@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "motion-proj"
+version = "0.1.0"
+description = "Motion-Proj: Dynamics Projection Distillation for Vision-Centric Driving World Models"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Motion-Proj" }]
+
+# NOTE: runtime deps are already installed in the `motionproj` conda env.
+# This list documents the direct dependencies; pinned versions live in
+# requirements.lock.txt. We intentionally do not re-pin here to avoid
+# accidental re-resolution of the carefully matched torch/diffusers stack.
+dependencies = [
+    "torch",
+    "torchvision",
+    "diffusers==0.31.0",
+    "transformers",
+    "accelerate",
+    "peft",
+    "safetensors",
+    "einops",
+    "omegaconf",
+    "numpy<2",
+    "opencv-python",
+    "nuscenes-devkit",
+    "pyquaternion",
+    "kornia",
+    "lpips",
+    "scikit-image",
+    "tqdm",
+    "rich",
+]
+
+[project.scripts]
+motionproj-build-cache = "motion_proj.cache.build_cache:main"
+motionproj-train = "motion_proj.train.train_motionproj:main"
+motionproj-eval = "motion_proj.eval.evaluate:main"
+motionproj-mine = "motion_proj.replay.mine:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["motion_proj*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,20 @@
+# Motion-Proj global defaults. Other configs override via OmegaConf merge.
+
+seed: 1234
+device: cuda
+dtype: bf16                       # bf16 | fp16 | fp32
+work_dir: /root/autodl-tmp/runs/motionproj_v1
+
+paths:
+  data_root: /root/autodl-tmp/data/nuscenes      # extracted nuScenes mini lives here
+  cache_dir: /root/autodl-tmp/cache/projection   # projection cache output
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+data:
+  name: nuscenes_mini
+
+model:
+  name: svd
+
+train: {}
