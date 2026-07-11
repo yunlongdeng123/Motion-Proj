@@ -10,21 +10,39 @@ from typing import Any
 import torch
 
 from ..utils.logging import get_logger
-from .boxes_nuscenes import build_tracks
-from .depth_anything import DepthEstimator
-from .ego_flow import boxes_to_dynamic_mask, build_static_mask, compute_ego_flow
-from .flow_raft import RAFTFlow
+from .ego_flow import boxes_to_dynamic_mask, build_static_mask
+from .providers import (
+    DepthProvider,
+    EgoMotionProvider,
+    FlowProvider,
+    LidarCalibratedDepthProvider,
+    NuScenesTrackProvider,
+    ProvidedEgoMotionProvider,
+    RAFTFlowProvider,
+    TrackProvider,
+)
 from .state import MotionState
 
 log = get_logger(__name__)
 
 
 class MotionAuditor:
-    def __init__(self, device: str = "cuda", enable_depth: bool = True, conf_thresh: float = 0.5):
+    def __init__(
+        self,
+        device: str = "cuda",
+        enable_depth: bool = True,
+        conf_thresh: float = 0.5,
+        flow_provider: FlowProvider | None = None,
+        depth_provider: DepthProvider | None = None,
+        track_provider: TrackProvider | None = None,
+        ego_motion_provider: EgoMotionProvider | None = None,
+    ):
         self.device = device
         self.conf_thresh = conf_thresh
-        self.flow = RAFTFlow(device=device)
-        self.depth = DepthEstimator(device=device, enable=enable_depth)
+        self.flow_provider = flow_provider or RAFTFlowProvider(device=device)
+        self.depth_provider = depth_provider or LidarCalibratedDepthProvider(device=device, enable=enable_depth)
+        self.track_provider = track_provider or NuScenesTrackProvider()
+        self.ego_motion_provider = ego_motion_provider or ProvidedEgoMotionProvider()
 
     @torch.no_grad()
     def audit(self, sample: dict) -> MotionState:
@@ -37,18 +55,18 @@ class MotionAuditor:
         k, _, h, w = frames.shape
 
         # 1) 光流 + 前后向一致性（fb-consistency）置信度
-        u_static, flow_conf = self.flow.flow_with_confidence(frames)
+        u_static, flow_conf = self.flow_provider.estimate(frames)
 
         # 2) 深度 + 由自车运动（ego）诱导的静态光流
-        depth = self.depth.depth(frames)                    # [K,H,W]
-        u_ego = compute_ego_flow(depth, K, cam2ego, ego2global)
+        depth = self.depth_provider.estimate(frames, sample)  # [K,H,W]
+        u_ego = self.ego_motion_provider.flow(depth, sample)
 
         # 3) 可靠静态掩码（高一致性，且位于目标框之外）
         dyn_mask = boxes_to_dynamic_mask(boxes, h, w, self.device)
         static_mask = build_static_mask(flow_conf, dyn_mask, self.conf_thresh)
 
         # 4) 由 GT 框得到的目标轨迹（tracks）
-        tracks = build_tracks(boxes, k)
+        tracks = self.track_provider.estimate(frames, sample)
 
         state = MotionState(
             u_static=u_static,

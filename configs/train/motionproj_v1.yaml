@@ -28,7 +28,9 @@ train:
   log_every: 20
   ckpt_every: 500
   sample_every: 500
-  logger: tensorboard           # tensorboard | wandb | none
+  logger: tensorboard           # tensorboard | none；W&B 只允许显式离线导出
+  resume: auto                  # auto | none | <checkpoint directory>
+  early_stop_patience: null
 
 cache:
   store: latent                 # latent | rgb

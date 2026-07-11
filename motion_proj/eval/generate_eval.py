@@ -31,6 +31,7 @@ from ..data import NuScenesFutureVideoDataset
 from ..utils.io import save_json, to_uint8_video, write_video
 from ..utils.logging import get_logger
 from ..utils.viz import make_comparison_panel
+from ..runtime.tasks import TaskStore
 from . import metrics as M
 
 log = get_logger(__name__)
@@ -198,6 +199,7 @@ def run_generate_eval(
     lora_enabled = bool(cfg.model.lora.enable)
 
     os.makedirs(out_dir, exist_ok=True)
+    tasks = TaskStore(os.path.join(out_dir, "_tasks"))
     # 预取 clip 源数据（GT 未来帧 + 几何），避免逐 adapter 重复解码数据集
     clips = {idx: ds[idx] for idx in indices}
 
@@ -231,19 +233,35 @@ def run_generate_eval(
         for idx in indices:
             src = clips[idx]
             sid = src["sample_id"]
+            task_seed = seed + idx
+            cached = tasks.completed_result(name, task_seed, sid)
+            if cached is not None:
+                per_clip.append(cached)
+                log.info("[%s] %s 已完成，跳过生成", name, sid)
+                continue
+            tasks.mark(name, task_seed, sid, "running")
             gt = src["frames"].to(device)          # [K,3,H,W]
             _, _, gh, gw = gt.shape
-            gen = torch.Generator(device=device).manual_seed(seed + idx)
+            gen = torch.Generator(device=device).manual_seed(task_seed)
             # 显式指定 height/width，否则 pipeline 会用 SVD-xt 原生分辨率(576x1024)，
             # 与训练/GT 的 256x448 不一致，导致无法与 GT 逐帧比较。
-            frames = backbone.generate(
-                src["cond_frame"].to(device),
-                num_frames=num_frames,
-                num_inference_steps=num_inference_steps,
-                generator=gen,
-                height=gh,
-                width=gw,
-            )
+            decode_chunk = 4
+            while True:
+                try:
+                    frames = backbone.generation(
+                        src["cond_frame"].to(device), num_frames=num_frames,
+                        num_inference_steps=num_inference_steps, generator=gen,
+                        height=gh, width=gw, decode_chunk_size=decode_chunk,
+                    )
+                    break
+                except torch.cuda.OutOfMemoryError:
+                    if decode_chunk <= 1:
+                        tasks.mark(name, task_seed, sid, "failed", reason="decode_oom")
+                        raise
+                    decode_chunk = max(1, decode_chunk // 2)
+                    torch.cuda.empty_cache()
+                    gen = torch.Generator(device=device).manual_seed(task_seed)
+                    log.warning("评估 decode OOM，保持任务语义并将 chunk 减至 %d", decode_chunk)
             k = min(frames.shape[0], gt.shape[0])
             fk, gk = frames[:k], gt[:k]
 
@@ -257,6 +275,7 @@ def run_generate_eval(
                 "ssim": _safe_metric(M.ssim, fk, gk),
             }
             per_clip.append(row)
+            tasks.mark(name, task_seed, sid, "completed", result=row, decode_chunk_size=decode_chunk)
             save_json(row, os.path.join(adapter_out, f"{sid}.json"))
             if save_video:
                 write_video(to_uint8_video(fk), os.path.join(adapter_out, f"{sid}.mp4"), fps=4)

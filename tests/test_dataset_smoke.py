@@ -74,6 +74,7 @@ def test_nuscenes_dataset_item():
             "version": "v1.0-mini", "dataroot": DATAROOT, "cameras": ["CAM_FRONT"],
             "num_frames": 4, "frame_stride": 1, "height": 128, "width": 224,
             "min_box_visibility": 2, "use_sweeps": False,
+            "use_lidar_depth": True,
         }
     )
     ds = NuScenesFutureVideoDataset(cfg)
@@ -81,3 +82,6 @@ def test_nuscenes_dataset_item():
     item = ds[0]
     assert item["frames"].shape == (4, 3, 128, 224)
     assert item["ego2global"].shape == (4, 4, 4)
+    assert item["lidar_depth"].shape == (4, 128, 224)
+    assert torch.isfinite(item["lidar_depth"]).all()
+    assert (item["lidar_depth"] > 0).sum() > 0

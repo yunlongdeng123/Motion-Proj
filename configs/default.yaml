@@ -1,5 +1,7 @@
 # Motion-Proj global defaults. Other configs override via OmegaConf merge.
 
+schema_version: 2
+
 seed: 1234
 device: cuda
 dtype: bf16                       # bf16 | fp16 | fp32
@@ -18,3 +20,8 @@ model:
   name: svd
 
 train: {}
+
+cache:
+  store: latent
+  overwrite: false
+  max_samples: null

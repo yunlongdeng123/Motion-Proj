@@ -44,3 +44,11 @@ writer.append(chunk)
 ### 文档
 - README、设计文档、变更说明等文档默认使用简体中文撰写。
 - 保留代码块、命令、路径、库名等原文。
+
+## 研究连续性协议
+
+1. 每次开始工作先读取 `docs/CVPR2027_PLAN.md` 和 `docs/EXPERIMENTS.md`，再检查 Git 状态与相关 run manifest；不得仅依赖对话上下文。
+2. 完成里程碑、修改研究决策、结束长实验或确认失败结论后，更新计划或实验事实源。
+3. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
+4. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
+5. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。

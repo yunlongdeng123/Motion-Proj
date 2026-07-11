@@ -1,85 +1,100 @@
-"""Dynamics Projector（动力学投影器）：P(y) = Gamma(a_y, s_dagger)。
-
-给定干净层级（clean-level）的帧 ``y`` 以及 auditor 的 ``MotionState``，产出
-经动力学修复的目标 ``x_dagger`` 和可靠性掩码 ``M_y``。整个投影器都是
-no-grad 的，并与训练分离（方案第 6/8.4 节）。
-"""
+"""由四个可替换组件构成的动力学投影器。"""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import torch
 
 from ..auditor.state import MotionState
 from ..utils.logging import get_logger
 from . import energies as E
-from .mask import build_reliability_mask
-from .smoothing import smooth_tracks
-from .support import classify_support
-from .warper import composite_objects, render_static
+from .components import (
+    BackgroundProjector,
+    EgoWarpBackground,
+    FlowObjectReliability,
+    ObjectProjector,
+    ReliabilityProvider,
+    SmoothedObjectProjector,
+    SupportProvider,
+    TemporalBorderSupport,
+)
 
 log = get_logger(__name__)
 
 
 @dataclass
 class ProjectionResult:
-    y: torch.Tensor            # [K,3,H,W] 输入帧
-    x_dagger: torch.Tensor     # [K,3,H,W] 修复后的目标
-    mask: torch.Tensor         # [K,1,H,W] 可靠性，取值 [0,1]
-    metadata: dict
+    y: torch.Tensor
+    x_dagger: torch.Tensor
+    mask: torch.Tensor
+    energy_before: dict[str, float]
+    energy_after: dict[str, float]
+    diagnostics: dict = field(default_factory=dict)
+    metadata: dict = field(default_factory=dict)
+
+    @property
+    def target(self) -> torch.Tensor:
+        return self.x_dagger
+
+    @property
+    def valid_mask(self) -> torch.Tensor:
+        return self.mask
 
 
 class DynamicsProjector:
-    def __init__(self, smooth_lambda: float = 5.0, anchor: int = 0):
-        self.smooth_lambda = smooth_lambda
-        self.anchor = anchor
+    def __init__(
+        self,
+        smooth_lambda: float = 5.0,
+        anchor: int = 0,
+        background: BackgroundProjector | None = None,
+        objects: ObjectProjector | None = None,
+        support: SupportProvider | None = None,
+        reliability: ReliabilityProvider | None = None,
+    ):
+        self.anchor = int(anchor)
+        self.background = background or EgoWarpBackground()
+        self.objects = objects or SmoothedObjectProjector(smooth_lambda)
+        self.support = support or TemporalBorderSupport()
+        self.reliability = reliability or FlowObjectReliability()
 
     @torch.no_grad()
     def project(self, frames: torch.Tensor, state: MotionState) -> ProjectionResult:
-        device = frames.device
         k, _, h, w = frames.shape
-        meta = state.meta
+        background = self.background.project(frames, state, self.anchor)
+        if not hasattr(self.objects, "smooth"):
+            raise TypeError("ObjectProjector 必须实现 smooth(tracks)，以便统一能量诊断")
+        projected_tracks = self.objects.smooth(state.tracks)  # type: ignore[attr-defined]
+        support = self.support.classify(state.tracks, (h, w))
+        target, object_mask = self.objects.project(background, frames, state.tracks, projected_tracks, support)
+        mask = self.reliability.build(state, object_mask, k).clamp(0, 1)
 
-        # 1) 静态层：由自车光流得到的无漂移背景
-        static_bg = render_static(
-            frames,
-            state.depth.to(device),
-            meta["intrinsics"].to(device),
-            meta["cam2ego"].to(device),
-            meta["ego2global"].to(device),
-            anchor=self.anchor,
-        )
-
-        # 2) 动态层：平滑轨迹、按支持性过滤、合成
-        smoothed = smooth_tracks(state.tracks, lam=self.smooth_lambda)
-        support = classify_support(state.tracks, (h, w))
-        x_dagger, obj_mask = composite_objects(
-            static_bg, frames, state.tracks, smoothed, support
-        )
-
-        # 3) 可靠性掩码
-        mask = build_reliability_mask(state.static_mask.to(device), obj_mask, k)
-
-        # 4) 能量报告（诊断）：比较投影前后
-        try:
-            terms = E.e_dyn(state, smoothed, support)
-            energy_report = {kk: float(vv) for kk, vv in terms.items()}
-            energy_report["obj_before"] = float(E.e_obj(state.tracks))
-            energy_report["obj_after"] = float(E.e_obj(smoothed))
-            energy_report["prior_before"] = float(E.e_prior(state.tracks))
-            energy_report["prior_after"] = float(E.e_prior(smoothed))
-            energy_report["static_drift"] = float(E.e_static(state))
-        except Exception as e:  # pragma: no cover
-            log.warning("energy report failed: %s", e)
-            energy_report = {}
-
-        metadata = {
-            "sample_id": meta.get("sample_id"),
+        before = self._energies(state, state.tracks, support)
+        after = self._energies(state, projected_tracks, support)
+        finite_pairs = [after[key] <= before[key] for key in ("obj", "prior")
+                        if key in before and key in after]
+        diagnostics = {
+            "eligible_fraction": float((mask > 0).float().mean()),
+            "energy_decreased": bool(finite_pairs and all(finite_pairs)),
             "num_tracks": len(state.tracks),
-            "num_unsupported": int(
-                sum(int((~v).sum()) for v in support.values())
-            ),
-            "energies": energy_report,
-            "hw": (h, w),
+            "num_unsupported": int(sum(int((~value).sum()) for value in support.values())),
+            "components": {
+                "background": type(self.background).__name__, "object": type(self.objects).__name__,
+                "support": type(self.support).__name__, "reliability": type(self.reliability).__name__,
+            },
         }
-        return ProjectionResult(y=frames, x_dagger=x_dagger, mask=mask, metadata=metadata)
+        legacy_energies = {
+            **{f"{key}_before": value for key, value in before.items()},
+            **{f"{key}_after": value for key, value in after.items()},
+            "static_drift": before.get("static", 0.0),
+        }
+        metadata = {"sample_id": state.meta.get("sample_id"), "hw": (h, w),
+                    "energies": legacy_energies, "diagnostics": diagnostics}
+        return ProjectionResult(frames, target, mask, before, after, diagnostics, metadata)
+
+    @staticmethod
+    def _energies(state, tracks, support) -> dict[str, float]:
+        try:
+            return {key: float(value) for key, value in E.e_dyn(state, tracks, support).items()}
+        except Exception as exc:  # pragma: no cover - 仅用于保留 cache 主流程
+            log.warning("energy report failed: %s", exc)
+            return {}

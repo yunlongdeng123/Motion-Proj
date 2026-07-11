@@ -8,13 +8,15 @@ import torch
 from torch.utils.data import Dataset
 
 from ..utils.io import load_json, load_tensor
+from .writer import COMPLETE
 
 
 class ProjectionCacheDataset(Dataset):
     def __init__(self, cache_dir: str):
         self.cache_dir = cache_dir
         self.dirs = sorted(
-            d for d in glob.glob(os.path.join(cache_dir, "*")) if os.path.isfile(os.path.join(d, "metadata.json"))
+            d for d in glob.glob(os.path.join(cache_dir, "*"))
+            if os.path.isfile(os.path.join(d, "metadata.json")) and os.path.isfile(os.path.join(d, COMPLETE))
         )
         if not self.dirs:
             raise FileNotFoundError(

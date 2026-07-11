@@ -1,16 +1,8 @@
-"""Motion-Proj 使用的抽象视频扩散骨干网络接口。
-
-训练代码与具体骨干网络无关：它只依赖这个接口。一个骨干网络必须能够
-（1）在 RGB 片段与 latent 空间之间相互映射，（2）在给定 sigma 下加噪，
-（3）从带噪 latent 产生*干净*预测 ``x0_hat``（模型预条件化在内部处理），
-以及（4）从冻结的基座模型产生*anchor*（锚定）预测（禁用 LoRA/适配器）。
-
-Latent 张量采用 ``[B, T, C, h, w]`` 的布局。
-"""
+"""SVD/OpenDWM 共用的稳定 diffusion backbone adapter 接口。"""
 from __future__ import annotations
 
 import abc
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 import torch
@@ -18,77 +10,96 @@ import torch
 
 @dataclass
 class Conditioning:
-    """骨干网络专属的条件包（对训练器保持不透明）。"""
+    """对 trainer 不透明的骨干条件包。"""
 
     data: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class BackboneCapabilities:
+    image_to_video: bool = True
+    future_ego_control: bool = False
+    layout_control: bool = False
+    multi_camera_sync: bool = False
+    generation: bool = False
+    parameterizations: tuple[str, ...] = ("edm",)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
 class DiffusionBackbone(abc.ABC):
-    parameterization: str = "edm"  # "edm"（通过预条件化得到 x0）或 "eps"
-    # EDM 训练噪声的对数正态默认值（子类可覆盖）
+    """trainer 唯一依赖的骨干协议，latent 统一为 ``[B,T,C,h,w]``。"""
+
+    parameterization: str = "edm"
     p_mean: float = 0.7
     p_std: float = 1.6
     sigma_data: float = 0.5
 
-    # --------------------------------------------------------------- latent 空间
-    @abc.abstractmethod
-    def encode(self, frames: torch.Tensor) -> torch.Tensor:
-        """RGB ``[B,T,3,H,W]``（取值 [-1,1]）-> latent ``[B,T,C,h,w]``。"""
+    @property
+    def capabilities(self) -> BackboneCapabilities:
+        return BackboneCapabilities(parameterizations=(self.parameterization,))
 
     @abc.abstractmethod
-    def decode(self, latents: torch.Tensor) -> torch.Tensor:
-        """Latent ``[B,T,C,h,w]`` -> RGB ``[B,T,3,H,W]``（取值 [-1,1]）。"""
+    def encode(self, frames: torch.Tensor) -> torch.Tensor: ...
 
-    # ----------------------------------------------------------------- 噪声模型
     @abc.abstractmethod
-    def sample_sigmas(self, num: int, device) -> torch.Tensor:
-        """返回升序的 sigma 调度表（其长度控制管道子集）。"""
+    def decode(self, latents: torch.Tensor) -> torch.Tensor: ...
+
+    @abc.abstractmethod
+    def sample_sigmas(self, num: int, device) -> torch.Tensor: ...
 
     def add_noise(self, x0: torch.Tensor, sigma: torch.Tensor, noise: torch.Tensor) -> torch.Tensor:
-        """EDM 前向：``z = x0 + sigma * noise``（alpha = 1）。"""
         while sigma.dim() < x0.dim():
             sigma = sigma.unsqueeze(-1)
         return x0 + sigma * noise
 
     def sample_training_sigma(self, n: int, device) -> torch.Tensor:
-        """标准去噪损失 L_real 所用的对数正态 EDM 噪声采样。"""
-        rnd = torch.randn(n, device=device)
-        return (rnd * self.p_std + self.p_mean).exp()
-
-    # ------------------------------------------------------------------- 去噪
-    @abc.abstractmethod
-    def predict_x0(
-        self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning
-    ) -> torch.Tensor:
-        """经过预条件化的干净预测 ``x0_hat``（可训练路径，LoRA 开启）。"""
+        return (torch.randn(n, device=device) * self.p_std + self.p_mean).exp()
 
     @abc.abstractmethod
-    def anchor_predict_x0(
-        self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning
-    ) -> torch.Tensor:
-        """来自冻结基座模型的干净预测（禁用 LoRA/适配器）。"""
+    def predict_x0(self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning) -> torch.Tensor: ...
 
-    # ----------------------------------------------------------------- 条件
-    @abc.abstractmethod
-    def build_conditioning(self, batch: dict) -> Conditioning:
-        """从 dataloader 批次构建条件包（不计算梯度）。"""
-
-    # ----------------------------------------------------------------- 可训练部分
-    @abc.abstractmethod
-    def trainable_parameters(self) -> list[torch.nn.Parameter]:
-        ...
+    def predict_train(self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning) -> torch.Tensor:
+        return self.predict_x0(z, sigma, cond)
 
     @abc.abstractmethod
-    def save_adapter(self, path: str) -> None:
-        ...
+    def anchor_predict_x0(self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning) -> torch.Tensor: ...
+
+    def predict_anchor(self, z: torch.Tensor, sigma: torch.Tensor, cond: Conditioning) -> torch.Tensor:
+        return self.anchor_predict_x0(z, sigma, cond)
 
     @abc.abstractmethod
-    def load_adapter(self, path: str) -> None:
-        ...
+    def build_conditioning(self, batch: dict) -> Conditioning: ...
 
-    # --------------------------------------------------------------------- 辅助函数
+    @abc.abstractmethod
+    def trainable_parameters(self) -> list[torch.nn.Parameter]: ...
+
+    @abc.abstractmethod
+    def save_adapter(self, path: str) -> None: ...
+
+    @abc.abstractmethod
+    def load_adapter(self, path: str) -> None: ...
+
+    def adapter_state(self) -> dict[str, torch.Tensor]:
+        raise NotImplementedError("该骨干未实现内存 adapter state 导出")
+
+    def load_adapter_state(self, state: dict[str, torch.Tensor]) -> None:
+        raise NotImplementedError("该骨干未实现内存 adapter state 加载")
+
+    def set_train_mode(self, enabled: bool = True) -> None:
+        for parameter in self.trainable_parameters():
+            parameter.requires_grad_(enabled)
+
+    def training_module(self) -> torch.nn.Module:
+        """返回 Accelerate 用于 accumulate/no_sync 的实际模块。"""
+        raise NotImplementedError("骨干 adapter 必须暴露 training_module")
+
+    def generation(self, cond_frame: torch.Tensor, **kwargs) -> torch.Tensor:
+        generate = getattr(self, "generate", None)
+        if not callable(generate):
+            raise NotImplementedError("该骨干不支持生成")
+        return generate(cond_frame, **kwargs)
+
     def eps_from_x0(self, z: torch.Tensor, sigma: torch.Tensor, x0: torch.Tensor) -> torch.Tensor:
-        """在 EDM 下将 x0 目标转换为 eps 目标（``eps = (z - x0)/sigma``）。"""
         while sigma.dim() < z.dim():
             sigma = sigma.unsqueeze(-1)
         return (z - x0) / sigma.clamp_min(1e-8)

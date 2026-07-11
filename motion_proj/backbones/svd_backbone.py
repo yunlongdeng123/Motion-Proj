@@ -25,7 +25,7 @@ import torch
 import torch.nn.functional as F
 
 from ..utils.logging import get_logger
-from .base import Conditioning, DiffusionBackbone
+from .base import BackboneCapabilities, Conditioning, DiffusionBackbone
 
 log = get_logger(__name__)
 
@@ -38,6 +38,18 @@ def _expand(sigma: torch.Tensor, ndim: int) -> torch.Tensor:
 
 class SVDBackbone(DiffusionBackbone):
     parameterization = "edm"
+
+    @property
+    def capabilities(self) -> BackboneCapabilities:
+        return BackboneCapabilities(
+            image_to_video=True,
+            generation=True,
+            future_ego_control=False,
+            layout_control=False,
+            multi_camera_sync=False,
+            parameterizations=("edm",),
+            metadata={"family": "SVD", "research_role": "development_backbone"},
+        )
 
     def __init__(self, cfg: Any):
         self.cfg = cfg
@@ -252,13 +264,25 @@ class SVDBackbone(DiffusionBackbone):
     def trainable_parameters(self) -> list[torch.nn.Parameter]:
         return [p for p in self.unet.parameters() if p.requires_grad]
 
+    def set_train_mode(self, enabled: bool = True) -> None:
+        self.unet.train(enabled)
+
+    def training_module(self) -> torch.nn.Module:
+        return self.unet
+
+    def adapter_state(self) -> dict[str, torch.Tensor]:
+        return {n: p.detach().cpu() for n, p in self.unet.named_parameters() if p.requires_grad}
+
+    def load_adapter_state(self, state: dict[str, torch.Tensor]) -> None:
+        self.unet.load_state_dict(state, strict=False)
+
     def save_adapter(self, path: str) -> None:
         import os
 
         from safetensors.torch import save_file
 
         os.makedirs(os.path.dirname(path), exist_ok=True)
-        sd = {n: p.detach().cpu() for n, p in self.unet.named_parameters() if p.requires_grad}
+        sd = self.adapter_state()
         save_file(sd, path)
         log.info("Saved adapter (%d tensors) -> %s", len(sd), path)
 
@@ -293,8 +317,9 @@ class SVDBackbone(DiffusionBackbone):
         # 组件以 bf16 加载，但 SVD pipeline 只对 fp16 VAE 做 force_upcast，会把 float32
         # 预处理后的图像直接喂给 bf16 VAE，导致 conv dtype 不匹配；用 autocast 统一精度。
         device_type = "cuda" if (torch.cuda.is_available() and str(self.device).startswith("cuda")) else "cpu"
+        decode_chunk_size = int(kw.pop("decode_chunk_size", 4))
         with torch.autocast(device_type=device_type, dtype=self.dtype):
-            out = self._pipe(Image.fromarray(img), num_frames=k, decode_chunk_size=4, **kw)
+            out = self._pipe(Image.fromarray(img), num_frames=k, decode_chunk_size=decode_chunk_size, **kw)
         frames = out.frames[0]  # PIL 列表
         import numpy as np
 

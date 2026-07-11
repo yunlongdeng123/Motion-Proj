@@ -1,0 +1,18 @@
+schema_version: 1
+storage: /root/autodl-tmp/runs/optuna/motionproj_v2.sqlite3
+hard_limit_hours: 9
+stages:
+  - {trials: 16, target_steps: 100}
+  - {promote: 4, target_steps: 300}
+  - {promote: 2, target_steps: 800}
+search_space:
+  lr: {type: log_float, low: 1.0e-5, high: 5.0e-5}
+  lambda_proj: {type: float, low: 0.03, high: 0.3}
+  beta_anchor: {type: float, low: 0.1, high: 1.0}
+  bound_B: {type: categorical, choices: [3, 4, 6, 8]}
+  tube_upper: {type: categorical, choices: [0.25, 0.35, 0.45]}
+fixed:
+  lora_rank: 16
+prune:
+  min_projection_eligible_fraction: 0.70
+  max_lpips_relative_degradation: 0.05

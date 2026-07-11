@@ -1,5 +1,5 @@
 """Motion-Proj 骨干网络子包。"""
-from .base import Conditioning, DiffusionBackbone
-from .registry import build_backbone
+from .base import BackboneCapabilities, Conditioning, DiffusionBackbone
+from .registry import build_backbone, register_backbone
 
-__all__ = ["DiffusionBackbone", "Conditioning", "build_backbone"]
+__all__ = ["BackboneCapabilities", "DiffusionBackbone", "Conditioning", "build_backbone", "register_backbone"]
