@@ -122,10 +122,12 @@ def evaluate_synthetic_case(
         tracks=corrupted_tracks,
         meta=dict(state.meta),
     )
-    device = frames.device if frames.is_cuda else state.depth.device
+    device = state.depth.device
+    frames = frames.to(device)
     state_corrupted = state_corrupted.to(device)
-    y_corrupted = build_corrupted_input(frames.to(device), state_corrupted, corrupted_tracks)
-    result = projector.project(frames.to(device), state_corrupted)
+    corrupted_tracks = state_corrupted.tracks
+    y_corrupted = build_corrupted_input(frames, state_corrupted, corrupted_tracks)
+    result = projector.project(frames, state_corrupted)
 
     prior_weight = float(settings.get("prior_weight", PRIOR_WEIGHT))
     before = float(result.energy_before["obj"]) + prior_weight * float(result.energy_before["prior"])
