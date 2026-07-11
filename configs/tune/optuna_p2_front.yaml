@@ -19,7 +19,7 @@ thresholds:
 eval:
   split: val
   num_clips: 4
-  clip_indices: [0, 100, 200, 300]
+  clip_indices: [0, 162, 396, 414]
   num_inference_steps: 8
   base_metrics: /root/autodl-tmp/runs/p2-tune-mini/base_metrics.json
 notes: >
@@ -30,4 +30,4 @@ notes: >
   --base-lpips <from base_metrics.json> --work-root /root/autodl-tmp/runs/p2-tune-mini/trials
   --command-template 'python -m motion_proj.tune.trial_runner --config configs/train/motionproj_tune_mini_p2.yaml
   --base-metrics /root/autodl-tmp/runs/p2-tune-mini/base_metrics.json --num-clips 4
-  --clip-indices 0,100,200,300 --num-inference-steps 8'
+  --clip-indices 0,162,396,414 --num-inference-steps 8'

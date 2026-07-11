@@ -75,4 +75,4 @@
 | 2026-07-11 | `9d9b28e` | projector 总能量严格下降；replay 训练改读 stage fingerprint | 禁止空 track 虚报 energy_decreased；避免 mining fingerprint 与 cache_config 冲突 |
 | 2026-07-11 | `ced5e35` | replay 能量门改为对 x_dagger 重审计 static drift | 生成帧无 GT track 时 e_dyn static 投影前后不变，不能作为能量下降证据 |
 | 2026-07-11 | `8f27415` | cache 跳过无轨迹 clip 直至凑满 max_samples | mini tune 在 clip 9 无轨迹导致整段失败 |
-| 2026-07-11 | pending | Optuna trial 评估桥（train→val 生成摘要） | 让 summary.json 含淘汰/排序字段，才能启动 16×100 |
+| 2026-07-11 | `0797529` | Optuna trial 评估桥（train→val 生成摘要） | 让 summary.json 含淘汰/排序字段，才能启动 16×100 |
