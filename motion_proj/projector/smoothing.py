@@ -23,19 +23,19 @@ def _smooth_channel(data: torch.Tensor, weight: torch.Tensor, lam: float) -> tor
     W = torch.diag(weight)
     # 二阶差分算子 D：[(K-2), K]
     if k >= 3:
-        D = torch.zeros(k - 2, k, dtype=data.dtype)
+        D = torch.zeros(k - 2, k, dtype=data.dtype, device=data.device)
         for i in range(k - 2):
             D[i, i] = 1.0
             D[i, i + 1] = -2.0
             D[i, i + 2] = 1.0
     else:  # k == 2 -> 一阶差分
-        D = torch.zeros(1, k, dtype=data.dtype)
+        D = torch.zeros(1, k, dtype=data.dtype, device=data.device)
         D[0, 0] = 1.0
         D[0, 1] = -1.0
     A = W + lam * (D.transpose(0, 1) @ D)
     b = W @ data
     # 为完全缺席的通道（所有权重为 0）添加微小的岭项（ridge）
-    A = A + 1e-6 * torch.eye(k, dtype=data.dtype)
+    A = A + 1e-6 * torch.eye(k, dtype=data.dtype, device=data.device)
     x = torch.linalg.solve(A, b)
     return x
 
