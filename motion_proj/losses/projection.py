@@ -29,13 +29,13 @@ def projection_loss(
     cond,
     cfg_tube,
     use_edm_weight: bool = False,
+    use_tube: bool = True,
 ) -> dict:
     """返回 ``{loss, z, x0_hat, sigma, gate_frac}``（其中的辅助项会被锚定损失复用）。"""
     device = y.device
     b = y.shape[0]
-    sigma = sample_tube_sigma(
-        backbone, b, device, tuple(cfg_tube.sigma_quantile_range)
-    )
+    quantile_range = tuple(cfg_tube.sigma_quantile_range) if use_tube else (0.0, 1.0)
+    sigma = sample_tube_sigma(backbone, b, device, quantile_range)
     noise = torch.randn_like(y)
     z = backbone.add_noise(y, sigma, noise)
     x0_hat = backbone.predict_x0(z, sigma, cond)
@@ -53,7 +53,8 @@ def projection_loss(
     m_full = m.expand_as(se)
     per_sample = se.flatten(1).sum(1) / m_full.flatten(1).sum(1).clamp_min(1.0)
 
-    gate = bound_gate(sigma, y, x_dagger, float(cfg_tube.bound_B)).float()
+    gate = (bound_gate(sigma, y, x_dagger, float(cfg_tube.bound_B)).float()
+            if use_tube else torch.ones(b, device=device))
     if use_edm_weight:
         per_sample = per_sample * edm_weight(sigma)
     loss = (per_sample * gate).sum() / gate.sum().clamp_min(1.0)

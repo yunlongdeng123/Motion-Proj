@@ -1,7 +1,8 @@
 import pytest
 import torch
 
-from motion_proj.cache import ProjectionCacheDataset, ProjectionCacheWriter
+from motion_proj.cache import MixedProjectionCacheDataset, ProjectionCacheDataset, ProjectionCacheWriter
+from motion_proj.cache.writer import CACHE_SCHEMA_VERSION
 
 
 def _tensors():
@@ -83,3 +84,37 @@ def test_cache_dataset_rejects_mixed_fingerprints(tmp_path):
             str(tmp_path),
             expected_fingerprint="expected",
         )
+
+
+def test_schema_v4_roundtrip_optional_flow_and_provenance(tmp_path):
+    y, target, mask = _tensors()
+    flow = torch.zeros(1, 4, 4, 2)
+    confidence = torch.ones(1, 1, 4, 4)
+    ProjectionCacheWriter(str(tmp_path), store="rgb", fingerprint="v4").write(
+        "sample-0", y, target, mask, {}, latent_flow=flow,
+        flow_confidence=confidence, source="replay", generation_seed=7,
+        parent_checkpoint="synthetic/step_100", source_fingerprint="source-fp",
+    )
+
+    item = ProjectionCacheDataset(str(tmp_path), expected_fingerprint="v4")[0]
+    assert item["metadata"]["cache_schema_version"] == CACHE_SCHEMA_VERSION == 4
+    assert item["metadata"]["source"] == "replay"
+    assert item["metadata"]["generation_seed"] == 7
+    assert item["metadata"]["parent_checkpoint"] == "synthetic/step_100"
+    assert torch.equal(item["latent_flow"], flow)
+    assert torch.equal(item["flow_confidence"], confidence)
+
+
+def test_mixed_cache_has_exact_three_to_one_schedule(tmp_path):
+    roots = {}
+    y, target, mask = _tensors()
+    for source in ("synthetic", "replay"):
+        root = tmp_path / source
+        ProjectionCacheWriter(str(root), store="rgb", fingerprint=source).write(
+            f"{source}-0", y, target, mask, {"source": source}
+        )
+        roots[source] = ProjectionCacheDataset(str(root), expected_fingerprint=source)
+    mixed = MixedProjectionCacheDataset(roots, {"synthetic": 3, "replay": 1}, epoch_size=8)
+    sources = [mixed[index]["cache_source"] for index in range(len(mixed))]
+    assert sources.count("synthetic") == 6
+    assert sources.count("replay") == 2

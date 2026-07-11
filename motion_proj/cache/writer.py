@@ -10,7 +10,7 @@ import torch
 from ..runtime.atomic import atomic_directory, atomic_write_json
 from ..utils.io import ensure_dir
 
-CACHE_SCHEMA_VERSION = 3
+CACHE_SCHEMA_VERSION = 4
 COMPLETE = "COMPLETE"
 
 
@@ -50,6 +50,8 @@ class ProjectionCacheWriter:
         x_dagger: torch.Tensor,
         mask: torch.Tensor,
         context: dict | None,
+        latent_flow: torch.Tensor | None,
+        flow_confidence: torch.Tensor | None,
     ) -> None:
         if clean.shape != y.shape or y.shape != x_dagger.shape:
             raise ValueError("clean、y 与 x_dagger shape 不一致")
@@ -67,13 +69,30 @@ class ProjectionCacheWriter:
             raise ValueError("mask 超出 [0,1]")
         if context is not None and not all(bool(torch.isfinite(v).all()) for v in context.values()):
             raise ValueError("context 包含 NaN/Inf")
+        if latent_flow is not None:
+            if latent_flow.shape != (y.shape[0] - 1, y.shape[-2], y.shape[-1], 2):
+                raise ValueError("latent_flow shape 必须为 [T-1,H,W,2]")
+            if not bool(torch.isfinite(latent_flow).all()):
+                raise ValueError("latent_flow 包含 NaN/Inf")
+        if flow_confidence is not None:
+            expected = (y.shape[0] - 1, 1, y.shape[-2], y.shape[-1])
+            if flow_confidence.shape != expected:
+                raise ValueError("flow_confidence shape 必须为 [T-1,1,H,W]")
+            if not bool(torch.isfinite(flow_confidence).all()):
+                raise ValueError("flow_confidence 包含 NaN/Inf")
+            if bool((flow_confidence < 0).any()) or bool((flow_confidence > 1).any()):
+                raise ValueError("flow_confidence 超出 [0,1]")
 
     def write(self, sample_id: str, y: torch.Tensor, x_dagger: torch.Tensor, mask: torch.Tensor,
-              metadata: dict, context: dict | None = None, clean: torch.Tensor | None = None) -> str:
+              metadata: dict, context: dict | None = None, clean: torch.Tensor | None = None,
+              latent_flow: torch.Tensor | None = None,
+              flow_confidence: torch.Tensor | None = None, *, source: str | None = None,
+              generation_seed: int | None = None, parent_checkpoint: str | None = None,
+              source_fingerprint: str | None = None) -> str:
         if self.exists(sample_id) and not self.overwrite:
             return self.sample_dir(sample_id)
         clean = y if clean is None else clean
-        self._validate(clean, y, x_dagger, mask, context)
+        self._validate(clean, y, x_dagger, mask, context, latent_flow, flow_confidence)
         target = self.sample_dir(sample_id)
         if os.path.exists(target):
             stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -85,9 +104,17 @@ class ProjectionCacheWriter:
             torch.save(mask.detach().cpu(), os.path.join(tmp, "mask.pt"))
             if context is not None:
                 torch.save({key: value.detach().cpu() for key, value in context.items()}, os.path.join(tmp, "context.pt"))
+            if latent_flow is not None:
+                torch.save(latent_flow.detach().cpu(), os.path.join(tmp, "latent_flow.pt"))
+            if flow_confidence is not None:
+                torch.save(flow_confidence.detach().cpu(), os.path.join(tmp, "flow_confidence.pt"))
             meta = dict(metadata)
             meta.update({"store": self.store, "cache_schema_version": CACHE_SCHEMA_VERSION,
-                         "cache_fingerprint": self.fingerprint})
+                         "cache_fingerprint": self.fingerprint,
+                         "source": source or meta.get("source"),
+                         "generation_seed": generation_seed,
+                         "parent_checkpoint": parent_checkpoint,
+                         "source_fingerprint": source_fingerprint})
             atomic_write_json(os.path.join(tmp, "metadata.json"), meta)
             with open(os.path.join(tmp, COMPLETE), "w", encoding="utf-8") as handle:
                 handle.write((self.fingerprint or "unversioned") + "\n")

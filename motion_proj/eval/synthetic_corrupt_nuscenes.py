@@ -170,6 +170,8 @@ def project_synthetic_sample(
         "energy_decreased": after < before - float(settings.get("energy_tolerance", 1e-6)),
         "eligible_fraction": float(result.diagnostics["eligible_fraction"]),
         "static_drift": float(auditor.static_drift_score(state)),
+        "latent_flow": state.u_static.detach().cpu(),
+        "flow_confidence": state.flow_conf.detach().cpu().unsqueeze(1),
         "y_corrupted": y_corrupted.detach().cpu(),
         "x_dagger": result.target.detach().cpu(),
         "mask": result.valid_mask.detach().cpu(),

@@ -10,6 +10,10 @@ from typing import Any
 from omegaconf import DictConfig, OmegaConf
 
 CURRENT_SCHEMA_VERSION = 2
+EXPERIMENT_TYPES = {
+    "base", "real-only", "flow", "synthetic", "replay", "full",
+    "full-no-anchor", "full-no-tube",
+}
 
 
 class ConfigError(ValueError):
@@ -60,12 +64,25 @@ def validate_config(cfg: DictConfig) -> None:
         if data_frames is not None and model_frames is not None and int(data_frames) != int(model_frames):
             errors.append(f"data.num_frames={data_frames} 与 model.num_frames={model_frames} 不一致")
     if "train" in cfg:
+        experiment_type = str(cfg.train.get("experiment_type", "synthetic"))
+        if experiment_type not in EXPERIMENT_TYPES:
+            errors.append(f"train.experiment_type 未知: {experiment_type}")
         resume = str(cfg.train.get("resume", "auto"))
         if resume not in {"auto", "none"} and not resume:
             errors.append("train.resume 必须是 auto/none/有效 checkpoint 路径")
         for name in ("max_steps", "micro_batch_size", "grad_accum"):
             if cfg.train.get(name) is not None and int(cfg.train[name]) <= 0:
                 errors.append(f"train.{name} 必须大于 0")
+        if experiment_type in {"full", "full-no-anchor", "full-no-tube"}:
+            ratios = cfg.train.get("cache_mix") or {}
+            actual = {str(key): int(value) for key, value in ratios.items()}
+            if actual != {"synthetic": 3, "replay": 1}:
+                errors.append("full 系列实验的 train.cache_mix 必须固定为 synthetic:3,replay:1")
+        if experiment_type == "flow" and float(cfg.train.get("lambda_flow", 0.0)) <= 0:
+            errors.append("flow 实验要求 train.lambda_flow > 0")
+        parent = cfg.get("parent_run_id")
+        if parent is not None and not str(parent).strip():
+            errors.append("parent_run_id 不得为空字符串")
     if errors:
         raise ConfigError("配置校验失败:\n- " + "\n- ".join(errors))
 

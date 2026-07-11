@@ -5,6 +5,7 @@ defaults_chain:
   - ../model/svd.yaml
 
 train:
+  experiment_type: synthetic   # base | real-only | flow | synthetic | replay | full | full-no-anchor | full-no-tube
   # optimization
   lr: 2.0e-5
   weight_decay: 0.0
@@ -18,6 +19,10 @@ train:
   lambda_proj: 0.1              # 0.05 - 0.2
   beta_anchor: 0.5             # 0.1 - 1.0
   use_real_loss: true
+  lambda_flow: 0.1
+  cache_sources: null
+  cache_mix: null
+  cache_epoch_size: null
 
   # low-noise projection "tube"
   tube:

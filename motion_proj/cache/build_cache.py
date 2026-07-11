@@ -12,6 +12,7 @@ import os
 import sys
 
 import torch
+import torch.nn.functional as F
 from tqdm import tqdm
 
 from ..auditor import MotionAuditor
@@ -26,6 +27,17 @@ from ..runtime.stage import StageManifest
 from .writer import ProjectionCacheWriter
 
 log = get_logger(__name__)
+
+
+def _flow_to_resolution(flow: torch.Tensor, confidence: torch.Tensor, height: int, width: int):
+    """把像素空间 RAFT flow 缩放到 cache 分辨率并保持像素单位一致。"""
+    source_h, source_w = flow.shape[1:3]
+    value = F.interpolate(flow.permute(0, 3, 1, 2), size=(height, width),
+                          mode="bilinear", align_corners=True)
+    value[:, 0] *= width / source_w
+    value[:, 1] *= height / source_h
+    conf = F.interpolate(confidence, size=(height, width), mode="area").clamp(0, 1)
+    return value.permute(0, 2, 3, 1).contiguous(), conf
 
 
 def build_cache(cfg) -> None:
@@ -95,6 +107,8 @@ def build_cache(cfg) -> None:
                 y = payload.pop("y_corrupted")
                 target = payload.pop("x_dagger")
                 mask = payload.pop("mask")
+                flow = payload.pop("latent_flow")
+                flow_confidence = payload.pop("flow_confidence")
                 metadata = payload
             elif source == "clean":
                 y = clean
@@ -107,6 +121,8 @@ def build_cache(cfg) -> None:
                     dtype=clean.dtype,
                 )
                 metadata = {"sample_id": sid, "source": "clean"}
+                flow = None
+                flow_confidence = None
             else:
                 raise NotImplementedError("replay cache 尚未接入；不得回退为 clean projection")
 
@@ -118,6 +134,11 @@ def build_cache(cfg) -> None:
                     mask.cpu(),
                     metadata,
                     clean=clean.cpu(),
+                    latent_flow=flow.cpu() if flow is not None else None,
+                    flow_confidence=flow_confidence.cpu() if flow_confidence is not None else None,
+                    source=source,
+                    generation_seed=int(cfg.seed),
+                    source_fingerprint=fingerprint,
                 )
             else:
                 batch = {"cond_frame": sample["cond_frame"].unsqueeze(0)}
@@ -126,6 +147,11 @@ def build_cache(cfg) -> None:
                 y_lat = backbone.encode(y.to(device).unsqueeze(0))[0]
                 xd_lat = backbone.encode(target.to(device).unsqueeze(0))[0]
                 mask_lat = downsample_mask_to_latent(mask.to(device), scale)
+                flow_lat, confidence_lat = (None, None)
+                if flow is not None and flow_confidence is not None:
+                    flow_lat, confidence_lat = _flow_to_resolution(
+                        flow.to(device), flow_confidence.to(device), y_lat.shape[-2], y_lat.shape[-1]
+                    )
                 context = {
                     "image_embeds": cond.data["image_embeds"][0],
                     "image_latents": cond.data["image_latents"][0],
@@ -139,6 +165,11 @@ def build_cache(cfg) -> None:
                     metadata,
                     context,
                     clean=clean_lat.cpu(),
+                    latent_flow=flow_lat.cpu() if flow_lat is not None else None,
+                    flow_confidence=confidence_lat.cpu() if confidence_lat is not None else None,
+                    source=source,
+                    generation_seed=int(cfg.seed),
+                    source_fingerprint=fingerprint,
                 )
         stage.complete({"samples": n})
     except Exception as exc:
