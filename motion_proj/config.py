@@ -135,9 +135,12 @@ def cache_config_fingerprint(cfg: Any) -> str:
 
 
 def cache_stage_fingerprint(cfg: Any) -> str:
-    """stage 完整性还依赖本次要求覆盖的样本范围。"""
-    payload = {"sample_fingerprint": cache_config_fingerprint(cfg),
-               "max_samples": to_container(cfg).get("cache", {}).get("max_samples")}
+    """stage 完整性还依赖本次要求覆盖的样本范围与填充策略。"""
+    payload = {
+        "sample_fingerprint": cache_config_fingerprint(cfg),
+        "max_samples": to_container(cfg).get("cache", {}).get("max_samples"),
+        "fill_policy": "skip-empty-tracks-until-max",
+    }
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 

@@ -80,39 +80,55 @@ def build_cache(cfg) -> None:
         backbone = build_backbone(cfg.model, load=True, device=device)
         scale = int(cfg.model.vae_scale_factor)
 
-    n = len(dataset)
-    if cfg.cache.get("max_samples"):
-        n = min(n, int(cfg.cache.max_samples))
-    log.info("Building %s cache for %d clips -> %s", store, n, paths.cache_dir)
+    n_total = len(dataset)
+    target = int(cfg.cache.max_samples) if cfg.cache.get("max_samples") else n_total
+    log.info(
+        "Building %s cache toward %d samples from %d clips -> %s",
+        store, target, n_total, paths.cache_dir,
+    )
 
+    kept = 0
+    skipped_no_tracks = 0
+    clips_scanned = 0
     try:
-        for i in tqdm(range(n)):
+        for i in tqdm(range(n_total)):
+            if kept >= target:
+                break
+            clips_scanned = i + 1
             sample = dataset[i]
             sid = sample["sample_id"]
             if writer.exists(sid) and not cfg.cache.overwrite:
+                kept += 1
                 continue
 
             clean = sample["frames"]
             if source == "synthetic":
                 assert auditor is not None and projector is not None
-                payload = project_synthetic_sample(
-                    sample,
-                    auditor,
-                    projector,
-                    case_index=i,
-                    seed=int(cfg.seed),
-                    settings=cfg.cache,
-                    clip_index=i,
-                )
+                try:
+                    payload = project_synthetic_sample(
+                        sample,
+                        auditor,
+                        projector,
+                        case_index=i,
+                        seed=int(cfg.seed),
+                        settings=cfg.cache,
+                        clip_index=i,
+                    )
+                except ValueError as exc:
+                    if "无可用轨迹" not in str(exc):
+                        raise
+                    skipped_no_tracks += 1
+                    log.warning("跳过无轨迹 clip %d (%s)", i, sid)
+                    continue
                 y = payload.pop("y_corrupted")
-                target = payload.pop("x_dagger")
+                target_frames = payload.pop("x_dagger")
                 mask = payload.pop("mask")
                 flow = payload.pop("latent_flow")
                 flow_confidence = payload.pop("flow_confidence")
                 metadata = payload
             elif source == "clean":
                 y = clean
-                target = clean
+                target_frames = clean
                 mask = torch.zeros(
                     clean.shape[0],
                     1,
@@ -130,7 +146,7 @@ def build_cache(cfg) -> None:
                 writer.write(
                     sid,
                     y.cpu(),
-                    target.cpu(),
+                    target_frames.cpu(),
                     mask.cpu(),
                     metadata,
                     clean=clean.cpu(),
@@ -145,7 +161,7 @@ def build_cache(cfg) -> None:
                 cond = backbone.build_conditioning(batch)
                 clean_lat = backbone.encode(clean.to(device).unsqueeze(0))[0]
                 y_lat = backbone.encode(y.to(device).unsqueeze(0))[0]
-                xd_lat = backbone.encode(target.to(device).unsqueeze(0))[0]
+                xd_lat = backbone.encode(target_frames.to(device).unsqueeze(0))[0]
                 mask_lat = downsample_mask_to_latent(mask.to(device), scale)
                 flow_lat, confidence_lat = (None, None)
                 if flow is not None and flow_confidence is not None:
@@ -171,12 +187,24 @@ def build_cache(cfg) -> None:
                     generation_seed=int(cfg.seed),
                     source_fingerprint=fingerprint,
                 )
-        stage.complete({"samples": n})
+            kept += 1
+        if kept < target:
+            raise RuntimeError(
+                f"cache 仅得到 {kept}/{target} 个样本（跳过无轨迹 {skipped_no_tracks}）；"
+                "请扩大扫描范围或检查标注可见性"
+            )
+        stage.complete({
+            "samples": kept,
+            "target_samples": target,
+            "clips_scanned": clips_scanned,
+            "skipped_no_tracks": skipped_no_tracks,
+            "fill_policy": "skip-empty-tracks-until-max",
+        })
     except Exception as exc:
         stage.fail(repr(exc))
         raise
 
-    log.info("Cache build complete.")
+    log.info("Cache build complete: kept=%d skipped_no_tracks=%d", kept, skipped_no_tracks)
 
 
 def main() -> None:
