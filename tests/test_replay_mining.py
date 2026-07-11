@@ -2,19 +2,33 @@ from types import SimpleNamespace
 
 from omegaconf import OmegaConf
 
-from motion_proj.replay.mine import _generation_settings, _summarize_rows, replay_is_eligible
+from motion_proj.replay.mine import (
+    _generation_settings,
+    _summarize_rows,
+    replay_energy_decreased,
+    replay_is_eligible,
+)
 
 
-def _result(energy=True, eligible=0.8):
-    return SimpleNamespace(diagnostics={"energy_decreased": energy,
-                                        "eligible_fraction": eligible})
+def _result(energy=True, eligible=0.8, before=2.0, after=1.0):
+    return SimpleNamespace(
+        diagnostics={"energy_decreased": energy, "eligible_fraction": eligible},
+        energy_before={"total": before},
+        energy_after={"total": after},
+    )
 
 
 def test_replay_requires_high_drift_energy_drop_and_70pct_eligible():
     assert replay_is_eligible(2.0, _result(), 1.0)
     assert not replay_is_eligible(0.9, _result(), 1.0)
-    assert not replay_is_eligible(2.0, _result(energy=False), 1.0)
+    assert not replay_is_eligible(2.0, _result(before=1.0, after=1.0), 1.0)
     assert not replay_is_eligible(2.0, _result(eligible=0.699), 1.0)
+
+
+def test_replay_rejects_vacuous_zero_track_energy_gate():
+    vacuous = _result(energy=True, before=39.0, after=39.0)
+    assert not replay_energy_decreased(vacuous)
+    assert not replay_is_eligible(30.0, vacuous, 1.0)
 
 
 def test_replay_diagnostics_preserve_generation_settings_and_gate_values():

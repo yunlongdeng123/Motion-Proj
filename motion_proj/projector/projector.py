@@ -70,11 +70,14 @@ class DynamicsProjector:
 
         before = self._energies(state, state.tracks, support)
         after = self._energies(state, projected_tracks, support)
-        finite_pairs = [after[key] <= before[key] for key in ("obj", "prior")
-                        if key in before and key in after]
+        # 必须用总能量严格下降；空 track 时 obj/prior 的 0<=0 不能虚报成功。
+        if "total" in before and "total" in after:
+            energy_decreased = float(after["total"]) < float(before["total"]) - 1e-6
+        else:
+            energy_decreased = False
         diagnostics = {
             "eligible_fraction": float((mask > 0).float().mean()),
-            "energy_decreased": bool(finite_pairs and all(finite_pairs)),
+            "energy_decreased": energy_decreased,
             "num_tracks": len(state.tracks),
             "num_unsupported": int(sum(int((~value).sum()) for value in support.values())),
             "components": {

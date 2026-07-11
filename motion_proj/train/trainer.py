@@ -120,8 +120,28 @@ class Trainer:
                     }
             return specs
         source = self.experiment_type if self.experiment_type in {"synthetic", "replay"} else "default"
-        return {source: {"path": self.paths.cache_dir,
-                         "fingerprint": cache_config_fingerprint(self.cfg)}}
+        fingerprint = (
+            self._stage_cache_fingerprint(self.paths.cache_dir)
+            if self.experiment_type == "replay"
+            else cache_config_fingerprint(self.cfg)
+        )
+        return {source: {"path": self.paths.cache_dir, "fingerprint": fingerprint}}
+
+    @staticmethod
+    def _stage_cache_fingerprint(cache_dir: str) -> str:
+        """replay cache 使用 mining stage fingerprint，而不是普通 cache_config_fingerprint。"""
+        import json
+
+        manifest = os.path.join(cache_dir, "_stage", "manifest.json")
+        complete = os.path.join(cache_dir, "_stage", "COMPLETE")
+        if not (os.path.isfile(manifest) and os.path.isfile(complete)):
+            raise FileNotFoundError(f"replay 训练缺少完整 stage manifest: {manifest}")
+        with open(manifest, encoding="utf-8") as handle:
+            payload = json.load(handle)
+        fingerprint = payload.get("fingerprint")
+        if not fingerprint or payload.get("status") != "completed":
+            raise RuntimeError(f"replay stage 未完成或缺少 fingerprint: {manifest}")
+        return str(fingerprint)
 
     def _build_dataset(self):
         datasets = {
