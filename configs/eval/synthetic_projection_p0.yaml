@@ -1,0 +1,21 @@
+defaults_chain:
+  - ../default.yaml
+
+seed: 20260711
+device: cpu
+dtype: fp32
+work_dir: /root/autodl-tmp/runs
+
+experiment:
+  task_id: P0-GEOMETRY-01
+  protocol: synthetic-object-track-v1
+  num_cases: 100
+  num_frames: 8
+  height: 64
+  width: 96
+  smooth_lambda: 5.0
+  prior_weight: 0.1
+  reliability_probability: 0.78
+  energy_tolerance: 1.0e-6
+  minimum_improvement_rate: 0.70
+  minimum_eligible_fraction: 0.70
