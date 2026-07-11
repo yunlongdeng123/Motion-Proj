@@ -23,11 +23,25 @@ from .callbacks import EarlyStopCallback
 log = get_logger(__name__)
 
 
+def seed_everything(seed: int) -> None:
+    """在模型/LoRA 构造前统一播种，保证独立 run 与精确恢复可比较。"""
+    import random
+
+    import numpy as np
+
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+
 class Trainer:
     def __init__(self, cfg, callbacks: list | None = None):
         from accelerate import Accelerator
 
         self.cfg = cfg
+        seed_everything(int(cfg.seed))
         self.paths = get_paths(cfg)
         self.work_dir = str(cfg.work_dir)
         os.makedirs(self.work_dir, exist_ok=True)
