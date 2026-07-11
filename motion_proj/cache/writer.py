@@ -10,7 +10,7 @@ import torch
 from ..runtime.atomic import atomic_directory, atomic_write_json
 from ..utils.io import ensure_dir
 
-CACHE_SCHEMA_VERSION = 2
+CACHE_SCHEMA_VERSION = 3
 COMPLETE = "COMPLETE"
 
 
@@ -34,7 +34,7 @@ class ProjectionCacheWriter:
                 meta = json.load(handle)
         except (OSError, ValueError):
             return False
-        required = ["y.pt", "x_dagger.pt", "mask.pt", "metadata.json", COMPLETE]
+        required = ["clean.pt", "y.pt", "x_dagger.pt", "mask.pt", "metadata.json", COMPLETE]
         if self.store == "latent":
             required.append("context.pt")
         return (
@@ -44,12 +44,23 @@ class ProjectionCacheWriter:
         )
 
     @staticmethod
-    def _validate(y: torch.Tensor, x_dagger: torch.Tensor, mask: torch.Tensor, context: dict | None) -> None:
-        if y.shape != x_dagger.shape:
-            raise ValueError("y 与 x_dagger shape 不一致")
+    def _validate(
+        clean: torch.Tensor,
+        y: torch.Tensor,
+        x_dagger: torch.Tensor,
+        mask: torch.Tensor,
+        context: dict | None,
+    ) -> None:
+        if clean.shape != y.shape or y.shape != x_dagger.shape:
+            raise ValueError("clean、y 与 x_dagger shape 不一致")
         if mask.shape[0] != y.shape[0] or mask.shape[-2:] != y.shape[-2:]:
             raise ValueError("mask 与目标的时间/空间 shape 不一致")
-        for name, tensor in (("y", y), ("x_dagger", x_dagger), ("mask", mask)):
+        for name, tensor in (
+            ("clean", clean),
+            ("y", y),
+            ("x_dagger", x_dagger),
+            ("mask", mask),
+        ):
             if not bool(torch.isfinite(tensor).all()):
                 raise ValueError(f"{name} 包含 NaN/Inf")
         if bool((mask < 0).any()) or bool((mask > 1).any()):
@@ -58,15 +69,17 @@ class ProjectionCacheWriter:
             raise ValueError("context 包含 NaN/Inf")
 
     def write(self, sample_id: str, y: torch.Tensor, x_dagger: torch.Tensor, mask: torch.Tensor,
-              metadata: dict, context: dict | None = None) -> str:
+              metadata: dict, context: dict | None = None, clean: torch.Tensor | None = None) -> str:
         if self.exists(sample_id) and not self.overwrite:
             return self.sample_dir(sample_id)
-        self._validate(y, x_dagger, mask, context)
+        clean = y if clean is None else clean
+        self._validate(clean, y, x_dagger, mask, context)
         target = self.sample_dir(sample_id)
         if os.path.exists(target):
             stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
             os.replace(target, f"{target}.stale-{stamp}")
         with atomic_directory(target) as tmp:
+            torch.save(clean.detach().cpu(), os.path.join(tmp, "clean.pt"))
             torch.save(y.detach().cpu(), os.path.join(tmp, "y.pt"))
             torch.save(x_dagger.detach().cpu(), os.path.join(tmp, "x_dagger.pt"))
             torch.save(mask.detach().cpu(), os.path.join(tmp, "mask.pt"))

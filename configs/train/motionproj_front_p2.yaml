@@ -1,0 +1,11 @@
+defaults_chain:
+  - ./motionproj_v1.yaml
+  - ../data/nuscenes_trainval.yaml
+
+work_dir: /root/autodl-tmp/runs/p2-front-dev
+
+paths:
+  data_root: /root/autodl-tmp/data/nuscenes
+  cache_dir: /root/autodl-tmp/cache/p2-front/train
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs

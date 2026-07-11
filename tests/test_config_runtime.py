@@ -5,7 +5,7 @@ import pytest
 import torch
 from omegaconf import OmegaConf
 
-from motion_proj.cache.writer import ProjectionCacheWriter
+from motion_proj.cache.writer import CACHE_SCHEMA_VERSION, ProjectionCacheWriter
 from motion_proj.config import ConfigError, cache_config_fingerprint, cache_stage_fingerprint, config_fingerprint, load_config, validate_config
 from motion_proj.runtime.experiment import ExperimentRegistry, JsonlMetrics
 from motion_proj.runtime.sampler import ResumableRandomSampler
@@ -23,11 +23,26 @@ def test_config_schema_and_resume_fingerprint():
     assert cache_config_fingerprint(changed) == cache_config_fingerprint(cfg)
     changed.cache.max_samples = 10
     assert cache_stage_fingerprint(changed) != cache_stage_fingerprint(cfg)
+    changed.cache.source = "clean"
+    assert cache_config_fingerprint(changed) != cache_config_fingerprint(cfg)
     changed.train.lr = 9e-5
     assert config_fingerprint(changed, resume_compatible=True) != base
     bad = OmegaConf.create({"schema_version": 1})
     with pytest.raises(ConfigError):
         validate_config(bad)
+
+
+def test_p2_front_config_isolates_cache_and_runtime_paths():
+    cfg = load_config(
+        "configs/train/motionproj_front_p2.yaml",
+        ["work_dir=/tmp/p2-run"],
+    )
+
+    assert cfg.data.version == "v1.0-trainval"
+    assert cfg.data.split == "train"
+    assert cfg.paths.cache_dir == "/root/autodl-tmp/cache/p2-front/train"
+    assert cfg.paths.ckpt_dir == "/tmp/p2-run/ckpts"
+    assert cfg.paths.log_dir == "/tmp/p2-run/logs"
 
 
 def test_resumable_sampler_continues_exact_position():
@@ -56,7 +71,7 @@ def test_atomic_cache_rejects_partial_and_preserves_stale(tmp_path):
     assert writer.exists("clip")
     assert list(tmp_path.glob("clip.stale-*"))
     with open(partial / "metadata.json", encoding="utf-8") as handle:
-        assert json.load(handle)["cache_schema_version"] == 2
+        assert json.load(handle)["cache_schema_version"] == CACHE_SCHEMA_VERSION
 
 
 def test_stage_registry_metrics_and_tasks(tmp_path):

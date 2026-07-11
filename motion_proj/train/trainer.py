@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 
 from ..backbones import Conditioning, build_backbone
 from ..cache.dataset import ProjectionCacheDataset, cache_collate
-from ..config import config_fingerprint, get_paths, save_resolved_config
+from ..config import cache_config_fingerprint, config_fingerprint, get_paths, save_resolved_config
 from ..losses import anchor_loss, projection_loss, real_loss
 from ..runtime.checkpoint import find_latest_checkpoint, load_checkpoint, save_checkpoint
 from ..runtime.experiment import ExperimentRegistry, JsonlMetrics, RunManifest
@@ -46,7 +46,10 @@ class Trainer:
         )
         self.device = self.accelerator.device
         self.backbone = build_backbone(cfg.model, load=True, device=str(self.device))
-        dataset = ProjectionCacheDataset(self.paths.cache_dir)
+        dataset = ProjectionCacheDataset(
+            self.paths.cache_dir,
+            expected_fingerprint=cache_config_fingerprint(cfg),
+        )
         self.sampler = ResumableRandomSampler(dataset, seed=int(cfg.seed))
         self.loader = DataLoader(
             dataset, batch_size=int(tcfg.micro_batch_size), sampler=self.sampler,
@@ -124,11 +127,12 @@ class Trainer:
             raise FileNotFoundError(resume)
 
     def _to_device(self, batch):
+        clean = batch["clean"].to(self.device)
         y = batch["y"].to(self.device)
         target = batch["x_dagger"].to(self.device)
         mask = batch["mask"].to(self.device)
         cond = Conditioning(data={key: value.to(self.device) for key, value in batch["context"].items()})
-        return y, target, mask, cond
+        return clean, y, target, mask, cond
 
     def train(self):
         max_steps = int(self.cfg.train.max_steps)
@@ -173,14 +177,14 @@ class Trainer:
         tcfg = self.cfg.train
         with self.accelerator.accumulate(self.backbone.training_module()):
             with self.accelerator.autocast():
-                y, target, mask, cond = self._to_device(batch)
+                clean, y, target, mask, cond = self._to_device(batch)
                 proj = projection_loss(self.backbone, y, target, mask, cond, tcfg.tube)
                 loss = float(tcfg.lambda_proj) * proj["loss"]
                 logs = {"loss/proj": float(proj["loss"]), "tube/gate_frac": float(proj["gate_frac"])}
                 if tcfg.use_real_loss:
-                    clean = real_loss(self.backbone, y, cond)
-                    loss = loss + clean["loss"]
-                    logs["loss/real"] = float(clean["loss"])
+                    clean_result = real_loss(self.backbone, clean, cond)
+                    loss = loss + clean_result["loss"]
+                    logs["loss/real"] = float(clean_result["loss"])
                 if float(tcfg.beta_anchor) > 0:
                     anchor = anchor_loss(self.backbone, proj["z"], proj["sigma"], cond, proj["x0_hat"])
                     loss = loss + float(tcfg.beta_anchor) * anchor

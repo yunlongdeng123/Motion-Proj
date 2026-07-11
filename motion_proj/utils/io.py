@@ -20,7 +20,7 @@ def save_tensor(t: torch.Tensor, path: str) -> None:
 
 
 def load_tensor(path: str, map_location: str = "cpu") -> torch.Tensor:
-    return torch.load(path, map_location=map_location)
+    return torch.load(path, map_location=map_location, weights_only=True)
 
 
 def save_json(obj: Any, path: str) -> None:

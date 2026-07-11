@@ -52,6 +52,8 @@ def validate_config(cfg: DictConfig) -> None:
         errors.append("dtype 必须是 bf16/fp16/fp32")
     if "cache" in cfg and cfg.cache.get("store") not in {"latent", "rgb"}:
         errors.append("cache.store 必须是 latent 或 rgb")
+    if "cache" in cfg and cfg.cache.get("source", "synthetic") not in {"clean", "synthetic", "replay"}:
+        errors.append("cache.source 必须是 clean、synthetic 或 replay")
     if "data" in cfg and "model" in cfg:
         data_frames = cfg.data.get("num_frames")
         model_frames = cfg.model.get("num_frames")
@@ -107,6 +109,7 @@ def cache_config_fingerprint(cfg: Any) -> str:
         "schema_version": data.get("schema_version"), "data": data.get("data"),
         "model": data.get("model"), "projector": data.get("projector", {}),
         "store": data.get("cache", {}).get("store"),
+        "source": data.get("cache", {}).get("source"),
     }
     raw = json.dumps(relevant, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     return hashlib.sha256(raw).hexdigest()

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 
 import torch
 from tqdm import tqdm
@@ -16,8 +17,10 @@ from tqdm import tqdm
 from ..auditor import MotionAuditor
 from ..config import cache_config_fingerprint, cache_stage_fingerprint, get_paths, load_config, save_resolved_config
 from ..data import NuScenesFutureVideoDataset
+from ..eval.synthetic_corrupt_nuscenes import project_synthetic_sample
 from ..projector import DynamicsProjector
 from ..projector.mask import downsample_mask_to_latent
+from ..runtime.fingerprint import environment_fingerprint, git_state
 from ..utils.logging import get_logger
 from ..runtime.stage import StageManifest
 from .writer import ProjectionCacheWriter
@@ -29,6 +32,7 @@ def build_cache(cfg) -> None:
     paths = get_paths(cfg)
     device = cfg.device
     store = cfg.cache.store
+    source = str(cfg.cache.get("source", "synthetic"))
     fingerprint = cache_config_fingerprint(cfg)
     stage_fingerprint = cache_stage_fingerprint(cfg)
     writer = ProjectionCacheWriter(paths.cache_dir, store=store, overwrite=cfg.cache.overwrite,
@@ -37,12 +41,25 @@ def build_cache(cfg) -> None:
     if stage.is_complete() and not cfg.cache.overwrite:
         log.info("Cache stage fingerprint 已完成，跳过: %s", fingerprint[:12])
         return
-    stage.begin({"store": store})
+    git = git_state(".")
+    if git.get("dirty"):
+        raise RuntimeError("正式 cache 构建拒绝在 dirty worktree 上运行")
+    stage.begin(
+        {
+            "store": store,
+            "source": source,
+            "sample_fingerprint": fingerprint,
+            "git": git,
+            "environment": environment_fingerprint(),
+            "data_split": f"{cfg.data.version}:{cfg.data.get('split', 'all')}",
+            "command": list(sys.argv),
+        }
+    )
     save_resolved_config(cfg, os.path.join(paths.cache_dir, "_stage", "resolved.yaml"))
 
     dataset = NuScenesFutureVideoDataset(cfg.data)
-    auditor = MotionAuditor(device=device, enable_depth=True)
-    projector = DynamicsProjector()
+    auditor = MotionAuditor(device=device, enable_depth=True) if source == "synthetic" else None
+    projector = DynamicsProjector() if source == "synthetic" else None
 
     backbone = None
     if store == "latent":
@@ -63,23 +80,66 @@ def build_cache(cfg) -> None:
             if writer.exists(sid) and not cfg.cache.overwrite:
                 continue
 
-            state = auditor.audit(sample)
-            res = projector.project(sample["frames"].to(device), state)
+            clean = sample["frames"]
+            if source == "synthetic":
+                assert auditor is not None and projector is not None
+                payload = project_synthetic_sample(
+                    sample,
+                    auditor,
+                    projector,
+                    case_index=i,
+                    seed=int(cfg.seed),
+                    settings=cfg.cache,
+                    clip_index=i,
+                )
+                y = payload.pop("y_corrupted")
+                target = payload.pop("x_dagger")
+                mask = payload.pop("mask")
+                metadata = payload
+            elif source == "clean":
+                y = clean
+                target = clean
+                mask = torch.zeros(
+                    clean.shape[0],
+                    1,
+                    clean.shape[-2],
+                    clean.shape[-1],
+                    dtype=clean.dtype,
+                )
+                metadata = {"sample_id": sid, "source": "clean"}
+            else:
+                raise NotImplementedError("replay cache 尚未接入；不得回退为 clean projection")
 
             if store == "rgb":
-                writer.write(sid, res.y.cpu(), res.x_dagger.cpu(), res.mask.cpu(), res.metadata)
+                writer.write(
+                    sid,
+                    y.cpu(),
+                    target.cpu(),
+                    mask.cpu(),
+                    metadata,
+                    clean=clean.cpu(),
+                )
             else:
                 batch = {"cond_frame": sample["cond_frame"].unsqueeze(0)}
                 cond = backbone.build_conditioning(batch)
-                y_lat = backbone.encode(res.y.unsqueeze(0))[0]
-                xd_lat = backbone.encode(res.x_dagger.unsqueeze(0))[0]
-                mask_lat = downsample_mask_to_latent(res.mask.to(device), scale)
+                clean_lat = backbone.encode(clean.to(device).unsqueeze(0))[0]
+                y_lat = backbone.encode(y.to(device).unsqueeze(0))[0]
+                xd_lat = backbone.encode(target.to(device).unsqueeze(0))[0]
+                mask_lat = downsample_mask_to_latent(mask.to(device), scale)
                 context = {
                     "image_embeds": cond.data["image_embeds"][0],
                     "image_latents": cond.data["image_latents"][0],
                     "added_time_ids": cond.data["added_time_ids"][0],
                 }
-                writer.write(sid, y_lat.cpu(), xd_lat.cpu(), mask_lat.cpu(), res.metadata, context)
+                writer.write(
+                    sid,
+                    y_lat.cpu(),
+                    xd_lat.cpu(),
+                    mask_lat.cpu(),
+                    metadata,
+                    context,
+                    clean=clean_lat.cpu(),
+                )
         stage.complete({"samples": n})
     except Exception as exc:
         stage.fail(repr(exc))

@@ -102,10 +102,33 @@ def evaluate_synthetic_case(
 ) -> dict[str, Any]:
     clip_index = case_index % len(dataset)
     sample = dataset[clip_index]
+    return project_synthetic_sample(
+        sample,
+        auditor,
+        projector,
+        case_index,
+        seed,
+        settings,
+        clip_index=clip_index,
+    )
+
+
+def project_synthetic_sample(
+    sample: dict[str, Any],
+    auditor,
+    projector: DynamicsProjector,
+    case_index: int,
+    seed: int,
+    settings: Mapping[str, Any],
+    *,
+    clip_index: int | None = None,
+) -> dict[str, Any]:
+    """对已加载的 clean sample 注入错误并生成 synthetic projection target。"""
     frames = sample["frames"]
     state = auditor.audit(sample)
     if not state.tracks:
-        raise ValueError(f"clip {clip_index} 无可用轨迹，无法构造 synthetic case")
+        location = sample.get("sample_id") if clip_index is None else f"clip {clip_index}"
+        raise ValueError(f"{location} 无可用轨迹，无法构造 synthetic case")
 
     corruption = CORRUPTIONS[case_index % len(CORRUPTIONS)]
     generator = torch.Generator().manual_seed(seed + case_index * 17)
