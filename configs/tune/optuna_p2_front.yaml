@@ -1,0 +1,22 @@
+schema_version: 1
+study_name: motionproj-p2-front-tune
+storage: /root/autodl-tmp/runs/p2-tune-mini/optuna.sqlite3
+hard_limit_hours: 9.0
+stages:
+  - [16, 100]
+  - [4, 300]
+  - [2, 800]
+search_space:
+  lr: [1.0e-5, 5.0e-5]
+  lambda_proj: [0.03, 0.3]
+  beta_anchor: [0.1, 1.0]
+  bound_B: [3, 4, 6, 8]
+  tube_upper: [0.25, 0.35, 0.45]
+  lora_rank: 16
+thresholds:
+  min_eligible_fraction: 0.70
+  max_lpips_vs_base: 1.05
+notes: >
+  Trial command must write summary.json with static_drift, track_acceleration,
+  lpips, projection_eligible_fraction, and normalized_*_improvement fields.
+  Do not relax thresholds if all trials prune for the same reason.

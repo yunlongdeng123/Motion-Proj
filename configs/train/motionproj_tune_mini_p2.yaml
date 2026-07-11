@@ -1,0 +1,22 @@
+defaults_chain:
+  - ../train/motionproj_front_p2.yaml
+
+work_dir: /root/autodl-tmp/runs/p2-tune-mini
+paths:
+  cache_dir: /root/autodl-tmp/cache/p2-front/tune-mini-synth32
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+seed: 20260711
+cache:
+  store: latent
+  source: synthetic
+  max_samples: 32
+  overwrite: false
+
+train:
+  experiment_type: synthetic
+  max_steps: 100
+  ckpt_every: 50
+  log_every: 10
+  logger: none
