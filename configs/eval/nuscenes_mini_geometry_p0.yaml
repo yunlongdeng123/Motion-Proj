@@ -1,0 +1,15 @@
+defaults_chain:
+  - ../train/motionproj_v1.yaml
+
+work_dir: /root/autodl-tmp/runs
+
+experiment:
+  task_id: P0-GEOMETRY-01
+  protocol: nuscenes-mini-geometry-v1
+  num_clips: 5
+  smooth_lambda: 5.0
+  prior_weight: 0.1
+  maximum_static_drift: 1000.0
+  minimum_depth_lidar_pearson: 0.5
+  minimum_corruption_detection_rate: 1.0
+  minimum_mean_eligible_fraction: 0.70

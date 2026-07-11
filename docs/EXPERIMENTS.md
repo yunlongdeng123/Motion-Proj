@@ -13,6 +13,7 @@
 | 日期 | Run/Trial | 状态 | 结论 | 证据 | 后续 |
 |---|---|---|---|---|---|
 | 2026-07-11 | legacy cache | rejected | 旧 cache 无 schema/完成标记/fingerprint，且部分历史 metadata 曾含 NaN，不能作为可信投影证据 | `/root/autodl-tmp/cache/projection/*/metadata.json` | 由新 writer 幂等重建 |
+| 2026-07-11 | `p0-geometry-mini5-5ff8e8c0-96306871` | completed | 审计运行完成但验收失败，唯一失败项为 `eligible_gate`：nuScenes mini 前 5 个 CAM_FRONT clip 的有效比例均值 62.3507%、最小值 54.7917%，0/5 达到 70%；深度-LiDAR Pearson 均值/最小值为 0.8780/0.8480，污染检测率、finite rate 和 track energy improvement rate 均为 100%；不调整 70% 门槛 | `/root/autodl-tmp/runs/p0-geometry-mini5-5ff8e8c0-96306871/{summary.json,manifest.json,metrics.jsonl}`；manifest commit `5ff8e8c0`，但本次审计新增文件运行时尚未被 Git 跟踪，代码溯源待补；config `configs/eval/nuscenes_mini_geometry_p0.yaml`（fingerprint `96306871`）；split `v1.0-mini:CAM_FRONT:first-5`；seed 1234；cache `not-applicable:online-audit` | 接受真实有效率事实；提交审计代码后重跑以闭环溯源，再建立 100 个合成错误集验证投影后能量下降 |
 
 ## 参数选择
 
