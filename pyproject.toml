@@ -33,6 +33,7 @@ dependencies = [
     "scikit-image",
     "tqdm",
     "rich",
+    "optuna>=4,<5",
 ]
 
 [project.scripts]
@@ -41,6 +42,8 @@ motionproj-train = "motion_proj.train.train_motionproj:main"
 motionproj-eval = "motion_proj.eval.evaluate:main"
 motionproj-mine = "motion_proj.replay.mine:main"
 motionproj-inspect = "motion_proj.eval.projection_inspection:main"
+motionproj-eval-p3 = "motion_proj.eval.multicamera_eval:main"
+motionproj-tune = "motion_proj.tune.optuna_runner:main"
 motionproj-split-manifest = "motion_proj.data.split_manifest:main"
 
 [tool.setuptools.packages.find]
