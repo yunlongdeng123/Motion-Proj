@@ -11,15 +11,26 @@ def compute_ego_flow(
     intrinsics: torch.Tensor, # [3,3]
     cam2ego: torch.Tensor,    # [4,4]
     ego2global: torch.Tensor, # [K,4,4]
-) -> torch.Tensor:
+    *,
+    return_valid: bool = False,
+) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
     """逐帧对（pair）由自车运动诱导的静态光流 ``[F,H,W,2]``（F = K-1）。"""
     k = depth.shape[0]
     flows = []
+    valid_masks = []
     for t in range(k - 1):
-        flows.append(
-            ego_induced_flow(depth[t], intrinsics, cam2ego, ego2global[t], ego2global[t + 1])
+        result = ego_induced_flow(
+            depth[t], intrinsics, cam2ego, ego2global[t], ego2global[t + 1],
+            return_valid=return_valid,
         )
-    return torch.stack(flows, 0)
+        if return_valid:
+            flow, valid = result
+            flows.append(flow)
+            valid_masks.append(valid)
+        else:
+            flows.append(result)
+    stacked = torch.stack(flows, 0)
+    return (stacked, torch.stack(valid_masks, 0)) if return_valid else stacked
 
 
 def boxes_to_dynamic_mask(boxes_per_frame: list, h: int, w: int, device) -> torch.Tensor:

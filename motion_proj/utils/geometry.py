@@ -92,7 +92,10 @@ def ego_induced_flow(
     cam2ego: torch.Tensor,
     ego2global_t: torch.Tensor,
     ego2global_tp1: torch.Tensor,
-) -> torch.Tensor:
+    *,
+    return_valid: bool = False,
+    min_depth: float = 0.1,
+) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
     """*静态*场景从 t -> t+1 会呈现的光流 ``[H,W,2]``。
 
     在静态区域上，观测光流（例如 RAFT）与该光流场之间的任何偏差，
@@ -105,16 +108,30 @@ def ego_induced_flow(
     """
     h, w = depth.shape
     uv = pixel_grid(h, w, device=depth.device, dtype=depth.dtype)        # [H,W,2]
-    X_t = backproject(uv, depth, K)                                       # [H,W,3]
+    source_valid = torch.isfinite(depth) & (depth >= min_depth)
+    safe_depth = torch.where(source_valid, depth, torch.full_like(depth, min_depth))
+    X_t = backproject(uv, safe_depth, K)                                  # [H,W,3]
 
     M = relative_cam_transform(cam2ego, ego2global_t, ego2global_tp1)     # [4,4]
     ones = torch.ones_like(X_t[..., :1])
     Xh = torch.cat([X_t, ones], dim=-1)                                   # [H,W,4]
     X_tp1 = (M @ Xh.reshape(-1, 4, 1)).reshape(h, w, 4)[..., :3]
 
-    uv_tp1 = project_points(X_tp1, K)                                     # [H,W,2]
-    flow = uv_tp1 - uv
-    return flow
+    destination_valid = torch.isfinite(X_tp1).all(dim=-1) & (X_tp1[..., 2] >= min_depth)
+    safe_X_tp1 = torch.where(destination_valid[..., None], X_tp1, torch.tensor(
+        [0.0, 0.0, 1.0], device=X_tp1.device, dtype=X_tp1.dtype,
+    ))
+    uv_tp1 = project_points(safe_X_tp1, K)                                # [H,W,2]
+    in_image = (
+        torch.isfinite(uv_tp1).all(dim=-1)
+        & (uv_tp1[..., 0] >= 0)
+        & (uv_tp1[..., 0] <= w - 1)
+        & (uv_tp1[..., 1] >= 0)
+        & (uv_tp1[..., 1] <= h - 1)
+    )
+    valid = source_valid & destination_valid & in_image
+    flow = torch.where(valid[..., None], uv_tp1 - uv, torch.zeros_like(uv))
+    return (flow, valid) if return_valid else flow
 
 
 def flow_to_grid(flow: torch.Tensor, h: int, w: int) -> torch.Tensor:

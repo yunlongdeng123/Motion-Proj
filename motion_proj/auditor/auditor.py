@@ -59,11 +59,17 @@ class MotionAuditor:
 
         # 2) 深度 + 由自车运动（ego）诱导的静态光流
         depth = self.depth_provider.estimate(frames, sample)  # [K,H,W]
-        u_ego = self.ego_motion_provider.flow(depth, sample)
+        flow_with_validity = getattr(self.ego_motion_provider, "flow_with_validity", None)
+        if callable(flow_with_validity):
+            u_ego, ego_valid = flow_with_validity(depth, sample)
+        else:
+            u_ego = self.ego_motion_provider.flow(depth, sample)
+            ego_valid = torch.ones(u_ego.shape[:-1], device=u_ego.device, dtype=torch.bool)
 
         # 3) 可靠静态掩码（高一致性，且位于目标框之外）
         dyn_mask = boxes_to_dynamic_mask(boxes, h, w, self.device)
         static_mask = build_static_mask(flow_conf, dyn_mask, self.conf_thresh)
+        static_mask = static_mask * ego_valid.to(static_mask.dtype)
 
         # 4) 由 GT 框得到的目标轨迹（tracks）
         tracks = self.track_provider.estimate(frames, sample)
@@ -81,6 +87,8 @@ class MotionAuditor:
                 "ego2global": ego2global,
                 "hw": (h, w),
                 "sample_id": sample.get("sample_id"),
+                "ego_valid_fraction": float(ego_valid.float().mean()),
+                "depth_diagnostics": getattr(self.depth_provider, "last_diagnostics", None),
             },
         )
         return state

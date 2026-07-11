@@ -42,9 +42,13 @@ class RAFTFlowProvider(FlowProvider):
 class LidarCalibratedDepthProvider(DepthProvider):
     """Depth-Anything 相对深度，存在投影 LiDAR 时逐帧做鲁棒尺度标定。"""
 
-    def __init__(self, device: str = "cuda", enable: bool = True, min_points: int = 16):
+    def __init__(self, device: str = "cuda", enable: bool = True, min_points: int = 16,
+                 min_depth: float = 0.5, max_depth: float = 200.0):
         self.model = DepthEstimator(device=device, enable=enable)
         self.min_points = int(min_points)
+        self.min_depth = float(min_depth)
+        self.max_depth = float(max_depth)
+        self.last_diagnostics: list[dict] = []
 
     def estimate(self, frames: torch.Tensor, sample: dict) -> torch.Tensor:
         prediction = self.model.depth(frames)
@@ -55,11 +59,24 @@ class LidarCalibratedDepthProvider(DepthProvider):
         if lidar.shape != prediction.shape:
             raise ValueError(f"lidar_depth shape {tuple(lidar.shape)} != prediction {tuple(prediction.shape)}")
         calibrated = prediction.clone()
+        diagnostics = []
         for index in range(prediction.shape[0]):
             valid = torch.isfinite(lidar[index]) & (lidar[index] > 0) & torch.isfinite(prediction[index]) & (prediction[index] > 0)
+            scale = None
             if int(valid.sum()) >= self.min_points:
                 scale = torch.median(lidar[index][valid] / prediction[index][valid]).clamp(1e-4, 1e4)
                 calibrated[index] = prediction[index] * scale
+            frame = calibrated[index]
+            invalid_or_outside = (~torch.isfinite(frame)) | (frame < self.min_depth) | (frame > self.max_depth)
+            calibrated[index] = torch.nan_to_num(
+                frame, nan=self.min_depth, posinf=self.max_depth, neginf=self.min_depth,
+            ).clamp(self.min_depth, self.max_depth)
+            diagnostics.append({
+                "lidar_points": int(valid.sum()),
+                "scale": float(scale) if scale is not None else None,
+                "clamped_fraction": float(invalid_or_outside.float().mean()),
+            })
+        self.last_diagnostics = diagnostics
         return calibrated
 
 
@@ -75,4 +92,13 @@ class ProvidedEgoMotionProvider(EgoMotionProvider):
             sample["intrinsics"].to(depth.device),
             sample["cam2ego"].to(depth.device),
             sample["ego2global"].to(depth.device),
+        )
+
+    def flow_with_validity(self, depth: torch.Tensor, sample: dict) -> tuple[torch.Tensor, torch.Tensor]:
+        return compute_ego_flow(
+            depth,
+            sample["intrinsics"].to(depth.device),
+            sample["cam2ego"].to(depth.device),
+            sample["ego2global"].to(depth.device),
+            return_valid=True,
         )

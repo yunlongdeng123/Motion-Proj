@@ -38,3 +38,17 @@ def test_nonzero_flow_under_translation():
     depth = torch.full((16, 28), 10.0)
     flow = G.ego_induced_flow(depth, K, cam2ego, e0, e1)
     assert flow.abs().max() > 1e-2
+
+
+def test_invalid_depth_is_masked_without_extreme_flow():
+    K = torch.tensor([[500.0, 0, 14.0], [0, 500.0, 8.0], [0, 0, 1.0]])
+    depth = torch.full((16, 28), 10.0)
+    depth[0, 0] = -1.0
+    depth[0, 1] = float("nan")
+    flow, valid = G.ego_induced_flow(
+        depth, K, torch.eye(4), torch.eye(4), torch.eye(4), return_valid=True,
+    )
+    assert not valid[0, 0]
+    assert not valid[0, 1]
+    assert torch.isfinite(flow).all()
+    assert flow.abs().max() < 1e-3
