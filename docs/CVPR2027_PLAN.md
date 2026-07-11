@@ -1,7 +1,7 @@
 # Motion-Proj CVPR 2027 可持续研发计划
 
 最后更新：2026-07-11
-当前阶段：P1 投影 target 人工检查
+当前阶段：P2 前视主实验数据准备
 状态词：`pending` / `running` / `blocked` / `done` / `rejected`
 
 ## 已锁定研究决策
@@ -18,10 +18,10 @@
 
 | ID | 时间 | 状态 | 目标与验收 | 证据 | 下一步 |
 |---|---|---|---|---|---|
-| P0-GEOMETRY-01 | 7 月 | done | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | `8c8afef4` clean run：`p0-geometry-synth100-s20260711-8c8afef4-e109eb12` 为 95/100 改善并通过；`p0-geometry-mini5-8c8afef4-96306871` 如实记录真实 eligible fraction 均值 62.35% 和唯一失败项 `eligible_gate` | 启动 P1，建立 synthetic/replay target 的人工检查协议；保留 `temporal_gap` 5/20 未改善作为边界案例 |
+| P0-GEOMETRY-01 | 7 月 | done | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | 数据源码纳入 Git 后由 `0b4a189` 重验：`p0-geometry-synth100-s20260711-0b4a1899-e109eb12` 为 95/100 改善并通过；`p0-geometry-mini5-0b4a1899-96306871` 复现 eligible fraction 均值 62.35% 和唯一失败项 `eligible_gate` | 保留 `temporal_gap` 5/20 未改善与真实覆盖率 62.35% 作为边界，不事后调门槛 |
 | P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `f11645b`，`python -m pytest -q` 为 26 passed | 在 mini 训练中做中断恢复演练 |
-| P1-PROJECTION-01 | 8 月上旬 | running | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | `0e3b5e7` 已导出 20-case 检查包 `p1-projection-manual20-s20260711-0e3b5e79-9487020a`（能量下降 20/20，eligible 均值 69.27%，待 review） | 人工填写 reviews.jsonl 并完成 70% reasonable 验收 |
-| P2-FRONT-01 | 8 月中下旬 | pending | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | 待记录 | 数据清单和 split fingerprint |
+| P1-PROJECTION-01 | 8 月上旬 | done | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | `0b4a189` 完整追踪数据源码的检查包 `p1-projection-manual20-s20260711-0b4a1899-9487020a`：与原人工 review 包的 20 个视频及 case metadata 逐项完全一致，迁移同一份 review 后为 20/20 reasonable，review fingerprint `3d00cbe6` | 结论限于 synthetic corruption target 合理性；进入 P2，不外推生成质量 |
+| P2-FRONT-01 | 8 月中下旬 | running | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | `0b4a189`：train manifest `p2-data-train-k8-0b4a1899-5d7cc689`（700/3,425，fingerprint `5d7cc689`）；val manifest `p2-data-val-k8-0b4a1899-72ce633b`（150/732，fingerprint `72ce633b`）均通过 | tmux 精选提取 CAM_FRONT + LIDAR_TOP；完整性通过后做独立 cache smoke 与中断恢复演练 |
 | P3-CAMERA-01 | 9 月上旬 | pending | 同一前视 checkpoint 零样本评估五相机；至少四个改善，macro 视觉质量退化不超过 5% | 待记录 | P2 主模型冻结后启动 |
 | P4-OPENDWM-01 | 9 月下旬至 10 月 | pending | CTSD 3.5 baseline 达官方指标 10% 相对误差；三天失败则切换 CTSD 2.1 | 待记录 | A100/H20 资源确认后启动 |
 | P5-PAPER-01 | 10 月 | pending | Full/OpenDWM 三种子与 bootstrap 95% CI；动力学显著改善且 FVD 相对退化不超过 5% | 待记录 | 10 月 10 日冻结主表，20 日冻结消融 |
@@ -65,5 +65,8 @@
 |---|---|---|---|
 | 2026-07-11 | `f11645b` | 建立持久化计划、事实源和可恢复运行基础设施 | 避免研究决策只存在于对话和不可恢复脚本中 |
 | 2026-07-11 | `094ff59` | 将未跟踪文件纳入 worktree 指纹，Git 状态不可用时 fail closed | 防止正式实验把未提交实现误记为 clean commit |
-| 2026-07-11 | `8c8afef4` | 完成真实 mini5 与合成 100-case 的 clean commit 正式验收 | 以可重聚合证据关闭 P0；保留 62.35% 真实覆盖率而不事后调低门槛 |
+| 2026-07-11 | `8c8afef4` | 首次完成真实 mini5 与合成 100-case 验收 | 记录 62.35% 真实覆盖率；后续发现数据源码受 `.gitignore` 误伤，最终 clean-code 证据由 `0b4a189` 重验替代 |
 | 2026-07-11 | `0e3b5e7` | 启动 P1 synthetic nuScenes 人工检查协议并导出首批 20-case 检查包 | P0 关闭后进入投影 target 合理性验证 |
+| 2026-07-11 | `6fe74f9` | 分离检查包导出与人工 review 聚合 provenance | 防止 `aggregate-only` 用当前 commit 覆盖原始导出证据 |
+| 2026-07-11 | `0b4a189` | 将误被 `data/` 规则忽略的数据源码纳入 Git，固化官方 split manifest，并重验 P0/P1 | 修复历史 clean manifest 未覆盖数据构建源码的溯源缺口；确认 P0 数值与 P1 视频逐项不变 |
+| 2026-07-11 | `e6bb6d6` | cache schema v3 分离 clean/y/x_dagger 并拒绝 stale/fingerprint 混用 | 落实 `L_real` 独立消费 clean latent 和 V2 不投影 clean GT 的锁定决策 |
