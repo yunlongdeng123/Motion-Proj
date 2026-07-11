@@ -23,17 +23,25 @@ from .callbacks import EarlyStopCallback
 log = get_logger(__name__)
 
 
-def seed_everything(seed: int) -> None:
-    """在模型/LoRA 构造前统一播种，保证独立 run 与精确恢复可比较。"""
+def seed_everything(seed: int, *, deterministic: bool = True) -> None:
+    """在模型/LoRA 构造前统一播种，并约束 CUDA 算法选择。"""
     import random
 
     import numpy as np
 
+    if deterministic:
+        # 必须在首次 cuBLAS 调用前设置，否则确定性算法会拒绝矩阵乘法。
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+    torch.use_deterministic_algorithms(deterministic)
+    if torch.backends.cudnn.is_available():
+        torch.backends.cudnn.deterministic = deterministic
+        if deterministic:
+            torch.backends.cudnn.benchmark = False
 
 
 class Trainer:
@@ -41,7 +49,7 @@ class Trainer:
         from accelerate import Accelerator
 
         self.cfg = cfg
-        seed_everything(int(cfg.seed))
+        seed_everything(int(cfg.seed), deterministic=bool(cfg.train.get("deterministic", True)))
         self.paths = get_paths(cfg)
         self.work_dir = str(cfg.work_dir)
         os.makedirs(self.work_dir, exist_ok=True)
