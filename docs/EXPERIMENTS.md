@@ -46,6 +46,7 @@
 | 2026-07-11 | `p2-cache-smoke-rgb2` | completed | `9c6da23` | 官方 train 前 2 clip / synthetic / RGB cache schema v3 | 2 clips | stage `a02d3c92`；sample `d5549c79` | `/root/autodl-tmp/cache/p2-front/smoke-rgb/{_stage/manifest.json,_stage/resolved.yaml,_stage/COMPLETE}` 及两个样本目录 | 两条 cache 均为 schema v3；clean、y、x_dagger 分离，全部 finite，mask 范围为 [0,1] |
 | 2026-07-11 | `p2-cache-smoke-latent8-v4` | completed | `3e0c41e` | 官方 train 前 8 clip / synthetic / latent cache schema v4 | 8 clips | stage `3518a430`；sample `ce38bd7e` | `/root/autodl-tmp/cache/p2-front/smoke-latent-v4-aa9ffe3/{_stage,*/metadata.json,*/COMPLETE}` | 8 个样本均为 `(8,4,32,56)` latent，flow 为 `(7,32,56,2)`，总计 5.4MB；clean/y/x_dagger、flow/confidence、seed/source/fingerprint 完整 |
 | 2026-07-11 | `p2-replay-mine8-reaudit` | completed | `ced5e35` | 冻结 2-step synthetic adapter；8 clip；`energy_gate=reaudit-static-drift-v1`；2 inference steps | 8 clips | stage `a5973bb5` | `/root/autodl-tmp/cache/p2-front/smoke-replay8-reaudit/_stage/{manifest.json,metrics.jsonl,COMPLETE}` | 8/8 static drift 下降（例 59.1→30.1、35.0→9.6）；1/8 kept；eligible 均值 65.23%（min 55.56%、max 70.64%）；不降低 70% 门槛；弱 parent 与覆盖边界下 keep 率低属预期 |
+| 2026-07-11 | `p2-tune-mini-cache32-skiptracks` | completed | `8f27415` | 官方 train / CAM_FRONT；synthetic latent schema v4；`fill_policy=skip-empty-tracks-until-max` | 32 kept / 33 scanned（跳过 1 无轨迹） | stage `3845e398`；sample `ce38bd7e` | `/root/autodl-tmp/cache/p2-front/tune-mini-synth32-v2/_stage/{manifest.json,resolved.yaml,COMPLETE}` 与 32 个样本目录 | 固定 mini cache 就绪，可作 7–9h Optuna 训练输入；不代表生成质量 |
 
 ## 参数选择
 
