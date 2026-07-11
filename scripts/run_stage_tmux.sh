@@ -25,7 +25,7 @@ mkdir -p "$run_dir/logs"
 printf -v command_q '%q ' "$@"
 printf -v root_q '%q' "$root"
 printf -v run_q '%q' "$run_dir"
-worker="cd $root_q && source /root/miniconda3/etc/profile.d/conda.sh && conda activate motionproj && exec bash scripts/experiment_worker.sh $run_q $command_q"
+worker="cd $root_q && source /root/miniconda3/etc/profile.d/conda.sh && conda activate motionproj && export HF_HOME=/root/autodl-tmp/hf_cache HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 && exec bash scripts/experiment_worker.sh $run_q $command_q"
 tmux new-session -d -s "$session" "$worker"
 tmux pipe-pane -o -t "$session" "cat >> $run_q/logs/stdout.log"
 
