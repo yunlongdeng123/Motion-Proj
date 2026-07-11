@@ -16,7 +16,7 @@ from ..data import NuScenesFutureVideoDataset
 from ..projector import DynamicsProjector
 from ..runtime.atomic import atomic_write_json, atomic_write_text
 from ..runtime.experiment import ExperimentRegistry, RunManifest, utc_now
-from ..runtime.fingerprint import environment_fingerprint, git_state, sha256_json
+from ..runtime.fingerprint import environment_fingerprint, file_fingerprint, git_state, sha256_json
 from ..utils.io import write_video
 from ..utils.viz import make_comparison_panel
 from .synthetic_corrupt_nuscenes import evaluate_synthetic_case
@@ -247,6 +247,7 @@ def run_experiment(
     root = Path(str(cfg.work_dir))
     run_dir = root / run_id
     complete_path = run_dir / "COMPLETE"
+    manifest_path = run_dir / "manifest.json"
     summary_path = run_dir / "summary.json"
     if (
         not aggregate_only
@@ -263,10 +264,20 @@ def run_experiment(
     if not resolved_path.exists():
         save_resolved_config(cfg, str(resolved_path))
 
+    export_git_commit = str(git["commit"])
+    export_experiment_fingerprint = experiment_fingerprint
+    manifest_payload: dict[str, Any] | None = None
+    if aggregate_only:
+        if not manifest_path.is_file():
+            raise FileNotFoundError(f"aggregate-only 缺少原始 manifest: {manifest_path}")
+        manifest_payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+        export_git_commit = str(manifest_payload["git"]["commit"])
+        export_experiment_fingerprint = str(manifest_payload["config_fingerprint"])
+
     registry = ExperimentRegistry(str(root / "experiments.sqlite3"))
     known = {row["run_id"]: row for row in registry.list()}
     if run_id not in known:
-        registry.register(run_id, "running", experiment_fingerprint, str(run_dir))
+        registry.register(run_id, "running", export_experiment_fingerprint, str(run_dir))
     else:
         registry.update(run_id, "running", exit_reason="resume")
 
@@ -281,28 +292,35 @@ def run_experiment(
             environment=environment_fingerprint(),
             data_split=f"{cfg.data.version}:{','.join(cfg.data.cameras)}:synthetic-{int(settings['num_cases'])}",
         )
-        manifest.save(str(run_dir / "manifest.json"))
+        manifest.save(str(manifest_path))
         case_rows = export_cases(cfg, run_dir, settings)
     else:
         case_rows = [completed for _, completed in sorted(_load_case_rows(run_dir).items())]
 
-    reviews = _load_jsonl(run_dir / "reviews.jsonl")
+    reviews_path = run_dir / "reviews.jsonl"
+    reviews = _load_jsonl(reviews_path)
+    completed_at = utc_now()
     summary = summarize_reviews(case_rows, reviews, settings)
     summary.update(
         {
             "run_id": run_id,
             "task_id": str(settings["task_id"]),
             "seed": int(cfg.seed),
-            "git_commit": git["commit"],
+            "git_commit": export_git_commit,
             "config_fingerprint": cfg_fingerprint,
-            "experiment_fingerprint": experiment_fingerprint,
-            "completed_at": utc_now(),
+            "experiment_fingerprint": export_experiment_fingerprint,
+            "completed_at": completed_at,
+            "review_fingerprint": file_fingerprint(str(reviews_path)) if reviews_path.is_file() else None,
+            "review_aggregation": {
+                "git_commit": str(git["commit"]),
+                "aggregated_at": completed_at,
+            },
         }
     )
     atomic_write_json(str(summary_path), summary)
 
     if not aggregate_only:
-        manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         manifest_obj = RunManifest(**manifest)
         manifest_obj.status = "completed"
         manifest_obj.ended_at = utc_now()
@@ -312,13 +330,18 @@ def run_experiment(
             )
         else:
             manifest_obj.exit_reason = "awaiting_reviews"
-        manifest_obj.save(str(run_dir / "manifest.json"))
+        manifest_obj.save(str(manifest_path))
         atomic_write_text(str(complete_path), experiment_fingerprint + "\n")
 
     if summary["acceptance"]["all_cases_reviewed"]:
         exit_reason = "acceptance_passed" if summary["acceptance"]["accepted"] else "acceptance_failed"
     else:
         exit_reason = "awaiting_reviews"
+    if aggregate_only:
+        assert manifest_payload is not None
+        manifest_payload["exit_reason"] = exit_reason
+        manifest_payload["status"] = "completed"
+        atomic_write_json(str(manifest_path), manifest_payload)
     registry.update(run_id, "completed", exit_reason=exit_reason, summary=summary)
     return run_dir, summary
 

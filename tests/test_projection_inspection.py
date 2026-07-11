@@ -1,7 +1,10 @@
+import json
+
 import torch
+from omegaconf import OmegaConf
 
 from motion_proj.auditor.state import Track
-from motion_proj.eval.projection_inspection import summarize_reviews
+from motion_proj.eval.projection_inspection import run_experiment, summarize_reviews
 from motion_proj.eval.synthetic_corrupt_nuscenes import corrupt_track, select_track_index
 
 
@@ -43,6 +46,70 @@ def test_summarize_reviews_excludes_borderline_from_rate():
     assert summary["borderline_cases"] == 1
     assert summary["acceptance"]["all_cases_reviewed"]
     assert summary["acceptance"]["accepted"]
+
+
+def test_aggregate_only_preserves_export_provenance(tmp_path, monkeypatch):
+    cfg = OmegaConf.create(
+        {
+            "work_dir": str(tmp_path),
+            "seed": 20260711,
+            "experiment": {
+                "task_id": "P1-PROJECTION-01",
+                "num_cases": 1,
+                "minimum_reasonable_rate": 0.7,
+            },
+        }
+    )
+    run_id = "p1-test"
+    run_dir = tmp_path / run_id
+    (run_dir / "cases").mkdir(parents=True)
+    (run_dir / "resolved.yaml").write_text(OmegaConf.to_yaml(cfg, resolve=True), encoding="utf-8")
+    (run_dir / "cases" / "synthetic-000.json").write_text(
+        json.dumps(_case("synthetic-000", 0)),
+        encoding="utf-8",
+    )
+    (run_dir / "reviews.jsonl").write_text(
+        json.dumps(
+            {
+                "case_id": "synthetic-000",
+                "verdict": "reasonable",
+                "reviewer": "test",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    manifest = {
+        "run_id": run_id,
+        "command": ["motionproj-inspect"],
+        "config_fingerprint": "export-fingerprint",
+        "cache_fingerprint": "not-applicable:projection-target-manual-v1",
+        "seed": 20260711,
+        "git": {"commit": "export-commit"},
+        "environment": {},
+        "data_split": "test",
+        "parent_run_id": None,
+        "started_at": "2026-07-11T00:00:00+00:00",
+        "ended_at": "2026-07-11T00:01:00+00:00",
+        "exit_reason": "awaiting_reviews",
+        "status": "completed",
+    }
+    (run_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    monkeypatch.setattr(
+        "motion_proj.eval.projection_inspection.git_state",
+        lambda _: {"commit": "aggregate-commit", "dirty": False},
+    )
+
+    _, summary = run_experiment(cfg, run_id=run_id, aggregate_only=True)
+
+    assert summary["acceptance"]["accepted"]
+    assert summary["git_commit"] == "export-commit"
+    assert summary["experiment_fingerprint"] == "export-fingerprint"
+    assert summary["review_aggregation"]["git_commit"] == "aggregate-commit"
+    assert summary["review_fingerprint"]
+    updated_manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert updated_manifest["git"]["commit"] == "export-commit"
+    assert updated_manifest["exit_reason"] == "acceptance_passed"
 
 
 def test_corrupt_track_changes_geometry():
