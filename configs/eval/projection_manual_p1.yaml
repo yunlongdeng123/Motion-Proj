@@ -1,0 +1,15 @@
+defaults_chain:
+  - ../train/motionproj_v1.yaml
+
+work_dir: /root/autodl-tmp/runs
+seed: 20260711
+
+experiment:
+  task_id: P1-PROJECTION-01
+  protocol: projection-target-manual-v1
+  num_cases: 20
+  smooth_lambda: 5.0
+  prior_weight: 0.1
+  energy_tolerance: 1.0e-6
+  minimum_reasonable_rate: 0.70
+  panel_fps: 4

@@ -1,7 +1,7 @@
 # Motion-Proj CVPR 2027 可持续研发计划
 
 最后更新：2026-07-11
-当前阶段：P1 投影目标验证准备
+当前阶段：P1 投影 target 人工检查
 状态词：`pending` / `running` / `blocked` / `done` / `rejected`
 
 ## 已锁定研究决策
@@ -20,7 +20,7 @@
 |---|---|---|---|---|---|
 | P0-GEOMETRY-01 | 7 月 | done | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | `8c8afef4` clean run：`p0-geometry-synth100-s20260711-8c8afef4-e109eb12` 为 95/100 改善并通过；`p0-geometry-mini5-8c8afef4-96306871` 如实记录真实 eligible fraction 均值 62.35% 和唯一失败项 `eligible_gate` | 启动 P1，建立 synthetic/replay target 的人工检查协议；保留 `temporal_gap` 5/20 未改善作为边界案例 |
 | P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `f11645b`，`python -m pytest -q` 为 26 passed | 在 mini 训练中做中断恢复演练 |
-| P1-PROJECTION-01 | 8 月上旬 | pending | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | 待记录 | 完成 P0 后启动 |
+| P1-PROJECTION-01 | 8 月上旬 | running | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | 待记录；已建立 `projection-target-manual-v1` 导出协议与 rubric | 导出 nuScenes synthetic 20-case 检查包并完成人工 review |
 | P2-FRONT-01 | 8 月中下旬 | pending | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | 待记录 | 数据清单和 split fingerprint |
 | P3-CAMERA-01 | 9 月上旬 | pending | 同一前视 checkpoint 零样本评估五相机；至少四个改善，macro 视觉质量退化不超过 5% | 待记录 | P2 主模型冻结后启动 |
 | P4-OPENDWM-01 | 9 月下旬至 10 月 | pending | CTSD 3.5 baseline 达官方指标 10% 相对误差；三天失败则切换 CTSD 2.1 | 待记录 | A100/H20 资源确认后启动 |
@@ -66,3 +66,4 @@
 | 2026-07-11 | `f11645b` | 建立持久化计划、事实源和可恢复运行基础设施 | 避免研究决策只存在于对话和不可恢复脚本中 |
 | 2026-07-11 | `094ff59` | 将未跟踪文件纳入 worktree 指纹，Git 状态不可用时 fail closed | 防止正式实验把未提交实现误记为 clean commit |
 | 2026-07-11 | `8c8afef4` | 完成真实 mini5 与合成 100-case 的 clean commit 正式验收 | 以可重聚合证据关闭 P0；保留 62.35% 真实覆盖率而不事后调低门槛 |
+| 2026-07-11 | pending | 启动 P1 synthetic nuScenes 人工检查协议 | P0 关闭后进入投影 target 合理性验证 |
