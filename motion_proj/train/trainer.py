@@ -14,7 +14,7 @@ from ..config import cache_config_fingerprint, config_fingerprint, get_paths, sa
 from ..losses import anchor_loss, flow_warp_charbonnier_loss, projection_loss, real_loss
 from ..runtime.checkpoint import find_latest_checkpoint, load_checkpoint, save_checkpoint
 from ..runtime.experiment import ExperimentRegistry, JsonlMetrics, RunManifest
-from ..runtime.atomic import atomic_write_json
+from ..runtime.atomic import atomic_write_json, atomic_write_text
 from ..runtime.fingerprint import directory_manifest_fingerprint, environment_fingerprint, git_state, sha256_json
 from ..runtime.sampler import ResumableRandomSampler
 from ..utils.logging import get_logger
@@ -213,9 +213,8 @@ class Trainer:
 
     def train(self):
         if self.experiment_type == "base":
-            summary = {"experiment_type": "base", "frozen": True,
-                       "checkpoint": "pretrained", "trained_steps": 0}
-            atomic_write_json(os.path.join(self.work_dir, "summary.json"), summary)
+            self.stop_reason = "frozen_base"
+            summary = self._write_completion_summary("pretrained", frozen=True)
             self.registry.update(self.run_id, "completed", exit_reason="frozen_base", summary=summary)
             self._finish_manifest("completed", "frozen_base")
             if self.writer:
@@ -224,7 +223,14 @@ class Trainer:
         max_steps = int(self.cfg.train.max_steps)
         if self.step >= max_steps:
             log.info("Checkpoint 已达到目标总步数 %d，无需继续训练", max_steps)
-            self.registry.update(self.run_id, "completed", exit_reason="already_at_target")
+            self.stop_reason = "already_at_target"
+            checkpoint = find_latest_checkpoint(
+                self.paths.ckpt_dir, self.config_fingerprint, self.cache_fingerprint
+            )
+            summary = self._write_completion_summary(checkpoint)
+            self.registry.update(
+                self.run_id, "completed", exit_reason="already_at_target", summary=summary
+            )
             self._finish_manifest("completed", "already_at_target")
             return
         self.backbone.set_train_mode(True)
@@ -246,8 +252,11 @@ class Trainer:
                         self._log(logs)
                     if self.step % int(self.cfg.train.ckpt_every) == 0:
                         self.save_ckpt()
-            self.save_ckpt(final=True)
-            self.registry.update(self.run_id, "completed", exit_reason=self.stop_reason)
+            checkpoint = self.save_ckpt(final=True)
+            summary = self._write_completion_summary(checkpoint)
+            self.registry.update(
+                self.run_id, "completed", exit_reason=self.stop_reason, summary=summary
+            )
             self._finish_manifest("completed", self.stop_reason)
         except Exception as exc:
             self.registry.update(self.run_id, "failed", exit_reason=repr(exc))
@@ -329,6 +338,21 @@ class Trainer:
         for callback in self.callbacks:
             callback.on_checkpoint(self, path)
         return path
+
+    def _write_completion_summary(self, checkpoint: str | None, *, frozen: bool = False) -> dict:
+        summary = {
+            "status": "completed",
+            "experiment_type": self.experiment_type,
+            "trained_steps": int(self.step),
+            "checkpoint": checkpoint,
+            "stop_reason": self.stop_reason,
+            "config_fingerprint": self.config_fingerprint,
+            "cache_fingerprint": self.cache_fingerprint,
+            "frozen": frozen,
+        }
+        atomic_write_json(os.path.join(self.work_dir, "summary.json"), summary)
+        atomic_write_text(os.path.join(self.work_dir, "COMPLETE"), "ok\n")
+        return summary
 
 
 def _cycle(loader):
