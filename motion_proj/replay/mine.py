@@ -1,17 +1,9 @@
-"""阶段 4：回放挖掘（方案第 9 节，阶段 4）。
-
-从 *当前* 模型（无梯度）采样未来帧，离线对其进行审计，保留高误差
-（高静态漂移）的生成结果，对其中可修复的样本做投影，并将它们加入
-投影缓存。这弥合了合成腐蚀与真实模型失败之间的差距。
-
-V1 范围：挖掘针对的是静态漂移类失败（生成帧上没有 GT 框，因此在未加入
-学习式检测器之前，物体层是空的）。源片段的自车轨迹 / 标定被复用作为
-条件生成时所期望的几何。基于学习式检测器的物体挖掘推迟到可选的
-``motionproj-mm`` 环境中实现。
-"""
+"""使用冻结 synthetic checkpoint 挖掘高漂移 replay cache。"""
 from __future__ import annotations
 
 import argparse
+import os
+import sys
 
 import torch
 from tqdm import tqdm
@@ -19,21 +11,31 @@ from tqdm import tqdm
 from ..auditor import MotionAuditor
 from ..auditor.state import MotionState
 from ..backbones import build_backbone
-from ..config import get_paths, load_config
+from ..cache.build_cache import _flow_to_resolution
+from ..cache.writer import ProjectionCacheWriter
+from ..config import cache_config_fingerprint, get_paths, load_config, save_resolved_config
 from ..data import NuScenesFutureVideoDataset
 from ..projector import DynamicsProjector
 from ..projector.mask import downsample_mask_to_latent
+from ..runtime.fingerprint import file_fingerprint, git_state, sha256_json
+from ..runtime.stage import StageManifest
 from ..utils.logging import get_logger
-from ..cache.writer import ProjectionCacheWriter
 
 log = get_logger(__name__)
 
 
+def _adapter_file(path: str) -> str:
+    candidate = os.path.join(path, "adapter.safetensors") if os.path.isdir(path) else path
+    if not os.path.isfile(candidate):
+        raise FileNotFoundError(f"synthetic checkpoint adapter 不存在: {candidate}")
+    return os.path.abspath(candidate)
+
+
 def _audit_generated(auditor: MotionAuditor, gen_frames: torch.Tensor, src_sample: dict) -> MotionState:
-    """审计一个生成的片段，复用源片段的几何信息，不使用 GT 框。"""
+    """审计生成片段时仅复用相机/自车几何，不把 GT 框泄漏给生成结果。"""
     sample = {
         "frames": gen_frames,
-        "boxes": [[] for _ in range(gen_frames.shape[0])],  # 生成帧上没有 GT
+        "boxes": [[] for _ in range(gen_frames.shape[0])],
         "intrinsics": src_sample["intrinsics"],
         "cam2ego": src_sample["cam2ego"],
         "ego2global": src_sample["ego2global"],
@@ -42,56 +44,136 @@ def _audit_generated(auditor: MotionAuditor, gen_frames: torch.Tensor, src_sampl
     return auditor.audit(sample)
 
 
-def mine(cfg, adapter: str | None, drift_thresh: float, max_samples: int) -> None:
+def replay_is_eligible(drift: float, result, drift_thresh: float,
+                       min_eligible_fraction: float = 0.70) -> bool:
+    diagnostics = result.diagnostics
+    return (
+        drift >= drift_thresh
+        and bool(diagnostics.get("energy_decreased", False))
+        and float(diagnostics.get("eligible_fraction", 0.0)) >= min_eligible_fraction
+    )
+
+
+@torch.no_grad()
+def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
+         min_eligible_fraction: float = 0.70) -> dict:
+    git = git_state(".")
+    if git.get("dirty"):
+        raise RuntimeError("正式 replay mining 拒绝在 dirty worktree 上运行")
+    adapter = _adapter_file(adapter)
+    parent_fingerprint = file_fingerprint(adapter)
     paths = get_paths(cfg)
     device = cfg.device
     ds = NuScenesFutureVideoDataset(cfg.data)
     backbone = build_backbone(cfg.model, load=True, device=device)
-    if adapter:
-        backbone.load_adapter(adapter)
+    backbone.load_adapter(adapter)
+    backbone.set_train_mode(False)
     auditor = MotionAuditor(device=device)
     projector = DynamicsProjector()
-    writer = ProjectionCacheWriter(paths.cache_dir, store=cfg.cache.store, overwrite=True)
-    scale = int(cfg.model.vae_scale_factor)
-
     n = min(max_samples, len(ds)) if max_samples else len(ds)
+    replay_fingerprint = sha256_json({
+        "cache": cache_config_fingerprint(cfg), "parent": parent_fingerprint,
+        "seed": int(cfg.seed), "drift_thresh": drift_thresh,
+        "min_eligible_fraction": min_eligible_fraction, "samples": n,
+    })
+    writer = ProjectionCacheWriter(
+        paths.cache_dir, store=cfg.cache.store, overwrite=False,
+        fingerprint=replay_fingerprint,
+    )
+    stage = StageManifest(os.path.join(paths.cache_dir, "_stage"), "replay", replay_fingerprint)
+    if stage.is_complete():
+        return {"status": "completed", "fingerprint": replay_fingerprint, "skipped": True}
+    stage.begin({
+        "source": "replay", "parent_checkpoint": adapter,
+        "parent_fingerprint": parent_fingerprint, "command": list(sys.argv),
+        "git": git, "samples_considered": n,
+    })
+    save_resolved_config(cfg, os.path.join(paths.cache_dir, "_stage", "resolved.yaml"))
+    scale = int(cfg.model.vae_scale_factor)
     kept = 0
-    for i in tqdm(range(n)):
-        src = ds[i]
-        gen = backbone.generate(src["cond_frame"], num_frames=int(cfg.data.num_frames))
-        state = _audit_generated(auditor, gen, src)
-        drift = auditor.static_drift_score(state)
-        if drift < drift_thresh:
-            continue  # 生成结果没问题，无需修复
-        res = projector.project(gen, state)
-        sid = src["sample_id"] + "_gen"
-        if cfg.cache.store == "rgb":
-            writer.write(sid, res.y.cpu(), res.x_dagger.cpu(), res.mask.cpu(), res.metadata)
-        else:
-            cond = backbone.build_conditioning({"cond_frame": src["cond_frame"].unsqueeze(0)})
-            y_lat = backbone.encode(res.y.unsqueeze(0))[0]
-            xd_lat = backbone.encode(res.x_dagger.unsqueeze(0))[0]
-            mask_lat = downsample_mask_to_latent(res.mask.to(device), scale)
-            context = {
-                "image_embeds": cond.data["image_embeds"][0],
-                "image_latents": cond.data["image_latents"][0],
-                "added_time_ids": cond.data["added_time_ids"][0],
-            }
-            writer.write(sid, y_lat.cpu(), xd_lat.cpu(), mask_lat.cpu(), res.metadata, context)
-        kept += 1
-    log.info("Replay mining done: kept %d / %d generated clips (drift>=%.3f)", kept, n, drift_thresh)
+    rejected = {"low_drift": 0, "energy": 0, "eligible": 0}
+    try:
+        for i in tqdm(range(n)):
+            src = ds[i]
+            sid = src["sample_id"] + "_replay"
+            if writer.exists(sid):
+                kept += 1
+                continue
+            task_seed = int(cfg.seed) + i
+            generator = torch.Generator(device=device).manual_seed(task_seed)
+            gen = backbone.generation(
+                src["cond_frame"].to(device), num_frames=int(cfg.data.num_frames),
+                num_inference_steps=int(cfg.cache.get("num_inference_steps", 25)),
+                generator=generator, height=int(cfg.data.height), width=int(cfg.data.width),
+                decode_chunk_size=int(cfg.cache.get("decode_chunk_size", 4)),
+            )
+            state = _audit_generated(auditor, gen, src)
+            drift = auditor.static_drift_score(state)
+            if drift < drift_thresh:
+                rejected["low_drift"] += 1
+                continue
+            result = projector.project(gen, state)
+            if not bool(result.diagnostics.get("energy_decreased", False)):
+                rejected["energy"] += 1
+                continue
+            if float(result.diagnostics.get("eligible_fraction", 0.0)) < min_eligible_fraction:
+                rejected["eligible"] += 1
+                continue
+
+            metadata = dict(result.metadata)
+            metadata.update({
+                "sample_id": sid, "source": "replay", "drift": drift,
+                "generation_seed": task_seed, "parent_checkpoint": adapter,
+                "parent_fingerprint": parent_fingerprint,
+            })
+            if cfg.cache.store == "rgb":
+                writer.write(
+                    sid, gen.cpu(), result.x_dagger.cpu(), result.mask.cpu(), metadata,
+                    clean=src["frames"].cpu(), latent_flow=state.u_static.cpu(),
+                    flow_confidence=state.flow_conf.cpu().unsqueeze(1), source="replay",
+                    generation_seed=task_seed, parent_checkpoint=adapter,
+                    source_fingerprint=parent_fingerprint,
+                )
+            else:
+                cond = backbone.build_conditioning({"cond_frame": src["cond_frame"].unsqueeze(0)})
+                clean_lat = backbone.encode(src["frames"].to(device).unsqueeze(0))[0]
+                y_lat = backbone.encode(gen.unsqueeze(0))[0]
+                target_lat = backbone.encode(result.x_dagger.unsqueeze(0))[0]
+                mask_lat = downsample_mask_to_latent(result.mask.to(device), scale)
+                flow_lat, confidence_lat = _flow_to_resolution(
+                    state.u_static, state.flow_conf.unsqueeze(1), y_lat.shape[-2], y_lat.shape[-1]
+                )
+                context = {key: cond.data[key][0] for key in
+                           ("image_embeds", "image_latents", "added_time_ids")}
+                writer.write(
+                    sid, y_lat.cpu(), target_lat.cpu(), mask_lat.cpu(), metadata, context,
+                    clean=clean_lat.cpu(), latent_flow=flow_lat.cpu(),
+                    flow_confidence=confidence_lat.cpu(), source="replay",
+                    generation_seed=task_seed, parent_checkpoint=adapter,
+                    source_fingerprint=parent_fingerprint,
+                )
+            kept += 1
+        summary = {"status": "completed", "fingerprint": replay_fingerprint,
+                   "considered": n, "kept": kept, "rejected": rejected,
+                   "min_eligible_fraction": min_eligible_fraction}
+        stage.complete(summary)
+        return summary
+    except Exception as exc:
+        stage.fail(repr(exc))
+        raise
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--config", required=True)
-    ap.add_argument("--adapter", default=None, help="path to trained LoRA adapter")
-    ap.add_argument("--drift-thresh", type=float, default=1.0)
-    ap.add_argument("--max-samples", type=int, default=0)
-    ap.add_argument("overrides", nargs="*")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--adapter", required=True, help="冻结 synthetic checkpoint 或 adapter.safetensors")
+    parser.add_argument("--drift-thresh", type=float, default=1.0)
+    parser.add_argument("--min-eligible-fraction", type=float, default=0.70)
+    parser.add_argument("--max-samples", type=int, default=0)
+    parser.add_argument("overrides", nargs="*")
+    args = parser.parse_args()
     cfg = load_config(args.config, args.overrides)
-    mine(cfg, args.adapter, args.drift_thresh, args.max_samples)
+    mine(cfg, args.adapter, args.drift_thresh, args.max_samples, args.min_eligible_fraction)
 
 
 if __name__ == "__main__":
