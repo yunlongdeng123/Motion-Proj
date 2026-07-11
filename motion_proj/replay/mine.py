@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 
@@ -17,8 +18,11 @@ from ..config import cache_config_fingerprint, get_paths, load_config, save_reso
 from ..data import NuScenesFutureVideoDataset
 from ..projector import DynamicsProjector
 from ..projector.mask import downsample_mask_to_latent
+from ..runtime.atomic import atomic_write_text
 from ..runtime.fingerprint import file_fingerprint, git_state, sha256_json
 from ..runtime.stage import StageManifest
+from ..runtime.tasks import TaskStore
+from ..utils.io import load_json
 from ..utils.logging import get_logger
 
 log = get_logger(__name__)
@@ -54,6 +58,32 @@ def replay_is_eligible(drift: float, result, drift_thresh: float,
     )
 
 
+def _generation_settings(cfg) -> dict:
+    return {
+        "num_inference_steps": int(cfg.cache.get("num_inference_steps", 25)),
+        "decode_chunk_size": int(cfg.cache.get("decode_chunk_size", 4)),
+    }
+
+
+def _summarize_rows(rows: list[dict]) -> dict:
+    eligible = [float(row["eligible_fraction"]) for row in rows
+                if row.get("eligible_fraction") is not None]
+    return {
+        "considered": len(rows),
+        "kept": sum(bool(row.get("kept")) for row in rows),
+        "rejected": {
+            reason: sum(row.get("reject_reason") == reason for row in rows)
+            for reason in ("low_drift", "energy", "eligible")
+        },
+        "eligible_fraction": {
+            "mean": sum(eligible) / len(eligible) if eligible else None,
+            "min": min(eligible) if eligible else None,
+            "max": max(eligible) if eligible else None,
+            "n": len(eligible),
+        },
+    }
+
+
 @torch.no_grad()
 def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
          min_eligible_fraction: float = 0.70) -> dict:
@@ -71,10 +101,12 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
     auditor = MotionAuditor(device=device)
     projector = DynamicsProjector()
     n = min(max_samples, len(ds)) if max_samples else len(ds)
+    generation = _generation_settings(cfg)
     replay_fingerprint = sha256_json({
         "cache": cache_config_fingerprint(cfg), "parent": parent_fingerprint,
         "seed": int(cfg.seed), "drift_thresh": drift_thresh,
         "min_eligible_fraction": min_eligible_fraction, "samples": n,
+        "generation": generation,
     })
     writer = ProjectionCacheWriter(
         paths.cache_dir, store=cfg.cache.store, overwrite=False,
@@ -86,43 +118,77 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
     stage.begin({
         "source": "replay", "parent_checkpoint": adapter,
         "parent_fingerprint": parent_fingerprint, "command": list(sys.argv),
-        "git": git, "samples_considered": n,
+        "git": git, "samples_considered": n, "generation": generation,
     })
     save_resolved_config(cfg, os.path.join(paths.cache_dir, "_stage", "resolved.yaml"))
     scale = int(cfg.model.vae_scale_factor)
-    kept = 0
-    rejected = {"low_drift": 0, "energy": 0, "eligible": 0}
+    tasks = TaskStore(os.path.join(paths.cache_dir, "_stage", "tasks"))
+    rows: list[dict] = []
+    camera = str(getattr(ds, "camera", "CAM_FRONT"))
     try:
         for i in tqdm(range(n)):
             src = ds[i]
             sid = src["sample_id"] + "_replay"
-            if writer.exists(sid):
-                kept += 1
-                continue
             task_seed = int(cfg.seed) + i
+            cached = tasks.completed_result(parent_fingerprint, task_seed, sid, camera)
+            if cached is not None:
+                rows.append(cached)
+                continue
+            if writer.exists(sid):
+                metadata = load_json(os.path.join(paths.cache_dir, sid, "metadata.json"))
+                row = {
+                    "clip_index": i, "sample_id": sid, "generation_seed": task_seed,
+                    "drift": metadata.get("drift"),
+                    "energy_decreased": metadata.get("energy_decreased"),
+                    "eligible_fraction": metadata.get("eligible_fraction"),
+                    "kept": True, "reject_reason": None,
+                }
+                tasks.mark(parent_fingerprint, task_seed, sid, "completed",
+                           camera=camera, result=row)
+                rows.append(row)
+                continue
+            tasks.mark(parent_fingerprint, task_seed, sid, "running", camera=camera)
             generator = torch.Generator(device=device).manual_seed(task_seed)
             gen = backbone.generation(
                 src["cond_frame"].to(device), num_frames=int(cfg.data.num_frames),
-                num_inference_steps=int(cfg.cache.get("num_inference_steps", 25)),
+                num_inference_steps=generation["num_inference_steps"],
                 generator=generator, height=int(cfg.data.height), width=int(cfg.data.width),
-                decode_chunk_size=int(cfg.cache.get("decode_chunk_size", 4)),
+                decode_chunk_size=generation["decode_chunk_size"],
             )
             state = _audit_generated(auditor, gen, src)
             drift = auditor.static_drift_score(state)
+            row = {
+                "clip_index": i, "sample_id": sid, "generation_seed": task_seed,
+                "drift": drift, "energy_decreased": None, "eligible_fraction": None,
+                "kept": False, "reject_reason": None,
+            }
             if drift < drift_thresh:
-                rejected["low_drift"] += 1
+                row["reject_reason"] = "low_drift"
+                tasks.mark(parent_fingerprint, task_seed, sid, "completed",
+                           camera=camera, result=row)
+                rows.append(row)
                 continue
             result = projector.project(gen, state)
-            if not bool(result.diagnostics.get("energy_decreased", False)):
-                rejected["energy"] += 1
+            row["energy_decreased"] = bool(result.diagnostics.get("energy_decreased", False))
+            row["eligible_fraction"] = float(result.diagnostics.get("eligible_fraction", 0.0))
+            if not row["energy_decreased"]:
+                row["reject_reason"] = "energy"
+                tasks.mark(parent_fingerprint, task_seed, sid, "completed",
+                           camera=camera, result=row)
+                rows.append(row)
                 continue
-            if float(result.diagnostics.get("eligible_fraction", 0.0)) < min_eligible_fraction:
-                rejected["eligible"] += 1
+            if row["eligible_fraction"] < min_eligible_fraction:
+                row["reject_reason"] = "eligible"
+                tasks.mark(parent_fingerprint, task_seed, sid, "completed",
+                           camera=camera, result=row)
+                rows.append(row)
                 continue
 
             metadata = dict(result.metadata)
             metadata.update({
                 "sample_id": sid, "source": "replay", "drift": drift,
+                "energy_decreased": row["energy_decreased"],
+                "eligible_fraction": row["eligible_fraction"],
                 "generation_seed": task_seed, "parent_checkpoint": adapter,
                 "parent_fingerprint": parent_fingerprint,
             })
@@ -152,10 +218,20 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
                     generation_seed=task_seed, parent_checkpoint=adapter,
                     source_fingerprint=parent_fingerprint,
                 )
-            kept += 1
-        summary = {"status": "completed", "fingerprint": replay_fingerprint,
-                   "considered": n, "kept": kept, "rejected": rejected,
-                   "min_eligible_fraction": min_eligible_fraction}
+            row["kept"] = True
+            tasks.mark(parent_fingerprint, task_seed, sid, "completed",
+                       camera=camera, result=row)
+            rows.append(row)
+        rows.sort(key=lambda row: int(row["clip_index"]))
+        atomic_write_text(
+            os.path.join(paths.cache_dir, "_stage", "metrics.jsonl"),
+            "".join(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in rows),
+        )
+        summary = {
+            "status": "completed", "fingerprint": replay_fingerprint,
+            **_summarize_rows(rows), "min_eligible_fraction": min_eligible_fraction,
+            "generation": generation,
+        }
         stage.complete(summary)
         return summary
     except Exception as exc:
