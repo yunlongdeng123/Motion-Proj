@@ -104,13 +104,56 @@ class SVDBackbone(DiffusionBackbone):
             target_modules=list(lcfg.target_modules),
             init_lora_weights="gaussian",
         )
-        self.unet.add_adapter(lora)
+        if hasattr(self.unet, "add_adapter"):
+            self.unet.add_adapter(lora)
+            backend = "diffusers.add_adapter"
+        else:
+            from peft import inject_adapter_in_model
+
+            self.unet = inject_adapter_in_model(lora, self.unet, adapter_name="default")
+            backend = "peft.inject_adapter_in_model"
         # 将 LoRA 参数保持为 fp32，以便在 bf16 autocast 下稳定优化
         for _, p in self.unet.named_parameters():
             if p.requires_grad:
                 p.data = p.data.float()
         n = sum(p.numel() for p in self.unet.parameters() if p.requires_grad)
-        log.info("Injected LoRA (rank=%d), trainable params: %.2fM", lcfg.rank, n / 1e6)
+        log.info("Injected LoRA via %s (rank=%d), trainable params: %.2fM", backend, lcfg.rank, n / 1e6)
+
+    def _set_lora_enabled(self, enabled: bool) -> None:
+        """兼容 diffusers adapter mixin 与 PEFT 原地注入两种 LoRA 后端。"""
+        if not self.cfg.lora.enable or self.unet is None:
+            return
+
+        method_name = "enable_adapters" if enabled else "disable_adapters"
+        model_method = getattr(self.unet, method_name, None)
+        if callable(model_method):
+            try:
+                model_method()
+                return
+            except TypeError:
+                if method_name == "enable_adapters":
+                    model_method(enabled)
+                    return
+
+        toggled = 0
+        for module in self.unet.modules():
+            if module is self.unet:
+                continue
+            enable_method = getattr(module, "enable_adapters", None)
+            if callable(enable_method):
+                try:
+                    enable_method(enabled)
+                    toggled += 1
+                    continue
+                except TypeError:
+                    pass
+            module_method = getattr(module, method_name, None)
+            if callable(module_method):
+                module_method()
+                toggled += 1
+
+        if toggled == 0:
+            log.warning("No LoRA adapter toggle method found; anchor prediction will include adapters")
 
     # --------------------------------------------------------------- latent 空间
     @torch.no_grad()
@@ -166,12 +209,12 @@ class SVDBackbone(DiffusionBackbone):
     @torch.no_grad()
     def anchor_predict_x0(self, z, sigma, cond: Conditioning) -> torch.Tensor:
         if self.cfg.lora.enable:
-            self.unet.disable_adapters()
+            self._set_lora_enabled(False)
         try:
             return self._unet_x0(z, sigma, cond)
         finally:
             if self.cfg.lora.enable:
-                self.unet.enable_adapters()
+                self._set_lora_enabled(True)
 
     # ----------------------------------------------------------------- 条件
     @torch.no_grad()
@@ -181,7 +224,8 @@ class SVDBackbone(DiffusionBackbone):
         t = int(self.cfg.num_frames)
 
         # CLIP 图像嵌入
-        pixel = (cond_frame + 1.0) / 2.0
+        # CLIPImageProcessor 会转 numpy；bf16 tensor 不能直接转 numpy。
+        pixel = (batch["cond_frame"].detach().cpu().float() + 1.0) / 2.0
         proc = self.feature_extractor(
             images=pixel, do_rescale=False, return_tensors="pt"
         ).pixel_values.to(self.device, self.dtype)
@@ -246,7 +290,11 @@ class SVDBackbone(DiffusionBackbone):
             )
         k = int(num_frames or self.cfg.num_frames)
         img = ((cond_frame + 1) / 2).clamp(0, 1).mul(255).byte().permute(1, 2, 0).cpu().numpy()
-        out = self._pipe(Image.fromarray(img), num_frames=k, decode_chunk_size=4, **kw)
+        # 组件以 bf16 加载，但 SVD pipeline 只对 fp16 VAE 做 force_upcast，会把 float32
+        # 预处理后的图像直接喂给 bf16 VAE，导致 conv dtype 不匹配；用 autocast 统一精度。
+        device_type = "cuda" if (torch.cuda.is_available() and str(self.device).startswith("cuda")) else "cpu"
+        with torch.autocast(device_type=device_type, dtype=self.dtype):
+            out = self._pipe(Image.fromarray(img), num_frames=k, decode_chunk_size=4, **kw)
         frames = out.frames[0]  # PIL 列表
         import numpy as np
 

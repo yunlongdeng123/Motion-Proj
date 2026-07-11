@@ -44,6 +44,10 @@ def e_obj(tracks: list[Track]) -> torch.Tensor:
         jerk = _second_difference(logz)
         # 仅统计完全存在的窗口
         w = (present[2:] & present[1:-1] & present[:-2]).float().unsqueeze(-1)
+        # 缺席帧在 center/scale 上为 NaN，会经二阶差分传播到相邻窗口；这些窗口的
+        # 权重 w 恒为 0，但 0 * NaN = NaN 仍会污染求和，故先把无效项清零。
+        acc = torch.nan_to_num(acc, nan=0.0)
+        jerk = torch.nan_to_num(jerk, nan=0.0)
         total = total + (charbonnier(acc) * w).sum() + (charbonnier(jerk) * w).sum()
         count += int(w.sum())
     return total / max(count, 1)
@@ -69,6 +73,8 @@ def e_prior(tracks: list[Track]) -> torch.Tensor:
             continue
         v = tr.center[1:] - tr.center[:-1]
         w = (tr.present[1:] & tr.present[:-1]).float().unsqueeze(-1)
+        # 与 e_obj 同理：跨缺席帧的速度为 NaN，但其权重为 0，先清零再加权求和。
+        v = torch.nan_to_num(v, nan=0.0)
         total = total + (charbonnier(v) * w).sum()
         count += int(w.sum())
     return total / max(count, 1)

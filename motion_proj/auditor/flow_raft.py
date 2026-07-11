@@ -59,7 +59,7 @@ class RAFTFlow:
         src = grid + fwd
         gx = 2.0 * src[..., 0] / max(w - 1, 1) - 1.0
         gy = 2.0 * src[..., 1] / max(h - 1, 1) - 1.0
-        samp = torch.stack([gx, gy], dim=-1).unsqueeze(0).expand(f, -1, -1, -1)
+        samp = torch.stack([gx, gy], dim=-1)
         bwd_warp = F.grid_sample(
             bwd.permute(0, 3, 1, 2), samp, align_corners=True, mode="bilinear", padding_mode="border"
         ).permute(0, 2, 3, 1)

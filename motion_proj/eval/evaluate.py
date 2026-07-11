@@ -1,10 +1,13 @@
 """评估命令行工具。
 
-两种模式：
+三种模式：
   - ``--mode cache``（默认，无需权重）：从投影缓存的元数据中聚合投影质量
     相关指标（第 3 周的评判标准）。
   - ``--mode auditor``：在数据集上运行 auditor，按静态漂移对片段排序，
     并报告腐蚀敏感度（第 2 周的评判标准）。
+  - ``--mode generate``：固定 seed，对 base SVD 与各 LoRA checkpoint 生成未来
+    片段并评估（静态漂移 + LPIPS/PSNR/SSIM）。更细的参数见
+    ``python -m motion_proj.eval.generate_eval``。
 """
 from __future__ import annotations
 
@@ -49,16 +52,47 @@ def eval_auditor(cfg, n: int = 20) -> dict:
     return {"ranked": ranked, "sensitivity": sens}
 
 
+def eval_generate(cfg, args) -> dict:
+    import os
+
+    from .generate_eval import resolve_adapters, run_generate_eval
+
+    paths = get_paths(cfg)
+    adapters = resolve_adapters(args.adapters.split(","), paths.ckpt_dir)
+    seed = args.seed if args.seed is not None else int(cfg.get("seed", 1234))
+    out_dir = args.out_dir or os.path.join(str(cfg.work_dir), "eval", "generate")
+    explicit = [int(x) for x in args.clip_indices.split(",")] if args.clip_indices else None
+    return run_generate_eval(
+        cfg,
+        adapters=adapters,
+        seed=seed,
+        out_dir=out_dir,
+        num_frames=int(cfg.data.num_frames),
+        num_inference_steps=int(args.num_inference_steps),
+        num_clips=int(args.num_clips),
+        clip_indices=explicit,
+    )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
-    ap.add_argument("--mode", choices=["cache", "auditor"], default="cache")
+    ap.add_argument("--mode", choices=["cache", "auditor", "generate"], default="cache")
     ap.add_argument("--n", type=int, default=20)
+    # generate 模式参数
+    ap.add_argument("--adapters", default="base,adapter_final")
+    ap.add_argument("--num-clips", type=int, default=4)
+    ap.add_argument("--clip-indices", default=None)
+    ap.add_argument("--seed", type=int, default=None)
+    ap.add_argument("--num-inference-steps", type=int, default=25)
+    ap.add_argument("--out-dir", default=None)
     ap.add_argument("overrides", nargs="*")
     args = ap.parse_args()
     cfg = load_config(args.config, args.overrides)
     if args.mode == "cache":
         eval_cache(cfg)
+    elif args.mode == "generate":
+        eval_generate(cfg, args)
     else:
         eval_auditor(cfg, n=args.n)
 
