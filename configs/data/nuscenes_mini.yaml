@@ -1,0 +1,15 @@
+data:
+  name: nuscenes_mini
+  version: v1.0-mini
+  dataroot: /root/autodl-tmp/data/nuscenes
+  cameras: [CAM_FRONT]          # V1: front camera only; extend to multi-view later
+  num_frames: 8                 # K future frames per clip
+  frame_stride: 1               # in keyframe units (nuScenes keyframes are ~2Hz)
+  height: 256
+  width: 448
+  min_box_visibility: 2         # nuScenes visibility token threshold (1..4)
+  use_sweeps: false             # keyframes only in V1 (have annotations)
+  use_lidar_depth: true         # 将 LIDAR_TOP 投影到相机，用于标定 Depth-Anything 尺度
+  conditioning:
+    first_frame: true           # SVD img2vid conditioning frame
+    future_ego: false           # optionally feed future ego trajectory later

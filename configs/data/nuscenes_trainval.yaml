@@ -1,0 +1,18 @@
+data:
+  name: nuscenes
+  version: v1.0-trainval
+  dataroot: /root/autodl-tmp/data/nuscenes
+  split: train
+  expected_scene_count: 700
+  expected_clip_count: 3425
+  cameras: [CAM_FRONT]
+  num_frames: 8
+  frame_stride: 1
+  height: 256
+  width: 448
+  min_box_visibility: 2
+  use_sweeps: false
+  use_lidar_depth: true
+  conditioning:
+    first_frame: true
+    future_ego: false
