@@ -88,15 +88,22 @@ class Trainer:
             return
         dataset = self._build_dataset()
         self.sampler = ResumableRandomSampler(dataset, seed=int(cfg.seed))
+        num_workers = int(tcfg.get("num_workers", 0))
+        if bool(tcfg.get("deterministic", True)) and num_workers != 0:
+            raise ValueError("确定性精确恢复要求 train.num_workers=0")
+        self.loader_generator = torch.Generator().manual_seed(int(cfg.seed))
         self.loader = DataLoader(
             dataset, batch_size=int(tcfg.micro_batch_size), sampler=self.sampler,
-            collate_fn=cache_collate, num_workers=int(tcfg.get("num_workers", 0)), drop_last=True,
+            collate_fn=cache_collate, num_workers=num_workers, drop_last=True,
+            generator=self.loader_generator,
         )
         params = self.backbone.trainable_parameters()
         if not params:
             raise RuntimeError("no trainable params; enable LoRA in the model config")
         self.optimizer = torch.optim.AdamW(params, lr=float(tcfg.lr), weight_decay=float(tcfg.weight_decay))
-        self.optimizer, self.loader = self.accelerator.prepare(self.optimizer, self.loader)
+        # Accelerate 的 DataLoaderShard 会预取一个 batch，checkpoint 时 sampler 已越过尚未消费的样本。
+        # P2/P3 锁定单卡且已在 _to_device 显式搬运 tensor，因此只包装 optimizer 才能精确恢复。
+        self.optimizer = self.accelerator.prepare(self.optimizer)
         self._resume(str(tcfg.get("resume", "auto")))
 
     def _cache_specs(self) -> dict[str, dict]:

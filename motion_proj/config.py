@@ -73,6 +73,8 @@ def validate_config(cfg: DictConfig) -> None:
         for name in ("max_steps", "micro_batch_size", "grad_accum"):
             if cfg.train.get(name) is not None and int(cfg.train[name]) <= 0:
                 errors.append(f"train.{name} 必须大于 0")
+        if bool(cfg.train.get("deterministic", True)) and int(cfg.train.get("num_workers", 0)) != 0:
+            errors.append("确定性精确恢复要求 train.num_workers=0")
         if experiment_type in {"full", "full-no-anchor", "full-no-tube"}:
             ratios = cfg.train.get("cache_mix") or {}
             actual = {str(key): int(value) for key, value in ratios.items()}

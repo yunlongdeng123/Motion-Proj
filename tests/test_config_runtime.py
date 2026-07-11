@@ -27,6 +27,10 @@ def test_config_schema_and_resume_fingerprint():
     assert cache_config_fingerprint(changed) != cache_config_fingerprint(cfg)
     changed.train.lr = 9e-5
     assert config_fingerprint(changed, resume_compatible=True) != base
+    nondeterministic_loader = OmegaConf.create(OmegaConf.to_container(cfg, resolve=True))
+    nondeterministic_loader.train.num_workers = 1
+    with pytest.raises(ConfigError, match="num_workers=0"):
+        validate_config(nondeterministic_loader)
     bad = OmegaConf.create({"schema_version": 1})
     with pytest.raises(ConfigError):
         validate_config(bad)

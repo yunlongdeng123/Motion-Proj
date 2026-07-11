@@ -3,6 +3,7 @@ import random
 
 import numpy as np
 import torch
+from torch.utils.data import DataLoader
 
 from motion_proj.train.trainer import seed_everything
 
@@ -26,3 +27,17 @@ def test_seed_everything_reproduces_python_numpy_and_torch(monkeypatch):
         torch.use_deterministic_algorithms(previous)
         torch.backends.cudnn.deterministic = previous_cudnn_deterministic
         torch.backends.cudnn.benchmark = previous_cudnn_benchmark
+
+
+def test_dataloader_generator_does_not_advance_training_rng():
+    seed_everything(456, deterministic=False)
+    expected = torch.rand(3)
+
+    seed_everything(456, deterministic=False)
+    loader = DataLoader(
+        list(range(4)),
+        batch_size=1,
+        generator=torch.Generator().manual_seed(456),
+    )
+    next(iter(loader))
+    assert torch.equal(torch.rand(3), expected)
