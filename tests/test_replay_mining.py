@@ -19,16 +19,22 @@ def _result(energy=True, eligible=0.8, before=2.0, after=1.0):
 
 
 def test_replay_requires_high_drift_energy_drop_and_70pct_eligible():
-    assert replay_is_eligible(2.0, _result(), 1.0)
-    assert not replay_is_eligible(0.9, _result(), 1.0)
-    assert not replay_is_eligible(2.0, _result(before=1.0, after=1.0), 1.0)
-    assert not replay_is_eligible(2.0, _result(eligible=0.699), 1.0)
+    assert replay_is_eligible(2.0, _result(), 1.0, drift_after=1.0)
+    assert not replay_is_eligible(0.9, _result(), 1.0, drift_after=0.5)
+    assert not replay_is_eligible(2.0, _result(before=1.0, after=1.0), 1.0, drift_after=2.0)
+    assert not replay_is_eligible(2.0, _result(eligible=0.699), 1.0, drift_after=1.0)
 
 
 def test_replay_rejects_vacuous_zero_track_energy_gate():
     vacuous = _result(energy=True, before=39.0, after=39.0)
-    assert not replay_energy_decreased(vacuous)
-    assert not replay_is_eligible(30.0, vacuous, 1.0)
+    assert not replay_energy_decreased(vacuous, drift_before=39.0, drift_after=39.0)
+    assert not replay_is_eligible(30.0, vacuous, 1.0, drift_after=30.0)
+
+
+def test_replay_accepts_static_drift_reduction_after_reaudit():
+    result = _result(before=10.0, after=10.0)
+    assert replay_energy_decreased(result, drift_before=12.0, drift_after=8.0)
+    assert replay_is_eligible(12.0, result, 1.0, drift_after=8.0)
 
 
 def test_replay_diagnostics_preserve_generation_settings_and_gate_values():

@@ -48,8 +48,12 @@ def _audit_generated(auditor: MotionAuditor, gen_frames: torch.Tensor, src_sampl
     return auditor.audit(sample)
 
 
-def replay_energy_decreased(result, tolerance: float = 1e-6) -> bool:
-    """要求投影后总能量严格下降；禁止空 track 时 obj/prior 的 0<=0 虚报。"""
+def replay_energy_decreased(result, tolerance: float = 1e-6,
+                            *, drift_before: float | None = None,
+                            drift_after: float | None = None) -> bool:
+    """优先用重审计后的 static drift；否则回退到投影总能量严格下降。"""
+    if drift_before is not None and drift_after is not None:
+        return float(drift_after) < float(drift_before) - tolerance
     before = result.energy_before if hasattr(result, "energy_before") else {}
     after = result.energy_after if hasattr(result, "energy_after") else {}
     if "total" in before and "total" in after:
@@ -58,11 +62,12 @@ def replay_energy_decreased(result, tolerance: float = 1e-6) -> bool:
 
 
 def replay_is_eligible(drift: float, result, drift_thresh: float,
-                       min_eligible_fraction: float = 0.70) -> bool:
+                       min_eligible_fraction: float = 0.70,
+                       *, drift_after: float | None = None) -> bool:
     diagnostics = result.diagnostics
     return (
         drift >= drift_thresh
-        and replay_energy_decreased(result)
+        and replay_energy_decreased(result, drift_before=drift, drift_after=drift_after)
         and float(diagnostics.get("eligible_fraction", 0.0)) >= min_eligible_fraction
     )
 
@@ -116,6 +121,7 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
         "seed": int(cfg.seed), "drift_thresh": drift_thresh,
         "min_eligible_fraction": min_eligible_fraction, "samples": n,
         "generation": generation,
+        "energy_gate": "reaudit-static-drift-v1",
     })
     writer = ProjectionCacheWriter(
         paths.cache_dir, store=cfg.cache.store, overwrite=False,
@@ -178,10 +184,15 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
                 rows.append(row)
                 continue
             result = projector.project(gen, state)
-            row["energy_decreased"] = replay_energy_decreased(result)
+            # 生成帧无 GT track 时 projector 总能量不反映 static 修复；对 x_dagger 重审计。
+            state_after = _audit_generated(auditor, result.target, src)
+            drift_after = auditor.static_drift_score(state_after)
+            row["energy_decreased"] = replay_energy_decreased(
+                result, drift_before=drift, drift_after=drift_after
+            )
             row["eligible_fraction"] = float(result.diagnostics.get("eligible_fraction", 0.0))
-            row["energy_before"] = float(result.energy_before.get("total", 0.0))
-            row["energy_after"] = float(result.energy_after.get("total", 0.0))
+            row["energy_before"] = drift
+            row["energy_after"] = drift_after
             row["num_tracks"] = int(result.diagnostics.get("num_tracks", 0))
             if not row["energy_decreased"]:
                 row["reject_reason"] = "energy"
