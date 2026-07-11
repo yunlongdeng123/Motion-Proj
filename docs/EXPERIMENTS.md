@@ -36,6 +36,8 @@
 |---|---|---|---|---|---:|---|---|---|
 | 2026-07-11 | `p2-data-train-k8-0b4a1899-5d7cc689` | completed | `0b4a189` | nuScenes v1.0-trainval 官方 train / CAM_FRONT | 700 / 3,425 | `5d7cc689` | `/root/autodl-tmp/runs/p2-data-train-k8-0b4a1899-5d7cc689/{split_manifest.json,summary.json,manifest.json,resolved.yaml,COMPLETE}` | scene 数、clip 数和 clip ID 唯一性全部通过 |
 | 2026-07-11 | `p2-data-val-k8-0b4a1899-72ce633b` | completed | `0b4a189` | nuScenes v1.0-trainval 官方 val / CAM_FRONT | 150 / 732 | `72ce633b` | `/root/autodl-tmp/runs/p2-data-val-k8-0b4a1899-72ce633b/{split_manifest.json,summary.json,manifest.json,resolved.yaml,COMPLETE}` | 与 train scene 不相交，全部清单门槛通过 |
+| 2026-07-11 | `trainval-front-extract` | completed | `0b4a189` | v1.0-trainval / CAM_FRONT + LIDAR_TOP keyframes | 34,149 / 34,149 files | N/A | `/root/autodl-tmp/data/nuscenes/.trainval-front-extract/{summary.json,extract.log}` | 两个通道缺失均为 0；体积约 5.09GB + 23.71GB，未解压无关相机与 sweeps |
+| 2026-07-11 | `p2-cache-smoke-rgb2` | completed | `9c6da23` | 官方 train 前 2 clip / synthetic / RGB cache schema v3 | 2 clips | stage `a02d3c92`；sample `d5549c79` | `/root/autodl-tmp/cache/p2-front/smoke-rgb/{_stage/manifest.json,_stage/resolved.yaml,_stage/COMPLETE}` 及两个样本目录 | 两条 cache 均为 schema v3；clean、y、x_dagger 分离，全部 finite，mask 范围为 [0,1] |
 
 ## 参数选择
 
