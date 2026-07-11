@@ -36,18 +36,64 @@ def directory_manifest_fingerprint(path: str, marker: str = "metadata.json") -> 
     return sha256_json(rows)
 
 
-def git_state(root: str = ".") -> dict[str, str | bool]:
-    def run(*args: str) -> str:
+def git_state(root: str = ".") -> dict[str, Any]:
+    def run(*args: str) -> str | None:
         try:
-            return subprocess.check_output(["git", "-C", root, *args], text=True, stderr=subprocess.DEVNULL).strip()
+            return subprocess.check_output(
+                ["git", "-C", root, *args],
+                text=True,
+                stderr=subprocess.DEVNULL,
+            )
         except Exception:
-            return "unknown"
+            return None
 
+    commit = run("rev-parse", "HEAD")
+    repo_root = run("rev-parse", "--show-toplevel")
     diff = run("diff", "--binary", "HEAD")
+    untracked = run("ls-files", "--others", "--exclude-standard", "--full-name", "-z")
+    if commit is None or repo_root is None or diff is None or untracked is None:
+        return {
+            "commit": "unknown",
+            "git_available": False,
+            "dirty": True,
+            "dirty_tracked": False,
+            "dirty_untracked": False,
+            "untracked_count": 0,
+            "dirty_diff_hash": "unknown",
+        }
+
+    untracked_paths = sorted(path for path in untracked.split("\0") if path)
+    untracked_manifest = []
+    repository = Path(repo_root.strip())
+    for relative_path in untracked_paths:
+        path = repository / relative_path
+        if path.is_symlink():
+            digest = hashlib.sha256(os.readlink(path).encode()).hexdigest()
+            kind = "symlink"
+        elif path.is_file():
+            digest = file_fingerprint(str(path))
+            kind = "file"
+        else:
+            digest = "unreadable"
+            kind = "other"
+        untracked_manifest.append(
+            {"path": relative_path, "kind": kind, "sha256": digest}
+        )
+
+    tracked_hash = hashlib.sha256(diff.encode()).hexdigest()
+    worktree_hash = (
+        sha256_json({"tracked_diff_sha256": tracked_hash, "untracked": untracked_manifest})
+        if untracked_manifest
+        else tracked_hash
+    )
     return {
-        "commit": run("rev-parse", "HEAD"),
-        "dirty": bool(diff and diff != "unknown"),
-        "dirty_diff_hash": hashlib.sha256(diff.encode()).hexdigest() if diff != "unknown" else "unknown",
+        "commit": commit.strip(),
+        "git_available": True,
+        "dirty": bool(diff or untracked_paths),
+        "dirty_tracked": bool(diff),
+        "dirty_untracked": bool(untracked_paths),
+        "untracked_count": len(untracked_paths),
+        "dirty_diff_hash": worktree_hash,
     }
 
 
