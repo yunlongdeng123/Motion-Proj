@@ -18,3 +18,16 @@ def test_flow_confidence_excludes_inconsistent_pixels():
     flow = torch.zeros(1, 1, 3, 3, 2)
     confidence = torch.zeros(1, 1, 1, 3, 3)
     assert float(flow_warp_charbonnier_loss(video, flow, confidence)) == 0.0
+
+
+def test_flow_loss_uses_stop_gradient_warp_target():
+    video = torch.zeros(1, 2, 1, 3, 3, requires_grad=True)
+    with torch.no_grad():
+        video[:, 1] = 1
+    flow = torch.zeros(1, 1, 3, 3, 2)
+    confidence = torch.ones(1, 1, 1, 3, 3)
+
+    flow_warp_charbonnier_loss(video, flow, confidence).backward()
+
+    assert torch.count_nonzero(video.grad[:, 0]) == video[:, 0].numel()
+    assert torch.count_nonzero(video.grad[:, 1]) == 0

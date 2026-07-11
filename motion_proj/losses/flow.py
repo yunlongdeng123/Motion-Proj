@@ -34,7 +34,9 @@ def flow_warp_charbonnier_loss(
     if flow.shape != expected_flow or confidence.shape != expected_conf:
         raise ValueError(f"flow/confidence shape 不匹配: {flow.shape}, {confidence.shape}")
     flat_flow = flow.reshape(-1, height, width, 2).to(video.dtype)
-    next_frames = video[:, 1:].reshape(-1, channels, height, width)
+    # CUDA grid_sample backward 非确定；把下一帧视为固定 warp target，
+    # 仍对当前帧预测反传，避免破坏 checkpoint/resume 的逐位一致性。
+    next_frames = video[:, 1:].detach().reshape(-1, channels, height, width)
     warped_next = F.grid_sample(
         next_frames,
         _sampling_grid(flat_flow),
