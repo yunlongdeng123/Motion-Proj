@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import numpy as np
 import torch
 
 from ..auditor.state import MotionState, Track
@@ -54,11 +55,36 @@ def ssim(a: torch.Tensor, b: torch.Tensor) -> float:
     return float(sum(vals) / len(vals))
 
 
-def fvd(real_videos, fake_videos):  # pragma: no cover - needs I3D weights
-    """Frechet Video Distance 的接口钩子。需要 I3D 特征提取器。
+def frechet_feature_distance(real_features, fake_features) -> float:
+    """对已经抽取的特征计算标准 Fréchet 距离。"""
+    from scipy.linalg import sqrtm
 
-    V1 中未实现（需要外部 I3D 权重）。可在此接入一个预训练的 I3D，
-    并计算片段特征的 Frechet 距离。在 V1 阶段，请改用 LPIPS/SSIM 以及
-    动态一致性指标来做合理性检查。
-    """
-    raise NotImplementedError("FVD requires an I3D feature extractor; not bundled in V1")
+    real = np.asarray(real_features, dtype=np.float64)
+    fake = np.asarray(fake_features, dtype=np.float64)
+    if real.ndim != 2 or fake.ndim != 2 or real.shape[1] != fake.shape[1]:
+        raise ValueError("Fréchet 输入必须为特征维一致的 [N,D]")
+    if len(real) < 2 or len(fake) < 2:
+        raise ValueError("Fréchet 距离每侧至少需要两个样本")
+    mu_real, mu_fake = real.mean(0), fake.mean(0)
+    cov_real, cov_fake = np.cov(real, rowvar=False), np.cov(fake, rowvar=False)
+    product = sqrtm(cov_real @ cov_fake)
+    if np.iscomplexobj(product):
+        if not np.allclose(product.imag, 0, atol=1e-6):
+            raise ValueError("Fréchet covariance sqrt 产生显著复数分量")
+        product = product.real
+    value = ((mu_real - mu_fake) ** 2).sum() + np.trace(cov_real + cov_fake - 2 * product)
+    return float(max(value, 0.0))
+
+
+def fid_future(real_frame_features, fake_frame_features) -> float:
+    return frechet_feature_distance(real_frame_features, fake_frame_features)
+
+
+def fvd8(real_i3d_features, fake_i3d_features) -> float:
+    """8 帧 clip 的 I3D 特征 FVD；特征提取器及权重由评估配置显式提供。"""
+    return frechet_feature_distance(real_i3d_features, fake_i3d_features)
+
+
+def fvd(real_features, fake_features):
+    """兼容旧接口；调用方必须传入已抽取的 I3D 特征。"""
+    return fvd8(real_features, fake_features)

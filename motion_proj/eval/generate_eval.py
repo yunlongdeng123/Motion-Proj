@@ -33,11 +33,17 @@ from ..utils.logging import get_logger
 from ..utils.viz import make_comparison_panel
 from ..runtime.tasks import TaskStore
 from . import metrics as M
+from .drivinggen import PROTOCOL as DRIVINGGEN_PROTOCOL
 
 log = get_logger(__name__)
 
 BASE_NAME = "base"
-_METRIC_KEYS = ("static_drift", "lpips", "psnr", "ssim")
+_METRIC_KEYS = (
+    "static_drift", "lpips", "psnr", "ssim", "fid_future", "fvd8",
+    "drivinggen_scene_consistency", "drivinggen_agent_consistency",
+    "drivinggen_agent_disappearance_consistency", "speed_consistency",
+    "acceleration_consistency", "trajectory_consistency",
+)
 # 是否越低越好（用于聚合排序）
 _LOWER_IS_BETTER = {"static_drift": True, "lpips": True, "psnr": False, "ssim": False}
 
@@ -189,6 +195,7 @@ def run_generate_eval(
     _seed_everything(seed)
 
     ds = NuScenesFutureVideoDataset(cfg.data)
+    camera = ds.camera
     indices = select_clip_indices(len(ds), num_clips, clip_indices)
     log.info("Generate-eval on %d clips (indices=%s), seed=%d", len(indices), indices, seed)
 
@@ -209,6 +216,9 @@ def run_generate_eval(
         "num_inference_steps": num_inference_steps,
         "clip_indices": indices,
         "clip_ids": [clips[i]["sample_id"] for i in indices],
+        "camera": camera,
+        "metric_protocol": DRIVINGGEN_PROTOCOL,
+        "static_drift_role": "internal_diagnostic_not_standard_benchmark",
         "adapters": {},
     }
 
@@ -234,12 +244,12 @@ def run_generate_eval(
             src = clips[idx]
             sid = src["sample_id"]
             task_seed = seed + idx
-            cached = tasks.completed_result(name, task_seed, sid)
+            cached = tasks.completed_result(name, task_seed, sid, camera)
             if cached is not None:
                 per_clip.append(cached)
                 log.info("[%s] %s 已完成，跳过生成", name, sid)
                 continue
-            tasks.mark(name, task_seed, sid, "running")
+            tasks.mark(name, task_seed, sid, "running", camera=camera)
             gt = src["frames"].to(device)          # [K,3,H,W]
             _, _, gh, gw = gt.shape
             gen = torch.Generator(device=device).manual_seed(task_seed)
@@ -256,7 +266,7 @@ def run_generate_eval(
                     break
                 except torch.cuda.OutOfMemoryError:
                     if decode_chunk <= 1:
-                        tasks.mark(name, task_seed, sid, "failed", reason="decode_oom")
+                        tasks.mark(name, task_seed, sid, "failed", camera=camera, reason="decode_oom")
                         raise
                     decode_chunk = max(1, decode_chunk // 2)
                     torch.cuda.empty_cache()
@@ -267,15 +277,21 @@ def run_generate_eval(
 
             state = _audit_generated(auditor, fk, src)
             row = {
+                "checkpoint": name,
+                "seed": task_seed,
+                "camera": camera,
                 "clip_index": idx,
                 "sample_id": sid,
                 "static_drift": _safe_metric(auditor.static_drift_score, state),
                 "lpips": _safe_metric(M.lpips_distance, fk, gk),
                 "psnr": _safe_metric(M.psnr, fk, gk),
                 "ssim": _safe_metric(M.ssim, fk, gk),
+                "metric_protocol": DRIVINGGEN_PROTOCOL["name"],
+                "static_drift_role": "internal_diagnostic",
             }
             per_clip.append(row)
-            tasks.mark(name, task_seed, sid, "completed", result=row, decode_chunk_size=decode_chunk)
+            tasks.mark(name, task_seed, sid, "completed", camera=camera,
+                       result=row, decode_chunk_size=decode_chunk)
             save_json(row, os.path.join(adapter_out, f"{sid}.json"))
             if save_video:
                 write_video(to_uint8_video(fk), os.path.join(adapter_out, f"{sid}.mp4"), fps=4)
