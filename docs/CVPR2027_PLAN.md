@@ -18,8 +18,8 @@
 
 | ID | 时间 | 状态 | 目标与验收 | 证据 | 下一步 |
 |---|---|---|---|---|---|
-| P0-GEOMETRY-01 | 7 月 | running | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | `tests/test_energies.py` 已覆盖缺帧 NaN；其余待实验 | 增加合成错误集与标定深度测试 |
-| P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | 2026-07-11 工作区实现；提交号待提交 | 在 mini 训练中做中断恢复演练 |
+| P0-GEOMETRY-01 | 7 月 | running | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | `f11645b` 已加入真实 nuScenes LiDAR 投影与缺帧 NaN 测试；合成错误验收待完成 | 建立 100 个合成错误集 |
+| P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `f11645b`，`python -m pytest -q` 为 26 passed | 在 mini 训练中做中断恢复演练 |
 | P1-PROJECTION-01 | 8 月上旬 | pending | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | 待记录 | 完成 P0 后启动 |
 | P2-FRONT-01 | 8 月中下旬 | pending | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | 待记录 | 数据清单和 split fingerprint |
 | P3-CAMERA-01 | 9 月上旬 | pending | 同一前视 checkpoint 零样本评估五相机；至少四个改善，macro 视觉质量退化不超过 5% | 待记录 | P2 主模型冻结后启动 |
@@ -63,4 +63,4 @@
 
 | 日期 | commit | 变更 | 原因 |
 |---|---|---|---|
-| 2026-07-11 | working-tree | 建立持久化计划、事实源和可恢复运行基础设施 | 避免研究决策只存在于对话和不可恢复脚本中 |
+| 2026-07-11 | `f11645b` | 建立持久化计划、事实源和可恢复运行基础设施 | 避免研究决策只存在于对话和不可恢复脚本中 |

@@ -52,3 +52,17 @@ writer.append(chunk)
 3. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
 4. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
 5. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。
+
+## Git 提交规范（强制）
+
+1. 每个 commit 只处理一个逻辑主题；代码、测试和直接相关文档应放在同一 commit，禁止混入无关格式化或临时文件。
+2. 标题采用 Conventional Commits：`<type>(<scope>): <简洁祈使句>`。常用 `type` 为 `feat`、`fix`、`refactor`、`test`、`docs`、`chore`、`perf`、`research`；`scope` 使用稳定模块名，如 `runtime`、`cache`、`trainer`、`eval`、`workflow`。
+3. 标题必须准确、可读，建议不超过 72 个字符，不加句号；禁止使用 `update`、`misc`、`working-tree`、纯哈希、自动生成占位文字或异常前缀等不可追溯标题。
+4. 除极小且语义显然的修改外，commit 必须包含正文。标题后空一行，正文说明：
+   - 背景或问题；
+   - 关键实现与重要取舍；
+   - 验证命令及结果；
+   - 兼容性、迁移或后续影响（如有）。
+5. 研究类 commit 的正文还必须写明任务/实验 ID、数据 split、seed、fingerprint 或证据路径；不得把未经验证的结果写成结论。
+6. 提交前必须检查 `git diff --cached --check` 和 `git diff --cached`，并运行与风险相称的测试。正文中的验证结果必须与实际执行一致。
+7. 需要重写已共享历史时，先建立本地备份分支；得到用户明确授权后才可重写。重写后由用户执行 `git push --force-with-lease`，agent 不擅自 push。
