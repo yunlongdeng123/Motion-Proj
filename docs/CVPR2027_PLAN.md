@@ -1,7 +1,7 @@
 # Motion-Proj CVPR 2027 可持续研发计划
 
 最后更新：2026-07-11
-当前阶段：P2 前视主实验数据准备
+当前阶段：P2 前视训练链路验收与调参准备
 状态词：`pending` / `running` / `blocked` / `done` / `rejected`
 
 ## 已锁定研究决策
@@ -19,9 +19,9 @@
 | ID | 时间 | 状态 | 目标与验收 | 证据 | 下一步 |
 |---|---|---|---|---|---|
 | P0-GEOMETRY-01 | 7 月 | done | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | 数据源码纳入 Git 后由 `0b4a189` 重验：`p0-geometry-synth100-s20260711-0b4a1899-e109eb12` 为 95/100 改善并通过；`p0-geometry-mini5-0b4a1899-96306871` 复现 eligible fraction 均值 62.35% 和唯一失败项 `eligible_gate` | 保留 `temporal_gap` 5/20 未改善与真实覆盖率 62.35% 作为边界，不事后调门槛 |
-| P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `f11645b`，`python -m pytest -q` 为 26 passed | 在 mini 训练中做中断恢复演练 |
+| P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `6c6261f` 的 P2 8-clip latent 实测：step 2 强制中断并自动恢复后，12-step 指标、LoRA、optimizer、sampler 和 RNG 与不间断对照逐位一致 | 保留单卡、`num_workers=0` 与确定性 CUDA 为正式训练约束 |
 | P1-PROJECTION-01 | 8 月上旬 | done | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | `0b4a189` 完整追踪数据源码的检查包 `p1-projection-manual20-s20260711-0b4a1899-9487020a`：与原人工 review 包的 20 个视频及 case metadata 逐项完全一致，迁移同一份 review 后为 20/20 reasonable，review fingerprint `3d00cbe6` | 结论限于 synthetic corruption target 合理性；进入 P2，不外推生成质量 |
-| P2-FRONT-01 | 8 月中下旬 | running | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | `0b4a189` 的 train/val manifest 分别为 700/3,425（`5d7cc689`）与 150/732（`72ce633b`）；CAM_FRONT/LIDAR_TOP 各 34,149 个关键帧且零缺失；`9c6da23` 的 2-clip synthetic RGB cache schema v3 smoke 通过（stage `a02d3c92`） | 运行小规模 latent cache 与训练中断恢复演练；通过后再启动完整 train cache |
+| P2-FRONT-01 | 8 月中下旬 | running | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | train/val manifest 为 700/3,425（`5d7cc689`）与 150/732（`72ce633b`）；CAM_FRONT/LIDAR_TOP 各 34,149 个关键帧且零缺失；`3e0c41e` 的 8-clip latent schema v4 cache 为 5.4MB，`6c6261f` 的中断恢复等价验收通过 | 完成各训练类型 2-clip 集成 smoke，构建固定 mini cache 后启动 16×100 调参 |
 | P3-CAMERA-01 | 9 月上旬 | pending | 同一前视 checkpoint 零样本评估五相机；至少四个改善，macro 视觉质量退化不超过 5% | 待记录 | P2 主模型冻结后启动 |
 | P4-OPENDWM-01 | 9 月下旬至 10 月 | pending | CTSD 3.5 baseline 达官方指标 10% 相对误差；三天失败则切换 CTSD 2.1 | 待记录 | A100/H20 资源确认后启动 |
 | P5-PAPER-01 | 10 月 | pending | Full/OpenDWM 三种子与 bootstrap 95% CI；动力学显著改善且 FVD 相对退化不超过 5% | 待记录 | 10 月 10 日冻结主表，20 日冻结消融 |
@@ -70,3 +70,5 @@
 | 2026-07-11 | `6fe74f9` | 分离检查包导出与人工 review 聚合 provenance | 防止 `aggregate-only` 用当前 commit 覆盖原始导出证据 |
 | 2026-07-11 | `0b4a189` | 将误被 `data/` 规则忽略的数据源码纳入 Git，固化官方 split manifest，并重验 P0/P1 | 修复历史 clean manifest 未覆盖数据构建源码的溯源缺口；确认 P0 数值与 P1 视频逐项不变 |
 | 2026-07-11 | `e6bb6d6` | cache schema v3 分离 clean/y/x_dagger 并拒绝 stale/fingerprint 混用 | 落实 `L_real` 独立消费 clean latent 和 V2 不投影 clean GT 的锁定决策 |
+| 2026-07-11 | `fa375b2` | 固定 cuBLAS/cuDNN/PyTorch 确定性算法并在 P2 禁用 xFormers | 同 seed 独立训练从第 2 步开始分叉，单纯播种不足以支持严格恢复验收 |
+| 2026-07-11 | `6c6261f` | 隔离 DataLoader RNG，并移除 Accelerate DataLoaderShard 的预取偏移 | checkpoint 的 sampler 不得越过尚未训练的 batch；恢复与连续训练最终逐位一致 |
