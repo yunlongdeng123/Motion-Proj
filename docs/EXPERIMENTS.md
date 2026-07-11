@@ -22,6 +22,12 @@
 | 2026-07-11 | `p0-geometry-mini5-5ff8e8c0-96306871` | completed | 首轮审计运行完成但验收失败，唯一失败项为 `eligible_gate`；数值已由 clean commit 正式 run 完整复现 | `/root/autodl-tmp/runs/p0-geometry-mini5-5ff8e8c0-96306871/{summary.json,manifest.json,metrics.jsonl}`；manifest commit `5ff8e8c0`，但审计新增文件运行时尚未被 Git 跟踪 | 保留为溯源不完整的历史 run，不覆盖；正式证据改用 `p0-geometry-mini5-8c8afef4-96306871` |
 | 2026-07-11 | `p0-geometry-mini5-8c8afef4-96306871` | completed | clean commit 正式审计仍仅 `eligible_gate` 失败：nuScenes mini 前 5 个 CAM_FRONT clip 的有效比例均值 62.3507%、最小值 54.7917%，0/5 达到 70%；深度-LiDAR Pearson 均值/最小值为 0.8780/0.8480，污染检测率、finite rate 和 track energy improvement rate 均为 100%；不调整 70% 门槛 | `/root/autodl-tmp/runs/p0-geometry-mini5-8c8afef4-96306871/{resolved.yaml,manifest.json,metrics.jsonl,summary.json,COMPLETE}`；commit `8c8afef4`；config fingerprint `96306871`；split `v1.0-mini:CAM_FRONT:first-5`；seed 1234；cache `not-applicable:online-audit` | 接受 62.35% 为当前真实有效投影覆盖率；将覆盖率作为适用范围披露，不通过调阈值改写事实 |
 
+## 人工检查（P1）
+
+| 日期 | Run ID | 状态 | commit | 协议/数据 | seed | 关键结果 | 证据路径 | 结论 |
+|---|---|---|---|---|---:|---|---|---|
+| 2026-07-11 | `p1-projection-manual20-s20260711-0e3b5e79-9487020a` | running | `0e3b5e7` | `projection-target-manual-v1` / `v1.0-mini:CAM_FRONT:synthetic-20` | 20260711 | 20-case 检查包已导出；轨迹能量下降 20/20，eligible fraction 均值 69.27%；五类 corruption 各 4 case；人工 verdict 待填 | `/root/autodl-tmp/runs/p1-projection-manual20-s20260711-0e3b5e79-9487020a/{panels,cases,reviews.template.jsonl,summary.json,COMPLETE}`；config fingerprint `9487020a` | 导出完成，待人工 review 后判定 70% reasonable 门槛 |
+
 ## 参数选择
 
 | 日期 | 范围 | 已锁定选择 | 依据 |
