@@ -1,7 +1,7 @@
 # Motion-Proj CVPR 2027 可持续研发计划
 
 最后更新：2026-07-11
-当前阶段：P2 固定 mini cache 完成，接入 Optuna trial 评估桥并准备调参
+当前阶段：P2 mini cache 与 trial 桥就绪，正式 Optuna 调参进行中
 状态词：`pending` / `running` / `blocked` / `done` / `rejected`
 
 ## 已锁定研究决策
@@ -21,7 +21,7 @@
 | P0-GEOMETRY-01 | 7 月 | done | 几何 mask、LiDAR 标定深度、static drift 量纲、cache 失效和 gate 修复；100 个合成错误中至少 70% 投影后能量下降 | 数据源码纳入 Git 后由 `0b4a189` 重验：`p0-geometry-synth100-s20260711-0b4a1899-e109eb12` 为 95/100 改善并通过；`p0-geometry-mini5-0b4a1899-96306871` 复现 eligible fraction 均值 62.35% 和唯一失败项 `eligible_gate` | 保留 `temporal_gap` 5/20 未改善与真实覆盖率 62.35% 作为边界，不事后调门槛 |
 | P0-RUNTIME-02 | 7 月 | done | 配置 schema、原子 cache、精确 checkpoint/resume、实验注册表和任务状态可测试 | `6c6261f` 的 P2 8-clip latent 实测：step 2 强制中断并自动恢复后，12-step 指标、LoRA、optimizer、sampler 和 RNG 与不间断对照逐位一致 | 保留单卡、`num_workers=0` 与确定性 CUDA 为正式训练约束 |
 | P1-PROJECTION-01 | 8 月上旬 | done | V2 使用 synthetic/replay，人工检查至少 70% target 更合理 | `0b4a189` 完整追踪数据源码的检查包 `p1-projection-manual20-s20260711-0b4a1899-9487020a`：与原人工 review 包的 20 个视频及 case metadata 逐项完全一致，迁移同一份 review 后为 20/20 reasonable，review fingerprint `3d00cbe6` | 结论限于 synthetic corruption target 合理性；进入 P2，不外推生成质量 |
-| P2-FRONT-01 | 8 月中下旬 | running | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | 数据与 8-clip latent v4 已就绪；中断恢复逐位等价通过；训练矩阵 smoke 完成；replay reaudit 1/8 kept；固定 mini synthetic latent 32-clip cache 已完成（跳过 1 个无轨迹 clip）；Optuna trial 评估桥已接入 | 测 base_metrics 与 2-step trial smoke，再启动 16×100 调参 |
+| P2-FRONT-01 | 8 月中下旬 | running | 官方 700/150 scene split，3,425/732 个 8 帧 clip；Base、real-only、flow、synthetic、replay、full 和核心消融 | 数据与 8-clip latent v4 已就绪；中断恢复逐位等价通过；训练矩阵 smoke 完成；replay reaudit 1/8 kept；固定 mini synthetic latent 32-clip cache 已完成；Optuna trial 桥与 base_metrics/2-step smoke 通过 | 启动 16×100→4×300→2×800 调参（9h 硬截止） |
 | P3-CAMERA-01 | 9 月上旬 | pending | 同一前视 checkpoint 零样本评估五相机；至少四个改善，macro 视觉质量退化不超过 5% | 待记录 | P2 主模型冻结后启动 |
 | P4-OPENDWM-01 | 9 月下旬至 10 月 | pending | CTSD 3.5 baseline 达官方指标 10% 相对误差；三天失败则切换 CTSD 2.1 | 待记录 | A100/H20 资源确认后启动 |
 | P5-PAPER-01 | 10 月 | pending | Full/OpenDWM 三种子与 bootstrap 95% CI；动力学显著改善且 FVD 相对退化不超过 5% | 待记录 | 10 月 10 日冻结主表，20 日冻结消融 |
