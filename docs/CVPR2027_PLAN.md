@@ -3,11 +3,11 @@
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
 * 最后更新：2026-07-12
-* 计划基线 commit：`ae826a1`
-* 当前阶段：`P2-FRONT-01 / V2 structural diagnosis`
+* 计划基线 commit：`fff5ccb`
+* 当前阶段：`P2-V2-API-01 / parameterization and LoRA isolation`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
-* 当前主问题：V1 训练损失和 LPIPS 改善，但完整 rollout 的静态漂移与轨迹加速度稳定恶化
+* 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
 
 ---
 
@@ -273,7 +273,7 @@ future ego2global
 
 | ID | 假设                                                | 当前证据                                                          | 证伪方式                              |
 | -- | ------------------------------------------------- | ------------------------------------------------------------- | --------------------------------- |
-| H0 | 当前 SVD static auditor 存在未来 ego 条件不匹配              | SVD 无 future ego control，但 generated audit 复用 GT `ego2global` | `P2-V2-COND-00`                   |
+| H0 | 当前 SVD static auditor 存在未来 ego 条件不匹配              | 已确认：16-case GT-ego residual 19.2887，identity 2.1164，self-estimated 0.9320；GT-ego 人工 16/16 无效 | `P2-V2-COND-00` 已关闭            |
 | H1 | synthetic corruption 与 Base rollout error 分布不匹配   | synthetic cache 32 个；旧 replay 仅 1/8 kept                      | synthetic 与 Base replay 因果对照      |
 | H2 | low-noise unweighted x0 loss 对 SVD 原始 (v) 输出梯度过弱  | 当前 loss 默认不加 EDM weight                                       | x0 / weighted-x0 / direct-v 对照    |
 | H3 | full-image anchor 抵消 mask 内 projection correction | projection 与 anchor 在同一 (z_\sigma) 上追逐不同 target               | 梯度 cosine 和 outside-mask preserve |
@@ -289,7 +289,7 @@ future ego2global
 
 # 5. P2-V2-COND-00：条件有效性门槛
 
-状态：`pending`
+状态：`done`（2026-07-12；commit `fff5ccb`；证据：`/root/autodl-tmp/runs/p2-v2-condition/p2-v2-cond16-s20260712-fff5ccb-97d2d05d`；下一步 `P2-V2-API-01`）
 
 这是所有 V2 replay 工作的前置阻塞项。
 
@@ -412,6 +412,38 @@ V2 SVD 正式 replay 必须满足：
 * SVD V2 暂时只执行 generated point-track/object branch；
 * static geometry branch 保留为 synthetic debug；
 * static control-consistent 主结论推迟到 OpenDWM。
+
+## 5.5 实验结论
+
+固定 16 个 nuScenes val clip、冻结 SVD Base、25 inference steps 的正式 run 已完成：
+
+```text
+run_id: p2-v2-cond16-s20260712-fff5ccb-97d2d05d
+commit: fff5ccb
+config fingerprint: 97d2d05d
+generation seeds: 20260712–20260727
+adapter_loaded: false
+```
+
+结果：
+
+* GT-ego、identity、self-estimated residual 均值分别为 `19.2887 / 2.1164 / 0.9320`；
+* formal candidate 的 `uses_future_gt_ego=false`，所有 target/mask finite；
+* 16/16 首帧完全冻结且首帧 mask 为零；
+* 人工复核 16/16：self-estimated 为 8 yes、4 no、4 uncertain；
+* decisive 合理率为 `8/12 = 66.67%`，低于预注册 `70%` 门槛；
+* 失败主要是高覆盖 background mask 传播车辆或 Base 既有伪影，形成路面色块和拖影。
+
+决策：
+
+```text
+H0 future ego mismatch: confirmed
+SVD GT-ego static target: rejected except synthetic/debug
+SVD self-estimated static replay V1: blocked
+SVD generated point-track branch: unlocked for later P2-V2-GEN-04
+```
+
+不得通过事后调整 review 或覆盖该 run 改变结论。
 
 ---
 
@@ -751,7 +783,7 @@ scope: temporal_only
 
 # 8. Generated object/point-track replay
 
-状态：`blocked by P2-V2-COND-00`
+状态：`pending`（条件门槛已关闭；static branch blocked，仅推进无 future GT 的 generated point-track）
 
 ## 8.1 目标
 
@@ -931,11 +963,11 @@ object_confidence_mean
 | P1-PROJECTION-01 | done     | synthetic target 人工检查           | 20/20 reasonable          | 不外推 rollout                |
 | P2-V1-TUNE-01    | rejected | V1 16×100、4×300 无正增益            | V1 归档                     | 不再续训                       |
 | P2-V2-ARCHIVE-00 | done     | 归档 V1 和修复 watchdog 完成态          | `docs/EXPERIMENTS.md`、`tests/test_watchdog_terminal_state.py` | 开始 V2 条件门槛             |
-| P2-V2-COND-00    | pending  | 关闭 SVD future ego 条件不匹配         | condition validity report | 解锁 replay                  |
+| P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
 | P2-V2-API-01     | pending  | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | pending  | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 决定参数化                      |
 | P2-V2-PILOT-03   | pending  | 8-pair 单步容量测试                   | A/B/C/D curves            | 解锁小规模 rollout              |
-| P2-V2-GEN-04     | pending  | generated track/static provider | provider tests/panel      | 解锁双 component              |
+| P2-V2-GEN-04     | pending  | generated point-track provider；static V1 blocked | provider tests/panel      | 解锁 object component         |
 | P2-V2-REPLAY-05  | pending  | 64–128 Base replay cache        | schema V5、manual review   | 解锁训练                       |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
@@ -1791,10 +1823,10 @@ Coding Agent 按顺序执行：
 * [x] 更新 `docs/EXPERIMENTS.md`
 * [x] 更新本计划状态
 * [x] 修复 watchdog terminal state
-* [ ] 增加 `generated_geometry_mode`
-* [ ] 完成 16-case condition validity report
-* [ ] 完成人工 condition review
-* [ ] 决定 SVD static branch 是否解锁
+* [x] 增加 `generated_geometry_mode`
+* [x] 完成 16-case condition validity report
+* [x] 完成人工 condition review
+* [x] 决定 SVD static branch 是否解锁（`blocked`）
 
 ## Phase B：参数化与 LoRA
 
@@ -1969,6 +2001,8 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `ae826a1`             | 将 V2 改为 Base-parent、teacher-relative residual-v、区域解耦 replay | 修复 parent distribution、参数化、anchor 和噪声尺度风险                           |
 | 2026-07-12 | `ae826a1`             | generated object supervision 改为无 GT point tracks            | 旧 replay 清空 boxes，无法形成 object dynamics 闭环                           |
 | 2026-07-12 | `ae826a1`             | FVD 移出 16/32-clip 筛选                                        | 避免用小样本分布指标作不稳定决策                                                    |
+| 2026-07-12 | `9a1f536`             | 完成 `P2-V2-ARCHIVE-00` 并修复 watchdog terminal state            | 正式归档 V1 negative result；终态 run 不再误报 heartbeat stale                    |
+| 2026-07-12 | `fff5ccb`             | 完成 16-case condition validity 与人工复核                           | H0 确认；GT static rejected；self-estimated static V1 以 66.67% 未过门槛          |
 
 ---
 
@@ -1977,16 +2011,16 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 立即执行且只执行：
 
 ```text
-P2-V2-ARCHIVE-00
-→ P2-V2-COND-00
+P2-V2-API-01
 ```
 
-在 `P2-V2-COND-00` 完成前：
+在 `P2-V2-API-01` 完成前：
 
-* 不实现正式 replay loss；
+* 不实现正式 V2 replay loss；
 * 不构建 64–128 cache；
 * 不启动新训练；
 * 不使用 future GT ego pose 生成正式 SVD target。
+* 不恢复已被人工门槛拒绝的 SVD self-estimated static V1。
 
 完成后输出：
 
