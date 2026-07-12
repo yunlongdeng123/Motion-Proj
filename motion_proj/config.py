@@ -14,6 +14,12 @@ EXPERIMENT_TYPES = {
     "base", "real-only", "flow", "synthetic", "replay", "full",
     "full-no-anchor", "full-no-tube",
 }
+GENERATED_GEOMETRY_MODES = {
+    "gt_ego_debug",
+    "identity_ego",
+    "estimated_background_motion",
+    "controlled_ego",
+}
 
 
 class ConfigError(ValueError):
@@ -58,6 +64,11 @@ def validate_config(cfg: DictConfig) -> None:
         errors.append("cache.store 必须是 latent 或 rgb")
     if "cache" in cfg and cfg.cache.get("source", "synthetic") not in {"clean", "synthetic", "replay"}:
         errors.append("cache.source 必须是 clean、synthetic 或 replay")
+    if "auditor" in cfg:
+        mode = str(cfg.auditor.get("generated_geometry_mode", "gt_ego_debug"))
+        if mode not in GENERATED_GEOMETRY_MODES:
+            allowed = ", ".join(sorted(GENERATED_GEOMETRY_MODES))
+            errors.append(f"auditor.generated_geometry_mode 必须是 {allowed}")
     if "data" in cfg and "model" in cfg:
         data_frames = cfg.data.get("num_frames")
         model_frames = cfg.model.get("num_frames")

@@ -11,6 +11,7 @@ import torch
 
 from ..utils.logging import get_logger
 from .ego_flow import boxes_to_dynamic_mask, build_static_mask
+from .generated_geometry import estimate_generated_geometry
 from .providers import (
     DepthProvider,
     EgoMotionProvider,
@@ -36,6 +37,8 @@ class MotionAuditor:
         depth_provider: DepthProvider | None = None,
         track_provider: TrackProvider | None = None,
         ego_motion_provider: EgoMotionProvider | None = None,
+        generated_geometry_mode: str | None = None,
+        background_fit_options: dict[str, Any] | None = None,
     ):
         self.device = device
         self.conf_thresh = conf_thresh
@@ -43,33 +46,70 @@ class MotionAuditor:
         self.depth_provider = depth_provider or LidarCalibratedDepthProvider(device=device, enable=enable_depth)
         self.track_provider = track_provider or NuScenesTrackProvider()
         self.ego_motion_provider = ego_motion_provider or ProvidedEgoMotionProvider()
+        self.generated_geometry_mode = generated_geometry_mode
+        self.background_fit_options = dict(background_fit_options or {})
 
     @torch.no_grad()
-    def audit(self, sample: dict) -> MotionState:
+    def audit(
+        self,
+        sample: dict,
+        *,
+        generated_geometry_mode: str | None = None,
+        observed_flow: torch.Tensor | None = None,
+        flow_confidence: torch.Tensor | None = None,
+        depth: torch.Tensor | None = None,
+    ) -> MotionState:
         """在单个（未成批的）数据集样本 dict 上运行 auditor。"""
         frames = sample["frames"].to(self.device)          # [K,3,H,W]
-        boxes = sample["boxes"]                              # list[K] of list[dict]
+        boxes = sample.get("boxes", [[] for _ in range(frames.shape[0])])
         K = sample["intrinsics"].to(self.device)
         cam2ego = sample["cam2ego"].to(self.device)
-        ego2global = sample["ego2global"].to(self.device)
         k, _, h, w = frames.shape
 
         # 1) 光流 + 前后向一致性（fb-consistency）置信度
-        u_static, flow_conf = self.flow_provider.estimate(frames)
+        if (observed_flow is None) != (flow_confidence is None):
+            raise ValueError("observed_flow 与 flow_confidence 必须同时提供")
+        if observed_flow is None:
+            u_static, flow_conf = self.flow_provider.estimate(frames)
+        else:
+            u_static = observed_flow.to(self.device)
+            flow_conf = flow_confidence.to(self.device)
 
         # 2) 深度 + 由自车运动（ego）诱导的静态光流
-        depth = self.depth_provider.estimate(frames, sample)  # [K,H,W]
-        flow_with_validity = getattr(self.ego_motion_provider, "flow_with_validity", None)
-        if callable(flow_with_validity):
-            u_ego, ego_valid = flow_with_validity(depth, sample)
+        if depth is None:
+            depth = self.depth_provider.estimate(frames, sample)  # [K,H,W]
         else:
-            u_ego = self.ego_motion_provider.flow(depth, sample)
-            ego_valid = torch.ones(u_ego.shape[:-1], device=u_ego.device, dtype=torch.bool)
+            depth = depth.to(self.device)
+        mode = generated_geometry_mode or self.generated_geometry_mode
+        geometry_diagnostics = None
+        uses_future_gt_ego = False
+        if mode is not None:
+            estimate = estimate_generated_geometry(
+                mode,
+                u_static,
+                flow_conf,
+                depth,
+                sample,
+                fit_options=self.background_fit_options,
+            )
+            u_ego = estimate.flow
+            geometry_confidence = estimate.confidence
+            ego_valid = geometry_confidence > 0
+            geometry_diagnostics = estimate.diagnostics
+            uses_future_gt_ego = estimate.uses_future_gt_ego
+        else:
+            flow_with_validity = getattr(self.ego_motion_provider, "flow_with_validity", None)
+            if callable(flow_with_validity):
+                u_ego, ego_valid = flow_with_validity(depth, sample)
+            else:
+                u_ego = self.ego_motion_provider.flow(depth, sample)
+                ego_valid = torch.ones(u_ego.shape[:-1], device=u_ego.device, dtype=torch.bool)
+            geometry_confidence = ego_valid.to(flow_conf.dtype)
 
         # 3) 可靠静态掩码（高一致性，且位于目标框之外）
         dyn_mask = boxes_to_dynamic_mask(boxes, h, w, self.device)
         static_mask = build_static_mask(flow_conf, dyn_mask, self.conf_thresh)
-        static_mask = static_mask * ego_valid.to(static_mask.dtype)
+        static_mask = static_mask * geometry_confidence.to(static_mask.dtype)
 
         # 4) 由 GT 框得到的目标轨迹（tracks）
         tracks = self.track_provider.estimate(frames, sample)
@@ -84,13 +124,19 @@ class MotionAuditor:
             meta={
                 "intrinsics": K,
                 "cam2ego": cam2ego,
-                "ego2global": ego2global,
                 "hw": (h, w),
                 "sample_id": sample.get("sample_id"),
                 "ego_valid_fraction": float(ego_valid.float().mean()),
                 "depth_diagnostics": getattr(self.depth_provider, "last_diagnostics", None),
+                "generated_geometry_mode": mode,
+                "geometry_diagnostics": geometry_diagnostics,
+                "uses_future_gt_ego": uses_future_gt_ego,
+                "uses_future_gt_track": False if mode is not None else None,
             },
         )
+        pose_key = "control_ego2global" if mode == "controlled_ego" else "ego2global"
+        if pose_key in sample and (mode is None or mode in {"gt_ego_debug", "controlled_ego"}):
+            state.meta["ego2global"] = sample[pose_key].to(self.device)
         return state
 
     @torch.no_grad()

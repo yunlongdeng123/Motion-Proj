@@ -35,17 +35,27 @@ def _adapter_file(path: str) -> str:
     return os.path.abspath(candidate)
 
 
-def _audit_generated(auditor: MotionAuditor, gen_frames: torch.Tensor, src_sample: dict) -> MotionState:
-    """审计生成片段时仅复用相机/自车几何，不把 GT 框泄漏给生成结果。"""
+def _audit_generated(
+    auditor: MotionAuditor,
+    gen_frames: torch.Tensor,
+    src_sample: dict,
+    geometry_mode: str,
+) -> MotionState:
+    """按显式几何模式审计生成片段，并在正式模式移除未来 GT。"""
     sample = {
         "frames": gen_frames,
         "boxes": [[] for _ in range(gen_frames.shape[0])],
         "intrinsics": src_sample["intrinsics"],
         "cam2ego": src_sample["cam2ego"],
-        "ego2global": src_sample["ego2global"],
         "sample_id": src_sample["sample_id"] + "_gen",
     }
-    return auditor.audit(sample)
+    if geometry_mode == "gt_ego_debug":
+        sample["ego2global"] = src_sample["ego2global"]
+    elif geometry_mode == "controlled_ego":
+        if "control_ego2global" not in src_sample:
+            raise ValueError("controlled_ego 要求 backbone 实际接收的 control_ego2global")
+        sample["control_ego2global"] = src_sample["control_ego2global"]
+    return auditor.audit(sample, generated_geometry_mode=geometry_mode)
 
 
 def replay_energy_decreased(result, tolerance: float = 1e-6,
@@ -112,7 +122,12 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
     backbone = build_backbone(cfg.model, load=True, device=device)
     backbone.load_adapter(adapter)
     backbone.set_train_mode(False)
-    auditor = MotionAuditor(device=device)
+    geometry_mode = str(cfg.auditor.generated_geometry_mode)
+    auditor = MotionAuditor(
+        device=device,
+        generated_geometry_mode=geometry_mode,
+        background_fit_options=dict(cfg.auditor.get("background_fit", {})),
+    )
     projector = DynamicsProjector()
     n = min(max_samples, len(ds)) if max_samples else len(ds)
     generation = _generation_settings(cfg)
@@ -170,7 +185,7 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
                 generator=generator, height=int(cfg.data.height), width=int(cfg.data.width),
                 decode_chunk_size=generation["decode_chunk_size"],
             )
-            state = _audit_generated(auditor, gen, src)
+            state = _audit_generated(auditor, gen, src, geometry_mode)
             drift = auditor.static_drift_score(state)
             row = {
                 "clip_index": i, "sample_id": sid, "generation_seed": task_seed,
@@ -185,7 +200,7 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
                 continue
             result = projector.project(gen, state)
             # 生成帧无 GT track 时 projector 总能量不反映 static 修复；对 x_dagger 重审计。
-            state_after = _audit_generated(auditor, result.target, src)
+            state_after = _audit_generated(auditor, result.target, src, geometry_mode)
             drift_after = auditor.static_drift_score(state_after)
             row["energy_decreased"] = replay_energy_decreased(
                 result, drift_before=drift, drift_after=drift_after

@@ -1,0 +1,28 @@
+defaults_chain:
+  - ../train/motionproj_front_p2.yaml
+
+seed: 20260712
+work_dir: /root/autodl-tmp/runs/p2-v2-condition
+
+data:
+  split: val
+
+model:
+  pretrained: /root/autodl-tmp/weights/svd-xt
+  lora:
+    enable: false
+
+auditor:
+  generated_geometry_mode: estimated_background_motion
+
+condition_validity:
+  protocol: p2-v2-condition-validity-v1
+  clip_indices: [0, 48, 96, 144, 192, 240, 288, 336, 384, 432, 480, 528, 576, 624, 672, 720]
+  generation_seed: 20260712
+  generation:
+    num_inference_steps: 25
+    decode_chunk_size: 4
+  inverse_iterations: 5
+  panel_fps: 4
+  required_reviews: 12
+  minimum_reasonable_rate: 0.70

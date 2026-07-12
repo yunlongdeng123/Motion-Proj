@@ -19,6 +19,18 @@ data:
 model:
   name: svd
 
+auditor:
+  # SVD 不接收 future ego；正式 generated audit 必须显式覆盖为自估计模式。
+  generated_geometry_mode: gt_ego_debug
+  background_fit:
+    min_confidence: 0.5
+    min_points: 256
+    max_points: 32768
+    irls_iterations: 5
+    huber_delta: 2.5
+    min_residual_px: 0.5
+    ridge: 1.0e-4
+
 train: {}
 
 cache:
