@@ -74,6 +74,7 @@ class Trainer:
         )
         self.device = self.accelerator.device
         self.backbone = build_backbone(cfg.model, load=True, device=str(self.device))
+        self._record_backbone_manifest()
         self.writer = self._make_tensorboard()
         self.step = 0
         self.should_stop = False
@@ -197,6 +198,26 @@ class Trainer:
         value.update({"status": status, "exit_reason": reason,
                       "ended_at": datetime.now(timezone.utc).isoformat()})
         atomic_write_json(path, value)
+
+    def _record_backbone_manifest(self) -> None:
+        """在训练前固化 LoRA 完整模块路径与实际可训练参数统计。"""
+        import json
+
+        adapter = self.backbone.adapter_metadata()
+        if int(adapter["trainable_tensor_count"]) != int(adapter["adapter_tensor_count"]):
+            raise RuntimeError("可训练 tensor 数与待保存 adapter tensor 数不一致")
+        if bool(self.cfg.model.lora.enable) and int(adapter["selected_module_count"]) <= 0:
+            raise RuntimeError("LoRA 已启用但 selected module list 为空")
+        module_names = [str(name) for name in adapter["selected_module_names"]]
+        atomic_write_text(
+            os.path.join(self.work_dir, "selected_modules.txt"),
+            "".join(f"{name}\n" for name in module_names),
+        )
+        path = os.path.join(self.work_dir, "manifest.json")
+        with open(path, encoding="utf-8") as handle:
+            manifest = json.load(handle)
+        manifest["model"] = {"name": str(self.cfg.model.name), "adapter": adapter}
+        atomic_write_json(path, manifest)
 
     def _make_tensorboard(self):
         if self.cfg.train.logger == "tensorboard" and self.accelerator.is_main_process:

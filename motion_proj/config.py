@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 from dataclasses import dataclass
 from typing import Any
@@ -20,6 +21,7 @@ GENERATED_GEOMETRY_MODES = {
     "estimated_background_motion",
     "controlled_ego",
 }
+LORA_SCOPES = {"temporal_only", "spatial_only", "all_attention"}
 
 
 class ConfigError(ValueError):
@@ -74,6 +76,20 @@ def validate_config(cfg: DictConfig) -> None:
         model_frames = cfg.model.get("num_frames")
         if data_frames is not None and model_frames is not None and int(data_frames) != int(model_frames):
             errors.append(f"data.num_frames={data_frames} 与 model.num_frames={model_frames} 不一致")
+        sigma_floor = cfg.model.get("sigma_floor", 1.0e-3)
+        if (
+            not isinstance(sigma_floor, (int, float))
+            or not math.isfinite(float(sigma_floor))
+            or float(sigma_floor) <= 0
+        ):
+            errors.append("model.sigma_floor 必须大于 0")
+        lora = cfg.model.get("lora")
+        if lora is not None:
+            scope = str(lora.get("scope", "all_attention"))
+            if scope not in LORA_SCOPES:
+                errors.append(f"model.lora.scope 必须是 {', '.join(sorted(LORA_SCOPES))}")
+            if int(lora.get("rank", 0)) <= 0:
+                errors.append("model.lora.rank 必须大于 0")
     if "train" in cfg:
         experiment_type = str(cfg.train.get("experiment_type", "synthetic"))
         if experiment_type not in EXPERIMENT_TYPES:

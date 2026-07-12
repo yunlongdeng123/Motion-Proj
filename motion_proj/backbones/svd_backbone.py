@@ -19,6 +19,7 @@ LoRA 被注入到 UNet 的注意力投影中；*anchor*（锚定）预测复用�
 from __future__ import annotations
 
 import math
+import re
 from typing import Any
 
 import torch
@@ -29,11 +30,56 @@ from .base import BackboneCapabilities, Conditioning, DiffusionBackbone
 
 log = get_logger(__name__)
 
+LORA_SCOPES = {"temporal_only", "spatial_only", "all_attention"}
+DEFAULT_LORA_PROJECTIONS = ("to_q", "to_k", "to_v", "to_out.0")
+
 
 def _expand(sigma: torch.Tensor, ndim: int) -> torch.Tensor:
     while sigma.dim() < ndim:
         sigma = sigma.unsqueeze(-1)
     return sigma
+
+
+def classify_attention_module_path(module_path: str) -> str | None:
+    """依据完整模块路径区分 SVD 空间与时间 attention。"""
+    segments = module_path.split(".")
+    if "temporal_transformer_blocks" in segments:
+        return "temporal"
+    if "transformer_blocks" in segments:
+        return "spatial"
+    return None
+
+
+def select_lora_module_names(
+    unet: torch.nn.Module,
+    scope: str,
+    projections: tuple[str, ...] | list[str] = DEFAULT_LORA_PROJECTIONS,
+) -> tuple[list[str], dict[str, str]]:
+    """从注入前 UNet 中选择完整 Linear 路径，并拒绝无法分类的 attention。"""
+    if scope not in LORA_SCOPES:
+        raise ValueError(f"未知 LoRA scope={scope!r}; allowed={sorted(LORA_SCOPES)}")
+    suffixes = tuple(str(value) for value in projections)
+    candidates: dict[str, str] = {}
+    ambiguous: list[str] = []
+    for name, module in unet.named_modules():
+        if not isinstance(module, torch.nn.Linear) or not name.endswith(suffixes):
+            continue
+        kind = classify_attention_module_path(name)
+        if kind is None:
+            ambiguous.append(name)
+        else:
+            candidates[name] = kind
+    if ambiguous:
+        raise RuntimeError(f"存在无法按完整路径分类的 attention 模块: {ambiguous}")
+
+    selected = sorted(
+        name
+        for name, kind in candidates.items()
+        if scope == "all_attention" or kind == scope.removesuffix("_only")
+    )
+    if not selected:
+        raise RuntimeError(f"LoRA scope={scope} 未匹配到任何模块")
+    return selected, {name: candidates[name] for name in selected}
 
 
 class SVDBackbone(DiffusionBackbone):
@@ -63,7 +109,13 @@ class SVDBackbone(DiffusionBackbone):
         self.fps = 7
         self.motion_bucket_id = 127
         self.noise_aug_strength = 0.02
+        self.sigma_floor = float(cfg.get("sigma_floor", 1.0e-3))
+        if not math.isfinite(self.sigma_floor) or self.sigma_floor <= 0:
+            raise ValueError("model.sigma_floor 必须是有限正数")
         self._loaded = False
+        self._lora_enabled = False
+        self._selected_lora_module_names: tuple[str, ...] = ()
+        self._selected_lora_module_kinds: dict[str, str] = {}
         self.unet = self.vae = self.image_encoder = self.feature_extractor = self.scheduler = None
 
     # --------------------------------------------------------------- 构建
@@ -109,11 +161,14 @@ class SVDBackbone(DiffusionBackbone):
         from peft import LoraConfig
 
         lcfg = self.cfg.lora
+        scope = str(lcfg.get("scope", "all_attention"))
+        projections = tuple(lcfg.get("projections", lcfg.get("target_modules", DEFAULT_LORA_PROJECTIONS)))
+        selected, kinds = select_lora_module_names(self.unet, scope, projections)
         lora = LoraConfig(
             r=int(lcfg.rank),
             lora_alpha=int(lcfg.alpha),
             lora_dropout=float(lcfg.get("dropout", 0.0)),
-            target_modules=list(lcfg.target_modules),
+            target_modules=selected,
             init_lora_weights="gaussian",
         )
         if hasattr(self.unet, "add_adapter"):
@@ -128,12 +183,61 @@ class SVDBackbone(DiffusionBackbone):
         for _, p in self.unet.named_parameters():
             if p.requires_grad:
                 p.data = p.data.float()
+        self._selected_lora_module_names = tuple(selected)
+        self._selected_lora_module_kinds = kinds
+        self._lora_enabled = True
+        self._validate_lora_isolation()
         n = sum(p.numel() for p in self.unet.parameters() if p.requires_grad)
-        log.info("Injected LoRA via %s (rank=%d), trainable params: %.2fM", backend, lcfg.rank, n / 1e6)
+        log.info(
+            "Injected LoRA via %s (rank=%d, scope=%s), modules=%d, trainable params=%.2fM",
+            backend,
+            lcfg.rank,
+            scope,
+            len(selected),
+            n / 1e6,
+        )
+        for name in selected:
+            log.info("LoRA selected module [%s]: %s", kinds[name], name)
+
+    @staticmethod
+    def _lora_parameter_module(parameter_name: str) -> str | None:
+        match = re.match(r"^(.*)\.lora_(?:A|B|embedding_A|embedding_B)\.", parameter_name)
+        return match.group(1) if match else None
+
+    def _validate_lora_isolation(self) -> None:
+        trainable_names = [name for name, parameter in self.unet.named_parameters() if parameter.requires_grad]
+        if not trainable_names:
+            raise RuntimeError("LoRA 注入后没有可训练 tensor")
+        non_lora = [name for name in trainable_names if self._lora_parameter_module(name) is None]
+        if non_lora:
+            raise RuntimeError(f"发现非 LoRA 可训练参数: {non_lora}")
+        actual_modules = {
+            module_name
+            for name in trainable_names
+            if (module_name := self._lora_parameter_module(name)) is not None
+        }
+        expected_modules = set(self._selected_lora_module_names)
+        if actual_modules != expected_modules:
+            raise RuntimeError(
+                "LoRA 实际注入模块与完整路径清单不一致: "
+                f"missing={sorted(expected_modules - actual_modules)}, "
+                f"unexpected={sorted(actual_modules - expected_modules)}"
+            )
+        scope = str(self.cfg.lora.get("scope", "all_attention"))
+        actual_kinds = {classify_attention_module_path(name) for name in actual_modules}
+        if None in actual_kinds:
+            raise RuntimeError("LoRA 实际注入到了无法分类的模块")
+        if scope == "temporal_only" and actual_kinds != {"temporal"}:
+            raise RuntimeError(f"temporal_only 混入非时间模块: {sorted(actual_modules)}")
+        if scope == "spatial_only" and actual_kinds != {"spatial"}:
+            raise RuntimeError(f"spatial_only 混入非空间模块: {sorted(actual_modules)}")
 
     def _set_lora_enabled(self, enabled: bool) -> None:
         """兼容 diffusers adapter mixin 与 PEFT 原地注入两种 LoRA 后端。"""
         if not self.cfg.lora.enable or self.unet is None:
+            return
+
+        if self._lora_enabled == enabled:
             return
 
         method_name = "enable_adapters" if enabled else "disable_adapters"
@@ -141,10 +245,12 @@ class SVDBackbone(DiffusionBackbone):
         if callable(model_method):
             try:
                 model_method()
+                self._lora_enabled = enabled
                 return
             except TypeError:
                 if method_name == "enable_adapters":
                     model_method(enabled)
+                    self._lora_enabled = enabled
                     return
 
         toggled = 0
@@ -165,7 +271,8 @@ class SVDBackbone(DiffusionBackbone):
                 toggled += 1
 
         if toggled == 0:
-            log.warning("No LoRA adapter toggle method found; anchor prediction will include adapters")
+            raise RuntimeError("未找到 LoRA adapter 开关；拒绝生成泄漏 student adapter 的 Base anchor")
+        self._lora_enabled = enabled
 
     # --------------------------------------------------------------- latent 空间
     @torch.no_grad()
@@ -197,35 +304,45 @@ class SVDBackbone(DiffusionBackbone):
         return (rnd * self.p_std + self.p_mean).exp()
 
     # ------------------------------------------------------------------- 去噪
-    def _unet_x0(self, z, sigma, cond: Conditioning) -> torch.Tensor:
-        sigma_e = _expand(sigma, z.dim())
+    def _safe_sigma(self, sigma: torch.Tensor) -> torch.Tensor:
+        if not bool(torch.isfinite(sigma).all()):
+            raise ValueError("sigma 包含 NaN/Inf")
+        return sigma.clamp_min(self.sigma_floor)
+
+    def predict_model_output(self, z, sigma, cond: Conditioning) -> torch.Tensor:
+        sigma_safe = self._safe_sigma(sigma)
+        sigma_e = _expand(sigma_safe, z.dim())
         c_in = 1.0 / (sigma_e**2 + 1.0).sqrt()
-        c_noise = 0.25 * torch.log(sigma.clamp_min(1e-8))
+        c_noise = 0.25 * torch.log(sigma_safe)
         img_lat = cond.data["image_latents"]            # [B,T,C,h,w]
         model_in = torch.cat([z * c_in, img_lat], dim=2).to(self.dtype)
-        out = self.unet(
+        return self.unet(
             model_in,
             c_noise.to(self.dtype),
             encoder_hidden_states=cond.data["image_embeds"].to(self.dtype),
             added_time_ids=cond.data["added_time_ids"].to(self.dtype),
             return_dict=False,
         )[0]
-        # v-prediction 转 x0
-        denom = (sigma_e**2 + 1.0)
-        x0 = z / denom - out * (sigma_e / denom.sqrt())
-        return x0
 
-    def predict_x0(self, z, sigma, cond: Conditioning) -> torch.Tensor:
-        return self._unet_x0(z, sigma, cond)
+    def x0_from_model_output(self, z, sigma, model_output) -> torch.Tensor:
+        sigma_e = _expand(self._safe_sigma(sigma), z.dim())
+        denom = sigma_e.square() + 1.0
+        return z / denom - model_output * (sigma_e / denom.sqrt())
+
+    def model_output_from_x0(self, z, sigma, x0) -> torch.Tensor:
+        sigma_e = _expand(self._safe_sigma(sigma), z.dim())
+        denom = sigma_e.square() + 1.0
+        return (z / denom - x0) * (denom.sqrt() / sigma_e)
 
     @torch.no_grad()
-    def anchor_predict_x0(self, z, sigma, cond: Conditioning) -> torch.Tensor:
-        if self.cfg.lora.enable:
+    def anchor_predict_model_output(self, z, sigma, cond: Conditioning) -> torch.Tensor:
+        was_enabled = self._lora_enabled
+        if self.cfg.lora.enable and was_enabled:
             self._set_lora_enabled(False)
         try:
-            return self._unet_x0(z, sigma, cond)
+            return self.predict_model_output(z, sigma, cond)
         finally:
-            if self.cfg.lora.enable:
+            if self.cfg.lora.enable and was_enabled:
                 self._set_lora_enabled(True)
 
     # ----------------------------------------------------------------- 条件
@@ -272,6 +389,32 @@ class SVDBackbone(DiffusionBackbone):
 
     def adapter_state(self) -> dict[str, torch.Tensor]:
         return {n: p.detach().cpu() for n, p in self.unet.named_parameters() if p.requires_grad}
+
+    def adapter_metadata(self) -> dict[str, Any]:
+        if not self.cfg.lora.enable:
+            return super().adapter_metadata()
+        self._validate_lora_isolation()
+        state = self.adapter_state()
+        trainable = self.trainable_parameters()
+        temporal_count = sum(
+            self._selected_lora_module_kinds[name] == "temporal"
+            for name in self._selected_lora_module_names
+        )
+        spatial_count = sum(
+            self._selected_lora_module_kinds[name] == "spatial"
+            for name in self._selected_lora_module_names
+        )
+        return {
+            "scope": str(self.cfg.lora.get("scope", "all_attention")),
+            "rank": int(self.cfg.lora.rank),
+            "selected_module_names": list(self._selected_lora_module_names),
+            "selected_module_count": len(self._selected_lora_module_names),
+            "temporal_module_count": temporal_count,
+            "spatial_module_count": spatial_count,
+            "trainable_tensor_count": len(trainable),
+            "trainable_parameter_count": sum(parameter.numel() for parameter in trainable),
+            "adapter_tensor_count": len(state),
+        }
 
     def load_adapter_state(self, state: dict[str, torch.Tensor]) -> None:
         self.unet.load_state_dict(state, strict=False)
