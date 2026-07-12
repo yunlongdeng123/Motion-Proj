@@ -3,8 +3,8 @@
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
 * 最后更新：2026-07-12
-* 计划基线 commit：`fff5ccb`
-* 当前阶段：`P2-V2-API-01 / parameterization and LoRA isolation`
+* 计划基线 commit：`5bd7a18`
+* 当前阶段：`P2-V2-GRAD-02 / V2 loss and gradient audit`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -964,7 +964,7 @@ object_confidence_mean
 | P2-V1-TUNE-01    | rejected | V1 16×100、4×300 无正增益            | V1 归档                     | 不再续训                       |
 | P2-V2-ARCHIVE-00 | done     | 归档 V1 和修复 watchdog 完成态          | `docs/EXPERIMENTS.md`、`tests/test_watchdog_terminal_state.py` | 开始 V2 条件门槛             |
 | P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
-| P2-V2-API-01     | pending  | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
+| P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | pending  | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 决定参数化                      |
 | P2-V2-PILOT-03   | pending  | 8-pair 单步容量测试                   | A/B/C/D curves            | 解锁小规模 rollout              |
 | P2-V2-GEN-04     | pending  | generated point-track provider；static V1 blocked | provider tests/panel      | 解锁 object component         |
@@ -1017,6 +1017,8 @@ pytest -q tests/test_watchdog_terminal_state.py
 ---
 
 # 12. P2-V2-API-01：参数化与模块选择
+
+状态：`done`（2026-07-12；commit `5bd7a18`；证据：`tests/test_svd_parameterization.py`、`tests/test_lora_scope.py`、全量 `105 passed`；下一步 `P2-V2-GRAD-02`）
 
 ## 12.1 需要修改的文件
 
@@ -1104,6 +1106,18 @@ tests/test_lora_scope.py
 * spatial-only 不包含 temporal module；
 * manifest 中 module list 可复现；
 * 训练参数数量与保存 adapter tensor 数一致。
+
+## 12.5 验收结论
+
+* 六个预注册 sigma 上，float32 的 `x0 → v → x0` 与 `v → x0 → v` 最大绝对误差均低于 `1e-5`；
+* bf16 latent + float32 sigma 的 roundtrip 通过预注册 `2e-3` 相对误差容差；
+* `sigma_floor=1e-3`，零 sigma 与 floor 行为一致，NaN/Inf fail closed；
+* Base anchor 输出为 detached，adapter 在原先启用和原先禁用两种状态下均准确恢复；
+* 完整 SVD-XT 结构 smoke 选中 `128` 个 temporal、`0` 个 spatial 模块；
+* rank 16 下实际为 `256` 个 adapter tensor、`3,319,808` 个可训练参数，保存 tensor 数一致；
+* selected module names 固化到 `selected_modules.txt` 与 run manifest。
+
+该门槛只确认代数、参数隔离和工程 provenance，不构成 rollout 改善证据。
 
 ---
 
@@ -1830,12 +1844,12 @@ Coding Agent 按顺序执行：
 
 ## Phase B：参数化与 LoRA
 
-* [ ] 增加 raw-v backbone API
-* [ ] 增加 x0/v 双向变换
-* [ ] 增加 sigma floor
-* [ ] 增加 temporal/spatial LoRA scope
-* [ ] 保存 selected module list
-* [ ] 完成代数与模块测试
+* [x] 增加 raw-v backbone API
+* [x] 增加 x0/v 双向变换
+* [x] 增加 sigma floor
+* [x] 增加 temporal/spatial LoRA scope
+* [x] 保存 selected module list
+* [x] 完成代数与模块测试
 
 ## Phase C：V2 loss
 
@@ -2003,6 +2017,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `ae826a1`             | FVD 移出 16/32-clip 筛选                                        | 避免用小样本分布指标作不稳定决策                                                    |
 | 2026-07-12 | `9a1f536`             | 完成 `P2-V2-ARCHIVE-00` 并修复 watchdog terminal state            | 正式归档 V1 negative result；终态 run 不再误报 heartbeat stale                    |
 | 2026-07-12 | `fff5ccb`             | 完成 16-case condition validity 与人工复核                           | H0 确认；GT static rejected；self-estimated static V1 以 66.67% 未过门槛          |
+| 2026-07-12 | `5bd7a18`             | 完成 SVD raw-v 参数化与 temporal-only LoRA 隔离                         | 关闭代数、sigma floor、adapter 恢复与完整路径模块选择风险；解锁 V2 loss/梯度审计             |
 
 ---
 
@@ -2011,26 +2026,27 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 立即执行且只执行：
 
 ```text
-P2-V2-API-01
+P2-V2-GRAD-02
 ```
 
-在 `P2-V2-API-01` 完成前：
+在 `P2-V2-GRAD-02` 完成前：
 
-* 不实现正式 V2 replay loss；
 * 不构建 64–128 cache；
 * 不启动新训练；
 * 不使用 future GT ego pose 生成正式 SVD target。
 * 不恢复已被人工门槛拒绝的 SVD self-estimated static V1。
+
+该阶段先完成 Phase C 的 V2 loss 单元测试，再实现固定 batch/noise 的 gradient audit；不得把 gradient audit 扩张为 rollout 训练。
 
 完成后输出：
 
 ```text
 1. 修改文件列表
 2. 测试结果
-3. condition_validity_summary.json
-4. 人工 review 包路径
-5. SVD static branch：promote / blocked
-6. 下一 milestone 建议
+3. gradient audit 证据路径与 summary
+4. raw-v / direct-v / preserve 梯度有限性与尺度结论
+5. LoRA scope 与 selected module 统计
+6. 下一 milestone 建议或阻塞原因
 7. Git diff summary
 8. 当前 worktree 状态
 ```
