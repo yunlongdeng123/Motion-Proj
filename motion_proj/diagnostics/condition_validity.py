@@ -28,7 +28,7 @@ from ..utils.io import to_uint8_video, write_video
 from ..utils.viz import flow_to_rgb, hstack_panels
 
 
-PROTOCOL_VERSION = "p2-v2-condition-validity-v1"
+PROTOCOL_VERSION = "p2-v2-condition-validity-v2"
 AUDIT_MODES = ("gt_ego_debug", "identity_ego", "estimated_background_motion")
 REVIEW_VALUES = {"yes", "no", "uncertain"}
 
@@ -93,10 +93,12 @@ def _condition_panel(
     estimated_target: torch.Tensor,
     observed_flow: torch.Tensor,
     estimated_mask: torch.Tensor,
+    generated_tracks: list,
 ) -> np.ndarray:
     base_video = to_uint8_video(base)
     gt_video = to_uint8_video(gt_target)
     estimated_video = to_uint8_video(estimated_target)
+    tracks_video = _draw_generated_tracks(base_video, generated_tracks)
     frames = []
     for index in range(base.shape[0]):
         pair_index = min(index, observed_flow.shape[0] - 1)
@@ -106,12 +108,38 @@ def _condition_panel(
         frames.append(
             hstack_panels(
                 _label_panel(base_video[index], "Base rollout"),
+                _label_panel(tracks_video[index], "Generated point tracks (no GT)"),
                 _label_panel(gt_video[index], "GT-ego correction [debug]"),
                 _label_panel(estimated_video[index], "Self-estimated correction"),
                 _label_panel(overlay, "Observed flow / self mask"),
             )
         )
     return np.stack(frames)
+
+
+def _draw_generated_tracks(video: np.ndarray, tracks: list) -> np.ndarray:
+    """在 Base rollout 上绘制 provider 的局部点轨迹，供人工检查而非训练输入。"""
+    import cv2
+
+    palette = {
+        "background": (80, 180, 255),
+        "dynamic_residual": (255, 90, 90),
+        "foreground_candidate": (80, 230, 100),
+    }
+    rendered = video.copy()
+    for time in range(rendered.shape[0]):
+        for track in tracks:
+            if not bool(track.present[time]):
+                continue
+            label = str(track.category).split("/")[-1]
+            color = palette.get(label, (220, 220, 220))
+            center = track.center[time].detach().float().cpu().round().to(torch.int64).tolist()
+            point = (int(center[0]), int(center[1]))
+            cv2.circle(rendered[time], point, 3, color, -1, lineType=cv2.LINE_AA)
+            if time and bool(track.present[time - 1]):
+                previous = track.center[time - 1].detach().float().cpu().round().to(torch.int64).tolist()
+                cv2.line(rendered[time], (int(previous[0]), int(previous[1])), point, color, 1, cv2.LINE_AA)
+    return rendered
 
 
 def _correction_stats(base: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) -> dict[str, Any]:
@@ -273,6 +301,7 @@ def export_cases(cfg: Any, run_dir: Path) -> list[dict[str, Any]]:
                 "static_mask_fraction": float((state.static_mask > 0).float().mean()),
                 "expected_flow_mean": float(state.u_ego.float().norm(dim=-1).mean()),
                 "geometry_diagnostics": state.meta["geometry_diagnostics"],
+                "track_diagnostics": state.meta["track_diagnostics"],
                 "correction": _correction_stats(base, target, mask),
             }
 
@@ -284,6 +313,7 @@ def export_cases(cfg: Any, run_dir: Path) -> list[dict[str, Any]]:
             targets["estimated_background_motion"],
             observed_flow,
             masks["estimated_background_motion"],
+            states["estimated_background_motion"].tracks,
         )
         write_video(panel, str(panel_path), fps=int(settings["panel_fps"]))
         row = {
@@ -333,7 +363,7 @@ def _write_review_package(run_dir: Path, rows: list[dict[str, Any]], required_re
         atomic_write_text(
             str(readme),
             "# P2-V2 条件有效性人工复核\n\n"
-            "每个视频依次为 `[Base | GT-ego debug correction | self-estimated correction | observed flow/self mask]`。\n"
+            "每个视频依次为 `[Base | generated point tracks | GT-ego debug correction | self-estimated correction | observed flow/self mask]`。\n"
             "至少复核模板中的 12 个 case，分别填写 `yes/no/uncertain`；重点判断背景运动修正是否符合 "
             "Base 自身生成的相机运动，以及是否引入撕裂、冻结或主体破坏。\n"
             "复制 `reviews.template.jsonl` 为 `reviews.jsonl` 后运行同一命令并增加 `--aggregate-only`。\n",
