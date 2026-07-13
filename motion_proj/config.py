@@ -13,7 +13,7 @@ from omegaconf import DictConfig, OmegaConf
 CURRENT_SCHEMA_VERSION = 2
 EXPERIMENT_TYPES = {
     "base", "real-only", "flow", "synthetic", "replay", "full",
-    "full-no-anchor", "full-no-tube",
+    "full-no-anchor", "full-no-tube", "v2_capacity_pilot",
 }
 GENERATED_GEOMETRY_MODES = {
     "gt_ego_debug",
@@ -102,8 +102,11 @@ def validate_config(cfg: DictConfig) -> None:
             if int(lora.get("rank", 0)) <= 0:
                 errors.append("model.lora.rank 必须大于 0")
         if cfg.cache.get("source") == "replay_v2":
-            if bool(lora.get("enable", False)):
-                errors.append("正式 replay_v2 必须 model.lora.enable=false")
+            is_capacity_pilot = str(cfg.train.get("experiment_type", "")) == "v2_capacity_pilot"
+            if bool(lora.get("enable", False)) and not is_capacity_pilot:
+                errors.append("正式 replay_v2 挖矿必须 model.lora.enable=false")
+            if is_capacity_pilot and not bool(lora.get("enable", False)):
+                errors.append("v2_capacity_pilot 必须 model.lora.enable=true")
             if str(cfg.auditor.get("generated_geometry_mode")) != "estimated_background_motion":
                 errors.append("正式 replay_v2 必须使用 estimated_background_motion")
     if "train" in cfg:

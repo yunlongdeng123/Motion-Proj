@@ -60,6 +60,18 @@ def test_replay_v2_config_requires_base_parent_without_adapter():
         validate_config(bad)
 
 
+def test_v2_capacity_pilot_is_the_only_replay_v2_training_exception():
+    cfg = load_config("configs/replay/p2_v2_base.yaml")
+    pilot = OmegaConf.create(OmegaConf.to_container(cfg, resolve=True))
+    OmegaConf.set_readonly(pilot, False)
+    pilot.train.experiment_type = "v2_capacity_pilot"
+    pilot.model.lora.enable = True
+    validate_config(pilot)
+    pilot.model.lora.enable = False
+    with pytest.raises(ConfigError, match="v2_capacity_pilot"):
+        validate_config(pilot)
+
+
 def test_resumable_sampler_continues_exact_position():
     data = list(range(10))
     sampler = ResumableRandomSampler(data, seed=7)

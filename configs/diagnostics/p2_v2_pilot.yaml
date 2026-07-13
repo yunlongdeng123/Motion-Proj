@@ -1,0 +1,59 @@
+defaults_chain:
+  - ../train/motionproj_front_p2.yaml
+
+run_id: p2-v2-pilot03
+work_dir: /root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03
+
+paths:
+  cache_dir: /root/autodl-tmp/cache/p2-v2/p2-v2-replay05-candidate64x2-s20260713-a41dfa4-objectonly
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+seed: 20260713
+
+model:
+  pretrained: /root/autodl-tmp/weights/svd-xt
+  lora:
+    enable: true
+    rank: 16
+    alpha: 16
+    dropout: 0.0
+    scope: temporal_only
+    projections: [to_q, to_k, to_v, to_out.0]
+
+auditor:
+  generated_geometry_mode: estimated_background_motion
+
+cache:
+  source: replay_v2
+  store: latent
+  overwrite: false
+
+train:
+  experiment_type: v2_capacity_pilot
+  deterministic: true
+  num_workers: 0
+  lr: 2.0e-5
+  weight_decay: 0.0
+  max_steps: 200
+  max_grad_norm: 1.0
+  log_every: 10
+  ckpt_every: 200
+  logger: none
+  resume: none
+
+pilot:
+  task_id: P2-V2-PILOT-03
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  selection_seed: 20260713
+  noise_seed: 20260714
+  pair_count: 8
+  train_pair_count: 4
+  variants: [A, B, C, D, E]
+  sigma_by_train_pair: [0.01, 0.05, 0.2, 1.0]
+  eta: 1.0
+  trust_region_B: 0.25
+  dilation_radius: 1
+  preserve_weight: 1.0
+  required_error_reduction: 0.80
+  max_outside_teacher_drift_ratio: 0.02
