@@ -14,7 +14,7 @@ from ..cache.dataset import ProjectionCacheDataset
 from ..config import config_fingerprint, get_paths, load_config, save_resolved_config
 from ..losses import correction_v_loss, outside_mask_preserve_v_loss, teacher_relative_v_target
 from ..runtime.atomic import atomic_write_json, atomic_write_text
-from ..runtime.experiment import JsonlMetrics, RunManifest
+from ..runtime.experiment import JsonlMetrics, RunManifest, utc_now
 from ..runtime.fingerprint import environment_fingerprint, file_fingerprint, git_state, sha256_json
 from .trainer import seed_everything
 
@@ -122,6 +122,27 @@ def _variant_loss(backbone, batch: dict, variant: str, pilot_cfg) -> tuple[torch
     }
 
 
+def _aggregate_evaluation_rows(values: list[dict]) -> dict:
+    """聚合 pair 指标；严格门槛使用逐 pair 最坏值，避免均值掩盖失败。"""
+    if not values:
+        raise ValueError("capacity evaluation 至少需要一个 pair")
+    mean_keys = (
+        "target_error",
+        "outside_teacher_drift_ratio",
+        "correction_direction_cosine",
+    )
+    aggregate = {
+        key: sum(float(row[key]) for row in values) / len(values)
+        for key in mean_keys
+    }
+    aggregate.update({
+        "outside_teacher_drift_ratio_max": max(float(row["outside_teacher_drift_ratio"]) for row in values),
+        "frame0_teacher_drift": max(abs(float(row["frame0_teacher_drift"])) for row in values),
+        "target_roundtrip_max_error": max(float(row["target_roundtrip_max_error"]) for row in values),
+    })
+    return aggregate
+
+
 def _evaluation(backbone, batches: list[dict], variant: str, pilot_cfg) -> dict:
     values = []
     with torch.no_grad():
@@ -138,13 +159,28 @@ def _evaluation(backbone, batches: list[dict], variant: str, pilot_cfg) -> dict:
             denom = (((student_x0 - teacher_x0).square() * batch["object"]).sum().sqrt()
                      * ((delta.square() * batch["object"]).sum().sqrt())).clamp_min(1.0e-12)
             values.append({
+                "sample_id": batch["sample_id"],
+                "sigma": float(batch["sigma"].flatten()[0]),
                 "target_error": float(info["target_error"]),
                 "outside_teacher_drift_ratio": float(drift / teacher_rms.clamp_min(1.0e-12)),
                 "frame0_teacher_drift": float(frame0),
                 "target_roundtrip_max_error": float(info["roundtrip_error"]),
                 "correction_direction_cosine": float(direction / denom),
             })
-    return {key: sum(row[key] for row in values) / len(values) for key in values[0]}
+    return {**_aggregate_evaluation_rows(values), "per_pair": values}
+
+
+def _record_backbone_provenance(work_dir: Path, manifest_data: dict, backbone, cfg) -> None:
+    """在首个 update 前固化 LoRA 模块清单与实际参数统计。"""
+    adapter = backbone.adapter_metadata()
+    if int(adapter["trainable_tensor_count"]) != int(adapter["adapter_tensor_count"]):
+        raise RuntimeError("可训练 tensor 数与待保存 adapter tensor 数不一致")
+    if int(adapter["selected_module_count"]) <= 0:
+        raise RuntimeError("capacity pilot 的 selected module list 为空")
+    module_names = [str(name) for name in adapter["selected_module_names"]]
+    atomic_write_text(str(work_dir / "selected_modules.txt"), "".join(f"{name}\n" for name in module_names))
+    manifest_data["model"] = {"name": str(cfg.model.name), "adapter": adapter}
+    atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
 
 
 def _noise_bank(dataset: ProjectionCacheDataset, indices: dict[str, list[int]], pilot_cfg, destination: Path) -> dict:
@@ -193,19 +229,29 @@ def run_capacity_pilot(cfg, *, variants: list[str] | None = None, max_steps: int
     manifest = RunManifest(run_id=str(cfg.run_id), command=list(sys.argv), config_fingerprint=config_fp,
                            cache_fingerprint=str(pilot_cfg.cache_fingerprint), seed=int(cfg.seed), git=git,
                            environment=environment_fingerprint(), data_split=str(cfg.data.split))
+    bank_fingerprint = file_fingerprint(str(bank_path))
+    expected_bank_fingerprint = pilot_cfg.get("expected_noise_bank_fingerprint")
     manifest_data = manifest.__dict__ | {"task_id": str(pilot_cfg.task_id), "selection": selection,
-                                          "noise_bank_fingerprint": file_fingerprint(str(bank_path)), "variants": requested}
+                                          "noise_bank_fingerprint": bank_fingerprint, "variants": requested}
     atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
     save_resolved_config(cfg, str(work_dir / "resolved.yaml"))
     metrics = JsonlMetrics(str(work_dir / "metrics.jsonl"))
-    device = torch.device(cfg.device)
-    train_batches = [_to_batch(dataset[index], bank["rows"][pos], device) for pos, index in enumerate(selection["train"])]
     results = {}
     try:
-        for variant_index, variant in enumerate(requested):
-            seed_everything(int(cfg.seed) + variant_index, deterministic=bool(cfg.train.deterministic))
+        if expected_bank_fingerprint and str(expected_bank_fingerprint) != bank_fingerprint:
+            raise RuntimeError(
+                "noise bank fingerprint 与预注册值不一致: "
+                f"expected={expected_bank_fingerprint}, actual={bank_fingerprint}"
+            )
+        device = torch.device(cfg.device)
+        train_batches = [_to_batch(dataset[index], bank["rows"][pos], device) for pos, index in enumerate(selection["train"])]
+        for variant in requested:
+            # 参数化对照必须共享相同初始化，不能让 variant 顺序改变 optimizer 起点。
+            seed_everything(int(cfg.seed), deterministic=bool(cfg.train.deterministic))
             backbone = build_backbone(cfg.model, load=True, device=str(device))
             backbone.set_train_mode(True)
+            if "model" not in manifest_data:
+                _record_backbone_provenance(work_dir, manifest_data, backbone, cfg)
             optimizer = torch.optim.AdamW(backbone.trainable_parameters(), lr=float(cfg.train.lr), weight_decay=float(cfg.train.weight_decay))
             initial = _evaluation(backbone, train_batches, variant, pilot_cfg)
             gradient_finite = True
@@ -213,14 +259,22 @@ def run_capacity_pilot(cfg, *, variants: list[str] | None = None, max_steps: int
             for step in range(limit):
                 batch = train_batches[step % len(train_batches)]
                 optimizer.zero_grad(set_to_none=True)
-                loss, _ = _variant_loss(backbone, batch, variant, pilot_cfg)
+                loss, loss_info = _variant_loss(backbone, batch, variant, pilot_cfg)
                 loss.backward()
                 norm = torch.nn.utils.clip_grad_norm_(backbone.trainable_parameters(), float(cfg.train.max_grad_norm))
                 gradient_finite = gradient_finite and bool(torch.isfinite(norm))
                 gradient_nonzero = gradient_nonzero or float(norm) > 0.0
                 optimizer.step()
                 if (step + 1) % int(cfg.train.log_every) == 0 or step + 1 == limit:
-                    metrics.append(step + 1, {"variant": variant, "loss": float(loss), "grad_norm": float(norm)})
+                    metrics.append(step + 1, {
+                        "variant": variant,
+                        "sample_id": batch["sample_id"],
+                        "sigma": float(batch["sigma"].flatten()[0]),
+                        "loss": float(loss),
+                        "target_error": float(loss_info["target_error"]),
+                        "preserve_loss": float(loss_info["preserve_loss"]),
+                        "grad_norm": float(norm),
+                    })
             final = _evaluation(backbone, train_batches, variant, pilot_cfg)
             variant_dir = work_dir / "variants" / variant
             variant_dir.mkdir(parents=True, exist_ok=False)
@@ -237,13 +291,21 @@ def run_capacity_pilot(cfg, *, variants: list[str] | None = None, max_steps: int
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
         summary = {"status": "completed", "task_id": str(pilot_cfg.task_id), "variants": results,
-                   "max_steps": limit, "selection": selection, "noise_bank_fingerprint": file_fingerprint(str(bank_path)),
-                   "experiment_fingerprint": sha256_json({"config": config_fp, "noise_bank": file_fingerprint(str(bank_path)), "results": results})}
+                   "max_steps": limit, "selection": selection, "noise_bank_fingerprint": bank_fingerprint,
+                   "experiment_fingerprint": sha256_json({"config": config_fp, "noise_bank": bank_fingerprint, "results": results})}
         atomic_write_json(str(work_dir / "summary.json"), summary)
         atomic_write_text(str(work_dir / "COMPLETE"), sha256_json(summary) + "\n")
+        manifest_data.update({
+            "status": "completed",
+            "ended_at": utc_now(),
+            "exit_reason": "capacity_passed" if all(row["decision"]["passed"] for row in results.values()) else "capacity_failed",
+        })
+        atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
         return summary
     except Exception as exc:
         atomic_write_json(str(work_dir / "summary.json"), {"status": "failed", "error": repr(exc)})
+        manifest_data.update({"status": "failed", "ended_at": utc_now(), "exit_reason": repr(exc)})
+        atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
         raise
 
 
