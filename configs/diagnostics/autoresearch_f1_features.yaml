@@ -1,0 +1,36 @@
+defaults_chain:
+  - ./p2_v2_pilot.yaml
+
+run_id: autoresearch-f1-features-s20260713
+work_dir: /root/autodl-tmp/runs/autoresearch-f1-features-s20260713
+
+model:
+  lora:
+    enable: false
+  gradient_checkpointing: false
+
+train:
+  experiment_type: replay
+  deterministic: true
+  num_workers: 0
+
+f1:
+  task_id: AUTORESEARCH-F1-FEATURE-DISCRIMINABILITY
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_indices: [8, 34, 37, 60, 69, 81, 99, 114]
+  noise_seed: 20260715
+  sigmas: [0.05, 0.2, 1.0]
+  smooth_lambda: 5.0
+  temperature: 0.05
+  pck_radius_cells: 1.0
+  # Preregistered before the formal F1 run.
+  max_fraction_below_half_cell: 0.50
+  min_observed_pck_1cell: 0.20
+  feature_layers:
+    down_s8: down_blocks.0.attentions.1
+    down_s16: down_blocks.1.attentions.1
+    down_s32: down_blocks.2.attentions.1
+    mid_s64: mid_block.attentions.0
+    up_s32: up_blocks.1.attentions.2
+    up_s16: up_blocks.2.attentions.2
+    up_s8: up_blocks.3.attentions.2
