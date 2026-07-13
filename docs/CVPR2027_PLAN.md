@@ -3,7 +3,7 @@
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
 * 最后更新：2026-07-13
-* 计划基线 commit：`63d9bd0`
+* 计划基线 commit：`3cb8445`
 * 当前阶段：`P2-V2-GEN-04 running / provider implementation awaiting Base-panel review`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
@@ -881,8 +881,11 @@ projector；轨迹和 projector 诊断会报告轨迹数、长度中位数、sur
 的独立 evaluator，缺依赖时 fail-closed，不会静默退回 RAFT。
 
 工程测试覆盖：无 GT 轨迹、分层 query、链式传播、F/B 拒绝、source-box 隔离、
-自估背景 projector 接线、配置和 CoTracker3 fail-closed。它们不构成真实 Base 轨迹质量证据；
-下一项仍是 clean commit 上的冻结 Base panel 与人工复核，未通过则 object replay 继续 blocked。
+自估背景 projector 接线、配置和 CoTracker3 fail-closed。首个 clean Base panel
+`p2-v2-gen04-panel1-s20260713-3cb8445` 已完成自动检查：72 个 query 中有 62 条有效
+轨迹、长度中位数 5 帧、survival 44.44%、局部 correction coverage 6.01%，且
+`uses_future_gt_track=false`。证据中的 track overlay 已供人工复核；单 case 只证明链路
+可运行，不构成轨迹质量晋级，未通过后续人工 review 前 object replay 继续 blocked。
 
 ---
 
@@ -2046,6 +2049,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `5bd7a18`             | 完成 SVD raw-v 参数化与 temporal-only LoRA 隔离                         | 关闭代数、sigma floor、adapter 恢复与完整路径模块选择风险；解锁 V2 loss/梯度审计             |
 | 2026-07-13 | `ce52feb` / `63d9bd0` | 完成 V2 residual-v loss 与 V1/V2 fixed-noise 梯度审计                    | direct-v/trust-region 梯度有限；V1 all-attention spatial GradRMS 多数行高于 temporal；无有效 Base replay pair，pilot blocked |
 | 2026-07-13 | `pending` | 开始 `P2-V2-GEN-04` RAFT point-track 工程接线 | generated mode 彻底隔离 source future boxes；真实 Base panel 尚未运行 |
+| 2026-07-13 | `3cb8445` | 生成首个无 GT point-track Base panel | 自动检查通过、62 条有效轨迹；等待人工 review，不构建 replay cache |
 
 ---
 
