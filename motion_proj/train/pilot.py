@@ -75,7 +75,8 @@ def _to_batch(item: dict, bank: dict, device: torch.device) -> dict:
     return {
         "base": base, "projected": projected, "residual": residual,
         "static": static, "object": obj, "sigma": bank["sigma"].to(device),
-        "noise": bank["noise"].to(device), "z": bank["z_sigma"].to(device),
+        # noise bank 按单 pair 保存 [T,C,H,W]，进入 SVD 前必须恢复 batch 维。
+        "noise": bank["noise"].unsqueeze(0).to(device), "z": bank["z_sigma"].unsqueeze(0).to(device),
         "condition": _conditioning(item, device), "sample_id": meta["sample_id"],
     }
 
