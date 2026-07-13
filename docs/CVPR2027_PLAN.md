@@ -1001,7 +1001,7 @@ object_confidence_mean
 | P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
-| P2-V2-PILOT-03   | running  | 8-pair 单步容量测试                   | A/B/C/D curves            | 已解锁；先固定 8-pair noise bank |
+| P2-V2-PILOT-03   | running  | 8-pair 单步容量测试                   | A/B/C/D curves            | E 200-step 未过；以同一 noise bank 检验 D |
 | P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
 | P2-V2-REPLAY-05  | done     | 64–128 Base replay cache        | 64×2 candidate 得 122 有效；20-case review 16/16 yes | 解锁 8-pair capacity pilot |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
@@ -1296,6 +1296,17 @@ verdict 均为 yes。pilot 只能使用该 candidate 中固定抽取的 8 个 pa
 ---
 
 # 14. P2-V2-PILOT-03：单步容量与参数化测试
+
+状态：`running`（2026-07-13；实现 commit `638eb71` / `b4c2608`；E 的固定 8-pair
+200-update capacity 失败；证据：`/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-capacity-e200-s20260713-b4c2608`；下一步：同一固定 noise bank 的 D 对照）
+
+E 使用 4 个固定 train pair（held-out 4 个只保留为后续 sanity check）、固定 selection
+`[8,34,37,60,69,81,99,114]` 与 noise-bank fingerprint `e3071be549ae0cb5e7f46b62ccad5a43de605eb24a9f3d777305664c44c2040c`。
+在 200 update 后 target error 从 `0.0137314` 到 `0.0105117`（下降 `23.45%`，低于 80%），
+outside-mask teacher drift 为 `6.52%`（高于 2%）、frame-0 teacher drift `0.1948`（非数值零）；
+gradient finite/nonzero、target-v roundtrip（`7.38e-6`）及 correction direction（`0.4975`）通过。
+因此 E 不通过 capacity gate，不得进入 rollout、16/8 泛化或长训练；这尚不能区分 trust-region 与
+更基础的 optimization/preserve 限制，下一步只允许固定同一 bank 跑 D。
 
 ## 14.1 Pilot 数据
 
@@ -1943,7 +1954,7 @@ Coding Agent 按顺序执行：
 
 * [x] 实现 gradient audit CLI
 * [x] 完成 V1/V2 gradient report
-* [ ] 构建 8-pair Base pilot（已由 `P2-V2-REPLAY-05` 解锁；待固定 noise bank）
+* [x] 构建 8-pair Base pilot 与固定 noise bank（E 200-step 未过 capacity gate）
 * [ ] 完成 A/B/C/D/E 对照
 * [ ] 完成 16/8 one-step generalization sanity check
 
@@ -2104,6 +2115,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `38a1665` | V5 object-only preflight 通过 | clean Base 1 condition × 2 seeds 均写入；RGB/latent/residual、provenance、首帧与 GT guards 完整；static mask=0，object mask 非空 | P2-V2-REPLAY-05 进入 running；下一步分层 64×2 candidate 与独立 20-case 复核，之前禁止训练 |
 | 2026-07-13 | `a41dfa4` | 完成 V5 64×2 Base replay candidate | 128 candidate 中 122 kept、6 条空 object mask 硬拒绝；全 122 条 schema/provenance 自检通过，固定 20-case review 包已导出 | P2-V2-REPLAY-05 仍 running，等待人工 verdict；不得训练 |
 | 2026-07-13 | `8d750f3` | 完成 V5 20-case object-only 人工门禁 | 20/20 已填写；16 decisive 均为 yes、4 uncertain，合理率 100% ≥ 70%；review fingerprint `ccd9c5fa26d8`，review run 写入 `COMPLETE` | P2-V2-REPLAY-05 done；只解锁 object-only 的 8-pair capacity pilot，static branch 继续 blocked |
+| 2026-07-13 | `b4c2608` | E 固定 8-pair capacity 失败 | 200 update 的 target error 仅下降 23.45%，outside drift 6.52%、frame-0 drift 0.1948；gradient/roundtrip/direction 通过 | PILOT-03 仍 running；固定同一 noise bank 执行 D，不进入 rollout 或泛化 |
 
 ---
 
@@ -2116,8 +2128,9 @@ P2-V2-PILOT-03
 ```
 
 `P2-V2-REPLAY-05` 已完成：64×2 candidate 的 122 个有效 V5 object-only pair 均通过 formal
-reader 审计，固定 20-case 人工复核的 decisive 合理率为 100%（16/16）。下一步仅构建固定 noise bank
-并执行最多 200 update 的 `P2-V2-PILOT-03` capacity test；不能跳至 rollout 比较、16/8 泛化或长训练。
+reader 审计，固定 20-case 人工复核的 decisive 合理率为 100%（16/16）。固定 8-pair 的 E 200-update
+capacity test 未过 gate；下一步仅以相同 selection/noise bank 执行 D 对照，不能跳至 rollout 比较、16/8
+泛化或长训练。
 
 * 不使用 future GT ego pose 生成正式 SVD target；
 * 不恢复已被人工门槛拒绝的 SVD self-estimated static V1；
