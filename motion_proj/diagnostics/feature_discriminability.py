@@ -545,13 +545,25 @@ def run_feature_discriminability(cfg: Any) -> dict[str, Any]:
             "pck_radius_cells": float(f1.pck_radius_cells),
             "stop_rule": "stop before F2 if no layer resolves at least half of projected corrections",
         },
+        "determinism": {
+            "track_reconstruction": (
+                "CUDA deterministic-algorithm enforcement disabled only for the existing "
+                "three-frame median; every reconstructed provider diagnostic must exactly "
+                "match the immutable cache metadata"
+            ),
+            "svd_feature_forward": bool(cfg.train.deterministic),
+        },
     }
     atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
     save_resolved_config(cfg, str(work_dir / "resolved.yaml"))
     metrics = JsonlMetrics(str(work_dir / "metrics.jsonl"))
 
     try:
-        seed_everything(int(cfg.seed), deterministic=bool(cfg.train.deterministic))
+        # ``torch.median(dim)`` requests an indices output whose CUDA kernel is not
+        # registered as deterministic.  Replay mining used this existing provider;
+        # reconstruction is random-free and is accepted only after exact cache-metadata
+        # matching.  Restore strict determinism before any SVD feature forward.
+        seed_everything(int(cfg.seed), deterministic=False)
         options = OmegaConf.to_container(cfg.auditor.generated_tracks, resolve=True)
         options = dict(options)
         options.pop("provider", None)
@@ -593,6 +605,7 @@ def run_feature_discriminability(cfg: Any) -> dict[str, Any]:
         del provider
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        seed_everything(int(cfg.seed), deterministic=bool(cfg.train.deterministic))
 
         noise_rows = []
         for payload in payloads:
