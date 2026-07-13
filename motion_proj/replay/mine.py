@@ -18,7 +18,7 @@ from ..config import cache_config_fingerprint, get_paths, load_config, save_reso
 from ..data import NuScenesFutureVideoDataset
 from ..projector import DynamicsProjector
 from ..projector.mask import downsample_mask_to_latent
-from ..runtime.atomic import atomic_write_text
+from ..runtime.atomic import atomic_write_json, atomic_write_text
 from ..runtime.fingerprint import file_fingerprint, git_state, sha256_json
 from ..runtime.stage import StageManifest
 from ..runtime.tasks import TaskStore
@@ -322,11 +322,12 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
             "".join(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in rows),
         )
         summary = {
-            "status": "completed", "fingerprint": replay_fingerprint,
+            "status": "completed", "task_id": "P2-V2-REPLAY-05", "fingerprint": replay_fingerprint,
             "candidates": len(rows), "kept": sum(bool(row["kept"]) for row in rows),
             "rejected": sum(not bool(row["kept"]) for row in rows),
             "condition_indices": indices, "generation_seeds": generation_seeds,
         }
+        atomic_write_json(os.path.join(paths.cache_dir, "_stage", "summary.json"), summary)
         stage.complete(summary)
         return summary
     except Exception as exc:
