@@ -4,7 +4,7 @@
 
 * 最后更新：2026-07-13
 * 计划基线 commit：`59c3f05`
-* 当前阶段：`P2-V2-GEN-04 done / generated object component unlocked；P2-V2-REPLAY-05 running`
+* 当前阶段：`P2-V2-GEN-04 / P2-V2-REPLAY-05 done；P2-V2-PILOT-03 running`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -1001,9 +1001,9 @@ object_confidence_mean
 | P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
-| P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
+| P2-V2-PILOT-03   | running  | 8-pair 单步容量测试                   | A/B/C/D curves            | 已解锁；先固定 8-pair noise bank |
 | P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
-| P2-V2-REPLAY-05  | running  | 64–128 Base replay cache        | 64×2 candidate 得 122 有效；20-case review pending | 20-case 门禁通过后才解锁训练 |
+| P2-V2-REPLAY-05  | done     | 64–128 Base replay cache        | 64×2 candidate 得 122 有效；20-case review 16/16 yes | 解锁 8-pair capacity pilot |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
 | P2-V2-REPRO-08   | pending  | 第二训练 seed 复现                    | two-seed report           | 晋级判断                       |
@@ -1288,7 +1288,10 @@ selected_modules.txt
 * direct-v 与 full-image anchor 的 cosine 在 12 行中均不低于 `0.3759`，未触发预注册的负冲突阈值；但这不推翻 full-image anchor 的设计替换，pilot 仍只使用 mask 外 preserve。
 * V1 all-attention 的 direct-v spatial GradRMS 在 11/12 行超过 temporal 的 2 倍；由于本阶段未同时观测 LPIPS 方向，不把它单独升级为因果结论，temporal-only 仍作为已通过隔离门槛的 pilot 主基线。
 
-`P2-V2-PILOT-03` 不能开跑：它要求 8 个人工合理、无 future-GT 泄漏的 Base replay pair，而 static V1 已被条件有效性门槛拒绝、generated point-track provider 尚未实现。因此先执行 `P2-V2-GEN-04`，不得用 legacy synthetic pair 替代该前置条件。
+`P2-V2-PILOT-03` 的前置条件已在 `P2-V2-REPLAY-05` 关闭时满足：正式 V5 candidate 已通过
+Base provenance/no-future-GT/首帧/latent 对齐审计，固定 20-case object-only 人工复核的 16 个 decisive
+verdict 均为 yes。pilot 只能使用该 candidate 中固定抽取的 8 个 pair；static V1 仍被条件有效性门槛拒绝，
+不得以 legacy synthetic pair 或 static component 替代。
 
 ---
 
@@ -1393,7 +1396,7 @@ capacity test 通过后，另构建：
 
 # 15. P2-V2-REPLAY-05：正式 Base rollout replay cache
 
-状态：`running`（2026-07-13；实现 commit `d127f0a` / `de9e604` / `97988f5` / `38a1665`；V5 object-only preflight 证据：`/root/autodl-tmp/cache/p2-v2/replay-v5-smoke-s20260713-38a1665-objectonly`；下一步：分层 64 conditions × 2 seeds candidate）
+状态：`done`（2026-07-13；实现 commit `d127f0a` / `de9e604` / `97988f5` / `38a1665` / `8d750f3`；candidate 与 20-case 人工门禁均通过；下一步：`P2-V2-PILOT-03` 固定 8-pair capacity test）
 
 ## 15.0 V5 object-only preflight
 
@@ -1415,8 +1418,11 @@ clean commit `a41dfa4` 的 `p2-v2-replay05-candidate64x2-s20260713-a41dfa4-objec
 六条拒绝均为 object component mask 为空，符合硬拒绝规则。全 122 条通过 Base provenance、无
 adapter/GT、首帧、RGB/latent/residual、VAE 与 static-disabled/object-nonempty reader 审计。有效
 object coverage 的均值/最小/最大为 `2.79% / 0.09% / 7.13%`。固定抽取的 20-case review 包为
-`/root/autodl-tmp/runs/p2-v2-replay/p2-v2-replay05-review20-s20260713-8d750f3`；在全部 verdict
-聚合并达到 70% 前，训练继续禁止。
+`/root/autodl-tmp/runs/p2-v2-replay/p2-v2-replay05-review20-s20260713-8d750f3`。20 条 review 已完整聚合：
+16 条 decisive 均为 yes、4 条 uncertain，合理率 `16/16 = 100%`，高于预注册的 70% 门槛；review fingerprint
+为 `ccd9c5fa26d8b6492f38d0a8df779c219ac194b78791b06a0daad56bbfca15c6`，并已写入该 review run 的
+`summary.json`、`manifest.json` 与 `COMPLETE`。因此关闭 REPLAY-05，仅解锁 object-only 的 8-pair
+capacity pilot；不解锁 static supervision、rollout 训练或任何收益结论。
 
 ## 15.1 数量
 
@@ -1937,7 +1943,7 @@ Coding Agent 按顺序执行：
 
 * [x] 实现 gradient audit CLI
 * [x] 完成 V1/V2 gradient report
-* [ ] 构建 8-pair Base pilot（blocked：等待 `P2-V2-REPLAY-05` 的有效 Base replay pair）
+* [ ] 构建 8-pair Base pilot（已由 `P2-V2-REPLAY-05` 解锁；待固定 noise bank）
 * [ ] 完成 A/B/C/D/E 对照
 * [ ] 完成 16/8 one-step generalization sanity check
 
@@ -2097,6 +2103,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `59c3f05` | 完成 GEN-04 独立点轨迹人工验收 | `point_track_valid` 8/8 decisive、7 yes、1 no，合理率 87.5% ≥ 70%；object component 解锁，static branch 保持 blocked；下一步为 schema V5/preflight，不启动 cache 或训练 |
 | 2026-07-13 | `38a1665` | V5 object-only preflight 通过 | clean Base 1 condition × 2 seeds 均写入；RGB/latent/residual、provenance、首帧与 GT guards 完整；static mask=0，object mask 非空 | P2-V2-REPLAY-05 进入 running；下一步分层 64×2 candidate 与独立 20-case 复核，之前禁止训练 |
 | 2026-07-13 | `a41dfa4` | 完成 V5 64×2 Base replay candidate | 128 candidate 中 122 kept、6 条空 object mask 硬拒绝；全 122 条 schema/provenance 自检通过，固定 20-case review 包已导出 | P2-V2-REPLAY-05 仍 running，等待人工 verdict；不得训练 |
+| 2026-07-13 | `8d750f3` | 完成 V5 20-case object-only 人工门禁 | 20/20 已填写；16 decisive 均为 yes、4 uncertain，合理率 100% ≥ 70%；review fingerprint `ccd9c5fa26d8`，review run 写入 `COMPLETE` | P2-V2-REPLAY-05 done；只解锁 object-only 的 8-pair capacity pilot，static branch 继续 blocked |
 
 ---
 
@@ -2105,16 +2112,16 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 下一步准备项：
 
 ```text
-P2-V2-REPLAY-05
+P2-V2-PILOT-03
 ```
 
-`P2-V2-GEN-04` 已完成：无 future GT track 自动门禁 8/8 通过，独立点轨迹人工评审 7/8 yes、
-87.5% ≥ 70%。因此可进入 `P2-V2-REPLAY-05` 的 cache schema V5 与 preflight；但在其独立 run
-和 20-case 人工复核完成前：
+`P2-V2-REPLAY-05` 已完成：64×2 candidate 的 122 个有效 V5 object-only pair 均通过 formal
+reader 审计，固定 20-case 人工复核的 decisive 合理率为 100%（16/16）。下一步仅构建固定 noise bank
+并执行最多 200 update 的 `P2-V2-PILOT-03` capacity test；不能跳至 rollout 比较、16/8 泛化或长训练。
 
-* 不启动训练；
 * 不使用 future GT ego pose 生成正式 SVD target；
-* 不恢复已被人工门槛拒绝的 SVD self-estimated static V1。
+* 不恢复已被人工门槛拒绝的 SVD self-estimated static V1；
+* 不把 object-only target 的人工合理性写成生成质量或 rollout 收益结论。
 
 不得把 GEN-04 的 8-case track 合理性外推为 projected target 或训练收益；static branch 继续 blocked。
 
