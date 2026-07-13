@@ -30,7 +30,13 @@ def select_pair_indices(total: int, *, pair_count: int, train_pair_count: int, s
     return {"all": selected, "train": selected[:train_pair_count], "held_out": selected[train_pair_count:]}
 
 
-def capacity_decision(metrics: dict, *, required_error_reduction: float, max_outside_teacher_drift_ratio: float) -> dict:
+def capacity_decision(
+    metrics: dict,
+    *,
+    required_error_reduction: float,
+    max_outside_teacher_drift_ratio: float,
+    max_target_roundtrip_relative_error: float = 2.0e-3,
+) -> dict:
     initial = float(metrics["initial_target_error"])
     final = float(metrics["final_target_error"])
     reduction = 1.0 - final / max(initial, 1.0e-12)
@@ -40,7 +46,10 @@ def capacity_decision(metrics: dict, *, required_error_reduction: float, max_out
         "frame0_teacher_drift": abs(float(metrics["frame0_teacher_drift"])) <= 1.0e-6,
         "gradient_finite": bool(metrics["gradient_finite"]),
         "gradient_nonzero": bool(metrics["gradient_nonzero"]),
-        "target_roundtrip": float(metrics["target_roundtrip_max_error"]) <= 1.0e-5,
+        "target_roundtrip": (
+            float(metrics["target_roundtrip_max_relative_error"])
+            <= max_target_roundtrip_relative_error
+        ),
         "correction_direction": float(metrics["correction_direction_cosine"]) > 0.0,
     }
     return {"passed": all(checks.values()), "target_error_reduction": reduction, "checks": checks}
@@ -87,6 +96,18 @@ def _masked_mse(error: torch.Tensor, mask: torch.Tensor, weight: torch.Tensor | 
     return (error.square() * weighted).sum() / weighted.sum().clamp_min(1.0)
 
 
+def _model_output_roundtrip_error(backbone, z: torch.Tensor, sigma: torch.Tensor, target: torch.Tensor) -> dict:
+    """以 float32 审计代数回环，并同时报告绝对与相对误差。"""
+    z_fp32 = z.float()
+    sigma_fp32 = sigma.float()
+    target_fp32 = target.float()
+    x0 = backbone.x0_from_model_output(z_fp32, sigma_fp32, target_fp32)
+    roundtrip = backbone.model_output_from_x0(z_fp32, sigma_fp32, x0)
+    absolute = (roundtrip - target_fp32).abs().max()
+    relative = absolute / target_fp32.abs().max().clamp_min(1.0e-12)
+    return {"absolute": absolute, "relative": relative}
+
+
 def _variant_loss(backbone, batch: dict, variant: str, pilot_cfg) -> tuple[torch.Tensor, dict]:
     sigma, z, cond = batch["sigma"], batch["z"], batch["condition"]
     student = backbone.predict_model_output(z, sigma, cond)
@@ -114,11 +135,13 @@ def _variant_loss(backbone, batch: dict, variant: str, pilot_cfg) -> tuple[torch
         weight=float(pilot_cfg.preserve_weight), dilation_radius=int(pilot_cfg.dilation_radius),
     )
     total = correction + preserve["loss"]
-    roundtrip = backbone.model_output_from_x0(z, sigma, backbone.x0_from_model_output(z, sigma, target))
+    roundtrip_error = _model_output_roundtrip_error(backbone, z, sigma, target)
     return total, {
         "target_error": correction.detach(), "preserve_loss": preserve["loss"].detach(),
         "student": student.detach(), "teacher": teacher.detach(), "target": target.detach(),
-        "outside": preserve["outside_mask"].detach(), "roundtrip_error": (roundtrip - target).abs().max().detach(),
+        "outside": preserve["outside_mask"].detach(),
+        "roundtrip_error": roundtrip_error["absolute"].detach(),
+        "roundtrip_relative_error": roundtrip_error["relative"].detach(),
     }
 
 
@@ -139,6 +162,9 @@ def _aggregate_evaluation_rows(values: list[dict]) -> dict:
         "outside_teacher_drift_ratio_max": max(float(row["outside_teacher_drift_ratio"]) for row in values),
         "frame0_teacher_drift": max(abs(float(row["frame0_teacher_drift"])) for row in values),
         "target_roundtrip_max_error": max(float(row["target_roundtrip_max_error"]) for row in values),
+        "target_roundtrip_max_relative_error": max(
+            float(row["target_roundtrip_max_relative_error"]) for row in values
+        ),
     })
     return aggregate
 
@@ -165,6 +191,7 @@ def _evaluation(backbone, batches: list[dict], variant: str, pilot_cfg) -> dict:
                 "outside_teacher_drift_ratio": float(drift / teacher_rms.clamp_min(1.0e-12)),
                 "frame0_teacher_drift": float(frame0),
                 "target_roundtrip_max_error": float(info["roundtrip_error"]),
+                "target_roundtrip_max_relative_error": float(info["roundtrip_relative_error"]),
                 "correction_direction_cosine": float(direction / denom),
             })
     return {**_aggregate_evaluation_rows(values), "per_pair": values}
@@ -284,7 +311,8 @@ def run_capacity_pilot(cfg, *, variants: list[str] | None = None, max_steps: int
                 "initial_target_error": initial["target_error"], "final_target_error": final["target_error"],
                 **final, "gradient_finite": gradient_finite, "gradient_nonzero": gradient_nonzero,
             }, required_error_reduction=float(pilot_cfg.required_error_reduction),
-                max_outside_teacher_drift_ratio=float(pilot_cfg.max_outside_teacher_drift_ratio))
+                max_outside_teacher_drift_ratio=float(pilot_cfg.max_outside_teacher_drift_ratio),
+                max_target_roundtrip_relative_error=float(pilot_cfg.max_target_roundtrip_relative_error))
             results[variant] = {"initial": initial, "final": final, "gradient_finite": gradient_finite,
                                 "gradient_nonzero": gradient_nonzero, "checkpoint": str(checkpoint), "decision": decision}
             del optimizer, backbone

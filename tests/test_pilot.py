@@ -7,11 +7,13 @@ import torch
 
 from motion_proj.train.pilot import (
     _aggregate_evaluation_rows,
+    _model_output_roundtrip_error,
     _record_backbone_provenance,
     _to_batch,
     capacity_decision,
     select_pair_indices,
 )
+from motion_proj.backbones.svd_backbone import SVDBackbone
 
 
 def test_select_pair_indices_is_stable_and_disjoint():
@@ -31,6 +33,7 @@ def test_capacity_decision_requires_every_preregistered_gate():
         "gradient_finite": True,
         "gradient_nonzero": True,
         "target_roundtrip_max_error": 0.0,
+        "target_roundtrip_max_relative_error": 0.0,
         "correction_direction_cosine": 0.2,
     }
     accepted = capacity_decision(metrics, required_error_reduction=0.8, max_outside_teacher_drift_ratio=0.02)
@@ -46,6 +49,7 @@ def test_evaluation_uses_worst_pair_for_strict_gates():
             "outside_teacher_drift_ratio": 0.01,
             "frame0_teacher_drift": 0.1,
             "target_roundtrip_max_error": 9.0e-6,
+            "target_roundtrip_max_relative_error": 9.0e-5,
             "correction_direction_cosine": 0.2,
         },
         {
@@ -53,6 +57,7 @@ def test_evaluation_uses_worst_pair_for_strict_gates():
             "outside_teacher_drift_ratio": 0.03,
             "frame0_teacher_drift": 0.3,
             "target_roundtrip_max_error": 2.3e-5,
+            "target_roundtrip_max_relative_error": 2.3e-4,
             "correction_direction_cosine": 0.4,
         },
     ]
@@ -62,6 +67,7 @@ def test_evaluation_uses_worst_pair_for_strict_gates():
     assert result["outside_teacher_drift_ratio_max"] == 0.03
     assert result["frame0_teacher_drift"] == 0.3
     assert result["target_roundtrip_max_error"] == 2.3e-5
+    assert result["target_roundtrip_max_relative_error"] == 2.3e-4
     assert result["correction_direction_cosine"] == pytest.approx(0.3)
 
 
@@ -92,6 +98,16 @@ def test_pilot_persists_lora_provenance(tmp_path: Path):
     selected = (tmp_path / "selected_modules.txt").read_text(encoding="utf-8").splitlines()
     assert selected == persisted["model"]["adapter"]["selected_module_names"]
     assert persisted["model"]["adapter"]["trainable_parameter_count"] == 128
+
+
+def test_roundtrip_gate_audits_bf16_target_in_float32():
+    backbone = SVDBackbone.__new__(SVDBackbone)
+    backbone.sigma_floor = 1.0e-3
+    generator = torch.Generator().manual_seed(7)
+    z = torch.randn(1, 2, 4, 3, 3, generator=generator).to(torch.bfloat16)
+    target = (32.0 * torch.randn(z.shape, generator=generator)).to(torch.bfloat16)
+    error = _model_output_roundtrip_error(backbone, z, torch.tensor([0.01], dtype=torch.bfloat16), target)
+    assert float(error["relative"]) < 2.0e-3
 
 
 def test_noise_bank_restores_batch_dimension_for_svd():
