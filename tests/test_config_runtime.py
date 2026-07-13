@@ -49,6 +49,17 @@ def test_p2_front_config_isolates_cache_and_runtime_paths():
     assert cfg.paths.log_dir == "/tmp/p2-run/logs"
 
 
+def test_replay_v2_config_requires_base_parent_without_adapter():
+    cfg = load_config("configs/replay/p2_v2_base.yaml")
+    assert cfg.cache.source == "replay_v2"
+    assert cfg.auditor.generated_geometry_mode == "estimated_background_motion"
+    bad = OmegaConf.create(OmegaConf.to_container(cfg, resolve=True))
+    OmegaConf.set_readonly(bad, False)
+    bad.model.lora.enable = True
+    with pytest.raises(ConfigError, match="lora.enable=false"):
+        validate_config(bad)
+
+
 def test_resumable_sampler_continues_exact_position():
     data = list(range(10))
     sampler = ResumableRandomSampler(data, seed=7)

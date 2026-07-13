@@ -1,4 +1,4 @@
-"""使用冻结 synthetic checkpoint 挖掘高漂移 replay cache。"""
+"""从冻结 Base rollout 构建无 future-GT 的 V5 replay candidate。"""
 from __future__ import annotations
 
 import argparse
@@ -95,6 +95,215 @@ def _generated_track_provider(cfg) -> RAFTChainGeneratedTrackProvider:
     if provider != "raft_chain":
         raise ValueError("replay mining 的训练 auditor 只允许 raft_chain；cotracker3 只能作为独立 evaluator")
     return RAFTChainGeneratedTrackProvider(device=cfg.device, **options)
+
+
+def _base_model_fingerprints(pretrained: str) -> tuple[str, str]:
+    """用模型配置文件绑定 Base/ VAE provenance，不把目录路径当作内容指纹。"""
+    root = os.path.abspath(pretrained)
+    required = {
+        "unet": os.path.join(root, "unet", "config.json"),
+        "vae": os.path.join(root, "vae", "config.json"),
+        "scheduler": os.path.join(root, "scheduler", "scheduler_config.json"),
+    }
+    missing = [name for name, path in required.items() if not os.path.isfile(path)]
+    if missing:
+        raise FileNotFoundError(f"Base 模型缺少 fingerprint 配置: {', '.join(missing)}")
+    digests = {name: file_fingerprint(path) for name, path in required.items()}
+    return sha256_json(digests), digests["vae"]
+
+
+def _evenly_spaced_indices(total: int, requested: int) -> list[int]:
+    """固定覆盖整个 split，避免只从低 index 或高 drift 区间挖样本。"""
+    if requested <= 0 or requested > total:
+        raise ValueError(f"max_conditions 必须在 [1,{total}] 内")
+    if requested == 1:
+        return [0]
+    return [round(index * (total - 1) / (requested - 1)) for index in range(requested)]
+
+
+def _component_energy(result, drift_before: float, drift_after: float) -> tuple[dict[str, float], dict[str, float]]:
+    return (
+        {"static": float(drift_before), "object": float(result.energy_before.get("obj", 0.0))},
+        {"static": float(drift_after), "object": float(result.energy_after.get("obj", 0.0))},
+    )
+
+
+def _formal_metadata(
+    sample_id: str,
+    source_sample_id: str,
+    condition_index: int,
+    generation_seed: int,
+    generation: dict,
+    base_model_fingerprint: str,
+    vae_fingerprint: str,
+    geometry_mode: str,
+    result,
+    energy_before: dict[str, float],
+    energy_after: dict[str, float],
+) -> dict:
+    return {
+        "sample_id": sample_id,
+        "source": "replay_v2",
+        "parent_kind": "base",
+        "base_model_fingerprint": base_model_fingerprint,
+        "adapter_loaded": False,
+        "condition_id": source_sample_id,
+        "condition_frame": int(condition_index),
+        "generation_seed": int(generation_seed),
+        "generation_sampler": "torch.Generator",
+        "generation_steps": int(generation["num_inference_steps"]),
+        "generation_settings": generation,
+        "first_frame_frozen": True,
+        "auditor_version": "generated-point-track-v1",
+        "projector_version": "dynamics-projector-v5",
+        "geometry_mode": geometry_mode,
+        "uses_future_gt_ego": False,
+        "uses_future_gt_track": False,
+        "energy_before_by_component": energy_before,
+        "energy_after_by_component": energy_after,
+        "projector_diagnostics": result.diagnostics,
+        "base_vae_fingerprint": vae_fingerprint,
+        "projected_vae_fingerprint": vae_fingerprint,
+    }
+
+
+@torch.no_grad()
+def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
+    """生成 Base-parent V5 candidate；质量拒绝由 writer 原子执行。"""
+    git = git_state(".")
+    if git.get("dirty"):
+        raise RuntimeError("正式 Base replay mining 拒绝在 dirty worktree 上运行")
+    if bool(cfg.model.lora.enable):
+        raise ValueError("正式 Base replay 必须 model.lora.enable=false")
+    if str(cfg.auditor.generated_geometry_mode) != "estimated_background_motion":
+        raise ValueError("正式 Base replay 必须使用 estimated_background_motion")
+    if not generation_seeds or len(set(generation_seeds)) != len(generation_seeds):
+        raise ValueError("generation_seeds 必须是非空且互异的整数列表")
+    paths = get_paths(cfg)
+    dataset = NuScenesFutureVideoDataset(cfg.data)
+    indices = _evenly_spaced_indices(len(dataset), int(max_conditions))
+    generation = _generation_settings(cfg)
+    base_fingerprint, vae_fingerprint = _base_model_fingerprints(str(cfg.model.pretrained))
+    replay_fingerprint = sha256_json({
+        "schema": "replay-v5-base", "cache": cache_config_fingerprint(cfg),
+        "base_model_fingerprint": base_fingerprint, "conditions": indices,
+        "generation_seeds": generation_seeds, "generation": generation,
+        "geometry_mode": str(cfg.auditor.generated_geometry_mode),
+    })
+    writer = ProjectionCacheWriter(
+        paths.cache_dir, store=cfg.cache.store, overwrite=False,
+        fingerprint=replay_fingerprint, formal_v2=True,
+    )
+    stage = StageManifest(os.path.join(paths.cache_dir, "_stage"), "replay_v2", replay_fingerprint)
+    if stage.is_complete():
+        return {"status": "completed", "fingerprint": replay_fingerprint, "skipped": True}
+    stage.begin({
+        "source": "replay_v2", "parent_kind": "base", "adapter_loaded": False,
+        "base_model_fingerprint": base_fingerprint, "generation_seeds": generation_seeds,
+        "condition_indices": indices, "generation": generation, "git": git,
+        "command": list(sys.argv),
+    })
+    save_resolved_config(cfg, os.path.join(paths.cache_dir, "_stage", "resolved.yaml"))
+    backbone = build_backbone(cfg.model, load=True, device=cfg.device)
+    backbone.set_train_mode(False)
+    auditor = MotionAuditor(
+        device=cfg.device, generated_geometry_mode=str(cfg.auditor.generated_geometry_mode),
+        background_fit_options=dict(cfg.auditor.get("background_fit", {})),
+        generated_track_provider=_generated_track_provider(cfg),
+    )
+    projector = DynamicsProjector()
+    rows: list[dict] = []
+    try:
+        for condition_index in tqdm(indices):
+            source = dataset[condition_index]
+            for generation_seed in generation_seeds:
+                sample_id = f"{source['sample_id']}_base_s{generation_seed}"
+                row = {
+                    "condition_index": condition_index, "sample_id": sample_id,
+                    "generation_seed": generation_seed, "kept": False, "reject_reason": None,
+                }
+                if writer.exists(sample_id):
+                    row["kept"] = True
+                    rows.append(row)
+                    continue
+                generator = torch.Generator(device=cfg.device).manual_seed(int(generation_seed))
+                base = backbone.generation(
+                    source["cond_frame"].to(cfg.device), num_frames=int(cfg.data.num_frames),
+                    num_inference_steps=generation["num_inference_steps"], generator=generator,
+                    height=int(cfg.data.height), width=int(cfg.data.width),
+                    decode_chunk_size=generation["decode_chunk_size"],
+                )
+                state = _audit_generated(auditor, base, source, str(cfg.auditor.generated_geometry_mode))
+                result = projector.project(base, state)
+                projected = result.target.clone()
+                projected[0] = base[0]
+                static_mask = result.static_mask
+                object_mask = result.object_mask
+                if static_mask is None or object_mask is None:
+                    raise RuntimeError("projector 未返回 V5 component mask")
+                combined_mask = torch.maximum(static_mask, object_mask)
+                combined_mask[0] = 0
+                projected_state = _audit_generated(auditor, projected, source, str(cfg.auditor.generated_geometry_mode))
+                before, after = _component_energy(
+                    result, auditor.static_drift_score(state), auditor.static_drift_score(projected_state),
+                )
+                metadata = _formal_metadata(
+                    sample_id, source["sample_id"], condition_index, generation_seed, generation,
+                    base_fingerprint, vae_fingerprint, str(cfg.auditor.generated_geometry_mode),
+                    result, before, after,
+                )
+                static_confidence = static_mask.clone()
+                object_confidence = object_mask.clone()
+                try:
+                    if cfg.cache.store == "rgb":
+                        writer.write(
+                            sample_id, base.cpu(), projected.cpu(), combined_mask.cpu(), metadata,
+                            static_mask=static_mask.cpu(), object_mask=object_mask.cpu(),
+                            static_confidence=static_confidence.cpu(), object_confidence=object_confidence.cpu(),
+                            base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
+                            generation_seed=generation_seed, source_fingerprint=base_fingerprint,
+                        )
+                    else:
+                        condition = backbone.build_conditioning({"cond_frame": source["cond_frame"].unsqueeze(0)})
+                        base_latent = backbone.encode(base.unsqueeze(0))[0]
+                        projected_latent = backbone.encode(projected.unsqueeze(0))[0]
+                        scale = int(cfg.model.vae_scale_factor)
+                        context = {key: condition.data[key][0] for key in
+                                   ("image_embeds", "image_latents", "added_time_ids")}
+                        writer.write(
+                            sample_id, base_latent.cpu(), projected_latent.cpu(),
+                            downsample_mask_to_latent(combined_mask, scale).cpu(), metadata, context,
+                            clean=base_latent.cpu(), static_mask=downsample_mask_to_latent(static_mask, scale).cpu(),
+                            object_mask=downsample_mask_to_latent(object_mask, scale).cpu(),
+                            static_confidence=downsample_mask_to_latent(static_confidence, scale).cpu(),
+                            object_confidence=downsample_mask_to_latent(object_confidence, scale).cpu(),
+                            base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
+                            generation_seed=generation_seed, source_fingerprint=base_fingerprint,
+                        )
+                except ValueError as exc:
+                    row["reject_reason"] = str(exc)
+                    rows.append(row)
+                    continue
+                row.update({"kept": True, "energy_before_by_component": before,
+                            "energy_after_by_component": after,
+                            "static_coverage": float(static_mask.mean()),
+                            "object_coverage": float(object_mask.mean())})
+                rows.append(row)
+        atomic_write_text(
+            os.path.join(paths.cache_dir, "_stage", "metrics.jsonl"),
+            "".join(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in rows),
+        )
+        summary = {
+            "status": "completed", "fingerprint": replay_fingerprint,
+            "candidates": len(rows), "kept": sum(bool(row["kept"]) for row in rows),
+            "rejected": sum(not bool(row["kept"]) for row in rows),
+            "condition_indices": indices, "generation_seeds": generation_seeds,
+        }
+        stage.complete(summary)
+        return summary
+    except Exception as exc:
+        stage.fail(repr(exc))
+        raise
 
 
 def _summarize_rows(rows: list[dict]) -> dict:
@@ -291,14 +500,13 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
-    parser.add_argument("--adapter", required=True, help="冻结 synthetic checkpoint 或 adapter.safetensors")
-    parser.add_argument("--drift-thresh", type=float, default=1.0)
-    parser.add_argument("--min-eligible-fraction", type=float, default=0.70)
-    parser.add_argument("--max-samples", type=int, default=0)
+    parser.add_argument("--max-conditions", type=int, required=True)
+    parser.add_argument("--generation-seeds", required=True, help="逗号分隔的 Base rollout seed")
     parser.add_argument("overrides", nargs="*")
     args = parser.parse_args()
     cfg = load_config(args.config, args.overrides)
-    mine(cfg, args.adapter, args.drift_thresh, args.max_samples, args.min_eligible_fraction)
+    seeds = [int(value) for value in args.generation_seeds.split(",") if value]
+    mine_base(cfg, args.max_conditions, seeds)
 
 
 if __name__ == "__main__":

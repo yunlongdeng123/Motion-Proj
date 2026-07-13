@@ -64,8 +64,8 @@ def validate_config(cfg: DictConfig) -> None:
         errors.append("dtype 必须是 bf16/fp16/fp32")
     if "cache" in cfg and cfg.cache.get("store") not in {"latent", "rgb"}:
         errors.append("cache.store 必须是 latent 或 rgb")
-    if "cache" in cfg and cfg.cache.get("source", "synthetic") not in {"clean", "synthetic", "replay"}:
-        errors.append("cache.source 必须是 clean、synthetic 或 replay")
+    if "cache" in cfg and cfg.cache.get("source", "synthetic") not in {"clean", "synthetic", "replay", "replay_v2"}:
+        errors.append("cache.source 必须是 clean、synthetic、replay 或 replay_v2")
     if "auditor" in cfg:
         mode = str(cfg.auditor.get("generated_geometry_mode", "gt_ego_debug"))
         if mode not in GENERATED_GEOMETRY_MODES:
@@ -101,6 +101,11 @@ def validate_config(cfg: DictConfig) -> None:
                 errors.append(f"model.lora.scope 必须是 {', '.join(sorted(LORA_SCOPES))}")
             if int(lora.get("rank", 0)) <= 0:
                 errors.append("model.lora.rank 必须大于 0")
+        if cfg.cache.get("source") == "replay_v2":
+            if bool(lora.get("enable", False)):
+                errors.append("正式 replay_v2 必须 model.lora.enable=false")
+            if str(cfg.auditor.get("generated_geometry_mode")) != "estimated_background_motion":
+                errors.append("正式 replay_v2 必须使用 estimated_background_motion")
     if "train" in cfg:
         experiment_type = str(cfg.train.get("experiment_type", "synthetic"))
         if experiment_type not in EXPERIMENT_TYPES:

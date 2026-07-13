@@ -31,6 +31,8 @@ class ProjectionResult:
     energy_after: dict[str, float]
     diagnostics: dict = field(default_factory=dict)
     metadata: dict = field(default_factory=dict)
+    static_mask: torch.Tensor | None = None
+    object_mask: torch.Tensor | None = None
 
     @property
     def target(self) -> torch.Tensor:
@@ -67,6 +69,11 @@ class DynamicsProjector:
         support = self.support.classify(state.tracks, (h, w))
         target, object_mask = self.objects.project(background, frames, state.tracks, projected_tracks, support)
         mask = self.reliability.build(state, object_mask, k).clamp(0, 1)
+        # 正式 V5 replay 单独保存 component mask，并固定首帧不受投影修正。
+        static_component = torch.zeros(k, 1, h, w, device=frames.device, dtype=mask.dtype)
+        static_component[1:] = state.static_mask[: k - 1].to(mask.dtype).unsqueeze(1)
+        object_component = object_mask.unsqueeze(1).to(mask.dtype)
+        object_component[0] = 0
 
         before = self._energies(state, state.tracks, support)
         after = self._energies(state, projected_tracks, support)
@@ -96,7 +103,10 @@ class DynamicsProjector:
         }
         metadata = {"sample_id": state.meta.get("sample_id"), "hw": (h, w),
                     "energies": legacy_energies, "diagnostics": diagnostics}
-        return ProjectionResult(frames, target, mask, before, after, diagnostics, metadata)
+        return ProjectionResult(
+            frames, target, mask, before, after, diagnostics, metadata,
+            static_mask=static_component, object_mask=object_component,
+        )
 
     @staticmethod
     def _energies(state, tracks, support) -> dict[str, float]:

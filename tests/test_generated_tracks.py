@@ -77,6 +77,10 @@ def test_generated_auditor_ignores_source_boxes_and_projector_uses_estimated_bac
     result = DynamicsProjector().project(frames, state)
     assert result.diagnostics["generated_tracks"]["uses_future_gt"] is False
     assert result.diagnostics["object_correction_coverage"] > 0
+    assert result.static_mask is not None and result.object_mask is not None
+    assert result.static_mask.shape == result.mask.shape == result.object_mask.shape
+    assert not bool(result.static_mask[0].any())
+    assert not bool(result.object_mask[0].any())
 
 
 def test_cotracker_adapter_requires_explicit_independent_predictor():

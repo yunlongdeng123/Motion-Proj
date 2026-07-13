@@ -1,0 +1,23 @@
+defaults_chain:
+  - ../train/motionproj_front_p2.yaml
+
+work_dir: /root/autodl-tmp/runs/p2-v2-replay
+
+paths:
+  cache_dir: /root/autodl-tmp/cache/p2-v2/replay-v5-base
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+model:
+  lora:
+    enable: false
+
+auditor:
+  generated_geometry_mode: estimated_background_motion
+
+cache:
+  source: replay_v2
+  store: latent
+  overwrite: false
+  num_inference_steps: 25
+  decode_chunk_size: 4
