@@ -1,0 +1,22 @@
+defaults_chain:
+  - ../train/motionproj_tune_mini_p2.yaml
+
+seed: 20260713
+work_dir: /root/autodl-tmp/runs/p2-v2-gradient-audit
+
+model:
+  pretrained: /root/autodl-tmp/weights/svd-xt
+  enable_xformers: false
+  gradient_checkpointing: true
+
+diagnostics:
+  output_dir: /root/autodl-tmp/runs/p2-v2-gradient-audit/p2-v2-grad-s20260713-a41c7c0-legacyv4
+  cache_dir: /root/autodl-tmp/cache/p2-front/tune-mini-synth32-v2
+  input_source: legacy_synthetic_v4
+  batch_size: 1
+  num_batches: 2
+  noise_seed: 20260713
+  sigmas: [0.002, 0.01, 0.05, 0.2, 1.0, 5.0]
+  eta: 0.5
+  trust_region_B: 0.25
+  dilation_radius: 1
