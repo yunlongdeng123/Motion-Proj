@@ -51,7 +51,7 @@ def test_condition_summary_promotes_only_after_review_threshold() -> None:
     )
 
     assert summary["automated_checks_passed"] is True
-    assert summary["reviews"]["self_estimated_reasonable_rate"] == 0.75
+    assert summary["reviews"]["reasonable_rate"] == 0.75
     assert summary["static_branch_decision"] == "promote"
 
 
@@ -70,3 +70,30 @@ def test_condition_summary_stays_pending_before_required_reviews() -> None:
 
     assert summary["status"] == "awaiting_reviews"
     assert summary["static_branch_decision"] == "pending_review"
+
+
+def test_generated_track_summary_requires_its_own_review_field() -> None:
+    cases = [_case(index) for index in range(8)]
+    for case in cases:
+        case["modes"]["estimated_background_motion"].update({
+            "uses_future_gt_track": False,
+            "track_diagnostics": {"valid_track_count": 3, "median_track_length": 5.0},
+        })
+    reviews = [
+        {"case_id": f"case-{index}", "point_track_valid": "yes" if index < 6 else "no"}
+        for index in range(8)
+    ]
+
+    summary = summarize_condition_validity(
+        cases,
+        reviews,
+        required_reviews=8,
+        minimum_reasonable_rate=0.70,
+        review_target="generated_tracks",
+    )
+
+    assert summary["automated_checks_passed"] is True
+    assert summary["reviews"]["field"] == "point_track_valid"
+    assert summary["reviews"]["reasonable_rate"] == 0.75
+    assert summary["static_branch_decision"] == "not_assessed"
+    assert summary["generated_track_decision"] == "promote"

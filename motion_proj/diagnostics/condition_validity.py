@@ -31,6 +31,7 @@ from ..utils.viz import flow_to_rgb, hstack_panels
 PROTOCOL_VERSION = "p2-v2-condition-validity-v2"
 AUDIT_MODES = ("gt_ego_debug", "identity_ego", "estimated_background_motion")
 REVIEW_VALUES = {"yes", "no", "uncertain"}
+REVIEW_TARGETS = {"static", "generated_tracks"}
 
 
 def _model_fingerprint(pretrained: str) -> str:
@@ -174,29 +175,39 @@ def summarize_condition_validity(
     *,
     required_reviews: int,
     minimum_reasonable_rate: float,
+    review_target: str = "static",
 ) -> dict[str, Any]:
     if not rows:
         raise ValueError("没有 condition validity case")
+    if review_target not in REVIEW_TARGETS:
+        raise ValueError(f"未知 review_target: {review_target}")
     review_map = {str(row.get("case_id")): row for row in reviews}
+    review_field = "self_estimated_valid" if review_target == "static" else "point_track_valid"
     valid_reviews = []
     for row in rows:
         review = review_map.get(str(row["case_id"]))
         if review is None:
             continue
-        gt = str(review.get("gt_ego_valid", ""))
-        estimated = str(review.get("self_estimated_valid", ""))
-        if gt in REVIEW_VALUES and estimated in REVIEW_VALUES:
+        if str(review.get(review_field, "")) in REVIEW_VALUES:
             valid_reviews.append(review)
-    decisive = [row for row in valid_reviews if row["self_estimated_valid"] != "uncertain"]
-    self_yes = sum(row["self_estimated_valid"] == "yes" for row in decisive)
+    decisive = [row for row in valid_reviews if row[review_field] != "uncertain"]
+    self_yes = sum(row[review_field] == "yes" for row in decisive)
     reasonable_rate = self_yes / len(decisive) if decisive else None
-    automated_pass = all(
-        row["modes"]["estimated_background_motion"]["correction"]["finite"]
-        and row["modes"]["estimated_background_motion"]["correction"]["first_frame_frozen"]
-        and row["modes"]["estimated_background_motion"]["correction"]["first_frame_mask_zero"]
-        and not row["modes"]["estimated_background_motion"]["uses_future_gt_ego"]
-        for row in rows
-    )
+    if review_target == "static":
+        automated_pass = all(
+            row["modes"]["estimated_background_motion"]["correction"]["finite"]
+            and row["modes"]["estimated_background_motion"]["correction"]["first_frame_frozen"]
+            and row["modes"]["estimated_background_motion"]["correction"]["first_frame_mask_zero"]
+            and not row["modes"]["estimated_background_motion"]["uses_future_gt_ego"]
+            for row in rows
+        )
+    else:
+        automated_pass = all(
+            not row["modes"]["estimated_background_motion"]["uses_future_gt_track"]
+            and int(row["modes"]["estimated_background_motion"]["track_diagnostics"]["valid_track_count"]) > 0
+            and float(row["modes"]["estimated_background_motion"]["track_diagnostics"]["median_track_length"]) >= 3.0
+            for row in rows
+        )
     review_complete = len(valid_reviews) >= required_reviews
     promoted = bool(
         automated_pass
@@ -210,16 +221,23 @@ def summarize_condition_validity(
         "cases": len(rows),
         "uses_future_gt_ego": False,
         "base_generation_adapter_loaded": False,
+        "review_target": review_target,
         "automated_checks_passed": automated_pass,
         "reviews": {
             "required": required_reviews,
             "completed": len(valid_reviews),
-            "decisive_self_estimated": len(decisive),
-            "self_estimated_yes": self_yes,
-            "self_estimated_reasonable_rate": reasonable_rate,
+            "field": review_field,
+            "decisive": len(decisive),
+            "yes": self_yes,
+            "reasonable_rate": reasonable_rate,
             "minimum_reasonable_rate": minimum_reasonable_rate,
         },
-        "static_branch_decision": "promote" if promoted else ("blocked" if review_complete else "pending_review"),
+        "static_branch_decision": (
+            "promote" if promoted else ("blocked" if review_complete else "pending_review")
+        ) if review_target == "static" else "not_assessed",
+        "generated_track_decision": (
+            "promote" if promoted else ("blocked" if review_complete else "pending_review")
+        ) if review_target == "generated_tracks" else "not_assessed",
         "mean_residual": {
             mode: float(np.mean([row["modes"][mode]["residual"]["mean"] for row in rows]))
             for mode in AUDIT_MODES
@@ -340,33 +358,45 @@ def export_cases(cfg: Any, run_dir: Path) -> list[dict[str, Any]]:
     return [completed[index] for index in range(len(indices))]
 
 
-def _write_review_package(run_dir: Path, rows: list[dict[str, Any]], required_reviews: int) -> None:
+def _write_review_package(
+    run_dir: Path,
+    rows: list[dict[str, Any]],
+    required_reviews: int,
+    review_target: str,
+) -> None:
     template = run_dir / "reviews.template.jsonl"
     if not template.exists():
         lines = []
         for row in rows[:required_reviews]:
+            review = {
+                "case_id": row["case_id"],
+                "failure_reason": "",
+                "reviewer": "human",
+            }
+            if review_target == "static":
+                review.update({"gt_ego_valid": "uncertain", "self_estimated_valid": "uncertain"})
+            else:
+                review["point_track_valid"] = "uncertain"
             lines.append(
-                json.dumps(
-                    {
-                        "case_id": row["case_id"],
-                        "gt_ego_valid": "uncertain",
-                        "self_estimated_valid": "uncertain",
-                        "failure_reason": "",
-                        "reviewer": "human",
-                    },
-                    ensure_ascii=False,
-                )
+                json.dumps(review, ensure_ascii=False)
             )
         atomic_write_text(str(template), "\n".join(lines) + "\n")
     readme = run_dir / "REVIEW_README.md"
     if not readme.exists():
         atomic_write_text(
             str(readme),
-            "# P2-V2 条件有效性人工复核\n\n"
-            "每个视频依次为 `[Base | generated point tracks | GT-ego debug correction | self-estimated correction | observed flow/self mask]`。\n"
-            "至少复核模板中的 12 个 case，分别填写 `yes/no/uncertain`；重点判断背景运动修正是否符合 "
-            "Base 自身生成的相机运动，以及是否引入撕裂、冻结或主体破坏。\n"
-            "复制 `reviews.template.jsonl` 为 `reviews.jsonl` 后运行同一命令并增加 `--aggregate-only`。\n",
+            "# P2-V2 人工复核\n\n"
+            + (
+                "每个视频依次为 `[Base | generated point tracks | GT-ego debug correction | self-estimated correction | observed flow/self mask]`。\n"
+                "至少复核模板中的 case，分别填写 `yes/no/uncertain`；重点判断背景运动修正是否符合 "
+                "Base 自身生成的相机运动，以及是否引入撕裂、冻结或主体破坏。\n"
+                if review_target == "static" else
+                "每个视频依次为 `[Base | generated point tracks | GT-ego debug correction | self-estimated correction | observed flow/self mask]`。\n"
+                "只评第二栏 generated point tracks：点是否大多贴合可见、可追踪的图像局部，跨帧是否连续；"
+                "若点系统性漂移到无关区域、跨帧跳变或明显把前景/背景混淆，填写 `no`，无法判断填写 `uncertain`。"
+                "后面三栏是已阻断 static branch 的诊断上下文，不作为本轮 verdict 对象。\n"
+            )
+            + "复制 `reviews.template.jsonl` 为 `reviews.jsonl` 后运行同一命令并增加 `--aggregate-only`。\n",
         )
 
 
@@ -376,6 +406,9 @@ def run_experiment(cfg: Any, run_id: str | None, aggregate_only: bool) -> tuple[
         raise RuntimeError("正式 condition validity 诊断拒绝在 dirty worktree 上运行")
     settings = OmegaConf.to_container(cfg.condition_validity, resolve=True)
     assert isinstance(settings, dict)
+    review_target = str(settings.get("review_target", "static"))
+    if review_target not in REVIEW_TARGETS:
+        raise ValueError("condition_validity.review_target 必须是 static 或 generated_tracks")
     cfg_fingerprint = config_fingerprint(cfg)
     fingerprint = sha256_json(
         {"protocol": PROTOCOL_VERSION, "config": cfg_fingerprint, "git_commit": git["commit"]}
@@ -429,13 +462,14 @@ def run_experiment(cfg: Any, run_id: str | None, aggregate_only: bool) -> tuple[
         rows = _load_rows(run_dir)
 
     required_reviews = int(settings["required_reviews"])
-    _write_review_package(run_dir, rows, required_reviews)
+    _write_review_package(run_dir, rows, required_reviews, review_target)
     reviews = _load_reviews(run_dir / "reviews.jsonl")
     summary = summarize_condition_validity(
         rows,
         reviews,
         required_reviews=required_reviews,
         minimum_reasonable_rate=float(settings["minimum_reasonable_rate"]),
+        review_target=review_target,
     )
     summary.update(
         {

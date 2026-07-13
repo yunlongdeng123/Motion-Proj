@@ -887,6 +887,12 @@ projector；轨迹和 projector 诊断会报告轨迹数、长度中位数、sur
 `uses_future_gt_track=false`。证据中的 track overlay 已供人工复核；单 case 只证明链路
 可运行，不构成轨迹质量晋级，未通过后续人工 review 前 object replay 继续 blocked。
 
+GEN-04 的轨迹人工门禁独立于已经被拒绝的 static V1：固定 8 个 clean Base rollout，
+`uses_future_gt_track=false`、每例至少 1 条有效轨迹且轨迹长度中位数至少 3 帧；人工只评
+panel 第二栏的点是否贴合可见局部并跨帧连续。8 例都必须填写 `yes/no/uncertain`，对 decisive
+例的 `yes` 比例必须不低于 70%。static correction 栏仅为上下文，不能以其已知失败结果替代或
+否决 point-track verdict；未达到该门槛时 object component 仍为 `blocked`。
+
 ---
 
 # 9. Cache Schema V5
