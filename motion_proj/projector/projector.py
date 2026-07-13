@@ -85,6 +85,10 @@ class DynamicsProjector:
                 "support": type(self.support).__name__, "reliability": type(self.reliability).__name__,
             },
         }
+        track_diagnostics = state.meta.get("track_diagnostics")
+        if track_diagnostics is not None:
+            diagnostics["generated_tracks"] = track_diagnostics
+            diagnostics["object_correction_coverage"] = float(object_mask.gt(0).float().mean())
         legacy_energies = {
             **{f"{key}_before": value for key, value in before.items()},
             **{f"{key}_after": value for key, value in after.items()},

@@ -38,6 +38,9 @@ class RAFTFlowProvider(FlowProvider):
     def estimate(self, frames: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         return self.model.flow_with_confidence(frames)
 
+    def estimate_bidirectional(self, frames: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        return self.model.flow_with_bidirectional_confidence(frames)
+
 
 class LidarCalibratedDepthProvider(DepthProvider):
     """Depth-Anything 相对深度，存在投影 LiDAR 时逐帧做鲁棒尺度标定。"""

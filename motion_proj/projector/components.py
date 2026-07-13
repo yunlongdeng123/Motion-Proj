@@ -6,6 +6,7 @@ from typing import Protocol
 import torch
 
 from ..auditor.state import MotionState, Track
+from ..auditor.generated_geometry import render_pairwise_background_correction
 from .mask import build_reliability_mask
 from .smoothing import smooth_tracks
 from .support import classify_support
@@ -32,6 +33,14 @@ class ReliabilityProvider(Protocol):
 class EgoWarpBackground:
     def project(self, frames: torch.Tensor, state: MotionState, anchor: int) -> torch.Tensor:
         meta = state.meta
+        # generated rollout 没有可用的 future ego pose。此处只使用审计器已经从生成帧
+        # 估计出的背景 flow，随后由局部 point-track overlay 恢复候选动态区域。
+        if meta.get("generated_geometry_mode") is not None and "ego2global" not in meta:
+            target, _ = render_pairwise_background_correction(
+                frames, state.u_ego.to(frames.device),
+                meta.get("geometry_confidence", state.flow_conf).to(frames.device),
+            )
+            return target
         return render_static(
             frames, state.depth.to(frames.device), meta["intrinsics"].to(frames.device),
             meta["cam2ego"].to(frames.device), meta["ego2global"].to(frames.device), anchor=anchor,

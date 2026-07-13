@@ -71,6 +71,17 @@ def validate_config(cfg: DictConfig) -> None:
         if mode not in GENERATED_GEOMETRY_MODES:
             allowed = ", ".join(sorted(GENERATED_GEOMETRY_MODES))
             errors.append(f"auditor.generated_geometry_mode 必须是 {allowed}")
+        generated_tracks = cfg.auditor.get("generated_tracks")
+        if generated_tracks is not None:
+            provider = str(generated_tracks.get("provider", "raft_chain"))
+            if provider not in {"raft_chain", "cotracker3"}:
+                errors.append("auditor.generated_tracks.provider 必须是 raft_chain 或 cotracker3")
+            for name in ("queries_per_stratum", "min_track_length"):
+                if generated_tracks.get(name) is not None and int(generated_tracks[name]) <= 0:
+                    errors.append(f"auditor.generated_tracks.{name} 必须大于 0")
+            for name in ("point_box_size", "min_distance", "fb_alpha", "fb_beta", "min_confidence"):
+                if generated_tracks.get(name) is not None and float(generated_tracks[name]) <= 0:
+                    errors.append(f"auditor.generated_tracks.{name} 必须大于 0")
     if "data" in cfg and "model" in cfg:
         data_frames = cfg.data.get("num_frames")
         model_frames = cfg.model.get("num_frames")

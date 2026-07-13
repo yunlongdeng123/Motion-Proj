@@ -9,6 +9,12 @@ from .generated_geometry import (
     render_pairwise_background_correction,
 )
 from .providers import DepthProvider, EgoMotionProvider, FlowProvider, TrackProvider
+from .generated_tracks import (
+    CoTracker3GeneratedTrackProvider,
+    GeneratedTrackProvider,
+    GeneratedTrackState,
+    RAFTChainGeneratedTrackProvider,
+)
 from .state import MotionState, Track
 
 __all__ = [
@@ -19,6 +25,10 @@ __all__ = [
     "DepthProvider",
     "TrackProvider",
     "EgoMotionProvider",
+    "GeneratedTrackProvider",
+    "GeneratedTrackState",
+    "RAFTChainGeneratedTrackProvider",
+    "CoTracker3GeneratedTrackProvider",
     "GENERATED_GEOMETRY_MODES",
     "BackgroundMotionEstimate",
     "estimate_generated_geometry",

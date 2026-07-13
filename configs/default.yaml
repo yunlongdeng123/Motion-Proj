@@ -30,6 +30,16 @@ auditor:
     huber_delta: 2.5
     min_residual_px: 0.5
     ridge: 1.0e-4
+  # generated point-track 的正式 replay 参数；CoTracker3 仅允许作为独立 evaluator。
+  generated_tracks:
+    provider: raft_chain
+    queries_per_stratum: 24
+    min_track_length: 3
+    point_box_size: 16.0
+    min_distance: 8.0
+    fb_alpha: 0.05
+    fb_beta: 0.5
+    min_confidence: 0.5
 
 train: {}
 

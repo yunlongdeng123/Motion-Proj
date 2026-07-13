@@ -9,7 +9,7 @@ import sys
 import torch
 from tqdm import tqdm
 
-from ..auditor import MotionAuditor
+from ..auditor import MotionAuditor, RAFTChainGeneratedTrackProvider
 from ..auditor.state import MotionState
 from ..backbones import build_backbone
 from ..cache.build_cache import _flow_to_resolution
@@ -89,6 +89,14 @@ def _generation_settings(cfg) -> dict:
     }
 
 
+def _generated_track_provider(cfg) -> RAFTChainGeneratedTrackProvider:
+    options = dict(cfg.auditor.get("generated_tracks", {}))
+    provider = str(options.pop("provider", "raft_chain"))
+    if provider != "raft_chain":
+        raise ValueError("replay mining 的训练 auditor 只允许 raft_chain；cotracker3 只能作为独立 evaluator")
+    return RAFTChainGeneratedTrackProvider(device=cfg.device, **options)
+
+
 def _summarize_rows(rows: list[dict]) -> dict:
     eligible = [float(row["eligible_fraction"]) for row in rows
                 if row.get("eligible_fraction") is not None]
@@ -123,10 +131,12 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
     backbone.load_adapter(adapter)
     backbone.set_train_mode(False)
     geometry_mode = str(cfg.auditor.generated_geometry_mode)
+    track_options = dict(cfg.auditor.get("generated_tracks", {}))
     auditor = MotionAuditor(
         device=device,
         generated_geometry_mode=geometry_mode,
         background_fit_options=dict(cfg.auditor.get("background_fit", {})),
+        generated_track_provider=_generated_track_provider(cfg),
     )
     projector = DynamicsProjector()
     n = min(max_samples, len(ds)) if max_samples else len(ds)
@@ -136,6 +146,7 @@ def mine(cfg, adapter: str, drift_thresh: float, max_samples: int,
         "seed": int(cfg.seed), "drift_thresh": drift_thresh,
         "min_eligible_fraction": min_eligible_fraction, "samples": n,
         "generation": generation,
+        "generated_tracks": track_options,
         "energy_gate": "reaudit-static-drift-v1",
     })
     writer = ProjectionCacheWriter(

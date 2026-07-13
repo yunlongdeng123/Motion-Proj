@@ -12,6 +12,7 @@ import torch
 from ..utils.logging import get_logger
 from .ego_flow import boxes_to_dynamic_mask, build_static_mask
 from .generated_geometry import estimate_generated_geometry
+from .generated_tracks import GeneratedTrackProvider, RAFTChainGeneratedTrackProvider
 from .providers import (
     DepthProvider,
     EgoMotionProvider,
@@ -39,6 +40,7 @@ class MotionAuditor:
         ego_motion_provider: EgoMotionProvider | None = None,
         generated_geometry_mode: str | None = None,
         background_fit_options: dict[str, Any] | None = None,
+        generated_track_provider: GeneratedTrackProvider | None = None,
     ):
         self.device = device
         self.conf_thresh = conf_thresh
@@ -48,6 +50,7 @@ class MotionAuditor:
         self.ego_motion_provider = ego_motion_provider or ProvidedEgoMotionProvider()
         self.generated_geometry_mode = generated_geometry_mode
         self.background_fit_options = dict(background_fit_options or {})
+        self.generated_track_provider = generated_track_provider
 
     @torch.no_grad()
     def audit(
@@ -69,8 +72,13 @@ class MotionAuditor:
         # 1) 光流 + 前后向一致性（fb-consistency）置信度
         if (observed_flow is None) != (flow_confidence is None):
             raise ValueError("observed_flow 与 flow_confidence 必须同时提供")
+        backward_flow = None
         if observed_flow is None:
-            u_static, flow_conf = self.flow_provider.estimate(frames)
+            estimate_bidirectional = getattr(self.flow_provider, "estimate_bidirectional", None)
+            if callable(estimate_bidirectional) and (generated_geometry_mode or self.generated_geometry_mode) is not None:
+                u_static, backward_flow, flow_conf = estimate_bidirectional(frames)
+            else:
+                u_static, flow_conf = self.flow_provider.estimate(frames)
         else:
             u_static = observed_flow.to(self.device)
             flow_conf = flow_confidence.to(self.device)
@@ -107,12 +115,29 @@ class MotionAuditor:
             geometry_confidence = ego_valid.to(flow_conf.dtype)
 
         # 3) 可靠静态掩码（高一致性，且位于目标框之外）
-        dyn_mask = boxes_to_dynamic_mask(boxes, h, w, self.device)
+        # generated rollout 的静态掩码也不得通过 source future boxes 获益。
+        mask_boxes = [[] for _ in range(k)] if mode is not None else boxes
+        dyn_mask = boxes_to_dynamic_mask(mask_boxes, h, w, self.device)
         static_mask = build_static_mask(flow_conf, dyn_mask, self.conf_thresh)
         static_mask = static_mask * geometry_confidence.to(static_mask.dtype)
 
-        # 4) 由 GT 框得到的目标轨迹（tracks）
-        tracks = self.track_provider.estimate(frames, sample)
+        # 4) generated 模式只从生成帧、光流和自估背景创建点轨迹；绝不读取 future box/track。
+        track_diagnostics = None
+        if mode is not None:
+            provider = self.generated_track_provider
+            if provider is None:
+                provider = RAFTChainGeneratedTrackProvider(device=self.device)
+                self.generated_track_provider = provider
+            generated_tracks = provider.track(
+                frames, observed_flow=u_static, flow_confidence=flow_conf, background_flow=u_ego,
+                backward_flow=backward_flow, depth=depth,
+            )
+            tracks = generated_tracks.tracks
+            track_diagnostics = generated_tracks.diagnostics
+            uses_future_gt_track = generated_tracks.uses_future_gt
+        else:
+            tracks = self.track_provider.estimate(frames, sample)
+            uses_future_gt_track = None
 
         state = MotionState(
             u_static=u_static,
@@ -131,7 +156,9 @@ class MotionAuditor:
                 "generated_geometry_mode": mode,
                 "geometry_diagnostics": geometry_diagnostics,
                 "uses_future_gt_ego": uses_future_gt_ego,
-                "uses_future_gt_track": False if mode is not None else None,
+                "uses_future_gt_track": uses_future_gt_track,
+                "track_diagnostics": track_diagnostics,
+                "geometry_confidence": geometry_confidence,
             },
         )
         pose_key = "control_ego2global" if mode == "controlled_ego" else "ego2global"

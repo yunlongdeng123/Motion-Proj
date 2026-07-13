@@ -4,7 +4,7 @@
 
 * 最后更新：2026-07-13
 * 计划基线 commit：`63d9bd0`
-* 当前阶段：`P2-V2-PILOT-03 blocked / waiting for valid Base replay pairs`
+* 当前阶段：`P2-V2-GEN-04 running / provider implementation awaiting Base-panel review`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -870,6 +870,20 @@ foreground candidate points
 * 仅运行 static/self-consistency 分支；
 * 正式结果不得报告 object improvement。
 
+## 8.6 2026-07-13 实现状态（待 Base panel）
+
+已接入 `RAFTChainGeneratedTrackProvider`：它按 background / dynamic-residual /
+foreground-candidate 三层确定性选取 query，以 RAFT 相邻流链式传播，并在每一步执行
+forward-backward、一致性、越界和低置信度筛除。所有点轨迹以 16px 可配置局部框进入
+projector；轨迹和 projector 诊断会报告轨迹数、长度中位数、survival、去背景速度/加速度/jerk、
+局部 correction coverage 与前后能量。generated 模式现在同时隔离 source future boxes，
+因此 GT box 不能再影响 static mask 或 track。`cotracker3` 仅保留为需要显式注入 predictor
+的独立 evaluator，缺依赖时 fail-closed，不会静默退回 RAFT。
+
+工程测试覆盖：无 GT 轨迹、分层 query、链式传播、F/B 拒绝、source-box 隔离、
+自估背景 projector 接线、配置和 CoTracker3 fail-closed。它们不构成真实 Base 轨迹质量证据；
+下一项仍是 clean commit 上的冻结 Base panel 与人工复核，未通过则 object replay 继续 blocked。
+
 ---
 
 # 9. Cache Schema V5
@@ -967,7 +981,7 @@ object_confidence_mean
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
 | P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
-| P2-V2-GEN-04     | pending  | generated point-track provider；static V1 blocked | provider tests/panel      | 解锁 object component         |
+| P2-V2-GEN-04     | running  | generated point-track provider；static V1 blocked | provider tests / Base-panel review | 仅通过 review 后解锁 object component |
 | P2-V2-REPLAY-05  | pending  | 64–128 Base replay cache        | schema V5、manual review   | 解锁训练                       |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
@@ -2031,6 +2045,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `fff5ccb`             | 完成 16-case condition validity 与人工复核                           | H0 确认；GT static rejected；self-estimated static V1 以 66.67% 未过门槛          |
 | 2026-07-12 | `5bd7a18`             | 完成 SVD raw-v 参数化与 temporal-only LoRA 隔离                         | 关闭代数、sigma floor、adapter 恢复与完整路径模块选择风险；解锁 V2 loss/梯度审计             |
 | 2026-07-13 | `ce52feb` / `63d9bd0` | 完成 V2 residual-v loss 与 V1/V2 fixed-noise 梯度审计                    | direct-v/trust-region 梯度有限；V1 all-attention spatial GradRMS 多数行高于 temporal；无有效 Base replay pair，pilot blocked |
+| 2026-07-13 | `pending` | 开始 `P2-V2-GEN-04` RAFT point-track 工程接线 | generated mode 彻底隔离 source future boxes；真实 Base panel 尚未运行 |
 
 ---
 

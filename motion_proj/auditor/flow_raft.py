@@ -45,11 +45,16 @@ class RAFTFlow:
 
         返回 ``(fwd [F,H,W,2], conf [F,H,W]，取值 [0,1])``，其中 ``F = K-1``。
         """
+        fwd, _, conf = self.flow_with_bidirectional_confidence(frames)
+        return fwd, conf
+
+    @torch.no_grad()
+    def flow_with_bidirectional_confidence(self, frames: torch.Tensor):
+        """同 ``flow_with_confidence``，额外返回未折叠的反向流供点轨迹 F/B 检验。"""
         a, b = frames[:-1], frames[1:]
         fwd = self.flow(a, b)
         bwd = self.flow(b, a)
-        conf = self._fb_consistency(fwd, bwd)
-        return fwd, conf
+        return fwd, bwd, self._fb_consistency(fwd, bwd)
 
     @staticmethod
     def _fb_consistency(fwd: torch.Tensor, bwd: torch.Tensor, alpha: float = 0.05, beta: float = 0.5):
