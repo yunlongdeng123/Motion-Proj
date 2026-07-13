@@ -5,6 +5,7 @@ import argparse
 import csv
 import json
 import math
+import os
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -559,6 +560,9 @@ def run_feature_discriminability(cfg: Any) -> dict[str, Any]:
     metrics = JsonlMetrics(str(work_dir / "metrics.jsonl"))
 
     try:
+        # cuBLAS reads this on its first CUDA use.  It must be present before RAFT,
+        # even though strict deterministic enforcement is temporarily disabled there.
+        os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
         # ``torch.median(dim)`` requests an indices output whose CUDA kernel is not
         # registered as deterministic.  Replay mining used this existing provider;
         # reconstruction is random-free and is accepted only after exact cache-metadata
