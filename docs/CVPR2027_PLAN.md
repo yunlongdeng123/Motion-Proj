@@ -4,7 +4,7 @@
 
 * 最后更新：2026-07-13
 * 计划基线 commit：`59c3f05`
-* 当前阶段：`P2-V2-GEN-04 running / 8-case generated-track review awaiting`
+* 当前阶段：`P2-V2-GEN-04 done / generated object component unlocked；下一步 P2-V2-REPLAY-05`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -783,7 +783,7 @@ scope: temporal_only
 
 # 8. Generated object/point-track replay
 
-状态：`pending`（条件门槛已关闭；static branch blocked，仅推进无 future GT 的 generated point-track）
+状态：`done`（2026-07-13；static branch 仍 blocked，仅解锁无 future GT 的 generated point-track/object component）
 
 ## 8.1 目标
 
@@ -870,7 +870,7 @@ foreground candidate points
 * 仅运行 static/self-consistency 分支；
 * 正式结果不得报告 object improvement。
 
-## 8.6 2026-07-13 实现状态（待 Base panel）
+## 8.6 2026-07-13 实现与 Base panel 验收
 
 已接入 `RAFTChainGeneratedTrackProvider`：它按 background / dynamic-residual /
 foreground-candidate 三层确定性选取 query，以 RAFT 相邻流链式传播，并在每一步执行
@@ -893,12 +893,17 @@ panel 第二栏的点是否贴合可见局部并跨帧连续。8 例都必须填
 例的 `yes` 比例必须不低于 70%。static correction 栏仅为上下文，不能以其已知失败结果替代或
 否决 point-track verdict；未达到该门槛时 object component 仍为 `blocked`。
 
-8-case clean Base 包 `p2-v2-gen04-track8-s20260713-59c3f05-net1` 已完成导出，固定 val
+8-case clean Base 包 `p2-v2-gen04-track8-s20260713-59c3f05-net1` 固定 val
 clip `0/96/192/288/384/480/576/672`，25 inference steps、无 adapter、无 replay cache。
 8/8 均通过自动门禁（无 future GT track、有效轨迹非空、长度中位数不低于 3 帧）；有效轨迹数
 为 45–72，长度中位数为 3–8 帧，survival 为 29.17%–84.72%，局部 correction coverage 为
-4.27%–7.36%。评审包已生成但 verdict 尚未填写，故 `generated_track_decision=pending_review`；
-不得据此推进 object component 或 replay。
+4.27%–7.36%。独立人工评审已完成：8/8 为 decisive，7 yes、1 no，合理率 87.5%（门槛 70%），
+故 `generated_track_decision=promote`。聚合后的实验 fingerprint 为
+`5c7188bca4fefdec4bd869fdf15ecbe7c35980515c2ed5506bb33389b9ecc69c`，review fingerprint 为
+`00babf16e0712567290d7b1f3fd0509a208f125ae5fea457ce1831fbe8cdde34`；证据为同 run 的
+`reviews.jsonl`、`condition_validity_summary.json`、`manifest.json` 与 `COMPLETE`。这仅解锁 object
+component 和 `P2-V2-REPLAY-05` 的 schema/preflight；static branch 继续 blocked，尚未构建 replay cache
+或启动训练。
 
 ---
 
@@ -997,7 +1002,7 @@ object_confidence_mean
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
 | P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
-| P2-V2-GEN-04     | running  | generated point-track provider；static V1 blocked | provider tests / Base-panel review | 仅通过 review 后解锁 object component |
+| P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
 | P2-V2-REPLAY-05  | pending  | 64–128 Base replay cache        | schema V5、manual review   | 解锁训练                       |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
@@ -1907,7 +1912,7 @@ Coding Agent 按顺序执行：
 
 * [x] 实现 gradient audit CLI
 * [x] 完成 V1/V2 gradient report
-* [ ] 构建 8-pair Base pilot（blocked：等待 `P2-V2-GEN-04`）
+* [ ] 构建 8-pair Base pilot（blocked：等待 `P2-V2-REPLAY-05` 的有效 Base replay pair）
 * [ ] 完成 A/B/C/D/E 对照
 * [ ] 完成 16/8 one-step generalization sanity check
 
@@ -1915,9 +1920,9 @@ Coding Agent 按顺序执行：
 
 * [ ] replay miner 支持 `parent_kind=base`
 * [ ] 正式 V2 禁止加载 adapter
-* [ ] 实现 generated background provider
-* [ ] 实现 generated track provider
-* [ ] 增加 GT leakage guard
+* [x] 实现 generated background provider
+* [x] 实现 generated track provider（GEN-04 8-case review 7/8 yes）
+* [x] 增加 GT leakage guard
 * [ ] 新增 cache schema V5
 * [ ] 构建 64×2 candidate replay
 * [ ] 完成 20-case 人工复核
@@ -2064,25 +2069,27 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `pending` | 开始 `P2-V2-GEN-04` RAFT point-track 工程接线 | generated mode 彻底隔离 source future boxes；真实 Base panel 尚未运行 |
 | 2026-07-13 | `3cb8445` | 生成首个无 GT point-track Base panel | 自动检查通过、62 条有效轨迹；static review 为 no，不能代替 point-track review，不构建 replay cache |
 | 2026-07-13 | `59c3f05` | 导出 GEN-04 独立 8-case point-track 评审包 | 8/8 无 future GT、有效轨迹非空、长度中位数至少 3 帧；等待 `point_track_valid` 人工 verdict，不构建 replay cache |
+| 2026-07-13 | `59c3f05` | 完成 GEN-04 独立点轨迹人工验收 | `point_track_valid` 8/8 decisive、7 yes、1 no，合理率 87.5% ≥ 70%；object component 解锁，static branch 保持 blocked；下一步为 schema V5/preflight，不启动 cache 或训练 |
 
 ---
 
 # 27. Coding Agent 的当前唯一下一步
 
-立即执行且只执行：
+下一步准备项：
 
 ```text
-P2-V2-GEN-04
+P2-V2-REPLAY-05
 ```
 
-在 `P2-V2-GEN-04` 完成前：
+`P2-V2-GEN-04` 已完成：无 future GT track 自动门禁 8/8 通过，独立点轨迹人工评审 7/8 yes、
+87.5% ≥ 70%。因此可进入 `P2-V2-REPLAY-05` 的 cache schema V5 与 preflight；但在其独立 run
+和 20-case 人工复核完成前：
 
-* 不构建 8-pair pilot 或 64–128 replay cache；
 * 不启动训练；
 * 不使用 future GT ego pose 生成正式 SVD target；
 * 不恢复已被人工门槛拒绝的 SVD self-estimated static V1。
 
-先实现并验证 generated point-track provider；只在 provider 的无 GT future 泄漏、轨迹有效性和人工检查均通过后，才构建 Base replay pair。
+不得把 GEN-04 的 8-case track 合理性外推为 projected target 或训练收益；static branch 继续 blocked。
 
 完成后输出：
 
