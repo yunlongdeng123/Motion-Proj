@@ -3,11 +3,11 @@
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
 * 最后更新：2026-07-13
-* 计划基线 commit：`59c3f05`
-* 当前阶段：`P2-V2-GEN-04 / P2-V2-REPLAY-05 done；P2-V2-PILOT-03 running`
+* 计划基线 commit：`9dd4c88`
+* 当前阶段：`P2-V2-GEN-04 / P2-V2-REPLAY-05 done；P2-V2-PILOT-03 blocked`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
-* 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
+* 当前主问题：H0 已确认，SVD static replay branch blocked；C/D/E capacity 与单-pair preserve gate 均失败，禁止进入 rollout
 
 ---
 
@@ -1001,7 +1001,7 @@ object_confidence_mean
 | P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
-| P2-V2-PILOT-03   | running  | 8-pair 单步容量测试                   | A/B/C/D curves            | E 200-step 未过；以同一 noise bank 检验 D |
+| P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | C/D/E 与单-pair 诊断        | correction 可学但 locality/preserve 不可兼得；等待约束设计决策 |
 | P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
 | P2-V2-REPLAY-05  | done     | 64–128 Base replay cache        | 64×2 candidate 得 122 有效；20-case review 16/16 yes | 解锁 8-pair capacity pilot |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
@@ -1297,16 +1297,49 @@ verdict 均为 yes。pilot 只能使用该 candidate 中固定抽取的 8 个 pa
 
 # 14. P2-V2-PILOT-03：单步容量与参数化测试
 
-状态：`running`（2026-07-13；实现 commit `638eb71` / `b4c2608`；E 的固定 8-pair
-200-update capacity 失败；证据：`/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-capacity-e200-s20260713-b4c2608`；下一步：同一固定 noise bank 的 D 对照）
+状态：`blocked`（2026-07-13；实现 commit `638eb71` / `b4c2608`，pilot 审计修复
+`e1574e0` / `9dd4c88`；固定 C/D/E 均未过 capacity，单-pair 因果诊断确认 correction
+可学但 locality/preserve gate 仍失败；不得进入 rollout、16/8 泛化或长训练）
 
-E 使用 4 个固定 train pair（held-out 4 个只保留为后续 sanity check）、固定 selection
-`[8,34,37,60,69,81,99,114]` 与 noise-bank fingerprint `e3071be549ae0cb5e7f46b62ccad5a43de605eb24a9f3d777305664c44c2040c`。
-在 200 update 后 target error 从 `0.0137314` 到 `0.0105117`（下降 `23.45%`，低于 80%），
-outside-mask teacher drift 为 `6.52%`（高于 2%）、frame-0 teacher drift `0.1948`（非数值零）；
-gradient finite/nonzero、target-v roundtrip（`7.38e-6`）及 correction direction（`0.4975`）通过。
-因此 E 不通过 capacity gate，不得进入 rollout、16/8 泛化或长训练；这尚不能区分 trust-region 与
-更基础的 optimization/preserve 限制，下一步只允许固定同一 bank 跑 D。
+固定 4 个 train pair（held-out 4 个只保留为后续 sanity check）、selection
+`[8,34,37,60,69,81,99,114]` 与 noise-bank fingerprint
+`e3071be549ae0cb5e7f46b62ccad5a43de605eb24a9f3d777305664c44c2040c` 的 200-update 结果为：
+
+| 版本 | target error | 降幅 | outside drift | frame-0 drift | 结论 |
+|---|---:|---:|---:|---:|---|
+| C | `5.07231→5.02427` | 0.95% | 20.59% | 0.6094 | failed |
+| D | `2.93743→2.89979` | 1.28% | 16.84% | 0.4077 | failed |
+| E | `0.0137314→0.0105117` | 23.45% | 6.52% | 0.1948 | failed |
+
+证据分别位于：
+
+```text
+/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-capacity-c200-s20260713-9dd4c88
+/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-capacity-d200-s20260713-0ca869a
+/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-capacity-e200-s20260713-b4c2608
+```
+
+`e1574e0` / `9dd4c88` 修正了历史 pilot 将逐 pair 严格门槛再求均值、variant 顺序改变初始化
+seed、manifest 缺少 selected module/终态，以及 bf16 回环误用 float32 绝对阈值的问题；不覆盖
+历史 run。修复后的 smoke `p2-v2-pilot03-smoke-e1-s20260713-9dd4c88` 记录 128/0 个
+temporal/spatial module、256 个 adapter tensor、3,319,808 个可训练参数，最大回环相对误差
+`9.31e-6 < 2e-3`，说明 raw-v 代数门槛有效。
+
+为区分 optimization、preserve 与表达容量，仅对固定 index 34、`sigma=0.05`、相同 noise
+执行预注册范围外的单-pair 诊断；这些 run 不属于正式 capacity，不解锁任何后续阶段：
+
+| lr | preserve weight | target 降幅 | outside drift | frame-0 drift |
+|---:|---:|---:|---:|---:|
+| `2e-5` | 1 | 45.81% | 6.93% | 0.2090 |
+| `2e-5` | 0 | 47.93% | 9.86% | 0.2910 |
+| `2e-4` | 0 | 96.39% | 17.58% | 0.4629 |
+| `2e-4` | 1 | 95.21% | 8.45% | 0.2324 |
+
+四条诊断共用 noise-bank fingerprint `92cd900bb5ce04e47cd98ee0dbcd507a50fa6568b30f8b575f38af76ae8a3085`，
+证据目录前缀为 `/root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03-diagnostic-e1pair200*`。
+高学习率证明 correction/raw-v/temporal-only LoRA 对单 pair 可拟合；preserve 可降低泄漏，但无法
+同时满足 outside `<=2%` 与 frame-0 数值零。因此当前阻塞项是共享 temporal adapter 的局部性/
+约束设计，而非继续增加步数、恢复 A/B 或调权重搜索。
 
 ## 14.1 Pilot 数据
 
@@ -1954,20 +1987,21 @@ Coding Agent 按顺序执行：
 
 * [x] 实现 gradient audit CLI
 * [x] 完成 V1/V2 gradient report
-* [x] 构建 8-pair Base pilot 与固定 noise bank（E 200-step 未过 capacity gate）
-* [ ] 完成 A/B/C/D/E 对照
-* [ ] 完成 16/8 one-step generalization sanity check
+* [x] 构建 8-pair Base pilot 与固定 noise bank
+* [x] 完成 C/D/E 200-update 并触发预注册停损线
+* [ ] A/B 对照（PILOT-03 blocked 后取消，局部性约束未关闭前不得恢复）
+* [ ] 16/8 one-step generalization sanity check（blocked）
 
 ## Phase E：Generated replay
 
-* [ ] replay miner 支持 `parent_kind=base`
-* [ ] 正式 V2 禁止加载 adapter
+* [x] replay miner 支持 `parent_kind=base`
+* [x] 正式 V2 禁止加载 adapter
 * [x] 实现 generated background provider
 * [x] 实现 generated track provider（GEN-04 8-case review 7/8 yes）
 * [x] 增加 GT leakage guard
 * [x] 新增 cache schema V5（object-only 1×2 preflight 通过；static branch 仍 blocked）
-* [ ] 构建 64×2 candidate replay
-* [ ] 完成 20-case 人工复核
+* [x] 构建 64×2 candidate replay
+* [x] 完成 20-case 人工复核
 
 ## Phase F：因果与尺度
 
@@ -2116,21 +2150,31 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `a41dfa4` | 完成 V5 64×2 Base replay candidate | 128 candidate 中 122 kept、6 条空 object mask 硬拒绝；全 122 条 schema/provenance 自检通过，固定 20-case review 包已导出 | P2-V2-REPLAY-05 仍 running，等待人工 verdict；不得训练 |
 | 2026-07-13 | `8d750f3` | 完成 V5 20-case object-only 人工门禁 | 20/20 已填写；16 decisive 均为 yes、4 uncertain，合理率 100% ≥ 70%；review fingerprint `ccd9c5fa26d8`，review run 写入 `COMPLETE` | P2-V2-REPLAY-05 done；只解锁 object-only 的 8-pair capacity pilot，static branch 继续 blocked |
 | 2026-07-13 | `b4c2608` | E 固定 8-pair capacity 失败 | 200 update 的 target error 仅下降 23.45%，outside drift 6.52%、frame-0 drift 0.1948；gradient/roundtrip/direction 通过 | PILOT-03 仍 running；固定同一 noise bank 执行 D，不进入 rollout 或泛化 |
+| 2026-07-13 | `0ca869a` | D 固定 8-pair capacity 失败 | target error 仅下降 1.28%，outside drift 16.84%、frame-0 drift 0.4077；关闭 trust-region 反而更差 | 不进入 rollout；执行 C 并按 C/D/E 停损线诊断实现 |
+| 2026-07-13 | `e1574e0` / `9dd4c88` | 修正 pilot 聚合、溯源和 dtype 门槛 | 保存 per-pair 最坏值、统一 variant seed、固定 noise bank、记录 LoRA 清单与 manifest 终态；bf16 回环改用相对容差；全量 `127 passed` | 历史 run 不覆盖；修复后 smoke 通过 provenance/回环检查 |
+| 2026-07-13 | `9dd4c88` | C 固定 8-pair capacity 失败并关闭 C/D/E 诊断 | C target 仅降 0.95%，outside 20.59%、frame-0 0.6094；单-pair 2×2 诊断显示高 LR 可拟合 correction，但 preserve 后 outside 仍 8.45% | `P2-V2-PILOT-03 blocked`；禁止 A/B、16/8、rollout 和长训，等待局部性/约束设计决策 |
 
 ---
 
 # 27. Coding Agent 的当前唯一下一步
 
-下一步准备项：
+当前阻塞项：
 
 ```text
-P2-V2-PILOT-03
+P2-V2-PILOT-03 / locality-preserve redesign decision
 ```
 
-`P2-V2-REPLAY-05` 已完成：64×2 candidate 的 122 个有效 V5 object-only pair 均通过 formal
-reader 审计，固定 20-case 人工复核的 decisive 合理率为 100%（16/16）。固定 8-pair 的 E 200-update
-capacity test 未过 gate；下一步仅以相同 selection/noise bank 执行 D 对照，不能跳至 rollout 比较、16/8
-泛化或长训练。
+固定 C/D/E 200-update 均未过 capacity；单-pair 2×2 诊断已排除 raw-v 代数、cache/VAE 对齐和
+temporal-only LoRA 完全无容量：`lr=2e-4` 时 correction target 可下降 95% 以上，但 outside drift
+仍为 8.45%（preserve on）且 frame-0 非零。下一步必须先预注册一个能够约束共享 adapter 局部性和
+首帧保持的设计，再回到单-pair feasibility；该选择会改变方法，不得由 Coding Agent 静默决定。
+
+在研究决策关闭前：
+
+* 不运行 A/B、16/8 泛化、rollout、CAUSAL-06 或长训练；
+* 不继续搜索 learning rate、preserve weight、训练步数或 LoRA rank；
+* 不把单-pair correction 95% 降幅外推为 8-pair capacity 或生成收益；
+* 不覆盖任何已有 C/D/E 或 diagnostic run。
 
 * 不使用 future GT ego pose 生成正式 SVD target；
 * 不恢复已被人工门槛拒绝的 SVD self-estimated static V1；
