@@ -1003,7 +1003,7 @@ object_confidence_mean
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
 | P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
 | P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
-| P2-V2-REPLAY-05  | running  | 64–128 Base replay cache        | schema V5 preflight 2/2 通过；待 candidate 与 manual review | 20-case 门禁通过后才解锁训练 |
+| P2-V2-REPLAY-05  | running  | 64–128 Base replay cache        | 64×2 candidate 得 122 有效；20-case review pending | 20-case 门禁通过后才解锁训练 |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
 | P2-V2-REPRO-08   | pending  | 第二训练 seed 复现                    | two-seed report           | 晋级判断                       |
@@ -1406,6 +1406,17 @@ train condition × 两个 generation seed 的 GPU smoke。stage fingerprint 为
 `0.1661→0.0288` 下降。重审计 static drift 有轻微变化只作诊断，不作为已解锁 static
 训练监督。此前 `97988f5` smoke 的 latent coverage 元数据因 RGB/latent mask 分辨率不同被
 正确拒绝；`38a1665` 将统计绑定到实际保存 tensor 后通过，故该失败不构成模型质量结论。
+
+## 15.0.1 64×2 candidate
+
+clean commit `a41dfa4` 的 `p2-v2-replay05-candidate64x2-s20260713-a41dfa4-objectonly`
+对 64 个全 split 均匀间隔 condition、各两个固定 seed 构建 128 个 candidate。stage fingerprint
+为 `e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39`，最终 122 kept、6 rejected；
+六条拒绝均为 object component mask 为空，符合硬拒绝规则。全 122 条通过 Base provenance、无
+adapter/GT、首帧、RGB/latent/residual、VAE 与 static-disabled/object-nonempty reader 审计。有效
+object coverage 的均值/最小/最大为 `2.79% / 0.09% / 7.13%`。固定抽取的 20-case review 包为
+`/root/autodl-tmp/runs/p2-v2-replay/p2-v2-replay05-review20-s20260713-8d750f3`；在全部 verdict
+聚合并达到 70% 前，训练继续禁止。
 
 ## 15.1 数量
 
@@ -2085,6 +2096,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `59c3f05` | 导出 GEN-04 独立 8-case point-track 评审包 | 8/8 无 future GT、有效轨迹非空、长度中位数至少 3 帧；等待 `point_track_valid` 人工 verdict，不构建 replay cache |
 | 2026-07-13 | `59c3f05` | 完成 GEN-04 独立点轨迹人工验收 | `point_track_valid` 8/8 decisive、7 yes、1 no，合理率 87.5% ≥ 70%；object component 解锁，static branch 保持 blocked；下一步为 schema V5/preflight，不启动 cache 或训练 |
 | 2026-07-13 | `38a1665` | V5 object-only preflight 通过 | clean Base 1 condition × 2 seeds 均写入；RGB/latent/residual、provenance、首帧与 GT guards 完整；static mask=0，object mask 非空 | P2-V2-REPLAY-05 进入 running；下一步分层 64×2 candidate 与独立 20-case 复核，之前禁止训练 |
+| 2026-07-13 | `a41dfa4` | 完成 V5 64×2 Base replay candidate | 128 candidate 中 122 kept、6 条空 object mask 硬拒绝；全 122 条 schema/provenance 自检通过，固定 20-case review 包已导出 | P2-V2-REPLAY-05 仍 running，等待人工 verdict；不得训练 |
 
 ---
 
