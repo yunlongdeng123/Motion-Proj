@@ -2,9 +2,9 @@
 
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
-* 最后更新：2026-07-12
-* 计划基线 commit：`5bd7a18`
-* 当前阶段：`P2-V2-GRAD-02 / V2 loss and gradient audit`
+* 最后更新：2026-07-13
+* 计划基线 commit：`63d9bd0`
+* 当前阶段：`P2-V2-PILOT-03 blocked / waiting for valid Base replay pairs`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -965,8 +965,8 @@ object_confidence_mean
 | P2-V2-ARCHIVE-00 | done     | 归档 V1 和修复 watchdog 完成态          | `docs/EXPERIMENTS.md`、`tests/test_watchdog_terminal_state.py` | 开始 V2 条件门槛             |
 | P2-V2-COND-00    | done     | 确认 SVD future ego 条件不匹配；判定 static V1 | condition validity report + 16-case review | GT static rejected；point-track 解锁 |
 | P2-V2-API-01     | done     | raw-v、代数变换和 temporal-only API   | 单元测试                      | 解锁新 loss                   |
-| P2-V2-GRAD-02    | pending  | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 决定参数化                      |
-| P2-V2-PILOT-03   | pending  | 8-pair 单步容量测试                   | A/B/C/D curves            | 解锁小规模 rollout              |
+| P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
+| P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
 | P2-V2-GEN-04     | pending  | generated point-track provider；static V1 blocked | provider tests/panel      | 解锁 object component         |
 | P2-V2-REPLAY-05  | pending  | 64–128 Base replay cache        | schema V5、manual review   | 解锁训练                       |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
@@ -1123,6 +1123,8 @@ tests/test_lora_scope.py
 
 # 13. P2-V2-GRAD-02：梯度审计
 
+状态：`done`（2026-07-13；实现 commit `ce52feb` / `63d9bd0`；证据：`/root/autodl-tmp/runs/p2-v2-gradient-audit/p2-v2-grad-s20260713-ce52feb-legacyv4`、`/root/autodl-tmp/runs/p2-v2-gradient-audit/p2-v2-grad-v1-s20260713-63d9bd0-legacyv4`；下一步：`P2-V2-PILOT-03` 因无有效 Base replay pair 而 blocked，先解锁 generated point-track provider）
+
 ## 13.1 工具
 
 新增：
@@ -1242,6 +1244,16 @@ gradient_norm_by_sigma.csv
 gradient_cosine_matrix.csv
 selected_modules.txt
 ```
+
+## 13.6 验收结论
+
+* V2 loss 单元测试与既有参数化/LoRA 测试均通过；完整测试为 `108 passed`。
+* temporal-only 零初始化 LoRA 的 12 个固定 `(sample, sigma)` 行均为 finite；legacy synthetic V4 仅用于参数化工程诊断，不能作为 Base replay、target 合理性或 rollout 收益证据。
+* 在已归档的 V1 `t10-300` all-attention adapter 上，direct-v 与 real 的 L2 比中位数为 `62.7214`，absolute x0 与 real 为 `2.7559`；最低 sigma 下 direct-v 没有 target/gradient NaN 或 Inf，trust-region 生效，故保留 teacher-relative residual-v + continuous trust-region 进入 pilot。
+* direct-v 与 full-image anchor 的 cosine 在 12 行中均不低于 `0.3759`，未触发预注册的负冲突阈值；但这不推翻 full-image anchor 的设计替换，pilot 仍只使用 mask 外 preserve。
+* V1 all-attention 的 direct-v spatial GradRMS 在 11/12 行超过 temporal 的 2 倍；由于本阶段未同时观测 LPIPS 方向，不把它单独升级为因果结论，temporal-only 仍作为已通过隔离门槛的 pilot 主基线。
+
+`P2-V2-PILOT-03` 不能开跑：它要求 8 个人工合理、无 future-GT 泄漏的 Base replay pair，而 static V1 已被条件有效性门槛拒绝、generated point-track provider 尚未实现。因此先执行 `P2-V2-GEN-04`，不得用 legacy synthetic pair 替代该前置条件。
 
 ---
 
@@ -1853,19 +1865,19 @@ Coding Agent 按顺序执行：
 
 ## Phase C：V2 loss
 
-* [ ] 新增 teacher-relative residual-v target
-* [ ] 新增 continuous trust-region scaling
-* [ ] 新增 static/object component loss
-* [ ] 新增 outside-mask preserve
-* [ ] 修改 real loss 接受外部 sigma/noise
-* [ ] 增加 shared-noise 模式
-* [ ] 增加所有 loss 单元测试
+* [x] 新增 teacher-relative residual-v target
+* [x] 新增 continuous trust-region scaling
+* [x] 新增 static/object component loss
+* [x] 新增 outside-mask preserve
+* [x] 修改 real loss 接受外部 sigma/noise
+* [x] 增加 shared-noise 模式
+* [x] 增加所有 loss 单元测试
 
 ## Phase D：梯度与单步实验
 
-* [ ] 实现 gradient audit CLI
-* [ ] 完成 V1/V2 gradient report
-* [ ] 构建 8-pair Base pilot
+* [x] 实现 gradient audit CLI
+* [x] 完成 V1/V2 gradient report
+* [ ] 构建 8-pair Base pilot（blocked：等待 `P2-V2-GEN-04`）
 * [ ] 完成 A/B/C/D/E 对照
 * [ ] 完成 16/8 one-step generalization sanity check
 
@@ -2018,6 +2030,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `9a1f536`             | 完成 `P2-V2-ARCHIVE-00` 并修复 watchdog terminal state            | 正式归档 V1 negative result；终态 run 不再误报 heartbeat stale                    |
 | 2026-07-12 | `fff5ccb`             | 完成 16-case condition validity 与人工复核                           | H0 确认；GT static rejected；self-estimated static V1 以 66.67% 未过门槛          |
 | 2026-07-12 | `5bd7a18`             | 完成 SVD raw-v 参数化与 temporal-only LoRA 隔离                         | 关闭代数、sigma floor、adapter 恢复与完整路径模块选择风险；解锁 V2 loss/梯度审计             |
+| 2026-07-13 | `ce52feb` / `63d9bd0` | 完成 V2 residual-v loss 与 V1/V2 fixed-noise 梯度审计                    | direct-v/trust-region 梯度有限；V1 all-attention spatial GradRMS 多数行高于 temporal；无有效 Base replay pair，pilot blocked |
 
 ---
 
@@ -2026,17 +2039,17 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 立即执行且只执行：
 
 ```text
-P2-V2-GRAD-02
+P2-V2-GEN-04
 ```
 
-在 `P2-V2-GRAD-02` 完成前：
+在 `P2-V2-GEN-04` 完成前：
 
-* 不构建 64–128 cache；
-* 不启动新训练；
-* 不使用 future GT ego pose 生成正式 SVD target。
+* 不构建 8-pair pilot 或 64–128 replay cache；
+* 不启动训练；
+* 不使用 future GT ego pose 生成正式 SVD target；
 * 不恢复已被人工门槛拒绝的 SVD self-estimated static V1。
 
-该阶段先完成 Phase C 的 V2 loss 单元测试，再实现固定 batch/noise 的 gradient audit；不得把 gradient audit 扩张为 rollout 训练。
+先实现并验证 generated point-track provider；只在 provider 的无 GT future 泄漏、轨迹有效性和人工检查均通过后，才构建 Base replay pair。
 
 完成后输出：
 
