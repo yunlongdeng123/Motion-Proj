@@ -140,6 +140,10 @@ def _formal_metadata(
     result,
     energy_before: dict[str, float],
     energy_after: dict[str, float],
+    static_mask: torch.Tensor,
+    object_mask: torch.Tensor,
+    static_confidence: torch.Tensor,
+    object_confidence: torch.Tensor,
 ) -> dict:
     return {
         "sample_id": sample_id,
@@ -164,6 +168,11 @@ def _formal_metadata(
         "projector_diagnostics": result.diagnostics,
         "base_vae_fingerprint": vae_fingerprint,
         "projected_vae_fingerprint": vae_fingerprint,
+        "vae_fingerprint": vae_fingerprint,
+        "static_valid_fraction": float(static_mask.gt(0).float().mean()),
+        "object_valid_fraction": float(object_mask.gt(0).float().mean()),
+        "static_confidence_mean": float(static_confidence.mean()),
+        "object_confidence_mean": float(object_confidence.mean()),
     }
 
 
@@ -235,14 +244,17 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                 )
                 state = _audit_generated(auditor, base, source, str(cfg.auditor.generated_geometry_mode))
                 result = projector.project(base, state)
-                projected = result.target.clone()
-                projected[0] = base[0]
-                static_mask = result.static_mask
+                # static 分支尚未通过人工门禁；V5 仅保留 object 局部修正，绝不把
+                # 自估背景 warp 写入可训练 target。
                 object_mask = result.object_mask
-                if static_mask is None or object_mask is None:
+                if object_mask is None:
                     raise RuntimeError("projector 未返回 V5 component mask")
-                combined_mask = torch.maximum(static_mask, object_mask)
-                combined_mask[0] = 0
+                static_mask = torch.zeros_like(object_mask)
+                object_mask = object_mask.clone()
+                object_mask[0] = 0
+                projected = base + object_mask * (result.target - base)
+                projected[0] = base[0]
+                combined_mask = object_mask
                 projected_state = _audit_generated(auditor, projected, source, str(cfg.auditor.generated_geometry_mode))
                 before, after = _component_energy(
                     result, auditor.static_drift_score(state), auditor.static_drift_score(projected_state),
@@ -250,10 +262,15 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                 metadata = _formal_metadata(
                     sample_id, source["sample_id"], condition_index, generation_seed, generation,
                     base_fingerprint, vae_fingerprint, str(cfg.auditor.generated_geometry_mode),
-                    result, before, after,
+                    result, before, after, static_mask, object_mask,
+                    static_mask, object_mask,
                 )
-                static_confidence = static_mask.clone()
-                object_confidence = object_mask.clone()
+                static_confidence = static_mask
+                object_confidence = object_mask
+                condition = backbone.build_conditioning({"cond_frame": source["cond_frame"].unsqueeze(0)})
+                base_latent = backbone.encode(base.unsqueeze(0))[0]
+                projected_latent = backbone.encode(projected.unsqueeze(0))[0]
+                latent_residual = projected_latent - base_latent
                 try:
                     if cfg.cache.store == "rgb":
                         writer.write(
@@ -262,11 +279,10 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                             static_confidence=static_confidence.cpu(), object_confidence=object_confidence.cpu(),
                             base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
                             generation_seed=generation_seed, source_fingerprint=base_fingerprint,
+                            base_latent=base_latent.cpu(), projected_latent=projected_latent.cpu(),
+                            latent_residual=latent_residual.cpu(),
                         )
                     else:
-                        condition = backbone.build_conditioning({"cond_frame": source["cond_frame"].unsqueeze(0)})
-                        base_latent = backbone.encode(base.unsqueeze(0))[0]
-                        projected_latent = backbone.encode(projected.unsqueeze(0))[0]
                         scale = int(cfg.model.vae_scale_factor)
                         context = {key: condition.data[key][0] for key in
                                    ("image_embeds", "image_latents", "added_time_ids")}
@@ -279,6 +295,8 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                             object_confidence=downsample_mask_to_latent(object_confidence, scale).cpu(),
                             base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
                             generation_seed=generation_seed, source_fingerprint=base_fingerprint,
+                            base_latent=base_latent.cpu(), projected_latent=projected_latent.cpu(),
+                            latent_residual=latent_residual.cpu(),
                         )
                 except ValueError as exc:
                     row["reject_reason"] = str(exc)

@@ -19,7 +19,9 @@ _FORMAL_V2_REQUIRED_METADATA = (
     "generation_steps", "generation_settings", "first_frame_frozen", "auditor_version",
     "projector_version", "geometry_mode", "uses_future_gt_ego", "uses_future_gt_track",
     "energy_before_by_component", "energy_after_by_component", "projector_diagnostics",
-    "base_vae_fingerprint", "projected_vae_fingerprint",
+    "base_vae_fingerprint", "projected_vae_fingerprint", "vae_fingerprint",
+    "static_valid_fraction", "object_valid_fraction", "static_confidence_mean",
+    "object_confidence_mean",
 )
 
 
@@ -116,6 +118,10 @@ class ProjectionCacheWriter:
         object_confidence: torch.Tensor | None,
         base_rgb: torch.Tensor | None,
         projected_rgb: torch.Tensor | None,
+        base_latent: torch.Tensor | None,
+        projected_latent: torch.Tensor | None,
+        latent_residual: torch.Tensor | None,
+        store: str,
     ) -> None:
         missing = [name for name in _FORMAL_V2_REQUIRED_METADATA if name not in metadata]
         if missing:
@@ -136,6 +142,8 @@ class ProjectionCacheWriter:
             metadata["base_vae_fingerprint"] != metadata["projected_vae_fingerprint"]
         ):
             raise ValueError("正式 V2 cache 的 Base/projected VAE fingerprint 必须一致且非空")
+        if metadata["vae_fingerprint"] != metadata["base_vae_fingerprint"]:
+            raise ValueError("正式 V2 cache 的 VAE fingerprint 必须与 Base/projected 一致")
         components = (static_mask, object_mask, static_confidence, object_confidence)
         if any(value is None for value in components):
             raise ValueError("正式 V2 cache 必须保存 static/object mask 与 confidence")
@@ -160,6 +168,37 @@ class ProjectionCacheWriter:
             raise ValueError("Base/projected RGB 包含 NaN/Inf")
         if not torch.equal(base_rgb[0], projected_rgb[0]):
             raise ValueError("正式 V2 cache 的 projected RGB 首帧必须与 Base 一致")
+        if base_latent is None or projected_latent is None or latent_residual is None:
+            raise ValueError("正式 V2 cache 必须保存 Base/projected latent 与 residual")
+        if base_latent.shape != projected_latent.shape or base_latent.shape != latent_residual.shape:
+            raise ValueError("Base/projected latent 与 residual shape 必须一致")
+        if base_latent.ndim != 4 or base_latent.shape[0] != y.shape[0]:
+            raise ValueError("Base/projected latent 必须与 RGB 保持相同 frame count")
+        if not all(bool(torch.isfinite(value).all()) for value in
+                   (base_latent, projected_latent, latent_residual)):
+            raise ValueError("Base/projected latent 或 residual 包含 NaN/Inf")
+        if not torch.allclose(latent_residual, projected_latent - base_latent, atol=1e-6, rtol=1e-5):
+            raise ValueError("latent_residual 必须等于 projected_latent - base_latent")
+        if store == "latent" and (
+            not torch.equal(y, base_latent) or not torch.equal(x_dagger, projected_latent)
+        ):
+            raise ValueError("latent cache 的 y/x_dagger 必须分别等于 Base/projected latent")
+        if store == "rgb" and (
+            not torch.equal(y, base_rgb) or not torch.equal(x_dagger, projected_rgb)
+        ):
+            raise ValueError("RGB cache 的 y/x_dagger 必须分别等于 Base/projected RGB")
+        actual_quality = {
+            "static_valid_fraction": float(static_mask.gt(0).float().mean()),
+            "object_valid_fraction": float(object_mask.gt(0).float().mean()),
+            "static_confidence_mean": float(static_confidence.mean()),
+            "object_confidence_mean": float(object_confidence.mean()),
+        }
+        for name, value in actual_quality.items():
+            declared = metadata[name]
+            if not isinstance(declared, (int, float)) or not 0.0 <= float(declared) <= 1.0:
+                raise ValueError(f"正式 V2 cache 的 {name} 必须位于 [0,1]")
+            if abs(float(declared) - value) > 1e-6:
+                raise ValueError(f"正式 V2 cache 的 {name} 与保存 tensor 不一致")
         before = metadata["energy_before_by_component"]
         after = metadata["energy_after_by_component"]
         if not isinstance(before, dict) or not isinstance(after, dict):
@@ -179,7 +218,8 @@ class ProjectionCacheWriter:
               source_fingerprint: str | None = None, static_mask: torch.Tensor | None = None,
               object_mask: torch.Tensor | None = None, static_confidence: torch.Tensor | None = None,
               object_confidence: torch.Tensor | None = None, base_rgb: torch.Tensor | None = None,
-              projected_rgb: torch.Tensor | None = None) -> str:
+              projected_rgb: torch.Tensor | None = None, base_latent: torch.Tensor | None = None,
+              projected_latent: torch.Tensor | None = None, latent_residual: torch.Tensor | None = None) -> str:
         if self.exists(sample_id) and not self.overwrite:
             return self.sample_dir(sample_id)
         clean = y if clean is None else clean
@@ -188,6 +228,7 @@ class ProjectionCacheWriter:
             self._validate_formal_v2(
                 sample_id, y, x_dagger, mask, metadata, static_mask, object_mask,
                 static_confidence, object_confidence, base_rgb, projected_rgb,
+                base_latent, projected_latent, latent_residual, self.store,
             )
         target = self.sample_dir(sample_id)
         if os.path.exists(target):
@@ -208,6 +249,8 @@ class ProjectionCacheWriter:
                 ("static_mask", static_mask), ("object_mask", object_mask),
                 ("static_confidence", static_confidence), ("object_confidence", object_confidence),
                 ("base_rgb", base_rgb), ("projected_rgb", projected_rgb),
+                ("base_latent", base_latent), ("projected_latent", projected_latent),
+                ("latent_residual", latent_residual),
             ):
                 if value is not None:
                     torch.save(value.detach().cpu(), os.path.join(tmp, f"{name}.pt"))

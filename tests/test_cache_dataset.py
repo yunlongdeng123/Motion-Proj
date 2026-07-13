@@ -119,6 +119,9 @@ def _formal_metadata(sample_id="formal-0"):
         "energy_after_by_component": {"static": 0.9, "object": 0.9},
         "projector_diagnostics": {}, "base_vae_fingerprint": "vae-fp",
         "projected_vae_fingerprint": "vae-fp",
+        "vae_fingerprint": "vae-fp",
+        "static_valid_fraction": 0.5, "object_valid_fraction": 0.0,
+        "static_confidence_mean": 0.5, "object_confidence_mean": 0.0,
     }
 
 
@@ -138,10 +141,12 @@ def test_formal_v2_requires_base_provenance_components_and_frozen_first_frame(tm
         "formal-0", y, target, mask, _formal_metadata(), static_mask=static_mask,
         object_mask=object_mask, static_confidence=static_confidence,
         object_confidence=object_confidence, base_rgb=base_rgb, projected_rgb=projected_rgb,
+        base_latent=y, projected_latent=target, latent_residual=target - y,
     )
     item = ProjectionCacheDataset(str(tmp_path), expected_fingerprint="formal")[0]
     assert item["metadata"]["formal_v2"] is True
     assert (tmp_path / "formal-0" / "static_mask.pt").is_file()
+    assert torch.equal(item["latent_residual"], target - y)
 
 
 def test_formal_v2_rejects_future_gt_and_unfrozen_first_frame(tmp_path):
@@ -156,6 +161,7 @@ def test_formal_v2_rejects_future_gt_and_unfrozen_first_frame(tmp_path):
             "formal-0", y, target, mask, metadata, static_mask=static_mask,
             object_mask=object_mask, static_confidence=static_mask,
             object_confidence=object_mask, base_rgb=y, projected_rgb=target,
+            base_latent=y, projected_latent=target, latent_residual=target - y,
         )
 
 

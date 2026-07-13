@@ -71,7 +71,16 @@ class ProjectionCacheDataset(Dataset):
         if os.path.isfile(ctx_path):
             item["context"] = torch.load(ctx_path, map_location="cpu", weights_only=True)
         for key, filename in (("latent_flow", "latent_flow.pt"),
-                              ("flow_confidence", "flow_confidence.pt")):
+                              ("flow_confidence", "flow_confidence.pt"),
+                              ("static_mask", "static_mask.pt"),
+                              ("object_mask", "object_mask.pt"),
+                              ("static_confidence", "static_confidence.pt"),
+                              ("object_confidence", "object_confidence.pt"),
+                              ("base_rgb", "base_rgb.pt"),
+                              ("projected_rgb", "projected_rgb.pt"),
+                              ("base_latent", "base_latent.pt"),
+                              ("projected_latent", "projected_latent.pt"),
+                              ("latent_residual", "latent_residual.pt")):
             path = os.path.join(d, filename)
             if os.path.isfile(path):
                 item[key] = torch.load(path, map_location="cpu", weights_only=True)
@@ -116,7 +125,9 @@ def cache_collate(batch: list[dict]) -> dict:
     if "context" in batch[0]:
         keys = batch[0]["context"].keys()
         out["context"] = {k: torch.stack([b["context"][k] for b in batch], 0) for k in keys}
-    for key in ("latent_flow", "flow_confidence"):
+    for key in ("latent_flow", "flow_confidence", "static_mask", "object_mask",
+                "static_confidence", "object_confidence", "base_rgb", "projected_rgb",
+                "base_latent", "projected_latent", "latent_residual"):
         present = [key in item for item in batch]
         if any(present) and not all(present):
             raise ValueError(f"同一 batch 的 {key} 不得部分缺失")
