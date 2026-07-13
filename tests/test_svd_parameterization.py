@@ -1,5 +1,6 @@
 import pytest
 import torch
+from diffusers import EulerDiscreteScheduler
 from omegaconf import OmegaConf
 
 from motion_proj.backbones.base import Conditioning
@@ -137,3 +138,33 @@ def test_anchor_preserves_preexisting_disabled_state():
     assert torch.all(anchor == 1.0)
     assert backbone._lora_enabled is False
     assert backbone.unet.adapters_enabled is False
+
+
+def test_raw_v_algebra_matches_official_euler_scheduler_step():
+    """The inverse-pair tests alone cannot detect duplicated preconditioning."""
+    scheduler = EulerDiscreteScheduler(
+        num_train_timesteps=1000,
+        prediction_type="v_prediction",
+        timestep_type="continuous",
+        use_karras_sigmas=True,
+        sigma_min=0.002,
+        sigma_max=700.0,
+    )
+    scheduler.set_timesteps(25)
+    generator = torch.Generator().manual_seed(19)
+    sample = torch.randn(2, 4, 3, 5, generator=generator)
+    raw_v = torch.randn(sample.shape, generator=generator)
+    backbone = SVDBackbone(_cfg())
+
+    for index, timestep in enumerate(scheduler.timesteps):
+        sigma = scheduler.sigmas[index]
+        expected_input = sample / torch.sqrt(1.0 + sigma.square())
+        scheduler_input = scheduler.scale_model_input(sample, timestep)
+        torch.testing.assert_close(scheduler_input, expected_input, rtol=1.0e-6, atol=1.0e-6)
+        torch.testing.assert_close(timestep, 0.25 * sigma.log(), rtol=1.0e-6, atol=1.0e-6)
+
+        official_x0 = scheduler.step(raw_v, timestep, sample).pred_original_sample
+        code_x0 = backbone.x0_from_model_output(
+            sample.unsqueeze(0), sigma.reshape(1), raw_v.unsqueeze(0)
+        ).squeeze(0)
+        torch.testing.assert_close(code_x0, official_x0, rtol=1.0e-6, atol=1.0e-6)

@@ -1,0 +1,32 @@
+defaults_chain:
+  - ./p2_v2_pilot.yaml
+
+run_id: autoresearch-f0-endpoint-s20260713
+work_dir: /root/autodl-tmp/runs/autoresearch-f0-endpoint-s20260713
+
+train:
+  # Capacity has already been demonstrated on this pair at 2e-4.  This is a
+  # locality Pareto audit, not a learning-rate search.
+  lr: 2.0e-4
+  weight_decay: 0.0
+  max_steps: 200
+  max_grad_norm: 1.0
+  log_every: 25
+
+f0:
+  task_id: AUTORESEARCH-F0-ENDPOINT-LOCALITY
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_index: 34
+  expected_sample_id: 5998b71b64c146769bde1d5430741381_CAM_FRONT_base_s20260713
+  noise_seed: 20260714
+  sigma: 0.05
+  eta: 1.0
+  trust_region_B: 0.25
+  dilation_radius: 1
+  # Applied after normalized preservation loss.  Values were fixed before run.
+  preserve_lambdas: [0.0, 0.25, 1.0, 4.0, 16.0]
+  evaluation_steps: [0, 25, 50, 100, 150, 200]
+  # A point is feasible only if all three preregistered gates hold together.
+  max_correction_fraction: 0.20
+  max_outside_teacher_drift_ratio: 0.02
+  max_frame0_teacher_drift: 1.0e-6
