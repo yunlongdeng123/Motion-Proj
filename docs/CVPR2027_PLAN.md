@@ -4,7 +4,7 @@
 
 * 最后更新：2026-07-13
 * 计划基线 commit：`59c3f05`
-* 当前阶段：`P2-V2-GEN-04 done / generated object component unlocked；下一步 P2-V2-REPLAY-05`
+* 当前阶段：`P2-V2-GEN-04 done / generated object component unlocked；P2-V2-REPLAY-05 running`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -1003,7 +1003,7 @@ object_confidence_mean
 | P2-V2-GRAD-02    | done     | 当前 V1 与 V2 梯度审计                 | gradient JSONL/report     | 保留 residual-v + trust region |
 | P2-V2-PILOT-03   | blocked  | 8-pair 单步容量测试                   | A/B/C/D curves            | 等待有效 Base replay pair       |
 | P2-V2-GEN-04     | done     | generated point-track provider；static V1 blocked | provider tests / 8-case Base review | 7/8 yes；object component 解锁 |
-| P2-V2-REPLAY-05  | pending  | 64–128 Base replay cache        | schema V5、manual review   | 解锁训练                       |
+| P2-V2-REPLAY-05  | running  | 64–128 Base replay cache        | schema V5 preflight 2/2 通过；待 candidate 与 manual review | 20-case 门禁通过后才解锁训练 |
 | P2-V2-CAUSAL-06  | pending  | 因果配方对照                          | paired 25-step report     | 选择唯一主配方                    |
 | P2-V2-SCALE-07   | pending  | low/mid/mixed sigma 对照          | scale report              | 判断 scale alignment         |
 | P2-V2-REPRO-08   | pending  | 第二训练 seed 复现                    | two-seed report           | 晋级判断                       |
@@ -1392,6 +1392,20 @@ capacity test 通过后，另构建：
 ---
 
 # 15. P2-V2-REPLAY-05：正式 Base rollout replay cache
+
+状态：`running`（2026-07-13；实现 commit `d127f0a` / `de9e604` / `97988f5` / `38a1665`；V5 object-only preflight 证据：`/root/autodl-tmp/cache/p2-v2/replay-v5-smoke-s20260713-38a1665-objectonly`；下一步：分层 64 conditions × 2 seeds candidate）
+
+## 15.0 V5 object-only preflight
+
+`replay-v5-smoke-s20260713-38a1665-objectonly` 在 clean commit `38a1665` 完成 1 个
+train condition × 两个 generation seed 的 GPU smoke。stage fingerprint 为
+`73af97ab718dc9d2ebd697171e4b4c7675dd785fad2d1e18e37a6c6352f34c89`，2/2 写入成功、
+无 future-GT、无 adapter、首帧 target/mask 冻结、RGB/latent/residual 与 VAE fingerprint
+均通过 writer 与 reader 自检。由于 static branch 仍 blocked，保存的 `static_mask`/confidence
+均为零，只保留非空的 `object_mask`；object energy 由 `1.6338→0.7115` 与
+`0.1661→0.0288` 下降。重审计 static drift 有轻微变化只作诊断，不作为已解锁 static
+训练监督。此前 `97988f5` smoke 的 latent coverage 元数据因 RGB/latent mask 分辨率不同被
+正确拒绝；`38a1665` 将统计绑定到实际保存 tensor 后通过，故该失败不构成模型质量结论。
 
 ## 15.1 数量
 
@@ -1923,7 +1937,7 @@ Coding Agent 按顺序执行：
 * [x] 实现 generated background provider
 * [x] 实现 generated track provider（GEN-04 8-case review 7/8 yes）
 * [x] 增加 GT leakage guard
-* [ ] 新增 cache schema V5
+* [x] 新增 cache schema V5（object-only 1×2 preflight 通过；static branch 仍 blocked）
 * [ ] 构建 64×2 candidate replay
 * [ ] 完成 20-case 人工复核
 
@@ -2070,6 +2084,7 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-13 | `3cb8445` | 生成首个无 GT point-track Base panel | 自动检查通过、62 条有效轨迹；static review 为 no，不能代替 point-track review，不构建 replay cache |
 | 2026-07-13 | `59c3f05` | 导出 GEN-04 独立 8-case point-track 评审包 | 8/8 无 future GT、有效轨迹非空、长度中位数至少 3 帧；等待 `point_track_valid` 人工 verdict，不构建 replay cache |
 | 2026-07-13 | `59c3f05` | 完成 GEN-04 独立点轨迹人工验收 | `point_track_valid` 8/8 decisive、7 yes、1 no，合理率 87.5% ≥ 70%；object component 解锁，static branch 保持 blocked；下一步为 schema V5/preflight，不启动 cache 或训练 |
+| 2026-07-13 | `38a1665` | V5 object-only preflight 通过 | clean Base 1 condition × 2 seeds 均写入；RGB/latent/residual、provenance、首帧与 GT guards 完整；static mask=0，object mask 非空 | P2-V2-REPLAY-05 进入 running；下一步分层 64×2 candidate 与独立 20-case 复核，之前禁止训练 |
 
 ---
 
