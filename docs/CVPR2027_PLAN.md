@@ -3,8 +3,8 @@
 > 本文档是当前阶段的唯一研发计划与决策源。Coding Agent 必须按照任务依赖顺序执行，不得跳过阻塞门槛、静默修改阈值或用更长训练掩盖失败。
 
 * 最后更新：2026-07-13
-* 计划基线 commit：`3cb8445`
-* 当前阶段：`P2-V2-GEN-04 running / provider implementation awaiting Base-panel review`
+* 计划基线 commit：`59c3f05`
+* 当前阶段：`P2-V2-GEN-04 running / 8-case generated-track review awaiting`
 * 当前开发骨干：Stable Video Diffusion XT
 * 状态词：`pending / running / blocked / done / rejected`
 * 当前主问题：H0 已确认，SVD future GT ego static target 禁用；self-estimated static V1 人工合理率 66.67%，static replay branch blocked
@@ -892,6 +892,13 @@ GEN-04 的轨迹人工门禁独立于已经被拒绝的 static V1：固定 8 个
 panel 第二栏的点是否贴合可见局部并跨帧连续。8 例都必须填写 `yes/no/uncertain`，对 decisive
 例的 `yes` 比例必须不低于 70%。static correction 栏仅为上下文，不能以其已知失败结果替代或
 否决 point-track verdict；未达到该门槛时 object component 仍为 `blocked`。
+
+8-case clean Base 包 `p2-v2-gen04-track8-s20260713-59c3f05-net1` 已完成导出，固定 val
+clip `0/96/192/288/384/480/576/672`，25 inference steps、无 adapter、无 replay cache。
+8/8 均通过自动门禁（无 future GT track、有效轨迹非空、长度中位数不低于 3 帧）；有效轨迹数
+为 45–72，长度中位数为 3–8 帧，survival 为 29.17%–84.72%，局部 correction coverage 为
+4.27%–7.36%。评审包已生成但 verdict 尚未填写，故 `generated_track_decision=pending_review`；
+不得据此推进 object component 或 replay。
 
 ---
 
@@ -2055,7 +2062,8 @@ MoAlign 使用与光流相关的 motion-centric representation alignment。
 | 2026-07-12 | `5bd7a18`             | 完成 SVD raw-v 参数化与 temporal-only LoRA 隔离                         | 关闭代数、sigma floor、adapter 恢复与完整路径模块选择风险；解锁 V2 loss/梯度审计             |
 | 2026-07-13 | `ce52feb` / `63d9bd0` | 完成 V2 residual-v loss 与 V1/V2 fixed-noise 梯度审计                    | direct-v/trust-region 梯度有限；V1 all-attention spatial GradRMS 多数行高于 temporal；无有效 Base replay pair，pilot blocked |
 | 2026-07-13 | `pending` | 开始 `P2-V2-GEN-04` RAFT point-track 工程接线 | generated mode 彻底隔离 source future boxes；真实 Base panel 尚未运行 |
-| 2026-07-13 | `3cb8445` | 生成首个无 GT point-track Base panel | 自动检查通过、62 条有效轨迹；等待人工 review，不构建 replay cache |
+| 2026-07-13 | `3cb8445` | 生成首个无 GT point-track Base panel | 自动检查通过、62 条有效轨迹；static review 为 no，不能代替 point-track review，不构建 replay cache |
+| 2026-07-13 | `59c3f05` | 导出 GEN-04 独立 8-case point-track 评审包 | 8/8 无 future GT、有效轨迹非空、长度中位数至少 3 帧；等待 `point_track_valid` 人工 verdict，不构建 replay cache |
 
 ---
 
