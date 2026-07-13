@@ -83,6 +83,9 @@ def run(cfg) -> dict[str, Any]:
     device = torch.device(str(cfg.device))
     dataset = ProjectionCacheDataset(str(dcfg.cache_dir), expected_fingerprint=dcfg.get("cache_fingerprint"))
     backbone = build_backbone(cfg.model, load=True, device=str(device))
+    student_adapter = dcfg.get("student_adapter")
+    if student_adapter:
+        backbone.load_adapter(str(student_adapter))
     backbone.set_train_mode(True)
     params = [(name, param) for name, param in backbone.training_module().named_parameters() if param.requires_grad]
     if not params:
@@ -153,6 +156,7 @@ def run(cfg) -> dict[str, Any]:
         "config_fingerprint": config_fingerprint(cfg),
         "cache_fingerprint": directory_manifest_fingerprint(str(dcfg.cache_dir)),
         "input_source": str(dcfg.input_source),
+        "student_adapter": None if not student_adapter else str(student_adapter),
         "input_limitations": "legacy synthetic schema-v4 cache；仅用于参数化/梯度工程诊断，不能作为 Base replay 或 rollout 收益证据。",
         "num_rows": len(rows),
         "sigmas": sigma_values,
@@ -168,7 +172,7 @@ def run(cfg) -> dict[str, Any]:
     _write_csv(os.path.join(output_dir, "gradient_cosine_matrix.csv"), cosine_rows, ["batch_index", "sigma", "pair", "cosine"])
     atomic_write_text(os.path.join(output_dir, "selected_modules.txt"), "".join(f"{name}\n" for name in backbone.adapter_metadata()["selected_module_names"]))
     save_resolved_config(cfg, os.path.join(output_dir, "resolved.yaml"))
-    atomic_write_json(os.path.join(output_dir, "manifest.json"), {"status": "completed", "task_id": "P2-V2-GRAD-02", "git": git_state(), "environment": environment_fingerprint(), "config_fingerprint": config_fingerprint(cfg), "cache_fingerprint": directory_manifest_fingerprint(str(dcfg.cache_dir)), "input_source": str(dcfg.input_source), "seed": int(cfg.seed)})
+    atomic_write_json(os.path.join(output_dir, "manifest.json"), {"status": "completed", "task_id": "P2-V2-GRAD-02", "git": git_state(), "environment": environment_fingerprint(), "config_fingerprint": config_fingerprint(cfg), "cache_fingerprint": directory_manifest_fingerprint(str(dcfg.cache_dir)), "input_source": str(dcfg.input_source), "student_adapter": None if not student_adapter else str(student_adapter), "seed": int(cfg.seed)})
     atomic_write_text(os.path.join(output_dir, "COMPLETE"), "completed\n")
     return summary
 

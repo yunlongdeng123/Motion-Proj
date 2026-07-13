@@ -1,0 +1,10 @@
+defaults_chain:
+  - ./p2_v2_grad.yaml
+
+model:
+  lora:
+    scope: all_attention
+
+diagnostics:
+  output_dir: /root/autodl-tmp/runs/p2-v2-gradient-audit/p2-v2-grad-v1-s20260713-pending
+  student_adapter: /root/autodl-tmp/runs/p2-tune-mini/trials/tune-t10-s100-6f451fa77e-s300-6f451fa77e/ckpts/step_000000300_final/adapter.safetensors
