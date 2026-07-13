@@ -259,14 +259,25 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                 before, after = _component_energy(
                     result, auditor.static_drift_score(state), auditor.static_drift_score(projected_state),
                 )
+                static_confidence = static_mask
+                object_confidence = object_mask
+                if cfg.cache.store == "latent":
+                    scale = int(cfg.model.vae_scale_factor)
+                    stored_static_mask = downsample_mask_to_latent(static_mask, scale)
+                    stored_object_mask = downsample_mask_to_latent(object_mask, scale)
+                    stored_static_confidence = downsample_mask_to_latent(static_confidence, scale)
+                    stored_object_confidence = downsample_mask_to_latent(object_confidence, scale)
+                else:
+                    stored_static_mask = static_mask
+                    stored_object_mask = object_mask
+                    stored_static_confidence = static_confidence
+                    stored_object_confidence = object_confidence
                 metadata = _formal_metadata(
                     sample_id, source["sample_id"], condition_index, generation_seed, generation,
                     base_fingerprint, vae_fingerprint, str(cfg.auditor.generated_geometry_mode),
-                    result, before, after, static_mask, object_mask,
-                    static_mask, object_mask,
+                    result, before, after, stored_static_mask, stored_object_mask,
+                    stored_static_confidence, stored_object_confidence,
                 )
-                static_confidence = static_mask
-                object_confidence = object_mask
                 condition = backbone.build_conditioning({"cond_frame": source["cond_frame"].unsqueeze(0)})
                 base_latent = backbone.encode(base.unsqueeze(0))[0]
                 projected_latent = backbone.encode(projected.unsqueeze(0))[0]
@@ -275,24 +286,23 @@ def mine_base(cfg, max_conditions: int, generation_seeds: list[int]) -> dict:
                     if cfg.cache.store == "rgb":
                         writer.write(
                             sample_id, base.cpu(), projected.cpu(), combined_mask.cpu(), metadata,
-                            static_mask=static_mask.cpu(), object_mask=object_mask.cpu(),
-                            static_confidence=static_confidence.cpu(), object_confidence=object_confidence.cpu(),
+                            static_mask=stored_static_mask.cpu(), object_mask=stored_object_mask.cpu(),
+                            static_confidence=stored_static_confidence.cpu(), object_confidence=stored_object_confidence.cpu(),
                             base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
                             generation_seed=generation_seed, source_fingerprint=base_fingerprint,
                             base_latent=base_latent.cpu(), projected_latent=projected_latent.cpu(),
                             latent_residual=latent_residual.cpu(),
                         )
                     else:
-                        scale = int(cfg.model.vae_scale_factor)
                         context = {key: condition.data[key][0] for key in
                                    ("image_embeds", "image_latents", "added_time_ids")}
                         writer.write(
                             sample_id, base_latent.cpu(), projected_latent.cpu(),
-                            downsample_mask_to_latent(combined_mask, scale).cpu(), metadata, context,
-                            clean=base_latent.cpu(), static_mask=downsample_mask_to_latent(static_mask, scale).cpu(),
-                            object_mask=downsample_mask_to_latent(object_mask, scale).cpu(),
-                            static_confidence=downsample_mask_to_latent(static_confidence, scale).cpu(),
-                            object_confidence=downsample_mask_to_latent(object_confidence, scale).cpu(),
+                            stored_object_mask.cpu(), metadata, context,
+                            clean=base_latent.cpu(), static_mask=stored_static_mask.cpu(),
+                            object_mask=stored_object_mask.cpu(),
+                            static_confidence=stored_static_confidence.cpu(),
+                            object_confidence=stored_object_confidence.cpu(),
                             base_rgb=base.cpu(), projected_rgb=projected.cpu(), source="replay_v2",
                             generation_seed=generation_seed, source_fingerprint=base_fingerprint,
                             base_latent=base_latent.cpu(), projected_latent=projected_latent.cpu(),
