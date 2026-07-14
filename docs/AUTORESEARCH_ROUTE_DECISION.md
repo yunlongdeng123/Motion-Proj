@@ -90,6 +90,27 @@ visibility expansion、turn 83.05%、dynamic-degree median 0.112）。
 12 个分 strata panel 与 `reviews.template.jsonl`，在完成至少 12 个有效人工 verdict 前，禁止
 F1-R 和最终路线晋级。证据：`/root/autodl-tmp/runs/autoresearch-p0-projector-s20260714-v1/`。
 
+### 1.4 P1 RGB/VAE counterfactual target 更新（2026-07-14；machine fail）
+
+P1 以 P0 machine-eligible P-UNC 为唯一输入，在 7 个具有 primary point-track tube component 的
+冻结 Base clips 上临时构造 RGB target；P0 index 114 仅含 background preservation、没有正向
+counterfactual target，故不被伪装成 P1 failure sample。诊断比较 full latent、当前 masked hybrid 和
+固定一格 dilated hybrid，未加载 adapter、未使用 future GT、未写 cache。P1 v1 保留了一个 scope bug：
+occlusion proxy 把未移动的密集 query overlap 一并计数；v2 在 clean commit `960c4c2` 上只审计至少
+一端发生实际 integer crop/paste move 的关系，仍得到同一机器失败结论。
+
+硬不变量本身通过：所有 7/7 constructed RGB/latent frame-0 error `<=1e-6`，hybrid mask 外 latent
+RMS/Base RMS 最大 0.00871。但 endpoint target 无法通过合法性 gate：(1) index 34 的 P-UNC correction
+在整数 crop/paste 后完全没有 RGB 改变；(2) decode(hybrid) 对 projected RGB 的 LPIPS 最大 0.06805，
+高于 0.05，且 full-VAE reconstruction 同样为 0.06805，表明限制已在 RGB/VAE target 而非仅 hybrid
+mask；(3) 出现 1 个 source-retention duplication proxy；(4) 即使只计实际移动组件，仍有 588 个
+无 depth/occlusion ordering 的 move-overlap relationship。当前 compositor 不能将 P0 的有效连续轨迹
+稳定映射为合法、可解码的 RGB/latent counterfactual。
+
+因此 endpoint route A 和 F1-R 均被 P1 阻断；不得靠扩大 mask、忽略 source 或引入大型视频编辑模型
+掩盖该结论。P1 的 panel/review template 保留为诊断证据，但 machine gate 已失败，不等待人审来反转它。
+证据：`/root/autodl-tmp/runs/autoresearch-p1-target-s20260714-v2/`（v1 也保留）。
+
 ## 2. Verified repository facts
 
 ## 2.1 当前训练目标：文档计划与正式 trainer 并不相同

@@ -142,7 +142,7 @@ dynamic-degree median ratio 0.862。P-CON 的 turn 88.79% 与 dynamic-degree 0.7
 high-SNR outlier、拒绝且不放大 sub-uncertainty jitter。因 12 个 panel 尚无人工 verdict，最终状态为
 `awaiting_reviews`；P1 可以以 machine eligibility 运行，F1-R 仍 blocked。
 
-## P1 — RGB projector / VAE target locality（next；no generator training）
+## P1 — RGB projector / VAE target locality（machine fail；no generator training）
 
 | Field | Pre-registration |
 |---|---|
@@ -150,14 +150,22 @@ high-SNR outlier、拒绝且不放大 sub-uncertainty jitter。因 12 个 panel 
 | Research question | `Xb→Xdagger→E(Xdagger)→MΔ` 是否对应合法、局部、可解码的 counterfactual target？ |
 | Hypothesis | 当前 crop/resize/paste + source retention + VAE 会产生明显非局部 hybrid latent；若无法定义一致 target，应停止 endpoint 核心方向。 |
 | Code changes | 新增只读 target-consistency diagnostic 与 panels；不改 warper/cache schema。 |
-| Fixed variables | P0 通过的最多 8 clips；same tracks/masks；deterministic VAE mode；same Base RGB/latent。 |
-| Independent variable | full `E(Xdagger)`、masked delta hybrid、decode(hybrid)、old compositor；可选 source-hole/occlusion diagnostic 仅作对照。 |
+| Fixed variables | P0 machine-eligible 的 7 个有 primary component clips（index 114 只有 background preservation，排除）；same P-UNC tracks/masks；deterministic VAE mode；same Base RGB。 |
+| Independent variable | full `E(Xdagger)`、masked delta hybrid、固定 radius-1 dilated hybrid、decode-reencode；现有 crop/resize/paste compositor 只作被审计对象。 |
 | Metrics | mask in/out latent RMS；outside changed fraction；decode-hybrid vs `Xdagger` LPIPS/PSNR；source duplication IoU；occlusion collision；edge energy；human 8-case validity。 |
 | Expected failure | hybrid latent 不可对应 target RGB；复制/ghosting 与遮挡错误被 dynamics loss 学习。 |
-| Promotion threshold | 8/8 frame0 exact；outside latent RMS/Base RMS `<=0.02` 或有可证明的 full-latent target treatment；decode-hybrid 与 target LPIPS `<=0.05`；decisive human validity `>=87.5%`；无 systematic duplication/occlusion failure。 |
+| Promotion threshold | 所有可构造 P0-primary target 的 frame0 exact；outside latent RMS/Base RMS `<=0.02` 或有可证明的 full-latent target treatment；decode-hybrid 与 target LPIPS `<=0.05`；decisive human validity `>=87.5%`；无 systematic duplication/occlusion failure。 |
 | Stop condition | target 只能靠扩大 mask/提高 preserve 掩盖；validity `<75%`；需要引入 depth/large external model 才可定义 target。 |
-| Artifacts | `runs/autoresearch-p1-target-*/{manifest.json,metrics.jsonl,summary.json,figures,panel,reviews.jsonl}`。 |
+| Artifacts | `runs/autoresearch-p1-target-*/{manifest.json,resolved.yaml,metrics.jsonl,summary.json,machine_summary.json,target_rows.csv,source_duplication_rows.csv,occlusion_overlap_rows.csv,panels,reviews.template.jsonl}`。 |
 | Estimated GPU budget | `<0.5 GPU-hour`（VAE encode/decode + panels）。 |
+
+结果（2026-07-14）：v1 run 保留了一个未移动 query overlap 的 occlusion-proxy scope bug；v2
+`autoresearch-p1-target-s20260714-v2` 在 clean commit `960c4c2` 上限定为实际 integer-paste move
+后复跑，machine fail 不变。7/7 constructed target 的 frame0 RGB/latent exact，hybrid mask 外 latent
+ratio 最大 0.00871；但 index 34 的 P-UNC correction 量化后没有产生任何 RGB target change，hybrid
+LPIPS 最大 0.06805（full VAE reconstruction 同值，超过 0.05），出现 1 个 source-retention duplication
+proxy，并有 588 个无 depth order 的 moved-component overlap。当前 crop/resize/paste + masked hybrid
+不能提供合法 counterfactual；endpoint A 和 F1-R blocked，不通过扩 mask 或大型修复模型补救。
 
 ## E0 — Independent rollout evaluator validity（next）
 

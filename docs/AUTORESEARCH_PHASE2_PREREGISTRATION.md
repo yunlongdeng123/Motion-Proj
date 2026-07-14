@@ -68,6 +68,15 @@ sub-uncertainty jitter。已导出 12 个 panel 和 review 模板；未填写 hu
 
 通过门槛：8/8 frame-0 RGB/latent exact；outside latent RMS/Base RMS `<=0.02`，或有可验证的 full-latent treatment；decode-hybrid 与 projected target LPIPS `<=0.05`；无系统性的 duplication/occlusion failure；decisive human validity `>=87.5%`。任一系统性 hybrid invalidity 或需要大型视频编辑模型才可修复时，endpoint route 为 `rejected`。
 
+执行记录（2026-07-14）：P1 使用 P0 machine-eligible P-UNC 的 7 个含 primary component 的 frozen-Base
+clips；index 114 只有 background preservation，未作为空 target 计入。v1 保留了未移动 query overlap 被
+计入 occlusion proxy 的 scope bug；v2 `autoresearch-p1-target-s20260714-v2` 在 clean commit `960c4c2`
+限定到至少一端实际 integer paste move 后复跑。所有 constructed frame-0 RGB/latent exact，hybrid
+outside latent ratio 最大 0.00871；但 index 34 无任何量化后的 RGB correction，hybrid LPIPS 最大
+0.06805（full VAE reconstruction 同样 0.06805，超过 0.05），有 1 个 source-retention duplication
+proxy 和 588 个无 depth order 的 moved-component overlap。因此 P1 machine `fail`：当前 RGB/VAE endpoint
+counterfactual 不合法，A/F1-R 不得启动；review template 仅保留为证据，不能以未完成的人审覆盖机器失败。
+
 ## 6. E0 — Independent rollout evaluator validity
 
 优先使用官方 CoTracker3，作为 optional、冻结且与 RAFT-chain 机制独立的 evaluator。输入 provenance 只允许 generated RGB、first-frame/query sampling 和 evaluator 自身权重；不得读取 cache tracks、projector outputs、future GT 或 source future metadata。query 固定并按 background、dynamic-residual、foreground-candidate 分开报告；无有效 track 必须为 `invalid` 而非 0。
