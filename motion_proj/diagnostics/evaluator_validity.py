@@ -34,8 +34,14 @@ from ..eval.independent_tracks import (
 )
 
 
-PROTOCOL_VERSION = "autoresearch-e0-independent-cotracker3-v1"
+PROTOCOL_VERSION = "autoresearch-e0-independent-cotracker3-v2"
 REVIEW_VALUES = {"valid", "invalid", "uncertain"}
+AGGREGATE_FIELDS = (
+    "survival_rate",
+    "camera_compensated_image_plane_velocity_rms_px",
+    "camera_compensated_image_plane_acceleration_rms_px",
+    "camera_compensated_image_plane_jerk_rms_px",
+)
 
 
 def _finite(value: Any) -> float | None:
@@ -88,6 +94,30 @@ def relative_metric_delta(left: Mapping[str, float] | None, right: Mapping[str, 
         values.append(value)
     result["max_relative_delta"] = max(values) if values else None
     return result
+
+
+def perturbation_rank_correlations(
+    real_rows: Iterable[Mapping[str, Any]],
+    modes: Iterable[str],
+) -> dict[str, dict[str, float | None]]:
+    """比较同一 clip 在原始与轻扰动输入上的 metric 排序，拒绝自相关的伪稳定性。"""
+    rows = list(real_rows)
+    output: dict[str, dict[str, float | None]] = {}
+    for mode in modes:
+        values: dict[str, float | None] = {}
+        for field in AGGREGATE_FIELDS:
+            baseline = [
+                row.get("aggregate", {}).get(field) if row.get("aggregate") is not None else None
+                for row in rows
+            ]
+            perturbed = [
+                row.get("perturbations", {}).get(mode, {}).get("aggregate", {}).get(field)
+                if row.get("perturbations", {}).get(mode, {}).get("aggregate") is not None else None
+                for row in rows
+            ]
+            values[field] = spearman_rank_correlation(baseline, perturbed)
+        output[str(mode)] = values
+    return output
 
 
 def _track_rerun_difference(left: IndependentTrackState, right: IndependentTrackState) -> dict[str, float | int | None]:
@@ -236,15 +266,33 @@ def _update_reviews(run_dir: Path, settings: Mapping[str, Any]) -> dict[str, Any
     return summary
 
 
-def _machine_decision(real_rows: list[dict[str, Any]], synthetic: Mapping[str, Any], threshold: Mapping[str, Any]) -> dict[str, Any]:
+def _machine_decision(
+    real_rows: list[dict[str, Any]],
+    synthetic: Mapping[str, Any],
+    threshold: Mapping[str, Any],
+    perturbation_ranks: Mapping[str, Mapping[str, float | None]],
+) -> dict[str, Any]:
     rerun = [row["rerun"]["aggregate_relative_delta"]["max_relative_delta"] for row in real_rows]
     rerun_ok = all(value is not None and float(value) <= float(threshold["maximum_rerun_relative_delta"]) for value in rerun)
     ranks = [value for value in synthetic.get("threshold_sweep_rank_correlations", []) if value is not None]
+    perturbation_values = [
+        value
+        for metrics in perturbation_ranks.values()
+        for value in metrics.values()
+        if value is not None
+    ]
+    expected_perturbation_values = len(perturbation_ranks) * len(AGGREGATE_FIELDS)
+    perturbation_ok = (
+        len(perturbation_values) == expected_perturbation_values
+        and bool(perturbation_values)
+        and min(float(value) for value in perturbation_values) >= float(threshold["minimum_rank_correlation"])
+    )
     synthetic_ok = bool(synthetic.get("acceleration_order_correct")) and bool(synthetic.get("jerk_order_correct"))
     invalid_recognized = bool(synthetic.get("occlusion_invalid_or_downweighted"))
     checks = {
         "identical_video_rerun": rerun_ok,
         "threshold_sweep_rank_correlation": bool(ranks) and min(float(value) for value in ranks) >= float(threshold["minimum_rank_correlation"]),
+        "perturbation_rank_correlation": perturbation_ok,
         "synthetic_acceleration_and_jerk_order": synthetic_ok,
         "occlusion_low_texture_invalidity_recognized": invalid_recognized,
         "all_real_clips_have_valid_tracks": all(bool(row["valid"]) for row in real_rows),
@@ -328,9 +376,11 @@ def run_evaluator_validity(cfg: Any, *, aggregate_only: bool = False) -> dict[st
             perturb = {}
             for mode in settings["perturbations"]:
                 state = evaluator.track(perturb_video(frames, str(mode)))
+                perturbed_aggregate = aggregate_dynamics(summarize_camera_compensated_dynamics(state))
                 perturb[str(mode)] = {
                     "valid": state.valid,
-                    "aggregate_relative_delta": relative_metric_delta(first_aggregate, aggregate_dynamics(summarize_camera_compensated_dynamics(state))),
+                    "aggregate": perturbed_aggregate,
+                    "aggregate_relative_delta": relative_metric_delta(first_aggregate, perturbed_aggregate),
                 }
             row = {
                 "dataset_index": index, "sample_id": str(item["metadata"]["sample_id"]), "valid": first.valid,
@@ -366,12 +416,14 @@ def run_evaluator_validity(cfg: Any, *, aggregate_only: bool = False) -> dict[st
                 for row in real_rows
             ]
             sweep.append(spearman_rank_correlation(baseline, filtered))
+        perturbation_ranks = perturbation_rank_correlations(real_rows, [str(mode) for mode in settings["perturbations"]])
         cv = synthetic_rows.get("constant_velocity", {}).get("aggregate") or {}
         ca = synthetic_rows.get("constant_acceleration", {}).get("aggregate") or {}
         turn = synthetic_rows.get("smooth_turn", {}).get("aggregate") or {}
         occlusion = synthetic_rows.get("occlusion", {}).get("aggregate")
         synthetic_summary = {
             "rows": synthetic_rows, "threshold_sweep_rank_correlations": sweep,
+            "perturbation_rank_correlations": perturbation_ranks,
             "acceleration_order_correct": (
                 _finite(ca.get("camera_compensated_image_plane_acceleration_rms_px")) is not None
                 and _finite(cv.get("camera_compensated_image_plane_acceleration_rms_px")) is not None
@@ -384,7 +436,7 @@ def run_evaluator_validity(cfg: Any, *, aggregate_only: bool = False) -> dict[st
             ),
             "occlusion_invalid_or_downweighted": occlusion is None or not bool(synthetic_rows["occlusion"]["valid"]) or _finite(occlusion.get("survival_rate")) is None or float(occlusion["survival_rate"]) < float(cv.get("survival_rate", 1.0)),
         }
-        decision = _machine_decision(real_rows, synthetic_summary, settings["thresholds"])
+        decision = _machine_decision(real_rows, synthetic_summary, settings["thresholds"], perturbation_ranks)
         machine = {
             "task_id": str(settings["task_id"]), "protocol": PROTOCOL_VERSION, "status": "completed",
             "machine_pass": bool(decision["machine_pass"]), "provider_preflight": preflight,

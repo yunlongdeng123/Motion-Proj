@@ -3,7 +3,9 @@ from __future__ import annotations
 import torch
 
 from motion_proj.diagnostics.evaluator_validity import (
+    _machine_decision,
     perturb_video,
+    perturbation_rank_correlations,
     spearman_rank_correlation,
     synthetic_videos,
 )
@@ -40,6 +42,44 @@ def test_rank_and_synthetic_protocol_are_deterministic():
     videos = synthetic_videos(7, frames=6, height=48, width=64)
     assert set(videos) == {"constant_velocity", "constant_acceleration", "smooth_turn", "occlusion"}
     assert videos["occlusion"].shape == (6, 3, 48, 64)
+
+
+def test_machine_gate_uses_cross_perturbation_ranks_instead_of_self_correlation():
+    fields = (
+        "survival_rate",
+        "camera_compensated_image_plane_velocity_rms_px",
+        "camera_compensated_image_plane_acceleration_rms_px",
+        "camera_compensated_image_plane_jerk_rms_px",
+    )
+    rows = []
+    for value in (1.0, 2.0, 3.0):
+        aggregate = {field: value for field in fields}
+        rows.append({
+            "valid": True,
+            "aggregate": aggregate,
+            "rerun": {"aggregate_relative_delta": {"max_relative_delta": 0.0}},
+            "perturbations": {
+                "photometric": {"aggregate": dict(aggregate)},
+                "codec_quantization": {"aggregate": dict(aggregate)},
+                "resize_roundtrip": {"aggregate": {field: 4.0 - value for field in fields}},
+            },
+        })
+    ranks = perturbation_rank_correlations(rows, ("photometric", "codec_quantization", "resize_roundtrip"))
+    assert ranks["photometric"]["camera_compensated_image_plane_acceleration_rms_px"] == 1.0
+    assert ranks["resize_roundtrip"]["camera_compensated_image_plane_acceleration_rms_px"] == -1.0
+    decision = _machine_decision(
+        rows,
+        {
+            "threshold_sweep_rank_correlations": [1.0],
+            "acceleration_order_correct": True,
+            "jerk_order_correct": True,
+            "occlusion_invalid_or_downweighted": True,
+        },
+        {"maximum_rerun_relative_delta": 0.02, "minimum_rank_correlation": 0.8},
+        ranks,
+    )
+    assert not decision["checks"]["perturbation_rank_correlation"]
+    assert not decision["machine_pass"]
 
 
 def test_official_cotracker_output_layout_is_normalized_without_shape_guessing():
