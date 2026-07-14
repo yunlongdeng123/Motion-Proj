@@ -26,6 +26,11 @@ def _cpu_tensor(value: torch.Tensor) -> torch.Tensor:
     return value.detach().to(device="cpu").clone()
 
 
+def as_torch_device(value: str | torch.device) -> torch.device:
+    """Diffusers prepare_latents 需要 torch.device，而 backbone 保留字符串设备名。"""
+    return value if isinstance(value, torch.device) else torch.device(value)
+
+
 def _tensor_fingerprint(value: torch.Tensor) -> str:
     tensor = _cpu_tensor(value).contiguous()
     digest = hashlib.sha256()
@@ -315,6 +320,7 @@ def trace_candidate_conditioning(
     """检查版本化候选 API 是否准确复现官方 condition 和 initial latent。"""
     pipe = backbone._generation_pipeline()
     generator = torch.Generator(device=backbone.device).manual_seed(int(seed))
+    device = as_torch_device(backbone.device)
     with _autocast(backbone):
         values = backbone.build_official_generation_conditioning(
             cond_frame,
@@ -323,7 +329,7 @@ def trace_candidate_conditioning(
             height=int(height),
             width=int(width),
         )
-        pipe.scheduler.set_timesteps(25, device=backbone.device)
+        pipe.scheduler.set_timesteps(25, device=device)
         values["initial_video_latents"] = pipe.prepare_latents(
             1,
             int(num_frames),
@@ -331,7 +337,7 @@ def trace_candidate_conditioning(
             int(height),
             int(width),
             values["image_embeds"].dtype,
-            backbone.device,
+            device,
             generator,
         )
     return {key: _cpu_tensor(value) if isinstance(value, torch.Tensor) else value for key, value in values.items()}

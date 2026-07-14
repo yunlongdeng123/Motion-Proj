@@ -4,6 +4,7 @@ from omegaconf import OmegaConf
 
 from motion_proj.backbones.svd_backbone import resolve_svd_generation_settings
 from motion_proj.diagnostics.svd_conditioning_parity import (
+    as_torch_device,
     compare_candidate_conditioning,
     compare_generation_traces,
     tensor_difference,
@@ -48,6 +49,12 @@ def test_tensor_difference_reports_shape_and_exactness():
     mismatch = tensor_difference(torch.zeros(2), torch.zeros(3))
     assert not mismatch["shape_match"]
     assert mismatch["max_abs"] == float("inf")
+
+
+def test_candidate_pipeline_device_is_a_torch_device():
+    assert as_torch_device("cuda") == torch.device("cuda")
+    device = torch.device("cpu")
+    assert as_torch_device(device) is device
 
 
 def test_generation_trace_comparison_finds_first_step_mismatch():
