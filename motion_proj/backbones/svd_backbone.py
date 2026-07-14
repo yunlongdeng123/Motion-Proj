@@ -32,6 +32,37 @@ log = get_logger(__name__)
 
 LORA_SCOPES = {"temporal_only", "spatial_only", "all_attention"}
 DEFAULT_LORA_PROJECTIONS = ("to_q", "to_k", "to_v", "to_out.0")
+SVD_GENERATION_PROTOCOLS = {"svd_legacy_unversioned", "svd_official_v1"}
+
+
+def resolve_svd_generation_settings(cfg: Any) -> dict[str, Any]:
+    """解析并校验 generation 协议；旧配置保持未版本化语义。"""
+    generation = cfg.get("generation", {}) or {}
+    protocol = str(generation.get("protocol", "svd_legacy_unversioned"))
+    if protocol not in SVD_GENERATION_PROTOCOLS:
+        raise ValueError(
+            f"未知 SVD generation.protocol={protocol!r}; "
+            f"allowed={sorted(SVD_GENERATION_PROTOCOLS)}"
+        )
+    settings = {
+        "protocol": protocol,
+        "fps": int(generation.get("fps", 7)),
+        "motion_bucket_id": int(generation.get("motion_bucket_id", 127)),
+        "noise_aug_strength": float(generation.get("noise_aug_strength", 0.02)),
+        "min_guidance_scale": float(generation.get("min_guidance_scale", 1.0)),
+        "max_guidance_scale": float(generation.get("max_guidance_scale", 3.0)),
+    }
+    if settings["fps"] <= 0:
+        raise ValueError("model.generation.fps 必须大于 0")
+    if settings["motion_bucket_id"] < 0:
+        raise ValueError("model.generation.motion_bucket_id 必须非负")
+    if not math.isfinite(settings["noise_aug_strength"]) or settings["noise_aug_strength"] < 0:
+        raise ValueError("model.generation.noise_aug_strength 必须是有限非负数")
+    if not all(math.isfinite(settings[key]) for key in ("min_guidance_scale", "max_guidance_scale")):
+        raise ValueError("model.generation guidance scale 必须有限")
+    if settings["min_guidance_scale"] <= 0 or settings["max_guidance_scale"] < settings["min_guidance_scale"]:
+        raise ValueError("model.generation guidance scale 范围无效")
+    return settings
 
 
 def _expand(sigma: torch.Tensor, ndim: int) -> torch.Tensor:
@@ -105,10 +136,11 @@ class SVDBackbone(DiffusionBackbone):
         self.p_mean = 0.7
         self.p_std = 1.6
         self.sigma_data = 0.5
-        # 条件默认值（对齐 SVD pipeline）
-        self.fps = 7
-        self.motion_bucket_id = 127
-        self.noise_aug_strength = 0.02
+        # 旧 checkpoint/config 没有 generation 字段时保留未版本化路径；新 run 必须显式声明。
+        self._generation_settings = resolve_svd_generation_settings(cfg)
+        self.fps = int(self._generation_settings["fps"])
+        self.motion_bucket_id = int(self._generation_settings["motion_bucket_id"])
+        self.noise_aug_strength = float(self._generation_settings["noise_aug_strength"])
         self.sigma_floor = float(cfg.get("sigma_floor", 1.0e-3))
         if not math.isfinite(self.sigma_floor) or self.sigma_floor <= 0:
             raise ValueError("model.sigma_floor 必须是有限正数")
@@ -274,6 +306,71 @@ class SVDBackbone(DiffusionBackbone):
             raise RuntimeError("未找到 LoRA adapter 开关；拒绝生成泄漏 student adapter 的 Base anchor")
         self._lora_enabled = enabled
 
+    # --------------------------------------------------------------- 生成协议
+    def generation_settings(self) -> dict[str, Any]:
+        """返回新生成/run manifest 必须保存的显式 SVD 协议参数。"""
+        return dict(self._generation_settings)
+
+    def generation_protocol_metadata(self) -> dict[str, Any]:
+        """导出协议与 scheduler 指纹；不重新标记既有 cache。"""
+        import hashlib
+        import json
+
+        try:
+            import diffusers
+
+            diffusers_version = str(diffusers.__version__)
+        except Exception:  # pragma: no cover - 仅在依赖异常时降级
+            diffusers_version = "unknown"
+        scheduler_config = dict(self.scheduler.config) if self.scheduler is not None else {}
+        scheduler_raw = json.dumps(
+            scheduler_config, sort_keys=True, ensure_ascii=False, default=str,
+        ).encode("utf-8")
+        settings = self.generation_settings()
+        return {
+            "protocol": settings["protocol"],
+            "diffusers_version": diffusers_version,
+            "scheduler_config_fingerprint": hashlib.sha256(scheduler_raw).hexdigest(),
+            "fps_input": settings["fps"],
+            "fps_time_id": settings["fps"] - 1,
+            "motion_bucket_id": settings["motion_bucket_id"],
+            "noise_aug_strength": settings["noise_aug_strength"],
+            "min_guidance_scale": settings["min_guidance_scale"],
+            "max_guidance_scale": settings["max_guidance_scale"],
+        }
+
+    def _generation_pipeline(self):
+        """延迟构造与官方 `StableVideoDiffusionPipeline` 同构的采样器。"""
+        from diffusers import StableVideoDiffusionPipeline
+
+        if getattr(self, "_pipe", None) is None:
+            self._pipe = StableVideoDiffusionPipeline(
+                vae=self.vae,
+                image_encoder=self.image_encoder,
+                unet=self.unet,
+                scheduler=self.scheduler,
+                feature_extractor=self.feature_extractor,
+            )
+        return self._pipe
+
+    @staticmethod
+    def _pipeline_image(cond_frame: torch.Tensor):
+        """保持历史 wrapper 的 uint8/PIL 输入语义，以便精确审计旧 Base rollout。"""
+        from PIL import Image
+
+        if cond_frame.ndim != 3 or cond_frame.shape[0] != 3:
+            raise ValueError("cond_frame 必须是 [3,H,W]")
+        image = (
+            ((cond_frame.detach() + 1.0) / 2.0)
+            .clamp(0, 1)
+            .mul(255)
+            .to(torch.uint8)
+            .permute(1, 2, 0)
+            .cpu()
+            .numpy()
+        )
+        return Image.fromarray(image)
+
     # --------------------------------------------------------------- latent 空间
     @torch.no_grad()
     def encode(self, frames: torch.Tensor) -> torch.Tensor:
@@ -348,6 +445,7 @@ class SVDBackbone(DiffusionBackbone):
     # ----------------------------------------------------------------- 条件
     @torch.no_grad()
     def build_conditioning(self, batch: dict) -> Conditioning:
+        """构造历史单步训练条件；不声称与完整 CFG rollout 等价。"""
         cond_frame = batch["cond_frame"].to(self.device, self.dtype)     # [B,3,H,W]，取值 [-1,1]
         b = cond_frame.shape[0]
         t = int(self.cfg.num_frames)
@@ -376,6 +474,79 @@ class SVDBackbone(DiffusionBackbone):
                 "added_time_ids": added_time_ids,
             }
         )
+
+    @torch.no_grad()
+    def build_official_generation_conditioning(
+        self,
+        cond_frame: torch.Tensor,
+        *,
+        generator: torch.Generator,
+        num_frames: int | None = None,
+        height: int | None = None,
+        width: int | None = None,
+    ) -> dict[str, Any]:
+        """复现官方 SVD 的 image/CFG/time-ID 条件构造，供 parity 与新协议使用。
+
+        此接口保留 condition-noise，调用者必须在同一个 generator 状态上继续创建
+        initial video latent，才能和完整 pipeline 的随机序列逐位对齐。
+        """
+        if self._generation_settings["protocol"] != "svd_official_v1":
+            raise RuntimeError("官方条件构造要求 model.generation.protocol=svd_official_v1")
+        from diffusers.utils.torch_utils import randn_tensor
+
+        pipe = self._generation_pipeline()
+        settings = self.generation_settings()
+        image = self._pipeline_image(cond_frame)
+        num_frames = int(num_frames or self.cfg.num_frames)
+        height = int(height or cond_frame.shape[-2])
+        width = int(width or cond_frame.shape[-1])
+        do_cfg = settings["max_guidance_scale"] > 1.0
+        device = torch.device(self.device)
+
+        image_embeds = pipe._encode_image(
+            image, device, num_videos_per_prompt=1, do_classifier_free_guidance=do_cfg,
+        )
+        preprocessed = pipe.video_processor.preprocess(image, height=height, width=width).to(device)
+        condition_noise = randn_tensor(
+            preprocessed.shape, generator=generator, device=device, dtype=preprocessed.dtype,
+        )
+        noisy_image = preprocessed + settings["noise_aug_strength"] * condition_noise
+
+        needs_upcasting = pipe.vae.dtype == torch.float16 and pipe.vae.config.force_upcast
+        if needs_upcasting:
+            pipe.vae.to(dtype=torch.float32)
+        image_latents = pipe._encode_vae_image(
+            noisy_image,
+            device=device,
+            num_videos_per_prompt=1,
+            do_classifier_free_guidance=do_cfg,
+        ).to(image_embeds.dtype)
+        if needs_upcasting:
+            pipe.vae.to(dtype=torch.float16)
+        repeated_image_latents = image_latents.unsqueeze(1).repeat(1, num_frames, 1, 1, 1)
+        fps_time_id = settings["fps"] - 1
+        added_time_ids = pipe._get_add_time_ids(
+            fps_time_id,
+            settings["motion_bucket_id"],
+            settings["noise_aug_strength"],
+            image_embeds.dtype,
+            1,
+            1,
+            do_cfg,
+        ).to(device)
+        return {
+            "image": image,
+            "preprocessed_image": preprocessed,
+            "condition_noise": condition_noise,
+            "noisy_condition_image": noisy_image,
+            "image_embeds": image_embeds,
+            "image_latents": repeated_image_latents,
+            "added_time_ids": added_time_ids,
+            "fps_input": settings["fps"],
+            "fps_time_id": fps_time_id,
+            "num_frames": num_frames,
+            "do_classifier_free_guidance": do_cfg,
+        }
 
     # ----------------------------------------------------------------- 可训练部分
     def trainable_parameters(self) -> list[torch.nn.Parameter]:
@@ -444,25 +615,29 @@ class SVDBackbone(DiffusionBackbone):
         ``cond_frame``：``[3,H,W]``，取值 [-1,1]。返回 ``[K,3,H,W]``，取值 [-1,1]。
         使用（LoRA 增强后的）各组件构建一个 ``StableVideoDiffusionPipeline``。
         """
-        from diffusers import StableVideoDiffusionPipeline
-        from PIL import Image
-
-        if getattr(self, "_pipe", None) is None:
-            self._pipe = StableVideoDiffusionPipeline(
-                vae=self.vae,
-                image_encoder=self.image_encoder,
-                unet=self.unet,
-                scheduler=self.scheduler,
-                feature_extractor=self.feature_extractor,
+        settings = self.generation_settings()
+        protocol = str(kw.pop("protocol", settings["protocol"]))
+        if protocol not in SVD_GENERATION_PROTOCOLS:
+            raise ValueError(f"未知 generation protocol: {protocol}")
+        if protocol != settings["protocol"]:
+            raise ValueError(
+                "调用参数 protocol 不得覆盖 model.generation.protocol；"
+                "请使用独立配置版本化新的 generation 语义"
             )
+        for key in (
+            "fps", "motion_bucket_id", "noise_aug_strength",
+            "min_guidance_scale", "max_guidance_scale",
+        ):
+            kw.setdefault(key, settings[key])
+        pipe = self._generation_pipeline()
         k = int(num_frames or self.cfg.num_frames)
-        img = ((cond_frame + 1) / 2).clamp(0, 1).mul(255).byte().permute(1, 2, 0).cpu().numpy()
+        image = self._pipeline_image(cond_frame)
         # 组件以 bf16 加载，但 SVD pipeline 只对 fp16 VAE 做 force_upcast，会把 float32
         # 预处理后的图像直接喂给 bf16 VAE，导致 conv dtype 不匹配；用 autocast 统一精度。
         device_type = "cuda" if (torch.cuda.is_available() and str(self.device).startswith("cuda")) else "cpu"
         decode_chunk_size = int(kw.pop("decode_chunk_size", 4))
         with torch.autocast(device_type=device_type, dtype=self.dtype):
-            out = self._pipe(Image.fromarray(img), num_frames=k, decode_chunk_size=decode_chunk_size, **kw)
+            out = pipe(image, num_frames=k, decode_chunk_size=decode_chunk_size, **kw)
         frames = out.frames[0]  # PIL 列表
         import numpy as np
 

@@ -22,6 +22,7 @@ GENERATED_GEOMETRY_MODES = {
     "controlled_ego",
 }
 LORA_SCOPES = {"temporal_only", "spatial_only", "all_attention"}
+SVD_GENERATION_PROTOCOLS = {"svd_legacy_unversioned", "svd_official_v1"}
 
 
 class ConfigError(ValueError):
@@ -101,6 +102,28 @@ def validate_config(cfg: DictConfig) -> None:
                 errors.append(f"model.lora.scope 必须是 {', '.join(sorted(LORA_SCOPES))}")
             if int(lora.get("rank", 0)) <= 0:
                 errors.append("model.lora.rank 必须大于 0")
+        generation = cfg.model.get("generation")
+        if generation is not None:
+            protocol = str(generation.get("protocol", "svd_legacy_unversioned"))
+            if protocol not in SVD_GENERATION_PROTOCOLS:
+                errors.append(
+                    "model.generation.protocol 必须是 "
+                    + "/".join(sorted(SVD_GENERATION_PROTOCOLS))
+                )
+            fps = generation.get("fps", 7)
+            motion_bucket_id = generation.get("motion_bucket_id", 127)
+            noise_aug_strength = generation.get("noise_aug_strength", 0.02)
+            min_guidance = generation.get("min_guidance_scale", 1.0)
+            max_guidance = generation.get("max_guidance_scale", 3.0)
+            if not isinstance(fps, int) or fps <= 0:
+                errors.append("model.generation.fps 必须是正整数")
+            if not isinstance(motion_bucket_id, int) or motion_bucket_id < 0:
+                errors.append("model.generation.motion_bucket_id 必须是非负整数")
+            scalar_values = (noise_aug_strength, min_guidance, max_guidance)
+            if not all(isinstance(value, (int, float)) and math.isfinite(float(value)) for value in scalar_values):
+                errors.append("model.generation noise/guidance 参数必须是有限数")
+            elif float(noise_aug_strength) < 0 or float(min_guidance) <= 0 or float(max_guidance) < float(min_guidance):
+                errors.append("model.generation noise/guidance 范围无效")
         if cfg.cache.get("source") == "replay_v2":
             is_capacity_pilot = str(cfg.train.get("experiment_type", "")) == "v2_capacity_pilot"
             if bool(lora.get("enable", False)) and not is_capacity_pilot:

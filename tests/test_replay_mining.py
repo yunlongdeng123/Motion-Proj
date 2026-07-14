@@ -38,8 +38,20 @@ def test_replay_accepts_static_drift_reduction_after_reaudit():
 
 
 def test_replay_diagnostics_preserve_generation_settings_and_gate_values():
-    cfg = OmegaConf.create({"cache": {"num_inference_steps": 7, "decode_chunk_size": 2}})
-    assert _generation_settings(cfg) == {"num_inference_steps": 7, "decode_chunk_size": 2}
+    cfg = OmegaConf.create({
+        "cache": {"num_inference_steps": 7, "decode_chunk_size": 2},
+        "model": {"generation": {
+            "protocol": "svd_official_v1", "fps": 7, "motion_bucket_id": 127,
+            "noise_aug_strength": 0.02, "min_guidance_scale": 1.0,
+            "max_guidance_scale": 3.0,
+        }},
+    })
+    assert _generation_settings(cfg) == {
+        "num_inference_steps": 7, "decode_chunk_size": 2,
+        "protocol": "svd_official_v1", "fps": 7, "fps_time_id": 6,
+        "motion_bucket_id": 127, "noise_aug_strength": 0.02,
+        "min_guidance_scale": 1.0, "max_guidance_scale": 3.0,
+    }
 
     summary = _summarize_rows([
         {"kept": False, "reject_reason": "eligible", "eligible_fraction": 0.62},

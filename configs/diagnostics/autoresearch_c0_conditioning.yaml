@@ -1,0 +1,46 @@
+defaults_chain:
+  - ./p2_v2_pilot.yaml
+
+run_id: autoresearch-c0-conditioning-s20260714-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-c0-conditioning-s20260714-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+model:
+  lora:
+    enable: false
+  gradient_checkpointing: false
+  enable_xformers: false
+  generation:
+    protocol: svd_official_v1
+    fps: 7
+    motion_bucket_id: 127
+    noise_aug_strength: 0.02
+    min_guidance_scale: 1.0
+    max_guidance_scale: 3.0
+
+cache:
+  source: clean
+  store: latent
+
+train:
+  experiment_type: base
+  deterministic: true
+  num_workers: 0
+  max_steps: 1
+  logger: none
+  resume: none
+
+c0:
+  task_id: AUTORESEARCH-C0-CONDITIONING-PARITY
+  condition_index: 0
+  generation_seed: 2026071401
+  num_frames: 8
+  num_inference_steps: 25
+  # 逐步 UNet 比较允许 bf16 算子误差；随机输入、time IDs 与 rerun 必须 exact。
+  max_raw_output_error: 1.0e-4
+  max_final_latent_rms: 1.0e-4
+  max_rgb_abs_error: 0.0
+  max_rerun_error: 0.0

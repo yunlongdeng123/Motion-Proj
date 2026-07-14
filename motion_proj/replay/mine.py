@@ -12,6 +12,7 @@ from tqdm import tqdm
 from ..auditor import MotionAuditor, RAFTChainGeneratedTrackProvider
 from ..auditor.state import MotionState
 from ..backbones import build_backbone
+from ..backbones.svd_backbone import resolve_svd_generation_settings
 from ..cache.build_cache import _flow_to_resolution
 from ..cache.writer import ProjectionCacheWriter
 from ..config import cache_config_fingerprint, get_paths, load_config, save_resolved_config
@@ -83,9 +84,18 @@ def replay_is_eligible(drift: float, result, drift_thresh: float,
 
 
 def _generation_settings(cfg) -> dict:
+    model_cfg = cfg.get("model", {}) or {}
+    settings = resolve_svd_generation_settings(model_cfg)
     return {
         "num_inference_steps": int(cfg.cache.get("num_inference_steps", 25)),
         "decode_chunk_size": int(cfg.cache.get("decode_chunk_size", 4)),
+        "protocol": settings["protocol"],
+        "fps": settings["fps"],
+        "fps_time_id": settings["fps"] - 1,
+        "motion_bucket_id": settings["motion_bucket_id"],
+        "noise_aug_strength": settings["noise_aug_strength"],
+        "min_guidance_scale": settings["min_guidance_scale"],
+        "max_guidance_scale": settings["max_guidance_scale"],
     }
 
 
