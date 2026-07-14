@@ -4,6 +4,7 @@ import torch
 
 from motion_proj.auditor.state import Track
 from motion_proj.diagnostics.target_validity import (
+    _overlap_rows,
     dilate_latent_mask,
     make_hybrid_latent,
     source_duplication_rows,
@@ -49,3 +50,14 @@ def test_source_duplication_proxy_flags_retained_source_and_new_destination():
     )
     assert len(rows) == 2
     assert all(row["source_retained_duplication_proxy"] for row in rows)
+
+
+def test_occlusion_proxy_ignores_static_query_density_without_integer_move():
+    left = _track("generated_dynamic_residual_000", [1, 1, 6, 6])
+    right = _track("generated_foreground_candidate_001", [2, 2, 7, 7])
+    assert not _overlap_rows([left, right], 12, 12, iou_threshold=0.2, moved_keys=set())
+    rows = _overlap_rows(
+        [left, right], 12, 12, iou_threshold=0.2,
+        moved_keys={("generated_dynamic_residual_000", 1)},
+    )
+    assert len(rows) == 1

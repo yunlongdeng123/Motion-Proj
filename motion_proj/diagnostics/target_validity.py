@@ -134,6 +134,14 @@ def _box_iou(left: torch.Tensor, right: torch.Tensor) -> float:
     return intersection / union
 
 
+def _quantized_box(box: torch.Tensor, height: int, width: int) -> tuple[int, int, int, int] | None:
+    region = _box_to_slice(box, height, width)
+    if region is None:
+        return None
+    ys, xs = region
+    return xs.start, ys.start, xs.stop, ys.stop
+
+
 def _mean_abs_region(value: torch.Tensor, region: tuple[slice, slice]) -> float:
     ys, xs = region
     piece = value[:, ys, xs]
@@ -174,7 +182,9 @@ def source_duplication_rows(
             source_change = _mean_abs_region(target[time] - base[time], source_region)
             destination_change = _mean_abs_region(target[time] - base[time], destination_region)
             overlap = _box_iou(source_box, destination_box)
-            moved = bool(torch.max(torch.abs(source_box - destination_box)) >= 0.5)
+            # compositor 是整数 crop/resize/paste；以其实际量化后的盒子判断有无移动，
+            # 不能把仅有亚像素 P-UNC correction 误记成 RGB target。
+            moved = _quantized_box(source_box, height, width) != _quantized_box(destination_box, height, width)
             duplicated = bool(
                 moved and overlap <= maximum_overlap_iou
                 and destination_change >= minimum_destination_change_l1
@@ -194,7 +204,11 @@ def source_duplication_rows(
     return rows
 
 
-def _overlap_rows(projected: list[Track], height: int, width: int, *, iou_threshold: float) -> list[dict[str, Any]]:
+def _overlap_rows(
+    projected: list[Track], height: int, width: int, *, iou_threshold: float,
+    moved_keys: set[tuple[str, int]],
+) -> list[dict[str, Any]]:
+    """只审计与实际 integer-paste move 相邻的 overlap，忽略未移动 query 密度。"""
     rows = []
     for time in range(projected[0].present.shape[0] if projected else 0):
         for left_index, left in enumerate(projected):
@@ -204,6 +218,8 @@ def _overlap_rows(projected: list[Track], height: int, width: int, *, iou_thresh
                 continue
             for right in projected[left_index + 1:]:
                 if not bool(right.present[time]):
+                    continue
+                if (left.instance_token, time) not in moved_keys and (right.instance_token, time) not in moved_keys:
                     continue
                 overlap = _box_iou(left.xyxy[time], right.xyxy[time])
                 if overlap >= iou_threshold:
@@ -601,7 +617,14 @@ def run_target_validity(cfg: Any, *, aggregate_only: bool = False) -> dict[str, 
                 maximum_source_change_l1=float(settings["render"]["maximum_source_change_l1"]),
                 maximum_overlap_iou=float(settings["render"]["maximum_source_destination_iou"]),
             )
-            overlaps = _overlap_rows(primary_projected, height, width, iou_threshold=float(settings["render"]["occlusion_overlap_iou"]))
+            moved_keys = {
+                (str(value["track_token"]), int(value["time"]))
+                for value in source_rows if bool(value["moved_after_quantization"])
+            }
+            overlaps = _overlap_rows(
+                primary_projected, height, width,
+                iou_threshold=float(settings["render"]["occlusion_overlap_iou"]), moved_keys=moved_keys,
+            )
             changed = (target - base).abs().amax(dim=1) > float(settings["render"]["minimum_destination_change_l1"])
             moved = [row for row in source_rows if row["moved_after_quantization"]]
             duplicated = [row for row in source_rows if row["source_retained_duplication_proxy"]]
