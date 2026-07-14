@@ -105,7 +105,7 @@ C0 + P0 + P1 + E0 all pass (including human gates)
 
 结果：hard fail。最细 stride-8 层仍有 94.97% correction `<0.5 cell`；无推荐层。F2/F3 立即 blocked。
 
-## P0 — Dynamics projector validity v2（next；no generator training）
+## P0 — Dynamics projector validity v2（machine pass；awaiting human review）
 
 | Field | Pre-registration |
 |---|---|
@@ -114,12 +114,12 @@ C0 + P0 + P1 + E0 all pass (including human gates)
 | Hypothesis | 按 strata 分离并加一阶/可见性约束后，可以避免 frame0/turn/visibility 语义错误；如果 correction 仍普遍亚像素，则显式 projector 的训练信号本身不足。 |
 | Code changes | 仅新增 experimental projector config/diagnostic；硬设 `p0=p0b`；记录约束残差；不替换正式 projector/cache schema。 |
 | Fixed variables | F1 的同 8 Base clips/tracks；同 provider/query；不重新采样 Base；同 support masks。 |
-| Independent variable | old smoothing vs constrained energy；stratum-specific weights；`lambda_a/lambda_j` 的小型手工 3 点 grid（不是 Optuna）。 |
+| Independent variable | P-ID/P-CUR/P-CON/P-UNC 四个预注册候选；P-CON/P-UNC 使用一组固定 constrained 参数，不做 lambda grid。 |
 | Metrics | correction px/cell；net displacement ratio；mean velocity error；direction cosine；turn sign；visibility expansion；support；accel/jerk ratio；dynamic-degree ratio；per-stratum statistics。 |
 | Expected failure | 高阶正则把轨迹变成近常速/静止；background 被当 positive motion；p0 与最终 frame0 freeze 冲突；correction 仍低于 feature resolution。 |
-| Promotion threshold | `p0` max error `<=1e-6 px`；visibility expansion 0；support 1；net displacement median `[0.9,1.1]` 且 p10 `>=0.7`；direction median `>=0.98`；turn preservation `>=0.95`；dynamic-degree median ratio `[0.8,1.2]`。若候选 future feature route，还要求至少一个实际层 `fraction<0.5cell <=0.50`。 |
+| Promotion threshold | `p0` max error `<=1e-6 px`；visibility expansion/support violation 0；net displacement median `[0.9,1.1]` 且 p10 `>=0.7`；direction median `>=0.98`；turn preservation `>=0.95`；dynamic-degree median ratio `[0.8,1.2]`；primary correction 高于预注册 uncertainty SNR；12-panel human valid `>=87.5%`。feature cell 只留给条件性 F1-R。 |
 | Stop condition | 任何 GT 使用；通过降低 displacement/dynamic degree 才降低 accel/jerk；全部配置仍 >80% correction `<0.5 stride-8 cell`；需要写正式 cache 或 >8 clips 才能判断。 |
-| Artifacts | `runs/autoresearch-p0-projector-*/{manifest.json,metrics.jsonl,summary.json,figures,track_rows.csv}`；config 指纹与旧/new energy 参数。 |
+| Artifacts | `runs/autoresearch-p0-projector-*/{manifest.json,resolved.yaml,metrics.jsonl,summary.json,machine_summary.json,track_rows.csv,synthetic_rows.csv,panels,reviews.template.jsonl}`。 |
 | Estimated GPU budget | CPU 为主；若复用 RAFT features `<0.2 GPU-hour`。 |
 
 建议能量与硬约束：
@@ -131,6 +131,16 @@ C0 + P0 + P1 + E0 all pass (including human gates)
 \]
 
 同时约束 `p0=p0b`、endpoint displacement、mean velocity、direction/turn sign、original visibility 与 support。background 只做 preservation/negative relation；dynamic_residual 与 foreground_candidate 分开加权。
+
+结果（2026-07-14）：`autoresearch-p0-projector-s20260714-v1` 在 clean commit `dfef913` 和固定 8 个
+Base replay indices `8/34/37/60/69/81/99/114` 上完成。P-UNC 是唯一 machine-eligible candidate：
+351 tracks 中 primary correction 290 个，均通过 SNR gate；frame-0/visibility/time-index/support
+violation 均为 0，net-displacement median/p10 均为 1，direction median 1，turn preservation 95.40%，
+dynamic-degree median ratio 0.862。P-CON 的 turn 88.79% 与 dynamic-degree 0.736 未达门槛；P-CUR
+出现 frame-0 10.165 px、127 个 visibility expansion 且 dynamic-degree 0.112。synthetic calibration
+覆盖匀速、加速、刹车、转弯、并线、jitter、outlier、遮挡恢复；P-UNC 保留 clean motion、改善所有
+high-SNR outlier、拒绝且不放大 sub-uncertainty jitter。因 12 个 panel 尚无人工 verdict，最终状态为
+`awaiting_reviews`；P1 可以以 machine eligibility 运行，F1-R 仍 blocked。
 
 ## P1 — RGB projector / VAE target locality（next；no generator training）
 

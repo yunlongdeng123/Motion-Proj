@@ -70,6 +70,26 @@ fps time ID 为 6，legacy 为 7，且 condition noise、image embedding 与 ima
 `svd_official_v1` 可作为未来显式协议通过 C0；既有 V5 Base rollout 的生成 provenance 不被否定，
 但其 stored legacy context 不得用于新的 one-step-to-rollout transfer claim，也不得被静默改写。
 
+### 1.3 P0 point-track tube 物理有效性更新（2026-07-14；machine pass，awaiting reviews）
+
+正式 run `autoresearch-p0-projector-s20260714-v1` 在 clean commit `dfef913` 上只读重建同一
+8 个 frozen-Base replay 的 RAFT-chain 点轨迹（351 tracks），没有生成新视频、加载 adapter、使用
+future GT 或改写 cache。它比较 P-ID、当前 P-CUR、受约束 P-CON 和 uncertainty-gated P-UNC；
+`background` 仅作 preservation/negative relation，所有正修正仅限 `dynamic_residual` 与
+`foreground_candidate` 的 point-track tube component。
+
+P-UNC 是唯一 machine-eligible 候选：frame-0 最大修正为 0，visibility/time-index/support
+violation 均为 0，net-displacement median/p10 均为 1，direction median 为 1，turn preservation
+为 95.40%，dynamic-degree median ratio 为 0.862；290 个实际 primary correction 均高于预注册
+tracker-uncertainty SNR 门槛。合成集上它保留 clean motion，5/5 high-SNR single-frame outlier
+改善，并且不放大 sub-uncertainty jitter。P-CON 保留硬不变量，但 turn preservation 88.79%、
+dynamic-degree median ratio 0.736，不能晋级；P-CUR 更明确失败（frame-0 max 10.165 px、127 个
+visibility expansion、turn 83.05%、dynamic-degree median 0.112）。
+
+因此 P1 可按 P-UNC 的 machine eligibility 启动，但 P0 仍为 `awaiting_reviews`：run 已导出
+12 个分 strata panel 与 `reviews.template.jsonl`，在完成至少 12 个有效人工 verdict 前，禁止
+F1-R 和最终路线晋级。证据：`/root/autodl-tmp/runs/autoresearch-p0-projector-s20260714-v1/`。
+
 ## 2. Verified repository facts
 
 ## 2.1 当前训练目标：文档计划与正式 trainer 并不相同

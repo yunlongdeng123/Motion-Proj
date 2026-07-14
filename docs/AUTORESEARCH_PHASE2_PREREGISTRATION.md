@@ -53,6 +53,15 @@ machine-pass 门槛：synthetic clean motion 不被系统性修改，noisy/outli
 
 输出至少 12 个分 strata panel 与 `reviews.template.jsonl`。人工 review 未完成时，P0 只能是 `awaiting_reviews`；可在 machine pass 后启动 P1，但不得启动 F1-R 或作最终路线晋级。
 
+执行记录（2026-07-14）：`autoresearch-p0-projector-s20260714-v1` 在 clean commit `dfef913`、同一
+8 个 frozen-Base replay index 和 cache fingerprint `e2e3a3b35f6d…` 上完成。P-UNC machine pass：
+351 tracks、290 个 primary correction，所有 correction 的 SNR 均不低于 1.0；frame-0/visibility/
+time-index/support violation 全为 0，net-displacement median/p10=1，direction median=1，turn
+preservation=95.40%，dynamic-degree median ratio=0.862。P-CON 的 turn/dynamic-degree 未通过，P-CUR
+违反 frame-0 与 visibility。合成集确认 P-UNC 保留 clean trajectory、改善 high-SNR outlier、且不放大
+sub-uncertainty jitter。已导出 12 个 panel 和 review 模板；未填写 human verdict，故 status 为
+`awaiting_reviews`，仅解锁 P1 machine branch，未解锁 F1-R/final promotion。
+
 ## 5. P1 — RGB / VAE counterfactual target validity
 
 仅在 P0 至少产生一个 machine-eligible projector 后运行，最多 8 个样本；P0 的人工 gate 仍必须在 F1-R 或最终路线晋级前通过。比较 `z_full=E(X_dagger)`、当前 masked hybrid latent、一个预注册 dilated-hybrid latent，以及 `decode(hybrid) -> encode` 回环。分别记录 frame-0 exactness、mask 内/外 RGB 与 latent RMS、full/hybrid distance、decode-reencode error、decoded trajectory realization、source duplication、ghosting、occlusion violation、texture stretching、identity 与 direction。
