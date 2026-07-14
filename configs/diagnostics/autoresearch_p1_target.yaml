@@ -1,0 +1,44 @@
+defaults_chain:
+  - ./autoresearch_p0_projector.yaml
+
+run_id: autoresearch-p1-target-s20260714-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-p1-target-s20260714-v1
+
+# 继承完全相同的 P0 P-UNC 参数；仅加载 frozen VAE，不加载 adapter/UNet。
+model:
+  lora:
+    enable: false
+  gradient_checkpointing: false
+
+train:
+  experiment_type: replay
+  deterministic: true
+  num_workers: 0
+
+p1:
+  task_id: AUTORESEARCH-P1-TARGET-VALIDITY
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  # P0 index 114 只有 background preservation、无 primary P-UNC component；保留在
+  # P0 audit 中，但不是可构造 RGB counterfactual 的 P1 sample。
+  dataset_indices: [8, 34, 37, 60, 69, 81, 99]
+  candidate: P-UNC
+  # 固定一个 latent-cell dilation，不做 mask radius 搜索。
+  dilation_radius: 1
+
+  render:
+    minimum_destination_change_l1: 1.0e-4
+    maximum_source_change_l1: 1.0e-6
+    maximum_source_destination_iou: 0.50
+    occlusion_overlap_iou: 0.20
+
+  thresholds:
+    frame0_max_error: 1.0e-6
+    maximum_outside_latent_rms_over_base: 0.02
+    maximum_hybrid_target_lpips: 0.05
+    maximum_source_duplication_fraction: 0.00
+    maximum_unresolved_overlap_fraction: 0.25
+
+  review:
+    required_cases: 7
+    minimum_valid_rate: 0.875
+    panel_fps: 4
