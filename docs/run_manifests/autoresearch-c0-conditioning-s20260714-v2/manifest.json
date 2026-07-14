@@ -1,0 +1,52 @@
+{
+  "run_id": "autoresearch-c0-conditioning-s20260714-v2",
+  "command": [
+    "/root/autodl-tmp/motion_proj/motion_proj/diagnostics/svd_conditioning_parity.py",
+    "--config",
+    "configs/diagnostics/autoresearch_c0_conditioning.yaml"
+  ],
+  "config_fingerprint": "f8d4f9d06bc6fc520a7e52c53c3a4b85c7fc518b16e1ee7335c038e0d50dc015",
+  "cache_fingerprint": "not-applicable:official-svd-conditioning-parity",
+  "seed": 20260713,
+  "git": {
+    "commit": "b36e0426d55c43734a96e9f2b9da120aedc368f8",
+    "git_available": true,
+    "dirty": false,
+    "dirty_tracked": false,
+    "dirty_untracked": false,
+    "untracked_count": 0,
+    "dirty_diff_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "environment": {
+    "python": "3.10.20",
+    "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "fingerprint": "c5313abea16c07b2fef896ecbe64fd13a39509bafb1691d9c76c76105b4b5ebf"
+  },
+  "data_split": "train",
+  "parent_run_id": null,
+  "started_at": "2026-07-14T05:40:44.300218+00:00",
+  "ended_at": "2026-07-14T05:41:13.772573+00:00",
+  "exit_reason": "pass_with_legacy_one_step_mismatch",
+  "status": "completed",
+  "task_id": "AUTORESEARCH-C0-CONDITIONING-PARITY",
+  "condition_index": 0,
+  "sample_id": "e93e98b63d3b40209056d129dc53ceee_CAM_FRONT",
+  "condition_fingerprint": "bcc9a0aea7b01993e3b0b05676095ff3885cb90096303727b9c3654161b40b04",
+  "base_model_fingerprint": "bf27c2d83a62ff376bcefa237b8d151037942508a56bf827202778c2c9801025",
+  "uses_future_gt_ego": false,
+  "uses_future_gt_track": false,
+  "generation_protocol": {
+    "protocol": "svd_official_v1",
+    "diffusers_version": "0.31.0",
+    "scheduler_config_fingerprint": "517231c6156c17e06e1ef307d2ee70ce92b894f6380e2dbd36eb30ca152b5a33",
+    "fps_input": 7,
+    "fps_time_id": 6,
+    "motion_bucket_id": 127,
+    "noise_aug_strength": 0.02,
+    "min_guidance_scale": 1.0,
+    "max_guidance_scale": 3.0
+  }
+}

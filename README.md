@@ -1,6 +1,6 @@
 # Motion-Proj：面向驾驶世界模型的动力学投影蒸馏
 
-对研究方案 `../motion_proj_cvpr_plan.md` 的工程实现（V1）。
+对研究方案 `docs/MOTION_PROJ_CVPR_PLAN.md` 的工程实现（V1）。
 
 Motion-Proj 通过把干净层级（clean-level）生成/受扰的视频投影到由几何定义的驾驶动力学流形上，
 并将投影诱导的局部去噪分数蒸馏进低噪声去噪器，从而对齐视频扩散驾驶世界模型。
@@ -64,4 +64,4 @@ python -m motion_proj.eval.evaluate --config configs/train/motionproj_v1.yaml
 并在上文中记录说明。每个模块均可独立导入，且多数模块提供 `__main__` 自检或在
 `tests/` 中有对应测试。
 
-conda 环境、数据集路径与网络说明见 `../ENVIRONMENT.md`。
+conda 环境、数据集路径与网络说明见 `docs/ENVIRONMENT.md`。换机接续见 `docs/MACHINE_MIGRATION.md`。

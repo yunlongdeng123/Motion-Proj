@@ -1,0 +1,218 @@
+schema_version: 2
+seed: 20260713
+device: cuda
+dtype: bf16
+work_dir: /root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v3
+paths:
+  data_root: /root/autodl-tmp/data/nuscenes
+  cache_dir: /root/autodl-tmp/cache/p2-v2/p2-v2-replay05-candidate64x2-s20260713-a41dfa4-objectonly
+  ckpt_dir: /root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03/ckpts
+  log_dir: /root/autodl-tmp/runs/p2-v2-pilot/p2-v2-pilot03/logs
+data:
+  name: nuscenes
+  version: v1.0-trainval
+  dataroot: /root/autodl-tmp/data/nuscenes
+  cameras:
+  - CAM_FRONT
+  num_frames: 8
+  frame_stride: 1
+  height: 256
+  width: 448
+  min_box_visibility: 2
+  use_sweeps: false
+  use_lidar_depth: true
+  conditioning:
+    first_frame: true
+    future_ego: false
+  split: train
+  expected_scene_count: 700
+  expected_clip_count: 3425
+model:
+  name: svd
+  pretrained: /root/autodl-tmp/weights/svd-xt
+  parameterization: edm
+  sigma_floor: 0.001
+  num_frames: 8
+  vae_scale_factor: 8
+  latent_channels: 4
+  lora:
+    enable: false
+    rank: 16
+    alpha: 16
+    dropout: 0.0
+    scope: temporal_only
+    projections:
+    - to_q
+    - to_k
+    - to_v
+    - to_out.0
+  generation:
+    protocol: svd_official_v1
+    fps: 7
+    motion_bucket_id: 127
+    noise_aug_strength: 0.02
+    min_guidance_scale: 1.0
+    max_guidance_scale: 3.0
+  freeze_vae: true
+  gradient_checkpointing: true
+  enable_xformers: false
+auditor:
+  generated_geometry_mode: estimated_background_motion
+  background_fit:
+    min_confidence: 0.5
+    min_points: 256
+    max_points: 32768
+    irls_iterations: 5
+    huber_delta: 2.5
+    min_residual_px: 0.5
+    ridge: 0.0001
+  generated_tracks:
+    provider: raft_chain
+    queries_per_stratum: 24
+    min_track_length: 3
+    point_box_size: 16.0
+    min_distance: 8.0
+    fb_alpha: 0.05
+    fb_beta: 0.5
+    min_confidence: 0.5
+train:
+  experiment_type: replay
+  lr: 2.0e-05
+  weight_decay: 0.0
+  max_steps: 200
+  warmup_steps: 50
+  micro_batch_size: 1
+  grad_accum: 8
+  max_grad_norm: 1.0
+  deterministic: true
+  num_workers: 0
+  lambda_proj: 0.1
+  beta_anchor: 0.5
+  use_real_loss: true
+  lambda_flow: 0.1
+  cache_sources: null
+  cache_mix: null
+  cache_epoch_size: null
+  tube:
+    sigma_quantile_range:
+    - 0.0
+    - 0.35
+    bound_B: 4.0
+  log_every: 10
+  ckpt_every: 200
+  sample_every: 500
+  logger: none
+  resume: none
+  early_stop_patience: null
+cache:
+  store: latent
+  source: replay_v2
+  overwrite: false
+  max_samples: null
+run_id: autoresearch-e0-evaluator-s20260714-v3
+pilot:
+  task_id: P2-V2-PILOT-03
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  selection_seed: 20260713
+  noise_seed: 20260714
+  expected_noise_bank_fingerprint: e3071be549ae0cb5e7f46b62ccad5a43de605eb24a9f3d777305664c44c2040c
+  pair_count: 8
+  train_pair_count: 4
+  variants:
+  - A
+  - B
+  - C
+  - D
+  - E
+  sigma_by_train_pair:
+  - 0.01
+  - 0.05
+  - 0.2
+  - 1.0
+  eta: 1.0
+  trust_region_B: 0.25
+  dilation_radius: 1
+  preserve_weight: 1.0
+  required_error_reduction: 0.8
+  max_outside_teacher_drift_ratio: 0.02
+  max_target_roundtrip_relative_error: 0.002
+p0:
+  task_id: AUTORESEARCH-P0-PROJECTOR-VALIDITY
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_indices:
+  - 8
+  - 34
+  - 37
+  - 60
+  - 69
+  - 81
+  - 99
+  - 114
+  candidates:
+  - P-ID
+  - P-CUR
+  - P-CON
+  - P-UNC
+  current_smooth_lambda: 5.0
+  constrained:
+    lambda_acceleration: 0.08
+    lambda_jerk: 0.02
+    robust_delta_px: 1.0
+    robust_iterations: 3
+    confidence_floor: 0.5
+    uncertainty_floor_px: 0.25
+    uncertainty_confidence_scale_px: 1.5
+    snr_threshold: 1.0
+  synthetic:
+    frame_count: 8
+  thresholds:
+    frame0_max_error_px: 1.0e-06
+    maximum_clean_rmse_px: 0.12
+    minimum_noisy_improvement_px: 0.0001
+    minimum_high_snr_outlier_improvement_fraction: 1.0
+    maximum_subuncertainty_jitter_worsening_px: 0.02
+    net_displacement_median_min: 0.9
+    net_displacement_median_max: 1.1
+    net_displacement_p10_min: 0.7
+    direction_median_min: 0.98
+    turn_preservation_min: 0.95
+    dynamic_degree_median_min: 0.8
+    dynamic_degree_median_max: 1.2
+    snr_threshold: 1.0
+  review:
+    required_panels: 12
+    minimum_valid_rate: 0.875
+e0:
+  task_id: AUTORESEARCH-E0-INDEPENDENT-EVALUATOR
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_indices:
+  - 8
+  - 34
+  - 37
+  - 60
+  - 69
+  - 81
+  - 99
+  - 114
+  provider:
+    repository_path: /root/autodl-tmp/third_party/co-tracker
+    repository_commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint_path: /root/autodl-tmp/weights/cotracker3/scaled_offline.pth
+    checkpoint_url: https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth
+    checkpoint_sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+    grid_size: 16
+  perturbations:
+  - photometric
+  - codec_quantization
+  - resize_roundtrip
+  visibility_survival_thresholds:
+  - 0.25
+  - 0.5
+  - 0.75
+  thresholds:
+    maximum_rerun_relative_delta: 0.02
+    minimum_rank_correlation: 0.8
+  review:
+    required_cases: 12
+    minimum_valid_rate: 0.875
+    panel_fps: 4

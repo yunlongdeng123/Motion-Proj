@@ -1,0 +1,57 @@
+{
+  "run_id": "autoresearch-p1-target-s20260714-v2",
+  "command": [
+    "/root/autodl-tmp/motion_proj/motion_proj/diagnostics/target_validity.py",
+    "--config",
+    "configs/diagnostics/autoresearch_p1_target.yaml"
+  ],
+  "config_fingerprint": "3bfe135deb61330b34050ef0cc209dcd069f66ee4245c6caab2f3b8e66fabfdf",
+  "cache_fingerprint": "e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39",
+  "seed": 20260713,
+  "git": {
+    "commit": "960c4c20dc450cabf8e26c2aebdf514adda9d8ec",
+    "git_available": true,
+    "dirty": false,
+    "dirty_tracked": false,
+    "dirty_untracked": false,
+    "untracked_count": 0,
+    "dirty_diff_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "environment": {
+    "python": "3.10.20",
+    "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "fingerprint": "c5313abea16c07b2fef896ecbe64fd13a39509bafb1691d9c76c76105b4b5ebf"
+  },
+  "data_split": "train",
+  "parent_run_id": null,
+  "started_at": "2026-07-14T06:14:48.418745+00:00",
+  "ended_at": "2026-07-14T06:15:25.658900+00:00",
+  "exit_reason": "machine_gate_fail",
+  "status": "fail",
+  "task_id": "AUTORESEARCH-P1-TARGET-VALIDITY",
+  "protocol": "autoresearch-p1-target-validity-v1",
+  "dataset_indices": [
+    8,
+    34,
+    37,
+    60,
+    69,
+    81,
+    99
+  ],
+  "p0_machine_eligible_candidate": "P-UNC",
+  "base_model_fingerprint": "25982a5d7e21784465da2162a8cba69465b025ad9820ed4505f2d133d2180aed",
+  "adapter_loaded": false,
+  "uses_future_gt": false,
+  "dilation_radius": 1,
+  "thresholds": {
+    "frame0_max_error": 1e-06,
+    "maximum_outside_latent_rms_over_base": 0.02,
+    "maximum_hybrid_target_lpips": 0.05,
+    "maximum_source_duplication_fraction": 0.0,
+    "maximum_unresolved_overlap_fraction": 0.25
+  }
+}

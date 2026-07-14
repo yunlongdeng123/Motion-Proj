@@ -1,0 +1,1049 @@
+{
+  "task_id": "AUTORESEARCH-E0-INDEPENDENT-EVALUATOR",
+  "protocol": "autoresearch-e0-independent-cotracker3-v1",
+  "status": "completed",
+  "machine_pass": true,
+  "provider_preflight": {
+    "provider": "cotracker3_offline",
+    "available": true,
+    "reasons": [],
+    "repository_path": "/root/autodl-tmp/third_party/co-tracker",
+    "repository_commit": "82e02e8029753ad4ef13cf06be7f4fc5facdda4d",
+    "repository_commit_expected": "82e02e8029753ad4ef13cf06be7f4fc5facdda4d",
+    "checkpoint_path": "/root/autodl-tmp/weights/cotracker3/scaled_offline.pth",
+    "checkpoint_sha256": "2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834",
+    "checkpoint_sha256_expected": "2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834",
+    "checkpoint_url": "https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth"
+  },
+  "uses_future_gt": false,
+  "fallback_used": false,
+  "real_rows": [
+    {
+      "dataset_index": 8,
+      "sample_id": "10c4433ceaf24dc59c9ed467a4c5ca6b_CAM_FRONT_base_s20260714",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 1.652014970779419
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 179,
+          "valid_velocity_count": 443,
+          "survival_rate": 0.3631284832954407,
+          "camera_compensated_image_plane_velocity_rms_px": 1.6407134532928467,
+          "camera_compensated_image_plane_acceleration_rms_px": 2.1048593521118164,
+          "camera_compensated_image_plane_jerk_rms_px": 2.689730405807495
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 57,
+          "valid_velocity_count": 92,
+          "survival_rate": 0.017543859779834747,
+          "camera_compensated_image_plane_velocity_rms_px": 5.016940116882324,
+          "camera_compensated_image_plane_acceleration_rms_px": 7.109711170196533,
+          "camera_compensated_image_plane_jerk_rms_px": 9.748984336853027
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 20,
+          "valid_velocity_count": 35,
+          "survival_rate": 0.10000000149011612,
+          "camera_compensated_image_plane_velocity_rms_px": 2.8852243423461914,
+          "camera_compensated_image_plane_acceleration_rms_px": 4.305643081665039,
+          "camera_compensated_image_plane_jerk_rms_px": 3.166060447692871
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.2911929004417177,
+        "camera_compensated_image_plane_velocity_rms_px": 2.2620656184982835,
+        "camera_compensated_image_plane_acceleration_rms_px": 3.0477958394770037,
+        "camera_compensated_image_plane_jerk_rms_px": 3.858367095495525
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.04837513882537997,
+            "camera_compensated_image_plane_jerk_rms_px": 0.07537134485649276,
+            "camera_compensated_image_plane_velocity_rms_px": 0.029136295976693347,
+            "survival_rate": 0.005499650093159497,
+            "max_relative_delta": 0.07537134485649276
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.028480994275993207,
+            "camera_compensated_image_plane_jerk_rms_px": 0.3183649686310511,
+            "camera_compensated_image_plane_velocity_rms_px": 0.015373462412840237,
+            "survival_rate": 0.022081119458277003,
+            "max_relative_delta": 0.3183649686310511
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 34,
+      "sample_id": "5998b71b64c146769bde1d5430741381_CAM_FRONT_base_s20260713",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 0.20195215940475464
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 164,
+          "valid_velocity_count": 1140,
+          "survival_rate": 0.9878048896789551,
+          "camera_compensated_image_plane_velocity_rms_px": 0.23208262026309967,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.24960066378116608,
+          "camera_compensated_image_plane_jerk_rms_px": 0.3826060891151428
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 64,
+          "valid_velocity_count": 372,
+          "survival_rate": 0.8125,
+          "camera_compensated_image_plane_velocity_rms_px": 1.1468992233276367,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.1084165573120117,
+          "camera_compensated_image_plane_jerk_rms_px": 1.7389670610427856
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 28,
+          "valid_velocity_count": 192,
+          "survival_rate": 0.9642857313156128,
+          "camera_compensated_image_plane_velocity_rms_px": 0.33277928829193115,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.36639830470085144,
+          "camera_compensated_image_plane_jerk_rms_px": 0.6356673836708069
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.946884057891201,
+        "camera_compensated_image_plane_velocity_rms_px": 0.4431422074705782,
+        "camera_compensated_image_plane_acceleration_rms_px": 0.4502489381063152,
+        "camera_compensated_image_plane_jerk_rms_px": 0.7072270105422382
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.002844650049090887,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0017028170241676966,
+            "camera_compensated_image_plane_velocity_rms_px": 0.019261591464609602,
+            "survival_rate": 8.323894420326055e-05,
+            "max_relative_delta": 0.019261591464609602
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.16061047050100247,
+            "camera_compensated_image_plane_jerk_rms_px": 0.1008242790823592,
+            "camera_compensated_image_plane_velocity_rms_px": 0.07121830774025859,
+            "survival_rate": 0.004891895249943103,
+            "max_relative_delta": 0.16061047050100247
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 37,
+      "sample_id": "5dea68380f5c4e31a183605f7743def5_CAM_FRONT_base_s20260714",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 0.19430099427700043
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 173,
+          "valid_velocity_count": 960,
+          "survival_rate": 0.8034682273864746,
+          "camera_compensated_image_plane_velocity_rms_px": 0.26772183179855347,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.3132995665073395,
+          "camera_compensated_image_plane_jerk_rms_px": 0.4147869944572449
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 62,
+          "valid_velocity_count": 274,
+          "survival_rate": 0.6451612710952759,
+          "camera_compensated_image_plane_velocity_rms_px": 1.6004070043563843,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.358546257019043,
+          "camera_compensated_image_plane_jerk_rms_px": 1.2690362930297852
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 21,
+          "valid_velocity_count": 118,
+          "survival_rate": 0.9047619104385376,
+          "camera_compensated_image_plane_velocity_rms_px": 0.23212090134620667,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.3098694980144501,
+          "camera_compensated_image_plane_jerk_rms_px": 0.49477508664131165
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.7802260295879206,
+        "camera_compensated_image_plane_velocity_rms_px": 0.5347002544963854,
+        "camera_compensated_image_plane_acceleration_rms_px": 0.5248327359733497,
+        "camera_compensated_image_plane_jerk_rms_px": 0.5948926917106442
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.02920604955512491,
+            "camera_compensated_image_plane_jerk_rms_px": 0.009866286544268237,
+            "camera_compensated_image_plane_velocity_rms_px": 0.010450819811057098,
+            "survival_rate": 0.003185676084626729,
+            "max_relative_delta": 0.02920604955512491
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.06986201740977978,
+            "camera_compensated_image_plane_jerk_rms_px": 0.21400252509093043,
+            "camera_compensated_image_plane_velocity_rms_px": 0.01360318230889966,
+            "survival_rate": 0.0013917615568201868,
+            "max_relative_delta": 0.21400252509093043
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 60,
+      "sample_id": "902dc84f70384b1f8aa82d3018031b85_CAM_FRONT_base_s20260713",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 0.381816029548645
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 161,
+          "valid_velocity_count": 1044,
+          "survival_rate": 0.9006211161613464,
+          "camera_compensated_image_plane_velocity_rms_px": 0.36863037943840027,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.4242984652519226,
+          "camera_compensated_image_plane_jerk_rms_px": 0.6936768293380737
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 63,
+          "valid_velocity_count": 267,
+          "survival_rate": 0.4761904776096344,
+          "camera_compensated_image_plane_velocity_rms_px": 1.0981805324554443,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.1373262405395508,
+          "camera_compensated_image_plane_jerk_rms_px": 2.09316086769104
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 32,
+          "valid_velocity_count": 217,
+          "survival_rate": 0.90625,
+          "camera_compensated_image_plane_velocity_rms_px": 0.5035741925239563,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.5064752101898193,
+          "camera_compensated_image_plane_jerk_rms_px": 0.8657726049423218
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.8272562518286768,
+        "camera_compensated_image_plane_velocity_rms_px": 0.5152748154954137,
+        "camera_compensated_image_plane_acceleration_rms_px": 0.5605620579569751,
+        "camera_compensated_image_plane_jerk_rms_px": 0.9626604821825526
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.02160738515082936,
+            "camera_compensated_image_plane_jerk_rms_px": 0.022956468594502462,
+            "camera_compensated_image_plane_velocity_rms_px": 0.014474133665778535,
+            "survival_rate": 0.002265411668875962,
+            "max_relative_delta": 0.022956468594502462
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.019055497350364187,
+            "camera_compensated_image_plane_jerk_rms_px": 0.020306614112489987,
+            "camera_compensated_image_plane_velocity_rms_px": 0.006790576359345649,
+            "survival_rate": 0.003950571662615443,
+            "max_relative_delta": 0.020306614112489987
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 69,
+      "sample_id": "9ca99b200b97420dbe00a111c47aff74_CAM_FRONT_base_s20260714",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 0.6689072847366333
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 170,
+          "valid_velocity_count": 950,
+          "survival_rate": 0.8235294222831726,
+          "camera_compensated_image_plane_velocity_rms_px": 0.9118041396141052,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.0355359315872192,
+          "camera_compensated_image_plane_jerk_rms_px": 1.3151460886001587
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 63,
+          "valid_velocity_count": 365,
+          "survival_rate": 0.8730158805847168,
+          "camera_compensated_image_plane_velocity_rms_px": 4.372457981109619,
+          "camera_compensated_image_plane_acceleration_rms_px": 4.599291801452637,
+          "camera_compensated_image_plane_jerk_rms_px": 5.970874309539795
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 23,
+          "valid_velocity_count": 109,
+          "survival_rate": 0.695652186870575,
+          "camera_compensated_image_plane_velocity_rms_px": 1.6955286264419556,
+          "camera_compensated_image_plane_acceleration_rms_px": 2.1223771572113037,
+          "camera_compensated_image_plane_jerk_rms_px": 2.4207825660705566
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.8264254465950339,
+        "camera_compensated_image_plane_velocity_rms_px": 1.8588298567560282,
+        "camera_compensated_image_plane_acceleration_rms_px": 2.0321908375520383,
+        "camera_compensated_image_plane_jerk_rms_px": 2.59313427447603
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.005484491711168481,
+            "camera_compensated_image_plane_jerk_rms_px": 0.006114430950426061,
+            "camera_compensated_image_plane_velocity_rms_px": 0.003383607333610473,
+            "survival_rate": 0.0051656126480908145,
+            "max_relative_delta": 0.006114430950426061
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0043382355226344715,
+            "camera_compensated_image_plane_jerk_rms_px": 0.00906894373966694,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0002707724640057911,
+            "survival_rate": 0.039900604152662396,
+            "max_relative_delta": 0.039900604152662396
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 81,
+      "sample_id": "afe98431e29740da84a4301a6c8c2640_CAM_FRONT_base_s20260713",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 0.9780557751655579
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 178,
+          "valid_velocity_count": 1041,
+          "survival_rate": 0.7865168452262878,
+          "camera_compensated_image_plane_velocity_rms_px": 0.6811224818229675,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.6086479425430298,
+          "camera_compensated_image_plane_jerk_rms_px": 1.072547435760498
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 58,
+          "valid_velocity_count": 331,
+          "survival_rate": 0.6551724076271057,
+          "camera_compensated_image_plane_velocity_rms_px": 2.393946886062622,
+          "camera_compensated_image_plane_acceleration_rms_px": 2.4190797805786133,
+          "camera_compensated_image_plane_jerk_rms_px": 4.095593452453613
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 20,
+          "valid_velocity_count": 138,
+          "survival_rate": 0.8999999761581421,
+          "camera_compensated_image_plane_velocity_rms_px": 1.030866026878357,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.8667919635772705,
+          "camera_compensated_image_plane_jerk_rms_px": 1.5538190603256226
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.7680967546456697,
+        "camera_compensated_image_plane_velocity_rms_px": 1.0885459831613578,
+        "camera_compensated_image_plane_acceleration_rms_px": 1.0290961632665419,
+        "camera_compensated_image_plane_jerk_rms_px": 1.7791989031216957
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.007907268965946332,
+            "camera_compensated_image_plane_jerk_rms_px": 0.007873212773684564,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0027536313124620327,
+            "survival_rate": 1.5892294032632185e-05,
+            "max_relative_delta": 0.007907268965946332
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.2193108222837165,
+            "camera_compensated_image_plane_jerk_rms_px": 0.2290499465663167,
+            "camera_compensated_image_plane_velocity_rms_px": 0.06679881323165017,
+            "survival_rate": 0.013678495470030548,
+            "max_relative_delta": 0.2290499465663167
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 99,
+      "sample_id": "ddaf88b5535c4b6fb54bb1fec759f03a_CAM_FRONT_base_s20260713",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 1.165372610092163
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 168,
+          "valid_velocity_count": 993,
+          "survival_rate": 0.9583333134651184,
+          "camera_compensated_image_plane_velocity_rms_px": 0.932353138923645,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.261694073677063,
+          "camera_compensated_image_plane_jerk_rms_px": 1.98713219165802
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 62,
+          "valid_velocity_count": 326,
+          "survival_rate": 0.9677419066429138,
+          "camera_compensated_image_plane_velocity_rms_px": 4.685024738311768,
+          "camera_compensated_image_plane_acceleration_rms_px": 2.618190288543701,
+          "camera_compensated_image_plane_jerk_rms_px": 3.2988789081573486
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 26,
+          "valid_velocity_count": 175,
+          "survival_rate": 0.9615384340286255,
+          "camera_compensated_image_plane_velocity_rms_px": 1.2759987115859985,
+          "camera_compensated_image_plane_acceleration_rms_px": 1.6118978261947632,
+          "camera_compensated_image_plane_jerk_rms_px": 2.4725499153137207
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.9607617588965609,
+        "camera_compensated_image_plane_velocity_rms_px": 1.7914621861903384,
+        "camera_compensated_image_plane_acceleration_rms_px": 1.598711090234708,
+        "camera_compensated_image_plane_jerk_rms_px": 2.330222908671761
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.020886589528638033,
+            "camera_compensated_image_plane_jerk_rms_px": 0.006744438520854871,
+            "camera_compensated_image_plane_velocity_rms_px": 0.02949203805896276,
+            "survival_rate": 0.00012588893127126396,
+            "max_relative_delta": 0.02949203805896276
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.013906530120769943,
+            "camera_compensated_image_plane_jerk_rms_px": 0.020810592910815332,
+            "camera_compensated_image_plane_velocity_rms_px": 0.019847930931574824,
+            "survival_rate": 0.007925623711015075,
+            "max_relative_delta": 0.020810592910815332
+          }
+        }
+      }
+    },
+    {
+      "dataset_index": 114,
+      "sample_id": "f7b0bfeed5f1455ba0587f99a7189124_CAM_FRONT_base_s20260713",
+      "valid": true,
+      "provider_diagnostics": {
+        "provider": "cotracker3_offline",
+        "uses_future_gt": false,
+        "query_protocol": "official_first_frame_grid_size_16",
+        "query_count": 256,
+        "pair_affine_valid_count": 7,
+        "residual_motion_median_px": 1.549755573272705
+      },
+      "dynamics": {
+        "background": {
+          "status": "valid",
+          "track_count": 177,
+          "valid_velocity_count": 1030,
+          "survival_rate": 0.790960431098938,
+          "camera_compensated_image_plane_velocity_rms_px": 1.1244975328445435,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.5291992425918579,
+          "camera_compensated_image_plane_jerk_rms_px": 0.762988805770874
+        },
+        "dynamic_residual": {
+          "status": "valid",
+          "track_count": 59,
+          "valid_velocity_count": 235,
+          "survival_rate": 0.2542372941970825,
+          "camera_compensated_image_plane_velocity_rms_px": 6.548714637756348,
+          "camera_compensated_image_plane_acceleration_rms_px": 2.39521861076355,
+          "camera_compensated_image_plane_jerk_rms_px": 3.054398536682129
+        },
+        "foreground_candidate": {
+          "status": "valid",
+          "track_count": 20,
+          "valid_velocity_count": 123,
+          "survival_rate": 0.800000011920929,
+          "camera_compensated_image_plane_velocity_rms_px": 1.8772034645080566,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.8596349954605103,
+          "camera_compensated_image_plane_jerk_rms_px": 1.2273080348968506
+        },
+        "all": {
+          "status": "valid",
+          "valid_strata": [
+            "background",
+            "dynamic_residual",
+            "foreground_candidate"
+          ],
+          "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+        }
+      },
+      "aggregate": {
+        "survival_rate": 0.7008897763937282,
+        "camera_compensated_image_plane_velocity_rms_px": 2.1095651475771704,
+        "camera_compensated_image_plane_acceleration_rms_px": 0.8744140474356561,
+        "camera_compensated_image_plane_jerk_rms_px": 1.1920900679802688
+      },
+      "rerun": {
+        "track": {
+          "point_max_error_px": 0.0,
+          "visibility_mismatch_count": 0
+        },
+        "aggregate_relative_delta": {
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0,
+          "camera_compensated_image_plane_velocity_rms_px": 0.0,
+          "survival_rate": 0.0,
+          "max_relative_delta": 0.0
+        }
+      },
+      "perturbations": {
+        "photometric": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.04711366872550247,
+            "camera_compensated_image_plane_jerk_rms_px": 0.05098893005957704,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0003480489907134072,
+            "survival_rate": 0.015104118980145817,
+            "max_relative_delta": 0.05098893005957704
+          }
+        },
+        "codec_quantization": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.0,
+            "survival_rate": 0.0,
+            "max_relative_delta": 0.0
+          }
+        },
+        "resize_roundtrip": {
+          "valid": true,
+          "aggregate_relative_delta": {
+            "camera_compensated_image_plane_acceleration_rms_px": 0.008015741370716962,
+            "camera_compensated_image_plane_jerk_rms_px": 0.0017163648178318194,
+            "camera_compensated_image_plane_velocity_rms_px": 0.005297231020448269,
+            "survival_rate": 0.014995782082807756,
+            "max_relative_delta": 0.014995782082807756
+          }
+        }
+      }
+    }
+  ],
+  "synthetic": {
+    "rows": {
+      "constant_velocity": {
+        "valid": true,
+        "summary": {
+          "background": {
+            "status": "valid",
+            "track_count": 163,
+            "valid_velocity_count": 1129,
+            "survival_rate": 0.987730085849762,
+            "camera_compensated_image_plane_velocity_rms_px": 0.021236997097730637,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.029368458315730095,
+            "camera_compensated_image_plane_jerk_rms_px": 0.052371006458997726
+          },
+          "dynamic_residual": {
+            "status": "valid",
+            "track_count": 64,
+            "valid_velocity_count": 364,
+            "survival_rate": 0.78125,
+            "camera_compensated_image_plane_velocity_rms_px": 0.029995715245604515,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.043180130422115326,
+            "camera_compensated_image_plane_jerk_rms_px": 0.08220773935317993
+          },
+          "foreground_candidate": {
+            "status": "valid",
+            "track_count": 29,
+            "valid_velocity_count": 203,
+            "survival_rate": 1.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.022897107526659966,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.031122133135795593,
+            "camera_compensated_image_plane_jerk_rms_px": 0.054537057876586914
+          },
+          "all": {
+            "status": "valid",
+            "valid_strata": [
+              "background",
+              "dynamic_residual",
+              "foreground_candidate"
+            ],
+            "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+          }
+        },
+        "aggregate": {
+          "survival_rate": 0.9448834121016398,
+          "camera_compensated_image_plane_velocity_rms_px": 0.023315520578213386,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.03254265916195505,
+          "camera_compensated_image_plane_jerk_rms_px": 0.05903390693733082
+        }
+      },
+      "constant_acceleration": {
+        "valid": true,
+        "summary": {
+          "background": {
+            "status": "valid",
+            "track_count": 168,
+            "valid_velocity_count": 1168,
+            "survival_rate": 0.988095223903656,
+            "camera_compensated_image_plane_velocity_rms_px": 0.028083384037017822,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.04572950303554535,
+            "camera_compensated_image_plane_jerk_rms_px": 0.08437498658895493
+          },
+          "dynamic_residual": {
+            "status": "valid",
+            "track_count": 64,
+            "valid_velocity_count": 392,
+            "survival_rate": 0.78125,
+            "camera_compensated_image_plane_velocity_rms_px": 0.04106282815337181,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.06946606934070587,
+            "camera_compensated_image_plane_jerk_rms_px": 0.1276862919330597
+          },
+          "foreground_candidate": {
+            "status": "valid",
+            "track_count": 24,
+            "valid_velocity_count": 168,
+            "survival_rate": 1.0,
+            "camera_compensated_image_plane_velocity_rms_px": 0.032129786908626556,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.05479856953024864,
+            "camera_compensated_image_plane_jerk_rms_px": 0.10221441090106964
+          },
+          "all": {
+            "status": "valid",
+            "valid_strata": [
+              "background",
+              "dynamic_residual",
+              "foreground_candidate"
+            ],
+            "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+          }
+        },
+        "aggregate": {
+          "survival_rate": 0.9423294106015453,
+          "camera_compensated_image_plane_velocity_rms_px": 0.03142119525000453,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.051995901856571436,
+          "camera_compensated_image_plane_jerk_rms_px": 0.09593462488717502
+        }
+      },
+      "smooth_turn": {
+        "valid": true,
+        "summary": {
+          "background": {
+            "status": "valid",
+            "track_count": 166,
+            "valid_velocity_count": 1124,
+            "survival_rate": 0.9518072009086609,
+            "camera_compensated_image_plane_velocity_rms_px": 0.03512254357337952,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.05000776797533035,
+            "camera_compensated_image_plane_jerk_rms_px": 0.08413667976856232
+          },
+          "dynamic_residual": {
+            "status": "valid",
+            "track_count": 64,
+            "valid_velocity_count": 338,
+            "survival_rate": 0.671875,
+            "camera_compensated_image_plane_velocity_rms_px": 0.048371490091085434,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0695594772696495,
+            "camera_compensated_image_plane_jerk_rms_px": 0.122723788022995
+          },
+          "foreground_candidate": {
+            "status": "valid",
+            "track_count": 26,
+            "valid_velocity_count": 174,
+            "survival_rate": 0.9230769276618958,
+            "camera_compensated_image_plane_velocity_rms_px": 0.04117865115404129,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.06127525493502617,
+            "camera_compensated_image_plane_jerk_rms_px": 0.10497285425662994
+          },
+          "all": {
+            "status": "valid",
+            "valid_strata": [
+              "background",
+              "dynamic_residual",
+              "foreground_candidate"
+            ],
+            "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+          }
+        },
+        "aggregate": {
+          "survival_rate": 0.890917132783927,
+          "camera_compensated_image_plane_velocity_rms_px": 0.038503904601508945,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.0552455555501879,
+          "camera_compensated_image_plane_jerk_rms_px": 0.0943249052886858
+        }
+      },
+      "occlusion": {
+        "valid": true,
+        "summary": {
+          "background": {
+            "status": "valid",
+            "track_count": 170,
+            "valid_velocity_count": 1057,
+            "survival_rate": 0.8941176533699036,
+            "camera_compensated_image_plane_velocity_rms_px": 0.03640182316303253,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.05517597869038582,
+            "camera_compensated_image_plane_jerk_rms_px": 0.09417759627103806
+          },
+          "dynamic_residual": {
+            "status": "valid",
+            "track_count": 64,
+            "valid_velocity_count": 383,
+            "survival_rate": 0.828125,
+            "camera_compensated_image_plane_velocity_rms_px": 0.04801162704825401,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.07178052514791489,
+            "camera_compensated_image_plane_jerk_rms_px": 0.12038885802030563
+          },
+          "foreground_candidate": {
+            "status": "valid",
+            "track_count": 22,
+            "valid_velocity_count": 139,
+            "survival_rate": 0.9090909361839294,
+            "camera_compensated_image_plane_velocity_rms_px": 0.04274947941303253,
+            "camera_compensated_image_plane_acceleration_rms_px": 0.0651724711060524,
+            "camera_compensated_image_plane_jerk_rms_px": 0.11022473871707916
+          },
+          "all": {
+            "status": "valid",
+            "valid_strata": [
+              "background",
+              "dynamic_residual",
+              "foreground_candidate"
+            ],
+            "camera_model": "per-pair evaluator-only robust affine image-plane fit"
+          }
+        },
+        "aggregate": {
+          "survival_rate": 0.8794286730472162,
+          "camera_compensated_image_plane_velocity_rms_px": 0.039776667435857,
+          "camera_compensated_image_plane_acceleration_rms_px": 0.06008354913941134,
+          "camera_compensated_image_plane_jerk_rms_px": 0.10194799908925795
+        }
+      }
+    },
+    "threshold_sweep_rank_correlations": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "acceleration_order_correct": true,
+    "jerk_order_correct": true,
+    "occlusion_invalid_or_downweighted": true
+  },
+  "decision": {
+    "checks": {
+      "identical_video_rerun": true,
+      "threshold_sweep_rank_correlation": true,
+      "synthetic_acceleration_and_jerk_order": true,
+      "occlusion_low_texture_invalidity_recognized": true,
+      "all_real_clips_have_valid_tracks": true
+    },
+    "machine_pass": true
+  },
+  "experiment_fingerprint": "1590b744c19e9a6e92d96945ff90fda49871e779219a626740aa161ded98040d"
+}

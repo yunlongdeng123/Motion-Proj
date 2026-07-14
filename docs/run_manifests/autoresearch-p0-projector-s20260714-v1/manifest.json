@@ -1,0 +1,74 @@
+{
+  "run_id": "autoresearch-p0-projector-s20260714-v1",
+  "command": [
+    "/root/autodl-tmp/motion_proj/motion_proj/diagnostics/projector_validity.py",
+    "--config",
+    "configs/diagnostics/autoresearch_p0_projector.yaml"
+  ],
+  "config_fingerprint": "cedad67b2d1d84b167a30c52ef1cfe8781e50ecf07c92b43a759b70977d79c9b",
+  "cache_fingerprint": "e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39",
+  "seed": 20260713,
+  "git": {
+    "commit": "dfef913186e1f9b7e8e2a4a86184c3ea9d9f1f34",
+    "git_available": true,
+    "dirty": false,
+    "dirty_tracked": false,
+    "dirty_untracked": false,
+    "untracked_count": 0,
+    "dirty_diff_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "environment": {
+    "python": "3.10.20",
+    "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "fingerprint": "c5313abea16c07b2fef896ecbe64fd13a39509bafb1691d9c76c76105b4b5ebf"
+  },
+  "data_split": "train",
+  "parent_run_id": null,
+  "started_at": "2026-07-14T05:58:59.271207+00:00",
+  "ended_at": "2026-07-14T05:59:25.023976+00:00",
+  "exit_reason": "human_review",
+  "status": "awaiting_reviews",
+  "task_id": "AUTORESEARCH-P0-PROJECTOR-VALIDITY",
+  "protocol": "autoresearch-p0-projector-validity-v1",
+  "dataset_indices": [
+    8,
+    34,
+    37,
+    60,
+    69,
+    81,
+    99,
+    114
+  ],
+  "base_model_fingerprint": "73ce4a1bdeb5fe69e6e6852aea86f5d30b17ba9725e4b2cf81d9adfab30467f9",
+  "base_generation_adapter_loaded": false,
+  "uses_future_gt": false,
+  "candidate_names": [
+    "P-ID",
+    "P-CUR",
+    "P-CON",
+    "P-UNC"
+  ],
+  "preregistration": {
+    "frame0_max_error_px": 1e-06,
+    "maximum_clean_rmse_px": 0.12,
+    "minimum_noisy_improvement_px": 0.0001,
+    "minimum_high_snr_outlier_improvement_fraction": 1.0,
+    "maximum_subuncertainty_jitter_worsening_px": 0.02,
+    "net_displacement_median_min": 0.9,
+    "net_displacement_median_max": 1.1,
+    "net_displacement_p10_min": 0.7,
+    "direction_median_min": 0.98,
+    "turn_preservation_min": 0.95,
+    "dynamic_degree_median_min": 0.8,
+    "dynamic_degree_median_max": 1.2,
+    "snr_threshold": 1.0
+  },
+  "review_requirements": {
+    "required_panels": 12,
+    "minimum_valid_rate": 0.875
+  }
+}

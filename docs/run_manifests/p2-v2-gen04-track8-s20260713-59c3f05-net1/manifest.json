@@ -1,0 +1,49 @@
+{
+  "run_id": "p2-v2-gen04-track8-s20260713-59c3f05-net1",
+  "command": [
+    "/root/autodl-tmp/motion_proj/motion_proj/diagnostics/condition_validity.py",
+    "--config",
+    "configs/diagnostics/p2_v2_condition.yaml",
+    "--run-id",
+    "p2-v2-gen04-track8-s20260713-59c3f05-net1",
+    "condition_validity.review_target=generated_tracks",
+    "condition_validity.clip_indices=[0,96,192,288,384,480,576,672]",
+    "condition_validity.required_reviews=8",
+    "condition_validity.generation_seed=20260713"
+  ],
+  "config_fingerprint": "9d3f4b36a9ae6177a51cd92b53d28dfdabc91bd45f310b941318dd7002717830",
+  "cache_fingerprint": "not-applicable:p2-v2-condition-validity-v2",
+  "seed": 20260713,
+  "git": {
+    "commit": "59c3f0593c0e1c0ff8d5920e9e17d4e4463d586f",
+    "git_available": true,
+    "dirty": false,
+    "dirty_tracked": false,
+    "dirty_untracked": false,
+    "untracked_count": 0,
+    "dirty_diff_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "environment": {
+    "python": "3.10.20",
+    "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "fingerprint": "c5313abea16c07b2fef896ecbe64fd13a39509bafb1691d9c76c76105b4b5ebf"
+  },
+  "data_split": "v1.0-trainval:val:CAM_FRONT:fixed-16",
+  "parent_run_id": null,
+  "started_at": "2026-07-13T06:47:26.338317+00:00",
+  "ended_at": "2026-07-13T08:05:42.010983+00:00",
+  "exit_reason": "completed",
+  "status": "completed",
+  "task_id": "P2-V2-COND-00",
+  "protocol": "p2-v2-condition-validity-v2",
+  "base_model_fingerprint": "73ce4a1bdeb5fe69e6e6852aea86f5d30b17ba9725e4b2cf81d9adfab30467f9",
+  "adapter_loaded": false,
+  "uses_future_gt_ego_for_formal_candidate": false,
+  "generation": {
+    "num_inference_steps": 25,
+    "decode_chunk_size": 4
+  }
+}

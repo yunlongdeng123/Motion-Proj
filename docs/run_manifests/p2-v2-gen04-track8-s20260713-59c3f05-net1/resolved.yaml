@@ -1,0 +1,124 @@
+schema_version: 2
+seed: 20260712
+device: cuda
+dtype: bf16
+work_dir: /root/autodl-tmp/runs/p2-v2-condition
+paths:
+  data_root: /root/autodl-tmp/data/nuscenes
+  cache_dir: /root/autodl-tmp/cache/p2-front/train
+  ckpt_dir: /root/autodl-tmp/runs/p2-front-dev/ckpts
+  log_dir: /root/autodl-tmp/runs/p2-front-dev/logs
+data:
+  name: nuscenes
+  version: v1.0-trainval
+  dataroot: /root/autodl-tmp/data/nuscenes
+  cameras:
+  - CAM_FRONT
+  num_frames: 8
+  frame_stride: 1
+  height: 256
+  width: 448
+  min_box_visibility: 2
+  use_sweeps: false
+  use_lidar_depth: true
+  conditioning:
+    first_frame: true
+    future_ego: false
+  split: val
+  expected_scene_count: 700
+  expected_clip_count: 3425
+model:
+  name: svd
+  pretrained: /root/autodl-tmp/weights/svd-xt
+  parameterization: edm
+  sigma_floor: 0.001
+  num_frames: 8
+  vae_scale_factor: 8
+  latent_channels: 4
+  lora:
+    enable: false
+    rank: 16
+    alpha: 16
+    dropout: 0.0
+    scope: temporal_only
+    projections:
+    - to_q
+    - to_k
+    - to_v
+    - to_out.0
+  freeze_vae: true
+  gradient_checkpointing: true
+  enable_xformers: false
+auditor:
+  generated_geometry_mode: estimated_background_motion
+  background_fit:
+    min_confidence: 0.5
+    min_points: 256
+    max_points: 32768
+    irls_iterations: 5
+    huber_delta: 2.5
+    min_residual_px: 0.5
+    ridge: 0.0001
+  generated_tracks:
+    provider: raft_chain
+    queries_per_stratum: 24
+    min_track_length: 3
+    point_box_size: 16.0
+    min_distance: 8.0
+    fb_alpha: 0.05
+    fb_beta: 0.5
+    min_confidence: 0.5
+train:
+  experiment_type: synthetic
+  lr: 2.0e-05
+  weight_decay: 0.0
+  max_steps: 2000
+  warmup_steps: 50
+  micro_batch_size: 1
+  grad_accum: 8
+  max_grad_norm: 1.0
+  deterministic: true
+  num_workers: 0
+  lambda_proj: 0.1
+  beta_anchor: 0.5
+  use_real_loss: true
+  lambda_flow: 0.1
+  cache_sources: null
+  cache_mix: null
+  cache_epoch_size: null
+  tube:
+    sigma_quantile_range:
+    - 0.0
+    - 0.35
+    bound_B: 4.0
+  log_every: 20
+  ckpt_every: 500
+  sample_every: 500
+  logger: tensorboard
+  resume: auto
+  early_stop_patience: null
+cache:
+  store: latent
+  source: synthetic
+  overwrite: false
+  max_samples: null
+condition_validity:
+  protocol: p2-v2-condition-validity-v1
+  clip_indices:
+  - 0
+  - 96
+  - 192
+  - 288
+  - 384
+  - 480
+  - 576
+  - 672
+  generation_seed: 20260713
+  generation:
+    num_inference_steps: 25
+    decode_chunk_size: 4
+  inverse_iterations: 5
+  panel_fps: 4
+  review_target: generated_tracks
+  required_reviews: 8
+  minimum_reasonable_rate: 0.7
