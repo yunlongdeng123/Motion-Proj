@@ -1,0 +1,40 @@
+defaults_chain:
+  - ./autoresearch_p0_projector.yaml
+
+run_id: autoresearch-e0-evaluator-s20260714-v2
+work_dir: /root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v2
+
+model:
+  lora:
+    enable: false
+
+train:
+  experiment_type: replay
+  deterministic: true
+  num_workers: 0
+
+e0:
+  task_id: AUTORESEARCH-E0-INDEPENDENT-EVALUATOR
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_indices: [8, 34, 37, 60, 69, 81, 99, 114]
+
+  # 固定官方 Meta CoTracker3 权重，禁止回退到 RAFT 或其他 provider。
+  provider:
+    repository_path: /root/autodl-tmp/third_party/co-tracker
+    repository_commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint_path: /root/autodl-tmp/weights/cotracker3/scaled_offline.pth
+    checkpoint_url: https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth
+    checkpoint_sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+    grid_size: 16
+
+  perturbations: [photometric, codec_quantization, resize_roundtrip]
+  visibility_survival_thresholds: [0.25, 0.50, 0.75]
+  thresholds:
+    maximum_rerun_relative_delta: 0.02
+    minimum_rank_correlation: 0.80
+
+  review:
+    # 8 个 Base overlay 加 4 个确定性合成 sanity overlay。
+    required_cases: 12
+    minimum_valid_rate: 0.875
+    panel_fps: 4
