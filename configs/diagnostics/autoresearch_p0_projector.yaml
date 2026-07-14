@@ -1,0 +1,57 @@
+defaults_chain:
+  - ./p2_v2_pilot.yaml
+
+run_id: autoresearch-p0-projector-s20260714-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-p0-projector-s20260714-v1
+
+# P0 只读冻结的 Base replay RGB；不加载 adapter、不重建或改写 cache。
+model:
+  lora:
+    enable: false
+
+train:
+  experiment_type: replay
+  deterministic: true
+  num_workers: 0
+
+p0:
+  task_id: AUTORESEARCH-P0-PROJECTOR-VALIDITY
+  cache_fingerprint: e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39
+  dataset_indices: [8, 34, 37, 60, 69, 81, 99, 114]
+  candidates: [P-ID, P-CUR, P-CON, P-UNC]
+  current_smooth_lambda: 5.0
+
+  # 单一预注册 constrained setting；不做 lambda sweep。
+  constrained:
+    lambda_acceleration: 0.08
+    lambda_jerk: 0.02
+    robust_delta_px: 1.0
+    robust_iterations: 3
+    confidence_floor: 0.50
+    uncertainty_floor_px: 0.25
+    uncertainty_confidence_scale_px: 1.50
+    snr_threshold: 1.00
+
+  synthetic:
+    frame_count: 8
+
+  thresholds:
+    frame0_max_error_px: 1.0e-6
+    maximum_clean_rmse_px: 0.12
+    minimum_noisy_improvement_px: 1.0e-4
+    # P-UNC 的职责是修正高 SNR outlier；低于 tracker uncertainty 的 jitter 应保持
+    # identity，因此单独审计“未放大”而不是强迫它产生不可识别的 correction。
+    minimum_high_snr_outlier_improvement_fraction: 1.00
+    maximum_subuncertainty_jitter_worsening_px: 0.02
+    net_displacement_median_min: 0.90
+    net_displacement_median_max: 1.10
+    net_displacement_p10_min: 0.70
+    direction_median_min: 0.98
+    turn_preservation_min: 0.95
+    dynamic_degree_median_min: 0.80
+    dynamic_degree_median_max: 1.20
+    snr_threshold: 1.00
+
+  review:
+    required_panels: 12
+    minimum_valid_rate: 0.875
