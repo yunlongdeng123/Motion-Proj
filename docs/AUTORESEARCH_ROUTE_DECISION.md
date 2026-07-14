@@ -28,6 +28,34 @@
 
 仅当以下前置条件全部通过、但 one-step 改善仍无法传到 25-step rollout 时，fallback 为 **2–4 step truncated rollout + explicit track dynamics loss**。它不是现在的下一步；当前最早失败点在 multi-pair one-step capacity/locality，短链不能修复一个不可辨或语义错误的 target。
 
+### 1.1 结论边界修订（2026-07-14；A1 corrigendum）
+
+本节不修改 F0/F1 的原始 run、数值、阈值或失败结论；它只收紧这些证据可以支持的外推范围。此前版本中将两个诊断结果表述为 endpoint 或连续 feature relation 的普遍性失败，超过了其固定输入、固定参数化和当前 projector 的证据边界。
+
+**F0 实际证明：**在固定 replay pair、固定 `sigma=0.05`、固定 noise、当前 teacher-relative residual-`v` target、共享 temporal LoRA 与当前 preserve 定义下，即使修正正 preserve 权重的归一化语义，仍未找到同时满足预注册 correction、mask 外 locality 与 frame-0 locality 门槛的点。因此禁止继续扫描 preserve weight、提高学习率、延长该单 pair shared-LoRA endpoint pilot，或把旧 preserve bug 解释为唯一失败原因。
+
+**F0 未证明：**所有 endpoint projection 都失败；所有 sigma、pair 或 mask policy 都无可行点；具有 hard-gated residual branch 或独立局部参数子空间的机制必然失败；raw-`v` one-step gate 与 decoded RGB 或完整 rollout locality 完全等价。
+
+**F1 实际证明：**当前 projector 的 correction 很小；在当前 8 对 replay 与 frozen raw SVD feature probe 中，绝大多数 correction 小于现有 feature stride 的半个 cell，且该 raw feature 没有提供明显的现成 projected relation signal。这是高风险信号，足以阻止在旧 target 上直接启动 F2/F3。
+
+**F1 未证明：**continuous feature target 必然不可学习；bilinear sampling、Gaussian relation target、soft-argmax、correlation distribution 或 sub-cell interpolation 必然没有信号。`<0.5 feature cell` 在后续 F1-R 中只保留为描述性统计，不能单独作为 hard fail。
+
+本轮新的严格依赖图为：
+
+```text
+A1 conclusion corrigendum
+        │
+        ├── C0 official-SVD conditioning parity
+        ├── P0 projector physical validity ──pass──> P1 RGB/VAE target validity
+        └── E0 independent rollout evaluator validity
+
+C0 + P0 + P1 + E0 all pass (including required human gates)
+        │
+        └── F1-R revised feature signal audit (read-only)
+```
+
+在 C0/P0/P1/E0 未全部通过前，不训练 feature head、zero-conv/refiner 或 short-chain，不构建新大规模 cache，也不运行 Optuna、300/800-step 或正式 Trainer V2 集成。所有新 gate 必须保存独立 config、manifest、metrics、summary 和终态文件；需要人工判断时只能标记为 `awaiting_reviews`，不得自行晋级。
+
 ## 2. Verified repository facts
 
 ## 2.1 当前训练目标：文档计划与正式 trainer 并不相同
