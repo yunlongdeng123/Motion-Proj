@@ -166,7 +166,7 @@ C0 + P0 + P1 + E0 all pass (including human gates)
 | Artifacts | `runs/autoresearch-e0-evaluator-*/{manifest.json,metrics.jsonl,summary.json,figures,track_overlay}`。 |
 | Estimated GPU budget | `0.5–1.5 GPU-hours`，不生成新 rollout 时更低。 |
 
-## C0 — Official-SVD conditioning parity（next）
+## C0 — Official-SVD conditioning parity（completed；legacy one-step context 不兼容）
 
 | Field | Pre-registration |
 |---|---|
@@ -182,6 +182,16 @@ C0 + P0 + P1 + E0 all pass (including human gates)
 | Stop condition | 无法复现 official Base；需要修改 scheduler/preconditioning algebra；发现 replay parent 不是 claimed Base。 |
 | Artifacts | `runs/autoresearch-c0-conditioning-*/{manifest.json,metrics.jsonl,summary.json}` + unit tests。 |
 | Estimated GPU budget | `<0.5 GPU-hour`。 |
+
+结果（2026-07-14）：`autoresearch-c0-conditioning-s20260714-v2` 在 clean commit `b36e042` 上完成，
+Diffusers `0.31.0`、固定 train condition index 0、25 steps、seed `2026071401`。official pipeline、
+实际 backbone wrapper 与 `svd_official_v1` candidate 的 added IDs、condition noise、initial latent、
+per-step input/raw unconditional/raw conditional/CFG/scheduler output、final latent 和 decoded RGB 均为
+0 差异，rerun 也 exact，因此版本化 generation protocol 通过 C0。旧 `build_conditioning()` 的
+conditional-branch 对比未通过：time ID 为 `7` 而 official 为 `6`，image embedding、latent 和 noise
+语义也不同。该结果不重写旧 V5 cache；其 Base generation provenance 可保留，但不允许它支持新的
+one-step-to-rollout transfer claim。证据目录含 `tensor_diffs.json`、`summary.json`、`metrics.jsonl`、
+`manifest.json` 和 `COMPLETE`；首个 v1 run 因诊断 device 类型错误失败并保留，未复用其 run ID。
 
 ## F1-R — Revised projector feature-resolution re-audit（conditional）
 

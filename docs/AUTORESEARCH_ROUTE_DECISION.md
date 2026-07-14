@@ -56,6 +56,20 @@ C0 + P0 + P1 + E0 all pass (including required human gates)
 
 在 C0/P0/P1/E0 未全部通过前，不训练 feature head、zero-conv/refiner 或 short-chain，不构建新大规模 cache，也不运行 Optuna、300/800-step 或正式 Trainer V2 集成。所有新 gate 必须保存独立 config、manifest、metrics、summary 和终态文件；需要人工判断时只能标记为 `awaiting_reviews`，不得自行晋级。
 
+### 1.2 C0 官方 SVD parity 更新（2026-07-14）
+
+正式 run `autoresearch-c0-conditioning-s20260714-v2` 在 clean commit `b36e042`、冻结
+SVD-XT、固定 train condition index 0、25 inference steps、seed `2026071401` 下完成。官方
+Diffusers 0.31.0 pipeline、实际 `SVDBackbone.generate()` 与版本化 `svd_official_v1` 候选的
+added-time IDs、condition-noise、initial latent、每步 scaled input、unconditional/conditional raw
+output、CFG output、scheduler output、final latent 与 decoded RGB 均一致；逐项最大差为 0，重复运行也
+逐位一致。证据：`/root/autodl-tmp/runs/autoresearch-c0-conditioning-s20260714-v2/`。
+
+但 C0 同时确认旧单步 `build_conditioning()` 与 rollout conditional branch 不等价：official 的
+fps time ID 为 6，legacy 为 7，且 condition noise、image embedding 与 image latent 都不同。因此
+`svd_official_v1` 可作为未来显式协议通过 C0；既有 V5 Base rollout 的生成 provenance 不被否定，
+但其 stored legacy context 不得用于新的 one-step-to-rollout transfer claim，也不得被静默改写。
+
 ## 2. Verified repository facts
 
 ## 2.1 当前训练目标：文档计划与正式 trainer 并不相同

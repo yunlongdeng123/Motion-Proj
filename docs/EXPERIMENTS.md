@@ -102,6 +102,13 @@ Base 指标为：static drift `8.2095`、track acceleration `4.3953`、LPIPS `0.
 | 2026-07-11 | `p2-tune-mini-cache32-skiptracks` | completed | `8f27415` | 官方 train / CAM_FRONT；synthetic latent schema v4；`fill_policy=skip-empty-tracks-until-max` | 32 kept / 33 scanned（跳过 1 无轨迹） | stage `3845e398`；sample `ce38bd7e` | `/root/autodl-tmp/cache/p2-front/tune-mini-synth32-v2/_stage/{manifest.json,resolved.yaml,COMPLETE}` 与 32 个样本目录 | 固定 mini cache 就绪，可作 7–9h Optuna 训练输入；不代表生成质量 |
 | 2026-07-11 | `p2-tune-base-metrics-hielig` / `tune-smoke2` | completed | `2f0476b` | val 固定高覆盖 clip 0/162/396/414；base 8-step 生成；2-step synthetic trial | seed 20260711 | base `lpips=0.509`、`eligible=0.855`；smoke summary 含全部 Optuna 字段且 `prune_reason=None` | `/root/autodl-tmp/runs/p2-tune-mini/base_metrics.json`；`/root/autodl-tmp/runs/p2-tune-mini/trials/tune-smoke2/summary.json`；低覆盖旧集保留为 `base_metrics.lowelig-0-100-200-300.json` | trial 评估桥可通；不把 2-step 分数当作正式超参 |
 
+## Autoresearch Phase 2
+
+| 日期 | Run ID | 状态 | commit | 协议/数据 | seed | 关键结果 | 证据路径 | 结论 |
+|---|---|---|---|---|---:|---|---|---|
+| 2026-07-14 | `autoresearch-c0-conditioning-s20260714-v1` | failed | `5b1bb6f` | C0 official SVD parity；固定 train condition 0；25 steps | 2026071401 | candidate initial latent 调用向 Diffusers 传入字符串 device，抛出 `AttributeError`；未产生可比较结果 | `/root/autodl-tmp/runs/autoresearch-c0-conditioning-s20260714-v1/{manifest.json,resolved.yaml,summary.json}` | 保留失败证据；不复用 run ID；由 v2 修复后重跑 |
+| 2026-07-14 | `autoresearch-c0-conditioning-s20260714-v2` | completed | `b36e042` | 冻结 SVD-XT / Diffusers 0.31.0；train condition index 0；25 steps；`svd_official_v1` | 2026071401 | official pipeline、backbone wrapper、versioned candidate 的 added IDs、condition noise、initial latent、逐步 conditional/unconditional raw、CFG、scheduler、final latent 和 RGB 均为 0 差异，rerun exact；legacy one-step context 不匹配 | `/root/autodl-tmp/runs/autoresearch-c0-conditioning-s20260714-v2/{resolved.yaml,manifest.json,metrics.jsonl,tensor_diffs.json,summary.json,figures,COMPLETE}`；config `f8d4f9d06bc6`；experiment `c06586f737ad` | C0 generation parity 通过；旧 V5 Base generation provenance 可保留，但 legacy stored conditioning 不得支撑新的 one-step-to-rollout claim，且不静默重建 cache |
+
 ## 参数选择
 
 | 日期 | 范围 | 已锁定选择 | 依据 |
