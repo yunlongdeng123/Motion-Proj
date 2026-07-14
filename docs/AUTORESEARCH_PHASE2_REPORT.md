@@ -10,8 +10,8 @@
 
 一句话结论：P0 能产生机器合格的连续 point-track correction，但当前
 `projected tracks → crop/resize/paste RGB → VAE/hybrid latent` 无法稳定构成合法、可观察、可解码的
-counterfactual target；独立 rollout evaluator 又未因官方 checkpoint 缺失而获得验证，因此不能把更多训练
-预算投入这一监督链。
+counterfactual target；独立 CoTracker3 evaluator 已完成机器稳定性 gate，但人工一致性待完成且没有任何训练
+方案可进行 comparative rollout。因此不能把更多训练预算投入这一监督链。
 
 **Fallback：D — 继续诊断，尚不足以选择新机制。**只有新的 target construction 与可校验的官方独立
 evaluator 都分别通过只读 gate 后，才重新预注册一个新问题；fallback 不包含 F1-R、short-chain、feature
@@ -22,15 +22,15 @@ head、zero-conv/refiner 或生成器训练。
 
 ## 2. 当前 Git 与环境事实
 
-- 本阶段最后一个代码提交：`a712587` (`research(eval): 建立独立长时点轨迹评价器`)；它之前的 C0/P0/P1
-  代码与证据提交依次为 `5b1bb6f`、`dfef913`、`960c4c2`，P1 gate 文档为 `f188698`。
-- E0 formal manifest 记录的干净 Git commit 是
-  `a71258720686feae6639b5f9cf68b2ae75d279f6`，`dirty=false`。
+- 本阶段最后一个 E0 代码提交：`016f752` (`fix(eval): 以跨扰动排序校验 E0 稳定性`)；其前的权重身份
+  固定提交为 `d846c9c`，C0/P0/P1 代码与证据提交依次为 `5b1bb6f`、`dfef913`、`960c4c2`。
+- E0 v3 formal manifest 记录的干净 Git commit 是
+  `016f752ea61b749cd17afa8b0a0f78c3daaec478`，`dirty=false`。
 - 运行环境来自 E0 manifest：Python 3.10.20、PyTorch 2.4.1+cu121、CUDA 12.1、NVIDIA RTX 4090；seed
   `20260713`；cache fingerprint `e2e3a3b35f6d1af9a4c4a0ac4d7c38d116dfafd6af7151721b75b4edbbea1a39`。
-- E0 开始前 GPU 使用为 1 MiB / 0%，正式 preflight 没有启动训练或生成任务。
-- E0 code commit 前完整测试为 `150 passed, 2 warnings`；官方 CoTracker3 local hub entry 在
-  `pretrained=False` 下可成功构造。
+- E0 v3 开始前 GPU 使用为 1 MiB / 0%，正式 run 只读取既有 Base RGB，不启动训练或生成任务。
+- E0 v3 code commit 前完整测试为 `151 passed, 2 warnings`；官方 CoTracker3 local hub entry、上传权重的
+  strict load 与短视频追踪均已验证。
 
 ## 3. F0/F1 结论边界修订
 
@@ -43,7 +43,7 @@ head、zero-conv/refiner 或生成器训练。
   94.97% 小于半个 cell，且没有现成的 projected relation signal；故旧 target 不可直接启动 F2/F3。
 - **F1 未证明：**bilinear/soft-argmax/Gaussian continuous relation 永远不可学习。F1-R 原应以 target
   separation、gradient SNR 和 sub-cell calibration 判断，而非单独用 `<0.5 cell`；本轮不运行它的原因是
-  P1/E0 前置失败。
+  P1 hard fail（另有 P0/E0 人审未完成）。
 
 ## 4. C0 — SVD parity
 
@@ -98,28 +98,32 @@ head、zero-conv/refiner 或生成器训练。
 
 ## 7. E0 — Independent evaluator
 
-- **status：blocked。**
+- **status：machine pass / awaiting_reviews。**
 - **provider：**官方 [CoTracker3 repository](https://github.com/facebookresearch/co-tracker) 的 offline
-  predictor；local repository 固定在 `82e02e8029753ad4ef13cf06be7f4fc5facdda4d`。query 是 evaluator 自身
-  的 first-frame grid，输入禁止 cache generated tracks、P0/P1 outputs、future GT 与 source-future metadata。
+  predictor；local repository 固定在 `82e02e8029753ad4ef13cf06be7f4fc5facdda4d`，官方上传权重的实际/预期
+  SHA256 同为 `2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834`。query 是 evaluator 自身
+  first-frame grid，输入禁止 cache generated tracks、P0/P1 outputs、future GT 与 source-future metadata。
 - **实现边界：**使用 evaluator-only robust affine background fit，并仅报告 camera-compensated image-plane
   velocity/acceleration/jerk；无有效 track 显式为 invalid，不回退至 RAFT/KLT。
-- **block 事实：**`scaled_offline.pth` 不在
-  `/root/autodl-tmp/weights/cotracker3/`，官方 checkpoint URL 在本机连接被拒；run 记录
-  `fallback_used=false`、`uses_future_gt=false` 和 checkpoint SHA256=`null`（因为文件不存在）。
-- **provider 选择：**只读扫描未发现可验证的预装 CoTracker/TAPIR/PIPS/TAPNet 等独立 tracker checkpoint
-  或 Python package；不为填补空缺安装未核验依赖或改用与 RAFT 同源的 provider。
-- **repeatability / synthetic sanity / human alignment：**均未执行，绝不写作 0、pass 或 fail metric；没有
-  overlay panel，也没有 human verdict。
-- **证据：**`/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v1/`，状态为 `blocked` 但保留
-  manifest、resolved config、metrics、summary 和 `COMPLETE` 终态标记。
+- **v2 更正：**v2 记录权重后发现 survival-threshold self-correlation 会重用基线值；该 run 保留为 scope-bug
+  evidence。`016f752` 将 protocol 升为 v2，保存每个 perturbation aggregate，并用 Base-vs-perturbation
+  跨 clip 四项 rank 执行原有 `>=0.8` 门槛、缺失值 fail-closed。
+- **v3 机器事实：**8/8 real clips valid；identical rerun 的 coordinate max、visibility mismatch、aggregate
+  relative delta 均为 0；synthetic acceleration/jerk ordering、occlusion down-weighting 与 visibility sweep
+  通过。photometric/codec 的 8 个 rank 均为 1.0；resize 的最低值为 acceleration `0.97619`。resize absolute
+  aggregate delta median/max 为 10.03%/31.84%，所以结论限于 ranking stability，不把绝对 jerk 当物理标定。
+- **human alignment：**生成并解码 8 个真实 + 4 个 synthetic、每个 8 帧的 overlay；`reviews.template.jsonl`
+  为 0/12 verdict，因此不宣称 E0 full pass，也没有任何新模型的 rollout-quality improvement。
+- **证据：**v1 `/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v1/`（checkpoint 缺失），v2
+  `...-v2/`（scope bug），v3 `/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v3/`（machine pass /
+  awaiting reviews）。
 
 ## 8. F1-R
 
 - **status：not run。**
 - **原因：**必要条件为 C0 pass、P0 human pass、P1 pass、E0 pass；实际为
-  `pass / awaiting_reviews / fail / blocked`。P1 fail 单独就阻断 feature supervision，E0 block 同时禁止
-  rollout transfer 解释。
+  `pass / awaiting_reviews / fail / machine pass awaiting_reviews`。P1 fail 单独就阻断 feature supervision，
+  E0 人审待完成也禁止将 evaluator 升格为完整 rollout transfer 解释。
 - **sub-cell calibration、TV/JS、gradient SNR、actual distinguishability：**未计算；不以缺失数值代替结论。
 
 ## 9. Route comparison
@@ -127,10 +131,10 @@ head、zero-conv/refiner 或生成器训练。
 | Route | Evidence for | Evidence against | Decision |
 |---|---|---|---|
 | Endpoint | C0 parity pass；P0 P-UNC 机器不变量合格。 | F0 locality fail；P1 legality hard fail。 | rejected |
-| Projected feature | 连续 relation 不应只按旧 F1 cell 统计否定。 | P1 target 不合法、P0 人审未完成、F1-R/E0 条件不成立；与 [Track4Gen](https://openaccess.thecvf.com/content/CVPR2025/html/Jeong_Track4Gen_Teaching_Video_Diffusion_Models_to_Track_Points_Improves_Video_CVPR_2025_paper.html) 邻域拥挤。 | rejected |
-| Short-chain | 仅当合法 one-step 不能 transfer 到 rollout 时才有意义。 | 还未有合法 one-step target 或独立 rollout evaluator。 | rejected |
+| Projected feature | 连续 relation 不应只按旧 F1 cell 统计否定。 | P1 target 不合法、P0/E0 人审未完成、F1-R 条件不成立；与 [Track4Gen](https://openaccess.thecvf.com/content/CVPR2025/html/Jeong_Track4Gen_Teaching_Video_Diffusion_Models_to_Track_Points_Improves_Video_CVPR_2025_paper.html) 邻域拥挤。 | rejected |
+| Short-chain | 仅当合法 one-step 不能 transfer 到 rollout 时才有意义。 | 还未有合法 one-step target；E0 只验证 evaluator 机器稳定性，没有训练 rollout 比较。 | rejected |
 | Reward/preference | 可作为不同研究主题。 | 丢失 explicit projector；SHIFT/DenseDPO/VideoGPA 等邻域拥挤，且超出单卡当前证据链。 | rejected / out of scope |
-| Stop | P1 正中 endpoint counterfactual 停止条件；E0 无法验证 rollout。 | 不外推为所有未来机制都失败。 | **selected (E)** |
+| Stop | P1 正中 endpoint counterfactual 停止条件；E0 尚待人工一致性且没有训练 rollout 比较。 | 不外推为所有未来机制都失败。 | **selected (E)** |
 
 ## 10. 最近邻工作与撞车分析
 
@@ -140,8 +144,8 @@ head、zero-conv/refiner 或生成器训练。
   拥挤；它们不能自动解决 generated RGB counterfactual 的 source/occlusion legality。
 - ShortFT 与 SIFT 已覆盖不同形式的 short-chain/shortcut motion alignment；short-chain 不能把 P1 的零 RGB
   correction、duplication 或无 depth-order overlap 变成合法监督。
-- E0 的设计本应切断“同一 RAFT 既造 target 又评分”的 circularity；官方 checkpoint 不可用时，诚实结论是
-  缺少独立 rollout evidence，而不是换一个非等价 tracker。
+- E0 的设计切断“同一 RAFT 既造 target 又评分”的 circularity，并已通过机器稳定性；人工 overlay 尚待完成，
+  也没有用它比较任何训练方案，故不能借此声称 rollout improvement。
 
 ## 11. 最终主路线、fallback 与推荐机制
 
@@ -152,7 +156,7 @@ head、zero-conv/refiner 或生成器训练。
   tracker 全部保持 no-grad。
 - **Locality mechanism：**不再训练；当前 shared temporal LoRA 的 locality 已由 F0 否决。
 - **Novelty boundary：**当前不存在可成立的 method claim；保留的是可复现的 negative decision evidence。
-- **Fallback D：**仅重新验证独立 evaluator 和全新 target construction，均为只读 diagnostics。
+- **Fallback D：**完成现有独立 evaluator 人审并验证全新 target construction，均为只读 diagnostics。
 
 ## 12. 明确停止做什么
 
@@ -169,8 +173,8 @@ head、zero-conv/refiner 或生成器训练。
    约束缓解了这一点，但人审仍待完成；不将它宣称为最终 physical truth。
 2. **“Counterfactual 不是视频。”**P1 给出直接反证（zero RGB realization、LPIPS、duplication、depth-order
    overlap），所以本报告停止而不是训练后挑指标。
-3. **“评价 circular。”**E0 设计隔离了 tracker provenance，但没拿到权重；因此不声称 independent rollout
-   improvement。
+3. **“评价 circular。”**E0 已隔离 tracker provenance 并通过机器稳定性，但 12-panel 人审待完成；因此不声称
+   independent rollout improvement。
 4. **“F0/F1 的失败被过度外推。”**A1 明确保留它们的有限范围；最终 E 的依据是 P1 legality，而不是 cell
    threshold。
 5. **“方法只是 Track4Gen + smoother。”**没有合法 target 与 independent rollout causal ordering 时不提出该
@@ -178,8 +182,8 @@ head、zero-conv/refiner 或生成器训练。
 
 ## 14. 下一轮最多三个实验（均未排程）
 
-1. 若获得官方 CoTracker3 offline checkpoint，记录 URL、repository commit、文件 SHA256 后以新 run ID
-   重跑 E0 的 rerun、扰动、synthetic 和 12-panel review；不换 provider。
+1. 完成 E0 v3 的 12-panel human review；它只能确认 evaluator alignment，不能反转 P1 failure 或创造
+   rollout-improvement evidence。
 2. 若提出不依赖大型视频编辑模型的新 renderer，先在 P1 的 7 个 frozen clips 上验证 source removal、
    depth/occlusion order、decoded trajectory realization 与 VAE round-trip；不训练生成器。
 3. 完成 P0 的 12-case human review，作为 projector 证据的独立人工补充；它不能反转 P1 machine fail。
@@ -187,8 +191,8 @@ head、zero-conv/refiner 或生成器训练。
 ## 15. GPU、磁盘与时间预算
 
 - 当前后续训练预算：**0 GPU-hour**；没有自动后台任务。
-- 条件性 E0 重跑上限：`<=1.5 GPU-hour`，只读 8 个已有 clips；新 checkpoint 仅放数据盘、必须记录实际 hash，
-  不加入 Git。
+- E0 v3 已在只读 8 个已有 clips 的预算内完成；权重仅放数据盘、实际 hash 已记录且不加入 Git。后续只剩
+  GPU 0 的 human review。
 - 条件性 target legality diagnostic 上限：`<=0.5 GPU-hour`，只读既有 7 个 clips；不建新大 cache、不用
   大模型 inpainting/video-editing。
 - P0 human review：GPU 0；任何超过这些边界或要求训练生成器的提案都必须重新立项，而不是 Phase 2 的延续。
@@ -199,15 +203,17 @@ head、zero-conv/refiner 或生成器训练。
 - C0：`/root/autodl-tmp/runs/autoresearch-c0-conditioning-s20260714-v2/`。
 - P0：`/root/autodl-tmp/runs/autoresearch-p0-projector-s20260714-v1/`。
 - P1：`/root/autodl-tmp/runs/autoresearch-p1-target-s20260714-v2/`，以及保留的 v1 scope-bug evidence。
-- E0：`/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v1/`。
+- E0：`/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v1/`、`...-v2/`、
+  `/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v3/`。
 - 代码/config/test：`motion_proj/diagnostics/{svd_conditioning_parity,projector_validity,target_validity,evaluator_validity}.py`、
-  `motion_proj/eval/independent_tracks.py`、`configs/diagnostics/autoresearch_{c0_conditioning,p0_projector,p1_target,e0_evaluator}.yaml`、
+  `motion_proj/eval/independent_tracks.py`、`configs/diagnostics/autoresearch_{c0_conditioning,p0_projector,p1_target}.yaml`、
+  `configs/diagnostics/autoresearch_e0_evaluator.yaml`、`autoresearch_e0_evaluator_v2.yaml`、`autoresearch_e0_evaluator_v3.yaml`、
   对应 `tests/test_*.py`。
 - 实验索引：`docs/EXPERIMENTS.md`；预注册：`docs/AUTORESEARCH_PHASE2_PREREGISTRATION.md`；文献矩阵：
   `docs/AUTORESEARCH_LITERATURE_MATRIX.md`。
 
 ## 17. Final status
 
-`C0=pass; P0=machine pass / awaiting_reviews; P1=fail; E0=blocked; F1-R=not run.`
+`C0=pass; P0=machine pass / awaiting_reviews; P1=fail; E0=machine pass / awaiting_reviews; F1-R=not run.`
 
 因此当前仓库不含新的生成器训练结果，也不做任何 rollout-quality 提升声明。
