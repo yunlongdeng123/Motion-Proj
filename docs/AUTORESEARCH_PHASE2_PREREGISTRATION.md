@@ -83,10 +83,19 @@ counterfactual 不合法，A/F1-R 不得启动；review template 仅保留为证
 
 验证包含 identical-video rerun、极小 photometric/codec/resize perturbation、已知平移/加速/转弯/遮挡 synthetic sanity，以及至少 12 个 overlay review panel。通过门槛：rerun aggregate metric relative delta `<=2%`；threshold sweep rank correlation `>=0.8`；synthetic acceleration/jerk ordering 正确；low-texture/occlusion failure 被识别并降权；decisive human overlay validity `>=87.5%`。所有指标名称必须使用“camera-compensated image-plane acceleration/jerk”并记录背景运动模型。
 
+执行记录（2026-07-14）：代码提交 `a712587` 后，full suite 为 `150 passed, 2 warnings`，官方 CoTracker3
+local `torch.hub` entry 在 `pretrained=False` 下可构造。formal run
+`autoresearch-e0-evaluator-s20260714-v1` 固定官方 repository commit
+`82e02e8029753ad4ef13cf06be7f4fc5facdda4d`，但
+`/root/autodl-tmp/weights/cotracker3/scaled_offline.pth` 缺失，官方 URL 在本机连接被拒。因此 run 明确写入
+`status=blocked`、`fallback_used=false`、`uses_future_gt=false`，未以 RAFT 或其他 tracker 回退。没有有效
+CoTracker output，rerun/perturbation/synthetic/review 均未执行；E0 不通过，也不能产生 rollout performance
+结论。证据：`/root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v1/`。
+
 ## 7. F1-R — 条件性 revised feature signal audit
 
 只有 C0、P0、P1、E0 全部 pass 才运行，且保持只读。除旧 F1 的 descriptive cell statistics 外，必须报告 target TV/JS separation、relation-gradient RMS 相对于 dtype/repeated-forward/tracker-uncertainty 的 SNR、0.05/0.10/0.25/0.50/1.00 cell synthetic sub-cell calibration 的单调性、soft-argmax 和实际 target distinguishability。仅当 actual target 不可区分、gradient 接近数值噪声、sub-cell calibration 失败、或 correction 低于 uncertainty 时停止 feature route；不得仅因 `<0.5 cell` 停止。
 
 ## 8. 预先声明的停止与报告规则
 
-发现 protocol 无法重现、Base provenance/GT 泄漏、projector correction 低于 uncertainty、target 系统性不合法、evaluator 不稳定，或需要超过本轮资源边界时立即停止相关分支并报告。完成后必须新增 `AUTORESEARCH_PHASE2_REPORT.md`，给出唯一主路线、唯一 fallback、每个 gate 的证据路径与未完成的人审状态。
+发现 protocol 无法重现、Base provenance/GT 泄漏、projector correction 低于 uncertainty、target 系统性不合法、evaluator 不稳定，或需要超过本轮资源边界时立即停止相关分支并报告。Phase 2 已因 P1 系统性 target 非法与 E0 block 关闭：C0 为 pass、P0 为 `awaiting_reviews`、P1 为 fail、E0 为 blocked，F1-R 不运行。最终主路线为 E，唯一 fallback 为 D；完整结论见 `docs/AUTORESEARCH_PHASE2_REPORT.md`，其中保留每个 gate 的证据路径与未完成的人审状态。

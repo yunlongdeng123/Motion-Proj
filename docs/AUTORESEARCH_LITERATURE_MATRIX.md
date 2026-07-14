@@ -1,10 +1,24 @@
 # Motion-Proj Autoresearch：2024–2026 最近邻文献矩阵
 
-更新日期：2026-07-13。检索只采用论文原文、官方会议页面、官方项目页和官方仓库。`Sampling-chain backprop` 指生成器参数是否通过多步反向采样链接收梯度；普通的单步 diffusion/flow-matching 训练记为“否”。
+更新日期：2026-07-14。检索只采用论文原文、官方会议页面、官方项目页和官方仓库。`Sampling-chain backprop` 指生成器参数是否通过多步反向采样链接收梯度；普通的单步 diffusion/flow-matching 训练记为“否”。
 
 ## 结论先行
 
 候选空间已经相当拥挤：Track4Gen 覆盖了 SVD 中间特征相关性、可微 soft-argmax、identity refiner、zero-conv feedback 和 temporal-block 微调；VideoREPA、MoAlign、SARA、PhysAlign 分别覆盖 generic token-relation、motion-subspace relation、局部 pair routing、以及“几何 + 全时空 Gram relation”；Geometry Forcing 覆盖 geometry-foundation-feature distillation；SHIFT、DenseDPO、VideoGPA、Flash-GRPO 覆盖多种 reward/preference post-training。Motion-Proj 若继续，不能把“feature alignment”本身作为贡献，只能把**无未来 GT 的 Base rollout → 显式驾驶动力学投影 → 可验证的生成动力学改善**作为核心边界。
+
+## Phase 2 方法选择更新：独立 evaluator 与 target legality
+
+E0 选择 [官方 CoTracker3 repository](https://github.com/facebookresearch/co-tracker) 仅作为冻结、与训练
+RAFT-chain 机制独立的 evaluator：其官方接口支持在首帧规则 grid 上查询并联合输出 point tracks 与
+visibility，正好避免复用训练 target 的 query/provenance。实现固定 repository commit
+`82e02e8029753ad4ef13cf06be7f4fc5facdda4d`，不把它接入训练，也不把它当作 P0/P1 target 的替代。
+但官方 offline checkpoint 在本机不可获得，故没有由 CoTracker3 产生任何 empirical rollout metric；这不是
+“用另一个 tracker 证实了改善”。
+
+[Track4Gen 的 CVPR 2025 一手论文](https://openaccess.thecvf.com/content/CVPR2025/html/Jeong_Track4Gen_Teaching_Video_Diffusion_Models_to_Track_Points_Improves_Video_CVPR_2025_paper.html)
+仍是最接近的 feature/track 邻域：它强化了“不能把 generic track relation 或 refiner/zero-conv 当作
+独创”的判断。更关键的是，P1 现在已发现当前 RGB crop/resize/paste 无法稳定实现连续 projected track，
+所以不能在 target 未合法化时以 feature relation 或 short-chain 绕过 renderer 问题。
 
 ## 主矩阵
 
@@ -58,4 +72,6 @@
 
 > 在不使用未来 GT、外部 motion condition、完整 sampling-chain 反传或大规模 preference rollout 的前提下，从 frozen driving-video generator 的 Base rollout 提取 point tracks，通过显式保持一阶运动与可见性的动力学投影只纠正高阶不合理性，并以严格局部、future-only 的机制把该干预蒸馏回生成器；贡献由 observed-track、generic smoothing、generic flow/VFM alignment 和 endpoint baselines 的完整 rollout 因果对比确认。
 
-当前证据还不支持这句话：projector correction 在所有已测 SVD feature 网格上不可分辨，endpoint temporal LoRA 又无法满足局部性门槛。
+当前证据不支持这句话：F0 的 temporal-LoRA endpoint locality 未过；P1 证明当前 RGB/VAE counterfactual
+target 不合法；E0 由于官方权重不可得而没有独立 rollout validation。因而本轮结论是停止当前 explicit
+projection 核心，而不是把 generic feature alignment、短链或替代 tracker 改名后继续。
