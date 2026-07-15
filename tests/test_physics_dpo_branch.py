@@ -6,6 +6,7 @@ import torch
 from motion_proj.diagnostics.physics_dpo_branch import (
     BranchPilotError,
     SEQUENCE_TRACE_FIELDS,
+    _conditions_with_all_indistinguishable_groups,
     calibrated_future_distance,
     choose_calibration_action,
     make_antithetic_perturbations,
@@ -99,22 +100,32 @@ def test_track_correspondence_requires_same_query_grid_and_reports_visibility_ov
 def test_calibration_action_is_sequential_not_grid_search() -> None:
     assert choose_calibration_action(
         current_strength_name="small",
-        all_distance_indistinguishable=True,
+        any_condition_all_distance_indistinguishable=True,
         any_structure_mismatch=False,
         any_other_failure=True,
     ) == "increase_strength_to_medium"
     assert choose_calibration_action(
         current_strength_name="medium",
-        all_distance_indistinguishable=True,
+        any_condition_all_distance_indistinguishable=True,
         any_structure_mismatch=False,
         any_other_failure=True,
     ) == "increase_strength_to_large"
     assert choose_calibration_action(
         current_strength_name="large",
-        all_distance_indistinguishable=False,
+        any_condition_all_distance_indistinguishable=False,
         any_structure_mismatch=True,
         any_other_failure=True,
     ) == "adjust_fork_to_0.8"
+
+
+def test_calibration_detects_indistinguishable_siblings_per_condition() -> None:
+    rows = [
+        {"condition_id": "a", "distance_indistinguishable": True},
+        {"condition_id": "a", "distance_indistinguishable": True},
+        {"condition_id": "b", "distance_indistinguishable": True},
+        {"condition_id": "b", "distance_indistinguishable": False},
+    ]
+    assert _conditions_with_all_indistinguishable_groups(rows) == ["a"]
 
 
 def _trace_for_prefix_test() -> dict[str, object]:

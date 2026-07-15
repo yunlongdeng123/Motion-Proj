@@ -1,0 +1,11 @@
+defaults_chain:
+  - ./physics_dpo_branch_v3.yaml
+
+# v3 中 scene-0126 的两组 sibling 都低于 future-distance 下界；按冻结的几何强度阶梯
+# small=0.01 -> medium=0.02 -> large=0.04，仅推进到首个下一档，不改 fork、condition 或 gate。
+run_id: autoresearch-pa1-branch-s20260715-v4
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v4
+
+branch:
+  strength_name: medium
+  strength_rho: 0.02

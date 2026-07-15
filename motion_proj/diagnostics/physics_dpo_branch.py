@@ -235,14 +235,14 @@ def track_correspondence(left: IndependentTrackState, right: IndependentTrackSta
 def choose_calibration_action(
     *,
     current_strength_name: str,
-    all_distance_indistinguishable: bool,
+    any_condition_all_distance_indistinguishable: bool,
     any_structure_mismatch: bool,
     any_other_failure: bool,
 ) -> str:
     """严格遵循 V2 的逐级最小强度、后调整 fork 的规则。"""
-    if all_distance_indistinguishable and str(current_strength_name) == "small":
+    if any_condition_all_distance_indistinguishable and str(current_strength_name) == "small":
         return "increase_strength_to_medium"
-    if all_distance_indistinguishable and str(current_strength_name) == "medium":
+    if any_condition_all_distance_indistinguishable and str(current_strength_name) == "medium":
         return "increase_strength_to_large"
     if any_structure_mismatch:
         return "adjust_fork_to_0.8"
@@ -1172,6 +1172,18 @@ def _provisional_direction_relation(
     return "abstain"
 
 
+def _conditions_with_all_indistinguishable_groups(group_reports: Sequence[Mapping[str, Any]]) -> list[str]:
+    """找出同一 condition 的所有 antithetic group 都低于 future-distance floor 的情形。"""
+    by_condition: dict[str, list[Mapping[str, Any]]] = {}
+    for row in group_reports:
+        by_condition.setdefault(str(row.get("condition_id", "")), []).append(row)
+    return sorted(
+        condition_id
+        for condition_id, rows in by_condition.items()
+        if condition_id and rows and all(bool(row.get("distance_indistinguishable")) for row in rows)
+    )
+
+
 def _machine_summary(
     *,
     condition_reports: Sequence[Mapping[str, Any]],
@@ -1191,11 +1203,11 @@ def _machine_summary(
         "minimum_valid_antithetic_groups": valid_groups >= int(branch.thresholds.minimum_valid_antithetic_groups),
         "provisional_direction_balance": direction_balance,
     }
-    all_distance_indistinguishable = bool(group_reports) and all(bool(row.get("distance_indistinguishable")) for row in group_reports)
+    indistinguishable_condition_ids = _conditions_with_all_indistinguishable_groups(group_reports)
     any_structure_mismatch = any(bool(row.get("structure_mismatch")) for row in group_reports)
     action = choose_calibration_action(
         current_strength_name=str(branch.strength_name),
-        all_distance_indistinguishable=all_distance_indistinguishable,
+        any_condition_all_distance_indistinguishable=bool(indistinguishable_condition_ids),
         any_structure_mismatch=any_structure_mismatch,
         any_other_failure=not all(checks.values()),
     )
@@ -1206,6 +1218,10 @@ def _machine_summary(
         "total_conditions": len(condition_reports),
         "valid_antithetic_groups": valid_groups,
         "total_antithetic_groups": len(group_reports),
+        "distance_calibration": {
+            "all_indistinguishable_condition_ids": indistinguishable_condition_ids,
+            "scope": "per-condition all-sibling future-distance diagnostic",
+        },
         "branch_balance": {
             "provisional_positive": positive,
             "provisional_negative": negative,
