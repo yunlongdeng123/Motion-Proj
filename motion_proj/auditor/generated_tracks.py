@@ -84,7 +84,10 @@ def _robust_smooth(points: torch.Tensor, visible: torch.Tensor) -> torch.Tensor:
     for time in range(1, points.shape[1] - 1):
         valid = visible[:, time - 1] & visible[:, time] & visible[:, time + 1]
         if bool(valid.any()):
-            smoothed[valid, time] = points[valid, time - 1: time + 2].median(dim=1).values
+            # CUDA median 会返回 indices，PyTorch 在 deterministic algorithms 下拒绝该 kernel。
+            # 三点窗口排序后的中心元素与逐坐标 median 完全等价，并保留确定性门禁。
+            window = points[valid, time - 1: time + 2]
+            smoothed[valid, time] = torch.sort(window, dim=1, stable=True).values[:, 1]
     return smoothed
 
 

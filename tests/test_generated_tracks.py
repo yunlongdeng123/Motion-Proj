@@ -2,7 +2,7 @@ import torch
 import pytest
 
 from motion_proj.auditor import MotionAuditor, RAFTChainGeneratedTrackProvider
-from motion_proj.auditor.generated_tracks import CoTracker3GeneratedTrackProvider
+from motion_proj.auditor.generated_tracks import CoTracker3GeneratedTrackProvider, _robust_smooth
 from motion_proj.projector import DynamicsProjector
 from motion_proj.config import ConfigError, load_config
 from motion_proj.replay.mine import _generated_track_provider
@@ -44,6 +44,23 @@ def test_raft_chain_drops_fb_inconsistent_points():
                            flow_confidence=confidence, background_flow=torch.zeros_like(flow))
     assert state.diagnostics["valid_track_count"] == 0
     assert state.diagnostics["survival_rate"] == 0.0
+
+
+def test_robust_smooth_is_compatible_with_deterministic_algorithms():
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    points = torch.tensor(
+        [[[0.0, 0.0], [50.0, -50.0], [2.0, 2.0], [3.0, 3.0]]],
+        device=device,
+    )
+    visible = torch.ones(1, 4, dtype=torch.bool, device=device)
+    previous = torch.are_deterministic_algorithms_enabled()
+    torch.use_deterministic_algorithms(True)
+    try:
+        smoothed = _robust_smooth(points, visible)
+    finally:
+        torch.use_deterministic_algorithms(previous)
+
+    assert torch.equal(smoothed[0, 1].cpu(), torch.tensor([2.0, 0.0]))
 
 
 class _Flow:
