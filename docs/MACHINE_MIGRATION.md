@@ -46,6 +46,7 @@ bash scripts/setup_third_party.sh          # CoTracker3 @ 固定 commit
 4. `docs/EXPERIMENTS.md` — 实验事实源
 5. `docs/AUTORESEARCH_RETROSPECTIVE_2026-07.md` — 2026-07 复盘与停止理由
 6. `docs/AUTORESEARCH_ROUTE_DECISION.md` — Phase 2 路线决策
+7. `docs/PHYSICS_DPO_AUTORESEARCH_PLAN.md` — 2026-07-14 用户授权的新偏好对齐计划；先读完前述失败边界，再以该计划作为未来任务顺序
 
 Autoresearch 自主研究续跑提示词：`docs/prompts/AUTORESEARCH_PHASE2.prompt.md`。
 
@@ -67,6 +68,6 @@ pytest -q tests/test_independent_evaluator.py tests/test_svd_conditioning_parity
 
 ## 当前研究状态（2026-07-14）
 
-- **P1 target legality：** failed — 当前 RGB/VAE counterfactual 构造不合法，训练链 blocked
-- **E0 CoTracker3：** machine pass，人工 review 0/12，不能作 rollout 改善结论
-- **下一步：** 见 `docs/AUTORESEARCH_ROUTE_DECISION.md` 与 `docs/CVPR2027_PLAN.md`，不得在未解除 P1 fail 时启动新生成器训练
+- **旧 explicit projection：** P1 target legality failed — 当前 RGB/VAE counterfactual 构造不合法；该 endpoint 训练链永久保持 blocked。
+- **P-UNC / E0 CoTracker3：** 均有机器门禁证据但人工 review 尚未完成，不能作旧路线的 rollout 改善结论。
+- **当前后续：** 新建的 offline Physics-DPO 是独立问题，不使用 P1 target。必须先执行 `docs/PHYSICS_DPO_AUTORESEARCH_PLAN.md` 的 PA0 人审与 PA1/PA2 pair 合法性门槛；在 PA4 单卡 screening 通过前，不启动长训或切双卡。

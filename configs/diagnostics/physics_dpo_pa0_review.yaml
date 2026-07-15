@@ -1,0 +1,43 @@
+run_id: autoresearch-pa0-review-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa0-review-s20260715-v1
+task_id: PA0-REVIEW-00
+protocol: sap-dpo-pa0-review-v1
+review_provenance: user-provided review files; reviewer identifiers are copied verbatim
+
+sources:
+  p0:
+    path: /root/autodl-tmp/runs/autoresearch-p0-projector-s20260714-v1
+    run_id: autoresearch-p0-projector-s20260714-v1
+    required_reviews: 12
+    minimum_valid_reviews: 11
+    candidate: P-UNC
+    required_machine_checks:
+      - nonidentity_primary_correction
+      - correction_above_uncertainty
+      - direction_preserved
+      - dynamic_degree_preserved
+      - net_displacement_preserved
+      - turn_preserved
+      - frame0_exact
+      - visibility_preserved
+      - support_preserved
+      - synthetic_clean_preserved
+      - synthetic_high_snr_outlier_improved
+      - synthetic_subuncertainty_jitter_not_amplified
+    required_zero_audit_fields:
+      - frame0_correction_px.max
+      - visibility_expansion_count
+      - valid_time_index_changed_count
+      - support_violation_count
+  e0:
+    path: /root/autodl-tmp/runs/autoresearch-e0-evaluator-s20260714-v3
+    run_id: autoresearch-e0-evaluator-s20260714-v3
+    required_reviews: 12
+    minimum_valid_reviews: 10
+    required_machine_checks:
+      - all_real_clips_have_valid_tracks
+      - identical_video_rerun
+      - occlusion_low_texture_invalidity_recognized
+      - perturbation_rank_correlation
+      - synthetic_acceleration_and_jerk_order
+      - threshold_sweep_rank_correlation
