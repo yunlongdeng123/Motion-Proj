@@ -509,6 +509,33 @@ def _write_constructor_pair(path: Path, row: Mapping[str, Any]) -> None:
     _json_line(path, row)
 
 
+def _constructor_coverage(
+    constructor_summary: Mapping[str, Mapping[str, Any]],
+    condition_count: int,
+) -> dict[str, Any]:
+    """核对每个 condition 的 P0:raw-P1:P2 pair 数严格为 1:2:1。"""
+    expected = {
+        "P0-independent": int(condition_count),
+        "P1-common-prefix": 2 * int(condition_count),
+        "P2-base-renoise": int(condition_count),
+    }
+    actual = {
+        name: int(constructor_summary.get(name, {}).get("pair_count", 0))
+        for name in CONSTRUCTORS
+    }
+    return {
+        "expected_pair_counts": expected,
+        "actual_pair_counts": actual,
+        "pass": actual == expected,
+    }
+
+
+def _machine_status(*, smoke: bool, checks: Mapping[str, Any]) -> str:
+    if not all(bool(value) for value in checks.values()):
+        return "blocked"
+    return "done" if smoke else "awaiting_reviews"
+
+
 def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
     """运行 PA2 机器 candidate/pair legality；human aggregate 由后续命令单独完成。"""
     _validate_pair_config(cfg)
@@ -603,6 +630,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             _json_line(work_dir / "conditions.jsonl", condition)
             for candidate in rows:
                 _json_line(work_dir / "candidate_manifest.jsonl", candidate)
+                _json_line(work_dir / "candidates.jsonl", candidate)
             for candidate in [p0_record, *renoise_rows]:
                 _json_line(work_dir / "constructor_candidates.jsonl", candidate)
             metrics.append(index, {
@@ -737,19 +765,21 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             }
             for constructor in CONSTRUCTORS
         }
+        constructor_coverage = _constructor_coverage(constructor_summary, len(conditions))
         checks = {
             "validated_core_schema": True,
             "minimum_valid_pairs": len(decisive) >= int(cfg.pair.minimum_valid_pairs),
             "minimum_non_tie_segment_conditions": len(decisive_segment_conditions) >= int(cfg.pair.minimum_valid_pairs),
-            "three_constructor_comparison": all(constructor_summary[name]["pair_count"] == len(conditions) for name in CONSTRUCTORS),
+            "three_constructor_comparison": bool(constructor_coverage["pass"]),
         }
-        status = "done" if bool(cfg.pair.smoke) else "awaiting_reviews" if all(checks.values()) else "blocked"
+        status = _machine_status(smoke=bool(cfg.pair.smoke), checks=checks)
         summary = {
             "status": status, "task_id": str(cfg.pair.task_id), "run_id": str(cfg.run_id), "config_fingerprint": cfg_fp,
             "scene_split_fingerprint": split_provenance["split_fingerprint"], "horizon_profile_fingerprint": horizon["profile_fingerprint"],
             "condition_count": len(conditions), "p1_candidate_count": len(p1_candidates), "audit_candidate_count": len(audit_candidates),
             "valid_global_pairs": len(decisive), "non_tie_segment_conditions": len(decisive_segment_conditions),
-            "constructor_summary": constructor_summary, "machine": {"machine_pass": all(checks.values()), "checks": checks},
+            "constructor_summary": constructor_summary, "constructor_coverage": constructor_coverage,
+            "machine": {"machine_pass": all(checks.values()), "checks": checks},
             "scorer_fingerprint": scorer_fingerprint, "next_gate": "PA2 human review" if status == "awaiting_reviews" else "PA2 formal" if bool(cfg.pair.smoke) else "PA2-PAIR-03",
             "uses_future_gt": False,
         }

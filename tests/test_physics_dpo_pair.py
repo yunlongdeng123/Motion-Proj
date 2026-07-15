@@ -6,7 +6,11 @@ import torch
 
 from motion_proj.auditor.state import Track
 from motion_proj.diagnostics import physics_dpo_pair as pair_module
-from motion_proj.diagnostics.physics_dpo_pair import make_renoise_delta
+from motion_proj.diagnostics.physics_dpo_pair import (
+    _constructor_coverage,
+    _machine_status,
+    make_renoise_delta,
+)
 from motion_proj.preference.pair_scoring import (
     candidate_feasibility,
     decide_global_pair,
@@ -188,3 +192,23 @@ def test_punc_score_normalizes_mixed_track_devices(monkeypatch) -> None:
     assert score["projection_energy"] == 4.0
     assert score["uses_future_gt"] is False
     assert quality["finite"] is True
+
+
+def test_constructor_coverage_uses_two_raw_p1_pairs_per_condition() -> None:
+    summary = {
+        "P0-independent": {"pair_count": 3},
+        "P1-common-prefix": {"pair_count": 6},
+        "P2-base-renoise": {"pair_count": 3},
+    }
+    coverage = _constructor_coverage(summary, 3)
+    assert coverage["pass"] is True
+    assert coverage["expected_pair_counts"]["P1-common-prefix"] == 6
+
+    summary["P1-common-prefix"]["pair_count"] = 3
+    assert _constructor_coverage(summary, 3)["pass"] is False
+
+
+def test_smoke_status_cannot_mask_failed_machine_check() -> None:
+    assert _machine_status(smoke=True, checks={"schema": True, "coverage": True}) == "done"
+    assert _machine_status(smoke=True, checks={"schema": True, "coverage": False}) == "blocked"
+    assert _machine_status(smoke=False, checks={"schema": True}) == "awaiting_reviews"
