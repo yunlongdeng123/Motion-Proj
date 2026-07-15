@@ -4,7 +4,7 @@
 > **决策日期**：2026-07-14
 > **计划基线**：`16b6975`，执行前必须重新核对当前 `HEAD`、分支和 worktree。
 > **当前硬件**：单张 RTX 4090 24 GB；仅在单卡筛选门槛通过后，由用户执行一次停机并切换为双 RTX 4090。
-> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 running`。PA1 v1 与 v2 均在首次 Base guard 的 trace hash 实现处失败，未形成任何有效 candidate/score/horizon 结论；失败 run 均已保留，修复后仅可用新 v3 run ID 重跑。当前仍只授权 Base guard profile，不授权 sibling candidate、训练或切换双卡。
+> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 done`。PA1 v3 以 clean `57987b0` 完成 2 condition × {8,14} 的 exact Base guard profile；14 帧通过预注册资源门槛，已冻结为后续 preference 数据帧数，claim scope 仍为 **short-horizon dynamics alignment**。下一唯一 gate 是 `PA1-BRANCH-02`；仍不授权训练或切换双卡。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **取代范围**：取代旧计划中未来关于 reward/DPO/AWR 的禁止性排程，不修改 V1/V2、F0、F1、P1 等历史负结论。
 > **目标投稿**：CVPR/ICCV 级视觉顶会；方法必须落在真实 RGB 驾驶视频生成、时序运动和物理一致性上。
@@ -971,7 +971,7 @@ failure reason
 |---|---|---|---|---|
 | PA0-REVIEW-00 | done | 完成 P-UNC/E0 人审 | 两者均通过 | `blocked`，不生成 preference 数据 |
 | PA0-SCENE-SPLIT-01 | done | materialize 唯一 scene-level split | source fingerprint、scene/clip 不泄漏与 `COMPLETE` 均通过 | `blocked`，不进入 PA1 |
-| PA1-HORIZON-01 | running | 8/14 帧 profile | 冻结帧数和 claim scope | 仅保留 8 帧短时 claim |
+| PA1-HORIZON-01 | done | 8/14 帧 profile | v3 通过：冻结 14 帧与 short-horizon claim scope | 仅保留 8 帧短时 claim |
 | PA1-BRANCH-02 | pending | 结构对齐候选 pilot | family、fork、strength 冻结 | `rejected`，不退回 independent seed 主线 |
 | PA2-PAIR-03 | pending | 32 condition pair legality | ≥24 有效 condition，30-pair 人审通过 | `rejected` |
 | PA3-KERNEL-04 | pending | DPO/AWR/SDPO 代数与容量 | 1/8/32 pair 依次通过 | `blocked`，只修代数/实现 |
@@ -1717,25 +1717,26 @@ PA0 人审
 
 # 19. 当前唯一下一步
 
-PA0 人审与唯一 scene split 已完成：
+PA0 人审、唯一 scene split 与 PA1 horizon profile 已完成：
 
 ```text
 autoresearch-pa0-scene-split-s20260715-v1
 split fingerprint e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a
-→ PA1-HORIZON-01
+→ autoresearch-pa1-horizon-s20260715-v3
+→ PA1-BRANCH-02
 ```
 
-`autoresearch-pa1-horizon-s20260715-v1` 已保留为实现失败证据：CPU `bfloat16` 的 trace hash 不能直接转 NumPy。`autoresearch-pa1-horizon-s20260715-v2` 修复该问题后，又在 scheduler 的 0-D scalar trace entry 上直接以不同元素大小作 byte view 而失败。两次失败均发生在首个 Base guard 的有效 artifact 写出前；没有候选、score、训练或方法结论。第二个 bug 修复后必须使用新的 `autoresearch-pa1-horizon-s20260715-v3`，不能覆盖 v1/v2。
+`autoresearch-pa1-horizon-s20260715-v1` 与 v2 已保留为 trace-hash 实现失败证据，均未形成有效 candidate/score/horizon 结论。v3 用 clean `57987b0` 完成：两种帧数均为 exact Base rerun，CoTracker aggregate repeatability 均为 0 相对差；14 帧 peak 为 `5.8049 GB`（阈值 `22 GB`），相对 8 帧 generation slowdown 为 `1.5799×`（阈值 `2.2×`）。因此冻结 `num_frames=14`，但仅允许 **short-horizon dynamics alignment** claim；该决定仅来自预注册资源规则。
 
 当前唯一可执行的 GPU 工作是：
 
 ```text
-2 conditions × {8, 14} frames × Base guard only
+4 conditions × (1 Base guard + 4 sibling candidates)
+25 denoising steps；仅 PA1-BRANCH-02 pilot
 ```
 
-在冻结 horizon 前禁止：
+在 PA1-BRANCH-02 family/fork/strength 冻结前禁止：
 
-- sibling / re-noise candidate generation；
 - DPO/AWR 实现；
 - 训练；
 - 切双卡；
@@ -1746,7 +1747,7 @@ PA0 已汇报并保留以下证据：
 ```text
 P-UNC human review
 CoTracker human review
-clean `5713267` worktree
-materialized scene split 与 schema
-next gate：PA1-HORIZON-01；冻结帧数和 claim scope 后才可进入 PA1-BRANCH-02
+clean `57987b0` worktree
+materialized scene split、schema 与 PA1 profile
+next gate：PA1-BRANCH-02；冻结 candidate family/fork/strength 后才可进入 PA2-PAIR-03
 ```
