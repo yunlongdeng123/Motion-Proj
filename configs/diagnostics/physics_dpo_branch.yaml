@@ -1,0 +1,83 @@
+defaults_chain:
+  - ./physics_dpo_horizon_v3.yaml
+
+# PA1-HORIZON v3 已完成；本 run 仅做首个、最小强度的 common-prefix pilot。
+run_id: autoresearch-pa1-branch-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+data:
+  num_frames: 14
+
+model:
+  num_frames: 14
+  lora:
+    enable: false
+
+branch:
+  task_id: PA1-BRANCH-02
+  # PA1-HORIZON v3 的唯一 clean evidence；14 帧只因预注册资源规则而冻结。
+  horizon_run: /root/autodl-tmp/runs/autoresearch-pa1-horizon-s20260715-v3
+  expected_horizon_profile_fingerprint: 70f7591b1599c5d4df7cc56a92fad66747e437dc1af331dcce5b71816563adfd
+  expected_num_frames: 14
+
+  scene_split_run: /root/autodl-tmp/runs/autoresearch-pa0-scene-split-s20260715-v1
+  expected_scene_split_fingerprint: e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a
+  pa0_review_run: /root/autodl-tmp/runs/autoresearch-pa0-review-s20260715-v1
+  expected_pa0_decision_fingerprint: d6183ae8021a0873d49c1447ecfa5d5e012e05489a10738a81d12fb014747d00
+
+  condition_partition: preference_dev
+  condition_count: 4
+  required_start_index: 0
+  num_inference_steps: 25
+  sibling_count: 4
+
+  # V2 §5.2.4：先固定 0.6 + small；仅在 machine failure 后按顺序升强度或改 fork，禁止 3×3 网格。
+  family: common_prefix
+  fork_fraction: 0.6
+  strength_name: small
+  strength_rho: 0.01
+  generation_seed_start: 2026071511
+  direction_seed_start: 2026071531
+  independent_seed_offset: 100000
+
+  # CoTracker3 只做独立结构/track diagnostics，绝不产生 preference winner。
+  evaluator:
+    repository_path: /root/autodl-tmp/third_party/co-tracker
+    repository_commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint_path: /root/autodl-tmp/weights/cotracker3/scaled_offline.pth
+    checkpoint_url: https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth
+    checkpoint_sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+    grid_size: 16
+    device: cuda
+
+  thresholds:
+    minimum_valid_conditions: 3
+    minimum_valid_antithetic_groups: 6
+    maximum_actual_perturbation_rms_relative_gap: 0.10
+    maximum_actual_perturbation_abs_mean: 0.01
+    maximum_first_frame_rgb_rms: 0.08
+    minimum_future_distance_ratio_to_independent: 0.05
+    maximum_future_distance_ratio_to_independent: 0.95
+    minimum_track_coverage: 0.50
+    minimum_median_track_length: 8
+    maximum_saturation_fraction: 0.99
+    maximum_survival_drop: 0.20
+    minimum_velocity_ratio_to_base: 0.50
+    maximum_velocity_ratio_to_base: 2.00
+    maximum_query_grid_delta_px: 0.01
+    minimum_track_correspondence_coverage: 0.50
+    minimum_subject_background_label_agreement: 0.40
+    minimum_antithetic_distance_symmetry_ratio: 0.50
+    provisional_acceleration_relative_margin: 0.05
+    provisional_velocity_relative_tolerance: 0.10
+    maximum_provisional_direction_fraction: 0.875
+
+  review:
+    seed: 2026071541
+    required_cases: 8
+    minimum_same_scene_rate: 0.875
+    maximum_bad_cases: 0

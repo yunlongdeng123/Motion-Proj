@@ -1030,6 +1030,26 @@ profile.json
 
 必须做 8–12 个候选组人工检查。
 
+### 已登记的首个 PA1-BRANCH execution（v1）
+
+在 PA1-HORIZON v3 冻结 `num_frames=14` 后，首个 formal pilot 只允许使用：
+
+```text
+common-prefix family
+fork fraction = 0.6（25 steps 中 shared prefix 为 15 transitions）
+strength = small（rho = 0.01 × sigma_fork）
+4 preference_dev conditions × (1 exact Base guard + 4 siblings)
+```
+
+两组 antithetic direction 使用固定 seed、零均值、理论等范数的 `+/-` 扰动。一个
+independent-seed rollout 只作为 future-distance 上界 diagnostic，明确不写入
+`candidate_manifest.jsonl`、不参加 pair 或训练。该 execution 的 config 为
+`configs/diagnostics/physics_dpo_branch.yaml`（fingerprint `a4fdfbbb6d44`）；完整 protocol
+见 `docs/PHYSICS_DPO_PA1_BRANCH_PROTOCOL.md`。
+
+若所有 sibling 与 Base 不可区分，下一次只能升至 medium；若发生 structure mismatch，
+下一次只能将 fork 调到 0.8；不得并行网格搜索，也不得跳入 re-noise、DPO/AWR、训练或双卡。
+
 ## PA2-PAIR-03
 
 固定：
@@ -1731,8 +1751,9 @@ split fingerprint e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c7
 当前唯一可执行的 GPU 工作是：
 
 ```text
-4 conditions × (1 Base guard + 4 sibling candidates)
-25 denoising steps；仅 PA1-BRANCH-02 pilot
+autoresearch-pa1-branch-s20260715-v1
+4 conditions × (1 exact Base guard + 4 common-prefix sibling candidates)
+14 frames、25 denoising steps、fork 0.6、small rho 0.01
 ```
 
 在 PA1-BRANCH-02 family/fork/strength 冻结前禁止：
