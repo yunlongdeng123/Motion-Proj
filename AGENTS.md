@@ -52,6 +52,8 @@ writer.append(chunk)
 3. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
 4. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
 5. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。
+6. 任何人工评测在交给用户前，Codex 必须同时交付完整、可独立执行的评测提示词；不得只给 panel 路径、模板或简短 rubric。提示词必须写明评测目的与非目标、盲法与禁止读取的信息、素材范围、逐项 verdict 定义与优先级、边界例、JSONL 填写格式、聚合阈值、完成后的精确命令和下一阶段影响。提示词须在对话中完整呈现，并在仓库 `docs/` 或 run 内留存可追溯副本。
+7. 人工 verdict 只能由用户或其指定评审者填写；Codex 不得代填、推断或以自动 scorer 替代。后续人工评测若没有新的完整提示词，不得请求用户开始评测，也不得把结果用于研究晋级。
 
 ## Git 提交规范（强制）
 

@@ -963,6 +963,19 @@ failure reason
 
 正式评估禁止用 P-UNC 作为唯一证据。
 
+## 6.4 人工评测交付协议（强制）
+
+任何人工评测在请求用户开始前，必须先在对话中完整交付一份可独立执行的提示词，并在仓库 `docs/` 或对应 run 中保留同一版本。该提示词至少包含：
+
+- 评测问题、允许的证据与明确的非目标；
+- 盲法、不得读取的 artifact，以及 panel/clip 的完整范围；
+- 每个 verdict 的定义、优先级、正反边界例与 `uncertain` 的使用条件；
+- JSONL/表单的逐项填写规则、合法值和 reviewer/notes 规则；
+- 预注册的 aggregation 公式、通过/拒绝阈值、完成后的精确命令；
+- review 通过或失败分别解锁/阻断的下一阶段。
+
+Codex 不得代填人工 verdict，也不得仅给出 `REVIEW_README.md`、模板路径或一句 rubric。没有以上提示词的 review 不得开始、不得 aggregate、不得用于训练或论文结论。当前 PA1 v5 的完整 handoff 固定在 `docs/PA1_BRANCH_HUMAN_REVIEW_PROMPT.md`；后续 PA2 及正式评估必须在各自 review 产生时交付同等完整的独立提示词。
+
 ---
 
 # 7. 里程碑与自动决策表
