@@ -1,0 +1,66 @@
+defaults_chain:
+  - ./autoresearch_c0_conditioning.yaml
+
+run_id: autoresearch-pa1-horizon-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-horizon-s20260715-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+model:
+  lora:
+    enable: false
+  gradient_checkpointing: false
+  enable_xformers: false
+  generation:
+    protocol: svd_official_v1
+    fps: 7
+    motion_bucket_id: 127
+    noise_aug_strength: 0.02
+    min_guidance_scale: 1.0
+    max_guidance_scale: 3.0
+
+cache:
+  source: clean
+  store: latent
+
+train:
+  experiment_type: base
+  deterministic: true
+  num_workers: 0
+  max_steps: 1
+  logger: none
+  resume: none
+
+horizon:
+  task_id: PA1-HORIZON-01
+  # PA0 的唯一 split；PA1 只从 preference_dev 选择两个不同 scene 的首个 clip。
+  scene_split_run: /root/autodl-tmp/runs/autoresearch-pa0-scene-split-s20260715-v1
+  expected_scene_split_fingerprint: e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a
+  pa0_review_run: /root/autodl-tmp/runs/autoresearch-pa0-review-s20260715-v1
+  expected_pa0_decision_fingerprint: d6183ae8021a0873d49c1447ecfa5d5e012e05489a10738a81d12fb014747d00
+  condition_partition: preference_dev
+  condition_count: 2
+  required_start_index: 0
+  frame_counts: [8, 14]
+  generation_seed_start: 2026071501
+  num_inference_steps: 25
+  base_guard_only: true
+
+  # 独立 CoTracker3 E0 v3 provider；缺失或 SHA 不匹配即 fail closed，不回退 RAFT。
+  evaluator:
+    repository_path: /root/autodl-tmp/third_party/co-tracker
+    repository_commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint_path: /root/autodl-tmp/weights/cotracker3/scaled_offline.pth
+    checkpoint_url: https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth
+    checkpoint_sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+    grid_size: 16
+    device: cuda
+
+  thresholds:
+    # V2 §5.1：只用资源门槛冻结 8/14 horizon，不用 rollout quality 选帧数。
+    maximum_14_peak_vram_gb: 22.0
+    maximum_14_generation_slowdown: 2.2
+    # 复用 E0 的 rerun 稳定性量级；无有效 track 永远为 invalid，不转成零。
+    maximum_score_repeatability_relative_delta: 0.02
