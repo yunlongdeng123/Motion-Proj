@@ -1,0 +1,7 @@
+defaults_chain:
+  - ./physics_dpo_branch_v2.yaml
+
+# v2 已完成所有生成，但 schema 将 permutation RMS 的 float32 归约尾差误判为不等范数。
+# v3 仅采用与 generator 一致的数值容差；研究参数、候选和 gate 均不改变。
+run_id: autoresearch-pa1-branch-s20260715-v3
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v3

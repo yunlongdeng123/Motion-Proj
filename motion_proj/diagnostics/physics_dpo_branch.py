@@ -131,8 +131,9 @@ def make_antithetic_perturbations(
 ) -> dict[str, dict[str, Any]]:
     """构造两组 permutation-distinct 的零均值正/负方向。
 
-    第二方向是第一方向的固定随机 permutation，因此四条理论 perturbation 在浮点
-    表示中严格等范数；实际 bf16 注入后的值也另行落盘并受阈值检查。
+    第二方向是第一方向的固定随机 permutation，因此四条理论 perturbation 的
+    元素多重集完全一致；RMS 的 float32 归约尾差按预注册数值容差验证。实际 bf16
+    注入后的值也另行落盘并受阈值检查。
     """
     if prefix_latent.numel() < 2:
         raise BranchPilotError("prefix latent 太小，不能构造零均值方向")

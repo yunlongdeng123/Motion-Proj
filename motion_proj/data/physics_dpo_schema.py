@@ -433,9 +433,12 @@ def validate_candidates(
             if not math.isclose(float(pair[0]["branch_strength"]), float(pair[1]["branch_strength"]), rel_tol=0.0, abs_tol=1.0e-12):
                 raise PhysicsDpoSchemaError(f"antithetic group {group_id} 的 strength 不相等")
         if siblings and all(item["branch_family"] == "common_prefix" for item in siblings):
-            rms_values = {float(item["perturbation_rms"]) for item in siblings}
-            if len(rms_values) != 1:
-                raise PhysicsDpoSchemaError("common_prefix 的四条 sibling 必须等范数")
+            rms_values = [float(item["perturbation_rms"]) for item in siblings]
+            reference_rms = rms_values[0]
+            # permutation 的归约顺序会带来极小的 float32 RMS 尾差；保持与
+            # generator 的理论等范数检查一致，拒绝任何有意义的强度差异。
+            if not all(math.isclose(value, reference_rms, rel_tol=1.0e-7, abs_tol=1.0e-12) for value in rms_values[1:]):
+                raise PhysicsDpoSchemaError("common_prefix 的四条 sibling 必须在数值容差内等范数")
     return candidates
 
 

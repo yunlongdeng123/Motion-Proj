@@ -110,6 +110,22 @@ def test_training_schema_accepts_aligned_four_sibling_group() -> None:
     assert validated["segment_count"] == 1
 
 
+def test_training_schema_accepts_permutation_rms_roundoff_but_rejects_real_strength_gap() -> None:
+    split, conditions, candidates, preferences, segments = _dataset()
+    near_equal = copy.deepcopy(candidates)
+    near_equal[3]["perturbation_rms"] = 0.20000001
+    near_equal[4]["perturbation_rms"] = 0.20000001
+
+    validated = validate_training_dataset(split, conditions, near_equal, preferences, segments, require_segments=True)
+    assert validated["candidate_count"] == 5
+
+    mismatched = copy.deepcopy(candidates)
+    mismatched[3]["perturbation_rms"] = 0.21
+    mismatched[4]["perturbation_rms"] = 0.21
+    with pytest.raises(PhysicsDpoSchemaError, match="等范数"):
+        validate_training_dataset(split, conditions, mismatched, preferences, segments, require_segments=True)
+
+
 def test_training_schema_rejects_future_gt_and_all_tie_pair() -> None:
     split, conditions, candidates, preferences, segments = _dataset()
     bad_conditions = copy.deepcopy(conditions)
