@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from types import SimpleNamespace
 
+import pytest
 import torch
 
 from motion_proj.auditor.state import Track
@@ -17,6 +19,11 @@ from motion_proj.preference.pair_scoring import (
     decide_segments,
     select_condition_pair,
     wilson_lower_bound,
+)
+from motion_proj.preference.review import (
+    PreferenceReviewError,
+    review_summary,
+    select_review_pairs,
 )
 
 
@@ -212,3 +219,73 @@ def test_smoke_status_cannot_mask_failed_machine_check() -> None:
     assert _machine_status(smoke=True, checks={"schema": True, "coverage": True}) == "done"
     assert _machine_status(smoke=True, checks={"schema": True, "coverage": False}) == "blocked"
     assert _machine_status(smoke=False, checks={"schema": True}) == "awaiting_reviews"
+
+
+def test_review_pair_selection_is_seeded_and_stratified() -> None:
+    rows = [
+        {"pair_id": f"p{index}", "global_label": label, "pair_confidence": confidence}
+        for index, (label, confidence) in enumerate([
+            ("a_wins", 0.9), ("a_wins", 0.5), ("b_wins", 0.9),
+            ("b_wins", 0.1), ("abstain", 0.0), ("invalid", 0.0),
+        ])
+    ]
+    first = select_review_pairs(rows, required=4, seed=11)
+    second = select_review_pairs(rows, required=4, seed=11)
+    assert [row["pair_id"] for row in first] == [row["pair_id"] for row in second]
+    assert len({(row["review_machine_stratum"], row["review_margin_bucket"]) for row in first}) == 4
+
+
+def _review_row(case_id: str, stage_a: str, stage_b: str, *, reason: str = "") -> dict:
+    return {
+        "case_id": case_id,
+        "stage_a_verdict": stage_a,
+        "stage_a_motion_plausibility": {"a": "pass", "b": "pass"},
+        "stage_a_visual_quality": {"a": "pass", "b": "pass"},
+        "stage_a_motion_amount": "similar",
+        "stage_a_identity_consistency": {"a": "pass", "b": "pass"},
+        "stage_a_failure_reasons": {"a": [], "b": []},
+        "stage_b_verdict": stage_b,
+        "stage_b_change_reason": reason,
+        "low_motion_collapse": {"a": False, "b": False},
+        "catastrophic_quality_failure": {"a": False, "b": False},
+        "reviewer": "human-1",
+        "notes": "",
+    }
+
+
+def test_two_stage_review_summary_uses_private_blind_mapping(tmp_path) -> None:
+    public = [{"case_id": "c0"}, {"case_id": "c1"}]
+    private = [
+        {"case_id": "c0", "blind_mapping": {"A": "x0", "B": "y0"},
+         "machine_global_label": "a_wins", "machine_winner_id": "x0"},
+        {"case_id": "c1", "blind_mapping": {"A": "x1", "B": "y1"},
+         "machine_global_label": "b_wins", "machine_winner_id": "y1"},
+    ]
+    (tmp_path / "review_cases.json").write_text(json.dumps(public), encoding="utf-8")
+    (tmp_path / "review_cases.private.json").write_text(json.dumps(private), encoding="utf-8")
+    reviews = [_review_row("c0", "a_better", "a_better"), _review_row("c1", "b_better", "b_better")]
+    (tmp_path / "reviews.jsonl").write_text("".join(json.dumps(row) + "\n" for row in reviews), encoding="utf-8")
+    summary = review_summary(tmp_path, {
+        "required_cases": 2, "minimum_decisive_agreement_cases": 2,
+        "minimum_agreement_rate": 0.75, "minimum_wilson_lower_bound": 0.0,
+        "maximum_low_motion_collapse": 0, "maximum_catastrophic_quality_failures": 0,
+    })
+    assert summary["pass"] is True
+    assert summary["agreements"] == 2
+    assert summary["agreement_rate"] == 1.0
+
+
+def test_stage_b_change_requires_human_reason(tmp_path) -> None:
+    (tmp_path / "review_cases.json").write_text(json.dumps([{"case_id": "c0"}]), encoding="utf-8")
+    (tmp_path / "review_cases.private.json").write_text(json.dumps([{
+        "case_id": "c0", "blind_mapping": {"A": "x", "B": "y"},
+        "machine_global_label": "a_wins", "machine_winner_id": "x",
+    }]), encoding="utf-8")
+    row = _review_row("c0", "tie", "a_better")
+    (tmp_path / "reviews.jsonl").write_text(json.dumps(row) + "\n", encoding="utf-8")
+    with pytest.raises(PreferenceReviewError, match="改判"):
+        review_summary(tmp_path, {
+            "required_cases": 1, "minimum_decisive_agreement_cases": 1,
+            "minimum_agreement_rate": 0.75, "minimum_wilson_lower_bound": 0.0,
+            "maximum_low_motion_collapse": 0, "maximum_catastrophic_quality_failures": 0,
+        })

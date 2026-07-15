@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import random
 import sys
 import time
 from pathlib import Path
@@ -32,7 +33,9 @@ from ..diagnostics.physics_dpo_branch import (
     _load_horizon_provenance,
     _load_scene_split,
     _quality_diagnostics,
+    _make_panel,
     _rms,
+    _score_with_state,
     _sync_cuda,
     _tensor_fingerprint,
     _validate_pa0,
@@ -43,6 +46,7 @@ from ..diagnostics.physics_dpo_branch import (
 )
 from ..diagnostics.physics_dpo_horizon import (
     _dataset_for_horizon,
+    _existing_video_path,
     _json_line,
     _load_condition_frame,
     _make_condition_record,
@@ -51,6 +55,8 @@ from ..diagnostics.physics_dpo_horizon import (
     fingerprint_denoising_trace,
     select_profile_conditions,
 )
+from ..diagnostics.evaluator_validity import _draw_overlay
+from ..eval.independent_tracks import CoTracker3IndependentEvaluator
 from ..diagnostics.projector_validity import PRIMARY_STRATA, build_candidate_tracks
 from ..diagnostics.svd_conditioning_parity import _base_model_fingerprint, trace_backbone_generation
 from ..preference.pair_scoring import (
@@ -61,10 +67,16 @@ from ..preference.pair_scoring import (
     select_condition_pair,
     wilson_lower_bound,
 )
+from ..preference.review import (
+    PreferenceReviewError,
+    review_summary,
+    select_review_pairs,
+)
 from ..runtime.atomic import atomic_write_json, atomic_write_text
 from ..runtime.experiment import JsonlMetrics, RunManifest, utc_now
 from ..runtime.fingerprint import environment_fingerprint, file_fingerprint, git_state, sha256_json
 from ..train.trainer import seed_everything
+from ..utils.io import write_video
 
 
 class PairPilotError(RuntimeError):
@@ -72,7 +84,6 @@ class PairPilotError(RuntimeError):
 
 
 CONSTRUCTORS = ("P0-independent", "P1-common-prefix", "P2-base-renoise")
-STAGE_VERDICTS = frozenset({"a_better", "b_better", "tie", "both_invalid", "uncertain"})
 
 
 def _finite(value: Any) -> float | None:
@@ -318,6 +329,13 @@ def preflight_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             split, partition=str(cfg.pair.condition_partition), condition_count=int(cfg.pair.condition_count),
             required_start_index=int(cfg.pair.required_start_index),
         )
+        if not bool(cfg.pair.smoke):
+            evaluator = CoTracker3IndependentEvaluator(dict(cfg.branch.evaluator))
+            result["independent_evaluator"] = evaluator.preflight()
+            if not bool(result["independent_evaluator"].get("available")):
+                raise PairPilotError("PA2 formal review 的 CoTracker3 不可用")
+            if not Path("docs/PA2_PAIR_HUMAN_REVIEW_PROMPT.md").is_file():
+                raise PairPilotError("PA2 formal 缺少完整人工评测提示词")
     except Exception as exc:
         result["status"] = "blocked"
         result["blockers"].append({"kind": "provenance", "error": repr(exc)})
@@ -536,6 +554,216 @@ def _machine_status(*, smoke: bool, checks: Mapping[str, Any]) -> str:
     return "done" if smoke else "awaiting_reviews"
 
 
+def _blind_segment_label(
+    segment_label: str,
+    *,
+    pair: Mapping[str, Any],
+    blind_mapping: Mapping[str, str],
+) -> str:
+    if segment_label not in {"a_wins", "b_wins"}:
+        return segment_label
+    winner = pair["candidate_a"] if segment_label == "a_wins" else pair["candidate_b"]
+    side = next((label for label, candidate_id in blind_mapping.items() if candidate_id == winner), None)
+    if side is None:
+        raise PairPilotError("local segment winner 不在 blind mapping")
+    return f"{side.lower()}_better"
+
+
+def _overlay_tensor(frames: torch.Tensor, state: Any) -> torch.Tensor:
+    overlay = _draw_overlay(frames, state)
+    return torch.from_numpy(overlay).permute(0, 3, 1, 2).float().div(127.5).sub(1.0)
+
+
+def _write_pair_review_materials(
+    *,
+    work_dir: Path,
+    cfg: Any,
+    frames_by_candidate: Mapping[str, torch.Tensor],
+    core_preferences: Sequence[Mapping[str, Any]],
+    core_segments: Sequence[Mapping[str, Any]],
+    constructor_pairs: Sequence[Mapping[str, Any]],
+    constructor_segments: Sequence[Mapping[str, Any]],
+    scores: Mapping[str, Mapping[str, Any]],
+    fps: int,
+) -> dict[str, Any]:
+    """生成 48-case Stage A blind video 与 Stage B 独立 CoTracker adjudication。"""
+    review_cfg = cfg.pair.review
+    by_pair = {str(row["pair_id"]): dict(row) for row in constructor_pairs}
+    p1_pool = [
+        by_pair[str(row["pair_id"])] for row in core_preferences
+        if str(row.get("global_label")) in DECISIVE_LABELS and str(row["pair_id"]) in by_pair
+    ]
+    p0_pool = [dict(row) for row in constructor_pairs if str(row.get("constructor")) == "P0-independent"]
+    p2_pool = [dict(row) for row in constructor_pairs if str(row.get("constructor")) == "P2-base-renoise"]
+    selected = [
+        *select_review_pairs(p1_pool, required=int(review_cfg.p1_cases), seed=int(review_cfg.seed)),
+        *select_review_pairs(p0_pool, required=int(review_cfg.p0_cases), seed=int(review_cfg.seed) + 1000),
+        *select_review_pairs(p2_pool, required=int(review_cfg.p2_cases), seed=int(review_cfg.seed) + 2000),
+    ]
+    random.Random(int(review_cfg.seed) + 3000).shuffle(selected)
+    if len(selected) != int(review_cfg.required_cases):
+        raise PairPilotError("PA2 review 抽样数量不等于 required_cases")
+
+    stage_a_dir = work_dir / "review" / "stage_a_blind"
+    stage_b_overlay_dir = work_dir / "review" / "stage_b_overlay"
+    stage_b_diagnostic_dir = work_dir / "review" / "stage_b_diagnostics"
+    stage_a_dir.mkdir(parents=True, exist_ok=False)
+    stage_b_overlay_dir.mkdir(parents=True, exist_ok=False)
+    stage_b_diagnostic_dir.mkdir(parents=True, exist_ok=False)
+    evaluator = CoTracker3IndependentEvaluator(dict(cfg.branch.evaluator))
+    evaluator_preflight = evaluator.preflight()
+    if not bool(evaluator_preflight.get("available")):
+        raise PairPilotError(f"PA2 review 需要已通过 E0 的 CoTracker3: {evaluator_preflight}")
+    independent_cache: dict[str, tuple[dict[str, Any], Any]] = {}
+    segment_rows = [*core_segments, *constructor_segments]
+    segments_by_pair: dict[str, list[Mapping[str, Any]]] = {}
+    for row in segment_rows:
+        segments_by_pair.setdefault(str(row["pair_id"]), []).append(row)
+    public_cases: list[dict[str, Any]] = []
+    private_cases: list[dict[str, Any]] = []
+    template_rows: list[dict[str, Any]] = []
+    for index, pair in enumerate(selected):
+        pair_id = str(pair["pair_id"])
+        candidates = [str(pair["candidate_a"]), str(pair["candidate_b"])]
+        random.Random(int(review_cfg.seed) + 4000 + index).shuffle(candidates)
+        blind_mapping = {"A": candidates[0], "B": candidates[1]}
+        case_id = f"pa2-pair-review-{index:03d}"
+        stage_a = _make_panel([frames_by_candidate[candidates[0]], frames_by_candidate[candidates[1]]], ["A", "B"])
+        stage_a_path = stage_a_dir / f"{case_id}.mp4"
+        write_video(stage_a, str(stage_a_path), fps=int(fps))
+        stage_a_artifact = _existing_video_path(stage_a_path)
+
+        overlay_frames: list[torch.Tensor] = []
+        independent_public: dict[str, Any] = {}
+        for side, candidate_id in blind_mapping.items():
+            if candidate_id not in independent_cache:
+                independent_cache[candidate_id] = _score_with_state(
+                    evaluator, frames_by_candidate[candidate_id], device=str(cfg.branch.evaluator.device),
+                )
+            independent_score, independent_state = independent_cache[candidate_id]
+            overlay_frames.append(_overlay_tensor(frames_by_candidate[candidate_id], independent_state))
+            independent_public[side] = independent_score
+        stage_b = _make_panel(overlay_frames, ["A", "B"])
+        stage_b_path = stage_b_overlay_dir / f"{case_id}.mp4"
+        write_video(stage_b, str(stage_b_path), fps=int(fps))
+        stage_b_artifact = _existing_video_path(stage_b_path)
+
+        local = []
+        seen_segments: set[tuple[int, int]] = set()
+        for segment in sorted(segments_by_pair.get(pair_id, []), key=lambda row: (int(row["start_frame"]), int(row["end_frame"]))):
+            window = (int(segment["start_frame"]), int(segment["end_frame"]))
+            if window in seen_segments:
+                continue
+            seen_segments.add(window)
+            local.append({
+                "start_frame": window[0], "end_frame": window[1],
+                "label": _blind_segment_label(str(segment["label"]), pair=pair, blind_mapping=blind_mapping),
+                "confidence": segment.get("confidence"), "frame_alignment_pass": segment.get("frame_alignment_pass"),
+            })
+        diagnostic = {
+            "case_id": case_id,
+            "evidence_order": ["A", "B"],
+            "independent_cotracker3": independent_public,
+            "punc_pair_scorer": {side: dict(scores[candidate_id]) for side, candidate_id in blind_mapping.items()},
+            "local_segment_labels": local,
+            "interpretation": {
+                "punc_projection_energy": "越低表示该视频轨迹需要的置信度归一化 P-UNC 修正越小；不是人工 verdict。",
+                "cotracker3": "独立 evaluator，仅显示 track/coverage/dynamics，不产生 pair winner。",
+            },
+        }
+        diagnostic_path = stage_b_diagnostic_dir / f"{case_id}.json"
+        atomic_write_json(str(diagnostic_path), diagnostic)
+        public_cases.append({
+            "case_id": case_id,
+            "stage_a_video": str(stage_a_artifact.relative_to(work_dir)),
+            "stage_b_overlay_video": str(stage_b_artifact.relative_to(work_dir)),
+            "stage_b_diagnostics": str(diagnostic_path.relative_to(work_dir)),
+            "blind_sides": ["A", "B"],
+        })
+        private_cases.append({
+            "case_id": case_id, "pair_id": pair_id, "condition_id": pair["condition_id"],
+            "constructor": pair["constructor"], "blind_mapping": blind_mapping,
+            "machine_global_label": pair["global_label"], "machine_winner_id": pair.get("winner_candidate_id"),
+            "machine_loser_id": pair.get("loser_candidate_id"),
+            "review_margin_bucket": pair["review_margin_bucket"],
+            "review_machine_stratum": pair["review_machine_stratum"],
+        })
+        template_rows.append({
+            "case_id": case_id,
+            "stage_a_verdict": "pending",
+            "stage_a_motion_plausibility": {"a": "pending", "b": "pending"},
+            "stage_a_visual_quality": {"a": "pending", "b": "pending"},
+            "stage_a_motion_amount": "pending",
+            "stage_a_identity_consistency": {"a": "pending", "b": "pending"},
+            "stage_a_failure_reasons": {"a": [], "b": []},
+            "stage_b_verdict": "pending",
+            "stage_b_change_reason": "",
+            "low_motion_collapse": {"a": None, "b": None},
+            "catastrophic_quality_failure": {"a": None, "b": None},
+            "reviewer": "pending",
+            "notes": "",
+        })
+    atomic_write_json(str(work_dir / "review_cases.json"), public_cases)
+    atomic_write_json(str(work_dir / "review_cases.private.json"), private_cases)
+    atomic_write_text(
+        str(work_dir / "reviews.template.jsonl"),
+        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in template_rows),
+    )
+    prompt_path = Path("docs/PA2_PAIR_HUMAN_REVIEW_PROMPT.md")
+    if not prompt_path.is_file():
+        raise PairPilotError("缺少 PA2 完整人工评测提示词文档")
+    prompt = prompt_path.read_text(encoding="utf-8")
+    atomic_write_text(str(work_dir / "REVIEW_PROMPT.md"), prompt)
+    atomic_write_text(str(work_dir / "REVIEW_README.md"), prompt)
+    return {
+        "required_cases": len(public_cases),
+        "p1_cases": sum(row["constructor"] == "P1-common-prefix" for row in private_cases),
+        "p0_cases": sum(row["constructor"] == "P0-independent" for row in private_cases),
+        "p2_cases": sum(row["constructor"] == "P2-base-renoise" for row in private_cases),
+        "independent_evaluator_preflight": evaluator_preflight,
+        "review_protocol": "pa2-two-stage-blind-v1",
+    }
+
+
+def _clean_terminal_markers(run_dir: Path) -> None:
+    for name in ("COMPLETE", "FAILED", "awaiting_reviews", "MACHINE_COMPLETE"):
+        path = run_dir / name
+        if path.exists():
+            path.unlink()
+
+
+def aggregate_physics_dpo_pair_reviews(cfg: Any) -> dict[str, Any]:
+    """只聚合人工 JSONL；不加载 SVD、RAFT 或 CoTracker，不改写人工 verdict。"""
+    run_dir = Path(str(cfg.work_dir))
+    machine = _read_json(run_dir / "machine_summary.json", label="PA2 machine summary")
+    machine_checks = _mapping(machine.get("machine"), label="PA2 machine checks")
+    if str(machine.get("status")) != "awaiting_reviews" or not bool(machine_checks.get("machine_pass")):
+        raise PairPilotError("仅 machine-pass 的 PA2 awaiting_reviews run 可聚合")
+    try:
+        human = review_summary(run_dir, dict(cfg.pair.review))
+    except PreferenceReviewError as exc:
+        raise PairPilotError(str(exc)) from exc
+    status = "done" if bool(human["pass"]) else str(human["status"])
+    summary = {
+        **machine,
+        "status": status,
+        "human_review": human,
+        "next_gate": "PA3-KERNEL-04" if status == "done" else "PA2 review expansion" if status == "needs_more_reviews" else "PA2-PAIR-03",
+    }
+    atomic_write_json(str(run_dir / "summary.json"), summary)
+    _clean_terminal_markers(run_dir)
+    if status in {"done", "rejected"}:
+        atomic_write_text(str(run_dir / "COMPLETE"), sha256_json(summary) + "\n")
+    else:
+        atomic_write_text(str(run_dir / "MACHINE_COMPLETE"), sha256_json(machine) + "\n")
+        atomic_write_text(str(run_dir / "awaiting_reviews"), sha256_json(summary) + "\n")
+    manifest_path = run_dir / "manifest.json"
+    manifest = _read_json(manifest_path, label="PA2 manifest")
+    manifest.update({"status": status, "ended_at": utc_now(), "exit_reason": "human_review"})
+    atomic_write_json(str(manifest_path), manifest)
+    return summary
+
+
 def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
     """运行 PA2 机器 candidate/pair legality；human aggregate 由后续命令单独完成。"""
     _validate_pair_config(cfg)
@@ -665,6 +893,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
         core_preferences: list[dict[str, Any]] = []
         core_segments: list[dict[str, Any]] = []
         constructor_pairs: list[dict[str, Any]] = []
+        constructor_segments: list[dict[str, Any]] = []
         selections: list[dict[str, Any]] = []
         by_condition: dict[str, list[dict[str, Any]]] = {}
         for candidate in p1_candidates:
@@ -709,6 +938,10 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
                 p1_segments[pair_id] = segments
                 constructor_pairs.append(pair)
                 _write_constructor_pair(work_dir / "constructor_pairs.jsonl", pair)
+                for segment in segments:
+                    constructor_segment = {**segment, "constructor": "P1-common-prefix"}
+                    constructor_segments.append(constructor_segment)
+                    _json_line(work_dir / "constructor_segments.jsonl", constructor_segment)
             choice = select_condition_pair(p1_rows)
             selected_pair = next((row for row in p1_rows if row["pair_id"] == choice["selected_pair_id"]), None)
             if selected_pair is None:
@@ -725,7 +958,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
 
             p0 = next(row for row in audit_by_condition[condition_id] if row["constructor"] == "P0-independent")
             p0_id = str(p0["audit_candidate_id"])
-            p0_pair, _ = _pair_record(
+            p0_pair, p0_segments = _pair_record(
                 pair_id=f"p0-{condition_id}", constructor="P0-independent", condition=condition, candidate_a=base_id, candidate_b=p0_id,
                 score_a=scores[base_id], score_b=scores[p0_id],
                 feasibility_a=candidate_feasibility(scores[base_id], scores[base_id], qualities[base_id], dict(cfg.pair.thresholds)),
@@ -735,11 +968,15 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             )
             constructor_pairs.append(p0_pair)
             _write_constructor_pair(work_dir / "constructor_pairs.jsonl", p0_pair)
+            for segment in p0_segments:
+                constructor_segment = {**segment, "constructor": "P0-independent"}
+                constructor_segments.append(constructor_segment)
+                _json_line(work_dir / "constructor_segments.jsonl", constructor_segment)
             renoise = sorted([row for row in audit_by_condition[condition_id] if row["constructor"] == "P2-base-renoise"], key=lambda row: str(row["audit_candidate_id"]))
             if len(renoise) != 2:
                 raise PairPilotError("P2 必须有两个 Base re-noise audit candidate")
             r0, r1 = str(renoise[0]["audit_candidate_id"]), str(renoise[1]["audit_candidate_id"])
-            p2_pair, _ = _pair_record(
+            p2_pair, p2_segments = _pair_record(
                 pair_id=f"p2-{condition_id}", constructor="P2-base-renoise", condition=condition, candidate_a=r0, candidate_b=r1,
                 score_a=scores[r0], score_b=scores[r1],
                 feasibility_a=candidate_feasibility(scores[r0], scores[base_id], qualities[r0], dict(cfg.pair.thresholds)),
@@ -749,6 +986,10 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             )
             constructor_pairs.append(p2_pair)
             _write_constructor_pair(work_dir / "constructor_pairs.jsonl", p2_pair)
+            for segment in p2_segments:
+                constructor_segment = {**segment, "constructor": "P2-base-renoise"}
+                constructor_segments.append(constructor_segment)
+                _json_line(work_dir / "constructor_segments.jsonl", constructor_segment)
 
         validate_preferences(core_preferences, indexed_conditions, indexed_candidates)
         validate_segments(core_segments, validate_preferences(core_preferences, indexed_conditions, indexed_candidates), indexed_candidates)
@@ -773,6 +1014,21 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             "three_constructor_comparison": bool(constructor_coverage["pass"]),
         }
         status = _machine_status(smoke=bool(cfg.pair.smoke), checks=checks)
+        review_materials = None
+        make_review_materials = status == "awaiting_reviews" or bool(
+            cfg.pair.smoke and cfg.pair.review.material_smoke
+        )
+        if make_review_materials:
+            del provider
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                _sync_cuda(str(cfg.device))
+            review_materials = _write_pair_review_materials(
+                work_dir=work_dir, cfg=cfg, frames_by_candidate=frames_by_candidate,
+                core_preferences=core_preferences, core_segments=core_segments,
+                constructor_pairs=constructor_pairs, constructor_segments=constructor_segments,
+                scores=scores, fps=int(metadata["fps_input"]),
+            )
         summary = {
             "status": status, "task_id": str(cfg.pair.task_id), "run_id": str(cfg.run_id), "config_fingerprint": cfg_fp,
             "scene_split_fingerprint": split_provenance["split_fingerprint"], "horizon_profile_fingerprint": horizon["profile_fingerprint"],
@@ -780,13 +1036,17 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             "valid_global_pairs": len(decisive), "non_tie_segment_conditions": len(decisive_segment_conditions),
             "constructor_summary": constructor_summary, "constructor_coverage": constructor_coverage,
             "machine": {"machine_pass": all(checks.values()), "checks": checks},
+            "review_materials": review_materials,
             "scorer_fingerprint": scorer_fingerprint, "next_gate": "PA2 human review" if status == "awaiting_reviews" else "PA2 formal" if bool(cfg.pair.smoke) else "PA2-PAIR-03",
             "uses_future_gt": False,
         }
         atomic_write_json(str(work_dir / "machine_summary.json"), summary)
         atomic_write_json(str(work_dir / "summary.json"), summary)
-        marker = "COMPLETE" if status in {"done", "blocked"} else "awaiting_reviews"
-        atomic_write_text(str(work_dir / marker), sha256_json(summary) + "\n")
+        if status == "awaiting_reviews":
+            atomic_write_text(str(work_dir / "MACHINE_COMPLETE"), sha256_json(summary) + "\n")
+            atomic_write_text(str(work_dir / "awaiting_reviews"), sha256_json(summary) + "\n")
+        else:
+            atomic_write_text(str(work_dir / "COMPLETE"), sha256_json(summary) + "\n")
         manifest_data.update({"status": status, "ended_at": utc_now(), "exit_reason": "smoke_complete" if bool(cfg.pair.smoke) else "human_review_required" if status == "awaiting_reviews" else "machine_pair_gate"})
         atomic_write_json(str(work_dir / "manifest.json"), manifest_data)
         return summary
@@ -804,9 +1064,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="PA2 structure-aligned preference pair legality")
     parser.add_argument("--config", required=True)
     parser.add_argument("--preflight", action="store_true")
+    parser.add_argument("--aggregate-only", action="store_true")
     args = parser.parse_args()
+    if args.preflight and args.aggregate_only:
+        parser.error("--preflight 与 --aggregate-only 不能同时使用")
     cfg = load_config(args.config)
-    result = preflight_physics_dpo_pair(cfg) if args.preflight else run_physics_dpo_pair(cfg)
+    if args.preflight:
+        result = preflight_physics_dpo_pair(cfg)
+    elif args.aggregate_only:
+        result = aggregate_physics_dpo_pair_reviews(cfg)
+    else:
+        result = run_physics_dpo_pair(cfg)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
 
 
