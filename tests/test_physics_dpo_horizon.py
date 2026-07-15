@@ -63,6 +63,14 @@ def test_tensor_fingerprint_supports_cpu_bfloat16_without_numeric_cast() -> None
     assert _tensor_fingerprint(value) != _tensor_fingerprint(value.to(torch.float32))
 
 
+def test_tensor_fingerprint_supports_zero_dimensional_trace_scalars() -> None:
+    import torch
+
+    scalar = torch.tensor(17.0, dtype=torch.float32)
+    assert _tensor_fingerprint(scalar) == _tensor_fingerprint(scalar.clone())
+    assert _tensor_fingerprint(scalar) != _tensor_fingerprint(torch.tensor(18.0, dtype=torch.float32))
+
+
 def test_score_repeatability_rejects_missing_metric_without_zero_fill() -> None:
     aggregate = {
         "survival_rate": 0.75,

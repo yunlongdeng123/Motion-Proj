@@ -4,7 +4,7 @@
 > **决策日期**：2026-07-14
 > **计划基线**：`16b6975`，执行前必须重新核对当前 `HEAD`、分支和 worktree。
 > **当前硬件**：单张 RTX 4090 24 GB；仅在单卡筛选门槛通过后，由用户执行一次停机并切换为双 RTX 4090。
-> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 running`。PA1 v1 在首次 Base guard 的 CPU `bfloat16` trace hash 处失败，未形成任何有效 candidate/score 结论；失败 run 已保留，修复后仅可用新 v2 run ID 重跑。当前仍只授权 Base guard profile，不授权 sibling candidate、训练或切换双卡。
+> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 running`。PA1 v1 与 v2 均在首次 Base guard 的 trace hash 实现处失败，未形成任何有效 candidate/score/horizon 结论；失败 run 均已保留，修复后仅可用新 v3 run ID 重跑。当前仍只授权 Base guard profile，不授权 sibling candidate、训练或切换双卡。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **取代范围**：取代旧计划中未来关于 reward/DPO/AWR 的禁止性排程，不修改 V1/V2、F0、F1、P1 等历史负结论。
 > **目标投稿**：CVPR/ICCV 级视觉顶会；方法必须落在真实 RGB 驾驶视频生成、时序运动和物理一致性上。
@@ -1725,7 +1725,7 @@ split fingerprint e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c7
 → PA1-HORIZON-01
 ```
 
-`autoresearch-pa1-horizon-s20260715-v1` 已保留为实现失败证据：CPU `bfloat16` 的 trace hash 不能直接转 NumPy，失败发生在首个 Base guard 写出前；没有候选、score、训练或方法结论。该 bug 修复后必须使用新的 `autoresearch-pa1-horizon-s20260715-v2`，不能覆盖 v1。
+`autoresearch-pa1-horizon-s20260715-v1` 已保留为实现失败证据：CPU `bfloat16` 的 trace hash 不能直接转 NumPy。`autoresearch-pa1-horizon-s20260715-v2` 修复该问题后，又在 scheduler 的 0-D scalar trace entry 上直接以不同元素大小作 byte view 而失败。两次失败均发生在首个 Base guard 的有效 artifact 写出前；没有候选、score、训练或方法结论。第二个 bug 修复后必须使用新的 `autoresearch-pa1-horizon-s20260715-v3`，不能覆盖 v1/v2。
 
 当前唯一可执行的 GPU 工作是：
 

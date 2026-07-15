@@ -80,7 +80,10 @@ def _tensor_fingerprint(value: torch.Tensor) -> str:
     digest.update(str(tuple(tensor.shape)).encode("utf-8"))
     # NumPy 不支持 CPU bfloat16；按连续 tensor 的底层字节哈希，保留 dtype/shape
     # 前缀即可避免与其他解释方式混淆。
-    digest.update(tensor.view(torch.uint8).numpy().tobytes())
+    # ``view(dtype)`` requires at least one dimension when element sizes differ;
+    # scheduler timesteps include 0-D scalars.  Flatten first so scalar,
+    # vector, and higher-rank trace entries share the same byte-exact path.
+    digest.update(tensor.flatten().view(torch.uint8).numpy().tobytes())
     return digest.hexdigest()
 
 
