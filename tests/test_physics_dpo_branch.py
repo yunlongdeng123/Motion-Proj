@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+from types import SimpleNamespace
+
 import pytest
 import torch
 
@@ -7,6 +10,7 @@ from motion_proj.diagnostics.physics_dpo_branch import (
     BranchPilotError,
     SEQUENCE_TRACE_FIELDS,
     _conditions_with_all_indistinguishable_groups,
+    aggregate_physics_dpo_branch_reviews,
     calibrated_future_distance,
     choose_calibration_action,
     make_antithetic_perturbations,
@@ -176,3 +180,45 @@ def test_common_prefix_verification_substitutes_only_callback_boundary_latent() 
             injection,
             fork_step=2,
         )
+
+
+def test_aggregate_reads_nested_machine_pass_from_generated_summary(tmp_path) -> None:
+    case = {
+        "case_id": "branch-review-00",
+        "rubric": "三列是否保持同一驾驶场景布局、主体身份和条件首帧？",
+    }
+    (tmp_path / "review_cases.json").write_text(json.dumps([case]), encoding="utf-8")
+    (tmp_path / "reviews.jsonl").write_text(
+        json.dumps({
+            "case_id": case["case_id"],
+            "verdict": "same_scene",
+            "reviewer": "human",
+            "notes": "同一场景。",
+            "rubric": case["rubric"],
+        }, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "machine_summary.json").write_text(json.dumps({
+        "status": "awaiting_reviews",
+        "machine": {"machine_pass": True},
+    }), encoding="utf-8")
+    (tmp_path / "manifest.json").write_text("{}", encoding="utf-8")
+    (tmp_path / "awaiting_reviews").write_text("stale\n", encoding="utf-8")
+    cfg = SimpleNamespace(
+        work_dir=str(tmp_path),
+        branch=SimpleNamespace(review={
+            "required_cases": 1,
+            "minimum_same_scene_rate": 1.0,
+            "maximum_bad_cases": 0,
+        }),
+    )
+
+    summary = aggregate_physics_dpo_branch_reviews(cfg)
+
+    assert summary["status"] == "done"
+    assert summary["human_review"]["pass"] is True
+    assert summary["next_gate"] == "PA2-PAIR-03"
+    assert (tmp_path / "COMPLETE").is_file()
+    assert not (tmp_path / "awaiting_reviews").exists()
+    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "done"

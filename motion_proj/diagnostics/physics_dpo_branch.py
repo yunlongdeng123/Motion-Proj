@@ -727,7 +727,10 @@ def aggregate_physics_dpo_branch_reviews(cfg: Any) -> dict[str, Any]:
     if not machine_path.is_file():
         raise BranchPilotError("--aggregate-only 需要已有 machine_summary.json")
     machine = json.loads(machine_path.read_text(encoding="utf-8"))
-    if str(machine.get("status")) != "awaiting_reviews" or not bool(machine.get("machine_pass")):
+    machine_checks = machine.get("machine")
+    if not isinstance(machine_checks, Mapping):
+        raise BranchPilotError("machine_summary.json 缺少 machine 检查结果")
+    if str(machine.get("status")) != "awaiting_reviews" or not bool(machine_checks.get("machine_pass")):
         raise BranchPilotError("仅 machine-pass 的 awaiting_reviews run 可以聚合人工 review")
     review = _review_summary(run_dir, cfg.branch.review)
     status = "done" if bool(review["pass"]) else str(review["status"])
