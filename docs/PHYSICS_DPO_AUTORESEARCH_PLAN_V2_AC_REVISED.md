@@ -4,7 +4,7 @@
 > **决策日期**：2026-07-14
 > **计划基线**：`16b6975`，执行前必须重新核对当前 `HEAD`、分支和 worktree。
 > **当前硬件**：单张 RTX 4090 24 GB；仅在单卡筛选门槛通过后，由用户执行一次停机并切换为双 RTX 4090。
-> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 done`。PA1 v3 以 clean `57987b0` 完成 2 condition × {8,14} 的 exact Base guard profile；14 帧通过预注册资源门槛，已冻结为后续 preference 数据帧数，claim scope 仍为 **short-horizon dynamics alignment**。`PA1-BRANCH-02` v1 的手动 scheduler continuation 被 exact Base safety gate 拦下；v2 是 schema RMS 尾差实现失败；v3 完成 20 candidate + CoTracker，但 scene-0126 的全部 sibling future distance 低于下界、scene-1102 Base track coverage 低于硬门槛，故 machine gate 为 2/4、4/8。唯一允许的 v4 是按离散阶梯将 strength 从 `rho=0.01` 推进到 `0.02`，不改 fork/condition/family/gate，仍不授权训练或切换双卡。
+> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 done`。PA1 v3 以 clean `57987b0` 完成 2 condition × {8,14} 的 exact Base guard profile；14 帧通过预注册资源门槛，已冻结为后续 preference 数据帧数，claim scope 仍为 **short-horizon dynamics alignment**。`PA1-BRANCH-02` v1 的手动 scheduler continuation 被 exact Base safety gate 拦下；v2 是 schema RMS 尾差实现失败；v3/v4 均完成 20 candidate + CoTracker，但 scene-0126 的全部 sibling future distance 仍低于下界、scene-1102 Base track coverage 低于硬门槛，machine gate 均为 2/4、4/8。v4 没有 structure/quality/correspondence failure，唯一允许的 v5 是按离散阶梯将 strength 从 `rho=0.02` 推进到 `0.04`，不改 fork/condition/family/gate，仍不授权训练或切换双卡。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **取代范围**：取代旧计划中未来关于 reward/DPO/AWR 的禁止性排程，不修改 V1/V2、F0、F1、P1 等历史负结论。
 > **目标投稿**：CVPR/ICCV 级视觉顶会；方法必须落在真实 RGB 驾驶视频生成、时序运动和物理一致性上。
@@ -442,7 +442,7 @@ strength level: {small, medium, large}
 不是 \(3\times3\) 全网格。使用逐级最小强度策略：
 
 1. 固定 fork 0.6，从 small 开始；
-2. 若候选不可区分，再试 medium；
+2. 若任一 condition 的全部 sibling 不可区分，按 `small -> medium -> large` 仅推进下一档；
 3. 若结构失配，再改 fork；
 4. 最多 4 conditions；
 5. 找到首个满足门槛的最小配置后冻结。
@@ -972,7 +972,7 @@ failure reason
 | PA0-REVIEW-00 | done | 完成 P-UNC/E0 人审 | 两者均通过 | `blocked`，不生成 preference 数据 |
 | PA0-SCENE-SPLIT-01 | done | materialize 唯一 scene-level split | source fingerprint、scene/clip 不泄漏与 `COMPLETE` 均通过 | `blocked`，不进入 PA1 |
 | PA1-HORIZON-01 | done | 8/14 帧 profile | v3 通过：冻结 14 帧与 short-horizon claim scope | 仅保留 8 帧短时 claim |
-| PA1-BRANCH-02 | running（v4 medium-strength calibration） | 结构对齐候选 pilot | family、fork、strength 冻结 | `rejected`，不退回 independent seed 主线 |
+| PA1-BRANCH-02 | running（v5 large-strength calibration） | 结构对齐候选 pilot | family、fork、strength 冻结 | `rejected`，不退回 independent seed 主线 |
 | PA2-PAIR-03 | pending | 32 condition pair legality | ≥24 有效 condition，30-pair 人审通过 | `rejected` |
 | PA3-KERNEL-04 | pending | DPO/AWR/SDPO 代数与容量 | 1/8/32 pair 依次通过 | `blocked`，只修代数/实现 |
 | PA4-SCREEN-05 | pending | 单卡方法筛选 | proposed 超过强基线，无 collapse | 终止，不切双卡 |
@@ -1072,7 +1072,14 @@ v4 config 为 `configs/diagnostics/physics_dpo_branch_v4.yaml`。预注册离散
 下一档 `medium=0.02`，同一四 condition、same seed rules、fork `0.6`、family、阈值和 review protocol
 保持不变。即使 scene-1102 继续不合格，v4 仍只有在其余三 condition、六个 groups 达标时才可 machine-pass。
 
-若任一 condition 的全部 sibling 与 Base 不可区分，下一次只能升至 medium；若发生 structure mismatch，
+v4 完成 20 candidate + CoTracker；scene-0126 future-VAE ratio 升至 `0.0431–0.0493`，仍全部低于
+`0.05`，而所有 first-frame、finite、dynamic-degree、survival、correspondence、symmetry 和 quality
+check 均通过；scene-1102 的 Base coverage 仍不合格。因此 v5 config 为
+`configs/diagnostics/physics_dpo_branch_v5.yaml`，只执行最后一档 `large=0.04`。v5 若仍不能让
+scene-0126 形成有效 candidates，禁止新增 strength 或扩大数据；必须按既定规则考察 fork `0.8` 或
+PA1 `rejected` 的路径。
+
+若任一 condition 的全部 sibling 与 Base 不可区分，下一次只能按阶梯升一档；若发生 structure mismatch，
 下一次只能将 fork 调到 0.8；不得并行网格搜索，也不得跳入 re-noise、DPO/AWR、训练或双卡。
 
 ## PA2-PAIR-03
@@ -1773,12 +1780,12 @@ split fingerprint e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c7
 
 `autoresearch-pa1-horizon-s20260715-v1` 与 v2 已保留为 trace-hash 实现失败证据，均未形成有效 candidate/score/horizon 结论。v3 用 clean `57987b0` 完成：两种帧数均为 exact Base rerun，CoTracker aggregate repeatability 均为 0 相对差；14 帧 peak 为 `5.8049 GB`（阈值 `22 GB`），相对 8 帧 generation slowdown 为 `1.5799×`（阈值 `2.2×`）。因此冻结 `num_frames=14`，但仅允许 **short-horizon dynamics alignment** claim；该决定仅来自预注册资源规则。
 
-`autoresearch-pa1-branch-s20260715-v1` 已作为 manual-continuation exact guard 的失败证据保留；v2 已作为 schema 数值容差失败证据保留；v3 已完整完成但 machine-blocked，三者均不进入 pair 或训练。当前唯一可执行的 GPU 工作是：
+`autoresearch-pa1-branch-s20260715-v1` 已作为 manual-continuation exact guard 的失败证据保留；v2 已作为 schema 数值容差失败证据保留；v3/v4 均已完整完成但 machine-blocked，四者均不进入 pair 或训练。当前唯一可执行的 GPU 工作是：
 
 ```text
-autoresearch-pa1-branch-s20260715-v4
+autoresearch-pa1-branch-s20260715-v5
 4 conditions × (1 exact Base guard + 4 common-prefix sibling candidates)
-14 frames、25 denoising steps、fork 0.6、medium rho 0.02
+14 frames、25 denoising steps、fork 0.6、large rho 0.04
 ```
 
 在 PA1-BRANCH-02 family/fork/strength 冻结前禁止：

@@ -1,0 +1,11 @@
+defaults_chain:
+  - ./physics_dpo_branch_v4.yaml
+
+# v4 的 scene-0126 全部 sibling 仍低于 future-distance 下界；按同一冻结阶梯执行最后一档。
+# small=0.01 -> medium=0.02 -> large=0.04；不改 fork、condition、family 或任何 gate。
+run_id: autoresearch-pa1-branch-s20260715-v5
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v5
+
+branch:
+  strength_name: large
+  strength_rho: 0.04
