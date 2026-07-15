@@ -4,7 +4,7 @@
 > **决策日期**：2026-07-14
 > **计划基线**：`16b6975`，执行前必须重新核对当前 `HEAD`、分支和 worktree。
 > **当前硬件**：单张 RTX 4090 24 GB；仅在单卡筛选门槛通过后，由用户执行一次停机并切换为双 RTX 4090。
-> **当前状态**：`PA0-REVIEW-00 done`；scene split/schema 已完成无 GPU 实现与测试，但正式 split materialization 因 worktree 非 clean 尚未执行。PA1 尚未开始；不授权生成 candidate、训练或切换双卡。
+> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`。唯一 scene split 已在 clean `5713267` worktree materialize，证据为 `/root/autodl-tmp/runs/autoresearch-pa0-scene-split-s20260715-v1/`；PA1 尚未开始。当前只授权 `PA1-HORIZON-01` 的 Base guard profile，不授权 sibling candidate、训练或切换双卡。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **取代范围**：取代旧计划中未来关于 reward/DPO/AWR 的禁止性排程，不修改 V1/V2、F0、F1、P1 等历史负结论。
 > **目标投稿**：CVPR/ICCV 级视觉顶会；方法必须落在真实 RGB 驾驶视频生成、时序运动和物理一致性上。
@@ -970,6 +970,7 @@ failure reason
 | ID | 状态 | 任务 | 晋级门槛 | 失败动作 |
 |---|---|---|---|---|
 | PA0-REVIEW-00 | done | 完成 P-UNC/E0 人审 | 两者均通过 | `blocked`，不生成 preference 数据 |
+| PA0-SCENE-SPLIT-01 | done | materialize 唯一 scene-level split | source fingerprint、scene/clip 不泄漏与 `COMPLETE` 均通过 | `blocked`，不进入 PA1 |
 | PA1-HORIZON-01 | pending | 8/14 帧 profile | 冻结帧数和 claim scope | 仅保留 8 帧短时 claim |
 | PA1-BRANCH-02 | pending | 结构对齐候选 pilot | family、fork、strength 冻结 | `rejected`，不退回 independent seed 主线 |
 | PA2-PAIR-03 | pending | 32 condition pair legality | ≥24 有效 condition，30-pair 人审通过 | `rejected` |
@@ -1408,7 +1409,7 @@ DDP 仅用于吞吐，不用于解决 OOM。
 
 ## 11.3 磁盘
 
-当前约 164 GB 可用。正式 scale-out 前必须根据 PA1 实测：
+新单卡实例于 2026-07-15 实测可用磁盘约 74 GB（以每次 run 前 `df` 为准）。正式 scale-out 前必须根据 PA1 实测：
 
 \[
 S_{\mathrm{total}}
@@ -1716,17 +1717,23 @@ PA0 人审
 
 # 19. 当前唯一下一步
 
-PA0 人审已完成。当前只执行：
+PA0 人审与唯一 scene split 已完成：
 
 ```text
-PA0-SCENE-SPLIT-01
-在 clean worktree materialize 唯一 scene split
+autoresearch-pa0-scene-split-s20260715-v1
+split fingerprint e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a
 → PA1-HORIZON-01
 ```
 
-在正式 split 落盘前禁止：
+当前唯一可执行的 GPU 工作是：
 
-- candidate generation；
+```text
+2 conditions × {8, 14} frames × Base guard only
+```
+
+在冻结 horizon 前禁止：
+
+- sibling / re-noise candidate generation；
 - DPO/AWR 实现；
 - 训练；
 - 切双卡；
@@ -1737,8 +1744,7 @@ PA0 已汇报并保留以下证据：
 ```text
 P-UNC human review
 CoTracker human review
-current HEAD/worktree
-fixed scene splits
-schema draft
-next gate：clean worktree 下的 PA0-SCENE-SPLIT-01；完成后才可进入 PA1-HORIZON-01
+clean `5713267` worktree
+materialized scene split 与 schema
+next gate：PA1-HORIZON-01；冻结帧数和 claim scope 后才可进入 PA1-BRANCH-02
 ```
