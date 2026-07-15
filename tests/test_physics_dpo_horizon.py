@@ -4,6 +4,7 @@ from typing import Any
 
 from motion_proj.data.physics_dpo_schema import build_scene_split
 from motion_proj.diagnostics.physics_dpo_horizon import (
+    _tensor_fingerprint,
     compare_score_repeatability,
     decide_horizon,
     select_profile_conditions,
@@ -52,6 +53,14 @@ def test_select_profile_conditions_uses_one_start_zero_clip_per_scene() -> None:
     assert len(selected) == 2
     assert len({row["scene_token"] for row in selected}) == 2
     assert all(row["start_index"] == 0 for row in selected)
+
+
+def test_tensor_fingerprint_supports_cpu_bfloat16_without_numeric_cast() -> None:
+    import torch
+
+    value = torch.tensor([1.0, -2.0, 3.5], dtype=torch.bfloat16)
+    assert _tensor_fingerprint(value) == _tensor_fingerprint(value.clone())
+    assert _tensor_fingerprint(value) != _tensor_fingerprint(value.to(torch.float32))
 
 
 def test_score_repeatability_rejects_missing_metric_without_zero_fill() -> None:

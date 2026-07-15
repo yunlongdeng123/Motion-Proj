@@ -78,7 +78,9 @@ def _tensor_fingerprint(value: torch.Tensor) -> str:
     digest = hashlib.sha256()
     digest.update(str(tensor.dtype).encode("utf-8"))
     digest.update(str(tuple(tensor.shape)).encode("utf-8"))
-    digest.update(tensor.numpy().tobytes())
+    # NumPy 不支持 CPU bfloat16；按连续 tensor 的底层字节哈希，保留 dtype/shape
+    # 前缀即可避免与其他解释方式混淆。
+    digest.update(tensor.view(torch.uint8).numpy().tobytes())
     return digest.hexdigest()
 
 
