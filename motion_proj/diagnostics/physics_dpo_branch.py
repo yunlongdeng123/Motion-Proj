@@ -61,7 +61,12 @@ from .physics_dpo_horizon import (
     fingerprint_denoising_trace,
     select_profile_conditions,
 )
-from .svd_conditioning_parity import _autocast, _base_model_fingerprint, _frames_to_tensor, trace_backbone_generation
+from .svd_conditioning_parity import (
+    _PipelineTrace,
+    _base_model_fingerprint,
+    _cpu_tensor,
+    trace_backbone_generation,
+)
 
 
 SEQUENCE_TRACE_FIELDS = (
@@ -269,7 +274,7 @@ def _prefix_trace_fingerprint(trace: Mapping[str, Any], fork_step: int) -> dict[
     }
 
 
-def _manual_state(
+def trace_backbone_generation_with_fork_perturbation(
     backbone: SVDBackbone,
     cond_frame: torch.Tensor,
     *,
@@ -278,134 +283,124 @@ def _manual_state(
     num_inference_steps: int,
     height: int,
     width: int,
-) -> dict[str, Any]:
-    """仅重建 official condition 与 scheduler；suffix 从现成 prefix latent 开始。"""
+    fork_step: int,
+    perturbation: torch.Tensor,
+) -> tuple[dict[str, Any], dict[str, torch.Tensor]]:
+    """在 official wrapper 的 step-end callback 内注入 branch latent。
+
+    这保留了 ``SVDBackbone.generate`` 的完整官方采样路径。扰动发生在第
+    ``fork_step`` 个 scheduler transition 刚完成之后；因此此前的 transition
+    逐项与 Base 相同，而后续 transition 使用实际注入后的 latent。它不试图
+    通过手动恢复 scheduler state 来拼接 suffix。
+    """
+    if int(fork_step) <= 0 or int(fork_step) >= int(num_inference_steps):
+        raise BranchPilotError("callback fork_step 必须严格位于 denoising chain 内部")
     pipe = backbone._generation_pipeline()
     pipe.set_progress_bar_config(disable=True)
-    settings = backbone.generation_settings()
-    if str(settings["protocol"]) != "svd_official_v1":
-        raise BranchPilotError("common-prefix 只支持 svd_official_v1")
-    device = torch.device(backbone.device)
-    pipe._guidance_scale = float(settings["max_guidance_scale"])
+    trace = _PipelineTrace(pipe)
+    injection: dict[str, torch.Tensor] = {}
     generator = torch.Generator(device=backbone.device).manual_seed(int(seed))
-    with torch.no_grad(), _autocast(backbone):
-        conditioning = backbone.build_official_generation_conditioning(
-            cond_frame, generator=generator, num_frames=int(num_frames), height=int(height), width=int(width),
+
+    def callback(_pipe: Any, index: int, timestep: Any, callback_kwargs: dict[str, Any]) -> dict[str, Any]:
+        values = dict(callback_kwargs)
+        if int(index) == int(fork_step) - 1:
+            original = values.get("latents")
+            if not isinstance(original, torch.Tensor):
+                raise BranchPilotError("official callback 未提供 latents，不能构造 common-prefix sibling")
+            delta = perturbation.detach().to(device=original.device, dtype=original.dtype)
+            if tuple(delta.shape) != tuple(original.shape):
+                raise BranchPilotError(
+                    f"branch perturbation shape 不匹配: {tuple(delta.shape)} vs {tuple(original.shape)}"
+                )
+            branched = (original + delta).to(dtype=original.dtype)
+            injection["pre_injection_latent"] = _cpu_tensor(original)
+            injection["actual_delta"] = _cpu_tensor(branched - original)
+            injection["post_injection_latent"] = _cpu_tensor(branched)
+            values["latents"] = branched
+        return trace.callback(_pipe, index, timestep, values)
+
+    with trace:
+        frames = backbone.generate(
+            cond_frame,
+            num_frames=int(num_frames),
+            num_inference_steps=int(num_inference_steps),
+            height=int(height),
+            width=int(width),
+            decode_chunk_size=4,
+            generator=generator,
+            callback_on_step_end=callback,
         )
-        pipe.scheduler.set_timesteps(int(num_inference_steps), device=device)
-        initial_latents = pipe.prepare_latents(
-            1,
-            int(num_frames),
-            int(pipe.unet.config.in_channels),
-            int(height),
-            int(width),
-            conditioning["image_embeds"].dtype,
-            device,
-            generator,
-        )
-    guidance = torch.linspace(
-        float(settings["min_guidance_scale"]), float(settings["max_guidance_scale"]), int(num_frames),
-        device=device, dtype=initial_latents.dtype,
-    ).unsqueeze(0)
-    guidance = guidance.repeat(1, 1)
-    while guidance.ndim < initial_latents.ndim:
-        guidance = guidance.unsqueeze(-1)
-    return {
-        "pipe": pipe,
-        "conditioning": conditioning,
-        "initial_latents": initial_latents,
-        "timesteps": pipe.scheduler.timesteps.detach().clone(),
-        "guidance": guidance,
-        "do_cfg": bool(float(settings["max_guidance_scale"]) > 1.0),
-        "num_frames": int(num_frames),
-        "num_inference_steps": int(num_inference_steps),
-        "decode_chunk_size": 4,
-    }
+    if len(trace.values["random_draws"]) < 2:
+        raise BranchPilotError("branch generation 未记录到 condition noise 与 initial latent 两次随机采样")
+    if set(injection) != {"pre_injection_latent", "actual_delta", "post_injection_latent"}:
+        raise BranchPilotError("official callback 未在预注册 fork step 注入 branch perturbation")
+    trace.values["condition_noise"] = trace.values["random_draws"][0]
+    trace.values["initial_latent_noise"] = trace.values["random_draws"][1]
+    trace.values["image_latents"] = trace.values["encoded_image_latents"].unsqueeze(1).repeat(
+        1, int(num_frames), 1, 1, 1,
+    )
+    trace.values["final_latent"] = trace.values["post_step_latents"][-1]
+    trace.values["decoded_frames"] = _cpu_tensor(frames)
+    return trace.values, injection
 
 
-def _run_suffix(
-    backbone: SVDBackbone,
-    state: Mapping[str, Any],
-    prefix_latent: torch.Tensor,
+def verify_shared_prefix_before_callback_injection(
+    official: Mapping[str, Any],
+    sibling: Mapping[str, Any],
+    injection: Mapping[str, torch.Tensor],
     *,
     fork_step: int,
 ) -> dict[str, Any]:
-    """从已完成的 prefix latent 恢复 Euler scheduler，并捕获 suffix 的逐步张量。"""
-    pipe = state["pipe"]
-    device = torch.device(backbone.device)
-    pipe.scheduler.set_timesteps(int(state["num_inference_steps"]), device=device)
-    if not hasattr(pipe.scheduler, "set_begin_index"):
-        raise BranchPilotError("当前 scheduler 不支持从 common prefix 恢复")
-    pipe.scheduler.set_begin_index(int(fork_step))
-    timesteps = pipe.scheduler.timesteps
-    if int(fork_step) >= len(timesteps):
-        raise BranchPilotError("fork_step 超出 scheduler timesteps")
-    latents = prefix_latent.detach().to(device=device, dtype=state["initial_latents"].dtype).contiguous()
-    values: dict[str, list[torch.Tensor]] = {name: [] for name in SEQUENCE_TRACE_FIELDS}
-    with torch.no_grad(), _autocast(backbone):
-        for time_index, timestep in enumerate(timesteps[int(fork_step):], start=int(fork_step)):
-            latent_model_input = torch.cat([latents] * 2) if bool(state["do_cfg"]) else latents
-            scaled = pipe.scheduler.scale_model_input(latent_model_input, timestep)
-            unet_input = torch.cat([scaled, state["conditioning"]["image_latents"]], dim=2)
-            raw = pipe.unet(
-                unet_input,
-                timestep,
-                encoder_hidden_states=state["conditioning"]["image_embeds"],
-                added_time_ids=state["conditioning"]["added_time_ids"],
-                return_dict=False,
-            )[0]
-            if bool(state["do_cfg"]):
-                uncond, conditional = raw.chunk(2)
-                cfg_output = uncond + state["guidance"] * (conditional - uncond)
-            else:
-                uncond = conditional = None
-                cfg_output = raw
-            stepped = pipe.scheduler.step(cfg_output, timestep, latents).prev_sample
-            values["scheduler_timesteps"].append(timestep.detach().cpu().clone())
-            values["scheduler_inputs"].append(latent_model_input.detach().cpu().clone())
-            values["scaled_model_inputs"].append(scaled.detach().cpu().clone())
-            values["unet_inputs"].append(unet_input.detach().cpu().clone())
-            values["raw_model_outputs"].append(raw.detach().cpu().clone())
-            if uncond is not None and conditional is not None:
-                values["unconditional_raw_model_outputs"].append(uncond.detach().cpu().clone())
-                values["conditional_raw_model_outputs"].append(conditional.detach().cpu().clone())
-            values["cfg_outputs"].append(cfg_output.detach().cpu().clone())
-            values["scheduler_step_outputs"].append(stepped.detach().cpu().clone())
-            values["post_step_latents"].append(stepped.detach().cpu().clone())
-            latents = stepped
-        decoded = pipe.decode_latents(latents, int(state["num_frames"]), int(state["decode_chunk_size"]))
-        pil_frames = pipe.video_processor.postprocess_video(video=decoded, output_type="pil")
-    if not values["post_step_latents"]:
-        raise BranchPilotError("common-prefix suffix 为空")
-    return {
-        **values,
-        "final_latent": values["post_step_latents"][-1],
-        "decoded_frames": _frames_to_tensor(pil_frames[0]),
-        "suffix_start_step": int(fork_step),
-        "suffix_end_step": len(timesteps),
-    }
+    """证明 sibling 在 callback 注入点之前逐项复现 official Base。
 
+    callback 的 ``post_step_latents[fork_step - 1]`` 是注入后的状态，因而此单一
+    记录位用 callback 保存的 *pre-injection* latent 替换后比较。scheduler 的
+    同一步 output 本身仍须 exact；第一个允许不同的 scheduler input 是下一步。
+    """
+    prefix = _prefix_trace_fingerprint(official, int(fork_step))
+    pre = injection.get("pre_injection_latent")
+    post = injection.get("post_injection_latent")
+    actual_delta = injection.get("actual_delta")
+    if not all(isinstance(value, torch.Tensor) for value in (pre, post, actual_delta)):
+        raise BranchPilotError("common-prefix verification 缺少 callback injection evidence")
+    assert isinstance(pre, torch.Tensor) and isinstance(post, torch.Tensor) and isinstance(actual_delta, torch.Tensor)
+    expected_prefix_latent = official["post_step_latents"][int(fork_step) - 1]
+    if _tensor_fingerprint(pre) != _tensor_fingerprint(expected_prefix_latent):
+        raise BranchPilotError("callback pre-injection latent 未 exact 匹配 official Base prefix")
+    observed_boundary = sibling.get("post_step_latents")
+    if not isinstance(observed_boundary, Sequence) or len(observed_boundary) < int(fork_step):
+        raise BranchPilotError("callback injection 后的 post-step trace 不完整")
+    if _tensor_fingerprint(post) != _tensor_fingerprint(observed_boundary[int(fork_step) - 1]):
+        raise BranchPilotError("callback injection 的 post-step latent 未写入 trace")
+    if tuple(pre.shape) != tuple(actual_delta.shape) or tuple(pre.shape) != tuple(post.shape):
+        raise BranchPilotError("callback injection evidence shape 不一致")
+    if not bool(torch.isfinite(actual_delta).all()):
+        raise BranchPilotError("callback actual perturbation 含 NaN/Inf")
 
-def _combine_prefix_and_suffix(base_trace: Mapping[str, Any], suffix: Mapping[str, Any], *, fork_step: int) -> dict[str, Any]:
-    trace: dict[str, Any] = {
-        "condition_noise": base_trace["condition_noise"],
-        "initial_video_latents": base_trace["initial_video_latents"],
-    }
+    for field in ("condition_noise", "initial_video_latents"):
+        if field not in sibling or _tensor_fingerprint(sibling[field]) != _tensor_fingerprint(official[field]):
+            raise BranchPilotError(f"common-prefix {field} 未 exact 匹配 official Base")
     for name in SEQUENCE_TRACE_FIELDS:
-        prefix = list(base_trace[name][:int(fork_step)])
-        continuation = list(suffix[name])
-        trace[name] = prefix + continuation
-    trace["final_latent"] = suffix["final_latent"]
-    trace["decoded_frames"] = suffix["decoded_frames"]
-    return trace
-
-
-def _assert_manual_continuation_exact(official: Mapping[str, Any], reconstructed: Mapping[str, Any]) -> dict[str, Any]:
-    official_hash = fingerprint_denoising_trace(official)
-    reconstructed_hash = fingerprint_denoising_trace(reconstructed)
-    if official_hash != reconstructed_hash:
-        raise BranchPilotError("common-prefix continuation 未能 exact 重构 official Base trace")
-    return official_hash
+        expected = official.get(name)
+        observed = sibling.get(name)
+        if not isinstance(expected, Sequence) or not isinstance(observed, Sequence):
+            raise BranchPilotError(f"common-prefix trace 字段不是 sequence: {name}")
+        if len(expected) < int(fork_step) or len(observed) < int(fork_step):
+            raise BranchPilotError(f"common-prefix trace 字段不足 fork step: {name}")
+        for step in range(int(fork_step)):
+            actual = pre if name == "post_step_latents" and step == int(fork_step) - 1 else observed[step]
+            if _tensor_fingerprint(actual) != _tensor_fingerprint(expected[step]):
+                raise BranchPilotError(f"common-prefix {name}[{step}] 未 exact 匹配 official Base")
+    return {
+        "verified": True,
+        "fork_step": int(fork_step),
+        "prefix_trace_hash": prefix["prefix_trace_hash"],
+        "prefix_latent_hash": prefix["prefix_latent_hash"],
+        "pre_injection_latent_hash": _tensor_fingerprint(pre),
+        "post_injection_latent_hash": _tensor_fingerprint(post),
+        "actual_delta_hash": _tensor_fingerprint(actual_delta),
+        "injection_semantics": "official_step_end_callback_after_transition",
+    }
 
 
 def _future_rgb_rms(left: torch.Tensor, right: torch.Tensor) -> float:
@@ -891,6 +886,12 @@ def _generate_condition_group(
     if official_hash != rerun_hash:
         raise BranchPilotError("PA1-BRANCH Base guard full denoising trace rerun 不 exact")
 
+    pipe = backbone._generation_pipeline()
+    pipe.scheduler.set_timesteps(int(branch.num_inference_steps), device=torch.device(backbone.device))
+    if not hasattr(pipe.scheduler, "sigmas") or len(pipe.scheduler.sigmas) <= fork_step:
+        raise BranchPilotError("official SVD scheduler 未提供预注册 fork 的 sigma")
+    sigma_at_fork = float(pipe.scheduler.sigmas[fork_step].detach().float().cpu())
+
     independent_seed = int(generation_seed) + int(branch.independent_seed_offset)
     independent_trace = trace_backbone_generation(
         backbone,
@@ -902,14 +903,6 @@ def _generate_condition_group(
 
     prefix = _prefix_trace_fingerprint(official, fork_step)
     prefix_latent = official["post_step_latents"][fork_step - 1]
-    state = _manual_state(backbone, condition_frame.to(backbone.device), **common)
-    if not torch.equal(state["initial_latents"].detach().cpu(), official["initial_video_latents"]):
-        raise BranchPilotError("manual continuation 的 initial latent 未匹配 official Base")
-    if not torch.equal(state["conditioning"]["condition_noise"].detach().cpu(), official["condition_noise"]):
-        raise BranchPilotError("manual continuation 的 condition noise 未匹配 official Base")
-    manual_suffix = _run_suffix(backbone, state, prefix_latent, fork_step=fork_step)
-    reconstructed_base = _combine_prefix_and_suffix(official, manual_suffix, fork_step=fork_step)
-    manual_hash = _assert_manual_continuation_exact(official, reconstructed_base)
 
     root = work_dir / "candidates" / str(condition["condition_id"])
     base_dir = root / "base_guard"
@@ -920,15 +913,15 @@ def _generate_condition_group(
         "fork_step": fork_step,
         "official_trace": official_hash,
         "rerun_trace": rerun_hash,
-        "manual_continuation_trace": manual_hash,
         "base_guard_exact": True,
         "prefix": prefix,
+        "branch_injection_semantics": "official_step_end_callback_after_transition",
     }
     base_video, base_vae, base_storage = _write_candidate_artifact(
         backbone=backbone,
         artifact_dir=base_dir,
-        frames=reconstructed_base["decoded_frames"],
-        trace=reconstructed_base,
+        frames=official["decoded_frames"],
+        trace=official,
         trace_payload=base_trace_payload,
         fps=fps,
     )
@@ -972,30 +965,40 @@ def _generate_condition_group(
     )
 
     candidates = [base_record]
-    frames_by_candidate: dict[str, torch.Tensor] = {base_id: reconstructed_base["decoded_frames"].detach().cpu()}
+    frames_by_candidate: dict[str, torch.Tensor] = {base_id: official["decoded_frames"].detach().cpu()}
     vae_by_candidate: dict[str, torch.Tensor] = {base_id: base_vae}
     perturbations = make_antithetic_perturbations(
         prefix_latent,
-        sigma_at_fork=float(state["pipe"].scheduler.sigmas[fork_step]),
+        sigma_at_fork=sigma_at_fork,
         strength_rho=float(branch.strength_rho),
         direction_seed=int(direction_seed),
     )
     actual_rms: list[float] = []
     actual_means: list[float] = []
     for branch_name, perturbation in sorted(perturbations.items()):
-        delta = perturbation["theoretical_delta"].to(device=backbone.device, dtype=prefix_latent.dtype)
-        branched_latent = (prefix_latent.to(backbone.device, dtype=prefix_latent.dtype) + delta).to(prefix_latent.dtype)
-        actual = branched_latent.detach().cpu().float() - prefix_latent.detach().cpu().float()
-        actual_rms.append(_rms(actual))
-        actual_means.append(abs(float(actual.mean())))
+        delta = perturbation["theoretical_delta"]
         _reset_peak_memory(str(backbone.device))
         sibling_started = time.perf_counter()
-        suffix = _run_suffix(backbone, state, branched_latent, fork_step=fork_step)
+        full_trace, injection = trace_backbone_generation_with_fork_perturbation(
+            backbone,
+            condition_frame.to(backbone.device),
+            **common,
+            fork_step=fork_step,
+            perturbation=delta,
+        )
         _sync_cuda(str(backbone.device))
         sibling_seconds = time.perf_counter() - sibling_started
         sibling_peak = _peak_memory_bytes(str(backbone.device))
-        full_trace = _combine_prefix_and_suffix(official, suffix, fork_step=fork_step)
         full_hash = fingerprint_denoising_trace(full_trace)
+        shared_prefix = verify_shared_prefix_before_callback_injection(
+            official,
+            full_trace,
+            injection,
+            fork_step=fork_step,
+        )
+        actual = injection["actual_delta"].detach().cpu().float()
+        actual_rms.append(_rms(actual))
+        actual_means.append(abs(float(actual.mean())))
         if not bool(torch.isfinite(full_trace["decoded_frames"]).all()):
             raise BranchPilotError("sibling decoded frames 包含 NaN/Inf")
         group_index = int(perturbation["group_index"])
@@ -1009,6 +1012,7 @@ def _generate_condition_group(
             "fork_fraction": float(branch.fork_fraction),
             "fork_step": fork_step,
             "prefix": prefix,
+            "shared_prefix_verification": shared_prefix,
             "full_trace": full_hash,
             "perturbation": {
                 "direction_hash": perturbation["direction_hash"],
@@ -1016,7 +1020,7 @@ def _generate_condition_group(
                 "theoretical_mean": perturbation["theoretical_mean"],
                 "actual_rms": actual_rms[-1],
                 "actual_mean": float(actual.mean()),
-                "sigma_at_fork": float(state["pipe"].scheduler.sigmas[fork_step]),
+                "sigma_at_fork": sigma_at_fork,
                 "strength_rho": float(branch.strength_rho),
             },
         }
@@ -1073,12 +1077,12 @@ def _generate_condition_group(
     details = {
         "condition_id": condition["condition_id"],
         "base_guard_exact": True,
-        "manual_continuation_exact": True,
+        "common_prefix_callback_verified": True,
         "generation_seed": int(generation_seed),
         "independent_seed": independent_seed,
         "fork_step": fork_step,
         "fork_fraction": float(branch.fork_fraction),
-        "sigma_at_fork": float(state["pipe"].scheduler.sigmas[fork_step]),
+        "sigma_at_fork": sigma_at_fork,
         "actual_perturbation_rms_relative_gap": perturbation_gap,
         "actual_perturbation_max_abs_mean": max(actual_means, default=math.inf),
         "independent_diagnostic": {
@@ -1342,7 +1346,7 @@ def run_physics_dpo_branch(cfg: Any) -> dict[str, Any]:
                 "event": "condition_generated",
                 "condition_id": condition["condition_id"],
                 "base_guard_exact": True,
-                "manual_continuation_exact": True,
+                "common_prefix_callback_verified": True,
                 "actual_perturbation_rms_relative_gap": detail["actual_perturbation_rms_relative_gap"],
             })
 

@@ -1,0 +1,7 @@
+defaults_chain:
+  - ./physics_dpo_branch.yaml
+
+# v1 的手动 scheduler continuation 未通过 exact Base guard；该失败 run 保留。
+# v2 仅替换为 official step-end callback 注入，family/fork/strength/conditions 均不变。
+run_id: autoresearch-pa1-branch-s20260715-v2
+work_dir: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v2

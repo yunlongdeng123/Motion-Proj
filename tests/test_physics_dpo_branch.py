@@ -1,13 +1,17 @@
 from __future__ import annotations
 
+import pytest
 import torch
 
 from motion_proj.diagnostics.physics_dpo_branch import (
+    BranchPilotError,
+    SEQUENCE_TRACE_FIELDS,
     calibrated_future_distance,
     choose_calibration_action,
     make_antithetic_perturbations,
     resolve_fork_step,
     track_correspondence,
+    verify_shared_prefix_before_callback_injection,
 )
 from motion_proj.eval.independent_tracks import IndependentTrackState
 
@@ -111,3 +115,53 @@ def test_calibration_action_is_sequential_not_grid_search() -> None:
         any_structure_mismatch=True,
         any_other_failure=True,
     ) == "adjust_fork_to_0.8"
+
+
+def _trace_for_prefix_test() -> dict[str, object]:
+    trace: dict[str, object] = {
+        "condition_noise": torch.full((1, 2), 3.0),
+        "initial_video_latents": torch.full((1, 2), 4.0),
+    }
+    for field_index, field in enumerate(SEQUENCE_TRACE_FIELDS):
+        trace[field] = [
+            torch.full((1, 2), float(field_index * 10 + step))
+            for step in range(3)
+        ]
+    return trace
+
+
+def test_common_prefix_verification_substitutes_only_callback_boundary_latent() -> None:
+    official = _trace_for_prefix_test()
+    sibling: dict[str, object] = {
+        "condition_noise": official["condition_noise"].clone(),  # type: ignore[union-attr]
+        "initial_video_latents": official["initial_video_latents"].clone(),  # type: ignore[union-attr]
+    }
+    for field in SEQUENCE_TRACE_FIELDS:
+        sibling[field] = [item.clone() for item in official[field]]  # type: ignore[index,union-attr]
+    pre = official["post_step_latents"][1].clone()  # type: ignore[index,union-attr]
+    actual_delta = torch.full_like(pre, 0.25)
+    post = pre + actual_delta
+    sibling["post_step_latents"][1] = post  # type: ignore[index]
+    injection = {
+        "pre_injection_latent": pre,
+        "actual_delta": actual_delta,
+        "post_injection_latent": post,
+    }
+
+    result = verify_shared_prefix_before_callback_injection(
+        official,
+        sibling,
+        injection,
+        fork_step=2,
+    )
+    assert result["verified"] is True
+    assert result["injection_semantics"] == "official_step_end_callback_after_transition"
+
+    sibling["scheduler_inputs"][1] = sibling["scheduler_inputs"][1] + 1  # type: ignore[index,operator]
+    with pytest.raises(BranchPilotError, match="scheduler_inputs"):
+        verify_shared_prefix_before_callback_injection(
+            official,
+            sibling,
+            injection,
+            fork_step=2,
+        )

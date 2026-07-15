@@ -1,4 +1,4 @@
-# PA1-BRANCH-02 v1：common-prefix sibling pilot
+# PA1-BRANCH-02 v2：common-prefix sibling pilot
 
 ## 已冻结输入
 
@@ -6,11 +6,11 @@
 - scene split：`e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a`
 - PA1 horizon v3 profile：`70f7591b1599c5d4df7cc56a92fad66747e437dc1af331dcce5b71816563adfd`
 - horizon decision：14 frames；peak 5.8049 GB；相对 8-frame generation slowdown 1.5799×。
-- formal config：`configs/diagnostics/physics_dpo_branch.yaml`，fingerprint `a4fdfbbb6d44d3d810f89b47dbd1e32591faffc469c3f639e507852a01f9c302`。
+- formal config：`configs/diagnostics/physics_dpo_branch_v2.yaml`（继承 v1 的全部研究参数，只改变 run ID 与 callback 注入实现）。
 
 本 protocol 只构造候选；不使用 future GT、P1 projected/hybrid target、训练 cache、LoRA update、DPO/AWR 或双卡。
 
-## v1 的最小离散校准
+## v2 的最小离散校准
 
 ```text
 family = common_prefix
@@ -22,7 +22,9 @@ conditions = preference_dev 的前 4 个 start_index=0、不同 scene clip
 siblings = two antithetic groups × {positive, negative}
 ```
 
-每个 condition 先由 `svd_official_v1` 生成 Base guard，并执行 full-trace exact rerun。随后以该 official trace 的第 15 个 post-step latent 为 prefix；手动 suffix 必须重新得到同一条 Base full trace，才允许生成 sibling。两个方向由固定 seed 的零均值方向和其 permutation 构成，正负成对；理论 RMS 完全相等，实际 bf16 注入 RMS/均值另行记录并 gate。
+每个 condition 先由 `svd_official_v1` 生成 Base guard，并执行 full-trace exact rerun。每条 sibling 随后用同一个 official `SVDBackbone.generate` wrapper、同一 condition/seed/25-step trajectory 重跑；在第 15 个 transition 完成后的官方 `callback_on_step_end` 内注入扰动。callback 保存 pre-injection latent，并逐项核验此前 condition noise、initial latent、scheduler/unet trace 与 Base exact 一致；boundary 的 post-step latent 用保存的 pre-injection 值比较。第 16 个 transition 是第一个允许不同的 scheduler input。该实现不手动恢复 scheduler state，也不拼接 suffix。
+
+v1 的手动 scheduler continuation 在首个 condition 未能 exact 重构 official Base trace，已保留为失败工程证据；未写入候选、score、pair 或训练结论。v2 仅替换上述生成实现，family、fork、strength、conditions、阈值和审查规则均冻结不变。
 
 为检验候选距离的上界，每个 condition 有一个不同 seed 的 diagnostic rollout。它只写入 `diagnostic_independent/`，从不进入 `candidate_manifest.jsonl`、pair、winner 或训练集。
 
