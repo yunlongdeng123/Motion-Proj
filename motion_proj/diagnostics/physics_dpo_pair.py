@@ -289,12 +289,25 @@ def _validate_pa1(cfg: Any) -> dict[str, Any]:
 
 def _validate_pair_config(cfg: Any) -> None:
     pair = cfg.pair
+    mode = str(pair.mode)
+    if mode not in {"formal", "extension", "smoke"}:
+        raise PairPilotError(f"未知 PA2 mode: {mode}")
     if str(cfg.model.generation.protocol) != "svd_official_v1" or bool(cfg.model.lora.enable):
         raise PairPilotError("PA2 只允许冻结 Base svd_official_v1")
-    if int(pair.num_inference_steps) != 25 or int(pair.condition_count) not in {1, 64}:
-        raise PairPilotError("PA2 只允许 25 steps，formal=64 conditions 或独立 1-condition smoke")
-    if not bool(pair.smoke) and int(pair.condition_count) != 64:
-        raise PairPilotError("PA2 formal 必须使用已登记的 64 conditions")
+    if int(pair.num_inference_steps) != 25:
+        raise PairPilotError("PA2 只允许 25 steps")
+    expected = {
+        "formal": {"smoke": False, "offset": 0, "count": 64, "minimum": 48, "reviews": 48},
+        "extension": {"smoke": False, "offset": 64, "count": 56, "minimum": 0, "reviews": 0},
+        "smoke": {"smoke": True, "offset": 0, "count": 1, "minimum": 0, "reviews": 1},
+    }[mode]
+    observed = {
+        "smoke": bool(pair.smoke), "offset": int(pair.condition_offset),
+        "count": int(pair.condition_count), "minimum": int(pair.minimum_valid_pairs),
+        "reviews": int(pair.review.required_cases),
+    }
+    if observed != expected:
+        raise PairPilotError(f"PA2 {mode} 规模未按预注册值冻结: observed={observed}, expected={expected}")
     if int(cfg.data.num_frames) != 14 or int(cfg.model.num_frames) != 14:
         raise PairPilotError("PA2 必须使用 PA1 冻结的 14 frames")
     if str(pair.condition_partition) != "preference_train":
@@ -307,9 +320,21 @@ def _validate_pair_config(cfg: Any) -> None:
         raise PairPilotError("P2 Base re-noise 对照必须恰好生成两个候选")
     if int(pair.review.required_cases) != int(pair.review.p1_cases) + int(pair.review.p0_cases) + int(pair.review.p2_cases):
         raise PairPilotError("PA2 review strata 数必须恰好等于 required_cases")
-    if not bool(pair.smoke):
-        if int(pair.review.required_cases) != 48 or int(pair.minimum_valid_pairs) != 48:
-            raise PairPilotError("PA2 formal 必须使用 48 valid pairs 与 48-case review")
+    if mode == "formal" and (int(pair.review.required_cases) != 48 or int(pair.minimum_valid_pairs) != 48):
+        raise PairPilotError("PA2 formal 必须使用 48 valid pairs 与 48-case review")
+
+
+def _select_pair_conditions(split: Mapping[str, Any], pair: Any) -> list[dict[str, Any]]:
+    offset = int(pair.condition_offset)
+    count = int(pair.condition_count)
+    selected = select_profile_conditions(
+        split, partition=str(pair.condition_partition), condition_count=offset + count,
+        required_start_index=int(pair.required_start_index),
+    )
+    result = [dict(row) for row in selected[offset:offset + count]]
+    if len(result) != count:
+        raise PairPilotError("PA2 condition offset/count 无法从冻结 split 满足")
+    return result
 
 
 def preflight_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
@@ -325,11 +350,8 @@ def preflight_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
         split, split_provenance = _load_scene_split(cfg.pair)
         result["scene_split"] = split_provenance
         result["pa0"] = _validate_pa0(cfg.pair)
-        result["selected_conditions"] = select_profile_conditions(
-            split, partition=str(cfg.pair.condition_partition), condition_count=int(cfg.pair.condition_count),
-            required_start_index=int(cfg.pair.required_start_index),
-        )
-        if not bool(cfg.pair.smoke):
+        result["selected_conditions"] = _select_pair_conditions(split, cfg.pair)
+        if str(cfg.pair.mode) == "formal":
             evaluator = CoTracker3IndependentEvaluator(dict(cfg.branch.evaluator))
             result["independent_evaluator"] = evaluator.preflight()
             if not bool(result["independent_evaluator"].get("available")):
@@ -548,10 +570,20 @@ def _constructor_coverage(
     }
 
 
-def _machine_status(*, smoke: bool, checks: Mapping[str, Any]) -> str:
+def _machine_status(*, mode: str, checks: Mapping[str, Any]) -> str:
     if not all(bool(value) for value in checks.values()):
         return "blocked"
-    return "done" if smoke else "awaiting_reviews"
+    return "awaiting_reviews" if mode == "formal" else "done"
+
+
+def _next_gate(*, mode: str, status: str) -> str:
+    if mode == "formal" and status == "awaiting_reviews":
+        return "PA2 human review"
+    if mode == "smoke" and status == "done":
+        return "PA2 formal"
+    if mode == "extension" and status == "done":
+        return "PA2 expanded merge"
+    return "PA2-PAIR-03"
 
 
 def _blind_segment_label(
@@ -777,10 +809,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
     horizon = _load_horizon_provenance(cfg.pair)
     split_manifest, split_provenance = _load_scene_split(cfg.pair)
     pa0 = _validate_pa0(cfg.pair)
-    selected = select_profile_conditions(
-        split_manifest, partition=str(cfg.pair.condition_partition), condition_count=int(cfg.pair.condition_count),
-        required_start_index=int(cfg.pair.required_start_index),
-    )
+    selected = _select_pair_conditions(split_manifest, cfg.pair)
     cfg_fp = config_fingerprint(cfg)
     work_dir.mkdir(parents=True, exist_ok=False)
     manifest = RunManifest(
@@ -792,6 +821,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
         "task_id": str(cfg.pair.task_id), "status": "running", "uses_future_gt": False, "training": False,
         "pa1_branch": pa1, "horizon": horizon, "scene_split": split_provenance, "pa0_review": pa0,
         "condition_selection_rule": {"partition": str(cfg.pair.condition_partition), "condition_count": int(cfg.pair.condition_count),
+                                     "condition_offset": int(cfg.pair.condition_offset),
                                      "required_start_index": int(cfg.pair.required_start_index),
                                      "ordering": "one start-index-matched clip per scene; ascending (scene_token, clip_id)"},
     }
@@ -1013,7 +1043,8 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             "minimum_non_tie_segment_conditions": len(decisive_segment_conditions) >= int(cfg.pair.minimum_valid_pairs),
             "three_constructor_comparison": bool(constructor_coverage["pass"]),
         }
-        status = _machine_status(smoke=bool(cfg.pair.smoke), checks=checks)
+        mode = str(cfg.pair.mode)
+        status = _machine_status(mode=mode, checks=checks)
         review_materials = None
         make_review_materials = status == "awaiting_reviews" or bool(
             cfg.pair.smoke and cfg.pair.review.material_smoke
@@ -1037,7 +1068,7 @@ def run_physics_dpo_pair(cfg: Any) -> dict[str, Any]:
             "constructor_summary": constructor_summary, "constructor_coverage": constructor_coverage,
             "machine": {"machine_pass": all(checks.values()), "checks": checks},
             "review_materials": review_materials,
-            "scorer_fingerprint": scorer_fingerprint, "next_gate": "PA2 human review" if status == "awaiting_reviews" else "PA2 formal" if bool(cfg.pair.smoke) else "PA2-PAIR-03",
+            "scorer_fingerprint": scorer_fingerprint, "next_gate": _next_gate(mode=mode, status=status),
             "uses_future_gt": False,
         }
         atomic_write_json(str(work_dir / "machine_summary.json"), summary)

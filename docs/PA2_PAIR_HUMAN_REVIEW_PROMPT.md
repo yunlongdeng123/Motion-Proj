@@ -5,7 +5,7 @@
 评测目录固定为：
 
 ```text
-/root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1
+/root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1
 ```
 
 共评测 `pa2-pair-review-000` 至 `pa2-pair-review-047`，必须完成 48 个 case。每个 case 是同一 condition 下的 A/B 两条真实 SVD rollout；A/B 顺序已按固定 seed 随机化。
@@ -130,8 +130,8 @@ overlay 只来自已通过 E0 的独立 CoTracker3 first-frame grid，不复用 
 
 ```bash
 cd /root/autodl-tmp/motion_proj
-cp /root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1/reviews.template.jsonl \
-   /root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1/reviews.jsonl
+cp /root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1/reviews.template.jsonl \
+   /root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1/reviews.jsonl
 ```
 
 每行对应一个 case，不得增删、重复或改写 `case_id`。JSON key 中的小写 `a/b` 对应视频上的大写 A/B。最终每行格式为：
@@ -155,8 +155,8 @@ cp /root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1/reviews.template.jso
 ```bash
 cd /root/autodl-tmp/motion_proj
 /root/autodl-tmp/envs/motionproj/bin/python \
-  -m motion_proj.diagnostics.physics_dpo_pair \
-  --config configs/diagnostics/physics_dpo_pair.yaml \
+  -m motion_proj.diagnostics.physics_dpo_pair_merge \
+  --config configs/diagnostics/physics_dpo_pair_merge.yaml \
   --aggregate-only
 ```
 

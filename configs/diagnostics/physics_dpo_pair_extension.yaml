@@ -1,0 +1,27 @@
+defaults_chain:
+  - ./physics_dpo_pair.yaml
+
+# v1 的 64 conditions 已完整保留；这里只追加排序后的 [64,120) 条件，不重生成前 64 条。
+run_id: autoresearch-pa2-pair-extension-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa2-pair-extension-s20260715-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+pair:
+  task_id: PA2-PAIR-EXT-03
+  mode: extension
+  smoke: false
+  condition_offset: 64
+  condition_count: 56
+  minimum_valid_pairs: 0
+  generation_seed_start: 2026071665
+  direction_seed_start: 2026071765
+  review:
+    material_smoke: false
+    required_cases: 0
+    p1_cases: 0
+    p0_cases: 0
+    p2_cases: 0
+    minimum_decisive_agreement_cases: 0

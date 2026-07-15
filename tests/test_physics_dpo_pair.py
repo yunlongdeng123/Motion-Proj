@@ -11,8 +11,10 @@ from motion_proj.diagnostics import physics_dpo_pair as pair_module
 from motion_proj.diagnostics.physics_dpo_pair import (
     _constructor_coverage,
     _machine_status,
+    _next_gate,
     make_renoise_delta,
 )
+from motion_proj.diagnostics.physics_dpo_pair_merge import PairMergeError, _unique
 from motion_proj.preference.pair_scoring import (
     candidate_feasibility,
     decide_global_pair,
@@ -216,9 +218,11 @@ def test_constructor_coverage_uses_two_raw_p1_pairs_per_condition() -> None:
 
 
 def test_smoke_status_cannot_mask_failed_machine_check() -> None:
-    assert _machine_status(smoke=True, checks={"schema": True, "coverage": True}) == "done"
-    assert _machine_status(smoke=True, checks={"schema": True, "coverage": False}) == "blocked"
-    assert _machine_status(smoke=False, checks={"schema": True}) == "awaiting_reviews"
+    assert _machine_status(mode="smoke", checks={"schema": True, "coverage": True}) == "done"
+    assert _machine_status(mode="smoke", checks={"schema": True, "coverage": False}) == "blocked"
+    assert _machine_status(mode="formal", checks={"schema": True}) == "awaiting_reviews"
+    assert _machine_status(mode="extension", checks={"schema": True}) == "done"
+    assert _next_gate(mode="extension", status="done") == "PA2 expanded merge"
 
 
 def test_review_pair_selection_is_seeded_and_stratified() -> None:
@@ -289,3 +293,9 @@ def test_stage_b_change_requires_human_reason(tmp_path) -> None:
             "minimum_agreement_rate": 0.75, "minimum_wilson_lower_bound": 0.0,
             "maximum_low_motion_collapse": 0, "maximum_catastrophic_quality_failures": 0,
         })
+
+
+def test_append_only_merge_rejects_duplicate_ids() -> None:
+    assert set(_unique([{"condition_id": "c0"}, {"condition_id": "c1"}], "condition_id", "condition")) == {"c0", "c1"}
+    with pytest.raises(PairMergeError, match="重复"):
+        _unique([{"condition_id": "c0"}, {"condition_id": "c0"}], "condition_id", "condition")

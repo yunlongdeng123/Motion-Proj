@@ -1,0 +1,23 @@
+defaults_chain:
+  - ./physics_dpo_pair.yaml
+
+# 合并首批 64 条与 append-only 56 条；只在合并门禁通过后对抽中 pair 解码 MP4 并生成 review。
+run_id: autoresearch-pa2-pair-expanded-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+merge:
+  task_id: PA2-PAIR-MERGE-03
+  expected_condition_count: 120
+  minimum_valid_pairs: 48
+  fps: 7
+  sources:
+    - path: /root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1
+      expected_task: PA2-PAIR-03
+      expected_status: blocked
+    - path: /root/autodl-tmp/runs/autoresearch-pa2-pair-extension-s20260715-v1
+      expected_task: PA2-PAIR-EXT-03
+      expected_status: done
