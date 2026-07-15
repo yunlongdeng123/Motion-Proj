@@ -162,6 +162,10 @@ def _punc_score(
     uncertainty_floor = float(constrained["uncertainty_floor_px"])
     uncertainty_scale = float(constrained["uncertainty_confidence_scale_px"])
     for index, (original, projected) in enumerate(zip(state.tracks, punc.tracks)):
+        # RAFT provider 可在 CUDA 上保留原轨迹，而 projector validity 会克隆到 CPU。
+        # scorer 是离线诊断，统一到 CPU 后再组合 mask，避免隐式跨设备并保持可复现。
+        original_center = original.center.detach().cpu().float()
+        projected_center = projected.center.detach().cpu().float()
         present = original.present.detach().cpu().bool()
         projected_present = projected.present.detach().cpu().bool()
         visibility_changed += int((present != projected_present).sum())
@@ -170,10 +174,10 @@ def _punc_score(
         visible = torch.nonzero(present, as_tuple=False).flatten()
         if int(visible.numel()) >= 2:
             first, last = int(visible[0]), int(visible[-1])
-            displacement.append(float(torch.linalg.vector_norm(original.center[last] - original.center[first])))
+            displacement.append(float(torch.linalg.vector_norm(original_center[last] - original_center[first])))
         for time in range(1, frame_count):
             if bool(present[time - 1] & present[time]):
-                motion_sum[time] += float(torch.linalg.vector_norm(original.center[time] - original.center[time - 1]))
+                motion_sum[time] += float(torch.linalg.vector_norm(original_center[time] - original_center[time - 1]))
                 motion_count[time] += 1
         uncertainty = punc.uncertainty[index].detach().cpu().float().clamp_min(1.0e-8)
         if uncertainty_scale > 0:
@@ -184,15 +188,15 @@ def _punc_score(
             continue
         primary_tracks += 1
         corrected = punc.corrected[index].detach().cpu().bool() & present & projected_present
-        valid = corrected & torch.isfinite(original.center).all(dim=-1) & torch.isfinite(projected.center).all(dim=-1)
+        valid = corrected & torch.isfinite(original_center).all(dim=-1) & torch.isfinite(projected_center).all(dim=-1)
         if bool(valid.any()):
-            delta = torch.linalg.vector_norm(projected.center[valid] - original.center[valid], dim=-1)
+            delta = torch.linalg.vector_norm(projected_center[valid] - original_center[valid], dim=-1)
             normalized_squared = (delta / uncertainty[valid]).square()
             for time, value in zip(torch.nonzero(valid, as_tuple=False).flatten().tolist(), normalized_squared.tolist()):
                 energy_sum[time] += float(value)
                 energy_count[time] += 1
         if bool(present[0] & projected_present[0]):
-            frame0_corrections.append(float(torch.linalg.vector_norm(projected.center[0] - original.center[0])))
+            frame0_corrections.append(float(torch.linalg.vector_norm(projected_center[0] - original_center[0])))
     total_points = sum(energy_count)
     projection_by_frame = [energy_sum[index] / energy_count[index] if energy_count[index] else None for index in range(frame_count)]
     track_count = len(state.tracks)

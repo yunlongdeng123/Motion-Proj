@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import torch
 
+from motion_proj.auditor.state import Track
+from motion_proj.diagnostics import physics_dpo_pair as pair_module
 from motion_proj.diagnostics.physics_dpo_pair import make_renoise_delta
 from motion_proj.preference.pair_scoring import (
     candidate_feasibility,
@@ -152,3 +156,35 @@ def test_renoise_delta_reconstructs_normalized_seeded_noise() -> None:
     assert abs(float(torch.sqrt(torch.mean(recovered_noise.square()))) - 1.0) < 1.0e-6
     assert abs(diagnostics["epsilon_mean"]) < 1.0e-6
     assert abs(diagnostics["epsilon_rms"] - 1.0) < 1.0e-6
+
+
+def test_punc_score_normalizes_mixed_track_devices(monkeypatch) -> None:
+    original_device = "cuda" if torch.cuda.is_available() else "cpu"
+    original_xyxy = torch.tensor(
+        [[-1.0, -1.0, 1.0, 1.0], [0.0, -1.0, 2.0, 1.0], [3.0, -1.0, 5.0, 1.0],
+         [2.0, -1.0, 4.0, 1.0], [3.0, -1.0, 5.0, 1.0]],
+        device=original_device,
+    )
+    projected_xyxy = original_xyxy.detach().cpu().clone()
+    projected_xyxy[2, [0, 2]] -= 2.0
+    present = torch.ones(5, dtype=torch.bool, device=original_device)
+    original = Track("track", "generated/dynamic_residual", original_xyxy, torch.ones(5, device=original_device), present)
+    projected = Track("track", "generated/dynamic_residual", projected_xyxy, torch.ones(5), torch.ones(5, dtype=torch.bool))
+    state = SimpleNamespace(
+        tracks=[original], confidence=torch.ones(1, 5, device=original_device), diagnostics={}, uses_future_gt=False,
+    )
+    punc = SimpleNamespace(
+        tracks=[projected], uncertainty=[torch.ones(5)], corrected=[torch.tensor([False, False, True, False, False])],
+    )
+    monkeypatch.setattr(pair_module, "build_candidate_tracks", lambda *args, **kwargs: {"P-UNC": punc})
+    provider = SimpleNamespace(track=lambda frames: state)
+
+    score, quality = pair_module._punc_score(
+        torch.zeros(5, 3, 8, 8), provider,
+        {"constrained": {"uncertainty_floor_px": 0.25, "uncertainty_confidence_scale_px": 1.5}},
+    )
+
+    assert score["projection_points"] == 1
+    assert score["projection_energy"] == 4.0
+    assert score["uses_future_gt"] is False
+    assert quality["finite"] is True
