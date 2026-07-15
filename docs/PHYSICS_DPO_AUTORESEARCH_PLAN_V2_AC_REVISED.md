@@ -4,7 +4,7 @@
 > **决策日期**：2026-07-14
 > **计划基线**：`16b6975`，执行前必须重新核对当前 `HEAD`、分支和 worktree。
 > **当前硬件**：单张 RTX 4090 24 GB；仅在单卡筛选门槛通过后，由用户执行一次停机并切换为双 RTX 4090。
-> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 done`、`PA1-BRANCH-02 done`。PA1 v3 以 clean `57987b0` 完成 2 condition × {8,14} 的 exact Base guard profile；14 帧通过预注册资源门槛，已冻结为后续 preference 数据帧数，claim scope 仍为 **short-horizon dynamics alignment**。`PA1-BRANCH-02` v1 的手动 scheduler continuation 被 exact Base safety gate 拦下；v2 是 schema RMS 尾差实现失败；v3/v4 均完成 20 candidate + CoTracker，但 scene-0126 的全部 sibling future distance 仍低于下界、scene-1102 Base track coverage 低于硬门槛，machine gate 均为 2/4、4/8。v5 以 clean `0e11515` 在相同 condition/family/fork/gate 下完成最后一档 `rho=0.04`：future-distance 校准通过，machine gate 为 3/4 condition、6/8 antithetic groups；人工结构盲审为 8/8 `same_scene`，按修复后的聚合器 `002b616` 完成并解锁 `PA2-PAIR-03`。PA2 依用户要求扩大为 64 个 condition 与至少 48 个 pair 的完整盲审；仍不授权 DPO/AWR、训练或切换双卡。
+> **当前状态**：`PA0-REVIEW-00 done`、`PA0-SCENE-SPLIT-01 done`、`PA1-HORIZON-01 done`、`PA1-BRANCH-02 done`。PA1 v3 以 clean `57987b0` 完成 2 condition × {8,14} 的 exact Base guard profile；14 帧通过预注册资源门槛，已冻结为后续 preference 数据帧数，claim scope 仍为 **short-horizon dynamics alignment**。`PA1-BRANCH-02` v5 以 clean `0e11515` 完成最后一档 `rho=0.04`，machine gate 为 3/4 condition、6/8 antithetic groups；8/8 人工结构盲审为 `same_scene`，由聚合修复 `002b616` 解锁 `PA2-PAIR-03`。PA2 已完成 1-condition 实链 smoke：v1/v2 分别保留 deterministic CUDA median 与 scorer device mismatch 的失败证据，v3 暴露 constructor coverage 计数缺陷，v4 在 `6934c3b` 达到 machine 4/4 checks，v5 在 `9d10f3e` 进一步真实生成 Stage A/B + CoTracker3 review 材料并通过可解码/盲法审计。当前唯一动作是以单卡运行 64-condition formal；其 aggregate 通过前仍不授权 DPO/AWR、训练或切换双卡。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **取代范围**：取代旧计划中未来关于 reward/DPO/AWR 的禁止性排程，不修改 V1/V2、F0、F1、P1 等历史负结论。
 > **目标投稿**：CVPR/ICCV 级视觉顶会；方法必须落在真实 RGB 驾驶视频生成、时序运动和物理一致性上。
@@ -1144,6 +1144,17 @@ P2 Base re-noise structural
 ```
 
 PA2 只比较 pair 合法性，不训练。
+
+### 已登记的 PA2 smoke
+
+`autoresearch-pa2-pair-smoke-s20260715-v1` 在首个真实 P-UNC 打分处被 CUDA
+`median-with-indices` 与 deterministic algorithms 的冲突拦截；v2 修复后又在 RAFT CUDA 原轨迹与
+projector CPU clone 的 finite mask 组合处发现 device mismatch。两次均保留 `FAILED`，不构成方法结论。
+v3 跑通候选与 scorer，但发现检查器把每 condition 的两个 raw P1 antithetic pair 错按一个计数；v4
+将 P0:P1:P2 严格核为 1:2:1，并输出训练 schema 的 `candidates.jsonl`，machine 4/4 checks 通过。
+v5 再增加 1-case 真实 review-material smoke：Stage A/B 均为 14 帧可解码视频，Stage B 使用冻结
+CoTracker3 checkpoint/commit，公开 artifact 无 candidate ID/global winner，人工模板保持全 `pending/null`。
+因此正式 `64 conditions / minimum 48 decisive P1 / 48 two-stage reviews` 已通过工程门禁，但尚未产生结果。
 
 ## PA3-KERNEL-04
 
