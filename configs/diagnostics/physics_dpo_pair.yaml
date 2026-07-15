@@ -1,0 +1,117 @@
+defaults_chain:
+  - ./physics_dpo_branch_v5.yaml
+
+# PA2 只接受 PA1 v5 的已聚合 structural-alignment evidence；不复用旧 endpoint cache。
+run_id: autoresearch-pa2-pair-s20260715-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa2-pair-s20260715-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+data:
+  num_frames: 14
+
+model:
+  num_frames: 14
+  lora:
+    enable: false
+
+pair:
+  task_id: PA2-PAIR-03
+  smoke: false
+  pa1_branch_run: /root/autodl-tmp/runs/autoresearch-pa1-branch-s20260715-v5
+
+  horizon_run: /root/autodl-tmp/runs/autoresearch-pa1-horizon-s20260715-v3
+  expected_horizon_profile_fingerprint: 70f7591b1599c5d4df7cc56a92fad66747e437dc1af331dcce5b71816563adfd
+  expected_num_frames: 14
+  scene_split_run: /root/autodl-tmp/runs/autoresearch-pa0-scene-split-s20260715-v1
+  expected_scene_split_fingerprint: e525edf33bcfec169c0077d2eb2e528d953dbc9930e771c803c889a32983c73a
+  pa0_review_run: /root/autodl-tmp/runs/autoresearch-pa0-review-s20260715-v1
+  expected_pa0_decision_fingerprint: d6183ae8021a0873d49c1447ecfa5d5e012e05489a10738a81d12fb014747d00
+
+  condition_partition: preference_train
+  condition_count: 64
+  required_start_index: 0
+  num_inference_steps: 25
+  fork_fraction: 0.6
+  strength_rho: 0.04
+  generation_seed_start: 2026071601
+  direction_seed_start: 2026071701
+  independent_seed_offset: 100000
+  minimum_valid_pairs: 48
+
+  # P0 is a baseline only; P1 is the only family eligible for the core training schema.
+  renoise:
+    candidate_count: 2
+    noise_seed_start: 2026071801
+    sigma_multiplier: 1.0
+
+  generated_tracks:
+    queries_per_stratum: 24
+    min_track_length: 3
+    point_box_size: 16.0
+    min_distance: 8.0
+    fb_alpha: 0.05
+    fb_beta: 0.5
+    min_confidence: 0.5
+
+  # 已通过 PA0 的 P-UNC setting；这里只读 trajectory diagnostic，绝不渲染 projected RGB/latent。
+  punc:
+    candidates: [P-ID, P-CUR, P-CON, P-UNC]
+    current_smooth_lambda: 5.0
+    constrained:
+      lambda_acceleration: 0.08
+      lambda_jerk: 0.02
+      robust_delta_px: 1.0
+      robust_iterations: 3
+      confidence_floor: 0.50
+      uncertainty_floor_px: 0.25
+      uncertainty_confidence_scale_px: 1.50
+      snr_threshold: 1.00
+
+  # 这些是 candidate feasibility 与 Pareto non-inferiority；不是可随结果调节的 weighted reward。
+  thresholds:
+    maximum_first_frame_rgb_rms: 0.08
+    minimum_projection_points: 4
+    minimum_primary_tracks: 1
+    minimum_track_coverage: 0.50
+    minimum_median_track_length: 4
+    minimum_scorer_confidence: 0.50
+    maximum_saturation_fraction: 0.99
+    frame0_max_correction_px: 1.0e-6
+    maximum_visibility_changed_count: 0
+    maximum_survival_drop_to_base: 0.20
+    minimum_motion_ratio_to_base: 0.50
+    maximum_motion_ratio_to_base: 2.00
+    minimum_displacement_ratio_to_base: 0.50
+    maximum_displacement_ratio_to_base: 2.00
+    tie_absolute_projection_margin: 1.0e-6
+    minimum_absolute_projection_margin: 0.05
+    minimum_relative_projection_margin: 0.05
+    maximum_pair_survival_drop: 0.10
+    maximum_pair_motion_drop_fraction: 0.10
+    maximum_pair_displacement_drop_fraction: 0.10
+    maximum_pair_coverage_drop: 0.10
+    maximum_pair_saturation_increase: 0.01
+    confidence_reference_relative_margin: 0.10
+    minimum_pair_confidence: 0.10
+    segment_tie_absolute_projection_margin: 1.0e-6
+    minimum_segment_absolute_projection_margin: 0.02
+    minimum_segment_relative_projection_margin: 0.02
+    maximum_segment_coverage_drop: 0.10
+    maximum_segment_motion_drop_fraction: 0.10
+    maximum_segment_survival_drop: 0.10
+    segment_confidence_reference_relative_margin: 0.05
+
+  review:
+    seed: 2026071901
+    required_cases: 48
+    p1_cases: 24
+    p0_cases: 12
+    p2_cases: 12
+    minimum_decisive_agreement_cases: 24
+    minimum_agreement_rate: 0.75
+    minimum_wilson_lower_bound: 0.50
+    maximum_low_motion_collapse: 0
+    maximum_catastrophic_quality_failures: 0
