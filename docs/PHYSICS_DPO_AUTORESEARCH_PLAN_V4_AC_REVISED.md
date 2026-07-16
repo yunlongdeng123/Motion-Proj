@@ -2,13 +2,13 @@
 
 > **工作方法名**：**DrivePO — Common-Support Partial-Order Alignment for Driving Video Diffusion**
 > **文档状态**：前向唯一计划；取代 `docs/PHYSICS_DPO_AUTORESEARCH_PLAN_V3.md` 的未来排程，不修改历史实验事实。
-> **最后更新**：2026-07-16
-> **当前代码基线**：用户提供的 `Motion-Proj-main-v3`；最近文档提交为 `b5d642b3a54d3c629f37a500eaf3f73e7540dc69`，执行时必须重新核对远端 `HEAD`。
-> **当前硬件**：单张 RTX 4090 24 GB；PA4 单卡筛选通过前禁止切换双卡。
+> **最后更新**：2026-07-17
+> **当前代码基线**：PA2-CAND 正式运行提交 `a9c60588be247c2f8d08b96c1a993e74b8edf559`；执行任何新计划前必须重新核对远端 `HEAD`。
+> **当前硬件**：单张 RTX 4090 24 GB 已完成本轮正式 fallback；未触发双卡需求，路线拒绝后禁止再配置双卡扩展。
 > **投稿目标**：CVPR 2027。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
-> **当前唯一允许执行的任务**：`PA2-CAND-03D`，只执行一次 8-condition earlier-fork fallback（fork 0.4、rho 0.04）；不降 oracle 阈值、不训练、不切双卡。
-> **当前执行状态**：`running`；`autoresearch-pa2-upo-s20260716-v2` 的 oracle 门禁全部通过，但未评审池仅 2/96 strict conditions，已按预注册规则解锁唯一 candidate fallback。
+> **当前唯一允许执行的任务**：无。`PA2-CAND-03D` 的唯一 8-condition earlier-fork fallback 已执行并被机器门禁拒绝；未经新计划明确授权，不得继续搜索 fork/rho、扩 candidate、训练或切双卡。
+> **当前执行状态**：`rejected`；SVD common-prefix sibling 路线停在候选生成门禁，未进入人工 review、prospective preference、PA3 或训练。
 
 ---
 
@@ -22,7 +22,9 @@
 - 14-frame、25-step 的 common-prefix sibling 生成；
 - 120 个 condition 的 sibling RGB 资产；
 - 旧 P-UNC scorer 的 53 个 machine global pairs；
-- 48 条两阶段人工 review。
+- 48 条两阶段人工 review；
+- common-support paired RAFT、measurement ROPE、selective partial-order oracle 与六类 shortcut reaudit；
+- 唯一一次 8-condition earlier-fork fallback 及其路线级负结果。
 
 人工结果已明确否决旧标签配方：
 
@@ -104,10 +106,17 @@ DrivePO 不再把创新放在“physics score + DPO”。
 ```text
 motion_proj/preference/pair_scoring.py
 motion_proj/preference/review.py
+motion_proj/preference/paired_tracks.py
+motion_proj/preference/common_support.py
+motion_proj/preference/residual_motion.py
+motion_proj/preference/calibration.py
+motion_proj/preference/selective_order.py
 motion_proj/diagnostics/physics_dpo_pair.py
 motion_proj/diagnostics/physics_dpo_pair_merge.py
 motion_proj/diagnostics/physics_dpo_branch.py
 motion_proj/diagnostics/physics_dpo_horizon.py
+motion_proj/diagnostics/physics_preference_reaudit.py
+motion_proj/diagnostics/physics_preference_candidate_fallback.py
 motion_proj/data/physics_dpo_schema.py
 
 tests/test_physics_dpo_pair.py
@@ -117,19 +126,16 @@ tests/test_physics_dpo_schema.py
 tests/test_physics_dpo_pa0_review.py
 ```
 
-当前尚不存在：
+截至唯一 fallback 结束后仍不存在：
 
 ```text
-paired common-support tracker
-candidate-set partial-order graph
-ROPE / selective calibration
 dynamic-track tube schema
 DPO / tie-DPO / SDPO loss
 preference trainer
 DrivePO capacity run
 ```
 
-不得把计划公式写成“已实现方法”。
+不得把已实现的 oracle/候选审计误写成已完成的 alignment 闭环；训练侧仍未实现，也未获授权。
 
 ## 1.2 旧 scorer 的代码语义
 
@@ -819,14 +825,35 @@ SVD common-prefix sibling route = rejected
 
 不得继续搜索 fork/rho、增加 candidate 数或切双卡。
 
-若 pilot 通过，可 append-only 生成新 conditions，直至获得：
+### 6.1 唯一 fallback 的正式结论（2026-07-17）
+
+`autoresearch-pa2-cand-fallback-s20260716-v1` 在 clean commit `a9c6058` 上按本节唯一配置完成：
 
 ```text
-至少 24 strict condition graphs
-至少 24 tie condition graphs
+8 个 preference_train 新场景，与旧 120 场景无重叠
+fork fraction = 0.4
+rho = 0.04
+14 frames / 25 steps
+每 condition：exact Base 两次 + 4 siblings
+冻结 UPO v2 oracle；无 future GT；无训练
 ```
 
-用于 PA3 capacity。正式 PA4 screening 前需要扩大到至少 96 strict conditions。
+Base guard、official common-prefix callback、扰动数值与 query protocol 均通过，8 个 condition 中
+7 个为 legal；但 `scene-0736` 的 4 个 sibling 全部触发双方 temporal-jump 质量失败，其中两个首帧
+RGB RMS 为 `0.1215/0.0976`，超过冻结门槛。全池仅得到 1 个 strict、0 tie、7 incomparable graph。
+因此 `all_first_frames_valid=false`、`no_quality_failure=false`、`machine_pass=false`，没有生成盲审包，
+也没有人工 verdict。
+
+该失败属于预注册的 first-frame/quality 路线门禁，而非工程异常；故正式结论为：
+
+```text
+SVD common-prefix sibling route = rejected
+```
+
+不得把 7 个 legal condition 或唯一 strict graph 事后筛成训练数据，也不得继续下一组 fork/rho。
+
+pilot 未通过，因此 append-only 扩展、PA3 capacity 与 PA4 screening 均失效。以下训练侧章节仅保留为
+预注册设计档案，不是当前 goal，也不授权执行。
 
 ---
 
@@ -1101,18 +1128,18 @@ PA2-UPO-03B = rejected
 | ID | 当前状态 | 任务 | 通过条件 | 失败动作 |
 |---|---|---|---|---|
 | PA2-UPO-03B | done | common-support oracle；v2 修复重跑完成 | tie holdout + stress 通过；yield 2/96 | 解锁唯一 fallback |
-| PA2-PROSPECT-03C | blocked | 32-case prospective review | strict/tie precision 门槛 | reject oracle |
-| PA2-CAND-03D | running | 唯一 earlier-fork fallback | 结构+strict precision通过 | reject SVD sibling |
-| PA3-KERNEL-04 | blocked | strict/tie/tube/SDPO 代数与容量 | 1/8/24 condition 依次通过 | 只修实现或 reject |
-| PA4-SCREEN-05 | blocked | 单卡方法筛选 | full 超强基线 | 不切双卡 |
-| PA5-SCALE-06 | blocked | 双卡扩数据 | 300–800 validated relations | 保留单卡结果 |
-| PA6-FORMAL-07 | blocked | 两训练 seed | 主指标同向 | reject |
-| PA7-EVAL-08 | blocked | 128/256+ clips 评估 | 统计+人工通过 | 归档负结果 |
-| PA8-PAPER-09 | blocked | 主表、消融、第二 backbone | 贡献可答辩 | 不投稿当前方法 |
+| PA2-PROSPECT-03C | rejected | 原 96-condition 池未进入 32-case review | strict 仅 2/96，低于 16 | 已执行唯一 fallback |
+| PA2-CAND-03D | rejected | 唯一 earlier-fork fallback 已完成 | 7/8 legal，但首帧/质量门禁失败；1 strict/8 | reject SVD sibling |
+| PA3-KERNEL-04 | rejected | 未执行 | 上游 prospective/candidate gate 未通过 | 保留设计档案 |
+| PA4-SCREEN-05 | rejected | 未执行单卡方法筛选 | PA3 未解锁 | 不切双卡 |
+| PA5-SCALE-06 | rejected | 未执行双卡扩数据 | PA4 未解锁 | 不配置双卡 |
+| PA6-FORMAL-07 | rejected | 未执行正式训练 | 无合法 preference 数据 | 归档负结果 |
+| PA7-EVAL-08 | rejected | 未执行方法评估 | 无正式 checkpoint | 归档负结果 |
+| PA8-PAPER-09 | rejected | 不以当前路线组织 CVPR 主张 | 路线级候选门禁失败 | 需要新研究假设 |
 
 ---
 
-# 11. PA2-UPO-03B：当前唯一任务
+# 11. PA2-UPO-03B：已完成 oracle 与路线决策
 
 ## 11.1 代码新增
 
@@ -1251,11 +1278,33 @@ COMPLETE / REJECTED
 status = blocked_candidate_yield
 ```
 
-只允许 PA2-CAND 唯一 fallback。
+当时只允许 PA2-CAND 唯一 fallback；该 fallback 现已执行，并按 11.5 的正式证据拒绝。
+
+## 11.5 PA2-CAND-03D 正式 run
+
+```text
+run_id:
+autoresearch-pa2-cand-fallback-s20260716-v1
+
+commit:
+a9c60588be247c2f8d08b96c1a993e74b8edf559
+
+config fingerprint:
+b6806afc33bd8ea85fd96ead058997c51549ae97277fe7cf5c90fbb9fe3ed7c9
+```
+
+该 run 以退出码 0 完成路线拒绝流程并写入 `REJECTED`，不是 crash：8 个新 scene disjoint
+conditions、40 个正式 sibling candidates 与 8 个独立 Base 诊断视频均完整；48 个 MP4 全部可逐帧
+解码为 `448×256×14`，11 个 JSONL 共 2,160 行全部通过 JSON 解析。机器 checks 中 Base guard、
+callback/perturbation、scene disjoint、minimum legal、cycle 与 frozen-oracle fingerprint 均为 true；
+first-frame 与 quality 为 false。正式状态为 `rejected`，`review_materials=null`，训练标志为 false。
 
 ---
 
 # 12. PA3-KERNEL-04：代数与容量
+
+本节及其后训练/扩展章节因 PA2-CAND 路线级门禁失败而冻结，仅保留为未执行的预注册设计；
+不属于当前计划的可执行任务。
 
 只有 prospective oracle 人审通过且至少获得：
 
