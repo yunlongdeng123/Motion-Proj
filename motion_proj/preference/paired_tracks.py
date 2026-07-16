@@ -448,6 +448,27 @@ class PairModeRAFTTracker:
         return self._model().flow_with_bidirectional_confidence(frames.to(self.device))
 
     @torch.no_grad()
+    def track_fixed_queries(
+        self,
+        *,
+        candidate_id: str,
+        frames: torch.Tensor,
+        query_set: PairedQuerySet,
+    ) -> RawTrackObservation:
+        """对 measurement perturbation 或新增 sibling 复用冻结 query set。"""
+        flow, backward, confidence = self._flows(frames)
+        return propagate_common_queries(
+            candidate_id=candidate_id,
+            frames=frames,
+            query_set=query_set,
+            observed_flow=flow,
+            backward_flow=backward,
+            flow_confidence=confidence,
+            fb_alpha=float(self.settings["fb_alpha"]),
+            fb_beta=float(self.settings["fb_beta"]),
+        )
+
+    @torch.no_grad()
     def track_condition(
         self,
         *,
@@ -486,15 +507,9 @@ class PairModeRAFTTracker:
         }
         for candidate_id in sorted(sibling_frames):
             frames = sibling_frames[candidate_id]
-            flow, backward, confidence = self._flows(frames)
-            observations[candidate_id] = propagate_common_queries(
+            observations[candidate_id] = self.track_fixed_queries(
                 candidate_id=candidate_id,
                 frames=frames,
                 query_set=query_set,
-                observed_flow=flow,
-                backward_flow=backward,
-                flow_confidence=confidence,
-                fb_alpha=float(self.settings["fb_alpha"]),
-                fb_beta=float(self.settings["fb_beta"]),
             )
         return query_set, observations

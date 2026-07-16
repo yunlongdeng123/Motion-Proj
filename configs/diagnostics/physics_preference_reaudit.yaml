@@ -1,0 +1,129 @@
+defaults_chain:
+  - ./physics_dpo_pair_merge.yaml
+
+# PA2-UPO 只读现有 120-condition RGB；不生成候选、不写 VAE cache、不训练。
+run_id: autoresearch-pa2-upo-s20260716-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa2-upo-s20260716-v1
+seed: 2026071603
+device: cuda
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+upo:
+  task_id: PA2-UPO-03B
+  source_run: /root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1
+  expected_source_run_id: autoresearch-pa2-pair-expanded-s20260715-v1
+  expected_condition_count: 120
+  expected_num_frames: 14
+
+  tracker:
+    background_queries: 24
+    dynamic_queries: 24
+    minimum_background_queries: 12
+    minimum_dynamic_queries: 8
+    min_distance: 8.0
+    min_confidence: 0.50
+    fb_alpha: 0.05
+    fb_beta: 0.50
+    background_residual_quantile: 0.50
+    dynamic_residual_quantile: 0.75
+    minimum_dynamic_residual_px: 0.25
+    texture_quantile: 0.35
+    dense_affine_min_points: 256
+
+  windows:
+    starts: [0, 2, 4, 6, 8, 10]
+    length: 4
+
+  support:
+    minimum_common_dynamic_queries: 8
+    minimum_common_background_queries: 12
+    minimum_common_dynamic_observations: 24
+    minimum_spatial_clusters: 4
+    minimum_frames_per_query: 3
+    min_confidence: 0.50
+    max_fb_error_px: 2.0
+    cluster_cell_size_px: 48.0
+
+  motion:
+    background_affine:
+      minimum_points: 8
+      irls_iterations: 5
+      huber_delta: 2.5
+      minimum_residual_px: 0.25
+      ridge: 1.0e-4
+    curve_speed_floor_px: 0.25
+    coherence_radius_px: 64.0
+    coherence_minimum_neighbors: 2
+    minimum_component_observations: 4
+    punc:
+      confidence_floor: 0.50
+      uncertainty_floor_px: 0.25
+      uncertainty_confidence_scale_px: 1.50
+      snr_threshold: 1.00
+      lambda_acceleration: 0.08
+      lambda_jerk: 0.02
+      robust_delta_px: 1.0
+      robust_iterations: 3
+
+  bootstrap:
+    samples: 256
+    secondary_samples: 128
+    secondary_seed_offset: 104729
+    confidence: 0.95
+    temporal_block: 2
+    familywise_alpha: 0.05
+
+  # ROPE 只读 deterministic rerun、photometric、resize 与 query jitter；不读 human winner。
+  measurement:
+    condition_count: 8
+    scene_hash_salt: drivepo-v4-measurement-20260716
+    query_jitter_px: 0.25
+    rope_quantile: 0.95
+    minimum_rope:
+      punc: 0.10
+      acceleration: 0.05
+      curvature: 0.02
+      coherence: 0.05
+
+  calibration:
+    calibration_ties: 12
+    scene_hash_salt: drivepo-v4-tie-split-20260716
+    false_strict_alpha: 0.10
+    minimum_strict_threshold: 1.0
+    minimum_comparable_ties: 8
+    maximum_holdout_false_strict: 1
+    maximum_threshold_relative_delta: 0.25
+    minimum_strict_seed_jaccard: 0.80
+
+  quality:
+    maximum_black_frame_fraction: 0.25
+    maximum_saturation_fraction: 0.99
+    maximum_temporal_l1: 0.35
+    maximum_sharpness_jump: 0.15
+    maximum_pair_saturation_difference: 0.05
+    maximum_pair_temporal_l1_difference: 0.08
+    minimum_pair_sharpness_ratio: 0.50
+    maximum_pair_sharpness_ratio: 2.00
+
+  relation:
+    maximum_camera_distance_px: 1.0
+    maximum_active_fraction_drop: 0.05
+    maximum_survival_drop: 0.05
+    maximum_motion_drop_fraction: 0.10
+    maximum_motion_increase_fraction: 1.00
+    activity_equivalence_absolute: 0.05
+    motion_equivalence_fraction: 0.10
+    high_confidence_margin: 1.0
+    minimum_condition_tie_fraction: 0.50
+    maximum_cycle_rate: 0.05
+
+  prospective:
+    minimum_strict_conditions: 16
+    minimum_tie_conditions: 8
+    minimum_incomparable_conditions: 8
+
+  stress:
+    maximum_common_transform_component_delta: 1.0e-3
