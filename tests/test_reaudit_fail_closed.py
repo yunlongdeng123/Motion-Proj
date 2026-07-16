@@ -9,8 +9,11 @@ from motion_proj.diagnostics.physics_preference_reaudit import (
     _assert_no_future_gt,
     _core_candidates,
     _ensure_source_immutable,
+    _measurement_window_eligible,
+    _observation_exactness,
     _source_fingerprints,
 )
+from motion_proj.preference.paired_tracks import RawTrackObservation
 
 
 def test_future_gt_and_debug_ego_fail_closed() -> None:
@@ -50,3 +53,37 @@ def test_historical_artifact_fingerprint_change_is_rejected(tmp_path) -> None:
     (tmp_path / "summary.json").write_text(json.dumps({"status": "changed"}), encoding="utf-8")
     with pytest.raises(PreferenceReauditError, match="被修改"):
         _ensure_source_immutable(tmp_path, expected)
+
+
+def test_measurement_rope_rejects_invalid_windows_and_requires_exact_rerun() -> None:
+    import torch
+    from types import SimpleNamespace
+
+    points = torch.tensor([[[1.0, 1.0], [2.0, 1.0]]])
+    reference = RawTrackObservation(
+        candidate_id="reference", query_set_hash="hash", raw_points=points,
+        raw_visibility=torch.ones(1, 2, dtype=torch.bool), raw_confidence=torch.ones(1, 2),
+        forward_backward_error=torch.zeros(1, 2),
+    )
+    repeated = RawTrackObservation(
+        candidate_id="repeated", query_set_hash="hash", raw_points=points.clone(),
+        raw_visibility=torch.ones(1, 2, dtype=torch.bool), raw_confidence=torch.ones(1, 2),
+        forward_backward_error=torch.zeros(1, 2),
+    )
+    assert _observation_exactness(reference, repeated)["exact"]
+    changed = RawTrackObservation(
+        candidate_id="changed", query_set_hash="hash", raw_points=points + 0.1,
+        raw_visibility=torch.ones(1, 2, dtype=torch.bool), raw_confidence=torch.ones(1, 2),
+        forward_backward_error=torch.zeros(1, 2),
+    )
+    assert not _observation_exactness(reference, changed)["exact"]
+
+    cfg = SimpleNamespace(upo=SimpleNamespace(relation=SimpleNamespace(maximum_camera_distance_px=1.0)))
+    eligible, reasons = _measurement_window_eligible(
+        SimpleNamespace(valid=False),
+        SimpleNamespace(valid=True, reason=None, camera_distance_px=0.0),
+        {"comparable": True},
+        cfg,
+    )
+    assert not eligible
+    assert reasons == ["support_invalid"]

@@ -446,11 +446,71 @@ def _calibration_case_score(
 
 def _measurement_perturbations(frames: torch.Tensor) -> dict[str, torch.Tensor]:
     unit = frames.add(1.0).mul(0.5).clamp(0, 1)
-    photometric = unit.mul(0.96).add(0.02).clamp(0, 1).mul(2.0).sub(1.0)
+    # 保留 0.01/0.99 saturation 分类，只施加不会跨越 quality gate 的轻微亮度压缩。
+    photometric = unit.mul(0.99).add(0.005).clamp(0, 1).mul(2.0).sub(1.0)
     height, width = frames.shape[-2:]
     smaller = F.interpolate(frames, size=(max(8, int(height * 0.875)), max(8, int(width * 0.875))), mode="bilinear", align_corners=False)
     resized = F.interpolate(smaller, size=(height, width), mode="bilinear", align_corners=False)
     return {"identical_rerun": frames.clone(), "photometric": photometric, "resize_roundtrip": resized}
+
+
+def _observation_exactness(
+    reference: RawTrackObservation,
+    repeated: RawTrackObservation,
+) -> dict[str, Any]:
+    """Identical rerun 必须逐位复现；该检查独立于 measurement ROPE。"""
+    visibility_exact = torch.equal(reference.raw_visibility, repeated.raw_visibility)
+    points_exact = torch.allclose(
+        reference.raw_points, repeated.raw_points, rtol=0.0, atol=0.0, equal_nan=True
+    )
+    confidence_exact = torch.allclose(
+        reference.raw_confidence, repeated.raw_confidence, rtol=0.0, atol=0.0, equal_nan=True
+    )
+    fb_exact = torch.allclose(
+        reference.forward_backward_error,
+        repeated.forward_backward_error,
+        rtol=0.0,
+        atol=0.0,
+        equal_nan=True,
+    )
+
+    def maximum_delta(left: torch.Tensor, right: torch.Tensor) -> float | None:
+        finite = torch.isfinite(left) & torch.isfinite(right)
+        return float((left[finite] - right[finite]).abs().max()) if bool(finite.any()) else None
+
+    return {
+        "exact": bool(visibility_exact and points_exact and confidence_exact and fb_exact),
+        "visibility_exact": visibility_exact,
+        "points_exact": points_exact,
+        "confidence_exact": confidence_exact,
+        "forward_backward_error_exact": fb_exact,
+        "maximum_point_delta": maximum_delta(reference.raw_points, repeated.raw_points),
+        "maximum_confidence_delta": maximum_delta(reference.raw_confidence, repeated.raw_confidence),
+        "maximum_forward_backward_error_delta": maximum_delta(
+            reference.forward_backward_error, repeated.forward_backward_error
+        ),
+    }
+
+
+def _measurement_window_eligible(
+    support: CommonSupportWindow,
+    evidence: MotionComponentEvidence,
+    quality: Mapping[str, Any],
+    cfg: Any,
+) -> tuple[bool, list[str]]:
+    """ROPE 只描述在完整 comparability gate 内观测到的 benign noise。"""
+    reasons = []
+    if not support.valid:
+        reasons.append("support_invalid")
+    if not evidence.valid:
+        reasons.append(evidence.reason or "evidence_invalid")
+    if evidence.camera_distance_px is None:
+        reasons.append("camera_distance_invalid")
+    elif evidence.camera_distance_px > float(cfg.upo.relation.maximum_camera_distance_px):
+        reasons.append("camera_mismatch")
+    if not bool(quality.get("comparable")):
+        reasons.append("quality_mismatch")
+    return not reasons, list(dict.fromkeys(reasons))
 
 
 def _jitter_query_set(query_set: PairedQuerySet, *, amplitude: float) -> PairedQuerySet:
@@ -493,31 +553,45 @@ def _collect_measurement_differences(
 ) -> tuple[dict[str, list[float]], list[dict[str, Any]]]:
     values = {component: [] for component in PRIMARY_COMPONENTS}
     records = []
-    variants: dict[str, RawTrackObservation] = {}
+    variants: dict[str, tuple[RawTrackObservation, torch.Tensor]] = {}
     for name, frames in _measurement_perturbations(base_frames).items():
         variants[name] = tracker.track_fixed_queries(
             candidate_id=f"measurement-{condition_id}-{name}", frames=frames, query_set=query_set
-        )
+        ), frames
     jittered = _jitter_query_set(query_set, amplitude=float(cfg.upo.measurement.query_jitter_px))
     jittered_observation = tracker.track_fixed_queries(
         candidate_id=f"measurement-{condition_id}-query-jitter", frames=base_frames, query_set=jittered
     )
-    variants["query_jitter"] = _remap_observation_query_hash(jittered_observation, query_set)
+    variants["query_jitter"] = _remap_observation_query_hash(jittered_observation, query_set), base_frames
 
-    for name, variant in variants.items():
+    base_quality = video_quality_metrics(base_frames)
+    for name, (variant, variant_frames) in variants.items():
+        quality = quality_comparability(
+            base_quality, video_quality_metrics(variant_frames), cfg.upo.quality
+        )
+        exactness = (
+            _observation_exactness(base_observation, variant)
+            if name == "identical_rerun" else None
+        )
         windows = build_common_support(
             query_set, base_observation, variant, cfg.upo.support,
             window_starts=tuple(int(value) for value in cfg.upo.windows.starts),
             window_length=int(cfg.upo.windows.length),
         )
         valid_windows = 0
+        invalid_reasons: dict[str, int] = {}
         component_counts = {component: 0 for component in PRIMARY_COMPONENTS}
         for window in windows:
             evidence = compute_motion_component_evidence(
                 query_set, base_observation, variant, window, cfg.upo.motion,
                 image_hw=tuple(int(value) for value in base_frames.shape[-2:]),
             )
-            valid_windows += int(evidence.valid)
+            eligible, reasons = _measurement_window_eligible(window, evidence, quality, cfg)
+            valid_windows += int(eligible)
+            for reason in reasons:
+                invalid_reasons[reason] = invalid_reasons.get(reason, 0) + 1
+            if not eligible:
+                continue
             for component in PRIMARY_COMPONENTS:
                 finite = evidence.differences[component][torch.isfinite(evidence.differences[component])]
                 values[component].extend(abs(float(value)) for value in finite.tolist())
@@ -527,6 +601,10 @@ def _collect_measurement_differences(
             "perturbation": name,
             "valid_windows": valid_windows,
             "component_counts": component_counts,
+            "invalid_window_reasons": invalid_reasons,
+            "quality_comparable": bool(quality["comparable"]),
+            "quality_reasons": list(quality["reasons"]),
+            "identical_rerun_exactness": exactness,
             "uses_future_gt": False,
         })
     return values, records
@@ -939,10 +1017,19 @@ def run_physics_preference_reaudit(cfg: Any) -> dict[str, Any]:
         threshold_relative_delta = abs(threshold - float(secondary_threshold["threshold"])) / max(
             threshold, float(secondary_threshold["threshold"]), 1.0e-8
         )
+        exactness_rows = [
+            row["identical_rerun_exactness"] for row in measurement_records
+            if row["perturbation"] == "identical_rerun"
+        ]
+        measurement_valid_condition_count = len({
+            row["condition_id"] for row in measurement_records if int(row["valid_windows"]) > 0
+        })
         calibration_summary = {
             "measurement_ropes": rope_rows,
             "measurement_audit": measurement_records,
             "measurement_condition_count": len({row["condition_id"] for row in measurement_records}),
+            "measurement_valid_condition_count": measurement_valid_condition_count,
+            "identical_rerun_exact": bool(exactness_rows) and all(bool(row["exact"]) for row in exactness_rows),
             "calibration_cases": calibration_scores,
             "comparable_calibration_ties": comparable_calibration,
             "threshold": threshold_row,
@@ -1036,6 +1123,9 @@ def run_physics_preference_reaudit(cfg: Any) -> dict[str, Any]:
         }
         strict_seed_jaccard = len(strict_primary & strict_secondary) / max(len(strict_primary | strict_secondary), 1)
         checks = {
+            "measurement_minimum_valid_conditions": measurement_valid_condition_count
+                >= int(cfg.upo.measurement.minimum_valid_conditions),
+            "measurement_identical_rerun_exact": bool(calibration_summary["identical_rerun_exact"]),
             "calibration_holdout_scene_disjoint": bool(partitions["scene_disjoint"]),
             "minimum_comparable_calibration_ties": comparable_calibration >= int(cfg.upo.calibration.minimum_comparable_ties),
             "holdout_false_strict": false_strict <= int(cfg.upo.calibration.maximum_holdout_false_strict),

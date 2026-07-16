@@ -8,6 +8,7 @@
 > **投稿目标**：CVPR 2027。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
 > **当前唯一允许执行的任务**：`PA2-UPO-03B`，只在已有 sibling RGB 上重建可信偏好 oracle；不生成新候选、不训练、不切双卡。
+> **当前执行状态**：`running`；`autoresearch-pa2-upo-s20260716-v1` 保留为 measurement-ROPE scope bug，当前只允许以 v2 修复重跑，尚未解锁 candidate fallback。
 
 ---
 
@@ -1099,7 +1100,7 @@ PA2-UPO-03B = rejected
 
 | ID | 当前状态 | 任务 | 通过条件 | 失败动作 |
 |---|---|---|---|---|
-| PA2-UPO-03B | pending | common-support oracle，复用现有 RGB | tie holdout + stress 通过 | reject oracle |
+| PA2-UPO-03B | running | common-support oracle；v1 scope bug 后以 v2 修复重跑 | tie holdout + stress 通过 | reject oracle |
 | PA2-PROSPECT-03C | blocked | 32-case prospective review | strict/tie precision 门槛 | reject oracle |
 | PA2-CAND-03D | blocked | 唯一 earlier-fork fallback | 结构+strict precision通过 | reject SVD sibling |
 | PA3-KERNEL-04 | blocked | strict/tie/tube/SDPO 代数与容量 | 1/8/24 condition 依次通过 | 只修实现或 reject |
@@ -1175,8 +1176,14 @@ future-GT fails closed
 
 ```text
 run_id:
-autoresearch-pa2-upo-s20260716-v1
+autoresearch-pa2-upo-s20260716-v2
 ```
+
+`autoresearch-pa2-upo-s20260716-v1` 已于 2026-07-16 完整运行，但 measurement ROPE 错误纳入
+`support/evidence invalid` 窗口，因此其 `0 strict prospective conditions` 只作为实现范围缺陷保留，
+不得触发 candidate fallback 或路线结论。v2 只修复为“valid support + valid evidence + camera/quality
+comparable”窗口进入 ROPE，并新增 identical-rerun exactness gate；其余 query、motion、bootstrap、
+calibration split 与阈值规则保持冻结。
 
 只读输入：
 
