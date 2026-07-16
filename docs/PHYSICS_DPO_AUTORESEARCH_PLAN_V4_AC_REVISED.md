@@ -7,8 +7,8 @@
 > **当前硬件**：单张 RTX 4090 24 GB；PA4 单卡筛选通过前禁止切换双卡。
 > **投稿目标**：CVPR 2027。
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`。
-> **当前唯一允许执行的任务**：`PA2-UPO-03B`，只在已有 sibling RGB 上重建可信偏好 oracle；不生成新候选、不训练、不切双卡。
-> **当前执行状态**：`running`；`autoresearch-pa2-upo-s20260716-v1` 保留为 measurement-ROPE scope bug，当前只允许以 v2 修复重跑，尚未解锁 candidate fallback。
+> **当前唯一允许执行的任务**：`PA2-CAND-03D`，只执行一次 8-condition earlier-fork fallback（fork 0.4、rho 0.04）；不降 oracle 阈值、不训练、不切双卡。
+> **当前执行状态**：`running`；`autoresearch-pa2-upo-s20260716-v2` 的 oracle 门禁全部通过，但未评审池仅 2/96 strict conditions，已按预注册规则解锁唯一 candidate fallback。
 
 ---
 
@@ -1100,9 +1100,9 @@ PA2-UPO-03B = rejected
 
 | ID | 当前状态 | 任务 | 通过条件 | 失败动作 |
 |---|---|---|---|---|
-| PA2-UPO-03B | running | common-support oracle；v1 scope bug 后以 v2 修复重跑 | tie holdout + stress 通过 | reject oracle |
+| PA2-UPO-03B | done | common-support oracle；v2 修复重跑完成 | tie holdout + stress 通过；yield 2/96 | 解锁唯一 fallback |
 | PA2-PROSPECT-03C | blocked | 32-case prospective review | strict/tie precision 门槛 | reject oracle |
-| PA2-CAND-03D | blocked | 唯一 earlier-fork fallback | 结构+strict precision通过 | reject SVD sibling |
+| PA2-CAND-03D | running | 唯一 earlier-fork fallback | 结构+strict precision通过 | reject SVD sibling |
 | PA3-KERNEL-04 | blocked | strict/tie/tube/SDPO 代数与容量 | 1/8/24 condition 依次通过 | 只修实现或 reject |
 | PA4-SCREEN-05 | blocked | 单卡方法筛选 | full 超强基线 | 不切双卡 |
 | PA5-SCALE-06 | blocked | 双卡扩数据 | 300–800 validated relations | 保留单卡结果 |
@@ -1184,6 +1184,13 @@ autoresearch-pa2-upo-s20260716-v2
 不得触发 candidate fallback 或路线结论。v2 只修复为“valid support + valid evidence + camera/quality
 comparable”窗口进入 ROPE，并新增 identical-rerun exactness gate；其余 query、motion、bootstrap、
 calibration split 与阈值规则保持冻结。
+
+`autoresearch-pa2-upo-s20260716-v2` 已完成并通过 oracle 可信性门禁：116/120 query sets valid，
+10 个 retrospective holdout ties 的 false-strict 为 0，uncertain/both-invalid 的 high-confidence
+strict 为 0，六类 shortcut stress、cycle 与双 bootstrap seed 稳定性均通过。valid-only measurement
+ROPE 为 P-UNC/acceleration/curvature/coherence = `1.5296/0.2414/0.1317/0.1279`。冻结 oracle
+在 96 个未评审 conditions 上得到 2 strict、0 condition-level tie、94 incomparable，因此不得直接进入
+prospective review，也不得降阈值；只解锁第 6 节规定的一次 8-condition earlier-fork fallback。
 
 只读输入：
 
@@ -1569,25 +1576,20 @@ LocalDPO with object mask
 现在只执行：
 
 ```text
-PA2-UPO-03B
+PA2-CAND-03D
 ```
 
 具体顺序：
 
 ```text
-读取事实源与完整 baseline tests
-→ 冻结 22 ties 的 12/10 scene-level split
-→ 新增 no-fallback common first-frame query protocol
-→ 输出 raw paired tracks
-→ common support
-→ robust affine background compensation
-→ paired component intervals
-→ measurement ROPE
-→ split-conformal strict threshold
-→ old tie holdout audit
-→ shortcut stress
-→ apply to unreviewed sibling conditions
-→ 决定 prospective review / candidate fallback / reject
+冻结 PA2-UPO v2 oracle 与 source fingerprints
+→ 从未使用 scene 中固定选择 8 个 new conditions
+→ exact Base guard
+→ 14-frame / 25-step / fork 0.4 / rho 0.04 / 4 siblings
+→ first-frame、quality、query protocol 与 oracle reaudit
+→ 生成 8-case same-scene structure blind review material
+→ 停在人工 review
+→ 结构少于 7/8、仍主要 tie 或 strict 来自质量差异时 reject SVD sibling route
 ```
 
 在完成前禁止：
@@ -1595,7 +1597,7 @@ PA2-UPO-03B
 ```text
 DPO/AWR trainer
 LoRA训练
-candidate扩量
+除本次 8-condition fallback 外的 candidate扩量
 双卡切换
 旧53 pairs训练
 自动填写人工review
