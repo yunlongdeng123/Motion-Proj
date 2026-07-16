@@ -1,0 +1,46 @@
+defaults_chain:
+  - ./physics_dpo_branch_v5.yaml
+
+# V4 唯一一次 candidate fallback；不得复用 run ID、继续搜索 fork/rho 或训练。
+run_id: autoresearch-pa2-cand-fallback-s20260716-v1
+work_dir: /root/autodl-tmp/runs/autoresearch-pa2-cand-fallback-s20260716-v1
+seed: 2026072201
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+branch:
+  task_id: PA2-CAND-03D
+  condition_partition: preference_train
+  condition_count: 8
+  required_start_index: 0
+  sibling_count: 4
+  num_inference_steps: 25
+  family: common_prefix
+  fork_fraction: 0.4
+  strength_name: earlier_fork_single_fallback
+  strength_rho: 0.04
+  generation_seed_start: 2026072201
+  direction_seed_start: 2026072301
+  independent_seed_offset: 100000
+
+fallback:
+  task_id: PA2-CAND-03D
+  upo_run: /root/autodl-tmp/runs/autoresearch-pa2-upo-s20260716-v2
+  expected_upo_run_id: autoresearch-pa2-upo-s20260716-v2
+  expected_upo_config_fingerprint: 249c47f43b638388bfb6040f1e2a06ac99ab781e21172207681322541f76852f
+  trigger_strict_upper_exclusive: 16
+  old_pair_run: /root/autodl-tmp/runs/autoresearch-pa2-pair-expanded-s20260715-v1
+  condition_offset: 120
+  condition_count: 8
+  oracle_config: configs/diagnostics/physics_preference_reaudit.yaml
+  maximum_first_frame_rgb_rms: 0.08
+  minimum_legal_conditions: 7
+  review_prompt_path: docs/PA2_CANDIDATE_FALLBACK_HUMAN_REVIEW_PROMPT.md
+  review:
+    seed: 2026072401
+    required_cases: 8
+    minimum_same_scene: 7
+    maximum_bad_cases: 0
+    maximum_uncertain: 1
