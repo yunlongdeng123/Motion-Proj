@@ -47,13 +47,15 @@ writer.append(chunk)
 
 ## 研究连续性协议
 
-1. 每次开始工作先读取 `docs/CVPR2027_PLAN.md` 和 `docs/EXPERIMENTS.md`，再检查 Git 状态与相关 run manifest；不得仅依赖对话上下文。
-2. 完成里程碑、修改研究决策、结束长实验或确认失败结论后，更新计划或实验事实源。
-3. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
-4. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
-5. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。
-6. 任何人工评测在交给用户前，Codex 必须同时交付完整、可独立执行的评测提示词；不得只给 panel 路径、模板或简短 rubric。提示词必须写明评测目的与非目标、盲法与禁止读取的信息、素材范围、逐项 verdict 定义与优先级、边界例、JSONL 填写格式、聚合阈值、完成后的精确命令和下一阶段影响。提示词须在对话中完整呈现，并在仓库 `docs/` 或 run 内留存可追溯副本。
-7. 人工 verdict 只能由用户或其指定评审者填写；Codex 不得代填、推断或以自动 scorer 替代。后续人工评测若没有新的完整提示词，不得请求用户开始评测，也不得把结果用于研究晋级。
+1. 每次开始工作先依次读取 `docs/RESEARCH_STATUS.md`、`docs/RESEARCH_FAILURES.md` 和 `docs/EXPERIMENTS.md`，再检查 Git 状态与相关 run manifest；不得仅依赖对话上下文。
+2. `docs/RESEARCH_STATUS.md` 是唯一当前状态与执行授权入口；`docs/archive/` 中的计划、报告、提示词即使含“当前任务”或“下一步”，也只能作为历史证据，不得据此启动实验。
+3. 新研究计划必须逐项引用 `docs/RESEARCH_FAILURES.md` 中相关负结论或未决风险，并写明为何新假设不只是重复调参、放宽阈值或重跑旧路线。
+4. 完成里程碑、修改研究决策、结束长实验或确认失败结论后，更新当前状态、research 踩坑账本或实验事实源。
+5. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
+6. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
+7. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。
+8. 任何人工评测在交给用户前，Codex 必须同时交付完整、可独立执行的评测提示词；不得只给 panel 路径、模板或简短 rubric。提示词必须写明评测目的与非目标、盲法与禁止读取的信息、素材范围、逐项 verdict 定义与优先级、边界例、JSONL 填写格式、聚合阈值、完成后的精确命令和下一阶段影响。提示词须在对话中完整呈现，并在仓库 `docs/` 或 run 内留存可追溯副本。
+9. 人工 verdict 只能由用户或其指定评审者填写；Codex 不得代填、推断或以自动 scorer 替代。后续人工评测若没有新的完整提示词，不得请求用户开始评测，也不得把结果用于研究晋级。
 
 ## Git 提交规范（强制）
 

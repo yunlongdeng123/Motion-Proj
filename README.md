@@ -1,67 +1,89 @@
-# Motion-Proj：面向驾驶世界模型的动力学投影蒸馏
+# Motion-Proj：驾驶视频物理对齐研究基础设施
 
-对研究方案 `docs/MOTION_PROJ_CVPR_PLAN.md` 的工程实现（V1）。
+Motion-Proj 是一个面向驾驶视频扩散模型的研究代码库，覆盖动力学审计、几何投影、
+Stable Video Diffusion（SVD）适配、实验运行时、独立评测，以及物理偏好关系的构造与校准。
 
-Motion-Proj 通过把干净层级（clean-level）生成/受扰的视频投影到由几何定义的驾驶动力学流形上，
-并将投影诱导的局部去噪分数蒸馏进低噪声去噪器，从而对齐视频扩散驾驶世界模型。
-运动审计器（motion auditor）与动力学投影器（dynamics projector）均为 **无梯度 / 离线 / 缓存**，
-因此训练只在视频去噪器上做反向传播。
+仓库保留了两条已经完成诊断的研究路线：早期 dynamics projection distillation，以及后续
+common-prefix sibling physics preference。它们提供了可复用的工程与评测基础设施，但当前均未形成
+可以继续扩量训练或用于论文主张的配方。
 
-## 流水线
+## 当前研究状态
 
-```
-NuScenesFutureVideoDataset
-  -> Motion Auditor (no-grad): RAFT flow + ego-induced static flow + GT box tracks + depth
-  -> Dynamics Projector: energies + RTS smoothing + support filter + warper Gamma
-  -> Projection Cache: (y, x_dagger, mask M_y, context, metadata) in latent space
-  -> Projection Distillation: L_real + lambda_proj * L_proj + beta * L_anchor (low-noise tube)
-  -> Eval: static drift / object track smoothness / LPIPS / FVD
-```
+截至 2026-07-18：
 
-## 目录结构
+- V1 synthetic projection distillation 已拒绝：LPIPS 改善伴随静态漂移和轨迹动力学恶化；
+- 当前 RGB/VAE counterfactual target 与 shared temporal LoRA endpoint 路线未通过合法性和局部性门禁；
+- 旧 P-UNC forced-binary preference recipe 已被 48-case 人工复核拒绝；
+- common-support selective partial-order oracle 通过了 false-strict 与 shortcut 校准，但旧候选池只有
+  `2/96` strict，唯一 earlier-fork fallback 也未通过首帧/质量门禁；
+- SVD common-prefix sibling 路线已停止，当前没有获准执行的训练、候选扩量、人工评审或双卡任务。
 
-```
-configs/                      # OmegaConf yaml 配置
+这不是“驾驶视频物理对齐不可行”的结论。准确的证据边界、禁止重复项和重新开启条件见：
+
+1. [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
+2. [`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)：从 V1 开始的 research 负结论与未决风险；
+3. [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)：正式实验事实源；
+4. [`docs/archive/2026-07/README.md`](docs/archive/2026-07/README.md)：旧计划、报告和评审协议索引。
+
+## 可复用能力
+
+```text
 motion_proj/
-  config.py                   # 配置加载 + dataclass schema
-  utils/                      # 几何、io、可视化、日志
-  data/                       # NuScenesFutureVideoDataset
-  backbones/                  # DiffusionBackbone 接口 + SVD 适配器
-  auditor/                    # 无梯度运动审计器 -> MotionState
-  projector/                  # 动力学投影器 -> x_dagger + mask
-  cache/                      # 投影缓存 writer/reader + 构建 CLI
-  losses/                     # tube 采样 + L_real / L_proj / L_anchor
-  train/                      # trainer + 训练 CLI
-  eval/                       # 指标 + 诊断 + 评估 CLI
-  replay/                     # replay 挖掘 CLI
-scripts/                      # 数据抽取 + 权重下载说明
-tests/                        # 几何 / 投影损失 / 数据集冒烟测试
+  data/          nuScenes 数据、scene split 与 preference schema
+  backbones/     SVD backbone、官方 conditioning parity 与 LoRA scope
+  auditor/       RAFT、ego/static flow、深度与 generated tracks
+  projector/     动力学能量、support、smoothing 与 warping
+  cache/         可追溯 projection/replay cache
+  losses/        projection、flow、tube、anchor 与 V2 loss
+  train/         单卡训练、checkpoint 与 pilot 基础设施
+  eval/          driving metrics、独立 tracker 与几何诊断
+  preference/    paired query、common support、校准与 selective order
+  diagnostics/   条件、target、evaluator、branch、pair 与 reaudit 门禁
+  runtime/       manifest、fingerprint、原子写入与 stage 管理
+configs/         数据、模型、训练、评估和历史诊断配置
+tests/           单元、回归和 fail-closed 测试
 ```
 
-## 快速开始
+其中“可复用”只表示实现和局部门禁已有证据，不代表对应研究路线已经晋级。开始任何新研究前，必须先读取
+`RESEARCH_STATUS.md` 和 `RESEARCH_FAILURES.md`，并以新的预注册假设明确哪些历史门禁需要重新验证。
+
+## 环境与自检
+
+项目环境位于数据盘。每个新 shell 先执行：
 
 ```bash
-conda activate motionproj
-
-# 0. （一次性）把 nuScenes mini 抽取到数据盘
-bash scripts/extract_nuscenes_mini.sh
-
-# 1. 下载 SVD 权重（见 scripts/download_weights.md）
-
-# 2. 在 mini 切分上构建投影缓存
-python -m motion_proj.cache.build_cache --config configs/train/motionproj_v1.yaml
-
-# 3. 投影蒸馏微调
-python -m motion_proj.train.train_motionproj --config configs/train/motionproj_v1.yaml
-
-# 4. 评估动态一致性指标
-python -m motion_proj.eval.evaluate --config configs/train/motionproj_v1.yaml
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate /root/autodl-tmp/envs/motionproj
+cd /root/autodl-tmp/motion_proj
+pytest -q
 ```
 
-## 状态（V1）
+环境版本、数据路径和网络说明见 [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md)，换机接续见
+[`docs/MACHINE_MIGRATION.md`](docs/MACHINE_MIGRATION.md)，第三方依赖见
+[`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md)。SVD 权重说明位于
+[`scripts/download_weights.md`](scripts/download_weights.md)。
 
-代码完整、模块化。较重的外部步骤（SVD 权重下载、mini 抽取、完整训练）已延后处理，
-并在上文中记录说明。每个模块均可独立导入，且多数模块提供 `__main__` 自检或在
-`tests/` 中有对应测试。
+## 工程入口
 
-conda 环境、数据集路径与网络说明见 `docs/ENVIRONMENT.md`。换机接续见 `docs/MACHINE_MIGRATION.md`。
+安装 editable package 后，以下入口仍可用于复现历史工程链或构建新诊断：
+
+```bash
+motionproj-build-cache --help
+motionproj-train --help
+motionproj-eval --help
+motionproj-mine --help
+motionproj-inspect --help
+motionproj-split-manifest --help
+```
+
+这些命令是工程接口，不是当前实验排程。不得仅凭入口存在就重启已拒绝的 cache、训练或搜索流程。
+
+## 证据与产物
+
+- 正式实验登记：`docs/EXPERIMENTS.md`
+- 轻量 Git 内证据：`docs/run_manifests/`
+- 完整运行产物：`/root/autodl-tmp/runs/`
+- cache 与 checkpoint：`/root/autodl-tmp/cache/`、`/root/autodl-tmp/weights/`
+
+正式 run 目录不可复用或覆盖。历史计划已集中归档，归档中的“当前任务”“下一步”只描述当时状态，
+不能授权新的执行。
