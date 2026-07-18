@@ -5,7 +5,7 @@
 > **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-R0-00`）
+> **计划状态**：`running`（当前阶段 `RP-R1-02`）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
 > **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。

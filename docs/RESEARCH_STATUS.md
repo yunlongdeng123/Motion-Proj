@@ -5,8 +5,8 @@
 > **研究基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
 > **当前计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)
 > **当前状态**：`running`
-> **当前任务**：`RP-R0-00`；完成后连续执行 `RP-LIT-01`、`RP-R1-02`、`RP-A0-03`、
-> `RP-A1-SCAN-04A` 与独立的 `RP-B0-05`
+> **当前任务**：`RP-R1-02`；完成后连续执行 `RP-A0-03`、`RP-A1-SCAN-04A` 与独立的
+> `RP-B0-05`
 > **硬件**：单张 RTX 4090 24 GB；V5 禁止切双卡
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
@@ -47,14 +47,16 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
 | `PA2-UPO-03B` | done / yield blocked | tie holdout、shortcut、cycle 与 bootstrap 门禁通过 | `2/96` strict 不足以进入训练 |
 | `PA2-CAND-03D` | rejected | 唯一 8-condition earlier-fork fallback 完成 | 不筛唯一 strict，不再搜索 fork/rho |
 | 旧 `PA3`–`PA8` | rejected / not run | 上游没有合法且足量的 preference 数据 | 不恢复旧 DrivePO trainer、screening 或双卡计划 |
+| `RP-R0-00` | done | 当前仓库、单张 4090、磁盘、权重、nuScenes、RAFT、Depth、CoTracker 与 scene split 均已核验；baseline 为 208 passed | 单卡资产足以继续 R1/A0/A1/B0；保持 30 GB 磁盘安全线 |
+| `RP-LIT-01` | done | [`ROUTE_PIVOT_LITERATURE_MATRIX.md`](ROUTE_PIVOT_LITERATURE_MATRIX.md) 完成一手核查，并补入 WMReward、SARA 等最近邻 | BoN 只作 B0 ceiling；主张收紧为 driving ego–actor decomposition + uncertainty/local safeguard |
 
 ## 3. V5 稳定任务表
 
 | ID | 当前状态 | Gate | 通过后的动作 |
 |---|---|---|---|
-| `RP-R0-00` | running | 仓库、环境、资产与文档基线 | 解锁一手文献、R1、A0、B0 |
-| `RP-LIT-01` | pending | 最近邻一手文献与创新边界 | 收紧 A/B novelty，不单独晋级方法 |
-| `RP-R1-02` | pending | 真实时间采样与 SVD fps audit | 冻结后续 generation fps 协议 |
+| `RP-R0-00` | done | 仓库、环境、资产与文档基线 | 已解锁一手文献、R1、A0、B0 |
+| `RP-LIT-01` | done | 最近邻一手文献与创新边界 | 已收紧 A/B novelty，不单独晋级方法 |
+| `RP-R1-02` | running | 真实时间采样与 SVD fps audit | 冻结后续 generation fps 协议 |
 | `RP-A0-03` | pending | 真实 ego–actor target legality | machine evidence 解锁 A1；human gate 可并行 pending |
 | `RP-A1-SCAN-04A` | pending | 24/8 clips frozen feature scan | 有合法候选才进入 confirm |
 | `RP-A1-CONFIRM-04B` | pending | 64/16/16 scene-disjoint confirm | pass 才解锁 A2 |
