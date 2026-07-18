@@ -61,6 +61,7 @@ def test_lateral_actor_motion_sign_and_variable_dt_units():
     assert half_second["residual_speed_px_per_s"] == pytest.approx(20.0)
     assert one_second["residual_speed_px_per_s"] == pytest.approx(10.0)
     assert half_second["velocity_direction_cosine"] == pytest.approx(1.0)
+    assert half_second["localizable_common_support"] is True
 
 
 def test_longitudinal_motion_changes_projection_at_off_axis_point():
@@ -82,3 +83,4 @@ def test_partially_visible_box_with_offscreen_center_is_not_projection_eligible(
     assert row["actual_uv_t"][0] == pytest.approx(110.0)
     assert row["center_projection_eligible_t"] is False
     assert row["center_projection_in_box_t"] is False
+    assert row["localizable_common_support"] is False

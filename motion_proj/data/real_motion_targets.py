@@ -208,6 +208,7 @@ def actor_residual_target(
     )[:3, 3]
     center_in_image_t = _inside_image(actual_t, image_size)
     center_in_image_tp1 = _inside_image(actual_tp1, image_size)
+    static_in_image_tp1 = _inside_image(static_tp1, image_size)
     attributes = sorted({str(value) for value in first.get("attributes", [])})
     category = str(first.get("category", ""))
     return {
@@ -242,6 +243,10 @@ def actor_residual_target(
         # 但不能进入“图内中心是否落在 clipped xyxy”检查的分母。
         "center_projection_eligible_t": center_in_image_t,
         "center_projection_eligible_tp1": center_in_image_tp1,
+        "static_projection_eligible_tp1": static_in_image_tp1,
+        "localizable_common_support": bool(
+            valid and center_in_image_t and center_in_image_tp1 and static_in_image_tp1
+        ),
         "finite": valid and bool(torch.isfinite(residual_velocity).all()),
         "target_scope": REAL_TARGET_SCOPE,
     }

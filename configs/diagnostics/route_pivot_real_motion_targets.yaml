@@ -1,8 +1,8 @@
 defaults_chain:
   - ./autoresearch_c0_conditioning.yaml
 
-run_id: route-pivot-a0-real-motion-s20260718-v2
-work_dir: /root/autodl-tmp/runs/route-pivot-a0-real-motion-s20260718-v2
+run_id: route-pivot-a0-real-motion-s20260718-v3
+work_dir: /root/autodl-tmp/runs/route-pivot-a0-real-motion-s20260718-v3
 
 paths:
   ckpt_dir: ${work_dir}/ckpts
@@ -57,6 +57,8 @@ a0:
     minimum_valid_actor_tracks: 32
     minimum_background_angular_agreement: 0.70
     minimum_finite_target_fraction: 0.95
+    # actual_t、actual_t+1 与 static-if-world-fixed_t+1 均在图内，才能进入 A1 局部 feature query。
+    minimum_localizable_actor_fraction: 0.85
 
     # 防止小支持集或单一 proxy 偶然通过。
     minimum_labeled_actor_pairs_each: 8

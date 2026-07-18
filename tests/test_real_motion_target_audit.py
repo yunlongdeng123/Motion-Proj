@@ -7,6 +7,7 @@ THRESHOLDS = {
     "minimum_projection_in_box_fraction": 0.98,
     "minimum_valid_actor_tracks": 32,
     "minimum_finite_target_fraction": 0.95,
+    "minimum_localizable_actor_fraction": 0.85,
     "minimum_background_direction_points": 256,
     "minimum_background_angular_agreement": 0.70,
     "minimum_velocity_direction_pairs": 16,
@@ -25,6 +26,7 @@ def _passing_metrics():
         "center_projection_in_box_fraction": 0.99,
         "valid_paired_actor_track_count": 40,
         "finite_target_fraction": 0.98,
+        "localizable_actor_pair_fraction": 0.92,
         "background_direction_point_count": 1000,
         "background_ego_vs_raft_angular_agreement": 0.75,
         "velocity_direction_pair_count": 30,
@@ -63,6 +65,7 @@ def test_projection_denominator_excludes_only_offscreen_centers():
         "ego_translation_speed_mps": 1.0,
         "sample_id": "s",
         "instance_token": "i",
+        "localizable_common_support": True,
     }
     rows = [
         {
@@ -77,3 +80,4 @@ def test_projection_denominator_excludes_only_offscreen_centers():
     assert metrics["center_projection_eligible_count"] == 1
     assert metrics["offscreen_visible_center_count"] == 1
     assert metrics["center_projection_in_box_fraction"] == 1.0
+    assert metrics["localizable_actor_pair_count"] == 1

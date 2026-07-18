@@ -241,17 +241,18 @@ def aggregate_a0_metrics(
     schema_rows: Sequence[Mapping[str, Any]],
 ) -> dict[str, Any]:
     finite_actor = [row for row in actor_rows if bool(row.get("finite"))]
-    moving = [float(row["residual_speed_px_per_s"]) for row in finite_actor if row.get("motion_label") == "moving"]
-    stationary = [float(row["residual_speed_px_per_s"]) for row in finite_actor if row.get("motion_label") == "stationary"]
+    localizable_actor = [row for row in finite_actor if bool(row.get("localizable_common_support"))]
+    moving = [float(row["residual_speed_px_per_s"]) for row in localizable_actor if row.get("motion_label") == "moving"]
+    stationary = [float(row["residual_speed_px_per_s"]) for row in localizable_actor if row.get("motion_label") == "stationary"]
     projection_pairs = [
         (bool(row.get(f"center_projection_eligible_{suffix}")), bool(row.get(f"center_projection_in_box_{suffix}")))
         for row in actor_rows
         for suffix in ("t", "tp1")
     ]
     projection_values = [inside for eligible, inside in projection_pairs if eligible]
-    velocity_cosines = _finite([row.get("velocity_direction_cosine") for row in finite_actor])
-    residual = [float(row["residual_speed_px_per_s"]) for row in finite_actor]
-    ego = [float(row["ego_translation_speed_mps"]) for row in finite_actor]
+    velocity_cosines = _finite([row.get("velocity_direction_cosine") for row in localizable_actor])
+    residual = [float(row["residual_speed_px_per_s"]) for row in localizable_actor]
+    ego = [float(row["ego_translation_speed_mps"]) for row in localizable_actor]
     direction_count = sum(int(row.get("direction", {}).get("count", 0)) for row in background_rows)
     direction_pass = sum(
         int(row.get("direction", {}).get("count", 0))
@@ -261,12 +262,14 @@ def aggregate_a0_metrics(
     )
     unique_tracks = {
         (str(row.get("sample_id", "")), str(row.get("instance_token", "")))
-        for row in finite_actor
+        for row in localizable_actor
     }
     return {
         "actor_pair_count": len(actor_rows),
         "finite_actor_pair_count": len(finite_actor),
         "finite_target_fraction": len(finite_actor) / max(len(actor_rows), 1),
+        "localizable_actor_pair_count": len(localizable_actor),
+        "localizable_actor_pair_fraction": len(localizable_actor) / max(len(actor_rows), 1),
         "valid_paired_actor_track_count": len(unique_tracks),
         "moving_pair_count": len(moving),
         "stationary_pair_count": len(stationary),
@@ -327,6 +330,7 @@ def decide_a0_gate(metrics: Mapping[str, Any], thresholds: Mapping[str, Any]) ->
         "center_projection": projection is not None and projection >= float(thresholds["minimum_projection_in_box_fraction"]),
         "actor_track_count": int(metrics.get("valid_paired_actor_track_count", 0)) >= int(thresholds["minimum_valid_actor_tracks"]),
         "finite_targets": finite_fraction is not None and finite_fraction >= float(thresholds["minimum_finite_target_fraction"]),
+        "localizable_support_fraction": float(metrics.get("localizable_actor_pair_fraction", 0.0)) >= float(thresholds["minimum_localizable_actor_fraction"]),
         "background_support": int(metrics.get("background_direction_point_count", 0)) >= int(thresholds["minimum_background_direction_points"]),
         "background_direction": background is not None and background >= float(thresholds["minimum_background_angular_agreement"]),
         "velocity_support": int(metrics.get("velocity_direction_pair_count", 0)) >= int(thresholds["minimum_velocity_direction_pairs"]),
@@ -392,7 +396,7 @@ def render_review_panel(
     destination: Path,
 ) -> dict[str, Any]:
     frames = to_uint8_video(torch.as_tensor(sample["frames"]))
-    finite_rows = [row for row in actor_rows if bool(row.get("finite"))]
+    finite_rows = [row for row in actor_rows if bool(row.get("localizable_common_support"))]
     chosen = max(
         finite_rows,
         key=lambda row: (row.get("motion_label") == "moving", float(row["residual_speed_px_per_s"])),
