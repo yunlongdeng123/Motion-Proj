@@ -5,7 +5,7 @@
 >
 > **最后更新**：2026-07-18
 > **覆盖范围**：Motion-Proj V1/V2、Autoresearch C0/P0/P1/E0/F0/F1、Physics-DPO PA0–PA2、
-> common-support UPO 与 earlier-fork fallback
+> common-support UPO、earlier-fork fallback 与 Route Pivot R1 temporal audit
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和各正式 run 目录
 > **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 
@@ -47,6 +47,7 @@
 | `RF-10` | rejected | candidate-specific query/support + forced binary 产生 false-strict | 继续使用旧 53 pairs、扩大同配方 review |
 | `RF-11` | blocked | uncertainty-aware partial order 可安全 abstain，但旧候选池几乎无 strict yield | 降 ROPE、降置信度或把 incomparable 改成 tie/winner |
 | `RF-12` | rejected | earlier fork 增强差异同时引入首帧/时间跳变与质量纠缠 | 继续搜索 fork/rho、事后筛唯一 strict |
+| `RF-13` | rejected | 直接把 SVD fps micro-conditioning 匹配到真实 2 Hz 会增大运动，也会破坏质量与时序 safeguard | 把 fps 数值一致当物理校准，或按 motion amount 单指标选 fps |
 
 ## 3. 已验证的 research 负结论
 
@@ -471,6 +472,48 @@ human strict precision 与 strict yield，而不是修改 oracle 迎合 candidat
 - `/root/autodl-tmp/runs/autoresearch-pa2-cand-fallback-s20260716-v1/`
 - commit `a9c60588be247c2f8d08b96c1a993e74b8edf559`
 - config fingerprint `b6806afc33bd8ea85fd96ead058997c51549ae97277fe7cf5c90fbb9fe3ed7c9`
+
+### RF-13：真实采样率不等于 SVD fps micro-conditioning 的安全设定
+
+**原始命题**
+
+nuScenes keyframe 视频约为 2 Hz，而旧生成协议固定 `fps=7`；把 SVD fps 输入改为 2 或 4，可能在不损害
+质量的前提下修复 Base motion 的时间尺度 mismatch。
+
+**观察**
+
+- 32 个 scene-distinct 真实 clips 的中位相邻时间为 `0.5000 s`、有效 fps 为 `2.0000 Hz`；
+- 8 conditions × 2 seeds 的 paired Base audit 中，`fps=2/4` 相对 7 的 dynamic degree 分别增加
+  `24.74%/10.05%`，image velocity 分别增加 `77.97%/110.71%`，95% bootstrap CI 均不跨 0；
+- `fps=2` 同时失败首帧、锐度、闪烁、track survival 与 acceleration safeguard；
+- `fps=4` 虽保住首帧、锐度和闪烁，但 survival ratio 为 `0.859 < 0.90`，acceleration p95 ratio 为
+  `1.950 > 1.25`；
+- 两档候选均通过 anti-low-motion floor，失败不是因为少动，而是更大运动伴随更差可跟踪性和高阶稳定性。
+
+**研究结论**
+
+SVD 的 fps 输入是 learned micro-conditioning，不是物理标定的播放速率。真实 timestamp mismatch 存在，
+但数值匹配不能作为安全修复；在当前官方 SVD-XT、8-frame、25-step 协议下直接改为 2/4 已被拒绝。
+后续 Route A 的真实运动 target 仍必须使用实际 delta-t，不能把保留 `fps=7` 解释为时间问题已解决。
+
+**禁止重复**
+
+- 不因 `2 Hz == fps input 2` 跳过生成质量和 motion safeguard；
+- 不按 dynamic degree 或 image velocity 增幅单指标选择 fps；
+- 不把 image-plane acceleration 当真实世界加速度，也不把统一 playback fps 当生成时间标定；
+- 不用后续训练收益事后反选 R1 的 fps。
+
+**允许重开**
+
+只有新的显式时间/action conditioning、经过校准的 continuous-time parameterization，或跨 backbone 的独立
+证据，才可用新任务重开。重开仍需同 condition/noise 的配对审计、真实 delta-t 与全部安全端点。
+
+**证据**
+
+- `/root/autodl-tmp/runs/route-pivot-r1-temporal-s20260718-v1/`
+- commit `f4b4cd5872d732dc2694d6fb9bae53fcf6dd7304`
+- config fingerprint `a1ed2f2527e9f9ea6a07ed6830b0c4ee6522c38b2fcae5dd1d6db239e86e10ed`
+- [`ROUTE_PIVOT_TEMPORAL_AUDIT.md`](ROUTE_PIVOT_TEMPORAL_AUDIT.md)
 
 ## 4. 未决 research 风险
 

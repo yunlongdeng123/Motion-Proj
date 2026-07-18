@@ -5,7 +5,7 @@
 > **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-R1-02`）
+> **计划状态**：`running`（当前阶段 `RP-A0-03`）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
 > **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。
@@ -278,12 +278,12 @@ D0：选择主线 / fallback / 停止 SVD
 
 稳定任务 ID 与依赖如下：
 
-| ID | 初始状态 | Gate | 依赖 |
+| ID | 当前状态 | Gate | 依赖 |
 |---|---|---|---|
-| `RP-R0-00` | running | 仓库、环境、资产、文档基线 | 无 |
-| `RP-LIT-01` | pending | 一手文献与创新边界矩阵 | R0 |
-| `RP-R1-02` | pending | 时间采样与 SVD fps audit | R0 |
-| `RP-A0-03` | pending | 真实 ego–actor target legality | R0 |
+| `RP-R0-00` | done | 仓库、环境、资产、文档基线 | 无 |
+| `RP-LIT-01` | done | 一手文献与创新边界矩阵 | R0 |
+| `RP-R1-02` | done | 时间采样与 SVD fps audit | R0 |
+| `RP-A0-03` | running | 真实 ego–actor target legality | R0 |
 | `RP-A1-SCAN-04A` | pending | frozen SVD feature scan | A0 machine evidence |
 | `RP-A1-CONFIRM-04B` | pending | scene-disjoint confirm | A1-SCAN 有合法候选 |
 | `RP-B0-05` | pending | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
@@ -397,6 +397,25 @@ docs(research): 归档 sibling 路线并启动真实运动表征研究
 # 5. R1 — 时间采样与 SVD conditioning 审计
 
 这是新路线的首个必要 gate。
+
+## 5.0 执行结论（2026-07-18，done）
+
+正式 run `route-pivot-r1-temporal-s20260718-v1` 已在 clean commit `f4b4cd5` 完成：
+
+- 32 个 scene-distinct 真实 clips 的中位 timestamp delta 为 `0.5000 s`，有效 fps 为 `2.0000 Hz`，
+  8 帧中位覆盖 `3.5000 s`；
+- 8 conditions × 3 fps × 2 seeds 共 48/48 生成与打分有效，16/16 paired groups 有效，
+  same-initial-noise trace 通过且生成/评估均不使用 future GT；
+- 相对 `fps=7`，`fps=2/4` 的 dynamic degree 分别增加 `24.74%/10.05%`，image velocity
+  分别增加 `77.97%/110.71%`，paired bootstrap 均显著；
+- 但 `fps=2` 的首帧、锐度、闪烁、track survival 与 acceleration safeguard 全部失败；`fps=4`
+  的 survival ratio `0.859 < 0.90`、acceleration p95 ratio `1.950 > 1.25`，同样不合格；
+- 冻结 V5 后续生成协议为 `generation.fps=7`。这不表示 7 与真实采样率一致，而是否定“直接降低
+  SVD fps micro-conditioning 就能安全修复时间 mismatch”。
+
+32 个 blinded pairs 已生成且 verdict 模板保持空值，作为 evaluator nuisance 的补充诊断；不阻塞独立的
+A0 machine gate。完整协议、reviewer 质疑与证据见
+[`ROUTE_PIVOT_TEMPORAL_AUDIT.md`](ROUTE_PIVOT_TEMPORAL_AUDIT.md)。
 
 当前代码事实：
 
