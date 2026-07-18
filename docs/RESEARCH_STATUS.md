@@ -5,7 +5,7 @@
 > **研究基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
 > **当前计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)
 > **当前状态**：`running`
-> **当前任务**：`RP-A1-SCAN-04A`；按 scan gate 决定是否进入 confirm，并继续独立的 `RP-B0-05`
+> **当前任务**：`RP-B0-05`；A1 actor 路线已按 scan gate 拒绝，继续独立的 natural-rollout ceiling
 > **硬件**：单张 RTX 4090 24 GB；V5 禁止切双卡
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
@@ -27,6 +27,10 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
   并能否通过 training-only auxiliary supervision 稳定进入 temporal LoRA；
 - **Route B**：冻结 SVD 的自然独立 rollout 分布是否已经包含人工与独立 evaluator 都认可的更优 motion
   sample，从而为后续 condition-relative AWR + real SFT 提供 support。
+
+Route A 的 A1 scan 已给出分解结论：冻结表示中的 sparse ego-flow signal 可泛化，但当前 compact linear
+probe 无法从 driving-specific ego/actor entanglement 中可靠恢复 actor residual，并严重违反 stationary
+safeguard。因此 actor 路线已拒绝，只保留 ego-only representation baseline；A1-CONFIRM 与 A2 不执行。
 
 只有 A、B 都失败时才执行 Route C 的 action/trajectory-conditioned backbone 只读迁移审计。本轮不训练
 新 backbone，不自动进入正式长训。
@@ -50,6 +54,7 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
 | `RP-LIT-01` | done | [`ROUTE_PIVOT_LITERATURE_MATRIX.md`](ROUTE_PIVOT_LITERATURE_MATRIX.md) 完成一手核查，并补入 WMReward、SARA 等最近邻 | BoN 只作 B0 ceiling；主张收紧为 driving ego–actor decomposition + uncertainty/local safeguard |
 | `RP-R1-02` | done | 32 个真实 clips 确认中位 `2.0 Hz`；48 个 SVD fps 对照与 16 个 paired groups 完整；[`ROUTE_PIVOT_TEMPORAL_AUDIT.md`](ROUTE_PIVOT_TEMPORAL_AUDIT.md) 已固化 | `fps=2/4` 虽显著增大 motion，但未通过画质/轨迹/加速度 safeguard；后续冻结 `generation.fps=7`，32 个盲审 pair 仅作补充诊断 |
 | `RP-A0-03` | machine pass / awaiting reviews | 16 scenes 上 392 个可局部化 pairs、89 tracks；AUC `0.8600`、velocity 方向 `0.9725`、ego 相关 `0.2226`、背景方向 `0.9870`；[`ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md`](ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md) 已固化 | 只解锁 A1 machine probe；12 个 panel 的人工 target legality 仍阻塞最终 Route A promotion |
+| `RP-A1-SCAN-04A` | rejected | 24/8 scene-disjoint clips、21 个 layer/sigma 配置；ego baseline 改善 `17.86%–25.01%`，actor 对 zero baseline 全为负且 stationary ratio `3.292–5.062`；[`ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md`](ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md) 已固化 | 保留 ego-only diagnostic；actor hypothesis、A1-CONFIRM 与 A2 停止，不调 probe 追门槛 |
 
 ## 3. V5 稳定任务表
 
@@ -59,10 +64,10 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
 | `RP-LIT-01` | done | 最近邻一手文献与创新边界 | 已收紧 A/B novelty，不单独晋级方法 |
 | `RP-R1-02` | done | 真实时间采样与 SVD fps audit | 已冻结后续 `generation.fps=7`；review material awaiting，不阻塞 A0 |
 | `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | machine pass 已解锁 A1；human gate 并行 pending |
-| `RP-A1-SCAN-04A` | running | 24/8 clips frozen feature scan | 有合法候选才进入 confirm |
-| `RP-A1-CONFIRM-04B` | pending | 64/16/16 scene-disjoint confirm | pass 才解锁 A2 |
-| `RP-B0-05` | pending | natural-rollout best-of-N ceiling | machine pass 后等待 24-case 人审；不自动长训 |
-| `RP-A2-06` | pending | auxiliary-alignment capacity | 仅 A1 confirm pass 时执行 |
+| `RP-A1-SCAN-04A` | rejected | 24/8 clips frozen feature scan | 0 个合法候选；不进入 confirm |
+| `RP-A1-CONFIRM-04B` | rejected / not run | 64/16/16 scene-disjoint confirm | scan dependency 未满足 |
+| `RP-B0-05` | running | natural-rollout best-of-N ceiling | machine pass 后等待 24-case 人审；不自动长训 |
+| `RP-A2-06` | rejected / not run | auxiliary-alignment capacity | A1 confirm dependency 未满足 |
 | `RP-C0-07` | pending | action-conditioned backbone 迁移审计 | 仅 A、B 均 rejected 时执行 |
 | `RP-D0-08` | pending | 最终路线决策与报告 | 固化主线、fallback 和停止项 |
 

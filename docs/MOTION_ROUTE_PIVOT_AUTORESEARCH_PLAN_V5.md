@@ -5,7 +5,7 @@
 > **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-A1-SCAN-04A`）
+> **计划状态**：`running`（当前阶段 `RP-B0-05`）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
 > **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。
@@ -284,10 +284,10 @@ D0：选择主线 / fallback / 停止 SVD
 | `RP-LIT-01` | done | 一手文献与创新边界矩阵 | R0 |
 | `RP-R1-02` | done | 时间采样与 SVD fps audit | R0 |
 | `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | R0 |
-| `RP-A1-SCAN-04A` | running | frozen SVD feature scan | A0 machine evidence |
-| `RP-A1-CONFIRM-04B` | pending | scene-disjoint confirm | A1-SCAN 有合法候选 |
-| `RP-B0-05` | pending | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
-| `RP-A2-06` | pending | auxiliary-alignment capacity | A1-CONFIRM pass |
+| `RP-A1-SCAN-04A` | rejected | frozen SVD feature scan | A0 machine evidence |
+| `RP-A1-CONFIRM-04B` | rejected / not run | scene-disjoint confirm | A1-SCAN 无合法候选 |
+| `RP-B0-05` | running | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
+| `RP-A2-06` | rejected / not run | auxiliary-alignment capacity | A1-CONFIRM 未通过 |
 | `RP-C0-07` | pending | action-conditioned backbone 迁移审计 | A 与 B 均 rejected |
 | `RP-D0-08` | pending | 路线决策与最终报告 | 所有已解锁 gate 结束 |
 
@@ -789,6 +789,31 @@ runs/route-pivot-a0-real-motion-<unique-id>/
 ---
 
 # 8. A1 — Frozen SVD Motion-Feature Probe
+
+## 8.0 执行结论（2026-07-18，rejected）
+
+正式 scan `route-pivot-a1-feature-scan-s20260718-v2` 在 clean commit `b27fb5a` 完成。工程失败的 v1
+因 official-conditioning 外缺少 bf16 autocast，在首个 clip、任何研究指标产生前终止；v1 原样保留，v2
+使用与 C0 parity 相同的 autocast 语义修复，没有更改数据、layer、sigma、probe 或门槛。
+
+v2 使用 24/8 个 scene-disjoint clips，得到 567/176 个 actor queries 与 2,304/768 个 ego queries，
+完整扫描 7 layers × 3 sigmas：
+
+- ego-flow 相对最佳 zero/mean baseline 的改善范围为 `17.86%–25.01%`；最佳
+  `up_s16 / sigma=0.05` 为 `25.01%`，time-shuffle 后 EPE 恶化 `30.14%`，说明冻结表示中存在可泛化的
+  background ego-motion signal；
+- moving actor A-RES 相对 zero-residual baseline 的改善全部为负，范围 `-213.80%–-120.35%`；最佳
+  `up_s32 / sigma=0.05` 仍为 `5.862 px`，而 zero baseline 仅 `2.660 px`；
+- A-RES 虽比 matched-capacity A-ABS 改善 `35.94%–65.81%`，但这不足以越过更强的 zero baseline；
+- stationary prediction / moving-target median ratio 为 `3.292–5.062`，远高于 `0.75` safeguard；
+- 因此 21/21 配置均未满足 primary gate，稳定 layer 为 0，top-2 为空。按 fail-closed 协议不执行昂贵的
+  single-frame/future-reversed top-2 复跑，也不进入 A1-CONFIRM 或 A2。
+
+结论只否定当前 SVD-XT、固定 96 维 compact projection、5×5 local cost 与 linear ridge 组合上的 actor
+residual hypothesis，不外推为“所有 SVD feature 都没有对象运动信息”。但 V5 的当前 Route A 不允许用事后
+调 ridge、扩大 head 或放宽 stationary/zero-baseline 门槛重开。ego-only 结果保留为 representation baseline，
+不得称为 EgoActor-Align。完整结果与 reviewer 边界见
+[`ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md`](ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md)。
 
 ## 8.1 为什么旧 F1 不适用
 
