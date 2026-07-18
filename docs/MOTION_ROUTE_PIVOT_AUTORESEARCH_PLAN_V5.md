@@ -2,21 +2,21 @@
 
 > **工作标题**：Motion-Proj Route Pivot — Real-Motion Representation vs. Natural-Rollout Alignment
 > **目标投稿**：CVPR 2027
-> **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
+> **文档职责**：V5 已完成执行计划与门禁记录；当前状态与后续授权以 `docs/RESEARCH_STATUS.md` 为准
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-C0-07`）
+> **计划状态**：`done`（`RP-D0-08` 已完成）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
-> **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
+> **当前路线状态**：Route A/B 均已 `rejected`；Route C 只读审计已完成，选择 `C1` 的 ReSim feasibility 路线；未下载权重、未启动训练。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。
 > **远端仓库预期路径**：`/root/autodl-tmp/motion_proj`，执行时必须自行确认。
-> **核心执行要求**：连续完成多个独立研究 gate，不因一个中间失败或一次 smoke 通过而停下；除硬阻塞外不向用户请求确认。
-> **当前主候选路线**：
+> **执行结果**：
 >
-> 1. **Route A：真实驾驶视频上的 Ego–Actor Motion Representation Alignment**；
-> 2. **Route B：自然 rollout 的 best-of-N / reward-weighted self-training 可行性**。
+> 1. **Route A**：A0 machine pass，但 A1 actor residual probe 失败；A1-CONFIRM/A2 未运行；
+> 2. **Route B**：N=8 下安全 support 不足，machine gate 失败；
+> 3. **Route C**：迁移审计完成，选择 ReSim `exp0_no_carla` 作为下一阶段单卡可行性候选。
 >
-> **候选路线 C**：只有 A、B 均失败时，做 action/trajectory-conditioned driving world model 的迁移审计，不在本轮训练新 backbone。
+> V5 到此关闭；本文不授权自动下载新 backbone、双卡切换或训练。
 
 ---
 
@@ -288,8 +288,8 @@ D0：选择主线 / fallback / 停止 SVD
 | `RP-A1-CONFIRM-04B` | rejected / not run | scene-disjoint confirm | A1-SCAN 无合法候选 |
 | `RP-B0-05` | rejected | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
 | `RP-A2-06` | rejected / not run | auxiliary-alignment capacity | A1-CONFIRM 未通过 |
-| `RP-C0-07` | running | action-conditioned backbone 迁移审计 | A 与 B 均 rejected |
-| `RP-D0-08` | pending | 路线决策与最终报告 | 所有已解锁 gate 结束 |
+| `RP-C0-07` | done | action-conditioned backbone 迁移审计 | A 与 B 均 rejected |
+| `RP-D0-08` | done | 路线决策与最终报告 | 所有已解锁 gate 结束 |
 
 阶段状态只按正式门禁更新；工程失败使用新 run ID 修复，不把任务直接标为 research `rejected`。
 
@@ -1450,6 +1450,24 @@ runs/route-pivot-b0-natural-rollout-<unique-id>/
 
 # 11. Route C — Backbone Migration Audit（仅在 A/B 都失败时）
 
+## 11.0 执行结论（2026-07-18，done）
+
+只读 run `route-pivot-c0-backbone-audit-s20260718-v1` 在 clean commit `e0063ab` 完成；没有下载权重、
+安装候选环境、启动推理或训练。
+
+- 比较 ReSim、VISTA、OpenDWM、MagicDrive-V2、DriveDreamer 与 VLA-World 后，选择 `C1`；
+- primary 为公开的 ReSim `exp0_no_carla`：2B DiT、8 点 future ego trajectory、历史帧预测、输入不要求
+  future actor boxes，官方 nuScenes JSON 的原始图像路径与本机数据匹配；
+- VISTA 作为 action-conditioned fallback；OpenDWM/MagicDrive-V2 只作 layout/geometry baseline，因为
+  future boxes/maps 会直接规定周车；
+- ReSim 官方有单进程采样入口，但 24 GB RTX 4090 尚未实测；两卡只适合后续缩减 LoRA capacity pilot；
+- 最小选择性资产约 34.4 GB，当前仅余 42 GB，下载后违反 30 GB 安全线，故本轮未下载；
+- 公开 checkpoint 不含 CARLA 非专家数据，固定源码树也未发现论文官方 evaluator 实现，后续不得越界声称。
+
+完整证据与 reviewer 攻击面见 [`BACKBONE_MIGRATION_AUDIT.md`](BACKBONE_MIGRATION_AUDIT.md)。最终路线
+见 [`ROUTE_PIVOT_FINAL_REPORT.md`](ROUTE_PIVOT_FINAL_REPORT.md)。C1 只解锁下一份计划中的单卡 Base/action
+feasibility，不解锁权重自动下载或训练。
+
 若：
 
 ```text
@@ -1566,6 +1584,9 @@ B0 fail
 SVD motion-post-training support insufficient
 进入 Route C 迁移审计
 ```
+
+执行结果：A1 与 B0 均失败，已完成 Route C 并选择 `C1 = ReSim exp0_no_carla feasibility`。选择的是
+可辨识性与可执行性候选，不是已通过的训练路线。
 
 ## Decision E
 
@@ -1770,6 +1791,7 @@ docs(research): 固化路线切换结论
 docs/MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md
 docs/ROUTE_PIVOT_LITERATURE_MATRIX.md
 docs/ROUTE_PIVOT_TEMPORAL_AUDIT.md
+docs/BACKBONE_MIGRATION_AUDIT.md
 docs/ROUTE_PIVOT_FINAL_REPORT.md
 ```
 
