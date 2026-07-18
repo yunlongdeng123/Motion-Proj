@@ -1,98 +1,124 @@
 # Motion-Proj 当前研究状态
 
 > **文档职责**：唯一当前状态与执行授权入口。
->
 > **最后更新**：2026-07-18
-> **研究决策基线**：`9c59c7c51ce2b4d725bb83b83c813e00eebfb5fa`
-> **当前状态**：`rejected`（现有 SVD common-prefix sibling 路线）
-> **当前允许执行的研究任务**：无
-> **硬件需求**：无 GPU 任务；不需要人工评审；不需要配置双卡
+> **研究基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
+> **当前计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)
+> **当前状态**：`running`
+> **当前任务**：`RP-R0-00`；完成后连续执行 `RP-LIT-01`、`RP-R1-02`、`RP-A0-03`、
+> `RP-A1-SCAN-04A` 与独立的 `RP-B0-05`
+> **硬件**：单张 RTX 4090 24 GB；V5 禁止切双卡
 
-本文只写当前决策和已经关闭的里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
+本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
 run 为准；为什么不能重复旧尝试见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)。
 
-## 1. 当前结论
+## 1. 当前研究问题
 
-Motion-Proj 已完成两轮主要研究路线的可证伪诊断：
+已拒绝的两条旧路线是：
 
 1. **Explicit dynamics projection / endpoint distillation**：当前 synthetic target、RGB/VAE
    counterfactual 和 shared temporal LoRA 组合未通过动力学、target legality 与 locality 门禁；
-2. **SVD sibling physics preference**：旧 P-UNC forced-binary 标签器未通过人工可信性复核；
+2. **SVD internal sibling physics preference**：旧 P-UNC forced-binary 标签器未通过人工可信性复核；
    common-support selective partial order 虽消除了校准集 false-strict，但候选 strict yield 过低，
-   唯一 earlier-fork fallback 又触发首帧/质量路线门禁。
+   唯一 earlier-fork fallback 又触发首帧/质量门禁。
 
-因此当前不存在可以进入 DPO、AWR、SFT、LoRA screening、正式训练或双卡扩量的 preference 数据。
-也没有任何新 checkpoint 或 rollout-quality improvement 可以用于 CVPR 2027 主张。
+V5 不恢复这两条路线，而检验两个独立的新问题：
 
-拒绝范围严格限定为已测试的机制与候选构造。它不证明以下更广命题：
+- **Route A**：真实训练视频中的 ego-induced motion 与 actor residual motion 是否在冻结 SVD 表示中可辨，
+  并能否通过 training-only auxiliary supervision 稳定进入 temporal LoRA；
+- **Route B**：冻结 SVD 的自然独立 rollout 分布是否已经包含人工与独立 evaluator 都认可的更优 motion
+  sample，从而为后续 condition-relative AWR + real SFT 提供 support。
 
-- 驾驶视频物理偏好无法定义；
-- partial order、localized alignment 或 diffusion preference training 普遍无效；
-- 显式 action/layout 条件的可控驾驶 world model 无法使用物理监督；
-- 新的、可辨识的 sibling/counterfactual generator 不可能产生合法 preference。
+只有 A、B 都失败时才执行 Route C 的 action/trajectory-conditioned backbone 只读迁移审计。本轮不训练
+新 backbone，不自动进入正式长训。
 
-## 2. 里程碑
+## 2. 已关闭里程碑
 
 | ID | 状态 | 已完成事实 | 当前决策 |
 |---|---|---|---|
 | `P2-V1-TUNE-01` | rejected | 16 个 100-step 与 4 个 300-step synthetic projection trial | 不继续旧 cache、Optuna、t10-800 或同配方调参 |
-| `P2-V2-COND-00` | done / branch rejected | future-GT ego mismatch 已确认；self-estimated static V1 未过人工门槛 | 未条件化 SVD 禁用 future-GT static target；static branch 停止 |
+| `P2-V2-COND-00` | done / branch rejected | future-GT ego mismatch 已确认；self-estimated static V1 未过人工门槛 | 未条件化 SVD 禁用 future-GT static target |
 | `P2-V2-REPLAY-05` | done | object-only generated-track replay 的 schema 与人工合理性通过 | 只保留基础设施，不外推训练收益 |
 | `P2-V2-PILOT-03` | blocked | C/D/E capacity 与 single-pair locality 诊断完成 | shared temporal LoRA endpoint 不进入 rollout 或长训 |
-| `F0/F1/P1` | rejected | endpoint preserve、raw-feature probe、RGB/VAE target legality 均完成门禁 | 不绕过 target legality 启动 feature head 或生成器训练 |
+| `F0/F1/P1` | rejected | endpoint preserve、旧 raw-feature probe、RGB/VAE target legality 完成 | 不绕过 target legality 启动旧 feature head 或生成器训练 |
 | `PA0-REVIEW-00` | done | P-UNC 与 E0 既有人工 review 聚合完成 | 仅完成基础设施可信度，不产生偏好标签 |
-| `PA1-BRANCH-02` | done | 14-frame common-prefix siblings 通过 same-scene 结构盲审 | 只证明结构合法，不证明 physics winner 可辨 |
+| `PA1-BRANCH-02` | done | common-prefix siblings 通过 same-scene 结构盲审 | 只证明结构合法，不证明 physics winner 可辨 |
 | `PA2-PAIR-03` | rejected | 120 conditions、53 machine pairs、48-case 人工复核完成 | 旧 P-UNC forced-binary recipe 禁止训练 |
-| `PA2-UPO-03B` | done / yield blocked | common-support oracle 的 tie holdout、shortcut、cycle 与 bootstrap 门禁通过 | `2/96` strict 不足以进入 prospective review 或训练 |
-| `PA2-CAND-03D` | rejected | 唯一 8-condition earlier-fork fallback 完成 | first-frame/quality gate 失败；不筛唯一 strict，不再搜索 fork/rho |
-| `PA3`–`PA8` | rejected / not run | 上游没有合法且足量的 preference 数据 | 未执行 kernel、screening、双卡、正式训练、评估或论文主张 |
+| `PA2-UPO-03B` | done / yield blocked | tie holdout、shortcut、cycle 与 bootstrap 门禁通过 | `2/96` strict 不足以进入训练 |
+| `PA2-CAND-03D` | rejected | 唯一 8-condition earlier-fork fallback 完成 | 不筛唯一 strict，不再搜索 fork/rho |
+| 旧 `PA3`–`PA8` | rejected / not run | 上游没有合法且足量的 preference 数据 | 不恢复旧 DrivePO trainer、screening 或双卡计划 |
 
-## 3. 当前执行边界
+## 3. V5 稳定任务表
 
-未经用户批准的新计划明确解锁，禁止：
+| ID | 当前状态 | Gate | 通过后的动作 |
+|---|---|---|---|
+| `RP-R0-00` | running | 仓库、环境、资产与文档基线 | 解锁一手文献、R1、A0、B0 |
+| `RP-LIT-01` | pending | 最近邻一手文献与创新边界 | 收紧 A/B novelty，不单独晋级方法 |
+| `RP-R1-02` | pending | 真实时间采样与 SVD fps audit | 冻结后续 generation fps 协议 |
+| `RP-A0-03` | pending | 真实 ego–actor target legality | machine evidence 解锁 A1；human gate 可并行 pending |
+| `RP-A1-SCAN-04A` | pending | 24/8 clips frozen feature scan | 有合法候选才进入 confirm |
+| `RP-A1-CONFIRM-04B` | pending | 64/16/16 scene-disjoint confirm | pass 才解锁 A2 |
+| `RP-B0-05` | pending | natural-rollout best-of-N ceiling | machine pass 后等待 24-case 人审；不自动长训 |
+| `RP-A2-06` | pending | auxiliary-alignment capacity | 仅 A1 confirm pass 时执行 |
+| `RP-C0-07` | pending | action-conditioned backbone 迁移审计 | 仅 A、B 均 rejected 时执行 |
+| `RP-D0-08` | pending | 最终路线决策与报告 | 固化主线、fallback 和停止项 |
 
-- 使用现有 53 个 P-UNC pairs、旧 local labels、UPO 的 2 个 strict 或 fallback 的唯一 strict 训练；
-- 继续搜索 common-prefix fork fraction、rho、candidate 数量或事后降低 strict/quality/coverage 阈值；
-- 启动 DPO、AWR、SFT、LoRA screening、长训练、正式 rollout 对比或双卡配置；
-- 自动填写、推断或替代任何人工 verdict；
-- 把 machine pass、same-scene pass、低能量或单-pair overfit 写成生成质量改善；
-- 从 `docs/archive/` 的旧“下一步”恢复任务。
+Route A 与 Route B 的机器任务相互独立。一条路线失败后仍继续另一条。人工 review 不阻塞独立机器 gate；
+若最终只缺人工 verdict，则相应任务标为 `awaiting_reviews` 并一次性交付完整提示词与材料。
 
-允许的无新研究授权操作只有：
+## 4. V5 已授权执行边界
 
-- 只读复核既有代码、文档与正式 run；
-- 修复不改变研究语义的基础设施问题，并运行测试；
-- 整理证据、负结论、复现说明或论文 related-work 材料；
-- 在用户明确要求后起草一个新的、独立预注册的研究计划。
+仅允许按 V5 固定顺序执行：
 
-## 4. 可复用资产
+```text
+R0 + literature
+→ R1 temporal/fps audit
+→ A0 target legality
+→ A1 scan/confirm（按门禁）
+→ B0 natural rollout ceiling（与 A 独立）
+→ A2（仅 A1 pass）或 Route C（仅 A/B rejected）
+→ D0 final report
+```
 
-下列资产没有因路线拒绝而失效，但复用时必须遵守各自证据边界：
+本轮明确禁止：
+
+- 继续 denoising-prefix sibling、fork、rho、CFG branch 或 candidate 数搜索；
+- 使用旧 53 pairs、旧 local labels、UPO 的 2 个 strict 或 fallback 唯一 strict 训练；
+- 实现旧 DrivePO tube-DPO、vanilla DPO、在线 PPO/GRPO 或大型 reward model；
+- 对完整 25-step sampling chain 反传；
+- 用 future ego/box/track 评价自由生成 rollout；
+- 把 image-plane acceleration 称为真实世界加速度；
+- 自动填写人工 verdict、覆盖正式 run、自动 push 或切换双卡；
+- 在 B0 通过后自动开始 B1 长训；B1 只允许形成下一阶段预注册计划。
+
+允许在真实训练视频的 representation target/probe 中使用 nuScenes ego pose、3D annotation 与 LiDAR；这些
+信号不得进入 generated-rollout 正式 evaluator，也不得描述为 inference-time future condition。
+
+## 5. 研究门禁原则
+
+V5 必须逐项遵守 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：
+
+1. 先证明 target/preference 存在、合法、可观察且 scene-disjoint，再训练；
+2. 真实时间戳参与所有速度/加速度归一化，SVD `fps` 作为版本化 micro-conditioning；
+3. generated rollout 的训练侧 scorer 与正式 CoTracker3 evaluator 隔离；
+4. low-motion、time-slow、track dropout、camera nuisance、画质与首帧损坏 fail closed；
+5. single-pair、machine pass 或 feature probe pass 只解锁下一门禁，不产生 rollout/论文结论；
+6. localized auxiliary loss 必须实测 gradient、outside、frame-0、motion amount 与 held-out transfer；
+7. 工程失败使用新 run ID 修复；只有通过预注册检查后的结果才能标为 research rejected。
+
+## 6. 可复用资产
 
 | 资产 | 已验证范围 | 不得解释为 |
 |---|---|---|
 | official SVD generation parity | matched inputs 下与 Diffusers pipeline exact | preference 或训练收益 |
 | scene-level split 与 provenance | scene/clip 无泄漏、fingerprint 可追溯 | 当前数据足以训练 |
+| real nuScenes geometry/annotations | 真实训练视频上的 target/probe | generated rollout 的 future condition 或 evaluator truth |
 | generated point tracks / P-UNC | point-space support、visibility 与部分运动不变量 | 合法 RGB target 或可靠 winner |
 | CoTracker3 evaluator | 当前协议内 rerun 与扰动排序稳定 | 绝对物理标定 |
-| common-prefix sibling RGB | 同一场景的不同 future 候选 | 人工可辨的物理偏好 |
 | common-support UPO oracle | 旧 tie holdout 上低 false-strict、shortcut reaudit 通过 | 足量 preference yield |
 | manifest / fingerprint / atomic runtime | 正式 run 可追溯与 fail-closed | 方法结论本身成立 |
 
-## 5. 重新开始研究的最低要求
-
-下一条路线必须是新的候选可辨识性或条件化假设，而不是当前路线的隐式补丁。新计划至少要：
-
-1. 引用 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 中相关条目，并解释规避机制；
-2. 在训练前证明候选是同条件、可观察、首帧一致、画质合法且对人类具有足够 strict yield；
-3. 对 low-motion、time-slow、track dropout、camera nuisance 和画质退化做 fail-closed attack；
-4. 将 tie 与 incomparable 作为正式数据语义，而不是强制二元 winner；
-5. 先做 localized correction/locality capacity gate，再讨论单卡 screening、双卡扩量或正式训练；
-6. 预注册停止线、人工评审协议、独立 evaluator 和 driving-specific motion-entanglement 证明。
-
-满足这些要求只允许创建新计划，不自动解锁实验。
-
-## 6. 事实源优先级
+## 7. 事实源优先级
 
 发生冲突时按以下顺序处理：
 
@@ -100,6 +126,8 @@ Motion-Proj 已完成两轮主要研究路线的可证伪诊断：
 2. [`EXPERIMENTS.md`](EXPERIMENTS.md) 的实验登记；
 3. 本文件的当前状态与授权；
 4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的跨实验解释与重开条件；
-5. `docs/archive/` 中的历史计划、报告和提示词。
+5. 当前 V5 的尚未执行设计；
+6. `docs/archive/` 中的历史计划、报告和提示词。
 
-历史文档保留当时语境，可能包含已经执行完毕的“当前任务”。它们不得覆盖本文件。
+每个正式 gate 完成后必须更新本文件与 `EXPERIMENTS.md`；新负结论或重开边界同时更新
+`RESEARCH_FAILURES.md`。归档材料不得覆盖本文件。

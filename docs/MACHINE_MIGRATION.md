@@ -97,5 +97,7 @@ pytest -q \
 ## 7. 当前研究状态
 
 截至 2026-07-18，V1 projection 与 SVD common-prefix sibling preference 两条路线均已按各自门禁停止。
-当前没有排程中的生成器训练、候选扩量、人工评审或双卡任务。准确状态及重开边界只以
-[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准。
+V5 route-pivot autoresearch 已获授权，单卡依次验证真实 ego–actor motion representation 与 natural
+independent-rollout best-of-N ceiling；不恢复旧 labels/fork/rho，不切双卡，也不自动进入正式长训。
+准确任务状态只以 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准，执行协议见
+[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)。
