@@ -1,0 +1,84 @@
+defaults_chain:
+  - ./autoresearch_c0_conditioning.yaml
+
+run_id: route-pivot-a1-feature-scan-s20260718-v1
+work_dir: /root/autodl-tmp/runs/route-pivot-a1-feature-scan-s20260718-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+seed: 20260718
+
+data:
+  split: train
+  num_frames: 8
+  frame_stride: 1
+  height: 256
+  width: 448
+  min_box_visibility: 2
+  use_lidar_depth: true
+
+model:
+  num_frames: 8
+  lora:
+    enable: false
+  gradient_checkpointing: false
+  enable_xformers: false
+  generation:
+    protocol: svd_official_v1
+    fps: 7
+
+cache:
+  source: clean
+  store: latent
+
+train:
+  experiment_type: base
+  deterministic: true
+  num_workers: 0
+  max_steps: 1
+  logger: none
+  resume: none
+
+a1:
+  task_id: RP-A1-SCAN-04A
+  mode: scan
+  parent_a0_run: /root/autodl-tmp/runs/route-pivot-a0-real-motion-s20260718-v3
+  train_clip_count: 24
+  dev_clip_count: 8
+  sigmas: [0.05, 0.2, 1.0]
+  feature_layers:
+    down_s8: down_blocks.0.attentions.1
+    down_s16: down_blocks.1.attentions.1
+    down_s32: down_blocks.2.attentions.1
+    mid_s64: mid_block.attentions.0
+    up_s32: up_blocks.1.attentions.2
+    up_s16: up_blocks.2.attentions.2
+    up_s8: up_blocks.3.attentions.2
+  maximum_actor_queries_per_clip: 48
+  maximum_ego_queries_per_clip: 96
+  box_dilation_px: 2
+  local_cost_radius_cells: 2
+  projection_dim: 96
+  projection_seed: 2026071803
+  noise_seed: 2026071804
+  condition_seed: 2026071805
+  control_seed: 2026071806
+  ridge_regularization: 1.0
+  top_k: 2
+  minimum_free_disk_gb: 30.0
+
+  thresholds:
+    # SCAN 只负责决定是否值得扩成 64/16/16；CONFIRM 仍执行 V5 的 20%/15%/10% 主门。
+    minimum_train_actor_queries: 256
+    minimum_dev_actor_queries: 64
+    minimum_train_ego_queries: 1024
+    minimum_dev_ego_queries: 256
+    scan_minimum_ego_improvement: 0.10
+    scan_minimum_actor_improvement: 0.075
+    scan_minimum_res_vs_abs_improvement: 0.05
+    minimum_control_degradation: 0.10
+    minimum_ego_control_degradation: 0.05
+    maximum_stationary_to_moving_ratio: 0.75
+    minimum_stable_sigmas_per_layer: 2
