@@ -10,7 +10,8 @@
     frames:      float 张量 [K, 3, H, W]，取值范围 [-1, 1]
     cond_frame:  float 张量 [3, H, W]            (= frames[0]，SVD 条件输入)
     intrinsics:  float 张量 [3, 3]               (已重新缩放到 H, W)
-    cam2ego:     float 张量 [4, 4]
+    cam2ego:     float 张量 [4, 4]                 （兼容字段，取第 0 帧）
+    cam2ego_frames: float 张量 [K, 4, 4]          （逐帧标定，通常恒定）
     ego2global:  float 张量 [K, 4, 4]
     boxes:       list[K]，其元素为 list[dict]      逐帧的真值检测框
     timestamps:  long 张量 [K]                   (微秒)
@@ -195,7 +196,11 @@ class NuScenesFutureVideoDataset(Dataset):
         return torch.from_numpy(flat.reshape(self.H, self.W))
 
     def _boxes_to_2d(self, boxes, K: torch.Tensor, sx, sy, ow, oh) -> list[dict]:
-        """将相机坐标系下的 3D 检测框投影为 2D xyxy，并附加实例 token。"""
+        """将相机坐标系 3D 框转为向后兼容的 2D + motion schema。
+
+        ``xyxy/center_depth/size3d`` 等旧字段保持不变；新增字段只服务真实视频
+        representation target。visibility 必须在任何投影与轨迹构造前 fail closed。
+        """
         from nuscenes.utils.geometry_utils import view_points
 
         out: list[dict] = []
@@ -203,6 +208,8 @@ class NuScenesFutureVideoDataset(Dataset):
         for box in boxes:
             ann = self.nusc.get("sample_annotation", box.token)
             vis = int(ann.get("visibility_token", "0") or 0)
+            if vis < self.min_vis:
+                continue
             corners = box.corners()  # [3, 8]，相机坐标系
             if (corners[2] <= 0.1).all():
                 continue  # 完全位于相机后方
@@ -214,13 +221,28 @@ class NuScenesFutureVideoDataset(Dataset):
             v0, v1 = np.clip([v0, v1], 0, self.H - 1)
             if (u1 - u0) < 2 or (v1 - v0) < 2:
                 continue
+            attributes = []
+            for token in ann.get("attribute_tokens", []):
+                attribute = self.nusc.get("attribute", token)
+                attributes.append(str(attribute["name"]))
+            try:
+                velocity_global = np.asarray(self.nusc.box_velocity(box.token), dtype=np.float32)
+            except Exception:
+                velocity_global = np.full(3, np.nan, dtype=np.float32)
+            if velocity_global.shape != (3,):
+                velocity_global = np.full(3, np.nan, dtype=np.float32)
             out.append(
                 {
+                    "annotation_token": str(box.token),
                     "instance_token": ann["instance_token"],
                     "category": ann["category_name"],
+                    "attributes": attributes,
                     "xyxy": np.array([u0, v0, u1, v1], dtype=np.float32),
+                    "center_cam": np.asarray(box.center, dtype=np.float32),
+                    "corners_cam": np.asarray(corners.T, dtype=np.float32),
                     "center_depth": float(box.center[2]),
                     "size3d": np.asarray(box.wlh, dtype=np.float32),
+                    "velocity_global": velocity_global,
                     "visibility": vis,
                 }
             )
@@ -244,7 +266,9 @@ class NuScenesFutureVideoDataset(Dataset):
             "frames": frames_t,
             "cond_frame": frames_t[0].clone(),
             "intrinsics": Ks[0],            # 对同一相机而言内参是恒定的
+            "intrinsics_frames": torch.stack(Ks, 0),
             "cam2ego": c2e[0],
+            "cam2ego_frames": torch.stack(c2e, 0),
             "ego2global": torch.stack(e2g, 0),
             "boxes": boxes,
             "timestamps": torch.tensor(ts, dtype=torch.long),
