@@ -605,6 +605,61 @@ evaluator 与完整 anti-collapse；只换 scorer 或增加 N 不算重开。
 - source/result fingerprints `29fc4036a7bd` / `d52b5f71da38`
 - [`ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md`](ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md)
 
+### RF-16：layout controllability 不等于 action-disentangled actor physics
+
+**原始命题**
+
+只要迁移到有 nuScenes、3D box、HD map、camera pose 和官方权重的 controllable driving generator，就能自动
+解决 SVD 上暴露的 ego–actor motion entanglement，并为物理 preference 提供合法 sibling。
+
+**观察**
+
+- OpenDWM 与 MagicDrive-V2 的 layout checkpoint 把逐帧 future 3D boxes/maps 直接作为条件；它们能验证条件
+  adherence，却不要求模型自主预测 other-agent future；
+- MagicDrive-V2 在 224×400 低分辨率上有明确单卡显存证据，但 stage-3 训练至少 4 GPU，且 actor 仍由 box
+  sequence 规定；
+- VISTA 有合法 trajectory/cmd/steer/speed/goal conditions，且 actor future 自由生成，但官方建议采样显存
+  至少 32 GB，架构仍基于 SVD；
+- ReSim 公开 `exp0_no_carla` checkpoint、8 点 future ego trajectory、历史帧预测与不含 future actor boxes 的
+  nuScenes schema，最接近本项目的可辨识性要求；
+- 公开 ReSim checkpoint 不包含论文 CARLA 非专家数据，官方单 GPU 入口也没有证明 24 GB RTX 4090 已通过；
+  固定源码树未发现论文 evaluator/IDM/Video2Reward 的发布实现；
+- 最小选择性下载约 34.4 GB，当前 42 GB 空间无法保持 30 GB 安全线。
+
+**研究结论**
+
+显式 **ego** trajectory 是重开 actor residual 可辨识性的必要条件，但不是物理偏好证据；future **actor** boxes
+则会把待检验结果直接变成输入。Route C 因此选择 ReSim `exp0_no_carla` 做下一阶段 feasibility，而不是按画质
+或单卡显存选择 layout model。该选择只改变问题结构，不证明 preference support、dense localization 或训练收益。
+
+**禁止重复**
+
+- 不把 box/map adherence、camera-path adherence 或 FID/FVD 改善称为 other-agent physics；
+- 不用 future actor boxes/tracks 生成“自由”rollout，或作为其正式 evaluator truth；
+- 不把 `exp0_no_carla` 写成包含 CARLA dangerous/non-expert behaviors 的完整 ReSim；
+- 不因官方脚本为单进程就宣称 24 GB 4090 可运行；必须实测峰值与完整输出；
+- 不跳过 Base/action feasibility 与 candidate-yield gate，直接在 ReSim 上实现 vanilla DPO、DenseDPO 或 AWR；
+- 不在当前磁盘安全线下自动下载大权重，也不先切双卡掩盖单卡/候选失败。
+
+**允许重开**
+
+用新的 C1 计划按顺序完成：
+
+1. ReSim 单卡 9-latent-frame Base/action smoke；
+2. action sibling 的因果响应与 rollout sibling 的安全 support 分离审计；
+3. common-support UPO 的 false-strict、strict yield、stationary/moving、action shuffle 与 low-motion gate；
+4. 只有前述 machine/human gate 通过后，才用两卡做短 LoRA dense safeguarded capacity test。
+
+若 full-CARLA ReSim、VLA-World 或其他显式 action backbone 后续正式发布，必须固定新源码/权重 fingerprint 并
+重新执行同样门禁；发布本身不自动晋级。
+
+**证据**
+
+- `/root/autodl-tmp/runs/route-pivot-c0-backbone-audit-s20260718-v1/`
+- [`BACKBONE_MIGRATION_AUDIT.md`](BACKBONE_MIGRATION_AUDIT.md)
+- [ReSim official source](https://github.com/OpenDriveLab/ReSim/tree/bf13dff45975eabbabc4e7de778207d2bb785e9b)
+- [ReSim paper](https://proceedings.neurips.cc/paper_files/paper/2025/file/f502981cbe221d857ad409450a7917c3-Paper-Conference.pdf)
+
 ## 4. 未决 research 风险
 
 以下风险必须进入下一份计划，但当前证据不足以写成已解决或已证伪。
