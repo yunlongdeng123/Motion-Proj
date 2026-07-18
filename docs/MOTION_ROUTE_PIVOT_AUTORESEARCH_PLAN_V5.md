@@ -5,7 +5,7 @@
 > **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-A0-03`）
+> **计划状态**：`running`（当前阶段 `RP-A1-SCAN-04A`）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
 > **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。
@@ -283,8 +283,8 @@ D0：选择主线 / fallback / 停止 SVD
 | `RP-R0-00` | done | 仓库、环境、资产、文档基线 | 无 |
 | `RP-LIT-01` | done | 一手文献与创新边界矩阵 | R0 |
 | `RP-R1-02` | done | 时间采样与 SVD fps audit | R0 |
-| `RP-A0-03` | running | 真实 ego–actor target legality | R0 |
-| `RP-A1-SCAN-04A` | pending | frozen SVD feature scan | A0 machine evidence |
+| `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | R0 |
+| `RP-A1-SCAN-04A` | running | frozen SVD feature scan | A0 machine evidence |
 | `RP-A1-CONFIRM-04B` | pending | scene-disjoint confirm | A1-SCAN 有合法候选 |
 | `RP-B0-05` | pending | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
 | `RP-A2-06` | pending | auxiliary-alignment capacity | A1-CONFIRM pass |
@@ -533,6 +533,25 @@ EgoActor-Align
 ---
 
 # 7. A0 — 真实运动 target 合法性
+
+## 7.0 执行结论（2026-07-18，machine pass / awaiting reviews）
+
+当前事实源为 `route-pivot-a0-real-motion-s20260718-v3`（clean commit `45cb279`）：
+
+- 修复了 `min_box_visibility` 读取但未应用的真实 bug，并以 additive schema 加入 annotation token、
+  attributes、camera-frame center/corners、global velocity 与逐帧 calibration；
+- 16 个 scene-distinct clips 上 420/421 actor pairs finite；进一步要求 actual_t、actual_t+1 和
+  static-if-world-fixed_t+1 都在图内后，仍有 392/421 pairs、89 条 unique tracks；
+- localizable support 中 moving/stationary pairs 为 181/208，residual AUC `0.8600`；velocity direction
+  positive fraction `0.9725`；residual 与 ego speed 的 Spearman `0.2226`；
+- 157,394 个 confident GT-box 外 LiDAR 点上，sparse ego flow 与 RAFT 夹角不超过 45° 的比例为
+  `0.9870`；schema、visibility、projection、calibration、LiDAR 与 leakage checks 全过；
+- v1 曾把 34 个部分可见但 center 已出画的 observations 错纳入 clipped-xyxy 分母；34/34 failures
+  均出画、图内 failure 为 0。v1 原样保留为 checker bug，v2 修正 eligibility，v3 再前置可局部化共同支持。
+
+因此 A0 machine evidence 解锁 A1-SCAN；12 个 review panels 和空 verdict 模板已生成，最终 Route A
+promotion 仍受 human gate 约束。完整边界与证据见
+[`ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md`](ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md)。
 
 ## 7.1 先审计当前数据代码
 

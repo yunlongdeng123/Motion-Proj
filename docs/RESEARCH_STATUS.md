@@ -5,8 +5,7 @@
 > **研究基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
 > **当前计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)
 > **当前状态**：`running`
-> **当前任务**：`RP-A0-03`；完成 machine evidence 后连续执行 `RP-A1-SCAN-04A` 与独立的
-> `RP-B0-05`
+> **当前任务**：`RP-A1-SCAN-04A`；按 scan gate 决定是否进入 confirm，并继续独立的 `RP-B0-05`
 > **硬件**：单张 RTX 4090 24 GB；V5 禁止切双卡
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
@@ -50,6 +49,7 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
 | `RP-R0-00` | done | 当前仓库、单张 4090、磁盘、权重、nuScenes、RAFT、Depth、CoTracker 与 scene split 均已核验；baseline 为 208 passed | 单卡资产足以继续 R1/A0/A1/B0；保持 30 GB 磁盘安全线 |
 | `RP-LIT-01` | done | [`ROUTE_PIVOT_LITERATURE_MATRIX.md`](ROUTE_PIVOT_LITERATURE_MATRIX.md) 完成一手核查，并补入 WMReward、SARA 等最近邻 | BoN 只作 B0 ceiling；主张收紧为 driving ego–actor decomposition + uncertainty/local safeguard |
 | `RP-R1-02` | done | 32 个真实 clips 确认中位 `2.0 Hz`；48 个 SVD fps 对照与 16 个 paired groups 完整；[`ROUTE_PIVOT_TEMPORAL_AUDIT.md`](ROUTE_PIVOT_TEMPORAL_AUDIT.md) 已固化 | `fps=2/4` 虽显著增大 motion，但未通过画质/轨迹/加速度 safeguard；后续冻结 `generation.fps=7`，32 个盲审 pair 仅作补充诊断 |
+| `RP-A0-03` | machine pass / awaiting reviews | 16 scenes 上 392 个可局部化 pairs、89 tracks；AUC `0.8600`、velocity 方向 `0.9725`、ego 相关 `0.2226`、背景方向 `0.9870`；[`ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md`](ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md) 已固化 | 只解锁 A1 machine probe；12 个 panel 的人工 target legality 仍阻塞最终 Route A promotion |
 
 ## 3. V5 稳定任务表
 
@@ -58,8 +58,8 @@ V5 不恢复这两条路线，而检验两个独立的新问题：
 | `RP-R0-00` | done | 仓库、环境、资产与文档基线 | 已解锁一手文献、R1、A0、B0 |
 | `RP-LIT-01` | done | 最近邻一手文献与创新边界 | 已收紧 A/B novelty，不单独晋级方法 |
 | `RP-R1-02` | done | 真实时间采样与 SVD fps audit | 已冻结后续 `generation.fps=7`；review material awaiting，不阻塞 A0 |
-| `RP-A0-03` | running | 真实 ego–actor target legality | machine evidence 解锁 A1；human gate 可并行 pending |
-| `RP-A1-SCAN-04A` | pending | 24/8 clips frozen feature scan | 有合法候选才进入 confirm |
+| `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | machine pass 已解锁 A1；human gate 并行 pending |
+| `RP-A1-SCAN-04A` | running | 24/8 clips frozen feature scan | 有合法候选才进入 confirm |
 | `RP-A1-CONFIRM-04B` | pending | 64/16/16 scene-disjoint confirm | pass 才解锁 A2 |
 | `RP-B0-05` | pending | natural-rollout best-of-N ceiling | machine pass 后等待 24-case 人审；不自动长训 |
 | `RP-A2-06` | pending | auxiliary-alignment capacity | 仅 A1 confirm pass 时执行 |
