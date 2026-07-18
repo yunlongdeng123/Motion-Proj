@@ -1,0 +1,24 @@
+defaults_chain:
+  - ./autoresearch_c0_conditioning.yaml
+
+run_id: route-pivot-b0-sensitivity-s20260718-v1
+work_dir: /root/autodl-tmp/runs/route-pivot-b0-sensitivity-s20260718-v1
+
+seed: 20260718
+
+b0_sensitivity:
+  task_id: RP-B0-05-SENSITIVITY
+  source_run: /root/autodl-tmp/runs/route-pivot-b0-natural-rollout-s20260718-v1
+  expected_source_result_fingerprint: 29fc4036a7bda45c61b8236068fc439d1f8dcfe0a12f7afd6fca83330ba28c42
+  parent_r1_run: /root/autodl-tmp/runs/route-pivot-r1-temporal-s20260718-v1
+  scenarios:
+    - name: strict
+      ignored_checks: []
+    - name: ignore_absolute
+      ignored_checks: [first_frame_absolute]
+    - name: ignore_all_first_frame
+      ignored_checks: [first_frame_absolute, first_frame_relative]
+    - name: ignore_first_frame_and_motion
+      ignored_checks: [first_frame_absolute, first_frame_relative, motion_floor_and_ceiling]
+    - name: strip_anti_collapse
+      ignored_checks: [first_frame_absolute, first_frame_relative, motion_floor_and_ceiling, flicker, sharpness, survival]

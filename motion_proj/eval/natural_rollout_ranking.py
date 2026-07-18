@@ -182,6 +182,46 @@ def condition_diversity(
     }
 
 
+def eligibility_sensitivity(
+    rows: Sequence[Mapping[str, Any]],
+    pairwise_rgb_rms_by_condition: Mapping[str, Mapping[str, float]],
+    thresholds: Mapping[str, Any],
+    *,
+    ignored_checks: Sequence[str],
+) -> dict[str, Any]:
+    """只读移除指定 checks，给出 candidate-support 上界；不重选或重算 scorer。"""
+    ignored = {str(name) for name in ignored_checks}
+    adjusted = []
+    for source in rows:
+        row = dict(source)
+        eligibility = source.get("eligibility") if isinstance(source.get("eligibility"), Mapping) else {}
+        checks = eligibility.get("checks") if isinstance(eligibility.get("checks"), Mapping) else {}
+        retained = {str(name): bool(value) for name, value in checks.items() if str(name) not in ignored}
+        row["eligible"] = bool(retained) and all(retained.values())
+        adjusted.append(row)
+    natural = [row for row in adjusted if row.get("candidate_role") != "base_fixed"]
+    passing = [row for row in natural if bool(row.get("eligible"))]
+    grouped: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
+    for row in adjusted:
+        grouped[str(row["condition_id"])].append(row)
+    eligible_by_condition = Counter(str(row["condition_id"]) for row in passing)
+    diversity = [
+        {
+            "condition_id": condition_id,
+            **condition_diversity(group, pairwise_rgb_rms_by_condition.get(condition_id, {}), thresholds),
+        }
+        for condition_id, group in sorted(grouped.items())
+    ]
+    return {
+        "ignored_checks": sorted(ignored),
+        "eligible_candidate_count": len(passing),
+        "condition_with_at_least_one_eligible": sum(count >= 1 for count in eligible_by_condition.values()),
+        "condition_with_at_least_two_eligible_upper_bound": sum(count >= 2 for count in eligible_by_condition.values()),
+        "diverse_condition_count": sum(bool(row["diverse"]) for row in diversity),
+        "diversity": diversity,
+    }
+
+
 def _rank(values: Sequence[float]) -> list[float]:
     order = sorted(range(len(values)), key=lambda index: (float(values[index]), index))
     ranks = [0.0] * len(values)
