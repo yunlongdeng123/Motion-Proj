@@ -145,13 +145,17 @@ def _official_conditioning(
     width: int,
 ) -> tuple[Conditioning, dict[str, Any]]:
     generator = torch.Generator(device=backbone.device).manual_seed(int(seed))
-    packed = backbone.build_official_generation_conditioning(
-        cond_frame,
-        generator=generator,
-        num_frames=int(backbone.cfg.num_frames),
-        height=int(height),
-        width=int(width),
-    )
+    device_type = "cuda" if str(backbone.device).startswith("cuda") else "cpu"
+    # diffusers 0.30 的 official SVD pipeline 依赖 autocast 将 fp32 preprocess
+    # 输入适配到 bf16 VAE；直接调用私有 encode helper 会触发 dtype mismatch。
+    with torch.autocast(device_type=device_type, dtype=backbone.dtype):
+        packed = backbone.build_official_generation_conditioning(
+            cond_frame,
+            generator=generator,
+            num_frames=int(backbone.cfg.num_frames),
+            height=int(height),
+            width=int(width),
+        )
 
     def conditional_half(value: torch.Tensor) -> torch.Tensor:
         if value.shape[0] == 2:
