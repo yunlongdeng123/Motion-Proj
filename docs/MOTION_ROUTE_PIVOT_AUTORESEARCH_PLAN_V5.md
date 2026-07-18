@@ -5,7 +5,7 @@
 > **文档职责**：当前唯一可执行研究计划；当前状态与授权同步到 `docs/RESEARCH_STATUS.md`
 > **最后更新**：2026-07-18
 > **计划基线**：`5e8e8d747aa42334204c5e58c49ba0ae96c74b55`
-> **计划状态**：`running`（当前阶段 `RP-B0-05`）
+> **计划状态**：`running`（当前阶段 `RP-C0-07`）
 > **状态词**：`pending / running / awaiting_reviews / blocked / done / rejected`
 > **当前路线状态**：SVD 内部去噪扰动 sibling preference 路线已 `rejected`；禁止继续搜索 fork、\(\rho\)、candidate 数或旧 DPO 标签器。
 > **当前硬件**：单张 RTX 4090 24 GB；本计划全部 autoresearch gate 默认单卡完成。
@@ -286,9 +286,9 @@ D0：选择主线 / fallback / 停止 SVD
 | `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | R0 |
 | `RP-A1-SCAN-04A` | rejected | frozen SVD feature scan | A0 machine evidence |
 | `RP-A1-CONFIRM-04B` | rejected / not run | scene-disjoint confirm | A1-SCAN 无合法候选 |
-| `RP-B0-05` | running | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
+| `RP-B0-05` | rejected | natural-rollout best-of-N ceiling | R0；与 A 路线独立 |
 | `RP-A2-06` | rejected / not run | auxiliary-alignment capacity | A1-CONFIRM 未通过 |
-| `RP-C0-07` | pending | action-conditioned backbone 迁移审计 | A 与 B 均 rejected |
+| `RP-C0-07` | running | action-conditioned backbone 迁移审计 | A 与 B 均 rejected |
 | `RP-D0-08` | pending | 路线决策与最终报告 | 所有已解锁 gate 结束 |
 
 阶段状态只按正式门禁更新；工程失败使用新 run ID 修复，不把任务直接标为 research `rejected`。
@@ -1239,6 +1239,26 @@ Route A training mechanism rejected
 ---
 
 # 10. Route B — Natural Rollout Best-of-N / Reward Alignment Ceiling
+
+## 10.0 执行结论（2026-07-18，rejected）
+
+正式 run `route-pivot-b0-natural-rollout-s20260718-v1` 在 clean commit `06dc211` 完成。16 个
+scene-distinct conditions 先生成 4 个完全独立 natural samples；N=4 为 `0/16` diverse，按冻结规则扩到
+8，总计 128/128 videos。fixed Base 占每组 index 0 但不进入 best-of-N 选择池；其余 112 个 selection
+candidates 只有 7 个通过 P-UNC support、first-frame、motion、survival、flicker、sharpness 与 track guard，
+最终只有 `1/16` condition 具有至少两条合法且非重复候选，远低于 `12/16`。
+
+仅 6 个 conditions 能形成 P-UNC-best 对照；其相对 random/Base 的 CoTracker win-credit rate 均为
+`41.67%`，低于 `60%/55%`。选中样本仍有 1 次 low-motion 与 3 次 catastrophic safeguard failure，
+positive-improvement condition 为 0；只有 survival median 与 seed monopoly 两项通过。机器 gate 因此拒绝，
+不生成 24-case 人审包，也不进入 AWR/SFT。
+
+v1 的 absolute first-frame floor `18 dB` 对 R1 合法 Base 分布过严：R1 fps7 的 16 个样本有 11 个低于
+18 dB。只读 `route-pivot-b0-sensitivity-s20260718-v1`（commit `d9ac65d`）证明 rejection 不依赖该错误：
+忽略 absolute floor、全部 first-frame checks、再加 motion floor 后分别只有 `4/16`、`6/16`、`10/16`
+diverse；只有同时剥掉 first-frame、motion、flicker、sharpness 和 survival 全套 anti-collapse 才到 `16/16`。
+因此不以新 ID 调低安全门重跑。完整边界见
+[`ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md`](ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md)。
 
 该路线不再制造内部 sibling。
 
