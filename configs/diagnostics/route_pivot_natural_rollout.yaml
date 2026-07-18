@@ -1,0 +1,149 @@
+defaults_chain:
+  - ./autoresearch_c0_conditioning.yaml
+
+run_id: route-pivot-b0-natural-rollout-s20260718-v1
+work_dir: /root/autodl-tmp/runs/route-pivot-b0-natural-rollout-s20260718-v1
+
+paths:
+  ckpt_dir: ${work_dir}/ckpts
+  log_dir: ${work_dir}/logs
+
+seed: 20260718
+
+data:
+  split: val
+  num_frames: 8
+  frame_stride: 1
+  height: 256
+  width: 448
+  use_lidar_depth: false
+
+model:
+  num_frames: 8
+  lora:
+    enable: false
+  gradient_checkpointing: false
+  enable_xformers: false
+  generation:
+    protocol: svd_official_v1
+    fps: 7
+    motion_bucket_id: 127
+    noise_aug_strength: 0.02
+    min_guidance_scale: 1.0
+    max_guidance_scale: 3.0
+
+cache:
+  source: clean
+  store: latent
+
+train:
+  experiment_type: base
+  deterministic: true
+  num_workers: 0
+  max_steps: 1
+  logger: none
+  resume: none
+
+b0:
+  task_id: RP-B0-05
+  parent_r1_run: /root/autodl-tmp/runs/route-pivot-r1-temporal-s20260718-v1
+  condition_count: 16
+  initial_candidate_count: 4
+  maximum_candidate_count: 8
+  base_candidate_index: 0
+  candidate_seed_start: 2026072401
+  selection_seed: 2026072402
+  num_frames: 8
+  num_inference_steps: 25
+  playback_fps: 7
+  minimum_diverse_conditions_before_expansion: 12
+  minimum_free_disk_gb: 30.0
+
+  raft_checkpoint_path: /root/.cache/torch/hub/checkpoints/raft_large_C_T_SKHT_V2-ff5fadd5.pth
+  raft_checkpoint_sha256: ff5fadd56d26b40647388883af1547351ea17868b765c05b27231e72dd16a322
+
+  generated_tracks:
+    queries_per_stratum: 24
+    min_track_length: 3
+    point_box_size: 16.0
+    min_distance: 8.0
+    fb_alpha: 0.05
+    fb_beta: 0.5
+    min_confidence: 0.5
+
+  punc:
+    candidates: [P-ID, P-CUR, P-CON, P-UNC]
+    current_smooth_lambda: 5.0
+    constrained:
+      lambda_acceleration: 0.08
+      lambda_jerk: 0.02
+      robust_delta_px: 1.0
+      robust_iterations: 3
+      confidence_floor: 0.50
+      uncertainty_floor_px: 0.25
+      uncertainty_confidence_scale_px: 1.50
+      snr_threshold: 1.00
+
+  evaluator:
+    repository_path: /root/autodl-tmp/third_party/co-tracker
+    repository_commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint_path: /root/autodl-tmp/weights/cotracker3/scaled_offline.pth
+    checkpoint_url: https://huggingface.co/facebook/cotracker3/resolve/main/scaled_offline.pth
+    checkpoint_sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+    grid_size: 16
+    device: cuda
+
+  thresholds:
+    # 单候选合法性；相对同 condition 的固定 Base，防止 freeze/blur/dropout 进入选择池。
+    minimum_projection_points: 4
+    minimum_primary_tracks: 1
+    minimum_track_coverage: 0.50
+    minimum_median_track_length: 4
+    minimum_scorer_confidence: 0.50
+    minimum_first_frame_psnr_db: 18.0
+    maximum_first_frame_psnr_drop_db: 1.5
+    minimum_sharpness_ratio_to_base: 0.80
+    maximum_flicker_ratio_to_base: 1.50
+    maximum_flicker_absolute_increase: 0.02
+    minimum_motion_ratio_to_base: 0.80
+    maximum_motion_ratio_to_base: 2.00
+    maximum_survival_drop_to_base: 0.20
+    maximum_saturation_fraction: 0.99
+    maximum_punc_frame0_correction_px: 1.0e-6
+    maximum_punc_visibility_changed_count: 0
+
+    # N=4 是否已有可用 support；不足 12/16 才扩到 N=8。
+    minimum_eligible_selection_candidates: 2
+    minimum_pairwise_rgb_rms: 0.01
+    minimum_candidate_metric_span: 0.02
+    minimum_diverse_conditions: 12
+
+    # 独立 CoTracker pair preference 与 anti-collapse。
+    acceleration_outlier_threshold_px: 10.0
+    minimum_pair_dynamic_ratio: 0.90
+    maximum_pair_survival_drop: 0.05
+    maximum_pair_coverage_drop: 0.05
+    minimum_pair_sharpness_ratio: 0.90
+    maximum_pair_flicker_ratio: 1.25
+    maximum_pair_flicker_absolute_increase: 0.02
+    maximum_pair_first_frame_psnr_drop_db: 1.0
+    cotracker_relative_tie_margin: 0.02
+
+    # V5 B0 machine gate；人工门只有机器通过才生成。
+    minimum_valid_comparison_conditions: 12
+    minimum_punc_random_win_rate: 0.60
+    minimum_punc_base_win_rate: 0.55
+    minimum_systematic_dynamic_ratio: 0.95
+    maximum_systematic_survival_drop: 0.05
+    minimum_rank_disagreement_conditions: 2
+    minimum_positive_improvement_conditions: 8
+    maximum_single_condition_positive_share: 0.25
+    maximum_winner_seed_fraction: 0.50
+
+  review:
+    seed: 2026072403
+    punc_vs_random_cases: 12
+    punc_vs_base_cases: 12
+    minimum_decisive_preference_rate: 0.65
+    maximum_low_motion_winners: 0
+    maximum_catastrophic_winners: 0
