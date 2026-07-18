@@ -35,6 +35,7 @@ def _target(first, second, *, dt=0.5, ego_next=None):
         cam2ego_tp1=I,
         ego2global_t=I,
         ego2global_tp1=I if ego_next is None else ego_next,
+        image_size=(80, 100),
     )
 
 
@@ -74,3 +75,10 @@ def test_behind_camera_actor_is_invalid_not_zero_filled():
     assert not row["finite"]
     assert math.isnan(row["residual_px"][0])
 
+
+def test_partially_visible_box_with_offscreen_center_is_not_projection_eligible():
+    row = _target(_box([6.0, 0.0, 10.0]), _box([6.0, 0.0, 10.0]))
+    assert row["finite"]
+    assert row["actual_uv_t"][0] == pytest.approx(110.0)
+    assert row["center_projection_eligible_t"] is False
+    assert row["center_projection_in_box_t"] is False

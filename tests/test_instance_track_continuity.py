@@ -19,6 +19,7 @@ def _box(token, frame, visibility=4):
 def test_only_same_instance_in_adjacent_visible_frames_forms_target():
     identity = torch.eye(4)
     sample = {
+        "frames": torch.zeros((3, 3, 80, 100)),
         "boxes": [
             [_box("a", 0), _box("gap", 0), _box("low", 0)],
             [_box("a", 1), _box("low", 1, visibility=1)],
@@ -33,4 +34,3 @@ def test_only_same_instance_in_adjacent_visible_frames_forms_target():
     assert [(row["instance_token"], row["frame_index"]) for row in rows] == [("a", 0), ("a", 1)]
     assert rows[0]["annotation_token_t"] == "ann-a-0"
     assert rows[1]["annotation_token_tp1"] == "ann-a-2"
-

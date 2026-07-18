@@ -1,4 +1,4 @@
-from motion_proj.diagnostics.real_motion_target_audit import decide_a0_gate
+from motion_proj.diagnostics.real_motion_target_audit import aggregate_a0_metrics, decide_a0_gate
 
 
 THRESHOLDS = {
@@ -53,3 +53,27 @@ def test_a0_gate_fails_closed_for_ego_entanglement_or_missing_support():
     assert {"ego_disentanglement", "moving_stationary_support"} <= set(decision["failed_checks"])
     assert decision["next_gate"] == "RP-B0-05"
 
+
+def test_projection_denominator_excludes_only_offscreen_centers():
+    base = {
+        "finite": True,
+        "motion_label": "moving",
+        "residual_speed_px_per_s": 2.0,
+        "velocity_direction_cosine": 1.0,
+        "ego_translation_speed_mps": 1.0,
+        "sample_id": "s",
+        "instance_token": "i",
+    }
+    rows = [
+        {
+            **base,
+            "center_projection_eligible_t": True,
+            "center_projection_in_box_t": True,
+            "center_projection_eligible_tp1": False,
+            "center_projection_in_box_tp1": False,
+        }
+    ]
+    metrics = aggregate_a0_metrics(rows, [], [])
+    assert metrics["center_projection_eligible_count"] == 1
+    assert metrics["offscreen_visible_center_count"] == 1
+    assert metrics["center_projection_in_box_fraction"] == 1.0

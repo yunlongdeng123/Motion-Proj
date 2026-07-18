@@ -139,6 +139,15 @@ def _inside_xyxy(uv: torch.Tensor, xyxy: Sequence[float], tolerance: float = 0.5
     )
 
 
+def _inside_image(uv: torch.Tensor, image_size: tuple[int, int] | None) -> bool | None:
+    if image_size is None:
+        return None
+    height, width = (int(image_size[0]), int(image_size[1]))
+    if height <= 0 or width <= 0 or not bool(torch.isfinite(uv).all()):
+        return False
+    return bool(0.0 <= float(uv[0]) <= width - 1 and 0.0 <= float(uv[1]) <= height - 1)
+
+
 def actor_residual_target(
     first: Mapping[str, Any],
     second: Mapping[str, Any],
@@ -151,6 +160,7 @@ def actor_residual_target(
     cam2ego_tp1: torch.Tensor,
     ego2global_t: torch.Tensor,
     ego2global_tp1: torch.Tensor,
+    image_size: tuple[int, int] | None = None,
 ) -> dict[str, Any]:
     """构造一个相邻帧实例的相机补偿 residual target。"""
     if str(first.get("instance_token")) != str(second.get("instance_token")):
@@ -196,6 +206,8 @@ def actor_residual_target(
     ego_translation = torch.as_tensor(ego2global_tp1, dtype=torch.float64)[:3, 3] - torch.as_tensor(
         ego2global_t, dtype=torch.float64,
     )[:3, 3]
+    center_in_image_t = _inside_image(actual_t, image_size)
+    center_in_image_tp1 = _inside_image(actual_tp1, image_size)
     attributes = sorted({str(value) for value in first.get("attributes", [])})
     category = str(first.get("category", ""))
     return {
@@ -226,6 +238,10 @@ def actor_residual_target(
         "ego_translation_speed_mps": float(torch.linalg.vector_norm(ego_translation) / float(dt_s)),
         "center_projection_in_box_t": _inside_xyxy(actual_t, first["xyxy"]),
         "center_projection_in_box_tp1": _inside_xyxy(actual_tp1, second["xyxy"]),
+        # 部分可见 3D box 的中心可以合法地位于图外；这种截断样本必须保留，
+        # 但不能进入“图内中心是否落在 clipped xyxy”检查的分母。
+        "center_projection_eligible_t": center_in_image_t,
+        "center_projection_eligible_tp1": center_in_image_tp1,
         "finite": valid and bool(torch.isfinite(residual_velocity).all()),
         "target_scope": REAL_TARGET_SCOPE,
     }
@@ -247,6 +263,8 @@ def build_actor_residual_targets(
     if ego2global.shape != (count, 4, 4):
         raise RealMotionTargetError("ego2global 必须为 [K,4,4]")
     rows: list[dict[str, Any]] = []
+    frames = torch.as_tensor(sample["frames"])
+    image_size = (int(frames.shape[-2]), int(frames.shape[-1]))
     for frame_index in range(count - 1):
         left = {
             str(box["instance_token"]): box
@@ -267,6 +285,7 @@ def build_actor_residual_targets(
                     intrinsics_t=intrinsics[frame_index], intrinsics_tp1=intrinsics[frame_index + 1],
                     cam2ego_t=cam2ego[frame_index], cam2ego_tp1=cam2ego[frame_index + 1],
                     ego2global_t=ego2global[frame_index], ego2global_tp1=ego2global[frame_index + 1],
+                    image_size=image_size,
                 )
             )
     return rows

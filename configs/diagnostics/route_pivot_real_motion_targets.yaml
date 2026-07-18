@@ -1,8 +1,8 @@
 defaults_chain:
   - ./autoresearch_c0_conditioning.yaml
 
-run_id: route-pivot-a0-real-motion-s20260718-v1
-work_dir: /root/autodl-tmp/runs/route-pivot-a0-real-motion-s20260718-v1
+run_id: route-pivot-a0-real-motion-s20260718-v2
+work_dir: /root/autodl-tmp/runs/route-pivot-a0-real-motion-s20260718-v2
 
 paths:
   ckpt_dir: ${work_dir}/ckpts
@@ -52,6 +52,7 @@ a0:
   thresholds:
     # V5 主门槛；必须在真实 run 前冻结。
     minimum_moving_stationary_auc: 0.75
+    # 分母只含投影中心位于图内的观察；部分可见但中心已出画的 box 单独计数。
     minimum_projection_in_box_fraction: 0.98
     minimum_valid_actor_tracks: 32
     minimum_background_angular_agreement: 0.70

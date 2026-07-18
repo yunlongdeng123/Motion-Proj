@@ -243,11 +243,12 @@ def aggregate_a0_metrics(
     finite_actor = [row for row in actor_rows if bool(row.get("finite"))]
     moving = [float(row["residual_speed_px_per_s"]) for row in finite_actor if row.get("motion_label") == "moving"]
     stationary = [float(row["residual_speed_px_per_s"]) for row in finite_actor if row.get("motion_label") == "stationary"]
-    projection_values = [
-        bool(value)
+    projection_pairs = [
+        (bool(row.get(f"center_projection_eligible_{suffix}")), bool(row.get(f"center_projection_in_box_{suffix}")))
         for row in actor_rows
-        for value in (row.get("center_projection_in_box_t"), row.get("center_projection_in_box_tp1"))
+        for suffix in ("t", "tp1")
     ]
+    projection_values = [inside for eligible, inside in projection_pairs if eligible]
     velocity_cosines = _finite([row.get("velocity_direction_cosine") for row in finite_actor])
     residual = [float(row["residual_speed_px_per_s"]) for row in finite_actor]
     ego = [float(row["ego_translation_speed_mps"]) for row in finite_actor]
@@ -275,6 +276,8 @@ def aggregate_a0_metrics(
         "center_projection_in_box_fraction": (
             sum(projection_values) / len(projection_values) if projection_values else None
         ),
+        "center_projection_eligible_count": len(projection_values),
+        "offscreen_visible_center_count": sum(not eligible for eligible, _ in projection_pairs),
         "velocity_direction_pair_count": len(velocity_cosines),
         "velocity_direction_positive_fraction": (
             sum(value > 0.0 for value in velocity_cosines) / len(velocity_cosines)
