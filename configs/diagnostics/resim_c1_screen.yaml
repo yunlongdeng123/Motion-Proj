@@ -1,5 +1,5 @@
 task_id: C1B-02
-run_id: resim-c1b02-screen-s20260719-v1
+run_id: resim-c1b02-screen-s20260719-v2
 known_deviation: ReSim 官方写 cu124；本机 cu121。C1B-02 v1 不执行 M sensitivity（matched_sensitivity_executed=false）。
 
 paths:
@@ -21,7 +21,7 @@ paths:
 
 disk:
   minimum_free_bytes: 32212254720  # 30 GiB
-  estimated_peak_bytes: 17179869184  # 16 GiB：20 路视频、日志与解码余量
+  estimated_peak_bytes: 8589934592  # 8 GiB：串行 20 路 L1 采样余量（单路 MP4≈0.25 MiB）
 
 sampling:
   source_rgb_frames: 49
