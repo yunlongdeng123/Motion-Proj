@@ -1,0 +1,61 @@
+task_id: C1B-01
+run_id: resim-c1b01-proxy-s20260719-v1
+
+paths:
+  motion_proj_root: /root/autodl-tmp/motion_proj
+  resim_root: /root/autodl-tmp/third_party/ReSim
+  output_root: /root/autodl-tmp/runs/resim_c1_v6
+  disk_root: /root/autodl-tmp
+  source_json: /root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat/resim_data_jsons/nus_val_4k.json
+  nuscenes_root: /root/autodl-tmp/data/nuscenes
+
+disk:
+  minimum_free_bytes: 32212254720  # 30 GiB
+  estimated_peak_bytes: 2147483648  # 2 GiB：RAFT、特征与证据的保守峰值
+
+selection:
+  selection_seed: 2026071902
+  screen_seed_base: 2026072101
+  source_frames: 49
+  calibration_rgb_frames: 33
+  horizon_seconds: 2.4
+  waypoint_hz: 2.0
+  stationary_max_displacement_m: 0.5
+  moving_min_displacement_m: 3.0
+  minimum_annotations: 5
+  excluded_scene_keywords: [night, dark, rain]
+  screen_counts:
+    stationary: 2
+    forward: 4
+    left: 2
+    right: 2
+  calibration_per_class: 12
+  calibration_fit_per_class: 6
+
+source_quality:
+  minimum_mean: 0.03
+  maximum_mean: 0.97
+  minimum_std: 0.02
+  maximum_black_fraction: 0.50
+  maximum_white_fraction: 0.50
+  minimum_gradient_abs_mean: 0.002
+
+proxy:
+  video_size: [256, 448]
+  future_start_frame: 8
+  raft_device: cuda
+  ridge_alpha: 0.1
+  minimum_valid_per_split_class: 5
+  affine_fit:
+    min_confidence: 0.5
+    min_points: 256
+    max_points: 32768
+    irls_iterations: 5
+    huber_delta: 2.5
+    min_residual_px: 0.5
+    ridge: 0.0001
+
+thresholds:
+  minimum_balanced_accuracy: 0.70
+  minimum_turn_sign_accuracy: 0.75
+  minimum_displacement_spearman: 0.50

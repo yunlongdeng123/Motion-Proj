@@ -382,7 +382,11 @@ L1 仍 OOM，C1B 工程失败并停止。不得减未来帧、减少 diffusion s
 - 相对 constant/command-only baseline 的增益；
 - stationary false-motion 分布。
 
-在看生成结果前，将校准阈值与 95% null band 写入冻结协议。最低有效性要求：balanced accuracy ≥0.70、turn-sign accuracy ≥0.75、Spearman ρ ≥0.50，且优于两个 baseline。任一不满足，机器 action 指标不可辨识，C1B 状态 `blocked`。不得用人工观感把未校准 proxy 变成 pass。
+在读取任何生成 future 前冻结 48 个 calibration scenes：stationary/forward/left/right 各 12 个，每类按稳定
+scene hash 固定为 6 个 fit 与 6 个 held-out eval；同一 scene 只出现一次。真实 trajectory 以 2 Hz waypoint
+线性插值到 2.4 秒 horizon。proxy 与后续 C1B screen 均固定使用 C1B-00 选出的 256×448 分辨率。
+
+在看生成结果前，将校准阈值与 95% null band 写入冻结协议。最低有效性要求：balanced accuracy ≥0.70、turn-sign accuracy ≥0.75、Spearman ρ ≥0.50；位移 MAE 必须同时优于 constant 与 command-only conditional-mean baseline。command 本身直接携带 left/right/forward 请求标签，因此 command-only 分类准确率只作 label-leakage sanity report，不能作为要求视频 proxy 超越的分类 gate。任一有效性要求不满足，机器 action 指标不可辨识，C1B 状态 `blocked`。不得用人工观感把未校准 proxy 变成 pass。
 
 该 proxy 统一称为 **local ego-motion proxy**，禁止称作 ReSim IDM、Trajectory Difference 或 ADE。
 
