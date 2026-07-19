@@ -357,6 +357,9 @@ L1 仍 OOM，C1B 工程失败并停止。不得减未来帧、减少 diffusion s
 **pass**：checkpoint/shape 正确、单卡无 OOM、输出可播放、无 NaN/Inf、重复性噪声可控、峰值 VRAM 和时长已记录。
 **fail**：工程失败，停止。
 
+**执行结果（2026-07-19）**：`done`。v4 在 L0 CUDA OOM 后按唯一允许路径进入 L1；L1 两次完整采样均为
+33×256×448，解码像素 SHA-256 相同、`max_abs=0`，峰值 VRAM 为 `23,617/23,651 MiB`。后续 C1B 统一使用 L1。
+
 ## C1B-01：场景冻结与 ego proxy 校准
 
 ### 6.4 场景集
@@ -582,8 +585,8 @@ L = L_pair_UPO
 |---|---|---|---|---|
 | C1A-00 | 资产、数据根与磁盘对账 | `done` | — | C1A-01 |
 | C1A-01 | 独立环境与 imports | `done` | C1A-00 | C1B-00 |
-| C1B-00 | smoke、shape、VRAM、确定性 | `running` | C1A-01 | C1B-01 |
-| C1B-01 | 10-context 冻结与 proxy calibration | `pending` | C1B-00 | C1B-02 |
+| C1B-00 | smoke、shape、VRAM、确定性 | `done` | C1A-01 | C1B-01 |
+| C1B-01 | 10-context 冻结与 proxy calibration | `running` | C1B-00 | C1B-02 |
 | C1B-02 | E vs F action screen | `pending` | C1B-01 | C1B-03 |
 | C1B-03 | action 人工盲审 | `pending` | C1B-02 | C1P-00 |
 | C1P-00 | 阈值、split、预算预注册 | `pending` | C1B-03 | C1P-01 |
