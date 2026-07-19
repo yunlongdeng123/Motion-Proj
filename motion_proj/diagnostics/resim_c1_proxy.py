@@ -331,7 +331,11 @@ def flow_with_confidence_chunked(
 def resample_future_indices(
     timestamps_us: Sequence[int], *, start_index: int, horizon_seconds: float, fps: float
 ) -> list[int]:
-    """按真实 source timestamp 最近邻重采样 0..horizon，输出严格递增索引。"""
+    """按真实 source timestamp 单调最近邻重采样 0..horizon。
+
+    nuScenes CAM_FRONT 间隔常混有 0.05/0.10/0.15/0.20 s；独立最近邻会在缺口处撞到同一帧。
+    因此每个目标时刻只在上一选中帧之后的候选中取最近邻，以保持严格递增。
+    """
     timestamps = np.asarray(timestamps_us, dtype=np.int64)
     if timestamps.ndim != 1 or not 0 <= start_index < len(timestamps) or horizon_seconds <= 0 or fps <= 0:
         raise ValueError("timestamp resampling 参数无效")
@@ -339,8 +343,15 @@ def resample_future_indices(
     targets = timestamps[start_index] + np.arange(count, dtype=np.float64) * (1_000_000.0 / fps)
     if targets[-1] > timestamps[-1] + 0.5 * (1_000_000.0 / fps):
         raise ProxyCalibrationError("source sequence 不覆盖 proxy future horizon")
-    candidates = np.arange(start_index, len(timestamps))
-    indices = [int(candidates[np.argmin(np.abs(timestamps[candidates] - target))]) for target in targets]
+    indices: list[int] = []
+    previous = start_index - 1
+    for target in targets:
+        candidates = np.arange(max(previous + 1, start_index), len(timestamps))
+        if candidates.size == 0:
+            raise ProxyCalibrationError("timestamp 单调最近邻重采样耗尽候选帧")
+        best = int(candidates[np.argmin(np.abs(timestamps[candidates] - target))])
+        indices.append(best)
+        previous = best
     if any(next_index <= index for index, next_index in zip(indices, indices[1:])):
         raise ProxyCalibrationError("timestamp 最近邻重采样产生重复/逆序 frame")
     return indices

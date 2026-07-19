@@ -127,3 +127,18 @@ def test_source_timestamps_resample_to_exact_2p4_second_proxy_horizon():
     assert all(next_index > index for index, next_index in zip(indices, indices[1:]))
     selected = [timestamps[index] for index in indices]
     assert abs((selected[-1] - selected[0]) / 1e6 - 2.4) <= 1 / 12
+
+
+def test_monotonic_resample_avoids_duplicate_frames_on_irregular_gaps():
+    # scene-0107 风格：history 末帧后出现 0.15 s 缺口，朴素最近邻会把 0.1/0.2 s 都映射到同一帧。
+    offsets_s = [
+        0.0, 0.15, 0.25, 0.3, 0.4, 0.5, 0.55, 0.65, 0.75, 0.8, 0.9, 1.0, 1.05, 1.15, 1.25, 1.3,
+        1.4, 1.5, 1.55, 1.65, 1.75, 1.8, 1.9, 2.0, 2.05, 2.15, 2.25, 2.3, 2.4, 2.5, 2.55, 2.65,
+        2.75, 2.8, 2.9, 3.0, 3.05, 3.15, 3.25, 3.3, 3.4,
+    ]
+    timestamps = [10_000_000 + int(round(value * 1_000_000)) for value in ([i * 0.1 for i in range(8)] + offsets_s)]
+    indices = resample_future_indices(timestamps, start_index=8, horizon_seconds=2.4, fps=10.0)
+    assert len(indices) == 25
+    assert indices[0] == 8
+    assert all(next_index > index for index, next_index in zip(indices, indices[1:]))
+    assert abs((timestamps[indices[-1]] - timestamps[indices[0]]) / 1e6 - 2.4) <= 0.15
