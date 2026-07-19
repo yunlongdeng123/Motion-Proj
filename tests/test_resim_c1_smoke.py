@@ -103,6 +103,7 @@ data:
 model:
   network_config:
     params:
+      num_frames: 49
       latent_width: 112
       latent_height: 64
       modules:
@@ -133,6 +134,7 @@ model:
         vae_path=vae,
         seed=11,
         source_rgb_frames=49,
+        output_rgb_frames=33,
         height=256,
         width=448,
         latent_height=32,
@@ -149,8 +151,32 @@ model:
     assert cfg.data.target == "data_nus.nuScenesDataset"
     assert "n_subset" not in params and "ind_subset" not in params
     assert cfg.data.params.max_num_frames == 49
+    assert cfg.model.network_config.params.num_frames == 33
     assert cfg.model.network_config.params.latent_height == 32
     assert cfg.model.network_config.params.latent_width == 56
+
+
+def test_build_resolved_config_rejects_invalid_rgb_output_horizon(tmp_path):
+    template = tmp_path / "infer.yaml"
+    template.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="4 \\* \\(latent_frames - 1\\) \\+ 1"):
+        build_resolved_config(
+            template,
+            data_manifest_path=tmp_path / "manifest.json",
+            checkpoint_root=tmp_path / "checkpoint",
+            t5_root=tmp_path / "t5",
+            vae_path=tmp_path / "vae.pt",
+            seed=11,
+            source_rgb_frames=49,
+            output_rgb_frames=32,
+            height=256,
+            width=448,
+            latent_height=32,
+            latent_width=56,
+            height_interpolation=1.0,
+            width_interpolation=1.16665,
+        )
 
 
 def test_new_output_directories_only_returns_new_children(tmp_path):

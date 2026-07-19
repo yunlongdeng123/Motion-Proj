@@ -328,6 +328,9 @@ args:
 
 9 latent frames 的 RGB 输出应为 33 帧，其中 9 帧历史、24 帧未来。若输出帧数、尺寸、轨迹长度或 history/future 边界不符，禁止继续。
 
+派生配置还必须令 `model.network_config.params.num_frames=33`。该字段决定 Transformer 内部的
+`compressed_num_frames`，必须与 `args.sampling_num_frames=9` 一致；它不同于下面保持 49 的 dataset/VAE 输入帧数。
+
 ReSim 官方 `encode_first_stage` 的 dataset/VAE 输入契约仍为 49 个 source RGB frames；其 causal VAE 编码后，
 采样只读取前三个 history latent。不得把 `sampling_num_frames=9` 误设成 33 帧 dataset 输入；正式输出仍必须是
 9 latent / 33 RGB，且后续 evaluator 只把前 9 RGB 当 history、后 24 RGB 当生成 future。
@@ -339,7 +342,7 @@ ReSim 官方 `encode_first_stage` 的 dataset/VAE 输入契约仍为 49 个 sour
 只允许两级、严格顺序：
 
 1. **B00-L0**：512×896、9 latent frames、官方采样步数、fp16、单样本。
-2. **B00-L1**：若 L0 CUDA OOM，改为 256×448、仍为 9 latent frames。必须同步修改 `sampling_video_size`、dataset `video_size`、network `latent_height/latent_width = 32/56` 以及 position interpolation 的 height/width；运行 shape preflight 后再采样。
+2. **B00-L1**：若 L0 CUDA OOM，改为 256×448、仍为 9 latent frames。必须同步修改 `sampling_video_size`、dataset `video_size`、network `num_frames=33`、network `latent_height/latent_width = 32/56` 以及 position interpolation 的 height/width；运行 shape preflight 后再采样。
 
 L1 仍 OOM，C1B 工程失败并停止。不得减未来帧、减少 diffusion steps、换 checkpoint 或加第二张卡来制造 pass。若 L0 过，则后续 action screen 使用 L0；只有 L0 OOM 时才统一使用 L1，不能按场景混分辨率。
 

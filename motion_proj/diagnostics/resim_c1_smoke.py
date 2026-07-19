@@ -167,6 +167,7 @@ def build_resolved_config(
     vae_path: Path,
     seed: int,
     source_rgb_frames: int,
+    output_rgb_frames: int,
     height: int,
     width: int,
     latent_height: int,
@@ -174,11 +175,14 @@ def build_resolved_config(
     height_interpolation: float,
     width_interpolation: float,
 ) -> Any:
+    if output_rgb_frames < 1 or (output_rgb_frames - 1) % 4 != 0:
+        raise ValueError("output_rgb_frames 必须满足 4 * (latent_frames - 1) + 1")
+    sampling_latent_frames = (output_rgb_frames - 1) // 4 + 1
     cfg = OmegaConf.load(str(template_path))
     cfg.args.load = str(checkpoint_root.resolve())
     cfg.args.use_ema = True
     cfg.args.seed = int(seed)
-    cfg.args.sampling_num_frames = 9
+    cfg.args.sampling_num_frames = int(sampling_latent_frames)
     cfg.args.sampling_video_size = [int(height), int(width)]
     cfg.args.valid_data = [str(data_manifest_path.resolve())]
     cfg.args.apply_traj = True
@@ -202,6 +206,10 @@ def build_resolved_config(
     cfg.data.params.pop("ind_subset", None)
 
     network = cfg.model.network_config.params
+    # ReSim uses network.num_frames to derive compressed_num_frames for every
+    # temporal rearrange. It must describe the requested RGB output horizon,
+    # while data.max_num_frames independently keeps the 49-frame VAE input.
+    network.num_frames = int(output_rgb_frames)
     network.latent_height = int(latent_height)
     network.latent_width = int(latent_width)
     pos = network.modules.pos_embed_config.params
@@ -628,6 +636,7 @@ def run(config_path: Path, *, run_id_override: str | None = None, prepare_only: 
                 vae_path=vae_path,
                 seed=int(cfg.seed),
                 source_rgb_frames=int(cfg.sampling.source_rgb_frames),
+                output_rgb_frames=int(cfg.sampling.expected_rgb_frames),
                 height=size[0],
                 width=size[1],
                 latent_height=latent[0],
