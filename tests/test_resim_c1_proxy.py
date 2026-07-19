@@ -1,12 +1,14 @@
 import math
 
 import numpy as np
+import torch
 
 from motion_proj.diagnostics.resim_c1_proxy import (
     FEATURE_NAMES,
     action_class,
     affine_proxy_features,
     calibration_checks,
+    flow_with_confidence_chunked,
     predict_proxy,
     select_scene_sets,
     trajectory_at_horizon,
@@ -97,3 +99,20 @@ def test_predict_proxy_rejects_feature_schema_drift():
     result = predict_proxy(model, [0.0] * len(FEATURE_NAMES))
     assert result["predicted_class"] == "stationary"
     assert result["predicted_displacement_m"] == 0.0
+
+
+def test_chunked_flow_preserves_pair_order_and_shape():
+    class FakeFlow:
+        def flow(self, source, target):
+            value = (target[:, 0, 0, 0] - source[:, 0, 0, 0]).view(-1, 1, 1, 1)
+            return value.expand(-1, source.shape[-2], source.shape[-1], 2).clone()
+
+        @staticmethod
+        def _fb_consistency(forward, backward):
+            return torch.ones(forward.shape[:-1])
+
+    frames = torch.arange(10, dtype=torch.float32).view(10, 1, 1, 1).expand(-1, 3, 8, 8)
+    flow, confidence = flow_with_confidence_chunked(FakeFlow(), frames, pair_batch_size=4)
+    assert flow.shape == (9, 8, 8, 2)
+    assert confidence.shape == (9, 8, 8)
+    assert torch.equal(flow[:, 0, 0, 0], torch.ones(9))

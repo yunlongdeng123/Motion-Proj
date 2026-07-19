@@ -303,6 +303,24 @@ def source_quality(frames: torch.Tensor) -> dict[str, Any]:
     }
 
 
+@torch.no_grad()
+def flow_with_confidence_chunked(
+    provider: RAFTFlow, frames: torch.Tensor, *, pair_batch_size: int
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """按连续 pair 小批量运行 RAFT，避免 24-pair future 一次性占满 4090。"""
+    if frames.ndim != 4 or frames.shape[0] < 2 or pair_batch_size <= 0:
+        raise ValueError("frames 必须是 [T,3,H,W] 且 pair_batch_size>0")
+    forward, confidence = [], []
+    for start in range(0, frames.shape[0] - 1, pair_batch_size):
+        end = min(start + pair_batch_size, frames.shape[0] - 1)
+        source, target = frames[start:end], frames[start + 1 : end + 1]
+        fwd = provider.flow(source, target)
+        bwd = provider.flow(target, source)
+        forward.append(fwd)
+        confidence.append(provider._fb_consistency(fwd, bwd))
+    return torch.cat(forward, dim=0), torch.cat(confidence, dim=0)
+
+
 def quality_passes(metrics: Mapping[str, Any], thresholds: Mapping[str, Any]) -> bool:
     return (
         float(thresholds["minimum_mean"]) <= float(metrics["mean"]) <= float(thresholds["maximum_mean"])
@@ -624,7 +642,10 @@ def _run(config_path: Path) -> tuple[Path, dict[str, Any]]:
             else:
                 start = int(cfg.proxy.future_start_frame)
                 proxy_frames = frames[start:].mul(2).sub(1)
-                observed, confidence = raft.flow_with_confidence(proxy_frames.to(str(cfg.proxy.raft_device)))
+                observed, confidence = flow_with_confidence_chunked(
+                    raft, proxy_frames.to(str(cfg.proxy.raft_device)),
+                    pair_batch_size=int(cfg.proxy.pair_batch_size),
+                )
                 estimate = fit_affine_background_flow(
                     observed, confidence, **OmegaConf.to_container(cfg.proxy.affine_fit, resolve=True)
                 )
