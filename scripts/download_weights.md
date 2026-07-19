@@ -1,7 +1,7 @@
 # 下载 SVD backbone 权重
 
 Motion-Proj 历史 V1 的 backbone 是 **Stable Video Diffusion (img2vid)**。权重*不*随项目打包。
-2026-07-19 的保留策略批次将本地 SVD-XT 标为可恢复资产；驻留状态以
+2026-07-19 的保留策略批次已将本地 SVD-XT 清理为 `non-resident` 可恢复资产；驻留状态以
 [`docs/ARTIFACT_RETENTION.md`](../docs/ARTIFACT_RETENTION.md) 为准。只有经当前研究计划明确授权、且确实需要
 复现历史 SVD 路线时才重新下载；C1 的 ReSim feasibility 不以该目录为依赖。
 

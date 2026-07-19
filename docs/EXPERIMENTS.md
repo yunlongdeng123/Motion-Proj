@@ -169,6 +169,7 @@ Base 指标为：static drift `8.2095`、track acceleration `4.3953`、LPIPS `0.
 | 日期 | 批次 | 阶段 | 基线 commit | 范围与事实 | 证据 | 研究边界 |
 |---|---|---|---|---|---|---|
 | 2026-07-19 | `STORAGE-RETENTION-20260719` | 清单已登记 / 尚未删除 | `73bd1a4`（clean，`main...origin/main`） | 128G 数据盘清理前可用 `45,049,835,520` 字节；冻结 75 个精确目标、逻辑大小 `46,525,314,508` 字节，包括 SVD-XT 32.61 GB、39 个历史 `ckpts/`、B0 128-video pool、F0 variants/noise、A1 feature tensors 与 PA1/PA2 中间目录 | [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)；清理前 534 个核心轻量 evidence 聚合 SHA-256 `5f7a616293870012cc227d58d3ae34728c28310a3f1d75d10813cf5527a60d77` | 只授权逐路径存储维护；不授权 ReSim 下载、C1-BOOT、推理、训练、双卡或人工 verdict 代填；实际回收与验证另追加完成行 |
+| 2026-07-19 | `STORAGE-RETENTION-20260719` | completed / verified | `2d52056`（先行清单提交） | 75/75 冻结目标删除；逻辑字节 `46,525,314,508`，`df` 实际回收 `46,541,172,736`；可用空间 `45,049,835,520 → 91,591,008,256` 字节（85.3 GiB），runs 降至 `572,469,248` 字节，SVD-XT 为 non-resident | [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)；48/32/12 人工材料、UPO v1/v2 与 534 个核心 evidence 哈希不变；513 JSON + 317 JSONL/96,765 records + 167 YAML 可解析；逐文件 `pytest -q` JUnit 汇总 73/73 files、247 passed、0 failures/errors/skips | 满足 80 GB 存储门槛，但不授权 C1-BOOT/ReSim 下载、推理或训练；`RF-01/06/09–12/14/15` 及人工 review pending 状态不变 |
 
 ## 登记规则
 

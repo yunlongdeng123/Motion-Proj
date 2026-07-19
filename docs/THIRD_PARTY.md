@@ -20,9 +20,9 @@ bash scripts/setup_third_party.sh
 
 见 [`scripts/download_weights.md`](../scripts/download_weights.md)。固定 Hugging Face revision 为
 `9e43909513c6714f1bc78bcb44d96e733cd242aa`。2026-07-19 清理前的完整本地快照为 32.61 GB，同时包含
-monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 10 GB。该资产可按
-[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 清理并从固定 revision 重建；不能仅凭历史配置假定
-`/root/autodl-tmp/weights/svd-xt` 当前驻留。
+monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 10 GB。该资产已按
+[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 清理，当前为 `non-resident`；如获授权，可从固定 revision
+重建。不能仅凭历史配置假定 `/root/autodl-tmp/weights/svd-xt` 驻留。
 
 ## nuScenes
 

@@ -39,7 +39,7 @@ pip install -r requirements.lock.txt
 
 ```bash
 bash scripts/setup_third_party.sh
-# 历史 SVD-XT 仅在获授权复现时按固定 revision 重建，见 scripts/download_weights.md
+# 历史 SVD-XT 当前 non-resident，仅在获授权复现时按固定 revision 重建，见 scripts/download_weights.md
 ```
 
 - nuScenes 全量：`/autodl-pub/data/nuScenes/Fulldatasetv1.0`

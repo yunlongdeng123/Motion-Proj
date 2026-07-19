@@ -73,12 +73,15 @@ motionproj 环境         : du -sh 约 7.8G
 SVD-XT 完整快照         : 32,608,949,417 字节；已登记为可恢复清理对象
 ```
 
+清理完成后，数据盘已用 `45,847,945,216`、可用 `91,591,008,256` 字节（85.3 GiB，`df -h` 显示
+43G used / 86G available）；SVD-XT 当前为 `non-resident`，`/root/autodl-tmp/weights/` 只保留 CoTracker3。
+
 - 正式 run ID、manifest、resolved config、metrics、summary、终止标记和人工 verdict 不得覆盖；已经固化结论的
   checkpoint、candidate 视频、adapter 和中间 tensor 可按
   [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 的逐路径批次瘦身。
 - 清理不得自行扩大到 nuScenes、环境、评审材料或 evaluator 资产。大权重下载前重新检查 `df`，并保留当前计划
   规定的安全线。
-- 上述 42G 是清理前事实；最终回收结果在保留策略文档中回填，不回写历史 V5/C0 快照。
+- 上述 42G 是清理前事实；最终回收结果见保留策略文档，不回写历史 V5/C0 快照。
 
 ## 7. 可选后续环境: motionproj-mm（重型 3D 感知）
 
