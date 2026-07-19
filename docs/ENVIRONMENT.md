@@ -8,14 +8,22 @@
 环境建在数据盘（系统盘可写层仅 30G，不够放 cache/checkpoint）：
 
 ```bash
+# Motion-Proj 主环境（审计 / CoTracker / 本仓库测试）
 conda activate motionproj
 # 等价于
 conda activate /root/autodl-tmp/envs/motionproj
+
+# ReSim C1（V6）独立环境——推理/训练用，勿与 motionproj 混装
+conda activate /root/autodl-tmp/envs/resim
 ```
 
 - Python: 3.10
-- 路径: `/root/autodl-tmp/envs/motionproj`（约 7.8G）
-- `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活。
+- `motionproj` 路径: `/root/autodl-tmp/envs/motionproj`（约 7.8G）
+- `resim` 路径: `/root/autodl-tmp/envs/resim`（约 6.4G；`torch 2.4.0+cu121` + vendored SAT）
+- `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活；`resim` 建议用绝对 `-p` 路径激活。
+- ReSim 权重: `/root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat`（含合成 T5 `t5-v1_1-xxl/`）。
+- 数据盘 128G **不可扩容**；可用空间硬门槛 ≥30 GiB，训练/大批候选中间产物预算见
+  [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §1.3。
 
 ## 2. 硬件与底座
 
@@ -73,15 +81,16 @@ motionproj 环境         : du -sh 约 7.8G
 SVD-XT 完整快照         : 32,608,949,417 字节；已登记为可恢复清理对象
 ```
 
-清理完成后，数据盘已用 `45,847,945,216`、可用 `91,591,008,256` 字节（85.3 GiB，`df -h` 显示
-43G used / 86G available）；SVD-XT 当前为 `non-resident`，`/root/autodl-tmp/weights/` 只保留 CoTracker3。
+清理完成后，数据盘曾可用约 85 GiB；随后装入 ReSim 权重/环境/T5 后余量下降。2026-07-19 环境就绪后快照约
+**86G used / 43G avail**（以实时 `df` 为准）。SVD-XT 为 `non-resident`；`/root/autodl-tmp/weights/` 只保留
+CoTracker3。
 
 - 正式 run ID、manifest、resolved config、metrics、summary、终止标记和人工 verdict 不得覆盖；已经固化结论的
   checkpoint、candidate 视频、adapter 和中间 tensor 可按
   [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 的逐路径批次瘦身。
-- 清理不得自行扩大到 nuScenes、环境、评审材料或 evaluator 资产。大权重下载前重新检查 `df`，并保留当前计划
-  规定的安全线。
-- 上述 42G 是清理前事实；最终回收结果见保留策略文档，不回写历史 V5/C0 快照。
+- **禁止**为腾盘删除 `envs/motionproj` 或 `envs/resim`；ReSim 正式 evidence 与受保护 review 材料同样不可擅自删。
+- 任何训练/候选生成写盘前检查：`avail - 预估峰值 ≥ 30 GiB`；否则先缩协议或等用户授权清理临时产物。
+- 大权重下载前重新检查 `df`；历史 V5/C0 文档中的 42G/85G 数字不回写覆盖当前事实。
 
 ## 7. 可选后续环境: motionproj-mm（重型 3D 感知）
 
