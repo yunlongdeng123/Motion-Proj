@@ -18,6 +18,7 @@ def main() -> None:
     parser.add_argument("--destination", required=True)
     parser.add_argument("--state-dir", required=True)
     parser.add_argument("--minimum-free-bytes", type=int, default=30 * 1024**3)
+    parser.add_argument("--start-shard", type=int, default=1)
     args = parser.parse_args()
     plan_path, destination = Path(args.asset_plan).resolve(), Path(args.destination).resolve()
     archive_root, state_dir = Path(args.archive_root).resolve(), Path(args.state_dir).resolve()
@@ -38,8 +39,15 @@ def main() -> None:
         raise SystemExit(f"预期 10 个 trainval shards，实际 {len(archives)}")
     fingerprint = hashlib.sha256("\n".join(required).encode("utf-8")).hexdigest()
     for index, archive in enumerate(archives, start=1):
+        if index < args.start_shard:
+            continue
         if not missing:
             break
+        marker = state_dir / f"archive-{index:02d}-{fingerprint[:12]}.complete.json"
+        if marker.is_file():
+            missing = [name for name in missing if not (destination / name).is_file()]
+            print(json.dumps({"archive": archive.name, "skipped_completed": True, "remaining": len(missing)}), flush=True)
+            continue
         list_path = state_dir / f"members-{fingerprint[:12]}-{index:02d}.txt"
         list_path.write_text("\n".join(missing) + "\n", encoding="utf-8")
         log_path = state_dir / f"archive-{index:02d}-{fingerprint[:12]}.log"
@@ -54,6 +62,10 @@ def main() -> None:
             "archive": archive.name, "tar_exit_code": result.returncode,
             "remaining": len(missing), "free_bytes": shutil.disk_usage(destination).free,
         }), flush=True)
+        marker.write_text(json.dumps({
+            "archive": str(archive), "asset_fingerprint": fingerprint,
+            "tar_exit_code": result.returncode, "remaining_after_archive": len(missing),
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if shutil.disk_usage(destination).free < args.minimum_free_bytes:
             raise SystemExit("提取过程中触发 30 GiB 磁盘安全线")
     summary = {
