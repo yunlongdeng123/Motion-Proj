@@ -5,10 +5,11 @@
 > **研究基线**：`43eda43878b5104cd043c4d8fee2ab177a356858`（V6 起草时 HEAD；V5 证据基线仍见终报）
 > **当前计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
 > **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
-> **当前状态**：`running`
-> **当前任务**：V6 `C1B-01` 场景冻结与 local ego-motion proxy 校准正在执行；`C1B-00` 已在 commit
-> `3d8f23c` 通过，正式证据为 `/root/autodl-tmp/runs/resim_c1_v6/C1B-00/resim-c1b00-smoke-s20260719-v4`
-> **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡）
+> **当前状态**：`blocked`
+> **当前任务**：V6 `C1B-01` local ego-motion proxy 校准已结束为 `blocked`（`RF-17`）；正式证据
+> `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v2`。`C1B-00` 仍为 done
+> （`/root/autodl-tmp/runs/resim_c1_v6/C1B-00/resim-c1b00-smoke-s20260719-v4`）。禁止进入 `C1B-02`/训练。
+> **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡），当前卡在 H1 proxy 可辨识性
 > **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
@@ -47,9 +48,11 @@ MagicDrive-V2 只作 layout/geometry baseline。完整边界见
 C1 源码在 `/root/autodl-tmp/third_party/ReSim`（`bf13dff...`）；独立环境
 `/root/autodl-tmp/envs/resim`（`torch 2.4.0+cu121`）；权重在
 `.../checkpoints/CogVideoX-2b-sat`（含 EMA、VAE、由 CogVideoX 合成的 T5）。`motionproj` 环境保留给
-evaluator。单卡 smoke 已通过、尚未训练：512×896 在 4090 上 OOM，预注册的 256×448 fallback 两次
-33-frame 采样逐像素完全一致，峰值 VRAM `23,617/23,651 MiB`。磁盘约 42.7 GiB 可用，正式候选/训练前必须按 V6 §1.3 预留峰值。
-细节见 [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)。
+evaluator。单卡 smoke 已通过：512×896 OOM 后 256×448 双重复解码一致。随后冻结的 RAFT+affine
+local ego-motion proxy 在真实 nuScenes 上位移相关通过（Spearman `0.927`），但 held-out
+moving balanced accuracy `0.444`、turn-sign `0.583` 未达预注册门槛，因此机器 action 指标不可辨识，
+`C1B-01 blocked`（`RF-17`）。磁盘约 42 GiB 可用。细节见
+[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)。
 
 ## 2. 已关闭里程碑
 
@@ -74,6 +77,7 @@ evaluator。单卡 smoke 已通过、尚未训练：512×896 在 4090 上 OOM，
 | `RP-B0-05` | rejected | 16 conditions × 最多 8 natural seeds；N=8 仅 `1/16` diverse，P-UNC 对 random/Base CoTracker win-credit 均 `41.67%`；[`ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md`](ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md) 已固化 | 不做人审、不扩 N/改 CFG/降 anti-collapse，不进入 AWR/SFT；解锁 Route C 迁移审计 |
 | `RP-C0-07` | done | 固定 5 个官方 repo HEAD 与 VLA-World 项目页，审计 6 个候选；ReSim 的官方 nuScenes schema 与本机 raw data 匹配；[`BACKBONE_MIGRATION_AUDIT.md`](BACKBONE_MIGRATION_AUDIT.md) 已固化 | 选择 `C1`，但只晋级下一阶段单卡 feasibility；未下载/推理/训练 |
 | `C1B-00` | done | ReSim EMA 30000、49-frame VAE 输入、9 latent/33 RGB 输出与单卡确定性通过；L0 OOM 后 L1 双重复解码哈希一致 | 后续 C1B 统一使用 256×448；只解锁 `C1B-01`，不解锁 action screen、人工 gate 或训练 |
+| `C1B-01` | blocked | 10 screen + 48 calibration scenes 冻结；49-frame 时间戳重采样；RAFT+affine proxy 在真实 future 上位移 Spearman `0.927` 且优于 constant/command-only MAE，但 class/turn gate 失败 | 机器 action 指标不可辨识（`RF-17`）；不解锁 `C1B-02`、人工盲审、C1P 或训练；不得降阈值续跑 |
 | `RP-D0-08` | done | [`ROUTE_PIVOT_FINAL_REPORT.md`](ROUTE_PIVOT_FINAL_REPORT.md) 汇总全部门禁、review pending、停止项与最多 3 个后续实验 | V5 关闭；新动作必须由下一份预注册计划授权 |
 
 ## 3. V5 稳定任务表
@@ -177,8 +181,8 @@ C1P preference support（依赖 C1B 人工 pass）
 C1S single-GPU learning（仍限单张 4090）
 ```
 
-`C1B-00` 已通过；当前唯一合法动作是 `C1B-01`。任何上游 fail 都直接停止，不靠扩卡、降 safeguard、
-打开 future boxes 或增加 candidate 数挽救。
+`C1B-00` 已通过；`C1B-01` 现为 `blocked`。在新的预注册 proxy 机制通过门禁前，唯一合法动作是记录证据与等待
+用户授权的计划修订；禁止启动 `C1B-02`、查看生成 future 的 action screen、降阈值或进入 C1P/C1S。
 
 ## 9. 存储维护状态
 

@@ -5,7 +5,7 @@
 >
 > **最后更新**：2026-07-19
 > **覆盖范围**：Motion-Proj V1/V2、Autoresearch C0/P0/P1/E0/F0/F1、Physics-DPO PA0–PA2、
-> common-support UPO、earlier-fork fallback、Route Pivot R1/A0/A1/B0/C0 与证据驻留状态
+> common-support UPO、earlier-fork fallback、Route Pivot R1/A0/A1/B0/C0、ReSim C1B-01 proxy 与证据驻留状态
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和各正式 run 目录
 > **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 
@@ -51,6 +51,7 @@
 | `RF-14` | rejected | 冻结 SVD 表示中的 ego signal 不等于可安全分离的 actor residual | 调宽 probe、忽略 zero/stationary gate 或把 ego-only 包装成 actor alignment |
 | `RF-15` | rejected | natural seed diversity 不等于足量安全 preference support | 扩 N、删 anti-collapse、挑唯一 diverse condition 或直接 AWR/SFT |
 | `RF-16` | limitation | layout controllability 不等于 action-disentangled actor physics | 用 future actor boxes 或公开 checkpoint 存在跳过 Base/action/support gate |
+| `RF-17` | blocked | 真实视频上 RAFT+affine ego proxy 位移相关够用，但 class/turn 不可辨识 | 降 BA/turn 阈值、用位移-only 冒充 action screen、偷看生成 future 调特征 |
 
 ## 3. 负结论证据驻留状态（2026-07-19）
 
@@ -684,6 +685,50 @@ evaluator 与完整 anti-collapse；只换 scorer 或增加 N 不算重开。
 - [`BACKBONE_MIGRATION_AUDIT.md`](BACKBONE_MIGRATION_AUDIT.md)
 - [ReSim official source](https://github.com/OpenDriveLab/ReSim/tree/bf13dff45975eabbabc4e7de778207d2bb785e9b)
 - [ReSim paper](https://proceedings.neurips.cc/paper_files/paper/2025/file/f502981cbe221d857ad409450a7917c3-Paper-Conference.pdf)
+
+### RF-17：local ego-motion proxy 的 class/turn 在真实 nuScenes 上不可辨识
+
+**原始命题**
+
+在冻结的 48 个 scene-disjoint calibration clips 上，用 RAFT + 稳健 affine background fit 提取的
+camera-motion 特征，经 ridge 校准后应达到预注册门槛：moving balanced accuracy ≥0.70、turn-sign
+accuracy ≥0.75、位移 Spearman ≥0.50，且位移 MAE 同时优于 constant 与 command-only baseline；从而
+为后续 ReSim E-vs-F action screen 提供可辨识的机器 action 指标。
+
+**观察**
+
+- `C1B-00` 单卡 smoke 已通过；校准资产 2,842 路径齐全，selection fingerprint `a1ae39db…`；
+- v1 工程失败：不规则 CAM_FRONT 间隔使朴素最近邻重采样撞帧（不计 gate）；
+- v2 正式校准：48/48 `proxy_valid`；位移 Spearman `0.9269`，MAE `1.264 m` 显著优于 constant
+  `5.412` 与 command-only `5.748`；
+- 分类失败：moving BA `0.444`、turn-sign `0.583`；held-out forward 6 例中 4 判 left、1 判 right；
+- stationary 位移中位较低，但 p95/max 仍可到数米，不能单独挽救 class/turn gate。
+
+**研究结论**
+
+当前预注册的 **local ego-motion proxy** 足以做粗粒度位移回归，但不足以在真实视频上可靠区分
+forward/left/right。因此机器侧 action response 指标不可辨识；`C1B-01` 必须记为 `blocked`，不得
+进入 `C1B-02` 或把“位移相关高”包装成 action feasibility pass。这不是 ReSim 生成失败，而是
+evaluator/proxy 前置失败。
+
+**禁止重复**
+
+- 不把阈值降到观察值附近后再宣称 pass；
+- 不用位移-only 或 command-label leakage baseline 替代 class/turn gate；
+- 不在未通过校准前查看生成 future、扩 sample、换 seed 或重选更容易的 scene；
+- 不把本 proxy 称作 ReSim IDM / Trajectory Difference / ADE。
+
+**允许重开**
+
+必须用**新预注册计划**更换可辨识机制，例如：显式 yaw/curvature 特征、独立 tracker 的 ego 估计、
+或官方 IDM 开源实现；并在看任何生成结果前冻结阈值与 scene split。仅调 ridge α、affine 超参或
+扩大同分布校准集不算新机制。
+
+**证据**
+
+- `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v1/`（engineering）
+- `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v2/`（`BLOCKED`）
+- [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §6.5
 
 ## 5. 未决 research 风险
 

@@ -5,7 +5,7 @@
 > **创建 / 修订日期**：2026-07-19
 > **计划基线**：`motion_proj` HEAD `43eda43878b5104cd043c4d8fee2ab177a356858`；ReSim HEAD `bf13dff45975eabbabc4e7de778207d2bb785e9b`
 > **硬件边界**：仅一张 NVIDIA RTX 4090 24 GB；v6 不允许用第二张卡救场
-> **计划状态**：`running`（C1A `done`；C1B-00 smoke 已启动）
+> **计划状态**：`blocked`（C1A/`C1B-00` `done`；`C1B-01` proxy 校准 `blocked`，见 `RF-17`）
 > **合法状态词**：`pending / running / blocked / done / rejected`
 > **状态事实源**：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)、[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)、[`EXPERIMENTS.md`](EXPERIMENTS.md)
 
@@ -593,7 +593,7 @@ L = L_pair_UPO
 | C1A-00 | 资产、数据根与磁盘对账 | `done` | — | C1A-01 |
 | C1A-01 | 独立环境与 imports | `done` | C1A-00 | C1B-00 |
 | C1B-00 | smoke、shape、VRAM、确定性 | `done` | C1A-01 | C1B-01 |
-| C1B-01 | 10-context 冻结与 proxy calibration | `running` | C1B-00 | C1B-02 |
+| C1B-01 | 10-context 冻结与 proxy calibration | `blocked` | C1B-00 | C1B-02（需新预注册 proxy 通过后） |
 | C1B-02 | E vs F action screen | `pending` | C1B-01 | C1B-03 |
 | C1B-03 | action 人工盲审 | `pending` | C1B-02 | C1P-00 |
 | C1P-00 | 阈值、split、预算预注册 | `pending` | C1B-03 | C1P-01 |
