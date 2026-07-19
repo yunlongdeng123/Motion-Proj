@@ -51,7 +51,7 @@
 | `RF-14` | rejected | 冻结 SVD 表示中的 ego signal 不等于可安全分离的 actor residual | 调宽 probe、忽略 zero/stationary gate 或把 ego-only 包装成 actor alignment |
 | `RF-15` | rejected | natural seed diversity 不等于足量安全 preference support | 扩 N、删 anti-collapse、挑唯一 diverse condition 或直接 AWR/SFT |
 | `RF-16` | limitation | layout controllability 不等于 action-disentangled actor physics | 用 future actor boxes 或公开 checkpoint 存在跳过 Base/action/support gate |
-| `RF-17` | blocked | 真实视频上 RAFT+affine ego proxy 位移相关够用，但 class/turn 不可辨识 | 降 BA/turn 阈值、用位移-only 冒充 action screen、偷看生成 future 调特征 |
+| `RF-17` | blocked→reopened | 四类 ridge 在真实视频上 class/turn 不可辨识；kinematic-lateral v3 同门槛已过 | 降 BA/turn 阈值、用位移-only 冒充 action screen、偷看生成 future 调特征；禁止退回 v1 ridge |
 
 ## 3. 负结论证据驻留状态（2026-07-19）
 

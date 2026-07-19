@@ -174,6 +174,7 @@ def build_resolved_config(
     latent_width: int,
     height_interpolation: float,
     width_interpolation: float,
+    apply_traj: bool = True,
 ) -> Any:
     if output_rgb_frames < 1 or (output_rgb_frames - 1) % 4 != 0:
         raise ValueError("output_rgb_frames 必须满足 4 * (latent_frames - 1) + 1")
@@ -185,7 +186,7 @@ def build_resolved_config(
     cfg.args.sampling_num_frames = int(sampling_latent_frames)
     cfg.args.sampling_video_size = [int(height), int(width)]
     cfg.args.valid_data = [str(data_manifest_path.resolve())]
-    cfg.args.apply_traj = True
+    cfg.args.apply_traj = bool(apply_traj)
     cfg.args.save_gt = False
     cfg.args.concat_gt_for_demo = False
     cfg.args.save_recon = False

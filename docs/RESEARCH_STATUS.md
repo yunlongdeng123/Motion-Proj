@@ -6,8 +6,8 @@
 > **当前计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
 > **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
 > **当前状态**：`running`
-> **当前任务**：V6 `C1B-01` 按 RF-17 允许路径重开为 `local-ego-motion-proxy-v2-kinematic-lateral`
-> （同 scene/同门槛）；v2 `blocked` 证据保留。`C1B-00` done。未解锁 `C1B-02` 直至 v3 通过。
+> **当前任务**：V6 `C1B-01` 已通过（kinematic-lateral v3）；正在实现并执行 `C1B-02` E-vs-F action
+> screen。证据：`/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v3`。
 > **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡）
 > **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容
 
@@ -76,7 +76,7 @@ moving balanced accuracy `0.444`、turn-sign `0.583` 未达预注册门槛，因
 | `RP-B0-05` | rejected | 16 conditions × 最多 8 natural seeds；N=8 仅 `1/16` diverse，P-UNC 对 random/Base CoTracker win-credit 均 `41.67%`；[`ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md`](ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md) 已固化 | 不做人审、不扩 N/改 CFG/降 anti-collapse，不进入 AWR/SFT；解锁 Route C 迁移审计 |
 | `RP-C0-07` | done | 固定 5 个官方 repo HEAD 与 VLA-World 项目页，审计 6 个候选；ReSim 的官方 nuScenes schema 与本机 raw data 匹配；[`BACKBONE_MIGRATION_AUDIT.md`](BACKBONE_MIGRATION_AUDIT.md) 已固化 | 选择 `C1`，但只晋级下一阶段单卡 feasibility；未下载/推理/训练 |
 | `C1B-00` | done | ReSim EMA 30000、49-frame VAE 输入、9 latent/33 RGB 输出与单卡确定性通过；L0 OOM 后 L1 双重复解码哈希一致 | 后续 C1B 统一使用 256×448；只解锁 `C1B-01`，不解锁 action screen、人工 gate 或训练 |
-| `C1B-01` | blocked | 10 screen + 48 calibration scenes 冻结；49-frame 时间戳重采样；RAFT+affine proxy 在真实 future 上位移 Spearman `0.927` 且优于 constant/command-only MAE，但 class/turn gate 失败 | 机器 action 指标不可辨识（`RF-17`）；不解锁 `C1B-02`、人工盲审、C1P 或训练；不得降阈值续跑 |
+| `C1B-01` | done | v2 四类 ridge `blocked`（`RF-17`）；v3 kinematic-lateral 同 scene/同门槛通过：moving BA `0.778`、turn-sign `0.750`、disp Spearman `0.953` | 解锁 `C1B-02`；v1/v2 证据保留；proxy 冻结为 `local-ego-motion-proxy-v2-kinematic-lateral` |
 | `RP-D0-08` | done | [`ROUTE_PIVOT_FINAL_REPORT.md`](ROUTE_PIVOT_FINAL_REPORT.md) 汇总全部门禁、review pending、停止项与最多 3 个后续实验 | V5 关闭；新动作必须由下一份预注册计划授权 |
 
 ## 3. V5 稳定任务表
@@ -180,8 +180,8 @@ C1P preference support（依赖 C1B 人工 pass）
 C1S single-GPU learning（仍限单张 4090）
 ```
 
-`C1B-00` 已通过；`C1B-01` v2 曾因四类 ridge 不可辨识而 `blocked`（`RF-17`）。当前唯一合法动作是完成预注册的
-kinematic-lateral v3 校准；通过后才解锁 `C1B-02`。禁止降阈值、换 scene、偷看生成 future 或跳过 proxy gate。
+`C1B-00`/`C1B-01` 已通过。当前唯一合法动作是 `C1B-02` E-vs-F action screen（单卡 L1 256×448，复用
+v3 proxy）。禁止降门槛、换 scene、用 M 补 E-vs-F，或跳过人审进入 C1P。
 
 ## 9. 存储维护状态
 

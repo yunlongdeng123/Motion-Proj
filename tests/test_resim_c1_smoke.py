@@ -154,6 +154,26 @@ model:
     assert cfg.model.network_config.params.num_frames == 33
     assert cfg.model.network_config.params.latent_height == 32
     assert cfg.model.network_config.params.latent_width == 56
+    assert cfg.args.apply_traj is True
+
+    cfg_free = build_resolved_config(
+        template,
+        data_manifest_path=manifest,
+        checkpoint_root=checkpoint,
+        t5_root=t5,
+        vae_path=vae,
+        seed=11,
+        source_rgb_frames=49,
+        output_rgb_frames=33,
+        height=256,
+        width=448,
+        latent_height=32,
+        latent_width=56,
+        height_interpolation=1.0,
+        width_interpolation=1.16665,
+        apply_traj=False,
+    )
+    assert cfg_free.args.apply_traj is False
 
 
 def test_build_resolved_config_rejects_invalid_rgb_output_horizon(tmp_path):
