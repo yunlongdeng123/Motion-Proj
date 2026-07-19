@@ -132,6 +132,7 @@ model:
         t5_root=t5,
         vae_path=vae,
         seed=11,
+        source_rgb_frames=49,
         height=256,
         width=448,
         latent_height=32,
@@ -147,7 +148,7 @@ model:
     assert cfg.args.save_gt is False
     assert cfg.data.target == "data_nus.nuScenesDataset"
     assert "n_subset" not in params and "ind_subset" not in params
-    assert cfg.data.params.max_num_frames == 33
+    assert cfg.data.params.max_num_frames == 49
     assert cfg.model.network_config.params.latent_height == 32
     assert cfg.model.network_config.params.latent_width == 56
 

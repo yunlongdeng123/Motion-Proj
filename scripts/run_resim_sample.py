@@ -35,10 +35,11 @@ def _dataset_preflight(config_path: Path, output_path: Path) -> None:
     item = dataset[0]
     mp4_shape = list(item["mp4"].shape)
     traj_shape = list(item["fut_traj"].shape)
-    expected_frames = 4 * (int(cfg.args.sampling_num_frames) - 1) + 1
+    expected_source_frames = int(cfg.data.params.max_num_frames)
+    expected_output_frames = 4 * (int(cfg.args.sampling_num_frames) - 1) + 1
     checks = {
         "dataset_length_one": len(dataset) == 1,
-        "rgb_frame_count": mp4_shape[0] == expected_frames,
+        "source_rgb_frame_count": mp4_shape[0] == expected_source_frames,
         "video_size": mp4_shape[-2:] == list(cfg.args.sampling_video_size),
         "trajectory_shape": traj_shape == [8, 3],
         "apply_traj": bool(cfg.args.apply_traj),
@@ -52,6 +53,7 @@ def _dataset_preflight(config_path: Path, output_path: Path) -> None:
         "dataset_length": len(dataset),
         "mp4_shape": mp4_shape,
         "fut_traj_shape": traj_shape,
+        "expected_output_rgb_frames": expected_output_frames,
         "text": str(item["txt"]),
         "lidar_pc_token": str(item["lidar_pc_token"]),
         "checks": checks,

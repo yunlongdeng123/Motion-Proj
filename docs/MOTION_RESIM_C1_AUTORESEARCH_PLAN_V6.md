@@ -328,6 +328,10 @@ args:
 
 9 latent frames 的 RGB 输出应为 33 帧，其中 9 帧历史、24 帧未来。若输出帧数、尺寸、轨迹长度或 history/future 边界不符，禁止继续。
 
+ReSim 官方 `encode_first_stage` 的 dataset/VAE 输入契约仍为 49 个 source RGB frames；其 causal VAE 编码后，
+采样只读取前三个 history latent。不得把 `sampling_num_frames=9` 误设成 33 帧 dataset 输入；正式输出仍必须是
+9 latent / 33 RGB，且后续 evaluator 只把前 9 RGB 当 history、后 24 RGB 当生成 future。
+
 主 smoke 不保存拼接 GT，减少显存/磁盘；source history 和 VAE round-trip baseline 单独提取。当前官方 sample code 已在 diffusion 后把 model 移至 CPU 再进行 VAE decode，不能把这一既有行为误报成新的优化。
 
 ### 6.2 单卡内存阶梯

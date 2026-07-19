@@ -166,6 +166,7 @@ def build_resolved_config(
     t5_root: Path,
     vae_path: Path,
     seed: int,
+    source_rgb_frames: int,
     height: int,
     width: int,
     latent_height: int,
@@ -191,7 +192,7 @@ def build_resolved_config(
 
     cfg.data.target = "data_nus.nuScenesDataset"
     cfg.data.params.video_size = [int(height), int(width)]
-    cfg.data.params.max_num_frames = 33
+    cfg.data.params.max_num_frames = int(source_rgb_frames)
     cfg.data.params.fps = 10
     cfg.data.params.reshape_mode = "center"
     cfg.data.params.p_drop_action_caption = 0.0
@@ -564,7 +565,7 @@ def run(config_path: Path, *, run_id_override: str | None = None, prepare_only: 
             source_json,
             nuscenes_root,
             int(cfg.source.clip_index),
-            int(cfg.sampling.expected_rgb_frames),
+            int(cfg.sampling.source_rgb_frames),
         )
         data_manifest_path = run_dir / "data_manifest.json"
         atomic_write_json(str(data_manifest_path), data_manifest)
@@ -626,6 +627,7 @@ def run(config_path: Path, *, run_id_override: str | None = None, prepare_only: 
                 t5_root=t5_root,
                 vae_path=vae_path,
                 seed=int(cfg.seed),
+                source_rgb_frames=int(cfg.sampling.source_rgb_frames),
                 height=size[0],
                 width=size[1],
                 latent_height=latent[0],
