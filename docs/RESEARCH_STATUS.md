@@ -5,11 +5,10 @@
 > **研究基线**：`43eda43878b5104cd043c4d8fee2ab177a356858`（V6 起草时 HEAD；V5 证据基线仍见终报）
 > **当前计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
 > **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
-> **当前状态**：`blocked`
-> **当前任务**：V6 `C1B-01` local ego-motion proxy 校准已结束为 `blocked`（`RF-17`）；正式证据
-> `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v2`。`C1B-00` 仍为 done
-> （`/root/autodl-tmp/runs/resim_c1_v6/C1B-00/resim-c1b00-smoke-s20260719-v4`）。禁止进入 `C1B-02`/训练。
-> **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡），当前卡在 H1 proxy 可辨识性
+> **当前状态**：`running`
+> **当前任务**：V6 `C1B-01` 按 RF-17 允许路径重开为 `local-ego-motion-proxy-v2-kinematic-lateral`
+> （同 scene/同门槛）；v2 `blocked` 证据保留。`C1B-00` done。未解锁 `C1B-02` 直至 v3 通过。
+> **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡）
 > **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
@@ -181,8 +180,8 @@ C1P preference support（依赖 C1B 人工 pass）
 C1S single-GPU learning（仍限单张 4090）
 ```
 
-`C1B-00` 已通过；`C1B-01` 现为 `blocked`。在新的预注册 proxy 机制通过门禁前，唯一合法动作是记录证据与等待
-用户授权的计划修订；禁止启动 `C1B-02`、查看生成 future 的 action screen、降阈值或进入 C1P/C1S。
+`C1B-00` 已通过；`C1B-01` v2 曾因四类 ridge 不可辨识而 `blocked`（`RF-17`）。当前唯一合法动作是完成预注册的
+kinematic-lateral v3 校准；通过后才解锁 `C1B-02`。禁止降阈值、换 scene、偷看生成 future 或跳过 proxy gate。
 
 ## 9. 存储维护状态
 

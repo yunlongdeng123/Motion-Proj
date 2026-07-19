@@ -31,7 +31,14 @@ FEATURE_NAMES = (
     "sum_tx", "sum_ty", "sum_divergence", "sum_curl", "sum_anisotropy", "sum_shear",
     "median_tx", "median_ty", "median_divergence", "median_curl",
     "median_affine_energy", "median_fit_residual", "median_fit_confidence", "valid_pair_fraction",
+    # RF-17 reopen：显式 yaw / 分段侧向，供 kinematic lateral 分类器使用
+    "sum_yaw", "abs_sum_yaw", "median_yaw",
+    "sum_tx_early", "sum_tx_late", "sum_yaw_early", "sum_yaw_late",
+    "delta_sum_tx", "delta_sum_yaw", "tx_over_ty", "yaw_over_trans",
 )
+PROXY_PROTOCOL = "local-ego-motion-proxy-v2-kinematic-lateral"
+STATIONARY_DISP_GRID = tuple(round(0.3 + 0.1 * index, 4) for index in range(18))
+LATERAL_TURN_GRID = tuple(round(0.3 + 0.1 * index, 4) for index in range(28))
 
 
 class ProxyCalibrationError(RuntimeError):
@@ -383,18 +390,29 @@ def affine_proxy_features(diagnostics: Mapping[str, Any], *, height: int, width:
         dxy, dyy = theta[2, 0] / width, theta[2, 1] / height
         divergence, curl = dxx + dyy, dyx - dxy
         anisotropy, shear = dxx - dyy, dyx + dxy
+        yaw = math.atan2(curl, 2.0 + dxx + dyy)
         energy = math.sqrt(tx * tx + ty * ty + dxx * dxx + dyx * dyx + dxy * dxy + dyy * dyy)
-        values.append([tx, ty, divergence, curl, anisotropy, shear, energy])
+        values.append([tx, ty, divergence, curl, anisotropy, shear, energy, yaw])
         residuals.append(float(row["residual_median_px"]))
         confidences.append(float(row["confidence_mean"]))
     if not values:
         return {"valid": False, "reason": "no_valid_affine_pairs", "features": None, "valid_pair_count": 0}
     matrix = np.asarray(values, dtype=np.float64)
+    mid = max(1, matrix.shape[0] // 2)
+    sum_tx, sum_ty = float(matrix[:, 0].sum()), float(matrix[:, 1].sum())
+    sum_yaw = float(matrix[:, 7].sum())
+    sum_tx_early, sum_tx_late = float(matrix[:mid, 0].sum()), float(matrix[mid:, 0].sum())
+    sum_yaw_early, sum_yaw_late = float(matrix[:mid, 7].sum()), float(matrix[mid:, 7].sum())
     features = np.asarray([
         *matrix[:, :6].sum(axis=0).tolist(),
         *np.median(matrix[:, :4], axis=0).tolist(),
         float(np.median(matrix[:, 6])), float(np.median(residuals)), float(np.median(confidences)),
         len(values) / max(len(pair_rows), 1),
+        sum_yaw, abs(sum_yaw), float(np.median(matrix[:, 7])),
+        sum_tx_early, sum_tx_late, sum_yaw_early, sum_yaw_late,
+        sum_tx_late - sum_tx_early, sum_yaw_late - sum_yaw_early,
+        sum_tx / (abs(sum_ty) + 1e-3),
+        sum_yaw / (abs(sum_ty) + abs(sum_tx) + 1e-3),
     ], dtype=np.float64)
     return {
         "valid": bool(np.isfinite(features).all()),
@@ -403,6 +421,71 @@ def affine_proxy_features(diagnostics: Mapping[str, Any], *, height: int, width:
         "valid_pair_count": len(values),
         "pair_count": len(pair_rows),
     }
+
+
+def kinematic_class_from_motion(
+    displacement_m: float, lateral_m: float, *, stationary_disp_m: float, lateral_turn_m: float
+) -> str:
+    """由预测位移/侧向导出 class；阈值只允许在 fit 上选择。"""
+    if displacement_m < stationary_disp_m:
+        return "stationary"
+    if lateral_m > lateral_turn_m:
+        return "left"
+    if lateral_m < -lateral_turn_m:
+        return "right"
+    return "forward"
+
+
+def select_kinematic_thresholds(
+    actual_class: Sequence[str],
+    predicted_displacement: np.ndarray,
+    predicted_lateral: np.ndarray,
+) -> dict[str, float]:
+    """仅在 fit split 上网格搜索，最大化 moving BA + turn-sign。"""
+    best: dict[str, float] | None = None
+    for stationary_disp in STATIONARY_DISP_GRID:
+        for lateral_turn in LATERAL_TURN_GRID:
+            predicted = [
+                kinematic_class_from_motion(
+                    float(displacement), float(lateral),
+                    stationary_disp_m=stationary_disp, lateral_turn_m=lateral_turn,
+                )
+                for displacement, lateral in zip(predicted_displacement, predicted_lateral)
+            ]
+            moving_indices = [index for index, name in enumerate(actual_class) if name in MOVING_CLASSES]
+            turning_indices = [index for index, name in enumerate(actual_class) if name in ("left", "right")]
+            moving_ba = _balanced_accuracy(
+                [actual_class[index] for index in moving_indices],
+                [predicted[index] for index in moving_indices],
+                MOVING_CLASSES,
+            )
+            turn_acc = (
+                sum(predicted[index] == actual_class[index] for index in turning_indices) / len(turning_indices)
+                if turning_indices else 0.0
+            )
+            if moving_ba is None:
+                continue
+            score = float(moving_ba) + float(turn_acc)
+            candidate = {
+                "score": score,
+                "stationary_disp_m": float(stationary_disp),
+                "lateral_turn_m": float(lateral_turn),
+                "fit_moving_balanced_accuracy": float(moving_ba),
+                "fit_turn_sign_accuracy": float(turn_acc),
+            }
+            if best is None or candidate["score"] > best["score"] + 1e-12:
+                best = candidate
+            elif best is not None and abs(candidate["score"] - best["score"]) <= 1e-12:
+                # 并列时取更保守（更大）阈值，降低假转向
+                if (
+                    candidate["lateral_turn_m"], candidate["stationary_disp_m"]
+                ) > (
+                    best["lateral_turn_m"], best["stationary_disp_m"]
+                ):
+                    best = candidate
+    if best is None:
+        raise ProxyCalibrationError("kinematic 阈值网格未找到合法 fit 解")
+    return best
 
 
 def _ridge(x: np.ndarray, target: np.ndarray, alpha: float) -> np.ndarray:
@@ -464,19 +547,32 @@ def calibrate_proxy(rows: Sequence[Mapping[str, Any]], proxy_cfg: Mapping[str, A
     mean, scale = x_fit.mean(axis=0), x_fit.std(axis=0)
     scale[scale < 1e-8] = 1.0
     z_fit, z_eval = (x_fit - mean) / scale, (x_eval - mean) / scale
-    y_class = np.zeros((len(fit), len(CLASSES)), dtype=np.float64)
-    for index, row in enumerate(fit):
-        y_class[index, CLASSES.index(row["action_class"])] = 1.0
     alpha = float(proxy_cfg["ridge_alpha"])
-    class_weights = _ridge(z_fit, y_class, alpha)
     displacement_weights = _ridge(
         z_fit, np.asarray([row["target_displacement_m"] for row in fit], dtype=np.float64), alpha
     )
-    class_scores = _predict(z_eval, class_weights)
-    predicted_class = [CLASSES[index] for index in class_scores.argmax(axis=1)]
+    lateral_weights = _ridge(
+        z_fit, np.asarray([row["target_lateral_m"] for row in fit], dtype=np.float64), alpha
+    )
+    fit_displacement = np.maximum(0.0, _predict(z_fit, displacement_weights))
+    fit_lateral = _predict(z_fit, lateral_weights)
+    threshold_selection = select_kinematic_thresholds(
+        [row["action_class"] for row in fit], fit_displacement, fit_lateral
+    )
+    stationary_disp_m = float(threshold_selection["stationary_disp_m"])
+    lateral_turn_m = float(threshold_selection["lateral_turn_m"])
     predicted_displacement = np.maximum(0.0, _predict(z_eval, displacement_weights))
+    predicted_lateral = _predict(z_eval, lateral_weights)
+    predicted_class = [
+        kinematic_class_from_motion(
+            float(displacement), float(lateral),
+            stationary_disp_m=stationary_disp_m, lateral_turn_m=lateral_turn_m,
+        )
+        for displacement, lateral in zip(predicted_displacement, predicted_lateral)
+    ]
     actual_class = [row["action_class"] for row in evaluation]
     actual_displacement = np.asarray([row["target_displacement_m"] for row in evaluation], dtype=np.float64)
+    actual_lateral = np.asarray([row["target_lateral_m"] for row in evaluation], dtype=np.float64)
     moving_indices = [index for index, name in enumerate(actual_class) if name in MOVING_CLASSES]
     turning_indices = [index for index, name in enumerate(actual_class) if name in ("left", "right")]
     constant_class = Counter(row["action_class"] for row in fit).most_common(1)[0][0]
@@ -493,6 +589,8 @@ def calibrate_proxy(rows: Sequence[Mapping[str, Any]], proxy_cfg: Mapping[str, A
     ]
     metrics = {
         "support": {key: dict(value) for key, value in support.items()},
+        "proxy_protocol": PROXY_PROTOCOL,
+        "threshold_selection": threshold_selection,
         "moving_balanced_accuracy": _balanced_accuracy(
             [actual_class[i] for i in moving_indices], [predicted_class[i] for i in moving_indices], MOVING_CLASSES
         ),
@@ -502,7 +600,9 @@ def calibrate_proxy(rows: Sequence[Mapping[str, Any]], proxy_cfg: Mapping[str, A
             if turning_indices else None
         ),
         "displacement_spearman": _spearman(predicted_displacement, actual_displacement),
+        "lateral_spearman": _spearman(predicted_lateral, actual_lateral),
         "displacement_mae_m": float(np.mean(np.abs(predicted_displacement - actual_displacement))),
+        "lateral_mae_m": float(np.mean(np.abs(predicted_lateral - actual_lateral))),
         "constant_displacement_mae_m": float(np.mean(np.abs(constant_prediction - actual_displacement))),
         "command_only_displacement_mae_m": float(np.mean(np.abs(command_prediction - actual_displacement))),
         "constant_moving_balanced_accuracy": _balanced_accuracy(
@@ -514,57 +614,69 @@ def calibrate_proxy(rows: Sequence[Mapping[str, Any]], proxy_cfg: Mapping[str, A
         "command_only_classification_note": "request-label leakage baseline; reported but never required to beat",
         "stationary_predicted_displacement_m": {
             "count": int(len(stationary_predictions)),
-            "median": float(np.median(stationary_predictions)),
-            "p95": float(np.quantile(stationary_predictions, 0.95)),
-            "max": float(np.max(stationary_predictions)),
+            "median": float(np.median(stationary_predictions)) if len(stationary_predictions) else 0.0,
+            "p95": float(np.quantile(stationary_predictions, 0.95)) if len(stationary_predictions) else 0.0,
+            "max": float(np.max(stationary_predictions)) if len(stationary_predictions) else 0.0,
         },
         "evaluation_predictions": [
             {
                 "calibration_id": row["calibration_id"], "scene_name": row["scene_name"],
                 "actual_class": actual_name, "predicted_class": predicted_name,
-                "actual_displacement_m": float(actual_value),
-                "predicted_displacement_m": float(predicted_value), "class_scores": scores,
+                "actual_displacement_m": float(actual_disp),
+                "predicted_displacement_m": float(predicted_disp),
+                "actual_lateral_m": float(actual_lat),
+                "predicted_lateral_m": float(predicted_lat),
             }
-            for row, actual_name, predicted_name, actual_value, predicted_value, scores in zip(
+            for row, actual_name, predicted_name, actual_disp, predicted_disp, actual_lat, predicted_lat in zip(
                 evaluation, actual_class, predicted_class, actual_displacement.tolist(),
-                predicted_displacement.tolist(), class_scores.tolist()
+                predicted_displacement.tolist(), actual_lateral.tolist(), predicted_lateral.tolist(),
             )
         ],
     }
     model = {
-        "protocol": "local-ego-motion-proxy-v1",
+        "protocol": PROXY_PROTOCOL,
         "feature_names": list(FEATURE_NAMES), "classes": list(CLASSES),
         "feature_mean": mean.tolist(), "feature_scale": scale.tolist(),
-        "class_weights": class_weights.tolist(), "displacement_weights": displacement_weights.tolist(),
+        "displacement_weights": displacement_weights.tolist(),
+        "lateral_weights": lateral_weights.tolist(),
+        "stationary_disp_m": stationary_disp_m,
+        "lateral_turn_m": lateral_turn_m,
+        "threshold_selection": threshold_selection,
         "ridge_alpha": alpha, "command_displacement_means": command_means,
         "constant_displacement_mean": constant_displacement,
         "stationary_false_motion_p95_m": metrics["stationary_predicted_displacement_m"]["p95"],
     }
-    for row, predicted_name, predicted_value, scores in zip(
-        evaluation, predicted_class, predicted_displacement.tolist(), class_scores.tolist()
+    for row, predicted_name, predicted_disp, predicted_lat in zip(
+        evaluation, predicted_class, predicted_displacement.tolist(), predicted_lateral.tolist()
     ):
         row["predicted_class"] = predicted_name
-        row["predicted_displacement_m"] = float(predicted_value)
-        row["class_scores"] = scores
+        row["predicted_displacement_m"] = float(predicted_disp)
+        row["predicted_lateral_m"] = float(predicted_lat)
     return model, metrics
 
 
 def predict_proxy(model: Mapping[str, Any], features: Sequence[float]) -> dict[str, Any]:
-    """使用冻结的 C1B-01 线性校准器推理，供 C1B-02 生成视频复用。"""
+    """使用冻结的 C1B-01 kinematic lateral 校准器推理，供 C1B-02 生成视频复用。"""
     feature = np.asarray(features, dtype=np.float64)
     names = tuple(model["feature_names"])
     if names != FEATURE_NAMES or feature.shape != (len(FEATURE_NAMES),):
         raise ValueError("proxy feature schema 不匹配")
+    if str(model.get("protocol")) != PROXY_PROTOCOL:
+        raise ValueError(f"proxy protocol 不匹配: {model.get('protocol')}")
     mean = np.asarray(model["feature_mean"], dtype=np.float64)
     scale = np.asarray(model["feature_scale"], dtype=np.float64)
     z = ((feature - mean) / scale)[None]
-    scores = _predict(z, np.asarray(model["class_weights"], dtype=np.float64))[0]
     displacement = float(max(0.0, _predict(z, np.asarray(model["displacement_weights"], dtype=np.float64))[0]))
-    classes = tuple(model["classes"])
+    lateral = float(_predict(z, np.asarray(model["lateral_weights"], dtype=np.float64))[0])
+    predicted_class = kinematic_class_from_motion(
+        displacement, lateral,
+        stationary_disp_m=float(model["stationary_disp_m"]),
+        lateral_turn_m=float(model["lateral_turn_m"]),
+    )
     return {
-        "predicted_class": classes[int(np.argmax(scores))],
+        "predicted_class": predicted_class,
         "predicted_displacement_m": displacement,
-        "class_scores": scores.tolist(),
+        "predicted_lateral_m": lateral,
     }
 
 

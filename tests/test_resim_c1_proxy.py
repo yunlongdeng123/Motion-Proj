@@ -5,10 +5,12 @@ import torch
 
 from motion_proj.diagnostics.resim_c1_proxy import (
     FEATURE_NAMES,
+    PROXY_PROTOCOL,
     action_class,
     affine_proxy_features,
     calibration_checks,
     flow_with_confidence_chunked,
+    kinematic_class_from_motion,
     predict_proxy,
     resample_future_indices,
     select_scene_sets,
@@ -90,16 +92,26 @@ def test_calibration_checks_require_proxy_to_beat_displacement_baselines():
     assert all(calibration_checks(metrics, thresholds).values())
 
 
+def test_kinematic_class_uses_lateral_thresholds():
+    assert kinematic_class_from_motion(0.1, 2.0, stationary_disp_m=0.5, lateral_turn_m=0.4) == "stationary"
+    assert kinematic_class_from_motion(5.0, 1.0, stationary_disp_m=0.5, lateral_turn_m=0.4) == "left"
+    assert kinematic_class_from_motion(5.0, -1.0, stationary_disp_m=0.5, lateral_turn_m=0.4) == "right"
+    assert kinematic_class_from_motion(5.0, 0.1, stationary_disp_m=0.5, lateral_turn_m=0.4) == "forward"
+
+
 def test_predict_proxy_rejects_feature_schema_drift():
     model = {
+        "protocol": PROXY_PROTOCOL,
         "feature_names": list(FEATURE_NAMES), "classes": ["stationary", "forward", "left", "right"],
         "feature_mean": [0.0] * len(FEATURE_NAMES), "feature_scale": [1.0] * len(FEATURE_NAMES),
-        "class_weights": np.zeros((len(FEATURE_NAMES) + 1, 4)).tolist(),
         "displacement_weights": np.zeros(len(FEATURE_NAMES) + 1).tolist(),
+        "lateral_weights": np.zeros(len(FEATURE_NAMES) + 1).tolist(),
+        "stationary_disp_m": 0.5, "lateral_turn_m": 0.4,
     }
     result = predict_proxy(model, [0.0] * len(FEATURE_NAMES))
     assert result["predicted_class"] == "stationary"
     assert result["predicted_displacement_m"] == 0.0
+    assert result["predicted_lateral_m"] == 0.0
 
 
 def test_chunked_flow_preserves_pair_order_and_shape():
