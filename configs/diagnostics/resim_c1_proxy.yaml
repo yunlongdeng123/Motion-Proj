@@ -17,7 +17,7 @@ selection:
   selection_seed: 2026071902
   screen_seed_base: 2026072101
   source_frames: 49
-  calibration_rgb_frames: 33
+  calibration_rgb_frames: 49
   horizon_seconds: 2.4
   waypoint_hz: 2.0
   stationary_max_displacement_m: 0.5
@@ -43,6 +43,7 @@ source_quality:
 proxy:
   video_size: [256, 448]
   future_start_frame: 8
+  source_resample_fps: 10.0
   raft_device: cuda
   pair_batch_size: 4
   ridge_alpha: 0.1

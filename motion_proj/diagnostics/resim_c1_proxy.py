@@ -131,6 +131,12 @@ def load_clip_records(source_json: Path, nuscenes_root: Path, selection: Mapping
         if any(word in description.lower() for word in excluded):
             continue
         trajectory = [list(map(float, point)) for point in clip["traj_fut"][:8]]
+        try:
+            source_timestamps_us = [int(sd_by_filename[name]["timestamp"]) for name in sequence]
+        except KeyError as error:
+            raise ProxyCalibrationError(f"source frame 缺少 sample_data timestamp: {error}") from error
+        if any(next_value <= value for value, next_value in zip(source_timestamps_us, source_timestamps_us[1:])):
+            raise ProxyCalibrationError(f"clip {clip_index} source timestamps 非严格递增")
         horizon = trajectory_at_horizon(
             trajectory,
             horizon_seconds=float(selection["horizon_seconds"]),
@@ -161,6 +167,7 @@ def load_clip_records(source_json: Path, nuscenes_root: Path, selection: Mapping
             "target_lateral_m": float(horizon[1]),
             "annotation_count": int(annotation_count[sample["token"]]),
             "source_frames": sequence,
+            "source_timestamps_us": source_timestamps_us,
         })
     return output
 
@@ -319,6 +326,24 @@ def flow_with_confidence_chunked(
         forward.append(fwd)
         confidence.append(provider._fb_consistency(fwd, bwd))
     return torch.cat(forward, dim=0), torch.cat(confidence, dim=0)
+
+
+def resample_future_indices(
+    timestamps_us: Sequence[int], *, start_index: int, horizon_seconds: float, fps: float
+) -> list[int]:
+    """按真实 source timestamp 最近邻重采样 0..horizon，输出严格递增索引。"""
+    timestamps = np.asarray(timestamps_us, dtype=np.int64)
+    if timestamps.ndim != 1 or not 0 <= start_index < len(timestamps) or horizon_seconds <= 0 or fps <= 0:
+        raise ValueError("timestamp resampling 参数无效")
+    count = int(round(horizon_seconds * fps)) + 1
+    targets = timestamps[start_index] + np.arange(count, dtype=np.float64) * (1_000_000.0 / fps)
+    if targets[-1] > timestamps[-1] + 0.5 * (1_000_000.0 / fps):
+        raise ProxyCalibrationError("source sequence 不覆盖 proxy future horizon")
+    candidates = np.arange(start_index, len(timestamps))
+    indices = [int(candidates[np.argmin(np.abs(timestamps[candidates] - target))]) for target in targets]
+    if any(next_index <= index for index, next_index in zip(indices, indices[1:])):
+        raise ProxyCalibrationError("timestamp 最近邻重采样产生重复/逆序 frame")
+    return indices
 
 
 def quality_passes(metrics: Mapping[str, Any], thresholds: Mapping[str, Any]) -> bool:
@@ -640,8 +665,13 @@ def _run(config_path: Path) -> tuple[Path, dict[str, Any]]:
             if not quality_ok:
                 proxy_row = {**row, "proxy_valid": False, "proxy_reason": "source_quality", "source_quality": quality}
             else:
-                start = int(cfg.proxy.future_start_frame)
-                proxy_frames = frames[start:].mul(2).sub(1)
+                indices = resample_future_indices(
+                    row["source_timestamps_us"],
+                    start_index=int(cfg.proxy.future_start_frame),
+                    horizon_seconds=float(cfg.selection.horizon_seconds),
+                    fps=float(cfg.proxy.source_resample_fps),
+                )
+                proxy_frames = frames[indices].mul(2).sub(1)
                 observed, confidence = flow_with_confidence_chunked(
                     raft, proxy_frames.to(str(cfg.proxy.raft_device)),
                     pair_batch_size=int(cfg.proxy.pair_batch_size),
@@ -657,6 +687,8 @@ def _run(config_path: Path) -> tuple[Path, dict[str, Any]]:
                     "feature_names": feature_result.get("feature_names"),
                     "valid_pair_count": feature_result.get("valid_pair_count"),
                     "pair_count": feature_result.get("pair_count"),
+                    "source_resample_indices": indices,
+                    "source_resample_timestamps_us": [row["source_timestamps_us"][i] for i in indices],
                     "source_quality": quality,
                     "affine_diagnostics": estimate.diagnostics,
                 }

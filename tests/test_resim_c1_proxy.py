@@ -10,6 +10,7 @@ from motion_proj.diagnostics.resim_c1_proxy import (
     calibration_checks,
     flow_with_confidence_chunked,
     predict_proxy,
+    resample_future_indices,
     select_scene_sets,
     trajectory_at_horizon,
 )
@@ -116,3 +117,13 @@ def test_chunked_flow_preserves_pair_order_and_shape():
     assert flow.shape == (9, 8, 8, 2)
     assert confidence.shape == (9, 8, 8)
     assert torch.equal(flow[:, 0, 0, 0], torch.ones(9))
+
+
+def test_source_timestamps_resample_to_exact_2p4_second_proxy_horizon():
+    timestamps = [1_000_000 + round(index * 1_000_000 / 12) for index in range(49)]
+    indices = resample_future_indices(timestamps, start_index=8, horizon_seconds=2.4, fps=10.0)
+    assert len(indices) == 25
+    assert indices[0] == 8
+    assert all(next_index > index for index, next_index in zip(indices, indices[1:]))
+    selected = [timestamps[index] for index in indices]
+    assert abs((selected[-1] - selected[0]) / 1e6 - 2.4) <= 1 / 12

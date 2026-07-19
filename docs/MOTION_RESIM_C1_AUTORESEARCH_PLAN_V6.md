@@ -384,7 +384,10 @@ L1 仍 OOM，C1B 工程失败并停止。不得减未来帧、减少 diffusion s
 
 在读取任何生成 future 前冻结 48 个 calibration scenes：stationary/forward/left/right 各 12 个，每类按稳定
 scene hash 固定为 6 个 fit 与 6 个 held-out eval；同一 scene 只出现一次。真实 trajectory 以 2 Hz waypoint
-线性插值到 2.4 秒 horizon。proxy 与后续 C1B screen 均固定使用 C1B-00 选出的 256×448 分辨率。
+线性插值到 2.4 秒 horizon。由于 ReSim source frame 的真实 timestamp 并非固定 10 Hz，校准必须读取完整
+49-frame source sequence，从第 9 个 history frame 起按 `sample_data.timestamp` 最近邻、严格递增地重采样为
+25 帧（0–2.4 秒、10 Hz）；禁止直接用 index 8–32 冒充 2.4 秒。proxy 与后续 C1B screen 均固定使用
+C1B-00 选出的 256×448 分辨率。
 
 在看生成结果前，将校准阈值与 95% null band 写入冻结协议。最低有效性要求：balanced accuracy ≥0.70、turn-sign accuracy ≥0.75、Spearman ρ ≥0.50；位移 MAE 必须同时优于 constant 与 command-only conditional-mean baseline。command 本身直接携带 left/right/forward 请求标签，因此 command-only 分类准确率只作 label-leakage sanity report，不能作为要求视频 proxy 超越的分类 gate。任一有效性要求不满足，机器 action 指标不可辨识，C1B 状态 `blocked`。不得用人工观感把未校准 proxy 变成 pass。
 
