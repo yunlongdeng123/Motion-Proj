@@ -19,7 +19,10 @@ def main() -> None:
     parser.add_argument("--state-dir", required=True)
     parser.add_argument("--minimum-free-bytes", type=int, default=30 * 1024**3)
     parser.add_argument("--start-shard", type=int, default=1)
+    parser.add_argument("--end-shard", type=int, default=10)
     args = parser.parse_args()
+    if not 1 <= args.start_shard <= args.end_shard <= 10:
+        raise SystemExit("shard 范围必须满足 1 <= start <= end <= 10")
     plan_path, destination = Path(args.asset_plan).resolve(), Path(args.destination).resolve()
     archive_root, state_dir = Path(args.archive_root).resolve(), Path(args.state_dir).resolve()
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
@@ -41,6 +44,8 @@ def main() -> None:
     for index, archive in enumerate(archives, start=1):
         if index < args.start_shard:
             continue
+        if index > args.end_shard:
+            break
         if not missing:
             break
         marker = state_dir / f"archive-{index:02d}-{fingerprint[:12]}.complete.json"
