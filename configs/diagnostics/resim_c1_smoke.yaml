@@ -1,0 +1,39 @@
+task_id: C1B-00
+run_id: resim-c1b00-smoke-s20260719-v1
+seed: 2026071901
+known_deviation: ReSim 官方要求 torch 2.4.0+cu124；本机固定 torch 2.4.0+cu121，已通过 CUDA/import 前置检查。
+
+paths:
+  motion_proj_root: /root/autodl-tmp/motion_proj
+  resim_root: /root/autodl-tmp/third_party/ReSim
+  output_root: /root/autodl-tmp/runs/resim_c1_v6
+  disk_root: /root/autodl-tmp
+  checkpoint_root: /root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat/resim_ckpts/exp0_no_carla
+  source_json: /root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat/resim_data_jsons/nus_val_4k.json
+  nuscenes_root: /root/autodl-tmp/data/nuscenes
+  t5_root: /root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat/t5-v1_1-xxl
+  vae_path: /root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat/vae/3d-vae.pt
+  infer_template: /root/autodl-tmp/third_party/ReSim/sat/configs/infer_nus.yaml
+  resim_python: /root/autodl-tmp/envs/resim/bin/python
+  entry_script: /root/autodl-tmp/motion_proj/scripts/run_resim_sample.py
+  hf_home: /root/autodl-tmp/hf_cache
+
+source:
+  clip_index: 0
+
+disk:
+  minimum_free_bytes: 32212254720  # 30 GiB
+  estimated_peak_bytes: 4294967296  # 4 GiB，包含双重复输出、日志与临时解码余量
+
+sampling:
+  repeats: 2
+  expected_rgb_frames: 33
+  levels:
+    - name: B00-L0
+      video_size: [512, 896]
+      latent_size: [64, 112]
+      position_interpolation: [2.0, 2.3333]
+    - name: B00-L1
+      video_size: [256, 448]
+      latent_size: [32, 56]
+      position_interpolation: [1.0, 1.16665]
