@@ -5,8 +5,9 @@
 > **研究基线**：`43eda43878b5104cd043c4d8fee2ab177a356858`（V6 起草时 HEAD；V5 证据基线仍见终报）
 > **当前计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
 > **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
-> **当前状态**：`pending`
-> **当前任务**：V6 `C1A` 环境/资产已就绪；下一门 `C1B-00` smoke；写盘须守 30 GiB 硬门槛（见 V6 §1.3）
+> **当前状态**：`running`
+> **当前任务**：V6 `C1B-00` smoke/shape/确定性正在执行；实现 commit `1477e54`；正式证据根
+> `/root/autodl-tmp/runs/resim_c1_v6/C1B-00/`；下一步仅在该 gate 通过后进入 `C1B-01`
 > **最终决策**：`C1`；执行入口为 V6 的 `C1A → C1B → C1P → C1S`（单卡）
 > **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容
 
