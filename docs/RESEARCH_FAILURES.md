@@ -5,7 +5,7 @@
 >
 > **最后更新**：2026-07-19
 > **覆盖范围**：Motion-Proj V1/V2、Autoresearch C0/P0/P1/E0/F0/F1、Physics-DPO PA0–PA2、
-> common-support UPO、earlier-fork fallback、Route Pivot R1/A0/A1/B0/C0、ReSim C1B-01 proxy 与证据驻留状态
+> common-support UPO、earlier-fork fallback、Route Pivot R1/A0/A1/B0/C0、ReSim C1 V6（含 C1B-02 H1）与证据驻留状态
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和各正式 run 目录
 > **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 
@@ -52,6 +52,7 @@
 | `RF-15` | rejected | natural seed diversity 不等于足量安全 preference support | 扩 N、删 anti-collapse、挑唯一 diverse condition 或直接 AWR/SFT |
 | `RF-16` | limitation | layout controllability 不等于 action-disentangled actor physics | 用 future actor boxes 或公开 checkpoint 存在跳过 Base/action/support gate |
 | `RF-17` | blocked→reopened | 四类 ridge 在真实视频上 class/turn 不可辨识；kinematic-lateral v3 同门槛已过 | 降 BA/turn 阈值、用位移-only 冒充 action screen、偷看生成 future 调特征；禁止退回 v1 ridge |
+| `RF-18` | rejected | 公开 ReSim `exp0_no_carla` 在 10-context E-vs-F screen 上 action response 不足（E 仅 3/8 优） | 降 7/8 门槛、用像素差冒充 action、扩 seed/换 scene、跳过人审进 C1P |
 
 ## 3. 负结论证据驻留状态（2026-07-19）
 
@@ -729,6 +730,44 @@ evaluator/proxy 前置失败。
 - `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v1/`（engineering）
 - `/root/autodl-tmp/runs/resim_c1_v6/C1B-01/resim-c1b01-proxy-s20260719-v2/`（`BLOCKED`）
 - [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §6.5
+
+### RF-18：公开 ReSim exp0_no_carla 的 E-vs-F action response 不足
+
+**原始命题**
+
+在冻结的 10 个 scene-disjoint contexts 上，同一 seed 的 expert-conditioned（E）相对 action-free（F）
+应在预注册 local ego-motion proxy 的 action error 上至少 7/8 moving 胜出，且 median paired improvement > 0；
+同时 future 像素效应超过 B00 null、history 效应留在 null band、质量与 stationary 不被破坏。
+
+**观察**
+
+- `C1B-00`/`C1B-01` 工程与 proxy 可辨识性均已通过；
+- `C1B-02` v2 完成 10×2 = 20 路 L1 采样；future_ok `8/8`、history_ok `7/8`、quality `8/8`、stationary ok；
+- action gate 失败：E wins 仅 `3/8`，median improvement `-0.107`；
+- 常见失败模式：E 被 proxy 判为 stationary/错转向，而 F 反而更接近请求 class（尤其 forward）；
+- 大 future 像素差存在，但不能转化为正确的 ego action 一致性。
+
+**研究结论**
+
+在公开 `exp0_no_carla` 支持与当前单卡 2.4 s / 256×448 协议下，**不能**宣称可靠的 expert trajectory
+因果响应。H1 `rejected`；不得进入偏好支持（C1P）或 adapter 训练（C1S）。这不是磁盘/OOM 工程失败。
+
+**禁止重复**
+
+- 不把 E/F 像素差、CoTracker survival 或画质 tie 包装成 action pass；
+- 不降 7/8 门槛、不扩 seed、不重选更容易的 scene、不用 M sensitivity 补主 gate；
+- 不跳过人审或用人工观感覆盖机器 reject；
+- 不因此自动切换双卡或完整 4 秒/更高分辨率“救场”。
+
+**允许重开**
+
+需要新预注册计划，并至少改变问题结构之一：完整 CARLA/非专家 checkpoint、官方 IDM evaluator、
+更长 horizon、或不同 action 接口；且仍须先过 Base/proxy/action 门禁。
+
+**证据**
+
+- `/root/autodl-tmp/runs/resim_c1_v6/C1B-02/resim-c1b02-screen-s20260719-v2/`
+- [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §6.8
 
 ## 5. 未决 research 风险
 
