@@ -1,9 +1,10 @@
 # Motion-Proj ReSim C1 V6 终报（单卡 screening）
 
-> **日期**：2026-07-19  
+> **日期**：2026-07-19（2026-07-20：与活跃 docs / archive 链接对齐）  
 > **计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)  
 > **结论**：`H1 rejected`（action response 不足）；不进入 C1P/C1S  
-> **硬件**：单张 RTX 4090 24 GB
+> **硬件**：单张 RTX 4090 24 GB  
+> **上游归档**：V5 / Route Pivot 审计见 [`archive/2026-07/`](archive/2026-07/README.md)
 
 ## 1. 一句话
 
