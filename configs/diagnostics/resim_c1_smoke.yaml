@@ -1,5 +1,5 @@
 task_id: C1B-00
-run_id: resim-c1b00-smoke-s20260719-v1
+run_id: resim-c1b00-smoke-s20260719-v2
 seed: 2026071901
 known_deviation: ReSim 官方要求 torch 2.4.0+cu124；本机固定 torch 2.4.0+cu121，已通过 CUDA/import 前置检查。
 
@@ -19,7 +19,9 @@ paths:
   hf_home: /root/autodl-tmp/hf_cache
 
 source:
-  clip_index: 0
+  # v1 的 index 0 因本机精选 nuScenes 缺少所需 12 Hz sweeps 而在模型加载前失败。
+  # index 874 是只依据本地文件完整性选出的首个 33/33 帧可用 clip，未查看任何生成结果。
+  clip_index: 874
 
 disk:
   minimum_free_bytes: 32212254720  # 30 GiB
