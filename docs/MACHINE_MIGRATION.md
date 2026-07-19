@@ -1,7 +1,7 @@
 # 换机 / 新实例接续指南
 
 系统盘若通过 AutoDL 克隆，conda 环境与数据盘通常可以直接沿用。若只拉取 Git 代码，按本指南恢复
-代码、环境和研究上下文；完整 run、cache、权重与 checkpoint 不在 Git 中。
+代码、环境和研究上下文；run 载荷、cache、权重与 checkpoint 不在 Git 中，且可能已按保留策略清理。
 
 ## 1. 拉取代码并核对状态
 
@@ -39,10 +39,11 @@ pip install -r requirements.lock.txt
 
 ```bash
 bash scripts/setup_third_party.sh
-# SVD-XT 权重见 scripts/download_weights.md
+# 历史 SVD-XT 仅在获授权复现时按固定 revision 重建，见 scripts/download_weights.md
 ```
 
 - nuScenes 全量：`/autodl-pub/data/nuScenes/Fulldatasetv1.0`
+- 当前本地子集：`/root/autodl-tmp/data/nuscenes`（约 35G）
 - Mini 开发切分：`bash scripts/extract_nuscenes_mini.sh`
 - Hugging Face cache：`/root/autodl-tmp/hf_cache`
 
@@ -63,7 +64,8 @@ bash scripts/setup_third_party.sh
 
 ## 5. 迁移运行产物
 
-如果要复核已有实验，应从旧机迁移而不是重建同名目录：
+如果要复核已有实验，先查 [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 判断资产是否仍驻留。需要迁移的
+现存目录通常包括：
 
 ```text
 /root/autodl-tmp/runs/
@@ -73,7 +75,9 @@ bash scripts/setup_third_party.sh
 ```
 
 用 `docs/run_manifests/` 的轻量副本和 [`EXPERIMENTS.md`](EXPERIMENTS.md) 核对 commit、config
-fingerprint、数据 split、seed 与终止标记。正式 run ID 不得复用或覆盖。
+fingerprint、数据 split、seed 与终止标记。正式 run ID 不得复用或覆盖；但已按策略移除的 checkpoint、
+candidate pool 或中间 tensor 不应被误报为迁移丢失。正式 48 条人工 verdict、R1/A0 待评审包和 UPO
+common-support 证据属于受保护资产，迁移时必须核对其 SHA-256。
 
 ## 6. 快速自检
 
@@ -96,8 +100,7 @@ pytest -q \
 
 ## 7. 当前研究状态
 
-截至 2026-07-18，V1 projection 与 SVD common-prefix sibling preference 两条路线均已按各自门禁停止。
-V5 route-pivot autoresearch 已获授权，单卡依次验证真实 ego–actor motion representation 与 natural
-independent-rollout best-of-N ceiling；不恢复旧 labels/fork/rho，不切双卡，也不自动进入正式长训。
-准确任务状态只以 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准，执行协议见
-[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)。
+截至 2026-07-19，V1 projection、SVD common-prefix sibling preference 以及 V5 route-pivot 均已按门禁收口；
+V5 选择 `C1 = ReSim exp0_no_carla feasibility`，但没有授权下载、推理或训练。R1 的 32 个 pair 与 A0 v3 的
+12 个 panel 仍待人工 review，并受保留策略保护。准确任务状态只以
+[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准；V5 计划只保留为已完成协议快照。

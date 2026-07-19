@@ -161,6 +161,15 @@ Base 指标为：static drift `8.2095`、track acceleration `4.3953`、LPIPS `0.
 | 2026-07-11 | 开发期容量 | LoRA rank 16 | 避免把容量变化混入方法比较 |
 | 2026-07-11 | 调参范围 | 见历史计划 `docs/archive/2026-07/CVPR2027_PLAN.md` | 固定搜索空间，防止事后扩域 |
 
+## 存储维护
+
+本节只追加非 Git 产物的驻留事实，不修改、更名或覆盖上方历史实验行。二进制载荷被清理后，原 run ID、
+研究状态与结论仍以保留的 manifest、resolved config、metrics、summary、result、人工 verdict 和终止标记为准。
+
+| 日期 | 批次 | 阶段 | 基线 commit | 范围与事实 | 证据 | 研究边界 |
+|---|---|---|---|---|---|---|
+| 2026-07-19 | `STORAGE-RETENTION-20260719` | 清单已登记 / 尚未删除 | `73bd1a4`（clean，`main...origin/main`） | 128G 数据盘清理前可用 `45,049,835,520` 字节；冻结 75 个精确目标、逻辑大小 `46,525,314,508` 字节，包括 SVD-XT 32.61 GB、39 个历史 `ckpts/`、B0 128-video pool、F0 variants/noise、A1 feature tensors 与 PA1/PA2 中间目录 | [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)；清理前 534 个核心轻量 evidence 聚合 SHA-256 `5f7a616293870012cc227d58d3ae34728c28310a3f1d75d10813cf5527a60d77` | 只授权逐路径存储维护；不授权 ReSim 下载、C1-BOOT、推理、训练、双卡或人工 verdict 代填；实际回收与验证另追加完成行 |
+
 ## 登记规则
 
 - 本节状态词描述 run/trial 生命周期；计划状态由 `RESEARCH_STATUS.md` 管理。

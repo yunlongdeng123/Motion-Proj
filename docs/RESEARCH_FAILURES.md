@@ -3,9 +3,9 @@
 > **目的**：记录从 V1 开始已经踩过的 research 坑、准确证据边界和重新开启条件，防止未来通过
 > 改名、扩大训练、放宽阈值或更换 loss 重复同一个失败问题。
 >
-> **最后更新**：2026-07-18
+> **最后更新**：2026-07-19
 > **覆盖范围**：Motion-Proj V1/V2、Autoresearch C0/P0/P1/E0/F0/F1、Physics-DPO PA0–PA2、
-> common-support UPO、earlier-fork fallback 与 Route Pivot R1 temporal audit
+> common-support UPO、earlier-fork fallback、Route Pivot R1/A0/A1/B0/C0 与证据驻留状态
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和各正式 run 目录
 > **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 
@@ -48,8 +48,33 @@
 | `RF-11` | blocked | uncertainty-aware partial order 可安全 abstain，但旧候选池几乎无 strict yield | 降 ROPE、降置信度或把 incomparable 改成 tie/winner |
 | `RF-12` | rejected | earlier fork 增强差异同时引入首帧/时间跳变与质量纠缠 | 继续搜索 fork/rho、事后筛唯一 strict |
 | `RF-13` | rejected | 直接把 SVD fps micro-conditioning 匹配到真实 2 Hz 会增大运动，也会破坏质量与时序 safeguard | 把 fps 数值一致当物理校准，或按 motion amount 单指标选 fps |
+| `RF-14` | rejected | 冻结 SVD 表示中的 ego signal 不等于可安全分离的 actor residual | 调宽 probe、忽略 zero/stationary gate 或把 ego-only 包装成 actor alignment |
+| `RF-15` | rejected | natural seed diversity 不等于足量安全 preference support | 扩 N、删 anti-collapse、挑唯一 diverse condition 或直接 AWR/SFT |
+| `RF-16` | limitation | layout controllability 不等于 action-disentangled actor physics | 用 future actor boxes 或公开 checkpoint 存在跳过 Base/action/support gate |
 
-## 3. 已验证的 research 负结论
+## 3. 负结论证据驻留状态（2026-07-19）
+
+`STORAGE-RETENTION-20260719` 只改变非 Git 二进制载荷的本机驻留状态，不改写实验事实。完整逐路径清单、
+SVD 固定 revision、清理前哈希与回收结果见 [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)。没有为待删载荷
+制作数据备份；恢复依赖固定下载源或以新 run ID 重算，不能覆盖原 run。
+
+| RF | 清理的可替代载荷 | 继续驻留的结论证据 | 对结论与重开的影响 |
+|---|---|---|---|
+| `RF-01` | V1 tune 与历史训练 `ckpts/` | manifest、resolved config、Optuna/metrics、summary、文档表格和终止事实 | proxy inversion、重复 exposure 结论不变；重开仍必须换合法监督分布与独立 endpoint |
+| `RF-06` | 历史训练 `ckpts/`、F0 五组 rejected variants/adapters 与 noise bank | F0 manifest、resolved YAML、metrics、Pareto CSV/PNG、summary、日志和 `COMPLETE` | correction/locality entanglement 不变；重开仍需结构上独立的局部参数子空间与 held-out gate |
+| `RF-09` | PA1 v2–v5 candidate 与 independent latent 中间目录 | PA1 manifest、candidate manifest/diagnostics、pairwise/track JSONL、8 条结构 review、panel 与 summary | same-scene 不推出 physics winner；人工可辨识性门禁不变 |
+| `RF-10` | PA2 smoke/formal/extension candidate、constructor baseline 与 independent latent 中间目录 | 48 条正式人工 verdict、完整 review package、候选索引/诊断、preferences/segments 与聚合 summary | forced-binary false-strict 结论不变；旧 53 pairs 仍禁止训练 |
+| `RF-11` | 不删除 UPO v1/v2 的可信度载荷；只清理其上游可重算候选中间目录 | UPO v1/v2 的 query、paired tracks、common support、bootstrap、graphs、stress 与 summaries 全部保留 | 安全 abstention 与 `2/96` strict yield 证据不变；不得降 ROPE/置信度或把 incomparable 改写为 winner |
+| `RF-12` | earlier-fork fallback 的 candidate 与 independent latent 目录 | conditions、candidate manifest、condition audits、paired tracks、common support、bootstrap、oracle graphs、summary 与 `REJECTED` | 首帧/质量纠缠结论不变；fork/rho 搜索仍关闭 |
+| `RF-14` | A1 rejected feature scan 的 `feature_records/` tensors | scene split、queries、feature index、control/primary probe metrics、result、summary 与 `COMPLETE` | ego-only positive 与 actor residual reject 均不变；不得事后调 probe 或启动 A1-CONFIRM/A2 |
+| `RF-15` | B0 已拒绝的 128-video `candidates/` pool | generation/scored 索引、rank/diversity、machine gate、result、summary、`REJECTED` 与独立 sensitivity run | natural support reject 不变；不得扩 N、删 anti-collapse 或进入 AWR/SFT |
+
+SVD-XT 本地快照也登记为可恢复清理对象。其 Hugging Face revision 固定为
+`9e43909513c6714f1bc78bcb44d96e733cd242aa`；清理只把历史 SVD asset check 改为 `non-resident`，不会把已关闭
+路线重新解释为“未测试”。`RF-01`、`RF-06`、`RF-09`–`RF-12`、`RF-14`、`RF-15` 的允许重开条件逐字
+继续生效。
+
+## 4. 已验证的 research 负结论
 
 ### RF-01：V1 synthetic projection 的 proxy inversion 与重复暴露
 
@@ -660,7 +685,7 @@ evaluator 与完整 anti-collapse；只换 scorer 或增加 N 不算重开。
 - [ReSim official source](https://github.com/OpenDriveLab/ReSim/tree/bf13dff45975eabbabc4e7de778207d2bb785e9b)
 - [ReSim paper](https://proceedings.neurips.cc/paper_files/paper/2025/file/f502981cbe221d857ad409450a7917c3-Paper-Conference.pdf)
 
-## 4. 未决 research 风险
+## 5. 未决 research 风险
 
 以下风险必须进入下一份计划，但当前证据不足以写成已解决或已证伪。
 
@@ -709,7 +734,7 @@ capacity gate，并与数据筛选、global DPO 和 no-localization baseline 对
 闭环驾驶、不同 backbone 或真实 action-conditioned world model 证据。当前负结论和任何未来正结果都不能
 无门槛外推到这些场景。
 
-## 5. 跨路线必须保留的原则
+## 6. 跨路线必须保留的原则
 
 1. **先证明监督对象存在，再训练。** target/preference 必须可观察、合法、可定位且可重复测量。
 2. **条件必须进入模型。** 数据集 future state 不能替代生成器实际 condition。
@@ -722,7 +747,7 @@ capacity gate，并与数据筛选、global DPO 和 no-localization baseline 对
 9. **machine pass 只解锁下一门禁。** 不自动解锁训练、双卡、论文 claim 或人工结论。
 10. **失败范围不能过度外推。** 每个 reject 都只否定明确的 target、backbone、parameterization 与协议组合。
 
-## 6. 新计划的防重复检查表
+## 7. 新计划的防重复检查表
 
 提交任何 V5 或新路线前，逐项回答：
 
@@ -740,7 +765,7 @@ capacity gate，并与数据筛选、global DPO 和 no-localization baseline 对
 如果答案只是“更多数据”“更大模型”“更长训练”“更低阈值”“换成 vanilla DPO/AWR”或“再调一个
 fork/rho”，则该计划仍在重复本账本中的旧问题。
 
-## 7. 历史材料
+## 8. 历史材料
 
 早期完整复盘、预注册、路线决策、历代 Physics-DPO/DrivePO 计划和人工评审提示词已集中到
 [`archive/2026-07/`](archive/2026-07/)。归档材料保留当时的术语与计划状态，只用于追查证据来源；

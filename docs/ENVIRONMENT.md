@@ -45,6 +45,8 @@ conda activate /root/autodl-tmp/envs/motionproj
   `/autodl-pub/data/nuScenes/Fulldatasetv1.0`
   - Map expansion: `/autodl-pub/data/nuScenes/Mapexpansion`
   - CAN bus expansion: `/autodl-pub/data/nuScenes/CANbusexpansion`
+- 当前本地子集：`/root/autodl-tmp/data/nuscenes`，`du -sh` 约 35G。它包含当前研究所需的
+  CAM_FRONT、LIDAR_TOP 和 `v1.0-trainval` metadata，不等同于复制完整公共盘数据集。
 - Argoverse 2（方案主数据集）: 公共盘暂无，需自行下载到数据盘后用 av2 API 读取。
 
 ## 5. 网络 / 模型下载
@@ -60,15 +62,23 @@ conda activate /root/autodl-tmp/envs/motionproj
 
 ## 6. 磁盘现状与策略（重要）
 
-```
-系统盘 /              : 30G，可写约 26G（勿在此放大文件）
-数据盘 /root/autodl-tmp: 50G，env 占 7.8G，余约 43G
+2026-07-19 清理登记前的只读快照：
+
+```text
+系统盘 /               : 30G，可写约 26G（勿在此放大文件）
+数据盘 /root/autodl-tmp : 128G，总计 137,438,953,472 字节
+                          已用 92,389,117,952 字节，可用 45,049,835,520 字节（df -h 显示 42G）
+本地 nuScenes 子集      : du -sh 约 35G
+motionproj 环境         : du -sh 约 7.8G
+SVD-XT 完整快照         : 32,608,949,417 字节；已登记为可恢复清理对象
 ```
 
-- 数据盘仅 50G，env + cache + checkpoint 会很快吃紧。建议:
-  - 尽早在 AutoDL 控制台扩容 autodl-tmp；
-  - 优先用 latent-space 投影 cache，RGB 中间产物验证后即删；
-  - 按方案 §11 的磁盘策略管理 cache 版本。
+- 正式 run ID、manifest、resolved config、metrics、summary、终止标记和人工 verdict 不得覆盖；已经固化结论的
+  checkpoint、candidate 视频、adapter 和中间 tensor 可按
+  [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 的逐路径批次瘦身。
+- 清理不得自行扩大到 nuScenes、环境、评审材料或 evaluator 资产。大权重下载前重新检查 `df`，并保留当前计划
+  规定的安全线。
+- 上述 42G 是清理前事实；最终回收结果在保留策略文档中回填，不回写历史 V5/C0 快照。
 
 ## 7. 可选后续环境: motionproj-mm（重型 3D 感知）
 

@@ -18,11 +18,16 @@ bash scripts/setup_third_party.sh
 
 ## SVD-XT backbone
 
-见 `scripts/download_weights.md`。本地目录默认 `/root/autodl-tmp/weights/svd-xt`（约 10GB，不入 Git）。
+见 [`scripts/download_weights.md`](../scripts/download_weights.md)。固定 Hugging Face revision 为
+`9e43909513c6714f1bc78bcb44d96e733cd242aa`。2026-07-19 清理前的完整本地快照为 32.61 GB，同时包含
+monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 10 GB。该资产可按
+[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 清理并从固定 revision 重建；不能仅凭历史配置假定
+`/root/autodl-tmp/weights/svd-xt` 当前驻留。
 
 ## nuScenes
 
-数据集在 AutoDL 公共盘，路径见 `docs/ENVIRONMENT.md` §4。抽取脚本在 `scripts/extract_nuscenes_*.sh`。
+完整数据集在 AutoDL 公共盘；当前数据盘另有约 35G 的 CAM_FRONT/LIDAR_TOP 与 metadata 本地子集。
+路径见 [`ENVIRONMENT.md`](ENVIRONMENT.md) §4，抽取脚本在 `scripts/extract_nuscenes_*.sh`。
 
 ## 不入 Git 的运行产物
 
@@ -30,9 +35,11 @@ bash scripts/setup_third_party.sh
 
 | 路径 | 内容 |
 |---|---|
-| `/root/autodl-tmp/runs/` | 完整实验 run（metrics、checkpoint、panel） |
+| `/root/autodl-tmp/runs/` | 实验 run；正式结论保留轻量证据，checkpoint/candidate 等载荷可按保留策略瘦身 |
 | `/root/autodl-tmp/cache/` | 投影 / replay cache |
 | `/root/autodl-tmp/weights/` | SVD、CoTracker 等权重 |
 | `/root/autodl-tmp/envs/motionproj` | Conda 环境（可用 `requirements.lock.txt` 重建） |
 
-轻量 run 摘要已归档到 `docs/run_manifests/`，供对照 commit 与 resolved config；完整证据仍以 run 目录为准。
+轻量 run 摘要已归档到 `docs/run_manifests/`，供对照 commit 与 resolved config。正式 run ID 不得复用或覆盖，
+但这不要求永久保留每个 checkpoint、candidate 视频或中间 tensor；实际驻留范围与受保护人工材料以
+[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 为准。
