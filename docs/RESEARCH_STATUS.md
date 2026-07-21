@@ -1,20 +1,36 @@
 # Motion-Proj 当前研究状态
 
 > **文档职责**：唯一当前状态与执行授权入口。
-> **最后更新**：2026-07-20
+> **最后更新**：2026-07-21
 > **研究基线**：`43eda43878b5104cd043c4d8fee2ab177a356858`（V6 起草时 HEAD；V5 证据基线仍见终报）
-> **当前计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)（`rejected` / 已关闭）
+> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)
+> （本轮自主执行已收尾；终报 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)）。
+> **上一计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)（`rejected` / 已关闭，见 `RF-18`）
 > **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](archive/2026-07/MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
-> **终报**：[`C1_V6_FINAL_REPORT.md`](C1_V6_FINAL_REPORT.md)
-> **当前状态**：`rejected`
-> **当前任务**：无。V6 H1 在 `C1B-02` 机器 gate 失败后关闭；证据
-> `/root/autodl-tmp/runs/resim_c1_v6/C1B-02/resim-c1b02-screen-s20260719-v2`（`REJECTED`）。
-> `C1B-00`/`C1B-01` 为 done；`C1B-03`/C1P/C1S 为 `not_run`。
-> **最终决策**：`C1` 单卡 screening **未通过**（action response 不足）；见 `RF-18`
-> **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容
+> **当前状态**：`completed_round`（V7 gates 已走完；D1=`modify_method_then_scale`）
+> **当前 gate**：`D1-DECIDE-09` done；U0 仅 proxy（全量 mAP 未跑）
+> （冻结场景：S0=scene-0655/003、S1=scene-0796/005、S2=scene-0757/004）。
+> **当前任务**：无进行中 gate；后续人类可按终报扩 U0/加强 L0。关机收尾按 V7 §A0.4。
+> **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容（可用硬门槛 ≥30 GiB）
 
 本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
 run 为准；为什么不能重复旧尝试见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)。
+
+## 0. 当前唯一合法入口（V7 autoresearch）
+
+> 本节覆盖旧 §8（V6）作为当前授权来源；§8 保留为 V6 历史记录，不再是当前任务队列。
+
+- **执行授权**：V7 计划状态为 `approved_for_autonomous_execution`。允许一个新 agent 在清空 context 后，
+  按 [`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md) **§A0 自主执行协议**
+  连续执行，无需逐 gate 人工确认。
+- **恢复入口**：新会话第一步执行 V7 §A0.6（读头部 + §A0.5 进度日志 + §13 里程碑 + 本文件当前 gate）。
+- **授权动作**：自由调用 subagent；长会话可临时写 `motion_proj/tmp/*.txt`；每完成一个 todo 立即回填
+  （V7 §A0.5、§13、本文件、`EXPERIMENTS.md`、必要时 `RESEARCH_FAILURES.md`）。
+- **终止与关机**：命中 V7 §A0.4 终止条件（U0/D1 完成 / 命中 §15 停止条件 reject / 无法解决的 blocker）后，
+  写终报 → 回填 → `git commit`（不 push）→ 执行 `/usr/bin/shutdown -h now`。
+- **硬约束**：单卡 4090、显存 <22–24GB、磁盘 ≥30 GiB、镜像装包、环境隔离、不重开 `RF-01`–`RF-18`、不自动 push。
+- **与 V6 的关系**：V6/C1 已 `rejected` 且关闭，其“禁止续跑 C1P/C1S、禁止人审补救降门槛”仍然有效；
+  V7 是**新预注册计划**，不复用 V6 被拒配方，故不与 `RF-18` 冲突。
 
 ## 1. 当前研究问题
 
@@ -172,7 +188,10 @@ V5 必须逐项遵守 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：
 每个正式 gate 完成后必须更新本文件与 `EXPERIMENTS.md`；新负结论或重开边界同时更新
 `RESEARCH_FAILURES.md`。归档材料不得覆盖本文件。
 
-## 8. 当前唯一合法入口（V6）
+## 8. 历史入口（V6，已关闭）
+
+> **已被 §0（V7）取代。** 本节仅作 V6 历史记录：V6/C1 在 `C1B-02` 失败后 `rejected`；其“禁止续跑
+> C1P/C1S、禁止人审补救/降门槛/换 seed 救场”的禁令继续有效，但 V6 不再是当前任务来源。
 
 完整协议见 [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)：
 

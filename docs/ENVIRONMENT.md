@@ -15,15 +15,24 @@ conda activate /root/autodl-tmp/envs/motionproj
 
 # ReSim C1（V6）独立环境——推理/训练用，勿与 motionproj 混装
 conda activate /root/autodl-tmp/envs/resim
+
+# OccGS / DriveStudio（V7）独立环境——禁止往 motionproj/resim 里混装
+conda activate /root/autodl-tmp/envs/drivestudio
+export CUDA_HOME=/usr/local/cuda-11.8
+export PATH=$CUDA_HOME/bin:$PATH
+export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
 ```
 
-- Python: 3.10
+- Python: 3.10（`motionproj` / `resim`）；DriveStudio 为 Python 3.9
 - `motionproj` 路径: `/root/autodl-tmp/envs/motionproj`（约 7.8G）
 - `resim` 路径: `/root/autodl-tmp/envs/resim`（约 6.4G；`torch 2.4.0+cu121` + vendored SAT）
-- `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活；`resim` 建议用绝对 `-p` 路径激活。
+- `drivestudio` 路径: `/root/autodl-tmp/envs/drivestudio`（约 6.8G；`torch 2.1.2+cu118` + gsplat 1.3.0 / pytorch3d 0.7.5 / nvdiffrast 0.4.0）
+- `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活；`resim` / `drivestudio` 建议用绝对 `-p` 路径激活。
 - ReSim 权重: `/root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat`（含合成 T5 `t5-v1_1-xxl/`）。
+- DriveStudio 代码: `/root/autodl-tmp/third_party/drivestudio`；E0 清单见 [`OCCGS_E0_ENV_MANIFEST.md`](OCCGS_E0_ENV_MANIFEST.md)。
 - 数据盘 128G **不可扩容**；可用空间硬门槛 ≥30 GiB，训练/大批候选中间产物预算见
-  [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §1.3。
+  [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §1.3 与 V7 计划 §6.7。
+- 装包一律走镜像：pip=`mirrors.aliyun.com`，torch wheels=`mirrors.aliyun.com/pytorch-wheels`，conda=`mirrors.tuna.tsinghua.edu.cn`；**不要**用 `download.pytorch.org` / `pypi.org`。
 
 ## 2. 硬件与底座
 

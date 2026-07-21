@@ -180,6 +180,21 @@ Base 指标为：static drift `8.2095`、track acceleration `4.3953`、LPIPS `0.
 |---|---|---|---|---|---|---|
 | 2026-07-19 | `STORAGE-RETENTION-20260719` | 清单已登记 / 尚未删除 | `73bd1a4`（clean，`main...origin/main`） | 128G 数据盘清理前可用 `45,049,835,520` 字节；冻结 75 个精确目标、逻辑大小 `46,525,314,508` 字节，包括 SVD-XT 32.61 GB、39 个历史 `ckpts/`、B0 128-video pool、F0 variants/noise、A1 feature tensors 与 PA1/PA2 中间目录 | [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)；清理前 534 个核心轻量 evidence 聚合 SHA-256 `5f7a616293870012cc227d58d3ae34728c28310a3f1d75d10813cf5527a60d77` | 只授权逐路径存储维护；不授权 ReSim 下载、C1-BOOT、推理、训练、双卡或人工 verdict 代填；实际回收与验证另追加完成行 |
 | 2026-07-19 | `STORAGE-RETENTION-20260719` | completed / verified | `2d52056`（先行清单提交） | 75/75 冻结目标删除；逻辑字节 `46,525,314,508`，`df` 实际回收 `46,541,172,736`；可用空间 `45,049,835,520 → 91,591,008,256` 字节（85.3 GiB），runs 降至 `572,469,248` 字节，SVD-XT 为 non-resident | [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)；48/32/12 人工材料、UPO v1/v2 与 534 个核心 evidence 哈希不变；513 JSON + 317 JSONL/96,765 records + 167 YAML 可解析；逐文件 `pytest -q` JUnit 汇总 73/73 files、247 passed、0 failures/errors/skips | 满足 80 GB 存储门槛，但不授权 C1-BOOT/ReSim 下载、推理或训练；`RF-01/06/09–12/14/15` 及人工 review pending 状态不变 |
+| 2026-07-21 | `OCCGS-D0-CLEAN-RESIM-CKPT` | completed | （V7 执行中） | 写盘前 avail≈33 GiB 逼近 30 GiB 门槛；删除已关闭 V6 路线可重建权重 `/root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat`（37 GiB）及 pip/conda/sandbox cache；ReSim 源码保留；正式 run manifest/metrics/reviews 未动；清理后 avail≈70 GiB | `docs/OCCGS_DATA_PREPARATION.md` §6 | 仅为 OccGS D0/B0 腾出写盘余量；不重开 V6/C1 |
+
+## OccGS-Resim（V7）
+
+| Run ID | 状态 | 配置摘要 | 关键结果 | 证据路径 | 结论 |
+|---|---|---|---|---|---|
+| `occgs_b0/b0_1_s0_1cam4s` | completed | StreetGS；S0=mini/003；1cam；t=0..39；3k iters；test_stride=10；load_smpl=False | full PSNR/SSIM/LPIPS=37.59/0.968/0.059；test=32.91/0.928/0.072；Vehicle-Only full PSNR=33.26；无 NaN/OOM；ckpt=`checkpoint_final.pth`；peak mem early≈1.4 GB | `/root/autodl-tmp/runs/occgs_resim/b0_recon/occgs_b0/b0_1_s0_1cam4s/` | B0-1 smoke **PASS**；解锁 B0-2/3/4 冻结配置全量训练 |
+| `occgs_b0/b0_2_s0_3cam8s` | completed | StreetGS 冻结；S0=003；3cams；t=0..79；30k | full 32.87/0.937/0.103；test 25.60/0.799/0.142；veh full/test 30.98/23.48；peak VRAM≈5GB | `.../b0_2_s0_3cam8s/` | B0-2 **PASS** |
+| `occgs_b0/b0_3_s1_3cam8s` | completed | 同上；S1=005 | full 27.07/0.815/0.220；test 20.18/0.472/0.325；veh 25.12/18.26 | `.../b0_3_s1_3cam8s/` | B0-3 **PASS**（held-out 偏弱，可识别） |
+| `occgs_b0/b0_4_s2_3cam8s` | completed | 同上；S2=004 | full 33.41/0.923/0.094；test 25.37/0.697/0.142；veh 27.24/22.11 | `.../b0_4_s2_3cam8s/` | B0-4 **PASS**；B0 gate 关闭 |
+| `occgs_c0/{s0,s1,s2}` | completed | StreetGS ckpt + S0 edits；RigidNodes pose rewrite；n_frames=16；无 diffusion | top-24 机器合法 **24/24**；全可见 46/62；scene003/004 明确通过 | `runs/occgs_resim/c0_cf/`；`data/occgs/reviews/c0_legality/` | C0 **PASS** |
+| `occgs_l0/{s0,s2}_v3` | completed | Telea + hard composition on |\ΔRGB| mask | outside-mask L1=0；mask≈1–2% | `runs/occgs_resim/l0_comp/` | L0 协议 **PASS**（视觉弱） |
+| `occgs_u0/proxy_v1` | completed / partial | R vs OccGS V1–V3 vs naive V4 | OccGS accept≈1.0；V4 accept=0；OccGS max\|\ΔRGB\|≈0.45；**无 mAP** | `runs/occgs_resim/u0_screen/u0_proxy_v1.json` | U0 proxy PASS；全量效用未测 |
+| `occgs_d1/final` | completed | V7 终态决策 | `modify_method_then_scale` | `docs/OCCGS_FINAL_REPORT.md` | D1 done；关机收尾 |
+
 
 ## 登记规则
 
