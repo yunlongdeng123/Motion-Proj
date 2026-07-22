@@ -1,229 +1,90 @@
 # Motion-Proj 当前研究状态
 
 > **文档职责**：唯一当前状态与执行授权入口。
-> **最后更新**：2026-07-21
-> **研究基线**：`43eda43878b5104cd043c4d8fee2ab177a356858`（V6 起草时 HEAD；V5 证据基线仍见终报）
+> **最后更新**：2026-07-22
+> **当前阶段**：`V7 / feasibility_done / method_validation_pending`
+> **证据基线**：`9722fa2`（V7 feasibility 收口提交）
+> **当前决策**：`modify_method_then_scale`
 > **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)
-> （本轮自主执行已收尾；终报 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)）。
-> **上一计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)（`rejected` / 已关闭，见 `RF-18`）
-> **归档计划**：[`MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md`](archive/2026-07/MOTION_ROUTE_PIVOT_AUTORESEARCH_PLAN_V5.md)（`done`，不得恢复已拒绝任务）
-> **当前状态**：`completed_round`（V7 gates 已走完；D1=`modify_method_then_scale`）
-> **当前 gate**：`D1-DECIDE-09` done；U0 仅 proxy（全量 mAP 未跑）
-> （冻结场景：S0=scene-0655/003、S1=scene-0796/005、S2=scene-0757/004）。
-> **当前任务**：无进行中 gate；后续人类可按终报扩 U0/加强 L0。关机收尾按 V7 §A0.4。
-> **硬件**：单张 RTX 4090 24 GB；数据盘 128G 不可扩容（可用硬门槛 ≥30 GiB）
+> **当前任务**：`V7-EV-10` pending；先补齐证据与公平基线，再启动 H1/H2/H3 方法实验。
+> **执行授权**：本轮只完成文档整理；后续实验计划已定义但尚未启动。
 
-本文只写当前决策、执行边界和稳定里程碑。正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 与对应
-run 为准；为什么不能重复旧尝试见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)。
+正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
+[`archive/2026-07/README.md`](archive/2026-07/README.md)。
 
-## 0. 当前唯一合法入口（V7 autoresearch）
+## 1. 一句话结论
 
-> 本节覆盖旧 §8（V6）作为当前授权来源；§8 保留为 V6 历史记录，不再是当前任务队列。
+V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → StreetGS object-centric 重建 → actor 轨迹改写 →
+反事实 RGB/depth 渲染 → 局部 hard composition”的工程闭环；但尚未证明 occupancy 带来方法增益、局部补全优于
+弱基线，也未证明合成数据有下游收益。因此当前不能 scale，也不能把 feasibility 写成论文假设通过。
 
-- **执行授权**：V7 计划状态为 `approved_for_autonomous_execution`。允许一个新 agent 在清空 context 后，
-  按 [`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md) **§A0 自主执行协议**
-  连续执行，无需逐 gate 人工确认。
-- **恢复入口**：新会话第一步执行 V7 §A0.6（读头部 + §A0.5 进度日志 + §13 里程碑 + 本文件当前 gate）。
-- **授权动作**：自由调用 subagent；长会话可临时写 `motion_proj/tmp/*.txt`；每完成一个 todo 立即回填
-  （V7 §A0.5、§13、本文件、`EXPERIMENTS.md`、必要时 `RESEARCH_FAILURES.md`）。
-- **终止与关机**：命中 V7 §A0.4 终止条件（U0/D1 完成 / 命中 §15 停止条件 reject / 无法解决的 blocker）后，
-  写终报 → 回填 → `git commit`（不 push）→ 执行 `/usr/bin/shutdown -h now`。
-- **硬约束**：单卡 4090、显存 <22–24GB、磁盘 ≥30 GiB、镜像装包、环境隔离、不重开 `RF-01`–`RF-18`、不自动 push。
-- **与 V6 的关系**：V6/C1 已 `rejected` 且关闭，其“禁止续跑 C1P/C1S、禁止人审补救降门槛”仍然有效；
-  V7 是**新预注册计划**，不复用 V6 被拒配方，故不与 `RF-18` 冲突。
+## 2. V7 当前进展
 
-## 1. 当前研究问题
-
-已拒绝的两条旧路线是：
-
-1. **Explicit dynamics projection / endpoint distillation**：当前 synthetic target、RGB/VAE
-   counterfactual 和 shared temporal LoRA 组合未通过动力学、target legality 与 locality 门禁；
-2. **SVD internal sibling physics preference**：旧 P-UNC forced-binary 标签器未通过人工可信性复核；
-   common-support selective partial order 虽消除了校准集 false-strict，但候选 strict yield 过低，
-   唯一 earlier-fork fallback 又触发首帧/质量门禁。
-
-V5 不恢复这两条路线，而检验两个独立的新问题：
-
-- **Route A**：真实训练视频中的 ego-induced motion 与 actor residual motion 是否在冻结 SVD 表示中可辨，
-  并能否通过 training-only auxiliary supervision 稳定进入 temporal LoRA；
-- **Route B**：冻结 SVD 的自然独立 rollout 分布是否已经包含人工与独立 evaluator 都认可的更优 motion
-  sample，从而为后续 condition-relative AWR + real SFT 提供 support。
-
-Route A 的 A1 scan 已给出分解结论：冻结表示中的 sparse ego-flow signal 可泛化，但当前 compact linear
-probe 无法从 driving-specific ego/actor entanglement 中可靠恢复 actor residual，并严重违反 stationary
-safeguard。因此 actor 路线已拒绝，只保留 ego-only representation baseline；A1-CONFIRM 与 A2 不执行。
-
-Route B 也已关闭：128 个独立 natural rollouts 中，严格 anti-collapse 下仅 `1/16` conditions 有两条合法
-候选；P-UNC-best 对 random/Base 的 CoTracker win-credit 均为 `41.67%`，并出现 low-motion/catastrophic
-selection。18 dB checker 虽过严，但只读 sensitivity 证明移除它后仍仅 `4/16` diverse；Route B 的拒绝稳健。
-
-Route C 只读迁移审计已经完成。ReSim `exp0_no_carla` 是唯一同时具备公开 checkpoint、显式 future ego
-trajectory、历史帧预测、且不要求 future actor boxes 的候选，因此选择 `C1`；VISTA 为 fallback，OpenDWM 与
-MagicDrive-V2 只作 layout/geometry baseline。完整边界见
-[`BACKBONE_MIGRATION_AUDIT.md`](archive/2026-07/BACKBONE_MIGRATION_AUDIT.md)。
-
-C1 源码在 `/root/autodl-tmp/third_party/ReSim`（`bf13dff...`）；独立环境
-`/root/autodl-tmp/envs/resim`（`torch 2.4.0+cu121`）；权重在
-`.../checkpoints/CogVideoX-2b-sat`（含 EMA、VAE、由 CogVideoX 合成的 T5）。`motionproj` 环境保留给
-evaluator。V6 串行执行已收口：`C1B-00` L1 256×448 确定性通过；`C1B-01` 在 `RF-17` 四类 ridge
-blocked 后，以预注册 `local-ego-motion-proxy-v2-kinematic-lateral` 同门槛重开并通过（BA `0.778`、
-turn `0.750`、Spearman `0.953`）；`C1B-02` 10-context E-vs-F screen 工程有效但 action gate 失败
-（E wins `3/8`，median improvement `-0.107`），记为 `RF-18` / H1 `rejected`。细节见
-[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) 与
-[`C1_V6_FINAL_REPORT.md`](C1_V6_FINAL_REPORT.md)。
-
-## 2. 已关闭里程碑
-
-| ID | 状态 | 已完成事实 | 当前决策 |
+| Gate | 状态 | 已有证据 | 准确边界 |
 |---|---|---|---|
-| `P2-V1-TUNE-01` | rejected | 16 个 100-step 与 4 个 300-step synthetic projection trial | 不继续旧 cache、Optuna、t10-800 或同配方调参 |
-| `P2-V2-COND-00` | done / branch rejected | future-GT ego mismatch 已确认；self-estimated static V1 未过人工门槛 | 未条件化 SVD 禁用 future-GT static target |
-| `P2-V2-REPLAY-05` | done | object-only generated-track replay 的 schema 与人工合理性通过 | 只保留基础设施，不外推训练收益 |
-| `P2-V2-PILOT-03` | blocked | C/D/E capacity 与 single-pair locality 诊断完成 | shared temporal LoRA endpoint 不进入 rollout 或长训 |
-| `F0/F1/P1` | rejected | endpoint preserve、旧 raw-feature probe、RGB/VAE target legality 完成 | 不绕过 target legality 启动旧 feature head 或生成器训练 |
-| `PA0-REVIEW-00` | done | P-UNC 与 E0 既有人工 review 聚合完成 | 仅完成基础设施可信度，不产生偏好标签 |
-| `PA1-BRANCH-02` | done | common-prefix siblings 通过 same-scene 结构盲审 | 只证明结构合法，不证明 physics winner 可辨 |
-| `PA2-PAIR-03` | rejected | 120 conditions、53 machine pairs、48-case 人工复核完成 | 旧 P-UNC forced-binary recipe 禁止训练 |
-| `PA2-UPO-03B` | done / yield blocked | tie holdout、shortcut、cycle 与 bootstrap 门禁通过 | `2/96` strict 不足以进入训练 |
-| `PA2-CAND-03D` | rejected | 唯一 8-condition earlier-fork fallback 完成 | 不筛唯一 strict，不再搜索 fork/rho |
-| 旧 `PA3`–`PA8` | rejected / not run | 上游没有合法且足量的 preference 数据 | 不恢复旧 DrivePO trainer、screening 或双卡计划 |
-| `RP-R0-00` | done | 当前仓库、单张 4090、磁盘、权重、nuScenes、RAFT、Depth、CoTracker 与 scene split 均已核验；baseline 为 208 passed | 单卡资产足以继续 R1/A0/A1/B0；保持 30 GB 磁盘安全线 |
-| `RP-LIT-01` | done | [`ROUTE_PIVOT_LITERATURE_MATRIX.md`](archive/2026-07/ROUTE_PIVOT_LITERATURE_MATRIX.md) 完成一手核查，并补入 WMReward、SARA 等最近邻 | BoN 只作 B0 ceiling；主张收紧为 driving ego–actor decomposition + uncertainty/local safeguard |
-| `RP-R1-02` | done | 32 个真实 clips 确认中位 `2.0 Hz`；48 个 SVD fps 对照与 16 个 paired groups 完整；[`ROUTE_PIVOT_TEMPORAL_AUDIT.md`](archive/2026-07/ROUTE_PIVOT_TEMPORAL_AUDIT.md) 已固化 | `fps=2/4` 虽显著增大 motion，但未通过画质/轨迹/加速度 safeguard；后续冻结 `generation.fps=7`，32 个盲审 pair 仍待标注、仅作补充诊断并受保护 |
-| `RP-A0-03` | machine pass / awaiting reviews | 16 scenes 上 392 个可局部化 pairs、89 tracks；AUC `0.8600`、velocity 方向 `0.9725`、ego 相关 `0.2226`、背景方向 `0.9870`；[`ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md`](archive/2026-07/ROUTE_PIVOT_REAL_MOTION_TARGET_AUDIT.md) 已固化 | 只解锁 A1 machine probe；12 个 panel 的人工 target legality 仍 pending、受保护，且不因 Route A machine reject 自动代填或删除 |
-| `RP-A1-SCAN-04A` | rejected | 24/8 scene-disjoint clips、21 个 layer/sigma 配置；ego baseline 改善 `17.86%–25.01%`，actor 对 zero baseline 全为负且 stationary ratio `3.292–5.062`；[`ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md`](archive/2026-07/ROUTE_PIVOT_MOTION_FEATURE_AUDIT.md) 已固化 | 保留 ego-only diagnostic；actor hypothesis、A1-CONFIRM 与 A2 停止，不调 probe 追门槛 |
-| `RP-B0-05` | rejected | 16 conditions × 最多 8 natural seeds；N=8 仅 `1/16` diverse，P-UNC 对 random/Base CoTracker win-credit 均 `41.67%`；[`ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md`](archive/2026-07/ROUTE_PIVOT_NATURAL_ROLLOUT_AUDIT.md) 已固化 | 不做人审、不扩 N/改 CFG/降 anti-collapse，不进入 AWR/SFT；解锁 Route C 迁移审计 |
-| `RP-C0-07` | done | 固定 5 个官方 repo HEAD 与 VLA-World 项目页，审计 6 个候选；ReSim 的官方 nuScenes schema 与本机 raw data 匹配；[`BACKBONE_MIGRATION_AUDIT.md`](archive/2026-07/BACKBONE_MIGRATION_AUDIT.md) 已固化 | 选择 `C1`，但只晋级下一阶段单卡 feasibility；未下载/推理/训练 |
-| `C1B-00` | done | ReSim EMA 30000、49-frame VAE 输入、9 latent/33 RGB 输出与单卡确定性通过；L0 OOM 后 L1 双重复解码哈希一致 | 后续 C1B 统一使用 256×448；只解锁 `C1B-01`，不解锁 action screen、人工 gate 或训练 |
-| `C1B-01` | done | v2 四类 ridge `blocked`（`RF-17`）；v3 kinematic-lateral 同 scene/同门槛通过：moving BA `0.778`、turn-sign `0.750`、disp Spearman `0.953` | 解锁 `C1B-02`；v1/v2 证据保留；proxy 冻结为 `local-ego-motion-proxy-v2-kinematic-lateral` |
-| `C1B-02` | rejected | 10 contexts × E/F 在 L1 256×448 完成；future/history/quality/stationary 通过，但 E 仅 3/8 优于 F，median improvement `-0.107` | H1 rejected（`RF-18`）；不进入人审/C1P/训练 |
-| `RP-D0-08` | done | [`ROUTE_PIVOT_FINAL_REPORT.md`](archive/2026-07/ROUTE_PIVOT_FINAL_REPORT.md) 汇总全部门禁、review pending、停止项与最多 3 个后续实验 | V5 关闭；新动作必须由下一份预注册计划授权 |
+| `E0-ENV-01` | done | DriveStudio、gsplat、PyTorch3D、nvdiffrast 单卡 smoke | 环境可运行；阶段清单已归档 |
+| `G0-THIRDPARTY-00` | done | DriveStudio/Occ3D/SplatAD 代码、license 与接口审计 | 不代表方法新颖性成立 |
+| `D0-DATA-02` | done | mini 003/004/005，3 前向相机，8 秒训练窗，10 Hz 处理 | 本机完整 sweep 只覆盖 mini 10 scenes，外部有效性受限 |
+| `B0-RECON-03` | done | 3/3 StreetGS 训练完成；test PSNR 为 25.60 / 20.18 / 25.37 | object-centric 重建可行；S1 held-out 质量偏弱；无正式 user review |
+| `O0-OCC-04` | artifact_done | 三场景 LiDAR+box occupancy，unknown 保留 | occupancy 尚未接入 S0 约束、C0 可见性或 L0 mask，H1 未验证 |
+| `S0-EDIT-05` | prototype_done | raised-cosine 横向编辑；V4 极端负例被运动学/距离规则拒绝 | 当前是几何启发式 editor，不是 occupancy-certified editor |
+| `C0-CF-06` | machine_screen_done | 3 scenes 渲染；全部可见 case 46/62 合法；按效应选出的 top-24 为 24/24 | 结论来自机器规则；没有用户人工 verdict；未完整重生 semantic/instance/box |
+| `L0-COMP-07` | feasibility_done | Telea + hard composition，12 帧 outside-mask L1=0 | 0 泄漏由构造保证；mask 来自 RGB 差分而非 occupancy/ray visibility；H2 未验证 |
+| `U0-UTILITY-08` | partial | 3-scene 约束/渲染 signal proxy | naive V4 是极端无效负例；未跑 detector/event task；H3 未验证 |
+| `D1-DECIDE-09` | done | feasibility 轮次收口 | 决策为先改方法再扩规模 |
 
-## 3. V5 稳定任务表
+阶段详情见 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)；整理前长计划和逐 Gate 报告已移至
+[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)。
 
-| ID | 当前状态 | Gate | 通过后的动作 |
-|---|---|---|---|
-| `RP-R0-00` | done | 仓库、环境、资产与文档基线 | 已解锁一手文献、R1、A0、B0 |
-| `RP-LIT-01` | done | 最近邻一手文献与创新边界 | 已收紧 A/B novelty，不单独晋级方法 |
-| `RP-R1-02` | done | 真实时间采样与 SVD fps audit | 已冻结后续 `generation.fps=7`；review material awaiting，不阻塞 A0 |
-| `RP-A0-03` | awaiting_reviews | 真实 ego–actor target legality | machine pass 已解锁 A1；human gate 并行 pending |
-| `RP-A1-SCAN-04A` | rejected | 24/8 clips frozen feature scan | 0 个合法候选；不进入 confirm |
-| `RP-A1-CONFIRM-04B` | rejected / not run | 64/16/16 scene-disjoint confirm | scan dependency 未满足 |
-| `RP-B0-05` | rejected | natural-rollout best-of-N ceiling | machine gate failed；不生成人审、不自动长训 |
-| `RP-A2-06` | rejected / not run | auxiliary-alignment capacity | A1 confirm dependency 未满足 |
-| `RP-C0-07` | done | action-conditioned backbone 迁移审计 | `C1 = ReSim exp0_no_carla feasibility` |
-| `RP-D0-08` | done | 最终路线决策与报告 | V5 已固化并关闭 |
+## 3. 核心假设状态
 
-Route A 与 Route B 的机器任务相互独立。一条路线失败后仍继续另一条。人工 review 不阻塞独立机器 gate；
-若最终只缺人工 verdict，则相应任务标为 `awaiting_reviews` 并一次性交付完整提示词与材料。
-
-## 4. V5 已完成执行边界
-
-V5 已按下列固定顺序执行完毕；该顺序现在是证据记录，不是新的任务队列：
-
-```text
-R0 + literature
-→ R1 temporal/fps audit
-→ A0 target legality
-→ A1 scan/confirm（按门禁）
-→ B0 natural rollout ceiling（与 A 独立）
-→ A2（仅 A1 pass）或 Route C（仅 A/B rejected）
-→ D0 final report
-```
-
-V6 曾授权按 [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
-串行执行 `C1B`→`C1P`→`C1S`（全程单张 4090）。该计划已在 H1 拒绝后关闭；下游 `C1B-03`/C1P/C1S
-为 `not_run`，不得在未授权新计划的情况下续跑或降门槛救场。
-
-本轮明确禁止：
-
-- 继续 denoising-prefix sibling、fork、rho、CFG branch 或 candidate 数搜索；
-- 使用旧 53 pairs、旧 local labels、UPO 的 2 个 strict 或 fallback 唯一 strict 训练；
-- 实现旧 DrivePO tube-DPO、vanilla DPO、在线 PPO/GRPO 或大型 reward model；
-- 对完整采样链反传；
-- future actor boxes/tracks 进入条件或自由 rollout 正式 evaluator；
-- 把 image-plane acceleration 称为真实世界加速度；
-- 把 `exp0_no_carla` 称为含 CARLA 非专家能力的完整 ReSim；
-- 自动填写人工 verdict、覆盖正式 run、自动 push 或在任何阶段切换双卡；
-- C1B 未过时启动 C1P 数据生成或任何 adapter/LoRA。
-
-允许在真实训练视频的 representation target/probe 中使用 nuScenes ego pose、3D annotation 与 LiDAR；这些
-信号不得进入 generated-rollout 正式 evaluator，也不得描述为 inference-time future condition。
-
-## 5. 研究门禁原则
-
-V5 必须逐项遵守 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：
-
-1. 先证明 target/preference 存在、合法、可观察且 scene-disjoint，再训练；
-2. 真实时间戳参与所有速度/加速度归一化，SVD `fps` 作为版本化 micro-conditioning；
-3. generated rollout 的训练侧 scorer 与正式 CoTracker3 evaluator 隔离；
-4. low-motion、time-slow、track dropout、camera nuisance、画质与首帧损坏 fail closed；
-5. single-pair、machine pass 或 feature probe pass 只解锁下一门禁，不产生 rollout/论文结论；
-6. localized auxiliary loss 必须实测 gradient、outside、frame-0、motion amount 与 held-out transfer；
-7. 工程失败使用新 run ID 修复；只有通过预注册检查后的结果才能标为 research rejected。
-
-## 6. 可复用资产
-
-| 资产 | 已验证范围 | 不得解释为 |
+| 假设 | 状态 | 还缺什么 |
 |---|---|---|
-| official SVD generation parity | matched inputs 下与 Diffusers pipeline exact | preference 或训练收益 |
-| scene-level split 与 provenance | scene/clip 无泄漏、fingerprint 可追溯 | 当前数据足以训练 |
-| real nuScenes geometry/annotations | 真实训练视频上的 target/probe | generated rollout 的 future condition 或 evaluator truth |
-| generated point tracks / P-UNC | point-space support、visibility 与部分运动不变量 | 合法 RGB target 或可靠 winner |
-| CoTracker3 evaluator | 当前协议内 rerun 与扰动排序稳定 | 绝对物理标定 |
-| common-support UPO oracle | 旧 tie holdout 上低 false-strict、shortcut reaudit 通过 | 足量 preference yield |
-| manifest / fingerprint / atomic runtime | 正式 run 可追溯与 fail-closed | 方法结论本身成立 |
+| H1：occupancy anchor 提高 actor edit 合法性 | open | occupancy 真正进入编辑/可见性/标签链；与 kinematic-only、naive transform 做 matched ablation |
+| H2：显式 disocclusion mask 使局部补全既局部又有效 | open | 几何生成 mask；在伪缺失可测区域比较 no-completion/Telea/局部生成，并测时序、深度与 identity |
+| H3：合法反事实数据带来下游收益 | open | scene-disjoint 的 R / R+naive / R+OccGS / R+OccGS+completion 对照和多 seed 任务指标 |
 
-## 7. 事实源优先级
+## 4. 下一步顺序
+
+| ID | 状态 | 目标 | 解锁条件 |
+|---|---|---|---|
+| `V7-EV-10` | pending | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 既有证据可逐项定位，新 run 模板 fail-closed |
+| `V7-H1-11` | pending | occupancy 接入约束、可见性与同步标签；在相同 scene/actor/轨迹幅度上做公平消融 | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
+| `V7-H2-12` | pending | 用 geometry/ray visibility 构建 disocclusion mask，验证局部 completion | 不只 outside=0，还要在可测 pseudo-hole 上改善 inside quality、temporal、depth/identity |
+| `V7-H3-13` | pending | 先完成下游 smoke，再做 scene-disjoint utility 实验 | OccGS 在等样本量、多 seed 下优于 real-only 与 matched naive GS |
+| `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |
+
+详细协议、停止条件和单卡预算见当前 V7 计划。当前最高信息增益路径是 `EV-10 → H1-11`，不是先增强
+Telea、扩大 scene 数或切换双卡。
+
+## 5. 当前硬边界
+
+- V1–V6 已拒绝路线不因归档而重开；尤其 `RF-18` 的 ReSim `exp0_no_carla` action-response 结论仍有效。
+- C0 的机器筛选不得写成用户人工评测；需要人审时必须先交付完整提示词和独立材料，再由用户填写 verdict。
+- 当前 O0 产物存在不等于 occupancy 已进入方法；未做 matched ablation 前不得使用“occupancy improves legality”表述。
+- hard composition 的 outside-mask L1=0 是实现不变量，不是补全质量收益。
+- U0 proxy 不等于 detector mAP、事件召回或训练数据效用。
+- V7 既有 run 缺少正式 `manifest.json`、`resolved.yaml` 与终态标记；只能记为 retrospective evidence。
+- 后续新 run 必须使用唯一 run ID，并保存 config、fingerprint、metrics、summary、checkpoint 与终态标记。
+- 未经新的明确执行指令，不自动启动实验、不 push、不扩到双卡。
+
+## 6. 事实源优先级
 
 发生冲突时按以下顺序处理：
 
-1. 正式 run 中不可变的 `manifest.json`、`resolved.yaml`、指标、人工 verdict 与终止标记；
-2. [`EXPERIMENTS.md`](EXPERIMENTS.md) 的实验登记；
-3. 本文件的当前状态与授权；
-4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的跨实验解释与重开条件；
-5. 下一份正式计划中尚未执行的设计；
+1. 实际 run 产物、配置、checkpoint 与原始指标；
+2. [`EXPERIMENTS.md`](EXPERIMENTS.md) 的 V7 登记；
+3. 本文件的当前状态与执行边界；
+4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的风险和防重复条件；
+5. 当前 V7 计划中尚未执行的设计；
 6. `docs/archive/` 中的历史计划、报告和提示词。
 
-每个正式 gate 完成后必须更新本文件与 `EXPERIMENTS.md`；新负结论或重开边界同时更新
-`RESEARCH_FAILURES.md`。归档材料不得覆盖本文件。
+## 7. 当前证据根
 
-## 8. 历史入口（V6，已关闭）
-
-> **已被 §0（V7）取代。** 本节仅作 V6 历史记录：V6/C1 在 `C1B-02` 失败后 `rejected`；其“禁止续跑
-> C1P/C1S、禁止人审补救/降门槛/换 seed 救场”的禁令继续有效，但 V6 不再是当前任务来源。
-
-完整协议见 [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)：
-
-```text
-C1B-00 smoke/shape/确定性  →  C1B-01 proxy 校准  →  C1B-02 10-context action screen  →  C1B-03 人工盲审
-    ↓ pass
-C1P preference support（依赖 C1B 人工 pass）
-    ↓ machine + human pass
-C1S single-GPU learning（仍限单张 4090）
-```
-
-`C1B-02` 已 `rejected`（H1）；终报见 [`C1_V6_FINAL_REPORT.md`](C1_V6_FINAL_REPORT.md)。当前唯一合法
-动作是等待用户授权的下一份预注册计划；禁止人审补救、降门槛扩样、换 seed、启动 C1P/C1S，或把
-future 像素差误写成 action pass。
-
-## 9. 存储维护状态
-
-`STORAGE-RETENTION-20260719` 是已完成的基础设施维护，不是新研究任务。清理清单由 commit `2d52056`
-先行固化；随后精确删除 75 个目标，逻辑大小 `46,525,314,508` 字节，文件系统实际回收
-`46,541,172,736` 字节。128G 数据盘清理完成时可用 `91,591,008,256` 字节（85.3 GiB）。此后 ReSim
-权重下载会降低可用空间；执行前以实时 `df` 为准并守 30 GB 安全线。V6 已关闭；任何新推理/训练须由
-下一份预注册计划重新授权，不得把历史 smoke/proxy/screen 证据当作可续跑通行证。
-
-以下材料明确受保护：
-
-- `autoresearch-pa2-pair-expanded-s20260715-v1` 的 48 条正式 `reviews.jsonl` 与完整 review package；
-- R1 的 32 个待标注 pair，以及 A0 v3 的 12 个待标注 panel；
-- 所有 manifest、resolved YAML、metrics、summary、result、人工 verdict 和终止标记；
-- UPO v1/v2 的 paired tracks、common support、bootstrap、graph 与 stress 证据；
-- nuScenes、本项目环境、CoTracker3、RAFT/Depth/evaluator 资产与 C0 迁移证据。
-
-已删除的 SVD 权重、历史 checkpoint、candidate 视频、adapter 和 feature tensor 只是二进制载荷；其清理不改变
-`RF-01`、`RF-06`、`RF-09`–`RF-12`、`RF-14`、`RF-15` 的负结论、适用范围或重开条件。清理后
-75/75 目标不存在，保护哈希逐项不变；JSON/JSONL/YAML 全部可解析，逐文件隔离的完整测试为 247 passed。
-历史 SVD asset check 现明确报告 `non-resident`。
+- reconstruction：`/root/autodl-tmp/runs/occgs_resim/b0_recon/occgs_b0/`
+- occupancy：`/root/autodl-tmp/data/occgs/occupancy/{003,004,005}/`
+- edits：`/root/autodl-tmp/data/occgs/scene_specs/s0_edits/`
+- counterfactual：`/root/autodl-tmp/runs/occgs_resim/c0_cf/`
+- legality screen：`/root/autodl-tmp/data/occgs/reviews/c0_legality/c0_legality_screen.json`
+- completion：`/root/autodl-tmp/runs/occgs_resim/l0_comp/`
+- utility proxy：`/root/autodl-tmp/runs/occgs_resim/u0_screen/u0_proxy_v1.json`

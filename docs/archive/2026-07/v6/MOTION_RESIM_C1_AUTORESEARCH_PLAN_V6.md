@@ -7,7 +7,7 @@
 > **硬件边界**：仅一张 NVIDIA RTX 4090 24 GB；v6 不允许用第二张卡救场
 > **计划状态**：`rejected`（H1：`C1B-02` action screen 机器 gate 失败；见 `RF-18`；已关闭）
 > **合法状态词**：`pending / running / blocked / done / rejected / not_run`
-> **状态事实源**：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)、[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)、[`EXPERIMENTS.md`](EXPERIMENTS.md)
+> **状态事实源**：[`RESEARCH_STATUS.md`](../v7-feasibility/RESEARCH_STATUS_LEGACY_SNAPSHOT.md)、[`RESEARCH_FAILURES.md`](../v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)、[`EXPERIMENTS.md`](../v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md)
 
 ---
 
@@ -57,7 +57,7 @@ v6 只回答三个逐级问题：
 | RF-02 / RF-04 / RF-08 / RF-14 | 未条件化未来 GT 非法；低运动捷径；稳定 evaluator 不等于绝对物理；ego signal 不等于 actor residual | 所有门禁都显式检查信息合法性、运动量、独立 evaluator 与 actor/ego 分离 |
 | RF-15 / RF-16 | 自然 seed 多样性不保证偏好支持；ReSim layout controllability 不等于 free actor physics | C1B 与 C1P 分开判；不能从 action pass 跳到 actor-physics pass |
 
-更完整负结论以 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 为准。若本计划与历史负结论冲突，先停止并修正文档，不得按较宽松版本运行。
+更完整负结论以 [`RESEARCH_FAILURES.md`](../v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md) 为准。若本计划与历史负结论冲突，先停止并修正文档，不得按较宽松版本运行。
 
 ## 1.2 2026-07-19 远端实况快照（环境就绪后修订）
 

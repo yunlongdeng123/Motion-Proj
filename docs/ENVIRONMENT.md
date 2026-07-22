@@ -1,7 +1,7 @@
 # Motion-Proj 运行环境速记
 
 本文件记录 Motion-Proj 项目的 conda 环境与服务器关键路径，方便后续会话快速接续。
-对应方案见 `motion_proj_cvpr_plan.md`。
+当前研究状态与实验授权只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。
 
 ## 1. 环境激活
 
@@ -28,10 +28,12 @@ export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
 - `resim` 路径: `/root/autodl-tmp/envs/resim`（约 6.4G；`torch 2.4.0+cu121` + vendored SAT）
 - `drivestudio` 路径: `/root/autodl-tmp/envs/drivestudio`（约 6.8G；`torch 2.1.2+cu118` + gsplat 1.3.0 / pytorch3d 0.7.5 / nvdiffrast 0.4.0）
 - `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活；`resim` / `drivestudio` 建议用绝对 `-p` 路径激活。
-- ReSim 权重: `/root/autodl-tmp/third_party/ReSim/checkpoints/CogVideoX-2b-sat`（含合成 T5 `t5-v1_1-xxl/`）。
-- DriveStudio 代码: `/root/autodl-tmp/third_party/drivestudio`；E0 清单见 [`OCCGS_E0_ENV_MANIFEST.md`](OCCGS_E0_ENV_MANIFEST.md)。
+- ReSim V6 已关闭；源码与环境可保留，但 CogVideoX checkpoint 已作为可重建载荷清理。历史恢复信息见
+  [`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)。
+- DriveStudio 代码: `/root/autodl-tmp/third_party/drivestudio`；E0 历史清单见
+  [`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)。
 - 数据盘 128G **不可扩容**；可用空间硬门槛 ≥30 GiB，训练/大批候选中间产物预算见
-  [`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md) §1.3 与 V7 计划 §6.7。
+  [`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md) §9。
 - 装包一律走镜像：pip=`mirrors.aliyun.com`，torch wheels=`mirrors.aliyun.com/pytorch-wheels`，conda=`mirrors.tuna.tsinghua.edu.cn`；**不要**用 `download.pytorch.org` / `pypi.org`。
 
 ## 2. 硬件与底座

@@ -8,8 +8,8 @@
 
 `motion_proj/resim/l0_local_completion.py`
 
-1. 用 V0 vs edited GS 的 |\ΔRGB| 构 disocclusion/source-footprint 代理 mask（膨胀）。  
-2. OpenCV Telea 仅在 mask 内补全。  
+1. 用 V0 vs edited GS 的 |\ΔRGB| 构 disocclusion/source-footprint 代理 mask（膨胀）。
+2. OpenCV Telea 仅在 mask 内补全。
 3. Hard composition：`I = (1-M) I_GS + M I_gen`。
 
 ## 结果

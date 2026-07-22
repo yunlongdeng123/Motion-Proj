@@ -1,10 +1,10 @@
 # Motion-Proj ReSim C1 V6 终报（单卡 screening）
 
-> **日期**：2026-07-19（2026-07-20：与活跃 docs / archive 链接对齐）  
-> **计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)  
-> **结论**：`H1 rejected`（action response 不足）；不进入 C1P/C1S  
-> **硬件**：单张 RTX 4090 24 GB  
-> **上游归档**：V5 / Route Pivot 审计见 [`archive/2026-07/`](archive/2026-07/README.md)
+> **日期**：2026-07-19（2026-07-20：与活跃 docs / archive 链接对齐）
+> **计划**：[`MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md`](MOTION_RESIM_C1_AUTORESEARCH_PLAN_V6.md)
+> **结论**：`H1 rejected`（action response 不足）；不进入 C1P/C1S
+> **硬件**：单张 RTX 4090 24 GB
+> **上游归档**：V5 / Route Pivot 审计见 [`archive/2026-07/`](../README.md)
 
 ## 1. 一句话
 
@@ -31,17 +31,17 @@
 
 ## 4. Reviewer 质疑简答
 
-1. **无 CARLA**：全部结论限于 expert/action-mask 支持内；未声称非专家物理。  
-2. **是否 seed/history 噪声**：E/F 同 seed；history 差大多低于 null band；future 像素差大但 action 不对。  
-3. **actor physics**：未作绝对 actor 准确率主张；actor 仅观察项。  
-4. **偏好支持**：未进入；H1 失败即停止。  
-5. **scorer/evaluator 隔离**：action 用 RAFT+affine proxy；CoTracker 只作 safeguard。  
-6. **低运动捷径**：stationary 控制未超冻结 p95。  
+1. **无 CARLA**：全部结论限于 expert/action-mask 支持内；未声称非专家物理。
+2. **是否 seed/history 噪声**：E/F 同 seed；history 差大多低于 null band；future 像素差大但 action 不对。
+3. **actor physics**：未作绝对 actor 准确率主张；actor 仅观察项。
+4. **偏好支持**：未进入；H1 失败即停止。
+5. **scorer/evaluator 隔离**：action 用 RAFT+affine proxy；CoTracker 只作 safeguard。
+6. **低运动捷径**：stationary 控制未超冻结 p95。
 7–10. **adapter/单对/held-out/多卡**：未训练；全程单卡；失败与排除已记账。
 
 ## 5. 负结论 ID
 
-- `RF-17`：旧四类 ridge proxy 不可辨识（已由 kinematic-lateral 重开并通过）  
+- `RF-17`：旧四类 ridge proxy 不可辨识（已由 kinematic-lateral 重开并通过）
 - `RF-18`：E-vs-F action response 不足（本终报主结论）
 
 ## 6. 下一步（需新计划授权）

@@ -27,8 +27,8 @@ python datasets/preprocess.py \
 
 ## 2. 冻结选择标准（v2，训练前）
 
-脚本：`motion_proj/resim/d0_scene_scan.py`  
-扫描产物：`data/occgs/scene_specs/d0_scene_scan_v1.json`  
+脚本：`motion_proj/resim/d0_scene_scan.py`
+扫描产物：`data/occgs/scene_specs/d0_scene_scan_v1.json`
 冻结清单：`data/occgs/scene_specs/d0_frozen_picks_v2.json`
 
 | Role | mini idx | nuScenes name | 关键统计 | 理由 |

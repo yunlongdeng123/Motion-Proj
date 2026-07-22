@@ -39,8 +39,8 @@
 
 ### 合法性筛选（机器代理人工 20/24）
 
-脚本：`motion_proj/resim/c0_legality_panel.py`  
-面板：`data/occgs/reviews/c0_legality/c0_review_panel.jpg`  
+脚本：`motion_proj/resim/c0_legality_panel.py`
+面板：`data/occgs/reviews/c0_legality/c0_review_panel.jpg`
 结果：`c0_legality_screen.json`
 
 | 指标 | 值 |

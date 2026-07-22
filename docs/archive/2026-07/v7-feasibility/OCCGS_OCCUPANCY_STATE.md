@@ -18,9 +18,9 @@
 - static：LiDAR 命中（非 dynamic）。
 - dynamic：3D vehicle box AABB 光栅化 + instance_id。
 
-脚本：`motion_proj/occupancy/build_scene_occupancy.py`  
-产物：`data/occgs/occupancy/{003,004,005}/frame_XXX.npz` + `meta.json` + `summary.json`  
-BEV 可视化：`data/occgs/reviews/o0_occupancy/bev_*_t040.png`  
+脚本：`motion_proj/occupancy/build_scene_occupancy.py`
+产物：`data/occgs/occupancy/{003,004,005}/frame_XXX.npz` + `meta.json` + `summary.json`
+BEV 可视化：`data/occgs/reviews/o0_occupancy/bev_*_t040.png`
 Sanity：`data/occgs/occupancy/o0_sanity_v1.json`
 
 ## 2. 定量（8s 窗口均值比例）

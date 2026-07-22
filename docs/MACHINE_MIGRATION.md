@@ -100,8 +100,9 @@ pytest -q \
 
 ## 7. 当前研究状态
 
-截至 2026-07-20，V1 projection、SVD common-prefix sibling preference、V5 route-pivot 以及 V6 ReSim
-C1 单卡 screening 均已按门禁收口。V5 选择 `C1 = ReSim exp0_no_carla feasibility`；V6 完成资产/smoke/
-proxy 后于 `C1B-02` H1 拒绝（`RF-18`）。R1 的 32 个 pair 与 A0 v3 的 12 个 panel 仍待人工 review，
-并受保留策略保护。准确任务状态只以 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准；V5 计划与审计见
-[`archive/2026-07/`](archive/2026-07/README.md)，V6 终报见 [`C1_V6_FINAL_REPORT.md`](C1_V6_FINAL_REPORT.md)。
+截至 2026-07-22，V1–V6 路线均已关闭并归档；OccGS-Resim V7 已完成三场景单卡 feasibility，当前决策为
+`modify_method_then_scale`。occupancy 方法增益、geometry-derived completion 与下游 utility 仍未验证，迁移后
+不得从历史计划恢复旧训练或直接扩规模。
+
+准确任务状态只以 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准；文档入口见 [`README.md`](README.md)，
+历史计划与终报见 [`archive/2026-07/`](archive/2026-07/README.md)。
