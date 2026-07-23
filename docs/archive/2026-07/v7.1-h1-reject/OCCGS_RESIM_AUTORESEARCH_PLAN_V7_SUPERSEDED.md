@@ -1,5 +1,11 @@
 # OccGS-Resim V7 当前研究计划
 
+> **归档状态**：`SUPERSEDED_BY_V7.1 / H1_REJECTED`
+> **归档日期**：2026-07-24
+> **权威当前入口**：[`../../../RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)
+> **说明**：本文是 V7 feasibility 后的过渡计划，已先被 V7.1 取代，随后 H1-11D 正式 rejected。
+> 其中 `planned`、`current task` 和执行授权均已失效。
+
 > **工作名称**：Occupancy-Anchored Object-Centric Gaussian Resimulation
 > **计划版本**：V7 feasibility 后续整理版
 > **最后更新**：2026-07-22

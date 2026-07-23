@@ -67,8 +67,8 @@ V6 的 C1P/C1S 未运行，禁止通过换 seed、降门槛或扩大同分布 sc
 
 目录：[`v7-feasibility/`](v7-feasibility/)
 
-该目录保存整理前原始长计划、阶段报告和 V1–V7 全量事实源快照。当前准确结论是“feasibility 完成，
-H1/H2/H3 未验证”；当前 V7 后续计划仍在活跃 `docs/` 根目录。
+该目录保存整理前原始长计划、阶段报告和 V1–V7 全量事实源快照。该阶段当时的准确结论是
+“feasibility 完成，H1/H2/H3 未验证”；之后 V7.1 已正式运行并在 H1-11D rejected，见下一节。
 
 | 文件 | 历史用途 |
 |---|---|
@@ -87,7 +87,24 @@ H1/H2/H3 未验证”；当前 V7 后续计划仍在活跃 `docs/` 根目录。
 | [`v7-feasibility/RESEARCH_STATUS_LEGACY_SNAPSHOT.md`](v7-feasibility/RESEARCH_STATUS_LEGACY_SNAPSHOT.md) | 整理前混合 V5/V6/V7 状态文件 |
 | [`v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md) | 完整旧 RF 原文与重开条件 |
 
-## 6. 如何复查历史
+## 6. OccGS-Resim V7.1 H1 reject
+
+目录：[`v7.1-h1-reject/`](v7.1-h1-reject/)
+
+| 文件 | 历史用途 |
+|---|---|
+| [`v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_SUPERSEDED.md`](v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_SUPERSEDED.md) | V7 feasibility 后过渡计划；已被 V7.1 取代 |
+| [`v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md`](v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md) | V7.1 完整执行计划；H1 reject 后失效 |
+| [`v7.1-h1-reject/V7_1_H1_REJECT_RETROSPECTIVE.md`](v7.1-h1-reject/V7_1_H1_REJECT_RETROSPECTIVE.md) | H1-CERT/H1-PROJ 收口复盘与失败分解 |
+| [`v7.1-h1-reject/RESEARCH_STATUS_H1_REJECT_SNAPSHOT.md`](v7.1-h1-reject/RESEARCH_STATUS_H1_REJECT_SNAPSHOT.md) | 转入 Post-OccGS 前的状态快照 |
+| [`v7.1-h1-reject/RESEARCH_FAILURES_H1_REJECT_SNAPSHOT.md`](v7.1-h1-reject/RESEARCH_FAILURES_H1_REJECT_SNAPSHOT.md) | 详细补账前的失败账本快照 |
+| [`v7.1-h1-reject/EXPERIMENTS_H1_REJECT_SNAPSHOT.md`](v7.1-h1-reject/EXPERIMENTS_H1_REJECT_SNAPSHOT.md) | V7.1 收口时实验事实快照 |
+| [`v7.1-h1-reject/README.md`](v7.1-h1-reject/README.md) | 目录说明、文件 hash 与备份边界 |
+
+V7.1 工程 gate 11A/11B/11C 通过；冻结的 11D matched pilot 同时拒绝 H1-CERT 与 H1-PROJ，
+未进入 H2/H3/scale。当前下一路线只在活跃 `docs/POST_OCCGS_RESEARCH_DIRECTIONS.md` 定义。
+
+## 7. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；

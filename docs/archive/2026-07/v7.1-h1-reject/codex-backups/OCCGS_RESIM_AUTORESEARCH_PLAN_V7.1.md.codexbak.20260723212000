@@ -1,0 +1,1138 @@
+# 先给结论
+
+你的直觉基本正确：
+
+> **把 actor 在 3DGS 中移动后，再用通用 2D diffusion 对缺口逐帧“修图”，不适合作为 V7 的核心技术路线。**
+
+它可以是：
+
+* visualization-only 后处理；
+* 很弱的 baseline；
+* 或最终系统中受几何强约束的 appearance completion。
+
+但不应承担：
+
+* 三维几何补全；
+* 遮挡与显露关系恢复；
+* 多相机一致性；
+* 动态对象身份保持；
+* depth、instance、box 等标签生成；
+* 可用于自动驾驶训练的数据真实性保证。
+
+这不是因为 2D diffusion 毫无价值，而是因为**成功的顶会方法几乎都在给它增加你当前还没有的结构**：
+
+* 多视角联合建模；
+* 视频时序先验；
+* LiDAR/depth/box/map 等像素级几何条件；
+* 显式 3DGS/mesh scene state；
+* 将生成结果重新蒸馏或优化回 3D 表示；
+* 专门训练的 empty-street prior；
+* 目标区域和非目标区域的显式分离。
+
+所以建议将 V7 调整为：
+
+[
+\boxed{
+\text{显式 3D 反事实编辑与标签重生作为主线}
+}
+]
+
+[
+\boxed{
+\text{2D/视频 diffusion completion 降级为可选模块}
+}
+]
+
+而不是现在就投入 H2。
+
+---
+
+# 一、V7 当前到底做到哪一步
+
+从你上传的 V7 代码和文档看，当前状态并不是“Occupancy + 3DGS + diffusion 路线已经基本完成”，而是：
+
+## 已经完成的
+
+### 1. 3DGS 工程闭环已经成立
+
+你已经跑通：
+
+```text
+nuScenes 小规模数据
+→ DriveStudio / StreetGS 重建
+→ actor pose 改写
+→ counterfactual RGB/depth render
+→ hard-composition feasibility
+```
+
+三个场景都完成了 StreetGS 重建。测试 PSNR 分别为：
+
+* S0：25.60；
+* S1：20.18；
+* S2：25.37。
+
+所以 **Reconstruction-first 在单卡 4090 上可行** 已经被证明。
+
+### 2. Object-centric actor 编辑已经能运行
+
+当前 `c0_counterfactual_render.py` 确实是在：
+
+```text
+RigidNodes 的三维 pose
+→ 修改 instances_trans / instances_quats
+→ 重新进行 Gaussian rendering
+```
+
+这与过去 2D crop/paste 有本质区别，是正确进展。
+
+### 3. Occupancy artifact 已经构建
+
+你已经生成了：
+
+```text
+unknown / free / static / dynamic occupancy
+```
+
+并且明确保留了 `unknown`。
+
+这是正确设计。
+
+---
+
+## 尚未完成的
+
+### 1. Occupancy 还没有进入编辑方法
+
+目前：
+
+* `build_scene_occupancy.py` 生成 occupancy；
+* `s0_trajectory_editor.py` 使用运动学、横向位移和距离规则；
+* `c0_counterfactual_render.py` 修改 actor pose；
+* `l0_local_completion.py` 通过 RGB 差分构造 mask。
+
+这几条路径仍然是分离的。
+
+因此目前不能称为：
+
+> occupancy-anchored editing。
+
+准确状态只是：
+
+> object-centric GS editing + 独立 occupancy artifact。
+
+### 2. 标签链没有闭环
+
+目前 C0 主要输出 Gaussian RGB/depth/rigid components，但还没有证明同一个 world-state record 能同步生成：
+
+* instance mask；
+* semantic；
+* 2D box；
+* 3D box；
+* visibility；
+* occupancy；
+* actor pose；
+* RGB/depth。
+
+对“造训练数据”来说，这比视觉修图更关键。
+
+### 3. 当前 L0 根本还不是 diffusion
+
+当前 `l0_local_completion.py` 使用：
+
+```python
+cv2.inpaint(..., cv2.INPAINT_TELEA)
+```
+
+而且 mask 是：
+
+```text
+V0 RGB 与 edited RGB 的差分
+→ percentile threshold
+→ dilation
+```
+
+所以它目前只是：
+
+> **Telea 图像补洞 + hard composition 的工程测试。**
+
+`outside-mask L1=0` 是由下面的合成公式直接保证的：
+
+[
+I_{\mathrm{final}}
+==================
+
+(1-M)I_{\mathrm{GS}}+MI_{\mathrm{inpaint}}.
+]
+
+它没有证明：
+
+* mask 是真实 disocclusion；
+* 洞内内容正确；
+* 时序一致；
+* 多相机一致；
+* depth 正确；
+* identity 正确。
+
+你现在担心的“2D diffusion 修图不可靠”，尚未真正实现，但确实是下一步 H2 最可能踩到的问题。
+
+### 4. 三个论文假设都还是 open
+
+当前 V7 自己的收口判断是准确的：
+
+* H1 occupancy 是否提高合法性：未验证；
+* H2 completion 是否提高质量：未验证；
+* H3 synthetic data 是否有下游收益：未验证。
+
+所以当前正确决策是：
+
+```text
+modify_method_then_scale
+```
+
+而不是扩场景或上 diffusion。
+
+---
+
+# 二、学术圈目前主流的驾驶反事实编辑是什么
+
+“3DGS 反事实编辑”不是一个单一方法。当前大致有四个层级。
+
+---
+
+## 路线 1：显式 3D scene graph 编辑
+
+这是最稳健、最传统，也最适合标签生成的路线。
+
+典型表示：
+
+```text
+static background Gaussians
++
+object-centric dynamic Gaussians
++
+per-object SE(3) trajectories
++
+camera trajectory
+```
+
+编辑直接发生在三维状态：
+
+[
+T'_{i,t}
+========
+
+\Delta T_{i,t}T_{i,t}.
+]
+
+然后重新渲染。
+
+Street Gaussians 将 Gaussian 分配给背景或前景车辆，并通过对象 pose 控制车辆；DriveStudio 则进一步提供统一数据层和多种 Gaussian representation，覆盖 nuScenes、Waymo、PandaSet 等驾驶数据。([GitHub][1])
+
+### 这种方法能正确处理
+
+* actor 位置；
+* camera viewpoint；
+* depth ordering；
+* source actor 移除；
+* 新的 occlusion；
+* 一部分 disocclusion；
+* actor identity；
+* 同步的 2D/3D labels。
+
+### 它不能自动解决
+
+* 原始日志从未看到的背景；
+* 离采集轨迹很远的新视角；
+* 新插入车辆的光照/材质融合；
+* 大范围新视角的 geometry holes；
+* 每个场景都需要优化，扩展速度有限。
+
+这是你当前 V7 已经站稳的部分。
+
+---
+
+## 路线 2：显式 3DGS/mesh 编辑，再使用生成模型做渲染增强
+
+这正在成为驾驶反事实编辑的前沿主流。
+
+### HorizonForge
+
+HorizonForge 先将场景重建成可编辑的 Gaussian Splats 和 Meshes，再做任意车辆与轨迹操作，最后用 noise-aware video diffusion 渲染编辑结果。它不是对普通 RGB 帧随便修图，而是建立在显式 3D 操作之上，并利用视频时序先验生成连贯结果。([CVF开放获取][2])
+
+它的链路更接近：
+
+```text
+GS / Mesh scene
+→ 3D actor insertion / trajectory edit
+→ geometry-aligned coarse render
+→ video diffusion renderer
+```
+
+而不是：
+
+```text
+GS RGB
+→ 单帧 inpainting
+```
+
+### SceneCrafter
+
+SceneCrafter 直接指出驾驶编辑的三个关键难点：
+
+1. 跨相机三维一致性；
+2. 前景长期遮挡下的 empty-street prior；
+3. 在保持布局和几何一致时获得配对编辑数据。
+
+它采用多视角 diffusion、agent boxes、HD maps，以及专门训练的 empty-street prior 和 multi-view repaint。([CVF开放获取][3])
+
+这说明：
+
+> 对象移除后的背景补全不是调用一个通用 inpainting 模型就结束，而是需要一个专门学习驾驶多相机“空街道”分布的模型。
+
+### 这一类方法的特点
+
+* diffusion 是最终外观生成器；
+* 但必须接收强几何和多视角条件；
+* 通常需要大规模专用训练；
+* 标签仍应来自显式 scene state，而不是 diffusion 像素；
+* 对你的算力而言，直接复现较重。
+
+---
+
+## 路线 3：生成模型产生额外视图，再优化回 3D/4D representation
+
+这是目前更“学术正确”的 hybrid 路线。
+
+### StreetCrafter
+
+StreetCrafter 使用 LiDAR point rendering 作为像素级条件控制视频 diffusion；生成 novel-trajectory views 后，再将这些视图作为额外监督优化 dynamic 3DGS。最终实时输出仍由 3DGS 渲染。([zju3dv.github.io][4])
+
+流程是：
+
+```text
+LiDAR / geometry render
+→ video diffusion生成额外观测
+→ 将观测加入3DGS训练
+→ 最终由3DGS渲染
+```
+
+### DriveDreamer4D
+
+DriveDreamer4D 明确指出，纯 2D 视频生成缺少复杂动态驾驶场景所需的空间—时间一致性，因此它用 world model 产生 novel-trajectory videos，再利用这些数据提升 4DGS representation。([arXiv][5])
+
+### ReconDreamer
+
+ReconDreamer 不是把 diffusion 输出直接当最终 simulator frame，而是通过 online restoration 与 progressive data update，逐步把生成知识集成到 driving scene reconstruction 中。官方代码已经公开。([CVF开放获取][6])
+
+### 这类路线更合理的原因
+
+生成模型可能出现小的视角不一致，但：
+
+* 多视角观测共同优化一个 3D/4D representation；
+* 不能被同一三维场景解释的冲突会被一定程度吸收或平均；
+* 最终 camera/depth/label 可以重新从 3D state 产生；
+* 不直接把 hallucinated 2D 像素当作三维真值。
+
+这比 V7 原计划中的“局部 2D diffusion → 直接作为最终 RGB”更稳健。
+
+---
+
+## 路线 4：完全使用几何方法扩展视角，不引入生成 hallucination
+
+这条路线经常被忽略，但对你的项目很重要。
+
+FlexDrive 指出，驾驶 3DGS 在 out-of-path 视角表现差，主要因为这些视角缺少高质量监督；它使用 inverse view warping 和 dense-depth bootstrap 构造 out-of-path supervision，而不是直接让图像生成模型猜内容。([CVF开放获取][7])
+
+VAD-GS 则使用多相机、跨帧观察进行 visibility-aware densification，主动补齐缺失几何。([CVF开放获取][8])
+
+这类方法的哲学是：
+
+> 先尽可能从其他时间和其他相机找真实观测；只有真实观测无法覆盖时，才考虑生成 prior。
+
+这应成为 V7 的下一步。
+
+---
+
+# 三、你的“2D 很难投射回 3D”判断是否正确
+
+## 判断正确，但需要更准确地表述
+
+不是简单的：
+
+> 高维映射到低维容易，低维映射到高维困难。
+
+更准确的原因是：
+
+## 1. 3D→2D 是有定义的渲染，而 2D→3D 是病态逆问题
+
+给定：
+
+* 三维几何；
+* 材质；
+* 光照；
+* 相机；
+* 遮挡关系；
+
+渲染到二维基本是确定的：
+
+[
+I=\mathcal R(S,C).
+]
+
+但只给一张二维图像 (I)，存在无数三维场景 (S) 都能产生近似相同的投影：
+
+[
+{S:\mathcal R(S,C)\approx I}.
+]
+
+二维图像丢失了：
+
+* 被遮挡区域；
+* 绝对深度；
+* 表面背面；
+* instance 的完整体积；
+* 多视角一致的纹理；
+* 光照与材质分解。
+
+因此，一个普通 2D diffusion 给出的“漂亮补丁”，不一定存在任何三维场景可以同时解释它在其他相机和后续帧中的投影。
+
+## 2. 单帧 diffusion 独立采样的是边缘分布
+
+逐视角编辑相当于分别采样：
+
+[
+p(I'_1\mid I_1,\text{instruction}),
+\quad
+p(I'_2\mid I_2,\text{instruction}),
+]
+
+但真正需要的是联合分布：
+
+[
+p(I'_1,\ldots,I'_N
+\mid
+S,{C_n},\text{edit}).
+]
+
+两个视角各自“看起来合理”，不代表二者对应同一个三维世界。
+
+## 3. 时间维度又增加一层约束
+
+视频还要求同一物体满足：
+
+* 稳定身份；
+* 连续纹理；
+* 连续几何；
+* 合法速度和遮挡；
+* 相机运动一致。
+
+所以逐帧修图非常容易出现：
+
+* texture swimming；
+* flicker；
+* object shape漂移；
+* 边缘抖动；
+* 前后景错位；
+* 重影；
+* 新旧物体同时存在。
+
+---
+
+# 四、有没有顶会“证明”直接 2D 编辑存在这些问题
+
+没有论文能数学证明“所有 2D diffusion 修补一定失败”。
+
+但连续几代顶会工作都把同一个问题当作核心研究动机，这已经形成非常强的经验共识。
+
+## 1. Instruct-NeRF2NeRF：早期 render–edit–optimize
+
+Instruct-NeRF2NeRF 使用 2D diffusion 反复编辑训练图像，同时优化 NeRF。它并不是直接把某一张编辑图作为最终三维结果，而是通过迭代 dataset update 让多个视角逐渐被同一个 NeRF 吸收。([CVF开放获取][9])
+
+后续大量工作存在的原因，就是这种方法仍难稳定保证跨视角一致。
+
+## 2. VcEdit：2D guidance 不一致会造成 mode collapse 和 artifacts
+
+VcEdit 明确指出，用 diffusion 分别修改多视角 render，会导致指导图像之间显著不一致，从而引发 3DGS mode collapse 和视觉伪影。([arXiv][10])
+
+这和你过去实验里的：
+
+* 重影；
+* 局部扭曲；
+* 不同位置得到不同外观；
+* 共享模型被不一致 target 拉扯；
+
+非常一致。
+
+## 3. EditSplat：现有 2D diffusion 没有充分利用多视角信息
+
+EditSplat 直接把问题写在摘要里：现有方法依赖 2D diffusion，但没有充分考虑多视角信息，因此出现 multi-view inconsistency；另外原始 Gaussians 保留过多 source information，也会阻碍真正的编辑。它通过 Multi-view Fusion Guidance 和 selective Gaussian trimming 解决。([arXiv][11])
+
+这对应你遇到的另一个问题：
+
+> 旧 source 内容没有真正从三维表示中被移除，生成补丁只是覆盖在表面。
+
+## 4. GaussianEditor：随机 2D guidance 必须经过层级 3D 稳定化
+
+GaussianEditor 使用 2D diffusion，但专门设计 hierarchical Gaussian splatting 来稳定 stochastic generative guidance，并用 semantic tracing 持续跟踪真正要编辑的 Gaussian。([CVF开放获取][12])
+
+也就是说，顶会并不是：
+
+```text
+diffusion结果很好
+→ 直接贴回去
+```
+
+而是：
+
+```text
+diffusion guidance有随机和不一致
+→ 必须用3D semantic tracing与层级优化约束
+```
+
+## 5. VDFE：目标区域和非目标区域很难隔离
+
+VDFE 指出现有方法经常缺乏 controllability 和 consistency。它使用 noise-free editing trajectory、flow difference 定位编辑区域，并只选择性更新相应的 Gaussians，以减少非目标区域变化。([CVF开放获取][13])
+
+这正面对应了你以前的 locality failure：
+
+> mask 或局部 loss 不代表共享网络只会修改局部输出。
+
+## 6. 动态 3D 编辑更加困难
+
+CTRL-D 明确将“动态 3D 场景中的可控且一致编辑”定义为重大挑战；它需要先从单张编辑参考对 2D editor 做 personalization，再通过两阶段 deformable 3DGS 优化和 edited-image buffer 提高时序一致性。([CVF开放获取][14])
+
+这远远超过“对每帧调一个 inpainting 模型”。
+
+## 7. 驾驶场景还增加了跨相机与 empty-street 问题
+
+SceneCrafter 把以下内容列为 driving editing 的专属核心难题：
+
+* cross-camera 3D consistency；
+* foreground occlusion 下的 empty-street prior；
+* 保持 layout/geometry 的 paired data。([CVF开放获取][3])
+
+所以你的担忧不是保守，而是这个领域公认的核心问题。
+
+---
+
+# 五、2D diffusion 是否应该彻底删除
+
+## 不应该彻底删除，但要重新定义它的职责
+
+建议分成三种级别。
+
+| 用法                                               | 建议       | 原因                        |
+| ------------------------------------------------ | -------- | ------------------------- |
+| 每帧通用 2D inpainting，直接作为最终仿真 RGB                  | **删除**   | 无法保证多视角、时序、depth和标签一致     |
+| geometry-conditioned multi-view/video completion | **后置可选** | 有显式条件，但仍需严格验证             |
+| 生成额外观测，再优化/蒸馏回 3DGS                              | **长期推荐** | 最终状态仍是统一3D representation |
+
+## 对 V7 最合理的方案
+
+把 H2 从：
+
+> occupancy-guided localized 2D/video completion
+
+改成：
+
+> **Visibility-Aware Background Recovery and 3D Completion**
+
+执行顺序：
+
+```text
+真实跨时间/跨相机观测复用
+→ 几何重投影
+→ background-only GS render
+→ visibility-aware Gaussian densification
+→ 3D-native hole completion
+→ 最后才是geometry-conditioned video prior
+```
+
+---
+
+# 六、V7 下一步不应先做 H2
+
+当前最高信息增益仍然是你文档中写的：
+
+```text
+V7-EV-10
+→ V7-H1-11
+```
+
+这点完全正确。
+
+## 原因 1：H1 才是 OccGS 名称是否成立的门槛
+
+现在 occupancy 完全没有进入：
+
+* trajectory acceptance；
+* collision/free-space；
+* visibility；
+* label regeneration；
+* completion mask。
+
+先不完成 H1，直接上 diffusion，最终只是：
+
+> StreetGS + trajectory script + image inpainting。
+
+它在 HorizonForge、SceneCrafter、StreetCrafter 面前没有竞争力。
+
+## 原因 2：你还没有可靠的 disocclusion mask
+
+当前 RGB 差分 mask 同时包含：
+
+* actor 新位置；
+* actor 旧位置；
+* Gaussian rendering noise；
+* 光栅化边缘差异；
+* appearance change；
+* 真正的 disocclusion。
+
+它无法区分：
+
+```text
+需要补背景的位置
+vs.
+被移动actor覆盖的新位置
+vs.
+正常渲染变化
+```
+
+diffusion 的输入域本身就不成立。
+
+## 原因 3：S1 reconstruction 已经较弱
+
+S1 的 test PSNR 20.18、SSIM 0.472、LPIPS 0.325。
+
+若直接对该场景做 completion，无法判断最后的错误来自：
+
+* 原始 GS 重建；
+* actor decomposition；
+* trajectory edit；
+* disocclusion；
+* inpainting。
+
+这会再次陷入多因素纠缠。
+
+---
+
+# 七、我建议把 V7 改成 V7.1
+
+## 主贡献改为：Visibility-Certified Counterfactual Resimulation
+
+核心不是“生成补洞”，而是：
+
+> 对每个反事实像素明确说明它来自已观测三维内容、变换后的 actor、真实跨帧重投影，还是不可验证的 unknown。
+
+定义一个每帧 provenance map：
+
+[
+P_t(x)\in
+{
+\text{observed-static},
+\text{observed-actor},
+\text{reprojected},
+\text{newly-occluded},
+\text{disoccluded-known},
+\text{disoccluded-unknown}
+}.
+]
+
+同时输出：
+
+* RGB；
+* depth；
+* instance；
+* semantic；
+* occupancy；
+* 2D/3D box；
+* provenance；
+* uncertainty。
+
+这比一个漂亮的修图结果更适合仿真数据。
+
+---
+
+## H1 需要建立统一 WorldState
+
+建议新增：
+
+```text
+WorldStateFrame
+├── timestamp
+├── ego_pose
+├── background_gaussian_version
+├── actor_nodes
+│   ├── instance_id
+│   ├── canonical_gaussians
+│   ├── canonical_occupancy
+│   ├── world_pose
+│   ├── velocity
+│   └── class
+├── static_occupancy
+├── observed/free/unknown
+└── camera_models
+```
+
+所有输出必须由它产生：
+
+```text
+render RGB
+render depth
+render instance
+write boxes
+write occupancy
+write visibility
+write provenance
+```
+
+不能继续每个模块自己读取一套 JSON。
+
+---
+
+## H1 matched ablation 应保留
+
+使用完全相同的：
+
+* scene；
+* actor；
+* trajectory；
+* displacement；
+* render budget。
+
+比较：
+
+```text
+A: naive rigid transform
+B: kinematic-only
+C: kinematic + pairwise distance
+D: occupancy + free-space + visibility + synchronized labels
+```
+
+但 H1 primary endpoint 不应只是“D 拒绝更多错误轨迹”。
+
+必须同时看：
+
+* valid edit yield；
+* unknown coverage；
+* collision；
+* road support；
+* visibility；
+* depth-instance-box 共位；
+* worst-scene；
+* 人工 legality。
+
+否则 occupancy 可能通过拒绝一切来获得 100% precision。
+
+---
+
+# 八、H2 应改成分层恢复，不直接上 diffusion
+
+## Level 0：允许 unknown，不补
+
+对于自动驾驶训练数据，诚实的 unknown 比错误的 hallucination 更好。
+
+如果一个 region 没有任何三维支持：
+
+```text
+provenance = unknown
+label = ignore
+```
+
+可以用于：
+
+* RGB 风格任务；
+* 不涉及该区域的任务；
+* masked loss。
+
+不能用于：
+
+* depth GT；
+* occupancy GT；
+* detector positive/negative label；
+* collision evaluation。
+
+## Level 1：从真实观测恢复
+
+搜索：
+
+* 其他 camera；
+* 其他 timestamp；
+* actor 移动前后的 background；
+* 多帧 LiDAR；
+* background Gaussian layer；
+* inverse view warping。
+
+这与 FlexDrive 和 VAD-GS 的方向更接近：优先用真实跨视角/跨帧证据补齐，而不是生成。([CVF开放获取][7])
+
+## Level 2：在 3D 中补 Gaussian
+
+若存在可靠 geometry，但 appearance 稀疏：
+
+* 从邻近 views 初始化 Gaussians；
+* occupancy/point cloud anchor；
+* visibility-aware densification；
+* 只优化新增 Gaussians；
+* 不动已观测区域。
+
+## Level 3：使用 diffusion prior，但蒸馏回 3D
+
+可以采用 StreetCrafter/ReconDreamer 范式：
+
+```text
+geometry-conditioned video generation
+→ 获得额外候选观测
+→ 只优化unknown区域的Gaussians
+→ 多视角一致性筛选
+→ 最终仍由3DGS输出
+```
+
+而不是把 diffusion RGB 直接写入正式传感器数据。
+
+---
+
+# 九、泛化性问题也确实存在
+
+## 1. 当前 StreetGS 是 per-scene optimization
+
+DriveStudio/Street Gaussians 提供统一框架，但每个场景仍需单独优化。框架可以跨数据集复用，不代表学到一个跨场景 feed-forward editor。([GitHub][15])
+
+你现在的 V7：
+
+```text
+3 scenes
+× 每scene 30k iterations
+```
+
+证明的是：
+
+> scene-specific reconstruction feasibility。
+
+并不证明：
+
+* 新城市泛化；
+* 新天气泛化；
+* 新车辆泛化；
+* 10+ scene scalability；
+* 自动处理失败场景。
+
+## 2. out-of-path 泛化是领域核心瓶颈
+
+FlexDrive 的出发点就是，驾驶 3DGS 在预录轨迹附近表现好，一旦偏离训练轨迹，质量显著下降，原因是缺少 out-of-path supervision。([CVF开放获取][7])
+
+DriveDreamer4D、StreetCrafter、ReconDreamer 都是在解决相同问题，但采用了不同程度的生成先验。([zju3dv.github.io][4])
+
+## 3. 2026 年开始出现 feed-forward 4D reconstruction
+
+DGGT、DynamicVGGT、ReconDrive 等工作开始将 driving 4DGS 从 per-scene iterative optimization 转向 feed-forward reconstruction；GaussianDWM 则进一步尝试把 Gaussian representation 作为统一理解和生成状态。([CVF开放获取][16])
+
+但这些方向：
+
+* 训练规模明显更大；
+* 依赖 foundation model；
+* 不是单卡快速复现路线。
+
+因此 V7 当前做 per-scene resimulation 是合理的，但论文必须准确定位：
+
+> **counterfactual neural resimulator**，不是跨场景通用 world model。
+
+你之前给出的路线定义也已经准确区分了这一点：Reconstruction-first 本身通常是传感器模拟器，只有加入状态转移才成为完整世界模型。
+
+---
+
+# 十、当前主流方法表
+
+| 方法范式                                | 代表工作                                        | diffusion 的作用                 | 最终统一状态                         | 适合你       |
+| ----------------------------------- | ------------------------------------------- | ----------------------------- | ------------------------------ | --------- |
+| Object-centric 3DGS edit            | Street Gaussians、DriveStudio、OmniRe         | 无                             | 3DGS scene graph               | **当前主线**  |
+| 3DGS + mesh + video renderer        | HorizonForge                                | 将显式3D edit渲染为连贯视频             | 3D scene + video output        | 太重，作为对照   |
+| Multi-view driving diffusion editor | SceneCrafter                                | 直接多相机编辑，专门学empty-street prior | multi-view images + conditions | 太重，难复现    |
+| Geometry-conditioned video → 3DGS   | StreetCrafter                               | 生成novel views，优化回3DGS         | dynamic 3DGS                   | **长期最推荐** |
+| World-model data → 4DGS             | DriveDreamer4D                              | 生成novel trajectory数据          | 4DGS                           | 长期参考      |
+| Online restoration → reconstruction | ReconDreamer                                | 逐步修复ghosting并更新训练数据           | 4D reconstruction              | 长期参考      |
+| Geometry-only out-of-path           | FlexDrive、VAD-GS                            | 不使用或弱使用生成                     | 3DGS                           | **近期推荐**  |
+| Sensor-realistic GS                 | SplatAD                                     | 无                             | camera + LiDAR renderer        | 后续多传感器    |
+| Generic 2D edit → 3D optimize       | Instruct-NeRF2NeRF、GaussianEditor、EditSplat | 2D edit guidance              | NeRF/3DGS                      | 只参考一致性机制  |
+| 逐帧2D inpaint直接输出                    | 没有成为主流强方法                                   | 最终像素补洞                        | 无统一3D状态                        | **不推荐**   |
+
+---
+
+# 十一、哪些开源项目最值得研究
+
+## 现在直接可用
+
+### DriveStudio
+
+你已经在用。适合：
+
+* nuScenes；
+* object-centric scene graph；
+* StreetGS/OmniRe baseline；
+* 多场景统一数据系统。([GitHub][15])
+
+### Street Gaussians
+
+适合理解最简洁的：
+
+```text
+background + foreground vehicle Gaussians
+```
+
+官方代码已公开。([GitHub][1])
+
+### SplatAD
+
+适合后续 camera+LiDAR renderer。官方 rasterizer代码公开，完整模型在 neurad-studio 路线中使用。([GitHub][17])
+
+### StreetCrafter
+
+官方代码和预训练权重已公开，但主要围绕 Waymo/PandaSet，计算和数据迁移成本高。更适合读取其 geometry condition 和 3DGS distillation 设计，而不是现在直接迁移到 nuScenes。([GitHub][18])
+
+### DriveDreamer4D / ReconDreamer
+
+两者均有官方仓库，适合研究“生成 prior 如何回灌 4DGS”，但不是 V7 下一步最小实验。([GitHub][19])
+
+### GaussianEditor
+
+官方代码公开，适合研究：
+
+* Gaussian semantic tracing；
+* selective Gaussian editing；
+* diffusion guidance 如何稳定地作用于 3D primitives。([GitHub][20])
+
+---
+
+# 十二、我的下一步建议
+
+## 优先级 1：完成 EV-10
+
+先把 V7 后续 run 的：
+
+* manifest；
+* resolved config；
+* fingerprint；
+* state record；
+* terminal marker；
+
+补齐。
+
+这不是行政工作。H1 要做 matched ablation，没有统一 provenance 就无法判断结果来自：
+
+* occupancy；
+* actor proposal；
+* scene selection；
+* render config；
+* reconstruction checkpoint。
+
+---
+
+## 优先级 2：完成 H1，但改名为 World-State Integration
+
+目标不是简单加一个 occupancy lookup。
+
+必须完成：
+
+```text
+occupancy
++ actor node
++ trajectory
++ Gaussian transform
++ visibility
++ all labels
+```
+
+共用同一个 `WorldStateFrame`。
+
+这是 V7 目前真正有研究价值的部分。
+
+---
+
+## 优先级 3：先做几何 disocclusion audit，不做 diffusion
+
+新增三个 mask：
+
+```text
+source_actor_footprint
+new_actor_footprint
+true_disocclusion
+```
+
+其中 true disocclusion 应来自：
+
+[
+M_{\mathrm{disocc}}
+===================
+
+V_{\mathrm{edited}}^{bg}
+\land
+\neg V_{\mathrm{source}}^{bg}.
+]
+
+然后把区域分为：
+
+```text
+known by background GS
+known by another camera/time
+unknown
+```
+
+先测：
+
+* 真正需要补的面积到底多大；
+* background GS 已经能覆盖多少；
+* 跨帧/跨相机能恢复多少；
+* 最终不可观测 unknown 有多少。
+
+很可能你会发现：
+
+> 对 actor 轨迹小幅编辑，真正需要生成补洞的区域远小于当前 RGB-diff mask。
+
+---
+
+## 优先级 4：将 Telea 保留为最低基线
+
+H2 未来比较：
+
+```text
+No completion
+Telea
+cross-frame reprojection
+visibility-aware GS densification
+geometry-conditioned video completion
+```
+
+Telea 不应删除，因为它能证明复杂模型是否真的带来增益。
+
+但它不应成为方法。
+
+---
+
+## 优先级 5：将 diffusion 降级为条件分支
+
+仅当同时满足：
+
+1. H1 occupancy/state/label chain 通过；
+2. 几何恢复后仍有足够 unknown area；
+3. unknown area影响人工质量或下游任务；
+4. 多相机或视频 completion 有可用模型；
+5. 生成内容不会被当作 geometry label；
+
+才启动 diffusion。
+
+否则完全可以写成一篇：
+
+> occupancy/visibility-certified object-centric Gaussian resimulation
+
+而不需要 diffusion。
+
+---
+
+# 十三、对论文路线的最终建议
+
+## 不建议的论文题目
+
+> Occupancy-Guided Diffusion Completion for 3DGS Driving Editing
+
+原因：
+
+* completion mask当前不成立；
+* 2D/视频生成一致性风险极高；
+* HorizonForge、SceneCrafter、StreetCrafter 已经明显领先；
+* 你的算力不适合训练专用多视角 diffusion；
+* 很容易再次回到过去的局部性和标签非法问题。
+
+## 推荐题目
+
+> **Visibility-Certified Counterfactual Resimulation with Panoptic Gaussian Scene Graphs**
+
+核心贡献：
+
+1. occupancy/instance/Gaussian 的统一世界状态；
+2. trajectory edit 的 road/free-space/visibility certificate；
+3. RGB/depth/instance/box/occupancy 同步再生成；
+4. observed/reprojected/unknown 像素 provenance；
+5. 数据效用优于 matched naive GS editing。
+
+Diffusion 只作为 optional appearance module。
+
+## 更保守但成功概率更高的版本
+
+> **Are Edited Neural Driving Simulators Valid Training Data?**
+
+重点不发明一个重模型，而系统研究：
+
+* 哪些 3DGS actor edits 合法；
+* occupancy constraints 能减少哪些错误；
+* unknown/disocclusion 如何影响标签；
+* completion 是否真的帮助；
+* 哪类 synthetic data 能改善 lane-merge/cut-in 模型。
+
+这类工作若实验扎实，可能比再造一个 diffusion module 更有可信度。
+
+---
+
+# 最终判断
+
+你的“2D diffusion 修图有点扯”的担忧，针对**当前 V7 预想的直接局部 completion**，是成立的。
+
+但需要避免另一个极端结论：
+
+> 2D/video diffusion 完全不能参与 3DGS 系统。
+
+顶会真正采用的范式是：
+
+[
+\boxed{
+\text{3D state决定几何、动作、遮挡和标签}
+}
+]
+
+[
+\boxed{
+\text{generation prior只负责缺失外观和分布外视角}
+}
+]
+
+并且优先让生成结果：
+
+[
+\boxed{
+\text{回灌并统一到3D/4D representation}
+}
+]
+
+而不是直接成为没有几何解释的最终像素。
+
+因此，V7 下一步应当是：
+
+```text
+EV-10
+→ H1统一WorldState与matched ablation
+→ geometry-derived disocclusion/provenance audit
+→ H3下游utility smoke
+```
+
+**暂缓 H2 diffusion。**
+
+等你知道真正 unknown 区域有多少、它是否影响下游任务，再决定是否值得引入 StreetCrafter/ReconDreamer 式的生成先验。
+
+[1]: https://github.com/zju3dv/street_gaussians?utm_source=chatgpt.com "GitHub - zju3dv/street_gaussians: [ECCV 2024] Street Gaussians: Modeling Dynamic Urban Scenes with Gaussian Splatting · GitHub"
+[2]: https://openaccess.thecvf.com/content/CVPR2026/html/Wang_HorizonForge_Driving_Scene_Editing_with_Any_Trajectories_and_Any_Vehicles_CVPR_2026_paper.html "CVPR 2026 Open Access Repository"
+[3]: https://openaccess.thecvf.com/content/CVPR2025/html/Zhu_SceneCrafter_Controllable_Multi-View_Driving_Scene_Editing_CVPR_2025_paper.html "CVPR 2025 Open Access Repository"
+[4]: https://zju3dv.github.io/street_crafter/ "StreetCrafter: Street View Synthesis with Controllable Video Diffusion Models"
+[5]: https://arxiv.org/html/2410.13571v1 "DriveDreamer4D: World Models Are Effective Data Machines for 4D Driving Scene Representation"
+[6]: https://openaccess.thecvf.com/content/CVPR2025/html/Ni_ReconDreamer_Crafting_World_Models_for_Driving_Scene_Reconstruction_via_Online_CVPR_2025_paper.html?utm_source=chatgpt.com "CVPR 2025 Open Access Repository"
+[7]: https://openaccess.thecvf.com/content/CVPR2025/html/Zhou_FlexDrive_Toward_Trajectory_Flexibility_in_Driving_Scene_Gaussian_Splatting_Reconstruction_CVPR_2025_paper.html "CVPR 2025 Open Access Repository"
+[8]: https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_VAD-GS_Visibility-Aware_Densification_for_3D_Gaussian_Splatting_in_Dynamic_Urban_CVPR_2026_paper.pdf?utm_source=chatgpt.com "VAD-GS: Visibility-Aware Densification for 3D Gaussian Splatting in Dynamic Urban Scenes"
+[9]: https://openaccess.thecvf.com/content/ICCV2023/html/Haque_Instruct-NeRF2NeRF_Editing_3D_Scenes_with_Instructions_ICCV_2023_paper.html "ICCV 2023 Open Access Repository"
+[10]: https://arxiv.org/abs/2403.11868?utm_source=chatgpt.com "View-Consistent 3D Editing with Gaussian Splatting"
+[11]: https://arxiv.org/abs/2412.11520?utm_source=chatgpt.com "EditSplat: Multi-View Fusion and Attention-Guided Optimization for View-Consistent 3D Scene Editing with 3D Gaussian Splatting"
+[12]: https://openaccess.thecvf.com/content/CVPR2024/html/Chen_GaussianEditor_Swift_and_Controllable_3D_Editing_with_Gaussian_Splatting_CVPR_2024_paper.html "CVPR 2024 Open Access Repository"
+[13]: https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_VDFE_Difference-Aware_3D_Scene_Editing_with_Non-Intrusive_Video_Diffusion_Priors_CVPR_2026_paper.html "CVPR 2026 Open Access Repository"
+[14]: https://openaccess.thecvf.com/content/CVPR2025/html/He_CTRL-D_Controllable_Dynamic_3D_Scene_Editing_with_Personalized_2D_Diffusion_CVPR_2025_paper.html "CVPR 2025 Open Access Repository"
+[15]: https://github.com/ziyc/drivestudio?utm_source=chatgpt.com "GitHub - ziyc/drivestudio: A 3DGS framework for omni urban scene reconstruction and simulation. · GitHub"
+[16]: https://openaccess.thecvf.com/content/CVPR2026/html/Chen_DGGT_Feedforward_4D_Reconstruction_of_Dynamic_Driving_Scenes_using_Unposed_CVPR_2026_paper.html?utm_source=chatgpt.com "CVPR 2026 Open Access Repository"
+[17]: https://github.com/carlinds/splatad?utm_source=chatgpt.com "GitHub - carlinds/splatad: SplatAD: Real-Time Lidar and Camera Rendering with 3D Gaussian Splatting for Autonomous Driving · GitHub"
+[18]: https://github.com/zju3dv/street_crafter?utm_source=chatgpt.com "StreetCrafter: Street View Synthesis with Controllable ..."
+[19]: https://github.com/GigaAI-research/DriveDreamer4D?utm_source=chatgpt.com "GigaAI-research/DriveDreamer4D"
+[20]: https://github.com/buaacyw/GaussianEditor?utm_source=chatgpt.com "GitHub - buaacyw/GaussianEditor: [CVPR 2024] GaussianEditor: Swift and Controllable 3D Editing with Gaussian Splatting · GitHub"

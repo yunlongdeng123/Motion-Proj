@@ -1,111 +1,124 @@
 # Motion-Proj 当前研究状态
 
-> **文档职责**：唯一当前状态与执行授权入口。
-> **最后更新**：2026-07-23
-> **当前阶段**：`V7.1 / H1-11D_rejected / autoresearch_stopped`
-> **证据基线**：`9722fa2`（V7 feasibility 收口提交）
-> **当前决策**：`reject_occgs_method_claim`
-> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
-> **当前任务**：无 running task；11D 预注册 pilot 已同时拒绝 H1-CERT 与 H1-PROJ，按停止规则不进入
-> H2/H3/scale。保留 object-centric GS、WorldState、typed-label 和 run-contract 基础设施。
-> **执行授权**：用户于 2026-07-23 授权持续 Auto Research；按 gate 自动推进，直到 research reject、必须人工审核、
-> 新外部授权缺失或硬阻塞。
-> **启动代码状态**：commit `b48130d1e48b3964875def1800ae4ccbf7da161c`；dirty fingerprint
-> `37827824e789f55ec066f0c0e807762f451afba2fe7f6c1a1d45f09fef9fe414`；启动时唯一未跟踪文件为本计划，
-> SHA256 `add6c69da67e7e6eac192ee069d5765fe5b5c310e7409b60de33fd655af18bbb`。
-> **EV-10 实现提交**：`3590558cd1ef3644f10c1b981366c3ccce9cd580`；证据索引
-> `/root/autodl-tmp/runs/occgs_resim/V7_EVIDENCE_INDEX.json`；contract smoke
-> `v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f`。
-> **H1-11A 正式 run**：`v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9`；
-> code `766f2287e79b3cdfc877eb175776482c79c3f98c`；engineering gate `PASS`，hypothesis 未评估。
-> **H1-11B 正式 run**：`v71_v7-h1-11b__pilot-3-calibration__s0__20260723T145956893820Z__b8349bc0`；
-> code `002bbb499e2bf967a0b16e19c09088cef2e60ef5`；engineering/calibration gate `PASS`，hypothesis 未评估。
-> **H1-11C 正式 run**：`v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5`；
-> code `9780e391fca689c1df033b0aa09611404af583a6`；engineering gate `PASS`，hypothesis 未评估。
-> **H1-11D 正式 run**：`v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc`；
-> code `304407b94350ddfd17a9d4f29e43b7d1b789a326`；engineering gate `PASS`，H1-CERT/H1-PROJ
-> 均为 `REJECTED`，terminal marker 为唯一 `REJECTED`。
+> **文档职责**：唯一当前状态、研究边界与下一阶段入口。
+> **最后更新**：2026-07-24
+> **当前阶段**：`POST_V7.1 / OCCGS_H1_REJECTED / NEXT_ROUTE_PREREGISTRATION`
+> **当前决策**：`archive_occgs_method_claim_and_pursue_event_first_route`
+> **当前路线**：[`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)
+> **当前任务**：归档 V7.1，补全失败账本，完成下一路线预检；尚无新实验 run。
+> **执行授权**：用户授权持续 Auto Research，直至 research reject、必须人工审核、缺少外部授权或硬阻塞。
+> **授权边界**：不包含 push、双卡、全量数据或大型权重下载。当前文档调研不自动授权任何数据下载。
 
-正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
-[`archive/2026-07/README.md`](archive/2026-07/README.md)。
+正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物为准；为什么不能重复旧尝试见
+[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；V7.1 完整计划、收口快照和编辑备份见
+[`archive/2026-07/v7.1-h1-reject/`](archive/2026-07/v7.1-h1-reject/)。
 
-## 1. 一句话结论
+## 1. 当前结论
 
-V7/V7.1 已证明 object-centric GS、统一 WorldState、同步 typed label 与 matched evaluation 的工程闭环；
-但冻结的 30-proposal pilot 中，D1 precision 仅 `0.75 < 0.80`，D2 拒绝 `30/30`、usable yield 为 `0`。
-因此 occupancy certificate/repair 方法主张被预注册拒绝，不进入 H2/H3/scale，也不能把 feasibility 写成论文假设通过。
+V7/V7.1 已完成 object-centric GS、统一 `WorldState`、同步 typed label、外部 evaluator 和 fail-closed
+run contract 的工程闭环。它没有证明 occupancy certificate/trajectory projection 的方法主张：
 
-## 2. V7 当前进展
+- 冻结的 30-proposal bank 中没有任何 `0→1` positive，也没有 same-actor positive pair；
+- D1 precision 为 `0.75 < 0.80`，10/30 abstain，PASS coverage 为 0；
+- D2 拒绝 30/30，0 个 comparable export，usable yield 为 0；
+- 因此 H1-CERT 与 H1-PROJ 均按预注册 `REJECTED`，H2/H3/scale 未触发。
 
-| Gate | 状态 | 已有证据 | 准确边界 |
+这不是“工程没跑通”，也不是“违例率降为 0”。准确结论是：在冻结对象、proposal、阈值和证据定义下，
+方法没有产生可比较样本，且 certificate 精度未达标。
+
+## 2. H1-11D 冻结事实
+
+| 项目 | 冻结结果 |
+|---|---|
+| 正式 run | `v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc` |
+| run 根 | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11D/v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc/` |
+| 代码 | `304407b94350ddfd17a9d4f29e43b7d1b789a326` |
+| 配置 SHA256 | `cf8d5ebc1429e076fc5142aa6a759a18f54b7f3f937c8423d51505a094bc9fe3` |
+| proposal-bank SHA256 | `f8986915f8d2be0cddddfa6be86f4d2d1ece456c12bf9a962cafec78fd058cd7` |
+| 样本 | 3 scenes × 2 actors × P1–P5 = 30；source-only eligibility |
+| matched 性 | C/D1 realized trajectory hash 30/30 相同 |
+| D1 | TP=15，FP=5，FN=2（含 abstention），FAIL=20，UNKNOWN=10，PASS=0 |
+| D1 指标 | precision `0.75`，recall `0.8824`，abstention `0.3333`，PASS coverage `0` |
+| C 外部 hard violation | 17/30；003=5/10，005=7/10，004=5/10 |
+| D2 | accept/export `0/30`，usable yield `0`，external violation rate 不可定义 |
+| scenario effect | positive=0，negative=25，source-positive/non-event=5，same-actor pair=0 |
+| 终态 | 唯一 terminal marker `REJECTED` |
+
+唯一允许的修复是 `metric_aggregation_bug`：首版错误地把 rejection 计作零违例；修复提交
+`b82c540` 保留了修复前 aggregate，并在无 export 时 fail closed。该修复没有改变任何方法输出。
+
+## 3. 失败分层
+
+| 层 | 观察到的事实 | 裁决 | 对下一路线的约束 |
 |---|---|---|---|
-| `E0-ENV-01` | done | DriveStudio、gsplat、PyTorch3D、nvdiffrast 单卡 smoke | 环境可运行；阶段清单已归档 |
-| `G0-THIRDPARTY-00` | done | DriveStudio/Occ3D/SplatAD 代码、license 与接口审计 | 不代表方法新颖性成立 |
-| `D0-DATA-02` | done | mini 003/004/005，3 前向相机，8 秒训练窗，10 Hz 处理 | 本机完整 sweep 只覆盖 mini 10 scenes，外部有效性受限 |
-| `B0-RECON-03` | done | 3/3 StreetGS 训练完成；test PSNR 为 25.60 / 20.18 / 25.37 | object-centric 重建可行；S1 held-out 质量偏弱；无正式 user review |
-| `O0-OCC-04` | artifact_done | 三场景 LiDAR+box occupancy，unknown 保留 | occupancy 尚未接入 S0 约束、C0 可见性或 L0 mask，H1 未验证 |
-| `S0-EDIT-05` | prototype_done | raised-cosine 横向编辑；V4 极端负例被运动学/距离规则拒绝 | 当前是几何启发式 editor，不是 occupancy-certified editor |
-| `C0-CF-06` | machine_screen_done | 3 scenes 渲染；全部可见 case 46/62 合法；按效应选出的 top-24 为 24/24 | 结论来自机器规则；没有用户人工 verdict；未完整重生 semantic/instance/box |
-| `L0-COMP-07` | feasibility_done | Telea + hard composition，12 帧 outside-mask L1=0 | 0 泄漏由构造保证；mask 来自 RGB 差分而非 occupancy/ray visibility；H2 未验证 |
-| `U0-UTILITY-08` | partial | 3-scene 约束/渲染 signal proxy | naive V4 是极端无效负例；未跑 detector/event task；H3 未验证 |
-| `D1-DECIDE-09` | done | feasibility 轮次收口 | 决策为先改方法再扩规模 |
+| 事件存在性 | 0 个 `0→1` positive、0 个同 actor 对 | proposal bank 不支持 H3 比较 | 先挖出真实事件和可配对候选，再做编辑或渲染 |
+| 独立证据 | base UNKNOWN 约 96–98%；D1 10/30 abstain | coarse voxel certificate 覆盖不足且 precision fail | 用矢量地图与运动补偿 raw sweeps 建独立几何证据 |
+| 修复吞吐 | D2 30/30 reject、0 export | H1-PROJ reject | 不得把拒绝当成零违规；必须先过 usable-yield gate |
+| 下游效用 | 无 positive pair，H1 已拒绝 | H3 not triggered | 不得训练 detector/event task 或声称数据增益 |
+| 渲染/补全 | H1 前置门禁失败 | H2 not triggered | GS 仅作为已验证 renderer 基础设施，不承担安全证明 |
 
-阶段详情见 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)；整理前长计划和逐 Gate 报告已移至
-[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)。
+完整的“观察—推断—未知—复开条件”见失败账本。
 
-## 3. 核心假设状态
+## 4. 本机预检与当前硬阻塞
 
-| 假设 | 状态 | 还缺什么 |
-|---|---|---|
-| H1：occupancy anchor 提高 actor edit 合法性 | rejected | H1-CERT precision 未达门槛；H1-PROJ 以 30/30 拒绝、0 usable yield 失败 |
-| H2：显式 disocclusion mask 使局部补全既局部又有效 | not_triggered_after_H1_reject | 11D 未通过方法前置门禁；不继续实例化方法实验 |
-| H3：合法反事实数据带来下游收益 | not_triggered_after_H1_reject | proposal bank 无 0→1 positive/same-actor pair，且 H1 已拒绝 |
+2026-07-24 只读审计：
 
-## 4. 下一步顺序
+- nuScenes 根：`/root/autodl-tmp/data/nuscenes`；
+- `maps/` 只有 4 个 raster PNG，没有 map-expansion vector JSON；
+- `/root/autodl-tmp/data` 下没有 Waymo 或 nuPlan 数据；
+- DriveStudio 只含 nuPlan/Waymo adapter 代码，不等于数据已存在；
+- `/root/autodl-tmp` 约 128G，总已用 64G，可用约 65G。
 
-| ID | 状态 | 目标 | 解锁条件 |
+因此目前可以继续做代码/标注审计和 mini 上的事件存在性 smoke；要运行基于 lane graph 的正式预检，至少需要
+nuScenes 官方 map expansion 资产。Waymo/nuPlan/大权重属于新的下载与许可边界，不能静默启动。
+
+## 5. 下一路线与闸门
+
+首选路线是“event-first map-and-raw-evidence counterfactual pipeline”，不是重命名后的 OccGS H1：
+
+| Gate | 目的 | 通过条件 | 失败动作 |
 |---|---|---|---|
-| `V7-EV-10` | done | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 1,610 个旧文件已逐文件索引；25 项测试与正式 smoke 通过 |
-| `V7-H1-11` | rejected | 11A/11B/11C 工程 gate 通过；11D H1-CERT/H1-PROJ 均拒绝 | 不解锁方法 claim |
-| `V7-H2-12` | not_triggered | 11D primary gate 已触发立即停止；高成本 render/recovery 不实例化 | 需要新的研究决策与重新预注册，不属于本轮自动授权 |
-| `V7-H3-13` | not_triggered | H1 已拒绝且冻结 proposal bank 无合格 positive pair | 需要新路线而非继续当前 OccGS 配方 |
-| `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |
+| `N0-ASSET` | 建立可审计地图/数据底座 | 官方 vector map 可加载；scene→map 映射与 hash 完整 | 缺授权则暂停并交付下载清单 |
+| `N1-EVENT` | 证明比较对象存在 | 冻结事件定义后，独立池内有足够正例及 same-actor `0→1/0→0` 对 | 事件池不足则 reject mini 路线，不渲染 |
+| `N2-EVIDENCE` | 建立独立合法性参照 | motion-compensated raw sweeps + map；报告 precision/recall/coverage/abstention | 覆盖或精度失败则停止，不调阈值救结果 |
+| `N3-PROPOSAL` | 生成 lane-reachable 候选 | 固定预算下有正效应、可判定且不靠后验挑 actor | 失败则 reject proposal family |
+| `N4-RENDER` | 复用 GS 生成同步可视产物 | 仅对通过 N1–N3 的冻结候选导出 | renderer 不用于证明合法性 |
+| `N5-UTILITY` | 检验下游收益 | scene-disjoint、matched budget、≥3 seeds、任务指标 | 无效则 reject data-utility claim |
 
-详细协议、停止条件和单卡预算见当前 V7.1 计划。本轮 Auto Research 已在预注册 reject 终点停止；不得自动
-通过调低 coverage、删除 S1、改 proposal 或把拒绝样本算作零违规来重开。
+详细预注册建议、文献依据、替代路线和禁止项见
+[`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)。
 
-## 5. 当前硬边界
+## 6. 可复用与冻结边界
 
-- V1–V6 已拒绝路线不因归档而重开；尤其 `RF-18` 的 ReSim `exp0_no_carla` action-response 结论仍有效。
-- C0 的机器筛选不得写成用户人工评测；需要人审时必须先交付完整提示词和独立材料，再由用户填写 verdict。
-- 当前 O0 产物存在不等于 occupancy 已进入方法；未做 matched ablation 前不得使用“occupancy improves legality”表述。
-- hard composition 的 outside-mask L1=0 是实现不变量，不是补全质量收益。
-- U0 proxy 不等于 detector mAP、事件召回或训练数据效用。
-- V7 既有 run 缺少正式 `manifest.json`、`resolved.yaml` 与终态标记；只能记为 retrospective evidence。
-- 后续新 run 必须使用唯一 run ID，并保存 config、fingerprint、metrics、summary、checkpoint 与终态标记。
-- V7.1 新 run 必须通过 `configs/resim/v71/run_contract.yaml`；EV-10 smoke 的 `COMPLETE` 只表示工程合同通过，
-  不表示 H1/H2/H3 hypothesis supported。
-- H1-11C 的 `COMPLETE` 同样只表示 state→renderer→typed-label 接口通过；H1-CERT/H1-PROJ 必须由 11D
-  的外部 evaluator 与十条 pilot gate 分别裁决。
-- 持续 Auto Research 授权不包含 push、双卡、全量数据或大型权重下载；这些仍服从计划中的独立 gate。
+可以复用：
 
-## 6. 事实源优先级
+- `WorldState`、坐标合同、typed depth/label、run contract、artifact index；
+- object-centric GS reconstruction 与 renderer；
+- D1/D2 evaluator 的接口、三态 `PASS/FAIL/UNKNOWN` 和 fail-closed aggregation；
+- 冻结 proposal-bank 作为负对照与回归 fixture。
+
+不得复开：
+
+- P1–P5 固定横移 proposal family 的 H1 claim；
+- 通过降低 known-fraction、删 S1、删 004 actor 8、换 actor/方向或把 UNKNOWN 并入 PASS 来翻案；
+- 把 0 export 写成 0 violation；
+- 用 GS、学习 occupancy 或同一方法生成的标签充当独立安全真值；
+- 在 N1 之前启动 H2/H3/scale。
+
+## 7. 当前任务队列
+
+1. 完成文档归档、失败账本和下一路线预注册；
+2. 在不下载新数据的前提下，审计 mini 事件可见性、官方 map 文件需求和现有 adapter；
+3. 输出 `N0-ASSET` 最小外部资产清单；
+4. 若资产获得授权，再运行 N0/N1；否则在外部授权处暂停，而不是绕过地图证据。
+
+## 8. 事实源优先级
 
 发生冲突时按以下顺序处理：
 
-1. 实际 run 产物、配置、checkpoint 与原始指标；
-2. [`EXPERIMENTS.md`](EXPERIMENTS.md) 的 V7 登记；
-3. 本文件的当前状态与执行边界；
-4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的风险和防重复条件；
-5. 当前 V7 计划中尚未执行的设计；
+1. 实际 run 产物、resolved config、原始指标、checkpoint 与 terminal marker；
+2. [`EXPERIMENTS.md`](EXPERIMENTS.md)；
+3. 本文件；
+4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；
+5. 当前预注册路线；
 6. `docs/archive/` 中的历史计划、报告和提示词。
-
-## 7. 当前证据根
-
-- reconstruction：`/root/autodl-tmp/runs/occgs_resim/b0_recon/occgs_b0/`
-- occupancy：`/root/autodl-tmp/data/occgs/occupancy/{003,004,005}/`
-- edits：`/root/autodl-tmp/data/occgs/scene_specs/s0_edits/`
-- counterfactual：`/root/autodl-tmp/runs/occgs_resim/c0_cf/`
-- legality screen：`/root/autodl-tmp/data/occgs/reviews/c0_legality/c0_legality_screen.json`
-- completion：`/root/autodl-tmp/runs/occgs_resim/l0_comp/`
-- utility proxy：`/root/autodl-tmp/runs/occgs_resim/u0_screen/u0_proxy_v1.json`

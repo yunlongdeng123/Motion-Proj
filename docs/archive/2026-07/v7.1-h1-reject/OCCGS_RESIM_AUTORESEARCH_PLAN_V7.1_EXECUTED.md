@@ -1,5 +1,11 @@
 # OccGS-Resim V7.1 Auto Research Plan
 
+> **归档状态**：`EXECUTED / H1-CERT_REJECTED / H1-PROJ_REJECTED`
+> **归档日期**：2026-07-24
+> **权威当前入口**：[`../../../RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)
+> **说明**：本文保留执行时的计划、门槛和授权措辞，仅用于复核。H1-11D 已在冻结 pilot 上触发停止；
+> 文中的未执行 H2/H3/scale 不再构成当前任务或授权。
+
 > - **工作名称**：Visibility-Certified Counterfactual Resimulation with Instance-Aware Gaussian Scene Graphs
 > - **中文名称**：基于实例感知高斯场景图的可见性认证反事实重仿真
 > - **计划版本**：V7.1
