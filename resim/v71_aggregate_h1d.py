@@ -118,17 +118,18 @@ def main() -> None:
     for scene_id in scenes:
         c_scene = _external_counts(records, "C_pairwise", scene_id)
         d2_scene = _external_counts(records, "D2_occgs_project", scene_id)
-        difference = (
-            d2_scene["fixed_pool_hard_violation_rate"]
-            - c_scene["fixed_pool_hard_violation_rate"]
-        )
+        c_rate = c_scene["accepted_hard_violation_rate"]
+        d2_rate = d2_scene["accepted_hard_violation_rate"]
+        comparable = c_rate is not None and d2_rate is not None
+        difference = d2_rate - c_rate if comparable else None
         per_scene[scene_id] = {
             "C": c_scene,
             "D2": d2_scene,
             "risk_difference_D2_minus_C": difference,
-            "nonworse": difference <= 0.0,
-            "worsening_within_10pp": difference
-            <= float(config["gate"]["max_scene_worsening_rate"]),
+            "comparable_export_pool": comparable,
+            "nonworse": comparable and difference <= 0.0,
+            "worsening_within_10pp": comparable
+            and difference <= float(config["gate"]["max_scene_worsening_rate"]),
         }
 
     usable = []
@@ -145,9 +146,12 @@ def main() -> None:
     usable_yield = _rate(sum(usable), proposal_count)
     nonworse_scene_count = sum(value["nonworse"] for value in per_scene.values())
     max_worsening_ok = all(value["worsening_within_10pp"] for value in per_scene.values())
+    c_export_rate = c_external["accepted_hard_violation_rate"]
+    d2_export_rate = d2_external["accepted_hard_violation_rate"]
     aggregate_strict_reduction = (
-        d2_external["fixed_pool_hard_violation_rate"]
-        < c_external["fixed_pool_hard_violation_rate"]
+        c_export_rate is not None
+        and d2_export_rate is not None
+        and d2_export_rate < c_export_rate
     )
 
     label_checks = []
@@ -249,13 +253,23 @@ def main() -> None:
         "h1_proj_verdict": projection_verdict,
         "render_audit_status": "pending_geometry_selected_12x3",
         "human_verdict": "not_collected_not_required_for_machine_pilot_gate",
+        "aggregation_repair": {
+            "mechanism": "metric_aggregation_bug",
+            "version": "export-denominator-fail-closed-v2",
+            "reason": (
+                "A rejected trajectory is not a zero-violation export; when D2 has no "
+                "measurable exports, the external violation rate and paired transition "
+                "are undefined and gates 4-6 fail closed."
+            ),
+            "pre_repair_artifact": "aggregate_pre_export_denominator_fix.json",
+            "method_outputs_changed": False,
+        },
     }
     summary["aggregate_sha256"] = canonical_sha256(summary)
-    output = args.output or evaluation_root / "aggregate.json"
+    output = args.output or evaluation_root / "aggregate_v2.json"
     atomic_write_json(str(output), summary)
     print(json.dumps(summary, ensure_ascii=False))
 
 
 if __name__ == "__main__":
     main()
-
