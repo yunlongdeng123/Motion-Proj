@@ -5,6 +5,7 @@ from motion_proj.resim.coordinates import (
     CoordinateError,
     box_corners_actor,
     compose_transform,
+    drivestudio_intrinsics,
     invert_transform,
     project_world_points,
     transform_points,
@@ -47,6 +48,16 @@ def test_camera_projection_uses_explicit_T_camera_world():
     )
     np.testing.assert_allclose(pixels, [[50.0, 40.0], [70.0, 80.0]])
     np.testing.assert_allclose(depth, [10.0, 5.0])
+
+
+def test_drivestudio_intrinsics_vector_is_not_reshaped_as_matrix():
+    calibration = drivestudio_intrinsics(
+        [1250.0, 1260.0, 826.0, 470.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    )
+    np.testing.assert_allclose(
+        calibration,
+        [[1250.0, 0.0, 826.0], [0.0, 1260.0, 470.0], [0.0, 0.0, 1.0]],
+    )
 
 
 def test_non_rigid_transform_fails_closed():

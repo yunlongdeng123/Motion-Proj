@@ -19,6 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from motion_proj.resim.coordinates import (
     box_corners_actor,
     compose_transform,
+    drivestudio_intrinsics,
     invert_transform,
     project_world_points,
     transform_points,
@@ -76,7 +77,9 @@ def audit_scene(scene: dict, config: dict, registry_root: Path) -> dict:
     T_model_world = invert_transform(T_world_model)
     calibration_rows = []
     for camera_id in (0, 1, 2):
-        intrinsics = np.loadtxt(data_root / "intrinsics" / f"{camera_id}.txt").reshape(3, 3)
+        intrinsics = drivestudio_intrinsics(
+            np.loadtxt(data_root / "intrinsics" / f"{camera_id}.txt")
+        )
         T_world_camera = validate_transform(
             np.loadtxt(data_root / "extrinsics" / f"000_{camera_id}.txt").reshape(4, 4)
         )

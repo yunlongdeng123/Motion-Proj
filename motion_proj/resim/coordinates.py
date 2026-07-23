@@ -67,6 +67,20 @@ def box_corners_actor(dimensions_lwh) -> np.ndarray:
     return signs * np.asarray([length, width, height]) / 2.0
 
 
+def drivestudio_intrinsics(values) -> np.ndarray:
+    """将 DriveStudio 的 fx,fy,cx,cy,distortion 向量转为 3x3 K。"""
+    flattened = np.asarray(values, dtype=np.float64).reshape(-1)
+    if len(flattened) < 4 or not np.isfinite(flattened).all():
+        raise CoordinateError("DriveStudio intrinsics 至少需要有限的 fx,fy,cx,cy")
+    fx, fy, cx, cy = flattened[:4]
+    if fx <= 0 or fy <= 0:
+        raise CoordinateError("focal length 必须为正")
+    return np.asarray(
+        [[fx, 0.0, cx], [0.0, fy, cy], [0.0, 0.0, 1.0]],
+        dtype=np.float64,
+    )
+
+
 def project_world_points(
     points_world,
     *,
