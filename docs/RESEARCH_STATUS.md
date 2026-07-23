@@ -2,11 +2,12 @@
 
 > **文档职责**：唯一当前状态与执行授权入口。
 > **最后更新**：2026-07-23
-> **当前阶段**：`V7.1 / H1-11B_done / H1-11C_running`
+> **当前阶段**：`V7.1 / H1-11C_done / H1-11D_running`
 > **证据基线**：`9722fa2`（V7 feasibility 收口提交）
 > **当前决策**：`modify_method_then_scale`
 > **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
-> **当前任务**：`V7-H1-11C` running；11B 工程/校准 gate 已通过，正在同步 renderer 与有限标签再生成。
+> **当前任务**：`V7-H1-11D` running；11C 同步 renderer、typed depth 与有限标签工程 gate 已通过，正在执行
+> 冻结的 A/B/C/D1/D2 matched pilot ablation。
 > **执行授权**：用户于 2026-07-23 授权持续 Auto Research；按 gate 自动推进，直到 research reject、必须人工审核、
 > 新外部授权缺失或硬阻塞。
 > **启动代码状态**：commit `b48130d1e48b3964875def1800ae4ccbf7da161c`；dirty fingerprint
@@ -19,6 +20,8 @@
 > code `766f2287e79b3cdfc877eb175776482c79c3f98c`；engineering gate `PASS`，hypothesis 未评估。
 > **H1-11B 正式 run**：`v71_v7-h1-11b__pilot-3-calibration__s0__20260723T145956893820Z__b8349bc0`；
 > code `002bbb499e2bf967a0b16e19c09088cef2e60ef5`；engineering/calibration gate `PASS`，hypothesis 未评估。
+> **H1-11C 正式 run**：`v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5`；
+> code `9780e391fca689c1df033b0aa09611404af583a6`；engineering gate `PASS`，hypothesis 未评估。
 
 正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
 [`archive/2026-07/README.md`](archive/2026-07/README.md)。
@@ -60,13 +63,13 @@ V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → Street
 | ID | 状态 | 目标 | 解锁条件 |
 |---|---|---|---|
 | `V7-EV-10` | done | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 1,610 个旧文件已逐文件索引；25 项测试与正式 smoke 通过 |
-| `V7-H1-11` | running | 11A/11B 已完成；当前执行 11C 同步 renderer 与有限标签再生成 | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
+| `V7-H1-11` | running | 11A/11B/11C 已完成；当前执行 11D A/B/C/D1/D2 matched pilot | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
 | `V7-H2-12` | pending | 用 geometry/ray visibility 构建 disocclusion mask，验证局部 completion | 不只 outside=0，还要在可测 pseudo-hole 上改善 inside quality、temporal、depth/identity |
 | `V7-H3-13` | pending | 先完成下游 smoke，再做 scene-disjoint utility 实验 | OccGS 在等样本量、多 seed 下优于 real-only 与 matched naive GS |
 | `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |
 
-详细协议、停止条件和单卡预算见当前 V7.1 计划。当前最高信息增益路径是 `H1-11A → H1-11B`，不是先增强
-Telea、扩大 scene 数或切换双卡。
+详细协议、停止条件和单卡预算见当前 V7.1 计划。当前最高信息增益路径是冻结的 `H1-11D` 全 proposal
+matched ablation；不是先增强 Telea、扩大 scene 数或切换双卡。
 
 ## 5. 当前硬边界
 
@@ -79,6 +82,8 @@ Telea、扩大 scene 数或切换双卡。
 - 后续新 run 必须使用唯一 run ID，并保存 config、fingerprint、metrics、summary、checkpoint 与终态标记。
 - V7.1 新 run 必须通过 `configs/resim/v71/run_contract.yaml`；EV-10 smoke 的 `COMPLETE` 只表示工程合同通过，
   不表示 H1/H2/H3 hypothesis supported。
+- H1-11C 的 `COMPLETE` 同样只表示 state→renderer→typed-label 接口通过；H1-CERT/H1-PROJ 必须由 11D
+  的外部 evaluator 与十条 pilot gate 分别裁决。
 - 持续 Auto Research 授权不包含 push、双卡、全量数据或大型权重下载；这些仍服从计划中的独立 gate。
 
 ## 6. 事实源优先级

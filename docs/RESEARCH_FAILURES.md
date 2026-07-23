@@ -32,12 +32,13 @@
 | `V7-RISK-04` | open_risk | U0 以极端 V4 为 naive 对照且没有下游任务 | 把 accept rate / RGB signal 写成优于 naive GS 或 mAP 收益 |
 | `V7-RISK-05` | legacy_limitation | V7 既有 run 缺正式 manifest、resolved config 与终态标记；V7.1 新 run 已由 EV-10 fail closed | 事后猜 seed/fingerprint 或伪造 immutable provenance |
 | `V7-RISK-06` | open_risk | 只覆盖 mini 三场景，S1 held-out 质量偏弱 | 先扩规模、只筛容易场景或把三场景外推为论文结论 |
-| `V7-RISK-07` | open_risk | editor 只使用运动学/距离规则，label regeneration 未闭环 | 把 kinematic validator 攵称 occupancy certificate |
+| `V7-RISK-07` | interface_mitigated_v71 | 11C 已闭合 WorldState→renderer→typed-label 工程链；occupancy repair 的方法增益仍未验证 | 把 label-sync 工程通过写成 occupancy certificate/projection 通过 |
 | `V7-RISK-08` | legacy_risk_mitigated_v71 | O0 坐标注释、metadata 与实际变换含义不一致；11A 已冻结显式 frame 合同 | 沿用含义不明的 `pose/T`，或在 round-trip 前计算 H1 指标 |
 | `V7-RISK-09` | confirmed_mitigated_v71 | 旧 rotated-corner AABB 使 PILOT-3 动态体素量膨胀 1.72–2.83 倍；扁平语义不能诚实移除 actor | 把旧 O0 AABB 当正式安全几何，或移除 actor 后把体积恢复为 free |
 | `V7-RISK-10` | confirmed_open_risk | 分层后 base unknown 仍约 96.0–97.6%，证书容易通过拒绝/abstain 获得表面 precision | 把 UNKNOWN 并入 PASS/FAIL，或降低观测门槛追求 yield |
 | `V7-RISK-15` | architecture_mitigated_v71 | certificate detection 与 trajectory projection 若混组会混淆检测和修复收益 | D1 修改 C trajectory，或把 D1/D2 合成单一 validity 数字 |
 | `V7-RISK-16` | open_risk | lateral displacement proposal 可能不形成真实 3D cut-in/merge label transition | 用位移幅度或 RGB 差分代替 scenario-effect gate |
+| `V7-RISK-17` | confirmed_mitigated_v71 | 单一 `depth` 名称会混淆 expected、first-hit 与 LiDAR measured truth tier；11C 已强制分名和 sidecar | 把 expected depth 登记为 measured GT，或省略 validity/truth-tier |
 
 ## 3. 风险详情与解除条件
 
@@ -166,6 +167,16 @@ occupancy 与 visibility regeneration 流水线。
 同一 world-state record 驱动 renderer 与所有标签 writer，逐帧验证 pose、depth、mask、box 和 occupancy 共位；
 对缺失/不可见标签 fail closed。
 
+**2026-07-23 缓解结果**
+
+- 11C 在 PILOT-3 的 V0/V1、三场景、三前向相机上生成 18 个样本和 432 个 typed sidecar；
+- 独立审计验证 18/18 样本、6/6 WorldState hash、temporal identity、三相机覆盖、instance-depth z-order 与
+  state-specific safety/observation/render-support 引用；
+- expected、first-hit、LiDAR measured depth 分名，有限 semantic scope 和 visibility provenance 均写入 sidecar；
+- S1 保留，正式 run 以唯一 `COMPLETE` 结束。
+
+该结果只解除 renderer/label 工程接口风险；11D 之前仍不能声称 occupancy certificate 或 repair 有方法收益。
+
 ### V7-RISK-08：O0 坐标框架歧义已确认
 
 **观察**
@@ -227,6 +238,13 @@ floaters 补 safety evidence。
 `certificate-calibration-v1` 三态接口。11D 必须让 D1 逐字节复用 C trajectory，D2 才允许修改轨迹；位移 proposal
 若未形成冻结的 corridor crossing、duration、gap 与 TTC/headway 条件，只能标为 non-event，不能靠命名成为
 cut-in/merge positive。
+
+### V7-RISK-17：typed depth 语义混淆已缓解
+
+11C 把 depth 冻结为三个不同产品：diagnostic expected depth、T1 Gaussian first-hit depth、T0 LiDAR measured
+depth；每个产品有独立 validity、definition、truth tier 与 artifact sidecar。独立审计确认三类各 18 个，且没有
+expected-as-measured 混写。后续 export/evaluator 必须继续按产品名和 truth tier 消费，不能重新折叠成无类型
+`depth`。
 
 ## 4. 跨路线必须保留的原则
 

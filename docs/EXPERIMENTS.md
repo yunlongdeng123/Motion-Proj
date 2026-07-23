@@ -153,7 +153,36 @@ geometry，但后续 visibility/label gate 必须 fail closed。
 40 项 V7.1 相关测试通过；正式 run 经 `v71_run_contract.py validate` 独立复验为唯一 `COMPLETE`。机器 overlay
 没有 agent 填写的人工 verdict。
 
-## 11. 登记规则
+## 11. V7.1 H1-11C 同步 renderer 与 typed label
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5` | completed / `COMPLETE` | PILOT-3；V0/V1 × 3 scenes × 3 cameras = 18 samples；24 artifacts/sample、432 typed sidecars；独立 label-sync audit 全通过；peak CUDA 7,852,088,320 bytes | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11C/v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5/` | 同一 WorldState 驱动三相机 renderer、分层 actor/background、expected/first-hit/measured depth、instance 与有限语义的工程接口通过；未运行 A/B/C/D1/D2，不构成 H1-CERT/H1-PROJ 结论 |
+
+正式代码 commit 为 `9780e391fca689c1df033b0aa09611404af583a6`，config fingerprint 为
+`8429e9a54dbdd70f79d14e17dcdf0911e66e39e38cbe3555d5bed3e94eb1e083`。冻结 hash：
+
+- world-state set：`1ce5cd77f6df801cb8fdccc770d468050e749961bad47a2b28b28d897d6249e2`
+- aggregate render request：`cdcff1677f4c2b4bede3d626eac738cac9119bcdb415c182c191c29cd88d7461`
+- artifact set：`f53defd159930580732c1280891d2e1a55eb3de819193cfdeef1575c1ee4548a`
+- full artifact index：`3ef957b550aa3745fc898dee02500c9b1869cc78b323c88fb1f2dc9d8fa3b8e4`
+- independent label-sync audit：`4f265244ed463939146375a4620e8c96d302a74b4f763e921287d929e374c3ba`
+
+独立审计重新计算 6 个 V0/V1 WorldState hash，验证 temporal identity、每序列三相机、18/18 sample audit、
+432/432 sidecar 与 state-specific safety/observation/render-support 引用。typed depth 数量严格为：
+18 个 diagnostic expected depth、18 个 T1 first-hit depth、18 个 T0 LiDAR measured depth；S1 未排除。
+重复渲染最大绝对差为 0；background/actor layer composition RGB MAE 为
+`0.000000–0.002171`（均值 `0.000511`）。V0 CAM_FRONT 相对 legacy renderer 的 RGB MAE 为
+003 `0.001959`、005 `0.001960`、004 `0.001950`。
+
+开发候选中，instance mask 曾以 alpha `0.15` 阈值且未按 first-hit z-order 遮挡，独立审计正确拒绝；
+修复为与 first-hit `0.5` 阈值一致并执行背景/actor z-order 后，使用新 artifact hash 完成正式 run。失败候选与
+审计 JSON 均保留，不进入正式 aggregate。该修复属于 renderer/label adapter 同步，不修改 H1 endpoint。
+
+相关 V7.1 测试、CUDA smoke 与正式 run contract validation 均通过；正式 run 只有唯一 `COMPLETE`。
+`hypothesis_verdict=not_evaluated`，不能将 label-sync 工程通过写成 occupancy 合法性增益。
+
+## 12. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
