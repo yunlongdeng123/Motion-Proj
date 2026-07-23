@@ -1,6 +1,6 @@
-# Motion-Proj V7 实验事实源
+# Motion-Proj V7 / V7.1 实验事实源
 
-> **范围**：本文件只登记 OccGS-Resim V7。V1–V6 及整理前全量账本已归档至
+> **范围**：本文件登记 OccGS-Resim V7 retrospective evidence 与 V7.1 正式实验。V1–V6 及整理前全量账本已归档至
 > [`archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md`](archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md)。
 > **证据基线**：`9722fa2`。
 > **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；本文件不授权执行。
@@ -76,7 +76,29 @@ feasibility，不登记 H2 pass。
 
 含义是保留路线、优先执行 `V7-EV-10 → V7-H1-11`；不表示 H1/H2/H3 已通过，也不解锁扩场景或双卡。
 
-## 8. 登记规则
+## 8. V7.1 EV-10 证据合同
+
+| Task / run | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `V7-EV-10` evidence index | completed | 对 B0/O0/S0/C0/L0/U0 共 1,610 个文件、4,121,645,920 bytes 逐文件计算 SHA256；index SHA256=`fbd8c65774edef6ad253f458ac01da29a95694c8f9448179b42601e89fbdb613` | `/root/autodl-tmp/runs/occgs_resim/V7_EVIDENCE_INDEX.json` | 旧证据可定位；未知 seed、run-start commit、fingerprint 和 terminal marker 保持显式 missing/unknown，未事后补造 |
+| `v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f` | completed / `COMPLETE` | seed=0；config fingerprint=`7d97212fbb38f85ae9cc6a7e348b424a6229e430b2c8fd4089e3bbe9eae5eb19`；data fingerprint=`fbd8c657...b613`；world/render/artifact-set hash 均通过；CPU only | `/root/autodl-tmp/runs/occgs_resim/v71/V7-EV-10/v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f/` | 新 run 缺 summary、三层 hash、artifact bytes 或唯一 terminal marker 时不能 COMPLETE；这是工程合同 smoke，不是研究假设结果 |
+
+实现 commit 为 `3590558cd1ef3644f10c1b981366c3ccce9cd580`。验证命令：
+
+```bash
+PYTHONPATH=. pytest -q \
+  tests/test_v71_run_contract.py \
+  tests/test_config_runtime.py \
+  tests/test_fingerprint.py
+# 25 passed
+python resim/v71_run_contract.py validate \
+  /root/autodl-tmp/runs/occgs_resim/v71/V7-EV-10/v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f
+```
+
+S0 editor 已改为原子增量合并 `s0_edit_summary.json`，后续单 scene 执行不再覆盖其他 scene；EV-10 未运行
+editor，也未修改现有 S0 summary 或任何旧 metrics。
+
+## 9. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。

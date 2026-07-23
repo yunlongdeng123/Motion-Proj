@@ -1,7 +1,7 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-07-22
-> **当前范围**：OccGS-Resim V7。
+> **最后更新**：2026-07-23
+> **当前范围**：OccGS-Resim V7 retrospective evidence 与 V7.1。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
@@ -30,7 +30,7 @@
 | `V7-RISK-02` | limitation | C0 24/24 是按效应 top-k 的机器筛选，不是用户人工评测 | 写成 human pass，或只报 top-k 隐藏 46/62 全分布 |
 | `V7-RISK-03` | open_risk | L0 mask 来自 RGB 差分，outside=0 由 hard composition 构造保证 | 用 0 leakage 宣称 occupancy-guided completion 有质量收益 |
 | `V7-RISK-04` | open_risk | U0 以极端 V4 为 naive 对照且没有下游任务 | 把 accept rate / RGB signal 写成优于 naive GS 或 mAP 收益 |
-| `V7-RISK-05` | limitation | V7 既有 run 缺正式 manifest、resolved config 与终态标记 | 事后猜 seed/fingerprint 或伪造 immutable provenance |
+| `V7-RISK-05` | legacy_limitation | V7 既有 run 缺正式 manifest、resolved config 与终态标记；V7.1 新 run 已由 EV-10 fail closed | 事后猜 seed/fingerprint 或伪造 immutable provenance |
 | `V7-RISK-06` | open_risk | 只覆盖 mini 三场景，S1 held-out 质量偏弱 | 先扩规模、只筛容易场景或把三场景外推为论文结论 |
 | `V7-RISK-07` | open_risk | editor 只使用运动学/距离规则，label regeneration 未闭环 | 把 kinematic validator 攵称 occupancy certificate |
 
@@ -118,6 +118,16 @@ scene-disjoint split、至少 3 seeds 和任务指标。三场景只可用于 pi
 
 `V7-EV-10` 为既有证据生成显式缺失项索引；所有新 run 通过 fail-closed wrapper 产生完整协议。禁止事后补造
 未知字段或覆盖旧目录。
+
+**2026-07-23 缓解结果**
+
+- `V7_EVIDENCE_INDEX.json` 已逐文件索引 B0/O0/S0/C0/L0/U0 的 1,610 个文件，并保留正式字段的
+  `missing/unknown_not_inferred`；
+- V7.1 run contract 对 run ID 复用、三层 hash、artifact bytes、summary、冲突终态标记和 optional
+  `not_triggered` 分支 fail closed；
+- 正式 smoke 在 commit `3590558` 上以唯一 `COMPLETE` 结束，25 项相关测试通过。
+
+该缓解只约束 V7.1 新 run；V7 旧 run 的 provenance 缺口不可逆，仍保持 retrospective/legacy limitation。
 
 ### V7-RISK-06：场景覆盖与质量
 
