@@ -403,8 +403,51 @@ def main() -> None:
                     "observation_evidence_map.npy": observation_map.astype(np.uint8),
                     "render_support_map.npy": output["opacity"].cpu().numpy().squeeze().astype(np.float32),
                 }
+                array_semantics = {
+                    "depth_render_expected.npy": {
+                        "artifact_type": "typed_depth",
+                        "truth_tier": "diagnostic",
+                        "definition": expected.definition,
+                    },
+                    "depth_surface_first_hit.npy": {
+                        "artifact_type": "typed_depth",
+                        "truth_tier": "T1",
+                        "definition": first.definition,
+                    },
+                    "depth_lidar_measured.npy": {
+                        "artifact_type": "typed_depth",
+                        "truth_tier": "T0",
+                        "definition": measured.definition,
+                    },
+                    "safety_geometry_map.npy": {
+                        "artifact_type": "safety_geometry",
+                        "source": "continuous_actor_OBB",
+                    },
+                    "observation_evidence_map.npy": {
+                        "artifact_type": "observation_evidence",
+                        "source": "base_plus_state_specific_instance_layer",
+                    },
+                    "render_support_map.npy": {
+                        "artifact_type": "render_support",
+                        "source": "gsplat_rendered_opacity",
+                    },
+                    "vehicle_instance_mask.npy": {
+                        "artifact_type": "vehicle_instance",
+                        "identity_namespace": "limited_label_id",
+                    },
+                    "limited_semantic_mask.npy": {
+                        "artifact_type": "limited_semantic",
+                        "allowed_values": [0, 1, 2, 255],
+                    },
+                }
                 for name, value in arrays.items():
-                    artifacts.append(_write_array(sample_dir / name, value, metadata))
+                    artifacts.append(
+                        _write_array(
+                            sample_dir / name,
+                            value,
+                            {**metadata, **array_semantics.get(name, {})},
+                        )
+                    )
                 artifacts.append(
                     _write_json_artifact(
                         sample_dir / "boxes.json",
