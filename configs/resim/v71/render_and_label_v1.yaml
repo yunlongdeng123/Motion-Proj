@@ -1,0 +1,37 @@
+schema_version: render-and-label-v1
+task_id: V7-H1-11C
+split: PILOT-3-interface
+world_config: configs/resim/v71/world_state_v1.yaml
+registry_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11A/registry_build
+evidence_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/evidence_v2
+support_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/support_overlays
+output_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11C/world_states
+cameras:
+  - {camera_id: CAM_FRONT, dataset_index: 0}
+  - {camera_id: CAM_FRONT_LEFT, dataset_index: 1}
+  - {camera_id: CAM_FRONT_RIGHT, dataset_index: 2}
+variants: [V0, V1]
+scenes:
+  - scene_id: "003"
+    actor_id: 35
+    render_frame: 45
+    edit_json: /root/autodl-tmp/data/occgs/scene_specs/s0_edits/scene_003_actor_35_edits.json
+  - scene_id: "005"
+    actor_id: 34
+    render_frame: 52
+    edit_json: /root/autodl-tmp/data/occgs/scene_specs/s0_edits/scene_005_actor_34_edits.json
+  - scene_id: "004"
+    actor_id: 8
+    render_frame: 42
+    edit_json: /root/autodl-tmp/data/occgs/scene_specs/s0_edits/scene_004_actor_8_edits.json
+render:
+  camera_downscale: 2.0
+  precision: float32
+  rasterizer_mode: gsplat-classic
+  alpha_first_hit_threshold: 0.5
+  instance_alpha_threshold: 0.15
+  deterministic_flags:
+    cudnn_benchmark: false
+    cudnn_deterministic: true
+  repeated_render_max_abs_tolerance: 1.0e-6
+  legacy_png_mean_abs_tolerance: 0.004
