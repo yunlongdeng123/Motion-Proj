@@ -49,6 +49,8 @@
 - scenario-effect 没有产生任何 `0→1` positive；
 - 5 个 source-positive case 在 proposal 后成为 non-event，25 个为 negative；
 - 没有 same-actor positive/negative pair。
+- 后续只读 continuity 审计发现，冻结 actor 003:38、003:35、005:23 在完整连续 track 内的 world
+  displacement 仅 0.88 / 0.29 / 0.76 m；原 source-only 排序偏好长、清晰 track，但没有事件相关性。
 
 **推断**
 

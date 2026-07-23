@@ -34,6 +34,10 @@
 | DriveStudio adapters | 有 nuPlan/Waymo adapter 代码 | 仅说明接口可能复用，不说明数据或许可已就绪 |
 | 磁盘 | `/root/autodl-tmp` 可用约 65G | 小型 map asset 可行；大型数据需独立预算与授权 |
 
+只读 N0 进一步确认了 processed-scene 映射与冻结 actor 的轨迹上限：003/004 属于
+`boston-seaport`，005 属于 `singapore-queenstown`；6 actors 中有 3 个完整 track 位移不足 1 m。
+详见 [`N0_ASSET_AND_EVENT_PREFLIGHT.md`](N0_ASSET_AND_EVENT_PREFLIGHT.md)。
+
 官方 nuScenes prediction API 提供 closest lane、incoming/outgoing lane 和 lane discretization，说明 lane graph
 是现成且可审计的 proposal/event 基础，而不是必须重新从 raster 猜测
 ([nuScenes prediction tutorial](https://www.nuscenes.org/tutorials/prediction_tutorial.html))。

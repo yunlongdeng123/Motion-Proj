@@ -9,8 +9,9 @@
 1. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前结论、授权边界、阻塞和任务队列；
 2. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：失败机制、已知卡点、禁止重复项和复开条件；
 3. [`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)：2026-07-24 调研与下一路线预注册；
-4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：V7/V7.1 已发生实验的数值事实；
-5. [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)：V7 feasibility 轮次的历史收口。
+4. [`N0_ASSET_AND_EVENT_PREFLIGHT.md`](N0_ASSET_AND_EVENT_PREFLIGHT.md)：scene→map、actor continuity 与最小外部资产；
+5. [`EXPERIMENTS.md`](EXPERIMENTS.md)：V7/V7.1 已发生实验的数值事实；
+6. [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)：V7 feasibility 轮次的历史收口。
 
 V7.1 执行计划已经完成并归档，不再是当前授权入口：
 [`archive/2026-07/v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md`](archive/2026-07/v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md)。
