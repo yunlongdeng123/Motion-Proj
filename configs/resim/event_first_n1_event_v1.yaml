@@ -1,0 +1,57 @@
+schema_version: event-first-n1-event-v1
+task_id: N1-EVENT-01
+split: nuscenes-mini-scenes-003-004-005
+seed: 0
+repo_root: /root/autodl-tmp/motion_proj
+dataset_root: /root/autodl-tmp/data/nuscenes
+processed_root: /root/autodl-tmp/data/occgs/processed_10Hz/mini
+run_root: /root/autodl-tmp/runs/event_first/N1-EVENT-01
+n0_run: /root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd
+frame_period_s: 0.1
+scenes:
+  - scene_id: "003"
+    map_name: boston-seaport
+  - scene_id: "005"
+    map_name: singapore-queenstown
+  - scene_id: "004"
+    map_name: boston-seaport
+eligibility:
+  class_prefix: vehicle.
+  min_track_frames: 20
+  max_frame_gaps: 0
+  min_displacement_m: 5.0
+map_matching:
+  centerline_resolution_m: 0.5
+  nearest_points_k: 16
+  max_centerline_distance_m: 3.0
+  max_heading_error_deg: 45.0
+  heading_score_weight_m_per_rad: 1.0
+event_definition:
+  min_stable_source_frames: 10
+  min_stable_target_frames: 10
+  max_transition_gap_frames: 20
+  min_lateral_centerline_shift_m: 1.5
+  max_lateral_centerline_shift_m: 6.0
+  max_parallel_heading_error_deg: 30.0
+  graph_hops_for_shared_corridor: 2
+  merge_min_target_incoming_lanes: 2
+  interaction_min_gap_m: 2.0
+  interaction_max_gap_m: 60.0
+  negative_window_frames: 30
+  ttc_cap_s: 20.0
+gates:
+  min_eligible_actors_per_scene: 2
+  min_positive_events: 2
+  min_negative_events: 2
+  min_same_actor_pairs: 2
+  min_positive_scenes: 2
+  unknown_is_positive: false
+  noninteractive_transition_is_positive: false
+stop_rule:
+  on_gate_failure: reject_mini_event_pool
+  prohibited_recovery:
+    - lower_event_thresholds
+    - remove_failed_scene
+    - posthoc_actor_selection
+    - merge_unknown_into_positive
+    - start_n2_n3_render_or_training
