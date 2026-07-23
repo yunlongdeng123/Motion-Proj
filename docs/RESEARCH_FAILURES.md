@@ -26,7 +26,7 @@
 
 | ID | 状态 | 风险 | 禁止的快捷修补 |
 |---|---|---|---|
-| `V7-RISK-01` | open_risk | O0 occupancy 与 S0/C0/L0 主链断开 | 因为 occupancy 文件存在就宣称 H1 通过 |
+| `V7-RISK-01` | rejected_v71 | occupancy 已接入 11D，但 certificate precision 与 repair yield 均未过预注册 gate | 因为 occupancy 文件存在或 D2 无 export 就宣称 H1 通过 |
 | `V7-RISK-02` | limitation | C0 24/24 是按效应 top-k 的机器筛选，不是用户人工评测 | 写成 human pass，或只报 top-k 隐藏 46/62 全分布 |
 | `V7-RISK-03` | open_risk | L0 mask 来自 RGB 差分，outside=0 由 hard composition 构造保证 | 用 0 leakage 宣称 occupancy-guided completion 有质量收益 |
 | `V7-RISK-04` | open_risk | U0 以极端 V4 为 naive 对照且没有下游任务 | 把 accept rate / RGB signal 写成优于 naive GS 或 mAP 收益 |
@@ -35,9 +35,9 @@
 | `V7-RISK-07` | interface_mitigated_v71 | 11C 已闭合 WorldState→renderer→typed-label 工程链；occupancy repair 的方法增益仍未验证 | 把 label-sync 工程通过写成 occupancy certificate/projection 通过 |
 | `V7-RISK-08` | legacy_risk_mitigated_v71 | O0 坐标注释、metadata 与实际变换含义不一致；11A 已冻结显式 frame 合同 | 沿用含义不明的 `pose/T`，或在 round-trip 前计算 H1 指标 |
 | `V7-RISK-09` | confirmed_mitigated_v71 | 旧 rotated-corner AABB 使 PILOT-3 动态体素量膨胀 1.72–2.83 倍；扁平语义不能诚实移除 actor | 把旧 O0 AABB 当正式安全几何，或移除 actor 后把体积恢复为 free |
-| `V7-RISK-10` | confirmed_open_risk | 分层后 base unknown 仍约 96.0–97.6%，证书容易通过拒绝/abstain 获得表面 precision | 把 UNKNOWN 并入 PASS/FAIL，或降低观测门槛追求 yield |
+| `V7-RISK-10` | confirmed_failure_v71 | 高 UNKNOWN 在 11D 导致 10/30 D1 abstain、D2 30/30 拒绝与 0 usable yield | 把 UNKNOWN 并入 PASS/FAIL，或降低观测门槛追求 yield |
 | `V7-RISK-15` | architecture_mitigated_v71 | certificate detection 与 trajectory projection 若混组会混淆检测和修复收益 | D1 修改 C trajectory，或把 D1/D2 合成单一 validity 数字 |
-| `V7-RISK-16` | open_risk | lateral displacement proposal 可能不形成真实 3D cut-in/merge label transition | 用位移幅度或 RGB 差分代替 scenario-effect gate |
+| `V7-RISK-16` | confirmed_failure_v71 | 冻结 30-proposal bank 得到 0 个 0→1 positive 和 0 个 same-actor pair | 用位移幅度或 RGB 差分代替 scenario-effect gate，或事后换 actor |
 | `V7-RISK-17` | confirmed_mitigated_v71 | 单一 `depth` 名称会混淆 expected、first-hit 与 LiDAR measured truth tier；11C 已强制分名和 sidecar | 把 expected depth 登记为 measured GT，或省略 validity/truth-tier |
 
 ## 3. 风险详情与解除条件
@@ -245,6 +245,35 @@ cut-in/merge positive。
 depth；每个产品有独立 validity、definition、truth tier 与 artifact sidecar。独立审计确认三类各 18 个，且没有
 expected-as-measured 混写。后续 export/evaluator 必须继续按产品名和 truth tier 消费，不能重新折叠成无类型
 `depth`。
+
+### V7-H1-11D：H1-CERT / H1-PROJ 预注册拒绝
+
+**冻结事实**
+
+- source-only eligibility 覆盖 3 scenes × 2 actors，P1–P5 共 30 proposals；S1 未删除；
+- C/D1 realized trajectory hash 30/30 完全相同；
+- D1：precision `0.75`、recall `0.8824`、abstention `0.3333`、PASS coverage `0`；
+- C external hard violation `17/30`；
+- D2：0/30 export、0 usable yield，external rate 不可定义；
+- scenario-effect：0 positive、25 negative、5 source-positive/non-event，0 same-actor pair。
+
+**裁决**
+
+H1-CERT 因 precision 低于 `0.80` 拒绝；H1-PROJ 因拒绝全部 proposal、无 comparable export、usable yield
+低于 `70%` 拒绝。按路线转向规则停止 OccGS 方法 claim，只保留 object-centric GS、WorldState、typed label、
+certificate/evaluator 与 run-contract 基础设施。
+
+**唯一修复与防重复**
+
+首版聚合把 rejection 计成零违规，已作为 `metric_aggregation_bug` 唯一修复，旧 aggregate 保留。修复未改变
+方法输出；第二版对无 export 的 rate fail closed。不得继续：
+
+- 调低 known-evidence/coverage 门槛把 UNKNOWN 改成 PASS；
+- 删除 005/S1 或 004 actor 8；
+- 根据现有结果重选 actor、方向、proposal 或 event threshold；
+- 用固定-pool `0/30 violation` 隐藏 D2 的 `30/30 reject`；
+- 因 recall 达标而隐藏 precision fail，或把 UNKNOWN 排除后重算；
+- 在当前配方上继续 H2/H3/scale。
 
 ## 4. 跨路线必须保留的原则
 

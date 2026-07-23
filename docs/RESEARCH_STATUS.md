@@ -2,12 +2,12 @@
 
 > **文档职责**：唯一当前状态与执行授权入口。
 > **最后更新**：2026-07-23
-> **当前阶段**：`V7.1 / H1-11C_done / H1-11D_running`
+> **当前阶段**：`V7.1 / H1-11D_rejected / autoresearch_stopped`
 > **证据基线**：`9722fa2`（V7 feasibility 收口提交）
-> **当前决策**：`modify_method_then_scale`
+> **当前决策**：`reject_occgs_method_claim`
 > **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
-> **当前任务**：`V7-H1-11D` running；11C 同步 renderer、typed depth 与有限标签工程 gate 已通过，正在执行
-> 冻结的 A/B/C/D1/D2 matched pilot ablation。
+> **当前任务**：无 running task；11D 预注册 pilot 已同时拒绝 H1-CERT 与 H1-PROJ，按停止规则不进入
+> H2/H3/scale。保留 object-centric GS、WorldState、typed-label 和 run-contract 基础设施。
 > **执行授权**：用户于 2026-07-23 授权持续 Auto Research；按 gate 自动推进，直到 research reject、必须人工审核、
 > 新外部授权缺失或硬阻塞。
 > **启动代码状态**：commit `b48130d1e48b3964875def1800ae4ccbf7da161c`；dirty fingerprint
@@ -22,15 +22,18 @@
 > code `002bbb499e2bf967a0b16e19c09088cef2e60ef5`；engineering/calibration gate `PASS`，hypothesis 未评估。
 > **H1-11C 正式 run**：`v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5`；
 > code `9780e391fca689c1df033b0aa09611404af583a6`；engineering gate `PASS`，hypothesis 未评估。
+> **H1-11D 正式 run**：`v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc`；
+> code `304407b94350ddfd17a9d4f29e43b7d1b789a326`；engineering gate `PASS`，H1-CERT/H1-PROJ
+> 均为 `REJECTED`，terminal marker 为唯一 `REJECTED`。
 
 正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
 [`archive/2026-07/README.md`](archive/2026-07/README.md)。
 
 ## 1. 一句话结论
 
-V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → StreetGS object-centric 重建 → actor 轨迹改写 →
-反事实 RGB/depth 渲染 → 局部 hard composition”的工程闭环；但尚未证明 occupancy 带来方法增益、局部补全优于
-弱基线，也未证明合成数据有下游收益。因此当前不能 scale，也不能把 feasibility 写成论文假设通过。
+V7/V7.1 已证明 object-centric GS、统一 WorldState、同步 typed label 与 matched evaluation 的工程闭环；
+但冻结的 30-proposal pilot 中，D1 precision 仅 `0.75 < 0.80`，D2 拒绝 `30/30`、usable yield 为 `0`。
+因此 occupancy certificate/repair 方法主张被预注册拒绝，不进入 H2/H3/scale，也不能把 feasibility 写成论文假设通过。
 
 ## 2. V7 当前进展
 
@@ -54,22 +57,22 @@ V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → Street
 
 | 假设 | 状态 | 还缺什么 |
 |---|---|---|
-| H1：occupancy anchor 提高 actor edit 合法性 | open | occupancy 真正进入编辑/可见性/标签链；与 kinematic-only、naive transform 做 matched ablation |
-| H2：显式 disocclusion mask 使局部补全既局部又有效 | open | 几何生成 mask；在伪缺失可测区域比较 no-completion/Telea/局部生成，并测时序、深度与 identity |
-| H3：合法反事实数据带来下游收益 | open | scene-disjoint 的 R / R+naive / R+OccGS / R+OccGS+completion 对照和多 seed 任务指标 |
+| H1：occupancy anchor 提高 actor edit 合法性 | rejected | H1-CERT precision 未达门槛；H1-PROJ 以 30/30 拒绝、0 usable yield 失败 |
+| H2：显式 disocclusion mask 使局部补全既局部又有效 | not_triggered_after_H1_reject | 11D 未通过方法前置门禁；不继续实例化方法实验 |
+| H3：合法反事实数据带来下游收益 | not_triggered_after_H1_reject | proposal bank 无 0→1 positive/same-actor pair，且 H1 已拒绝 |
 
 ## 4. 下一步顺序
 
 | ID | 状态 | 目标 | 解锁条件 |
 |---|---|---|---|
 | `V7-EV-10` | done | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 1,610 个旧文件已逐文件索引；25 项测试与正式 smoke 通过 |
-| `V7-H1-11` | running | 11A/11B/11C 已完成；当前执行 11D A/B/C/D1/D2 matched pilot | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
-| `V7-H2-12` | pending | 用 geometry/ray visibility 构建 disocclusion mask，验证局部 completion | 不只 outside=0，还要在可测 pseudo-hole 上改善 inside quality、temporal、depth/identity |
-| `V7-H3-13` | pending | 先完成下游 smoke，再做 scene-disjoint utility 实验 | OccGS 在等样本量、多 seed 下优于 real-only 与 matched naive GS |
+| `V7-H1-11` | rejected | 11A/11B/11C 工程 gate 通过；11D H1-CERT/H1-PROJ 均拒绝 | 不解锁方法 claim |
+| `V7-H2-12` | not_triggered | 11D primary gate 已触发立即停止；高成本 render/recovery 不实例化 | 需要新的研究决策与重新预注册，不属于本轮自动授权 |
+| `V7-H3-13` | not_triggered | H1 已拒绝且冻结 proposal bank 无合格 positive pair | 需要新路线而非继续当前 OccGS 配方 |
 | `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |
 
-详细协议、停止条件和单卡预算见当前 V7.1 计划。当前最高信息增益路径是冻结的 `H1-11D` 全 proposal
-matched ablation；不是先增强 Telea、扩大 scene 数或切换双卡。
+详细协议、停止条件和单卡预算见当前 V7.1 计划。本轮 Auto Research 已在预注册 reject 终点停止；不得自动
+通过调低 coverage、删除 S1、改 proposal 或把拒绝样本算作零违规来重开。
 
 ## 5. 当前硬边界
 

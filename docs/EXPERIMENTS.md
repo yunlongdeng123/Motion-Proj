@@ -182,7 +182,48 @@ geometry，但后续 visibility/label gate 必须 fail closed。
 相关 V7.1 测试、CUDA smoke 与正式 run contract validation 均通过；正式 run 只有唯一 `COMPLETE`。
 `hypothesis_verdict=not_evaluated`，不能将 label-sync 工程通过写成 occupancy 合法性增益。
 
-## 12. 登记规则
+## 12. V7.1 H1-11D matched pilot ablation
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc` | rejected / `REJECTED` | source-only 选择 2 actors/scene；30 proposals；A/B/C/D1/D2；C/D1 30/30 trajectory hash 相同；D1 precision `0.75`、recall `0.8824`、abstention `0.3333`、PASS coverage `0`；D2 0/30 export、usable yield `0` | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11D/v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc/` | engineering gate 通过；H1-CERT 与 H1-PROJ 均按预注册拒绝。不得把 D2 全拒绝写成 violation reduction |
+
+冻结 config SHA 为 `cf8d5ebc1429e076fc5142aa6a759a18f54b7f3f937c8423d51505a094bc9fe3`，
+proposal-bank SHA 为 `f8986915f8d2be0cddddfa6be86f4d2d1ece456c12bf9a962cafec78fd058cd7`。
+proposal bank 只读取 source observation，以
+`(-visible_frame_count, -track_frame_count, -lidar_point_count, actor_id)` 确定性选择：
+
+- 003：actor 38、35；
+- 005（S1）：actor 23、20；
+- 004：actor 4、8。
+
+每 actor 使用冻结 P1–P5，得到 30 个 matched proposals。纯 3D scenario-effect 分布为 0 个 0→1 positive、
+25 个 0→0 negative、5 个 source-positive/non-event；same-actor counterfactual pair 为 0。没有按 RGB、
+edit effect 或组间结果换 actor/proposal。
+
+D1 在 30 个可测 C trajectories 上得到 15 TP、5 FP、2 个包含 abstention 的 FN；20 FAIL、10 UNKNOWN、
+0 PASS。五个 FP 全来自 004 actor 8，occupancy certificate 各报告 5 个 static-overlap voxels，而独立 raw
+LiDAR evaluator 为 0 non-source points；两个 FN 来自 005 actor 20 的 P3/P5，D1 因 known fraction 为 0
+给 UNKNOWN，而 raw LiDAR 分别发现 3/2 个 non-source points。precision `15/20=0.75` 未达到冻结 `0.80`
+门槛，故即使 recall `15/17=0.8824` 达标，H1-CERT 仍为 `REJECTED`。
+
+C 接受 30/30，独立 external hard violation 为 17/30：003 `5/10`、005 `7/10`、004 `5/10`。D2 的所有
+candidate 均不能同时取得 kinematic、continuous OBB、occupancy 与 visibility PASS，故拒绝 30/30，
+没有可测 export，usable yield 为 `0/30`。D2 external violation rate 因无 export 而不可定义，不能记为
+`0%`；第 4–7 条 projection gate 均失败，H1-PROJ 为 `REJECTED`。
+
+首版 aggregate 曾错误地以固定 30 proposal 为 denominator，把 30 个拒绝样本计成“0 violation”。原文件已保留为
+`aggregate_pre_export_denominator_fix.json`；按计划允许的一次 `metric_aggregation_bug` 修复，在 commit
+`b82c5400fdf50eac0e04c1b55c7baa732dd6fa5b` 中改为无可测 export 时 fail closed。该修复不改变任何 trajectory、
+certificate 或 external evaluator 输出。修复后 aggregate SHA 为
+`813971c4b88e23f411b1a61c42bb546259d5157d42d4168ad173ba8657b2401d`。
+
+由于 D2 以拒绝全部 proposal 触发第 16.1 节立即停止规则，高成本 12-frame × 3-camera render audit 和 blind
+review pack 未实例化；正式 run 保存了几何预选帧 manifest、未填写的人审 prompt 草稿和停止原因。机器 primary
+gate 已足以 reject，不需要人工 verdict。22 项相关测试通过，正式 run 经独立 contract validation 为唯一
+`REJECTED`。
+
+## 13. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
