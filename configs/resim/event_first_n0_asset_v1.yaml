@@ -1,0 +1,76 @@
+schema_version: event-first-n0-asset-v1
+task_id: N0-ASSET-01
+split: nuscenes-mini-scenes-003-004-005
+seed: 0
+run_root: /root/autodl-tmp/runs/event_first/N0-ASSET-01
+repo_root: /root/autodl-tmp/motion_proj
+dataset_root: /root/autodl-tmp/data/nuscenes
+processed_root: /root/autodl-tmp/data/occgs/processed_10Hz/mini
+archive:
+  path: /root/autodl-tmp/nuScenes-map-expansion-v1.3.zip
+  sha256: 9dbc80a095b6b28d9b79fc9a43471a750dc92ca78c6d0db288fd92b34be5a144
+  size_bytes: 398535531
+  source: user_provided_official_nuscenes_map_expansion_v1.3
+  license_path: /root/autodl-tmp/data/nuscenes/maps/LICENSE
+maps:
+  minimum_version: "1.3"
+  required_layers:
+    - polygon
+    - line
+    - node
+    - drivable_area
+    - road_segment
+    - road_block
+    - lane
+    - lane_connector
+    - arcline_path_3
+    - connectivity
+  files:
+    boston-seaport:
+      path: maps/expansion/boston-seaport.json
+      sha256: fc33712481efd763be39ce7edca0ec924d2d1fe20e1c89d52e21bf43d86e6b59
+    singapore-hollandvillage:
+      path: maps/expansion/singapore-hollandvillage.json
+      sha256: 0c9209c277686e367b06ab5bbe2547ba357f7f790365cb4927f44ae0f78266b2
+    singapore-onenorth:
+      path: maps/expansion/singapore-onenorth.json
+      sha256: 17939122b940d7faff50fa7ff623ded7f739549a781c32dff1ecd1ac7bebca02
+    singapore-queenstown:
+      path: maps/expansion/singapore-queenstown.json
+      sha256: c7e75f5a5643c4831aae1c99a0fdcc61e9ba3c01f98d922f0fafa34ea1062927
+prediction:
+  path: maps/prediction/prediction_scenes.json
+  sha256: 9bea18f585c852c9dc9a66bdd28cb4ee1e021623047a58e75c731b585d737e87
+license:
+  path: maps/LICENSE
+  sha256: 1a218286e733f6d6135fc5698d614cda2be94ea096f6eee280278458e570636a
+scenes:
+  - processed_scene_id: "003"
+    nuscenes_scene_index: 3
+    scene_name: scene-0655
+    scene_token: bebf5f5b2a674631ab5c88fd1aa9e87a
+    map_name: boston-seaport
+    sample_count: 41
+    selected_actor_ids: [38, 35]
+  - processed_scene_id: "005"
+    nuscenes_scene_index: 5
+    scene_name: scene-0796
+    scene_token: c5224b9b454b4ded9b5d2d2634bbda8a
+    map_name: singapore-queenstown
+    sample_count: 40
+    selected_actor_ids: [23, 20]
+  - processed_scene_id: "004"
+    nuscenes_scene_index: 4
+    scene_name: scene-0757
+    scene_token: 2fc3753772e241f2ab2cd16a784cc680
+    map_name: boston-seaport
+    sample_count: 41
+    selected_actor_ids: [4, 8]
+gates:
+  map_version_exact: "1.3"
+  require_all_maps_loadable: true
+  require_scene_mapping_exact: true
+  require_processed_raw_pose_roundtrip: true
+  pose_translation_tolerance_m: 0.000001
+  pose_rotation_tolerance_rad: 0.000001
+  closest_lane_radius_m: 8.0
