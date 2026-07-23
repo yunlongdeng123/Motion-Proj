@@ -1,0 +1,12 @@
+schema_version: scenario-effect-v1
+input_domain: realized_3d_world_state_only
+event_min_consecutive_frames: 5
+min_lateral_gap_change_m: 0.5
+min_boundary_crossings: 1
+ttc_valid_range_s: [1.0, 6.0]
+time_headway_valid_range_s: [0.5, 4.0]
+positive_label_transition: "0->1"
+negative_label_transition: "0->0"
+no_map_corridor_source: proxy
+pair_schema_version: counterfactual-pair-v1
+pair_tie_break: lexicographic_proposal_id

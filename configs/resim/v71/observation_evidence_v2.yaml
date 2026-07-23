@@ -1,0 +1,16 @@
+schema_version: observation-evidence-v2
+source_version: legacy-o0-separated-v2
+legacy_root: /root/autodl-tmp/data/occgs/occupancy
+processed_root: /root/autodl-tmp/data/occgs/processed_10Hz/mini
+output_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/evidence_v2
+scenes: ["003", "005", "004"]
+frames: [0, 79]
+grid:
+  minimum: [-40.0, -40.0, -1.0]
+  maximum: [40.0, 40.0, 5.4]
+  voxel_size: 0.4
+base_dynamic_removal_policy: restore_UNKNOWN
+dynamic_voxelizer: oriented-box-center-inclusion-v1
+coarse_ablation: rotated-corner-AABB-v1
+layer_serialization: sparse-flat-indices-v1
+unknown_is_free: false

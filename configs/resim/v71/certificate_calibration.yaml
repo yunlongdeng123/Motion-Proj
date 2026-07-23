@@ -1,0 +1,24 @@
+schema_version: certificate-calibration-v1
+task_id: V7-H1-11B
+split: PILOT-3-calibration
+scenes: ["003", "005", "004"]
+processed_root: /root/autodl-tmp/data/occgs/processed_10Hz/mini
+registry_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11A/registry_build
+evidence_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/evidence_v2
+output_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/calibration
+frame_range: [0, 79]
+frame_period_s: 0.1
+thresholds:
+  max_step_m: 5.0
+  max_speed_mps: 55.0
+  max_acceleration_mps2: 100.0
+  collision_clearance_m: 0.0
+targets:
+  measurable_real_control_retention: 0.95
+  detectable_controlled_negative_recall: 1.0
+controlled_negatives:
+  collision: expected_FAIL
+  teleport: expected_FAIL
+  offroad_without_map: expected_UNKNOWN
+unknown_policy: never_coerce_to_PASS
+road_support_without_map: UNKNOWN
