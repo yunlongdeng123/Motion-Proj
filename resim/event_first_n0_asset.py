@@ -14,6 +14,7 @@ import yaml
 from nuscenes.map_expansion.map_api import NuScenesMap
 from nuscenes.nuscenes import NuScenes
 from pyquaternion import Quaternion
+from scipy.spatial import cKDTree
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -103,27 +104,51 @@ def _actor_positions(processed_root: Path, scene_id: str, actor_ids: list[int]) 
     return output
 
 
-def _lane_audit(nmap: NuScenesMap, xy_rows: list[dict], radius_m: float) -> dict:
+def _build_lane_index(nmap: NuScenesMap) -> tuple[cKDTree, list[str]]:
+    tokens = [row["token"] for row in nmap.lane + nmap.lane_connector]
+    discrete = nmap.discretize_lanes(tokens, 1.0)
+    points = []
+    point_tokens = []
+    for token in tokens:
+        for x, y, _ in discrete[token]:
+            points.append((x, y))
+            point_tokens.append(token)
+    return cKDTree(np.asarray(points, dtype=float)), point_tokens
+
+
+def _lane_audit(
+    nmap: NuScenesMap,
+    lane_index: tuple[cKDTree, list[str]],
+    xy_rows: list[dict],
+    radius_m: float,
+) -> dict:
+    tree, point_tokens = lane_index
     matched = 0
-    layer_hits = 0
     examples = []
     for row in xy_rows:
         x, y = row["xy"]
-        lane_token = nmap.get_closest_lane(x, y, radius=radius_m)
-        layers = nmap.get_records_in_radius(
-            x, y, radius=0.1, layer_names=["drivable_area", "lane", "lane_connector"]
-        )
+        distance, index = tree.query(np.asarray([x, y], dtype=float), k=1)
+        lane_token = point_tokens[int(index)] if distance <= radius_m else ""
         matched += int(bool(lane_token))
-        layer_hits += int(any(layers.values()))
         if len(examples) < 5:
-            examples.append({**row, "closest_lane_token": lane_token, "layers": layers})
+            layers = nmap.get_records_in_radius(
+                x, y, radius=0.1, layer_names=["drivable_area", "lane", "lane_connector"]
+            )
+            examples.append(
+                {
+                    **row,
+                    "closest_lane_token": lane_token,
+                    "centerline_distance_m": float(distance),
+                    "point_layers": layers,
+                }
+            )
     count = len(xy_rows)
     return {
         "query_count": count,
         "closest_lane_match_count": matched,
         "closest_lane_match_fraction": matched / count if count else None,
-        "drivable_or_lane_point_hit_count": layer_hits,
-        "drivable_or_lane_point_hit_fraction": layer_hits / count if count else None,
+        "closest_lane_implementation": "NuScenesMap.discretize_lanes@1m+cKDTree",
+        "point_layer_query_count": len(examples),
         "examples": examples,
     }
 
@@ -220,6 +245,9 @@ def run(config_path: Path, output_root: Path | None) -> Path:
                 }
             )
         nmap = maps[expected["map_name"]]["api"]
+        if "lane_index" not in maps[expected["map_name"]]:
+            maps[expected["map_name"]]["lane_index"] = _build_lane_index(nmap)
+        lane_index = maps[expected["map_name"]]["lane_index"]
         actor_rows = _actor_positions(
             processed_root,
             expected["processed_scene_id"],
@@ -240,8 +268,10 @@ def run(config_path: Path, output_root: Path | None) -> Path:
                         row["rotation_error_rad"] for row in pose_rows
                     ),
                 },
-                "ego_lane_audit": _lane_audit(nmap, ego_rows, radius),
-                "selected_actor_lane_audit": _lane_audit(nmap, actor_rows, radius),
+                "ego_lane_audit": _lane_audit(nmap, lane_index, ego_rows, radius),
+                "selected_actor_lane_audit": _lane_audit(
+                    nmap, lane_index, actor_rows, radius
+                ),
             }
         )
 
@@ -260,7 +290,11 @@ def run(config_path: Path, output_root: Path | None) -> Path:
     run_dir.mkdir(parents=True, exist_ok=False)
     started_at = utc_now()
     maps_serializable = {
-        name: {key: value for key, value in record.items() if key != "api"}
+        name: {
+            key: value
+            for key, value in record.items()
+            if key not in {"api", "lane_index"}
+        }
         for name, record in maps.items()
     }
     asset_manifest = {
