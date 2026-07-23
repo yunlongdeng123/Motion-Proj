@@ -1,13 +1,16 @@
 # Motion-Proj 当前研究状态
 
 > **文档职责**：唯一当前状态与执行授权入口。
-> **最后更新**：2026-07-22
-> **当前阶段**：`V7 / feasibility_done / method_validation_pending`
+> **最后更新**：2026-07-23
+> **当前阶段**：`V7.1 / evidence_contract_running`
 > **证据基线**：`9722fa2`（V7 feasibility 收口提交）
 > **当前决策**：`modify_method_then_scale`
-> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)
-> **当前任务**：`V7-EV-10` pending；先补齐证据与公平基线，再启动 H1/H2/H3 方法实验。
-> **执行授权**：本轮只完成文档整理；后续实验计划已定义但尚未启动。
+> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
+> **当前任务**：`V7-EV-10` running；执行范围锁定为证据索引、正式 run contract、S0 聚合修复与 smoke。
+> **执行授权**：用户于 2026-07-23 明确指令执行 V7.1；EV-10 gate 完成前不解锁 H1-11A。
+> **启动代码状态**：commit `b48130d1e48b3964875def1800ae4ccbf7da161c`；dirty fingerprint
+> `37827824e789f55ec066f0c0e807762f451afba2fe7f6c1a1d45f09fef9fe414`；启动时唯一未跟踪文件为本计划，
+> SHA256 `add6c69da67e7e6eac192ee069d5765fe5b5c310e7409b60de33fd655af18bbb`。
 
 正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
 [`archive/2026-07/README.md`](archive/2026-07/README.md)。
@@ -48,13 +51,13 @@ V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → Street
 
 | ID | 状态 | 目标 | 解锁条件 |
 |---|---|---|---|
-| `V7-EV-10` | pending | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 既有证据可逐项定位，新 run 模板 fail-closed |
+| `V7-EV-10` | running | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 既有证据可逐项定位，新 run 模板 fail-closed |
 | `V7-H1-11` | pending | occupancy 接入约束、可见性与同步标签；在相同 scene/actor/轨迹幅度上做公平消融 | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
 | `V7-H2-12` | pending | 用 geometry/ray visibility 构建 disocclusion mask，验证局部 completion | 不只 outside=0，还要在可测 pseudo-hole 上改善 inside quality、temporal、depth/identity |
 | `V7-H3-13` | pending | 先完成下游 smoke，再做 scene-disjoint utility 实验 | OccGS 在等样本量、多 seed 下优于 real-only 与 matched naive GS |
 | `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |
 
-详细协议、停止条件和单卡预算见当前 V7 计划。当前最高信息增益路径是 `EV-10 → H1-11`，不是先增强
+详细协议、停止条件和单卡预算见当前 V7.1 计划。当前最高信息增益路径是 `EV-10 → H1-11`，不是先增强
 Telea、扩大 scene 数或切换双卡。
 
 ## 5. 当前硬边界
