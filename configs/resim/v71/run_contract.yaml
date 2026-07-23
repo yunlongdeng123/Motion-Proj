@@ -1,0 +1,46 @@
+schema_version: 1
+plan_version: V7.1
+task_id: V7-EV-10
+run_root: /root/autodl-tmp/runs/occgs_resim/v71
+
+retrospective_evidence_roots:
+  B0: /root/autodl-tmp/runs/occgs_resim/b0_recon/occgs_b0
+  O0: /root/autodl-tmp/data/occgs/occupancy
+  S0: /root/autodl-tmp/data/occgs/scene_specs/s0_edits
+  C0: /root/autodl-tmp/runs/occgs_resim/c0_cf
+  L0: /root/autodl-tmp/runs/occgs_resim/l0_comp
+  U0: /root/autodl-tmp/runs/occgs_resim/u0_screen
+
+contract:
+  terminal_markers:
+    - COMPLETE
+    - FAILED
+    - REJECTED
+    - BLOCKED
+  required_files:
+    - manifest.json
+    - resolved.yaml
+    - fingerprints/code.json
+    - fingerprints/environment.json
+    - fingerprints/data.json
+    - fingerprints/third_party.json
+    - fingerprints/checkpoints.json
+    - proposal_bank.json
+    - actor_registry.json
+    - world_state_manifest.json
+    - render_request_manifest.json
+    - artifact_manifest.json
+    - metrics.jsonl
+    - summary.json
+  required_directories:
+    - artifacts
+    - logs
+  required_hash_fields:
+    - world_state_hash
+    - render_request_hash
+    - artifact_set_hash
+  optional_branches:
+    h2_generation:
+      not_triggered_value: not_triggered
+      required_parent_reason_field: trigger_reason
+      instantiate_run_when_not_triggered: false

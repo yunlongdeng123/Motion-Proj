@@ -13,9 +13,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from motion_proj.runtime.atomic import atomic_merge_json_object, atomic_write_json
 
 PROC = Path("/root/autodl-tmp/data/occgs/processed_10Hz/mini")
 OUT = Path("/root/autodl-tmp/data/occgs/scene_specs/s0_edits")
@@ -262,12 +269,15 @@ def main():
         out = dict(scene_idx=sid, actor_id=actor, cutin_score=score,
                    start=args.start, end=args.end, variants=variants, version="v2")
         path = OUT / f"scene_{sid:03d}_actor_{actor}_edits.json"
-        json.dump(out, open(path, "w"), indent=2)
+        atomic_write_json(str(path), out)
         summary[sid] = dict(actor=actor, score=score, path=str(path),
                             accept={k: variants[k]["accepted"] for k in variants},
                             peaks={k: variants[k]["peak_abs_dy"] for k in variants})
         print(sid, summary[sid])
-    json.dump(summary, open(OUT / "s0_edit_summary.json", "w"), indent=2)
+    atomic_merge_json_object(
+        str(OUT / "s0_edit_summary.json"),
+        {str(scene_id): value for scene_id, value in summary.items()},
+    )
 
 
 if __name__ == "__main__":

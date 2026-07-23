@@ -29,6 +29,20 @@ def atomic_write_json(path: str, value: Any) -> None:
     atomic_write_text(path, json.dumps(value, indent=2, ensure_ascii=False, default=str, allow_nan=False) + "\n")
 
 
+def atomic_merge_json_object(path: str, updates: dict[str, Any]) -> dict[str, Any]:
+    """原子合并 JSON object，避免分批运行覆盖已有聚合条目。"""
+    current: dict[str, Any] = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as handle:
+            loaded = json.load(handle)
+        if not isinstance(loaded, dict):
+            raise ValueError(f"无法合并非 object JSON: {path}")
+        current.update(loaded)
+    current.update(updates)
+    atomic_write_json(path, current)
+    return current
+
+
 @contextlib.contextmanager
 def atomic_directory(target: str) -> Iterator[str]:
     """在临时目录完成写入；成功后一次性提交到目标路径。"""
