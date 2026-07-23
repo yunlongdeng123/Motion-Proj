@@ -33,7 +33,7 @@
 | `V7-RISK-05` | legacy_limitation | V7 既有 run 缺正式 manifest、resolved config 与终态标记；V7.1 新 run 已由 EV-10 fail closed | 事后猜 seed/fingerprint 或伪造 immutable provenance |
 | `V7-RISK-06` | open_risk | 只覆盖 mini 三场景，S1 held-out 质量偏弱 | 先扩规模、只筛容易场景或把三场景外推为论文结论 |
 | `V7-RISK-07` | open_risk | editor 只使用运动学/距离规则，label regeneration 未闭环 | 把 kinematic validator 攵称 occupancy certificate |
-| `V7-RISK-08` | confirmed_risk | O0 坐标注释、metadata 与实际变换含义不一致 | 沿用含义不明的 `pose/T`，或在 round-trip 前计算 H1 指标 |
+| `V7-RISK-08` | legacy_risk_mitigated_v71 | O0 坐标注释、metadata 与实际变换含义不一致；11A 已冻结显式 frame 合同 | 沿用含义不明的 `pose/T`，或在 round-trip 前计算 H1 指标 |
 
 ## 3. 风险详情与解除条件
 
@@ -183,6 +183,16 @@ occupancy 与 visibility regeneration 流水线。
 `V7-H1-11A` 统一使用 `T_dst_src` 命名，修正新 schema/adapter 的 frame 声明，以 synthetic fixtures 和
 PILOT-3 原始标定验证 translation、yaw、box corners、camera projection 及 checkpoint pose round trip。
 旧 O0 文件不原地改写；正式 H1 evidence 产生新版本与新 fingerprint。
+
+**2026-07-23 缓解结果**
+
+- 11A 将 annotation/model/grid/camera/LiDAR frame 分别冻结为 world、start-CAM_FRONT、per-frame-LiDAR、
+  `T_world_camera` 与 `T_world_lidar`；
+- 三场景 1,679 个 actor poses 的 translation、rotation、box 和三前向相机投影 round-trip gate 通过；
+- registry 跨独立进程重建 hash 完全一致，正式 run 以唯一 `COMPLETE` 结束。
+
+旧 O0 metadata 不原地改写，故该风险仍是 retrospective artifact 的 legacy limitation；V7.1 后续模块必须引用
+11A coordinate contract 和新 fingerprint。
 
 ## 4. 跨路线必须保留的原则
 

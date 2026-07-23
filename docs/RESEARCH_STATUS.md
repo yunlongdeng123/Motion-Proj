@@ -2,11 +2,12 @@
 
 > **文档职责**：唯一当前状态与执行授权入口。
 > **最后更新**：2026-07-23
-> **当前阶段**：`V7.1 / H1-11A_running`
+> **当前阶段**：`V7.1 / H1-11A_done / H1-11B_running`
 > **证据基线**：`9722fa2`（V7 feasibility 收口提交）
 > **当前决策**：`modify_method_then_scale`
 > **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
-> **当前任务**：`V7-H1-11A` running；正在执行坐标审计、WorldState schema、canonical hash 与 actor registry。
+> **当前任务**：`V7-H1-11B` running；11A 工程 gate 已通过，正在构建分层 evidence、scenario effect 与
+> certificate calibration。
 > **执行授权**：用户于 2026-07-23 授权持续 Auto Research；按 gate 自动推进，直到 research reject、必须人工审核、
 > 新外部授权缺失或硬阻塞。
 > **启动代码状态**：commit `b48130d1e48b3964875def1800ae4ccbf7da161c`；dirty fingerprint
@@ -15,6 +16,8 @@
 > **EV-10 实现提交**：`3590558cd1ef3644f10c1b981366c3ccce9cd580`；证据索引
 > `/root/autodl-tmp/runs/occgs_resim/V7_EVIDENCE_INDEX.json`；contract smoke
 > `v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f`。
+> **H1-11A 正式 run**：`v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9`；
+> code `766f2287e79b3cdfc877eb175776482c79c3f98c`；engineering gate `PASS`，hypothesis 未评估。
 
 正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
 [`archive/2026-07/README.md`](archive/2026-07/README.md)。
@@ -56,7 +59,7 @@ V7 已证明单张 4090 上可以完成“nuScenes 三场景预处理 → Street
 | ID | 状态 | 目标 | 解锁条件 |
 |---|---|---|---|
 | `V7-EV-10` | done | 建立 V7 retrospective evidence index，明确缺失 manifest/terminal marker，不伪造历史 provenance；为所有新 run 接入正式 run contract | 1,610 个旧文件已逐文件索引；25 项测试与正式 smoke 通过 |
-| `V7-H1-11` | running | occupancy 接入约束、可见性与同步标签；当前执行 11A 坐标、schema 与 registry | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
+| `V7-H1-11` | running | 11A 已完成；当前执行 11B 分层 evidence、scenario effect 与 certificate calibration | occupancy 方法相对 matched baselines 有预注册、非循环的合法性收益 |
 | `V7-H2-12` | pending | 用 geometry/ray visibility 构建 disocclusion mask，验证局部 completion | 不只 outside=0，还要在可测 pseudo-hole 上改善 inside quality、temporal、depth/identity |
 | `V7-H3-13` | pending | 先完成下游 smoke，再做 scene-disjoint utility 实验 | OccGS 在等样本量、多 seed 下优于 real-only 与 matched naive GS |
 | `V7-SCALE-14` | blocked | 扩 scene、baseline 与 seed | 仅在 H1 与 H3 通过、瓶颈确认为吞吐后解锁 |

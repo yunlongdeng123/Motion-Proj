@@ -98,7 +98,34 @@ python resim/v71_run_contract.py validate \
 S0 editor 已改为原子增量合并 `s0_edit_summary.json`，后续单 scene 执行不再覆盖其他 scene；EV-10 未运行
 editor，也未修改现有 S0 summary 或任何旧 metrics。
 
-## 9. 登记规则
+## 9. V7.1 H1-11A 状态底座
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9` | completed / `COMPLETE` | PILOT-3；seed=0；S0/S1/S2 RigidNodes actor=9/18/5；跨进程 registry hash 稳定；1,679 个 pose 的 coordinate round-trip gate PASS；world/render/artifact-set hashes 完整 | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11A/v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9/` | WorldState schema、显式坐标与 actor registry 工程底座通过；未运行 certificate/projection，不构成 H1-CERT/H1-PROJ 结论 |
+
+实现与运行代码 commit 为 `766f2287e79b3cdfc877eb175776482c79c3f98c`，config fingerprint 为
+`0ff143d9d060d52001e27b5947de24406f38a487c74e1694a79a40ad522dc724`。逐场景 registry hash：
+
+- 003：`c9359fc3a6adeb135db09eab9a10e5a1ebcf452aa57ba779cd1564e2cb7b1ed0`
+- 005：`5cac16f5879df8afb3c0827b4f1ef64a40c4f3abd797f502eef5d0a518ad91ee`
+- 004：`d43d16f2682efcb5576570b0bef8e4e4f1fe59a50a0451d8f47605b38faac470`
+
+坐标审计明确冻结：
+
+- annotation：world frame；
+- DriveStudio model：起始 `CAM_FRONT` sensor frame；
+- O0 grid：per-frame LiDAR sensor frame；
+- extrinsics：`T_world_camera`；LiDAR pose：`T_world_lidar`。
+
+三场景最大 world→model→world translation error 为 `6.83e-13 m`，最大 rotation error 为
+`7.89e-08 rad`；最大 world→grid→world box error 为 `9.10e-13 m`。checkpoint pose refinement 相对原
+annotation 的最大 translation delta 为 `0.8763 m`、最大 rotation delta 为 `0.0532 rad`，作为训练后 pose
+差异单独报告，不混入 round-trip gate。
+
+相关验证为 42 passed；正式 run 经 `v71_run_contract.py validate` 独立复验为唯一 `COMPLETE`。
+
+## 10. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
