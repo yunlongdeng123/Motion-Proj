@@ -33,6 +33,7 @@
 | `V7-RISK-05` | legacy_limitation | V7 既有 run 缺正式 manifest、resolved config 与终态标记；V7.1 新 run 已由 EV-10 fail closed | 事后猜 seed/fingerprint 或伪造 immutable provenance |
 | `V7-RISK-06` | open_risk | 只覆盖 mini 三场景，S1 held-out 质量偏弱 | 先扩规模、只筛容易场景或把三场景外推为论文结论 |
 | `V7-RISK-07` | open_risk | editor 只使用运动学/距离规则，label regeneration 未闭环 | 把 kinematic validator 攵称 occupancy certificate |
+| `V7-RISK-08` | confirmed_risk | O0 坐标注释、metadata 与实际变换含义不一致 | 沿用含义不明的 `pose/T`，或在 round-trip 前计算 H1 指标 |
 
 ## 3. 风险详情与解除条件
 
@@ -160,6 +161,28 @@ occupancy 与 visibility regeneration 流水线。
 
 同一 world-state record 驱动 renderer 与所有标签 writer，逐帧验证 pose、depth、mask、box 和 occupancy 共位；
 对缺失/不可见标签 fail closed。
+
+### V7-RISK-08：O0 坐标框架歧义已确认
+
+**观察**
+
+- `occupancy/build_scene_occupancy.py` 文件头将 grid 描述为首帧 ego-centric；
+- `meta.json` 将同一产物描述为 per-frame ego-centric；
+- 实际实现每帧读取 `lidar_pose/{t}.txt`，以其逆矩阵把 world box 变换到 grid，同时直接使用 sensor-local
+  LiDAR 点。因此产物实际是 per-frame LiDAR-sensor grid，而不是首帧固定 grid，也不能在未审计 LiDAR-to-ego
+  外参前简称 ego frame；
+- DriveStudio 则以起始 `CAM_FRONT` 的 `camera_to_world` 逆矩阵定义 model frame。
+
+**边界**
+
+现有 O0 数值仍可作为 coarse retrospective evidence，但在显式记录 `T_grid_world`、`T_model_world`、
+`T_world_camera` 并通过 world→model/grid→world round trip 前，不得用于 H1 合法性指标。
+
+**解除条件**
+
+`V7-H1-11A` 统一使用 `T_dst_src` 命名，修正新 schema/adapter 的 frame 声明，以 synthetic fixtures 和
+PILOT-3 原始标定验证 translation、yaw、box corners、camera projection 及 checkpoint pose round trip。
+旧 O0 文件不原地改写；正式 H1 evidence 产生新版本与新 fingerprint。
 
 ## 4. 跨路线必须保留的原则
 
