@@ -224,6 +224,78 @@ def continuous_safety_check(
     }
 
 
+def continuous_safety_against_scene(
+    realized_frames: list[dict],
+    *,
+    actor_id: int,
+    raw_actor_frames: dict[int, list[dict]],
+    ego_by_frame: dict[int, np.ndarray],
+    ego_dimensions_lwh,
+    clearance_m: float,
+    max_translation_step_m: float = 0.1,
+    max_yaw_step_rad: float = 0.02,
+) -> dict:
+    """Check every overlapping interval, including partially observed actors and ego."""
+    own = frames_to_boxes(realized_frames, actor_id=actor_id)
+    frame_indices = [int(value["frame_index"]) for value in realized_frames]
+    own_by_frame = dict(zip(frame_indices, own))
+    checked = 0
+    minimum = float("inf")
+    collision_with = None
+
+    comparators: dict[int | str, dict[int, OrientedBox]] = {}
+    for other_id, values in raw_actor_frames.items():
+        if int(other_id) == int(actor_id):
+            continue
+        comparators[int(other_id)] = {
+            int(value["frame_index"]): box
+            for value, box in zip(values, frames_to_boxes(values, actor_id=int(other_id)))
+        }
+    comparators["ego"] = dict(
+        zip(
+            frame_indices,
+            ego_boxes(frame_indices, ego_by_frame, ego_dimensions_lwh),
+        )
+    )
+    for comparator_id, other_by_frame in comparators.items():
+        for first, second in zip(frame_indices[:-1], frame_indices[1:]):
+            if first not in other_by_frame or second not in other_by_frame:
+                continue
+            result = swept_obb_collision(
+                own_by_frame[first],
+                own_by_frame[second],
+                other_by_frame[first],
+                other_by_frame[second],
+                clearance_m=clearance_m,
+                max_translation_step_m=max_translation_step_m,
+                max_yaw_step_rad=max_yaw_step_rad,
+            )
+            checked += 1
+            minimum = min(minimum, float(result["minimum_signed_separation_m"]))
+            if result["collision"]:
+                collision_with = comparator_id
+                return {
+                    "verdict": Verdict.FAIL.value,
+                    "reason": "continuous_obb_collision",
+                    "checked_intervals": checked,
+                    "minimum_signed_separation_m": minimum,
+                    "collision_with": collision_with,
+                }
+    if checked == 0:
+        return {
+            "verdict": Verdict.UNKNOWN.value,
+            "reason": "no_comparable_actor_or_ego",
+            "checked_intervals": 0,
+        }
+    return {
+        "verdict": Verdict.PASS.value,
+        "reason": "no_continuous_obb_collision",
+        "checked_intervals": checked,
+        "minimum_signed_separation_m": minimum,
+        "collision_with": collision_with,
+    }
+
+
 def _load_sparse_dynamic(npz) -> dict[int, np.ndarray]:
     shape = npz["base_state"].shape
     actor_ids = npz["dynamic_actor_ids"]
@@ -259,6 +331,7 @@ def occupancy_certificate(
     lower_vertical_margin_m: float,
     static_overlap_fail_voxels: int,
     minimum_known_fraction_for_pass: float,
+    evidence_cache: dict | None = None,
 ) -> dict:
     total_voxels = known_voxels = static_overlap = dynamic_overlap = 0
     per_frame = []
@@ -277,17 +350,29 @@ def occupancy_certificate(
             lower_vertical_margin_m,
         )
         mask = voxelize_oriented_box(grid_box, grid)
-        with np.load(evidence_scene_root / f"frame_{frame:03d}.npz", allow_pickle=False) as evidence:
-            base = evidence["base_state"]
-            layers = _load_sparse_dynamic(evidence)
-            other_dynamic = np.zeros(mask.shape, dtype=bool)
-            for layer_id, layer in layers.items():
-                if layer_id != actor_id + 1:
-                    other_dynamic |= layer
-            frame_total = int(mask.sum())
-            frame_known = int(np.count_nonzero(mask & (base != 0)))
-            frame_static = int(np.count_nonzero(mask & (base == 2)))
-            frame_dynamic = int(np.count_nonzero(mask & other_dynamic))
+        cache_key = (str(evidence_scene_root), frame)
+        cached = evidence_cache.get(cache_key) if evidence_cache is not None else None
+        if cached is None:
+            with np.load(evidence_scene_root / f"frame_{frame:03d}.npz", allow_pickle=False) as evidence:
+                cached = (
+                    evidence["base_state"].copy(),
+                    evidence["dynamic_actor_ids"].copy(),
+                    evidence["dynamic_layer_offsets"].copy(),
+                    evidence["dynamic_layer_flat_indices"].copy(),
+                )
+            if evidence_cache is not None:
+                evidence_cache[cache_key] = cached
+        base, dynamic_ids, offsets, flat_indices = cached
+        other_parts = [
+            flat_indices[offsets[index] : offsets[index + 1]]
+            for index, layer_id in enumerate(dynamic_ids)
+            if int(layer_id) != actor_id + 1
+        ]
+        other_indices = np.concatenate(other_parts) if other_parts else np.asarray([], dtype=np.int64)
+        frame_total = int(mask.sum())
+        frame_known = int(np.count_nonzero(mask & (base != 0)))
+        frame_static = int(np.count_nonzero(mask & (base == 2)))
+        frame_dynamic = int(np.count_nonzero(mask.reshape(-1)[other_indices]))
         total_voxels += frame_total
         known_voxels += frame_known
         static_overlap += frame_static
@@ -402,6 +487,7 @@ def raw_lidar_external_violation(
     actor_id: int,
     lower_vertical_margin_m: float,
     minimum_points: int,
+    raw_points_cache: dict | None = None,
 ) -> dict:
     """Independent raw-return check; it does not read occupancy or certificate verdicts."""
     total = 0
@@ -410,9 +496,14 @@ def raw_lidar_external_violation(
     realized_boxes = frames_to_boxes(realized_frames, actor_id=actor_id)
     for value, source_world, realized_world in zip(realized_frames, source_boxes, realized_boxes):
         frame = int(value["frame_index"])
-        raw = np.fromfile(processed_scene_root / "lidar" / f"{frame:03d}.bin", dtype=np.float32)
-        width = 4 if raw.size % 4 == 0 else 5 if raw.size % 5 == 0 else 3
-        points = raw.reshape(-1, width)[:, :3].astype(np.float64)
+        cache_key = (str(processed_scene_root), frame)
+        points = raw_points_cache.get(cache_key) if raw_points_cache is not None else None
+        if points is None:
+            raw = np.fromfile(processed_scene_root / "lidar" / f"{frame:03d}.bin", dtype=np.float32)
+            width = 4 if raw.size % 4 == 0 else 5 if raw.size % 5 == 0 else 3
+            points = raw.reshape(-1, width)[:, :3].astype(np.float64)
+            if raw_points_cache is not None:
+                raw_points_cache[cache_key] = points
         T_grid_world = np.linalg.inv(np.asarray(ego_by_frame[frame], dtype=float))
 
         def to_grid(box: OrientedBox) -> OrientedBox:
@@ -480,4 +571,3 @@ def select_geometry_audit_frames(
 
 def outcome_hash(payload: dict) -> str:
     return canonical_sha256(payload)
-
