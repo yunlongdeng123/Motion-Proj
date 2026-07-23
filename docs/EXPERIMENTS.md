@@ -223,7 +223,54 @@ review pack 未实例化；正式 run 保存了几何预选帧 manifest、未填
 gate 已足以 reject，不需要人工 verdict。22 项相关测试通过，正式 run 经独立 contract validation 为唯一
 `REJECTED`。
 
-## 13. 登记规则
+## 13. Event-first N0-ASSET-01
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd` | completed / `COMPLETE` | map-expansion v1.3；4 maps；3 scenes；seed=0；raw/processed pose max translation `0 m`、rotation `1.01065e-7 rad` | `/root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd/` | 官方 vector map、scene→map 与坐标合同通过；不是 event hypothesis 结果 |
+
+实现 commit 为 `fcb5a7392c0169934d5388b9efd12a637b236ff9`。压缩包 SHA 为
+`9dbc80a095b6b28d9b79fc9a43471a750dc92ca78c6d0db288fd92b34be5a144`；asset manifest SHA 为
+`48e8ace83e286b79b31d1adbfedc33bcacf2c43b3f19587dd9c2fc6fbd0c60a7`；scene-map registry SHA 为
+`7c83e936e150ab5ed3ab21c57a55a3ee0143d64264fa0da17cdbd77e9d3560c1`。config fingerprint 为
+`e250cccdf415561e617600ae0e93b3e1f2b190aefd4d960f72023301d5b15696`，data fingerprint 为
+`b03d6cbf6093869c92659626c7a1add182157a71ff9f89cf722e24fcef6ac56b`。
+
+四张地图均为 version 1.3，lane、lane_connector、connectivity、drivable、road layers 可查询。
+003/005/004 ego keyframes 41/40/41 全部在冻结 8 m closest-lane 半径内。旧 selected actors 的匹配为
+266/322、342/342、154/217，只作诊断，不用于修改 N0 gate。
+
+验证：`PYTHONPATH=. pytest -q tests/test_event_first_n0_asset.py`，4 passed；正式 run 唯一 `COMPLETE`。
+
+## 14. Event-first N1-EVENT-01
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n1-event-01__mini-event-v1__s0__20260723T232920917536Z__cd56b326` | rejected / `REJECTED` | 45 eligible actors；71 transitions；22 topology pass；0 interaction positive；0 negative/pair；0 positive scenes | `/root/autodl-tmp/runs/event_first/N1-EVENT-01/v71_n1-event-01__mini-event-v1__s0__20260723T232920917536Z__cd56b326/` | 冻结 mini event pool 不支持可比较 interaction；N2–N5 not triggered |
+
+实现 commit 为 `82117c7ec58db9bbe7e26d0f866442b620b617f6`；config fingerprint 为
+`cd56b326cd38ecda3ab6dd36bb31a38ce03f14aacbef7e199ff8f073558f5cf3`，data fingerprint 为
+`919b08593a5fdf13e668714865cc2f1d2129f5bf221a3d7c3ad54af80ccbc0a3`，event-pool SHA 为
+`6f39cc8b917c277adfc9a8b17130c4d5d1e762beb862cbaf51c92b61727dc792`。
+
+scene 级 eligibility/map match：
+
+- 003：7 actors，464/522 poses；
+- 005：22 actors，1,976/2,067 poses；
+- 004：16 actors，1,238/1,326 poses。
+
+transition taxonomy 为 route continuation 39、merge 19、lane change 3、unresolved 10。19 merges 与
+3 lane changes 通过 topology，但 22/22 interaction FAIL：18 个 exact target token 无邻车，4 个只有
+front、无 rear；其中两个 front 在冻结 60 m 外。预注册要求 positive/negative/pair 各至少 2、positive
+至少覆盖 2 scenes，故 fail closed 为 `reject_mini_event_pool`。
+
+`negative=0` 因 negative 只为 positive actor 构造 same-actor pairing，不代表没有普通稳定行驶窗口。
+exact-token relation 可能存在 corridor fragmentation 风险，须在独立 calibration pool 修正，不能回写本 run。
+
+验证：`PYTHONPATH=. pytest -q tests/test_event_first_n0_asset.py tests/test_event_first_n1_event.py`，8 passed；
+正式 manifest `code_dirty=false`，唯一 terminal marker 为 `REJECTED`。
+
+## 15. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。

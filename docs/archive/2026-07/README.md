@@ -102,9 +102,19 @@ V6 的 C1P/C1S 未运行，禁止通过换 seed、降门槛或扩大同分布 sc
 | [`v7.1-h1-reject/README.md`](v7.1-h1-reject/README.md) | 目录说明、文件 hash 与备份边界 |
 
 V7.1 工程 gate 11A/11B/11C 通过；冻结的 11D matched pilot 同时拒绝 H1-CERT 与 H1-PROJ，
-未进入 H2/H3/scale。当前下一路线只在活跃 `docs/POST_OCCGS_RESEARCH_DIRECTIONS.md` 定义。
+未进入 H2/H3/scale。
 
-## 7. 如何复查历史
+## 7. Event-first N0/N1 mini reject
+
+目录：[`event-first-mini-reject/`](event-first-mini-reject/)
+
+该目录索引 Post-OccGS 路线的 N0 asset pass 与 N1 mini event-pool reject。N1 在冻结的 topology +
+exact-target-token interaction 定义下得到 45 eligible actors、71 transitions、22 topology pass、
+0 interaction positive 和 0 same-actor pair，因此 N2–N5 未触发。
+
+配置逐字快照保存在不可变 run 的 `resolved.yaml`；归档 README 记录 commit、fingerprint、hash、路径和禁止复开项。
+
+## 8. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；

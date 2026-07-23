@@ -1,9 +1,23 @@
 # Post-OccGS 下一研究方向：event-first、map-and-raw-evidence 反事实路线
 
 > **调研日期**：2026-07-24
-> **状态**：研究建议与预注册草案；不是数据下载授权，也不是 H1 复开。
+> **状态**：N0/N1 已执行；mini event pool 于 2026-07-24 正式 reject。
 > **输入事实**：V7.1 H1-CERT/H1-PROJ 均 rejected；30 个 proposal 中 0 positive、D2 0 export。
 > **首选方向**：先证明事件存在，再建立独立几何证据，最后才生成、渲染和检验效用。
+
+## 0. 执行结果与路线更新
+
+- `N0-ASSET-01`：`COMPLETE`。map-expansion v1.3、四图 layer、scene→map、pose contract 与 hash 通过；
+- `N1-EVENT-01`：`REJECTED / reject_mini_event_pool`。45 eligible actors、71 stable transitions、
+  22 topology-pass、0 interaction positive、0 same-actor pair；
+- N2–N5：均 `not triggered`，不得在 mini 上继续。
+
+原路线 A 在 mini split 上已经完成裁决，不再是待执行计划。路线 B 的最小同域版本更新为：
+
+> 先获取 nuScenes `v1.0-trainval` annotations/metadata，用 scene-disjoint calibration 修正
+> exact-token corridor fragmentation，再运行 full-domain annotation+map-only N1；只有 N1 通过才请求 sweeps。
+
+该更新不是对 mini gate 降阈值，也不改变其 `REJECTED` 终态。
 
 ## 1. 研究问题重新定义
 
@@ -29,7 +43,7 @@
 |---|---|---|
 | nuScenes mini | 已有，根目录 `/root/autodl-tmp/data/nuscenes` | 可做 schema、轨迹和 raw sweep smoke |
 | nuScenes raster maps | 4 个 PNG | 可显示，不足以可靠查询 lane connectivity/polygon |
-| nuScenes map expansion vector JSON | 缺失 | `NuScenesMap` lane graph、drivable polygon 正式 gate 暂不可运行 |
+| nuScenes map expansion vector JSON | v1.3 已安装并通过 N0 | lane graph、drivable polygon 可查询 |
 | Waymo / nuPlan 数据 | 缺失 | 不能直接使用 Waymax/nuPlan 做正式 scenario mining |
 | DriveStudio adapters | 有 nuPlan/Waymo adapter 代码 | 仅说明接口可能复用，不说明数据或许可已就绪 |
 | 磁盘 | `/root/autodl-tmp` 可用约 65G | 小型 map asset 可行；大型数据需独立预算与授权 |
@@ -162,7 +176,12 @@ GS 在此处是 renderer，不是安全证书。completion 的 outside-mask inva
 
 ## 5. 条件性路线 B：换事件数据底座
 
-如果 N1 证明 nuScenes mini 没有足够事件，最合理的动作是换数据底座，而不是继续在 3 scenes 上调阈值。
+N1 已证明冻结 mini pool 没有足够可配对事件。最合理的动作是先扩至同域 full nuScenes，而不是继续在
+3 scenes 上调阈值；只有 full-domain 仍失败才换数据底座。
+
+- nuScenes 官方数据包含 1,000 个约 20 秒 scenes，其中 850 个属于 train/val；当前只使用 3 scenes。
+  因此 `v1.0-trainval` annotations/metadata 是最小的规模突破，且复用同一 map/schema/devkit。
+- 先做 annotation+map-only 事件挖掘，不需要立即取得 camera/LiDAR sweeps；N1 通过后才进入 N2 资产预算。
 
 - nuPlan 官方基准包含 1,282 小时、4 城市，并专门挖掘常见/稀有 scenario，支持 closed-loop interaction
   ([nuPlan paper](https://arxiv.org/abs/2403.04133))。
@@ -208,13 +227,12 @@ GS 在此处是 renderer，不是安全证书。completion 的 outside-mask inva
 
 ## 8. 推荐的最小下一步
 
-1. 生成 `N0-ASSET` 清单：只列出官方 map expansion 所需文件、来源、预计体积、许可和 hash 流程；
-2. 在现有 mini 上实现不依赖 vector map 的 annotation continuity/actor visibility 审计，估算事件上限；
-3. 等 map asset 获得授权后，运行 lane topology smoke；
-4. 先提交 N1 event-pool 报告；只有它通过，才实现 N2/N3。
-
-这一路线的第一个有价值结论可能仍然是 reject：如果 mini 没有足够事件，尽早证明并转向数据底座，
-比继续消耗 GPU 做渲染更有信息量。
+1. 当前停止：保留 N0 `COMPLETE` 与 N1 `REJECTED`，不启动 N2/N3；
+2. 若获新授权，取得 nuScenes `v1.0-trainval` annotations/metadata，不先下载 sweeps/图像；
+3. 用 mini 的 22 topology-pass candidates 作为 calibration/audit pool，检查 graph corridor 跨 token
+   longitudinal relation；不得回写 mini verdict；
+4. 冻结 corridor evaluator 后，在 scene-disjoint trainval evaluation scenes 重跑 N1；
+5. 只有 full-domain N1 通过，才请求 raw sweeps 并运行 N2。
 
 ## 9. 来源范围与证据等级
 

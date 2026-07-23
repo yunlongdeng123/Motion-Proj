@@ -1,19 +1,19 @@
 # N0 资产与事件上限预检
 
 > **日期**：2026-07-24
-> **状态**：`READ_ONLY_PREFLIGHT_COMPLETE / VECTOR_MAP_MISSING`
+> **状态**：`N0_ASSET_COMPLETE / N1_MINI_EVENT_POOL_REJECTED`
 > **范围**：现有 nuScenes mini、DriveStudio 10 Hz 派生数据、H1 冻结 actor pool。
-> **未执行**：未下载数据、未修改标注、未启动 GPU run。
+> **执行说明**：用户提供 map-expansion v1.3；未修改标注、未使用 GPU。
 
 ## 1. 结论
 
-现有数据足以确认 H1 proposal bank 的上游弱点，但不足以运行正式 event gate：
+只读预检时的资产缺口已解除，N0 正式通过；随后的 N1 event gate 正式拒绝：
 
 - 3 个处理场景实际对应 2 张地图：`boston-seaport` 与 `singapore-queenstown`；
-- 本机缺 `maps/expansion/*.json`，所以不能正式查询 lane、lane_connector、connectivity 或 drivable polygon；
+- map-expansion v1.3 四图均可加载并查询 lane、lane_connector、connectivity 与 drivable polygon；
 - 冻结 6 actors 的轨迹都连续，但其中 3 个在完整 track span 内位移不足 1 m；
 - 因此“track 很长/可见帧多”不等于“适合产生 cut-in/merge 事件”；
-- 下一步需要的最小外部资产是两张相关地图的官方 map-expansion JSON，而不是全量 nuScenes/Waymo/nuPlan。
+- N1 扩展到所有 source-only eligible actors 后仍为 positive=0、same-actor pair=0，mini pool 已 reject。
 
 ## 2. scene→map provenance
 
@@ -83,20 +83,41 @@ DriveStudio converter 直接使用 `self.nusc.scene[scene_idx]`，并把 `scene_
 官方实现与路径：
 [nuScenes map API](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/map_expansion/map_api.py)。
 
-## 5. 获得授权后的 N0 smoke
+## 5. N0 正式结果
 
-1. 下载到临时目录，核对来源、许可、大小、version 和 SHA256；
-2. 只读安装到 `maps/expansion/`，不覆盖当前 raster PNG；
-3. 对两张地图实例化 `NuScenesMap`；
-4. 对三场景所有 ego/selected-actor poses 查询 closest lane、drivable layer 与 incoming/outgoing connectivity；
-5. 验证 world/map 坐标不需隐式变换；保留 round-trip fixture；
-6. 生成 immutable `asset_manifest.json` 和 `scene_map_registry.json`；
-7. 若任何 selected actor 长时间没有附近 lane，先审计坐标/场景语义，不放宽搜索半径救结果。
+用户提供：
 
-## 6. 停止与授权边界
+`/root/autodl-tmp/nuScenes-map-expansion-v1.3.zip`
 
-当前已到明确外部边界：官方 map-expansion 文件尚未存在，本轮没有数据下载授权。没有该资产时可以继续写
-N1 schema/tests，但不能给出正式事件标签或运行 lane-based proposal。
+压缩包测试无错误，大小 `398,535,531 bytes`，SHA256：
 
-若用户授权，建议只批准 nuScenes 官方 map expansion 包/上述两张 JSON，不批准全量 Waymo、nuPlan 或大型
-模型权重。后者只有在 mini event pool 被正式 reject 后才重新评估。
+`9dbc80a095b6b28d9b79fc9a43471a750dc92ca78c6d0db288fd92b34be5a144`
+
+只安装 `expansion/`、`prediction/` 与 `LICENSE`，未覆盖 raster PNG。正式 run：
+
+`/root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd/`
+
+| gate | observed | verdict |
+|---|---:|---|
+| 四图 version | 4/4 为 `1.3` | pass |
+| 必需 map layers | 4/4 完整 | pass |
+| scene→map exact | 3/3 | pass |
+| raw/processed keyframe pose translation | max `0 m` | pass |
+| raw/processed keyframe pose rotation | max `1.01065e-7 rad` | pass |
+| ego closest-lane | 121/121 | diagnostic pass |
+| selected actor closest-lane | 003 `266/322`；005 `342/342`；004 `154/217` | diagnostic |
+
+asset manifest SHA 为 `48e8ace8…c60a7`，scene-map registry SHA 为 `7c83e936…560c1`，唯一终态
+`COMPLETE`。
+
+selected actor lane coverage 不作为 N0 fail gate；它暴露的是旧 actor pool 含静止/非道路位置对象。N1
+因此重新使用预注册 source-only eligibility 扫描全部 vehicle tracks，没有通过挑 actor 修补旧结果。
+
+## 6. N1 停止边界
+
+N1 正式 run 得到 45 eligible actors、71 transitions、22 topology-pass candidates，但 interaction
+PASS 为 0；`REJECTED / reject_mini_event_pool`。完整分解见
+[`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md)。
+
+不得在这三个 scenes 上降低 front/rear、gap、稳定帧或 map-match 门槛翻案。下一次数据动作应是新的明确授权：
+优先 nuScenes `v1.0-trainval` annotations/metadata；传感器 sweeps、Waymo、nuPlan 与大模型仍不在授权内。

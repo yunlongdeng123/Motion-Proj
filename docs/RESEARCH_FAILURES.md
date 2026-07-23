@@ -9,6 +9,93 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## N1 mini event-pool reject（2026-07-24）
+
+### N1-F01：interaction-support failure
+
+**观察**
+
+- N0 map-expansion、scene→map 与 pose contract 已通过，不再是资产缺失；
+- 45 个 source-only eligible actors 产生 71 个 stable token transitions；
+- topology taxonomy：39 route continuations、19 merges、3 lane changes、10 unresolved；
+- 19 merges + 3 lane changes 共 22 个 topology-pass candidates；
+- 22/22 的 exact-target-token front/rear relation 为 FAIL；
+- 18 个没有 target-token 邻车，4 个只有 front、没有 rear；0 个同时满足 2–60 m front/rear；
+- positive=0、negative pairing=0、same-actor pair=0、positive scenes=0，唯一终态 `REJECTED`。
+
+**能下的结论**
+
+冻结 mini split 不支持可比较 interaction event pool，N2–N5 不触发。地图缺失不是旧 H1 的唯一根因；
+补地图后 mini interaction support 仍为零。
+
+**不能下的结论**
+
+不能写成“人类绝对看不到任何交互”或“full nuScenes 也没有事件”。exact target token 可能把同一
+longitudinal corridor 上的 actor 分到相邻 lane/connector token；该表示风险尚未独立校准。
+
+**复开条件**
+
+mini run 不复开。新的路线必须：
+
+1. 使用不同 run/task ID；
+2. 以 22 topology-pass mini cases 仅作 calibration/audit，不作 formal evaluation；
+3. 在 graph corridor 上定义 route-aligned curvilinear front/rear，而非后验放宽欧氏半径；
+4. calibration 与 evaluation scenes 分离；
+5. 优先在 full nuScenes trainval annotations/metadata 上冻结并评估。
+
+### N1-F02：exact-token corridor fragmentation
+
+**观察**
+
+71 transitions 中 39 个只是 directed route continuation，说明官方 lane graph 将连续道路划分为多个
+lane/lane_connector token。当前 interaction 只接受 relation frame 上与 subject 完全相同的 target token。
+
+**推断**
+
+该规则高精度但可能低 recall，尤其在 lane→connector→lane 或短 lane segment 附近。它是 0 interaction
+PASS 的一个可能贡献因素，但不是已证实的唯一原因；mini 本身也可能确实缺少前后车。
+
+**禁止快捷修补**
+
+- 不把“相邻 token”全部并入；
+- 不把只有 front 或只有 rear 改成 positive；
+- 不把 82–89 m front 后验纳入 60 m；
+- 不在同一 22 cases 上调 graph hops、gap 或 heading 直到出现 positive。
+
+允许的修复是先定义有向 corridor、route-aligned `s` 和 branch disambiguation，再由独立 calibration
+审计冻结；formal evaluation 必须 scene-disjoint。
+
+### N1-F03：mini scale 与静止对象密度
+
+**观察**
+
+- 003/005/004 eligible actors 为 7/22/16；
+- 因首尾位移不足 5 m 被拒的 actor 为 107/17/5；
+- eligible pose map-match coverage 为 88.89% / 95.60% / 93.36%；
+- 官方 full nuScenes 有 1,000 个约 20 秒 scenes，850 个为 train/val，而当前 formal pool 只有 3 scenes。
+
+**结论**
+
+mini 三场景对多 scene interaction event pool 的统计支持不足。下一步应扩数据底座，不应换 actor 或删场景。
+优先同域 `v1.0-trainval` annotations/metadata，只有其 event gate 仍失败才评估 nuPlan/Waymo。
+
+### N1-F04：negative=0 的语义
+
+N1 只为已经有 positive 的 actor 构造 same-actor comparable negative。因此 `negative=0` 是
+`positive actor set=∅` 的结构结果，不证明没有稳定非事件窗口。后续报告必须同时给出 positive actor 分母，
+不得把 negative=0 解释为数据中全是事件或完全无普通驾驶。
+
+### N1 禁止重试矩阵
+
+| 快捷做法 | 为什么无效 | 允许替代 |
+|---|---|---|
+| 删除 rear requirement | 改变冻结 interaction claim | corridor calibration + scene-disjoint evaluation |
+| 扩大 60 m 到覆盖 82–89 m | 看结果后调阈值 | 在新 calibration pool 依据任务时间窗冻结 |
+| exact token 改成任意相邻 token | 可能跨 branch/对向车道误配 | directed corridor + route-aligned `s` |
+| 从 22 cases 挑“看起来像”的 positive | 人工/后验标签泄漏 | 完整盲审协议；calibration 不进入 eval |
+| 在 005 单 scene 继续 | 删除失败 scene、失去多 scene gate | full trainval scene-disjoint split |
+| 直接启动 N2/N3/render | 没有 comparable event | 新 N1 先通过 |
+
 ## 0. H1 reject 执行摘要
 
 ### 0.1 为什么 reject
