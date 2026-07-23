@@ -39,6 +39,8 @@ from motion_proj.resim.label_regeneration import (
     vehicle_instance_mask,
     visible_box_from_mask,
 )
+from motion_proj.resim.observation_evidence import ObservationEvidenceFrame
+from motion_proj.resim.safety_geometry import GridSpec, OrientedBox
 from motion_proj.resim.schema import render_request_hash, render_request_payload
 from motion_proj.runtime.atomic import atomic_write_json
 from motion_proj.runtime.fingerprint import file_fingerprint
@@ -102,6 +104,42 @@ def _frame_record(world: dict, frame_index: int) -> dict:
     if len(matches) != 1:
         raise RuntimeError(f"WorldState 中 frame {frame_index} 必须恰好一次")
     return matches[0]
+
+
+def _state_evidence(
+    path: Path, frame_record: dict, occupancy_actor_id: int
+) -> tuple[np.ndarray, np.ndarray]:
+    stored = np.load(path, allow_pickle=False)
+    shape = stored["base_state"].shape
+    layers = {}
+    ids = stored["dynamic_actor_ids"]
+    offsets = stored["dynamic_layer_offsets"]
+    flat = stored["dynamic_layer_flat_indices"]
+    for index, actor_id in enumerate(ids):
+        mask = np.zeros(np.prod(shape), dtype=bool)
+        mask[flat[offsets[index] : offsets[index + 1]]] = True
+        layers[int(actor_id)] = mask.reshape(shape)
+    grid = GridSpec((-40.0, -40.0, -1.0), (40.0, 40.0, 5.4), 0.4)
+    evidence = ObservationEvidenceFrame(
+        grid,
+        stored["base_state"],
+        stored["observed_count"],
+        stored["observation_age_frames"],
+        layers,
+        "H1-11B-evidence-v2",
+    ).without_actor(occupancy_actor_id)
+    actor = frame_record["actor_nodes"][0]
+    T_grid_world = np.linalg.inv(np.asarray(frame_record["T_world_ego"], dtype=float))
+    T_grid_actor = T_grid_world @ np.asarray(actor["T_world_actor"], dtype=float)
+    box = OrientedBox(
+        tuple(T_grid_actor[:3, 3]),
+        tuple(actor["dimensions_lwh"]),
+        float(np.arctan2(T_grid_actor[1, 0], T_grid_actor[0, 0])),
+        occupancy_actor_id,
+    )
+    edited = evidence.with_actor_box(occupancy_actor_id, box)
+    semantics, _ = edited.composite()
+    return edited.dynamic_instance_layers[occupancy_actor_id], semantics
 
 
 def _render_request(world_hash: str, frame: int, camera: dict, config: dict, renderer_hash: str) -> dict:
@@ -336,6 +374,11 @@ def main() -> None:
                 }
                 sample_dir = args.output_root / scene_id / variant_name / camera["camera_id"]
                 sample_dir.mkdir(parents=True)
+                safety_map, observation_map = _state_evidence(
+                    Path(config["evidence_root"]) / scene_id / f"frame_{frame_index:03d}.npz",
+                    frame_record,
+                    int(target_rows[0]["occupancy_instance_id"]),
+                )
                 artifacts = []
                 rgb = (np.clip(output["rgb"].cpu().numpy(), 0, 1) * 255).round().astype(np.uint8)
                 artifacts.append(_write_png(sample_dir / "rgb.png", rgb, metadata))
@@ -356,6 +399,9 @@ def main() -> None:
                     "depth_surface_first_hit_actor_only_valid.npy": rigid_valid.astype(np.uint8),
                     "vehicle_instance_mask.npy": instance,
                     "limited_semantic_mask.npy": semantic,
+                    "safety_geometry_map.npy": safety_map.astype(np.uint8),
+                    "observation_evidence_map.npy": observation_map.astype(np.uint8),
+                    "render_support_map.npy": output["opacity"].cpu().numpy().squeeze().astype(np.float32),
                 }
                 for name, value in arrays.items():
                     artifacts.append(_write_array(sample_dir / name, value, metadata))

@@ -107,6 +107,15 @@ def main() -> None:
                         ],
                     }
                 )
+            actor_state_sha256 = canonical_sha256(
+                [
+                    {
+                        "frame_index": value["frame_index"],
+                        "actor_nodes": value["actor_nodes"],
+                    }
+                    for value in frames
+                ]
+            )
             payload = {
                 "sequence_id": f"{scene_id}:{scene['actor_id']}:{variant_name}",
                 "scene_id": scene_id,
@@ -127,9 +136,19 @@ def main() -> None:
                 },
                 "actor_registry_sha256": registry["actor_registry_sha256"],
                 "safety_geometry_sha256": canonical_sha256(
-                    {"source": "raw_annotations", "scene_id": scene_id}
+                    {
+                        "source": "continuous_actor_OBB",
+                        "scene_id": scene_id,
+                        "actor_state_sha256": actor_state_sha256,
+                    }
                 ),
-                "observation_evidence_sha256": evidence["scenes"][scene_id]["scene_evidence_sha256"],
+                "observation_evidence_sha256": canonical_sha256(
+                    {
+                        "base_evidence_sha256": evidence["scenes"][scene_id]["scene_evidence_sha256"],
+                        "actor_state_sha256": actor_state_sha256,
+                        "edit_policy": "remove_source_then_insert_oriented_box",
+                    }
+                ),
                 "render_support_sha256": support["scenes"][scene_id]["scene_support_sha256"],
                 "edit_spec": {
                     "variant": variant_name,
