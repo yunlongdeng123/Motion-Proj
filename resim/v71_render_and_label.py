@@ -325,6 +325,17 @@ def main() -> None:
                     alpha_threshold=float(config["render"]["alpha_first_hit_threshold"]),
                     gaussian_mask=rigid_global,
                 )
+                # instance 必须满足与 first-hit 相同的 alpha 门槛，并位于背景之前。
+                visible_rigid = rigid_valid & (
+                    (~bg_valid) | (rigid_first <= bg_first + 1e-4)
+                )
+                instance[~visible_rigid] = 0
+                semantic = limited_semantic_mask(
+                    output["Background_opacity"].cpu().numpy().squeeze(),
+                    instance,
+                    alpha_threshold=float(config["render"]["instance_alpha_threshold"]),
+                    ignore_mask=image_infos["human_masks"].cpu().numpy() > 0,
+                )
                 expected = render_expected_depth(
                     output["depth"].cpu().numpy().squeeze(),
                     output["opacity"].cpu().numpy().squeeze(),
