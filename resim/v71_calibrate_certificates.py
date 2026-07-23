@@ -171,6 +171,9 @@ def main() -> None:
             )
         )
         allowed = {int(actor["true_instance_id"]) for actor in registry["actors"]}
+        registry_by_id = {
+            int(actor["true_instance_id"]): actor for actor in registry["actors"]
+        }
         raw_path = processed_root / scene_id / "instances" / "instances_info.json"
         trajectories = _load_trajectories(raw_path, allowed, start, end)
         for actor_id, trajectory in sorted(trajectories.items()):
@@ -191,17 +194,25 @@ def main() -> None:
             actor_evidence = evidence_summary["scenes"][scene_id]["actors"].get(
                 occupancy_id
             )
+            direct_lidar_points = int(
+                registry_by_id[actor_id].get("lidar_point_count", 0)
+            )
             source_observation = (
                 ComponentResult(
                     "source_observation", Verdict.PASS,
                     {
                         "frames": actor_evidence["frames"],
                         "base_unknown_ratio": actor_evidence["base_unknown_ratio"],
+                        "direct_lidar_point_count": direct_lidar_points,
                     },
-                    "source_dynamic_instance_layer_present",
+                    "direct_source_lidar_points_present",
                 )
-                if actor_evidence and actor_evidence["frames"] > 0
-                else unavailable_component("source_observation", "no_dynamic_instance_layer")
+                if actor_evidence
+                and actor_evidence["frames"] > 0
+                and direct_lidar_points > 0
+                else unavailable_component(
+                    "source_observation", "no_direct_source_lidar_points"
+                )
             )
             road = unavailable_component(
                 "road_support", "nuscenes_map_expansion_unavailable"
