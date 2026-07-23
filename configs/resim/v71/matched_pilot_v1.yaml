@@ -1,0 +1,95 @@
+schema_version: h1-matched-pilot-v1
+task_id: V7-H1-11D
+split: PILOT-3
+seed: 0
+processed_root: /root/autodl-tmp/data/occgs/processed_10Hz/mini
+registry_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11A/registry_build
+evidence_root: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/evidence_v2
+support_summary: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/support_overlays/summary.json
+scenario_config: configs/resim/v71/scenario_effect_v1.yaml
+proposal_output: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11D/proposal_bank_v1
+evaluation_output: /root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11D/matched_eval_v1
+frame_range: [0, 79]
+frame_period_s: 0.1
+image_size_wh: [1600, 900]
+cameras:
+  - {camera_id: CAM_FRONT, dataset_index: 0}
+  - {camera_id: CAM_FRONT_LEFT, dataset_index: 1}
+  - {camera_id: CAM_FRONT_RIGHT, dataset_index: 2}
+scenes:
+  - {scene_id: "003", cohort_id: S0}
+  - {scene_id: "005", cohort_id: S1}
+  - {scene_id: "004", cohort_id: S2}
+eligibility:
+  actors_per_scene: 2
+  min_track_frames: 30
+  min_visible_frames: 5
+  min_bbox_area_fraction: 0.0002
+  min_lidar_points: 1
+  min_actor_gaussians: 1
+  tie_break: [-visible_frame_count, -track_frame_count, -lidar_point_count, actor_id]
+proposals:
+  - {proposal_id: P1, peak_lateral_offset_m: 0.4, timing: centered}
+  - {proposal_id: P2, peak_lateral_offset_m: 0.8, timing: early}
+  - {proposal_id: P3, peak_lateral_offset_m: 0.8, timing: late}
+  - {proposal_id: P4, peak_lateral_offset_m: 1.2, timing: centered}
+  - {proposal_id: P5, peak_lateral_offset_m: 1.6, timing: centered}
+direction_policy: toward_per_frame_lidar_corridor_by_source_median_side
+corridor:
+  source: proxy
+  half_width_m: 1.75
+projection:
+  candidate_scales: [1.0, 0.875, 0.75, 0.625, 0.5, 0.375, 0.25, 0.125, 0.0]
+  objective: lexicographic_minimum_requested_delta
+  tie_break: candidate_scale_descending_then_proposal_id
+kinematic:
+  max_delta_lateral_speed_mps: 3.0
+  max_delta_lateral_acceleration_mps2: 2.5
+  max_speed_mps: 55.0
+  max_acceleration_mps2: 100.0
+  max_step_m: 5.0
+safety:
+  collision_clearance_m: 0.0
+  ego_dimensions_lwh: [4.9, 2.0, 1.8]
+occupancy_certificate:
+  grid:
+    minimum: [-40.0, -40.0, -1.0]
+    maximum: [40.0, 40.0, 5.4]
+    voxel_size: 0.4
+  lower_vertical_margin_m: 0.4
+  static_overlap_fail_voxels: 2
+  minimum_known_fraction_for_pass: 0.005
+  unknown_policy: UNKNOWN
+visibility_certificate:
+  min_visible_frames: 5
+  min_bbox_area_fraction: 0.0002
+external_evaluator:
+  raw_lidar_min_non_source_points: 2
+  lower_vertical_margin_m: 0.4
+  continuous_obb_translation_step_m: 0.05
+  continuous_obb_yaw_step_rad: 0.01
+  map_policy: unavailable_report_UNKNOWN
+render_audit:
+  frames_per_trajectory: 12
+  cameras: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT]
+  selection: geometry_equal_spacing_plus_peak_plus_max_visibility_change
+  output_resolution: [400, 225]
+gate:
+  minimum_actors_per_scene: 2
+  d1_min_precision: 0.80
+  d1_min_recall: 0.80
+  d2_min_usable_yield: 0.70
+  max_scene_worsening_rate: 0.10
+  minimum_nonworse_scenes: 2
+  label_hash_invariant_rate: 1.0
+  trajectory_hash_identity_rate: 1.0
+repair_policy:
+  maximum_method_repairs: 1
+  allowed_mechanisms:
+    - coordinate_or_id_mapping_bug
+    - aabb_voxelization_false_collision
+    - renderer_adapter_unsynchronized
+    - source_view_leakage
+    - threshold_calibration_implementation_error
+    - metric_aggregation_bug
+
