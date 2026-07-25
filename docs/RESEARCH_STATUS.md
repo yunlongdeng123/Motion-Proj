@@ -2,13 +2,14 @@
 
 > **文档职责**：唯一当前状态、研究边界与下一阶段入口。
 > **最后更新**：2026-07-24
-> **当前阶段**：`POST_V7.1 / N0_ASSET_PASSED / N1_MINI_EVENT_POOL_REJECTED`
-> **当前决策**：`stop_n2_n5_and_reject_mini_event_pool`
+> **当前阶段**：`POST_V7.1 / N0_ASSET_PASSED / N1_MINI_REJECTED / N1_FULLDOMAIN_PASSED`
+> **当前决策**：`n1_fulldomain_pass_await_human_audit_before_n2`
 > **当前路线**：[`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)
-> **当前任务**：N0 已通过、N1 已按冻结 gate reject；更新事实源与归档，不启动 N2/N3/render/training。
+> **当前任务**：N0 通过、mini N1 已 reject、full-domain N1（val 146）在冻结定义 + 预注册 graph-corridor
+> relation 下 `COMPLETE`。N1 通过仅解锁“请求 raw sweeps”；进入 N2 前需人工审计 positive 并获传感器授权。
 > **执行授权**：用户授权持续 Auto Research，直至 research reject、必须人工审核、缺少外部授权或硬阻塞。
-> **授权边界**：本轮已到 research reject。后续 trainval/Waymo/nuPlan 数据、人工 candidate audit、push、
-> 双卡或大型权重均需新的明确授权。
+> **授权边界**：用户已授权 trainval annotation N1。后续传感器 sweeps 下载/抽取、N2 启动、人工 candidate
+> audit、Waymo/nuPlan、push、双卡或大型权重均仍需新的明确授权；已到“必须人工审核”停止点。
 
 正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物为准；为什么不能重复旧尝试见
 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；V7.1 完整计划、收口快照和编辑备份见
@@ -93,8 +94,16 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 | N1 transitions | route continuation=39、merge=19、lane change=3、unresolved=10 |
 | N1 interaction | topology pass=22；interaction PASS=0/22 |
 | N1 gate | positive=0、negative=0、pair=0、positive scenes=0；`REJECTED` |
+| N1-FULL run | `v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c` |
+| N1-FULL code/config | commit `2bac4c9`(dirty)；config `f12c886c…`；event-pool `9635b514…` |
+| N1-FULL split | calibration=mini 003/004/005；evaluation=官方 val 146（排除全部 mini scene） |
+| N1-FULL calibration | 逐位复现 mini：45 eligible、71 transition、22 topology-pass、0 positive |
+| N1-FULL evaluation | 1,361 eligible、1,898 transition、396 topology-pass |
+| N1-FULL gate | positive=37、negative=7、pair=7、positive scenes=17；`COMPLETE` |
+| N1-FULL 归因 | 37 positive 中 36 依赖 corridor 挽回的跨-token 邻车（exact-token 下约 1） |
 
-完整报告见 [`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md)。
+完整报告见 [`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md) 与
+[`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md)。
 
 ## 5. 下一路线与闸门
 
@@ -103,8 +112,9 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 | Gate | 目的 | 通过条件 | 失败动作 |
 |---|---|---|---|
 | `N0-ASSET` | 建立可审计地图/数据底座 | 官方 vector map 可加载；scene→map 映射与 hash 完整 | **PASSED** |
-| `N1-EVENT` | 证明比较对象存在 | ≥2 positive、≥2 negative、≥2 same-actor pairs、≥2 positive scenes | **REJECTED** |
-| `N2-EVIDENCE` | 建立独立合法性参照 | N1 先通过 | **not triggered** |
+| `N1-EVENT` (mini) | 证明比较对象存在 | ≥2 positive、≥2 negative、≥2 same-actor pairs、≥2 positive scenes | **REJECTED**（mini pool 太小） |
+| `N1-EVENT-FULL` (val 146) | 同上，full-domain + graph-corridor relation | 同上 | **PASSED**：37 pos / 7 neg / 7 pair / 17 pos-scenes；见 [`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md) |
+| `N2-EVIDENCE` | 建立独立合法性参照 | N1 通过 + 人工审计 + 传感器授权 | **unlocked, not started**（待人工审计 37 positive） |
 | `N3-PROPOSAL` | 生成 lane-reachable 候选 | N1/N2 先通过 | **not triggered** |
 | `N4-RENDER` | 复用 GS 生成同步可视产物 | N1–N3 先通过 | **not triggered** |
 | `N5-UTILITY` | 检验下游收益 | scene-disjoint、matched budget、≥3 seeds | **not triggered** |
@@ -132,12 +142,14 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 
 ## 7. 当前任务队列
 
-1. 完成 N0/N1 结果登记、失败分解和 `event-first-mini-reject` 归档；
-2. 停止 mini 上的 N2–N5；不得用阈值修改翻案；
-3. 若用户另行授权，优先请求 nuScenes `v1.0-trainval` annotations/metadata，先做 scene-disjoint
-   corridor-relation calibration，再冻结大池评估；这比直接下载传感器全量或大模型更小、更同域；
-4. 22 个 topology-pass candidate 可作为 calibration/audit 对象，但不能回流为本 run 的 positive。
-   若采用人工审计，必须另交完整盲评提示词且 verdict 只能由用户/指定评审填写；
+1. 已完成：N0/mini-N1 登记与归档；full-domain N1（val 146）在冻结定义 + 预注册 graph-corridor relation
+   下 `COMPLETE`（37 pos / 7 neg / 7 pair / 17 pos-scenes）；
+2. **待人工审计**：盲评抽样 N1-FULL 的 37 个 positive（尤其依赖跨-token 邻车者），确认 corridor s 轴与
+   front/rear 物理正确；verdict 只能由用户/指定评审填写；必要时对 `graph_hops` 做敏感性分析；
+3. 审计通过并获传感器授权后，才用 `scripts/extract_nuscenes_scenes.py` 按
+   `configs/resim/n2_extract_scene_list.txt`（17 positive scene）只抽 CAM_FRONT+LIDAR_TOP 的
+   samples+sweeps，再冻结独立 raw/map evaluator 运行 N2；不得以 N1 positive 直接充当 N2 独立证据；
+4. 不得降低 N1 阈值、事后挑 actor/scene，或把 mini `REJECTED` 回写；
 5. full nuScenes 仍不足时，才独立评估 nuPlan/Waymo/ScenarioNet 的许可、容量和最小 shard。
 
 ## 8. 事实源优先级

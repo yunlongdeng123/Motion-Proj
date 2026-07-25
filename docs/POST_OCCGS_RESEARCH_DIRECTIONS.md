@@ -1,23 +1,25 @@
 # Post-OccGS 下一研究方向：event-first、map-and-raw-evidence 反事实路线
 
 > **调研日期**：2026-07-24
-> **状态**：N0/N1 已执行；mini event pool 于 2026-07-24 正式 reject。
+> **状态**：N0 pass；mini N1 reject；**full-domain N1（val 146）于 2026-07-24 正式 `COMPLETE`**（待人工审计后才进 N2）。
 > **输入事实**：V7.1 H1-CERT/H1-PROJ 均 rejected；30 个 proposal 中 0 positive、D2 0 export。
 > **首选方向**：先证明事件存在，再建立独立几何证据，最后才生成、渲染和检验效用。
 
 ## 0. 执行结果与路线更新
 
 - `N0-ASSET-01`：`COMPLETE`。map-expansion v1.3、四图 layer、scene→map、pose contract 与 hash 通过；
-- `N1-EVENT-01`：`REJECTED / reject_mini_event_pool`。45 eligible actors、71 stable transitions、
+- `N1-EVENT-01`（mini）：`REJECTED / reject_mini_event_pool`。45 eligible actors、71 stable transitions、
   22 topology-pass、0 interaction positive、0 same-actor pair；
-- N2–N5：均 `not triggered`，不得在 mini 上继续。
+- `N1-EVENT-FULL-01`（val 146）：`COMPLETE / n1_fulldomain_event_pool_pass`。沿用 mini 冻结阈值 +
+  预注册 graph-corridor relation，得 1,898 transition、396 topology-pass、37 positive、7 negative、
+  7 same-actor pair、17 positive scenes；calibration（mini）逐位复现 71/22/0，corridor 未翻案 mini。
+  详见 [`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md)。
+- N2–N5：`unlocked, not started`。N1 通过仅解锁“请求 raw sweeps”；进入 N2 前需人工审计 37 positive
+  并获传感器授权。
 
-原路线 A 在 mini split 上已经完成裁决，不再是待执行计划。路线 B 的最小同域版本更新为：
-
-> 先获取 nuScenes `v1.0-trainval` annotations/metadata，用 scene-disjoint calibration 修正
-> exact-token corridor fragmentation，再运行 full-domain annotation+map-only N1；只有 N1 通过才请求 sweeps。
-
-该更新不是对 mini gate 降阈值，也不改变其 `REJECTED` 终态。
+上文的 full-domain N1 计划已执行并通过。关键归因：37 positive 中 36 个依赖 graph-corridor 挽回的跨-token
+邻车（同一 val 上改用 mini exact-token relation 约仅 1 positive，仍不过 gate），因此本次 pass 由
+“full-domain 规模 + corridor relation”共同促成，且不改变 mini 的 `REJECTED` 终态。
 
 ## 1. 研究问题重新定义
 

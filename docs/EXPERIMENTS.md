@@ -270,7 +270,28 @@ exact-token relation 可能存在 corridor fragmentation 风险，须在独立 c
 验证：`PYTHONPATH=. pytest -q tests/test_event_first_n0_asset.py tests/test_event_first_n1_event.py`，8 passed；
 正式 manifest `code_dirty=false`，唯一 terminal marker 为 `REJECTED`。
 
-## 15. 登记规则
+## 15. Event-first N1-EVENT-FULL-01
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c` | machine screen completed / `COMPLETE`；human audit pending | val 146（与 mini calibration scene-disjoint）；1,361 eligible actors、1,898 transitions、396 topology pass；机器 positive=37、negative=7、pair=7、positive scenes=17 | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/` | graph-corridor 机器样本量 gate 通过；37 个 positive 尚未经人工裁决，不能据此进入 N2 |
+
+实现时仓库基线为 `2bac4c9592e710bced0c1ea4bf7d19a3b20bdacb`，正式 manifest 诚实记录
+`code_dirty=true` 与 diff hash
+`9b15fd2bf45d470872eabb87fb52e82255d43c10554cbce9e6d11c699802ba94`；config fingerprint 为
+`f12c886cb6bb58171e7c5bf358809d88e3a15e1424005ce05d5fd335c561fcea`，event-pool SHA256 为
+`9635b5148ae58933db0c594605c1ae104fa891f065d565bef789a32139ba708c`。
+
+calibration 为 scene-0655/0757/0796，逐位复现 mini 的 45 eligible、71 transition、22 topology-pass、
+0 positive；evaluation 为官方 val 150 scenes 排除与 mini 重叠的 4 scenes，共 146 scenes。机器筛选得到
+35 merge、2 lane-change positive；37 个 positive 中 36 个依赖 graph-corridor 挽回至少一个跨-token
+front/rear。该高度依赖关系触发强制人工审计，`COMPLETE` 只表示机器海选和产物合同完成，不是人工真实性通过。
+
+轨迹由 `v1.0-trainval` 2 Hz annotation keyframe 流式重建为与 DriveStudio 一致的 10 Hz 插值缓存；mini
+对拍的 instance token、frame index 与 transform 一致。这个 cadence 对拍只证明数据适配一致，不能把插值帧
+当成新的物理观测。正式人审事实必须在独立 audit run 登记，不得原地改写本 run 的 event pool 或 terminal。
+
+## 16. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
