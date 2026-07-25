@@ -1,13 +1,106 @@
 # Motion-Proj 当前研究风险与防重复账本
 
 > **最后更新**：2026-07-25
-> **当前范围**：V1–V7.1 防重复约束、两次 N1 reject 根因与 kinematics-first 第三版约束。
+> **当前范围**：V1–V7.1 防重复约束、两次 N1 reject 根因、kinematics-first 第三版 machine-support
+> 失败与人工审核边界。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
+
+## N1 kinematics-first 第三版（2026-07-25，等待人工审核）
+
+### N1-F09：候选真实性与 matched-control 支持是两个独立门槛
+
+**观察**
+
+- clean commit `aa162ef4dea808ad28ca7e56f1273f106e9c0e49` 上的 official train 694-scene
+  formal run 完成 8,631 transitions → 1,879 topology-pass → 244 physical-motion-pass →
+  12 interaction candidates；
+- 12 candidates 覆盖 9 scenes，达到 candidate `≥12` 与 scene `≥6`；
+- same-actor lane-keeping negative 只有 2，same-actor pair 只有 2，均低于冻结阈值 4；
+- 因此 `machine_gate_passed=false`，但用户明确要求第三次人审且候选大于 0，所以唯一 terminal 为
+  `AWAITING_HUMAN_REVIEW`；
+- `AWAITING_HUMAN_REVIEW` 是审计就绪状态，不是 machine pass，更不是 N1/N2 授权。
+
+**Pair 失败的冻结诊断**
+
+对 12 个 positive actor 重放原 30-frame negative 搜索，不改 event pool：
+
+| 主阻塞 | actor 数 | 观察 |
+|---|---:|---|
+| paired | 2 | 仅 `scene-0870` 两个 actor |
+| 无 30-frame stable run | 1 | actor 轨迹支持太短 |
+| 所有窗口与 positive overlap | 5 | 4–27 个候选窗口全部重叠 |
+| non-overlap lane-keeping 存在，但 interaction 全失败 | 4 | 共 25 个 lane-keeping PASS windows，全部缺 center front/rear |
+
+其中 6/10 未配对 actor 没有可用的非重叠长控制窗口；另外 4/10 没有等价的双侧 interaction control。
+这不是把 gap 或速度阈值稍微放宽就能解决的问题。
+
+**禁止快捷修补**
+
+- 不把 30-frame 缩短到刚好得到 4 pairs；
+- 不允许 negative 与 positive event overlap；
+- 不用不同 actor 冒充 same-actor control，也不只挑有 pair 的两个 actor 报告；
+- 不把普通 lane-keeping 但缺 front/rear 的窗口当成与正例等价的 interaction negative；
+- 不因人工可能判真而把 `machine_research_support` 改成 true。
+
+**可能突破**
+
+若第三次人工表明 merge 候选真实性足够高，可新预注册“更长日志中的同 actor control”或
+“matched-other-actor control”研究问题；前者需要更长 trajectory 数据底座，后者必须显式匹配
+scene、类别、速度、道路与交互密度。二者都不能回写本 run。
+
+### N1-F10：第三版最终候选只覆盖 converging-branch merge
+
+**观察**
+
+- 244 个 physical-motion-pass 包含 181 merge、63 parallel lane change；
+- interaction 层有 215 个在中心关键帧缺 front/rear、17 个 temporal identity/bumper-gap 失败；
+- 最终 12/12 candidates 全是 `converging_branch_merge`，parallel lane-change 为 0。
+
+**能下的结论**
+
+第三次人审只能估计这 12 个 converging-branch merge 的真实性。即使全部为真，也不能声称第三版已经覆盖
+一般 lane change/cut-in；同时也不能断言 63 个 physical lane-change 都是假事件，因为它们是在更严格的
+双侧 interaction 层失败。
+
+**复开条件**
+
+先把 `subject maneuver authenticity` 与 `front+rear gap-insertion interaction` 拆成两个预注册层。
+可对 63 个 physical lane-change 建独立 diagnostic audit，但不得事后补进当前 12 条、降低当前 machine gate
+或把 subject-only event 当 interaction positive。
+
+### N1-F11：完整审核包不等于每项都有前视相机可见证据
+
+**观察**
+
+- 正式包包含 12/12 panels、evidence、topdown、checklist、prompt 和逐文件 SHA256；
+- 本机 full train 数据完整覆盖 CAM_FRONT，但其他五个相机目录只有 mini 规模，不能为这些 formal scenes
+  提供稳定六相机视图；
+- 首尾面板 QA 正常；部分 subject/front/rear 不在 CAM_FRONT 视野，但 2 Hz annotation topdown 仍存在；
+- 40 个 immutable audit files 复算 0 hash mismatch；空白 review validator 按预期 fail closed。
+
+**审核边界**
+
+不在 CAM_FRONT 中的角色不能被猜测为 VALID。评审先使用 topdown、vector centerline 和跨时刻 identity；
+若相机与 annotation 冲突或证据仍不足，必须判 `UNCERTAIN` 并记录
+`INSUFFICIENT_VISUAL_EVIDENCE`。补六相机或 raw LiDAR 需要独立资产/用途授权，不能偷偷进入本轮或 N2。
+
+### N1 第三版禁止重试矩阵
+
+| 快捷做法 | 为什么无效 | 合法后续 |
+|---|---|---|
+| 把 `AWAITING_HUMAN_REVIEW` 写成 pass | negative/pair 两项 machine gate 已失败 | 等用户审核并独立 adjudicate |
+| 人工全真就覆盖 pair gate | authenticity 与 comparison support 是不同问题 | 两类 gate 均保留 |
+| 缩短/重叠 negative window | 事后改变 matched-control 定义 | 新任务、新 split、新预注册 |
+| 用其他 actor 补足 same-actor pair | 混入 actor/scene confound | 预注册 matched-other-actor 设计 |
+| 把 63 个 physical lane changes 加入 positive | 它们没有通过冻结 interaction | 单独 subject-only diagnostic |
+| 用单侧 front 或 rear 算 interaction | 改变“插入双侧 gap”的研究对象 | 另立事件 subtype |
+| 没有相机框也猜 TRUE/FALSE | 把证据缺失转成标签 | `UNCERTAIN` |
+| 审核后自动启动 N2 | 本 run 明确 `n2_authorized=false` | 新授权 + 新 gate |
 
 ## N1 full-domain 第二次 reject（2026-07-25）
 

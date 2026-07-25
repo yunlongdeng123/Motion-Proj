@@ -2,12 +2,12 @@
 
 > **文档职责**：唯一当前状态、研究边界与下一阶段入口。
 > **最后更新**：2026-07-25
-> **当前阶段**：`POST_V7.1 / N1_MINI_REJECTED / N1_FULLDOMAIN_HUMAN_REJECTED / N1_KINEMATIC_PREREGISTERED`
-> **当前决策**：`run_scene_disjoint_n1_kinematic_then_await_third_human_audit`
+> **当前阶段**：`POST_V7.1 / N1_MINI_REJECTED / N1_FULLDOMAIN_HUMAN_REJECTED / N1_KINEMATIC_AWAITING_HUMAN_REVIEW`
+> **当前决策**：`await_user_third_n1_audit_no_n2`
 > **当前路线**：[`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)
-> **当前任务**：第二次 full-domain N1 经 37/37 人审为 2 TP / 35 FP，独立 run 已 `REJECTED`；
-> `N1-EVENT-KINEMATIC-01` 已完成预注册与开发烟测，下一动作是在 clean commit 上运行 official train formal
-> evaluation，并交付第三次完整盲审材料。
+> **当前任务**：第三版 official train 694-scene formal evaluation 已完成；12/12 个 kinematics-first
+> 候选的完整审核包已交付，唯一终态 `AWAITING_HUMAN_REVIEW`。现在只能由用户/指定评审填写第三次
+> verdict；machine support 因 negative/pair 仅 2/2 已失败，N2 继续封闭。
 > **执行授权**：用户授权持续 Auto Research，直至 research reject、必须人工审核、缺少外部授权或硬阻塞。
 > **授权边界**：用户本轮明确授权第三版 N1 开发、annotation+map formal run 与第三次人工 audit pack；
 > 明确禁止进入 N2。传感器 sweeps 下载/抽取、N2/N3、Waymo/nuPlan、push、双卡或大型权重均未授权。
@@ -32,9 +32,21 @@
 
 第三版 [`N1_KINEMATIC_PREREGISTRATION.md`](N1_KINEMATIC_PREREGISTRATION.md) 已冻结：
 第二次 val 37 条只作 calibration，formal evaluation 改用 scene-disjoint official train；2 Hz kinematics
-先行，再做 branch-safe temporal interaction，最后才生成用户盲审包。开发烟测不构成正式结论。
+先行，再做 branch-safe temporal interaction，最后才生成用户盲审包。正式 run 已在 clean commit
+`aa162ef` 上完成：
 
-event-first 路线已得到第二个、层级更上游的正式负结论：
+- official train 694 scenes，8,631 transitions → 1,879 topology-pass → 244 physical-motion-pass →
+  12 persistent-interaction candidates；
+- 12 candidates 覆盖 9 scenes，但 same-actor negative/pair 只有 2/2，低于冻结的 4/4；
+- machine gate 的 candidate-count/scene checks 通过，negative/pair checks 失败；
+- 12/12 候选全部进入第三次盲审，40 个 immutable audit files 的 hash 已复算无误；
+- 唯一终态 `AWAITING_HUMAN_REVIEW` 只表示材料就绪，不表示 N1 通过；
+- `review_working.jsonl` 仍为空白，agent 没有填写或推断任何第三次 verdict。
+
+完整结果、pair 失败分解、审核入口和下一方向见
+[`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)。
+
+更早的 mini 第一次 N1 负结论仍冻结，不因第三版 formal 而回写：
 
 - 用户提供的 `nuScenes-map-expansion-v1.3.zip` 已通过压缩包完整性、文件 SHA、四图 version/layer、
   scene→map 和 raw→processed pose 合同；`N0-ASSET-01` 为唯一 `COMPLETE`；
@@ -120,10 +132,17 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 | N1-FULL human audit | 37/37 已审；TP=2、FP=35、UNCERTAIN=0；precision=`0.054054`；独立裁决 run 唯一终态 `REJECTED` |
 | N1-FULL audit provenance | review SHA256 `ae71b31e…dd05`；clean adjudication commit `1e2f5ea`；run `v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac` |
 | N1-FULL 归因 | 37 positive 中 36 依赖 corridor 挽回的跨-token 邻车；核心错误是以 target 多 incoming 代替 subject 运动学与持续交互 |
-| N1-KINEMATIC | 第三版合同已预注册；旧 37 条只用于 calibration，official train 作 scene-disjoint formal evaluation；尚无正式结论 |
+| N1-KINEMATIC run | `v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6` |
+| N1-KINEMATIC code/config/data | commit `aa162ef4…e49`；config `8c2247b6…b3b1b`；data `4f914ac8…efe3`；`code_dirty=false` |
+| N1-KINEMATIC split | calibration=第二次 val 人审 17 scenes；evaluation=official train 694，排除全部 10 mini；scene-disjoint |
+| N1-KINEMATIC calibration | 35/35 旧 FP 拒绝；2 个旧 TP 保留 1；只用于设计，不混入 formal metric |
+| N1-KINEMATIC evaluation | 8,631 transition；1,879 topology；244 physical motion；12 interaction candidates / 9 scenes |
+| N1-KINEMATIC pair support | negative=2、same-actor pair=2，均低于冻结阈值 4；`machine_gate_passed=false` |
+| N1-KINEMATIC audit | 12/12 全审；review 仍空白；唯一 `AWAITING_HUMAN_REVIEW`；event-pool `4778abad…d6bf` |
 
-完整报告见 [`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md) 与
-[`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md)。
+完整报告见 [`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md)、
+[`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md) 与
+[`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)。
 
 ## 5. 下一路线与闸门
 
@@ -134,7 +153,7 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 | `N0-ASSET` | 建立可审计地图/数据底座 | 官方 vector map 可加载；scene→map 映射与 hash 完整 | **PASSED** |
 | `N1-EVENT` (mini) | 证明比较对象存在 | ≥2 positive、≥2 negative、≥2 same-actor pairs、≥2 positive scenes | **REJECTED**（mini pool 太小） |
 | `N1-EVENT-FULL` (val 146) | 同上，full-domain + graph-corridor relation | 机器支持 + 人工真实性 | **HUMAN REJECTED**：机器 37 pos 中仅 2 TP / 35 FP；见 [`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md) |
-| `N1-EVENT-KINEMATIC` (train, 第三版) | 以 subject 物理运动学与持续交互重建事件池 | 先过冻结机器支持门槛，再过第三次人工门槛 | **preregistered, formal pending**；见 [`N1_KINEMATIC_PREREGISTRATION.md`](N1_KINEMATIC_PREREGISTRATION.md) |
+| `N1-EVENT-KINEMATIC` (train, 第三版) | 以 subject 物理运动学与持续交互重建事件池 | 先过冻结机器支持门槛，再过第三次人工门槛 | **AWAITING HUMAN REVIEW / machine support failed**：12 candidates / 9 scenes，但 negative/pair=2/2；见 [`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md) |
 | `N2-EVIDENCE` | 建立独立合法性参照 | 新 N1 通过 + 用户显式裁决 + 传感器授权 | **locked / forbidden**；旧名单已失效且当前配置 fail closed |
 | `N3-PROPOSAL` | 生成 lane-reachable 候选 | N1/N2 先通过 | **not triggered** |
 | `N4-RENDER` | 复用 GS 生成同步可视产物 | N1–N3 先通过 | **not triggered** |
@@ -168,13 +187,15 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 
 1. 已完成：N0/mini-N1 归档；第二版 full-domain 机器海选与 37/37 人工裁决分开固化，最终人工证据为
    2 TP / 35 FP，第二次 N1 正式 `REJECTED`；
-2. **执行中**：在 clean commit 上按
-   [`N1_KINEMATIC_PREREGISTRATION.md`](N1_KINEMATIC_PREREGISTRATION.md) 跑 official train
-   scene-disjoint formal evaluation；不得查看或引入 train 人工标签；
-3. **随后必须停在人工审核**：若至少产生 1 个候选，交付 HTML 索引、逐事件 evidence JSON、2 Hz
-   CAM_FRONT/topdown 联合面板、checklist、完整提示词和 blank review JSONL；verdict 只能由用户/指定评审填写；
-4. 无论机器支持门槛是否通过，第三次审核完成和用户显式裁决前，N2 配置保持空名单、extractor fail closed；
-5. 不得降低冻结阈值、事后挑 actor/scene、把开发烟测升级为正式证据，或把任何旧 `REJECTED` 回写。
+2. 已完成：第三版在 clean commit `aa162ef` 上跑完 official train 694 scenes，并生成 12/12 全量
+   HTML/evidence/panel/checklist/prompt/blank JSONL 审核包；
+3. **当前必须人工审核**：用户按
+   [`N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md`](N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md)
+   填写 `audit/review_working.jsonl`；agent 只能校验与汇总，不能代填；
+4. 审核后由用户确认第三次 `REJECTED` 或其他裁决，再建独立 adjudication run；当前 machine support
+   已因 negative/pair 不足失败，即使人工全真也不能回写为 machine-gate pass；
+5. N2 配置保持空名单、extractor fail closed；不得降低阈值、事后挑 actor/scene、缩短 negative window、
+   允许 positive overlap、改成单侧邻车，或把 `AWAITING_HUMAN_REVIEW` 写成通过。
 
 ## 8. 事实源优先级
 

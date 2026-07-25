@@ -274,7 +274,7 @@ exact-token relation 可能存在 corridor fragmentation 风险，须在独立 c
 
 | Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
 |---|---|---|---|---|
-| `v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c` | machine screen completed / `COMPLETE`；human audit pending | val 146（与 mini calibration scene-disjoint）；1,361 eligible actors、1,898 transitions、396 topology pass；机器 positive=37、negative=7、pair=7、positive scenes=17 | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/` | graph-corridor 机器样本量 gate 通过；37 个 positive 尚未经人工裁决，不能据此进入 N2 |
+| `v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c` | parent machine screen / `COMPLETE`；后续 human audit `REJECTED` | val 146（与 mini calibration scene-disjoint）；1,361 eligible actors、1,898 transitions、396 topology pass；机器 positive=37、negative=7、pair=7、positive scenes=17 | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/` | 父 run 保持不可变机器终态；37 条后续人审仅 2 TP / 35 FP，最终裁决见第 16 节 |
 
 实现时仓库基线为 `2bac4c9592e710bced0c1ea4bf7d19a3b20bdacb`，正式 manifest 诚实记录
 `code_dirty=true` 与 diff hash
@@ -311,7 +311,42 @@ decision。reviewer 字段按收到的文件原样登记（`ChatGPT_manual=32`�
 assignment、插值/subject identity 错配。完整防重复约束见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)
 的 `N1-F05`–`N1-F08`。
 
-## 17. 登记规则
+## 17. N1-EVENT-KINEMATIC-01 第三版正式海选
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6` | audit ready / `AWAITING_HUMAN_REVIEW` | official train 694 scenes；8,631 transition、1,879 topology、244 physical motion；12 candidates / 9 scenes；negative=2、pair=2 | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/` | 第三次 12/12 审核材料就绪；candidate/scene gate 通过，negative/pair gate 失败；不是 N1 pass，N2 未授权 |
+
+实现与预注册 commit 为 `aa162ef4dea808ad28ca7e56f1273f106e9c0e49`，`code_dirty=false`；
+config fingerprint 为
+`8c2247b6e968aa792fec1dfc475a232f3497e379445ca04f3a38fd12254b3b1b`，data fingerprint 为
+`4f914ac88d2927f78baa67b91b77eab48c6bb56d87acddfae8580acead1befe3`，event-pool canonical SHA256 为
+`4778abadfc44c830f815efd4c52e544bf23e67f975d0b7df44e52e742289d6bf`，artifact-set SHA256 为
+`5742231a88da08ed73d6cf156913084c2a32ad771b16e27f063eae9b1eb70c6b`。
+
+第二次 val 37 条只作 calibration，formal 使用 scene-disjoint official train 并排除全部 10 mini scenes。
+calibration 中第三版拒绝旧 FP 35/35，保留旧 TP 1/2；这些数字不与 formal 候选混算 precision。
+
+全量漏斗：
+
+- transition taxonomy：route continuation=5,759、merge=1,660、lane change=219、unresolved=993；
+- topology-pass 1,879 中，原始 2 Hz physical-motion-pass=244（merge=181、lane change=63）；
+- 244 中 215 缺 center front/rear，17 temporal identity/bumper-gap fail，12 interaction pass；
+- 12/12 最终候选均为 converging-branch merge，覆盖 9 scenes；parallel lane-change 最终为 0；
+- machine checks：positive candidates=true、candidate scenes=true、negative windows=false、
+  same-actor pairs=false，故 `machine_gate_passed=false`。
+
+pair 诊断不改正式 pool：2 actors paired；1 actor 无 30-frame stable run；5 actors 的全部控制窗口与 positive
+overlap；4 actors 有 non-overlap lane-keeping windows，但全部缺等价 front/rear interaction。不得通过缩短
+window、允许 overlap、换 actor 或改成单侧邻车翻案。
+
+audit population=12、items=12；40 个 immutable files 的 hash 复算无误，immutable-set SHA256 为
+`8696e66dcb5764b414b7e3cf74e89261fff63f137197fe13bf6617724180e168`。`review_working.jsonl` 仍为空白，
+SHA256 为 `77e68c2e9dea76113148dade3f176ef3365f3c4a3162b8b54d8247f222bfc9aa`；空白 validator 按预期拒绝
+`K3-001`。完整报告见
+[`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)。
+
+## 18. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。

@@ -1,7 +1,8 @@
 # Post-OccGS 下一研究方向：event-first、map-and-raw-evidence 反事实路线
 
-> **调研日期**：2026-07-24
-> **状态**：N0 pass；mini N1 reject；**full-domain N1（val 146）于 2026-07-24 正式 `COMPLETE`**（待人工审计后才进 N2）。
+> **调研日期**：2026-07-24；2026-07-25 按第二次 reject 与第三版 formal 结果更新
+> **状态**：N0 pass；mini N1 reject；第二版 full-domain 人审 `REJECTED`；第三版 kinematics-first
+> formal 为 `AWAITING_HUMAN_REVIEW`，但 machine support 已因 negative/pair 不足失败。
 > **输入事实**：V7.1 H1-CERT/H1-PROJ 均 rejected；30 个 proposal 中 0 positive、D2 0 export。
 > **首选方向**：先证明事件存在，再建立独立几何证据，最后才生成、渲染和检验效用。
 
@@ -10,16 +11,18 @@
 - `N0-ASSET-01`：`COMPLETE`。map-expansion v1.3、四图 layer、scene→map、pose contract 与 hash 通过；
 - `N1-EVENT-01`（mini）：`REJECTED / reject_mini_event_pool`。45 eligible actors、71 stable transitions、
   22 topology-pass、0 interaction positive、0 same-actor pair；
-- `N1-EVENT-FULL-01`（val 146）：`COMPLETE / n1_fulldomain_event_pool_pass`。沿用 mini 冻结阈值 +
-  预注册 graph-corridor relation，得 1,898 transition、396 topology-pass、37 positive、7 negative、
-  7 same-actor pair、17 positive scenes；calibration（mini）逐位复现 71/22/0，corridor 未翻案 mini。
-  详见 [`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md)。
-- N2–N5：`unlocked, not started`。N1 通过仅解锁“请求 raw sweeps”；进入 N2 前需人工审计 37 positive
-  并获传感器授权。
+- `N1-EVENT-FULL-01`（val 146）机器层：37 positive、7 negative/pair、17 scenes；后续 37/37 人审只有
+  2 TP / 35 FP，独立 `N1-EVENT-FULL-AUDIT-01` 唯一 `REJECTED`。核心错误是把 target 多 incoming
+  当作 subject merge，而非 graph gap 数值不足；
+- `N1-EVENT-KINEMATIC-01`（official train 694）：原始 2 Hz subject kinematics + branch-safe temporal
+  interaction 得到 12 candidates / 9 scenes，但 negative=2、same-actor pair=2，machine support 未通过；
+  12/12 人审材料已就绪，唯一 `AWAITING_HUMAN_REVIEW`。详见
+  [`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)；
+- N2–N5：`locked / forbidden`。旧 N2 名单已失效；第三次审核和用户独立裁决前不得下载、抽取或执行。
 
-上文的 full-domain N1 计划已执行并通过。关键归因：37 positive 中 36 个依赖 graph-corridor 挽回的跨-token
-邻车（同一 val 上改用 mini exact-token relation 约仅 1 positive，仍不过 gate），因此本次 pass 由
-“full-domain 规模 + corridor relation”共同促成，且不改变 mini 的 `REJECTED` 终态。
+第三版说明“先运动学、后交互”能把旧 35/35 已知 FP 拒绝，并在未见标签的 train split 找到 12 个更窄
+候选；它尚未证明候选真实，且没有满足 matched-control 支持。现在的首要问题已经从“地图能否找到候选”
+转成两个分开的验证对象：**merge authenticity** 与 **long-horizon comparable control availability**。
 
 ## 1. 研究问题重新定义
 
@@ -43,12 +46,13 @@
 
 | 资产 | 本机状态 | 影响 |
 |---|---|---|
-| nuScenes mini | 已有，根目录 `/root/autodl-tmp/data/nuscenes` | 可做 schema、轨迹和 raw sweep smoke |
+| nuScenes trainval metadata/annotations | 已有，`v1.0-trainval` 约 2.5G；已完成 694-scene annotation-only formal | 可继续只读 N1 诊断 |
+| nuScenes sensors | full CAM_FRONT/LIDAR_TOP samples 在盘；其余相机主要为 mini，sweeps 约 4.7G 且覆盖未审 | 当前未授权用于 N2；存在不等于可执行 |
 | nuScenes raster maps | 4 个 PNG | 可显示，不足以可靠查询 lane connectivity/polygon |
 | nuScenes map expansion vector JSON | v1.3 已安装并通过 N0 | lane graph、drivable polygon 可查询 |
 | Waymo / nuPlan 数据 | 缺失 | 不能直接使用 Waymax/nuPlan 做正式 scenario mining |
 | DriveStudio adapters | 有 nuPlan/Waymo adapter 代码 | 仅说明接口可能复用，不说明数据或许可已就绪 |
-| 磁盘 | `/root/autodl-tmp` 可用约 65G | 小型 map asset 可行；大型数据需独立预算与授权 |
+| 磁盘 | `/root/autodl-tmp` 可用约 63G | 小型 audit/diagnostic 可行；大型数据需独立预算与授权 |
 
 只读 N0 进一步确认了 processed-scene 映射与冻结 actor 的轨迹上限：003/004 属于
 `boston-seaport`，005 属于 `singapore-queenstown`；6 actors 中有 3 个完整 track 位移不足 1 m。
@@ -62,8 +66,8 @@
 
 | 优先级 | 路线 | 解决的核心失败 | 本机代价 | 裁决 |
 |---|---|---|---|---|
-| A | event-first + vector map + motion-compensated raw sweeps | 0 positive、0 pair、UNKNOWN、coarse voxel FP | 低到中；先需 map asset | **首选** |
-| B | Waymo/nuPlan/ScenarioNet 的 scenario mining + closed-loop | mini 事件池太小、交互行为不足 | 高；需数据、许可、存储 | 条件性后备 |
+| A | event-first + vector map + motion-compensated raw sweeps | 真实性、pair、UNKNOWN、coarse voxel FP | map 已就绪；raw 阶段仍需授权 | **停在 N1 第三次人审；N2 locked** |
+| B | Waymo/nuPlan/ScenarioNet 的长日志 scenario mining + closed-loop | nuScenes 20 秒内 same-actor control 不足 | 高；需数据、许可、存储 | 第三次人审后条件性后备 |
 | C | uncertainty-calibrated learned occupancy | raw LiDAR 稀疏导致 coverage 低 | 高；需训练、校准集 | 仅探索，不作真值 |
 | D | 直接用 diffusion/generative traffic 造事件 | proposal 多样性 | 高；评价更难 | 暂不启动 |
 
@@ -178,12 +182,13 @@ GS 在此处是 renderer，不是安全证书。completion 的 outside-mask inva
 
 ## 5. 条件性路线 B：换事件数据底座
 
-N1 已证明冻结 mini pool 没有足够可配对事件。最合理的动作是先扩至同域 full nuScenes，而不是继续在
-3 scenes 上调阈值；只有 full-domain 仍失败才换数据底座。
+mini、val 人审和 official train kinematics-first 已依次表明：同域扩容能找到候选，但真实性和 same-actor
+control 支持不能由 scene 数量自动解决。当前 full-domain 已执行，不能再把“扩到 full nuScenes”列为未做动作。
 
-- nuScenes 官方数据包含 1,000 个约 20 秒 scenes，其中 850 个属于 train/val；当前只使用 3 scenes。
-  因此 `v1.0-trainval` annotations/metadata 是最小的规模突破，且复用同一 map/schema/devkit。
-- 先做 annotation+map-only 事件挖掘，不需要立即取得 camera/LiDAR sweeps；N1 通过后才进入 N2 资产预算。
+- nuScenes 官方数据包含 1,000 个约 20 秒 scenes；本项目已分别使用 val 146 和 train 694 做第二/三版
+  evaluation。第三版 10/12 positive actors 找不到等价 negative，说明约 20 秒 scene 与更短 actor track
+  对 same-actor non-overlap control 是结构性限制，而不是继续扩同一 split 就会消失；
+- annotation+map-only 事件挖掘已完成，不需要、也没有因此自动取得 N2 camera/LiDAR sweeps 使用权。
 
 - nuPlan 官方基准包含 1,282 小时、4 城市，并专门挖掘常见/稀有 scenario，支持 closed-loop interaction
   ([nuPlan paper](https://arxiv.org/abs/2403.04133))。
@@ -229,12 +234,30 @@ N1 已证明冻结 mini pool 没有足够可配对事件。最合理的动作是
 
 ## 8. 推荐的最小下一步
 
-1. 当前停止：保留 N0 `COMPLETE` 与 N1 `REJECTED`，不启动 N2/N3；
-2. 若获新授权，取得 nuScenes `v1.0-trainval` annotations/metadata，不先下载 sweeps/图像；
-3. 用 mini 的 22 topology-pass candidates 作为 calibration/audit pool，检查 graph corridor 跨 token
-   longitudinal relation；不得回写 mini verdict；
-4. 冻结 corridor evaluator 后，在 scene-disjoint trainval evaluation scenes 重跑 N1；
-5. 只有 full-domain N1 通过，才请求 raw sweeps 并运行 N2。
+### 当前唯一动作
+
+1. 用户按
+   [`N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md`](N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md)
+   完成 12/12 第三次盲审；
+2. validator 只校验/汇总，最终 verdict 由用户确认并另建 adjudication run；
+3. N2/N3/render/training 继续封闭。machine pair gate 已失败，人工不能把它覆盖为 true。
+
+### 审核后可突破方向
+
+1. **若 merge authenticity 低**：第三版 reject；冻结 train，换独立 calibration/evaluation 或引入
+   lane-polygon/人工事件标签，不在同 split 调 branch angle；
+2. **若 authenticity 高但 pair 仍不足**：优先换更长 trajectory/log 的事件底座，或新预注册
+   matched-other-actor control。nuPlan 官方 devkit提供 lane change、interaction 等 scenario 类型与筛选，
+   其 metrics 也按 lane/lane_connector occupancy、expert route 与 projected boxes 限定 TTC；
+3. **若 front/rear 是主误差**：研究 oriented-box swept ordering 和 lane-polygon occupancy；不得改成
+   单侧邻车回写当前双侧 gap-insertion 定义；
+4. **parallel lane-change 独立诊断**：对本 run 的 63 个 physical lane-change 单独审核主体动作，
+   区分真实换道与 map-match 假象；它是新 diagnostic，不补进当前 12 条；
+5. **视觉 evidence 升级**：若 CAM_FRONT + annotation topdown 产生大量 `UNCERTAIN`，再请求六相机或
+   raw sensor 资产授权；该授权不等于 N2 pass。
+
+路线选择依据不是“哪个最容易凑够 4 pairs”，而是第三次人审暴露的主失败层。任何新方向都要新 task ID、
+scene-disjoint split、预注册阈值与 fail-closed terminal。
 
 ## 9. 来源范围与证据等级
 

@@ -114,7 +114,22 @@ exact-target-token interaction 定义下得到 45 eligible actors、71 transitio
 
 配置逐字快照保存在不可变 run 的 `resolved.yaml`；归档 README 记录 commit、fingerprint、hash、路径和禁止复开项。
 
-## 8. 如何复查历史
+## 8. Event-first full-domain 第二次 reject
+
+目录：[`n1-fulldomain-second-reject/`](n1-fulldomain-second-reject/)
+
+第二版 val 146 machine screen 产生 37 candidates，后续 37/37 人审为 2 TP / 35 FP；独立 adjudication
+唯一 `REJECTED`。旧 17-scene N2 list 已在该目录归档为失效证据，活跃 N2 配置为空并 fail closed。
+
+## 9. Kinematics-first 第三次审核
+
+目录：[`n1-kinematic-third-audit/`](n1-kinematic-third-audit/)
+
+第三版 official train 694-scene formal run 产生 12 candidates / 9 scenes，但 negative/pair 只有 2/2，
+machine support 未通过。12/12 完整审核材料已生成，当前唯一 `AWAITING_HUMAN_REVIEW`，人工 verdict 尚空，
+`n2_authorized=false`。
+
+## 10. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；
