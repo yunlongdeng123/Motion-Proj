@@ -1,0 +1,21 @@
+schema_version: n1-fulldomain-human-audit-adjudication-v1
+task_id: N1-EVENT-FULL-AUDIT-01
+seed: 0
+repo_root: /root/autodl-tmp/motion_proj
+run_root: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01
+parent_run: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c
+original_review_template: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/audit/positive_audit.jsonl
+completed_review_file: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/audit/positive_audit_relabelled.jsonl
+completed_review_sha256: ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05
+allowed_verdicts:
+  - TRUE_POSITIVE
+  - FALSE_POSITIVE
+  - UNCERTAIN
+
+# 这是对用户已作出的第二次 N1 reject 决策做不可变登记，不是查看结果后补造统计阈值。
+decision:
+  terminal_status: REJECTED
+  research_verdict: reject_n1_fulldomain_after_human_audit
+  declared_by: user
+  declared_date: "2026-07-25"
+  rationale: 机器海选只看地图拓扑、忽略车辆物理运动学；不得进入 N2
