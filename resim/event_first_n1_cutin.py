@@ -12,6 +12,7 @@ import gc
 import json
 import platform
 import sys
+import traceback
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -56,6 +57,82 @@ MAP_NAMES = (
     "singapore-onenorth",
     "singapore-queenstown",
 )
+
+_ACTIVE_RUN_DIR: Path | None = None
+
+_REQUIRED_CONFIG_PATHS = (
+    ("task_id",),
+    ("seed",),
+    ("repo_root",),
+    ("dataset_root",),
+    ("cache_dir",),
+    ("run_root",),
+    ("n0_run",),
+    ("interpolate_n",),
+    ("scene_batch_size",),
+    ("calibration",),
+    ("evaluation",),
+    ("eligibility",),
+    ("map_matching",),
+    ("transition", "negative_window_frames"),
+    ("transition", "positive_exclusion_guard_frames"),
+    ("cutin", "annotation_keyframe_stride"),
+    ("cutin", "min_median_speed_mps"),
+    ("kinematics_control", "annotation_keyframe_stride"),
+    ("kinematics_control", "dense_frame_period_s"),
+    ("kinematics_control", "min_median_speed_mps"),
+    ("kinematics_control", "max_acceleration_mps2"),
+    ("kinematics_control", "negative_min_keyframes"),
+    ("kinematics_control", "negative_max_centerline_distance_m"),
+    ("kinematics_control", "negative_max_lateral_span_m"),
+    ("kinematics_control", "negative_max_heading_error_deg"),
+    ("machine_gates",),
+    ("audit_readiness",),
+    ("human_audit", "review_schema"),
+    ("stop_rule", "never_start_n2_from_this_run"),
+)
+
+
+def _validate_config_contract(config: dict) -> None:
+    missing = []
+    for path in _REQUIRED_CONFIG_PATHS:
+        value = config
+        for key in path:
+            if not isinstance(value, dict) or key not in value:
+                missing.append(".".join(path))
+                break
+            value = value[key]
+    if missing:
+        raise ValueError(
+            "K4 config contract missing required keys: " + ", ".join(missing)
+        )
+    if config["human_audit"]["review_schema"] != "receiver_cutin":
+        raise ValueError("K4 human_audit.review_schema must be receiver_cutin")
+    if config["stop_rule"]["never_start_n2_from_this_run"] is not True:
+        raise ValueError("K4 stop_rule must keep N2 fail-closed")
+
+
+def _mark_active_run_failed(exc: BaseException) -> None:
+    run_dir = _ACTIVE_RUN_DIR
+    if run_dir is None or not run_dir.is_dir():
+        return
+    failure = {
+        "schema_version": "engineering-failure-v1",
+        "task_id": "N1-EVENT-CUTIN-01",
+        "terminal_status": "FAILED",
+        "exit_reason": "uncaught_engineering_exception",
+        "exception_type": type(exc).__name__,
+        "exception_message": str(exc),
+        "traceback": traceback.format_exc(),
+        "written_research_outputs_before_failure": (run_dir / "event_pool.json").is_file(),
+        "n2_authorized": False,
+        "recovery": "preserve this directory, fix the defect, and use a new run ID",
+    }
+    atomic_write_json(str(run_dir / "failure.json"), failure)
+    atomic_write_text(str(run_dir / "FAILED"), "uncaught_engineering_exception\n")
+    running = run_dir / "RUNNING"
+    if running.is_file():
+        running.unlink()
 
 
 class LaneIndexCache:
@@ -644,8 +721,10 @@ def run(
     max_evaluation_scenes_development: int | None = None,
     force_audit_development: bool = False,
 ) -> Path:
+    global _ACTIVE_RUN_DIR
     started_at = utc_now()
     config = _load_yaml(config_path)
+    _validate_config_contract(config)
     print(json.dumps({"phase": "config_loaded"}), flush=True)
     code = git_state(str(Path(config["repo_root"])))
     print(json.dumps({"phase": "git_state_loaded"}), flush=True)
@@ -717,6 +796,7 @@ def run(
     run_id = generate_run_id(config["task_id"], tag, int(config["seed"]), config_sha)
     run_dir = (output_root or Path(config["run_root"])) / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
+    _ACTIVE_RUN_DIR = run_dir
     atomic_write_text(str(run_dir / "RUNNING"), "n1_receiver_cutin_screen\n")
     atomic_write_text(
         str(run_dir / "resolved.yaml"), config_path.read_text(encoding="utf-8")
@@ -936,6 +1016,7 @@ def run(
     )
     (run_dir / "RUNNING").unlink()
     atomic_write_text(str(run_dir / terminal), verdict + "\n")
+    _ACTIVE_RUN_DIR = None
     print(json.dumps({"run_dir": str(run_dir), **summary}, ensure_ascii=False))
     return run_dir
 
@@ -953,14 +1034,18 @@ def main() -> None:
     parser.add_argument("--max-evaluation-scenes-development", type=int)
     parser.add_argument("--force-audit-development", action="store_true")
     args = parser.parse_args()
-    run(
-        args.config,
-        args.output_root,
-        allow_dirty_development=args.allow_dirty_development,
-        skip_audit_panels=args.skip_audit_panels,
-        max_evaluation_scenes_development=args.max_evaluation_scenes_development,
-        force_audit_development=args.force_audit_development,
-    )
+    try:
+        run(
+            args.config,
+            args.output_root,
+            allow_dirty_development=args.allow_dirty_development,
+            skip_audit_panels=args.skip_audit_panels,
+            max_evaluation_scenes_development=args.max_evaluation_scenes_development,
+            force_audit_development=args.force_audit_development,
+        )
+    except BaseException as exc:
+        _mark_active_run_failed(exc)
+        raise
 
 
 if __name__ == "__main__":
