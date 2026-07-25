@@ -16,7 +16,6 @@ from collections import defaultdict
 from pathlib import Path
 
 import yaml
-from nuscenes.map_expansion.map_api import NuScenesMap
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -534,6 +533,8 @@ def run(
     max_evaluation_scenes_development: int | None = None,
     force_audit_development: bool = False,
 ) -> Path:
+    from nuscenes.map_expansion.map_api import NuScenesMap
+
     started_at = utc_now()
     config = _load_yaml(config_path)
     repo_root = Path(config["repo_root"])

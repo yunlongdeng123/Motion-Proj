@@ -12,7 +12,6 @@ from pathlib import Path
 
 import numpy as np
 import yaml
-from nuscenes.map_expansion.map_api import NuScenesMap
 from scipy.spatial import cKDTree
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -86,7 +85,7 @@ def _eligibility(actor_id: int, actor: dict, config: dict) -> tuple[dict, list[d
 
 
 class LaneIndex:
-    def __init__(self, nmap: NuScenesMap, config: dict):
+    def __init__(self, nmap, config: dict):
         self.nmap = nmap
         self.tokens = [row["token"] for row in nmap.lane + nmap.lane_connector]
         self.layer_by_token = {
@@ -485,6 +484,8 @@ def _gate_decision(summary: dict, gates: dict) -> tuple[bool, dict]:
 
 
 def run(config_path: Path, output_root: Path | None) -> Path:
+    from nuscenes.map_expansion.map_api import NuScenesMap
+
     config = _load_yaml(config_path)
     n0_run = Path(config["n0_run"])
     if not (n0_run / "COMPLETE").is_file():

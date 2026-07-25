@@ -174,6 +174,7 @@ def _camera_panel(
         "SUBJECT": (255, 0, 255),
         "FRONT": (0, 220, 0),
         "REAR": (0, 160, 255),
+        "RECEIVER": (0, 160, 255),
     }
     for role, instance_token in roles.items():
         _draw_actor_box(
@@ -211,7 +212,8 @@ def _topdown_panel(
     crossing = int(event["crossing_frame"])
     subject_state = _actor_state(info, roles["SUBJECT"], int(round(crossing / 5) * 5))
     if subject_state is None:
-        center = np.asarray(event["motion"].get("projected_xy", [0, 0]), dtype=float)
+        event_geometry = event.get("motion", event.get("cutin", {}))
+        center = np.asarray(event_geometry.get("projected_xy", [0, 0]), dtype=float)
     else:
         center = subject_state["transform"][:2, 3]
     figure, axis = plt.subplots(figsize=(8, 6), dpi=120)
@@ -241,7 +243,12 @@ def _topdown_panel(
         label="target lane",
         zorder=2,
     )
-    colors = {"SUBJECT": "#ff00ff", "FRONT": "#00aa00", "REAR": "#008cff"}
+    colors = {
+        "SUBJECT": "#ff00ff",
+        "FRONT": "#00aa00",
+        "REAR": "#008cff",
+        "RECEIVER": "#008cff",
+    }
     for role, token in roles.items():
         trajectory = _trajectory_xy(info, token, crossing - 30, crossing + 40)
         if trajectory.size:
@@ -267,6 +274,36 @@ def _topdown_panel(
 
 
 def _metrics_text(event: dict, audit_id: str) -> str:
+    if "cutin" in event:
+        cutin = event["cutin"]
+
+        def number(value, digits: int = 2) -> str:
+            return "NA" if value is None else f"{float(value):.{digits}f}"
+
+        return "\n".join(
+            [
+                f"AUDIT ITEM: {audit_id}",
+                "Colors: SUBJECT=magenta RECEIVER=blue FRONT(optional)=green",
+                f"machine type: {event.get('maneuver_mode')}",
+                f"source->target: {event['source_run']['token'][:8]} -> {event['target_run']['token'][:8]}",
+                f"2Hz pre frames: {[row['frame'] for row in cutin.get('pre_keyframes', [])]}",
+                f"2Hz post frames: {[row['frame'] for row in cutin.get('post_keyframes', [])]}",
+                "center outside / full-box outside / post box inside: "
+                f"{cutin.get('pre_center_outside_count')}/"
+                f"{cutin.get('pre_box_outside_count')}/"
+                f"{cutin.get('post_box_inside_count')}",
+                f"lateral pre->post: {number(cutin.get('pre_median_abs_lateral_m'))}->{number(cutin.get('post_median_abs_lateral_m'))} m",
+                f"convergence/consistency: {number(cutin.get('lateral_convergence_m'))}/{number(cutin.get('lateral_convergence_consistency'))}",
+                f"settled duration: {number(cutin.get('settle_duration_s'))} s",
+                f"receiver pre/post support: {cutin.get('receiver_pre_support_keyframes')}/{cutin.get('receiver_post_support_keyframes')}",
+                f"receiver bumper gap: {number(cutin.get('receiver_bumper_gap_m'))} m",
+                f"subject/receiver speed: {number(cutin.get('subject_longitudinal_speed_mps'))}/{number(cutin.get('receiver_longitudinal_speed_mps'))} m/s",
+                f"receiver TTC: {number(cutin.get('receiver_ttc_s'))} s",
+                "",
+                "Do not infer TRUE from machine PASS.",
+                "Judge body lane entry and the independent receiver identity first.",
+            ]
+        )
     motion = event["motion"]
     interaction = event["interaction"]
     join = motion["join_geometry"]
@@ -317,6 +354,144 @@ def _combine_panel(
     panel.save(output, optimize=True)
 
 
+def _receiver_review_prompt(
+    run_dir: Path,
+    event_pool_sha: str,
+    population: int,
+    count: int,
+    config: dict,
+    machine_summary: dict,
+    machine_checks: dict,
+) -> str:
+    gates = config["human_audit"]
+    return f"""# N1-EVENT-CUTIN-01 第四次人工盲审完整提示词
+
+## 1. 评测目的与非目标
+
+你要独立判断第四版候选是否为真实的 receiver-centric vehicle cut-in：洋红 SUBJECT
+原先稳定处在蓝色 RECEIVER 所在目标车流之外，随后车身横向进入该车流并在 RECEIVER
+前方稳定；RECEIVER 必须在进入前后都是目标 corridor 上最近、同向、身份连续的后车。
+绿色 FRONT 只是可选的上下文，不是 TRUE_POSITIVE 的必要条件。
+
+本评测不评价渲染质量、碰撞安全、反事实编辑、N2 raw evidence、训练收益或数据下载。
+机器 PASS 只表示候选满足冻结的 2 Hz 几何规则，不等于人工 TRUE_POSITIVE。
+
+## 2. 盲法与禁止读取的信息
+
+- 只按 `audit/index.html` 或 `audit/REVIEW_CHECKLIST.md` 的盲序 `K4-xxx` 审核；
+- 可以读取同一 item 的 panel 与 `evidence/K4-xxx.json`；
+- 禁止读取第二/第三次人审文件、`calibration_audit.json`、旧审核 notes、源码中的
+  calibration 结果，或按 scene/event 名猜答案；
+- 禁止更改 `review_template.jsonl`、panel、evidence 或 hash 字段；只编辑
+  `audit/review_working.jsonl` 的 verdict、failure_codes、reviewer 和 notes；
+- 不因候选数量、机器 gate、gap/TTC 数字或“第四版应该更准”而给 TRUE。
+
+## 3. 素材范围与颜色
+
+- panel 顶部最多 5 张原始 CAM_FRONT 2 Hz keyframe，3D box 颜色为：
+  SUBJECT=洋红 `S`，RECEIVER=蓝色 `R`，可选 FRONT=绿色 `F`；
+- 左下是官方 vector-map centerline 与各角色的原始 2 Hz annotation 轨迹；
+- 右下报告车身 outside/inside、横向收敛、1 秒稳定、receiver 身份支持、bumper gap 与 TTC；
+- 10 Hz 插值只用于候选 token 对齐和显示，不是独立物理观测；
+- 某角色不在 CAM_FRONT 中时，使用俯视轨迹、box 和其他关键帧；仍不足则判
+  `UNCERTAIN/INSUFFICIENT_VISUAL_EVIDENCE`，不得猜测。
+
+## 4. 逐项判定顺序与优先级
+
+按以下顺序审核；任一项明确失败，overall 必须为 `FALSE_POSITIVE`：
+
+1. **subject maneuver**：洋红身份连续，车身确实从目标车道带外横向进入其内并稳定。
+   主路正常续接、道路自身弯曲、仅 token 切换、地图匹配抖动均不是 cut-in；
+2. **receiver corridor**：蓝色 RECEIVER 的道路分支/车道才是被切入的目标车流，
+   且与 SUBJECT 的 source stream 在进入前相互独立。不能把 SUBJECT 后方同一队列车辆
+   重新命名为 RECEIVER，也不能跨到平行岔路、对向或横穿车流；
+3. **receiver relation**：SUBJECT 进入后位于 RECEIVER 前方，蓝车是目标 corridor
+   上最近的同向后车，bumper gap 与俯视几何相容并在冻结 `[0.5, 40] m`；
+4. **temporal persistence / path clear**：同一 RECEIVER 在进入前至少 2 个、进入后至少
+   2 个原始 2 Hz keyframe 保持身份与次序；二者之间没有被忽略的同车道车辆；
+5. **可选 FRONT**：绿色 F 只辅助理解。FRONT 错误应写入 notes，但若 1–4 均成立，
+   不单独把真实 receiver-centric cut-in 判为 FP。
+
+## 5. Overall verdict 与 failure code
+
+- `TRUE_POSITIVE`：第 4 节 1–4 全部 `VALID`，failure_codes 必须为空；
+- `FALSE_POSITIVE`：任一必需项明确 `INVALID`；至少填一个 failure code；
+- `UNCERTAIN`：没有必需项可明确判 INVALID，但证据不足；至少一个 component 为
+  `UNCERTAIN`，notes 写明缺失证据。
+
+允许的 failure codes：
+`SUBJECT_IDENTITY_MISMATCH`、`SUBJECT_NO_LATERAL_MANEUVER`、`ROUTE_CONTINUATION`、
+`NORMAL_TURN`、`MAP_MATCH_JITTER`、`INTERPOLATION_ONLY`、`WRONG_BRANCH`、
+`OPPOSITE_OR_CROSS_TRAFFIC`、`RECEIVER_INVALID`、`RECEIVER_ON_SOURCE_STREAM`、
+`GAP_INVALID`、`PATH_NOT_CLEAR`、`IDENTITY_NOT_PERSISTENT`、
+`INSUFFICIENT_VISUAL_EVIDENCE`、`OTHER`。
+
+边界例：
+
+- SUBJECT 与蓝车始终在同一条弯道排队，仅经过 lane/connector 边界：
+  `FALSE_POSITIVE/ROUTE_CONTINUATION/RECEIVER_ON_SOURCE_STREAM`；
+- SUBJECT 在相邻平行车道，车身跨入蓝车车道并稳定，蓝车持续跟在其后：
+  可判 TRUE，即使没有绿色 FRONT；
+- SUBJECT 正常左/右转进入新道路：`FALSE_POSITIVE/NORMAL_TURN`；
+- 蓝车位于另一平行岔路或横向路口：`FALSE_POSITIVE/WRONG_BRANCH/RECEIVER_INVALID`；
+- 蓝车身份前后切换，或中间有另一辆目标车道车辆：分别为
+  `IDENTITY_NOT_PERSISTENT` 或 `PATH_NOT_CLEAR`；
+- 相机看不清但俯视 annotation 明确可判；相机与 annotation 冲突则 `UNCERTAIN`。
+
+## 6. JSONL 填写格式
+
+逐行保留 `audit_id`、`evidence_sha256`、`panel_sha256`，只填写：
+
+```json
+{{"audit_id":"K4-001","evidence_sha256":"...","panel_sha256":"...",
+"subject_maneuver_verdict":"VALID|INVALID|UNCERTAIN",
+"receiver_corridor_verdict":"VALID|INVALID|UNCERTAIN",
+"receiver_relation_verdict":"VALID|INVALID|UNCERTAIN",
+"temporal_persistence_verdict":"VALID|INVALID|UNCERTAIN",
+"overall_verdict":"TRUE_POSITIVE|FALSE_POSITIVE|UNCERTAIN",
+"failure_codes":[],"reviewer":"你的名字","notes":"基于哪些关键帧、轨迹和角色关系作出判断"}}
+```
+
+不得删除、增加、重排或重复 item。`FALSE_POSITIVE` 必须至少一个 failure code；
+所有 item 的 reviewer/notes 必须非空。
+
+## 7. 聚合阈值（查看第四次结果前冻结）
+
+population={population}，本次按 SHA256 确定性盲序审核 count={count}；
+parent event_pool SHA256=`{event_pool_sha}`。
+
+只有以下条件全部满足，才可建议第四版 N1 通过：
+
+- machine gate 全部通过。machine summary：
+  `{json.dumps(machine_summary, ensure_ascii=False, sort_keys=True)}`；
+  checks：`{json.dumps(machine_checks, ensure_ascii=False, sort_keys=True)}`；
+- 完整审核数 ≥ `{gates['min_reviewed_items']}`；
+- TRUE_POSITIVE ≥ `{gates['min_true_positive_count']}` 且覆盖 ≥
+  `{gates['min_true_positive_scenes']}` scenes；
+- determinate precision `TP/(TP+FP) ≥ {gates['min_precision']:.2f}`；
+- Wilson 95% precision lower bound ≥ `{gates['min_wilson_95_lower_bound']:.2f}`；
+- UNCERTAIN fraction ≤ `{gates['max_uncertain_fraction']:.2f}`。
+
+任一条件失败，第四版 N1 为 `REJECTED`。即使全部通过，也只获得请求下一阶段授权的
+资格；本 run 固定 `n2_authorized=false`，不得自动启动 N2。
+
+## 8. 完成后的精确命令与影响
+
+```bash
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate motionproj
+cd /root/autodl-tmp/motion_proj
+PYTHONPATH=. python scripts/validate_n1_cutin_review.py \\
+  --run-dir {run_dir} \\
+  --review-file {run_dir}/audit/review_working.jsonl
+```
+
+该命令只校验和聚合人工填写，不启动 N2。完成后把 `review_working.jsonl` 路径和
+汇总输出交给 Codex；最终 verdict 仍由用户确认并写入独立 adjudication run。
+不得改写本候选 run 或用人工 verdict 覆盖失败的 machine gate。
+"""
+
+
 def _review_prompt(
     run_dir: Path,
     event_pool_sha: str,
@@ -326,6 +501,16 @@ def _review_prompt(
     machine_summary: dict,
     machine_checks: dict,
 ) -> str:
+    if config["human_audit"].get("review_schema") == "receiver_cutin":
+        return _receiver_review_prompt(
+            run_dir,
+            event_pool_sha,
+            population,
+            count,
+            config,
+            machine_summary,
+            machine_checks,
+        )
     gates = config["human_audit"]
     return f"""# N1-KINEMATIC-01 第三次人工盲审完整提示词
 
@@ -451,6 +636,13 @@ def build_audit_pack(
     machine_summary: dict,
     machine_checks: dict,
 ) -> dict:
+    receiver_schema = config["human_audit"].get("review_schema") == "receiver_cutin"
+    audit_prefix = str(config["human_audit"].get("audit_prefix", "K3"))
+    audit_title = (
+        "N1-EVENT-CUTIN-01 第四次人工审核清单"
+        if receiver_schema
+        else "N1-KINEMATIC-01 第三次人工审核清单"
+    )
     audit_dir = run_dir / "audit"
     panels_dir = audit_dir / "panels"
     evidence_dir = audit_dir / "evidence"
@@ -473,35 +665,70 @@ def build_audit_pack(
     scene_cache = {}
     template_rows = []
     index_cards = []
-    checklist = ["# N1-KINEMATIC-01 第三次人工审核清单", ""]
+    checklist = [f"# {audit_title}", ""]
 
     for index, event in enumerate(selected, 1):
-        audit_id = f"K3-{index:03d}"
+        audit_id = f"{audit_prefix}-{index:03d}"
         scene = event["scene_id"]
         if scene not in scene_cache:
-            scene_cache[scene] = json.loads(
-                (cache_root / scene / "instances" / "instances_info.json").read_text(
-                    encoding="utf-8"
+            candidates = [
+                cache_root / scene / "instances" / "instances_info.json",
+                cache_root / "evaluation" / scene / "instances" / "instances_info.json",
+            ]
+            cache_path = next((path for path in candidates if path.is_file()), None)
+            if cache_path is None:
+                raise FileNotFoundError(
+                    f"未找到 audit scene instances_info: {scene}"
                 )
+            scene_cache[scene] = json.loads(
+                cache_path.read_text(encoding="utf-8")
             )
         info = scene_cache[scene]
-        roles = {
-            "SUBJECT": event["subject_instance_token"],
-            "FRONT": event["front_instance_token"],
-            "REAR": event["rear_instance_token"],
-        }
+        if receiver_schema:
+            roles = {
+                "SUBJECT": event["subject_instance_token"],
+                "RECEIVER": event["receiver_instance_token"],
+            }
+            if event.get("front_instance_token"):
+                roles["FRONT"] = event["front_instance_token"]
+        else:
+            roles = {
+                "SUBJECT": event["subject_instance_token"],
+                "FRONT": event["front_instance_token"],
+                "REAR": event["rear_instance_token"],
+            }
         crossing = int(event["crossing_frame"])
-        relation = int(event["interaction"]["center_frame"])
+        relation = int(
+            event["relation_frame"]
+            if receiver_schema
+            else event["interaction"]["center_frame"]
+        )
+        if receiver_schema:
+            pre_frames = [
+                int(row["frame"]) for row in event["cutin"]["pre_keyframes"]
+            ]
+            post_frames = [
+                int(row["frame"]) for row in event["cutin"]["post_keyframes"]
+            ]
+            frame_values = (
+                pre_frames[0],
+                pre_frames[-1],
+                post_frames[0],
+                relation,
+                post_frames[-1],
+            )
+        else:
+            frame_values = (
+                crossing - 10,
+                crossing - 5,
+                crossing,
+                crossing + 5,
+                relation,
+            )
         frames = sorted(
             {
                 int(round(value / 5) * 5)
-                for value in (
-                    crossing - 10,
-                    crossing - 5,
-                    crossing,
-                    crossing + 5,
-                    relation,
-                )
+                for value in frame_values
             }
         )[:5]
         camera_images = [
@@ -548,27 +775,46 @@ def build_audit_pack(
             "crossing_frame": crossing,
             "relation_frame": relation,
             "topology": event["topology"],
-            "motion": event["motion"],
-            "interaction": event["interaction"],
             "event_record_sha256": event["event_record_sha256"],
         }
+        if receiver_schema:
+            evidence["maneuver_mode"] = event["maneuver_mode"]
+            evidence["cutin"] = event["cutin"]
+        else:
+            evidence["motion"] = event["motion"]
+            evidence["interaction"] = event["interaction"]
         evidence_path = evidence_dir / f"{audit_id}.json"
         atomic_write_json(str(evidence_path), evidence)
         evidence_sha = file_fingerprint(str(evidence_path))
         panel_sha = file_fingerprint(str(panel_path))
-        template = {
-            "audit_id": audit_id,
-            "evidence_sha256": evidence_sha,
-            "panel_sha256": panel_sha,
-            "subject_maneuver_verdict": "",
-            "target_corridor_verdict": "",
-            "front_relation_verdict": "",
-            "rear_relation_verdict": "",
-            "overall_verdict": "",
-            "failure_codes": [],
-            "reviewer": "",
-            "notes": "",
-        }
+        if receiver_schema:
+            template = {
+                "audit_id": audit_id,
+                "evidence_sha256": evidence_sha,
+                "panel_sha256": panel_sha,
+                "subject_maneuver_verdict": "",
+                "receiver_corridor_verdict": "",
+                "receiver_relation_verdict": "",
+                "temporal_persistence_verdict": "",
+                "overall_verdict": "",
+                "failure_codes": [],
+                "reviewer": "",
+                "notes": "",
+            }
+        else:
+            template = {
+                "audit_id": audit_id,
+                "evidence_sha256": evidence_sha,
+                "panel_sha256": panel_sha,
+                "subject_maneuver_verdict": "",
+                "target_corridor_verdict": "",
+                "front_relation_verdict": "",
+                "rear_relation_verdict": "",
+                "overall_verdict": "",
+                "failure_codes": [],
+                "reviewer": "",
+                "notes": "",
+            }
         template_rows.append(template)
         checklist.extend(
             [
@@ -597,10 +843,10 @@ def build_audit_pack(
         str(audit_dir / "REVIEW_CHECKLIST.md"), "\n".join(checklist) + "\n"
     )
     index_html = (
-        "<!doctype html><meta charset='utf-8'><title>N1 Kinematic Audit</title>"
+        f"<!doctype html><meta charset='utf-8'><title>{audit_title}</title>"
         "<style>body{font-family:sans-serif;max-width:1660px;margin:auto}"
         "section{border-bottom:1px solid #ccc;padding:20px 0}"
-        "img{width:100%;height:auto}</style><h1>N1-KINEMATIC-01 blind audit</h1>"
+        f"img{{width:100%;height:auto}}</style><h1>{audit_title}</h1>"
         + "".join(index_cards)
     )
     atomic_write_text(str(audit_dir / "index.html"), index_html)
@@ -627,7 +873,11 @@ def build_audit_pack(
         for path in sorted(immutable_files)
     }
     manifest = {
-        "schema_version": "n1-kinematic-human-audit-pack-v1",
+        "schema_version": (
+            "n1-receiver-cutin-human-audit-pack-v1"
+            if receiver_schema
+            else "n1-kinematic-human-audit-pack-v1"
+        ),
         "run_dir": str(run_dir),
         "event_pool_sha256": event_pool["event_pool_sha256"],
         "candidate_population_count": len(positives),

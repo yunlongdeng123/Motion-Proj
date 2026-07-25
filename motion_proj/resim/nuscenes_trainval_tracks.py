@@ -72,17 +72,26 @@ class TrainvalAnnotationSource:
         self.map_name_by_scene = {
             row["token"]: logs[row["log_token"]]["location"] for row in scenes
         }
-        self.sample_by_token = {
-            row["token"]: row for row in _load_json(self.meta / "sample.json")
-        }
+        # sample/instance 是 trainval 中最占 Python 对象内存的两张元数据表。
+        # 下游只读取三个 sample 字段和 instance->category 映射，因此流式保留
+        # 最小投影，避免 json.load 的完整行与最终索引同时驻留造成峰值翻倍。
+        self.sample_by_token = {}
+        with (self.meta / "sample.json").open("rb") as handle:
+            for row in ijson.items(handle, "item"):
+                self.sample_by_token[row["token"]] = {
+                    "next": row["next"],
+                    "timestamp": row["timestamp"],
+                }
         categories = {
             row["token"]: row["name"]
             for row in _load_json(self.meta / "category.json")
         }
-        self.category_by_instance = {
-            row["token"]: categories[row["category_token"]]
-            for row in _load_json(self.meta / "instance.json")
-        }
+        self.category_by_instance = {}
+        with (self.meta / "instance.json").open("rb") as handle:
+            for row in ijson.items(handle, "item"):
+                self.category_by_instance[row["token"]] = categories[
+                    row["category_token"]
+                ]
 
     def resolve_scene(self, entry: str) -> dict:
         row = self.scene_by_name.get(entry) or self.scene_by_token.get(entry)
@@ -230,6 +239,7 @@ def build_scene_instances_info(
     interpolate_n: int = 4,
     cache_dir: Path | None = None,
     retain: bool = True,
+    source: TrainvalAnnotationSource | None = None,
 ) -> dict[str, dict]:
     """为给定 scene 生成 10Hz interpolated instances_info。
 
@@ -238,7 +248,7 @@ def build_scene_instances_info(
     - 若 ``retain=False``，dense 轨迹写盘后不驻留内存（大规模评估时控内存），
       返回值中不含 ``instances_info``，仅含 scene_token/map_name 与缓存路径。
     """
-    source = TrainvalAnnotationSource(dataset_root)
+    source = source or TrainvalAnnotationSource(dataset_root)
     scenes = [source.resolve_scene(entry) for entry in scene_entries]
     records = _build_keyframe_records(source, scenes)
 
