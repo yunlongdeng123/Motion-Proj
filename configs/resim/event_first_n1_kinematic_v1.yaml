@@ -1,0 +1,134 @@
+schema_version: event-first-n1-kinematic-v1
+task_id: N1-EVENT-KINEMATIC-01
+seed: 0
+repo_root: /root/autodl-tmp/motion_proj
+dataset_root: /root/autodl-tmp/data/nuscenes
+cache_dir: /root/autodl-tmp/data/occgs/processed_10Hz/n1_kinematic_v1
+run_root: /root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01
+n0_run: /root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd
+interpolate_n: 4
+scene_batch_size: 128
+require_clean_git: true
+
+# 第二次人审只作 calibration，不进入第三次正式评估。
+calibration:
+  parent_run: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c
+  audit_reject_run: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01/v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac
+  completed_review_file: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/audit/positive_audit_relabelled.jsonl
+  completed_review_sha256: ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05
+
+# official train 与第二次 val 审计、mini calibration 均 scene-disjoint。
+evaluation:
+  split_name: train
+  exclude_scenes:
+    - scene-0061
+    - scene-0103
+    - scene-0553
+    - scene-0655
+    - scene-0757
+    - scene-0796
+    - scene-0916
+    - scene-1077
+    - scene-1094
+    - scene-1100
+  max_scenes: null
+
+eligibility:
+  class_prefix: vehicle.
+  min_track_frames: 20
+  max_frame_gaps: 0
+  min_displacement_m: 5.0
+
+map_matching:
+  centerline_resolution_m: 0.5
+  nearest_points_k: 16
+  max_centerline_distance_m: 3.0
+  max_heading_error_deg: 45.0
+  heading_score_weight_m_per_rad: 1.0
+
+transition:
+  min_stable_source_frames: 10
+  min_stable_target_frames: 10
+  max_transition_gap_frames: 20
+  min_lateral_centerline_shift_m: 1.5
+  max_lateral_centerline_shift_m: 6.0
+  max_parallel_heading_error_deg: 30.0
+  graph_hops_for_shared_corridor: 2
+  merge_min_target_incoming_lanes: 2
+  negative_window_frames: 30
+
+# 速度/加速度/横向运动只由原始 2 Hz annotation keyframe 计算。
+kinematics:
+  annotation_keyframe_stride: 5
+  dense_frame_period_s: 0.1
+  keyframes_each_side: 3
+  branch_lookback_m: 8.0
+  min_median_speed_mps: 0.5
+  max_net_course_change_deg: 30.0
+  max_net_yaw_change_deg: 30.0
+  max_course_deviation_deg: 35.0
+  max_lane_join_heading_error_deg: 30.0
+  min_lateral_displacement_m: 0.8
+  min_lateral_span_m: 1.0
+  min_peak_lateral_speed_mps: 0.2
+  max_peak_lateral_speed_mps: 4.0
+  min_lateral_direction_consistency: 0.65
+  min_longitudinal_progress_m: 2.0
+  max_source_distance_m: 2.5
+  max_target_distance_m: 2.5
+  min_lane_preference_margin_m: 0.4
+  merge_min_target_incoming_lanes: 2
+  min_merge_branch_alignment_disadvantage_deg: 3.0
+  min_merge_branch_convergence_angle_deg: 3.0
+  max_acceleration_mps2: 12.0
+  max_yaw_rate_deg_s: 60.0
+  negative_min_keyframes: 5
+  negative_max_centerline_distance_m: 2.0
+  negative_max_lateral_span_m: 0.6
+  negative_max_heading_error_deg: 20.0
+
+interaction:
+  annotation_keyframe_stride: 5
+  graph_hops: 2
+  max_edge_heading_error_deg: 20.0
+  max_edge_endpoint_gap_m: 3.0
+  max_actor_heading_error_deg: 25.0
+  temporal_keyframe_count: 3
+  min_identity_support_keyframes: 2
+  min_identity_support_fraction: 0.6666666667
+  min_bumper_gap_m: 0.5
+  max_bumper_gap_m: 60.0
+
+machine_gates:
+  min_positive_candidates: 12
+  min_negative_windows: 4
+  min_same_actor_pairs: 4
+  min_candidate_scenes: 6
+
+# 用户明确要求第三次人审；只要至少有 1 个完整 machine positive，就生成全量/盲抽材料。
+# machine_gates 仍是正式研究支持门槛，人工不能覆盖其失败。
+audit_readiness:
+  min_positive_candidates: 1
+
+human_audit:
+  max_items: 40
+  sampling: deterministic_sha256_uniform
+  blind_order_seed: n1-kinematic-audit-v1
+  min_reviewed_items: 12
+  min_true_positive_count: 8
+  min_true_positive_scenes: 4
+  min_precision: 0.80
+  min_wilson_95_lower_bound: 0.60
+  max_uncertain_fraction: 0.10
+
+stop_rule:
+  on_machine_gate_failure: reject_n1_kinematic_pool
+  on_audit_ready: await_human_review
+  on_no_audit_candidate: reject_n1_kinematic_no_candidate
+  never_start_n2_from_this_run: true
+  prohibited_recovery:
+    - use_10hz_interpolation_as_physical_measurement
+    - posthoc_threshold_or_scene_selection
+    - treat_mainline_route_continuation_as_merge
+    - use_single_frame_front_rear_relation
+    - start_n2_n3_render_or_training

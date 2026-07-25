@@ -291,7 +291,27 @@ front/rear。该高度依赖关系触发强制人工审计，`COMPLETE` 只表�
 对拍的 instance token、frame index 与 transform 一致。这个 cadence 对拍只证明数据适配一致，不能把插值帧
 当成新的物理观测。正式人审事实必须在独立 audit run 登记，不得原地改写本 run 的 event pool 或 terminal。
 
-## 16. 登记规则
+## 16. N1-EVENT-FULL-AUDIT-01 第二次人工裁决
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac` | rejected / `REJECTED` | 37/37 条完整；TP=2、FP=35、UNCERTAIN=0；audited precision=`0.054054`；用户明确宣告第二次 N1 reject | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01/v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac/` | graph-corridor machine pass 被人审推翻；N2 未授权，父机器 run 不改写 |
+
+adjudication code commit 为 `1e2f5eacc75d31b186f2b9f3476f6352cd855599`，`code_dirty=false`；
+config fingerprint 为
+`6507cbacde489df9675e54b7be12a5b1132055e42e3009aa78f14264ef2fb577`，data fingerprint 为
+`563c8c25a7914919eb761f9df427952fb50beff6fb70a40a0fb5600078ec66a9`。输入 completed review SHA256：
+`ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05`。
+
+父提示词没有预注册 aggregate threshold，因此本 run 没有查看结果后补造阈值；研究终态直接来自用户明确
+decision。reviewer 字段按收到的文件原样登记（`ChatGPT_manual=32`、`yunlong=2`、`yunlong.deng=3`），
+并由用户在本轮整体确认结果。agent 只验证非 review 字段、event ID、hash、完整性与计数，没有代填 verdict。
+
+人审 notes 的主导机制是把主路正常 lane/connector continuation 当 merge；另含正常转弯、map/token
+assignment、插值/subject identity 错配。完整防重复约束见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)
+的 `N1-F05`–`N1-F08`。
+
+## 17. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。

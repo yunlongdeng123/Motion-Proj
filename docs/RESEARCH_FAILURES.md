@@ -1,13 +1,97 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-07-24
-> **当前范围**：V1–V7.1 防重复约束、H1 reject 根因分解与 Post-OccGS 新路线风险。
+> **最后更新**：2026-07-25
+> **当前范围**：V1–V7.1 防重复约束、两次 N1 reject 根因与 kinematics-first 第三版约束。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
+
+## N1 full-domain 第二次 reject（2026-07-25）
+
+### N1-F05：把 target 多 incoming 的地图类别误当成 subject 行为
+
+**观察**
+
+- 父机器 run `N1-EVENT-FULL-01` 在 val 146 上报 37 个 positive，其中 topology 为 35 merge + 2 lane change；
+- 完成人审文件 SHA256 为
+  `ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05`；
+- 用户确认的逐项结果为 `TRUE_POSITIVE=2`、`FALSE_POSITIVE=35`、`UNCERTAIN=0`，机器候选精度
+  `2/37=0.054054`；
+- 多数 reviewer notes 明确指出：subject 沿与 target 共线的主路 lane/connector 正常直行，真正汇入
+  target 的是另一条 incoming branch；旧规则却只因 `target_incoming_count>=2` 就把 subject 标为 merge；
+- 独立 audit adjudication：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01/v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac/`，
+  唯一终态 `REJECTED`。
+
+**能下的结论**
+
+graph-corridor 修复了邻车跨 token fragmentation，却没有证明 subject 本身执行了 lateral maneuver。
+“target 有多个 incoming”是地图节点属性，不是 actor-specific merge 证据；第二次 N1 不能进入 N2。
+
+**不能下的结论**
+
+不能据此断言 full nuScenes 没有真实 lane change/merge，也不能把 2 个标注 TP 当成已验证的完整事件池。
+旧 audit panel 没有把 subject/front/rear 的 3D identity 投影到图像，且 reviewer 字段包含多个来源；
+用户已整体确认 reject，但单条 TP 仍只能作为第三版 calibration 标签，不得直接进入 formal evaluation。
+
+### N1-F06：10 Hz 插值 cadence 被错误提升为物理证据
+
+**观察**
+
+nuScenes `sample` 是 2 Hz 标注关键帧。第二版把 2 Hz box 线性/SLERP 插值到 10 Hz 后，用连续 lane-token run
+寻找 transition；该做法对齐了 DriveStudio cadence，却没有产生新的物理观测。第二次人审 notes 多次指出
+短 token 切换、轨迹插值或 map assignment 假象。
+
+**防重复**
+
+- 第三版速度、加速度、yaw-rate、lane preference、front/rear persistence 只能用原始 2 Hz keyframe；
+- 10 Hz 只用于 frame 对齐、可视化和复现旧 transition 候选，不得计算导数或宣称 0.1 s 观测；
+- 至少 3 个 pre 和 3 个 post keyframes；不足时为 `UNKNOWN`，不得靠插值补齐。
+
+### N1-F07：单时刻中心距不是持续物理交互
+
+**观察**
+
+第二版在单一 relation frame 上用中心线 `s` 与中心距 `[2,60] m` 选择 front/rear，没有扣除 box extent，
+也不要求同一 front/rear identity 跨时刻持续。37 个 machine positive 中 36 个至少依赖一个跨-token 邻车，
+因此 branch 选择错误会直接翻转结果。
+
+**第三版解除条件**
+
+1. target corridor 每个 graph edge 同时满足方向连续和 endpoint 连续，并只选单一最连续分支；
+2. 使用 oriented box 在 lane tangent 上的投影半长，报告 bumper gap 与 center gap；
+3. 至少 2/3 个连续 2 Hz keyframe 保持同一 front/rear identity、方向和次序；
+4. 同时报告 longitudinal speed、closing speed、headway/TTC；它们是诊断，不得替代人审。
+
+### N1-F08：第二版审核合同与 provenance 不足
+
+**观察**
+
+- 父机器 run 诚实记录 `code_dirty=true`；它可定位但不是 clean-commit formal baseline；
+- 旧人审清单给了逐项 verdict 定义，却未预注册聚合阈值；
+- 因此第二次 reject adjudication 没有查看结果后补造阈值，只登记用户明确决定；
+- 旧 CAM_FRONT 清单没有身份 box overlay，容易把画面中“真正并道的另一辆车”认成 subject。
+
+**复开条件**
+
+第三版必须在 clean commit 上运行；正式 audit pack 同时提供盲序、subject/front/rear 颜色框、2 Hz 俯视轨迹、
+逐项 component verdict、failure codes、完整提示词、immutable file hashes、预注册统计阈值和独立
+adjudication 命令。Agent 不得填写人工 verdict。
+
+### N1 full-domain 禁止重试矩阵
+
+| 快捷做法 | 为什么无效 | 第三版允许替代 |
+|---|---|---|
+| 继续调 `graph_hops` 或 gap | 35/37 误报的主体事件本身不成立 | actor-specific 2 Hz kinematics 先行 |
+| target 有多个 incoming 就叫 merge | 把地图节点类别当行为 | 比较 source 与主路 incoming 的 approach geometry |
+| 用已审 val 37 条挑最终阈值并在同一 split 报结果 | calibration/evaluation 泄漏 | val 只 calibration；official train formal evaluation |
+| 从 10 Hz 插值计算速度/横移 | 人造高频证据 | 原始 sample timestamp + 2 Hz boxes |
+| 单帧 front/rear 中心距 | branch/identity 易跳变，忽略车长 | branch-safe corridor + temporal identity + bumper gap |
+| 把 2 个旧 TP 直接当第三版正例 | panel identity 仍有未决风险 | 只作 calibration；第三版候选重新盲审 |
+| 机器候选一出现就启动 N2 | 人工真实性与样本支持尚未通过 | `AWAITING_HUMAN_REVIEW`，`n2_authorized=false` |
 
 ## N1 mini event-pool reject（2026-07-24）
 
