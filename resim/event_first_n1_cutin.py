@@ -38,6 +38,13 @@ from motion_proj.resim.cutin_receiver import (  # noqa: E402
     receiver_centric_cutin,
 )
 from motion_proj.resim.event_kinematics import lane_keeping_features  # noqa: E402
+from motion_proj.resim.io_memory import (  # noqa: E402
+    advise_sequential,
+    drop_handle_page_cache,
+    memory_snapshot,
+    page_cache_control_available,
+    trim_process_heap,
+)
 from motion_proj.resim.lightweight_nuscenes_map import (  # noqa: E402
     LightweightNuScenesMap,
 )
@@ -181,6 +188,15 @@ def _resolve_evaluation_scenes(spec: dict, calibration_scenes: set[str]) -> list
     if spec.get("max_scenes") is not None:
         names = names[: int(spec["max_scenes"])]
     return names
+
+
+def _read_json_bounded(path: Path) -> object:
+    with path.open(encoding="utf-8") as handle:
+        advise_sequential(handle)
+        try:
+            return json.load(handle)
+        finally:
+            drop_handle_page_cache(handle)
 
 
 def _transition_records(
@@ -729,6 +745,10 @@ def run(
     code = git_state(str(Path(config["repo_root"])))
     print(json.dumps({"phase": "git_state_loaded"}), flush=True)
     formal = not allow_dirty_development
+    if formal and not page_cache_control_available():
+        raise RuntimeError(
+            "正式 N1-K4 在 2 GiB cgroup 下需要 POSIX page-cache control"
+        )
     if formal and bool(config.get("require_clean_git", True)) and code["dirty"]:
         raise RuntimeError("正式 N1-K4 必须在 clean git worktree 上运行")
     if formal and skip_audit_panels:
@@ -825,9 +845,7 @@ def run(
         )
         for scene_name in batch:
             entry = meta[scene_name]
-            instances_info = json.loads(
-                Path(entry["cache_path"]).read_text(encoding="utf-8")
-            )
+            instances_info = _read_json_bounded(Path(entry["cache_path"]))
             scene = source.resolve_scene(scene_name)
             result = _process_scene(
                 scene_name,
@@ -839,6 +857,9 @@ def run(
             result["map_name"] = entry["map_name"]
             result["scene_token"] = entry["scene_token"]
             scene_results[scene_name] = result
+            del instances_info
+        del meta
+        trim_process_heap()
         print(
             json.dumps(
                 {
@@ -846,6 +867,7 @@ def run(
                         batch_start + len(batch), len(evaluation_order)
                     ),
                     "evaluation_scenes": len(evaluation_order),
+                    "memory": memory_snapshot(),
                 }
             ),
             flush=True,

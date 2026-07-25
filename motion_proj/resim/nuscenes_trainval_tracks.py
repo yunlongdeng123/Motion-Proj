@@ -25,6 +25,11 @@ import ijson
 import numpy as np
 from pyquaternion import Quaternion
 
+from motion_proj.resim.io_memory import (
+    advise_sequential,
+    drop_handle_page_cache,
+)
+
 # 与 third_party/drivestudio/datasets/nuscenes/nuscenes_preprocess.py 保持一致
 NUSCENES_DYNAMIC_CLASSES = [
     "animal",
@@ -50,7 +55,11 @@ NUSCENES_DYNAMIC_CLASSES = [
 
 def _load_json(path: Path) -> object:
     with path.open(encoding="utf-8") as handle:
-        return json.load(handle)
+        advise_sequential(handle)
+        try:
+            return json.load(handle)
+        finally:
+            drop_handle_page_cache(handle)
 
 
 def _float_list(values) -> list[float]:
@@ -77,21 +86,29 @@ class TrainvalAnnotationSource:
         # 最小投影，避免 json.load 的完整行与最终索引同时驻留造成峰值翻倍。
         self.sample_by_token = {}
         with (self.meta / "sample.json").open("rb") as handle:
-            for row in ijson.items(handle, "item"):
-                self.sample_by_token[row["token"]] = {
-                    "next": row["next"],
-                    "timestamp": row["timestamp"],
-                }
+            advise_sequential(handle)
+            try:
+                for row in ijson.items(handle, "item"):
+                    self.sample_by_token[row["token"]] = {
+                        "next": row["next"],
+                        "timestamp": row["timestamp"],
+                    }
+            finally:
+                drop_handle_page_cache(handle)
         categories = {
             row["token"]: row["name"]
             for row in _load_json(self.meta / "category.json")
         }
         self.category_by_instance = {}
         with (self.meta / "instance.json").open("rb") as handle:
-            for row in ijson.items(handle, "item"):
-                self.category_by_instance[row["token"]] = categories[
-                    row["category_token"]
-                ]
+            advise_sequential(handle)
+            try:
+                for row in ijson.items(handle, "item"):
+                    self.category_by_instance[row["token"]] = categories[
+                        row["category_token"]
+                    ]
+            finally:
+                drop_handle_page_cache(handle)
 
     def resolve_scene(self, entry: str) -> dict:
         row = self.scene_by_name.get(entry) or self.scene_by_token.get(entry)
@@ -127,22 +144,26 @@ def _build_keyframe_records(
         scene["token"]: {} for scene in scenes
     }
     with (source.meta / "sample_annotation.json").open("rb") as handle:
-        for ann in ijson.items(handle, "item"):
-            sample_token = ann["sample_token"]
-            scene_token = sample_to_scene.get(sample_token)
-            if scene_token is None:
-                continue
-            instance_token = ann["instance_token"]
-            category = source.category_by_instance.get(instance_token)
-            if category not in NUSCENES_DYNAMIC_CLASSES:
-                continue
-            kf = keyframe_index[sample_token]
-            records[scene_token].setdefault(instance_token, {})[kf] = {
-                "category": category,
-                "translation": _float_list(ann["translation"]),
-                "size": _float_list(ann["size"]),
-                "rotation": _float_list(ann["rotation"]),
-            }
+        advise_sequential(handle)
+        try:
+            for ann in ijson.items(handle, "item"):
+                sample_token = ann["sample_token"]
+                scene_token = sample_to_scene.get(sample_token)
+                if scene_token is None:
+                    continue
+                instance_token = ann["instance_token"]
+                category = source.category_by_instance.get(instance_token)
+                if category not in NUSCENES_DYNAMIC_CLASSES:
+                    continue
+                kf = keyframe_index[sample_token]
+                records[scene_token].setdefault(instance_token, {})[kf] = {
+                    "category": category,
+                    "translation": _float_list(ann["translation"]),
+                    "size": _float_list(ann["size"]),
+                    "rotation": _float_list(ann["rotation"]),
+                }
+        finally:
+            drop_handle_page_cache(handle)
     return records
 
 

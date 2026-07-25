@@ -11,6 +11,11 @@ from pathlib import Path
 
 import ijson
 
+from motion_proj.resim.io_memory import (
+    advise_sequential,
+    drop_handle_page_cache,
+)
+
 
 MAP_NAMES = {
     "boston-seaport",
@@ -22,12 +27,20 @@ MAP_NAMES = {
 
 def _items(path: Path, prefix: str) -> list:
     with path.open("rb") as handle:
-        return list(ijson.items(handle, prefix, use_float=True))
+        advise_sequential(handle)
+        try:
+            return list(ijson.items(handle, prefix, use_float=True))
+        finally:
+            drop_handle_page_cache(handle)
 
 
 def _mapping(path: Path, prefix: str) -> dict:
     with path.open("rb") as handle:
-        return dict(ijson.kvitems(handle, prefix, use_float=True))
+        advise_sequential(handle)
+        try:
+            return dict(ijson.kvitems(handle, prefix, use_float=True))
+        finally:
+            drop_handle_page_cache(handle)
 
 
 def _principal_value(angle: float) -> float:
