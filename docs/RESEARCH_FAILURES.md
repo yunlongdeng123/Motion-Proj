@@ -1,8 +1,8 @@
 # Motion-Proj 当前研究风险与防重复账本
 
 > **最后更新**：2026-07-25
-> **当前范围**：V1–V7.1 防重复约束、两次 N1 reject 根因、kinematics-first 第三版 machine-support
-> 失败与人工审核边界。
+> **当前范围**：V1–V7.1 防重复约束、三次 N1 reject 根因、receiver-centric 第四版
+> 预注册约束与工程卡点。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
@@ -10,7 +10,112 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
-## N1 kinematics-first 第三版（2026-07-25，等待人工审核）
+## N1 kinematics-first 第三次 reject 与第四版约束（2026-07-25）
+
+### N1-F12：地图分支收敛不是车辆横向机动
+
+**观察**
+
+- 第三次人审文件：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/audit/review_working.jsonl`；
+- review SHA256：
+  `005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`；
+- 12/12 已审，`TRUE_POSITIVE=0`、`FALSE_POSITIVE=12`、`UNCERTAIN=0`，precision=`0`；
+- subject maneuver 为 `INVALID` 12/12；failure code 为
+  `SUBJECT_NO_LATERAL_MANEUVER=12`、`ROUTE_CONTINUATION=11`、`NORMAL_TURN=1`、
+  `MAP_MATCH_JITTER=1`；
+- 第三版 12/12 机器候选都是 `converging_branch_merge`。规则只验证 source/target
+  地图分支在几何上汇合，却没有验证车辆中心/车身相对接收车道发生 outside→inside 横移；
+- target corridor 人审 12/12 为 `VALID` 并不能挽救 subject maneuver。地图画对了，不等于事件成立。
+
+**根因**
+
+第三版仍把“actor 沿一条会汇入 target 的道路行驶”当成“actor 主动切入 target 车流”。车辆可以保持正常
+转向/道路中心线跟随，而道路本身向另一分支收敛；仅比较 source/target approach heading 或地图 token
+变化仍会把路形变化误写成车辆运动学。
+
+**防重复**
+
+- 必须直接从原始 2 Hz annotation 计算 subject 相对接收 corridor 的连续横向状态；
+- 至少观察目标车道中心外→中心内，并在进入后保持名义 1 s；10 Hz 插值不参与物理门；
+- 进入前还必须与接收 corridor 近似同向，避免把大角度路口/主路续接的几何距离收敛当作 cut-in；
+- 不再把 `merge` 地图类别、multiple incoming、route token change 或道路弯曲本身当正例。
+
+### N1-F13：接收车必须来自独立目标车流，不能复用 subject 后车
+
+**观察**
+
+- 第三次 review 中 rear 为 `INVALID` 2/12、front 为 `INVALID` 1/12；
+- 第三版 corridor 构造会贪心选择与 subject source 最顺的 incoming，再在该 corridor 上找 rear；
+- 因而所谓 rear 往往就是 subject 原队列中的后车，而不是被切入目标车流的接收车；
+- K3-004 选错 front branch；K3-007、K3-010 选错 rear branch。其余多项虽被人审写成 corridor
+  `VALID`，也只说明地图链连续，不证明 receiver 角色语义成立。
+
+**第四版硬约束**
+
+1. parallel lane change 的 target chain 显式排除 source token；
+2. merge 只枚举 `target` 的 direct incoming 中不同于 subject source 的分支；
+3. RECEIVER 必须在进入前后保持同一 identity、同向、最近后车次序与 `[0.5,40] m` bumper gap；
+4. subject/receiver 之间不得遗漏更近同 corridor 车辆；
+5. negative control 也必须存在持续 receiver，不能用孤车普通直行冒充交互密度等价 control。
+
+### N1-F14：第三次裁决的研究失败与工程失败必须分开
+
+**研究裁决**
+
+- clean adjudication commit：`1fbbbc1`；
+- 成功 run：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-AUDIT-01/v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9`；
+- 唯一终态 `REJECTED`，`n2_authorized=false`。
+
+**保留的工程失败**
+
+第一次 formal adjudication 使用了错误的 audit-manifest 指纹键，在写入研究产物前失败：
+`.../v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155523736677Z__4c51f0d9/`。
+该目录保留 `FAILED/failure.json`，原因是 `engineering_manifest_key_mismatch`。修复将
+`artifact_set_sha256` 更正为实际 schema 的 `immutable_artifact_set_sha256`，并把所有输入校验提前到
+run 目录创建之前。不得删除失败尝试或把它统计成 research reject。
+
+### N1-F15：四图全常驻与重型 map API 会触发 2 GiB cgroup 峰值
+
+**观察**
+
+- 第四版首个 development smoke 在算法开始前以 `RC=137` 被杀；
+- 容器 `memory.max=2147483648`，当时常驻服务已占约 `1.85 GiB`；
+- 官方 `nuscenes.map_expansion.map_api` 的导入会连带 OpenCV、Matplotlib、Shapely 和渲染 API；
+  单是 import probe RSS 就从约 `58 MiB` 增至约 `212 MiB`；
+- 同时常驻四张 `NuScenesMap`、完整 sample/instance JSON 行和 128-scene dense batch 会进一步放大峰值。
+
+**工程修复**
+
+- 新增只读取 `lane`、`lane_connector`、`arcline_path_3`、`connectivity` 的轻量 map reader；
+- arcline 离散化与官方 devkit reference 在单测中逐点一致；
+- map index 改为一次只缓存一个 location，calibration/evaluation 按 location 排序；
+- `sample.json`、`instance.json` 改为 ijson 流式最小字段投影，scene builder 复用同一 metadata source；
+- scene batch 冻结为 32；不得通过杀死用户编辑器进程、修改容器上限或跳过地图证据来“解决”。
+
+### 第四版 calibration 冻结结果与禁止矩阵
+
+第四版只用第二、三次全部 49 条人工标签调试阈值，所有 26 个已审 scene 从 formal evaluation 排除。
+截至冻结前 development replay：
+
+- 第三次 FP 拒绝 `12/12`；
+- 第二次 FP 拒绝 `35/35`；
+- 第二次 TP 保留 `1/2`；
+- 被保留真例同时满足目标车道中心外→中心内、进入后稳定、进入前近似同向和 RECEIVER 前后身份连续；
+- 另一个旧 TP 因没有独立 RECEIVER 的 pre identity support 被拒绝，不用旧 overall 标签覆盖新事件定义。
+
+| 快捷做法 | 为什么无效 | 第四版合法替代 |
+|---|---|---|
+| 降低分支/多 incoming 门槛 | 仍把地图属性当车辆行为 | 原始 2 Hz center/box outside→inside |
+| 复用 subject source-stream rear | 重演 K3 rear 污染 | 独立 direct incoming / target lane RECEIVER |
+| 只要求进入后有 rear | 无法证明被切入车流在事件前已存在 | 同一 RECEIVER pre/post identity |
+| 因 0.999 s 拒绝名义三帧 1 s | nuScenes 时间戳有毫秒抖动 | 冻结 20 ms timestamp tolerance，仍需 3 个 2 Hz 帧 |
+| 在正式 train 结果上再调阈值/scene | evaluation 泄漏 | 阈值只由 49 条旧审标签冻结 |
+| 缩短 30-frame negative 或允许 overlap | 改写 matched-control 问题 | physical event window + 0.5 s guard，control 仍 30 frames |
+| 自动启动 N2 | 三次 reject 后边界更严格 | 第四次用户裁决 + 新授权前 `n2_authorized=false` |
+
+## N1 kinematics-first 第三版（2026-07-25，已人工 REJECTED）
 
 ### N1-F09：候选真实性与 matched-control 支持是两个独立门槛
 
@@ -21,9 +126,9 @@
   12 interaction candidates；
 - 12 candidates 覆盖 9 scenes，达到 candidate `≥12` 与 scene `≥6`；
 - same-actor lane-keeping negative 只有 2，same-actor pair 只有 2，均低于冻结阈值 4；
-- 因此 `machine_gate_passed=false`，但用户明确要求第三次人审且候选大于 0，所以唯一 terminal 为
-  `AWAITING_HUMAN_REVIEW`；
-- `AWAITING_HUMAN_REVIEW` 是审计就绪状态，不是 machine pass，更不是 N1/N2 授权。
+- 因此 parent `machine_gate_passed=false`；parent 的唯一 terminal 保持
+  `AWAITING_HUMAN_REVIEW`，后续独立 adjudication 已按 12/12 FP 写成 `REJECTED`；
+- `AWAITING_HUMAN_REVIEW` 只是当时的审计就绪状态，从未表示 machine pass 或 N1/N2 授权。
 
 **Pair 失败的冻结诊断**
 
@@ -49,9 +154,10 @@
 
 **可能突破**
 
-若第三次人工表明 merge 候选真实性足够高，可新预注册“更长日志中的同 actor control”或
-“matched-other-actor control”研究问题；前者需要更长 trajectory 数据底座，后者必须显式匹配
-scene、类别、速度、道路与交互密度。二者都不能回写本 run。
+第三次人工已表明 12/12 merge 候选均不真实，因此先修 subject/receiver 语义，再谈 control 扩展。
+若第四版人审真实性通过但 same-actor control 仍不足，可新预注册“更长日志中的同 actor control”或
+“matched-other-actor control”；后者必须显式匹配 scene、类别、速度、道路与交互密度。二者都不能回写
+第三版 run。
 
 ### N1-F10：第三版最终候选只覆盖 converging-branch merge
 
@@ -89,12 +195,12 @@ scene、类别、速度、道路与交互密度。二者都不能回写本 run�
 若相机与 annotation 冲突或证据仍不足，必须判 `UNCERTAIN` 并记录
 `INSUFFICIENT_VISUAL_EVIDENCE`。补六相机或 raw LiDAR 需要独立资产/用途授权，不能偷偷进入本轮或 N2。
 
-### N1 第三版禁止重试矩阵
+### N1 第三版历史禁止重试矩阵
 
 | 快捷做法 | 为什么无效 | 合法后续 |
 |---|---|---|
-| 把 `AWAITING_HUMAN_REVIEW` 写成 pass | negative/pair 两项 machine gate 已失败 | 等用户审核并独立 adjudicate |
-| 人工全真就覆盖 pair gate | authenticity 与 comparison support 是不同问题 | 两类 gate 均保留 |
+| 把 parent `AWAITING_HUMAN_REVIEW` 写成 pass | negative/pair 失败且人工 12/12 FP | 独立 adjudication 已 `REJECTED` |
+| 用人工结果覆盖 pair gate | authenticity 与 comparison support 是不同问题 | 两类 gate 均保留 |
 | 缩短/重叠 negative window | 事后改变 matched-control 定义 | 新任务、新 split、新预注册 |
 | 用其他 actor 补足 same-actor pair | 混入 actor/scene confound | 预注册 matched-other-actor 设计 |
 | 把 63 个 physical lane changes 加入 positive | 它们没有通过冻结 interaction | 单独 subject-only diagnostic |

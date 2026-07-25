@@ -1,8 +1,8 @@
 # N1-EVENT-KINEMATIC-01 正式结果与第三次人工审核交付
 
 > **运行日期**：2026-07-25
-> **当前终态**：`AWAITING_HUMAN_REVIEW`
-> **研究含义**：审计材料已就绪，但预注册 machine support gate 未通过；不得写成 N1 pass
+> **Parent 终态**：`AWAITING_HUMAN_REVIEW`（历史不可变）
+> **最终研究裁决**：第三次人审 0 TP / 12 FP；独立 adjudication `REJECTED`
 > **硬边界**：`n2_authorized=false`，N2 未启动、未解锁
 
 ## 1. 结论先行
@@ -21,11 +21,28 @@
 `≥4`。因此：
 
 - `machine_gate_passed=false`；
-- 由于用户明确要求第三次人审且候选数大于 0，run 按预注册停在唯一
-  `AWAITING_HUMAN_REVIEW`，而不是提前替用户作最终裁决；
+- parent 按预注册停在唯一 `AWAITING_HUMAN_REVIEW`，没有提前替用户作最终裁决；
 - 12/12 候选均已生成完整盲审材料；
-- 即使第三次人工 12/12 全部判真，人审也不能覆盖 machine support failure；
-- 最终第三次 N1 verdict 仍只能由用户在审核后确认，并写入独立 adjudication run。
+- 用户随后完成 12/12：TP=0、FP=12、UNCERTAIN=0；
+- 独立 adjudication 已 `REJECTED`；parent 文件和 terminal 没有被回写；
+- machine support failure 与 12/12 人工真实性 failure 同时保留。
+
+### 1.1 第三次人审追加事实
+
+- review：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/audit/review_working.jsonl`；
+- SHA256：
+  `005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`；
+- subject maneuver `INVALID=12/12`；
+- `SUBJECT_NO_LATERAL_MANEUVER=12`、`ROUTE_CONTINUATION=11`、`NORMAL_TURN=1`；
+- rear `INVALID=2`、front `INVALID=1`、`MAP_MATCH_JITTER=1`；
+- clean adjudication：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-AUDIT-01/v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9/`；
+- adjudication commit `1fbbbc1`，唯一 `REJECTED`，`n2_authorized=false`。
+
+准确根因是：12/12 最终候选验证了地图分支收敛，却没有验证 subject 车身相对独立接收车流发生真实
+outside→inside 横移；第三版 corridor 还可能复用 subject 原队列后车。第四版接续见
+[`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
 
 ## 2. 正式 provenance
 
@@ -165,11 +182,11 @@ topology-pass 中，362 条因原始 annotation keyframe 不足为 `UNKNOWN`，1
 | `topdown/K3-001.png` … `K3-012.png` | 原始 2 Hz 三车轨迹和 vector map |
 | `audit_manifest.json` | 40 个 immutable files 的逐文件 hash |
 
-材料 QA：
+交付时材料 QA（随后 `review_working.jsonl` 已由用户填写，immutable 文件未改）：
 
 - candidate population=12，audit items=12，全量审核，没有 top-k 丢弃；
 - 40 个 immutable file 的 SHA256 已全部复算，0 mismatch；
-- `review_working.jsonl` 与模板逐字节相同，SHA256
+- 交付时 `review_working.jsonl` 与模板逐字节相同，SHA256
   `77e68c2e9dea76113148dade3f176ef3365f3c4a3162b8b54d8247f222bfc9aa`；
 - 空白 review 运行 validator 按预期 fail closed：
   `ValueError: component verdict 非法或缺失: K3-001`；
@@ -179,7 +196,7 @@ topology-pass 中，362 条因原始 annotation keyframe 不足为 `UNKNOWN`，1
 仓库中的同版提示词快照：
 [`N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md`](N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md)。
 
-## 7. 审核完成后的命令
+## 7. 已执行的审核汇总命令
 
 只编辑 `audit/review_working.jsonl` 的 component verdict、overall verdict、failure codes、reviewer 和 notes，
 不要改 hash、audit ID 或模板：
@@ -193,28 +210,21 @@ PYTHONPATH=. python scripts/validate_n1_kinematic_review.py \
   --review-file /root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/audit/review_working.jsonl
 ```
 
-validator 只校验与汇总，不启动 N2。用户确认后另建 immutable adjudication run；不得改写本 run。
+validator 只校验与汇总，没有启动 N2。用户已确认并另建 immutable adjudication run；parent 未改写。
 
 ## 8. 下一步突破方向
 
-当前必须先完成第三次人审，因为它回答“12 个 converging-branch merge 到底有多少是真的”。在结果出来前，
-不得用 machine PASS 推断 precision。
+第三次人审已选择“主体 merge 真实性低”分支并正式 reject。第四版不再调第三版 branch angle，而是另立
+receiver-centric 事件：
 
-人审后按证据分支：
+1. 原始 2 Hz subject center outside→post full-box inside；
+2. pre heading alignment 排除主路/路口几何收敛；
+3. target corridor 排除 source，RECEIVER 必须来自独立目标车流并保持 pre/post identity；
+4. 30-frame control 不缩短且同样要求 receiver；
+5. 49 条旧审标签只作 calibration，全部已审 scene 从新 formal train 排除。
 
-1. **主体 merge 真实性仍低**：第三版 N1 reject；冻结 train，不能在同 split 继续调 branch angle/alignment。
-   下一版必须换 calibration/evaluation 或采用独立 lane-polygon occupancy/人工事件标签。
-2. **主体 merge 真实，但 front/rear 经常错**：单独修 interaction representation；不得通过单侧邻车或放宽
-   gap 回写当前事件定义。可预注册 oriented-box swept ordering 与完整 lane-polygon occupancy。
-3. **12 条真实性高但 pair gate 仍失败**：这是长时 control-window 支持不足。优先使用能提供更长 log、
-   预定义 lane-change/interaction scenario filter 的数据底座，或重新定义 matched-other-actor 对照；
-   两者都属于新研究问题，需新 split 和用户授权。nuPlan 官方 devkit提供 lane-change/interaction scenario
-   可视化与筛选，且其 metrics 明确按 lane/lane_connector occupancy、expert route 和物理 box 计算 TTC；
-   这比在 nuScenes 20 秒 scene 内缩短当前 window 更可审计。
-4. **parallel lane-change 覆盖为 0**：先对 63 个 physical lane-change 做独立 subject-maneuver diagnostic，
-   区分“真实换道但无双侧交互”和“map-match 假象”；不能把它们事后补进当前 12 条。
-5. **视觉证据大量 UNCERTAIN**：当前 full 数据只完整具备 CAM_FRONT；若需要六相机或 raw LiDAR 辅助，
-   必须单独申请传感器资产/用途授权，并与 N2 独立证据阶段区分。
+完整冻结合同见
+[`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
 
 技术设计依据：
 

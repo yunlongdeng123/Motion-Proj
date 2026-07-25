@@ -29,6 +29,17 @@ monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 1
 完整数据集在 AutoDL 公共盘；当前数据盘另有约 35G 的 CAM_FRONT/LIDAR_TOP 与 metadata 本地子集。
 路径见 [`ENVIRONMENT.md`](ENVIRONMENT.md) §4，抽取脚本在 `scripts/extract_nuscenes_*.sh`。
 
+## cut-in rules reference package
+
+- **路径：** `/root/autodl-tmp/third_party/data_mining/cutin_rules_package`
+- **用途：** 第四版 N1 规则结构调研，只读参考 stable adjacent-lane、outside→inside、receiver identity、
+  persistence、path-clear 与 gap/TTC 设计；
+- **边界：** 包内未发现明确 license 文件，主仓库不复制其 Lua/规则源码；第四版实现为独立 Python
+  代码与独立测试；
+- **已知问题：** high-recall 示例中的 `abs(diff)` 不能证明横向距离单调，宽松 fallback 也不进入
+  formal gate；
+- **研究合同：** [`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
+
 ## 不入 Git 的运行产物
 
 以下目录保留在数据盘，换机若只 `git clone` 需重新生成或从旧机拷贝：

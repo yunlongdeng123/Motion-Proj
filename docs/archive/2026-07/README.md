@@ -121,15 +121,22 @@ exact-target-token interaction 定义下得到 45 eligible actors、71 transitio
 第二版 val 146 machine screen 产生 37 candidates，后续 37/37 人审为 2 TP / 35 FP；独立 adjudication
 唯一 `REJECTED`。旧 17-scene N2 list 已在该目录归档为失效证据，活跃 N2 配置为空并 fail closed。
 
-## 9. Kinematics-first 第三次审核
+## 9. Kinematics-first 第三次审核材料
 
 目录：[`n1-kinematic-third-audit/`](n1-kinematic-third-audit/)
 
 第三版 official train 694-scene formal run 产生 12 candidates / 9 scenes，但 negative/pair 只有 2/2，
-machine support 未通过。12/12 完整审核材料已生成，当前唯一 `AWAITING_HUMAN_REVIEW`，人工 verdict 尚空，
+machine support 未通过。该目录保存当时交付的预注册、报告和空白审核提示；后续人工结果见下一节。
+
+## 10. Kinematics-first 第三次 reject
+
+目录：[`n1-kinematic-third-reject/`](n1-kinematic-third-reject/)
+
+第三次 review 12/12 均为 FP，subject maneuver 12/12 INVALID；独立 adjudication 唯一 `REJECTED`。
+该目录索引 review hash、成功/失败 adjudication、地图分支误当车辆行为的根因和第四版接续合同。
 `n2_authorized=false`。
 
-## 10. 如何复查历史
+## 11. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；

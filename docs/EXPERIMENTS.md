@@ -315,7 +315,7 @@ assignment、插值/subject identity 错配。完整防重复约束见 [`RESEARC
 
 | Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
 |---|---|---|---|---|
-| `v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6` | audit ready / `AWAITING_HUMAN_REVIEW` | official train 694 scenes；8,631 transition、1,879 topology、244 physical motion；12 candidates / 9 scenes；negative=2、pair=2 | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/` | 第三次 12/12 审核材料就绪；candidate/scene gate 通过，negative/pair gate 失败；不是 N1 pass，N2 未授权 |
+| `v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6` | parent `AWAITING_HUMAN_REVIEW`；后续 human audit `REJECTED` | official train 694 scenes；8,631 transition、1,879 topology、244 physical motion；12 candidates / 9 scenes；negative=2、pair=2 | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/` | machine support 已失败；第三次 12/12 人审均为 FP，独立裁决见第 18 节；N2 未授权 |
 
 实现与预注册 commit 为 `aa162ef4dea808ad28ca7e56f1273f106e9c0e49`，`code_dirty=false`；
 config fingerprint 为
@@ -341,12 +341,68 @@ overlap；4 actors 有 non-overlap lane-keeping windows，但全部缺等价 fro
 window、允许 overlap、换 actor 或改成单侧邻车翻案。
 
 audit population=12、items=12；40 个 immutable files 的 hash 复算无误，immutable-set SHA256 为
-`8696e66dcb5764b414b7e3cf74e89261fff63f137197fe13bf6617724180e168`。`review_working.jsonl` 仍为空白，
-SHA256 为 `77e68c2e9dea76113148dade3f176ef3365f3c4a3162b8b54d8247f222bfc9aa`；空白 validator 按预期拒绝
-`K3-001`。完整报告见
+`8696e66dcb5764b414b7e3cf74e89261fff63f137197fe13bf6617724180e168`。用户完成后的
+`review_working.jsonl` SHA256 为
+`005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`：
+TP=0、FP=12、UNCERTAIN=0，subject maneuver `INVALID=12`。完整 parent 报告见
 [`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)。
 
-## 18. 登记规则
+## 18. N1-EVENT-KINEMATIC-AUDIT-01 第三次人工裁决
+
+| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
+|---|---|---|---|---|
+| `v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9` | rejected / `REJECTED` | 12/12 完整；TP=0、FP=12、UNCERTAIN=0；precision=0；所有 human gates false（完整性门除外） | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-AUDIT-01/v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9/` | 地图分支收敛不等于车辆横向机动；第三版正式拒绝，N2 不授权 |
+
+adjudication 入口 commit `984e1f5`，manifest 指纹键修复 commit `1fbbbc1`；成功 run
+`code_dirty=false`。review SHA256 为
+`005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`。
+failure-code 计数：
+
+- `SUBJECT_NO_LATERAL_MANEUVER=12`；
+- `ROUTE_CONTINUATION=11`；
+- `NORMAL_TURN=1`；
+- `REAR_INVALID=2`、`FRONT_INVALID=1`；
+- `MAP_MATCH_JITTER=1`。
+
+首次 formal 尝试
+`v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155523736677Z__4c51f0d9`
+因读取不存在的 `artifact_set_sha256` 而工程失败，保留 `FAILED/failure.json`，不计入研究裁决。修复使用实际
+`immutable_artifact_set_sha256`，并将输入校验移到 run 目录创建前。两次尝试不得合并或删除。
+
+## 19. N1-EVENT-CUTIN-01 第四版预注册与开发校准
+
+第四版 formal 结果查看前冻结
+[`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)：
+
+- receiver-centric 2 Hz center outside→post full-box inside；
+- pre heading alignment，避免主路/路口几何收敛；
+- target corridor 排除 subject source；merge 只枚举独立 direct incoming；
+- 同一最近 RECEIVER pre/post identity 与 `[0.5,40] m` bumper gap；
+- 30-frame same-actor negative 不缩短、不与 physical event overlap，并要求 receiver-matched control。
+
+历史 calibration 为第二次 37 条 + 第三次 12 条，共 49 条 / 26 scenes；这些 scenes 从 formal train 排除。
+冻结 replay：
+
+| Gate | 阈值 | 结果 |
+|---|---:|---:|
+| 第三次 FP rejection | ≥12 | 12/12 |
+| 第二次 FP rejection | ≥34 | 35/35 |
+| 第二次 TP retention | ≥1 | 1/2 |
+
+早期 development smoke 有三类保留证据：
+
+1. 四张官方 `NuScenesMap` 全常驻时进程在算法前 `RC=137`；cgroup memory max 为 2 GiB；
+2. 新 lightweight reader 只读取 lane/arcline/connectivity，arcline 离散化与官方 devkit reference
+   `atol=1e-12` 一致；map cache 改为单 location；
+3. `sample.json`/`instance.json` 使用流式最小投影并复用 metadata source，32-scene batch；相关
+   cut-in/map/review 单测 16 passed。
+
+校准阈值只依据历史已审 49 条冻结；development evaluation 只检查机器产量与工程，不读取人工标签，不得用于
+后验改阈值。正式 machine gates 为 positive≥8、negative≥4、pair≥4、candidate scenes≥5；第四次人工门为
+reviewed≥8、TP≥6、TP scenes≥4、precision≥0.8、Wilson lower≥0.5、uncertain≤0.1，并且 machine gate
+必须通过。所有 development/formal 产物固定 `n2_authorized=false`。
+
+## 20. 登记规则
 
 - 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
 - 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
