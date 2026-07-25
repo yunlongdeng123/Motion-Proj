@@ -107,6 +107,18 @@ def adjudicate(config_path: Path, output_root: Path | None = None) -> Path:
     )
     reviewer_counts = Counter(str(row["reviewer"]) for row in rows)
 
+    audit_manifest = json.loads(
+        (parent / "audit" / "audit_manifest.json").read_text(encoding="utf-8")
+    )
+    immutable_set_sha = audit_manifest["immutable_artifact_set_sha256"]
+    data_fingerprint = canonical_sha256(
+        {
+            "parent_event_pool_sha256": stored_pool_sha,
+            "parent_audit_immutable_set_sha256": immutable_set_sha,
+            "completed_review_sha256": actual_review_sha,
+            "decision": decision,
+        }
+    )
     config_sha = file_fingerprint(str(config_path))
     code = git_state(str(Path(config["repo_root"])))
     if code["dirty"]:
@@ -117,10 +129,6 @@ def adjudicate(config_path: Path, output_root: Path | None = None) -> Path:
     run_dir = (output_root or Path(config["run_root"])) / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     started_at = utc_now()
-
-    audit_manifest = json.loads(
-        (parent / "audit" / "audit_manifest.json").read_text(encoding="utf-8")
-    )
     audit_summary = {
         "schema_version": config["schema_version"],
         "task_id": config["task_id"],
@@ -145,16 +153,6 @@ def adjudicate(config_path: Path, output_root: Path | None = None) -> Path:
         "research_verdict": decision["research_verdict"],
         "n2_authorized": False,
     }
-    data_fingerprint = canonical_sha256(
-        {
-            "parent_event_pool_sha256": stored_pool_sha,
-            "parent_audit_immutable_set_sha256": audit_manifest[
-                "immutable_set_sha256"
-            ],
-            "completed_review_sha256": actual_review_sha,
-            "decision": decision,
-        }
-    )
     ended_at = utc_now()
     manifest = {
         "schema_version": 1,
