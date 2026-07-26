@@ -1,0 +1,168 @@
+schema_version: receiver-centric-cutin-final-v1
+task_id: N1-EVENT-CUTIN-FINAL-01
+seed: 0
+repo_root: /root/autodl-tmp/motion_proj
+dataset_root: /root/autodl-tmp/data/nuscenes
+cache_dir: /root/autodl-tmp/data/occgs/processed_10Hz/n1_receiver_cutin_final_v1
+run_root: /root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-FINAL-01
+n0_run: /root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd
+interpolate_n: 4
+require_clean_git: true
+
+calibration:
+  second_audit:
+    parent_run: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c
+    audit_reject_run: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01/v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac
+    completed_review_file: /root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/audit/positive_audit_relabelled.jsonl
+    completed_review_sha256: ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05
+  third_audit:
+    parent_run: /root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6
+    audit_reject_run: /root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-AUDIT-01/v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9
+    completed_review_file: /root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/audit/review_working.jsonl
+    completed_review_sha256: 005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96
+  fourth_review:
+    fixture_dir: tests/fixtures/n1_cutin_k4
+    completed_review_sha256: 983e4b7a4160ff7aec127343b5ca3e1e9a1f07f06d799f4db9695fa241851321
+    expected_label_count: 18
+    expected_scene_count: 16
+  expected_label_count: 67
+  expected_scene_count: 42
+  exclude_all_calibration_scenes_from_evaluation: true
+
+evaluation:
+  split_name: train
+  expected_scene_count: 669
+  max_scenes: null
+
+eligibility:
+  class_prefix: vehicle.
+  min_track_frames: 20
+  max_frame_gaps: 0
+  min_displacement_m: 5.0
+
+map_matching:
+  centerline_resolution_m: 0.5
+  nearest_points_k: 16
+  max_centerline_distance_m: 3.0
+  max_heading_error_deg: 45.0
+  heading_score_weight_m_per_rad: 1.0
+
+transition:
+  min_stable_source_frames: 10
+  min_stable_target_frames: 10
+  max_transition_gap_frames: 20
+  min_lateral_centerline_shift_m: 1.5
+  max_lateral_centerline_shift_m: 6.0
+  max_parallel_heading_error_deg: 30.0
+  graph_hops_for_shared_corridor: 2
+  merge_min_target_incoming_lanes: 2
+
+taxonomy:
+  allowed_positive_modes:
+    - parallel_lane_change
+  unsupported_modes:
+    receiver_branch_merge: UNSUPPORTED_BRANCH_MERGE_MODE
+
+strict:
+  hard_evidence_source: raw_2hz_annotations
+  interpolation_can_pass_hard_gate: false
+  ambiguity_policy: ABSTAIN
+  lane_half_width_m: 1.75
+  lane_width_source: configured_nominal_fallback
+  subject:
+    raw_frame_stride: 5
+    raw_pre_keyframes: 3
+    raw_post_keyframes: 3
+    raw_pre_search_keyframes: 9
+    raw_post_search_keyframes: 9
+    max_entry_transition_duration_s: 4.0
+    min_pre_center_outside_keyframes: 2
+    min_post_box_inside_keyframes: 2
+    min_pre_center_lateral_m: 1.85
+    max_post_center_lateral_m: 0.80
+    min_lateral_convergence_m: 1.40
+    min_lateral_convergence_consistency: 0.80
+    min_pre_side_consistency: 0.80
+    min_source_target_shift_m: 2.0
+    max_source_target_shift_m: 6.0
+    min_parallel_overlap_m: 8.0
+    max_source_target_heading_error_deg: 10.0
+    max_pre_heading_error_deg: 15.0
+    max_post_heading_error_deg: 10.0
+    max_accumulated_yaw_change_deg: 15.0
+    min_median_speed_mps: 1.0
+    min_settle_duration_s: 1.0
+    timestamp_tolerance_s: 0.02
+  receiver:
+    class_prefix: vehicle.
+    min_raw_pre_support: 2
+    min_raw_post_support: 2
+    min_total_non_null_support: 5
+    max_missing_required_frames: 1
+    min_local_displacement_m: 1.0
+    min_median_longitudinal_speed_mps: 1.0
+    max_heading_error_deg: 15.0
+    max_centerline_distance_m: 1.5
+    min_bumper_gap_m: 0.5
+    max_bumper_gap_m: 40.0
+  corridor:
+    graph_hops: 2
+    enumerate_candidate_chains: true
+    max_edge_heading_error_deg: 15.0
+    max_edge_endpoint_gap_m: 4.0
+    different_receiver_policy: ABSTAIN
+
+runtime:
+  cpu_only: true
+  scene_batch_size: 32
+  max_live_map_locations: 1
+  streaming_aggregate: true
+  split_mining_and_audit_processes: true
+  require_posix_page_cache_control: true
+  max_start_cgroup_current_bytes: 1350000000
+  warn_process_rss_bytes: 700000000
+  stop_process_rss_bytes: 900000000
+  warn_cgroup_current_bytes: 1750000000
+  stop_cgroup_current_bytes: 1950000000
+
+machine_readiness:
+  min_strict_pass_candidates: 3
+  min_strict_pass_scenes: 3
+  require_k4_regression: true
+  require_raw_evidence_only: true
+  max_resource_contract_violations: 0
+
+audit:
+  primary_target_count: 30
+  primary_max_count: 40
+  max_primary_per_scene: 1
+  selection: deterministic_sha256
+  abstain_diagnostic_max_count: 10
+  raw_pre_keyframes: 3
+  raw_post_keyframes: 3
+  include_crossing_keyframe: true
+  include_framewise_topdown: true
+  include_corridor_aligned_view: true
+  include_signal_timeseries: true
+  use_camera_only_when_file_exists: true
+  require_all_six_cameras: false
+  build_debug_page: true
+  build_blind_page: true
+
+human_gates:
+  pass_min_reviewed_determinate: 15
+  pass_min_true_positive: 8
+  pass_min_positive_scenes: 5
+  pass_min_precision: 0.80
+  pass_min_wilson_lower_bound: 0.50
+  pass_max_uncertain_fraction: 0.15
+  sparse_min_true_positive: 3
+  sparse_min_positive_scenes: 3
+  sparse_min_precision: 0.80
+  sparse_max_uncertain_fraction: 0.25
+  sparse_require_all_primary_pass_reviewed: true
+
+stop_rule:
+  final_iteration: true
+  no_further_threshold_iteration: true
+  never_start_n2_from_this_run: true

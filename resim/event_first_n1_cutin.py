@@ -36,6 +36,7 @@ from motion_proj.resim.canonical_hash import canonical_sha256  # noqa: E402
 from motion_proj.resim.cutin_receiver import (  # noqa: E402
     lane_keeping_receiver,
     receiver_centric_cutin,
+    receiver_centric_cutin_v2,
 )
 from motion_proj.resim.event_kinematics import lane_keeping_features  # noqa: E402
 from motion_proj.resim.io_memory import (  # noqa: E402
@@ -1043,6 +1044,469 @@ def run(
     return run_dir
 
 
+_FINAL_REQUIRED_CONFIG_PATHS = (
+    ("task_id",),
+    ("seed",),
+    ("repo_root",),
+    ("dataset_root",),
+    ("cache_dir",),
+    ("run_root",),
+    ("n0_run",),
+    ("interpolate_n",),
+    ("calibration", "fourth_review", "fixture_dir"),
+    ("evaluation", "expected_scene_count"),
+    ("eligibility",),
+    ("map_matching",),
+    ("transition",),
+    ("strict", "subject"),
+    ("strict", "receiver"),
+    ("strict", "corridor"),
+    ("runtime",),
+    ("machine_readiness",),
+    ("audit",),
+    ("human_gates",),
+    ("stop_rule", "never_start_n2_from_this_run"),
+)
+
+
+def _validate_final_config_contract(config: dict) -> None:
+    missing = []
+    for path in _FINAL_REQUIRED_CONFIG_PATHS:
+        current = config
+        for key in path:
+            if not isinstance(current, dict) or key not in current:
+                missing.append(".".join(path))
+                break
+            current = current[key]
+    if missing:
+        raise ValueError("final cut-in config 缺少字段: " + ", ".join(missing))
+    if config["schema_version"] != "receiver-centric-cutin-final-v1":
+        raise ValueError("final cut-in schema_version 不匹配")
+    if config["stop_rule"]["never_start_n2_from_this_run"] is not True:
+        raise ValueError("final cut-in 必须保持 N2 fail-closed")
+    if config["strict"].get("hard_evidence_source") != "raw_2hz_annotations":
+        raise ValueError("strict hard evidence 必须是 raw_2hz_annotations")
+    if config["strict"].get("interpolation_can_pass_hard_gate") is not False:
+        raise ValueError("插值不得通过 strict hard gate")
+
+
+def _load_final_calibration(config: dict) -> tuple[set[str], dict]:
+    """冻结 49 条历史标签加第四轮 K4 18 条，并返回唯一 scene 集。"""
+    historical, scenes, provenance = _load_calibration_events(config)
+    fourth = config["calibration"]["fourth_review"]
+    # fixture 必须来自执行中的 code worktree，以保证 formal clean worktree
+    # 使用同一已提交的冻结 evidence，而不依赖 dirty shared checkout。
+    fixture = PROJECT_ROOT / fourth["fixture_dir"]
+    review_path = fixture / "review_working.jsonl"
+    if file_fingerprint(str(review_path)) != fourth["completed_review_sha256"]:
+        raise RuntimeError("第四轮 K4 fixture review SHA256 不匹配")
+    review_rows = _read_jsonl(review_path)
+    evidence_dir = fixture / "evidence"
+    evidence_files = sorted(evidence_dir.glob("K4-*.json"))
+    if len(review_rows) != int(fourth["expected_label_count"]) or len(evidence_files) != len(review_rows):
+        raise RuntimeError("第四轮 K4 fixture 条数不完整")
+    fourth_scenes = {
+        json.loads(path.read_text(encoding="utf-8"))["scene_id"]
+        for path in evidence_files
+    }
+    if len(fourth_scenes) != int(fourth["expected_scene_count"]):
+        raise RuntimeError("第四轮 K4 fixture scene 数不匹配")
+    all_scenes = set(scenes) | fourth_scenes
+    expected_labels = int(config["calibration"]["expected_label_count"])
+    expected_scenes = int(config["calibration"]["expected_scene_count"])
+    if len(historical) + len(review_rows) != expected_labels:
+        raise RuntimeError("冻结 calibration label 数不匹配")
+    if len(all_scenes) != expected_scenes:
+        raise RuntimeError("冻结 calibration scene 数不匹配")
+    return all_scenes, {
+        **provenance,
+        "fourth_review_sha256": fourth["completed_review_sha256"],
+        "historical_label_count": len(historical),
+        "fourth_label_count": len(review_rows),
+        "total_label_count": expected_labels,
+        "historical_scene_count": len(scenes),
+        "fourth_scene_count": len(fourth_scenes),
+        "total_scene_count": expected_scenes,
+        "fourth_scenes": sorted(fourth_scenes),
+    }
+
+
+def _final_transition_records(
+    scene_id: str,
+    lane_index: LaneIndex,
+    tracks: dict[int, list[dict]],
+    matches: dict[int, list[dict]],
+    actor_tokens: dict[int, str],
+    frame_times: dict[int, float],
+    config: dict,
+    map_name: str,
+) -> tuple[list[dict], dict]:
+    """仅为当前 scene 流式生成 strict-v2 transition records。"""
+    transition_config = config["transition"]
+    minimum = max(
+        int(transition_config["min_stable_source_frames"]),
+        int(transition_config["min_stable_target_frames"]),
+    )
+    runs_by_actor = {
+        actor_id: _stable_runs(rows, minimum) for actor_id, rows in matches.items()
+    }
+    matches_by_actor = {
+        actor_id: {int(row["frame_index"]): row for row in rows}
+        for actor_id, rows in matches.items()
+    }
+    records = []
+    topology_count = 0
+    for actor_id, runs in sorted(runs_by_actor.items()):
+        for source_run, target_run in zip(runs, runs[1:]):
+            gap = int(target_run["start_frame"]) - int(source_run["end_frame"]) - 1
+            if gap > int(transition_config["max_transition_gap_frames"]):
+                continue
+            nominal_crossing = (
+                int(source_run["end_frame"]) + int(target_run["start_frame"])
+            ) // 2
+            available = [
+                row
+                for row in tracks[actor_id]
+                if abs(int(row["frame_index"]) - nominal_crossing)
+                <= int(transition_config["max_transition_gap_frames"])
+            ]
+            if not available:
+                continue
+            crossing = min(
+                available,
+                key=lambda row: (
+                    abs(int(row["frame_index"]) - nominal_crossing),
+                    int(row["frame_index"]),
+                ),
+            )
+            topology = _transition_type(
+                lane_index,
+                source_run["token"],
+                target_run["token"],
+                crossing["xy"],
+                transition_config,
+            )
+            if not topology["topology_pass"]:
+                continue
+            topology_count += 1
+            base = {
+                "event_id": (
+                    f"{scene_id}:{actor_id}:F1:"
+                    f"{source_run['end_frame']}:{target_run['start_frame']}"
+                ),
+                "scene_id": scene_id,
+                "map_name": map_name,
+                "actor_id": int(actor_id),
+                "subject_instance_token": actor_tokens[actor_id],
+                "source_run": source_run,
+                "target_run": target_run,
+                "transition_gap_frames": gap,
+                "crossing_frame": int(crossing["frame_index"]),
+                "topology": topology,
+            }
+            strict = receiver_centric_cutin_v2(
+                actor_id,
+                source_run,
+                target_run,
+                topology,
+                tracks,
+                matches_by_actor,
+                lane_index,
+                frame_times,
+                config,
+                source_event_record_sha256=canonical_sha256(base),
+                map_version=map_name,
+            )
+            record = {
+                **base,
+                "maneuver_mode": strict["maneuver_mode"],
+                "strict": strict,
+                "label": (
+                    "machine_positive_strict_v2"
+                    if strict["machine_positive"]
+                    else "strict_v2_nonpositive"
+                ),
+                "machine_positive": bool(strict["machine_positive"]),
+            }
+            receiver_id = strict["receiver"].get("selected_actor_id")
+            if receiver_id is not None:
+                record["receiver_actor_id"] = int(receiver_id)
+                if int(receiver_id) in actor_tokens:
+                    record["receiver_instance_token"] = actor_tokens[int(receiver_id)]
+            pre_frames = strict["subject"].get("pre_frames", [])
+            post_frames = strict["subject"].get("post_frames", [])
+            if pre_frames:
+                record["event_start_frame"] = int(pre_frames[0])
+            if post_frames:
+                record["event_end_frame"] = int(post_frames[-1])
+            record["event_record_sha256"] = canonical_sha256(record)
+            records.append(record)
+    return records, {"topology_pass_count": topology_count}
+
+
+def _strict_transition_diagnostic(record: dict) -> dict:
+    strict = record["strict"]
+    return {
+        "event_id": record["event_id"],
+        "event_record_sha256": record["event_record_sha256"],
+        "scene_id": record["scene_id"],
+        "map_name": record["map_name"],
+        "actor_id": record["actor_id"],
+        "crossing_frame": record["crossing_frame"],
+        "maneuver_mode": strict["maneuver_mode"],
+        "status": strict["status"],
+        "primary_reason": strict["primary_reason"],
+        "machine_positive": strict["machine_positive"],
+        "hard_evidence_source": strict["hard_evidence_source"],
+        "uses_interpolated_physics": strict["uses_interpolated_physics"],
+        "subject_frames": {
+            "pre": strict["subject"].get("pre_frames", []),
+            "post": strict["subject"].get("post_frames", []),
+        },
+        "receiver_actor_id": strict["receiver"].get("selected_actor_id"),
+        "receiver_identity_switch_frames": strict["receiver"].get(
+            "identity_switch_frames", []
+        ),
+    }
+
+
+def _final_memory_check(config: dict) -> dict:
+    snapshot = memory_snapshot()
+    runtime = config["runtime"]
+    rss = snapshot.get("process_rss_bytes")
+    cgroup = snapshot.get("cgroup_memory_current_bytes")
+    if rss is not None and rss > int(runtime["stop_process_rss_bytes"]):
+        raise RuntimeError(f"process RSS 超过 stop 阈值: {rss}")
+    if cgroup is not None and cgroup > int(runtime["stop_cgroup_current_bytes"]):
+        raise RuntimeError(f"cgroup current 超过 stop 阈值: {cgroup}")
+    return snapshot
+
+
+def run_final_mining(
+    config_path: Path,
+    run_dir: Path,
+    *,
+    max_evaluation_scenes: int | None = None,
+) -> dict:
+    """final worker A：只挖掘并流式聚合，绝不导入 audit/render 依赖。"""
+    config = _load_yaml(config_path)
+    _validate_final_config_contract(config)
+    if config["runtime"].get("require_posix_page_cache_control") and not page_cache_control_available():
+        raise RuntimeError("final mining 需要 POSIX page-cache control")
+    config["config_fingerprint"] = file_fingerprint(str(config_path))
+    start_snapshot = memory_snapshot()
+    max_start = int(config["runtime"]["max_start_cgroup_current_bytes"])
+    if (
+        start_snapshot.get("cgroup_memory_current_bytes") is not None
+        and start_snapshot["cgroup_memory_current_bytes"] > max_start
+    ):
+        raise RuntimeError("启动 cgroup current 超过 final runtime 合同")
+    n0_run = Path(config["n0_run"])
+    if not (n0_run / "COMPLETE").is_file():
+        raise RuntimeError("N0 未 COMPLETE")
+
+    source = TrainvalAnnotationSource(Path(config["dataset_root"]))
+    lane_indices = LaneIndexCache(Path(config["dataset_root"]), config["map_matching"])
+    calibration_scenes, calibration_provenance = _load_final_calibration(config)
+    evaluation_names = _resolve_evaluation_scenes(config["evaluation"], calibration_scenes)
+    if max_evaluation_scenes is not None:
+        evaluation_names = evaluation_names[: int(max_evaluation_scenes)]
+    elif len(evaluation_names) != int(config["evaluation"]["expected_scene_count"]):
+        raise RuntimeError(
+            "final evaluation scene 数不匹配: "
+            f"{len(evaluation_names)} != {config['evaluation']['expected_scene_count']}"
+        )
+    if calibration_scenes & set(evaluation_names):
+        raise RuntimeError("calibration/evaluation scene 未分离")
+    atomic_write_json(
+        str(run_dir / "calibration_audit.json"),
+        {
+            "schema_version": "n1-cutin-final-calibration-freeze-v1",
+            "calibration_scenes": sorted(calibration_scenes),
+            "scene_count": len(calibration_scenes),
+            "provenance": calibration_provenance,
+            "evaluation_scene_count": len(evaluation_names),
+            "intersection_count": len(calibration_scenes & set(evaluation_names)),
+        },
+    )
+
+    cache_dir = Path(config["cache_dir"]) / "evaluation"
+    evaluation_order = sorted(
+        evaluation_names,
+        key=lambda name: (
+            source.map_name_by_scene[source.resolve_scene(name)["token"]],
+            name,
+        ),
+    )
+    aggregate = Counter()
+    pass_scenes: set[str] = set()
+    pass_records: list[dict] = []
+    abstain_by_reason: dict[str, dict] = {}
+    resource_observations = []
+    scene_batch_size = int(config["runtime"]["scene_batch_size"])
+    with (
+        (run_dir / "scene_metrics.jsonl").open("w", encoding="utf-8") as scene_handle,
+        (run_dir / "transition_diagnostics.jsonl").open("w", encoding="utf-8") as transition_handle,
+        (run_dir / "strict_candidates.jsonl").open("w", encoding="utf-8") as candidate_handle,
+        (run_dir / "metrics.jsonl").open("w", encoding="utf-8") as metrics_handle,
+    ):
+        for batch_start in range(0, len(evaluation_order), scene_batch_size):
+            batch = evaluation_order[batch_start : batch_start + scene_batch_size]
+            meta = build_scene_instances_info(
+                Path(config["dataset_root"]),
+                batch,
+                int(config["interpolate_n"]),
+                cache_dir,
+                retain=False,
+                source=source,
+            )
+            for scene_name in batch:
+                entry = meta[scene_name]
+                instances_info = _read_json_bounded(Path(entry["cache_path"]))
+                scene = source.resolve_scene(scene_name)
+                tracks, matches, actor_tokens, _ = _track_and_matches(
+                    scene_name,
+                    instances_info,
+                    lane_indices[entry["map_name"]],
+                    config,
+                )
+                records, topology_summary = _final_transition_records(
+                    scene_name,
+                    lane_indices[entry["map_name"]],
+                    tracks,
+                    matches,
+                    actor_tokens,
+                    _frame_times_s(source, scene, int(config["interpolate_n"])),
+                    config,
+                    entry["map_name"],
+                )
+                status_counts = Counter(record["strict"]["status"] for record in records)
+                reason_counts = Counter(
+                    record["strict"]["primary_reason"]
+                    for record in records
+                    if record["strict"]["primary_reason"] is not None
+                )
+                for record in records:
+                    diagnostic = _strict_transition_diagnostic(record)
+                    transition_handle.write(
+                        json.dumps(diagnostic, ensure_ascii=False, sort_keys=True) + "\n"
+                    )
+                    aggregate[f"status:{diagnostic['status']}"] += 1
+                    aggregate[f"mode:{diagnostic['maneuver_mode']}"] += 1
+                    if diagnostic["primary_reason"] is not None:
+                        aggregate[f"reason:{diagnostic['primary_reason']}"] += 1
+                    if record["strict"]["machine_positive"]:
+                        pass_records.append(record)
+                        pass_scenes.add(scene_name)
+                        candidate_handle.write(
+                            json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n"
+                        )
+                    elif diagnostic["status"] == "ABSTAIN":
+                        reason = str(diagnostic["primary_reason"])
+                        existing = abstain_by_reason.get(reason)
+                        if (
+                            existing is None
+                            or record["event_record_sha256"]
+                            < existing["event_record_sha256"]
+                        ):
+                            abstain_by_reason[reason] = record
+                scene_metric = {
+                    "scene_id": scene_name,
+                    "scene_token": entry["scene_token"],
+                    "map_name": entry["map_name"],
+                    "eligible_actor_count": len(tracks),
+                    "transition_count": len(records),
+                    "topology_pass_count": topology_summary["topology_pass_count"],
+                    "strict_status_counts": dict(sorted(status_counts.items())),
+                    "strict_primary_reason_counts": dict(sorted(reason_counts.items())),
+                    "strict_pass_count": status_counts["PASS"],
+                }
+                scene_handle.write(
+                    json.dumps(scene_metric, ensure_ascii=False, sort_keys=True) + "\n"
+                )
+                del instances_info, tracks, matches, actor_tokens, records
+            del meta
+            trim_process_heap()
+            snapshot = _final_memory_check(config)
+            observation = {
+                "processed_scenes": min(batch_start + len(batch), len(evaluation_order)),
+                "evaluation_scenes": len(evaluation_order),
+                "memory": snapshot,
+            }
+            resource_observations.append(observation)
+            metrics_handle.write(
+                json.dumps(observation, ensure_ascii=False, sort_keys=True) + "\n"
+            )
+
+    _assert_event_record_hashes(pass_records)
+    strict_event_pool = {
+        "schema_version": "receiver-centric-cutin-strict-v2-event-pool-v1",
+        "task_id": config["task_id"],
+        "seed": int(config["seed"]),
+        "evaluation_scene_count": len(evaluation_names),
+        "strict_passes": pass_records,
+    }
+    strict_event_pool["strict_event_pool_sha256"] = canonical_sha256(strict_event_pool)
+    atomic_write_json(str(run_dir / "strict_event_pool.json"), strict_event_pool)
+    limit = int(config["audit"]["abstain_diagnostic_max_count"])
+    abstain_records = sorted(
+        abstain_by_reason.values(),
+        key=lambda row: (
+            str(row["strict"]["primary_reason"]),
+            row["event_record_sha256"],
+        ),
+    )[:limit]
+    with (run_dir / "diagnostic_abstain_candidates.jsonl").open(
+        "w", encoding="utf-8"
+    ) as handle:
+        for record in abstain_records:
+            handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+    abstain_index = [_strict_transition_diagnostic(record) for record in abstain_records]
+    summary = {
+        "schema_version": "n1-cutin-final-mining-summary-v1",
+        "task_id": config["task_id"],
+        "evaluation_scene_count": len(evaluation_names),
+        "calibration_scene_count": len(calibration_scenes),
+        "strict_pass_candidate_count": len(pass_records),
+        "strict_pass_scene_count": len(pass_scenes),
+        "strict_status_counts": {
+            key.removeprefix("status:"): value
+            for key, value in sorted(aggregate.items())
+            if key.startswith("status:")
+        },
+        "strict_mode_counts": {
+            key.removeprefix("mode:"): value
+            for key, value in sorted(aggregate.items())
+            if key.startswith("mode:")
+        },
+        "strict_primary_reason_counts": {
+            key.removeprefix("reason:"): value
+            for key, value in sorted(aggregate.items())
+            if key.startswith("reason:")
+        },
+        "diagnostic_abstain_index": abstain_index[:limit],
+        "resource_observations": resource_observations,
+        "uses_interpolated_physics": False,
+        "n2_authorized": False,
+    }
+    readiness = config["machine_readiness"]
+    summary["machine_readiness_checks"] = {
+        "strict_pass_candidates": len(pass_records)
+        >= int(readiness["min_strict_pass_candidates"]),
+        "strict_pass_scenes": len(pass_scenes)
+        >= int(readiness["min_strict_pass_scenes"]),
+        "raw_evidence_only": True,
+        "resource_contract_violations": 0
+        <= int(readiness["max_resource_contract_violations"]),
+    }
+    summary["machine_readiness_passed_without_k4"] = all(
+        summary["machine_readiness_checks"].values()
+    )
+    atomic_write_json(str(run_dir / "mining_summary.json"), summary)
+    atomic_write_text(str(run_dir / "stages" / "MINING_COMPLETE"), "mining_complete\n")
+    return summary
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -1055,7 +1519,20 @@ def main() -> None:
     parser.add_argument("--skip-audit-panels", action="store_true")
     parser.add_argument("--max-evaluation-scenes-development", type=int)
     parser.add_argument("--force-audit-development", action="store_true")
+    parser.add_argument("--internal-final-mining", action="store_true")
+    parser.add_argument("--run-dir", type=Path)
+    parser.add_argument("--max-evaluation-scenes", type=int)
     args = parser.parse_args()
+    if args.internal_final_mining:
+        if args.run_dir is None:
+            parser.error("--internal-final-mining requires --run-dir")
+        summary = run_final_mining(
+            args.config,
+            args.run_dir,
+            max_evaluation_scenes=args.max_evaluation_scenes,
+        )
+        print(json.dumps({"run_dir": str(args.run_dir), **summary}, ensure_ascii=False))
+        return
     try:
         run(
             args.config,

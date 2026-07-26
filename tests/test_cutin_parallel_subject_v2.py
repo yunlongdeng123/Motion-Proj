@@ -141,3 +141,26 @@ def test_interpolation_cannot_supply_hard_support():
     )
     assert result["status"] == "ABSTAIN"
     assert result["reasons"] == ["INTERPOLATION_ONLY"]
+
+
+def test_boundary_raw_entry_is_abstain_never_relaxed_to_pass():
+    lane_index = _LaneIndex(
+        {"source": _line(-30, 40, 1.9), "target": _line(-30, 40, 0.0)},
+        {"source": {"incoming": [], "outgoing": []}, "target": {"incoming": [], "outgoing": []}},
+    )
+    pre = [_row(0, -10, 1.6), _row(5, -6, 1.5), _row(10, -2, 1.4)]
+    post = [_row(15, 2, 0.6), _row(20, 6, 0.2), _row(25, 10, 0.0)]
+    frame_times = {row["frame_index"]: row["frame_index"] / 10.0 for row in [*pre, *post]}
+    result = evaluate_parallel_subject_v2(
+        actor_id=1,
+        source_token="source",
+        target_token="target",
+        pre_rows=pre,
+        post_rows=post,
+        lane_index=lane_index,
+        frame_times_s=frame_times,
+        config=_config(),
+    )
+    assert result["status"] == "ABSTAIN"
+    assert result["reasons"] == ["BOUNDARY_RAW_ENTRY_EVIDENCE"]
+    assert result["geometry"]["boundary_raw_entry_evidence"] is True

@@ -37,6 +37,11 @@ cases:
     human_verdict: TRUE_POSITIVE
     expected_status: PASS
     expected_primary_reason: null
+    allowed_statuses:
+      - PASS
+      - ABSTAIN
+    allowed_primary_reasons:
+      - BOUNDARY_RAW_ENTRY_EVIDENCE
     release_blocking: false
   K4-010:
     human_verdict: TRUE_POSITIVE
@@ -52,6 +57,11 @@ cases:
     human_verdict: FALSE_POSITIVE
     expected_status: FAIL
     expected_primary_reason: RECEIVER_IDENTITY_SWITCH
+    allowed_primary_reasons:
+      - RECEIVER_IDENTITY_SWITCH
+      - SOURCE_TARGET_NOT_PARALLEL
+    required_all_reasons:
+      - RECEIVER_IDENTITY_SWITCH
   K4-013:
     human_verdict: FALSE_POSITIVE
     expected_status: ABSTAIN

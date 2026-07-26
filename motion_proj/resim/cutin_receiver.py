@@ -28,6 +28,7 @@ STRICT_V2_SCHEMA_VERSION = "receiver-centric-cutin-strict-v2"
 STRICT_V2_REASONS = (
     "UNSUPPORTED_BRANCH_MERGE_MODE",
     "INSUFFICIENT_RAW_SUPPORT",
+    "BOUNDARY_RAW_ENTRY_EVIDENCE",
     "MAP_GEOMETRY_UNAVAILABLE",
     "SOURCE_TARGET_NOT_PARALLEL",
     "NO_RAW_LATERAL_ENTRY",
@@ -456,6 +457,8 @@ def local_parallel_lane_geometry(
         "min_parallel_overlap_m": min_overlap,
         "source_projection": source_projection,
         "target_projection": target_projection,
+        "source_centerline_xy": source_line[:, :2].tolist(),
+        "target_centerline_xy": target_line[:, :2].tolist(),
     }
 
 
@@ -658,15 +661,50 @@ def evaluate_parallel_subject_v2(
                 and speed >= float(subject_config["min_median_speed_mps"]),
             }
         )
-        if not checks["source_target_parallel"]:
-            reasons.append("SOURCE_TARGET_NOT_PARALLEL")
-        if not checks["raw_pre_outside"] or not checks["raw_post_inside"] or not checks["lateral_convergence"]:
-            reasons.append("NO_RAW_LATERAL_ENTRY")
-        if not checks["post_heading_stable"]:
-            reasons.append("POST_HEADING_UNSTABLE")
-        if not checks["subject_dynamic"]:
-            reasons.append("SUBJECT_NOT_DYNAMIC")
-        status = "PASS" if not reasons else "FAIL"
+        # 在相邻几何仅差一个边界带、且 raw window 已从“部分进入”开始时，
+        # 不能把不完整的首段观测伪装成 FAIL 或 PASS。该路径仅 ABSTAIN，绝不
+        # 放宽任何 machine-positive 阈值；它对应 K4-009 所述的 center-based
+        # 边界可见性限制，而不是一个新的 lane-change 规则。
+        boundary_overlap = parallel_overlap_length(
+            lane_index,
+            source_token,
+            target_token,
+            max_heading_error_deg=float(subject_config["max_source_target_heading_error_deg"]),
+            min_lateral_separation_m=0.0,
+            max_lateral_separation_m=float(subject_config["max_source_target_shift_m"]),
+        )
+        boundary_parallel = (
+            not geometry["source_target_parallel"]
+            and not geometry["route_continuation"]
+            and geometry["local_heading_error_deg"]
+            <= float(subject_config["max_source_target_heading_error_deg"])
+            and boundary_overlap
+            >= float(subject_config.get("min_parallel_overlap_m", 8.0))
+            and 0.0
+            < geometry["local_lateral_separation_m"]
+            < float(subject_config["min_source_target_shift_m"])
+        )
+        boundary_raw_entry = (
+            boundary_parallel
+            and not checks["raw_pre_outside"]
+            and not checks["lateral_convergence"]
+            and checks["raw_post_inside"]
+            and checks["post_heading_stable"]
+            and checks["subject_dynamic"]
+        )
+        if boundary_raw_entry:
+            reasons = ["BOUNDARY_RAW_ENTRY_EVIDENCE"]
+            status = "ABSTAIN"
+        else:
+            if not checks["source_target_parallel"]:
+                reasons.append("SOURCE_TARGET_NOT_PARALLEL")
+            if not checks["raw_pre_outside"] or not checks["raw_post_inside"] or not checks["lateral_convergence"]:
+                reasons.append("NO_RAW_LATERAL_ENTRY")
+            if not checks["post_heading_stable"]:
+                reasons.append("POST_HEADING_UNSTABLE")
+            if not checks["subject_dynamic"]:
+                reasons.append("SUBJECT_NOT_DYNAMIC")
+            status = "PASS" if not reasons else "FAIL"
         geometry.update(
             {
                 "pre_median_abs_lateral_m": pre_median,
@@ -677,17 +715,24 @@ def evaluate_parallel_subject_v2(
                 "settle_duration_s": settle_duration,
                 "median_speed_mps": speed,
                 "accumulated_yaw_change_deg": yaw_change,
+                "boundary_raw_entry_evidence": boundary_raw_entry,
+                "boundary_parallel_overlap_length_m": boundary_overlap,
             }
         )
     lane_preference = raw_lane_preference_sequence(
         [*pre_rows, *post_rows], lane_index, source_token, target_token
     )
     frame_records = []
-    for row in projections:
+    for raw_row, row in zip([*pre_rows, *post_rows], projections):
         frame_records.append(
             {
                 "frame": int(row["frame"]),
                 "observation_source": "raw_2hz",
+                "world_xy": [float(value) for value in raw_row["xy"]],
+                "yaw_rad": float(raw_row["yaw"]),
+                "dimensions_lwh": [
+                    float(value) for value in raw_row["dimensions_lwh"]
+                ],
                 "source_d_m": None,
                 "target_d_m": float(row["signed_lateral_m"]),
                 "target_s_m": float(row["s_m"]),
@@ -905,6 +950,11 @@ def _rear_candidates_v2(
                 ),
                 "centerline_distance_m": float(projection["distance_m"]),
                 "target_s_m": float(projection["s_m"]),
+                "world_xy": [float(value) for value in row["xy"]],
+                "yaw_rad": float(row["yaw"]),
+                "dimensions_lwh": [
+                    float(value) for value in row["dimensions_lwh"]
+                ],
                 "row": row,
             }
         )
@@ -938,11 +988,16 @@ def _local_receiver_speed(
 
 
 def _public_corridor(corridor: Mapping[str, Any]) -> dict:
-    return {
+    value = {
         key: value
         for key, value in corridor.items()
         if key not in {"centerline", "arc_lengths", "token_set"}
     }
+    value["centerline_xy"] = [
+        [float(point[0]), float(point[1])]
+        for point in np.asarray(corridor["centerline"], dtype=float)
+    ]
+    return value
 
 
 def evaluate_receiver_corridor_v2(
@@ -1022,8 +1077,8 @@ def evaluate_receiver_corridor_v2(
     centerline_distances = [
         float(item["nearest"]["centerline_distance_m"]) for item in selected_rows
     ]
-    speeds = [
-        _local_receiver_speed(
+    speed_by_frame = {
+        int(item["frame"]): _local_receiver_speed(
             dominant_id,
             int(item["frame"]),
             matches_by_actor,
@@ -1032,7 +1087,15 @@ def evaluate_receiver_corridor_v2(
             raw_stride,
         )
         for item in selected_rows
-    ] if dominant_id is not None else []
+    } if dominant_id is not None else {}
+    speeds = [
+        speed_by_frame.get(int(item["frame"]))
+        if dominant_id is not None
+        and item["nearest"] is not None
+        and int(item["nearest"]["actor_id"]) == dominant_id
+        else None
+        for item in per_frame
+    ]
     observed_speeds = [float(value) for value in speeds if value is not None]
     selected_s = [float(item["nearest"]["target_s_m"]) for item in selected_rows]
     local_displacement = (
@@ -1262,6 +1325,242 @@ def evaluate_receiver_across_corridors_v2(
         for row in evaluations
     ]
     return selected
+
+
+def receiver_centric_cutin_v2(
+    actor_id: int,
+    source_run: Mapping[str, Any],
+    target_run: Mapping[str, Any],
+    topology: Mapping[str, Any],
+    tracks_by_actor: Mapping[int, list[dict]],
+    matches_by_actor: Mapping[int, Mapping[int, dict]],
+    lane_index,
+    frame_times_s: Mapping[int, float],
+    config: Mapping[str, Any],
+    *,
+    source_event_record_sha256: str | None = None,
+    map_version: str | None = None,
+) -> dict:
+    """将 strict-v2 subject、receiver 和 corridor hard checks 组合为一个事件 verdict。"""
+    strict = dict(config.get("strict", config))
+    subject_config = dict(strict.get("subject", strict))
+    topology_type = str(topology.get("type", ""))
+    mode = (
+        "parallel_lane_change"
+        if topology_type == "lane_change"
+        else "receiver_branch_merge"
+    )
+    source_token = str(source_run["token"])
+    target_token = str(target_run["token"])
+    base_subject = {
+        "actor_id": int(actor_id),
+        "source_token": source_token,
+        "target_token": target_token,
+    }
+    provenance = {
+        "source_event_record_sha256": source_event_record_sha256,
+        "config_fingerprint": config.get("config_fingerprint"),
+        "map_version": map_version,
+        "lane_width_source": strict.get(
+            "lane_width_source", "configured_nominal_fallback"
+        ),
+    }
+    if mode == "receiver_branch_merge":
+        return strict_v2_result(
+            status="ABSTAIN",
+            maneuver_mode=mode,
+            reasons=["UNSUPPORTED_BRANCH_MERGE_MODE"],
+            subject=base_subject,
+            provenance=provenance,
+            extra={"topology": dict(topology), "candidate_window_count": 0},
+        )
+    track = list(tracks_by_actor.get(actor_id, []))
+    raw_stride = int(subject_config.get("raw_frame_stride", 5))
+    raw_track = [
+        row
+        for row in track
+        if int(row["frame_index"]) % raw_stride == 0
+        and str(row.get("observation_source", "raw_2hz")) == "raw_2hz"
+    ]
+    pre_count = int(subject_config["raw_pre_keyframes"])
+    post_count = int(subject_config["raw_post_keyframes"])
+    pre_search_count = int(subject_config.get("raw_pre_search_keyframes", pre_count))
+    post_search_count = int(subject_config.get("raw_post_search_keyframes", post_count))
+    pre_end = int(source_run["end_frame"])
+    post_start = int(target_run["start_frame"])
+    pre_all = [
+        row
+        for row in raw_track
+        if pre_end - (pre_search_count - 1) * raw_stride
+        <= int(row["frame_index"])
+        <= pre_end
+    ]
+    post_all = [
+        row
+        for row in raw_track
+        if post_start
+        <= int(row["frame_index"])
+        <= post_start + (post_search_count - 1) * raw_stride
+    ]
+    if len(pre_all) < pre_count or len(post_all) < post_count:
+        return strict_v2_result(
+            status="ABSTAIN",
+            maneuver_mode=mode,
+            reasons=["INSUFFICIENT_RAW_SUPPORT"],
+            subject={
+                **base_subject,
+                "pre_frames": [int(row["frame_index"]) for row in pre_all],
+                "post_frames": [int(row["frame_index"]) for row in post_all],
+            },
+            provenance=provenance,
+            extra={"topology": dict(topology), "candidate_window_count": 0},
+        )
+    pre_windows = [
+        pre_all[index : index + pre_count]
+        for index in range(len(pre_all) - pre_count + 1)
+    ]
+    post_windows = [
+        post_all[index : index + post_count]
+        for index in range(len(post_all) - post_count + 1)
+    ]
+    max_duration = float(subject_config.get("max_entry_transition_duration_s", 4.0))
+    candidates = []
+    for pre_rows in pre_windows:
+        for post_rows in post_windows:
+            entry_duration = _time(
+                int(post_rows[0]["frame_index"]), dict(frame_times_s), 0.5
+            ) - _time(int(pre_rows[-1]["frame_index"]), dict(frame_times_s), 0.5)
+            if entry_duration <= 0 or entry_duration > max_duration:
+                continue
+            subject_result = evaluate_parallel_subject_v2(
+                actor_id=actor_id,
+                source_token=source_token,
+                target_token=target_token,
+                pre_rows=pre_rows,
+                post_rows=post_rows,
+                lane_index=lane_index,
+                frame_times_s=frame_times_s,
+                config=config,
+            )
+            # 即使 subject 已经是 non-positive，仍提取 receiver diagnostic：
+            # 这不会改变 subject 的 FAIL/ABSTAIN 终态，却能让 K4-012 一类的
+            # identity switch 在 all_reasons 与审核证据中可追溯，而非被较早的
+            # subject failure 静默遮蔽。
+            receiver_result = evaluate_receiver_across_corridors_v2(
+                actor_id=actor_id,
+                pre_rows=pre_rows,
+                post_rows=post_rows,
+                matches_by_actor=matches_by_actor,
+                lane_index=lane_index,
+                source_token=source_token,
+                target_token=target_token,
+                frame_times_s=frame_times_s,
+                config=config,
+            )
+            receiver_checks = {
+                "receiver_dynamic": bool(receiver_result["checks"].get("receiver_dynamic")),
+                "receiver_same_direction": bool(receiver_result["checks"].get("receiver_same_direction")),
+                "receiver_identity_persistent": bool(receiver_result["checks"].get("receiver_identity_persistent")),
+                "receiver_nearest_rear_persistent": bool(receiver_result["checks"].get("receiver_nearest_rear_persistent")),
+                "path_clear": bool(receiver_result["checks"].get("path_clear")),
+                "corridor_unambiguous": bool(receiver_result["checks"].get("corridor_unambiguous")),
+            }
+            receiver = receiver_result["receiver"]
+            if subject_result["status"] == "PASS":
+                status = receiver_result["status"]
+                reasons = receiver_result["reasons"]
+                checks = {
+                    **subject_result["checks"],
+                    **receiver_checks,
+                }
+            elif subject_result["status"] == "FAIL":
+                status = "FAIL"
+                reasons = ordered_strict_v2_reasons(
+                    [*subject_result["reasons"], *receiver_result["reasons"]]
+                )
+                checks = {**subject_result["checks"], **receiver_checks}
+            else:
+                status = subject_result["status"]
+                reasons = subject_result["reasons"]
+                checks = {**subject_result["checks"], **receiver_checks}
+            candidates.append(
+                {
+                    "status": status,
+                    "reasons": reasons,
+                    "checks": checks,
+                    "subject": subject_result["subject"],
+                    "receiver": receiver,
+                    "subject_geometry": subject_result["geometry"],
+                    "receiver_result": receiver_result,
+                    "entry_transition_duration_s": entry_duration,
+                }
+            )
+    if not candidates:
+        return strict_v2_result(
+            status="ABSTAIN",
+            maneuver_mode=mode,
+            reasons=["INSUFFICIENT_RAW_SUPPORT"],
+            subject=base_subject,
+            provenance=provenance,
+            extra={"topology": dict(topology), "candidate_window_count": 0},
+        )
+    def diagnostic_window_key(row: Mapping[str, Any]) -> tuple[int, float]:
+        """为 non-positive evidence 保留最能呈现 first/secondary failure 的 raw 窗口。"""
+        reasons = set(row["reasons"])
+        post_frames = row["subject"].get("post_frames", [])
+        last_post = max(post_frames) if post_frames else -1
+        if "RECEIVER_IDENTITY_SWITCH" in reasons:
+            return (0, -float(last_post))
+        if "POST_HEADING_UNSTABLE" in reasons:
+            post_set = set(post_frames)
+            heading = [
+                float(item["target_heading_error_deg"])
+                for item in row["subject"].get("per_frame", [])
+                if int(item["frame"]) in post_set
+            ]
+            return (1, -max(heading, default=0.0))
+        return (2, -float(last_post))
+
+    selected = min(
+        candidates,
+        key=lambda row: (
+            0 if row["status"] == "PASS" else 1,
+            _STRICT_V2_REASON_RANK[row["reasons"][0]] if row["reasons"] else len(_STRICT_V2_REASON_RANK),
+            # 对 non-positive 候选优先保留更晚的 raw post anchor，避免一个较短
+            # 的窗口把末帧 receiver identity/rank switch 裁掉；PASS 仍按最短
+            # 合法 transition 保持原有确定性。
+            (
+                (0, float(row["entry_transition_duration_s"]))
+                if row["status"] == "PASS"
+                else diagnostic_window_key(row)
+            ),
+            float(row["entry_transition_duration_s"]),
+            tuple(row["subject"]["pre_frames"]),
+        ),
+    )
+    extra = {
+        "topology": dict(topology),
+        "subject_geometry": selected["subject_geometry"],
+        "entry_transition_duration_s": selected["entry_transition_duration_s"],
+        "candidate_window_count": len(candidates),
+    }
+    if selected["receiver_result"] is not None:
+        extra["corridor"] = selected["receiver_result"].get("corridor")
+        extra["receiver_checks_detail"] = selected["receiver_result"].get("checks")
+        extra["candidate_corridor_results"] = selected["receiver_result"].get(
+            "candidate_corridor_results", []
+        )
+        extra["receiver_per_frame"] = selected["receiver_result"].get("per_frame", [])
+    return strict_v2_result(
+        status=selected["status"],
+        maneuver_mode=mode,
+        reasons=selected["reasons"],
+        checks=selected["checks"],
+        subject=selected["subject"],
+        receiver=selected["receiver"],
+        provenance=provenance,
+        extra=extra,
+    )
 
 
 def _edge_geometry(lane_index, left: str, right: str) -> dict:
