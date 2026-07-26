@@ -12,7 +12,7 @@
 from __future__ import annotations
 
 import math
-from typing import Iterable
+from typing import Any, Iterable, Mapping
 
 import numpy as np
 
@@ -21,6 +21,302 @@ from motion_proj.resim.event_kinematics import (
     annotation_keyframes,
     project_to_polyline,
 )
+
+
+STRICT_V2_SCHEMA_VERSION = "receiver-centric-cutin-strict-v2"
+STRICT_V2_REASONS = (
+    "UNSUPPORTED_BRANCH_MERGE_MODE",
+    "INSUFFICIENT_RAW_SUPPORT",
+    "MAP_GEOMETRY_UNAVAILABLE",
+    "SOURCE_TARGET_NOT_PARALLEL",
+    "NO_RAW_LATERAL_ENTRY",
+    "POST_HEADING_UNSTABLE",
+    "SUBJECT_NOT_DYNAMIC",
+    "AMBIGUOUS_RECEIVER_CORRIDOR",
+    "RECEIVER_NOT_DYNAMIC",
+    "RECEIVER_WRONG_DIRECTION",
+    "RECEIVER_NOT_ESTABLISHED_ON_TARGET_STREAM",
+    "RECEIVER_IDENTITY_SWITCH",
+    "RECEIVER_SUPPORT_INSUFFICIENT",
+    "RECEIVER_GAP_INVALID",
+    "PATH_NOT_CLEAR",
+    "INTERPOLATION_ONLY",
+)
+_STRICT_V2_REASON_RANK = {
+    reason: index for index, reason in enumerate(STRICT_V2_REASONS)
+}
+_STRICT_V2_CHECK_KEYS = (
+    "supported_mode",
+    "source_target_parallel",
+    "raw_pre_outside",
+    "raw_post_inside",
+    "lateral_convergence",
+    "post_heading_stable",
+    "subject_dynamic",
+    "receiver_dynamic",
+    "receiver_same_direction",
+    "receiver_identity_persistent",
+    "receiver_nearest_rear_persistent",
+    "path_clear",
+    "corridor_unambiguous",
+)
+
+
+def ordered_strict_v2_reasons(reasons: Iterable[str]) -> list[str]:
+    """按冻结的 first-failure 优先级稳定排序 reason。"""
+    unique = {str(reason) for reason in reasons if reason is not None}
+    unknown = unique.difference(_STRICT_V2_REASON_RANK)
+    if unknown:
+        raise ValueError(f"未知 strict-v2 reason: {sorted(unknown)}")
+    return sorted(unique, key=_STRICT_V2_REASON_RANK.__getitem__)
+
+
+def strict_v2_result(
+    *,
+    status: str,
+    maneuver_mode: str,
+    reasons: Iterable[str] = (),
+    checks: Mapping[str, bool] | None = None,
+    subject: Mapping[str, Any] | None = None,
+    receiver: Mapping[str, Any] | None = None,
+    provenance: Mapping[str, Any] | None = None,
+    extra: Mapping[str, Any] | None = None,
+) -> dict:
+    """构造带 fail-closed 语义的 strict-v2 evidence record。
+
+    这里集中约束 schema，避免任何调用方把 branch merge、插值或 FAIL/ABSTAIN
+    错写成 machine-positive。所有 hard evidence 的来源固定为原始 2 Hz annotation。
+    """
+    status = str(status).upper()
+    if status not in {"PASS", "FAIL", "ABSTAIN"}:
+        raise ValueError(f"非法 strict-v2 status: {status}")
+    maneuver_mode = str(maneuver_mode)
+    if maneuver_mode not in {"parallel_lane_change", "receiver_branch_merge"}:
+        raise ValueError(f"非法 maneuver_mode: {maneuver_mode}")
+    ordered = ordered_strict_v2_reasons(reasons)
+    if maneuver_mode == "receiver_branch_merge":
+        status = "ABSTAIN"
+        ordered = ["UNSUPPORTED_BRANCH_MERGE_MODE"]
+    if "INTERPOLATION_ONLY" in ordered and status == "PASS":
+        status = "ABSTAIN"
+    if status == "PASS" and ordered:
+        raise ValueError("PASS 不得携带 hard failure reason")
+    if status != "PASS" and not ordered:
+        ordered = ["INSUFFICIENT_RAW_SUPPORT"]
+
+    resolved_checks = {key: False for key in _STRICT_V2_CHECK_KEYS}
+    if checks:
+        unknown_checks = set(checks).difference(resolved_checks)
+        if unknown_checks:
+            raise ValueError(f"未知 strict-v2 check: {sorted(unknown_checks)}")
+        resolved_checks.update({key: bool(value) for key, value in checks.items()})
+    resolved_checks["supported_mode"] = maneuver_mode == "parallel_lane_change"
+
+    value = {
+        "schema_version": STRICT_V2_SCHEMA_VERSION,
+        "status": status,
+        "primary_reason": ordered[0] if ordered else None,
+        "all_reasons": ordered,
+        "maneuver_mode": maneuver_mode,
+        "machine_positive": status == "PASS",
+        "hard_evidence_source": "raw_2hz_annotations",
+        "uses_interpolated_physics": False,
+        "provenance": {
+            "source_event_record_sha256": None,
+            "config_fingerprint": None,
+            "map_version": None,
+            "lane_width_source": "configured_nominal_fallback",
+            **dict(provenance or {}),
+        },
+        "subject": {
+            "actor_id": None,
+            "instance_token": None,
+            "source_token": None,
+            "target_token": None,
+            "pre_frames": [],
+            "post_frames": [],
+            "per_frame": [],
+            **dict(subject or {}),
+        },
+        "receiver": {
+            "selected_actor_id": None,
+            "actor_id_by_frame": [],
+            "nearest_rear_rank_by_frame": [],
+            "gap_m_by_frame": [],
+            "longitudinal_speed_mps_by_frame": [],
+            "heading_error_deg_by_frame": [],
+            "identity_switch_frames": [],
+            "missing_frames": [],
+            "intermediate_actor_ids_by_frame": {},
+            "identity_persistent": False,
+            "nearest_rear_persistent": False,
+            "path_clear": False,
+            **dict(receiver or {}),
+        },
+        "checks": resolved_checks,
+    }
+    if extra:
+        overlap = set(value).intersection(extra)
+        if overlap:
+            raise ValueError(f"strict-v2 extra 覆盖保留字段: {sorted(overlap)}")
+        value.update(dict(extra))
+    return value
+
+
+def adapt_v1_evidence_to_v2(record: Mapping[str, Any]) -> dict:
+    """只读适配历史 receiver-centric v1 evidence 为 v2 diagnostic。
+
+    该 adapter 不迁移 parent 文件，也不把 v1 的 PASS 当成新的 final truth；它只让
+    K4 fixture 和历史诊断能够由 v2 工具稳定读取。
+    """
+    cutin = record.get("cutin", record)
+    if not isinstance(cutin, Mapping):
+        raise ValueError("v1 evidence 缺少 cutin object")
+    mode = str(record.get("maneuver_mode", "parallel_lane_change"))
+    if mode == "lane_change":
+        mode = "parallel_lane_change"
+    if mode == "merge":
+        mode = "receiver_branch_merge"
+    if mode not in {"parallel_lane_change", "receiver_branch_merge"}:
+        raise ValueError(f"无法适配的 v1 maneuver mode: {mode}")
+    legacy_status = str(cutin.get("status", "UNKNOWN")).upper()
+    subject_checks_v1 = dict(cutin.get("subject_checks", {}))
+    receiver_checks_v1 = dict(cutin.get("receiver_checks", {}))
+    checks = {
+        "source_target_parallel": mode == "parallel_lane_change",
+        "raw_pre_outside": bool(
+            subject_checks_v1.get("pre_center_outside_target_band", False)
+        ),
+        "raw_post_inside": bool(
+            subject_checks_v1.get("post_box_inside_target_band", False)
+        ),
+        "lateral_convergence": bool(
+            subject_checks_v1.get("lateral_convergence", False)
+        ),
+        "post_heading_stable": bool(
+            subject_checks_v1.get("post_heading_alignment", False)
+        ),
+        "subject_dynamic": bool(
+            subject_checks_v1.get("minimum_motion_speed", False)
+        ),
+        "receiver_dynamic": cutin.get("receiver_longitudinal_speed_mps") is not None,
+        "receiver_same_direction": True,
+        "receiver_identity_persistent": bool(
+            receiver_checks_v1.get("receiver_pre_identity_support", False)
+            and receiver_checks_v1.get("receiver_post_identity_support", False)
+        ),
+        "receiver_nearest_rear_persistent": bool(
+            receiver_checks_v1.get("receiver_pre_identity_support", False)
+            and receiver_checks_v1.get("receiver_post_identity_support", False)
+        ),
+        "path_clear": True,
+        "corridor_unambiguous": int(
+            cutin.get("candidate_receiver_branch_count", 1)
+        ) <= 1,
+    }
+    if mode == "receiver_branch_merge":
+        status, reasons = "ABSTAIN", ["UNSUPPORTED_BRANCH_MERGE_MODE"]
+    elif legacy_status == "PASS":
+        status, reasons = "PASS", []
+    elif legacy_status == "UNKNOWN":
+        status, reasons = "ABSTAIN", ["INSUFFICIENT_RAW_SUPPORT"]
+    elif not checks["raw_pre_outside"] or not checks["raw_post_inside"]:
+        status, reasons = "FAIL", ["NO_RAW_LATERAL_ENTRY"]
+    elif not checks["post_heading_stable"]:
+        status, reasons = "FAIL", ["POST_HEADING_UNSTABLE"]
+    else:
+        status, reasons = "FAIL", ["RECEIVER_SUPPORT_INSUFFICIENT"]
+
+    per_frame = list(cutin.get("per_frame", []))
+    receiver_ids = [
+        (row.get("receiver") or {}).get("actor_id") for row in per_frame
+    ]
+    selected = cutin.get("receiver_actor_id")
+    selected_int = int(selected) if selected is not None else None
+    non_null = [int(value) for value in receiver_ids if value is not None]
+    switches = [
+        int(row.get("frame"))
+        for row, value in zip(per_frame, receiver_ids)
+        if value is not None and selected_int is not None and int(value) != selected_int
+    ]
+    subject_frames = [
+        {
+            "frame": int(row["frame"]),
+            "observation_source": "raw_2hz",
+            "source_d_m": None,
+            "target_d_m": float(row["signed_lateral_m"]),
+            "target_s_m": float(row["s_m"]),
+            "target_heading_error_deg": float(row["heading_error_deg"]),
+            "speed_mps": None,
+            "center_outside_target_band": bool(
+                row["center_outside_target_band"]
+            ),
+            "box_inside_target_band": bool(row["box_inside_target_band"]),
+        }
+        for row in [
+            *list(cutin.get("pre_keyframes", [])),
+            *list(cutin.get("post_keyframes", [])),
+        ]
+    ]
+    return strict_v2_result(
+        status=status,
+        maneuver_mode=mode,
+        reasons=reasons,
+        checks=checks,
+        provenance={
+            "source_event_record_sha256": record.get("event_record_sha256"),
+            "config_fingerprint": record.get("config_fingerprint"),
+            "map_version": record.get("map_name"),
+        },
+        subject={
+            "actor_id": record.get("actor_id"),
+            "instance_token": (record.get("roles") or {}).get("SUBJECT"),
+            "source_token": (record.get("source_run") or {}).get("token"),
+            "target_token": (record.get("target_run") or {}).get("token"),
+            "pre_frames": [
+                int(row["frame"]) for row in cutin.get("pre_keyframes", [])
+            ],
+            "post_frames": [
+                int(row["frame"]) for row in cutin.get("post_keyframes", [])
+            ],
+            "per_frame": subject_frames,
+        },
+        receiver={
+            "selected_actor_id": selected_int,
+            "actor_id_by_frame": receiver_ids,
+            "nearest_rear_rank_by_frame": [
+                1 if value is not None else None for value in receiver_ids
+            ],
+            "gap_m_by_frame": [
+                (row.get("receiver") or {}).get("bumper_gap_m")
+                for row in per_frame
+            ],
+            "longitudinal_speed_mps_by_frame": [None for _ in per_frame],
+            "heading_error_deg_by_frame": [
+                (row.get("receiver") or {}).get("heading_error_deg")
+                for row in per_frame
+            ],
+            "identity_switch_frames": switches,
+            "missing_frames": [
+                int(row.get("frame"))
+                for row, value in zip(per_frame, receiver_ids)
+                if value is None
+            ],
+            "intermediate_actor_ids_by_frame": {
+                str(row.get("frame")): [] for row in per_frame
+            },
+            "identity_persistent": len(set(non_null)) <= 1 and bool(non_null),
+            "nearest_rear_persistent": len(set(non_null)) <= 1 and bool(non_null),
+            "path_clear": True,
+        },
+        extra={
+            "legacy_v1_diagnostic": {
+                "status": legacy_status,
+                "reason": cutin.get("reason"),
+                "schema_version": cutin.get("schema_version"),
+            }
+        },
+    )
 
 
 def _edge_geometry(lane_index, left: str, right: str) -> dict:
