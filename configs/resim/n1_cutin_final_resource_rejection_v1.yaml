@@ -1,0 +1,21 @@
+schema_version: n1-cutin-final-resource-adjudication-v1
+task_id: N1-EVENT-CUTIN-FINAL-RESOURCE-AUDIT-01
+seed: 0
+require_clean_git: true
+parent_run: /root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-FINAL-01/v71_n1-event-cutin-final-01__receiver-cutin-final-v1__s0__20260726T121042935837Z__a6b12de0
+parent_expected_terminal: FAILED
+expected_parent_code_commit: 7104f5cb9793d2f168cf7d721f7c9fb7d5232401
+expected_parent_failure_exit_reason: orchestrator_or_worker_failure
+parent_artifact_sha256:
+  preflight.json: 974e80e78fe1bde1be014faea42549f066beb8b0856fbefb907fae7e8ee3eff3
+  failure.json: 352daccce72a63f38b344f5e43a4fb8b6c208be4cfa7b7c683732292e1e9fbb8
+  resolved.yaml: a6b12de0c1afe4ecd1ef6295b6b8104d363cbc5498e348a3b779096dba4d2b96
+  stages/K4_REGRESSION.json: f15caefe193a582727537c266be57c7d851cf08699e6951ee5d8b92218189599
+resource_contract:
+  max_start_cgroup_current_bytes: 1350000000
+  expected_parent_preflight_cgroup_current_bytes: 1523929088
+run_root: /root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-FINAL-RESOURCE-AUDIT-01
+decision:
+  terminal_status: REJECTED
+  research_verdict: stop_nuscenes_cutin_mining
+  n2_authorized: false
