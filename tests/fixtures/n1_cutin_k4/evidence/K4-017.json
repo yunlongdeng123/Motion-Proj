@@ -1,0 +1,381 @@
+{
+  "audit_id": "K4-017",
+  "event_id": "scene-0892:89:K4:150:152",
+  "scene_id": "scene-0892",
+  "map_name": "boston-seaport",
+  "camera_keyframes": [
+    {
+      "frame": 135,
+      "path": "/root/autodl-tmp/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-14-54-39-0400__CAM_FRONT__1537297587412404.jpg"
+    },
+    {
+      "frame": 145,
+      "path": "/root/autodl-tmp/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-14-54-39-0400__CAM_FRONT__1537297588362404.jpg"
+    },
+    {
+      "frame": 155,
+      "path": "/root/autodl-tmp/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-14-54-39-0400__CAM_FRONT__1537297589362404.jpg"
+    },
+    {
+      "frame": 160,
+      "path": "/root/autodl-tmp/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-14-54-39-0400__CAM_FRONT__1537297589862404.jpg"
+    },
+    {
+      "frame": 165,
+      "path": "/root/autodl-tmp/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-14-54-39-0400__CAM_FRONT__1537297590412404.jpg"
+    }
+  ],
+  "roles": {
+    "SUBJECT": "bd3ec8522ba14687be1afe38e6f37f6f",
+    "RECEIVER": "f5c71ac3a48e495283aacee78e53d195"
+  },
+  "source_run": {
+    "token": "6b54ded7-5058-4d12-9be9-10d8e9e340cd",
+    "start_frame": 96,
+    "end_frame": 150,
+    "frame_count": 55
+  },
+  "target_run": {
+    "token": "feb8f309-2274-4286-aff8-e18761ac440c",
+    "start_frame": 152,
+    "end_frame": 167,
+    "frame_count": 16
+  },
+  "crossing_frame": 151,
+  "relation_frame": 160,
+  "topology": {
+    "type": "merge",
+    "topology_pass": true,
+    "directed_connected": true,
+    "directed_reachable_within_hops": true,
+    "target_incoming_count": 3,
+    "lateral_shift_m": null,
+    "parallel_heading_error_deg": null
+  },
+  "event_record_sha256": "26fc1118c090ab9ded273fcae346bb01f14a77959037a428f78db26c7f5b4bea",
+  "maneuver_mode": "receiver_branch_merge",
+  "cutin": {
+    "schema_version": "receiver-centric-cutin-v1",
+    "status": "PASS",
+    "reason": null,
+    "subject_entry_pass": true,
+    "receiver_interaction_pass": true,
+    "subject_checks": {
+      "pre_center_outside_target_band": true,
+      "post_box_inside_target_band": true,
+      "pre_center_lateral_offset": true,
+      "post_center_lateral_offset": true,
+      "lateral_convergence": true,
+      "lateral_convergence_consistency": true,
+      "pre_side_consistency": true,
+      "pre_heading_alignment": true,
+      "post_heading_alignment": true,
+      "settled_duration": true,
+      "minimum_motion_speed": true
+    },
+    "receiver_checks": {
+      "receiver_at_relation_frame": true,
+      "receiver_pre_identity_support": true,
+      "receiver_post_identity_support": true,
+      "receiver_bumper_gaps": true,
+      "receiver_branch_excludes_subject_source": true
+    },
+    "pre_keyframes": [
+      {
+        "frame": 135,
+        "s_m": 77.69929992194761,
+        "signed_lateral_m": 3.4572937597321296,
+        "abs_lateral_m": 3.4572937597321296,
+        "corridor_heading_rad": -1.78184558250563,
+        "heading_error_deg": 49.24776837663731,
+        "corner_signed_lateral_m": [
+          2.4278008429064597,
+          0.9728728176339505,
+          4.96684873786069,
+          6.032375211192206
+        ],
+        "center_outside_target_band": true,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": false
+      },
+      {
+        "frame": 140,
+        "s_m": 78.72673870494268,
+        "signed_lateral_m": 2.3047420728710515,
+        "abs_lateral_m": 2.3047420728710515,
+        "corridor_heading_rad": -1.951340805044617,
+        "heading_error_deg": 29.53640747752279,
+        "corner_signed_lateral_m": [
+          2.127377919112304,
+          0.35640065840044366,
+          3.1220139548208286,
+          4.5364477862070265
+        ],
+        "center_outside_target_band": true,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": false
+      },
+      {
+        "frame": 145,
+        "s_m": 80.93507703396631,
+        "signed_lateral_m": 1.3829077672368022,
+        "abs_lateral_m": 1.3829077672368022,
+        "corridor_heading_rad": -2.1533765445764583,
+        "heading_error_deg": 14.677958720490995,
+        "corner_signed_lateral_m": [
+          1.6372645544037758,
+          -0.1717922389557425,
+          1.447221682260002,
+          3.1129454468089586
+        ],
+        "center_outside_target_band": false,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": false
+      }
+    ],
+    "post_keyframes": [
+      {
+        "frame": 155,
+        "s_m": 86.3323560911878,
+        "signed_lateral_m": 0.5554760519596718,
+        "abs_lateral_m": 0.5554760519596718,
+        "corridor_heading_rad": -2.1572968359740066,
+        "heading_error_deg": 7.884518281582898,
+        "corner_signed_lateral_m": [
+          1.1294354039240315,
+          -0.7228866736569957,
+          -0.01401755802458652,
+          1.8373312244411268
+        ],
+        "center_outside_target_band": false,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": true
+      },
+      {
+        "frame": 160,
+        "s_m": 89.06455287882882,
+        "signed_lateral_m": 0.38274298157465336,
+        "abs_lateral_m": 0.38274298157465336,
+        "corridor_heading_rad": -2.1572968359740066,
+        "heading_error_deg": 4.594751530767787,
+        "corner_signed_lateral_m": [
+          1.1090617939183995,
+          -0.7549284388687937,
+          -0.3435758307689929,
+          1.520414402018286
+        ],
+        "center_outside_target_band": false,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": true
+      },
+      {
+        "frame": 165,
+        "s_m": 90.50936431330908,
+        "signed_lateral_m": 0.3740671438389079,
+        "abs_lateral_m": 0.3740671438389079,
+        "corridor_heading_rad": -2.1572968359741993,
+        "heading_error_deg": 0.9811970445886952,
+        "corner_signed_lateral_m": [
+          1.2649634495565996,
+          -0.6047623499732422,
+          -0.5168291618785191,
+          1.3528966376512594
+        ],
+        "center_outside_target_band": false,
+        "box_fully_outside_target_band": false,
+        "box_inside_target_band": true
+      }
+    ],
+    "pre_box_outside_count": 0,
+    "pre_center_outside_count": 2,
+    "post_box_inside_count": 3,
+    "pre_median_abs_lateral_m": 2.3047420728710515,
+    "post_median_abs_lateral_m": 0.38274298157465336,
+    "lateral_convergence_m": 1.921999091296398,
+    "lateral_convergence_consistency": 1.0,
+    "pre_side_consistency": 1.0,
+    "settle_duration_s": 1.0500779151916504,
+    "median_speed_mps": 5.469150724795082,
+    "relation_frame": 160,
+    "receiver_actor_id": 121,
+    "front_actor_id": null,
+    "receiver_pre_support_keyframes": 3,
+    "receiver_post_support_keyframes": 3,
+    "receiver_bumper_gap_m": 17.592988234196298,
+    "subject_longitudinal_speed_mps": 5.464722929179814,
+    "receiver_longitudinal_speed_mps": 0.23925992682780256,
+    "receiver_closing_speed_mps": -5.225463002352011,
+    "receiver_ttc_s": null,
+    "per_frame": [
+      {
+        "frame": 135,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "center_delta_s_m": -13.838434317026952,
+          "bumper_gap_m": 9.058793822691646,
+          "heading_error_deg": 6.412538793294273,
+          "signed_lateral_m": -0.17014353981608782
+        },
+        "neighbor_count": 1
+      },
+      {
+        "frame": 140,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "center_delta_s_m": -14.78441277024885,
+          "bumper_gap_m": 9.69434072201098,
+          "heading_error_deg": 6.412538793294273,
+          "signed_lateral_m": -0.17506438052183257
+        },
+        "neighbor_count": 1
+      },
+      {
+        "frame": 145,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "center_delta_s_m": -16.90269997722538,
+          "bumper_gap_m": 11.786769237956245,
+          "heading_error_deg": 6.41253879328725,
+          "signed_lateral_m": -0.18043051675261254
+        },
+        "neighbor_count": 1
+      },
+      {
+        "frame": 155,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "center_delta_s_m": -20.72224314241143,
+          "bumper_gap_m": 15.629703447898232,
+          "heading_error_deg": 8.418884396133098,
+          "signed_lateral_m": -0.4825832784366408
+        },
+        "neighbor_count": 1
+      },
+      {
+        "frame": 160,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "center_delta_s_m": -22.67391490876568,
+          "bumper_gap_m": 17.592988234196298,
+          "heading_error_deg": 10.705932102364871,
+          "signed_lateral_m": -0.5999429740913983
+        },
+        "neighbor_count": 1
+      },
+      {
+        "frame": 165,
+        "front": null,
+        "receiver": {
+          "actor_id": 121,
+          "lane_token": "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+          "center_delta_s_m": -23.246988817995287,
+          "bumper_gap_m": 18.207953013383328,
+          "heading_error_deg": 11.612769053478226,
+          "signed_lateral_m": -0.7561041174179013
+        },
+        "neighbor_count": 1
+      }
+    ],
+    "corridor": {
+      "source_token_excluded": "6b54ded7-5058-4d12-9be9-10d8e9e340cd",
+      "target_token": "feb8f309-2274-4286-aff8-e18761ac440c",
+      "receiver_branch_token": "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+      "incoming_tokens_nearest_first": [
+        "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+        "cf2db7d3-90af-4e14-8d30-086d224992f5"
+      ],
+      "outgoing_tokens_nearest_first": [],
+      "ordered_tokens": [
+        "cf2db7d3-90af-4e14-8d30-086d224992f5",
+        "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+        "feb8f309-2274-4286-aff8-e18761ac440c"
+      ],
+      "incoming_edges": [
+        {
+          "from_token": "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+          "to_token": "feb8f309-2274-4286-aff8-e18761ac440c",
+          "heading_error_deg": 2.5444437451708134e-14,
+          "endpoint_gap_m": 1.1368683772161603e-13,
+          "candidate_count": 1,
+          "runner_up_heading_error_deg": null
+        },
+        {
+          "from_token": "cf2db7d3-90af-4e14-8d30-086d224992f5",
+          "to_token": "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+          "heading_error_deg": 2.5444437451708134e-14,
+          "endpoint_gap_m": 7.279509460923746e-13,
+          "candidate_count": 1,
+          "runner_up_heading_error_deg": null
+        }
+      ],
+      "outgoing_edges": []
+    },
+    "event_pass": true,
+    "entry_transition_duration_s": 0.9991970062255859,
+    "pre_window_frames": [
+      135,
+      140,
+      145
+    ],
+    "post_window_frames": [
+      155,
+      160,
+      165
+    ],
+    "candidate_receiver_branch_count": 2,
+    "candidate_window_count": 64,
+    "candidate_receiver_branch_results": [
+      {
+        "receiver_branch_token": "21985f53-5fb9-4746-8dbb-eb0df92d33cf",
+        "status": "FAIL",
+        "reason": "no_stable_independent_target_lane_receiver",
+        "subject_entry_pass": true,
+        "receiver_interaction_pass": false,
+        "receiver_actor_id": null,
+        "receiver_bumper_gap_m": null,
+        "entry_transition_duration_s": 0.9991970062255859,
+        "pre_window_frames": [
+          135,
+          140,
+          145
+        ],
+        "post_window_frames": [
+          155,
+          160,
+          165
+        ]
+      },
+      {
+        "receiver_branch_token": "56b6b6ca-c6f7-4202-9442-4a58ea0de6bc",
+        "status": "PASS",
+        "reason": null,
+        "subject_entry_pass": true,
+        "receiver_interaction_pass": true,
+        "receiver_actor_id": 121,
+        "receiver_bumper_gap_m": 17.592988234196298,
+        "entry_transition_duration_s": 0.9991970062255859,
+        "pre_window_frames": [
+          135,
+          140,
+          145
+        ],
+        "post_window_frames": [
+          155,
+          160,
+          165
+        ]
+      }
+    ],
+    "uses_interpolated_physics": false
+  }
+}
