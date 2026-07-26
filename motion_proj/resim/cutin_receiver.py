@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import math
+from collections import Counter
 from typing import Any, Iterable, Mapping
 
 import numpy as np
@@ -711,6 +712,556 @@ def evaluate_parallel_subject_v2(
         },
         "geometry": geometry,
     }
+
+
+def _enumerate_corridor_chains(
+    lane_index,
+    start: str,
+    direction: str,
+    *,
+    hops: int,
+    max_heading_error_deg: float,
+    max_endpoint_gap_m: float,
+    excluded_tokens: set[str],
+) -> list[tuple[list[str], list[dict]]]:
+    """枚举 graph_hops 内的全部小型可用 chain，而不是按 token 贪心选第一条。"""
+    output: list[tuple[list[str], list[dict]]] = [([], [])]
+    connectivity = lane_index.nmap.connectivity
+
+    def visit(
+        current: str,
+        remaining: int,
+        tokens: list[str],
+        edges: list[dict],
+        visited: set[str],
+    ) -> None:
+        if remaining <= 0:
+            return
+        candidates = []
+        for neighbor in connectivity.get(current, {}).get(direction, []):
+            if neighbor in visited or neighbor not in lane_index.centerlines:
+                continue
+            left, right = (
+                (current, neighbor)
+                if direction == "outgoing"
+                else (neighbor, current)
+            )
+            geometry = _edge_geometry(lane_index, left, right)
+            if (
+                geometry["heading_error_deg"] <= max_heading_error_deg
+                and geometry["endpoint_gap_m"] <= max_endpoint_gap_m
+            ):
+                candidates.append((neighbor, geometry))
+        candidates.sort(key=lambda value: (value[1]["heading_error_deg"], value[1]["endpoint_gap_m"], value[0]))
+        for neighbor, geometry in candidates:
+            edge = {
+                "from_token": neighbor if direction == "incoming" else current,
+                "to_token": current if direction == "incoming" else neighbor,
+                **geometry,
+                "candidate_count": len(candidates),
+            }
+            next_tokens = [*tokens, neighbor]
+            next_edges = [*edges, edge]
+            output.append((next_tokens, next_edges))
+            visit(
+                neighbor,
+                remaining - 1,
+                next_tokens,
+                next_edges,
+                {*(visited or set()), neighbor},
+            )
+
+    visit(start, int(hops), [], [], {start, *excluded_tokens})
+    return output
+
+
+def _build_corridor_from_chains(
+    lane_index,
+    source_token: str,
+    target_token: str,
+    incoming: list[str],
+    incoming_edges: list[dict],
+    outgoing: list[str],
+    outgoing_edges: list[dict],
+) -> dict:
+    ordered_tokens = [*reversed(incoming), target_token, *outgoing]
+    if source_token in ordered_tokens:
+        raise ValueError("receiver corridor 不能含 subject source token")
+    points: list[np.ndarray] = []
+    for token in ordered_tokens:
+        line = np.asarray(lane_index.centerlines[token], dtype=float)
+        for index, point in enumerate(line):
+            if points and index == 0 and float(np.linalg.norm(points[-1][:2] - point[:2])) < 1e-6:
+                continue
+            points.append(point)
+    centerline = np.asarray(points, dtype=float)
+    if len(centerline) < 2:
+        raise ValueError("receiver corridor centerline 不足")
+    arc_lengths = np.concatenate(
+        ([0.0], np.cumsum(np.linalg.norm(np.diff(centerline[:, :2], axis=0), axis=1)))
+    )
+    return {
+        "source_token_excluded": source_token,
+        "target_token": target_token,
+        "incoming_tokens_nearest_first": incoming,
+        "outgoing_tokens_nearest_first": outgoing,
+        "ordered_tokens": ordered_tokens,
+        "token_set": set(ordered_tokens),
+        "incoming_edges": incoming_edges,
+        "outgoing_edges": outgoing_edges,
+        "centerline": centerline,
+        "arc_lengths": arc_lengths,
+    }
+
+
+def enumerate_receiver_corridors_v2(
+    lane_index,
+    source_token: str,
+    target_token: str,
+    config: Mapping[str, Any],
+) -> list[dict]:
+    """构造所有有限 hop 的 target-corridor 假设，供 identity 语义判别。"""
+    strict = dict(config.get("strict", config))
+    corridor_config = dict(strict.get("corridor", strict))
+    if target_token not in lane_index.centerlines:
+        return []
+    hops = int(corridor_config["graph_hops"])
+    max_heading = float(corridor_config["max_edge_heading_error_deg"])
+    max_gap = float(corridor_config["max_edge_endpoint_gap_m"])
+    incoming_options = _enumerate_corridor_chains(
+        lane_index,
+        target_token,
+        "incoming",
+        hops=hops,
+        max_heading_error_deg=max_heading,
+        max_endpoint_gap_m=max_gap,
+        excluded_tokens={source_token},
+    )
+    outgoing_options = _enumerate_corridor_chains(
+        lane_index,
+        target_token,
+        "outgoing",
+        hops=hops,
+        max_heading_error_deg=max_heading,
+        max_endpoint_gap_m=max_gap,
+        excluded_tokens={source_token},
+    )
+    result = []
+    seen = set()
+    for incoming, incoming_edges in incoming_options:
+        for outgoing, outgoing_edges in outgoing_options:
+            key = (tuple(incoming), tuple(outgoing))
+            if key in seen:
+                continue
+            seen.add(key)
+            try:
+                result.append(
+                    _build_corridor_from_chains(
+                        lane_index,
+                        source_token,
+                        target_token,
+                        incoming,
+                        incoming_edges,
+                        outgoing,
+                        outgoing_edges,
+                    )
+                )
+            except ValueError:
+                continue
+    return result
+
+
+def _rear_candidates_v2(
+    actor_id: int,
+    frame: int,
+    subject_projection: Mapping[str, Any],
+    matches_by_actor: Mapping[int, Mapping[int, dict]],
+    corridor: Mapping[str, Any],
+) -> list[dict]:
+    subject_row = matches_by_actor[actor_id][frame]
+    subject_extent = _longitudinal_half_extent(
+        subject_row, float(subject_projection["corridor_heading_rad"])
+    )
+    candidates = []
+    for other_id, rows in sorted(matches_by_actor.items()):
+        if int(other_id) == int(actor_id):
+            continue
+        row = rows.get(frame)
+        if row is None or row.get("lane_token") not in corridor["token_set"]:
+            continue
+        projection = _project_xy(row["xy"], corridor)
+        extent = _longitudinal_half_extent(row, float(projection["heading_rad"]))
+        delta_s = float(projection["s_m"] - subject_projection["s_m"])
+        if delta_s >= 0:
+            continue
+        candidates.append(
+            {
+                "actor_id": int(other_id),
+                "lane_token": str(row["lane_token"]),
+                "center_delta_s_m": delta_s,
+                "bumper_gap_m": abs(delta_s) - subject_extent - extent,
+                "heading_error_deg": math.degrees(
+                    angle_error(float(row["yaw"]), float(projection["heading_rad"]))
+                ),
+                "centerline_distance_m": float(projection["distance_m"]),
+                "target_s_m": float(projection["s_m"]),
+                "row": row,
+            }
+        )
+    candidates.sort(key=lambda value: (-value["center_delta_s_m"], value["actor_id"]))
+    for rank, row in enumerate(candidates, 1):
+        row["nearest_rear_rank"] = rank
+    return candidates
+
+
+def _local_receiver_speed(
+    actor_id: int,
+    frame: int,
+    matches_by_actor: Mapping[int, Mapping[int, dict]],
+    corridor: Mapping[str, Any],
+    frame_times_s: Mapping[int, float],
+    raw_stride: int,
+) -> float | None:
+    rows = matches_by_actor.get(actor_id, {})
+    left = rows.get(frame - raw_stride)
+    right = rows.get(frame + raw_stride)
+    if left is None or right is None:
+        return None
+    if frame - raw_stride not in frame_times_s or frame + raw_stride not in frame_times_s:
+        return None
+    dt = float(frame_times_s[frame + raw_stride] - frame_times_s[frame - raw_stride])
+    if dt <= 0:
+        return None
+    left_s = float(_project_xy(left["xy"], corridor)["s_m"])
+    right_s = float(_project_xy(right["xy"], corridor)["s_m"])
+    return (right_s - left_s) / dt
+
+
+def _public_corridor(corridor: Mapping[str, Any]) -> dict:
+    return {
+        key: value
+        for key, value in corridor.items()
+        if key not in {"centerline", "arc_lengths", "token_set"}
+    }
+
+
+def evaluate_receiver_corridor_v2(
+    *,
+    actor_id: int,
+    pre_rows: list[dict],
+    post_rows: list[dict],
+    matches_by_actor: Mapping[int, Mapping[int, dict]],
+    corridor: Mapping[str, Any],
+    frame_times_s: Mapping[int, float],
+    config: Mapping[str, Any],
+) -> dict:
+    """在一个 corridor 上按每个 raw frame 重新确定最近后车与接收车证据。"""
+    strict = dict(config.get("strict", config))
+    receiver_config = dict(strict.get("receiver", strict))
+    lane_half_width = float(strict.get("lane_half_width_m", 1.75))
+    raw_stride = int(strict.get("subject", {}).get("raw_frame_stride", 5))
+    required = [*pre_rows, *post_rows]
+    pre_frames = {int(row["frame_index"]) for row in pre_rows}
+    post_frames = {int(row["frame_index"]) for row in post_rows}
+    per_frame = []
+    for subject_row in required:
+        frame = int(subject_row["frame_index"])
+        subject_projection = _strict_subject_projection(
+            subject_row, corridor, lane_half_width
+        )
+        rear = _rear_candidates_v2(
+            actor_id, frame, subject_projection, matches_by_actor, corridor
+        )
+        nearest = rear[0] if rear else None
+        per_frame.append(
+            {
+                "frame": frame,
+                "subject_projection": subject_projection,
+                "rear_candidates": rear,
+                "nearest": nearest,
+            }
+        )
+    non_null_ids = [
+        int(item["nearest"]["actor_id"])
+        for item in per_frame
+        if item["nearest"] is not None
+    ]
+    id_counts = Counter(non_null_ids)
+    dominant_id = (
+        min(
+            (actor for actor, count in id_counts.items() if count == max(id_counts.values())),
+            default=None,
+        )
+        if id_counts
+        else None
+    )
+    unique_ids = sorted(set(non_null_ids))
+    switch_frames = []
+    previous = None
+    for item in per_frame:
+        nearest = item["nearest"]
+        value = int(nearest["actor_id"]) if nearest is not None else None
+        if value is not None and previous is not None and value != previous:
+            switch_frames.append(int(item["frame"]))
+        if value is not None:
+            previous = value
+    missing_frames = [
+        int(item["frame"]) for item in per_frame if item["nearest"] is None
+    ]
+    selected_rows = [
+        item
+        for item in per_frame
+        if dominant_id is not None
+        and item["nearest"] is not None
+        and int(item["nearest"]["actor_id"]) == dominant_id
+    ]
+    pre_support = sum(int(item["frame"]) in pre_frames for item in selected_rows)
+    post_support = sum(int(item["frame"]) in post_frames for item in selected_rows)
+    gaps = [float(item["nearest"]["bumper_gap_m"]) for item in selected_rows]
+    heading_errors = [float(item["nearest"]["heading_error_deg"]) for item in selected_rows]
+    centerline_distances = [
+        float(item["nearest"]["centerline_distance_m"]) for item in selected_rows
+    ]
+    speeds = [
+        _local_receiver_speed(
+            dominant_id,
+            int(item["frame"]),
+            matches_by_actor,
+            corridor,
+            frame_times_s,
+            raw_stride,
+        )
+        for item in selected_rows
+    ] if dominant_id is not None else []
+    observed_speeds = [float(value) for value in speeds if value is not None]
+    selected_s = [float(item["nearest"]["target_s_m"]) for item in selected_rows]
+    local_displacement = (
+        max(selected_s) - min(selected_s) if len(selected_s) >= 2 else 0.0
+    )
+    min_gap = float(receiver_config["min_bumper_gap_m"])
+    max_gap = float(receiver_config["max_bumper_gap_m"])
+    max_missing = int(receiver_config["max_missing_required_frames"])
+    last_post = per_frame[-1]["nearest"] if per_frame else None
+    identity_persistent = (
+        len(unique_ids) == 1
+        and len(missing_frames) <= max_missing
+        and last_post is not None
+        and int(last_post["actor_id"]) == dominant_id
+    )
+    intermediate_by_frame = {}
+    for item in per_frame:
+        nearest = item["nearest"]
+        if dominant_id is None:
+            intermediate_by_frame[str(item["frame"])] = []
+            continue
+        selected = next(
+            (row for row in item["rear_candidates"] if int(row["actor_id"]) == dominant_id),
+            None,
+        )
+        intermediate_by_frame[str(item["frame"])] = (
+            [
+                int(row["actor_id"])
+                for row in item["rear_candidates"]
+                if selected is not None
+                and row["center_delta_s_m"] > selected["center_delta_s_m"]
+            ]
+            if selected is not None
+            else []
+        )
+    path_clear = all(not actors for actors in intermediate_by_frame.values())
+    checks = {
+        "receiver_dynamic": bool(observed_speeds)
+        and float(np.median(observed_speeds)) >= float(receiver_config["min_median_longitudinal_speed_mps"])
+        and local_displacement >= float(receiver_config["min_local_displacement_m"]),
+        "receiver_same_direction": bool(observed_speeds)
+        and min(observed_speeds) > 0.0
+        and bool(heading_errors)
+        and max(heading_errors) <= float(receiver_config["max_heading_error_deg"]),
+        "receiver_identity_persistent": identity_persistent,
+        "receiver_nearest_rear_persistent": identity_persistent,
+        "path_clear": path_clear,
+        "receiver_established_on_target_stream": (
+            pre_support >= int(receiver_config["min_raw_pre_support"])
+            and bool(centerline_distances)
+            and max(centerline_distances)
+            <= float(receiver_config["max_centerline_distance_m"])
+        ),
+        "receiver_gap_valid": bool(gaps) and all(min_gap <= gap <= max_gap for gap in gaps),
+    }
+    reasons = []
+    if len(unique_ids) > 1:
+        reasons.append("RECEIVER_IDENTITY_SWITCH")
+    if not identity_persistent or pre_support < int(receiver_config["min_raw_pre_support"]) or post_support < int(receiver_config["min_raw_post_support"]) or len(selected_rows) < int(receiver_config["min_total_non_null_support"]):
+        reasons.append("RECEIVER_SUPPORT_INSUFFICIENT")
+    if observed_speeds and min(observed_speeds) <= 0.0:
+        reasons.append("RECEIVER_WRONG_DIRECTION")
+    elif observed_speeds and not checks["receiver_same_direction"]:
+        reasons.append("RECEIVER_WRONG_DIRECTION")
+    elif not observed_speeds or not checks["receiver_dynamic"]:
+        reasons.append("RECEIVER_NOT_DYNAMIC")
+    if not checks["receiver_established_on_target_stream"]:
+        reasons.append("RECEIVER_NOT_ESTABLISHED_ON_TARGET_STREAM")
+    if not checks["receiver_gap_valid"]:
+        reasons.append("RECEIVER_GAP_INVALID")
+    if not checks["path_clear"]:
+        reasons.append("PATH_NOT_CLEAR")
+    ordered = ordered_strict_v2_reasons(reasons)
+    status = "PASS" if not ordered else (
+        "ABSTAIN"
+        if ordered[0] == "RECEIVER_SUPPORT_INSUFFICIENT"
+        else "FAIL"
+    )
+    return {
+        "status": status,
+        "reasons": ordered,
+        "checks": checks,
+        "receiver": {
+            "selected_actor_id": dominant_id if len(unique_ids) == 1 else None,
+            "actor_id_by_frame": [
+                int(item["nearest"]["actor_id"]) if item["nearest"] is not None else None
+                for item in per_frame
+            ],
+            "nearest_rear_rank_by_frame": [
+                int(item["nearest"]["nearest_rear_rank"])
+                if item["nearest"] is not None
+                else None
+                for item in per_frame
+            ],
+            "gap_m_by_frame": [
+                float(item["nearest"]["bumper_gap_m"])
+                if item["nearest"] is not None
+                else None
+                for item in per_frame
+            ],
+            "longitudinal_speed_mps_by_frame": speeds,
+            "heading_error_deg_by_frame": [
+                float(item["nearest"]["heading_error_deg"])
+                if item["nearest"] is not None
+                else None
+                for item in per_frame
+            ],
+            "identity_switch_frames": switch_frames,
+            "missing_frames": missing_frames,
+            "intermediate_actor_ids_by_frame": intermediate_by_frame,
+            "identity_persistent": identity_persistent,
+            "nearest_rear_persistent": identity_persistent,
+            "path_clear": path_clear,
+            "pre_support_count": pre_support,
+            "post_support_count": post_support,
+            "total_non_null_support": len(selected_rows),
+            "local_displacement_m": local_displacement,
+            "median_longitudinal_speed_mps": (
+                float(np.median(observed_speeds)) if observed_speeds else None
+            ),
+        },
+        "per_frame": [
+            {
+                "frame": int(item["frame"]),
+                "nearest_rear": (
+                    {
+                        key: value
+                        for key, value in item["nearest"].items()
+                        if key != "row"
+                    }
+                    if item["nearest"] is not None
+                    else None
+                ),
+                "all_rear_actor_ids": [
+                    int(row["actor_id"]) for row in item["rear_candidates"]
+                ],
+            }
+            for item in per_frame
+        ],
+        "corridor": _public_corridor(corridor),
+    }
+
+
+def evaluate_receiver_across_corridors_v2(
+    *,
+    actor_id: int,
+    pre_rows: list[dict],
+    post_rows: list[dict],
+    matches_by_actor: Mapping[int, Mapping[int, dict]],
+    lane_index,
+    source_token: str,
+    target_token: str,
+    frame_times_s: Mapping[int, float],
+    config: Mapping[str, Any],
+) -> dict:
+    """评估所有 corridor；不同 PASS receiver 或纵向次序即明确 ABSTAIN。"""
+    corridors = enumerate_receiver_corridors_v2(
+        lane_index, source_token, target_token, config
+    )
+    if not corridors:
+        return {
+            "status": "ABSTAIN",
+            "reasons": ["MAP_GEOMETRY_UNAVAILABLE"],
+            "checks": {"corridor_unambiguous": False},
+            "receiver": {},
+            "candidate_corridor_results": [],
+        }
+    evaluations = [
+        evaluate_receiver_corridor_v2(
+            actor_id=actor_id,
+            pre_rows=pre_rows,
+            post_rows=post_rows,
+            matches_by_actor=matches_by_actor,
+            corridor=corridor,
+            frame_times_s=frame_times_s,
+            config=config,
+        )
+        for corridor in corridors
+    ]
+    passes = [row for row in evaluations if row["status"] == "PASS"]
+    if passes:
+        reference = passes[0]
+        reference_receiver = reference["receiver"].get("selected_actor_id")
+        reference_sequence = reference["receiver"].get("actor_id_by_frame")
+        equivalent = all(
+            row["receiver"].get("selected_actor_id") == reference_receiver
+            and row["receiver"].get("actor_id_by_frame") == reference_sequence
+            for row in passes
+        )
+        if not equivalent:
+            return {
+                "status": "ABSTAIN",
+                "reasons": ["AMBIGUOUS_RECEIVER_CORRIDOR"],
+                "checks": {"corridor_unambiguous": False},
+                "receiver": reference["receiver"],
+                "candidate_corridor_results": [
+                    {
+                        "status": row["status"],
+                        "primary_reason": row["reasons"][0] if row["reasons"] else None,
+                        "receiver_actor_id": row["receiver"].get("selected_actor_id"),
+                        "corridor": row["corridor"],
+                    }
+                    for row in evaluations
+                ],
+            }
+        selected = reference
+        selected["checks"] = {**selected["checks"], "corridor_unambiguous": True}
+    else:
+        selected = min(
+            evaluations,
+            key=lambda row: (
+                -int(row["receiver"].get("total_non_null_support", 0)),
+                -int(row["receiver"].get("pre_support_count", 0)),
+                -int(row["receiver"].get("post_support_count", 0)),
+                _STRICT_V2_REASON_RANK[row["reasons"][0]] if row["reasons"] else len(_STRICT_V2_REASON_RANK),
+                str(row["corridor"]["ordered_tokens"]),
+            ),
+        )
+        selected["checks"] = {**selected["checks"], "corridor_unambiguous": len(evaluations) == 1}
+    selected["candidate_corridor_results"] = [
+        {
+            "status": row["status"],
+            "primary_reason": row["reasons"][0] if row["reasons"] else None,
+            "receiver_actor_id": row["receiver"].get("selected_actor_id"),
+            "corridor": row["corridor"],
+        }
+        for row in evaluations
+    ]
+    return selected
 
 
 def _edge_geometry(lane_index, left: str, right: str) -> dict:
