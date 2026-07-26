@@ -38,7 +38,26 @@ monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 1
   代码与独立测试；
 - **已知问题：** high-recall 示例中的 `abs(diff)` 不能证明横向距离单调，宽松 fallback 也不进入
   formal gate；
-- **研究合同：** [`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
+- **历史研究合同：**
+  [`archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md`](archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md)；
+- **当前状态：** 只读历史参考，cut-in 路线已冻结，不再作为活跃依赖。
+
+## 动态重建新路线（计划中，尚未安装）
+
+只有用户开放资源且 `DR-M2-ENV-ASSET-01` 通过 preflight 后，才按
+[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 安装：
+
+| 项目 | 预期路径 | 当前用途 | 当前状态 |
+|---|---|---|---|
+| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | exact reproduction 主基线 | `pending` |
+| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | AD-GS depth prior | `pending` |
+| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | object/sky pseudo masks | `pending` |
+| DGGT | `/root/autodl-tmp/third_party/dggt` | inference-only 前馈对照 | `pending` |
+| VAD-GS | `/root/autodl-tmp/third_party/VAD-GS` | 补密/可见性方向条件对照 | `pending` |
+| DrivingEditor | `/root/autodl-tmp/third_party/DrivingEditor` | 编辑能力参考/条件运行 | `pending` |
+
+每项安装后必须登记 upstream commit、submodule、license、checkpoint SHA-256、conda explicit、pip freeze 与
+本地 patch。计划中的版本号不能提前写成“当前环境事实”。
 
 ## 不入 Git 的运行产物
 
@@ -50,6 +69,7 @@ monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 1
 | `/root/autodl-tmp/cache/` | 投影 / replay cache |
 | `/root/autodl-tmp/weights/` | SVD、CoTracker 等权重 |
 | `/root/autodl-tmp/envs/motionproj` | Conda 环境（可用 `requirements.lock.txt` 重建） |
+| `/root/autodl-tmp/envs/{adgs,adgs-dpt,adgs-sam,dggt}` | 新路线隔离环境；当前均未创建 |
 
 轻量 run 摘要已归档到 `docs/run_manifests/`，供对照 commit 与 resolved config。正式 run ID 不得复用或覆盖，
 但这不要求永久保留每个 checkpoint、candidate 视频或中间 tensor；实际驻留范围与受保护人工材料以

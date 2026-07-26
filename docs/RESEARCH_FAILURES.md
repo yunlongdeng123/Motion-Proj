@@ -1,6 +1,6 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-07-25
+> **最后更新**：2026-07-26
 > **当前范围**：V1–V7.1 防重复约束、三次 N1 reject 根因、receiver-centric 第四版
 > 预注册约束与工程卡点。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
@@ -93,6 +93,92 @@ run 目录创建之前。不得删除失败尝试或把它统计成 research rej
 - map index 改为一次只缓存一个 location，calibration/evaluation 按 location 排序；
 - `sample.json`、`instance.json` 改为 ijson 流式最小字段投影，scene builder 复用同一 metadata source；
 - scene batch 冻结为 32；不得通过杀死用户编辑器进程、修改容器上限或跳过地图证据来“解决”。
+
+### N1-F16：负对照配置契约缺项导致首个正式 K4 工程失败
+
+**失败事实**
+
+- 失败 run：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-01/v71_n1-event-cutin-01__receiver-cutin-v1__s0__20260725T170948229629Z__46186120`；
+- 失败代码提交：`f5c9bbe4c819abce42e1cca0b8800e16a77af680`；
+- 正式日志：
+  `/root/autodl-tmp/runs/event_first/n1k4_formal_f5c9bbe.log`，SHA256
+  `b9ac6d3cce2e731f16aad7bc6a068eaf09c54439ad654bb0a3a9d0c58f63a487`；
+- calibration 已运行，进入首个 formal evaluation batch 后，在构造 same-actor 30-frame
+  lane-keeping negative control 时抛出 `KeyError: min_median_speed_mps`；
+- `lane_keeping_features` 实际接收 `kinematics_control`，但该字段只写在 `cutin` 下；同一调用下一步还会需要
+  `max_acceleration_mps2`，原 YAML 也遗漏；
+- 失败发生在 `event_pool.json`、`summary.json` 与任何研究裁决写入前。因此它是工程失败，不是机器 gate
+  reject，更不是第四次人工评测结论；`n2_authorized=false`。
+
+**保留与修复**
+
+- 旧目录不删除、不改造成成功 run；写入结构化 `failure.json` 与 `FAILED`，原 `RUNNING` 被保留为
+  `RUNNING.invalidated`；
+- 修复提交 `8581d4dcd1bf9a4f92b426c601e1149c804afc5a` 同时补入
+  `kinematics_control.min_median_speed_mps=0.5` 和 `max_acceleration_mps2=12.0`；
+- 新增启动前 `_validate_config_contract`，在加载 nuScenes metadata 前检查 delayed runtime dependency、
+  `receiver_cutin` 审核 schema 与 `never_start_n2_from_this_run=true`；
+- 新增 post-run-directory 异常处理：后续未捕获异常自动写 `FAILED/failure.json`、清除活动
+  `RUNNING`，并强制 `n2_authorized=false`；
+- 27 项相关测试通过后才从新 run ID 完整重跑。
+
+**防重复**
+
+1. development pilot 必须覆盖至少一个 positive actor 的 negative-control 搜索；“positive=1、
+   negative=0”不能被误读为该分支已执行；
+2. 所有按候选稀疏触发的配置依赖必须在启动时校验，不能等全量运行数分钟后才由 `KeyError` 暴露；
+3. 任何残留 `RUNNING` 的异常目录必须先结构化归档，再开始新 run；禁止覆盖、续跑或统计为 research
+   reject；
+4. 修复配置/异常落盘不授权改变冻结 K4 阈值、评估 scene 或候选排序。
+
+### N1-F17：重复扫描 583 MB 标注文件产生 cgroup 页缓存压力与外部 SIGKILL
+
+**失败事实**
+
+- 失败 run：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-01/v71_n1-event-cutin-01__receiver-cutin-v1__s0__20260725T171746938858Z__5b1634e3`；
+- 失败代码提交：`8581d4dcd1bf9a4f92b426c601e1149c804afc5a`；
+- 正式日志：
+  `/root/autodl-tmp/runs/event_first/n1k4_formal_8581d4d.log`，SHA256
+  `7a89e5f5ab88c53a6d9531dedc56a9db302cef8dab144ade7da75a91f3c09191`；
+- calibration 与前 96/685 个 evaluation scenes 已执行，随后 shell 报 `Killed`；没有
+  `event_pool.json`、`summary.json` 或研究裁决；
+- 本层 cgroup `memory.max=2147483648`，事件计数仍为 `oom=0`、`oom_kill=0`，因此不能把信号来源伪写成
+  kernel OOM；终态登记为 `external_sigkill_under_cgroup_memory_pressure`；
+- `sample_annotation.json` 大小为 `583417244` bytes。失败后进程已消失时，
+  `memory.current=1704148992`、file cache=`639545344` bytes；
+- 对该只读标注文件执行 `POSIX_FADV_DONTNEED` 后，在没有停止编辑器/Jupyter/TensorBoard 等用户服务的前提下，
+  `memory.current` 立即降为 `1169817600`、file cache 降为 `102739968` bytes。
+
+**根因边界**
+
+证据支持以下工程推断：每个 32-scene batch 都顺序扫描 583 MB 标注表，读页长期计入 2 GiB cgroup；
+进程 RSS、既有服务和文件页缓存共同逼近硬上限，外部管理层随后发送 SIGKILL。由于无内核日志权限且
+`oom_kill=0`，不能声称已证明具体 killer；但页缓存释放的前后差值直接证明了主要可控压力源。
+
+**修复与复验**
+
+- 修复提交 `f13eb0f1e39b608de1c5e698cd678c2dfd8365a4`；
+- 所有大型顺序输入在读取前标记 `POSIX_FADV_SEQUENTIAL`，读取后标记
+  `POSIX_FADV_DONTNEED`；
+- per-scene JSON 改为 `json.load(file_handle)`，不再由 `read_text` 同时常驻字符串和解析对象；
+- 每批显式删除 dense scene payload、执行 `gc.collect` 与 glibc `malloc_trim`；
+- 每批日志新增 process RSS 与 cgroup current；正式启动若缺 POSIX page-cache control 则 fail closed；
+- 30 项相关测试通过。新正式 run 在 96 scenes 的同一死亡点记录
+  RSS `602673152`、cgroup current `1707110400` bytes，且继续运行，证明修复覆盖了原路径；
+- 成功 run 最终完成 685/685 scenes；最后一批 RSS `510734336`、cgroup current
+  `1612763136` bytes，`oom=0`、`oom_kill=0`。它以独立 run ID
+  `...T173015103731Z__5b1634e3` 和唯一 `AWAITING_HUMAN_REVIEW` 结束。
+
+**防重复**
+
+1. Python RSS 不是 2 GiB 容器的完整内存分母；必须同时记录 anon、file cache、cgroup current 与
+   `memory.events`；
+2. 流式解析只限制 Python 对象，不自动释放内核页缓存；反复全表扫描必须有 cache-pressure 策略；
+3. 不得以杀死用户服务、跳过正式场景、降低地图分辨率或减少校准标签来换取“成功”；
+4. SIGKILL 无法触发 Python exception handler，因此监控器必须把残留 `RUNNING` 另行结构化封存；
+5. 该修复只改变 I/O/内存生命周期，不改变 K4 候选、阈值、排序、scene split 或人工门槛。
 
 ### 第四版 calibration 冻结结果与禁止矩阵
 
@@ -838,6 +924,111 @@ certificate/evaluator 与 run-contract 基础设施。
 - 因 recall 达标而隐藏 precision fail，或把 UNKNOWN 排除后重算；
 - 在当前配方上继续 H2/H3/scale。
 
+## N1 receiver-centric cut-in final：第四轮后新增防重复项（2026-07-26）
+
+### N1-F18：receiver branch merge 的 13/13 历史假阳性不能靠阈值微调挽回
+
+第四版旧 parent 的 18 个 machine candidates 中有 13 个 receiver-branch merge；第四轮人工裁决表明这类
+历史 branch-merge 候选均为 `FALSE_POSITIVE`。因此 branch topology、`target_incoming_count`、shared successor
+或 token change 永远不能单独证明 cut-in。final v2 把该类别固定为
+`ABSTAIN/UNSUPPORTED_BRANCH_MERGE_MODE`；不得为了候选数量重新放宽它。
+
+### N1-F19：support-count 不能替代完整 receiver identity 时序
+
+K4-012 暴露了“support 数量足够”仍可能跨 raw 帧切换接收车身份的问题。legacy fixture 的 `1→38` 与 v2
+raw map 重放中观测到的 `9→1→9` 是不同窗口/枚举证据，二者都不能被静默等同为连续 receiver。final v2
+要求 required raw frame 全窗唯一 non-null identity、last-post anchor 和每帧 rank/gap/path-clear；任一身份
+切换必须 FAIL 或 ABSTAIN，不能被总 support count 抵消。
+
+### N1-F20：弯道 map jitter 的 post heading 不能借由宽松窗口穿透
+
+K4-015 证明 source/target 局部不平行或 post heading 过大时，几何横向收敛可以伪装成切入。final v2 使用
+local parallel overlap、raw post-heading、累计 yaw 和 raw-only provenance；它不是针对 scene/token 的黑名单。
+禁止为了保留 K4-015 或增加 PASS 数而放宽这些 hard gate。
+
+### N1-F21：CAM_FRONT 的五帧截图不能承担角色/时序的完整证明
+
+单相机可见性和五帧页面截断无法可靠展示 SUBJECT、RECEIVER、source/target corridor 的完整 raw 窗口。
+审核 V2 因而以逐 raw-frame topdown、2 Hz signals、actor-ID switch 标注和固定 camera-unavailable 警告为主；
+相机只作可选证据。看不清必须 `UNCERTAIN`，不得肉眼猜身份或通过下载未授权传感器补洞。
+
+### N1-F22：final v2 不是旧阈值的第五次微调
+
+本轮只吸收第四轮已完成的校准信息，变更的是事件语义和证据链：parallel-only subject body entry、独立
+receiver 全时序、raw 2 Hz hard evidence、三态 first-failure、streaming worker 与 blind/debug 分离。K4 只做
+固定 regression；Resource Contract V1 在任何 final scene 前失败，用户复开后的 V2 已按 N1-F25 修正为
+675 scenes 并完整运行，但同样没有用于调参。后续若研究 branch merge 或新资产，必须是新的任务 ID、
+预注册与 scene-disjoint 评估。
+
+### N1-F23：共享 cgroup 的 start 合同是研究终止门，而非可绕过的工程告警
+
+final formal 在 clean commit `7104f5c` 的 preflight 已将 runner 自身 RSS 降至 `20,705,280` bytes，仍记录
+`cgroup_memory_current_bytes=1,523,929,088`，超过冻结上限 `1,350,000,000`。它在任何 evaluation scene 前
+安全失败；独立裁决冻结证据并以 `REJECTED/stop_nuscenes_cutin_mining` 结束。development override 的 32/96
+smoke、清页缓存或 K4 回归均不能替代正式 start 合同。禁止杀死 Cursor/Jupyter/TensorBoard 等用户服务、修改
+正式阈值、截断正式 split（当时 expected 常量误写为 669，见 N1-F25）或把这次结果说成“nuScenes 没有
+cut-in”；`n2_authorized=false` 保持不变。
+
+**2026-07-26 用户复开授权**
+
+上述 `REJECTED` 仍是 Resource Contract V1 下不可改写的历史裁决，但不再代表任务永久停滞。用户随后显式
+扩大容器内存并授权继续本次 final：现场复核 `memory.max=128,849,018,880` bytes（120 GiB），原
+`2,147,483,648` bytes（2 GiB）资源前提已改变。因此必须保留失败 parent 与独立拒绝裁决，同时使用新的
+Resource Contract V2、全新 config fingerprint 和不可复用 run ID 恢复 scene-disjoint formal
+（经 N1-F25 确认为 675 scenes）；不得覆盖或续写
+V1 失败目录，也不得把 V2 成功倒写成 V1 当时没有失败。
+
+### N1-F24：内存不足时停止并等待资源授权，不继续死磕
+
+**新执行规则**
+
+1. 任何正式或开发任务若触发启动/运行 stop 阈值、`RC=137`、SIGKILL，或观察到持续逼近 cgroup
+   `memory.max`，立即停止启动新 batch，并尽最大可能写入结构化 `FAILED/failure.json`、最后完成 scene、
+   process RSS、cgroup current、anon/file cache 与 `memory.events`；
+2. 不通过反复重跑、杀死 Cursor/Jupyter/TensorBoard 等用户服务、缩短正式 split、降低证据质量、跳过
+   audit、修改研究阈值或清理不属于本任务的缓存来争抢资源；
+3. 把失败点、最低所需资源和恢复命令回报用户，然后等待用户开放资源；没有新的明确授权时不得自行恢复；
+4. 用户开放资源后，先记录新的 `memory.max/current` 和授权时间，版本化 resource contract，使用新 run ID
+   从冻结研究配置重新运行。资源合同变化只允许调整资源阈值，不允许调整 cut-in taxonomy、hard gate、
+   calibration/evaluation split、抽样或人工聚合门槛；
+5. 资源暂停与研究拒绝分开登记。未读取 prospective evaluation scene 的资源失败不能被写成方法精度失败，
+   后续在新授权下完成的结果也不能删除或覆盖先前工程失败证据。
+
+### N1-F25：final 的 669-scene 预期是 split 算术错误，不是 evaluation 集合定义
+
+Resource Contract V2 的首次 clean formal run：
+`/root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-FINAL-01/v71_n1-event-cutin-final-01__receiver-cutin-final-v1__s0__20260726T142634031503Z__5c8c65d7`
+在 K4 regression 通过后、任何 evaluation scene 或 candidate 读取前 fail closed，错误为
+`final evaluation scene 数不匹配: 675 != 669`。
+
+独立复算表明：nuScenes official `train` 为 700 scenes；冻结的 42 个 calibration scenes 中，25 个属于
+`train`、17 个属于 `val`，且没有 split 外 scene。因此 scene-disjoint evaluation 的确定数量是
+`700 - 25 = 675`。`_resolve_evaluation_scenes` 已正确执行
+`set(train) - set(all_calibration_scenes)`；错误只在 YAML 的 `expected_scene_count` 常量把不属于 train 的
+calibration scene 也错误计入了减法。
+
+合法修复仅为把 Resource Contract V2 配置中的 assertion 从 669 改为 675，并生成新 config fingerprint、
+新 clean commit 和新 run ID。不得借此增删 calibration scene、显式挑选 evaluation scene、查看 candidate 后
+改 split，或修改 taxonomy、strict gate、K4、抽样与人工门槛。失败 run 必须保留为工程契约失败，不能统计成
+research reject。
+
+### N1-F26：strict v2 在 675 scenes 上只有 1 个 PASS，不能靠人审单例或放宽规则扩池
+
+Resource Contract V2 的 clean formal run：
+`/root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-FINAL-01/v71_n1-event-cutin-final-01__receiver-cutin-final-v1__s0__20260726T142941598714Z__883fae9a`
+在 commit `beee1de`、seed 0、config fingerprint
+`883fae9a6514c0bff5bba8bcaf81a22c79e6d719586221596a7d4b5364c337da` 上完成 675/675 scenes。
+
+结果为 `ABSTAIN=1,556`、`FAIL=200`、`PASS=1`，唯一 PASS 只覆盖 1 scene；冻结 machine-readiness 要求
+至少 3 candidates / 3 scenes，故 parent 以
+`REJECTED / stop_nuscenes_cutin_mining_too_sparse` 结束。K4、raw-only 和资源合同检查均通过，峰值 batch
+process RSS 为 `337,154,048` bytes、cgroup current 为 `4,556,898,304` bytes；这次拒绝不再是资源失败。
+
+独立稀疏终局人工包保留唯一 PASS 和 3 条 diagnostic，但人工结果不能改变数量门失败：即使唯一 PASS 被判为
+TP，仍只有 1 TP / 1 scene，低于 sparse 的 3/3。禁止为了形成池而把 ABSTAIN 提升为 PASS、恢复
+`receiver_branch_merge`、放宽 raw/parallel/receiver 时序门、事后改 scene 或把单例人工真实性外推为总体
+precision。准确结论是“当前冻结 strict v2 的 prospective pool 过稀”，不是“nuScenes 没有 cut-in”。
+
 ## 4. 跨路线必须保留的原则
 
 1. 先证明监督/比较对象存在，再训练或扩量。
@@ -861,3 +1052,106 @@ certificate/evaluator 与 run-contract 基础设施。
 - [ ] human verdict 是否只由用户/指定评审者填写？
 - [ ] run 是否有唯一 ID、resolved config、fingerprint、metrics、summary 与终态标记？
 - [ ] 哪个单卡门禁失败时停止，什么条件才允许 scale？
+
+## 6. 2026-07-26 路线转向新增失败与防重复项
+
+### PIVOT-F01：nuScenes cut-in 没有可验证的召回率分母
+
+**观察**
+
+nuScenes 官方公开的是场景、样本、对象实例、类别、属性、3D 框、传感器与地图等结构；`scene.description`
+是自由文本，不是事件级 cut-in 真值。官方没有发布 cut-in 场景占比、逐事件标签或可直接用于召回率计算的全集分母。
+四轮挖掘和最终 675-scene prospective run 最多只能测量“冻结规则产出的候选质量”，不能测量“数据集中所有
+cut-in 被召回了多少”。
+
+**最终证据**
+
+- `N1-F26`：strict v2 在 675 个 scene 上只有 `1 PASS / 1 scene`；
+- 最终人工稀疏包即使把唯一 PASS 判为真阳性，也仍低于预注册的 `3 candidates / 3 scenes`；
+- 该结果不能外推为“nuScenes 没有 cut-in”，也不能用事后放宽规则伪造召回。
+
+**裁决**
+
+`cut-in mining` 状态固定为 `rejected / frozen`。以后 cut-in 只允许作为已经具备重建与编辑能力后的可选演示，
+不再承担数据集入口、方法定义、训练前置条件或论文成立条件。
+
+**解除条件**
+
+只有新的、独立的数据源提供事件级真值及明确分母，或新的任务本身不需要宣称事件召回率，才允许创建全新任务 ID
+重新讨论；不得恢复当前 strict-v2 阈值调参。
+
+### PIVOT-F02：贡献漂移——工程系统吞噬了重建与编辑研究
+
+**观察**
+
+过去路线的主要投入逐步变成事件挖掘、地图匹配、接收车身份、规则校准、候选审核与资源合同。它们改善了审计性，
+却没有自然回答动态对象几何、连续运动表示、遮挡/去遮挡、反事实轨迹编辑或下游感知一致性。
+
+**边界**
+
+这不否定已形成的 WorldState、typed label、run contract、审计与人工审核基础设施；它只否定把“更好的 cut-in
+挖掘器”作为 3DGS/4D 重建论文的核心贡献。
+
+**后续约束**
+
+新路线必须先复现公开强基线，再通过重建/编辑压力测试选择创新点。数据工程模块只能服务于冻结实验，不得重新成为
+论文主任务。每个里程碑都必须说明它直接回答的重建或编辑问题。
+
+### PIVOT-F03：未完成 exact reproduction 前禁止集成式“改进”
+
+**观察**
+
+`RF-05/06/08/09/16/18` 与 `V7-RISK-03/04/06/07/10/16/17` 共同表明：输入、状态、比较对象、覆盖率和真值定义
+未冻结时，模块堆叠会把工程可运行误当成方法收益。AD-GS 的公开 nuScenes 协议提供了固定 scene、帧区间、预处理、
+训练和评测入口，适合作为新的事实锚点。
+
+**禁令**
+
+在 AD-GS exact reproduction 门禁通过前，不得：
+
+- 合并 Motion-Proj/StreetGS/OccGS 模块；
+- 加 occupancy、物理约束、扩散补全、感知损失或轨迹编辑；
+- 更换为自选事件场景、调低分辨率后对齐论文指标或只展示成功帧；
+- 把兼容性补丁、预处理修复或运行成功表述为方法改进。
+
+任何 unavoidable compatibility patch 必须独立提交、最小化、附 upstream diff 与消融；原始基线结果必须保留。
+
+### PIVOT-F04：不能把“可见性建模”泛化成未观测背景已经解决
+
+**观察**
+
+AD-GS 的双向时间可见性用于动态对象生命周期和已观察运动建模；VAD-GS（CVPR 2026）的 visibility-aware
+densification 已覆盖稀疏观测下的几何补密；DrivingEditor 支持对象删除/添加；Real2Sim 进一步展示对象级编辑与
+物理交互。这意味着“增加一个 visibility 模块”或“支持平移对象”本身已经不足以构成新意。
+
+**仍未闭合的问题**
+
+反事实轨迹编辑会同时制造原位置去遮挡、新位置遮挡、跨相机深度排序和证据外外观。当前项目只有在下列内容形成
+联合、可验证方案时才可提出方法 claim：
+
+- 编辑诱发的显式可见性重计算；
+- 未观测区域的真实性/置信度与拒绝机制；
+- 跨视角、跨时间一致的背景恢复；
+- 目标区预期变化与非目标区感知保持。
+
+**防重复**
+
+创新选择前必须把 AD-GS、VAD-GS、DrivingEditor、DGGT/ReconDrive 和当时最新工作重新做一次代码可用性与
+claim 边界审计；不得把已有 visibility-aware densification 或基本对象变换重新命名为贡献。
+
+### PIVOT-F05：资源不足时研究停机规则跨路线继续生效
+
+`N1-F24` 是项目级规则，不属于 cut-in 专属逻辑。本轮 cgroup 为 `memory.max=2,147,483,648` bytes，轻量元数据
+审计后 `memory.current` 一度达到 `2,129,526,784` bytes，因此立即停止 Python 扫描、conda 求解、下载、
+预处理和训练，只继续轻量文本/文件操作。后续任何新路线任务遇到相同条件时，必须保存失败/现场证据并等待用户开放
+资源；不得反复重跑、杀用户服务或偷偷缩减正式协议。
+
+## 7. 新路线启动前附加检查
+
+- [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
+- [ ] AD-GS exact reproduction 是否已经通过冻结门禁？
+- [ ] 是否把 upstream 原始结果与 compatibility patch 结果分开？
+- [ ] 是否对 VAD-GS 等已公开的 visibility/completion 工作做 novelty 边界核对？
+- [ ] 反事实无真值指标是否有真实 held-out/pseudo-hole 证据，而不是自洽规则？
+- [ ] 是否同时评估目标区变化、非目标区保持、几何/时序一致性和下游感知？
+- [ ] 遇到内存/GPU不足时是否按 `N1-F24/PIVOT-F05` 停机并等待授权？

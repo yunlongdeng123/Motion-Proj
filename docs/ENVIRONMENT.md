@@ -1,121 +1,181 @@
-# Motion-Proj 运行环境速记
+# Motion-Proj 运行环境
 
-本文件记录 Motion-Proj 项目的 conda 环境与服务器关键路径，方便后续会话快速接续。
-当前研究状态与实验授权只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。
+- 更新时间：2026-07-26
+- 当前事实源：本文件记录机器/路径；研究授权只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
+- 当前资源合同：无 GPU，cgroup 内存上限 2 GiB
+- 新路线环境：尚未安装
 
-## 1. 环境激活
+## 1. 当前资源
 
-环境建在数据盘（系统盘可写层仅 30G，不够放 cache/checkpoint）：
+2026-07-26 现场：
+
+```text
+cgroup memory.max     2,147,483,648 B
+metadata audit peak   2,129,526,784 B
+memory.events         oom 0 / oom_kill 0
+GPU                   当前未开放；不以历史 4090 配置推断本轮可用
+data disk             128G total / 62G used / 67G avail / 49%
+```
+
+当前只允许轻量文本、Git 和精确文件操作。禁止 conda 求解、权重下载、tar 全量扫描、预处理、训练、推理和 GPU
+测试。任何持续接近 `memory.max`、RC137、SIGKILL 或 OOM 都按 `N1-F24/PIVOT-F05` 停机并等待用户。
+
+## 2. 现有环境
+
+环境都在数据盘，禁止混装：
+
+| 环境 | 路径 | 大小约 | 用途/状态 |
+|---|---|---:|---|
+| motionproj | `/root/autodl-tmp/envs/motionproj` | 7.8G | 主仓库轻量审计与测试，保留 |
+| drivestudio | `/root/autodl-tmp/envs/drivestudio` | 7.0G | 历史 StreetGS/OccGS，保留 |
+| resim | `/root/autodl-tmp/envs/resim` | 6.4G | 历史 ReSim V6，非活跃 |
+
+主仓库命令的标准激活：
 
 ```bash
-# Motion-Proj 主环境（审计 / CoTracker / 本仓库测试）
+source /root/miniconda3/etc/profile.d/conda.sh
 conda activate motionproj
-# 等价于
-conda activate /root/autodl-tmp/envs/motionproj
+```
 
-# ReSim C1（V6）独立环境——推理/训练用，勿与 motionproj 混装
-conda activate /root/autodl-tmp/envs/resim
+DriveStudio 历史环境：
 
-# OccGS / DriveStudio（V7）独立环境——禁止往 motionproj/resim 里混装
+```bash
+source /root/miniconda3/etc/profile.d/conda.sh
 conda activate /root/autodl-tmp/envs/drivestudio
 export CUDA_HOME=/usr/local/cuda-11.8
-export PATH=$CUDA_HOME/bin:$PATH
 export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
 ```
 
-- Python: 3.10（`motionproj` / `resim`）；DriveStudio 为 Python 3.9
-- `motionproj` 路径: `/root/autodl-tmp/envs/motionproj`（约 7.8G）
-- `resim` 路径: `/root/autodl-tmp/envs/resim`（约 6.4G；`torch 2.4.0+cu121` + vendored SAT）
-- `drivestudio` 路径: `/root/autodl-tmp/envs/drivestudio`（约 6.8G；`torch 2.1.2+cu118` + gsplat 1.3.0 / pytorch3d 0.7.5 / nvdiffrast 0.4.0）
-- `envs_dirs` 已注册 `/root/autodl-tmp/envs`，故可直接按名 `motionproj` 激活；`resim` / `drivestudio` 建议用绝对 `-p` 路径激活。
-- ReSim V6 已关闭；源码与环境可保留，但 CogVideoX checkpoint 已作为可重建载荷清理。历史恢复信息见
-  [`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)。
-- DriveStudio 代码: `/root/autodl-tmp/third_party/drivestudio`；E0 历史清单见
-  [`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)。
-- 数据盘 128G **不可扩容**；可用空间硬门槛 ≥30 GiB，训练/大批候选中间产物预算见
-  [`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md) §9。
-- 装包一律走镜像：pip=`mirrors.aliyun.com`，torch wheels=`mirrors.aliyun.com/pytorch-wheels`，conda=`mirrors.tuna.tsinghua.edu.cn`；**不要**用 `download.pytorch.org` / `pypi.org`。
+历史细节：
 
-## 2. 硬件与底座
+- ReSim V6：[`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)
+- OccGS E0：[`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)
+- 当前保留规则：[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)
 
-- GPU: 单卡 RTX 4090 24GB（sm_89）
-- PyTorch: `2.4.1+cu121`，torchvision `0.19.1`，torchaudio `2.4.1`
-- 加速算子: `xformers==0.0.28.post1`，`flash-attn==2.6.3`（cu123/torch2.4/cp310/abiFALSE 预编译 wheel）
-- 三者在 bf16 下已实测可用（matmul / flash_attn_func / memory_efficient_attention 均通过）
+## 3. 新路线计划环境
 
-## 3. 已安装的主要包
+只有用户开放资源并通过 `DR-M2-ENV-ASSET-01` 后才创建：
 
-- 扩散训练栈: diffusers 0.31.0（注: 必须用 0.31.0，0.38 在 torch2.4+flash-attn 下导入 SVD 会因 attention_dispatch 的 FA3 schema 报错）, transformers 4.46.3, accelerate 1.14, peft 0.19.1, safetensors, einops, timm, bitsandbytes, omegaconf, sentencepiece, ftfy
-- 感知（no-grad/离线用）:
-  - 光流: torchvision 内置 RAFT（`from torchvision.models.optical_flow import raft_large`），无额外依赖
-  - 深度: Depth-Anything V2 → 通过 transformers + timm 加载（首次需联网下权重）
-  - 2D 检测/跟踪: ultralytics 8.4 + lap（ByteTrack 类）
-  - 几何/warp 辅助: kornia 0.8.2
-  - 3D 框 / ego pose: V1 直接用 nuScenes GT 标注
-- 数据工具: nuscenes-devkit 1.2, av2 0.3.6, opencv-python 4.11, pyquaternion, shapely, imageio(+ffmpeg), decord
-- 评测/指标: lpips, clean-fid, torchmetrics, scikit-image, scipy
-- 训练辅助: tensorboard, wandb, tqdm, rich
+| 环境 | 计划路径 | 关键 upstream 版本 |
+|---|---|---|
+| AD-GS | `/root/autodl-tmp/envs/adgs` | Python 3.7.16 / torch 1.13.1 / CUDA 11.7 runtime / COLMAP 3.7 |
+| Depth Anything V2 | `/root/autodl-tmp/envs/adgs-dpt` | Python 3.11 |
+| Grounded-SAM-2 | `/root/autodl-tmp/envs/adgs-sam` | Python 3.10 / CUDA_HOME 12.1 |
+| DGGT | `/root/autodl-tmp/envs/dggt` | Python 3.10 / torch 2.4.1 |
+| VAD-GS | `/root/autodl-tmp/envs/vadgs` | 条件启用；Python 3.8 / torch 1.12 + cu113 |
 
-> 注: `pip check` 会提示 "decord 0.6.0 is not supported on this platform"，这只是 wheel 平台标签问题，`import decord` 实测正常；若遇异常可改用 torchvision/av 读视频。
+这些只是计划值，不是已安装事实。完整顺序、兼容性 patch 规则和输出 manifest 见
+[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 第 4–5 节。
 
-## 4. 数据集路径
+## 4. 代码与第三方路径
 
-- nuScenes 全量（只读共享盘，无需拷贝）:
-  `/autodl-pub/data/nuScenes/Fulldatasetv1.0`
-  - Map expansion: `/autodl-pub/data/nuScenes/Mapexpansion`
-  - CAN bus expansion: `/autodl-pub/data/nuScenes/CANbusexpansion`
-- 当前本地子集：`/root/autodl-tmp/data/nuscenes`，`du -sh` 约 35G。它包含当前研究所需的
-  CAM_FRONT、LIDAR_TOP 和 `v1.0-trainval` metadata，不等同于复制完整公共盘数据集。
-- Argoverse 2（方案主数据集）: 公共盘暂无，需自行下载到数据盘后用 av2 API 读取。
-
-## 5. 网络 / 模型下载
-
-- pip 走阿里云镜像、conda 走清华镜像（国内快），直连可用。
-- HuggingFace 直连超时，下权重前二选一：
-  ```bash
-  source /etc/network_turbo          # 学术代理（172.29.51.4:12798）
-  # 或
-  export HF_ENDPOINT=https://hf-mirror.com
-  ```
-- 注意: 开启学术代理后访问 pip/aliyun 源会变慢，装包时记得 `unset http_proxy https_proxy`。
-
-## 6. 磁盘现状与策略（重要）
-
-2026-07-19 清理登记前的只读快照：
+现有：
 
 ```text
-系统盘 /               : 30G，可写约 26G（勿在此放大文件）
-数据盘 /root/autodl-tmp : 128G，总计 137,438,953,472 字节
-                          已用 92,389,117,952 字节，可用 45,049,835,520 字节（df -h 显示 42G）
-本地 nuScenes 子集      : du -sh 约 35G
-motionproj 环境         : du -sh 约 7.8G
-SVD-XT 完整快照         : 32,608,949,417 字节；已登记为可恢复清理对象
+/root/autodl-tmp/motion_proj
+/root/autodl-tmp/third_party/drivestudio
+/root/autodl-tmp/third_party/co-tracker
+/root/autodl-tmp/third_party/gsplat
+/root/autodl-tmp/third_party/pytorch3d
 ```
 
-清理完成后，数据盘曾可用约 85 GiB；随后装入 ReSim 权重/环境/T5 后余量下降。2026-07-19 环境就绪后快照约
-**86G used / 43G avail**（以实时 `df` 为准）。SVD-XT 为 `non-resident`；`/root/autodl-tmp/weights/` 只保留
-CoTracker3。
+计划新增但当前不存在/未锁定：
 
-- 正式 run ID、manifest、resolved config、metrics、summary、终止标记和人工 verdict 不得覆盖；已经固化结论的
-  checkpoint、candidate 视频、adapter 和中间 tensor 可按
-  [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 的逐路径批次瘦身。
-- **禁止**为腾盘删除 `envs/motionproj` 或 `envs/resim`；ReSim 正式 evidence 与受保护 review 材料同样不可擅自删。
-- 任何训练/候选生成写盘前检查：`avail - 预估峰值 ≥ 30 GiB`；否则先缩协议或等用户授权清理临时产物。
-- 大权重下载前重新检查 `df`；历史 V5/C0 文档中的 42G/85G 数字不回写覆盖当前事实。
-
-## 7. 可选后续环境: motionproj-mm（重型 3D 感知）
-
-仅当进入 replay-mining 且需在生成帧上做学习式 3D 检测时再建（mmlab 系列对 torch 版本锁定严，不与主 env 混装）:
-
-```bash
-conda create -p /root/autodl-tmp/envs/motionproj-mm python=3.10 -y
-# torch 2.1.2 cu121 + mmcv 2.1 / mmdet 3.x / mmdet3d 1.4，离线生成 cache
+```text
+/root/autodl-tmp/third_party/AD-GS
+/root/autodl-tmp/third_party/Depth-Anything-V2
+/root/autodl-tmp/third_party/Grounded-SAM-2
+/root/autodl-tmp/third_party/dggt
+/root/autodl-tmp/third_party/VAD-GS
+/root/autodl-tmp/third_party/DrivingEditor
 ```
 
-## 8. 快速自检
+每个新增仓库必须登记 commit、submodules、license、local diff 和 checkpoint SHA-256，不能只记分支名。
 
-```bash
-conda activate motionproj
-python -c "import torch,diffusers,transformers,peft,xformers,flash_attn,kornia,nuscenes,av2; \
-print('torch',torch.__version__,'cuda',torch.cuda.is_available(),torch.cuda.get_device_name(0))"
+## 5. 数据路径
+
+```text
+# 当前本地 raw 子集，约 35G；主要是 CAM_FRONT、LIDAR_TOP 与 metadata
+/root/autodl-tmp/data/nuscenes
+
+# 本机只读 nuScenes trainval tar shards，10 个 blobs 合计约 294G
+/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+
+# 历史 OccGS 数据
+/root/autodl-tmp/data/occgs
+
+# 新路线计划目录
+/root/autodl-tmp/data/dynamic_recon
 ```
+
+AD-GS 官方六场景的左右前相机和中间 sweeps 当前不完整。下一轮只从 tar shards 选择性提取精确 member，不全量
+解压，不原地修改 `/root/autodl-tmp/data/nuscenes`。
+
+六场景资产缺口表见
+[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 第 3.2 节。
+
+## 6. Run 与备份路径
+
+```text
+# 历史 runs
+/root/autodl-tmp/runs/occgs_resim
+/root/autodl-tmp/runs/event_first
+
+# 新路线计划 runs
+/root/autodl-tmp/runs/dynamic_recon
+
+# 本轮归档前完整 docs 恢复点
+/root/autodl-tmp/motion_proj_backups/docs-before-direction-pivot-2026-07-26
+```
+
+正式 run 使用唯一 ID，不覆盖失败实例。config、metrics、summary、terminal、hash 与人工 verdict 永久保护。
+
+## 7. 磁盘策略
+
+本轮清理后：
+
+```text
+/dev/md0  128G total  62G used  67G available  49%
+```
+
+新路线规则：
+
+- 安装/训练启动前可用空间必须 ≥60 GiB；
+- 运行中始终保留 20 GiB；
+- 不复制 294 GB 公共 tar；
+- 不在 AD-GS exact reproduction 前下载 Waymo、PandaSet、大型视频生成模型或全部可选 baseline；
+- 环境、权重和输出先由 scene-0230 100/1,000-iteration profile 估算，再批准六场景；
+- 空间不足时按清单评估可再生 cache，不从 raw、final checkpoint、正式指标或人工证据开始删。
+
+## 8. 网络与下载
+
+当前不下载。资源开放后：
+
+- conda/pip 优先使用已配置镜像；
+- Hugging Face checkpoint 必须固定 revision/文件 SHA-256；
+- 下载前记录 license 和远端大小；
+- 下载后立即哈希，不保留重复 cache；
+- 任何网络/权重差异都写入 run manifest。
+
+## 9. 下一轮资源 preflight
+
+用户开放资源后的第一条动作只读：
+
+```text
+memory.max/current/events
+nvidia-smi GPU/VRAM/driver
+nvcc/gcc
+CPU cores
+df/inode
+process inventory
+```
+
+最低目标：
+
+```text
+RAM >= 32 GB (64 GB recommended)
+GPU >= 1 x 24 GB
+disk available >= 60 GiB
+```
+
+满足后才创建 AD-GS 环境；不满足则 `DR-M2-ENV-ASSET-01=blocked` 并等待。

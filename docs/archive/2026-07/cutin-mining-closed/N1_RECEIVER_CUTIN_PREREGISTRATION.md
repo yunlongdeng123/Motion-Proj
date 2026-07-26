@@ -195,3 +195,21 @@ Human gates：
 - negative 与 physical event overlap；
 - 查看 formal 结果后改阈值/scene/sampling；
 - 启动 N2/N3/render/training。
+
+## 7. 冻结后的执行记录（不修改上述合同）
+
+2026-07-25 UTC，formal 在 clean commit
+`f13eb0f1e39b608de1c5e698cd678c2dfd8365a4` 上完成：
+
+- run：
+  `/root/autodl-tmp/runs/event_first/N1-EVENT-CUTIN-01/v71_n1-event-cutin-01__receiver-cutin-v1__s0__20260725T173015103731Z__5b1634e3/`；
+- 685 evaluation scenes，与 26 calibration scenes 交集为 0；
+- 18 positives / 16 candidate scenes / 6 negatives / 6 pairs；
+- 四项 machine gate 全部通过；
+- 18 个盲审 item 已生成，人工字段保持空白；
+- 唯一终态 `AWAITING_HUMAN_REVIEW`，`n2_authorized=false`。
+
+完整结果与第四次材料入口见
+[`N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md`](N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md)；
+完整逐字节同版提示词见
+[`N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md`](N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md)。

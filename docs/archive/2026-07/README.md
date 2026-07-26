@@ -3,8 +3,8 @@
 > **权威性**：历史证据，不是当前计划。
 > **当前入口**：[`../../README.md`](../../README.md) → [`../../RESEARCH_STATUS.md`](../../RESEARCH_STATUS.md)。
 
-本目录保存 Motion-Proj 从 explicit projection、physics preference、Route Pivot V5、ReSim C1 V6 到
-OccGS-Resim V7 feasibility 的历史计划、报告、提示词与整理前事实源。
+本目录保存 Motion-Proj 从 explicit projection、physics preference、Route Pivot V5、ReSim C1 V6、
+OccGS-Resim V7/V7.1 到 event-first/cut-in 最终关闭的历史计划、报告、提示词与整理前事实源。
 
 归档文件保留当时措辞，可能包含“当前任务”“下一步”“approved”“awaiting reviews”等过期状态。任何 agent 或
 研究者都不得据此启动实验、恢复训练、请求人审或切换硬件。发生冲突时，以实际 run → 当前
@@ -136,7 +136,33 @@ machine support 未通过。该目录保存当时交付的预注册、报告和�
 该目录索引 review hash、成功/失败 adjudication、地图分支误当车辆行为的根因和第四版接续合同。
 `n2_authorized=false`。
 
-## 11. 如何复查历史
+## 11. Receiver-centric 第四次审核材料
+
+目录：[`n1-receiver-cutin-fourth-review/`](n1-receiver-cutin-fourth-review/)
+
+第四版 official train 685-scene formal run 在 clean commit `f13eb0f` 上产生 18 candidates /
+16 scenes、6 receiver-matched negatives / 6 same-actor pairs，四项机器门槛全通过。该目录索引两个
+独立工程失败、成功 parent run、完整报告、逐字节同版提示词和 18 项审核材料。后续人工裁决表明
+receiver-branch merge 历史候选为系统性假阳性，第四版没有解锁 N2；最终收口见下一节。
+
+## 12. nuScenes cut-in 最终关闭
+
+目录：[`cutin-mining-closed/`](cutin-mining-closed/)
+
+该目录集中保存 N0、mini、全域、运动学、接收车和最终 strict-v2 路线材料。最终 Resource Contract V2 在
+675 个 prospective scenes 上完整运行，只有 `1 PASS / 1 scene`，低于预注册的 `3 candidates / 3 scenes`，
+因此路线以 `rejected / frozen` 结束。
+
+目录同时包含：
+
+- 最终预注册、baseline、报告和稀疏人工审核包；
+- 结束时 `RESEARCH_STATUS` 与 `EXPERIMENTS` 快照；
+- 文档/数据/中间产物清理清单和恢复路径；
+- “不能声称 nuScenes 没有 cut-in”“不能靠放宽规则扩池”等最终边界。
+
+cut-in 以后只允许作为动态重建与编辑方法成熟后的可选演示，不再作为活跃数据入口。
+
+## 13. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；

@@ -1,411 +1,201 @@
-# Motion-Proj V7 / V7.1 实验事实源
+# Experiments
 
-> **范围**：本文件登记 OccGS-Resim V7 retrospective evidence 与 V7.1 正式实验。V1–V6 及整理前全量账本已归档至
-> [`archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md`](archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md)。
-> **证据基线**：`9722fa2`。
-> **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；本文件不授权执行。
+- 更新时间：2026-07-26
+- 活跃路线：动态驾驶场景重建与反事实编辑
+- 权威方案：[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
+- 历史快照：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
 
-## 1. 证据完整性说明
+本文件只登记当前路线。V1–V7.1、OccGS 和 cut-in 的完整实验历史已归档；失败事实继续由
+[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 约束，不因精简活动台账而删除。
 
-V7 feasibility 产物可定位且核心 JSON/ckpt 存在，但 `runs/occgs_resim/` 下未保存本仓库正式协议要求的
-`manifest.json`、`resolved.yaml` 与唯一终态标记。因此下表统一标记为 `retrospective`：数值可由现存产物核对，
-但不能事后补写未知 seed、运行开始 commit 或 data fingerprint。
+## 1. 状态词
 
-后续新 run 必须通过 `V7-EV-10` 的正式 run contract；不得覆盖下列目录或复用 run ID。
+只使用：
 
-## 2. 数据与环境
-
-| Task / artifact | 状态 | 配置与结果 | 证据 | 结论边界 |
-|---|---|---|---|---|
-| `E0-ENV-01` | completed / retrospective | DriveStudio env；Python 3.9.25；torch 2.1.2+cu118；gsplat 1.3.0；CUDA extension smoke 通过 | [`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md) | 环境可用，不是方法结果 |
-| `G0-THIRDPARTY-00` | completed / retrospective | DriveStudio `e59bda4...` MIT；SplatAD/Occ3D 只审计；本机完整前向 sweep 限于 mini 10 scenes | [`archive/2026-07/v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md`](archive/2026-07/v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md) | 约束后续数据规模 |
-| `D0-DATA-02` | completed / retrospective | S0=003/scene-0655，S1=005/scene-0796，S2=004/scene-0757；3 前向相机；8 秒训练窗；10 Hz 处理；数据完整性通过 | [`archive/2026-07/v7-feasibility/OCCGS_DATA_PREPARATION.md`](archive/2026-07/v7-feasibility/OCCGS_DATA_PREPARATION.md)；`data/occgs/scene_specs/d0_frozen_picks_v2.json` | 三场景 feasibility，不支持规模结论 |
-
-## 3. B0 reconstruction
-
-所有全量 run 使用 DriveStudio StreetGS、3 cameras、`t=0..79`、30k iterations、`load_smpl=False`；
-B0-1 为 1 camera、4 秒、3k iterations smoke。
-
-| Run ID | 状态 | full PSNR / SSIM / LPIPS | test PSNR / SSIM / LPIPS | vehicle full/test PSNR | 证据 |
-|---|---|---|---|---|---|
-| `b0_1_s0_1cam4s` | completed / retrospective | 37.59 / 0.968 / 0.059 | 32.91 / 0.928 / 0.072 | 33.26 / 27.90 | `runs/occgs_resim/b0_recon/occgs_b0/b0_1_s0_1cam4s/` |
-| `b0_2_s0_3cam8s` | completed / retrospective | 32.87 / 0.937 / 0.103 | 25.60 / 0.799 / 0.142 | 30.98 / 23.48 | `runs/occgs_resim/b0_recon/occgs_b0/b0_2_s0_3cam8s/` |
-| `b0_3_s1_3cam8s` | completed / retrospective | 27.07 / 0.815 / 0.220 | 20.18 / 0.472 / 0.325 | 25.12 / 18.26 | `runs/occgs_resim/b0_recon/occgs_b0/b0_3_s1_3cam8s/` |
-| `b0_4_s2_3cam8s` | completed / retrospective | 33.41 / 0.923 / 0.094 | 25.37 / 0.697 / 0.142 | 27.24 / 22.11 | `runs/occgs_resim/b0_recon/occgs_b0/b0_4_s2_3cam8s/` |
-
-现存证据包括 `config.yaml`、training `metrics.json`、full/test eval JSON、`checkpoint_final.pth` 与渲染产物。
-未发现 NaN/OOM；文档记录训练峰值约 5 GB。B0 证明单卡重建可行，但没有 formal user review，也没有与
-Static GS/OmniRe 做方法比较。
-
-## 4. O0 / S0 / C0
-
-| Task / run | 状态 | 关键结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `O0-OCC-04` | completed artifact / retrospective | 003/004/005 各 80 帧，200×200×16；unknown/free/static/dynamic 分离；unknown 比例约 0.96 | `data/occgs/occupancy/{003,004,005}/{frame_*.npz,meta.json,summary.json}` | occupancy artifact 存在；尚未进入 editor/render/completion 主链 |
-| `S0-EDIT-05` | completed prototype / retrospective | actor 003/35、005/34、004/8；0.8 m variants 多数通过，1.6 m 在 S1 拒绝，极端 V4 全拒绝 | `data/occgs/scene_specs/s0_edits/scene_*_actor_*_edits.json` | 当前 validator 使用相对运动学、横向范围和 actor/ego 距离；未查询 occupancy |
-| `occgs_c0/{s0,s1,s2}` | completed machine screen / retrospective | 3 scenes；可见编辑 case 46/62 机器合法；按 mean edit effect 选出的 top-24 为 24/24；003/004 明确贡献多数合法 case | `runs/occgs_resim/c0_cf/{s0,s1,s2}/`；`data/occgs/reviews/c0_legality/c0_legality_screen.json` | machine-only；没有用户 human verdict；top-k 不能用于估计全分布合法率 |
-
-补充 provenance 缺口：`s0_edit_summary.json` 会被单次脚本执行覆盖，当前只汇总 scene 004；三场景事实应读取各自
-`scene_*_edits.json`，后续由 `V7-EV-10` 修复聚合方式，但不得改写原文件。
-
-## 5. L0 completion feasibility
-
-| Run ID | 状态 | 方法 | 结果 | 证据 |
-|---|---|---|---|---|
-| `l0_comp/s0_v3` | completed / retrospective | RGB-diff mask + Telea + hard composition；6 帧 | outside-mask L1=0；inside-mask L1≈22.48；mask≈1.27% | `runs/occgs_resim/l0_comp/s0_v3/l0_feasibility.json` |
-| `l0_comp/s2_v3` | completed / retrospective | 同上；6 帧 | outside-mask L1=0；inside-mask L1≈25.97；mask≈1.99% | `runs/occgs_resim/l0_comp/s2_v3/l0_feasibility.json` |
-
-outside-mask 为 0 由 `I=(1-M)I_GS+MI_gen` 构造保证。当前 mask 来自 V0/edited RGB 差分，不是 occupancy 或
-ray visibility；没有 pseudo-hole 真值、时序质量或用户人工 verdict。因此只登记 locality implementation
-feasibility，不登记 H2 pass。
-
-## 6. U0 utility proxy
-
-| Run ID | 状态 | 关键结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `u0_screen/u0_proxy_v1` | partial / retrospective | V1/V2 accept rate=1.0，V3=0.667，极端 V4=0；V1/V2/V3 mean max RGB diff≈0.454/0.475/0.395；`u0_full_map_pass=false` | `runs/occgs_resim/u0_screen/u0_proxy_v1.json` | 只说明当前规则能拒绝故意无效 V4，且 accepted edit 有像素信号；没有 downstream utility |
-
-该 proxy 的 `naive_V4` 是横向位移约 39–50 m 的强制负例，不是 matched naive GS baseline。它不能支持
-“OccGS 优于 naive GS”的研究结论。
-
-## 7. D1 决策
-
-| Task | 状态 | 决策 | 证据 |
-|---|---|---|---|
-| `D1-DECIDE-09` | done | `modify_method_then_scale` | [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md) |
-
-含义是保留路线、优先执行 `V7-EV-10 → V7-H1-11`；不表示 H1/H2/H3 已通过，也不解锁扩场景或双卡。
-
-## 8. V7.1 EV-10 证据合同
-
-| Task / run | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `V7-EV-10` evidence index | completed | 对 B0/O0/S0/C0/L0/U0 共 1,610 个文件、4,121,645,920 bytes 逐文件计算 SHA256；index SHA256=`fbd8c65774edef6ad253f458ac01da29a95694c8f9448179b42601e89fbdb613` | `/root/autodl-tmp/runs/occgs_resim/V7_EVIDENCE_INDEX.json` | 旧证据可定位；未知 seed、run-start commit、fingerprint 和 terminal marker 保持显式 missing/unknown，未事后补造 |
-| `v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f` | completed / `COMPLETE` | seed=0；config fingerprint=`7d97212fbb38f85ae9cc6a7e348b424a6229e430b2c8fd4089e3bbe9eae5eb19`；data fingerprint=`fbd8c657...b613`；world/render/artifact-set hash 均通过；CPU only | `/root/autodl-tmp/runs/occgs_resim/v71/V7-EV-10/v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f/` | 新 run 缺 summary、三层 hash、artifact bytes 或唯一 terminal marker 时不能 COMPLETE；这是工程合同 smoke，不是研究假设结果 |
-
-实现 commit 为 `3590558cd1ef3644f10c1b981366c3ccce9cd580`。验证命令：
-
-```bash
-PYTHONPATH=. pytest -q \
-  tests/test_v71_run_contract.py \
-  tests/test_config_runtime.py \
-  tests/test_fingerprint.py
-# 25 passed
-python resim/v71_run_contract.py validate \
-  /root/autodl-tmp/runs/occgs_resim/v71/V7-EV-10/v71_v7-ev-10__smoke__s0__20260723T141019751134Z__7d97212f
+```text
+pending | running | blocked | done | rejected
 ```
 
-S0 editor 已改为原子增量合并 `s0_edit_summary.json`，后续单 scene 执行不再覆盖其他 scene；EV-10 未运行
-editor，也未修改现有 S0 summary 或任何旧 metrics。
+`done` 表示预注册门禁满足；`blocked` 表示需要外部资源/权限或 upstream 修复；`rejected` 表示研究门禁失败，不能靠
+重命名、挑场景或放宽阈值继续。
+
+## 2. 活跃注册表
 
-## 9. V7.1 H1-11A 状态底座
+| Run ID | 状态 | 目标 | 输入 | Primary gate | 证据路径 |
+|---|---|---|---|---|---|
+| `DR-M0-ARCHIVE-01` | done | 封存 cut-in、清理可再生产物 | 历史 docs/data/runs | 保留项完整、删除项精确、无 OOM | `docs/archive/2026-07/cutin-mining-closed/` |
+| `DR-M1-PLAN-01` | done | 官方调研与下一阶段完整方案 | 官方论文/代码、本地只读资产 | baseline/data/env/experiments/stops/review 全部闭合 | `docs/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md` |
+| `DR-M2-ENV-ASSET-01` | pending | AD-GS 环境与六场景资产 smoke | 官方六 scenes、独立 envs | 编译/单步/文件计数/typed provenance 全过 | `/root/autodl-tmp/runs/dynamic_recon/` |
+| `DR-M3-ADGS-0230-01` | pending | scene-0230 exact pipeline | frames 10..69、三相机、900×1600 | 60k 正常结束、官方 render/metrics 完整 | 同上 |
+| `DR-M4-ADGS-6SCENE-01` | pending | AD-GS 六场景数值复现 | 官方六 scenes | PSNR≥30.56、SSIM≥0.915、LPIPS≤0.184 | 同上 |
+| `DR-M5-DGGT-NUSC-01` | pending | DGGT 推理级对照 | 同六 scenes 固定窗口 | upstream smoke；完整输入预算与速度/质量报告 | 同上 |
+| `DR-M6-STRESS-01` | pending | 重建/编辑/去遮挡/噪声压力测试 | 六 scenes、冻结对象与编辑幅度 | ≥3 scenes 重复同一失败 | 同上 |
+| `DR-M7-HYPOTHESIS-01` | pending | 唯一创新假设预注册 | M6 failure matrix | novelty、truth tier、primary、baseline 冻结 | `docs/` |
+| `DR-M8-METHOD-01` | pending | 方法/消融/统计 | 六 scenes、3 seeds | primary 改善且 guardrails 不退化 | `/root/autodl-tmp/runs/dynamic_recon/` |
+| `DR-M9-HUMAN-01` | pending | 盲审与最终人工包 | 冻结全量 clips/metrics | 用户/指定评审完成 verdict | `docs/human-review/` |
 
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9` | completed / `COMPLETE` | PILOT-3；seed=0；S0/S1/S2 RigidNodes actor=9/18/5；跨进程 registry hash 稳定；1,679 个 pose 的 coordinate round-trip gate PASS；world/render/artifact-set hashes 完整 | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11A/v71_v7-h1-11a__pilot-3__s0__20260723T144155452295Z__0ff143d9/` | WorldState schema、显式坐标与 actor registry 工程底座通过；未运行 certificate/projection，不构成 H1-CERT/H1-PROJ 结论 |
+## 3. `DR-M0-ARCHIVE-01`
 
-实现与运行代码 commit 为 `766f2287e79b3cdfc877eb175776482c79c3f98c`，config fingerprint 为
-`0ff143d9d060d52001e27b5947de24406f38a487c74e1694a79a40ad522dc724`。逐场景 registry hash：
+### 结果
 
-- 003：`c9359fc3a6adeb135db09eab9a10e5a1ebcf452aa57ba779cd1564e2cb7b1ed0`
-- 005：`5cac16f5879df8afb3c0827b4f1ef64a40c4f3abd797f502eef5d0a518ad91ee`
-- 004：`d43d16f2682efcb5576570b0bef8e4e4f1fe59a50a0451d8f47605b38faac470`
+- 状态：`done`
+- 文档快照：
+  `/root/autodl-tmp/motion_proj_backups/docs-before-direction-pivot-2026-07-26/`
+- 回收：约 5 GiB；
+- 删除：3 个 N1 可再生 10 Hz cache、3 个 B0 中间 checkpoint、2 个 H1C 失败渲染副本、
+  5 个干净 worktree、41 个冗余 `.codexbak.*`；V7.1 审计目录内 20 个已索引备份继续保留；
+- 保留：raw nuScenes、mini comparator、trainval annotations、final checkpoints、正式指标/日志、审核证据、
+  `RESEARCH_FAILURES.md`；
+- `memory.events`: `oom=0`, `oom_kill=0`。
 
-坐标审计明确冻结：
+### 证据
 
-- annotation：world frame；
-- DriveStudio model：起始 `CAM_FRONT` sensor frame；
-- O0 grid：per-frame LiDAR sensor frame；
-- extrinsics：`T_world_camera`；LiDAR pose：`T_world_lidar`。
-
-三场景最大 world→model→world translation error 为 `6.83e-13 m`，最大 rotation error 为
-`7.89e-08 rad`；最大 world→grid→world box error 为 `9.10e-13 m`。checkpoint pose refinement 相对原
-annotation 的最大 translation delta 为 `0.8763 m`、最大 rotation delta 为 `0.0532 rad`，作为训练后 pose
-差异单独报告，不混入 round-trip gate。
-
-相关验证为 42 passed；正式 run 经 `v71_run_contract.py validate` 独立复验为唯一 `COMPLETE`。
-
-## 10. V7.1 H1-11B 分层证据与 certificate calibration
+- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)
+- [`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
 
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_v7-h1-11b__pilot-3-calibration__s0__20260723T145956893820Z__b8349bc0` | completed / `COMPLETE` | 240 帧 observation-evidence-v2；32 条真实 source controls，30 条可测且 30/30 PASS；collision/teleport 可检测负例 2/2；off-road 在 map-expansion 缺失时 UNKNOWN；32/32 full certificate 为 UNKNOWN；三类 overlay 分离 | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11B/v71_v7-h1-11b__pilot-3-calibration__s0__20260723T145956893820Z__b8349bc0/` | safety/observation/render-support 职责、三态语义和校准 gate 通过；尚未运行 C/D1/D2 matched H1 实验，不构成 H1-CERT/H1-PROJ 结论 |
+## 4. `DR-M1-PLAN-01`
 
-实现 commit 为 `002bbb499e2bf967a0b16e19c09088cef2e60ef5`。核心冻结 hash：
-
-- evidence set：`a9b02f08474fdcbfb58ef54e6788900cc1cd9dddf15db488ae6c8f837f807930`
-- render support set：`2e4f02979db4aea850ab0c73325e8e5270d4d7fb554ce47fc365659bfa49c671`
-- world state：`6ac9b6b0a8ea0b4acf2efffb1e5722709e79201d353b532489f0b8db0ae272e5`
-- render request：`02451378ac4cd84bc965d8942eac3da25c23ef0e31d1b4b646b6052cf50cb922`
-- artifact set：`c4800f6bc73ba1fce38ee8d8f408dd3921116b53df5fe1d71b41f9a67f8382bd`
-
-旧 rotated-corner AABB 相对 oriented-box center-inclusion 的体素量比分别为 003 `1.721×`、005 `2.249×`、
-004 `2.833×`，确认旧表示会系统性膨胀动态体积。分离 actor layer 后，三场景 base unknown 比例仍为
-`97.10% / 96.04% / 97.57%`；因此 source actor removal 恢复 UNKNOWN 而不是 FREE，不能靠拒绝困难样本产生
-表面 precision。
+### 结果
 
-地图审计只发现 nuScenes 栅格底图 PNG，没有可查询的 map-expansion polygons，故 road-support 和对应 off-road
-control 保持 UNKNOWN。真实 control 的可测 retention 只聚合 kinematic、continuous dynamic OBB 与有直接 LiDAR
-点支持的 source-observation；完整 certificate 不把 road UNKNOWN 偷记为 PASS。scene 005 的一个 RigidNodes
-model index 在 checkpoint 中有 0 个 Gaussian primitive，已作为 render-support 缺失事实保留，不影响 safety
-geometry，但后续 visibility/label gate 必须 fail closed。
+- 状态：`done`
+- 主基线：AD-GS；
+- 前馈对照：DGGT inference-only；
+- 编辑参考：DrivingEditor；
+- conditional geometry comparator：VAD-GS；
+- primary data：AD-GS 官方 nuScenes 六 scenes；
+- 当前资产结论：左右前相机和 sweeps 不完整，必须选择性提取；
+- 当前资源结论：2 GiB 接近上限，本轮不能安装或运行。
 
-40 项 V7.1 相关测试通过；正式 run 经 `v71_run_contract.py validate` 独立复验为唯一 `COMPLETE`。机器 overlay
-没有 agent 填写的人工 verdict。
-
-## 11. V7.1 H1-11C 同步 renderer 与 typed label
+### 复现锚点
 
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5` | completed / `COMPLETE` | PILOT-3；V0/V1 × 3 scenes × 3 cameras = 18 samples；24 artifacts/sample、432 typed sidecars；独立 label-sync audit 全通过；peak CUDA 7,852,088,320 bytes | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11C/v71_v7-h1-11c__pilot-3-interface__s0__20260723T152729207694Z__8429e9a5/` | 同一 WorldState 驱动三相机 renderer、分层 actor/background、expected/first-hit/measured depth、instance 与有限语义的工程接口通过；未运行 A/B/C/D1/D2，不构成 H1-CERT/H1-PROJ 结论 |
+```text
+scenes = 0230,0242,0255,0295,0518,0749
+frames = 10..69 inclusive
+cameras = CAM_FRONT_LEFT,CAM_FRONT,CAM_FRONT_RIGHT
+resolution = 900x1600
+iterations = 60000
+paper_mean = PSNR 31.06 / SSIM 0.925 / LPIPS 0.164
+```
 
-正式代码 commit 为 `9780e391fca689c1df033b0aa09611404af583a6`，config fingerprint 为
-`8429e9a54dbdd70f79d14e17dcdf0911e66e39e38cbe3555d5bed3e94eb1e083`。冻结 hash：
+### 下一步
 
-- world-state set：`1ce5cd77f6df801cb8fdccc770d468050e749961bad47a2b28b28d897d6249e2`
-- aggregate render request：`cdcff1677f4c2b4bede3d626eac738cac9119bcdb415c182c191c29cd88d7461`
-- artifact set：`f53defd159930580732c1280891d2e1a55eb3de819193cfdeef1575c1ee4548a`
-- full artifact index：`3ef957b550aa3745fc898dee02500c9b1869cc78b323c88fb1f2dc9d8fa3b8e4`
-- independent label-sync audit：`4f265244ed463939146375a4620e8c96d302a74b4f763e921287d929e374c3ba`
+等待用户开放至少 32 GB RAM 和 1×24 GB GPU。资源未开放前 `DR-M2-ENV-ASSET-01` 不启动。
 
-独立审计重新计算 6 个 V0/V1 WorldState hash，验证 temporal identity、每序列三相机、18/18 sample audit、
-432/432 sidecar 与 state-specific safety/observation/render-support 引用。typed depth 数量严格为：
-18 个 diagnostic expected depth、18 个 T1 first-hit depth、18 个 T0 LiDAR measured depth；S1 未排除。
-重复渲染最大绝对差为 0；background/actor layer composition RGB MAE 为
-`0.000000–0.002171`（均值 `0.000511`）。V0 CAM_FRONT 相对 legacy renderer 的 RGB MAE 为
-003 `0.001959`、005 `0.001960`、004 `0.001950`。
+## 5. `DR-M2-ENV-ASSET-01` 预注册
 
-开发候选中，instance mask 曾以 alpha `0.15` 阈值且未按 first-hit z-order 遮挡，独立审计正确拒绝；
-修复为与 first-hit `0.5` 阈值一致并执行背景/actor z-order 后，使用新 artifact hash 完成正式 run。失败候选与
-审计 JSON 均保留，不进入正式 aggregate。该修复属于 renderer/label adapter 同步，不修改 H1 endpoint。
+### 输入
 
-相关 V7.1 测试、CUDA smoke 与正式 run contract validation 均通过；正式 run 只有唯一 `COMPLETE`。
-`hypothesis_verdict=not_evaluated`，不能将 label-sync 工程通过写成 occupancy 合法性增益。
+- official AD-GS commit；
+- official environment.yaml；
+- scene-0230 首先；
+- 本机只读 nuScenes tar shards。
 
-## 12. V7.1 H1-11D matched pilot ablation
+### 固定顺序
 
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc` | rejected / `REJECTED` | source-only 选择 2 actors/scene；30 proposals；A/B/C/D1/D2；C/D1 30/30 trajectory hash 相同；D1 precision `0.75`、recall `0.8824`、abstention `0.3333`、PASS coverage `0`；D2 0/30 export、usable yield `0` | `/root/autodl-tmp/runs/occgs_resim/v71/V7-H1-11D/v71_v7-h1-11d__pilot-3-matched__s0__20260723T155755269940Z__cf8d5ebc/` | engineering gate 通过；H1-CERT 与 H1-PROJ 均按预注册拒绝。不得把 D2 全拒绝写成 violation reduction |
+1. resource preflight；
+2. pin source/license；
+3. create AD-GS env；
+4. compile rasterizers；
+5. one-step forward/backward；
+6. DPT/SAM single-image smoke；
+7. exact asset member manifest；
+8. scene-0230 selective extraction；
+9. upstream preprocess structural audit。
 
-冻结 config SHA 为 `cf8d5ebc1429e076fc5142aa6a759a18f54b7f3f937c8423d51505a094bc9fe3`，
-proposal-bank SHA 为 `f8986915f8d2be0cddddfa6be86f4d2d1ece456c12bf9a962cafec78fd058cd7`。
-proposal bank 只读取 source observation，以
-`(-visible_frame_count, -track_frame_count, -lidar_point_count, actor_id)` 确定性选择：
+### 单卡停止
 
-- 003：actor 38、35；
-- 005（S1）：actor 23、20；
-- 004：actor 4、8。
-
-每 actor 使用冻结 P1–P5，得到 30 个 matched proposals。纯 3D scenario-effect 分布为 0 个 0→1 positive、
-25 个 0→0 negative、5 个 source-positive/non-event；same-actor counterfactual pair 为 0。没有按 RGB、
-edit effect 或组间结果换 actor/proposal。
-
-D1 在 30 个可测 C trajectories 上得到 15 TP、5 FP、2 个包含 abstention 的 FN；20 FAIL、10 UNKNOWN、
-0 PASS。五个 FP 全来自 004 actor 8，occupancy certificate 各报告 5 个 static-overlap voxels，而独立 raw
-LiDAR evaluator 为 0 non-source points；两个 FN 来自 005 actor 20 的 P3/P5，D1 因 known fraction 为 0
-给 UNKNOWN，而 raw LiDAR 分别发现 3/2 个 non-source points。precision `15/20=0.75` 未达到冻结 `0.80`
-门槛，故即使 recall `15/17=0.8824` 达标，H1-CERT 仍为 `REJECTED`。
-
-C 接受 30/30，独立 external hard violation 为 17/30：003 `5/10`、005 `7/10`、004 `5/10`。D2 的所有
-candidate 均不能同时取得 kinematic、continuous OBB、occupancy 与 visibility PASS，故拒绝 30/30，
-没有可测 export，usable yield 为 `0/30`。D2 external violation rate 因无 export 而不可定义，不能记为
-`0%`；第 4–7 条 projection gate 均失败，H1-PROJ 为 `REJECTED`。
+- memory ≥90% limit；
+- OOM/RC137；
+- GPU OOM；
+- disk free <20 GiB；
+- 需要少相机/低分辨率才能继续。
 
-首版 aggregate 曾错误地以固定 30 proposal 为 denominator，把 30 个拒绝样本计成“0 violation”。原文件已保留为
-`aggregate_pre_export_denominator_fix.json`；按计划允许的一次 `metric_aggregation_bug` 修复，在 commit
-`b82c5400fdf50eac0e04c1b55c7baa732dd6fa5b` 中改为无可测 export 时 fail closed。该修复不改变任何 trajectory、
-certificate 或 external evaluator 输出。修复后 aggregate SHA 为
-`813971c4b88e23f411b1a61c42bb546259d5157d42d4168ad173ba8657b2401d`。
+任一触发后状态写 `blocked`，不重跑。
 
-由于 D2 以拒绝全部 proposal 触发第 16.1 节立即停止规则，高成本 12-frame × 3-camera render audit 和 blind
-review pack 未实例化；正式 run 保存了几何预选帧 manifest、未填写的人审 prompt 草稿和停止原因。机器 primary
-gate 已足以 reject，不需要人工 verdict。22 项相关测试通过，正式 run 经独立 contract validation 为唯一
-`REJECTED`。
-
-## 13. Event-first N0-ASSET-01
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd` | completed / `COMPLETE` | map-expansion v1.3；4 maps；3 scenes；seed=0；raw/processed pose max translation `0 m`、rotation `1.01065e-7 rad` | `/root/autodl-tmp/runs/event_first/N0-ASSET-01/v71_n0-asset-01__map-v1-3__s0__20260723T232427413355Z__e250cccd/` | 官方 vector map、scene→map 与坐标合同通过；不是 event hypothesis 结果 |
-
-实现 commit 为 `fcb5a7392c0169934d5388b9efd12a637b236ff9`。压缩包 SHA 为
-`9dbc80a095b6b28d9b79fc9a43471a750dc92ca78c6d0db288fd92b34be5a144`；asset manifest SHA 为
-`48e8ace83e286b79b31d1adbfedc33bcacf2c43b3f19587dd9c2fc6fbd0c60a7`；scene-map registry SHA 为
-`7c83e936e150ab5ed3ab21c57a55a3ee0143d64264fa0da17cdbd77e9d3560c1`。config fingerprint 为
-`e250cccdf415561e617600ae0e93b3e1f2b190aefd4d960f72023301d5b15696`，data fingerprint 为
-`b03d6cbf6093869c92659626c7a1add182157a71ff9f89cf722e24fcef6ac56b`。
-
-四张地图均为 version 1.3，lane、lane_connector、connectivity、drivable、road layers 可查询。
-003/005/004 ego keyframes 41/40/41 全部在冻结 8 m closest-lane 半径内。旧 selected actors 的匹配为
-266/322、342/342、154/217，只作诊断，不用于修改 N0 gate。
-
-验证：`PYTHONPATH=. pytest -q tests/test_event_first_n0_asset.py`，4 passed；正式 run 唯一 `COMPLETE`。
-
-## 14. Event-first N1-EVENT-01
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n1-event-01__mini-event-v1__s0__20260723T232920917536Z__cd56b326` | rejected / `REJECTED` | 45 eligible actors；71 transitions；22 topology pass；0 interaction positive；0 negative/pair；0 positive scenes | `/root/autodl-tmp/runs/event_first/N1-EVENT-01/v71_n1-event-01__mini-event-v1__s0__20260723T232920917536Z__cd56b326/` | 冻结 mini event pool 不支持可比较 interaction；N2–N5 not triggered |
-
-实现 commit 为 `82117c7ec58db9bbe7e26d0f866442b620b617f6`；config fingerprint 为
-`cd56b326cd38ecda3ab6dd36bb31a38ce03f14aacbef7e199ff8f073558f5cf3`，data fingerprint 为
-`919b08593a5fdf13e668714865cc2f1d2129f5bf221a3d7c3ad54af80ccbc0a3`，event-pool SHA 为
-`6f39cc8b917c277adfc9a8b17130c4d5d1e762beb862cbaf51c92b61727dc792`。
-
-scene 级 eligibility/map match：
-
-- 003：7 actors，464/522 poses；
-- 005：22 actors，1,976/2,067 poses；
-- 004：16 actors，1,238/1,326 poses。
-
-transition taxonomy 为 route continuation 39、merge 19、lane change 3、unresolved 10。19 merges 与
-3 lane changes 通过 topology，但 22/22 interaction FAIL：18 个 exact target token 无邻车，4 个只有
-front、无 rear；其中两个 front 在冻结 60 m 外。预注册要求 positive/negative/pair 各至少 2、positive
-至少覆盖 2 scenes，故 fail closed 为 `reject_mini_event_pool`。
-
-`negative=0` 因 negative 只为 positive actor 构造 same-actor pairing，不代表没有普通稳定行驶窗口。
-exact-token relation 可能存在 corridor fragmentation 风险，须在独立 calibration pool 修正，不能回写本 run。
-
-验证：`PYTHONPATH=. pytest -q tests/test_event_first_n0_asset.py tests/test_event_first_n1_event.py`，8 passed；
-正式 manifest `code_dirty=false`，唯一 terminal marker 为 `REJECTED`。
-
-## 15. Event-first N1-EVENT-FULL-01
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c` | parent machine screen / `COMPLETE`；后续 human audit `REJECTED` | val 146（与 mini calibration scene-disjoint）；1,361 eligible actors、1,898 transitions、396 topology pass；机器 positive=37、negative=7、pair=7、positive scenes=17 | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-01/v71_n1-event-full-01__fulldomain-v1__s0__20260724T081214528945Z__f12c886c/` | 父 run 保持不可变机器终态；37 条后续人审仅 2 TP / 35 FP，最终裁决见第 16 节 |
-
-实现时仓库基线为 `2bac4c9592e710bced0c1ea4bf7d19a3b20bdacb`，正式 manifest 诚实记录
-`code_dirty=true` 与 diff hash
-`9b15fd2bf45d470872eabb87fb52e82255d43c10554cbce9e6d11c699802ba94`；config fingerprint 为
-`f12c886cb6bb58171e7c5bf358809d88e3a15e1424005ce05d5fd335c561fcea`，event-pool SHA256 为
-`9635b5148ae58933db0c594605c1ae104fa891f065d565bef789a32139ba708c`。
-
-calibration 为 scene-0655/0757/0796，逐位复现 mini 的 45 eligible、71 transition、22 topology-pass、
-0 positive；evaluation 为官方 val 150 scenes 排除与 mini 重叠的 4 scenes，共 146 scenes。机器筛选得到
-35 merge、2 lane-change positive；37 个 positive 中 36 个依赖 graph-corridor 挽回至少一个跨-token
-front/rear。该高度依赖关系触发强制人工审计，`COMPLETE` 只表示机器海选和产物合同完成，不是人工真实性通过。
-
-轨迹由 `v1.0-trainval` 2 Hz annotation keyframe 流式重建为与 DriveStudio 一致的 10 Hz 插值缓存；mini
-对拍的 instance token、frame index 与 transform 一致。这个 cadence 对拍只证明数据适配一致，不能把插值帧
-当成新的物理观测。正式人审事实必须在独立 audit run 登记，不得原地改写本 run 的 event pool 或 terminal。
-
-## 16. N1-EVENT-FULL-AUDIT-01 第二次人工裁决
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac` | rejected / `REJECTED` | 37/37 条完整；TP=2、FP=35、UNCERTAIN=0；audited precision=`0.054054`；用户明确宣告第二次 N1 reject | `/root/autodl-tmp/runs/event_first/N1-EVENT-FULL-AUDIT-01/v71_n1-event-full-audit-01__human-audit-reject-v1__s0__20260725T083929632491Z__6507cbac/` | graph-corridor machine pass 被人审推翻；N2 未授权，父机器 run 不改写 |
-
-adjudication code commit 为 `1e2f5eacc75d31b186f2b9f3476f6352cd855599`，`code_dirty=false`；
-config fingerprint 为
-`6507cbacde489df9675e54b7be12a5b1132055e42e3009aa78f14264ef2fb577`，data fingerprint 为
-`563c8c25a7914919eb761f9df427952fb50beff6fb70a40a0fb5600078ec66a9`。输入 completed review SHA256：
-`ae71b31e02faf1d783c36748e629e85acf32a132f35ce2f98102a5f62201dd05`。
-
-父提示词没有预注册 aggregate threshold，因此本 run 没有查看结果后补造阈值；研究终态直接来自用户明确
-decision。reviewer 字段按收到的文件原样登记（`ChatGPT_manual=32`、`yunlong=2`、`yunlong.deng=3`），
-并由用户在本轮整体确认结果。agent 只验证非 review 字段、event ID、hash、完整性与计数，没有代填 verdict。
-
-人审 notes 的主导机制是把主路正常 lane/connector continuation 当 merge；另含正常转弯、map/token
-assignment、插值/subject identity 错配。完整防重复约束见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)
-的 `N1-F05`–`N1-F08`。
-
-## 17. N1-EVENT-KINEMATIC-01 第三版正式海选
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6` | parent `AWAITING_HUMAN_REVIEW`；后续 human audit `REJECTED` | official train 694 scenes；8,631 transition、1,879 topology、244 physical motion；12 candidates / 9 scenes；negative=2、pair=2 | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-01/v71_n1-event-kinematic-01__kinematic-v1__s0__20260725T092427030639Z__8c2247b6/` | machine support 已失败；第三次 12/12 人审均为 FP，独立裁决见第 18 节；N2 未授权 |
-
-实现与预注册 commit 为 `aa162ef4dea808ad28ca7e56f1273f106e9c0e49`，`code_dirty=false`；
-config fingerprint 为
-`8c2247b6e968aa792fec1dfc475a232f3497e379445ca04f3a38fd12254b3b1b`，data fingerprint 为
-`4f914ac88d2927f78baa67b91b77eab48c6bb56d87acddfae8580acead1befe3`，event-pool canonical SHA256 为
-`4778abadfc44c830f815efd4c52e544bf23e67f975d0b7df44e52e742289d6bf`，artifact-set SHA256 为
-`5742231a88da08ed73d6cf156913084c2a32ad771b16e27f063eae9b1eb70c6b`。
-
-第二次 val 37 条只作 calibration，formal 使用 scene-disjoint official train 并排除全部 10 mini scenes。
-calibration 中第三版拒绝旧 FP 35/35，保留旧 TP 1/2；这些数字不与 formal 候选混算 precision。
-
-全量漏斗：
-
-- transition taxonomy：route continuation=5,759、merge=1,660、lane change=219、unresolved=993；
-- topology-pass 1,879 中，原始 2 Hz physical-motion-pass=244（merge=181、lane change=63）；
-- 244 中 215 缺 center front/rear，17 temporal identity/bumper-gap fail，12 interaction pass；
-- 12/12 最终候选均为 converging-branch merge，覆盖 9 scenes；parallel lane-change 最终为 0；
-- machine checks：positive candidates=true、candidate scenes=true、negative windows=false、
-  same-actor pairs=false，故 `machine_gate_passed=false`。
-
-pair 诊断不改正式 pool：2 actors paired；1 actor 无 30-frame stable run；5 actors 的全部控制窗口与 positive
-overlap；4 actors 有 non-overlap lane-keeping windows，但全部缺等价 front/rear interaction。不得通过缩短
-window、允许 overlap、换 actor 或改成单侧邻车翻案。
-
-audit population=12、items=12；40 个 immutable files 的 hash 复算无误，immutable-set SHA256 为
-`8696e66dcb5764b414b7e3cf74e89261fff63f137197fe13bf6617724180e168`。用户完成后的
-`review_working.jsonl` SHA256 为
-`005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`：
-TP=0、FP=12、UNCERTAIN=0，subject maneuver `INVALID=12`。完整 parent 报告见
-[`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)。
-
-## 18. N1-EVENT-KINEMATIC-AUDIT-01 第三次人工裁决
-
-| Run ID | 状态 | 配置与结果 | 证据 | 准确结论 |
-|---|---|---|---|---|
-| `v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9` | rejected / `REJECTED` | 12/12 完整；TP=0、FP=12、UNCERTAIN=0；precision=0；所有 human gates false（完整性门除外） | `/root/autodl-tmp/runs/event_first/N1-EVENT-KINEMATIC-AUDIT-01/v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155754010881Z__4c51f0d9/` | 地图分支收敛不等于车辆横向机动；第三版正式拒绝，N2 不授权 |
-
-adjudication 入口 commit `984e1f5`，manifest 指纹键修复 commit `1fbbbc1`；成功 run
-`code_dirty=false`。review SHA256 为
-`005cd74b874833808435fd2f47387d1d8e446cdea2d3a5cae6146e34bf331e96`。
-failure-code 计数：
-
-- `SUBJECT_NO_LATERAL_MANEUVER=12`；
-- `ROUTE_CONTINUATION=11`；
-- `NORMAL_TURN=1`；
-- `REAR_INVALID=2`、`FRONT_INVALID=1`；
-- `MAP_MATCH_JITTER=1`。
-
-首次 formal 尝试
-`v71_n1-event-kinematic-audit-01__human-audit-reject-v1__s0__20260725T155523736677Z__4c51f0d9`
-因读取不存在的 `artifact_set_sha256` 而工程失败，保留 `FAILED/failure.json`，不计入研究裁决。修复使用实际
-`immutable_artifact_set_sha256`，并将输入校验移到 run 目录创建前。两次尝试不得合并或删除。
-
-## 19. N1-EVENT-CUTIN-01 第四版预注册与开发校准
-
-第四版 formal 结果查看前冻结
-[`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)：
-
-- receiver-centric 2 Hz center outside→post full-box inside；
-- pre heading alignment，避免主路/路口几何收敛；
-- target corridor 排除 subject source；merge 只枚举独立 direct incoming；
-- 同一最近 RECEIVER pre/post identity 与 `[0.5,40] m` bumper gap；
-- 30-frame same-actor negative 不缩短、不与 physical event overlap，并要求 receiver-matched control。
-
-历史 calibration 为第二次 37 条 + 第三次 12 条，共 49 条 / 26 scenes；这些 scenes 从 formal train 排除。
-冻结 replay：
-
-| Gate | 阈值 | 结果 |
-|---|---:|---:|
-| 第三次 FP rejection | ≥12 | 12/12 |
-| 第二次 FP rejection | ≥34 | 35/35 |
-| 第二次 TP retention | ≥1 | 1/2 |
-
-早期 development smoke 有三类保留证据：
-
-1. 四张官方 `NuScenesMap` 全常驻时进程在算法前 `RC=137`；cgroup memory max 为 2 GiB；
-2. 新 lightweight reader 只读取 lane/arcline/connectivity，arcline 离散化与官方 devkit reference
-   `atol=1e-12` 一致；map cache 改为单 location；
-3. `sample.json`/`instance.json` 使用流式最小投影并复用 metadata source，32-scene batch；相关
-   cut-in/map/review 单测 16 passed。
-
-校准阈值只依据历史已审 49 条冻结；development evaluation 只检查机器产量与工程，不读取人工标签，不得用于
-后验改阈值。正式 machine gates 为 positive≥8、negative≥4、pair≥4、candidate scenes≥5；第四次人工门为
-reviewed≥8、TP≥6、TP scenes≥4、precision≥0.8、Wilson lower≥0.5、uncertain≤0.1，并且 machine gate
-必须通过。所有 development/formal 产物固定 `n2_authorized=false`。
-
-## 20. 登记规则
-
-- 本文件只追加后续 V7 正式实验；历史全量事实不再回填到当前表。
-- 正式 run 不得复用目录或 ID；engineering failure、research rejection 和 completed 都保留。
-- 每条新结论必须给出 commit、resolved config、data/code fingerprint、split、seed、证据路径和终态标记。
-- 人工 verdict 只能由用户或指定评审者填写；机器 screen 与 agent 目视检查单独登记。
-- 任何汇总必须能从 run 产物重新生成；不得手工修饰原始指标或用 top-k 替代全分布结果。
+## 6. `DR-M3/M4` 预注册
+
+### M3
+
+scene-0230 先 100 iterations、再 1,000 iterations 做资源画像；只有投影满足资源合同才跑官方 60k。
+M3 不以单场景数字对齐论文，只验证 exact pipeline 完整。
+
+### M4
+
+六场景全部运行，三项必须同时通过：
+
+```text
+mean PSNR >= 30.56
+mean SSIM >= 0.915
+mean LPIPS(VGG) <= 0.184
+```
+
+报告所有 per-scene、mean、worst-case、coverage。失败只允许一次有明确根因的重跑；仍失败则 `blocked`。
+
+## 7. `DR-M5` 预注册
+
+DGGT 不做训练。固定三个 4-frame windows/scene：
+
+```text
+10..13
+34..37
+66..69
+```
+
+先官方 native protocol，再做 common-observation diagnostic。必须报告 DGGT 与 AD-GS 不同的输入帧数、pose 使用、
+逐场景优化和 resize，禁止写成 matched leaderboard。
+
+## 8. `DR-M6` 预注册
+
+### 对象
+
+每 scene 最多两个：
+
+- 可见支持最高的 `high-support`；
+- 仍满足最低门槛但支持最低的 `boundary-support`。
+
+不足两个如实记 coverage。
+
+### 编辑
+
+```text
+lateral +0.5/+1.0/+1.5 m
+time shift -0.5/+0.5 s
+speed 0.75x/1.25x
+stop 1.0 s then restart
+delete
+```
+
+不赋予 cut-in/merge 语义。
+
+### 真值
+
+- Tier A：held-out real observation；
+- Tier B：geometric support；
+- Tier C：unsupported，只评 uncertainty/ABSTAIN/人审。
+
+### 噪声
+
+固定 `0230/0242/0255`，one-factor-at-a-time，3 seeds；完整级别见权威计划第 11.5 节。
+
+## 9. `DR-M7/M8` 预注册
+
+只有 M6 在 ≥3 scenes 重复失败才选方法。当前预期优先考察：
+
+```text
+编辑诱发 visibility recomputation
++ evidence-typed/confidence-aware Gaussians
++ non-target perception preservation
+```
+
+但 VAD-GS、GA-GS、DrivingEditor、DenoiseGS、Perception-aware 3DGS 的 claim 边界必须先审计。若无稳定失败，
+M7=`rejected`，不硬造模块。
+
+方法实验至少 3 seeds，matched scene/frame/camera/actor/edit/seed/budget，报告 CI、worst-case 与 coverage。
+
+## 10. 历史路线入口
+
+- cut-in 最终封存：[`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
+- cut-in 结束时状态：[`archive/2026-07/cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md)
+- cut-in 结束时实验台账：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
+- OccGS V7/V7.1：[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)
+- 所有失败：[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)

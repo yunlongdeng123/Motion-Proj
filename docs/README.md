@@ -1,62 +1,57 @@
-# Motion-Proj 文档入口
+# Motion-Proj 文档导航
 
-> **当前阶段**：V7.1 H1 已 reject；N1 前三次均已 reject。第三次人审 0 TP / 12 FP；
-> receiver-centric 第四版已预注册且历史 calibration gate 通过。
-> **当前决策**：继续第四版 formal train 海选并交付第四次完整人工审核材料；N2–N5 保持封闭。
-> **唯一状态入口**：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。
+更新时间：2026-07-26
 
-## 建议阅读顺序
+当前研究主线已经从 nuScenes cut-in 挖掘转为：
 
-1. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前结论、授权边界、阻塞和任务队列；
-2. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：失败机制、已知卡点、禁止重复项和复开条件；
-3. [`N1_RECEIVER_CUTIN_PREREGISTRATION.md`](N1_RECEIVER_CUTIN_PREREGISTRATION.md)：
-   第四版 outside→inside、独立 RECEIVER、matched control 与机器/人工门槛；
-4. [`N1_KINEMATIC_PREREGISTRATION.md`](N1_KINEMATIC_PREREGISTRATION.md)：第三版数据隔离、
-   2 Hz 运动学、branch-safe interaction 与机器/人工门槛；
-5. [`N1_KINEMATIC_EVENT_POOL_REPORT.md`](N1_KINEMATIC_EVENT_POOL_REPORT.md)：第三版正式漏斗、
-   pair 失败分解、审核入口与下一突破方向；
-6. [`N1_FULLDOMAIN_EVENT_POOL_REPORT.md`](N1_FULLDOMAIN_EVENT_POOL_REPORT.md)：第二版机器海选及其
-   37 条人工复核入口（最终裁决以状态与实验账本为准）；
-7. [`POST_OCCGS_RESEARCH_DIRECTIONS.md`](POST_OCCGS_RESEARCH_DIRECTIONS.md)：路线调研、替代方向与边界；
-8. [`N0_ASSET_AND_EVENT_PREFLIGHT.md`](N0_ASSET_AND_EVENT_PREFLIGHT.md)：scene→map、actor continuity 与最小外部资产；
-9. [`N1_MINI_EVENT_POOL_REPORT.md`](N1_MINI_EVENT_POOL_REPORT.md)：第一次 N1 provenance 与失败分解；
-10. [`EXPERIMENTS.md`](EXPERIMENTS.md)：V7/V7.1 与 event-first 已发生实验的数值事实；
-11. [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)：V7 feasibility 轮次的历史收口。
+> 动态驾驶场景重建 → 对象级轨迹编辑压力测试 → 遮挡/去遮挡与感知一致性 → 基于稳定失败选择创新。
 
-V7.1 执行计划已经完成并归档，不再是当前授权入口：
-[`archive/2026-07/v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md`](archive/2026-07/v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md)。
+## 当前必须先读
 
-## 当前文档职责
+1. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与授权入口；
+2. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：失败、边界和防重复规则；
+3. [`EXPERIMENTS.md`](EXPERIMENTS.md)：当前路线实验注册表；
+4. [`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)：下一阶段完整方案；
+5. [`human-review/dynamic-reconstruction-plan-v1/README.md`](human-review/dynamic-reconstruction-plan-v1/README.md)：本轮人工审核包。
 
-| 文档 | 负责 | 不负责 |
-|---|---|---|
-| `RESEARCH_STATUS.md` | 当前状态、任务、优先级、授权边界 | 详细实验流水 |
-| `RESEARCH_FAILURES.md` | 失败账本、防重复约束、复开条件 | 隐藏或美化负结果 |
-| `POST_OCCGS_RESEARCH_DIRECTIONS.md` | 调研、路线排序、预检闸门 | 自动授权数据/权重下载 |
-| `N1_RECEIVER_CUTIN_PREREGISTRATION.md` | 第四版 receiver-centric 冻结合同 | formal 后调阈值或启动 N2 |
-| `N1_KINEMATIC_PREREGISTRATION.md` | 第三版冻结合同与停止条件 | 事后调门槛或代替人工 verdict |
-| `N1_KINEMATIC_EVENT_POOL_REPORT.md` | 第三版 formal 事实、失败分解与审核交付 | 把 audit ready 写成 pass |
-| `N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md` | 第三次审核的完整填写合同 | 代填 verdict |
-| `N1_FULLDOMAIN_EVENT_POOL_REPORT.md` | 第二版机器 run provenance 与 audit pack | 把机器 `COMPLETE` 写成人工通过 |
-| `N1_MINI_EVENT_POOL_REPORT.md` | N0/N1 正式结果、边界、下一方向 | 复开已拒绝 mini gate |
-| `EXPERIMENTS.md` | 已发生实验事实、路径、hash | 为未来路线授权 |
-| `OCCGS_FINAL_REPORT.md` | 已结束 feasibility 的历史边界 | 当前任务队列 |
+## 当前路线
 
-## 运维资料
+- 主基线：AD-GS exact reproduction；
+- 前馈对照：DGGT inference-only；
+- 编辑参考：DrivingEditor；
+- 可见性/补密方向必查：VAD-GS；
+- 主数据：AD-GS 官方 nuScenes 六 scenes、固定 60 帧、三前向相机；
+- 当前状态：计划完成，等待用户开放内存与 GPU；
+- 当前禁止：训练、预处理、权重下载、cut-in 继续调参、baseline 前集成改进。
 
-- [`ENVIRONMENT.md`](ENVIRONMENT.md)：环境与路径；
-- [`THIRD_PARTY.md`](THIRD_PARTY.md)：第三方依赖；
-- [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：非 Git 产物保留策略；
-- [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：换机接续。
+## 长期维护文档
 
-## 归档
+- [`ENVIRONMENT.md`](ENVIRONMENT.md)：当前 Motion-Proj 环境；
+- [`THIRD_PARTY.md`](THIRD_PARTY.md)：第三方代码与许可证；
+- [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：产物保留/清理规则；
+- [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：迁移说明；
+- [`run_manifests/`](run_manifests/)：轻量 run manifests。
 
-- [`archive/2026-07/README.md`](archive/2026-07/README.md)：V1–V7.1 历史索引；
-- `archive/2026-07/v7-feasibility/`：V7 feasibility 原计划、阶段报告与旧事实快照；
-- `archive/2026-07/v7.1-h1-reject/`：V7.1 完整执行计划、H1 reject 快照、复盘与编辑备份；
-- `archive/2026-07/n1-kinematic-third-audit/`：第三版预注册、正式报告和人审提示词索引；
-- `archive/2026-07/n1-kinematic-third-reject/`：第三次 12/12 FP、裁决、根因与第四版接续索引；
-- `run_manifests/`：早期轻量 run 证据，不等同于 V7.1 正式 run provenance。
+新路线的 AD-GS/DGGT 独立环境将在用户开放资源并通过 `DR-M2-ENV-ASSET-01` 后登记；不要提前把计划值写成已安装事实。
 
-归档文档里的“当前任务”“下一步”“approved”等措辞均已过期，不构成执行授权。原始 run、checkpoint、
-指标和 review material 仍按原路径保留；归档只改变文档信息架构，不改写实验事实。
+## 历史路线
+
+- [2026-07 总归档索引](archive/2026-07/README.md)
+- [cut-in 路线最终封存](archive/2026-07/cutin-mining-closed/README.md)
+- [OccGS V7 可行性](archive/2026-07/v7-feasibility/)
+- [OccGS V7.1 H1 拒绝](archive/2026-07/v7.1-h1-reject/)
+- [event-first mini 拒绝](archive/2026-07/event-first-mini-reject/)
+- [N1 运动学第三轮](archive/2026-07/n1-kinematic-third-reject/)
+- [N1 接收车第四轮](archive/2026-07/n1-receiver-cutin-fourth-review/)
+
+历史文档只解释当时发生了什么，不授予继续运行旧路线的权限。任何冲突以当前
+[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准。
+
+## 文档规则
+
+- 活跃根目录只保留状态、失败、实验、当前计划和长期维护文档；
+- 路线结束后移入 `archive/YYYY-MM/<route>/`，不在根目录堆多轮报告；
+- 失败教训永不因路线切换而删除；
+- 工具生成的 `.codexbak.*` 不作为正式历史，正式快照必须有命名、索引和恢复路径；
+- 每完成一个里程碑，立即更新 plan、status、experiments，再决定下一步；
+- 人工 verdict 只能由用户或指定评审者填写。
