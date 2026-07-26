@@ -319,6 +319,400 @@ def adapt_v1_evidence_to_v2(record: Mapping[str, Any]) -> dict:
     )
 
 
+def _line_arcs(lane_index, token: str) -> np.ndarray:
+    arcs = getattr(lane_index, "arc_lengths", {}).get(token)
+    if arcs is not None:
+        return np.asarray(arcs, dtype=float)
+    line = np.asarray(lane_index.centerlines[token], dtype=float)
+    if len(line) == 0:
+        raise ValueError(f"空 centerline: {token}")
+    return np.concatenate(
+        ([0.0], np.cumsum(np.linalg.norm(np.diff(line[:, :2], axis=0), axis=1)))
+    )
+
+
+def _line_heading(line: np.ndarray, index: int) -> float:
+    if len(line) == 1:
+        return float(line[0, 2]) if line.shape[1] >= 3 else 0.0
+    left = max(0, min(int(index), len(line) - 2))
+    delta = line[left + 1, :2] - line[left, :2]
+    if float(np.linalg.norm(delta)) > 1e-9:
+        return float(math.atan2(delta[1], delta[0]))
+    return float(line[left, 2]) if line.shape[1] >= 3 else 0.0
+
+
+def parallel_overlap_length(
+    lane_index,
+    source_token: str,
+    target_token: str,
+    *,
+    max_heading_error_deg: float,
+    min_lateral_separation_m: float,
+    max_lateral_separation_m: float,
+) -> float:
+    """计算两条局部并行 centerline 的最长连续重叠长度。"""
+    source_line = np.asarray(lane_index.centerlines[source_token], dtype=float)
+    target_line = np.asarray(lane_index.centerlines[target_token], dtype=float)
+    source_arcs = _line_arcs(lane_index, source_token)
+    target_arcs = _line_arcs(lane_index, target_token)
+    if len(source_line) < 2 or len(target_line) < 2:
+        return 0.0
+    valid = []
+    for index, point in enumerate(source_line):
+        target_projection = project_to_polyline(point[:2], target_line, target_arcs)
+        source_heading = _line_heading(source_line, index)
+        heading_error = math.degrees(
+            angle_error(source_heading, float(target_projection["heading_rad"]))
+        )
+        separation = float(target_projection["distance_m"])
+        valid.append(
+            heading_error <= max_heading_error_deg
+            and min_lateral_separation_m <= separation <= max_lateral_separation_m
+        )
+    best = current = 0.0
+    for index in range(1, len(source_line)):
+        segment = float(source_arcs[index] - source_arcs[index - 1])
+        if valid[index - 1] and valid[index]:
+            current += segment
+            best = max(best, current)
+        else:
+            current = 0.0
+    return float(best)
+
+
+def local_parallel_lane_geometry(
+    lane_index,
+    source_token: str,
+    target_token: str,
+    crossing_xy: Iterable[float],
+    config: Mapping[str, Any],
+) -> dict:
+    """只用局部中心线检查 source/target 是否是相邻、同向、并行车道。"""
+    subject_config = dict(config.get("subject", config))
+    if (
+        source_token not in lane_index.centerlines
+        or target_token not in lane_index.centerlines
+    ):
+        return {
+            "available": False,
+            "source_target_parallel": False,
+            "reason": "MAP_GEOMETRY_UNAVAILABLE",
+        }
+    source_line = np.asarray(lane_index.centerlines[source_token], dtype=float)
+    target_line = np.asarray(lane_index.centerlines[target_token], dtype=float)
+    if len(source_line) < 2 or len(target_line) < 2:
+        return {
+            "available": False,
+            "source_target_parallel": False,
+            "reason": "MAP_GEOMETRY_UNAVAILABLE",
+        }
+    source_projection = project_to_polyline(
+        crossing_xy, source_line, _line_arcs(lane_index, source_token)
+    )
+    target_projection = project_to_polyline(
+        crossing_xy, target_line, _line_arcs(lane_index, target_token)
+    )
+    heading_error = math.degrees(
+        angle_error(
+            float(source_projection["heading_rad"]),
+            float(target_projection["heading_rad"]),
+        )
+    )
+    lateral_separation = float(
+        np.linalg.norm(
+            np.asarray(source_projection["projected_xy"], dtype=float)
+            - np.asarray(target_projection["projected_xy"], dtype=float)
+        )
+    )
+    max_heading = float(subject_config["max_source_target_heading_error_deg"])
+    min_separation = float(subject_config["min_source_target_shift_m"])
+    max_separation = float(subject_config["max_source_target_shift_m"])
+    overlap = parallel_overlap_length(
+        lane_index,
+        source_token,
+        target_token,
+        max_heading_error_deg=max_heading,
+        min_lateral_separation_m=min_separation,
+        max_lateral_separation_m=max_separation,
+    )
+    min_overlap = float(subject_config.get("min_parallel_overlap_m", 8.0))
+    route_continuation = target_token in lane_index.nmap.connectivity.get(
+        source_token, {}
+    ).get("outgoing", [])
+    parallel = (
+        not route_continuation
+        and heading_error <= max_heading
+        and min_separation <= lateral_separation <= max_separation
+        and overlap >= min_overlap
+    )
+    return {
+        "available": True,
+        "source_target_parallel": parallel,
+        "route_continuation": route_continuation,
+        "local_heading_error_deg": heading_error,
+        "local_lateral_separation_m": lateral_separation,
+        "parallel_overlap_length_m": overlap,
+        "min_parallel_overlap_m": min_overlap,
+        "source_projection": source_projection,
+        "target_projection": target_projection,
+    }
+
+
+def raw_lane_preference_sequence(
+    rows: Iterable[Mapping[str, Any]],
+    lane_index,
+    source_token: str,
+    target_token: str,
+) -> list[dict]:
+    """输出原始 keyframe 对 source/target 的几何偏好，供 evidence 与审核使用。"""
+    if source_token not in lane_index.centerlines or target_token not in lane_index.centerlines:
+        return []
+    source_line = np.asarray(lane_index.centerlines[source_token], dtype=float)
+    target_line = np.asarray(lane_index.centerlines[target_token], dtype=float)
+    source_arcs = _line_arcs(lane_index, source_token)
+    target_arcs = _line_arcs(lane_index, target_token)
+    output = []
+    for row in rows:
+        source = project_to_polyline(row["xy"], source_line, source_arcs)
+        target = project_to_polyline(row["xy"], target_line, target_arcs)
+        if abs(float(source["distance_m"]) - float(target["distance_m"])) <= 1e-6:
+            preferred = "tie"
+        elif float(source["distance_m"]) < float(target["distance_m"]):
+            preferred = "source"
+        else:
+            preferred = "target"
+        output.append(
+            {
+                "frame": int(row["frame_index"]),
+                "source_distance_m": float(source["distance_m"]),
+                "target_distance_m": float(target["distance_m"]),
+                "preferred": preferred,
+            }
+        )
+    return output
+
+
+def _strict_subject_projection(row: Mapping[str, Any], corridor: Mapping[str, Any], lane_half_width_m: float) -> dict:
+    """计算 strict-v2 的 raw 2 Hz center/box evidence。"""
+    projection_config = {
+        "lane_half_width_m": lane_half_width_m,
+        "pre_box_outside_clearance_m": 0.0,
+        "post_box_inside_tolerance_m": 0.0,
+    }
+    return _subject_projection(dict(row), dict(corridor), projection_config)
+
+
+def _unwrapped_yaw_change_deg(rows: Iterable[Mapping[str, Any]]) -> float:
+    yaw = np.asarray([float(row["yaw"]) for row in rows], dtype=float)
+    if len(yaw) < 2:
+        return 0.0
+    return float(np.degrees(np.abs(np.diff(np.unwrap(yaw))).sum()))
+
+
+def evaluate_parallel_subject_v2(
+    *,
+    actor_id: int,
+    source_token: str,
+    target_token: str,
+    pre_rows: list[dict],
+    post_rows: list[dict],
+    lane_index,
+    frame_times_s: Mapping[int, float],
+    config: Mapping[str, Any],
+) -> dict:
+    """验证 parallel-lane subject 的全部 raw 2 Hz hard evidence。"""
+    strict = dict(config.get("strict", config))
+    subject_config = dict(strict.get("subject", strict.get("cutin", strict)))
+    lane_half_width = float(strict.get("lane_half_width_m", 1.75))
+    required_pre = int(subject_config["raw_pre_keyframes"])
+    required_post = int(subject_config["raw_post_keyframes"])
+    checks = {
+        "source_target_parallel": False,
+        "raw_pre_outside": False,
+        "raw_post_inside": False,
+        "lateral_convergence": False,
+        "post_heading_stable": False,
+        "subject_dynamic": False,
+    }
+    reasons: list[str] = []
+    if len(pre_rows) < required_pre or len(post_rows) < required_post:
+        reasons.append("INSUFFICIENT_RAW_SUPPORT")
+        return {
+            "status": "ABSTAIN",
+            "reasons": ordered_strict_v2_reasons(reasons),
+            "checks": checks,
+            "subject": {
+                "actor_id": int(actor_id),
+                "source_token": source_token,
+                "target_token": target_token,
+                "pre_frames": [int(row["frame_index"]) for row in pre_rows],
+                "post_frames": [int(row["frame_index"]) for row in post_rows],
+                "per_frame": [],
+            },
+            "geometry": {"available": False, "reason": "INSUFFICIENT_RAW_SUPPORT"},
+        }
+    raw_stride = int(subject_config.get("raw_frame_stride", 5))
+    if any(
+        int(row["frame_index"]) % raw_stride != 0
+        or str(row.get("observation_source", "raw_2hz")) != "raw_2hz"
+        for row in [*pre_rows, *post_rows]
+    ):
+        return {
+            "status": "ABSTAIN",
+            "reasons": ["INTERPOLATION_ONLY"],
+            "checks": checks,
+            "subject": {
+                "actor_id": int(actor_id),
+                "source_token": source_token,
+                "target_token": target_token,
+                "pre_frames": [int(row["frame_index"]) for row in pre_rows],
+                "post_frames": [int(row["frame_index"]) for row in post_rows],
+                "per_frame": [],
+            },
+            "geometry": {"available": False, "reason": "INTERPOLATION_ONLY"},
+        }
+
+    crossing_xy = np.asarray(post_rows[0]["xy"], dtype=float)
+    geometry = local_parallel_lane_geometry(
+        lane_index, source_token, target_token, crossing_xy, subject_config
+    )
+    if not geometry["available"]:
+        reasons.append("MAP_GEOMETRY_UNAVAILABLE")
+        status = "ABSTAIN"
+        projections: list[dict] = []
+    else:
+        corridor = {
+            "centerline": np.asarray(lane_index.centerlines[target_token], dtype=float),
+            "arc_lengths": _line_arcs(lane_index, target_token),
+        }
+        projections = [
+            _strict_subject_projection(row, corridor, lane_half_width)
+            for row in [*pre_rows, *post_rows]
+        ]
+        pre_projection = projections[: len(pre_rows)]
+        post_projection = projections[len(pre_rows) :]
+        abs_lateral = [float(row["abs_lateral_m"]) for row in projections]
+        pre_abs = abs_lateral[: len(pre_rows)]
+        post_abs = abs_lateral[len(pre_rows) :]
+        inward = -np.diff(np.asarray(abs_lateral, dtype=float))
+        variation = float(np.abs(inward).sum())
+        convergence_consistency = (
+            float(np.clip(inward, 0.0, None).sum() / variation)
+            if variation > 1e-9
+            else 0.0
+        )
+        pre_signs = [
+            1 if float(row["signed_lateral_m"]) >= 0 else -1
+            for row in pre_projection
+            if abs(float(row["signed_lateral_m"])) > 1e-6
+        ]
+        side_consistency = (
+            max(pre_signs.count(1), pre_signs.count(-1)) / len(pre_signs)
+            if pre_signs
+            else 0.0
+        )
+        pre_median = float(np.median(pre_abs))
+        post_median = float(np.median(post_abs))
+        post_frames = [int(row["frame"]) for row in post_projection]
+        settle_duration = _time(
+            post_frames[-1], dict(frame_times_s), 0.5
+        ) - _time(post_frames[0], dict(frame_times_s), 0.5)
+        speed = _median_speed(
+            [*pre_rows, *post_rows], dict(frame_times_s), 0.5
+        )
+        yaw_change = _unwrapped_yaw_change_deg([*pre_rows, *post_rows])
+        checks.update(
+            {
+                "source_target_parallel": bool(geometry["source_target_parallel"]),
+                "raw_pre_outside": (
+                    sum(row["center_outside_target_band"] for row in pre_projection)
+                    >= int(subject_config["min_pre_center_outside_keyframes"])
+                    and pre_median >= float(subject_config["min_pre_center_lateral_m"])
+                    and side_consistency
+                    >= float(subject_config["min_pre_side_consistency"])
+                ),
+                "raw_post_inside": (
+                    sum(row["box_inside_target_band"] for row in post_projection)
+                    >= int(subject_config["min_post_box_inside_keyframes"])
+                    and post_median <= float(subject_config["max_post_center_lateral_m"])
+                    and settle_duration
+                    + float(subject_config.get("timestamp_tolerance_s", 0.0))
+                    >= float(subject_config["min_settle_duration_s"])
+                ),
+                "lateral_convergence": (
+                    pre_median - post_median
+                    >= float(subject_config["min_lateral_convergence_m"])
+                    and convergence_consistency
+                    >= float(subject_config["min_lateral_convergence_consistency"])
+                ),
+                "post_heading_stable": (
+                    float(np.median([row["heading_error_deg"] for row in pre_projection]))
+                    <= float(subject_config["max_pre_heading_error_deg"])
+                    and max(row["heading_error_deg"] for row in post_projection)
+                    <= float(subject_config["max_post_heading_error_deg"])
+                    and yaw_change
+                    <= float(subject_config["max_accumulated_yaw_change_deg"])
+                ),
+                "subject_dynamic": speed is not None
+                and speed >= float(subject_config["min_median_speed_mps"]),
+            }
+        )
+        if not checks["source_target_parallel"]:
+            reasons.append("SOURCE_TARGET_NOT_PARALLEL")
+        if not checks["raw_pre_outside"] or not checks["raw_post_inside"] or not checks["lateral_convergence"]:
+            reasons.append("NO_RAW_LATERAL_ENTRY")
+        if not checks["post_heading_stable"]:
+            reasons.append("POST_HEADING_UNSTABLE")
+        if not checks["subject_dynamic"]:
+            reasons.append("SUBJECT_NOT_DYNAMIC")
+        status = "PASS" if not reasons else "FAIL"
+        geometry.update(
+            {
+                "pre_median_abs_lateral_m": pre_median,
+                "post_median_abs_lateral_m": post_median,
+                "lateral_convergence_m": pre_median - post_median,
+                "lateral_convergence_consistency": convergence_consistency,
+                "pre_side_consistency": side_consistency,
+                "settle_duration_s": settle_duration,
+                "median_speed_mps": speed,
+                "accumulated_yaw_change_deg": yaw_change,
+            }
+        )
+    lane_preference = raw_lane_preference_sequence(
+        [*pre_rows, *post_rows], lane_index, source_token, target_token
+    )
+    frame_records = []
+    for row in projections:
+        frame_records.append(
+            {
+                "frame": int(row["frame"]),
+                "observation_source": "raw_2hz",
+                "source_d_m": None,
+                "target_d_m": float(row["signed_lateral_m"]),
+                "target_s_m": float(row["s_m"]),
+                "target_heading_error_deg": float(row["heading_error_deg"]),
+                "speed_mps": None,
+                "center_outside_target_band": bool(row["center_outside_target_band"]),
+                "box_inside_target_band": bool(row["box_inside_target_band"]),
+            }
+        )
+    return {
+        "status": status,
+        "reasons": ordered_strict_v2_reasons(reasons),
+        "checks": checks,
+        "subject": {
+            "actor_id": int(actor_id),
+            "source_token": source_token,
+            "target_token": target_token,
+            "pre_frames": [int(row["frame_index"]) for row in pre_rows],
+            "post_frames": [int(row["frame_index"]) for row in post_rows],
+            "per_frame": frame_records,
+            "raw_lane_preference": lane_preference,
+        },
+        "geometry": geometry,
+    }
+
+
 def _edge_geometry(lane_index, left: str, right: str) -> dict:
     left_line = lane_index.centerlines[left]
     right_line = lane_index.centerlines[right]
