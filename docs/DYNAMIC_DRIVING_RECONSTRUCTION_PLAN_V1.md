@@ -1,9 +1,9 @@
 # 动态驾驶场景重建与反事实编辑研究计划 V1
 
 - 版本：V1
-- 日期：2026-07-26
-- 当前里程碑状态：`done`（M1 完成；M2 等待用户开放资源）
-- 当前授权：无 GPU，cgroup 内存上限 2 GiB；只允许调研、文档、归档与轻量审计
+- 日期：2026-07-27
+- 当前里程碑状态：`blocked`（M3 scene-0230 已完成；M4 scene-0242 触发注册的 cgroup 90% 停止线）
+- 当前授权：1× RTX 4080 SUPER 32 GB，cgroup `memory.max=66,571,993,088` bytes，数据盘约 149 GiB 可用
 - 主基线：AD-GS exact reproduction
 - 前馈对照：DGGT inference-only
 - 编辑参考：DrivingEditor
@@ -78,7 +78,7 @@ AD-GS 是 ICCV 2025 的自监督对象级动态驾驶场景高斯方法。官方
 
 - scenes：`0230, 0242, 0255, 0295, 0518, 0749`
 - 每个 scene：camera chain 的第 `10..69` 帧，含首尾，共 60 帧
-- cameras：`CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT`
+- cameras：`CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT`
 - 分辨率：`900×1600`
 - 测试：每 4 张取 1 张，严格沿用 upstream 实现
 - 训练：官方配置默认 60,000 iterations
@@ -152,12 +152,16 @@ nuScenes 官方提供对象类别、属性、3D 框、传感器和地图等标�
 
 结论：当前 raw 主要只有 keyframe 资产；AD-GS 需要的左右前相机和中间 sweep 不完整。不能直接开训练。
 
+2026-07-27 的 M2 已在版本化目录中闭合该缺口：六场景各 180 RGB + 60 个最近 LiDAR，共 1,440 个唯一
+sensor payload；另补齐 nuScenes devkit 初始化必需的 4 个静态 map masks。所有文件均为非 symlink、非空且
+SHA-256 与 manifest 一致。旧 `/root/autodl-tmp/data/nuscenes` 仍未原地改写。
+
 ### 3.3 选择性提取，不复制 294 GB 全量 tar
 
 本机只读公共目录：
 
 ```text
-/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval/
+/autodl-pub/data/nuScenes/Fulldatasetv1.0/Trainval/
 ```
 
 其中有 `v1.0-trainval01_blobs.tgz` 至 `v1.0-trainval10_blobs.tgz`，合计约 294 GB。执行阶段采用：
@@ -240,7 +244,7 @@ nuScenes 官方提供对象类别、属性、3D 框、传感器和地图等标�
 
 - Depth Anything V2 Large：Python `3.11`，固定 checkpoint SHA-256；
 - Grounded-SAM-2：Python `3.10`，`CUDA_HOME` 指向 12.1 toolkit；
-- CoTracker3：固定 torch.hub repo commit 与权重哈希；
+- CoTracker3：固定本地 repo commit 与离线权重哈希，禁止运行时追随在线 `main`；
 - COLMAP/SfM：记录 COLMAP 版本、命令行和数据库哈希。
 
 若 Python 3.7/旧包 channel 已不可求解，只允许最小 compatibility patch：
@@ -303,10 +307,14 @@ CC BY-NC-SA 4.0 与附加条款。DGGT 代码与模型许可证分别登记，�
 
 ### 5.1 本轮合同
 
-- `memory.max=2,147,483,648` bytes；
-- metadata 审计后 `memory.current` 一度约 `2,129,526,784` bytes；
-- 无可用 GPU；
-- 因此本轮不执行 conda 求解、clone、权重下载、tar 扫描、预处理、训练或推理。
+- GPU：`NVIDIA GeForce RTX 4080 SUPER, 32760 MiB`，driver `580.105.08`；
+- `memory.max=66,571,993,088` bytes（约 62 GiB）；
+- M2 正式通过实例峰值 `memory.current=30,123,261,952` bytes；
+- 首次全量 tar 扫描实例峰值 `57,001,484,288` bytes，仍低于 90% 停机线；
+- M2 全程 `oom=0 / oom_kill=0`；
+- 数据盘在 M2 结束时约 161 GiB 可用。
+
+该合同满足 24 GB GPU、32 GB RAM 和 60 GiB 启动磁盘门槛，允许继续 scene-0230 分级复现。
 
 ### 5.2 下一轮最低申请
 
@@ -362,9 +370,9 @@ wall time、退出码、产物字节数与 SHA-256。失败 run 不覆盖，重�
 |---|---|---|---|---|
 | M0 旧路线封存与清理 | `DR-M0-ARCHIVE-01` | done | 归档、清理清单、恢复路径 | 保留项验证、无 OOM |
 | M1 官方调研与方案 | `DR-M1-PLAN-01` | done | 本计划、失败追加、人工审核包 | 用户审核并开放资源 |
-| M2 环境与资产 smoke | `DR-M2-ENV-ASSET-01` | pending | 锁定环境、六场景精确资产 manifest | 所有结构门禁通过 |
-| M3 AD-GS 0230 | `DR-M3-ADGS-0230-01` | pending | 预处理、60k 训练、渲染、指标、资源画像 | pipeline 完整、无协议修改 |
-| M4 AD-GS 六场景 | `DR-M4-ADGS-6SCENE-01` | pending | 六场景 per-scene/aggregate 结果 | 论文复现带宽通过 |
+| M2 环境与资产 smoke | `DR-M2-ENV-ASSET-01` | done | 锁定环境、六场景精确资产 manifest | 所有结构门禁通过 |
+| M3 AD-GS 0230 | `DR-M3-ADGS-0230-01` | done | 预处理、60k 训练、渲染、指标、资源画像 | pipeline 完整、无协议修改 |
+| M4 AD-GS 六场景 | `DR-M4-ADGS-6SCENE-01` | blocked | 六场景 per-scene/aggregate 结果 | 论文复现带宽通过 |
 | M5 DGGT 推理对照 | `DR-M5-DGGT-NUSC-01` | pending | native 与 common-input 诊断报告 | upstream smoke 通过 |
 | M6 编辑/噪声压力测试 | `DR-M6-STRESS-01` | pending | failure matrix、视频、typed metrics | 至少一个跨场景稳定失败 |
 | M7 创新假设预注册 | `DR-M7-HYPOTHESIS-01` | pending | 唯一主假设、matched baselines、primary endpoint | 不与现有工作重合 |
@@ -375,6 +383,10 @@ wall time、退出码、产物字节数与 SHA-256。失败 run 不覆盖，重�
 [`EXPERIMENTS.md`](EXPERIMENTS.md)，再决定下一步。不得一次越过两个未通过门禁。
 
 ## 8. M2：环境、资产和伪监督闭合
+
+M2 冻结环境、权重、原始资产和各伪监督模型的最小 GPU smoke；scene-0230 的整段 depth/mask/flow/COLMAP
+生成属于 M3 的预处理 stages。这个执行拆分不改变 upstream 顺序、输入、分辨率或模型，只避免在原始资产门禁通过前
+生成不可审计的派生产物。
 
 ### 8.1 环境 smoke
 
@@ -396,7 +408,7 @@ wall time、退出码、产物字节数与 SHA-256。失败 run 不覆盖，重�
 - camera pose 与 intrinsics 都是 finite；
 - 最近 LiDAR 匹配时间差分布；
 - train/test 索引与 upstream 逐项一致；
-- `meta.npz`、`points3d.ply` 可解析；
+- M3 `prepare_raw` 后生成的 `meta.npz`、`points3d.ply` 可解析；
 - 不允许 symlink 指向会被清理的旧 N1 cache。
 
 ### 8.3 伪监督流水线
@@ -790,6 +802,78 @@ guardrails：
 - 文档导航、失败总账、实验台账和空白人工审核包已完成
 - 下一步：停止计算，等待用户审核并开放 ≥32 GB RAM 与 24 GB GPU
 
+### 2026-07-27 — M2 `done`
+
+- 正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M2-ENV-ASSET-01/20260727T180733__e49a4e-4080s-r3/`
+- 项目 commit：`2d46f4c1c79708451081f291a267a7acd26a3236`；未提交工作树由 fingerprint 和 source snapshots 固化
+- AD-GS、DPT、Grounded-SAM-2、固定 revision 的 Grounding DINO HF 与固定 CoTracker3 权重 smoke 全部通过
+- 六场景共 1,440 个 sensor payload 与 4 个 map masks 通过文件、哈希、尺寸、时间戳、标定、pose 和 LiDAR 审计
+- 数据 manifest SHA-256：`64c68972a25834757168cd8fdc11c64b134b6ae0d9206a9ebde4064891c16092`
+- AD-GS compatibility patch SHA-256：`efbed2eb888d2e77238e99ea84423435cc5d241b3dbb0dc55443e4967eb1c98a`
+- 前一实例因遗漏 devkit 所需 map masks 以 `blocked` 保留；修复没有覆盖失败证据
+- 正式实例峰值 cgroup memory `30,123,261,952` bytes，`oom=0 / oom_kill=0`
+- 下一步：M4 依次执行其余五个官方 scenes，并与已完成的 scene-0230 聚合六场景指标
+
+### 2026-07-27 — M3 `done`
+
+- 第一个 blocked 实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/20260727T181617__scene0230__s0/`
+- blocked 根因：AD-GS nuScenes prepare 固定输出 PNG，而 Grounded-SAM-2 video loader 只按 JPEG 扩展名枚举
+- 第二个 blocked 实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/20260727T182247__scene0230__s0-r2/`
+- 第二次 blocked 根因：upstream COLMAP 使用全部 128 个 CPU threads，feature extraction 峰值
+  cgroup memory `62,265,835,520` bytes，连续两个采样高于 90% 停止线；`oom=0 / oom_kill=0`
+- 当前正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/20260727T195611__scene0230__s0-r3/`
+- 启动配置：scene-0230，frames 10..69，三相机 upstream 顺序，900×1600，seed 0
+- r3 逐文件验证并复用 r2 的 860 个 pre-COLMAP 产物，复用指纹：
+  `836b8f1480b083e5d9180f235e06d290c2ed7c5eb6f4de791d920fe945282891`
+- compatibility patch 新增 byte-preserving `.jpg` staging alias，并只把 COLMAP 并发限制为 16 threads；
+  不转码、不改像素、模型、SIFT 参数、匹配、损失或指标；patch SHA-256：
+  `49b4c06ecec6c30f1e80b5abf4d46970920f9d71952acbda273774d9b5b34f48`
+- COLMAP 已通过：138/138 images registered、70,933 points；阶段峰值 cgroup memory
+  `35,117,174,784` bytes，`oom=0 / oom_kill=0`
+- processed audit 已通过：180 images/depth/sky/semantic、138/138 flow；meta、points 与 COLMAP 均可解析
+- 100-step official test render：
+  `SSIM 0.722992 / PSNR 20.259757 / LPIPS(VGG) 0.508387`
+- 1,000-step official test render：
+  `SSIM 0.817581 / PSNR 24.365907 / LPIPS(VGG) 0.376104`；checkpoint 为 216,705 points
+- 1,000-step train/render 峰值 cgroup memory：
+  `54,966,005,760 / 57,229,574,144` bytes；峰值 VRAM `6,723 / 3,957` MiB；无 OOM
+- 100/1,000 工程门禁证据：
+  `gate_train100.json`、`gate_train1000.json`
+- 正式 60,000-step train/render 均 `rc=0`；test：
+  `SSIM 0.905364 / PSNR 29.902695 / LPIPS(VGG) 0.212178 / FPS 48.0888`
+- train：
+  `SSIM 0.939280 / PSNR 33.639803 / LPIPS(VGG) 0.181345 / FPS 42.3325`
+- 最终 1,315,757 points；60k train/render 峰值 cgroup memory：
+  `59,136,491,520 / 59,530,678,272` bytes；峰值 VRAM `16,039 / 6,407` MiB；无 OOM
+- 180 个 train/test render 全部 1600×900、非空、非全黑；代表性 GT/render 对抽查未发现错相机或分支整体崩溃，
+  动态车辆与路侧信息牌仍存在可见拖影，保留为 baseline 局限
+- 最终审计：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/20260727T195611__scene0230__s0-r3/m3_final_audit.json`
+- 单场景无预注册数值目标，M3 只裁决 pipeline 完整性，不能冒充六场景论文复现
+
+### 2026-07-28 — M4 `blocked`
+
+- scene-0230 直接采用 M3 冻结的正式 60k 结果，不重复训练
+- scene-0242 正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260727T235743__scene0242__s0/`
+- 通用逐场景 runner：
+  `scripts/run_dr_adgs_scene.py`，SHA-256
+  `b6d91f6986828dc8d23d0a6384bfe5bc5f9c3f466f91c189f167b0d2e8d52be8`
+- scene-0242 preprocess 完整通过：180 images/depth/sky/semantic、138/138 flow、COLMAP 138/138
+  registered images；SfM 只有 1,639 points，但主点云有 392,177 points，结构审计无失败
+- flow 耗时约 2 小时 45 分，峰值 cgroup memory `44,934,205,440` bytes、VRAM `19,473` MiB；
+  COLMAP 峰值 cgroup memory `44,902,842,368` bytes，均无 OOM
+- 100-step train 已完成：test PSNR `16.817851`、train PSNR `17.162207`、79,320 points；
+  峰值 cgroup memory `59,359,428,608` bytes
+- 随后的 official render 在第 2/138 帧触发注册硬停止：连续两个采样达到 cgroup 90%，峰值
+  `59,996,393,472` bytes，超过停止线约 81,599,693 bytes；runner 以 `SIGTERM` 结束本 stage，
+  `oom=0 / oom_kill=0`，没有杀其他服务或继续重跑
+- M4 当前需要外部资源变更后以新 instance 恢复；不得在现有合同下重跑、清空全局缓存、降分辨率或删相机
+
 ## 18. 官方一手来源
 
 - [nuScenes 官方数据说明](https://www.nuscenes.org/nuscenes)
@@ -812,17 +896,9 @@ guardrails：
 - [GA-GS 论文](https://arxiv.org/abs/2604.04331)
 - [Waymo E2E 官方页](https://waymo.com/open/data/e2e/)
 
-## 19. 下一次授权后的第一条动作
+## 19. 当前下一条动作
 
-不直接安装。先执行只读资源 preflight，并把新合同写入 `DR-M2-ENV-ASSET-01`：
-
-```text
-memory.max/current/events
-GPU model/VRAM/driver
-CUDA toolkit/nvcc/gcc
-CPU cores
-disk free/inode
-existing process inventory
-```
-
-只有资源合同满足第 5 节，才 clone/pin AD-GS 并开始 M2。若不满足，状态写 `blocked`，向用户报告缺口并等待。
+等待为 `DR-M4-ADGS-6SCENE-01` 提高 cgroup 内存额度；建议至少 80 GiB，推荐 96 GiB，为 scene-0242
+60k 增密与最终 render 留出安全余量。资源变化后新建 instance，从已冻结 processed scene
+`scene-0242` 开始，不覆盖 blocked 实例；随后严格串行处理 scene-0255、0295、0518、0749。禁止在当前
+合同下重跑、放宽 90% 停止线、降分辨率、删相机或全局 drop caches。

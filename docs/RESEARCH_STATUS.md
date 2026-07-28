@@ -1,13 +1,13 @@
 # Research Status
 
-- 更新时间：2026-07-26
+- 更新时间：2026-07-28
 - 当前路线：动态驾驶场景重建与反事实编辑
-- 当前里程碑：`DR-M1-PLAN-01`
-- 状态：`done`
-- 下一门禁：用户审核计划并开放资源后，启动 `DR-M2-ENV-ASSET-01`
-- 当前资源合同：无 GPU，cgroup `memory.max=2,147,483,648` bytes
-- 本轮执行起点：`beee1de`
-- 本轮交付 commit：以远端 `git rev-parse HEAD` 为准
+- 当前里程碑：`DR-M4-ADGS-6SCENE-01`
+- 状态：`blocked`
+- 当前门禁：scene-0242 official render 触发 cgroup 90% 硬停止
+- 当前资源合同：RTX 4080 SUPER 32 GB，cgroup `memory.max=66,571,993,088` bytes，数据盘约 149 GiB 可用
+- 本轮执行起点：`2d46f4c1c79708451081f291a267a7acd26a3236`
+- 本轮交付 commit：尚未提交；正式 run 已记录 worktree fingerprint 和 source snapshots
 - 权威计划：[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
 
 ## 当前裁决
@@ -55,6 +55,37 @@ nuScenes cut-in mining 已 `rejected / frozen`：
 - 写成完整环境、数据、实验、统计、停止与人工审核方案；
 - 将路线转向失败与防重复项加入 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)。
 
+### `DR-M2-ENV-ASSET-01` — done
+
+- 正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M2-ENV-ASSET-01/20260727T180733__e49a4e-4080s-r3/`
+- AD-GS、DPT、Grounded-SAM-2、固定 revision Grounding DINO HF 和固定 CoTracker3 权重 smoke 全部通过；
+- 六场景精确提取 1,440 个 sensor payload，并补齐 4 个 nuScenes map masks；
+- 每场景 180 RGB + 60 unique LiDAR；1600×900、相机顺序、时间戳、标定、pose、LiDAR shape 全部通过；
+- manifest SHA-256：
+  `64c68972a25834757168cd8fdc11c64b134b6ae0d9206a9ebde4064891c16092`；
+- compatibility patch SHA-256：
+  `efbed2eb888d2e77238e99ea84423435cc5d241b3dbb0dc55443e4967eb1c98a`；
+- 正式实例峰值 cgroup memory `30,123,261,952` bytes，`oom=0 / oom_kill=0`；
+- 首次审计因缺少 4 个 map masks 失败，已以独立 `blocked` 实例保留，没有覆盖失败证据。
+
+### `DR-M3-ADGS-0230-01` — done
+
+- 正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/20260727T195611__scene0230__s0-r3/`
+- 180 images/depth/sky/semantic、138/138 flow、COLMAP 138/138 registered images 全部通过；
+- 60k official test：
+  `SSIM 0.905364 / PSNR 29.902695 / LPIPS(VGG) 0.212178 / FPS 48.0888`；
+- 60k official train：
+  `SSIM 0.939280 / PSNR 33.639803 / LPIPS(VGG) 0.181345 / FPS 42.3325`；
+- checkpoint：1,315,757 points；
+- 60k train/render 峰值 cgroup memory：
+  `59,136,491,520 / 59,530,678,272` bytes；
+- 60k train/render 峰值 VRAM：`16,039 / 6,407` MiB；
+- `oom=0 / oom_kill=0`，渲染阶段距 90% 停止线仅 384,115,507 bytes；
+- 全量结构/像素统计与代表性视觉抽查通过；动态目标拖影作为 baseline 局限保留；
+- 最终审计：`m3_final_audit.json`；M3 无单场景数值目标，不能冒充论文六场景结果。
+
 ## 当前资产事实
 
 AD-GS 官方 nuScenes 协议固定为：
@@ -63,35 +94,48 @@ AD-GS 官方 nuScenes 协议固定为：
 scene-0230, scene-0242, scene-0255,
 scene-0295, scene-0518, scene-0749
 frames 10..69 inclusive
-CAM_FRONT_LEFT / CAM_FRONT / CAM_FRONT_RIGHT
+CAM_FRONT / CAM_FRONT_LEFT / CAM_FRONT_RIGHT
 900×1600
 ```
 
-当前磁盘缺少左右前相机和中间 sweeps，不能直接训练。所需文件可从本机只读官方 tar shards 选择性提取：
+M1 发现的左右前相机和中间 sweeps 缺口已经闭合。正式 raw subset：
 
 ```text
-/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval/
+/root/autodl-tmp/data/dynamic_recon/raw_subset/adgs_nuscenes_v1/
 ```
 
-禁止全量解压 294 GB；下一阶段先生成精确 member manifest。
+来源是 `/autodl-pub/data/nuScenes/Fulldatasetv1.0/Trainval/` 的只读 tar shards；只提取精确 member，
+没有全量解压 294 GB。
 
-## 下一步：`DR-M2-ENV-ASSET-01`
+## 当前执行：`DR-M4-ADGS-6SCENE-01`
 
-用户开放资源后，第一步只做资源 preflight：
+scene-0230 使用 M3 已冻结的正式 60k 结果。当前 scene-0242 实例：
 
-- 至少 1×24 GB GPU；
-- 系统 RAM 最低 32 GB，推荐 64 GB；
-- 磁盘启动时可用 ≥60 GiB，并保留 20 GiB 安全余量；
-- 记录 GPU/driver/CUDA/gcc/cgroup/process inventory。
+```text
+/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260727T235743__scene0242__s0/
+```
 
-资源满足后：
+通用 runner `scripts/run_dr_adgs_scene.py` 把原 M3 runner 只做 scene/task 参数化；preprocess、模型、
+阈值、分辨率、帧、相机、seed、训练和指标命令均未改变。runner SHA-256：
+`b6d91f6986828dc8d23d0a6384bfe5bc5f9c3f466f91c189f167b0d2e8d52be8`。
 
-1. pin AD-GS upstream commit；
-2. 创建隔离的 AD-GS/DPT/SAM 环境；
-3. 编译并做最小 forward/backward smoke；
-4. 选择性提取 scene-0230；
-5. 完成伪监督与数据结构门禁；
-6. 先 100/1,000 iteration profile，再决定是否启动官方 60k。
+scene-0242 preprocess 已通过：180 images/depth/sky/semantic、138/138 flow、COLMAP 138/138
+registered images；主点云 392,177 points，SfM 1,639 points。100-step train 完成，test PSNR
+`16.817851`、train PSNR `17.162207`、79,320 points；训练峰值 cgroup memory
+`59,359,428,608` bytes。
+
+official render 随后在第 2/138 帧连续两个采样达到 90% 停止线，峰值
+`59,996,393,472` bytes，stage `rc=-15`、runner `rc=1`；`oom=0 / oom_kill=0`。该实例已保留为
+`blocked`，没有立即重跑、放宽门禁、降分辨率、删相机或全局清缓存。
+
+固定执行：
+
+恢复条件：
+
+1. 提高容器 cgroup 内存；建议至少 80 GiB、推荐 96 GiB；
+2. 新建 M4 scene-0242 instance，复用已冻结 processed scene，但不覆盖 blocked 证据；
+3. 保持 frames 10..69、三相机、900×1600、seed 0、模型、损失与指标不变；
+4. 再继续 scene-0255、0295、0518、0749，最后聚合六场景门禁。
 
 任何内存/显存不足、RC137 或需要缩减官方协议的情况，立即写 `blocked` 并等待用户，不反复重跑。
 
