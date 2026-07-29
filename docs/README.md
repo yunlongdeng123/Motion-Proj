@@ -1,28 +1,32 @@
 # Motion-Proj 文档导航
 
-更新时间：2026-07-26
+更新时间：2026-07-29
 
-当前研究主线已经从 nuScenes cut-in 挖掘转为：
+动态驾驶重建路线已按预注册 novelty gate 走到研究终态：
 
-> 动态驾驶场景重建 → 对象级轨迹编辑压力测试 → 遮挡/去遮挡与感知一致性 → 基于稳定失败选择创新。
+> AD-GS 六场景复现完成 → DGGT upstream 对照闭合 → M6 身份负结果跨六场景重复 → M7 novelty rejected → M8/M9 未授权。
 
 ## 当前必须先读
 
 1. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与授权入口；
 2. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：失败、边界和防重复规则；
 3. [`EXPERIMENTS.md`](EXPERIMENTS.md)：当前路线实验注册表；
-4. [`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)：下一阶段完整方案；
-5. [`human-review/dynamic-reconstruction-plan-v1/README.md`](human-review/dynamic-reconstruction-plan-v1/README.md)：本轮人工审核包。
+4. [`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)：完整方案与最终里程碑日志；
+5. [`DR_M5_DGGT_REPORT.md`](DR_M5_DGGT_REPORT.md)：DGGT blocked 证据与 common-observation 边界；
+6. [`DR_M7_NOVELTY_AUDIT.md`](DR_M7_NOVELTY_AUDIT.md)：唯一候选与官方 novelty matrix；
+7. [`human-review/dynamic-reconstruction-results-v1/README.md`](human-review/dynamic-reconstruction-results-v1/README.md)：M9 未触发的机器终止包；
+8. [`20260729T150248+0800_summary.md`](20260729T150248+0800_summary.md)：本轮结束总结。
 
 ## 当前路线
 
-- 主基线：AD-GS exact reproduction；
-- 前馈对照：DGGT inference-only；
-- 编辑参考：DrivingEditor；
-- 可见性/补密方向必查：VAD-GS；
-- 主数据：AD-GS 官方 nuScenes 六 scenes、固定 60 帧、三前向相机；
-- 当前状态：计划完成，等待用户开放内存与 GPU；
-- 当前禁止：训练、预处理、权重下载、cut-in 继续调参、baseline 前集成改进。
+- M4：AD-GS 官方 nuScenes 六 scenes exact reproduction `done`，三项带宽通过；
+- M5：DGGT inference-only `blocked`，正式证据
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`；
+  common-observation 未触发；
+- M6：`persistent_object_identity_unavailable` 在 6/6 scenes 重复，0/12 object slots；
+- M7：候选 A novelty `rejected`；
+- M8/M9：`rejected / not authorized`，没有方法数字、盲审 clips 或人工 verdict；
+- 当前禁止：继续本轮方法实现、事后注册 endpoint、把适配工程或 0 coverage 重命名为创新。
 
 ## 长期维护文档
 
@@ -32,7 +36,8 @@
 - [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：迁移说明；
 - [`run_manifests/`](run_manifests/)：轻量 run manifests。
 
-新路线的 AD-GS/DGGT 独立环境将在用户开放资源并通过 `DR-M2-ENV-ASSET-01` 后登记；不要提前把计划值写成已安装事实。
+AD-GS/DGGT 环境与精确版本已经登记在 [`ENVIRONMENT.md`](ENVIRONMENT.md)；新路线必须使用新的任务 ID、
+独立 novelty delta 与前瞻 endpoint，不能覆盖本轮 rejected/ABSTAIN 证据。
 
 ## 历史路线
 

@@ -1,14 +1,14 @@
 # 动态驾驶场景重建与反事实编辑研究计划 V1
 
 - 版本：V1
-- 日期：2026-07-27
-- 当前里程碑状态：`blocked`（M3 scene-0230 已完成；M4 scene-0242 触发注册的 cgroup 90% 停止线）
-- 当前授权：1× RTX 4080 SUPER 32 GB，cgroup `memory.max=66,571,993,088` bytes，数据盘约 149 GiB 可用
+- 日期：2026-07-27；最终更新：2026-07-29
+- 当前里程碑状态：`research terminal / M7 rejected`；M4 done，M5 blocked，M6 done，M8/M9 未授权
+- 当前授权：本轮只允许证据闭合；禁止在 M7 novelty 失败后启动 M8 方法/消融或 M9 盲审
 - 主基线：AD-GS exact reproduction
 - 前馈对照：DGGT inference-only
 - 编辑参考：DrivingEditor
 - 必查几何对照：VAD-GS（仅当后续创新涉及补密/可见性/缺失几何）
-- 研究主张候选：面向反事实轨迹编辑的、对象级且不确定性感知的动态驾驶场景高斯重仿真
+- 研究主张候选：`rejected`；身份/actor binding/轨迹编辑主机制与现有工作直接重合
 - 历史路线：nuScenes cut-in mining 已 `rejected / frozen`
 
 ## 0. 一页执行摘要
@@ -25,15 +25,17 @@
 → matched ablation、下游感知评测与盲审
 ```
 
+实际执行在 M7 novelty gate 结束：M8/M9 未授权，最后一行没有启动。完整终态见第 17–19 节。
+
 在 AD-GS 六场景复现门禁通过前，禁止集成 Motion-Proj/StreetGS/OccGS、occupancy、扩散、物理约束、感知损失或
 轨迹编辑。cut-in 最多在方法成熟后作为一个演示，不再要求官方占比或事件召回率。
 
-当前最可能的论文问题是：
+预注册时的候选论文问题是：
 
 > 当对象轨迹被反事实修改后，如何显式重算遮挡/去遮挡，在观测不足区域给出可校准的真实性与拒绝信号，并在非目标
 > 区域保持跨视角、跨时间和下游感知一致性？
 
-这只是待压力测试验证的假设，不是已经成立的贡献。
+M6 证明冻结身份不可用，M7 又证明候选核心机制缺少独立 novelty；因此它没有成为本轮贡献。
 
 ## 1. 路线裁决与失败继承
 
@@ -307,14 +309,15 @@ CC BY-NC-SA 4.0 与附加条款。DGGT 代码与模型许可证分别登记，�
 
 ### 5.1 本轮合同
 
-- GPU：`NVIDIA GeForce RTX 4080 SUPER, 32760 MiB`，driver `580.105.08`；
-- `memory.max=66,571,993,088` bytes（约 62 GiB）；
-- M2 正式通过实例峰值 `memory.current=30,123,261,952` bytes；
-- 首次全量 tar 扫描实例峰值 `57,001,484,288` bytes，仍低于 90% 停机线；
-- M2 全程 `oom=0 / oom_kill=0`；
-- 数据盘在 M2 结束时约 161 GiB 可用。
+- GPU：`NVIDIA GeForce RTX 3090, 24576 MiB`，driver `580.105.08`；
+- `memory.max=96,636,764,160` bytes（90 GiB）；
+- 当前换机 M2 实例峰值 `memory.current=9,685,876,736` bytes；
+- scene-0242 1,000-step train/render 峰值
+  `23,832,678,400 / 25,567,031,296` bytes；
+- 当前实例截至 1,000-step 全程 `oom=0 / oom_kill=0`；
+- 数据盘在新合同启动时约 141 GiB 可用。
 
-该合同满足 24 GB GPU、32 GB RAM 和 60 GiB 启动磁盘门槛，允许继续 scene-0230 分级复现。
+该合同满足 24 GB GPU、至少 80 GiB cgroup 和 60 GiB 启动磁盘门槛，允许恢复 scene-0242 并继续串行 M4。
 
 ### 5.2 下一轮最低申请
 
@@ -372,12 +375,12 @@ wall time、退出码、产物字节数与 SHA-256。失败 run 不覆盖，重�
 | M1 官方调研与方案 | `DR-M1-PLAN-01` | done | 本计划、失败追加、人工审核包 | 用户审核并开放资源 |
 | M2 环境与资产 smoke | `DR-M2-ENV-ASSET-01` | done | 锁定环境、六场景精确资产 manifest | 所有结构门禁通过 |
 | M3 AD-GS 0230 | `DR-M3-ADGS-0230-01` | done | 预处理、60k 训练、渲染、指标、资源画像 | pipeline 完整、无协议修改 |
-| M4 AD-GS 六场景 | `DR-M4-ADGS-6SCENE-01` | blocked | 六场景 per-scene/aggregate 结果 | 论文复现带宽通过 |
-| M5 DGGT 推理对照 | `DR-M5-DGGT-NUSC-01` | pending | native 与 common-input 诊断报告 | upstream smoke 通过 |
-| M6 编辑/噪声压力测试 | `DR-M6-STRESS-01` | pending | failure matrix、视频、typed metrics | 至少一个跨场景稳定失败 |
-| M7 创新假设预注册 | `DR-M7-HYPOTHESIS-01` | pending | 唯一主假设、matched baselines、primary endpoint | 不与现有工作重合 |
-| M8 方法与消融 | `DR-M8-METHOD-01` | pending | 3 seeds、六场景、消融、统计 | primary 改善且 guardrail 不退化 |
-| M9 人工审核与最终包 | `DR-M9-HUMAN-01` | pending | 盲审包、复现包、论文 claim 边界 | 人工结论由评审填写 |
+| M4 AD-GS 六场景 | `DR-M4-ADGS-6SCENE-01` | done | 六场景 per-scene/aggregate 结果 | 三项论文复现带宽全过 |
+| M5 DGGT 推理对照 | `DR-M5-DGGT-NUSC-01` | blocked | native 与 common-input 诊断报告 | 明确 upstream packaging blocked 证据 |
+| M6 编辑/噪声压力测试 | `DR-M6-STRESS-01` | done | failure matrix、typed metrics、完整 ABSTAIN coverage | 6/6 scenes 持久身份失败 |
+| M7 创新假设预注册 | `DR-M7-HYPOTHESIS-01` | rejected | 唯一候选 A 与官方 novelty matrix | 与 InstDrive 等直接重合 |
+| M8 方法与消融 | `DR-M8-METHOD-01` | rejected | 未授权、0 seeds、0 proposed metrics | M7 novelty gate 失败 |
+| M9 人工审核与最终包 | `DR-M9-HUMAN-01` | rejected | 未触发说明、machine termination pack | 不存在可盲审的 M8 方法结果 |
 
 每完成一个里程碑，必须在同一工作回合更新本表、[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 和
 [`EXPERIMENTS.md`](EXPERIMENTS.md)，再决定下一步。不得一次越过两个未通过门禁。
@@ -874,6 +877,103 @@ guardrails：
   `oom=0 / oom_kill=0`，没有杀其他服务或继续重跑
 - M4 当前需要外部资源变更后以新 instance 恢复；不得在现有合同下重跑、清空全局缓存、降分辨率或删相机
 
+### 2026-07-28 — M4 `running`
+
+- 新资源合同：RTX 3090 24 GB，cgroup 90 GiB，数据盘启动时约 141 GiB 可用
+- 换机 smoke：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M2-ENV-ASSET-01/20260728T131221__wm-clone-3090-r4/`
+- 五项环境 smoke、1,440/1,440 sensor payload 与 4 个 map masks 均通过；峰值 cgroup memory
+  `9,685,876,736` bytes，`oom=0 / oom_kill=0`
+- 当前 scene-0242：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T131642__scene0242__s0-r3-wm3090/`
+- 已冻结 processed scene 的逐文件复用 fingerprint：
+  `32bf9ccaa108273b69286625a0c7aaacb04fd9d76f243daff976206d0b7ef4f6`
+- 独立 preprocess audit 再次通过；100-step test：
+  `SSIM 0.771688 / PSNR 16.814014 / LPIPS(VGG) 0.453852`
+- 1,000-step test：
+  `SSIM 0.857157 / PSNR 24.363341 / LPIPS(VGG) 0.356590`
+- 1,000-step train/render 峰值 cgroup memory：
+  `23,832,678,400 / 25,567,031,296` bytes；峰值 VRAM `6,647 / 4,145` MiB；无 OOM
+- 60k train 已启动；完成后先冻结 scene-0242，再串行执行 0255、0295、0518、0749
+- 剩余场景 fail-closed sequencer：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T134226__remaining-sequencer-wm3090/`
+- sequencer 只在 scene-0242 `done` 且 launcher `rc=0` 后逐场景启动，任何 source hash、资源或终态异常即停止
+- 首个换机复用实例因完整性校验误拒合法的空 COLMAP 占位文件而在训练前 `blocked`：
+  `20260728T131533__scene0242__s0-r2-wm3090/`；修复没有改变模型、数据或评测协议
+
+### 2026-07-28 — M4 聚合守护与 M5 readiness
+
+- 六场景聚合 finalizer：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/`
+- finalizer 只读等待 sequencer，逐场景复核合同、60k 产物、render 数量、checkpoint、OOM 与 official metrics；
+  只有 coverage=6/6 且三项门禁同时通过才写 M4=`done`
+- finalizer SHA-256：
+  `64306bcb952d7753ef5799d6bce0a9b5aafbb975d672abd504035ac80ec1b8d4`
+- DGGT official repo 已固定到 commit `a3276d2bbe4cbb03bcc117830b1836110a27adeb`；该动作只做
+  readiness，不改变 M5=`pending`
+- DGGT model repo revision 固定为 `735ac9a6486057b1eb886c33a8c6dc79e0b43214`；
+  nuScenes checkpoint 远端大小 `5,411,266,466` bytes，尚未下载
+- 静态审计再次确认 upstream `diffusion`/`difix` 参数错配，并发现 mode 2 硬编码 `start_idx=0`；
+  M5 必须保存原始失败、使用最小兼容性 patch，并以可哈希 staging 实现固定窗口
+- DGGT 代码许可证 Apache-2.0，模型权重 CC BY-NC 4.0；两者不得混写
+- M5 post-gate controller：
+  `/root/autodl-tmp/runs/dynamic_recon/_controllers/20260728T143042__m4-to-m5-wm3090/`
+- controller 只在 M4 aggregate `done`、`all_gates_passed=true`、launcher `rc=0` 后创建正式 M5 run；
+  M4 失败时不安装环境、不下载权重、不占 GPU
+- M5 runner 固定 SHA-256：
+  `3be81eef40d2062b9a8000ed086a5d9fbbb99e81e7aa25d3345dc90b4c07f445`；
+  controller SHA-256：
+  `31a90fb574b5dc886cc106086beaa4890ba850acda0bd5a8fd989696effdcbbf`
+- 固定窗口 adapter SHA-256：
+  `e8a629583eeb26ea6d60149c8340a38119dbfcff73270dcd6b2da32de295dfcf`；
+  DGGT 单行 compatibility patch SHA-256：
+  `a433785a84fffe44e5a84354b2aacf3bb3c21b308186fb88e52848b3476cb3a1`
+
+### 2026-07-29 — M4 `done`
+
+- 正式聚合实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/`
+- 六场景 coverage `6/6`，全部 60k checkpoint、42 test renders、138 train renders 与 official metrics 完整；
+- official test arithmetic mean：
+  `PSNR 31.174515 / SSIM 0.927661 / LPIPS(VGG) 0.163489`；
+- 三项门禁 `PSNR≥30.56 / SSIM≥0.915 / LPIPS≤0.184` 全过；
+- worst scene：PSNR scene-0295 `29.355150`、SSIM scene-0230 `0.905364`、LPIPS scene-0230
+  `0.212178`；
+- 六场景 train/render 均 `oom=0 / oom_kill=0`，没有通过缩协议获得结果。
+
+### 2026-07-29 — M5 `blocked`
+
+- 首个实例在 `env_torch` 期间因外部容器实例重建中断，已保留为 blocked：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T094923__native-nusc-s0-wm3090/`；
+- 恢复实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`；
+- requirements 成功解析为 `rerun-sdk 0.23.1 / opencv-python 4.11.0.86 / numpy 1.26.4`；
+- pointops2 的 PEP 517 隔离 build env 因 `ModuleNotFoundError: torch` 以 `rc=1` 失败，
+  `oom=0 / oom_kill=0`、GPU 0 MiB；没有事后加入 `--no-build-isolation` 覆盖正式失败；
+- checkpoint、untouched `difix` smoke、1-view/3-view 均未启动；common-observation 正式指标也未触发；
+- 216-target AD-GS↔固定窗口像素映射只完成只读预审，不冒充 M5 正式 run；明确 blocked 证据满足 M6 前置分支。
+
+### 2026-07-29 — M6 `done`
+
+- 正式实例：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M6-STRESS-01/20260729T145645__identity-audit-s0-wm3090/`；
+- 冻结 SAM pseudo ID 在六场景最长仅支持 `1/6/1/1/2/1` 帧，均低于 `20/60`；
+- 六个 60k checkpoint 都只保存二值 `obj∈{0,1}`，持久 instance ID 数为 0；
+- `persistent_object_identity_unavailable` 在 6/6 scenes 重复，满足跨场景失败门禁；
+- 0/12 eligible object slots，全部对象编辑、pseudo-hole 与三 seeds 噪声行按协议记为 ABSTAIN 并保留
+  coverage，没有事后几何重关联回填 baseline。
+
+### 2026-07-29 — M7 `rejected`，M8/M9 未触发
+
+- 正式 M7：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M7-HYPOTHESIS-01/20260729T145748__novelty-audit-s0-wm3090/`；
+- 只考察决策表 A；InstDrive、Director、OmniRe、HorizonForge 与 G²Editor 已直接覆盖其持久实例身份、
+  actor-centric Gaussian、轨迹编辑与遮挡补全主机制；
+- novelty gate 失败，禁止事后注册 primary endpoint，M8 为 0 seeds/0 proposed metrics；
+- 没有可供 M9 盲审的方法结果，因此不生成伪造 clips 或 verdict；human verdict 保持 `null`；
+- 结果审核未触发说明：
+  `docs/human-review/dynamic-reconstruction-results-v1/`。
+
 ## 18. 官方一手来源
 
 - [nuScenes 官方数据说明](https://www.nuscenes.org/nuscenes)
@@ -894,11 +994,15 @@ guardrails：
 - [ReconDrive 官方代码](https://github.com/TuojingAI/ReconDrive)
 - [Real2Sim 论文](https://arxiv.org/abs/2605.13591)
 - [GA-GS 论文](https://arxiv.org/abs/2604.04331)
+- [InstDrive 论文](https://arxiv.org/abs/2508.12015)
+- [Director 论文](https://arxiv.org/abs/2604.01678)
+- [OmniRe OpenReview](https://openreview.net/forum?id=9cwxZxJixB)
+- [HorizonForge 论文](https://arxiv.org/abs/2602.21333)
+- [G²Editor 论文](https://arxiv.org/abs/2508.20471)
 - [Waymo E2E 官方页](https://waymo.com/open/data/e2e/)
 
 ## 19. 当前下一条动作
 
-等待为 `DR-M4-ADGS-6SCENE-01` 提高 cgroup 内存额度；建议至少 80 GiB，推荐 96 GiB，为 scene-0242
-60k 增密与最终 render 留出安全余量。资源变化后新建 instance，从已冻结 processed scene
-`scene-0242` 开始，不覆盖 blocked 实例；随后严格串行处理 scene-0255、0295、0518、0749。禁止在当前
-合同下重跑、放宽 90% 停止线、降分辨率、删相机或全局 drop caches。
+本计划已按预注册停止规则走到研究终态。保留 M4 exact reproduction、M5 DGGT upstream 对照与 M6 跨场景
+身份负结果；M7 novelty gate 失败后，不启动 M8/M9，不把 AD-GS 适配工程重命名为方法创新。后续若提出新路线，
+必须使用新的任务 ID、独立 novelty delta 与前瞻 primary endpoint，不能回填或覆盖本轮 ABSTAIN/rejected 证据。

@@ -1,16 +1,42 @@
 # Research Status
 
-- 更新时间：2026-07-28
+- 更新时间：2026-07-29
 - 当前路线：动态驾驶场景重建与反事实编辑
-- 当前里程碑：`DR-M4-ADGS-6SCENE-01`
-- 状态：`blocked`
-- 当前门禁：scene-0242 official render 触发 cgroup 90% 硬停止
-- 当前资源合同：RTX 4080 SUPER 32 GB，cgroup `memory.max=66,571,993,088` bytes，数据盘约 149 GiB 可用
-- 本轮执行起点：`2d46f4c1c79708451081f291a267a7acd26a3236`
-- 本轮交付 commit：尚未提交；正式 run 已记录 worktree fingerprint 和 source snapshots
+- 当前里程碑：`DR-M7-HYPOTHESIS-01`
+- 状态：`rejected / route stopped by preregistered novelty gate`
+- 当前门禁：M7 novelty 未通过；M8/M9 均未授权，不再启动方法、消融或人工盲审
+- 当前资源合同：RTX 3090 24 GB，cgroup `memory.max=96,636,764,160` bytes（90 GiB）
+- 本轮执行起点：`d90226cbba3854fe67cf32e6cb6be323a106e778`
+- 本轮结果代码 commit：`460124664629f0b7bbea1f3509b7721f9d8cfe7d`
+- 文档收口 commit：本文件所在提交（交付时以 `git log -1` 为准）
 - 权威计划：[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
 
-## 当前裁决
+## 最终裁决
+
+本路线完成了强基线复现与负结果审计，但没有形成可注册的新方法：
+
+- M4 `done`：AD-GS 官方六场景 exact reproduction 为
+  `PSNR 31.174515 / SSIM 0.927661 / LPIPS(VGG) 0.163489`，三项带宽全过；
+- M5 `blocked`：正式恢复实例
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`；
+  requirements 成功后，pointops2 的 PEP 517 隔离构建环境因没有 `torch` 而失败，无 OOM；权重、native inference
+  和 common-observation 正式指标均未运行，216-target 像素映射只完成只读预审；
+- M6 `done`：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M6-STRESS-01/20260729T145645__identity-audit-s0-wm3090/`；六场景冻结 pseudo ID 最长仅 `1/6/1/1/2/1` 帧，checkpoint 又只保留
+  二值对象标记，`persistent_object_identity_unavailable` 在 6/6 scenes 重复；
+- M7 `rejected`：
+  `/root/autodl-tmp/runs/dynamic_recon/DR-M7-HYPOTHESIS-01/20260729T145748__novelty-audit-s0-wm3090/`；候选 A 与 InstDrive、Director、OmniRe、HorizonForge、G²Editor
+  直接重合，novelty gate 不通过；
+- M8 `rejected / not authorized`：0 seeds、0 proposed metrics，没有事后注册 primary endpoint；
+- M9 `rejected / not triggered`：没有可盲审的 method clips，human verdict=`null`，Codex 未代填。
+
+结果审核未触发说明与证据清单：
+[`human-review/dynamic-reconstruction-results-v1/`](human-review/dynamic-reconstruction-results-v1/)。
+
+准确 claim 边界是：保留 AD-GS 六场景复现、DGGT upstream 对照和 AD-GS identity collapse 的负结果；不得把
+适配工程、0 coverage 或已有 instance-aware/editing 机制重命名为创新。
+
+## 历史 cut-in 裁决
 
 nuScenes cut-in mining 已 `rejected / frozen`：
 
@@ -107,7 +133,9 @@ M1 发现的左右前相机和中间 sweeps 缺口已经闭合。正式 raw subs
 来源是 `/autodl-pub/data/nuScenes/Fulldatasetv1.0/Trainval/` 的只读 tar shards；只提取精确 member，
 没有全量解压 294 GB。
 
-## 当前执行：`DR-M4-ADGS-6SCENE-01`
+## M4/M5 执行历史（已由上方最终裁决取代）
+
+以下内容保留长跑期间的逐阶段事实和旧时点状态；不再表示当前任务仍为 running。
 
 scene-0230 使用 M3 已冻结的正式 60k 结果。当前 scene-0242 实例：
 
@@ -128,16 +156,97 @@ official render 随后在第 2/138 帧连续两个采样达到 90% 停止线，�
 `59,996,393,472` bytes，stage `rc=-15`、runner `rc=1`；`oom=0 / oom_kill=0`。该实例已保留为
 `blocked`，没有立即重跑、放宽门禁、降分辨率、删相机或全局清缓存。
 
-固定执行：
+新实例资源授权后，先完成换机 smoke：
 
-恢复条件：
+```text
+/root/autodl-tmp/runs/dynamic_recon/DR-M2-ENV-ASSET-01/20260728T131221__wm-clone-3090-r4/
+```
 
-1. 提高容器 cgroup 内存；建议至少 80 GiB、推荐 96 GiB；
-2. 新建 M4 scene-0242 instance，复用已冻结 processed scene，但不覆盖 blocked 证据；
-3. 保持 frames 10..69、三相机、900×1600、seed 0、模型、损失与指标不变；
-4. 再继续 scene-0255、0295、0518、0749，最后聚合六场景门禁。
+- AD-GS / DPT / Grounded-SAM-2 / pinned Grounding DINO HF / CoTracker3 全部通过；
+- 1,440/1,440 sensor payload 与 4/4 map masks 重新审计通过；
+- 峰值 cgroup memory `9,685,876,736` bytes，`oom=0 / oom_kill=0`；
+- config fingerprint：
+  `61ed109016f16a74ea0b53b175436d840cb33eae63dbf76e9b9da729fe82d2a5`。
 
-任何内存/显存不足、RC137 或需要缩减官方协议的情况，立即写 `blocked` 并等待用户，不反复重跑。
+当前 scene-0242 新实例：
+
+```text
+/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T131642__scene0242__s0-r3-wm3090/
+```
+
+- 逐文件复用已冻结 processed scene，output fingerprint：
+  `32bf9ccaa108273b69286625a0c7aaacb04fd9d76f243daff976206d0b7ef4f6`；
+- 独立 preprocess audit 再次通过；
+- 100-step test：
+  `SSIM 0.771688 / PSNR 16.814014 / LPIPS(VGG) 0.453852`；
+- 1,000-step test：
+  `SSIM 0.857157 / PSNR 24.363341 / LPIPS(VGG) 0.356590`；
+- 1,000-step train/render 峰值 cgroup memory：
+  `23,832,678,400 / 25,567,031,296` bytes；峰值 VRAM `6,647 / 4,145` MiB；
+- `oom=0 / oom_kill=0`，60k train 已于 2026-07-28 13:34 +08:00 后启动；
+- runner SHA-256：
+  `3fe0b746ff442085d3b0b40bb64a30c8fe2f05fae90842541af37872de150653`；
+- config fingerprint：
+  `3c5a332e0ae4324565cb5b93ba34f20d34655d0cb909ba5688a05f9b3f5a185b`。
+
+剩余场景 sequencer：
+
+```text
+/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T134226__remaining-sequencer-wm3090/
+```
+
+它只在 scene-0242 `done` 且 launcher `rc=0` 后，按
+`0255 → 0295 → 0518 → 0749` 严格串行调用同一冻结 runner；任一 source hash、资源或终态异常立即
+`blocked`。sequencer SHA-256：
+`a3b150f04a988feacd96781b590806ec5589ec3a1f0673c08a90540c3f644dfd`。
+
+复用校验的首个新实例因合法的 0-byte COLMAP 占位文件被误判而在训练前 `blocked`，证据保留于
+`20260728T131533__scene0242__s0-r2-wm3090/`；修复只调整完整性校验，不改变资产、模型或协议。
+
+六场景聚合 finalizer 已启动并只读等待 sequencer：
+
+```text
+/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/
+```
+
+finalizer SHA-256：
+`64306bcb952d7753ef5799d6bce0a9b5aafbb975d672abd504035ac80ec1b8d4`。它逐场景复核
+terminal、协议、seed、upstream commit、60k train/render、OOM、42/138 张 test/train 渲染、checkpoint 与
+official `results.json`，再写 per-scene、mean、worst-case、coverage 和三项门禁；任何缺失或数值不通过都
+`blocked`，不会解锁 M5。
+
+M5 仅完成不占 GPU 的 upstream readiness 审计，里程碑仍为 `pending`：
+
+- DGGT 已固定到 `/root/autodl-tmp/third_party/dggt` commit
+  `a3276d2bbe4cbb03bcc117830b1836110a27adeb`，worktree clean；
+- Hugging Face 模型 revision 固定为 `735ac9a6486057b1eb886c33a8c6dc79e0b43214`；
+  nuScenes 权重远端大小 `5,411,266,466` bytes，尚未下载；
+- 代码许可证 Apache-2.0；模型卡许可证 CC BY-NC 4.0，必须分开登记；
+- upstream `inference.py` 仍定义 `args.diffusion` 却访问 `args.difix`，且 mode 2 忽略 CLI
+  `start_idx`；正式 M5 必须先保存原始失败，再以最小 patch 和显式窗口 staging 继续。
+
+M5 的 post-gate controller 已只读等待 M4：
+
+```text
+/root/autodl-tmp/runs/dynamic_recon/_controllers/20260728T143042__m4-to-m5-wm3090/
+```
+
+只有 M4 aggregate `done`、`all_gates_passed=true` 且 launcher `rc=0` 才创建正式 M5 run。M5 runner 会按顺序
+创建隔离环境、准备并哈希 18 个固定窗口、下载固定 revision 的 nuScenes 权重、保存 untouched upstream
+`difix` 失败、应用单行 compatibility patch、完成 18/18 1-view，并在 24 GiB 支持时尝试 3-view。若 M4
+`blocked`，controller 也立即 `blocked`，不会下载权重或占用 GPU。
+
+冻结 SHA-256：
+
+```text
+prepare_dr_m5_dggt_inputs.py e8a629583eeb26ea6d60149c8340a38119dbfcff73270dcd6b2da32de295dfcf
+DGGT-2026-07-28.patch         a433785a84fffe44e5a84354b2aacf3bb3c21b308186fb88e52848b3476cb3a1
+run_dr_m5_dggt.py             3be81eef40d2062b9a8000ed086a5d9fbbb99e81e7aa25d3345dc90b4c07f445
+run_dr_m5_after_m4.py         31a90fb574b5dc886cc106086beaa4890ba850acda0bd5a8fd989696effdcbbf
+```
+
+60k 完成后先裁决 scene-0242，再严格串行继续 scene-0255、0295、0518、0749，最后由 finalizer 聚合。
+任何内存/显存不足、RC137、合同缺失或需要缩减官方协议的情况，立即写 `blocked`，不反复重跑。
 
 ## 禁止事项
 

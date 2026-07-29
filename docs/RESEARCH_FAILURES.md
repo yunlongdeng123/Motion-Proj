@@ -1229,6 +1229,70 @@ stage `rc=-15`、runner `rc=1`，`oom=0 / oom_kill=0`，没有影响其他服务
 processed scene，但必须记录来源、哈希和新资源合同。若无法增加资源，则 M4 保持 `blocked`，不得将只有
 scene-0230 的结果写成六场景论文复现。
 
+### PIVOT-F13：processed scene 复用校验必须区分关键产物与合法空占位
+
+RTX 3090 换机后的首个 scene-0242 复用实例
+`/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T131533__scene0242__s0-r2-wm3090/`
+在训练前 fail closed：新增递归哈希校验把 COLMAP 的合法 0-byte `created/sparse/model/points3D.txt`
+占位文件误判为损坏。旧实例以 `blocked` 保留，没有修改 processed scene 或启动训练。
+
+合法修复允许 COLMAP 非关键占位文件为 0 bytes，同时继续强制 `database.db`、`cameras.txt`、
+`images.txt`、`colmap.ply` 和所有训练直接消费的 image/depth/mask/flow/meta/point cloud 非空；
+复用后必须重新运行独立 processed audit。修复后的新实例 output fingerprint 为
+`32bf9ccaa108273b69286625a0c7aaacb04fd9d76f243daff976206d0b7ef4f6`，138/138 registered images
+审计通过。不得删除空占位文件、伪造非空内容或因此重跑昂贵预处理。
+
+### PIVOT-F14：容器实例重建必须与 OOM/方法失败分开
+
+M5 首个正式 DGGT 实例
+`/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T094923__native-nusc-s0-wm3090/`
+在 `env_torch` 下载期间停止。日志没有 stage 终态、OOM 或 `oom_kill` 增量；当前容器 PID 1 的启动时间为
+2026-07-29 13:13:43 +08:00，晚于日志停止时间，故裁决为外部容器实例重建，而不是 DGGT 精度、显存或方法失败。
+
+旧 run 与旧 controller 已原子标为 `blocked`，部分环境移动到
+`/root/autodl-tmp/envs/dggt.interrupted-20260729T094923/`，没有覆盖或删除。恢复使用新 run
+`/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`；以后同类中断必须先核对 PID 1 启动时间、stage marker、launcher 与 OOM 证据，再决定是否创建
+新实例，禁止把 stale `running` 当成任务仍存活。
+
+### PIVOT-F14B：pointops2 的 PEP 517 build isolation 没有继承已安装 torch
+
+恢复实例完成 Python 3.10、torch 2.4.1 和全部 requirements；resolver 最终选择
+`rerun-sdk 0.23.1 / opencv-python 4.11.0.86 / numpy 1.26.4`。随后 upstream pointops2 执行普通
+`pip install .` 时，PEP 517 临时 build env 在读取 setup requirements 阶段报
+`ModuleNotFoundError: No module named 'torch'`。正式 stage `rc=1`，峰值 cgroup memory
+`16,839,843,840` bytes、GPU 0 MiB，`oom=0 / oom_kill=0`。
+
+正式 blocked 证据：
+`/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`。
+checkpoint、native inference 和 common-observation metrics 均未启动；没有在同一实例事后加入
+`--no-build-isolation` 覆盖失败。该结果属于明确 upstream packaging blocked，不是 DGGT 质量、显存或方法裁决，
+并按权威计划第 15.1 节满足继续 M6 的替代前置证据。
+
+### PIVOT-F15：AD-GS 冻结 pseudo ID 与 checkpoint 都不能支持单对象编辑
+
+M6 直接审计训练前冻结的 `semantic/mask_*.npy`。按 camera-local ID 统计，六个官方场景最长支持帧为
+`1 / 6 / 1 / 1 / 2 / 1`，全部低于预注册 `≥20/60`；processed scene 也没有冻结的 vehicle track artifact。
+与此同时，六个 60k checkpoint 的 `point_cloud.ply` 均只有二值 `obj∈{0,1}`，没有持久 instance ID。
+
+正式证据：
+`/root/autodl-tmp/runs/dynamic_recon/DR-M6-STRESS-01/20260729T145645__identity-audit-s0-wm3090/`。稳定失败
+`persistent_object_identity_unavailable` 在 6/6 scenes 重复。对象编辑、pseudo-hole 和噪声行全部保留为
+`ABSTAIN`，0/12 object slots 没有从 coverage 分母删除。禁止在看到 checkpoint/场景结果后用几何 Hungarian
+轨迹回填 M6 baseline；这类重关联只能作为新方法候选，并必须先过 novelty。
+
+### PIVOT-F16：instance-aware 与 driving edit 已被 2025–2026 工作直接覆盖
+
+M7 只沿决策表考察 A“可编辑运动表示与轨迹不确定性”。重新核对官方来源后：InstDrive 已用 SAM pseudo masks
+学习动态驾驶场景 2D/3D instance identity；Director 已做 4D Gaussian identity consistency；OmniRe 已用
+actor scene graph/canonical vehicle nodes 做仿真；HorizonForge 与 G²Editor 已覆盖车辆轨迹操作、删除和遮挡区
+恢复。
+
+正式 evidence：
+`/root/autodl-tmp/runs/dynamic_recon/DR-M7-HYPOTHESIS-01/20260729T145748__novelty-audit-s0-wm3090/`。候选的持久身份、actor-centric Gaussian binding、时序一致性和轨迹/对象编辑
+核心机制均为 direct overlap；confidence/ABSTAIN 是评测与安全护栏，不构成独立技术 delta，剩余差异只是
+AD-GS 适配工程。因此 M7=`rejected`，不注册事后 primary endpoint；M8/M9 均
+`rejected / not authorized`，不得通过改名、挑场景或把 0 coverage 写成改进继续。
+
 ## 7. 新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

@@ -42,22 +42,47 @@ monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 1
   [`archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md`](archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md)；
 - **当前状态：** 只读历史参考，cut-in 路线已冻结，不再作为活跃依赖。
 
-## 动态重建新路线（计划中，尚未安装）
+## 动态重建新路线
 
 只有用户开放资源且 `DR-M2-ENV-ASSET-01` 通过 preflight 后，才按
 [`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 安装：
 
-| 项目 | 预期路径 | 当前用途 | 当前状态 |
+| 项目 | 路径 | 当前用途 | 当前状态 |
 |---|---|---|---|
-| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | exact reproduction 主基线 | `pending` |
-| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | AD-GS depth prior | `pending` |
-| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | object/sky pseudo masks | `pending` |
-| DGGT | `/root/autodl-tmp/third_party/dggt` | inference-only 前馈对照 | `pending` |
-| VAD-GS | `/root/autodl-tmp/third_party/VAD-GS` | 补密/可见性方向条件对照 | `pending` |
-| DrivingEditor | `/root/autodl-tmp/third_party/DrivingEditor` | 编辑能力参考/条件运行 | `pending` |
+| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | exact reproduction 主基线 | commit `9a208512…`，M4 done / 6 scenes |
+| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | AD-GS depth prior | commit `a561b849…`，smoke done |
+| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | object/sky pseudo masks | commit `b7a9c29f…`，smoke done |
+| DGGT | `/root/autodl-tmp/third_party/dggt` | inference-only 前馈对照 | commit `a3276d2…`，M5 blocked at pointops2 packaging |
+| VAD-GS | `/root/autodl-tmp/third_party/VAD-GS` | 补密/可见性方向条件对照 | `not installed`；M7 rejected 后未触发 |
+| DrivingEditor | `/root/autodl-tmp/third_party/DrivingEditor` | 编辑能力参考/条件运行 | `not installed`；M7 rejected 后未触发 |
 
 每项安装后必须登记 upstream commit、submodule、license、checkpoint SHA-256、conda explicit、pip freeze 与
 本地 patch。计划中的版本号不能提前写成“当前环境事实”。
+
+DGGT readiness 事实：
+
+- code：Apache-2.0；NOTICE 另含 VGGT 衍生文件许可边界；
+- model repo：`xiaomi-research/dggt` revision
+  `735ac9a6486057b1eb886c33a8c6dc79e0b43214`，model card 为 CC BY-NC 4.0；
+- `model_latest_nuscenes.pt` 远端大小 `5,411,266,466` bytes；M5 在下载前 blocked，本地 checkpoint 不存在；
+- `/root/autodl-tmp/envs/dggt` 已由 M5 隔离创建；完整 pip freeze 与阶段终态见正式 run；
+- upstream 已知 `diffusion`/`difix` 参数错配和 mode-2 `start_idx=0` 硬编码必须保留原始失败证据，
+  不能直接把 patch 后结果冒充 untouched upstream。
+
+## M7 novelty 官方来源（不等于本地依赖）
+
+2026-07-29 对唯一候选 A 重新核对以下一手来源：
+
+| 工作 | 官方来源 | 与候选的边界 |
+|---|---|---|
+| InstDrive | https://arxiv.org/abs/2508.12015 | SAM pseudo masks → dynamic-driving 3D instance identity / interactive editing |
+| Director | https://arxiv.org/abs/2604.01678 | temporally aligned instance masks → 4D Gaussian identity consistency |
+| OmniRe | https://openreview.net/forum?id=9cwxZxJixB | actor scene graph、canonical vehicle nodes 与 simulation |
+| HorizonForge | https://arxiv.org/abs/2602.21333 | editable splats/meshes、任意车辆轨迹与对象操作 |
+| G²Editor | https://arxiv.org/abs/2508.20471 | reposition/insert/delete 与遮挡区恢复 |
+
+这些工作用于 novelty rejection，不表示仓库已安装其代码或权重。M7 详细矩阵：
+[`DR_M7_NOVELTY_AUDIT.md`](DR_M7_NOVELTY_AUDIT.md)。
 
 ## 不入 Git 的运行产物
 
@@ -69,7 +94,8 @@ monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 1
 | `/root/autodl-tmp/cache/` | 投影 / replay cache |
 | `/root/autodl-tmp/weights/` | SVD、CoTracker 等权重 |
 | `/root/autodl-tmp/envs/motionproj` | Conda 环境（可用 `requirements.lock.txt` 重建） |
-| `/root/autodl-tmp/envs/{adgs,adgs-dpt,adgs-sam,dggt}` | 新路线隔离环境；当前均未创建 |
+| `/root/autodl-tmp/envs/{adgs,adgs-dpt,adgs-sam}` | AD-GS 新路线隔离环境；已创建并通过 M2 smoke |
+| `/root/autodl-tmp/envs/dggt` | DGGT 隔离环境；requirements 已安装，pointops2 未完成，M5 blocked |
 
 轻量 run 摘要已归档到 `docs/run_manifests/`，供对照 commit 与 resolved config。正式 run ID 不得复用或覆盖，
 但这不要求永久保留每个 checkpoint、candidate 视频或中间 tensor；实际驻留范围与受保护人工材料以
