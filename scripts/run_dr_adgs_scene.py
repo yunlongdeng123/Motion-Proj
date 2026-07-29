@@ -39,7 +39,7 @@ DPT_PYTHON = "/root/autodl-tmp/envs/adgs-dpt/bin/python"
 SAM_PYTHON = "/root/autodl-tmp/envs/adgs-sam/bin/python"
 M2_RUN = Path(
     "/root/autodl-tmp/runs/dynamic_recon/DR-M2-ENV-ASSET-01/"
-    "20260727T180733__e49a4e-4080s-r3"
+    "20260728T131221__wm-clone-3090-r4"
 )
 DATA_MANIFEST = Path(
     "/root/autodl-tmp/data/dynamic_recon/manifests/"
@@ -606,7 +606,7 @@ def initialize_run(run_dir):
 
 
 def reuse_completed_preprocess(run_dir, source_run):
-    """把同一 processed scene 的已完成前缀移交给新的修复实例。"""
+    """把同一 processed scene 的已完成预处理前缀移交给新实例。"""
     source_run = Path(source_run)
     reusable_stages = [
         "prepare_raw",
@@ -617,6 +617,7 @@ def reuse_completed_preprocess(run_dir, source_run):
         "flow",
     ]
     reusable_sources = [
+        "compatibility.patch",
         "nuscene.py",
         "run_dpt.py",
         "semantic.py",
@@ -624,11 +625,15 @@ def reuse_completed_preprocess(run_dir, source_run):
         "flow.py",
     ]
     source_terminal = json.loads((source_run / "terminal.json").read_text())
-    if (
-        source_terminal.get("status") != "blocked"
-        or "stage colmap blocked" not in (source_terminal.get("failure") or "")
-    ):
-        raise RuntimeError("只允许复用因 colmap stage 阻塞的前一实例")
+    if source_terminal.get("status") != "blocked":
+        raise RuntimeError("只允许从保留为 blocked 的前一实例复用")
+
+    colmap_marker = source_run / "stages/colmap.json"
+    if colmap_marker.is_file():
+        colmap_stage = json.loads(colmap_marker.read_text())
+        if colmap_stage.get("status") == "done":
+            reusable_stages.append("colmap")
+            reusable_sources.append("colmap.py")
 
     source_manifest_path = source_run / "manifest.json"
     source_manifest = json.loads(source_manifest_path.read_text())
@@ -678,6 +683,7 @@ def reuse_completed_preprocess(run_dir, source_run):
         ("flow", "flow", "*.npz", 138),
     ]
     output_paths = [SCENE / "meta.npz", SCENE / "points3d.ply"]
+    allow_empty_paths = set()
     counts = {}
     for label, folder, pattern, expected in expected_groups:
         paths = sorted((SCENE / folder).glob(pattern))
@@ -687,9 +693,25 @@ def reuse_completed_preprocess(run_dir, source_run):
                 "{} 输出计数 {} != {}".format(label, len(paths), expected)
             )
         output_paths.extend(paths)
+    if "colmap" in reusable_stages:
+        output_paths.append(SCENE / "colmap.ply")
+        colmap_paths = [
+            path for path in sorted((SCENE / "colmap").rglob("*"))
+            if path.is_file()
+        ]
+        output_paths.extend(colmap_paths)
+        allow_empty_paths.update(colmap_paths)
+        for required in [
+            SCENE / "colmap/database.db",
+            SCENE / "colmap/created/sparse/model/cameras.txt",
+            SCENE / "colmap/created/sparse/model/images.txt",
+        ]:
+            allow_empty_paths.discard(required)
     output_rows = []
     for path in sorted(output_paths):
-        if not path.is_file() or path.stat().st_size <= 0:
+        if not path.is_file():
+            raise RuntimeError("复用输出缺失: {}".format(path))
+        if path.stat().st_size <= 0 and path not in allow_empty_paths:
             raise RuntimeError("复用输出缺失或为空: {}".format(path))
         output_rows.append({
             "path": str(path),
@@ -831,7 +853,7 @@ def main():
     )
     parser.add_argument(
         "--reuse-completed-from",
-        help="复用仅在 colmap 阶段阻塞的前一实例之已完成预处理前缀",
+        help="从同场景 blocked 实例复用经哈希验证的已完成预处理前缀",
     )
     args = parser.parse_args()
     SCENE_NAME = args.scene
