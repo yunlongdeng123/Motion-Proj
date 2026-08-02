@@ -461,7 +461,7 @@ configs/env/autodl_condarc_v2.yaml
 ```bash
 bash -n scripts/bootstrap_autodl_v2.sh
 shellcheck scripts/bootstrap_autodl_v2.sh  # 若 shellcheck 已安装；不得仅为此污染环境
-pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py
+python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py
 ```
 
 ## 5.4 通过条件
@@ -1510,7 +1510,7 @@ synthetic actor
 
 ```bash
 git diff --cached --check
-pytest -q <relevant tests>
+python -m pytest -q <relevant tests>
 ```
 
 不允许在正文写未实际执行的测试。

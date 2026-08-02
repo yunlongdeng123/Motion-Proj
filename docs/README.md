@@ -28,6 +28,7 @@
 - DriveStudio 源码与环境存在，但 V2 的 `scene-0230/0242/0255` processed data 和 actor-aware
   checkpoint 尚不存在；M3 不能把历史 `003/004/005` 资产冒充 V2 baseline。
 - V2 run namespace 尚不存在；本次只做文档归档、事实校准与存储清理，不算 M0 已执行。
+- 清理后数据盘为 `127G used / 124G available`，比清理前增加约 58 GiB 可用空间。
 
 ## 当前维护文档
 

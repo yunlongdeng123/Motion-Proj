@@ -3,7 +3,7 @@
 - 更新时间：2026-07-29
 - 活跃路线：动态驾驶场景重建与反事实编辑
 - 权威方案：[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
-- 历史快照：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
+- 历史快照：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](../cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
 
 本文件只登记当前路线。V1–V7.1、OccGS 和 cut-in 的完整实验历史已归档；失败事实继续由
 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 约束，不因精简活动台账而删除。
@@ -50,8 +50,8 @@ pending | running | blocked | done | rejected
 
 ### 证据
 
-- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)
-- [`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
+- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](../cutin-mining-closed/CLEANUP_MANIFEST.md)
+- [`archive/2026-07/cutin-mining-closed/README.md`](../cutin-mining-closed/README.md)
 
 ## 4. `DR-M1-PLAN-01`
 
@@ -376,8 +376,8 @@ M7=`rejected`，不硬造模块。
 
 ## 14. 历史路线入口
 
-- cut-in 最终封存：[`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
-- cut-in 结束时状态：[`archive/2026-07/cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md)
-- cut-in 结束时实验台账：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
-- OccGS V7/V7.1：[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)
+- cut-in 最终封存：[`archive/2026-07/cutin-mining-closed/README.md`](../cutin-mining-closed/README.md)
+- cut-in 结束时状态：[`archive/2026-07/cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md`](../cutin-mining-closed/RESEARCH_STATUS_CUTIN_FINAL_SNAPSHOT.md)
+- cut-in 结束时实验台账：[`archive/2026-07/cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md`](../cutin-mining-closed/EXPERIMENTS_CUTIN_FINAL_SNAPSHOT.md)
+- OccGS V7/V7.1：[`archive/2026-07/v7-feasibility/`](../v7-feasibility/)
 - 所有失败：[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)

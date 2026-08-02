@@ -4,7 +4,9 @@
 - 路线状态：`rejected / frozen`
 - 最终决策：停止继续调参、停止扩大事件挖掘；cut-in 仅保留为以后可选的演示场景，不再承担数据入口、方法定义或论文成立条件。
 - 权威失败记录：[`../../../RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)
-- 当前研究入口：[`../../../DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](../../../DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
+- 后续路线历史入口：[`../dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](../dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)
+
+本目录不再提供当前执行入口；当前授权只看 [`../../../RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)。
 
 ## 为什么封存
 

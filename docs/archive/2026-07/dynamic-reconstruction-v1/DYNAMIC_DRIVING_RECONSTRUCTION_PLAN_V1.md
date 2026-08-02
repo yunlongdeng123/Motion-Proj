@@ -48,8 +48,8 @@ M6 证明冻结身份不可用，M7 又证明候选核心机制缺少独立 nove
 
 历史证据与清理记录：
 
-- [`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
-- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)
+- [`archive/2026-07/cutin-mining-closed/README.md`](../cutin-mining-closed/README.md)
+- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](../cutin-mining-closed/CLEANUP_MANIFEST.md)
 - [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 中 `N1-F24`、`N1-F26`、`PIVOT-F01` 至 `PIVOT-F05`
 
 ### 1.2 新路线必须继承的失败约束

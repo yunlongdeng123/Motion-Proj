@@ -72,7 +72,7 @@ export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 source /root/miniconda3/etc/profile.d/conda.sh
 conda activate /root/autodl-tmp/envs/motionproj
 cd /root/autodl-tmp/motion_proj
-pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py
+python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py
 ```
 
 该命令只是现有代码 smoke，不代表 V2 M0 完成。M0 还必须建立分支、修正文档入口、生成 bootstrap、验证镜像

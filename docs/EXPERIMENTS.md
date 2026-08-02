@@ -4,7 +4,7 @@
 - 活跃路线：动态驾驶场景可编辑重建与失败诊断 V2
 - 权威方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
-  [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS_V1_FINAL.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS_V1_FINAL.md)
+  [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
 本文件只登记 V2。当前没有 V2 run，所有研究里程碑均未执行。
 

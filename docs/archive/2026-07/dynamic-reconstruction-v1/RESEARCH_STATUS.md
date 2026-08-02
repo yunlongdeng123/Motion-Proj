@@ -48,8 +48,8 @@ nuScenes cut-in mining 已 `rejected / frozen`：
 
 历史文档、最终报告、审核包和清理清单：
 
-- [`archive/2026-07/cutin-mining-closed/README.md`](archive/2026-07/cutin-mining-closed/README.md)
-- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)
+- [`archive/2026-07/cutin-mining-closed/README.md`](../cutin-mining-closed/README.md)
+- [`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](../cutin-mining-closed/CLEANUP_MANIFEST.md)
 
 ## 已完成
 
@@ -265,4 +265,4 @@ run_dr_m5_after_m4.py         31a90fb574b5dc886cc106086beaa4890ba850acda0bd5a8fd
 - [失败与防重复](RESEARCH_FAILURES.md)
 - [文档导航](README.md)
 - [本轮人工审核包](human-review/dynamic-reconstruction-plan-v1/README.md)
-- [历史归档](archive/2026-07/README.md)
+- [历史归档](../README.md)

@@ -162,7 +162,17 @@ receiver-branch merge 历史候选为系统性假阳性，第四版没有解锁 
 
 cut-in 以后只允许作为动态重建与编辑方法成熟后的可选演示，不再作为活跃数据入口。
 
-## 13. 如何复查历史
+## 13. 动态驾驶重建 V1 终态
+
+目录：[`dynamic-reconstruction-v1/`](dynamic-reconstruction-v1/)
+
+该目录保存 AD-GS 六场景 exact reproduction、DGGT upstream blocked、持久身份资产审计和候选 A
+novelty rejection 的完整计划、终态、实验台账、报告、summary 与人工审核材料。V1 的准确边界是：
+AD-GS 复现成功，但 DGGT inference 和真实对象编辑/去遮挡压力测试均未运行。
+
+2026-08-02 开启的 V2 是新的独立诊断路线；不得修改 V1 的 rejected 终态。
+
+## 14. 如何复查历史
 
 1. 先读当前 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md)，定位适用的 RF 或 V7 risk；
 2. 再读对应归档计划/报告，确认当时阈值、证据边界与路径；

@@ -10,7 +10,7 @@
 
 1. 读 [`../../RESEARCH_STATUS.md`](../../RESEARCH_STATUS.md)，确认当前裁决与下一门禁；
 2. 读 [`../../RESEARCH_FAILURES.md`](../../RESEARCH_FAILURES.md) 的 `PIVOT-F01` 至 `PIVOT-F05`；
-3. 读 [`../../archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](../../archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)，确认删除边界；
+3. 读 [`../../../cutin-mining-closed/CLEANUP_MANIFEST.md`](../../../cutin-mining-closed/CLEANUP_MANIFEST.md)，确认删除边界；
 4. 读 [`../../DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](../../DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md)；
 5. 对照 [`EVIDENCE_MANIFEST.md`](EVIDENCE_MANIFEST.md) 与 [`REVIEW_CHECKLIST.md`](REVIEW_CHECKLIST.md)；
 6. 将结论填写到 [`HUMAN_VERDICT_TEMPLATE.md`](HUMAN_VERDICT_TEMPLATE.md) 的副本中，不覆盖空白模板。

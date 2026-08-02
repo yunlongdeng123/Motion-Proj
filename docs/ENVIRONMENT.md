@@ -14,9 +14,8 @@ memory.events   oom=0 / oom_kill=0
 data filesystem /dev/nvme0n1, 250G
 ```
 
-清理前为 `185G used / 66G available`。清理后的实际值将在
-[`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md)
-完成后回填。
+清理前为 `185G used / 66G available`；清理后为 `127G used / 124G available`（51%）。精确目标与
+验证见 [`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md)。
 
 ## 2. V2 环境驻留状态
 

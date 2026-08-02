@@ -54,8 +54,8 @@ export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
 
 历史细节：
 
-- ReSim V6：[`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)
-- OccGS E0：[`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)
+- ReSim V6：[`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](../v6/C1_V6_FINAL_REPORT.md)
+- OccGS E0：[`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](../v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)
 - 当前保留规则：[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)
 
 ## 3. 新路线环境

@@ -1,7 +1,7 @@
 # Motion-Proj 产物保留策略
 
 > **当前职责**：定义可删除与必须保留的边界，不记录某次实例的实时硬件状态。
-> **历史清理账本**：[`archive/2026-07/v7-feasibility/ARTIFACT_RETENTION_20260719.md`](archive/2026-07/v7-feasibility/ARTIFACT_RETENTION_20260719.md)。
+> **历史清理账本**：[`archive/2026-07/v7-feasibility/ARTIFACT_RETENTION_20260719.md`](../v7-feasibility/ARTIFACT_RETENTION_20260719.md)。
 > **当前执行授权**：只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。
 
 ## 1. 必须保留
@@ -45,7 +45,7 @@
 
 - SVD-XT：固定 Hugging Face revision 与 2026-07-19 清理细节见历史账本；
 - ReSim CogVideoX checkpoint：V6 已关闭，历史重建边界见
-  [`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)；
+  [`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](../v6/C1_V6_FINAL_REPORT.md)；
 - pip/conda/Hugging Face cache：仅在不影响当前环境复现且上游固定时清理；
 - 历史已拒绝路线的 checkpoint/candidate：轻量证据和负结论必须继续驻留。
 
@@ -80,5 +80,5 @@
 | 新路线正式 runs | `/root/autodl-tmp/runs/dynamic_recon/` | config/metrics/summary/terminal/hash 与 final checkpoint 保护 |
 
 本次已执行清理的精确路径、字节数、checkpoint 哈希、保留项和恢复路径只由
-[`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md)
+[`archive/2026-07/cutin-mining-closed/CLEANUP_MANIFEST.md`](../cutin-mining-closed/CLEANUP_MANIFEST.md)
 解释。后续清理不得把该批次扩展为未列出的路径。

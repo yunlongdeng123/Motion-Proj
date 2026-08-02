@@ -1,7 +1,7 @@
 # V2 启动前存储清理清单
 
 - 日期：2026-08-02
-- 状态：`planned`
+- 状态：`done`
 - 授权：用户要求删除占空间的中间产物，只保留 V2 计划需要的资产
 - 项目：`/root/autodl-tmp/motion_proj`
 - 删除前数据盘：250G total / 185G used / 66G available
@@ -61,11 +61,20 @@
 - Grounding DINO HF cache、Grounded-SAM-2 与 CoTracker3 权重；
 - 原始数据、第三方源码、Git 文档/归档和人工材料。
 
-## 4. 完成后验证（待回填）
+## 4. 完成后验证
 
-- 实际删除字节/磁盘余量：待回填；
-- 所有精确目标不存在：待回填；
-- 六个 `model_60000` 与聚合 metrics/terminal：待回填；
-- DGGT full preload 大小/hash：待回填；
-- raw/processed 数据、核心环境和第三方 repo：待回填；
-- Git 文档状态与链接检查：待回填。
+- 所有清单目标均不存在；按删除前统计移除 `63,284,939,678` bytes；
+- 数据盘从 `185G used / 66G available` 变为 `127G used / 124G available`（51%）；
+- `/root/autodl-tmp/runs/dynamic_recon` 从 30G 降至 11G；
+- 六个 `model_60000` 均存在，逐 run `terminal.status=done`，point cloud 非空；
+- 每个最终模型仍有 42 张 official test render 和 138 张 train render，`results.json` 可解析；
+- aggregate `summary.json` 为 `status=done / coverage=1.0 / all_gates_passed=true`；
+- DGGT full preload 仍为 `5,411,266,466` bytes，SHA-256 复核通过；
+- raw subset 2.9G、AD-GS processed 39G、manifests 1.7M 均驻留；
+- `motionproj/drivestudio/adgs/adgs-sam` 四个核心环境均驻留；
+- 直接执行 `pytest` 暴露 console-script 不含仓库根目录的 import 路径问题；改用规范命令
+  `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py` 后 `7 passed`；
+  V2 计划和迁移指南已据此校准；
+- 活动文档和两个新归档入口的相对 Markdown 链接检查为 `missing_links=0`。
+
+删除的目录/文件不进入回收站；恢复方式仅为按固定版本重新下载/重建。V1 的轻量证据与 V2 输入未删除。

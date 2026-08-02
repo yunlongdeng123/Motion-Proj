@@ -14,10 +14,11 @@
 ## 文件
 
 - `DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`：计划与最终更新日志；
-- `RESEARCH_STATUS_V1_FINAL.md`：终态快照；
-- `EXPERIMENTS_V1_FINAL.md`：完整 V1 台账；
-- `ENVIRONMENT_V1_FINAL.md`：2026-07-29 环境快照；
-- `ARTIFACT_RETENTION_V1_FINAL.md`：V1 结束时保留策略；
+- `RESEARCH_STATUS.md`：终态快照；
+- `EXPERIMENTS.md`：完整 V1 台账；
+- `RESEARCH_FAILURES.md`：V2 启动前的失败账本快照；
+- `ENVIRONMENT.md`：2026-07-29 环境快照；
+- `ARTIFACT_RETENTION.md`：V1 结束时保留策略；
 - `DR_M5_DGGT_REPORT.md`：DGGT blocked 报告；
 - `DR_M7_NOVELTY_AUDIT.md`：候选 A novelty 裁决；
 - 两份时间戳 summary 与 `CODEX_AGENT_STATUS.md`：当时交接/心跳终态。
