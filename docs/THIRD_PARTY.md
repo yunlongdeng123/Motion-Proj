@@ -1,102 +1,56 @@
-# 第三方依赖
+# V2 第三方依赖
 
-Motion-Proj 主仓库不包含大型第三方源码与模型权重。换机后按需准备以下路径。
+- 更新时间：2026-08-02
+- 当前计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
-## CoTracker3（E0 独立 evaluator）
+## 当前驻留
 
-- **用途：** Autoresearch E0 冻结 CoTracker3 offline evaluator
-- **固定 commit：** `82e02e8029753ad4ef13cf06be7f4fc5facdda4d`
-- **预期路径：** `/root/autodl-tmp/third_party/co-tracker`
-- **一键克隆：**
+| 项目 | 路径 | commit / 资产 | V2 用途 |
+|---|---|---|---|
+| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | `9a208512e49c8ddbaa20387921d9648adcd21cb4` | 六场景冻结重建参考 |
+| DGGT | `/root/autodl-tmp/third_party/dggt` | `a3276d2bbe4cbb03bcc117830b1836110a27adeb`，clean | M1 inference-only |
+| DriveStudio | `/root/autodl-tmp/third_party/drivestudio` | `e59bda4fa681f829dbb1d65f0de582b0f633c450`，clean | M3 StreetGS/actor graph baseline |
+| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | `b7a9c29f196edff0eb54dbe14588d7ae5e3dde28`，clean | M5 感知 evaluator |
+| CoTracker3 | `/root/autodl-tmp/third_party/co-tracker` | V1 固定资产 | M5 可选 tracking evaluator |
+| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | `a561b849ebae10a6f5ef49e26c83cbbcd36c71bf` | source 留档；env/weight non-resident |
 
-```bash
-bash scripts/setup_third_party.sh
+AD-GS worktree 中存在 V1 已登记的 compatibility 修改与编译产物；M0 必须读取正式 run 的
+`source_snapshot/compatibility.patch`，不能把 live dirty 状态误报成 upstream clean。
+
+## DGGT 权重
+
+```text
+model repo  xiaomi-research/dggt
+revision    735ac9a6486057b1eb886c33a8c6dc79e0b43214
+license     CC BY-NC 4.0（模型卡）；代码为 Apache-2.0
+path        /root/autodl-tmp/checkpoints/dggt_preload/model_latest_nuscenes.pt
+bytes       5,411,266,466
+sha256      fd15644b3a878849470cbf5f0f9eae39167cfec1b853092898ae754c4f3acde9
 ```
 
-- **权重：** `scaled_offline.pth` 需放到 `third_party/co-tracker/checkpoints/`。首次 E0 若缺失会 blocked；下载前可 `source /etc/network_turbo` 或 `export HF_ENDPOINT=https://hf-mirror.com`。
-- **配置引用：** `configs/diagnostics/autoresearch_e0_evaluator*.yaml` 中 `repository_path` 指向上述目录。
+该文件是本地完整候选，不等于 M1 已完成 provenance 验证。M1 必须核对固定 revision、license、远端元数据和
+hash 后再复用；不得无理由重新下载。V1 的 5.39 GB `.partial` 不完整副本已列入清理。
 
-## SVD-XT backbone
+## DriveStudio 当前缺口
 
-见 [`scripts/download_weights.md`](../scripts/download_weights.md)。固定 Hugging Face revision 为
-`9e43909513c6714f1bc78bcb44d96e733cd242aa`。2026-07-19 清理前的完整本地快照为 32.61 GB，同时包含
-monolithic 与 Diffusers `full`/`fp16` 权重，而不是旧文档所写的约 10 GB。该资产已按
-[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 清理，当前为 `non-resident`；如获授权，可从固定 revision
-重建。不能仅凭历史配置假定 `/root/autodl-tmp/weights/svd-xt` 驻留。
+- 源码与 `/root/autodl-tmp/envs/drivestudio` 驻留；环境为 Python 3.9 / torch 2.1.2+cu118；
+- 历史数据/checkpoint 对应旧 mini/OccGS scenes `003/004/005`；
+- 未发现 V2 `scene-0230/0242/0255` 的 DriveStudio processed data 或 actor-aware checkpoint；
+- 因而 M3 默认从“官方 source/env 可用、V2 资产缺失”开始，不能走“已有 checkpoint”路径，除非 M3
+  正式 audit 找到此前未索引且 hash/配置完整的资产。
 
-## nuScenes
+## 下载与镜像
 
-完整数据集在 AutoDL 公共盘；当前数据盘另有约 35G 的 CAM_FRONT/LIDAR_TOP 与 metadata 本地子集。
-路径见 [`ENVIRONMENT.md`](ENVIRONMENT.md) §4，抽取脚本在 `scripts/extract_nuscenes_*.sh`。
+- Conda/PyPI：项目级 TUNA 镜像；
+- Hugging Face：`HF_ENDPOINT=https://hf-mirror.com`，固定 revision 并校验 SHA-256；
+- GitHub：先 `/etc/network_turbo`；用户允许学术加速作为传输 fallback，但结果必须核对官方 remote、固定
+  commit、submodule 和 license；
+- PyTorch/CUDA extension：版本与 wheel variant 以官方兼容矩阵为准，镜像只加速传输。
 
-## cut-in rules reference package
+新增仓库必须登记 official URL、commit、submodule、license、local diff 和权重 SHA-256。不得用浮动
+`main`、未固定 revision 或来源不明网盘进入正式 run。
 
-- **路径：** `/root/autodl-tmp/third_party/data_mining/cutin_rules_package`
-- **用途：** 第四版 N1 规则结构调研，只读参考 stable adjacent-lane、outside→inside、receiver identity、
-  persistence、path-clear 与 gap/TTC 设计；
-- **边界：** 包内未发现明确 license 文件，主仓库不复制其 Lua/规则源码；第四版实现为独立 Python
-  代码与独立测试；
-- **已知问题：** high-recall 示例中的 `abs(diff)` 不能证明横向距离单调，宽松 fallback 也不进入
-  formal gate；
-- **历史研究合同：**
-  [`archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md`](archive/2026-07/cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md)；
-- **当前状态：** 只读历史参考，cut-in 路线已冻结，不再作为活跃依赖。
+## 历史依赖
 
-## 动态重建新路线
-
-只有用户开放资源且 `DR-M2-ENV-ASSET-01` 通过 preflight 后，才按
-[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 安装：
-
-| 项目 | 路径 | 当前用途 | 当前状态 |
-|---|---|---|---|
-| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | exact reproduction 主基线 | commit `9a208512…`，M4 done / 6 scenes |
-| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | AD-GS depth prior | commit `a561b849…`，smoke done |
-| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | object/sky pseudo masks | commit `b7a9c29f…`，smoke done |
-| DGGT | `/root/autodl-tmp/third_party/dggt` | inference-only 前馈对照 | commit `a3276d2…`，M5 blocked at pointops2 packaging |
-| VAD-GS | `/root/autodl-tmp/third_party/VAD-GS` | 补密/可见性方向条件对照 | `not installed`；M7 rejected 后未触发 |
-| DrivingEditor | `/root/autodl-tmp/third_party/DrivingEditor` | 编辑能力参考/条件运行 | `not installed`；M7 rejected 后未触发 |
-
-每项安装后必须登记 upstream commit、submodule、license、checkpoint SHA-256、conda explicit、pip freeze 与
-本地 patch。计划中的版本号不能提前写成“当前环境事实”。
-
-DGGT readiness 事实：
-
-- code：Apache-2.0；NOTICE 另含 VGGT 衍生文件许可边界；
-- model repo：`xiaomi-research/dggt` revision
-  `735ac9a6486057b1eb886c33a8c6dc79e0b43214`，model card 为 CC BY-NC 4.0；
-- `model_latest_nuscenes.pt` 远端大小 `5,411,266,466` bytes；M5 在下载前 blocked，本地 checkpoint 不存在；
-- `/root/autodl-tmp/envs/dggt` 已由 M5 隔离创建；完整 pip freeze 与阶段终态见正式 run；
-- upstream 已知 `diffusion`/`difix` 参数错配和 mode-2 `start_idx=0` 硬编码必须保留原始失败证据，
-  不能直接把 patch 后结果冒充 untouched upstream。
-
-## M7 novelty 官方来源（不等于本地依赖）
-
-2026-07-29 对唯一候选 A 重新核对以下一手来源：
-
-| 工作 | 官方来源 | 与候选的边界 |
-|---|---|---|
-| InstDrive | https://arxiv.org/abs/2508.12015 | SAM pseudo masks → dynamic-driving 3D instance identity / interactive editing |
-| Director | https://arxiv.org/abs/2604.01678 | temporally aligned instance masks → 4D Gaussian identity consistency |
-| OmniRe | https://openreview.net/forum?id=9cwxZxJixB | actor scene graph、canonical vehicle nodes 与 simulation |
-| HorizonForge | https://arxiv.org/abs/2602.21333 | editable splats/meshes、任意车辆轨迹与对象操作 |
-| G²Editor | https://arxiv.org/abs/2508.20471 | reposition/insert/delete 与遮挡区恢复 |
-
-这些工作用于 novelty rejection，不表示仓库已安装其代码或权重。M7 详细矩阵：
-[`DR_M7_NOVELTY_AUDIT.md`](DR_M7_NOVELTY_AUDIT.md)。
-
-## 不入 Git 的运行产物
-
-以下目录保留在数据盘，换机若只 `git clone` 需重新生成或从旧机拷贝：
-
-| 路径 | 内容 |
-|---|---|
-| `/root/autodl-tmp/runs/` | 实验 run；正式结论保留轻量证据，checkpoint/candidate 等载荷可按保留策略瘦身 |
-| `/root/autodl-tmp/cache/` | 投影 / replay cache |
-| `/root/autodl-tmp/weights/` | SVD、CoTracker 等权重 |
-| `/root/autodl-tmp/envs/motionproj` | Conda 环境（可用 `requirements.lock.txt` 重建） |
-| `/root/autodl-tmp/envs/{adgs,adgs-dpt,adgs-sam}` | AD-GS 新路线隔离环境；已创建并通过 M2 smoke |
-| `/root/autodl-tmp/envs/dggt` | DGGT 隔离环境；requirements 已安装，pointops2 未完成，M5 blocked |
-
-轻量 run 摘要已归档到 `docs/run_manifests/`，供对照 commit 与 resolved config。正式 run ID 不得复用或覆盖，
-但这不要求永久保留每个 checkpoint、candidate 视频或中间 tensor；实际驻留范围与受保护人工材料以
-[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 为准。
+OccGS/ReSim/SVD/cut-in 的依赖和研究结论已归档；它们不再授权执行。需要追溯时从
+[`archive/2026-07/README.md`](archive/2026-07/README.md) 进入。

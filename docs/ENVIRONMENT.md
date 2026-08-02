@@ -1,196 +1,110 @@
-# Motion-Proj 运行环境
+# Motion-Proj V2 运行环境
 
-- 更新时间：2026-07-29
-- 当前事实源：本文件记录机器/路径；研究授权只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
-- 当前资源合同：RTX 3090 24 GB，cgroup 内存上限 90 GiB
-- 新路线环境：AD-GS/DPT/Grounded-SAM-2 已安装；DGGT 代码、隔离环境与正式终态由 M5 固定
+- 更新时间：2026-08-02
+- 研究授权：只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
+- 当前计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
-## 1. 当前资源
-
-2026-07-28 换机后现场：
+## 1. 当前机器
 
 ```text
-cgroup memory.max     96,636,764,160 B (90 GiB)
-memory.events         oom 0 / oom_kill 0
-GPU                   NVIDIA GeForce RTX 3090, 24,576 MiB
-driver                580.105.08
-data disk             250G total / 112G used / 139G avail / 45%
+GPU             NVIDIA GeForce RTX 3090, 24,576 MiB
+driver          580.105.08
+cgroup memory   96,636,764,160 B (90 GiB)
+memory.events   oom=0 / oom_kill=0
+data filesystem /dev/nvme0n1, 250G
 ```
 
-M4 已完成，M5 blocked 证据位于
-`/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`。任何连续两个 5 秒采样达到 cgroup 90%、RC137、SIGKILL、GPU OOM、
-`memory.events` 增加或数据盘低于 20 GiB，都按 `N1-F24/PIVOT-F05` 停止当前 stage；不杀其他服务，
-不降分辨率或删相机绕过门禁。
+清理前为 `185G used / 66G available`。清理后的实际值将在
+[`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md)
+完成后回填。
 
-## 2. 现有环境
+## 2. V2 环境驻留状态
 
-环境都在数据盘，禁止混装：
+| 环境 | 路径 | 用途 | 状态 |
+|---|---|---|---|
+| motionproj | `/root/autodl-tmp/envs/motionproj` | 主仓库、M0/M2 与轻量测试 | 保留 |
+| drivestudio | `/root/autodl-tmp/envs/drivestudio` | M3 对象级 baseline | 保留；Python 3.9 / torch 2.1.2+cu118 |
+| adgs | `/root/autodl-tmp/envs/adgs` | 读取/必要时渲染冻结 AD-GS | 保留 |
+| adgs-sam | `/root/autodl-tmp/envs/adgs-sam` | M5 冻结感知 evaluator | 保留 |
+| dggt-v2 | `/root/autodl-tmp/envs/dggt-v2` | M1 新隔离环境 | 尚未创建；M0 前禁止创建 |
 
-| 环境 | 路径 | 大小约 | 用途/状态 |
-|---|---|---:|---|
-| motionproj | `/root/autodl-tmp/envs/motionproj` | 7.8G | 主仓库轻量审计与测试，保留 |
-| drivestudio | `/root/autodl-tmp/envs/drivestudio` | 7.0G | 历史 StreetGS/OccGS，保留 |
-| resim | `/root/autodl-tmp/envs/resim` | 6.4G | 历史 ReSim V6，非活跃 |
-| adgs | `/root/autodl-tmp/envs/adgs` | 7.1G | AD-GS train/render/COLMAP，M4 done |
-| adgs-dpt | `/root/autodl-tmp/envs/adgs-dpt` | 5.8G | Depth Anything V2，已通过 smoke |
-| adgs-sam | `/root/autodl-tmp/envs/adgs-sam` | 6.0G | Grounded-SAM-2，已通过 smoke |
-| dggt | `/root/autodl-tmp/envs/dggt` | 以 M5 manifest 为准 | requirements 已安装；pointops2 build isolation 失败，M5 blocked |
+V1 的 `/root/autodl-tmp/envs/dggt`、中断副本、ReSim V6 环境和 DPT 预处理环境属于可重建历史环境，
+按 V2 启动前清理清单移除。环境被移除不改变历史 run 结论。
 
-主仓库命令的标准激活：
+## 3. 代码与版本
 
-```bash
-source /root/miniconda3/etc/profile.d/conda.sh
-conda activate motionproj
-```
-
-DriveStudio 历史环境：
-
-```bash
-source /root/miniconda3/etc/profile.d/conda.sh
-conda activate /root/autodl-tmp/envs/drivestudio
-export CUDA_HOME=/usr/local/cuda-11.8
-export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
-```
-
-历史细节：
-
-- ReSim V6：[`archive/2026-07/v6/C1_V6_FINAL_REPORT.md`](archive/2026-07/v6/C1_V6_FINAL_REPORT.md)
-- OccGS E0：[`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md)
-- 当前保留规则：[`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)
-
-## 3. 新路线环境
-
-| 环境 | 路径 | 关键 upstream 版本 / 当前状态 |
+| 项目 | 路径 | commit / 状态 |
 |---|---|---|
-| AD-GS | `/root/autodl-tmp/envs/adgs` | 已安装；Python 3.7 / torch 1.13.1 compatibility 环境 |
-| Depth Anything V2 | `/root/autodl-tmp/envs/adgs-dpt` | 已安装；Python 3.11 |
-| Grounded-SAM-2 | `/root/autodl-tmp/envs/adgs-sam` | 已安装；Python 3.10 |
-| DGGT | `/root/autodl-tmp/envs/dggt` | Python 3.10 / torch 2.4.1；requirements 完成，pointops2 未完成 |
-| VAD-GS | `/root/autodl-tmp/envs/vadgs` | 未创建；M7 rejected 后未触发 |
+| Motion-Proj | `/root/autodl-tmp/motion_proj` | V2 授权前基线 `1e83ad5b` |
+| AD-GS | `/root/autodl-tmp/third_party/AD-GS` | `9a208512e49c8ddbaa20387921d9648adcd21cb4`；有已登记 compatibility 修改和 build 产物 |
+| DGGT | `/root/autodl-tmp/third_party/dggt` | `a3276d2bbe4cbb03bcc117830b1836110a27adeb`；worktree clean |
+| DriveStudio | `/root/autodl-tmp/third_party/drivestudio` | `e59bda4fa681f829dbb1d65f0de582b0f633c450`；worktree clean |
+| Grounded-SAM-2 | `/root/autodl-tmp/third_party/Grounded-SAM-2` | `b7a9c29f196edff0eb54dbe14588d7ae5e3dde28`；worktree clean |
+| Depth Anything V2 | `/root/autodl-tmp/third_party/Depth-Anything-V2` | source 保留；env/weight non-resident |
 
-完整顺序、兼容性 patch 规则和输出 manifest 见
-[`DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`](DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md) 第 4–5 节。
+## 4. 数据与最终产物
 
-## 4. 代码与第三方路径
-
-现有：
+必须保留：
 
 ```text
-/root/autodl-tmp/motion_proj
-/root/autodl-tmp/third_party/drivestudio
-/root/autodl-tmp/third_party/co-tracker
-/root/autodl-tmp/third_party/gsplat
-/root/autodl-tmp/third_party/pytorch3d
-/root/autodl-tmp/third_party/AD-GS
-/root/autodl-tmp/third_party/Depth-Anything-V2
-/root/autodl-tmp/third_party/Grounded-SAM-2
-/root/autodl-tmp/third_party/dggt
-```
-
-条件启用、当前不存在：
-
-```text
-/root/autodl-tmp/third_party/VAD-GS
-/root/autodl-tmp/third_party/DrivingEditor
-```
-
-固定 commits：
-
-```text
-AD-GS             9a208512e49c8ddbaa20387921d9648adcd21cb4
-Depth-Anything-V2 a561b849ebae10a6f5ef49e26c83cbbcd36c71bf
-Grounded-SAM-2    b7a9c29f196edff0eb54dbe14588d7ae5e3dde28
-DGGT              a3276d2bbe4cbb03bcc117830b1836110a27adeb
-```
-
-每个新增仓库必须登记 commit、submodules、license、local diff 和 checkpoint SHA-256，不能只记分支名。
-
-## 5. 数据路径
-
-```text
-# AD-GS 官方六场景精确 raw subset，含三前相机、LiDAR、metadata 与 maps
 /root/autodl-tmp/data/dynamic_recon/raw_subset/adgs_nuscenes_v1
-
-# 六场景已生成/正在生成的 AD-GS processed assets
+/root/autodl-tmp/data/dynamic_recon/manifests
 /root/autodl-tmp/data/dynamic_recon/processed/adgs_nuscenes_v1
-
-# 本机只读 nuScenes trainval tar shards，10 个 blobs 合计约 294G
-/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
-
-# 历史 OccGS 数据
-/root/autodl-tmp/data/occgs
-
-# 历史本地子集
-/root/autodl-tmp/data/nuscenes
+/root/autodl-tmp/runs/dynamic_recon/*/正式轻量证据
+/root/autodl-tmp/runs/dynamic_recon/DR-M3-ADGS-0230-01/.../model_60000
+/root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/.../model_60000
 ```
 
-AD-GS 官方六场景缺口已由选择性 tar member 提取闭合，1,440/1,440 sensor payload 与 4/4 map masks
-在换机 M2 smoke 中再次通过。没有全量解压 294 GB，也没有原地修改历史 `/root/autodl-tmp/data/nuscenes`。
+39G AD-GS processed 数据暂时保留，因为现有
+`scripts/prepare_dr_m5_dggt_inputs.py` 直接读取其 `image/sky/semantic`，M1 改造前不能删除。
 
-## 6. Run 与备份路径
+DriveStudio 历史数据只有旧 mini/OccGS 资产，不能替代 V2 的 `scene-0230/0242/0255` processed data。
+
+## 5. 权重
 
 ```text
-# 历史 runs
-/root/autodl-tmp/runs/occgs_resim
-/root/autodl-tmp/runs/event_first
-
-# 新路线计划 runs
-/root/autodl-tmp/runs/dynamic_recon
-
-# 本轮归档前完整 docs 恢复点
-/root/autodl-tmp/motion_proj_backups/docs-before-direction-pivot-2026-07-26
+DGGT full preload
+path   /root/autodl-tmp/checkpoints/dggt_preload/model_latest_nuscenes.pt
+bytes  5,411,266,466
+sha256 fd15644b3a878849470cbf5f0f9eae39167cfec1b853092898ae754c4f3acde9
 ```
 
-正式 run 使用唯一 ID，不覆盖失败实例。config、metrics、summary、terminal、hash 与人工 verdict 永久保护。
+M1 必须先核对固定 revision、license 与 hash，再以同文件系统 hardlink 或只读路径复用；不得再次下载一份
+5.41 GB 副本。旧 `/root/autodl-tmp/checkpoints/dggt/*.partial` 已列入清理。
 
-## 7. 磁盘策略
+Grounding DINO/Hugging Face cache 与 CoTracker3 权重保留供 M5 使用。DPT 权重属于已完成 AD-GS 预处理的
+可重下载输入，V2 不再训练 AD-GS，因此改为 non-resident。
 
-2026-07-28：
+## 6. 缓存和镜像
 
-```text
-/dev/md0  250G total  112G used  139G available  45%
+V2 统一使用：
+
+```bash
+export PROJECT_ROOT=/root/autodl-tmp/motion_proj
+export ENV_ROOT=/root/autodl-tmp/envs
+export CACHE_ROOT=/root/autodl-tmp/cache
+export CONDA_PKGS_DIRS=/root/autodl-tmp/cache/conda-pkgs
+export PIP_CACHE_DIR=/root/autodl-tmp/cache/pip
+export HF_HOME=/root/autodl-tmp/hf_cache
+export HF_HUB_CACHE=/root/autodl-tmp/hf_cache/hub
+export HF_ENDPOINT=https://hf-mirror.com
+export TORCH_HOME=/root/autodl-tmp/cache/torch
+export XDG_CACHE_HOME=/root/autodl-tmp/cache/xdg
+export TMPDIR=/root/autodl-tmp/tmp
 ```
 
-新路线规则：
+- Conda/PyPI 默认使用项目级 TUNA 配置，不写全局配置；
+- Hugging Face 默认使用镜像，同时固定 repo revision、记录 license、字节数和 SHA-256；
+- GitHub 先启用 `/etc/network_turbo`；需要时允许用户授权的学术加速传输，但必须核对官方 remote、固定
+  commit、submodule 和 license；
+- PyTorch/CUDA 扩展使用官方兼容 wheel/index，镜像不能改变构建变体。
 
-- 安装/训练启动前可用空间必须 ≥60 GiB；
-- 运行中始终保留 20 GiB；
-- 不复制 294 GB 公共 tar；
-- 不在 AD-GS exact reproduction 前下载 Waymo、PandaSet、大型视频生成模型或全部可选 baseline；
-- 环境、权重和输出先由 scene-0230 100/1,000-iteration profile 估算，再批准六场景；
-- 空间不足时按清单评估可再生 cache，不从 raw、final checkpoint、正式指标或人工证据开始删。
+## 7. 激活与停止合同
 
-## 8. 网络与下载
-
-M4 exact 已完成；DGGT 环境/权重下载与 upstream smoke 由 M5 正式 run 执行：
-
-- conda/pip 优先使用已配置镜像；
-- Hugging Face checkpoint 必须固定 revision/文件 SHA-256；
-- 下载前记录 license 和远端大小；
-- 下载后立即哈希，不保留重复 cache；
-- 任何网络/权重差异都写入 run manifest。
-
-## 9. 换机 preflight
-
-换机后第一条动作只读：
-
-```text
-memory.max/current/events
-nvidia-smi GPU/VRAM/driver
-nvcc/gcc
-CPU cores
-df/inode
-process inventory
+```bash
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate /root/autodl-tmp/envs/<env-name>
 ```
 
-最低目标：
-
-```text
-RAM >= 32 GB (64 GB recommended)
-GPU >= 1 x 24 GB
-disk available >= 60 GiB
-```
-
-当前实例已通过该 preflight 和换机 M2 smoke。DGGT 环境、5.41 GB nuScenes 权重与终态以
-`/root/autodl-tmp/runs/dynamic_recon/DR-M5-DGGT-NUSC-01/20260729T133346__native-nusc-s0-wm3090/`
-的 manifest/stages/summary 为准；checkpoint 未下载，native inference 未执行。
+V2 禁止执行 `conda init` 或写全局 pip/Conda 配置。GPU run 前按计划审计 GPU、cgroup、磁盘和进程；
+低于 20 GiB、OOM/RC137、cgroup 90% 或需缩协议时立即停止并保留现场。

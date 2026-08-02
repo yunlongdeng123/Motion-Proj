@@ -1,83 +1,70 @@
-# 换机 / 新实例接续指南
+# 换机 / 清空 context 后的 V2 接续指南
 
-系统盘若通过 AutoDL 克隆，conda 环境与数据盘通常可以直接沿用。若只拉取 Git 代码，按本指南恢复
-代码、环境和研究上下文；run 载荷、cache、权重与 checkpoint 不在 Git 中，且可能已按保留策略清理。
-
-## 1. 拉取代码并核对状态
-
-```bash
-cd /root/autodl-tmp
-git clone https://github.com/yunlongdeng123/Motion-Proj.git motion_proj
-cd motion_proj
-git status --short --branch
-git log -3 --oneline
-```
-
-不得在不知道原机器 commit、dirty 状态和 run fingerprint 的情况下续跑正式实验。
-
-## 2. 恢复环境
-
-克隆系统盘时通常可跳过安装，但每个新 shell 仍需加载 conda：
-
-```bash
-source /root/miniconda3/etc/profile.d/conda.sh
-conda activate /root/autodl-tmp/envs/motionproj
-```
-
-若环境不存在：
-
-```bash
-source /root/miniconda3/etc/profile.d/conda.sh
-conda create -p /root/autodl-tmp/envs/motionproj python=3.10 -y
-conda activate /root/autodl-tmp/envs/motionproj
-pip install -r requirements.lock.txt
-```
-
-完整版本约束与网络说明见 [`ENVIRONMENT.md`](ENVIRONMENT.md)。
-
-## 3. 第三方、权重与数据
-
-```bash
-bash scripts/setup_third_party.sh
-# 历史 SVD-XT 当前 non-resident，仅在获授权复现时按固定 revision 重建，见 scripts/download_weights.md
-```
-
-- nuScenes 全量：`/autodl-pub/data/nuScenes/Fulldatasetv1.0`
-- 当前本地子集：`/root/autodl-tmp/data/nuscenes`（约 35G）
-- Mini 开发切分：`bash scripts/extract_nuscenes_mini.sh`
-- Hugging Face cache：`/root/autodl-tmp/hf_cache`
-
-第三方 commit 与离线资源见 [`THIRD_PARTY.md`](THIRD_PARTY.md)。
-
-## 4. 研究上下文阅读顺序
-
-不要仅依赖聊天记录，也不要从归档计划恢复“下一步”。按以下顺序阅读：
-
-1. `AGENTS.md`：环境、研究连续性和提交约定；
-2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
-3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：已验证 research 负结论、禁止重复项和未决风险；
-4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：实验事实源；
-5. 相关正式 run 的 `manifest.json`、`resolved.yaml`、`summary.json` 和指标文件；
-6. [`archive/2026-07/README.md`](archive/2026-07/README.md)：仅在追查历史方案时阅读。
-
-`docs/archive/` 中的旧计划、报告和提示词不再授权任何执行。新的研究动作必须由新的当前计划明确解锁。
-
-## 5. 迁移运行产物
-
-如果要复核已有实验，先查 [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md) 判断资产是否仍驻留。需要迁移的
-现存目录通常包括：
+## 1. 唯一恢复顺序
 
 ```text
-/root/autodl-tmp/runs/
-/root/autodl-tmp/cache/
-/root/autodl-tmp/weights/
-/root/autodl-tmp/hf_cache/
+AGENTS.md
+→ docs/RESEARCH_STATUS.md
+→ docs/RESEARCH_FAILURES.md
+→ docs/EXPERIMENTS.md
+→ docs/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md
+→ 相关 run manifest/terminal
 ```
 
-用 `docs/run_manifests/` 的轻量副本和 [`EXPERIMENTS.md`](EXPERIMENTS.md) 核对 commit、config
-fingerprint、数据 split、seed 与终止标记。正式 run ID 不得复用或覆盖；但已按策略移除的 checkpoint、
-candidate pool 或中间 tensor 不应被误报为迁移丢失。正式 48 条人工 verdict、R1/A0 待评审包和 UPO
-common-support 证据属于受保护资产，迁移时必须核对其 SHA-256。
+归档计划、旧 summary 和聊天记录都不授予下一步。当前唯一动作以 `RESEARCH_STATUS.md` 为准。
+
+## 2. 代码
+
+```bash
+cd /root/autodl-tmp/motion_proj
+git status --short --branch
+git log -3 --oneline --decorate
+```
+
+若需要重新 clone，优先使用 `/etc/network_turbo`。用户允许学术加速传输 GitHub，但 clone 后必须把官方
+repository URL、固定 commit、submodule 和 license 写入 run；不能把镜像分支名当 provenance。
+
+## 3. 环境
+
+```bash
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate /root/autodl-tmp/envs/motionproj
+```
+
+V2 禁止 `conda init` 和全局镜像配置。M0 将创建项目级 condarc 与 bootstrap；M0 完成前不得自行拼装
+`dggt-v2`。
+
+当前应驻留环境：`motionproj`、`drivestudio`、`adgs`、`adgs-sam`。历史 `dggt/resim/adgs-dpt`
+已按清理账本移除，不能据此推断数据或历史实验丢失。
+
+## 4. 关键非 Git 资产
+
+```text
+/root/autodl-tmp/data/dynamic_recon/raw_subset/adgs_nuscenes_v1
+/root/autodl-tmp/data/dynamic_recon/manifests
+/root/autodl-tmp/data/dynamic_recon/processed/adgs_nuscenes_v1
+/root/autodl-tmp/runs/dynamic_recon
+/root/autodl-tmp/checkpoints/dggt_preload/model_latest_nuscenes.pt
+/root/autodl-tmp/hf_cache
+/root/autodl-tmp/weights/cotracker3
+```
+
+DGGT preload 必须为 `5,411,266,466` bytes，SHA-256
+`fd15644b3a878849470cbf5f0f9eae39167cfec1b853092898ae754c4f3acde9`。
+
+六场景 AD-GS 只保留最终 `model_60000` 大载荷；100/1,000-step 中间 checkpoint non-resident 是预期状态。
+
+## 5. 网络
+
+```bash
+source /etc/network_turbo 2>/dev/null || true
+export HF_ENDPOINT=https://hf-mirror.com
+export HF_HOME=/root/autodl-tmp/hf_cache
+export HF_HUB_CACHE=/root/autodl-tmp/hf_cache/hub
+export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+正式下载仍须固定 revision、记录 endpoint/命令/返回码/字节数/license/SHA-256。
 
 ## 6. 快速自检
 
@@ -85,24 +72,8 @@ common-support 证据属于受保护资产，迁移时必须核对其 SHA-256。
 source /root/miniconda3/etc/profile.d/conda.sh
 conda activate /root/autodl-tmp/envs/motionproj
 cd /root/autodl-tmp/motion_proj
-pytest -q
+pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py
 ```
 
-如果只检查关键基础设施，可先运行：
-
-```bash
-pytest -q \
-  tests/test_svd_conditioning_parity.py \
-  tests/test_independent_evaluator.py \
-  tests/test_selective_partial_order.py \
-  tests/test_physics_preference_candidate_fallback.py
-```
-
-## 7. 当前研究状态
-
-截至 2026-07-22，V1–V6 路线均已关闭并归档；OccGS-Resim V7 已完成三场景单卡 feasibility，当前决策为
-`modify_method_then_scale`。occupancy 方法增益、geometry-derived completion 与下游 utility 仍未验证，迁移后
-不得从历史计划恢复旧训练或直接扩规模。
-
-准确任务状态只以 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md) 为准；文档入口见 [`README.md`](README.md)，
-历史计划与终报见 [`archive/2026-07/`](archive/2026-07/README.md)。
+该命令只是现有代码 smoke，不代表 V2 M0 完成。M0 还必须建立分支、修正文档入口、生成 bootstrap、验证镜像
+并更新三份事实源。
