@@ -2,22 +2,26 @@
 
 - 更新时间：2026-08-02
 - 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前里程碑：`DR-V2-M1-DGGT-REPAIR-01`
-- 状态：`pending / user-authorized / M0 done`
-- 当前门禁：M0 已通过并解锁 M1；M1 提交前不得进入 M2
+- 当前里程碑：`DR-V2-M2-ACTOR-EVAL-01`
+- 状态：`pending / user-authorized / M0–M1 done`
+- 当前门禁：M1 已通过并解锁 M2；M2 提交前不得进入 M3
 - 权威计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V2 授权前 Git 基线：`1e83ad5b`（`main` / `origin/main`）
 - 当前分支：`research/dynamic-editing-v2`
 - M0 正式 run：
   `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T115419Z__bootstrap-s0-r3`
+- M1 正式证据：
+  `20260802T125138Z__native-nusc-s0-r6` + `20260802T133151Z__common-retry-s0-r8` +
+  `20260802T133912Z__regional-s0-r9`
 
 ## 当前裁决
 
-`DR-V2-M0-BOOTSTRAP-01` 已按计划完成：独立分支、V2 文档入口、项目级镜像配置、空 shell/tmux
-bootstrap、source audit、冻结资产复核和定向测试均通过。V1 数值和 `rejected` 终态未覆盖。
+`DR-V2-M1-DGGT-REPAIR-01` 已按计划完成。pointops2 upstream CUDA 构建/反传通过，
+checkpoint provenance 通过，untouched 失败与单行 patch 分离；18/18 1-view、18/18 3-view、
+216/216 common target 和 504 行动态/边界诊断全部完成。
 
-当前唯一动作是执行 `DR-V2-M1-DGGT-REPAIR-01`。只有 M1 形成 18/18 1-view 结果或可信 upstream
-`blocked` 证据，并完成独立事实源更新和 commit，才可进入 M2。
+当前唯一动作是执行 `DR-V2-M2-ACTOR-EVAL-01`；只允许用 nuScenes 真值做评测选择与
+oracle 诊断，不允许作为 AD-GS 训练输入。
 
 ## V1 历史终态
 
@@ -62,11 +66,19 @@ V1 结论保持不变，完整快照在
 - 定向测试：`7 passed`；
 - source audit：[`DR_V2_M0_SOURCE_AUDIT.md`](DR_V2_M0_SOURCE_AUDIT.md)。
 
-## 下一步：只执行 M1
+## M1 完成证据
 
-1. 新建 `/root/autodl-tmp/envs/dggt-v2` 并固定 Python/PyTorch/CUDA 构建；
-2. 复核 DGGT official commit、model revision、license 与 preload provenance；
-3. 按 upstream `python setup.py install` 构建 pointops2，并做 CUDA forward/backward；
-4. 分开保存 untouched `difix/diffusion` 失败和最小 compatibility patch；
-5. 完成固定 18-window 1-view、3-view diagnostic 与 common-observation 诊断，或形成可信 upstream blocked；
-6. 更新事实源并独立提交 M1，之后才允许进入 M2。
+- 1-view mean：`PSNR 20.707359 / SSIM 0.856031 / LPIPS(Alex) 0.135780 / 1.785527 s`；
+- 3-view mean：`PSNR 21.165262 / SSIM 0.771051 / LPIPS(Alex) 0.165553 / 4.517659 s`；
+- AD-GS same-target 216/216：1-view `34.581860 / 0.951918 / 0.062490`，3-view
+  `34.894344 / 0.951711 / 0.061447`；
+- regional coverage：AD-GS `216`、DGGT 1-view `72`、DGGT 3-view `216`；
+- 对照不是 matched leaderboard：DGGT 不用 pose/逐场景优化且在 294x518 推理，AD-GS 使用 pose、
+  138 帧逐场景 60k 优化且在 900x1600 渲染。
+
+## 下一步：只执行 M2
+
+1. 固定 nuScenes raw sample/frame 与 AD-GS processed frame 映射；
+2. 以 `instance_token` 构建 2 Hz raw truth actor track；
+3. 实现三相机 3D box 投影、可见性、选择和 truth-tier 审计；
+4. 预注册 scene-0230/0242/0255 各至少 1 个合格 vehicle actor，并以独立 commit 封存。

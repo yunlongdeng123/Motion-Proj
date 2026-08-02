@@ -6,7 +6,7 @@
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
-本文件只登记 V2。M0 已完成；当前只允许进入 M1。
+本文件只登记 V2。M0–M1 已完成；当前只允许进入 M2。
 
 ## 1. 状态词
 
@@ -23,7 +23,7 @@ pending | running | blocked | done | rejected
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
 |---|---|---|---|---|
 | `DR-V2-M0-BOOTSTRAP-01` | done | 事实源、分支、镜像与 bootstrap | 正式 run 完成；历史失败实例保留 | README/STATUS/PLAN 一致，bootstrap smoke 通过 |
-| `DR-V2-M1-DGGT-REPAIR-01` | pending | 修复 pointops2 并做 18-window inference | repo/full preload 存在；旧失败 env 已清理 | M0 done；1-view 18/18 或可信 upstream blocked |
+| `DR-V2-M1-DGGT-REPAIR-01` | done | 修复 pointops2 并做 18-window inference | 1/3-view、common、regional 全部完成 | 18/18 + 216/216 + 完整运行合同 |
 | `DR-V2-M2-ACTOR-EVAL-01` | pending | nuScenes 真值 actor 评测适配器 | raw subset 与 metadata 驻留 | 三个 pilot scene 各至少 1 个合格车辆 |
 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS 可编辑基线 | source/env 存在；V2 scene 资产缺失 | scene-0230 remove/lateral/3-camera smoke |
 | `DR-V2-M4-EDIT-PILOT-01` | pending | scene-0230 真实编辑闭环 | 未生成 | 两种编辑真实执行且证据可审计 |
@@ -80,6 +80,43 @@ pending | running | blocked | done | rejected
   `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py` → `7 passed`；
 - `shellcheck` 未安装，按计划未为此污染环境；`bash -n` 通过。
 
-## 6. 当前唯一动作
+## 6. `DR-V2-M1-DGGT-REPAIR-01`
 
-执行 `DR-V2-M1-DGGT-REPAIR-01`。M1 提交前不进入 M2，不创建 DriveStudio 正式训练 run。
+### 冻结实现
+
+- repo `a3276d2b`；model revision `735ac9a6`；checkpoint bytes/SHA-256 通过并 hardlink 复用；
+- `/root/autodl-tmp/envs/dggt-v2`：Python 3.10 / torch 2.4.1+cu121 / 固定 NVIDIA CUDA 12.1
+  compiler+runtime+headers；
+- pointops2 upstream `python setup.py install`；CUDA forward/backward=`PASS`；
+- compatibility patch 仅 `args.difix -> args.diffusion`，untouched 错误单独保留。
+
+### 正式运行
+
+| 证据 | 终态 | 覆盖/结果 |
+|---|---|---|
+| `20260802T125138Z__native-nusc-s0-r6` | native done；后续 common import blocked | 1-view 18/18；3-view 18/18；原生输出不受 common 失败影响 |
+| `20260802T133151Z__common-retry-s0-r8` | done | AD-GS common target 216/216；GT 像素身份 216/216 |
+| `20260802T133912Z__regional-s0-r9` | done | AD-GS 216 + DGGT 1-view 72 + DGGT 3-view 216 = 504 rows |
+
+M1 均值：
+
+| 协议 | PSNR | SSIM | LPIPS(Alex) | inference s |
+|---|---:|---:|---:|---:|
+| DGGT 1-view | 20.707359 | 0.856031 | 0.135780 | 1.785527 |
+| DGGT 3-view | 21.165262 | 0.771051 | 0.165553 | 4.517659 |
+| AD-GS same-target 1-view | 34.581860 | 0.951918 | 0.062490 | n/a |
+| AD-GS same-target 3-view | 34.894344 | 0.951711 | 0.061447 | n/a |
+
+区域诊断的动态区/边界带 PSNR 分别为：AD-GS `29.640118/29.480968`、DGGT 1-view
+`22.999911/22.017347`、DGGT 3-view `22.902139/21.810579`。边界带固定为二值动态区
+7x7 dilation XOR erosion。这些数值仅用于 failure characterization，不得解释为同预算排行。
+
+### 失败实例
+
+`r1–r5`分别固定了 pip backtracking、CUDA 11.8/cu121 compiler mismatch、缺 cusparse headers、
+transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common 固定 `flow_vis`
+缺失；r7 固定重试封装字段错误。全部为独立 `blocked` run，没有覆盖原运行。
+
+## 7. 当前唯一动作
+
+执行 `DR-V2-M2-ACTOR-EVAL-01`。M2 提交前不进入 M3，不创建 DriveStudio 正式训练 run。

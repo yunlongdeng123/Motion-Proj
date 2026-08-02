@@ -1308,6 +1308,34 @@ actor scene graph/canonical vehicle nodes 做仿真；HorizonForge 与 G²Editor
 AD-GS 适配工程。因此 M7=`rejected`，不注册事后 primary endpoint；M8/M9 均
 `rejected / not authorized`，不得通过改名、挑场景或把 0 coverage 写成改进继续。
 
+### PIVOT-F17：DGGT 扩展构建必须同时固定 compiler、headers 和 Python 依赖上界
+
+V2 M1 表明，“已安装 torch cu121”并不足以证明 CUDA extension 可构建。宿主只有 CUDA 11.8
+toolkit，会在 pointops2 编译时与 torch 2.4.1+cu121 硬失配；只补 `nvcc` 又会缺
+cusparse 等 headers。正确合同是在前缀环境固定 NVIDIA CUDA 12.1 compiler/runtime/headers，
+传播 `CUDA_HOME/CPATH/LD_LIBRARY_PATH`，再按 upstream `python setup.py install`。
+
+同一里程碑还暴露了浮动 Python 树的独立风险：transformers 5.x 使用 torch 2.4.1 未提供的
+DTensor API，diffusers 0.39 触发 torch schema 不兼容。最终固定
+`transformers 4.48.3 / tokenizers 0.21.0 / diffusers 0.32.2 / numpy 1.26.4 /
+opencv-python 4.11.0.86 / rerun-sdk 0.23.1 / flow-vis 0.1`。
+
+对应 blocked runs 为
+`20260802T120027Z__native-nusc-s0`、`120943Z__...-r2`、`122213Z__...-r3`、
+`122904Z__...-r4`、`124347Z__...-r5`。这些失败是构建/依赖证据，不能推断 DGGT
+方法质量。
+
+### PIVOT-F18：原生阶段完成不应被后续评估依赖失败覆盖
+
+M1 r6 已完成 18/18 1-view 和 18/18 3-view，但 common evaluator 导入 AD-GS 冻结
+`loss_utils` 时因 `flow_vis` 未安装而 blocked。原生输出本身未损坏，但主 terminal 已转为
+blocked，禁止为了“好看的 done”改写。
+
+恢复方式是新建 r8，对 r6 `native_summary.json/metrics.json`、每个 stage 和输出哈希做
+fail-closed 引用后只执行 common diagnostic。r7 中重试封装自身的 `KeyError` 也以新的
+blocked run 保留，再由 r8 完成。后续所有 multi-stage run 必须把“可复用的完成阶段”与
+“整个 instance 的 terminal 终态”分开；重试不得修改旧 terminal。
+
 ## 7. 新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

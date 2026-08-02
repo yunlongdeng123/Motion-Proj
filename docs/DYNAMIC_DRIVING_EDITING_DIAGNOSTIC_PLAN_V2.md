@@ -6,7 +6,7 @@
 - **执行环境**：远端 AutoDL，单卡 NVIDIA GPU，项目根目录默认 `/root/autodl-tmp/motion_proj`
 - **权威前序计划**：`docs/archive/2026-07/dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`
 - **V1 终态**：AD-GS 六场景精确复现成功；DGGT 因 pointops2 构建方式阻塞；M6 只完成身份资产审计，未真正执行编辑压力测试；候选 A“补实例身份并做轨迹编辑”因创新性重合被拒绝
-- **V2 当前状态**：`M0 done / M1 pending and authorized`
+- **V2 当前状态**：`M0–M1 done / M2 pending and authorized`
 - **V2 核心任务**：补齐前馈对照和可编辑基线，真正产生编辑结果与失败证据，再决定是否存在新的研究贡献
 
 ### 预执行现场校准（2026-08-02）
@@ -395,7 +395,7 @@ pending | running | blocked | done | rejected
 | 里程碑 | Task ID | 当前状态 | 核心产物 | 解锁条件 |
 |---|---|---:|---|---|
 | M0 V2 事实源与镜像基线 | `DR-V2-M0-BOOTSTRAP-01` | done | V2 状态、环境 bootstrap、镜像 smoke | 所有源可审计，旧结果不被覆盖 |
-| M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | pending | 18 窗口 1-view、3-view smoke、common diagnostic | 1-view coverage 18/18 或明确 upstream blocked |
+| M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | done | 18 窗口 1-view/3-view、common 与区域诊断 | 1-view/3-view 18/18，216/216 common target |
 | M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | pending | `instance_token` 轨迹、投影、固定 actor cohort | 三场景至少各 1 个可评测车辆 |
 | M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
 | M4 单场景真实编辑闭环 | `DR-V2-M4-EDIT-PILOT-01` | pending | 0230 固定 actor 的原始/横移/删除视频与指标 | 编辑真实执行、无空结果、证据可审计 |
@@ -646,6 +646,41 @@ DGGT mode 2 若仍忽略 CLI `start_idx`，继续使用每窗口独立 staging�
 
 ```text
 fix(dggt): 按上游构建 pointops2 并完成推理协议
+```
+
+## 6.10 执行结果（2026-08-02）
+
+M1=`done`，不改变 DGGT 模型语义：
+
+- 官方 repo commit `a3276d2bbe4cbb03bcc117830b1836110a27adeb`、model revision
+  `735ac9a6486057b1eb886c33a8c6dc79e0b43214`、`CC-BY-NC-4.0` 和 5.41 GB checkpoint
+  SHA-256 均通过；checkpoint 以同文件系统 hardlink 复用；
+- 新环境 `/root/autodl-tmp/envs/dggt-v2` 固定 Python 3.10、PyTorch 2.4.1+cu121；因宿主
+  toolkit 只有 CUDA 11.8，从官方 NVIDIA Conda 包固定 12.1 compiler/runtime/headers；
+- pointops2 严格按 upstream `python setup.py install` 构建，CUDA forward/backward=`PASS`；
+- untouched `--help` 通过；untouched inference 精确复现 `args.difix` 错误；实例内最小
+  patch 仅修改 `args.difix -> args.diffusion`；
+- 原生 r6 完成 18/18 1-view 和 18/18 3-view；1-view mean 为
+  `PSNR 20.707359 / SSIM 0.856031 / LPIPS(Alex) 0.135780 / 1.785527 s`，3-view mean 为
+  `PSNR 21.165262 / SSIM 0.771051 / LPIPS(Alex) 0.165553 / 4.517659 s`；
+- common r8 完成 216/216 target 和 216/216 GT 像素身份校验；冻结 AD-GS 同 target
+  1-view mean 为 `34.581860 / 0.951918 / 0.062490`，3-view mean 为
+  `34.894344 / 0.951711 / 0.061447`（PSNR/SSIM/LPIPS(Alex)）；
+- regional r9 完成 AD-GS 216、DGGT 1-view 72、DGGT 3-view 216 行。在各自冻结分辨率下，
+  动态区 PSNR 为 `29.640118 / 22.999911 / 22.902139`，7x7 形态学边界带 PSNR 为
+  `29.480968 / 22.017347 / 21.810579`；
+- DGGT 与 AD-GS 的输入观测数、pose、逐场景优化和分辨率不匹配，所有对照只是
+  failure characterization，不是 matched leaderboard。
+
+正式证据链：
+
+```text
+native:
+/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M1-DGGT-REPAIR-01/20260802T125138Z__native-nusc-s0-r6
+common:
+/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M1-DGGT-REPAIR-01/20260802T133151Z__common-retry-s0-r8
+dynamic/boundary:
+/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M1-DGGT-REPAIR-01/20260802T133912Z__regional-s0-r9
 ```
 
 ---
@@ -1677,3 +1712,14 @@ M0 开始前：
 - `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py`：`7 passed`；
 - DriveStudio source/env 可用但三个 pilot scene 资产缺失的现场事实保持不变；
 - 下一里程碑：`DR-V2-M1-DGGT-REPAIR-01`。
+
+### 2026-08-02 — M1 `done`
+
+- 以固定 CUDA 12.1 Conda toolchain 和严格依赖约束新建 `dggt-v2`，pointops2 upstream
+  CUDA forward/backward 通过；
+- 未修改 upstream 推理的 `args.difix` 原始失败与单行 compatibility patch 分开封存；
+- r6 完成 18/18 1-view 与 18/18 3-view，r8 完成 216/216 common targets，r9 完成
+  504 行动态区/边界诊断；
+- 包解析、CUDA toolkit、Torch API 与 common evaluator 依赖的失败实例均保留为独立
+  `blocked` run，没有覆盖重跑；
+- M1 门禁通过，下一唯一授权里程碑为 `DR-V2-M2-ACTOR-EVAL-01`。

@@ -1,0 +1,10 @@
+# V1 在同一 DGGT commit、Python 3.10 和 torch 2.4.1 下已完成解析的关键浮动依赖。
+# 固定这些版本可阻止 rerun-sdk~=0.21 的大型 wheel 无界回溯，并避免
+# transformers 5.x 调用 torch 2.4.1 尚未暴露的 DTensor API。
+rerun-sdk==0.23.1
+opencv-python==4.11.0.86
+numpy==1.26.4
+transformers==4.48.3
+tokenizers==0.21.0
+diffusers==0.32.2
+flow-vis==0.1
