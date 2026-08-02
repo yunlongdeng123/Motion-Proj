@@ -6,7 +6,7 @@
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
-本文件只登记 V2。M0–M1 已完成；当前只允许进入 M2。
+本文件只登记 V2。M0–M2 已完成；当前只允许进入 M3。
 
 ## 1. 状态词
 
@@ -24,7 +24,7 @@ pending | running | blocked | done | rejected
 |---|---|---|---|---|
 | `DR-V2-M0-BOOTSTRAP-01` | done | 事实源、分支、镜像与 bootstrap | 正式 run 完成；历史失败实例保留 | README/STATUS/PLAN 一致，bootstrap smoke 通过 |
 | `DR-V2-M1-DGGT-REPAIR-01` | done | 修复 pointops2 并做 18-window inference | 1/3-view、common、regional 全部完成 | 18/18 + 216/216 + 完整运行合同 |
-| `DR-V2-M2-ACTOR-EVAL-01` | pending | nuScenes 真值 actor 评测适配器 | raw subset 与 metadata 驻留 | 三个 pilot scene 各至少 1 个合格车辆 |
+| `DR-V2-M2-ACTOR-EVAL-01` | done | nuScenes 真值 actor 评测适配器 | raw 2Hz 轨迹、4,356 exact mappings、6/6 cohort | 三 scene eligible 16/20/6，visual QA 通过 |
 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS 可编辑基线 | source/env 存在；V2 scene 资产缺失 | scene-0230 remove/lateral/3-camera smoke |
 | `DR-V2-M4-EDIT-PILOT-01` | pending | scene-0230 真实编辑闭环 | 未生成 | 两种编辑真实执行且证据可审计 |
 | `DR-V2-M5-STRESS-3SCENE-01` | pending | 三场景编辑/去遮挡压力测试 | 未生成 | 3 scene、4 edits 有效 coverage |
@@ -117,6 +117,33 @@ M1 均值：
 transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common 固定 `flow_vis`
 缺失；r7 固定重试封装字段错误。全部为独立 `blocked` run，没有覆盖原运行。
 
-## 7. 当前唯一动作
+## 7. `DR-V2-M2-ACTOR-EVAL-01`
 
-执行 `DR-V2-M2-ACTOR-EVAL-01`。M2 提交前不进入 M3，不创建 DriveStudio 正式训练 run。
+### 正式运行
+
+`/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M2-ACTOR-EVAL-01/20260802T140312Z__actor-eval-s0-r5`
+=`done`。
+
+| scene | raw actors | eligible | high-support | boundary-support |
+|---|---:|---:|---|---|
+| scene-0230 | 58 | 16 | `af663976db5e...` | `18c7f0c5fa6b...` |
+| scene-0242 | 53 | 20 | `40f087d8d9d7...` | `2c820a798ad9...` |
+| scene-0255 | 56 | 6 | `f4aa30b8d0b4...` | `80c08b992f1d...` |
+
+- 预注册 support score 和字典序 tie-break 未调节，冻结时尚无 M3/M4 编辑输出；
+- 4,356/4,356 observations 使用 timestamp+exact `sample_token`；无效投影不从分母中静默删除；
+- raw 2 Hz 与 interpolated visualization 字段物理分离，本运行插值列表为空；
+- 11 个输入 metadata 哈希、167 actor metrics、3 份 cohort CSV、6 组投影 panel、6 张 raw
+  轨迹图与视觉 QA 齐全。
+
+### 失败实例
+
+- r1：错误假设磁盘 `sample.json` 含 devkit 运行时 `anns` 反向索引；
+- r2：`ijson` Decimal 进入 JSON 运行合同；
+- r3：近平面后的 invalid projection 没有统一零面积 schema；
+- r4：只选最近 timestamp sweep 导致 raw sample token 不精确，protocol QA 失败；
+- r5：改为 exact token 内再做 timestamp 最近选择，不改 actor 门槛，通过。
+
+## 8. 当前唯一动作
+
+执行 `DR-V2-M3-EDIT-BASELINE-01`。M3 提交前不进入 M4。

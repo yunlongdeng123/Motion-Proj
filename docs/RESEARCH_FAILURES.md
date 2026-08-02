@@ -1336,6 +1336,20 @@ fail-closed 引用后只执行 common diagnostic。r7 中重试封装自身的 `
 blocked run 保留，再由 r8 完成。后续所有 multi-stage run 必须把“可复用的完成阶段”与
 “整个 instance 的 terminal 终态”分开；重试不得修改旧 terminal。
 
+### PIVOT-F19：nuScenes devkit 反向索引与磁盘 metadata 不是同一 schema
+
+M2 r1 直接读取官方磁盘 `sample.json` 时发现其中没有 `anns`；该字段是 nuScenes devkit
+初始化后才注入的反向索引，不是原始 JSON 合同。正式适配器改为流式扫描
+`sample_annotation.sample_token`；由于这个外键非唯一，不得用单值 dict 覆盖同一 sample
+的多个 annotation。`ijson` 还必须以 `use_float=True` 读取，否则 Decimal 会污染严格 JSON
+运行合同。
+
+同一里程碑还表明，“时间最近”不足以建立 raw annotation 到 camera sweep 的真值映射。r4
+中 scene-0242 boundary actor 命中更近的 sweep，但 sweep 所属 `sample_token` 与 raw 2 Hz annotation
+不同，因此在 QA 前即 blocked。正确规则是先限定 exact sample token，再在候选内最小化
+timestamp delta；正式 r5 达到 `4356/4356` exact mappings。后续不得仅按文件名或时间
+猜测 raw/processed/render 映射。
+
 ## 7. 新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

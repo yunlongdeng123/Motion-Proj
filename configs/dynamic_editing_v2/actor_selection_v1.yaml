@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "protocol": "DR-V2-M2-ACTOR-EVAL-01",
+  "scenes": ["scene-0230", "scene-0242", "scene-0255"],
+  "cameras": ["CAM_FRONT", "CAM_FRONT_LEFT", "CAM_FRONT_RIGHT"],
+  "raw_frame_range_inclusive": [10, 69],
+  "category_prefix": "vehicle.",
+  "max_camera_timestamp_delta_us": 50000,
+  "thresholds": {
+    "min_raw_annotations": 4,
+    "min_point_supported_annotations": 2,
+    "min_center_inside_observations": 4,
+    "min_median_visible_area_px": 500.0
+  },
+  "score_weights": {
+    "raw_annotation_count": 1.0,
+    "valid_camera_observation_count": 1.0,
+    "log1p_lidar_radar_point_sum": 1.0,
+    "log1p_median_visible_area_px": 1.0
+  },
+  "tie_break": "instance_token_lexicographic",
+  "roles": ["high-support", "boundary-support"],
+  "truth_policy": {
+    "raw": "nuscenes_raw_2hz",
+    "interpolated": "visualization_interpolation_not_truth",
+    "training_use": "forbidden",
+    "selection_uses_edit_outputs": false
+  }
+}

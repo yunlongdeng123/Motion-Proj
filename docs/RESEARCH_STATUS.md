@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-02
 - 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前里程碑：`DR-V2-M2-ACTOR-EVAL-01`
-- 状态：`pending / user-authorized / M0–M1 done`
-- 当前门禁：M1 已通过并解锁 M2；M2 提交前不得进入 M3
+- 当前里程碑：`DR-V2-M3-EDIT-BASELINE-01`
+- 状态：`pending / user-authorized / M0–M2 done`
+- 当前门禁：M2 已通过并解锁 M3；M3 提交前不得进入 M4
 - 权威计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V2 授权前 Git 基线：`1e83ad5b`（`main` / `origin/main`）
 - 当前分支：`research/dynamic-editing-v2`
@@ -13,6 +13,8 @@
 - M1 正式证据：
   `20260802T125138Z__native-nusc-s0-r6` + `20260802T133151Z__common-retry-s0-r8` +
   `20260802T133912Z__regional-s0-r9`
+- M2 正式 run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M2-ACTOR-EVAL-01/20260802T140312Z__actor-eval-s0-r5`
 
 ## 当前裁决
 
@@ -20,8 +22,12 @@
 checkpoint provenance 通过，untouched 失败与单行 patch 分离；18/18 1-view、18/18 3-view、
 216/216 common target 和 504 行动态/边界诊断全部完成。
 
-当前唯一动作是执行 `DR-V2-M2-ACTOR-EVAL-01`；只允许用 nuScenes 真值做评测选择与
-oracle 诊断，不允许作为 AD-GS 训练输入。
+`DR-V2-M2-ACTOR-EVAL-01` 已完成：三场景 eligible actor=`16/20/6`，冻结 cohort=`2/2/2`，
+4,356/4,356 camera observations 使用 timestamp+exact sample token 映射，输入哈希、cohort table、
+raw 轨迹和三相机 QA 齐全。nuScenes GT 仍只用于评测选择和 oracle 诊断。
+
+当前唯一动作是执行 `DR-V2-M3-EDIT-BASELINE-01`：先生成 baseline readiness，再按资产实况选择
+复用 checkpoint、官方 scene-0230 训练或带证据 blocked。
 
 ## V1 历史终态
 
@@ -76,9 +82,19 @@ V1 结论保持不变，完整快照在
 - 对照不是 matched leaderboard：DGGT 不用 pose/逐场景优化且在 294x518 推理，AD-GS 使用 pose、
   138 帧逐场景 60k 优化且在 900x1600 渲染。
 
-## 下一步：只执行 M2
+## M2 完成证据
 
-1. 固定 nuScenes raw sample/frame 与 AD-GS processed frame 映射；
-2. 以 `instance_token` 构建 2 Hz raw truth actor track；
-3. 实现三相机 3D box 投影、可见性、选择和 truth-tier 审计；
-4. 预注册 scene-0230/0242/0255 各至少 1 个合格 vehicle actor，并以独立 commit 封存。
+- 原始/合格/冻结 actor：`scene-0230 58/16/2`、`scene-0242 53/20/2`、
+  `scene-0255 56/6/2`；
+- 冻结 token：0230 `af663976... / 18c7f0c5...`，0242 `40f087d8... / 2c820a79...`，
+  0255 `f4aa30b8... / 80c08b99...`；
+- exact token mapping `4356/4356`；代表 panel 自动 QA `18/18`；视觉 QA `12/12`；
+- `raw_annotations.provenance=nuscenes_raw_2hz`；`interpolated_visualization=[]`；
+- DriveStudio frame 不可用时显式写 null 和 `assets_missing_until_m3`，不猜测。
+
+## 下一步：只执行 M3
+
+1. 审计 DriveStudio/StreetGS commit、license、env、pilot data/checkpoint 和原生 edit/render API；
+2. 产生 `baseline_readiness.json`；
+3. 若无 checkpoint 但官方路径可用，仅对 scene-0230 做 100/1,000-step profile 后再进正式训练；
+4. 一次 untouched smoke + 至多一次有根因的兼容修复仍失败时，M3 带完整证据 blocked。

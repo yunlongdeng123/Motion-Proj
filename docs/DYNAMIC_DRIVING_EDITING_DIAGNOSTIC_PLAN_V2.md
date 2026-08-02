@@ -6,7 +6,7 @@
 - **执行环境**：远端 AutoDL，单卡 NVIDIA GPU，项目根目录默认 `/root/autodl-tmp/motion_proj`
 - **权威前序计划**：`docs/archive/2026-07/dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`
 - **V1 终态**：AD-GS 六场景精确复现成功；DGGT 因 pointops2 构建方式阻塞；M6 只完成身份资产审计，未真正执行编辑压力测试；候选 A“补实例身份并做轨迹编辑”因创新性重合被拒绝
-- **V2 当前状态**：`M0–M1 done / M2 pending and authorized`
+- **V2 当前状态**：`M0–M2 done / M3 pending and authorized`
 - **V2 核心任务**：补齐前馈对照和可编辑基线，真正产生编辑结果与失败证据，再决定是否存在新的研究贡献
 
 ### 预执行现场校准（2026-08-02）
@@ -396,7 +396,7 @@ pending | running | blocked | done | rejected
 |---|---|---:|---|---|
 | M0 V2 事实源与镜像基线 | `DR-V2-M0-BOOTSTRAP-01` | done | V2 状态、环境 bootstrap、镜像 smoke | 所有源可审计，旧结果不被覆盖 |
 | M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | done | 18 窗口 1-view/3-view、common 与区域诊断 | 1-view/3-view 18/18，216/216 common target |
-| M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | pending | `instance_token` 轨迹、投影、固定 actor cohort | 三场景至少各 1 个可评测车辆 |
+| M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | done | raw 2 Hz 轨迹、精确投影、冻结 3×2 actor cohort | 三场景 eligible=16/20/6，各选 2 |
 | M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
 | M4 单场景真实编辑闭环 | `DR-V2-M4-EDIT-PILOT-01` | pending | 0230 固定 actor 的原始/横移/删除视频与指标 | 编辑真实执行、无空结果、证据可审计 |
 | M5 三场景压力测试 | `DR-V2-M5-STRESS-3SCENE-01` | pending | 3 scene × 2 actor × 4 edit 的 failure matrix | 至少 3 scene 完整 coverage，不能全 ABSTAIN |
@@ -849,6 +849,30 @@ raw_annotation_count
 
 ```text
 feat(eval): 建立 nuScenes 持久 actor 评测适配器
+```
+
+## 7.11 执行结果（2026-08-02）
+
+M2=`done`：
+
+- 新增 `motion_proj.dynamic_editing_v2` 的 schema、frame mapping、box projection、actor selection
+  和 nuScenes adapter；
+- 三场景原始 actor 数为 `58/53/56`，按预注册门槛合格数为 `16/20/6`；
+- 在任何 M3/M4 编辑输出存在前，每 scene 确定性冻结 high-support 与
+  boundary-support 各 1 个，slot coverage=`6/6`；
+- 全部 4,356 个 actor-camera observation 均以 timestamp + exact `sample_token` 双重映射；
+  无效投影保留原因、零面积和裁剪前后 polygon，不静默丢失；
+- raw 2 Hz 注释与 visualization interpolation 物理分离；本运行未生成任何插值 truth；
+- 11 个 metadata/frame-table 输入完整哈希，167 行 actor support metrics，每场景 cohort CSV、
+  6 组三相机 panel 和 6 张 raw BEV 轨迹图均已封存；
+- 自动代表 panel exact-token QA=`18/18`；Codex 逐张视觉 QA 未见身份错配或系统性偏移；
+- DriveStudio processed frame 因 M3 资产仍缺失而显式记为
+  `assets_missing_until_m3`，未用文件名猜测伪造映射。
+
+正式 run：
+
+```text
+/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M2-ACTOR-EVAL-01/20260802T140312Z__actor-eval-s0-r5
 ```
 
 ---
@@ -1723,3 +1747,16 @@ M0 开始前：
 - 包解析、CUDA toolkit、Torch API 与 common evaluator 依赖的失败实例均保留为独立
   `blocked` run，没有覆盖重跑；
 - M1 门禁通过，下一唯一授权里程碑为 `DR-V2-M2-ACTOR-EVAL-01`。
+
+### 2026-08-02 — M2 `done`
+
+- 建立 nuScenes raw 2 Hz `instance_token` actor chain、明示 `T_camera_global`、近平面/图像边界
+  polygon 裁剪与 AD-GS frame/render 映射；
+- 预注册门槛未调节，`scene-0230/0242/0255` 合格 actor 为 `16/20/6`，每场景冻结
+  high/boundary 各 1 个；
+- 4,356/4,356 camera observations 以 timestamp+exact sample token 映射，11 个输入 metadata
+  文件全部哈希；
+- 6 组投影 panel 与 6 张 raw 轨迹图通过逐张身份/投影 QA，raw/interpolated 没有混写；
+- r1–r4 的 devkit 反向索引、Decimal、invalid projection schema 与 token 精确映射失败
+  均作为独立 `blocked` 证据保留；
+- 正式 r5 为 `done`，下一唯一授权里程碑为 `DR-V2-M3-EDIT-BASELINE-01`。

@@ -1,0 +1,5 @@
+"""V2 动态驾驶编辑的评测与实验协议。"""
+
+from .schema import INTERPOLATED_PROVENANCE, RAW_PROVENANCE
+
+__all__ = ["RAW_PROVENANCE", "INTERPOLATED_PROVENANCE"]
