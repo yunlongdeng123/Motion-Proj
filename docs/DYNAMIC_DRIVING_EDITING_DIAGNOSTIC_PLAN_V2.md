@@ -6,7 +6,7 @@
 - **执行环境**：远端 AutoDL，单卡 NVIDIA GPU，项目根目录默认 `/root/autodl-tmp/motion_proj`
 - **权威前序计划**：`docs/archive/2026-07/dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`
 - **V1 终态**：AD-GS 六场景精确复现成功；DGGT 因 pointops2 构建方式阻塞；M6 只完成身份资产审计，未真正执行编辑压力测试；候选 A“补实例身份并做轨迹编辑”因创新性重合被拒绝
-- **V2 当前状态**：`M0–M2 done / M3 pending and authorized`
+- **V2 当前状态**：`M0–M3 done / M4 pending and authorized`
 - **V2 核心任务**：补齐前馈对照和可编辑基线，真正产生编辑结果与失败证据，再决定是否存在新的研究贡献
 
 ### 预执行现场校准（2026-08-02）
@@ -397,7 +397,7 @@ pending | running | blocked | done | rejected
 | M0 V2 事实源与镜像基线 | `DR-V2-M0-BOOTSTRAP-01` | done | V2 状态、环境 bootstrap、镜像 smoke | 所有源可审计，旧结果不被覆盖 |
 | M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | done | 18 窗口 1-view/3-view、common 与区域诊断 | 1-view/3-view 18/18，216/216 common target |
 | M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | done | raw 2 Hz 轨迹、精确投影、冻结 3×2 actor cohort | 三场景 eligible=16/20/6，各选 2 |
-| M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
+| M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | done | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
 | M4 单场景真实编辑闭环 | `DR-V2-M4-EDIT-PILOT-01` | pending | 0230 固定 actor 的原始/横移/删除视频与指标 | 编辑真实执行、无空结果、证据可审计 |
 | M5 三场景压力测试 | `DR-V2-M5-STRESS-3SCENE-01` | pending | 3 scene × 2 actor × 4 edit 的 failure matrix | 至少 3 scene 完整 coverage，不能全 ABSTAIN |
 | M6 创新假设门禁 | `DR-V2-M6-HYPOTHESIS-01` | pending | 唯一 hypothesis、novelty delta、primary endpoint | 跨 3 scene 稳定失败且 novelty 不重合 |
@@ -998,6 +998,35 @@ scene-0230 的 `high-support` actor 必须支持：
 
 ```text
 feat(edit): 接入对象级驾驶场景编辑基线
+```
+
+## 8.9 执行结果（2026-08-03）
+
+M3=`done`，基线身份为 `DriveStudio/StreetGS actor-aware native baseline`：
+
+- 官方 DriveStudio commit `e59bda4fa681f829dbb1d65f0de582b0f633c450`、MIT license 和原生
+  `configs/streetgs.yaml + nuscenes/3cams` 固定；scene-0230 原生索引为 `179`；
+- raw/processed 资产为 `1176 images / 196 lidar / 196 poses / 1176 extrinsics / 588 sky masks`；
+  100/1,000-step profile 通过后完成原生 30,000-step 训练；
+- RTX 3090 的旧 `gsplat/nvdiffrast` 二进制不含 SM 8.6，均从固定官方源码重建；没有修改算子、
+  模型或训练超参；
+- 正式 checkpoint 为 `386,398,646` bytes，`step=30000`，SHA-256
+  `8ed405767b851aaad98b550c203778ce41625fc2fbd43a170446595a38a73f9e`；
+- 上游训练后的 full render 将帧常驻内存，r8 在 `577/588` 时触发 cgroup 90% 守卫；
+  `oom=0/oom_kill=0`。r8 保持 `blocked`，r12 只复核并引用已完成的 step-30000 checkpoint；
+- token-first registry 映射冻结 high-support actor
+  `af663976db5e412e83db033d309c5c29 → true id 13 → dataset column 13 → rigid model 5`；
+  正式 slice 含 `2,683` 个高斯。24 个原生 model 中 23 个非空，训练裁剪为空的非目标 model 14
+  显式标记 `unavailable_empty_checkpoint_slice`；
+- 3 帧 × 3 相机 × `original/lateral +1m/remove` 共 27 张 smoke 输出全部非空；checkpoint 文件、
+  非目标 actor 参数和两次 reload 哈希均精确不变；编辑差异非零；
+- final readiness 为 `available=11 / missing=0 / incompatible=0`。这些结果只证明编辑 API 可运行，
+  不在 M3 作质量结论。
+
+正式完成 run：
+
+```text
+/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M3-EDIT-BASELINE-01/20260802T163930Z__formal-checkpoint-recovery-s0-r12
 ```
 
 ---

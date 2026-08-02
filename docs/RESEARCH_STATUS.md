@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-02
 - 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前里程碑：`DR-V2-M3-EDIT-BASELINE-01`
-- 状态：`pending / user-authorized / M0–M2 done`
-- 当前门禁：M2 已通过并解锁 M3；M3 提交前不得进入 M4
+- 当前里程碑：`DR-V2-M4-EDIT-PILOT-01`
+- 状态：`pending / user-authorized / M0–M3 done`
+- 当前门禁：M3 已通过；完成本次 M3 独立提交后只执行 M4
 - 权威计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V2 授权前 Git 基线：`1e83ad5b`（`main` / `origin/main`）
 - 当前分支：`research/dynamic-editing-v2`
@@ -15,6 +15,8 @@
   `20260802T133912Z__regional-s0-r9`
 - M2 正式 run：
   `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M2-ACTOR-EVAL-01/20260802T140312Z__actor-eval-s0-r5`
+- M3 正式 run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M3-EDIT-BASELINE-01/20260802T163930Z__formal-checkpoint-recovery-s0-r12`
 
 ## 当前裁决
 
@@ -26,8 +28,9 @@ checkpoint provenance 通过，untouched 失败与单行 patch 分离；18/18 1-
 4,356/4,356 camera observations 使用 timestamp+exact sample token 映射，输入哈希、cohort table、
 raw 轨迹和三相机 QA 齐全。nuScenes GT 仍只用于评测选择和 oracle 诊断。
 
-当前唯一动作是执行 `DR-V2-M3-EDIT-BASELINE-01`：先生成 baseline readiness，再按资产实况选择
-复用 checkpoint、官方 scene-0230 训练或带证据 blocked。
+`DR-V2-M3-EDIT-BASELINE-01` 已完成：原生 30k checkpoint、token-first registry 与
+`original/lateral +1m/remove` 三相机可逆编辑 smoke 均通过。M3 只证明基线与编辑 API 可运行，
+不对视觉质量作结论。
 
 ## V1 历史终态
 
@@ -92,9 +95,17 @@ V1 结论保持不变，完整快照在
 - `raw_annotations.provenance=nuscenes_raw_2hz`；`interpolated_visualization=[]`；
 - DriveStudio frame 不可用时显式写 null 和 `assets_missing_until_m3`，不猜测。
 
-## 下一步：只执行 M3
+## M3 完成证据
 
-1. 审计 DriveStudio/StreetGS commit、license、env、pilot data/checkpoint 和原生 edit/render API；
-2. 产生 `baseline_readiness.json`；
-3. 若无 checkpoint 但官方路径可用，仅对 scene-0230 做 100/1,000-step profile 后再进正式训练；
-4. 一次 untouched smoke + 至多一次有根因的兼容修复仍失败时，M3 带完整证据 blocked。
+- DriveStudio `e59bda4` / MIT / native StreetGS 3-camera config；scene index `179`；
+- 30k checkpoint：`386,398,646` bytes，`step=30000`，SHA-256 `8ed40576...a73f9e`；
+- high-support token `af663976...` 映射为 `true id 13 / column 13 / model 5 / 2,683 Gaussians`；
+- registry `24 actors / 23 non-empty / 1 explicit unavailable empty slice`；
+- 27/27 edit-smoke PNG；14/14 invariant/effect checks 通过；峰值显存 `8,241 MiB`；
+- final readiness `available=11 / missing=0 / incompatible=0`；r12 terminal=`done`；
+- r8 的 post-render memory guard、r9–r11 的恢复 schema/依赖 fail-closed 实例全部保留，未覆盖。
+
+## 下一步：只执行 M4
+
+对 scene-0230 冻结 high-support actor 运行完整 clip 的 `original / actor-local lateral +1.0 m /
+delete`，输出三相机同步视频、mask、footprint、depth/visibility、world-state hash、诊断指标与 QA 页面。

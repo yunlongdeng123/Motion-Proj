@@ -144,6 +144,41 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 - r4：只选最近 timestamp sweep 导致 raw sample token 不精确，protocol QA 失败；
 - r5：改为 exact token 内再做 timestamp 最近选择，不改 actor 门槛，通过。
 
-## 8. 当前唯一动作
+## 8. `DR-V2-M3-EDIT-BASELINE-01`
 
-执行 `DR-V2-M3-EDIT-BASELINE-01`。M3 提交前不进入 M4。
+### 正式训练与恢复
+
+- 原生训练 run `20260802T152252Z__native-train-s0-r8` 完成 100/1,000-step profile 和 30k
+  训练，checkpoint=`386,398,646 bytes / step 30000 / SHA-256 8ed40576...a73f9e`；
+- 训练后上游 full render 把帧累计在内存中，`577/588` 时 cgroup memory 连续两次超过 90%，
+  守卫返回 `-15`；峰值 GPU `23,873 MiB`，峰值 cgroup `89,836,462,080 bytes`，
+  `oom=0 / oom_kill=0`；r8 保持 `blocked`；
+- r12 对 checkpoint step/bytes/hash、r8 formal stage 和 blocked terminal 做窄范围复核，未复制或修改
+  checkpoint；训练语义完成与上游 post-render 未完成分开记录。
+
+### 正式编辑 smoke
+
+完成 run：
+`/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M3-EDIT-BASELINE-01/20260802T163930Z__formal-checkpoint-recovery-s0-r12`。
+
+- registry 24 个 model：23 non-empty，1 个被原生训练裁剪为空并显式不可用；
+- 冻结 actor `af663976... → true id 13 → column 13 → model 5 → 2,683 Gaussians`；
+- `3 frames × 3 cameras × 3 variants = 27` PNG；original/remove/lateral 均非空且时间同步；
+- lateral/remove mean absolute RGB diff 分别为 `0.0003448362 / 0.0002196175`；两者均在 2 个
+  frame-camera 上非零；这只是 effect smoke，不是质量指标；
+- checkpoint SHA、非目标参数、reload 后完整 RigidNodes state 均精确不变；
+- post peak GPU `8,241 MiB`，peak cgroup `58,291,757,056 bytes`；readiness 11/11 available。
+
+### 独立失败实例
+
+- r4/r6/r7：旧 `gsplat/nvdiffrast` CUDA binary 不含 RTX 3090 SM 8.6；固定源码重建后通过；
+- r5：tmux 非登录环境没有裸 `python`；改为前缀解释器；
+- r8：训练完成后的累积 full render 触发内存守卫；
+- r9：恢复 probe provenance 字段错误嵌套；
+- r10：registry helper 在 DriveStudio 环境误依赖未声明 `ijson`；改为读取 16 MB 标准 JSON；
+- r11：一个非目标 model 的 Gaussian slice 被训练裁剪为空；registry v2 显式标记 unavailable，
+  仍要求所选 actor slice 非空。
+
+## 9. 当前唯一动作
+
+执行 `DR-V2-M4-EDIT-PILOT-01`。M4 提交前不进入 M5。

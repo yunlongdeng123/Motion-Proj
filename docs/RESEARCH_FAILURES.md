@@ -1350,6 +1350,31 @@ M2 r1 直接读取官方磁盘 `sample.json` 时发现其中没有 `anns`；该�
 timestamp delta；正式 r5 达到 `4356/4356` exact mappings。后续不得仅按文件名或时间
 猜测 raw/processed/render 映射。
 
+### PIVOT-F20：CUDA 扩展 import 成功不等于包含当前 GPU 架构
+
+M3 的 DriveStudio 环境能正常 import `gsplat` 和 `nvdiffrast`，但旧二进制没有 RTX 3090 的
+SM 8.6 kernel：前者在 SH rasterization 报 `no kernel image`，后者在 EnvLight 路径报 CUDA 209。
+只做 import smoke 无法发现此类错误。恢复时分别固定官方源码 commit，以
+`TORCH_CUDA_ARCH_LIST=8.6+PTX` 重建，并执行真实 CUDA forward/backward；旧 `.so` 先备份，
+没有修改算子语义或模型配置。
+
+对应 blocked runs 为 r4、r6、r7；正式 binary SHA-256 为 gsplat
+`6d7c8e5a...dd6131`、nvdiffrast `0d18f767...96499`。以后 CUDA 扩展 readiness 必须包含
+目标 GPU 上的实际 kernel forward/backward，不能只看包版本和 import。
+
+### PIVOT-F21：训练完成 checkpoint 与累积式 post-render 必须分开裁决
+
+M3 r8 的 30k 原生训练已保存 `step=30000` checkpoint，但上游随后将 588 个 full-render 结果累积在
+内存中；在 `577/588` 时 cgroup memory 连续两次超过 90%，资源守卫发送 SIGTERM。`oom=0 /
+oom_kill=0`，checkpoint 字节数与 step 完整。r8 仍保持 `blocked`，不得改写为 done；r12 通过新的
+不可变 run 对 checkpoint step/bytes/hash 和原失败 terminal 做窄范围复核，再执行流式 27-image
+edit smoke 完成 M3。
+
+同一恢复链还发现，正式训练会把某个非目标 rigid model 的全部 Gaussian 裁剪掉。token、dataset column
+和 model index 仍是一一映射，但 checkpoint slice 为空。registry v2 因此将其明确标成
+`unavailable_empty_checkpoint_slice`，同时对正式选中 actor 继续要求非空。禁止为了全 registry 看起来
+完整而伪造 slice，也禁止因一个非目标空 slice 丢弃 23 个真实非空映射。
+
 ## 7. 新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
