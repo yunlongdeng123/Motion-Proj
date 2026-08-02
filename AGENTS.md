@@ -6,15 +6,11 @@ conda base 在 `/root/miniconda3`，项目环境 `motionproj` 建在数据盘 `/
 
 在**任何新开的 shell（尤其是 tmux / 非登录 shell）**里，直接 `conda activate motionproj` 可能报
 `CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'`。
-这是因为该 shell 没加载过 conda 初始化。任一方式解决：
+这是因为该 shell 没加载过 conda 初始化。按以下方式解决；不得执行 `conda init` 或改写用户 shell 配置：
 
 ```bash
-# 方式 A（推荐，不改配置，每个新 shell 先跑一次）
+# 每个新 shell 先跑一次
 source /root/miniconda3/etc/profile.d/conda.sh
-conda activate motionproj
-
-# 方式 B（一劳永逸，写入 ~/.bashrc，之后重开 shell 自动生效）
-conda init bash && source ~/.bashrc
 conda activate motionproj
 ```
 

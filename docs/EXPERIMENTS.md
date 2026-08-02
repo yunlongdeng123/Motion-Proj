@@ -6,7 +6,7 @@
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
-本文件只登记 V2。当前没有 V2 run，所有研究里程碑均未执行。
+本文件只登记 V2。M0 已完成；当前只允许进入 M1。
 
 ## 1. 状态词
 
@@ -22,7 +22,7 @@ pending | running | blocked | done | rejected
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
 |---|---|---|---|---|
-| `DR-V2-M0-BOOTSTRAP-01` | pending | 事实源、分支、镜像与 bootstrap | 文档预整理完成；尚无 V2 run | README/STATUS/PLAN 一致，bootstrap smoke 通过 |
+| `DR-V2-M0-BOOTSTRAP-01` | done | 事实源、分支、镜像与 bootstrap | 正式 run 完成；历史失败实例保留 | README/STATUS/PLAN 一致，bootstrap smoke 通过 |
 | `DR-V2-M1-DGGT-REPAIR-01` | pending | 修复 pointops2 并做 18-window inference | repo/full preload 存在；旧失败 env 已清理 | M0 done；1-view 18/18 或可信 upstream blocked |
 | `DR-V2-M2-ACTOR-EVAL-01` | pending | nuScenes 真值 actor 评测适配器 | raw subset 与 metadata 驻留 | 三个 pilot scene 各至少 1 个合格车辆 |
 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS 可编辑基线 | source/env 存在；V2 scene 资产缺失 | scene-0230 remove/lateral/3-camera smoke |
@@ -51,6 +51,35 @@ pending | running | blocked | done | rejected
 | V1 pseudo identity audit | 0/12 slots | 失败边界；不得当作真实编辑结果 |
 | V1 候选 A novelty | rejected | 禁止复活“补身份 + 基础轨迹编辑”作为贡献 |
 
-## 5. 当前唯一动作
+## 5. `DR-V2-M0-BOOTSTRAP-01`
 
-执行 `DR-V2-M0-BOOTSTRAP-01`。M0 提交前不进入 M1，不创建正式 DGGT/DriveStudio run。
+### 工程失败实例
+
+- run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T114342Z__bootstrap-s0`；
+- terminal：`blocked / empty_shell_python_not_on_path`；
+- 网络四源已可达，但非登录空 shell 中裸 `python` 不在 PATH，导致 `source_resolution.json` 未生成；
+- 修复仅显式选择 `/root/miniconda3/bin/python`，没有安装依赖或改写全局环境。
+
+### 正式完成实例
+
+- 验证实例：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T114453Z__bootstrap-s0-r2`
+  为 `done`；其后只为让 source snapshot 覆盖相对 `HEAD` 的 staged/unstaged 全部 M0 文件创建 r3，未改变
+  bootstrap、资产或测试协议；
+- run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T115419Z__bootstrap-s0-r3`；
+- terminal：`done`；
+- branch：`research/dynamic-editing-v2`；source commit：`09fbb55` + 本 M0 工作树快照；seed：`0`；
+- empty shell/tmux shell：`PASS/PASS`；TUNA Conda/PyPI、HF mirror、GitHub：`4/4 HTTP 200`；
+- AD-GS `model_60000`、42 test renders、138 train renders 与 processed 输入：`6/6`；
+- DGGT preload：`5,411,266,466` bytes，SHA-256
+  `fd15644b3a878849470cbf5f0f9eae39167cfec1b853092898ae754c4f3acde9`；
+- DriveStudio commit `e59bda4fa681f829dbb1d65f0de582b0f633c450` 与 env 可用，pilot assets `missing`；
+- 测试：
+  `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py` → `7 passed`；
+- `shellcheck` 未安装，按计划未为此污染环境；`bash -n` 通过。
+
+## 6. 当前唯一动作
+
+执行 `DR-V2-M1-DGGT-REPAIR-01`。M1 提交前不进入 M2，不创建 DriveStudio 正式训练 run。

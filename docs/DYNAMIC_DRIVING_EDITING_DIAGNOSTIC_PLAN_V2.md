@@ -6,7 +6,7 @@
 - **执行环境**：远端 AutoDL，单卡 NVIDIA GPU，项目根目录默认 `/root/autodl-tmp/motion_proj`
 - **权威前序计划**：`docs/archive/2026-07/dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`
 - **V1 终态**：AD-GS 六场景精确复现成功；DGGT 因 pointops2 构建方式阻塞；M6 只完成身份资产审计，未真正执行编辑压力测试；候选 A“补实例身份并做轨迹编辑”因创新性重合被拒绝
-- **V2 当前状态**：`pending / user-authorized new route`
+- **V2 当前状态**：`M0 done / M1 pending and authorized`
 - **V2 核心任务**：补齐前馈对照和可编辑基线，真正产生编辑结果与失败证据，再决定是否存在新的研究贡献
 
 ### 预执行现场校准（2026-08-02）
@@ -392,9 +392,9 @@ pending | running | blocked | done | rejected
 
 ## 4. 里程碑注册表
 
-| 里程碑 | Task ID | 初始状态 | 核心产物 | 解锁条件 |
+| 里程碑 | Task ID | 当前状态 | 核心产物 | 解锁条件 |
 |---|---|---:|---|---|
-| M0 V2 事实源与镜像基线 | `DR-V2-M0-BOOTSTRAP-01` | pending | V2 状态、环境 bootstrap、镜像 smoke | 所有源可审计，旧结果不被覆盖 |
+| M0 V2 事实源与镜像基线 | `DR-V2-M0-BOOTSTRAP-01` | done | V2 状态、环境 bootstrap、镜像 smoke | 所有源可审计，旧结果不被覆盖 |
 | M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | pending | 18 窗口 1-view、3-view smoke、common diagnostic | 1-view coverage 18/18 或明确 upstream blocked |
 | M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | pending | `instance_token` 轨迹、投影、固定 actor cohort | 三场景至少各 1 个可评测车辆 |
 | M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
@@ -1660,3 +1660,20 @@ M0 开始前：
 - M3–M5 要求真实生成对象编辑视频和跨场景 failure matrix；
 - M6 只允许根据真实失败选择新假设；候选 A 不得复活；
 - 当前唯一授权里程碑：`DR-V2-M0-BOOTSTRAP-01`。
+
+### 2026-08-02 — M0 `done`
+
+- 新建分支 `research/dynamic-editing-v2`，V1 历史终态与冻结数值未改写；
+- 根 `README.md` 已切换到 V2，`AGENTS.md` 已删除全局 `conda init` 路径；
+- 新增 `configs/env/autodl_condarc_v2.yaml`、`scripts/bootstrap_autodl_v2.sh` 和
+  `docs/DR_V2_M0_SOURCE_AUDIT.md`；
+- 首个 smoke 实例
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T114342Z__bootstrap-s0`
+  因空 shell 中裸 `python` 不在 PATH 以 `blocked` 保留；修复只显式选择 Miniconda Python；
+- source-snapshot 完整的正式实例
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T115419Z__bootstrap-s0-r3`
+  以 `done` 结束：空 shell/tmux shell 均通过，TUNA Conda/PyPI、HF mirror、GitHub 4/4 返回 200；
+- AD-GS `model_60000`、official render 与 processed 输入 6/6 完整；DGGT preload 字节数与 SHA-256 通过；
+- `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py`：`7 passed`；
+- DriveStudio source/env 可用但三个 pilot scene 资产缺失的现场事实保持不变；
+- 下一里程碑：`DR-V2-M1-DGGT-REPAIR-01`。

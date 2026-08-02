@@ -2,20 +2,22 @@
 
 - 更新时间：2026-08-02
 - 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前里程碑：`DR-V2-M0-BOOTSTRAP-01`
-- 状态：`pending / user-authorized / not started`
-- 当前门禁：只允许执行 M0；不得提前安装 `dggt-v2`、运行 GPU inference 或进入 M1
+- 当前里程碑：`DR-V2-M1-DGGT-REPAIR-01`
+- 状态：`pending / user-authorized / M0 done`
+- 当前门禁：M0 已通过并解锁 M1；M1 提交前不得进入 M2
 - 权威计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V2 授权前 Git 基线：`1e83ad5b`（`main` / `origin/main`）
-- V2 run：尚未创建
+- 当前分支：`research/dynamic-editing-v2`
+- M0 正式 run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T115419Z__bootstrap-s0-r3`
 
 ## 当前裁决
 
-用户已授权新的 V2 诊断路线，但本次工作只完成执行前整理：归档 V1 文档、按现场校准 V2、清理 V2
-不需要的可再生中间产物。它不是 V2 M0，也没有解锁 M1。
+`DR-V2-M0-BOOTSTRAP-01` 已按计划完成：独立分支、V2 文档入口、项目级镜像配置、空 shell/tmux
+bootstrap、source audit、冻结资产复核和定向测试均通过。V1 数值和 `rejected` 终态未覆盖。
 
-下一次清空 context 后的唯一动作是执行 V2 M0，并按计划先创建
-`research/dynamic-editing-v2` 分支或独立 worktree。不得把本次预整理改写成 M0 `done`。
+当前唯一动作是执行 `DR-V2-M1-DGGT-REPAIR-01`。只有 M1 形成 18/18 1-view 结果或可信 upstream
+`blocked` 证据，并完成独立事实源更新和 commit，才可进入 M2。
 
 ## V1 历史终态
 
@@ -49,16 +51,22 @@ V1 结论保持不变，完整快照在
 - DriveStudio repo commit `e59bda4fa681f829dbb1d65f0de582b0f633c450` 与环境存在；V2 三个 pilot
   scene 的 processed data/checkpoint 不存在，M3 初始 readiness 为 `source available / assets missing`。
 
-## 下一步：只执行 M0
+## M0 完成证据
 
-M0 必须：
+- 首个工程失败实例：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T114342Z__bootstrap-s0`；
+- 正式完成实例：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M0-BOOTSTRAP-01/20260802T115419Z__bootstrap-s0-r3`；
+- 空 shell/tmux shell bootstrap：`PASS/PASS`；网络源：`4/4`；
+- AD-GS 冻结资产：`6/6`；DGGT preload：bytes/SHA-256 `PASS`；
+- 定向测试：`7 passed`；
+- source audit：[`DR_V2_M0_SOURCE_AUDIT.md`](DR_V2_M0_SOURCE_AUDIT.md)。
 
-1. 读取本状态、失败账本、V2 实验注册表、V2/V1 计划和 `AGENTS.md`；
-2. 检查 Git、最终资产 hash、GPU/cgroup/磁盘和无活跃 run；
-3. 创建 V2 分支或 worktree；
-4. 修正根 `README.md` 的 V7 过时入口，并协调 `AGENTS.md` 与 V2 的“禁止全局 conda init”规则；
-5. 创建并验证项目级镜像配置与 `scripts/bootstrap_autodl_v2.sh`；
-6. 完成 V2 指定的 source audit；
-7. 更新 PLAN / STATUS / EXPERIMENTS 并只提交 M0。
+## 下一步：只执行 M1
 
-M0 前不得创建 `/root/autodl-tmp/envs/dggt-v2`，不得运行 DGGT、DriveStudio 训练或任何正式 GPU task。
+1. 新建 `/root/autodl-tmp/envs/dggt-v2` 并固定 Python/PyTorch/CUDA 构建；
+2. 复核 DGGT official commit、model revision、license 与 preload provenance；
+3. 按 upstream `python setup.py install` 构建 pointops2，并做 CUDA forward/backward；
+4. 分开保存 untouched `difix/diffusion` 失败和最小 compatibility patch；
+5. 完成固定 18-window 1-view、3-view diagnostic 与 common-observation 诊断，或形成可信 upstream blocked；
+6. 更新事实源并独立提交 M1，之后才允许进入 M2。

@@ -1,89 +1,69 @@
 # Motion-Proj
 
-Motion-Proj 当前研究主线是 **OccGS-Resim V7**：基于 object-centric Gaussian scene representation、显式
-occupancy/world state 和约束轨迹编辑，构建可验证的驾驶反事实重仿真数据。
+Motion-Proj 当前研究主线是**动态驾驶场景可编辑重建与失败诊断 V2**：先补齐前馈重建对照和对象级可编辑
+基线，再用真实轨迹修改、遮挡重算、去遮挡与非目标区域保持实验定位跨场景稳定失败。项目不会预设必须产生
+新方法；只有真实失败、可验证 endpoint 与独立 novelty delta 同时成立，才进入方法实现。
 
 ## 当前状态
 
-V7 已在单张 RTX 4090 上完成三场景 feasibility 闭环：
+- 权威状态：[`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md)
+- 权威计划：
+  [`docs/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](docs/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- 实验台账：[`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)
+- 失败与防重复账本：[`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)
+
+V1 已作为历史终态冻结：AD-GS 六场景 exact reproduction 完成，官方 test mean 为
+`PSNR 31.174515 / SSIM 0.927661 / LPIPS(VGG) 0.163489 / coverage 6/6`；DGGT 当时阻塞于
+pointops2 的 PEP 517 build isolation；V1 没有执行真实对象编辑。V2 不覆盖这些事实，也不恢复已拒绝的
+cut-in 挖掘或“补身份 + 基础轨迹编辑”贡献。
+
+## V2 执行顺序
 
 ```text
-nuScenes preparation
-→ StreetGS reconstruction
-→ actor trajectory edit
-→ counterfactual RGB/depth render
-→ local hard composition
+M0 事实源与环境镜像基线
+→ M1 DGGT 修复与推理对照
+→ M2 nuScenes 真值 actor 评测适配器
+→ M3 对象级可编辑基线
+→ M4 scene-0230 真实编辑闭环
+→ M5 三场景编辑与去遮挡压力测试
+→ M6 基于真实失败的创新性门禁
+→ M7 条件式方法与 matched ablation（仅 M6 done 后）
+→ M8 人工盲审与最终裁决（仅有真实方法结果后）
 ```
 
-当前决策为 `modify_method_then_scale`。这表示路线保留，但核心研究假设仍未通过：
-
-- occupancy 已生成，尚未真正进入 editor、visibility 与 completion mask；
-- C0 只有机器 screen，没有用户人工 verdict，也未完成所有标签重生；
-- L0 的 outside-mask exact 由 hard composition 构造保证，不代表补全质量提升；
-- U0 未运行正式下游任务，不能声称合成数据有效。
-
-因此下一步是证据契约与 occupancy matched ablation，不是直接扩场景、切双卡或回到旧扩散路线。
-
-## 文档入口
-
-从 [`docs/README.md`](docs/README.md) 开始。核心阅读顺序：
-
-1. [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
-2. [`docs/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](docs/OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)：V7 当前计划与门禁；
-3. [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)：V7 实验事实；
-4. [`docs/OCCGS_FINAL_REPORT.md`](docs/OCCGS_FINAL_REPORT.md)：feasibility 收口审计；
-5. [`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)：当前风险、历史约束与防重复条件。
-
-V1–V7 的旧计划、完整旧实验账本、逐 Gate 报告和评审材料索引位于
-[`docs/archive/2026-07/`](docs/archive/2026-07/)。归档中的“当前任务”“下一步”只描述当时状态，不构成执行授权。
-
-## 当前 V7 代码
-
-```text
-occupancy/
-  build_scene_occupancy.py   LiDAR + box scene-local occupancy
-  o0_sanity_vis.py           occupancy sanity / BEV review material
-resim/
-  d0_scene_scan.py           scene scan 与冻结选择
-  d0_integrity_check.py      数据完整性检查
-  d0_sky_mask_segformer.py   sky mask 替代路径
-  s0_trajectory_editor.py    actor 轨迹编辑原型
-  c0_counterfactual_render.py RigidNodes counterfactual render
-  c0_legality_panel.py       机器合法性 screen 与材料生成
-  l0_local_completion.py     local hard-composition feasibility
-  u0_utility_screen.py       轻量 proxy（非下游 utility）
-```
-
-历史 SVD projection/preference/ReSim 工程仍保留用于追溯，但其研究路线已经关闭；接口存在不代表允许续跑。
+每个里程碑使用独立 task ID、run 目录和 Git commit；`pending/running/blocked/done/rejected` 是唯一允许的
+阶段状态。M7/M8 是条件阶段，不能用占位结果越过门禁。
 
 ## 环境
 
-V7 使用隔离的 DriveStudio 环境：
+基础开发环境位于数据盘：
 
 ```bash
 source /root/miniconda3/etc/profile.d/conda.sh
-conda activate /root/autodl-tmp/envs/drivestudio
-export CUDA_HOME=/usr/local/cuda-11.8
-export PATH=$CUDA_HOME/bin:$PATH
-export PYTHONPATH=/root/autodl-tmp/third_party/drivestudio:$PYTHONPATH
+conda activate /root/autodl-tmp/envs/motionproj
 cd /root/autodl-tmp/motion_proj
 ```
 
-完整环境、依赖、迁移与存储规则见：
+V2 的缓存、镜像与网络 smoke 统一由项目脚本配置：
+
+```bash
+source scripts/bootstrap_autodl_v2.sh
+```
+
+脚本使用项目级 `configs/env/autodl_condarc_v2.yaml`，不会执行 `conda init`，也不会改写
+`~/.condarc` 或全局 pip 配置。大型环境、checkpoint 和缓存一律放在 `/root/autodl-tmp`。
+
+## 代码与证据边界
+
+- `motion_proj/dynamic_editing_v2/`：V2 actor 真值适配、投影、选择与评测模块；
+- `motion_proj/resim/`：可复用的 WorldState、actor registry、DriveStudio adapter 与 typed render 基础设施；
+- `motion_proj/dynamic_recon/`：V1 动态重建审计代码，只作历史证据或窄接口复用；
+- `/root/autodl-tmp/runs/dynamic_editing_v2/`：V2 正式 run、日志、指标、资源记录与终态；
+- `docs/archive/`：历史计划和结论，只作证据，不构成当前执行授权。
+
+更完整的第三方环境、资产与保留策略见：
 
 - [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md)
 - [`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md)
 - [`docs/MACHINE_MIGRATION.md`](docs/MACHINE_MIGRATION.md)
 - [`docs/ARTIFACT_RETENTION.md`](docs/ARTIFACT_RETENTION.md)
-
-## 证据与产物
-
-- 当前实验登记：`docs/EXPERIMENTS.md`
-- V7 reconstruction：`/root/autodl-tmp/runs/occgs_resim/b0_recon/occgs_b0/`
-- V7 occupancy：`/root/autodl-tmp/data/occgs/occupancy/`
-- V7 counterfactual：`/root/autodl-tmp/runs/occgs_resim/c0_cf/`
-- V7 completion / proxy：`/root/autodl-tmp/runs/occgs_resim/{l0_comp,u0_screen}/`
-- 历史轻量 Git 证据：`docs/run_manifests/`
-
-既有 V7 run 为 retrospective evidence，缺少完整 formal manifest/terminal marker；后续新 run 必须先完成
-`V7-EV-10` 的运行契约，不得覆盖旧目录或事后伪造 provenance。
