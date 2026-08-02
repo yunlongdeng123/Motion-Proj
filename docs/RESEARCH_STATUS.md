@@ -1,10 +1,10 @@
 # Research Status
 
-- 更新时间：2026-08-02
+- 更新时间：2026-08-03
 - 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前里程碑：`DR-V2-M4-EDIT-PILOT-01`
-- 状态：`pending / user-authorized / M0–M3 done`
-- 当前门禁：M3 已通过；完成本次 M3 独立提交后只执行 M4
+- 当前里程碑：`DR-V2-M5-STRESS-3SCENE-01`
+- 状态：`pending / user-authorized / M0–M4 done`
+- 当前门禁：M4 已通过并独立提交；只执行 M5
 - 权威计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V2 授权前 Git 基线：`1e83ad5b`（`main` / `origin/main`）
 - 当前分支：`research/dynamic-editing-v2`
@@ -17,6 +17,8 @@
   `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M2-ACTOR-EVAL-01/20260802T140312Z__actor-eval-s0-r5`
 - M3 正式 run：
   `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M3-EDIT-BASELINE-01/20260802T163930Z__formal-checkpoint-recovery-s0-r12`
+- M4 正式 run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M4-EDIT-PILOT-01/20260802T171000Z__scene0230-pilot-s0-r7`
 
 ## 当前裁决
 
@@ -31,6 +33,10 @@ raw 轨迹和三相机 QA 齐全。nuScenes GT 仍只用于评测选择和 oracl
 `DR-V2-M3-EDIT-BASELINE-01` 已完成：原生 30k checkpoint、token-first registry 与
 `original/lateral +1m/remove` 三相机可逆编辑 smoke 均通过。M3 只证明基线与编辑 API 可运行，
 不对视觉质量作结论。
+
+`DR-V2-M4-EDIT-PILOT-01` 已完成：scene-0230 全部 196 帧、三相机、original/lateral/delete
+共 1,764 张 RGB 和配套深度/掩码/footprint 均落盘，9 个同步视频非空，1,176 行 paired metrics
+与 16/16 自动检查通过。人工抽检只确认产物非黑、编辑效应位于目标 footprint；不对视觉质量作通过结论。
 
 ## V1 历史终态
 
@@ -105,7 +111,21 @@ V1 结论保持不变，完整快照在
 - final readiness `available=11 / missing=0 / incompatible=0`；r12 terminal=`done`；
 - r8 的 post-render memory guard、r9–r11 的恢复 schema/依赖 fail-closed 实例全部保留，未覆盖。
 
-## 下一步：只执行 M4
+## M4 完成证据
 
-对 scene-0230 冻结 high-support actor 运行完整 clip 的 `original / actor-local lateral +1.0 m /
-delete`，输出三相机同步视频、mask、footprint、depth/visibility、world-state hash、诊断指标与 QA 页面。
+- full clip：`196 frames × 3 cameras × 3 variants = 1,764` RGB，另有逐帧 depth/opacity/
+  dynamic opacity/target mask 与 source/edited footprint；
+- 9/9 MP4、1,176/1,176 paired metric rows、16/16 checks 和内嵌图 QA 页面齐全；
+- lateral/delete non-target PSNR=`93.394483/95.598042`，LPIPS(Alex, 256px)=
+  `5.260851e-09/3.052960e-09`；目标 effect energy=`0.055526/0.031926`；
+- SE(3) 最大平移误差 `3.814697e-06 m`，rotation/size/canonical drift=`0`，跨相机 world
+  transform mismatch=`0`；
+- 正式运行 `685.3 s`，峰值显存 `8,543 MiB`，峰值 cgroup `58,478,706,688 bytes`，
+  `oom=0 / oom_kill=0`；最终 terminal=`done`；
+- r1 保留 float32 容差过严的 blocked smoke；r5/r6 保留调试控制器被外层 timeout/tmux
+  中断后的证据；正式 r7 使用独立 nohup controller 完成，没有覆盖旧实例。
+
+## 下一步：只执行 M5
+
+对 scene-0230/0242/0255 的冻结 high-support 与 boundary-support actor 执行四类预注册编辑，
+完成 pseudo-hole、真值分层、感知诊断和跨场景 failure matrix。M5 提交前不进入 M6。

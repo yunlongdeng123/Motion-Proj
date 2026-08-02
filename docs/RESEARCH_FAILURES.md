@@ -1375,6 +1375,25 @@ edit smoke 完成 M3。
 `unavailable_empty_checkpoint_slice`，同时对正式选中 actor 继续要求非空。禁止为了全 registry 看起来
 完整而伪造 slice，也禁止因一个非目标空 slice 丢弃 23 个真实非空映射。
 
+### PIVOT-F22：外层 timeout 不会自动回收独立 session 的 GPU 子进程
+
+M4 controller 用 `subprocess.Popen(..., start_new_session=True)` 隔离正式渲染，使 SSH/tmux 断开不应
+误杀长任务；相应地，用外层 `timeout` 调试 controller 时，SIGINT 只终止父进程，子进程会以 PPID 1
+继续占用 GPU。`debug_controller_s0_r5` 复现了该行为；残留子进程通过已核实的精确 PGID 发送 SIGTERM
+回收，GPU 从约 `8.1 GiB` 回到 `0 MiB`，没有终止用户服务。
+
+以后不得用外层 timeout 探测会派生独立 session 的 controller。正式运行应直接由 nohup/tmux 托管，
+同时监控 controller PID、child PID、terminal 和 resource.jsonl；确需中止时必须核实 process tree 后
+显式回收 child process group。`r5/r6` 的 running terminal 保留为中断证据，不改写成 done。
+
+### PIVOT-F23：SE(3) 一致性容差必须覆盖 float32 往返误差
+
+M4 单帧 r1 的 actor transform 先由 checkpoint float32 tensor 变换，再写入 JSON 并读回，最大平移误差
+略高于 `1e-6 m`；其余 15 项检查均通过。把该值当几何失败会制造假阴性。协议在查看正式全量结果前
+固定为 `1e-4 m`，r2/r3 冒烟通过，正式 196 帧实测最大误差为
+`3.814697265625e-06 m`，rotation/size/canonical drift 均为零。容差变更只反映数值精度，不降低
+1 m 编辑幅度，也不得据此为真正的轨迹偏差放宽门禁。
+
 ## 7. 新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

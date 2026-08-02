@@ -6,7 +6,7 @@
 - **执行环境**：远端 AutoDL，单卡 NVIDIA GPU，项目根目录默认 `/root/autodl-tmp/motion_proj`
 - **权威前序计划**：`docs/archive/2026-07/dynamic-reconstruction-v1/DYNAMIC_DRIVING_RECONSTRUCTION_PLAN_V1.md`
 - **V1 终态**：AD-GS 六场景精确复现成功；DGGT 因 pointops2 构建方式阻塞；M6 只完成身份资产审计，未真正执行编辑压力测试；候选 A“补实例身份并做轨迹编辑”因创新性重合被拒绝
-- **V2 当前状态**：`M0–M3 done / M4 pending and authorized`
+- **V2 当前状态**：`M0–M4 done / M5 pending and authorized`
 - **V2 核心任务**：补齐前馈对照和可编辑基线，真正产生编辑结果与失败证据，再决定是否存在新的研究贡献
 
 ### 预执行现场校准（2026-08-02）
@@ -398,7 +398,7 @@ pending | running | blocked | done | rejected
 | M1 DGGT 修复与正式推理 | `DR-V2-M1-DGGT-REPAIR-01` | done | 18 窗口 1-view/3-view、common 与区域诊断 | 1-view/3-view 18/18，216/216 common target |
 | M2 nuScenes actor 评测适配器 | `DR-V2-M2-ACTOR-EVAL-01` | done | raw 2 Hz 轨迹、精确投影、冻结 3×2 actor cohort | 三场景 eligible=16/20/6，各选 2 |
 | M3 对象级可编辑基线 | `DR-V2-M3-EDIT-BASELINE-01` | done | DriveStudio/StreetGS actor registry、原始渲染、编辑 API smoke | scene-0230 一对象可移除、平移并三相机渲染 |
-| M4 单场景真实编辑闭环 | `DR-V2-M4-EDIT-PILOT-01` | pending | 0230 固定 actor 的原始/横移/删除视频与指标 | 编辑真实执行、无空结果、证据可审计 |
+| M4 单场景真实编辑闭环 | `DR-V2-M4-EDIT-PILOT-01` | done | 0230 固定 actor 的原始/横移/删除视频与指标 | 编辑真实执行、无空结果、证据可审计 |
 | M5 三场景压力测试 | `DR-V2-M5-STRESS-3SCENE-01` | pending | 3 scene × 2 actor × 4 edit 的 failure matrix | 至少 3 scene 完整 coverage，不能全 ABSTAIN |
 | M6 创新假设门禁 | `DR-V2-M6-HYPOTHESIS-01` | pending | 唯一 hypothesis、novelty delta、primary endpoint | 跨 3 scene 稳定失败且 novelty 不重合 |
 | M7 方法与消融 | `DR-V2-M7-METHOD-01` | pending | matched ablation、3 seeds、统计结果 | M6 通过且 effect size 预注册 |
@@ -1119,6 +1119,23 @@ actor ID / frame / raw-or-interpolated
 - 没有因 unsupported 区域而把整条实验写成 ABSTAIN。
 
 若 baseline 无法执行任一基本编辑，M4=`blocked`，不能进入 M5。
+
+### 2026-08-03 完成事实
+
+- 正式 run：
+  `/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M4-EDIT-PILOT-01/20260802T171000Z__scene0230-pilot-s0-r7`；
+- `196 frames × 3 cameras × 3 variants = 1,764` 张 RGB 全部生成，并同步保存深度、
+  opacity、dynamic opacity、target mask、source/edited footprint、9 个 MP4 和内嵌图片的 QA 页面；
+- 两个编辑各有 `588` 行 paired metrics，总计 `1,176` 行；16/16 运行与不变量检查通过；
+- actor-local `+y 1.0 m` 的最大平移误差为 `3.814697265625e-06 m`，旋转、尺寸、
+  canonical pairwise distance 和跨相机 world transform mismatch 均为 `0`；
+- lateral/delete 的 non-target PSNR 分别为 `93.394483 / 95.598042`，LPIPS(Alex, 256px)
+  分别为 `5.260851e-09 / 3.052960e-09`；这些值只证明非目标保持，不代表视觉质量通过；
+- 正式 run 用时 `685.3 s`，峰值 GPU `8,543 MiB`、峰值 cgroup `58,478,706,688 bytes`，
+  `oom=0 / oom_kill=0`；人工抽检确认三组渲染非黑，source/edited footprint 有预期位移，
+  差分集中于目标区域；
+- effect mask 是 `original/delete` 与 `lateral/delete` 的模型内反事实差分，不是真实观测真值；
+  M5 仍必须执行 Tier A/B/C pseudo-hole/观测边界评测。
 
 ## 9.7 M4 commit
 

@@ -1,12 +1,12 @@
 # Experiments
 
-- 更新时间：2026-08-02
+- 更新时间：2026-08-03
 - 活跃路线：动态驾驶场景可编辑重建与失败诊断 V2
 - 权威方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
-本文件只登记 V2。M0–M2 已完成；当前只允许进入 M3。
+本文件只登记 V2。M0–M4 已完成；当前只允许进入 M5。
 
 ## 1. 状态词
 
@@ -25,8 +25,8 @@ pending | running | blocked | done | rejected
 | `DR-V2-M0-BOOTSTRAP-01` | done | 事实源、分支、镜像与 bootstrap | 正式 run 完成；历史失败实例保留 | README/STATUS/PLAN 一致，bootstrap smoke 通过 |
 | `DR-V2-M1-DGGT-REPAIR-01` | done | 修复 pointops2 并做 18-window inference | 1/3-view、common、regional 全部完成 | 18/18 + 216/216 + 完整运行合同 |
 | `DR-V2-M2-ACTOR-EVAL-01` | done | nuScenes 真值 actor 评测适配器 | raw 2Hz 轨迹、4,356 exact mappings、6/6 cohort | 三 scene eligible 16/20/6，visual QA 通过 |
-| `DR-V2-M3-EDIT-BASELINE-01` | pending | DriveStudio/StreetGS 可编辑基线 | source/env 存在；V2 scene 资产缺失 | scene-0230 remove/lateral/3-camera smoke |
-| `DR-V2-M4-EDIT-PILOT-01` | pending | scene-0230 真实编辑闭环 | 未生成 | 两种编辑真实执行且证据可审计 |
+| `DR-V2-M3-EDIT-BASELINE-01` | done | DriveStudio/StreetGS 可编辑基线 | 30k checkpoint、registry、27-image smoke 完成 | scene-0230 remove/lateral/3-camera smoke |
+| `DR-V2-M4-EDIT-PILOT-01` | done | scene-0230 真实编辑闭环 | 1,764 RGB、9 MP4、1,176 paired rows、16/16 checks | 两种编辑真实执行且证据可审计 |
 | `DR-V2-M5-STRESS-3SCENE-01` | pending | 三场景编辑/去遮挡压力测试 | 未生成 | 3 scene、4 edits 有效 coverage |
 | `DR-V2-M6-HYPOTHESIS-01` | pending | 基于真实失败做 novelty gate | 未生成 | 跨 3 scene 稳定失败且有独立 novelty delta |
 | `DR-V2-M7-METHOD-01` | pending | 最小方法与 matched ablation | 未授权 | M6 done 且 endpoint/effect size 预注册 |
@@ -179,6 +179,31 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 - r11：一个非目标 model 的 Gaussian slice 被训练裁剪为空；registry v2 显式标记 unavailable，
   仍要求所选 actor slice 非空。
 
-## 9. 当前唯一动作
+## 9. `DR-V2-M4-EDIT-PILOT-01`
 
-执行 `DR-V2-M4-EDIT-PILOT-01`。M4 提交前不进入 M5。
+### 正式运行
+
+`/root/autodl-tmp/runs/dynamic_editing_v2/DR-V2-M4-EDIT-PILOT-01/20260802T171000Z__scene0230-pilot-s0-r7`
+=`done`。
+
+- 固定 scene-0230 high-support actor `af663976...`，196 帧、三相机、original/lateral +1m/delete
+  共 `1,764` 张 RGB，所有配套 depth/opacity/dynamic/target mask/footprint 与 9 个 MP4 完整；
+- paired metrics=`1,176` rows；16/16 协议、不变量和产物检查通过；
+- lateral/delete non-target PSNR=`93.394483/95.598042`，LPIPS(Alex, 256px)=
+  `5.260851e-09/3.052960e-09`，source effect energy=`0.055526/0.031926`；
+- actor-local 位移最大误差 `3.814697e-06 m`，rotation/size/canonical drift 和 multi-camera
+  world mismatch 均为 `0`；
+- 自动检查不冒充质量门禁；人工抽检只确认非黑、非重复 original、footprint 和目标差分可见。
+
+### 独立失败实例
+
+- `smoke_frame1_s0_r1`：float32 transform 往返最大误差高于不现实的 `1e-6 m`，其余检查通过；
+  r2 将协议容差固定为 `1e-4 m` 后 16/16 通过，正式实测误差为 `3.814697e-06 m`；
+- `debug_controller_s0_r5`：外层诊断 `timeout` 中断 controller，但 child 使用
+  `start_new_session=True`，故需按精确 PGID 回收；未覆盖；
+- `20260802T170600Z__...-r6`：调试 tmux 生命周期中断后保留 running terminal 证据；
+  正式 r7 改用 nohup controller，资源守卫和 terminal 均闭环。
+
+## 10. 当前唯一动作
+
+执行 `DR-V2-M5-STRESS-3SCENE-01`。M5 提交前不进入 M6。
