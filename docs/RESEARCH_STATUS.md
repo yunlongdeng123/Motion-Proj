@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-05
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
-- 当前任务：`WS-V3-P0-ROUTE-01`
+- 当前任务：`WS-V3-A0-NATIVE-BASELINE-01`
 - 状态：`running`
-- 当前门禁：只完成 V3 文档切换与事实冻结；P0 提交后进入 A0
+- 当前门禁：P0 已由 `076ebdc` 完成；只执行 A0 scene-0255 回归与三场景原生基线
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -70,8 +70,8 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 
 | Task ID | 状态 | 当前结论/门禁 |
 |---|---|---|
-| `WS-V3-P0-ROUTE-01` | running | 文档编写中；尚未提交 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | pending | P0 提交后授权；先修 scene-0255 空 CUDA tensor 聚合 |
+| `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | running | 已授权；先修 scene-0255 空 CUDA tensor 聚合 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | pending | A0 三场景冻结后进入 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
@@ -89,6 +89,6 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 
 ## 下一步
 
-完成 `WS-V3-P0-ROUTE-01` 的 Markdown/link/Git diff 校验并独立提交。提交后将当前任务切换为
-`WS-V3-A0-NATIVE-BASELINE-01`，先把 r27 诊断固化为回归测试，再实施 scene-0255 最小兼容修复；不得
-直接跳到 A2，也不得继续扩建 V2 M5 evaluator。
+执行 `WS-V3-A0-NATIVE-BASELINE-01`：先把 r27 诊断固化为 mixed-empty/all-empty CUDA 回归测试，再实施
+scene-0255 最小兼容修复；复核 0230/0242 checkpoint 可复用合同，完成 3/3 checkpoint/render/registry/资源
+基线。不得直接跳到 A2，也不得继续扩建 V2 M5 evaluator。

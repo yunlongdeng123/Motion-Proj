@@ -8,7 +8,8 @@
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
-保持 `pending` 历史终态；M6–M8 不再授权。当前只执行 `WS-V3-P0-ROUTE-01`。
+保持 `pending` 历史终态；M6–M8 不再授权。P0 已由 `076ebdc` 完成，当前只执行
+`WS-V3-A0-NATIVE-BASELINE-01`。
 
 ## 1. 状态词
 
@@ -24,8 +25,8 @@ pending | running | blocked | done | rejected
 
 | Task ID | 状态 | 目标 | 完成门禁 |
 |---|---|---|---|
-| `WS-V3-P0-ROUTE-01` | running | 单一 V3 权威计划与 V2 事实冻结 | PLAN/STATUS/EXPERIMENTS/FAILURES/README 一致并独立提交 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | pending | 三场景原生 StreetGS 基线 | scene-0255 最小兼容修复；3/3 checkpoint/render/registry/资源数据 |
+| `WS-V3-P0-ROUTE-01` | done | 单一 V3 权威计划与 V2 事实冻结 | `076ebdc`；文档一致，链接与 Git diff 校验通过 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | running | 三场景原生 StreetGS 基线 | scene-0255 最小兼容修复；3/3 checkpoint/render/registry/资源数据 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | pending | 成像、位姿和 LiDAR 初始化消融 | off/native/enhanced 三场景对照；rolling shutter 有证据或 `not_supported` |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning | 完成 D0–D3 小步消融；质量/GS 数/训练代价 Pareto |
@@ -249,5 +250,5 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-完成 `WS-V3-P0-ROUTE-01` 文档校验与提交。随后只进入
-`WS-V3-A0-NATIVE-BASELINE-01`，先固化 scene-0255 回归测试，再做最小兼容修复和三场景 A0 冻结。
+执行 `WS-V3-A0-NATIVE-BASELINE-01`：先固化 scene-0255 mixed-empty/all-empty CUDA 回归测试，再做最小
+兼容修复、既有 0230/0242 资产复核和三场景 A0 冻结。

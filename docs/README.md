@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-05
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
-- 当前任务：`WS-V3-P0-ROUTE-01`（`running`）
+- 当前任务：`WS-V3-A0-NATIVE-BASELINE-01`（`running`）
 - 唯一当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
 
 ## 恢复顺序

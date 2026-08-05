@@ -5,7 +5,7 @@
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **执行环境**：AutoDL，单卡 NVIDIA GeForce RTX 3090 24 GiB，cgroup memory 90 GiB
 - **V3 启动基线**：`research/dynamic-editing-v2@e691c1f`
-- **当前任务**：`WS-V3-P0-ROUTE-01`（`running`）
+- **当前任务**：`WS-V3-A0-NATIVE-BASELINE-01`（`running`）
 - **唯一当前计划**：本文件
 - **历史前序**：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
@@ -161,8 +161,8 @@ P0 路线切换与事实冻结
 
 | Task ID | 状态 | 交付物 | 完成门禁 |
 |---|---|---|---|
-| `WS-V3-P0-ROUTE-01` | running | V3 plan、状态/实验/失败/README 同步 | 单一权威计划，V2 M5 如实冻结，Git 校验通过并提交 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | pending | 三场景原生 checkpoint、held-out render、actor registry、资源基线 | scene-0255 最小修复有回归测试；3/3 terminal；不丢场景 |
+| `WS-V3-P0-ROUTE-01` | done | V3 plan、状态/实验/失败/README 同步 | `076ebdc`；单一权威计划、V2 M5 冻结、链接与 Git 校验通过 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | running | 三场景原生 checkpoint、held-out render、actor registry、资源基线 | scene-0255 最小修复有回归测试；3/3 terminal；不丢场景 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 本地可运行性/输入/输出/license 审计 | 官方 revision 固定；unsupported 能力明示；不要求 GPU 全量跑通 |
 | `WS-V3-A1-CALIBRATION-01` | pending | off/native/enhanced 校准消融 | 三场景同协议；rolling shutter 有 metadata 或显式 `not_supported` |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning 模块与子消融 | 模块可关闭；完成 D0–D3；Gaussian/质量/代价齐全 |
@@ -376,11 +376,13 @@ registry；整数/低比特量化和 LOD 是在该最低集之上的独立实验
 
 ## 14. 更新记录
 
-### 2026-08-05 — `WS-V3-P0-ROUTE-01` running
+### 2026-08-05 — `WS-V3-P0-ROUTE-01` done
 
 - 用户授权从 V2 大型失败诊断路线切换到 WorldSim 模型链与 A0–A4 消融；
 - 核实 V2 M0–M4 完成、M5 部分执行、scene-0255 空 CUDA tensor 聚合阻塞和 dirty worktree；
 - 核实 DriveStudio 已有 Affine/CamPose/LiDAR init，原生 RigidNodes 仍为统一增密/剪枝；
 - 核对 Instant NuRec、OmniRe、IDSplat、SplatAD、ADGaussian、Real2Sim、RoVES、RealityBridge、
   Difix3D+ 与 Speedy-Splat 的一手事实源；
-- 创建 V3 唯一权威计划，下一里程碑在 P0 提交后固定为 `WS-V3-A0-NATIVE-BASELINE-01`。
+- 创建 V3 唯一权威计划，Markdown local links 与 `git diff --check` 通过；
+- 路线注册提交：`076ebdc`（`docs(worldsim): 注册 V3 模型增强路线`）；
+- 当前任务切换为 `WS-V3-A0-NATIVE-BASELINE-01`，先固化 scene-0255 空 CUDA tensor 回归。
