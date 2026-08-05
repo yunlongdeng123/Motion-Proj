@@ -1,6 +1,6 @@
 # Experiments
 
-- 更新时间：2026-08-05
+- 更新时间：2026-08-06
 - 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
 - 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
@@ -8,8 +8,8 @@
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
-保持 `pending` 历史终态；M6–M8 不再授权。P0 已由 `076ebdc` 完成，当前只执行
-`WS-V3-A0-NATIVE-BASELINE-01`。
+保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线已完成，当前执行
+`WS-V3-A1-CALIBRATION-01`。
 
 ## 1. 状态词
 
@@ -26,19 +26,19 @@ pending | running | blocked | done | rejected
 | Task ID | 状态 | 目标 | 完成门禁 |
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | 单一 V3 权威计划与 V2 事实冻结 | `076ebdc`；文档一致，链接与 Git diff 校验通过 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | running | 三场景原生 StreetGS 基线 | scene-0255 最小兼容修复；3/3 checkpoint/render/registry/资源数据 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
-| `WS-V3-A1-CALIBRATION-01` | pending | 成像、位姿和 LiDAR 初始化消融 | off/native/enhanced 三场景对照；rolling shutter 有证据或 `not_supported` |
+| `WS-V3-A1-CALIBRATION-01` | running | 成像、位姿和 LiDAR 初始化消融 | off/native/enhanced 三场景对照；rolling shutter 有证据或 `not_supported` |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning | 完成 D0–D3 小步消融；质量/GS 数/训练代价 Pareto |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
-### `WS-V3-A0-NATIVE-BASELINE-01` 当前证据
+### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
 
 - fix commit：`436cfc1`；DriveStudio upstream：`e59bda4`；compatibility patch SHA-256：
   `54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619`；
-- `tests/test_worldsim_v3_drivestudio_compat.py` + `tests/test_run_worldsim_v3_a0_smoke.py`：`5 passed`；
+- 完整 A0 定向测试：`16 passed`；
 - canonical smoke：
   `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`；
 - terminal=`done`；torch=`2.1.2+cu118`；原生 mixed-empty cat 复现
@@ -46,6 +46,25 @@ pending | running | blocked | done | rejected
 - 真实 1-step DriveStudio 路径完成数据集、LiDAR 实例初始化、一次优化和 checkpoint；controller
   `72.1 s`，peak GPU sample `8,388 MiB`，peak cgroup `5,971,820,544` bytes，无 OOM；
 - smoke checkpoint `320,832,362` bytes 只证明执行路径，不注册为 A0 最终模型。
+
+正式三场景矩阵：
+
+| scene | checkpoint / step | global PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | high boundary PSNR / SSIM | bg / rigid GS | train s / peak MiB |
+|---|---|---:|---:|---:|---:|---:|
+| 0230 | `24a39f…e49` / 30k | 24.934 / .740 / .169 | 21.728 / .596 / .121 | 20.165 / .603 | 1,152,614 / 167,299 | 3014.5 / 23,799 |
+| 0242 | `16179d…fda` / 30k | 29.107 / .906 / .113 | 19.788 / .665 / .153 | 23.277 / .795 | 843,756 / 86,255 | 2006.2 / 12,783 |
+| 0255 | `f8c81c…ef9` / 30k | 25.230 / .743 / .192 | 23.531 / .665 / .058 | 22.991 / .656 | 1,510,936 / 40,447 | 2739.4 / 24,057 |
+
+- scene-0255 正式训练：`20260805T162355Z__scene0255-native30k-s0-r1`；0230/0242 通过 config normalized
+  SHA、checkpoint bytes/SHA/step 和同实现合同注册复用；
+- actor evaluator 提交 `01cd303`；counterfactual mask 明示不是真值分割，并记录 coverage。actor runs：
+  `20260805T173900Z__scene0230-actor-metrics-s0-r1`、`20260805T174100Z__scene0242-actor-metrics-s0-r1`、
+  `20260805T174300Z__scene0255-actor-metrics-s0-r1`；peak GPU `8,455 / 7,905 / 8,685 MiB`；
+- 0242 boundary role 按注册表保留 `ABSTAIN`；其余 boundary actor 区域/边界带均有正式指标；
+- finalizer r1 `20260805T174700Z__a0-three-scene-finalize-s0-r1` 因 native/reuse training resource 字段差异
+  `blocked`；`00ba4e8` 归一化后 r2 `20260805T175000Z__a0-three-scene-finalize-s0-r2`=`done`，产出
+  `a0_matrix.json/csv` 与 `a0_report.md`；
+- A0 只支持固定三场景的描述性结论。跨场景 GS 数与质量不可作因果归因；A1/A2 必须做同场景受控消融。
 
 工作树准备脚本首次创建旧候选 worktree 后，因 `git status --short` 的输出已被 `.strip()` 去除前导空格，
 verification literal 写成带前导空格而失败；修正为 `M datasets/driving_dataset.py` 后 verify-only 通过。canonical
@@ -267,5 +286,5 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-执行 scene-0255 30k formal training 和 high/boundary registry；随后复核 0230/0242 资产合同，完成三场景
-held-out render、质量/actor/边界/Gaussian 数和资源基线。
+执行 `WS-V3-A1-CALIBRATION-01`：先完成 metadata/原生参数/LiDAR provenance 审计，再按 C0/C1/C2/C3
+逐项实现和比较；C4 没有真实 row timing 时必须 `not_supported`。不得直接合并多个增强后只报一个结果。

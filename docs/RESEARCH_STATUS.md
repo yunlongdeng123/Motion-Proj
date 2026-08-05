@@ -1,10 +1,10 @@
 # Research Status
 
-- 更新时间：2026-08-05
+- 更新时间：2026-08-06
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
-- 当前任务：`WS-V3-A0-NATIVE-BASELINE-01`
+- 当前任务：`WS-V3-A1-CALIBRATION-01`
 - 状态：`running`
-- 当前门禁：P0 已由 `076ebdc` 完成；只执行 A0 scene-0255 回归与三场景原生基线
+- 当前门禁：A0 已由三场景 finalizer r2 完成；执行 A1 off/native/enhanced 校准与 LiDAR provenance 审计
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -66,13 +66,13 @@ DriveStudio 固定 commit `e59bda4fa681f829dbb1d65f0de582b0f633c450`。源码审
 因此 A1 是已有校准能力的 off/native/enhanced 消融；A2 才是 V3 的首要模型新增。rolling shutter 只有在
 processed data 存在真实 readout direction/time 后才可实现，否则必须报告 `not_supported`。
 
-## A0 当前证据
+## A0 完成证据
 
 - 实现提交：`436cfc1`（`fix(drivestudio): 过滤空 LiDAR 实例块`）；
 - patch SHA-256：`54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619`；
 - frozen DriveStudio：`e59bda4`，实际训练使用独立 patched worktree
   `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-r2`，原始上游保持 clean；
-- 定向测试：`5 passed`；patch apply/reverse-check 与 `git diff --check` 通过；
+- 定向测试：`16 passed`；patch apply/reverse-check 与 `git diff --check` 通过；
 - scene-0255 canonical smoke：
   `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`
   =`done`；原生 r27 mixed-empty CUDA cat 错误被复现，修复后为 `59×3 / 177 numel` 且点/颜色 exact pairing；
@@ -80,16 +80,32 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
   controller duration `72.1 s`，peak GPU sample `8,388 MiB`，peak cgroup `5,971,820,544` bytes，
   `invalid_configuration=false`。
 
-该 smoke 只解除工程阻塞，不能当作 A0 30k checkpoint 或重建质量结果。A0 仍为 `running`。
+该 smoke 只解释兼容修复。A0 正式冻结还包括：
+
+- scene-0255 新 30k run：`20260805T162355Z__scene0255-native30k-s0-r1`；
+- scene-0230/0242 等价 checkpoint 复用 run：`20260805T171624Z__scene0230-reuse-eval-s0-r1` 与
+  `20260805T171914Z__scene0242-reuse-eval-s0-r1`；
+- 全图 PSNR（0230/0242/0255）：`24.934 / 29.107 / 25.230`；总 GS：
+  `1,319,913 / 930,011 / 1,551,383`；训练时间：`3014.5 / 2006.2 / 2739.4 s`；
+- high actor 区域 PSNR/SSIM/tight-crop LPIPS：`21.728/0.596/0.121`、
+  `19.788/0.665/0.153`、`23.531/0.665/0.058`；scene-0242 boundary role 为预注册 `ABSTAIN`；
+- actor mask 为 paired original/delete render 的模型 counterfactual diagnostic，不是真值分割；每场记录
+  visible image 和 pixel coverage，checkpoint 评估前后哈希一致；
+- 唯一汇总：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T175000Z__a0-three-scene-finalize-s0-r2`
+  =`done`。r1 的训练资源 schema 字段差异已作为 `blocked` 保留，`00ba4e8` 修复后 r2 通过。
+
+A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scene-0242 全图 PSNR 最高，但 high actor PSNR
+最低；scene-0255 boundary actor 区域 SSIM 仅 `0.526`。这为 A1/A2 提供目标，不构成跨场景因果结论。
 
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
 |---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | running | 已授权；先修 scene-0255 空 CUDA tensor 聚合 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
-| `WS-V3-A1-CALIBRATION-01` | pending | A0 三场景冻结后进入 |
+| `WS-V3-A1-CALIBRATION-01` | running | 先审计真实 metadata 与原生参数，再实现 C0/C2/C3 小步消融 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
@@ -99,12 +115,12 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 67 GiB 可用；
+- 数据盘：约 66 GiB 可用；
 - 无活跃研究 tmux/controller/GPU 进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-执行 scene-0255 独立 30k formal training，生成 checkpoint/hash 和 high/boundary registry；随后复核
-0230/0242 checkpoint 可复用合同，并完成 3/3 held-out render/指标/资源基线。不得直接跳到 A2，也不得继续
-扩建 V2 M5 evaluator。
+执行 A1 事实审计：冻结 C0/C1/C2/C3 参数化、检查 processed/raw metadata 是否有真实 rolling-shutter row
+timing、导出 Affine/CamPose 与 LiDAR 初始化 provenance。先用 scene-0230 做同预算 smoke/短程归因，再按固定
+协议推进三场景；不得把原生 Affine/CamPose/LiDAR init 冒充新增模块，也不得直接跳到 A2。

@@ -5,7 +5,7 @@
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **执行环境**：AutoDL，单卡 NVIDIA GeForce RTX 3090 24 GiB，cgroup memory 90 GiB
 - **V3 启动基线**：`research/dynamic-editing-v2@e691c1f`
-- **当前任务**：`WS-V3-A0-NATIVE-BASELINE-01`（`running`）
+- **当前任务**：`WS-V3-A1-CALIBRATION-01`（`running`）
 - **唯一当前计划**：本文件
 - **历史前序**：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
@@ -162,9 +162,9 @@ P0 路线切换与事实冻结
 | Task ID | 状态 | 交付物 | 完成门禁 |
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | V3 plan、状态/实验/失败/README 同步 | `076ebdc`；单一权威计划、V2 M5 冻结、链接与 Git 校验通过 |
-| `WS-V3-A0-NATIVE-BASELINE-01` | running | 三场景原生 checkpoint、held-out render、actor registry、资源基线 | scene-0255 最小修复有回归测试；3/3 terminal；不丢场景 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 checkpoint、held-out render、actor registry、资源基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 terminal、质量/actor/边界/GS/资源矩阵齐全 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 本地可运行性/输入/输出/license 审计 | 官方 revision 固定；unsupported 能力明示；不要求 GPU 全量跑通 |
-| `WS-V3-A1-CALIBRATION-01` | pending | off/native/enhanced 校准消融 | 三场景同协议；rolling shutter 有 metadata 或显式 `not_supported` |
+| `WS-V3-A1-CALIBRATION-01` | running | off/native/enhanced 校准消融 | 三场景同协议；rolling shutter 有 metadata 或显式 `not_supported` |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning 模块与子消融 | 模块可关闭；完成 D0–D3；Gaussian/质量/代价齐全 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 局部 Gaussian affected-set、短步优化与时序约束 | outside frozen；Tier-A/深度/时序指标齐全；无大视频 diffusion |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD、转换器、asset registry | pruning + 数值压缩 + chunk 完成；不变量和质量-大小-速度 Pareto 通过 |
@@ -213,7 +213,7 @@ P0 提交后只授权 `WS-V3-A0-NATIVE-BASELINE-01`。不得跳到 A2，也不�
 已有 0230/0242 checkpoint 可在 hash、split、config 与实现一致时注册复用，不为形式完整而重训。scene-0255
 必须在修复后创建新 formal run，旧 blocked run 不覆盖。
 
-### 6.3 当前进展（2026-08-05）
+### 6.3 完成证据（2026-08-06）
 
 - r27 的 166-chunk CUDA 合同已独立复现：PyTorch `2.1.2+cu118` 原生 mixed-empty `torch.cat`
   稳定触发 `invalid configuration argument`；
@@ -227,8 +227,23 @@ P0 提交后只授权 `WS-V3-A0-NATIVE-BASELINE-01`。不得跳到 A2，也不�
   `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`
   为 `done`：完整数据初始化、1-step 优化和 checkpoint 保存通过，67 秒级，无 invalid-configuration，峰值
   GPU 采样 `8,388 MiB`；
-- 上述只解除 scene-0255 初始化阻塞，不是 A0 30k checkpoint 或质量结论。下一步执行独立 30k formal
-  training，再构建 high/boundary registry 和 held-out baseline。
+- scene-0255 新 30k formal run
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T162355Z__scene0255-native30k-s0-r1`
+  为 `done`；0230/0242 通过只忽略 `scene_idx/log_dir` 的 config 等价、checkpoint bytes/SHA/step 校验后复用；
+- 三场景 checkpoint SHA-256 分别为 `24a39f…e49`、`16179d…fda`、`f8c81c…ef9`，step 均为 30k；
+  held-out 全图 PSNR 分别为 `24.934 / 29.107 / 25.230`，background/rigid GS 分别为
+  `1,152,614/167,299`、`843,756/86,255`、`1,510,936/40,447`；
+- `01cd303` 新增只读 actor counterfactual 诊断：mask 来源为 original 与 actor-delete 配对渲染差分，明确不是
+  ground-truth segmentation；记录 coverage，区域/3px 边界带报告 PSNR、SSIM 与 tight-crop LPIPS；
+- high actor 区域 PSNR/SSIM/LPIPS 在 0230/0242/0255 分别为
+  `21.728/0.596/0.121`、`19.788/0.665/0.153`、`23.531/0.665/0.058`；0242 boundary role 按注册表为
+  `ABSTAIN`，未替换 actor；
+- 唯一汇总 run
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T175000Z__a0-three-scene-finalize-s0-r2`
+  为 `done`，输出 JSON/CSV/Markdown。`r1` 因复用 run 与原生 run 的训练资源字段名不同而 `blocked`；
+  `00ba4e8` 增加 schema 归一化后 r2 通过；
+- 定向测试 `16 passed`，三场景 actor evaluator 峰值 GPU `7,905–8,685 MiB`，checkpoint 前后哈希一致，
+  无 OOM。A0 终态为 `done`，不能再由 smoke 口径恢复为 `running`。
 
 ## 7. F0：Instant NuRec 前馈范式审计
 
@@ -392,6 +407,14 @@ registry；整数/低比特量化和 LOD 是在该最低集之上的独立实验
 不得从 V2 计划、归档报告或旧 tmux terminal 恢复“下一步”。当前动作永远以 STATUS 和本计划的任务表为准。
 
 ## 14. 更新记录
+
+### 2026-08-06 — `WS-V3-A0-NATIVE-BASELINE-01` done
+
+- scene-0255 空 LiDAR 实例块兼容修复、30k 原生训练、registry 与 held-out 评估闭环；
+- 0230/0242 checkpoint 通过严格等价合同注册复用，三场景均完成原生质量、GS 数和资源冻结；
+- 新增 actor/边界 counterfactual 诊断与 coverage 防缩分母合同；
+- A0 finalizer r1 固定资源 schema 差异，r2 归一化后产出唯一三场景矩阵；
+- A0 说明全图指标不能代替动态 actor/边界指标；当前任务切换到 A1。
 
 ### 2026-08-05 — `WS-V3-P0-ROUTE-01` done
 

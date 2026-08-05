@@ -28,6 +28,8 @@
   residual 后只报告一个合并结果。
 - `V3-F10`：编辑后 local refinement 的 unknown background 仍是 unknown；只允许 Tier-A、多视图或 LiDAR
   支持监督，Tier B/C 不得当伪真值回传。
+- `V3-F11`：全图 PSNR/SSIM 不能代替 actor/边界质量；counterfactual mask 也不是真值分割，必须同时报告
+  visible-image/pixel coverage，避免目标未渲染时通过缩小分母得到虚高指标。
 
 ### V3-F01：局部保持不等于编辑质量
 
@@ -50,8 +52,23 @@ CUDA float32 tensors、152 个 `(0, 3)` 空 tensor、177 scalars，且 `oom/oom_
 
 V3 A0 已用 `436cfc1` 实现配对过滤：点与颜色按同一个 empty-row 条件过滤，全空时返回 prototype view。
 canonical smoke `20260805T161656Z__scene0255-catfix-s0-r2` 在原生错误复现后完成真实 dataset init、1-step
-优化与 checkpoint，说明该工程阻塞已在 smoke 范围解除。它仍不证明 30k 训练、held-out 质量或方法提升；
-这些门禁保持未满足。
+优化与 checkpoint，说明该工程阻塞已在 smoke 范围解除。随后新 30k run
+`20260805T162355Z__scene0255-native30k-s0-r1` 完成 checkpoint、registry 与 held-out 评估；0230/0242 通过
+严格等价合同复用。该兼容问题现已闭环，但只证明工程修复和 A0 基线成立，不证明任何 A1/A2 方法提升。
+
+### V3-F11：全图质量与模型差分 mask 都有明确边界
+
+A0 中 scene-0242 全图 PSNR=`29.107`，高于 0230/0255，但其 high actor 区域 PSNR=`19.788`，反而是三场景
+最低。scene-0255 boundary actor 区域 SSIM=`0.526`，也没有被全图 SSIM=`0.743` 反映。后续 A1/A2 不得只用
+全图指标判断动态对象提升。
+
+A0 actor mask 来自同一 checkpoint 的 original 与 actor-delete 配对渲染差分，是模型 counterfactual
+diagnostic，不是 nuScenes 真值 segmentation。如果模型没有画出 actor，mask 会缩小；因此每个结果必须同时报告
+candidate/visible image、effect pixel coverage 和 `ABSTAIN`。tight-crop LPIPS 用固定 8px padding 与 256px 输出，
+不能和全图 DriveStudio LPIPS 混为同一指标。
+
+A0 finalizer r1 因复用 checkpoint run 使用 `source_training_resources`、原生 run 使用 `train_resources` 而
+`blocked`。这是汇总 schema 兼容失败，不是模型失败；`00ba4e8` 增加显式 provenance 归一化，r2 为唯一完成矩阵。
 
 ### V3-F05/F06/F07：结论规模与研究边界
 
