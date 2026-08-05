@@ -5,8 +5,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import random
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from models.trainers.scene_graph import MultiTrainer
@@ -43,9 +45,23 @@ class WorldSimV3Trainer(MultiTrainer):
             return super().init_gaussians_from_dataset(dataset)
 
         destination = Path(destination_value)
+        seed = int(os.environ.get("WORLDSIM_V3_INIT_SEED", "0"))
+        random.seed(seed)
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
         captured: dict[str, object] = {
             "schema_version": 1,
             "truth_tier": "exact_runtime_initialization_inputs",
+            "rng_reset": {
+                "seed": seed,
+                "python": True,
+                "numpy": True,
+                "torch_cpu": True,
+                "torch_cuda_all": bool(torch.cuda.is_available()),
+                "location": "immediately_before_gaussian_initialization",
+            },
             "background_lidar_sample": None,
             "instance_lidar_samples": {},
         }

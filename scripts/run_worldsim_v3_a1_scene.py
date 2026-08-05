@@ -31,7 +31,12 @@ from scripts.run_worldsim_v3_a0_smoke import (
 
 
 TASK_ID = "WS-V3-A1-CALIBRATION-01"
-VARIANTS = ("c0-off", "c2-factorized-isp", "c3-bounded-pose")
+VARIANTS = (
+    "c0-off",
+    "c1-native",
+    "c2-factorized-isp",
+    "c3-bounded-pose",
+)
 SCENES = {
     "scene-0230": {
         "scene_index": 179,
@@ -136,14 +141,30 @@ def calibration_contract(checkpoint: Path, variant: str) -> dict[str, object]:
             result["bounded_rotation_max_deg"] = float(
                 torch.rad2deg(bounded_rotation.max())
             )
+    affine_keys = set(result["affine_keys"])
+    pose_keys = set(result["pose_keys"])
+    result["affine_kind"] = (
+        "factorized"
+        if "camera_embedding.weight" in affine_keys
+        else "native"
+        if "embedding.weight" in affine_keys
+        else "absent"
+    )
+    result["pose_kind"] = (
+        "native"
+        if "identity" in pose_keys
+        else "bounded"
+        if "embeds.weight" in pose_keys
+        else "absent"
+    )
     expected = {
-        "c0-off": (False, False),
-        "c2-factorized-isp": (True, True),
-        "c3-bounded-pose": (True, True),
+        "c0-off": ("absent", "absent"),
+        "c1-native": ("native", "native"),
+        "c2-factorized-isp": ("factorized", "native"),
+        "c3-bounded-pose": ("factorized", "bounded"),
     }[variant]
-    result["expected_modules_present"] = (
-        result["affine_present"],
-        result["pose_present"],
+    result["expected_module_contract"] = (
+        result["affine_kind"], result["pose_kind"]
     ) == expected
     del payload, models, affine, pose
     gc.collect()
@@ -161,6 +182,7 @@ def provenance_contract(path: Path) -> dict[str, object]:
         "path": str(path),
         "sha256": sha256_file(path),
         "truth_tier": payload.get("truth_tier"),
+        "rng_reset": payload.get("rng_reset"),
         "background_point_count": background.get("point_count"),
         "background_points_sha256": background.get("points_sha256"),
         "instance_count": len(instances),
@@ -282,6 +304,7 @@ def main() -> None:
     provenance_path = args.run_dir / "artifacts/init_provenance.json"
     environment = common_environment()
     environment["WORLDSIM_V3_INIT_PROVENANCE"] = str(provenance_path)
+    environment["WORLDSIM_V3_INIT_SEED"] = "0"
     manifest = {
         "schema_version": 1,
         "task_id": TASK_ID,
@@ -338,7 +361,7 @@ def main() -> None:
     if checkpoint_info.get("step") != args.num_iters:
         raise RuntimeError(f"checkpoint step mismatch: {checkpoint_info}")
     calibration_info = calibration_contract(checkpoint, args.variant)
-    if not calibration_info["expected_modules_present"]:
+    if not calibration_info["expected_module_contract"]:
         raise RuntimeError(f"calibration module contract failed: {calibration_info}")
     provenance_info = provenance_contract(provenance_path)
     if (

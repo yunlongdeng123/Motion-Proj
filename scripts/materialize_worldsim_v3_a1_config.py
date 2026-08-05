@@ -9,7 +9,12 @@ from pathlib import Path
 from omegaconf import DictConfig, OmegaConf
 
 
-VARIANTS = ("c0-off", "c2-factorized-isp", "c3-bounded-pose")
+VARIANTS = (
+    "c0-off",
+    "c1-native",
+    "c2-factorized-isp",
+    "c3-bounded-pose",
+)
 
 
 def materialize_config(source: DictConfig, variant: str, num_iters: int) -> DictConfig:
@@ -28,7 +33,7 @@ def materialize_config(source: DictConfig, variant: str, num_iters: int) -> Dict
     if variant == "c0-off":
         del config.model["Affine"]
         del config.model["CamPose"]
-    else:
+    elif variant != "c1-native":
         affine_optim = OmegaConf.to_container(config.model.Affine.optim, resolve=True)
         config.model.Affine = {
             "type": "motion_proj.worldsim_v3.calibration.FactorizedAffineTransform",

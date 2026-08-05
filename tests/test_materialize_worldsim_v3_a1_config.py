@@ -33,6 +33,13 @@ def test_c0_removes_both_native_calibration_modules() -> None:
     assert config.worldsim_v3.rolling_shutter == "not_supported"
 
 
+def test_c1_keeps_both_native_calibration_modules() -> None:
+    config = materialize_config(source_config(), "c1-native", 150)
+    assert config.model.Affine.type == "native.Affine"
+    assert config.model.CamPose.type == "native.CamPose"
+    assert config.trainer.optim.num_iters == 150
+
+
 def test_c2_changes_only_affine_parameterization() -> None:
     config = materialize_config(source_config(), "c2-factorized-isp", 200)
     assert config.model.Affine.type.endswith("FactorizedAffineTransform")
