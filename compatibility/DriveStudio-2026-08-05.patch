@@ -1,0 +1,25 @@
+diff --git a/datasets/driving_dataset.py b/datasets/driving_dataset.py
+--- a/datasets/driving_dataset.py
++++ b/datasets/driving_dataset.py
+@@ -16,4 +16,7 @@ from utils.visualization import get_layout
+ from utils.visualization import get_layout
+ from utils.geometry import transform_points
+ from utils.camera import get_interp_novel_trajectories
++from motion_proj.worldsim_v3.drivestudio_compat import (
++    concatenate_paired_lidar_chunks,
++)
+ from utils.misc import export_points_to_ply, import_str
+@@ -344,7 +347,11 @@ class DrivingDataset(SceneDataset):
+         logger.info(f"Aggregating lidar points across {self.frame_num} frames")
+         for ins_id in instance_dict:
+-            instance_dict[ins_id]["pts"] = torch.cat(instance_dict[ins_id]["pts"], dim=0)
+-            instance_dict[ins_id]["colors"] = torch.cat(instance_dict[ins_id]["colors"], dim=0)
++            points, colors = concatenate_paired_lidar_chunks(
++                instance_dict[ins_id]["pts"],
++                instance_dict[ins_id]["colors"],
++            )
++            instance_dict[ins_id]["pts"] = points
++            instance_dict[ins_id]["colors"] = colors
+             # instance_dict[ins_id]["flows"] = torch.cat(instance_dict[ins_id]["flows"], dim=0)
+             instance_dict[ins_id]["num_pts"] = instance_dict[ins_id]["pts"].shape[0]
+             if instance_dict[ins_id]["num_pts"] > instance_max_pts:
