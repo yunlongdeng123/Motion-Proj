@@ -1,13 +1,66 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-02
-> **当前范围**：V2 直接约束索引，以及 V1–V7.1、N1/cut-in 的完整防重复结论。
+> **最后更新**：2026-08-05
+> **当前范围**：V3 WorldSim 模型链直接约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
+
+## V3 启动时必须先读的结论（2026-08-05）
+
+- `V3-F01`：M4 的 non-target PSNR 93/95 dB 是硬局部编辑的构造/保持性证据，不是编辑后视觉质量。
+- `V3-F02`：DriveStudio 已有 Affine、CamPose 与 LiDAR 初始化；A1 必须做 off/native/enhanced 消融，
+  不得把上游能力改名为新增模块。
+- `V3-F03`：V2 M5 未完成。0230/0242 checkpoint、Tier A/B/C 和 0255 诊断可复用，但不得把部分资产
+  写成三场景压力测试通过。
+- `V3-F04`：scene-0255 是小输入 CUDA `torch.cat` 工程阻塞且无 OOM 证据，不能写成 3DGS 方法失败。
+- `V3-F05`：三个 scene 只支撑模型消融和工程判断；不得外推 trainval、夜间、长时或复杂交互。
+- `V3-F06`：Instant NuRec 等工作已经改变前馈基线边界；DGGT 只作历史范式对照，不做跨分辨率、跨输入、
+  跨训练预算的 leaderboard。
+- `V3-F07`：persistent identity、actor binding、scene graph 和基础 trajectory edit 已由上游与 V2 覆盖，
+  不能作为 V3 模型贡献。
+- `V3-F08`：rolling shutter 需要真实 readout direction/time；没有 metadata 时必须 `not_supported`，不得
+  从帧时间或相机顺序推测行曝光时间。
+- `V3-F09`：actor-aware densification 必须分 D0–D3 小步消融；不得一次加入 boundary、LiDAR、visibility、
+  residual 后只报告一个合并结果。
+- `V3-F10`：编辑后 local refinement 的 unknown background 仍是 unknown；只允许 Tier-A、多视图或 LiDAR
+  支持监督，Tier B/C 不得当伪真值回传。
+
+### V3-F01：局部保持不等于编辑质量
+
+M4 的 lateral/delete non-target PSNR=`93.394483/95.598042`，主要来自编辑器只改变目标 actor 并保留其他
+Gaussian。它证明实现没有意外改动非目标区域，但不能证明 source footprint 后方背景正确、actor 边界自然或
+连续帧无闪烁。V3 必须把 outside preservation 与 Tier-A hole、depth ordering、boundary 和 temporal 指标分开。
+
+### V3-F02：原生校准和初始化不能重复发明
+
+DriveStudio `e59bda4` 的 `AffineTransform` 已输出 RGB affine，`CameraOptModule` 已学习 3D 平移和 6D 旋转
+残差，数据集也已从 LiDAR 初始化背景/实例。A1 的合法动作是关闭/原生/增强的受控消融，以及 support provenance
+审计；不能把启用原生 config 写成新成像、位姿或 LiDAR 模块。
+
+### V3-F03/F04：V2 M5 部分证据与 scene-0255 工程阻塞必须分开
+
+V2 M5 没有生成预注册的 24 条有效序列和 final matrix。scene-0230/0242 checkpoint 是有效训练资产；
+scene-0255 训练则阻塞于 `datasets/driving_dataset.py` 实例点列表的 CUDA `torch.cat`。r27 观察到 166 个
+CUDA float32 tensors、152 个 `(0, 3)` 空 tensor、177 scalars，且 `oom/oom_kill=0`。V3 A0 可以基于此做
+最小 compatibility fix，但必须使用新 task/run，不能改写 M5 terminal，也不能由诊断完成推断训练完成。
+
+### V3-F05/F06/F07：结论规模与研究边界
+
+三个固定 scene 足以比较相同数据、预算和实现下的 A0–A4，但不构成数据规模、天气、城市或交互分布覆盖。
+Instant NuRec、OmniRe、IDSplat、SplatAD、ADGaussian、Real2Sim、RoVES 等工作分别覆盖前馈分层重建、
+实例场景图、传感器和物理方向；V3 的价值来自完整复现、窄模型改动、负结果和工程 Pareto，而不是重新命名
+已公开能力。只有 A2/A3 在至少 2/3 场景方向一致且资源稳定，才讨论扩展场景。
+
+### V3-F08/F09/F10：禁止不可归因或无真值捷径
+
+rolling shutter 没有 row timing 就不能实现；actor-aware densification 必须从 actor/background threshold 与
+quota 开始，再分别增加 boundary/residual 和 LiDAR/visibility；local refinement 必须冻结 affected set 外参数，
+并区分 expected/first-hit/measured depth。不得用 hard-composition outside=0、原图 actor 像素或未知区域的
+自洽渲染作为方法成功证据。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 
@@ -1394,7 +1447,7 @@ M4 单帧 r1 的 actor transform 先由 checkpoint float32 tensor 变换，再�
 `3.814697265625e-06 m`，rotation/size/canonical drift 均为零。容差变更只反映数值精度，不降低
 1 m 编辑幅度，也不得据此为真正的轨迹偏差放宽门禁。
 
-## 7. 新路线启动前附加检查
+## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
 - [ ] AD-GS exact reproduction 是否已经通过冻结门禁？
@@ -1403,3 +1456,16 @@ M4 单帧 r1 的 actor transform 先由 checkpoint float32 tensor 变换，再�
 - [ ] 反事实无真值指标是否有真实 held-out/pseudo-hole 证据，而不是自洽规则？
 - [ ] 是否同时评估目标区变化、非目标区保持、几何/时序一致性和下游感知？
 - [ ] 遇到内存/GPU不足时是否按 `N1-F24/PIVOT-F05` 停机并等待授权？
+
+## 8. V3 每个正式消融前检查
+
+- [ ] 是否使用 V3 task ID、新 run 和冻结 config/source hash，而不是续写 V2 terminal？
+- [ ] 是否保持 scene-0230/0242/0255、split、seed、相机、步数和 actor cohort 不变？
+- [ ] 是否把原生 Affine/CamPose/LiDAR init 与新增实现分开？
+- [ ] rolling-shutter 路径是否有真实 row timing；没有时是否显式 `not_supported`？
+- [ ] actor-aware 变化是否只增加一个可归因因子，并保留 module-off 原生等价测试？
+- [ ] 是否同时报告 actor/boundary 质量、GS 数、训练时间、VRAM 和 non-target 保持？
+- [ ] local refinement 是否冻结 affected set 外参数，并只使用 Tier-A/多视图/LiDAR 可观测证据？
+- [ ] expected/first-hit/measured depth 是否继续保持 typed separation？
+- [ ] 工程 `blocked`、方法负结果 `rejected` 和任务完成 `done` 是否没有混写？
+- [ ] 结论是否明确限制在三场景消融，不写成大规模泛化或闭环安全结论？

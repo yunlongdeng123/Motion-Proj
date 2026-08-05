@@ -1,12 +1,14 @@
 # Experiments
 
-- 更新时间：2026-08-03
-- 活跃路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 权威方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- 更新时间：2026-08-05
+- 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
+- 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
+- V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
-本文件只登记 V2。M0–M4 已完成；当前只允许进入 M5。
+本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
+保持 `pending` 历史终态；M6–M8 不再授权。当前只执行 `WS-V3-P0-ROUTE-01`。
 
 ## 1. 状态词
 
@@ -18,7 +20,20 @@ pending | running | blocked | done | rejected
 
 `done` 表示预注册门禁满足；`blocked` 表示工程、资源或外部依赖阻塞；`rejected` 表示研究门禁失败。
 
-## 2. V2 注册表
+## 2. V3 注册表
+
+| Task ID | 状态 | 目标 | 完成门禁 |
+|---|---|---|---|
+| `WS-V3-P0-ROUTE-01` | running | 单一 V3 权威计划与 V2 事实冻结 | PLAN/STATUS/EXPERIMENTS/FAILURES/README 一致并独立提交 |
+| `WS-V3-A0-NATIVE-BASELINE-01` | pending | 三场景原生 StreetGS 基线 | scene-0255 最小兼容修复；3/3 checkpoint/render/registry/资源数据 |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
+| `WS-V3-A1-CALIBRATION-01` | pending | 成像、位姿和 LiDAR 初始化消融 | off/native/enhanced 三场景对照；rolling shutter 有证据或 `not_supported` |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning | 完成 D0–D3 小步消融；质量/GS 数/训练代价 Pareto |
+| `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
+| `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
+| `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
+
+## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
 |---|---|---|---|---|
@@ -27,12 +42,12 @@ pending | running | blocked | done | rejected
 | `DR-V2-M2-ACTOR-EVAL-01` | done | nuScenes 真值 actor 评测适配器 | raw 2Hz 轨迹、4,356 exact mappings、6/6 cohort | 三 scene eligible 16/20/6，visual QA 通过 |
 | `DR-V2-M3-EDIT-BASELINE-01` | done | DriveStudio/StreetGS 可编辑基线 | 30k checkpoint、registry、27-image smoke 完成 | scene-0230 remove/lateral/3-camera smoke |
 | `DR-V2-M4-EDIT-PILOT-01` | done | scene-0230 真实编辑闭环 | 1,764 RGB、9 MP4、1,176 paired rows、16/16 checks | 两种编辑真实执行且证据可审计 |
-| `DR-V2-M5-STRESS-3SCENE-01` | pending | 三场景编辑/去遮挡压力测试 | 未生成 | 3 scene、4 edits 有效 coverage |
-| `DR-V2-M6-HYPOTHESIS-01` | pending | 基于真实失败做 novelty gate | 未生成 | 跨 3 scene 稳定失败且有独立 novelty delta |
-| `DR-V2-M7-METHOD-01` | pending | 最小方法与 matched ablation | 未授权 | M6 done 且 endpoint/effect size 预注册 |
-| `DR-V2-M8-HUMAN-01` | pending | 人工盲审与终局 | 未授权 | M7 有完整可审结果 |
+| `DR-V2-M5-STRESS-3SCENE-01` | pending | 三场景编辑/去遮挡压力测试 | 0230/0242 checkpoint 与 0255 诊断已生成；任务未闭环并冻结 | 历史门禁未满足；V3 不再授权继续 |
+| `DR-V2-M6-HYPOTHESIS-01` | pending | 基于真实失败做 novelty gate | 未生成 | V3 路线不再授权 |
+| `DR-V2-M7-METHOD-01` | pending | 最小方法与 matched ablation | 未生成 | V3 路线不再授权 |
+| `DR-V2-M8-HUMAN-01` | pending | 人工盲审与终局 | 未生成 | V3 路线不再授权 |
 
-## 3. V2 启动前维护记录
+## 4. V2 启动前维护记录
 
 2026-08-02 的文档归档和存储清理属于 maintenance，不冒充 `DR-V2-M0-BOOTSTRAP-01`：
 
@@ -42,7 +57,7 @@ pending | running | blocked | done | rejected
   [`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md)；
 - AD-GS 六场景最终 60k checkpoint/render/metrics、processed 输入、raw subset、DGGT 完整预下载候选均受保护。
 
-## 4. V1 冻结输入
+## 5. V1 冻结输入
 
 | 资产 | 终态 | V2 用法 |
 |---|---|---|
@@ -51,7 +66,7 @@ pending | running | blocked | done | rejected
 | V1 pseudo identity audit | 0/12 slots | 失败边界；不得当作真实编辑结果 |
 | V1 候选 A novelty | rejected | 禁止复活“补身份 + 基础轨迹编辑”作为贡献 |
 
-## 5. `DR-V2-M0-BOOTSTRAP-01`
+## 6. `DR-V2-M0-BOOTSTRAP-01`
 
 ### 工程失败实例
 
@@ -80,7 +95,7 @@ pending | running | blocked | done | rejected
   `python -m pytest -q tests/test_dr_pseudo_tracks.py tests/test_v71_actor_registry.py` → `7 passed`；
 - `shellcheck` 未安装，按计划未为此污染环境；`bash -n` 通过。
 
-## 6. `DR-V2-M1-DGGT-REPAIR-01`
+## 7. `DR-V2-M1-DGGT-REPAIR-01`
 
 ### 冻结实现
 
@@ -117,7 +132,7 @@ M1 均值：
 transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common 固定 `flow_vis`
 缺失；r7 固定重试封装字段错误。全部为独立 `blocked` run，没有覆盖原运行。
 
-## 7. `DR-V2-M2-ACTOR-EVAL-01`
+## 8. `DR-V2-M2-ACTOR-EVAL-01`
 
 ### 正式运行
 
@@ -144,7 +159,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 - r4：只选最近 timestamp sweep 导致 raw sample token 不精确，protocol QA 失败；
 - r5：改为 exact token 内再做 timestamp 最近选择，不改 actor 门槛，通过。
 
-## 8. `DR-V2-M3-EDIT-BASELINE-01`
+## 9. `DR-V2-M3-EDIT-BASELINE-01`
 
 ### 正式训练与恢复
 
@@ -179,7 +194,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 - r11：一个非目标 model 的 Gaussian slice 被训练裁剪为空；registry v2 显式标记 unavailable，
   仍要求所选 actor slice 非空。
 
-## 9. `DR-V2-M4-EDIT-PILOT-01`
+## 10. `DR-V2-M4-EDIT-PILOT-01`
 
 ### 正式运行
 
@@ -204,6 +219,35 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 - `20260802T170600Z__...-r6`：调试 tmux 生命周期中断后保留 running terminal 证据；
   正式 r7 改用 nohup controller，资源守卫和 terminal 均闭环。
 
-## 10. 当前唯一动作
+## 11. `DR-V2-M5-STRESS-3SCENE-01` 部分执行后冻结
 
-执行 `DR-V2-M5-STRESS-3SCENE-01`。M5 提交前不进入 M6。
+该任务保持 `pending`，因为没有满足 V2 预注册完成门禁。2026-08-05 路线切换后不再继续扩建其大型评测链，
+但已生成资产和失败诊断作为 V3 A0/A3 的输入保留。
+
+### 已有证据
+
+- scene-0230 held-out：checkpoint `398,652,534` bytes，SHA-256
+  `24a39f27dfeed36bbdb01ee14211aec51b414e6ab0e61915b71c1dddcdf61e49`；
+  high/boundary actor 均可用，分别 `4,747/1,914` GS；
+- scene-0242 held-out：checkpoint `306,034,934` bytes，SHA-256
+  `16179d8f99becb86b6893a18ff036af72d78c9897f7aa2b0e297b735dd6c5fda`；high actor `6,939` GS，
+  boundary actor 显式不可用；
+- scene-0255：数据准备与 sky 产物已落盘；r8 的 90% cgroup memory stop 与其后的 cache recovery 分开保留；
+- r25–r27 把训练失败定位到 DriveStudio 实例点聚合的 CUDA `torch.cat`；r27 输入 166 个 CUDA float32
+  tensor，其中 152 个为空 `(0, 3)`，总计 177 scalars，terminal=`done` 表示诊断完成，不表示训练完成；
+- 当前无 M5 控制器、tmux 或 GPU 进程。r16/r18 的 `running` terminal 是容器生命周期中断证据，不改写。
+
+### 未完成
+
+- scene-0255 原生完整 checkpoint 与 actor registry；
+- 三场景 × 两 actor × 四编辑的 24 条有效序列；
+- pseudo-hole、perception 与跨场景 final matrix；
+- M5 单独实现提交和 V2 M6 novelty gate。
+
+未提交的 M5 config/scripts/tests 属于保留工作树，V3 P0 文档提交不得 stage 它们。scene-0255 修复在 V3 A0
+以新 task、新 run 和最小 compatibility patch 执行，不能倒写旧 M5 terminal。
+
+## 12. 当前唯一动作
+
+完成 `WS-V3-P0-ROUTE-01` 文档校验与提交。随后只进入
+`WS-V3-A0-NATIVE-BASELINE-01`，先固化 scene-0255 回归测试，再做最小兼容修复和三场景 A0 冻结。

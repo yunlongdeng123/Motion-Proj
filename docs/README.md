@@ -1,42 +1,40 @@
 # Motion-Proj 文档导航
 
-- 更新时间：2026-08-02
-- 当前路线：动态驾驶场景可编辑重建与失败诊断 V2
-- 当前状态：用户已授权，尚未执行研究里程碑；下一步只执行 M0
-- 唯一当前计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- 更新时间：2026-08-05
+- 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
+- 当前任务：`WS-V3-P0-ROUTE-01`（`running`）
+- 唯一当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
 
-## 开始执行前必读
+## 恢复顺序
 
-1. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与授权入口；
-2. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败与禁止重复项；
-3. [`EXPERIMENTS.md`](EXPERIMENTS.md)：V2 里程碑注册表；
-4. [`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)：当前执行合同；
-5. [`../AGENTS.md`](../AGENTS.md)：仓库级环境、研究连续性与提交约定。
+1. [`../AGENTS.md`](../AGENTS.md)：仓库级环境、研究连续性和提交约定；
+2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与授权入口；
+3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败与禁止重复项；
+4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：V2 冻结证据和 V3 task 注册表；
+5. [`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)：当前执行合同。
 
-清空对话上下文后，不从归档文档恢复“下一步”。当前唯一入口是 V2 M0：
-`DR-V2-M0-BOOTSTRAP-01`。
+清空对话或换实例后，不从 V2 计划、归档报告或旧 terminal 恢复“下一步”。当前唯一入口由
+`RESEARCH_STATUS.md` 和 V3 计划共同定义。
 
-## 2026-08-02 现场结论
+## 路线边界
 
-- V1 已结束且终态不变：AD-GS 六场景 exact reproduction `done`；DGGT inference 未运行；
-  V1 的身份候选 novelty `rejected`。
-- 六场景 AD-GS `model_60000` checkpoint、官方 render、指标和 processed 输入仍驻留，V2 不重复训练。
-- DGGT 完整预下载候选已驻留：
-  `/root/autodl-tmp/checkpoints/dggt_preload/model_latest_nuscenes.pt`，大小
-  `5,411,266,466` bytes，SHA-256
-  `fd15644b3a878849470cbf5f0f9eae39167cfec1b853092898ae754c4f3acde9`。
-- DriveStudio 源码与环境存在，但 V2 的 `scene-0230/0242/0255` processed data 和 actor-aware
-  checkpoint 尚不存在；M3 不能把历史 `003/004/005` 资产冒充 V2 baseline。
-- V2 run namespace 尚不存在；本次只做文档归档、事实校准与存储清理，不算 M0 已执行。
-- 清理后数据盘为 `127G used / 124G available`，比清理前增加约 58 GiB 可用空间。
+- V1：动态重建历史路线，已冻结；
+- V2：M0–M4 `done`，M5 部分执行后冻结，M6–M8 不再授权；
+- V3：当前路线，完成 A0–A4 WorldSim 模型链和消融；
+- 三场景是模型消融场，不是新 benchmark；
+- identity、actor binding、基础轨迹编辑和 scene graph 是继承基础设施，不是 V3 贡献。
+
+V2 原计划
+[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+保留在原位，只用于解释历史 run，后续不再修改。
 
 ## 当前维护文档
 
-- [`ENVIRONMENT.md`](ENVIRONMENT.md)：实际机器、环境、数据、权重和镜像策略；
-- [`THIRD_PARTY.md`](THIRD_PARTY.md)：V2 第三方代码、commit、license 与驻留状态；
-- [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：V2 保留边界；
+- [`ENVIRONMENT.md`](ENVIRONMENT.md)：机器、环境、数据、权重和镜像策略；
+- [`THIRD_PARTY.md`](THIRD_PARTY.md)：第三方代码、commit、license 与驻留状态；
+- [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：资产保留边界；
 - [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：换机与清空 context 后恢复顺序；
-- [`run_manifests/`](run_manifests/)：早期路线的轻量历史 manifests，不是 V2 当前 run。
+- [`run_manifests/`](run_manifests/)：历史轻量 manifests，不是 V3 formal run。
 
 ## 历史归档
 
@@ -50,7 +48,7 @@
 ## 文档规则
 
 - 活跃根目录只保留当前状态、失败账本、实验注册表、当前计划和长期维护文档；
-- 旧计划、结束总结、阶段报告和 Agent 心跳终态统一进入按年月/路线命名的归档目录；
 - 实际 run、文件 hash 和现场审计高于旧文档中的驻留描述；
-- 完成、阻塞或拒绝一个 V2 里程碑后，同步更新 PLAN / STATUS / EXPERIMENTS；
+- 完成、阻塞或拒绝一个 V3 task 后，同步更新 PLAN / STATUS / EXPERIMENTS / FAILURES；
+- task 状态只使用 `pending/running/blocked/done/rejected`；
 - 人工 verdict 只能由用户或指定评审者填写。
