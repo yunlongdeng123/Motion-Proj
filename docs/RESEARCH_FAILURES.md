@@ -48,6 +48,11 @@ scene-0255 训练则阻塞于 `datasets/driving_dataset.py` 实例点列表的 C
 CUDA float32 tensors、152 个 `(0, 3)` 空 tensor、177 scalars，且 `oom/oom_kill=0`。V3 A0 可以基于此做
 最小 compatibility fix，但必须使用新 task/run，不能改写 M5 terminal，也不能由诊断完成推断训练完成。
 
+V3 A0 已用 `436cfc1` 实现配对过滤：点与颜色按同一个 empty-row 条件过滤，全空时返回 prototype view。
+canonical smoke `20260805T161656Z__scene0255-catfix-s0-r2` 在原生错误复现后完成真实 dataset init、1-step
+优化与 checkpoint，说明该工程阻塞已在 smoke 范围解除。它仍不证明 30k 训练、held-out 质量或方法提升；
+这些门禁保持未满足。
+
 ### V3-F05/F06/F07：结论规模与研究边界
 
 三个固定 scene 足以比较相同数据、预算和实现下的 A0–A4，但不构成数据规模、天气、城市或交互分布覆盖。

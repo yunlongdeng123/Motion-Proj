@@ -213,6 +213,23 @@ P0 提交后只授权 `WS-V3-A0-NATIVE-BASELINE-01`。不得跳到 A2，也不�
 已有 0230/0242 checkpoint 可在 hash、split、config 与实现一致时注册复用，不为形式完整而重训。scene-0255
 必须在修复后创建新 formal run，旧 blocked run 不覆盖。
 
+### 6.3 当前进展（2026-08-05）
+
+- r27 的 166-chunk CUDA 合同已独立复现：PyTorch `2.1.2+cu118` 原生 mixed-empty `torch.cat`
+  稳定触发 `invalid configuration argument`；
+- `concatenate_paired_lidar_chunks` 过滤空的点/颜色配对块，全空时返回 prototype zero-row view；
+  5 个定向测试通过，点/颜色顺序与数值保持；
+- compatibility patch 固定上游 `e59bda4`，patch SHA-256
+  `54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619`，独立 patched worktree 的
+  apply/reverse-check 和 dirty-scope 校验通过；
+- 实现提交 `436cfc1`（`fix(drivestudio): 过滤空 LiDAR 实例块`）；
+- canonical smoke
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`
+  为 `done`：完整数据初始化、1-step 优化和 checkpoint 保存通过，67 秒级，无 invalid-configuration，峰值
+  GPU 采样 `8,388 MiB`；
+- 上述只解除 scene-0255 初始化阻塞，不是 A0 30k checkpoint 或质量结论。下一步执行独立 30k formal
+  training，再构建 high/boundary registry 和 held-out baseline。
+
 ## 7. F0：Instant NuRec 前馈范式审计
 
 本任务只回答“当前官方代码能否在本项目输入上形成可审计基线”。固定检查：

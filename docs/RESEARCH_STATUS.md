@@ -66,6 +66,22 @@ DriveStudio 固定 commit `e59bda4fa681f829dbb1d65f0de582b0f633c450`。源码审
 因此 A1 是已有校准能力的 off/native/enhanced 消融；A2 才是 V3 的首要模型新增。rolling shutter 只有在
 processed data 存在真实 readout direction/time 后才可实现，否则必须报告 `not_supported`。
 
+## A0 当前证据
+
+- 实现提交：`436cfc1`（`fix(drivestudio): 过滤空 LiDAR 实例块`）；
+- patch SHA-256：`54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619`；
+- frozen DriveStudio：`e59bda4`，实际训练使用独立 patched worktree
+  `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-r2`，原始上游保持 clean；
+- 定向测试：`5 passed`；patch apply/reverse-check 与 `git diff --check` 通过；
+- scene-0255 canonical smoke：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`
+  =`done`；原生 r27 mixed-empty CUDA cat 错误被复现，修复后为 `59×3 / 177 numel` 且点/颜色 exact pairing；
+- 1-step 真实训练完成 dataset init、`966,259` background GS、`27,894` rigid GS、优化和 checkpoint 保存；
+  controller duration `72.1 s`，peak GPU sample `8,388 MiB`，peak cgroup `5,971,820,544` bytes，
+  `invalid_configuration=false`。
+
+该 smoke 只解除工程阻塞，不能当作 A0 30k checkpoint 或重建质量结果。A0 仍为 `running`。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -89,6 +105,6 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 
 ## 下一步
 
-执行 `WS-V3-A0-NATIVE-BASELINE-01`：先把 r27 诊断固化为 mixed-empty/all-empty CUDA 回归测试，再实施
-scene-0255 最小兼容修复；复核 0230/0242 checkpoint 可复用合同，完成 3/3 checkpoint/render/registry/资源
-基线。不得直接跳到 A2，也不得继续扩建 V2 M5 evaluator。
+执行 scene-0255 独立 30k formal training，生成 checkpoint/hash 和 high/boundary registry；随后复核
+0230/0242 checkpoint 可复用合同，并完成 3/3 held-out render/指标/资源基线。不得直接跳到 A2，也不得继续
+扩建 V2 M5 evaluator。

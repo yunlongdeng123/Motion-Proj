@@ -34,6 +34,23 @@ pending | running | blocked | done | rejected
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
+### `WS-V3-A0-NATIVE-BASELINE-01` 当前证据
+
+- fix commit：`436cfc1`；DriveStudio upstream：`e59bda4`；compatibility patch SHA-256：
+  `54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619`；
+- `tests/test_worldsim_v3_drivestudio_compat.py` + `tests/test_run_worldsim_v3_a0_smoke.py`：`5 passed`；
+- canonical smoke：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T161656Z__scene0255-catfix-s0-r2`；
+- terminal=`done`；torch=`2.1.2+cu118`；原生 mixed-empty cat 复现
+  `invalid configuration argument`，patched output=`[59,3] / 177 numel / exact point-color pairing`；
+- 真实 1-step DriveStudio 路径完成数据集、LiDAR 实例初始化、一次优化和 checkpoint；controller
+  `72.1 s`，peak GPU sample `8,388 MiB`，peak cgroup `5,971,820,544` bytes，无 OOM；
+- smoke checkpoint `320,832,362` bytes 只证明执行路径，不注册为 A0 最终模型。
+
+工作树准备脚本首次创建旧候选 worktree 后，因 `git status --short` 的输出已被 `.strip()` 去除前导空格，
+verification literal 写成带前导空格而失败；修正为 `M datasets/driving_dataset.py` 后 verify-only 通过。canonical
+patch 为 r2 worktree 和上述 SHA；旧候选只解释首次 smoke，不进入 formal training。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -250,5 +267,5 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-执行 `WS-V3-A0-NATIVE-BASELINE-01`：先固化 scene-0255 mixed-empty/all-empty CUDA 回归测试，再做最小
-兼容修复、既有 0230/0242 资产复核和三场景 A0 冻结。
+执行 scene-0255 30k formal training 和 high/boundary registry；随后复核 0230/0242 资产合同，完成三场景
+held-out render、质量/actor/边界/Gaussian 数和资源基线。
