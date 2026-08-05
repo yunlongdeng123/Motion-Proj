@@ -1,4 +1,8 @@
-from scripts.finalize_worldsim_v3_a0 import markdown_table, parse_scene_record
+from scripts.finalize_worldsim_v3_a0 import (
+    markdown_table,
+    normalized_training_resources,
+    parse_scene_record,
+)
 
 
 def test_parse_scene_record() -> None:
@@ -31,3 +35,32 @@ def test_markdown_table_renders_abstain() -> None:
     assert "scene-0242" in rendered
     assert "ABSTAIN" in rendered
     assert "843,756 / 86,255" in rendered
+
+
+def test_training_resource_schema_is_normalized() -> None:
+    native = normalized_training_resources(
+        {
+            "train_resources": {
+                "duration_seconds": 12.0,
+                "peak_gpu_memory_mib_sampled": 24000,
+            }
+        }
+    )
+    reused = normalized_training_resources(
+        {
+            "source_training_resources": {
+                "duration_seconds": 13.0,
+                "peak_gpu_memory_mib": 12000,
+            }
+        }
+    )
+    assert native == {
+        "duration_seconds": 12.0,
+        "peak_gpu_memory_mib": 24000,
+        "provenance": "native_v3_run",
+    }
+    assert reused == {
+        "duration_seconds": 13.0,
+        "peak_gpu_memory_mib": 12000,
+        "provenance": "validated_reused_native_checkpoint",
+    }

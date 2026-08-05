@@ -57,6 +57,24 @@ def metric(region: dict[str, object], name: str):
     return region.get(name) if region.get("status") == "done" else None
 
 
+def normalized_training_resources(source: dict[str, object]) -> dict[str, object]:
+    if "train_resources" in source:
+        value = source["train_resources"]
+        return {
+            "duration_seconds": value["duration_seconds"],
+            "peak_gpu_memory_mib": value["peak_gpu_memory_mib_sampled"],
+            "provenance": "native_v3_run",
+        }
+    if "source_training_resources" in source:
+        value = source["source_training_resources"]
+        return {
+            "duration_seconds": value["duration_seconds"],
+            "peak_gpu_memory_mib": value["peak_gpu_memory_mib"],
+            "provenance": "validated_reused_native_checkpoint",
+        }
+    raise KeyError("summary has no recognized training-resource contract")
+
+
 def validate_scene_record(
     scene: str, source_run_dir: Path, actor_run_dir: Path
 ) -> dict[str, object]:
@@ -99,6 +117,7 @@ def validate_scene_record(
     total_gaussians = int(checkpoint["background_gaussians"]) + int(
         checkpoint["rigid_gaussians"]
     )
+    training = normalized_training_resources(source)
     return {
         "scene": scene,
         "scene_index": source["scene_index"],
@@ -148,10 +167,9 @@ def validate_scene_record(
         "boundary_band_lpips_tight_crop": metric(
             boundary_band, "masked_lpips_alex_tight_crop_256px"
         ),
-        "train_seconds": source["train_resources"]["duration_seconds"],
-        "train_peak_gpu_mib": source["train_resources"][
-            "peak_gpu_memory_mib_sampled"
-        ],
+        "train_resource_provenance": training["provenance"],
+        "train_seconds": training["duration_seconds"],
+        "train_peak_gpu_mib": training["peak_gpu_memory_mib"],
         "eval_seconds": source["eval_resources"]["duration_seconds"],
         "eval_peak_gpu_mib": source["eval_resources"][
             "peak_gpu_memory_mib_sampled"
