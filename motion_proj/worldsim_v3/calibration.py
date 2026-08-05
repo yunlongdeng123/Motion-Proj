@@ -19,7 +19,9 @@ def _bounded_vector(raw: Tensor, maximum_norm: float) -> Tensor:
     if maximum_norm <= 0:
         raise ValueError("maximum_norm must be positive")
     norm = torch.linalg.vector_norm(raw, dim=-1, keepdim=True)
-    scale = maximum_norm * torch.tanh(norm) / torch.clamp(norm, min=1e-12)
+    ratio = torch.tanh(norm) / torch.clamp(norm, min=1e-12)
+    ratio = torch.where(norm < 1e-6, 1.0 - norm.square() / 3.0, ratio)
+    scale = maximum_norm * ratio
     return raw * scale
 
 

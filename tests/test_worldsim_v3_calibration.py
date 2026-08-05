@@ -70,3 +70,17 @@ def test_bounded_camera_pose_identity_at_zero() -> None:
     camera = torch.eye(4)[None]
     result = module(camera, torch.tensor([0]))
     assert torch.equal(result, camera)
+
+
+def test_bounded_camera_pose_has_nonzero_gradient_at_zero() -> None:
+    module = BoundedCameraOptModule(
+        class_name="CamPose", n=6, num_cameras=3, device=torch.device("cpu")
+    )
+    translation, _ = module.bounded_residuals()
+    translation.sum().backward()
+    gradient = module.embeds.weight.grad
+    assert gradient is not None
+    assert torch.isfinite(gradient).all()
+    assert torch.equal(
+        gradient[:, :3], torch.full_like(gradient[:, :3], 0.15)
+    )
