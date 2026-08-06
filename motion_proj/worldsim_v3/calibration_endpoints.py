@@ -28,6 +28,15 @@ def validate_endpoint_contract(payload: Mapping[str, Any]) -> None:
         ["CAM_FRONT_LEFT", "CAM_FRONT"],
         ["CAM_FRONT", "CAM_FRONT_RIGHT"],
     ]
+    expected_camera_mapping = {
+        0: "CAM_FRONT",
+        1: "CAM_FRONT_LEFT",
+        2: "CAM_FRONT_RIGHT",
+    }
+    if e1.get("camera_id_to_name") != expected_camera_mapping:
+        raise ValueError(
+            f"E1 camera_id_to_name must be {expected_camera_mapping}"
+        )
     if e1.get("camera_pairs") != expected_pairs:
         raise ValueError(f"E1 camera_pairs must be {expected_pairs}")
     if e1.get("directions") != "bidirectional":

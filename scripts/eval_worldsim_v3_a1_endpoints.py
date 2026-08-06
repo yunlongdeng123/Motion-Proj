@@ -33,7 +33,7 @@ from motion_proj.worldsim_v3.calibration_endpoints import (
 )
 
 
-CAMERA_NAMES = ("CAM_FRONT_LEFT", "CAM_FRONT", "CAM_FRONT_RIGHT")
+CAMERA_NAMES = ("CAM_FRONT", "CAM_FRONT_LEFT", "CAM_FRONT_RIGHT")
 ROLE_NAMES = ("high-support", "boundary-support")
 
 

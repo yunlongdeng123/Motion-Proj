@@ -6,6 +6,10 @@ frozen_before_result_access: true
 e1:
   name: cross_camera_photometric_residual
   truth_tier: model_geometry_conditioned_diagnostic
+  camera_id_to_name:
+    0: CAM_FRONT
+    1: CAM_FRONT_LEFT
+    2: CAM_FRONT_RIGHT
   camera_pairs:
     - [CAM_FRONT_LEFT, CAM_FRONT]
     - [CAM_FRONT, CAM_FRONT_RIGHT]

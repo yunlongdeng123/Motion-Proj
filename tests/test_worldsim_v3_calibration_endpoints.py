@@ -20,6 +20,11 @@ def test_endpoint_contract_is_frozen() -> None:
         open("configs/worldsim_v3/a1_endpoints_v1.yaml", encoding="utf-8")
     )
     validate_endpoint_contract(payload)
+    assert payload["e1"]["camera_id_to_name"] == {
+        0: "CAM_FRONT",
+        1: "CAM_FRONT_LEFT",
+        2: "CAM_FRONT_RIGHT",
+    }
     payload["e1"]["camera_pairs"].append(["CAM_FRONT_LEFT", "CAM_FRONT_RIGHT"])
     with pytest.raises(ValueError, match="camera_pairs"):
         validate_endpoint_contract(payload)
