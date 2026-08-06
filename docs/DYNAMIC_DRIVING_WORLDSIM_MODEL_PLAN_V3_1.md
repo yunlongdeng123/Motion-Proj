@@ -5,7 +5,7 @@
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **执行环境**：AutoDL，单卡 NVIDIA GeForce RTX 3090 24 GiB，cgroup memory 90 GiB
 - **当前分支**：`research/worldsim-v3`
-- **A1-E0 实现基线**：`14bc3c2`（端点、相机映射修复与最小 LiDAR provenance）
+- **A1 开发场景冻结基线**：`60ef079`（C0–C3、端点/诊断与 C* 选择协议）
 - **当前任务**：`WS-V3-A1-CALIBRATION-01`（`running`）
 - **当前里程碑**：`P0 done / A0 done / A1 running / F0-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
@@ -171,10 +171,10 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 ### 2.3 当前 A1 现场快照
 
 - 分支：`research/worldsim-v3`
-- A1-E0 实现基线：`14bc3c2`
+- A1 开发场景冻结基线：`60ef079`
 - GPU：空闲
 - 活跃训练/controller/tmux：无
-- 数据盘剩余：约 63 GiB
+- 数据盘剩余：约 62 GiB
 - 当前任务：`WS-V3-A1-CALIBRATION-01`
 
 已提交实现：
@@ -188,44 +188,35 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 | `20c4276` | 冻结并实现 A1 E1/E2 端点、正式控制器与定向测试 |
 | `d85ef27` | 按 DriveStudio 权威定义修复 nuScenes 相机 ID 映射 |
 | `14bc3c2` | 完成 A1 最小 LiDAR provenance 与初始深度 witness 审计 |
+| `801db7a` | 同步 A1-E0、相机错误 run 与 LiDAR truth boundary |
+| `95d0807` | 冻结并实现 ISP/位姿/速度分层 A1-D0 诊断 |
+| `60ef079` | 冻结无容差 A1-S0 开发场景选择和 exact-alias 确认语义 |
 
 已完成：
 
 - C0/C1/C2/C3 配对 100-step smoke；
 - C3 held-out 推理接口；
-- A1-E0 + LiDAR 定向测试：`23 passed`；
-- `scene-0230` C0/C1 两个 30k formal。
+- A1-E0、LiDAR、A1-D0 与选择 finalizer；定向 WorldSim 测试 `56 passed`；
+- `scene-0230` C0/C1/C2/C3 四个配对 30k formal、同端点回填与正式 C* 冻结。
 
-`scene-0230` 初步结果：
+`scene-0230` 完整开发结果：
 
-| 指标 | C0：关闭 Affine/CamPose | C1：原生校准 |
-|---|---:|---:|
-| 全图 PSNR | 27.746 | 24.979 |
-| 全图 SSIM | 0.851 | 0.743 |
-| 全图 LPIPS ↓ | 0.176 | 0.169 |
-| high actor PSNR | 25.358 | 21.696 |
-| high actor SSIM | 0.844 | 0.602 |
-| high actor LPIPS ↓ | 0.094 | 0.120 |
-| high actor boundary PSNR | 22.676 | 19.817 |
-| 总 GS | 1,360,649 | 1,316,421 |
-| 训练时间 | 52.1 min | 53.7 min |
-| 峰值显存 | 24,077 MiB | 24,035 MiB |
+| variant | global PSNR / SSIM / LPIPS | boundary actor PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | total GS | train min / peak MiB |
+|---|---:|---:|---:|---:|---:|
+| C0-off | 27.746 / .851 / .1764 | 27.756 / .892 / .0687 | 25.358 / .844 / .0943 | 1,360,649 | 52.05 / 24,077 |
+| C1-native | 24.979 / .743 / .1694 | 22.549 / .700 / .1033 | 21.696 / .602 / .1201 | 1,316,421 | 53.69 / 24,035 |
+| C2-factorized-isp | 25.011 / .743 / .1677 | 22.583 / .705 / .1043 | 21.779 / .608 / .1174 | 1,322,979 | 52.26 / 24,081 |
+| C3-bounded-pose | 28.109 / .862 / .1666 | 28.169 / .897 / .0657 | 25.137 / .846 / .0938 | 1,363,040 | 56.14 / 23,779 |
 
 当前只允许得出：
 
-- C0 在多数像素、actor 和边界指标上优于 C1；
-- C1 在全图 LPIPS 上略优；
-- C0 使用约 4.4 万个额外 Gaussian；
-- C1 与 A0 原生结果一致，说明 A1 runner 没有明显跑偏。
+- C3 的全图与 boundary actor 画质最佳，学习位姿修正也最稳定；
+- C0 的 high actor PSNR 略高于 C3，C3 的对应 SSIM/LPIPS 略好；
+- C1/C2 使用较少 Gaussian，但 actor/boundary 质量明显低于 C0/C3；
+- 这些画质和容量结果不能覆盖预注册 E1/E2 主端点。
 
-当前仍不能得出“关闭校准是最终最优候选”，因为：
-
-- 只有一个开发场景；
-- C2/C3 尚未完成 formal；
-- 低速/近静止位姿稳定性尚未分层；
-- C0/C1 的 GS 数量不同，存在质量—容量耦合。
-
-按旧 V3 矩阵，A1 formal 完成 `2/12`；按 V3.1 两阶段矩阵，完成 `2/10`。
+开发场景选择已经冻结为 `C*=C0-off / done_off`；该结果仍需两个确认场景完成 A1，不构成跨场景最终结论。
+V3.1 当前完成 `4/10` 个逻辑矩阵项；C* 是 C0 exact alias，因此总计只需 8 个唯一训练，当前完成 `4/8`。
 
 #### A1-E0 正式回填结果
 
@@ -236,22 +227,38 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 ```text
 C0  20260806T141409Z__scene0230-c0-a1-e0-formal-full-camera-map-fix-s0-r2
 C1  20260806T141623Z__scene0230-c1-a1-e0-formal-full-camera-map-fix-s0-r1
+C2  20260806T154541Z__scene0230-c2-a1-e0-formal-full-s0-r1
+C3  20260806T164852Z__scene0230-c3-a1-e0-formal-full-s0-r1
 ```
 
-| 端点（越低越好） | C0-off | C1-native |
-|---|---:|---:|
-| E1 valid / candidate / coverage | 28,744 / 266,631 / 10.780% | 29,151 / 274,658 / 10.614% |
-| E1 RGB residual median / P90 | 0.05951 / 0.14719 | 0.06289 / 0.15623 |
-| E2 high actor mean / P90 / image coverage | 0.004813 / 0.010895 / 26.316% | 0.004751 / 0.010895 / 28.070% |
-| E2 boundary actor mean / P90 / image coverage | 0.003547 / 0.006353 / 35.294% | 0.004450 / 0.007626 / 35.294% |
+| 端点（越低越好） | C0-off | C1-native | C2-factorized-isp | C3-bounded-pose |
+|---|---:|---:|---:|---:|
+| E1 valid / candidate / coverage | 28,744 / 266,631 / 10.780% | 29,151 / 274,658 / 10.614% | 31,299 / 275,877 / 11.345% | 29,846 / 268,826 / 11.102% |
+| E1 median / P90 | .05951 / .14719 | .06289 / .15623 | .06544 / .16160 | .06309 / .15448 |
+| E2 high mean / P90 / coverage | .004813 / .010895 / 26.316% | .004751 / .010895 / 28.070% | .004844 / .011734 / 28.070% | .004930 / .011734 / 26.316% |
+| E2 boundary mean / P90 / coverage | .003547 / .006353 / 35.294% | .004450 / .007626 / 35.294% | .003346 / .005447 / 35.294% | .003592 / .006537 / 35.294% |
 
-在当前开发场景，C1 的 E1 median/P90 和 boundary actor E2 均劣于 C0；high actor E2 mean 略好但 P90
-持平。结合全图/actor 指标，现有证据不支持宣称原生校准优于 C0，但必须等 C2/C3 和确认场景后才能冻结
-`C*`。评估前后 checkpoint SHA 一致；少量 E1/E2 panel 只做坐标/投影工程 sanity check，不作为人工质量结论。
+C2 只改善 boundary role E2，high role 和 actor/boundary LPIPS 退化；C3 的 E1 和两个 E2 role 均未严格优于
+C0。四次评估前后 checkpoint SHA 一致；少量 E1/E2 panel 只做坐标/投影工程 sanity check，不作为人工质量结论。
 
 首次 formal 端点 run `20260806T140703Z__scene0230-c0-a1-e0-formal-full-s0-r1` 使用了继承自旧脚本的错误
 相机标签，导致本应相邻的相机对被错误解释；该 run 已保留并明确标记 `rejected / INVALID_CAMERA_ID_LABEL_MAPPING`，
 不得进入汇总。
+
+#### A1-D0 与开发场景选择
+
+A1-D0 配置 `configs/worldsim_v3/a1_diagnostics_v1.yaml` SHA-256 为
+`a445078d3bea89a78a0c9e6544a94a2be4c9c2e71f45aec4a9d8878b4c6593c1`。正式 run
+`20260806T170219Z__scene0230-a1-diagnostics-c0-c3-formal-s0-r1`=`done`：输入速度层
+near-static/low/normal=`2/18/176` 帧；C1 learned pose residual translation median/P90=`7.256/12.215 mm`、
+rotation=`0.1660/0.35465°`，C3 bounded pose 为 `1.703/2.338 mm`、`0.02553/0.03337°`。near-static
+只有 2 帧，且这些量是学习修正幅值，不是独立 pose GT。
+
+选择协议实现提交为 `60ef079`；`configs/worldsim_v3/a1_dev_selection_v1.yaml` SHA-256 为
+`a45699ebf696c875a18832f8db920a6106837a1e4f235dcd9036eff48dfbc609`。协议如实记录：V3.1 7.5 的文字要求
+在开发结果已可见后、确认场景前被操作化为无容差严格 Pareto，没有新增事后数值阈值。正式 run
+`20260806T171417Z__scene0230-a1-dev-selection-formal-s0-r1`=`done`，结论为
+`C*=C0-off / done_off`。C2 仅单个 E2 role 改善；C3 画质和位姿稳定性最佳但没有主端点改善，均不满足候选合同。
 
 ---
 
@@ -319,14 +326,19 @@ scene-0242 × C0/C1/C* = 3 runs
 scene-0255 × C0/C1/C* = 3 runs
 ```
 
-其中 `C*` 是在 `scene-0230` 按预注册端点冻结的增强候选，可以是 C2、C3，也可以是 C0/C1。不得为了“必须有改进”强制选择 C2/C3。
+其中 `C*` 是在 `scene-0230` 按预注册端点冻结的候选，可以是 C2、C3，也可以是 C0/C1。不得为了“必须有改进”
+强制选择 C2/C3。当前已冻结 `C*=C0-off`；确认场景的 C* 项必须登记为同一 C0 source run/checkpoint 的
+exact alias，不重复训练一个完全相同的变体。
 
 总计：
 
 ```text
-10 formal runs
-当前完成 2/10
+10 logical formal entries
+当前完成 4/10
 ```
+
+当 C*=C0/C1 时，10 个逻辑项对应 8 个唯一 30k 训练；当前唯一训练进度为 `4/8`。alias 必须保留独立矩阵项、
+source run、checkpoint SHA 和 `alias_of`，但不得写成独立随机重复或独立模型证据。
 
 ### 4.3 A2/A3 新矩阵
 
@@ -467,7 +479,7 @@ candidate/valid image 与 coverage。
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | V3 路线与事实冻结 | 已提交并同步事实源 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 checkpoint、registry、held-out/actor/资源基线 | 3/3 场景闭环 |
-| `WS-V3-A1-CALIBRATION-01` | running | E1/E2、C0–C3 开发消融、两确认场景复核 | 10-run 两阶段矩阵完成或准确 blocked |
+| `WS-V3-A1-CALIBRATION-01` | running | E1/E2、C0–C3 开发消融、两确认场景复核 | 开发场景/C*=C0 done；确认矩阵与 finalizer 待完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware quota、边界尺度、几何与 provenance 消融 | D1/D2 必做，D3/D4 条件式 |
@@ -628,6 +640,22 @@ blocked
 ```
 
 若 C0 最终 Pareto 最优，允许选择 C0；不能为了“模型必须更复杂”强行选择 C2/C3。
+
+### 7.6 开发场景 C* 冻结（done）
+
+A1-S0-v1 将 7.5 操作化为：E1 的 median/P90 必须同时严格下降且 coverage 不降低；E2 的两个冻结 role
+必须全部 non-degraded，且至少一个 role 的 mean/P90 同时严格下降；另一主端点不得退化；global、两个 actor
+region 和两个 boundary band 的 LPIPS 均不得高于 C0。比较不设容差。若多个候选通过，依次按改善主端点数、
+global LPIPS、total GS、训练时间与固定候选顺序裁决；若无候选通过则回退 C0。
+
+该操作化是在开发结果已可见后、确认场景前完成，因此只能称“确认前冻结的透明规则”，不能称盲测前数值阈值。
+正式 finalizer 校验所有 source terminal、端点/诊断配置 SHA、配对初始化 SHA、source/checkpoint 绑定与评估前后
+checkpoint 不变。结果为：
+
+- C1：无主端点改善，actor/boundary LPIPS 退化；
+- C2：boundary role E2 改善，但 high role E2 与 actor/boundary LPIPS 退化；
+- C3：全部冻结 LPIPS 可接受，但 E1/E2 均无严格改善；
+- 冻结 `C*=C0-off`，开发终态 `done_off`。
 
 ---
 
@@ -1097,14 +1125,14 @@ stage_manifest.json
    - 指标；
    - 下一步。
 
-当前 A1 的最近四个提交正文不足，A1-E0 收口时必须补一份汇总事实记录；不改写历史 commit，但在 plan/EXPERIMENTS 中补齐证据链。
+A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发场景台账已补齐任务、run、配置 SHA、测试和结论证据链。
 
 ---
 
 ## 15. 停止与扩展规则
 
 - A1 E1/E2 未冻结前，不启动新的 30k；
-- A1 `scene-0230` C2/C3 未完成前，不扩确认场景；
+- A1 `scene-0230` C2/C3 与 C* 未冻结前，不扩确认场景；该门禁现已通过；
 - A2 D1 未通过 smoke 和同预算开发场景前，不做 D2；
 - A2 LiDAR ancestry 不完整时，不做 D4；
 - A3 不允许整场景重训冒充局部精修；
@@ -1119,17 +1147,16 @@ stage_manifest.json
 
 ## 16. 当前唯一下一步
 
-A1-E0、C0/C1 回填和最小 LiDAR provenance 已完成。文档与测试门禁通过后，执行顺序固定为：
+A1 开发场景 C0–C3、端点、诊断和 `C*=C0` 已冻结。文档与测试门禁通过后，执行顺序固定为：
 
 ```text
-1. 同步 V3.1 / STATUS / EXPERIMENTS / FAILURES / README
-2. 审计定向测试、配置解析、Git diff、GPU/cgroup/磁盘与活动进程
-3. 顺序运行 scene-0230 C2/C3 30k formal
-4. 用同一冻结配置回填 C2/C3 E1/E2
-5. 在 scene-0230 冻结 C*
-6. 运行 scene-0242/0255 的 C0/C1/C*
-7. A1 finalizer
-8. 进入 A2 instrumentation + D1
+1. 同步开发场景证据并审计测试、配置、Git、GPU/cgroup/磁盘
+2. 顺序运行 scene-0242 C0/C1 30k，不并发
+3. 用冻结 E1/E2 配置回填，并登记 C*=C0 exact alias
+4. 顺序运行 scene-0255 C0/C1 30k，不并发
+5. 用冻结 E1/E2 配置回填，并登记 C*=C0 exact alias
+6. A1 finalizer：10 个逻辑项 / 8 个唯一训练
+7. 进入 A2 instrumentation + D1
 ```
 
 A1 完成前不得直接开始 A2 模型代码。
@@ -1155,7 +1182,7 @@ A1 完成前不得直接开始 A2 模型代码。
 - A4 扩展为端到端 profile、可恢复 stage、冷加载和并发指标；
 - 当前状态保持 `A1 running`，不提前进入 A2。
 
-### 2026-08-06 — A1 当前事实
+### 2026-08-06 — A1-E0 阶段快照
 
 - C0/C1/C2/C3 配对 smoke 完成；
 - C3 零梯度 bug 已修复；
@@ -1167,7 +1194,16 @@ A1 完成前不得直接开始 A2 模型代码。
 - 一次错误相机标签 formal 已显式 rejected，修复 run 为唯一有效端点证据；
 - 最小 LiDAR provenance 已完成；随机背景 CUDA visibility filter 使 exact 初始化 replay 不成立，初始深度只作
   reconstructed witness；
-- 当前门禁转为 scene-0230 C2/C3 30k formal，之后才能冻结 C*。
+- 当时门禁转为 scene-0230 C2/C3 30k formal，之后才能冻结 C*。
+
+### 2026-08-07 — A1 开发场景与 C* 冻结
+
+- C2/C3 配对 30k、actor/global 评估与冻结 E1/E2 回填完成；
+- A1-D0 ISP/位姿/速度分层诊断完成；near-static 只有 2 帧，保留低支持边界；
+- C3 的全图/boundary actor 质量与 learned pose correction 稳定性最佳，但 E1/E2 不优于 C0；
+- A1-S0-v1 如实披露结果访问时点，以无容差严格 Pareto 操作化 7.5；
+- 正式选择 `C*=C0-off / done_off`；确认矩阵使用 C0 exact alias，10 个逻辑项对应 8 个唯一训练；
+- 当前门禁转为 scene-0242/0255 C0/C1 确认、端点回填、alias 登记和 A1 finalizer。
 
 ### 2026-08-06 — A0 done
 
@@ -1184,18 +1220,18 @@ A1 完成前不得直接开始 A2 模型代码。
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 当前任务固定为 WS-V3-A1-CALIBRATION-01。
-当前 A1-E0、C0/C1 端点回填和最小 LiDAR provenance 已完成；下一步是 scene-0230 C2/C3 formal。
+当前 scene-0230 C0–C3、E1/E2、LiDAR、A1-D0 与 C* 冻结已完成；C*=C0-off。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
 2. 检查 research/worldsim-v3 分支、HEAD、dirty files、run terminal、GPU/cgroup/磁盘；
-3. 核对冻结端点配置 SHA、C0/C1 有效/拒绝 run 和 LiDAR witness 边界；
+3. 核对冻结端点/诊断/选择配置 SHA、C0–C3 run、C*=C0 和 LiDAR witness 边界；
 4. 运行 A1 定向测试、配置解析和 git diff 门禁；
 5. 确认 GPU 空闲、cgroup 无 OOM、数据盘充足且无活动 controller；
-6. 顺序运行 scene-0230 C2/C3 30k formal，不并发；
+6. 顺序运行 scene-0242/0255 的 C0/C1 30k，不并发；
 7. 每个 checkpoint 用冻结配置补算 E1/E2，评估前后 SHA 必须一致；
-8. 比较 global/actor/boundary/E1/E2/GS/资源并冻结 C*；
-9. 再进入 0242/0255 确认矩阵与 A1 finalizer。
+8. 每场景登记 C*=C0 source run/checkpoint exact alias，不重复训练；
+9. 完成 10 个逻辑项 / 8 个唯一训练的 A1 finalizer。
 
-不得提前跑 0242/0255，不得进入 A2，不得恢复 V2 M5，不得新增大型 diffusion。
+不得在 A1 finalizer 前进入 A2，不得恢复 V2 M5，不得新增大型 diffusion。
 ```

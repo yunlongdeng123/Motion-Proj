@@ -34,6 +34,8 @@
   预注册相机对，已有 formal 必须 rejected 后重跑，不能只改图标题。
 - `V3-F13`：seed=0 不保证 CUDA visibility filter 后的随机背景初始化逐点/逐计数复现。记录的 LiDAR/actor
   tensor exact 可作门禁，重建初始化 depth 只能作 witness，不能冒充源训练初始化 exact residual。
+- `V3-F14`：局部 role、全图画质或 learned correction 稳定性改善不能替代预注册阶段主端点。C2/C3 未通过
+  E1/E2 合同就不能为了保留增强模块而成为 C*。
 
 ### V3-F01：局部保持不等于编辑质量
 
@@ -114,6 +116,17 @@ visibility filter 后，背景初始 Gaussian 数从源运行 946,484 变为 rep
 容差。正式初始 depth residual 必须标为
 `seed0_reconstructed_initialization_witness_not_exact_source_initialization`。要获得源训练初始化的 exact depth，未来
 必须在训练创建时直接持久化 post-filter 初始化 tensors；A2 的逐 Gaussian ancestry 仍需独立 instrumentation。
+
+### V3-F14：局部改善不能替代阶段主端点
+
+scene-0230 中，C2 的 boundary-support E2 mean/P90 从 C0 的 `0.003547/0.006353` 改善为
+`0.003346/0.005447`，但 high-support E2 P90 退化到 `0.011734`，actor/boundary LPIPS 也整体退化；因此不能把
+单个 role 的改善提升为整个 E2 端点改善。C3 的全图 PSNR/LPIPS、boundary actor 质量和 learned pose correction
+稳定性均最好，但 E1 median/P90 与两个 E2 role 仍未严格优于 C0。
+
+A1-S0-v1 在结果已可见后、确认场景前把 V3.1 7.5 操作化为无容差严格 Pareto，并如实披露该时点；没有新增
+事后数值阈值。正式结论必须是 `C*=C0-off / done_off`。不得更换 role、放宽端点、只引用 C3 全图画质或把
+learned correction 幅值写成 pose GT，以强行保留增强模块。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 

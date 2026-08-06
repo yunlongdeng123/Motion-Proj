@@ -72,13 +72,15 @@ patch 为 r2 worktree 和上述 SHA；旧候选只解释首次 smoke，不进入
 
 ### `WS-V3-A1-CALIBRATION-01` 当前证据
 
-开发场景 `scene-0230` 已完成 C0/C1 30k formal；初始化 provenance SHA 均为
+开发场景 `scene-0230` 已完成 C0–C3 30k formal；初始化 provenance SHA 均为
 `8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898`。固定 step 结果：
 
-| variant | global PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | boundary actor PSNR | total GS | train min |
+| variant | global PSNR / SSIM / LPIPS | boundary actor PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | total GS | train min |
 |---|---:|---:|---:|---:|---:|
-| C0-off | 27.746 / .851 / .176 | 25.358 / .844 / .094 | 22.676 | 1,360,649 | 52.1 |
-| C1-native | 24.979 / .743 / .169 | 21.696 / .602 / .120 | 19.817 | 1,316,421 | 53.7 |
+| C0-off | 27.746 / .851 / .176 | 27.756 / .892 / .069 | 25.358 / .844 / .094 | 1,360,649 | 52.05 |
+| C1-native | 24.979 / .743 / .169 | 22.549 / .700 / .103 | 21.696 / .602 / .120 | 1,316,421 | 53.69 |
+| C2-factorized-isp | 25.011 / .743 / .168 | 22.583 / .705 / .104 | 21.779 / .608 / .117 | 1,322,979 | 52.26 |
+| C3-bounded-pose | 28.109 / .862 / .167 | 28.169 / .897 / .066 | 25.137 / .846 / .094 | 1,363,040 | 56.14 |
 
 A1-E0 实现提交为 `20c4276`，相机映射修复为 `d85ef27`。冻结配置
 `configs/worldsim_v3/a1_endpoints_v1.yaml` 的 SHA-256 为
@@ -92,10 +94,12 @@ near/far、coverage 与 `ABSTAIN`。
 |---|---:|---:|---:|---:|
 | C0 `20260806T141409Z__scene0230-c0-a1-e0-formal-full-camera-map-fix-s0-r2` | 28,744/266,631/10.780% | .05951/.14719 | .004813/.010895/26.316% | .003547/.006353/35.294% |
 | C1 `20260806T141623Z__scene0230-c1-a1-e0-formal-full-camera-map-fix-s0-r1` | 29,151/274,658/10.614% | .06289/.15623 | .004751/.010895/28.070% | .004450/.007626/35.294% |
+| C2 `20260806T154541Z__scene0230-c2-a1-e0-formal-full-s0-r1` | 31,299/275,877/11.345% | .06544/.16160 | .004844/.011734/28.070% | .003346/.005447/35.294% |
+| C3 `20260806T164852Z__scene0230-c3-a1-e0-formal-full-s0-r1` | 29,846/268,826/11.102% | .06309/.15448 | .004930/.011734/26.316% | .003592/.006537/35.294% |
 
-C1 在 E1 和 boundary actor E2 上退化；high actor E2 mean 略好、P90 持平。只登记开发场景描述性结果，
-不在 C2/C3 与确认场景前冻结 C*。两次有效评估 checkpoint SHA 前后相同。QA panel 只确认投影落在真实相邻
-视野和 actor 支持边界，不能替代人工质量裁决。
+C2 只改善 boundary role E2，high role E2 与 actor/boundary LPIPS 退化；C3 全图、boundary actor 与位姿稳定性
+最好，但 E1 和两个 E2 role 均未严格优于 C0。四次有效评估 checkpoint SHA 前后相同。QA panel 只确认投影落在
+真实相邻视野和 actor 支持边界，不能替代人工质量裁决。
 
 首次 formal `20260806T140703Z__scene0230-c0-a1-e0-formal-full-s0-r1` 继承了错误相机 ID 标签，实际把
 非相邻画面当成预注册相机对，已保留为 `rejected / INVALID_CAMERA_ID_LABEL_MAPPING`；修复后 run 是唯一有效证据。
@@ -113,8 +117,18 @@ replay 分别为 946,597、946,309、946,291。首次 strict smoke
 正式 depth 结果前冻结为“LiDAR/actor tensor exact 是 gate，随机背景 exact 仅 report”，成功 smoke 和 formal 的
 初始 depth 都明确标为 reconstructed witness。没有使用事后计数容差。逐 Gaussian ancestry 留到 A2 instrumentation。
 
-A1-E0 + LiDAR 定向测试为 `23 passed`。A1 正式训练矩阵仍为 `2/10`；端点/provenance 诊断 run 不冒充新的
-30k 训练。下一步顺序运行 scene-0230 C2/C3 30k，并用同一冻结端点回填。
+A1-D0 配置 SHA-256 为 `a445078d3bea89a78a0c9e6544a94a2be4c9c2e71f45aec4a9d8878b4c6593c1`；
+`20260806T170219Z__scene0230-a1-diagnostics-c0-c3-formal-s0-r1`=`done`。输入速度层为
+near-static/low/normal=`2/18/176` 帧；near-static 只有 2 帧，不承担统计结论。C1 位姿修正 translation
+median/P90=`7.256/12.215 mm`、rotation=`0.1660/0.35465°`；C3 为 `1.703/2.338 mm`、
+`0.02553/0.03337°`。这些是学习修正幅值，不是独立 pose accuracy。
+
+选择协议提交 `60ef079`；配置 `configs/worldsim_v3/a1_dev_selection_v1.yaml` SHA-256 为
+`a45699ebf696c875a18832f8db920a6106837a1e4f235dcd9036eff48dfbc609`。协议如实披露结果访问，且不引入
+数值容差。正式 run `20260806T171417Z__scene0230-a1-dev-selection-formal-s0-r1`=`done`，输出
+`C*=C0-off / done_off`。若 C* 为 C0/C1，确认矩阵保留三个逻辑项但用 source run/checkpoint exact alias；因此
+V3.1 当前为 `4/10` 逻辑项、`4/8` 唯一训练。定向 WorldSim 测试 `56 passed`。下一步串行运行
+scene-0242/0255 C0/C1、回填 E1/E2 并登记 C0 alias。
 
 ## 3. V2 冻结注册表
 
@@ -332,5 +346,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-执行 `WS-V3-A1-CALIBRATION-01`：A1-E0 与最小 LiDAR provenance 已完成；顺序运行 scene-0230 C2/C3
-30k formal 并回填冻结 E1/E2，再冻结 C*。C4 保持 `not_supported`，不得并发或提前进入确认场景/A2。
+执行 `WS-V3-A1-CALIBRATION-01`：scene-0230 C0–C3、诊断与 C*=C0 冻结已完成；顺序运行
+scene-0242/0255 C0/C1 30k、回填冻结 E1/E2 并登记 C0 exact alias。C4 保持 `not_supported`，确认矩阵与
+A1 finalizer 完成前不得进入 A2。

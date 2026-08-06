@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A1-CALIBRATION-01`
 - 状态：`running`
-- 当前门禁：A1-E0、C0/C1 回填和最小 LiDAR provenance 已完成；顺序运行 scene-0230 C2/C3 formal
+- 当前门禁：scene-0230 C0–C3 与 C* 冻结完成；顺序运行 scene-0242/0255 C0/C1 确认矩阵
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -98,7 +98,7 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scene-0242 全图 PSNR 最高，但 high actor PSNR
 最低；scene-0255 boundary actor 区域 SSIM 仅 `0.526`。这为 A1/A2 提供目标，不构成跨场景因果结论。
 
-## A1-E0 与 LiDAR 最小 provenance 完成证据
+## A1 开发场景完成证据
 
 - 端点提交：`20c4276`；权威相机映射修复：`d85ef27`；LiDAR provenance：`14bc3c2`；
 - 冻结 E1/E2 配置 SHA-256：
@@ -120,6 +120,33 @@ A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scen
   `seed0_reconstructed_initialization_witness_not_exact_source_initialization`，不是源初始化 exact replay；
 - A1 定向测试 `23 passed`；逐 Gaussian ancestry/parent-child/split-clone lineage 按 V3.1 后移至 A2。
 
+scene-0230 四个配对 30k 训练均已完成；共同 initialization provenance SHA 为
+`8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898`：
+
+| variant | global PSNR / LPIPS | boundary actor PSNR / LPIPS | high actor PSNR / LPIPS | total GS | train min |
+|---|---:|---:|---:|---:|---:|
+| C0-off | 27.746 / .1764 | 27.756 / .0687 | 25.358 / .0943 | 1,360,649 | 52.05 |
+| C1-native | 24.979 / .1694 | 22.549 / .1033 | 21.696 / .1201 | 1,316,421 | 53.69 |
+| C2-factorized-isp | 25.011 / .1677 | 22.583 / .1043 | 21.779 / .1174 | 1,322,979 | 52.26 |
+| C3-bounded-pose | 28.109 / .1666 | 28.169 / .0657 | 25.137 / .0938 | 1,363,040 | 56.14 |
+
+- C2/C3 训练 run：`20260806T144938Z__scene0230-c2-factorized-isp-formal30k-s0-r1`、
+  `20260806T154834Z__scene0230-c3-bounded-pose-formal30k-s0-r1`；
+- C2/C3 端点 run：`20260806T154541Z__scene0230-c2-a1-e0-formal-full-s0-r1`、
+  `20260806T164852Z__scene0230-c3-a1-e0-formal-full-s0-r1`；均保持 checkpoint SHA 不变；
+- 冻结 A1-D0 配置 SHA-256 为
+  `a445078d3bea89a78a0c9e6544a94a2be4c9c2e71f45aec4a9d8878b4c6593c1`；正式诊断
+  `20260806T170219Z__scene0230-a1-diagnostics-c0-c3-formal-s0-r1`=`done`；
+- 输入速度层为 near-static/low/normal=`2/18/176` 帧；near-static 仅 2 帧，只作低支持描述；
+- C3 学习位姿修正 translation median/P90=`1.703/2.338 mm`、rotation=`0.02553/0.03337°`，明显小于
+  C1 的 `7.256/12.215 mm`、`0.1660/0.35465°`；这只是学习修正幅值，不是独立 pose GT；
+- 选择实现提交 `60ef079`，无容差选择配置 SHA-256 为
+  `a45699ebf696c875a18832f8db920a6106837a1e4f235dcd9036eff48dfbc609`；明确披露其在开发结果可见后、
+  确认场景前操作化；
+- 正式选择 run `20260806T171417Z__scene0230-a1-dev-selection-formal-s0-r1`=`done`，冻结
+  `C*=C0-off / done_off`：C2 只改善 boundary role E2，high role 与 LPIPS 退化；C3 画质和位姿稳定性最好，
+  但 E1/E2 均未严格改善。确认场景 C* 项登记为 C0 exact alias，10 个逻辑矩阵项对应 8 个唯一训练。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -127,7 +154,7 @@ A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scen
 | `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
-| `WS-V3-A1-CALIBRATION-01` | running | A1-E0 与最小 provenance 完成；下一门禁为 scene-0230 C2/C3 30k + 同端点回填 |
+| `WS-V3-A1-CALIBRATION-01` | running | 开发场景 4/4 与 C*=C0 冻结完成；下一门禁为 0242/0255 C0/C1 + C0 alias 确认 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
@@ -137,11 +164,11 @@ A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scen
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 63 GiB 可用；
+- 数据盘：约 62 GiB 可用；
 - 无活跃研究 tmux/controller/GPU 进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-按冻结协议顺序运行 scene-0230 C2/C3 30k formal，并分别用同一 E1/E2 配置回填；比较
-global/actor/boundary/E1/E2/GS/资源后冻结 C*。不得并发训练、不得提前跑确认场景、不得直接跳到 A2。
+按冻结协议串行运行 scene-0242、scene-0255 的 C0/C1 30k，并分别用同一 E1/E2 配置回填；每个场景将 C* 项
+登记为 C0 source run/checkpoint 的 exact alias。确认矩阵和 A1 finalizer 完成前不得进入 A2。

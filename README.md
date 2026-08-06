@@ -45,8 +45,9 @@ CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒�
 已有能力的严谨消融/增强；首要模型新增是 A2，而不是重新命名上游功能。三场景只用于模型消融与工程结论，
 不包装成新的 benchmark 或大规模泛化结果。
 
-当前 A1-E0 已冻结 E1 跨相机光度残差与 E2 actor 边界重投影误差，并完成 scene-0230 C0/C1 回填和最小
-LiDAR provenance。下一门禁是顺序完成 scene-0230 C2/C3 30k formal，再冻结确认场景候选 C*。
+当前 A1 已完成 scene-0230 的 C0–C3 30k、冻结 E1/E2 回填、LiDAR provenance、ISP/位姿诊断与正式
+Pareto 选择。没有增强候选通过主端点合同，故冻结 `C*=C0-off / done_off`；下一门禁是顺序完成
+scene-0242/0255 的 C0/C1 30k 与同端点回填，C* 作为 C0 checkpoint 的 exact alias 登记，不重复训练。
 
 ## 环境
 
@@ -69,7 +70,7 @@ source scripts/bootstrap_autodl_v2.sh
 
 - `motion_proj/resim/`：WorldState、actor registry、轨迹编辑和 typed render；
 - `motion_proj/dynamic_editing_v2/`：可复用的 actor 真值、投影和局部评测设施；
-- `motion_proj/worldsim_v3/`：A1 端点、LiDAR provenance 与后续 WorldSim 模型组件；
+- `motion_proj/worldsim_v3/`：A1 校准、端点、诊断、LiDAR provenance 与后续 WorldSim 模型组件；
 - `/root/autodl-tmp/third_party/drivestudio/`：固定 DriveStudio/StreetGS 上游；
 - `/root/autodl-tmp/runs/dynamic_editing_v2/`：V2 冻结证据；
 - V3/V3.1 formal run 使用 `/root/autodl-tmp/runs/worldsim_v3/`；
