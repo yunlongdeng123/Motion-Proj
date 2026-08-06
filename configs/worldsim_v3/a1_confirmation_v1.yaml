@@ -1,0 +1,54 @@
+schema_version: 1
+confirmation_version: A1-CF-v1
+task_id: WS-V3-A1-CALIBRATION-01
+endpoint_config_sha256: 60c211625860c25edf92842b88bdb040ea8c180b12fe0fa78f2fc1c342bc4051
+
+development_selection:
+  run_id: 20260806T171417Z__scene0230-a1-dev-selection-formal-s0-r1
+  config_sha256: a45699ebf696c875a18832f8db920a6106837a1e4f235dcd9036eff48dfbc609
+  selected_variant: c0-off
+  decision_status: done_off
+
+decision_contract:
+  source: configs/worldsim_v3/a1_dev_selection_v1.yaml
+  comparator: strict_floating_point_order_without_tolerance
+  confirmation_policy: >-
+    对每个确认场景按可用的冻结 role 复用 E1/E2、另一端点和 LPIPS non-degradation
+    合同；预注册 ABSTAIN role 不进入数值比较，也不得换 actor。
+  final_policy: >-
+    C* 保持开发场景冻结结果；确认场景报告支持、反向或场景依赖，不在确认结果后重选 C*。
+
+scenes:
+  scene-0242:
+    scene_index: 191
+    expected_initialization_sha256: 5c0d5a5d136e20f6e1220ec70d544926e38f9199867591dbfc0f162dc3f4f730
+    expected_e2_roles:
+      boundary-support: ABSTAIN
+      high-support: done
+    training_runs:
+      c0-off: 20260806T172514Z__scene0242-c0-confirm-formal30k-s0-r1
+      c1-native: 20260806T181957Z__scene0242-c1-confirm-formal30k-s0-r1
+    endpoint_runs:
+      c0-off: 20260806T181834Z__scene0242-c0-a1-e0-confirm-formal-full-s0-r1
+      c1-native: 20260806T191202Z__scene0242-c1-a1-e0-confirm-formal-full-s0-r1
+    cstar_alias_run: 20260806T211000Z__scene0242-cstar-c0-exact-alias-s0-r1
+  scene-0255:
+    scene_index: 204
+    expected_initialization_sha256: 2528edaa766d0f5f1bc0de84ac5681ec5d9a9dc9698c5aa91d0249e33531cb82
+    expected_e2_roles:
+      boundary-support: done
+      high-support: done
+    training_runs:
+      c0-off: 20260806T191340Z__scene0255-c0-confirm-formal30k-s0-r1
+      c1-native: 20260806T201041Z__scene0255-c1-confirm-formal30k-s0-r1
+    endpoint_runs:
+      c0-off: 20260806T200907Z__scene0255-c0-a1-e0-confirm-formal-full-s0-r1
+      c1-native: 20260806T210645Z__scene0255-c1-a1-e0-confirm-formal-full-s0-r1
+    cstar_alias_run: 20260806T211100Z__scene0255-cstar-c0-exact-alias-s0-r1
+
+matrix_contract:
+  logical_entries: 10
+  unique_training_runs: 8
+  development_entries: 4
+  confirmation_entries: 6
+  exact_alias_entries: 2
