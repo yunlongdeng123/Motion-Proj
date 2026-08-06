@@ -5,9 +5,9 @@
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **执行环境**：AutoDL，单卡 NVIDIA GeForce RTX 3090 24 GiB，cgroup memory 90 GiB
 - **当前分支**：`research/worldsim-v3`
-- **A1 开发场景冻结基线**：`60ef079`（C0–C3、端点/诊断与 C* 选择协议）
-- **当前任务**：`WS-V3-A1-CALIBRATION-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 running / F0-A4 pending`
+- **A1 正式实现基线**：`198a681`（开发选择、确认矩阵、exact alias 与 finalizer）
+- **当前任务**：`WS-V3-A1-CALIBRATION-01`（`done_off`）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / F0-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -171,7 +171,7 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 ### 2.3 当前 A1 现场快照
 
 - 分支：`research/worldsim-v3`
-- A1 开发场景冻结基线：`60ef079`
+- A1 正式实现基线：`198a681`
 - GPU：空闲
 - 活跃训练/controller/tmux：无
 - 数据盘剩余：约 62 GiB
@@ -191,13 +191,15 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 | `801db7a` | 同步 A1-E0、相机错误 run 与 LiDAR truth boundary |
 | `95d0807` | 冻结并实现 ISP/位姿/速度分层 A1-D0 诊断 |
 | `60ef079` | 冻结无容差 A1-S0 开发场景选择和 exact-alias 确认语义 |
+| `198a681` | 冻结 A1 确认矩阵、exact-alias 登记器与三场景 finalizer |
 
 已完成：
 
 - C0/C1/C2/C3 配对 100-step smoke；
 - C3 held-out 推理接口；
-- A1-E0、LiDAR、A1-D0 与选择 finalizer；定向 WorldSim 测试 `56 passed`；
-- `scene-0230` C0/C1/C2/C3 四个配对 30k formal、同端点回填与正式 C* 冻结。
+- A1-E0、LiDAR、A1-D0、开发选择与三场景 finalizer；定向 WorldSim 测试 `59 passed`；
+- `scene-0230` C0/C1/C2/C3 四个配对 30k formal；
+- `scene-0242/0255` C0/C1 四个确认 30k formal、冻结端点回填与两个 C0 exact alias。
 
 `scene-0230` 完整开发结果：
 
@@ -215,8 +217,8 @@ A0 已经说明：全图指标不能替代动态 actor 与边界质量。`scene-
 - C1/C2 使用较少 Gaussian，但 actor/boundary 质量明显低于 C0/C3；
 - 这些画质和容量结果不能覆盖预注册 E1/E2 主端点。
 
-开发场景选择已经冻结为 `C*=C0-off / done_off`；该结果仍需两个确认场景完成 A1，不构成跨场景最终结论。
-V3.1 当前完成 `4/10` 个逻辑矩阵项；C* 是 C0 exact alias，因此总计只需 8 个唯一训练，当前完成 `4/8`。
+开发场景选择和两个确认场景已经共同收口为 `C*=C0-off / done_off`。A1 已完成 `10/10` 个逻辑矩阵项；
+C* 是 C0 exact alias，因此实际完成 `8/8` 个唯一训练。
 
 #### A1-E0 正式回填结果
 
@@ -259,6 +261,21 @@ rotation=`0.1660/0.35465°`，C3 bounded pose 为 `1.703/2.338 mm`、`0.02553/0.
 在开发结果已可见后、确认场景前被操作化为无容差严格 Pareto，没有新增事后数值阈值。正式 run
 `20260806T171417Z__scene0230-a1-dev-selection-formal-s0-r1`=`done`，结论为
 `C*=C0-off / done_off`。C2 仅单个 E2 role 改善；C3 画质和位姿稳定性最佳但没有主端点改善，均不满足候选合同。
+
+#### A1 确认矩阵与正式终态
+
+确认配置提交为 `198a681`，SHA-256 为
+`63a3cc607ccfddbb714cc81d0570da356263c01c5a68880345953023d2d6a8cd`。`scene-0242/0255` 的 C0/C1
+四个 30k 训练及冻结 E1/E2 回填均为 `done`，评估前后 checkpoint SHA 不变；两个 C* 项登记为指向对应 C0
+source run/checkpoint 的 exact alias，没有新训练或评测。
+
+| 场景 | C0 global PSNR / LPIPS | C1 global PSNR / LPIPS | 冻结合同结论 |
+|---|---:|---:|---|
+| scene-0242 | 30.064 / .1108 | 29.161 / .1122 | C1 不 eligible；boundary role 保持 `ABSTAIN` |
+| scene-0255 | 27.255 / .2086 | 25.240 / .1921 | C1 原始 E1/E2 error 较低，但 coverage 与 actor/boundary 质量不满足合同 |
+
+finalizer `20260806T211248Z__a1-three-scene-finalize-s0-r1`=`done`：`10/10` 逻辑项、`8/8` 唯一训练，
+正式终态为 `C*=C0-off / done_off`。必须同时保留边界：原始端点方向存在场景依赖，不能表述成“C0 每场景每项指标都最好”。
 
 ---
 
@@ -334,10 +351,10 @@ exact alias，不重复训练一个完全相同的变体。
 
 ```text
 10 logical formal entries
-当前完成 4/10
+当前完成 10/10
 ```
 
-当 C*=C0/C1 时，10 个逻辑项对应 8 个唯一 30k 训练；当前唯一训练进度为 `4/8`。alias 必须保留独立矩阵项、
+当 C*=C0/C1 时，10 个逻辑项对应 8 个唯一 30k 训练；当前唯一训练进度为 `8/8`。alias 必须保留独立矩阵项、
 source run、checkpoint SHA 和 `alias_of`，但不得写成独立随机重复或独立模型证据。
 
 ### 4.3 A2/A3 新矩阵
@@ -479,7 +496,7 @@ candidate/valid image 与 coverage。
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | V3 路线与事实冻结 | 已提交并同步事实源 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 checkpoint、registry、held-out/actor/资源基线 | 3/3 场景闭环 |
-| `WS-V3-A1-CALIBRATION-01` | running | E1/E2、C0–C3 开发消融、两确认场景复核 | 开发场景/C*=C0 done；确认矩阵与 finalizer 待完成 |
+| `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware quota、边界尺度、几何与 provenance 消融 | D1/D2 必做，D3/D4 条件式 |
@@ -1147,19 +1164,16 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 ## 16. 当前唯一下一步
 
-A1 开发场景 C0–C3、端点、诊断和 `C*=C0` 已冻结。文档与测试门禁通过后，执行顺序固定为：
+A1 已以 `C*=C0-off / done_off` 正式收口。当前唯一下一步是 A2 instrumentation，执行顺序固定为：
 
 ```text
-1. 同步开发场景证据并审计测试、配置、Git、GPU/cgroup/磁盘
-2. 顺序运行 scene-0242 C0/C1 30k，不并发
-3. 用冻结 E1/E2 配置回填，并登记 C*=C0 exact alias
-4. 顺序运行 scene-0255 C0/C1 30k，不并发
-5. 用冻结 E1/E2 配置回填，并登记 C*=C0 exact alias
-6. A1 finalizer：10 个逻辑项 / 8 个唯一训练
-7. 进入 A2 instrumentation + D1
+1. 审计原生 RigidNodes 的 densification、split、clone 与 prune 数据流
+2. 增加逐 Gaussian actor/background、init_source、parent_id/lineage root ancestry
+3. 验证 split/clone 后 lineage 完整、prune 后索引一致、模块关闭时逐位退化为原生行为
+4. 冻结 D1 配置和资源合同，先 smoke，再决定是否启动 formal
 ```
 
-A1 完成前不得直接开始 A2 模型代码。
+A2 instrumentation 门禁通过前不得直接启动 D1 formal。
 
 ---
 
@@ -1180,7 +1194,7 @@ A1 完成前不得直接开始 A2 模型代码。
 - A2 增加 boundary scale cap、depth/normal、provenance 和 actor 资产路由；
 - A3 明确 S-A/S-B/S-C 证据边界，并保留冻结生成式上界作为诊断；
 - A4 扩展为端到端 profile、可恢复 stage、冷加载和并发指标；
-- 当前状态保持 `A1 running`，不提前进入 A2。
+- 计划创建时状态保持 `A1 running`，不提前进入 A2。
 
 ### 2026-08-06 — A1-E0 阶段快照
 
@@ -1203,7 +1217,14 @@ A1 完成前不得直接开始 A2 模型代码。
 - C3 的全图/boundary actor 质量与 learned pose correction 稳定性最佳，但 E1/E2 不优于 C0；
 - A1-S0-v1 如实披露结果访问时点，以无容差严格 Pareto 操作化 7.5；
 - 正式选择 `C*=C0-off / done_off`；确认矩阵使用 C0 exact alias，10 个逻辑项对应 8 个唯一训练；
-- 当前门禁转为 scene-0242/0255 C0/C1 确认、端点回填、alias 登记和 A1 finalizer。
+- 当时门禁转为 scene-0242/0255 C0/C1 确认、端点回填、alias 登记和 A1 finalizer。
+
+### 2026-08-07 — A1 确认矩阵正式收口
+
+- scene-0242/0255 C0/C1 四个 30k、冻结端点回填与两个 C0 exact alias 全部完成；
+- A1 finalizer 完成 `10/10` 逻辑项、`8/8` 唯一训练，正式终态 `C*=C0-off / done_off`；
+- scene-0242 原始端点支持 C0，scene-0255 的部分原始 E1/E2 error 支持 C1，但 C1 未通过完整冻结合同；
+- 当前门禁转为 A2 instrumentation，不再恢复 A1 为 running。
 
 ### 2026-08-06 — A0 done
 
@@ -1219,19 +1240,19 @@ A1 完成前不得直接开始 A2 模型代码。
 ```text
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
-当前任务固定为 WS-V3-A1-CALIBRATION-01。
-当前 scene-0230 C0–C3、E1/E2、LiDAR、A1-D0 与 C* 冻结已完成；C*=C0-off。
+WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
+当前任务进入 WS-V3-A2-ACTOR-DENSIFY-01 instrumentation；尚未启动 D1 formal。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
 2. 检查 research/worldsim-v3 分支、HEAD、dirty files、run terminal、GPU/cgroup/磁盘；
-3. 核对冻结端点/诊断/选择配置 SHA、C0–C3 run、C*=C0 和 LiDAR witness 边界；
-4. 运行 A1 定向测试、配置解析和 git diff 门禁；
+3. 核对 A1 finalizer、10/10 logical、8/8 unique、C*=C0 exact alias 和 scene-dependent 原始端点边界；
+4. 运行 WorldSim 定向测试、配置解析和 git diff 门禁；
 5. 确认 GPU 空闲、cgroup 无 OOM、数据盘充足且无活动 controller；
-6. 顺序运行 scene-0242/0255 的 C0/C1 30k，不并发；
-7. 每个 checkpoint 用冻结配置补算 E1/E2，评估前后 SHA 必须一致；
-8. 每场景登记 C*=C0 source run/checkpoint exact alias，不重复训练；
-9. 完成 10 个逻辑项 / 8 个唯一训练的 A1 finalizer。
+6. 审计原生 RigidNodes densification、split、clone、prune 数据流；
+7. 先实现逐 Gaussian ancestry 与模块关闭等价性测试；
+8. instrumentation 门禁通过后再冻结 D1 配置并运行 smoke；
+9. 未通过 smoke/资源门禁不得启动 D1 formal。
 
-不得在 A1 finalizer 前进入 A2，不得恢复 V2 M5，不得新增大型 diffusion。
+不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
 ```

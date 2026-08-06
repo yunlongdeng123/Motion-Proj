@@ -45,9 +45,9 @@ CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒�
 已有能力的严谨消融/增强；首要模型新增是 A2，而不是重新命名上游功能。三场景只用于模型消融与工程结论，
 不包装成新的 benchmark 或大规模泛化结果。
 
-当前 A1 已完成 scene-0230 的 C0–C3 30k、冻结 E1/E2 回填、LiDAR provenance、ISP/位姿诊断与正式
-Pareto 选择。没有增强候选通过主端点合同，故冻结 `C*=C0-off / done_off`；下一门禁是顺序完成
-scene-0242/0255 的 C0/C1 30k 与同端点回填，C* 作为 C0 checkpoint 的 exact alias 登记，不重复训练。
+A1 已完成 scene-0230 开发消融、scene-0242/0255 确认、冻结 E1/E2、LiDAR provenance、ISP/位姿诊断和
+10 项逻辑矩阵 finalizer，正式终态为 `C*=C0-off / done_off`。原始端点方向存在场景依赖，但 C1 在两个确认
+场景均未通过完整的 coverage + LPIPS 合同。下一门禁是 A2 instrumentation 与 actor-aware D1。
 
 ## 环境
 

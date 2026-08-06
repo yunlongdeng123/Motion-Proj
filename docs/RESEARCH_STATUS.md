@@ -3,8 +3,8 @@
 - 更新时间：2026-08-06
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A1-CALIBRATION-01`
-- 状态：`running`
-- 当前门禁：scene-0230 C0–C3 与 C* 冻结完成；顺序运行 scene-0242/0255 C0/C1 确认矩阵
+- 状态：`done_off`
+- 当前门禁：A1 10 项逻辑矩阵完成；下一任务为 A2 instrumentation + D1
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -147,6 +147,26 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
   `C*=C0-off / done_off`：C2 只改善 boundary role E2，high role 与 LPIPS 退化；C3 画质和位姿稳定性最好，
   但 E1/E2 均未严格改善。确认场景 C* 项登记为 C0 exact alias，10 个逻辑矩阵项对应 8 个唯一训练。
 
+## A1 确认与正式终态
+
+冻结确认配置 `configs/worldsim_v3/a1_confirmation_v1.yaml` SHA-256 为
+`63a3cc607ccfddbb714cc81d0570da356263c01c5a68880345953023d2d6a8cd`，实现提交 `198a681`。四个确认训练和
+端点 run 均 `done`、每场景 C0/C1 initialization SHA 相同、所有端点评估前后 checkpoint SHA 不变：
+
+| scene / variant | global PSNR / LPIPS | E1 median / P90 / coverage | E2 high mean / P90 / coverage | E2 boundary mean / P90 / coverage |
+|---|---:|---:|---:|---:|
+| 0242 C0 | 30.064 / .1108 | .03147 / .08826 / 6.491% | .008264 / .020697 / 42.857% | `ABSTAIN` |
+| 0242 C1 | 29.161 / .1122 | .03333 / .08971 / 6.423% | .008660 / .021708 / 42.857% | `ABSTAIN` |
+| 0255 C0 | 27.255 / .2086 | .04348 / .14248 / 6.710% | .004772 / .009805 / 23.529% | .004032 / .009308 / 41.176% |
+| 0255 C1 | 25.240 / .1921 | .04277 / .13626 / 6.751% | .003715 / .007704 / 21.569% | .003923 / .008784 / 41.176% |
+
+- 0242 原始端点与全图指标偏向 C0；boundary role 按预注册继续 `ABSTAIN`；
+- 0255 的 C1 E1/E2 error 较低，但 high-role coverage 降低，且 boundary/high actor LPIPS 均退化，未通过完整合同；
+- exact alias run：`20260806T211000Z__scene0242-cstar-c0-exact-alias-s0-r1`、
+  `20260806T211100Z__scene0255-cstar-c0-exact-alias-s0-r1`，均明确无新训练/评测；
+- A1 finalizer `20260806T211248Z__a1-three-scene-finalize-s0-r1`=`done`：10/10 逻辑项、8/8 唯一训练，
+  `C*=C0-off / done_off`。该结论是完整冻结合同下的 Pareto 选择，不是“所有场景每项指标 C0 都最好”。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -154,7 +174,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
-| `WS-V3-A1-CALIBRATION-01` | running | 开发场景 4/4 与 C*=C0 冻结完成；下一门禁为 0242/0255 C0/C1 + C0 alias 确认 |
+| `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
@@ -170,5 +190,5 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-按冻结协议串行运行 scene-0242、scene-0255 的 C0/C1 30k，并分别用同一 E1/E2 配置回填；每个场景将 C* 项
-登记为 C0 source run/checkpoint 的 exact alias。确认矩阵和 A1 finalizer 完成前不得进入 A2。
+A1 已收口。下一步进入 `WS-V3-A2-ACTOR-DENSIFY-01`：先完成逐 Gaussian ancestry、parent-child、split/clone
+来源和 module-off 等价 instrumentation，再启动只增加 actor/background quota 的 D1 smoke。
