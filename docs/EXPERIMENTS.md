@@ -1,8 +1,8 @@
 # Experiments
 
 - 更新时间：2026-08-06
-- 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
-- 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
+- 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
+- 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
@@ -28,7 +28,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-P0-ROUTE-01` | done | 单一 V3 权威计划与 V2 事实冻结 | `076ebdc`；文档一致，链接与 Git diff 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
-| `WS-V3-A1-CALIBRATION-01` | running | 成像、位姿和 LiDAR 初始化消融 | off/native/enhanced 三场景对照；rolling shutter 有证据或 `not_supported` |
+| `WS-V3-A1-CALIBRATION-01` | running | 成像、位姿和 LiDAR 初始化消融 | A1-E0/provenance 已完成；10-run 两阶段矩阵与 finalizer |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | actor-aware densification/pruning | 完成 D0–D3 小步消融；质量/GS 数/训练代价 Pareto |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
@@ -69,6 +69,52 @@ pending | running | blocked | done | rejected
 工作树准备脚本首次创建旧候选 worktree 后，因 `git status --short` 的输出已被 `.strip()` 去除前导空格，
 verification literal 写成带前导空格而失败；修正为 `M datasets/driving_dataset.py` 后 verify-only 通过。canonical
 patch 为 r2 worktree 和上述 SHA；旧候选只解释首次 smoke，不进入 formal training。
+
+### `WS-V3-A1-CALIBRATION-01` 当前证据
+
+开发场景 `scene-0230` 已完成 C0/C1 30k formal；初始化 provenance SHA 均为
+`8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898`。固定 step 结果：
+
+| variant | global PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | boundary actor PSNR | total GS | train min |
+|---|---:|---:|---:|---:|---:|
+| C0-off | 27.746 / .851 / .176 | 25.358 / .844 / .094 | 22.676 | 1,360,649 | 52.1 |
+| C1-native | 24.979 / .743 / .169 | 21.696 / .602 / .120 | 19.817 | 1,316,421 | 53.7 |
+
+A1-E0 实现提交为 `20c4276`，相机映射修复为 `d85ef27`。冻结配置
+`configs/worldsim_v3/a1_endpoints_v1.yaml` 的 SHA-256 为
+`60c211625860c25edf92842b88bdb040ea8c180b12fe0fa78f2fc1c342bc4051`。相机对只使用 DriveStudio 权威映射
+`0=FRONT / 1=FRONT_LEFT / 2=FRONT_RIGHT` 下的相邻对，支持双向投影、静态/可见/遮挡/深度边缘 mask、
+near/far、coverage 与 `ABSTAIN`。
+
+有效正式回填：
+
+| variant / run | E1 valid/candidate/coverage | E1 median/P90 ↓ | E2 high mean/P90/coverage ↓ | E2 boundary mean/P90/coverage ↓ |
+|---|---:|---:|---:|---:|
+| C0 `20260806T141409Z__scene0230-c0-a1-e0-formal-full-camera-map-fix-s0-r2` | 28,744/266,631/10.780% | .05951/.14719 | .004813/.010895/26.316% | .003547/.006353/35.294% |
+| C1 `20260806T141623Z__scene0230-c1-a1-e0-formal-full-camera-map-fix-s0-r1` | 29,151/274,658/10.614% | .06289/.15623 | .004751/.010895/28.070% | .004450/.007626/35.294% |
+
+C1 在 E1 和 boundary actor E2 上退化；high actor E2 mean 略好、P90 持平。只登记开发场景描述性结果，
+不在 C2/C3 与确认场景前冻结 C*。两次有效评估 checkpoint SHA 前后相同。QA panel 只确认投影落在真实相邻
+视野和 actor 支持边界，不能替代人工质量裁决。
+
+首次 formal `20260806T140703Z__scene0230-c0-a1-e0-formal-full-s0-r1` 继承了错误相机 ID 标签，实际把
+非相邻画面当成预注册相机对，已保留为 `rejected / INVALID_CAMERA_ID_LABEL_MAPPING`；修复后 run 是唯一有效证据。
+
+最小 LiDAR provenance 实现提交为 `14bc3c2`，冻结配置 SHA-256
+`f2fd1712cf4ddd75c1c4d1da4a426dcf7e1340a5fd943066401ba881f51c5639`。正式 run
+`20260806T143644Z__scene0230-a1-lidar-provenance-formal-full-witness-s0-r1`=`done`：196 个 LiDAR/pose block、
+6,804,832 raw points、24 actor/75,002 actor points；记录的 LiDAR 与 actor tensors 全部 exact match，RigidNodes
+初始计数 75,002 exact。held-out sparse depth 172,844/172,844，绝对 median/P90=`7.679/35.958 m`，相对
+median/P90=`.6649/.9077`，checkpoint SHA 未变。
+
+背景随机 near/far 点的 CUDA visibility filter 不提供跨初始化 exact replay：源背景初始计数 946,484，三次
+replay 分别为 946,597、946,309、946,291。首次 strict smoke
+`20260806T142900Z__scene0230-a1-lidar-provenance-smoke1-s0-r1` 因 exact SHA 门禁 `blocked`；协议在查看
+正式 depth 结果前冻结为“LiDAR/actor tensor exact 是 gate，随机背景 exact 仅 report”，成功 smoke 和 formal 的
+初始 depth 都明确标为 reconstructed witness。没有使用事后计数容差。逐 Gaussian ancestry 留到 A2 instrumentation。
+
+A1-E0 + LiDAR 定向测试为 `23 passed`。A1 正式训练矩阵仍为 `2/10`；端点/provenance 诊断 run 不冒充新的
+30k 训练。下一步顺序运行 scene-0230 C2/C3 30k，并用同一冻结端点回填。
 
 ## 3. V2 冻结注册表
 
@@ -286,5 +332,5 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-执行 `WS-V3-A1-CALIBRATION-01`：先完成 metadata/原生参数/LiDAR provenance 审计，再按 C0/C1/C2/C3
-逐项实现和比较；C4 没有真实 row timing 时必须 `not_supported`。不得直接合并多个增强后只报一个结果。
+执行 `WS-V3-A1-CALIBRATION-01`：A1-E0 与最小 LiDAR provenance 已完成；顺序运行 scene-0230 C2/C3
+30k formal 并回填冻结 E1/E2，再冻结 C*。C4 保持 `not_supported`，不得并发或提前进入确认场景/A2。

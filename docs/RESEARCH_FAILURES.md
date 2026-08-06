@@ -1,6 +1,6 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-05
+> **最后更新**：2026-08-06
 > **当前范围**：V3 WorldSim 模型链直接约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
@@ -30,6 +30,10 @@
   支持监督，Tier B/C 不得当伪真值回传。
 - `V3-F11`：全图 PSNR/SSIM 不能代替 actor/边界质量；counterfactual mask 也不是真值分割，必须同时报告
   visible-image/pixel coverage，避免目标未渲染时通过缩小分母得到虚高指标。
+- `V3-F12`：nuScenes processed camera ID 必须以数据加载器事实源映射；显示标签写错会把非相邻相机当成
+  预注册相机对，已有 formal 必须 rejected 后重跑，不能只改图标题。
+- `V3-F13`：seed=0 不保证 CUDA visibility filter 后的随机背景初始化逐点/逐计数复现。记录的 LiDAR/actor
+  tensor exact 可作门禁，重建初始化 depth 只能作 witness，不能冒充源训练初始化 exact residual。
 
 ### V3-F01：局部保持不等于编辑质量
 
@@ -83,6 +87,33 @@ rolling shutter 没有 row timing 就不能实现；actor-aware densification �
 quota 开始，再分别增加 boundary/residual 和 LiDAR/visibility；local refinement 必须冻结 affected set 外参数，
 并区分 expected/first-hit/measured depth。不得用 hard-composition outside=0、原图 actor 像素或未知区域的
 自洽渲染作为方法成功证据。
+
+### V3-F12：相机标签错误会污染跨相机端点
+
+A1-E0 初版沿用了错误的显示顺序 `0=FRONT_LEFT / 1=FRONT / 2=FRONT_RIGHT`，但 DriveStudio nuScenes
+事实源明确为 `0=FRONT / 1=FRONT_LEFT / 2=FRONT_RIGHT`。结果是名义上的相邻相机对可能实际落到
+左右两侧非相邻画面，零支持也会被错误解释为模型现象。首次 formal
+`20260806T140703Z__scene0230-c0-a1-e0-formal-full-s0-r1` 因此已标记
+`rejected / INVALID_CAMERA_ID_LABEL_MAPPING`，原 terminal/manifest/summary 以 `*.original_done.json` 保留；
+`d85ef27` 修复后 C0/C1 使用新唯一 run 回填。
+
+防重复门禁：相机 ID/name 映射必须来自训练数据加载器或预处理权威列表，写入 resolved config 并纳入 hash；
+QA 必须验证投影落在实际重叠的建筑/路面。若映射错误，所有受影响正式结果必须 rejected，不得通过重命名
+已有 JSON、图片或曲线继续使用。
+
+### V3-F13：随机 CUDA 可见性筛选不等于 exact 初始化 replay
+
+A1 最小 LiDAR provenance 的 strict smoke
+`20260806T142900Z__scene0230-a1-lidar-provenance-smoke1-s0-r1` 观察到：800,000 个背景 LiDAR 点、全部 24 个
+actor point/color tensor、75,002 个 RigidNodes 初始点均 exact match，但随机 near/far 球面候选经过 CUDA
+visibility filter 后，背景初始 Gaussian 数从源运行 946,484 变为 replay 的 946,597；后续 replay 又得到
+946,309 和 946,291。这不是 LiDAR 输入变化，也没有训练或 checkpoint 修改。
+
+防重复门禁：冻结的 `a1_lidar_provenance_v1.yaml` 要求记录 LiDAR/actor tensor exact match，并记录随机球面
+候选、visibility mask SHA 和计数；背景 exact replay 固定为 `report_not_gate`，不允许事后设置“接近即可”的计数
+容差。正式初始 depth residual 必须标为
+`seed0_reconstructed_initialization_witness_not_exact_source_initialization`。要获得源训练初始化的 exact depth，未来
+必须在训练创建时直接持久化 post-filter 初始化 tensors；A2 的逐 Gaussian ancestry 仍需独立 instrumentation。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 

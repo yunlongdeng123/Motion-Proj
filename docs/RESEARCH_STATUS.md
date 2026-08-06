@@ -1,11 +1,11 @@
 # Research Status
 
 - 更新时间：2026-08-06
-- 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3
+- 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A1-CALIBRATION-01`
 - 状态：`running`
-- 当前门禁：A0 已由三场景 finalizer r2 完成；执行 A1 off/native/enhanced 校准与 LiDAR provenance 审计
-- 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
+- 当前门禁：A1-E0、C0/C1 回填和最小 LiDAR provenance 已完成；顺序运行 scene-0230 C2/C3 formal
+- 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
 
@@ -98,6 +98,28 @@ processed data 存在真实 readout direction/time 后才可实现，否则必�
 A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scene-0242 全图 PSNR 最高，但 high actor PSNR
 最低；scene-0255 boundary actor 区域 SSIM 仅 `0.526`。这为 A1/A2 提供目标，不构成跨场景因果结论。
 
+## A1-E0 与 LiDAR 最小 provenance 完成证据
+
+- 端点提交：`20c4276`；权威相机映射修复：`d85ef27`；LiDAR provenance：`14bc3c2`；
+- 冻结 E1/E2 配置 SHA-256：
+  `60c211625860c25edf92842b88bdb040ea8c180b12fe0fa78f2fc1c342bc4051`；
+- C0/C1 有效正式端点 run：
+  `20260806T141409Z__scene0230-c0-a1-e0-formal-full-camera-map-fix-s0-r2`、
+  `20260806T141623Z__scene0230-c1-a1-e0-formal-full-camera-map-fix-s0-r1`，均为 `done` 且 checkpoint SHA 未变；
+- E1 median/P90：C0 `0.05951/0.14719`，C1 `0.06289/0.15623`；coverage 为 `10.780%/10.614%`；
+- E2 high actor mean/P90：C0 `0.004813/0.010895`，C1 `0.004751/0.010895`；boundary actor：
+  C0 `0.003547/0.006353`，C1 `0.004450/0.007626`；
+- 错误相机标签 run `20260806T140703Z__scene0230-c0-a1-e0-formal-full-s0-r1` 已显式
+  `rejected / INVALID_CAMERA_ID_LABEL_MAPPING`，不得进入结果；
+- 最小 LiDAR provenance 正式 run：
+  `20260806T143644Z__scene0230-a1-lidar-provenance-formal-full-witness-s0-r1`=`done`；配置 SHA-256
+  `f2fd1712cf4ddd75c1c4d1da4a426dcf7e1340a5fd943066401ba881f51c5639`；196 个 block、6,804,832 raw
+  points、24 actor/75,002 actor points 均入账；
+- 记录的 LiDAR/actor tensors exact match，但 CUDA visibility filter 使随机背景初始 GS 从源运行 946,484
+  变为正式 witness 946,291。初始深度 median/P90=`7.679/35.958 m` 仅为
+  `seed0_reconstructed_initialization_witness_not_exact_source_initialization`，不是源初始化 exact replay；
+- A1 定向测试 `23 passed`；逐 Gaussian ancestry/parent-child/split-clone lineage 按 V3.1 后移至 A2。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -105,7 +127,7 @@ A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scen
 | `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
-| `WS-V3-A1-CALIBRATION-01` | running | 先审计真实 metadata 与原生参数，再实现 C0/C2/C3 小步消融 |
+| `WS-V3-A1-CALIBRATION-01` | running | A1-E0 与最小 provenance 完成；下一门禁为 scene-0230 C2/C3 30k + 同端点回填 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
@@ -115,12 +137,11 @@ A0 的核心判断是：全图重建质量不能替代 actor/边界质量。scen
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 66 GiB 可用；
+- 数据盘：约 63 GiB 可用；
 - 无活跃研究 tmux/controller/GPU 进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-执行 A1 事实审计：冻结 C0/C1/C2/C3 参数化、检查 processed/raw metadata 是否有真实 rolling-shutter row
-timing、导出 Affine/CamPose 与 LiDAR 初始化 provenance。先用 scene-0230 做同预算 smoke/短程归因，再按固定
-协议推进三场景；不得把原生 Affine/CamPose/LiDAR init 冒充新增模块，也不得直接跳到 A2。
+按冻结协议顺序运行 scene-0230 C2/C3 30k formal，并分别用同一 E1/E2 配置回填；比较
+global/actor/boundary/E1/E2/GS/资源后冻结 C*。不得并发训练、不得提前跑确认场景、不得直接跳到 A2。

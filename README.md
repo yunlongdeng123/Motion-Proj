@@ -1,6 +1,6 @@
 # Motion-Proj
 
-Motion-Proj 当前主线是**面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3**。项目以
+Motion-Proj 当前主线是**面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1**。项目以
 DriveStudio/StreetGS 和已经完成的动态 actor 编辑链为基础，研究校准、动态 Gaussian 资源分配、编辑后局部
 3D 精修和部署优化，不以“大创新”或大型评测框架为前提。
 
@@ -8,7 +8,7 @@ DriveStudio/StreetGS 和已经完成的动态 actor 编辑链为基础，研究�
 
 - 权威状态：[`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md)
 - 唯一当前计划：
-  [`docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md`](docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md)
+  [`docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - 实验台账：[`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)
 - 失败与防重复账本：[`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)
 
@@ -45,6 +45,9 @@ CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒�
 已有能力的严谨消融/增强；首要模型新增是 A2，而不是重新命名上游功能。三场景只用于模型消融与工程结论，
 不包装成新的 benchmark 或大规模泛化结果。
 
+当前 A1-E0 已冻结 E1 跨相机光度残差与 E2 actor 边界重投影误差，并完成 scene-0230 C0/C1 回填和最小
+LiDAR provenance。下一门禁是顺序完成 scene-0230 C2/C3 30k formal，再冻结确认场景候选 C*。
+
 ## 环境
 
 ```bash
@@ -66,9 +69,10 @@ source scripts/bootstrap_autodl_v2.sh
 
 - `motion_proj/resim/`：WorldState、actor registry、轨迹编辑和 typed render；
 - `motion_proj/dynamic_editing_v2/`：可复用的 actor 真值、投影和局部评测设施；
+- `motion_proj/worldsim_v3/`：A1 端点、LiDAR provenance 与后续 WorldSim 模型组件；
 - `/root/autodl-tmp/third_party/drivestudio/`：固定 DriveStudio/StreetGS 上游；
 - `/root/autodl-tmp/runs/dynamic_editing_v2/`：V2 冻结证据；
-- V3 formal run 将使用 `/root/autodl-tmp/runs/worldsim_v3/`；
+- V3/V3.1 formal run 使用 `/root/autodl-tmp/runs/worldsim_v3/`；
 - `docs/archive/`：历史计划与结论，不构成当前执行授权。
 
 第三方版本、环境、迁移与资产保留规则见：
