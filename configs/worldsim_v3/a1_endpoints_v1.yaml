@@ -1,0 +1,58 @@
+schema_version: 1
+endpoint_version: A1-E0-v1
+task_id: WS-V3-A1-CALIBRATION-01
+frozen_before_result_access: true
+
+e1:
+  name: cross_camera_photometric_residual
+  truth_tier: model_geometry_conditioned_diagnostic
+  camera_pairs:
+    - [CAM_FRONT_LEFT, CAM_FRONT]
+    - [CAM_FRONT, CAM_FRONT_RIGHT]
+  directions: bidirectional
+  grid_stride_pixels: 8
+  exclude_ground_truth_sky: true
+  exclude_ground_truth_dynamic: true
+  exclude_egocar: true
+  minimum_rendered_opacity: 0.70
+  maximum_dynamic_opacity: 0.05
+  maximum_relative_depth_edge: 0.05
+  depth_edge_dilation_pixels: 1
+  maximum_relative_occlusion_error: 0.03
+  inverse_affine_observed_rgb: true
+  clip_inverse_affine_rgb: false
+  residual: channel_mean_absolute_rgb
+  near_far_split_meters: 20.0
+  aggregation: pooled_valid_static_supports
+  report_quantiles: [median, p90]
+  minimum_valid_supports: 256
+  minimum_coverage: 0.01
+  abstain_reasons:
+    - NO_CANDIDATE_SUPPORT
+    - ZERO_CROSS_CAMERA_SUPPORT
+    - INSUFFICIENT_VALID_SUPPORT
+    - INSUFFICIENT_COVERAGE
+
+e2:
+  name: actor_boundary_reprojection_error
+  truth_tier: model_geometry_and_counterfactual_effect_conditioned_diagnostic
+  effect_mask_source: a0_paired_original_delete_uint8
+  effect_threshold_uint8: 2
+  effect_dilation_radius_pixels: 2
+  actor_support_source: selected_rigid_gaussian_opacity_render
+  minimum_actor_support_opacity: 0.05
+  boundary_extractor: inner_8_connected_one_pixel
+  distance: symmetric_bidirectional_boundary_distance
+  distance_normalization: image_diagonal
+  aggregation: pooled_boundary_pixels
+  report_quantiles: [mean, median, p90]
+  minimum_valid_images: 3
+  minimum_coverage: 0.05
+  qa_images_per_role: 6
+  abstain_reasons:
+    - ACTOR_UNAVAILABLE_IN_SOURCE_CONTRACT
+    - NO_HELDOUT_VALID_FRAMES
+    - ZERO_COUNTERFACTUAL_EFFECT_BOUNDARY
+    - ZERO_PROJECTED_ACTOR_SUPPORT_BOUNDARY
+    - INSUFFICIENT_VALID_SUPPORT
+    - INSUFFICIENT_COVERAGE
