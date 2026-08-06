@@ -1,0 +1,58 @@
+schema_version: 1
+diagnostic_version: A1-D0-v1
+task_id: WS-V3-A1-CALIBRATION-01
+frozen_before_diagnostic_result_access: true
+
+scene:
+  name: scene-0230
+  index: 179
+  processed_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179
+  num_frames: 196
+  num_cameras: 3
+  processed_hz: 10.0
+  test_frame_stride: 10
+  camera_id_to_name:
+    0: CAM_FRONT
+    1: CAM_FRONT_LEFT
+    2: CAM_FRONT_RIGHT
+
+speed_tiers:
+  source_camera_id: 0
+  source: processed_camera_extrinsics_translation
+  frame_alignment: previous_interval_right_aligned
+  near_static_upper_mps: 0.5
+  low_speed_upper_mps: 2.0
+  minimum_frames_per_tier: 2
+  expected_input_only_counts:
+    near_static: 2
+    low_speed: 18
+    normal: 176
+
+pose:
+  truth_tier: learned_camera_correction_diagnostic_not_pose_ground_truth
+  translation_unit: meters
+  rotation_unit: degrees
+  native_rotation: six_dimensional_plus_identity
+  bounded_translation_max_m: 0.15
+  bounded_rotation_max_deg: 2.0
+  first_difference: adjacent_residual_translation_and_rotation_geodesic
+  second_difference: adjacent_first_difference_translation_and_rotation_geodesic
+  report_quantiles: [mean, median, p90, max]
+
+isp:
+  truth_tier: learned_rgb_affine_diagnostic
+  c0_policy: identity
+  c1_heldout_policy: decoder_of_mean_native_embedding
+  c2_c3_policy: camera_embedding_plus_continuous_linear_normalized_time
+  residual_vector: flattened_gain_minus_identity_plus_bias
+  temporal_first_difference: adjacent_frames_same_camera_l2
+  temporal_second_difference: adjacent_first_differences_same_camera_l2
+  camera_pairs:
+    - [CAM_FRONT_LEFT, CAM_FRONT]
+    - [CAM_FRONT, CAM_FRONT_RIGHT]
+  report_quantiles: [mean, median, p90, max]
+
+abstain_reasons:
+  - MODULE_ABSENT_BY_VARIANT
+  - INSUFFICIENT_SPEED_TIER_FRAMES
+  - INVALID_CHECKPOINT_CONTRACT
