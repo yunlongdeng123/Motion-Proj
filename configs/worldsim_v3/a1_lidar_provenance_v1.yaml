@@ -1,0 +1,47 @@
+schema_version: 1
+audit_version: A1-LP0-v1
+task_id: WS-V3-A1-CALIBRATION-01
+frozen_before_result_access: true
+
+raw_inputs:
+  lidar_scan_format: float32_xyzi
+  bytes_per_point: 16
+  lidar_pose_format: text_4x4_lidar_to_world
+  actor_annotations:
+    - instances/instances_info.json
+    - instances/frame_instances.json
+  hash: sha256_file_bytes
+
+runtime_initialization:
+  seed: 0
+  background_lidar_sample_points: 800000
+  random_near_config_points: 100000
+  random_far_config_points: 100000
+  random_candidate_multiplier_in_drivestudio: 3
+  require_recorded_lidar_actor_tensor_match: true
+  exact_background_reproduction: report_not_gate
+
+initial_depth_residual:
+  split: heldout_test
+  lidar_valid_minimum_meters: 0.001
+  rendered_valid_minimum_meters: 0.001
+  minimum_rendered_opacity: 0.05
+  absolute_residual: abs_rendered_expected_depth_minus_lidar_z_meters
+  relative_residual: absolute_residual_divided_by_lidar_z
+  aggregation: pooled_valid_sparse_lidar_pixels
+  report_quantiles: [mean, median, p90]
+  minimum_valid_points: 1000
+  minimum_coverage: 0.05
+  qa_images: 6
+
+scope_boundary:
+  included:
+    - raw_lidar_and_pose_block_sha_point_count
+    - runtime_sample_tensor_sha_point_count
+    - actor_mapping_and_visible_frame_count
+    - initial_background_and_actor_gaussian_count
+    - initial_heldout_sparse_lidar_depth_residual
+  deferred_to_a2:
+    - post_densification_per_gaussian_ancestry
+    - parent_child_lineage
+    - split_clone_source_chain
