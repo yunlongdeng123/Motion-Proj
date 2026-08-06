@@ -1,0 +1,82 @@
+schema_version: 1
+selection_version: A1-S0-v1
+task_id: WS-V3-A1-CALIBRATION-01
+
+scope:
+  scene_name: scene-0230
+  scene_index: 179
+  seed: 0
+  split: formal_heldout_full
+  baseline_variant: c0-off
+  alternatives:
+    - c1-native
+    - c2-factorized-isp
+    - c3-bounded-pose
+
+result_access_disclosure:
+  operationalized_after_development_results: true
+  frozen_before_confirmation_scenes: true
+  numerical_tolerances_introduced: false
+  note: >-
+    V3.1 7.5 已预注册 E1/E2、另一端点不得关键退化及 actor/global LPIPS
+    不得不可接受退化；本配置在开发场景结果已可见后，只把上述文字要求操作化为
+    无容差的严格 Pareto 判定，不把它表述为盲测前阈值。
+
+source_contract:
+  endpoint_config_sha256: 60c211625860c25edf92842b88bdb040ea8c180b12fe0fa78f2fc1c342bc4051
+  diagnostic_config_sha256: a445078d3bea89a78a0c9e6544a94a2be4c9c2e71f45aec4a9d8878b4c6593c1
+  paired_initialization_sha256: 8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898
+  training_runs:
+    c0-off: 20260805T182500Z__scene0230-c0-formal30k-s0-r1
+    c1-native: 20260805T032100Z__scene0230-c1-formal30k-s0-r1
+    c2-factorized-isp: 20260806T144938Z__scene0230-c2-factorized-isp-formal30k-s0-r1
+    c3-bounded-pose: 20260806T154834Z__scene0230-c3-bounded-pose-formal30k-s0-r1
+  endpoint_runs:
+    c0-off: 20260806T141409Z__scene0230-c0-a1-e0-formal-full-camera-map-fix-s0-r2
+    c1-native: 20260806T141623Z__scene0230-c1-a1-e0-formal-full-camera-map-fix-s0-r1
+    c2-factorized-isp: 20260806T154541Z__scene0230-c2-a1-e0-formal-full-s0-r1
+    c3-bounded-pose: 20260806T164852Z__scene0230-c3-a1-e0-formal-full-s0-r1
+  diagnostic_run: 20260806T170219Z__scene0230-a1-diagnostics-c0-c3-formal-s0-r1
+
+decision:
+  comparator: strict_floating_point_order_without_tolerance
+  e1:
+    lower_is_better: [median, p90]
+    support_not_lower: [coverage]
+    improvement: all_error_metrics_strictly_lower_and_support_not_lower
+    non_degradation: all_error_metrics_not_higher_and_support_not_lower
+  e2:
+    roles: [boundary-support, high-support]
+    lower_is_better: [mean, p90]
+    support_not_lower: [coverage]
+    improvement: >-
+      every role non-degraded and at least one role has all error metrics strictly lower
+    non_degradation: every_role_error_not_higher_and_support_not_lower
+  appearance:
+    lower_is_better:
+      - global_lpips
+      - boundary_actor_lpips
+      - boundary_band_lpips
+      - high_actor_lpips
+      - high_boundary_lpips
+    acceptability: every_metric_not_higher_than_c0
+  eligibility: >-
+    E1 or E2 improves, the other endpoint is non-degraded, and every frozen
+    appearance LPIPS is non-degraded.
+  tie_break:
+    - improved_primary_endpoint_count_desc
+    - global_lpips_asc
+    - total_gaussians_asc
+    - train_seconds_asc
+    - alternative_order_asc
+  fallback_variant: c0-off
+
+confirmation_alias_policy:
+  logical_matrix_entries: 10
+  development_training_runs: 4
+  per_confirmation_scene_entries: [c0-off, c1-native, selected_c_star]
+  exact_alias_when_selected_is_c0_or_c1: true
+  duplicate_training_for_exact_alias: false
+  note: >-
+    若 C* 等于 C0 或 C1，确认场景仍保留三个逻辑矩阵项，但 C* 项必须登记为同一
+    source run/checkpoint 的 exact alias；不把完全相同的重复训练冒充独立变体。
