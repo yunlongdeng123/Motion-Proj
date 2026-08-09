@@ -58,6 +58,12 @@ def load_model_checkpoint_read_only(
     del state_dict
 
 
+def release_trainer_render_info(trainer: Any) -> None:
+    """Drop per-view CUDA intermediates before the next render allocates."""
+    if hasattr(trainer, "info"):
+        trainer.info = {}
+
+
 def uint8_rgb(value: torch.Tensor) -> np.ndarray:
     array = value.detach().float().cpu().numpy()
     if not np.isfinite(array).all():
@@ -360,6 +366,7 @@ def render_edit(
             "first_hit_valid": np.asarray(first_hit_valid, dtype=np.bool_),
         }
     finally:
+        release_trainer_render_info(trainer)
         with torch.no_grad():
             rigid.instances_trans.copy_(translations)
             rigid.instances_fv.copy_(visibility)

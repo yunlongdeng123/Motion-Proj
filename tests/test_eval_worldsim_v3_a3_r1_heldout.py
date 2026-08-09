@@ -9,6 +9,7 @@ from scripts.eval_worldsim_v3_a3_r1_heldout import (
     build_variant_aggregate,
     classify_exact_pareto,
     load_model_checkpoint_read_only,
+    release_trainer_render_info,
     squared_rgb_error,
 )
 
@@ -177,3 +178,10 @@ def test_checkpoint_loader_stages_tensors_on_cpu(monkeypatch, tmp_path) -> None:
     }
     assert state_dict["models"]["Background"] == {"value": 1}
     assert state_dict["models"]["RigidNodes"] == {"staged": rigid_state}
+
+
+def test_render_info_is_released_between_views() -> None:
+    trainer = type("Trainer", (), {})()
+    trainer.info = {"large_cuda_intermediate": object()}
+    release_trainer_render_info(trainer)
+    assert trainer.info == {}
