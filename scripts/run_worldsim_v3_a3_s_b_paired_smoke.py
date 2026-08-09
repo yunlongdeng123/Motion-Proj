@@ -379,6 +379,9 @@ def main() -> None:
     device = torch.device(args.device)
     torch.manual_seed(int(protocol["paired_design"]["seed"]))
     if device.type == "cuda":
+        torch.cuda.set_device(device)
+        # Peak-stat reset requires a live CUDA context on the target device.
+        torch.empty((), device=device)
         torch.cuda.manual_seed_all(int(protocol["paired_design"]["seed"]))
         torch.cuda.reset_peak_memory_stats(device)
     dataset = DrivingDataset(data_cfg=resolved_config.data)
