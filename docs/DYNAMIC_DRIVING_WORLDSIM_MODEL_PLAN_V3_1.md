@@ -14,8 +14,9 @@
 - **A2-D2 formal 证据基线**：`482fba0`（唯一 30k 实例、5k grid、fixed/matched 与资源/不可变性证据）
 - **A2 正式收口基线**：`2246693`（D2 formal 证据、非支配裁决、D2 research asset 与 D1 fallback）
 - **A3-I0 协议 SHA-256**：`03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`
+- **A3 R0/R1 engineering guard 基线**：`9c639dd`（exact alias、row/Adam exact guard、DriveStudio patch 与 synthetic smoke）
 - **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3-I0 semantic protocol frozen / A3 R0-R1 engineering next / D3-D4 not launched / F0、A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 synthetic contract done / A3 paired sidecar-smoke next / D3-D4 not launched / F0、A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -1390,14 +1391,16 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 A1 已以 `C*=C0-off / done_off` 收口，A2 的 I0、D1/D2 smoke、D1/D2 formal 与 fixed/matched 完整 Pareto
 也已全部闭环。A2 终态为 `done / tradeoff_non_dominated`：D2 在 boundary-support boundary band 改善，
 但 global、部分 actor/non-target 与训练成本存在退化；A3 采用 D2 boundary-priority asset，保留 D1 fallback。
-A3-I0 semantic protocol 已冻结，但尚未授权训练。当前唯一动作是实现 R0/R1 工程门：
+A3-I0 semantic protocol 已冻结，R0/R1 materializer、DriveStudio patch、module-off loss exact、逐步 outside
+parameter/Adam exact 与 synthetic contract 已由 `9c639dd` 和 synthetic run 闭环；这不是 paired 或质量证据，仍未授权
+formal。当前唯一动作前移到真实 scene-0230 paired evidence：
 
 ```text
-1. 以 D2 30k exact asset 物化 R0-off 与 R1-reactivate；D1 只读 fallback，不重复训练
-2. 实现 deterministic lateral/delete、affected/support sidecar 与三种 typed depth 的 fail-closed 绑定
-3. R0 必须 checkpoint/config/output exact alias；R1 只允许 Background affected S-A/S-B opacity/scale 行有梯度
-4. 每步恢复/审计 outside 参数和 optimizer state；RigidNodes、actor trajectory、registry 与 tensor order exact
-5. 先通过 synthetic contract，再做最小 paired engineering smoke；smoke 不构成质量结论或 formal 授权
+1. 对 high/boundary actor 的 lateral +1m/delete 物化 deterministic source/edited footprints，不使用 held-out frames
+2. 生成 Background 1,205,164 行的 affected/support NPZ+manifest；S-A/S-B/S-C、三种 typed depth 与 SHA provenance 完整
+3. 将 S-A RGB mask、S-A/S-B geometry mask 注入 DriveStudio；缺失/越权/S-B RGB/S-C update 必须 fail closed
+4. 先做最小 R0/R1 paired engineering smoke；继续要求 outside parameter/Adam、RigidNodes/trajectory/registry/order exact
+5. smoke 通过后才冻结 optimizer steps、opacity/scaling LR、affected cap、first-hit alpha 与资源上界；不得直接 formal
 ```
 
 paired smoke 后才冻结 optimizer steps、LR、affected/seed cap、first-hit alpha 和资源上界。D3 继续
@@ -1406,6 +1409,21 @@ paired smoke 后才冻结 optimizer steps、LR、affected/seed cap、first-hit a
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A3 R0/R1 exactness guard 与 synthetic contract 完成
+
+- implementation=`9c639dd5a0adcd1f8b5126f7f20d836815b127a6`；DriveStudio patch SHA-256=
+  `155ec58fd2bfdc2e40357035dc20800bf2340b0c1c9ac5972c7c78efbd8cb69b`；独立工作树通过 apply/reverse、
+  `py_compile` 与 import smoke；
+- synthetic run=`20260809T132133Z__a3-r0-r1-synthetic-s0-r1`，summary SHA-256=
+  `2ac123f0603120a103743e59680a31dd4cdf5b6d5fa45605d7c84d36ec337ada`，manifest SHA-256=
+  `8ffa697e15d8a97108d8281a51313119c304fbf0f245d88bfbd127663fde27c4`；110 项联合回归通过；
+- R0 重新计算 D2 checkpoint/config/protocol SHA 并只生成 immutable alias，optimizer steps=`0`、无新 checkpoint key；
+- R1 synthetic 中只有 affected S-A/S-B Background opacity/scale 行变化；outside 参数和 Adam moments、
+  Background position/color、RigidNodes/trajectory、tensor shape/order exact；
+- 原 D2 与 A3 module-off 的 RGB/SSIM loss tensor 逐位相等；缺少 paired provenance/masks 时 fail closed；
+- evidence tier 仍为 `synthetic_contract_only`，`paired_engineering_smoke_complete=false`、
+  `formal_training_authorized=false`。下一门禁是真实 heldout-safe affected/support sidecar 与最小 paired smoke。
 
 ### 2026-08-09 — A3-I0 局部精修语义协议冻结
 
@@ -1568,7 +1586,8 @@ WS-V3-A3-LOCAL-REFINE-01 当前为 running；I0 semantic protocol 已冻结，fo
 11. 核对 D2 paired smoke r1 terminal、summary SHA `749c7d15...3136`、provenance、真实 observation/order/cap、quota 与资源门禁；
 12. 核对 D2 formal r1 terminal、summary SHA `9c41dfc8...de7d`、六个 grid、matched 0.67165%、D1 checkpoint 不变与资源终态；
 13. 核对 A3 protocol SHA `03fbf632...72d0`、D2/D1 asset hashes、两 actor/两 edit、held-out exclusion、S-A/B/C 与三种 depth 语义；
-14. 只实现 R0/R1 materializer、DriveStudio patch、module-off/outside exact 与 synthetic smoke；不得启动 formal 或混入 R2-R4。
+14. 核对 A3 implementation `9c639dd`、patch SHA `155ec58f...b69b`、synthetic summary/manifest、110 项测试、R0 alias 与 R1 outside/Adam exact；
+15. 当前只物化真实 heldout-safe affected/support sidecar、paired loss 注入和最小 R0/R1 engineering smoke；不得启动 formal 或混入 R2-R4。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

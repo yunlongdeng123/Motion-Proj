@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A3-LOCAL-REFINE-01`
 - 状态：`running`
-- 当前门禁：A3-I0 semantic protocol 已冻结；下一门禁为 R0 exact alias、R1 affected-only opacity/scale 与 synthetic smoke
+- 当前门禁：A3 R0/R1 synthetic contract 已通过；下一门禁为 heldout-safe paired sidecar、loss 注入与最小 engineering smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -308,6 +308,24 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - `formal_training_authorized=false`。未提交 V2 M5 config/metrics/runner 明确排除为依赖；paired smoke 后再冻结
   steps、LR、affected/seed cap、first-hit alpha 与资源数值合同；新增 `12 passed`，联合回归 `98 passed`。
 
+## A3 R0/R1 engineering guard 与 synthetic closeout
+
+- implementation=`9c639dd5a0adcd1f8b5126f7f20d836815b127a6`；DriveStudio patch SHA-256=
+  `155ec58fd2bfdc2e40357035dc20800bf2340b0c1c9ac5972c7c78efbd8cb69b`；独立工作树=
+  `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1`，apply/reverse、`py_compile`、import 均通过；
+- canonical synthetic run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T132133Z__a3-r0-r1-synthetic-s0-r1`，
+  terminal=`done`，summary SHA-256=`2ac123f0603120a103743e59680a31dd4cdf5b6d5fa45605d7c84d36ec337ada`，
+  manifest SHA-256=`8ffa697e15d8a97108d8281a51313119c304fbf0f245d88bfbd127663fde27c4`；
+- R0 materializer 重新命中 checkpoint/config/protocol SHA，只生成 immutable exact alias；optimizer steps=`0`，
+  无新 checkpoint/key；
+- R1 guard 在 Adam step 前只保留 affected S-A/S-B Background opacity/scale 行梯度，step 后逐位审计参数与 moments；
+  synthetic 中授权行变化，outside、position/color、RigidNodes/trajectory、shape/order exact；
+- 原 D2 与 A3 module-off 的 RGB/SSIM loss tensor 逐位相等；缺少 paired provenance/masks 会拒绝；
+  checkpoint 实际布局为 Background=`1,205,164` 行、RigidNodes=`104,704` 行、trajectory=`196×24`；
+- 联合 WorldSim V3/materializer 回归=`110 passed`。证据仍为 `synthetic_contract_only`，
+  `paired_engineering_smoke_complete=false`、`formal_training_authorized=false`。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -340,7 +358,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | running | I0 semantic protocol frozen；R0/R1 materializer、patch 与 synthetic smoke next；formal 未授权 |
+| `WS-V3-A3-LOCAL-REFINE-01` | running | R0/R1 synthetic contract done；heldout-safe paired sidecar/loss/smoke next；formal 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
@@ -354,7 +372,8 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-A3-I0 semantic protocol 已冻结。下一步只实现 R0/R1：物化 D2 exact alias、确定性 lateral/delete、支持 sidecar、
-typed depth 绑定、R1 Background affected opacity/scale gradient mask，以及逐步 outside parameter/optimizer exact
-审计；先通过 synthetic contract，再做最小 paired engineering smoke。smoke 不是质量证据；在其后冻结数值预算
-前不得启动 formal 或 R2–R4。D3/D4 保持未解锁，F0 仍是独立非阻塞项。
+A3 R0/R1 materializer、DriveStudio guard 与 synthetic contract 已完成。下一步只物化 scene-0230 high/boundary
+actor 的 deterministic lateral/delete footprints、排除 19 个 held-out frames 的 S-A/S-B/S-C support/typed-depth sidecar，
+并把 S-A RGB 与 S-A/S-B geometry masks fail-closed 注入最小 R0/R1 paired engineering smoke。smoke 仍不是质量证据；
+通过后才冻结 steps/LR/affected cap/first-hit alpha/resource 数值合同。在此之前不得 formal 或 R2–R4；D3/D4 保持
+未解锁，F0 仍是独立非阻塞项。

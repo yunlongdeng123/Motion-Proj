@@ -319,6 +319,22 @@ Matched-RigidNodes-budget：
   不得成为 A3 dependency；新增 `12 passed`，联合 WorldSim V3/materializer 回归 `98 passed`。下一工程门是
   materializer/patch/module-off/outside exact 与 paired smoke。
 
+### `WS-V3-A3-LOCAL-REFINE-01` I1 engineering guard / synthetic closeout
+
+- implementation=`9c639dd5a0adcd1f8b5126f7f20d836815b127a6`；DriveStudio patch SHA=
+  `155ec58fd2bfdc2e40357035dc20800bf2340b0c1c9ac5972c7c78efbd8cb69b`；独立 A3 工作树通过
+  apply/reverse、`py_compile` 与 import；
+- run=`20260809T132133Z__a3-r0-r1-synthetic-s0-r1`；summary SHA=
+  `2ac123f0603120a103743e59680a31dd4cdf5b6d5fa45605d7c84d36ec337ada`，manifest SHA=
+  `8ffa697e15d8a97108d8281a51313119c304fbf0f245d88bfbd127663fde27c4`；联合回归 `110 passed`；
+- R0=`immutable_exact_alias_no_optimizer_no_new_checkpoint`，重新命中 D2 checkpoint/config/protocol SHA；
+- R1 synthetic 只改变 affected S-A/S-B Background opacity/scale；outside parameter/Adam state、position/color、
+  RigidNodes/trajectory、tensor shape/order exact；原 D2 与 A3 module-off RGB/SSIM loss tensor exact；
+- 缺 paired provenance/masks 时 DriveStudio fail closed；实际 checkpoint Background/Rigid rows=
+  `1,205,164/104,704`，trajectory=`196×24`；
+- 状态=`done synthetic_contract_only`，不是 paired/质量证据；`paired_engineering_smoke_complete=false`、
+  `formal_training_authorized=false`。下一门是 heldout-safe affected/support sidecar、loss 注入与最小 paired smoke。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -536,6 +552,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 ## 12. 当前唯一动作
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
-`done / tradeoff_non_dominated`。A3-I0 protocol 已冻结；下一动作只实现 R0 exact alias 与 R1 Background
-affected opacity/scale 的 materializer、DriveStudio patch、support/depth sidecar、outside optimizer exact 和
-synthetic paired smoke。smoke 后再冻结数值预算；不得启动 formal、R2–R4 或 D3/D4。
+`done / tradeoff_non_dominated`。A3-I0 protocol 与 R0/R1 synthetic contract 已完成；下一动作只物化真实
+scene-0230 deterministic footprints、heldout-safe S-A/S-B/S-C support/typed-depth sidecar、DriveStudio paired loss
+注入和最小 R0/R1 engineering smoke。smoke 后再冻结数值预算；不得启动 formal、R2–R4 或 D3/D4。
