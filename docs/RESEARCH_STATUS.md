@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-D1 formal r1 已 `done`；D2 协议已冻结；下一门禁为独立实现、synthetic integration 与 paired smoke
+- 当前门禁：A2-D1 formal r1 已 `done`；D2 协议、独立实现与 synthetic integration 已完成；下一门禁为 paired smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -238,8 +238,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - boundary scale cap 复用 native densify size threshold，pre-cap scale 先决定 split/clone geometry，再在原生 refinement
   前同比缩放三轴、保持 anisotropy，并清零 cap 行的 Adam moments；不新增 RNG draw；
 - D3 depth/normal、D4 LiDAR/visibility/provenance pruning、非原生 cull 与 Background 干预明确禁止；
-- D2 合同/纯函数与 D1 quota/I0 ancestry 联合测试=`22 passed`。当前没有 DriveStudio D2 patch、真实 paired smoke
-  或质量结果；协议冻结不等于 D2 方法通过。
+- 工程提交=`1065264762569c9832219936ddae6f063d6eaf07`；canonical worktree=
+  `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d2-r8`；D2 patch SHA-256=
+  `80fef55195906808d74394af0b997cfccbdb88fd7cb356b45240473e55f357cc`；replay/reverse-check 与六文件状态通过；
+- D1/D2 materializer normalized-match、真实 `RigidNodes` synthetic integration 与联合回归=`29 passed`；boundary/residual
+  各 6 次观测、1 次排序/refinement、6 个 cap、quota maximum、optimizer moments、checkpoint round-trip 和 module-off
+  native state/RNG bitwise 均通过；
+- 当前没有真实 paired smoke 或质量结果；协议/工程门禁通过不等于 D2 方法通过。
 
 ## A2-D1 quota-only 配对 smoke 完成证据
 
@@ -272,7 +277,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；D2 protocol frozen；implementation/smoke next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；D2 protocol/implementation/synthetic done；paired smoke next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -287,7 +292,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-A1 已收口，A2-I0、D1 quota-only paired smoke/formal 与 D2 协议冻结均已完成。下一步实现独立 D2
-DriveStudio patch、D1/D2 materializer 和 synthetic integration；先证明 module-off 与 D1 逐位等价、信号/排序/cap
-非空且 checkpoint 可恢复，再运行 scene-0230 / seed 0 / D1→D2 各 1000-step sequential paired smoke。
+A1 已收口，A2-I0、D1 quota-only paired smoke/formal、D2 协议、独立 DriveStudio patch、D1/D2 materializer
+与 synthetic integration 均已完成。下一步运行 scene-0230 / seed 0 / D1→D2 各 1000-step sequential paired smoke，
+要求真实信号/排序/cap 非空、quota/cap/checkpoint/资源审计通过。
 D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。

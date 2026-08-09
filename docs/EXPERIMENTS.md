@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke/formal 与 D2 协议冻结已完成，当前实现 D2 paired smoke。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke/formal 与 D2 协议/实现/synthetic 已完成，当前运行 D2 paired smoke。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal done；D2 protocol frozen；implementation/smoke next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal done；D2 protocol/implementation/synthetic done；paired smoke next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -248,7 +248,13 @@ Matched-RigidNodes-budget：
   Adam moments；不新增 RNG；
 - D1 eligibility/quota/native cull/Background 精确继承；depth/normal、LiDAR/visibility/provenance pruning 与
   Background intervention 禁止；
-- contract/helper 与 D1 quota/I0 ancestry 联合回归=`22 passed`；尚无 DriveStudio patch、真实 smoke 或质量证据。
+- 工程提交=`1065264762569c9832219936ddae6f063d6eaf07`；canonical worktree=
+  `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d2-r8`；D2 patch SHA-256=
+  `80fef55195906808d74394af0b997cfccbdb88fd7cb356b45240473e55f357cc`；四层 patch replay/reverse-check 通过；
+- D1/D2 materializer normalized-match、真实 `RigidNodes` synthetic integration 与联合回归=`29 passed`；boundary/residual
+  各 6 次观测、1 次排序/refinement、6 个 cap、配额上限、optimizer moments、checkpoint round-trip 和 module-off
+  native state/RNG bitwise 全部通过；
+- 尚无真实 paired smoke 或质量证据，不能登记 D2 方法结果。
 
 ## 3. V2 冻结注册表
 
@@ -466,6 +472,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 与 D2 protocol 已完成。下一动作是实现独立
-D2 DriveStudio patch、D1/D2 materializer、synthetic integration 和 module-off bitwise gate；通过后才执行
-scene-0230 / seed 0 / D1→D2 各 1000-step paired smoke。不得混入 D3 depth/normal 或 D4 pruning。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 与 D2 protocol/implementation/synthetic 已完成。
+下一动作是执行并审计 scene-0230 / seed 0 / D1→D2 各 1000-step paired smoke；真实 boundary/residual、ordering、
+cap、quota、checkpoint 与资源门禁必须通过。不得混入 D3 depth/normal 或 D4 pruning。
