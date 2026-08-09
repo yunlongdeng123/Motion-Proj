@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-D1 formal r1 已 `done` 且 fixed/matched 均为非支配 tradeoff；下一门禁为 D2 协议冻结与 paired smoke
+- 当前门禁：A2-D1 formal r1 已 `done`；D2 协议已冻结；下一门禁为独立实现、synthetic integration 与 paired smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -226,6 +226,21 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - fixed D0、fixed D1、matched D1 三次评测前后 checkpoint SHA 均不变，high/boundary/non-target 均 `done`，
   `oom=0 / oom_kill=0`。控制器登记 `d2_unlocked=true`，仅解锁 D2 协议冻结。
 
+## A2-D2 协议冻结证据
+
+- 配置：`configs/worldsim_v3/a2_d2_protocol_v1.yaml`，SHA-256=
+  `acceb7f4ce0f8dc3745de2fcaca51659891cfd82e4175f5a0e5765d77a01e567`；
+- immutable prerequisite：D1 canonical summary SHA=`e3b194c2...66ac`，D1 closeout commit=`f380dd2`；
+- 真实信号只用训练帧 dynamic mask 的 3px 形态学轮廓带与 projected-center RGB channel-mean L1 residual；
+  gsplat `means2d` 按像素坐标 nearest-center 采样，跳过不可见、非有限和中心出界项；
+- per-actor quota 内排序为 boundary observed/mean → residual observed/mean → screen-grad → Gaussian index；
+  D1 gradient eligibility、minimum recovery、maximum quota、split/clone cost、Background 与 native cull 全部不变；
+- boundary scale cap 复用 native densify size threshold，pre-cap scale 先决定 split/clone geometry，再在原生 refinement
+  前同比缩放三轴、保持 anisotropy，并清零 cap 行的 Adam moments；不新增 RNG draw；
+- D3 depth/normal、D4 LiDAR/visibility/provenance pruning、非原生 cull 与 Background 干预明确禁止；
+- D2 合同/纯函数与 D1 quota/I0 ancestry 联合测试=`22 passed`。当前没有 DriveStudio D2 patch、真实 paired smoke
+  或质量结果；协议冻结不等于 D2 方法通过。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -257,7 +272,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；fixed/matched 均为 tradeoff；D2 协议冻结 next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；D2 protocol frozen；implementation/smoke next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -272,7 +287,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-A1 已收口，A2-I0 与 D1 quota-only paired smoke/formal 均已完成。下一步冻结 D2 的真实 boundary/residual 信号、
-排序键与并列规则、boundary scale cap、module-off/D1-equivalence、checkpoint 与资源停止合同；随后只做
-scene-0230 / seed 0 的 D1→D2 paired smoke。D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning，
-也不得因 D1 的 tradeoff 事后更换 actor、指标或 quota。
+A1 已收口，A2-I0、D1 quota-only paired smoke/formal 与 D2 协议冻结均已完成。下一步实现独立 D2
+DriveStudio patch、D1/D2 materializer 和 synthetic integration；先证明 module-off 与 D1 逐位等价、信号/排序/cap
+非空且 checkpoint 可恢复，再运行 scene-0230 / seed 0 / D1→D2 各 1000-step sequential paired smoke。
+D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。

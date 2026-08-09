@@ -1,0 +1,127 @@
+schema_version: 1
+task_id: WS-V3-A2-ACTOR-DENSIFY-01
+audit_version: A2-D2-PROTOCOL-v1
+seed: 0
+
+depends_on:
+  d1_config: configs/worldsim_v3/a2_d1_v1.yaml
+  d1_formal_config: configs/worldsim_v3/a2_d1_formal_v1.yaml
+  d1_formal_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1
+  d1_formal_status: done
+  d1_formal_summary_sha256: e3b194c2ed0563385df70ca2043dbc791bedb21068d28dc9d75fb59984c166ac
+  d1_closeout_commit: f380dd202d0056fc7754e973cbad3ab9f2e64a43
+
+paired_intervention:
+  scene: scene-0230
+  seed: 0
+  order: [d1-actor-quota, d2-boundary-residual]
+  d1_inherited_exactly:
+    rigid_densify_grad_threshold: 0.00025
+    minimum_initial_multiplier: 0.5
+    minimum_absolute_floor: 1
+    maximum_initial_multiplier: 2.4
+    maximum_absolute_cap: 12000
+    below_threshold_policy: only_to_recover_minimum
+    split_parent_cost: n_split_samples
+    clone_parent_cost: 1
+    native_cull_policy: unchanged
+    background_policy: native_unchanged
+
+training_attribution:
+  enabled: true
+  mask_source: image_infos.dynamic_masks
+  mask_required: true
+  mask_binarization_threshold: 0.5
+  boundary_band:
+    operator: binary_morphological_gradient
+    radius_pixels: 3
+    definition: dilated_mask_and_not_eroded_mask
+  photometric_residual:
+    prediction: outputs.rgb_detached
+    target: image_infos.pixels_detached
+    per_pixel_reduction: channel_mean_absolute_error
+  projection:
+    source: gsplat_info.means2d_pixel_coordinates
+    visible_rule: radii_positive_and_finite_center_in_image
+    integer_rule: floor_coordinate_plus_half
+    sampling: nearest_projected_center
+  aggregation:
+    boundary: per_gaussian_running_arithmetic_mean
+    photometric_residual: per_gaussian_running_arithmetic_mean
+    update_timing: after_backward_before_refinement
+  truth_tier: training_attribution_diagnostic_not_gt_instance_segmentation
+
+ordering:
+  actor_partition: inherited_d1_actor_id
+  eligibility: inherited_d1_screen_gradient_threshold_and_minimum_recovery
+  deterministic: true
+  stable: true
+  keys:
+    - boundary_observed_desc
+    - boundary_mean_desc
+    - photometric_residual_observed_desc
+    - photometric_residual_mean_desc
+    - screen_grad_desc
+    - gaussian_index_asc
+  quota_accounting: inherited_d1_exactly
+
+boundary_scale_cap:
+  enabled: true
+  boundary_rule: finite_boundary_mean_gt_zero_and_observation_count_positive
+  event: every_native_refinement_event
+  geometry_classification: use_pre_cap_scales
+  application_timing: after_geometry_classification_before_native_split_clone_cull
+  maximum_scale: native_densify_size_threshold_times_scene_scale
+  threshold_multiplier: 1.0
+  transform: uniform_axis_rescale_preserving_anisotropy
+  optimizer_state: zero_exp_avg_and_exp_avg_sq_for_capped_rows
+  checkpoint_state_key: worldsim_a2_boundary_residual
+  extra_rng_draws: false
+
+scope_boundary:
+  stage: d2_boundary_residual_ordering_and_boundary_scale_cap_only
+  forbidden_in_d2:
+    - depth_residual_ordering
+    - normal_residual_ordering
+    - lidar_distance_weighting
+    - visibility_weighting
+    - provenance_aware_pruning
+    - non_native_cull_policy
+    - background_intervention
+
+module_off_equivalence:
+  enabled_value: false
+  reference: d1-actor-quota
+  require_native_tensor_bitwise_equality: true
+  require_native_checkpoint_key_equality: true
+  forbid_extra_rng_draws: true
+
+paired_smoke:
+  scene: scene-0230
+  variants: [d1-actor-quota, d2-boundary-residual]
+  num_iters: 1000
+  seed: 0
+  execution: sequential
+  required_checks:
+    - both_terminal_done
+    - paired_materialized_configs_except_variant_and_d2_enable
+    - initialization_provenance_exact_match
+    - d2_boundary_observations_nonzero
+    - d2_photometric_residual_observations_nonzero
+    - d2_ordering_events_nonzero
+    - d2_capped_gaussians_nonzero
+    - d2_scale_cap_respected_after_each_event
+    - d1_and_d2_quota_maximum_respected
+    - d2_checkpoint_roundtrip
+    - d2_module_off_bitwise_equal_to_d1
+    - no_nan_or_inf
+    - no_oom
+  formal_protocol_allowed_before_pass: false
+
+resource_contract:
+  gpu_count: 1
+  cgroup_memory_limit_bytes: 96636764160
+  minimum_free_disk_gib: 40
+  monitoring_interval_seconds: 10
+  stop_on_gpu_oom: true
+  stop_on_cgroup_oom: true

@@ -10,7 +10,7 @@
 - **A2-D1 工程基线**：`c9b2422`（quota-only policy、可重放 DriveStudio patch、配对 smoke controller）
 - **A2-D1 formal 协议基线**：`387dd50`（30k 配对控制器、held-out/non-target 评测、matched-budget 裁决）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 protocol next / F0、A3-A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 protocol frozen / D2 implementation next / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -847,6 +847,25 @@ I0 在 D1 前实现：
 冻结裁决为 `d2_unlocked=true`，下一动作只允许冻结 D2 boundary/residual ordering 与 boundary scale cap 协议。
 该结果仅限 scene-0230 / seed 0；负向和 tradeoff 证据有效，更多 Gaussian 不是自动改进。
 
+### 9.2.3 D2 协议冻结（implementation pending）
+
+- 冻结配置：`configs/worldsim_v3/a2_d2_protocol_v1.yaml`，SHA-256=
+  `acceb7f4ce0f8dc3745de2fcaca51659891cfd82e4175f5a0e5765d77a01e567`；依赖 D1 canonical summary
+  SHA `e3b194c2...66ac` 与收口提交 `f380dd2`；
+- D2 完整继承 D1 的 `0.00025` gradient eligibility、minimum recovery、per-actor maximum quota、split/clone
+  cost、Background 原生策略与 native cull；唯一允许的新干预是 quota 内排序和 boundary scale cap；
+- boundary 信号固定为训练帧 `image_infos.dynamic_masks` 的 3px 二值形态学轮廓带；photometric residual 固定为
+  detached `mean(abs(outputs.rgb - image_infos.pixels), channel)`；二者在可见、有限且中心位于图像内的 gsplat
+  `means2d` 像素坐标处做 nearest-center 采样，并按 Gaussian 记录算术运行均值与观察次数；
+- actor 内稳定排序键固定为：boundary observed/mean 降序 → residual observed/mean 降序 → screen-grad 降序
+  → Gaussian index 升序；gradient threshold 仍决定 eligibility，不把低残差 Gaussian 事后改成 eligible；
+- boundary scale cap 只作用于 boundary mean>0 且有观察的 Gaussian；geometry 先读 pre-cap scale，然后在原生
+  split/clone/cull 前把最大轴同比缩到原生 `densify_size_thresh × scene_scale`，保持各轴比例并清零被 cap 行的
+  Adam 一、二阶矩；不新增 RNG draw；
+- D3 depth/normal、D4 LiDAR/visibility/provenance pruning、非原生 cull 与 Background 干预全部显式禁止；
+- 纯合同、轮廓、投影采样、排序和 cap 测试与 D1 quota/I0 ancestry 联合回归=`22 passed`；当前尚无
+  DriveStudio D2 patch、真实 smoke 或质量证据，不得登记 D2 方法结果。
+
 ### 9.3 子消融
 
 | 实验 | 改动 | 状态要求 |
@@ -1257,14 +1276,16 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0、D1 quota-only 配对 smoke、formal 协议与唯一 formal run
 `20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 均已完成。fixed 30k 与 matched-RigidNodes 两种视图均为
-`tradeoff_non_dominated`，冻结控制器登记 `d2_unlocked=true`。当前唯一动作转为冻结 D2 协议：
+`tradeoff_non_dominated`，冻结控制器登记 `d2_unlocked=true`。D2 信号、排序与 scale-cap 协议现已冻结；
+当前唯一动作转为实现并验证 D2 paired smoke：
 
 ```text
-1. D2 只在 D1 上增加 boundary/residual 排序与 boundary scale cap，不混入 D3 depth/normal 或 D4 pruning
-2. 先冻结真实训练信号来源、归因时点、排序键、并列规则、scale cap 与 module-off/D1-equivalence 合同
-3. 先做 scene-0230 / seed 0 短步 D1→D2 paired smoke，验证信号非空、checkpoint round-trip、资源与停止条件
-4. smoke 通过后才冻结 D2 formal；fixed-step 与 matched-RigidNodes 继续沿用 D1 的 held-out/non-target/Pareto 合同
-5. 不因 D1 tradeoff 事后调 actor、指标或阈值；D2 仍允许负结果，且结论只限 scene-0230
+1. 实现独立、可重放的 DriveStudio D2 patch，不修改已冻结 D1 worktree 与 patch
+2. 物化 D1/D2 paired 配置；除 variant、D2 enable 和排序枚举外必须 normalized match
+3. synthetic integration 先验证 attribution、稳定排序、cap、optimizer state、checkpoint round-trip 与 module-off D1 bitwise
+4. 通过后再做 scene-0230 / seed 0 / D1→D2 / 各 1000-step sequential paired smoke
+5. 真实 smoke 必须有非零 boundary/residual observation、ordering event 与 capped Gaussian，且 quota/cap/资源门禁通过
+6. smoke 通过后才冻结 D2 formal；fixed/matched 继续沿用 D1 held-out/non-target/Pareto 合同
 ```
 
 D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,609,442`，虽 RigidNodes 匹配但 Background
@@ -1273,6 +1294,13 @@ D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A2-D2 boundary/residual 协议冻结
+
+- 配置 SHA-256=`acceb7f4...e567`；D1 formal summary 与收口提交作为不可变前置；
+- 冻结 3px dynamic-mask boundary band、投影中心 RGB L1 residual、稳定六键排序与复用 native size threshold 的 cap；
+- 明确 D1 eligibility/quota/cull/Background 不变，D3/D4 因子禁止，module-off 必须与 D1 逐位等价；
+- 新增纯函数与合同测试，并与 D1 quota、I0 ancestry 联合回归 `22 passed`；尚未实现 DriveStudio patch 或运行 smoke。
 
 ### 2026-08-09 — A2-D1 formal 正式收口
 
@@ -1386,7 +1414,7 @@ D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 已 done，当前只冻结 D2 协议，禁止重复启动 D1。
+WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 已 done、D2 协议已冻结，当前实现 D2 paired smoke。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1399,7 +1427,8 @@ WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 已 done，当前只�
 8. 核对 A2-D1 `c9b2422`、配置/patch SHA、canonical r4、D0/D1 provenance 匹配和 24/24 quota 上限；
 9. 核对 formal 协议提交 `387dd50`、配置 SHA `ad77db41...f8e7`、80 项测试和只读 preflight；
 10. 核对 D1 formal r1 terminal/summary、初始化同源、6×2 grid、fixed/matched 两视图与 checkpoint 不可变性；
-11. 冻结 D2 boundary/residual ordering + boundary scale cap 协议；不得混入 D3 depth/normal 或 D4 pruning。
+11. 核对 D2 protocol SHA `acceb7f4...e567` 与 22 项回归后，实现独立 patch/materializer/synthetic smoke；
+12. 只有 synthetic 门禁通过才运行 scene-0230 D1→D2 1000-step paired smoke；不得混入 D3/D4。
 
 不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
 ```

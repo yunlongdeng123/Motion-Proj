@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke 与 formal 已完成，当前冻结 D2 协议。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke/formal 与 D2 协议冻结已完成，当前实现 D2 paired smoke。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 smoke/formal done；fixed/matched tradeoff；D2 协议冻结 next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal done；D2 protocol frozen；implementation/smoke next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -235,6 +235,20 @@ Matched-RigidNodes-budget：
   RigidNodes 匹配不等于 total GS 匹配，D1 total GS 多 `1,249,195`；
 - 裁决：`d2_unlocked=true`，只解锁 D2 boundary/residual ordering + boundary scale cap 协议冻结。证据仅限
   scene-0230 / seed 0；不宣称 D1 全面优于 D0，也不以更多 Gaussian 冒充改进。
+
+### `WS-V3-A2-ACTOR-DENSIFY-01` D2 协议冻结
+
+- 配置=`configs/worldsim_v3/a2_d2_protocol_v1.yaml`；SHA-256=
+  `acceb7f4ce0f8dc3745de2fcaca51659891cfd82e4175f5a0e5765d77a01e567`；
+- D1 formal summary SHA=`e3b194c2...66ac` 与 closeout commit=`f380dd2` 为冻结前置；
+- attribution：dynamic mask 3px morphological boundary band + detached RGB channel-mean L1 residual；用 gsplat
+  projected center 做 nearest pixel sampling，按 Gaussian 记录 running mean/count；
+- ordering：boundary observed/mean、residual observed/mean、screen-grad 全部降序，Gaussian index 升序作稳定 tie-break；
+- cap：复用 native `densify_size_thresh × scene_scale`；pre-cap scale 决定 geometry，随后三轴同比缩放并清零 cap 行
+  Adam moments；不新增 RNG；
+- D1 eligibility/quota/native cull/Background 精确继承；depth/normal、LiDAR/visibility/provenance pruning 与
+  Background intervention 禁止；
+- contract/helper 与 D1 quota/I0 ancestry 联合回归=`22 passed`；尚无 DriveStudio patch、真实 smoke 或质量证据。
 
 ## 3. V2 冻结注册表
 
@@ -452,6 +466,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 已完成。下一动作是冻结 D2 的真实
-boundary/residual 信号、排序键/并列规则、boundary scale cap、module-off/D1-equivalence 与资源合同，然后执行
-scene-0230 / seed 0 的短步 D1→D2 paired smoke。不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 与 D2 protocol 已完成。下一动作是实现独立
+D2 DriveStudio patch、D1/D2 materializer、synthetic integration 和 module-off bitwise gate；通过后才执行
+scene-0230 / seed 0 / D1→D2 各 1000-step paired smoke。不得混入 D3 depth/normal 或 D4 pruning。
