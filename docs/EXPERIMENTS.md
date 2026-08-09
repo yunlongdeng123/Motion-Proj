@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0 ancestry instrumentation 与 D1 quota-only paired smoke 已完成，D1 formal 尚未启动。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 quota-only paired smoke 与 formal 协议冻结已完成，D1 formal 尚未启动。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0 done；D1 paired smoke done；D1 formal 与 D2 质量/GS/训练代价 Pareto 尚未完成 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 smoke 与 formal 协议 done；D1 formal 与 D2 质量/GS/训练代价 Pareto 尚未完成 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -188,6 +188,19 @@ actor/background threshold 和 per-actor min/max quota，先做 D0/D1 配对短�
 
 裁决：工程 smoke=`done`，只解锁 D1 formal 协议冻结。当前没有冻结 held-out actor/boundary 质量证据，D1 比 D0
 多 `26,915` 个 Rigid Gaussian，不能登记为质量改进或直接进入 D2。
+
+### `WS-V3-A2-ACTOR-DENSIFY-01` D1 formal 协议冻结
+
+- 提交=`387dd50`；配置 `configs/worldsim_v3/a2_d1_formal_v1.yaml` SHA-256=
+  `ad77db41d9d8c5172804a20b38a2dd92173c3639398d8abc24dc6f4799e8f8e7`；
+- frozen pair=scene-0230 / seed 0 / D0→D1 / 每臂 30k；5k candidate grid 只读，不改变训练；
+- matched-Gaussian-budget 目标为 D0 最终 RigidNodes 数；D1 选绝对差最小、并列更早的 checkpoint，2% 之外
+  `ABSTAIN_BUDGET_NOT_MATCHED`；不做事后 pruning、重训或 quota retune；
+- held-out 报告 global、high/boundary actor region/boundary band、两 actor 反事实 mask 并集之外的 non-target、
+  24 actor GS、Background/total GS、训练时间、peak VRAM/cgroup；matched 中间 step 的峰值只报完整 30k 上界；
+- `80 passed`；read-only preflight=`done`：GPU=`0 MiB`、free disk=`58.39 GiB`、cgroup memory.max=`90 GiB`，
+  canonical r4 summary SHA 与 compatibility/instrumentation/quota patch SHA 均匹配；
+- formal 尚未启动；本条只证明协议已冻结，不构成 fixed-step 或 matched-budget 质量结果。
 
 ## 3. V2 冻结注册表
 
@@ -405,7 +418,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0 与 D1 quota-only paired smoke 已完成。下一动作是冻结
-scene-0230 D0/D1 30k fixed-step、held-out global/high/boundary/non-target、per-actor GS、资源停止阈值与
-matched-Gaussian-budget 的 D1 formal 协议；协议 clean commit 前不启动 formal，不得混入 boundary、LiDAR、
-visibility、residual、scale cap 或 D2–D4。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke 与 formal 协议已完成。下一动作是按 `387dd50`
+用唯一 run ID 在 tmux 中顺序运行 scene-0230 D0→D1 30k，生成 fixed-step 与 matched-RigidNodes-budget 视图。
+两臂及 matched gate 完成前不得启动 D2；不得混入 boundary、LiDAR、visibility、residual、scale cap 或 D2–D4。

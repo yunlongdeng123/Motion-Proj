@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-I0 与 quota-only D1 配对 smoke 已收口；下一门禁为 D1 formal 协议/评测/matched-GS-budget 冻结
+- 当前门禁：A2-D1 formal 协议已在 `387dd50` 冻结且只读 preflight 通过；下一门禁为 D0→D1 30k formal 完整终态
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -189,6 +189,20 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 该结果只关闭 deterministic synthetic `RigidNodes` instrumentation 门禁，不是 scene-0230 真实质量证据，
 不授权直接启动 D1 formal。本次 source commit 只包含 A2-I0 代码、测试与直接相关文档，不混入保留的 V2 M5 文件。
 
+## A2-D1 formal 协议冻结证据
+
+- clean 协议/控制器/评测提交：`387dd501cd931b632ca4fd9950ee40b14bac6fce`；
+- formal 配置：`configs/worldsim_v3/a2_d1_formal_v1.yaml`，SHA-256=
+  `ad77db41d9d8c5172804a20b38a2dd92173c3639398d8abc24dc6f4799e8f8e7`；
+- scene-0230 / seed 0 / D0→D1 / 每臂 30k；5k 保存只读 candidate checkpoint；
+- matched-GS 只匹配干预域 `RigidNodes`：目标为 D0 30k 最终计数，D1 按绝对差最小、并列更早 step 选择；
+  相对差 `<=2%` 才登记 done，否则 `ABSTAIN_BUDGET_NOT_MATCHED`；禁止事后 pruning、重训或 quota retune；
+- held-out 端点为 global、high/boundary actor region 与 boundary band，以及两 actor 反事实 mask 并集之外的 non-target；
+  counterfactual mask 明示不是 GT segmentation；
+- `80 passed`；只读 preflight=`done`：GPU=`0 MiB`、free disk=`58.39 GiB`、memory.max=`90 GiB`、
+  canonical r4 summary SHA 与三层 DriveStudio patch SHA 全部匹配；
+- formal 尚未启动。该证据只解除启动门，不允许宣称 D1 质量改进，也不允许提前启动 D2。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -220,7 +234,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 done；quota-only D1 paired smoke done；下一门禁为 D1 formal 协议与质量/GS Pareto |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke 与 formal 协议 done；下一门禁为 D0→D1 30k formal 与质量/GS Pareto |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -235,7 +249,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-A1 已收口，A2-I0 与 D1 quota-only paired smoke 已通过。下一步以 `c9b2422` 和 canonical r4 为基线，冻结
-scene-0230 D0/D1 30k fixed-step、held-out global/high/boundary/non-target、per-actor GS、资源停止阈值与
-matched-Gaussian-budget 协议。协议/控制器/测试进入独立 clean commit 前不启动 formal；D1 formal 完成前不启动
-D2，也不混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4 因子。
+A1 已收口，A2-I0、D1 quota-only paired smoke 与 formal 协议冻结均已通过。下一步按 `387dd50` 用唯一 run ID
+在 tmux 中顺序运行 scene-0230 D0→D1 30k，并生成 fixed-step 与 matched-RigidNodes-budget 两个视图。formal 两臂
+和 matched gate 完成前不启动 D2；更多 Gaussian 不自动解释为改进，也不混入 boundary/residual、scale cap、
+LiDAR/visibility 或 D2–D4 因子。
