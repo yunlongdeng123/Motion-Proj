@@ -1,0 +1,170 @@
+schema_version: 1
+task_id: WS-V3-A4-DEPLOYMENT-01
+profile_id: A4-P0-END-TO-END-PROFILE-v1
+protocol_status: frozen_before_new_a4_measurements
+seed: 0
+scene: scene-0230
+
+authorization:
+  training_authorized: false
+  checkpoint_mutation_authorized: false
+  a3_r1_reactivation_authorized: false
+  p1_prune_authorized: false
+  p2_fp16_authorized: false
+  p3_chunk_authorized: false
+  p5_registry_resume_authorized: false
+
+selected_asset:
+  role: A3-star-R0-off-D2-immutable-exact-alias
+  variant: r0-no-refine-exact-alias
+  a3_closeout_commit: 10eee3ad30c3729532afecdcc520c1ef542e0210
+  checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+    sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+    bytes: 578819674
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+    sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+    bytes: 4661
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+    sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+    bytes: 3721428
+  rejected_r1_checkpoint_policy: forbidden_as_profile_or_production_input
+
+historical_evidence:
+  d2_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1
+  manifest:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/manifest.json
+    sha256: 260af5d99f3d3ece4f2c178f8c18385338432da9fbf94b7d8a4603163db20926
+  summary:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/summary.json
+    sha256: 9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d
+  resource_log:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/resource.jsonl
+    sha256: 1c1738ea1d8ca91f3ca7834af7231a95fb857e6d628146fbf149a273981802cf
+  stages:
+    train:
+      path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/stages/train_d2_boundary_residual_30000.json
+      sha256: 5b33b1b81ae568c4e56cc09b25359e40c54c859612284ec0af2f1467e4c137c7
+    render_eval:
+      path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/stages/eval_fixed_d2_boundary_residual.json
+      sha256: 731eb222b99e51f4f9976abeff548952281c93d0402061379453e42ad81a1ad8
+    registry:
+      path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/stages/registry_fixed_d2_boundary_residual.json
+      sha256: f39db18ceb8b3971eceef5663bb8fcf72228039b63e0b70db5646e9f09df6cab
+    actor_metrics:
+      path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/stages/actor_metrics_fixed_d2_boundary_residual.json
+      sha256: 3cc2e84a14c72d2f79d760953cee6d8484f5b14764ae06f0f83981a64334852c
+  reuse_policy:
+    prepare: new_process_probe_required
+    train: immutable_stage_reuse_no_rerun
+    render_eval: immutable_stage_reuse_no_rerun
+    convert: inventory_manifest_only_no_parameter_conversion
+    load: new_process_probe_required
+    runtime_render: new_process_probe_required
+    failure_recovery: dry_run_resume_audit_required
+  missing_value_policy: explicit_null_with_reason_never_zero
+
+new_probe:
+  device: cuda:0
+  resolution:
+    width: 1600
+    height: 900
+    policy: native_source_config_no_resize
+  camera_count: 3
+  warmup:
+    frame: 0
+    camera: 0
+    repeats: 2
+    output_hash_must_repeat_exactly: true
+  measured:
+    frames: [10, 100, 190]
+    cameras: [0, 1, 2]
+    repetitions_per_view: 1
+    expected_samples: 9
+    edit: original_only
+    image_persistence: hashes_only_no_png_or_video
+  timing:
+    clock: time.perf_counter
+    cuda_synchronize_before_and_after_each_render: true
+    p50: nearest_rank
+    p95: nearest_rank
+    fps: measured_frames_divided_by_sum_synchronized_render_seconds
+  load_semantics:
+    process_cold: first_checkpoint_load_in_fresh_process_after_trainer_construction
+    process_warm: second_identical_checkpoint_load_in_same_process
+    filesystem_cache: uncontrolled_report_explicitly
+    os_cache_eviction: forbidden
+  required_stage_measurements:
+    - prepare_dataset_seconds
+    - trainer_construction_seconds
+    - process_cold_checkpoint_load_seconds
+    - process_warm_checkpoint_reload_seconds
+    - runtime_render_warmup_seconds
+    - runtime_render_sample_seconds
+    - runtime_render_p50_seconds
+    - runtime_render_p95_seconds
+    - runtime_render_fps
+    - checkpoint_and_registry_inventory_bytes
+    - peak_torch_allocated_mib
+    - peak_torch_reserved_mib
+    - peak_nvidia_process_memory_mib_sampled
+    - peak_cgroup_memory_bytes_sampled
+  no_optimizer_construction_or_step: true
+  no_checkpoint_or_render_media_write: true
+
+resource_ceilings:
+  wall_time_seconds: 600
+  peak_torch_allocated_mib: 16384
+  peak_torch_reserved_mib: 24576
+  peak_nvidia_process_memory_mib_sampled: 24000
+  peak_cgroup_memory_bytes: 34359738368
+  run_bytes: 50000000
+  disk_free_floor_bytes: 30000000000
+  oom_events_delta: 0
+  oom_kill_events_delta: 0
+
+required_audits:
+  selected_input_hashes_and_bytes_exact: true
+  historical_evidence_hashes_exact: true
+  no_rejected_r1_input: true
+  no_training_or_optimizer: true
+  no_checkpoint_written: true
+  source_checkpoint_sha_before_after_exact: true
+  actor_registry_sha_before_after_exact: true
+  warmup_rgb_hash_repeat_exact: true
+  measured_matrix_complete_and_unique: true
+  native_resolution_exact: true
+  synchronized_timing_complete: true
+  resources_within_frozen_ceilings: true
+  dry_run_resume_reuses_completed_stages_without_gpu_launch: true
+
+recovery_contract:
+  stage_order: [inventory, runtime_probe, aggregate, resume_audit]
+  atomic_stage_records: true
+  resume_validation: hash_each_completed_stage_before_reuse
+  invalid_stage_policy: rerun_only_first_invalid_stage_and_downstream
+  completed_stage_policy: never_overwrite
+  resume_probe_policy: read_only_dry_run_after_initial_completion
+  minimum_rerun_units:
+    inventory: inventory_and_downstream
+    runtime_probe: runtime_probe_and_downstream
+    aggregate: aggregate_only
+    resume_audit: resume_audit_only
+
+claim_boundary:
+  p0_is_profile_not_quality_improvement: true
+  cold_load_is_process_cold_not_filesystem_cold: true
+  runtime_results_apply_only_to_scene_0230_seed_0_native_resolution: true
+  no_concurrency_claim_from_single_process_probe: true
+  no_a3_result_reinterpretation: true
+  no_p1_p2_p3_p5_unlock_until_p0_closeout: true
+
+failure_precedents:
+  - PIVOT-F05
+  - PIVOT-F12
+  - PIVOT-F18
+  - PIVOT-F21
+  - PIVOT-F22
+  - PIVOT-F24

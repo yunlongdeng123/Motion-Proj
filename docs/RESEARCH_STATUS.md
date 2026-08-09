@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A3 已以 R1 负结果、A3*=R0-off 收口；下一门禁为结果前冻结 A4-P0 profile 协议
+- 当前门禁：A4-P0 profile 协议已在新结果前冻结；下一步执行唯一 P0 profile run
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -408,7 +408,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 当前只冻结并执行 P0 end-to-end profile；P1/P2/P3/P5 尚未解锁 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0 protocol SHA=`8ba96278...d9a4` 已冻结，当前执行 profile；P1/P2/P3/P5 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -421,8 +421,8 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-冻结 `WS-V3-A4-DEPLOYMENT-01 / P0 profile` 协议：输入固定为 A3*=R0/D2 exact alias、现有 immutable run evidence
-与 actor registry；先定义 prepare/train/render-eval/convert/load/runtime-render/recovery 的 schema、同步/暖机、资源
-采样、cache 与最小重跑单位。已有训练/评测只复用可信时间和 bytes，不重复运行；仅对缺失的 convert/load/runtime/
-recovery 做最小可回退 profile。P0 关闭前不启动 prune、FP16、chunk、registry/resume，也不通过修改 A3 renderer 或
-资源 ceiling 倒改 R1 结论。D3/D4 与 A3 formal/R2–R4 保持未解锁，F0 仍是独立非阻塞项。
+执行已冻结的 `WS-V3-A4-DEPLOYMENT-01 / P0 profile`：先过 protocol validator 与 idle/disk/cgroup preflight，再创建
+唯一 run。train/render-eval 只读复用历史 stage；新测 inventory、prepare、process-cold/warm load、2 次 warm-up、
+9 个原生 `1600×900` 同步 render、aggregate 和 read-only resume audit。只存 JSON/hash，不写媒体或 checkpoint。
+P0 关闭前不启动 prune、FP16、chunk、registry/resume，也不修改 A3 renderer/ceiling 倒改 R1。D3/D4 与 A3
+formal/R2–R4 保持未解锁，F0 仍是独立非阻塞项。

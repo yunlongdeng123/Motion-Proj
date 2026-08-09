@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 已进入 `running`，当前只允许冻结并执行 P0 profile。
+`done`，`A3*=R0-off`；A4 已进入 `running`，P0 profile 协议已冻结，当前只允许执行 P0。
 
 ## 1. 状态词
 
@@ -32,7 +32,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | 当前先做 P0 profile；P0 后才裁决 pruning/FP16/chunk/registry-resume |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0 protocol frozen，profile next；P0 后才裁决 pruning/FP16/chunk/registry-resume |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -385,6 +385,23 @@ Matched-RigidNodes-budget：
 - final decision：R1 arm=`rejected_resource_gate_and_diagnostic_tradeoff`，A3 task=`done`，`A3*=R0-off`
   （D2 immutable exact alias）。S-A 未物化，formal/R2–R4 未授权；下一阶段为 A4-P0 profile 协议冻结。
 
+### `WS-V3-A4-DEPLOYMENT-01` P0 end-to-end profile protocol freeze
+
+- protocol=`configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml`，SHA-256=
+  `8ba96278b7f65957480a343a21977e2e24a537462b7a0b042a3268684d27d9a4`；A3 closeout=
+  `10eee3ad30c3729532afecdcc520c1ef542e0210`；selected asset=`A3*=R0-off/D2 exact alias`，checkpoint/config/
+  registry SHA=`1a061247...e7c / 115deaf...5e68 / ed57764e...0c68`；R1 输入禁止；
+- A2-D2 train、render/eval、registry、actor metrics stage JSON 及 manifest/summary/resource log 均固定 hash，P0
+  只读复用，不重跑训练或质量评测；convert 只盘点 inventory，不做参数转换；
+- new probe=`process-cold/warm load + 2 warm-up + frames 10/100/190 × cameras 0/1/2 original render`，原生
+  `1600×900`、CUDA 同步、P50/P95 nearest-rank、只存 RGB hash/JSON；OS cache eviction 禁止且 filesystem cache
+  明示 uncontrolled；
+- frozen ceilings=`600 s / 16,384 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA sampled / 32 GiB
+  cgroup / 50 MB run`，OOM delta=`0/0`；recovery=`inventory→runtime_probe→aggregate→resume_audit`，completed
+  stages 不覆盖，resume audit 不启动 GPU；
+- validator preflight 核对 10 个 immutable path/hash/bytes；协议单测=`4 passed`，联合 WorldSim V3=`143 passed`。
+  本条写入时尚未读取新 A4 runtime/load 结果；P1/P2/P3/P5 未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -603,6 +620,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
 `done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
-失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。下一动作只允许冻结并执行
-`WS-V3-A4-DEPLOYMENT-01 / P0 profile`；已有训练/评测证据只读复用，只补 convert/load/runtime/recovery 缺口。
+失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。下一动作只允许执行已冻结的
+`WS-V3-A4-DEPLOYMENT-01 / P0 profile`；已有训练/评测证据只读复用，只补 inventory/prepare/load/runtime/
+recovery 缺口，当前执行唯一 P0 run。
 P0 前不得启动 P1/P2/P3/P5，不得修改 A3 renderer/ceiling 挽回 R1，也不得启动 formal、R2–R4 或 D3/D4。

@@ -18,7 +18,7 @@
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 protocol next / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 protocol frozen、profile next / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,7 +545,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | 当前只冻结并执行 P0 profile；最低集完成且质量—大小—速度可审计 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0 protocol 已冻结，当前执行 profile；P1/P2/P3/P5 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1189,6 +1189,25 @@ H0：冻结的 2D Harmonizer / inpaint diagnostic
 
 ### 11.1 A4-P0：先做流水线 profile
 
+#### 11.1.1 P0 结果前协议冻结
+
+- 配置=`configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml`，SHA-256=
+  `8ba96278b7f65957480a343a21977e2e24a537462b7a0b042a3268684d27d9a4`；依赖 A3 closeout=
+  `10eee3ad30c3729532afecdcc520c1ef542e0210`，production input 只允许 `A3*=R0-off` 的 D2 checkpoint
+  `1a061247...e7c`、config `115deaf...5e68` 与 registry `ed57764e...0c68`；rejected R1 禁止进入 profile；
+- train 与 render/eval 只读复用 A2-D2 formal 的不可变 stage JSON，不重跑 30k 或质量评测；prepare/load/runtime
+  必须新进程测量，convert 在 P0 只做 checkpoint/registry inventory，不转换参数；缺失值必须显式 null+reason；
+- 原生 `1600×900`，warm-up=`frame 0 / camera 0 ×2` 且 uint8 RGB hash 必须 exact；计时矩阵为
+  frames `10/100/190 × cameras 0/1/2` 共 9 个 original view，每帧前后 CUDA synchronize，P50/P95 用
+  nearest-rank；不保存 PNG/MP4；
+- load 分为 process-cold 首次 load 与同进程 warm reload；filesystem cache 明示 uncontrolled，禁止驱逐 OS cache；
+  资源 ceiling=`600 s / 16,384 MiB torch allocated / 24,576 MiB torch reserved / 24,000 MiB NVIDIA sampled /
+  32 GiB cgroup / 50 MB run bytes`，OOM delta=`0/0`；
+- recovery stage 固定为 `inventory→runtime_probe→aggregate→resume_audit`，completed stage 禁止覆盖；resume audit
+  只做 read-only dry-run，不启动 GPU。P0 仍只是 profile，不登记质量改进或并发结论；P1/P2/P3/P5 未授权；
+- validator preflight 已核对 10 个路径/hash/bytes，4 项协议测试与联合 WorldSim V3 回归=`143 passed`。协议提交时
+  尚未读取任何新 A4 prepare/load/runtime 结果。
+
 对最终 A3 产物拆分记录：
 
 ```text
@@ -1450,14 +1469,14 @@ A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitw
 两项 RGB safeguard 严格退化并存的 `tradeoff_non_dominated`。因此 R1 方法臂已 rejected，A3 task 以正式负结果
 done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
 
-当前唯一动作转为 `WS-V3-A4-DEPLOYMENT-01 / P0 profile`：
+当前唯一动作是按已冻结协议执行 `WS-V3-A4-DEPLOYMENT-01 / P0 profile`：
 
 ```text
-1. 在读取新的部署结果前冻结 A4-P0 profile 协议、阶段 schema、同步/暖机方式、资源采样与失败恢复规则
-2. 输入只允许 A3*=R0/D2 exact alias、已有 A2/A3 immutable evidence 与 actor registry；不得把 rejected R1 设为生产基线
-3. 先盘点 prepare/train/render-eval/convert/load/runtime-render/recovery 的可复用时间与 bytes，已有训练不重复执行
-4. 只对缺失的 convert/load/runtime/recovery 做最小只读或可回退 profile；报告 wall、VRAM/RAM、bytes、cache、terminal、最小重跑单位
-5. P0 收口前不启动 P1 prune、P2 FP16、P3 chunk 或 P5 registry/resume，不用 packed/分块路径倒改 A3 结论
+1. 运行 protocol validator 和 GPU/disk/cgroup idle preflight，全部 exact 后才创建唯一 P0 run
+2. 只读盘点 train/render-eval 历史 stage，执行 inventory、prepare/load/runtime probe、aggregate 与 dry-run resume audit
+3. runtime 固定 2 个 warm-up + 9 个原生 1600×900 original views；同步计时且只存 hash/JSON，不存媒体
+4. 报告 wall、torch/NVIDIA VRAM、cgroup RAM、bytes、cache 语义、terminal 与逐 stage 最小重跑单位
+5. P0 收口前不启动 P1 prune、P2 FP16、P3 chunk 或 P5 registry/resume，不用部署因子倒改 A3 结论
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1465,6 +1484,15 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A4-P0 端到端 profile 协议冻结
+
+- protocol SHA=`8ba96278...d9a4`，输入锁定 `A3*=R0/D2 exact alias`；rejected R1、训练、checkpoint mutation、
+  prune/FP16/chunk/registry-resume 均未授权；
+- 历史 train/render-eval stage 只读复用，新测固定 process-cold/warm load、2 warm-up、9 个原生分辨率同步 render、
+  inventory 与 dry-run resume；filesystem cache 不冒充 cold；
+- 资源 ceiling 和 recovery stage 在结果前冻结；validator 核对 10 个 immutable inputs，协议测试 4 passed，联合
+  WorldSim V3 回归 143 passed；下一动作是唯一 P0 profile run。
 
 ### 2026-08-09 — A3 R1 heldout 资源门失败、诊断 tradeoff 与 A3 正式收口
 
@@ -1648,7 +1676,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；只允许先冻结并执行 P0 profile。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 protocol 已冻结，只允许执行 P0 profile。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1670,7 +1698,8 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；只允许先冻结并执行 P0 profil
 17. 核对 heldout protocol SHA `eb87a9f2...b05a`、r5 resource audit `d9536f4e...6280`、14,241.40 MiB
     超过 12,288 MiB、checkpoint exact、无新 `.pth` 与资源无效 diagnostic tradeoff；
 18. 核对 A3 task=`done`、R1=`rejected_resource_gate_and_diagnostic_tradeoff`、A3*=R0/D2 exact alias；
-19. 当前只允许冻结并执行 A4-P0 profile；不得重跑 A3、上调阈值、切换 packed/分块 renderer 挽回结果，
+19. 核对 A4-P0 protocol SHA `8ba96278...d9a4`、A3*=R0 输入、2+9 render matrix、资源/recovery contract 与
+    143 项回归；当前只允许执行唯一 P0 profile；不得重跑 A3、上调阈值、切换 packed/分块 renderer 挽回结果，
     不得启动 formal、R2–R4 或把 S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
