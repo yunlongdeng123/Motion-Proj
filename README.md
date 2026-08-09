@@ -50,7 +50,8 @@ A1 已完成 scene-0230 开发消融、scene-0242/0255 确认、冻结 E1/E2、L
 场景均未通过完整的 coverage + LPIPS 合同。A2 的 ancestry instrumentation、D1 quota-only 与 D2
 boundary/residual smoke/formal 也已完成；fixed/matched 正式裁决都是 `tradeoff_non_dominated`。后续以 D2
 作为边界优先研究资产、D1 作为低成本/全局质量回退，不宣称 D2 全面支配 D1。当前门禁是 A3 affected-set、
-证据层级、深度语义、outside preservation 与局部质量端点协议冻结，尚未授权 A3 训练；D3/D4 未启动。
+证据层级、深度语义、outside preservation 与局部质量端点：I0 semantic protocol 已冻结，首个工程门只实现
+R0 exact alias 与 R1 affected Background opacity/scale。formal 训练仍未授权；D3/D4 未启动。
 
 ## 环境
 

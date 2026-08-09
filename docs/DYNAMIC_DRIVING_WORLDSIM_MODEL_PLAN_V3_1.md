@@ -12,8 +12,10 @@
 - **A2-D2 工程基线**：`1065264`（boundary/residual attribution、稳定排序、scale cap 与配对 smoke controller）
 - **A2-D2 formal 协议基线**：`20b3f4d`（D1 exact alias、D2 单臂 30k、fixed/matched 与完整质量裁决）
 - **A2-D2 formal 证据基线**：`482fba0`（唯一 30k 实例、5k grid、fixed/matched 与资源/不可变性证据）
-- **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`pending`，先冻结协议）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated；A2*=D2 boundary-priority，D1 fallback）/ D3-D4 not launched / F0、A3-A4 pending`
+- **A2 正式收口基线**：`2246693`（D2 formal 证据、非支配裁决、D2 research asset 与 D1 fallback）
+- **A3-I0 协议 SHA-256**：`03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`
+- **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`running`）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3-I0 semantic protocol frozen / A3 R0-R1 engineering next / D3-D4 not launched / F0、A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -309,7 +311,8 @@ I0 已在真实 DriveStudio `RigidNodes` 类路径上的确定性合成 refineme
 - 8 个初始 Gaussian 经 1 split、1 clone、1 prune 后保留 10 个，分配 11 个全局 ID；
 - 最终来源计数为 LiDAR 7、split 2、clone 1；parent、lineage root、actor ID 与 prune 后索引一致；
 - online 更新 `visibility_count/screen_grad`；boundary、photometric、depth、normal 只冻结归因 API；
-- `nearest_lidar_distance` 当前只对 actor 做 exact offline materialization，background 因无有界参考集继续 deferred。
+- I0 r3 的 `nearest_lidar_distance` 只对 actor 做 exact offline materialization，background 因无有界参考集 deferred；
+  后续 D2 final 虽记录 Background direct LiDAR roots/lineage，仍不等于 target ray 的 measured depth。
 
 该 run 只关闭 ancestry instrumentation 工程门禁，不是 `scene-0230` 真实训练或质量证据；后续 D1 smoke
 证据单独登记于 9.2.1，不能倒写或扩大 I0 结论。
@@ -538,7 +541,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | pending | evidence-aware affected set 与局部短步精修 | outside frozen，支持区域指标闭环 |
+| `WS-V3-A3-LOCAL-REFINE-01` | running | I0 semantic protocol frozen；R0 exact alias 与 R1 opacity/scale 工程门下一步 | outside/optimizer exact，支持区域指标闭环；formal 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
@@ -800,7 +803,8 @@ I0 在 D1 前实现：
   external actor replacement、prune 和 checkpoint round-trip 保持可审计；
 - `visibility_count/screen_grad` 接入原生训练在线路径；
 - boundary、photometric、depth、normal residual 当前只提供显式 update API，不在 I0 合成 run 中冒充已观测值；
-- normal 没有可靠输入时保持 schema-only；background `nearest_lidar_distance` 保持 deferred；
+- normal 没有可靠输入时保持 schema-only；I0 的 background bounded `nearest_lidar_distance` 保持 deferred，
+  后续 direct LiDAR-root ancestry 仅按 provenance 使用；
 - module-off 无额外 RNG draw、无额外 checkpoint key，原生 tensor 逐位相等；
 - canonical r3 只覆盖 deterministic synthetic `RigidNodes` refinement，不替代 D1 的真实 `scene-0230` smoke。
 
@@ -1009,6 +1013,31 @@ actor_quality.json
 
 ## 10. A3：证据分层的编辑后局部 Gaussian 精修
 
+### 10.0 A3-I0 语义协议冻结
+
+- 冻结配置：`configs/worldsim_v3/a3_local_refine_protocol_v1.yaml`，SHA-256=
+  `03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`；依赖 A2 closeout=`2246693`，
+  D2 selected checkpoint SHA=`1a061247...e7c`、summary SHA=`9c41dfc8...de7d` 与 registry SHA=
+  `ed57764e...0c68`；D1 checkpoint SHA=`c9d2a052...af52` 只作 fallback；
+- 固定 `scene-0230 / scene_index 179 / seed 0 / cameras 0,1,2`，actor roles 为 high-support 与
+  boundary-support，编辑只含已提交 M4 合同的 `lateral +1m` 和 `delete full trajectory`；19 个 stride-10
+  held-out frames 仅评测，禁止进入优化或支持选择；
+- source/edited footprint 继续使用已提交 paired RGB difference：uint8 threshold=`2`、counterfactual dilation=
+  `2px`；affected union 再固定 dilation=`3px`，并纳入有注册支持的 vacated hole 与 first-hit depth-order conflict，
+  tolerance=`0.05m`。mask 是 model-counterfactual diagnostic，不是真值分割；
+- target actor 只作 context，确定性 edit 后 actor 参数、轨迹与 registry 全部冻结。R1 只允许更新 affected 且属于
+  S-A/S-B 的 `Background._opacities/_scales`；position、color、seed、RigidNodes 与其他模型均冻结；
+- S-A 必须使用排除 target view 的真实 alternate camera/time RGB 和 calibrated reprojection；S-B 只接受 T0
+  LiDAR measured 或至少两视图 calibrated geometry，禁止 RGB loss；S-C 不更新、不 seed、不进 loss，只报告
+  coverage/uncertainty/ABSTAIN。ancestry `nearest_lidar_distance` 只是 provenance，不是 T0 metric depth；
+- expected/first-hit/measured depth 分别固定为 `diagnostic / T1 / T0`；无名 `depth` 产品禁止。R0 为 D2
+  checkpoint immutable exact alias，R1→R4 必须一次只加一个因子；首个工程门只做 R0/R1；
+- 当前 `formal_training_authorized=false`。paired smoke 后仍须另行冻结 steps、逐字段 learning rate、affected/seed
+  cap、first-hit alpha threshold 与资源上界，才可设计 formal；
+- A3 独立实现不得依赖工作树中未提交的 V2 M5 config、`stress_metrics.py` 或 stress runner。协议 validator、
+  support classifier、affected-mask 与逐 tensor outside audit 使用独立 V3 模块；新增 `12 passed`，联合 WorldSim
+  V3/materializer 回归 `98 passed`。
+
 ### 10.1 核心边界
 
 编辑后区域分为：
@@ -1016,7 +1045,7 @@ actor_quality.json
 | 支持类型 | 含义 | 允许操作 |
 |---|---|---|
 | S-A observed | 其他时间/相机有真实观测 | 局部优化与补点 |
-| S-B geometric | 有 LiDAR/多视图几何，无同视角 RGB | 深度、opacity、scale、有限外观优化 |
+| S-B geometric | 有 LiDAR/至少两视图几何，无合法 RGB | 深度、opacity、scale；禁止 RGB loss |
 | S-C unsupported | 完全未观测 | 不生成伪 3D 真值，不作为局部 3D 精修成功区域 |
 
 A3 的主方法只解决 S-A/S-B。S-C 是生成式资产补全的边界，不通过增加高斯强行“恢复真实世界”。
@@ -1025,13 +1054,13 @@ A3 的主方法只解决 S-A/S-B。S-C 是生成式资产补全的边界，不�
 
 对 lateral/delete：
 
-- 目标 actor Gaussian；
+- 目标 actor Gaussian 只作冻结的 context/mask 来源；
 - source footprint；
 - edited footprint；
 - 后方静态 Gaussian；
 - 局部深度排序冲突；
 - 有 LiDAR/多视图支持的 hole；
-- 固定像素 dilation 对应的局部视锥。
+- paired counterfactual `2px` mask dilation 后再做固定 `3px` affected dilation 对应的局部视锥。
 
 affected set 外：
 
@@ -1053,13 +1082,13 @@ affected set 外：
 
 ```text
 opacity/scale
-→ 小范围 position/depth
-→ color/SH
+→ S-A observed color/SH
 → evidence-backed seed
 → temporal consistency
 ```
 
-不先用 RGB 幻觉生成三维点。
+V1 协议不允许 position update；若后续需要，必须作为 R1 与 R2 之间的独立新因子重新冻结。不得先用 RGB
+幻觉生成三维点。
 
 ### 10.4 生成式上界
 
@@ -1361,22 +1390,35 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 A1 已以 `C*=C0-off / done_off` 收口，A2 的 I0、D1/D2 smoke、D1/D2 formal 与 fixed/matched 完整 Pareto
 也已全部闭环。A2 终态为 `done / tradeoff_non_dominated`：D2 在 boundary-support boundary band 改善，
 但 global、部分 actor/non-target 与训练成本存在退化；A3 采用 D2 boundary-priority asset，保留 D1 fallback。
-当前唯一动作是冻结 `WS-V3-A3-LOCAL-REFINE-01` 协议，而不是立即启动训练：
+A3-I0 semantic protocol 已冻结，但尚未授权训练。当前唯一动作是实现 R0/R1 工程门：
 
 ```text
-1. 固定 scene-0230 / seed 0，A3 输入为 D2 30k checkpoint exact asset；D1 30k 只读保留为 fallback
-2. 训练前冻结 affected-set 构造、S-A/S-B/S-C 证据层级及 expected/first-hit/measured depth 语义
-3. 只允许受影响 Gaussian 与明确支持区短步优化；outside 必须逐 tensor/渲染保持并可审计
-4. 冻结 Tier-A hole、depth ordering、boundary 与 temporal flicker 端点；coverage 与 LPIPS 同时报告
-5. 未完成协议、资源上界、module-off/exact-alias 和 synthetic 门禁前，不启动 A3 formal
+1. 以 D2 30k exact asset 物化 R0-off 与 R1-reactivate；D1 只读 fallback，不重复训练
+2. 实现 deterministic lateral/delete、affected/support sidecar 与三种 typed depth 的 fail-closed 绑定
+3. R0 必须 checkpoint/config/output exact alias；R1 只允许 Background affected S-A/S-B opacity/scale 行有梯度
+4. 每步恢复/审计 outside 参数和 optimizer state；RigidNodes、actor trajectory、registry 与 tensor order exact
+5. 先通过 synthetic contract，再做最小 paired engineering smoke；smoke 不构成质量结论或 formal 授权
 ```
 
-D3 继续 `not_unlocked`，D4 继续 `not_launched`；F0 前馈审计为独立、非阻塞任务。A3 不得把 unknown background
-改写为真值，也不得以 D2 的边界改善隐藏其 global/non-target/cost 退化。
+paired smoke 后才冻结 optimizer steps、LR、affected/seed cap、first-hit alpha 和资源上界。D3 继续
+`not_unlocked`，D4 继续 `not_launched`；F0 独立非阻塞。A3 不得把 unknown background 改写为真值。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A3-I0 局部精修语义协议冻结
+
+- config SHA-256=`03fbf632...72d0`；固定 D2 30k boundary-priority asset、D1 fallback、scene-0230/seed 0、
+  两 actor roles、lateral/delete 与 held-out exclusion；
+- 冻结 paired footprint morphology、affected union、S-A/S-B/S-C precedence、expected/first-hit/measured depth
+  truth tiers、outside parameter/optimizer exact 与 R0→R4 单因子顺序；
+- 首个工程门只允许 R0 exact alias 和 R1 Background opacity/scale；target actor、position/color/seed、S-C、
+  D3/D4、whole-scene retraining 与大型 diffusion 禁止；
+- D2 checkpoint 的 Background ancestry 含 `240,528` 个直接 LiDAR roots，但 ancestry 仅作 provenance，不能冒充
+  measured depth；未提交 V2 M5 文件明确排除为依赖；
+- 当前 `formal_training_authorized=false`；下一步实现 materializer/DriveStudio patch、module-off/outside exact 与
+  synthetic paired smoke，smoke 后再冻结数值预算；新增 12 项、联合回归 98 项测试通过。
 
 ### 2026-08-09 — A2-D2 formal 与 A2 正式收口
 
@@ -1510,7 +1552,7 @@ D3 继续 `not_unlocked`，D4 继续 `not_launched`；F0 前馈审计为独立�
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
-当前任务是 WS-V3-A3-LOCAL-REFINE-01 的协议冻结，尚未授权 A3 formal 训练。
+WS-V3-A3-LOCAL-REFINE-01 当前为 running；I0 semantic protocol 已冻结，formal 训练仍未授权。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1525,7 +1567,8 @@ WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追
 10. 核对 D1 formal r1 terminal/summary、初始化同源、6×2 grid、fixed/matched 两视图与 checkpoint 不可变性；
 11. 核对 D2 paired smoke r1 terminal、summary SHA `749c7d15...3136`、provenance、真实 observation/order/cap、quota 与资源门禁；
 12. 核对 D2 formal r1 terminal、summary SHA `9c41dfc8...de7d`、六个 grid、matched 0.67165%、D1 checkpoint 不变与资源终态；
-13. 冻结 A3 affected-set、S-A/S-B/S-C、三种 depth 语义、outside preservation、局部质量端点与资源上界；在此之前不启动训练。
+13. 核对 A3 protocol SHA `03fbf632...72d0`、D2/D1 asset hashes、两 actor/两 edit、held-out exclusion、S-A/B/C 与三种 depth 语义；
+14. 只实现 R0/R1 materializer、DriveStudio patch、module-off/outside exact 与 synthetic smoke；不得启动 formal 或混入 R2-R4。
 
-不得恢复 A1/A2 或 V2 M5，不得把 D2 tradeoff 改写成全面提升，不得新增大型 diffusion。
+不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

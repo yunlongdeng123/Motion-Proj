@@ -1,0 +1,229 @@
+schema_version: 1
+task_id: WS-V3-A3-LOCAL-REFINE-01
+audit_version: A3-LOCAL-REFINE-PROTOCOL-v1
+protocol_status: frozen_before_engineering_smoke
+formal_training_authorized: false
+
+depends_on:
+  a2_closeout_commit: 224669317418a2c7664b7381ebaa64134d83367c
+  a2_decision: tradeoff_non_dominated
+  selected_asset_role: d2-boundary-residual-boundary-priority
+  selected_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1
+  selected_summary_sha256: 9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d
+  selected_manifest_sha256: 260af5d99f3d3ece4f2c178f8c18385338432da9fbf94b7d8a4603163db20926
+  selected_checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  selected_checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  selected_checkpoint_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  selected_actor_registry: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+  selected_actor_registry_sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+  d1_fallback_checkpoint_sha256: c9d2a0520493ee6e448a5d859661b29754190c6aef514e0475b174625779af52
+  d1_fallback_policy: immutable_read_only_if_d2_asset_fails_a3_engineering_gate
+
+committed_inputs:
+  edit_runner:
+    path: scripts/run_dr_v2_m4_pilot.py
+    sha256: a6c4e45e887403e80ee053c35762ee70cbd51f5c6124ac6e15a84852d3f1ff9c
+  paired_mask_metrics:
+    path: motion_proj/dynamic_editing_v2/pilot_metrics.py
+    sha256: b030537940eec761e1513620d2a9ac8f92d76aeaee5f08f3ae25cbd10ab9895a
+  typed_depth:
+    path: motion_proj/resim/label_regeneration.py
+    sha256: 1672803c1056e9045308cf6c87afcc835401439715a9ef28ed11376123a51c66
+  drivestudio_depth_adapter:
+    path: motion_proj/resim/drivestudio_adapter.py
+    sha256: 9bb6bc7a504d435f7974f597d2a3cbabcd3dee616f4ac155bc363cae56f46eeb
+  forbidden_dependencies:
+    - configs/dynamic_editing_v2/m5_protocol_v1.yaml
+    - motion_proj/dynamic_editing_v2/stress_metrics.py
+    - scripts/run_dr_v2_m5_stress_scene.py
+
+paired_design:
+  scene: scene-0230
+  scene_index: 179
+  seed: 0
+  cameras: [0, 1, 2]
+  camera_names: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT]
+  edits: [lateral, delete]
+  actor_roles: [high-support, boundary-support]
+  actors:
+    high-support:
+      instance_token: af663976db5e412e83db033d309c5c29
+      rigid_model_index: 5
+    boundary-support:
+      instance_token: 18c7f0c5fa6b49449f71c9dbae5c31d4
+      rigid_model_index: 21
+  heldout:
+    test_image_stride: 10
+    frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+    use: evaluation_only_excluded_from_all_optimization_and_support_selection
+  execution_order: [r0-no-refine-exact-alias, r1-reactivate, r2-appearance, r3-hole-seed, r4-temporal]
+  first_engineering_gate: [r0-no-refine-exact-alias, r1-reactivate]
+  never_merge_multiple_new_factors_in_one_gate: true
+
+edit_contract:
+  lateral:
+    actor_local_y_m: 1.0
+    coordinate_rule: actor_local_positive_y_transformed_by_per_frame_quaternion
+  delete:
+    scope: full_actor_trajectory
+  target_actor_parameters: context_only_frozen
+  target_actor_trajectory: frozen_after_deterministic_edit
+  original_actor_pixels_are_not_delete_background_truth: true
+
+affected_set:
+  paired_footprint:
+    definition: counterfactual_rgb_max_uint8_difference
+    difference_threshold_uint8: 2
+    counterfactual_mask_dilation_pixels: 2
+    affected_union_dilation_pixels: 3
+    provenance: model_counterfactual_diagnostic_not_truth_segmentation
+  pixel_union:
+    - source_actor_footprint
+    - edited_actor_footprint
+    - source_vacated_hole_with_registered_support
+    - local_first_hit_depth_order_conflict
+  gaussian_membership:
+    target_actor: context_only_frozen
+    background: projected_center_intersects_affected_pixel_union_in_registered_evidence_view
+    source_occluded_background: background_first_hit_is_farther_than_source_actor_by_tolerance
+    local_depth_order_conflict: absolute_actor_background_first_hit_disagreement_exceeds_tolerance
+    depth_order_tolerance_m: 0.05
+  outside_contract:
+    gaussian_parameters: exact_bitwise_frozen
+    optimizer_state: exact_bitwise_frozen
+    checkpoint_tensor_shape_and_order: unchanged_for_r0_r1_r2_r4
+    registry_and_trajectory: exact
+
+support_strata:
+  precedence: [S-A-observed, S-B-geometric, S-C-unsupported]
+  S-A-observed:
+    requires:
+      - target_frame_camera_excluded_from_optimization
+      - alternate_camera_or_time_rgb_observed
+      - calibrated_reprojection_registered
+    rgb_loss_allowed: true
+    geometry_loss_allowed: true
+  S-B-geometric:
+    requires_any:
+      - depth_lidar_measured_T0_valid
+      - calibrated_multiview_geometry_count_at_least_2
+    rgb_loss_allowed: false
+    geometry_loss_allowed: true
+  S-C-unsupported:
+    definition: neither_S-A_nor_S-B
+    parameter_update_allowed: false
+    gaussian_seed_allowed: false
+    loss_allowed: false
+    report: coverage_uncertainty_and_ABSTAIN_only
+  ancestry_nearest_lidar_distance_is_provenance_not_metric_depth: true
+
+typed_depth_contract:
+  depth_render_expected:
+    truth_tier: diagnostic
+    allowed_use: visualization_only
+  depth_surface_first_hit:
+    truth_tier: T1
+    allowed_use: visibility_and_ordering
+    alpha_threshold_to_freeze_after_renderer_smoke: true
+  depth_lidar_measured:
+    truth_tier: T0
+    allowed_use: sparse_geometry_loss_and_evaluation
+  unnamed_depth_product_forbidden: true
+
+variants:
+  r0-no-refine-exact-alias:
+    optimizer_steps: 0
+    checkpoint_mode: immutable_exact_alias
+    new_checkpoint_keys: false
+    mutable_parameters: []
+  r1-reactivate:
+    mutable_models: [Background]
+    mutable_strata: [S-A-observed, S-B-geometric]
+    mutable_parameters: [Background._opacities, Background._scales]
+    position_updates: false
+    color_updates: false
+    gaussian_seed: false
+  r2-appearance:
+    adds_to: r1-reactivate
+    mutable_parameters_added: [Background._features_dc, Background._features_rest]
+    rgb_loss_stratum: S-A-observed
+  r3-hole-seed:
+    adds_to: r2-appearance
+    seed_sources: [depth_lidar_measured_T0, calibrated_multiview_geometry]
+    single_view_rgb_seed_forbidden: true
+    seed_cap_to_freeze_after_paired_smoke: true
+  r4-temporal:
+    adds_to: r3-hole-seed
+    shared_background_parameters_only: true
+    target_actor_trajectory_remains_frozen: true
+
+loss_boundary:
+  observed_rgb: S-A-observed_only
+  measured_depth: S-B-geometric_where_depth_lidar_measured_T0_valid
+  first_hit_ordering: S-A-observed_or_S-B-geometric
+  unsupported_pixels: zero_weight_and_reported
+  source_actor_pixels_as_delete_target: forbidden
+  hard_composition_outside_zero_as_success_metric: forbidden
+
+engineering_gate:
+  module_off_exact_alias_required: true
+  r0_checkpoint_sha256_must_equal_selected_asset: true
+  r1_only_first_smoke: true
+  affected_indices_frozen_before_first_optimizer_step: true
+  finite_loss_and_gradients_required: true
+  outside_parameter_and_optimizer_state_exact_required: true
+  registry_trajectory_and_actor_parameters_exact_required: true
+  typed_depth_names_and_truth_tiers_required: true
+  support_provenance_complete_required: true
+  formal_training_authorized: false
+  freeze_after_paired_smoke_before_formal:
+    - optimizer_steps
+    - learning_rates_by_parameter
+    - maximum_affected_background_gaussians
+    - first_hit_alpha_threshold
+    - maximum_seed_gaussians
+    - resource_time_and_disk_limits
+
+evaluation:
+  primary_endpoints:
+    - S-A_pseudo_hole_psnr_ssim_lpips_and_coverage
+    - depth_ordering_violation_rate
+    - vacated_source_residual
+    - temporal_boundary_lpips_and_warp_error
+  safeguards:
+    - outside_parameter_and_optimizer_state_exact
+    - non_target_render_quality
+    - registry_trajectory_and_actor_parameter_exact
+    - affected_gaussian_count
+    - local_wall_time
+    - peak_vram
+    - peak_cgroup_memory
+  comparison:
+    baseline: r0-no-refine-exact-alias
+    numeric_tolerance: none
+    exact_pareto: true
+    coverage_reported_with_quality: true
+    S-B_pixel_quality_claim_forbidden: true
+    S-C_success_claim_forbidden: true
+
+resource_preflight:
+  gpu_count: 1
+  cgroup_memory_limit_bytes: 96636764160
+  gpu_idle_max_mib: 2048
+  memory_stop_fraction: 0.90
+  memory_stop_consecutive_samples: 2
+  stop_on_oom_event_increase: true
+  outer_execution: tmux_or_nohup_only_for_nontrivial_gpu_work
+  process_cleanup: exact_process_group_only
+
+scope_boundary:
+  current_stage: semantic_protocol_and_synthetic_contract_only
+  forbidden:
+    - formal_training
+    - whole_scene_retraining
+    - D3_depth_normal_densification
+    - D4_provenance_pruning
+    - S-C_pseudo_truth
+    - single_view_RGB_to_3D_seed
+    - large_video_diffusion
+    - untracked_V2_M5_dependency

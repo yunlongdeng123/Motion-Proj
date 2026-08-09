@@ -9,7 +9,8 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
-`tradeoff_non_dominated`。当前进入 `WS-V3-A3-LOCAL-REFINE-01` 协议冻结，尚未授权 A3 训练。
+`tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已进入 `running`，I0 semantic protocol 已冻结；
+当前实现 R0/R1 工程门，尚未授权 A3 formal 训练。
 
 ## 1. 状态词
 
@@ -30,7 +31,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
+| `WS-V3-A3-LOCAL-REFINE-01` | running | 编辑区域局部 Gaussian 精修 | I0 protocol frozen；R0/R1 exact/outside smoke next；formal 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
@@ -300,6 +301,24 @@ Matched-RigidNodes-budget：
 - 状态=`done`。冻结 D2 boundary-residual 为 A3 的 boundary-priority research asset，D1 quota-only 为 fallback；
   不宣称 D2 dominance。`d3_unlocked=false`，D4 未启动。
 
+### `WS-V3-A3-LOCAL-REFINE-01` I0 语义协议
+
+- config=`configs/worldsim_v3/a3_local_refine_protocol_v1.yaml`，SHA-256=
+  `03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`；A2 closeout=`2246693`；
+- input 固定为 D2 scene-0230 30k checkpoint SHA=`1a061247...e7c` 和 actor registry SHA=
+  `ed57764e...0c68`；D1 SHA=`c9d2a052...af52` 只作 fallback；
+- scene/seed/cameras=`scene-0230/0/[0,1,2]`；actors=`high-support/boundary-support`；edits=
+  `lateral +1m/delete`；stride-10 的 19 个 held-out frames 禁止进入优化或支持选择；
+- paired footprint threshold/dilation=`2/2px`，affected union dilation=`3px`，depth-order tolerance=`0.05m`；
+  source/edited mask 仍是 counterfactual diagnostic；
+- S-A/S-B/S-C 严格分层；S-B 禁止 RGB loss，S-C 禁止更新/seed/loss；expected/first-hit/measured depth=
+  `diagnostic/T1/T0`，ancestry 不冒充 measured depth；
+- R0 为 immutable exact alias；R1 只允许 affected S-A/S-B 的 Background opacity/scale；outside parameter 与
+  optimizer、RigidNodes/trajectory/registry exact。R2 appearance、R3 evidence seed、R4 temporal 继续锁定；
+- 当前 stage=`semantic_protocol_and_synthetic_contract_only`、`formal_training_authorized=false`；V2 M5 未提交文件
+  不得成为 A3 dependency；新增 `12 passed`，联合 WorldSim V3/materializer 回归 `98 passed`。下一工程门是
+  materializer/patch/module-off/outside exact 与 paired smoke。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -517,6 +536,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 ## 12. 当前唯一动作
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
-`done / tradeoff_non_dominated`。下一动作是冻结 A3 affected-set、S-A/B/C 证据层级、depth 语义、outside
-preservation、局部质量端点和资源上界；以 D2 30k 为 exact 输入并保留 D1 fallback。协议与 synthetic 门禁完成前
-不得启动 A3 formal，也不得顺带启动 D3/D4。
+`done / tradeoff_non_dominated`。A3-I0 protocol 已冻结；下一动作只实现 R0 exact alias 与 R1 Background
+affected opacity/scale 的 materializer、DriveStudio patch、support/depth sidecar、outside optimizer exact 和
+synthetic paired smoke。smoke 后再冻结数值预算；不得启动 formal、R2–R4 或 D3/D4。

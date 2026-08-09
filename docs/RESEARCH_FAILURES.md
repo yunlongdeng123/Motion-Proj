@@ -40,6 +40,8 @@
   “C0 在所有场景、所有指标都最好”，也不得只挑 0255 E1/E2 error 改写 C*。
 - `V3-F16`：A2-D2 的边界改善、global/non-target 退化与更高训练成本构成严格 Pareto tradeoff。不得用新增
   事后标量权重把它改写成 D2 dominance；后续采用 D2 必须同时登记 D1 fallback 和完整退化轴。
+- `V3-F17`：Gaussian ancestry、counterfactual footprint 和未提交 V2 M5 产物都不能自动升级为 A3 真值。
+  ancestry 只证明来源，paired mask 只是模型诊断；A3 必须使用已提交输入和 typed support，S-C 保持 unsupported。
 
 ### V3-F01：局部保持不等于编辑质量
 
@@ -153,6 +155,22 @@ A3 采用 D2 是因为 A2 的预注册靶点包含 actor boundary，并且 D2 �
 可见后的工程资产路由，不是新增数值门槛、统计显著性或 D2 对 D1 的支配结论。任何后续报告都必须同时保留
 D1 quota-only fallback，披露 D2 的 global/部分 actor/non-target/cost 退化，并禁止只摘录边界带结果宣称 A2
 “全面提升”。单场景 scene-0230 也不能支持跨场景泛化结论。
+
+### V3-F17：来源账本与 paired mask 不等于局部精修监督真值
+
+D2 final checkpoint 的 Background ancestry 完整对齐 `1,205,164` 个 Gaussian，其中 `240,528` 个
+`init_source=LIDAR` direct roots，其余含 random、split 与 clone；`nearest_lidar_distance` 对部分 lineage 有限，
+但它是出生/父子来源记录，不是当前 target ray 的 T0 measured depth。A3 只能把 calibrated LiDAR projection 的
+`depth_lidar_measured` 当 T0，把 first-hit 当 T1 ordering，把 expected depth 保持 diagnostic。
+
+同样，source/edited footprint 来自同一 checkpoint 的 paired RGB difference，只能定位干预区域，不能充当真值
+segmentation 或删除后的背景 RGB。S-A RGB 监督必须来自排除 target view 的 alternate camera/time 真实观测并有
+calibrated reprojection；S-B 只使用 measured LiDAR 或至少两视图 geometry，禁止 RGB loss；S-C 不更新、不 seed、
+不进入 loss，只报告 coverage/uncertainty/ABSTAIN。
+
+当前工作树中的 V2 M5 protocol、`stress_metrics.py` 和 stress runner 均未提交且属于被冻结的用户工作，A3 不得
+通过 import 或复制其结果建立隐式依赖。只能复用已提交并按 SHA 冻结的 M4 edit、paired mask、typed-depth 与
+registry 接口；否则无法形成 clean source commit，也会把 V2 未闭环事实倒写成 V3 证据。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 

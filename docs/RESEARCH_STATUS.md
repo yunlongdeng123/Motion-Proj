@@ -3,8 +3,8 @@
 - 更新时间：2026-08-09
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A3-LOCAL-REFINE-01`
-- 状态：`pending`（协议冻结中，尚未授权训练）
-- 当前门禁：A2 已 `done / tradeoff_non_dominated`；下一门禁为 A3 affected-set、证据层级、深度语义与局部端点协议
+- 状态：`running`
+- 当前门禁：A3-I0 semantic protocol 已冻结；下一门禁为 R0 exact alias、R1 affected-only opacity/scale 与 synthetic smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -290,6 +290,24 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - A2 状态冻结为 `done`。A3 使用 D2 boundary-residual 作为 boundary-priority research asset，D1 quota-only
   作为低成本/全局质量 fallback；这不是 dominance 或跨场景结论。`d3_unlocked=false`，D4 未启动。
 
+## A3-I0 语义协议冻结证据
+
+- config=`configs/worldsim_v3/a3_local_refine_protocol_v1.yaml`，SHA-256=
+  `03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`；依赖 A2 closeout=`2246693`、
+  D2 checkpoint SHA=`1a061247...e7c`、summary SHA=`9c41dfc8...de7d`、registry SHA=`ed57764e...0c68`；
+- 固定 scene-0230 / seed 0 / cameras 0–2、high/boundary 两 actor、lateral/delete 与 19 个只读 held-out frames；
+  D1 checkpoint `c9d2a052...af52` 只作 fallback；
+- affected set 冻结为 paired source/edited footprint（threshold 2、2px dilation）、supported hole、first-hit conflict
+  的并集，再做 3px dilation；target actor 只作冻结 context；
+- S-A 要求排除 target view 的 alternate observed RGB + calibrated reprojection；S-B 只接受 T0 LiDAR measured 或
+  至少两视图 geometry，禁止 RGB loss；S-C 不更新、不 seed、不进 loss；
+- depth 产品继续分为 expected=`diagnostic`、first-hit=`T1`、measured LiDAR=`T0`；D2 Background ancestry 的
+  `240,528` 个 direct LiDAR roots 只证明 provenance，不是 measured-depth GT；
+- R0 为 D2 immutable exact alias；首个工程门 R1 仅允许 affected S-A/S-B Background opacity/scale，outside
+  参数与 optimizer state、RigidNodes、trajectory、registry 全部 exact；
+- `formal_training_authorized=false`。未提交 V2 M5 config/metrics/runner 明确排除为依赖；paired smoke 后再冻结
+  steps、LR、affected/seed cap、first-hit alpha 与资源数值合同；新增 `12 passed`，联合回归 `98 passed`。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -322,7 +340,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | pending | 先冻结 affected-set、S-A/B/C、depth 语义、outside preservation 与局部端点 |
+| `WS-V3-A3-LOCAL-REFINE-01` | running | I0 semantic protocol frozen；R0/R1 materializer、patch 与 synthetic smoke next；formal 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
@@ -336,7 +354,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-A1/A2 已收口。下一步只冻结 A3 协议：固定 scene-0230 / seed 0，D2 30k 作为 exact 输入资产并保留 D1
-fallback；训练前定义 affected-set、S-A/S-B/S-C、expected/first-hit/measured depth、outside preservation、
-Tier-A hole、depth ordering、boundary 与 temporal flicker 端点以及资源上界。协议、module-off/exact-alias 和
-synthetic 门禁完成前不得启动 A3 formal。D3/D4 保持未解锁，F0 仍是独立非阻塞项。
+A3-I0 semantic protocol 已冻结。下一步只实现 R0/R1：物化 D2 exact alias、确定性 lateral/delete、支持 sidecar、
+typed depth 绑定、R1 Background affected opacity/scale gradient mask，以及逐步 outside parameter/optimizer exact
+审计；先通过 synthetic contract，再做最小 paired engineering smoke。smoke 不是质量证据；在其后冻结数值预算
+前不得启动 formal 或 R2–R4。D3/D4 保持未解锁，F0 仍是独立非阻塞项。
