@@ -3,14 +3,17 @@
 - 更新时间：2026-08-10
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-R0-INTEGRATION-01`
-- 状态：`running`
-- 当前门禁：A0–A4 与 F0 已闭环；F1=`conditional_not_unlocked`。R0 protocol 已冻结，下一步只运行提交后的 canonical 只读集成
+- 状态：`done`
+- 当前门禁：`none_plan_complete`；A0–A4、F0 与 R0 已闭环，F1=`conditional_not_unlocked`
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`4fe20c3197d5ea954e7b37dd2ff68b6ecf357ce7d2770507e6adcb5398797575` /
   `d58c4008cea264ff42ee0da436cabba5d7014d14d773040cd8cf471725d0c5ce`
+- R0 canonical summary/manifest/terminal SHA-256：`3ffe99ea25302a1bfd8a73329133ae052632f8cf32d8124bc7df4d35e85f15a7` /
+  `a9b052a636de3410700bca6899c6efda88248398b2befb96cd247ac16f3e1d90` /
+  `207758b92d750cd239fa998ed7572c5f404f8747fadb0a4b74a12295983015c6`
 
 ## 当前裁决
 
@@ -511,6 +514,24 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - R0 定向测试=`11 passed`，WorldSim V3 联合回归=`252 passed`。训练、推理、GPU、安装、下载、源 checkpoint/
   registry mutation、F1/P4/D3/D4/A3 追加实验均未授权。本条尚无 canonical R0 terminal。
 
+## R0 canonical 收口
+
+- canonical=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-R0-INTEGRATION-01/20260809T194625Z__r0-integration-s0-r1`；
+  source=`64e3d15ca30de44088c2f6fbfb6da048a31a4acf`，terminal=`done`，summary/manifest/terminal SHA=
+  `3ffe99ea...15a7 / a9b052a6...1d90 / 207758b9...15c6`；28 files=`1,117,645 bytes`；
+- 63/63 inputs、11/11 terminal states、23/23 decisions、12/12 deliverables 与 26/26 manifest files 全 exact；
+  documentation snapshot 5/5 exact，P3 package 159/159 files、444,177,055 bytes 再次 exact；
+- final chain=
+  `A1-C0-off__A2-D2-boundary-priority__A3-R0-off__A4-P2-mixed__A4-P3-exact-chunk`；
+- final conclusions 为 `calibration_native_or_off_preferred / actor_aware_supported /
+  local_refine_limited_to_observed_support / deployment_pareto_supported / engineering_blocked`；12 条 claim boundary
+  全 true，故这些结论不表示 D2 dominance、R1/P1 selected、P2/P3 render speedup、Instant NuRec local quality、完整
+  world model、安全闭环或跨场景泛化；
+- resource/no-launch 全通过：wall=`1.678173 s`、cgroup current=`30,389,452,800 bytes`、disk free=
+  `42,325,843,968 bytes`、OOM/kill=`0/0`；torch 未导入，GPU/训练/推理/安装/下载均未启动；
+- `next_action=none_plan_complete`。F1/P4/D3/D4/A3 R2–R4 保留未启动终态，不构成 V3.1 主计划缺口。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -522,7 +543,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact chunk package selected |
-| `WS-V3-R0-INTEGRATION-01` | running | protocol frozen；63 inputs/23 decisions/P3 159-file package exact；canonical pending |
+| `WS-V3-R0-INTEGRATION-01` | done | canonical done；63 inputs、23 decisions、12 deliverables、26 manifest files、P3 package 与 no-launch exact |
 
 ## 机器与工作树
 
@@ -532,8 +553,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - A3 heldout r5、A4-P0 v1 r1、A4-P5 r1 与 A4-P2 r1 均保留 blocked；P0/P5/P2 canonical r2 与 P3 canonical r1 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
-## 下一步
+## 计划终态
 
-提交已冻结的 `WS-V3-R0-INTEGRATION-01` protocol/runner/test 与本次文档，然后运行 canonical 只读集成；核验
-12/12 deliverables、manifest、terminal、资源与 no-launch audit，再同步最终收口文档。F1、P4、D3/D4 与 A3
-formal/R2–R4 保持未解锁；不启动新训练、推理或大型 UI。
+`WS-V3-R0-INTEGRATION-01` 已 `done`，V3.1 当前为 `none_plan_complete`。F1、P4、D3/D4 与 A3 formal/R2–R4
+保持未解锁；除非未来以新任务、新协议和新授权启动，否则不得恢复为当前动作，也不得改写既有 terminal。
