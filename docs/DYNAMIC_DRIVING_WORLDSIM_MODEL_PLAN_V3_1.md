@@ -18,7 +18,7 @@
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 v1 r1 blocked（resolution contract）/ v2 protocol frozen、rerun next / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ P5 protocol freeze next / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,7 +545,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0 v1 r1 因分辨率合同阻塞；v2 已冻结，当前只执行完整 rerun；P1/P2/P3/P5 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0 v2 r2 done；下一门禁只冻结 P5 registry/resume 协议，P1/P2/P3 仍未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1214,6 +1214,30 @@ H0：冻结的 2D Harmonizer / inpaint diagnostic
 - v2 validator 已 exact 核对 16 个路径/hash/bytes；协议测试=`7 passed`，联合 WorldSim V3=`152 passed`。P0 仍
   只是 profile，不登记质量改进或并发结论；P1/P2/P3/P5 未授权。
 
+#### 11.1.2 P0 v2 正式结果与部署排序
+
+- canonical run=`20260809T152923Z__a4-p0-profile-v2-s0-r2`，source commit=
+  `b191afaaa88d5d356506fc29a36e6128959d8897`，exit=`0`，terminal=`done`；summary/manifest/resource/rows
+  SHA=`0278a320...e92 / 12df93b3...a0f5 / b89c93bb...5fac / 4a94b1fb...a934`；13/13 required
+  audits 全 true；checkpoint/registry 前后 SHA exact，run 内无 `.pth`、PNG、JPEG 或 MP4；
+- 资产 inventory：checkpoint=`578,819,674 bytes`，registry=`3,721,428 bytes`，合计=`582,541,102 bytes`
+  （`555.55 MiB`）；静态背景仍为 1 个 monolithic block；actor=`24`，其中 `23 available / 1 unavailable`；模型
+  Gaussian=`1,205,164 Background + 104,704 RigidNodes`；P0 未做参数转换；
+- 新测 wall=`60.784519 s`，prepare=`50.420569 s`（占 wall `82.95%`），trainer construction=`1.885644 s`，
+  process-cold/warm load=`.391351/.397158 s`；filesystem cache 仍为 uncontrolled，不能宣称 filesystem-cold；
+- 2 次 warm-up hash exact；9 个 `800×450` measured original views 覆盖 `frames 10/100/190 × cameras 0/1/2`，
+  P50/P95=`.068017/.127388 s`，聚合 FPS=`16.377547`。这些数只适用于 scene-0230/seed-0/单进程/当前
+  checkpoint 与同步口径，不构成并发或跨场景结论；
+- resource audit=`passed`：torch allocated/reserved=`7,913.31/8,232 MiB`，NVIDIA sampled=`8,574 MiB`，
+  cgroup peak=`24,474,128,384 bytes`（`22.79 GiB`），run bytes=`85,169`，disk free=`45,292,818,432 bytes`，
+  OOM/kill delta=`0/0`；全部低于冻结 ceiling；
+- no-torch resume dry-run=`.160304 s`，原子复用 inventory/runtime/aggregate 三个 completed stage，输入=
+  `16,256 bytes`、输出=`919 bytes`，前后均无 GPU compute process；最小重跑单位为 none；
+- P0 的主要瓶颈是 dataset prepare，而不是 checkpoint load；单进程 runtime 也没有触发显存门。没有证据支持先承担
+  P1 prune、P2 FP16 或 P3 chunk 的质量/数值风险。下一门禁选择无模型变异的 P5 registry/resume 协议冻结：先把
+  checkpoint、config、actor registry、stage/summary hashes 注册为不可变资产并做独立 reload/resume smoke；
+  P1/P2/P3 继续未授权。
+
 对最终 A3 产物拆分记录：
 
 ```text
@@ -1475,14 +1499,14 @@ A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitw
 两项 RGB safeguard 严格退化并存的 `tradeoff_non_dominated`。因此 R1 方法臂已 rejected，A3 task 以正式负结果
 done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
 
-当前唯一动作是按重新冻结的 v2 协议执行 `WS-V3-A4-DEPLOYMENT-01 / P0 profile` 完整 rerun：
+P0 已由 v2 r2 正式关闭。当前唯一动作是结果前冻结 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 协议：
 
 ```text
-1. exact 校验 v2 protocol、10 项原输入与 6 项 v1 纠错证据，并通过 GPU/disk/cgroup idle preflight 后创建新 run
-2. 只读盘点 train/render-eval 历史 stage，执行 inventory、prepare/load/runtime probe、aggregate 与 dry-run resume audit
-3. runtime 固定 2 个 warm-up + 9 个模型原生 800×450 original views；同步计时且只存 hash/JSON，不存媒体
-4. 报告 wall、torch/NVIDIA VRAM、cgroup RAM、bytes、cache 语义、terminal 与逐 stage 最小重跑单位
-5. P0 收口前不启动 P1 prune、P2 FP16、P3 chunk 或 P5 registry/resume，不用部署因子倒改 A3 结论
+1. 输入只允许 P0 canonical summary/manifest、A3*=R0 checkpoint/config 与 actor registry 的 exact hash/bytes
+2. converter 默认采用 reference-only immutable manifest，不复制或重写 578 MB checkpoint，不做 prune/FP16/chunk
+3. registry schema 必须覆盖 static block、24 actor（含 unavailable 原因）、source/stage hash、bytes 与最小恢复单位
+4. reload smoke 只读构造模型、加载一次 checkpoint、核对 Gaussian/actor inventory；失败后 dry-run resume 不启动 GPU
+5. 冻结 wall/VRAM/RAM/run-bytes/OOM ceiling 和原子 stage 顺序后才允许运行；P1/P2/P3 继续未授权
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1491,6 +1515,15 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 
 ## 17. 更新日志
 
+### 2026-08-09 — A4-P0 v2 formal profile 完成
+
+- canonical r2=`20260809T152923Z__a4-p0-profile-v2-s0-r2`，exit=`0`，summary SHA=`0278a320...e92`，13/13
+  audits 全通过；checkpoint/registry exact，无训练、checkpoint 或媒体输出，no-torch resume 复用通过；
+- inventory=`582,541,102 bytes checkpoint+registry / 1 static block / 24 actors（23 available）`；prepare 占 wall
+  `82.95%`，cold/warm load=`.391/.397 s`，render P50/P95=`.068/.127 s`，FPS=`16.378`；
+- resources=`7,913 MiB allocated / 8,232 MiB reserved / 8,574 MiB NVIDIA / 22.79 GiB cgroup / OOM 0`，门禁通过；
+  P0=`done`。下一门禁只冻结无模型变异的 P5 registry/resume 协议；P1/P2/P3 仍未授权。
+
 ### 2026-08-09 — A4-P0 v1 分辨率合同阻塞与 v2 重新冻结
 
 - runner=`199abd9`；v1 formal r1 完成全部 probe 与 no-torch resume audit，但 11 行实际 render 均为 `800×450`，
@@ -1498,7 +1531,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 - source config 的三路 `downscale_when_loading=[2,2,2]` 证明 `1600×900` 是传感器尺寸，当前 checkpoint 模型原生
   尺寸为 `800×450`；v1 结果只作合同纠错 diagnostic，不作为正式性能结论；
 - v2 protocol SHA=`43db7182...3f18`，只纠正尺寸并冻结 6 项 v1 失败证据；其余输入、矩阵、资源与恢复门禁不变。
-  当前唯一动作是从新目录完整执行 v2，不复用 v1 的 measured runtime stage；P1/P2/P3/P5 仍未授权。
+  该冻结点的下一动作是从新目录完整执行 v2，不复用 v1 measured runtime stage；P1/P2/P3/P5 当时均未授权。
 
 ### 2026-08-09 — A4-P0 端到端 profile 协议冻结
 
@@ -1691,7 +1724,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 v1 r1 已因分辨率合同 blocked，v2 已重新冻结，只允许完整 rerun。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 v1 r1 resolution blocked、v2 r2 done，当前只冻结 P5 协议。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1713,9 +1746,8 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 v1 r1 已因分辨率合同 blocke
 17. 核对 heldout protocol SHA `eb87a9f2...b05a`、r5 resource audit `d9536f4e...6280`、14,241.40 MiB
     超过 12,288 MiB、checkpoint exact、无新 `.pth` 与资源无效 diagnostic tradeoff；
 18. 核对 A3 task=`done`、R1=`rejected_resource_gate_and_diagnostic_tradeoff`、A3*=R0/D2 exact alias；
-19. 核对 A4-P0 v2 protocol SHA `43db7182...3f18`、A3*=R0 输入、v1 六项纠错证据、800×450 的 2+9 render
-    matrix、资源/recovery contract 与联合回归；当前只允许执行 v2 完整 rerun；不得重跑 A3、上调阈值、切换
-    packed/分块 renderer 挽回结果，
+19. 核对 A4-P0 v2 summary SHA `0278a320...e92`、13/13 audits、800×450 的 2+9 matrix、资源/recovery
+    contract 与 P0 done 结论；当前只允许冻结 P5 registry/resume 协议；不得重跑 A3、上调阈值或启动 P1/P2/P3，
     不得启动 formal、R2–R4 或把 S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。

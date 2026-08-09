@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0 v1 r1 因分辨率合同 blocked；v2 已重新冻结，下一步从新目录完整 rerun
+- 当前门禁：A4-P0 v2 r2 已 done；下一步只冻结 P5 registry/resume 协议
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -28,6 +28,11 @@ A4-P0 v1 formal r1 已完成 probe 与无 torch resume audit，但 source config
 模型原生 render 为 `800×450`，不是 v1 误写的传感器尺寸 `1600×900`。r1 因唯一 audit
 `native_resolution_exact` 保留为 `blocked`；v2 只纠正该输入合同并冻结 r1 证据，不把 r1 性能登记为正式结果。
 v2 validator 已核对 16 个 exact inputs，协议测试 7 passed，联合 WorldSim V3 回归 152 passed。
+
+A4-P0 v2 formal r2 已以 `done` 关闭：13/13 audits 全 true，prepare 占 60.78 s wall 的 82.95%，cold/warm load
+约 `.39/.40 s`，9 个模型原生 view 为 P50/P95 `.068/.127 s` 与 `16.38 FPS`；资源峰值为 `8,574 MiB`
+NVIDIA sampled / `22.79 GiB` cgroup，OOM=0。P0 不证明并发或质量改进；它只支持先冻结无模型变异的 P5
+registry/resume，而不先启动 prune、FP16 或 chunk。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -413,7 +418,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | v1 r1 resolution blocked；v2 SHA=`43db7182...3f18` 已冻结，当前只执行完整 rerun；P1/P2/P3/P5 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0 v2 r2 done，summary=`0278a320...e92`；下一门禁只冻结 P5 protocol，P1/P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -421,14 +426,12 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
 - 数据盘：最近 formal 终态最小 free=`46,471,581,696 bytes`；
-- A3 heldout r5 与 A4-P0 v1 r1 controller 均已退出，exit=`1`；r1 resource audit 通过但 resolution audit 失败；
+- A3 heldout r5 与 A4-P0 v1 r1 controller 均已退出，exit=`1`；P0 v2 r2 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-执行重新冻结的 `WS-V3-A4-DEPLOYMENT-01 / P0 v2 profile`：先 exact 校验 10 项原输入与 6 项 v1 纠错证据，再过
-idle/disk/cgroup preflight 并创建新 run。train/render-eval 只读复用历史 stage；新测 inventory、prepare、
-process-cold/warm load、2 次 warm-up、9 个模型原生 `800×450` 同步 render、aggregate 和 read-only resume audit。
-只存 JSON/hash，不写媒体或 checkpoint；不得复用 v1 的 measured runtime stage。
-P0 关闭前不启动 prune、FP16、chunk、registry/resume，也不修改 A3 renderer/ceiling 倒改 R1。D3/D4 与 A3
-formal/R2–R4 保持未解锁，F0 仍是独立非阻塞项。
+冻结 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 协议。输入锁定 P0 canonical summary/manifest、
+`A3*=R0` checkpoint/config 与 actor registry；先采用 reference-only immutable manifest，不复制/改写 checkpoint，
+不做 prune/FP16/chunk。冻结 static/actor registry schema、atomic stage 顺序、单次只读 reload、失败 dry-run resume、
+资源 ceiling 和 exact audits 后才允许运行。P1/P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
