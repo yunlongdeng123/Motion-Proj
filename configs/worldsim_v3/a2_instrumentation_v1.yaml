@@ -1,0 +1,68 @@
+schema_version: 1
+task_id: WS-V3-A2-ACTOR-DENSIFY-01
+audit_version: A2-I0-v1
+seed: 0
+
+drivestudio:
+  upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  compatibility_patch: compatibility/DriveStudio-2026-08-05.patch
+  instrumentation_patch: compatibility/DriveStudio-WorldSim-A2-ancestry-v1.patch
+  patched_worktree: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-r5
+
+instrumentation:
+  enabled: true
+  checkpoint_key: worldsim_a2_ancestry
+  init_source_codes:
+    unknown: 0
+    lidar: 1
+    random-near: 2
+    random-far: 3
+    split: 4
+    clone: 5
+  per_gaussian_fields:
+    - gaussian_id
+    - actor_id
+    - init_source
+    - parent_id
+    - lineage_root_id
+    - birth_step
+    - generation
+    - visibility_count
+    - screen_grad
+    - screen_grad_count
+    - boundary_contribution
+    - boundary_contribution_count
+    - photometric_residual
+    - photometric_residual_count
+    - depth_residual
+    - depth_residual_count
+    - normal_residual
+    - normal_residual_count
+    - nearest_lidar_distance
+  online_updates:
+    - visibility_count
+    - screen_grad
+  attributed_update_api:
+    - boundary_contribution
+    - photometric_residual
+    - depth_residual
+    - normal_residual
+  nearest_lidar_distance:
+    mode: exact_offline_per_actor
+    chunk_size: 1024
+    maximum_reference_points_per_actor: 10000
+    background_status: deferred_no_bounded_reference_set
+
+module_off_equivalence:
+  enabled_value: false
+  require_native_tensor_bitwise_equality: true
+  require_native_checkpoint_key_equality: true
+  forbid_extra_rng_draws: true
+
+scope_boundary:
+  stage: instrumentation_before_d1
+  d1_changes_enabled: false
+  reliable_normal_available: false
+  normal_residual_policy: schema_and_update_api_only_until_reliable_normal
+  boundary_and_residual_attribution_policy: update_api_only_until_d2
+  legacy_checkpoint_without_ancestry: load_as_unknown_not_lidar

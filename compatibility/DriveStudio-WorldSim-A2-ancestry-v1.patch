@@ -1,0 +1,330 @@
+diff --git a/datasets/driving_dataset.py b/datasets/driving_dataset.py
+index 18c9534..38f00b5 100644
+--- a/datasets/driving_dataset.py
++++ b/datasets/driving_dataset.py
+@@ -487,0 +488 @@ class DrivingDataset(SceneDataset):
++        seed_metadata: Dict[str, Tensor] = None,
+@@ -529,0 +531,8 @@ class DrivingDataset(SceneDataset):
++        filtered_metadata = {}
++        if seed_metadata is not None:
++            for name, value in seed_metadata.items():
++                if value.shape[0] != inside_mask.shape[0]:
++                    raise ValueError(
++                        f"seed metadata {name} does not align with seed points"
++                    )
++                filtered_metadata[name] = value[~inside_mask]
+@@ -559 +568,2 @@ class DrivingDataset(SceneDataset):
+-            "time": seed_time
++            "time": seed_time,
++            "metadata": filtered_metadata,
+@@ -765 +775 @@ class DrivingDataset(SceneDataset):
+-            return self.pixel_source.prepare_novel_view_render_data(self.type, traj)
+\ No newline at end of file
++            return self.pixel_source.prepare_novel_view_render_data(self.type, traj)
+diff --git a/models/gaussians/vanilla.py b/models/gaussians/vanilla.py
+index d59ff14..4218d97 100644
+--- a/models/gaussians/vanilla.py
++++ b/models/gaussians/vanilla.py
+@@ -24,0 +25,4 @@ from models.gaussians.basics import *
++from motion_proj.worldsim_v3.gaussian_ancestry import (
++    GaussianAncestryLedger,
++    InitSource,
++)
+@@ -50,0 +55,3 @@ class VanillaGaussians(nn.Module):
++        ancestry_cfg = self.ctrl_cfg.get("a2_ancestry", {})
++        self._a2_ancestry_enabled = bool(ancestry_cfg.get("enabled", False))
++        self._a2_ancestry = None
+@@ -79 +86,7 @@ class VanillaGaussians(nn.Module):
+-    def create_from_pcd(self, init_means: torch.Tensor, init_colors: torch.Tensor) -> None:
++    def create_from_pcd(
++        self,
++        init_means: torch.Tensor,
++        init_colors: torch.Tensor,
++        init_sources: torch.Tensor = None,
++        actor_ids: torch.Tensor = None,
++    ) -> None:
+@@ -105,0 +119,71 @@ class VanillaGaussians(nn.Module):
++        self._initialize_a2_ancestry(
++            means=init_means,
++            init_sources=init_sources,
++            actor_ids=actor_ids,
++        )
++
++    def _default_a2_init_source(self) -> InitSource:
++        return InitSource.UNKNOWN
++
++    def _default_a2_actor_ids(self) -> torch.Tensor:
++        return torch.full(
++            (self.num_points,), -1, device=self.device, dtype=torch.long
++        )
++
++    def _initialize_a2_ancestry(
++        self,
++        *,
++        means: torch.Tensor,
++        init_sources: torch.Tensor = None,
++        actor_ids: torch.Tensor = None,
++    ) -> None:
++        if not self._a2_ancestry_enabled:
++            self._a2_ancestry = None
++            return
++        if init_sources is None:
++            init_sources = int(self._default_a2_init_source())
++        if actor_ids is None:
++            actor_ids = self._default_a2_actor_ids()
++        self._a2_ancestry = GaussianAncestryLedger.initialize(
++            means=means,
++            actor_ids=actor_ids,
++            init_sources=init_sources,
++            birth_step=self.step,
++        )
++
++    def _append_a2_children(
++        self,
++        *,
++        parent_indices: torch.Tensor,
++        repeats: int,
++        source: InitSource,
++        child_means: torch.Tensor,
++    ) -> None:
++        if self._a2_ancestry is None:
++            return
++        self._a2_ancestry.append_children(
++            parent_indices=parent_indices,
++            repeats=repeats,
++            source=source,
++            birth_step=self.step,
++            child_means=child_means,
++        )
++
++    def record_a2_diagnostics(
++        self,
++        *,
++        indices: torch.Tensor,
++        boundary_contribution: torch.Tensor = None,
++        photometric_residual: torch.Tensor = None,
++        depth_residual: torch.Tensor = None,
++        normal_residual: torch.Tensor = None,
++    ) -> None:
++        if self._a2_ancestry is None:
++            return
++        self._a2_ancestry.record_diagnostics(
++            indices=indices,
++            boundary_contribution=boundary_contribution,
++            photometric_residual=photometric_residual,
++            depth_residual=depth_residual,
++            normal_residual=normal_residual,
++        )
+@@ -191,0 +276,5 @@ class VanillaGaussians(nn.Module):
++            if self._a2_ancestry is not None:
++                self._a2_ancestry.record_screen_statistics(
++                    indices=torch.where(full_mask)[0],
++                    gradients=grads[visible_mask],
++                )
+@@ -276,0 +366,12 @@ class VanillaGaussians(nn.Module):
++                self._append_a2_children(
++                    parent_indices=split_idcs,
++                    repeats=nsamps,
++                    source=InitSource.SPLIT,
++                    child_means=split_means,
++                )
++                self._append_a2_children(
++                    parent_indices=dup_idcs,
++                    repeats=1,
++                    source=InitSource.CLONE,
++                    child_means=dup_means,
++                )
+@@ -328,0 +430,2 @@ class VanillaGaussians(nn.Module):
++        if self._a2_ancestry is not None:
++            self._a2_ancestry.prune(~culls)
+@@ -453,0 +557,6 @@ class VanillaGaussians(nn.Module):
++    def state_dict(self, *args, **kwargs) -> Dict:
++        state_dict = super().state_dict(*args, **kwargs)
++        if self._a2_ancestry is not None:
++            state_dict["worldsim_a2_ancestry"] = self._a2_ancestry.state_dict()
++        return state_dict
++
+@@ -454,0 +564 @@ class VanillaGaussians(nn.Module):
++        ancestry_state = state_dict.pop("worldsim_a2_ancestry", None)
+@@ -462,0 +573,16 @@ class VanillaGaussians(nn.Module):
++        if self._a2_ancestry_enabled:
++            if ancestry_state is None:
++                self._initialize_a2_ancestry(
++                    means=self._means.detach(),
++                    init_sources=int(InitSource.UNKNOWN),
++                    actor_ids=self._default_a2_actor_ids(),
++                )
++            else:
++                self._a2_ancestry = GaussianAncestryLedger.from_state_dict(
++                    ancestry_state, device=self.device
++                )
++            self._a2_ancestry.validate(
++                expected_actor_ids=self._default_a2_actor_ids()
++            )
++        else:
++            self._a2_ancestry = None
+@@ -474 +600 @@ class VanillaGaussians(nn.Module):
+-        }
+\ No newline at end of file
++        }
+diff --git a/models/nodes/rigid.py b/models/nodes/rigid.py
+index 70900bc..9b63fe1 100644
+--- a/models/nodes/rigid.py
++++ b/models/nodes/rigid.py
+@@ -10,0 +11 @@ from models.gaussians.vanilla import VanillaGaussians
++from motion_proj.worldsim_v3.gaussian_ancestry import InitSource
+@@ -99,0 +101,11 @@ class RigidNodes(VanillaGaussians):
++        self._initialize_a2_ancestry(
++            means=init_means,
++            init_sources=int(InitSource.LIDAR),
++            actor_ids=self.point_ids[..., 0],
++        )
++
++    def _default_a2_init_source(self) -> InitSource:
++        return InitSource.LIDAR
++
++    def _default_a2_actor_ids(self) -> torch.Tensor:
++        return self.point_ids[..., 0]
+@@ -197,0 +210,12 @@ class RigidNodes(VanillaGaussians):
++                self._append_a2_children(
++                    parent_indices=split_idcs,
++                    repeats=nsamps,
++                    source=InitSource.SPLIT,
++                    child_means=split_means,
++                )
++                self._append_a2_children(
++                    parent_indices=dup_idcs,
++                    repeats=1,
++                    source=InitSource.CLONE,
++                    child_means=dup_means,
++                )
+@@ -252,0 +277,2 @@ class RigidNodes(VanillaGaussians):
++        if self._a2_ancestry is not None:
++            self._a2_ancestry.prune(~culls)
+@@ -519,0 +546,2 @@ class RigidNodes(VanillaGaussians):
++            if self._a2_ancestry is not None:
++                self._a2_ancestry.prune(mask)
+@@ -533,0 +562,4 @@ class RigidNodes(VanillaGaussians):
++                if self._a2_ancestry is not None:
++                    instance_raw_dict["ancestry"] = self._a2_ancestry.select(
++                        self.point_ids[..., 0] == id
++                    )
+@@ -558,0 +591,6 @@ class RigidNodes(VanillaGaussians):
++            if self._a2_ancestry is not None:
++                self._a2_ancestry.append_external_clones(
++                    source_rows=new_gaussian["ancestry"],
++                    actor_id=ins_id,
++                    birth_step=self.step,
++                )
+@@ -571 +609 @@ class RigidNodes(VanillaGaussians):
+-        }
+\ No newline at end of file
++        }
+diff --git a/models/trainers/scene_graph.py b/models/trainers/scene_graph.py
+index 92a3bd5..f54f54e 100644
+--- a/models/trainers/scene_graph.py
++++ b/models/trainers/scene_graph.py
+@@ -8,0 +9 @@ from utils.geometry import uniform_sample_sphere
++from motion_proj.worldsim_v3.gaussian_ancestry import InitSource
+@@ -131,0 +133,6 @@ class MultiTrainer(BasicTrainer):
++                sampled_sources = torch.full(
++                    (sampled_pts.shape[0],),
++                    int(InitSource.LIDAR),
++                    device=self.device,
++                    dtype=torch.long,
++                )
+@@ -133,0 +141 @@ class MultiTrainer(BasicTrainer):
++                random_sources = []
+@@ -137 +145,8 @@ class MultiTrainer(BasicTrainer):
+-                    random_pts.append(uniform_sample_sphere(num_near_pts, self.device))
++                    near_pts = uniform_sample_sphere(num_near_pts, self.device)
++                    random_pts.append(near_pts)
++                    random_sources.append(torch.full(
++                        (near_pts.shape[0],),
++                        int(InitSource.RANDOM_NEAR),
++                        device=self.device,
++                        dtype=torch.long,
++                    ))
+@@ -141 +156,8 @@ class MultiTrainer(BasicTrainer):
+-                    random_pts.append(uniform_sample_sphere(num_far_pts, self.device, inverse=True))
++                    far_pts = uniform_sample_sphere(num_far_pts, self.device, inverse=True)
++                    random_pts.append(far_pts)
++                    random_sources.append(torch.full(
++                        (far_pts.shape[0],),
++                        int(InitSource.RANDOM_FAR),
++                        device=self.device,
++                        dtype=torch.long,
++                    ))
+@@ -144,0 +167 @@ class MultiTrainer(BasicTrainer):
++                    random_sources = torch.cat(random_sources, dim=0)
+@@ -147,0 +171 @@ class MultiTrainer(BasicTrainer):
++                    valid_sources = random_sources[visible_mask]
+@@ -150,0 +175,3 @@ class MultiTrainer(BasicTrainer):
++                    sampled_sources = torch.cat(
++                        [sampled_sources, valid_sources], dim=0
++                    )
+@@ -155 +182,2 @@ class MultiTrainer(BasicTrainer):
+-                    valid_instances_dict=allnode_pts_dict
++                    valid_instances_dict=allnode_pts_dict,
++                    seed_metadata={"init_sources": sampled_sources},
+@@ -159 +187,3 @@ class MultiTrainer(BasicTrainer):
+-                    init_means=processed_init_pts["pts"], init_colors=processed_init_pts["colors"]
++                    init_means=processed_init_pts["pts"],
++                    init_colors=processed_init_pts["colors"],
++                    init_sources=processed_init_pts["metadata"]["init_sources"],
+@@ -296 +326 @@ class MultiTrainer(BasicTrainer):
+-        return metric_dict
+\ No newline at end of file
++        return metric_dict
+diff --git a/models/trainers/single.py b/models/trainers/single.py
+index 3e07274..95d49a8 100644
+--- a/models/trainers/single.py
++++ b/models/trainers/single.py
+@@ -10,0 +11 @@ from utils.geometry import uniform_sample_sphere
++from motion_proj.worldsim_v3.gaussian_ancestry import InitSource
+@@ -93,0 +95,6 @@ class SingleTrainer(BasicTrainer):
++                sampled_sources = torch.full(
++                    (sampled_pts.shape[0],),
++                    int(InitSource.LIDAR),
++                    device=self.device,
++                    dtype=torch.long,
++                )
+@@ -95,0 +103 @@ class SingleTrainer(BasicTrainer):
++                random_sources = []
+@@ -99 +107,8 @@ class SingleTrainer(BasicTrainer):
+-                    random_pts.append(uniform_sample_sphere(num_near_pts, self.device))
++                    near_pts = uniform_sample_sphere(num_near_pts, self.device)
++                    random_pts.append(near_pts)
++                    random_sources.append(torch.full(
++                        (near_pts.shape[0],),
++                        int(InitSource.RANDOM_NEAR),
++                        device=self.device,
++                        dtype=torch.long,
++                    ))
+@@ -103 +118,8 @@ class SingleTrainer(BasicTrainer):
+-                    random_pts.append(uniform_sample_sphere(num_far_pts, self.device, inverse=True))
++                    far_pts = uniform_sample_sphere(num_far_pts, self.device, inverse=True)
++                    random_pts.append(far_pts)
++                    random_sources.append(torch.full(
++                        (far_pts.shape[0],),
++                        int(InitSource.RANDOM_FAR),
++                        device=self.device,
++                        dtype=torch.long,
++                    ))
+@@ -106,0 +129 @@ class SingleTrainer(BasicTrainer):
++                    random_sources = torch.cat(random_sources, dim=0)
+@@ -109,0 +133 @@ class SingleTrainer(BasicTrainer):
++                    valid_sources = random_sources[visible_mask]
+@@ -112,0 +137,3 @@ class SingleTrainer(BasicTrainer):
++                    sampled_sources = torch.cat(
++                        [sampled_sources, valid_sources], dim=0
++                    )
+@@ -122 +149,3 @@ class SingleTrainer(BasicTrainer):
+-                        init_means=sampled_pts, init_colors=sampled_color
++                        init_means=sampled_pts,
++                        init_colors=sampled_color,
++                        init_sources=sampled_sources,
+@@ -212 +241 @@ class SingleTrainer(BasicTrainer):
+-        return metric_dict
+\ No newline at end of file
++        return metric_dict

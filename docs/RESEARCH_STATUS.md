@@ -1,10 +1,10 @@
 # Research Status
 
-- 更新时间：2026-08-06
+- 更新时间：2026-08-09
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
-- 当前任务：`WS-V3-A1-CALIBRATION-01`
-- 状态：`done_off`
-- 当前门禁：A1 10 项逻辑矩阵完成；下一任务为 A2 instrumentation + D1
+- 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
+- 状态：`running`
+- 当前门禁：A2-I0 ancestry instrumentation 与 clean source 收口；下一门禁为 quota-only D1 配置/资源合同与配对 smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -167,6 +167,28 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - A1 finalizer `20260806T211248Z__a1-three-scene-finalize-s0-r1`=`done`：10/10 逻辑项、8/8 唯一训练，
   `C*=C0-off / done_off`。该结论是完整冻结合同下的 Pareto 选择，不是“所有场景每项指标 C0 都最好”。
 
+## A2-I0 ancestry instrumentation 完成证据
+
+- canonical r3 项目基线：`research/worldsim-v3@70cf2b2` + formal run 内不可变 source snapshot；当前实现由本次
+  A2-I0 milestone commit 收口；
+- DriveStudio upstream：`e59bda4fa681f829dbb1d65f0de582b0f633c450`；patched worktree：
+  `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-r5`；
+- 配置 `configs/worldsim_v3/a2_instrumentation_v1.yaml` SHA-256：
+  `bac1ec5b3642470a999e7f0cf8ddc9cf5b4d9a1445029c43ae92601929f4bfce`；
+- instrumentation patch SHA-256：`87c084f77ed5d6395acce95abb992ca86004bdc47b68154878bf462a0fb345b0`；
+- canonical formal run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T071500Z__a2-i0-ancestry-formal-s0-r3`=`done`；
+- module-off/on 原生 checkpoint tensor 逐位一致、无 mismatch；off 不增加 ancestry key，on 增加且 round-trip；
+- 8 个初始 Gaussian 经 split/clone/prune 后保留 10 个、累计分配 11 个 ID；来源计数 LiDAR/split/clone=`7/2/1`；
+- actor/parent/lineage root、prune 后索引与 checkpoint 恢复通过；`nearest_lidar_distance` 对 actor 做 exact offline，
+  background 因无有界参考集保持 deferred；
+- boundary/photometric/depth/normal 在 I0 只冻结 attributed update API；无可靠 normal 时保持 schema-only；
+- patched worktree verify、patch reverse-check、当前 working-tree `git diff --check` 和 WorldSim 定向测试
+  `66 passed`。
+
+该结果只关闭 deterministic synthetic `RigidNodes` instrumentation 门禁，不是 scene-0230 真实质量证据，
+不授权直接启动 D1 formal。本次 source commit 只包含 A2-I0 代码、测试与直接相关文档，不混入保留的 V2 M5 文件。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -175,7 +197,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | pending | A1 完成后按 D0–D3 小步消融 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 ancestry instrumentation done；下一门禁为 quota-only D1 配置/资源合同与配对 smoke |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -184,11 +206,12 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 62 GiB 可用；
+- 数据盘：约 61 GiB 可用；
 - 无活跃研究 tmux/controller/GPU 进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A1 已收口。下一步进入 `WS-V3-A2-ACTOR-DENSIFY-01`：先完成逐 Gaussian ancestry、parent-child、split/clone
-来源和 module-off 等价 instrumentation，再启动只增加 actor/background quota 的 D1 smoke。
+A1 已收口，A2-I0 与 clean source 已通过。下一步冻结只改变 actor/background threshold 与 per-actor min/max quota
+的 D1 配置、scene-0230 配对短步预算、指标和资源停止阈值。D0/D1 smoke 通过前不启动
+formal，也不混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4 因子。
