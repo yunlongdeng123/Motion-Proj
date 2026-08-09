@@ -17,8 +17,8 @@
 - **A3 R0/R1 engineering guard 基线**：`9c639dd`（exact alias、row/Adam exact guard、DriveStudio patch 与 synthetic smoke）
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
-- **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 R1 paired+frozen replay done / A3 heldout evaluation protocol next / D3-D4 not launched / F0、A4 pending`
+- **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 protocol next / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -544,8 +544,8 @@ candidate/valid image 与 coverage。
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | running | I0 semantic protocol frozen；R0 exact alias 与 R1 opacity/scale 工程门下一步 | outside/optimizer exact，支持区域指标闭环；formal 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
+| `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | 当前只冻结并执行 P0 profile；最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1035,8 +1035,8 @@ actor_quality.json
   coverage/uncertainty/ABSTAIN。ancestry `nearest_lidar_distance` 只是 provenance，不是 T0 metric depth；
 - expected/first-hit/measured depth 分别固定为 `diagnostic / T1 / T0`；无名 `depth` 产品禁止。R0 为 D2
   checkpoint immutable exact alias，R1→R4 必须一次只加一个因子；首个工程门只做 R0/R1；
-- 当前 `formal_training_authorized=false`。R1 paired smoke 后已经冻结 steps、逐字段 learning rate、affected/seed
-  cap、first-hit alpha threshold 与资源上界；在读取 heldout 结果前仍须另行冻结只读评测协议，不能直接 formal；
+- `formal_training_authorized=false`。R1 paired smoke 后冻结了 steps、逐字段 learning rate、affected/seed cap、
+  first-hit alpha threshold 与资源上界；heldout 只读评测协议和负结果见 10.0.2，不能直接 formal；
 - A3 独立实现不得依赖工作树中未提交的 V2 M5 config、`stress_metrics.py` 或 stress runner。协议 validator、
   support classifier、affected-mask 与逐 tensor outside audit 使用独立 V3 模块；新增 `12 passed`，联合 WorldSim
   V3/materializer 回归 `98 passed`。
@@ -1069,6 +1069,32 @@ actor_quality.json
   四单元 loss 逐值相同，重现同一 checkpoint SHA，wall=`50.68 s`、peak GPU=`8,286.86 MiB`、
   sampled cgroup peak=`22,631,796,736 bytes`、OOM delta=`0`；
 - 这些证据只关闭真实工程链与数值可重放门。S-A 未物化，S-B pixel quality claim 禁止，R2–R4 与 formal 仍未授权。
+
+### 10.0.2 A3 R1 heldout 只读评测负结果与 A3 收口
+
+- 结果前冻结协议=`configs/worldsim_v3/a3_r1_eval_protocol_v1.yaml`，SHA-256=
+  `eb87a9f2ea7df9bdc050a8d4e4f3cdc7c6a1115ea6f4f69e2fd3c8011904b05a`；协议/评测器提交=
+  `42508fb / c8fc560`，固定 19 heldout frames × 3 cameras、R0-only masks、T0/T1 geometry、non-target/global RGB
+  safeguard、exact no-tolerance Pareto、checkpoint 不可变性与 `12,288 MiB` GPU ceiling；
+- 首次运行后补充的资源审计、CPU checkpoint staging、Rigid quota 兼容与 per-view render-state 释放提交依次为
+  `05cee1e / c9e3df4 / ef74622 / c2eb14f`；这些修复没有更改协议、阈值、mask、端点或 checkpoint。当前联合
+  WorldSim V3 回归=`139 passed`；
+- canonical negative run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T144037Z__a3-r1-heldout-eval-s0-r5`，
+  exit=`1`，terminal=`blocked / A3 heldout resource ceiling failed: peak_gpu_memory_mib`；resource audit SHA-256=
+  `d9536f4ec937bee0694a754038b22ab75a4b6b028f20e1e6f42e38e4db9a6280`，wall/GPU/cgroup/run bytes=
+  `117.98 s / 14,241.40 MiB / 23,749,709,824 / 299,910`，OOM/OOM-kill delta=`0/0`。r2/r4 的完整指标路径也
+  分别达到 `14,241.78 / 14,244.92 MiB`；r3 在指标前暴露并修复 Rigid quota device mismatch，不作结果；
+- r5 原始 metric/global rows SHA-256=
+  `04da7a2503460c075a3164c90d6c08436bbea9f4ec5560ea0417ee40e91aa939 / 04bf741e1da6cfe845b5ee6c9d4cccede54d79a1c8f7178e00abcf737ff7245e`；
+  R0/R1 checkpoint 运行后 SHA 仍为 `1a061247...e7c / e995e7c2...8cd1`，run 内无 `.pth`；
+- 因资源门失败，下列重算只作 diagnostic，不能升级为合格 heldout 证据：R0→R1 的 S-B first-hit coverage=
+  `1.0→1.0`，depth-order violation=`0.915792→0.908173`，non-target RGB MSE=
+  `0.002095031327→0.002095032019`，original-global RGB MSE=`0.002104032262→0.002104032654`；预冻结 exact
+  comparator 为 `tradeoff_non_dominated`，不是 R1 pass；
+- 正式裁决：单次 run 保留 `blocked`，R1 方法臂=`rejected_resource_gate_and_diagnostic_tradeoff`，A3 task=`done`。
+  不事后上调显存阈值、不改成 `packed=true`/分块渲染挽回结果，不启动 formal、R2–R4 或独立 S-A 训练；
+  `A3*=R0-off`，即 D2 checkpoint immutable exact alias。R1 checkpoint 只保留为负结果/工程复现资产。
 
 ### 10.1 核心边界
 
@@ -1419,27 +1445,37 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 ## 16. 当前唯一下一步
 
-A1 已以 `C*=C0-off / done_off` 收口，A2 的 I0、D1/D2 smoke、D1/D2 formal 与 fixed/matched 完整 Pareto
-也已全部闭环。A2 终态为 `done / tradeoff_non_dominated`：D2 在 boundary-support boundary band 改善，
-但 global、部分 actor/non-target 与训练成本存在退化；A3 采用 D2 boundary-priority asset，保留 D1 fallback。
-A3-I0 semantic protocol、R0 exact alias、R1 real S-B/T0 sidecar、四步 paired smoke 和 frozen replay 均已闭环；
-checkpoint `e995e7c2...8cd1` 已逐位重现，工程实现仍不是 heldout 质量证据，formal 继续未授权。当前唯一动作前移到
-读取任何 R0/R1 heldout 结果之前的评测协议冻结：
+A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitwise replay 通过，但冻结 heldout
+评测连续三条完整指标路径均越过 `12,288 MiB` GPU ceiling；r5 的资源无效 diagnostic 又是 geometry 改善与
+两项 RGB safeguard 严格退化并存的 `tradeoff_non_dominated`。因此 R1 方法臂已 rejected，A3 task 以正式负结果
+done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
+
+当前唯一动作转为 `WS-V3-A4-DEPLOYMENT-01 / P0 profile`：
 
 ```text
-1. 只读加载 R0 D2 alias 与 frozen R1 checkpoint，不再执行 optimizer step
-2. 在 19 个 heldout frames × 3 cameras 上冻结可计算的 depth-order violation、vacated-source residual、coverage 与 non-target safeguard
-3. S-B 只登记 T0/T1 geometry endpoint 与 coverage，不登记 RGB/PSNR/SSIM/LPIPS 成功；S-C 只登记 ABSTAIN
-4. 在读取结果前冻结 actor/edit/view 聚合、missing-value、exact Pareto 与 checkpoint 不可变性规则
-5. 评测后才裁决 R1 是继续、rejected 或需要独立 S-A 物化；不得把当前 smoke 直接升级为 formal，也不得混入 R2–R4
+1. 在读取新的部署结果前冻结 A4-P0 profile 协议、阶段 schema、同步/暖机方式、资源采样与失败恢复规则
+2. 输入只允许 A3*=R0/D2 exact alias、已有 A2/A3 immutable evidence 与 actor registry；不得把 rejected R1 设为生产基线
+3. 先盘点 prepare/train/render-eval/convert/load/runtime-render/recovery 的可复用时间与 bytes，已有训练不重复执行
+4. 只对缺失的 convert/load/runtime/recovery 做最小只读或可回退 profile；报告 wall、VRAM/RAM、bytes、cache、terminal、最小重跑单位
+5. P0 收口前不启动 P1 prune、P2 FP16、P3 chunk 或 P5 registry/resume，不用 packed/分块路径倒改 A3 结论
 ```
 
-R1 数值合同已经冻结并通过 bitwise replay；下一冻结对象仅是 heldout 只读评测合同。D3 继续 `not_unlocked`，
-D4 继续 `not_launched`；F0 独立非阻塞。A3 不得把 unknown background 改写为真值。
+D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A3 R1 heldout 资源门失败、诊断 tradeoff 与 A3 正式收口
+
+- heldout 协议/评测器=`42508fb / c8fc560`，protocol SHA=`eb87a9f2...b05a`；后续只增加失败资源审计和
+  等价内存诊断，当前联合回归 `139 passed`；
+- r5 exit=1，peak GPU=`14,241.40 MiB > 12,288 MiB`，wall/cgroup/run bytes/OOM 其余门禁均通过；R0/R1
+  checkpoint SHA 前后 exact，run 内无 checkpoint；
+- 资源无效 diagnostic 为 depth violation 改善、coverage 不变、non-target/global RGB MSE 严格退化，exact Pareto=
+  `tradeoff_non_dominated`；不得登记为合格 heldout 质量证据；
+- R1=`rejected_resource_gate_and_diagnostic_tradeoff`，A3=`done`，`A3*=R0-off`。下一门禁转为 A4-P0 profile
+  协议冻结；formal、R2–R4、S-A 训练以及通过上调阈值/更换 renderer 挽回均未授权。
 
 ### 2026-08-09 — A3 R1 真实 paired smoke、数值冻结与 bitwise replay 完成
 
@@ -1611,7 +1647,8 @@ D4 继续 `not_launched`；F0 独立非阻塞。A3 不得把 unknown background 
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
-WS-V3-A3-LOCAL-REFINE-01 当前为 running；I0 semantic protocol 已冻结，formal 训练仍未授权。
+WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；只允许先冻结并执行 P0 profile。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1630,7 +1667,11 @@ WS-V3-A3-LOCAL-REFINE-01 当前为 running；I0 semantic protocol 已冻结，fo
 14. 核对 A3 synthetic implementation `9c639dd`、summary/manifest、R0 alias 与 R1 outside/Adam exact；
 15. 核对 sidecar manifest `42474f73...7273`、8 个 S-B/T0 pixels、51 mutable/16,451 S-C rows 与 heldout exclusion；
 16. 核对 paired/frozen replay 两次 checkpoint SHA `e995e7c2...8cd1`、numeric freeze SHA `d9289df0...b3e3`、119 项测试和资源上界；
-17. 当前只允许结果前冻结并执行 R0/R1 heldout 只读评测；不得启动 formal、混入 R2-R4 或把 S-B/S-C 登记为 RGB 质量成功。
+17. 核对 heldout protocol SHA `eb87a9f2...b05a`、r5 resource audit `d9536f4e...6280`、14,241.40 MiB
+    超过 12,288 MiB、checkpoint exact、无新 `.pth` 与资源无效 diagnostic tradeoff；
+18. 核对 A3 task=`done`、R1=`rejected_resource_gate_and_diagnostic_tradeoff`、A3*=R0/D2 exact alias；
+19. 当前只允许冻结并执行 A4-P0 profile；不得重跑 A3、上调阈值、切换 packed/分块 renderer 挽回结果，
+    不得启动 formal、R2–R4 或把 S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

@@ -1557,6 +1557,20 @@ M4 单帧 r1 的 actor transform 先由 checkpoint float32 tensor 变换，再�
 `3.814697265625e-06 m`，rotation/size/canonical drift 均为零。容差变更只反映数值精度，不降低
 1 m 编辑幅度，也不得据此为真正的轨迹偏差放宽门禁。
 
+### PIVOT-F24：冻结 heldout 资源门失败不能靠事后更换 renderer 或提高阈值挽回
+
+A3 R1 在结果前冻结 `12,288 MiB` PyTorch allocated GPU ceiling。三条完成全部 R0/R1 指标计算的只读路径
+`r2/r4/r5` 分别达到 `14,241.777 / 14,244.924 / 14,241.399 MiB`；wall、cgroup、run bytes 与 OOM delta
+均通过。资源审计、CPU checkpoint staging、Rigid quota device 兼容和逐 view `trainer.info` 释放都没有改变这一
+单 view 峰值。继续把 renderer 改为 `packed=true`、分块/降分辨率，或把 ceiling 提高到观测值以上，会在看到结果后
+改变 source-render 路径或预算，不再是预注册评测。
+
+r5 的资源无效 diagnostic 也不能救回方法：S-B depth-order violation 从 `0.915792` 降至 `0.908173`，但
+non-target 与 original-global RGB MSE 都按 exact comparator 严格变差，故为 `tradeoff_non_dominated`。正确分层是：
+r5 run 保留 `blocked`，R1 方法臂登记 `rejected_resource_gate_and_diagnostic_tradeoff`，A3 任务以负结果 `done`；
+生产路由回退到 R0/D2 immutable exact alias。以后若研究 packed/分块渲染，只能在 A4 作为新的部署因子另行冻结，
+不得倒写 A3 heldout 结论或解锁 R2–R4。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

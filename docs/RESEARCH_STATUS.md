@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-09
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
-- 当前任务：`WS-V3-A3-LOCAL-REFINE-01`
+- 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A3 R1 real S-B/T0 paired smoke 与 frozen replay 已通过；下一门禁为结果前冻结 heldout 只读评测协议
+- 当前门禁：A3 已以 R1 负结果、A3*=R0-off 收口；下一门禁为结果前冻结 A4-P0 profile 协议
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -19,6 +19,10 @@
 
 1. 动态 actor 是否应使用区别于静态背景的 Gaussian 增密与剪枝规则；
 2. 对象移动/删除后，局部 3D Gaussian 短步精修是否能改善空洞、深度/透明度排序和时序闪烁。
+
+A3 已给出受冻结合同约束的负答案：R1 S-B 四步工程链可重放，但 heldout evaluator 连续越过 GPU ceiling，且
+资源无效 diagnostic 是 geometry 改善与 RGB safeguard 退化并存的 tradeoff。当前生产路由使用 R0/D2 exact alias，
+不把 R1 checkpoint 升级为方法或部署基线。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -349,6 +353,28 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - 结论仅为 `real_paired_engineering_and_bitwise_replay_done`。S-A 未物化，S-B pixel quality claim 禁止，
   `formal_training_authorized=false`，R2–R4 未授权。
 
+## A3 R1 heldout 只读评测负结果与任务收口
+
+- heldout protocol=`configs/worldsim_v3/a3_r1_eval_protocol_v1.yaml`，SHA-256=
+  `eb87a9f2ea7df9bdc050a8d4e4f3cdc7c6a1115ea6f4f69e2fd3c8011904b05a`；冻结/评测器提交=
+  `42508fb / c8fc560`；资源审计与内存诊断提交=`05cee1e / c9e3df4 / ef74622 / c2eb14f`；联合回归
+  `139 passed`；
+- closeout run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T144037Z__a3-r1-heldout-eval-s0-r5`，
+  exit=`1`，terminal=`blocked / peak_gpu_memory_mib`；resource audit SHA=
+  `d9536f4ec937bee0694a754038b22ab75a4b6b028f20e1e6f42e38e4db9a6280`；wall/GPU/cgroup/run bytes=
+  `117.983 s / 14,241.399 MiB / 23,749,709,824 / 299,910`，冻结 GPU ceiling=`12,288 MiB`，OOM delta=`0/0`；
+- r2/r4 的完整指标路径分别为 `14,241.777 / 14,244.924 MiB`，同样只失败 GPU ceiling；r3 在指标前
+  失败于 Rigid quota CPU/CUDA validator，已修复且不作结果。未提高 ceiling，也未换 packed/分块 renderer；
+- r5 metric/global rows SHA=
+  `04da7a2503460c075a3164c90d6c08436bbea9f4ec5560ea0417ee40e91aa939 / 04bf741e1da6cfe845b5ee6c9d4cccede54d79a1c8f7178e00abcf737ff7245e`；
+  R0/R1 checkpoint SHA 前后保持 `1a061247...e7c / e995e7c2...8cd1`，run 内无 `.pth`；
+- 资源无效 diagnostic：coverage `1.0→1.0`，depth violation `0.915792→0.908173`，non-target RGB MSE
+  `0.002095031327→0.002095032019`，original-global RGB MSE `0.002104032262→0.002104032654`；exact Pareto=
+  `tradeoff_non_dominated`。该数值只刻画失败，不登记为合格 heldout 证据；
+- 状态分层：r5 run=`blocked`，R1 arm=`rejected_resource_gate_and_diagnostic_tradeoff`，A3 task=`done`。
+  `A3*=R0-off`，即 D2 checkpoint immutable exact alias；formal、R2–R4 与独立 S-A 训练未授权。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -381,8 +407,8 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | running | R1 real paired+frozen replay done；heldout read-only evaluation protocol next；formal 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
+| `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 当前只冻结并执行 P0 end-to-end profile；P1/P2/P3/P5 尚未解锁 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -390,12 +416,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
 - 数据盘：最近 formal 终态最小 free=`46,471,581,696 bytes`；
-- A2-D2 formal controller 已退出，四个 stage 全部 completed；当前 GPU=`0 MiB`，无活动训练/评测进程；
+- A3 heldout r5 controller 已退出，exit=`1`；当前 GPU=`0 MiB`，无活动训练/评测进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A3 R1 的真实 S-B/T0 sidecar、四步 paired smoke、数值冻结与 bitwise replay 已完成。下一步必须在读取任何 heldout
-结果前冻结 R0/R1 只读评测合同：19 heldout frames × 3 cameras，只登记 T0/T1 geometry/coverage、vacated residual、
-non-target safeguard 与 exact Pareto；S-B 不登记 RGB 质量成功，S-C 只 ABSTAIN。评测后再裁决 R1 继续、rejected
-或需要独立 S-A 物化。在此之前不得 formal 或 R2–R4；D3/D4 保持未解锁，F0 仍是独立非阻塞项。
+冻结 `WS-V3-A4-DEPLOYMENT-01 / P0 profile` 协议：输入固定为 A3*=R0/D2 exact alias、现有 immutable run evidence
+与 actor registry；先定义 prepare/train/render-eval/convert/load/runtime-render/recovery 的 schema、同步/暖机、资源
+采样、cache 与最小重跑单位。已有训练/评测只复用可信时间和 bytes，不重复运行；仅对缺失的 convert/load/runtime/
+recovery 做最小可回退 profile。P0 关闭前不启动 prune、FP16、chunk、registry/resume，也不通过修改 A3 renderer 或
+资源 ceiling 倒改 R1 结论。D3/D4 与 A3 formal/R2–R4 保持未解锁，F0 仍是独立非阻塞项。

@@ -9,8 +9,8 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
-`tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已进入 `running`，I0 semantic protocol 已冻结；
-R1 real S-B/T0 paired smoke、数值冻结与 bitwise replay 已完成，尚未授权 A3 formal 训练。
+`tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
+`done`，`A3*=R0-off`；A4 已进入 `running`，当前只允许冻结并执行 P0 profile。
 
 ## 1. 状态词
 
@@ -31,8 +31,8 @@ pending | running | blocked | done | rejected
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | running | 编辑区域局部 Gaussian 精修 | R1 real paired+frozen replay done；heldout evaluation protocol next；formal 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
+| `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | 当前先做 P0 profile；P0 后才裁决 pruning/FP16/chunk/registry-resume |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -358,6 +358,33 @@ Matched-RigidNodes-budget：
 - 当前定向/联合回归=`26/119 passed`。本节只登记工程可重放性，不登记 heldout/S-B RGB 质量改进；
   `quality_claim_authorized=false`、`formal_training_authorized=false`、R2–R4 未授权。
 
+### `WS-V3-A3-LOCAL-REFINE-01` I3 heldout read-only evaluation / negative closeout
+
+- frozen protocol=`configs/worldsim_v3/a3_r1_eval_protocol_v1.yaml`，SHA-256=
+  `eb87a9f2ea7df9bdc050a8d4e4f3cdc7c6a1115ea6f4f69e2fd3c8011904b05a`；protocol/evaluator commits=
+  `42508fb810bad5bcd9bd16f6386465c4b9fc8c95 / c8fc5603b471588a5b4d3e54199f4b44b5cf1752`；固定
+  19 heldout frames × 3 cameras、R0-derived masks、T0/T1 geometry、non-target/global RGB safeguard、exact Pareto、
+  checkpoint immutability 与只读执行；
+- observability/memory diagnostic commits=`05cee1ed0ea6144dd2a8bb95a04e9457b1ac64c1 / c9e3df4654933b2e8a21fcd10dc37f1acea9efd8 /
+  ef74622382dd2c2b96090282db80f4eb8c315077 / c2eb14f635b5ddee362f584b20bea967dafcfaf2`；当前联合回归=
+  `139 passed`。这些提交不改变 protocol SHA、端点、mask、阈值或 checkpoint；
+- failed closeout run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T144037Z__a3-r1-heldout-eval-s0-r5`；
+  exit=`1`，terminal SHA=`eabe266bc3b4e7917391789e95e8cff771c6cac7d2b0567e60205f9cd8a7aad9`；resource audit
+  SHA=`d9536f4ec937bee0694a754038b22ab75a4b6b028f20e1e6f42e38e4db9a6280`；wall/GPU/cgroup/run bytes=
+  `117.983202636 s / 14,241.398926 MiB / 23,749,709,824 / 299,910`，GPU ceiling=`12,288 MiB`，OOM/OOM-kill
+  delta=`0/0`；
+- metric/global rows count=`432/114`，SHA=
+  `04da7a2503460c075a3164c90d6c08436bbea9f4ec5560ea0417ee40e91aa939 / 04bf741e1da6cfe845b5ee6c9d4cccede54d79a1c8f7178e00abcf737ff7245e`；
+  checkpoint before/after SHA=`1a061247...e7c / e995e7c2...8cd1`，run 中无 `.pth`；
+- resource-invalid diagnostic primary axes（R0→R1）：coverage=`1.0→1.0`，depth violation=
+  `.9157920573→.9081725143`，non-target RGB MSE=`.002095031327→.002095032019`，original-global RGB MSE=
+  `.002104032262→.002104032654`；exact Pareto=`tradeoff_non_dominated`。该重算不得登记为合格 heldout 质量证据；
+- r2/r4 同样完成 432/114 rows 后只失败 GPU ceiling，峰值=`14,241.777/14,244.924 MiB`；r3 在指标前因
+  Rigid quota device mismatch 失败并已修复。失败 run 不覆盖、不删除、不改写为 done；
+- final decision：R1 arm=`rejected_resource_gate_and_diagnostic_tradeoff`，A3 task=`done`，`A3*=R0-off`
+  （D2 immutable exact alias）。S-A 未物化，formal/R2–R4 未授权；下一阶段为 A4-P0 profile 协议冻结。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -575,6 +602,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 ## 12. 当前唯一动作
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
-`done / tradeoff_non_dominated`。A3-I0 protocol、R1 real S-B/T0 paired smoke、数值冻结与 bitwise replay 已完成；
-下一动作只允许在读取结果前冻结并执行 R0/R1 heldout 只读评测：T0/T1 geometry/coverage、vacated residual、
-non-target safeguard 与 exact Pareto。S-B 不登记 RGB 成功，S-C 只 ABSTAIN；不得启动 formal、R2–R4 或 D3/D4。
+`done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
+失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。下一动作只允许冻结并执行
+`WS-V3-A4-DEPLOYMENT-01 / P0 profile`；已有训练/评测证据只读复用，只补 convert/load/runtime/recovery 缺口。
+P0 前不得启动 P1/P2/P3/P5，不得修改 A3 renderer/ceiling 挽回 R1，也不得启动 formal、R2–R4 或 D3/D4。
