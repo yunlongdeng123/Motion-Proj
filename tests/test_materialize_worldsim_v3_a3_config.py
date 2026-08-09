@@ -32,10 +32,21 @@ def source_config() -> object:
             "trainer": {
                 "type": "models.trainers.MultiTrainer",
                 "optim": {"num_iters": 30_000, "use_grad_scaler": False},
+                "losses": {
+                    "rgb": {"w": 0.8},
+                    "ssim": {"w": 0.2},
+                    "mask": {"w": 0.05},
+                    "depth": {"w": 0.01},
+                    "affine": {"w": 1.0e-5},
+                    "opacity_entropy": {"w": 0.01},
+                },
             },
             "model": {
-                "Background": {"optim": {"opacity": {"lr": 0.05}, "scaling": {"lr": 0.005}}},
-                "RigidNodes": {},
+                "Background": {
+                    "optim": {"opacity": {"lr": 0.05}, "scaling": {"lr": 0.005}},
+                    "reg": {"sharp_shape_reg": {"w": 1.0}},
+                },
+                "RigidNodes": {"reg": {"temporal_smooth_reg": {"w": 0.01}}},
                 "Sky": {},
             },
             "logging": {"saveckpt_freq": 5_000},
@@ -107,9 +118,14 @@ def test_r1_materializer_binds_sidecar_and_remains_engineering_only() -> None:
     assert config.trainer.optim.num_iters == 30_002
     assert config.trainer.a3_local_refinement.enabled is True
     assert config.trainer.a3_local_refinement.require_external_paired_loss_masks is True
+    assert config.trainer.a3_local_refinement.native_regularizers_disabled is True
+    assert set(config.trainer.losses) == {"rgb", "ssim", "mask", "depth"}
+    assert config.model.Background.reg == {}
+    assert config.model.RigidNodes.reg == {}
     assert config.worldsim_v3.formal is False
     assert config.worldsim_v3.numeric_protocol_frozen is False
     assert config.worldsim_v3.sidecar_arrays_sha256 == "b" * 64
+    assert config.worldsim_v3.native_regularizers_disabled is True
 
 
 def test_r1_rejects_formal_or_source_hash_drift() -> None:

@@ -869,10 +869,14 @@ class LocalRefinementGuard:
             gradient.mul_(view)
             outside_zero = bool(torch.count_nonzero(gradient[~rows]) == 0)
             _require(outside_zero, f"outside gradient mask failed: {name}")
+            inside_nonzero = int(torch.count_nonzero(gradient[rows]).item())
+            inside_l2 = float(torch.linalg.vector_norm(gradient[rows]).item())
             gradient_checks[name] = {
                 "authorized_field": True,
                 "finite": finite,
                 "outside_zero": outside_zero,
+                "inside_nonzero": inside_nonzero,
+                "inside_l2": inside_l2,
             }
         return {"pass": True, "checks": gradient_checks}
 

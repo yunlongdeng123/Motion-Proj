@@ -1,5 +1,5 @@
 diff --git a/models/trainers/base.py b/models/trainers/base.py
-index 3923120..57d30a1 100644
+index 3923120..6e47a72 100644
 --- a/models/trainers/base.py
 +++ b/models/trainers/base.py
 @@ -22,0 +23,4 @@ from motion_proj.worldsim_v3.boundary_residual import (
@@ -14,7 +14,7 @@ index 3923120..57d30a1 100644
 +        self.a3_local_refinement_guard = None
 +        self._a3_last_gradient_audit = None
 +        self._a3_last_exactness_audit = None
-@@ -234,0 +244,49 @@ class BasicTrainer(nn.Module):
+@@ -234,0 +244,57 @@ class BasicTrainer(nn.Module):
 +        self._initialize_a3_local_refinement()
 +
 +    def _a3_optimizer_parameters(self) -> Dict[str, torch.nn.Parameter]:
@@ -46,8 +46,16 @@ index 3923120..57d30a1 100644
 +            cfg.get("disable_native_gaussian_postprocess") is not True
 +            or cfg.get("require_external_paired_loss_masks") is not True
 +            or cfg.get("start_after_checkpoint_step") is not True
++            or cfg.get("native_regularizers_disabled") is not True
 +        ):
 +            raise RuntimeError("A3 R1 fail-closed controls are missing")
++        if any(
++            bool((self.model_config[class_name].get("reg") or {}))
++            for class_name in self.gaussian_classes
++        ):
++            raise RuntimeError("A3 R1 native Gaussian regularizers remain enabled")
++        if set(self.losses_dict) - {"rgb", "ssim", "mask", "depth"}:
++            raise RuntimeError("A3 R1 auxiliary trainer losses remain enabled")
 +        if self.optim_general.get("use_grad_scaler", False):
 +            raise RuntimeError("A3 R1 does not authorize gradient scaling")
 +        if self.viewer is not None:
@@ -64,26 +72,26 @@ index 3923120..57d30a1 100644
 +            mutable_rows=sidecar.mutable_rows,
 +            variant=cfg.get("variant"),
 +        )
-@@ -285,0 +344,5 @@ class BasicTrainer(nn.Module):
+@@ -285,0 +352,5 @@ class BasicTrainer(nn.Module):
 +        if self.a3_local_refinement_guard is not None:
 +            # R1 must preserve tensor shape/order and cannot run native
 +            # after_train, split, duplicate, cull, or opacity reset.
 +            self._a2_d2_diagnostic_maps = None
 +            return
-@@ -536,0 +600,4 @@ class BasicTrainer(nn.Module):
+@@ -536,0 +608,4 @@ class BasicTrainer(nn.Module):
 +        if self.a3_local_refinement_guard is not None:
 +            self._a3_last_gradient_audit = (
 +                self.a3_local_refinement_guard.before_optimizer_step()
 +            )
-@@ -537,0 +605,4 @@ class BasicTrainer(nn.Module):
+@@ -537,0 +613,4 @@ class BasicTrainer(nn.Module):
 +        if self.a3_local_refinement_guard is not None:
 +            self._a3_last_exactness_audit = (
 +                self.a3_local_refinement_guard.after_optimizer_step()
 +            )
-@@ -580 +651 @@ class BasicTrainer(nn.Module):
+@@ -580 +659 @@ class BasicTrainer(nn.Module):
 -            valid_loss_mask = (1.0 - image_infos["egocar_masks"]).float()
 +            base_valid_loss_mask = (1.0 - image_infos["egocar_masks"]).float()
-@@ -582 +653,31 @@ class BasicTrainer(nn.Module):
+@@ -582 +661,31 @@ class BasicTrainer(nn.Module):
 -            valid_loss_mask = torch.ones_like(image_infos["sky_masks"])
 +            base_valid_loss_mask = torch.ones_like(image_infos["sky_masks"])
 +
@@ -116,22 +124,34 @@ index 3923120..57d30a1 100644
 +            geometry_valid_loss_mask = base_valid_loss_mask * geometry_mask
 +            if torch.count_nonzero(geometry_valid_loss_mask) == 0:
 +                raise RuntimeError("A3 paired loss masks authorize no pixels")
-@@ -584,2 +685,2 @@ class BasicTrainer(nn.Module):
+@@ -584,5 +693,12 @@ class BasicTrainer(nn.Module):
 -        gt_rgb = image_infos["pixels"] * valid_loss_mask[..., None]
 -        predicted_rgb = outputs["rgb"] * valid_loss_mask[..., None]
-+        gt_rgb = image_infos["pixels"] * rgb_valid_loss_mask[..., None]
-+        predicted_rgb = outputs["rgb"] * rgb_valid_loss_mask[..., None]
-@@ -587,2 +688,2 @@ class BasicTrainer(nn.Module):
+-
 -        gt_occupied_mask = (1.0 - image_infos["sky_masks"]).float() * valid_loss_mask
 -        pred_occupied_mask = outputs["opacity"].squeeze() * valid_loss_mask
-+        gt_occupied_mask = (1.0 - image_infos["sky_masks"]).float() * geometry_valid_loss_mask
++        gt_rgb = image_infos["pixels"] * rgb_valid_loss_mask[..., None]
++        predicted_rgb = outputs["rgb"] * rgb_valid_loss_mask[..., None]
++
++        if self.a3_local_refinement_guard is not None:
++            # S-B geometry is authorized only by a measured T0 LiDAR hit; sky
++            # segmentation is not the paired occupancy target for this gate.
++            gt_occupied_mask = (
++                image_infos["lidar_depth_map"] > 0
++            ).float() * geometry_valid_loss_mask
++        else:
++            gt_occupied_mask = (1.0 - image_infos["sky_masks"]).float() * geometry_valid_loss_mask
 +        pred_occupied_mask = outputs["opacity"].squeeze() * geometry_valid_loss_mask
-@@ -606 +707 @@ class BasicTrainer(nn.Module):
+@@ -606 +722 @@ class BasicTrainer(nn.Module):
 -            lidar_hit_mask = (gt_depth > 0).float() * valid_loss_mask
 +            lidar_hit_mask = (gt_depth > 0).float() * geometry_valid_loss_mask
-@@ -658 +759 @@ class BasicTrainer(nn.Module):
+@@ -658 +774 @@ class BasicTrainer(nn.Module):
 -                dynamic_pred_mask = dynamic_pred_mask & valid_loss_mask.bool()
 +                dynamic_pred_mask = dynamic_pred_mask & rgb_valid_loss_mask.bool()
+@@ -839 +955 @@ class BasicTrainer(nn.Module):
+-        return render_colors[0].cpu().numpy()
+\ No newline at end of file
++        return render_colors[0].cpu().numpy()
 diff --git a/tools/train.py b/tools/train.py
 index f86411a..f815d88 100644
 --- a/tools/train.py

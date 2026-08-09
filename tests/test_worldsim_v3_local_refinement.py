@@ -286,7 +286,9 @@ def test_guard_masks_gradients_and_audits_adam_outside_exact() -> None:
     )
     before = {name: value.detach().clone() for name, value in parameters.items()}
     sum(value.square().sum() for value in parameters.values()).backward()
-    guard.before_optimizer_step()
+    gradient_audit = guard.before_optimizer_step()
+    assert gradient_audit["checks"]["Background._opacities"]["inside_nonzero"] == 2
+    assert gradient_audit["checks"]["Background._opacities"]["inside_l2"] > 0
     assert parameters["Background._means"].grad is None
     assert torch.count_nonzero(parameters["Background._scales"].grad[~mutable_rows]) == 0
     optimizer.step()

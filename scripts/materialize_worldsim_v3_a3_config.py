@@ -22,6 +22,7 @@ from motion_proj.worldsim_v3.local_refinement import (
 
 VARIANTS = ("r0-no-refine-exact-alias", "r1-reactivate")
 SELECTED_CHECKPOINT_STEP = 30_000
+PAIRED_LOSS_KEYS = {"rgb", "ssim", "mask", "depth"}
 
 
 def _validate_source(
@@ -116,6 +117,15 @@ def materialize_r1_config(
 
     config = OmegaConf.create(deepcopy(OmegaConf.to_container(source, resolve=True)))
     config.trainer.optim.num_iters = SELECTED_CHECKPOINT_STEP + optimizer_steps
+    # R1 may only learn from externally authorized paired pixels.  Native
+    # Gaussian and trainer regularizers have no S-A/S-B provenance and could
+    # otherwise move an authorized opacity/scale row through a loss side door.
+    for model_config in config.model.values():
+        if isinstance(model_config, DictConfig) and "reg" in model_config:
+            model_config.reg = {}
+    for loss_name in list(config.trainer.losses):
+        if loss_name not in PAIRED_LOSS_KEYS:
+            del config.trainer.losses[loss_name]
     config.trainer.a3_local_refinement = {
         "enabled": True,
         "variant": VARIANTS[1],
@@ -124,6 +134,7 @@ def materialize_r1_config(
         "start_after_checkpoint_step": True,
         "disable_native_gaussian_postprocess": True,
         "require_external_paired_loss_masks": True,
+        "native_regularizers_disabled": True,
         "sidecar_manifest": sidecar_manifest_path,
         "protocol_sha256": protocol_sha256,
         "checkpoint_sha256": checkpoint_sha256,
@@ -142,6 +153,7 @@ def materialize_r1_config(
         "protocol_sha256": protocol_sha256,
         "sidecar_arrays_sha256": sidecar_manifest["arrays"]["sha256"],
         "optimizer_steps": optimizer_steps,
+        "native_regularizers_disabled": True,
         "formal": False,
         "numeric_protocol_frozen": False,
     }
