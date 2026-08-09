@@ -10,7 +10,7 @@
 - **A2-D1 工程基线**：`c9b2422`（quota-only policy、可重放 DriveStudio patch、配对 smoke controller）
 - **A2-D1 formal 协议基线**：`387dd50`（30k 配对控制器、held-out/non-target 评测、matched-budget 裁决）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 smoke done / formal protocol done / D0 running / F0、A3-A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 protocol next / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -19,7 +19,8 @@
 ## 0. V3.1 修订目的
 
 V3.1 创建时已完成路线切换和三场景原生基线，并进入 A1 正式实验；当前 A1 已收口、A2-I0 已完成，
-A2-D1 quota-only 配对工程 smoke 与 formal 协议冻结已通过，唯一 30k formal run 正在执行 D0。
+A2-D1 quota-only 配对工程 smoke、formal 协议与唯一 30k formal run 均已收口。fixed-step 与 matched-RigidNodes
+两种视图均为非支配 tradeoff，按冻结门禁解锁 D2 协议冻结，但不构成“D1 全面更优”或跨场景结论。
 V3.1 不推翻 V3，而是在以下新事实基础上修正执行协议：
 
 1. 6–7 月 WorldSim/GS 周报表明，工业链路的核心不是单个 3DGS 模型，而是：
@@ -531,7 +532,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke 与 formal 协议 done；30k run pending；边界尺度、几何与 provenance 消融未启动 | I0 done；D1/D2 必做，D3/D4 条件式 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；fixed/matched tradeoff；D2 协议冻结 next | I0/D1 done；D2 必做，D3/D4 条件式 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | evidence-aware affected set 与局部短步精修 | outside frozen，支持区域指标闭环 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
@@ -822,6 +823,29 @@ I0 在 D1 前实现：
 
 该 smoke 只关闭真实训练路径、资源、quota 与 checkpoint 工程门；它没有执行冻结 held-out actor/boundary
 质量合同，不能把更多 Gaussian 解释为方法改进。结论是“允许冻结 D1 formal 协议”，不是“D1 已通过方法门禁”。
+
+### 9.2.2 D1 formal 结果（done）
+
+- 唯一 canonical run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1`，
+  `terminal=done`；source commit=`f32f96b`；summary SHA-256=
+  `e3b194c2ed0563385df70ca2043dbc791bedb21068d28dc9d75fb59984c166ac`；
+- D0/D1 初始化 provenance SHA 均为 `8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898`，
+  初始 Background/RigidNodes 均为 `946,484 / 75,002`；两份物化配置仅 variant/quota-enable 不同；
+- fixed 30k 的 D0/D1 Background/Rigid/total GS 分别为
+  `1,182,619 / 177,628 / 1,360,247` 与 `1,201,057 / 105,412 / 1,306,469`；
+- D1 5k 网格按冻结规则选中 15k checkpoint：Rigid=`176,741`，距 D0 目标 `887`（`0.499%`，小于 2%），
+  Background/total=`2,432,701 / 2,609,442`；D0 matched 视图是 fixed D0 final 的 exact alias；
+- fixed 质量轴 D1/D0 更优数=`12/7`，matched 质量轴=`9/10`；两种视图的质量与质量—成本裁决均为
+  `tradeoff_non_dominated`。matched D1 改善 boundary-support 多数指标，但 global PSNR/SSIM/LPIPS 与 non-target
+  均明显退化，因此不能压缩成单一“D1 更好”结论；
+- D0/D1 30k duration=`2883.08 / 2099.33 s`，peak GPU sample=`23,867 / 23,989 MiB`，peak cgroup=
+  `10,350,350,336 / 16,012,115,968 bytes`；matched 15k elapsed=`1127.66 s`，资源峰值按完整 D1 臂上界报告；
+- 6×2 checkpoint 网格、quota/ancestry、原生 finite 与 24/24 actor 上限审计通过；三次 held-out/actor 评测前后
+  checkpoint SHA 不变，high/boundary/non-target 均为 `done`，cgroup `oom=0 / oom_kill=0`。
+
+冻结裁决为 `d2_unlocked=true`，下一动作只允许冻结 D2 boundary/residual ordering 与 boundary scale cap 协议。
+该结果仅限 scene-0230 / seed 0；负向和 tradeoff 证据有效，更多 Gaussian 不是自动改进。
 
 ### 9.3 子消融
 
@@ -1231,29 +1255,39 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 ## 16. 当前唯一下一步
 
-A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0 与 D1 quota-only 配对 smoke 已通过。D1 formal 协议、评测、
-matched-Gaussian-budget 裁决与资源停止条件已在独立提交 `387dd50` 冻结；只读 preflight 已通过。唯一 formal run
-`20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 已在 tmux 启动，当前动作是监控其 D0→D1 顺序闭环：
+A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0、D1 quota-only 配对 smoke、formal 协议与唯一 formal run
+`20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 均已完成。fixed 30k 与 matched-RigidNodes 两种视图均为
+`tradeoff_non_dominated`，冻结控制器登记 `d2_unlocked=true`。当前唯一动作转为冻结 D2 协议：
 
 ```text
-1. scene-0230 / seed 0 / D0→D1 / 每臂 30k fixed-step；每 5k 保存只读候选 checkpoint
-2. 正式报告 held-out global、high/boundary actor、两者反事实 footprint 并集之外的 non-target、per-actor GS、时间与显存
-3. matched-Gaussian-budget 以 D0 30k 最终 RigidNodes 数为目标，在 D1 5k 网格选绝对差最小者；并列取更早 step
-4. 只有相对差不超过 2% 才登记 matched view；否则 `ABSTAIN_BUDGET_NOT_MATCHED`，不事后裁点、重训或调 quota
-5. fixed-step 与 matched view 均完成前不得启动 D2；负结果和 Pareto tradeoff 仍是有效正式证据
+1. D2 只在 D1 上增加 boundary/residual 排序与 boundary scale cap，不混入 D3 depth/normal 或 D4 pruning
+2. 先冻结真实训练信号来源、归因时点、排序键、并列规则、scale cap 与 module-off/D1-equivalence 合同
+3. 先做 scene-0230 / seed 0 短步 D1→D2 paired smoke，验证信号非空、checkpoint round-trip、资源与停止条件
+4. smoke 通过后才冻结 D2 formal；fixed-step 与 matched-RigidNodes 继续沿用 D1 的 held-out/non-target/Pareto 合同
+5. 不因 D1 tradeoff 事后调 actor、指标或阈值；D2 仍允许负结果，且结论只限 scene-0230
 ```
 
-D1 formal 不得混入 boundary/residual 排序、scale cap、LiDAR/visibility pruning 或 D2–D4 因子；smoke 结果只授权
-formal 协议冻结，不构成 D1 方法结论。
+D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,609,442`，虽 RigidNodes 匹配但 Background
+不匹配，必须继续同时报告干预域预算和 total-GS 成本，不得称为全模型同预算。
 
 ---
 
 ## 17. 更新日志
 
+### 2026-08-09 — A2-D1 formal 正式收口
+
+- canonical r1 terminal=`done`，summary SHA-256=`e3b194c2...66ac`，formal contract SHA-256=`ad77db41...f8e7`；
+- D0/D1 各 30k、初始化 provenance 完全一致，6×2 checkpoint 网格与 24/24 actor quota 上限通过，无 OOM；
+- fixed D0/D1 global PSNR/SSIM/LPIPS=`27.7481/.851207/.176319` 与 `27.7700/.850915/.177704`；
+- matched 选中 D1 15k：Rigid=`176,741`，对 D0 `177,628` 的差=`887 / 0.499%`；D0 为 fixed final exact alias；
+- matched D1 global=`25.9290/.825381/.217941`，boundary-support actor PSNR/SSIM/LPIPS=
+  `29.2937/.902828/.061463`；表现为局部改善与 global/non-target 退化并存；
+- fixed 与 matched 的质量裁决均为 `tradeoff_non_dominated`，故仅解锁 D2 协议冻结，不宣称 D1 全面改进。
+
 ### 2026-08-09 — A2-D1 formal 唯一实例启动
 
 - run=`20260809T085400Z__a2-d1-paired-formal30k-s0-r1`；source commit=`f32f96b`；tmux=`ws_a2_d1_f1`；
-- terminal=`running`，当前 stage=`train_d0_native_30000`；D1 未启动；
+- 启动登记时 terminal=`running`，stage=`train_d0_native_30000`，D1 未启动；该生命周期记录已由上方 done 终态取代；
 - 两份物化配置除 variant/quota-enable 外一致；formal/base config SHA 与 canonical r4 summary SHA 已写入 manifest；
 - D0 初始化计数 Background/RigidNodes=`946,484 / 75,002`，与冻结 scene-0230 起点一致；
 - 启动后 GPU 约 `3.0 GiB` 且无 OOM；该条仅登记生命周期，不构成 checkpoint 或质量结果。
@@ -1267,7 +1301,7 @@ formal 协议冻结，不构成 D1 方法结论。
 - non-target 冻结为 high/boundary 两名 actor 的 model-counterfactual effect mask 并集之外，truth tier 不是 GT segmentation；
 - `80 passed`；direct-script import 修复后只读 preflight=`done`：GPU=`0 MiB`、free disk=`58.39 GiB`、
   cgroup memory.max=`96,636,764,160` bytes，patch/SHA 与 canonical r4 summary SHA 全部匹配；
-- formal 训练尚未启动；该提交只解除启动门，不构成 D1 质量结论。
+- 协议冻结提交时 formal 尚未启动；该提交本身只解除启动门，不构成 D1 质量结论。
 
 ### 2026-08-09 — A2-D1 quota-only 配对 smoke 收口
 
@@ -1352,7 +1386,7 @@ formal 协议冻结，不构成 D1 方法结论。
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；唯一 formal r1 正在执行 D0，禁止重复启动。
+WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 已 done，当前只冻结 D2 协议，禁止重复启动 D1。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1364,8 +1398,8 @@ WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；唯一 formal r1 正在执行 D0�
 7. 核对 clean A2-I0 source commit 只含 instrumentation、测试和直接相关文档，未混入 V2 M5；
 8. 核对 A2-D1 `c9b2422`、配置/patch SHA、canonical r4、D0/D1 provenance 匹配和 24/24 quota 上限；
 9. 核对 formal 协议提交 `387dd50`、配置 SHA `ad77db41...f8e7`、80 项测试和只读 preflight；
-10. 按冻结合同用唯一 run ID 在 tmux 中顺序执行 D0→D1；两臂和 matched gate 完成前不得启动 D2；
-11. 不得提前混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4。
+10. 核对 D1 formal r1 terminal/summary、初始化同源、6×2 grid、fixed/matched 两视图与 checkpoint 不可变性；
+11. 冻结 D2 boundary/residual ordering + boundary scale cap 协议；不得混入 D3 depth/normal 或 D4 pruning。
 
 不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
 ```

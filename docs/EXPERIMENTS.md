@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke 与 formal 协议已完成，唯一 D1 formal r1 正在执行 D0。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke 与 formal 已完成，当前冻结 D2 协议。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 smoke 与 formal 协议 done；唯一 r1 正在执行 D0→D1 formal |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 smoke/formal done；fixed/matched tradeoff；D2 协议冻结 next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -200,14 +200,41 @@ actor/background threshold 和 per-actor min/max quota，先做 D0/D1 配对短�
   24 actor GS、Background/total GS、训练时间、peak VRAM/cgroup；matched 中间 step 的峰值只报完整 30k 上界；
 - `80 passed`；read-only preflight=`done`：GPU=`0 MiB`、free disk=`58.39 GiB`、cgroup memory.max=`90 GiB`，
   canonical r4 summary SHA 与 compatibility/instrumentation/quota patch SHA 均匹配；
-- formal 尚未启动；本条只证明协议已冻结，不构成 fixed-step 或 matched-budget 质量结果。
+- 协议冻结提交时 formal 尚未启动；本条本身不构成 fixed-step 或 matched-budget 质量结果。
 
-### `WS-V3-A2-ACTOR-DENSIFY-01` D1 formal 当前运行
+### `WS-V3-A2-ACTOR-DENSIFY-01` D1 formal 正式结果
 
 - run=`20260809T085400Z__a2-d1-paired-formal30k-s0-r1`；source commit=`f32f96b`；tmux=`ws_a2_d1_f1`；
-- terminal=`running`，当前 stage=`train_d0_native_30000`；D1 未启动；
-- materialized configs normalized match=true；D0 初始化 Background/RigidNodes=`946,484 / 75,002`；
-- 启动后 GPU 约 `3.0 GiB`、无 OOM；当前不登记 checkpoint、held-out 或方法质量结论。
+- terminal=`done`；summary SHA-256=`e3b194c2ed0563385df70ca2043dbc791bedb21068d28dc9d75fb59984c166ac`；
+  manifest SHA-256=`f10e6e654ab27289ccb1c995ebbe1ffde913009dbfb3eae0ab4c6414de18a560`；
+- materialized configs normalized match=true；D0/D1 初始化 provenance SHA=`8951543c...b898`，Background/RigidNodes
+  均为 `946,484 / 75,002`；6×2 checkpoint 网格有效且同源，评测前后 checkpoint SHA 不变；
+- D1 quota 158 次 event；24/24 actor 不超过冻结上限；D0/D1 native tensor finite；无 OOM。
+
+Fixed-step（30k）：
+
+| arm | global PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | boundary actor PSNR / SSIM / LPIPS | non-target PSNR / SSIM / LPIPS | bg / rigid / total GS | train s / peak MiB |
+|---|---:|---:|---:|---:|---:|---:|
+| D0 native | 27.7481 / .851207 / .176319 | 24.9965 / .838813 / .094204 | 27.1783 / .882177 / .068895 | 26.8707 / .848887 / .057715 | 1,182,619 / 177,628 / 1,360,247 | 2883.08 / 23,867 |
+| D1 quota | 27.7700 / .850915 / .177704 | 25.1238 / .840230 / .096602 | 28.4658 / .899698 / .063419 | 26.8901 / .848493 / .058316 | 1,201,057 / 105,412 / 1,306,469 | 2099.33 / 23,989 |
+
+- quality 轴 D1/D0 更优=`12/7`；quality-cost 轴=`15/9`；两者均 `tradeoff_non_dominated`；
+- peak cgroup D0/D1=`10,350,350,336 / 16,012,115,968 bytes`。
+
+Matched-RigidNodes-budget：
+
+| arm | checkpoint | global PSNR / SSIM / LPIPS | high actor PSNR / SSIM / LPIPS | boundary actor PSNR / SSIM / LPIPS | non-target PSNR / SSIM / LPIPS | bg / rigid / total GS |
+|---|---:|---:|---:|---:|---:|---:|
+| D0 native | 30k exact alias | 27.7481 / .851207 / .176319 | 24.9965 / .838813 / .094204 | 27.1783 / .882177 / .068895 | 26.8707 / .848887 / .057715 | 1,182,619 / 177,628 / 1,360,247 |
+| D1 quota | 15k | 25.9290 / .825381 / .217941 | 25.7705 / .829707 / .109637 | 29.2937 / .902828 / .061463 | 24.3371 / .822724 / .090772 | 2,432,701 / 176,741 / 2,609,442 |
+
+- D1 15k 是 5k 网格绝对差最小候选：距 D0 Rigid target `887 / 0.499%`，通过 2% 门；checkpoint SHA-256=
+  `b864e5ff772777108fcf2214c0548fd4fdc243c360c79890018d7e0d213a9f58`，elapsed=`1127.66 s`；
+- quality 轴 D1/D0 更优=`9/10`；quality-cost 轴=`11/13`；两者均 `tradeoff_non_dominated`；
+- D1 在 boundary-support actor 与其 boundary band 多数指标改善，但 global、non-target 与部分 high-support 指标退化；
+  RigidNodes 匹配不等于 total GS 匹配，D1 total GS 多 `1,249,195`；
+- 裁决：`d2_unlocked=true`，只解锁 D2 boundary/residual ordering + boundary scale cap 协议冻结。证据仅限
+  scene-0230 / seed 0；不宣称 D1 全面优于 D0，也不以更多 Gaussian 冒充改进。
 
 ## 3. V2 冻结注册表
 
@@ -425,6 +452,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke 与 formal 协议已完成。唯一 r1 已在 tmux 中顺序运行
-scene-0230 D0→D1 30k；下一动作是监控该实例并生成 fixed-step 与 matched-RigidNodes-budget 视图。
-两臂及 matched gate 完成前不得启动 D2；不得混入 boundary、LiDAR、visibility、residual、scale cap 或 D2–D4。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 已完成。下一动作是冻结 D2 的真实
+boundary/residual 信号、排序键/并列规则、boundary scale cap、module-off/D1-equivalence 与资源合同，然后执行
+scene-0230 / seed 0 的短步 D1→D2 paired smoke。不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。

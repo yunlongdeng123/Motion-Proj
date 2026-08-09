@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：唯一 A2-D1 formal r1 已启动并正在执行 D0；下一门禁为 D0→D1 30k formal 完整终态
+- 当前门禁：A2-D1 formal r1 已 `done` 且 fixed/matched 均为非支配 tradeoff；下一门禁为 D2 协议冻结与 paired smoke
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -201,16 +201,30 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
   counterfactual mask 明示不是 GT segmentation；
 - `80 passed`；只读 preflight=`done`：GPU=`0 MiB`、free disk=`58.39 GiB`、memory.max=`90 GiB`、
   canonical r4 summary SHA 与三层 DriveStudio patch SHA 全部匹配；
-- formal 尚未启动。该证据只解除启动门，不允许宣称 D1 质量改进，也不允许提前启动 D2。
+- 协议冻结提交时 formal 尚未启动。该证据本身只解除启动门，不构成 D1 质量结论。
 
-## A2-D1 formal 当前运行
+## A2-D1 formal 完成证据
 
-- canonical candidate run：
+- canonical run：
   `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1`；
-- source commit=`f32f96b47619e05066d2ee11c899e38d07398e11`；tmux=`ws_a2_d1_f1`；terminal=`running`；
-- manifest 已确认 D0/D1 物化配置除 variant/quota-enable 外匹配，formal config SHA=`ad77db41...f8e7`；
-- 当前 stage=`train_d0_native_30000`，D1 尚未启动；D0 初始化 Background/RigidNodes=`946,484 / 75,002`；
-- 启动后 GPU 约 `3.0 GiB`，cgroup 无 OOM。当前不得启动第二个 formal run 或 D2。
+- source commit=`f32f96b47619e05066d2ee11c899e38d07398e11`；terminal=`done`；summary SHA-256=
+  `e3b194c2ed0563385df70ca2043dbc791bedb21068d28dc9d75fb59984c166ac`；manifest SHA-256=
+  `f10e6e654ab27289ccb1c995ebbe1ffde913009dbfb3eae0ab4c6414de18a560`；
+- D0/D1 物化配置配对，初始化 provenance SHA 均为 `8951543c...b898`，初始 Background/RigidNodes=
+  `946,484 / 75,002`；6×2 checkpoint 网格、quota/ancestry、native finite 与 24/24 actor 上限均通过；
+- fixed 30k D0/D1：Background/Rigid/total GS=`1,182,619/177,628/1,360,247` 与
+  `1,201,057/105,412/1,306,469`；global PSNR/SSIM/LPIPS=`27.7481/.851207/.176319` 与
+  `27.7700/.850915/.177704`；质量轴更优数 D1/D0=`12/7`，裁决=`tradeoff_non_dominated`；
+- matched 选中 D1 15k：Rigid=`176,741`，与 D0 target 差 `887 / 0.499%`；D0 视图为 fixed final exact alias；
+  D1 Background/total=`2,432,701/2,609,442`，global=`25.9290/.825381/.217941`；质量轴更优数 D1/D0=
+  `9/10`，裁决仍为 `tradeoff_non_dominated`；
+- matched D1 boundary-support actor PSNR/SSIM/LPIPS=`29.2937/.902828/.061463`，优于 D0 的
+  `27.1783/.882177/.068895`；但 non-target PSNR/SSIM/LPIPS=`24.3371/.822724/.090772`，劣于 D0 的
+  `26.8707/.848887/.057715`。这是局部—全局 tradeoff，不是 D1 全面改进；
+- D0/D1 train duration=`2883.08/2099.33 s`，peak GPU=`23,867/23,989 MiB`，peak cgroup=
+  `10,350,350,336/16,012,115,968 bytes`；matched 15k elapsed=`1127.66 s`，资源按完整 D1 臂上界报告；
+- fixed D0、fixed D1、matched D1 三次评测前后 checkpoint SHA 均不变，high/boundary/non-target 均 `done`，
+  `oom=0 / oom_kill=0`。控制器登记 `d2_unlocked=true`，仅解锁 D2 协议冻结。
 
 ## A2-D1 quota-only 配对 smoke 完成证据
 
@@ -243,7 +257,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke 与 formal 协议 done；唯一 r1 正在执行 D0→D1 30k formal |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；fixed/matched 均为 tradeoff；D2 协议冻结 next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -252,13 +266,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 59 GiB 可用；
-- 活跃 tmux=`ws_a2_d1_f1`；唯一 A2-D1 formal r1 正在使用 GPU；
+- 数据盘：约 50 GiB 可用；
+- A2-D1 formal controller 已退出，`ws_a2_d1_f1` 仅保留 dead pane；当前无活动训练/评测进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A1 已收口，A2-I0、D1 quota-only paired smoke 与 formal 协议冻结均已通过。唯一 r1 已在 tmux 中顺序运行
-scene-0230 D0→D1 30k；下一步是监控该实例并生成 fixed-step 与 matched-RigidNodes-budget 两个视图。formal 两臂
-和 matched gate 完成前不启动 D2；更多 Gaussian 不自动解释为改进，也不混入 boundary/residual、scale cap、
-LiDAR/visibility 或 D2–D4 因子。
+A1 已收口，A2-I0 与 D1 quota-only paired smoke/formal 均已完成。下一步冻结 D2 的真实 boundary/residual 信号、
+排序键与并列规则、boundary scale cap、module-off/D1-equivalence、checkpoint 与资源停止合同；随后只做
+scene-0230 / seed 0 的 D1→D2 paired smoke。D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning，
+也不得因 D1 的 tradeoff 事后更换 actor、指标或 quota。
