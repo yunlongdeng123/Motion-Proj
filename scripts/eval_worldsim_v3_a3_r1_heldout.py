@@ -43,6 +43,13 @@ def command_output(*command: str, cwd: Path) -> str:
     return subprocess.check_output(command, cwd=cwd, text=True).strip()
 
 
+def load_model_checkpoint_read_only(trainer: Any, checkpoint: Path) -> None:
+    """Load through CPU so the resident model is not duplicated on GPU."""
+    state_dict = torch.load(checkpoint, map_location="cpu")
+    trainer.load_state_dict(state_dict, load_only_model=True, strict=True)
+    del state_dict
+
+
 def uint8_rgb(value: torch.Tensor) -> np.ndarray:
     array = value.detach().float().cpu().numpy()
     if not np.isfinite(array).all():
@@ -472,7 +479,7 @@ def main() -> None:
     )
     if hasattr(trainer, "optimizer"):
         raise RuntimeError("A3 read-only evaluator constructed an optimizer early")
-    trainer.resume_from_checkpoint(str(r0_checkpoint), load_only_model=True)
+    load_model_checkpoint_read_only(trainer, r0_checkpoint)
     trainer.set_eval()
     rigid = trainer.models["RigidNodes"]
     rigid_sha_before = rigid_contract_sha256(rigid)
@@ -617,7 +624,7 @@ def main() -> None:
     if rigid_contract_sha256(rigid) != rigid_sha_before:
         raise RuntimeError("A3 R0 actor edit restore drift")
     print("A3 heldout phase: R1 original and edited metrics", flush=True)
-    trainer.resume_from_checkpoint(str(r1_checkpoint), load_only_model=True)
+    load_model_checkpoint_read_only(trainer, r1_checkpoint)
     trainer.set_eval()
     if rigid_contract_sha256(rigid) != rigid_sha_before:
         raise RuntimeError("A3 R1 Rigid checkpoint drift")

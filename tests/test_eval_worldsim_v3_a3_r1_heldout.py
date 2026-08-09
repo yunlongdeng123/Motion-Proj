@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import numpy as np
+import scripts.eval_worldsim_v3_a3_r1_heldout as heldout_eval
 
 from scripts.eval_worldsim_v3_a3_r1_heldout import (
     aggregate_metric_rows,
     build_resource_audit,
     build_variant_aggregate,
     classify_exact_pareto,
+    load_model_checkpoint_read_only,
     squared_rgb_error,
 )
 
@@ -132,4 +134,31 @@ def test_resource_audit_persists_exact_failed_dimension() -> None:
         "run_bytes": False,
         "oom_events_delta": False,
         "oom_kill_events_delta": False,
+    }
+
+
+def test_checkpoint_loader_stages_tensors_on_cpu(monkeypatch, tmp_path) -> None:
+    state_dict = {"step": 1, "models": {"Background": {"value": 2}}}
+    observed = {}
+
+    def fake_load(path, *, map_location):
+        observed["path"] = path
+        observed["map_location"] = map_location
+        return state_dict
+
+    class FakeTrainer:
+        def load_state_dict(self, value, *, load_only_model, strict):
+            observed["state_dict"] = value
+            observed["load_only_model"] = load_only_model
+            observed["strict"] = strict
+
+    monkeypatch.setattr(heldout_eval.torch, "load", fake_load)
+    checkpoint = tmp_path / "checkpoint.pth"
+    load_model_checkpoint_read_only(FakeTrainer(), checkpoint)
+    assert observed == {
+        "path": checkpoint,
+        "map_location": "cpu",
+        "state_dict": state_dict,
+        "load_only_model": True,
+        "strict": True,
     }
