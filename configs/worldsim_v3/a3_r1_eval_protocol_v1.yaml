@@ -1,0 +1,148 @@
+schema_version: 1
+task_id: WS-V3-A3-LOCAL-REFINE-01
+audit_version: A3-R1-HELDOUT-EVAL-PROTOCOL-v1
+protocol_status: frozen_before_reading_heldout_results
+formal_training_authorized: false
+quality_claim_authorized: false
+
+depends_on:
+  numeric_freeze: configs/worldsim_v3/a3_r1_numeric_freeze_v1.yaml
+  numeric_freeze_sha256: d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3
+  sidecar_manifest_sha256: 42474f73fc563a2bba4c52cbec029bb4c28d33a21ca5f3d83ad4311bb7957273
+  r0_checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  r0_checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  r1_checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T135921Z__a3-r1-sb-paired4-s0-r2/artifacts/r1_checkpoint/checkpoint_final.pth
+  r1_checkpoint_sha256: e995e7c266d9fed4e64c86813718e46ab4576bbfdf60500a637bdaeaaba78cd1
+
+matrix:
+  scene: scene-0230
+  scene_index: 179
+  seed: 0
+  variants: [r0-no-refine-exact-alias, r1-reactivate]
+  actor_roles: [high-support, boundary-support]
+  edits: [lateral, delete]
+  cameras: [0, 1, 2]
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+  actor_frame_eligibility: source_checkpoint_instances_fv_true
+  invalid_actor_frame_policy: exclude_and_report_count
+  camera_visibility_policy: retain_all_cameras_report_zero_footprint
+
+fixed_masks:
+  source_variant: r0-no-refine-exact-alias
+  source_actor_footprint:
+    counterfactual: original_minus_delete
+    max_uint8_difference_threshold: 2
+    dilation_pixels: 2
+  edited_actor_footprint:
+    counterfactual: lateral_minus_delete
+    max_uint8_difference_threshold: 2
+    dilation_pixels: 2
+  affected_pixel_mask:
+    union: [source_actor_footprint, edited_actor_footprint]
+    dilation_pixels: 3
+  s_b_t0_mask:
+    expression: affected_and_not_source_and_not_edited_and_depth_lidar_measured_T0_valid
+    variant_independent: true
+  non_target_mask:
+    expression: not_affected_pixel_mask_and_not_egocar
+    variant_independent: true
+  empty_mask_policy: exclude_metric_unit_and_report_coverage
+
+typed_depth:
+  depth_lidar_measured:
+    truth_tier: T0
+    source: frozen_full_image_dataset
+  depth_surface_first_hit:
+    truth_tier: T1
+    alpha_threshold: 0.5
+  depth_render_expected:
+    truth_tier: diagnostic
+    use: report_only_not_decision
+  depth_order_tolerance_m: 0.05
+
+endpoints:
+  s_b_first_hit_valid_coverage:
+    numerator: s_b_t0_pixels_with_variant_T1_valid
+    denominator: all_s_b_t0_pixels
+    direction: higher
+  s_b_depth_order_violation_rate:
+    numerator: absolute_T1_minus_T0_gt_0.05m_or_T1_invalid
+    denominator: all_s_b_t0_pixels
+    direction: lower
+  s_b_t0_first_hit_mae_m:
+    support: common_r0_r1_T1_valid_s_b_t0_pixels
+    direction: lower
+    decision_role: secondary_tiebreak_report_coverage
+  non_target_observed_rgb_mse:
+    target: heldout_observed_RGB
+    support: fixed_non_target_mask
+    aggregation: pooled_pixels_then_role_edit_macro
+    direction: lower
+  original_global_observed_rgb_mse:
+    target: heldout_observed_RGB
+    support: full_image_excluding_egocar
+    aggregation: pooled_pixels_over_unique_frame_camera_views
+    direction: lower
+    safeguard: true
+  coverage:
+    report:
+      - eligible_actor_frames
+      - total_view_units
+      - zero_footprint_view_units
+      - s_b_t0_pixels
+      - common_T1_valid_pixels
+      - non_target_pixels
+
+aggregation:
+  raw_key_order: [role, edit, frame, camera, variant]
+  primary_group_order:
+    - high-support::lateral
+    - high-support::delete
+    - boundary-support::lateral
+    - boundary-support::delete
+  pixel_endpoints: sum_numerators_and_denominators_before_division
+  group_macro: equal_weight_over_groups_with_nonzero_fixed_denominator
+  missing_values: null_never_zero
+  no_posthoc_camera_actor_or_frame_reweighting: true
+
+decision:
+  comparator: exact_no_numeric_tolerance
+  primary_axes:
+    s_b_first_hit_valid_coverage: higher
+    s_b_depth_order_violation_rate: lower
+    non_target_observed_rgb_mse: lower
+    original_global_observed_rgb_mse: lower
+  pass_rule: all_primary_axes_non_worse_and_at_least_one_strictly_better
+  exact_alias_rule: all_primary_axes_equal_and_output_checkpoint_sha_equal
+  tradeoff_rule: neither_variant_dominates
+  reject_rule: r1_dominated_by_r0_or_any_required_audit_fails
+  s_b_t0_first_hit_mae_m: secondary_report_only_no_rescue
+  zero_s_b_coverage: insufficient_evidence_not_success
+
+required_audits:
+  no_optimizer_constructed_or_step_executed: true
+  no_checkpoint_written: true
+  r0_checkpoint_sha_before_after_exact: true
+  r1_checkpoint_sha_before_after_exact: true
+  actor_registry_trajectory_parameters_exact: true
+  fixed_masks_derived_from_r0_only: true
+  heldout_frames_only: true
+  raw_rows_and_aggregate_recompute_match: true
+  finite_metrics_or_explicit_null: true
+
+resource_ceilings:
+  wall_time_seconds: 900
+  peak_gpu_memory_mib: 12288
+  peak_cgroup_memory_bytes: 34359738368
+  run_bytes: 2000000000
+  oom_events_delta: 0
+  oom_kill_events_delta: 0
+
+claim_boundary:
+  s_a_status: ABSTAIN_NOT_MATERIALIZED
+  s_a_rgb_quality_claim: forbidden
+  s_b_rgb_psnr_ssim_lpips_claim: forbidden
+  s_c_update_seed_loss_or_success_claim: forbidden
+  cross_scene_claim: forbidden
+  formal_training_authorized: false
+  r2_r3_r4_authorized: false

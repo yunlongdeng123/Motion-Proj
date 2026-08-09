@@ -18,6 +18,7 @@ TASK_ID = "WS-V3-A3-LOCAL-REFINE-01"
 AUDIT_VERSION = "A3-LOCAL-REFINE-PROTOCOL-v1"
 SIDECAR_AUDIT_VERSION = "A3-R1-SIDECAR-v1"
 R1_NUMERIC_AUDIT_VERSION = "A3-R1-NUMERIC-FREEZE-v1"
+R1_EVAL_AUDIT_VERSION = "A3-R1-HELDOUT-EVAL-PROTOCOL-v1"
 STRATA = ("S-A-observed", "S-B-geometric", "S-C-unsupported")
 VARIANTS = (
     "r0-no-refine-exact-alias",
@@ -402,6 +403,145 @@ def validate_a3_r1_numeric_freeze(contract: Mapping[str, Any]) -> None:
         and scope.get("r2_r3_r4_authorized") is False
         and scope.get("formal_training_authorized") is False,
         "A3 R1 numeric scope drift",
+    )
+
+
+def validate_a3_r1_eval_protocol(contract: Mapping[str, Any]) -> None:
+    """Validate the result-blind, read-only R0/R1 heldout evaluation contract."""
+
+    _require(contract.get("schema_version") == 1, "unsupported A3 R1 eval schema")
+    _require(contract.get("task_id") == TASK_ID, "A3 R1 eval task drift")
+    _require(
+        contract.get("audit_version") == R1_EVAL_AUDIT_VERSION,
+        "A3 R1 eval audit drift",
+    )
+    _require(
+        contract.get("protocol_status") == "frozen_before_reading_heldout_results",
+        "A3 R1 eval protocol is not result-blind frozen",
+    )
+    _require(
+        contract.get("formal_training_authorized") is False
+        and contract.get("quality_claim_authorized") is False,
+        "A3 R1 eval cannot authorize formal training or quality claims",
+    )
+    dependencies = contract.get("depends_on") or {}
+    for name in (
+        "numeric_freeze_sha256",
+        "sidecar_manifest_sha256",
+        "r0_checkpoint_sha256",
+        "r1_checkpoint_sha256",
+    ):
+        _sha256(dependencies.get(name), f"missing A3 R1 eval dependency SHA: {name}")
+    _require(
+        dependencies.get("numeric_freeze_sha256")
+        == "d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3"
+        and dependencies.get("r0_checkpoint_sha256")
+        == "1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c"
+        and dependencies.get("r1_checkpoint_sha256")
+        == "e995e7c266d9fed4e64c86813718e46ab4576bbfdf60500a637bdaeaaba78cd1",
+        "A3 R1 eval checkpoint/numeric dependency drift",
+    )
+    matrix = contract.get("matrix") or {}
+    _require(
+        matrix.get("scene") == "scene-0230"
+        and matrix.get("scene_index") == 179
+        and matrix.get("seed") == 0,
+        "A3 R1 eval scene/seed drift",
+    )
+    _require(
+        matrix.get("variants")
+        == ["r0-no-refine-exact-alias", "r1-reactivate"]
+        and matrix.get("actor_roles") == ["high-support", "boundary-support"]
+        and matrix.get("edits") == ["lateral", "delete"]
+        and matrix.get("cameras") == [0, 1, 2]
+        and matrix.get("heldout_frames") == HELDOUT_FRAMES,
+        "A3 R1 eval matrix drift",
+    )
+    _require(
+        matrix.get("actor_frame_eligibility")
+        == "source_checkpoint_instances_fv_true"
+        and matrix.get("invalid_actor_frame_policy")
+        == "exclude_and_report_count",
+        "A3 R1 eval actor eligibility drift",
+    )
+    masks = contract.get("fixed_masks") or {}
+    source = masks.get("source_actor_footprint") or {}
+    edited = masks.get("edited_actor_footprint") or {}
+    affected = masks.get("affected_pixel_mask") or {}
+    _require(
+        masks.get("source_variant") == "r0-no-refine-exact-alias"
+        and source.get("max_uint8_difference_threshold") == 2
+        and source.get("dilation_pixels") == 2
+        and edited.get("max_uint8_difference_threshold") == 2
+        and edited.get("dilation_pixels") == 2
+        and affected.get("dilation_pixels") == 3,
+        "A3 R1 eval fixed-mask morphology drift",
+    )
+    _require(
+        (masks.get("s_b_t0_mask") or {}).get("variant_independent") is True
+        and (masks.get("non_target_mask") or {}).get("variant_independent") is True
+        and masks.get("empty_mask_policy")
+        == "exclude_metric_unit_and_report_coverage",
+        "A3 R1 eval mask independence/missing policy drift",
+    )
+    depth = contract.get("typed_depth") or {}
+    _require(
+        (depth.get("depth_lidar_measured") or {}).get("truth_tier") == "T0"
+        and (depth.get("depth_surface_first_hit") or {}).get("truth_tier") == "T1"
+        and float((depth.get("depth_surface_first_hit") or {}).get("alpha_threshold", -1)) == 0.5
+        and (depth.get("depth_render_expected") or {}).get("truth_tier") == "diagnostic"
+        and float(depth.get("depth_order_tolerance_m", -1)) == 0.05,
+        "A3 R1 eval typed-depth drift",
+    )
+    endpoints = contract.get("endpoints") or {}
+    directions = {
+        "s_b_first_hit_valid_coverage": "higher",
+        "s_b_depth_order_violation_rate": "lower",
+        "s_b_t0_first_hit_mae_m": "lower",
+        "non_target_observed_rgb_mse": "lower",
+        "original_global_observed_rgb_mse": "lower",
+    }
+    _require(
+        all((endpoints.get(name) or {}).get("direction") == direction for name, direction in directions.items()),
+        "A3 R1 eval endpoint direction drift",
+    )
+    aggregation = contract.get("aggregation") or {}
+    _require(
+        aggregation.get("raw_key_order") == ["role", "edit", "frame", "camera", "variant"]
+        and aggregation.get("missing_values") == "null_never_zero"
+        and aggregation.get("no_posthoc_camera_actor_or_frame_reweighting") is True,
+        "A3 R1 eval aggregation drift",
+    )
+    decision = contract.get("decision") or {}
+    _require(
+        decision.get("comparator") == "exact_no_numeric_tolerance"
+        and decision.get("pass_rule")
+        == "all_primary_axes_non_worse_and_at_least_one_strictly_better"
+        and decision.get("tradeoff_rule") == "neither_variant_dominates"
+        and decision.get("zero_s_b_coverage")
+        == "insufficient_evidence_not_success",
+        "A3 R1 eval decision drift",
+    )
+    audits = contract.get("required_audits") or {}
+    _require(audits and all(value is True for value in audits.values()), "A3 R1 eval audit gate drift")
+    ceilings = contract.get("resource_ceilings") or {}
+    _require(
+        ceilings.get("wall_time_seconds") == 900
+        and ceilings.get("peak_gpu_memory_mib") == 12_288
+        and ceilings.get("peak_cgroup_memory_bytes") == 34_359_738_368
+        and ceilings.get("oom_events_delta") == 0
+        and ceilings.get("oom_kill_events_delta") == 0,
+        "A3 R1 eval resource ceiling drift",
+    )
+    claims = contract.get("claim_boundary") or {}
+    _require(
+        claims.get("s_a_status") == "ABSTAIN_NOT_MATERIALIZED"
+        and claims.get("s_a_rgb_quality_claim") == "forbidden"
+        and claims.get("s_b_rgb_psnr_ssim_lpips_claim") == "forbidden"
+        and claims.get("s_c_update_seed_loss_or_success_claim") == "forbidden"
+        and claims.get("formal_training_authorized") is False
+        and claims.get("r2_r3_r4_authorized") is False,
+        "A3 R1 eval claim boundary drift",
     )
 
 

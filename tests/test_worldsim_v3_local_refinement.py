@@ -25,6 +25,7 @@ from motion_proj.worldsim_v3.local_refinement import (
     snapshot_optimizer_state,
     validate_a3_protocol,
     validate_a3_r1_numeric_freeze,
+    validate_a3_r1_eval_protocol,
     validate_a3_sidecar_manifest,
 )
 
@@ -54,6 +55,18 @@ def test_frozen_a3_r1_numeric_replay_budget_is_valid_and_fail_closed() -> None:
     value["formal_training_authorized"] = True
     with pytest.raises(ValueError, match="cannot authorize"):
         validate_a3_r1_numeric_freeze(value)
+
+
+def test_frozen_a3_r1_heldout_eval_protocol_is_result_blind_and_fail_closed() -> None:
+    value = yaml.safe_load(
+        (PROJECT / "configs/worldsim_v3/a3_r1_eval_protocol_v1.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    validate_a3_r1_eval_protocol(value)
+    value["fixed_masks"]["source_variant"] = "r1-reactivate"
+    with pytest.raises(ValueError, match="fixed-mask morphology drift"):
+        validate_a3_r1_eval_protocol(value)
 
 
 def test_protocol_cannot_authorize_formal_training() -> None:
