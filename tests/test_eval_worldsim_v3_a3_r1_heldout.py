@@ -4,6 +4,7 @@ import numpy as np
 
 from scripts.eval_worldsim_v3_a3_r1_heldout import (
     aggregate_metric_rows,
+    build_resource_audit,
     build_variant_aggregate,
     classify_exact_pareto,
     squared_rgb_error,
@@ -103,3 +104,32 @@ def test_exact_pareto_reports_tradeoff_and_missing_evidence() -> None:
         {"a": None}, {"a": 1.0}, {"a": "lower"}
     )
     assert missing["classification"] == "insufficient_evidence"
+
+
+def test_resource_audit_persists_exact_failed_dimension() -> None:
+    audit = build_resource_audit(
+        duration=10.0,
+        peak_gpu_mib=11.0,
+        cgroup_samples=[100, None, 201],
+        run_bytes=12,
+        oom_delta=0,
+        oom_kill_delta=0,
+        ceilings={
+            "wall_time_seconds": 10,
+            "peak_gpu_memory_mib": 12,
+            "peak_cgroup_memory_bytes": 200,
+            "run_bytes": 12,
+            "oom_events_delta": 0,
+            "oom_kill_events_delta": 0,
+        },
+    )
+    assert audit["status"] == "failed"
+    assert audit["measured"]["cgroup_memory_samples_bytes"] == [100, 201]
+    assert audit["violations"] == {
+        "wall_time_seconds": False,
+        "peak_gpu_memory_mib": False,
+        "peak_cgroup_memory_bytes": True,
+        "run_bytes": False,
+        "oom_events_delta": False,
+        "oom_kill_events_delta": False,
+    }

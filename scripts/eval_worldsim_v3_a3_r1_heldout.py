@@ -66,6 +66,52 @@ def safe_ratio(numerator: int | float, denominator: int | float) -> float | None
     return float(numerator) / float(denominator) if denominator else None
 
 
+def build_resource_audit(
+    *,
+    duration: float,
+    peak_gpu_mib: float,
+    cgroup_samples: Iterable[int | None],
+    run_bytes: int,
+    oom_delta: int,
+    oom_kill_delta: int,
+    ceilings: Mapping[str, Any],
+) -> dict[str, Any]:
+    samples = [value for value in cgroup_samples if value is not None]
+    measured = {
+        "wall_time_seconds": float(duration),
+        "peak_gpu_memory_mib": float(peak_gpu_mib),
+        "peak_cgroup_memory_bytes_sampled": max(samples) if samples else None,
+        "cgroup_memory_samples_bytes": samples,
+        "run_bytes_before_resource_audit": int(run_bytes),
+        "oom_events_delta": int(oom_delta),
+        "oom_kill_events_delta": int(oom_kill_delta),
+    }
+    violations = {
+        "wall_time_seconds": measured["wall_time_seconds"]
+        > float(ceilings["wall_time_seconds"]),
+        "peak_gpu_memory_mib": measured["peak_gpu_memory_mib"]
+        > float(ceilings["peak_gpu_memory_mib"]),
+        "peak_cgroup_memory_bytes": measured[
+            "peak_cgroup_memory_bytes_sampled"
+        ]
+        is not None
+        and measured["peak_cgroup_memory_bytes_sampled"]
+        > int(ceilings["peak_cgroup_memory_bytes"]),
+        "run_bytes": measured["run_bytes_before_resource_audit"]
+        > int(ceilings["run_bytes"]),
+        "oom_events_delta": measured["oom_events_delta"]
+        != int(ceilings["oom_events_delta"]),
+        "oom_kill_events_delta": measured["oom_kill_events_delta"]
+        != int(ceilings["oom_kill_events_delta"]),
+    }
+    return {
+        "status": "failed" if any(violations.values()) else "passed",
+        "measured": measured,
+        "ceilings": dict(ceilings),
+        "violations": violations,
+    }
+
+
 def aggregate_metric_rows(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     values = list(rows)
     sums = {
@@ -756,22 +802,28 @@ def main() -> None:
         raise RuntimeError(f"A3 heldout required audit failed: {audits}")
     duration = time.monotonic() - started
     peak_gpu = float(torch.cuda.max_memory_allocated(device) / (1024**2))
-    peak_cgroup = max(
-        value for value in memory_samples if value is not None
-    ) if any(value is not None for value in memory_samples) else None
     events_after = cgroup_memory_events()
     oom_delta = events_after.get("oom", 0) - memory_events_before.get("oom", 0)
     oom_kill_delta = events_after.get("oom_kill", 0) - memory_events_before.get("oom_kill", 0)
     ceilings = eval_protocol["resource_ceilings"]
-    if (
-        duration > float(ceilings["wall_time_seconds"])
-        or peak_gpu > float(ceilings["peak_gpu_memory_mib"])
-        or (peak_cgroup is not None and peak_cgroup > int(ceilings["peak_cgroup_memory_bytes"]))
-        or directory_bytes(args.run_dir) > int(ceilings["run_bytes"])
-        or oom_delta != int(ceilings["oom_events_delta"])
-        or oom_kill_delta != int(ceilings["oom_kill_events_delta"])
-    ):
-        raise RuntimeError("A3 heldout resource ceiling failed")
+    resource_audit = build_resource_audit(
+        duration=duration,
+        peak_gpu_mib=peak_gpu,
+        cgroup_samples=memory_samples,
+        run_bytes=directory_bytes(args.run_dir),
+        oom_delta=oom_delta,
+        oom_kill_delta=oom_kill_delta,
+        ceilings=ceilings,
+    )
+    resource_audit_path = args.run_dir / "artifacts" / "resource_audit.json"
+    atomic_json(resource_audit_path, resource_audit)
+    if resource_audit["status"] != "passed":
+        failed = sorted(
+            key for key, value in resource_audit["violations"].items() if value
+        )
+        raise RuntimeError(
+            "A3 heldout resource ceiling failed: " + ", ".join(failed)
+        )
     summary = {
         "status": "done",
         "task_id": eval_protocol["task_id"],
@@ -794,11 +846,9 @@ def main() -> None:
         "decision": decision,
         "audits": audits,
         "resources": {
-            "wall_time_seconds": duration,
-            "peak_gpu_memory_mib": peak_gpu,
-            "peak_cgroup_memory_bytes_sampled": peak_cgroup,
-            "oom_events_delta": oom_delta,
-            "oom_kill_events_delta": oom_kill_delta,
+            **resource_audit["measured"],
+            "audit_path": str(resource_audit_path.relative_to(args.run_dir)),
+            "audit_sha256": sha256_file(resource_audit_path),
         },
         "project_commit": run_manifest["project_commit"],
     }
