@@ -26,13 +26,23 @@ def materialize_config(
     variant: str,
     num_iters: int,
     protocol: dict,
+    *,
+    stage: str = "paired-smoke",
+    checkpoint_interval: int | None = None,
 ) -> DictConfig:
     validate_a2_d2_contract(protocol)
     if variant not in VARIANTS:
         raise ValueError(f"unknown A2-D2 variant: {variant}")
-    smoke = protocol["paired_smoke"]
-    if num_iters != int(smoke["num_iters"]):
-        raise ValueError("A2-D2 smoke iteration budget drift")
+    if stage not in {"paired-smoke", "formal"}:
+        raise ValueError(f"unknown A2-D2 materialization stage: {stage}")
+    if stage == "paired-smoke":
+        smoke = protocol["paired_smoke"]
+        if num_iters != int(smoke["num_iters"]):
+            raise ValueError("A2-D2 smoke iteration budget drift")
+    elif num_iters != 30_000 or checkpoint_interval != 5_000:
+        raise ValueError(
+            "A2-D2 formal requires 30000 iterations and 5000 checkpoints"
+        )
 
     inherited = protocol["paired_intervention"]["d1_inherited_exactly"]
     quota = OmegaConf.create(
@@ -58,7 +68,8 @@ def materialize_config(
         "d1-actor-quota",
         num_iters,
         quota,
-        stage="paired-smoke",
+        stage=stage,
+        checkpoint_interval=checkpoint_interval,
     )
     policy = BoundaryResidualPolicy.from_contract(protocol)
     config.model.RigidNodes.ctrl.a2_boundary_residual = {
@@ -70,7 +81,11 @@ def materialize_config(
         ),
         "ranking": policy.ranking,
     }
-    config.worldsim_v3.stage = "D2 paired engineering smoke"
+    config.worldsim_v3.stage = (
+        "D2 paired engineering smoke"
+        if stage == "paired-smoke"
+        else "D2 formal fixed-step and matched-budget candidate grid"
+    )
     config.worldsim_v3.variant = variant
     config.worldsim_v3.boundary_residual_checkpoint_key = (
         "worldsim_a2_boundary_residual"
@@ -97,6 +112,10 @@ def main() -> None:
     parser.add_argument("--protocol", type=Path, required=True)
     parser.add_argument("--variant", choices=VARIANTS, required=True)
     parser.add_argument("--num-iters", type=int, default=1000)
+    parser.add_argument(
+        "--stage", choices=("paired-smoke", "formal"), default="paired-smoke"
+    )
+    parser.add_argument("--checkpoint-interval", type=int)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -109,6 +128,8 @@ def main() -> None:
         args.variant,
         args.num_iters,
         protocol,
+        stage=args.stage,
+        checkpoint_interval=args.checkpoint_interval,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     OmegaConf.save(config=config, f=args.output)

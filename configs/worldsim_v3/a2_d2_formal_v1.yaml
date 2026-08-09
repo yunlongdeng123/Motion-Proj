@@ -1,0 +1,142 @@
+schema_version: 1
+task_id: WS-V3-A2-ACTOR-DENSIFY-01
+audit_version: A2-D2-FORMAL-v1
+
+depends_on:
+  implementation_commit: 1065264762569c9832219936ddae6f063d6eaf07
+  smoke_closeout_commit: 05c748a3b2f0ae48915ab3d1d24762f8fd45e48e
+  d2_protocol: configs/worldsim_v3/a2_d2_protocol_v1.yaml
+  d2_protocol_sha256: acceb7f4ce0f8dc3745de2fcaca51659891cfd82e4175f5a0e5765d77a01e567
+  paired_smoke_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T111304Z__a2-d2-paired-smoke1k-s0-r1
+  paired_smoke_summary_sha256: 749c7d15c27cc0798c267aa8af12857f3bea52a52ea9d00f7617a3b3edda3136
+  paired_smoke_manifest_sha256: 5cb7879d898839b88a46c8ec7ec34141f3402245490416d589938658f33b4c8d
+
+d1_reference_alias:
+  mode: immutable_exact_alias_no_retraining
+  rationale: D1 formal is complete and D2 changes no D1-enabled behavior; reuse avoids an uninformative duplicate 30k arm
+  run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1
+  summary_sha256: e3b194c2ed0563385df70ca2043dbc791bedb21068d28dc9d75fb59984c166ac
+  source_commit: f32f96b47619e05066d2ee11c899e38d07398e11
+  initialization_provenance_sha256: 8951543c33f72f439068237f1a552fae660895f8906afbf4651f5f580981b898
+  fixed_checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d1_actor_quota_formal_s0_i30000/checkpoint_final.pth
+  fixed_checkpoint_sha256: c9d2a0520493ee6e448a5d859661b29754190c6aef514e0475b174625779af52
+  fixed_rigid_gaussians: 105412
+  fixed_background_gaussians: 1201057
+  fixed_evaluation_path: summary.fixed_step.d1_evaluation
+  fixed_resource_path: arms.d1-actor-quota.train_stage
+  checkpoint_must_remain_unchanged: true
+
+paired_design:
+  scene: scene-0230
+  scene_index: 179
+  seed: 0
+  order: [d1-actor-quota-exact-alias, d2-boundary-residual]
+  trained_arms: [d2-boundary-residual]
+  exact_alias_arms: [d1-actor-quota]
+  num_iters: 30000
+  checkpoint_interval: 5000
+  test_image_stride: 10
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T171624Z__scene0230-reuse-eval-s0-r1/assets/native_checkpoint/config.yaml
+  initialization_provenance:
+    compare_d2_to_d1_alias_sha256: true
+    require_truth_tier: exact_runtime_initialization_inputs
+    seed_reset: python_numpy_torch_cpu_cuda_immediately_before_initialization
+  paired_config_normalization:
+    mutable_fields:
+      - worldsim_v3.variant
+      - model.RigidNodes.ctrl.a2_actor_quota.ranking
+      - model.RigidNodes.ctrl.a2_boundary_residual.enabled
+    require_all_other_fields_equal: true
+
+matched_gaussian_budget:
+  scope: RigidNodes
+  rationale: D2 only changes RigidNodes ordering and boundary scale cap; Background remains native and is reported separately
+  target: d1_fixed_30000_rigid_gaussians
+  target_count: 105412
+  candidate_steps: [5000, 10000, 15000, 20000, 25000, 30000]
+  selection: minimum_absolute_gap_then_earliest_step
+  maximum_relative_gap: 0.02
+  failure_status: ABSTAIN_BUDGET_NOT_MATCHED
+  posthoc_pruning: false
+  retraining: false
+  quota_retuning: false
+  checkpoint_mutation: false
+  d1_view: exact_alias_of_fixed_d1_final
+  resource_accounting:
+    d1: canonical_full_30k_alias_resources
+    d2_wall_time: elapsed_from_arm_start_to_selected_checkpoint_mtime
+    d2_peak_vram: full_30k_arm_sampled_peak_upper_bound
+    d2_peak_cgroup: full_30k_arm_sampled_peak_upper_bound
+
+evaluation:
+  formal_full_split: true
+  global_metrics: [psnr, ssim, lpips]
+  actor_roles: [high-support, boundary-support]
+  actor_regions: [actor_region, boundary_band]
+  actor_metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px]
+  non_target_definition: complement_of_selected_actor_counterfactual_union
+  non_target_truth_tier: model_counterfactual_diagnostic_not_ground_truth_segmentation
+  non_target_metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px, mean_absolute_error]
+  checkpoint_must_remain_unchanged: true
+  quality_directions:
+    global.psnr: max
+    global.ssim: max
+    global.lpips: min
+    high.actor.psnr: max
+    high.actor.ssim: max
+    high.actor.lpips: min
+    high.boundary.psnr: max
+    high.boundary.ssim: max
+    high.boundary.lpips: min
+    boundary.actor.psnr: max
+    boundary.actor.ssim: max
+    boundary.actor.lpips: min
+    boundary.boundary.psnr: max
+    boundary.boundary.ssim: max
+    boundary.boundary.lpips: min
+    non_target.psnr: max
+    non_target.ssim: max
+    non_target.lpips: min
+    non_target.mae: min
+  pareto:
+    baseline_role: d1
+    candidate_role: d2
+    numeric_tolerance: none
+    cost_axes: [rigid_gaussians, total_gaussians, wall_time, peak_vram, peak_cgroup]
+    more_gaussians_is_not_automatic_improvement: true
+
+resource_contract:
+  execution: one_new_arm_then_read_only_evaluation
+  gpu_count: 1
+  cgroup_memory_limit_bytes: 96636764160
+  minimum_free_disk_gib: 40
+  gpu_idle_max_mib: 2048
+  monitoring_interval_seconds: 10
+  memory_stop_fraction: 0.90
+  memory_stop_consecutive_samples: 2
+  stop_on_oom_event_increase: true
+  train_timeout_seconds_per_arm: 10800
+  eval_timeout_seconds_per_stage: 1800
+  outer_execution: tmux_or_nohup_only
+  process_cleanup: exact_process_group_only
+
+scope_boundary:
+  stage: d2_boundary_residual_ordering_and_boundary_scale_cap_only
+  background_policy: native_unchanged
+  native_cull_policy: unchanged
+  forbidden:
+    - depth_residual_ordering
+    - normal_residual_ordering
+    - lidar_distance_weighting
+    - visibility_weighting
+    - provenance_aware_pruning
+    - non_native_cull_policy
+    - background_intervention
+
+formal_gate:
+  fixed_step_required: true
+  matched_budget_required: true
+  matched_budget_abstain_is_valid_evidence: true
+  negative_or_tradeoff_quality_result_is_valid_evidence: true
+  checkpoint_immutability_required: true
+  d3_not_automatically_unlocked: true
