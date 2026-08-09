@@ -59,6 +59,23 @@ def validate_schema(protocol: Mapping[str, Any]) -> None:
     require(registry["checkpoint_copy_forbidden"], "checkpoint copy")
     require(registry["checkpoint_rewrite_forbidden"], "checkpoint rewrite")
     require(registry["output_bytes_ceiling"] == 2_000_000, "registry bytes")
+    require(
+        registry["required_top_level_fields"]
+        == [
+            "schema_version",
+            "task_id",
+            "profile_id",
+            "scene",
+            "seed",
+            "source_assets",
+            "static_assets",
+            "actor_assets",
+            "totals",
+            "recovery",
+            "registry_sha256",
+        ],
+        "registry fields",
+    )
     static = registry["static_asset"]
     require(
         static
@@ -74,6 +91,21 @@ def validate_schema(protocol: Mapping[str, Any]) -> None:
         "static asset",
     )
     actors = registry["actor_assets"]
+    require(
+        actors["required_compact_fields"]
+        == [
+            "asset_id",
+            "rigid_model_index",
+            "instance_token",
+            "class_name",
+            "availability",
+            "selector",
+            "gaussian_count",
+            "flat_indices_sha256",
+            "source_registry_sha256",
+        ],
+        "actor compact fields",
+    )
     require(
         {
             "model_key": actors["model_key"],
@@ -120,7 +152,26 @@ def validate_schema(protocol: Mapping[str, Any]) -> None:
         },
         "resource ceilings",
     )
-    require(len(protocol["required_audits"]) == 14, "audit count")
+    require(
+        set(protocol["required_audits"])
+        == {
+            "selected_input_hashes_and_bytes_exact",
+            "p0_canonical_evidence_exact_and_done",
+            "reference_only_no_checkpoint_copy_or_rewrite",
+            "compact_registry_schema_exact",
+            "static_asset_inventory_exact",
+            "actor_asset_counts_and_availability_exact",
+            "actor_index_counts_and_hashes_exact_after_reload",
+            "model_gaussian_counts_exact_after_reload",
+            "unavailable_actor_remains_explicitly_empty",
+            "source_checkpoint_and_registry_sha_before_after_exact",
+            "no_training_optimizer_render_or_media",
+            "exactly_one_checkpoint_load",
+            "resources_within_frozen_ceilings",
+            "dry_run_resume_reuses_completed_stages_without_gpu_launch",
+        },
+        "audit schema",
+    )
     require(all(bool(value) for value in protocol["required_audits"].values()), "audits")
     require(all(bool(value) for value in protocol["claim_boundary"].values()), "claims")
     require(

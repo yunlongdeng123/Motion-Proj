@@ -40,6 +40,13 @@ def test_registry_counts_are_frozen() -> None:
         validate_schema(protocol)
 
 
+def test_compact_actor_fields_are_frozen() -> None:
+    protocol = deepcopy(load_protocol())
+    protocol["registry_contract"]["actor_assets"]["required_compact_fields"].pop()
+    with pytest.raises(RuntimeError, match="actor compact fields"):
+        validate_schema(protocol)
+
+
 def test_resource_ceiling_cannot_be_relaxed() -> None:
     protocol = deepcopy(load_protocol())
     protocol["resource_ceilings"]["wall_time_seconds"] = 300
