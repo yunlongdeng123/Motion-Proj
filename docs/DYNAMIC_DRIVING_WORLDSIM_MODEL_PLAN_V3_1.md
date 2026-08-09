@@ -19,7 +19,7 @@
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **A4-P1 runner 基线**：`19cab2cf40b8ed8ef9a4ad1ba8cce4cc8cf67163`（train-only contribution、三臂物化、冻结质量门、runtime 与恢复审计）
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ P2 protocol next / P3 not launched / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ P2 protocol frozen、runner next / P3 not launched / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -546,7 +546,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol next，P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol frozen、runner next，P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1400,6 +1400,37 @@ failure recovery
   冻结 36-view contribution 与 57-view quality 合同，不证明跨场景 pruning 失败，也不授权 post-hoc 新 arm。
   A4 最低完成集还缺 P2/P3；下一动作只冻结 P2 FP16 逐字段数值与质量协议，P3 继续未授权。
 
+#### 11.2.5 P2 mixed-precision 结果前协议冻结
+
+- protocol=`configs/worldsim_v3/a4_p2_mixed_precision_protocol_v1.yaml`，SHA-256=
+  `6558fb3f0864c7711add2bd8b61500670ddbf631be7e356f1eac77c57c136d4e`，P1 closeout=
+  `e733cbed8121643fca2223153c496a009b52283d`；exact 输入为 source checkpoint/config/registry、P1 canonical
+  summary/manifest/resource/source-quality/resume/terminal 共 9 files，加 33-mask directory；P1 必须为 21/21 audits、
+  selected=`p1-source`、method rejected、terminal done，禁止把 rejected prune arm 传给 P2；
+- arm 只固定 `p2-source` 与 `p2-gs-param-fp16`。候选 checkpoint 仅把 Background/RigidNodes 的 `_scales`、
+  `_quats`、`_features_dc`、`_features_rest`、`_opacities` 共 10 个 float32 tensor 以 IEEE binary16
+  round-to-nearest-ties-even 转为 float16；candidate bitwise 必须等于 `source.to(float16)`，一次原子写入，schema/count/
+  actor index 不变；
+- source-only dtype audit 在任何 P2 render 前发现 Background `_means` 范围 `[-686.0377,2996.3384] m`，直接 FP16
+  roundtrip 最大绝对误差=`0.999267578125 m`；Rigid means 也记录 `.0009765625 m`。因此两类 `_means`、Sky、LPIPS、
+  trajectory、`points_ids`、ancestry/quota/boundary state 与 step 均预先冻结为 FP32/原 dtype exact，不允许看结果后改；
+- runtime candidate 只让上述 10 个持久 Gaussian parameter 保持 FP16；`collect_gaussians` 后在进入 gsplat 前把
+  means/scales/quats/RGB/opacities 显式转为 FP32，autocast=false。P2 研究的是 mixed-precision parameter storage，
+  不授权或宣称 FP16 renderer kernel、Tensor Core speedup；checkpoint bytes 下降也不等于 peak VRAM 必然下降；
+- 质量使用同一 57-view source replay 与 33 个 frozen masks。global PSNR/SSIM/LPIPS 最大退化=
+  `.05 dB/.001/.001`；actor/boundary=`.10 dB/.0025/.0025`、MAE `+.001`；non-target=
+  `.05 dB/.001/.001`、MAE `+.0005`。候选必须 31/31 全通过，缺失/nonfinite 直接 reject；
+- runtime 固定 P0 的 `frames 10/100/190 × cameras 0/1/2`、2 warm-up、`800×450`、CUDA sync/nearest-rank；
+  同时报告 checkpoint/load、persistent parameter bytes/dtype、renderer input dtype、P50/P95/FPS 与资源，filesystem
+  cache 仍 uncontrolled，性能值不参与质量选择；
+- selection 只有两种：候选 conversion/preservation/reload/dtype/quality/bytes/resource 全通过则选择
+  `p2-gs-param-fp16`；否则 method rejected 并 exact fallback 到 `p2-source`。禁止事后增减字段或阈值；
+- recovery=`input_audit→source_dtype_audit→materialize→evaluate→runtime→aggregate→resume_audit` 共 7 stages；
+  ceiling=`900 s / 16,384 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA / 48 GiB cgroup /
+  1 GB run / 30 GB disk floor / OOM 0/0`，required audits=`19`。full validator exact 通过 10 项输入记录与 10 个
+  converted source fields；协议测试=`9 passed`，联合 WorldSim V3=`199 passed`。本条无 P2 新 render/conversion
+  measurement；下一动作只实现并提交 runner，P3 继续未授权。
+
 ### 11.3 必报工程指标
 
 | 维度 | 指标 |
@@ -1615,14 +1646,14 @@ done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S
 P0 已由 v2 r2 正式关闭；P5 r1 的 runtime/state-key 混淆保留为 `blocked`，修复后 r2 已以 14/14 audits
 正式关闭 P5。P1 r1 已完成 21/21 audits，但 b05/b10/b20 分别失败 3/12/15 个冻结质量 safeguard；方法
 `rejected_quality_or_integrity_gate`，生产资产 exact fallback 到 source，P1 实验以负结果 `done`。A4 因最低完成集
-仍包含 P2/P3 而保持 `running`。当前唯一动作是冻结 `P2-fp16` 协议：
+仍包含 P2/P3 而保持 `running`。P2 protocol SHA=`6558fb3f...6d4e` 已冻结；当前唯一动作是实现并提交 runner：
 
 ```text
-1. 输入固定为 P1 选择的 source exact alias，不把 rejected prune checkpoint 传给 P2
-2. 预先枚举可转换字段、保留字段、checkpoint schema、逐字段误差与 reload dtype，不做训练或 optimizer 转换
-3. baseline/FP16 使用同一 57-view global/actor/boundary/non-target 质量门和 P0 9-view runtime matrix
-4. 冻结数值容差、质量退化、资源 ceiling、fallback、stage recovery 与 required audits 后才能实现 runner
-5. P2 formal 完成前不启动 P3；不得把 checkpoint bytes 下降直接写成运行时显存或质量改进
+1. no-torch controller exact 审计 9 files + 33-mask directory 与 P1 selected source
+2. source dtype stage 复核 10 个转换字段和 `_means` FP16 排除事实；materialize 一次原子写候选 checkpoint/registry
+3. loader 让 10 个持久参数保持 FP16，render adapter 在 gsplat 前显式转 FP32，并审计两侧 dtype/autocast
+4. source/candidate 完整执行冻结 57-view 质量与 9-view runtime，aggregate 严格应用 31 safeguards 与 exact fallback
+5. implementation、聚焦测试和联合回归提交前不创建 P2 formal run；P3 继续未授权
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1630,6 +1661,17 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — A4-P2 mixed-precision 协议冻结
+
+- protocol SHA=`6558fb3f...6d4e`，输入 exact 锁定 P1-selected source 与 P1 21/21 canonical evidence；只设
+  source 和一个 mixed candidate，不继承 rejected prune arm；
+- 候选只转换两模型的 scales/quats/features/opacities 共 10 tensors；Background means 的 source-only FP16
+  roundtrip 最大误差近 `1 m`，故 means、Sky、trajectory、LPIPS 与 provenance 在结果前固定保留；
+- persistent parameter FP16 与 renderer-input FP32 分离，禁止 FP16 kernel/Tensor Core claim；57-view 31 项质量门、
+  9-view runtime、7-stage recovery、900 s/16 GiB torch/48 GiB cgroup/1 GB run 与 19 audits 已冻结；
+- full validator passed，协议测试 9 passed、联合 WorldSim V3 199 passed。本条未创建 P2 formal measurement；
+  下一动作只实现并提交 P2 runner，P3 未授权。
 
 ### 2026-08-10 — A4-P1 formal contribution-prune 完成并拒绝候选
 
@@ -1877,7 +1919,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5 与 P1 done；P1 method rejected、selected=p1-source exact alias；当前只冻结 P2 FP16 protocol。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5 与 P1 done；P1 method rejected、selected=p1-source exact alias；P2 protocol frozen，当前只实现并提交 runner。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1906,8 +1948,10 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5 与 P1 done；P1 method rejec
     57-view safeguards、11-stage recovery、21 audits 与 178 项联合回归；
 21. 核对 P1 runner `19cab2cf...7163`、canonical r1 summary SHA `7c5347e3...7119`、21/21 audits、source replay、
     b05/b10/b20 的 3/12/15 项质量失败、资源与 no-torch resume；保持 method rejected、source exact fallback；
-22. 当前只冻结 P2 FP16 protocol；在协议/测试提交前不得创建 P2 formal run，不得启动 P3、补 post-hoc prune arm、
-    重跑 A3、上调阈值、启动 R2–R4，或把 checkpoint bytes/FPS/S-B/S-C 登记为 RGB 质量成功。
+22. 核对 P2 protocol SHA `6558fb3f...6d4e`、P1-selected source、10 个转换字段、Background means 近 1 m
+    FP16 排除事实、31 项质量门、9-view runtime、7-stage recovery、19 audits 与 199 项联合回归；
+23. 当前只实现并提交 P2 runner；不得在 implementation/测试提交前创建 P2 formal run，不得启动 P3、补 post-hoc
+    prune/precision arm、改转换字段或阈值、重跑 A3、启动 R2–R4，或把 checkpoint bytes/FPS 登记为质量/FP16 kernel 成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

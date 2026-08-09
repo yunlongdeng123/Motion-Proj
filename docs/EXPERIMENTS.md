@@ -10,8 +10,8 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 保持 `running`，P0、P5 与 P1 done；P1 三个候选均被质量门拒绝并回退到 source，
-下一步只冻结 P2 FP16 协议。
+`done`，`A3*=R0-off`；A4 保持 `running`，P0、P5 与 P1 done；P1 三个候选均被质量门拒绝并回退到 source；
+P2 protocol frozen，当前只实现 runner。
 
 ## 1. 状态词
 
@@ -33,7 +33,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol next，P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol frozen、runner next，P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -534,6 +534,27 @@ Matched-RigidNodes-budget：
   这是 scene-0230/seed-0 的冻结负结果，不是所有贡献度剪枝或跨场景剪枝不可行的结论。A4 仍需 P2/P3；下一步
   只冻结 P2 FP16 协议。
 
+### `WS-V3-A4-DEPLOYMENT-01` P2 mixed-precision protocol freeze
+
+- protocol=`configs/worldsim_v3/a4_p2_mixed_precision_protocol_v1.yaml`，SHA=`6558fb3f...6d4e`，P1 closeout=
+  `e733cbed...283d`；9 个 exact files + 33-mask directory 锁定 P1-selected source 与 P1 canonical 21/21 evidence，
+  不允许将 b05/b10/b20 rejected checkpoint 输入 P2；
+- arms 固定 `p2-source` 与 `p2-gs-param-fp16`。候选只把两 Gaussian 模型的 `_scales/_quats/_features_dc/
+  _features_rest/_opacities` 共 10 个 float32 tensors 转为 float16；候选必须 bitwise 等于 `source.to(float16)`，
+  checkpoint schema、Gaussian/actor count/index 保持 exact；
+- source dtype audit 在新 P2 measurement 前确认 Background means 范围 `[-686.0377,2996.3384] m`，若 FP16
+  roundtrip 最大误差=`.999267578125 m`；故 Background/Rigid means、Sky、LPIPS、trajectory、points_ids、ancestry/
+  quota/boundary state 与 step 全部保留 FP32/原 dtype exact；
+- runtime policy 是 persistent converted parameters FP16、`collect_gaussians` 后 renderer inputs FP32、autocast=false。
+  本实验不声称 FP16 gsplat kernel 或 Tensor Core speedup，checkpoint bytes 下降也不自动等于 peak VRAM 下降；
+- quality 仍为 57 views/33 frozen masks/31 endpoints；global 门=`.05 dB/.001/.001`，actor/boundary=
+  `.10 dB/.0025/.0025/+ .001 MAE`，non-target=`.05 dB/.001/.001/+ .0005 MAE`，必须 31/31；
+- runtime=`2 arms × frames 10/100/190 × cameras 0/1/2`、2 warm-up、800×450、sync/nearest-rank；recovery=
+  7 stages；resources=`900 s / 16,384 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA / 48 GiB cgroup /
+  1 GB run / 30 GB disk floor / OOM 0`；required audits=`19`；
+- full validator exact 通过 10 项输入记录与 source 10-field dtype audit；协议测试=`9 passed`，联合 WorldSim V3=
+  `199 passed`。本条没有 P2 conversion/render measurement；下一动作只实现并提交 runner，P3 未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -755,6 +776,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。A4-P0 v1 r1 已因
 resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P5 r1 保留 runtime attribute blocked，
 r2 已 14/14 audits passed 并登记 `done`。P1 canonical r1 已 21/21 audits passed；b05/b10/b20 分别失败
-3/12/15 个冻结质量门，method rejected、selected=p1-source exact alias，P1 experiment=`done`。下一动作只冻结
-`WS-V3-A4-DEPLOYMENT-01 / P2-fp16` 协议；协议/测试提交前不创建 P2 formal run。P3 不启动，不修改 A3
-renderer/ceiling 挽回 R1，也不得启动 A3 formal、R2–R4 或 D3/D4。
+3/12/15 个冻结质量门，method rejected、selected=p1-source exact alias，P1 experiment=`done`。P2 protocol SHA=
+`6558fb3f...6d4e` 已冻结；下一动作只实现并提交 `P2-fp16` runner，implementation/测试提交前不创建 P2 formal
+run。P3 不启动，不修改 A3 renderer/ceiling 挽回 R1，也不得启动 A3 formal、R2–R4 或 D3/D4。

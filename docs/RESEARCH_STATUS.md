@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0、P5 与 P1 已 done；P1 三个候选均被冻结质量门拒绝并 exact fallback 到 source；下一步只冻结 P2 FP16 协议
+- 当前门禁：A4-P0、P5 与 P1 已 done；P1 三个候选均被冻结质量门拒绝并 exact fallback 到 source；P2 FP16 协议已冻结，下一步只实现 runner
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -50,7 +50,15 @@ occupied PSNR/global PSNR/non-target PSNR 退化 `0.117684/0.110926/0.125462 dB`
 b10/b20 分别失败 12/15 项。全部候选因质量而 rejected，P1 method=`rejected_quality_or_integrity_gate`，生产路由
 exact fallback 到 p1-source/A3*=R0-D2，实验终态=`done`。resource audit passed：wall=`605.281 s`、allocated/
 reserved/NVIDIA=`14,342.71/14,892/15,234 MiB`、cgroup=`26,264,842,240 bytes`、run=`1,610,165,885 bytes`、
-OOM=0；resume=`2.316 s`/10 stages/no torch/no GPU。下一步只冻结 P2 FP16 协议，P3 仍未授权。
+OOM=0；resume=`2.316 s`/10 stages/no torch/no GPU。
+
+P2 protocol SHA=`6558fb3f...6d4e` 已在任何 P2 conversion/render 前冻结。输入 exact 指向 P1-selected source 与 P1
+canonical evidence，不允许使用 rejected prune checkpoint。候选只转换 Background/RigidNodes 的 scales/quats/
+features/opacities 共 10 tensors；source audit 显示 Background means 若 FP16 roundtrip 最大空间误差近 `1 m`，因此
+means、Sky、LPIPS、trajectory 与 provenance 保留 FP32/原 dtype exact。runtime persistent parameters 为 FP16，
+但进入 gsplat 前显式转 FP32、autocast=false，不宣称 FP16 renderer。57-view 31 项质量门、9-view runtime、
+7-stage recovery、900 s/16 GiB torch/48 GiB cgroup/1 GB run ceiling 与 19 audits 已固定；full validator passed，
+协议测试 9 passed、联合 WorldSim V3 199 passed。下一步只实现并提交 runner，P3 仍未授权。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -436,7 +444,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1 done；P1 method rejected、selected=p1-source exact alias；P2 protocol next，P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol=`6558fb3f...6d4e` frozen、runner next，P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -449,7 +457,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-冻结 `WS-V3-A4-DEPLOYMENT-01 / P2-fp16` 协议：输入只允许 P1 选择的 p1-source exact alias；先枚举允许转换与
-必须 FP32 保留的 checkpoint 字段，固定逐字段误差、reload dtype、57-view 质量、9-view runtime、bytes/VRAM、
-资源 ceiling、fallback、stage recovery 与 required audits，再实现 runner。P2 正式完成前不启动 P3；D3/D4 与
+实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P2-fp16` runner：no-torch input controller、source dtype audit、10-field
+atomic mixed checkpoint/registry、persistent-FP16/renderer-FP32 adapter、source/candidate 57-view evaluator、双臂
+9-view runtime、aggregate/finalizer 与 no-torch resume。实现和联合回归提交前不创建 P2 formal run；P3、D3/D4 与
 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
