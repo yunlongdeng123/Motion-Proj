@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-D1 formal r1 已 `done`；D2 协议、独立实现与 synthetic integration 已完成；下一门禁为 paired smoke
+- 当前门禁：A2-D1 formal r1 与 D2 paired smoke r1 已 `done`；下一门禁为 D2 formal 协议冻结
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -244,7 +244,20 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - D1/D2 materializer normalized-match、真实 `RigidNodes` synthetic integration 与联合回归=`29 passed`；boundary/residual
   各 6 次观测、1 次排序/refinement、6 个 cap、quota maximum、optimizer moments、checkpoint round-trip 和 module-off
   native state/RNG bitwise 均通过；
-- 当前没有真实 paired smoke 或质量结果；协议/工程门禁通过不等于 D2 方法通过。
+- paired smoke r1 见下一节；协议/工程门禁通过本身不等于 D2 方法通过。
+
+## A2-D2 配对工程 smoke 完成证据
+
+- canonical run=`20260809T111304Z__a2-d2-paired-smoke1k-s0-r1`，terminal=`done`；summary SHA=
+  `749c7d15c27cc0798c267aa8af12857f3bea52a52ea9d00f7617a3b3edda3136`，manifest SHA=
+  `5cb7879d898839b88a46c8ec7ec34141f3402245490416d589938658f33b4c8d`，source=`c594e0c`；
+- D1/D2 configs normalized match，initialization provenance 与 frozen initial quota 精确匹配；两臂 step=1000，
+  D1=`Background 1,141,192 / Rigid 152,733`，D2=`Background 1,144,988 / Rigid 152,807`；
+- D2 observation event=`1001`，boundary/residual observations 各 `10,846,748`，refinement/ordering event=`5`，
+  capped Gaussian=`365`，boundary-observed live=`56,732`；cap/quota/finite/checkpoint round-trip 全通过；
+- D1/D2 duration=`142.17/141.99 s`，torch peak GPU=`9,615/9,620 MiB`，cgroup peak=
+  `16,473,858,048/16,667,971,584 bytes`，`oom=0 / oom_kill=0`；
+- 裁决=`d2_formal_unlocked=true`，仅解锁 formal 协议冻结；1k smoke 不登记质量改进。
 
 ## A2-D1 quota-only 配对 smoke 完成证据
 
@@ -277,7 +290,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；D2 protocol/implementation/synthetic done；paired smoke next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal 与 D2 paired smoke done；D2 formal protocol next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -287,12 +300,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
 - 数据盘：约 50 GiB 可用；
-- A2-D1 formal controller 已退出，`ws_a2_d1_f1` 仅保留 dead pane；当前无活动训练/评测进程；
+- A2-D1 formal 与 A2-D2 smoke controller 均已退出；`ws_a2_d1_f1` 仅保留 dead pane，当前无活动训练/评测进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
 A1 已收口，A2-I0、D1 quota-only paired smoke/formal、D2 协议、独立 DriveStudio patch、D1/D2 materializer
-与 synthetic integration 均已完成。下一步运行 scene-0230 / seed 0 / D1→D2 各 1000-step sequential paired smoke，
-要求真实信号/排序/cap 非空、quota/cap/checkpoint/资源审计通过。
+与 synthetic integration 均已完成，D2 paired smoke r1 也已通过真实信号/排序/cap、quota/checkpoint 与资源门禁。
+下一步冻结 D2 formal 的 fixed 30k、matched-RigidNodes-budget、held-out/high/boundary/non-target、checkpoint
+不可变性与 Pareto 裁决协议；冻结前不得直接启动 formal。
 D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。

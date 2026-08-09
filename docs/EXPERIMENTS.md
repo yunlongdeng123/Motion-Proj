@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 smoke/formal 与 D2 协议/实现/synthetic 已完成，当前运行 D2 paired smoke。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 formal 与 D2 paired smoke 已完成，当前冻结 D2 formal 协议。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal done；D2 protocol/implementation/synthetic done；paired smoke next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal 与 D2 paired smoke done；formal protocol next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -254,7 +254,20 @@ Matched-RigidNodes-budget：
 - D1/D2 materializer normalized-match、真实 `RigidNodes` synthetic integration 与联合回归=`29 passed`；boundary/residual
   各 6 次观测、1 次排序/refinement、6 个 cap、配额上限、optimizer moments、checkpoint round-trip 和 module-off
   native state/RNG bitwise 全部通过；
-- 尚无真实 paired smoke 或质量证据，不能登记 D2 方法结果。
+- paired smoke r1 见下一节；工程门禁本身不能登记 D2 方法结果。
+
+### `WS-V3-A2-ACTOR-DENSIFY-01` D2 配对 smoke
+
+- run=`20260809T111304Z__a2-d2-paired-smoke1k-s0-r1`，terminal=`done`；summary SHA=
+  `749c7d15c27cc0798c267aa8af12857f3bea52a52ea9d00f7617a3b3edda3136`，manifest SHA=
+  `5cb7879d898839b88a46c8ec7ec34141f3402245490416d589938658f33b4c8d`，source=`c594e0c`；
+- normalized configs、initialization provenance 与 frozen initial quota 全匹配；D1/D2 step 1000 totals 分别为
+  `Background 1,141,192 / Rigid 152,733` 与 `Background 1,144,988 / Rigid 152,807`；
+- D2 记录 `1001` 个 observation event，boundary/residual 各 `10,846,748` 个观测，5 个 ordering/refinement event，
+  365 个 cap；cap/quota/finite/checkpoint round-trip 均通过；
+- D1/D2 duration=`142.17/141.99 s`，torch peak GPU=`9,615/9,620 MiB`，cgroup peak=
+  `16,473,858,048/16,667,971,584 bytes`，无 OOM；
+- 裁决=`d2_formal_unlocked=true`；只解锁 formal 协议，不把 1k 规模/训练指标登记为质量结论。
 
 ## 3. V2 冻结注册表
 
@@ -472,6 +485,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 smoke/formal 与 D2 protocol/implementation/synthetic 已完成。
-下一动作是执行并审计 scene-0230 / seed 0 / D1→D2 各 1000-step paired smoke；真实 boundary/residual、ordering、
-cap、quota、checkpoint 与资源门禁必须通过。不得混入 D3 depth/normal 或 D4 pruning。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 formal 与 D2 paired smoke 已完成。下一动作是冻结 D2
+formal 的 fixed 30k、matched-RigidNodes-budget、held-out/high/boundary/non-target、checkpoint 不可变性和 Pareto
+裁决协议；冻结前不得启动 formal。不得混入 D3 depth/normal 或 D4 pruning。
