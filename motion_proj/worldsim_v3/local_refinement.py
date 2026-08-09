@@ -366,6 +366,106 @@ def auditable_update_rows(
     return mask & supported
 
 
+def measured_background_support_mask(
+    *,
+    affected_mask: np.ndarray,
+    source_actor_footprint: np.ndarray,
+    edited_actor_footprint: np.ndarray,
+    depth_lidar_measured: np.ndarray,
+) -> np.ndarray:
+    """Authorize conservative S-B pixels with direct non-actor LiDAR support."""
+
+    affected = np.asarray(affected_mask, dtype=bool)
+    source = np.asarray(source_actor_footprint, dtype=bool)
+    edited = np.asarray(edited_actor_footprint, dtype=bool)
+    measured = np.asarray(depth_lidar_measured, dtype=np.float32)
+    if not (
+        affected.shape == source.shape == edited.shape == measured.shape
+        and affected.ndim == 2
+    ):
+        raise ValueError("A3 measured-support arrays must share shape [H, W]")
+    valid = np.isfinite(measured) & (measured > 0)
+    return affected & ~source & ~edited & valid
+
+
+def projected_background_rows(
+    *,
+    means2d: Tensor,
+    radii: Tensor,
+    pixel_mask: Tensor | np.ndarray,
+    background_point_count: int,
+) -> Tensor:
+    """Map an evidence-view pixel mask to stable Background checkpoint rows."""
+
+    if means2d.ndim == 3:
+        if means2d.shape[0] != 1:
+            raise ValueError("A3 projection currently requires one camera")
+        means2d = means2d[0]
+    if radii.ndim == 2:
+        if radii.shape[0] != 1:
+            raise ValueError("A3 radii currently require one camera")
+        radii = radii[0]
+    if means2d.ndim != 2 or means2d.shape[-1] != 2:
+        raise ValueError("A3 means2d must have shape [N, 2]")
+    if radii.ndim != 1 or radii.shape[0] != means2d.shape[0]:
+        raise ValueError("A3 radii must align with means2d")
+    if not 0 < background_point_count <= means2d.shape[0]:
+        raise ValueError("invalid A3 Background point count")
+    mask = torch.as_tensor(pixel_mask, dtype=torch.bool, device=means2d.device)
+    if mask.ndim != 2:
+        raise ValueError("A3 projected evidence mask must have shape [H, W]")
+    height, width = mask.shape
+    centers = means2d[:background_point_count]
+    visible_radii = radii[:background_point_count]
+    x, y = centers[:, 0], centers[:, 1]
+    visible = (
+        (visible_radii > 0)
+        & torch.isfinite(x)
+        & torch.isfinite(y)
+        & (x >= 0)
+        & (x <= width - 1)
+        & (y >= 0)
+        & (y <= height - 1)
+    )
+    indices = torch.where(visible)[0]
+    rows = torch.zeros(
+        background_point_count, dtype=torch.bool, device=means2d.device
+    )
+    if indices.numel() == 0:
+        return rows
+    pixel_x = torch.floor(x[indices] + 0.5).to(torch.long)
+    pixel_y = torch.floor(y[indices] + 0.5).to(torch.long)
+    rows[indices] = mask[pixel_y, pixel_x]
+    return rows
+
+
+def merge_s_b_row_observations(
+    observations: list[tuple[Tensor, Tensor]],
+    *,
+    background_point_count: int,
+) -> tuple[Tensor, Tensor]:
+    """Merge view-local affected/S-B rows; all remaining affected rows are S-C."""
+
+    if not observations:
+        raise ValueError("A3 row observations cannot be empty")
+    affected = torch.zeros(background_point_count, dtype=torch.bool)
+    supported = torch.zeros_like(affected)
+    for affected_rows, supported_rows in observations:
+        left = torch.as_tensor(affected_rows, dtype=torch.bool).cpu().flatten()
+        right = torch.as_tensor(supported_rows, dtype=torch.bool).cpu().flatten()
+        if left.shape != affected.shape or right.shape != affected.shape:
+            raise ValueError("A3 row observation count drift")
+        if torch.any(right & ~left):
+            raise ValueError("A3 supported rows must be affected")
+        affected |= left
+        supported |= right
+    strata = torch.full((background_point_count,), 2, dtype=torch.uint8)
+    strata[supported] = 1
+    if not bool(supported.any()):
+        raise ValueError("A3 S-B sidecar authorizes no rows")
+    return affected, strata
+
+
 def audit_frozen_rows(
     before: Mapping[str, Tensor],
     after: Mapping[str, Tensor],

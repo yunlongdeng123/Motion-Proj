@@ -18,7 +18,10 @@ from motion_proj.worldsim_v3.local_refinement import (
     classify_support,
     load_a3_refinement_sidecar,
     LocalRefinementGuard,
+    measured_background_support_mask,
+    merge_s_b_row_observations,
     mutable_parameter_fields,
+    projected_background_rows,
     snapshot_optimizer_state,
     validate_a3_protocol,
     validate_a3_sidecar_manifest,
@@ -316,3 +319,56 @@ def test_optimizer_audit_detects_outside_momentum_drift() -> None:
         mutable_fields={"Background._opacities"},
     )
     assert not audit["pass"]
+
+
+def test_measured_support_excludes_both_actor_footprints() -> None:
+    affected = np.ones((3, 4), dtype=bool)
+    source = np.zeros_like(affected)
+    edited = np.zeros_like(affected)
+    source[0, 0] = True
+    edited[0, 1] = True
+    depth = np.ones((3, 4), dtype=np.float32)
+    depth[0, 2] = 0
+    result = measured_background_support_mask(
+        affected_mask=affected,
+        source_actor_footprint=source,
+        edited_actor_footprint=edited,
+        depth_lidar_measured=depth,
+    )
+    assert not result[0, 0] and not result[0, 1] and not result[0, 2]
+    assert result[1:, :].all()
+
+
+def test_projected_rows_keep_checkpoint_order_and_visibility() -> None:
+    means = torch.tensor(
+        [[[0.49, 0.49], [2.0, 1.0], [3.0, 2.0], [1.0, 1.0]]]
+    )
+    radii = torch.tensor([[1, 1, 0, 1]], dtype=torch.int32)
+    mask = np.zeros((3, 4), dtype=bool)
+    mask[0, 0] = True
+    mask[1, 2] = True
+    rows = projected_background_rows(
+        means2d=means,
+        radii=radii,
+        pixel_mask=mask,
+        background_point_count=3,
+    )
+    assert rows.tolist() == [True, True, False]
+
+
+def test_s_b_merge_keeps_unsupported_affected_rows_s_c() -> None:
+    affected, strata = merge_s_b_row_observations(
+        [
+            (
+                torch.tensor([True, True, False, False]),
+                torch.tensor([False, True, False, False]),
+            ),
+            (
+                torch.tensor([False, False, True, False]),
+                torch.tensor([False, False, True, False]),
+            ),
+        ],
+        background_point_count=4,
+    )
+    assert affected.tolist() == [True, True, True, False]
+    assert strata.tolist() == [2, 1, 1, 2]
