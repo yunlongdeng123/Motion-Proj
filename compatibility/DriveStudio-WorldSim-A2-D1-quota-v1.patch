@@ -1,0 +1,143 @@
+--- a/models/nodes/rigid.py
++++ b/models/nodes/rigid.py
+@@ -10,0 +11,4 @@
++from motion_proj.worldsim_v3.actor_quota import (
++    ActorQuotaController,
++    ActorQuotaPolicy,
++)
+@@ -20,0 +25,10 @@
++        quota_cfg = self.ctrl_cfg.get("a2_actor_quota", {})
++        self._a2_actor_quota_enabled = bool(
++            quota_cfg.get("enabled", False)
++        )
++        self._a2_actor_quota_policy = None
++        self._a2_actor_quota = None
++        if self._a2_actor_quota_enabled:
++            self._a2_actor_quota_policy = ActorQuotaPolicy.from_mapping(
++                quota_cfg
++            )
+@@ -105,0 +120,5 @@
++        if self._a2_actor_quota_enabled:
++            self._a2_actor_quota = ActorQuotaController.initialize(
++                actor_ids=self.point_ids[..., 0],
++                policy=self._a2_actor_quota_policy,
++            )
+@@ -152,2 +171,2 @@
+-                avg_grad_norm = self.xys_grad_norm / self.vis_counts
+-                high_grads = (avg_grad_norm > self.ctrl_cfg.densify_grad_thresh).squeeze()
++                avg_grad_norm = (
++                    self.xys_grad_norm / self.vis_counts
+@@ -155,3 +174,0 @@
+-                splits = (
+-                    self.get_scaling.max(dim=-1).values > \
+-                        self.ctrl_cfg.densify_size_thresh * self.scene_scale
+@@ -159,3 +174,51 @@
+-                if self.step < self.ctrl_cfg.stop_screen_size_at:
+-                    splits |= (self.max_2Dsize > self.ctrl_cfg.split_screen_size).squeeze()
+-                splits &= high_grads
++                if self._a2_actor_quota_enabled:
++                    if self._a2_actor_quota is None:
++                        raise RuntimeError(
++                            "enabled A2 actor quota is not initialized"
++                        )
++                    split_geometry = (
++                        self.get_scaling.max(dim=-1).values > \
++                            self.ctrl_cfg.densify_size_thresh * self.scene_scale
++                    ).squeeze()
++                    if self.step < self.ctrl_cfg.stop_screen_size_at:
++                        split_geometry |= (
++                            self.max_2Dsize > self.ctrl_cfg.split_screen_size
++                        ).squeeze()
++                    clone_geometry = (
++                        self.get_scaling.max(dim=-1).values <= \
++                            self.ctrl_cfg.densify_size_thresh * self.scene_scale
++                    ).squeeze()
++                    splits, dups, quota_decision = (
++                        self._a2_actor_quota.select_densification(
++                            actor_ids=self.point_ids[..., 0],
++                            average_gradients=avg_grad_norm,
++                            visibility_counts=self.vis_counts.squeeze(),
++                            split_geometry=split_geometry,
++                            clone_geometry=clone_geometry,
++                            split_children=self.ctrl_cfg.n_split_samples,
++                        )
++                    )
++                    logger.info(
++                        "A2 actor quota event %d accepted %d children and rejected %d parents",
++                        quota_decision["event"],
++                        quota_decision["accepted_children"],
++                        quota_decision["rejected_by_maximum_parents"],
++                    )
++                else:
++                    high_grads = (
++                        avg_grad_norm > self.ctrl_cfg.densify_grad_thresh
++                    ).squeeze()
++                    splits = (
++                        self.get_scaling.max(dim=-1).values > \
++                            self.ctrl_cfg.densify_size_thresh * self.scene_scale
++                    ).squeeze()
++                    if self.step < self.ctrl_cfg.stop_screen_size_at:
++                        splits |= (
++                            self.max_2Dsize > self.ctrl_cfg.split_screen_size
++                        ).squeeze()
++                    splits &= high_grads
++                    dups = (
++                        self.get_scaling.max(dim=-1).values <= \
++                            self.ctrl_cfg.densify_size_thresh * self.scene_scale
++                    ).squeeze()
++                    dups &= high_grads
+@@ -173,5 +235,0 @@
+-                dups = (
+-                    self.get_scaling.max(dim=-1).values <= \
+-                        self.ctrl_cfg.densify_size_thresh * self.scene_scale
+-                ).squeeze()
+-                dups &= high_grads
+@@ -195,0 +254,4 @@
++                if self._a2_actor_quota is not None:
++                    self._a2_actor_quota.validate(
++                        actor_ids=self.point_ids[..., 0]
++                    )
+@@ -513,2 +576,6 @@
+-        })
+-        return state_dict
++        })
++        if self._a2_actor_quota is not None:
++            state_dict["worldsim_a2_actor_quota"] = (
++                self._a2_actor_quota.state_dict()
++            )
++        return state_dict
+@@ -516 +583,2 @@
+-    def load_state_dict(self, state_dict: Dict, **kwargs) -> str:
++    def load_state_dict(self, state_dict: Dict, **kwargs) -> str:
++        quota_state = state_dict.pop("worldsim_a2_actor_quota", None)
+@@ -526,2 +594,28 @@
+-        msg = super().load_state_dict(state_dict, **kwargs)
+-        return msg
++        msg = super().load_state_dict(state_dict, **kwargs)
++        if self._a2_actor_quota_enabled:
++            if quota_state is None:
++                raise ValueError(
++                    "A2 actor quota checkpoint state is required when enabled"
++                )
++            self._a2_actor_quota = ActorQuotaController.from_state_dict(
++                quota_state, device=self.device
++            )
++            if self._a2_actor_quota.policy != self._a2_actor_quota_policy:
++                raise ValueError(
++                    "A2 actor quota checkpoint policy does not match config"
++                )
++            self._a2_actor_quota.validate(
++                actor_ids=self.point_ids[..., 0]
++            )
++        else:
++            self._a2_actor_quota = None
++        return msg
++
++    def get_a2_actor_quota_summary(self) -> Dict:
++        if self._a2_actor_quota is None:
++            return {"enabled": False}
++        summary = self._a2_actor_quota.summary(
++            actor_ids=self.point_ids[..., 0]
++        )
++        summary["enabled"] = True
++        return summary

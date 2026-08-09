@@ -1,0 +1,89 @@
+schema_version: 1
+task_id: WS-V3-A2-ACTOR-DENSIFY-01
+audit_version: A2-D1-v1
+seed: 0
+
+depends_on:
+  implementation_commit: 271d876
+  instrumentation_config: configs/worldsim_v3/a2_instrumentation_v1.yaml
+  instrumentation_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T071500Z__a2-i0-ancestry-formal-s0-r3
+
+drivestudio:
+  upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  compatibility_patch: compatibility/DriveStudio-2026-08-05.patch
+  instrumentation_patch: compatibility/DriveStudio-WorldSim-A2-ancestry-v1.patch
+  quota_patch: compatibility/DriveStudio-WorldSim-A2-D1-quota-v1.patch
+  patched_worktree: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d1-r5
+
+actor_densification:
+  enabled: true
+  background:
+    policy: native_unchanged
+    densify_grad_threshold: 0.0005
+    quota: disabled
+  rigid_nodes:
+    densify_grad_threshold: 0.00025
+    quota:
+      minimum_initial_multiplier: 0.5
+      minimum_absolute_floor: 1
+      maximum_initial_multiplier: 2.4
+      maximum_absolute_cap: 12000
+      ranking: screen_grad_desc_then_gaussian_index
+      below_threshold_policy: only_to_recover_minimum
+      budget_policy: gradient_ranked_prefix
+    accounting:
+      split_parent_cost: n_split_samples
+      clone_parent_cost: 1
+      overlap_cost: sum
+      maximum_enforcement_point: before_native_cull
+      minimum_semantics: recovery_target_not_cull_floor
+
+frozen_scene_0230_reference:
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A1-CALIBRATION-01/20260805T182500Z__scene0230-c0-formal30k-s0-r1/work_dirs/worldsim_v3_a1/scene0230_a1_c0_off_s0_i30000/checkpoint_final.pth
+  initial_actor_counts: [2489, 1911, 5000, 4086, 2286, 2592, 4688, 1974, 305, 5000, 5000, 1265, 5000, 1198, 1, 3324, 4114, 3313, 2888, 5000, 5000, 5000, 3458, 110]
+  c0_final_actor_counts: [9100, 4246, 11114, 5054, 8190, 5507, 9816, 5498, 1398, 6509, 11289, 3176, 35173, 8026, 0, 4127, 10145, 4384, 6692, 2780, 19591, 1676, 4121, 431]
+  initial_total: 75002
+  c0_final_total: 178043
+  frozen_minimum_total: 37504
+  frozen_maximum_total: 180013
+
+scope_boundary:
+  stage: d1_threshold_and_actor_quota_only
+  forbidden_in_d1:
+    - boundary_weighting
+    - photometric_residual_weighting
+    - depth_residual_weighting
+    - normal_residual_weighting
+    - gaussian_scale_cap
+    - lidar_distance_weighting
+    - visibility_weighting
+  native_cull_policy: unchanged
+  normal_policy: schema_only_until_reliable_normal
+
+module_off_equivalence:
+  enabled_value: false
+  require_native_tensor_bitwise_equality: true
+  require_native_checkpoint_key_equality: true
+  forbid_extra_rng_draws: true
+
+paired_smoke:
+  scene: scene-0230
+  variants: [d0-native, d1-actor-quota]
+  num_iters: 1000
+  seed: 0
+  matched_training_budget: true
+  required_checks:
+    - both_terminal_done
+    - d0_native_tensor_bitwise_equal_to_a2_i0_off
+    - d1_quota_state_roundtrip
+    - d1_actor_counts_do_not_exceed_frozen_maximum
+    - background_policy_unchanged
+    - no_nan_or_inf
+  formal_run_allowed_before_pass: false
+
+resource_contract:
+  execution: sequential
+  gpu_count: 1
+  cgroup_memory_limit_bytes: 96636764160
+  minimum_free_disk_gib: 40
+  monitoring_interval_seconds: 10
