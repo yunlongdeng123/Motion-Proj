@@ -10,8 +10,9 @@
 - **A2-D1 工程基线**：`c9b2422`（quota-only policy、可重放 DriveStudio patch、配对 smoke controller）
 - **A2-D1 formal 协议基线**：`387dd50`（30k 配对控制器、held-out/non-target 评测、matched-budget 裁决）
 - **A2-D2 工程基线**：`1065264`（boundary/residual attribution、稳定排序、scale cap 与配对 smoke controller）
+- **A2-D2 formal 协议基线**：`20b3f4d`（D1 exact alias、D2 单臂 30k、fixed/matched 与完整质量裁决）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 protocol+implementation+paired smoke done / D2 formal protocol next / F0、A3-A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 paired smoke done / D2 formal protocol frozen / D2 formal next / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -533,7 +534,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke/formal done；D2 paired smoke done；formal protocol next | I0/D1 done；D2 必做，D3/D4 条件式 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal、D2 smoke/formal protocol done；D2 formal next | I0/D1 done；D2 必做，D3/D4 条件式 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | evidence-aware affected set 与局部短步精修 | outside frozen，支持区域指标闭环 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
@@ -888,6 +889,23 @@ I0 在 D1 前实现：
   `16,473,858,048/16,667,971,584 bytes`；`oom=0 / oom_kill=0`；
 - 裁决：`d2_formal_unlocked=true`，只解锁 D2 formal 协议冻结。1k smoke 不是质量证据，D2 比 D1 多 74 个
   Rigid 与 3,796 个 Background Gaussian，不得据此宣称方法改进。
+
+### 9.2.5 D2 formal 协议冻结
+
+- 配置：`configs/worldsim_v3/a2_d2_formal_v1.yaml`，SHA-256=
+  `b66cf795c55dfe65315ecf49c09951482d8d6809ce7d001b901942a6bd9a05bc`；实现提交=
+  `20b3f4dc6bd09f371bb4cf1855370493b8abfc68`；39 项定向回归通过；
+- D1 reference 不重训，固定为 D1 formal r1 的 immutable exact alias：summary SHA=`e3b194c2...66ac`，
+  source=`f32f96b`，initialization provenance SHA=`8951543c...b898`，fixed checkpoint SHA=
+  `c9d2a052...af52`，30k counts=`Rigid 105,412 / Background 1,201,057`；运行前后必须复核 checkpoint SHA；
+- 唯一新训练臂为 D2 30k / seed 0，每 5k 保存一次；物化 D1/D2 formal configs 除 variant、actor ranking 与
+  D2 enable 外 normalized match，D2 initialization provenance 必须与 D1 alias SHA 精确相同；
+- fixed 视图比较 D1 alias 30k 与 D2 30k；matched 目标锁定 D1 fixed 的 `105,412` 个 Rigid Gaussian，从 D2
+  5k–30k 网格按最小绝对 gap、再最早 step 选择，relative gap 必须≤2%；禁止 pruning/retrain/retune/mutation；
+- held-out global、high-support、boundary-support、boundary band、non-target 与 exact Pareto 轴全部继承 D1；
+  shared comparator 中旧 `d0/d1` 字段明确映射为 `D1 baseline / D2 candidate`，不得混淆结论标签；
+- 只读 preflight=`done`，输出 SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`；
+  GPU used=`0 MiB`、free disk=`47.92 GiB`，合同、smoke、D1 alias、r8 patch 与 cgroup 门禁均通过。
 
 ### 9.3 子消融
 
@@ -1301,14 +1319,15 @@ A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0、D1 quota-only 配对 smo
 `20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 均已完成。fixed 30k 与 matched-RigidNodes 两种视图均为
 `tradeoff_non_dominated`，冻结控制器登记 `d2_unlocked=true`。D2 信号、排序与 scale-cap 协议已冻结，独立
 DriveStudio patch/materializer/controller 和 synthetic 门禁也已由 `1065264` 完成；canonical paired smoke r1
-现已 `done` 并登记 `d2_formal_unlocked=true`。当前唯一动作是冻结 D2 formal 协议：
+现已 `done` 并登记 `d2_formal_unlocked=true`。D2 formal 协议与只读 preflight 也已冻结；当前唯一动作是执行
+D2 formal：
 
 ```text
-1. 已完成：独立 patch、normalized-match、synthetic 与 scene-0230 D1→D2 1000-step paired smoke
-2. 冻结 D1→D2 fixed 30k 主比较；D1 可复用 canonical immutable checkpoint 时必须登记 exact alias 与 SHA
-3. 冻结 matched-RigidNodes-budget 规则、held-out/high/boundary/non-target 指标、checkpoint 不可变性和 Pareto 裁决
-4. formal 配置/控制器必须绑定 D2 protocol、r8 patch、source commit、seed 0 与单卡资源合同
-5. formal 完成前不得解锁 D3 depth/normal 或 D4 pruning
+1. 已完成：D1 exact alias、D2 fixed 30k、matched grid、完整质量轴、资源与不可变性协议冻结
+2. 启动唯一 D2 30k 新训练臂；D1 checkpoint 只读 alias，禁止重复训练或改写
+3. 顺序完成 D2 fixed 与 matched（若≤2%）held-out/high/boundary/non-target 评测
+4. 报告 fixed/matched 的 quality 与 quality-cost exact Pareto，负向、tradeoff 或 abstain 均为有效证据
+5. formal 收口前不得解锁 D3 depth/normal 或 D4 pruning；D3 不因 D2 formal 自动解锁
 ```
 
 D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,609,442`，虽 RigidNodes 匹配但 Background
@@ -1437,7 +1456,7 @@ D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 与 D2 paired smoke r1 已 done，当前冻结 D2 formal 协议。
+WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1、D2 smoke r1 与 formal preflight 已 done，当前执行 D2 formal。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1451,7 +1470,7 @@ WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1 与 D2 paired smoke r
 9. 核对 formal 协议提交 `387dd50`、配置 SHA `ad77db41...f8e7`、80 项测试和只读 preflight；
 10. 核对 D1 formal r1 terminal/summary、初始化同源、6×2 grid、fixed/matched 两视图与 checkpoint 不可变性；
 11. 核对 D2 paired smoke r1 terminal、summary SHA `749c7d15...3136`、provenance、真实 observation/order/cap、quota 与资源门禁；
-12. 冻结 D2 formal fixed/matched/held-out/Pareto 协议后再启动 formal；不得混入 D3/D4。
+12. 核对 formal config SHA `b66cf795...05bc`、提交 `20b3f4d` 与 preflight SHA `9cf49af0...a28` 后启动唯一 D2 30k 臂；不得混入 D3/D4。
 
 不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
 ```

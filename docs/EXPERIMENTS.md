@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 formal 与 D2 paired smoke 已完成，当前冻结 D2 formal 协议。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 formal、D2 smoke 与 formal preflight 已完成，当前执行 D2 formal。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal 与 D2 paired smoke done；formal protocol next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal、D2 smoke/formal preflight done；D2 formal next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -269,6 +269,18 @@ Matched-RigidNodes-budget：
   `16,473,858,048/16,667,971,584 bytes`，无 OOM；
 - 裁决=`d2_formal_unlocked=true`；只解锁 formal 协议，不把 1k 规模/训练指标登记为质量结论。
 
+### `WS-V3-A2-ACTOR-DENSIFY-01` D2 formal 协议
+
+- config=`configs/worldsim_v3/a2_d2_formal_v1.yaml`，SHA-256=
+  `b66cf795c55dfe65315ecf49c09951482d8d6809ce7d001b901942a6bd9a05bc`，commit=`20b3f4d`，39 tests passed；
+- D1 formal r1 作为 immutable exact alias：summary SHA=`e3b194c2...66ac`，provenance SHA=`8951543c...b898`，
+  fixed checkpoint SHA=`c9d2a052...af52`，Rigid target=`105,412`；不重训、不改写；
+- 新训练仅 D2 30k / seed 0，每 5k checkpoint；fixed D1→D2，matched 从 D2 网格匹配 D1 fixed Rigid，
+  maximum gap=2%，无 pruning/retrain/retune/mutation；
+- 完整复用 held-out/high/boundary/non-target、checkpoint immutable 与 exact quality/quality-cost Pareto；
+- read-only preflight=`done`，SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`，
+  GPU 0 MiB、free disk 47.92 GiB，D2 smoke/D1 alias/r8 patch/cgroup 门禁通过。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -485,6 +497,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 formal 与 D2 paired smoke 已完成。下一动作是冻结 D2
-formal 的 fixed 30k、matched-RigidNodes-budget、held-out/high/boundary/non-target、checkpoint 不可变性和 Pareto
-裁决协议；冻结前不得启动 formal。不得混入 D3 depth/normal 或 D4 pruning。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 formal、D2 smoke 与 formal preflight 已完成。下一动作是
+执行唯一 D2 30k 新训练臂和 fixed/matched 完整评测；D1 checkpoint 只读 exact alias。不得混入 D3 depth/normal
+或 D4 pruning。

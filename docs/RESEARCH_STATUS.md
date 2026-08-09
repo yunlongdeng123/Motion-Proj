@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-D1 formal r1 与 D2 paired smoke r1 已 `done`；下一门禁为 D2 formal 协议冻结
+- 当前门禁：A2-D1 formal r1、D2 paired smoke r1 与 D2 formal 只读 preflight 已 `done`；下一门禁为 D2 formal
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -259,6 +259,18 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
   `16,473,858,048/16,667,971,584 bytes`，`oom=0 / oom_kill=0`；
 - 裁决=`d2_formal_unlocked=true`，仅解锁 formal 协议冻结；1k smoke 不登记质量改进。
 
+## A2-D2 formal 协议冻结证据
+
+- formal config=`configs/worldsim_v3/a2_d2_formal_v1.yaml`，SHA-256=
+  `b66cf795c55dfe65315ecf49c09951482d8d6809ce7d001b901942a6bd9a05bc`；提交=`20b3f4d`；39 tests passed；
+- D1 baseline 使用 formal r1 immutable exact alias，不重训：summary SHA=`e3b194c2...66ac`，provenance SHA=
+  `8951543c...b898`，fixed checkpoint SHA=`c9d2a052...af52`，target Rigid=`105,412`；
+- 唯一新训练为 D2 30k / seed 0 / 5k checkpoint grid；fixed 比较 D1 alias 与 D2 30k，matched 从 D2
+  grid 匹配 D1 fixed Rigid target，最大 relative gap=2%，无 pruning/retrain/retune/mutation；
+- held-out/high/boundary/non-target、checkpoint immutability、quality 与 quality-cost exact Pareto 完整继承 D1；
+- read-only preflight=`done`，输出 SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`；
+  project=`20b3f4d`、GPU=`0 MiB`、free disk=`47.92 GiB`，所有依赖与资源门禁通过。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -290,7 +302,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal 与 D2 paired smoke done；D2 formal protocol next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal、D2 smoke/formal preflight done；D2 formal next |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -307,6 +319,6 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 A1 已收口，A2-I0、D1 quota-only paired smoke/formal、D2 协议、独立 DriveStudio patch、D1/D2 materializer
 与 synthetic integration 均已完成，D2 paired smoke r1 也已通过真实信号/排序/cap、quota/checkpoint 与资源门禁。
-下一步冻结 D2 formal 的 fixed 30k、matched-RigidNodes-budget、held-out/high/boundary/non-target、checkpoint
-不可变性与 Pareto 裁决协议；冻结前不得直接启动 formal。
+下一步启动唯一 D2 30k 新训练臂并完成 fixed/matched held-out/high/boundary/non-target 与 Pareto 裁决；D1 formal
+checkpoint 只读 exact alias，不重复训练。负向、tradeoff 或 matched abstain 均须保留为有效证据。
 D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。
