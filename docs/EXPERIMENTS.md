@@ -11,7 +11,7 @@
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
 `done`，`A3*=R0-off`；A4 保持 `running`，P0、P5、P1 与 P2 done；P1 候选被质量门拒绝并回退到 source；
-P2 canonical r2 选择 mixed checkpoint，当前只冻结 P3 chunk protocol。
+P2 canonical r2 选择 mixed checkpoint；P3 chunk protocol 已冻结，当前只实现 runner。
 
 ## 1. 状态词
 
@@ -33,7 +33,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5、P1、P2 done；P1 rejected；P2 selected mixed checkpoint；P3 protocol next |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5、P1、P2 done；P1 rejected；P2 selected mixed checkpoint；P3 protocol frozen，runner next |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -578,6 +578,29 @@ Matched-RigidNodes-budget：
 - selection=`p2-gs-param-fp16`，method=`selected_mixed_precision_parameter_storage_fp32_render`，P2=`done`。结论只
   覆盖 scene-0230/seed-0，且不声称 FP16 renderer/Tensor Core/VRAM 或 load/render speedup；下一步只冻结 P3。
 
+### `WS-V3-A4-DEPLOYMENT-01` P3 exact chunk package protocol freeze
+
+- protocol=`configs/worldsim_v3/a4_p3_chunk_protocol_v1.yaml`，SHA=`dfaaba79...1b41`，P2 closeout=
+  `e954e23c...ebe7`；9 个 exact files + 33-mask directory 锁定 P2-selected mixed checkpoint 与 P2 canonical
+  19/19 evidence，禁止接入原 FP32 source 或 P1 rejected prune candidates；
+- static contract 是 origin `[0,0] m`、50 m XY half-open cells、数值 `(ix,iy)` 排序；source inventory=
+  `133 chunks / 1,205,164 rows / count 1..330,169 / 98 sparse<100 / 7 dense>=10,000 / 69,393 rows within
+  .25 m of cell edge`。稀疏和离群 chunk 全保留，不设 min count、merge 或 post-hoc cell-size search；
+- Background/Rigid 分别冻结 25/26 row tensors。每个 asset 保存全部 row fields 与升序 `int64 source_flat_indices`；
+  24 个 actor assets 中 23 个非空 source rows 全部 interleaved，actor 14 仍输出完整 zero-row asset。static/actor
+  source inventory SHA=`d78fa6e...27cae / 384870e6...f23a`；
+- package=`manifest + skeleton + 133 static + 24 actor = 159 files`；shared skeleton 对 row tensors 使用唯一 sentinel，
+  其余 state exact。row values 不重复；manifest 绑定逐文件 path/SHA/bytes/count/bounds/index digest；候选只在内存
+  scatter 重组并要求 recursive schema、tensor shape/dtype/value、reload/registry 与 P2 FP16-persistent/FP32-renderer
+  adapter exact；禁止复制 source 或持久写出 reassembled checkpoint；
+- quality=`57 views + 33 masks`，source 先 exact replay P2 selected quality，chunk 再要求 57 个 RGB SHA 和 31 个
+  endpoints exact；runtime=`2 arms × 9 views`、2 warm-up、800×450、读取全部 package、cache uncontrolled，仅报告。
+  选择成功为 `selected_exact_chunk_package`；任一 integrity/quality/resource 门失败则 exact fallback P2；
+- recovery=8 stages，resources=`900 s / 16,384 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA /
+  48 GiB cgroup / 1 GB run / 30 GB disk floor / OOM 0`，required audits=`21`。full validator passed，协议测试=
+  `12 passed`，联合 WorldSim V3=`222 passed`。本条没有 P3 materialization/render/formal measurement；下一动作只
+  实现并提交 runner，P4 继续未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -801,5 +824,6 @@ resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P
 r2 已 14/14 audits passed 并登记 `done`。P1 canonical r1 已 21/21 audits passed；b05/b10/b20 分别失败
 3/12/15 个冻结质量门，method rejected、selected=p1-source exact alias，P1 experiment=`done`。P2 r1 因 evidence
 ledger 漏项保留 blocked，canonical r2 已 19/19 audits、31/31 safeguards 并选择 `p2-gs-param-fp16`，P2=`done`。
-下一动作只冻结 `P3-chunk` protocol/validator/tests；协议提交前不实现或创建 P3 formal run。不修改 A3 renderer/
-ceiling 挽回 R1，也不得启动 P4、A3 formal、R2–R4 或 D3/D4。
+P3 protocol SHA=`dfaaba79...1b41` 已冻结且 validator/12 项协议测试/222 项联合回归通过。下一动作只实现并提交
+`P3-chunk` runner；提交前不创建 formal run，不修改 frozen grid/schema/quality/resource/selection，也不得启动
+P4、A3 formal、R2–R4 或 D3/D4。

@@ -20,8 +20,9 @@
 - **A4-P1 runner 基线**：`19cab2cf40b8ed8ef9a4ad1ba8cce4cc8cf67163`（train-only contribution、三臂物化、冻结质量门、runtime 与恢复审计）
 - **A4-P2 协议基线**：`588e37e`；协议 SHA-256=`6558fb3f0864c7711add2bd8b61500670ddbf631be7e356f1eac77c57c136d4e`
 - **A4-P2 runner / 账本修复基线**：`1cd9a6e` / `dcf2822`（10-field FP16、FP32 renderer adapter、19-audit finalizer）
+- **A4-P3 协议 SHA-256**：`dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41`
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ A4-P2 done（r1 evidence-ledger blocked，r2 selected mixed checkpoint）/ P3 protocol next / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ A4-P2 done（r1 evidence-ledger blocked，r2 selected mixed checkpoint）/ P3 protocol frozen（runner next）/ D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -548,7 +549,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；下一步只冻结 P3 protocol |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；P3 protocol frozen，下一步只实现 runner |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1463,6 +1464,43 @@ failure recovery
   `done`；部署资产在 A3*=R0/D2 与 P1 source exact fallback 上增加冻结的 mixed storage 层。结论只覆盖
   scene-0230/seed-0/单卡/冻结矩阵；A4 最低完成集还缺 P3，下一动作只冻结 P3 chunk 协议，P4 继续条件式。
 
+#### 11.2.7 P3 exact chunk package 结果前协议冻结
+
+- protocol=`configs/worldsim_v3/a4_p3_chunk_protocol_v1.yaml`，SHA-256=
+  `dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41`，P2 closeout=
+  `e954e23cc4e81e4ba15ebcd9be4666cc3269ebe7`；exact 输入为 P2-selected mixed checkpoint/config/registry、P2
+  canonical summary/manifest/resource/selected-quality/resume/terminal 共 9 files，加原 33-mask directory。P2
+  必须为 terminal done、19/19 audits、31/31 safeguards 且 selected=`p2-gs-param-fp16`，禁止回退到原 FP32
+  checkpoint 或接入 P1 rejected prune arm；
+- static chunk 在任何 P3 materialization/render 前固定为原点 `[0,0] m`、`50 m` 固定 XY 半开网格，cell=
+  `floor(float64(xy-origin)/50)`，按数值 `(ix,iy)` 排序。source-only audit 得到 `133` 个 occupied chunks、
+  count=`1..330,169`，其中 `98` 个少于 100 rows、`7` 个不少于 10,000 rows，`.25 m` cell-edge band 含
+  `69,393` rows；所有 sparse/outlier chunk 均保留，禁止 minimum-count、merge、cell-size search 或事后改网格；
+- Background/RigidNodes 分别冻结 `25/26` 个 row tensors：mixed-precision render fields、全部 ancestry fields，
+  以及 Rigid `points_ids`。每个 static/actor asset 携带严格升序 `int64 source_flat_indices` 与全部对应 row values；
+  source static index inventory SHA=`d78fa6e...27cae`。24 个 actor 资产按模型索引 `0..23` 输出，23 个非空
+  actor 的源行均为 interleaved、不得假设 contiguous slice；actor 14 必须输出含全部 zero-row fields 的显式空资产，
+  actor inventory SHA=`384870e6...f23a`；
+- package 固定为 manifest + shared skeleton + 133 static files + 24 actor files，共 `159` files。skeleton 逐路径
+  保留所有非 row checkpoint state，并把每个 row tensor 替换为带 model/path/rows/shape/dtype 的唯一 sentinel；
+  row values 只在所属 chunk/actor 存一次。manifest 必须绑定 protocol/source/grid/schema 及逐文件 relative path/
+  SHA/bytes/count/bounds/index digest；禁止复制 source checkpoint 或落盘持久 reassembled checkpoint；
+- candidate 只在内存中按源 flat index scatter，重建后 recursive container schema、每个 tensor shape/dtype/value
+  SHA、模型/actor count、registry 与 P2 mixed-persistent/FP32-renderer adapter 必须 exact。质量仍用 57 views/33
+  frozen masks：source 先以 `1e-6 PSNR / 1e-8 其余` 回放 P2 selected quality，chunk arm 再要求 57 个 RGB SHA
+  逐 view 相等且 31 个 global/actor/boundary/non-target endpoints 在同一 exact tolerance 内；这不是质量提升门；
+- runtime 固定两臂、`frames 10/100/190 × cameras 0/1/2`、2 warm-up、`800×450`、sync/nearest-rank。
+  chunk load 必须读取并校验全部 133+24 assets 与 skeleton 后完整重组，不允许 selective loading/culling；cache
+  uncontrolled，load/reassembly/P50/P95/FPS/VRAM/RAM/package bytes 只报告且不参与 selection；
+- selection 只有两种：inventory/manifest/reassembly/reload/adapter/source replay/RGB+quality/resource 全通过则
+  `selected_exact_chunk_package`；任一失败则 `rejected_chunk_integrity_quality_or_resource_gate` 并 exact fallback
+  到 P2-selected checkpoint。recovery=`input→source_layout→materialize→reassemble→evaluate→runtime→aggregate→resume`
+  共 8 stages；ceiling 延续 `900 s / 16 GiB allocated / 24 GiB reserved / 24,000 MiB NVIDIA / 48 GiB cgroup /
+  1 GB run / 30 GB disk floor / OOM 0/0`，required audits=`21`；
+- full validator exact 通过 10 项输入记录、133 static/24 actor inventory 与 25/26 row schema；协议测试=`12 passed`，
+  联合 WorldSim V3=`222 passed`。本条没有创建 chunk package、render 或 formal run；下一动作只实现并提交 runner，
+  不启动 P4、D3/D4 或 A3 R2–R4。
+
 ### 11.3 必报工程指标
 
 | 维度 | 指标 |
@@ -1679,14 +1717,15 @@ P0 已由 v2 r2 正式关闭；P5 r1 的 runtime/state-key 混淆保留为 `bloc
 正式关闭 P5。P1 r1 已完成 21/21 audits，但 b05/b10/b20 分别失败 3/12/15 个冻结质量 safeguard；方法
 `rejected_quality_or_integrity_gate`，生产资产 exact fallback 到 source，P1 实验以负结果 `done`。P2 r1 的 mapped
 parameter ledger 漏项保留为 `blocked`；只修账本后的 canonical r2 已 19/19 audits、31/31 safeguards 全通过，选择
-`p2-gs-param-fp16`，P2=`done`。A4 因最低完成集仍缺 P3 而保持 `running`；当前唯一动作是冻结 P3 chunk 协议：
+`p2-gs-param-fp16`，P2=`done`。P3 chunk 协议现已在任何 materialization/render 前冻结；A4 因最低完成集仍缺
+P3 formal 结果而保持 `running`。当前唯一动作是实现并提交 P3 runner：
 
 ```text
-1. exact 输入锁定 P2-selected mixed checkpoint/registry、source config、P2 summary/manifest/resource/resume/terminal
-2. 结果前固定 static chunk 空间定义、动态 actor 独立资产语义、chunk 边界与不可见/空 actor 处理
-3. 固定 source/chunk arms、57-view global/actor/boundary/non-target 质量门与 9-view runtime；性能仍只报告
-4. 固定 chunk manifest/checkpoint 引用、逐块 count/index/hash、无重训/无 post-hoc chunk size 与 exact fallback
-5. protocol、validator 与测试提交前不实现/运行 P3；P4 LOD 继续条件式，不启动 D3/D4 或 A3 R2–R4
+1. 只实现 frozen 50 m grid、133 static + 24 actor assets、shared skeleton、manifest 与内存 exact reassembly
+2. 每个 asset 原子写入并记录 source flat index/count/bounds/schema/SHA/bytes；空 actor 14 不得省略
+3. 复用 P2 FP16-persistent/FP32-renderer adapter，完成 source/chunk 57-view exact replay 与两臂 9-view runtime
+4. 实现 8-stage recovery、21-audit finalizer、资源采样、source 不可变性与 exact fallback；不得改变 frozen protocol
+5. runner 提交前不创建 P3 formal run；P4 LOD 继续条件式，不启动 D3/D4 或 A3 R2–R4
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1694,6 +1733,16 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — A4-P3 exact chunk package 协议冻结
+
+- protocol SHA=`dfaaba79...1b41`，输入 exact 锁定 P2-selected mixed checkpoint 与 P2 19/19 canonical evidence；
+- static 固定 50 m XY 半开网格与 133-chunk source inventory；dynamic 固定 24 actor assets、显式 interleaved
+  source indices 与 actor 14 zero-row asset；Background/Rigid row schema=`25/26`；
+- package 固定 manifest+skeleton+157 data assets、内存 bitwise exact reassembly、57 RGB SHA/31 endpoints exact、
+  两臂 9-view report-only runtime、8-stage recovery、21 audits 与 exact P2 fallback；
+- full validator passed，协议测试 12 passed、联合 WorldSim V3 222 passed。本条没有创建 P3 package/render/formal
+  run；下一动作只实现并提交 runner。
 
 ### 2026-08-10 — A4-P2 mixed-precision formal 完成并选择候选
 
@@ -1961,7 +2010,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5、P1、P2 done；P1 method rejected；P2 selected=p2-gs-param-fp16；当前只冻结 P3 chunk protocol。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5、P1、P2 done；P1 method rejected；P2 selected=p2-gs-param-fp16；P3 protocol frozen，当前只实现 runner。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1994,8 +2043,11 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5、P1、P2 done；P1 method re
     FP16 排除事实、31 项质量门、9-view runtime、7-stage recovery、19 audits 与 199 项联合回归；
 23. 核对 P2 runner/fix `1cd9a6e/dcf2822`、r1 blocked terminal SHA `5ef3dab6...74c0`、canonical r2 summary
     SHA `980f9b0f...1103`、19/19 audits、31/31 safeguards、candidate checkpoint `7be87e8b...7448`、资源与 no-torch resume；
-24. 当前只冻结 P3 chunk protocol；不得在协议/validator/测试提交前实现或创建 P3 formal run，不得补 post-hoc
-    precision 字段/阈值、启动 P4、重跑 A3、启动 R2–R4，或把 checkpoint bytes/runtime 波动登记为质量/FP16 kernel speedup。
+24. 核对 P3 protocol SHA `dfaaba79...1b41`、9 files + 1 mask directory、50 m/133 static chunks、24 actor
+    assets、actor 14 empty、25/26 row tensors、159 package files、57 RGB/31 endpoints exact、8-stage recovery、
+    21 audits 与 222 项联合回归；
+25. 当前只实现并提交 P3 runner；不得改变 frozen grid/actor/schema/quality/resource/selection，不得在 runner 提交前
+    创建 formal run，不得启动 P4、重跑 A3、启动 R2–R4，或把 package bytes/runtime 波动登记为质量/streaming speedup。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0、P5、P1 与 P2 已 done；P1 候选被拒绝并 exact fallback 到 source；P2 canonical r2 已选择 mixed checkpoint；下一步只冻结 P3 chunk protocol
+- 当前门禁：A4-P0、P5、P1 与 P2 已 done；P1 候选被拒绝并 exact fallback 到 source；P2 canonical r2 已选择 mixed checkpoint；P3 chunk protocol 已冻结，下一步只实现 runner
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -70,6 +70,17 @@ runtime 只报告 source/candidate load=`.33669/.47407 s`、P50=`.04583/.08721 s
 FPS=`17.256/13.065`，不支持 speedup claim。resource passed：wall=`206.548 s`、allocated/reserved/NVIDIA=
 `7,754.05/8,072/8,426 MiB`、cgroup=`29,673,631,744 bytes`、run=`436,430,167 bytes`、OOM=0；resume=
 `1.217 s`/6 stages/no torch/no GPU。P2=`done`，selected=`p2-gs-param-fp16`；A4 仍缺 P3。
+
+P3 protocol SHA=`dfaaba79...1b41` 已在任何 chunk materialization/render 前冻结，输入 exact 接 P2-selected mixed
+checkpoint 与 P2 19/19 canonical evidence。static 使用原点 `[0,0] m` 的 50 m XY 半开网格，source-only audit
+固定 `133` 个 occupied chunks（count `1..330,169`，98 个 `<100`，7 个 `>=10,000`），不允许稀疏/离群块丢弃、
+merge 或 cell-size search。Background/Rigid row tensor schema=`25/26`；24 个 actor 均使用显式升序 source flat
+indices，23 个非空 actor 全部 interleaved，actor 14 输出 zero-row asset。package 固定 manifest+skeleton+133 static+
+24 actor=`159 files`，仅内存 scatter 重组，recursive tensor 必须 bitwise exact，禁止复制 source 或落盘重组
+checkpoint。质量要求 source 回放 P2 exact、chunk 的 57 RGB SHA 与 31 endpoints exact；9-view runtime 读取全部
+assets，只报告、不做 streaming/load/render speedup claim。8-stage recovery、900 s/16 GiB torch/48 GiB cgroup/
+1 GB run ceiling、21 audits 与 P2 exact fallback 已固定；full validator passed，协议测试 12 passed、联合 WorldSim
+V3 222 passed。本冻结点未创建 package/render/formal run；下一步只实现并提交 runner。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -455,7 +466,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；P3 protocol next |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；P3 protocol frozen，runner next |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -468,7 +479,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-冻结 `WS-V3-A4-DEPLOYMENT-01 / P3-chunk` 最小协议、validator 与测试：输入只接 P2-selected mixed asset；结果前
-固定 static spatial chunk、dynamic actor 独立资产、边界审计、source/chunk 质量与 runtime、manifest/hash/count、
-资源上限、恢复阶段和 exact fallback。协议提交前不实现或创建 P3 formal run；P4、D3/D4 与 A3 formal/R2–R4
-保持未解锁；F0 独立非阻塞。
+只实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P3-chunk` runner：严格执行 frozen 50 m/133 static、24 actor、shared
+skeleton/manifest、内存 exact reassembly、57-view exact quality、两臂 9-view runtime、8-stage recovery 与 21-audit
+finalizer。不得改变协议或在 runner 提交前创建 formal run；P4、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0
+独立非阻塞。

@@ -1,0 +1,410 @@
+schema_version: 1
+task_id: WS-V3-A4-DEPLOYMENT-01
+profile_id: A4-P3-CHUNK-v1
+protocol_status: frozen_before_new_p3_measurements
+seed: 0
+scene: scene-0230
+p2_closeout_commit: e954e23cc4e81e4ba15ebcd9be4666cc3269ebe7
+
+authorization:
+  p3_chunk_materialization_authorized: true
+  p3_reassembled_candidate_render_authorized: true
+  source_checkpoint_mutation_authorized: false
+  training_authorized: false
+  optimizer_authorized: false
+  selective_chunk_render_authorized: false
+  view_dependent_chunk_culling_authorized: false
+  chunk_size_search_authorized: false
+  p4_lod_authorized: false
+
+selected_asset:
+  role: P2-selected-p2-gs-param-fp16-immutable
+  checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/candidates/p2-gs-param-fp16.pth
+    sha256: 7be87e8b0bdaf86c4a8066fa99a8c8a0a691ba9b5ea1c91ebf7b7fbf60287448
+    bytes: 432111754
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+    sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+    bytes: 4661
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/candidates/p2-gs-param-fp16_actor_registry.json
+    sha256: 69c4f38ae2a06d5fd3cd92d61dcc3595e3f05e70a4229f8827acd53d87448a27
+    bytes: 3721277
+    embedded_registry_sha256: 31cd63e5958a6a814546aecf3ad01df45ccb9547132e627eb46a232b6f102db6
+  inventory:
+    background_gaussians: 1205164
+    rigid_gaussians: 104704
+    total_gaussians: 1309868
+    actor_count: 24
+    available_actor_count: 23
+    unavailable_actor_count: 1
+
+p2_canonical_evidence:
+  run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2
+  source_commit: dcf282238b6433ddbd9c7f9688e0c7d483c79860
+  summary:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/summary.json
+    sha256: 980f9b0f25741167b55bd8e245f89f5ca2aea277dad2981f92e9d25422791103
+    bytes: 139592
+  manifest:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/manifest.json
+    sha256: bed45626b05a3ad888d8f93ff17621d5c832084e93a82425fa7230a2035d98cb
+    bytes: 8411
+  resource_audit:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/resource_audit.json
+    sha256: 221d5e82b9ede9ac03bf898b71c6bb9f4c3e6957ea86e2dc96bc7ff2d6e90df5
+    bytes: 1187
+  selected_quality:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/quality/p2-gs-param-fp16.json
+    sha256: bd339be631e3aec31a180e0d3386e8065ba08fefb9dca171b44f27052b535ed0
+    bytes: 65128
+  resume_audit:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/stages/resume_audit.json
+    sha256: f2b9966d57e781e7bc64ca1a0f733b7ee68d4f2043406c2656c275468eefbea5
+    bytes: 2883
+  terminal:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/terminal.json
+    sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645
+    bytes: 42
+
+baseline_quality:
+  source_quality:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/quality/p2-gs-param-fp16.json
+    sha256: bd339be631e3aec31a180e0d3386e8065ba08fefb9dca171b44f27052b535ed0
+    bytes: 65128
+  actor_masks:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_metrics/masks
+    digest_algorithm: sha256_of_sorted_lines_sha256_two_spaces_dot_slash_relative_path_newline
+    sha256: 429f3693ddaf05b4cc665cddd6ca43049fdcf9d60ea284e9da3b02c2ce7c43cf
+    file_glob: '*.png'
+    file_count: 33
+    total_bytes: 25714
+
+source_precision_contract:
+  models: [Background, RigidNodes]
+  float32_row_fields: [_means]
+  float16_row_fields: [_scales, _quats, _features_dc, _features_rest, _opacities]
+  runtime_adapter:
+    persistent_parameter_policy: keep_p2_mixed_precision_dtypes_after_read_only_load
+    renderer_policy: collect_gaussians_then_cast_means_scales_quats_rgbs_opacities_to_float32_before_gsplat
+    renderer_input_dtype_required: float32
+    spherical_harmonics_input_dtype_required: float32
+    autocast_enabled: false
+    fp16_renderer_kernel_claim_allowed: false
+
+row_tensor_schema:
+  common_gaussian_row_tensors:
+    - {path: _means, dtype: float32, shape_tail: [3]}
+    - {path: _scales, dtype: float16, shape_tail: [3]}
+    - {path: _quats, dtype: float16, shape_tail: [4]}
+    - {path: _features_dc, dtype: float16, shape_tail: [3]}
+    - {path: _features_rest, dtype: float16, shape_tail: [15, 3]}
+    - {path: _opacities, dtype: float16, shape_tail: [1]}
+    - {path: worldsim_a2_ancestry.fields.gaussian_id, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.actor_id, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.init_source, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.parent_id, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.lineage_root_id, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.birth_step, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.generation, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.visibility_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.screen_grad, dtype: float32, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.screen_grad_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.boundary_contribution, dtype: float32, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.boundary_contribution_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.photometric_residual, dtype: float32, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.photometric_residual_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.depth_residual, dtype: float32, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.depth_residual_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.normal_residual, dtype: float32, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.normal_residual_count, dtype: int64, shape_tail: []}
+    - {path: worldsim_a2_ancestry.fields.nearest_lidar_distance, dtype: float32, shape_tail: []}
+  models:
+    Background:
+      row_count: 1205164
+      additional_row_tensors: []
+    RigidNodes:
+      row_count: 104704
+      additional_row_tensors:
+        - {path: points_ids, dtype: int64, shape_tail: [1]}
+  row_tensor_discovery_rule: recursive_tensor_with_first_dimension_equal_to_model_row_count
+  all_non_row_values_policy: preserve_in_skeleton_recursive_type_shape_dtype_and_value_exact
+
+static_chunk_contract:
+  model: Background
+  coordinate_tensor_path: _means
+  axes: [x, y]
+  origin_xy_m: [0.0, 0.0]
+  cell_size_m: 50.0
+  coordinate_precision_for_membership: float64
+  membership_rule: floor_each_axis_of_coordinate_minus_origin_divided_by_cell_size
+  cell_bounds: half_open_lower_inclusive_upper_exclusive
+  cell_order: ascending_integer_ix_then_iy
+  chunk_id_format: static-x-{n_or_p}{abs_ix_4d}-y-{n_or_p}{abs_iy_4d}
+  source_flat_indices_dtype: int64
+  source_flat_indices_order: strictly_ascending
+  source_flat_indices_hash_algorithm: sha256_of_little_endian_int64_c_order_bytes
+  inventory_digest_algorithm: sha256_of_utf8_numeric_order_lines_id_tab_ix_tab_iy_tab_count_tab_index_sha256_newline
+  empty_cells_emitted: false
+  sparse_chunks_preserved: true
+  outlier_chunks_preserved: true
+  minimum_chunk_count: null
+  merge_policy: none
+  post_hoc_cell_size_or_merge_forbidden: true
+  expected_source_inventory:
+    occupied_chunk_count: 133
+    background_count: 1205164
+    xyz_min: [-511.4183654785156, -686.0376586914062, -15.289227485656738]
+    xyz_max: [722.8541870117188, 43.843109130859375, 2996.33837890625]
+    count_min: 1
+    count_max: 330169
+    chunks_below_100: 98
+    chunks_at_least_10000: 7
+    boundary_band_m: 0.25
+    boundary_band_rule: minimum_distance_in_xy_to_any_fixed_cell_edge_less_than_or_equal
+    boundary_band_count: 69393
+    inventory_sha256: d78fa6e1046a365f6606b4e04a692351b0668af5f27b5d0a401d69d0dec27cae
+
+actor_chunk_contract:
+  model: RigidNodes
+  assignment_tensor_path: points_ids
+  actor_index_domain_inclusive: [0, 23]
+  actor_order: ascending_model_actor_index
+  actor_id_format: actor-{actor_index_4d}
+  source_flat_indices_dtype: int64
+  source_flat_indices_order: strictly_ascending
+  source_flat_indices_hash_algorithm: sha256_of_little_endian_int64_c_order_bytes
+  inventory_digest_algorithm: sha256_of_utf8_actor_order_lines_id_tab_actor_index_tab_availability_tab_count_tab_index_sha256_newline
+  contiguous_slice_assumption_allowed: false
+  expected_asset_count: 24
+  expected_available_count: 23
+  expected_unavailable_count: 1
+  empty_actor_indices: [14]
+  empty_actor_asset_policy: emit_zero_row_tensor_asset_with_all_row_fields
+  expected_inventory_sha256: 384870e6773c639be26c21e1e6067c28999acbb8785d52faff5b43792d24f23a
+  expected_actors:
+    - {actor_index: 0, count: 4240, source_flat_indices_sha256: d1c38dc5696128562be1976b1a43982abddda0a901b2a32fc7c27cd7fc3fffa6}
+    - {actor_index: 1, count: 3196, source_flat_indices_sha256: 52dc4f6020c1d812a9b2d059c83ea1dde719fdfc6604ed79ba918cb8bebb774d}
+    - {actor_index: 2, count: 6846, source_flat_indices_sha256: 05d6aed77ae288fcc46e7114af4d65c049e8a871f7df7abfc0c6b7a979bcdd45}
+    - {actor_index: 3, count: 5007, source_flat_indices_sha256: 19d1f0d4227fd31bbb9cd435d5e47b6d930154ef199ca88364e12919d227ac68}
+    - {actor_index: 4, count: 4969, source_flat_indices_sha256: 5cf0c9f5b8617092d2f69dece2d234d3af6bb2525667c6e5bea70a72f586ebd0}
+    - {actor_index: 5, count: 4525, source_flat_indices_sha256: 35e7b134e18fa8658ef04912ea72618aa04ee84e9ec00f7edb91c33ae6ffbae3}
+    - {actor_index: 6, count: 6396, source_flat_indices_sha256: 136a68a1c1de0282ddcc99bde7bcc824ee0b071d86470ba3ac332f5b4418df53}
+    - {actor_index: 7, count: 4119, source_flat_indices_sha256: 4865344831f8de0951325b01e1408acfc92f5e27a7d885cf6519e6b1706c764b}
+    - {actor_index: 8, count: 673, source_flat_indices_sha256: 075e74f1dce1dff28b3ba19e068e3d2e3098bc163e1725ca29ff600c01d09ed3}
+    - {actor_index: 9, count: 4573, source_flat_indices_sha256: 77b16189b97fb1b765ad7d689ba50ed2151dcdf2329b5973c4660576e3bcb270}
+    - {actor_index: 10, count: 7084, source_flat_indices_sha256: d3e4139eee0d0afb364d25ac41fc682cfecc330afcb8762d05d95b93635481d5}
+    - {actor_index: 11, count: 2748, source_flat_indices_sha256: 12431307d6cd5b73cf4621f8ac9fa7e3bbbecd9f7a76497b414d76aa6622ccd4}
+    - {actor_index: 12, count: 7241, source_flat_indices_sha256: cadc980c776de77994056bb711b0740b086bdcc26304bb39d330f45b32ef5e41}
+    - {actor_index: 13, count: 2558, source_flat_indices_sha256: d701b4fd11176d22f162c0d71e5a69c40de8ea2da42e319642843e8fe7d3ee50}
+    - {actor_index: 14, count: 0, source_flat_indices_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855}
+    - {actor_index: 15, count: 5265, source_flat_indices_sha256: b85e074513035a4a1f30150fa5a0cafb1e152483a899df3489dbea62bc51260b}
+    - {actor_index: 16, count: 7319, source_flat_indices_sha256: 6e8720d921d7f15484aabf109c56d33fbcf8bfe5ffefdc82ec1d41bc64f04654}
+    - {actor_index: 17, count: 2827, source_flat_indices_sha256: 8df7e4f0846108274440fdbb22292ef0d2d41a581f3081f4de7b56d5ef497aab}
+    - {actor_index: 18, count: 4774, source_flat_indices_sha256: b96ba00300e4437e92fc120e84f5e6764c1a3429a0edf99ddb2c6063e04813ae}
+    - {actor_index: 19, count: 5501, source_flat_indices_sha256: 3340e7e0f8393372347231f967f7a1fa33b27be2b61b3ee1b19549cc71274ca9}
+    - {actor_index: 20, count: 8740, source_flat_indices_sha256: 443c85d75f5bf937be5963342d52f2cd88853c14f89f6fa90b0f31606580376c}
+    - {actor_index: 21, count: 3728, source_flat_indices_sha256: bd13d9f0e6f7c00cbd584e4c96adf5207f067ff0418e62e11a5c008e3c362db2}
+    - {actor_index: 22, count: 2197, source_flat_indices_sha256: 8427ecfc2a33533b5f4fd289dea58435fb191212360eb70ee073d217d0c46fba}
+    - {actor_index: 23, count: 178, source_flat_indices_sha256: ff3cd89104587499a3a7dab767b4ab90325968d7c1b82f70c1fc558ee6664e35}
+
+package_contract:
+  arms:
+    - {id: p3-source, storage: immutable_external_p2_selected_checkpoint}
+    - {id: p3-chunk-package, storage: run_local_exact_chunk_package}
+  package_format: worldsim_v3_chunk_package_v1
+  root_output: artifacts/chunk_package
+  manifest_output: artifacts/chunk_package/manifest.json
+  skeleton_output: artifacts/chunk_package/skeleton.pth
+  static_output_directory: artifacts/chunk_package/static
+  actor_output_directory: artifacts/chunk_package/actors
+  expected_static_asset_count: 133
+  expected_actor_asset_count: 24
+  expected_data_asset_count: 157
+  expected_payload_file_count: 158
+  expected_file_count_including_manifest: 159
+  asset_required_fields:
+    - schema_version
+    - package_format
+    - asset_kind
+    - asset_id
+    - model
+    - source_row_count
+    - source_flat_indices
+    - row_tensors
+  skeleton_row_tensor_sentinel:
+    tag: __worldsim_v3_chunk_row_tensor__
+    required_fields: [tag, model, field_path, rows, shape_tail, dtype]
+  skeleton_policy: preserve_every_non_row_value_exact_and_replace_each_row_tensor_with_one_sentinel
+  row_storage_policy: every_source_row_value_stored_exactly_once_in_its_static_or_actor_asset
+  chunk_asset_write_policy: one_atomic_write_per_asset_never_overwrite
+  manifest_policy: bind_protocol_source_grid_schema_each_relative_file_sha256_bytes_count_bounds_and_index_digest
+  source_checkpoint_copy_forbidden: true
+  persistent_reassembled_checkpoint_forbidden: true
+  reassembly:
+    mode: in_memory_only
+    order: manifest_numeric_static_then_actor_order
+    method: allocate_exact_source_shape_dtype_then_scatter_by_source_flat_indices
+    source_flat_indices_must_be_unique_disjoint_exhaustive: true
+    recursive_container_schema_must_match_source: true
+    every_tensor_shape_dtype_and_value_sha256_must_match_source: true
+    reconstructed_state_reload_required: true
+  raw_render_media_forbidden: true
+
+quality_contract:
+  baseline_arm: p3-source
+  candidate_arm: p3-chunk-package
+  baseline_replay_required: true
+  candidate_actor_masks: reuse_frozen_p2_selected_mask_bytes_exact
+  candidate_mask_regeneration_forbidden: true
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+  cameras: [0, 1, 2]
+  expected_views: 57
+  original_resolution: [800, 450]
+  global_endpoints:
+    metrics:
+      - image_metrics/test/human_psnr
+      - image_metrics/test/human_ssim
+      - image_metrics/test/lpips
+      - image_metrics/test/masked_psnr
+      - image_metrics/test/masked_ssim
+      - image_metrics/test/occupied_psnr
+      - image_metrics/test/occupied_ssim
+      - image_metrics/test/psnr
+      - image_metrics/test/ssim
+      - image_metrics/test/vehicle_psnr
+      - image_metrics/test/vehicle_ssim
+  actor_endpoints:
+    roles: [high-support, boundary-support]
+    regions: [actor_region, boundary_band]
+    metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px, mean_absolute_error]
+  non_target_endpoints:
+    metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px, mean_absolute_error]
+  endpoint_count: 31
+  p2_baseline_replay_tolerance:
+    psnr_absolute: 0.000001
+    ssim_absolute: 0.00000001
+    lpips_absolute: 0.00000001
+    mean_absolute_error_absolute: 0.00000001
+  candidate_source_replay_tolerance:
+    psnr_absolute: 0.000001
+    ssim_absolute: 0.00000001
+    lpips_absolute: 0.00000001
+    mean_absolute_error_absolute: 0.00000001
+  candidate_per_view_rgb_sha256_must_equal_source: true
+  candidate_pass_rule: all_57_rgb_hashes_and_all_31_quality_endpoints_exact
+  missing_or_nonfinite_metric_policy: candidate_rejected
+
+runtime_contract:
+  frames: [10, 100, 190]
+  cameras: [0, 1, 2]
+  expected_samples_per_arm: 9
+  warmup_views: 2
+  resolution: [800, 450]
+  cuda_synchronize_each_measurement: true
+  percentile: nearest_rank
+  filesystem_cache: uncontrolled_report_explicitly
+  source_load_definition: read_and_verify_monolithic_checkpoint_then_load_full_trainer
+  chunk_load_definition: read_and_verify_manifest_skeleton_all_133_static_and_24_actor_assets_reassemble_then_load_full_trainer
+  selective_loading_or_view_culling_forbidden: true
+  required_metrics:
+    - source_checkpoint_or_package_bytes
+    - payload_and_manifest_file_count
+    - checkpoint_or_package_load_reassembly_seconds
+    - model_gaussian_counts
+    - persistent_parameter_bytes_by_dtype
+    - render_input_dtypes
+    - render_p50_seconds
+    - render_p95_seconds
+    - aggregate_fps
+    - peak_torch_allocated_mib
+    - peak_torch_reserved_mib
+    - peak_nvidia_process_memory_mib_sampled
+    - peak_cgroup_memory_bytes_sampled
+  performance_values_are_report_only_not_quality_selection: true
+
+selection_contract:
+  candidate_requirements:
+    - exact_static_and_actor_asset_inventory
+    - exact_row_fields_and_shared_skeleton_without_duplication
+    - exact_package_manifest_hashes_bytes_counts_bounds_and_indices
+    - bitwise_exact_full_checkpoint_reassembly_and_reload
+    - p2_mixed_precision_runtime_adapter_exact
+    - source_baseline_replay_matches_p2_exact
+    - all_57_rgb_hashes_and_all_31_quality_endpoints_exact
+    - source_checkpoint_registry_config_and_masks_unchanged
+    - resources_within_frozen_ceilings
+  candidate_pass:
+    selected_arm: p3-chunk-package
+    method_state: selected_exact_chunk_package
+  candidate_fail:
+    selected_arm: p3-source
+    method_state: rejected_chunk_integrity_quality_or_resource_gate
+    fallback: immutable_p2_selected_checkpoint_exact_alias
+  runtime_values_used_for_selection: false
+  no_result_dependent_chunk_size_merge_field_policy_or_threshold: true
+
+recovery_contract:
+  stage_order:
+    - input_audit
+    - source_layout_audit
+    - materialize_chunk_package
+    - reassemble_and_hash_audit
+    - evaluate_source_and_chunk
+    - runtime_profile_both_arms
+    - aggregate
+    - resume_audit
+  atomic_stage_records: true
+  completed_stage_policy: never_overwrite
+  invalid_stage_policy: rerun_only_first_invalid_stage_and_downstream
+  resume_validation: hash_each_completed_stage_and_output_before_reuse
+  resume_probe_process: no_torch_no_gpu
+
+resource_ceilings:
+  wall_time_seconds: 900
+  peak_torch_allocated_mib: 16384
+  peak_torch_reserved_mib: 24576
+  peak_nvidia_process_memory_mib_sampled: 24000
+  peak_cgroup_memory_bytes: 51539607552
+  run_bytes: 1000000000
+  disk_free_floor_bytes: 30000000000
+  oom_events_delta: 0
+  oom_kill_events_delta: 0
+
+required_audits:
+  all_fingerprinted_inputs_exact: true
+  p2_canonical_evidence_done_and_mixed_selected: true
+  source_checkpoint_registry_config_and_masks_unchanged: true
+  source_precision_and_row_tensor_schema_exact: true
+  static_grid_contract_and_source_inventory_exact: true
+  static_chunk_indices_sorted_disjoint_exhaustive_and_cell_membership_exact: true
+  actor_assets_24_counts_indices_and_empty_actor_exact: true
+  chunk_row_field_dtypes_shapes_and_values_exact: true
+  shared_state_preserved_and_source_rows_not_duplicated: true
+  package_manifest_file_hashes_bytes_counts_and_bounds_exact: true
+  reassembled_checkpoint_schema_dtype_and_tensor_hashes_exact: true
+  reassembled_checkpoint_reload_counts_registry_and_adapter_exact: true
+  p2_runtime_precision_adapter_contract_reused_exactly: true
+  source_baseline_replay_matches_p2_exact: true
+  frozen_actor_masks_reused_without_regeneration: true
+  all_57_rgb_hashes_and_31_quality_endpoints_exact: true
+  runtime_matrix_and_statistics_complete: true
+  no_training_optimizer_source_mutation_or_raw_media: true
+  resources_within_frozen_ceilings: true
+  selection_and_exact_fallback_rule_exact: true
+  dry_run_resume_reuses_completed_stages_without_torch_or_gpu: true
+
+claim_boundary:
+  p3_is_exact_checkpoint_packaging_into_individually_addressable_assets: true
+  p3_does_not_claim_selective_streaming_view_culling_or_partial_render: true
+  p3_does_not_claim_compression_checkpoint_or_package_byte_reduction: true
+  p3_does_not_claim_load_render_vram_or_tensor_core_speedup: true
+  uncontrolled_filesystem_cache_does_not_support_load_speedup_claim: true
+  runtime_values_are_report_only_and_do_not_affect_selection: true
+  quality_pass_would_mean_exact_replay_not_quality_improvement: true
+  single_scene_seed0_does_not_support_cross_scene_generalization: true
+  rejected_chunk_candidate_does_not_invalidate_p2_selected_asset: true
+  p3_does_not_authorize_p4_lod_training_concurrency_or_renderer_changes: true
+
+failure_precedents: [PIVOT-F05, PIVOT-F22, PIVOT-F24, PIVOT-F25, PIVOT-F26, PIVOT-F27, PIVOT-F28]
