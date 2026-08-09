@@ -1,0 +1,172 @@
+schema_version: 1
+task_id: WS-V3-A4-DEPLOYMENT-01
+profile_id: A4-P5-REGISTRY-RESUME-v1
+protocol_status: frozen_before_new_p5_measurements
+seed: 0
+scene: scene-0230
+p0_closeout_commit: 9811c03ce1d0c7f017f50d950fe55d5c2891e0b5
+
+authorization:
+  p5_registry_resume_execution_authorized: true
+  training_authorized: false
+  checkpoint_mutation_authorized: false
+  checkpoint_copy_authorized: false
+  render_authorized: false
+  p1_prune_authorized: false
+  p2_fp16_authorized: false
+  p3_chunk_authorized: false
+
+selected_asset:
+  role: A3-star-R0-off-D2-immutable-exact-alias
+  checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+    sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+    bytes: 578819674
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+    sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+    bytes: 4661
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+    sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+    bytes: 3721428
+    embedded_registry_sha256: bafd4f9a027682941c7a17ad713960a397d0076e564531bc7f988db1535b0f69
+
+p0_canonical_evidence:
+  run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2
+  source_commit: b191afaaa88d5d356506fc29a36e6128959d8897
+  protocol:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml
+    sha256: 43db718233589d847cb56e2497c4a75b20506e440e523177daaebfbc82c03f18
+    bytes: 9145
+  manifest:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2/manifest.json
+    sha256: 12df93b3728ab857bdfc279d7cf0fd7f202f28bde6abe038af204279c775a0f5
+    bytes: 8504
+  summary:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2/summary.json
+    sha256: 0278a32095bb4c73236c40a6b9c383dda5d7564983316cd28d63a0d35dd62e92
+    bytes: 19107
+  resource_audit:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2/artifacts/resource_audit.json
+    sha256: b89c93bb377bc507c9ab56cfca5cb0cabc7ec4983edc3c5283ee3e522bbd5fac
+    bytes: 1160
+  runtime_rows:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2/artifacts/runtime_rows.jsonl
+    sha256: 4a94b1fb1fe140f6b144ccacdea93a0606fb1c02565a2c7b8f8ace8e12ffa934
+    bytes: 2807
+  terminal:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2/terminal.json
+    sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645
+    bytes: 42
+
+registry_contract:
+  schema_version: worldsim-v3-deployment-registry-v1
+  mode: reference_only_immutable_manifest
+  output: artifacts/deployment_registry.json
+  checkpoint_copy_forbidden: true
+  checkpoint_rewrite_forbidden: true
+  compact_actor_entries: true
+  canonical_json: sort_keys_compact_utf8_sha256
+  required_top_level_fields:
+    - schema_version
+    - task_id
+    - profile_id
+    - scene
+    - seed
+    - source_assets
+    - static_assets
+    - actor_assets
+    - totals
+    - recovery
+    - registry_sha256
+  static_asset:
+    asset_id: static-background-000
+    model_key: models.Background
+    gaussian_count: 1205164
+    asset_count: 1
+    storage: monolithic_checkpoint_reference
+    independently_extractable: false
+    independent_extraction_missing_reason: p3_chunk_not_authorized
+  actor_assets:
+    model_key: models.RigidNodes
+    gaussian_count: 104704
+    actor_count: 24
+    available_actor_count: 23
+    unavailable_actor_count: 1
+    unavailable_policy: preserve_unavailable_empty_checkpoint_slice
+    required_compact_fields:
+      - asset_id
+      - rigid_model_index
+      - instance_token
+      - class_name
+      - availability
+      - selector
+      - gaussian_count
+      - flat_indices_sha256
+      - source_registry_sha256
+  output_bytes_ceiling: 2000000
+
+reload_smoke:
+  process: fresh_drivestudio_python
+  device: cuda:0
+  checkpoint_loads: 1
+  load_only_model: true
+  filesystem_cache: uncontrolled_report_explicitly
+  dataset_prepare_required_for_trainer_construction: true
+  render_count: 0
+  verify_model_gaussian_counts: true
+  verify_all_actor_counts_and_index_hashes: true
+  verify_unavailable_actor_remains_empty: true
+  no_optimizer_construction_or_step: true
+
+recovery_contract:
+  stage_order: [input_audit, registry_materialize, reload_smoke, aggregate, resume_audit]
+  atomic_stage_records: true
+  completed_stage_policy: never_overwrite
+  invalid_stage_policy: rerun_only_first_invalid_stage_and_downstream
+  resume_validation: hash_each_completed_stage_before_reuse
+  resume_probe_process: no_torch_no_gpu
+  minimum_rerun_units:
+    input_audit: input_audit_and_downstream
+    registry_materialize: registry_materialize_and_downstream
+    reload_smoke: reload_smoke_and_downstream
+    aggregate: aggregate_only
+    resume_audit: resume_audit_only
+
+resource_ceilings:
+  wall_time_seconds: 180
+  peak_torch_allocated_mib: 16384
+  peak_torch_reserved_mib: 24576
+  peak_nvidia_process_memory_mib_sampled: 24000
+  peak_cgroup_memory_bytes: 34359738368
+  run_bytes: 5000000
+  disk_free_floor_bytes: 30000000000
+  oom_events_delta: 0
+  oom_kill_events_delta: 0
+
+required_audits:
+  selected_input_hashes_and_bytes_exact: true
+  p0_canonical_evidence_exact_and_done: true
+  reference_only_no_checkpoint_copy_or_rewrite: true
+  compact_registry_schema_exact: true
+  static_asset_inventory_exact: true
+  actor_asset_counts_and_availability_exact: true
+  actor_index_counts_and_hashes_exact_after_reload: true
+  model_gaussian_counts_exact_after_reload: true
+  unavailable_actor_remains_explicitly_empty: true
+  source_checkpoint_and_registry_sha_before_after_exact: true
+  no_training_optimizer_render_or_media: true
+  exactly_one_checkpoint_load: true
+  resources_within_frozen_ceilings: true
+  dry_run_resume_reuses_completed_stages_without_gpu_launch: true
+
+claim_boundary:
+  p5_is_packaging_and_recovery_not_quality_improvement: true
+  reference_manifest_does_not_make_assets_independently_extractable: true
+  filesystem_cache_is_not_controlled: true
+  single_reload_does_not_support_concurrency_claim: true
+  unavailable_actor_is_preserved_not_repaired: true
+  no_p1_p2_p3_unlock_until_p5_closeout: true
+
+failure_precedents: [PIVOT-F05, PIVOT-F22, PIVOT-F25]

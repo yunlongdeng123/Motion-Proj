@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0 v2 r2 已 done；下一步只冻结 P5 registry/resume 协议
+- 当前门禁：A4-P0 v2 r2 已 done，P5 registry/resume 协议已冻结；下一步实现并提交唯一 runner
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -33,6 +33,11 @@ A4-P0 v2 formal r2 已以 `done` 关闭：13/13 audits 全 true，prepare 占 60
 约 `.39/.40 s`，9 个模型原生 view 为 P50/P95 `.068/.127 s` 与 `16.38 FPS`；资源峰值为 `8,574 MiB`
 NVIDIA sampled / `22.79 GiB` cgroup，OOM=0。P0 不证明并发或质量改进；它只支持先冻结无模型变异的 P5
 registry/resume，而不先启动 prune、FP16 或 chunk。
+
+P5 protocol SHA=`51acb935...5874` 已在新 P5 测量前冻结：9 项 P0/A3 输入 exact，部署 registry 只引用原
+checkpoint/config/actor registry，不复制或重写参数；static=`1 / 1,205,164 GS`，actor=`24 / 104,704 GS / 23
+available / 1 unavailable`。reload 只允许一次只读 load、0 render，并在 no-torch/no-GPU 进程验证 resume。
+协议测试 6 passed，联合 WorldSim V3 回归 158 passed；P1/P2/P3 仍未授权。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -418,7 +423,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0 v2 r2 done，summary=`0278a320...e92`；下一门禁只冻结 P5 protocol，P1/P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0 done；P5 protocol=`51acb935...5874` frozen、runner next；P1/P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -431,7 +436,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-冻结 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 协议。输入锁定 P0 canonical summary/manifest、
-`A3*=R0` checkpoint/config 与 actor registry；先采用 reference-only immutable manifest，不复制/改写 checkpoint，
-不做 prune/FP16/chunk。冻结 static/actor registry schema、atomic stage 顺序、单次只读 reload、失败 dry-run resume、
-资源 ceiling 和 exact audits 后才允许运行。P1/P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
+实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 唯一 runner：no-torch input/materialize controller、
+fresh DriveStudio 单次只读 reload worker、aggregate/finalize 与 no-torch resume auditor。必须生成小于 2 MB 的 compact
+reference registry，核对 1 static/24 actor 与所有 actor index hash；不复制 checkpoint、不 render/训练。实现和
+158 项联合回归提交前不创建 formal run。P1/P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。

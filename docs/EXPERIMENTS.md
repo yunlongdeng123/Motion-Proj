@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 已进入 `running`，P0 v1 r1 resolution blocked、v2 r2 done，当前只冻结 P5 协议。
+`done`，`A3*=R0-off`；A4 已进入 `running`，P0 v2 r2 done、P5 protocol frozen，当前只实现唯一 runner。
 
 ## 1. 状态词
 
@@ -32,7 +32,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0 v2 r2 done；下一门禁 P5 registry/resume protocol freeze，P1/P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0 done；P5 protocol frozen、runner next，P1/P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -439,6 +439,24 @@ Matched-RigidNodes-budget：
 - P0=`done`。prepare 是明显主导项，而 load/runtime 未触发冻结资源门，故不先承担 P1/P2/P3 的质量或数值风险；
   下一门禁只冻结 reference-only P5 registry/resume 协议，再决定是否执行。P1/P2/P3 仍未授权。
 
+### `WS-V3-A4-DEPLOYMENT-01` P5 registry/resume protocol freeze
+
+- protocol=`configs/worldsim_v3/a4_p5_registry_resume_protocol_v1.yaml`，SHA=`51acb935...5874`，P0 closeout=
+  `9811c03c...e0b5`；validator exact 核对 P0 protocol/manifest/summary/resource/rows/terminal 与 checkpoint/config/
+  actor registry 共 9 项 path/hash/bytes，P0 terminal/13 audits 必须 done/true；
+- output=`artifacts/deployment_registry.json`，schema=`worldsim-v3-deployment-registry-v1`，mode=
+  `reference_only_immutable_manifest`；checkpoint copy/rewrite 禁止，registry ceiling=`2,000,000 bytes`；
+- static 固定 `models.Background / 1 asset / 1,205,164 GS / monolithic reference / not independently extractable`；
+  actors 固定 `models.RigidNodes / 24 assets / 104,704 GS / 23 available / 1 unavailable`，compact entry 只保留身份、
+  selector、count、flat-index hash 与 source registry hash，不复制大段 ranges；
+- reload=`fresh DriveStudio / load_only_model / exactly one checkpoint load / 0 render`；核对模型总量与全部 actor
+  count/index hash，不构造 optimizer、不训练；filesystem cache 仍 uncontrolled；
+- recovery=`input_audit→registry_materialize→reload_smoke→aggregate→resume_audit`，completed stage 不覆盖，resume=
+  no-torch/no-GPU；ceilings=`180 s / 16,384 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA / 32 GiB
+  cgroup / 5 MB run / OOM 0`；required audits=`14`；
+- 协议测试=`6 passed`，联合 WorldSim V3=`158 passed`。本条写入时尚未执行任何 P5 formal measurement；下一动作
+  只实现并提交 runner。P1/P2/P3 未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -658,6 +676,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
 `done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
 失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。A4-P0 v1 r1 已因
-resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。下一动作只冻结
-`WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 结果前协议；P1/P2/P3 不启动，不修改 A3 renderer/ceiling
+resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P5 结果前协议已冻结；下一动作只实现并
+提交 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` runner；P1/P2/P3 不启动，不修改 A3 renderer/ceiling
 挽回 R1，也不得启动 formal、R2–R4 或 D3/D4。
