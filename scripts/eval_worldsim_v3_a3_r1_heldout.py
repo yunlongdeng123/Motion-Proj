@@ -46,20 +46,19 @@ def command_output(*command: str, cwd: Path) -> str:
 def load_model_checkpoint_read_only(
     trainer: Any, checkpoint: Path, device: torch.device
 ) -> None:
-    """Load through CPU so the resident model is not duplicated on GPU."""
+    """经 CPU 加载 checkpoint，避免在 GPU 上复制常驻模型。"""
     state_dict = torch.load(checkpoint, map_location="cpu")
     model_states = state_dict.get("models", {})
     if "RigidNodes" in model_states:
-        # The RigidNodes quota validator compares checkpoint counts with
-        # resident CUDA limits before torch's normal load_state_dict copy.
-        # This state is small; stage only it on the target device.
+        # RigidNodes 配额校验早于 PyTorch 的常规 state copy，且会比较 checkpoint
+        # 计数与常驻 CUDA 上限；该 state 很小，只把它暂存到目标设备。
         model_states["RigidNodes"] = to_device(model_states["RigidNodes"], device)
     trainer.load_state_dict(state_dict, load_only_model=True, strict=True)
     del state_dict
 
 
 def release_trainer_render_info(trainer: Any) -> None:
-    """Drop per-view CUDA intermediates before the next render allocates."""
+    """在下一视图分配前释放当前视图的 CUDA 中间量。"""
     if hasattr(trainer, "info"):
         trainer.info = {}
 
