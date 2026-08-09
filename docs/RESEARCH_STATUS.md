@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0 与 P5 已 done；下一步只冻结并提交 P1 contribution-prune 结果前协议、validator 与测试
+- 当前门禁：A4-P0 与 P5 已 done，P1 contribution-prune 协议已冻结；下一步只实现并提交 P1 runner
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -41,9 +41,12 @@ canonical r2=`20260809T155753Z__a4-p5-registry-resume-s0-r2` 已 14/14 audits pa
 source before/after SHA exact。reload=`52.321 s / one load / zero render`，资源门通过；no-torch resume=`.128 s`，
 无 GPU launch并复用四个 completed stage。P5=`done`，不产生 chunk、filesystem-cold、concurrency 或质量 claim。
 
-A4 最低完成集仍要求 P1/P2/P3，因此 task 保持 `running`。P0 显示 dataset prepare 主导且 load/runtime 尚未触发
-资源门；下一步只冻结 P1 contribution-prune 协议，在任何新测量前固定 contribution 语义、候选阈值、质量/资源
-safeguards、exact fallback 与恢复合同。P2/P3 仍未授权。
+A4 最低完成集仍要求 P1/P2/P3，因此 task 保持 `running`。P1 protocol SHA=`4f893c09...429b` 已在新测量前
+冻结：13 个文件加 1 个 33-mask 目录 exact；排名只用 6 train frames × 3 cameras，另 6 heldout frames × 3 cameras
+只作 contribution audit；arm 固定 source/b05/b10/b20，并按 Background 与每个 available actor 独立稳定排序。
+完整质量门复用 57 heldout views 与 source mask bytes，禁止 candidate 重生成 mask；global/actor/boundary/non-target
+最大退化、checkpoint row alignment/invariant、最大合格 fraction 与 source exact fallback 均已固定。11-stage recovery、
+21 audits 和资源门也已冻结；协议测试 11 passed，联合 WorldSim V3 178 passed。下一步只实现 runner，P2/P3 未授权。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -429,7 +432,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5 done；下一步只冻结 P1 protocol；P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5 done；P1 protocol=`4f893c09...429b` frozen、runner next；P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
@@ -442,8 +445,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-冻结并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` 结果前协议、validator 与测试。输入只允许
-`A3*=R0/D2` immutable asset、P0 canonical profile 和 P5 canonical registry/recovery evidence；必须在新测量前固定
-contribution 观测语义、候选阈值/预算、确定性 tie-break、原始/heldout/actor/boundary 质量 safeguards、资源门、
-被删 index/hash 证据、exact fallback 与恢复合同。协议和联合回归提交前不创建 P1 formal run。P2/P3、D3/D4 与
-A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
+实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` runner：no-torch exact input controller、train-only
+occlusion-aware alpha-weight scan、逐资产 b05/b10/b20 原子 checkpoint/registry/removal manifest、冻结 57-view
+global/actor/boundary/non-target evaluator、P0 9-view all-arm profiler、aggregate/finalizer 与 no-torch resume auditor。
+实现和联合回归提交前不创建 P1 formal run。P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。

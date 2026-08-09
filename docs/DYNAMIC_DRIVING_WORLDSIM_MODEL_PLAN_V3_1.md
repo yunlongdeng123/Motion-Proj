@@ -18,7 +18,7 @@
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ P1 protocol freeze next / P2-P3 not launched / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ P1 protocol frozen、runner next / P2-P3 not launched / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,7 +545,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5 done；下一步只冻结 P1 protocol，P2/P3 仍未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5 done；P1 protocol frozen、runner next，P2/P3 仍未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1338,6 +1338,38 @@ failure recovery
   立即转换模型的理由；执行顺序冻结为下一步只制定 P1 contribution-prune 协议、validator 与测试，在新测量前固定
   contribution 语义、候选阈值、质量/资源 safeguards、回退资产与恢复合同。P2/P3 继续未授权，A4 保持 `running`。
 
+#### 11.2.3 P1 contribution-prune 结果前协议冻结
+
+- protocol=`configs/worldsim_v3/a4_p1_contribution_prune_protocol_v1.yaml`，SHA-256=
+  `4f893c095989ed274ff431b9a19a8fd27ef5534e3a7df5a8112d07ed34ea429b`，P5 closeout=
+  `4db43ddcc23d5c0fee5bf8fc0c254ad51301779b`；13 个文件加 1 个 mask 目录锁定 A3*=R0/D2 checkpoint/config/
+  registry、D2 global/actor/boundary/non-target 基线、P0 profile 与 P5 registry/recovery canonical evidence；
+- contribution 排名只使用 train frames `[5,45,85,125,165,195] × cameras [0,1,2]`。对 gsplat near→far
+  intersections 计算遮挡感知 `T_before × alpha`，按 Gaussian 在 CPU float64 稳定累加并量化到 12 位小数；heldout
+  frames `[10,50,90,130,170,190] × 3` 只报告 contribution audit，禁止参与排名或阈值选择；
+- 候选预先固定为 source exact reference 与 `5%/10%/20%` 三个 arm；Background 和 23 个 available actor 分资产
+  独立稳定排序，删除数=`floor(source_asset_count × fraction)`，不按 high/boundary role 特判；1 个 unavailable actor
+  继续显式为空。所有 Gaussian 参数、`points_ids` 与 ancestry row 必须使用同一 keep mask，Sky/LPIPS/轨迹/step exact；
+- candidate checkpoint 只允许一次原子写入，不新增 checkpoint key；每臂必须报告 checkpoint/count、逐资产 removed
+  flat-index/gaussian-id hash、invariant before/after 与新 registry。source checkpoint 禁止复制、改写；不训练、不构造
+  optimizer、不输出 raw render media；
+- 质量裁决固定完整 `19 heldout frames × 3 cameras=57 views`，复用 source actor mask 的 33 个 PNG bytes exact，禁止
+  candidate 重生成 mask。global PSNR/SSIM/LPIPS 最大退化=`0.10 dB / .002 / .002`；actor/boundary 最大退化=
+  `0.20 dB / .005 / .005`，MAE 最大增加 `.002`；non-target 用更严格的 `0.10 dB / .002 / .002 / .001 MAE`；
+  缺失或非有限 endpoint 直接 reject；
+- 三个 candidate 全部按同一门禁执行，禁止看结果新增 arm/阈值。选择规则是通过 reload/count/invariant、全部质量、
+  bytes/GS reduction 与资源门的最大 prune fraction；若无 candidate 通过，P1 method 登记 rejected，生产资产 exact
+  fallback 到 source，P1 实验仍可 terminal done；bounded loss 不登记为质量提升；
+- runtime 复用 P0 的 `frames 10/100/190 × cameras 0/1/2`、2 warm-up、`800×450`、CUDA sync 与 nearest-rank，
+  对全部 arm 报 checkpoint/load/P50/P95/FPS/VRAM/RAM；filesystem cache 仍 uncontrolled，性能只报告、不反向选择
+  质量阈值；
+- recovery=`input_audit→contribution_scan→三臂 materialize/evaluate→runtime_profile_all_arms→aggregate→resume_audit`
+  共 11 stage，completed stage 不覆盖，resume 必须 no-torch/no-GPU。ceiling=`1,800 s / 20,480 MiB allocated /
+  24,576 MiB reserved / 24,000 MiB NVIDIA / 48 GiB cgroup / 2.5 GB run / 30 GB disk floor / OOM 0/0`；
+  required audits=`21`；
+- validator full preflight 已核对全部输入与 33-mask digest；协议测试=`11 passed`，联合 WorldSim V3=`178 passed`。
+  本条写入时尚未执行任何 P1 新 measurement；下一动作只实现并提交 runner，P2/P3 仍未授权。
+
 ### 11.3 必报工程指标
 
 | 维度 | 指标 |
@@ -1551,15 +1583,15 @@ A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitw
 done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
 
 P0 已由 v2 r2 正式关闭；P5 r1 的 runtime/state-key 混淆保留为 `blocked`，修复后 r2 已以 14/14 audits
-正式关闭 P5。A4 因最低完成集仍包含 P1/P2/P3 而保持 `running`。当前唯一动作是冻结并提交
-`WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` 结果前协议、validator 与测试：
+正式关闭 P5。A4 因最低完成集仍包含 P1/P2/P3 而保持 `running`。P1 结果前协议也已完成冻结；当前唯一动作是
+实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` runner：
 
 ```text
-1. 输入只允许 A3*=R0/D2 immutable asset、P0 canonical profile 与 P5 canonical registry/recovery evidence
-2. 在读取任何 P1 新质量结果前冻结 contribution 观测语义、候选阈值/预算和确定性 tie-break，不用结果挑阈值
-3. 冻结 A3 原始/heldout/actor/boundary 质量 safeguards、Gaussian/bytes/load/runtime/资源指标与 exact fallback
-4. 每个候选必须输出被删 index/hash、checkpoint hash、前后 registry 与不可变 source 证据；失败不覆盖 completed stage
-5. protocol、validator、定向测试和联合回归提交前不创建 P1 formal run；P2/P3 继续未授权
+1. no-torch controller 先 exact input audit；fresh DriveStudio worker 只用冻结 train matrix 生成 contribution score artifact
+2. 用同一稳定排序逐资产原子物化 b05/b10/b20 checkpoint、registry 与 removal/invariant manifest，source 只引用不复制
+3. baseline 与三臂在冻结 57-view global/actor/boundary/non-target mask 合同上完整评测，不重生成 candidate mask
+4. 全部 arm 按 P0 9-view 矩阵 profile；aggregate 严格应用最大合格 fraction 与 exact source fallback，不新增阈值
+5. implementation、定向测试和联合回归提交前不创建 P1 formal run；P2/P3 继续未授权
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1567,6 +1599,15 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — A4-P1 contribution-prune 协议冻结
+
+- protocol SHA=`4f893c09...429b`，精确锁定 13 files + 1 frozen-mask directory；train-only 18-view contribution
+  ranking、heldout audit-only 18 views 与完整 57-view quality split 明确分离；
+- arm 固定 source/b05/b10/b20，逐 static/actor 资产稳定排序；checkpoint row alignment、invariant、registry、质量
+  退化阈值、最大合格 fraction 与 exact source fallback 均在结果前冻结；
+- 11-stage recovery、1,800 s/20 GiB torch/48 GiB cgroup/2.5 GB run ceiling 与 21 audits 已固定；validator full
+  preflight、11 项协议测试、178 项联合回归通过。下一动作只实现并提交 P1 runner；P2/P3 仍未授权。
 
 ### 2026-08-10 — A4-P5 formal registry/resume 完成
 
@@ -1795,7 +1836,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 与 P5 done，当前只冻结并提交 P1 contribution-prune 结果前协议。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 与 P5 done，P1 protocol frozen，当前只实现并提交 P1 runner。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1820,8 +1861,10 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 与 P5 done，当前只冻结并�
 19. 核对 A4-P5 protocol SHA `51acb935...5874`、r1 blocked terminal SHA `61d30a11...773e`、runtime
     `point_ids` 修复 `0e899b2` 与 canonical r2 summary SHA `0c86ff68...8744`；确认 14/14 audits、24 actor index
     hashes、source before/after、resource 和 no-torch resume 全通过；
-20. 当前只冻结并提交 P1 contribution-prune 协议、validator 与测试；不得在协议提交前创建 P1 formal run，不得启动
-    P2/P3、重跑 A3、上调阈值、启动 R2–R4，或把 S-B/S-C 登记为 RGB 质量成功。
+20. 核对 P1 protocol SHA `4f893c09...429b`、13 files + 1 mask directory、train-only 18-view ranking、b05/b10/b20、
+    57-view safeguards、11-stage recovery、21 audits 与 178 项联合回归；
+21. 当前只实现并提交 P1 runner；不得在 implementation/测试提交前创建 P1 formal run，不得启动 P2/P3、重跑 A3、
+    上调阈值、启动 R2–R4，或把 bounded loss/S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

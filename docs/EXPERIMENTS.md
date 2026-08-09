@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 保持 `running`，P0 与 P5 done，当前只冻结 P1 contribution-prune 结果前协议。
+`done`，`A3*=R0-off`；A4 保持 `running`，P0 与 P5 done，P1 protocol frozen，当前只实现唯一 runner。
 
 ## 1. 状态词
 
@@ -32,7 +32,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5 done；P1 protocol freeze next，P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5 done；P1 protocol frozen、runner next，P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -477,6 +477,24 @@ Matched-RigidNodes-budget：
   结论只覆盖 reference-only packaging 与单实例 recovery。A4 仍需 P1/P2/P3；下一步只冻结 P1 protocol，P2/P3
   继续未授权。
 
+### `WS-V3-A4-DEPLOYMENT-01` P1 contribution-prune protocol freeze
+
+- protocol=`configs/worldsim_v3/a4_p1_contribution_prune_protocol_v1.yaml`，SHA=`4f893c09...429b`，P5 closeout=
+  `4db43ddc...1779b`；full validator exact 核对 source checkpoint/config/registry、D2 quality、P0 profile、P5
+  registry/recovery 共 13 files + 1 directory，33 个 frozen actor masks digest=`429f3693...43cf`；
+- ranking 只用 train frames `[5,45,85,125,165,195] × 3 cameras`，从 gsplat near→far intersections 稳定计算
+  occlusion-aware `T_before×alpha`；`[10,50,90,130,170,190] × 3` heldout contribution 只作 audit，不参与排名；
+- arms=`source/b05/b10/b20`。Background 与 23 个 available actors 分资产按冻结 key 排名并删除固定 fraction，
+  unavailable actor 保持空；所有 Gaussian/`points_ids`/ancestry row 同 mask，Sky/LPIPS/trajectory/step exact；
+- full quality=`19 heldout frames × 3 cameras`，复用 source 的 33 mask bytes，禁止 candidate 重生成。global
+  PSNR/SSIM/LPIPS 最大退化=`.10 dB/.002/.002`；actor/boundary=`.20 dB/.005/.005`、MAE `+.002`；non-target=
+  `.10 dB/.002/.002`、MAE `+.001`；缺失或 nonfinite 即 reject；
+- selection 固定为通过 reload/count/invariant、质量、compression 与资源门的最大 prune fraction；若全失败，P1 method
+  rejected 且生产资产 exact fallback 到 source。不得看结果新增 arm/阈值，也不把 bounded loss 写成质量提升；
+- recovery=`11 stages`，ceilings=`1,800 s / 20,480 MiB allocated / 24,576 MiB reserved / 24,000 MiB NVIDIA /
+  48 GiB cgroup / 2.5 GB run / 30 GB disk floor / OOM 0`，required audits=`21`；协议测试=`11 passed`，联合
+  WorldSim V3=`178 passed`。本条写入时尚无 P1 新 measurement；下一动作只实现并提交 runner，P2/P3 未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -697,6 +715,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 `done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
 失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。A4-P0 v1 r1 已因
 resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P5 r1 保留 runtime attribute blocked，
-r2 已 14/14 audits passed 并登记 `done`。下一动作只冻结并提交 `WS-V3-A4-DEPLOYMENT-01 / P1
-contribution-prune` 结果前协议、validator 与测试；协议提交前不创建 P1 formal run。P2/P3 不启动，不修改 A3
-renderer/ceiling 挽回 R1，也不得启动 A3 formal、R2–R4 或 D3/D4。
+r2 已 14/14 audits passed 并登记 `done`。P1 protocol SHA=`4f893c09...429b` 已冻结；下一动作只实现并提交
+`WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` runner，implementation/测试提交前不创建 P1 formal run。
+P2/P3 不启动，不修改 A3 renderer/ceiling 挽回 R1，也不得启动 A3 formal、R2–R4 或 D3/D4。
