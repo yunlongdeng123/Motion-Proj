@@ -21,8 +21,9 @@
 - **A4-P2 协议基线**：`588e37e`；协议 SHA-256=`6558fb3f0864c7711add2bd8b61500670ddbf631be7e356f1eac77c57c136d4e`
 - **A4-P2 runner / 账本修复基线**：`1cd9a6e` / `dcf2822`（10-field FP16、FP32 renderer adapter、19-audit finalizer）
 - **A4-P3 协议 SHA-256**：`dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41`
-- **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ A4-P2 done（r1 evidence-ledger blocked，r2 selected mixed checkpoint）/ P3 protocol frozen（runner next）/ D3-D4 not launched / F0 pending`
+- **A4-P3 runner 基线**：`aba55777f38a3d8e4363d2ff7d546d412214b481`（exact chunk package、内存重组、21-audit finalizer）
+- **当前任务**：`WS-V3-F0-FEEDFORWARD-AUDIT-01`（`running`）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 running / F1 conditional / R0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,11 +546,11 @@ candidate/valid image 与 coverage。
 | `WS-V3-P0-ROUTE-01` | done | V3 路线与事实冻结 | 已提交并同步事实源 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 checkpoint、registry、held-out/actor/资源基线 | 3/3 场景闭环 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | running | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；P3 protocol frozen，下一步只实现 runner |
+| `WS-V3-A4-DEPLOYMENT-01` | done | 端到端 profile、prune、FP16、chunk、registry、resume | P0/P5/P1/P2/P3 全部闭环；P1 rejected；P2 mixed checkpoint + P3 exact package selected；21/21 P3 audits |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1501,6 +1502,36 @@ failure recovery
   联合 WorldSim V3=`222 passed`。本条没有创建 chunk package、render 或 formal run；下一动作只实现并提交 runner，
   不启动 P4、D3/D4 或 A3 R2–R4。
 
+#### 11.2.8 P3 exact chunk package formal 结果与 A4 收口
+
+- runner 提交=`aba55777f38a3d8e4363d2ff7d546d412214b481`；定向测试=`23 passed`，联合 WorldSim V3=
+  `233 passed`。canonical r1=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T184240Z__a4-p3-chunk-s0-r1`，
+  exit=`0`、terminal=`done`、21/21 audits passed；summary SHA-256=
+  `f8e6e16639b685f4a9a80fd20a57d6553b9e09e7e5ddfc2b1a5a38604abca293`，manifest=
+  `8b79d355...bd7af`，resource=`55ee6f0b...55e81`，terminal=`80dd8178...c645`；
+- package manifest SHA=`35a3f1fe...64b8`，固定 `133 static + 24 actor + skeleton + manifest = 159 files`；
+  package 总计 `444,177,055 bytes`，source checkpoint=`432,111,754 bytes`，开销=`12,065,301 bytes /
+  +2.792171%`。158 个 payload=`444,033,142 bytes`，skeleton=`101,176,684 bytes / 51 sentinels`；没有复制
+  source，也没有落盘 reconstructed checkpoint；
+- 内存重组的 85 个 tensor path、recursive schema、shape/dtype/value SHA 与 non-tensor signature 全部 exact；
+  Background `1,205,164` 行、RigidNodes `104,704` 行均 covered once，missing/duplicated=`0/0`。24 个 actor
+  均有资产，actor 14 保留显式空资产；source checkpoint/registry 前后 SHA 保持
+  `7be87e8b...7448 / 69c4f38a...48a27`；
+- source replay 的 31 endpoints 最大绝对差=`0`；chunk 相对 source 的 57 个 RGB SHA、31 endpoints 与 masks
+  全部 exact。quality 两臂分别记录 `57/114` renderer/SH observations，runtime 两臂记录 `11/22`，全部 renderer
+  inputs 为 FP32 且 autocast=false；因此 P2 的 FP16-persistent/FP32-renderer 合同保持 exact；
+- 9-view、2 warm-up、`800×450`、filesystem cache uncontrolled 的报告值为：source load=`.9071 s`、
+  P50/P95=`.03013/.09446 s`、FPS=`21.2783`；chunk 全资产 load/reassembly=`4.1775 s`、P50/P95=
+  `.03950/.10586 s`、FPS=`20.4471`。结果不支持 package size reduction、load speedup、render speedup、
+  selective streaming 或 concurrency claim；chunk 的价值限于 exact spatial/actor asset separation；
+- resource audit passed：wall=`221.786 s`，torch allocated/reserved=`7,614.99/8,066 MiB`，NVIDIA sampled=
+  `8,420 MiB`，cgroup peak=`32,689,958,912 bytes`，run=`444,885,133 bytes`，disk free=
+  `42,359,705,600 bytes`，OOM/kill=`0/0`；no-torch resume=`1.104 s`、7 actions、159 package artifacts verified、
+  GPU launch=false；
+- selection=`p3-chunk-package`，method=`selected_exact_chunk_package`，P3=`done`。P0/P5/P1/P2/P3 最低完成集
+  已全部闭环，A4=`done`；P4 LOD 继续为可选项且不作为 R0 门禁。下一任务按依赖执行 F0 官方能力审计，之后再做 R0。
+
 ### 11.3 必报工程指标
 
 | 维度 | 指标 |
@@ -1534,6 +1565,8 @@ P0 profile
 ```
 
 LOD、整数/低比特量化、完整 LiDAR raycast 和复杂 Web UI 均为可选项，不作为 R0 完成门禁。
+
+当前完成性：P0/P1/P2/P3/P5 均已形成 canonical terminal、资源/恢复审计和受限结论，A4 最低完成集满足。
 
 ### 11.5 最小可视化入口
 
@@ -1717,22 +1750,35 @@ P0 已由 v2 r2 正式关闭；P5 r1 的 runtime/state-key 混淆保留为 `bloc
 正式关闭 P5。P1 r1 已完成 21/21 audits，但 b05/b10/b20 分别失败 3/12/15 个冻结质量 safeguard；方法
 `rejected_quality_or_integrity_gate`，生产资产 exact fallback 到 source，P1 实验以负结果 `done`。P2 r1 的 mapped
 parameter ledger 漏项保留为 `blocked`；只修账本后的 canonical r2 已 19/19 audits、31/31 safeguards 全通过，选择
-`p2-gs-param-fp16`，P2=`done`。P3 chunk 协议现已在任何 materialization/render 前冻结；A4 因最低完成集仍缺
-P3 formal 结果而保持 `running`。当前唯一动作是实现并提交 P3 runner：
+`p2-gs-param-fp16`，P2=`done`。P3 canonical r1 已 21/21 audits、57 RGB/31 endpoints 和 checkpoint reassembly
+exact，选择 `p3-chunk-package`；package 比 source 大 `2.792171%` 且 load/reassembly 更慢，性能只报告、不宣称收益。
+P0/P5/P1/P2/P3 最低完成集已满足，A4=`done`。
+
+R0 必交付仍要求 F0 审计，因此当前唯一动作切换为 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：
 
 ```text
-1. 只实现 frozen 50 m grid、133 static + 24 actor assets、shared skeleton、manifest 与内存 exact reassembly
-2. 每个 asset 原子写入并记录 source flat index/count/bounds/schema/SHA/bytes；空 actor 14 不得省略
-3. 复用 P2 FP16-persistent/FP32-renderer adapter，完成 source/chunk 57-view exact replay 与两臂 9-view runtime
-4. 实现 8-stage recovery、21-audit finalizer、资源采样、source 不可变性与 exact fallback；不得改变 frozen protocol
-5. runner 提交前不创建 P3 formal run；P4 LOD 继续条件式，不启动 D3/D4 或 A3 R2–R4
+1. 冻结并记录 NVIDIA Instant NuRec 官方 repository revision、license、README/paper/checkpoint provenance
+2. 静态审计输入 schema、相机模型/cadence、pose/LiDAR/instance 依赖和 CLI 的实际导出边界
+3. 在不下载 gated 数据/权重前先做本机环境与 CLI preflight；只有依赖和公开输入满足时才执行一窗口 inference smoke
+4. 明确区分论文完整模型能力与 standalone CLI 能力，网页演示不得登记为本地 CLI 事实
+5. 给出 F1 unlocked/blocked/not_applicable 裁决；不启动 F1，不启动 P4、D3/D4 或 A3 R2–R4
 ```
 
-D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
+D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，不因能力缺口改写官方/本地边界。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — A4-P3 formal 与 A4 done
+
+- runner `aba5577` 的 23 项定向测试与 233 项联合回归通过；canonical r1 terminal=`done`、21/21 audits，
+  summary SHA=`f8e6e166...a293`；
+- 133 static、24 actor、skeleton 与 manifest 共 159 files；85 tensors/non-tensor state exact reassembly，57 RGB 与
+  31 endpoints exact，source/registry hash 不变，no-torch resume 通过；
+- package=`444,177,055 bytes`，较 source checkpoint 大 `2.792171%`；全资产 load/reassembly=`4.1775 s`，未优于
+  source `.9071 s`，render FPS=`20.447/21.278`。只登记 exact asset separation，不登记 size/load/render speedup；
+- selected=`p3-chunk-package`，P3=`done`；A4 最低完成集全部满足，A4=`done`。下一任务为 R0 前置的 F0 官方能力审计。
 
 ### 2026-08-10 — A4-P3 exact chunk package 协议冻结
 
@@ -2010,7 +2056,8 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5、P1、P2 done；P1 method rejected；P2 selected=p2-gs-param-fp16；P3 protocol frozen，当前只实现 runner。
+WS-V3-A4-DEPLOYMENT-01 已 done；P0/P5/P1/P2/P3 全部闭环；P1 method rejected；P2 selected=p2-gs-param-fp16；P3 selected=p3-chunk-package。
+WS-V3-F0-FEEDFORWARD-AUDIT-01 当前为 running；只审计 Instant NuRec 官方/本地能力，尚未授权 F1。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -2046,8 +2093,11 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5、P1、P2 done；P1 method re
 24. 核对 P3 protocol SHA `dfaaba79...1b41`、9 files + 1 mask directory、50 m/133 static chunks、24 actor
     assets、actor 14 empty、25/26 row tensors、159 package files、57 RGB/31 endpoints exact、8-stage recovery、
     21 audits 与 222 项联合回归；
-25. 当前只实现并提交 P3 runner；不得改变 frozen grid/actor/schema/quality/resource/selection，不得在 runner 提交前
-    创建 formal run，不得启动 P4、重跑 A3、启动 R2–R4，或把 package bytes/runtime 波动登记为质量/streaming speedup。
+25. 核对 P3 runner `aba5577`、canonical r1 summary SHA `f8e6e166...a293`、21/21 audits、159 files、85 tensor
+    paths exact、57 RGB/31 endpoints exact、source/registry 不变、资源与 no-torch resume；保持 package +2.792171%、
+    load/reassembly 更慢且无 streaming/load/render speedup claim；
+26. 当前只执行 F0：冻结官方 revision/license/checkpoint provenance，静态审计 input/output/schema/CLI，再做本机
+    preflight；只有公开输入和依赖满足时才运行一窗口 smoke。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

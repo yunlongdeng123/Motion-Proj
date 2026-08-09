@@ -10,8 +10,8 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 保持 `running`，P0、P5、P1 与 P2 done；P1 候选被质量门拒绝并回退到 source；
-P2 canonical r2 选择 mixed checkpoint；P3 chunk protocol 已冻结，当前只实现 runner。
+`done`，`A3*=R0-off`；A4 已 `done`，P0、P5、P1、P2 与 P3 全部闭环；P1 候选被质量门拒绝并回退到 source，
+P2 canonical r2 选择 mixed checkpoint，P3 canonical r1 选择 exact chunk package。当前执行 F0 官方能力审计，F1 未授权。
 
 ## 1. 状态词
 
@@ -29,11 +29,11 @@ pending | running | blocked | done | rejected
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | 单一 V3 权威计划与 V2 事实冻结 | `076ebdc`；文档一致，链接与 Git diff 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
-| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | running | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和条件式 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5、P1、P2 done；P1 rejected；P2 selected mixed checkpoint；P3 protocol frozen，runner next |
+| `WS-V3-A4-DEPLOYMENT-01` | done | pruning/precision/chunk/LOD 与资产注册 | P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -601,6 +601,32 @@ Matched-RigidNodes-budget：
   `12 passed`，联合 WorldSim V3=`222 passed`。本条没有 P3 materialization/render/formal measurement；下一动作只
   实现并提交 runner，P4 继续未授权。
 
+### `WS-V3-A4-DEPLOYMENT-01` P3 exact chunk package formal
+
+- runner commit=`aba55777f38a3d8e4363d2ff7d546d412214b481`；focused=`23 passed`，WorldSim V3 full=
+  `233 passed`。canonical r1=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T184240Z__a4-p3-chunk-s0-r1`，
+  exit=`0`、terminal=`done`、21/21 audits passed；summary/manifest/resource/terminal SHA=
+  `f8e6e166...a293 / 8b79d355...bd7af / 55ee6f0b...55e81 / 80dd8178...c645`；
+- package manifest=`35a3f1fe...64b8 / 143,913 bytes`；133 static、24 actor、1 skeleton 加 manifest 共
+  `159 files / 444,177,055 bytes`，158 payload=`444,033,142 bytes`。source checkpoint=
+  `432,111,754 bytes`，package 开销=`12,065,301 bytes / +2.792171%`；skeleton=
+  `101,176,684 bytes / 51 row sentinels`，没有 source copy 或 persistent reassembled checkpoint；
+- 85 个 tensor path 的 recursive schema/shape/dtype/value SHA 与 non-tensor signature 全部 exact；Background=
+  `1,205,164`、RigidNodes=`104,704` rows 均 covered once，missing/duplicated=`0/0`；24 actor assets 完整，actor 14
+  为显式 zero-row asset。source checkpoint/registry SHA 前后保持 `7be87e8b...7448 / 69c4f38a...48a27`；
+- source replay 31 endpoints max abs diff=`0`；chunk 相对 source 的 57 RGB SHA、31 quality endpoints 和 masks
+  exact。quality adapter 两臂均为 `57 renderer / 114 SH` observations，runtime 为 `11/22`，全部 FP32 且
+  autocast=false；P2 mixed-persistent/FP32-renderer 合同 exact；
+- 9-view runtime（2 warm-up、800×450、sync、cache uncontrolled）：source/chunk load=`.907071/4.177543 s`，
+  P50=`.030126/.039505 s`，P95=`.094460/.105862 s`，FPS=`21.2783/20.4471`。package 没有缩小，load/reassembly
+  与 render 均未加速；结果只支持 exact spatial/actor asset separation，不支持 streaming、speedup 或 concurrency claim；
+- resource passed：wall=`221.786 s`、allocated/reserved/NVIDIA=`7,614.99/8,066/8,420 MiB`、cgroup=
+  `32,689,958,912 bytes`、run=`444,885,133 bytes`、disk free=`42,359,705,600 bytes`、OOM/kill=`0/0`；resume=
+  `1.104 s`、7 actions、159 artifacts、no torch/no GPU；
+- selected=`p3-chunk-package`，method=`selected_exact_chunk_package`，P3=`done`。P0/P5/P1/P2/P3 最低完成集
+  全部满足，A4=`done`；P4 保持 optional，下一任务是 R0 前置的 F0 官方能力审计。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -825,5 +851,11 @@ r2 已 14/14 audits passed 并登记 `done`。P1 canonical r1 已 21/21 audits p
 3/12/15 个冻结质量门，method rejected、selected=p1-source exact alias，P1 experiment=`done`。P2 r1 因 evidence
 ledger 漏项保留 blocked，canonical r2 已 19/19 audits、31/31 safeguards 并选择 `p2-gs-param-fp16`，P2=`done`。
 P3 protocol SHA=`dfaaba79...1b41` 已冻结且 validator/12 项协议测试/222 项联合回归通过。下一动作只实现并提交
-`P3-chunk` runner；提交前不创建 formal run，不修改 frozen grid/schema/quality/resource/selection，也不得启动
-P4、A3 formal、R2–R4 或 D3/D4。
+`P3-chunk` runner；该冻结动作随后由 runner `aba5577` 和 canonical r1 完成：21/21 audits、57 RGB/31 endpoints、
+85 tensor paths 与 source/registry immutable 全部 exact，selected=`p3-chunk-package`。package 比 source 大
+`2.792171%` 且 load/reassembly 更慢，只登记 exact asset separation；A4=`done`。
+
+当前唯一动作是 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：冻结并核对 NVIDIA Instant NuRec 官方 revision、license、
+checkpoint provenance、硬件、相机/cadence/pose/LiDAR/instance 输入与 standalone CLI 实际导出；先做本机无权重/
+无 gated 数据 preflight，只有依赖和公开输入满足时才运行一窗口 inference smoke。不得把论文或网页演示能力写成
+本地 CLI 能力；F1、P4、A3 formal/R2–R4 与 D3/D4 仍未授权。
