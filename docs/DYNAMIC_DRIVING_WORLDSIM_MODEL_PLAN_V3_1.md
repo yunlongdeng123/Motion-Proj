@@ -10,7 +10,7 @@
 - **A2-D1 工程基线**：`c9b2422`（quota-only policy、可重放 DriveStudio patch、配对 smoke controller）
 - **A2-D1 formal 协议基线**：`387dd50`（30k 配对控制器、held-out/non-target 评测、matched-budget 裁决）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 smoke done / formal protocol done，run pending / F0、A3-A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 smoke done / formal protocol done / D0 running / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -19,7 +19,7 @@
 ## 0. V3.1 修订目的
 
 V3.1 创建时已完成路线切换和三场景原生基线，并进入 A1 正式实验；当前 A1 已收口、A2-I0 已完成，
-A2-D1 quota-only 配对工程 smoke 与 formal 协议冻结已通过，30k formal 尚未启动。
+A2-D1 quota-only 配对工程 smoke 与 formal 协议冻结已通过，唯一 30k formal run 正在执行 D0。
 V3.1 不推翻 V3，而是在以下新事实基础上修正执行协议：
 
 1. 6–7 月 WorldSim/GS 周报表明，工业链路的核心不是单个 3DGS 模型，而是：
@@ -1232,8 +1232,8 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 ## 16. 当前唯一下一步
 
 A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0 与 D1 quota-only 配对 smoke 已通过。D1 formal 协议、评测、
-matched-Gaussian-budget 裁决与资源停止条件已在独立提交 `387dd50` 冻结；只读 preflight 已通过。当前唯一下一步是
-用新 run ID 在 tmux 中顺序执行 D0 formal → D1 formal：
+matched-Gaussian-budget 裁决与资源停止条件已在独立提交 `387dd50` 冻结；只读 preflight 已通过。唯一 formal run
+`20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 已在 tmux 启动，当前动作是监控其 D0→D1 顺序闭环：
 
 ```text
 1. scene-0230 / seed 0 / D0→D1 / 每臂 30k fixed-step；每 5k 保存只读候选 checkpoint
@@ -1249,6 +1249,14 @@ formal 协议冻结，不构成 D1 方法结论。
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A2-D1 formal 唯一实例启动
+
+- run=`20260809T085400Z__a2-d1-paired-formal30k-s0-r1`；source commit=`f32f96b`；tmux=`ws_a2_d1_f1`；
+- terminal=`running`，当前 stage=`train_d0_native_30000`；D1 未启动；
+- 两份物化配置除 variant/quota-enable 外一致；formal/base config SHA 与 canonical r4 summary SHA 已写入 manifest；
+- D0 初始化计数 Background/RigidNodes=`946,484 / 75,002`，与冻结 scene-0230 起点一致；
+- 启动后 GPU 约 `3.0 GiB` 且无 OOM；该条仅登记生命周期，不构成 checkpoint 或质量结果。
 
 ### 2026-08-09 — A2-D1 formal 协议冻结
 
@@ -1344,7 +1352,7 @@ formal 协议冻结，不构成 D1 方法结论。
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；A2-I0、D1 smoke 与 formal 协议已 done，30k formal 尚未启动。
+WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；唯一 formal r1 正在执行 D0，禁止重复启动。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；

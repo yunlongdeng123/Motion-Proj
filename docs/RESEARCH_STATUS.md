@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-D1 formal 协议已在 `387dd50` 冻结且只读 preflight 通过；下一门禁为 D0→D1 30k formal 完整终态
+- 当前门禁：唯一 A2-D1 formal r1 已启动并正在执行 D0；下一门禁为 D0→D1 30k formal 完整终态
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -203,6 +203,15 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
   canonical r4 summary SHA 与三层 DriveStudio patch SHA 全部匹配；
 - formal 尚未启动。该证据只解除启动门，不允许宣称 D1 质量改进，也不允许提前启动 D2。
 
+## A2-D1 formal 当前运行
+
+- canonical candidate run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T085400Z__a2-d1-paired-formal30k-s0-r1`；
+- source commit=`f32f96b47619e05066d2ee11c899e38d07398e11`；tmux=`ws_a2_d1_f1`；terminal=`running`；
+- manifest 已确认 D0/D1 物化配置除 variant/quota-enable 外匹配，formal config SHA=`ad77db41...f8e7`；
+- 当前 stage=`train_d0_native_30000`，D1 尚未启动；D0 初始化 Background/RigidNodes=`946,484 / 75,002`；
+- 启动后 GPU 约 `3.0 GiB`，cgroup 无 OOM。当前不得启动第二个 formal run 或 D2。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -234,7 +243,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke 与 formal 协议 done；下一门禁为 D0→D1 30k formal 与质量/GS Pareto |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 smoke 与 formal 协议 done；唯一 r1 正在执行 D0→D1 30k formal |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -244,12 +253,12 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
 - 数据盘：约 59 GiB 可用；
-- 无活跃研究 tmux/controller/GPU 进程；
+- 活跃 tmux=`ws_a2_d1_f1`；唯一 A2-D1 formal r1 正在使用 GPU；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A1 已收口，A2-I0、D1 quota-only paired smoke 与 formal 协议冻结均已通过。下一步按 `387dd50` 用唯一 run ID
-在 tmux 中顺序运行 scene-0230 D0→D1 30k，并生成 fixed-step 与 matched-RigidNodes-budget 两个视图。formal 两臂
+A1 已收口，A2-I0、D1 quota-only paired smoke 与 formal 协议冻结均已通过。唯一 r1 已在 tmux 中顺序运行
+scene-0230 D0→D1 30k；下一步是监控该实例并生成 fixed-step 与 matched-RigidNodes-budget 两个视图。formal 两臂
 和 matched gate 完成前不启动 D2；更多 Gaussian 不自动解释为改进，也不混入 boundary/residual、scale cap、
 LiDAR/visibility 或 D2–D4 因子。
