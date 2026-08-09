@@ -200,11 +200,25 @@ def persistent_parameter_inventory(trainer: Any) -> dict[str, Any]:
     """汇总 trainer 的持久 Parameter 字节，并保留逐参数 dtype 账本。"""
     by_dtype: dict[str, int] = {}
     rows = {}
-    for name, parameter in trainer.named_parameters():
-        dtype = str(parameter.dtype).removeprefix("torch.")
-        size = int(parameter.numel() * parameter.element_size())
-        by_dtype[dtype] = by_dtype.get(dtype, 0) + size
-        rows[name] = {"dtype": dtype, "shape": list(parameter.shape), "bytes": size}
+    seen: set[int] = set()
+    sources = [("", trainer.named_parameters())]
+    sources.extend(
+        (f"models.{model_name}.", model.named_parameters())
+        for model_name, model in trainer.models.items()
+    )
+    for prefix, named_parameters in sources:
+        for name, parameter in named_parameters:
+            if id(parameter) in seen:
+                continue
+            seen.add(id(parameter))
+            dtype = str(parameter.dtype).removeprefix("torch.")
+            size = int(parameter.numel() * parameter.element_size())
+            by_dtype[dtype] = by_dtype.get(dtype, 0) + size
+            rows[f"{prefix}{name}"] = {
+                "dtype": dtype,
+                "shape": list(parameter.shape),
+                "bytes": size,
+            }
     return {
         "bytes_by_dtype": dict(sorted(by_dtype.items())),
         "total_bytes": sum(by_dtype.values()),

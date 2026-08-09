@@ -150,9 +150,7 @@ class FakeGaussians:
 class FakeTrainer(torch.nn.Module):
     def __init__(self) -> None:
         super().__init__()
-        self.models = torch.nn.ModuleDict(
-            {"Background": FakeModel(), "RigidNodes": FakeModel()}
-        )
+        self.models = {"Background": FakeModel(), "RigidNodes": FakeModel()}
 
     def collect_gaussians(self) -> FakeGaussians:
         rows = [self.models[name].get_gaussians() for name in ("Background", "RigidNodes")]
@@ -167,11 +165,14 @@ class FakeTrainer(torch.nn.Module):
 def test_runtime_dtype_and_renderer_adapter_contract() -> None:
     trainer = FakeTrainer()
     install_fp32_renderer_input_adapter(trainer)
+    source_inventory = persistent_parameter_inventory(trainer)
     apply_runtime_parameter_dtypes(trainer, candidate=True)
     assert runtime_converted_field_audit(trainer, expected_dtype="float16")["exact"]
     inventory = persistent_parameter_inventory(trainer)
     assert inventory["bytes_by_dtype"]["float16"] > 0
     assert inventory["bytes_by_dtype"]["float32"] > 0
+    assert inventory["total_bytes"] < source_inventory["total_bytes"]
+    assert "models.Background._scales" in inventory["parameters"]
     set_fp32_renderer_adapter_mode(trainer, candidate=True)
     gaussians = trainer.collect_gaussians()
     assert all(
