@@ -36,6 +36,9 @@ DEFAULT_SIDECAR_MANIFEST = Path(
     "/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/"
     "20260809T133911Z__a3-sb-sidecar-s0-r3/sidecar/manifest.json"
 )
+DEFAULT_NUMERIC_FREEZE = (
+    PROJECT / "configs/worldsim_v3/a3_r1_numeric_freeze_v1.yaml"
+)
 SELECTED_CHECKPOINT_STEP = 30_000
 UNIT_ARRAY_KEYS = {
     "source_actor_footprint",
@@ -260,6 +263,20 @@ def cgroup_memory_current() -> int | None:
     return int(path.read_text().strip()) if path.is_file() else None
 
 
+def cgroup_memory_events() -> dict[str, int]:
+    path = Path("/sys/fs/cgroup/memory.events")
+    if not path.is_file():
+        return {}
+    return {
+        key: int(value)
+        for key, value in (line.split() for line in path.read_text().splitlines())
+    }
+
+
+def directory_bytes(path: Path) -> int:
+    return sum(item.stat().st_size for item in path.rglob("*") if item.is_file())
+
+
 def main() -> None:
     global _ACTIVE_RUN_DIR, _TERMINAL_FINAL
     parser = argparse.ArgumentParser()
@@ -270,6 +287,7 @@ def main() -> None:
         default=PROJECT / "configs/worldsim_v3/a3_local_refine_protocol_v1.yaml",
     )
     parser.add_argument("--sidecar-manifest", type=Path, default=DEFAULT_SIDECAR_MANIFEST)
+    parser.add_argument("--numeric-freeze", type=Path, default=DEFAULT_NUMERIC_FREEZE)
     parser.add_argument("--source-config", type=Path, default=DEFAULT_D2_WORK / "config.yaml")
     parser.add_argument(
         "--source-checkpoint",
@@ -291,21 +309,29 @@ def main() -> None:
     from motion_proj.worldsim_v3.local_refinement import (
         load_a3_refinement_sidecar,
         validate_a3_protocol,
+        validate_a3_r1_numeric_freeze,
     )
     from scripts.materialize_worldsim_v3_a3_config import materialize_r1_config
 
     protocol = OmegaConf.to_container(OmegaConf.load(args.protocol), resolve=True)
     validate_a3_protocol(protocol)
+    numeric_freeze = OmegaConf.to_container(
+        OmegaConf.load(args.numeric_freeze), resolve=True
+    )
+    validate_a3_r1_numeric_freeze(numeric_freeze)
     manifest = json.loads(args.sidecar_manifest.read_text(encoding="utf-8"))
     units = ordered_unit_records(protocol, manifest)
-    if len(units) != 4:
-        raise RuntimeError("A3 first paired gate requires exactly four units")
+    optimizer_steps = int(numeric_freeze["execution"]["optimizer_steps"])
+    unit_order = [f"{row['role']}::{row['edit']}" for row in units]
+    if len(units) != optimizer_steps or unit_order != numeric_freeze["execution"]["unit_order"]:
+        raise RuntimeError("A3 frozen paired unit/step budget drift")
     input_hashes = {
         "protocol": sha256_file(args.protocol),
         "source_config": sha256_file(args.source_config),
         "source_checkpoint": sha256_file(args.source_checkpoint),
         "registry": sha256_file(args.registry),
         "sidecar_manifest": sha256_file(args.sidecar_manifest),
+        "numeric_freeze": sha256_file(args.numeric_freeze),
     }
     dependencies = protocol["depends_on"]
     expected_hashes = {
@@ -314,11 +340,22 @@ def main() -> None:
         "source_checkpoint": dependencies["selected_checkpoint_sha256"],
         "registry": dependencies["selected_actor_registry_sha256"],
         "sidecar_manifest": input_hashes["sidecar_manifest"],
+        "numeric_freeze": input_hashes["numeric_freeze"],
     }
     if input_hashes != expected_hashes:
         raise RuntimeError(f"A3 paired smoke immutable input drift: {input_hashes!r}")
     sidecar_root = args.sidecar_manifest.parent
     unit_arrays = [load_and_validate_unit(sidecar_root, record) for record in units]
+    caps = numeric_freeze["authorization_caps"]
+    if (
+        int(manifest["counts"]["affected_background_rows"])
+        > int(caps["maximum_affected_background_gaussians"])
+        or int(manifest["counts"]["s_b_background_rows"])
+        > int(caps["maximum_mutable_background_gaussians"])
+        or sum(int(row["s_b_t0_geometry_pixels"]) for row in units)
+        != int(caps["s_b_t0_geometry_loss_pixels"])
+    ):
+        raise RuntimeError("A3 frozen authorization caps drift")
 
     args.run_dir.mkdir(parents=True)
     _ACTIVE_RUN_DIR = args.run_dir
@@ -337,7 +374,7 @@ def main() -> None:
         source_config_sha256=input_hashes["source_config"],
         checkpoint_sha256=input_hashes["source_checkpoint"],
         sidecar_manifest_path=str(args.sidecar_manifest.resolve()),
-        optimizer_steps=len(units),
+        optimizer_steps=optimizer_steps,
     )
     resolved_path = args.run_dir / "resolved.yaml"
     OmegaConf.save(config=resolved_config, f=resolved_path)
@@ -347,6 +384,7 @@ def main() -> None:
         PROJECT / "motion_proj/worldsim_v3/local_refinement.py",
         PROJECT / "compatibility/DriveStudio-WorldSim-A3-R1-local-refine-v1.patch",
         args.protocol,
+        args.numeric_freeze,
     )
     source_hashes = {}
     for source in source_files:
@@ -361,10 +399,10 @@ def main() -> None:
         "task_id": protocol["task_id"],
         "component": "A3 R1 conservative S-B/T0 paired engineering smoke",
         "formal_training_authorized": False,
-        "numeric_protocol_frozen": False,
+        "numeric_protocol_frozen": True,
         "seed": int(protocol["paired_design"]["seed"]),
-        "optimizer_steps": len(units),
-        "unit_order": [f"{row['role']}::{row['edit']}" for row in units],
+        "optimizer_steps": optimizer_steps,
+        "unit_order": unit_order,
         "input_hashes": input_hashes,
         "source_hashes": source_hashes,
         "project_commit": command_output("git", "rev-parse", "HEAD", cwd=PROJECT),
@@ -402,6 +440,13 @@ def main() -> None:
     guard = trainer.a3_local_refinement_guard
     if guard is None:
         raise RuntimeError("A3 local refinement guard was not initialized")
+    optimizer_groups = {
+        group["name"]: float(group["lr"])
+        for group in trainer.optimizer.param_groups
+    }
+    for field, spec in numeric_freeze["execution"]["learning_rates"].items():
+        if optimizer_groups.get(spec["optimizer_group"]) != float(spec["value"]):
+            raise RuntimeError(f"A3 frozen learning rate drift: {field}")
     loaded_sidecar = load_a3_refinement_sidecar(
         args.sidecar_manifest,
         protocol_sha256=input_hashes["protocol"],
@@ -420,6 +465,7 @@ def main() -> None:
     initial_rigid_sha256 = rigid_contract_sha256(rigid)
     per_unit = []
     memory_samples = [cgroup_memory_current()]
+    memory_events_before = cgroup_memory_events()
 
     for offset, (record, arrays) in enumerate(zip(units, unit_arrays), start=1):
         step = SELECTED_CHECKPOINT_STEP + offset
@@ -530,16 +576,41 @@ def main() -> None:
     )
     checkpoint_path = checkpoint_dir / "checkpoint_final.pth"
     duration = time.monotonic() - started
+    checkpoint_sha256 = sha256_file(checkpoint_path)
+    if checkpoint_sha256 != numeric_freeze["evidence"]["output_checkpoint_sha256"]:
+        raise RuntimeError("A3 frozen replay checkpoint is not bitwise exact")
+    peak_gpu_memory_mib = (
+        float(torch.cuda.max_memory_allocated(device) / (1024**2))
+        if device.type == "cuda"
+        else None
+    )
+    peak_cgroup_memory = max(
+        value for value in memory_samples if value is not None
+    ) if any(value is not None for value in memory_samples) else None
+    memory_events_after = cgroup_memory_events()
+    ceilings = numeric_freeze["replay_resource_ceilings"]
+    oom_delta = memory_events_after.get("oom", 0) - memory_events_before.get("oom", 0)
+    oom_kill_delta = memory_events_after.get("oom_kill", 0) - memory_events_before.get("oom_kill", 0)
+    if (
+        duration > float(ceilings["wall_time_seconds"])
+        or (peak_gpu_memory_mib is not None and peak_gpu_memory_mib > float(ceilings["peak_gpu_memory_mib"]))
+        or (peak_cgroup_memory is not None and peak_cgroup_memory > int(ceilings["peak_cgroup_memory_bytes"]))
+        or checkpoint_path.stat().st_size > int(ceilings["checkpoint_bytes"])
+        or directory_bytes(args.run_dir) > int(ceilings["run_bytes"])
+        or oom_delta != int(ceilings["oom_events"])
+        or oom_kill_delta != int(ceilings["oom_kill_events"])
+    ):
+        raise RuntimeError("A3 frozen replay resource ceiling failed")
     summary = {
         "status": "done",
         "task_id": protocol["task_id"],
         "component": "A3 R1 conservative S-B/T0 paired engineering smoke",
         "formal_training_authorized": False,
-        "numeric_protocol_frozen": False,
+        "numeric_protocol_frozen": True,
         "evidence_tier": "real_scene_paired_engineering_only_not_quality_evidence",
         "scene": protocol["paired_design"]["scene"],
         "seed": int(protocol["paired_design"]["seed"]),
-        "optimizer_steps": len(units),
+        "optimizer_steps": optimizer_steps,
         "support": {
             "mode": manifest["evidence"]["support_mode"],
             "s_a_rgb_pixels": 0,
@@ -564,24 +635,19 @@ def main() -> None:
         },
         "checkpoint": {
             "path": str(checkpoint_path),
-            "sha256": sha256_file(checkpoint_path),
+            "sha256": checkpoint_sha256,
             "bytes": checkpoint_path.stat().st_size,
             "step": int(trainer.step),
         },
         "resources": {
             "wall_time_seconds": duration,
-            "peak_gpu_memory_mib": (
-                float(torch.cuda.max_memory_allocated(device) / (1024**2))
-                if device.type == "cuda"
-                else None
-            ),
-            "peak_cgroup_memory_bytes_sampled": max(
-                value for value in memory_samples if value is not None
-            )
-            if any(value is not None for value in memory_samples)
-            else None,
+            "peak_gpu_memory_mib": peak_gpu_memory_mib,
+            "peak_cgroup_memory_bytes_sampled": peak_cgroup_memory,
+            "oom_events_delta": oom_delta,
+            "oom_kill_events_delta": oom_kill_delta,
         },
         "input_hashes": input_hashes,
+        "numeric_freeze_sha256": input_hashes["numeric_freeze"],
         "resolved_config_sha256": sha256_file(resolved_path),
         "project_commit": run_manifest["project_commit"],
     }

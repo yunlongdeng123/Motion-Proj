@@ -17,6 +17,7 @@ from torch import Tensor
 TASK_ID = "WS-V3-A3-LOCAL-REFINE-01"
 AUDIT_VERSION = "A3-LOCAL-REFINE-PROTOCOL-v1"
 SIDECAR_AUDIT_VERSION = "A3-R1-SIDECAR-v1"
+R1_NUMERIC_AUDIT_VERSION = "A3-R1-NUMERIC-FREEZE-v1"
 STRATA = ("S-A-observed", "S-B-geometric", "S-C-unsupported")
 VARIANTS = (
     "r0-no-refine-exact-alias",
@@ -272,6 +273,135 @@ def validate_a3_protocol(contract: Mapping[str, Any]) -> None:
         set((contract.get("scope_boundary") or {}).get("forbidden") or ())
         == FORBIDDEN_SCOPE,
         "A3 scope boundary drift",
+    )
+
+
+def validate_a3_r1_numeric_freeze(contract: Mapping[str, Any]) -> None:
+    """Validate the post-smoke R1 engineering replay budget."""
+
+    _require(contract.get("schema_version") == 1, "unsupported A3 R1 numeric schema")
+    _require(contract.get("task_id") == TASK_ID, "A3 R1 numeric task drift")
+    _require(
+        contract.get("audit_version") == R1_NUMERIC_AUDIT_VERSION,
+        "A3 R1 numeric audit drift",
+    )
+    _require(
+        contract.get("status") == "frozen_after_real_paired_engineering_smoke",
+        "A3 R1 numeric status drift",
+    )
+    _require(
+        contract.get("formal_training_authorized") is False
+        and contract.get("quality_claim_authorized") is False,
+        "A3 R1 numeric freeze cannot authorize claims or formal training",
+    )
+    evidence = contract.get("evidence") or {}
+    for name in (
+        "summary_sha256",
+        "manifest_sha256",
+        "resolved_config_sha256",
+        "output_checkpoint_sha256",
+        "controller_log_sha256",
+        "exit_code_sha256",
+        "sidecar_manifest_sha256",
+        "sidecar_arrays_sha256",
+    ):
+        _sha256(evidence.get(name), f"missing A3 R1 evidence SHA: {name}")
+    immutable = contract.get("immutable_inputs") or {}
+    for name in (
+        "protocol_sha256",
+        "source_config_sha256",
+        "source_checkpoint_sha256",
+        "actor_registry_sha256",
+    ):
+        _sha256(immutable.get(name), f"missing A3 R1 immutable SHA: {name}")
+    _require(
+        immutable.get("source_checkpoint_sha256")
+        == "1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c",
+        "A3 R1 numeric source checkpoint drift",
+    )
+    execution = contract.get("execution") or {}
+    _require(
+        execution.get("scene") == "scene-0230"
+        and execution.get("scene_index") == 179
+        and execution.get("seed") == 0,
+        "A3 R1 numeric scene/seed drift",
+    )
+    _require(
+        execution.get("source_checkpoint_step") == 30_000
+        and execution.get("optimizer_steps") == 4
+        and execution.get("output_checkpoint_step") == 30_004,
+        "A3 R1 numeric step budget drift",
+    )
+    _require(
+        execution.get("unit_order")
+        == [
+            "high-support::lateral",
+            "high-support::delete",
+            "boundary-support::lateral",
+            "boundary-support::delete",
+        ],
+        "A3 R1 unit order drift",
+    )
+    learning_rates = execution.get("learning_rates") or {}
+    _require(
+        set(learning_rates) == MUTABLE_FIELDS["r1-reactivate"],
+        "A3 R1 learning-rate fields drift",
+    )
+    _require(
+        float(learning_rates["Background._opacities"].get("value", -1)) == 0.05
+        and float(learning_rates["Background._scales"].get("value", -1)) == 0.005,
+        "A3 R1 learning-rate value drift",
+    )
+    _require(
+        float(execution.get("first_hit_alpha_threshold", -1)) == 0.5
+        and execution.get("maximum_seed_gaussians") == 0,
+        "A3 R1 alpha/seed budget drift",
+    )
+    caps = contract.get("authorization_caps") or {}
+    _require(
+        caps
+        == {
+            "maximum_affected_background_gaussians": 16_502,
+            "maximum_mutable_background_gaussians": 51,
+            "s_a_rgb_loss_pixels": 0,
+            "s_b_t0_geometry_loss_pixels": 8,
+            "s_c_abstain_background_gaussians": 16_451,
+        },
+        "A3 R1 authorization caps drift",
+    )
+    observed = contract.get("observed_resources") or {}
+    ceilings = contract.get("replay_resource_ceilings") or {}
+    for name in (
+        "wall_time_seconds",
+        "peak_gpu_memory_mib",
+        "peak_cgroup_memory_bytes",
+        "run_bytes",
+        "checkpoint_bytes",
+    ):
+        observed_name = (
+            "peak_cgroup_memory_bytes_sampled"
+            if name == "peak_cgroup_memory_bytes"
+            else name
+        )
+        _require(
+            float(observed.get(observed_name, -1)) <= float(ceilings.get(name, -2)),
+            f"A3 R1 observed resource exceeds ceiling: {name}",
+        )
+    _require(
+        observed.get("oom_events") == ceilings.get("oom_events") == 0
+        and observed.get("oom_kill_events") == ceilings.get("oom_kill_events") == 0,
+        "A3 R1 OOM budget drift",
+    )
+    required = contract.get("required_audits") or {}
+    _require(required and all(value is True for value in required.values()), "A3 R1 audit gate drift")
+    scope = contract.get("scope") or {}
+    _require(
+        scope.get("valid_for") == "engineering_replay_only"
+        and scope.get("support_mode") == "conservative_S_B_T0_only"
+        and scope.get("s_a_status") == "ABSTAIN_NOT_MATERIALIZED"
+        and scope.get("r2_r3_r4_authorized") is False
+        and scope.get("formal_training_authorized") is False,
+        "A3 R1 numeric scope drift",
     )
 
 
