@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-10
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
-- 当前任务：`WS-V3-F0-FEEDFORWARD-AUDIT-01`
+- 当前任务：`WS-V3-R0-INTEGRATION-01`
 - 状态：`running`
-- 当前门禁：A4-P0/P5/P1/P2/P3 已全部闭环，P3 canonical r1 选择 exact chunk package，A4=`done`；R0 前先完成 F0 官方能力审计，F1 尚未授权
+- 当前门禁：A0–A4 与 F0 已闭环；F1=`conditional_not_unlocked`。R0 只集成既有 canonical evidence，不启动新训练/推理
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -471,7 +471,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 该证据只授权冻结 D1 formal 协议；1000-step smoke 未执行冻结 held-out actor/boundary 质量合同，且 D1 Gaussian
 更多，不能登记为方法改进或直接解锁 D2。
 
-## F0 Instant NuRec 协议冻结状态
+## F0 Instant NuRec canonical 审计收口
 
 - official source checkout=`/root/autodl-tmp/third_party/instant-nurec-worldsim-v3-f0`，revision/tree=
   `1ce2288e646548e61fea6100bc58de3acd4bc8d0 / 96e36fa4772f5ddada37dc3decb1be9d2e595dc0`；16 个关键文件
@@ -484,8 +484,14 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - formal smoke gate 固定 Python 3.11、uv、CC≥8.0、VRAM≥30,720 MiB、RAM≥32 GB、free disk≥100 GB、精确
   权重、合法 NCore input/terms、exact clean checkout 与 CLI help 全合取。任一失败时不得构造 inference command，
   不安装依赖、不下载权重/gated 数据、不启动 GPU；
-- protocol/runner SHA=`2004a029...fd611 / 249f26d5...8e4a`。本条只冻结协议；formal 本机审计尚未执行，F1=
-  `conditional_not_unlocked`。
+- protocol/runner SHA=`2004a029...fd611 / 249f26d5...8e4a`；canonical=
+  `20260809T192139Z__f0-instant-nurec-audit-s0-r1`，source=`ab76f19`，terminal=`done`，summary/manifest/terminal
+  SHA=`d111c457...be37 / f1c76fdd...6a11 / 207758b9...15c6`；9/9 manifest artifacts exact；
+- exact source、CC/system memory、CLI help 共形成 4/11 passed；失败项为 Python 3.11、uv、≥30,720 MiB VRAM、
+  ≥100 GB free disk、exact weight、licensed NCore input、terms record。官方 focused tests=`33 passed` 与
+  `37 passed / 15 failed`，15 项均因当前未配置环境缺 `shortuuid`；
+- `inference_command_constructed=false`，torch/GPU/training/install/download 全未启动，OOM/kill=`0/0`。F0=
+  `done_local_inference_not_executable_on_current_host`；F1=`conditional_not_unlocked`，当前转 R0。
 
 ## V3 任务状态
 
@@ -493,24 +499,23 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 |---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | `076ebdc`；单一 V3 计划、V2 冻结边界、链接与 Git 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
-| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | running | A4 已闭环；当前审计 Instant NuRec 官方代码、权重、输入输出、license 与本地能力边界 |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | done | canonical audit done；4/11 prerequisites；inference not-run；F1 conditional_not_unlocked |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact chunk package selected |
-| `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
+| `WS-V3-R0-INTEGRATION-01` | running | 汇总 A0–A4/F0 与复现包，不要求扩展到六场景或启动条件项 |
 
 ## 机器与工作树
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：P3 r1 终态 free=`42,359,705,600 bytes`；
+- 数据盘：F0 canonical preflight free=`42,327,777,280 bytes`；
 - A3 heldout r5、A4-P0 v1 r1、A4-P5 r1 与 A4-P2 r1 均保留 blocked；P0/P5/P2 canonical r2 与 P3 canonical r1 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-用已冻结 F0 协议运行唯一 canonical 本机只读 audit：核对 exact source、CLI help、两组官方 focused tests 与
-Python/uv/GPU/RAM/disk/token/weight/NCore/terms 的 11 项前置条件。若任一条件失败，formal run 以 audit `done`、
-inference `not_run_prerequisites_failed` 收口并保持 F1=`conditional_not_unlocked`；不得安装依赖、下载权重/gated
-数据或启动 GPU。F1、P4、D3/D4 与 A3 formal/R2–R4 保持未解锁。
+执行 `WS-V3-R0-INTEGRATION-01`：冻结并核对 A0/A1/F0/A2/A3/A4 canonical terminal、summary、config、selected
+asset 与 claim boundary；生成 A0→A4 主表、质量—规模—时间—显存 Pareto、负结果、复现 manifest 和最小离线
+可视化索引。F1、P4、D3/D4 与 A3 formal/R2–R4 保持未解锁；不启动新训练、推理或大型 UI。

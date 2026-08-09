@@ -23,8 +23,9 @@
 - **A4-P3 协议 SHA-256**：`dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41`
 - **A4-P3 runner 基线**：`aba55777f38a3d8e4363d2ff7d546d412214b481`（exact chunk package、内存重组、21-audit finalizer）
 - **F0 Instant NuRec 审计协议 SHA-256**：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
-- **当前任务**：`WS-V3-F0-FEEDFORWARD-AUDIT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 running / F1 conditional / R0 pending`
+- **F0 审计实现基线**：`ab76f1901b60491af7bc8355589e149fcb69fe04`；canonical summary SHA-256=`d111c45727263a5667d7efbf5fa50d53aadb7d171454ab24569f63e7c108be37`
+- **当前任务**：`WS-V3-R0-INTEGRATION-01`（`running`）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 done（local inference not executable）/ F1 conditional_not_unlocked / R0 running`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -547,12 +548,12 @@ candidate/valid image 与 coverage。
 | `WS-V3-P0-ROUTE-01` | done | V3 路线与事实冻结 | 已提交并同步事实源 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 checkpoint、registry、held-out/actor/资源基线 | 3/3 场景闭环 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | running | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | done | Instant NuRec 官方代码、输入输出、license、导出能力审计 | canonical audit done；本机 4/11 前置通过，inference not-run；F1 未解锁 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | 端到端 profile、prune、FP16、chunk、registry、resume | P0/P5/P1/P2/P3 全部闭环；P1 rejected；P2 mixed checkpoint + P3 exact package selected；21/21 P3 audits |
-| `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
+| `WS-V3-R0-INTEGRATION-01` | running | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
 
@@ -764,6 +765,26 @@ checkpoint 不变。结果为：
   `249f26d5cbff0687bfedf094c5386237365cdf24ddcf811d3c56b487e9868e4a`；协议/官方源码指纹测试=`8 passed`，
   WorldSim V3 联合回归=`241 passed`。
   本条写入时 formal 本机审计尚未运行，不构成 inference、wall/VRAM 或质量结果。
+
+#### 8.1.2 F0 canonical 本机审计与 F1 裁决
+
+- canonical run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-F0-FEEDFORWARD-AUDIT-01/20260809T192139Z__f0-instant-nurec-audit-s0-r1`，
+  source commit=`ab76f1901b60491af7bc8355589e149fcb69fe04`，terminal=`done`；summary/manifest/terminal SHA-256=
+  `d111c457...be37 / f1c76fdd...6a11 / 207758b9...15c6`，run=`65,917 bytes`，manifest 9/9 artifacts
+  的 path/bytes/SHA 本地复核 exact；
+- official source revision/tree、16 个文件 hash、静态 code signatures 与 clean checkout 全通过；CLI `--help`
+  exit=`0`。官方基础输入/权重测试=`33 passed`；CLI+input 组合=`37 passed / 15 failed`，15 项均同源于当前未配置
+  环境缺 `shortuuid`，只登记环境 preflight，不推断 upstream 质量失败；
+- 11 项 smoke prerequisites 通过 `4` 项：CC 8.6、system/cgroup memory、exact clean checkout、CLI help；失败 `7`
+  项：无 Python 3.11、无 `uv`、24,576 MiB VRAM < 30,720 MiB、free disk=`42,327,777,280 bytes` < 100 GB、
+  无 exact weight、无 licensed NCore input、无 dataset terms record；
+- 因全合取门失败，`inference_smoke=not_run_prerequisites_failed`、`inference_command_constructed=false`；wall=
+  `.991914 s`，torch/GPU/training/dependency install/weight-or-data download 全为 false，GPU compute process 为空，
+  cgroup OOM/kill=`0/0`；该 wall 只表示审计，不是模型推理时间；
+- standalone CLI 结论保持 static-layer PLY only；它不提供 scene-0230 可直接转换的动态 actor/registry/depth 资产，
+  static PLY 也不是 exact StreetGS checkpoint。因此 F0=`done_local_inference_not_executable_on_current_host`，F1=
+  `conditional_not_unlocked` 且未启动；不宣称未来在兼容硬件、合法 NCore 输入和 exact converter 下永久不可行。
 
 ### 8.2 F1 条件式初始化 pilot
 
@@ -1775,13 +1796,15 @@ parameter ledger 漏项保留为 `blocked`；只修账本后的 canonical r2 已
 exact，选择 `p3-chunk-package`；package 比 source 大 `2.792171%` 且 load/reassembly 更慢，性能只报告、不宣称收益。
 P0/P5/P1/P2/P3 最低完成集已满足，A4=`done`。
 
-R0 必交付仍要求 F0 审计，因此当前唯一动作切换为 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：
+F0 canonical audit 已 `done`，且 F1 因 standalone CLI/static PLY 与本机前置条件均不满足而保持
+`conditional_not_unlocked`。当前唯一动作切换为 `WS-V3-R0-INTEGRATION-01`：
 
 ```text
-1. 使用已冻结 F0 协议运行 canonical 本机只读审计，核对 exact clean 官方 checkout 和 16 个文件指纹
-2. 记录 CLI help、两组官方 focused tests、Python/uv/GPU/RAM/disk/token/weight/NCore/terms 前置条件
-3. 只在全部前置条件通过时授权后续一窗口 inference；任一失败时 formal run 以 audit done、inference not-run 收口
-4. 给出 F1 conditional_not_unlocked/unlocked 裁决；不启动 F1，不启动 P4、D3/D4 或 A3 R2–R4
+1. 冻结 R0 集成协议，逐项绑定 A0/A1/F0/A2/A3/A4 canonical terminal、summary、config 与 selected asset hash
+2. 生成 A0→A4 主表、质量—规模—时间—显存 Pareto、负结果/claim boundary 与 reproducibility manifest
+3. 核对 12 项必交付；F1、P4、D3/D4、A3 formal/R2–R4 的未启动状态必须显式保留
+4. 只复用已有离线渲染/asset package 作为最小可视化入口，不启动新训练、推理或大型 UI
+5. 运行集成 validator 与全量回归，生成 canonical R0 terminal 后同步最终文档
 ```
 
 D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，不因能力缺口改写官方/本地边界。
@@ -1789,6 +1812,17 @@ D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — F0 canonical 本机审计完成，F1 未解锁
+
+- canonical=`20260809T192139Z__f0-instant-nurec-audit-s0-r1`，source=`ab76f19`，terminal=`done`，summary/
+  manifest/terminal SHA=`d111c457...be37 / f1c76fdd...6a11 / 207758b9...15c6`；9/9 manifest artifacts exact；
+- official source/hash/code signatures/CLI help 通过；官方 focused tests=`33 passed` 与 `37 passed / 15 failed`，
+  后者 15 项全部是未配置环境缺 `shortuuid`，只作 environment preflight；
+- prerequisites=`4/11 passed`；缺 Python 3.11、uv、≥30 GiB VRAM、≥100 GB free disk、exact weight、licensed
+  NCore input 和 terms record。故未构造 inference command，torch/GPU/install/download/training 全未启动；
+- F0=`done_local_inference_not_executable_on_current_host`；standalone CLI=static PLY only，F1=
+  `conditional_not_unlocked`、未启动。当前任务切换为 R0 integration。
 
 ### 2026-08-10 — F0 Instant NuRec 官方/本机能力审计协议冻结
 
@@ -2088,7 +2122,8 @@ WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
 WS-V3-A4-DEPLOYMENT-01 已 done；P0/P5/P1/P2/P3 全部闭环；P1 method rejected；P2 selected=p2-gs-param-fp16；P3 selected=p3-chunk-package。
-WS-V3-F0-FEEDFORWARD-AUDIT-01 当前为 running；只审计 Instant NuRec 官方/本地能力，尚未授权 F1。
+WS-V3-F0-FEEDFORWARD-AUDIT-01 已 done；本机 4/11 前置通过，inference not-run，F1=conditional_not_unlocked。
+WS-V3-R0-INTEGRATION-01 当前为 running；只集成既有 canonical evidence，不启动新训练/推理。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -2127,9 +2162,11 @@ WS-V3-F0-FEEDFORWARD-AUDIT-01 当前为 running；只审计 Instant NuRec 官方
 25. 核对 P3 runner `aba5577`、canonical r1 summary SHA `f8e6e166...a293`、21/21 audits、159 files、85 tensor
     paths exact、57 RGB/31 endpoints exact、source/registry 不变、资源与 no-torch resume；保持 package +2.792171%、
     load/reassembly 更慢且无 streaming/load/render speedup claim；
-26. 核对 F0 protocol SHA `2004a029...fd611`、官方 source revision/tree、16 个 source hashes、三份权重 provenance、
-    static-Ply-only CLI boundary、11 项本机前置门与 8 项测试；只运行 canonical read-only audit。任一前置失败时不得
-    构造 inference command。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
+26. 核对 F0 protocol SHA `2004a029...fd611`、canonical summary SHA `d111c457...be37`、official source exact、
+    4/11 prerequisites、33 passed、37 passed/15 missing-shortuuid failures、no inference/GPU/install/download 与
+    F1=`conditional_not_unlocked`；
+27. 当前只执行 R0：绑定 A0/A1/F0/A2/A3/A4 canonical evidence，生成主表/Pareto/边界/复现 manifest 和最小离线
+    可视化索引。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

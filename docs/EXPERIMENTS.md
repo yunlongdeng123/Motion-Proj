@@ -11,7 +11,8 @@
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
 `done`，`A3*=R0-off`；A4 已 `done`，P0、P5、P1、P2 与 P3 全部闭环；P1 候选被质量门拒绝并回退到 source，
-P2 canonical r2 选择 mixed checkpoint，P3 canonical r1 选择 exact chunk package。当前执行 F0 官方能力审计，F1 未授权。
+P2 canonical r2 选择 mixed checkpoint，P3 canonical r1 选择 exact chunk package。F0 canonical audit 已 `done`，
+本机 inference 前置条件未通过，F1=`conditional_not_unlocked`；当前执行 R0 集成。
 
 ## 1. 状态词
 
@@ -29,12 +30,12 @@ pending | running | blocked | done | rejected
 |---|---|---|---|
 | `WS-V3-P0-ROUTE-01` | done | 单一 V3 权威计划与 V2 事实冻结 | `076ebdc`；文档一致，链接与 Git diff 校验通过 |
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
-| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | running | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和条件式 1-window smoke |
+| `WS-V3-F0-FEEDFORWARD-AUDIT-01` | done | Instant NuRec 官方本地能力审计 | canonical audit done；4/11 prerequisites；inference not-run；F1 未解锁 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | pruning/precision/chunk/LOD 与资产注册 | P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected |
-| `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
+| `WS-V3-R0-INTEGRATION-01` | running | 完整 A0–A4/F0 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
 
@@ -645,6 +646,25 @@ Matched-RigidNodes-budget：
   nuScenes→NCore exact converter/actor registry。该边界不等于宣称 upstream 永久不可用，DGGT fallback 也不阻塞 R0；
 - 本条没有 formal run、inference wall/VRAM 或质量测量。下一动作只运行已提交协议的 canonical read-only audit。
 
+### `WS-V3-F0-FEEDFORWARD-AUDIT-01` canonical local audit
+
+- canonical=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-F0-FEEDFORWARD-AUDIT-01/20260809T192139Z__f0-instant-nurec-audit-s0-r1`，
+  source=`ab76f1901b60491af7bc8355589e149fcb69fe04`，exit=`0`、terminal=`done`；summary/manifest/terminal SHA=
+  `d111c457...be37 / f1c76fdd...6a11 / 207758b9...15c6`；run=`65,917 bytes`，9/9 manifest artifacts 的
+  path/bytes/SHA 复核 exact；
+- official checkout revision/tree、16 file hashes、code signatures、no-LiDAR-reader 与 clean status 全通过；CLI help
+  exit=`0`。官方 `ncore_input+pretrained` tests=`33 passed`；`cli+ncore_input`=`37 passed / 15 failed`，15 项全部为
+  当前未配置环境缺 `shortuuid`，是 environment preflight，不是 upstream 质量结论；
+- prerequisites=`4/11 passed`：CC 8.6、system/cgroup RAM、source exact、CLI help 通过；Python 3.11、uv、VRAM
+  `24,576<30,720 MiB`、free disk `42,327,777,280<100,000,000,000 bytes`、exact weight、licensed NCore input、
+  terms record 失败；HF token 也不存在但未单独作为第 12 条门；
+- `inference_smoke=not_run_prerequisites_failed`、`inference_command_constructed=false`；audit wall=`.991914 s`，
+  torch/GPU/training/dependency install/weight-or-dataset download 全 false，GPU compute process 为空，OOM/kill=`0/0`；
+- F0 outcome=`done_local_inference_not_executable_on_current_host`；F1=`conditional_not_unlocked`、未启动。CLI static PLY
+  不含 dynamic/sky/ISP/actor registry/depth，且不是 exact StreetGS checkpoint；未来兼容硬件/合法输入/converter
+  的窄 static-background pilot 不被永久否定。当前任务切换为 R0 integration，DGGT fallback 不阻塞 R0。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -873,7 +893,7 @@ P3 protocol SHA=`dfaaba79...1b41` 已冻结且 validator/12 项协议测试/222 
 85 tensor paths 与 source/registry immutable 全部 exact，selected=`p3-chunk-package`。package 比 source 大
 `2.792171%` 且 load/reassembly 更慢，只登记 exact asset separation；A4=`done`。
 
-当前唯一动作是用 SHA=`2004a029...fd611` 的冻结协议运行 `WS-V3-F0-FEEDFORWARD-AUDIT-01` canonical read-only
-audit：核对 exact source、CLI help、官方 focused tests 与 11 项本机前置条件。任一前置失败时以 audit `done`、
-inference `not_run_prerequisites_failed` 收口，不构造 inference command、不安装依赖、不下载权重/gated data、
-不启动 GPU；F1 保持 `conditional_not_unlocked`。P4、A3 formal/R2–R4 与 D3/D4 仍未授权。
+F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`conditional_not_unlocked`。当前唯一动作是
+`WS-V3-R0-INTEGRATION-01`：冻结并绑定 A0/A1/F0/A2/A3/A4 canonical evidence，生成 A0→A4 主表、Pareto、
+负结果/适用边界、复现 manifest 和最小离线可视化索引，再以 validator/canonical terminal 收口。P4、A3
+formal/R2–R4、D3/D4 与新训练/推理仍未授权。
