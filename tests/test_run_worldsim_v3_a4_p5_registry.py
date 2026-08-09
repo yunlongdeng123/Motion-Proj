@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import json
 import sys
+from types import SimpleNamespace
 
 import pytest
+import torch
 
 from scripts.aggregate_worldsim_v3_a4_p5 import build_aggregate
 from scripts.audit_worldsim_v3_a4_p5_resume import build_resume_audit
@@ -15,6 +17,7 @@ from scripts.run_worldsim_v3_a4_p5_registry import (
 from scripts.run_worldsim_v3_a4_p5_reload_smoke import (
     audit_actor_indices,
     index_sha256,
+    runtime_rigid_point_ids,
 )
 
 
@@ -137,6 +140,17 @@ def test_actor_index_audit_rejects_drift() -> None:
     source = fixture_source_registry()
     rows = audit_actor_indices([0, 1, 0], source["actors"])
     assert not all(row["exact"] for row in rows)
+
+
+def test_runtime_rigid_point_ids_uses_loaded_runtime_attribute() -> None:
+    rigid = SimpleNamespace(point_ids=torch.tensor([[0], [2], [0]]))
+    assert runtime_rigid_point_ids(rigid) == [0, 2, 0]
+
+
+def test_runtime_rigid_point_ids_rejects_checkpoint_key_alias() -> None:
+    rigid = SimpleNamespace(points_ids=torch.tensor([[0]]))
+    with pytest.raises(RuntimeError, match="runtime point_ids attribute missing"):
+        runtime_rigid_point_ids(rigid)
 
 
 def test_aggregate_keeps_resume_pending(tmp_path) -> None:

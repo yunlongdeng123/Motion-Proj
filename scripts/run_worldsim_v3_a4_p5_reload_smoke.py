@@ -75,6 +75,14 @@ def audit_actor_indices(
     return rows
 
 
+def runtime_rigid_point_ids(rigid: Any) -> list[int]:
+    """读取 DriveStudio RigidNodes 的运行时 actor 索引。"""
+    # checkpoint 键为 points_ids，但 load_state_dict 后运行时属性名是 point_ids。
+    if not hasattr(rigid, "point_ids"):
+        raise RuntimeError("A4-P5 RigidNodes runtime point_ids attribute missing")
+    return rigid.point_ids[:, 0].detach().cpu().tolist()
+
+
 def main() -> None:
     global _ACTIVE_RUN_DIR
     parser = argparse.ArgumentParser()
@@ -141,7 +149,7 @@ def main() -> None:
             if hasattr(model, "_means")
         }
         rigid = trainer.models["RigidNodes"]
-        point_ids = rigid.points_ids[:, 0].detach().cpu().tolist()
+        point_ids = runtime_rigid_point_ids(rigid)
         actor_rows = audit_actor_indices(point_ids, source_registry["actors"])
         total_seconds = time.perf_counter() - started
         peak_allocated = float(torch.cuda.max_memory_allocated(device) / (1024**2))
