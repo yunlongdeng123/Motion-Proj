@@ -1614,6 +1614,26 @@ occupied PSNR、global PSNR 与 non-target PSNR 分别退化 `0.117684/0.110926/
 不能在看到 b05 失败后新增 b01/b02、改排名视图、放宽 `0.10 dB` 或只保留通过的局部端点；这些都属于新的预注册
 实验，而不是当前 P1 的修复。该负结果只约束 scene-0230/seed-0/冻结视图矩阵，不外推为所有贡献度剪枝均失败。
 
+### PIVOT-F28：顶层 `named_parameters()` 不保证覆盖普通映射中的子模型参数
+
+A4-P2 formal r1=`20260809T174337Z__a4-p2-mixed-precision-s0-r1` 已成功完成 10-field checkpoint conversion、
+source/candidate 57-view quality、两臂 runtime、aggregate 与 no-torch resume；aggregate 也按冻结门选择 mixed arm。
+但 finalizer 的 `checkpoint_reduction_and_runtime_matrix_exact` 唯一失败：账本只调用
+`trainer.named_parameters()`，而 DriveStudio 把 Gaussian 子模型保存在普通 `trainer.models` 映射中，并未注册成
+顶层 `ModuleDict`。因此账本只看见 LPIPS 等 `9,883,392 bytes`，把 source/candidate 错记为相同总量且没有 FP16
+bucket，尽管候选 checkpoint 已实际从 `578,819,674` 降到 `432,111,754 bytes`。
+
+这属于 evidence collection defect，不是 conversion、质量、资源或方法失败。r1 保留 `blocked`，terminal SHA=
+`5ef3dab60ff934af19ff547c0f7e7cd0fe74b83000476888a630341ee39474c0`；不得手改 r1 runtime stage 或把它倒写为
+done。修复 `dcf2822` 显式遍历 `trainer.models` 中每个 module 的 parameters，并按 Parameter identity 去重；回归 fixture
+故意使用未注册的普通映射，锁定 `models.Background._scales` 等字段必须进入账本。协议、字段、阈值、renderer 与
+selection 均未改变。
+
+新目录 canonical r2=`20260809T174850Z__a4-p2-mixed-precision-s0-r2` 完成 19/19 audits，正确记录 source/candidate
+persistent bytes=`394,641,424 / 247,936,208` 与 candidate FP16 bucket=`146,705,216 bytes`，并选择 mixed arm。
+以后审计复合模型时，必须同时核对容器是否已注册为 `nn.Module`、顶层 traversal 覆盖范围与逐字段预期集合；
+证据账本缺失不得用 checkpoint 文件变小或 runtime 成功来推断补齐。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

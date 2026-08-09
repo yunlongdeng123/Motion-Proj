@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0、P5 与 P1 已 done；P1 三个候选均被冻结质量门拒绝并 exact fallback 到 source；P2 FP16 协议已冻结，下一步只实现 runner
+- 当前门禁：A4-P0、P5、P1 与 P2 已 done；P1 候选被拒绝并 exact fallback 到 source；P2 canonical r2 已选择 mixed checkpoint；下一步只冻结 P3 chunk protocol
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -59,6 +59,17 @@ means、Sky、LPIPS、trajectory 与 provenance 保留 FP32/原 dtype exact。ru
 但进入 gsplat 前显式转 FP32、autocast=false，不宣称 FP16 renderer。57-view 31 项质量门、9-view runtime、
 7-stage recovery、900 s/16 GiB torch/48 GiB cgroup/1 GB run ceiling 与 19 audits 已固定；full validator passed，
 协议测试 9 passed、联合 WorldSim V3 199 passed。下一步只实现并提交 runner，P3 仍未授权。
+
+P2 runner/fix=`1cd9a6e / dcf2822`。r1=`20260809T174337Z__a4-p2-mixed-precision-s0-r1` 的 conversion、quality、
+runtime、aggregate 与 resume 均完成，但参数账本未遍历普通 `trainer.models` 映射，finalizer 唯一 audit 失败；r1
+保持 `blocked`，terminal SHA=`5ef3dab6...74c0`。只修账本后的 canonical r2=
+`20260809T174850Z__a4-p2-mixed-precision-s0-r2` exit=`0`、19/19 audits、31/31 safeguards、source replay exact，
+summary SHA=`980f9b0f...1103`。candidate checkpoint=`7be87e8b...7448 / 432,111,754 bytes`，较 source 减少
+`146,707,920 bytes / 25.346049%`；persistent parameters=`394,641,424→247,936,208 bytes / -37.174307%`。
+runtime 只报告 source/candidate load=`.33669/.47407 s`、P50=`.04583/.08721 s`、P95=`.13170/.09750 s`、
+FPS=`17.256/13.065`，不支持 speedup claim。resource passed：wall=`206.548 s`、allocated/reserved/NVIDIA=
+`7,754.05/8,072/8,426 MiB`、cgroup=`29,673,631,744 bytes`、run=`436,430,167 bytes`、OOM=0；resume=
+`1.217 s`/6 stages/no torch/no GPU。P2=`done`，selected=`p2-gs-param-fp16`；A4 仍缺 P3。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -444,20 +455,20 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol=`6558fb3f...6d4e` frozen、runner next，P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1、P2 done；P1 method rejected；P2 selected mixed checkpoint；P3 protocol next |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：P1 r1 终态 free=`43,679,989,760 bytes`；
-- A3 heldout r5、A4-P0 v1 r1 与 A4-P5 r1 均保留 blocked；P0 v2 r2 与 P5 r2 exit=`0`，GPU 无遗留进程；
+- 数据盘：P2 r2 终态 free=`42,806,071,296 bytes`；
+- A3 heldout r5、A4-P0 v1 r1、A4-P5 r1 与 A4-P2 r1 均保留 blocked；P0/P5/P2 canonical r2 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P2-fp16` runner：no-torch input controller、source dtype audit、10-field
-atomic mixed checkpoint/registry、persistent-FP16/renderer-FP32 adapter、source/candidate 57-view evaluator、双臂
-9-view runtime、aggregate/finalizer 与 no-torch resume。实现和联合回归提交前不创建 P2 formal run；P3、D3/D4 与
-A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
+冻结 `WS-V3-A4-DEPLOYMENT-01 / P3-chunk` 最小协议、validator 与测试：输入只接 P2-selected mixed asset；结果前
+固定 static spatial chunk、dynamic actor 独立资产、边界审计、source/chunk 质量与 runtime、manifest/hash/count、
+资源上限、恢复阶段和 exact fallback。协议提交前不实现或创建 P3 formal run；P4、D3/D4 与 A3 formal/R2–R4
+保持未解锁；F0 独立非阻塞。
