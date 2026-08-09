@@ -148,7 +148,7 @@ median/P90=`7.256/12.215 mm`、rotation=`0.1660/0.35465°`；C3 为 `1.703/2.338
 
 ### `WS-V3-A2-ACTOR-DENSIFY-01` I0 完成证据
 
-- canonical r3 项目基线 `70cf2b2` + run 内 source snapshot；当前实现由本次 A2-I0 milestone commit 收口；
+- canonical r3 项目基线 `70cf2b2` + run 内 source snapshot；当前实现提交 `271d876`；
   DriveStudio upstream `e59bda4`，patched worktree
   `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-r5`；
 - 配置 `configs/worldsim_v3/a2_instrumentation_v1.yaml` SHA-256：

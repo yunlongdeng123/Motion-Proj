@@ -6,6 +6,7 @@
 - **执行环境**：AutoDL，单卡 NVIDIA GeForce RTX 3090 24 GiB，cgroup memory 90 GiB
 - **当前分支**：`research/worldsim-v3`
 - **A1 正式实现基线**：`198a681`（开发选择、确认矩阵、exact alias 与 finalizer）
+- **A2-I0 实现基线**：`271d876`（ancestry instrumentation、module-off 等价、正式控制器与事实源）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
 - **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 pending / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
@@ -280,8 +281,8 @@ finalizer `20260806T211248Z__a1-three-scene-finalize-s0-r1`=`done`：`10/10` 逻
 
 ### 2.4 当前 A2-I0 instrumentation 现场快照
 
-- canonical r3 的项目提交基线：`research/worldsim-v3@70cf2b2` + 不可变 source snapshot；当前实现由本次
-  A2-I0 milestone commit 收口；
+- canonical r3 的项目提交基线：`research/worldsim-v3@70cf2b2` + 不可变 source snapshot；当前实现由
+  `271d876` 收口；
 - DriveStudio 上游：`e59bda4fa681f829dbb1d65f0de582b0f633c450`；patched worktree：
   `/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-r5`；
 - 冻结配置：`configs/worldsim_v3/a2_instrumentation_v1.yaml`，SHA-256
@@ -1220,6 +1221,7 @@ smoke/资源门禁未通过时不得启动 D1 formal。
 
 ### 2026-08-09 — A2-I0 ancestry instrumentation 收口
 
+- 实现提交：`271d876`；
 - DriveStudio `e59bda4` 的 RigidNodes split、clone、external replacement、prune 与 checkpoint 数据流已接入逐
   Gaussian ancestry；
 - 冻结 I0 配置、init-source code、online/update API、module-off 等价合同和 legacy checkpoint 边界；
