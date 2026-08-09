@@ -79,6 +79,21 @@ def counterfactual_effect_mask(
     return binary_dilate(difference >= threshold_uint8, dilation_radius)
 
 
+def complement_of_mask_union(masks: Iterable[np.ndarray]) -> np.ndarray:
+    """Return the non-target complement of a non-empty, shape-matched mask set."""
+
+    values = [_require_mask(mask) for mask in masks]
+    if not values:
+        raise ValueError("mask union requires at least one mask")
+    shape = values[0].shape
+    if any(value.shape != shape for value in values[1:]):
+        raise ValueError("all masks in a union must share a shape")
+    union = np.zeros(shape, dtype=bool)
+    for value in values:
+        union |= value
+    return ~union
+
+
 def region_error_sums(
     prediction: np.ndarray, target: np.ndarray, mask: np.ndarray
 ) -> dict[str, float | int]:

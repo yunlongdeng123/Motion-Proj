@@ -17,6 +17,9 @@ def materialize_config(
     variant: str,
     num_iters: int,
     actor_quota: DictConfig,
+    *,
+    stage: str = "paired-smoke",
+    checkpoint_interval: int | None = None,
 ) -> DictConfig:
     if variant not in VARIANTS:
         raise ValueError(f"unknown A2-D1 variant: {variant}")
@@ -27,7 +30,16 @@ def materialize_config(
         "motion_proj.worldsim_v3.trainer.WorldSimV3Trainer"
     )
     config.trainer.optim.num_iters = int(num_iters)
-    config.logging.saveckpt_freq = int(num_iters)
+    if stage not in {"paired-smoke", "formal"}:
+        raise ValueError(f"unknown A2-D1 materialization stage: {stage}")
+    if stage == "formal" and num_iters != 30_000:
+        raise ValueError("A2-D1 formal materialization requires 30000 iterations")
+    save_interval = int(checkpoint_interval or num_iters)
+    if save_interval <= 0 or num_iters % save_interval:
+        raise ValueError("checkpoint interval must be positive and divide num-iters")
+    if stage == "formal" and save_interval != 5_000:
+        raise ValueError("A2-D1 formal checkpoint interval is frozen at 5000")
+    config.logging.saveckpt_freq = save_interval
     config.render.render_full = False
     config.render.render_test = False
     config.render.render_novel = None
@@ -49,7 +61,11 @@ def materialize_config(
     }
     config.worldsim_v3 = {
         "task_id": "WS-V3-A2-ACTOR-DENSIFY-01",
-        "stage": "D1 paired engineering smoke",
+        "stage": (
+            "D1 paired engineering smoke"
+            if stage == "paired-smoke"
+            else "D1 formal fixed-step and matched-budget candidate grid"
+        ),
         "variant": variant,
         "seed": 0,
         "scene": "scene-0230",
@@ -58,6 +74,8 @@ def materialize_config(
             native_background_threshold
         ),
         "actor_quota_checkpoint_key": "worldsim_a2_actor_quota",
+        "formal": stage == "formal",
+        "checkpoint_interval": save_interval,
     }
     return config
 
@@ -68,6 +86,10 @@ def main() -> None:
     parser.add_argument("--contract", type=Path, required=True)
     parser.add_argument("--variant", choices=VARIANTS, required=True)
     parser.add_argument("--num-iters", type=int, required=True)
+    parser.add_argument(
+        "--stage", choices=("paired-smoke", "formal"), default="paired-smoke"
+    )
+    parser.add_argument("--checkpoint-interval", type=int)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -85,6 +107,8 @@ def main() -> None:
         args.variant,
         args.num_iters,
         actor_quota,
+        stage=args.stage,
+        checkpoint_interval=args.checkpoint_interval,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     OmegaConf.save(config=config, f=args.output)

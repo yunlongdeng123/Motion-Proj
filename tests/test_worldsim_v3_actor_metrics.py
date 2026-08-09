@@ -5,6 +5,7 @@ from motion_proj.worldsim_v3.actor_metrics import (
     binary_dilate,
     binary_erode,
     boundary_band,
+    complement_of_mask_union,
     counterfactual_effect_mask,
     psnr_from_sums,
     region_error_sums,
@@ -51,3 +52,22 @@ def test_region_sums_and_psnr() -> None:
     assert psnr_from_sums(result["squared_error_sum"], result["value_count"]) == pytest.approx(
         6.020599913279624
     )
+
+
+def test_non_target_is_complement_of_selected_actor_union() -> None:
+    first = np.zeros((3, 4), dtype=bool)
+    second = np.zeros((3, 4), dtype=bool)
+    first[0, 0] = True
+    second[1, 1:3] = True
+    non_target = complement_of_mask_union([first, second])
+    assert non_target.sum() == 9
+    assert not non_target[0, 0]
+    assert not non_target[1, 1]
+    assert non_target[2, 3]
+
+
+def test_non_target_union_rejects_shape_drift() -> None:
+    with pytest.raises(ValueError, match="share a shape"):
+        complement_of_mask_union(
+            [np.zeros((2, 2), dtype=bool), np.zeros((3, 2), dtype=bool)]
+        )

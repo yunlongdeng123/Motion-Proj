@@ -1,0 +1,114 @@
+schema_version: 1
+task_id: WS-V3-A2-ACTOR-DENSIFY-01
+audit_version: A2-D1-FORMAL-v1
+
+depends_on:
+  implementation_commit: c9b2422af637370ca90f48b42a7d0131f458f96d
+  base_contract: configs/worldsim_v3/a2_d1_v1.yaml
+  base_contract_sha256: 6895370625080ccab327e731264e9ebb0f980499b8fec87d02d9efb2e56b14af
+  paired_smoke_run: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T081330Z__a2-d1-paired-smoke1k-s0-r4
+  paired_smoke_summary_sha256: ec219bb567799d4d84252e86bd4194620f6b5563d6032c43067ff8e155d3b8bd
+
+paired_design:
+  scene: scene-0230
+  scene_index: 179
+  seed: 0
+  order: [d0-native, d1-actor-quota]
+  num_iters: 30000
+  checkpoint_interval: 5000
+  test_image_stride: 10
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T171624Z__scene0230-reuse-eval-s0-r1/assets/native_checkpoint/config.yaml
+  initialization_provenance:
+    require_exact_pair_match: true
+    require_truth_tier: exact_runtime_initialization_inputs
+    seed_reset: python_numpy_torch_cpu_cuda_immediately_before_initialization
+  paired_config_normalization:
+    mutable_fields: [worldsim_v3.variant, model.RigidNodes.ctrl.a2_actor_quota.enabled]
+    require_all_other_fields_equal: true
+
+matched_gaussian_budget:
+  scope: RigidNodes
+  rationale: D1 only intervenes on actor densification; background remains native and is reported separately
+  target: d0_final_30000_rigid_gaussians
+  candidate_steps: [5000, 10000, 15000, 20000, 25000, 30000]
+  selection: minimum_absolute_gap_then_earliest_step
+  maximum_relative_gap: 0.02
+  failure_status: ABSTAIN_BUDGET_NOT_MATCHED
+  posthoc_pruning: false
+  retraining: false
+  quota_retuning: false
+  checkpoint_mutation: false
+  d0_view: exact_alias_of_fixed_step_final
+  resource_accounting:
+    wall_time: elapsed_from_arm_start_to_selected_checkpoint_mtime
+    peak_vram: full_30k_arm_sampled_peak_upper_bound
+    peak_cgroup: full_30k_arm_sampled_peak_upper_bound
+
+evaluation:
+  formal_full_split: true
+  global_metrics: [psnr, ssim, lpips]
+  actor_roles: [high-support, boundary-support]
+  actor_regions: [actor_region, boundary_band]
+  actor_metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px]
+  non_target_definition: complement_of_selected_actor_counterfactual_union
+  non_target_truth_tier: model_counterfactual_diagnostic_not_ground_truth_segmentation
+  non_target_metrics: [psnr, ssim, masked_lpips_alex_tight_crop_256px, mean_absolute_error]
+  checkpoint_must_remain_unchanged: true
+  quality_directions:
+    global.psnr: max
+    global.ssim: max
+    global.lpips: min
+    high.actor.psnr: max
+    high.actor.ssim: max
+    high.actor.lpips: min
+    high.boundary.psnr: max
+    high.boundary.ssim: max
+    high.boundary.lpips: min
+    boundary.actor.psnr: max
+    boundary.actor.ssim: max
+    boundary.actor.lpips: min
+    boundary.boundary.psnr: max
+    boundary.boundary.ssim: max
+    boundary.boundary.lpips: min
+    non_target.psnr: max
+    non_target.ssim: max
+    non_target.lpips: min
+    non_target.mae: min
+  pareto:
+    numeric_tolerance: none
+    cost_axes: [rigid_gaussians, total_gaussians, wall_time, peak_vram, peak_cgroup]
+    more_gaussians_is_not_automatic_improvement: true
+
+resource_contract:
+  execution: sequential
+  gpu_count: 1
+  cgroup_memory_limit_bytes: 96636764160
+  minimum_free_disk_gib: 40
+  gpu_idle_max_mib: 2048
+  monitoring_interval_seconds: 10
+  memory_stop_fraction: 0.90
+  memory_stop_consecutive_samples: 2
+  stop_on_oom_event_increase: true
+  train_timeout_seconds_per_arm: 10800
+  eval_timeout_seconds_per_stage: 1800
+  outer_execution: tmux_or_nohup_only
+  process_cleanup: exact_process_group_only
+
+scope_boundary:
+  stage: d1_threshold_and_actor_quota_only
+  background_policy: native_unchanged
+  native_cull_policy: unchanged
+  forbidden:
+    - boundary_weighting
+    - photometric_residual_weighting
+    - depth_residual_weighting
+    - normal_residual_weighting
+    - gaussian_scale_cap
+    - lidar_distance_weighting
+    - visibility_weighting
+
+formal_gate:
+  fixed_step_required: true
+  matched_budget_done_required_before_d2: true
+  matched_budget_abstain_does_not_unlock_d2: true
+  negative_quality_result_is_valid_evidence: true

@@ -19,6 +19,7 @@ from skimage.metrics import structural_similarity
 
 from motion_proj.worldsim_v3.actor_metrics import (
     boundary_band,
+    complement_of_mask_union,
     counterfactual_effect_mask,
     finite_mean,
     psnr_from_sums,
@@ -262,6 +263,14 @@ def main() -> None:
         type=int,
         help="Optional engineering-smoke cap; omit for a formal full-split run.",
     )
+    parser.add_argument(
+        "--non-target-union",
+        action="store_true",
+        help=(
+            "Also evaluate the complement of the union of the selected actor "
+            "counterfactual masks over the complete held-out split."
+        ),
+    )
     args = parser.parse_args()
 
     if args.max_images_per_role is not None and args.max_images_per_role <= 0:
@@ -357,10 +366,17 @@ def main() -> None:
             for position in spec["positions"]
         }
     )
+    if args.non_target_union:
+        required_positions = list(range(len(test_indices)))
     original_cache: dict[int, np.ndarray] = {}
+    target_cache: dict[int, np.ndarray] = {}
+    target_union_cache: dict[int, np.ndarray] = {}
     for ordinal, position in enumerate(required_positions, start=1):
-        prediction, _ = render_sample(dataset, trainer, position, device)
+        prediction, target = render_sample(dataset, trainer, position, device)
         original_cache[position] = uint8_rgb(prediction)
+        target_cache[position] = target
+        if args.non_target_union:
+            target_union_cache[position] = np.zeros(target.shape[:2], dtype=bool)
         print(
             f"original {ordinal}/{len(required_positions)} position={position}",
             flush=True,
@@ -405,6 +421,8 @@ def main() -> None:
                 threshold_uint8=EFFECT_THRESHOLD_UINT8,
                 dilation_radius=EFFECT_DILATION_RADIUS,
             )
+            if args.non_target_union:
+                target_union_cache[position] |= effect
             boundary = boundary_band(effect, radius=BOUNDARY_RADIUS)
             full_index = test_indices[position]
             frame = full_index // num_cameras
@@ -481,6 +499,48 @@ def main() -> None:
             "boundary_band": boundary_summary,
         }
 
+    non_target_result: dict[str, object] | None = None
+    if args.non_target_union:
+        non_target_accumulator = RegionAccumulator()
+        target_union_pixels = 0
+        candidate_pixels = 0
+        for position in required_positions:
+            original = original_cache[position].astype(np.float32) / 255.0
+            target = target_cache[position]
+            target_union = target_union_cache[position]
+            non_target = complement_of_mask_union([target_union])
+            target_union_pixels += int(target_union.sum())
+            candidate_pixels += int(target_union.size)
+            if not non_target.any():
+                continue
+            image_ssim = ssim_map(original, target)
+            lpips_value = masked_lpips(
+                trainer.lpips, original, target, non_target, device
+            )
+            non_target_accumulator.update(
+                original, target, non_target, image_ssim, lpips_value
+            )
+        quality = non_target_accumulator.summary()
+        non_target_result = {
+            "status": quality["status"],
+            "reason": quality.get("reason"),
+            "definition": (
+                "held-out pixels outside the union of high-support and "
+                "boundary-support model-counterfactual effect masks"
+            ),
+            "truth_tier": (
+                "model_counterfactual_diagnostic_not_ground_truth_segmentation"
+            ),
+            "selected_roles": list(ROLE_NAMES),
+            "heldout_image_count": len(required_positions),
+            "target_union_pixel_count": target_union_pixels,
+            "candidate_pixel_count": candidate_pixels,
+            "target_union_coverage": (
+                target_union_pixels / candidate_pixels if candidate_pixels else None
+            ),
+            "quality": quality,
+        }
+
     checkpoint_after = sha256_file(checkpoint)
     if checkpoint_after != checkpoint_before:
         raise RuntimeError("checkpoint changed during read-only actor evaluation")
@@ -513,6 +573,7 @@ def main() -> None:
             "aggregation": "pixel-weighted PSNR/SSIM/MAE; visible-image mean masked LPIPS",
         },
         "roles": role_results,
+        "non_target": non_target_result,
         "per_image_metrics": str(rows_path),
         "qa_directory": str(args.output_dir / "qa"),
     }
