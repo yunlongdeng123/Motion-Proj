@@ -138,13 +138,22 @@ def test_resource_audit_persists_exact_failed_dimension() -> None:
 
 
 def test_checkpoint_loader_stages_tensors_on_cpu(monkeypatch, tmp_path) -> None:
-    state_dict = {"step": 1, "models": {"Background": {"value": 2}}}
+    rigid_state = {"value": 2}
+    state_dict = {
+        "step": 1,
+        "models": {"Background": {"value": 1}, "RigidNodes": rigid_state},
+    }
     observed = {}
 
     def fake_load(path, *, map_location):
         observed["path"] = path
         observed["map_location"] = map_location
         return state_dict
+
+    def fake_to_device(value, device):
+        observed["rigid_state"] = value
+        observed["rigid_device"] = device
+        return {"staged": value}
 
     class FakeTrainer:
         def load_state_dict(self, value, *, load_only_model, strict):
@@ -153,12 +162,18 @@ def test_checkpoint_loader_stages_tensors_on_cpu(monkeypatch, tmp_path) -> None:
             observed["strict"] = strict
 
     monkeypatch.setattr(heldout_eval.torch, "load", fake_load)
+    monkeypatch.setattr(heldout_eval, "to_device", fake_to_device)
     checkpoint = tmp_path / "checkpoint.pth"
-    load_model_checkpoint_read_only(FakeTrainer(), checkpoint)
+    device = heldout_eval.torch.device("cuda:0")
+    load_model_checkpoint_read_only(FakeTrainer(), checkpoint, device)
     assert observed == {
         "path": checkpoint,
         "map_location": "cpu",
+        "rigid_state": rigid_state,
+        "rigid_device": device,
         "state_dict": state_dict,
         "load_only_model": True,
         "strict": True,
     }
+    assert state_dict["models"]["Background"] == {"value": 1}
+    assert state_dict["models"]["RigidNodes"] == {"staged": rigid_state}

@@ -43,9 +43,17 @@ def command_output(*command: str, cwd: Path) -> str:
     return subprocess.check_output(command, cwd=cwd, text=True).strip()
 
 
-def load_model_checkpoint_read_only(trainer: Any, checkpoint: Path) -> None:
+def load_model_checkpoint_read_only(
+    trainer: Any, checkpoint: Path, device: torch.device
+) -> None:
     """Load through CPU so the resident model is not duplicated on GPU."""
     state_dict = torch.load(checkpoint, map_location="cpu")
+    model_states = state_dict.get("models", {})
+    if "RigidNodes" in model_states:
+        # The RigidNodes quota validator compares checkpoint counts with
+        # resident CUDA limits before torch's normal load_state_dict copy.
+        # This state is small; stage only it on the target device.
+        model_states["RigidNodes"] = to_device(model_states["RigidNodes"], device)
     trainer.load_state_dict(state_dict, load_only_model=True, strict=True)
     del state_dict
 
@@ -479,7 +487,7 @@ def main() -> None:
     )
     if hasattr(trainer, "optimizer"):
         raise RuntimeError("A3 read-only evaluator constructed an optimizer early")
-    load_model_checkpoint_read_only(trainer, r0_checkpoint)
+    load_model_checkpoint_read_only(trainer, r0_checkpoint, device)
     trainer.set_eval()
     rigid = trainer.models["RigidNodes"]
     rigid_sha_before = rigid_contract_sha256(rigid)
@@ -624,7 +632,7 @@ def main() -> None:
     if rigid_contract_sha256(rigid) != rigid_sha_before:
         raise RuntimeError("A3 R0 actor edit restore drift")
     print("A3 heldout phase: R1 original and edited metrics", flush=True)
-    load_model_checkpoint_read_only(trainer, r1_checkpoint)
+    load_model_checkpoint_read_only(trainer, r1_checkpoint, device)
     trainer.set_eval()
     if rigid_contract_sha256(rigid) != rigid_sha_before:
         raise RuntimeError("A3 R1 Rigid checkpoint drift")
