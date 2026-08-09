@@ -15,8 +15,10 @@
 - **A2 正式收口基线**：`2246693`（D2 formal 证据、非支配裁决、D2 research asset 与 D1 fallback）
 - **A3-I0 协议 SHA-256**：`03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0`
 - **A3 R0/R1 engineering guard 基线**：`9c639dd`（exact alias、row/Adam exact guard、DriveStudio patch 与 synthetic smoke）
+- **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
+- **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 synthetic contract done / A3 paired sidecar-smoke next / D3-D4 not launched / F0、A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 R1 paired+frozen replay done / A3 heldout evaluation protocol next / D3-D4 not launched / F0、A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -1033,11 +1035,40 @@ actor_quality.json
   coverage/uncertainty/ABSTAIN。ancestry `nearest_lidar_distance` 只是 provenance，不是 T0 metric depth；
 - expected/first-hit/measured depth 分别固定为 `diagnostic / T1 / T0`；无名 `depth` 产品禁止。R0 为 D2
   checkpoint immutable exact alias，R1→R4 必须一次只加一个因子；首个工程门只做 R0/R1；
-- 当前 `formal_training_authorized=false`。paired smoke 后仍须另行冻结 steps、逐字段 learning rate、affected/seed
-  cap、first-hit alpha threshold 与资源上界，才可设计 formal；
+- 当前 `formal_training_authorized=false`。R1 paired smoke 后已经冻结 steps、逐字段 learning rate、affected/seed
+  cap、first-hit alpha threshold 与资源上界；在读取 heldout 结果前仍须另行冻结只读评测协议，不能直接 formal；
 - A3 独立实现不得依赖工作树中未提交的 V2 M5 config、`stress_metrics.py` 或 stress runner。协议 validator、
   support classifier、affected-mask 与逐 tensor outside audit 使用独立 V3 模块；新增 `12 passed`，联合 WorldSim
   V3/materializer 回归 `98 passed`。
+
+### 10.0.1 A3 R1 真实 S-B/T0 paired smoke 与数值冻结
+
+- heldout-safe sidecar run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T133911Z__a3-sb-sidecar-s0-r3`；
+  manifest SHA-256=`42474f73fc563a2bba4c52cbec029bb4c28d33a21ca5f3d83ad4311bb7957273`，rows SHA-256=
+  `c5756ecbc0eabee9a576a55297a1739aa20e2af578aa4a5a92e727701b5138fc`。选择 frame `0/31`、camera 0，
+  与 19 个 heldout frames 交集为空；S-A=`ABSTAIN/0`；
+- Background affected=`16,502` 行，其中 S-B mutable=`51`、S-C abstain=`16,451`；四个
+  `high/boundary × lateral/delete` unit 共 8 个 T0 geometry loss 像素，S-B RGB loss 恒为 0；first-hit alpha
+  `0.5` 在该门只作冻结 visibility diagnostic；
+- canonical paired run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T135921Z__a3-r1-sb-paired4-s0-r2`；
+  summary/manifest SHA-256=`ba4e2b853690f0b9c9bb7bfe039b4571db16c020ce726768a1ff884b09b3557d / de717ba0a5adb1afeb416a15a53ec55f471a8eb841882f784012b04ac86b596c`；
+  step `30001–30004` 每个 unit 恰好一步，R1 checkpoint SHA-256=
+  `e995e7c266d9fed4e64c86813718e46ab4576bbfdf60500a637bdaeaaba78cd1`；
+- 两个授权字段每步均有 finite/nonzero gradient 与行内变化；行外参数和 Adam moments、其他字段、RigidNodes、
+  actor trajectory/registry、tensor shape/dtype/order 全部 exact。wall=`50.16 s`、peak GPU=`8,286.86 MiB`、
+  sampled cgroup peak=`22,076,936,192 bytes`、OOM=`0`；
+- 数值冻结配置=`configs/worldsim_v3/a3_r1_numeric_freeze_v1.yaml`，SHA-256=
+  `d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`：steps=`4`，opacity/scaling LR=
+  `0.05/0.005`，affected/mutable cap=`16,502/51`，seed cap=`0`，alpha=`0.5`，资源 ceiling=
+  `120 s / 12,288 MiB / 32 GiB / 650,000,000 run bytes`；
+- frozen replay run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T140534Z__a3-r1-sb-frozen-replay4-s0-r1`；
+  summary/manifest SHA-256=`7d820a53de21f505a5c56043d56556edb8d3a86510488ea3956b7cfa159187c6 / 393e65d5f91c0e2072eebd7c23a1161d46422502220ceeeaa18c04905fec646d`；
+  四单元 loss 逐值相同，重现同一 checkpoint SHA，wall=`50.68 s`、peak GPU=`8,286.86 MiB`、
+  sampled cgroup peak=`22,631,796,736 bytes`、OOM delta=`0`；
+- 这些证据只关闭真实工程链与数值可重放门。S-A 未物化，S-B pixel quality claim 禁止，R2–R4 与 formal 仍未授权。
 
 ### 10.1 核心边界
 
@@ -1391,24 +1422,34 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 A1 已以 `C*=C0-off / done_off` 收口，A2 的 I0、D1/D2 smoke、D1/D2 formal 与 fixed/matched 完整 Pareto
 也已全部闭环。A2 终态为 `done / tradeoff_non_dominated`：D2 在 boundary-support boundary band 改善，
 但 global、部分 actor/non-target 与训练成本存在退化；A3 采用 D2 boundary-priority asset，保留 D1 fallback。
-A3-I0 semantic protocol 已冻结，R0/R1 materializer、DriveStudio patch、module-off loss exact、逐步 outside
-parameter/Adam exact 与 synthetic contract 已由 `9c639dd` 和 synthetic run 闭环；这不是 paired 或质量证据，仍未授权
-formal。当前唯一动作前移到真实 scene-0230 paired evidence：
+A3-I0 semantic protocol、R0 exact alias、R1 real S-B/T0 sidecar、四步 paired smoke 和 frozen replay 均已闭环；
+checkpoint `e995e7c2...8cd1` 已逐位重现，工程实现仍不是 heldout 质量证据，formal 继续未授权。当前唯一动作前移到
+读取任何 R0/R1 heldout 结果之前的评测协议冻结：
 
 ```text
-1. 对 high/boundary actor 的 lateral +1m/delete 物化 deterministic source/edited footprints，不使用 held-out frames
-2. 生成 Background 1,205,164 行的 affected/support NPZ+manifest；S-A/S-B/S-C、三种 typed depth 与 SHA provenance 完整
-3. 将 S-A RGB mask、S-A/S-B geometry mask 注入 DriveStudio；缺失/越权/S-B RGB/S-C update 必须 fail closed
-4. 先做最小 R0/R1 paired engineering smoke；继续要求 outside parameter/Adam、RigidNodes/trajectory/registry/order exact
-5. smoke 通过后才冻结 optimizer steps、opacity/scaling LR、affected cap、first-hit alpha 与资源上界；不得直接 formal
+1. 只读加载 R0 D2 alias 与 frozen R1 checkpoint，不再执行 optimizer step
+2. 在 19 个 heldout frames × 3 cameras 上冻结可计算的 depth-order violation、vacated-source residual、coverage 与 non-target safeguard
+3. S-B 只登记 T0/T1 geometry endpoint 与 coverage，不登记 RGB/PSNR/SSIM/LPIPS 成功；S-C 只登记 ABSTAIN
+4. 在读取结果前冻结 actor/edit/view 聚合、missing-value、exact Pareto 与 checkpoint 不可变性规则
+5. 评测后才裁决 R1 是继续、rejected 或需要独立 S-A 物化；不得把当前 smoke 直接升级为 formal，也不得混入 R2–R4
 ```
 
-paired smoke 后才冻结 optimizer steps、LR、affected/seed cap、first-hit alpha 和资源上界。D3 继续
-`not_unlocked`，D4 继续 `not_launched`；F0 独立非阻塞。A3 不得把 unknown background 改写为真值。
+R1 数值合同已经冻结并通过 bitwise replay；下一冻结对象仅是 heldout 只读评测合同。D3 继续 `not_unlocked`，
+D4 继续 `not_launched`；F0 独立非阻塞。A3 不得把 unknown background 改写为真值。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A3 R1 真实 paired smoke、数值冻结与 bitwise replay 完成
+
+- sidecar materializer/controller=`3b8526a / aac5213`；paired runner/guard=`d89e0ac`，CUDA preflight fix=`78741b3`，
+  numeric freeze=`c02c8c7`；当前 A3 联合回归 `119 passed`；
+- real sidecar 将 frame `0/31` 的四个 unit 冻结为 8 个 S-B/T0 loss pixels、51 mutable Background rows、
+  16,451 S-C abstain rows；19 个 heldout frames 未进入 support/optimization，S-A 保持 0；
+- canonical paired 与 frozen replay 的四单元 loss 完全相同，checkpoint SHA 均为 `e995e7c2...8cd1`；outside
+  parameter/Adam、Rigid/trajectory/registry、shape/order exact，资源均低于冻结上界且无 OOM；
+- `formal_training_authorized=false`、`quality_claim_authorized=false`；下一门禁是结果前冻结 heldout 只读评测协议。
 
 ### 2026-08-09 — A3 R0/R1 exactness guard 与 synthetic contract 完成
 
@@ -1586,8 +1627,10 @@ WS-V3-A3-LOCAL-REFINE-01 当前为 running；I0 semantic protocol 已冻结，fo
 11. 核对 D2 paired smoke r1 terminal、summary SHA `749c7d15...3136`、provenance、真实 observation/order/cap、quota 与资源门禁；
 12. 核对 D2 formal r1 terminal、summary SHA `9c41dfc8...de7d`、六个 grid、matched 0.67165%、D1 checkpoint 不变与资源终态；
 13. 核对 A3 protocol SHA `03fbf632...72d0`、D2/D1 asset hashes、两 actor/两 edit、held-out exclusion、S-A/B/C 与三种 depth 语义；
-14. 核对 A3 implementation `9c639dd`、patch SHA `155ec58f...b69b`、synthetic summary/manifest、110 项测试、R0 alias 与 R1 outside/Adam exact；
-15. 当前只物化真实 heldout-safe affected/support sidecar、paired loss 注入和最小 R0/R1 engineering smoke；不得启动 formal 或混入 R2-R4。
+14. 核对 A3 synthetic implementation `9c639dd`、summary/manifest、R0 alias 与 R1 outside/Adam exact；
+15. 核对 sidecar manifest `42474f73...7273`、8 个 S-B/T0 pixels、51 mutable/16,451 S-C rows 与 heldout exclusion；
+16. 核对 paired/frozen replay 两次 checkpoint SHA `e995e7c2...8cd1`、numeric freeze SHA `d9289df0...b3e3`、119 项测试和资源上界；
+17. 当前只允许结果前冻结并执行 R0/R1 heldout 只读评测；不得启动 formal、混入 R2-R4 或把 S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```

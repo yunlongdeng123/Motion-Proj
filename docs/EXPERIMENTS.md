@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已进入 `running`，I0 semantic protocol 已冻结；
-当前实现 R0/R1 工程门，尚未授权 A3 formal 训练。
+R1 real S-B/T0 paired smoke、数值冻结与 bitwise replay 已完成，尚未授权 A3 formal 训练。
 
 ## 1. 状态词
 
@@ -31,7 +31,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
-| `WS-V3-A3-LOCAL-REFINE-01` | running | 编辑区域局部 Gaussian 精修 | I0 protocol frozen；R0/R1 exact/outside smoke next；formal 未授权 |
+| `WS-V3-A3-LOCAL-REFINE-01` | running | 编辑区域局部 Gaussian 精修 | R1 real paired+frozen replay done；heldout evaluation protocol next；formal 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
@@ -315,9 +315,8 @@ Matched-RigidNodes-budget：
   `diagnostic/T1/T0`，ancestry 不冒充 measured depth；
 - R0 为 immutable exact alias；R1 只允许 affected S-A/S-B 的 Background opacity/scale；outside parameter 与
   optimizer、RigidNodes/trajectory/registry exact。R2 appearance、R3 evidence seed、R4 temporal 继续锁定；
-- 当前 stage=`semantic_protocol_and_synthetic_contract_only`、`formal_training_authorized=false`；V2 M5 未提交文件
-  不得成为 A3 dependency；新增 `12 passed`，联合 WorldSim V3/materializer 回归 `98 passed`。下一工程门是
-  materializer/patch/module-off/outside exact 与 paired smoke。
+- I0 冻结时 stage=`semantic_protocol_and_synthetic_contract_only`、`formal_training_authorized=false`；V2 M5 未提交文件
+  不得成为 A3 dependency；新增 `12 passed`，联合 WorldSim V3/materializer 回归 `98 passed`。后续工程门见 I1/I2。
 
 ### `WS-V3-A3-LOCAL-REFINE-01` I1 engineering guard / synthetic closeout
 
@@ -332,8 +331,32 @@ Matched-RigidNodes-budget：
   RigidNodes/trajectory、tensor shape/order exact；原 D2 与 A3 module-off RGB/SSIM loss tensor exact；
 - 缺 paired provenance/masks 时 DriveStudio fail closed；实际 checkpoint Background/Rigid rows=
   `1,205,164/104,704`，trajectory=`196×24`；
-- 状态=`done synthetic_contract_only`，不是 paired/质量证据；`paired_engineering_smoke_complete=false`、
-  `formal_training_authorized=false`。下一门是 heldout-safe affected/support sidecar、loss 注入与最小 paired smoke。
+- 状态=`done synthetic_contract_only`，不是 paired/质量证据；该 run 自身记录
+  `paired_engineering_smoke_complete=false`。后续 I2 已关闭 paired 工程门，但 `formal_training_authorized=false` 不变。
+
+### `WS-V3-A3-LOCAL-REFINE-01` I2 real S-B/T0 paired smoke / numeric freeze
+
+- sidecar materializer/controller commits=`3b8526af6e3ffb53362ec6641d6f280862ad1cb8 / aac521328eb38e8367e4071601443c0c45086a39`；
+  run=`20260809T133911Z__a3-sb-sidecar-s0-r3`，manifest/rows SHA=
+  `42474f73fc563a2bba4c52cbec029bb4c28d33a21ca5f3d83ad4311bb7957273 / c5756ecbc0eabee9a576a55297a1739aa20e2af578aa4a5a92e727701b5138fc`；
+- high actor 选择 frame 0，boundary actor 选择 frame 31，均为 camera 0 且不是 19 个 heldout frames；四个
+  lateral/delete units 冻结 affected/S-B mutable/S-C rows=`16,502/51/16,451`，共 8 个 T0 geometry pixels；
+  S-A/RGB=`0/ABSTAIN`，first-hit alpha=`0.5` 仅作 visibility diagnostic；
+- paired implementation/fix=`d89e0ace37eda22434470849ec9940360c0e9251 / 78741b3abee07b2c39be6646c63928e8212b6a6b`；
+  native Gaussian/trainer regularizer 被双重关闭，S-B occupancy target 只使用 measured T0 LiDAR；delete 使用临时
+  visibility 关闭而不删除 Gaussian，lateral 在每 unit 后精确恢复 actor trajectory；
+- canonical paired run=`20260809T135921Z__a3-r1-sb-paired4-s0-r2`，summary/manifest SHA=
+  `ba4e2b853690f0b9c9bb7bfe039b4571db16c020ce726768a1ff884b09b3557d / de717ba0a5adb1afeb416a15a53ec55f471a8eb841882f784012b04ac86b596c`；
+  step `30001–30004`，每 unit 一步；opacity/scale 均有行内 finite nonzero gradient 和变化，outside parameter/Adam、
+  Rigid/trajectory/registry、shape/dtype/order exact；checkpoint SHA=
+  `e995e7c266d9fed4e64c86813718e46ab4576bbfdf60500a637bdaeaaba78cd1`；
+- numeric freeze commit/config SHA=`c02c8c74c671362e86269bd7e00980bfa75ae1c9 / d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`；
+  steps=`4`，opacity/scaling LR=`0.05/0.005`，affected/mutable cap=`16,502/51`，seed cap=`0`，alpha=`0.5`；
+- frozen replay run=`20260809T140534Z__a3-r1-sb-frozen-replay4-s0-r1`，summary/manifest SHA=
+  `7d820a53de21f505a5c56043d56556edb8d3a86510488ea3956b7cfa159187c6 / 393e65d5f91c0e2072eebd7c23a1161d46422502220ceeeaa18c04905fec646d`；
+  四 unit loss 与 checkpoint SHA 逐位重现；wall/GPU/cgroup=`50.68s/8,286.86MiB/22,631,796,736B`，OOM delta 0；
+- 当前定向/联合回归=`26/119 passed`。本节只登记工程可重放性，不登记 heldout/S-B RGB 质量改进；
+  `quality_claim_authorized=false`、`formal_training_authorized=false`、R2–R4 未授权。
 
 ## 3. V2 冻结注册表
 
@@ -552,6 +575,6 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 ## 12. 当前唯一动作
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
-`done / tradeoff_non_dominated`。A3-I0 protocol 与 R0/R1 synthetic contract 已完成；下一动作只物化真实
-scene-0230 deterministic footprints、heldout-safe S-A/S-B/S-C support/typed-depth sidecar、DriveStudio paired loss
-注入和最小 R0/R1 engineering smoke。smoke 后再冻结数值预算；不得启动 formal、R2–R4 或 D3/D4。
+`done / tradeoff_non_dominated`。A3-I0 protocol、R1 real S-B/T0 paired smoke、数值冻结与 bitwise replay 已完成；
+下一动作只允许在读取结果前冻结并执行 R0/R1 heldout 只读评测：T0/T1 geometry/coverage、vacated residual、
+non-target safeguard 与 exact Pareto。S-B 不登记 RGB 成功，S-C 只 ABSTAIN；不得启动 formal、R2–R4 或 D3/D4。
