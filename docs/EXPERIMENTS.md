@@ -8,8 +8,8 @@
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
-保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0、D1 formal、D2 smoke 与 formal preflight 已完成，当前执行 D2 formal。
+保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
+`tradeoff_non_dominated`。当前进入 `WS-V3-A3-LOCAL-REFINE-01` 协议冻结，尚未授权 A3 训练。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0、D1 formal、D2 smoke/formal preflight done；D2 formal next |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -281,6 +281,25 @@ Matched-RigidNodes-budget：
 - read-only preflight=`done`，SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`，
   GPU 0 MiB、free disk 47.92 GiB，D2 smoke/D1 alias/r8 patch/cgroup 门禁通过。
 
+### `WS-V3-A2-ACTOR-DENSIFY-01` D2 formal 正式结果与收口
+
+- run=`20260809T113230Z__a2-d2-formal30k-s0-r1`，terminal=`done`，source=`482fba0`，summary SHA-256=
+  `9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d`，manifest SHA-256=
+  `260af5d99f3d3ece4f2c178f8c18385338432da9fbf94b7d8a4603163db20926`；
+- D2 final checkpoint SHA-256=`1a061247...e7c`，30k counts=`Background 1,205,164 / Rigid 104,704`；
+  D1 checkpoint SHA 在运行前后保持 `c9d2a052...af52`；D1/D2 initialization provenance 相同；
+- 六个 5k grid checkpoint 均 finite 且通过 quota/cap；matched 目标=`105,412` Rigid，选中 D2 30k，
+  gap=`708 / 0.67165%`，所以 fixed 与 matched D2 是 exact alias；
+- D2/D1 global PSNR=`27.703188/27.770024`、SSIM=`.850333/.850915`、LPIPS=`.178344/.177704`；
+  boundary-support boundary-band PSNR=`26.171399/25.770024`、SSIM=`.828868/.821572`、
+  LPIPS=`.044568/.048382`；局部边界改善与 global/其他局部轴退化并存；
+- fixed/matched strict-quality exact Pareto 都为 `tradeoff_non_dominated`（D1/D2/equal=`11/8/0`）；
+  quality-cost 也为 `tradeoff_non_dominated`（`14/9/1`）。D2/D1 wall=`2720.82/2099.33 s`；
+- D2 audit=`30,001` observation events、boundary/residual 各 `591,405,097` observations、`295`
+  refinement events、capped Gaussian=`70,764`；297 条资源记录、四个 stage completed、无 OOM；
+- 状态=`done`。冻结 D2 boundary-residual 为 A3 的 boundary-priority research asset，D1 quota-only 为 fallback；
+  不宣称 D2 dominance。`d3_unlocked=false`，D4 未启动。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -497,6 +516,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0、D1 formal、D2 smoke 与 formal preflight 已完成。下一动作是
-执行唯一 D2 30k 新训练臂和 fixed/matched 完整评测；D1 checkpoint 只读 exact alias。不得混入 D3 depth/normal
-或 D4 pruning。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
+`done / tradeoff_non_dominated`。下一动作是冻结 A3 affected-set、S-A/B/C 证据层级、depth 语义、outside
+preservation、局部质量端点和资源上界；以 D2 30k 为 exact 输入并保留 D1 fallback。协议与 synthetic 门禁完成前
+不得启动 A3 formal，也不得顺带启动 D3/D4。

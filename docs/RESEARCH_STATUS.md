@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-09
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
-- 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
-- 状态：`running`
-- 当前门禁：A2-D1 formal r1、D2 paired smoke r1 与 D2 formal 只读 preflight 已 `done`；下一门禁为 D2 formal
+- 当前任务：`WS-V3-A3-LOCAL-REFINE-01`
+- 状态：`pending`（协议冻结中，尚未授权训练）
+- 当前门禁：A2 已 `done / tradeoff_non_dominated`；下一门禁为 A3 affected-set、证据层级、深度语义与局部端点协议
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -271,6 +271,25 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - read-only preflight=`done`，输出 SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`；
   project=`20b3f4d`、GPU=`0 MiB`、free disk=`47.92 GiB`，所有依赖与资源门禁通过。
 
+## A2-D2 formal 完成与 A2 裁决
+
+- canonical run=
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1`，
+  terminal=`done`，source=`482fba0`，summary SHA-256=`9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d`；
+- D2 final checkpoint SHA-256=`1a061247...e7c`，counts=`Background 1,205,164 / Rigid 104,704`；D1 reference
+  checkpoint 运行前后 SHA 都是 `c9d2a052...af52`，初始化 provenance SHA 精确匹配；
+- 5k–30k 六个 checkpoint 全部通过 finite/quota/cap 审计；matched 选中 30k，Rigid gap=`708 / 0.67165%`，
+  matched D2 因而是 fixed D2 exact alias；
+- D1→D2 global PSNR/SSIM/LPIPS 从 `27.770024/.850915/.177704` 变为
+  `27.703188/.850333/.178344`；boundary-support boundary-band 从 `25.770024/.821572/.048382` 变为
+  `26.171399/.828868/.044568`。边界三项改善与 global/部分 actor/non-target 退化并存；
+- fixed/matched strict-quality Pareto 都为 `tradeoff_non_dominated`（D1/D2/equal=`11/8/0`），quality-cost
+  也为 `tradeoff_non_dominated`（`14/9/1`）；D2/D1 wall=`2720.82/2099.33 s`；
+- 297 条资源记录、四个 stage 全部 completed，peak GPU=`23,989 MiB`，full-run peak cgroup=
+  `25,837,490,176 bytes`，`oom=0 / oom_kill=0`，终态 GPU=`0 MiB`；
+- A2 状态冻结为 `done`。A3 使用 D2 boundary-residual 作为 boundary-priority research asset，D1 quota-only
+  作为低成本/全局质量 fallback；这不是 dominance 或跨场景结论。`d3_unlocked=false`，D4 未启动。
+
 ## A2-D1 quota-only 配对 smoke 完成证据
 
 - 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
@@ -302,8 +321,8 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal、D2 smoke/formal preflight done；D2 formal next |
-| `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
+| `WS-V3-A3-LOCAL-REFINE-01` | pending | 先冻结 affected-set、S-A/B/C、depth 语义、outside preservation 与局部端点 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
@@ -311,14 +330,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 50 GiB 可用；
-- A2-D1 formal 与 A2-D2 smoke controller 均已退出；`ws_a2_d1_f1` 仅保留 dead pane，当前无活动训练/评测进程；
+- 数据盘：最近 formal 终态最小 free=`46,471,581,696 bytes`；
+- A2-D2 formal controller 已退出，四个 stage 全部 completed；当前 GPU=`0 MiB`，无活动训练/评测进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A1 已收口，A2-I0、D1 quota-only paired smoke/formal、D2 协议、独立 DriveStudio patch、D1/D2 materializer
-与 synthetic integration 均已完成，D2 paired smoke r1 也已通过真实信号/排序/cap、quota/checkpoint 与资源门禁。
-下一步启动唯一 D2 30k 新训练臂并完成 fixed/matched held-out/high/boundary/non-target 与 Pareto 裁决；D1 formal
-checkpoint 只读 exact alias，不重复训练。负向、tradeoff 或 matched abstain 均须保留为有效证据。
-D2 不得混入 D3 depth/normal 或 D4 LiDAR/visibility/provenance pruning。
+A1/A2 已收口。下一步只冻结 A3 协议：固定 scene-0230 / seed 0，D2 30k 作为 exact 输入资产并保留 D1
+fallback；训练前定义 affected-set、S-A/S-B/S-C、expected/first-hit/measured depth、outside preservation、
+Tier-A hole、depth ordering、boundary 与 temporal flicker 端点以及资源上界。协议、module-off/exact-alias 和
+synthetic 门禁完成前不得启动 A3 formal。D3/D4 保持未解锁，F0 仍是独立非阻塞项。

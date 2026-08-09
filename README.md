@@ -47,7 +47,10 @@ CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒�
 
 A1 已完成 scene-0230 开发消融、scene-0242/0255 确认、冻结 E1/E2、LiDAR provenance、ISP/位姿诊断和
 10 项逻辑矩阵 finalizer，正式终态为 `C*=C0-off / done_off`。原始端点方向存在场景依赖，但 C1 在两个确认
-场景均未通过完整的 coverage + LPIPS 合同。下一门禁是 A2 instrumentation 与 actor-aware D1。
+场景均未通过完整的 coverage + LPIPS 合同。A2 的 ancestry instrumentation、D1 quota-only 与 D2
+boundary/residual smoke/formal 也已完成；fixed/matched 正式裁决都是 `tradeoff_non_dominated`。后续以 D2
+作为边界优先研究资产、D1 作为低成本/全局质量回退，不宣称 D2 全面支配 D1。当前门禁是 A3 affected-set、
+证据层级、深度语义、outside preservation 与局部质量端点协议冻结，尚未授权 A3 训练；D3/D4 未启动。
 
 ## 环境
 

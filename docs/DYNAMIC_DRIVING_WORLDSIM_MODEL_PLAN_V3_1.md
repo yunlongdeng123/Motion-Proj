@@ -11,8 +11,9 @@
 - **A2-D1 formal 协议基线**：`387dd50`（30k 配对控制器、held-out/non-target 评测、matched-budget 裁决）
 - **A2-D2 工程基线**：`1065264`（boundary/residual attribution、稳定排序、scale cap 与配对 smoke controller）
 - **A2-D2 formal 协议基线**：`20b3f4d`（D1 exact alias、D2 单臂 30k、fixed/matched 与完整质量裁决）
-- **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 formal done / D2 paired smoke done / D2 formal protocol frozen / D2 formal next / F0、A3-A4 pending`
+- **A2-D2 formal 证据基线**：`482fba0`（唯一 30k 实例、5k grid、fixed/matched 与资源/不可变性证据）
+- **当前任务**：`WS-V3-A3-LOCAL-REFINE-01`（`pending`，先冻结协议）
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated；A2*=D2 boundary-priority，D1 fallback）/ D3-D4 not launched / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -21,8 +22,10 @@
 ## 0. V3.1 修订目的
 
 V3.1 创建时已完成路线切换和三场景原生基线，并进入 A1 正式实验；当前 A1 已收口、A2-I0 已完成，
-A2-D1 quota-only 配对工程 smoke、formal 协议与唯一 30k formal run 均已收口。fixed-step 与 matched-RigidNodes
-两种视图均为非支配 tradeoff，按冻结门禁解锁 D2 协议冻结，但不构成“D1 全面更优”或跨场景结论。
+A2-D1 quota-only 与 A2-D2 boundary/residual 的配对工程 smoke、formal 协议和唯一 30k formal run 均已收口。
+D1→D2 的 fixed-step 与 matched-RigidNodes 两种视图仍为非支配 tradeoff；A2 以 D2 作为边界优先的后续研究资产，
+保留 D1 作为低成本/全局质量回退。这是冻结完整 Pareto 后的工程分支选择，不构成“D2 全面更优”、统计显著性
+或跨场景结论。
 V3.1 不推翻 V3，而是在以下新事实基础上修正执行协议：
 
 1. 6–7 月 WorldSim/GS 周报表明，工业链路的核心不是单个 3DGS 模型，而是：
@@ -534,7 +537,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0、D1 formal、D2 smoke/formal protocol done；D2 formal next | I0/D1 done；D2 必做，D3/D4 条件式 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | evidence-aware affected set 与局部短步精修 | outside frozen，支持区域指标闭环 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
@@ -907,6 +910,44 @@ I0 在 D1 前实现：
 - 只读 preflight=`done`，输出 SHA=`9cf49af0be9a2676c6c113bee963efb79704bb9434083857684f97bd19caaa28`；
   GPU used=`0 MiB`、free disk=`47.92 GiB`，合同、smoke、D1 alias、r8 patch 与 cgroup 门禁均通过。
 
+### 9.2.6 D2 formal 结果与 A2 收口
+
+- canonical run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1`，
+  terminal=`done`；source=`482fba0`，summary SHA-256=
+  `9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d`，manifest SHA-256=
+  `260af5d99f3d3ece4f2c178f8c18385338432da9fbf94b7d8a4603163db20926`；
+- D2 唯一 30k checkpoint SHA-256=
+  `1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c`，终态
+  `Rigid 104,704 / Background 1,205,164 / total 1,309,868`；D1 reference 保持
+  `Rigid 105,412 / Background 1,201,057`，checkpoint 运行前后 SHA 均为 `c9d2a052...af52`；
+- 5k、10k、15k、20k、25k、30k 六个 checkpoint 均通过 finite、quota maximum 与 boundary scale-cap 审计。
+  D2 共记录 `30,001` observation event，boundary/residual observations 各 `591,405,097`，`295` 个
+  refinement event，累计 cap `70,764` 个 Gaussian，`158` 个 quota event 接受 `609,139` children；
+- D1/D2 initialization provenance SHA 都是 `8951543c...b898`，物化配置符合配对合同。matched 目标为
+  D1 fixed 的 `105,412` 个 Rigid；唯一合法候选为 D2 30k，gap=`708 / 0.67165%`，因此 matched D2 是 fixed
+  D2 的 exact alias，不产生第二个训练、剪枝或调参分支；
+
+| scene-0230 formal 指标 | D1 | D2 | D2-D1 方向 |
+|---|---:|---:|---|
+| global PSNR / SSIM / LPIPS | 27.770024 / .850915 / .177704 | 27.703188 / .850333 / .178344 | 三项轻微退化 |
+| high-support actor PSNR / SSIM / LPIPS | 25.123809 / .840230 / .096602 | 25.071334 / .838744 / .095563 | PSNR/SSIM 退化，LPIPS 改善 |
+| boundary-support actor PSNR / SSIM / LPIPS | 28.465795 / .899698 / .063419 | 28.678742 / .899129 / .064110 | PSNR 改善，SSIM/LPIPS 退化 |
+| boundary-support boundary-band PSNR / SSIM / LPIPS | 25.770024 / .821572 / .048382 | 26.171399 / .828868 / .044568 | 三项改善 |
+| non-target PSNR / SSIM / LPIPS | 26.890073 / .848493 / .058316 | 26.772341 / .847950 / .058242 | PSNR/SSIM 退化，LPIPS 轻微改善 |
+
+- fixed 与 matched 的 strict-quality Pareto 都是 `tradeoff_non_dominated`：D1/D2/equal axes=`11/8/0`；
+  quality-cost Pareto 也是 `tradeoff_non_dominated`：`14/9/1`。D2 训练 wall time=`2720.82 s`，高于 D1 的
+  `2099.33 s`；两者 sampled peak GPU 都为 `23,989 MiB`，train cgroup peak 分别为
+  `16,012,115,968 / 21,676,654,592 bytes`；
+- 完整 run 的 `297` 条资源记录覆盖四个 stage，全部 `completed`，`oom=0 / oom_kill=0`；full-run peak GPU=
+  `23,989 MiB`，peak cgroup=`25,837,490,176 bytes`（评测阶段），结束时 GPU=`0 MiB`；
+- A2 正式状态为 `done`，裁决类为 `tradeoff_non_dominated`。后续 A3 冻结 `A2*=D2-boundary-residual`
+  作为 boundary-priority research asset，并保留 D1 quota-only 作为低成本/全局质量回退。该选择基于完整 Pareto
+  与 A2 的边界靶点，不设置结果后数值阈值，也不宣称 D2 支配 D1；
+- `d3_unlocked=false`：当前没有可注册的可靠 depth/normal 输入；D4 也不因 ancestry instrumentation 已完成而
+  自动启动。A2 不再追加 D3/D4 训练臂，条件项必须在后续独立协议中重新取得授权。
+
 ### 9.3 子消融
 
 | 实验 | 改动 | 状态要求 |
@@ -914,15 +955,15 @@ I0 在 D1 前实现：
 | D0 | 原生统一规则 | baseline |
 | D1 | actor/background 分离阈值 + 每 actor 最小/最大 quota | 必做 |
 | D2 | D1 + boundary/residual 排序 + boundary scale cap | 必做 |
-| D3 | D2 + depth/normal consistency | 有可靠 depth/normal 才做 |
-| D4 | D2/D3 + LiDAR/visibility/provenance-aware pruning | ancestry 审计完成后做 |
+| D3 | D2 + depth/normal consistency | `not_unlocked`；有可靠、可注册 depth/normal 才做 |
+| D4 | D2/D3 + LiDAR/visibility/provenance-aware pruning | `not_launched`；instrumentation 只是必要非充分条件 |
 
 执行规则：
 
 ```text
 D1 smoke → D1 formal
-→ D2 smoke → D2 formal
-→ D3/D4 条件式
+→ D2 smoke → D2 formal → A2 done / tradeoff_non_dominated
+→ D3/D4 保持条件式、未启动
 ```
 
 不得一次合并 D1–D4。
@@ -960,7 +1001,9 @@ actor_quality.json
 - wall time；
 - peak VRAM。
 
-更多 Gaussian 不自动算改进。若 D1/D2 均不改善 Pareto，A2 可 `rejected`，A3 回退使用 A1 产物。
+更多 Gaussian 不自动算改进。若 D1/D2 均不改善 Pareto，A2 可 `rejected`，A3 回退使用 A1 产物。当前正式结果
+不是 dominance，而是 D1/D2 同处非支配前沿；因此 A3 使用 D2 boundary-priority asset，同时必须保留 D1 fallback
+和上述完整成本/退化披露。
 
 ---
 
@@ -1315,27 +1358,37 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 ## 16. 当前唯一下一步
 
-A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0、D1 quota-only 配对 smoke、formal 协议与唯一 formal run
-`20260809T085400Z__a2-d1-paired-formal30k-s0-r1` 均已完成。fixed 30k 与 matched-RigidNodes 两种视图均为
-`tradeoff_non_dominated`，冻结控制器登记 `d2_unlocked=true`。D2 信号、排序与 scale-cap 协议已冻结，独立
-DriveStudio patch/materializer/controller 和 synthetic 门禁也已由 `1065264` 完成；canonical paired smoke r1
-现已 `done` 并登记 `d2_formal_unlocked=true`。D2 formal 协议与只读 preflight 也已冻结；当前唯一动作是执行
-D2 formal：
+A1 已以 `C*=C0-off / done_off` 收口，A2 的 I0、D1/D2 smoke、D1/D2 formal 与 fixed/matched 完整 Pareto
+也已全部闭环。A2 终态为 `done / tradeoff_non_dominated`：D2 在 boundary-support boundary band 改善，
+但 global、部分 actor/non-target 与训练成本存在退化；A3 采用 D2 boundary-priority asset，保留 D1 fallback。
+当前唯一动作是冻结 `WS-V3-A3-LOCAL-REFINE-01` 协议，而不是立即启动训练：
 
 ```text
-1. 已完成：D1 exact alias、D2 fixed 30k、matched grid、完整质量轴、资源与不可变性协议冻结
-2. 启动唯一 D2 30k 新训练臂；D1 checkpoint 只读 alias，禁止重复训练或改写
-3. 顺序完成 D2 fixed 与 matched（若≤2%）held-out/high/boundary/non-target 评测
-4. 报告 fixed/matched 的 quality 与 quality-cost exact Pareto，负向、tradeoff 或 abstain 均为有效证据
-5. formal 收口前不得解锁 D3 depth/normal 或 D4 pruning；D3 不因 D2 formal 自动解锁
+1. 固定 scene-0230 / seed 0，A3 输入为 D2 30k checkpoint exact asset；D1 30k 只读保留为 fallback
+2. 训练前冻结 affected-set 构造、S-A/S-B/S-C 证据层级及 expected/first-hit/measured depth 语义
+3. 只允许受影响 Gaussian 与明确支持区短步优化；outside 必须逐 tensor/渲染保持并可审计
+4. 冻结 Tier-A hole、depth ordering、boundary 与 temporal flicker 端点；coverage 与 LPIPS 同时报告
+5. 未完成协议、资源上界、module-off/exact-alias 和 synthetic 门禁前，不启动 A3 formal
 ```
 
-D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,609,442`，虽 RigidNodes 匹配但 Background
-不匹配，必须继续同时报告干预域预算和 total-GS 成本，不得称为全模型同预算。
+D3 继续 `not_unlocked`，D4 继续 `not_launched`；F0 前馈审计为独立、非阻塞任务。A3 不得把 unknown background
+改写为真值，也不得以 D2 的边界改善隐藏其 global/non-target/cost 退化。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A2-D2 formal 与 A2 正式收口
+
+- canonical run=`20260809T113230Z__a2-d2-formal30k-s0-r1`，terminal=`done`，summary SHA-256=
+  `9c41dfc8...de7d`，D2 final checkpoint SHA-256=`1a061247...e7c`；D1 checkpoint 前后 SHA 不变；
+- 六个 5k grid checkpoint、初始化同源、quota/cap/finite、297 条资源记录及四个 stage 全部通过，无 OOM；
+- matched 选中 D2 30k，Rigid gap=`708 / 0.67165%`，因此 matched 是 fixed D2 exact alias；
+- fixed/matched quality 与 quality-cost 都为 `tradeoff_non_dominated`；D2 boundary-support boundary-band
+  PSNR/SSIM/LPIPS 三项改善，但 global、部分 actor/non-target 和 wall/cgroup 成本退化；
+- A2 状态冻结为 `done`；A3 采用 `A2*=D2-boundary-residual` 作为 boundary-priority research asset，D1
+  quota-only 保留为 fallback。此为完整 Pareto 后的工程分支选择，不是 dominance 或跨场景结论；
+- `d3_unlocked=false`，D4 未启动；当前门禁转为 A3 affected-set、证据层级、深度语义和局部端点协议冻结。
 
 ### 2026-08-09 — A2-D2 boundary/residual 协议冻结
 
@@ -1456,7 +1509,8 @@ D2 协议冻结前不得直接启动 D2 训练；D1 matched 15k 的 total GS=`2,
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1、D2 smoke r1 与 formal preflight 已 done，当前执行 D2 formal。
+WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
+当前任务是 WS-V3-A3-LOCAL-REFINE-01 的协议冻结，尚未授权 A3 formal 训练。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1470,7 +1524,8 @@ WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；D1 formal r1、D2 smoke r1 与 for
 9. 核对 formal 协议提交 `387dd50`、配置 SHA `ad77db41...f8e7`、80 项测试和只读 preflight；
 10. 核对 D1 formal r1 terminal/summary、初始化同源、6×2 grid、fixed/matched 两视图与 checkpoint 不可变性；
 11. 核对 D2 paired smoke r1 terminal、summary SHA `749c7d15...3136`、provenance、真实 observation/order/cap、quota 与资源门禁；
-12. 核对 formal config SHA `b66cf795...05bc`、提交 `20b3f4d` 与 preflight SHA `9cf49af0...a28` 后启动唯一 D2 30k 臂；不得混入 D3/D4。
+12. 核对 D2 formal r1 terminal、summary SHA `9c41dfc8...de7d`、六个 grid、matched 0.67165%、D1 checkpoint 不变与资源终态；
+13. 冻结 A3 affected-set、S-A/S-B/S-C、三种 depth 语义、outside preservation、局部质量端点与资源上界；在此之前不启动训练。
 
-不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
+不得恢复 A1/A2 或 V2 M5，不得把 D2 tradeoff 改写成全面提升，不得新增大型 diffusion。
 ```

@@ -1,6 +1,6 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-06
+> **最后更新**：2026-08-09
 > **当前范围**：V3 WorldSim 模型链直接约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
@@ -38,6 +38,8 @@
   E1/E2 合同就不能为了保留增强模块而成为 C*。
 - `V3-F15`：确认场景的原始端点方向可以与开发场景相反。不得把完整 Pareto 合同的 `done_off` 改写成
   “C0 在所有场景、所有指标都最好”，也不得只挑 0255 E1/E2 error 改写 C*。
+- `V3-F16`：A2-D2 的边界改善、global/non-target 退化与更高训练成本构成严格 Pareto tradeoff。不得用新增
+  事后标量权重把它改写成 D2 dominance；后续采用 D2 必须同时登记 D1 fallback 和完整退化轴。
 
 ### V3-F01：局部保持不等于编辑质量
 
@@ -138,6 +140,19 @@ role error 都更低。但 0255 C1 的 high E2 coverage 从 `23.529%` 降至 `21
 
 A1 finalizer 的合法表述是：C1 在两个确认场景均不 eligible，C*=C0 保持 `done_off`，同时原始端点方向具有
 scene dependence。禁止写成“C0 普遍校准更优”，也禁止忽略 coverage/appearance 只引用 0255 error 重选 C1。
+
+### V3-F16：边界优先分支选择不等于全面方法提升
+
+A2 formal 中，D2 相对 D1 的 boundary-support boundary-band PSNR/SSIM/LPIPS 从
+`25.770024/.821572/.048382` 改善到 `26.171399/.828868/.044568`；但 global 从
+`27.770024/.850915/.177704` 退化到 `27.703188/.850333/.178344`，non-target PSNR/SSIM 也下降，训练
+wall time 从 `2099.33 s` 增至 `2720.82 s`。fixed 与 matched strict-quality、quality-cost 裁决都为
+`tradeoff_non_dominated`，且 matched D2 只是 fixed 30k 的 exact alias，不是独立复现。
+
+A3 采用 D2 是因为 A2 的预注册靶点包含 actor boundary，并且 D2 在该边界带三项指标同时改善；这是完整结果
+可见后的工程资产路由，不是新增数值门槛、统计显著性或 D2 对 D1 的支配结论。任何后续报告都必须同时保留
+D1 quota-only fallback，披露 D2 的 global/部分 actor/non-target/cost 退化，并禁止只摘录边界带结果宣称 A2
+“全面提升”。单场景 scene-0230 也不能支持跨场景泛化结论。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 
