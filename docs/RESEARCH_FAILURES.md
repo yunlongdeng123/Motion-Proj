@@ -1599,6 +1599,21 @@ registry SHA=`e48bccdf...9039d` 不覆盖。修复 `0e899b2` 只通过 fail-clos
 以后凡从 checkpoint 结构推断 live module API，必须同时核对 `state_dict` 保存端、加载端赋值和加载后的真实对象，
 并用回归测试锁定层级；旧失败 run 维持 `blocked`，不得因修复后的新 run 成功而倒写。
 
+### PIVOT-F27：最小预注册剪枝臂失败后不能事后补更小 fraction 或放宽质量门
+
+A4-P1 在结果前固定 source/b05/b10/b20 四臂，并要求 global、actor、boundary 与 non-target 的全部 safeguard 同时
+通过。canonical r1=`20260809T165058Z__a4-p1-contribution-prune-s0-r1` 完成 36-view contribution、三臂物化、
+四臂 57-view 质量和 9-view runtime，21/21 audits 全 true，资源门通过；因此它不是工程或资源 `blocked`。
+
+最小候选 b05 已将 checkpoint 减少 `23,881,368 bytes`，全部 row/invariant/reload/count 审计 exact，但 global
+occupied PSNR、global PSNR 与 non-target PSNR 分别退化 `0.117684/0.110926/0.125462 dB`，超过冻结的
+`0.10 dB` 上限；b10/b20 分别失败 12/15 个端点。局部 actor/boundary 指标的保持或改善不能覆盖全局与非目标区
+失败。运行时 P50/FPS 也非随 fraction 单调，且 filesystem cache 未控制，只能报告，不能充当事后选择理由。
+
+正确裁决是 P1 experiment=`done`、method=`rejected_quality_or_integrity_gate`、生产资产 exact fallback 到 source。
+不能在看到 b05 失败后新增 b01/b02、改排名视图、放宽 `0.10 dB` 或只保留通过的局部端点；这些都属于新的预注册
+实验，而不是当前 P1 的修复。该负结果只约束 scene-0230/seed-0/冻结视图矩阵，不外推为所有贡献度剪枝均失败。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

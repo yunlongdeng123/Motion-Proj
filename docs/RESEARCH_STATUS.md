@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0 与 P5 已 done，P1 contribution-prune 协议已冻结；下一步只实现并提交 P1 runner
+- 当前门禁：A4-P0、P5 与 P1 已 done；P1 三个候选均被冻结质量门拒绝并 exact fallback 到 source；下一步只冻结 P2 FP16 协议
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -41,12 +41,16 @@ canonical r2=`20260809T155753Z__a4-p5-registry-resume-s0-r2` 已 14/14 audits pa
 source before/after SHA exact。reload=`52.321 s / one load / zero render`，资源门通过；no-torch resume=`.128 s`，
 无 GPU launch并复用四个 completed stage。P5=`done`，不产生 chunk、filesystem-cold、concurrency 或质量 claim。
 
-A4 最低完成集仍要求 P1/P2/P3，因此 task 保持 `running`。P1 protocol SHA=`4f893c09...429b` 已在新测量前
-冻结：13 个文件加 1 个 33-mask 目录 exact；排名只用 6 train frames × 3 cameras，另 6 heldout frames × 3 cameras
-只作 contribution audit；arm 固定 source/b05/b10/b20，并按 Background 与每个 available actor 独立稳定排序。
-完整质量门复用 57 heldout views 与 source mask bytes，禁止 candidate 重生成 mask；global/actor/boundary/non-target
-最大退化、checkpoint row alignment/invariant、最大合格 fraction 与 source exact fallback 均已固定。11-stage recovery、
-21 audits 和资源门也已冻结；协议测试 11 passed，联合 WorldSim V3 178 passed。下一步只实现 runner，P2/P3 未授权。
+A4 最低完成集仍要求 P2/P3，因此 task 保持 `running`。P1 protocol SHA=`4f893c09...429b` 在测量前冻结，runner=
+`19cab2cf...7163`。canonical r1=`20260809T165058Z__a4-p1-contribution-prune-s0-r1` exit=`0`、21/21 audits
+passed、summary SHA=`7c5347e3...7119`。36-view contribution score、b05/b10/b20 原子 checkpoint/registry、四臂
+57-view global/actor/boundary/non-target 质量、9-view runtime 与 no-torch resume 均完成；source replay exact。
+b05/b10/b20 分别减少 checkpoint `23,881,368 / 47,762,712 / 95,527,000 bytes`，但最小 b05 已使 global
+occupied PSNR/global PSNR/non-target PSNR 退化 `0.117684/0.110926/0.125462 dB`，超过冻结 `0.10 dB` 门；
+b10/b20 分别失败 12/15 项。全部候选因质量而 rejected，P1 method=`rejected_quality_or_integrity_gate`，生产路由
+exact fallback 到 p1-source/A3*=R0-D2，实验终态=`done`。resource audit passed：wall=`605.281 s`、allocated/
+reserved/NVIDIA=`14,342.71/14,892/15,234 MiB`、cgroup=`26,264,842,240 bytes`、run=`1,610,165,885 bytes`、
+OOM=0；resume=`2.316 s`/10 stages/no torch/no GPU。下一步只冻结 P2 FP16 协议，P3 仍未授权。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -432,20 +436,20 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5 done；P1 protocol=`4f893c09...429b` frozen、runner next；P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5、P1 done；P1 method rejected、selected=p1-source exact alias；P2 protocol next，P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：P5 r2 终态 free=`45,291,683,840 bytes`；
+- 数据盘：P1 r1 终态 free=`43,679,989,760 bytes`；
 - A3 heldout r5、A4-P0 v1 r1 与 A4-P5 r1 均保留 blocked；P0 v2 r2 与 P5 r2 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` runner：no-torch exact input controller、train-only
-occlusion-aware alpha-weight scan、逐资产 b05/b10/b20 原子 checkpoint/registry/removal manifest、冻结 57-view
-global/actor/boundary/non-target evaluator、P0 9-view all-arm profiler、aggregate/finalizer 与 no-torch resume auditor。
-实现和联合回归提交前不创建 P1 formal run。P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
+冻结 `WS-V3-A4-DEPLOYMENT-01 / P2-fp16` 协议：输入只允许 P1 选择的 p1-source exact alias；先枚举允许转换与
+必须 FP32 保留的 checkpoint 字段，固定逐字段误差、reload dtype、57-view 质量、9-view runtime、bytes/VRAM、
+资源 ceiling、fallback、stage recovery 与 required audits，再实现 runner。P2 正式完成前不启动 P3；D3/D4 与
+A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。

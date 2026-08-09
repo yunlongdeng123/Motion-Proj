@@ -17,8 +17,9 @@
 - **A3 R0/R1 engineering guard 基线**：`9c639dd`（exact alias、row/Adam exact guard、DriveStudio patch 与 synthetic smoke）
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
+- **A4-P1 runner 基线**：`19cab2cf40b8ed8ef9a4ad1ba8cce4cc8cf67163`（train-only contribution、三臂物化、冻结质量门、runtime 与恢复审计）
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ P1 protocol frozen、runner next / P2-P3 not launched / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 done（v1 r1 resolution blocked，v2 r2 passed）/ A4-P5 done（r1 blocked，r2 14/14 passed）/ A4-P1 done（method rejected，source exact fallback）/ P2 protocol next / P3 not launched / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,7 +546,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5 done；P1 protocol frozen、runner next，P2/P3 仍未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0、P5、P1 done；P1 method rejected、source fallback；P2 protocol next，P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1370,6 +1371,35 @@ failure recovery
 - validator full preflight 已核对全部输入与 33-mask digest；协议测试=`11 passed`，联合 WorldSim V3=`178 passed`。
   本条写入时尚未执行任何 P1 新 measurement；下一动作只实现并提交 runner，P2/P3 仍未授权。
 
+#### 11.2.4 P1 formal 结果与部署裁决
+
+- runner 实现提交=`19cab2cf40b8ed8ef9a4ad1ba8cce4cc8cf67163`；提交前 23 项聚焦测试与 105 项
+  WorldSim-prefix 回归通过，正式运行后完整 `tests/*worldsim_v3*.py` 回归=`190 passed`。canonical r1=
+  `20260809T165058Z__a4-p1-contribution-prune-s0-r1`，exit=`0`、terminal=`done`、21/21 audits 全 true；
+  summary/manifest/resource/terminal SHA=`7c5347e3...7119 / 486342ba...61ac / 8b6073ed...4b7c /
+  80dd8178...c645`，source checkpoint/config/registry 与 33-mask 目录前后 exact；
+- contribution scan 完整执行 18 train ranking views 与 18 heldout audit-only views，score NPZ=`30,376,517 bytes`、
+  SHA=`0165401a...69a9`，15 个数组的 dtype/shape/content hash 全部复核；scan=`198.712 s`，峰值 torch
+  allocated/reserved=`14,342.71/14,892 MiB`、NVIDIA sampled=`15,234 MiB`，未越过冻结资源门；
+- b05/b10/b20 分别生成 `554,938,306 / 531,056,962 / 483,292,674-byte` checkpoint，相对 source 减少
+  `23,881,368 / 47,762,712 / 95,527,000 bytes`；模型计数分别为 `1,144,906+99,480 /
+  1,084,648+94,246 / 964,132+83,773`。每个 Background/available actor 的 floor removal、row alignment、
+  ancestry、Sky/LPIPS/trajectory/step invariant、registry 与 fresh reload count 均 exact，unavailable actor 继续为空；
+- source 质量 replay 对冻结历史端点逐项 exact。b05 已是最小预注册剪枝臂，但仍在 31 个 safeguard 中失败 3 项：
+  global occupied PSNR `-0.117684 dB`、global PSNR `-0.110926 dB`、non-target PSNR `-0.125462 dB`，均超过
+  `0.10 dB` 上限；b10/b20 分别失败 `12/15` 项。actor/boundary 的部分局部指标保持或改善，不能抵消全局与
+  non-target 门禁失败；禁止事后新增更小 fraction 或放宽阈值；
+- 全部 arm fresh reload 与 9-view runtime matrix 完成。source/b05/b10/b20 checkpoint load=`.365/.387/.365/.356 s`，
+  render P50=`.0447/.0329/.0700/.0399 s`、P95=`.1402/.0785/.1538/.1008 s`、aggregate FPS=
+  `18.11/23.64/14.54/22.73`；filesystem cache 未控制且性能只报告，非单调样本不用于质量选择；
+- final resource audit=`passed`：wall=`605.281 s`，torch allocated/reserved=`14,342.71/14,892 MiB`，NVIDIA=
+  `15,234 MiB`，cgroup=`26,264,842,240 bytes`，run=`1,610,165,885 bytes`，disk free=
+  `43,679,989,760 bytes`，OOM/kill=`0/0`；no-torch resume=`2.316 s`，复用 10 个 completed stages，GPU launch=false；
+- 三个 candidate 全部因质量门失败，故 `method_state=rejected_quality_or_integrity_gate`、selected arm=`p1-source`，
+  生产资产保持 A3*=R0/D2 immutable exact alias；P1 实验以合规负结果 `done`。结论仅适用于 scene-0230/seed-0/
+  冻结 36-view contribution 与 57-view quality 合同，不证明跨场景 pruning 失败，也不授权 post-hoc 新 arm。
+  A4 最低完成集还缺 P2/P3；下一动作只冻结 P2 FP16 逐字段数值与质量协议，P3 继续未授权。
+
 ### 11.3 必报工程指标
 
 | 维度 | 指标 |
@@ -1583,15 +1613,16 @@ A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitw
 done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
 
 P0 已由 v2 r2 正式关闭；P5 r1 的 runtime/state-key 混淆保留为 `blocked`，修复后 r2 已以 14/14 audits
-正式关闭 P5。A4 因最低完成集仍包含 P1/P2/P3 而保持 `running`。P1 结果前协议也已完成冻结；当前唯一动作是
-实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` runner：
+正式关闭 P5。P1 r1 已完成 21/21 audits，但 b05/b10/b20 分别失败 3/12/15 个冻结质量 safeguard；方法
+`rejected_quality_or_integrity_gate`，生产资产 exact fallback 到 source，P1 实验以负结果 `done`。A4 因最低完成集
+仍包含 P2/P3 而保持 `running`。当前唯一动作是冻结 `P2-fp16` 协议：
 
 ```text
-1. no-torch controller 先 exact input audit；fresh DriveStudio worker 只用冻结 train matrix 生成 contribution score artifact
-2. 用同一稳定排序逐资产原子物化 b05/b10/b20 checkpoint、registry 与 removal/invariant manifest，source 只引用不复制
-3. baseline 与三臂在冻结 57-view global/actor/boundary/non-target mask 合同上完整评测，不重生成 candidate mask
-4. 全部 arm 按 P0 9-view 矩阵 profile；aggregate 严格应用最大合格 fraction 与 exact source fallback，不新增阈值
-5. implementation、定向测试和联合回归提交前不创建 P1 formal run；P2/P3 继续未授权
+1. 输入固定为 P1 选择的 source exact alias，不把 rejected prune checkpoint 传给 P2
+2. 预先枚举可转换字段、保留字段、checkpoint schema、逐字段误差与 reload dtype，不做训练或 optimizer 转换
+3. baseline/FP16 使用同一 57-view global/actor/boundary/non-target 质量门和 P0 9-view runtime matrix
+4. 冻结数值容差、质量退化、资源 ceiling、fallback、stage recovery 与 required audits 后才能实现 runner
+5. P2 formal 完成前不启动 P3；不得把 checkpoint bytes 下降直接写成运行时显存或质量改进
 ```
 
 D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，不因提升不显著更换端点、阈值或场景。
@@ -1599,6 +1630,16 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — A4-P1 formal contribution-prune 完成并拒绝候选
+
+- runner=`19cab2cf...7163`；canonical r1=`20260809T165058Z__a4-p1-contribution-prune-s0-r1`，exit=`0`，
+  summary SHA=`7c5347e3...7119`，21/21 audits 全通过；36-view contribution score、三臂 checkpoint/registry、
+  4-arm 完整质量与 runtime、no-torch resume 均完成，资源门通过；
+- b05/b10/b20 checkpoint bytes 分别下降 `23.88/47.76/95.53 MB`，但最小 b05 已违反 global occupied PSNR、
+  global PSNR 与 non-target PSNR 三个冻结门；b10/b20 分别失败 12/15 项，不新增 post-hoc arm；
+- P1 method=`rejected_quality_or_integrity_gate`，selected=`p1-source immutable exact alias`，实验终态=`done`。
+  A4 仍缺 P2/P3；下一步只冻结 P2 FP16 协议。
 
 ### 2026-08-10 — A4-P1 contribution-prune 协议冻结
 
@@ -1836,7 +1877,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 与 P5 done，P1 protocol frozen，当前只实现并提交 P1 runner。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0、P5 与 P1 done；P1 method rejected、selected=p1-source exact alias；当前只冻结 P2 FP16 protocol。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1863,8 +1904,10 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 与 P5 done，P1 protocol frozen�
     hashes、source before/after、resource 和 no-torch resume 全通过；
 20. 核对 P1 protocol SHA `4f893c09...429b`、13 files + 1 mask directory、train-only 18-view ranking、b05/b10/b20、
     57-view safeguards、11-stage recovery、21 audits 与 178 项联合回归；
-21. 当前只实现并提交 P1 runner；不得在 implementation/测试提交前创建 P1 formal run，不得启动 P2/P3、重跑 A3、
-    上调阈值、启动 R2–R4，或把 bounded loss/S-B/S-C 登记为 RGB 质量成功。
+21. 核对 P1 runner `19cab2cf...7163`、canonical r1 summary SHA `7c5347e3...7119`、21/21 audits、source replay、
+    b05/b10/b20 的 3/12/15 项质量失败、资源与 no-torch resume；保持 method rejected、source exact fallback；
+22. 当前只冻结 P2 FP16 protocol；在协议/测试提交前不得创建 P2 formal run，不得启动 P3、补 post-hoc prune arm、
+    重跑 A3、上调阈值、启动 R2–R4，或把 checkpoint bytes/FPS/S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```
