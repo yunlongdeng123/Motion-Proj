@@ -8,6 +8,7 @@
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
+- F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 
 ## 当前裁决
 
@@ -470,6 +471,22 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 该证据只授权冻结 D1 formal 协议；1000-step smoke 未执行冻结 held-out actor/boundary 质量合同，且 D1 Gaussian
 更多，不能登记为方法改进或直接解锁 D2。
 
+## F0 Instant NuRec 协议冻结状态
+
+- official source checkout=`/root/autodl-tmp/third_party/instant-nurec-worldsim-v3-f0`，revision/tree=
+  `1ce2288e646548e61fea6100bc58de3acd4bc8d0 / 96e36fa4772f5ddada37dc3decb1be9d2e595dc0`；16 个关键文件
+  hash exact、git clean，协议/源码指纹测试 `8 passed`、WorldSim V3 联合回归 `241 passed`；
+- 代码 Apache-2.0；权重 NVIDIA Open Model License；gated NCore 数据为 NVIDIA Autonomous Vehicle Dataset
+  License 且需单独接受 terms。三个当前 weights-only PTH 已固定各自 HF commit、bytes、SHA-256 与 Xet hash；
+- 论文/模型卡描述完整 static+dynamic+sky+per-camera ISP 研究模型；当前 standalone CLI 的实际输入为
+  NCore V4 `.json/.lst`、FTheta camera、RGB/pose/intrinsics/mask/optional cuboids，不读 LiDAR；输出仅 static PLY，
+  不导出 dynamic/sky/ISP/actor registry/trajectory/depth。网页 demo 不作本地 CLI 证据；
+- formal smoke gate 固定 Python 3.11、uv、CC≥8.0、VRAM≥30,720 MiB、RAM≥32 GB、free disk≥100 GB、精确
+  权重、合法 NCore input/terms、exact clean checkout 与 CLI help 全合取。任一失败时不得构造 inference command，
+  不安装依赖、不下载权重/gated 数据、不启动 GPU；
+- protocol/runner SHA=`2004a029...fd611 / 249f26d5...8e4a`。本条只冻结协议；formal 本机审计尚未执行，F1=
+  `conditional_not_unlocked`。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -493,7 +510,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 ## 下一步
 
-执行 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：冻结 NVIDIA Instant NuRec 官方 repository revision、license、paper 与
-checkpoint provenance；静态审计相机/cadence/pose/LiDAR/instance 输入、standalone CLI 实际导出与 actor registry
-保留能力；先做无权重/无 gated 数据的本机 CLI preflight，只有依赖和公开输入满足时才执行一窗口 inference smoke。
-明确区分论文完整模型与 standalone CLI，不把网页演示写成本地能力。F1、P4、D3/D4 与 A3 formal/R2–R4 保持未解锁。
+用已冻结 F0 协议运行唯一 canonical 本机只读 audit：核对 exact source、CLI help、两组官方 focused tests 与
+Python/uv/GPU/RAM/disk/token/weight/NCore/terms 的 11 项前置条件。若任一条件失败，formal run 以 audit `done`、
+inference `not_run_prerequisites_failed` 收口并保持 F1=`conditional_not_unlocked`；不得安装依赖、下载权重/gated
+数据或启动 GPU。F1、P4、D3/D4 与 A3 formal/R2–R4 保持未解锁。

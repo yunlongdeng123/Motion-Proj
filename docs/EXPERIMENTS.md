@@ -627,6 +627,24 @@ Matched-RigidNodes-budget：
 - selected=`p3-chunk-package`，method=`selected_exact_chunk_package`，P3=`done`。P0/P5/P1/P2/P3 最低完成集
   全部满足，A4=`done`；P4 保持 optional，下一任务是 R0 前置的 F0 官方能力审计。
 
+### `WS-V3-F0-FEEDFORWARD-AUDIT-01` Instant NuRec protocol freeze
+
+- protocol=`configs/worldsim_v3/f0_instant_nurec_audit_v1.yaml`，SHA=`2004a029...fd611`；runner SHA=
+  `249f26d5...8e4a`；official checkout revision/tree=`1ce2288e...8d0 / 96e36fa4...5dc0`，16 个关键文件 hash
+  exact 且 clean。协议/源码指纹测试=`8 passed`、WorldSim V3 联合回归=`241 passed`；
+- 三份正式 weights-only PTH 的 profile/path/HF commit/bytes/SHA-256/Xet hash 全冻结；code/model/dataset license
+  分层为 Apache-2.0 / NVIDIA Open Model License / NVIDIA Autonomous Vehicle Dataset License，NCore gated 与
+  terms acceptance 不由 source license 代替；
+- paper/model-card contract=`calibrated multi-camera RGB + 2–4 Hz + per-image pose/intrinsics + optional cuboids →
+  static/dynamic 3DGS + sky + per-camera ISP`；standalone CLI contract=`NCore V4/FTheta/CUDA → static PLY only`。
+  CLI 不读 LiDAR，不导出 dynamic、sky、ISP、actor registry/trajectory 或 depth/point map；
+- local inference gate=11 条全合取前置：Python 3.11、uv、CC≥8.0、VRAM≥30,720 MiB、RAM≥32 GB、disk free≥
+  100 GB、exact weight、licensed NCore input、terms record、exact clean source 与 CLI help。任一失败时禁止构造
+  inference command，也不安装依赖、下载权重/gated data 或启动 GPU；
+- F1 默认裁决=`conditional_not_unlocked`；static PLY 不是 exact StreetGS checkpoint，且当前无 scene-0230
+  nuScenes→NCore exact converter/actor registry。该边界不等于宣称 upstream 永久不可用，DGGT fallback 也不阻塞 R0；
+- 本条没有 formal run、inference wall/VRAM 或质量测量。下一动作只运行已提交协议的 canonical read-only audit。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -855,7 +873,7 @@ P3 protocol SHA=`dfaaba79...1b41` 已冻结且 validator/12 项协议测试/222 
 85 tensor paths 与 source/registry immutable 全部 exact，selected=`p3-chunk-package`。package 比 source 大
 `2.792171%` 且 load/reassembly 更慢，只登记 exact asset separation；A4=`done`。
 
-当前唯一动作是 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：冻结并核对 NVIDIA Instant NuRec 官方 revision、license、
-checkpoint provenance、硬件、相机/cadence/pose/LiDAR/instance 输入与 standalone CLI 实际导出；先做本机无权重/
-无 gated 数据 preflight，只有依赖和公开输入满足时才运行一窗口 inference smoke。不得把论文或网页演示能力写成
-本地 CLI 能力；F1、P4、A3 formal/R2–R4 与 D3/D4 仍未授权。
+当前唯一动作是用 SHA=`2004a029...fd611` 的冻结协议运行 `WS-V3-F0-FEEDFORWARD-AUDIT-01` canonical read-only
+audit：核对 exact source、CLI help、官方 focused tests 与 11 项本机前置条件。任一前置失败时以 audit `done`、
+inference `not_run_prerequisites_failed` 收口，不构造 inference command、不安装依赖、不下载权重/gated data、
+不启动 GPU；F1 保持 `conditional_not_unlocked`。P4、A3 formal/R2–R4 与 D3/D4 仍未授权。

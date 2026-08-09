@@ -1,0 +1,206 @@
+schema_version: 1
+task_id: WS-V3-F0-FEEDFORWARD-AUDIT-01
+profile_id: F0-INSTANT-NUREC-AUDIT-v1
+protocol_status: frozen_before_formal_local_audit
+seed: 0
+
+authorization:
+  official_source_read_only_audit_authorized: true
+  local_environment_preflight_authorized: true
+  official_focused_tests_authorized: true
+  inference_smoke_authorized_only_if_all_prerequisites_pass: true
+  dependency_install_authorized: false
+  weight_download_authorized: false
+  gated_dataset_download_authorized: false
+  training_authorized: false
+  gpu_launch_when_any_prerequisite_fails_authorized: false
+  f1_pilot_authorized: false
+
+official_sources:
+  repository: https://github.com/NVIDIA/instant-nurec
+  paper: https://arxiv.org/abs/2607.14203
+  model_card: https://huggingface.co/nvidia/instant-nurec
+  dataset_card: https://huggingface.co/datasets/nvidia/PhysicalAI-Autonomous-Vehicles-NCore
+  hardware_guide: https://docs.nvidia.com/nurec/basics/hardware.html
+  model_license: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
+
+official_source_checkout:
+  path: /root/autodl-tmp/third_party/instant-nurec-worldsim-v3-f0
+  repository_revision: 1ce2288e646548e61fea6100bc58de3acd4bc8d0
+  repository_tree: 96e36fa4772f5ddada37dc3decb1be9d2e595dc0
+  commit_date: '2026-07-29T09:52:40+02:00'
+  clean_required: true
+  shallow_clone_allowed: true
+  files:
+    README.md: 21980f93a65b1e3e28db3bac54f2f001ca59cdf83354809a4dca40645af5c268
+    LICENSE.txt: a287a3acd15e22f00aa9682367b46f4b156f5ba7afc64043c905990cd3ecf88a
+    THIRD_PARTY_LICENSE.txt: 2cd058d3d9adccd569418b5be00887aa4c2336f897c1574f719956a4376f8fc5
+    pyproject.toml: 6a029f137bb2ea1113c4724dcf89cdfbba50ba1ecbf33223afb1fd307017c912
+    uv.lock: 983aadb1e84b29764f42ff5f7f1afa99a1754f8df2666a0c17d78366ea4a461f
+    instant_nurec/cli.py: bc87990aa221ea9444cb26a2fb7d89481b310a5abadadaf3c5284fb9d794106c
+    instant_nurec/pretrained.py: 9647de8c6f77b6e4d981f272055eeace20716956354e2e55669126a1fd265267
+    instant_nurec/config_schema/dataset.py: ce9e54689f98af38239e42c8e0b6177857e2c75f541df36b65089015a7591c72
+    instant_nurec/datasets/samplers.py: 63ba27e90ab94fb3b3c6fa81059d4552bdbecea5c5719666589535d9aff47f9d
+    instant_nurec/datasets/instantnurec_ncore.py: 70da8da1a15e10ade81e134e0a33a08fe82214872b2f78db45e28a8831319053
+    instant_nurec/model/inference.py: 588f56ab70e439147cfa3e7d57002f62e812ae02484156a02cdfc7c78205c667
+    instant_nurec/model/static_core.py: 6682709a133510e15b94f9a26a20e37664046e0d4e6f9337391f7915867a2664
+    instant_nurec/model/system.py: f56401c956603d74a9204b89535a4492b8c90904c38dd262cd829ddc5049fbb1
+    instant_nurec/predict/export_ply.py: 97025e52f0870d50b2c57b43f933452ceab10aaa1e1646dc306fa7fb7a7d1721
+    instant_nurec/utils/gaussians/utils.py: 0e12b6fce624cdc631d13db0d68ef2fa8c843e2e950d0f7f1732e8786d0d2e1b
+    instant_nurec/utils/sensors/ncore_sensors_converters.py: c5176e8f654c6e1e915e7230a9b777274d1f2ccb55c13ca93c47337b500a8ff4
+
+license_contract:
+  source_code: Apache-2.0
+  model_weights: NVIDIA Open Model License
+  dataset: NVIDIA Autonomous Vehicle Dataset License
+  dataset_is_gated: true
+  dataset_terms_acceptance_required: true
+  source_code_license_does_not_grant_model_or_dataset_rights: true
+
+checkpoint_provenance:
+  huggingface_repository: nvidia/instant-nurec
+  observed_main_revision: 73536a971c00ff9d505c93815c90ef31414c21da
+  supported_weights:
+    - profile: pa-front
+      path: pth/instant_nurec_pa_front_1.1.0.pth
+      commit: 0d68763ec5c8b52f7bec152f14dcba8460c7cee6
+      bytes: 730200087
+      sha256: a3b707342cc12d910383f14c8bad4445dcaf42623ce2044394cf53693dfea94b
+      xet_hash: 99b4d7f2e022e4fab33a3e5caa5363af939523c77a99cea0430cdb35417df131
+    - profile: pa-multiview
+      path: pth/instant_nurec_pa_multiview_1.1.0.pth
+      commit: 01d441187947d059e348d2a6db19fcbc9b784323
+      bytes: 730202407
+      sha256: 946e2f66aca98ce8bcdbb2d84f4292ffc2c0a59958c6a8410d24cce3d4b3933a
+      xet_hash: 266acb15912e333b1c3ae74a43e111e51f3bdb2c0256eedb67755e0a5ed707e4
+    - profile: pq-front
+      path: pth/instant_nurec_pq_road_1.0.0.pth
+      commit: 530cb36cff8aa49738b641a99990343390f34da4
+      bytes: 1141125047
+      sha256: 827896e493eb96b1225363a3a37cb82ea411c6a764ded90a37a28ae58b8186a9
+      xet_hash: 564dbef6386dce3a38e2f0e49d35a506236dd26b444246a7a6fcbb7f5dfd979b
+  legacy_traced_archive_is_not_supported_by_current_repository: true
+
+research_model_contract:
+  input:
+    calibrated_multi_camera_rgb: true
+    cadence_hz: [2, 4]
+    per_image_6dof_pose: true
+    per_image_intrinsics: true
+    optional_cuboid_tracks: true
+    lidar_extension_described_in_paper: true
+  output:
+    layered_static_3dgs: true
+    layered_dynamic_3dgs: true
+    sky_cubemap: true
+    per_camera_isp: true
+  claim_boundary: paper_and_model_card_not_local_cli_evidence
+
+standalone_cli_contract:
+  python: '>=3.11,<3.12'
+  setup: uv sync --frozen
+  torch: 2.7.0+cu128
+  input_format: NCore V4 .json or .lst
+  profiles:
+    pa-front: {cameras: 1, frames_per_camera: 18, resolution: [784, 448]}
+    pa-multiview: {cameras_allowed: [1, 3, 5], frames_per_camera: 18, resolution: [504, 280]}
+    pq-front: {cameras: 1, frames_per_camera: 18, resolution: [784, 448]}
+  temporal_sampling:
+    frames_per_camera: 18
+    maximum_gap_microseconds: 750000
+    maximum_chunk_seconds: 13.5
+    maximum_chunks: 8
+  camera_kernel:
+    accepted_type: FTheta
+    optional_external_distortion: bivariate_windshield
+    pinhole_or_generic_fisheye_accepted: false
+  reads:
+    rgb: true
+    rig_and_world_pose: true
+    intrinsics_and_masks: true
+    optional_cuboid_tracks: true
+    lidar: false
+  exports:
+    format: PLY
+    static_layer: true
+    dynamic_layer: false
+    sky_cubemap: false
+    isp_affine: false
+    actor_registry: false
+    actor_trajectories: false
+    depth_or_point_map: false
+  ply_fields:
+    - x
+    - y
+    - z
+    - optional_rgb
+    - normals
+    - rot_0_through_3
+    - scale_0_through_2
+    - opacity
+    - f_dc_0_through_2
+    - road_mask
+    - sky_mask
+  inference_requires_cuda: true
+  merge_option_voxelizes_to_target_gaussians_default: 2000000
+
+static_code_signatures:
+  instant_nurec/predict/export_ply.py:
+    - static_layer
+    - export_ply
+  instant_nurec/model/inference.py:
+    - dynamic_layer
+    - sky_cubemap
+    - torch.zeros
+  instant_nurec/utils/sensors/ncore_sensors_converters.py:
+    - FTheta
+    - TypeError
+  instant_nurec/config_schema/dataset.py:
+    - '750_000'
+    - n_frames_per_sample
+  instant_nurec/cli.py:
+    - '13.5 s'
+  instant_nurec/pretrained.py:
+    - n_frames_per_sample=18
+
+local_smoke_prerequisites:
+  all_required: true
+  python_3_11_available: true
+  uv_available: true
+  cuda_compute_capability_minimum: 8.0
+  inference_vram_minimum_mib: 30720
+  system_memory_minimum_bytes: 32000000000
+  disk_free_minimum_bytes: 100000000000
+  exact_supported_weight_present: true
+  licensed_ncore_v4_input_present: true
+  dataset_terms_acceptance_recorded: true
+  source_checkout_exact_and_clean: true
+  cli_help_success: true
+
+formal_audit:
+  run_root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-F0-FEEDFORWARD-AUDIT-01
+  run_slug: f0-instant-nurec-audit-s0-r1
+  current_python: /root/autodl-tmp/envs/motionproj/bin/python
+  cli_help_timeout_seconds: 30
+  focused_tests:
+    - [tests/test_ncore_input.py, tests/test_pretrained.py]
+    - [tests/test_cli.py, tests/test_ncore_input.py]
+  test_timeout_seconds: 180
+  dependency_or_environment_failures_are_report_only: true
+  inference_command_must_not_be_constructed_when_gate_fails: true
+
+f1_decision_contract:
+  unlock_requires_f0_convertible_scene0230_asset: true
+  requires_dynamic_actor_registry_or_exact_converter: true
+  static_ply_alone_is_not_exact_streetgs_checkpoint: true
+  current_decision_if_cli_contract_matches: conditional_not_unlocked
+  dggt_fallback_is_optional_and_not_required_for_r0: true
+
+claim_boundary:
+  web_demo_is_not_local_cli_capability: true
+  paper_research_model_is_not_standalone_cli_capability: true
+  no_runtime_or_quality_claim_without_inference: true
+  no_nuscenes_to_ncore_converter_claim: true
+  no_static_ply_to_streetgs_exact_checkpoint_claim: true
+  no_f1_launch_claim: true
+  negative_local_preflight_does_not_claim_permanent_upstream_impossibility: true

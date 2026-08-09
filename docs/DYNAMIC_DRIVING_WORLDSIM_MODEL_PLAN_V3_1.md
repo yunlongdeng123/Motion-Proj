@@ -22,6 +22,7 @@
 - **A4-P2 runner / 账本修复基线**：`1cd9a6e` / `dcf2822`（10-field FP16、FP32 renderer adapter、19-audit finalizer）
 - **A4-P3 协议 SHA-256**：`dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41`
 - **A4-P3 runner 基线**：`aba55777f38a3d8e4363d2ff7d546d412214b481`（exact chunk package、内存重组、21-audit finalizer）
+- **F0 Instant NuRec 审计协议 SHA-256**：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - **当前任务**：`WS-V3-F0-FEEDFORWARD-AUDIT-01`（`running`）
 - **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 running / F1 conditional / R0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
@@ -743,6 +744,26 @@ checkpoint 不变。结果为：
 - 一窗口 wall time、VRAM 和 schema。
 
 网页演示能力不能写成本地 CLI 能力。
+
+#### 8.1.1 F0 审计协议冻结
+
+- 官方代码 checkout 固定为 NVIDIA `instant-nurec@1ce2288e646548e61fea6100bc58de3acd4bc8d0`，tree=
+  `96e36fa4772f5ddada37dc3decb1be9d2e595dc0`；16 个关键文件逐 SHA-256 锁定且 checkout 必须 clean；
+- source code、model weights、NCore dataset 的许可分别登记为 Apache-2.0、NVIDIA Open Model License 与
+  NVIDIA Autonomous Vehicle Dataset License；dataset gated/terms acceptance 与 source code 许可分离；
+- 固定三个当前 weights-only PTH 的 Hugging Face commit、bytes、SHA-256 与 Xet hash；旧 traced archive 不作为
+  当前仓库支持的 checkpoint；
+- 论文/模型卡完整模型的 static/dynamic/sky/ISP 能力与 standalone CLI 分表。当前 CLI 只读 NCore V4
+  `.json/.lst`，接受 FTheta camera，可读 RGB/pose/intrinsics/mask/optional cuboids，不读 LiDAR；只导出
+  static-layer PLY，不导出 dynamic、sky、ISP、actor registry/trajectory 或 depth/point map；
+- 本机 smoke 为全前置条件合取：Python 3.11、`uv`、CC≥8.0、VRAM≥30,720 MiB、RAM≥32 GB、free disk≥100 GB、
+  精确支持权重、合法 NCore 输入/terms 记录、exact clean checkout 与 CLI help 全部通过才授权。任一失败时不得构造
+  inference command，也不得安装依赖、下载权重/gated 数据或启动 GPU；
+- protocol=`configs/worldsim_v3/f0_instant_nurec_audit_v1.yaml`，SHA-256=
+  `2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`；runner SHA-256=
+  `249f26d5cbff0687bfedf094c5386237365cdf24ddcf811d3c56b487e9868e4a`；协议/官方源码指纹测试=`8 passed`，
+  WorldSim V3 联合回归=`241 passed`。
+  本条写入时 formal 本机审计尚未运行，不构成 inference、wall/VRAM 或质量结果。
 
 ### 8.2 F1 条件式初始化 pilot
 
@@ -1757,11 +1778,10 @@ P0/P5/P1/P2/P3 最低完成集已满足，A4=`done`。
 R0 必交付仍要求 F0 审计，因此当前唯一动作切换为 `WS-V3-F0-FEEDFORWARD-AUDIT-01`：
 
 ```text
-1. 冻结并记录 NVIDIA Instant NuRec 官方 repository revision、license、README/paper/checkpoint provenance
-2. 静态审计输入 schema、相机模型/cadence、pose/LiDAR/instance 依赖和 CLI 的实际导出边界
-3. 在不下载 gated 数据/权重前先做本机环境与 CLI preflight；只有依赖和公开输入满足时才执行一窗口 inference smoke
-4. 明确区分论文完整模型能力与 standalone CLI 能力，网页演示不得登记为本地 CLI 事实
-5. 给出 F1 unlocked/blocked/not_applicable 裁决；不启动 F1，不启动 P4、D3/D4 或 A3 R2–R4
+1. 使用已冻结 F0 协议运行 canonical 本机只读审计，核对 exact clean 官方 checkout 和 16 个文件指纹
+2. 记录 CLI help、两组官方 focused tests、Python/uv/GPU/RAM/disk/token/weight/NCore/terms 前置条件
+3. 只在全部前置条件通过时授权后续一窗口 inference；任一失败时 formal run 以 audit done、inference not-run 收口
+4. 给出 F1 conditional_not_unlocked/unlocked 裁决；不启动 F1，不启动 P4、D3/D4 或 A3 R2–R4
 ```
 
 D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，不因能力缺口改写官方/本地边界。
@@ -1769,6 +1789,17 @@ D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — F0 Instant NuRec 官方/本机能力审计协议冻结
+
+- protocol SHA=`2004a029...fd611`，官方 checkout 固定为 `1ce2288e...8d0` / tree `96e36fa4...5dc0`，16 个
+  source files、三份权重的 commit/bytes/SHA/Xet、三层 license 与官方来源 URL 全部锁定；
+- 明确论文完整模型与 standalone CLI 不等价：CLI 为 NCore V4/FTheta/CUDA、static PLY only，不读 LiDAR，
+  不导出 dynamic/sky/ISP/actor registry/trajectory/depth；网页 demo 不登记为本地能力；
+- 本机 smoke 采用 11 条全合取前置条件与 fail-closed 路由；失败时禁止构造 inference command、安装依赖、下载
+  权重/gated 数据或启动 GPU；F1 预设为 `conditional_not_unlocked`，静态 PLY 不冒充 exact StreetGS checkpoint；
+- runner SHA=`249f26d5...8e4a`，协议与 exact checkout 测试 8 passed、联合回归 241 passed。本条无 formal run 或 inference measurement；
+  下一动作只运行已提交协议的 canonical F0 audit。
 
 ### 2026-08-10 — A4-P3 formal 与 A4 done
 
@@ -2096,8 +2127,9 @@ WS-V3-F0-FEEDFORWARD-AUDIT-01 当前为 running；只审计 Instant NuRec 官方
 25. 核对 P3 runner `aba5577`、canonical r1 summary SHA `f8e6e166...a293`、21/21 audits、159 files、85 tensor
     paths exact、57 RGB/31 endpoints exact、source/registry 不变、资源与 no-torch resume；保持 package +2.792171%、
     load/reassembly 更慢且无 streaming/load/render speedup claim；
-26. 当前只执行 F0：冻结官方 revision/license/checkpoint provenance，静态审计 input/output/schema/CLI，再做本机
-    preflight；只有公开输入和依赖满足时才运行一窗口 smoke。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
+26. 核对 F0 protocol SHA `2004a029...fd611`、官方 source revision/tree、16 个 source hashes、三份权重 provenance、
+    static-Ply-only CLI boundary、11 项本机前置门与 8 项测试；只运行 canonical read-only audit。任一前置失败时不得
+    构造 inference command。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```
