@@ -426,6 +426,7 @@ def validate_a3_r1_eval_protocol(contract: Mapping[str, Any]) -> None:
     )
     dependencies = contract.get("depends_on") or {}
     for name in (
+        "main_protocol_sha256",
         "numeric_freeze_sha256",
         "sidecar_manifest_sha256",
         "r0_checkpoint_sha256",
@@ -433,7 +434,9 @@ def validate_a3_r1_eval_protocol(contract: Mapping[str, Any]) -> None:
     ):
         _sha256(dependencies.get(name), f"missing A3 R1 eval dependency SHA: {name}")
     _require(
-        dependencies.get("numeric_freeze_sha256")
+        dependencies.get("main_protocol_sha256")
+        == "03fbf632645326692bbcf18ab18a08b5440c7733c709f925945c78018bb272d0"
+        and dependencies.get("numeric_freeze_sha256")
         == "d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3"
         and dependencies.get("r0_checkpoint_sha256")
         == "1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c"
@@ -494,6 +497,13 @@ def validate_a3_r1_eval_protocol(contract: Mapping[str, Any]) -> None:
         "A3 R1 eval typed-depth drift",
     )
     endpoints = contract.get("endpoints") or {}
+    _require(
+        endpoints.get("rgb_comparison_encoding")
+        == "round_clip_0_1_times_255_uint8"
+        and endpoints.get("rgb_mse_normalization")
+        == "squared_uint8_error_divided_by_65025",
+        "A3 R1 eval RGB comparison precision drift",
+    )
     directions = {
         "s_b_first_hit_valid_coverage": "higher",
         "s_b_depth_order_violation_rate": "lower",
