@@ -1,0 +1,242 @@
+schema_version: 1
+task_id: WS-V3-R0-INTEGRATION-01
+profile_id: R0-INTEGRATION-v1
+protocol_status: frozen_before_canonical_integration
+seed: 0
+prerequisite_closeout_commit: 80b4f983b665d7bb3e4d73fb6d9531f1adbbe901
+
+authorization:
+  read_existing_evidence_authorized: true
+  hash_existing_assets_authorized: true
+  derive_json_csv_markdown_reports_authorized: true
+  snapshot_documentation_authorized: true
+  verify_chunk_package_payloads_authorized: true
+  training_authorized: false
+  model_inference_authorized: false
+  gpu_launch_authorized: false
+  checkpoint_or_registry_mutation_authorized: false
+  dependency_install_authorized: false
+  download_authorized: false
+  f1_pilot_authorized: false
+  p4_lod_authorized: false
+  a3_additional_refinement_authorized: false
+  d3_d4_authorized: false
+
+documentation:
+  project_root: /root/autodl-tmp/motion_proj
+  files:
+    - docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md
+    - docs/RESEARCH_STATUS.md
+    - docs/EXPERIMENTS.md
+    - docs/RESEARCH_FAILURES.md
+    - README.md
+
+protocol_inputs:
+  a1_confirmation:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/a1_confirmation_v1.yaml
+    bytes: 2293
+    sha256: 63a3cc607ccfddbb714cc81d0570da356263c01c5a68880345953023d2d6a8cd
+  a2_d2_formal:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/a2_d2_formal_v1.yaml
+    bytes: 5856
+    sha256: b66cf795c55dfe65315ecf49c09951482d8d6809ce7d001b901942a6bd9a05bc
+  a3_r1_eval:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/a3_r1_eval_protocol_v1.yaml
+    bytes: 5672
+    sha256: eb87a9f2ea7df9bdc050a8d4e4f3cdc7c6a1115ea6f4f69e2fd3c8011904b05a
+  a4_p3_chunk:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/a4_p3_chunk_protocol_v1.yaml
+    bytes: 21125
+    sha256: dfaaba79162961673b632271727c8a949c45519b1e75e5ed873badf999ad1b41
+  f0_audit:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v3/f0_instant_nurec_audit_v1.yaml
+    bytes: 8232
+    sha256: 2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611
+
+canonical_evidence:
+  a0:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T175000Z__a0-three-scene-finalize-s0-r2
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 7034, sha256: 136515bc372789c9d3452ad164b44be0afd340a7386d39d315513f0581b27ae7}
+      manifest.json: {bytes: 2356, sha256: 4f392136a50f84fdbc1069c51c7d9bfbb025fea0d47343f030bef9e23d651dd1}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+      artifacts/a0_matrix.json: {bytes: 6486, sha256: 7fd6e658a939a0b9132f5abe7f6186415759a5724ab7a73536324308843d1206}
+      artifacts/a0_report.md: {bytes: 1085, sha256: 13e8e6cc8c3bddf8e183fceac94f31199415641bf308b555be3ed6ebfa8603e5}
+  a1:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A1-CALIBRATION-01/20260806T211248Z__a1-three-scene-finalize-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 1275, sha256: eb5d1aba6e2d7f040b6f84bac8fbebedccf5b1c0d82561de8cd205d90eb93f4a}
+      manifest.json: {bytes: 1618, sha256: e8e657bb1f4a80e87e4974a6d595d1788d05f74e47a6ed9ff938788c61af7386}
+      terminal.json: {bytes: 94, sha256: b9c0be2a48851dd45ff49b695e42a8681a16703ab8dfc9d87b332a0ad3595848}
+      artifacts/a1_matrix.json: {bytes: 19152, sha256: c70acf1f910d58691ee012f3a52fce8f3738291a756b3cc730ea0a7af1325ec8}
+      summary.md: {bytes: 279, sha256: 11817afb68dfcdaf2ed87cb5ff3234e9b0e4f52a8e4933aa20820ea30913fd2d}
+  f0:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-F0-FEEDFORWARD-AUDIT-01/20260809T192139Z__f0-instant-nurec-audit-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 2360, sha256: d111c45727263a5667d7efbf5fa50d53aadb7d171454ab24569f63e7c108be37}
+      manifest.json: {bytes: 1873, sha256: f1c76fdd9a637ad7877c806bb6ad83de0daf1c37623da80d9cf54bdcc5016a11}
+      terminal.json: {bytes: 41, sha256: 207758b92d750cd239fa998ed7572c5f404f8747fadb0a4b74a12295983015c6}
+      artifacts/capability_matrix.json: {bytes: 2373, sha256: b303e8e2c5288d6d608e27220e5ce57ae31df785a832f4370403fbfd9c7e0533}
+      artifacts/smoke_prerequisites.json: {bytes: 919, sha256: 1f5f1da5f8f234e64fa95ff27b7487b4f76319a563253b9c98870d96ad9391e7}
+      artifacts/f1_decision.json: {bytes: 1047, sha256: 2b389ae1c7e996c0fc10ba4f8644c11e26ee3f2f7a0a3a4e2af95ab5ccc4c73b}
+  a2:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 163053, sha256: 9c41dfc83c9da0a14201e1c719fb3d0e2cf59dd1ad20cd279c6e1a9a1c97de7d}
+      manifest.json: {bytes: 8999, sha256: 260af5d99f3d3ece4f2c178f8c18385338432da9fbf94b7d8a4603163db20926}
+      terminal.json: {bytes: 94, sha256: 22690d536cd92938e50c22f7a1d6abe47bfb4af61a4aca09bf12cd9a7d03dbdf}
+      stages/actor_metrics_fixed_d2_boundary_residual.json: {bytes: 1545, sha256: 3cc2e84a14c72d2f79d760953cee6d8484f5b14764ae06f0f83981a64334852c}
+      stages/registry_fixed_d2_boundary_residual.json: {bytes: 1461, sha256: f39db18ceb8b3971eceef5663bb8fcf72228039b63e0b70db5646e9f09df6cab}
+      artifacts/evaluations/fixed-d2-boundary-residual/actor_metrics/summary.json: {bytes: 6250, sha256: 7bd03eaf152fe6ef27a7d8f9aa3f7de6478484a7d3440ff0ac3628a0d439a7d8}
+      artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json: {bytes: 3721428, sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68}
+      work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml: {bytes: 4661, sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68}
+      work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth: {bytes: 578819674, sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c}
+  a3_synthetic:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T132133Z__a3-r0-r1-synthetic-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 1602, sha256: 2ac123f0603120a103743e59680a31dd4cdf5b6d5fa45605d7c84d36ec337ada}
+      manifest.json: {bytes: 1027, sha256: 8ffa697e15d8a97108d8281a51313119c304fbf0f245d88bfbd127663fde27c4}
+      terminal.json: {bytes: 479, sha256: 2a8ab6c33ea925964734ca02abba782be71006405c53cb8723084a246d39c591}
+      artifacts/r0-exact-alias.json: {bytes: 809, sha256: 9b21905a575bfc84c29e0453719b00203ddc42ca10811851a0187db16d6cf9d3}
+  a3_negative:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A3-LOCAL-REFINE-01/20260809T144037Z__a3-r1-heldout-eval-s0-r5
+    expected_terminal_status: blocked
+    files:
+      manifest.json: {bytes: 2694, sha256: 29629f5f9b4783191aea9bcb0e3311f4213810d7d3b8cd9d7695fae1d9bdc9db}
+      terminal.json: {bytes: 173, sha256: eabe266bc3b4e7917391789e95e8cff771c6cac7d2b0567e60205f9cd8a7aad9}
+      artifacts/resource_audit.json: {bytes: 867, sha256: d9536f4ec937bee0694a754038b22ab75a4b6b028f20e1e6f42e38e4db9a6280}
+      artifacts/heldout_metric_rows.jsonl: {bytes: 184189, sha256: 04da7a2503460c075a3164c90d6c08436bbea9f4ec5560ea0417ee40e91aa939}
+      artifacts/heldout_global_rows.jsonl: {bytes: 16355, sha256: 04bf741e1da6cfe845b5ee6c9d4cccede54d79a1c8f7178e00abcf737ff7245e}
+  a4_p0:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T152923Z__a4-p0-profile-v2-s0-r2
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 19107, sha256: 0278a32095bb4c73236c40a6b9c383dda5d7564983316cd28d63a0d35dd62e92}
+      manifest.json: {bytes: 8504, sha256: 12df93b3728ab857bdfc279d7cf0fd7f202f28bde6abe038af204279c775a0f5}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+  a4_p5:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T155753Z__a4-p5-registry-resume-s0-r2
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 5502, sha256: 0c86ff68edc5f0f929b57afa6fe78e39374c078366a74151bc57d6c12c8f8744}
+      manifest.json: {bytes: 6844, sha256: 78830d744901c7a227432c72eb02560c9c2e20bfb022f48b69c6b45e8cdb58bd}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+  a4_p1:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T165058Z__a4-p1-contribution-prune-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 112577, sha256: 7c5347e30b020fddceb5f643cd44f555346ee12e44bdfe7ad9472e9f7cf67119}
+      manifest.json: {bytes: 9388, sha256: 486342ba995a52ca33602a3c37482f82a546a31fedc21baf94bd259a4b5d61ac}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+  a4_p2:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 139592, sha256: 980f9b0f25741167b55bd8e245f89f5ca2aea277dad2981f92e9d25422791103}
+      manifest.json: {bytes: 8411, sha256: bed45626b05a3ad888d8f93ff17621d5c832084e93a82425fa7230a2035d98cb}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+  a4_p3:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T184240Z__a4-p3-chunk-s0-r1
+    expected_terminal_status: done
+    files:
+      summary.json: {bytes: 113986, sha256: f8e6e16639b685f4a9a80fd20a57d6553b9e09e7e5ddfc2b1a5a38604abca293}
+      manifest.json: {bytes: 8724, sha256: 8b79d3556635593171972f15394c2fe45025d6af881e0dc48ee55562bc1bd7af}
+      terminal.json: {bytes: 42, sha256: 80dd8178d629ad67a056cb0b96006e33c77ab2b070618519310ab6596f0ac645}
+      artifacts/resource_audit.json: {bytes: 1187, sha256: 55ee6f0b0e296e856d21190afc3888f8f5d2863f4a09a61bd895766350c55e81}
+      artifacts/chunk_package/manifest.json: {bytes: 143913, sha256: 35a3f1fe7e351e68eb46d0dfe9ae0fe1204185041bef13b19baec3b0a4a064b8}
+
+selected_production_asset:
+  method_chain: A1-C0-off__A2-D2-boundary-priority__A3-R0-off__A4-P2-mixed__A4-P3-exact-chunk
+  source_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/candidates/p2-gs-param-fp16.pth
+    bytes: 432111754
+    sha256: 7be87e8b0bdaf86c4a8066fa99a8c8a0a691ba9b5ea1c91ebf7b7fbf60287448
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/candidates/p2-gs-param-fp16_actor_registry.json
+    bytes: 3721277
+    sha256: 69c4f38ae2a06d5fd3cd92d61dcc3595e3f05e70a4229f8827acd53d87448a27
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+    bytes: 4661
+    sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  chunk_package:
+    root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T184240Z__a4-p3-chunk-s0-r1/artifacts/chunk_package
+    manifest_sha256: 35a3f1fe7e351e68eb46d0dfe9ae0fe1204185041bef13b19baec3b0a4a064b8
+    total_bytes: 444177055
+    expected_files: 159
+    static_assets: 133
+    actor_assets: 24
+
+visualization_package:
+  kind: existing_offline_scene0230_d2_heldout_videos
+  files:
+    - {role: ground_truth, path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/videos_eval/test_set_30000_a2_fixed_d2_boundary_residual_gt_rgbs.mp4, bytes: 2504247, sha256: d55c817a7bf2b78cdf64f6bd5eb01d0d4c064bca042653e719f8fa3f68e319f3}
+    - {role: composed, path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/videos_eval/test_set_30000_a2_fixed_d2_boundary_residual_rgbs.mp4, bytes: 1951458, sha256: 4f4946b3a0a3909a3475eccb17c566e012a795ea2ec6f5b41e27e3af3963eeb8}
+    - {role: background, path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/videos_eval/test_set_30000_a2_fixed_d2_boundary_residual_Background_rgbs.mp4, bytes: 1911079, sha256: 97b417851f2991bfc7116f6e1828ab441ccc4916c1804b9a692a9f7cd97f7015}
+    - {role: rigid_nodes, path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/videos_eval/test_set_30000_a2_fixed_d2_boundary_residual_RigidNodes_rgbs.mp4, bytes: 429944, sha256: e29167c9d548ae8b267a7265a0e5f8a703b0e05fdbfe5af1c77a3b3d05b934e4}
+  raw_media_copy_forbidden: true
+
+expected_decisions:
+  a0: {status: done, scene_count: 3}
+  a1: {status: done, decision_status: done_off, selected_variant: c0-off, logical_matrix_entries: 10, unique_training_runs: 8}
+  f0: {audit_outcome: done_local_inference_not_executable_on_current_host, prerequisite_passed: 4, prerequisite_total: 11, inference_smoke: not_run_prerequisites_failed, f1_decision: conditional_not_unlocked}
+  a2: {status: done, d2_formal_complete: true, d3_unlocked: false, fixed_quality_verdict: tradeoff_non_dominated, fixed_quality_cost_verdict: tradeoff_non_dominated, selected_checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c}
+  a3: {task_status: done, selected_arm: R0-off, r1_method_state: rejected_resource_gate_and_diagnostic_tradeoff, formal_training_authorized: false}
+  a4: {status: done, p1_method_state: rejected_quality_or_integrity_gate, p2_selected_arm: p2-gs-param-fp16, p3_selected_arm: p3-chunk-package}
+
+final_conclusions:
+  - calibration_native_or_off_preferred
+  - actor_aware_supported
+  - local_refine_limited_to_observed_support
+  - deployment_pareto_supported
+  - engineering_blocked
+
+deliverables:
+  - {id: D01, output: artifacts/documentation_snapshot.json, description: V3.1 final plan and update-log snapshot}
+  - {id: D02, output: artifacts/a0_baseline.json, description: A0 three-scene native baseline}
+  - {id: D03, output: artifacts/a1_calibration.json, description: A1 two-stage calibration result}
+  - {id: D04, output: artifacts/f0_audit.json, description: F0 audit and conditional F1 decision}
+  - {id: D05, output: artifacts/actor_quality.json, description: A2 actor-aware selected asset quality}
+  - {id: D06, output: artifacts/a3_local_refine_support.json, description: A3 support types and negative method result}
+  - {id: D07, output: artifacts/a4_deployment.json, description: A4 converter registry resume and selected asset}
+  - {id: D08, output: artifacts/a0_a4_main_table.json, description: A0 through A4 main table}
+  - {id: D09, output: artifacts/quality_scale_time_vram_pareto.json, description: quality scale time VRAM Pareto}
+  - {id: D10, output: artifacts/negative_results_and_boundaries.json, description: negative results and applicability boundaries}
+  - {id: D11, output: artifacts/reproducibility_manifest.json, description: commands configs checkpoints and hashes}
+  - {id: D12, output: artifacts/visualization_index.json, description: minimal offline visualization entry}
+
+formal_integration:
+  run_root: /root/autodl-tmp/runs/worldsim_v3/WS-V3-R0-INTEGRATION-01
+  run_slug: r0-integration-s0-r1
+  verify_every_chunk_payload: true
+  expected_protocol_input_count: 5
+  expected_canonical_evidence_file_count: 51
+  expected_selected_asset_file_count: 3
+  expected_visualization_file_count: 4
+  expected_deliverable_count: 12
+  resource_ceilings:
+    wall_time_seconds: 180
+    peak_cgroup_memory_bytes: 51539607552
+    run_bytes: 10000000
+    disk_free_floor_bytes: 30000000000
+    oom_events_delta: 0
+    oom_kill_events_delta: 0
+
+claim_boundary:
+  evidence_scope_is_three_nuscenes_scenes: true
+  a2_a3_formal_method_evidence_is_scene0230_only: true
+  a1_selected_c0_off_not_calibration_enhancement: true
+  a2_d2_is_boundary_priority_tradeoff_not_dominance: true
+  a3_r1_is_rejected_not_selected: true
+  p1_pruning_is_rejected: true
+  p2_reduces_storage_but_does_not_speed_render: true
+  p3_separates_assets_but_does_not_reduce_size_or_speed_load_render: true
+  f0_no_local_inference_or_quality_claim: true
+  f1_p4_d3_d4_and_a3_r2_r4_not_launched: true
+  visualization_is_existing_offline_evidence_not_new_ui: true
+  no_complete_world_model_or_safety_closed_loop_claim: true

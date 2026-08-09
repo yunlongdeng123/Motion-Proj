@@ -12,7 +12,7 @@
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
 `done`，`A3*=R0-off`；A4 已 `done`，P0、P5、P1、P2 与 P3 全部闭环；P1 候选被质量门拒绝并回退到 source，
 P2 canonical r2 选择 mixed checkpoint，P3 canonical r1 选择 exact chunk package。F0 canonical audit 已 `done`，
-本机 inference 前置条件未通过，F1=`conditional_not_unlocked`；当前执行 R0 集成。
+本机 inference 前置条件未通过，F1=`conditional_not_unlocked`；R0 只读集成协议已冻结，canonical pending。
 
 ## 1. 状态词
 
@@ -35,7 +35,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | pruning/precision/chunk/LOD 与资产注册 | P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected |
-| `WS-V3-R0-INTEGRATION-01` | running | 完整 A0–A4/F0 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
+| `WS-V3-R0-INTEGRATION-01` | running | 完整 A0–A4/F0 结论与复现包 | protocol frozen；63 inputs/23 decisions/P3 159-file package exact；canonical pending |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
 
@@ -665,6 +665,21 @@ Matched-RigidNodes-budget：
   不含 dynamic/sky/ISP/actor registry/depth，且不是 exact StreetGS checkpoint；未来兼容硬件/合法输入/converter
   的窄 static-background pilot 不被永久否定。当前任务切换为 R0 integration，DGGT fallback 不阻塞 R0。
 
+### `WS-V3-R0-INTEGRATION-01` formal 前协议冻结
+
+- protocol=`configs/worldsim_v3/r0_integration_protocol_v1.yaml`，SHA=`4fe20c3197...7575`；runner SHA=
+  `d58c4008...c5ce`；前置 closeout commit=`80b4f983b665d7bb3e4d73fb6d9531f1adbbe901`；
+- 授权边界为 read/hash/derive reports/document snapshot/chunk-payload verification；training/inference/GPU/install/
+  download/checkpoint-or-registry mutation 与 F1/P4/D3/D4/A3 extra 均为 false；
+- 冻结 `5 protocols + 51 canonical evidence files + 3 selected production files + 4 offline MP4 = 63` 个输入审计行；
+  11 组 terminal status、23/23 decision checks 均 exact；
+- P3 package=`159 files / 444,177,055 bytes / 133 static / 24 actor`；manifest 和 158 payload 的 path/bytes/SHA
+  全 exact；12 个最终 deliverable 路径与 claim boundary 全冻结；
+- selected chain=`A1-C0-off__A2-D2-boundary-priority__A3-R0-off__A4-P2-mixed__A4-P3-exact-chunk`；
+  production checkpoint/registry/config SHA=`7be87e8b...7448 / 69c4f38a...8a27 / 115deaf8...5e68`；
+- 定向测试 `11 passed`，WorldSim V3 联合回归 `252 passed`。本条未运行 canonical、未生成 terminal，也没有新训练、
+  推理、GPU measurement 或质量结论；下一动作只提交冻结协议后运行 canonical read-only integration。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -893,7 +908,7 @@ P3 protocol SHA=`dfaaba79...1b41` 已冻结且 validator/12 项协议测试/222 
 85 tensor paths 与 source/registry immutable 全部 exact，selected=`p3-chunk-package`。package 比 source 大
 `2.792171%` 且 load/reassembly 更慢，只登记 exact asset separation；A4=`done`。
 
-F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`conditional_not_unlocked`。当前唯一动作是
-`WS-V3-R0-INTEGRATION-01`：冻结并绑定 A0/A1/F0/A2/A3/A4 canonical evidence，生成 A0→A4 主表、Pareto、
-负结果/适用边界、复现 manifest 和最小离线可视化索引，再以 validator/canonical terminal 收口。P4、A3
-formal/R2–R4、D3/D4 与新训练/推理仍未授权。
+F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`conditional_not_unlocked`。R0 protocol
+SHA=`4fe20c31...7575` 已冻结并通过 63-input/23-decision/P3-package exact 审计；当前唯一动作是提交该协议后运行
+`WS-V3-R0-INTEGRATION-01` canonical，只读生成 A0→A4 主表、Pareto、负结果/适用边界、复现 manifest 和最小
+离线可视化索引，再以 terminal 收口。P4、A3 formal/R2–R4、D3/D4 与新训练/推理仍未授权。

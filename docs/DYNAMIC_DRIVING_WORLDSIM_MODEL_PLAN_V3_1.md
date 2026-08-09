@@ -24,8 +24,10 @@
 - **A4-P3 runner 基线**：`aba55777f38a3d8e4363d2ff7d546d412214b481`（exact chunk package、内存重组、21-audit finalizer）
 - **F0 Instant NuRec 审计协议 SHA-256**：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - **F0 审计实现基线**：`ab76f1901b60491af7bc8355589e149fcb69fe04`；canonical summary SHA-256=`d111c45727263a5667d7efbf5fa50d53aadb7d171454ab24569f63e7c108be37`
+- **R0 集成协议 SHA-256**：`4fe20c3197d5ea954e7b37dd2ff68b6ecf357ce7d2770507e6adcb5398797575`
+- **R0 只读 runner SHA-256**：`d58c4008cea264ff42ee0da436cabba5d7014d14d773040cd8cf471725d0c5ce`
 - **当前任务**：`WS-V3-R0-INTEGRATION-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 done（local inference not executable）/ F1 conditional_not_unlocked / R0 running`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4 done（P0/P5/P1/P2/P3 complete；P1 rejected；P2 mixed checkpoint + P3 exact package selected）/ D3-D4 not launched / F0 done（local inference not executable）/ F1 conditional_not_unlocked / R0 protocol frozen，canonical pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -553,7 +555,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
 | `WS-V3-A4-DEPLOYMENT-01` | done | 端到端 profile、prune、FP16、chunk、registry、resume | P0/P5/P1/P2/P3 全部闭环；P1 rejected；P2 mixed checkpoint + P3 exact package selected；21/21 P3 audits |
-| `WS-V3-R0-INTEGRATION-01` | running | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
+| `WS-V3-R0-INTEGRATION-01` | running | 最终模型链、负结果、复现包和工程说明 | protocol frozen；63 inputs/23 decisions/P3 package exact；canonical pending |
 
 ---
 
@@ -1656,6 +1658,22 @@ engineering_blocked
 
 不得把所有负结果统一写成“项目失败”。
 
+### 12.3 R0 formal 前协议冻结
+
+- task/profile=`WS-V3-R0-INTEGRATION-01 / R0-INTEGRATION-v1`，seed=`0`；协议/runner SHA-256=
+  `4fe20c31...7575 / d58c4008...c5ce`，前置 closeout commit=`80b4f983b665d7bb3e4d73fb6d9531f1adbbe901`；
+- 只读绑定 `5` 份上游协议、`51` 个 canonical evidence files、`3` 个 selected production files、`4` 个
+  scene-0230 D2 held-out 离线 MP4；共 `63` 个输入审计行，11 组 terminal 状态全部 exact；
+- P3 selected package=`159 files / 444,177,055 bytes`，含 `133` static assets、`24` actor assets 与 `1`
+  skeleton；manifest 和全部 `158` 个 payload 的 path/bytes/SHA-256 均逐项复核 exact；
+- 23/23 frozen decision checks 与 12/12 deliverable schema 通过；R0 定向测试 `11 passed`，WorldSim V3 联合回归
+  `252 passed`。协议只授权生成 JSON/CSV/Markdown、文档 snapshot 与包哈希审计；训练、模型推理、GPU、依赖安装、
+  下载、checkpoint/registry mutation、F1/P4/D3/D4/A3 追加实验均为 false；
+- 最终结论词冻结为 `calibration_native_or_off_preferred / actor_aware_supported /
+  local_refine_limited_to_observed_support / deployment_pareto_supported / engineering_blocked`；其中
+  `engineering_blocked` 只指本机 Instant NuRec inference，不能扩大成项目失败或 upstream 永久不可行；
+- 正式 run 必须在协议提交后执行；本冻结点尚无 canonical R0 terminal，不提前登记 final conclusion 为已完成。
+
 ---
 
 ## 13. 资源与运行合同
@@ -1797,10 +1815,10 @@ exact，选择 `p3-chunk-package`；package 比 source 大 `2.792171%` 且 load/
 P0/P5/P1/P2/P3 最低完成集已满足，A4=`done`。
 
 F0 canonical audit 已 `done`，且 F1 因 standalone CLI/static PLY 与本机前置条件均不满足而保持
-`conditional_not_unlocked`。当前唯一动作切换为 `WS-V3-R0-INTEGRATION-01`：
+`conditional_not_unlocked`。R0 协议已按 12.3 冻结，当前唯一动作是提交该协议后运行 canonical 只读集成：
 
 ```text
-1. 冻结 R0 集成协议，逐项绑定 A0/A1/F0/A2/A3/A4 canonical terminal、summary、config 与 selected asset hash
+1. 使用已冻结 R0 集成协议，逐项复核 A0/A1/F0/A2/A3/A4 canonical terminal、summary、config 与 selected asset hash
 2. 生成 A0→A4 主表、质量—规模—时间—显存 Pareto、负结果/claim boundary 与 reproducibility manifest
 3. 核对 12 项必交付；F1、P4、D3/D4、A3 formal/R2–R4 的未启动状态必须显式保留
 4. 只复用已有离线渲染/asset package 作为最小可视化入口，不启动新训练、推理或大型 UI
@@ -1812,6 +1830,16 @@ D3/D4 继续未解锁；P4 继续条件式。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-10 — R0 只读集成协议冻结
+
+- protocol/runner SHA=`4fe20c31...7575 / d58c4008...c5ce`；固定前置 closeout commit=`80b4f98`，只允许读取、
+  哈希、派生报告与文档快照，不授权训练、推理、GPU、安装、下载或源资产 mutation；
+- 63 个冻结输入行 exact：5 protocols + 51 canonical evidence files + 3 selected production files + 4 offline
+  MP4；11 组 terminal 状态 exact，23/23 decisions exact；
+- P3 159-file/444,177,055-byte package 的 manifest 和 158 payload 全逐项 path/bytes/SHA exact；12 项交付输出
+  schema 已锁定；定向测试 `11 passed`，WorldSim V3 联合回归 `252 passed`；
+- 本条是 formal 前协议冻结，没有 canonical R0 terminal 或新训练/推理结果。下一动作只提交协议并运行已提交 runner。
 
 ### 2026-08-10 — F0 canonical 本机审计完成，F1 未解锁
 
@@ -2123,7 +2151,8 @@ WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
 WS-V3-A4-DEPLOYMENT-01 已 done；P0/P5/P1/P2/P3 全部闭环；P1 method rejected；P2 selected=p2-gs-param-fp16；P3 selected=p3-chunk-package。
 WS-V3-F0-FEEDFORWARD-AUDIT-01 已 done；本机 4/11 前置通过，inference not-run，F1=conditional_not_unlocked。
-WS-V3-R0-INTEGRATION-01 当前为 running；只集成既有 canonical evidence，不启动新训练/推理。
+WS-V3-R0-INTEGRATION-01 当前为 running；protocol SHA=4fe20c31...7575，runner SHA=d58c4008...c5ce；
+63 个输入、23 个决策与 P3 159-file package 已 exact，下一步只运行提交后的 canonical 只读集成。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -2165,8 +2194,9 @@ WS-V3-R0-INTEGRATION-01 当前为 running；只集成既有 canonical evidence�
 26. 核对 F0 protocol SHA `2004a029...fd611`、canonical summary SHA `d111c457...be37`、official source exact、
     4/11 prerequisites、33 passed、37 passed/15 missing-shortuuid failures、no inference/GPU/install/download 与
     F1=`conditional_not_unlocked`；
-27. 当前只执行 R0：绑定 A0/A1/F0/A2/A3/A4 canonical evidence，生成主表/Pareto/边界/复现 manifest 和最小离线
-    可视化索引。不得提前启动 F1、P4、A3 R2–R4 或 D3/D4。
+27. 当前只执行 R0：复核 protocol SHA `4fe20c31...7575`、63 个输入、11 个 terminal、23 个决策和 P3 159-file
+    package exact，再运行 canonical，生成主表/Pareto/边界/复现 manifest 和最小离线可视化索引。不得提前启动
+    F1、P4、A3 R2–R4 或 D3/D4。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。
 ```
