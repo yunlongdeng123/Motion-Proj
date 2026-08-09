@@ -4,7 +4,7 @@
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A2-ACTOR-DENSIFY-01`
 - 状态：`running`
-- 当前门禁：A2-I0 ancestry instrumentation 与 clean source 收口；下一门禁为 quota-only D1 配置/资源合同与配对 smoke
+- 当前门禁：A2-I0 与 quota-only D1 配对 smoke 已收口；下一门禁为 D1 formal 协议/评测/matched-GS-budget 冻结
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -189,6 +189,29 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 该结果只关闭 deterministic synthetic `RigidNodes` instrumentation 门禁，不是 scene-0230 真实质量证据，
 不授权直接启动 D1 formal。本次 source commit 只包含 A2-I0 代码、测试与直接相关文档，不混入保留的 V2 M5 文件。
 
+## A2-D1 quota-only 配对 smoke 完成证据
+
+- 工程提交：`c9b2422af637370ca90f48b42a7d0131f458f96d`；配置 SHA-256：
+  `6895370625080ccab327e731264e9ebb0f980499b8fec87d02d9efb2e56b14af`；
+- DriveStudio upstream=`e59bda4`，canonical worktree=`/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d1-r5`，
+  quota patch SHA-256=`c232af2c5fa532016943f399830c85ebba612078871b7c1a296bda816ae7bb1b`；
+- canonical run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T081330Z__a2-d1-paired-smoke1k-s0-r4`，
+  terminal=`done`，summary SHA-256=`ec219bb567799d4d84252e86bd4194620f6b5563d6032c43067ff8e155d3b8bd`；
+- D0/D1 均为 scene-0230、seed 0、1000 step，顺序执行；配置除 quota enable/variant 外匹配，初始化 provenance 相同；
+- actor threshold=`0.00025`，Background 保持原生 `0.0005`；初始/min/max actor 总量=`75,002 / 37,504 / 180,013`；
+- D1 quota 5 次 event 接受 `93,057` children、拒绝 `30,171` parent；最终 `152,830` Rigid，24/24 actor
+  不超过最大值；D0 最终 `125,915` Rigid；
+- module-off tensor 逐位等价；D1 quota/ancestry checkpoint round-trip，D0/D1 原生 tensor finite；
+- D0/D1 peak GPU=`12,807 / 12,795 MiB`，peak cgroup=`5,392,334,848 / 5,661,368,320 bytes`，
+  duration=`110.91 / 110.97 s`，无 OOM；
+- patch replay/reverse-check、synthetic integration 与 WorldSim 定向回归通过；当前回归为 `75 passed`；
+- noncanonical r2 因前台 SSH 转 tmux 显式中止，r3 因 r2 遗留独立 session GPU 子进程被 idle preflight 拒绝；
+  遵循 `PIVOT-F22` 精确回收后，r4 才作为 canonical，旧 terminal 不改写为 done。
+
+该证据只授权冻结 D1 formal 协议；1000-step smoke 未执行冻结 held-out actor/boundary 质量合同，且 D1 Gaussian
+更多，不能登记为方法改进或直接解锁 D2。
+
 ## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
@@ -197,7 +220,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 3/3 30k/等价 checkpoint、held-out、registry、actor/boundary、GS 与资源矩阵完成 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | A0 后审计 Instant NuRec 官方代码与本地能力边界 |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 ancestry instrumentation done；下一门禁为 quota-only D1 配置/资源合同与配对 smoke |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 done；quota-only D1 paired smoke done；下一门禁为 D1 formal 协议与质量/GS Pareto |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | A2 后实施 affected-set 与短步局部精修 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | A3 后做 pruning/precision/chunk/LOD |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
@@ -206,12 +229,13 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：约 61 GiB 可用；
+- 数据盘：约 59 GiB 可用；
 - 无活跃研究 tmux/controller/GPU 进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-A1 已收口，A2-I0 与 clean source 已通过。下一步冻结只改变 actor/background threshold 与 per-actor min/max quota
-的 D1 配置、scene-0230 配对短步预算、指标和资源停止阈值。D0/D1 smoke 通过前不启动
-formal，也不混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4 因子。
+A1 已收口，A2-I0 与 D1 quota-only paired smoke 已通过。下一步以 `c9b2422` 和 canonical r4 为基线，冻结
+scene-0230 D0/D1 30k fixed-step、held-out global/high/boundary/non-target、per-actor GS、资源停止阈值与
+matched-Gaussian-budget 协议。协议/控制器/测试进入独立 clean commit 前不启动 formal；D1 formal 完成前不启动
+D2，也不混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4 因子。

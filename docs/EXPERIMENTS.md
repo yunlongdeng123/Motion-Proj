@@ -9,7 +9,7 @@
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0 三场景原生基线与 A1 已完成，当前执行
-`WS-V3-A2-ACTOR-DENSIFY-01`；I0 ancestry instrumentation 已完成，D1 尚未启动。
+`WS-V3-A2-ACTOR-DENSIFY-01`；I0 ancestry instrumentation 与 D1 quota-only paired smoke 已完成，D1 formal 尚未启动。
 
 ## 1. 状态词
 
@@ -29,7 +29,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A0-NATIVE-BASELINE-01` | done | 三场景原生 StreetGS 基线 | `20260805T175000Z__a0-three-scene-finalize-s0-r2`；3/3 完整矩阵 |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方本地能力审计 | revision/license/input/output/asset-editability 审计和 1-window smoke |
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0 done；D1/D2 小步消融及质量/GS 数/训练代价 Pareto 尚未完成 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | actor-aware densification/pruning | I0 done；D1 paired smoke done；D1 formal 与 D2 质量/GS/训练代价 Pareto 尚未完成 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | 编辑区域局部 Gaussian 精修 | outside frozen；Tier-A/深度顺序/时序指标齐全 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | pruning/precision/chunk/LOD 与资产注册 | pruning + 数值压缩 + chunk；不变量和质量-大小-速度 Pareto |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
@@ -166,6 +166,28 @@ median/P90=`7.256/12.215 mm`、rotation=`0.1660/0.35465°`；C3 为 `1.703/2.338
 边界：这是 I0 工程 instrumentation 证据，不是 scene-0230 真实训练或质量结论。boundary/photometric/depth/normal
 当前只冻结 update API，normal 无可靠输入时保持 schema-only，background nearest-LiDAR 保持 deferred。D1 必须只增加
 actor/background threshold 和 per-actor min/max quota，先做 D0/D1 配对短步 smoke，不得合并 D2–D4。
+
+### `WS-V3-A2-ACTOR-DENSIFY-01` D1 quota-only paired smoke
+
+- 实现提交：`c9b2422`；配置 SHA-256=`6895370625080ccab327e731264e9ebb0f980499b8fec87d02d9efb2e56b14af`；
+- DriveStudio worktree=`/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d1-r5`；quota patch SHA-256=
+  `c232af2c5fa532016943f399830c85ebba612078871b7c1a296bda816ae7bb1b`；
+- canonical run：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T081330Z__a2-d1-paired-smoke1k-s0-r4`，
+  terminal=`done`，summary SHA-256=`ec219bb567799d4d84252e86bd4194620f6b5563d6032c43067ff8e155d3b8bd`；
+- scene-0230 / seed 0 / 1000 step；D0 后 D1 顺序执行，配置预算匹配，initialization provenance 完全相同；
+- D1 policy：actor grad threshold=`0.00025`，Background native threshold=`0.0005`；24 actor 初始/min/max 总量=
+  `75,002 / 37,504 / 180,013`；
+- D0 final：Background/Rigid=`1,144,022 / 125,915`；D1 final：`1,144,598 / 152,830`；
+- D1 5 次 quota event，accepted children=`93,057`，rejected parents=`30,171`，24/24 actor 未超过上限；
+- D0/D1 原生 tensor finite；module-off bitwise=true；D1 quota/ancestry checkpoint round-trip=true；
+- D0/D1 duration=`110.91 / 110.97 s`，peak GPU=`12,807 / 12,795 MiB`，peak cgroup=
+  `5,392,334,848 / 5,661,368,320 bytes`，无 OOM；
+- r2 terminal=`blocked / MANUAL_RESTART_IN_TMUX`；r3 terminal=`blocked / GPU is not idle`，遵循 `PIVOT-F22`
+  精确回收独立 session 子进程后新建 r4，未覆盖旧 terminal。
+
+裁决：工程 smoke=`done`，只解锁 D1 formal 协议冻结。当前没有冻结 held-out actor/boundary 质量证据，D1 比 D0
+多 `26,915` 个 Rigid Gaussian，不能登记为质量改进或直接进入 D2。
 
 ## 3. V2 冻结注册表
 
@@ -383,6 +405,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 ## 12. 当前唯一动作
 
-`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0 ancestry instrumentation 与 clean source 已完成。下一动作是冻结
-只改变 actor/background threshold 与 per-actor min/max quota 的 D1 配置、scene-0230 配对短步
-预算和资源合同，再运行 D0/D1 smoke；不得一次混入 boundary、LiDAR、visibility、residual、scale cap 或 D2–D4。
+`WS-V3-A1-CALIBRATION-01` 已 `done_off`，A2-I0 与 D1 quota-only paired smoke 已完成。下一动作是冻结
+scene-0230 D0/D1 30k fixed-step、held-out global/high/boundary/non-target、per-actor GS、资源停止阈值与
+matched-Gaussian-budget 的 D1 formal 协议；协议 clean commit 前不启动 formal，不得混入 boundary、LiDAR、
+visibility、residual、scale cap 或 D2–D4。

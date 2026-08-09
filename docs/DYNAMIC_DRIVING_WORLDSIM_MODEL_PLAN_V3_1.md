@@ -7,8 +7,9 @@
 - **当前分支**：`research/worldsim-v3`
 - **A1 正式实现基线**：`198a681`（开发选择、确认矩阵、exact alias 与 finalizer）
 - **A2-I0 实现基线**：`271d876`（ancestry instrumentation、module-off 等价、正式控制器与事实源）
+- **A2-D1 工程基线**：`c9b2422`（quota-only policy、可重放 DriveStudio patch、配对 smoke controller）
 - **当前任务**：`WS-V3-A2-ACTOR-DENSIFY-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 pending / F0、A3-A4 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2-I0 done / A2-D1 smoke done，formal pending / F0、A3-A4 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -16,7 +17,8 @@
 
 ## 0. V3.1 修订目的
 
-V3.1 创建时已完成路线切换和三场景原生基线，并进入 A1 正式实验；当前 A1 已收口、A2-I0 已完成。
+V3.1 创建时已完成路线切换和三场景原生基线，并进入 A1 正式实验；当前 A1 已收口、A2-I0 已完成，
+A2-D1 quota-only 配对工程 smoke 已通过。
 V3.1 不推翻 V3，而是在以下新事实基础上修正执行协议：
 
 1. 6–7 月 WorldSim/GS 周报表明，工业链路的核心不是单个 3DGS 模型，而是：
@@ -302,7 +304,8 @@ I0 已在真实 DriveStudio `RigidNodes` 类路径上的确定性合成 refineme
 - online 更新 `visibility_count/screen_grad`；boundary、photometric、depth、normal 只冻结归因 API；
 - `nearest_lidar_distance` 当前只对 actor 做 exact offline materialization，background 因无有界参考集继续 deferred。
 
-该 run 只关闭 ancestry instrumentation 工程门禁，不是 `scene-0230` 真实训练或质量证据；D1 尚未启动。
+该 run 只关闭 ancestry instrumentation 工程门禁，不是 `scene-0230` 真实训练或质量证据；后续 D1 smoke
+证据单独登记于 9.2.1，不能倒写或扩大 I0 结论。
 本次 source commit 只允许包含 A2-I0 代码、测试与直接相关文档，不得混入保留的 V2 M5 工作。
 
 ---
@@ -527,7 +530,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-A1-CALIBRATION-01` | done_off | E1/E2、C0–C3 开发消融、两确认场景复核 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-F0-FEEDFORWARD-AUDIT-01` | pending | Instant NuRec 官方代码、输入输出、license、导出能力审计 | 形成可执行/不可执行事实结论 |
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
-| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 ancestry instrumentation 已完成；actor-aware quota、边界尺度、几何与 provenance 消融 | I0 done；D1/D2 必做，D3/D4 条件式 |
+| `WS-V3-A2-ACTOR-DENSIFY-01` | running | I0 done；D1 quota-only smoke done，formal pending；边界尺度、几何与 provenance 消融未启动 | I0 done；D1/D2 必做，D3/D4 条件式 |
 | `WS-V3-A3-LOCAL-REFINE-01` | pending | evidence-aware affected set 与局部短步精修 | outside frozen，支持区域指标闭环 |
 | `WS-V3-A4-DEPLOYMENT-01` | pending | 端到端 profile、prune、FP16、chunk、registry、resume | 最低集完成且质量—大小—速度可审计 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
@@ -793,6 +796,31 @@ I0 在 D1 前实现：
 - normal 没有可靠输入时保持 schema-only；background `nearest_lidar_distance` 保持 deferred；
 - module-off 无额外 RNG draw、无额外 checkpoint key，原生 tensor 逐位相等；
 - canonical r3 只覆盖 deterministic synthetic `RigidNodes` refinement，不替代 D1 的真实 `scene-0230` smoke。
+
+### 9.2.1 D1 quota-only 工程门（smoke done）
+
+- 实现提交：`c9b2422`；配置：`configs/worldsim_v3/a2_d1_v1.yaml`，SHA-256
+  `6895370625080ccab327e731264e9ebb0f980499b8fec87d02d9efb2e56b14af`；
+- DriveStudio upstream=`e59bda4`，canonical patched worktree=`/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a2-d1-r5`，
+  quota patch SHA-256=`c232af2c5fa532016943f399830c85ebba612078871b7c1a296bda816ae7bb1b`；
+- D1 只改变 `RigidNodes` 的 actor threshold=`0.00025` 与 per-actor quota；Background 保持原生 threshold=`0.0005`
+  且不启用 quota；native cull、boundary/residual、scale cap、LiDAR/visibility 与 D2–D4 均未混入；
+- 初始 actor count 冻结为 24 项、合计 `75,002`；min/max 公式分别为
+  `max(1, ceil(0.5 * initial))` 与 `max(min, min(12000, ceil(2.4 * initial)))`，总和为
+  `37,504 / 180,013`；
+- canonical paired smoke：
+  `/root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T081330Z__a2-d1-paired-smoke1k-s0-r4`，
+  `terminal=done`，scene-0230 / seed 0 / D0→D1 各 1000 step 顺序执行；
+- D0/D1 物化配置预算匹配，初始化 provenance 完全一致；module-off 原生 tensor 逐位相等，D1 quota 与 ancestry
+  checkpoint 均可 round-trip，原生 tensor 无 NaN/Inf；
+- D1 共执行 5 次 quota event，接受 `93,057` 个子点、拒绝 `30,171` 个超额 parent；最终 Rigid 总数
+  `152,830`，24/24 actor 均不超过冻结最大值；D0 Rigid 总数为 `125,915`；
+- D0/D1 duration=`110.91 / 110.97 s`，peak GPU sample=`12,807 / 12,795 MiB`，peak cgroup=
+  `5,392,334,848 / 5,661,368,320 bytes`；无 OOM，结束后 GPU 回到 0 MiB。
+- patch replay/reverse-check、synthetic integration 与 WorldSim 定向回归通过；当前回归为 `75 passed`。
+
+该 smoke 只关闭真实训练路径、资源、quota 与 checkpoint 工程门；它没有执行冻结 held-out actor/boundary
+质量合同，不能把更多 Gaussian 解释为方法改进。结论是“允许冻结 D1 formal 协议”，不是“D1 已通过方法门禁”。
 
 ### 9.3 子消融
 
@@ -1202,22 +1230,32 @@ A1 早期四个提交的正文不足不改写历史；`801db7a` 与本节开发�
 
 ## 16. 当前唯一下一步
 
-A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0 ancestry instrumentation 已通过。当前唯一下一步是冻结并执行
-quota-only D1 smoke，顺序固定为：
+A1 已以 `C*=C0-off / done_off` 正式收口，A2-I0 与 D1 quota-only 配对 smoke 已通过。当前唯一下一步是冻结
+D1 formal 协议；在协议、评测和资源停止条件进入独立 clean commit 前，不直接启动 30k 训练：
 
 ```text
-1. 以 clean A2-I0 source commit 为基线，冻结 D1 配置：只改变 actor/background threshold 与 per-actor min/max quota
-2. 冻结 scene-0230、seed、step、actor cohort、质量/GS/时间/VRAM/non-target 指标和停止阈值
-3. 运行 D0/D1 配对短步 smoke，验证 quota 生效、lineage 完整、module-off 仍与原生等价
-4. smoke 与资源门禁通过后，才决定是否启动 D1 formal
+1. 以 c9b2422 与 canonical r4 smoke 为基线，冻结 scene-0230 / seed 0 / D0-D1 顺序和 30k fixed-step 预算
+2. 冻结 held-out global、high/boundary actor、non-target、per-actor GS、wall time、VRAM 与失败停止条件
+3. 明确 matched-Gaussian-budget 的生成与比较方式；不得把 fixed-step 更多 GS 自动解释为改进
+4. 协议/控制器/测试 clean commit 后，才运行 D0 formal → D1 formal；两者通过前不得启动 D2
 ```
 
-D1 smoke 前不得混入 boundary/residual 排序、scale cap、LiDAR/visibility pruning 或 D2–D4 因子；
-smoke/资源门禁未通过时不得启动 D1 formal。
+D1 formal 不得混入 boundary/residual 排序、scale cap、LiDAR/visibility pruning 或 D2–D4 因子；smoke 结果只授权
+formal 协议冻结，不构成 D1 方法结论。
 
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A2-D1 quota-only 配对 smoke 收口
+
+- 工程实现提交：`c9b2422`；DriveStudio quota patch SHA-256=`c232af2c...7bb1b`；
+- 冻结 actor threshold=`0.00025`、Background native threshold=`0.0005` 与 24 actor min/max quota；
+- canonical scene-0230 D0/D1 1000-step paired smoke r4=`done`，配置预算和初始化 provenance 匹配；
+- module-off 逐位等价、quota/ancestry checkpoint round-trip、24/24 actor 上限与资源门禁通过；
+- D1 最终 Rigid=`152,830`，高于 D0 的 `125,915`，明确不能据 Gaussian 数量宣称质量改进；
+- r2 为前台 SSH 转 tmux 的显式中止，r3 被 GPU 非空预检拒绝；均非 canonical，不覆盖 r4；
+- 当前门禁转为 D1 formal 协议、评测和 matched-Gaussian-budget 冻结，尚未启动 D1 formal。
 
 ### 2026-08-09 — A2-I0 ancestry instrumentation 收口
 
@@ -1292,7 +1330,7 @@ smoke/资源门禁未通过时不得启动 D1 formal。
 执行 docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md。
 
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
-WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；A2-I0 ancestry instrumentation 已 done，尚未启动 D1 smoke/formal。
+WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；A2-I0 与 D1 quota-only paired smoke 已 done，D1 formal 尚未启动。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1302,9 +1340,9 @@ WS-V3-A2-ACTOR-DENSIFY-01 当前为 running；A2-I0 ancestry instrumentation 已
 5. 确认 GPU 空闲、cgroup 无 OOM、数据盘充足且无活动 controller；
 6. 核对 A2-I0 r3、配置/patch SHA、module-off 逐位等价、lineage/prune/checkpoint round-trip 和 66 项测试；
 7. 核对 clean A2-I0 source commit 只含 instrumentation、测试和直接相关文档，未混入 V2 M5；
-8. 冻结只改变 actor/background threshold 与 per-actor min/max quota 的 D1 配置和资源合同；
-9. 先运行 D0/D1 配对短步 smoke；不得提前混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4；
-10. 未通过 smoke/资源门禁不得启动 D1 formal。
+8. 核对 A2-D1 `c9b2422`、配置/patch SHA、canonical r4、D0/D1 provenance 匹配和 24/24 quota 上限；
+9. 冻结 D1 formal 的 30k fixed-step、held-out actor/boundary/non-target 与 matched-Gaussian-budget 协议；
+10. formal 协议 clean commit 前不得启动训练；不得提前混入 boundary/residual、scale cap、LiDAR/visibility 或 D2–D4。
 
 不得恢复 A1 或 V2 M5，不得跳过 ancestry instrumentation，不得新增大型 diffusion。
 ```
