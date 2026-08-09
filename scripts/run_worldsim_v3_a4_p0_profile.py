@@ -24,7 +24,7 @@ import torch
 
 PROJECT = Path("/root/autodl-tmp/motion_proj")
 DRIVESTUDIO = Path("/root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1")
-PROTOCOL = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml"
+PROTOCOL = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml"
 _ACTIVE_RUN_DIR: Path | None = None
 
 
@@ -133,8 +133,16 @@ class ResourceSampler:
 
     def summary(self) -> dict[str, Any]:
         errors = [sample["sampling_error"] for sample in self.samples if "sampling_error" in sample]
-        nvidia = [sample["nvidia_process_memory_mib"] for sample in self.samples if "nvidia_process_memory_mib" in sample]
-        cgroup = [sample["cgroup_memory_bytes"] for sample in self.samples if sample.get("cgroup_memory_bytes") is not None]
+        nvidia = [
+            sample["nvidia_process_memory_mib"]
+            for sample in self.samples
+            if "nvidia_process_memory_mib" in sample
+        ]
+        cgroup = [
+            sample["cgroup_memory_bytes"]
+            for sample in self.samples
+            if sample.get("cgroup_memory_bytes") is not None
+        ]
         return {
             "sample_count": len(self.samples),
             "sampling_errors": errors,

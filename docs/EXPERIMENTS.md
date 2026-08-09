@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 已进入 `running`，P0 profile 协议已冻结，当前只允许执行 P0。
+`done`，`A3*=R0-off`；A4 已进入 `running`，P0 v1 r1 因分辨率合同 blocked，v2 已重新冻结，当前只允许完整 rerun。
 
 ## 1. 状态词
 
@@ -32,7 +32,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0 protocol frozen，profile next；P0 后才裁决 pruning/FP16/chunk/registry-resume |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | v1 r1 resolution blocked，v2 profile rerun next；P0 后才裁决 pruning/FP16/chunk/registry-resume |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -402,6 +402,25 @@ Matched-RigidNodes-budget：
 - validator preflight 核对 10 个 immutable path/hash/bytes；协议单测=`4 passed`，联合 WorldSim V3=`143 passed`。
   本条写入时尚未读取新 A4 runtime/load 结果；P1/P2/P3/P5 未授权。
 
+### `WS-V3-A4-DEPLOYMENT-01` P0 v1 resolution block / v2 correction freeze
+
+- runner 实现提交=`199abd99d642747241b79ce543c8eb9096553a1d`；v1 formal r1=
+  `20260809T151539Z__a4-p0-profile-s0-r1` 完成 inventory/runtime/aggregate/resume 四个 stage，resume audit 未导入
+  torch、前后均无 GPU compute process、三个 completed stage hash 全部复用；
+- r1 终态=`blocked`，唯一失败 audit=`native_resolution_exact`。11 个 runtime rows 均为 `800×450`；warm-up 两行
+  RGB hash exact，rows SHA=`fbf801eb...1e1a`，runtime stage SHA=`d86ec9fa...9b7`，terminal SHA=
+  `9084e49c...e5ed`；run 内无 checkpoint/render media；
+- source config SHA=`115deaf...5e68` 明确冻结三路 `downscale_when_loading=[2,2,2]`。因此 v1 的 `1600×900`
+  是传感器原始尺寸，不是当前 checkpoint 的模型原生 render 尺寸；v1 不改写，也不登记为正式 P0 性能结果；
+- r1 resource diagnostic 自身 passed：wall=`62.144008 s`，prepare=`52.069271 s`，cold/warm load=
+  `.341640/.343181 s`，render P50/P95=`.029865/.092485 s`，FPS=`20.501837`，torch allocated/reserved=
+  `7,913.31/8,232 MiB`，NVIDIA sampled=`8,574 MiB`，cgroup peak=`24,775,639,040 bytes`，OOM=`0/0`；这些值
+  只用于 v2 风险审计；
+- v2 protocol=`configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml`，SHA=`43db7182...3f18`；只把模型原生尺寸纠正
+  为 `800×450`，冻结 v1 protocol/manifest/runtime stage/rows/resource audit/terminal 六项证据，其余输入、矩阵、
+  ceiling、recovery 和 claim boundary 不变。v2 必须新目录完整 rerun，不复用 v1 measured runtime stage；
+  validator exact 核对 16 个 inputs，协议测试=`7 passed`，联合 WorldSim V3=`152 passed`；P1/P2/P3/P5 仍未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -620,7 +639,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
 `done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
-失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。下一动作只允许执行已冻结的
-`WS-V3-A4-DEPLOYMENT-01 / P0 profile`；已有训练/评测证据只读复用，只补 inventory/prepare/load/runtime/
-recovery 缺口，当前执行唯一 P0 run。
+失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。A4-P0 v1 r1 已因
+resolution contract blocked；下一动作只允许执行重新冻结的 `WS-V3-A4-DEPLOYMENT-01 / P0 v2 profile`；已有
+训练/评测证据只读复用，只补 inventory/prepare/load/runtime/recovery 缺口，并从新目录完整 rerun。
 P0 前不得启动 P1/P2/P3/P5，不得修改 A3 renderer/ceiling 挽回 R1，也不得启动 formal、R2–R4 或 D3/D4。

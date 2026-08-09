@@ -18,7 +18,7 @@
 - **A3 R1 真实 paired 工程基线**：`78741b3`（heldout-safe S-B/T0 sidecar、四单元 loss 注入、exact guard 与 checkpoint）
 - **A3 R1 数值冻结基线**：`c02c8c7`；配置 SHA-256=`d9289df0b2ac7df7a7c408b5cb1601bc5f874e2922ebc9cb87961aacee43b3e3`
 - **当前任务**：`WS-V3-A4-DEPLOYMENT-01`（`running`）
-- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 protocol frozen、profile next / D3-D4 not launched / F0 pending`
+- **当前里程碑**：`P0 done / A0 done / A1 done_off / A2 done（tradeoff_non_dominated）/ A3 done（R1 rejected，A3*=R0-off）/ A4-P0 v1 r1 blocked（resolution contract）/ v2 protocol frozen、rerun next / D3-D4 not launched / F0 pending`
 - **替代计划**：本文件替代 `DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md` 成为唯一当前计划
 - **历史前序**：`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`、V3 原计划及其已完成事实
 
@@ -545,7 +545,7 @@ candidate/valid image 与 coverage。
 | `WS-V3-F1-FEEDFORWARD-INIT-01` | conditional | 前馈深度/高斯初始化 + StreetGS 短步精修 pilot | 只在 F0 输出可转换资产时启动；不阻塞 A2 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | I0、D1/D2 smoke 与 formal、fixed/matched Pareto 和资产路由 | `tradeoff_non_dominated`；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | I0、R0 exact alias、R1 S-B 工程/replay 与 heldout 负结果 | R1 资源门失败且诊断 Pareto tradeoff；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0 protocol 已冻结，当前执行 profile；P1/P2/P3/P5 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | 端到端 profile、prune、FP16、chunk、registry、resume | P0 v1 r1 因分辨率合同阻塞；v2 已冻结，当前只执行完整 rerun；P1/P2/P3/P5 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 最终模型链、负结果、复现包和工程说明 | 所有 terminal、配置和结论可追踪 |
 
 ---
@@ -1189,24 +1189,30 @@ H0：冻结的 2D Harmonizer / inpaint diagnostic
 
 ### 11.1 A4-P0：先做流水线 profile
 
-#### 11.1.1 P0 结果前协议冻结
+#### 11.1.1 P0 v1 阻塞与 v2 结果前重新冻结
 
-- 配置=`configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml`，SHA-256=
-  `8ba96278b7f65957480a343a21977e2e24a537462b7a0b042a3268684d27d9a4`；依赖 A3 closeout=
-  `10eee3ad30c3729532afecdcc520c1ef542e0210`，production input 只允许 `A3*=R0-off` 的 D2 checkpoint
-  `1a061247...e7c`、config `115deaf...5e68` 与 registry `ed57764e...0c68`；rejected R1 禁止进入 profile；
-- train 与 render/eval 只读复用 A2-D2 formal 的不可变 stage JSON，不重跑 30k 或质量评测；prepare/load/runtime
-  必须新进程测量，convert 在 P0 只做 checkpoint/registry inventory，不转换参数；缺失值必须显式 null+reason；
-- 原生 `1600×900`，warm-up=`frame 0 / camera 0 ×2` 且 uint8 RGB hash 必须 exact；计时矩阵为
-  frames `10/100/190 × cameras 0/1/2` 共 9 个 original view，每帧前后 CUDA synchronize，P50/P95 用
-  nearest-rank；不保存 PNG/MP4；
-- load 分为 process-cold 首次 load 与同进程 warm reload；filesystem cache 明示 uncontrolled，禁止驱逐 OS cache；
-  资源 ceiling=`600 s / 16,384 MiB torch allocated / 24,576 MiB torch reserved / 24,000 MiB NVIDIA sampled /
+- v1 配置=`configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml`，SHA-256=`8ba96278...d9a4`，保持不可变；runner
+  提交=`199abd99d642747241b79ce543c8eb9096553a1d`。formal r1=`20260809T151539Z__a4-p0-profile-s0-r1`
+  完成 inventory/runtime/aggregate/no-torch resume audit 后，只因 `native_resolution_exact=false` 被 finalize 正确
+  阻塞；terminal SHA=`9084e49c...e5ed`，不覆盖、不改写为 done；
+- 根因是冻结的 A2 source config 已写明三路 `data.pixel_source.downscale_when_loading=[2,2,2]`。v1 将传感器
+  `1600×900` 错当成当前 checkpoint 的模型原生分辨率；11 行 render 全部为 `800×450`，2 次 warm-up RGB hash
+  exact。该观测只用于纠正 profile 输入合同，不登记为合格 P0 性能结果；
+- v2 配置=`configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml`，SHA-256=
+  `43db718233589d847cb56e2497c4a75b20506e440e523177daaebfbc82c03f18`；production input、2+9 matrix、同步/
+  nearest-rank、历史 stage 复用、资源 ceiling 和 recovery contract 均不变，只把模型原生尺寸纠正为
+  `800×450` 并冻结 v1 protocol/manifest/runtime rows/resource audit/terminal 六项证据；
+- production input 仍只允许 `A3*=R0-off` 的 D2 checkpoint `1a061247...e7c`、config `115deaf...5e68` 与
+  registry `ed57764e...0c68`；rejected R1 禁止进入 profile。train 与 render/eval 只读复用，不重跑 30k 或质量
+  评测；convert 只做 inventory；缺失值显式 null+reason；
+- load 仍分 process-cold 首次 load 与同进程 warm reload；filesystem cache 明示 uncontrolled，禁止驱逐 OS cache；
+  ceiling 仍为 `600 s / 16,384 MiB torch allocated / 24,576 MiB torch reserved / 24,000 MiB NVIDIA sampled /
   32 GiB cgroup / 50 MB run bytes`，OOM delta=`0/0`；
-- recovery stage 固定为 `inventory→runtime_probe→aggregate→resume_audit`，completed stage 禁止覆盖；resume audit
-  只做 read-only dry-run，不启动 GPU。P0 仍只是 profile，不登记质量改进或并发结论；P1/P2/P3/P5 未授权；
-- validator preflight 已核对 10 个路径/hash/bytes，4 项协议测试与联合 WorldSim V3 回归=`143 passed`。协议提交时
-  尚未读取任何新 A4 prepare/load/runtime 结果。
+- r1 diagnostic 的 resource audit 自身通过：wall=`62.144 s`、allocated/reserved/NVIDIA=`7,913.31/8,232/
+  8,574 MiB`、cgroup peak=`24,775,639,040 bytes`、run=`77,135 bytes`、OOM=`0/0`；由于 v1 分辨率合同错误，
+  这些值不用于关闭 P0，只作为 v2 ceiling 风险审计；
+- v2 validator 已 exact 核对 16 个路径/hash/bytes；协议测试=`7 passed`，联合 WorldSim V3=`152 passed`。P0 仍
+  只是 profile，不登记质量改进或并发结论；P1/P2/P3/P5 未授权。
 
 对最终 A3 产物拆分记录：
 
@@ -1469,12 +1475,12 @@ A1=`done_off`，A2=`done / tradeoff_non_dominated`。A3 的 R1 工程链和 bitw
 两项 RGB safeguard 严格退化并存的 `tradeoff_non_dominated`。因此 R1 方法臂已 rejected，A3 task 以正式负结果
 done，`A3*=R0-off`（D2 immutable exact alias）；formal、R2–R4 与独立 S-A 训练均未解锁。
 
-当前唯一动作是按已冻结协议执行 `WS-V3-A4-DEPLOYMENT-01 / P0 profile`：
+当前唯一动作是按重新冻结的 v2 协议执行 `WS-V3-A4-DEPLOYMENT-01 / P0 profile` 完整 rerun：
 
 ```text
-1. 运行 protocol validator 和 GPU/disk/cgroup idle preflight，全部 exact 后才创建唯一 P0 run
+1. exact 校验 v2 protocol、10 项原输入与 6 项 v1 纠错证据，并通过 GPU/disk/cgroup idle preflight 后创建新 run
 2. 只读盘点 train/render-eval 历史 stage，执行 inventory、prepare/load/runtime probe、aggregate 与 dry-run resume audit
-3. runtime 固定 2 个 warm-up + 9 个原生 1600×900 original views；同步计时且只存 hash/JSON，不存媒体
+3. runtime 固定 2 个 warm-up + 9 个模型原生 800×450 original views；同步计时且只存 hash/JSON，不存媒体
 4. 报告 wall、torch/NVIDIA VRAM、cgroup RAM、bytes、cache 语义、terminal 与逐 stage 最小重跑单位
 5. P0 收口前不启动 P1 prune、P2 FP16、P3 chunk 或 P5 registry/resume，不用部署因子倒改 A3 结论
 ```
@@ -1484,6 +1490,15 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 ---
 
 ## 17. 更新日志
+
+### 2026-08-09 — A4-P0 v1 分辨率合同阻塞与 v2 重新冻结
+
+- runner=`199abd9`；v1 formal r1 完成全部 probe 与 no-torch resume audit，但 11 行实际 render 均为 `800×450`，
+  与 v1 的 `1600×900` 冻结值不符，因此 run=`blocked`，唯一失败 audit=`native_resolution_exact`；
+- source config 的三路 `downscale_when_loading=[2,2,2]` 证明 `1600×900` 是传感器尺寸，当前 checkpoint 模型原生
+  尺寸为 `800×450`；v1 结果只作合同纠错 diagnostic，不作为正式性能结论；
+- v2 protocol SHA=`43db7182...3f18`，只纠正尺寸并冻结 6 项 v1 失败证据；其余输入、矩阵、资源与恢复门禁不变。
+  当前唯一动作是从新目录完整执行 v2，不复用 v1 的 measured runtime stage；P1/P2/P3/P5 仍未授权。
 
 ### 2026-08-09 — A4-P0 端到端 profile 协议冻结
 
@@ -1676,7 +1691,7 @@ D3/D4 继续未解锁；F0 独立非阻塞。负结果保留为最终交付，�
 WS-V3-A1-CALIBRATION-01 已固定为 done_off；不得恢复为 running。
 WS-V3-A2-ACTOR-DENSIFY-01 已固定为 done / tradeoff_non_dominated；不得追加 D3/D4 或改写为 D2 dominance。
 WS-V3-A3-LOCAL-REFINE-01 已 done；R1 方法臂因 frozen resource gate 与 diagnostic tradeoff 被 rejected，A3*=R0-off。
-WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 protocol 已冻结，只允许执行 P0 profile。
+WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 v1 r1 已因分辨率合同 blocked，v2 已重新冻结，只允许完整 rerun。
 
 开始前：
 1. 读取 AGENTS.md、RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md 和 V3.1；
@@ -1698,8 +1713,9 @@ WS-V3-A4-DEPLOYMENT-01 当前为 running；P0 protocol 已冻结，只允许执�
 17. 核对 heldout protocol SHA `eb87a9f2...b05a`、r5 resource audit `d9536f4e...6280`、14,241.40 MiB
     超过 12,288 MiB、checkpoint exact、无新 `.pth` 与资源无效 diagnostic tradeoff；
 18. 核对 A3 task=`done`、R1=`rejected_resource_gate_and_diagnostic_tradeoff`、A3*=R0/D2 exact alias；
-19. 核对 A4-P0 protocol SHA `8ba96278...d9a4`、A3*=R0 输入、2+9 render matrix、资源/recovery contract 与
-    143 项回归；当前只允许执行唯一 P0 profile；不得重跑 A3、上调阈值、切换 packed/分块 renderer 挽回结果，
+19. 核对 A4-P0 v2 protocol SHA `43db7182...3f18`、A3*=R0 输入、v1 六项纠错证据、800×450 的 2+9 render
+    matrix、资源/recovery contract 与联合回归；当前只允许执行 v2 完整 rerun；不得重跑 A3、上调阈值、切换
+    packed/分块 renderer 挽回结果，
     不得启动 formal、R2–R4 或把 S-B/S-C 登记为 RGB 质量成功。
 
 不得恢复 A1/A2 或 V2 M5，不得依赖未提交 V2 M5 文件，不得把 ancestry 写成 measured depth，不得新增大型 diffusion。

@@ -14,7 +14,9 @@ from omegaconf import OmegaConf
 
 
 PROJECT = Path("/root/autodl-tmp/motion_proj")
-DEFAULT_PROTOCOL = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml"
+PROTOCOL_V1 = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml"
+PROTOCOL_V2 = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml"
+DEFAULT_PROTOCOL = PROTOCOL_V2
 
 
 def sha256_file(path: Path) -> str:
@@ -33,9 +35,10 @@ def require(condition: bool, message: str) -> None:
 def validate_schema(protocol: Mapping[str, Any]) -> None:
     require(protocol["schema_version"] == 1, "schema_version")
     require(protocol["task_id"] == "WS-V3-A4-DEPLOYMENT-01", "task_id")
+    profile_id = protocol["profile_id"]
     require(
-        protocol["protocol_status"] == "frozen_before_new_a4_measurements",
-        "protocol_status",
+        profile_id in {"A4-P0-END-TO-END-PROFILE-v1", "A4-P0-END-TO-END-PROFILE-v2"},
+        "profile_id",
     )
     require(protocol["seed"] == 0 and protocol["scene"] == "scene-0230", "split")
     authorization = protocol["authorization"]
@@ -49,11 +52,63 @@ def validate_schema(protocol: Mapping[str, Any]) -> None:
         "R1 exclusion",
     )
     probe = protocol["new_probe"]
-    require(probe["resolution"] == {
-        "width": 1600,
-        "height": 900,
-        "policy": "native_source_config_no_resize",
-    }, "resolution")
+    if profile_id.endswith("-v1"):
+        require(
+            protocol["protocol_status"] == "frozen_before_new_a4_measurements",
+            "protocol_status",
+        )
+        expected_resolution = {
+            "width": 1600,
+            "height": 900,
+            "policy": "native_source_config_no_resize",
+        }
+        require("resolution_correction" not in protocol, "v1 correction boundary")
+    else:
+        require(
+            protocol["protocol_status"]
+            == "frozen_before_v2_rerun_after_v1_resolution_block",
+            "protocol_status",
+        )
+        expected_resolution = {
+            "width": 800,
+            "height": 450,
+            "policy": (
+                "native_checkpoint_config_downscale_when_loading_no_additional_resize"
+            ),
+        }
+        correction = protocol["resolution_correction"]
+        require(
+            correction["source_config_field"]
+            == "data.pixel_source.downscale_when_loading",
+            "resolution source field",
+        )
+        require(correction["source_config_value"] == [2, 2, 2], "resolution source value")
+        require(
+            correction["sensor_resolution"] == {"width": 1600, "height": 900},
+            "sensor resolution",
+        )
+        require(
+            correction["expected_model_native_resolution"]
+            == {"width": 800, "height": 450},
+            "model native resolution",
+        )
+        require(
+            correction["failed_v1_only_audit"] == "native_resolution_exact",
+            "v1 failed audit",
+        )
+        require(
+            set(correction["files"])
+            == {
+                "v1_protocol",
+                "v1_manifest",
+                "v1_runtime_probe",
+                "v1_runtime_rows",
+                "v1_resource_audit",
+                "v1_terminal",
+            },
+            "v1 correction evidence",
+        )
+    require(probe["resolution"] == expected_resolution, "resolution")
     require(probe["warmup"] == {
         "frame": 0,
         "camera": 0,
@@ -93,7 +148,10 @@ def validate_schema(protocol: Mapping[str, Any]) -> None:
     )
     require(recovery["completed_stage_policy"] == "never_overwrite", "overwrite policy")
     precedents = set(protocol["failure_precedents"])
-    require({"PIVOT-F05", "PIVOT-F22", "PIVOT-F24"} <= precedents, "failure precedents")
+    required_precedents = {"PIVOT-F05", "PIVOT-F22", "PIVOT-F24"}
+    if profile_id.endswith("-v2"):
+        required_precedents.add("PIVOT-F25")
+    require(required_precedents <= precedents, "failure precedents")
     require(all(bool(value) for value in protocol["required_audits"].values()), "audits")
     require(all(bool(value) for value in protocol["claim_boundary"].values()), "claims")
 
@@ -107,6 +165,10 @@ def iter_fingerprinted_inputs(protocol: Mapping[str, Any]):
         yield f"historical_evidence.{name}", evidence[name]
     for name, value in evidence["stages"].items():
         yield f"historical_evidence.stages.{name}", value
+    correction = protocol.get("resolution_correction")
+    if correction:
+        for name, value in correction["files"].items():
+            yield f"resolution_correction.files.{name}", value
 
 
 def validate_inputs(protocol: Mapping[str, Any]) -> dict[str, dict[str, Any]]:

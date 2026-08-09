@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-if [[ $# -ne 1 ]]; then
-  echo "usage: $0 RUN_DIR" >&2
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo "usage: $0 RUN_DIR [PROTOCOL]" >&2
   exit 2
 fi
 
 run_dir=$1
 project=/root/autodl-tmp/motion_proj
+protocol=${2:-$project/configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml}
 if [[ -e $run_dir || -e ${run_dir}.controller.log || -e ${run_dir}.exit_code ]]; then
   echo "refusing to overwrite A4-P0 profile: $run_dir" >&2
   exit 2
@@ -23,7 +24,8 @@ log=${run_dir}.controller.log
 code=0
 /root/autodl-tmp/envs/drivestudio/bin/python \
   scripts/run_worldsim_v3_a4_p0_profile.py \
-  --run-dir "$run_dir" >"$log" 2>&1 || code=$?
+  --run-dir "$run_dir" \
+  --protocol "$protocol" >"$log" 2>&1 || code=$?
 
 if [[ $code -eq 0 ]]; then
   /root/autodl-tmp/envs/motionproj/bin/python \
@@ -34,7 +36,8 @@ fi
 if [[ $code -eq 0 ]]; then
   /root/autodl-tmp/envs/motionproj/bin/python \
     scripts/finalize_worldsim_v3_a4_p0.py \
-    --run-dir "$run_dir" >>"$log" 2>&1 || code=$?
+    --run-dir "$run_dir" \
+    --protocol "$protocol" >>"$log" 2>&1 || code=$?
 fi
 
 printf '%s\n' "$code" >"${run_dir}.exit_code"

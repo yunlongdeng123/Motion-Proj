@@ -13,7 +13,7 @@ from omegaconf import OmegaConf
 
 
 PROJECT = Path("/root/autodl-tmp/motion_proj")
-PROTOCOL = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v1.yaml"
+PROTOCOL = PROJECT / "configs/worldsim_v3/a4_p0_profile_protocol_v2.yaml"
 _ACTIVE_RUN_DIR: Path | None = None
 
 

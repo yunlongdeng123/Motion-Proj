@@ -1571,6 +1571,19 @@ r5 run 保留 `blocked`，R1 方法臂登记 `rejected_resource_gate_and_diagnos
 生产路由回退到 R0/D2 immutable exact alias。以后若研究 packed/分块渲染，只能在 A4 作为新的部署因子另行冻结，
 不得倒写 A3 heldout 结论或解锁 R2–R4。
 
+### PIVOT-F25：部署 profile 必须区分传感器原始尺寸与 checkpoint 原生加载尺寸
+
+A4-P0 v1 在新测量前把 scene-0230 的 nuScenes 传感器尺寸 `1600×900` 冻结为“原生分辨率”。formal r1 实际
+完成 2 次 warm-up 与 9 次 measured render 后，11 行全部为 `800×450`，因此只在 finalize 的
+`native_resolution_exact` audit 失败；资源、输入 hash、无训练/无 checkpoint、同步矩阵与无 torch resume audit
+均通过。source config 事后审计确认三路相机已冻结 `data.pixel_source.downscale_when_loading=[2,2,2]`，故当前
+checkpoint 的模型原生加载/渲染尺寸本来就是 `800×450`。
+
+不得修改 v1 或把 r1 改写为 done，也不得用 r1 性能数字关闭 P0。正确处理是保留 r1=`blocked`，冻结其 protocol、
+manifest、runtime stage/rows、resource audit 与 terminal hash；创建 v2 只纠正分辨率语义，再从新目录完整重跑。
+后续协议必须同时记录 sensor resolution、source-config downscale 与 model-native render resolution；“native”一词
+不能在这三层之间无来源转换。该纠错不授权降低分辨率、切换 renderer、改变资源 ceiling 或开启 P1/P2/P3/P5。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
