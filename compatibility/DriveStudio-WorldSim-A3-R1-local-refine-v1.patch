@@ -1,0 +1,146 @@
+diff --git a/models/trainers/base.py b/models/trainers/base.py
+index 3923120..57d30a1 100644
+--- a/models/trainers/base.py
++++ b/models/trainers/base.py
+@@ -22,0 +23,4 @@ from motion_proj.worldsim_v3.boundary_residual import (
++from motion_proj.worldsim_v3.local_refinement import (
++    LocalRefinementGuard,
++    load_a3_refinement_sidecar,
++)
+@@ -76,0 +81 @@ class BasicTrainer(nn.Module):
++        a3_local_refinement: OmegaConf = None,
+@@ -93,0 +99,4 @@ class BasicTrainer(nn.Module):
++        self.a3_local_refinement_cfg = a3_local_refinement
++        self.a3_local_refinement_guard = None
++        self._a3_last_gradient_audit = None
++        self._a3_last_exactness_audit = None
+@@ -234,0 +244,49 @@ class BasicTrainer(nn.Module):
++        self._initialize_a3_local_refinement()
++
++    def _a3_optimizer_parameters(self) -> Dict[str, torch.nn.Parameter]:
++        optimizer_ids = {
++            id(parameter)
++            for group in self.optimizer.param_groups
++            for parameter in group["params"]
++        }
++        parameters = {}
++        for class_name, model in self.models.items():
++            for parameter_name, parameter in model.named_parameters():
++                if id(parameter) in optimizer_ids:
++                    parameters[f"{class_name}.{parameter_name}"] = parameter
++        if len(parameters) != len(optimizer_ids):
++            raise RuntimeError("A3 could not name every optimizer parameter")
++        return parameters
++
++    def _initialize_a3_local_refinement(self) -> None:
++        cfg = self.a3_local_refinement_cfg
++        if cfg is None or not bool(cfg.get("enabled", False)):
++            return
++        if (
++            cfg.get("variant") != "r1-reactivate"
++            or cfg.get("engineering_only") is not True
++            or cfg.get("formal_training_authorized") is not False
++        ):
++            raise RuntimeError("A3 R1 engineering boundary drift")
++        if (
++            cfg.get("disable_native_gaussian_postprocess") is not True
++            or cfg.get("require_external_paired_loss_masks") is not True
++            or cfg.get("start_after_checkpoint_step") is not True
++        ):
++            raise RuntimeError("A3 R1 fail-closed controls are missing")
++        if self.optim_general.get("use_grad_scaler", False):
++            raise RuntimeError("A3 R1 does not authorize gradient scaling")
++        if self.viewer is not None:
++            raise RuntimeError("A3 R1 does not authorize the interactive viewer")
++        sidecar = load_a3_refinement_sidecar(
++            cfg.get("sidecar_manifest"),
++            protocol_sha256=cfg.get("protocol_sha256"),
++            checkpoint_sha256=cfg.get("checkpoint_sha256"),
++            device=self.device,
++        )
++        self.a3_local_refinement_guard = LocalRefinementGuard(
++            parameters=self._a3_optimizer_parameters(),
++            optimizer=self.optimizer,
++            mutable_rows=sidecar.mutable_rows,
++            variant=cfg.get("variant"),
++        )
+@@ -285,0 +344,5 @@ class BasicTrainer(nn.Module):
++        if self.a3_local_refinement_guard is not None:
++            # R1 must preserve tensor shape/order and cannot run native
++            # after_train, split, duplicate, cull, or opacity reset.
++            self._a2_d2_diagnostic_maps = None
++            return
+@@ -536,0 +600,4 @@ class BasicTrainer(nn.Module):
++        if self.a3_local_refinement_guard is not None:
++            self._a3_last_gradient_audit = (
++                self.a3_local_refinement_guard.before_optimizer_step()
++            )
+@@ -537,0 +605,4 @@ class BasicTrainer(nn.Module):
++        if self.a3_local_refinement_guard is not None:
++            self._a3_last_exactness_audit = (
++                self.a3_local_refinement_guard.after_optimizer_step()
++            )
+@@ -580 +651 @@ class BasicTrainer(nn.Module):
+-            valid_loss_mask = (1.0 - image_infos["egocar_masks"]).float()
++            base_valid_loss_mask = (1.0 - image_infos["egocar_masks"]).float()
+@@ -582 +653,31 @@ class BasicTrainer(nn.Module):
+-            valid_loss_mask = torch.ones_like(image_infos["sky_masks"])
++            base_valid_loss_mask = torch.ones_like(image_infos["sky_masks"])
++
++        rgb_valid_loss_mask = base_valid_loss_mask
++        geometry_valid_loss_mask = base_valid_loss_mask
++        if self.a3_local_refinement_guard is not None:
++            authorization = image_infos.get("a3_paired_loss_authorized")
++            rgb_mask = image_infos.get("a3_rgb_loss_mask")
++            geometry_mask = image_infos.get("a3_geometry_loss_mask")
++            if authorization is None or not bool(authorization.item()):
++                raise RuntimeError("A3 paired loss provenance is not authorized")
++            if rgb_mask is None or geometry_mask is None:
++                raise RuntimeError("A3 paired loss masks were not materialized")
++            if (
++                rgb_mask.shape != base_valid_loss_mask.shape
++                or geometry_mask.shape != base_valid_loss_mask.shape
++            ):
++                raise RuntimeError("A3 paired loss mask shape drift")
++            rgb_mask = rgb_mask.float()
++            geometry_mask = geometry_mask.float()
++            if (
++                not torch.isfinite(rgb_mask).all()
++                or not torch.isfinite(geometry_mask).all()
++                or not torch.all((rgb_mask == 0) | (rgb_mask == 1))
++                or not torch.all((geometry_mask == 0) | (geometry_mask == 1))
++                or torch.any(rgb_mask > geometry_mask)
++            ):
++                raise RuntimeError("A3 paired loss mask semantic drift")
++            rgb_valid_loss_mask = base_valid_loss_mask * rgb_mask
++            geometry_valid_loss_mask = base_valid_loss_mask * geometry_mask
++            if torch.count_nonzero(geometry_valid_loss_mask) == 0:
++                raise RuntimeError("A3 paired loss masks authorize no pixels")
+@@ -584,2 +685,2 @@ class BasicTrainer(nn.Module):
+-        gt_rgb = image_infos["pixels"] * valid_loss_mask[..., None]
+-        predicted_rgb = outputs["rgb"] * valid_loss_mask[..., None]
++        gt_rgb = image_infos["pixels"] * rgb_valid_loss_mask[..., None]
++        predicted_rgb = outputs["rgb"] * rgb_valid_loss_mask[..., None]
+@@ -587,2 +688,2 @@ class BasicTrainer(nn.Module):
+-        gt_occupied_mask = (1.0 - image_infos["sky_masks"]).float() * valid_loss_mask
+-        pred_occupied_mask = outputs["opacity"].squeeze() * valid_loss_mask
++        gt_occupied_mask = (1.0 - image_infos["sky_masks"]).float() * geometry_valid_loss_mask
++        pred_occupied_mask = outputs["opacity"].squeeze() * geometry_valid_loss_mask
+@@ -606 +707 @@ class BasicTrainer(nn.Module):
+-            lidar_hit_mask = (gt_depth > 0).float() * valid_loss_mask
++            lidar_hit_mask = (gt_depth > 0).float() * geometry_valid_loss_mask
+@@ -658 +759 @@ class BasicTrainer(nn.Module):
+-                dynamic_pred_mask = dynamic_pred_mask & valid_loss_mask.bool()
++                dynamic_pred_mask = dynamic_pred_mask & rgb_valid_loss_mask.bool()
+diff --git a/tools/train.py b/tools/train.py
+index f86411a..f815d88 100644
+--- a/tools/train.py
++++ b/tools/train.py
+@@ -175 +175,6 @@ def main(args):
+-    all_iters = np.arange(trainer.step, trainer.num_iters + 1)
++    if trainer.a3_local_refinement_guard is not None:
++        # The selected D2 checkpoint already completed trainer.step. R1 starts
++        # strictly after it so optimizer_steps has one unambiguous meaning.
++        all_iters = np.arange(trainer.step + 1, trainer.num_iters + 1)
++    else:
++        all_iters = np.arange(trainer.step, trainer.num_iters + 1)

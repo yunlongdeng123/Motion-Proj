@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
+import json
 from pathlib import Path
 
 import numpy as np
@@ -10,11 +12,16 @@ import yaml
 
 from motion_proj.worldsim_v3.local_refinement import (
     affected_pixel_mask,
+    audit_optimizer_frozen_rows,
     auditable_update_rows,
     audit_frozen_rows,
     classify_support,
+    load_a3_refinement_sidecar,
+    LocalRefinementGuard,
     mutable_parameter_fields,
+    snapshot_optimizer_state,
     validate_a3_protocol,
+    validate_a3_sidecar_manifest,
 )
 
 
@@ -182,5 +189,130 @@ def test_frozen_row_audit_detects_outside_or_actor_drift() -> None:
         actor,
         mutable_rows=torch.tensor([False, True, False]),
         mutable_fields={"Background._scales"},
+    )
+    assert not audit["pass"]
+
+
+def _sidecar_manifest(arrays_sha256: str) -> dict:
+    return {
+        "schema_version": 1,
+        "task_id": "WS-V3-A3-LOCAL-REFINE-01",
+        "audit_version": "A3-R1-SIDECAR-v1",
+        "variant": "r1-reactivate",
+        "formal_training_authorized": False,
+        "protocol_sha256": "1" * 64,
+        "checkpoint_sha256": "2" * 64,
+        "background_point_count": 4,
+        "arrays": {
+            "path": "rows.npz",
+            "sha256": arrays_sha256,
+            "affected_rows_key": "affected_background_rows",
+            "support_strata_key": "support_strata_codes",
+        },
+        "evidence": {
+            "support_provenance_complete": True,
+            "heldout_frames": list(range(10, 200, 10)),
+            "heldout_excluded_from_support": True,
+            "typed_depth_truth_tiers": {
+                "depth_render_expected": "diagnostic",
+                "depth_surface_first_hit": "T1",
+                "depth_lidar_measured": "T0",
+            },
+        },
+    }
+
+
+def test_sidecar_load_excludes_affected_s_c_and_checks_sha(tmp_path: Path) -> None:
+    arrays_path = tmp_path / "rows.npz"
+    np.savez(
+        arrays_path,
+        affected_background_rows=np.array([True, True, True, False]),
+        support_strata_codes=np.array([0, 1, 2, 0], dtype=np.uint8),
+    )
+    arrays_sha256 = hashlib.sha256(arrays_path.read_bytes()).hexdigest()
+    manifest = _sidecar_manifest(arrays_sha256)
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    loaded = load_a3_refinement_sidecar(
+        manifest_path,
+        protocol_sha256="1" * 64,
+        checkpoint_sha256="2" * 64,
+    )
+    assert loaded.mutable_rows.tolist() == [True, True, False, False]
+
+    manifest["arrays"]["sha256"] = "3" * 64
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="arrays SHA drift"):
+        load_a3_refinement_sidecar(
+            manifest_path,
+            protocol_sha256="1" * 64,
+            checkpoint_sha256="2" * 64,
+        )
+
+
+def test_sidecar_manifest_rejects_incomplete_provenance() -> None:
+    manifest = _sidecar_manifest("3" * 64)
+    manifest["evidence"]["support_provenance_complete"] = False
+    with pytest.raises(ValueError, match="provenance is incomplete"):
+        validate_a3_sidecar_manifest(
+            manifest,
+            protocol_sha256="1" * 64,
+            checkpoint_sha256="2" * 64,
+        )
+
+
+def test_guard_masks_gradients_and_audits_adam_outside_exact() -> None:
+    parameters = {
+        "Background._opacities": torch.nn.Parameter(torch.ones(4, 1)),
+        "Background._scales": torch.nn.Parameter(torch.ones(4, 3)),
+        "Background._means": torch.nn.Parameter(torch.ones(4, 3)),
+        "RigidNodes._means": torch.nn.Parameter(torch.ones(2, 3)),
+    }
+    optimizer = torch.optim.Adam(
+        [
+            {"params": [parameter], "name": name, "lr": 0.01}
+            for name, parameter in parameters.items()
+        ],
+        lr=0.0,
+    )
+    mutable_rows = torch.tensor([True, True, False, False])
+    guard = LocalRefinementGuard(
+        parameters=parameters,
+        optimizer=optimizer,
+        mutable_rows=mutable_rows,
+    )
+    before = {name: value.detach().clone() for name, value in parameters.items()}
+    sum(value.square().sum() for value in parameters.values()).backward()
+    guard.before_optimizer_step()
+    assert parameters["Background._means"].grad is None
+    assert torch.count_nonzero(parameters["Background._scales"].grad[~mutable_rows]) == 0
+    optimizer.step()
+    audit = guard.after_optimizer_step()
+    assert audit["pass"]
+    assert torch.equal(
+        before["Background._opacities"][~mutable_rows],
+        parameters["Background._opacities"].detach()[~mutable_rows],
+    )
+    assert torch.equal(
+        before["RigidNodes._means"], parameters["RigidNodes._means"].detach()
+    )
+
+
+def test_optimizer_audit_detects_outside_momentum_drift() -> None:
+    parameter = torch.nn.Parameter(torch.zeros(3, 1))
+    optimizer = torch.optim.Adam([parameter], lr=0.1)
+    optimizer.zero_grad()
+    parameter.grad = torch.zeros_like(parameter)
+    optimizer.step()
+    parameters = {"Background._opacities": parameter}
+    before = snapshot_optimizer_state(optimizer, parameters)
+    optimizer.state[parameter]["exp_avg"][2] = 1
+    after = snapshot_optimizer_state(optimizer, parameters)
+    audit = audit_optimizer_frozen_rows(
+        before,
+        after,
+        parameter_shapes={"Background._opacities": parameter.shape},
+        mutable_rows=torch.tensor([True, False, False]),
+        mutable_fields={"Background._opacities"},
     )
     assert not audit["pass"]

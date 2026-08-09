@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from dataclasses import dataclass
+import hashlib
+import json
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -12,6 +16,7 @@ from torch import Tensor
 
 TASK_ID = "WS-V3-A3-LOCAL-REFINE-01"
 AUDIT_VERSION = "A3-LOCAL-REFINE-PROTOCOL-v1"
+SIDECAR_AUDIT_VERSION = "A3-R1-SIDECAR-v1"
 STRATA = ("S-A-observed", "S-B-geometric", "S-C-unsupported")
 VARIANTS = (
     "r0-no-refine-exact-alias",
@@ -404,3 +409,419 @@ def audit_frozen_rows(
             for value in checks.values()
         ),
     }
+
+
+def sha256_file(path: str | Path) -> str:
+    """Return a streaming SHA-256 digest for an immutable A3 input."""
+
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def validate_a3_sidecar_manifest(
+    manifest: Mapping[str, Any],
+    *,
+    protocol_sha256: str,
+    checkpoint_sha256: str,
+) -> None:
+    """Validate the compact R1 row/provenance manifest without loading arrays."""
+
+    _require(manifest.get("schema_version") == 1, "unsupported A3 sidecar schema")
+    _require(manifest.get("task_id") == TASK_ID, "A3 sidecar task drift")
+    _require(
+        manifest.get("audit_version") == SIDECAR_AUDIT_VERSION,
+        "A3 sidecar audit drift",
+    )
+    _require(manifest.get("variant") == "r1-reactivate", "A3 sidecar variant drift")
+    _require(
+        manifest.get("formal_training_authorized") is False,
+        "A3 sidecar cannot authorize formal training",
+    )
+    _sha256(protocol_sha256, "invalid expected A3 protocol SHA")
+    _sha256(checkpoint_sha256, "invalid expected A3 checkpoint SHA")
+    _require(
+        manifest.get("protocol_sha256") == protocol_sha256,
+        "A3 sidecar protocol SHA drift",
+    )
+    _require(
+        manifest.get("checkpoint_sha256") == checkpoint_sha256,
+        "A3 sidecar checkpoint SHA drift",
+    )
+    count = manifest.get("background_point_count")
+    _require(isinstance(count, int) and count > 0, "invalid background point count")
+    arrays = manifest.get("arrays") or {}
+    _require(bool(arrays.get("path")), "missing A3 sidecar arrays path")
+    _sha256(arrays.get("sha256"), "missing A3 sidecar arrays SHA")
+    _require(
+        arrays.get("affected_rows_key") == "affected_background_rows"
+        and arrays.get("support_strata_key") == "support_strata_codes",
+        "A3 sidecar array key drift",
+    )
+    evidence = manifest.get("evidence") or {}
+    _require(
+        evidence.get("support_provenance_complete") is True,
+        "A3 support provenance is incomplete",
+    )
+    _require(
+        evidence.get("heldout_frames") == HELDOUT_FRAMES
+        and evidence.get("heldout_excluded_from_support") is True,
+        "A3 held-out leakage boundary drift",
+    )
+    _require(
+        evidence.get("typed_depth_truth_tiers")
+        == {
+            "depth_render_expected": "diagnostic",
+            "depth_surface_first_hit": "T1",
+            "depth_lidar_measured": "T0",
+        },
+        "A3 typed-depth evidence drift",
+    )
+
+
+@dataclass(frozen=True)
+class LoadedRefinementSidecar:
+    """Validated row authorization loaded from an immutable NPZ sidecar."""
+
+    manifest_path: Path
+    arrays_path: Path
+    arrays_sha256: str
+    affected_rows: Tensor
+    support_strata_codes: Tensor
+    mutable_rows: Tensor
+
+
+def load_a3_refinement_sidecar(
+    manifest_path: str | Path,
+    *,
+    protocol_sha256: str,
+    checkpoint_sha256: str,
+    device: torch.device | str | None = None,
+) -> LoadedRefinementSidecar:
+    """Load R1 row authorization and fail closed on any provenance drift."""
+
+    path = Path(manifest_path).resolve()
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    validate_a3_sidecar_manifest(
+        manifest,
+        protocol_sha256=protocol_sha256,
+        checkpoint_sha256=checkpoint_sha256,
+    )
+    arrays_path = Path(manifest["arrays"]["path"])
+    if not arrays_path.is_absolute():
+        arrays_path = (path.parent / arrays_path).resolve()
+    actual_sha256 = sha256_file(arrays_path)
+    _require(
+        actual_sha256 == manifest["arrays"]["sha256"],
+        "A3 sidecar arrays SHA drift",
+    )
+    with np.load(arrays_path, allow_pickle=False) as arrays:
+        _require(
+            set(arrays.files)
+            == {"affected_background_rows", "support_strata_codes"},
+            "A3 sidecar arrays changed",
+        )
+        affected = np.asarray(arrays["affected_background_rows"])
+        strata_codes = np.asarray(arrays["support_strata_codes"])
+    count = int(manifest["background_point_count"])
+    _require(
+        affected.shape == (count,) and affected.dtype == np.bool_,
+        "affected Background rows must be a bool vector",
+    )
+    _require(
+        strata_codes.shape == (count,)
+        and np.issubdtype(strata_codes.dtype, np.integer),
+        "support strata codes must be an integer vector",
+    )
+    _require(
+        bool(np.isin(strata_codes, [0, 1, 2]).all()),
+        "unknown A3 support stratum code",
+    )
+    affected_tensor = torch.as_tensor(affected, dtype=torch.bool, device=device)
+    strata_tensor = torch.as_tensor(
+        strata_codes, dtype=torch.uint8, device=device
+    )
+    mutable = affected_tensor & (strata_tensor != 2)
+    _require(bool(mutable.any()), "A3 R1 sidecar authorizes no mutable rows")
+    return LoadedRefinementSidecar(
+        manifest_path=path,
+        arrays_path=arrays_path,
+        arrays_sha256=actual_sha256,
+        affected_rows=affected_tensor,
+        support_strata_codes=strata_tensor,
+        mutable_rows=mutable,
+    )
+
+
+def _clone_optimizer_state_value(value: Any) -> Any:
+    if isinstance(value, Tensor):
+        return value.detach().clone()
+    return value
+
+
+def snapshot_optimizer_state(
+    optimizer: torch.optim.Optimizer,
+    parameters: Mapping[str, Tensor],
+) -> dict[str, dict[str, Any]]:
+    """Clone per-parameter optimizer state using stable protocol field names."""
+
+    return {
+        name: {
+            key: _clone_optimizer_state_value(value)
+            for key, value in optimizer.state.get(parameter, {}).items()
+        }
+        for name, parameter in parameters.items()
+    }
+
+
+def audit_optimizer_frozen_rows(
+    before: Mapping[str, Mapping[str, Any]],
+    after: Mapping[str, Mapping[str, Any]],
+    *,
+    parameter_shapes: Mapping[str, torch.Size],
+    mutable_rows: Tensor,
+    mutable_fields: set[str],
+) -> dict[str, Any]:
+    """Audit Adam moments exactly outside authorized Background rows."""
+
+    if set(before) != set(after) or set(before) != set(parameter_shapes):
+        raise ValueError("optimizer parameter fields changed")
+    rows = torch.as_tensor(mutable_rows, dtype=torch.bool).flatten()
+    checks: dict[str, dict[str, Any]] = {}
+    for name in sorted(before):
+        left = before[name]
+        right = after[name]
+        authorized = name in mutable_fields
+        keys_exact = set(left) == set(right)
+        state_exact = keys_exact
+        if keys_exact:
+            for key in left:
+                left_value = left[key]
+                right_value = right[key]
+                if isinstance(left_value, Tensor) != isinstance(right_value, Tensor):
+                    state_exact = False
+                    break
+                if not isinstance(left_value, Tensor):
+                    if left_value != right_value:
+                        state_exact = False
+                        break
+                    continue
+                if left_value.shape != right_value.shape or left_value.dtype != right_value.dtype:
+                    state_exact = False
+                    break
+                if (
+                    authorized
+                    and tuple(left_value.shape) == tuple(parameter_shapes[name])
+                ):
+                    field_rows = rows.to(device=left_value.device)
+                    if left_value.ndim == 0 or left_value.shape[0] != rows.numel():
+                        state_exact = False
+                        break
+                    if not torch.equal(
+                        left_value[~field_rows], right_value[~field_rows]
+                    ):
+                        state_exact = False
+                        break
+                elif authorized and key == "step":
+                    # Adam owns one scalar step for the authorized tensor.
+                    continue
+                elif not torch.equal(left_value, right_value):
+                    state_exact = False
+                    break
+        checks[name] = {
+            "keys_exact": keys_exact,
+            "outside_exact": state_exact,
+            "authorized_field": authorized,
+        }
+    return {
+        "checks": checks,
+        "pass": all(
+            value["keys_exact"] and value["outside_exact"]
+            for value in checks.values()
+        ),
+    }
+
+
+class LocalRefinementGuard:
+    """Fail-closed R1 gradient mask and post-step exactness auditor."""
+
+    def __init__(
+        self,
+        *,
+        parameters: Mapping[str, torch.nn.Parameter],
+        optimizer: torch.optim.Optimizer,
+        mutable_rows: Tensor,
+        variant: str = "r1-reactivate",
+    ) -> None:
+        if type(optimizer) is not torch.optim.Adam:
+            raise ValueError("A3 R1 currently requires exact torch.optim.Adam")
+        self.parameters = dict(parameters)
+        self.optimizer = optimizer
+        self.mutable_fields = mutable_parameter_fields(variant)
+        self.mutable_rows = torch.as_tensor(
+            mutable_rows, dtype=torch.bool
+        ).flatten()
+        _require(bool(self.mutable_rows.any()), "A3 R1 authorizes no rows")
+        _require(
+            self.mutable_fields.issubset(self.parameters),
+            "A3 R1 mutable parameters are missing",
+        )
+        self.parameter_order = tuple(self.parameters)
+        self.parameter_ids = {
+            name: id(parameter) for name, parameter in self.parameters.items()
+        }
+        self.parameter_shapes = {
+            name: parameter.shape for name, parameter in self.parameters.items()
+        }
+        self.parameter_dtypes = {
+            name: parameter.dtype for name, parameter in self.parameters.items()
+        }
+        for name in self.mutable_fields:
+            parameter = self.parameters[name]
+            _require(
+                parameter.ndim > 0
+                and parameter.shape[0] == self.mutable_rows.numel(),
+                f"A3 mutable row count mismatch: {name}",
+            )
+        optimizer_parameters = {
+            id(parameter): group
+            for group in optimizer.param_groups
+            for parameter in group["params"]
+        }
+        _require(
+            set(self.parameter_ids.values()).issubset(optimizer_parameters),
+            "A3 parameter is missing from optimizer",
+        )
+        for name in self.mutable_fields:
+            group = optimizer_parameters[self.parameter_ids[name]]
+            _require(
+                float(group.get("weight_decay", 0.0)) == 0.0,
+                f"A3 mutable field cannot use weight decay: {name}",
+            )
+            self._initialize_adam_state(self.parameters[name], group)
+        self._parameter_before: dict[str, Tensor] | None = None
+        self._optimizer_before: dict[str, dict[str, Any]] | None = None
+
+    def _initialize_adam_state(
+        self, parameter: torch.nn.Parameter, group: Mapping[str, Any]
+    ) -> None:
+        state = self.optimizer.state[parameter]
+        if state:
+            _require(
+                {"step", "exp_avg", "exp_avg_sq"}.issubset(state),
+                "unexpected pre-existing Adam state",
+            )
+            return
+        capturable = bool(group.get("capturable", False))
+        fused = bool(group.get("fused", False))
+        step_device = parameter.device if capturable or fused else torch.device("cpu")
+        state["step"] = torch.zeros((), dtype=torch.float32, device=step_device)
+        state["exp_avg"] = torch.zeros_like(
+            parameter, memory_format=torch.preserve_format
+        )
+        state["exp_avg_sq"] = torch.zeros_like(
+            parameter, memory_format=torch.preserve_format
+        )
+        if bool(group.get("amsgrad", False)):
+            state["max_exp_avg_sq"] = torch.zeros_like(
+                parameter, memory_format=torch.preserve_format
+            )
+
+    def _assert_structure(self) -> None:
+        _require(tuple(self.parameters) == self.parameter_order, "parameter order drift")
+        for name, parameter in self.parameters.items():
+            _require(id(parameter) == self.parameter_ids[name], f"parameter identity drift: {name}")
+            _require(parameter.shape == self.parameter_shapes[name], f"parameter shape drift: {name}")
+            _require(parameter.dtype == self.parameter_dtypes[name], f"parameter dtype drift: {name}")
+
+    def before_optimizer_step(self) -> dict[str, Any]:
+        """Snapshot exact state, then leave gradients only on authorized rows."""
+
+        _require(self._parameter_before is None, "A3 optimizer step is already open")
+        self._assert_structure()
+        self._parameter_before = {
+            name: parameter.detach().clone()
+            for name, parameter in self.parameters.items()
+        }
+        self._optimizer_before = snapshot_optimizer_state(
+            self.optimizer, self.parameters
+        )
+        gradient_checks: dict[str, dict[str, Any]] = {}
+        for name, parameter in self.parameters.items():
+            authorized = name in self.mutable_fields
+            if not authorized:
+                parameter.grad = None
+                gradient_checks[name] = {
+                    "authorized_field": False,
+                    "finite": True,
+                    "outside_zero": True,
+                }
+                continue
+            _require(parameter.grad is not None, f"missing A3 gradient: {name}")
+            gradient = parameter.grad
+            _require(gradient.shape == parameter.shape, f"gradient shape drift: {name}")
+            finite = bool(torch.isfinite(gradient).all())
+            _require(finite, f"non-finite A3 gradient: {name}")
+            rows = self.mutable_rows.to(device=gradient.device)
+            view = rows.reshape(rows.shape[0], *([1] * (gradient.ndim - 1)))
+            gradient.mul_(view)
+            outside_zero = bool(torch.count_nonzero(gradient[~rows]) == 0)
+            _require(outside_zero, f"outside gradient mask failed: {name}")
+            gradient_checks[name] = {
+                "authorized_field": True,
+                "finite": finite,
+                "outside_zero": outside_zero,
+            }
+        return {"pass": True, "checks": gradient_checks}
+
+    def after_optimizer_step(self) -> dict[str, Any]:
+        """Audit parameters and Adam moments before allowing another step."""
+
+        _require(
+            self._parameter_before is not None
+            and self._optimizer_before is not None,
+            "A3 optimizer step was not opened",
+        )
+        self._assert_structure()
+        after = {
+            name: parameter.detach().clone()
+            for name, parameter in self.parameters.items()
+        }
+        parameter_audit = audit_frozen_rows(
+            self._parameter_before,
+            after,
+            mutable_rows=self.mutable_rows,
+            mutable_fields=self.mutable_fields,
+        )
+        optimizer_audit = audit_optimizer_frozen_rows(
+            self._optimizer_before,
+            snapshot_optimizer_state(self.optimizer, self.parameters),
+            parameter_shapes=self.parameter_shapes,
+            mutable_rows=self.mutable_rows,
+            mutable_fields=self.mutable_fields,
+        )
+        changed_inside: dict[str, int] = {}
+        rows = self.mutable_rows
+        for name in sorted(self.mutable_fields):
+            before_value = self._parameter_before[name]
+            after_value = after[name]
+            device_rows = rows.to(device=before_value.device)
+            changed_inside[name] = int(
+                torch.count_nonzero(
+                    before_value[device_rows] != after_value[device_rows]
+                ).item()
+            )
+        result = {
+            "pass": bool(parameter_audit["pass"] and optimizer_audit["pass"]),
+            "parameter_audit": parameter_audit,
+            "optimizer_audit": optimizer_audit,
+            "changed_inside_elements": changed_inside,
+            "parameter_order": list(self.parameter_order),
+        }
+        self._parameter_before = None
+        self._optimizer_before = None
+        if not result["pass"]:
+            raise RuntimeError("A3 outside exactness audit failed")
+        return result
