@@ -1,0 +1,254 @@
+diff --git a/models/trainers/base.py b/models/trainers/base.py
+index 852f1c0..cc5ab8b 100644
+--- a/models/trainers/base.py
++++ b/models/trainers/base.py
+@@ -17,0 +18,5 @@ from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
++from motion_proj.worldsim_v3.boundary_residual import (
++    binary_boundary_band,
++    photometric_residual_map,
++    sample_projected_centers,
++)
+@@ -107,0 +113 @@ class BasicTrainer(nn.Module):
++        self._a2_d2_diagnostic_maps = None
+@@ -289,0 +296,24 @@ class BasicTrainer(nn.Module):
++            model = self.models[class_name]
++            if (
++                class_name == "RigidNodes"
++                and getattr(model, "a2_boundary_residual_enabled", False)
++            ):
++                if self._a2_d2_diagnostic_maps is None:
++                    raise RuntimeError(
++                        "A2-D2 training diagnostics were not materialized"
++                    )
++                projected = sample_projected_centers(
++                    means2d=self.info["means2d"][0, gaussian_mask],
++                    radii=radii[0, gaussian_mask],
++                    boundary_map=self._a2_d2_diagnostic_maps["boundary"],
++                    residual_map=self._a2_d2_diagnostic_maps[
++                        "photometric_residual"
++                    ],
++                )
++                model.record_a2_d2_projected_observations(
++                    filtered_indices=projected["indices"],
++                    boundary=projected["boundary"],
++                    photometric_residual=projected[
++                        "photometric_residual"
++                    ],
++                )
+@@ -291 +321 @@ class BasicTrainer(nn.Module):
+-            self.models[class_name].postprocess_per_train_step(
++            model.postprocess_per_train_step(
+@@ -297,0 +328 @@ class BasicTrainer(nn.Module):
++        self._a2_d2_diagnostic_maps = None
+@@ -525,0 +557,20 @@ class BasicTrainer(nn.Module):
++        rigid_model = self.models.get("RigidNodes")
++        if rigid_model is not None and getattr(
++            rigid_model, "a2_boundary_residual_enabled", False
++        ):
++            dynamic_mask = image_infos.get("dynamic_masks")
++            if dynamic_mask is None:
++                raise RuntimeError("A2-D2 requires image_infos.dynamic_masks")
++            policy = rigid_model.a2_boundary_residual_policy
++            self._a2_d2_diagnostic_maps = {
++                "boundary": binary_boundary_band(
++                    dynamic_mask,
++                    radius_pixels=policy.boundary_radius_pixels,
++                    threshold=policy.mask_binarization_threshold,
++                ),
++                "photometric_residual": photometric_residual_map(
++                    outputs["rgb"], image_infos["pixels"]
++                ),
++            }
++        else:
++            self._a2_d2_diagnostic_maps = None
+diff --git a/models/nodes/rigid.py b/models/nodes/rigid.py
+index 6c2b985..fcf12d8 100644
+--- a/models/nodes/rigid.py
++++ b/models/nodes/rigid.py
+@@ -15,0 +16,5 @@ from motion_proj.worldsim_v3.gaussian_ancestry import InitSource
++from motion_proj.worldsim_v3.boundary_residual import (
++    BoundaryResidualPolicy,
++    BoundaryResidualState,
++    apply_boundary_scale_cap,
++)
+@@ -34,0 +40,17 @@ class RigidNodes(VanillaGaussians):
++        d2_cfg = self.ctrl_cfg.get("a2_boundary_residual", {})
++        self._a2_boundary_residual_enabled = bool(
++            d2_cfg.get("enabled", False)
++        )
++        self._a2_boundary_residual_policy = None
++        self._a2_boundary_residual_state = None
++        if self._a2_boundary_residual_enabled:
++            if not self._a2_actor_quota_enabled:
++                raise ValueError("A2-D2 requires the D1 actor quota")
++            self._a2_boundary_residual_policy = (
++                BoundaryResidualPolicy.from_mapping(d2_cfg)
++            )
++            if (
++                self._a2_actor_quota_policy.ranking
++                != self._a2_boundary_residual_policy.ranking
++            ):
++                raise ValueError("A2-D2 ranking must match actor quota config")
+@@ -124,0 +147,6 @@ class RigidNodes(VanillaGaussians):
++        if self._a2_boundary_residual_enabled:
++            if self._a2_ancestry is None:
++                raise ValueError("A2-D2 requires A2 ancestry instrumentation")
++            self._a2_boundary_residual_state = BoundaryResidualState(
++                policy=self._a2_boundary_residual_policy
++            )
+@@ -131,0 +160,94 @@ class RigidNodes(VanillaGaussians):
++    @property
++    def a2_boundary_residual_enabled(self) -> bool:
++        return self._a2_boundary_residual_enabled
++
++    @property
++    def a2_boundary_residual_policy(self) -> BoundaryResidualPolicy:
++        if self._a2_boundary_residual_policy is None:
++            raise RuntimeError("A2-D2 boundary/residual policy is disabled")
++        return self._a2_boundary_residual_policy
++
++    def record_a2_d2_projected_observations(
++        self,
++        *,
++        filtered_indices: torch.Tensor,
++        boundary: torch.Tensor,
++        photometric_residual: torch.Tensor,
++    ) -> None:
++        if not self._a2_boundary_residual_enabled:
++            return
++        if self._a2_ancestry is None or self._a2_boundary_residual_state is None:
++            raise RuntimeError("A2-D2 state is not initialized")
++        filtered_indices = filtered_indices.to(
++            device=self.device, dtype=torch.long
++        ).flatten()
++        visible_full_indices = torch.where(self.filter_mask)[0]
++        if filtered_indices.numel() and (
++            int(filtered_indices.min()) < 0
++            or int(filtered_indices.max()) >= visible_full_indices.numel()
++        ):
++            raise IndexError("A2-D2 filtered index is outside RigidNodes")
++        full_indices = visible_full_indices[filtered_indices]
++        self.record_a2_diagnostics(
++            indices=full_indices,
++            boundary_contribution=boundary,
++            photometric_residual=photometric_residual,
++        )
++        self._a2_boundary_residual_state.record_observations(
++            boundary_count=int(boundary.numel()),
++            residual_count=int(photometric_residual.numel()),
++        )
++
++    def _apply_a2_d2_scale_cap(
++        self, *, optimizer: torch.optim.Optimizer, maximum_scale: float
++    ) -> torch.Tensor:
++        if not self._a2_boundary_residual_enabled:
++            return torch.zeros(
++                self.num_points, device=self.device, dtype=torch.bool
++            )
++        if self._a2_ancestry is None or self._a2_boundary_residual_state is None:
++            raise RuntimeError("A2-D2 state is not initialized")
++        updated, capped = apply_boundary_scale_cap(
++            log_scales=self._scales.detach(),
++            boundary_mean=self._a2_ancestry.boundary_contribution,
++            boundary_count=self._a2_ancestry.boundary_contribution_count,
++            maximum_scale=maximum_scale,
++        )
++        if capped.any():
++            self._scales.data.copy_(updated)
++            group_name = self.class_prefix + "scaling"
++            matching = [
++                group for group in optimizer.param_groups
++                if group["name"] == group_name
++            ]
++            if len(matching) != 1:
++                raise RuntimeError("A2-D2 could not identify scaling optimizer")
++            parameter = matching[0]["params"][0]
++            state = optimizer.state.get(parameter, {})
++            for key in ("exp_avg", "exp_avg_sq"):
++                value = state.get(key)
++                if value is not None:
++                    value[capped] = 0
++        observed = (
++            self._a2_ancestry.boundary_contribution_count > 0
++        ) & torch.isfinite(self._a2_ancestry.boundary_contribution) & (
++            self._a2_ancestry.boundary_contribution > 0
++        )
++        if observed.any() and torch.any(
++            self.get_scaling[observed].max(dim=-1).values
++            > maximum_scale * (1.0 + 1e-6)
++        ):
++            raise RuntimeError("A2-D2 boundary scale cap was not respected")
++        self._a2_boundary_residual_state.record_refinement(
++            step=self.step,
++            boundary_observed_gaussians=int(
++                (self._a2_ancestry.boundary_contribution_count > 0).sum()
++            ),
++            residual_observed_gaussians=int(
++                (self._a2_ancestry.photometric_residual_count > 0).sum()
++            ),
++            capped_gaussians=int(capped.sum()),
++            maximum_scale=maximum_scale,
++        )
++        return capped
++
+@@ -165,0 +288,10 @@ class RigidNodes(VanillaGaussians):
++            pre_cap_scaling = self.get_scaling.detach().clone()
++            if self._a2_boundary_residual_enabled:
++                self._apply_a2_d2_scale_cap(
++                    optimizer=optimizer,
++                    maximum_scale=(
++                        float(self.ctrl_cfg.densify_size_thresh)
++                        * float(self.scene_scale)
++                        * self._a2_boundary_residual_policy.scale_cap_threshold_multiplier
++                    ),
++                )
+@@ -181 +313 @@ class RigidNodes(VanillaGaussians):
+-                        self.get_scaling.max(dim=-1).values > \
++                        pre_cap_scaling.max(dim=-1).values > \
+@@ -189 +321 @@ class RigidNodes(VanillaGaussians):
+-                        self.get_scaling.max(dim=-1).values <= \
++                        pre_cap_scaling.max(dim=-1).values <= \
+@@ -191,0 +324,10 @@ class RigidNodes(VanillaGaussians):
++                    diagnostic_kwargs = {}
++                    if self._a2_boundary_residual_enabled:
++                        if self._a2_ancestry is None:
++                            raise RuntimeError("A2-D2 ancestry is missing")
++                        diagnostic_kwargs = {
++                            "boundary_mean": self._a2_ancestry.boundary_contribution,
++                            "boundary_count": self._a2_ancestry.boundary_contribution_count,
++                            "photometric_residual_mean": self._a2_ancestry.photometric_residual,
++                            "photometric_residual_count": self._a2_ancestry.photometric_residual_count,
++                        }
+@@ -199,0 +342 @@ class RigidNodes(VanillaGaussians):
++                            **diagnostic_kwargs,
+@@ -580,0 +724,4 @@ class RigidNodes(VanillaGaussians):
++        if self._a2_boundary_residual_state is not None:
++            state_dict["worldsim_a2_boundary_residual"] = (
++                self._a2_boundary_residual_state.state_dict()
++            )
+@@ -584,0 +732 @@ class RigidNodes(VanillaGaussians):
++        d2_state = state_dict.pop("worldsim_a2_boundary_residual", None)
+@@ -611,0 +760,17 @@ class RigidNodes(VanillaGaussians):
++        if self._a2_boundary_residual_enabled:
++            if d2_state is None:
++                raise ValueError(
++                    "A2-D2 checkpoint state is required when enabled"
++                )
++            self._a2_boundary_residual_state = (
++                BoundaryResidualState.from_state_dict(d2_state)
++            )
++            if (
++                self._a2_boundary_residual_state.policy
++                != self._a2_boundary_residual_policy
++            ):
++                raise ValueError("A2-D2 checkpoint policy does not match config")
++        else:
++            if d2_state is not None:
++                raise ValueError("disabled A2-D2 received unexpected state")
++            self._a2_boundary_residual_state = None
+@@ -622,0 +788,5 @@ class RigidNodes(VanillaGaussians):
++    def get_a2_boundary_residual_summary(self) -> Dict:
++        if self._a2_boundary_residual_state is None:
++            return {"enabled": False}
++        return self._a2_boundary_residual_state.summary()
++

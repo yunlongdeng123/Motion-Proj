@@ -6,10 +6,16 @@ from typing import Any, Mapping
 
 import torch
 
+from motion_proj.worldsim_v3.boundary_residual import (
+    boundary_residual_order,
+)
+
 
 SCHEMA_VERSION = 1
 EXPECTED_TASK_ID = "WS-V3-A2-ACTOR-DENSIFY-01"
 EXPECTED_AUDIT_VERSION = "A2-D1-v1"
+D1_RANKING = "screen_grad_desc_then_gaussian_index"
+D2_RANKING = "boundary_residual_screen_grad_then_gaussian_index"
 
 
 @dataclass(frozen=True)
@@ -19,7 +25,7 @@ class ActorQuotaPolicy:
     minimum_absolute_floor: int
     maximum_initial_multiplier: float
     maximum_absolute_cap: int
-    ranking: str = "screen_grad_desc_then_gaussian_index"
+    ranking: str = D1_RANKING
     below_threshold_policy: str = "only_to_recover_minimum"
     budget_policy: str = "gradient_ranked_prefix"
 
@@ -37,7 +43,7 @@ class ActorQuotaPolicy:
             maximum_absolute_cap=int(payload["maximum_absolute_cap"]),
             ranking=str(
                 payload.get(
-                    "ranking", "screen_grad_desc_then_gaussian_index"
+                    "ranking", D1_RANKING
                 )
             ),
             below_threshold_policy=str(
@@ -69,7 +75,7 @@ class ActorQuotaPolicy:
             raise ValueError(
                 "maximum_absolute_cap must not be below the minimum floor"
             )
-        if self.ranking != "screen_grad_desc_then_gaussian_index":
+        if self.ranking not in (D1_RANKING, D2_RANKING):
             raise ValueError("unsupported actor quota ranking")
         if self.below_threshold_policy != "only_to_recover_minimum":
             raise ValueError("unsupported below-threshold policy")
@@ -184,6 +190,10 @@ class ActorQuotaController:
         split_geometry: torch.Tensor,
         clone_geometry: torch.Tensor,
         split_children: int,
+        boundary_mean: torch.Tensor | None = None,
+        boundary_count: torch.Tensor | None = None,
+        photometric_residual_mean: torch.Tensor | None = None,
+        photometric_residual_count: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor, dict[str, Any]]:
         actor_ids = self._validate_current_actor_ids(actor_ids)
         if split_children < 1:
@@ -199,6 +209,41 @@ class ActorQuotaController:
         finite_gradients = average_gradients[torch.isfinite(average_gradients)]
         if torch.any(finite_gradients < 0):
             raise ValueError("average_gradients must be non-negative")
+        diagnostics = (
+            boundary_mean,
+            boundary_count,
+            photometric_residual_mean,
+            photometric_residual_count,
+        )
+        if self.policy.ranking == D1_RANKING:
+            if any(value is not None for value in diagnostics):
+                raise ValueError("D1 ranking must not receive D2 diagnostics")
+        else:
+            if any(value is None for value in diagnostics):
+                raise ValueError("D2 ranking requires all diagnostic vectors")
+            assert boundary_mean is not None
+            assert boundary_count is not None
+            assert photometric_residual_mean is not None
+            assert photometric_residual_count is not None
+            for name, value in (
+                ("boundary_mean", boundary_mean),
+                ("boundary_count", boundary_count),
+                ("photometric_residual_mean", photometric_residual_mean),
+                ("photometric_residual_count", photometric_residual_count),
+            ):
+                _validate_vector(name, value, actor_ids)
+            finite_boundary = boundary_mean[torch.isfinite(boundary_mean)]
+            if torch.any((finite_boundary < 0) | (finite_boundary > 1)):
+                raise ValueError("boundary means must be in the interval [0, 1]")
+            finite_residual = photometric_residual_mean[
+                torch.isfinite(photometric_residual_mean)
+            ]
+            if torch.any(finite_residual < 0):
+                raise ValueError("photometric residuals must be non-negative")
+            if torch.any(boundary_count < 0) or torch.any(
+                photometric_residual_count < 0
+            ):
+                raise ValueError("diagnostic counts must be non-negative")
 
         current_counts = torch.bincount(
             actor_ids, minlength=self.initial_counts.numel()
@@ -242,9 +287,23 @@ class ActorQuotaController:
                 )
                 continue
 
-            scores = average_gradients[candidate_indices]
-            order = torch.argsort(scores, descending=True, stable=True)
-            ranked_indices = candidate_indices[order]
+            if self.policy.ranking == D1_RANKING:
+                scores = average_gradients[candidate_indices]
+                order = torch.argsort(scores, descending=True, stable=True)
+                ranked_indices = candidate_indices[order]
+            else:
+                assert boundary_mean is not None
+                assert boundary_count is not None
+                assert photometric_residual_mean is not None
+                assert photometric_residual_count is not None
+                ranked_indices = boundary_residual_order(
+                    candidate_indices=candidate_indices,
+                    boundary_mean=boundary_mean,
+                    boundary_count=boundary_count,
+                    residual_mean=photometric_residual_mean,
+                    residual_count=photometric_residual_count,
+                    screen_grad=average_gradients,
+                )
             ranked_scores = average_gradients[ranked_indices]
             ranked_costs = (
                 split_geometry[ranked_indices].to(torch.long)

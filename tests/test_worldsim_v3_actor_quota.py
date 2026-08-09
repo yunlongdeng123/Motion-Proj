@@ -9,6 +9,7 @@ import yaml
 from motion_proj.worldsim_v3.actor_quota import (
     ActorQuotaController,
     ActorQuotaPolicy,
+    D2_RANKING,
     validate_a2_d1_contract,
 )
 
@@ -105,6 +106,48 @@ def test_stable_tie_break_uses_gaussian_index() -> None:
     )
 
     assert clones.tolist() == [True, True, False]
+
+
+def test_d2_ranking_changes_order_without_changing_eligibility_or_quota() -> None:
+    controller = ActorQuotaController(
+        policy=make_policy(ranking=D2_RANKING),
+        initial_counts=torch.tensor([3]),
+        minimum_counts=torch.tensor([1]),
+        maximum_counts=torch.tensor([5]),
+    )
+    _, clones, decision = controller.select_densification(
+        actor_ids=torch.tensor([0, 0, 0]),
+        average_gradients=torch.tensor([0.9, 0.8, 0.7]),
+        visibility_counts=torch.ones(3),
+        split_geometry=torch.zeros(3, dtype=torch.bool),
+        clone_geometry=torch.ones(3, dtype=torch.bool),
+        split_children=2,
+        boundary_mean=torch.tensor([0.0, 1.0, 1.0]),
+        boundary_count=torch.ones(3, dtype=torch.long),
+        photometric_residual_mean=torch.tensor([10.0, 0.1, 0.2]),
+        photometric_residual_count=torch.ones(3, dtype=torch.long),
+    )
+
+    assert clones.tolist() == [False, True, True]
+    assert decision["accepted_children"] == 2
+
+
+def test_d2_ranking_requires_all_diagnostic_vectors() -> None:
+    controller = ActorQuotaController(
+        policy=make_policy(ranking=D2_RANKING),
+        initial_counts=torch.tensor([1]),
+        minimum_counts=torch.tensor([1]),
+        maximum_counts=torch.tensor([2]),
+    )
+    with pytest.raises(ValueError, match="requires all diagnostic vectors"):
+        controller.select_densification(
+            actor_ids=torch.tensor([0]),
+            average_gradients=torch.tensor([0.9]),
+            visibility_counts=torch.ones(1),
+            split_geometry=torch.zeros(1, dtype=torch.bool),
+            clone_geometry=torch.ones(1, dtype=torch.bool),
+            split_children=2,
+        )
 
 
 def test_visible_below_threshold_candidates_only_recover_minimum() -> None:

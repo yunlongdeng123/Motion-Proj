@@ -7,6 +7,8 @@ import torch
 import yaml
 
 from motion_proj.worldsim_v3.boundary_residual import (
+    BoundaryResidualPolicy,
+    BoundaryResidualState,
     apply_boundary_scale_cap,
     binary_boundary_band,
     boundary_residual_order,
@@ -123,3 +125,17 @@ def test_scale_cap_preserves_axis_ratios_and_ignores_non_boundary() -> None:
     assert capped.tolist() == [True, False, False]
     torch.testing.assert_close(activated[0], torch.tensor([2.0, 1.0, 0.5]))
     torch.testing.assert_close(activated[1:], scales[1:])
+
+
+def test_boundary_residual_state_roundtrip_preserves_policy_and_counters() -> None:
+    state = BoundaryResidualState(policy=BoundaryResidualPolicy())
+    state.record_observations(boundary_count=3, residual_count=4)
+    state.record_refinement(
+        step=600,
+        boundary_observed_gaussians=3,
+        residual_observed_gaussians=4,
+        capped_gaussians=2,
+        maximum_scale=0.03,
+    )
+    restored = BoundaryResidualState.from_state_dict(state.state_dict())
+    assert restored.summary() == state.summary()

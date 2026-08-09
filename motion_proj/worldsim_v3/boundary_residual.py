@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Any, Mapping
 
 import torch
@@ -26,6 +26,24 @@ class BoundaryResidualPolicy:
     boundary_radius_pixels: int = 3
     mask_binarization_threshold: float = 0.5
     scale_cap_threshold_multiplier: float = 1.0
+    ranking: str = "boundary_residual_screen_grad_then_gaussian_index"
+
+    @classmethod
+    def from_mapping(
+        cls, payload: Mapping[str, Any]
+    ) -> "BoundaryResidualPolicy":
+        policy = cls(
+            boundary_radius_pixels=int(payload["boundary_radius_pixels"]),
+            mask_binarization_threshold=float(
+                payload["mask_binarization_threshold"]
+            ),
+            scale_cap_threshold_multiplier=float(
+                payload["scale_cap_threshold_multiplier"]
+            ),
+            ranking=str(payload["ranking"]),
+        )
+        policy.validate()
+        return policy
 
     @classmethod
     def from_contract(
@@ -43,6 +61,7 @@ class BoundaryResidualPolicy:
             scale_cap_threshold_multiplier=float(
                 scale_cap["threshold_multiplier"]
             ),
+            ranking="boundary_residual_screen_grad_then_gaussian_index",
         )
         policy.validate()
         return policy
@@ -56,6 +75,118 @@ class BoundaryResidualPolicy:
             raise ValueError("mask threshold must be in the interval (0, 1)")
         if self.scale_cap_threshold_multiplier != 1.0:
             raise ValueError("D2 scale cap must reuse the native size threshold")
+        if self.ranking != "boundary_residual_screen_grad_then_gaussian_index":
+            raise ValueError("unsupported D2 boundary/residual ranking")
+
+
+class BoundaryResidualState:
+    schema_version = 1
+
+    def __init__(self, *, policy: BoundaryResidualPolicy) -> None:
+        policy.validate()
+        self.policy = policy
+        self.observation_events = 0
+        self.boundary_observations = 0
+        self.photometric_residual_observations = 0
+        self.refinement_events = 0
+        self.capped_gaussians = 0
+        self.last_refinement: dict[str, Any] | None = None
+
+    def record_observations(
+        self, *, boundary_count: int, residual_count: int
+    ) -> None:
+        if boundary_count < 0 or residual_count < 0:
+            raise ValueError("observation counts must be non-negative")
+        self.observation_events += 1
+        self.boundary_observations += int(boundary_count)
+        self.photometric_residual_observations += int(residual_count)
+
+    def record_refinement(
+        self,
+        *,
+        step: int,
+        boundary_observed_gaussians: int,
+        residual_observed_gaussians: int,
+        capped_gaussians: int,
+        maximum_scale: float,
+    ) -> None:
+        counts = (
+            boundary_observed_gaussians,
+            residual_observed_gaussians,
+            capped_gaussians,
+        )
+        if any(value < 0 for value in counts):
+            raise ValueError("refinement counts must be non-negative")
+        if not math.isfinite(maximum_scale) or maximum_scale <= 0:
+            raise ValueError("maximum_scale must be finite and positive")
+        self.refinement_events += 1
+        self.capped_gaussians += int(capped_gaussians)
+        self.last_refinement = {
+            "event": self.refinement_events,
+            "step": int(step),
+            "boundary_observed_gaussians": int(
+                boundary_observed_gaussians
+            ),
+            "residual_observed_gaussians": int(residual_observed_gaussians),
+            "capped_gaussians": int(capped_gaussians),
+            "maximum_scale": float(maximum_scale),
+        }
+
+    def state_dict(self) -> dict[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "policy": asdict(self.policy),
+            "counters": {
+                "observation_events": self.observation_events,
+                "boundary_observations": self.boundary_observations,
+                "photometric_residual_observations": (
+                    self.photometric_residual_observations
+                ),
+                "refinement_events": self.refinement_events,
+                "capped_gaussians": self.capped_gaussians,
+            },
+            "last_refinement": self.last_refinement,
+        }
+
+    @classmethod
+    def from_state_dict(
+        cls, payload: Mapping[str, Any]
+    ) -> "BoundaryResidualState":
+        if int(payload.get("schema_version", -1)) != cls.schema_version:
+            raise ValueError("unsupported boundary/residual state schema")
+        state = cls(
+            policy=BoundaryResidualPolicy.from_mapping(payload["policy"])
+        )
+        counters = payload.get("counters", {})
+        for name in (
+            "observation_events",
+            "boundary_observations",
+            "photometric_residual_observations",
+            "refinement_events",
+            "capped_gaussians",
+        ):
+            value = int(counters.get(name, 0))
+            if value < 0:
+                raise ValueError("boundary/residual counters must be non-negative")
+            setattr(state, name, value)
+        state.last_refinement = payload.get("last_refinement")
+        return state
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "enabled": True,
+            "policy": asdict(self.policy),
+            "counters": {
+                "observation_events": self.observation_events,
+                "boundary_observations": self.boundary_observations,
+                "photometric_residual_observations": (
+                    self.photometric_residual_observations
+                ),
+                "refinement_events": self.refinement_events,
+                "capped_gaussians": self.capped_gaussians,
+            },
+            "last_refinement": self.last_refinement,
+        }
 
 
 def binary_boundary_band(
