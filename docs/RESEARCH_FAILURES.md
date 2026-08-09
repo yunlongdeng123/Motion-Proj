@@ -1584,6 +1584,21 @@ manifest、runtime stage/rows、resource audit 与 terminal hash；创建 v2 只
 后续协议必须同时记录 sensor resolution、source-config downscale 与 model-native render resolution；“native”一词
 不能在这三层之间无来源转换。该纠错不授权降低分辨率、切换 renderer、改变资源 ceiling 或开启 P1/P2/P3/P5。
 
+### PIVOT-F26：checkpoint state key 不能冒充加载后的模型运行时属性
+
+A4-P5 formal r1 已通过 9 项输入审计并生成 `14,729-byte` reference-only deployment registry，但 fresh DriveStudio
+worker 在 checkpoint 成功加载后读取 `RigidNodes.points_ids` 时报 `AttributeError`。源码事实是：checkpoint
+`state_dict` 以 `points_ids` 为序列化键，`load_state_dict` 将它弹出并写入运行时属性 `self.point_ids`。两者语义
+相关但接口层不同；直接把 checkpoint 键拼成对象属性会使恢复链在资产已经物化后失败。
+
+r1=`20260809T155209Z__a4-p5-registry-resume-s0-r1` 保留 `blocked`，terminal SHA=`61d30a11...773e`；其已生成
+registry SHA=`e48bccdf...9039d` 不覆盖。修复 `0e899b2` 只通过 fail-closed helper 读取 runtime `point_ids`，并用
+两条测试分别锁定有效属性和拒绝 `points_ids` 别名；没有修改 P5 protocol、输入、资源 ceiling 或审计口径。
+新目录 r2 以相同 registry SHA 完成 14/14 audits，证明问题属于 runner/runtime contract，不是资产或方法失败。
+
+以后凡从 checkpoint 结构推断 live module API，必须同时核对 `state_dict` 保存端、加载端赋值和加载后的真实对象，
+并用回归测试锁定层级；旧失败 run 维持 `blocked`，不得因修复后的新 run 成功而倒写。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

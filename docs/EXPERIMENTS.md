@@ -1,6 +1,6 @@
 # Experiments
 
-- 更新时间：2026-08-09
+- 更新时间：2026-08-10
 - 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
@@ -10,7 +10,7 @@
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
 `tradeoff_non_dominated`。`WS-V3-A3-LOCAL-REFINE-01` 已以 R1 资源门失败和 diagnostic tradeoff 的负结果
-`done`，`A3*=R0-off`；A4 已进入 `running`，P0 v2 r2 done、P5 protocol frozen，当前只实现唯一 runner。
+`done`，`A3*=R0-off`；A4 保持 `running`，P0 与 P5 done，当前只冻结 P1 contribution-prune 结果前协议。
 
 ## 1. 状态词
 
@@ -32,7 +32,7 @@ pending | running | blocked | done | rejected
 | `WS-V3-A1-CALIBRATION-01` | done_off | 成像、位姿和 LiDAR 初始化消融 | 10/10 逻辑项、8/8 唯一训练；C*=C0；finalizer done |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | actor-aware densification/pruning | D1/D2 formal 完成；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | 编辑区域局部 Gaussian 精修 | R1 rejected；A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0 done；P5 protocol frozen、runner next，P1/P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | pruning/precision/chunk/LOD 与资产注册 | P0、P5 done；P1 protocol freeze next，P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 完整 A0–A4 结论与复现包 | 所有正式 terminal 可审计；结论不超出三场景证据 |
 
 ### `WS-V3-A0-NATIVE-BASELINE-01` 完成证据
@@ -457,6 +457,26 @@ Matched-RigidNodes-budget：
 - 协议测试=`6 passed`，联合 WorldSim V3=`158 passed`。本条写入时尚未执行任何 P5 formal measurement；下一动作
   只实现并提交 runner。P1/P2/P3 未授权。
 
+### `WS-V3-A4-DEPLOYMENT-01` P5 formal registry/resume result
+
+- runner=`4de2126e...d8078`。formal r1=`20260809T155209Z__a4-p5-registry-resume-s0-r1` 完成 input audit 与
+  registry materialize，产出 `14,729-byte` compact registry 后在 reload 读取 `RigidNodes.points_ids` 时报错；
+  terminal=`blocked`，SHA=`61d30a11...773e`，registry SHA=`e48bccdf...9039d`，旧证据不覆盖；
+- root cause 是 DriveStudio checkpoint state key=`points_ids`、loaded runtime attribute=`point_ids`。fix=
+  `0e899b2e6dcf7d5a091a0a4092ea99767c982357`，只修运行时读取并锁定别名拒绝；protocol SHA 保持
+  `51acb935...5874`。聚焦测试=`15 passed`，联合 WorldSim V3=`167 passed`；
+- canonical r2=`20260809T155753Z__a4-p5-registry-resume-s0-r2`，source=`0e899b2...2357`，exit=`0`，
+  summary/manifest/resource/registry SHA=`0c86ff68...8744 / 78830d74...58bd / f6c06df0...3ac4 / e48bccdf...9039d`；
+  required audits=`14/14 true`，source checkpoint/registry before-after exact；
+- compact registry=`14,729 bytes`，canonical content SHA=`02467963...cb6`；`1 static / 1,205,164 GS`，
+  `24 actors / 104,704 GS / 23 available / 1 unavailable`，fresh reload 后 24/24 actor count/index hashes exact；
+- reload=`52.320687 s`，prepare/trainer/load=`49.631015/1.987488/.445515 s`，checkpoint load count=`1`，render=`0`，
+  无 optimizer/training/checkpoint copy；resources=`passed`：allocated/reserved/NVIDIA=`7,188.73/7,226/7,564 MiB`，
+  cgroup=`24,498,089,984 bytes`，wall=`60.437454 s`，run=`102,229 bytes`，OOM/kill=`0/0`；
+- no-torch resume=`.127572 s`，torch 未导入、GPU launch=false、四个 completed stage 按 hash 全复用；P5=`done`。
+  结论只覆盖 reference-only packaging 与单实例 recovery。A4 仍需 P1/P2/P3；下一步只冻结 P1 protocol，P2/P3
+  继续未授权。
+
 ## 3. V2 冻结注册表
 
 | Task ID | 状态 | 目标 | 当前输入事实 | 解锁条件 |
@@ -676,6 +696,7 @@ transformers 5.x/DTensor 和 diffusers 0.39/torch schema 不兼容；r6 common �
 `WS-V3-A1-CALIBRATION-01` 已 `done_off`，`WS-V3-A2-ACTOR-DENSIFY-01` 已
 `done / tradeoff_non_dominated`，`WS-V3-A3-LOCAL-REFINE-01` 已 `done`：R1 因 frozen GPU resource gate
 失败且 resource-invalid diagnostic 为 tradeoff 被 rejected，`A3*=R0/D2 exact alias`。A4-P0 v1 r1 已因
-resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P5 结果前协议已冻结；下一动作只实现并
-提交 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` runner；P1/P2/P3 不启动，不修改 A3 renderer/ceiling
-挽回 R1，也不得启动 formal、R2–R4 或 D3/D4。
+resolution contract blocked，v2 r2 已 13/13 audits passed 并登记 `done`。P5 r1 保留 runtime attribute blocked，
+r2 已 14/14 audits passed 并登记 `done`。下一动作只冻结并提交 `WS-V3-A4-DEPLOYMENT-01 / P1
+contribution-prune` 结果前协议、validator 与测试；协议提交前不创建 P1 formal run。P2/P3 不启动，不修改 A3
+renderer/ceiling 挽回 R1，也不得启动 A3 formal、R2–R4 或 D3/D4。

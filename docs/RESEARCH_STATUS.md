@@ -1,10 +1,10 @@
 # Research Status
 
-- 更新时间：2026-08-09
+- 更新时间：2026-08-10
 - 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
 - 当前任务：`WS-V3-A4-DEPLOYMENT-01`
 - 状态：`running`
-- 当前门禁：A4-P0 v2 r2 已 done，P5 registry/resume 协议已冻结；下一步实现并提交唯一 runner
+- 当前门禁：A4-P0 与 P5 已 done；下一步只冻结并提交 P1 contribution-prune 结果前协议、validator 与测试
 - 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3`
@@ -34,10 +34,16 @@ A4-P0 v2 formal r2 已以 `done` 关闭：13/13 audits 全 true，prepare 占 60
 NVIDIA sampled / `22.79 GiB` cgroup，OOM=0。P0 不证明并发或质量改进；它只支持先冻结无模型变异的 P5
 registry/resume，而不先启动 prune、FP16 或 chunk。
 
-P5 protocol SHA=`51acb935...5874` 已在新 P5 测量前冻结：9 项 P0/A3 输入 exact，部署 registry 只引用原
-checkpoint/config/actor registry，不复制或重写参数；static=`1 / 1,205,164 GS`，actor=`24 / 104,704 GS / 23
-available / 1 unavailable`。reload 只允许一次只读 load、0 render，并在 no-torch/no-GPU 进程验证 resume。
-协议测试 6 passed，联合 WorldSim V3 回归 158 passed；P1/P2/P3 仍未授权。
+P5 protocol SHA=`51acb935...5874` 已在新 P5 测量前冻结。r1 在成功生成 `14,729-byte` registry 后，因把 checkpoint
+key `points_ids` 当作 runtime attribute 而 blocked；旧 terminal 保留。修复提交=`0e899b2`，未改变协议与测量合同。
+canonical r2=`20260809T155753Z__a4-p5-registry-resume-s0-r2` 已 14/14 audits passed：reference-only registry
+保持 `1 static / 24 actors（23 available / 1 unavailable）/ 1,309,868 total GS`，全部 actor count/index hash 与
+source before/after SHA exact。reload=`52.321 s / one load / zero render`，资源门通过；no-torch resume=`.128 s`，
+无 GPU launch并复用四个 completed stage。P5=`done`，不产生 chunk、filesystem-cold、concurrency 或质量 claim。
+
+A4 最低完成集仍要求 P1/P2/P3，因此 task 保持 `running`。P0 显示 dataset prepare 主导且 load/runtime 尚未触发
+资源门；下一步只冻结 P1 contribution-prune 协议，在任何新测量前固定 contribution 语义、候选阈值、质量/资源
+safeguards、exact fallback 与恢复合同。P2/P3 仍未授权。
 
 三场景是模型消融场，不是新 benchmark。结果只支持当前数据、实现和资源合同下的模型/工程结论，不外推为
 大规模泛化、物理真实性或闭环安全结论。
@@ -423,20 +429,21 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 | `WS-V3-A1-CALIBRATION-01` | done_off | 10/10 逻辑项、8/8 唯一训练；C*=C0；确认原始端点方向存在场景依赖 |
 | `WS-V3-A2-ACTOR-DENSIFY-01` | done | D1/D2 fixed/matched 均为 tradeoff；A2*=D2 boundary-priority，D1 fallback；D3/D4 未启动 |
 | `WS-V3-A3-LOCAL-REFINE-01` | done | R1 resource gate failed，diagnostic tradeoff；R1 rejected，A3*=R0/D2 exact alias；formal、R2–R4 未授权 |
-| `WS-V3-A4-DEPLOYMENT-01` | running | P0 done；P5 protocol=`51acb935...5874` frozen、runner next；P1/P2/P3 未授权 |
+| `WS-V3-A4-DEPLOYMENT-01` | running | P0、P5 done；下一步只冻结 P1 protocol；P2/P3 未授权 |
 | `WS-V3-R0-INTEGRATION-01` | pending | 汇总 A0–A4，不要求扩展到六场景 |
 
 ## 机器与工作树
 
 - GPU：NVIDIA GeForce RTX 3090，24,576 MiB；driver `580.105.08`；最近审计 0 MiB；
 - cgroup memory：90 GiB，`oom=0 / oom_kill=0`；
-- 数据盘：最近 formal 终态最小 free=`46,471,581,696 bytes`；
-- A3 heldout r5 与 A4-P0 v1 r1 controller 均已退出，exit=`1`；P0 v2 r2 exit=`0`，GPU 无遗留进程；
+- 数据盘：P5 r2 终态 free=`45,291,683,840 bytes`；
+- A3 heldout r5、A4-P0 v1 r1 与 A4-P5 r1 均保留 blocked；P0 v2 r2 与 P5 r2 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
 ## 下一步
 
-实现并提交 `WS-V3-A4-DEPLOYMENT-01 / P5 registry-resume` 唯一 runner：no-torch input/materialize controller、
-fresh DriveStudio 单次只读 reload worker、aggregate/finalize 与 no-torch resume auditor。必须生成小于 2 MB 的 compact
-reference registry，核对 1 static/24 actor 与所有 actor index hash；不复制 checkpoint、不 render/训练。实现和
-158 项联合回归提交前不创建 formal run。P1/P2/P3、D3/D4 与 A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
+冻结并提交 `WS-V3-A4-DEPLOYMENT-01 / P1 contribution-prune` 结果前协议、validator 与测试。输入只允许
+`A3*=R0/D2` immutable asset、P0 canonical profile 和 P5 canonical registry/recovery evidence；必须在新测量前固定
+contribution 观测语义、候选阈值/预算、确定性 tie-break、原始/heldout/actor/boundary 质量 safeguards、资源门、
+被删 index/hash 证据、exact fallback 与恢复合同。协议和联合回归提交前不创建 P1 formal run。P2/P3、D3/D4 与
+A3 formal/R2–R4 保持未解锁；F0 独立非阻塞。
