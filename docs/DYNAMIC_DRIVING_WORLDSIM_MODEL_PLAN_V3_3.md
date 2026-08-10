@@ -4,14 +4,14 @@
 - **日期**：2026-08-11
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **当前硬件**：单卡 NVIDIA GeForce RTX 3090 24 GiB
-- **当前历史分支**：`research/worldsim-v3.2-semantic-repair`
-- **建议新分支**：`research/worldsim-v3.3-object-maintenance`
+- **当前分支**：`research/worldsim-v3.3-object-maintenance`
+- **V3.3 P0 commit**：`73b6b59`
 - **V3.2 scoped closeout commit**：`f44decacca812fe1b476253b6bdc8aac1869f873`
 - **V3.2 canonical R0**：
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-S1-OBJECT-AWARE-GS-01`
+- **V3.3 当前唯一授权任务**：`WS-V33-S2-ROADPATCH-INPAINT-01`
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -520,7 +520,7 @@ conditional future task
 | Task ID | 初始状态 | 目标 | 完成门禁 |
 |---|---|---|---|
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、建立新分支、审计 SAM3.1/OP2GS/Inpaint360GS/GS-RoadPatching/3D-GIMP/FocusGS/R3D2 | canonical r2；10 sources；5 个 V3.2 资产 SHA exact；36+4 tests |
-| `WS-V33-S1-OBJECT-AWARE-GS-01` | pending | SAM3.1/SAM2 + instance-opacity Gaussian field | base RGB bitwise 不变；mask field 可复现；优于 heuristic 或透明记录 no-gain |
+| `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + instance-opacity Gaussian field | canonical formal r9；O1 selected；base SHA exact；51 tests |
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS strong baseline | 至少一个真实 delete background 方法过门 |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester automatic 1/2/4-view selection | 高支持 actor 必做；通过后扩 boundary actor |
 | `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | exact compose / rollback / package |
@@ -2446,6 +2446,20 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — S1 canonical 完成，S2 解锁
+
+- 以 immutable D2 checkpoint 和 V3.2 SAM2.1 posterior 构建独立 `instance_field.npz`；base
+  means/scales/quats/SH/RGB opacity 不进入 optimizer，checkpoint before/after SHA exact；
+- 纯 Torch compositor、真实 gsplat 可微 opacity render、identity conflict fail-closed 与 no-RGB-mutation 测试通过；
+- development smoke r1 在零 heldout 下冻结选择 O1，O3 wider reassignment 未入选；
+- 恢复 exact SAM2 source/checkpoint 与隔离 runtime；heldout-target r4 固定 19 帧、37/37 accepted masks，
+  `optimization_forbidden=true`；
+- canonical formal r9 只比较 O0 + frozen O1；O1 的 heldout boundary F1/IoU 提升约
+  `387%/423%`，NBD/FP mass 下降约 `27%/31%`；FN mass 上升被透明记录，不声明全面支配；
+- selected field=`5,882,296 bytes`、SHA=`23b2403c...c8d7`；确定性 NPZ 重写 SHA exact，训练浮点与容器确定性分层；
+  peak CUDA reserved 约 `8.08 GB`；
+- P0+S1 与 V3.2 定向回归 `51 passed`；S1 关闭后只解锁 `WS-V33-S2-ROADPATCH-INPAINT-01`。
 
 ## 2026-08-11 — P0 canonical 完成，S1 解锁
 

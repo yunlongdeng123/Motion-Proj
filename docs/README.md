@@ -2,11 +2,12 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 最新有效完成任务：`WS-V33-P0-ROUTE-SOTA-AUDIT-01`（canonical r1）
+- 最新有效完成任务：`WS-V33-S1-OBJECT-AWARE-GS-01`（canonical formal r9）
 - 研究终态：`running`
-- 当前执行授权：仅 `WS-V33-S1-OBJECT-AWARE-GS-01`
+- 当前执行授权：仅 `WS-V33-S2-ROADPATCH-INPAINT-01`
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
+- S1 对象场报告：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 
 ## 恢复顺序
@@ -16,10 +17,11 @@
 3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败、禁止重复项与复开条件；
 4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：canonical run、hash、指标和任务终态；
 5. [`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)：当前路线与顺序门禁；
-6. [`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)：V3.3 source/license/weights/hardware 事实边界。
+6. [`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)：V3.3 source/license/weights/hardware 事实边界；
+7. [`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)：immutable base + instance-opacity 的实现、run 与指标。
 
 清空对话、换机或换实例后，不从归档计划、旧 terminal 或计划中的“下一步”恢复动作。只有
-`RESEARCH_STATUS.md` 可以授权新的 task、run、训练或评测；当前只授权 V3.3 S1。
+`RESEARCH_STATUS.md` 可以授权新的 task、run、训练或评测；当前只授权 V3.3 S2。
 
 ## 当前事实源
 
@@ -35,8 +37,11 @@
 
 - [`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)：当前计划与任务注册表；
 - [`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)：P0 canonical SOTA/source 审计；
+- [`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)：S1 canonical 对象场报告；
 - [`../configs/worldsim_v33/p0_sources_v1.yaml`](../configs/worldsim_v33/p0_sources_v1.yaml)：机器可检验事实配置；
+- [`../configs/worldsim_v33/s1_instance_field_v1.yaml`](../configs/worldsim_v33/s1_instance_field_v1.yaml)：S1 冻结配置；
 - [`../scripts/audit_worldsim_v33_sources.py`](../scripts/audit_worldsim_v33_sources.py)：只读审计 runner；
+- [`../scripts/run_worldsim_v33_s1_instance_field.py`](../scripts/run_worldsim_v33_s1_instance_field.py)：S1 训练/评测 runner；
 - `/root/autodl-tmp/runs/worldsim_v33/`：V3.3 唯一正式 run namespace。
 
 ## V3.2 冻结文件

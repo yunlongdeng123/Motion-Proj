@@ -2,12 +2,13 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-P0-ROUTE-SOTA-AUDIT-01`
-- 当前任务：`WS-V33-S1-OBJECT-AWARE-GS-01`
+- 最新有效完成任务：`WS-V33-S1-OBJECT-AWARE-GS-01`
+- 当前任务：`WS-V33-S2-ROADPATCH-INPAINT-01`
 - 路线终态：`running`
-- 当前门禁：只授权 S1 dual instance-opacity sidecar；S2–S5 与 R0 需按 V3.3 顺序解锁
+- 当前门禁：只授权 S2 RoadPatch-Lite 与 Inpaint360GS 条件 baseline；S3–S5 与 R0 需按 V3.3 顺序解锁
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
+- S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -18,12 +19,38 @@
   `08806b5f197d524207aa5d527b9976a993042b6451fa0cc9b0458a20b3a1d68a` /
   `2603ff0e037931aef8f8c84606038bd748600c99cef1a2a29cc82c621c51a12d` /
   `91096d0eae7616f2c68d133796922b49d475220c0c18fb7c438ca3655a32072d`
+- V3.3 S1 canonical formal run：`20260810T183154Z__s1-instance-field-formal-s0-r9`
+- V3.3 S1 config/summary/manifest/status SHA-256：
+  `9afa48aa1ff5ebbb290da564e901f25c48ac1f6ee16f97379f936457acdc3150` /
+  `4ab311a64437202ecdd5fa915c4bd528543cdc6040a12df54a5183a39bdf8c4a` /
+  `e1b858fd505c65e41dc3272137e355ad36b4e45bc18b350c3140bcbde1ef584e` /
+  `9394d15e935285955812e9a4502ffa0f4029ca4c3be9c535b249ecc93e7303b9`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 S1 收口与 S2 授权
+
+- development smoke canonical r1 在未读取 heldout 的前提下比较 O0/O1/O3，冻结选择
+  `O1_dual_opacity`；O3 的宽 ambiguous reassignment 未入选；
+- heldout target canonical r4 固定 19 帧、31 个可见 block、37/37 accepted SAM2.1 masks，
+  `optimization_forbidden=true`；source commit=`2b90b9f`、checkpoint SHA=`2647878d...318`；
+- SAM2 隔离环境恢复为 Python `3.10.20`、torch `2.5.1+cu124`、torchvision `0.20.1+cu124`，
+  conda explicit/pip freeze SHA=`c9294494...713 / aded7fb5...d69`；未修改 DriveStudio 环境；
+- canonical formal r9 只运行 `O0 + frozen O1`，O1 相对 O0 的 heldout boundary F1=
+  `0.068960→0.336158`、IoU=`0.063253→0.330727`、normalized boundary distance=
+  `0.144958→0.105280`、false-positive semantic mass=`0.900308→0.623276`；
+- false-negative semantic mass=`0.061278→0.109356`，因此不宣称全面支配；identity presence 两 arm 同为
+  `0.972973`，全局共享 instance logit 的参数稳定性为 `1.0`；
+- selected field=`5,882,296 bytes`、SHA=`23b2403ccb47e2e2c6b5fa3d22a9a6d93815d9f9bcbc6d11b66f035831adc8d7`；
+  D2 checkpoint before/after SHA=`1a061247...e7c` exact；peak CUDA reserved=`8,084,520,960 bytes`；
+- instance-field writer 固定 entry 排序、ZIP timestamp、权限与压缩参数；同一数组二次写入的 SHA exact。r7→r9
+  的 O0 数组 exact，O1 CUDA 优化存在最大 `0.001357` logit / `8.918e-05` opacity 浮点漂移，但 heldout aggregate exact；
+- V3.3 P0+S1 与 V3.2 定向回归=`51 passed`，py_compile、bash syntax、diff check 均通过；
+- 当前唯一 next action 是 `WS-V33-S2-ROADPATCH-INPAINT-01`；S3–S5/R0 仍未授权。
 
 ## V3.3 P0 收口与 S1 授权
 
@@ -38,7 +65,7 @@
   但没有作者导出的 R3D2 model，保持 `weights_blocked` 且禁止从零训练；GOR-IS 只作非商业研究 audit；
 - 五个 V3.2 canonical 大资产重新计算 SHA 全 exact，R0 terminal 仍 `done`、8/8 gates；V3.2 定向回归=`36 passed`；
 - P0 新增 source auditor 回归=`4 passed`；P0 未训练、未运行模型推理、未安装依赖、未下载大型权重、未修改 DriveStudio；
-- 当前唯一 next action 是 `WS-V33-S1-OBJECT-AWARE-GS-01`：base RGB/opacity immutable，只学习独立 instance-opacity sidecar。
+- P0 关闭时唯一解锁的是 `WS-V33-S1-OBJECT-AWARE-GS-01`；该任务现已由上节 canonical r9 收口。
 
 ## V3.2 终局处置
 

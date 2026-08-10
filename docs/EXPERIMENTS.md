@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-S1-OBJECT-AWARE-GS-01`
+- 当前执行授权：仅 `WS-V33-S2-ROADPATCH-INPAINT-01`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -28,8 +28,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | Task ID | 状态 | 目标 | 当前证据/门禁 |
 |---|---|---|---|
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、切换分支、审计 source/license/weights/hardware | canonical r2；10 sources；5 个 V3.2 大资产 SHA exact；36+4 tests |
-| `WS-V33-S1-OBJECT-AWARE-GS-01` | pending | SAM2.1 fallback + dual instance-opacity field | 当前唯一授权；base RGB/opacity 必须 immutable |
-| `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS baseline | S1 收口后解锁 |
+| `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + dual instance-opacity field | canonical formal r9；O1 selected；base exact；51 tests |
+| `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS baseline | 当前唯一授权；先 RoadPatch-Lite |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester auto 1/2/4-view | S2 收口后按计划解锁 |
 | `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | S3 收口后按计划解锁 |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | R3D2 pretrained 当前 unavailable |
@@ -55,7 +55,39 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   `4 passed`；第一次无 `PYTHONPATH=.` 的 pytest 只在 collection 阶段失败，按仓库入口重跑无逻辑失败；
 - GPU=`RTX 3090 24,576 MiB`、cgroup max=`96,636,764,160 bytes`、OOM/kill=`0/0`、disk free 约 `40 GiB`；
   P0 training/model inference/install/large-weight download/DriveStudio mutation 均为 false；
-- S1 为唯一 next authorization；S2–S5/R0 仍 pending，不能由 source availability 自动启动。
+- P0 关闭时只解锁 S1；该历史门禁已由下节 S1 closeout 满足，当前授权以文件头与 STATUS 为准。
+
+### `WS-V33-S1-OBJECT-AWARE-GS-01` canonical closeout
+
+- diagnostic r0 完整贯通 O0/O1/O3，但 `diagnostic_steps_override=1`，只作工程证据；development smoke r1
+  使用固定 10 个 development frames、零 heldout，O1 相对 O0 同时改善 boundary F1、NBD、IoU 与 FP mass，
+  因而冻结 `formal_selected_arm=O1_dual_opacity`；O3 未入选；
+- heldout-target r2 因外部清理后的旧 SAM Python 路径不存在而 fail closed；r3 在首个 block 暴露 logits rank
+  兼容错误，未正式发布 mask；修复后 canonical r4=`20260810T180231Z__s1-heldout-targets-s0-r4`，
+  31 blocks / 37 accepted / 0 rejected，summary/manifest/status SHA=
+  `686c7100...20ff / d2b2ab14...3050 / b186664e...b4d1`；
+- r4 使用 SAM2 source=`2b90b9f`、checkpoint=`898,083,611 bytes / 2647878d...318`；隔离 runtime=
+  Python `3.10.20`、torch `2.5.1+cu124`、torchvision `0.20.1+cu124`，peak reserved=
+  `2,099,249,152 bytes`；19 个 heldout frames 从文件级标记 `optimization_forbidden=true`；
+- canonical formal r9=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9`，
+  terminal=`done`；config/summary/manifest/status SHA=
+  `9afa48aa...3150 / 4ab311a6...8c4a / e1b858fd...584e / 9394d15e...03b9`；
+- O0 heldout：boundary F1=`0.068960`、IoU=`0.063253`、NBD=`0.144958`、FP/FN mass=
+  `0.900308 / 0.061278`；O1：`0.336158 / 0.330727 / 0.105280 / 0.623276 / 0.109356`；
+  对应 boundary F1 `+387.47%`、IoU `+422.87%`、NBD `-27.37%`、FP mass `-30.77%`，但 FN mass
+  增加，按范围限定为 precision/boundary breakthrough，不宣称所有指标全面支配；
+- O1 field=`5,882,296 bytes`、SHA=`23b2403ccb47e2e2c6b5fa3d22a9a6d93815d9f9bcbc6d11b66f035831adc8d7`，
+  包含 `1,309,868` 行、`65,989` assigned/trainable Gaussian；11 个近似身份冲突背景点 fail closed 未分配；
+- formal optimization=`300 steps / 15.115s`，peak allocated/reserved=
+  `8,001,482,240 / 8,084,520,960 bytes`；D2 checkpoint SHA 前后 exact，base means/scales/quats/SH/RGB
+  opacity 均未进入 optimizer；
+- r5 为输入正确但缺 runner 入口 identity 三元重核的 noncanonical formal；r6 补齐重核，但暴露
+  `np.savez_compressed` ZIP timestamp 导致相同 O0 数组文件 SHA 漂移；r7 改为固定排序/timestamp/权限/压缩参数，
+  同一数组重写后 O0/O1 SHA exact，但其 source snapshot 与提交前 EOF 空白清理不再 exact；r8 在同步 SSH 超时后
+  以 SIGPIPE/141 failed；r9 由后台托管重跑，9 个源码快照与待提交文件 SHA exact。r7→r9 O1 有小幅 CUDA
+  数值漂移，但两 arm aggregate 指标 exact；
+- 定向回归=`51 passed`，py_compile、bash syntax、git diff check 通过；下一步只解锁 S2。
 
 ## 1. 状态词
 

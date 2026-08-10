@@ -9,6 +9,35 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 S1 防重复结论（2026-08-11）
+
+- `V33-F07`：磁盘可用空间在 P0 后被外部流程扩大，同时 V3.2 SAM2 checkout/weight/runtime 被删除；不能把
+  canonical train masks 仍存在误判为 heldout 推理环境仍可用。普通 clone 又被大型 demo checkout 拖住，已终止本任务
+  PID 并保留 `sam2.incomplete-20260811T0138`。恢复只能 sparse checkout exact commit、下载 exact weight，另建
+  隔离环境并冻结 package list；不得修改 DriveStudio 环境或复用不完整 checkout。
+- `V33-F08`：heldout-target r2 在旧 `/root/autodl-tmp/envs/worldsim-v32-sam/bin/python` 不存在时 exit=`127`；
+  prompts 虽生成但 run terminal=`failed`，不得续写。新环境必须复原 V3.2 记录的 Python/torch/torchvision 版本并
+  新建 run；r4 已按此收口。
+- `V33-F09`：SAM2 singleton predictor 在当前 exact runtime 返回 `[object,1,H,W]`，而旧兼容路径也可能给
+  `[object,H,W]`。r3 无条件 `unsqueeze` 产生 5D interpolation 错误；修复必须显式接受 rank 3/4、拒绝其他 rank，
+  并新建 r4。r3 未发布正式 mask，不得当质量证据。
+- `V33-F10`：更宽的 O3 ambiguous reassignment 并不自动改善边界。100-step development smoke 中 O3 的
+  boundary F1/IoU=`0.123499/0.160504`，低于 O1 的 `0.149382/0.181752`，且 FP 更高；O3 已排除。除非提出
+  新的几何邻域/身份证据并使用新 task/run，否则不得因“候选更多”重开。
+- `V33-F11`：O1 在 heldout 显著改善 boundary/IoU/NBD/FP，但 FN mass 从 `0.061278` 增到 `0.109356`，
+  identity presence 仍为 `0.972973`。因此只能声明对象边界与 false-positive 抑制突破，不能声明全面支配或完整
+  召回；S2 delete mask 必须继续报告 FN/残留语义，不能用 O1 的高 precision 掩盖漏删。
+- `V33-F12`：`np.savez_compressed` 默认把当前时间写入 ZIP entry header；即使 r6/r7 的 O0 全部数组 exact，文件
+  SHA 也会漂移。r6 因此保留为 done noncanonical。r7 writer 固定 entry 排序、1980 ZIP timestamp、权限与压缩
+  参数，并用同一 field 二次写入 byte-exact 测试锁定容器确定性。该合同不等于宣称 CUDA 训练位级确定性：
+  r6→r7 O1 最大 logit/opacity 漂移为 `0.001357 / 8.918e-05`，但 heldout aggregate exact。
+- `V33-F13`：正式 run 的 source snapshot 必须与最终提交源码 byte exact，纯 EOF 空白也不能例外。r7 方法与门禁
+  均通过，但提交前 `git diff --check` 清理了 4 个新文件的多余 EOF 空行，导致其中 2 个冻结快照不再与待提交源码
+  exact；r7 因此降为 done noncanonical，不能仅凭“空白不影响算法”继续引用为 canonical。
+- `V33-F14`：长 GPU 任务不能把前台 SSH 生命周期当作任务托管。r8 已完成模型与 finalizer，但 124 秒调用超时关闭
+  stdout，外层 `tee` 收到 SIGPIPE，terminal 按预注册 trap 写成 `failed / exit 141`；不得把已有 summary 反推成 done。
+  r9 改用 `nohup` 后台托管并以只读 SSH 轮询，最终正常 `done`、GPU 释放、9 个 source snapshots 全 exact。
+
 ## V3.3 P0 防重复结论（2026-08-11）
 
 - `V33-F01`：官方 SAM3.1 source 可 checkout 不等于 checkpoint 可执行。当前代码固定为 `96914d2`，但

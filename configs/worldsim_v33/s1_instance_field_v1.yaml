@@ -1,0 +1,135 @@
+schema_version: worldsim_v33_s1_instance_field_v1
+task_id: WS-V33-S1-OBJECT-AWARE-GS-01
+seed: 20260811
+
+inputs:
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  source_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  actor_registry: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+  actor_registry_sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+  v32_config: /root/autodl-tmp/motion_proj/configs/worldsim_v32/s1_semantic_lift_v3.yaml
+  v32_config_sha256: 377cd95999dcc02d15782fce06940952826c410d5f4df13846e5dd4c58304960
+  v32_prompt_manifest: /root/autodl-tmp/assets/worldsim_v32/s1_prompt_v3/prompt_manifest.json
+  v32_prompt_manifest_sha256: 8c43b59175da1598b9720bb71d35d573647651ee4075c44ac7b0e265931f6ccf
+  train_mask_manifest: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/mask_manifest.json
+  train_mask_manifest_sha256: efc7d82145dfe0cf3c1bfccf230b0756f152ed5b306610b2634ddbcdbabab98b
+  semantic_manifest: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/semantic_manifest.json
+  semantic_manifest_sha256: 6d7bbc2c9711031f42eae764872f41e177f7b6406e1721d558bb54be9c5eb1e9
+
+scene:
+  name: scene-0230
+  processed_scene_dir: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179
+  instances_info_sha256: d8bfe57d0ad7345e075d29b2ed64d14d3d12d06efbf1f7117012ba3e1563097c
+  frame_count: 196
+  cameras:
+    - {id: 0, name: CAM_FRONT}
+    - {id: 1, name: CAM_FRONT_LEFT}
+    - {id: 2, name: CAM_FRONT_RIGHT}
+
+split:
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+  development_frames: [5, 25, 45, 65, 85, 105, 125, 145, 165, 185]
+  heldout_usage: evaluation_only
+  optimization_forbidden: true
+
+actors:
+  high_support:
+    instance_token: af663976db5e412e83db033d309c5c29
+    dataset_instance_id: 13
+    rigid_model_index: 5
+    sam_object_id: 1
+    class_name: vehicle.car
+    semantic_sidecar: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/high_support.npz
+    semantic_sidecar_sha256: 0119e15d979c1c69cdaea23d9c4716ae66f323972cd4abf3027fb43593ce22cb
+  boundary_support:
+    instance_token: 18c7f0c5fa6b49449f71c9dbae5c31d4
+    dataset_instance_id: 41
+    rigid_model_index: 21
+    sam_object_id: 2
+    class_name: vehicle.car
+    semantic_sidecar: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/boundary_support.npz
+    semantic_sidecar_sha256: 25b1eaecb2bb53af852ec2c5fae1abf53636359f9714e2de6e9a330187f22050
+
+sam2_fallback:
+  policy: exact_v32_sam2_1
+  source_checkout: /root/autodl-tmp/third_party/worldsim_v32/sam2
+  source_commit: 2b90b9f5ceec907a1c18123530e92e794ad901a4
+  model_config: configs/sam2.1/sam2.1_hiera_l.yaml
+  checkpoint: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+  checkpoint_sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+  runtime:
+    environment: /root/autodl-tmp/envs/worldsim-v33-sam2
+    python: 3.10.20
+    torch: 2.5.1+cu124
+    torchvision: 0.20.1+cu124
+    numpy: 1.26.4
+    conda_explicit: /root/autodl-tmp/envs/worldsim-v33-sam2/provenance/conda-explicit.txt
+    conda_explicit_sha256: c9294494e5950608814721382974722fb99f7f0d720d747842a18677aa1d0713
+    pip_freeze: /root/autodl-tmp/envs/worldsim-v33-sam2/provenance/pip-freeze.txt
+    pip_freeze_sha256: aded7fb5fd6a3cfc5ecce203b79ed09d800f9bce5e16356a9ba3786eacd25d69
+  mask_logit_threshold: 0.0
+  quality_gate:
+    minimum_positive_pixels: 32
+    minimum_prompt_bbox_iou: 0.02
+    maximum_mask_to_prompt_area_ratio: 6.0
+    maximum_centroid_to_prompt_diagonal: 1.0
+
+representation:
+  base_models: [Background, RigidNodes]
+  sidecar_only: true
+  rgb_checkpoint_immutable: true
+  rigid_core_opacity: 0.98
+  unassigned_opacity: 0.0001
+  ambiguous_minimum_score: 0.35
+  ambiguous_minimum_boundary_score: 0.05
+  assignment_minimum_margin: 0.05
+
+arms:
+  O0_heuristic:
+    train: false
+    allow_ambiguous_reassignment: false
+  O1_dual_opacity:
+    train: true
+    allow_ambiguous_reassignment: false
+  O2_sam31_dual_opacity:
+    status: weights_blocked
+    reason: SAM3.1 gated checkpoint unavailable at P0
+  O3_dual_opacity_reassignment:
+    train: true
+    allow_ambiguous_reassignment: true
+
+optimization:
+  random_object_sampling: true
+  smoke_steps: 100
+  formal_steps: 300
+  formal_selected_arm: O1_dual_opacity
+  learning_rate: 0.05
+  gradient_clip_norm: 5.0
+  loss_weights:
+    mask_bce: 1.0
+    dice: 1.0
+    sparse: 0.01
+    prior: 0.05
+    temporal: 0.0
+  temporal_contract: shared_global_logit_exact
+
+evaluation:
+  mask_threshold: 0.5
+  boundary_tolerance_pixels: 3.0
+  minimum_iou_retention: 0.98
+  maximum_fp_mass_ratio: 1.10
+  selected_metric_order:
+    - boundary_f1
+    - normalized_boundary_distance
+
+outputs:
+  model_native_width: 800
+  model_native_height: 450
+  save_prediction_png_limit_per_arm: 12
+
+runtimes:
+  sam_python: /root/autodl-tmp/envs/worldsim-v33-sam2/bin/python
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1

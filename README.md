@@ -10,16 +10,18 @@ V3.2 production baseline 上研究 dual instance opacity、真实 3D donor 优�
 - 唯一当前计划：
   [`docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.3 P0 审计：[`docs/WS_V33_P0_SOTA_AUDIT.md`](docs/WS_V33_P0_SOTA_AUDIT.md)
+- V3.3 S1 对象场：[`docs/WS_V33_S1_OBJECT_AWARE_GS.md`](docs/WS_V33_S1_OBJECT_AWARE_GS.md)
 - 实验台账：[`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)
 - 失败与防重复账本：[`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)
 
 V2 计划保留为历史执行合同，不再更新。V2 M0–M4 已完成；M5 的 0230/0242 checkpoint、scene-0255
 CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒充完成的三场景压力测试。
 
-V3.3 P0 已完成：10 个 source 的 commit/tree/license/weight/hardware 边界已冻结，V3.2 五个 canonical 大资产
-重新 hash exact，V3.2 回归 `36 passed`，P0 auditor `4 passed`。当前唯一授权任务为
-`WS-V33-S1-OBJECT-AWARE-GS-01`；SAM3.1 权重当前 blocked，S1 使用 V3.2 SAM2.1 exact fallback，不影响
-dual instance-opacity 主线。
+V3.3 P0 与 S1 已完成。S1 在 immutable D2 RGB 3DGS 上新增约 `5.88 MB` 的独立 instance-opacity sidecar；
+heldout 上 O1 相对 V3.2 heuristic 的 boundary F1 `0.0690→0.3362`、IoU `0.0633→0.3307`、
+normalized boundary distance `0.1450→0.1053`、false-positive mass `0.9003→0.6233`，checkpoint SHA
+前后 exact。SAM3.1 权重仍 blocked，S1 使用恢复到 exact commit/weight/runtime 的 SAM2.1 fallback。
+当前唯一授权任务为 `WS-V33-S2-ROADPATCH-INPAINT-01`。
 
 ## V3.1 历史模型链
 
