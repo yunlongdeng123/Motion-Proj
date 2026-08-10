@@ -1,7 +1,7 @@
 # Motion-Proj 当前研究风险与防重复账本
 
 > **最后更新**：2026-08-11
-> **当前范围**：V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
+> **当前范围**：V3.3 启动前边界、V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
@@ -23,6 +23,7 @@ V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口
 | S4 harmonizer | task `done`，non-temporal `excluded diagnostic`；temporal `blocked` | 仅凭锐化或全图指标把删除区重生车辆纳入生产链；绕过 gated 权重 | 合法取得 gated base；显式 semantic preservation + temporal gate；新 task/protocol/run |
 | S5 multiview upper bound | `blocked`，未授权 | 猜测许可证、移植无根许可证代码或把未执行写成质量结论 | 明确可执行许可证与权重；独立资源审计；用户重新授权的新 task |
 | R0 integration | `done`，canonical r4 | 从 exact package 外推 streaming、跨场景、闭环安全或 GT correctness | 为对应 claim 增加独立数据、协议、测量与 run；不得续写 r4 |
+| 存储收口 | `done`，V3.3 白名单驻留 | 把已主动清理的旧载荷写成损坏，或让 V3.3 隐式依赖 non-canonical 过程产物 | 按清理账本重建公开依赖；旧 run 大载荷如确需复现，必须新 task/protocol/run |
 
 统一复开规则：外部门禁解除只改变“是否可提出新任务”，不会把 S4 temporal 或 S5 自动变成当前任务。任何复开都
 必须引用相关失败 ID，使用新 task ID、新冻结 protocol 和不可复用 run ID；旧 `blocked/rejected/done` terminal
@@ -81,6 +82,13 @@ V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口
   `GENERATED_BACKGROUND` 和 `GENERATED_ACTOR` 仍不是 GT；S4 仍被排除；S5 仍阻塞。432 MB mixed checkpoint、
   444 MB chunk payload 与 8.36 GiB 峰值也不证明 streaming、load、render、跨场景泛化或闭环安全收益；未来相关
   claim 必须有独立 protocol、数据与测量，不能由 R0 exact reassembly 外推。
+
+- `V3-F47`：2026-08-11 的 V3.3 启动前清理将 V3.2 及更早路线中不再被 V3.3 使用的过程载荷转为
+  non-resident，实际释放 `227,705,974,784 bytes / 212.1 GiB`。V3.1 D2 final、V3.2 S1/S2/S3/S4/R0 canonical、
+  三场景 processed 数据、三个运行环境和必要第三方模型在清理前后通过 exact SHA/存在性/import 核验。后续看到
+  旧 checkpoint、图片、视频、raw staging、环境或 cache 缺失时，不得写成数据损坏、历史 run 失败或重新执行
+  V3.2 的授权；机器清单、删除列表 SHA 与恢复边界见
+  [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)。
 
 - `V3-F18`：A3 R1 的工程链可逐位重放，但 heldout 评测越过冻结 GPU ceiling，且资源无效 diagnostic 为
   geometry 改善与 RGB safeguard 退化并存。后续不得提高旧 ceiling、替换旧 renderer 或继续调同一四步配方。

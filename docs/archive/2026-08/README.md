@@ -3,6 +3,7 @@
 本目录只保存已经结束或冻结路线的历史计划、状态快照和维护证据，不构成当前执行授权。
 
 - [`worldsim-v3.2/`](worldsim-v3.2/README.md)：WorldSim V3.2 计划、S0 审计、R0 收口快照、canonical 证据入口与 SHA256 清单；
+- [`pre-v3.3-cleanup/`](pre-v3.3-cleanup/CLEANUP_MANIFEST.md)：V3.3 启动前旧过程产物清理范围、实际释放空间、保留资产 SHA 与恢复边界；
 - [`worldsim-v3.1/`](worldsim-v3.1/README.md)：WorldSim V3/V3.1 计划、R0 收口快照、canonical 证据入口与 SHA256 清单；
 - [`v2-preflight/CLEANUP_MANIFEST.md`](v2-preflight/CLEANUP_MANIFEST.md)：Dynamic Editing V2 启动前的文档归档与存储清理账本。
 

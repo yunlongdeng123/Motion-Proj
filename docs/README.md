@@ -1,11 +1,13 @@
 # Motion-Proj 文档导航
 
 - 更新时间：2026-08-11
-- 当前路线：无；WorldSim V3.2 已收口并归档
+- 当前路线：无执行路线；WorldSim V3.2 已收口并归档，V3.3 计划待后续明确启动
 - 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`（canonical r4，8/8 gates）
 - 研究终态：`none_plan_complete`
 - 当前执行授权：无
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
+- V3.3 待执行计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- 启动前清理账本：[`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 
 ## 恢复顺序
 
@@ -17,6 +19,7 @@
 
 清空对话、换机或换实例后，不从归档计划、旧 terminal 或计划中的“下一步”恢复动作。只有
 `RESEARCH_STATUS.md` 可以授权新的 task、run、训练或评测；当前没有已授权执行项。
+V3.3 计划文件已准备但尚未执行，不能因当前分支名或计划中的命令自动启动。
 
 ## 当前事实源
 
@@ -26,6 +29,8 @@
 - [`ENVIRONMENT.md`](ENVIRONMENT.md)：机器、环境、数据、权重和镜像策略；
 - [`THIRD_PARTY.md`](THIRD_PARTY.md)：第三方代码、commit、license 与驻留状态；
 - [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：资产保留边界；
+- [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)：
+  V3.3 启动前实际删除范围、保留 SHA 与恢复边界；
 - [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：换机与恢复流程。
 
 ## V3.2 冻结文件
@@ -56,6 +61,7 @@ V3/V3.1、V3.2 和 V2 的原计划继续保留在 `docs/` 根目录，原因是�
 ## 归档索引
 
 - [WorldSim V3.2 终局归档](archive/2026-08/worldsim-v3.2/README.md)
+- [V3.3 启动前清理账本](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 - [WorldSim V3.1 终局归档](archive/2026-08/worldsim-v3.1/README.md)
 - [2026-08 归档索引](archive/2026-08/README.md)
 - [动态重建 V1 终态](archive/2026-07/dynamic-reconstruction-v1/README.md)

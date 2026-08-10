@@ -1,17 +1,21 @@
 # Research Status
 
 - 更新时间：2026-08-11
-- 当前路线：无；WorldSim V3.2 已收口并归档
+- 当前路线：无执行路线；WorldSim V3.2 已收口并归档，V3.3 计划待后续明确启动
 - 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`
 - 当前任务：无
 - 路线终态：`none_plan_complete`
 - 当前门禁：无新的已授权执行项；S4 temporal 与 S5 的外部门禁保持历史 `blocked`，不自动恢复为当前任务
 - 最近完成计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
+- 待执行计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)；本轮未执行
 - S0 审计：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
-- 当前分支：`research/worldsim-v3.2-semantic-repair`
+- 当前分支：`research/worldsim-v3.3-object-maintenance`
+- V3.3 启动前清理：已释放 `227,705,974,784 bytes / 212.1 GiB`，清理后可用 `251.9 GiB`；
+  canonical SHA 与运行环境 smoke 均通过，详见
+  [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
