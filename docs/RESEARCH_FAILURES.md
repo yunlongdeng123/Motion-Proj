@@ -9,6 +9,26 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 S4 防重复结论（2026-08-11）
+
+- `V33-F30`：S1 `hard_instance_id` 是候选身份集合，不等于所有 Background 候选都应被硬 ERASE。r2 将
+  high actor 的 `36,736 Background + 4,525 Rigid` 全部设为零，虽然 target coverage=`0.999741`，但目标外
+  L1=`0.821965>0.5`，方法按冻结门 rejected。不得通过放宽 L1 门、扩大 target mask 或只报告 coverage 复活该臂。
+  合法修复是使用 S1 已训练 instance opacity 的 MAP 正类 `p>=0.5` 选择 Background，同时保留全部物理 Rigid core；
+  r8 以 `1,614+4,525` 行将目标外 L1 降到 `0.225349`，门与视角未变。
+- `V33-F31`：S2 canonical `roadpatch_delta.npz` 的 104 行同时服务 high/boundary 两个 actor，不是任一单 edit
+  都应加载的整体。S4 high package 必须按冻结 `target_role=high_support` 只取 25 行，并保留 parent delta SHA；
+  把 boundary 的 79 行混入 high edit 会产生无关场景变化，不能用“同属 Background repair”掩盖。
+- `V33-F32`：恢复同一批 Python/Parameter 对象是必要条件，但不足以证明可回滚。renderer 可能持有缓存或顺序状态；
+  每个 stack 卸载后必须重新执行 source render 并比较 tensor schema+bytes SHA。canonical r8 为 5 视角×4 stack=
+  `20/20` exact，另有 full deterministic replay 和 replay rollback；以后不能只比较 checkpoint SHA 或 object id。
+- `V33-F33`：immutable base + delta package 不能把 579 MB checkpoint 复制到 base 目录后仍称“小型 delta”。
+  canonical package 的 base 只含 checkpoint/registry reference descriptor，完整 checkpoint copy=`0`，最大 payload
+  `3,942,422 bytes`；任何 materialized deployment checkpoint 必须作为独立 deployment factor，不得改写 authoring state。
+- `V33-F34`：S4 r3/r4 的方法和指标有效，但最终核心增加 fail-closed policy validator 后其 source snapshot 不再是
+  提交态；r5/r6 与最终方法一致，但 builder 后续补齐异常 terminal。最终只认完整重跑 r7/r8 为 canonical；不得以
+  “只是校验/失败处理代码”绕过源码 byte-exact 合同。
+
 ## V3.3 S3 防重复结论（2026-08-11）
 
 - `V33-F22`：DriveStudio `instances_info.obj_to_world` 在冻结数据中可直接是 list，也可能是历史 JSON string。

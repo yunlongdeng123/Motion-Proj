@@ -11,7 +11,7 @@
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-S4-SPATIAL-DELTA-01`
+- **V3.3 当前唯一授权任务**：`WS-V33-S5-SEMANTIC-RENDER-01`
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -523,8 +523,8 @@ conditional future task
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + instance-opacity Gaussian field | canonical formal r9；O1 selected；base SHA exact；51 tests |
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS strong baseline | canonical B1 r10/r11；B2 r12=`blocked_single_3090` |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester automatic 1/2/4-view selection | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
-| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | 当前唯一授权；exact compose / rollback / package |
-| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated Harmonizer；R3D2 conditional | 不允许删除语义重引入 |
+| `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
+| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated Harmonizer；R3D2 conditional | 当前唯一授权；不允许删除语义重引入 |
 | `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 全部 canonical hash / gates / single-GPU 资源通过 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | conditional | LiDAR extrapolated view future audit | 不阻塞 R0 |
 
@@ -2446,6 +2446,26 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — S4 canonical 完成，S5 解锁
+
+- 实现外置 spatial delta schema：`ERASE / INSERT_BACKGROUND / INSERT_ACTOR / RENDER_ONLY`，固定组合次序，
+  base checkpoint/registry 只读；runtime 不删除 base 行，erase opacity 的 sigmoid 精确为零；
+- S2 combined delta 按 high-support role 只取 25 行 RoadPatch，S3 high A4 封装 99,241 行 actor-local asset；
+  两类 insert 都保留逐 Gaussian provenance，Rigid point-id prefix 与其他 actor 不变；
+- 首个 all-hard r2 把 36,736 个低/高后验 Background assignment 全部擦除，target 外 L1=
+  `0.821965>0.5`，按冻结门 rejected；不放宽门，改为 S1 学得后验的 MAP 正类 `p>=0.5`，Rigid core 全保留；
+- canonical r7 package=`4,007,120 bytes`，最大 payload=`3,942,422 bytes`，full checkpoint copy=`0`，
+  manifest SHA=`3be8ce88...ee43`，重复构建 byte-exact；
+- canonical r8 在 5 个固定视角评估五栈；edit target erase/background/actor/full effect=
+  `27,000/6,663/14,844/28,218 pixels`，erase/actor mask coverage=`0.999741/0.849298`，
+  outside L1=`0.225349`；
+- 5 views×4 overlays 的 20 次卸载后 source render SHA 全 exact；full stack 二次重放与额外 rollback exact；
+  checkpoint/registry SHA exact、base deletion/nonzero erase opacity/duplicate insert 均为 0；
+- wall=`66.181 s`、peak CUDA reserved=`8,132 MiB`、OOM/kill=`0/0`；S4 专项 `9 passed`、V3.3/V3.2
+  定向回归 `72 passed`，canonical source snapshots 与最终核心/evaluator/config byte-exact；
+- S4 完整报告见 [`WS_V33_S4_SPATIAL_DELTA.md`](WS_V33_S4_SPATIAL_DELTA.md)；下一步只解锁
+  `WS-V33-S5-SEMANTIC-RENDER-01`，R0 仍未授权。
 
 ## 2026-08-11 — S3 canonical 完成，S4 解锁
 

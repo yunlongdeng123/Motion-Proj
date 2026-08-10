@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-S4-SPATIAL-DELTA-01`
+- 当前执行授权：仅 `WS-V33-S5-SEMANTIC-RENDER-01`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -31,8 +31,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + dual instance-opacity field | canonical formal r9；O1 selected；base exact；51 tests |
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS baseline | r10 index + r11 B1 canonical；r12 B2 blocked_single_3090 |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester auto 1/2/4-view | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
-| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | 当前唯一授权；high A4 exact 输入已冻结 |
-| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | R3D2 pretrained 当前 unavailable |
+| `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
+| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | 当前唯一授权；R3D2 pretrained 当前 unavailable |
 | `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | S1–S5 决策收口后解锁 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | pending | 条件式未来 LiDAR 扩展 | 不阻塞 R0，当前未授权 |
 
@@ -165,6 +165,32 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   evaluator snapshot 漂移降为有效 noncanonical，r13/r14 重跑后与提交态 byte-exact；
 - S3 专项=`11 passed`，V3.3/V3.2 定向回归=`63 passed`；py_compile/diff check/source snapshot exact；
   下一步只解锁 S4，且只允许 high A4=`06d5db85...ec13` 进入 production delta。
+
+### `WS-V33-S4-SPATIAL-DELTA-01` canonical closeout
+
+- initial all-hard package r1 completed；real-render r2=`rejected`，唯一失败门为 target 外 L1
+  `0.8219646>0.5`；其余 exact rollback、toggle、resource、checkpoint/registry integrity 均通过；
+- r2 暴露 S1 的 36,736 个 high Background hard assignments 大多是低 instance-opacity 候选；最终 protocol
+  保持原视角/门不变，以概率 MAP 边界 `p(instance)>=0.5` 选择 Background，Rigid core 4,525 行仍全部 ERASE；
+- canonical package r7=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221300Z__s4-package-canonical-s0-r7`；
+  config/package/summary/status SHA=`4b318a67...508a / 3be8ce88...ee43 / cbde9600...0c63 / 4c8332d6...375f`；
+- package 只含 base checkpoint/registry reference descriptor，delta/inventory/stacks 共 `4,007,120 bytes`，
+  最大 payload=`3,942,422 bytes`，完整 checkpoint copy=`0`；r3/r5/r7 package manifest byte-exact；
+- ERASE=`1,614 Background + 4,525 Rigid`，base row deletion=`0`、runtime effective opacity exact zero；
+  high RoadPatch=`25` rows（不混入 boundary 79 rows），A4 actor=`99,241` rows，insert provenance 逐行完整；
+- canonical evaluation r8=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221700Z__s4-eval-canonical-s0-r8`；
+  summary/status/decision SHA=`6f143040...9085 / 87d33d95...c5e5 / 19e3aba6...db9`；
+- edit target f091/c1 的 erase/background/actor/full effect pixels=`27,000/6,663/14,844/28,218`，
+  erase/actor mask coverage=`0.999741/0.849298`，outside L1=`0.225349<=0.5`；
+- 5 个固定视角、4 个 overlay stack 均在卸载后重新 source-render，`20/20` SHA exact；full target render
+  二次 replay SHA=`451ae330...50bff` exact，replay rollback exact；duplicate insert index=`0`；
+- wall=`66.181 s`、peak CUDA allocated/reserved=`8,433,577,472/8,527,020,032 bytes`，run bytes=
+  `11,744,674`，OOM/kill=`0/0`，无训练/optimizer；S4 专项=`9 passed`、V3.3/V3.2 定向回归=`72 passed`，
+  py_compile、bash syntax 与 source snapshot exact；
+- r3/r4 为有效 noncanonical（最终 validator 后 snapshot 漂移），r5/r6 与最终方法一致但 builder fail-terminal
+  尚未进入 snapshot；r7/r8 才是 canonical。下一步只解锁 S5。
 
 ## 1. 状态词
 

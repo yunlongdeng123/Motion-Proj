@@ -1,0 +1,71 @@
+schema_version: worldsim_v33_s4_spatial_delta_v1
+task_id: WS-V33-S4-SPATIAL-DELTA-01
+seed: 0
+
+inputs:
+  checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+    sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+    sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+    sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+  s1_instance_field:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/artifacts/O1_dual_opacity/instance_field.npz
+    sha256: 23b2403ccb47e2e2c6b5fa3d22a9a6d93815d9f9bcbc6d11b66f035831adc8d7
+  s2_roadpatch_delta:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193140Z__s2-roadpatch-formal-s0-r11/artifacts/roadpatch_delta.npz
+    sha256: a31053137e37bb36eb7f59d0250d525a9ebe274caf2903f5dd92a47063289014
+  s3_actor_asset:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-IMPORT-01/20260810T202210Z__s3-import-high-formal-s0-r4/artifacts/actor_assets/high_support_auto_4view/actor_asset.npz
+    sha256: 06d5db8599624f2f067c4065f53aad1828ca42c946becfb037a9e24c3cf7ec13
+  s3_actor_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-IMPORT-01/20260810T202210Z__s3-import-high-formal-s0-r4/artifacts/actor_assets/high_support_auto_4view/actor_asset_manifest.json
+    sha256: 4590c1bd35ca0d709af2a4a1b0d0cf07efa503fccac759da393c24a850e67343
+  target_mask:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/masks/high_support/CAM_FRONT_LEFT/091.npz
+    sha256: c5014caeb4b6bb9efd36abb7c3c5bdda1b21436bb9eedc5c38b1f9305de03690
+
+actor:
+  role: high_support
+  dataset_instance_id: 13
+  instance_token: af663976db5e412e83db033d309c5c29
+  rigid_model_index: 5
+
+composition:
+  order: [ERASE, INSERT_BACKGROUND, INSERT_ACTOR, RENDER_ONLY]
+  stacks: [base_only, erase, erase_background, actor_override, full]
+  minimum_background_instance_opacity: 0.5
+
+evaluation:
+  edit_target_view: [91, 1]
+  development_views:
+    - [5, 0]
+    - [65, 1]
+  heldout_confirmation_views:
+    - [20, 0]
+    - [60, 1]
+  effect_threshold_uint8: 2
+  effect_dilation_pixels: 2
+
+gates:
+  erase_counts:
+    Background: 1614
+    RigidNodes: 4525
+  minimum_edit_target_erase_effect_pixels: 32
+  minimum_edit_target_actor_effect_pixels: 32
+  minimum_edit_target_background_effect_pixels: 1
+  minimum_edit_target_mask_coverage: 0.05
+  maximum_outside_target_l1_uint8: 0.5
+  maximum_package_file_bytes: 16777216
+  maximum_peak_cuda_reserved_mib: 12288
+  maximum_wall_seconds: 600
+  maximum_run_bytes: 268435456
+  maximum_oom_events_delta: 0
+  maximum_oom_kill_events_delta: 0
+
+runtimes:
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python

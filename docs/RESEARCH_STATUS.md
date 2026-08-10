@@ -2,15 +2,16 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-S3-ASSET-VIEWSELECT-01`
-- 当前任务：`WS-V33-S4-SPATIAL-DELTA-01`
+- 最新有效完成任务：`WS-V33-S4-SPATIAL-DELTA-01`
+- 当前任务：`WS-V33-S5-SEMANTIC-RENDER-01`
 - 路线终态：`running`
-- 当前门禁：只授权 S4 immutable spatial delta；S5 与 R0 需按 V3.3 顺序解锁
+- 当前门禁：只授权 S5 semantic-gated render；R0 需在 S5 决策收口后解锁
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
 - S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](WS_V33_S3_ASSET_VIEW_SELECTION.md)
+- S4 Spatial Delta：[`WS_V33_S4_SPATIAL_DELTA.md`](WS_V33_S4_SPATIAL_DELTA.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -50,12 +51,43 @@
   `06d5db8599624f2f067c4065f53aad1828ca42c946becfb037a9e24c3cf7ec13` /
   `28d4f75c8778e179b13a235a574e868be60d5539db7f3399d31d426dcd0d82bf` /
   `795ecbc5852c4cfeb2df9e18d803a14c6e79a5845c5053aaaceb127ce83d8032`
+- V3.3 S4 canonical package / real-render evaluation：
+  `20260810T221300Z__s4-package-canonical-s0-r7` /
+  `20260810T221700Z__s4-eval-canonical-s0-r8`
+- V3.3 S4 config/package manifest/package summary/eval summary/decision SHA-256：
+  `4b318a67786e576d56b6ea57d91528252fa290f0a53bd3a2f5d45dbae1c3508a` /
+  `3be8ce88764b8261740ced82a460e0109f2ce04a29c1c343c9d97ca3152bee43` /
+  `cbde96004e81a6f1f0e37b7ccdd095fed364482a9754d0704052973caeda0c63` /
+  `6f143040177cc251317328e8574ad12047803c710289159ca6eaaf5ca3c79085` /
+  `19e3aba6d65479701d7eef296730d974a3032c6dec13c2368ddc325547c30db9`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 S4 收口与 S5 授权
+
+- S4 将 D2 checkpoint/registry 表达为 external exact reference；package 不复制 `.pth/.ckpt`，总量
+  `4,007,120 bytes`、最大文件 `3,942,422 bytes`，完整 checkpoint copy=`0`；
+- composition 固定为 `base→ERASE→INSERT_BACKGROUND→INSERT_ACTOR→RENDER_ONLY`；ERASE 只创建临时
+  opacity Parameter，`sigmoid` 精确为零，不删除 base 行；INSERT 逐行保留 patch reuse / generated actor provenance；
+- S2 的 104-row combined delta 按 `target_role=high_support` 只取 25 行，不把 boundary 的 79 行混入当前 edit；
+  S3 high A4 以 99,241-row actor-local delta 装载到 rigid index 5，原 point-id prefix 不变；
+- r2 把 S1 的 36,736 个 Background hard assignments 全部擦除，目标外 L1=`0.821965>0.5`，按冻结门
+  rejected；没有放宽门。最终用 S1 已学得 instance opacity 的 MAP 边界 `p>=0.5`，保留
+  `1,614 Background + 4,525 Rigid core` erase rows；
+- canonical r8 的 edit target f091/c1：erase/background/actor/full effect pixels=
+  `27,000/6,663/14,844/28,218`，erase/actor mask coverage=`0.999741/0.849298`，目标外 L1=`0.225349`；
+- 五视角 aggregate erase/background/actor/full effect=`51,218/14,147/28,688/54,519`；20/20 逐栈
+  rollback render SHA exact，full stack 二次重放 SHA exact，额外 replay rollback exact；
+- checkpoint/registry before-after SHA exact，base row deletion/nonzero erased opacity/duplicate insert index 均为 `0`；
+  wall=`66.181 s`、peak CUDA reserved=`8,132 MiB`、run bytes=`11,744,674`、OOM/kill=`0/0`；
+- S4 专项=`9 passed`，V3.3/V3.2 定向回归=`72 passed`；真实 GPU source snapshots 与最终
+  核心/config/builder/evaluator byte-exact；r7/r8 为 canonical；
+- 当前唯一 next action 是 `WS-V33-S5-SEMANTIC-RENDER-01`；通用 unconstrained Harmonizer 继续禁止，
+  R3D2 仍受 pretrained 缺失约束，R0 未授权。
 
 ## V3.3 S3 收口与 S4 授权
 
