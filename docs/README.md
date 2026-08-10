@@ -1,13 +1,13 @@
 # Motion-Proj 文档导航
 
 - 更新时间：2026-08-11
-- 当前路线：无执行路线；WorldSim V3.2 已收口并归档，V3.3 计划待后续明确启动
-- 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`（canonical r4，8/8 gates）
-- 研究终态：`none_plan_complete`
-- 当前执行授权：无
+- 当前路线：WorldSim V3.3 对象感知与可维护资产
+- 最新有效完成任务：`WS-V33-P0-ROUTE-SOTA-AUDIT-01`（canonical r1）
+- 研究终态：`running`
+- 当前执行授权：仅 `WS-V33-S1-OBJECT-AWARE-GS-01`
+- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
-- V3.3 待执行计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
-- 启动前清理账本：[`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 
 ## 恢复顺序
 
@@ -15,11 +15,11 @@
 2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
 3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败、禁止重复项与复开条件；
 4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：canonical run、hash、指标和任务终态；
-5. [`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)：V3.2 计划、审计与收口快照。
+5. [`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)：当前路线与顺序门禁；
+6. [`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)：V3.3 source/license/weights/hardware 事实边界。
 
 清空对话、换机或换实例后，不从归档计划、旧 terminal 或计划中的“下一步”恢复动作。只有
-`RESEARCH_STATUS.md` 可以授权新的 task、run、训练或评测；当前没有已授权执行项。
-V3.3 计划文件已准备但尚未执行，不能因当前分支名或计划中的命令自动启动。
+`RESEARCH_STATUS.md` 可以授权新的 task、run、训练或评测；当前只授权 V3.3 S1。
 
 ## 当前事实源
 
@@ -29,9 +29,15 @@ V3.3 计划文件已准备但尚未执行，不能因当前分支名或计划中
 - [`ENVIRONMENT.md`](ENVIRONMENT.md)：机器、环境、数据、权重和镜像策略；
 - [`THIRD_PARTY.md`](THIRD_PARTY.md)：第三方代码、commit、license 与驻留状态；
 - [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：资产保留边界；
-- [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)：
-  V3.3 启动前实际删除范围、保留 SHA 与恢复边界；
 - [`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：换机与恢复流程。
+
+## V3.3 当前文件
+
+- [`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)：当前计划与任务注册表；
+- [`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)：P0 canonical SOTA/source 审计；
+- [`../configs/worldsim_v33/p0_sources_v1.yaml`](../configs/worldsim_v33/p0_sources_v1.yaml)：机器可检验事实配置；
+- [`../scripts/audit_worldsim_v33_sources.py`](../scripts/audit_worldsim_v33_sources.py)：只读审计 runner；
+- `/root/autodl-tmp/runs/worldsim_v33/`：V3.3 唯一正式 run namespace。
 
 ## V3.2 冻结文件
 
@@ -61,7 +67,6 @@ V3/V3.1、V3.2 和 V2 的原计划继续保留在 `docs/` 根目录，原因是�
 ## 归档索引
 
 - [WorldSim V3.2 终局归档](archive/2026-08/worldsim-v3.2/README.md)
-- [V3.3 启动前清理账本](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 - [WorldSim V3.1 终局归档](archive/2026-08/worldsim-v3.1/README.md)
 - [2026-08 归档索引](archive/2026-08/README.md)
 - [动态重建 V1 终态](archive/2026-07/dynamic-reconstruction-v1/README.md)

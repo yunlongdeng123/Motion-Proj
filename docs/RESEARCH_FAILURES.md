@@ -1,13 +1,33 @@
 # Motion-Proj 当前研究风险与防重复账本
 
 > **最后更新**：2026-08-11
-> **当前范围**：V3.3 启动前边界、V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
+> **当前范围**：V3.3 当前门禁、V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
+
+## V3.3 P0 防重复结论（2026-08-11）
+
+- `V33-F01`：官方 SAM3.1 source 可 checkout 不等于 checkpoint 可执行。当前代码固定为 `96914d2`，但
+  `hf auth whoami` 为未登录且 cache 无 SAM3.1；不得绕过 gated access、猜权重 revision/hash，或让该门阻塞
+  dual-opacity 主假设。S1 必须 exact fallback 到 V3.2 SAM2.1 canonical masks；未来解锁需新 task/protocol/run。
+- `V33-F02`：论文写 code available、GitHub 仓库存在或项目页可访问，不等于存在 runnable implementation。
+  GS-RoadPatching `468f812` 只有 HTML/CSS/JS/图片、无算法源码和根 LICENSE；OP2GS、3D-GIMP、FocusGS、
+  LiDAR-EVS 也没有可固定官方 runnable source。后续只能称 `*-inspired` 或 `audit_only`，不得写 reproduction。
+- `V33-F03`：R3D2 `3fc6e31` 已公开 Apache-2.0 训练/export/eval 代码，但仓库只声明下载 `sd-turbo/taesd`
+  base，没有作者训练并导出的 R3D2 pipeline。单卡从零训练不是“补齐 inference”，且被计划禁止；S5 保持
+  `weights_blocked`，不能拿 base diffusion 输出冒充 R3D2。
+- `V33-F04`：GOR-IS source release 不消除许可与运行合同。根许可证只允许 non-commercial research/evaluation，
+  torch/CUDA 未 pin，且要求 nvdiffrast、CUDA rasterizer 和 OptiX gtracer；没有 pretrained manifest。它只能作
+  optional audit，不能抢占 RoadPatch 主线或被写成单卡已验证 baseline。
+- `V33-F05`：Inpaint360GS 的官方 source/Apache-2.0 只支持进入 adapter/preflight。上游验证环境是 RTX 4090 /
+  CUDA 11.8，并依赖外部 CropFormer/LaMa 权重；在 StreetGS split、相机、分辨率和输入 schema 冻结前，不得
+  安装/训练。若 24 GiB 下必须静默降正式分辨率、改 heldout 或改相机数，必须 `blocked_single_3090`。
+- `V33-F06`：P0 重新 hash 的 D2/S2/S3/mixed/chunk 五资产 exact 与 V3.2 `36 passed` 只证明 immutable baseline
+  仍成立，不证明 V3.3 方法有效。P0 全程无训练/模型推理；S1 必须另建 protocol、run 和指标证据。
 
 ## V3.2 终局处置与复开门禁（2026-08-11）
 
@@ -23,7 +43,6 @@ V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口
 | S4 harmonizer | task `done`，non-temporal `excluded diagnostic`；temporal `blocked` | 仅凭锐化或全图指标把删除区重生车辆纳入生产链；绕过 gated 权重 | 合法取得 gated base；显式 semantic preservation + temporal gate；新 task/protocol/run |
 | S5 multiview upper bound | `blocked`，未授权 | 猜测许可证、移植无根许可证代码或把未执行写成质量结论 | 明确可执行许可证与权重；独立资源审计；用户重新授权的新 task |
 | R0 integration | `done`，canonical r4 | 从 exact package 外推 streaming、跨场景、闭环安全或 GT correctness | 为对应 claim 增加独立数据、协议、测量与 run；不得续写 r4 |
-| 存储收口 | `done`，V3.3 白名单驻留 | 把已主动清理的旧载荷写成损坏，或让 V3.3 隐式依赖 non-canonical 过程产物 | 按清理账本重建公开依赖；旧 run 大载荷如确需复现，必须新 task/protocol/run |
 
 统一复开规则：外部门禁解除只改变“是否可提出新任务”，不会把 S4 temporal 或 S5 自动变成当前任务。任何复开都
 必须引用相关失败 ID，使用新 task ID、新冻结 protocol 和不可复用 run ID；旧 `blocked/rejected/done` terminal
@@ -82,13 +101,6 @@ V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口
   `GENERATED_BACKGROUND` 和 `GENERATED_ACTOR` 仍不是 GT；S4 仍被排除；S5 仍阻塞。432 MB mixed checkpoint、
   444 MB chunk payload 与 8.36 GiB 峰值也不证明 streaming、load、render、跨场景泛化或闭环安全收益；未来相关
   claim 必须有独立 protocol、数据与测量，不能由 R0 exact reassembly 外推。
-
-- `V3-F47`：2026-08-11 的 V3.3 启动前清理将 V3.2 及更早路线中不再被 V3.3 使用的过程载荷转为
-  non-resident，实际释放 `227,705,974,784 bytes / 212.1 GiB`。V3.1 D2 final、V3.2 S1/S2/S3/S4/R0 canonical、
-  三场景 processed 数据、三个运行环境和必要第三方模型在清理前后通过 exact SHA/存在性/import 核验。后续看到
-  旧 checkpoint、图片、视频、raw staging、环境或 cache 缺失时，不得写成数据损坏、历史 run 失败或重新执行
-  V3.2 的授权；机器清单、删除列表 SHA 与恢复边界见
-  [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)。
 
 - `V3-F18`：A3 R1 的工程链可逐位重放，但 heldout 评测越过冻结 GPU ceiling，且资源无效 diagnostic 为
   geometry 改善与 RGB safeguard 退化并存。后续不得提高旧 ceiling、替换旧 renderer 或继续调同一四步配方。

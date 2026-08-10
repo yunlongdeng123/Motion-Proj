@@ -1,0 +1,301 @@
+schema_version: worldsim_v33_p0_sources_v1
+task_id: WS-V33-P0-ROUTE-SOTA-AUDIT-01
+status: done
+audited_at: "2026-08-11"
+
+project:
+  baseline_commit: a055fc6727dddacd194665d5c997a1fe47c2d2f4
+  branch: research/worldsim-v3.3-object-maintenance
+  v32_scoped_closeout_commit: f44decacca812fe1b476253b6bdc8aac1869f873
+  v32_branch_at_start: research/worldsim-v3.2-semantic-repair
+  dirty_v2_m5_files_preserved_and_excluded: true
+
+host_audit:
+  gpu: NVIDIA GeForce RTX 3090
+  gpu_memory_mib: 24576
+  compute_capability: "8.6"
+  driver: "580.105.08"
+  driver_reported_cuda: "13.0"
+  cgroup_memory_max_bytes: 96636764160
+  cgroup_oom: 0
+  cgroup_oom_kill: 0
+  data_disk_available_gib: 40
+  p0_third_party_checkout_bytes_approx: 667000000
+  gpu_compute_processes_at_gate: 0
+  active_tmux_at_gate: 0
+  training_started: false
+  model_inference_started: false
+  large_weight_download_started: false
+
+v32_canonical:
+  run: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1
+  terminal_status: done
+  gates_passed: 8
+  gates_total: 8
+  regression: 36 passed
+  source_checkpoint_before_after_exact: true
+  assets:
+    d2_checkpoint:
+      path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+      bytes: 578819674
+      sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+    s2_checkpoint:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/checkpoint_s2_generated_background.pth
+      bytes: 579269554
+      sha256: 3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f
+    s3_actor_asset:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset.npz
+      bytes: 3798161
+      sha256: b0c1f413e1a462292a1e3396ad45b8a8fc10f87f647e4bc3e1b98a4c8913caf0
+    mixed_checkpoint:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/artifacts/checkpoint_v32_mixed_precision.pth
+      bytes: 432347490
+      sha256: 6d4e4c489f53bf4e7de3f5c405ec37dc63d3f79155aad5237fe175ce0fcd7e5d
+    chunk_manifest:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/artifacts/chunk_package_manifest.json
+      bytes: 141427
+      sha256: af7b402e0b171b11f8c22e4123002f4f844db746ea72f53b77c3de878bf0947d
+
+sources:
+  sam3:
+    name: Meta SAM 3.1 Object Multiplex
+    official_url: https://github.com/facebookresearch/sam3
+    paper_url: https://ai.meta.com/research/sam3/
+    checkout: /root/autodl-tmp/third_party/worldsim_v33/sam3
+    commit: 96914d2425f90a64f45ca977c2b5165418099543
+    tree_sha: 573deb167702e014829a5b830de8ae62abe891d5
+    upstream_head_exact: true
+    license: Meta SAM License (2025-11-19)
+    license_path: LICENSE
+    license_sha256: 4dea99bfaa016e21bc860d73f344236bd1e5c4977d1a9a8fd32f822b500ae1be
+    weights: facebook/sam3.1/sam3.1_multiplex.pt; gated; not downloaded
+    weights_revision: null
+    weights_sha256: null
+    python: ">=3.12"
+    torch: ">=2.7"
+    cuda: ">=12.6"
+    single_3090: code_compatible_but_unmeasured_and_weights_unavailable
+    input_schema: ordered_images_or_video_plus_text_exemplar_box_mask_or_point_prompts
+    output_schema: object_ids_boxes_scores_and_per_frame_binary_masks
+    execution_state: weights_blocked
+    evidence: hf_cli_not_logged_in_and_no_cached_sam31_checkpoint
+
+  op2gs:
+    name: OP2GS dual-opacity primitives
+    official_url: null
+    paper_url: https://arxiv.org/abs/2605.20044
+    checkout: null
+    commit: null
+    tree_sha: null
+    license: unavailable
+    license_path: null
+    license_sha256: null
+    weights: unavailable
+    weights_revision: null
+    weights_sha256: null
+    python: unavailable
+    torch: unavailable
+    cuda: unavailable
+    single_3090: paper_inspired_sidecar_only
+    input_schema: paper_describes_3dgs_plus_multiview_object_masks
+    output_schema: paper_describes_instance_identity_and_dedicated_instance_opacity
+    execution_state: source_not_released
+    evidence: arxiv_record_contains_no_official_runnable_repository
+
+  inpaint360gs:
+    name: Inpaint360GS
+    official_url: https://github.com/dfki-av/Inpaint360GS
+    paper_url: https://arxiv.org/abs/2511.06457
+    checkout: /root/autodl-tmp/third_party/worldsim_v33/inpaint360gs
+    commit: d54c893285c6cb27788e05cce607e7d3cca6388a
+    tree_sha: 671626f4825cbf3d7c1ca37cc97a153d45e49b1c
+    upstream_head_exact: true
+    license: Apache-2.0
+    license_path: LICENSE.txt
+    license_sha256: 41d805773f2aa0b36c2fb69491f64c3079fe3e0671c9848680645fc9e65d5a10
+    weights: CropFormer and big-lama external public/manual weights; hashes not frozen in P0
+    weights_revision: null
+    weights_sha256: null
+    python: "3.10"
+    torch: "2.0.0+cu118"
+    cuda: "11.8; upstream verified on RTX 4090"
+    single_3090: conditional_minimum_resolution_preflight_required
+    input_schema: posed_train_test_images_colmap_metadata_object_ids_and_masks
+    output_schema: object_aware_3dgs_removed_scene_2d_color_depth_inpaint_and_3d_inpaint
+    execution_state: executable
+    evidence: official_source_and_install_pipeline_available_not_executed_in_p0
+
+  gs_roadpatching:
+    name: GS-RoadPatching
+    official_url: https://github.com/Shanzhaguoo/GS-RoadPatching
+    paper_url: https://arxiv.org/abs/2509.19937
+    checkout: /root/autodl-tmp/third_party/worldsim_v33/gs-roadpatching
+    commit: 468f812587581cb3207ed1c5df211151518e76fe
+    tree_sha: d4505b9be1b5665deee11c654843bde585fb1c43
+    upstream_head_exact: true
+    license: no_license_file
+    license_path: null
+    license_sha256: null
+    weights: unavailable
+    weights_revision: null
+    weights_sha256: null
+    python: unavailable
+    torch: unavailable
+    cuda: unavailable
+    single_3090: inspired_roadpatch_lite_only
+    input_schema: paper_describes_feature_embedded_driving_gaussian_patches
+    output_schema: paper_describes_searched_placed_and_fused_gaussian_patches
+    execution_state: source_not_released
+    evidence: official_repository_contains_only_project_page_static_assets_and_zero_algorithm_source_files
+
+  3d_gimp:
+    name: 3D-GIMP
+    official_url: null
+    paper_url: https://arxiv.org/abs/2607.20789
+    checkout: null
+    commit: null
+    tree_sha: null
+    license: unavailable
+    license_path: null
+    license_sha256: null
+    weights: unavailable
+    weights_revision: null
+    weights_sha256: null
+    python: unavailable
+    torch: unavailable
+    cuda: unavailable
+    single_3090: not_assessable_without_source
+    input_schema: paper_describes_reference_view_inpaint_plus_multiview_scene
+    output_schema: paper_describes_patchmatch_propagation_and_reconstructed_3dgs
+    execution_state: source_not_released
+    evidence: arxiv_record_contains_no_official_runnable_repository
+
+  focusgs:
+    name: FocusGS spatial delta layers
+    official_url: null
+    paper_url: https://arxiv.org/abs/2607.28834
+    checkout: null
+    commit: null
+    tree_sha: null
+    license: unavailable
+    license_path: null
+    license_sha256: null
+    weights: unavailable
+    weights_revision: null
+    weights_sha256: null
+    python: unavailable
+    torch: unavailable
+    cuda: unavailable
+    single_3090: inspired_spatial_delta_interface_only
+    input_schema: paper_describes_trained_3dgs_plus_local_edit_or_repair_target
+    output_schema: paper_describes_additive_repair_or_erase_insert_spatial_delta
+    execution_state: source_not_released
+    evidence: arxiv_record_contains_no_official_runnable_repository
+
+  r3d2:
+    name: Zenseact R3D2
+    official_url: https://github.com/zenseact/R3D2
+    paper_url: https://arxiv.org/abs/2506.07826
+    checkout: /root/autodl-tmp/third_party/worldsim_v33/r3d2
+    commit: 3fc6e317d9fea9d800d3f8706554ad6ac794d980
+    tree_sha: 759dd48d47b75da124a3816a7789349f944079c7
+    upstream_head_exact: true
+    license: Apache-2.0
+    license_path: LICENSE
+    license_sha256: 43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1
+    weights: sd-turbo and taesd base weights only; no exported author R3D2 pipeline
+    weights_revision: null
+    weights_sha256: null
+    python: ">=3.9"
+    torch: ">=2.1"
+    cuda: unspecified_by_upstream
+    single_3090: inference_not_authorized_without_exported_r3d2_model
+    input_schema: trained_exported_pipeline_plus_single_image_or_video_without_rendering_effects
+    output_schema: image_or_video_with_shadow_and_lighting_integration
+    execution_state: weights_blocked
+    evidence: repository_tracks_training_validation_export_and_eval_code_but_no_author_exported_checkpoint
+
+  gor_is:
+    name: GOR-IS
+    official_url: https://github.com/applezyh/gor-is
+    paper_url: https://arxiv.org/abs/2605.00498
+    checkout: /root/autodl-tmp/third_party/worldsim_v33/gor-is
+    commit: eb36accba0a3c543c2dfaea5e7ef12c8e468acf5
+    tree_sha: d03c79c350168691ad919a8a0fd7f530f4f200d2
+    upstream_head_exact: true
+    license: custom_noncommercial_research_only_based_on_gaussian_splatting_license
+    license_path: LICENSE
+    license_sha256: 35fdbaff9564b32c81c5d0d6e2ff48363af91aee87f8f1852317eecebe2deee8
+    weights: no_official_pretrained_checkpoint_manifest
+    weights_revision: null
+    weights_sha256: null
+    python: "3.12"
+    torch: unpinned
+    cuda: custom_cuda_rasterizer_nvdiffrast_and_optix_gtracer_required
+    single_3090: unmeasured_and_not_a_required_v33_arm
+    input_schema: colmap_scene_object_masks_specular_masks_normals_and_split_lists
+    output_schema: intrinsic_material_lighting_decomposition_and_inpainted_3dgs
+    execution_state: audit_only
+    evidence: source_released_but_noncommercial_license_unpinned_runtime_and_no_pretrained_manifest
+
+  lidar_evs:
+    name: LiDAR-EVS
+    official_url: null
+    paper_url: https://arxiv.org/abs/2603.14763
+    checkout: null
+    commit: null
+    tree_sha: null
+    license: unavailable
+    license_path: null
+    license_sha256: null
+    weights: unavailable
+    weights_revision: null
+    weights_sha256: null
+    python: unavailable
+    torch: unavailable
+    cuda: unavailable
+    single_3090: future_audit_only
+    input_schema: paper_describes_multiframe_lidar_and_baseline_neural_renderer
+    output_schema: paper_describes_extrapolated_view_lidar_synthesis
+    execution_state: source_not_released
+    evidence: arxiv_record_contains_no_official_runnable_repository
+
+  asset_harvester_inherited:
+    name: NVIDIA Asset Harvester (V3.2 inherited)
+    official_url: https://github.com/NVIDIA/asset-harvester
+    paper_url: https://arxiv.org/abs/2604.18468
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester
+    commit: 767b2439ce47a8b2513038ae0fb2073026f89ee8
+    tree_sha: ecec799fdb507c734083d4464480eca3f933fd70
+    upstream_head_exact_at_v32_audit: true
+    license: Apache-2.0
+    license_path: LICENSE.txt
+    license_sha256: d07c0367e2861e7fe70fa1b679f879f4fa2f9138ade4457d44ecf8b2e135bb45
+    weights: nvidia/asset-harvester; three exact V3.2 safetensors retained read-only
+    weights_revision: dc341ceb0b9d7201ebbd9e1a989f072f28e8418e
+    weights_sha256: recorded_per_file_in_v32_canonical_environment_result
+    python: V3.2 isolated_environment
+    torch: "2.10+cu128"
+    cuda: "12.8-compatible"
+    single_3090: supported_v32_peak_20137_mib
+    input_schema: one_or_few_object_views_plus_masks_and_optional_cameras
+    output_schema: complete_gaussian_actor_asset
+    execution_state: executable
+    evidence: v32_canonical_1view_and_2view_both_ran_and_exact_2view_asset_is_immutable
+
+gates:
+  v32_canonical_immutable: true
+  v32_hashes_recomputed_exact: true
+  v32_regression_36_passed: true
+  source_commit_tree_license_recorded: true
+  missing_source_not_misrepresented_as_reproduction: true
+  gated_weights_not_bypassed: true
+  no_training: true
+  no_model_inference: true
+  no_large_weight_download: true
+  no_drivestudio_mutation: true
+  s1_authorized: true
+  s2_authorized: false
+  s3_authorized: false
+  s4_authorized: false
+  s5_authorized: false

@@ -1,9 +1,9 @@
 # Experiments
 
 - 更新时间：2026-08-11
-- 当前路线：无；WorldSim V3.2 已收口
-- 当前执行授权：无（`none_plan_complete`）
-- 最近完成方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
+- 当前路线：WorldSim V3.3 对象感知与可维护资产
+- 当前执行授权：仅 `WS-V33-S1-OBJECT-AWARE-GS-01`
+- 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
@@ -22,6 +22,40 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 阻塞。R0 canonical r4 已完成语义扩展、mixed storage、S3 actor override registry、exact chunk package 与三视角
 单卡验证；全部单卡 RTX 3090 可执行环节终态为 `done`，S5 继续 `blocked`。V3.2 整体终态为
 `none_plan_complete`；本注册表自 2026-08-11 起冻结为历史事实，不授权续跑 S4 temporal、S5 或旧 rejected run。
+
+## V3.3 注册表
+
+| Task ID | 状态 | 目标 | 当前证据/门禁 |
+|---|---|---|---|
+| `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、切换分支、审计 source/license/weights/hardware | canonical r2；10 sources；5 个 V3.2 大资产 SHA exact；36+4 tests |
+| `WS-V33-S1-OBJECT-AWARE-GS-01` | pending | SAM2.1 fallback + dual instance-opacity field | 当前唯一授权；base RGB/opacity 必须 immutable |
+| `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS baseline | S1 收口后解锁 |
+| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester auto 1/2/4-view | S2 收口后按计划解锁 |
+| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | S3 收口后按计划解锁 |
+| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | R3D2 pretrained 当前 unavailable |
+| `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | S1–S5 决策收口后解锁 |
+| `WS-V33-F0-LIDAR-EVS-AUDIT-01` | pending | 条件式未来 LiDAR 扩展 | 不阻塞 R0，当前未授权 |
+
+### `WS-V33-P0-ROUTE-SOTA-AUDIT-01` canonical closeout
+
+- branch=`research/worldsim-v3.3-object-maintenance`，baseline=`a055fc6727dddacd194665d5c997a1fe47c2d2f4`；
+- canonical=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-P0-ROUTE-SOTA-AUDIT-01/20260810T171744Z__p0-source-audit-s0-r2`，
+  terminal=`done`；config/summary/manifest/status SHA-256=
+  `29c167fe...9ae2 / 08806b5f...d68a / 2603ff0e...a12d / 91096d0e...072d`；
+- r1 的审计门全部通过，但 runner 未把 auditor/module/test 快照进 run，故保留为 noncanonical `done` 证据；r2 新增
+  三份 source snapshot（SHA=`96024691...c065 / 5760318f...fec3 / 0fe51b7c...a778`），不改写 r1；
+- 10 个 source=`2 executable / 2 weights_blocked / 5 source_not_released / 1 audit_only`；5 个有 Git checkout 的新 source
+  与继承 Asset Harvester 均 commit/tree clean exact，存在的 5 份 root license SHA exact；
+- SAM3.1=`96914d2`，当前 `hf auth whoami=Not logged in` 且无 cached checkpoint，故 SAM3 arms `weights_blocked`；
+  OP2GS/3D-GIMP/FocusGS/LiDAR-EVS 无官方 runnable source；GS-RoadPatching=`468f812` 只有 project-page assets；
+- Inpaint360GS=`d54c893 / Apache-2.0 / source executable`，只在 S2 adapter 后做最小单卡 preflight；R3D2=
+  `3fc6e31 / Apache-2.0 / exported author model absent`，不从零训练；GOR-IS=`eb36acc / noncommercial audit_only`；
+- D2/S2/S3/mixed/chunk 五资产重新 hash 全 exact；V3.2 R0 8/8 gates 与 `36 passed` 回归复核通过；P0 auditor=
+  `4 passed`；第一次无 `PYTHONPATH=.` 的 pytest 只在 collection 阶段失败，按仓库入口重跑无逻辑失败；
+- GPU=`RTX 3090 24,576 MiB`、cgroup max=`96,636,764,160 bytes`、OOM/kill=`0/0`、disk free 约 `40 GiB`；
+  P0 training/model inference/install/large-weight download/DriveStudio mutation 均为 false；
+- S1 为唯一 next authorization；S2–S5/R0 仍 pending，不能由 source availability 自动启动。
 
 ## 1. 状态词
 

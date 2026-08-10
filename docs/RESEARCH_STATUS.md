@@ -1,27 +1,44 @@
 # Research Status
 
 - 更新时间：2026-08-11
-- 当前路线：无执行路线；WorldSim V3.2 已收口并归档，V3.3 计划待后续明确启动
-- 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`
-- 当前任务：无
-- 路线终态：`none_plan_complete`
-- 当前门禁：无新的已授权执行项；S4 temporal 与 S5 的外部门禁保持历史 `blocked`，不自动恢复为当前任务
-- 最近完成计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
-- 待执行计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)；本轮未执行
-- S0 审计：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)
+- 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
+- 最新有效完成任务：`WS-V33-P0-ROUTE-SOTA-AUDIT-01`
+- 当前任务：`WS-V33-S1-OBJECT-AWARE-GS-01`
+- 路线终态：`running`
+- 当前门禁：只授权 S1 dual instance-opacity sidecar；S2–S5 与 R0 需按 V3.3 顺序解锁
+- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3.3-object-maintenance`
-- V3.3 启动前清理：已释放 `227,705,974,784 bytes / 212.1 GiB`，清理后可用 `251.9 GiB`；
-  canonical SHA 与运行环境 smoke 均通过，详见
-  [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
+- V3.3 P0 canonical run：`20260810T171744Z__p0-source-audit-s0-r2`
+- V3.3 P0 config/summary/manifest/status SHA-256：
+  `29c167fe050d074f626884c0eba7b67fd6fd56c8493adc4c6be0d390f09b9ae2` /
+  `08806b5f197d524207aa5d527b9976a993042b6451fa0cc9b0458a20b3a1d68a` /
+  `2603ff0e037931aef8f8c84606038bd748600c99cef1a2a29cc82c621c51a12d` /
+  `91096d0eae7616f2c68d133796922b49d475220c0c18fb7c438ca3655a32072d`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 P0 收口与 S1 授权
+
+- 新分支从 `a055fc6727dddacd194665d5c997a1fe47c2d2f4` 建立；V2/M5 dirty files 原样保留且未纳入 V3.3；
+- canonical P0 run=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-P0-ROUTE-SOTA-AUDIT-01/20260810T171744Z__p0-source-audit-s0-r2`，
+  terminal=`done`；10 个 source 裁决为 `2 executable / 2 weights_blocked / 5 source_not_released / 1 audit_only`；
+- SAM3.1 官方 source 固定为 `96914d2`，但当前 HF 未登录且无 cached checkpoint，故 `weights_blocked`；S1 exact fallback 到 V3.2 SAM2.1 canonical masks；
+- OP2GS、GS-RoadPatching、3D-GIMP、FocusGS、LiDAR-EVS 没有可执行官方 source 时只允许 inspired/audit-only；
+  GS-RoadPatching 官方仓库 `468f812` 当前只有项目页静态文件、无算法源码和根 LICENSE；
+- Inpaint360GS `d54c893`/Apache-2.0 可进入 S2 独立 adapter/preflight；R3D2 `3fc6e31` 虽有 Apache-2.0 代码，
+  但没有作者导出的 R3D2 model，保持 `weights_blocked` 且禁止从零训练；GOR-IS 只作非商业研究 audit；
+- 五个 V3.2 canonical 大资产重新计算 SHA 全 exact，R0 terminal 仍 `done`、8/8 gates；V3.2 定向回归=`36 passed`；
+- P0 新增 source auditor 回归=`4 passed`；P0 未训练、未运行模型推理、未安装依赖、未下载大型权重、未修改 DriveStudio；
+- 当前唯一 next action 是 `WS-V33-S1-OBJECT-AWARE-GS-01`：base RGB/opacity immutable，只学习独立 instance-opacity sidecar。
 
 ## V3.2 终局处置
 
