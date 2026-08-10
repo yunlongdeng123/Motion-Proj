@@ -11,17 +11,26 @@ V3.2 production baseline 上研究 dual instance opacity、真实 3D donor 优�
   [`docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.3 P0 审计：[`docs/WS_V33_P0_SOTA_AUDIT.md`](docs/WS_V33_P0_SOTA_AUDIT.md)
 - V3.3 S1 对象场：[`docs/WS_V33_S1_OBJECT_AWARE_GS.md`](docs/WS_V33_S1_OBJECT_AWARE_GS.md)
+- V3.3 S2 道路修复：[`docs/WS_V33_S2_ROADPATCH_INPAINT.md`](docs/WS_V33_S2_ROADPATCH_INPAINT.md)
+- V3.3 S3 Actor 视图选择：[`docs/WS_V33_S3_ASSET_VIEW_SELECTION.md`](docs/WS_V33_S3_ASSET_VIEW_SELECTION.md)
+- V3.3 S4 Spatial Delta：[`docs/WS_V33_S4_SPATIAL_DELTA.md`](docs/WS_V33_S4_SPATIAL_DELTA.md)
+- V3.3 S5 语义门控渲染：[`docs/WS_V33_S5_SEMANTIC_RENDER.md`](docs/WS_V33_S5_SEMANTIC_RENDER.md)
+- V3.3 R0 完整集成：[`docs/WS_V33_R0_INTEGRATION.md`](docs/WS_V33_R0_INTEGRATION.md)
 - 实验台账：[`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)
 - 失败与防重复账本：[`docs/RESEARCH_FAILURES.md`](docs/RESEARCH_FAILURES.md)
 
 V2 计划保留为历史执行合同，不再更新。V2 M0–M4 已完成；M5 的 0230/0242 checkpoint、scene-0255
 CUDA 空 tensor 聚合诊断和未提交脚本作为部分证据冻结，不冒充完成的三场景压力测试。
 
-V3.3 P0 与 S1 已完成。S1 在 immutable D2 RGB 3DGS 上新增约 `5.88 MB` 的独立 instance-opacity sidecar；
-heldout 上 O1 相对 V3.2 heuristic 的 boundary F1 `0.0690→0.3362`、IoU `0.0633→0.3307`、
-normalized boundary distance `0.1450→0.1053`、false-positive mass `0.9003→0.6233`，checkpoint SHA
-前后 exact。SAM3.1 权重仍 blocked，S1 使用恢复到 exact commit/weight/runtime 的 SAM2.1 fallback。
-当前唯一授权任务为 `WS-V33-S2-ROADPATCH-INPAINT-01`。
+V3.3 P0–S5 与 R0 已完成，整体终态为 `v33_supported`。最终链选择 O1 dual instance opacity、B1
+RoadPatch-Lite、high-support A4 auto-4view actor、posterior-gated spatial delta 与 S5 G0 raw-3D fail-safe。
+R0 内容寻址 release 含 `76` 个文件、`18,432,994` payload bytes，完整 checkpoint copy=`0`；deterministic
+archive SHA=`cffaad16...44a7`，解包后可离线逐文件复验。计划的 object field、3D-native repair、自动视图选择和
+exact spatial delta 四个必须成功标准全部满足。
+
+负结果同样是正式结论：O1 的 FN mass 上升；RoadPatch 未与 V3.2 Telea 做 matched 排名；boundary actor A4、
+all-hard erase 与 S5 semantic-gate G1 被拒绝；SAM3.1/R3D2/Inpaint360GS 受权重或单卡官方合同阻塞。当前没有
+新的执行授权；LiDAR-EVS 仅保留为 R0 后 conditional audit。
 
 ## V3.1 历史模型链
 

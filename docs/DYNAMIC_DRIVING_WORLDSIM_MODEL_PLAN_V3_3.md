@@ -11,7 +11,7 @@
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-R0-INTEGRATION-01`
+- **V3.3 当前授权任务**：无；R0=`done / v33_supported`，F0 LiDAR-EVS 仍为 conditional
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -525,7 +525,7 @@ conditional future task
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester automatic 1/2/4-view selection | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
 | `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | done | semantic-gated Harmonizer；R3D2 conditional | canonical r4；G1 留出 contact gate rejected；生产 G0；删除 5/5 exact safe |
-| `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 当前唯一授权；全部 canonical hash / gates / single-GPU 资源通过 |
+| `WS-V33-R0-INTEGRATION-01` | done | object-aware + background repair + actor + delta + packaging | canonical r7；44 inputs；10/10 gates；76-file exact release；`v33_supported` |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | conditional | LiDAR extrapolated view future audit | 不阻塞 R0 |
 
 ---
@@ -2459,6 +2459,26 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — R0 canonical 完成，V3.3 收口
+
+- canonical r7 验证 P0–S5/V3.2 persistent storage/D2 base 共 44 个输入的 path/bytes/SHA/terminal/decision，
+  并重新执行 O1 instance-field、104-row RoadPatch 与 99,241-row A4 asset schema validator；
+- 最终链=`D2 base→O1→B1→A4→posterior-gated delta→S5 G0→persistent storage reference→exact release`；
+  四个必须成功标准 `4/4`，整体裁决=`v33_supported`；
+- 对 RoadPatch 不伪造 V3.2 Telea matched 排名；Inpaint360GS=`blocked_single_3090`、
+  R3D2=`blocked_pretrained_model_unavailable`、SAM3.1=`weights_blocked` 都不包装成质量失败；
+- 发布包含 76 files、`18,432,994` payload bytes、39 份 canonical JSON evidence、typed provenance/decision/
+  resource/claims ledgers 和 standalone verifier；完整 checkpoint copy=`0`；
+- deterministic archive 在 diagnostic/formal 以及同 run 双构建均 exact，SHA=
+  `cffaad16e2d14e8274c41bb48b24be64c73d9fb6f41d1fe4792934adeab244a7`，archive=`13,760,114 bytes`；
+  解包 replay manifest SHA=`e386c14b...a6c53` exact；
+- R0 wall=`2.721847 s`、GPU compute process=`0`、run=`50,851,476 bytes`、OOM/kill=`0/0`；
+  S1–S5 选定链累计实测 wall=`379.552 s`，峰值 S3=`20,137 MiB`；
+- config/summary/status SHA=`4b4a20b9...73a9 / c1903255...a2b2 / 0a1396f4...aa4`，7 个 source snapshots
+  与提交候选 byte-exact；R0 专项 `6 passed`，V3.3/V3.2 定向回归 `86 passed`；
+- 完整报告见 [`WS_V33_R0_INTEGRATION.md`](WS_V33_R0_INTEGRATION.md)。当前无下一执行授权；
+  F0 LiDAR-EVS 保持 conditional，不属于本次交付。
 
 ## 2026-08-11 — S5 canonical 完成，R0 解锁
 

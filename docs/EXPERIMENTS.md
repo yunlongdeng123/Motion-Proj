@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-R0-INTEGRATION-01`
+- 当前执行授权：无；V3.3 R0 已 `done / v33_supported`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -33,7 +33,7 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester auto 1/2/4-view | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
 | `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | done | semantic-gated render；R3D2 conditional | canonical r4；G1 heldout rejected；G0 production；delete 5/5 safe |
-| `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | 当前唯一授权；S1–S5 已收口 |
+| `WS-V33-R0-INTEGRATION-01` | done | 单卡完整集成与 exact package | canonical r7；44 inputs；10/10 gates；76-file release；v33_supported |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | pending | 条件式未来 LiDAR 扩展 | 不阻塞 R0，当前未授权 |
 
 ### `WS-V33-P0-ROUTE-SOTA-AUDIT-01` canonical closeout
@@ -213,6 +213,25 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   `blocked_pretrained_model_unavailable`，无模型加载/训练；temporal 因非相邻五视图显式 not-evaluated；
 - S5 专项=`8 passed`，V3.3/V3.2 定向回归=`80 passed`。S5 task=`done`，G1 method=`rejected`，
   production=`G0_raw_3d`；下一步只解锁 R0。
+
+### `WS-V33-R0-INTEGRATION-01` canonical closeout
+
+- diagnostic `222435/222453/222511` 分别因 S2 empty-list、S3 heldout phase、S4 real-render stage 的 exact
+  schema 枚举误写而 failed；`222526` 移除报告层冗余 `schema_version` 假设，正式 instance-field validator 已通过；
+  `222549` 修复 release `tools/` 目录创建；旧 terminal 均未覆盖；
+- diagnostic r6=`20260810T222610Z__r0-integration-diagnostic-s0-r1` 首次 10/10 gates 通过，并冻结 archive SHA；
+  formal config 将 expected SHA 固定后执行 canonical r7=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-R0-INTEGRATION-01/20260810T222701Z__r0-integration-canonical-s0-r7`；
+- config/summary/status SHA=`4b4a20b9...73a9 / c1903255...a2b2 / 0a1396f4...aa4`；44 inputs
+  exact，O1/RoadPatch/A4 schema validator 通过，S4 rollback=`20/20`，S5 production exact-safe=`5/5`；
+- selected chain=`D2→O1→B1→A4→posterior-gated delta→S5 G0→persistent storage reference→exact release`；
+  4/4 required success criteria，overall=`v33_supported`；
+- release=`76 files / 18,432,994 payload bytes`、39 JSON evidence、full checkpoint copy=`0`；archive=
+  `13,760,114 bytes / cffaad16...44a7`，双构建 exact；解包 content manifest=`e386c14b...a6c53` exact；
+- standalone verifier 的 directory/archive 两种模式均返回 valid；R0 wall=`2.721847 s`、GPU compute max=`0`、
+  run bytes=`50,851,476`、OOM/kill=`0/0`；S1–S5 selected wall=`379.552 s`、peak=`20,137 MiB`；
+- 对 RoadPatch vs Telea 结论为 `not_directly_ranked`；blocked SOTA 不作质量失败；R0 专项=`6 passed`、
+  V3.3/V3.2 定向回归=`86 passed`；当前无下一执行授权，F0 LiDAR-EVS 保持 conditional。
 
 ## 1. 状态词
 

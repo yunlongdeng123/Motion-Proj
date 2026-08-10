@@ -9,6 +9,27 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 R0 防重复结论（2026-08-11）
+
+- `V33-F41`：R0 不能把 JSON 中“语义相近”的类型或枚举视为相同。diagnostic 前三次分别把 S2 的空列表写成
+  数值 0、把 S3 `heldout` 写成 `heldout_confirmation`、把 S4 `real_renderer_evaluation` 写成
+  `evaluation`，均 fail-closed。以后 verifier 必须比较原始类型/枚举；不得用字符串归一化掩盖 schema 漂移。
+- `V33-F42`：正式 instance-field validator 通过不代表 NPZ 必须有未约定的 `schema_version`。r4 在报告层
+  冗余读取该字段而 failed；修复只移除报告假设，仍执行完整 validator。以后不能把“自己希望存在的字段”变成
+  canonical 资产失败，也不能因此跳过正式 schema 校验。
+- `V33-F43`：RoadPatch 成为 V3.3 主方法不等于已在 matched 协议下胜过 V3.2 Telea。两者 base、空间语义与
+  评测协议不同；R0 答案固定为 `not_directly_ranked`。不得用 B1 相对 B0 的 heldout gate 写成 Telea head-to-head，
+  也不得因缺直接排名否定 RoadPatch 的 3D-native/provenance/heldout 成立结论。
+- `V33-F44`：内容寻址 release 不允许为“完整”而复制 579 MB base checkpoint。R0 package 含 O1 sidecar、
+  RoadPatch/A4/S4 delta、production renders 与 external reference，forbidden model suffix count=`0`；离线 verifier
+  同时锁 file set/bytes/SHA。任何新增 `.pth/.pt/.ckpt/.safetensors` 或未登记文件都必须拒绝。
+- `V33-F45`：deterministic archive 不能包含当前 run timestamp、绝对输出路径或可变 ZIP metadata。R0 release
+  ledger 只引用固定 canonical 输入，ZIP entry 排序/1980 timestamp/permission/compression 固定；diagnostic、
+  formal 和同 run replay SHA 均为 `cffaad16...44a7`。以后新增 release 字段必须先证明跨 run byte-exact。
+- `V33-F46`：R0 的 `v33_supported` 只覆盖 scene-0230 主链、冻结确认视图和单 RTX 3090。它不证明
+  scene-0242/0255 完整 V3.3 transfer、生成 actor GT、相邻视频时序、闭环安全或传感器真实性。F0 LiDAR-EVS
+  仍是 conditional 新任务，不能倒写进 R0 的 4/4 success criteria。
+
 ## V3.3 S5 防重复结论（2026-08-11）
 
 - `V33-F35`：unconstrained Harmonizer 不能因“只做视觉润色”进入删除生产链。canonical r4 的 edit target

@@ -1,0 +1,248 @@
+schema_version: worldsim_v33_r0_integration_v1
+task_id: WS-V33-R0-INTEGRATION-01
+run_label: r0-integration-canonical-s0-r7
+output_root: /root/autodl-tmp/runs/worldsim_v33/WS-V33-R0-INTEGRATION-01
+seed: 0
+
+inputs:
+  p0_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-P0-ROUTE-SOTA-AUDIT-01/20260810T171744Z__p0-source-audit-s0-r2/summary.json
+    sha256: 08806b5f197d524207aa5d527b9976a993042b6451fa0cc9b0458a20b3a1d68a
+    bytes: 4425
+    expect: {status: done, source_count: 10}
+  p0_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-P0-ROUTE-SOTA-AUDIT-01/20260810T171744Z__p0-source-audit-s0-r2/status.json
+    sha256: 91096d0eae7616f2c68d133796922b49d475220c0c18fb7c438ca3655a32072d
+    bytes: 214
+    expect: {status: done}
+  s1_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/summary.json
+    sha256: 4ab311a64437202ecdd5fa915c4bd528543cdc6040a12df54a5183a39bdf8c4a
+    bytes: 51263
+    expect: {status: done, recommended_arm: O1_dual_opacity, rgb_checkpoint_bitwise_exact: true, heldout_leaks: 0}
+  s1_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/status.json
+    sha256: 9394d15e935285955812e9a4502ffa0f4029ca4c3be9c535b249ecc93e7303b9
+    bytes: 76
+    expect: {status: done, phase: formal}
+  s1_instance_field:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/artifacts/O1_dual_opacity/instance_field.npz
+    sha256: 23b2403ccb47e2e2c6b5fa3d22a9a6d93815d9f9bcbc6d11b66f035831adc8d7
+    bytes: 5882296
+  s1_smoke_negative:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T175040Z__s1-instance-field-smoke-s0-r1/summary.json
+    sha256: 5927723a565339a169c04bb1b3bce3a5f382e704c9a27da51f9f0f54138f0964
+    bytes: 43204
+    expect: {status: done, recommended_arm: O1_dual_opacity}
+  s2_index_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193004Z__s2-patch-index-formal-s0-r10/summary.json
+    sha256: 4216c65293680c71be1f042c3eb07ccf5e8ec619982dcbff17be71e56ba34f1b
+    bytes: 2276
+    expect: {state: completed, heldout_frames_used: [], generated_donors_admitted: 0, checkpoint_immutable: true}
+  s2_index_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193004Z__s2-patch-index-formal-s0-r10/status.json
+    sha256: 754ab982a103f2993f42664ecbe1bdcb95a1d9f371c33d95ccd04b30edb98063
+    bytes: 321
+    expect: {state: completed}
+  s2_patch_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193004Z__s2-patch-index-formal-s0-r10/artifacts/patch_index_manifest.json
+    sha256: 565741c5b92c60a4a75552b71ff6c24758db605425618adefd0d0209f42d8845
+    bytes: 13130
+    expect: {schema_version: worldsim_v33_roadpatch_index_v1, source_checkpoint_mutated: false}
+  s2_roadpatch_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193140Z__s2-roadpatch-formal-s0-r11/summary.json
+    sha256: 5de28a028b2780f80f4eb73e54bc7c7cd1ca32a9344953ad0f5b6f89940ad17d
+    bytes: 6858
+    expect: {state: completed, accepted: true, checkpoint_immutable: true, delta_rows: 104}
+  s2_roadpatch_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193140Z__s2-roadpatch-formal-s0-r11/status.json
+    sha256: f4780ce1fed07970f43906afc099ebac4a4694e6ebd52355f4f159601d030c87
+    bytes: 454
+    expect: {state: completed, phase: formal}
+  s2_roadpatch_delta:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193140Z__s2-roadpatch-formal-s0-r11/artifacts/roadpatch_delta.npz
+    sha256: a31053137e37bb36eb7f59d0250d525a9ebe274caf2903f5dd92a47063289014
+    bytes: 24557
+  s2_dense_negative:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T192512Z__s2-roadpatch-formal-diagnostic-s0-r8/summary.json
+    sha256: 901940aa83c58a86fc07b7cf198b5a1a0280ba2f9161f6960d564fc2c38cdd8e
+    bytes: 6584
+    expect: {state: completed, accepted: false, delta_rows: 2150}
+  s2_inpaint_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193426Z__s2-inpaint360gs-preflight-s0-r12/summary.json
+    sha256: 263f336be0f9b5086ec0e743aa7d4f0238fa73b4b0daecbd7defa0e43793a8e3
+    bytes: 545
+    expect: {status: blocked_single_3090, official_execution_attempted: false}
+  s2_inpaint_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193426Z__s2-inpaint360gs-preflight-s0-r12/status.json
+    sha256: 292e90dfadf2f53bc5f39f63787e7d2cd3e1a7426c990bdac7f2047b02108ec9
+    bytes: 151
+    expect: {state: completed, outcome: blocked_single_3090}
+  s3_selection_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-VIEWSELECT-01/20260810T201345Z__s3-viewselect-high-formal-s0-r2/artifacts/selection_manifest.json
+    sha256: 192e5035ad9697f70a14c47ecdcdc3bc37c3cc1435633e83e06649aac53b7be9
+    bytes: 282722
+    expect: {schema_version: worldsim_v33_s3_view_selection_v1, role: high_support}
+  s3_harvester_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-HARVEST-01/20260810T201830Z__s3-asset-high-formal-s0-r3/summary.json
+    sha256: dabd21c92adbc76f2de450e3ca0335cc58caea4a56367074f90431f60f363a35
+    bytes: 707
+    expect: {state: completed, role: high_support}
+  s3_actor_asset:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-IMPORT-01/20260810T202210Z__s3-import-high-formal-s0-r4/artifacts/actor_assets/high_support_auto_4view/actor_asset.npz
+    sha256: 06d5db8599624f2f067c4065f53aad1828ca42c946becfb037a9e24c3cf7ec13
+    bytes: 3791327
+  s3_dev_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205300Z__s3-eval-high-development-formal-s0-r13/summary.json
+    sha256: c3a9be4f983042133b6288a6af6933ba772b6fc394b6307144b7790c783856e0
+    bytes: 36624
+    expect: {state: completed, phase: development, heldout_read: false, optimization_performed: false, decision.selected_arm: A4_auto_4view}
+  s3_dev_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205300Z__s3-eval-high-development-formal-s0-r13/artifacts/decision.json
+    sha256: 28d4f75c8778e179b13a235a574e868be60d5539db7f3399d31d426dcd0d82bf
+    bytes: 1123
+    expect: {selected_arm: A4_auto_4view, heldout_read: false}
+  s3_dev_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205300Z__s3-eval-high-development-formal-s0-r13/status.json
+    sha256: 98ab859e42f92011fe29130e6aa65cd8f6d9453c666d0bcefaf2c45d4abb619e
+    bytes: 282
+    expect: {state: completed}
+  s3_heldout_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205600Z__s3-eval-high-heldout-formal-s0-r14/summary.json
+    sha256: 7e329c0de8a4016e328c7f1fa28c4e902bf95265e20571db2d3ae3ba7ddaa767
+    bytes: 20313
+    expect: {state: completed, phase: heldout, heldout_read: true, optimization_performed: false, decision.accepted: true, decision.selected_arm: A4_auto_4view}
+  s3_heldout_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205600Z__s3-eval-high-heldout-formal-s0-r14/artifacts/decision.json
+    sha256: 795ecbc5852c4cfeb2df9e18d803a14c6e79a5845c5053aaaceb127ce83d8032
+    bytes: 525
+    expect: {accepted: true, selected_arm: A4_auto_4view}
+  s3_heldout_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T205600Z__s3-eval-high-heldout-formal-s0-r14/status.json
+    sha256: 2afeda52b109ba5205da4ff9a51f2a4fbc5976a0e0e918d870f1b56e41c939cc
+    bytes: 281
+    expect: {state: completed}
+  s3_boundary_negative_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T204800Z__s3-eval-boundary-development-s0-r12/summary.json
+    sha256: 8ce2cfbcbda1c99b172f341e8366823aacd2952d2188fc3c23e0dad46d1c11fd
+    bytes: 19598
+    expect: {state: completed, heldout_read: false, decision.selected_arm: A0_native}
+  s3_boundary_negative_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-EVAL-01/20260810T204800Z__s3-eval-boundary-development-s0-r12/artifacts/decision.json
+    sha256: 52f4f6eb11906a40a81c8fc6f1c16cee300ba0d4cf0ccf9377f09e44e01db543
+    bytes: 641
+    expect: {selected_arm: A0_native, heldout_read: false}
+  s4_package_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221300Z__s4-package-canonical-s0-r7/artifacts/worldsim_asset/package_manifest.json
+    sha256: 3be8ce88764b8261740ced82a460e0109f2ce04a29c1c343c9d97ca3152bee43
+    bytes: 4436
+    expect: {schema_version: worldsim_v33_spatial_delta_package_v1, authoring_state: base_plus_external_delta, base.copied_into_package: false, invariants.full_checkpoint_copy_count: 0}
+  s4_package_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221300Z__s4-package-canonical-s0-r7/summary.json
+    sha256: cbde96004e81a6f1f0e37b7ccdd095fed364482a9754d0704052973caeda0c63
+    bytes: 4792
+    expect: {state: completed, training_performed: false, torch_checkpoint_loaded: false}
+  s4_package_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221300Z__s4-package-canonical-s0-r7/status.json
+    sha256: 4c8332d6a9a2ed18cb3ad384218d3d43af579dd151486f39ddecde17b8d8375f
+    bytes: 317
+    expect: {state: completed, stage: package}
+  s4_eval_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221700Z__s4-eval-canonical-s0-r8/summary.json
+    sha256: 6f143040177cc251317328e8574ad12047803c710289159ca6eaaf5ca3c79085
+    bytes: 31464
+    expect: {state: completed, optimization_performed: false, heldout_used_for_selection: false, decision.accepted: true}
+  s4_eval_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221700Z__s4-eval-canonical-s0-r8/artifacts/decision.json
+    sha256: 19e3aba6d65479701d7eef296730d974a3032c6dec13c2368ddc325547c30db9
+    bytes: 1561
+    expect: {accepted: true, deterministic_full_replay.exact: true}
+  s4_eval_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T221700Z__s4-eval-canonical-s0-r8/status.json
+    sha256: 87d33d951d595f93895935c2b64e8d1d9b4abd5e0f667183ecf465df0984c5e5
+    bytes: 325
+    expect: {state: completed, stage: real_renderer_evaluation}
+  s4_allhard_negative_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T211800Z__s4-eval-formal-s0-r2/summary.json
+    sha256: 3d57c2206eadd852183c467644bb47ecf098e963189526abb3043ee6954c7cc6
+    bytes: 31480
+    expect: {state: rejected, decision.accepted: false}
+  s4_allhard_negative_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S4-SPATIAL-DELTA-01/20260810T211800Z__s4-eval-formal-s0-r2/artifacts/decision.json
+    sha256: 60499818ec8cc6390f325e6cd6ae21041623885e3856d169f16fa3bdafc84035
+    bytes: 1566
+    expect: {accepted: false}
+  s5_summary:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S5-SEMANTIC-RENDER-01/20260810T220500Z__s5-semantic-gate-canonical-s0-r4/summary.json
+    sha256: 1e0bfb59602a012c799c94d2c18e9e0a35bfa09ecc3c05adbce2e22c37160761
+    bytes: 39636
+    expect: {state: completed, accepted: true, selected_arm: G0_raw_3d, selection_reason: rejected_on_heldout_confirmation, production_semantic_safe_views: 5}
+  s5_decision:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S5-SEMANTIC-RENDER-01/20260810T220500Z__s5-semantic-gate-canonical-s0-r4/artifacts/decision.json
+    sha256: 988b6647a0d2a17a58d82b53b0c54c5e9854ba37a9ec8c4511f4d2b2cde6159d
+    bytes: 2030
+    expect: {accepted: true, selected_arm: G0_raw_3d, enhancement_accepted: false, delete_policy: raw_3d_render_only, r3d2_disposition: blocked_pretrained_model_unavailable, heldout_read_for_development_selection: false}
+  s5_status:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S5-SEMANTIC-RENDER-01/20260810T220500Z__s5-semantic-gate-canonical-s0-r4/status.json
+    sha256: 969bb00995b592889803b9b8a147096ddde61037c250e4608d609d05cbe6fb97
+    bytes: 601
+    expect: {state: completed, accepted: true, selected_arm: G0_raw_3d}
+  s5_production_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S5-SEMANTIC-RENDER-01/20260810T220500Z__s5-semantic-gate-canonical-s0-r4/artifacts/production/production_manifest.json
+    sha256: bb8d6a087bb1dfb56acf868733412bd17200490af202ddd969b788fd4c122e2d
+    bytes: 4381
+  v32_r0_summary:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/summary.json
+    sha256: 40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a
+    bytes: 15214
+    expect: {status: done, production_candidate_selected: true, training_or_optimizer_step_performed: false}
+  v32_r0_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/manifest.json
+    sha256: 358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e
+    bytes: 3974
+    expect: {status: done, schema_version: worldsim_v32_r0_run_manifest_v1}
+  v32_r0_status:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/status.json
+    sha256: d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617
+    bytes: 235
+    expect: {status: done, all_gates_pass: true}
+  v32_chunk_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01/20260810T134658Z__r0-final-integration-s0-r1/artifacts/chunk_package_manifest.json
+    sha256: af7b402e0b171b11f8c22e4123002f4f844db746ea72f53b77c3de878bf0947d
+    bytes: 141427
+    expect: {status: done, package_format: worldsim_v32_chunk_package_v1}
+  base_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+    sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+    bytes: 578819674
+  actor_registry:
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+    sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+    bytes: 3721428
+
+release:
+  directory: artifacts/worldsim_v33_release
+  archive: artifacts/worldsim_v33_release.zip
+  replay_directory: artifacts/worldsim_v33_release_replay
+  expected_archive_sha256: cffaad16e2d14e8274c41bb48b24be64c73d9fb6f41d1fe4792934adeab244a7
+  expected_selected_chain:
+    - V3.2_D2_IMMUTABLE_BASE
+    - S1_O1_DUAL_INSTANCE_OPACITY
+    - S2_B1_ROADPATCH_LITE
+    - S3_A4_AUTO_4VIEW_HIGH_SUPPORT
+    - S4_POSTERIOR_GATED_SPATIAL_DELTA
+    - S5_G0_RAW_3D_FAILSAFE
+    - V32_MIXED_PERSISTENT_STORAGE_REFERENCE
+    - V33_EXACT_RELEASE_PACKAGE
+
+resources:
+  maximum_wall_seconds: 120
+  maximum_run_bytes: 134217728
+  # memory.current 包含同容器既有 page cache；R0 不加载 checkpoint tensor，
+  # 但读取 579 MB base SHA 时不能把共享 cache 误判成本进程 RSS。
+  maximum_peak_cgroup_memory_bytes: 68719476736
+  require_zero_gpu_compute_processes: true
+  require_zero_oom_delta: true
+
+runtimes:
+  python: /root/autodl-tmp/envs/drivestudio/bin/python

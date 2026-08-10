@@ -1,8 +1,8 @@
-# Motion-Proj V3.3 启动前产物保留策略
+# Motion-Proj V3.3 canonical 产物保留策略
 
 - 更新时间：2026-08-11
 - 当前研究授权：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
-- V3.3 计划：尚未执行；本文件只规定存储驻留边界
+- V3.3 终态：`R0 done / v33_supported`
 - 本次清理账本：
   [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
 
@@ -17,12 +17,23 @@
 | V3.2 S3 canonical | `.../20260810T112505Z__s3-asset-harvest-s0-r3` | manual 1/2-view actor baseline 与 selected actor asset |
 | V3.2 S4 canonical | `.../20260810T131909Z__s4-harmonizer-nontemporal-s0-r3` | semantic reintroduction 负对照和 optional diagnostic |
 | V3.2 R0 canonical | `.../20260810T134658Z__r0-final-integration-s0-r1` | mixed checkpoint、registry、semantic extension 与 exact chunk package |
+| V3.3 S1 canonical | `.../20260810T183154Z__s1-instance-field-formal-s0-r9` | O1 instance field 与 object-aware heldout 证据 |
+| V3.3 S2 canonical | `.../r10`、`.../r11`、`.../r12` | native patch index、RoadPatch delta 与 Inpaint360GS blocker |
+| V3.3 S3 canonical | high r2/r3/r4/r13/r14 | auto-view selection、A4 actor asset 与 heldout decision |
+| V3.3 S4 canonical | `.../20260810T221300Z__...-r7`、`.../20260810T221700Z__...-r8` | base+delta package、20/20 rollback 与真实渲染 |
+| V3.3 S5 canonical | `.../20260810T220500Z__...-r4` | G0 production、SAM2 reintroduction 证据与 G1 负结果 |
+| V3.3 R0 canonical | `.../20260810T222701Z__r0-integration-canonical-s0-r7` | 44-input ledger、76-file release、deterministic archive 与 standalone verifier |
 | 运行环境 | `/root/autodl-tmp/envs/{motionproj,drivestudio,worldsim-v32-asset-harvester}` | V3.3 主代码、StreetGS、Asset Harvester/Harmonizer |
 | 第三方与模型 | DriveStudio、Asset Harvester、Inpaint360GS、Harmonizer、必要 gsplat/nvdiffrast/PyTorch3D、Asset Harvester HF cache | V3.3 已知可复用依赖 |
 | 文档与清理证据 | `docs/`、`/root/autodl-tmp/cleanup_manifests/20260811-pre-v33-space-reclaim/` | 研究连续性、删除清单和恢复边界 |
 
 上述 canonical 路径、关键模型和三场景 processed 数据不得原地改写。V3.3 必须使用新的 run namespace；任何输入
 变更都要通过新 task、冻结协议和 before/after SHA 审计。
+
+R0 release archive SHA=`cffaad16e2d14e8274c41bb48b24be64c73d9fb6f41d1fe4792934adeab244a7`，
+content manifest SHA=`e386c14b6b29c74bd1316a31a3abefedf10a74530cfe3149cf9e040eb78a6c53`。至少保留
+`worldsim_v33_release.zip`、`content_manifest.json`、summary/status/source snapshots；release 内无完整 checkpoint，
+因此 D2 base checkpoint 和 actor registry 仍是独立必留 external references。
 
 ## 2. 已转为 non-resident 的内容
 

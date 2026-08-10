@@ -2,10 +2,10 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-S5-SEMANTIC-RENDER-01`
-- 当前任务：`WS-V33-R0-INTEGRATION-01`
-- 路线终态：`running`
-- 当前门禁：只授权 R0 integration；F0 LiDAR-EVS 不阻塞且当前未授权
+- 最新有效完成任务：`WS-V33-R0-INTEGRATION-01`
+- 当前任务：无
+- 路线终态：`v33_supported`
+- 当前门禁：P0–S5/R0 已收口；F0 LiDAR-EVS 保持 conditional，当前未授权
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
@@ -13,6 +13,7 @@
 - S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](WS_V33_S3_ASSET_VIEW_SELECTION.md)
 - S4 Spatial Delta：[`WS_V33_S4_SPATIAL_DELTA.md`](WS_V33_S4_SPATIAL_DELTA.md)
 - S5 语义门控渲染：[`WS_V33_S5_SEMANTIC_RENDER.md`](WS_V33_S5_SEMANTIC_RENDER.md)
+- R0 完整集成：[`WS_V33_R0_INTEGRATION.md`](WS_V33_R0_INTEGRATION.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -70,12 +71,38 @@
   `1e0bfb59602a012c799c94d2c18e9e0a35bfa09ecc3c05adbce2e22c37160761` /
   `969bb00995b592889803b9b8a147096ddde61037c250e4608d609d05cbe6fb97` /
   `988b6647a0d2a17a58d82b53b0c54c5e9854ba37a9ec8c4511f4d2b2cde6159d`
-- F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
-- R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
+- V3.3 R0 canonical run：`20260810T222701Z__r0-integration-canonical-s0-r7`
+- V3.3 R0 config/summary/status/release/content-manifest SHA-256：
+  `4b4a20b95c2cd9803d2087128dca4942344e7e0a6ac1669b71e108c0e11273a9` /
+  `c19032559796377d28073ce14584ce086a0d6ec8b20c598069fe15ae391ca2b2` /
+  `0a1396f45a063df6ae60bc8ba56378d89df20651a4074c157a5babbc18f09aa4` /
+  `cffaad16e2d14e8274c41bb48b24be64c73d9fb6f41d1fe4792934adeab244a7` /
+  `e386c14b6b29c74bd1316a31a3abefedf10a74530cfe3149cf9e040eb78a6c53`
+- V3.1 F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
+- V3.1 R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
-- R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
+- V3.1 R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 R0 canonical 收口
+
+- R0 对 44 个 canonical inputs 做 path/bytes/SHA 与嵌套 terminal/decision 枚举 exact 检查；再次验证
+  O1=`1,309,868` Gaussian、RoadPatch=`104` rows、A4=`99,241` rows 的正式 schema；
+- selected chain 固定为 `D2 immutable base→O1→B1→A4→posterior-gated spatial delta→S5 G0→
+  V3.2 persistent storage reference→V3.3 exact release`；四个必须成功标准 `4/4`，overall=`v33_supported`；
+- R0 对问题 2 明确 `not_directly_ranked`：B1 通过冻结 heldout 且成为 V3.3 主方法，但不声称在非 matched
+  协议下优于 V3.2 Telea；Inpaint360GS/SAM3.1/R3D2 的 blocked 也不写成质量失败；
+- release 物化 O1 field、完整 RoadPatch delta、A4 asset、14-file S4 delta package、S5 5×2 production
+  PNG、V3.2 chunk manifest、39 JSON evidence 与五类 ledger；`76 files / 18,432,994 bytes`，full checkpoint copy=`0`；
+- archive 在 diagnostic/formal 与同 run 双构建均 SHA exact=`cffaad16...44a7`；directory/archive replay 的
+  content manifest SHA=`e386c14b...a6c53`，standalone verifier 两种模式均 passed；
+- R0 wall=`2.721847 s`、GPU compute max=`0`、cgroup peak（含既有 page cache）=`39,614,062,592 bytes`、
+  run=`50,851,476 bytes`、OOM/kill=`0/0`；S1–S5 selected wall 累计=`379.552 s`、peak=`20,137 MiB`；
+- 前五个 diagnostic 分别修复 exact list/enum、无冗余 schema 假设和 tools directory 创建，terminal 均 failed；
+  r6 冻结 archive，formal r7 以 expected SHA 通过；
+- R0 专项=`6 passed`、V3.3/V3.2 定向回归=`86 passed`、7 个 source snapshots 与提交候选 exact；
+  当前无下一执行授权，F0 LiDAR-EVS 保持 conditional。
 
 ## V3.3 S5 收口与 R0 授权
 
