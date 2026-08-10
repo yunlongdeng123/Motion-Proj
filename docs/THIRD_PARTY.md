@@ -1,7 +1,38 @@
-# V2 第三方依赖
+# WorldSim 第三方依赖
 
-- 更新时间：2026-08-02
-- 当前计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- 更新时间：2026-08-11
+- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+
+## V3.3 S2 审计
+
+| 项目 | 路径 | 固定版本/许可 | V3.3 裁决 |
+|---|---|---|---|
+| Inpaint360GS | `/root/autodl-tmp/third_party/worldsim_v33/inpaint360gs` | `d54c893285c6cb27788e05cce607e7d3cca6388a`，clean，Apache-2.0 | r12=`blocked_single_3090`；未执行官方训练/推理 |
+| GS-RoadPatching | `/root/autodl-tmp/third_party/worldsim_v33/gs-roadpatching` | `468f812`；仅 project-page 静态文件，无算法源码与根 LICENSE | 只允许 `GS-RoadPatching-inspired RoadPatch-Lite`，不得写官方复现 |
+
+Inpaint360GS 官方 README/环境文件声明：
+
+- 验证硬件为 RTX 4090，CUDA 11.8；
+- 主环境为 Python 3.10、torch 2.0+cu118；LaMa 使用独立 CUDA 10.2 环境；
+- 需要 CropFormer、Big-LaMa、SAM、DeAOT/GroundingDINO 等外部代码或权重；
+- 官方流程面向静态 COLMAP/object-aware Gaussian 初始化、分割、LaMa、PLY 与 5k finetune；
+- 官方仓库没有 DriveStudio/StreetGS checkpoint adapter。
+
+当前主机为 RTX 3090 24,576 MiB，`/root/autodl-tmp/envs/inpaint360gs` 与
+`/root/autodl-tmp/envs/lama` 不存在，必需权重和 StreetGS adapter 也不存在。因此 canonical preflight：
+
+```text
+/root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/
+20260810T193426Z__s2-inpaint360gs-preflight-s0-r12
+```
+
+记录 `official_execution_attempted=false`、`blocked_single_3090`。这只表示当前官方执行合同不满足，不是对
+Inpaint360GS 质量的负结论；不得下载替代权重、静默降低正式分辨率、改变 heldout split，或用 RoadPatch/Telea
+输出冒充官方 B2。
+
+## V2 历史依赖
+
+- 历史计划：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
 ## 当前驻留
 

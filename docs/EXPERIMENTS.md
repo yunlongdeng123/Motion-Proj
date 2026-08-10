@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-S2-ROADPATCH-INPAINT-01`
+- 当前执行授权：仅 `WS-V33-S3-ASSET-VIEWSELECT-01`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -29,8 +29,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 |---|---|---|---|
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、切换分支、审计 source/license/weights/hardware | canonical r2；10 sources；5 个 V3.2 大资产 SHA exact；36+4 tests |
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + dual instance-opacity field | canonical formal r9；O1 selected；base exact；51 tests |
-| `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS baseline | 当前唯一授权；先 RoadPatch-Lite |
-| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester auto 1/2/4-view | S2 收口后按计划解锁 |
+| `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS baseline | r10 index + r11 B1 canonical；r12 B2 blocked_single_3090 |
+| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester auto 1/2/4-view | 当前唯一授权；S2 canonical 已满足入门 |
 | `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | S3 收口后按计划解锁 |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | R3D2 pretrained 当前 unavailable |
 | `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | S1–S5 决策收口后解锁 |
@@ -88,6 +88,48 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   以 SIGPIPE/141 failed；r9 由后台托管重跑，9 个源码快照与待提交文件 SHA exact。r7→r9 O1 有小幅 CUDA
   数值漂移，但两 arm aggregate 指标 exact；
 - 定向回归=`51 passed`，py_compile、bash syntax、git diff check 通过；下一步只解锁 S2。
+
+### `WS-V33-S2-ROADPATCH-INPAINT-01` canonical closeout
+
+- diagnostic r0 因外层 `nohup` 在注册前创建 run.log 而拒绝 non-empty run 目录；r1 识别出旧 P3 绑定 P2 FP16
+  且使用 `(x,y)` 网格；r2 识别出内参为 9 值；三者均保留 failed，未续写；
+- r3 的 whole-cell geometry gate 被天空/立面 outlier 污染，`53,541` patches 中 `0` valid；r4–r6 引入
+  row-level fail-closed、densest vertical slab 与明确的 sidecar/front-camera support，得到 `822` valid patches；
+- canonical index r10=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193004Z__s2-patch-index-formal-s0-r10`，
+  terminal=`done`；config/index/manifest/summary/status SHA-256=
+  `34022784...af79 / 51561eec...a4c / 565741c5...8845 / 4216c652...f1b / 754ab982...063`；
+- r10 从 D2 FP32 `1,205,164` 个 native Background rows 中保留 `702,506` eligible rows，建立
+  `15,591` 个 1/2/4 m patches，valid=`617/160/45`；index=`4,146,483 bytes`，generated donors=`0`；
+- high/boundary 两个 target anchors 由 S1 object-aware delete mask ∩ accepted SAM2 mask、target-view first-hit
+  depth 与 cross-view support 冻结，均选择最小覆盖的 4 m patch，且各自 top-5 通过 geometry/visibility/separation；
+- r7 完成真实 GPU anchor/top-5 preflight；r8 用 2,150-row dense delta 时 heldout PSNR/SSIM delta=
+  `-0.8553 dB/-0.00619`，保持 rejected；r9 在冻结 `maximum_rows_per_target=512` 后以 104 rows 通过门，
+  但在 formal index manifest 前，仅作 diagnostic；
+- canonical RoadPatch r11=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193140Z__s2-roadpatch-formal-s0-r11`，
+  terminal=`done`；summary/acceptance/selection/delta/status SHA-256=
+  `5de28a02...17d / 9be39845...cd0 / da54ad6d...0f0 / a3105313...014 / f4780ce1...c87`；
+- r11 选择 high=`p4-x-000008-z+000009 / 25 rows`、boundary=`p4-x-000009-z+000009 / 79 rows`；
+  delta=`24,557 bytes`，保留 exact native row/chunk provenance、rigid `(x,z)` transform、opacity feather、bounded
+  RGB affine、scale clamp；candidate 只临时挂载 Background 后渲染并恢复同一对象，base checkpoint 不变；
+- heldout B0→B1 mean：PSNR `28.1571546740→28.0731240061`、SSIM
+  `0.87145031937→0.87054233897`、LPIPS `0.14966575801→0.15152705088`；冻结门分别为
+  `-0.1 dB/-0.005/+0.01`，全部通过；static PSNR `+0.00286484865 dB`，static LiDAR MAE
+  `-0.00525204837 m`；
+- r11 wall=`69.335 s`，peak CUDA allocated/reserved=
+  `8,337,670,144 / 8,420,065,280 bytes`；D2 checkpoint before/after SHA exact；
+- Inpaint360GS canonical preflight r12=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S2-ROADPATCH-INPAINT-01/20260810T193426Z__s2-inpaint360gs-preflight-s0-r12`；
+  source=`d54c893285c6cb27788e05cce607e7d3cca6388a`、tree clean、Apache-2.0 license
+  SHA=`41d80577...5a10`；config/preflight/summary/status SHA=
+  `f6dc0291...1845 / 91b5c6a0...30b / 263f336b...8e3 / 292e90df...ec9`；
+- 官方要求 RTX 4090/CUDA 11.8、main+LaMa 隔离环境以及 CropFormer/Big-LaMa/SAM/DeAOT/GroundingDINO
+  权重；当前 RTX 3090 24,576 MiB 上上述环境/权重与 StreetGS adapter 均缺失，故
+  `blocked_single_3090`、`official_execution_attempted=false`；不生成 B2 质量指标；
+- RoadPatch 专项=`6 passed`，V3.3/V3.2 定向回归=`52 passed`，py_compile 与 r10/r11/r12 的 8 个
+  canonical source snapshots byte-exact；
+- S2 以 B1 RoadPatch 为 canonical，B2 作为可审计外部阻塞保留；下一步只解锁 S3。
 
 ## 1. 状态词
 

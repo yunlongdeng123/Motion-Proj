@@ -9,6 +9,35 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 S2 防重复结论（2026-08-11）
+
+- `V33-F15`：正式 run 目录不能在 runner 注册前由 `nohup ... > run.log` 预创建。r0 因 shell 先创建
+  `run.log` 而触发 non-empty run-directory fail-closed；不得删除日志后续写。正式托管应把 launcher 日志写到
+  run 目录外，或由 runner 创建目录后再写；r10/r11 使用新 run 收口。
+- `V33-F16`：V3.1 P3 package 的空间网格是 `(x,y)` 且绑定 V3.2 P2 FP16 mixed checkpoint，不是当前 D2 FP32
+  原生 Background 的道路索引。DriveStudio 首个 CAM_FRONT 是 OpenCV `x-right/y-down/z-forward`，道路 BEV
+  必须使用 `(x,z)`；r1 因错误要求 P3 manifest 绑定 D2 exact SHA 而失败。不得为复用旧索引而放宽 checkpoint hash。
+- `V33-F17`：相机内参在当前 DriveStudio 输入中是 9 个值（`fx/fy/cx/cy + 5 distortion`），不是只含 4 个值；
+  r2 在正式物化前 fail closed。所有 adapter 必须显式接受已冻结 schema、校验前四项和 distortion 长度，不能静默切片
+  后假称已适配其他相机模型。
+- `V33-F18`：对整格直接取 `max_scale/max_plane_residual` 会被一个天空、立面或跨层 Gaussian 污染。r3 得到
+  `53,541` patches 但 `0` valid；这不证明场景没有道路 donor。修复应先逐行排除 actor/generated/低 support/
+  scale outlier，再确定性选择 `<=0.75 m` 的 densest vertical slab，最后做 plane/normal 门。r10 由此得到
+  `822` valid patches；不得回到 whole-cell 放宽阈值。
+- `V33-F19`：cross-view sidecar 的 `visible_view_count` 与 front-camera frustum observation 是两个合同。
+  r4/r5 已有 valid 4 m patch，但把 `minimum_multi_camera_count=2` 当作当前六相机逐相机观测计数，导致两个真实
+  target 的 top-5 手工门失败；当前实现明确要求 sidecar `visible_view_count>=5` 且至少一个 front-camera frustum
+  observation，不虚构不可得的逐相机 visibility。
+- `V33-F20`：donor 几何合格不等于新增 Gaussian 数量可以无限。r8 的 2,150-row dense delta 在 development
+  selection 中可见，但 heldout PSNR/SSIM 退化 `-0.8553 dB/-0.00619`，保持 rejected。修复不是从 heldout 选
+  top-K，而是在候选资格阶段冻结 `maximum_rows_per_target=512`，让搜索选择最小可见 delta；r11 最终为
+  `25+79=104` rows，并通过全部 heldout 门。不得复活 r8 或事后改写其 terminal。
+- `V33-F21`：官方 Inpaint360GS source clean、Apache-2.0 不等于当前 StreetGS/3090 上已复现。官方声明
+  RTX 4090/CUDA 11.8，并需要主环境、独立 LaMa 环境、CropFormer/Big-LaMa/SAM/DeAOT/GroundingDINO 权重；
+  官方代码没有 DriveStudio/StreetGS checkpoint adapter。r12 因这些前置条件 fail-closed 为
+  `blocked_single_3090`、`official_execution_attempted=false`。该状态不是 B2 质量负结论，也不得用 Telea、base
+  SAM 或自写 RoadPatch 输出冒充官方 Inpaint360GS。
+
 ## V3.3 S1 防重复结论（2026-08-11）
 
 - `V33-F07`：磁盘可用空间在 P0 后被外部流程扩大，同时 V3.2 SAM2 checkout/weight/runtime 被删除；不能把

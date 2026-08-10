@@ -2,13 +2,14 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-S1-OBJECT-AWARE-GS-01`
-- 当前任务：`WS-V33-S2-ROADPATCH-INPAINT-01`
+- 最新有效完成任务：`WS-V33-S2-ROADPATCH-INPAINT-01`
+- 当前任务：`WS-V33-S3-ASSET-VIEWSELECT-01`
 - 路线终态：`running`
-- 当前门禁：只授权 S2 RoadPatch-Lite 与 Inpaint360GS 条件 baseline；S3–S5 与 R0 需按 V3.3 顺序解锁
+- 当前门禁：只授权 S3 Asset Harvester 自动 1/2/4-view selection；S4–S5 与 R0 需按 V3.3 顺序解锁
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
+- S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -25,12 +26,49 @@
   `4ab311a64437202ecdd5fa915c4bd528543cdc6040a12df54a5183a39bdf8c4a` /
   `e1b858fd505c65e41dc3272137e355ad36b4e45bc18b350c3140bcbde1ef584e` /
   `9394d15e935285955812e9a4502ffa0f4029ca4c3be9c535b249ecc93e7303b9`
+- V3.3 S2 canonical index / RoadPatch / Inpaint360GS preflight：
+  `20260810T193004Z__s2-patch-index-formal-s0-r10` /
+  `20260810T193140Z__s2-roadpatch-formal-s0-r11` /
+  `20260810T193426Z__s2-inpaint360gs-preflight-s0-r12`
+- V3.3 S2 index/manifest/RoadPatch delta/acceptance/preflight SHA-256：
+  `51561eecf66ac20f38d139abd9738c970cefe686f40ba9ae787ea62be74a1a4c` /
+  `565741c5b92c60a4a75552b71ff6c24758db605425618adefd0d0209f42d8845` /
+  `a31053137e37bb36eb7f59d0250d525a9ebe274caf2903f5dd92a47063289014` /
+  `9be398450e34a5b5a4f43dcfccd562b42439a4735a7efc9faaf97b59afa43cd0` /
+  `91b5c6a04cefc6086e4695584f57c0497bc9985ba36e874336b85cc4a11a830b`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 S2 收口与 S3 授权
+
+- RoadPatch-Lite 明确标记为 `GS-RoadPatching-inspired`；没有把仅含项目页静态文件的上游仓库写成官方复现；
+- DriveStudio 首个 CAM_FRONT 使用 OpenCV `x-right/y-down/z-forward`，道路 BEV 为 `(x,z)`；V3.1 P3 的 `(x,y)`
+  网格和 V3.2 P2 FP16 checkpoint 仅为历史 package schema，不再误用为原生 donor truth；
+- canonical index r10 从 D2 FP32 Background 的 `1,205,164` 个 native rows 建立 1/2/4 m 静态索引；先做
+  row-level actor/generated/scale/support fail-closed，再取 `<=0.75 m` densest vertical slab，避免一个天空/立面点污染整格；
+- index 共 `15,591` patches，`822` valid（1/2/4 m=`617/160/45`），eligible native rows=`702,506`，
+  generated donor=`0`；index=`4,146,483 bytes / 51561eec...a4c`；
+- S1∩SAM2 delete mask、target-view first-hit depth 与 cross-view support 形成两个真实 4 m hole anchors；两者的
+  5 个候选均满足冻结的几何/可见性/分离门禁；
+- development-only r8 的 `2,150`-row dense delta 造成 heldout PSNR/SSIM=`-0.8553 dB/-0.00619`，保持
+  rejected；新增 `maximum_rows_per_target=512` 作为候选资格门，不事后修改 r8；
+- canonical RoadPatch r11 自动选择 `25 + 79 = 104` 个 native donor rows，delta=`24,557 bytes / a3105313...9014`；
+  authoring state 是 immutable D2 base + deterministic delta，不另造完整 checkpoint；
+- heldout B0→B1：PSNR `28.157155→28.073124`（`-0.084031 dB`）、SSIM
+  `0.871450→0.870542`、LPIPS `0.149666→0.151527`；static PSNR `+0.002865 dB`，static LiDAR MAE
+  `0.895636→0.890384 m`，全部通过冻结门；checkpoint before/after SHA exact；
+- r11 wall=`69.335 s`，peak CUDA allocated/reserved=`8,337,670,144 / 8,420,065,280 bytes`；
+- 官方 Inpaint360GS r12 固定 source=`d54c893`、Apache-2.0；其 RTX 4090/CUDA 11.8 双环境与
+  CropFormer/LaMa/SAM/DeAOT/GroundingDINO 权重、StreetGS adapter 在当前 3090 主机均不齐，故
+  `blocked_single_3090`，`official_execution_attempted=false`，不伪造 B2 质量结果；
+- V3.3/V3.2 定向回归=`52 passed`，RoadPatch 专项=`6 passed`，py_compile 与 8 个 canonical source
+  snapshot byte-exact 均通过；
+- S2 canonical 以 B1 RoadPatch 收口，当前唯一 next action 为 `WS-V33-S3-ASSET-VIEWSELECT-01`；
+  S4–S5/R0 仍未授权。
 
 ## V3.3 S1 收口与 S2 授权
 

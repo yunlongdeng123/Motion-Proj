@@ -1,0 +1,149 @@
+schema_version: worldsim_v33_s2_roadpatch_v1
+task_id: WS-V33-S2-ROADPATCH-INPAINT-01
+seed: 20260811
+
+inputs:
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  checkpoint_background_count: 1205164
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  source_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  s1_config: /root/autodl-tmp/motion_proj/configs/worldsim_v33/s1_instance_field_v1.yaml
+  s1_config_sha256: 9afa48aa1ff5ebbb290da564e901f25c48ac1f6ee16f97379f936457acdc3150
+  s1_instance_field: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/artifacts/O1_dual_opacity/instance_field.npz
+  s1_instance_field_sha256: 23b2403ccb47e2e2c6b5fa3d22a9a6d93815d9f9bcbc6d11b66f035831adc8d7
+  s1_summary: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/summary.json
+  s1_summary_sha256: 4ab311a64437202ecdd5fa915c4bd528543cdc6040a12df54a5183a39bdf8c4a
+  semantic_sidecars:
+    high_support:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/high_support.npz
+      sha256: 0119e15d979c1c69cdaea23d9c4716ae66f323972cd4abf3027fb43593ce22cb
+    boundary_support:
+      path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/boundary_support.npz
+      sha256: 25b1eaecb2bb53af852ec2c5fae1abf53636359f9714e2de6e9a330187f22050
+  v32_telea:
+    checkpoint: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/checkpoint_s2_generated_background.pth
+    checkpoint_sha256: 3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f
+    summary: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/summary.json
+    summary_sha256: a07bbf7a1b160d352fd0d3d08be9e217a3d27648eeffec7841f443b5bc871407
+    evaluation: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/evaluation.json
+    evaluation_sha256: 05a6286846c8f5c9282601286aaca93974022ff9222f9a0325c64ca0db9f6c81
+    generated_provenance: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/generated_background_provenance.npz
+    generated_provenance_sha256: 1baf73b81205f66cfe30a6ea3385cdf960b3d8952648031fb34be26a7ef758cc
+  v31_chunk_manifest: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T184240Z__a4-p3-chunk-s0-r1/artifacts/chunk_package/manifest.json
+  v31_chunk_manifest_sha256: 35a3f1fe7e351e68eb46d0dfe9ae0fe1204185041bef13b19baec3b0a4a064b8
+
+scene:
+  name: scene-0230
+  processed_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179
+  coordinate_frame: first_CAM_FRONT_aligned_OpenCV_x_right_y_down_z_forward
+  bev_axes: [0, 2]
+  vertical_axis: 1
+  source_width: 1600
+  source_height: 900
+  model_native_width: 800
+  model_native_height: 450
+  cameras: [0, 1, 2]
+  development_frames: [5, 25, 45, 65, 85, 105, 125, 145, 165, 185]
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+
+targets:
+  high_support:
+    frame: 91
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    dataset_instance_id: 13
+    instance_token: af663976db5e412e83db033d309c5c29
+    rigid_model_index: 5
+    semantic_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/masks/high_support/CAM_FRONT_LEFT/091.npz
+    semantic_mask_sha256: c5014caeb4b6bb9efd36abb7c3c5bdda1b21436bb9eedc5c38b1f9305de03690
+    cross_view_observed_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/high_support/cross_view_observed.png
+    cross_view_observed_mask_sha256: bac54550ccb8345263799dc36b2f0b31d9c7f6cd6f8f96ea2e2d66ea55d03b78
+    completion_reference: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/high_support/completion_reference.png
+    completion_reference_sha256: e48391c14183e03f3fe593c7e344e64fd6bf63b4cdbeb1e950835b0c9b4f817b
+  boundary_support:
+    frame: 31
+    camera_id: 0
+    camera_name: CAM_FRONT
+    dataset_instance_id: 41
+    instance_token: 18c7f0c5fa6b49449f71c9dbae5c31d4
+    rigid_model_index: 21
+    semantic_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/masks/boundary_support/CAM_FRONT/031.npz
+    semantic_mask_sha256: a4c3c356ecd91684d02ff77a11ab866c769f7343a9414f262581a3ad4a16ba1e
+    cross_view_observed_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/boundary_support/cross_view_observed.png
+    cross_view_observed_mask_sha256: a2dcc77ffdf56a0503c51ec063f0b2090842a06929965876f23efe8d5d5185b4
+    completion_reference: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/boundary_support/completion_reference.png
+    completion_reference_sha256: 1af8bf660eb8dda8b7e670762572059a91be91758991a1cd3961dc1d6c399f73
+
+index:
+  patch_sizes_m: [1.0, 2.0, 4.0]
+  coarse_chunk_size_m: 50.0
+  thresholds:
+    minimum_rows: 16
+    maximum_actor_semantic: 0.8
+    minimum_visibility_mass: 1.0
+    minimum_train_view_observations: 5
+    minimum_multi_camera_count: 1
+    minimum_multi_camera_rows: 1
+    maximum_plane_residual_m: 0.12
+    minimum_abs_plane_normal_vertical: 0.85
+    maximum_vertical_range_m: 0.75
+    maximum_scale_m: 0.35
+
+anchor:
+  instance_mask_threshold: 0.5
+  bottom_quantile: 0.6
+  robust_quantiles: [0.05, 0.95]
+  minimum_anchor_pixels: 32
+  minimum_cross_view_observed_pixels: 32
+  context_ring_pixels: 8
+
+search:
+  top_k: 5
+  weights:
+    geometry: 1.0
+    appearance: 2.0
+    semantic: 2.0
+    visibility: 0.5
+  minimum_spatial_separation_m: 5.0
+  minimum_tangent_confidence: 0.35
+  maximum_abs_yaw_radians: 0.7853981633974483
+  maximum_abs_vertical_offset_m: 0.5
+
+delta:
+  opacity_feather_width_m: 0.3
+  maximum_rgb_affine: 0.05
+  minimum_scale_m: 0.01
+  maximum_scale_m: 0.25
+  duplicate_radius_m: 0.005
+  maximum_rows_per_target: 512
+
+selection:
+  minimum_effect_pixels: 32
+  minimum_effect_coverage: 0.01
+  maximum_outside_l1_uint8: 0.5
+  score_weights:
+    missing_coverage: 2.0
+    observed_l1: 2.0
+    seam_l1: 1.0
+    depth_discontinuity: 0.5
+    outside_l1: 2.0
+    index_distance: 0.1
+
+evaluation:
+  heldout_views:
+    - [30, 0]
+    - [50, 0]
+    - [90, 1]
+    - [110, 1]
+  maximum_heldout_psnr_degradation_db: 0.1
+  maximum_heldout_ssim_degradation: 0.005
+  maximum_heldout_lpips_increase: 0.01
+
+resources:
+  minimum_free_disk_gib: 20
+  maximum_cgroup_fraction: 0.9
+
+runtimes:
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1

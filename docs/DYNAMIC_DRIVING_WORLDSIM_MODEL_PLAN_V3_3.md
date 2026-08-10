@@ -11,7 +11,7 @@
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-S2-ROADPATCH-INPAINT-01`
+- **V3.3 当前唯一授权任务**：`WS-V33-S3-ASSET-VIEWSELECT-01`
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -521,8 +521,8 @@ conditional future task
 |---|---|---|---|
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、建立新分支、审计 SAM3.1/OP2GS/Inpaint360GS/GS-RoadPatching/3D-GIMP/FocusGS/R3D2 | canonical r2；10 sources；5 个 V3.2 资产 SHA exact；36+4 tests |
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + instance-opacity Gaussian field | canonical formal r9；O1 selected；base SHA exact；51 tests |
-| `WS-V33-S2-ROADPATCH-INPAINT-01` | pending | RoadPatch-Lite + Inpaint360GS strong baseline | 至少一个真实 delete background 方法过门 |
-| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester automatic 1/2/4-view selection | 高支持 actor 必做；通过后扩 boundary actor |
+| `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS strong baseline | canonical B1 r10/r11；B2 r12=`blocked_single_3090` |
+| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester automatic 1/2/4-view selection | 当前唯一授权；高支持 actor 必做，通过后扩 boundary actor |
 | `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | exact compose / rollback / package |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated Harmonizer；R3D2 conditional | 不允许删除语义重引入 |
 | `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 全部 canonical hash / gates / single-GPU 资源通过 |
@@ -2446,6 +2446,25 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — S2 canonical 完成，S3 解锁
+
+- 修正 DriveStudio 坐标合同：首个 CAM_FRONT 是 OpenCV `x-right/y-down/z-forward`，道路 BEV 必须使用
+  `(x,z)`；V3.1 P3 `(x,y)` 网格与 V3.2 P2 FP16 checkpoint 只保留为历史 package schema；
+- canonical index r10 从 D2 FP32 的 `1,205,164` 个 native Background rows 构建 1/2/4 m、28-feature
+  静态 patch index；先 row-level fail-closed，再用 densest vertical slab 隔离道路层；
+- eligible native rows=`702,506`；`15,591` patches 中 `822` valid（1/2/4 m=`617/160/45`）；
+  所有 donor 均非 actor、非 heldout-only、非 V3.2 generated background；
+- 由 S1∩SAM2 delete mask、真实 first-hit depth 和 cross-view support 冻结两个 4 m target anchors；top-K 固定为 5；
+- development r8 的 2,150-row dense delta heldout 明显退化，保持 rejected；候选资格增加每目标最多 512 rows 后，
+  canonical r11 自动选择 `25 + 79 = 104` 行最小可见 delta，不事后改写 r8；
+- B1 heldout PSNR/SSIM/LPIPS delta=`-0.084031 dB / -0.000908 / +0.001861`，static PSNR
+  `+0.002865 dB`、static LiDAR MAE `-0.005252 m`，全部通过冻结门；D2 checkpoint before/after SHA exact；
+- deterministic delta=`24,557 bytes / a3105313...9014`，authoring state 为 immutable base + delta，未创建新完整 checkpoint；
+- 官方 Inpaint360GS 固定 `d54c893`/Apache-2.0，但双环境、五类外部权重、StreetGS adapter 与官方 RTX 4090
+  硬件合同在当前 3090 不满足；r12 fail-closed 为 `blocked_single_3090`，未伪造官方执行或 B2 指标；
+- V3.3/V3.2 定向回归 `52 passed`，RoadPatch 专项 `6 passed`；canonical source snapshots byte-exact；
+- S2 以 RoadPatch B1 为 canonical 收口，下一步只解锁 `WS-V33-S3-ASSET-VIEWSELECT-01`。
 
 ## 2026-08-11 — S1 canonical 完成，S2 解锁
 
