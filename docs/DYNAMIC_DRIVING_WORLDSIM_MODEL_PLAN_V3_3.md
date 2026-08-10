@@ -11,7 +11,7 @@
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-S3-ASSET-VIEWSELECT-01`
+- **V3.3 当前唯一授权任务**：`WS-V33-S4-SPATIAL-DELTA-01`
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -522,8 +522,8 @@ conditional future task
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、建立新分支、审计 SAM3.1/OP2GS/Inpaint360GS/GS-RoadPatching/3D-GIMP/FocusGS/R3D2 | canonical r2；10 sources；5 个 V3.2 资产 SHA exact；36+4 tests |
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + instance-opacity Gaussian field | canonical formal r9；O1 selected；base SHA exact；51 tests |
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS strong baseline | canonical B1 r10/r11；B2 r12=`blocked_single_3090` |
-| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester automatic 1/2/4-view selection | 当前唯一授权；高支持 actor 必做，通过后扩 boundary actor |
-| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | exact compose / rollback / package |
+| `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester automatic 1/2/4-view selection | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
+| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | 当前唯一授权；exact compose / rollback / package |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated Harmonizer；R3D2 conditional | 不允许删除语义重引入 |
 | `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 全部 canonical hash / gates / single-GPU 资源通过 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | conditional | LiDAR extrapolated view future audit | 不阻塞 R0 |
@@ -2446,6 +2446,25 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — S3 canonical 完成，S4 解锁
+
+- 从 train-only pool 自动评分 actor observation：projected area、SAM confidence、Laplacian sharpness、D2
+  counterfactual visibility、nearby-dynamic occlusion、truncation；集合分数再加入 circular yaw、时间和相机多样性；
+- 10 个预留 development frames 与 19 个 heldout frames 均不进入候选池；diagnostic/formal 的 selection/input
+  manifest 对 high 与 boundary 都 byte-exact；
+- high formal selector r2 在 `130/119` candidates/eligible 中选择 A1=`91L`、A2=`0F+91L`、
+  A4=`11F+83L+89L+94L`；`heldout_read=false`、`reserved_development_read=false`；
+- 官方 Asset Harvester 固定 `767b243`、三套权重和 VAE/C-RADIO revision，HF offline；三臂 wall=`160.189 s`、
+  peak=`20,137 MiB`、OOM/high=`0`；StreetGS A4=`99,241 Gaussian / 06d5db85...ec13`；
+- development r13 在 A0/A1/A2/A4 四臂中选择 A4；heldout r14 相对 V3.2 manual A0 的 IoU/boundary F1=
+  `+0.023490/+0.059889`，PSNR/LPIPS=`-0.015760 dB/+0.008527`，四项冻结门全过；
+- boundary selector/AH/import 真实跑通，A4=`94,835 Gaussian / 9b2295e5...5dd1f`；但 development r12 相对
+  immutable D2 native actor 的 IoU/boundary F1=`-0.041730/-0.063202`，LPIPS/PSNR 也明显退化，生产 override
+  明确 `ABSTAIN_GENERATED_OVERRIDE`，未读取 boundary heldout；
+- scene-0242/0255 因缺少与本任务冻结协议一致的 V3.3 S1/S2 输入链，且 boundary transfer 已拒绝，条件确认未执行；
+- S3 专项 `11 passed`，V3.3/V3.2 定向回归 `63 passed`，py_compile/diff check/source snapshot exact；
+- S3 以 high-support A4 为 production actor asset 收口，下一步只解锁 `WS-V33-S4-SPATIAL-DELTA-01`。
 
 ## 2026-08-11 — S2 canonical 完成，S3 解锁
 

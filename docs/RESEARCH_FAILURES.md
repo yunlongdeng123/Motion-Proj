@@ -9,6 +9,32 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 S3 防重复结论（2026-08-11）
+
+- `V33-F22`：DriveStudio `instances_info.obj_to_world` 在冻结数据中可直接是 list，也可能是历史 JSON string。
+  selector r0 只接受 string，在首个候选 fail-closed，未发布 selection。修复必须对两种 schema 都验证 4×4 shape
+  与 finite，不得无校验 `json.loads` 或续写 r0；r1/r2 已以新 run 收口。
+- `V33-F23`：view selector 的确定性不能用复制 manifest 冒充。high r1→r2、boundary r7→r8 都重新执行全部
+  D2 original/delete 候选渲染，formal 传入 diagnostic 的 expected selection/input SHA 并得到 byte-exact；候选池
+  必须继续排除 heldout 与 reserved development，不能让评估帧参与 view selection。
+- `V33-F24`：更多输入视图不自动等于更好 actor。high development 中 A4 被选择是因为冻结 metric order 下
+  IoU/boundary 改善且 LPIPS/PSNR/背景漂移/横移碎裂 retention 全过；heldout 只允许 A0 与 frozen A4 一次确认。
+  不得从 heldout 重选 A1/A2/A4，或把生成背面写成 GT accuracy。
+- `V33-F25`：V3.2 manual A0 只绑定 high-support token `af663...c5c29`，不是 boundary actor 基线。boundary
+  评估必须使用同 identity 的 immutable D2 native actor，不能复用 high A0、换 actor 或仅凭 class 相同跳过三元核对。
+- `V33-F26`：Asset Harvester 对 boundary A4 成功生成 PLY/NPZ 不等于 production override 可接受。r12 中 A4
+  相对 native 的 IoU/boundary F1 从 `0.666562/0.555343` 降到 `0.624832/0.492141`，LPIPS/PSNR 也失败；
+  决策为 `ABSTAIN_GENERATED_OVERRIDE`，未读 boundary heldout。不得通过放宽门、读取 heldout 或只展示 orbit
+  render 复活该资产。
+- `V33-F27`：CLI 编排提供错误 inference manifest SHA 时，importer 必须在物化前 fail-closed。boundary r10
+  因传错 SHA 保留失败证据；正确 SHA 只用于新 r11。不得删除 r10 后续写、绕过 SHA，或把编排错误写成模型失败。
+- `V33-F28`：canonical eval 的 source snapshot 必须等于最终提交源码。high r5/r6 的指标与 r13/r14 完全相同，
+  但 evaluator 后来增加 native baseline 支持，旧快照不再等于提交态；因此只把 r13/r14 作为 canonical。不得用
+  “逻辑没变”绕过 byte-exact 合同。
+- `V33-F29`：scene-0242/0255 有旧 V3 checkpoint 不等于存在本任务冻结的 V3.3 S1/S2 mask/actor 输入链。
+  在 boundary transfer 已拒绝的情况下更不能混用旧资产补齐跨场景表。合法复开需要新 task、每场景 exact identity/
+  mask/checkpoint 协议、冻结 high actor policy 和新 run；旧 S3 terminal 不续写。
+
 ## V3.3 S2 防重复结论（2026-08-11）
 
 - `V33-F15`：正式 run 目录不能在 runner 注册前由 `nohup ... > run.log` 预创建。r0 因 shell 先创建

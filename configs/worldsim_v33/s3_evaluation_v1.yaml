@@ -1,0 +1,67 @@
+schema_version: worldsim_v33_s3_evaluation_v1
+task_id: WS-V33-S3-ASSET-VIEWSELECT-01
+
+inputs:
+  train_mask_manifest: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/mask_manifest.json
+  train_mask_manifest_sha256: efc7d82145dfe0cf3c1bfccf230b0756f152ed5b306610b2634ddbcdbabab98b
+  heldout_mask_manifest: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T180231Z__s1-heldout-targets-s0-r4/artifacts/masks/mask_manifest.json
+  heldout_mask_manifest_sha256: f99cc1150a5c964bb9348b7b3dabf4b26ed4edcea9e2bdaf75a12bc6f4897c1a
+  manual_a0:
+    manifest: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset_manifest.json
+    manifest_sha256: 988d8c2c1109fd14d2b7b1d445f86f9ac50d06eed81f73d941c3a6566c2e0a23
+    asset: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset.npz
+    asset_sha256: b0c1f413e1a462292a1e3396ad45b8a8fc10f87f647e4bc3e1b98a4c8913caf0
+    source_summary: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/summary.json
+    source_summary_sha256: 8dc4fc930229fbb17343b0bbcf9ccda632ac54b2e5301d4ca6448bda0d99c2d1
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  source_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+
+actor:
+  role: high_support
+  instance_token: af663976db5e412e83db033d309c5c29
+  dataset_instance_id: 13
+  rigid_model_index: 5
+
+development_views:
+  - [5, 0]
+  - [25, 0]
+  - [65, 1]
+  - [85, 1]
+
+heldout_views:
+  - [20, 0]
+  - [40, 0]
+  - [60, 1]
+  - [90, 1]
+
+selection:
+  arms: [A0_manual_2view, A1_auto_1view, A2_auto_2view, A4_auto_4view]
+  auto_arms: [A1_auto_1view, A2_auto_2view, A4_auto_4view]
+  development_metric_order:
+    - mean_silhouette_iou
+    - mean_masked_crop_lpips_alex
+    - mean_masked_rgb_psnr
+    - mean_boundary_f1_tolerance_3px
+  acceptance_vs_manual_a0:
+    maximum_iou_degradation: 0.03
+    maximum_boundary_f1_degradation: 0.05
+    maximum_psnr_degradation_db: 0.5
+    maximum_lpips_increase: 0.02
+    maximum_outside_l1_uint8: 0.2
+    maximum_lateral_fragmentation: 0.15
+  heldout_confirmation:
+    maximum_iou_degradation: 0.04
+    maximum_boundary_f1_degradation: 0.06
+    maximum_psnr_degradation_db: 0.75
+    maximum_lpips_increase: 0.025
+
+render:
+  lateral_offset_m: 1.0
+  minimum_effect_pixels: 25
+  boundary_tolerance_pixels: 3
+
+runtimes:
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python

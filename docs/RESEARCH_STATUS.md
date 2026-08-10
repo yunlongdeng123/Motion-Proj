@@ -2,14 +2,15 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-S2-ROADPATCH-INPAINT-01`
-- 当前任务：`WS-V33-S3-ASSET-VIEWSELECT-01`
+- 最新有效完成任务：`WS-V33-S3-ASSET-VIEWSELECT-01`
+- 当前任务：`WS-V33-S4-SPATIAL-DELTA-01`
 - 路线终态：`running`
-- 当前门禁：只授权 S3 Asset Harvester 自动 1/2/4-view selection；S4–S5 与 R0 需按 V3.3 顺序解锁
+- 当前门禁：只授权 S4 immutable spatial delta；S5 与 R0 需按 V3.3 顺序解锁
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
+- S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](WS_V33_S3_ASSET_VIEW_SELECTION.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -36,12 +37,48 @@
   `a31053137e37bb36eb7f59d0250d525a9ebe274caf2903f5dd92a47063289014` /
   `9be398450e34a5b5a4f43dcfccd562b42439a4735a7efc9faaf97b59afa43cd0` /
   `91b5c6a04cefc6086e4695584f57c0497bc9985ba36e874336b85cc4a11a830b`
+- V3.3 S3 high selector / AH / import / development / heldout canonical runs：
+  `20260810T201345Z__s3-viewselect-high-formal-s0-r2` /
+  `20260810T201830Z__s3-asset-high-formal-s0-r3` /
+  `20260810T202210Z__s3-import-high-formal-s0-r4` /
+  `20260810T205300Z__s3-eval-high-development-formal-s0-r13` /
+  `20260810T205600Z__s3-eval-high-heldout-formal-s0-r14`
+- V3.3 S3 high selection/input/inference/A4 asset/dev decision/heldout decision SHA-256：
+  `192e5035ad9697f70a14c47ecdcdc3bc37c3cc1435633e83e06649aac53b7be9` /
+  `34b1e09e6f8e7fbd8ed47a64e3140aa3b1158a66efea3c3784da0693dfdef2e7` /
+  `e33fcc650848de868c76ea7f0d54b4c73e51df42bc90b562481ed3606a7f2d90` /
+  `06d5db8599624f2f067c4065f53aad1828ca42c946becfb037a9e24c3cf7ec13` /
+  `28d4f75c8778e179b13a235a574e868be60d5539db7f3399d31d426dcd0d82bf` /
+  `795ecbc5852c4cfeb2df9e18d803a14c6e79a5845c5053aaaceb127ce83d8032`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 S3 收口与 S4 授权
+
+- selector 只枚举 train frames，并排除 19 heldout + 10 reserved development frames；每个候选使用真实 D2
+  original/delete counterfactual effect，保存 area/mask/sharpness/visibility/occlusion/truncation/yaw 全量证据；
+- high diagnostic/formal selection/input SHA byte-exact；r2 candidates/eligible=`130/119`，A1=`91L`、
+  A2=`0F+91L`、A4=`11F+83L+89L+94L`，heldout/development read 均为 false；
+- 官方 Asset Harvester source=`767b243` clean，三套权重与 VAE/C-RADIO revision exact，HF offline；r3
+  wall=`160.189 s`、peak=`20,137 MiB`、OOM/high=`0`；三份 PLY 均非空；
+- importer r4 的 A4=`99,241 Gaussian / 3,791,327 bytes / 06d5db85...ec13`，deterministic
+  reserialization 与 reload exact，enriched manifest=`4590c1bd...7343`；
+- high development r13 的 A0/A1/A2/A4 IoU=`0.669876/0.658477/0.664463/0.701490`、boundary F1=
+  `0.517563/0.497629/0.544166/0.604799`；三条 auto arm retention gates 全过，冻结选择 A4；
+- high heldout r14 只比较 A0/A4；A4 相对 A0 的 IoU/boundary F1=`+0.023490/+0.059889`、
+  PSNR/LPIPS=`-0.015760 dB/+0.008527`，四项 gate 全过；checkpoint exact、无 heldout 优化；
+- boundary formal selector r8/AH r9/import r11 执行成功，A4=`94,835 Gaussian / 9b2295e5...5dd1f`；
+  r12 使用 immutable D2 native actor 作诚实基线，不复用错误角色的 manual A0；
+- boundary A4 相对 native 的 IoU/boundary F1=`0.624832/0.492141` vs `0.666562/0.555343`，LPIPS/PSNR
+  也失败，故 `ABSTAIN_GENERATED_OVERRIDE`；没有读取 boundary heldout；
+- scene-0242/0255 没有本协议冻结的 V3.3 S1/S2 输入链，且 boundary transfer 已拒绝，不混用旧 V3 资产；
+- S3 专项=`11 passed`，V3.3/V3.2 定向回归=`63 passed`，py_compile、diff check 与最终 source snapshots exact；
+- S3 production 输出只包含 high-support A4；generated backside 仍只作 completeness/consistency claim；
+- 当前唯一 next action 是 `WS-V33-S4-SPATIAL-DELTA-01`；S5/R0 仍未授权。
 
 ## V3.3 S2 收口与 S3 授权
 

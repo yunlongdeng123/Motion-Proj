@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-S3-ASSET-VIEWSELECT-01`
+- 当前执行授权：仅 `WS-V33-S4-SPATIAL-DELTA-01`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -30,8 +30,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | `WS-V33-P0-ROUTE-SOTA-AUDIT-01` | done | 冻结 V3.2、切换分支、审计 source/license/weights/hardware | canonical r2；10 sources；5 个 V3.2 大资产 SHA exact；36+4 tests |
 | `WS-V33-S1-OBJECT-AWARE-GS-01` | done | SAM2.1 fallback + dual instance-opacity field | canonical formal r9；O1 selected；base exact；51 tests |
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS baseline | r10 index + r11 B1 canonical；r12 B2 blocked_single_3090 |
-| `WS-V33-S3-ASSET-VIEWSELECT-01` | pending | Asset Harvester auto 1/2/4-view | 当前唯一授权；S2 canonical 已满足入门 |
-| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | S3 收口后按计划解锁 |
+| `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester auto 1/2/4-view | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
+| `WS-V33-S4-SPATIAL-DELTA-01` | pending | immutable base + erase/insert delta | 当前唯一授权；high A4 exact 输入已冻结 |
 | `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | R3D2 pretrained 当前 unavailable |
 | `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | S1–S5 决策收口后解锁 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | pending | 条件式未来 LiDAR 扩展 | 不阻塞 R0，当前未授权 |
@@ -130,6 +130,41 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - RoadPatch 专项=`6 passed`，V3.3/V3.2 定向回归=`52 passed`，py_compile 与 r10/r11/r12 的 8 个
   canonical source snapshots byte-exact；
 - S2 以 B1 RoadPatch 为 canonical，B2 作为可审计外部阻塞保留；下一步只解锁 S3。
+
+### `WS-V33-S3-ASSET-VIEWSELECT-01` canonical closeout
+
+- high selector diagnostic r1 与 formal r2 的 selection/input manifest byte-exact；r2=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S3-ASSET-VIEWSELECT-01/20260810T201345Z__s3-viewselect-high-formal-s0-r2`；
+  `130` candidates / `119` eligible，heldout/development read=false；selection/input/summary/status SHA=
+  `192e5035...b7be9 / 34b1e09e...ef2e7 / 65485a63...0311 / b4c0af50...376c`；
+- high 自动集合：A1=`f091 c1`，A2=`f000 c0 + f091 c1`，A4=`f011 c0 + f083/f089/f094 c1`；
+  selector 使用 frozen area/mask/sharpness/D2 visibility/occlusion/truncation Q_view 与 yaw/time/camera Q_set；
+- high AH r3=`20260810T201830Z__s3-asset-high-formal-s0-r3`，official source=`767b243` clean、
+  三权重和 VAE/C-RADIO exact、HF offline；PLY SHA=`13ff42b6...299b / 9bb7f925...8c4a / 9e9875b8...6ca0`，
+  inference manifest=`e33fcc65...2d90`，wall=`160.189 s`，peak=`20,137 MiB`，OOM/high=`0`；
+- importer r4=`20260810T202210Z__s3-import-high-formal-s0-r4`；A1/A2/A4 Gaussian=
+  `101,988/100,783/99,241`，asset SHA=`00397310...5290 / 1a6d9300...6859 / 06d5db85...ec13`，
+  deterministic reserialization/reload exact；
+- high development canonical r13=`20260810T205300Z__s3-eval-high-development-formal-s0-r13`；
+  A0/A1/A2/A4 IoU=`.669876/.658477/.664463/.701490`，boundary F1=`.517563/.497629/.544166/.604799`，
+  LPIPS=`.090755/.092720/.095948/.098533`，PSNR=`17.718824/18.480375/17.980733/17.694031`；
+  三 auto arm 的六项 retention gate 全过，A4 由冻结 metric order 选中，decision=`28d4f75c...82bf`；
+- high heldout canonical r14=`20260810T205600Z__s3-eval-high-heldout-formal-s0-r14`；只比较 A0/A4，
+  IoU=`.704974→.728464`、boundary F1=`.505017→.564906`、LPIPS=`.094170→.102697`、
+  PSNR=`17.025697→17.009936`；四项 gate 全过，decision=`795ecbc5...8032`，无 optimization，checkpoint exact；
+- boundary selector diagnostic/formal exact；formal r8=`20260810T203700Z__s3-viewselect-boundary-formal-s0-r8`，
+  `135/127` candidates/eligible，A4=`f039 c0 + f146/f151/f156 c1`，yaw=`17.95°→84.53°`；selection/input=
+  `ba05b224...505f / 5cb0ab6c...5856`；
+- boundary AH r9/import r11 完成，inference=`2bd2d011...54bd3`，A4=`94,835 Gaussian / 3,632,764 bytes /
+  9b2295e5...5dd1f`；错误 CLI SHA 的 importer r10 fail-closed 并保留，未续写；
+- V3.2 无 boundary manual asset；r12 使用 immutable D2 native baseline。native vs A4 IoU=
+  `.666562/.624832`、boundary F1=`.555343/.492141`、LPIPS=`.015414/.111043`、PSNR=
+  `31.006882/16.396747`；A4 retention 失败，生产 override=`ABSTAIN_GENERATED_OVERRIDE`，boundary heldout 未读；
+- scene-0242/0255 缺少同协议冻结的 V3.3 S1/S2 输入链，且 boundary transfer 已拒绝，条件确认未执行；
+- selector r0 的 `obj_to_world` list schema 与 importer r10 的错误 CLI hash 都按新 run 修复；high r5/r6 因最终
+  evaluator snapshot 漂移降为有效 noncanonical，r13/r14 重跑后与提交态 byte-exact；
+- S3 专项=`11 passed`，V3.3/V3.2 定向回归=`63 passed`；py_compile/diff check/source snapshot exact；
+  下一步只解锁 S4，且只允许 high A4=`06d5db85...ec13` 进入 production delta。
 
 ## 1. 状态词
 
