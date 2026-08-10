@@ -9,6 +9,27 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V3.3 S5 防重复结论（2026-08-11）
+
+- `V33-F35`：unconstrained Harmonizer 不能因“只做视觉润色”进入删除生产链。canonical r4 的 edit target
+  delete candidate 让冻结 SAM2 semantic mass/fraction 增加 `+0.126399/+0.133885`；production raw fallback
+  两项均为 `0`。以后不得关闭 detector、改用候选图作 delete，或只展示另外四个未触发视图。
+- `V33-F36`：跨视图平均改善不能掩盖单视图确认失败。五视图 contact 平均为改善，但 heldout f060/c1 的
+  contact L1 delta=`+0.422686`，超过冻结逐视图上限 `+0.25`；因此 G1 必须 rejected、production=G0。
+  不得改成 aggregate gate、放宽上限、删除该视图或用 edit target 的强改善抵消它。
+- `V33-F37`：heldout confirmation 不是第二个开发集。S5 先只用 f091/c1、f005/c0、f065/c1 选择 G1，随后才
+  读取 f020/c0、f060/c1；看到 F36 后不得调 contact/shadow 区域、权重、cap 或阈值并继续在同一 heldout 上
+  宣称泛化。合法复开需要新假设、新 task 和未读 confirmation 数据；R0 只登记当前负结果。
+- `V33-F38`：冻结推理环境不应为共享模块的无关顶层依赖而污染。r1 的 Harmonizer 已完成，SAM2 启动时因
+  `semantic_gate.py` 顶层 SciPy import failed；SAM2 只消费 semantic mass/decision，并不构建 gate。修复是将
+  SciPy 限在 builder 内 lazy import，不是往冻结 SAM2 环境临时安装包；r1 terminal 保持 failed。
+- `V33-F39`：R3D2 official code、Apache license 与 clean commit 不等于存在作者 pretrained pipeline。
+  canonical S5 只登记 `blocked_pretrained_model_unavailable`，`model_loaded=false/training=false`。不得拿
+  SD-Turbo/TAESD base、Harmonizer 或自训权重冒充 R3D2-fast。
+- `V33-F40`：S5 的五个冻结视图不是相邻视频帧，不能从 deterministic image SHA、跨 run exact 或五视图
+  quality 推出 temporal consistency。canonical 明确 `not_evaluated_non_temporal_frozen_five_view_protocol`；
+  时序 claim 需要独立连续视频协议、新指标与新 run。
+
 ## V3.3 S4 防重复结论（2026-08-11）
 
 - `V33-F30`：S1 `hard_instance_id` 是候选身份集合，不等于所有 Background 候选都应被硬 ERASE。r2 将

@@ -2,16 +2,17 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-S4-SPATIAL-DELTA-01`
-- 当前任务：`WS-V33-S5-SEMANTIC-RENDER-01`
+- 最新有效完成任务：`WS-V33-S5-SEMANTIC-RENDER-01`
+- 当前任务：`WS-V33-R0-INTEGRATION-01`
 - 路线终态：`running`
-- 当前门禁：只授权 S5 semantic-gated render；R0 需在 S5 决策收口后解锁
+- 当前门禁：只授权 R0 integration；F0 LiDAR-EVS 不阻塞且当前未授权
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
 - S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](WS_V33_S3_ASSET_VIEW_SELECTION.md)
 - S4 Spatial Delta：[`WS_V33_S4_SPATIAL_DELTA.md`](WS_V33_S4_SPATIAL_DELTA.md)
+- S5 语义门控渲染：[`WS_V33_S5_SEMANTIC_RENDER.md`](WS_V33_S5_SEMANTIC_RENDER.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
@@ -60,12 +61,41 @@
   `cbde96004e81a6f1f0e37b7ccdd095fed364482a9754d0704052973caeda0c63` /
   `6f143040177cc251317328e8574ad12047803c710289159ca6eaaf5ca3c79085` /
   `19e3aba6d65479701d7eef296730d974a3032c6dec13c2368ddc325547c30db9`
+- V3.3 S5 canonical run：`20260810T220500Z__s5-semantic-gate-canonical-s0-r4`
+- V3.3 S5 config/input/Harmonizer/SAM2/summary/status/decision SHA-256：
+  `b3848289add5e0f401d7386abf3e72caed80d3fa126b63a34694787463b18c89` /
+  `939a829eac74014ff913eb8d02058ef83166a576c8b93e89d5b7689bd58a635c` /
+  `1da253d85e98babc1a8b33187f48cfe4b1a7a6c712cacc5cc25886e836913863` /
+  `c03fe7c9c4c25d56fc256d9c3328ecc70453b2daef05f4a61f2ed76da3c58b19` /
+  `1e0bfb59602a012c799c94d2c18e9e0a35bfa09ecc3c05adbce2e22c37160761` /
+  `969bb00995b592889803b9b8a147096ddde61037c250e4608d609d05cbe6fb97` /
+  `988b6647a0d2a17a58d82b53b0c54c5e9854ba37a9ec8c4511f4d2b2cde6159d`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
 - R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
   `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+
+## V3.3 S5 收口与 R0 授权
+
+- 实现 semantic gate 核心、五视图输入冻结、Harmonizer/SAM2 分环境串行 runner、development→heldout
+  finalizer 与新 run 不覆盖 launcher；删除 production 固定为 raw 3D render exact copy；
+- gate 只覆盖 actor boundary、ground contact、shadow/seam support，residual cap=`12/255`，far weight=`0`；
+  五视图 far changed pixels=`0`、actor interior L1 delta=`0`；
+- development 三视图的 boundary/contact L1 delta=`-1.837229/-2.771866`，故预注册选择 G1；只有此后才读取
+  heldout；f060/c1 contact delta=`+0.422686>+0.25`，G1 被确认门拒绝，生产回退 G0；
+- unconstrained delete 在 edit target 的 SAM2 mass/fraction delta=`+0.126399/+0.133885` 并被标记；production
+  delete 5/5 pixel SHA exact、semantic mass/fraction delta=`0/0`，安全门 5/5；
+- R3D2 source/commit/tree/license exact，但没有作者 exported pretrained model；状态固定
+  `blocked_pretrained_model_unavailable`，model loaded/training 均为 false；
+- canonical r4 的 Harmonizer/SAM2 wall=`30.180697/5.701133 s`、peak NVIDIA sampled=`3,553/2,399 MiB`、
+  peak torch reserved=`3,940/2,070 MiB`、
+  run bytes=`34,548,858`、OOM/kill=`0/0`；r2–r4 的 30 个 RGB SHA 跨三次 run exact、decision SHA exact；
+- r1 因 SAM2 环境无 SciPy 而 failed，修复为形态学依赖延迟导入，不安装新包；r3 消除 r2 的 NumPy warning，
+  r4 清理 input-prep EOF 空白并使 source snapshot 与提交态 exact；S5 专项=`8 passed`，V3.3/V3.2 定向回归=`80 passed`；
+- 当前唯一 next action 是 `WS-V33-R0-INTEGRATION-01`；R0 必须登记 G1 负结果、G0 production、R3D2 外部
+  阻塞与 temporal not-evaluated，不得把可回退工程合同写成增强泛化成功。
 
 ## V3.3 S4 收口与 S5 授权
 

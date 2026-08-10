@@ -3,6 +3,22 @@
 - 更新时间：2026-08-11
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 
+## V3.3 S5 审计
+
+| 项目 | 路径 | 固定版本/许可/权重 | V3.3 裁决 |
+|---|---|---|---|
+| NVIDIA Harmonizer | `/root/autodl-tmp/third_party/worldsim_v32/harmonizer` | commit `dd5799e50855c5bcb1f6ef52a77b5b644b4798c0`；Apache license SHA `58d1e17f...d8bd`；JIT model SHA `ece8e2da...6e90` | 只作 semantic-gated insertion candidate；delete production 禁止写回 |
+| R3D2 | `/root/autodl-tmp/third_party/worldsim_v33/r3d2` | commit `3fc6e317d9fea9d800d3f8706554ad6ac794d980`；tree `759dd48...79c7`；Apache license SHA `43070e2d...79c1` | `blocked_pretrained_model_unavailable`；无作者 exported pipeline；禁止从零训练 |
+| SAM2.1 | `/root/autodl-tmp/third_party/worldsim_v32/sam2` | commit `2b90b9f5ceec907a1c18123530e92e794ad901a4`；license SHA `c71d239d...ab4`；large checkpoint SHA `2647878d...d318` | 冻结 image prompt 回灌 detector；checkpoint before/after exact |
+
+Harmonizer exported model 为 `1,448,843,112 bytes`，model card SHA=`f3fc6b26...4b23`。canonical S5
+没有修改模型，也没有把其 unconstrained delete 输出发布为 production。R3D2 仓库提供训练/export/eval 代码，
+但只引用基础 diffusion 组件，未发布作者训练并导出的推理 pipeline；该状态不是 R3D2 质量负结论。
+
+SAM2 独立环境固定 Python `3.10.20`、torch `2.5.1+cu124`、torchvision `0.20.1+cu124`、numpy
+`1.26.4`，conda/pip provenance SHA 分别为 `c9294494...0713 / aded7fb5...5d69`。r1 没有为无关
+SciPy import 安装新包；实现改为仅在 gate builder 中 lazy import，保持该冻结环境不变。
+
 ## V3.3 S2 审计
 
 | 项目 | 路径 | 固定版本/许可 | V3.3 裁决 |

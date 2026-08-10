@@ -11,7 +11,7 @@
   - run=`20260810T134658Z__r0-final-integration-s0-r1`
   - 8/8 gates passed
   - regression=`36 passed`
-- **V3.3 当前唯一授权任务**：`WS-V33-S5-SEMANTIC-RENDER-01`
+- **V3.3 当前唯一授权任务**：`WS-V33-R0-INTEGRATION-01`
 - **本计划替代关系**：
   - V3.2 保留为已完成、不可改写的历史事实；
   - V3.3 只在新的分支与新的 run namespace 中执行；
@@ -524,8 +524,8 @@ conditional future task
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS strong baseline | canonical B1 r10/r11；B2 r12=`blocked_single_3090` |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester automatic 1/2/4-view selection | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
 | `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
-| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated Harmonizer；R3D2 conditional | 当前唯一授权；不允许删除语义重引入 |
-| `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 全部 canonical hash / gates / single-GPU 资源通过 |
+| `WS-V33-S5-SEMANTIC-RENDER-01` | done | semantic-gated Harmonizer；R3D2 conditional | canonical r4；G1 留出 contact gate rejected；生产 G0；删除 5/5 exact safe |
+| `WS-V33-R0-INTEGRATION-01` | pending | object-aware + background repair + actor + delta + packaging | 当前唯一授权；全部 canonical hash / gates / single-GPU 资源通过 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | conditional | LiDAR extrapolated view future audit | 不阻塞 R0 |
 
 ---
@@ -1658,7 +1658,7 @@ hard preserve generated background
 far non-target：
 
 ```text
-small residual only
+zero residual in the frozen S5 production contract
 ```
 
 blend：
@@ -1707,6 +1707,19 @@ inside-delete semantic mass > threshold
 reject enhanced frame
 fallback raw 3D render
 ```
+
+## 14.6 canonical 结果
+
+- canonical r4 在 edit target + 2 development views 上冻结选择，G1 的 boundary/contact L1 分别改善
+  `1.837229/2.771866`，actor interior 漂移为 `0`；
+- 仅在 G1 选定后读取 2 个 heldout confirmation views；f060/c1 的 contact L1 恶化
+  `+0.422686>+0.25`，因此 G1 被拒绝，最终 production arm 为 `G0_raw_3d`；
+- 这不是 S5 工程失败：optional enhancer 合法 no-production，删除路径 5/5 像素 exact、SAM2 production
+  semantic mass/fraction delta 均为 `0`，far non-target changed pixels 均为 `0`；
+- unconstrained delete Harmonizer 在 edit target 触发 SAM2 semantic reintroduction（mass/fraction
+  `+0.126399/+0.133885`），证明删除路径禁止通用增强的门禁有实际作用；
+- R3D2 固定为 `blocked_pretrained_model_unavailable`，没有加载 base diffusion 冒充作者模型，也没有从零训练；
+- 非时序五视图协议不是相邻视频帧，temporal consistency 显式 `not_evaluated`，不作时序 claim。
 
 ---
 
@@ -2446,6 +2459,26 @@ Reconstruction
 ---
 
 # 30. 更新日志
+
+## 2026-08-11 — S5 canonical 完成，R0 解锁
+
+- 实现 `input + gate × clamp(enhancer-input, ±12/255)`；gate 只覆盖 actor boundary、ground contact、
+  shadow/seam support，far non-target 权重固定为 0，五视图 changed far pixels 均为 0；
+- 删除主链完全绕过 2D enhancer：生产 delete 是 raw 3D render 的字节相同副本；冻结 SAM2 prompt 对 raw、
+  unconstrained candidate 与 production 做回灌审计，production 5/5 mass/fraction delta 均为 0；
+- unconstrained delete candidate 在 edit target 的 SAM2 mass/fraction 增加 `0.126399/0.133885` 并被标记，
+  证明 semantic reintroduction detector 不是空门；
+- development 选择 G1，boundary/contact L1 平均改善 `1.837229/2.771866`，actor interior drift=`0`；
+  heldout f060/c1 contact L1 `+0.422686>+0.25`，故 G1 按冻结确认门 rejected，生产自动回退 G0；
+- R3D2 official code/Apache source exact，但作者 exported pretrained model 不存在，固定
+  `blocked_pretrained_model_unavailable`，无训练、无模型伪造；
+- canonical r4 summary/status/decision SHA=`1e0bfb59...0761 / 969bb009...fb97 / 988b6647...6159d`；
+  Harmonizer/SAM2 wall=`30.181/5.701 s`、peak NVIDIA sampled=`3,553/2,399 MiB`、peak torch reserved=
+  `3,940/2,070 MiB`、run=`34,548,858 bytes`、
+  OOM/kill=`0/0`；r2–r4 的 30 个图像产物 SHA 跨三次 run 全 exact，decision SHA exact；
+- S5 专项 `8 passed`、V3.3/V3.2 定向回归 `80 passed`；完整报告见
+  [`WS_V33_S5_SEMANTIC_RENDER.md`](WS_V33_S5_SEMANTIC_RENDER.md)。下一步只解锁
+  `WS-V33-R0-INTEGRATION-01`。
 
 ## 2026-08-11 — S4 canonical 完成，S5 解锁
 

@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：仅 `WS-V33-S5-SEMANTIC-RENDER-01`
+- 当前执行授权：仅 `WS-V33-R0-INTEGRATION-01`
 - 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -32,8 +32,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | `WS-V33-S2-ROADPATCH-INPAINT-01` | done | RoadPatch-Lite + Inpaint360GS baseline | r10 index + r11 B1 canonical；r12 B2 blocked_single_3090 |
 | `WS-V33-S3-ASSET-VIEWSELECT-01` | done | Asset Harvester auto 1/2/4-view | high A4 heldout accepted；boundary override ABSTAIN；63 tests |
 | `WS-V33-S4-SPATIAL-DELTA-01` | done | immutable base + erase/insert delta | canonical r7/r8；20 rollback exact；posterior-gated erase；9 tests |
-| `WS-V33-S5-SEMANTIC-RENDER-01` | pending | semantic-gated render；R3D2 conditional | 当前唯一授权；R3D2 pretrained 当前 unavailable |
-| `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | S1–S5 决策收口后解锁 |
+| `WS-V33-S5-SEMANTIC-RENDER-01` | done | semantic-gated render；R3D2 conditional | canonical r4；G1 heldout rejected；G0 production；delete 5/5 safe |
+| `WS-V33-R0-INTEGRATION-01` | pending | 单卡完整集成与 exact package | 当前唯一授权；S1–S5 已收口 |
 | `WS-V33-F0-LIDAR-EVS-AUDIT-01` | pending | 条件式未来 LiDAR 扩展 | 不阻塞 R0，当前未授权 |
 
 ### `WS-V33-P0-ROUTE-SOTA-AUDIT-01` canonical closeout
@@ -191,6 +191,28 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   py_compile、bash syntax 与 source snapshot exact；
 - r3/r4 为有效 noncanonical（最终 validator 后 snapshot 漂移），r5/r6 与最终方法一致但 builder fail-terminal
   尚未进入 snapshot；r7/r8 才是 canonical。下一步只解锁 S5。
+
+### `WS-V33-S5-SEMANTIC-RENDER-01` canonical closeout
+
+- r1=`failed`：input 与 Harmonizer 已完成，但 SAM2 冻结环境没有 SciPy，共享 semantic module 顶层导入形态学
+  依赖；修复为 gate builder 内 lazy import，没有安装包或修改冻结环境；
+- r2 首次完整完成；development 选择 G1，heldout f060/c1 contact delta=`+0.422686>+0.25`，final arm
+  自动回退 G0；r3 仅消除只读 NumPy view warning；r4 只清理 input-prep EOF 空白，协议/阈值/选择均未改；
+- canonical r4=
+  `/root/autodl-tmp/runs/worldsim_v33/WS-V33-S5-SEMANTIC-RENDER-01/20260810T220500Z__s5-semantic-gate-canonical-s0-r4`；
+  config/input/Harmonizer/SAM2 SHA=`b3848289...8c89 / 939a829e...635c / 1da253d8...3863 / c03fe7c9...8b19`；
+  summary/status/decision SHA=`1e0bfb59...0761 / 969bb009...fb97 / 988b6647...6159d`；
+- semantic gate residual cap=`12/255`、far weight=`0`；五视图 far changed pixels=`0`、actor interior delta=`0`；
+  development boundary/contact delta=`-1.837229/-2.771866`；
+- delete production 全部 raw 3D exact copy，SAM2 production mass/fraction delta 5/5=`0/0`；unconstrained
+  candidate 在 f091/c1 的 mass/fraction=`+0.126399/+0.133885`，1/5 被标记；
+- Harmonizer/SAM2 wall=`30.180697/5.701133 s`、peak NVIDIA sampled=`3,553/2,399 MiB`、peak torch
+  reserved=`3,940/2,070 MiB`，run bytes=
+  `34,548,858`，OOM/kill=`0/0`；r2–r4 的 30 个 RGB 产物跨三次 run SHA 全 exact，decision SHA exact；
+- R3D2 commit/tree/license exact，但作者 exported pretrained model 不存在；状态
+  `blocked_pretrained_model_unavailable`，无模型加载/训练；temporal 因非相邻五视图显式 not-evaluated；
+- S5 专项=`8 passed`，V3.3/V3.2 定向回归=`80 passed`。S5 task=`done`，G1 method=`rejected`，
+  production=`G0_raw_3d`；下一步只解锁 R0。
 
 ## 1. 状态词
 
