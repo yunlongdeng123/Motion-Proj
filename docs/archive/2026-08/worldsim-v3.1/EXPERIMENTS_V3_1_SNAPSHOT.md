@@ -1,9 +1,8 @@
 # Experiments
 
 - 更新时间：2026-08-10
-- 当前路线：WorldSim V3.2 语义资产修复
-- 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
-- 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
+- 活跃路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
+- 权威方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
@@ -14,11 +13,6 @@
 `done`，`A3*=R0-off`；A4 已 `done`，P0、P5、P1、P2 与 P3 全部闭环；P1 候选被质量门拒绝并回退到 source，
 P2 canonical r2 选择 mixed checkpoint，P3 canonical r1 选择 exact chunk package。F0 canonical audit 已 `done`，
 本机 inference 前置条件未通过，F1=`conditional_not_unlocked`；R0 canonical 已 `done`，V3.1=`none_plan_complete`。
-V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已生成并选定 Asset Harvester
-2-view actor asset，S2 canonical r3 已选定 3DGIC-adapted generated-background checkpoint。S4 canonical r3
-完成 non-temporal JIT，但删除语义保持门失败，只保留 optional diagnostic；temporal arm 受 gated Cosmos base
-阻塞。R0 canonical r4 已完成语义扩展、mixed storage、S3 actor override registry、exact chunk package 与三视角
-单卡验证；全部单卡 RTX 3090 可执行环节终态为 `done`，S5 继续 `blocked`。
 
 ## 1. 状态词
 
@@ -30,200 +24,7 @@ pending | running | blocked | done | rejected
 
 `done` 表示预注册门禁满足；`blocked` 表示工程、资源或外部依赖阻塞；`rejected` 表示研究门禁失败。
 
-## V3.2 注册表
-
-| Task ID | 状态 | 目标 | 当前证据/门禁 |
-|---|---|---|---|
-| `WS-V32-S0-ROUTE-AND-SOTA-AUDIT-01` | done | source/license/weight/hardware audit | 11 个 official HEAD exact；SAM2.1 large weight bytes/SHA exact；V3.1 immutable |
-| `WS-V32-S1-SEMANTIC-LIFT-01` | done | SAM2 temporal mask + Gaussian semantic posterior | r6 identity-aware finalizer 通过；398 masks、334 accepted、0 heldout leak、6 smoke |
-| `WS-V32-S2-BACKGROUND-INPAINT-01` | done | background 3D inpainting | canonical r3；1,896 generated rows；两目标与四路 held-out 全部门禁通过 |
-| `WS-V32-S3-ASSET-HARVEST-01` | done | complete dynamic actor asset | canonical r3；1/2-view 皆完成，选定 2-view；4 个真实视角回注渲染与资源门通过 |
-| `WS-V32-S4-HARMONIZER-01` | done | visual harmonization | canonical r3；non-temporal 执行完成但语义删除门失败，optional diagnostic；temporal externally blocked |
-| `WS-V32-S5-MULTIVIEW-UPPERBOUND-01` | blocked | multi-view editing upper bound | 未授权；许可证门未通过 |
-| `WS-V32-R0-INTEGRATION-01` | done | V3.2 integration | canonical r4；8/8 gates，mixed checkpoint、extended semantics、actor override 与 exact chunk package selected |
-
-### `WS-V32-S0-ROUTE-AND-SOTA-AUDIT-01` 完成证据
-
-- branch=`research/worldsim-v3.2-semantic-repair`，baseline=`d91e80e`；
-- source truth：`configs/worldsim_v32/s0_sources_v1.yaml`；报告：`docs/WS_V32_S0_SOTA_AUDIT.md`；
-- SAM2 checkout=`2b90b9f5ceec907a1c18123530e92e794ad901a4`；SAM2.1 large HF revision=
-  `665f8e2ad61cf5f53d65644ff27c8ee525124610`；checkpoint=`898,083,611 bytes`，SHA-256=
-  `2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318`；
-- 无卡模式 cgroup max=`2,147,483,648 bytes`；未运行 torch GPU、模型推理或训练；
-- D2 checkpoint/A3*=R0/P2/P3/V3.1 terminal 未 mutation；S1 为唯一 next authorization。
-
-### `WS-V32-S1-SEMANTIC-LIFT-01` 无卡准备（未启动 GPU 任务）
-
-- 冻结配置：`configs/worldsim_v32/s1_semantic_lift_v1.yaml`；
-- 无卡验收事实：`configs/worldsim_v32/s1_no_gpu_preflight_v1.yaml`；独立环境为 torch
-  `2.5.1+cu124` / torchvision `0.20.1+cu124`，`pip check` 无破损依赖；
-- prompt asset：`/root/autodl-tmp/assets/worldsim_v32/s1_prompt_v1/prompt_manifest.json`，SHA-256
-  `f60131687e5b4e814dd41a47e69e4b6d4d83d626e20221c43462332d03d9e69d`；
-- split：177 个 train frames / 19 个 heldout frames，manifest 检查为零 heldout 泄漏；
-- 静态验收：Python compile、4 个 schema/projection/split 单测、runner `bash -n`、`git diff --check` 均通过；
-- 未执行 SAM2 mask、Gaussian lift、original/delete/lateral smoke，故 S1 保持 `pending`。
-
-### `WS-V32-S1-SEMANTIC-LIFT-01` r5 invalidation 与 canonical r6
-
-- r5 的旧 finalizer 只核对字段、SHA 与 rigid core count，没有核对 `dataset_instance_id` 对应的
-  `instances_info.id` 是否等于同一 role 的 `instance_token`；
-- high-support 旧配置为 dataset ID `5` / token `af663…` / rigid index `5`，实际 ID `5` 的 token 是
-  `bf9a…`，`af663…` 的真实 dataset ID 是 `13`；因此 r5 的高支持 SAM mask 与 D2 actor core 不是同一对象；
-- 新 validator 同时核对 dataset ID ↔ token ↔ actor registry rigid index；v2 负测 exit=`1`，v3 正测通过；
-- v3 config SHA-256=`377cd95999dcc02d15782fce06940952826c410d5f4df13846e5dd4c58304960`，
-  prompt v3 SHA-256=`8c43b59175da1598b9720bb71d35d573647651ee4075c44ac7b0e265931f6ccf`；
-- r6=`20260810T101739Z__s1-semantic-lift-s0-r6` 已 `done`；actor identity contract=`validated`；
-  final summary SHA-256=`482dcd067ee91952536e863cded1e18cffa1003bbd3f1b0caa9a18380e93bb4a`；
-- 398 masks=`334 accepted / 64 rejected`，heldout leaks=`0`；SAM2 wall=`81.605s`，peak
-  allocated/reserved=`1,908,027,904 / 2,204,106,752 bytes`；
-- semantic lift wall=`919.436s`，peak allocated/reserved=`15,723,618,816 / 24,683,479,040 bytes`；
-  high-support labels=`1,230,548 / 4,525 / 36,767 / 38,028`，boundary-support labels=
-  `1,276,927 / 3,728 / 21,033 / 8,180`（negative/core/semantic/ambiguous）；
-- 6 个 original/delete/lateral smoke 均非空；D2 checkpoint before/after SHA-256 均为
-  `1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c`；S1=`done`；
-- 以下 r5 数值只保留为失效证据，不再支撑任何 selected/canonical 结论。
-
-### `WS-V32-S2-BACKGROUND-INPAINT-01` canonical r3
-
-- 官方 source 审计：3DGIC commit=`0fdbaed680264c02d6222c573434618eb21a44a1`、license SHA-256=
-  `c2297cb5b2dd996979a6031ae7c5e112be310f87595c1dc40340be820e0d67e5`；Inpaint360GS commit=
-  `d54c893285c6cb27788e05cce607e7d3cca6388a`、Apache-2.0 license SHA-256=
-  `41d805773f2aa0b36c2fb69491f64c3079fe3e0671c9848680645fc9e65d5a10`。当前 StreetGS checkpoint 与两者
-  原生 schema 都不相同；正式实现明确称为 3DGIC depth-guided cross-view 原理适配，不冒充上游原生运行；
-- r1=`20260810T120554Z__s2-3dgic-adapted-s0-r1` 在生成任何候选 checkpoint 前因 boundary-support
-  跨视图像素低于 `32` 而 `rejected`。保留的 train-only exhaustive diagnostic 显示目标 frame `31` 之后三相机
-  均无几何重叠，重新冻结 frame `24..29` / CAM_FRONT，不使用 held-out；
-- r2=`20260810T121342Z__s2-3dgic-adapted-s0-r2` 完成 3,940 行候选与严格重载，但把 high-support
-  未观测 Telea 像素持久化进静态背景，导致四路 held-out 平均 PSNR/SSIM delta=
-  `-0.495842 dB / -0.007160`，候选为 `candidate_selected=false`；
-- canonical r3=`20260810T121829Z__s2-3dgic-adapted-s0-r3`，config/runner SHA-256=
-  `8ad962d84009b44464ca70347fec8c935b012ad727e8e233e03648dc41defe29` /
-  `8a3c9dae6c937828ff4193bcfc64bda09e0720ba64632c1bdb5848ad6b3de93c`；基础 projection/adapter 测试
-  `6 passed`；
-- high-support mask=`15,461` pixels，train-only cross-view observed=`7,189`、multi-support=`1,788`、
-  unseen Telea=`8,272`；checkpoint 仅持久化 observed geometry。boundary-support mask=`288`，observed=`46`、
-  multi-support=`44`、unseen=`242`，小目标保留完整补全。所有 unseen 只声明 provenance、view consistency 与
-  artifact，不声明 GT accuracy；
-- append=`1,896` rows，Background=`1,205,164 → 1,207,060`；旧 means exact，候选 strict reload、V3.1
-  ancestry 对齐，权威 sidecar 对每个新行记录 `GENERATED_BACKGROUND`、confidence、observed flag、target code 与
-  source pixel；
-- high/boundary candidate effect=`9,928 / 176` pixels，outside L1=`0.042503 / 0.005122`；candidate 对
-  completion-reference mask PSNR=`17.127871 / 21.363783 dB`，均高于 source delete 的
-  `15.969350 / 19.123467 dB`；
-- 四路 held-out 只在生成后读取；平均 PSNR/SSIM/LPIPS delta=
-  `-0.022958 dB / -0.000528 / +0.000301`，通过冻结 `-0.1 dB / -0.005 / +0.01` 门；
-- selected checkpoint/summary/provenance SHA-256=
-  `3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f` /
-  `a07bbf7a1b160d352fd0d3d08be9e217a3d27648eeffec7841f443b5bc871407` /
-  `1baf73b81205f66cfe30a6ea3385cdf960b3d8952648031fb34be26a7ef758cc`；D2 source before/after SHA exact；
-  wall=`63.908s`，peak CUDA allocated/reserved=`8,051,344,384 / 8,141,144,064 bytes`，NVIDIA sampled=
-  `8,125 MiB`，cgroup peak=`39,369,183,232 bytes`，OOM=`0`。S2=`done`，selected=canonical r3。
-
-### `WS-V32-S3-ASSET-HARVEST-01` canonical r3
-
-- r2=`20260810T103527Z__s3-asset-harvest-s0-r2` 因在 CUDA context 显式初始化前调用 PyTorch 2.10
-  峰值显存计数器而 `rejected`；实际模型推理未启动、GPU peak=`0 MiB`、无部分输出；
-- canonical r3=`20260810T112505Z__s3-asset-harvest-s0-r3`，官方 source commit=
-  `767b2439ce47a8b2513038ae0fb2073026f89ee8`，config SHA-256=
-  `72a5901348265369e14636090ca02b1c61b10b454bfa76e869188036aefc1cdb`；
-- actor identity=dataset ID `13` / token `af663…` / rigid index `5`；CAM_FRONT_LEFT frame `91/51` 均为
-  直接 prompt、非 heldout，SAM 被 D2 actor-effect 完整覆盖；input manifest SHA-256=
-  `35555c431c44754b0d6fc2a019d7ef9ccf4d47cd7ea2cc8733189ebe2e6cf2dd`；
-- Asset Harvester 1/2-view 各生成 `16` 个新视角和非空 `gaussians.ply`；inference wall=
-  `113.981s`，peak CUDA allocated/reserved=`15,522,251,776 / 20,772,290,560 bytes`，NVIDIA sampled=
-  `20,137 MiB`，cgroup peak=`48,426,651,648 bytes`，OOM=`0`；
-- 导入后 1-view/2-view 分别为 `102,303 / 99,045` Gaussians，exact reload，3σ bounds 与冻结
-  LWH=`4.51 / 1.76 / 1.65 m` 的最大误差为 `2.22e-16 m`；
-- 两资产各在 frame `91/51` 完成 original/lateral/delete，四个 formal render 的 D2 checkpoint
-  before/after SHA exact；
-- 1-view mean IoU/F1/PSNR/LPIPS=`0.723918 / 0.499815 / 16.078961 dB / 0.104843`；
-  2-view=`0.733945 / 0.459813 / 16.671399 dB / 0.094894`；综合指标与前/侧/后目视 QA，
-  selected=`high_support_2view`，同时保留 boundary F1 较低的限制；
-- summary/evaluation SHA-256=
-  `8dc4fc930229fbb17343b0bbcf9ccda632ac54b2e5301d4ca6448bda0d99c2d1` /
-  `224eda1a6480941592cef843a685b7c73a70833cbf0a81e0618385466c180a3e`；S3=`done`，生成背面不声明 GT correctness。
-
-### `WS-V32-S4-HARMONIZER-01` canonical r3
-
-- 官方 source commit=`dd5799e50855c5bcb1f6ef52a77b5b644b4798c0`；non-temporal JIT model bytes/SHA-256=
-  `1,448,843,112 / ece8e2daa914e8c2a027a2da94e0eb2064491d5b3fd8514009fae9a442e06e90`；code 与 model license
-  分别为 Apache-2.0 / NVIDIA Open Model License；
-- temporal checkpoint 的官方链还要求 gated Cosmos 0.6B base。固定 revision=`dd55b6858b22ad569976bff207880b8fea839da7`，
-  当前无 HF 授权，403 证据保留且未绕过；因此不做 temporal consistency claim；
-- 当前 PyTorch 2.10+cu128 环境通过公式等价 RMSNorm 回退和两个 shape scalar device 修复运行导出图；
-  BF16 operator 对独立参考式 exact、max abs error=`0`，适配器测试 `4 passed`；
-- r1=`20260810T131510Z__s4-harmonizer-nontemporal-s0-r1` 在模型前向前因 device 初始化顺序错误
-  `rejected`；r2 工程门通过但视觉 QA 发现 G1 删除区被生成式模型重新解释成车辆，失去候选资格；
-- canonical r3=`20260810T131909Z__s4-harmonizer-nontemporal-s0-r3` 覆盖 5 张同 camera 输入：
-  G0 original ×2、G1 semantic remove+inpaint ×1、G2 selected Asset Harvester lateral ×2；
-  800×450→1024×576→800×450，direct bilinear、无 crop/pad；
-- G0/G1/G2 mean outside-mask L1=`3.543039 / 3.831952 / 3.640835` uint8；G1 inside L1=
-  `14.217278`、inside changed fraction >8=`0.541750`，同时失败冻结 `<=12.0 / <=0.40` 门；
-  `non_temporal_candidate_selected=false`，`final_disposition=optional_diagnostic`，不得默认串入删除输出；
-- 5/5 输出均有 `HARMONIZED_2D` provenance，无 3D 写回；D2、S2 selected checkpoint、S3 selected actor
-  before/after SHA exact。wall=`35.048s`，常态 median inference=`0.3386s`，peak NVIDIA=`4,077 MiB`，
-  peak CUDA reserved=`4,131,389,440 bytes`，OOM=`0`；
-- summary/status/grid SHA-256=`4543b5fa2543f6f42aa65f0dbc17f11899de1cc7ebad4aed653200e881f1ba39` /
-  `42465759974c60f0fa5407969b12ccf8aeb5952ed7c36904b378a86163b78e51` /
-  `086b08b7ab57de7a27d28dda28a84109579ff8cfae15216f88533085e19f3cbf`；S4 task=`done`。
-
-### `WS-V32-R0-INTEGRATION-01` canonical r4
-
-- r1=`20260810T134019Z__r0-final-integration-s0-r1` 因相对 config path 无法冻结 source snapshot 而
-  `rejected`，未物化资产、未启动推理；r2=`20260810T134128Z__...` 已物化资产，但在首个 forward 发现
-  DriveStudio 必须显式 `set_eval()`，故 `rejected`；r3=`20260810T134421Z__...` 的混合精度与 exact chunk
-  均通过，但误把冻结 `MAE<=1` 写成 `max_error<=1`，保持 `rejected`，不事后改写；
-- canonical r4=`20260810T134658Z__r0-final-integration-s0-r1`，config/runner/integration/test SHA-256=
-  `7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
-  `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c` /
-  `5ca86b4170d6990bd8b54e15033c090ccc19675b6d8d5340b1bd22ec0eded1f1` /
-  `b9cdaab156c6bf3bec19111a22f43764d64926d23bc96e9633a0c073440700d2`；
-- S2 generated-background provenance 1,896/1,896 行连续 exact；cross-view true/false=`1,835/61`，target
-  code 0/1=`1,824/72`，confidence 与 observed contract exact；S1 high/boundary sidecar 扩展后 SHA-256=
-  `7caae12fdfb92f15ae02f5f7fc6f5c8111236f18632516a128b09960b6d79b26` /
-  `74dd3679b58423c6e752cd3441a347d8f3f3f1add1e5ce748e75150eb510185b`，旧 prefix/rigid suffix exact；
-- P2-style mixed checkpoint bytes/SHA-256=`432,347,490 /
-  6d4e4c489f53bf4e7de3f5c405ec37dc63d3f79155aad5237fe175ce0fcd7e5d`，较 S2 FP32 source 减少
-  `146,922,064 bytes / 25.363333%`；十个转换 tensor 的 FP16 值、未转换 tensor、schema 与重载全部 exact；
-- registry bytes/SHA-256=`3,589 / 6633af150baa4b5adda143b2037091e7647f85966490de5d660fa74968ab6c57`；
-  high-support rigid index `5` 使用 S3 99,045-Gaussian `GENERATED_ACTOR`，boundary 和其余 actor 用 V3.1
-  fallback；S4 excluded diagnostic、S5 blocked 均为显式字段；
-- P3-style package 为 `133 static + 24 actor + skeleton`，manifest bytes/SHA-256=`141,427 /
-  af7b402e0b171b11f8c22e4123002f4f844db746ea72f53b77c3de878bf0947d`，payload=`444,282,102 bytes`；
-  Background/RigidNodes=`1,207,060/104,704` 行均 covered once，missing/duplicated=`0/0`，85 tensor paths、
-  recursive schema 与 non-tensor signature exact；
-- fixed views `(31,0)/(51,1)/(91,1)` 的 source→mixed PSNR=
-  `68.299304/67.239933/68.432160 dB`，MAE=`0.009614/0.012271/0.009330` uint8；mixed 与 reassembled
-  三个 RGB SHA exact，FP16 persistent/FP32 renderer adapter exact；
-- wall=`103.099s`，peak NVIDIA=`8,362 MiB`，CUDA allocated/reserved=`7,729.707/8,020 MiB`，cgroup=
-  `48,169,205,760 bytes`，run=`948,244,397 bytes`，OOM/kill=`0/0`；input immutability exact，训练/optimizer
-  steps=`0`；V3.2 定向测试=`36 passed`；
-- summary/manifest/status/report SHA-256=
-  `40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
-  `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
-  `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617` /
-  `b5397f555270a901013f0a6ce82ba20c8a868d9e22039ba1d9cc2066adf20913`；R0=`done`。
-
-### `WS-V32-S1-SEMANTIC-LIFT-01` r5 历史运行（identity-invalid）
-
-- run=`20260810T093248Z__s1-semantic-lift-s0-r5`，config=
-  `configs/worldsim_v32/s1_semantic_lift_v2.yaml`，config SHA-256=
-  `ecb6c2bc6f68376c9cd81e3e2a362a30506edfba5772226ad27125f0dcbad706`；
-- prompt v2 SHA-256=`771817828acb689e8cab19c4f4c368d8ead24c0d1c154bd1d8bcc283a9b6c071`，使用相对
-  video block、逐帧投影 box、双向传播、源图到 800×450 的 exact 坐标映射和冻结 fail-closed QC；
-- 263 masks=`212 accepted / 51 rejected`，heldout leaks=`0`；SAM2 wall=`58.337s`，peak
-  allocated/reserved=`1,895,410,176 / 2,197,815,296 bytes`；
-- semantic lift 263/263 views，wall=`770.733s`，peak allocated/reserved=
-  `15,726,013,440 / 24,536,678,400 bytes`，无 CUDA/cgroup OOM；
-- high-support sidecar SHA-256=`85ef3c1473b19c6fd5c46ab92d27f78e873e68066dde21fb25beab64ec19e103`，
-  labels=`1,295,141 / 4,525 / 3,927 / 6,275`（negative/core/semantic/ambiguous）；
-- boundary-support sidecar SHA-256=`983cffe338caa602b8d347e347b95950ec8d2f5d5568ac82dda0a180b9dfca81`，
-  labels=`1,276,895 / 3,728 / 21,043 / 8,202`；
-- 6 个 original/delete/lateral smoke 完整且每个 actor 的三个 SHA 互异；D2 checkpoint before/after SHA exact；
-- final summary SHA-256=`84fbf086dfe8a171b7b4025aceff078bf84b8674f2feb902cd43fe694d112408`；
-  旧 finalizer 当时返回 `done`，但 identity 审计后该 run 已失效，不得作为 S1 selected 或 S3 输入。
-
-## 2. V3.1 冻结注册表
+## 2. V3 注册表
 
 | Task ID | 状态 | 目标 | 完成门禁 |
 |---|---|---|---|
@@ -1126,5 +927,3 @@ F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`c
 已 `done`：63 inputs、23 decisions、12 deliverables、26 manifest files 与 P3 package 全 exact；A0→A4 主表、
 Pareto、负结果/适用边界、复现 manifest 和最小离线可视化索引均已生成。V3.1 当前为 `none_plan_complete`。
 P4、A3 formal/R2–R4、D3/D4 与新训练/推理仍未授权，除非未来以独立任务重新预注册。
-V3.1 计划和本文件的 R0 收口快照见
-[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；归档内容不构成新的执行入口。

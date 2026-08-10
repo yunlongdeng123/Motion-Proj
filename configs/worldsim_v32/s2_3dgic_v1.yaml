@@ -1,0 +1,113 @@
+schema_version: worldsim_v32_s2_3dgic_v1
+task_id: WS-V32-S2-BACKGROUND-INPAINT-01
+seed: 20260810
+
+inputs:
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  source_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  s1_config: /root/autodl-tmp/motion_proj/configs/worldsim_v32/s1_semantic_lift_v3.yaml
+  s1_config_sha256: 377cd95999dcc02d15782fce06940952826c410d5f4df13846e5dd4c58304960
+
+scene:
+  name: scene-0230
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+  model_native_width: 800
+  model_native_height: 450
+
+third_party:
+  3dgic:
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/3dgic
+    commit: 0fdbaed680264c02d6222c573434618eb21a44a1
+    license: /root/autodl-tmp/third_party/worldsim_v32/3dgic/LICENSE.md
+    license_sha256: c2297cb5b2dd996979a6031ae7c5e112be310f87595c1dc40340be820e0d67e5
+    integration: official_depth_guided_cross_view_principle_and_point_unprojection_adapted_to_streetgs
+    official_checkpoint_schema: gaussian_grouping_inria
+    source_checkpoint_schema: drivestudio_streetgs
+    two_dimensional_inpainter: opencv_telea_deterministic
+  inpaint360gs:
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/inpaint360gs
+    commit: d54c893285c6cb27788e05cce607e7d3cca6388a
+    license: /root/autodl-tmp/third_party/worldsim_v32/inpaint360gs/LICENSE.txt
+    license_sha256: 41d805773f2aa0b36c2fb69491f64c3079fe3e0671c9848680645fc9e65d5a10
+    disposition: adapter_blocked
+    reason: requires_own_colmap_scene_object_aware_retraining_interactive_segment_and_track_and_lama_pipeline
+
+targets:
+  high_support:
+    frame: 91
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    dataset_instance_id: 13
+    instance_token: af663976db5e412e83db033d309c5c29
+    rigid_model_index: 5
+    mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/masks/high_support/CAM_FRONT_LEFT/091.npz
+    mask_sha256: c5014caeb4b6bb9efd36abb7c3c5bdda1b21436bb9eedc5c38b1f9305de03690
+    checkpoint_persistence: cross_view_observed_only
+    support_views:
+      - [76, 1]
+      - [81, 1]
+      - [86, 1]
+      - [96, 1]
+      - [101, 1]
+      - [106, 1]
+  boundary_support:
+    frame: 31
+    camera_id: 0
+    camera_name: CAM_FRONT
+    dataset_instance_id: 41
+    instance_token: 18c7f0c5fa6b49449f71c9dbae5c31d4
+    rigid_model_index: 21
+    mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/sam2/masks/boundary_support/CAM_FRONT/031.npz
+    mask_sha256: a4c3c356ecd91684d02ff77a11ab866c769f7343a9414f262581a3ad4a16ba1e
+    checkpoint_persistence: full_completion_small_boundary_target
+    support_selection:
+      mode: exhaustive_train_only_geometry_audit
+      rejected_run: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T120554Z__s2-3dgic-adapted-s0-r1
+      diagnostic: diagnostics/boundary_cross_camera_search.json
+      heldout_used: false
+      finding: only_pre_target_CAM_FRONT_views_have_geometric_overlap
+    support_views:
+      - [24, 0]
+      - [25, 0]
+      - [26, 0]
+      - [27, 0]
+      - [28, 0]
+      - [29, 0]
+
+projection:
+  source_stride: 1
+  absolute_depth_tolerance_m: 0.5
+  relative_depth_tolerance: 0.1
+  minimum_source_opacity: 0.5
+  inpaint_radius_pixels: 5
+
+gaussians:
+  target_stride: 2
+  scale_multiplier: 0.8
+  minimum_scale_m: 0.01
+  maximum_scale_m: 0.12
+  voxel_size_m: 0.02
+  opacity: 0.3
+
+evaluation:
+  heldout_views:
+    - [30, 0]
+    - [50, 0]
+    - [90, 1]
+    - [110, 1]
+  minimum_cross_view_observed_pixels: 32
+  minimum_candidate_effect_pixels: 32
+  maximum_target_outside_l1_uint8: 0.5
+  maximum_heldout_psnr_degradation_db: 0.1
+  maximum_heldout_ssim_degradation: 0.005
+  maximum_heldout_lpips_increase: 0.01
+
+resources:
+  minimum_free_disk_gib: 20
+  maximum_cgroup_fraction: 0.9
+
+runtimes:
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1

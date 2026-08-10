@@ -1,84 +1,13 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-10
-> **当前范围**：V3.2 WorldSim 语义资产修复、V3.1 模型链终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
+> **最后更新**：2026-08-09
+> **当前范围**：V3 WorldSim 模型链直接约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
-
-## V3.2 新增防重复结论（2026-08-10）
-
-- `V3-F34`：actor role 必须同时绑定 dataset instance ID、`instances_info.id`/instance token 与 checkpoint
-  rigid model index。只分别验证 class、token registry 和 core count 会允许“2D mask 属于 actor A、D2 core 属于 actor B”
-  的静默错配。所有 prompt、semantic lift、asset generation 在运行前必须 fail-closed 核对三元 identity；旧 r5
-  因 ID `5`/token `af663…` 错配而失效，不得通过后续 adapter 或人工选图补救。
-
-- `V3-F35`：AutoDL 根 `.condarc` 可把 `nvidia` channel 重写到缺包镜像；第三方官方 setup 的 CUDA channel
-  不能只凭 channel 名复现。Asset Harvester 必须使用 `--override-channels` 和明确的官方 NVIDIA/defaults URL，
-  同时记录 setup 日志；TUNA 对应 404 不能被误判成官方包不存在。
-- `V3-F36`：复制第三方 setup 脚本到 `/tmp` 后，基于脚本位置计算的 `REPO_DIR` 会静默变成 `/tmp`。
-  transport-only patch 必须冻结真实 checkout 绝对路径，并让恢复 wrapper 显式接收 formal `RUN_DIR`；不得把
-  环境完成结果写入已拒绝的旧 run。
-- `V3-F37`：`gsplat` 的浅克隆或 transport-only 复制不会自动带上 GLM submodule。Asset Harvester
-  环境不能只以 `pip install` 成功为准；必须固定 `gsplat` commit、初始化 GLM 到 exact commit，
-  并在当前 GPU 上 import CUDA extension。
-- `V3-F38`：第三方 setup 子进程里的 conda activation 不会传回父 wrapper。恢复脚本后续记录、
-  校验或 formal 推理必须使用明确的环境 Python 绝对路径，不得依赖裸 `python`
-  或父 shell 的隐式 PATH。
-- `V3-F39`：PyTorch 2.10 下 `torch.cuda.manual_seed_all` 不会立即建立 CUDA context；在此前调用
-  `reset_peak_memory_stats(0)` 可以在模型加载前报 `Invalid device argument`。资源监控 runner 必须先
-  `set_device` + `cuda.init`，再清零峰值计数器。S3 r2 因此在 GPU peak=`0 MiB`、无部分输出时
-  `rejected`；修复后必须新建 formal run，不得改写 r2。
-- `V3-F40`：边界目标的时间邻近帧不等于存在静态世界几何重叠。S2 r1 的固定支持集合跨过 frame `31` 后，
-  boundary mask 的有效跨视图覆盖低于 `32` 像素；放宽深度门也不能修复零几何重叠。后续只能在 train-only
-  视图上冻结 exhaustive camera/frame geometry audit，再新建 run；不得读取 held-out 来选支持帧，也不得单纯
-  放宽深度容差掩盖视锥不重叠。
-- `V3-F41`：2D unseen completion 可生成不等于其深度足以作为全时段静态 Background。S2 r2 把全部未观测
-  Telea 区域写入 3D checkpoint 后，四路 held-out 平均 PSNR/SSIM 退化 `0.495842 dB / 0.007160`，形成后续帧
-  灰色遮挡；候选必须拒绝。S2 r3 保留完整 2D unseen artifact/provenance，但高支持 checkpoint 只持久化
-  cross-view observed geometry，并重新通过未放宽的 held-out 门。后续不得把 inpainted RGB 自动升级为
-  geometry-grounded world state；若要持久化 unseen 3D，必须增加独立深度/多视图证据和新预注册门。
-- `V3-F42`：Harmonizer 导出 JIT 不是脱离官方 NGC runtime 即可原样执行的普通 TorchScript。当前权重包含
-  `tex_ts::rmsnorm_fwd_inf_ts`，PyTorch 2.10 还会把两个 einops shape scalar 随 `map_location` 移到 CUDA，
-  造成 shape tensor CPU/CUDA 冲突。当前适配只允许使用独立公式验证为 BF16 exact 的 RMSNorm 回退，并将整数
-  1/2 shape scalar 放回 CPU；必须记录 runtime deviation 和测试，不能写成 untouched official runtime。
-- `V3-F43`：生成式 final-render enhancer 可以恢复外观，同时破坏明确的 counterfactual 语义。S4 r2/r3 在
-  G1 remove+inpaint 区域重新生成 actor-like 黑色车辆外观；r3 的 mask 内 L1=`14.217278`、changed fraction
-  `0.541750`，失败冻结 `12.0 / 0.40` 门。全图 PSNR、outside drift 或“看起来更锐利”都不能覆盖 actor deletion
-  失败；non-temporal Harmonizer 仅保留 optional diagnostic，不得默认进入 remove 输出链。未来复开必须增加
-  显式 semantic conditioning/preservation 和连续帧 temporal gate，并取得 gated Cosmos base 的合法授权。
-- `V3-F44`：DriveStudio 只读 forward 使用 `torch.inference_mode()` 不等于 trainer 已切换到 eval。训练态
-  renderer 会对 `means2d` 调用 `retain_grad()`，与 inference tensor 冲突；R0 r2 因此在首个 forward 明确
-  `rejected`。所有只读 replay 必须在每次 state load 后显式 `trainer.set_eval()`；失败 run 不得补写结果，
-  只能修复代码后新建唯一 run。
-- `V3-F45`：质量门必须冻结指标、区域、单位和范数；`MAE<=1 uint8` 不能被实现成逐像素 L∞/max-error
-  `<=1`。R0 r3 的 source→mixed PSNR=`67.24–68.43 dB`、MAE=`0.0093–0.0123`，但两视角存在极少量
-  max error=`2`，因错误合同仍保持 `rejected`。修复必须更新 protocol/runner hash 后新建 run，不能在旧结果上
-  改 gate 或把 max error 隐藏。
-- `V3-F46`：R0 `done` 只证明当前 scene 的 V3.2 资产可追踪集成与固定三视角 storage/package 等价。
-  `GENERATED_BACKGROUND` 和 `GENERATED_ACTOR` 仍不是 GT；S4 仍被排除；S5 仍阻塞。432 MB mixed checkpoint、
-  444 MB chunk payload 与 8.36 GiB 峰值也不证明 streaming、load、render、跨场景泛化或闭环安全收益；未来相关
-  claim 必须有独立 protocol、数据与测量，不能由 R0 exact reassembly 外推。
-
-- `V3-F18`：A3 R1 的工程链可逐位重放，但 heldout 评测越过冻结 GPU ceiling，且资源无效 diagnostic 为
-  geometry 改善与 RGB safeguard 退化并存。后续不得提高旧 ceiling、替换旧 renderer 或继续调同一四步配方。
-- `V3-F19`：传感器原始尺寸、checkpoint 原生加载尺寸和评测输出尺寸是三个不同合同。A4-P0 v1 的
-  `1600×900` 误记不能在后续路线重现；每次 profile 必须同时记录三层尺寸和 downscale 来源。
-- `V3-F20`：checkpoint `state_dict` 键不等于加载后的 runtime attribute。任何新资产注册、恢复或 streaming
-  代码必须同时审计保存端、加载端赋值和 live object，不能从序列化 schema 猜运行时 API。
-- `V3-F21`：A4-P1 最小预注册剪枝臂 b05 已违反 global/non-target 质量门。不得事后增加 b01/b02、放宽
-  `0.10 dB` 或只挑 actor/boundary 指标，把同一结果改写成剪枝成功。
-- `V3-F22`：A4-P2 只证明选择性 FP16 参数存储在冻结质量门内可把 checkpoint 减少 `25.35%`；它没有证明
-  renderer、load、FPS 或 peak VRAM 加速，且 Gaussian means 不能安全降为 FP16。
-- `V3-F23`：A4-P3 只证明 159-file static/actor chunk package 可 exact 重组。package 比 source 大
-  `2.79%`、load/reassembly 更慢；没有 demand loading、cache policy 和驻留集测量时，不能声称 streaming/LOD 收益。
-- `V3-F24`：F0 只完成 Instant NuRec 官方能力与本机前置审计；本机没有执行 inference，standalone CLI 只导出
-  static PLY。不得把它写成前馈基线质量失败，也不得把 static PLY 当完整 dynamic WorldSim checkpoint。
-- `V3-F25`：R0 的 63 inputs、23 decisions、12 deliverables 与 P3 package exact 只证明 V3.1 证据链闭环。
-  它不证明 D2 dominance、R1/P1 有效、P2/P3 加速、完整 world model、跨场景泛化或闭环安全。
 
 ## V3 启动时必须先读的结论（2026-08-05）
 
@@ -242,82 +171,6 @@ calibrated reprojection；S-B 只使用 measured LiDAR 或至少两视图 geomet
 当前工作树中的 V2 M5 protocol、`stress_metrics.py` 和 stress runner 均未提交且属于被冻结的用户工作，A3 不得
 通过 import 或复制其结果建立隐式依赖。只能复用已提交并按 SHA 冻结的 M4 edit、paired mask、typed-depth 与
 registry 接口；否则无法形成 clean source commit，也会把 V2 未闭环事实倒写成 V3 证据。
-
-### V3-F18：A3 工程可重放不等于局部精修可晋级
-
-A3 R1 已证明四个 S-B/T0 unit 的 opacity/scale 更新可以逐位重放，但可变集合只有 `51` 个 Background rows、
-四个 unit 合计只有 `8` 个 T0 geometry pixels，S-A/RGB 为 `0/ABSTAIN`。heldout r2/r4/r5 的单 view 峰值稳定在
-`14,241–14,245 MiB`，超过结果前冻结的 `12,288 MiB` ceiling；r5 的资源无效 diagnostic 同时出现 depth-order
-改善和 non-target/original-global RGB MSE 严格退化，exact Pareto 为 `tradeoff_non_dominated`。
-
-因此后续若复开局部精修，研究变量必须先变为“可观测支持如何获得、分层和拒绝”，而不是继续调 R1 的 step、
-LR、alpha、mask dilation 或旧 renderer。合法复开需要新任务、新协议、与 heldout 隔离的支持审计，以及冻结前
-证明 S-A 或更充分 T0/多视图证据确实存在；否则保持 `A3*=R0/D2 exact alias`。
-
-### V3-F19：部署尺寸必须分为 sensor、model-native 与 evaluation 三层
-
-A4-P0 v1 把 nuScenes sensor `1600×900` 写成 checkpoint 原生分辨率，但 source config 已固定
-`downscale_when_loading=[2,2,2]`，真实模型加载和 render 均为 `800×450`。v1 保持 `blocked`，v2 只纠正输入
-合同并在新 run 完整重跑；不能使用 v1 的性能数字关闭 P0。
-
-后续所有 runtime、质量和资源协议必须显式记录 sensor resolution、source-config downscale、model-native
-resolution 和最终 evaluation/output resolution。任何一层变化都是新的实验因子，不能用“native”一词静默折叠。
-
-### V3-F20：序列化 schema 不能替代 live runtime API 审计
-
-A4-P5 r1 已生成合法 registry，却把 checkpoint key `points_ids` 当作加载后的 `RigidNodes.points_ids`；实际
-`load_state_dict` 会把它写入 `self.point_ids`。r1 因此保留 `blocked`，修复后的 r2 才通过 14/14 audits。
-
-后续做 lazy loading、分块恢复、资产注册或 checkpoint 迁移时，必须分别验证 state key、load hook、live attribute
-和调用方，并用真实 fresh-process reload 测试锁定。不能因为 checkpoint 中存在字段，就推断运行时对象暴露同名接口。
-
-### V3-F21：预注册最小剪枝臂失败后不能事后缩小 fraction
-
-A4-P1 的 b05/b10/b20 均通过结构、reload、count 和资源审计，但最小 b05 已使 global occupied PSNR、global PSNR
-和 non-target PSNR 分别退化 `0.117684/0.110926/0.125462 dB`，超过冻结 `0.10 dB` 门；更大 fraction 失败更多
-端点。局部 actor/boundary 指标保持或改善不能覆盖全局与非目标区失败。
-
-后续不得在同一 ranking、视图和结果上新增 b01/b02、改变阈值或只报局部轴。若重新研究压缩，必须有不同的、
-结果前可解释的结构假设与新预注册；单纯把 fraction 调小不是新的研究问题。
-
-### V3-F22：FP16 存储压缩不等于端到端加速
-
-A4-P2 把 Background/RigidNodes 的 10 个 scale/quat/feature/opacity tensors 转为 FP16，checkpoint 从
-`578,819,674` 降到 `432,111,754` bytes，31/31 quality safeguards 通过。但 candidate 的 load、P50 和 FPS 没有
-形成一致加速，renderer 输入仍显式转回 FP32；source audit 还表明 Background means 若做 FP16 roundtrip，最大
-空间误差接近 `1 m`。
-
-因此当前合法 claim 仅为 `mixed_precision_parameter_storage_fp32_render`。后续若研究低精度执行，必须单独冻结
-renderer dtype、数值误差、质量、peak resident memory 和 latency 合同；不得从文件变小推断 Tensor Core、VRAM
-或实时收益，也不得把 means、trajectory 或 provenance 一并降精度。
-
-### V3-F23：exact chunk package 不等于 streaming/LOD 系统
-
-A4-P3 的 133 static + 24 actor + skeleton + manifest 共 159 files 可 exact 重组，57 RGB SHA、31 endpoints、
-85 tensor paths 和 source/registry immutability 全通过。但 package 比 source checkpoint 大 `2.792171%`，全量读取的
-load/reassembly 与 render 均未加速，filesystem cache 也未控制。
-
-后续只有在实现真实 demand loading、明确 working set/cache/eviction、记录首帧与稳态 latency、peak resident bytes、
-I/O bytes 和 exact fallback 后，才可研究 streaming/LOD。继续把同一 159-file package 全量读入内存，只能叫资产
-分离，不能叫部署加速。
-
-### V3-F24：F0 前置失败不是前馈方法质量失败
-
-Instant NuRec canonical audit 只通过 4/11 prerequisites；Python 3.11、uv、30 GiB VRAM、100 GB free disk、exact
-weights、licensed NCore input 与 terms record 未同时满足，所以 `inference_command_constructed=false`。官方 standalone
-CLI 的实际输出又只含 static PLY，不含 dynamic/sky/ISP/actor registry/trajectory/depth。
-
-后续不得把“本机未运行”写成 upstream quality reject，也不得用 static PLY 与 StreetGS 完整 checkpoint 做假等价
-比较。只有硬件、许可、数据和 converter 接口全部独立满足后，才能用新任务做窄范围前馈 pilot。
-
-### V3-F25：证据链 exact 不等于研究主张自动成立
-
-R0 canonical 的 63/63 inputs、23/23 decisions、12/12 deliverables、26/26 manifest files 与 P3 159-file package
-全部 exact，证明 V3.1 可以从冻结事实恢复同一结论与生产链。它没有增加场景、seed、真值、闭环控制或新的方法臂。
-
-后续研究必须从一个明确、可证伪的新问题出发，并说明新增证据解除哪一条失败约束；不能把 R0 的可复现性重新命名为
-完整 world model、跨场景泛化、物理真实性或安全性。若主张涉及 A2/A3 方法，至少需要独立场景确认；若主张涉及
-部署收益，必须直接测量对应 runtime/working-set 端点。
 
 ## V2 启动时必须先读的结论（2026-08-02）
 
@@ -1781,47 +1634,6 @@ persistent bytes=`394,641,424 / 247,936,208` 与 candidate FP16 bucket=`146,705,
 以后审计复合模型时，必须同时核对容器是否已注册为 `nn.Module`、顶层 traversal 覆盖范围与逐字段预期集合；
 证据账本缺失不得用 checkpoint 文件变小或 runtime 成功来推断补齐。
 
-### PIVOT-F29：无卡实例必须以 cgroup 内存为资源合同，不能读取宿主机 `free`
-
-V3.2 S0 在 AutoDL 无卡开机模式中观察到 `free -b` 暴露宿主机约 810 GB 内存，但
-`/sys/fs/cgroup/memory.max=2,147,483,648`，实际只有 2 GiB。CoIn 的完整 partial-clone checkout 在大量 blob
-物化时把 `memory.current` 推近上限且长时间无进展；继续并发创建环境或校验大权重会把可回收 page cache 与真实
-匿名内存混在一起，增加无意义的 OOM 风险。
-
-正确处理是停止该 checkout，把残留移到仓库外备份，并改用 `--no-checkout --filter=blob:none` 固定 commit/tree；
-所有下载使用流式落盘，依赖安装和 hash 校验串行执行。GPU、VRAM 与 driver 则必须在有卡重启后重新审计，不能把
-无卡模式的 `nvidia-smi: permission denied` 写成硬件不存在。后续任何资源 preflight 都必须同时记录
-`memory.max`、`memory.current`、`memory.events` 和数据盘余量；宿主机 `free` 只作诊断，不作授权。
-
-### PIVOT-F30：原子发布目录不能把 `.partial` 绝对路径写进 manifest
-
-S1 prompt preparer 首次在 `s1_prompt_v1.partial` 内生成绝对 `video_dir`，发布时将目录改名为
-`s1_prompt_v1`，manifest 内部却仍指向已经不存在的 `.partial` 路径。SAM2 因此把它判定为既非 MP4 也非 JPEG
-目录，r1 在真实 GPU 启动后立即失败。修复是 manifest 只保存相对 `sam_inputs/...`，消费者相对 manifest
-父目录解析；原子 rename 后重新验证每个目录和 JPEG 链接。任何会整体 rename 的 staged asset 都不得在内部保存
-staging 绝对路径。
-
-### PIVOT-F31：SAM2 `reverse=True` 默认从最早 prompt 开始，可能合法地产生零帧
-
-首次双向传播实现只设置 `reverse=True`，但官方 predictor 默认 `start_frame_idx=min(condition frames)`；train-only
-block 的首个 prompt 常在 local frame 0，反向 processing order 因此为空。调用成功和进度条 `0it` 不能证明反向
-覆盖。正确做法是显式用 block 内最晚 prompt 作为 reverse start，并按每个 object 自己的 prompt frame 过滤输出；
-r5 中实际产生 13 个 prompt 之前的 mask，才构成双向证据。
-
-### PIVOT-F32：mask QC 必须在同一像素坐标系比较
-
-r4 将 SAM logits 从源图 `1600×900` resize 到模型原生 `800×450`，却直接与源图坐标的逐帧 3D box 比较，
-造成 `235/263` 假拒绝。修复后 box 按 exact x/y 比例映射到 800×450，r5 为 `212 accepted / 51
-fail-closed`，其中 43 个是近空 mask。以后任何 IoU、centroid、boundary 或 area ratio 门禁都必须同时记录 source
-size、target size 与变换；不同尺度间的数值不得直接进入裁决。
-
-### PIVOT-F33：大规模 Gaussian 重复索引累加不得使用逐元素 `np.add.at`
-
-S1 r2 在每个视图的数百万 ray/Gaussian intersections 上多次使用 `np.add.at`，CPU 单核成为瓶颈；同时该版本
-仍缺计划要求的 negative views、depth-consistency rate 和 boundary score，因此保留 250 个 mask 后以 exit 143
-终止，不得作为完成证据。r5 改用 `np.bincount(minlength=total)` 和向量化 view count，263-view lift wall
-`770.733s`，并保存完整 posterior schema。研究 runner 必须输出阶段进度；“CPU 持续运行”不能替代复杂度审计。
-
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
@@ -1832,7 +1644,7 @@ S1 r2 在每个视图的数百万 ray/Gaussian intersections 上多次使用 `np
 - [ ] 是否同时评估目标区变化、非目标区保持、几何/时序一致性和下游感知？
 - [ ] 遇到内存/GPU不足时是否按 `N1-F24/PIVOT-F05` 停机并等待授权？
 
-## 8. WorldSim 后续正式消融前检查
+## 8. V3 每个正式消融前检查
 
 - [ ] 是否使用 V3 task ID、新 run 和冻结 config/source hash，而不是续写 V2 terminal？
 - [ ] 是否保持 scene-0230/0242/0255、split、seed、相机、步数和 actor cohort 不变？
@@ -1844,6 +1656,3 @@ S1 r2 在每个视图的数百万 ray/Gaussian intersections 上多次使用 `np
 - [ ] expected/first-hit/measured depth 是否继续保持 typed separation？
 - [ ] 工程 `blocked`、方法负结果 `rejected` 和任务完成 `done` 是否没有混写？
 - [ ] 结论是否明确限制在三场景消融，不写成大规模泛化或闭环安全结论？
-- [ ] 新路线是否只选择一个 primary hypothesis，并说明它具体解除 `V3-F18`–`V3-F25` 中哪一项？
-- [ ] 是否在任何训练、推理或新结果读取前冻结 matched baseline、主端点、资源门、停止条件和确认场景？
-- [ ] 是否避免把更小剪枝 fraction、提高旧资源 ceiling、全量读取 chunk 或继续调 R1 配方伪装成新研究？

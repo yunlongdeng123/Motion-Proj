@@ -1,0 +1,101 @@
+schema_version: worldsim_v32_r0_integration_v1
+task_id: WS-V32-R0-INTEGRATION-01
+run_label: r0-final-integration-s0-r1
+output_root: /root/autodl-tmp/runs/worldsim_v32/WS-V32-R0-INTEGRATION-01
+seed: 20260810
+
+runtime:
+  conda_env: drivestudio
+  device: cuda:0
+  expected_gpu: NVIDIA GeForce RTX 3090
+
+source_config:
+  path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  bytes: 4661
+
+source_checkpoint:
+  path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/checkpoint_s2_generated_background.pth
+  sha256: 3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f
+  bytes: 579269554
+
+base_actor_registry:
+  path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A4-DEPLOYMENT-01/20260809T174850Z__a4-p2-mixed-precision-s0-r2/artifacts/candidates/p2-gs-param-fp16_actor_registry.json
+  sha256: 69c4f38ae2a06d5fd3cd92d61dcc3595e3f05e70a4229f8827acd53d87448a27
+  bytes: 3721277
+
+semantic_sidecars:
+  high_support:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/high_support.npz
+    sha256: 0119e15d979c1c69cdaea23d9c4716ae66f323972cd4abf3027fb43593ce22cb
+    bytes: 39330546
+  boundary_support:
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S1-SEMANTIC-LIFT-01/20260810T101739Z__s1-semantic-lift-s0-r6/artifacts/semantic_sidecar/boundary_support.npz
+    sha256: 25b1eaecb2bb53af852ec2c5fae1abf53636359f9714e2de6e9a330187f22050
+    bytes: 30443678
+
+generated_background_provenance:
+  path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/generated_background_provenance.npz
+  sha256: 1baf73b81205f66cfe30a6ea3385cdf960b3d8952648031fb34be26a7ef758cc
+  bytes: 42388
+  expected_cross_view_true: 1835
+  expected_cross_view_false: 61
+  expected_target_code_0: 1824
+  expected_target_code_1: 72
+
+selected_actor_asset:
+  path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset.npz
+  sha256: b0c1f413e1a462292a1e3396ad45b8a8fc10f87f647e4bc3e1b98a4c8913caf0
+  bytes: 3798161
+  instance_token: af663976db5e412e83db033d309c5c29
+  dataset_instance_id: 13
+  rigid_model_index: 5
+  gaussian_count: 99045
+  provenance: GENERATED_ACTOR
+
+selected_actor_manifest:
+  path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset_manifest.json
+  sha256: 988d8c2c1109fd14d2b7b1d445f86f9ac50d06eed81f73d941c3a6566c2e0a23
+  bytes: 10036
+
+harmonizer_diagnostic:
+  path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S4-HARMONIZER-01/20260810T131909Z__s4-harmonizer-nontemporal-s0-r3/summary.json
+  sha256: 4543b5fa2543f6f42aa65f0dbc17f11899de1cc7ebad4aed653200e881f1ba39
+  bytes: 26451
+  selected_for_production: false
+  reason: semantic_reintroduction_gate_failed
+
+counts:
+  old_background: 1205164
+  generated_background: 1896
+  final_background: 1207060
+  rigid: 104704
+
+precision:
+  converted_models: [Background, RigidNodes]
+  converted_fields: [_scales, _quats, _features_dc, _features_rest, _opacities]
+  output: artifacts/checkpoint_v32_mixed_precision.pth
+
+semantic_outputs:
+  high_support: artifacts/semantic_sidecar/high_support_v32.npz
+  boundary_support: artifacts/semantic_sidecar/boundary_support_v32.npz
+
+registry_output: artifacts/worldsim_v32_asset_registry.json
+chunk_package_root: artifacts/chunk_package
+chunk_manifest_output: artifacts/chunk_package_manifest.json
+
+render_validation:
+  views:
+    - {frame: 31, camera: 0, camera_name: CAM_FRONT}
+    - {frame: 51, camera: 1, camera_name: CAM_FRONT_LEFT}
+    - {frame: 91, camera: 1, camera_name: CAM_FRONT_LEFT}
+  min_source_candidate_psnr_db: 45.0
+  max_source_candidate_mae_uint8: 1.0
+  require_candidate_reassembled_rgb_sha_exact: true
+
+resource_ceilings:
+  max_peak_nvidia_process_memory_mib: 23500
+  max_peak_cgroup_memory_bytes: 103079215104
+  max_wall_seconds: 3600
+  max_run_bytes: 2147483648
+  require_zero_oom_delta: true

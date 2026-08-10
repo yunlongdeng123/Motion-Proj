@@ -1,0 +1,127 @@
+schema_version: worldsim_v32_s4_config_v1
+task_id: WS-V32-S4-HARMONIZER-01
+run_label: s4-harmonizer-nontemporal-s0-r3
+output_root: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S4-HARMONIZER-01
+
+runtime:
+  python: /root/autodl-tmp/envs/worldsim-v32-asset-harvester/bin/python
+  device: cuda:0
+  expected_gpu: NVIDIA GeForce RTX 3090
+  model_size: [1024, 576]
+  source_size: [800, 450]
+  resize_rule: direct_bilinear_exact_aspect_16_9_no_crop_no_pad
+
+official_source:
+  checkout: /root/autodl-tmp/third_party/worldsim_v32/harmonizer
+  url: https://github.com/NVIDIA/harmonizer
+  commit: dd5799e50855c5bcb1f6ef52a77b5b644b4798c0
+  code_license: Apache-2.0
+  license_path: /root/autodl-tmp/third_party/worldsim_v32/harmonizer/LICENSE
+  license_sha256: 58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd
+
+model:
+  repo: nvidia/Harmonizer
+  revision: 20ca33d4612b1e98e0526b3a7ee604af5b289f58
+  path: /root/autodl-tmp/models/worldsim_v32/harmonizer/model_repo/harmonizer_nontemporal.pt
+  sha256: ece8e2daa914e8c2a027a2da94e0eb2064491d5b3fd8514009fae9a442e06e90
+  bytes: 1448843112
+  mode: exported_jit_nontemporal
+  model_license: NVIDIA Open Model License Agreement
+  model_card: /root/autodl-tmp/models/worldsim_v32/harmonizer/model_repo/README.md
+  model_card_sha256: f3fc6b26418c93b156ad97e4ee63019ca901b9b64423de26933a005ebd334b23
+
+temporal_arm:
+  status: blocked
+  reason: huggingface_gated_repo_authorization_required
+  repo: nvidia/Cosmos-Predict2-0.6B-Text2Image
+  revision: dd55b6858b22ad569976bff207880b8fea839da7
+  hf_token_present: false
+  expected_total_bytes: 4324256313
+  required_files:
+    model.pt: 1195209249
+    model_distilled.pt: 1195206483
+    model_fast_tokenizer.pt: 1195209447
+    tokenizer/tokenizer.pth: 507609880
+    tokenizer_fast/tokenizer.pth: 230994532
+  official_runtime:
+    container: nvcr.io/nvidia/pytorch:25.10-py3
+    torch: 2.9.0a0+145a3a7bda
+    cuda: 13.0.2
+    transformer_engine: "2.8"
+
+inputs:
+  - id: G0-original-f051-c1
+    group: G0_original_render
+    frame: 51
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    variant: d2_original
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/inputs/audit/f051_c1_d2_original.png
+    sha256: 524d9102d699eed076577e2311cd91e2510c515c806fe5e5e05be5898aa9efc2
+    target_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/inputs/audit/f051_c1_d2_effect.png
+    target_mask_sha256: 1c52c88f6c308b70c03e76e8d01695e85dd0a23a9ddacf72a04908eb2da1a528
+  - id: G0-original-f091-c1
+    group: G0_original_render
+    frame: 91
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    variant: d2_original
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/inputs/audit/f091_c1_d2_original.png
+    sha256: 90da1a67b4f4fd5c17b64f2ef1566fb9678dccbe68db080fa490aba455bc368c
+    target_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/inputs/audit/f091_c1_d2_effect.png
+    target_mask_sha256: cf7fd9c5b9456e3042722349a550b6c149fc34e11c66aa04343efb5bf639d904
+  - id: G1-inpaint-delete-f091-c1
+    group: G1_semantic_remove_inpaint
+    frame: 91
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    variant: s2_selected_candidate_delete
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/high_support/candidate_delete.png
+    sha256: e53837d1b057e8ed247810876c7f240b570065b88d8d9d6d98154ebdc6550f7a
+    target_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/targets/high_support/target_mask.png
+    target_mask_sha256: 000bc0b873e243d299abaaa0f314d32c9e59c38eb772a01569dd8870b7aaaee3
+  - id: G2-harvested-lateral-f051-c1
+    group: G2_asset_harvester_lateral
+    frame: 51
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    variant: s3_selected_2view_lateral
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/renders/high_support_2view_view1/lateral.png
+    sha256: 9bfa47e32212d1091556d2c9431635ab386b039fd788d57f8abcda3f92c8ee09
+    target_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/renders/high_support_2view_view1/lateral_effect.png
+    target_mask_sha256: 51799732fcfe0e7c6a60e68cbbdbec70612169931ee6d67cf23a419b59145dc8
+  - id: G2-harvested-lateral-f091-c1
+    group: G2_asset_harvester_lateral
+    frame: 91
+    camera_id: 1
+    camera_name: CAM_FRONT_LEFT
+    variant: s3_selected_2view_lateral
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/renders/high_support_2view_view0/lateral.png
+    sha256: 4d660ff21ed004d31f09822179db352073233a4b0fd864ffbfd079879d361ef0
+    target_mask: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/renders/high_support_2view_view0/lateral_effect.png
+    target_mask_sha256: cc2c2164f74c985b932b13745578e769060a2dca6f8f627711bb2db2f8a7a53a
+
+immutable_assets:
+  - name: v31_d2_source_checkpoint
+    path: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+    sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  - name: s2_selected_checkpoint
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S2-BACKGROUND-INPAINT-01/20260810T121829Z__s2-3dgic-adapted-s0-r3/artifacts/checkpoint_s2_generated_background.pth
+    sha256: 3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f
+  - name: s3_selected_actor_asset
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset.npz
+    sha256: b0c1f413e1a462292a1e3396ad45b8a8fc10f87f647e4bc3e1b98a4c8913caf0
+  - name: s3_selected_actor_manifest
+    path: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/actor_assets/high_support_2view/actor_asset_manifest.json
+    sha256: 988d8c2c1109fd14d2b7b1d445f86f9ac50d06eed81f73d941c3a6566c2e0a23
+
+evaluation:
+  max_outside_mask_l1_uint8: 8.0
+  min_input_output_psnr_db: 28.0
+  min_changed_pixel_fraction_gt8: 0.001
+  max_semantic_delete_inside_l1_uint8: 12.0
+  max_semantic_delete_inside_changed_fraction_gt8: 0.40
+  changed_pixel_threshold_uint8: 8
+  provenance: HARMONIZED_2D
+  provenance_alias: 2D_HARMONIZED_RENDER
+  claim_scope: no_ground_truth_quality_claim_non_temporal_output_only

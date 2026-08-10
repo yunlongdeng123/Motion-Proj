@@ -1,138 +1,21 @@
 # Research Status
 
 - 更新时间：2026-08-10
-- 当前路线：WorldSim V3.2 语义资产修复
-- 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`
-- 当前任务：`WS-V32-R0-INTEGRATION-01`
+- 当前路线：面向世界仿真的动态驾驶 3DGS 复现、模型增强与工程化 V3.1
+- 当前任务：`WS-V3-R0-INTEGRATION-01`
 - 状态：`done`
-- 当前门禁：全部单卡 RTX 3090 可执行的 V3.2 工作已完成；S1/S2/S3/R0 形成 production candidate，S4 非时序分支因删除语义重生成仅保留 diagnostic；S4 temporal 受 Hugging Face gated base 权重阻塞，S5 受许可证门阻塞；当前无新的已授权执行项
-- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
-- S0 审计：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)
-- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
+- 当前门禁：`none_plan_complete`；A0–A4、F0 与 R0 已闭环，F1=`conditional_not_unlocked`
+- 权威计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
-- 当前分支：`research/worldsim-v3.2-semantic-repair`
+- 当前分支：`research/worldsim-v3`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
-- R0 集成协议/runner SHA-256：`7011d99f70fc59835569c43bd7e750a5e1981ea67843ef08873bfe4707deb624` /
-  `deb1a82f8d60eb659acf1237482ffff26a6d47d615c3eeb50df75d18f0c3c97c`
-- R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
-  `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
-  `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
+- R0 集成协议/runner SHA-256：`4fe20c3197d5ea954e7b37dd2ff68b6ecf357ce7d2770507e6adcb5398797575` /
+  `d58c4008cea264ff42ee0da436cabba5d7014d14d773040cd8cf471725d0c5ce`
+- R0 canonical summary/manifest/terminal SHA-256：`3ffe99ea25302a1bfd8a73329133ae052632f8cf32d8124bc7df4d35e85f15a7` /
+  `a9b052a636de3410700bca6899c6efda88248398b2befb96cd247ac16f3e1d90` /
+  `207758b92d750cd239fa998ed7572c5f404f8747fadb0a4b74a12295983015c6`
 
-## V3.2 S0–S3 收口
-
-- project baseline=`d91e80eea33a1bf8b6596d2357ee0ccf357691cc`；
-- V3.1 D2 checkpoint SHA-256=`1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c`，
-  A3*=R0-off，P2/P3 与 V3.1 terminal 全部保持只读；
-- 11 个公开官方 source 已固定 commit，并验证本地 checkout 与审计时 upstream HEAD exact；
-- MV-SAM 未找到可固定官方代码/checkpoint；VISTA、Omni-3DEdit、CoIn 因无明确根许可证保持执行阻塞；
-- SAM2.1 Hiera Large revision=`665f8e2ad61cf5f53d65644ff27c8ee525124610`，checkpoint
-  bytes=`898,083,611`、SHA-256=`2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318`；
-- 当前为单卡 RTX 3090 24 GiB；cgroup memory max=`96,636,764,160 bytes`，S1 GPU 推理与 lift 已完成且
-  `memory.events oom/oom_kill=0/0`；
-- r5 复核发现 high-support 配置把 token `af663…` / rigid index `5` 错配到 dataset instance ID `5`；
-  数据事实中该 token 的 ID 是 `13`，ID `5` 属于 token `bf9a…`，故 r5 不再是 canonical 证据；
-- 新增 dataset ID ↔ instance token ↔ rigid index fail-closed 合同；旧 v2 配置现会以 exit=`1` 明确拒绝；
-- 修正配置：`configs/worldsim_v32/s1_semantic_lift_v3.yaml`，SHA-256=
-  `377cd95999dcc02d15782fce06940952826c410d5f4df13846e5dd4c58304960`；prompt v3 SHA-256=
-  `8c43b59175da1598b9720bb71d35d573647651ee4075c44ac7b0e265931f6ccf`；
-- canonical run=`20260810T101739Z__s1-semantic-lift-s0-r6` 已 `done`，final summary SHA-256=
-  `482dcd067ee91952536e863cded1e18cffa1003bbd3f1b0caa9a18380e93bb4a`；398 个 train-only masks 中
-  `334 accepted / 64 rejected`，heldout leaks=`0`；
-- high-support labels=`1,230,548 / 4,525 / 36,767 / 38,028`，boundary-support labels=
-  `1,276,927 / 3,728 / 21,033 / 8,180`（negative/core/semantic/ambiguous）；6 个真实
-  original/delete/lateral smoke 非空，D2 checkpoint before/after SHA exact；
-- SAM2 wall=`81.605s`、semantic lift wall=`919.436s`；peak allocated 分别为
-  `1,908,027,904 / 15,723,618,816 bytes`，单卡 RTX 3090 无 OOM；
-- S3 r2=`20260810T103527Z__s3-asset-harvest-s0-r2` 在模型加载前因 PyTorch 2.10 CUDA context
-  未显式初始化而 `rejected`；GPU 峰值 `0 MiB`、无部分模型输出，不得作为质量证据；
-- S3 canonical r3=`20260810T112505Z__s3-asset-harvest-s0-r3` 已 `done`；输入冻结为 high-support
-  actor 的 CAM_FRONT_LEFT frame `91`（1-view）和 `51`（2-view 补充），两帧皆为直接 prompt、
-  非 heldout，SAM mask 均被 D2 counterfactual actor-effect 完整覆盖；
-- 官方 Asset Harvester 1-view/2-view 均生成 `16` 个新视角与非空 Gaussian PLY；推理
-  wall=`113.981s`，peak NVIDIA VRAM=`20,137 MiB`，cgroup peak=`48,426,651,648 bytes`，
-  `oom/oom_kill=0/0`，磁盘停止门通过；
-- 两份资产均已 exact reload 并匹配 actor LWH，各在 frame `91/51` 完成 original/lateral/delete
-  回注渲染，D2 checkpoint before/after SHA exact；2-view 的 mean IoU/PSNR/LPIPS 为
-  `0.733945 / 16.671399 dB / 0.094894`，优于 1-view 的 `0.723918 / 16.078961 dB / 0.104843`，
-  但 boundary F1 较低（`0.459813` vs `0.499815`）；综合多视角目视 QA 选定 `high_support_2view`；
-- S3 final summary SHA-256=`8dc4fc930229fbb17343b0bbcf9ccda632ac54b2e5301d4ca6448bda0d99c2d1`；
-  背面只声明生成完整性/一致性，不声明 GT correctness。
-- S2 r1=`20260810T120554Z__s2-3dgic-adapted-s0-r1` 因 boundary-support 原支持视图几何重叠不足而
-  `rejected`；其 train-only 全量视图/相机搜索证明只有目标帧之前的 CAM_FRONT 有重叠，诊断保留在 r1；
-- S2 r2=`20260810T121342Z__s2-3dgic-adapted-s0-r2` 完成方法链但候选未选定：把全部未观测 Telea
-  补全写入静态 Background 后，held-out PSNR/SSIM 平均退化 `0.495842 dB / 0.007160`；该候选保持
-  `candidate_selected=false`，不得用于集成；
-- S2 canonical r3=`20260810T121829Z__s2-3dgic-adapted-s0-r3` 已 `done`；3DGIC 官方深度引导跨视图原则与
-  RGB-D unprojection 被显式适配到 StreetGS，2D unseen 补全用确定性 OpenCV Telea；不声明是未修改的上游
-  3DGIC checkpoint 运行；
-- high-support 的 `15,461` 个目标像素中 `7,189` 个有 train-only 跨视图观测，unseen=`8,272`；
-  boundary-support 的 `288` 个目标像素中 `46` 个有观测，unseen=`242`。完整 unseen 2D 资产均保留，但高支持
-  checkpoint 只持久化有几何观测的点，小 boundary 目标保留完整补全；
-- r3 向 Background 追加 `1,896` 个 `GENERATED_BACKGROUND` 行（`1,205,164 → 1,207,060`），旧行保持
-  exact，候选落盘后严格重载，V3.1 ancestry 兼容账本与权威 V3.2 provenance sidecar 对齐；
-- 目标视图 candidate effect=`9,928 / 176` 像素，outside L1=`0.042503 / 0.005122`；四路只读 held-out
-  平均 PSNR/SSIM/LPIPS delta=`-0.022958 dB / -0.000528 / +0.000301`，通过冻结
-  `-0.1 dB / -0.005 / +0.01` 门；unseen completion 不声明 accuracy；
-- r3 checkpoint/summary/provenance SHA-256=`3d6e13d47291f5b5949ff3adf5598b6e0cffb930c4cbff2200c6e708d82e6e0f` /
-  `a07bbf7a1b160d352fd0d3d08be9e217a3d27648eeffec7841f443b5bc871407` /
-  `1baf73b81205f66cfe30a6ea3385cdf960b3d8952648031fb34be26a7ef758cc`；wall=`63.908s`，
-  peak NVIDIA=`8,125 MiB`，cgroup peak=`39,369,183,232 bytes`，OOM=`0`，D2 source before/after SHA exact。
-
-## V3.2 S4 收口与 R0 入口
-
-- 官方 Harmonizer source commit=`dd5799e50855c5bcb1f6ef52a77b5b644b4798c0`，Apache-2.0 code license；
-  `harmonizer_nontemporal.pt` revision=`20ca33d4612b1e98e0526b3a7ee604af5b289f58`，bytes=`1,448,843,112`，
-  SHA-256=`ece8e2daa914e8c2a027a2da94e0eb2064491d5b3fd8514009fae9a442e06e90`；模型受 NVIDIA Open Model License 管理；
-- temporal 分支所需 `nvidia/Cosmos-Predict2-0.6B-Text2Image@dd55b685...` 为 gated repo，当前账号无授权、
-  HF token 不存在；4,324,256,313-byte 文件清单可审计但下载返回 403，不绕过门禁；
-- 官方 JIT 在非 NGC 环境依赖 `tex_ts::rmsnorm_fwd_inf_ts`，并把两个 einops shape scalar 随
-  `map_location` 移到 CUDA。适配器使用公式等价 RMSNorm（BF16 exact，max error=`0`）并把整数 1/2 shape scalar
-  放回 CPU；4 个单测通过；
-- r1=`20260810T131510Z__s4-harmonizer-nontemporal-s0-r1` 在推理前因未显式 `set_device` 就重置峰值计数器而
-  `rejected`；r2 完成 5 图但视觉 QA 发现 G1 删除区重生成黑色车辆外观，不能作为候选；
-- canonical r3=`20260810T131909Z__s4-harmonizer-nontemporal-s0-r3` 已 `done`，覆盖同一
-  CAM_FRONT_LEFT 的 G0 original、G1 remove+inpaint、G2 Asset Harvester lateral；全部输出仅标记
-  `HARMONIZED_2D`，D2/S2/S3 assets before/after SHA exact，无 Gaussian 写回；
-- G0/G1/G2 mean outside-mask L1 分别约 `3.543 / 3.832 / 3.641` uint8，常态 inference median=`0.3386s`；
-  G1 删除区 inside L1=`14.2173`、`>8` changed fraction=`0.54175`，违反冻结 `12.0 / 0.40` 语义保持门，
-  因此 `non_temporal_candidate_selected=false`、`final_disposition=optional_diagnostic`；
-- r3 summary/status/grid SHA-256=`4543b5fa2543f6f42aa65f0dbc17f11899de1cc7ebad4aed653200e881f1ba39` /
-  `42465759974c60f0fa5407969b12ccf8aeb5952ed7c36904b378a86163b78e51` /
-  `086b08b7ab57de7a27d28dda28a84109579ff8cfae15216f88533085e19f3cbf`；wall=`35.048s`，
-  peak NVIDIA=`4,077 MiB`、CUDA reserved=`4,131,389,440 bytes`、OOM=`0`；S4 task=`done`，生产集成时保持 excluded diagnostic。
-
-## V3.2 R0 canonical 收口
-
-- 失败尝试全部保留为 `rejected`：r1 在 source snapshot 前发现相对 config path；r2 在首个 forward 发现
-  DriveStudio 未 `set_eval()` 会与 `inference_mode` 的 `retain_grad` 冲突；r3 把冻结的 MAE 门误实现为
-  L∞/max-error 门。三者均未被改写，修复后使用新的唯一 run；
-- canonical r4=`20260810T134658Z__r0-final-integration-s0-r1` 已 `done`，8/8 gates 通过：generated-background
-  provenance、semantic extension、mixed precision、actor registry、chunk reassembly、render validation、input
-  immutability 与 resource ceiling 全为 `true`；
-- S1 两份 sidecar 在旧 Background 与 RigidNodes 之间插入 1,896 行 actor-negative/zero evidence；旧 Background
-  prefix 与 Rigid suffix exact。high/boundary V3.2 sidecar SHA-256=
-  `7caae12fdfb92f15ae02f5f7fc6f5c8111236f18632516a128b09960b6d79b26` /
-  `74dd3679b58423c6e752cd3441a347d8f3f3f1add1e5ce748e75150eb510185b`；
-- S2 selected checkpoint 仅将 Background/RigidNodes 的 scales、quats、features 与 opacities 转为 FP16；means
-  与其余 state 保持原 dtype/value。candidate bytes=`432,347,490`、SHA-256=
-  `6d4e4c489f53bf4e7de3f5c405ec37dc63d3f79155aad5237fe175ce0fcd7e5d`，较 FP32 source 减少
-  `146,922,064 bytes / 25.363333%`；
-- V3.2 registry SHA-256=`6633af150baa4b5adda143b2037091e7647f85966490de5d660fa74968ab6c57`；
-  rigid index `5` 绑定 S3 99,045-Gaussian `GENERATED_ACTOR`，boundary 与其他 actor 明确回退 V3.1 native registry；
-  S4 non-temporal 明确 excluded，S5 保持 `blocked`；
-- 动态 row schema 物化 `133 static + 24 actor + 1 skeleton` payload，chunk manifest SHA-256=
-  `af7b402e0b171b11f8c22e4123002f4f844db746ea72f53b77c3de878bf0947d`；payload bytes=`444,282,102`。
-  Background `1,207,060` 与 RigidNodes `104,704` 行均 covered once，missing/duplicated=`0/0`；85 个 tensor
-  path、容器 schema 与 non-tensor state 全部 exact；
-- 三个固定视角 source→mixed PSNR=`68.2993 / 67.2399 / 68.4322 dB`，MAE=
-  `0.009614 / 0.012271 / 0.009330` uint8；mixed 与内存重组 checkpoint 的三个 RGB SHA 逐视角 exact；
-- resource audit：wall=`103.099s`，peak NVIDIA=`8,362 MiB`，peak CUDA allocated/reserved=
-  `7,729.707 / 8,020 MiB`，cgroup peak=`48,169,205,760 bytes`，run bytes=`948,244,397`，
-  OOM/kill=`0/0`；所有 D2/S1/S2/S3/S4 输入 before/after SHA exact，无训练或 optimizer step；
-- V3.2 定向回归=`36 passed`。production chain 固定为 S1 extended semantic sidecars + S2 generated-background
-  mixed scene + S3 generated-actor override + R0 exact chunk package；当前单卡工作终态=`done`，无下一执行授权。
-
-## V3.1 终局裁决
+## 当前裁决
 
 项目不再以“提出新的可编辑 3DGS”或 V2 M5/M6 大型失败评测为主线。V3 的交付目标是完整的 WorldSim
 模型链和 A0–A4 消融：原生 StreetGS → 校准增强 → actor-aware 增密/剪枝 → 编辑后局部 Gaussian 精修
@@ -649,7 +532,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
   `42,325,843,968 bytes`、OOM/kill=`0/0`；torch 未导入，GPU/训练/推理/安装/下载均未启动；
 - `next_action=none_plan_complete`。F1/P4/D3/D4/A3 R2–R4 保留未启动终态，不构成 V3.1 主计划缺口。
 
-## V3.1 冻结任务状态
+## V3 任务状态
 
 | Task ID | 状态 | 当前结论/门禁 |
 |---|---|---|
@@ -670,9 +553,7 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 - A3 heldout r5、A4-P0 v1 r1、A4-P5 r1 与 A4-P2 r1 均保留 blocked；P0/P5/P2 canonical r2 与 P3 canonical r1 exit=`0`，GPU 无遗留进程；
 - 当前非 V3 文档 dirty files 属于 V2 M5，必须保留。
 
-## 计划终态与归档
+## 计划终态
 
 `WS-V3-R0-INTEGRATION-01` 已 `done`，V3.1 当前为 `none_plan_complete`。F1、P4、D3/D4 与 A3 formal/R2–R4
 保持未解锁；除非未来以新任务、新协议和新授权启动，否则不得恢复为当前动作，也不得改写既有 terminal。
-V3.1 的计划与 R0 收口快照已归档至
-[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；当前没有新的研究计划或实验授权。

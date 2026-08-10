@@ -1,0 +1,51 @@
+schema_version: worldsim_v32_s1_no_gpu_preflight_v1
+task_id: WS-V32-S1-SEMANTIC-LIFT-01
+status: done
+date: 2026-08-10
+execution_scope: no_gpu_preparation_only
+formal_s1_status: pending
+
+hardware:
+  cuda_visible: false
+  cgroup_memory_max_bytes: 2147483648
+  cgroup_oom_kill_delta: 0
+
+sam2_runtime:
+  environment: /root/autodl-tmp/envs/worldsim-v32-sam
+  python: "3.10"
+  torch: 2.5.1+cu124
+  torchvision: 0.20.1+cu124
+  sam2_install: editable_no_optional_cuda_extension
+  pip_check: no_broken_requirements
+  config_compose: sam2.1/sam2.1_hiera_l.yaml
+  config_target: sam2.modeling.sam2_base.SAM2Base
+
+sam2_checkpoint:
+  path: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+  bytes: 898083611
+  sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+  hf_repo: facebook/sam2.1-hiera-large
+  hf_revision: 665f8e2ad61cf5f53d65644ff27c8ee525124610
+  mirror: https://hf-mirror.com
+
+prompt_asset:
+  manifest: /root/autodl-tmp/assets/worldsim_v32/s1_prompt_v1/prompt_manifest.json
+  manifest_sha256: f60131687e5b4e814dd41a47e69e4b6d4d83d626e20221c43462332d03d9e69d
+  train_frame_count: 177
+  heldout_frame_count: 19
+  heldout_leak_count: 0
+  manifest_block_count: 29
+
+static_checks:
+  python_compile: passed
+  pytest_worldsim_v32_semantic_schema: 4_passed
+  bash_syntax: passed
+  git_diff_check: passed
+  markdown_relative_links: 0_missing
+  no_gpu_runner_preflight_exit_code: 3
+  no_gpu_runner_created_run_dir: false
+
+gpu_only_remaining:
+  - sam2_temporal_mask_inference
+  - depth_consistent_gaussian_semantic_lift
+  - original_delete_lateral_smoke

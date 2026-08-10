@@ -1,0 +1,62 @@
+schema_version: worldsim_v32_s3_asset_harvester_v1
+task_id: WS-V32-S3-ASSET-HARVEST-01
+
+source:
+  checkout: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester
+  commit: 767b2439ce47a8b2513038ae0fb2073026f89ee8
+
+weights:
+  diffusion:
+    path: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester/checkpoints/AH_multiview_diffusion.safetensors
+    sha256: 92a25a615a78999477df764ed6616c0cf1dd8e08c5c12cf776dd03bbcbc72270
+  lifting:
+    path: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester/checkpoints/AH_tokengs_lifting.safetensors
+    sha256: 576a4250e373547c6864cc3fa6ec310b7c66dd06b8025d609ec6681405896ff8
+  camera_estimator:
+    path: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester/checkpoints/AH_camera_estimator.safetensors
+    sha256: 4e698b079a667054c825e84247c72da0cdc3272808d95f34dc33d23ef3d52885
+
+transitive_models:
+  vae:
+    repo_id: mit-han-lab/dc-ae-f32c32-sana-1.0-diffusers
+    revision: ca69e17e97609e64ce055115a6515215109b1f50
+  cradio:
+    repo_id: nvidia/C-RADIO
+    revision: c3ab05bfe0a70819f9af060dfb0424d12eaf03a4
+
+runtime:
+  hf_home: /root/autodl-tmp/hf_cache/worldsim_v32_asset_harvester
+  hf_endpoint: https://hf-mirror.com
+  offline: true
+
+inputs:
+  input_manifest: /root/autodl-tmp/runs/worldsim_v32/WS-V32-S3-ASSET-HARVEST-01/20260810T112505Z__s3-asset-harvest-s0-r3/artifacts/inputs/input_manifest.json
+  input_manifest_sha256: 35555c431c44754b0d6fc2a019d7ef9ccf4d47cd7ea2cc8733189ebe2e6cf2dd
+
+actor:
+  instance_token: af663976db5e412e83db033d309c5c29
+  dataset_instance_id: 13
+  rigid_model_index: 5
+
+inference:
+  seed: 20260810
+  num_steps: 30
+  cfg_scale: 2.0
+  precision: bf16
+  offload_model_to_cpu: true
+
+adapter:
+  orientation_y_degrees: 90.0
+  bounds_support_sigma: 3.0
+
+streetgs:
+  checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+
+smoke:
+  sample: high_support_1view
+  source_view_index: 0
+  lateral_offset_m: 1.0
+  minimum_effect_pixels: 25

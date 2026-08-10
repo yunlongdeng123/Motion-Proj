@@ -1,0 +1,72 @@
+schema_version: worldsim_v32_s1_semantic_lift_v1
+task_id: WS-V32-S1-SEMANTIC-LIFT-01
+seed: 20260810
+
+inputs:
+  checkpoint: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/checkpoint_final.pth
+  checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  source_config: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/work_dirs/worldsim_v3_a2/scene0230_a2_d2_boundary_residual_formal_s0_i30000/config.yaml
+  source_config_sha256: 115deaf843e3bca97a6a284aa9f8271f0c58a911ebf0dbb34fdd1eec4c7f5e68
+  actor_registry: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A2-ACTOR-DENSIFY-01/20260809T113230Z__a2-d2-formal30k-s0-r1/artifacts/evaluations/fixed-d2-boundary-residual/actor_registry.json
+  actor_registry_sha256: ed57764e094e83392bad8f052441da54bbe6c7b6754139908c3ddb83980e0c68
+
+scene:
+  name: scene-0230
+  processed_scene_dir: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179
+  instances_info_sha256: d8bfe57d0ad7345e075d29b2ed64d14d3d12d06efbf1f7117012ba3e1563097c
+  frame_count: 196
+  cameras:
+    - {id: 0, name: CAM_FRONT}
+    - {id: 1, name: CAM_FRONT_LEFT}
+    - {id: 2, name: CAM_FRONT_RIGHT}
+
+split:
+  heldout_frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+
+actors:
+  high_support:
+    instance_token: af663976db5e412e83db033d309c5c29
+    dataset_instance_id: 5
+    rigid_model_index: 5
+    sam_object_id: 1
+    class_name: vehicle.car
+  boundary_support:
+    instance_token: 18c7f0c5fa6b49449f71c9dbae5c31d4
+    dataset_instance_id: 41
+    rigid_model_index: 21
+    sam_object_id: 2
+    class_name: vehicle.car
+
+prompts:
+  minimum_depth_m: 0.1
+  padding_fraction: 0.08
+  minimum_side_pixels: 8.0
+
+sam2:
+  source_checkout: /root/autodl-tmp/third_party/worldsim_v32/sam2
+  source_commit: 2b90b9f5ceec907a1c18123530e92e794ad901a4
+  model_config: configs/sam2.1/sam2.1_hiera_l.yaml
+  checkpoint: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+  checkpoint_sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+  mask_logit_threshold: 0.0
+
+lift:
+  first_hit_alpha_threshold: 0.5
+  depth_absolute_tolerance_m: 0.35
+  depth_relative_tolerance: 0.08
+  semantic_positive_posterior: 0.65
+  ambiguous_posterior_low: 0.35
+  ambiguous_posterior_high: 0.65
+  minimum_visible_mass: 0.001
+  minimum_positive_views: 2
+
+outputs:
+  model_native_width: 800
+  model_native_height: 450
+  sidecar_only: true
+  smoke_lateral_offset_m: 1.0
+
+runtimes:
+  sam_python: /root/autodl-tmp/envs/worldsim-v32-sam/bin/python
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v3-a3-r1-r1

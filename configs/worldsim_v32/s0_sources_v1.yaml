@@ -1,0 +1,197 @@
+schema_version: worldsim_v32_s0_sources_v1
+task_id: WS-V32-S0-ROUTE-AND-SOTA-AUDIT-01
+status: done
+audited_at: "2026-08-10"
+project:
+  baseline_commit: d91e80eea33a1bf8b6596d2357ee0ccf357691cc
+  branch: research/worldsim-v3.2-semantic-repair
+  immutable_d2_checkpoint_sha256: 1a061247a753c0d8c9aa7835a52efa2ab1ddc79141a6168adc18b9748de66e7c
+  a3_selection: R0-off
+  v31_gate_before_s0: none_plan_complete
+
+host_audit:
+  mode: no_gpu_boot
+  cgroup_memory_max_bytes: 2147483648
+  host_memory_view_is_not_an_execution_limit: true
+  gpu_visible: false
+  nvidia_smi_result: permission_denied_no_gpu_device
+  docker_available: false
+  data_disk_bytes: 322122547200
+  data_disk_available_bytes_at_audit: 94801928192
+  github_access: passed
+  huggingface_mirror_access: passed
+  hf_endpoint: https://hf-mirror.com
+  hf_home: /root/autodl-tmp/hf_cache
+  gpu_execution_gate: require_visible_gpu_and_preflight_after_gpu_reboot
+
+selected_s1_runtime:
+  source: sam2
+  model: sam2.1_hiera_large
+  environment: /root/autodl-tmp/envs/worldsim-v32-sam
+  config: sam2/configs/sam2.1/sam2.1_hiera_l.yaml
+  checkpoint: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+  weights_repo: facebook/sam2.1-hiera-large
+  weights_revision: 665f8e2ad61cf5f53d65644ff27c8ee525124610
+  weights_bytes: 898083611
+  weights_sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+  download_endpoint: https://hf-mirror.com
+  checkpoint_license: Apache-2.0
+
+sources:
+  sam2:
+    official_url: https://github.com/facebookresearch/sam2
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/sam2
+    branch: main
+    commit: 2b90b9f5ceec907a1c18123530e92e794ad901a4
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_status: selected_downloaded_exact
+    python: ">=3.10"
+    torch: ">=2.5.1"
+    torchvision: ">=0.20.1"
+    input_schema: ordered_frames_plus_point_or_box_prompts
+    output_schema: per_frame_mask_logits_and_binary_masks
+
+  saga:
+    official_url: https://github.com/Jumpat/SegAnyGAussians
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/saga
+    branch: v2
+    commit: 2d4c5d77c857c956d747e4775d3d72c4ec5dfe16
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_status: requires_external_sam_and_scene_3dgs_not_selected_for_s1
+    input_schema: colmap_or_nerf_scene_plus_3dgs_plus_sam_masks
+    output_schema: per_gaussian_affinity_features_and_binary_mask
+
+  gaussian_grouping:
+    official_url: https://github.com/lkeab/gaussian-grouping
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/gaussian-grouping
+    branch: main
+    commit: 0ab60afed3385b717c985af1d30a20f7b0884c89
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_status: multiple_external_segmentation_tracking_dependencies_not_frozen
+    input_schema: 3dgs_scene_plus_multiview_segmentation_tracking
+    output_schema: per_gaussian_group_identity_and_edit_mask
+
+  segment_anything_in_3d:
+    official_url: https://github.com/Jumpat/SegmentAnythingin3D
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/segment-anything-in-3d
+    branch: main
+    commit: 35739ac684c2239c979ebc79c99cb98ae4c42d2c
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_status: external_sam_or_mobile_sam_not_selected_for_s1
+    input_schema: nerf_plus_single_view_prompt
+    output_schema: density_guided_3d_mask_grid_and_rendered_masks
+
+  3dgic:
+    official_url: https://github.com/peterjohnsonhuang/3dgic
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/3dgic
+    branch: main
+    commit: 0fdbaed680264c02d6222c573434618eb21a44a1
+    upstream_head_exact: true
+    license: custom_inria_gaussian_splatting_research_license
+    commercial_use_gate: blocked_pending_license_review
+    weights_status: no_single_project_checkpoint_external_depth_and_inpainting_dependencies
+    input_schema: 3dgs_checkpoint_plus_removal_config_plus_images_and_depth
+    output_schema: depth_guided_inpainted_3dgs_and_renders
+
+  inpaint360gs:
+    official_url: https://github.com/dfki-av/Inpaint360GS
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/inpaint360gs
+    branch: main
+    commit: d54c893285c6cb27788e05cce607e7d3cca6388a
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_status: external_lama_and_segmentation_dependencies_not_frozen
+    input_schema: posed_360_images_plus_object_mask
+    output_schema: inpainted_3dgs_and_multiview_renders
+
+  vista:
+    official_url: https://github.com/Aswhalefall/VISTA
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/vista
+    branch: main
+    commit: 95e47fd4725516241eb3bc2216a325976b723f6a
+    upstream_head_exact: true
+    license: no_license_file
+    execution_gate: blocked_license_and_incomplete_runtime_documentation
+    weights_status: no_official_weight_manifest_found
+    input_schema: multiview_scene_plus_removal_mask
+    output_schema: visibility_uncertainty_guided_inpainted_scene
+
+  asset_harvester:
+    official_url: https://github.com/NVIDIA/asset-harvester
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/asset-harvester
+    branch: main
+    commit: 767b2439ce47a8b2513038ae0fb2073026f89ee8
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_repo: nvidia/asset-harvester
+    weights_revision: dc341ceb0b9d7201ebbd9e1a989f072f28e8418e
+    weights_status: manifest_frozen_not_downloaded_s3_only
+    minimum_driver: ">=570"
+    cuda: "12.8-compatible"
+    minimum_vram: approximately_16_GiB
+    input_schema: one_or_few_object_views_plus_optional_masks_and_cameras
+    output_schema: complete_gaussian_actor_asset
+
+  harmonizer:
+    official_url: https://github.com/NVIDIA/harmonizer
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/harmonizer
+    branch: main
+    commit: dd5799e50855c5bcb1f6ef52a77b5b644b4798c0
+    upstream_head_exact: true
+    license: Apache-2.0
+    weights_repo: nvidia/Harmonizer
+    weights_revision: 20ca33d4612b1e98e0526b3a7ee604af5b289f58
+    base_weights_repo: nvidia/Cosmos-Predict2-0.6B-Text2Image
+    base_weights_revision: dd55b6858b22ad569976bff207880b8fea839da7
+    base_weights_gate: auto_gated_huggingface_terms_required
+    weights_status: manifest_frozen_not_downloaded_s4_only
+    input_schema: rendered_frames_plus_temporal_context
+    output_schema: temporally_harmonized_frames
+
+  omni3dedit:
+    official_url: https://github.com/mt-cly/Omni3DEdit
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/omni3dedit
+    branch: main
+    commit: 13da5f2c9e873c0f763ac09387f65c7153556d6a
+    upstream_head_exact: true
+    license: no_license_file
+    execution_gate: blocked_pending_license_clarification
+    weights_repo: mutou0308/Omni3DEdit
+    weights_revision: c4bf24e492d985ab774c4501abb463eb379d8c31
+    weights_status: manifest_frozen_not_downloaded_s5_only
+    input_schema: multiview_images_plus_reference_edit
+    output_schema: edited_multiview_images
+
+  coin:
+    official_url: https://github.com/hana001106/CoIn
+    checkout: /root/autodl-tmp/third_party/worldsim_v32/coin
+    checkout_mode: no_checkout_audit_only
+    branch: main
+    commit: a87cffde5b6b4d437a67e5e7a573b4aa80bce1e1
+    tree: f91736788fe59aa61f1bab68e83f88d1ec933951
+    upstream_head_exact: true
+    license: no_license_file
+    execution_gate: blocked_pending_license_and_full_runtime_audit
+    weights_status: no_official_weight_manifest_frozen
+    input_schema: alternating_2d_diffusion_and_3d_gaussian_guidance
+    output_schema: inpainted_images_and_gaussian_scene
+
+  mv_sam:
+    paper: https://arxiv.org/abs/2601.17866
+    official_url: null
+    commit: null
+    license: unavailable
+    weights_status: unavailable
+    execution_gate: blocked_no_official_code_or_checkpoint_found_at_audit
+
+gates:
+  v31_assets_mutated: false
+  large_dependency_install_during_s0: false
+  model_inference_during_s0: false
+  training_during_s0: false
+  s1_authorized: true
+  s2_s3_s4_s5_authorized: false
