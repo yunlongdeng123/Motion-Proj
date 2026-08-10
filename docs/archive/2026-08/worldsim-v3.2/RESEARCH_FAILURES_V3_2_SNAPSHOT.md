@@ -1,7 +1,7 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-11
-> **当前范围**：V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
+> **最后更新**：2026-08-10
+> **当前范围**：V3.2 WorldSim 语义资产修复、V3.1 模型链终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
@@ -9,26 +9,7 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
-## V3.2 终局处置与复开门禁（2026-08-11）
-
-V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口。归档位于
-[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)。下面的 `V3-F34`–`V3-F46`
-继续约束任何后续路线，但不构成继续执行 V3.2 的任务清单。
-
-| 分支 | 终局处置 | 禁止的延续方式 | 合法复开条件 |
-|---|---|---|---|
-| S1 semantic lift | `done`，canonical r6 | 复用 identity-invalid r5；绕过 ID/token/rigid 三元核对 | 新数据或新语义假设；新 task/protocol/run；继续 fail-closed identity |
-| S2 background inpaint | `done`，canonical r3 | 把 Telea unseen RGB 当作 geometry/GT；复活退化的 r2 | 独立深度或多视图证据；预注册未观测 3D 门；新 run |
-| S3 actor harvest | `done`，canonical r3 | 把生成背面写成 GT；倒写 CUDA preflight 失败的 r2 | 新 actor/方法假设；固定 source/weight/license；新 task/run |
-| S4 harmonizer | task `done`，non-temporal `excluded diagnostic`；temporal `blocked` | 仅凭锐化或全图指标把删除区重生车辆纳入生产链；绕过 gated 权重 | 合法取得 gated base；显式 semantic preservation + temporal gate；新 task/protocol/run |
-| S5 multiview upper bound | `blocked`，未授权 | 猜测许可证、移植无根许可证代码或把未执行写成质量结论 | 明确可执行许可证与权重；独立资源审计；用户重新授权的新 task |
-| R0 integration | `done`，canonical r4 | 从 exact package 外推 streaming、跨场景、闭环安全或 GT correctness | 为对应 claim 增加独立数据、协议、测量与 run；不得续写 r4 |
-
-统一复开规则：外部门禁解除只改变“是否可提出新任务”，不会把 S4 temporal 或 S5 自动变成当前任务。任何复开都
-必须引用相关失败 ID，使用新 task ID、新冻结 protocol 和不可复用 run ID；旧 `blocked/rejected/done` terminal
-保持不可改写。当前 `next_action=none_plan_complete`。
-
-## V3.2 防重复结论（2026-08-10）
+## V3.2 新增防重复结论（2026-08-10）
 
 - `V3-F34`：actor role 必须同时绑定 dataset instance ID、`instances_info.id`/instance token 与 checkpoint
   rigid model index。只分别验证 class、token registry 和 core count 会允许“2D mask 属于 actor A、D2 core 属于 actor B”

@@ -1,14 +1,13 @@
 # Research Status
 
-- 更新时间：2026-08-11
-- 当前路线：无；WorldSim V3.2 已收口并归档
+- 更新时间：2026-08-10
+- 当前路线：WorldSim V3.2 语义资产修复
 - 最新有效完成任务：`WS-V32-R0-INTEGRATION-01`
-- 当前任务：无
-- 路线终态：`none_plan_complete`
-- 当前门禁：无新的已授权执行项；S4 temporal 与 S5 的外部门禁保持历史 `blocked`，不自动恢复为当前任务
-- 最近完成计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
+- 当前任务：`WS-V32-R0-INTEGRATION-01`
+- 状态：`done`
+- 当前门禁：全部单卡 RTX 3090 可执行的 V3.2 工作已完成；S1/S2/S3/R0 形成 production candidate，S4 非时序分支因删除语义重生成仅保留 diagnostic；S4 temporal 受 Hugging Face gated base 权重阻塞，S5 受许可证门阻塞；当前无新的已授权执行项
+- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
 - S0 审计：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)
-- V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3.2-semantic-repair`
@@ -18,16 +17,6 @@
 - R0 canonical summary/manifest/status SHA-256：`40624cbc79a004e9e07e57b00cebc535b900297a10f0d070fb4e9305a5f7937a` /
   `358d9fc7fde6a535c2ffb0bb2ff34cf1f9df3c151066f3051e24859a5d73a27e` /
   `d31a4f8e62f31dbbf6bbf2520243f5061c68e6682ea5011ef8c64a8dbb541617`
-
-## V3.2 终局处置
-
-- S0–S4 与 R0 的全部单卡 RTX 3090 可执行工作已终结；S1/S2/S3/R0 形成 production candidate；
-- 最终链固定为 S1 extended semantic sidecars + S2 generated-background mixed scene + S3 generated-actor
-  override + R0 exact chunk package；
-- S4 non-temporal 因删除语义重生成被排除，仅保留 optional diagnostic；S4 temporal 受 gated Cosmos base
-  权重阻塞，S5 受许可证门阻塞；
-- 外部条件未来变化时，也必须先建立新 task ID、冻结新 protocol 并创建新 run；不得续写 V3.2 terminal；
-- `next_action=none_plan_complete`，当前无训练、评测、下载或第三方接入授权。
 
 ## V3.2 S0–S3 收口
 
