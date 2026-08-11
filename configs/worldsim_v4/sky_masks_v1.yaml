@@ -1,0 +1,31 @@
+schema_version: worldsim_v4_sky_masks_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-11"
+model:
+  id: nvidia/segformer-b5-finetuned-cityscapes-1024-1024
+  revision: 2c6f153e4c23c229e2fa2b188eb250607e030cd8
+  snapshot: /root/autodl-tmp/hf_cache/hub/models--nvidia--segformer-b5-finetuned-cityscapes-1024-1024/snapshots/2c6f153e4c23c229e2fa2b188eb250607e030cd8
+  environment: /root/autodl-tmp/envs/drivestudio
+  local_files_only: true
+  restore:
+    endpoint: https://huggingface.co
+    cache_dir: /root/autodl-tmp/hf_cache/hub
+    policy: official_exact_revision_if_missing
+  required_files:
+    config.json: {bytes: 1682, sha256: ae4f8cf860df088dc5565a45dd8b309b140bfc6a14ac51f403a4bc6b1e992b24}
+    preprocessor_config.json: {bytes: 273, sha256: 697d92c83640ee381065f575ebdaef42d00d44483a827b92265026c0173dcbbf}
+    pytorch_model.bin: {bytes: 338896453, sha256: bdefc7b5bf4b548d347e6bcbe3ab1a0ff4370047211ae9e56c9e53dfb1f78033}
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  cameras: [0, 1, 2]
+  expected_timesteps: 196
+  expected_masks: 588
+  scenes: {scene-0048: 45, scene-0139: 110, scene-0994: 752}
+runtime:
+  device: cuda:0
+  resource_sample_every_masks: 10
+  maximum_gpu_used_at_start_mib: 2048
+  minimum_disk_free_gib: 40
+  generation_network_access: false
+  no_test_quality_read: true
