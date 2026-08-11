@@ -5,13 +5,13 @@
 `WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计、工程指标、6 个 development
 scenes 的 DriveStudio 输入与 sky masks 已经落地。2026-08-12 复核发现：早先 r17/r20/r22/r24/r26/r28
 使用的是 `test_image_stride=10`，不能满足冻结的 `sample_index mod 5` 三分区合同；这些 run 只保留为
-native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 1/6 / AD-GS 0/6`。
+native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 1/6 / AD-GS 1/6`。
 
 | baseline | 当前 executable scenes | 需要 | 事实边界 |
 |---|---:|---:|---|
 | V3.3 frozen | 1 | 6 | scene-0230 canonical release 与其外部 base 仍可解析；其余五 scene 未物化完整链 |
 | Native StreetGS | 1 | 6 | scene-0230 strict mod5 30k r32 可执行；旧六场景 stride=10 run 只作协议不匹配 provenance |
-| AD-GS | 0 | 6 | official exact source、权重与 CUDA 环境已恢复；尚无 strict same-split checkpoint |
+| AD-GS | 1 | 6 | scene-0230 strict train-only 60k r44 已由内容寻址审计登记；其余五 scene 尚待重建 |
 
 ## 冻结协议
 
@@ -135,7 +135,7 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   cefae2306265806043314cc4bf77dc83d657e5d72efa1f2d176f6e7763c05873`；项目在 terminal 时
   clean=`54ca265723d55226c0af4e634370a612c06c10a8`，development/heldout/test quality 均未读；
 - run-local extension source 修复=`9f839fd`，冻结区域协议与 development-only scene evaluator=`abd82d8`；
-  baseline/AD-GS/region/evaluator 联合定向测试=`38 passed`。
+  baseline/AD-GS/region/evaluator 联合定向测试在内容寻址 registry 纳入后=`50 passed`。
 - profile r39 在 iteration 前因 `utils/flow_utils.py` 全局导入可选 `flow_vis` blocked；r40 从 exact 本地
   `roma-1.5.7-py3-none-any.whl`（`25,627 bytes / a322b032...f5a2`）离线补齐 Python runtime，terminal done；
   r41 随后在 iteration 前暴露 inherited PyTorch3D binary 缺少 sm86 KNN kernel，保持 blocked；两者均未读 dev/heldout；
@@ -150,9 +150,22 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   `1a6e32673e365d9be6aeea2782f86706c836256f8749af550bd8ea3991ff268d /
   080ca14d444f4104841776fa3255fff7e9cae44d8f6917cf7381a5501aa58396`，development/heldout/test quality 均未读；
   profile 只解锁 formal，不计 executable coverage。
+- scene-0230 formal60k r44=`20260811T185600Z__adgs-scene0230-formal60k-s0-r44` done，train stage=
+  `7,054.6221 s`、peak GPU=`16,692 MiB`、peak cgroup=`33,680,572,416 bytes`、701 个资源采样的
+  OOM/kill/max/high 均为 `0`；checkpoint `point_cloud/deform/env=413,905,347/435,921,657/805,307,528 bytes`，SHA=
+  `f17ed27f...a0cbb / c725f952...c84b0 / c3233b71...e4d34`；fingerprint/manifest/summary SHA=
+  `0e69e2b9...e8d28 / 9fa1f2c1...d8f42 / 7774d712...b9a8f`。训练只物化 train remainder，
+  `development_content_read=false / heldout_content_read=false / test_quality_read=false`，项目 terminal HEAD=
+  `7001b5c` 且 clean；
+- fail-closed checkpoint registry=`904e395`：StreetGS/AD-GS 只有在 runtime/source/patch 精确、formal step 精确、
+  checkpoint bytes/SHA 精确且位于登记 run 内、fingerprint/manifest SHA 精确时才计 coverage；联合定向测试=`50 passed`；
+- corrected inventory r45=`20260811T205840Z__baseline-adgs-formal-registration-s0-r45`，terminal=
+  `blocked / matched_baseline_assets_incomplete`，coverage=`StreetGS/V3.3/AD-GS=1/1/1`；inventory/fingerprint SHA=
+  `4bf7cf68213ab068370a3251ee76005156631912b63d673769bcdde63333ad6b /
+  3db524d235496d68945223fcc223e57e5b0eb8197a8afe6f310ef5a79ee349e5`，project HEAD=`904e395` 且 clean。
 
 ## 下一动作
 
-依次完成 AD-GS scene-0230 formal、StreetGS 其余五场 strict mod5 重跑，再补齐
-AD-GS 与 V3.3 六场景 same-split。B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
+依次完成 StreetGS 其余五场 strict mod5 重跑，再补齐 AD-GS 与 V3.3 其余五场景 same-split。
+B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
 `done`，M1 在此之前不启动。

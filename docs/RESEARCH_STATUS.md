@@ -4,7 +4,7 @@
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
 - 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
 - 当前任务：`WS-V4-B0-MATCHED-BASELINES-01`
-- 路线状态：`active / d0_done / d1_blocked_external / b0_matched_1of6_each_v33_streetgs`
+- 路线状态：`active / d0_done / d1_blocked_external / b0_matched_1of6_each_v33_streetgs_adgs`
 - 当前门禁：继续补齐 V3.3/StreetGS/AD-GS 6-development-scene strict matched baseline；StreetGS 旧 stride=10 六场景只作 provenance，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
 - 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
@@ -29,7 +29,7 @@
 - KITTI D1 审计：[`KITTI_LAYOUT_AUDIT.md`](KITTI_LAYOUT_AUDIT.md)，canonical blocked run=
   `20260811T085210Z__d1-kitti-layout-formal-s0-r2`
 - V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；6-scene DriveStudio 输入与 sky masks
-  已齐；当前 strict executable coverage=`V3.3 1/6 / StreetGS 1/6 / AD-GS 0/6`，B0 仍为 running
+  已齐；当前 strict executable coverage=`V3.3 1/6 / StreetGS 1/6 / AD-GS 1/6`，B0 仍为 running
 - B0 StreetGS profile：`20260811T111810Z__streetgs-scene0048-profile100-s0-r16`，100 steps done，checkpoint
   SHA=`446297b8...3af`，peak GPU=`9,004 MiB`，30k formal 已解锁；test quality 未读
 - B0 StreetGS 协议纠错：r17/r20/r22/r24/r26/r28 虽均为 30k finite 且 OOM/kill=`0/0`，但使用
@@ -40,10 +40,12 @@
 - B0 AD-GS 恢复：official `9a208512` + exact DPT/CoTracker weights 已审计；离线环境 r34 done，
   r42 又从 clean PyTorch3D v0.7.5 source 离线重编 sm86 并通过真实 KNN kernel smoke；scene-0230
   train-only preprocess r38 done，`image/semantic/sky/depth/flow=354/354/354/354/285`，峰值 GPU=`20,112 MiB`、
-  峰值 cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`；profile100 r43 done，peak GPU=`6,012 MiB`，
-  三文件 checkpoint 已审计；尚无 60k formal checkpoint，不计 executable coverage
+  峰值 cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`；profile100 r43 done，peak GPU=`6,012 MiB`；
+  formal60k r44 done，stage=`7,054.6221 s`，peak GPU/cgroup=`16,692 MiB / 33,680,572,416 bytes`，三文件 SHA=
+  `f17ed27f...a0cbb / c725f952...c84b0 / c3233b71...e4d34`，development/heldout/test quality 均未读；
+  r45 内容寻址 inventory=`V3.3/StreetGS/AD-GS 1/1/1`，inventory/fingerprint=`4bf7cf68...ad6b / 3db524d2...49e5`
 - B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
-  engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`38 passed`
+  engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`50 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
 - V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)

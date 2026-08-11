@@ -92,6 +92,10 @@
   但 inherited `_C.so` 在 RTX3090 KNN 首次执行时报 `no kernel image`；必须从 clean frozen source 在 run-local
   目录以 `TORCH_CUDA_ARCH_LIST=8.6` 重编，并在环境 smoke 中真实调用 `knn_points`。r42 完成该合同后 r43 才进入
   100/100 iteration；r39/r41 继续保留 blocked，不倒写为成功。
+- `V4-F32`：进度条达到 60k 或路径上存在 checkpoint 不等于 scene executable。r44 只有在 formal step、run 内
+  `point_cloud/deform/env` 三文件 bytes/SHA、fingerprint/manifest、source HEAD、六修改文件与兼容补丁全部精确后，
+  才由 r45 从 `AD-GS 0/6` 更新为 `1/6`；StreetGS 同样从“存在即计数”收紧为 runtime+bytes+SHA 精确。
+  `AD-GS-2026-07-27.patch` 是 zero-context patch，reverse-check 必须显式传 `--unidiff-zero`，否则会产生审计假阴性。
 
 ## V4 P0 防重复结论（2026-08-11）
 

@@ -144,9 +144,16 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - profile r43=`20260811T185145Z__adgs-scene0230-profile100-s0-r43` done，100 steps train stage=`40.3595 s`，
   peak GPU/cgroup=`6,012 MiB / 30,991,519,744 bytes`，三文件 checkpoint SHA=
   `bc364930...16c5 / 8205e276...e5ab / 45644cb4...8e77`，test quality 未读；profile 不计 coverage；
+- formal r44=`20260811T185600Z__adgs-scene0230-formal60k-s0-r44` done，60k stage=`7,054.6221 s`，
+  peak GPU/cgroup=`16,692 MiB / 33,680,572,416 bytes`，OOM/kill=`0/0`；三文件 bytes=
+  `413,905,347/435,921,657/805,307,528`，SHA=`f17ed27f...a0cbb / c725f952...c84b0 /
+  c3233b71...e4d34`，train-only partition 且 development/heldout/test quality 均未读；
+- fail-closed registry 提交=`904e395`；r45=`20260811T205840Z__baseline-adgs-formal-registration-s0-r45`
+  重新校验 runtime/source/patch、formal step、run 内三文件 bytes/SHA 与 fingerprint/manifest，得到 strict coverage=
+  `StreetGS/V3.3/AD-GS 1/1/1`，inventory/fingerprint=`4bf7cf68...ad6b / 3db524d2...49e5`；
 - run-local extension build source=`9f839fd`，baseline region/evaluator=`abd82d8`，runtime import/sm86 fixes=
-  `c3600be/eed00cb`；联合定向测试=`38 passed`；
-- B0 继续 running；下一步完成 AD-GS scene-0230 formal、StreetGS 其余五场 strict 重跑，
+  `c3600be/eed00cb`；联合定向测试=`50 passed`；
+- B0 继续 running；下一步完成 StreetGS 其余五场 strict 重跑，
   再补齐 AD-GS/V3.3 6-scene same-split。M1 与 test quality 继续未授权。
 
 ## V3.3 注册表
