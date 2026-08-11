@@ -127,6 +127,11 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - corrected inventory r33=`20260811T165009Z__baseline-matched-correction-s0-r33`，terminal blocked，strict
   coverage=`StreetGS/V3.3/AD-GS 1/1/0`，inventory/fingerprint SHA=
   `73d36544...bea9e / c19fba13...e285853`；它覆盖当前结论但不覆盖旧 run；
+- strict scene-0242 r46=`20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46` 30k done，
+  wall=`1,998.0482 s`，checkpoint=`302,953,462 bytes / dd41a34d...52bc0`，Background/Rigid=
+  `824,583/92,170`，peak GPU/cgroup=`17,530 MiB / 23,842,824,192 bytes`，OOM/kill=`0/0`，
+  无 test/full render；r47 内容寻址 inventory=`StreetGS/V3.3/AD-GS 2/1/1`，
+  inventory/fingerprint=`89c72659...eafad / b91f7c76...712d6`；
 - AD-GS official exact source=`9a208512`、DPT/CoTracker weights 与 train-only adapter 已恢复；环境 r34=
   `20260811T165030Z__adgs-environment-restore-r34` 离线完成，torch=`2.1.2+cu118`，两个 CUDA 扩展真实
   forward/backward smoke passed，OOM/kill=`0/0`。该结果只解锁 strict preprocess/profile，不计 scene coverage；
@@ -153,7 +158,7 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   `StreetGS/V3.3/AD-GS 1/1/1`，inventory/fingerprint=`4bf7cf68...ad6b / 3db524d2...49e5`；
 - run-local extension build source=`9f839fd`，baseline region/evaluator=`abd82d8`，runtime import/sm86 fixes=
   `c3600be/eed00cb`；联合定向测试=`50 passed`；
-- B0 继续 running；下一步完成 StreetGS 其余五场 strict 重跑，
+- B0 继续 running；下一步完成 StreetGS 其余四场 strict 重跑，
   再补齐 AD-GS/V3.3 6-scene same-split。M1 与 test quality 继续未授权。
 
 ## V3.3 注册表

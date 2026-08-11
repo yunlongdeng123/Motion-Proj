@@ -5,12 +5,12 @@
 `WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计、工程指标、6 个 development
 scenes 的 DriveStudio 输入与 sky masks 已经落地。2026-08-12 复核发现：早先 r17/r20/r22/r24/r26/r28
 使用的是 `test_image_stride=10`，不能满足冻结的 `sample_index mod 5` 三分区合同；这些 run 只保留为
-native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 1/6 / AD-GS 1/6`。
+native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 2/6 / AD-GS 1/6`。
 
 | baseline | 当前 executable scenes | 需要 | 事实边界 |
 |---|---:|---:|---|
 | V3.3 frozen | 1 | 6 | scene-0230 canonical release 与其外部 base 仍可解析；其余五 scene 未物化完整链 |
-| Native StreetGS | 1 | 6 | scene-0230 strict mod5 30k r32 可执行；旧六场景 stride=10 run 只作协议不匹配 provenance |
+| Native StreetGS | 2 | 6 | scene-0230/0242 strict mod5 30k r32/r46 可执行；旧六场景 stride=10 run 只作协议不匹配 provenance |
 | AD-GS | 1 | 6 | scene-0230 strict train-only 60k r44 已由内容寻址审计登记；其余五 scene 尚待重建 |
 
 ## 冻结协议
@@ -104,6 +104,14 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   `blocked / matched_baseline_assets_incomplete`，coverage=`StreetGS/V3.3/AD-GS=1/1/0`；inventory/fingerprint SHA=
   `73d3654450621d48a60a18ae296e61e1fb5ced5f211763ff3473bcb14bbbea9e /
   c19fba13a7f8143608c56a318533d23d2894e888bbf87d8a5652ccaf0e285853`。
+- scene-0242 strict run=`20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46`，30k done，wall=
+  `1,998.0482 s`；checkpoint=`302,953,462 bytes / SHA256 dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0`，
+  Gaussian=`Background 824,583 / RigidNodes 92,170`，means finite；peak GPU/cgroup=
+  `17,530 MiB / 23,842,824,192 bytes`，200 个资源采样 OOM/kill/max/high 均为 `0`；无 test/full render，
+  `test_quality_read=false`，fingerprint/manifest/summary=`9c193ddf...2236c / 55c88461...3cade / cfb4308d...2c503`；
+- registry 提交=`9d587de`；r47=`20260811T213829Z__baseline-streetgs-scene0242-registration-s0-r47` 得到 coverage=
+  `StreetGS/V3.3/AD-GS=2/1/1`，inventory/fingerprint SHA=`89c72659...eafad / b91f7c76...712d6`，
+  terminal 仍为预期的 `blocked / matched_baseline_assets_incomplete`，project clean。
 
 ## AD-GS exact source、权重与环境恢复
 
@@ -166,6 +174,6 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
 
 ## 下一动作
 
-依次完成 StreetGS 其余五场 strict mod5 重跑，再补齐 AD-GS 与 V3.3 其余五场景 same-split。
+依次完成 StreetGS 其余四场 strict mod5 重跑，再补齐 AD-GS 与 V3.3 其余五场景 same-split。
 B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
 `done`，M1 在此之前不启动。
