@@ -163,7 +163,7 @@ def build_preprocess_commands(config: Mapping[str, Any], project_root: Path, sce
         ("segment_points", [python, str(adgs / "scripts/segment_pcd.py"), str(destination)], adgs),
         (
             "flow",
-            [python, str(adgs / "scripts/flow.py"), str(destination), "--device", "cuda:0", "--downsample", "1", "--step", str(preprocess["flow_step"]), "--seed", str(preprocess["seed"])],
+            [python, str(adgs / "scripts/flow.py"), str(destination), "--device", "cuda:0", "--downsample", "1", "--step", str(preprocess["flow_step"]), "--seed", str(preprocess["seed"]), "--disable-visualization"],
             adgs,
         ),
     ]

@@ -9,6 +9,7 @@ import yaml
 
 from scripts.run_worldsim_v4_adgs_scene import (
     ADGSRunError,
+    build_preprocess_commands,
     build_train_command,
     load_config,
     validate_processed,
@@ -32,6 +33,21 @@ def test_train_command_disables_internal_test_evaluation(tmp_path: Path) -> None
     assert command[command.index("--iterations") + 1] == "100"
     assert model_root == tmp_path / "run/model"
     assert iterations == 100
+
+
+def test_preprocess_flow_disables_diagnostic_visualization(tmp_path: Path) -> None:
+    config = minimal_config(tmp_path)
+    config.update(
+        {
+            "implementation": {**config["implementation"], "root": "/third/AD-GS"},
+            "dependencies": {"depth_anything": {"checkpoint": "/weights/dpt.pth"}},
+            "preprocess": {"depth_encoder": "vitl", "flow_step": 4, "seed": 0},
+            "data": {**config["data"], "source_root": "/data/source"},
+            "scenes": {"scene-0230": 179},
+        }
+    )
+    flow_command = build_preprocess_commands(config, tmp_path, "scene-0230")[-1][1]
+    assert "--disable-visualization" in flow_command
 
 
 def test_validate_processed_accepts_train_only_native_scene(tmp_path: Path) -> None:
