@@ -31,6 +31,19 @@ def test_partition_contract_for_196_frames_and_three_cameras() -> None:
     ]
 
 
+def test_train_only_partition_has_no_validation_or_heldout_rows() -> None:
+    flags, rows = build_partition_flags(include_partitions=("train",))
+    assert flags.shape == (354,)
+    assert not flags.any()
+    assert {row["partition"] for row in rows} == {"train"}
+    assert {row["timestep"] % 5 for row in rows} == {0, 1, 3}
+
+
+def test_partition_selection_requires_train() -> None:
+    with pytest.raises(ADGSAdapterError, match="包含 train"):
+        build_partition_flags(include_partitions=("development",))
+
+
 def test_intrinsic_and_aligned_extrinsic_are_half_resolution() -> None:
     intrinsic = scaled_intrinsic(
         np.asarray([1200.0, 1000.0, 800.0, 450.0]), (800, 450)

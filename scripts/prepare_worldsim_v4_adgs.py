@@ -66,12 +66,19 @@ def partition_name(timestep: int) -> str:
 def build_partition_flags(
     frame_count: int = FRAME_COUNT,
     cameras: Sequence[int] = CAMERAS,
+    include_partitions: Sequence[str] = ("train", "development", "heldout"),
 ) -> tuple[np.ndarray, list[dict[str, Any]]]:
+    selected = frozenset(include_partitions)
+    valid = frozenset(("train", "development", "heldout"))
+    if not selected or not selected <= valid or "train" not in selected:
+        raise ADGSAdapterError("include_partitions 必须是包含 train 的非空合法子集")
     flags: list[bool] = []
     rows: list[dict[str, Any]] = []
     image_id = 0
     for timestep in range(frame_count):
         split = partition_name(timestep)
+        if split not in selected:
+            continue
         for camera in cameras:
             flags.append(split != "train")
             rows.append(
@@ -213,6 +220,7 @@ def prepare_scene(
     frame_count: int = FRAME_COUNT,
     cameras: Sequence[int] = CAMERAS,
     target_size: tuple[int, int] = TARGET_SIZE,
+    include_partitions: Sequence[str] = ("train", "development", "heldout"),
 ) -> dict[str, Any]:
     source = source.resolve()
     destination = destination.resolve()
@@ -234,7 +242,10 @@ def prepare_scene(
         )
         for camera in cameras
     }
-    flags, partition_rows = build_partition_flags(frame_count, cameras)
+    selected_partitions = frozenset(include_partitions)
+    flags, partition_rows = build_partition_flags(
+        frame_count, cameras, include_partitions
+    )
     intrinsics_rows: list[np.ndarray] = []
     rotations: list[np.ndarray] = []
     translations: list[np.ndarray] = []
@@ -245,6 +256,9 @@ def prepare_scene(
     image_id = 0
 
     for timestep in range(frame_count):
+        split = partition_name(timestep)
+        if split != "train" and split not in selected_partitions:
+            continue
         frame_images: list[np.ndarray] = []
         frame_w2c: list[np.ndarray] = []
         frame_intrinsics: list[np.ndarray] = []
@@ -254,39 +268,39 @@ def prepare_scene(
             if image.size != (1600, 900):
                 raise ADGSAdapterError(f"图像分辨率漂移: {stem}={image.size}")
             image = image.resize(target_size, Image.Resampling.LANCZOS)
-            image.save(partial / "image" / f"{image_id:06d}.png")
             image_array = np.asarray(image)
-
-            semantic = Image.open(
-                source / "dynamic_masks" / "all" / f"{stem}.png"
-            ).convert("L").resize(target_size, Image.Resampling.NEAREST)
-            sky = Image.open(source / "sky_masks" / f"{stem}.png").convert(
-                "L"
-            ).resize(target_size, Image.Resampling.NEAREST)
-            np.save(
-                partial / "semantic" / f"mask_{image_id:06d}.npy",
-                (np.asarray(semantic) > 0).astype(np.uint8),
-            )
-            np.save(
-                partial / "sky" / f"mask_{image_id:06d}.npy",
-                (np.asarray(sky) > 0).astype(np.uint8),
-            )
 
             camera_to_world = np.loadtxt(
                 source / "extrinsics" / f"{stem}.txt"
             )
             world_to_camera = aligned_world_to_camera(camera_to_world, origin)
             intrinsic = camera_intrinsics[camera]
-            intrinsics_rows.append(intrinsic)
-            rotations.append(world_to_camera[:3, :3])
-            translations.append(world_to_camera[:3, 3])
-            timestamps.append(float(timestep))
+            if split in selected_partitions:
+                image.save(partial / "image" / f"{image_id:06d}.png")
+                semantic = Image.open(
+                    source / "dynamic_masks" / "all" / f"{stem}.png"
+                ).convert("L").resize(target_size, Image.Resampling.NEAREST)
+                sky = Image.open(source / "sky_masks" / f"{stem}.png").convert(
+                    "L"
+                ).resize(target_size, Image.Resampling.NEAREST)
+                np.save(
+                    partial / "semantic" / f"mask_{image_id:06d}.npy",
+                    (np.asarray(semantic) > 0).astype(np.uint8),
+                )
+                np.save(
+                    partial / "sky" / f"mask_{image_id:06d}.npy",
+                    (np.asarray(sky) > 0).astype(np.uint8),
+                )
+                intrinsics_rows.append(intrinsic)
+                rotations.append(world_to_camera[:3, :3])
+                translations.append(world_to_camera[:3, 3])
+                timestamps.append(float(timestep))
+                image_id += 1
             frame_images.append(image_array)
             frame_w2c.append(world_to_camera)
             frame_intrinsics.append(intrinsic)
-            image_id += 1
 
-        if partition_name(timestep) != "train":
+        if split != "train":
             continue
         lidar = np.fromfile(
             source / "lidar" / f"{timestep:03d}.bin", dtype=np.float32
@@ -329,6 +343,7 @@ def prepare_scene(
             "development_remainder": DEVELOPMENT_REMAINDER,
             "heldout_remainder": HELDOUT_REMAINDER,
             "train_remainders": list(TRAIN_REMAINDERS),
+            "included_partitions": sorted(selected_partitions),
             "rows": partition_rows,
         },
     )
@@ -344,6 +359,7 @@ def prepare_scene(
         "frame_count": frame_count,
         "cameras": list(cameras),
         "target_size": list(target_size),
+        "included_partitions": sorted(selected_partitions),
         "image_count": image_id,
         "partition_image_counts": counts,
         "point_count": int(xyz.shape[0]),
@@ -362,10 +378,20 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, type=Path)
     parser.add_argument("--destination", required=True, type=Path)
+    parser.add_argument(
+        "--partitions",
+        nargs="+",
+        choices=("train", "development", "heldout"),
+        default=("train", "development", "heldout"),
+    )
     args = parser.parse_args()
     print(
         json.dumps(
-            prepare_scene(args.source, args.destination),
+            prepare_scene(
+                args.source,
+                args.destination,
+                include_partitions=args.partitions,
+            ),
             ensure_ascii=False,
             sort_keys=True,
         )
