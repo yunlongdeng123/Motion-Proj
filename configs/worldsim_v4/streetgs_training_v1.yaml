@@ -7,7 +7,7 @@ implementation:
   upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
   expected_git_status: M datasets/driving_dataset.py
   compatibility_patch: compatibility/DriveStudio-2026-08-05.patch
-  compatibility_patch_sha256: 54e7584b6d74431e58f626dfaadd69812d4058d54f82c7941e75aa11f5f94619
+  compatibility_patch_sha256: 8da6bd078609d29d74c2d8eba3e648b941d5a0cc17f472f4daca172788ae953b
   environment: /root/autodl-tmp/envs/drivestudio
   config_file: configs/streetgs.yaml
 data:
@@ -15,7 +15,14 @@ data:
   dataset_config: nuscenes/3cams
   start_timestep: 0
   end_timestep: -1
-  test_image_stride: 10
+  # DriveStudio 的 train/test wrapper 只承载两路；V4 在训练阶段把 dev 与
+  # heldout 都排除，统一 evaluator 再按 remainder 分开读取。
+  test_image_stride: 0
+  frame_partition:
+    modulus: 5
+    development_remainder: 2
+    heldout_remainder: 4
+    train_remainders: [0, 1, 3]
   load_smpl: false
   expected_frames: 196
   expected_cameras: 6

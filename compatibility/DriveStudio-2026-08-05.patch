@@ -23,3 +23,48 @@ diff --git a/datasets/driving_dataset.py b/datasets/driving_dataset.py
              # instance_dict[ins_id]["flows"] = torch.cat(instance_dict[ins_id]["flows"], dim=0)
              instance_dict[ins_id]["num_pts"] = instance_dict[ins_id]["pts"].shape[0]
              if instance_dict[ins_id]["num_pts"] > instance_max_pts:
+@@ -582,7 +589,34 @@ class DrivingDataset(SceneDataset):
+         return valid_mask
+
+     def split_train_test(self):
+-        if self.data_cfg.pixel_source.test_image_stride != 0:
++        partition_modulus = int(
++            self.data_cfg.pixel_source.get("partition_modulus", 0)
++        )
++        excluded_remainders = list(
++            self.data_cfg.pixel_source.get("excluded_remainders", [])
++        )
++        if partition_modulus > 0:
++            if not excluded_remainders:
++                raise ValueError(
++                    "partition_modulus requires non-empty excluded_remainders"
++                )
++            if len(set(excluded_remainders)) != len(excluded_remainders):
++                raise ValueError("excluded_remainders must be unique")
++            if any(
++                int(remainder) < 0 or int(remainder) >= partition_modulus
++                for remainder in excluded_remainders
++            ):
++                raise ValueError("excluded_remainders outside partition modulus")
++            excluded = {int(remainder) for remainder in excluded_remainders}
++            test_timesteps = np.array(
++                [
++                    timestep
++                    for timestep in range(self.num_img_timesteps)
++                    if timestep % partition_modulus in excluded
++                ],
++                dtype=np.int64,
++            )
++        elif self.data_cfg.pixel_source.test_image_stride != 0:
+             test_timesteps = np.arange(
+                 # it makes no sense to have test timesteps before the start timestep
+                 self.data_cfg.pixel_source.test_image_stride,
+@@ -590,7 +624,7 @@ class DrivingDataset(SceneDataset):
+                 self.data_cfg.pixel_source.test_image_stride,
+             )
+         else:
+-            test_timesteps = []
++            test_timesteps = np.array([], dtype=np.int64)
+         train_timesteps = np.array(
+             [i for i in range(self.num_img_timesteps) if i not in test_timesteps]
+         )

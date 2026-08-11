@@ -86,6 +86,16 @@ def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, 
         raise StreetGSTrainingError("DriveStudio compatibility patch 漂移")
     if config.get("training", {}).get("seed") != 0 or config.get("training", {}).get("modes") != {"profile100": 100, "formal": 30000}:
         raise StreetGSTrainingError("seed/iteration 合同漂移")
+    partition = config.get("data", {}).get("frame_partition", {})
+    if partition != {
+        "modulus": 5,
+        "development_remainder": 2,
+        "heldout_remainder": 4,
+        "train_remainders": [0, 1, 3],
+    }:
+        raise StreetGSTrainingError("frame partition 合同漂移")
+    if int(config.get("data", {}).get("test_image_stride", -1)) != 0:
+        raise StreetGSTrainingError("matched partition 禁止 stride split")
     scenes = config.get("scenes", {})
     if scenes != {"scene-0230": 179, "scene-0242": 191, "scene-0255": 204, "scene-0048": 45, "scene-0994": 752, "scene-0139": 110}:
         raise StreetGSTrainingError("六场景 index 合同漂移")
@@ -154,6 +164,11 @@ def build_train_command(config: Mapping[str, Any], scene: str, mode: str, run_di
     run_name = f"{scene.replace('-', '')}_{mode}_s0"
     output_root = run_dir / "work_dirs"
     checkpoint = output_root / project / run_name / "checkpoint_final.pth"
+    partition = config["data"]["frame_partition"]
+    excluded_remainders = [
+        int(partition["development_remainder"]),
+        int(partition["heldout_remainder"]),
+    ]
     command = [
         str(Path(config["implementation"]["environment"]) / "bin/python"),
         "tools/train.py",
@@ -168,6 +183,8 @@ def build_train_command(config: Mapping[str, Any], scene: str, mode: str, run_di
         f"data.end_timestep={config['data']['end_timestep']}",
         f"data.pixel_source.load_smpl={str(bool(config['data']['load_smpl'])).lower()}",
         f"data.pixel_source.test_image_stride={int(config['data']['test_image_stride'])}",
+        f"+data.pixel_source.partition_modulus={int(partition['modulus'])}",
+        "+data.pixel_source.excluded_remainders=" + json.dumps(excluded_remainders, separators=(",", ":")),
         f"trainer.optim.num_iters={iterations}",
         f"logging.saveckpt_freq={iterations}",
         "render.render_full=false",
