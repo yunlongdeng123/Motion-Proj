@@ -19,6 +19,7 @@ def main() -> None:
     import open3d
     import plyfile
     import pytorch3d
+    from pytorch3d.ops import knn_points
     from diff_gaussian_rasterization import GaussianRasterizationSettings, GaussianRasterizer
     from simple_knn._C import distCUDA2
     from utils.graphics_utils import getProjectionMatrix, getWorld2View2
@@ -28,6 +29,9 @@ def main() -> None:
     points = torch.rand(100_000, 3, device="cuda")
     distances = distCUDA2(points)
     assert torch.isfinite(distances).all()
+    knn = knn_points(points[:1024][None], points[1024:3072][None], K=8)
+    assert knn.idx.shape == (1, 1024, 8)
+    assert torch.isfinite(knn.dists).all()
 
     height, width = 120, 160
     fov = 1.0

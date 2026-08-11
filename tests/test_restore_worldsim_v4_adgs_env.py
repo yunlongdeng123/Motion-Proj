@@ -33,6 +33,8 @@ extensions:
   - {name: diff_gaussian_rasterization, source: submodules/rasterizer, import: diff_gaussian_rasterization}
 runtime_wheels:
   - {name: roma, import: roma, path: /weights/roma.whl, bytes: 10, sha256: abc}
+external_extensions:
+  - {name: pytorch3d, import: pytorch3d._C, source_root: /third/pytorch3d, commit: abc123}
 """
 
 
@@ -60,6 +62,7 @@ def test_build_commands_are_offline_and_use_target_python(tmp_path: Path) -> Non
         "install_runtime_roma",
         "build_simple_knn",
         "build_diff_gaussian_rasterization",
+        "build_external_pytorch3d",
         "cuda_smoke",
     ]
     for _, command, _ in commands:
@@ -75,14 +78,24 @@ def test_extension_builds_use_run_local_source_copies(tmp_path: Path) -> None:
     (adgs / "submodules/rasterizer").mkdir(parents=True)
     (adgs / "submodules/simple-knn/setup.py").write_text("# simple\n", encoding="utf-8")
     (adgs / "submodules/rasterizer/setup.py").write_text("# raster\n", encoding="utf-8")
-    path.write_text(valid_config().replace("/third/AD-GS", str(adgs)), encoding="utf-8")
+    pytorch3d = tmp_path / "third" / "pytorch3d"
+    pytorch3d.mkdir(parents=True)
+    (pytorch3d / "setup.py").write_text("# pytorch3d\n", encoding="utf-8")
+    path.write_text(
+        valid_config()
+        .replace("/third/AD-GS", str(adgs))
+        .replace("/third/pytorch3d", str(pytorch3d)),
+        encoding="utf-8",
+    )
     config = load_config(path)
     build_root = materialize_extension_sources(config, tmp_path / "run/build_source")
     commands = build_commands(config, build_root)
     assert commands[2][2] == build_root / "submodules/simple-knn"
     assert commands[3][2] == build_root / "submodules/rasterizer"
+    assert commands[4][2] == build_root / "external/pytorch3d"
     assert (adgs / "submodules/simple-knn/build").exists() is False
     assert (build_root / "submodules/simple-knn/setup.py").read_text(encoding="utf-8") == "# simple\n"
+    assert (build_root / "external/pytorch3d/setup.py").read_text(encoding="utf-8") == "# pytorch3d\n"
 
 
 def test_environment_and_training_configs_share_compatibility_contract() -> None:
@@ -96,3 +109,4 @@ def test_environment_and_training_configs_share_compatibility_contract() -> None
     assert source["expected_modified_files"] == implementation["expected_modified_files"]
     assert "utils/flow_utils.py" in source["expected_modified_files"]
     assert [row["import"] for row in environment["runtime_wheels"]] == ["roma"]
+    assert [row["import"] for row in environment["external_extensions"]] == ["pytorch3d._C"]

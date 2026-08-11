@@ -69,6 +69,8 @@ def load_config(path: Path) -> dict[str, Any]:
         raise AdgsEnvironmentError("AD-GS CUDA extension 集合漂移")
     if [row.get("import") for row in value.get("runtime_wheels", [])] != ["roma"]:
         raise AdgsEnvironmentError("AD-GS runtime wheel 集合漂移")
+    if [row.get("import") for row in value.get("external_extensions", [])] != ["pytorch3d._C"]:
+        raise AdgsEnvironmentError("AD-GS external extension 集合漂移")
     return value
 
 
@@ -139,6 +141,23 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
                 **actual,
             }
         )
+    external_extensions = []
+    for row in config.get("external_extensions", []):
+        source_root = Path(row["source_root"])
+        actual_commit = git(source_root, "rev-parse", "HEAD")
+        dirty = git(source_root, "status", "--porcelain")
+        if actual_commit != row["commit"] or dirty:
+            raise AdgsEnvironmentError(
+                f"external extension source 漂移：{row['name']}@{actual_commit} dirty={bool(dirty)}"
+            )
+        external_extensions.append(
+            {
+                "name": row["name"],
+                "import": row["import"],
+                "source_root": str(source_root),
+                "commit": actual_commit,
+            }
+        )
     base_probe = subprocess.run(
         [str(base / "bin/python"), "-c", "import json,sys,torch;print(json.dumps({'python':sys.version.split()[0],'torch':torch.__version__,'torch_cuda':torch.version.cuda}))"],
         capture_output=True,
@@ -156,6 +175,7 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
         "compatibility_patch": {"path": str(patch), "bytes": patch.stat().st_size, "sha256": sha256_file(patch)},
         "plyfile_wheel": {"path": str(wheel), **wheel_actual},
         "runtime_wheels": runtime_wheels,
+        "external_extensions": external_extensions,
         "base_environment": {"path": str(base), **versions},
     }
 
@@ -171,6 +191,15 @@ def materialize_extension_sources(config: Mapping[str, Any], build_root: Path) -
         destination = build_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(source, destination)
+    for extension in config.get("external_extensions", []):
+        source = Path(extension["source_root"])
+        destination = build_root / "external" / extension["name"]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(
+            source,
+            destination,
+            ignore=shutil.ignore_patterns(".git", "build", "dist", "*.egg-info", "__pycache__"),
+        )
     return build_root
 
 
@@ -195,6 +224,19 @@ def build_commands(
     for extension in config["extensions"]:
         source = (extension_root or adgs) / extension["source"]
         commands.append((f"build_{extension['name']}", [python, "-m", "pip", "install", "--no-index", "--no-deps", "--no-build-isolation", "."], source))
+    for extension in config.get("external_extensions", []):
+        source = (
+            extension_root / "external" / extension["name"]
+            if extension_root is not None
+            else Path(extension["source_root"])
+        )
+        commands.append(
+            (
+                f"build_external_{extension['name']}",
+                [python, "-m", "pip", "install", "--no-index", "--no-deps", "--no-build-isolation", "."],
+                source,
+            )
+        )
     commands.append(("cuda_smoke", [python, str(Path(paths["project_root"]) / "scripts/smoke_worldsim_v4_adgs_env.py")], adgs))
     return commands
 
@@ -259,14 +301,19 @@ def audit_environment(config: Mapping[str, Any]) -> dict[str, Any]:
         ["plyfile"]
         + [row["import"] for row in config.get("runtime_wheels", [])]
         + [row["import"] for row in config["extensions"]]
+        + [row["import"] for row in config.get("external_extensions", [])]
     )
     probe_code = "import importlib,json,sys,torch; names=" + repr(imports) + "; print(json.dumps({'python':sys.version.split()[0],'torch':torch.__version__,'torch_cuda':torch.version.cuda,'imports':{n:importlib.import_module(n).__file__ for n in names}}))"
     probe = subprocess.run([str(python), "-c", probe_code], capture_output=True, text=True, check=True)
     extensions = []
     for path in sorted((target / "lib").rglob("*.so")):
-        if "simple_knn" in str(path) or "diff_gaussian_rasterization" in str(path):
+        if (
+            "simple_knn" in str(path)
+            or "diff_gaussian_rasterization" in str(path)
+            or "pytorch3d/_C" in str(path)
+        ):
             extensions.append({"path": str(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
-    if len(extensions) < 2:
+    if len(extensions) < 3:
         raise AdgsEnvironmentError("AD-GS CUDA extension 二进制不完整")
     return {"target_environment": str(target), "probe": json.loads(probe.stdout), "extension_binaries": extensions}
 
@@ -330,8 +377,9 @@ def run(config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
         restore_mode = "created_from_frozen_local_environment"
     else:
         restore_mode = "existing_environment_audited"
-        for name, command, cwd in build_commands(config):
-            if name.startswith("install_") or name == "cuda_smoke":
+        extension_root = materialize_extension_sources(config, run_dir / "build_source")
+        for name, command, cwd in build_commands(config, extension_root):
+            if name.startswith("install_") or name.startswith("build_external_") or name == "cuda_smoke":
                 run_stage(run_dir, name, command, cwd, environment)
     audit = audit_environment(config)
     write_json(run_dir / "environment" / "environment_audit.json", audit)

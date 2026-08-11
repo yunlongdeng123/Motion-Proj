@@ -34,6 +34,12 @@ runtime_wheels:
     path: /root/autodl-tmp/data/worldsim_v4/model_staging/python_wheels/roma-1.5.7-py3-none-any.whl
     bytes: 25627
     sha256: a322b032dd0b14e21c3b40f8ae1f6e93c473476cc2d0fbaa1b501216df31f5a2
+external_extensions:
+  - name: pytorch3d
+    import: pytorch3d._C
+    version: 0.7.5
+    source_root: /root/autodl-tmp/third_party/pytorch3d
+    commit: 2f11ddc5ee7d6bd56f2fb6744a16776fab6536f7
 runtime_contract:
   python: "3.9"
   torch: 2.1.2+cu118
