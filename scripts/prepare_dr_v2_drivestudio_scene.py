@@ -235,7 +235,7 @@ def main() -> None:
         )
     manifest = {
         "schema_version": 1,
-        "purpose": "DriveStudio/StreetGS scene-0230 native nuScenes input",
+        "purpose": f"DriveStudio/StreetGS {args.scene_name} native nuScenes input",
         "scene_name": args.scene_name,
         "scene_index": args.scene_index,
         "scene_token": payload["scene_token"],

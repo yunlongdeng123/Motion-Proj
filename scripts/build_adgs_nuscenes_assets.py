@@ -168,44 +168,69 @@ def _scan_one_shard(task: tuple[str, set[str], str | None]) -> dict:
     t0 = time.time()
     print(f"[shard] scanning {archive.name} for {len(members)} candidates", flush=True)
 
-    with tarfile.open(archive, "r:gz") as tf:
-        for info in tf:
-            name = info.name[2:] if info.name.startswith("./") else info.name
-            if name not in members:
-                continue
-            if not info.isfile():
-                raise RuntimeError(f"required member 不是普通文件: {archive.name}:{info.name}")
-            if name in found:
-                raise RuntimeError(f"同一 shard 内 required member 重复: {archive.name}:{name}")
+    advice_interval = 256 << 20
+    advice_safety_tail = 64 << 20
+    advised_until = 0
+    with archive.open("rb") as archive_handle:
+        with tarfile.open(fileobj=archive_handle, mode="r:gz") as tf:
+            for info in tf:
+                name = info.name[2:] if info.name.startswith("./") else info.name
+                if name in members:
+                    if not info.isfile():
+                        raise RuntimeError(
+                            f"required member 不是普通文件: {archive.name}:{info.name}"
+                        )
+                    if name in found:
+                        raise RuntimeError(
+                            f"同一 shard 内 required member 重复: {archive.name}:{name}"
+                        )
 
-            extracted = False
-            if dst is not None:
-                target = dst / name
-                if not (target.is_file() and target.stat().st_size > 0):
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    src = tf.extractfile(info)
-                    if src is None:
-                        raise RuntimeError(f"无法读取 tar member: {archive.name}:{info.name}")
-                    tmp = target.with_name(f"{target.name}.partial.{os.getpid()}")
-                    try:
-                        with src, tmp.open("wb") as out:
-                            shutil.copyfileobj(src, out, length=1 << 20)
-                        if tmp.stat().st_size != info.size:
-                            raise RuntimeError(
-                                f"提取字节数不匹配: {name} {tmp.stat().st_size} != {info.size}"
+                    extracted = False
+                    if dst is not None:
+                        target = dst / name
+                        if not (target.is_file() and target.stat().st_size > 0):
+                            target.parent.mkdir(parents=True, exist_ok=True)
+                            src = tf.extractfile(info)
+                            if src is None:
+                                raise RuntimeError(
+                                    f"无法读取 tar member: {archive.name}:{info.name}"
+                                )
+                            tmp = target.with_name(
+                                f"{target.name}.partial.{os.getpid()}"
                             )
-                        os.replace(str(tmp), str(target))
-                    finally:
-                        if tmp.exists():
-                            tmp.unlink()
-                    extracted = True
+                            try:
+                                with src, tmp.open("wb") as out:
+                                    shutil.copyfileobj(src, out, length=1 << 20)
+                                if tmp.stat().st_size != info.size:
+                                    raise RuntimeError(
+                                        f"提取字节数不匹配: {name} "
+                                        f"{tmp.stat().st_size} != {info.size}"
+                                    )
+                                os.replace(str(tmp), str(target))
+                            finally:
+                                if tmp.exists():
+                                    tmp.unlink()
+                            extracted = True
 
-            found[name] = {
-                "shard": archive.name,
-                "extracted": extracted,
-            }
-            if len(found) == len(members):
-                break
+                    found[name] = {
+                        "shard": archive.name,
+                        "extracted": extracted,
+                    }
+                    if len(found) == len(members):
+                        break
+
+                if hasattr(os, "posix_fadvise"):
+                    safe_position = max(
+                        0, archive_handle.tell() - advice_safety_tail
+                    )
+                    if safe_position - advised_until >= advice_interval:
+                        os.posix_fadvise(
+                            archive_handle.fileno(),
+                            advised_until,
+                            safe_position - advised_until,
+                            os.POSIX_FADV_DONTNEED,
+                        )
+                        advised_until = safe_position
 
     print(
         f"[shard] done {archive.name}: found={len(found)} elapsed={time.time()-t0:.1f}s",

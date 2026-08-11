@@ -1,0 +1,77 @@
+schema_version: 1
+task_id: DR-V2-M5-STRESS-3SCENE-01
+selection_frozen_before_m3_m4_outputs: true
+scenes:
+  scene-0230:
+    scene_index: 179
+    high-support: af663976db5e412e83db033d309c5c29
+    boundary-support: 18c7f0c5fa6b49449f71c9dbae5c31d4
+  scene-0242:
+    scene_index: 191
+    high-support: 40f087d8d9d74c10ae7dc8a2f34e0df5
+    boundary-support: 2c820a798ad943a299a83ec2dd494dd9
+  scene-0255:
+    scene_index: 204
+    high-support: f4aa30b8d0b44e2381a4abeafbe17642
+    boundary-support: 80c08b992f1d47359de644be24f491df
+cameras: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT]
+fps: 10
+frame_count: 196
+heldout:
+  test_image_stride: 10
+  frames: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+  use: evaluation_only
+  pseudo_hole_mask: frozen_actor_footprint_shifted_to_static_region
+edits:
+  lateral:
+    actor_local_y_m: 1.0
+  speed:
+    time_scale: 0.75
+  stop_restart:
+    stop_seconds: 1.0
+    recovery: cubic_smoothstep_to_original_terminal_pose
+  delete:
+    scope: full_actor_trajectory
+perception:
+  model: IDEA-Research/grounding-dino-base
+  revision: 12bdfa3120f3e7ec7b434d90674b3396eccf88eb
+  snapshot_fingerprint: d31d62ff8bca3d3160ba6fc9800f8482e80141aa8dc58c16cf3d9a76f7ce81a0
+  prompt: "car. truck. bus. pedestrian. bicycle. motorcycle."
+  box_threshold: 0.25
+  text_threshold: 0.25
+  sample_frames: [0, 20, 40, 60, 80, 100, 120, 140, 160, 180]
+failure_priority:
+  - BASELINE_RUNTIME_FAILURE
+  - ACTOR_IDENTITY_MISMATCH
+  - ACTOR_GEOMETRY_DEFORMATION
+  - TRAJECTORY_NOT_FOLLOWED
+  - SOURCE_RESIDUAL
+  - SHADOW_RESIDUAL
+  - BACKGROUND_HOLE
+  - DEPTH_ORDERING_ERROR
+  - NEW_OCCLUSION_ERROR
+  - MULTICAMERA_INCONSISTENCY
+  - TEMPORAL_FLICKER
+  - NON_TARGET_VISUAL_DRIFT
+  - NON_TARGET_PERCEPTION_DRIFT
+  - UNSUPPORTED_DISOCCLUSION
+  - INSUFFICIENT_EVIDENCE
+thresholds:
+  trajectory_translation_max_m: 0.02
+  trajectory_rotation_max_deg: 1.0
+  geometry_drift_max_m: 0.01
+  vacated_source_residual_mean_abs_max: 0.02
+  non_target_psnr_min: 35.0
+  non_target_ssim_min: 0.98
+  non_target_lpips_max: 0.05
+  depth_ordering_violation_rate_max: 0.01
+  temporal_boundary_lpips_max: 0.20
+  perception_match_iou_min: 0.70
+  perception_false_disappearance_max: 0.05
+  unsupported_disocclusion_rate_max: 0.50
+  minimum_effect_pixels_per_sequence: 100
+truth_tiers:
+  A: held-out observed image excluded before optimization; RGB/depth/perception allowed
+  B: finite static Gaussian or LiDAR/multiview geometry support; RGB accuracy forbidden
+  C: no verifiable observation; only uncertainty/coverage/ABSTAIN/human review
+quality_claim: automatic thresholds diagnose failures but never replace human visual review
