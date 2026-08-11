@@ -4,7 +4,7 @@ import copy
 
 import pytest
 
-from scripts.build_worldsim_v4_sky_masks import SkyMaskError, validate_config
+from scripts.build_worldsim_v4_sky_masks import SkyMaskError, validate_config, validate_output_paths
 
 
 def config() -> dict:
@@ -35,3 +35,24 @@ def test_sky_mask_config_fails_closed(mutation, message: str) -> None:
     mutation(value)
     with pytest.raises(SkyMaskError, match=message):
         validate_config(value)
+
+
+def test_output_paths_accept_preprocess_created_empty_target(tmp_path) -> None:
+    target = tmp_path / "sky_masks"
+    target.mkdir()
+
+    assert validate_output_paths(target, tmp_path / "sky_masks.partial.run") is True
+
+
+def test_output_paths_reject_existing_mask_or_partial(tmp_path) -> None:
+    target = tmp_path / "sky_masks"
+    target.mkdir()
+    (target / "000_0.png").write_bytes(b"mask")
+    with pytest.raises(SkyMaskError, match="target 已存在且非空"):
+        validate_output_paths(target, tmp_path / "sky_masks.partial.run")
+
+    target.joinpath("000_0.png").unlink()
+    partial = tmp_path / "sky_masks.partial.run"
+    partial.mkdir()
+    with pytest.raises(SkyMaskError, match="partial 已存在"):
+        validate_output_paths(target, partial)

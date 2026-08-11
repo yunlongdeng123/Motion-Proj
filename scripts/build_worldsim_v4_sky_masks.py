@@ -122,6 +122,17 @@ def append_jsonl(path: Path, payload: Mapping[str, Any]) -> None:
         handle.write(canonical_json_bytes(payload))
 
 
+def validate_output_paths(target: Path, partial: Path) -> bool:
+    """允许 preprocess 预建的空目录；任何已有产物仍 fail-closed。"""
+    if partial.exists():
+        raise SkyMaskError(f"sky-mask partial 已存在：{partial}")
+    if not target.exists():
+        return False
+    if target.is_symlink() or not target.is_dir() or any(target.iterdir()):
+        raise SkyMaskError(f"sky-mask target 已存在且非空：{target}")
+    return True
+
+
 def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dict[str, Any]:
     import numpy as np
     import torch
@@ -146,8 +157,7 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
         raise SkyMaskError(f"训练相机 image count {len(images)} != 588")
     target = scene_root / "sky_masks"
     partial = scene_root / f"sky_masks.partial.{run_dir.name}"
-    if target.exists() or partial.exists():
-        raise SkyMaskError(f"sky-mask target/partial 已存在：{target} / {partial}")
+    precreated_empty_target = validate_output_paths(target, partial)
     pre = resource_sample("preflight", 0)
     if int(pre["gpu"]["memory_used_mib"]) > int(config["runtime"]["maximum_gpu_used_at_start_mib"]):
         raise SkyMaskError(f"GPU 非空闲：{pre['gpu']}")
@@ -208,6 +218,8 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
     gc_collect = getattr(torch.cuda, "empty_cache", None)
     if gc_collect:
         gc_collect()
+    if precreated_empty_target:
+        target.rmdir()
     os.replace(partial, target)
     elapsed = time.monotonic() - started
     post = resource_sample("completed", len(rows))
