@@ -48,6 +48,7 @@ def test_config_and_formal_command_freeze_same_split_no_post_render(tmp_path: Pa
     assert "+data.pixel_source.partition_modulus=5" in command
     assert "+data.pixel_source.excluded_remainders=[2,4]" in command
     assert "trainer.optim.num_iters=30000" in command
+    assert "logging.vis_freq=-1" in command
     assert "render.render_test=false" in command
     assert checkpoint.name == "checkpoint_final.pth"
 

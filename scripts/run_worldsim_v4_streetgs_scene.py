@@ -187,6 +187,7 @@ def build_train_command(config: Mapping[str, Any], scene: str, mode: str, run_di
         "+data.pixel_source.excluded_remainders=" + json.dumps(excluded_remainders, separators=(",", ":")),
         f"trainer.optim.num_iters={iterations}",
         f"logging.saveckpt_freq={iterations}",
+        "logging.vis_freq=-1",
         "render.render_full=false",
         "render.render_test=false",
         "render.render_novel=null",
