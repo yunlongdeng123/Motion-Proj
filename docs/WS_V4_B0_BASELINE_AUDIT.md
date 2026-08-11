@@ -108,9 +108,9 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
 ## AD-GS exact source、权重与环境恢复
 
 - official source=`/root/autodl-tmp/third_party/AD-GS@9a208512e49c8ddbaa20387921d9648adcd21cb4`；兼容补丁只含
-  `scripts/colmap.py/scripts/flow.py/scripts/run-dpt.py/scripts/semantic.py/train.py`，patch SHA=
-  `e36c134bebb67f092659407522332d32664482d1dacb8de283c8a229d54f8d09`；其中 `flow.py` 支持正式
-  无可视化模式，`train.py` 增加
+  `scripts/colmap.py/scripts/flow.py/scripts/run-dpt.py/scripts/semantic.py/train.py/utils/flow_utils.py`，patch SHA=
+  `b2614c8bf720e041b2d5abaeb20305dbc30057b690d567a3ff646d5d9719513b`；其中 flow preprocess 支持正式
+  无可视化模式、训练 import 不再强依赖可选诊断包，`train.py` 增加
   `--disable_test_evaluation`，strict 训练不触碰 development/heldout 质量；
 - Depth-Anything-V2=`a561b849...c71bf`，DPT weight=`1,341,395,338 bytes /
   a7ea19fa0ed99244e67b624c72b8580b7e9553043245905be58796a608eb9345`；CoTracker=`82e02e80...dda4d`，
@@ -121,8 +121,8 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   device=`RTX 3090`、visible Gaussians=`1,024`、smoke peak GPU=`12.63 MiB`；扩展 SHA=
   `019c87b6...15190 / be64aef4...b0ed99`，OOM/kill=`0/0`，fingerprint=
   `c7e0d5be3a066416a8fde8ccaaca1ab7a45252a6b8c3ffb3b98b19dfb5693b46`；
-- r34 记录的兼容补丁 SHA 为前一版 `01145883...3d8e4`；后续 `e36c134b...f8d09` 只改变 Python flow
-  的诊断视频依赖与训练 runner 命令，不改变已编译 CUDA extension，因此 r34 二进制/smoke 证据继续有效；
+- r34 记录的兼容补丁 SHA 为前一版 `01145883...3d8e4`；后续 `b2614c8b...9513b` 改变 Python flow/训练
+  的诊断依赖与 runner 命令，不改变 r34 已编译的两个 Gaussian CUDA extension；新的 runtime 证据由 r40/r42 独立补齐；
 - 环境成功只解锁 preprocess/profile，不计入 executable scene coverage；historical aggregate 仍不得写入 matched 主表。
 - preprocess r35 因包装器预建 run 目录、r36 因环境构建遗留 untracked build 目录、r37 因可选 `flow_vis`
   诊断依赖分别 fail-closed；三者均未训练或读 dev/heldout。r37 partial 已移入规定 backup，旧 run/partial 均未覆盖；
@@ -135,10 +135,24 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   cefae2306265806043314cc4bf77dc83d657e5d72efa1f2d176f6e7763c05873`；项目在 terminal 时
   clean=`54ca265723d55226c0af4e634370a612c06c10a8`，development/heldout/test quality 均未读；
 - run-local extension source 修复=`9f839fd`，冻结区域协议与 development-only scene evaluator=`abd82d8`；
-  baseline/AD-GS/region/evaluator 联合定向测试=`36 passed`。
+  baseline/AD-GS/region/evaluator 联合定向测试=`38 passed`。
+- profile r39 在 iteration 前因 `utils/flow_utils.py` 全局导入可选 `flow_vis` blocked；r40 从 exact 本地
+  `roma-1.5.7-py3-none-any.whl`（`25,627 bytes / a322b032...f5a2`）离线补齐 Python runtime，terminal done；
+  r41 随后在 iteration 前暴露 inherited PyTorch3D binary 缺少 sm86 KNN kernel，保持 blocked；两者均未读 dev/heldout；
+- r42=`20260811T183048Z__adgs-environment-pytorch3d-sm86-r42` 从 clean
+  `pytorch3d@2f11ddc5 (v0.7.5)` 复制到 run-local source，离线重编 `sm_86`；build wall=`1,151.39 s`，
+  新 `_C.so=10,313,184 bytes / eca71e2c...e3084`，真实 `knn_points` + Gaussian forward/backward smoke passed，
+  OOM/kill=`0/0`，fingerprint=`03ec74e888265ee97974e4be6a021d4988f3b71acc274e4db296f4f12205f7fb`；
+- scene-0230 profile100 r43=`20260811T185145Z__adgs-scene0230-profile100-s0-r43` done，train stage=
+  `40.3595 s`、peak GPU=`6,012 MiB`、peak cgroup=`30,991,519,744 bytes`、OOM/kill=`0/0`；checkpoint
+  `point_cloud/deform/env=82,578,770/114,955,577/805,307,528 bytes`，SHA=
+  `bc364930...16c5 / 8205e276...e5ab / 45644cb4...8e77`；fingerprint/manifest=
+  `1a6e32673e365d9be6aeea2782f86706c836256f8749af550bd8ea3991ff268d /
+  080ca14d444f4104841776fa3255fff7e9cae44d8f6917cf7381a5501aa58396`，development/heldout/test quality 均未读；
+  profile 只解锁 formal，不计 executable coverage。
 
 ## 下一动作
 
-依次完成 AD-GS scene-0230 profile/formal、StreetGS 其余五场 strict mod5 重跑，再补齐
+依次完成 AD-GS scene-0230 formal、StreetGS 其余五场 strict mod5 重跑，再补齐
 AD-GS 与 V3.3 六场景 same-split。B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
 `done`，M1 在此之前不启动。

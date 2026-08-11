@@ -38,11 +38,12 @@
   766648bf...af97cd1`，peak GPU=`23,892 MiB`，OOM/kill=`0/0`，test quality 未读；corrected inventory
   r33=`StreetGS/V3.3/AD-GS 1/1/0`，fingerprint=`c19fba13...e285853`；
 - B0 AD-GS 恢复：official `9a208512` + exact DPT/CoTracker weights 已审计；离线环境 r34 done，
-  torch=`2.1.2+cu118`，两个 CUDA 扩展编译并通过真实 forward/backward smoke，OOM/kill=`0/0`；scene-0230
+  r42 又从 clean PyTorch3D v0.7.5 source 离线重编 sm86 并通过真实 KNN kernel smoke；scene-0230
   train-only preprocess r38 done，`image/semantic/sky/depth/flow=354/354/354/354/285`，峰值 GPU=`20,112 MiB`、
-  峰值 cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`；尚无 formal checkpoint，不计 executable coverage
+  峰值 cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`；profile100 r43 done，peak GPU=`6,012 MiB`，
+  三文件 checkpoint 已审计；尚无 60k formal checkpoint，不计 executable coverage
 - B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
-  engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`36 passed`
+  engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`38 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
 - V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)

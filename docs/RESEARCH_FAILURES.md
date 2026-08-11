@@ -85,6 +85,13 @@
   `flow_vis` 缺失而在 flow 启动时 blocked。三者均未训练或读取 dev/heldout；r37 partial 移入
   `work/codex-backups/2026-08-12-adgs-r37-partial-scene0230`，不覆盖、不伪装 resume。正式 flow 通过显式
   no-visualization 合同移除诊断视频依赖，CUDA extension 后续从 run-local source copy 构建，避免再次污染 official checkout。
+- `V4-F30`：修掉 preprocess 可视化依赖不等于训练 import graph 已解除同名依赖。r39 尚未进入 iteration，
+  `loss_utils -> flow_utils` 就因全局 `flow_vis` import blocked；正确修复是只在 TensorBoard flow 图真正调用时 lazy import，
+  并把 `utils/flow_utils.py` 纳入 exact compatibility patch。不得安装非必要诊断包来掩盖正式无评测训练合同。
+- `V4-F31`：Python import 成功不证明 CUDA extension 包含当前 GPU kernel。r41 能加载 PyTorch3D 0.7.5，
+  但 inherited `_C.so` 在 RTX3090 KNN 首次执行时报 `no kernel image`；必须从 clean frozen source 在 run-local
+  目录以 `TORCH_CUDA_ARCH_LIST=8.6` 重编，并在环境 smoke 中真实调用 `knn_points`。r42 完成该合同后 r43 才进入
+  100/100 iteration；r39/r41 继续保留 blocked，不倒写为成功。
 
 ## V4 P0 防重复结论（2026-08-11）
 

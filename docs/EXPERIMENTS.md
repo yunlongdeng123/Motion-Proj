@@ -137,8 +137,16 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   `20260811T171507Z__adgs-scene0230-preprocess-s0-r38` done，文件计数=`354/354/354/354/285`，flow wall=
   `3,046.9930 s`，peak GPU/cgroup=`20,112 MiB / 22,384,893,952 bytes`，OOM/kill=`0/0`，无可视化视频且
   development/heldout/test quality 均未读；fingerprint/manifest=`d44a0530...fbf2c37 / cefae230...c05873`；
-- run-local extension build source=`9f839fd`，baseline region/evaluator=`abd82d8`；联合定向测试=`36 passed`；
-- B0 继续 running；下一步完成 AD-GS scene-0230 profile/formal、StreetGS 其余五场 strict 重跑，
+- profile r39 因训练 import 全局依赖可选 `flow_vis`、r41 因 inherited PyTorch3D binary 无 sm86 KNN kernel
+  分别在 iteration 前 blocked；均未读 dev/heldout。r40 exact `roma 1.5.7` runtime restore done；r42 从 clean
+  `pytorch3d@2f11ddc5` run-local 重编 sm86，build=`1,151.39 s`，KNN + Gaussian CUDA smoke passed，
+  新 binary=`10,313,184 bytes / eca71e2c...e3084`，fingerprint=`03ec74e8...05f7fb`；
+- profile r43=`20260811T185145Z__adgs-scene0230-profile100-s0-r43` done，100 steps train stage=`40.3595 s`，
+  peak GPU/cgroup=`6,012 MiB / 30,991,519,744 bytes`，三文件 checkpoint SHA=
+  `bc364930...16c5 / 8205e276...e5ab / 45644cb4...8e77`，test quality 未读；profile 不计 coverage；
+- run-local extension build source=`9f839fd`，baseline region/evaluator=`abd82d8`，runtime import/sm86 fixes=
+  `c3600be/eed00cb`；联合定向测试=`38 passed`；
+- B0 继续 running；下一步完成 AD-GS scene-0230 formal、StreetGS 其余五场 strict 重跑，
   再补齐 AD-GS/V3.3 6-scene same-split。M1 与 test quality 继续未授权。
 
 ## V3.3 注册表
