@@ -30,6 +30,17 @@
   eda9f684...44578` 拦截。r4 必须对 tag 排序并用 `math.fsum`，测试须跨多个 hash seed；不得固定环境变量掩盖算法
   非确定性，也不得把 r3 候选倒写成新 cohort。
 
+## V4 D1 防重复结论（2026-08-11）
+
+- `V4-F14`：requested dataset path 与 symlink-resolved physical path 必须同时记录。D1 r1 只写了
+  `/autodl-pub/data/KITTI`，容易被误读为审计了不同根；r2 明确 `/root/autodl-pub/KITTI ->
+  /autodl-pub/data/KITTI` 且两者均缺失。不得用 `Path.resolve()` 后的单一路径抹掉用户合同。
+- `V4-F15`：synthetic 12-gate pass 只证明 adapter schema/坐标/投影/track-ID 检查可执行，不等于真实 KITTI adapter
+  smoke。真实目录缺失时任务必须保持 `blocked`，不能将 unit fixture 写成两 sequence evidence 或 10-sequence
+  cross-domain 结果。
+- `V4-F16`：KITTI 原生合同只有 `image_02/image_03` 两路彩色相机。不得为了匹配 nuScenes 三相机伪造第三视角；
+  tracking 缺失时才审计 raw，且 pose/tracklet/calibration 任一门失败都必须 `blocked_dataset_adapter`。
+
 ## V4 P0 防重复结论（2026-08-11）
 
 - `V4-F01`：计划草案记录的 HEAD 不是执行时事实。草案写 `main@144ed19`，P0 实查为 `main@2108430`，且 V3.3

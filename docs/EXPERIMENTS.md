@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V4 / EviDelta-GS
-- 当前执行授权：`WS-V4-D1-KITTI-ADAPTER-01` fail-closed 实现；公共数据缺失时转入 B0，不得下载或读取 test quality
+- 当前执行授权：`WS-V4-B0-MATCHED-BASELINES-01` 6-development-scene evaluator/baseline；不得读取 test quality
 - 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -29,8 +29,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 |---|---|---|---|
 | `WS-V4-P0-SCOPE-PAPER-FREEZE-01` | done | 冻结 claim、HEAD、数学、baseline、数据、指标与一手来源 | `main@2108430`；15 sources；KITTI missing 如实阻塞；P0 不训练 |
 | `WS-V4-D0-NUSCENES-COHORT-01` | done | 结果前冻结 6 dev + 6 val + 18 test | canonical r4；850 candidates；2-scene preprocess smoke passed；无训练/test quality |
-| `WS-V4-D1-KITTI-ADAPTER-01` | running | 本地 tracking/raw adapter | 只实现 auto-detect/fail-closed；`/root/autodl-pub/KITTI` 缺失且禁止下载 |
-| `WS-V4-B0-MATCHED-BASELINES-01` | pending | V3.3/StreetGS/AD-GS same-split replay | D1 missing-data terminal 后解锁 6 development scenes；M1 仍未授权 |
+| `WS-V4-D1-KITTI-ADAPTER-01` | blocked | 本地 tracking/raw adapter | code + 12-gate synthetic contract done；canonical r2=`blocked_local_dataset_missing`；禁止下载 |
+| `WS-V4-B0-MATCHED-BASELINES-01` | running | V3.3/StreetGS/AD-GS same-split replay | 当前唯一授权：6 development scenes evaluator；M1 仍未授权 |
 | `WS-V4-M1-EVIDENCE-FIELD-01` | pending | Bayesian/calibrated temporal evidence | B0 未闭环前未授权 |
 | `WS-V4-M2-REPAIR-ROUTER-01` | pending | Bayes-risk repair compiler | M1 未收口前未授权 |
 | `WS-V4-M3-TEMPORAL-DELTA-01` | pending | `SE(3)` B-spline temporal delta | M2 未收口前未授权 |
@@ -75,6 +75,21 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - D0 定向测试=`8 passed`，D0/P0 + V3.3/V3.2 联合回归=`106 passed`。下一任务 D1 必须在 public KITTI
   缺失时输出合法 blocked terminal，禁止下载；随后才进入 6-development-scene B0 matched baseline，M1/M2/M3 与
   test quality 仍未授权。
+
+### `WS-V4-D1-KITTI-ADAPTER-01` blocked closeout
+
+- 实现 tracking-first / raw-fallback 自动 layout discovery、KITTI 原生 `image_02/image_03` 双相机合同、calibration、
+  track ID/3D box、LiDAR/box projection、pose/timestamp、stereo 与 frame-leak 检查；KITTI threshold search=false；
+- synthetic tracking/raw fixtures 的 12 项 adapter gates 全通过，定向测试=`7 passed`；D1/D0/P0 + V3.3/V3.2
+  联合回归=`113 passed`；这些测试不冒充真实 KITTI smoke 或 cross-domain quality；
+- `/root/autodl-pub -> /autodl-pub/data`；requested `/root/autodl-pub/KITTI` 与 resolved
+  `/autodl-pub/data/KITTI` 均不存在，没有创建目录或下载；terminal=`blocked_local_dataset_missing`；
+- canonical blocked run=`20260811T085210Z__d1-kitti-layout-formal-s0-r2`；
+  config/summary/manifest/status/fingerprint SHA=`bffe6eaa...93d4 / 05eeb265...9ca9 / 7c9ca256...f582 /
+  598eac51...d54b / 233e464e...fdc5`；14 files=`45,214 bytes`；r1 只记 physical path，r2 补齐 requested +
+  symlink-resolved provenance；
+- D1 只在真实数据挂载后以新 run 复开；E1 继续 pending。当前转入 B0 nuScenes development，不因此宣称
+  single-card closure，也不读取 test quality。
 
 ## V3.3 注册表
 

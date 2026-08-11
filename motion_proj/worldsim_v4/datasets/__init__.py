@@ -7,6 +7,7 @@ from .nuscenes import (
     select_scene_cohort,
     validate_cohort,
 )
+from .kitti import KittiAdapterError, build_tracking_manifest, detect_kitti_layout
 
 __all__ = [
     "CohortError",
@@ -14,4 +15,7 @@ __all__ = [
     "build_frame_partitions",
     "select_scene_cohort",
     "validate_cohort",
+    "KittiAdapterError",
+    "build_tracking_manifest",
+    "detect_kitti_layout",
 ]

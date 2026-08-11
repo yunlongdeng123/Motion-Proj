@@ -3,9 +3,9 @@
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
 - 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
-- 当前任务：`WS-V4-D1-KITTI-ADAPTER-01`
-- 路线状态：`active / d0_done`
-- 当前门禁：D1 只实现 layout-detecting fail-closed adapter，公共 KITTI 缺失时保持 blocked；随后只解锁 B0 6-development-scene matched baseline，不得读取 test quality
+- 当前任务：`WS-V4-B0-MATCHED-BASELINES-01`
+- 路线状态：`active / d0_done / d1_blocked_external`
+- 当前门禁：只执行 6-development-scene matched baseline/evaluator；D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
 - 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
 - V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
@@ -26,6 +26,8 @@
   `eda9f6847d2d9d01ce813c06f550aa2a0f5cf9a23ee8ab3ba766911acb144578`
 - V4 一手文献矩阵：[`WS_V4_LITERATURE_MATRIX.md`](WS_V4_LITERATURE_MATRIX.md)
 - KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
+- KITTI D1 审计：[`KITTI_LAYOUT_AUDIT.md`](KITTI_LAYOUT_AUDIT.md)，canonical blocked run=
+  `20260811T085210Z__d1-kitti-layout-formal-s0-r2`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
 - V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)

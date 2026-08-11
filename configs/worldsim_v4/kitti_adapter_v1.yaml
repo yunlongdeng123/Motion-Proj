@@ -1,0 +1,27 @@
+schema_version: worldsim_v4_kitti_adapter_config_v1
+task_id: WS-V4-D1-KITTI-ADAPTER-01
+status: running
+created_at: "2026-08-11"
+
+dataset:
+  root: /root/autodl-pub/KITTI
+  read_only: true
+  download_allowed: false
+  preferred_layout: tracking_training
+  fallback_layout: raw_sync
+
+protocol:
+  cameras: [image_02, image_03]
+  lidar: velodyne
+  adapter_smoke_sequences: 2
+  cross_domain_target_sequences: 10
+  method_threshold_source: frozen_nuscenes_only
+  kitti_threshold_search: false
+  quality_read: false
+  training: false
+
+freeze:
+  expected_root_state: missing
+  expected_status: blocked_local_dataset_missing
+  p0_audit: docs/WS_V4_KITTI_AUDIT.md
+  d0_commit: 1a80e052c43ffea946f871a35c30dd4d15027315

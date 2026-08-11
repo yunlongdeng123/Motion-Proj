@@ -24,10 +24,12 @@ V4 保持 V3.3/StreetGS base immutable，将对象归属、几何支持、来源
 state，再由 Bayes risk repair router 与连续时间可逆 delta 完成编辑。
 
 当前 P0 已冻结方法/数据/baseline/指标/test-freeze 合同，D0 已从 850 个官方候选中结果前冻结 30-scene nuScenes
-cohort，并完成两 scene preprocess smoke；尚未启动新方法训练。计划与证据见
+cohort，并完成两 scene preprocess smoke；D1 adapter 合同已实现，但真实 KITTI 公共路径缺失，保持外部 blocked。
+尚未启动新方法训练。计划与证据见
 [`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)、
 [`WS_V4_P0_SCOPE.md`](docs/WS_V4_P0_SCOPE.md) 和
-[`WS_V4_D0_NUSCENES_COHORT.md`](docs/WS_V4_D0_NUSCENES_COHORT.md)。
+[`WS_V4_D0_NUSCENES_COHORT.md`](docs/WS_V4_D0_NUSCENES_COHORT.md)、
+[`KITTI_LAYOUT_AUDIT.md`](docs/KITTI_LAYOUT_AUDIT.md)。
 
 V4 的只读起点 **WorldSim V3.3** 建立在 DriveStudio/StreetGS 3D Gaussian Splatting 基线之上，将对象语义、
 道路几何修复、生成式 actor 资产与可逆编辑组织为一条可审计的神经资产链：
@@ -333,7 +335,7 @@ Motion-Proj 将“代码能运行”和“研究结论成立”分开管理：
 | nuScenes cohort | `6 development + 6 validation + 18 frozen test` |
 | D0 canonical cohort SHA | `eda9f684...44578` |
 | KITTI D1 | `blocked_local_dataset_missing`；禁止下载 |
-| Next authorized task | `D1 fail-closed adapter → B0 matched baselines` |
+| Next authorized task | `B0 matched baselines / unified evaluator` |
 | V3.3 frozen baseline | `v33_supported`；canonical assets read-only |
 
 ## Citation 与许可
