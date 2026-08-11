@@ -6,7 +6,7 @@
 
 **从多相机驾驶日志到对象感知、道路可修复、编辑可回滚且可逐文件复验的神经场景资产**
 
-[![Status](https://img.shields.io/badge/WorldSim_V4-P0_done-blue?style=flat-square)](docs/RESEARCH_STATUS.md)
+[![Status](https://img.shields.io/badge/WorldSim_V4-D0_done-blue?style=flat-square)](docs/RESEARCH_STATUS.md)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-CUDA-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
 ![GPU](https://img.shields.io/badge/Validated-1%C3%97RTX_3090-76B900?style=flat-square&logo=nvidia&logoColor=white)
@@ -23,9 +23,11 @@ V3.3 单场景可维护资产升级为 30-scene nuScenes、冻结 KITTI cross-do
 V4 保持 V3.3/StreetGS base immutable，将对象归属、几何支持、来源真实性、不确定性和时序记忆统一成 evidence
 state，再由 Bayes risk repair router 与连续时间可逆 delta 完成编辑。
 
-当前 P0 已冻结方法/数据/baseline/指标/test-freeze 合同；下一步只执行 30-scene nuScenes cohort，不启动新方法训练。
-计划与 P0 证据见 [`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md) 和
-[`WS_V4_P0_SCOPE.md`](docs/WS_V4_P0_SCOPE.md)。
+当前 P0 已冻结方法/数据/baseline/指标/test-freeze 合同，D0 已从 850 个官方候选中结果前冻结 30-scene nuScenes
+cohort，并完成两 scene preprocess smoke；尚未启动新方法训练。计划与证据见
+[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)、
+[`WS_V4_P0_SCOPE.md`](docs/WS_V4_P0_SCOPE.md) 和
+[`WS_V4_D0_NUSCENES_COHORT.md`](docs/WS_V4_D0_NUSCENES_COHORT.md)。
 
 V4 的只读起点 **WorldSim V3.3** 建立在 DriveStudio/StreetGS 3D Gaussian Splatting 基线之上，将对象语义、
 道路几何修复、生成式 actor 资产与可逆编辑组织为一条可审计的神经资产链：
@@ -327,12 +329,12 @@ Motion-Proj 将“代码能运行”和“研究结论成立”分开管理：
 
 | Item | Status |
 |---|---|
-| WorldSim V3.3 P0–S5 | `done` |
-| V3.3 R0 Integration | `done` |
-| Overall | `v33_supported` |
-| Selected production chain | `D2 → O1 → B1 → A4 → posterior-gated delta → G0 → exact release` |
-| Next authorized task | `none` |
-| Conditional future audit | `LiDAR-EVS` |
+| WorldSim V4 P0 / D0 | `done / done` |
+| nuScenes cohort | `6 development + 6 validation + 18 frozen test` |
+| D0 canonical cohort SHA | `eda9f684...44578` |
+| KITTI D1 | `blocked_local_dataset_missing`；禁止下载 |
+| Next authorized task | `D1 fail-closed adapter → B0 matched baselines` |
+| V3.3 frozen baseline | `v33_supported`；canonical assets read-only |
 
 ## Citation 与许可
 

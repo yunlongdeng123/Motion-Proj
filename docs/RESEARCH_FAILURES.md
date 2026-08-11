@@ -9,6 +9,27 @@
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
 
+## V4 D0 防重复结论（2026-08-11）
+
+- `V4-F08`：nuScenes metadata 的实际可用入口是 `/root/autodl-pub/nuScenes` 中的官方 archive，不是历史代码里的
+  `/root/autodl-tmp/data/nuscenes` 或空的 DriveStudio data 目录。D0 只展开 `v1.0-trainval_meta.tgz`，不得为 cohort
+  选择展开 549 GB sensor blobs、下载副本或把空目录写成数据集失败。
+- `V4-F09`：nuScenes log filename 不能用未锚定的三组 `NN-NN-NN` 正则取小时。首版把
+  `n015-2018-11-14-19-09-14+0800` 的月份 `11` 当成小时，测试将夜间误分为白天。修复必须解析完整
+  `YYYY-MM-DD-HH-MM-SS±ZZZZ` 尾部；不得以放宽测试或手工改 scene 标签绕过。
+- `V4-F10`：三个既有 processed scene 是 infrastructure anchors，不是结果前随机样本，也不能用其 V3/V3.3 质量选择
+  test。D0 只把 0230/0242/0255 固定在 development，并以 metadata-only diversity 补足其余 scenes；后续不得把
+  anchor smoke 写成 baseline 或方法质量结论。
+- `V4-F11`：只冻结 scene name 列表不足以复验 cohort。D0 config 同时冻结 30 scene 的 actor/edit/clip/frame/sensor
+  完整记录，formal builder 逐字段比对并锁 cohort SHA；任何 metadata 更新或构建逻辑变化都必须新建 run，不能静默
+  沿用 `eda9f684...44578`。
+- `V4-F12`：metadata donor support 是场景级 proxy，不是重建后 donor 的图像/几何质量。D0 可以用它做结果前分层，
+  但 B0/M2 不得把 strong/medium/weak 标签直接当作 repair 成功、真实性或 quality ground truth。
+- `V4-F13`：确定性 greedy selection 不能对无序 `set` 直接做普通浮点求和。r1/r2 恰好重建一致，r3 在另一
+  `PYTHONHASHSEED` 下因同分 score 的末位舍入选择了不同 scene，freeze gate 以 `af36f51a...3447 !=
+  eda9f684...44578` 拦截。r4 必须对 tag 排序并用 `math.fsum`，测试须跨多个 hash seed；不得固定环境变量掩盖算法
+  非确定性，也不得把 r3 候选倒写成新 cohort。
+
 ## V4 P0 防重复结论（2026-08-11）
 
 - `V4-F01`：计划草案记录的 HEAD 不是执行时事实。草案写 `main@144ed19`，P0 实查为 `main@2108430`，且 V3.3

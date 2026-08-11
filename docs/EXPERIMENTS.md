@@ -2,7 +2,7 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V4 / EviDelta-GS
-- 当前执行授权：仅 `WS-V4-D0-NUSCENES-COHORT-01`
+- 当前执行授权：`WS-V4-D1-KITTI-ADAPTER-01` fail-closed 实现；公共数据缺失时转入 B0，不得下载或读取 test quality
 - 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
@@ -28,9 +28,9 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 | Task ID | 状态 | 目标 | 当前证据/门禁 |
 |---|---|---|---|
 | `WS-V4-P0-SCOPE-PAPER-FREEZE-01` | done | 冻结 claim、HEAD、数学、baseline、数据、指标与一手来源 | `main@2108430`；15 sources；KITTI missing 如实阻塞；P0 不训练 |
-| `WS-V4-D0-NUSCENES-COHORT-01` | pending | 结果前冻结 6 dev + 6 val + 18 test | 当前唯一授权；先枚举 metadata，再做 2-scene preprocess smoke |
-| `WS-V4-D1-KITTI-ADAPTER-01` | pending | 本地 tracking/raw adapter | `/root/autodl-pub/KITTI` 缺失，未授权且禁止下载 |
-| `WS-V4-B0-MATCHED-BASELINES-01` | pending | V3.3/StreetGS/AD-GS same-split replay | D0 未完成前未授权 |
+| `WS-V4-D0-NUSCENES-COHORT-01` | done | 结果前冻结 6 dev + 6 val + 18 test | canonical r4；850 candidates；2-scene preprocess smoke passed；无训练/test quality |
+| `WS-V4-D1-KITTI-ADAPTER-01` | running | 本地 tracking/raw adapter | 只实现 auto-detect/fail-closed；`/root/autodl-pub/KITTI` 缺失且禁止下载 |
+| `WS-V4-B0-MATCHED-BASELINES-01` | pending | V3.3/StreetGS/AD-GS same-split replay | D1 missing-data terminal 后解锁 6 development scenes；M1 仍未授权 |
 | `WS-V4-M1-EVIDENCE-FIELD-01` | pending | Bayesian/calibrated temporal evidence | B0 未闭环前未授权 |
 | `WS-V4-M2-REPAIR-ROUTER-01` | pending | Bayes-risk repair compiler | M1 未收口前未授权 |
 | `WS-V4-M3-TEMPORAL-DELTA-01` | pending | `SE(3)` B-spline temporal delta | M2 未收口前未授权 |
@@ -56,6 +56,25 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   `248bde62...aaa8 / aba1fbcf...1283 / ec32e983...3970 / b3941601...272a`；5 份 source snapshot exact，
   run=`101,624 bytes`；r1 因提交前只规范计划参考文献 whitespace 导致 source/config SHA 改变，保留为 noncanonical
   done，r2 对最终字节重新审计。
+
+### `WS-V4-D0-NUSCENES-COHORT-01` closeout
+
+- 从官方 nuScenes `v1.0-trainval` 元数据枚举 850 个候选，只按结果前 metadata 分层；development/validation
+  全来自官方 train，18 个 test 全来自官方 val，scene name/token 全局互斥；
+- 冻结 6 development、6 validation、18 test；完整配置保存 30 scene 的 high/difficult actor、remove/lateral/insert、
+  2–4 秒 continuous clip、3-front-camera + LIDAR_TOP 与逐帧 train/development/heldout 划分；
+- cohort SHA=`eda9f684...44578`；formal 构建会逐字段比较 `scene_records`，不只校验名单；30/30 scene 均找到
+  high/difficult actor，连续片段范围=`2.899163–3.150218 s`；
+- scene-0230/0242 只复用已有 preprocess 产物做 smoke：每 scene `196` 帧、`1,176` 图像、`196` LiDAR，实例 JSON
+  与抽样 artifact SHA 全通过；没有训练、模型推理或质量读取；
+- canonical=`20260811T084108Z__d0-cohort-formal-s40117-r4`；config/summary/manifest/status/cohort SHA=
+  `ed47c0da...667a1 / ec96970d...f276 / 3349a636...6b30 / 1dfd5db4...4461 / eda9f684...44578`；
+  12 files=`1,221,825 bytes`，11 个 metadata table fingerprint exact；diagnostic r1 保留为 noncanonical；r2 因
+  CRLF→LF source bytes 改变降为 noncanonical；r3 被 cohort SHA freeze gate 拦截并记录 `blocked` terminal，定位为
+  set 浮点求和顺序受 Python hash seed 影响；r4 使用排序 + `math.fsum` 并恢复原 cohort SHA；
+- D0 定向测试=`8 passed`，D0/P0 + V3.3/V3.2 联合回归=`106 passed`。下一任务 D1 必须在 public KITTI
+  缺失时输出合法 blocked terminal，禁止下载；随后才进入 6-development-scene B0 matched baseline，M1/M2/M3 与
+  test quality 仍未授权。
 
 ## V3.3 注册表
 

@@ -2,10 +2,10 @@
 
 - 更新时间：2026-08-11
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
-- 最新有效完成任务：`WS-V4-P0-SCOPE-PAPER-FREEZE-01`
-- 当前任务：`WS-V4-D0-NUSCENES-COHORT-01`
-- 路线状态：`active / p0_done`
-- 当前门禁：只授权 D0 冻结 30-scene nuScenes cohort；不得训练 M1/M2/M3，不得读取 test quality
+- 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
+- 当前任务：`WS-V4-D1-KITTI-ADAPTER-01`
+- 路线状态：`active / d0_done`
+- 当前门禁：D1 只实现 layout-detecting fail-closed adapter，公共 KITTI 缺失时保持 blocked；随后只解锁 B0 6-development-scene matched baseline，不得读取 test quality
 - 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
 - V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
@@ -16,6 +16,14 @@
   `aba1fbcffbe89e7b992bb1d0c691f398423c143319628b52cff7f7f3d0b51283` /
   `ec32e983ad48e6ed415906562c90338844bfc47ec305afa950bb4a99f1543970` /
   `b39416015b1d6275dd3b8bfefa74c7aa45d4ceee790fdeab4d72b5e3baca272a`
+- V4 D0：[`WS_V4_D0_NUSCENES_COHORT.md`](WS_V4_D0_NUSCENES_COHORT.md)
+- V4 D0 canonical：`20260811T084108Z__d0-cohort-formal-s40117-r4`
+- V4 D0 config/summary/manifest/status/cohort SHA-256：
+  `ed47c0da2c76e14b3b0a0e7a8b4d9b580bdf37e4c69a1d5a389b965e88c667a1` /
+  `ec96970d8733e99b206048baf463fce69cae99db916c15b1e4fd777a74d4f276` /
+  `3349a63667988c61596494506c67cf4d3b7f36e934ab4fac5d0935974c0d6b30` /
+  `1dfd5db4e71566c344aa382e9f8e464c0b512cb01ff8a6053a03123bd3cb4461` /
+  `eda9f6847d2d9d01ce813c06f550aa2a0f5cf9a23ee8ab3ba766911acb144578`
 - V4 一手文献矩阵：[`WS_V4_LITERATURE_MATRIX.md`](WS_V4_LITERATURE_MATRIX.md)
 - KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
