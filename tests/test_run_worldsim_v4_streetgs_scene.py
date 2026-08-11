@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 from pathlib import Path
+import subprocess
+import sys
 
 import pytest
 
@@ -48,3 +50,16 @@ def test_training_config_fails_closed(tmp_path: Path, mutation, message: str) ->
     mutation(value)
     with pytest.raises(StreetGSTrainingError, match=message):
         validate_config(value, tmp_path)
+
+
+def test_direct_script_entry_can_resolve_project_imports() -> None:
+    project = Path(__file__).resolve().parents[1]
+    process = subprocess.run(
+        [sys.executable, str(project / "scripts/run_worldsim_v4_streetgs_scene.py"), "--help"],
+        cwd=project,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert process.returncode == 0, process.stderr
+    assert "--scene" in process.stdout

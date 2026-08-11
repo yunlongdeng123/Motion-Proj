@@ -13,6 +13,7 @@ import re
 import shutil
 import signal
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,6 +21,10 @@ from typing import Any, Mapping
 
 import torch
 import yaml
+
+PROJECT_IMPORT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_IMPORT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_IMPORT_ROOT))
 
 from scripts.prepare_worldsim_v4_baseline_data import scene_directory_name, validate_processed_scene
 
