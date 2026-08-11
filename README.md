@@ -99,7 +99,7 @@ flowchart LR
     E --> BG["INSERT_BACKGROUND<br/>RoadPatch rows"]
     BG --> A["INSERT_ACTOR<br/>actor-local rows"]
     A --> R["RENDER_ONLY<br/>optional 2D candidate"]
-    R -. "unload + exact replay" .-> B
+    R -.->|unload + exact replay| B
 ```
 
 S4 的 authoring state 不复制或删除基础行。ERASE 仅创建临时 opacity parameter，并由 S1 instance posterior 的
