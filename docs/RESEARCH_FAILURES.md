@@ -62,6 +62,9 @@
   修复只允许非 symlink 的空目录，发布前再次 `rmdir`，已有 mask、非目录或 partial 一律拒绝，不能覆盖正式产物。
 - `V4-F23`：StreetGS 100-step profile 只证明训练链、checkpoint schema 和单卡资源门可执行。r16 不能计入 6-scene
   30k formal coverage，也不能读取/登记质量或据此宣称 baseline 已完成；每场 formal 必须新建不可变 run。
+- `V4-F24`：六场景 StreetGS 的 Gaussian 数、wall 与 peak GPU 差异很大；scene-0255/0048 sampled peak 达
+  `24,092/24,000 MiB`，scene-0994 final RigidNodes 仅 `1,029`。不能用一个 scene 的 profile 外推所有资源，不能因
+  actor 稀疏补点或删 scene，也不能把无 OOM 的近上限运行倒写成资源失败。主表保留每场分母与工程行。
 
 ## V4 P0 防重复结论（2026-08-11）
 

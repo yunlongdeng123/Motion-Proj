@@ -115,6 +115,13 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - StreetGS r9 在 iteration 前因缺 sky mask blocked；r16 profile100 完成，wall=`90.8965 s`、checkpoint=
   `340,298,602 bytes / SHA 446297b8...3af`、peak GPU=`9,004 MiB`、OOM/kill=`0/0`。该 profile 只解锁
   六场景 30k formal，B0 coverage 仍为 `0/6 formal`，M1 与 test quality 继续未授权。
+- StreetGS formal r17/r20/r22/r24/r26/r28 按冻结顺序全部完成 30k / seed0 / final-only checkpoint；wall=
+  `3,118.35/2,069.20/2,442.84/2,250.89/1,877.13/2,129.88 s`，checkpoint bytes=
+  `396,257,270/306,226,038/451,821,046/340,189,878/297,410,742/325,005,110`；六个 means finite，
+  peak GPU=`23,720/12,692/24,092/24,000/16,744/23,754 MiB`，OOM/kill 全为 `0/0`；
+- clean inventory r29=`StreetGS/V3.3/AD-GS 6/1/0`，inventory/fingerprint SHA=
+  `3c5fdad9...4b806 / a257fe38...9fa0f`。StreetGS 资产门已关闭，但 B0 仍 running；下一步只恢复 AD-GS 与
+  V3.3 same-split，不提前启动 M1，不读取 test quality。
 
 ## V3.3 注册表
 

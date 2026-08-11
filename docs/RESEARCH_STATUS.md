@@ -4,8 +4,8 @@
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
 - 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
 - 当前任务：`WS-V4-B0-MATCHED-BASELINES-01`
-- 路线状态：`active / d0_done / d1_blocked_external / b0_data_ready_profile_passed`
-- 当前门禁：只执行 6-development-scene matched baseline/evaluator；StreetGS 30k formal 已由 profile100 解锁，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
+- 路线状态：`active / d0_done / d1_blocked_external / b0_streetgs_6of6`
+- 当前门禁：继续恢复 V3.3/AD-GS 6-development-scene matched baseline；StreetGS 6/6 已完成，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
 - 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
 - V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
@@ -28,10 +28,13 @@
 - KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
 - KITTI D1 审计：[`KITTI_LAYOUT_AUDIT.md`](KITTI_LAYOUT_AUDIT.md)，canonical blocked run=
   `20260811T085210Z__d1-kitti-layout-formal-s0-r2`
-- V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；6-scene DriveStudio 输入与 sky masks
-  已齐，当前 executable coverage=`V3.3 1/6 / StreetGS 0 formal + 1 profile / AD-GS 0/6`；B0 仍为 running
+- V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；6-scene DriveStudio 输入、sky masks
+  与 StreetGS formal checkpoints 已齐，当前 executable coverage=`V3.3 1/6 / StreetGS 6/6 / AD-GS 0/6`；B0 仍为 running
 - B0 StreetGS profile：`20260811T111810Z__streetgs-scene0048-profile100-s0-r16`，100 steps done，checkpoint
   SHA=`446297b8...3af`，peak GPU=`9,004 MiB`，30k formal 已解锁；test quality 未读
+- B0 StreetGS formal closeout：r17/r20/r22/r24/r26/r28 六场景全部 30k done；checkpoint bytes=
+  `297,410,742–451,821,046`，peak GPU=`12,692–24,092 MiB`，全部 finite、OOM/kill=`0/0`；clean inventory
+  r29=`6/1/0`，fingerprint=`a257fe38...fa0f`
 - B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
   engineering timing/yield/recovery 派生已实现，定向单测=`9 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读

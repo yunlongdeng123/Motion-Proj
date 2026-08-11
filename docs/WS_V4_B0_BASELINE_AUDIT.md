@@ -3,14 +3,14 @@
 ## 当前结论
 
 `WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计和工程指标代码已经落地；
-6 个 development scenes 的 DriveStudio 输入与 StreetGS sky masks 已全部物化，scene-0048 的 100-step
-训练 profile 已通过。当前仍缺 6-scene formal StreetGS、V3.3 replay 与 AD-GS same-split 资产，因此 B0
+6 个 development scenes 的 DriveStudio 输入、sky masks 与 StreetGS 30k formal checkpoints 已全部物化。
+当前仍缺 V3.3 replay 与 AD-GS same-split 资产，因此 B0
 尚未闭环；所有 blocked run 都是独立诊断，不是方法负结果。
 
 | baseline | 当前 executable scenes | 需要 | 事实边界 |
 |---|---:|---:|---|
 | V3.3 frozen | 1 | 6 | scene-0230 canonical release 与其外部 base 仍可解析；其余五 scene 未物化完整链 |
-| Native StreetGS | 0 formal / 1 profile | 6 formal | 6-scene 数据齐备；scene-0048 profile100 通过，尚未登记 30k formal checkpoint |
+| Native StreetGS | 6 | 6 | 六个独立 30k / seed0 / final-only checkpoint 全部 finite，统一 inventory r29 可执行 |
 | AD-GS | 0 | 6 | 6-scene historical metrics 仍在；source/env/checkpoint 当前均缺失，历史数值不算 executable |
 
 ## 冻结协议
@@ -70,8 +70,26 @@
   fingerprint=`62ebeb1ef11dc6785e1031f1555188c97e3e17d426101a316584abf3765c2eda`；
 - profile 只证明 30k 训练链和资源前置可执行，不计入 formal coverage，不登记图像质量改进。
 
+## StreetGS 六场景 formal closeout
+
+| scene | run | wall s | checkpoint bytes | SHA256 | Background / Rigid | peak GPU MiB |
+|---|---|---:|---:|---|---:|---:|
+| scene-0230 | r17 | 3,118.35 | 396,257,270 | `fba28355...0162f` | 1,140,862 / 168,849 | 23,720 |
+| scene-0242 | r20 | 2,069.20 | 306,226,038 | `3c292d74...413b` | 844,231 / 86,579 | 12,692 |
+| scene-0255 | r22 | 2,442.84 | 451,821,046 | `ee5450b4...428d` | 1,507,559 / 41,179 | 24,092 |
+| scene-0048 | r24 | 2,250.89 | 340,189,878 | `dede872b...cf3d` | 1,059,206 / 19,020 | 24,000 |
+| scene-0994 | r26 | 1,877.13 | 297,410,742 | `f7965426...b7a0` | 897,077 / 1,029 | 16,744 |
+| scene-0139 | r28 | 2,129.88 | 325,005,110 | `cb6d4254...a8f2` | 1,005,857 / 8,713 | 23,754 |
+
+- 六个 run 均为独立原生初始化、step=`30000`、means finite、OOM/kill=`0/0`、test quality 未读；profile checkpoint
+  未被 resume；
+- scene-0255 最高 sampled GPU=`24,092 MiB`，没有提高门槛或发生 OOM；scene-0994 actor 很稀疏但 final
+  RigidNodes=`1,029` 非空，按预注册合同保留场景差异，不补点、不拒绝；
+- clean inventory=`20260811T152304Z__b0-inventory-streetgs6-s0-r29`，coverage=
+  `StreetGS/V3.3/AD-GS=6/1/0`，inventory/fingerprint SHA=
+  `3c5fdad9adc47361883ed3b1dcee17627eda9abaec6b7308ae2416091ec4b806 / a257fe38241d417933a7718756320f1bc813ff81bbf9df6c4decaef2db19fa0f`。
+
 ## 下一动作
 
-按固定 scene 顺序串行完成 6 个 StreetGS 30k formal checkpoint，并逐场登记 bytes/SHA/资源；随后恢复固定 official
-AD-GS commit 的 same-split baseline，并补齐 V3.3 六场景 replay。B0 只有在三种方法均达到 6/6 且统一 evaluator
+恢复固定 official AD-GS commit 的 same-split baseline，并补齐 V3.3 六场景 replay。B0 只有在三种方法均达到 6/6 且统一 evaluator
 生成完整 scene rows 后才可 `done`，M1 在此之前不启动。
