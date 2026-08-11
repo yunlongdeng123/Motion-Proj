@@ -113,12 +113,42 @@ baselines:
     implementation_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
     implementation_root: /root/autodl-tmp/third_party/AD-GS
     environment: /root/autodl-tmp/envs/adgs
+    expected_modified_files: [scripts/colmap.py, scripts/flow.py, scripts/run-dpt.py, scripts/semantic.py, train.py, utils/flow_utils.py]
+    compatibility_patch: compatibility/AD-GS-2026-07-27.patch
+    compatibility_patch_sha256: b2614c8bf720e041b2d5abaeb20305dbc30057b690d567a3ff646d5d9719513b
     historical_metrics: /root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/metrics.json
     historical_overlap_scenes: [scene-0230, scene-0242, scene-0255]
     historical_only_scenes: [scene-0295, scene-0518, scene-0749]
     required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
-    executable_checkpoints: []
-    note: 历史指标只作 provenance；当前 source、environment 与 checkpoint 均须重建后才可进入 matched 主表。
+    executable_checkpoints:
+      scene-0230:
+        state: matched_formal_done
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44
+        step: 60000
+        seed: 0
+        duration_seconds: 7054.6220526099205
+        peak_gpu_memory_mib: 16692
+        peak_cgroup_memory_bytes: 33680572416
+        development_content_read: false
+        heldout_content_read: false
+        test_quality_read: false
+        fingerprint_sha256: 0e69e2b9f4d608d489420b5d8d70b77dc8ee2e92257ffba73138549cb94e8d28
+        manifest_sha256: 9fa1f2c12dd99168ed15cd889e165cb73ffbd387c5ea9a35b2fdf166fa0d8f42
+        summary_sha256: 7774d7126653c377fb62fc3839fa1b1c42bc8f5a12784b910e79642f0cfb9a8f
+        files:
+          point_cloud.ply:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/point_cloud.ply
+            bytes: 413905347
+            sha256: f17ed27fd445b981a1f798de9ca2f3ebdd35b567a8d7bc76c5fd1fa08c1a0cbb
+          deform.pth:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/deform.pth
+            bytes: 435921657
+            sha256: c725f952db2217584a3586f39f2bc5be424b2e8153859b6612f81ae21c9c84b0
+          env.pth:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/env.pth
+            bytes: 805307528
+            sha256: c3233b717de7048bd76a530633a1116b1b7af8a84da86ab4f6214e8e38ce4d34
+    note: 历史指标只作 provenance；只有 strict same-split、内容寻址且不可变的 formal checkpoint 才进入 matched 主表。
 
 completion_gate:
   methods: [streetgs, v33_frozen, ad_gs]

@@ -67,7 +67,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 
 def _git(path: Path, *args: str) -> str | None:
     process = subprocess.run(["git", "-C", str(path), *args], capture_output=True, text=True, check=False)
-    return process.stdout.strip() if process.returncode == 0 else None
+    return process.stdout.rstrip() if process.returncode == 0 else None
 
 
 def _path_state(value: Any, *, kind: str = "file") -> dict[str, Any]:
@@ -79,6 +79,97 @@ def _path_state(value: Any, *, kind: str = "file") -> dict[str, Any]:
     if exists and kind == "file":
         row.update(bytes=path.stat().st_size, sha256=sha256_file(path))
     return row
+
+
+def _checkpoint_registration_state(value: Any) -> dict[str, Any]:
+    """Fail closed unless every AD-GS checkpoint component is byte exact."""
+    required_files = ("point_cloud.ply", "deform.pth", "env.pth")
+    if not isinstance(value, Mapping):
+        return {
+            "state": "not_registered",
+            "all_files_exact": False,
+            "files": {},
+        }
+    configured_files = value.get("files")
+    if not isinstance(configured_files, Mapping) or set(configured_files) != set(required_files):
+        return {
+            "state": "invalid_registration",
+            "all_files_exact": False,
+            "files": {},
+        }
+    run = Path(str(value.get("run", "")))
+    run_state = _path_state(run, kind="dir") if value.get("run") else {"path": None, "exists": False, "state": "not_registered"}
+    evidence: dict[str, Any] = {}
+    for name, field in (("fingerprint.json", "fingerprint_sha256"), ("manifest.json", "manifest_sha256")):
+        actual = _path_state(run / name) if run_state["exists"] else _path_state(None)
+        expected_sha256 = value.get(field)
+        evidence[name] = {
+            **actual,
+            "expected_sha256": expected_sha256,
+            "sha256_exact": actual.get("sha256") == expected_sha256,
+        }
+    files: dict[str, Any] = {}
+    for name in required_files:
+        configured = configured_files[name]
+        if not isinstance(configured, Mapping):
+            files[name] = {"state": "invalid_registration", "exact": False}
+            continue
+        actual = _path_state(configured.get("path"))
+        expected_bytes = configured.get("bytes")
+        expected_sha256 = configured.get("sha256")
+        bytes_exact = actual.get("bytes") == expected_bytes
+        sha256_exact = actual.get("sha256") == expected_sha256
+        inside_run = bool(
+            actual["exists"]
+            and run_state["exists"]
+            and Path(str(actual["path"])).resolve().is_relative_to(run.resolve())
+        )
+        files[name] = {
+            **actual,
+            "expected_bytes": expected_bytes,
+            "expected_sha256": expected_sha256,
+            "bytes_exact": bytes_exact,
+            "sha256_exact": sha256_exact,
+            "inside_run": inside_run,
+            "exact": actual["exists"] and bytes_exact and sha256_exact and inside_run,
+        }
+    all_files_exact = all(row.get("exact", False) for row in files.values())
+    evidence_exact = all(row["exists"] and row["sha256_exact"] for row in evidence.values())
+    formal_step_exact = value.get("step") == 60000
+    executable_exact = all_files_exact and evidence_exact and formal_step_exact
+    return {
+        "state": "executable_exact" if executable_exact else "checkpoint_mismatch",
+        "executable_exact": executable_exact,
+        "all_files_exact": all_files_exact,
+        "run": run_state,
+        "step": value.get("step"),
+        "formal_step_exact": formal_step_exact,
+        "fingerprint_sha256": value.get("fingerprint_sha256"),
+        "manifest_sha256": value.get("manifest_sha256"),
+        "evidence_exact": evidence_exact,
+        "evidence": evidence,
+        "files": files,
+    }
+
+
+def _single_checkpoint_registration_state(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        return {"path": None, "exists": False, "state": "not_registered", "exact": False}
+    actual = _path_state(value.get("path"))
+    expected_bytes = value.get("bytes")
+    expected_sha256 = value.get("sha256")
+    bytes_exact = actual.get("bytes") == expected_bytes
+    sha256_exact = actual.get("sha256") == expected_sha256
+    exact = actual["exists"] and bytes_exact and sha256_exact
+    return {
+        **actual,
+        "state": "executable_exact" if exact else actual["state"],
+        "expected_bytes": expected_bytes,
+        "expected_sha256": expected_sha256,
+        "bytes_exact": bytes_exact,
+        "sha256_exact": sha256_exact,
+        "exact": exact,
+    }
 
 
 def _validate_metrics(config: Mapping[str, Any]) -> None:
@@ -100,6 +191,8 @@ def _validate_metrics(config: Mapping[str, Any]) -> None:
 
 
 def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
+    matrix_path = matrix_path.resolve()
+    project_root = project_root.resolve()
     matrix = _load_yaml(matrix_path)
     if matrix.get("task_id") != TASK_ID or matrix.get("status") != "running":
         raise BaselineAuditError("B0 matrix 必须是 running 状态且 task_id 精确")
@@ -133,7 +226,20 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
         "expected_commit": street["implementation_commit"],
     }
     street_runtime["commit_exact"] = street_runtime["actual_commit"] == street_runtime["expected_commit"]
-    street_scenes = {scene: _path_state(street.get("checkpoints", {}).get(scene, {}).get("path")) for scene in scenes}
+    street_runtime_ready = bool(
+        street_runtime["implementation"]["exists"]
+        and street_runtime["environment"]["exists"]
+        and street_runtime["commit_exact"]
+    )
+    street_scenes: dict[str, Any] = {}
+    for scene in scenes:
+        checkpoint = _single_checkpoint_registration_state(street.get("checkpoints", {}).get(scene))
+        checkpoint_exact = checkpoint["exact"]
+        checkpoint["checkpoint_exact"] = checkpoint_exact
+        checkpoint["runtime_ready"] = street_runtime_ready
+        checkpoint["exact"] = street_runtime_ready and checkpoint_exact
+        checkpoint["state"] = "executable" if checkpoint["exact"] else checkpoint["state"]
+        street_scenes[scene] = checkpoint
 
     v33 = baselines["v33_frozen"]
     v33_source = _path_state(v33["source_run"], kind="dir")
@@ -148,6 +254,7 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
     adgs = baselines["ad_gs"]
     adgs_root = Path(adgs["implementation_root"])
     adgs_env = Path(adgs["environment"])
+    adgs_patch = project_root / str(adgs.get("compatibility_patch", ""))
     historical = _path_state(adgs["historical_metrics"])
     historical_scenes: list[str] = []
     if historical["exists"]:
@@ -158,18 +265,53 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
         "environment": _path_state(adgs_env, kind="dir"),
         "actual_commit": _git(adgs_root, "rev-parse", "HEAD") if adgs_root.is_dir() else None,
         "expected_commit": adgs["implementation_commit"],
+        "compatibility_patch": _path_state(adgs_patch),
+        "expected_compatibility_patch_sha256": adgs.get("compatibility_patch_sha256"),
         "historical_metrics": historical,
         "historical_scenes": historical_scenes,
         "historical_metrics_count_as_executable": False,
     }
-    executable = set(adgs.get("executable_checkpoints", [])) if adgs_root.is_dir() and adgs_env.is_dir() else set()
-    adgs_scenes = {
-        scene: {
-            "state": "executable" if scene in executable else "historical_metrics_only" if scene in historical_scenes else "missing_training_required",
+    adgs_runtime["commit_exact"] = adgs_runtime["actual_commit"] == adgs_runtime["expected_commit"]
+    actual_modified_files = sorted(
+        line[3:]
+        for line in (_git(adgs_root, "status", "--short") or "").splitlines()
+        if len(line) > 3
+    )
+    adgs_runtime["actual_modified_files"] = actual_modified_files
+    adgs_runtime["expected_modified_files"] = sorted(adgs.get("expected_modified_files", []))
+    adgs_runtime["modified_files_exact"] = actual_modified_files == adgs_runtime["expected_modified_files"]
+    adgs_runtime["compatibility_patch_exact"] = bool(
+        adgs_runtime["compatibility_patch"].get("sha256")
+        == adgs_runtime["expected_compatibility_patch_sha256"]
+    )
+    reverse_check = subprocess.run(
+        ["git", "-C", str(adgs_root), "apply", "--reverse", "--check", "--unidiff-zero", str(adgs_patch)],
+        capture_output=True,
+        text=True,
+        check=False,
+    ) if adgs_root.is_dir() and adgs_patch.is_file() else None
+    adgs_runtime["compatibility_patch_reverse_check"] = bool(reverse_check and reverse_check.returncode == 0)
+    runtime_ready = bool(
+        adgs_runtime["implementation"]["exists"]
+        and adgs_runtime["environment"]["exists"]
+        and adgs_runtime["commit_exact"]
+        and adgs_runtime["modified_files_exact"]
+        and adgs_runtime["compatibility_patch_exact"]
+        and adgs_runtime["compatibility_patch_reverse_check"]
+    )
+    registrations = adgs.get("executable_checkpoints", {})
+    if not isinstance(registrations, Mapping):
+        registrations = {}
+    adgs_scenes: dict[str, Any] = {}
+    for scene in scenes:
+        checkpoint = _checkpoint_registration_state(registrations.get(scene))
+        executable = runtime_ready and checkpoint.get("executable_exact", False)
+        adgs_scenes[scene] = {
+            "state": "executable" if executable else "historical_metrics_only" if scene in historical_scenes else "missing_training_required",
             "historical_metric_present": scene in historical_scenes,
+            "runtime_ready": runtime_ready,
+            "checkpoint": checkpoint,
         }
-        for scene in scenes
-    }
 
     inventory = {
         "schema_version": "worldsim_v4_b0_inventory_v1",
@@ -184,7 +326,7 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
         },
     }
     executable_counts = {
-        "streetgs": sum(row["exists"] for row in street_scenes.values()),
+        "streetgs": sum(row["exact"] for row in street_scenes.values()),
         "v33_frozen": sum(row["state"] == "executable_frozen_chain" for row in v33_scenes.values()),
         "ad_gs": sum(row["state"] == "executable" for row in adgs_scenes.values()),
     }
