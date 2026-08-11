@@ -251,3 +251,17 @@ index b1c4f70..f16c21d 100755
  step = args.step # the step to sample frames for Grounding DINO predictor
  # step = len(frame_names) # the step to sample frames for Grounding DINO predictor
  
+diff --git a/train.py b/train.py
+index f7bb53f..349f6a1 100755
+--- a/train.py
++++ b/train.py
+@@ -297,0 +298,5 @@ if __name__ == "__main__":
++    parser.add_argument(
++        "--disable_test_evaluation",
++        action="store_true",
++        help="Do not render validation cameras during training; use an external split-aware evaluator.",
++    )
+@@ -302 +307,2 @@ if __name__ == "__main__":
+-    args.test_iterations.append(args.iterations)
++    if not args.disable_test_evaluation:
++        args.test_iterations.append(args.iterations)

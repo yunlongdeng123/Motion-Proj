@@ -74,7 +74,8 @@ def git(root: Path, *args: str) -> str:
     process = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True, check=False)
     if process.returncode != 0:
         raise AdgsEnvironmentError(process.stderr.strip())
-    return process.stdout.strip()
+    # porcelain status 的首列允许空格；只能裁掉末尾换行，不能破坏首行 XY 字段。
+    return process.stdout.rstrip()
 
 
 def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
@@ -93,9 +94,26 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
         raise AdgsEnvironmentError(f"AD-GS compatibility 文件集合漂移：{changed}")
     if sha256_file(patch) != source["compatibility_patch_sha256"]:
         raise AdgsEnvironmentError("compatibility patch 哈希漂移")
-    diff = subprocess.run(["git", "-C", str(adgs_root), "diff", "--binary"], capture_output=True, check=True).stdout
-    if hashlib.sha256(diff).hexdigest() != source["compatibility_patch_sha256"]:
-        raise AdgsEnvironmentError("AD-GS working-tree patch 与冻结补丁不一致")
+    reverse_check = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(adgs_root),
+            "apply",
+            "--check",
+            "--reverse",
+            "--unidiff-zero",
+            str(patch),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if reverse_check.returncode != 0:
+        raise AdgsEnvironmentError(
+            "AD-GS working tree 不是冻结 compatibility patch 的精确已应用状态："
+            + reverse_check.stderr.strip()
+        )
     wheel_expected = config["wheel_contract"]
     wheel_actual = {"bytes": wheel.stat().st_size, "sha256": sha256_file(wheel)} if wheel.is_file() else None
     if wheel_actual != {"bytes": wheel_expected["bytes"], "sha256": wheel_expected["sha256"]}:
