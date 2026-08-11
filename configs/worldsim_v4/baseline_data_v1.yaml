@@ -1,0 +1,41 @@
+schema_version: worldsim_v4_baseline_data_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-11"
+dataset:
+  name: nuScenes
+  version: v1.0-trainval
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  public_archive_read_only: true
+  raw_union_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz
+  raw_manifest_root: /root/autodl-tmp/data/worldsim_v4/manifests
+protocol:
+  sensors: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK_LEFT, CAM_BACK_RIGHT, CAM_BACK, LIDAR_TOP]
+  interpolation_hz: 10
+  extraction_workers: 10
+  no_download: true
+  test_quality_read: false
+scenes:
+  scene-0230:
+    scene_index: 179
+    state: reuse_processed
+    processed_source: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179
+  scene-0242:
+    scene_index: 191
+    state: reuse_processed
+    processed_source: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/191
+  scene-0255:
+    scene_index: 204
+    state: reuse_processed
+    processed_source: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/204
+  scene-0048: {scene_index: 45, state: extract_and_preprocess}
+  scene-0994: {scene_index: 752, state: extract_and_preprocess}
+  scene-0139: {scene_index: 110, state: extract_and_preprocess}
+gates:
+  expected_scene_count: 6
+  expected_extract_scene_count: 3
+  expected_frames_10hz: 196
+  expected_cameras: 6
+  minimum_disk_free_gib: 80
