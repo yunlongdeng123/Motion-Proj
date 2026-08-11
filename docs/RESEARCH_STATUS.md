@@ -1,12 +1,25 @@
 # Research Status
 
 - 更新时间：2026-08-11
-- 当前路线：WorldSim V3.3 对象感知、道路原生修复与可维护编辑资产
-- 最新有效完成任务：`WS-V33-R0-INTEGRATION-01`
-- 当前任务：无
-- 路线终态：`v33_supported`
-- 当前门禁：P0–S5/R0 已收口；F0 LiDAR-EVS 保持 conditional，当前未授权
-- 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
+- 最新有效完成任务：`WS-V4-P0-SCOPE-PAPER-FREEZE-01`
+- 当前任务：`WS-V4-D0-NUSCENES-COHORT-01`
+- 路线状态：`active / p0_done`
+- 当前门禁：只授权 D0 冻结 30-scene nuScenes cohort；不得训练 M1/M2/M3，不得读取 test quality
+- 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
+- V4 分支：`research/worldsim-v4-evidelta`
+- V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
+- V4 P0：[`WS_V4_P0_SCOPE.md`](WS_V4_P0_SCOPE.md)
+- V4 P0 canonical：`20260811T080636Z__p0-scope-formal-s0-r2`
+- V4 P0 config/summary/manifest/status SHA-256：
+  `248bde621343597196c1a608ce8674a0c4a1f974d38abc70710c7783d8ecaaa8` /
+  `aba1fbcffbe89e7b992bb1d0c691f398423c143319628b52cff7f7f3d0b51283` /
+  `ec32e983ad48e6ed415906562c90338844bfc47ec305afa950bb4a99f1543970` /
+  `b39416015b1d6275dd3b8bfefa74c7aa45d4ceee790fdeab4d72b5e3baca272a`
+- V4 一手文献矩阵：[`WS_V4_LITERATURE_MATRIX.md`](WS_V4_LITERATURE_MATRIX.md)
+- KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
+- V3.3 终态：`v33_supported`，全部 canonical 资产只读
+- V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
 - S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
 - S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
@@ -17,7 +30,7 @@
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
-- 当前分支：`research/worldsim-v3.3-object-maintenance`
+- V3.3 历史分支：`research/worldsim-v3.3-object-maintenance`
 - V3.3 P0 canonical run：`20260810T171744Z__p0-source-audit-s0-r2`
 - V3.3 P0 config/summary/manifest/status SHA-256：
   `29c167fe050d074f626884c0eba7b67fd6fd56c8493adc4c6be0d390f09b9ae2` /

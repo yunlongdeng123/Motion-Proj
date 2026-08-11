@@ -1,9 +1,9 @@
 # Experiments
 
 - 更新时间：2026-08-11
-- 当前路线：WorldSim V3.3 对象感知与可维护资产
-- 当前执行授权：无；V3.3 R0 已 `done / v33_supported`
-- 当前方案：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- 当前路线：WorldSim V4 / EviDelta-GS
+- 当前执行授权：仅 `WS-V4-D0-NUSCENES-COHORT-01`
+- 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
 - V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
@@ -22,6 +22,40 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 阻塞。R0 canonical r4 已完成语义扩展、mixed storage、S3 actor override registry、exact chunk package 与三视角
 单卡验证；全部单卡 RTX 3090 可执行环节终态为 `done`，S5 继续 `blocked`。V3.2 整体终态为
 `none_plan_complete`；本注册表自 2026-08-11 起冻结为历史事实，不授权续跑 S4 temporal、S5 或旧 rejected run。
+
+## V4 注册表
+
+| Task ID | 状态 | 目标 | 当前证据/门禁 |
+|---|---|---|---|
+| `WS-V4-P0-SCOPE-PAPER-FREEZE-01` | done | 冻结 claim、HEAD、数学、baseline、数据、指标与一手来源 | `main@2108430`；15 sources；KITTI missing 如实阻塞；P0 不训练 |
+| `WS-V4-D0-NUSCENES-COHORT-01` | pending | 结果前冻结 6 dev + 6 val + 18 test | 当前唯一授权；先枚举 metadata，再做 2-scene preprocess smoke |
+| `WS-V4-D1-KITTI-ADAPTER-01` | pending | 本地 tracking/raw adapter | `/root/autodl-pub/KITTI` 缺失，未授权且禁止下载 |
+| `WS-V4-B0-MATCHED-BASELINES-01` | pending | V3.3/StreetGS/AD-GS same-split replay | D0 未完成前未授权 |
+| `WS-V4-M1-EVIDENCE-FIELD-01` | pending | Bayesian/calibrated temporal evidence | B0 未闭环前未授权 |
+| `WS-V4-M2-REPAIR-ROUTER-01` | pending | Bayes-risk repair compiler | M1 未收口前未授权 |
+| `WS-V4-M3-TEMPORAL-DELTA-01` | pending | `SE(3)` B-spline temporal delta | M2 未收口前未授权 |
+| `WS-V4-E0-NUSCENES-SCALE-01` | pending | 6 dev + 6 val + 18 test | test freeze 提交前不得读取 test quality |
+| `WS-V4-E1-KITTI-CROSSDATA-01` | pending | 2 smoke + 10 formal | D1 exact 且 nuScenes 参数冻结后解锁 |
+| `WS-V4-E2-ENGINEERING-BENCH-01` | pending | 生产效率 benchmark | 方法冻结后执行 |
+| `WS-V4-E3-DOWNSTREAM-GAP-01` | pending | perception real-to-sim gap | 方法冻结后执行 |
+| `WS-V4-H0-HUMAN-STUDY-01` | pending | 条件式人评 | 只有自动/定量门完成后单独解锁 |
+| `WS-V4-R0-RELEASE-01` | pending | exact paper release | 前序收口后解锁 |
+| `WS-V4-W0-PAPER-01` | pending | 技术报告 / paper | 只写已有证据 |
+
+### `WS-V4-P0-SCOPE-PAPER-FREEZE-01` closeout
+
+- 实际起点为 `main@21084309480895f5541196a06191a5dffb4e30c1`；计划草案里的 `144ed19` 保留为历史点；
+  `e6663e1` 和 `144ed19` 均在当前 `main` 历史中；
+- 创建 `research/worldsim-v4-evidelta`，冻结 EviDelta-GS 三模块、30-scene nuScenes 6/6/18 split、
+  KITTI frozen cross-domain、Tier A/B baseline、PSNR/SSIM/LPIPS-Alex、scene-level statistics 与工程指标；
+- 审计 15 个一手工作；“官方论文/源码存在”与“本机 executable”分开记录，不可执行路线不填数值；
+- `/root/autodl-pub/KITTI` 当前不存在，登记 `blocked_local_dataset_missing`；没有创建目录或网络下载；
+- P0 时 GPU=`RTX 3090 24,576 MiB`、GPU process=`0`、cgroup OOM/kill=`0/0`、disk free 约 `193 GiB`；
+- training/model inference/weight download 均为 false；P0 只解锁 D0。
+- canonical=`20260811T080636Z__p0-scope-formal-s0-r2`；config/summary/manifest/status SHA=
+  `248bde62...aaa8 / aba1fbcf...1283 / ec32e983...3970 / b3941601...272a`；5 份 source snapshot exact，
+  run=`101,624 bytes`；r1 因提交前只规范计划参考文献 whitespace 导致 source/config SHA 改变，保留为 noncanonical
+  done，r2 对最终字节重新审计。
 
 ## V3.3 注册表
 

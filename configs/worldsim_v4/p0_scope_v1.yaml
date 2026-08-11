@@ -1,0 +1,366 @@
+schema_version: worldsim_v4_p0_scope_v1
+task_id: WS-V4-P0-SCOPE-PAPER-FREEZE-01
+status: done
+audited_at: "2026-08-11"
+
+project:
+  head_at_start: 21084309480895f5541196a06191a5dffb4e30c1
+  head_at_plan_draft: 144ed1900af1cdd40c5c0f22f0c566aba2be3fb2
+  v33_closeout_commit: e6663e1
+  v33_closeout_is_in_main: true
+  branch: research/worldsim-v4-evidelta
+  plan_path: docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md
+  plan_sha256: 9f3f5f50d5b041c6cb515b513851456a1bfc297673a8ef9e2d378b8e74d23c1b
+  run_namespace: /root/autodl-tmp/runs/worldsim_v4
+  v33_canonical_read_only: true
+  v2_m5_files_excluded: true
+
+host_audit:
+  gpu: NVIDIA GeForce RTX 3090
+  gpu_memory_mib: 24576
+  cgroup_memory_max_bytes: 96636764160
+  cgroup_memory_current_bytes_at_p0: 1555189760
+  cgroup_oom_at_p0: 0
+  cgroup_oom_kill_at_p0: 0
+  data_disk_available_gib_at_p0: 193
+  active_gpu_compute_processes_at_p0: 0
+  training_started: false
+  model_inference_started: false
+  weight_download_started: false
+
+paper_claim:
+  title: "EviDelta-GS: Evidence-Calibrated Temporal Delta Assets for Editable Driving World Simulation"
+  central_claim: >-
+    将对象归属、几何支持、来源真实性、不确定性与时序记忆统一为 Gaussian evidence state，
+    以 Bayes risk 选择 observed/donor/generated/abstain repair，并通过连续时间可逆 delta 实现时序一致编辑。
+  contribution_limit: 4
+  no_unimplemented_formula: true
+  no_generated_ground_truth: true
+  no_pixel_level_significance: true
+  main_contributions:
+    - evidence_calibrated_gaussian_field
+    - evidence_prioritized_delta_compiler
+    - temporal_reversible_delta_operator
+    - cross_scene_cross_dataset_engineering_validation
+
+method_schema:
+  base_asset:
+    symbol: G_0
+    fields: [center, covariance, appearance_opacity, sh_or_color, provenance_instance_metadata]
+    implementation_source: v33_streetgs_asset
+    train_new_base_required: false
+  evidence_state:
+    symbol: E_i_a_t
+    distribution: beta
+    parameters: [alpha_e, beta_e]
+    posterior_mean: alpha_e/(alpha_e+beta_e)
+    posterior_variance: alpha_e*beta_e/((alpha_e+beta_e)^2*(alpha_e+beta_e+1))
+  multi_view_update:
+    evidence_sources: [object_mask, rendering_visibility, depth_consistency, lidar_support, camera_confidence]
+    alpha_update: alpha_0+sum(weight*evidence)
+    beta_update: beta_0+sum(weight*(1-evidence))
+  temporal_memory:
+    update: state_t=rho*state_t_minus_1+(1-rho)*observation_t
+    rho_fit_split: development
+  calibration:
+    candidates: [raw, temperature, beta]
+    fit_split: development
+    validation_read_only: true
+    test_read_only: true
+    fallback: raw
+  authenticity:
+    symbol: q_i
+    range: [0.0, 1.0]
+    provenance_order: [observed_or_lidar_or_real_donor, cross_view_reconstructed, generated, unknown]
+    is_ground_truth: false
+  repair_risk:
+    candidates: [observed, donor, generated, abstain]
+    terms: [photo, geometry, temporal, uncertainty, compute]
+    decision: argmin_risk
+    abstain_condition: min_risk_gt_tau
+    lambda_fit_split: development
+  temporal_transform:
+    group: SE3
+    algebra: se3
+    basis: cubic_bspline
+    transform: T_0_exp_hat_xi_t
+    supported_edits: [remove, lateral, insert]
+  reversible_delta:
+    state: [erase_selector, inserted_gaussians]
+    composition_level: asset_state
+    claims_image_space_linearity: false
+    base_immutable: true
+    rollback_render_sha_exact: true
+
+datasets:
+  nuscenes:
+    root: /root/autodl-tmp/nuscenes
+    scene_counts:
+      development: 6
+      validation: 6
+      test: 18
+    scene_disjoint: true
+    selection_uses_model_results: false
+    stratification_fields:
+      - time_of_day
+      - weather
+      - road_geometry
+      - actor_support
+      - occlusion
+      - donor_support
+      - speed_regime
+      - actor_class
+      - distance_regime
+    per_scene_contract:
+      - high_support_actor_or_abstain
+      - difficult_actor_or_abstain
+      - remove
+      - lateral
+      - insert
+      - continuous_clip_2_to_4_seconds
+      - camera_set
+      - lidar
+      - train_development_heldout_frames
+    test_read_count: 1
+    test_requires_freeze_artifact: V4_TEST_FREEZE.json
+  kitti:
+    root: /root/autodl-pub/KITTI
+    root_present_at_p0: false
+    layout_state: blocked_local_dataset_missing
+    audit_scope: local_metadata_only
+    download_allowed: false
+    preferred_layout: tracking_training
+    fallback_layout: raw_sync
+    cameras: [image_02, image_03]
+    fabricate_third_camera: false
+    smoke_sequences: 2
+    formal_sequences: 10
+    method_threshold_source: frozen_nuscenes
+    adapter_gate_count: 12
+
+baselines:
+  v33_frozen:
+    tier: A
+    same_split: true
+    execution_state: executable_inherited
+    role: maintenance_and_editing_baseline
+    canonical_run: /root/autodl-tmp/runs/worldsim_v33/WS-V33-R0-INTEGRATION-01/20260810T222701Z__r0-integration-canonical-s0-r7
+  streetgs:
+    tier: A
+    same_split: true
+    execution_state: executable_inherited_drivestudio
+    role: native_reconstruction_and_engineering_baseline
+  ad_gs:
+    tier: A
+    same_split: true
+    execution_state: conditional_existing_reproduction_assets
+    role: dynamic_motion_reconstruction_baseline
+  splatad:
+    tier: B
+    same_split: true
+    execution_state: blocked_baseline_adapter_until_preflight
+    role: camera_lidar_realtime_baseline
+  idsplat:
+    tier: B
+    same_split: true
+    execution_state: blocked_baseline_adapter_until_preflight
+    role: instance_decomposed_driving_baseline
+  inpaint360gs:
+    tier: B
+    same_split: true
+    execution_state: blocked_single_3090_from_v33
+    role: generated_repair_baseline
+
+metrics:
+  image:
+    primary: [psnr, ssim, lpips_alex]
+    regions: [global, static, actor, boundary, edit_roi]
+    missing_gt: undefined
+  editing:
+    - operation_success
+    - deleted_semantic_reintroduction
+    - hole_coverage
+    - non_target_preservation
+    - target_translation_error
+    - target_yaw_error
+    - trajectory_rmse
+    - silhouette_iou
+    - boundary_f1
+    - ground_contact_error
+    - occlusion_ordering
+  temporal:
+    - temporal_lpips
+    - optical_flow_warp_l1
+    - optical_flow_warp_lpips
+    - frame_flicker
+    - mask_iou_jitter
+    - boundary_f1_jitter
+    - identity_switch
+    - centroid_jitter
+    - contact_region_jitter
+  geometry:
+    - depth_mae
+    - depth_median_error
+    - relative_depth_error
+    - chamfer_distance
+  evidence:
+    - ece
+    - brier
+    - nll
+    - uncertainty_error_correlation
+    - selective_risk_curve
+    - coverage_vs_error
+  engineering:
+    - wall
+    - peak_nvidia_vram
+    - peak_torch_allocated
+    - peak_torch_reserved
+    - peak_cgroup_ram
+    - oom_count
+    - oom_kill_count
+    - asset_bytes
+    - cold_load
+    - warm_load
+    - compose_wall
+    - p50_frame_time
+    - p95_frame_time
+    - fps
+    - pipeline_success_rate
+    - valid_edit_yield
+    - counterfactual_expansion_ratio
+    - scenes_per_gpu_day
+    - accepted_clips_per_gpu_hour
+    - retry_amplification
+    - resume_efficiency
+    - minimum_rerun_unit
+    - deterministic_replay_rate
+    - rollback_exact_rate
+  statistics:
+    unit: scene
+    summaries: [mean, median, std, iqr, scene_bootstrap_ci95]
+    pairwise: [paired_bootstrap, permutation, wilcoxon_signed_rank]
+    random_final_candidate_seeds: 3
+    include_failed_blocked_abstain: true
+
+test_freeze:
+  artifact: V4_TEST_FREEZE.json
+  freeze_before_test: true
+  commit_before_test: true
+  immutable_fields:
+    - source_commit
+    - config_sha256
+    - split_sha256
+    - method_selection
+    - thresholds
+    - baseline_list
+    - metrics_list
+  test_read_count: 1
+
+single_card_contract:
+  gpu: NVIDIA GeForce RTX 3090
+  required_before_multigpu:
+    - six_nuscenes_development
+    - six_nuscenes_validation
+    - two_kitti_adapter_smoke
+    - no_oom
+    - no_silent_downscale
+    - no_camera_reduction
+    - complete_evaluator
+    - paper_table_generation
+  future_multigpu_mode: scene_level_parallel_only
+
+literature:
+  - name: Street Gaussians
+    primary_url: https://arxiv.org/abs/2401.01339
+    role: tier_a_reconstruction_baseline
+    execution_state: executable_inherited
+  - name: DrivingGaussian
+    primary_url: https://openaccess.thecvf.com/content/CVPR2024/html/Zhou_DrivingGaussian_Composite_Gaussian_Splatting_for_Surrounding_Dynamic_Autonomous_Driving_Scenes_CVPR_2024_paper.html
+    role: paper_comparison
+    execution_state: official_source_available_external
+  - name: NeuRAD
+    primary_url: https://openaccess.thecvf.com/content/CVPR2024/html/Tonderski_NeuRAD_Neural_Rendering_for_Autonomous_Driving_CVPR_2024_paper.html
+    role: paper_and_sensor_baseline_reference
+    execution_state: official_source_available_external
+  - name: HUGS
+    primary_url: https://openaccess.thecvf.com/content/CVPR2024/html/Zhou_HUGS_Holistic_Urban_3D_Scene_Understanding_via_Gaussian_Splatting_CVPR_2024_paper.html
+    role: paper_comparison
+    execution_state: official_project_available_external
+  - name: AD-GS
+    primary_url: https://arxiv.org/abs/2507.12137
+    role: tier_a_dynamic_motion_baseline
+    execution_state: conditional_existing_reproduction_assets
+  - name: SplatAD
+    primary_url: https://openaccess.thecvf.com/content/CVPR2025/html/Hess_SplatAD_Real-Time_Lidar_and_Camera_Rendering_with_3D_Gaussian_Splatting_CVPR_2025_paper.html
+    role: tier_b_camera_lidar_baseline
+    execution_state: blocked_baseline_adapter_until_preflight
+  - name: IDSplat
+    primary_url: https://github.com/zenseact/idsplat
+    role: tier_b_instance_baseline
+    execution_state: blocked_baseline_adapter_until_preflight
+  - name: HorizonForge
+    primary_url: https://openaccess.thecvf.com/content/CVPR2026/html/Wang_HorizonForge_Driving_Scene_Editing_with_Any_Trajectories_and_Any_Vehicles_CVPR_2026_paper.html
+    role: paper_only_editing_comparison
+    execution_state: paper_only
+  - name: RecEdit-Drive
+    primary_url: https://openaccess.thecvf.com/content/CVPR2026/html/Wu_RecEdit-Drive_3D_Reconstruction-Guided_Spatiotemporal_Video_Editing_for_Autonomous_Driving_Scenes_CVPR_2026_paper.html
+    role: paper_only_editing_comparison
+    execution_state: paper_only
+  - name: OP2GS
+    primary_url: https://arxiv.org/abs/2605.20044
+    role: evidence_representation_inspiration
+    execution_state: source_not_released
+  - name: GaME
+    primary_url: https://github.com/VladimirYugay/GaME
+    role: evolving_scene_reference
+    execution_state: official_source_available_external
+  - name: GOR-IS
+    primary_url: https://openaccess.thecvf.com/content/CVPR2026/html/Zhao_GOR-IS_3D_Gaussian_Object_Removal_In_the_Intrinsic_Space_CVPR_2026_paper.html
+    role: paper_only_object_removal_comparison
+    execution_state: audit_only_noncommercial_runtime_unfrozen
+  - name: FocusGS
+    primary_url: https://arxiv.org/abs/2607.28834
+    role: reversible_delta_inspiration
+    execution_state: source_not_released
+  - name: LiDAR-EVS
+    primary_url: https://arxiv.org/abs/2603.14763
+    role: future_sensor_robustness_reference
+    execution_state: source_not_released
+  - name: UniSim
+    primary_url: https://openaccess.thecvf.com/content/CVPR2023/html/Yang_UniSim_A_Neural_Closed-Loop_Sensor_Simulator_CVPR_2023_paper.html
+    role: closed_loop_reference
+    execution_state: paper_comparison
+
+task_registry:
+  WS-V4-P0-SCOPE-PAPER-FREEZE-01: done
+  WS-V4-D0-NUSCENES-COHORT-01: pending
+  WS-V4-D1-KITTI-ADAPTER-01: pending
+  WS-V4-B0-MATCHED-BASELINES-01: pending
+  WS-V4-M1-EVIDENCE-FIELD-01: pending
+  WS-V4-M2-REPAIR-ROUTER-01: pending
+  WS-V4-M3-TEMPORAL-DELTA-01: pending
+  WS-V4-E0-NUSCENES-SCALE-01: pending
+  WS-V4-E1-KITTI-CROSSDATA-01: pending
+  WS-V4-E2-ENGINEERING-BENCH-01: pending
+  WS-V4-E3-DOWNSTREAM-GAP-01: pending
+  WS-V4-H0-HUMAN-STUDY-01: pending
+  WS-V4-R0-RELEASE-01: pending
+  WS-V4-W0-PAPER-01: pending
+
+gates:
+  paper_claim_frozen: true
+  math_schema_frozen: true
+  baseline_matrix_frozen: true
+  metrics_schema_frozen: true
+  dataset_protocol_frozen: true
+  kitti_layout_audited: true
+  no_training: true
+  no_model_inference: true
+  no_weight_download: true
+  d0_authorized: true
+  d1_authorized: false
+  b0_authorized: false
+  m1_authorized: false
+  m2_authorized: false
+  m3_authorized: false
+  test_authorized: false

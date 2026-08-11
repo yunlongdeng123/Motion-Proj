@@ -2,11 +2,11 @@
 
 # Motion-Proj
 
-### Object-Aware, Reversible 3D Gaussian Driving World Simulation
+### Evidence-Calibrated Temporal Delta Assets for Editable Driving World Simulation
 
 **从多相机驾驶日志到对象感知、道路可修复、编辑可回滚且可逐文件复验的神经场景资产**
 
-[![Status](https://img.shields.io/badge/WorldSim_V3.3-v33__supported-2ea44f?style=flat-square)](docs/RESEARCH_STATUS.md)
+[![Status](https://img.shields.io/badge/WorldSim_V4-P0_done-blue?style=flat-square)](docs/RESEARCH_STATUS.md)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-CUDA-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
 ![GPU](https://img.shields.io/badge/Validated-1%C3%97RTX_3090-76B900?style=flat-square&logo=nvidia&logoColor=white)
@@ -18,9 +18,17 @@
 
 ---
 
-Motion-Proj 是一个面向驾驶世界模型的研究代码库。当前主线 **WorldSim V3.3** 建立在
-DriveStudio/StreetGS 3D Gaussian Splatting 基线之上，将对象语义、道路几何修复、生成式 actor 资产与可逆编辑
-组织为一条可审计的神经资产链：
+Motion-Proj 是一个面向驾驶世界模型的研究代码库。当前主线 **WorldSim V4 / EviDelta-GS** 正在把已冻结的
+V3.3 单场景可维护资产升级为 30-scene nuScenes、冻结 KITTI cross-domain、scene-level 统计的 paper-first 系统。
+V4 保持 V3.3/StreetGS base immutable，将对象归属、几何支持、来源真实性、不确定性和时序记忆统一成 evidence
+state，再由 Bayes risk repair router 与连续时间可逆 delta 完成编辑。
+
+当前 P0 已冻结方法/数据/baseline/指标/test-freeze 合同；下一步只执行 30-scene nuScenes cohort，不启动新方法训练。
+计划与 P0 证据见 [`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md) 和
+[`WS_V4_P0_SCOPE.md`](docs/WS_V4_P0_SCOPE.md)。
+
+V4 的只读起点 **WorldSim V3.3** 建立在 DriveStudio/StreetGS 3D Gaussian Splatting 基线之上，将对象语义、
+道路几何修复、生成式 actor 资产与可逆编辑组织为一条可审计的神经资产链：
 
 ```text
 D2 immutable 3DGS base
@@ -37,8 +45,23 @@ D2 immutable 3DGS base
 
 > [!NOTE]
 > 仓库名称保留了早期 *Dynamics Projection Distillation* 研究线；当前生产研究主线自 WorldSim V3.1 起转向
-> 可编辑驾驶 3DGS。早期 auditor/projector/distillation 组件仍保留在仓库中，V3.3 的权威状态以
+> 可编辑驾驶 3DGS。早期 auditor/projector/distillation 组件仍保留在仓库中，当前执行授权以
 > [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md) 为准。
+
+## V4 当前路线
+
+```text
+V3.3 immutable base
+  → Evidence-Calibrated Gaussian Field
+  → Evidence-Prioritized Delta Compiler
+  → SE(3) B-Spline Temporal Delta
+  → nuScenes 6 dev + 6 val + 18 test
+  → frozen KITTI cross-domain confirmation
+  → image + temporal + geometry + engineering + scene statistics
+```
+
+P0 的关键事实：起始 HEAD=`2108430`；V3.3 `e6663e1` 已在 `main` 历史中；单卡资源门通过；
+`/root/autodl-pub/KITTI` 当前缺失并记录为 `blocked_local_dataset_missing`，项目不会自动下载替代。
 
 ## 核心亮点
 

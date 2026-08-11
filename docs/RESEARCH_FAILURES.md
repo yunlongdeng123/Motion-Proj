@@ -1,13 +1,31 @@
 # Motion-Proj 当前研究风险与防重复账本
 
 > **最后更新**：2026-08-11
-> **当前范围**：V3.3 当前门禁、V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
+> **当前范围**：V4 当前门禁、V3.3/V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 > **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
+
+## V4 P0 防重复结论（2026-08-11）
+
+- `V4-F01`：计划草案记录的 HEAD 不是执行时事实。草案写 `main@144ed19`，P0 实查为 `main@2108430`，且 V3.3
+  收口 `e6663e1` 已进入其历史。V4 必须从真实 `main` 建分支，不得回退旧 HEAD 或把草案 provenance 写成 canonical。
+- `V4-F02`：计划写“`/root/autodl-pub/KITTI` 已在公共盘”不等于当前机器已挂载。P0 实查目录不存在，状态固定为
+  `blocked_local_dataset_missing`。不得创建空目录、下载 KITTI、借其他 layout 冒充，或把外部缺盘写成 adapter/算法失败。
+- `V4-F03`：H0 在计划表中写了 `conditional`，但同一计划规定任务状态只允许
+  `pending/running/blocked/done/rejected`。V4 注册表将 H0 规范化为 `pending`，条件授权单独记录；不得引入第六种状态。
+- `V4-F04`：一手论文、项目页或官方源码存在不等于 baseline 已在本机 single RTX 3090 + same split 执行。SplatAD、
+  IDSplat、HorizonForge、RecEdit-Drive 等必须分开记录 paper/source/executable 状态；没有 matched run 不填数值。
+- `V4-F05`：KITTI 缺失不阻塞 D0 nuScenes cohort，但会阻塞 single-card closure 的 KITTI adapter smoke。不得因此提前
+  读取 nuScenes test、跳过跨数据集条件，或用多卡/新下载掩盖外部前提。
+- `V4-F06`：V4 的公式必须同时对应 config、代码、ablation 和可计算指标。P0 只冻结 schema，不代表 M1/M2/M3
+  已实现或有效；后续失败必须按预注册早停，不得继续堆 evidence feature、diffusion 或数学包装。
+- `V4-F07`：formal run 通过不代表可跳过提交前 whitespace gate。P0 r1 使用的方法合同正确，但未跟踪计划的参考文献
+  含 Markdown 行尾空格，`git diff --check` 拒绝提交；规范引用格式后 plan/config SHA 改变。r1 保留 noncanonical
+  done，r2 对最终字节重新审计并成为 canonical；不得倒写或覆盖 r1。
 
 ## V3.3 R0 防重复结论（2026-08-11）
 
