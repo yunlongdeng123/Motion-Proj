@@ -1,0 +1,48 @@
+schema_version: worldsim_v4_adgs_environment_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-12"
+policy:
+  restore_mode: clone_frozen_local_environment_then_build_vendored_extensions
+  network_access: false
+  test_quality_read: false
+paths:
+  project_root: /root/autodl-tmp/motion_proj
+  base_environment: /root/autodl-tmp/envs/drivestudio
+  target_environment: /root/autodl-tmp/envs/adgs
+  adgs_root: /root/autodl-tmp/third_party/AD-GS
+  compatibility_patch: /root/autodl-tmp/motion_proj/compatibility/AD-GS-2026-07-27.patch
+  plyfile_wheel: /root/autodl-tmp/data/worldsim_v4/model_staging/python_wheels/plyfile-0.9-py3-none-any.whl
+source_contract:
+  adgs_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+  compatibility_patch_sha256: 49b4c06ecec6c30f1e80b5abf4d46970920f9d71952acbda273774d9b5b34f48
+  expected_modified_files:
+    - scripts/colmap.py
+    - scripts/flow.py
+    - scripts/run-dpt.py
+    - scripts/semantic.py
+wheel_contract:
+  filename: plyfile-0.9-py3-none-any.whl
+  bytes: 30123
+  sha256: 5f5bb9396c3c22f055677b5d0c7224271b81d8acd227c85d3357aa821fad2060
+runtime_contract:
+  python: "3.9"
+  torch: 2.1.2+cu118
+  torch_cuda: "11.8"
+  cuda_home: /usr/local/cuda-11.8
+  torch_cuda_arch_list: "8.6"
+  max_jobs: 4
+  minimum_disk_free_gib: 40
+  minimum_cgroup_memory_gib: 32
+  maximum_gpu_used_at_smoke_start_mib: 2048
+extensions:
+  - name: simple_knn
+    source: submodules/simple-knn
+    import: simple_knn._C
+  - name: diff_gaussian_rasterization
+    source: submodules/depth-diff-gaussian-rasterization
+    import: diff_gaussian_rasterization
+license_boundary:
+  use: internal_research_baseline_only
+  redistribute_upstream_source_or_weights: false
+  note: AD-GS 顶层仓库未提供可依赖的再分发许可证；只记录 pinned source provenance，不打包发布。
