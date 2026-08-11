@@ -1,11 +1,11 @@
 # Research Status
 
-- 更新时间：2026-08-11
+- 更新时间：2026-08-12
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
 - 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
 - 当前任务：`WS-V4-B0-MATCHED-BASELINES-01`
-- 路线状态：`active / d0_done / d1_blocked_external / b0_streetgs_6of6`
-- 当前门禁：继续恢复 V3.3/AD-GS 6-development-scene matched baseline；StreetGS 6/6 已完成，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
+- 路线状态：`active / d0_done / d1_blocked_external / b0_matched_1of6_each_v33_streetgs`
+- 当前门禁：继续补齐 V3.3/StreetGS/AD-GS 6-development-scene strict matched baseline；StreetGS 旧 stride=10 六场景只作 provenance，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
 - 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
 - V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
@@ -28,15 +28,21 @@
 - KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
 - KITTI D1 审计：[`KITTI_LAYOUT_AUDIT.md`](KITTI_LAYOUT_AUDIT.md)，canonical blocked run=
   `20260811T085210Z__d1-kitti-layout-formal-s0-r2`
-- V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；6-scene DriveStudio 输入、sky masks
-  与 StreetGS formal checkpoints 已齐，当前 executable coverage=`V3.3 1/6 / StreetGS 6/6 / AD-GS 0/6`；B0 仍为 running
+- V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；6-scene DriveStudio 输入与 sky masks
+  已齐；当前 strict executable coverage=`V3.3 1/6 / StreetGS 1/6 / AD-GS 0/6`，B0 仍为 running
 - B0 StreetGS profile：`20260811T111810Z__streetgs-scene0048-profile100-s0-r16`，100 steps done，checkpoint
   SHA=`446297b8...3af`，peak GPU=`9,004 MiB`，30k formal 已解锁；test quality 未读
-- B0 StreetGS formal closeout：r17/r20/r22/r24/r26/r28 六场景全部 30k done；checkpoint bytes=
-  `297,410,742–451,821,046`，peak GPU=`12,692–24,092 MiB`，全部 finite、OOM/kill=`0/0`；clean inventory
-  r29=`6/1/0`，fingerprint=`a257fe38...fa0f`
+- B0 StreetGS 协议纠错：r17/r20/r22/r24/r26/r28 虽均为 30k finite 且 OOM/kill=`0/0`，但使用
+  `test_image_stride=10`，不满足冻结的 `sample_index mod 5` 三分区合同，全部降为 protocol-mismatch provenance；
+- B0 StreetGS strict canonical：scene-0230 r32 30k done，checkpoint=`386,410,166 bytes /
+  766648bf...af97cd1`，peak GPU=`23,892 MiB`，OOM/kill=`0/0`，test quality 未读；corrected inventory
+  r33=`StreetGS/V3.3/AD-GS 1/1/0`，fingerprint=`c19fba13...e285853`；
+- B0 AD-GS 恢复：official `9a208512` + exact DPT/CoTracker weights 已审计；离线环境 r34 done，
+  torch=`2.1.2+cu118`，两个 CUDA 扩展编译并通过真实 forward/backward smoke，OOM/kill=`0/0`；scene-0230
+  train-only preprocess r38 done，`image/semantic/sky/depth/flow=354/354/354/354/285`，峰值 GPU=`20,112 MiB`、
+  峰值 cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`；尚无 formal checkpoint，不计 executable coverage
 - B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
-  engineering timing/yield/recovery 派生已实现，定向单测=`9 passed`
+  engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`36 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
 - V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)

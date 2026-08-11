@@ -1,6 +1,6 @@
 # Motion-Proj 当前研究风险与防重复账本
 
-> **最后更新**：2026-08-11
+> **最后更新**：2026-08-12
 > **当前范围**：V4 当前门禁、V3.3/V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
@@ -46,9 +46,10 @@
 - `V4-F17`：历史 summary/metrics 记录 checkpoint 曾经存在，不等于当前 checkpoint 可执行。B0 首次磁盘审计中，
   scene-0230/0242/0255 的历史 StreetGS 文件均已不在路径；只能保留 bytes/hash provenance，不能把历史
   `exists=true` 或旧质量数值登记为当前 executable。正式 matrix 必须在每次 run 重新检查真实文件。
-- `V4-F18`：AD-GS historical aggregate 的 6-scene metrics 只覆盖旧 cohort，且当前 source/env/checkpoint 已缺失。
-  与 V4 development 重叠的 0230/0242/0255 也只能记 `historical_metrics_only`；不得把旧三场景数值拼接新三场景，
-  不得用 aggregate mean 代替 scene rows，也不得把历史复现写成 V4 same-split executable baseline。
+- `V4-F18`：AD-GS historical aggregate 的 6-scene metrics 只覆盖旧 cohort，且其历史 source/env/checkpoint 路径已缺失。
+  与 V4 development 重叠的 0230/0242/0255 也只能记 `historical_metrics_only`；2026-08-12 新恢复的 exact official
+  source/env 只解除执行前置，不使历史 metric executable。不得把旧三场景数值拼接新三场景、用 aggregate mean 代替
+  scene rows，或把环境 smoke 写成 V4 same-split checkpoint。
 - `V4-F19`：baseline inventory 的 `blocked` terminal 是当前资产前置条件未齐，不是 B0 task 的永久 blocked 或方法失败。
   B0 继续 `running`，通过新 run 补齐资产；旧 inventory 不覆盖。只有 V3.3/StreetGS/AD-GS 各 6/6 且统一 evaluator
   完整后才可收口，不能因 M1 实现更有趣而跳过 matched baseline。
@@ -65,6 +66,25 @@
 - `V4-F24`：六场景 StreetGS 的 Gaussian 数、wall 与 peak GPU 差异很大；scene-0255/0048 sampled peak 达
   `24,092/24,000 MiB`，scene-0994 final RigidNodes 仅 `1,029`。不能用一个 scene 的 profile 外推所有资源，不能因
   actor 稀疏补点或删 scene，也不能把无 OOM 的近上限运行倒写成资源失败。主表保留每场分母与工程行。
+- `V4-F25`：StreetGS 原生 `test_image_stride=10` 不是冻结的 `sample_index mod 5` 三分区。r17/r20/r22/r24/r26/r28
+  即使完成 30k、checkpoint finite 且未主动读 test quality，余数 4 的 heldout 输入仍可能进入训练，因此只能保留为
+  protocol-mismatch provenance；r29 的 `StreetGS=6` 被 corrected inventory r33 明确推翻。不得用“训练成功”替代
+  matched-contract 合规，也不得覆盖旧 run 来修正历史。
+- `V4-F26`：不读取 test quality 还不够，训练进程也必须在 I/O 层隔离 development/heldout。AD-GS adapter 正式训练
+  只物化 `train` 的 354 张图；兼容补丁增加 `--disable_test_evaluation`，避免上游在 final iteration 自动将 test
+  iterations 加入评测。审计/统一 evaluator 可以显式物化三分区，但训练 runner 不得复用该全量目录。
+- `V4-F27`：source checkout、权重和 Python 包必须分别固定 commit/bytes/SHA，环境恢复成功不等于 baseline scene
+  executable。r34 从冻结本地环境离线复制，编译 `simple_knn` 与 `diff_gaussian_rasterization` 并通过真实 CUDA
+  forward/backward smoke；在 strict preprocess + checkpoint 完成前，AD-GS coverage 仍为 `0/6`。
+- `V4-F28`：传输/命令包装失败与模型失败必须分开。CoTracker/plyfile 的首次远端校验受 shell quoting 影响，DPT 下载
+  曾出现两个进程指向同一 partial，发布后的附带 `stat` 也曾因 quoting 失败；这些尝试均未被登记为 canonical。
+  只有停止冲突进程、临时路径原子发布并对最终 bytes/SHA 做独立复验后才可使用，且不得把 wrapper failure 写成
+  权重、CUDA 或算法失败。
+- `V4-F29`：preprocess 失败后的目标目录不是可静默复用的 canonical。r35 因启动包装器预建 run 目录而被不可变门拒绝；
+  r36 因环境构建留下的未跟踪目录被 source-audit 拒绝；r37 完成 adapter/depth/segment 后因可选诊断依赖
+  `flow_vis` 缺失而在 flow 启动时 blocked。三者均未训练或读取 dev/heldout；r37 partial 移入
+  `work/codex-backups/2026-08-12-adgs-r37-partial-scene0230`，不覆盖、不伪装 resume。正式 flow 通过显式
+  no-visualization 合同移除诊断视频依赖，CUDA extension 后续从 run-local source copy 构建，避免再次污染 official checkout。
 
 ## V4 P0 防重复结论（2026-08-11）
 

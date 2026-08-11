@@ -1,6 +1,6 @@
 # Experiments
 
-- 更新时间：2026-08-11
+- 更新时间：2026-08-12
 - 当前路线：WorldSim V4 / EviDelta-GS
 - 当前执行授权：`WS-V4-B0-MATCHED-BASELINES-01` 6-development-scene evaluator/baseline；不得读取 test quality
 - 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
@@ -95,6 +95,8 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 
 - 冻结 `metrics_v1.yaml`：PSNR/SSIM/LPIPS-Alex、五类区域、无 GT/空区域 undefined、scene-level
   mean/median/std/IQR/bootstrap CI 与 paired bootstrap/sign-flip/Wilcoxon；failed/blocked/abstain 保留 denominator；
+- baseline 区域协议显式冻结为 actor=`dynamic_masks/all>0`、static=`not actor and not egocar`、boundary=L1
+  半径 3 px 形态学带，未编辑 baseline 的 edit_roi 为空；development-only scene evaluator 已加入文件/partition/重复键门；
 - 实现统一 evaluator、scene statistics 和 engineering raw-row 派生，定向测试 `9 passed`；该里程碑未启动训练、
   模型推理或 test quality 读取；
 - `baseline_matrix_v1.yaml` 精确锁 D0 六个 development scenes、same split/resolution、DriveStudio
@@ -115,13 +117,29 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - StreetGS r9 在 iteration 前因缺 sky mask blocked；r16 profile100 完成，wall=`90.8965 s`、checkpoint=
   `340,298,602 bytes / SHA 446297b8...3af`、peak GPU=`9,004 MiB`、OOM/kill=`0/0`。该 profile 只解锁
   六场景 30k formal，B0 coverage 仍为 `0/6 formal`，M1 与 test quality 继续未授权。
-- StreetGS formal r17/r20/r22/r24/r26/r28 按冻结顺序全部完成 30k / seed0 / final-only checkpoint；wall=
-  `3,118.35/2,069.20/2,442.84/2,250.89/1,877.13/2,129.88 s`，checkpoint bytes=
-  `396,257,270/306,226,038/451,821,046/340,189,878/297,410,742/325,005,110`；六个 means finite，
-  peak GPU=`23,720/12,692/24,092/24,000/16,744/23,754 MiB`，OOM/kill 全为 `0/0`；
-- clean inventory r29=`StreetGS/V3.3/AD-GS 6/1/0`，inventory/fingerprint SHA=
-  `3c5fdad9...4b806 / a257fe38...9fa0f`。StreetGS 资产门已关闭，但 B0 仍 running；下一步只恢复 AD-GS 与
-  V3.3 same-split，不提前启动 M1，不读取 test quality。
+- StreetGS r17/r20/r22/r24/r26/r28 均完成 30k、means finite、OOM/kill=`0/0`，但 2026-08-12 复核确认其
+  `test_image_stride=10` 不满足冻结的 `sample_index mod 5` 三分区合同；六个 run 与 r29=`6/1/0` 只保留为
+  protocol-mismatch provenance，不计 strict matched coverage；
+- strict scene-0230 r32=`20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32` 30k done，wall=
+  `3,200.0184 s`，checkpoint=`386,410,166 bytes / SHA 766648bf...af97cd1`，Background/RigidNodes=
+  `1,095,606/172,264`，peak GPU=`23,892 MiB`、peak cgroup=`15,281,917,952 bytes`，OOM/kill=`0/0`，
+  test quality 未读；
+- corrected inventory r33=`20260811T165009Z__baseline-matched-correction-s0-r33`，terminal blocked，strict
+  coverage=`StreetGS/V3.3/AD-GS 1/1/0`，inventory/fingerprint SHA=
+  `73d36544...bea9e / c19fba13...e285853`；它覆盖当前结论但不覆盖旧 run；
+- AD-GS official exact source=`9a208512`、DPT/CoTracker weights 与 train-only adapter 已恢复；环境 r34=
+  `20260811T165030Z__adgs-environment-restore-r34` 离线完成，torch=`2.1.2+cu118`，两个 CUDA 扩展真实
+  forward/backward smoke passed，OOM/kill=`0/0`。该结果只解锁 strict preprocess/profile，不计 scene coverage；
+- AD-GS preprocess r35/r36/r37 分别被 run-dir 不可变门、official source 未跟踪 build 目录、可选 `flow_vis`
+  诊断依赖 fail-closed；均未训练或读取 dev/heldout。r37 已完成的 adapter/depth/segment partial 移入规定 backup，
+  no-visualization flow 合同与 run-local extension build source 作为新提交修复，不覆盖旧 run；
+- AD-GS scene-0230 canonical train-only preprocess r38=
+  `20260811T171507Z__adgs-scene0230-preprocess-s0-r38` done，文件计数=`354/354/354/354/285`，flow wall=
+  `3,046.9930 s`，peak GPU/cgroup=`20,112 MiB / 22,384,893,952 bytes`，OOM/kill=`0/0`，无可视化视频且
+  development/heldout/test quality 均未读；fingerprint/manifest=`d44a0530...fbf2c37 / cefae230...c05873`；
+- run-local extension build source=`9f839fd`，baseline region/evaluator=`abd82d8`；联合定向测试=`36 passed`；
+- B0 继续 running；下一步完成 AD-GS scene-0230 profile/formal、StreetGS 其余五场 strict 重跑，
+  再补齐 AD-GS/V3.3 6-scene same-split。M1 与 test quality 继续未授权。
 
 ## V3.3 注册表
 

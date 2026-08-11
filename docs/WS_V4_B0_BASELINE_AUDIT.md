@@ -2,16 +2,16 @@
 
 ## 当前结论
 
-`WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计和工程指标代码已经落地；
-6 个 development scenes 的 DriveStudio 输入、sky masks 与 StreetGS 30k formal checkpoints 已全部物化。
-当前仍缺 V3.3 replay 与 AD-GS same-split 资产，因此 B0
-尚未闭环；所有 blocked run 都是独立诊断，不是方法负结果。
+`WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计、工程指标、6 个 development
+scenes 的 DriveStudio 输入与 sky masks 已经落地。2026-08-12 复核发现：早先 r17/r20/r22/r24/r26/r28
+使用的是 `test_image_stride=10`，不能满足冻结的 `sample_index mod 5` 三分区合同；这些 run 只保留为
+native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 1/6 / AD-GS 0/6`。
 
 | baseline | 当前 executable scenes | 需要 | 事实边界 |
 |---|---:|---:|---|
 | V3.3 frozen | 1 | 6 | scene-0230 canonical release 与其外部 base 仍可解析；其余五 scene 未物化完整链 |
-| Native StreetGS | 6 | 6 | 六个独立 30k / seed0 / final-only checkpoint 全部 finite，统一 inventory r29 可执行 |
-| AD-GS | 0 | 6 | 6-scene historical metrics 仍在；source/env/checkpoint 当前均缺失，历史数值不算 executable |
+| Native StreetGS | 1 | 6 | scene-0230 strict mod5 30k r32 可执行；旧六场景 stride=10 run 只作协议不匹配 provenance |
+| AD-GS | 0 | 6 | official exact source、权重与 CUDA 环境已恢复；尚无 strict same-split checkpoint |
 
 ## 冻结协议
 
@@ -19,6 +19,8 @@
 - 同 scene、同 `sample_index mod 5` train/development/heldout；sensor `1600×900`、source downscale=2、
   model/metric `800×450`；不得读取 test quality；
 - 图像主指标固定 `PSNR/SSIM/LPIPS-Alex`，区域固定 global/static/actor/boundary/edit_roi；
+- baseline 区域生成固定为 actor=`dynamic_masks/all>0`、static=`not actor and not egocar`、boundary=dynamic mask
+  的 L1 半径 3 px 形态学带；无编辑 baseline 的 edit_roi 固定为空并返回 `undefined`；
 - 无 GT 或空区域返回 `undefined`，禁止以生成结果自身作 GT；
 - 主统计单位固定为 scene；failed/blocked/abstain 保留 denominator；
 - 工程指标由 raw timing/count/resource rows 派生，不允许手填 success/yield/retry 比率。
@@ -70,7 +72,7 @@
   fingerprint=`62ebeb1ef11dc6785e1031f1555188c97e3e17d426101a316584abf3765c2eda`；
 - profile 只证明 30k 训练链和资源前置可执行，不计入 formal coverage，不登记图像质量改进。
 
-## StreetGS 六场景 formal closeout
+## StreetGS 旧六场景 native provenance（不计 matched）
 
 | scene | run | wall s | checkpoint bytes | SHA256 | Background / Rigid | peak GPU MiB |
 |---|---|---:|---:|---|---:|---:|
@@ -81,15 +83,62 @@
 | scene-0994 | r26 | 1,877.13 | 297,410,742 | `f7965426...b7a0` | 897,077 / 1,029 | 16,744 |
 | scene-0139 | r28 | 2,129.88 | 325,005,110 | `cb6d4254...a8f2` | 1,005,857 / 8,713 | 23,754 |
 
-- 六个 run 均为独立原生初始化、step=`30000`、means finite、OOM/kill=`0/0`、test quality 未读；profile checkpoint
-  未被 resume；
+- 六个 run 均为独立原生初始化、step=`30000`、means finite、OOM/kill=`0/0`；但配置
+  `test_image_stride=10` 未显式物化冻结的 mod5 分区，余数 4 的 heldout 帧可能进入训练；
 - scene-0255 最高 sampled GPU=`24,092 MiB`，没有提高门槛或发生 OOM；scene-0994 actor 很稀疏但 final
   RigidNodes=`1,029` 非空，按预注册合同保留场景差异，不补点、不拒绝；
-- clean inventory=`20260811T152304Z__b0-inventory-streetgs6-s0-r29`，coverage=
-  `StreetGS/V3.3/AD-GS=6/1/0`，inventory/fingerprint SHA=
-  `3c5fdad9adc47361883ed3b1dcee17627eda9abaec6b7308ae2416091ec4b806 / a257fe38241d417933a7718756320f1bc813ff81bbf9df6c4decaef2db19fa0f`。
+- r29 的 `StreetGS=6` 是被后续复核推翻的旧 inventory 结论，不覆盖或删除；matrix 已把六个 run 移入
+  `protocol_mismatch_runs`，理由统一登记为 stride=10 不满足 strict mod5。
+
+## StreetGS strict matched 重跑
+
+- scene-0230 canonical strict run=
+  `20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32`，30k done，wall=`3,200.0184 s`；
+- checkpoint=`386,410,166 bytes / SHA256 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1`，
+  Gaussian=`Background 1,095,606 / RigidNodes 172,264`，means finite；peak GPU=`23,892 MiB`、peak cgroup=
+  `15,281,917,952 bytes`、OOM/kill=`0/0`；fingerprint=
+  `8b1a43b74f727658b0f2d9d1d00e72a2cc62fdeed886fbb0ab870b579788dde3`；
+- run 配置 `render_test=false / render_full=false`，无 Test/Full Set 评测行或 render 文件，summary 明确
+  `test_quality_read=false`；训练结束日志的通用 Pixels 聚合只包含 train metrics；
+- corrected inventory=`20260811T165009Z__baseline-matched-correction-s0-r33`，terminal=
+  `blocked / matched_baseline_assets_incomplete`，coverage=`StreetGS/V3.3/AD-GS=1/1/0`；inventory/fingerprint SHA=
+  `73d3654450621d48a60a18ae296e61e1fb5ced5f211763ff3473bcb14bbbea9e /
+  c19fba13a7f8143608c56a318533d23d2894e888bbf87d8a5652ccaf0e285853`。
+
+## AD-GS exact source、权重与环境恢复
+
+- official source=`/root/autodl-tmp/third_party/AD-GS@9a208512e49c8ddbaa20387921d9648adcd21cb4`；兼容补丁只含
+  `scripts/colmap.py/scripts/flow.py/scripts/run-dpt.py/scripts/semantic.py/train.py`，patch SHA=
+  `e36c134bebb67f092659407522332d32664482d1dacb8de283c8a229d54f8d09`；其中 `flow.py` 支持正式
+  无可视化模式，`train.py` 增加
+  `--disable_test_evaluation`，strict 训练不触碰 development/heldout 质量；
+- Depth-Anything-V2=`a561b849...c71bf`，DPT weight=`1,341,395,338 bytes /
+  a7ea19fa0ed99244e67b624c72b8580b7e9553043245905be58796a608eb9345`；CoTracker=`82e02e80...dda4d`，
+  weight=`101,890,938 bytes / 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834`；
+- environment restore=
+  `20260811T165030Z__adgs-environment-restore-r34`，terminal=`done`；从冻结本地环境离线复制并构建
+  `simple_knn` 与 `diff_gaussian_rasterization`，CUDA forward/backward smoke=`passed`，torch=`2.1.2+cu118`、
+  device=`RTX 3090`、visible Gaussians=`1,024`、smoke peak GPU=`12.63 MiB`；扩展 SHA=
+  `019c87b6...15190 / be64aef4...b0ed99`，OOM/kill=`0/0`，fingerprint=
+  `c7e0d5be3a066416a8fde8ccaaca1ab7a45252a6b8c3ffb3b98b19dfb5693b46`；
+- r34 记录的兼容补丁 SHA 为前一版 `01145883...3d8e4`；后续 `e36c134b...f8d09` 只改变 Python flow
+  的诊断视频依赖与训练 runner 命令，不改变已编译 CUDA extension，因此 r34 二进制/smoke 证据继续有效；
+- 环境成功只解锁 preprocess/profile，不计入 executable scene coverage；historical aggregate 仍不得写入 matched 主表。
+- preprocess r35 因包装器预建 run 目录、r36 因环境构建遗留 untracked build 目录、r37 因可选 `flow_vis`
+  诊断依赖分别 fail-closed；三者均未训练或读 dev/heldout。r37 partial 已移入规定 backup，旧 run/partial 均未覆盖；
+  后续正式 flow 固定 `--disable-visualization`，CUDA extension 恢复改为 run-local source copy。
+- scene-0230 canonical train-only preprocess=
+  `20260811T171507Z__adgs-scene0230-preprocess-s0-r38`，terminal=`done`；adapter/depth/segment/flow wall=
+  `80.7806/100.9956/10.0506/3,046.9930 s`，文件计数=`image/semantic/sky/depth/flow=354/354/354/354/285`；
+  peak GPU=`20,112 MiB`、peak cgroup=`22,384,893,952 bytes`、OOM/kill=`0/0`，无 `flow.mp4`；fingerprint/manifest SHA=
+  `d44a053039f5b0899ab44ab6e52cb311630e22c6e319c1ccaca279809fbf2c37 /
+  cefae2306265806043314cc4bf77dc83d657e5d72efa1f2d176f6e7763c05873`；项目在 terminal 时
+  clean=`54ca265723d55226c0af4e634370a612c06c10a8`，development/heldout/test quality 均未读；
+- run-local extension source 修复=`9f839fd`，冻结区域协议与 development-only scene evaluator=`abd82d8`；
+  baseline/AD-GS/region/evaluator 联合定向测试=`36 passed`。
 
 ## 下一动作
 
-恢复固定 official AD-GS commit 的 same-split baseline，并补齐 V3.3 六场景 replay。B0 只有在三种方法均达到 6/6 且统一 evaluator
-生成完整 scene rows 后才可 `done`，M1 在此之前不启动。
+依次完成 AD-GS scene-0230 profile/formal、StreetGS 其余五场 strict mod5 重跑，再补齐
+AD-GS 与 V3.3 六场景 same-split。B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
+`done`，M1 在此之前不启动。
