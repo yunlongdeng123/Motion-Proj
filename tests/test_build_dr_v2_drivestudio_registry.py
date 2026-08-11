@@ -13,9 +13,10 @@ SCRIPT = (
 SPEC = importlib.util.spec_from_file_location("build_dr_v2_drivestudio_registry", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
-OMEGACONF = types.ModuleType("omegaconf")
-OMEGACONF.OmegaConf = object
-sys.modules.setdefault("omegaconf", OMEGACONF)
+if importlib.util.find_spec("omegaconf") is None:
+    OMEGACONF = types.ModuleType("omegaconf")
+    OMEGACONF.OmegaConf = object
+    sys.modules["omegaconf"] = OMEGACONF
 SPEC.loader.exec_module(MODULE)
 
 
