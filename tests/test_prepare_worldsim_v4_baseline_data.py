@@ -4,7 +4,7 @@ import copy
 
 import pytest
 
-from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, validate_config
+from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, validate_config, validate_processed_scene
 
 
 SCENES = ["scene-0230", "scene-0242", "scene-0255", "scene-0048", "scene-0994", "scene-0139"]
@@ -50,3 +50,19 @@ def test_data_config_fails_closed(mutation, message: str) -> None:
     mutation(value)
     with pytest.raises(BaselineDataError, match=message):
         validate_config(value, cohort())
+
+
+def test_processed_scene_validator_checks_exact_counts(tmp_path) -> None:
+    root = tmp_path / "45"
+    (root / "images").mkdir(parents=True)
+    (root / "lidar").mkdir()
+    (root / "instances").mkdir()
+    for index in range(4):
+        (root / "images" / f"{index}.jpg").write_bytes(b"rgb")
+    for index in range(2):
+        (root / "lidar" / f"{index}.bin").write_bytes(b"lidar")
+    (root / "instances/instances_info.json").write_text("{}")
+    (root / "instances/frame_instances.json").write_text("{}")
+    result = validate_processed_scene(root, expected_frames=2, expected_cameras=2)
+    assert result["image_count"] == 4
+    assert result["lidar_count"] == 2
