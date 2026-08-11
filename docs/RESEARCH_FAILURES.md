@@ -41,6 +41,18 @@
 - `V4-F16`：KITTI 原生合同只有 `image_02/image_03` 两路彩色相机。不得为了匹配 nuScenes 三相机伪造第三视角；
   tracking 缺失时才审计 raw，且 pose/tracklet/calibration 任一门失败都必须 `blocked_dataset_adapter`。
 
+## V4 B0 防重复结论（2026-08-11）
+
+- `V4-F17`：历史 summary/metrics 记录 checkpoint 曾经存在，不等于当前 checkpoint 可执行。B0 首次磁盘审计中，
+  scene-0230/0242/0255 的历史 StreetGS 文件均已不在路径；只能保留 bytes/hash provenance，不能把历史
+  `exists=true` 或旧质量数值登记为当前 executable。正式 matrix 必须在每次 run 重新检查真实文件。
+- `V4-F18`：AD-GS historical aggregate 的 6-scene metrics 只覆盖旧 cohort，且当前 source/env/checkpoint 已缺失。
+  与 V4 development 重叠的 0230/0242/0255 也只能记 `historical_metrics_only`；不得把旧三场景数值拼接新三场景，
+  不得用 aggregate mean 代替 scene rows，也不得把历史复现写成 V4 same-split executable baseline。
+- `V4-F19`：baseline inventory 的 `blocked` terminal 是当前资产前置条件未齐，不是 B0 task 的永久 blocked 或方法失败。
+  B0 继续 `running`，通过新 run 补齐资产；旧 inventory 不覆盖。只有 V3.3/StreetGS/AD-GS 各 6/6 且统一 evaluator
+  完整后才可收口，不能因 M1 实现更有趣而跳过 matched baseline。
+
 ## V4 P0 防重复结论（2026-08-11）
 
 - `V4-F01`：计划草案记录的 HEAD 不是执行时事实。草案写 `main@144ed19`，P0 实查为 `main@2108430`，且 V3.3

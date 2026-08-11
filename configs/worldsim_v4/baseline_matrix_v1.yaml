@@ -1,0 +1,77 @@
+schema_version: worldsim_v4_baseline_matrix_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-11"
+cohort_config: configs/worldsim_v4/nuscenes_cohort_v1.yaml
+metrics_config: configs/worldsim_v4/metrics_v1.yaml
+split: development
+scene_contract:
+  scene-0230: {scene_index: 179, official_split: train}
+  scene-0242: {scene_index: 191, official_split: train}
+  scene-0255: {scene_index: 204, official_split: train}
+  scene-0048: {scene_index: 45, official_split: train}
+  scene-0994: {scene_index: 752, official_split: train}
+  scene-0139: {scene_index: 110, official_split: train}
+frame_partition:
+  heldout: sample_index_mod_5_eq_4
+  development: sample_index_mod_5_eq_2
+  train: remaining
+same_resolution: true
+same_scene: true
+same_train_heldout: true
+resolution_contract:
+  sensor_rgb: [1600, 900]
+  source_config_downscale: 2
+  model_native_render: [800, 450]
+  metric_resolution: [800, 450]
+
+baselines:
+  streetgs:
+    tier: A
+    implementation_root: /root/autodl-tmp/third_party/drivestudio
+    implementation_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+    environment: /root/autodl-tmp/envs/drivestudio
+    required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    checkpoints:
+      scene-0230:
+        path: null
+        state: missing_training_required
+        historical_bytes: 398652534
+      scene-0242:
+        path: null
+        state: missing_training_required
+        historical_bytes: 306034934
+      scene-0255:
+        path: null
+        state: missing_training_required
+        historical_summary: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T162355Z__scene0255-native30k-s0-r1/summary.json
+        historical_bytes: 452439350
+      scene-0048: {path: null, state: missing_training_required}
+      scene-0994: {path: null, state: missing_training_required}
+      scene-0139: {path: null, state: missing_training_required}
+  v33_frozen:
+    tier: A
+    implementation_commit: e6663e1
+    canonical_read_only: true
+    required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    executable_scenes: [scene-0230]
+    missing_scenes: [scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    source_run: /root/autodl-tmp/runs/worldsim_v33/WS-V33-R0-INTEGRATION-01/20260810T222701Z__r0-integration-canonical-s0-r7
+  ad_gs:
+    tier: A
+    implementation_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+    implementation_root: /root/autodl-tmp/third_party/AD-GS
+    environment: /root/autodl-tmp/envs/adgs
+    historical_metrics: /root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/metrics.json
+    historical_overlap_scenes: [scene-0230, scene-0242, scene-0255]
+    historical_only_scenes: [scene-0295, scene-0518, scene-0749]
+    required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    executable_checkpoints: []
+    note: 历史指标只作 provenance；当前 source、environment 与 checkpoint 均须重建后才可进入 matched 主表。
+
+completion_gate:
+  methods: [streetgs, v33_frozen, ad_gs]
+  required_scene_count_per_method: 6
+  allow_historical_metric_as_executable: false
+  require_unified_evaluator: true
+  test_split_access: false

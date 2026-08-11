@@ -1,0 +1,63 @@
+schema_version: worldsim_v4_metrics_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-11"
+
+image:
+  input_color_space: srgb_float01
+  data_range: 1.0
+  primary: [psnr, ssim, lpips_alex]
+  regions: [global, static, actor, boundary, edit_roi]
+  psnr:
+    reduction: masked_rgb_mse
+    perfect_match: positive_infinity
+  ssim:
+    implementation: skimage.metrics.structural_similarity
+    channel_axis: -1
+    gaussian_weights: true
+    sigma: 1.5
+    use_sample_covariance: false
+    masked_reduction: mean_full_ssim_map_inside_mask
+  lpips:
+    backbone: alex
+    version: lpips_0.1
+    input_range: [-1.0, 1.0]
+    region_protocol: tight_bbox_masked_difference
+    crop_padding_pixels: 8
+    minimum_side_pixels: 64
+  no_ground_truth_policy: undefined
+  empty_region_policy: undefined
+
+statistics:
+  unit: scene
+  scene_reduction: arithmetic_mean_over_valid_frames
+  report: [mean, median, std, iqr, scene_bootstrap_ci95]
+  bootstrap_samples: 10000
+  bootstrap_seed: 40117
+  paired_tests: [paired_bootstrap, sign_flip_permutation, wilcoxon_signed_rank]
+  denominator_policy: retain_failed_blocked_abstain
+  pixel_level_significance: forbidden
+
+engineering:
+  timing_phases: [prepare, train, semantic, asset, repair, compile, render, eval]
+  time_unit: seconds
+  resources:
+    - peak_nvidia_vram_bytes
+    - peak_torch_allocated_bytes
+    - peak_torch_reserved_bytes
+    - peak_cgroup_ram_bytes
+    - oom_count
+    - oom_kill_count
+  sizes:
+    - base_checkpoint_bytes
+    - semantic_evidence_bytes
+    - delta_bytes
+    - actor_asset_bytes
+    - package_bytes
+  runtime:
+    synchronize_cuda: true
+    warmup_frames: 10
+    measured_frames: 100
+    report: [cold_load_seconds, warm_load_seconds, compose_seconds, frame_time_p50_seconds, frame_time_p95_seconds, fps]
+  production:
+    report: [pipeline_success_rate, valid_edit_yield, counterfactual_expansion_ratio, scene_throughput_per_gpu_day, edit_throughput_per_gpu_hour, gpu_hours_per_accepted_clip, retry_amplification, resume_efficiency]

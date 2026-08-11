@@ -91,6 +91,21 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
 - D1 只在真实数据挂载后以新 run 复开；E1 继续 pending。当前转入 B0 nuScenes development，不因此宣称
   single-card closure，也不读取 test quality。
 
+### `WS-V4-B0-MATCHED-BASELINES-01` evaluator + inventory milestone
+
+- 冻结 `metrics_v1.yaml`：PSNR/SSIM/LPIPS-Alex、五类区域、无 GT/空区域 undefined、scene-level
+  mean/median/std/IQR/bootstrap CI 与 paired bootstrap/sign-flip/Wilcoxon；failed/blocked/abstain 保留 denominator；
+- 实现统一 evaluator、scene statistics 和 engineering raw-row 派生，定向测试 `9 passed`；该里程碑未启动训练、
+  模型推理或 test quality 读取；
+- `baseline_matrix_v1.yaml` 精确锁 D0 六个 development scenes、same split/resolution、DriveStudio
+  `e59bda4`、V3.3 `e6663e1` 与 AD-GS `9a20851`；分辨率层级固定为 sensor `1600×900`、source downscale=2、
+  model/metric `800×450`；historical metric/provenance 不算 executable；
+- diagnostic inventory=`20260811T090951Z__b0-inventory-diagnostic-s0-r1`，terminal=
+  `blocked / matched_baseline_assets_incomplete`，coverage=`V3.3 1/6、StreetGS 0/6、AD-GS 0/6`；run 只说明
+  当前磁盘资产缺口，B0 task 继续 `running`；
+- 三个历史 StreetGS checkpoint 的 summary/bytes provenance 仍可审计，但文件当前不在磁盘；AD-GS historical
+  六场景 metrics 存在，而 source/env/checkpoint 不存在。后续必须新 run 重训/恢复，不能把历史数值填入 matched 主表。
+
 ## V3.3 注册表
 
 | Task ID | 状态 | 目标 | 当前证据/门禁 |

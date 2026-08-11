@@ -28,6 +28,11 @@
 - KITTI P0 审计：[`WS_V4_KITTI_AUDIT.md`](WS_V4_KITTI_AUDIT.md)，当前 `blocked_local_dataset_missing`
 - KITTI D1 审计：[`KITTI_LAYOUT_AUDIT.md`](KITTI_LAYOUT_AUDIT.md)，canonical blocked run=
   `20260811T085210Z__d1-kitti-layout-formal-s0-r2`
+- V4 B0 盘点：[`WS_V4_B0_BASELINE_AUDIT.md`](WS_V4_B0_BASELINE_AUDIT.md)；diagnostic run=
+  `20260811T090951Z__b0-inventory-diagnostic-s0-r1`，当前 executable coverage=
+  `V3.3 1/6 / StreetGS 0/6 / AD-GS 0/6`；B0 仍为 running
+- B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
+  engineering timing/yield/recovery 派生已实现，定向单测=`9 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
 - V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
 - P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
