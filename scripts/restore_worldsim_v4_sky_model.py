@@ -51,7 +51,7 @@ def load_config(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise SkyModelRestoreError("config 必须为 mapping")
     restore = value.get("model", {}).get("restore", {})
-    if restore.get("endpoint") != "https://huggingface.co" or restore.get("policy") != "official_exact_revision_if_missing":
+    if restore.get("endpoint") != "https://huggingface.co" or restore.get("policy") != "official_exact_revision_if_missing" or not restore.get("remote_staging_dir"):
         raise SkyModelRestoreError("restore endpoint/policy 漂移")
     return value
 
@@ -68,6 +68,32 @@ def audit_required(config: dict[str, Any]) -> dict[str, Any]:
             raise SkyModelRestoreError(f"model file 漂移：{name}: {actual} != {expected}")
         files[name] = {"path": str(path), **actual}
     return {"snapshot": str(root), "files": files}
+
+
+def restore_from_staging(staging: Path, target: Path, required_files: dict[str, dict[str, Any]]) -> None:
+    """校验 staging 后，经同盘临时目录原子发布 snapshot。"""
+    if target.exists():
+        raise SkyModelRestoreError(f"incomplete snapshot 已存在，拒绝覆盖：{target}")
+    for name, expected in required_files.items():
+        source = staging / name
+        actual = {"bytes": source.stat().st_size, "sha256": sha256_file(source)}
+        if actual != expected:
+            raise SkyModelRestoreError(f"staging file 漂移：{name}: {actual} != {expected}")
+    partial = target.with_name(f".{target.name}.partial-{os.getpid()}")
+    if partial.exists():
+        raise SkyModelRestoreError(f"staging publish 临时目录已存在：{partial}")
+    partial.mkdir(parents=True, exist_ok=False)
+    try:
+        for name, expected in required_files.items():
+            destination = partial / name
+            shutil.copy2(staging / name, destination)
+            actual = {"bytes": destination.stat().st_size, "sha256": sha256_file(destination)}
+            if actual != expected:
+                raise SkyModelRestoreError(f"staging copy 漂移：{name}: {actual} != {expected}")
+        os.replace(partial, target)
+    except BaseException:
+        shutil.rmtree(partial, ignore_errors=True)
+        raise
 
 
 def _git(root: Path, *args: str) -> str:
@@ -87,21 +113,33 @@ def run(config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
     model = config["model"]
     target = Path(model["snapshot"])
     present_before = all((target / name).is_file() for name in model["required_files"])
+    staging = Path(model["restore"]["remote_staging_dir"])
+    staging_present = all((staging / name).is_file() for name in model["required_files"])
     run_dir.mkdir(parents=True)
     (run_dir / "artifacts").mkdir()
     shutil.copy2(config_path, run_dir / "resolved.yaml")
-    os.environ["HF_ENDPOINT"] = model["restore"]["endpoint"]
-    resolved = Path(snapshot_download(
-        repo_id=model["id"],
-        revision=model["revision"],
-        cache_dir=model["restore"]["cache_dir"],
-        allow_patterns=sorted(model["required_files"]),
-        local_files_only=present_before,
-    ))
-    if resolved.resolve() != target.resolve():
-        raise SkyModelRestoreError(f"resolved snapshot 漂移：{resolved} != {target}")
+    if not present_before and staging_present:
+        restore_from_staging(staging, target, model["required_files"])
+        restore_mode = "codex_local_official_staging_exact"
+        network_attempted = False
+    elif not present_before:
+        os.environ["HF_ENDPOINT"] = model["restore"]["endpoint"]
+        resolved = Path(snapshot_download(
+            repo_id=model["id"],
+            revision=model["revision"],
+            cache_dir=model["restore"]["cache_dir"],
+            allow_patterns=sorted(model["required_files"]),
+            local_files_only=False,
+        ))
+        if resolved.resolve() != target.resolve():
+            raise SkyModelRestoreError(f"resolved snapshot 漂移：{resolved} != {target}")
+        restore_mode = "remote_official_huggingface_exact"
+        network_attempted = True
+    else:
+        restore_mode = "existing_snapshot_exact"
+        network_attempted = False
     audit = audit_required(config)
-    audit.update({"model_id": model["id"], "revision": model["revision"], "endpoint": model["restore"]["endpoint"], "present_before": present_before, "network_attempted": not present_before})
+    audit.update({"model_id": model["id"], "revision": model["revision"], "endpoint": model["restore"]["endpoint"], "present_before": present_before, "staging_present": staging_present, "staging_dir": str(staging), "staging_provenance": model["restore"]["staging_provenance"], "restore_mode": restore_mode, "network_attempted": network_attempted})
     _write_json(run_dir / "artifacts/model_snapshot_audit.json", audit)
     snapshots = {}
     for relpath in SNAPSHOT_RELPATHS:
@@ -114,12 +152,12 @@ def run(config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
     fingerprint = {"config_sha256": sha256_file(config_path), "audit_sha256": sha256_file(run_dir / "artifacts/model_snapshot_audit.json"), "source_snapshots": snapshots, "project_git": project_git}
     _write_json(run_dir / "fingerprint.json", fingerprint)
     now = datetime.now(timezone.utc).isoformat()
-    _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "sky_model_restore_complete", "status": "done", "network_attempted": not present_before})
-    summary = {"schema_version": "worldsim_v4_sky_model_restore_summary_v1", "task_id": TASK_ID, "status": "done", "finished_at_utc": now, "model_id": model["id"], "revision": model["revision"], "present_before": present_before, "network_attempted": not present_before, "audit_sha256": fingerprint["audit_sha256"], "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "project_git": project_git, "training_started": False, "model_inference_started": False, "test_quality_read": False}
+    _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "sky_model_restore_complete", "status": "done", "restore_mode": restore_mode, "network_attempted": network_attempted})
+    summary = {"schema_version": "worldsim_v4_sky_model_restore_summary_v1", "task_id": TASK_ID, "status": "done", "finished_at_utc": now, "model_id": model["id"], "revision": model["revision"], "present_before": present_before, "restore_mode": restore_mode, "network_attempted": network_attempted, "audit_sha256": fingerprint["audit_sha256"], "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "project_git": project_git, "training_started": False, "model_inference_started": False, "test_quality_read": False}
     _write_json(run_dir / "summary.json", summary)
     _write_json(run_dir / "status.json", {"task_id": TASK_ID, "status": "done", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_sky_model_restore_manifest_v1", "task_id": TASK_ID, "status": "done", "artifacts": artifacts, "network_attempted": not present_before, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_sky_model_restore_manifest_v1", "task_id": TASK_ID, "status": "done", "artifacts": artifacts, "restore_mode": restore_mode, "network_attempted": network_attempted, "test_quality_read": False})
     return summary
 
 

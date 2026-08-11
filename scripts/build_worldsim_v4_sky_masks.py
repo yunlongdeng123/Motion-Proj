@@ -15,12 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
-import numpy as np
-import torch
-import torch.nn.functional as functional
 import yaml
-from PIL import Image
-from transformers import AutoImageProcessor, SegformerForSemanticSegmentation
 
 
 PROJECT_IMPORT_ROOT = Path(__file__).resolve().parents[1]
@@ -128,6 +123,12 @@ def append_jsonl(path: Path, payload: Mapping[str, Any]) -> None:
 
 
 def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dict[str, Any]:
+    import numpy as np
+    import torch
+    import torch.nn.functional as functional
+    from PIL import Image
+    from transformers import AutoImageProcessor, SegformerForSemanticSegmentation
+
     config_path = config_path.resolve()
     run_dir = run_dir.resolve()
     project_root = project_root.resolve()
