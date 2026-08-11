@@ -105,6 +105,16 @@ V3.1 终态保持冻结；V3.2 S1 canonical r6 已完成，S3 canonical r3 已�
   当前磁盘资产缺口，B0 task 继续 `running`；
 - 三个历史 StreetGS checkpoint 的 summary/bytes provenance 仍可审计，但文件当前不在磁盘；AD-GS historical
   六场景 metrics 存在，而 source/env/checkpoint 不存在。后续必须新 run 重训/恢复，不能把历史数值填入 matched 主表。
+- raw extraction canonical r3 从官方 10 个 nuScenes tar shard 物化缺失 scene-0048/0139/0994，`5,264/5,264`
+  members，fingerprint=`c51f4162...e38`；没有下载数据或读取 test quality；
+- preprocess r5/r6/r7 均 done；六个 scene index `045/110/179/191/204/752` 现均为 `1,176 RGB / 196 LiDAR`。
+  r4 的真实上游输出保留，但因 `_10Hz` root 合同不匹配为 blocked；
+- remote sky-model r10 因网络不可达 blocked；官方 fixed-revision 本机 exact staging 由 r11 离线恢复完成，fingerprint=
+  `15c200fd...90bfd`。sky r12 因预建空目录误拒绝 blocked；r13/r14/r15 分别为三个新 scene 原子生成
+  `588/588` masks，fingerprint=`c35a9dbe...c3eb / 5f6a2fe7...c702 / 455dcb20...e6c7`；
+- StreetGS r9 在 iteration 前因缺 sky mask blocked；r16 profile100 完成，wall=`90.8965 s`、checkpoint=
+  `340,298,602 bytes / SHA 446297b8...3af`、peak GPU=`9,004 MiB`、OOM/kill=`0/0`。该 profile 只解锁
+  六场景 30k formal，B0 coverage 仍为 `0/6 formal`，M1 与 test quality 继续未授权。
 
 ## V3.3 注册表
 

@@ -52,6 +52,16 @@
 - `V4-F19`：baseline inventory 的 `blocked` terminal 是当前资产前置条件未齐，不是 B0 task 的永久 blocked 或方法失败。
   B0 继续 `running`，通过新 run 补齐资产；旧 inventory 不覆盖。只有 V3.3/StreetGS/AD-GS 各 6/6 且统一 evaluator
   完整后才可收口，不能因 M1 实现更有趣而跳过 matched baseline。
+- `V4-F20`：DriveStudio preprocess 会把输出根再追加 `_10Hz`，并按零填充 scene index 写目录。r4 的上游命令成功
+  不等于 runner 目录合同成功；必须验证真实输出 root、scene dir、`1,176 RGB / 196 LiDAR` 后才能登记 done，不能移动
+  或重命名一个未审计路径来掩盖合同错误。
+- `V4-F21`：远端网络不可达不能用镜像、floating revision 或未校验模型绕过。sky-model r10 因 `Errno 101` 保留
+  blocked；本机只从官方固定 revision URL 获取三文件，传输前后均按 bytes/SHA256 exact 校验，远端恢复经临时目录
+  原子发布且 generation 保持 offline。任何 staging 漂移都必须 fail-closed。
+- `V4-F22`：preprocess 预建的空 `sky_masks/` 与已有推理产物不是同一状态。r12 因旧 runner 只看目录存在而 blocked；
+  修复只允许非 symlink 的空目录，发布前再次 `rmdir`，已有 mask、非目录或 partial 一律拒绝，不能覆盖正式产物。
+- `V4-F23`：StreetGS 100-step profile 只证明训练链、checkpoint schema 和单卡资源门可执行。r16 不能计入 6-scene
+  30k formal coverage，也不能读取/登记质量或据此宣称 baseline 已完成；每场 formal 必须新建不可变 run。
 
 ## V4 P0 防重复结论（2026-08-11）
 
