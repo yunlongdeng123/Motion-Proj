@@ -4,7 +4,7 @@ import copy
 
 import pytest
 
-from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, validate_config, validate_processed_scene
+from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, scene_directory_name, validate_config, validate_processed_scene
 
 
 SCENES = ["scene-0230", "scene-0242", "scene-0255", "scene-0048", "scene-0994", "scene-0139"]
@@ -66,3 +66,8 @@ def test_processed_scene_validator_checks_exact_counts(tmp_path) -> None:
     result = validate_processed_scene(root, expected_frames=2, expected_cameras=2)
     assert result["image_count"] == 4
     assert result["lidar_count"] == 2
+
+
+def test_upstream_scene_directory_is_zero_padded() -> None:
+    assert scene_directory_name(45) == "045"
+    assert scene_directory_name(110) == "110"

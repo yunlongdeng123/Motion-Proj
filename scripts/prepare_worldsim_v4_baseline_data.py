@@ -258,6 +258,12 @@ def validate_processed_scene(scene_root: Path, expected_frames: int, expected_ca
     }
 
 
+def scene_directory_name(scene_index: int) -> str:
+    if scene_index < 0:
+        raise BaselineDataError("scene index 必须非负")
+    return f"{scene_index:03d}"
+
+
 def _ensure_reused_processed(config: Mapping[str, Any], processed_root: Path) -> list[dict[str, Any]]:
     destination = processed_root / "trainval"
     destination.mkdir(parents=True, exist_ok=True)
@@ -266,7 +272,7 @@ def _ensure_reused_processed(config: Mapping[str, Any], processed_root: Path) ->
         if record["state"] != "reuse_processed":
             continue
         source = Path(record["processed_source"]).resolve()
-        target = destination / str(record["scene_index"])
+        target = destination / scene_directory_name(int(record["scene_index"]))
         if not source.is_dir():
             raise BaselineDataError(f"reuse processed source 缺失：{source}")
         if target.is_symlink():
@@ -293,7 +299,11 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
     if not isinstance(record, Mapping) or record.get("state") != "extract_and_preprocess":
         raise BaselineDataError(f"scene 不属于待 preprocess 集合：{scene}")
     raw_root = Path(config["dataset"]["raw_union_root"])
+    processor_save_dir = Path(config["dataset"]["processor_save_dir"])
     processed_root = Path(config["dataset"]["processed_root"])
+    expected_processed_root = processor_save_dir.with_name(processor_save_dir.name + "_10Hz")
+    if processed_root != expected_processed_root:
+        raise BaselineDataError(f"processor save/output root 合同漂移：{processor_save_dir} -> {expected_processed_root} != {processed_root}")
     raw_manifest = Path(config["dataset"]["raw_manifest_root"]) / f"{scene}_raw_manifest_v4.json"
     if not raw_manifest.is_file():
         raise BaselineDataError(f"raw manifest 缺失：{raw_manifest}")
@@ -303,7 +313,7 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
         if not path.is_file() or path.stat().st_size != int(row["bytes"]):
             raise BaselineDataError(f"raw payload bytes 漂移：{path}")
     scene_index = int(record["scene_index"])
-    scene_root = processed_root / "trainval" / str(scene_index)
+    scene_root = processed_root / "trainval" / scene_directory_name(scene_index)
     if scene_root.exists() or scene_root.is_symlink():
         raise BaselineDataError(f"processed scene target 已存在，禁止覆盖：{scene_root}")
     pre = _resource_state(Path("/root/autodl-tmp"))
@@ -319,7 +329,7 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
         "/root/autodl-tmp/envs/drivestudio/bin/python",
         str(project_root / "scripts/preprocess_dr_v2_nuscenes_single.py"),
         "--data-root", str(raw_root),
-        "--target-dir", str(processed_root),
+        "--target-dir", str(processor_save_dir),
         "--scene-index", str(scene_index),
         "--upstream-root", "/root/autodl-tmp/third_party/drivestudio",
     ]
