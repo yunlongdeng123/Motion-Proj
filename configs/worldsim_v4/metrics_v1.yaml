@@ -8,6 +8,11 @@ image:
   data_range: 1.0
   primary: [psnr, ssim, lpips_alex]
   regions: [global, static, actor, boundary, edit_roi]
+  region_protocol:
+    actor: drivestudio_dynamic_masks_all_nonzero
+    static: not_actor_and_not_egocar
+    boundary: dynamic_mask_morphological_band_l1_radius_3px
+    baseline_edit_roi: empty_undefined
   psnr:
     reduction: masked_rgb_mse
     perfect_match: positive_infinity

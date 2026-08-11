@@ -25,10 +25,14 @@ SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_matrix_v1.yaml",
     "configs/worldsim_v4/metrics_v1.yaml",
     "motion_proj/worldsim_v4/evaluator.py",
+    "motion_proj/worldsim_v4/region_masks.py",
+    "motion_proj/worldsim_v4/baseline_scene_evaluator.py",
     "motion_proj/worldsim_v4/statistics.py",
     "motion_proj/worldsim_v4/engineering_metrics.py",
     "scripts/run_worldsim_v4_baselines.py",
     "tests/test_worldsim_v4_evaluator.py",
+    "tests/test_worldsim_v4_region_masks.py",
+    "tests/test_worldsim_v4_baseline_scene_evaluator.py",
     "tests/test_worldsim_v4_statistics.py",
     "tests/test_worldsim_v4_engineering_metrics.py",
 )
@@ -83,6 +87,13 @@ def _validate_metrics(config: Mapping[str, Any]) -> None:
         raise BaselineAuditError("主图像指标必须冻结为 PSNR/SSIM/LPIPS-Alex")
     if image.get("regions") != ["global", "static", "actor", "boundary", "edit_roi"]:
         raise BaselineAuditError("图像区域顺序/集合漂移")
+    if image.get("region_protocol") != {
+        "actor": "drivestudio_dynamic_masks_all_nonzero",
+        "static": "not_actor_and_not_egocar",
+        "boundary": "dynamic_mask_morphological_band_l1_radius_3px",
+        "baseline_edit_roi": "empty_undefined",
+    }:
+        raise BaselineAuditError("图像区域生成协议漂移")
     statistics = config.get("statistics", {})
     if statistics.get("unit") != "scene" or statistics.get("denominator_policy") != "retain_failed_blocked_abstain":
         raise BaselineAuditError("scene-level 统计或 denominator 合同漂移")
