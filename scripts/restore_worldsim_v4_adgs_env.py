@@ -138,7 +138,23 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def build_commands(config: Mapping[str, Any]) -> list[tuple[str, list[str], Path]]:
+def materialize_extension_sources(config: Mapping[str, Any], build_root: Path) -> Path:
+    """把 vendored CUDA extension 复制到 run 内，避免 pip 污染 official checkout。"""
+    if build_root.exists():
+        raise AdgsEnvironmentError(f"extension build root 已存在：{build_root}")
+    adgs = Path(config["paths"]["adgs_root"])
+    for extension in config["extensions"]:
+        relative = Path(extension["source"])
+        source = adgs / relative
+        destination = build_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(source, destination)
+    return build_root
+
+
+def build_commands(
+    config: Mapping[str, Any], extension_root: Path | None = None
+) -> list[tuple[str, list[str], Path]]:
     paths = config["paths"]
     target = Path(paths["target_environment"])
     adgs = Path(paths["adgs_root"])
@@ -147,7 +163,7 @@ def build_commands(config: Mapping[str, Any]) -> list[tuple[str, list[str], Path
         ("install_plyfile", [python, "-m", "pip", "install", "--no-index", "--no-deps", paths["plyfile_wheel"]], adgs),
     ]
     for extension in config["extensions"]:
-        source = adgs / extension["source"]
+        source = (extension_root or adgs) / extension["source"]
         commands.append((f"build_{extension['name']}", [python, "-m", "pip", "install", "--no-index", "--no-deps", "--no-build-isolation", "."], source))
     commands.append(("cuda_smoke", [python, str(Path(paths["project_root"]) / "scripts/smoke_worldsim_v4_adgs_env.py")], adgs))
     return commands
@@ -269,7 +285,9 @@ def run(config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
         os.replace(partial, target)
         clone_result["published_target"] = str(target)
         write_json(run_dir / "stages" / "clone_base_environment.json", clone_result)
-        for name, command, cwd in build_commands(config):
+        extension_root = materialize_extension_sources(
+            config, run_dir / "build_source")
+        for name, command, cwd in build_commands(config, extension_root):
             if name == "cuda_smoke":
                 sample = resource_sample()
                 if sample["gpu"]["memory_used_mib"] > int(runtime["maximum_gpu_used_at_smoke_start_mib"]):

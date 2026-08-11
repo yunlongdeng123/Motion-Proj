@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from scripts.restore_worldsim_v4_adgs_env import AdgsEnvironmentError, build_commands, load_config
+from scripts.restore_worldsim_v4_adgs_env import (
+    AdgsEnvironmentError,
+    build_commands,
+    load_config,
+    materialize_extension_sources,
+)
 
 
 def valid_config() -> str:
@@ -58,3 +63,20 @@ def test_build_commands_are_offline_and_use_target_python(tmp_path: Path) -> Non
         assert command[0].replace("\\", "/") == "/env/adgs/bin/python"
     for _, command, _ in commands[:-1]:
         assert "--no-index" in command
+
+
+def test_extension_builds_use_run_local_source_copies(tmp_path: Path) -> None:
+    path = tmp_path / "config.yaml"
+    adgs = tmp_path / "third" / "AD-GS"
+    (adgs / "submodules/simple-knn").mkdir(parents=True)
+    (adgs / "submodules/rasterizer").mkdir(parents=True)
+    (adgs / "submodules/simple-knn/setup.py").write_text("# simple\n", encoding="utf-8")
+    (adgs / "submodules/rasterizer/setup.py").write_text("# raster\n", encoding="utf-8")
+    path.write_text(valid_config().replace("/third/AD-GS", str(adgs)), encoding="utf-8")
+    config = load_config(path)
+    build_root = materialize_extension_sources(config, tmp_path / "run/build_source")
+    commands = build_commands(config, build_root)
+    assert commands[1][2] == build_root / "submodules/simple-knn"
+    assert commands[2][2] == build_root / "submodules/rasterizer"
+    assert (adgs / "submodules/simple-knn/build").exists() is False
+    assert (build_root / "submodules/simple-knn/setup.py").read_text(encoding="utf-8") == "# simple\n"
