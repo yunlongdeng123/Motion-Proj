@@ -1,0 +1,79 @@
+schema_version: worldsim_v4_adgs_training_v1
+task_id: WS-V4-B0-MATCHED-BASELINES-01
+status: running
+created_at: "2026-08-12"
+implementation:
+  root: /root/autodl-tmp/third_party/AD-GS
+  commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+  expected_modified_files: [scripts/colmap.py, scripts/flow.py, scripts/run-dpt.py, scripts/semantic.py, train.py]
+  compatibility_patch: compatibility/AD-GS-2026-07-27.patch
+  compatibility_patch_sha256: 01145883aab24aff93bcae61c0539350a8f9a34bfb3575831738f75dda33d8e4
+  environment: /root/autodl-tmp/envs/adgs
+  model_config: configs/worldsim_v4/adgs_nuscenes_v4.py
+dependencies:
+  depth_anything:
+    root: /root/autodl-tmp/third_party/Depth-Anything-V2
+    commit: a561b849ebae10a6f5ef49e26c83cbbcd36c71bf
+    checkpoint: /root/autodl-tmp/data/worldsim_v4/model_staging/depth_anything_v2/depth_anything_v2_vitl.pth
+    bytes: 1341395338
+    sha256: a7ea19fa0ed99244e67b624c72b8580b7e9553043245905be58796a608eb9345
+  cotracker:
+    root: /root/autodl-tmp/third_party/co-tracker
+    commit: 82e02e8029753ad4ef13cf06be7f4fc5facdda4d
+    checkpoint: /root/autodl-tmp/data/worldsim_v4/model_staging/cotracker3/scaled_offline.pth
+    bytes: 101890938
+    sha256: 2670d4562ed69326dda775a26e54883925cd11b6fc9b24cb7aa9f8078bce7834
+data:
+  source_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  processed_root: /root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train
+  frame_count: 196
+  cameras: [0, 1, 2]
+  image_size: [800, 450]
+  expected_train_images: 354
+  materialized_partitions: [train]
+  frame_partition:
+    modulus: 5
+    train_remainders: [0, 1, 3]
+    development_remainder: 2
+    heldout_remainder: 4
+scenes:
+  scene-0230: 179
+  scene-0242: 191
+  scene-0255: 204
+  scene-0048: 45
+  scene-0994: 752
+  scene-0139: 110
+preprocess:
+  depth_encoder: vitl
+  flow_step: 4
+  seed: 0
+training:
+  seed: 0
+  modes: {profile100: 100, formal: 60000}
+  data_device: cuda:0
+  disable_test_evaluation: true
+  save_only_final_checkpoint: true
+resources:
+  minimum_gpu_memory_mib: 24000
+  maximum_gpu_used_at_start_mib: 2048
+  minimum_cgroup_memory_gib: 32
+  minimum_disk_free_at_start_gib: 60
+  stop_disk_free_gib: 20
+  stop_cgroup_ratio: 0.90
+  stop_cgroup_consecutive_samples: 2
+  sample_interval_seconds: 10
+  timeout_seconds:
+    adapter: 3600
+    depth: 7200
+    segment_points: 3600
+    flow: 14400
+    profile100: 1800
+    formal: 18000
+gates:
+  no_network_access: true
+  no_development_or_heldout_materialized_for_training: true
+  no_test_quality_read: true
+  checkpoint_files_nonempty: true
+license_boundary:
+  use: internal_research_baseline_only
+  redistribute_upstream_source_or_weights: false
