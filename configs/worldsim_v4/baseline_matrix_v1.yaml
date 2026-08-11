@@ -28,63 +28,78 @@ resolution_contract:
 baselines:
   streetgs:
     tier: A
-    implementation_root: /root/autodl-tmp/third_party/drivestudio
+    implementation_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
     implementation_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
     environment: /root/autodl-tmp/envs/drivestudio
     required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    matched_contract:
+      train_remainders: [0, 1, 3]
+      excluded_remainders: [2, 4]
+      test_image_stride: 0
+      train_time_visualization: false
+      test_quality_read: false
+    protocol_mismatch_runs:
+      scene-0230:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+      scene-0242:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T121817Z__streetgs-scene0242-formal30k-s0-r20
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T121817Z__streetgs-scene0242-formal30k-s0-r20/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+      scene-0255:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T125407Z__streetgs-scene0255-formal30k-s0-r22
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T125407Z__streetgs-scene0255-formal30k-s0-r22/work_dirs/worldsim_v4_streetgs/scene0255_formal_s0/checkpoint_final.pth
+      scene-0048:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth
+      scene-0994:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T141429Z__streetgs-scene0994-formal30k-s0-r26
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T141429Z__streetgs-scene0994-formal30k-s0-r26/work_dirs/worldsim_v4_streetgs/scene0994_formal_s0/checkpoint_final.pth
+      scene-0139:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T144653Z__streetgs-scene0139-formal30k-s0-r28
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T144653Z__streetgs-scene0139-formal30k-s0-r28/work_dirs/worldsim_v4_streetgs/scene0139_formal_s0/checkpoint_final.pth
+      common_reason: runner used test_image_stride=10 instead of the frozen mod-5 partition; heldout frames could enter training, so these runs are provenance only.
     checkpoints:
       scene-0230:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17
+        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+        state: matched_formal_done
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32
         step: 30000
-        bytes: 396257270
-        sha256: fba28355d61ddad8273f490edee5834b8093cad727d0ce3381bce53c8e60162f
-        fingerprint_sha256: 68d9a294a27db3e796249c074c8b42dc674f54f09b65c463f335b71b8959af1b
+        bytes: 386410166
+        sha256: 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1
+        fingerprint_sha256: 8b1a43b74f727658b0f2d9d1d00e72a2cc62fdeed886fbb0ab870b579788dde3
+        duration_seconds: 3200.018405770883
+        peak_gpu_memory_mib: 23892
+        gaussian_counts: {Background: 1095606, RigidNodes: 172264}
+        supersedes_protocol_mismatch_run: r17
         historical_bytes: 398652534
       scene-0242:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T121817Z__streetgs-scene0242-formal30k-s0-r20/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T121817Z__streetgs-scene0242-formal30k-s0-r20
+        path: null
+        state: pending_matched_rerun
+        run: null
         step: 30000
-        bytes: 306226038
-        sha256: 3c292d74bd11be4709120161e04add2e7553061f39472685de809c94eea2413b
-        fingerprint_sha256: cc0eadaff1c9fa8bfe4571c3ad15099cbeba05f503bf266f106e709fef5d687f
         historical_bytes: 306034934
       scene-0255:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T125407Z__streetgs-scene0255-formal30k-s0-r22/work_dirs/worldsim_v4_streetgs/scene0255_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T125407Z__streetgs-scene0255-formal30k-s0-r22
+        path: null
+        state: pending_matched_rerun
+        run: null
         step: 30000
-        bytes: 451821046
-        sha256: ee5450b421a3d823fc25809709acab8e652da39bc51013f0e7e3374810b3428d
-        fingerprint_sha256: 6358596991676d58e453cc286adfc7b1cdd48f32ef26f72b8ce2bbdd937df410
         historical_summary: /root/autodl-tmp/runs/worldsim_v3/WS-V3-A0-NATIVE-BASELINE-01/20260805T162355Z__scene0255-native30k-s0-r1/summary.json
         historical_bytes: 452439350
       scene-0048:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24
+        path: null
+        state: pending_matched_rerun
+        run: null
         step: 30000
-        bytes: 340189878
-        sha256: dede872b691feb6e5aec6f6c07978a53c6f4f7cbd2f5214e17f04ad04783cf3d
-        fingerprint_sha256: 61d375585589727e96b9d14aedf43376af86ea50eb2c45c30c85ac0b5d67ed4c
       scene-0994:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T141429Z__streetgs-scene0994-formal30k-s0-r26/work_dirs/worldsim_v4_streetgs/scene0994_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T141429Z__streetgs-scene0994-formal30k-s0-r26
+        path: null
+        state: pending_matched_rerun
+        run: null
         step: 30000
-        bytes: 297410742
-        sha256: f79654262ba883383b18ab642d11913f76eb29a33872401682b12e042a49b7a0
-        fingerprint_sha256: 7bb49e2325313c41d7c6fac97ef7ef986e9fef18d463920f58abfa1f9b6fb74d
       scene-0139:
-        path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T144653Z__streetgs-scene0139-formal30k-s0-r28/work_dirs/worldsim_v4_streetgs/scene0139_formal_s0/checkpoint_final.pth
-        state: formal_done
-        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T144653Z__streetgs-scene0139-formal30k-s0-r28
+        path: null
+        state: pending_matched_rerun
+        run: null
         step: 30000
-        bytes: 325005110
-        sha256: cb6d4254e082e084ba0e3813aa12133df78fdb1c2b705f3eb4d07bdb9a24a8f2
-        fingerprint_sha256: 2ed64d6628361cd817dafd650290e0bdf94598b5a14de3db329583c68942fd22
   v33_frozen:
     tier: A
     implementation_commit: e6663e1
