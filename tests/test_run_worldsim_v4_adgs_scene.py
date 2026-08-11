@@ -91,3 +91,10 @@ def test_load_config_requires_mapping(tmp_path: Path) -> None:
     path.write_text(yaml.safe_dump(["not", "mapping"]), encoding="utf-8")
     with pytest.raises(ADGSRunError, match="mapping"):
         load_config(path)
+
+
+def test_training_config_tracks_lazy_flow_diagnostic_patch() -> None:
+    config = yaml.safe_load(
+        Path("configs/worldsim_v4/adgs_training_v1.yaml").read_text(encoding="utf-8")
+    )
+    assert "utils/flow_utils.py" in config["implementation"]["expected_modified_files"]

@@ -31,6 +31,8 @@ runtime_contract:
 extensions:
   - {name: simple_knn, source: submodules/simple-knn, import: simple_knn._C}
   - {name: diff_gaussian_rasterization, source: submodules/rasterizer, import: diff_gaussian_rasterization}
+runtime_wheels:
+  - {name: roma, import: roma, path: /weights/roma.whl, bytes: 10, sha256: abc}
 """
 
 
@@ -55,6 +57,7 @@ def test_build_commands_are_offline_and_use_target_python(tmp_path: Path) -> Non
     commands = build_commands(load_config(path))
     assert [name for name, _, _ in commands] == [
         "install_plyfile",
+        "install_runtime_roma",
         "build_simple_knn",
         "build_diff_gaussian_rasterization",
         "cuda_smoke",
@@ -76,7 +79,20 @@ def test_extension_builds_use_run_local_source_copies(tmp_path: Path) -> None:
     config = load_config(path)
     build_root = materialize_extension_sources(config, tmp_path / "run/build_source")
     commands = build_commands(config, build_root)
-    assert commands[1][2] == build_root / "submodules/simple-knn"
-    assert commands[2][2] == build_root / "submodules/rasterizer"
+    assert commands[2][2] == build_root / "submodules/simple-knn"
+    assert commands[3][2] == build_root / "submodules/rasterizer"
     assert (adgs / "submodules/simple-knn/build").exists() is False
     assert (build_root / "submodules/simple-knn/setup.py").read_text(encoding="utf-8") == "# simple\n"
+
+
+def test_environment_and_training_configs_share_compatibility_contract() -> None:
+    environment = load_config(Path("configs/worldsim_v4/adgs_environment_v1.yaml"))
+    training = pytest.importorskip("yaml").safe_load(
+        Path("configs/worldsim_v4/adgs_training_v1.yaml").read_text(encoding="utf-8")
+    )
+    source = environment["source_contract"]
+    implementation = training["implementation"]
+    assert source["compatibility_patch_sha256"] == implementation["compatibility_patch_sha256"]
+    assert source["expected_modified_files"] == implementation["expected_modified_files"]
+    assert "utils/flow_utils.py" in source["expected_modified_files"]
+    assert [row["import"] for row in environment["runtime_wheels"]] == ["roma"]

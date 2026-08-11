@@ -15,17 +15,25 @@ paths:
   plyfile_wheel: /root/autodl-tmp/data/worldsim_v4/model_staging/python_wheels/plyfile-0.9-py3-none-any.whl
 source_contract:
   adgs_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
-  compatibility_patch_sha256: 01145883aab24aff93bcae61c0539350a8f9a34bfb3575831738f75dda33d8e4
+  compatibility_patch_sha256: b2614c8bf720e041b2d5abaeb20305dbc30057b690d567a3ff646d5d9719513b
   expected_modified_files:
     - scripts/colmap.py
     - scripts/flow.py
     - scripts/run-dpt.py
     - scripts/semantic.py
     - train.py
+    - utils/flow_utils.py
 wheel_contract:
   filename: plyfile-0.9-py3-none-any.whl
   bytes: 30123
   sha256: 5f5bb9396c3c22f055677b5d0c7224271b81d8acd227c85d3357aa821fad2060
+runtime_wheels:
+  - name: roma
+    import: roma
+    version: 1.5.7
+    path: /root/autodl-tmp/data/worldsim_v4/model_staging/python_wheels/roma-1.5.7-py3-none-any.whl
+    bytes: 25627
+    sha256: a322b032dd0b14e21c3b40f8ae1f6e93c473476cc2d0fbaa1b501216df31f5a2
 runtime_contract:
   python: "3.9"
   torch: 2.1.2+cu118

@@ -1,5 +1,5 @@
 diff --git a/scripts/colmap.py b/scripts/colmap.py
-index 7affc68..bbb3932 100755
+index 7affc68886d3bfc7b778e05d2c776011d36b5bbd..bbb39322a702919f7a4027e4aa1bbfb98f73bf44 100755
 --- a/scripts/colmap.py
 +++ b/scripts/colmap.py
 @@ -24,0 +25,3 @@ def get_args():
@@ -58,7 +58,7 @@ index 7affc68..bbb3932 100755
 \ No newline at end of file
 +    print('SfM pointcloud:', ply_path, 'pts:', xyz.shape[0])
 diff --git a/scripts/flow.py b/scripts/flow.py
-index 570aae9..4cc8431 100755
+index 570aae92ff740cff16db15f8754e02fd55f444a5..4cc8431592fc2f94188c26bd9db4e59b2f8ec9d0 100755
 --- a/scripts/flow.py
 +++ b/scripts/flow.py
 @@ -9,0 +10 @@ import os
@@ -125,7 +125,7 @@ index 570aae9..4cc8431 100755
 \ No newline at end of file
 +        print("Save a visualized video:", flow_video_path)
 diff --git a/scripts/run-dpt.py b/scripts/run-dpt.py
-index c3080cd..03160fc 100644
+index c3080cdc552671be96f773ec4ebcd3130184dd82..03160fcfd422d94173b97116397ac3070ff5e14a 100644
 --- a/scripts/run-dpt.py
 +++ b/scripts/run-dpt.py
 @@ -19,0 +20,3 @@ if __name__ == '__main__':
@@ -136,7 +136,7 @@ index c3080cd..03160fc 100644
 -    depth_anything.load_state_dict(torch.load(f'checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))
 +    depth_anything.load_state_dict(torch.load(args.checkpoint, map_location='cpu'))
 diff --git a/scripts/semantic.py b/scripts/semantic.py
-index b1c4f70..f16c21d 100755
+index b1c4f70e27a63f1eb3961f8384db6ac7e07dce65..f16c21d75d184b9f49cb300f63b0c24e0b489aa8 100755
 --- a/scripts/semantic.py
 +++ b/scripts/semantic.py
 @@ -2,0 +3 @@ import argparse
@@ -191,7 +191,7 @@ index b1c4f70..f16c21d 100755
 -inference_state = video_predictor.init_state(video_path=video_dir, offload_video_to_cpu=True, async_loading_frames=True)
 +inference_state = video_predictor.init_state(video_path=sam2_video_dir, offload_video_to_cpu=True, async_loading_frames=True)
 diff --git a/train.py b/train.py
-index f7bb53f..349f6a1 100755
+index f7bb53f71b1def5576fa9a767f2ca2ee459f0b5c..349f6a125e517110286c9f6fe2aae6bafa476930 100755
 --- a/train.py
 +++ b/train.py
 @@ -297,0 +298,5 @@ if __name__ == "__main__":
@@ -204,3 +204,19 @@ index f7bb53f..349f6a1 100755
 -    args.test_iterations.append(args.iterations)
 +    if not args.disable_test_evaluation:
 +        args.test_iterations.append(args.iterations)
+diff --git a/utils/flow_utils.py b/utils/flow_utils.py
+index c29273dc1280e0e06233bb9499ea6aafebf483c5..b65f167b3a0397cf0a741eeba8d92212c9aae82e 100755
+--- a/utils/flow_utils.py
++++ b/utils/flow_utils.py
+@@ -3 +2,0 @@ from torch.nn.functional import interpolate
+-from flow_vis import flow_to_color
+@@ -30,0 +30,5 @@ def flow_to_img(flow, mask=None):
++    # flow_vis is only needed for TensorBoard diagnostics. Matched training
++    # disables internal evaluation, so importing the training loss path must
++    # not require this optional visualization package.
++    from flow_vis import flow_to_color
++
+@@ -50 +54 @@ def flow_to_img(flow, mask=None):
+-    return img
+\ No newline at end of file
++    return img

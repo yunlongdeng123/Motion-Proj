@@ -67,6 +67,8 @@ def load_config(path: Path) -> dict[str, Any]:
     extensions = value.get("extensions", [])
     if [row.get("import") for row in extensions] != ["simple_knn._C", "diff_gaussian_rasterization"]:
         raise AdgsEnvironmentError("AD-GS CUDA extension 集合漂移")
+    if [row.get("import") for row in value.get("runtime_wheels", [])] != ["roma"]:
+        raise AdgsEnvironmentError("AD-GS runtime wheel 集合漂移")
     return value
 
 
@@ -118,6 +120,25 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
     wheel_actual = {"bytes": wheel.stat().st_size, "sha256": sha256_file(wheel)} if wheel.is_file() else None
     if wheel_actual != {"bytes": wheel_expected["bytes"], "sha256": wheel_expected["sha256"]}:
         raise AdgsEnvironmentError(f"plyfile wheel 漂移：{wheel_actual}")
+    runtime_wheels = []
+    for row in config.get("runtime_wheels", []):
+        runtime_wheel = Path(row["path"])
+        actual = (
+            {"bytes": runtime_wheel.stat().st_size, "sha256": sha256_file(runtime_wheel)}
+            if runtime_wheel.is_file()
+            else None
+        )
+        expected = {"bytes": row["bytes"], "sha256": row["sha256"]}
+        if actual != expected:
+            raise AdgsEnvironmentError(f"runtime wheel 漂移：{row['name']}={actual}")
+        runtime_wheels.append(
+            {
+                "name": row["name"],
+                "import": row["import"],
+                "path": str(runtime_wheel),
+                **actual,
+            }
+        )
     base_probe = subprocess.run(
         [str(base / "bin/python"), "-c", "import json,sys,torch;print(json.dumps({'python':sys.version.split()[0],'torch':torch.__version__,'torch_cuda':torch.version.cuda}))"],
         capture_output=True,
@@ -134,6 +155,7 @@ def inspect_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
         "modified_files": changed,
         "compatibility_patch": {"path": str(patch), "bytes": patch.stat().st_size, "sha256": sha256_file(patch)},
         "plyfile_wheel": {"path": str(wheel), **wheel_actual},
+        "runtime_wheels": runtime_wheels,
         "base_environment": {"path": str(base), **versions},
     }
 
@@ -162,6 +184,14 @@ def build_commands(
     commands: list[tuple[str, list[str], Path]] = [
         ("install_plyfile", [python, "-m", "pip", "install", "--no-index", "--no-deps", paths["plyfile_wheel"]], adgs),
     ]
+    for wheel in config.get("runtime_wheels", []):
+        commands.append(
+            (
+                f"install_runtime_{wheel['name']}",
+                [python, "-m", "pip", "install", "--no-index", "--no-deps", wheel["path"]],
+                adgs,
+            )
+        )
     for extension in config["extensions"]:
         source = (extension_root or adgs) / extension["source"]
         commands.append((f"build_{extension['name']}", [python, "-m", "pip", "install", "--no-index", "--no-deps", "--no-build-isolation", "."], source))
@@ -225,7 +255,11 @@ def run_stage(run_dir: Path, name: str, command: list[str], cwd: Path, environme
 def audit_environment(config: Mapping[str, Any]) -> dict[str, Any]:
     target = Path(config["paths"]["target_environment"])
     python = target / "bin/python"
-    imports = ["plyfile"] + [row["import"] for row in config["extensions"]]
+    imports = (
+        ["plyfile"]
+        + [row["import"] for row in config.get("runtime_wheels", [])]
+        + [row["import"] for row in config["extensions"]]
+    )
     probe_code = "import importlib,json,sys,torch; names=" + repr(imports) + "; print(json.dumps({'python':sys.version.split()[0],'torch':torch.__version__,'torch_cuda':torch.version.cuda,'imports':{n:importlib.import_module(n).__file__ for n in names}}))"
     probe = subprocess.run([str(python), "-c", probe_code], capture_output=True, text=True, check=True)
     extensions = []
@@ -296,7 +330,9 @@ def run(config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
         restore_mode = "created_from_frozen_local_environment"
     else:
         restore_mode = "existing_environment_audited"
-        run_stage(run_dir, "cuda_smoke", build_commands(config)[-1][1], build_commands(config)[-1][2], environment)
+        for name, command, cwd in build_commands(config):
+            if name.startswith("install_") or name == "cuda_smoke":
+                run_stage(run_dir, name, command, cwd, environment)
     audit = audit_environment(config)
     write_json(run_dir / "environment" / "environment_audit.json", audit)
     with (run_dir / "environment" / "pip_freeze.txt").open("wb") as handle:
