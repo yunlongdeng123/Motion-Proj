@@ -1,0 +1,81 @@
+schema_version: worldsim_v4_m1_evidence_v1
+task_id: WS-V4-M1-EVIDENCE-FIELD-01
+status: running
+created_at: "2026-08-12"
+
+protocol:
+  dataset: nuScenes
+  tuning_split: development
+  confirmation_split: validation
+  test_quality_read: false
+  smoke_scenes: [scene-0994, scene-0139]
+  development_scenes:
+    [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+  validation_scenes:
+    [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
+  abstain_no_actor_scenes: [scene-0242, scene-0255, scene-0048]
+  calibration_fit_split: development
+  calibration_fit_reuse_for_scoring: true
+  calibration_fit_reuse_note: smoke_and_development_model_selection_only_validation_is_read_only
+
+inputs:
+  cohort_config: configs/worldsim_v4/nuscenes_cohort_v1.yaml
+  baseline_matrix: configs/worldsim_v4/baseline_matrix_v1.yaml
+  v33_replay_config: configs/worldsim_v4/v33_replay_v1.yaml
+  required_v33_arm: O1_dual_opacity
+  require_v33_scene_chain: true
+  require_source_hashes_exact: true
+
+evidence:
+  prior:
+    source: v33_o1_instance_opacity
+    strength: 2.0
+    unassigned_probability: 0.0001
+  update:
+    source: frozen_train_only_v32_semantic_sidecar
+    factors: [mask, visibility, depth, lidar]
+    visibility_saturation_mass: 1.0
+    mask_confidence_floor: 0.25
+    depth_confidence_floor: 0.25
+    lidar_confidence_floor: 0.50
+  authenticity:
+    lidar_supported: 1.0
+    observed_cross_view: 0.80
+  temporal:
+    retention: 0.75
+    freeze_on: development
+
+calibration:
+  candidates: [raw, temperature, beta]
+  target: rendered_evidence_probability
+  ece_bins: 15
+  beta_l2_regularization: 1.0e-6
+  selection_order: [brier, ece, boundary_f1]
+  non_selected_metric_max_degradation: 0.01
+  boundary_f1_max_degradation: 0.01
+  false_negative_mass_max_degradation: 0.01
+
+evaluation:
+  mask_threshold: 0.5
+  candidate_policy: o1_owned_union_positive_evidence
+  minimum_positive_views: 1
+  boundary_tolerance_pixels: 3.0
+  metrics: [iou, boundary_f1, false_positive_semantic_mass,
+            false_negative_semantic_mass, ece, brier]
+  reference: v33_o1
+  scene_aggregation: unweighted_mean
+  retain_failed_blocked_abstain_in_denominator: true
+
+immutability:
+  sidecar_only: true
+  base_geometry_requires_grad: false
+  checkpoint_sha_before_after_exact: true
+  base_rgb_render_sha_exact: true
+
+gates:
+  boundary_f1_scene_mean_delta_min: 0.03
+  false_negative_semantic_mass_delta_max: 0.01
+  require_ece_or_brier_improvement: true
+  other_calibration_metric_max_degradation: 0.01
+  base_rgb_exact: true
+  reject_if_failed: true
