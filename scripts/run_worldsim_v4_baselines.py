@@ -21,20 +21,70 @@ import yaml
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
 REQUIRED_METHODS = ("streetgs", "v33_frozen", "ad_gs")
+V33_REQUIRED_STAGES = (
+    "semantic_lift",
+    "instance_field",
+    "roadpatch",
+    "asset_harvester",
+    "spatial_delta",
+    "semantic_render",
+)
+V33_ABSTAIN_STAGES = ("roadpatch", "asset_harvester", "semantic_render")
+V33_REQUIRED_FILES = ("scene_chain.json", "render_manifest.json", "metrics.json")
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_matrix_v1.yaml",
     "configs/worldsim_v4/metrics_v1.yaml",
+    "configs/worldsim_v4/v33_replay_v1.yaml",
     "motion_proj/worldsim_v4/evaluator.py",
     "motion_proj/worldsim_v4/region_masks.py",
     "motion_proj/worldsim_v4/baseline_scene_evaluator.py",
     "motion_proj/worldsim_v4/statistics.py",
     "motion_proj/worldsim_v4/engineering_metrics.py",
+    "motion_proj/worldsim_v4/v33_replay.py",
+    "motion_proj/worldsim_v4/semantic_split.py",
+    "motion_proj/worldsim_v33/evaluation_partition.py",
+    "scripts/build_worldsim_v4_v33_actor_registry.py",
+    "scripts/materialize_worldsim_v4_v33_replay.py",
+    "scripts/materialize_worldsim_v4_v33_semantic_config.py",
+    "scripts/materialize_worldsim_v4_v33_instance_config.py",
+    "scripts/run_worldsim_v4_v33_semantic_lift.py",
+    "scripts/run_worldsim_v4_v33_instance_field.py",
+    "scripts/finalize_worldsim_v33_s1.py",
+    "scripts/materialize_worldsim_v4_v33_spatial_config.py",
+    "scripts/build_worldsim_v33_s4_spatial_delta.py",
+    "scripts/evaluate_worldsim_v33_s4_spatial_delta.py",
+    "scripts/run_worldsim_v4_v33_spatial_delta.py",
+    "scripts/finalize_worldsim_v4_v33_scene_chain.py",
+    "scripts/build_worldsim_v4_v33_registration.py",
+    "scripts/prepare_worldsim_v32_s1_prompts.py",
+    "scripts/validate_worldsim_v32_s1.py",
+    "scripts/build_worldsim_v32_sam_masks.py",
+    "scripts/lift_worldsim_v32_semantics.py",
+    "scripts/finalize_worldsim_v32_s1.py",
+    "scripts/prepare_worldsim_v33_s1_eval_prompts.py",
+    "scripts/build_worldsim_v33_s1_eval_masks.py",
+    "scripts/finalize_worldsim_v33_s1_eval_targets.py",
+    "scripts/run_worldsim_v33_s1_instance_field.py",
     "scripts/run_worldsim_v4_baselines.py",
     "tests/test_worldsim_v4_evaluator.py",
     "tests/test_worldsim_v4_region_masks.py",
     "tests/test_worldsim_v4_baseline_scene_evaluator.py",
     "tests/test_worldsim_v4_statistics.py",
     "tests/test_worldsim_v4_engineering_metrics.py",
+    "tests/test_materialize_worldsim_v4_v33_replay.py",
+    "tests/test_materialize_worldsim_v4_v33_semantic_config.py",
+    "tests/test_materialize_worldsim_v4_v33_instance_config.py",
+    "tests/test_run_worldsim_v4_v33_semantic_lift.py",
+    "tests/test_run_worldsim_v4_v33_instance_field.py",
+    "tests/test_worldsim_v4_v33_spatial_delta.py",
+    "tests/test_run_worldsim_v4_v33_spatial_delta.py",
+    "tests/test_finalize_worldsim_v4_v33_scene_chain.py",
+    "tests/test_build_worldsim_v4_v33_registration.py",
+    "tests/test_build_worldsim_v4_v33_actor_registry.py",
+    "tests/test_prepare_worldsim_v32_s1_prompts.py",
+    "tests/test_worldsim_v4_semantic_split.py",
+    "tests/test_worldsim_v33_evaluation_partition.py",
+    "tests/test_worldsim_v4_v33_replay.py",
 )
 
 
@@ -172,6 +222,148 @@ def _single_checkpoint_registration_state(value: Any) -> dict[str, Any]:
     }
 
 
+def _v33_chain_registration_state(
+    value: Any, *, expected_scene: str
+) -> dict[str, Any]:
+    """只有完整、内容寻址且语义闭环的逐场景链才计入 V3.3 coverage。"""
+    if not isinstance(value, Mapping):
+        return {
+            "state": "not_registered",
+            "executable_exact": False,
+            "files": {},
+        }
+    configured_files = value.get("files")
+    if not isinstance(configured_files, Mapping) or set(configured_files) != set(
+        V33_REQUIRED_FILES
+    ):
+        return {
+            "state": "invalid_registration",
+            "executable_exact": False,
+            "files": {},
+        }
+
+    run = Path(str(value.get("run", "")))
+    run_state = (
+        _path_state(run, kind="dir")
+        if value.get("run")
+        else {"path": None, "exists": False, "state": "not_registered"}
+    )
+    evidence: dict[str, Any] = {}
+    for name, field in (
+        ("summary.json", "summary_sha256"),
+        ("manifest.json", "manifest_sha256"),
+        ("status.json", "status_sha256"),
+    ):
+        actual = _path_state(run / name) if run_state["exists"] else _path_state(None)
+        expected_sha256 = value.get(field)
+        evidence[name] = {
+            **actual,
+            "expected_sha256": expected_sha256,
+            "sha256_exact": actual.get("sha256") == expected_sha256,
+        }
+
+    files: dict[str, Any] = {}
+    for name in V33_REQUIRED_FILES:
+        configured = configured_files[name]
+        if not isinstance(configured, Mapping):
+            files[name] = {"state": "invalid_registration", "exact": False}
+            continue
+        actual = _path_state(configured.get("path"))
+        bytes_exact = actual.get("bytes") == configured.get("bytes")
+        sha256_exact = actual.get("sha256") == configured.get("sha256")
+        inside_run = bool(
+            actual["exists"]
+            and run_state["exists"]
+            and Path(str(actual["path"])).resolve().is_relative_to(run.resolve())
+        )
+        files[name] = {
+            **actual,
+            "expected_bytes": configured.get("bytes"),
+            "expected_sha256": configured.get("sha256"),
+            "bytes_exact": bytes_exact,
+            "sha256_exact": sha256_exact,
+            "inside_run": inside_run,
+            "exact": actual["exists"] and bytes_exact and sha256_exact and inside_run,
+        }
+
+    all_files_exact = all(row.get("exact", False) for row in files.values())
+    evidence_exact = all(row["exists"] and row["sha256_exact"] for row in evidence.values())
+    chain_semantics_exact = False
+    terminal_exact = False
+    stage_states: dict[str, Any] = {}
+    if all_files_exact:
+        chain = json.loads(Path(files["scene_chain.json"]["path"]).read_text(encoding="utf-8"))
+        stages = chain.get("stages", {}) if isinstance(chain, Mapping) else {}
+        for stage in V33_REQUIRED_STAGES:
+            row = stages.get(stage, {}) if isinstance(stages, Mapping) else {}
+            status = row.get("status") if isinstance(row, Mapping) else None
+            reason = row.get("reason") if isinstance(row, Mapping) else None
+            valid = status == "done" or (
+                stage in V33_ABSTAIN_STAGES
+                and status == "abstain"
+                and isinstance(reason, str)
+                and bool(reason.strip())
+            )
+            stage_states[stage] = {"status": status, "reason": reason, "valid": valid}
+        render = json.loads(
+            Path(files["render_manifest.json"]["path"]).read_text(encoding="utf-8")
+        )
+        metrics = json.loads(
+            Path(files["metrics.json"]["path"]).read_text(encoding="utf-8")
+        )
+        render_rows = render.get("rows", []) if isinstance(render, Mapping) else []
+        metric_rows = metrics.get("rows", []) if isinstance(metrics, Mapping) else []
+        evaluation_exact = bool(
+            render.get("scene") == expected_scene
+            and render.get("split") == "development"
+            and render.get("test_quality_read") is False
+            and isinstance(render_rows, list)
+            and bool(render_rows)
+            and metrics.get("scene") == expected_scene
+            and metrics.get("split") == "development"
+            and metrics.get("test_quality_read") is False
+            and isinstance(metric_rows, list)
+            and bool(metric_rows)
+        )
+        chain_semantics_exact = bool(
+            chain.get("schema_version") == "worldsim_v4_v33_scene_chain_v1"
+            and chain.get("scene") == expected_scene
+            and chain.get("algorithm_commit") == value.get("algorithm_commit")
+            and chain.get("base_checkpoint_sha256")
+            == value.get("base_checkpoint_sha256")
+            and chain.get("partition_contract") == "sample_index_mod_5"
+            and chain.get("test_quality_read") is False
+            and set(stages) == set(V33_REQUIRED_STAGES)
+            and all(row["valid"] for row in stage_states.values())
+            and evaluation_exact
+        )
+    if evidence_exact:
+        terminal = json.loads(Path(evidence["status.json"]["path"]).read_text(encoding="utf-8"))
+        terminal_exact = bool(
+            terminal.get("scene") == expected_scene
+            and terminal.get("status", terminal.get("state")) in {"done", "completed"}
+            and terminal.get("test_quality_read") is False
+        )
+    executable_exact = bool(
+        all_files_exact and evidence_exact and chain_semantics_exact and terminal_exact
+    )
+    return {
+        "state": "executable_exact" if executable_exact else "scene_chain_mismatch",
+        "executable_exact": executable_exact,
+        "run": run_state,
+        "scene": expected_scene,
+        "algorithm_commit": value.get("algorithm_commit"),
+        "base_checkpoint_sha256": value.get("base_checkpoint_sha256"),
+        "all_files_exact": all_files_exact,
+        "evidence_exact": evidence_exact,
+        "chain_semantics_exact": chain_semantics_exact,
+        "terminal_exact": terminal_exact,
+        "stage_states": stage_states,
+        "evidence": evidence,
+        "files": files,
+    }
+
+
 def _validate_metrics(config: Mapping[str, Any]) -> None:
     image = config.get("image", {})
     if image.get("primary") != ["psnr", "ssim", "lpips_alex"]:
@@ -243,13 +435,37 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
 
     v33 = baselines["v33_frozen"]
     v33_source = _path_state(v33["source_run"], kind="dir")
-    v33_scenes = {
-        scene: {
-            "state": "executable_frozen_chain" if scene in v33.get("executable_scenes", []) and v33_source["exists"] else "missing_scene_chain",
-            "source_run": v33_source["path"] if scene in v33.get("executable_scenes", []) else None,
-        }
-        for scene in scenes
-    }
+    v33_registrations = v33.get("executable_scene_chains", {})
+    if not isinstance(v33_registrations, Mapping):
+        v33_registrations = {}
+    v33_scenes: dict[str, Any] = {}
+    for scene in scenes:
+        registration = _v33_chain_registration_state(
+            v33_registrations.get(scene), expected_scene=scene
+        )
+        legacy_exact = bool(
+            scene in v33.get("legacy_executable_scenes", [])
+            and scene == "scene-0230"
+            and v33_source["exists"]
+        )
+        if legacy_exact:
+            v33_scenes[scene] = {
+                "state": "executable_frozen_chain",
+                "source_run": v33_source["path"],
+                "legacy_canonical": True,
+                "registration": registration,
+            }
+        else:
+            v33_scenes[scene] = {
+                "state": (
+                    "executable_frozen_chain"
+                    if registration["executable_exact"]
+                    else "missing_scene_chain"
+                ),
+                "source_run": registration.get("run", {}).get("path"),
+                "legacy_canonical": False,
+                "registration": registration,
+            }
 
     adgs = baselines["ad_gs"]
     adgs_root = Path(adgs["implementation_root"])
@@ -321,7 +537,14 @@ def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
         "scenes": scenes,
         "methods": {
             "streetgs": {"runtime": street_runtime, "scenes": street_scenes},
-            "v33_frozen": {"runtime": {"source_run": v33_source, "canonical_read_only": True}, "scenes": v33_scenes},
+            "v33_frozen": {
+                "runtime": {
+                    "source_run": v33_source,
+                    "canonical_read_only": True,
+                    "algorithm_commit": v33.get("implementation_commit"),
+                },
+                "scenes": v33_scenes,
+            },
             "ad_gs": {"runtime": adgs_runtime, "scenes": adgs_scenes},
         },
     }

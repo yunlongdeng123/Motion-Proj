@@ -18,6 +18,7 @@ from motion_proj.worldsim_v32.semantic_schema import (
     validate_actor_identity_contract,
     validate_disjoint_split,
 )
+from motion_proj.worldsim_v4.semantic_split import resolve_semantic_split
 
 
 def main() -> None:
@@ -68,9 +69,16 @@ def main() -> None:
             registry_actor=registry_by_token[token],
         )
 
-    heldout = [int(value) for value in config["split"]["heldout_frames"]]
-    train = [frame for frame in range(int(config["scene"]["frame_count"])) if frame not in set(heldout)]
-    validate_disjoint_split(train, heldout)
+    split = resolve_semantic_split(config)
+    heldout = split["heldout"]
+    development = split["development"]
+    forbidden = set(heldout) | set(development)
+    train = [
+        frame
+        for frame in range(int(config["scene"]["frame_count"]))
+        if frame not in forbidden
+    ]
+    validate_disjoint_split(train, sorted(forbidden))
     sam_root = Path(config["sam2"]["source_checkout"])
     head = subprocess.check_output(
         ["git", "-C", str(sam_root), "rev-parse", "HEAD"], text=True
@@ -82,7 +90,8 @@ def main() -> None:
             raise FileNotFoundError(config["runtimes"][runtime])
     print(json.dumps({
         "status": "done", "task_id": config["task_id"], "verified": verified,
-        "train_frames": len(train), "heldout_frames": heldout,
+        "train_frames": len(train), "development_frames": development,
+        "heldout_frames": heldout, "development_excluded": True,
         "heldout_excluded": True, "sam2_source_commit": head,
         "actor_identity_contract": "validated",
     }, ensure_ascii=False, indent=2))

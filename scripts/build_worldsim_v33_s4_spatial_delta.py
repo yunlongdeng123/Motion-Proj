@@ -86,6 +86,17 @@ def write_stack(
     return path
 
 
+def available_stack_ids(*, has_background: bool, has_actor: bool) -> list[str]:
+    stacks = ["base_only", "erase"]
+    if has_background:
+        stacks.append("erase_background")
+    if has_actor:
+        stacks.append("actor_override")
+    if has_background and has_actor:
+        stacks.append("full")
+    return stacks
+
+
 def main() -> int:
     global _ACTIVE_RUN_DIR
     parser = argparse.ArgumentParser()
@@ -94,9 +105,15 @@ def main() -> int:
     args = parser.parse_args()
     started = time.time()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    if config.get("schema_version") != "worldsim_v33_s4_spatial_delta_v1":
+    if config.get("schema_version") not in {
+        "worldsim_v33_s4_spatial_delta_v1",
+        "worldsim_v4_v33_spatial_delta_v1",
+    }:
         raise ValueError("S4 config schema version 漂移")
-    if config.get("task_id") != "WS-V33-S4-SPATIAL-DELTA-01":
+    if config.get("task_id") not in {
+        "WS-V33-S4-SPATIAL-DELTA-01",
+        "WS-V4-B0-MATCHED-BASELINES-01",
+    }:
         raise ValueError("S4 task_id 漂移")
     if tuple(config["composition"]["order"]) != (
         "ERASE",
@@ -141,37 +158,46 @@ def main() -> int:
         "Background": int(np.sum(np.asarray(erase["model_code"]) == 0)),
         "RigidNodes": int(np.sum(np.asarray(erase["model_code"]) == 1)),
     }
-    expected_counts = {
-        name: int(value) for name, value in config["gates"]["erase_counts"].items()
-    }
-    if erase_counts != expected_counts:
+    expected_counts = config["gates"].get("erase_counts")
+    if expected_counts is not None:
+        expected_counts = {
+            name: int(value) for name, value in expected_counts.items()
+        }
+    if expected_counts is not None and erase_counts != expected_counts:
         raise RuntimeError(
             f"ERASE count 漂移: expected={expected_counts} actual={erase_counts}"
         )
 
-    parent_background = load_patch_delta(
-        config["inputs"]["s2_roadpatch_delta"]["path"]
-    )
-    background = filter_background_delta(
-        parent_background, target_role=str(actor["role"])
-    )
-    with np.load(
-        config["inputs"]["s3_actor_asset"]["path"], allow_pickle=False
-    ) as payload:
-        source_asset = {name: payload[name].copy() for name in payload.files}
-    actor_delta = build_actor_insert_delta(
-        source_asset,
-        instance_id=int(actor["dataset_instance_id"]),
-        instance_token=str(actor["instance_token"]),
-        rigid_model_index=int(actor["rigid_model_index"]),
-    )
+    has_background = "s2_roadpatch_delta" in config["inputs"]
+    has_actor = "s3_actor_asset" in config["inputs"]
+    background = None
+    if has_background:
+        parent_background = load_patch_delta(
+            config["inputs"]["s2_roadpatch_delta"]["path"]
+        )
+        background = filter_background_delta(
+            parent_background, target_role=str(actor["role"])
+        )
+    actor_delta = None
+    if has_actor:
+        with np.load(
+            config["inputs"]["s3_actor_asset"]["path"], allow_pickle=False
+        ) as payload:
+            source_asset = {name: payload[name].copy() for name in payload.files}
+        actor_delta = build_actor_insert_delta(
+            source_asset,
+            instance_id=int(actor["dataset_instance_id"]),
+            instance_token=str(actor["instance_token"]),
+            rigid_model_index=int(actor["rigid_model_index"]),
+        )
 
     base_dir = package / "base"
     delete_dir = package / f"deltas/delete_actor_{actor['dataset_instance_id']}"
     actor_dir = package / f"deltas/actor_override_{actor['dataset_instance_id']}"
     base_dir.mkdir(parents=True)
     delete_dir.mkdir(parents=True)
-    actor_dir.mkdir(parents=True)
+    if has_actor:
+        actor_dir.mkdir(parents=True)
     atomic_json(
         base_dir / "checkpoint.ref.json",
         {
@@ -212,73 +238,97 @@ def main() -> int:
         "effective_opacity": 0.0,
     }
     atomic_json(delete_dir / "erase.json", erase_descriptor)
-    background_path = delete_dir / "background_patch.npz"
-    atomic_save_npz(background_path, background)
-    background_manifest = {
-        "operation_id": f"insert_background_actor_{actor['dataset_instance_id']}",
-        "type": "INSERT_BACKGROUND",
-        "provenance": "GENERATED_BY_PATCH_REUSE",
-        "target_role": str(actor["role"]),
-        "rows": int(len(background["means"])),
-        "arrays_sha256": sha256_arrays(background),
-        "payload": file_record(background_path, package),
-        "parent_delta": verified["s2_roadpatch_delta"],
-    }
-    atomic_json(delete_dir / "manifest.json", background_manifest)
+    background_manifest = None
+    if background is not None:
+        background_path = delete_dir / "background_patch.npz"
+        atomic_save_npz(background_path, background)
+        background_manifest = {
+            "operation_id": f"insert_background_actor_{actor['dataset_instance_id']}",
+            "type": "INSERT_BACKGROUND",
+            "provenance": "GENERATED_BY_PATCH_REUSE",
+            "target_role": str(actor["role"]),
+            "rows": int(len(background["means"])),
+            "arrays_sha256": sha256_arrays(background),
+            "payload": file_record(background_path, package),
+            "parent_delta": verified["s2_roadpatch_delta"],
+        }
+        atomic_json(delete_dir / "manifest.json", background_manifest)
 
-    actor_path = actor_dir / "actor_override.npz"
-    atomic_save_actor_insert_delta(actor_path, actor_delta)
-    actor_loaded = load_actor_insert_delta(actor_path)
-    actor_manifest = {
-        "operation_id": f"insert_actor_{actor['dataset_instance_id']}",
-        "type": "INSERT_ACTOR",
-        "provenance": "GENERATED_ACTOR",
-        "instance_id": int(actor["dataset_instance_id"]),
-        "instance_token": str(actor["instance_token"]),
-        "rigid_model_index": int(actor["rigid_model_index"]),
-        "rows": int(len(actor_loaded["means"])),
-        "arrays_sha256": sha256_arrays(actor_loaded),
-        "payload": file_record(actor_path, package),
-        "parent_asset": verified["s3_actor_asset"],
-        "base_rows_deleted": 0,
-    }
-    atomic_json(actor_dir / "manifest.json", actor_manifest)
+    actor_loaded = None
+    actor_manifest = None
+    if actor_delta is not None:
+        actor_path = actor_dir / "actor_override.npz"
+        atomic_save_actor_insert_delta(actor_path, actor_delta)
+        actor_loaded = load_actor_insert_delta(actor_path)
+        actor_manifest = {
+            "operation_id": f"insert_actor_{actor['dataset_instance_id']}",
+            "type": "INSERT_ACTOR",
+            "provenance": "GENERATED_ACTOR",
+            "instance_id": int(actor["dataset_instance_id"]),
+            "instance_token": str(actor["instance_token"]),
+            "rigid_model_index": int(actor["rigid_model_index"]),
+            "rows": int(len(actor_loaded["means"])),
+            "arrays_sha256": sha256_arrays(actor_loaded),
+            "payload": file_record(actor_path, package),
+            "parent_asset": verified["s3_actor_asset"],
+            "base_rows_deleted": 0,
+        }
+        atomic_json(actor_dir / "manifest.json", actor_manifest)
 
     erase_op = {
         "operation_id": erase_descriptor["operation_id"],
         "type": "ERASE",
         "manifest": (delete_dir / "erase.json").relative_to(package).as_posix(),
     }
-    background_op = {
-        "operation_id": background_manifest["operation_id"],
-        "type": "INSERT_BACKGROUND",
-        "manifest": (delete_dir / "manifest.json").relative_to(package).as_posix(),
-    }
-    actor_op = {
-        "operation_id": actor_manifest["operation_id"],
-        "type": "INSERT_ACTOR",
-        "manifest": (actor_dir / "manifest.json").relative_to(package).as_posix(),
-    }
     render_op = {"operation_id": "render_only", "type": "RENDER_ONLY"}
     stack_paths = [
         write_stack(package, stack_id="base_only", operations=[render_op]),
         write_stack(package, stack_id="erase", operations=[erase_op, render_op]),
-        write_stack(
-            package,
-            stack_id="erase_background",
-            operations=[erase_op, background_op, render_op],
-        ),
-        write_stack(
-            package,
-            stack_id="actor_override",
-            operations=[erase_op, actor_op, render_op],
-        ),
-        write_stack(
-            package,
-            stack_id="full",
-            operations=[erase_op, background_op, actor_op, render_op],
-        ),
     ]
+    background_op = None
+    if background_manifest is not None:
+        background_op = {
+            "operation_id": background_manifest["operation_id"],
+            "type": "INSERT_BACKGROUND",
+            "manifest": (delete_dir / "manifest.json").relative_to(package).as_posix(),
+        }
+        stack_paths.append(
+            write_stack(
+                package,
+                stack_id="erase_background",
+                operations=[erase_op, background_op, render_op],
+            )
+        )
+    actor_op = None
+    if actor_manifest is not None:
+        actor_op = {
+            "operation_id": actor_manifest["operation_id"],
+            "type": "INSERT_ACTOR",
+            "manifest": (actor_dir / "manifest.json").relative_to(package).as_posix(),
+        }
+        stack_paths.append(
+            write_stack(
+                package,
+                stack_id="actor_override",
+                operations=[erase_op, actor_op, render_op],
+            )
+        )
+    if background_op is not None and actor_op is not None:
+        stack_paths.append(
+            write_stack(
+                package,
+                stack_id="full",
+                operations=[erase_op, background_op, actor_op, render_op],
+            )
+        )
+    actual_stack_ids = [path.stem for path in stack_paths]
+    expected_stack_ids = available_stack_ids(
+        has_background=has_background, has_actor=has_actor
+    )
+    if actual_stack_ids != expected_stack_ids:
+        raise RuntimeError("S4 stack availability 漂移")
+    if list(config["composition"].get("stacks", actual_stack_ids)) != actual_stack_ids:
+        raise RuntimeError("S4 config/actual stack 集漂移")
 
     inventory = [
         file_record(path, package)
@@ -301,6 +351,8 @@ def main() -> int:
         },
         "actor": actor,
         "composition_order": config["composition"]["order"],
+        "available_stacks": actual_stack_ids,
+        "stage_abstentions": config.get("stage_abstentions", {}),
         "stacks": [file_record(path, package) for path in stack_paths],
         "inventory": inventory,
         "invariants": {
@@ -335,8 +387,14 @@ def main() -> int:
         "state": "completed",
         "verified_inputs": verified,
         "erase_counts": erase_counts,
-        "background_insert_rows": int(len(background["means"])),
-        "actor_insert_rows": int(len(actor_loaded["means"])),
+        "background_insert_rows": (
+            0 if background is None else int(len(background["means"]))
+        ),
+        "actor_insert_rows": (
+            0 if actor_loaded is None else int(len(actor_loaded["means"]))
+        ),
+        "available_stacks": actual_stack_ids,
+        "stage_abstentions": config.get("stage_abstentions", {}),
         "package_manifest": {
             **file_record(package_manifest_path, package),
             "absolute_path": str(package_manifest_path),

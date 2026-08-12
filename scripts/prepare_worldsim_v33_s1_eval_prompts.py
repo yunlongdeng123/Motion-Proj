@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""为固定 heldout 帧生成 evaluation-only SAM2.1 projected-box prompts。"""
+"""为冻结 evaluation 分区生成 SAM2.1 projected-box prompts。"""
 
 from __future__ import annotations
 
@@ -24,6 +24,7 @@ from motion_proj.worldsim_v32.semantic_schema import (
     sha256_file,
     validate_actor_identity_contract,
 )
+from motion_proj.worldsim_v33.evaluation_partition import resolve_evaluation_frames
 
 
 def atomic_json(path: Path, payload: object) -> None:
@@ -51,9 +52,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--partition", choices=("development", "heldout"), default="heldout"
+    )
     args = parser.parse_args()
     if args.output_dir.exists():
-        raise FileExistsError(f"拒绝覆盖 heldout prompt 目录: {args.output_dir}")
+        raise FileExistsError(f"拒绝覆盖 evaluation prompt 目录: {args.output_dir}")
     args.output_dir.mkdir(parents=True)
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     inputs = config["inputs"]
@@ -90,7 +94,7 @@ def main() -> None:
         }
 
     blocks: list[dict[str, Any]] = []
-    heldout = [int(value) for value in config["split"]["heldout_frames"]]
+    evaluation_frames = resolve_evaluation_frames(config, args.partition)
     for camera in config["scene"]["cameras"]:
         camera_id = int(camera["id"])
         intrinsics_path = scene_dir / "intrinsics" / f"{camera_id}.txt"
@@ -99,11 +103,11 @@ def main() -> None:
             [[raw[0], 0.0, raw[2]], [0.0, raw[1], raw[3]], [0.0, 0.0, 1.0]],
             dtype=np.float64,
         )
-        for frame in heldout:
+        for frame in evaluation_frames:
             image_path = scene_dir / "images" / f"{frame:03d}_{camera_id}.jpg"
             extrinsics_path = scene_dir / "extrinsics" / f"{frame:03d}_{camera_id}.txt"
             if not image_path.is_file() or not extrinsics_path.is_file():
-                raise FileNotFoundError(f"heldout view 缺失: {frame}/{camera_id}")
+                raise FileNotFoundError(f"evaluation view 缺失: {frame}/{camera_id}")
             with Image.open(image_path) as image:
                 width, height = image.size
             c2w = np.loadtxt(extrinsics_path, dtype=np.float64).reshape(4, 4)
@@ -167,12 +171,17 @@ def main() -> None:
                 }
             )
     manifest = {
-        "schema_version": "worldsim_v33_s1_heldout_prompt_manifest_v1",
+        "schema_version": (
+            "worldsim_v33_s1_heldout_prompt_manifest_v1"
+            if args.partition == "heldout"
+            else "worldsim_v33_s1_eval_prompt_manifest_v2"
+        ),
         "task_id": config["task_id"],
         "config": str(args.config.resolve()),
         "config_sha256": sha256_file(args.config),
         "scene": config["scene"]["name"],
-        "evaluation_frames": heldout,
+        "evaluation_partition": args.partition,
+        "evaluation_frames": evaluation_frames,
         "optimization_forbidden": True,
         "instances_info": str(instances_path),
         "instances_info_sha256": sha256_file(instances_path),

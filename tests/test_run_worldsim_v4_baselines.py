@@ -7,7 +7,11 @@ from pathlib import Path
 import yaml
 
 from scripts import run_worldsim_v4_baselines as baselines
-from scripts.run_worldsim_v4_baselines import _checkpoint_registration_state, _single_checkpoint_registration_state
+from scripts.run_worldsim_v4_baselines import (
+    _checkpoint_registration_state,
+    _single_checkpoint_registration_state,
+    _v33_chain_registration_state,
+)
 
 
 def _sha256(path: Path) -> str:
@@ -92,6 +96,139 @@ def test_single_checkpoint_registration_rejects_hash_drift(tmp_path: Path) -> No
     assert result["sha256_exact"] is False
 
 
+def _v33_registration(tmp_path: Path, *, scene: str = "scene-0242") -> dict:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    stages = {
+        name: {"status": "done"}
+        for name in baselines.V33_REQUIRED_STAGES
+    }
+    chain = {
+        "schema_version": "worldsim_v4_v33_scene_chain_v1",
+        "scene": scene,
+        "algorithm_commit": "e6663e1",
+        "base_checkpoint_sha256": "base-sha",
+        "partition_contract": "sample_index_mod_5",
+        "test_quality_read": False,
+        "stages": stages,
+    }
+    status = {"status": "done", "scene": scene, "test_quality_read": False}
+    for name, payload in (
+        ("scene_chain.json", chain),
+        (
+            "render_manifest.json",
+            {
+                "scene": scene,
+                "split": "development",
+                "test_quality_read": False,
+                "rows": [{"frame": 2, "camera": 0}],
+            },
+        ),
+        (
+            "metrics.json",
+            {
+                "scene": scene,
+                "split": "development",
+                "test_quality_read": False,
+                "rows": [{"psnr": 20.0, "ssim": 0.8, "lpips_alex": 0.2}],
+            },
+        ),
+        ("summary.json", {"scene": scene}),
+        ("manifest.json", {"scene": scene}),
+        ("status.json", status),
+    ):
+        (tmp_path / name).write_text(
+            baselines.canonical_json_bytes(payload).decode("utf-8"), encoding="utf-8"
+        )
+    files = {
+        name: {
+            "path": str(tmp_path / name),
+            "bytes": (tmp_path / name).stat().st_size,
+            "sha256": _sha256(tmp_path / name),
+        }
+        for name in baselines.V33_REQUIRED_FILES
+    }
+    return {
+        "run": str(tmp_path),
+        "algorithm_commit": "e6663e1",
+        "base_checkpoint_sha256": "base-sha",
+        "summary_sha256": _sha256(tmp_path / "summary.json"),
+        "manifest_sha256": _sha256(tmp_path / "manifest.json"),
+        "status_sha256": _sha256(tmp_path / "status.json"),
+        "files": files,
+    }
+
+
+def test_v33_registration_requires_exact_complete_scene_chain(tmp_path: Path) -> None:
+    result = _v33_chain_registration_state(
+        _v33_registration(tmp_path), expected_scene="scene-0242"
+    )
+
+    assert result["state"] == "executable_exact"
+    assert result["executable_exact"] is True
+    assert result["chain_semantics_exact"] is True
+    assert set(result["stage_states"]) == set(baselines.V33_REQUIRED_STAGES)
+
+
+def test_v33_registration_accepts_explicit_stage_abstain(tmp_path: Path) -> None:
+    registration = _v33_registration(tmp_path)
+    chain_path = Path(registration["files"]["scene_chain.json"]["path"])
+    chain = yaml.safe_load(chain_path.read_text(encoding="utf-8"))
+    chain["stages"]["asset_harvester"] = {
+        "status": "abstain",
+        "reason": "insufficient_real_views",
+    }
+    chain_path.write_bytes(baselines.canonical_json_bytes(chain))
+    registration["files"]["scene_chain.json"].update(
+        bytes=chain_path.stat().st_size, sha256=_sha256(chain_path)
+    )
+
+    result = _v33_chain_registration_state(
+        registration, expected_scene="scene-0242"
+    )
+
+    assert result["executable_exact"] is True
+    assert result["stage_states"]["asset_harvester"]["status"] == "abstain"
+
+
+def test_v33_registration_rejects_missing_or_unreasoned_stage(tmp_path: Path) -> None:
+    registration = _v33_registration(tmp_path)
+    chain_path = Path(registration["files"]["scene_chain.json"]["path"])
+    chain = yaml.safe_load(chain_path.read_text(encoding="utf-8"))
+    chain["stages"]["roadpatch"] = {"status": "abstain"}
+    chain_path.write_bytes(baselines.canonical_json_bytes(chain))
+    registration["files"]["scene_chain.json"].update(
+        bytes=chain_path.stat().st_size, sha256=_sha256(chain_path)
+    )
+
+    result = _v33_chain_registration_state(
+        registration, expected_scene="scene-0242"
+    )
+
+    assert result["executable_exact"] is False
+    assert result["chain_semantics_exact"] is False
+
+
+def test_v33_registration_rejects_abstain_for_required_core_stage(tmp_path: Path) -> None:
+    registration = _v33_registration(tmp_path)
+    chain_path = Path(registration["files"]["scene_chain.json"]["path"])
+    chain = yaml.safe_load(chain_path.read_text(encoding="utf-8"))
+    chain["stages"]["instance_field"] = {
+        "status": "abstain",
+        "reason": "not_allowed_for_core_stage",
+    }
+    chain_path.write_bytes(baselines.canonical_json_bytes(chain))
+    registration["files"]["scene_chain.json"].update(
+        bytes=chain_path.stat().st_size, sha256=_sha256(chain_path)
+    )
+
+    result = _v33_chain_registration_state(
+        registration, expected_scene="scene-0242"
+    )
+
+    assert result["executable_exact"] is False
+    assert result["stage_states"]["instance_field"]["valid"] is False
+
+
 def test_audit_counts_only_exact_adgs_runtime_and_checkpoint(tmp_path: Path, monkeypatch) -> None:
     project = tmp_path / "project"
     project.mkdir()
@@ -149,7 +286,9 @@ def test_audit_counts_only_exact_adgs_runtime_and_checkpoint(tmp_path: Path, mon
             },
             "v33_frozen": {
                 "source_run": str(v33_run),
-                "executable_scenes": ["scene-0230"],
+                "legacy_executable_scenes": ["scene-0230"],
+                "executable_scene_chains": {},
+                "implementation_commit": "e6663e1",
             },
             "ad_gs": {
                 "implementation_root": str(adgs_root),

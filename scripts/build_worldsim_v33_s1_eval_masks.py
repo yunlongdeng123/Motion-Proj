@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""用冻结 SAM2.1 为 S1 heldout 生成 evaluation-only pseudo target。"""
+"""用冻结 SAM2.1 为 S1 evaluation 分区生成 pseudo target。"""
 
 from __future__ import annotations
 
@@ -23,6 +23,10 @@ if str(PROJECT) not in sys.path:
     sys.path.insert(0, str(PROJECT))
 
 from motion_proj.worldsim_v32.semantic_schema import sha256_file
+from motion_proj.worldsim_v33.evaluation_partition import (
+    manifest_evaluation_partition,
+    resolve_evaluation_frames,
+)
 from scripts.build_worldsim_v32_sam_masks import quality_gate
 
 
@@ -48,19 +52,24 @@ def main() -> None:
     parser.add_argument("--prompt-manifest", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument(
+        "--partition", choices=("development", "heldout"), default="heldout"
+    )
     args = parser.parse_args()
     if args.output_dir.exists():
-        raise FileExistsError(f"拒绝覆盖 heldout mask 目录: {args.output_dir}")
+        raise FileExistsError(f"拒绝覆盖 evaluation mask 目录: {args.output_dir}")
     args.output_dir.mkdir(parents=True)
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     prompts = json.loads(args.prompt_manifest.read_text(encoding="utf-8"))
     if prompts.get("config_sha256") != sha256_file(args.config):
-        raise RuntimeError("heldout prompt/config SHA 不一致")
+        raise RuntimeError("evaluation prompt/config SHA 不一致")
     if not prompts.get("optimization_forbidden"):
-        raise RuntimeError("heldout prompt 未声明 optimization_forbidden")
-    heldout = {int(value) for value in config["split"]["heldout_frames"]}
-    if set(int(value) for value in prompts["evaluation_frames"]) != heldout:
-        raise RuntimeError("heldout frame 集漂移")
+        raise RuntimeError("evaluation prompt 未声明 optimization_forbidden")
+    evaluation_frames = set(resolve_evaluation_frames(config, args.partition))
+    if manifest_evaluation_partition(prompts) != args.partition:
+        raise RuntimeError("evaluation partition 漂移")
+    if set(int(value) for value in prompts["evaluation_frames"]) != evaluation_frames:
+        raise RuntimeError("evaluation frame 集漂移")
 
     sam = config["sam2_fallback"]
     source_root = Path(sam["source_checkout"])
@@ -95,11 +104,11 @@ def main() -> None:
                 f"actual={runtime_actual[name]}"
             )
     if not torch.cuda.is_available():
-        raise RuntimeError("heldout SAM2 需要可见 CUDA GPU")
+        raise RuntimeError("evaluation SAM2 需要可见 CUDA GPU")
     device = torch.device(args.device)
     torch.cuda.set_device(device)
     if torch.cuda.memory_allocated(device) > 2 * 1024**3:
-        raise RuntimeError("heldout SAM2 GPU preflight 非空闲")
+        raise RuntimeError("evaluation SAM2 GPU preflight 非空闲")
     if str(source_root) not in sys.path:
         sys.path.insert(0, str(source_root))
     from sam2.build_sam import build_sam2_video_predictor
@@ -116,8 +125,8 @@ def main() -> None:
     with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
         for block in prompts["blocks"]:
             frame = int(block["frame"])
-            if frame not in heldout or len(block["frames"]) != 1:
-                raise RuntimeError("heldout block 不满足 singleton/eval-only 合同")
+            if frame not in evaluation_frames or len(block["frames"]) != 1:
+                raise RuntimeError("evaluation block 不满足 singleton/eval-only 合同")
             video_dir = Path(block["video_dir"])
             if not video_dir.is_absolute():
                 video_dir = args.prompt_manifest.parent / video_dir
@@ -145,7 +154,7 @@ def main() -> None:
                     raw_value = raw_value.unsqueeze(0)
                 if raw_value.ndim != 4:
                     raise RuntimeError(
-                        f"SAM2 heldout logits rank 不合法: {raw_value.shape}"
+                        f"SAM2 evaluation logits rank 不合法: {raw_value.shape}"
                     )
                 value = functional.interpolate(
                     raw_value,
@@ -200,9 +209,13 @@ def main() -> None:
             torch.cuda.empty_cache()
     checkpoint_after = sha256_file(checkpoint)
     if checkpoint_after != checkpoint_before:
-        raise RuntimeError("SAM2 checkpoint 在 heldout 推理后发生 mutation")
+        raise RuntimeError("SAM2 checkpoint 在 evaluation 推理后发生 mutation")
     manifest = {
-        "schema_version": "worldsim_v33_s1_heldout_mask_manifest_v1",
+        "schema_version": (
+            "worldsim_v33_s1_heldout_mask_manifest_v1"
+            if args.partition == "heldout"
+            else "worldsim_v33_s1_eval_mask_manifest_v2"
+        ),
         "task_id": config["task_id"],
         "config_sha256": sha256_file(args.config),
         "prompt_manifest": str(args.prompt_manifest),
@@ -210,7 +223,8 @@ def main() -> None:
         "source_commit": source_commit,
         "checkpoint_sha256_before": checkpoint_before,
         "checkpoint_sha256_after": checkpoint_after,
-        "evaluation_frames": sorted(heldout),
+        "evaluation_partition": args.partition,
+        "evaluation_frames": sorted(evaluation_frames),
         "optimization_forbidden": True,
         "mask_count": len(rows),
         "accepted_mask_count": sum(bool(row["accepted"]) for row in rows),

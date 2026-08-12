@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""验收 S1 heldout pseudo target，证明其只用于 formal evaluation。"""
+"""验收 S1 pseudo target，证明其只用于冻结的 formal evaluation。"""
 
 from __future__ import annotations
 
@@ -18,6 +18,10 @@ if str(PROJECT) not in sys.path:
     sys.path.insert(0, str(PROJECT))
 
 from motion_proj.worldsim_v32.semantic_schema import sha256_file
+from motion_proj.worldsim_v33.evaluation_partition import (
+    manifest_evaluation_partition,
+    resolve_evaluation_frames,
+)
 
 
 def atomic_json(path: Path, payload: object) -> None:
@@ -32,6 +36,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument(
+        "--partition", choices=("development", "heldout"), default="heldout"
+    )
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     prompt_path = args.run_dir / "artifacts/prompts/prompt_manifest.json"
@@ -40,16 +47,19 @@ def main() -> None:
     masks = json.loads(mask_path.read_text(encoding="utf-8"))
     config_sha = sha256_file(args.config)
     if prompts.get("config_sha256") != config_sha or masks.get("config_sha256") != config_sha:
-        raise RuntimeError("heldout target config SHA 漂移")
+        raise RuntimeError("evaluation target config SHA 漂移")
     if not prompts.get("optimization_forbidden") or not masks.get("optimization_forbidden"):
-        raise RuntimeError("heldout target 未声明 optimization_forbidden")
-    expected_frames = {int(value) for value in config["split"]["heldout_frames"]}
+        raise RuntimeError("evaluation target 未声明 optimization_forbidden")
+    expected_frames = set(resolve_evaluation_frames(config, args.partition))
+    for name, payload in (("prompt", prompts), ("mask", masks)):
+        if manifest_evaluation_partition(payload) != args.partition:
+            raise RuntimeError(f"{name} evaluation partition 漂移")
     if set(prompts["evaluation_frames"]) != expected_frames:
-        raise RuntimeError("heldout prompt frame 集漂移")
+        raise RuntimeError("evaluation prompt frame 集漂移")
     if set(masks["evaluation_frames"]) != expected_frames:
-        raise RuntimeError("heldout mask frame 集漂移")
+        raise RuntimeError("evaluation mask frame 集漂移")
     if masks["checkpoint_sha256_before"] != masks["checkpoint_sha256_after"]:
-        raise RuntimeError("SAM2 checkpoint 在 heldout target 生成中发生 mutation")
+        raise RuntimeError("SAM2 checkpoint 在 evaluation target 生成中发生 mutation")
     if masks["checkpoint_sha256_after"] != config["sam2_fallback"]["checkpoint_sha256"]:
         raise RuntimeError("SAM2 checkpoint SHA 不等于冻结值")
     runtime_contract = config["sam2_fallback"]["runtime"]
@@ -65,20 +75,20 @@ def main() -> None:
     for row in masks["masks"]:
         key = (str(row["role"]), int(row["frame"]), int(row["camera_id"]))
         if key in seen or key[1] not in expected_frames:
-            raise RuntimeError(f"heldout target row 重复或越权: {key}")
+            raise RuntimeError(f"evaluation target row 重复或越权: {key}")
         seen.add(key)
         if sha256_file(row["source_image"]) != row["source_image_sha256"]:
-            raise RuntimeError(f"heldout source image SHA 漂移: {key}")
+            raise RuntimeError(f"evaluation source image SHA 漂移: {key}")
         if sha256_file(row["mask"]) != row["mask_sha256"]:
-            raise RuntimeError(f"heldout mask SHA 漂移: {key}")
+            raise RuntimeError(f"evaluation mask SHA 漂移: {key}")
         accepted += int(bool(row["accepted"]) and int(row["positive_pixels"]) > 0)
     if accepted != int(masks["accepted_mask_count"]) or accepted == 0:
-        raise RuntimeError("heldout accepted mask 计数不合法")
+        raise RuntimeError("evaluation accepted mask 计数不合法")
     train = json.loads(
         Path(config["inputs"]["train_mask_manifest"]).read_text(encoding="utf-8")
     )
     if any(int(row["frame"]) in expected_frames for row in train["masks"]):
-        raise RuntimeError("V3.2 train mask 混入 heldout")
+        raise RuntimeError("train mask 混入 evaluation partition")
 
     snapshot_dir = args.run_dir / "artifacts/source_snapshot"
     snapshot_dir.mkdir(parents=True, exist_ok=False)
@@ -99,6 +109,7 @@ def main() -> None:
         "mask_manifest": str(mask_path),
         "mask_manifest_sha256": sha256_file(mask_path),
         "evaluation_frames": sorted(expected_frames),
+        "evaluation_partition": args.partition,
         "optimization_forbidden": True,
         "mask_count": len(seen),
         "accepted_mask_count": accepted,

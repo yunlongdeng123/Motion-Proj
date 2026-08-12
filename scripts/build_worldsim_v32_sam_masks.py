@@ -22,6 +22,7 @@ if str(PROJECT) not in sys.path:
     sys.path.insert(0, str(PROJECT))
 
 from motion_proj.worldsim_v32.semantic_schema import sha256_file, validate_disjoint_split
+from motion_proj.worldsim_v4.semantic_split import validate_prompt_optimization_split
 
 
 def atomic_json(path: Path, payload: object) -> None:
@@ -155,8 +156,7 @@ def main() -> None:
     if prompts.get("actor_registry_sha256") != config["inputs"]["actor_registry_sha256"]:
         raise RuntimeError("prompt manifest 的 actor registry 已漂移")
     validate_disjoint_split(prompts["train_frames"], prompts["heldout_frames"])
-    if not prompts.get("heldout_excluded"):
-        raise RuntimeError("S1 prompt manifest 未证明 heldout 排除")
+    forbidden_frames = validate_prompt_optimization_split(config, prompts)
 
     checkpoint = Path(config["sam2"]["checkpoint"])
     checkpoint_before = sha256_file(checkpoint)
@@ -245,8 +245,8 @@ def main() -> None:
             for (local_index, numeric_object_id), raw_value in sorted(propagated.items()):
                 frame_row = frames[int(local_index)]
                 frame = int(frame_row["frame"])
-                if frame in set(prompts["heldout_frames"]):
-                    raise RuntimeError(f"SAM2 输出命中 heldout frame={frame}")
+                if frame in forbidden_frames:
+                    raise RuntimeError(f"SAM2 输出命中冻结 evaluation frame={frame}")
                 role = role_by_object[numeric_object_id]
                 value = functional.interpolate(
                     raw_value.unsqueeze(0) if raw_value.ndim == 3 else raw_value,
@@ -351,6 +351,8 @@ def main() -> None:
         "checkpoint_sha256_after": checkpoint_after,
         "heldout_frames": prompts["heldout_frames"],
         "heldout_excluded": True,
+        "development_frames": prompts.get("development_frames", []),
+        "development_excluded": bool(prompts.get("development_excluded", False)),
         "propagation": "bidirectional_from_projected_box_keyframe",
         "quality_gate": quality,
         "mask_count": len(mask_rows),

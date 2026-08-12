@@ -27,6 +27,10 @@ from motion_proj.worldsim_v32.semantic_schema import (
     validate_actor_identity_contract,
     validate_disjoint_split,
 )
+from motion_proj.worldsim_v33.evaluation_partition import (
+    manifest_evaluation_partition,
+    resolve_forbidden_optimization_frames,
+)
 from motion_proj.worldsim_v33.instance_field import (
     ActorSemanticSource,
     atomic_save_instance_field,
@@ -164,7 +168,7 @@ def validate_mask_rows(
     manifest: Mapping[str, Any], *, forbidden_frames: set[int], require_eval_only: bool
 ) -> list[dict[str, Any]]:
     if require_eval_only and not manifest.get("optimization_forbidden"):
-        raise RuntimeError("heldout manifest 未声明 optimization_forbidden")
+        raise RuntimeError("evaluation manifest 未声明 optimization_forbidden")
     seen: set[tuple[str, int, int]] = set()
     rows = []
     for row in manifest["masks"]:
@@ -173,7 +177,7 @@ def validate_mask_rows(
             raise RuntimeError(f"重复 mask row: {key}")
         seen.add(key)
         if not require_eval_only and key[1] in forbidden_frames:
-            raise RuntimeError(f"optimization mask 命中 heldout: {key}")
+            raise RuntimeError(f"optimization mask 命中 forbidden frame: {key}")
         path = Path(row["mask"])
         if sha256_file(path) != row["mask_sha256"]:
             raise RuntimeError(f"mask SHA 漂移: {path}")
@@ -432,6 +436,9 @@ def main() -> None:
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--phase", choices=("smoke", "formal"), required=True)
     parser.add_argument("--eval-mask-manifest", type=Path)
+    parser.add_argument(
+        "--eval-partition", choices=("development", "heldout"), default="heldout"
+    )
     parser.add_argument("--diagnostic-steps", type=int)
     parser.add_argument("--device", default="cuda:0")
     args = parser.parse_args()
@@ -447,8 +454,11 @@ def main() -> None:
     heldout = {int(value) for value in config["split"]["heldout_frames"]}
     development = {int(value) for value in config["split"]["development_frames"]}
     train_manifest = load_manifest(config["inputs"]["train_mask_manifest"])
+    forbidden_train_frames = resolve_forbidden_optimization_frames(
+        config, phase=args.phase, evaluation_partition=args.eval_partition
+    )
     train_rows = validate_mask_rows(
-        train_manifest, forbidden_frames=heldout, require_eval_only=False
+        train_manifest, forbidden_frames=forbidden_train_frames, require_eval_only=False
     )
     if args.phase == "smoke":
         optimization_rows = [row for row in train_rows if int(row["frame"]) not in development]
@@ -466,23 +476,32 @@ def main() -> None:
         if selected not in {"O0_heuristic", "O1_dual_opacity", "O3_dual_opacity_reassignment"}:
             raise RuntimeError("formal_selected_arm 尚未由 smoke 冻结")
         if args.eval_mask_manifest is None:
-            raise ValueError("formal phase 必须提供 heldout eval mask manifest")
+            raise ValueError("formal phase 必须提供 evaluation mask manifest")
         eval_manifest = load_manifest(args.eval_mask_manifest)
         if eval_manifest.get("config_sha256") != sha256_file(args.config):
-            raise RuntimeError("heldout eval mask/config SHA 不一致")
+            raise RuntimeError("evaluation mask/config SHA 不一致")
+        manifest_partition = manifest_evaluation_partition(eval_manifest)
+        if manifest_partition != args.eval_partition:
+            raise RuntimeError("formal evaluation partition 漂移")
         evaluation_rows = validate_mask_rows(
             eval_manifest, forbidden_frames=set(), require_eval_only=True
         )
-        if any(int(row["frame"]) not in heldout for row in evaluation_rows):
-            raise RuntimeError("formal evaluation 混入非 heldout frame")
+        allowed_evaluation_frames = (
+            development if args.eval_partition == "development" else heldout
+        )
+        if any(int(row["frame"]) not in allowed_evaluation_frames for row in evaluation_rows):
+            raise RuntimeError(
+                f"formal evaluation 混入非 {args.eval_partition} frame"
+            )
         optimization_rows = train_rows
         arm_names = ["O0_heuristic"] + ([] if selected == "O0_heuristic" else [selected])
         steps = int(config["optimization"]["formal_steps"])
-        evaluation_protocol = "heldout_confirmation_only"
+        evaluation_protocol = f"{args.eval_partition}_confirmation_only"
         evaluation_source = {
             "manifest": str(args.eval_mask_manifest.resolve()),
             "manifest_sha256": sha256_file(args.eval_mask_manifest),
             "optimization_forbidden": True,
+            "partition": args.eval_partition,
         }
     if args.diagnostic_steps is not None:
         if args.phase != "smoke" or args.diagnostic_steps <= 0:
@@ -566,6 +585,9 @@ def main() -> None:
         "status": "done",
         "phase": args.phase,
         "evaluation_protocol": evaluation_protocol,
+        "evaluation_partition": (
+            "development" if args.phase == "smoke" else args.eval_partition
+        ),
         "evaluation_source": evaluation_source,
         "diagnostic_steps_override": args.diagnostic_steps,
         "config": str(args.config.resolve()),
@@ -579,6 +601,7 @@ def main() -> None:
         "optimization_frames": sorted({int(row["frame"]) for row in optimization_rows}),
         "evaluation_frames": sorted({int(row["frame"]) for row in evaluation_rows}),
         "heldout_leaks": 0,
+        "evaluation_leaks": 0,
         "arms": arms,
         "recommended_arm": recommended,
         "runtime": {

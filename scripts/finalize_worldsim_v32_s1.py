@@ -19,6 +19,7 @@ if str(PROJECT) not in sys.path:
     sys.path.insert(0, str(PROJECT))
 
 from motion_proj.worldsim_v32.semantic_schema import CORE_POSITIVE, sha256_file
+from motion_proj.worldsim_v4.semantic_split import forbidden_frames_from_mask_manifest
 
 
 REQUIRED_POSTERIOR_FIELDS = {
@@ -54,9 +55,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument(
+        "--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v32")
+    )
     args = parser.parse_args()
 
-    run_root = Path("/root/autodl-tmp/runs/worldsim_v32").resolve()
+    run_root = args.run_root.resolve()
     run_dir = args.run_dir.resolve()
     if run_root not in run_dir.parents:
         raise ValueError(f"S1 run 不在冻结根目录下: {run_dir}")
@@ -71,8 +75,7 @@ def main() -> None:
         raise RuntimeError("mask manifest config SHA 漂移")
     if masks["checkpoint_sha256_before"] != masks["checkpoint_sha256_after"]:
         raise RuntimeError("SAM2 checkpoint 在推理中发生 mutation")
-    if not masks.get("heldout_excluded"):
-        raise RuntimeError("mask manifest 未声明 heldout 排除")
+    forbidden_frames = forbidden_frames_from_mask_manifest(config, masks)
     prompt_path = Path(masks["prompt_manifest"])
     if sha256_file(prompt_path) != masks["prompt_manifest_sha256"]:
         raise RuntimeError("prompt manifest SHA 漂移")
@@ -91,7 +94,6 @@ def main() -> None:
         ):
             if prompt_actor[field] != actor_config[field]:
                 raise RuntimeError(f"prompt/config actor identity 漂移: {role}/{field}")
-    heldout = {int(value) for value in masks["heldout_frames"]}
     expected_shape = (
         int(config["outputs"]["model_native_height"]),
         int(config["outputs"]["model_native_width"]),
@@ -104,8 +106,8 @@ def main() -> None:
         if key in seen:
             raise RuntimeError(f"重复 mask row: {key}")
         seen.add(key)
-        if key[1] in heldout:
-            raise RuntimeError(f"heldout mask 泄漏: {key}")
+        if key[1] in forbidden_frames:
+            raise RuntimeError(f"evaluation mask 泄漏: {key}")
         for field in (
             "instance_token",
             "source_image_sha256",
@@ -151,6 +153,13 @@ def main() -> None:
         raise RuntimeError("D2 checkpoint SHA 漂移")
     if not semantics.get("sidecar_only") or not semantics.get("heldout_excluded"):
         raise RuntimeError("semantic sidecar 违反只读或 split 合同")
+    expected_development = sorted(
+        int(value) for value in config["split"].get("development_frames", [])
+    )
+    if sorted(int(value) for value in semantics.get("development_frames", [])) != expected_development:
+        raise RuntimeError("semantic sidecar development frame 集漂移")
+    if expected_development and not semantics.get("development_excluded"):
+        raise RuntimeError("semantic sidecar 未声明 development_excluded")
     if semantics["checkpoint_sha256_before"] != expected_source_sha:
         raise RuntimeError("semantic sidecar 输入 checkpoint 不匹配")
     if semantics["checkpoint_sha256_after"] != expected_source_sha:
@@ -219,6 +228,10 @@ def main() -> None:
         "checkpoint_sha256_before": expected_source_sha,
         "checkpoint_sha256_after": source_sha,
         "heldout_leaks": 0,
+        "development_leaks": 0,
+        "development_content_read": False,
+        "heldout_content_read": False,
+        "test_quality_read": False,
         "actor_identity_contract": "validated",
         "mask_count": len(seen),
         "accepted_mask_count": accepted,

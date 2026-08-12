@@ -8,7 +8,7 @@ import json
 import os
 from pathlib import Path
 import sys
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 import yaml
@@ -26,6 +26,24 @@ from motion_proj.worldsim_v32.semantic_schema import (
     validate_actor_identity_contract,
     validate_disjoint_split,
 )
+
+
+def resolve_optimization_frames(
+    config: Mapping[str, Any], frame_count: int
+) -> tuple[list[int], list[int], list[int]]:
+    """返回 train/development/heldout，并保证开发帧不会进入语义优化。"""
+    split = config["split"]
+    heldout = sorted({int(value) for value in split["heldout_frames"]})
+    development = sorted(
+        {int(value) for value in split.get("development_frames", [])}
+    )
+    validate_disjoint_split(development, heldout)
+    excluded = set(development) | set(heldout)
+    if any(value < 0 or value >= frame_count for value in excluded):
+        raise ValueError("development/heldout frame 超出 scene frame_count")
+    train = [frame for frame in range(frame_count) if frame not in excluded]
+    validate_disjoint_split(train, sorted(excluded))
+    return train, development, heldout
 
 
 def atomic_json(path: Path, payload: object) -> None:
@@ -92,9 +110,9 @@ def main() -> None:
         str(row["instance_token"]): row for row in registry["actors"]
     }
     frame_count = int(config["scene"]["frame_count"])
-    heldout = [int(value) for value in config["split"]["heldout_frames"]]
-    train_frames = [frame for frame in range(frame_count) if frame not in set(heldout)]
-    validate_disjoint_split(train_frames, heldout)
+    train_frames, development, heldout = resolve_optimization_frames(
+        config, frame_count
+    )
     blocks = contiguous_blocks(train_frames)
 
     actor_rows: dict[str, dict[str, Any]] = {}
@@ -212,7 +230,9 @@ def main() -> None:
         "config_sha256": sha256_file(args.config),
         "scene": config["scene"]["name"],
         "train_frames": train_frames,
+        "development_frames": development,
         "heldout_frames": heldout,
+        "development_excluded": True,
         "heldout_excluded": True,
         "instances_info": str(instances_path),
         "instances_info_sha256": sha256_file(instances_path),

@@ -24,6 +24,7 @@ from motion_proj.worldsim_v32.semantic_schema import (
     binary_inner_boundary, classify_gaussians, label_counts, semantic_posterior,
     sha256_file, validate_disjoint_split,
 )
+from motion_proj.worldsim_v4.semantic_split import forbidden_frames_from_mask_manifest
 from scripts.eval_worldsim_v3_a3_r1_heldout import (
     get_view_data, load_model_checkpoint_read_only, release_trainer_render_info,
 )
@@ -127,11 +128,11 @@ def main() -> None:
     args.output_dir.mkdir(parents=True)
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     masks = json.loads(args.mask_manifest.read_text(encoding="utf-8"))
-    heldout = [int(v) for v in masks["heldout_frames"]]
     rows = masks["masks"]
-    validate_disjoint_split(sorted({int(r["frame"]) for r in rows}), heldout)
-    if not masks.get("heldout_excluded") or any(int(r["frame"]) in heldout for r in rows):
-        raise RuntimeError("mask manifest 存在 heldout 泄漏")
+    forbidden_frames = forbidden_frames_from_mask_manifest(config, masks)
+    validate_disjoint_split(
+        sorted({int(row["frame"]) for row in rows}), sorted(forbidden_frames)
+    )
     source = Path(config["inputs"]["checkpoint"])
     checkpoint_before = sha256_file(source)
     if checkpoint_before != config["inputs"]["checkpoint_sha256"]:
@@ -281,6 +282,9 @@ def main() -> None:
         "task_id": config["task_id"],
         "sidecar_only": True,
         "heldout_excluded": True,
+        "development_excluded": bool(masks.get("development_excluded", False)),
+        "development_frames": masks.get("development_frames", []),
+        "heldout_frames": masks["heldout_frames"],
         "checkpoint_sha256_before": checkpoint_before,
         "checkpoint_sha256_after": checkpoint_after,
         "gaussian_counts": counts,

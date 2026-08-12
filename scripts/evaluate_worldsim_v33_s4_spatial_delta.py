@@ -103,7 +103,7 @@ def directory_bytes(path: Path) -> int:
 
 
 def make_panel(path: Path, images: Mapping[str, np.ndarray], title: str) -> None:
-    names = ["base_only", "erase", "erase_background", "actor_override", "full"]
+    names = list(images)
     width, height = images[names[0]].shape[1], images[names[0]].shape[0]
     header = 30
     panel = Image.new("RGB", (width * len(names), height + header), "white")
@@ -117,7 +117,12 @@ def make_panel(path: Path, images: Mapping[str, np.ndarray], title: str) -> None
 
 def load_package(
     manifest_path: Path, expected_sha256: str
-) -> tuple[dict[str, Any], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
+) -> tuple[
+    dict[str, Any],
+    dict[str, np.ndarray],
+    dict[str, np.ndarray] | None,
+    dict[str, np.ndarray] | None,
+]:
     verify(manifest_path, expected_sha256, "S4 package manifest")
     package = json.loads(manifest_path.read_text(encoding="utf-8"))
     if package.get("schema_version") != PACKAGE_SCHEMA_VERSION:
@@ -133,12 +138,21 @@ def load_package(
     erase = load_erase_delta(
         root / f"deltas/delete_actor_{actor_id}/erase_indices.npz"
     )
-    background = load_patch_delta(
-        root / f"deltas/delete_actor_{actor_id}/background_patch.npz"
-    )
-    actor = load_actor_insert_delta(
-        root / f"deltas/actor_override_{actor_id}/actor_override.npz"
-    )
+    background_path = root / f"deltas/delete_actor_{actor_id}/background_patch.npz"
+    actor_path = root / f"deltas/actor_override_{actor_id}/actor_override.npz"
+    background = load_patch_delta(background_path) if background_path.is_file() else None
+    actor = load_actor_insert_delta(actor_path) if actor_path.is_file() else None
+    available = package.get("available_stacks")
+    if available is not None:
+        expected = ["base_only", "erase"]
+        if background is not None:
+            expected.append("erase_background")
+        if actor is not None:
+            expected.append("actor_override")
+        if background is not None and actor is not None:
+            expected.append("full")
+        if available != expected:
+            raise RuntimeError("package available stack 集漂移")
     return package, erase, background, actor
 
 
@@ -166,7 +180,10 @@ def main() -> int:
     args = parser.parse_args()
     started = time.time()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    if config.get("schema_version") != "worldsim_v33_s4_spatial_delta_v1":
+    if config.get("schema_version") not in {
+        "worldsim_v33_s4_spatial_delta_v1",
+        "worldsim_v4_v33_spatial_delta_v1",
+    }:
         raise ValueError("S4 config schema version 漂移")
     run_dir = args.run_dir.resolve()
     _ACTIVE_RUN_DIR = run_dir
@@ -230,21 +247,31 @@ def main() -> int:
             for row in evaluation["heldout_confirmation_views"]
         ],
     ]
+    if config.get("schema_version") == "worldsim_v4_v33_spatial_delta_v1":
+        if evaluation.get("heldout_confirmation_views"):
+            raise RuntimeError("V4 B0 spatial evaluation 禁止 heldout confirmation")
+        development = {int(value) for value in config["scene"]["development_frames"]}
+        if any(frame not in development for frame, _ in views):
+            raise RuntimeError("V4 B0 spatial evaluation 混入非 development frame")
     if len(set(views)) != len(views):
         raise RuntimeError("S4 evaluation views 重复")
     threshold = int(evaluation["effect_threshold_uint8"])
     dilation = int(evaluation["effect_dilation_pixels"])
     rows: list[dict[str, Any]] = []
     rollback_checks: list[dict[str, Any]] = []
-    full_target_sha: str | None = None
+    composed_target_sha: str | None = None
     target_metrics: dict[str, Any] | None = None
 
     stacks = {
         "erase": (None, None),
-        "erase_background": (background, None),
-        "actor_override": (None, actor),
-        "full": (background, actor),
     }
+    if background is not None:
+        stacks["erase_background"] = (background, None)
+    if actor is not None:
+        stacks["actor_override"] = (None, actor)
+    if background is not None and actor is not None:
+        stacks["full"] = (background, actor)
+    composed_stack = list(stacks)[-1]
     for frame, camera in views:
         view_dir = render_root / f"f{frame:03d}_c{camera}"
         view_dir.mkdir()
@@ -292,20 +319,20 @@ def main() -> int:
         erase_effect = effect_mask(
             base, images["erase"], threshold=threshold, dilation=dilation
         )
-        background_effect = effect_mask(
-            images["erase"],
-            images["erase_background"],
-            threshold=threshold,
-            dilation=dilation,
-        )
-        actor_effect = effect_mask(
-            images["erase"],
-            images["actor_override"],
-            threshold=threshold,
-            dilation=dilation,
-        )
-        full_effect = effect_mask(
-            base, images["full"], threshold=threshold, dilation=dilation
+        background_effect = np.zeros_like(erase_effect)
+        if "erase_background" in images:
+            background_effect = effect_mask(
+                images["erase"], images["erase_background"],
+                threshold=threshold, dilation=dilation,
+            )
+        actor_effect = np.zeros_like(erase_effect)
+        if "actor_override" in images:
+            actor_effect = effect_mask(
+                images["erase"], images["actor_override"],
+                threshold=threshold, dilation=dilation,
+            )
+        composed_effect = effect_mask(
+            base, images[composed_stack], threshold=threshold, dilation=dilation
         )
         row = {
             "frame": frame,
@@ -318,10 +345,12 @@ def main() -> int:
                 "erase": int(erase_effect.sum()),
                 "insert_background": int(background_effect.sum()),
                 "insert_actor": int(actor_effect.sum()),
-                "full": int(full_effect.sum()),
+                "composed": int(composed_effect.sum()),
             },
             "audits": audits,
         }
+        if composed_stack == "full":
+            row["effect_pixels"]["full"] = row["effect_pixels"]["composed"]
         rows.append(row)
         if (frame, camera) == tuple(evaluation["edit_target_view"]):
             outside = ~binary_dilation(target_mask, iterations=8)
@@ -329,18 +358,25 @@ def main() -> int:
                 "erase_effect_pixels": int(erase_effect.sum()),
                 "background_effect_pixels": int(background_effect.sum()),
                 "actor_effect_pixels": int(actor_effect.sum()),
-                "full_effect_pixels": int(full_effect.sum()),
+                "composed_effect_pixels": int(composed_effect.sum()),
                 "erase_mask_coverage": float(
                     np.sum(erase_effect & target_mask) / max(int(target_mask.sum()), 1)
                 ),
                 "actor_mask_coverage": float(
                     np.sum(actor_effect & target_mask) / max(int(target_mask.sum()), 1)
                 ),
-                "full_outside_target_l1_uint8": mean_l1(
-                    base, images["full"], outside
+                "composed_outside_target_l1_uint8": mean_l1(
+                    base, images[composed_stack], outside
                 ),
             }
-            full_target_sha = array_sha256(images["full"])
+            if composed_stack == "full":
+                target_metrics["full_effect_pixels"] = target_metrics[
+                    "composed_effect_pixels"
+                ]
+                target_metrics["full_outside_target_l1_uint8"] = target_metrics[
+                    "composed_outside_target_l1_uint8"
+                ]
+            composed_target_sha = array_sha256(images[composed_stack])
         make_panel(
             panel_root / f"f{frame:03d}_c{camera}.png",
             images,
@@ -354,7 +390,7 @@ def main() -> int:
             flush=True,
         )
 
-    if target_metrics is None or full_target_sha is None:
+    if target_metrics is None or composed_target_sha is None:
         raise RuntimeError("S4 edit target view 未执行")
     target_frame, target_camera = (
         int(value) for value in evaluation["edit_target_view"]
@@ -373,7 +409,7 @@ def main() -> int:
         background_delta=background,
         actor_delta=actor,
     ):
-        full_replay = render_rgb(
+        composed_replay = render_rgb(
             trainer,
             dataset,
             frame=target_frame,
@@ -387,7 +423,7 @@ def main() -> int:
         camera=target_camera,
         device=device,
     )
-    deterministic_replay = array_sha256(full_replay) == full_target_sha
+    deterministic_replay = array_sha256(composed_replay) == composed_target_sha
     exact_replay_rollback = bool(
         np.array_equal(rollback_replay, base_replay)
         and array_sha256(rollback_replay) == base_replay_sha
@@ -396,29 +432,39 @@ def main() -> int:
     gates_cfg = config["gates"]
     aggregate_effect = {
         name: int(sum(row["effect_pixels"][name] for row in rows))
-        for name in ("erase", "insert_background", "insert_actor", "full")
+        for name in ("erase", "insert_background", "insert_actor", "composed")
     }
+    if composed_stack == "full":
+        aggregate_effect["full"] = aggregate_effect["composed"]
     functional_gates = {
         "all_stack_rollbacks_render_exact": all(
             row["exact"] for row in rollback_checks
         ),
-        "full_stack_deterministic_replay": deterministic_replay,
+        "composed_stack_deterministic_replay": deterministic_replay,
         "replay_rollback_render_exact": exact_replay_rollback,
         "erase_independently_effective": aggregate_effect["erase"] > 0,
-        "background_independently_effective": aggregate_effect["insert_background"] > 0,
-        "actor_independently_effective": aggregate_effect["insert_actor"] > 0,
+        "background_independently_effective": (
+            background is None or aggregate_effect["insert_background"] > 0
+        ),
+        "actor_independently_effective": (
+            actor is None or aggregate_effect["insert_actor"] > 0
+        ),
         "edit_target_erase_effect": target_metrics["erase_effect_pixels"]
         >= int(gates_cfg["minimum_edit_target_erase_effect_pixels"]),
-        "edit_target_background_effect": target_metrics["background_effect_pixels"]
-        >= int(gates_cfg["minimum_edit_target_background_effect_pixels"]),
-        "edit_target_actor_effect": target_metrics["actor_effect_pixels"]
-        >= int(gates_cfg["minimum_edit_target_actor_effect_pixels"]),
-        "edit_target_mask_coverage": min(
-            target_metrics["erase_mask_coverage"],
-            target_metrics["actor_mask_coverage"],
+        "edit_target_background_effect": (
+            background is None or target_metrics["background_effect_pixels"]
+            >= int(gates_cfg["minimum_edit_target_background_effect_pixels"])
+        ),
+        "edit_target_actor_effect": (
+            actor is None or target_metrics["actor_effect_pixels"]
+            >= int(gates_cfg["minimum_edit_target_actor_effect_pixels"])
+        ),
+        "edit_target_mask_coverage": (
+            min(target_metrics["erase_mask_coverage"], target_metrics["actor_mask_coverage"])
+            if actor is not None else target_metrics["erase_mask_coverage"]
         )
         >= float(gates_cfg["minimum_edit_target_mask_coverage"]),
-        "outside_target_preserved": target_metrics["full_outside_target_l1_uint8"]
+        "outside_target_preserved": target_metrics["composed_outside_target_l1_uint8"]
         <= float(gates_cfg["maximum_outside_target_l1_uint8"]),
         "base_rows_never_deleted": all(
             audit["base_rows_deleted"] == 0
@@ -436,6 +482,8 @@ def main() -> int:
             for audit in row["audits"].values()
         ),
     }
+    if composed_stack == "full":
+        functional_gates["full_stack_deterministic_replay"] = deterministic_replay
     checkpoint_after = sha256_file(config["inputs"]["checkpoint"]["path"])
     registry_after = sha256_file(config["inputs"]["actor_registry"]["path"])
     functional_gates["checkpoint_immutable"] = (
@@ -480,12 +528,17 @@ def main() -> int:
         "resource_gates": resource_gates,
         "target_metrics": target_metrics,
         "aggregate_effect_pixels": aggregate_effect,
-        "deterministic_full_replay": {
-            "first_sha256": full_target_sha,
-            "replay_sha256": array_sha256(full_replay),
+        "deterministic_composed_replay": {
+            "stack": composed_stack,
+            "first_sha256": composed_target_sha,
+            "replay_sha256": array_sha256(composed_replay),
             "exact": deterministic_replay,
         },
     }
+    if composed_stack == "full":
+        decision["deterministic_full_replay"] = dict(
+            decision["deterministic_composed_replay"]
+        )
     decision_path = run_dir / "artifacts/decision.json"
     atomic_json(decision_path, decision)
     summary = {

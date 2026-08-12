@@ -35,6 +35,9 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--phase", choices=("smoke", "formal"), required=True)
+    parser.add_argument(
+        "--evaluation-partition", choices=("development", "heldout")
+    )
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     summary_path = args.run_dir / "summary.json"
@@ -57,12 +60,16 @@ def main() -> None:
         raise RuntimeError("S1 base_requires_grad 必须为 false")
     if not summary.get("instance_field_independent") or summary.get("heldout_leaks") != 0:
         raise RuntimeError("S1 sidecar/split 合同失败")
-    expected_eval = set(
-        int(value)
-        for value in config["split"][
-            "development_frames" if args.phase == "smoke" else "heldout_frames"
-        ]
+    evaluation_partition = args.evaluation_partition or (
+        "development" if args.phase == "smoke" else "heldout"
     )
+    if args.phase == "smoke" and evaluation_partition != "development":
+        raise RuntimeError("smoke evaluation partition 必须是 development")
+    if summary.get("evaluation_partition", evaluation_partition) != evaluation_partition:
+        raise RuntimeError("S1 summary evaluation partition 漂移")
+    expected_eval = {
+        int(value) for value in config["split"][f"{evaluation_partition}_frames"]
+    }
     if not set(int(value) for value in summary["evaluation_frames"]) <= expected_eval:
         raise RuntimeError("S1 evaluation frame 越权")
     if set(summary["optimization_frames"]) & set(summary["evaluation_frames"]):
@@ -74,6 +81,8 @@ def main() -> None:
         target_manifest = json.loads(
             Path(evaluation_source["manifest"]).read_text(encoding="utf-8")
         )
+        if target_manifest.get("evaluation_partition", "heldout") != evaluation_partition:
+            raise RuntimeError("formal target evaluation partition 漂移")
         if not evaluation_source.get("optimization_forbidden") or not target_manifest.get(
             "optimization_forbidden"
         ):
@@ -114,6 +123,7 @@ def main() -> None:
         "task_id": config["task_id"],
         "status": "done",
         "phase": args.phase,
+        "evaluation_partition": evaluation_partition,
         "selected_arm": selected,
         "fallback_to_v32_heuristic": selected == "O0_heuristic",
         "gates": {
