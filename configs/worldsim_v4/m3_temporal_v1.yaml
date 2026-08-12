@@ -1,0 +1,50 @@
+schema_version: worldsim_v4_m3_temporal_v1
+task_id: WS-V4-M3-TEMPORAL-DELTA-01
+status: pending
+created_at: "2026-08-12"
+
+execution_gate:
+  requires_m2_development_frozen: true
+  current_state: locked_waiting_for_m2
+  dataset: nuScenes
+  tuning_split: development
+  validation_read_only: true
+  test_quality_read: false
+
+clip:
+  minimum_seconds: 2.0
+  maximum_seconds: 4.0
+  operations: [REMOVE, LATERAL, INSERT]
+  camera_reduction_forbidden: true
+  resolution_reduction_forbidden: true
+
+trajectory:
+  representation: uniform_cubic_bspline_se3
+  twist_order: [tx, ty, tz, rx, ry, rz]
+  minimum_control_points: 4
+  acceleration_regularization: true
+  parameters_frozen_on: development
+
+ablations:
+  arms: [FRAME_INDEPENDENT, LINEAR, CUBIC_BSPLINE,
+         CUBIC_BSPLINE_TEMPORAL_EVIDENCE, FULL_WARP_REGULARIZED]
+  same_base: true
+  same_clip: true
+  same_edit_request: true
+
+metrics:
+  [temporal_lpips, warp_l1, warp_lpips, frame_flicker, mask_iou_jitter,
+   boundary_f1_jitter, identity_switch, centroid_jitter, contact_region_jitter]
+
+gates:
+  operation_success_non_degradation: true
+  temporal_error_relative_improvement_min: 0.10
+  identity_switch_relative_reduction_min: 0.25
+  allow_identity_zero_remains_zero: true
+  deleted_semantic_reintroduction: 0
+  rollback_exact_fraction: 1.0
+
+immutability:
+  base_checkpoint_mutation: false
+  composition_order: [BASE, ERASE, INSERT]
+  rollback_render_sha_exact: true
