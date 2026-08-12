@@ -58,16 +58,17 @@ calibration:
 evaluation:
   mask_threshold: 0.5
   mask_threshold_candidates:
-    [0.01, 0.02, 0.03, 0.04, 0.05, 0.075, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50]
+    [0.01, 0.02, 0.03, 0.04, 0.05, 0.075, 0.10, 0.15, 0.20, 0.30, 0.40,
+     0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
   threshold_fn_mass_max_degradation: 0.01
-  candidate_policy: development_posterior_arm_search
+  candidate_policy: development_uncertainty_penalty_search
   candidate_arms:
-    owned_only: null
-    posterior_090: 0.90
-    posterior_080: 0.80
-    posterior_070: 0.70
-    posterior_060: 0.60
-    posterior_050: 0.50
+    risk_000: 0.0
+    risk_025: 0.25
+    risk_050: 0.50
+    risk_100: 1.0
+    risk_200: 2.0
+    risk_400: 4.0
   candidate_arm_fn_mass_max_degradation: 0.01
   boundary_tolerance_pixels: 3.0
   metrics: [iou, boundary_f1, false_positive_semantic_mass,

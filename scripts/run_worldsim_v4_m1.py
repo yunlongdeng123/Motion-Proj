@@ -277,35 +277,31 @@ def candidate_probability_vectors(
     field: Mapping[str, np.ndarray],
     state: Mapping[str, np.ndarray],
     actor_instance_id: int,
-    candidate_arms: Mapping[str, float | None],
+    candidate_arms: Mapping[str, float],
 ) -> tuple[np.ndarray, dict[str, np.ndarray]]:
-    """Build one common Gaussian support and zero-pad every development arm."""
+    """Build O1-owned posterior-minus-uncertainty development arms."""
 
-    if not candidate_arms or "owned_only" not in candidate_arms:
-        raise ValueError("candidate arms must include owned_only")
-    if candidate_arms["owned_only"] is not None:
-        raise ValueError("owned_only threshold must be null")
+    if not candidate_arms or float(candidate_arms.get("risk_000", -1.0)) != 0.0:
+        raise ValueError("candidate arms must include zero-penalty risk_000")
     hard = np.asarray(field["hard_instance_id"], dtype=np.int32)
     posterior = np.asarray(state["posterior"], dtype=np.float32)
+    uncertainty = np.asarray(state["uncertainty"], dtype=np.float32)
     o1 = np.asarray(field["instance_opacity"], dtype=np.float32)
-    if not (hard.shape == posterior.shape == o1.shape):
+    if not (hard.shape == posterior.shape == uncertainty.shape == o1.shape):
         raise ValueError("field/state Gaussian shapes differ")
     owned = hard == int(actor_instance_id)
-    masks: dict[str, np.ndarray] = {"raw__owned_only": owned}
-    for name, threshold in candidate_arms.items():
-        if name == "owned_only":
-            continue
-        value = float(threshold) if threshold is not None else float("nan")
-        if not np.isfinite(value) or not 0.0 < value <= 1.0:
-            raise ValueError(f"candidate arm {name} threshold is invalid")
-        masks[f"raw__{name}"] = owned | (posterior >= value)
-    common = np.logical_or.reduce(list(masks.values()))
-    ids = np.flatnonzero(common)
+    ids = np.flatnonzero(owned)
     if ids.size == 0:
         raise ValueError("candidate arm union is empty")
-    vectors = {"v33_o1": np.where(owned[ids], o1[ids], 0.0).astype(np.float32)}
-    for name, mask in masks.items():
-        vectors[name] = np.where(mask[ids], posterior[ids], 0.0).astype(np.float32)
+    vectors = {"v33_o1": o1[ids].astype(np.float32)}
+    standard_deviation = np.sqrt(np.maximum(uncertainty[ids], 0.0))
+    for name, penalty in candidate_arms.items():
+        value = float(penalty)
+        if not np.isfinite(value) or value < 0.0:
+            raise ValueError(f"candidate arm {name} penalty is invalid")
+        vectors[f"raw__{name}"] = np.clip(
+            posterior[ids] - value * standard_deviation, 0.0, 1.0
+        ).astype(np.float32)
     return ids, vectors
 
 
@@ -548,7 +544,7 @@ def run(
         raise M1RunError("M1 scene config provenance is not sealed")
     if any(
         config["evaluation"].get("candidate_policy")
-        != "development_posterior_arm_search"
+        != "development_uncertainty_penalty_search"
         or not isinstance(config["evaluation"].get("candidate_arms"), Mapping)
         for config in configs
     ):

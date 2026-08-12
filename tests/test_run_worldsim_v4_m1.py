@@ -57,17 +57,20 @@ def test_candidate_arm_vectors_share_support_and_zero_pad() -> None:
         "hard_instance_id": np.asarray([7, -1, -1]),
         "instance_opacity": np.asarray([0.8, 0.2, 0.3]),
     }
-    state = {"posterior": np.asarray([0.9, 0.85, 0.4])}
+    state = {
+        "posterior": np.asarray([0.9, 0.85, 0.4]),
+        "uncertainty": np.asarray([0.04, 0.01, 0.01]),
+    }
     ids, vectors = candidate_probability_vectors(
         field=field,
         state=state,
         actor_instance_id=7,
-        candidate_arms={"owned_only": None, "posterior_080": 0.8},
+        candidate_arms={"risk_000": 0.0, "risk_100": 1.0},
     )
-    np.testing.assert_array_equal(ids, [0, 1])
-    np.testing.assert_allclose(vectors["v33_o1"], [0.8, 0.0])
-    np.testing.assert_allclose(vectors["raw__owned_only"], [0.9, 0.0])
-    np.testing.assert_allclose(vectors["raw__posterior_080"], [0.9, 0.85])
+    np.testing.assert_array_equal(ids, [0])
+    np.testing.assert_allclose(vectors["v33_o1"], [0.8])
+    np.testing.assert_allclose(vectors["raw__risk_000"], [0.9])
+    np.testing.assert_allclose(vectors["raw__risk_100"], [0.7])
 
 
 def test_evidence_arm_selection_preserves_fn_then_maximizes_boundary() -> None:
