@@ -229,6 +229,61 @@ def test_v33_registration_rejects_abstain_for_required_core_stage(tmp_path: Path
     assert result["stage_states"]["instance_field"]["valid"] is False
 
 
+def test_v33_registration_accepts_proven_abstain_no_actor_chain(
+    tmp_path: Path,
+) -> None:
+    registration = _v33_registration(tmp_path)
+    chain_path = Path(registration["files"]["scene_chain.json"]["path"])
+    registry_path = tmp_path / "actor_registry.json"
+    registry = {
+        "checkpoint_sha256": "base-sha",
+        "actors": [
+            {
+                "instance_token": "high-token",
+                "processed_true_instance_id": 21,
+                "availability": "unavailable_initialization_filter",
+                "rigid_model_index": None,
+                "checkpoint_tensor_slice": {
+                    "gaussian_count": 0,
+                    "flat_index_ranges_half_open": [],
+                },
+            }
+        ],
+    }
+    registry_path.write_bytes(baselines.canonical_json_bytes(registry))
+    chain = yaml.safe_load(chain_path.read_text(encoding="utf-8"))
+    chain["abstention"] = {
+        "reason": "ABSTAIN_NO_ACTOR",
+        "actor": {
+            "instance_token": "high-token",
+            "dataset_instance_id": 21,
+            "availability": "unavailable_initialization_filter",
+        },
+        "actor_registry": {
+            "path": str(registry_path),
+            "bytes": registry_path.stat().st_size,
+            "sha256": _sha256(registry_path),
+        },
+    }
+    for stage in baselines.V33_NO_ACTOR_STAGES:
+        chain["stages"][stage] = {
+            "status": "abstain",
+            "reason": "ABSTAIN_NO_ACTOR",
+        }
+    chain_path.write_bytes(baselines.canonical_json_bytes(chain))
+    registration["files"]["scene_chain.json"].update(
+        bytes=chain_path.stat().st_size, sha256=_sha256(chain_path)
+    )
+
+    result = _v33_chain_registration_state(
+        registration, expected_scene="scene-0242"
+    )
+
+    assert result["executable_exact"] is True
+    assert result["no_actor_proof"]["exact"] is True
+    assert result["stage_states"]["instance_field"]["no_actor_abstain"] is True
+
+
 def test_audit_counts_only_exact_adgs_runtime_and_checkpoint(tmp_path: Path, monkeypatch) -> None:
     project = tmp_path / "project"
     project.mkdir()

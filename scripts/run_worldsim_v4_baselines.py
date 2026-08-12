@@ -30,6 +30,14 @@ V33_REQUIRED_STAGES = (
     "semantic_render",
 )
 V33_ABSTAIN_STAGES = ("roadpatch", "asset_harvester", "semantic_render")
+V33_NO_ACTOR_STAGES = (
+    "semantic_lift",
+    "instance_field",
+    "roadpatch",
+    "asset_harvester",
+    "spatial_delta",
+)
+V33_NO_ACTOR_REASON = "ABSTAIN_NO_ACTOR"
 V33_REQUIRED_FILES = ("scene_chain.json", "render_manifest.json", "metrics.json")
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_matrix_v1.yaml",
@@ -55,6 +63,7 @@ SNAPSHOT_RELPATHS = (
     "scripts/evaluate_worldsim_v33_s4_spatial_delta.py",
     "scripts/run_worldsim_v4_v33_spatial_delta.py",
     "scripts/finalize_worldsim_v4_v33_scene_chain.py",
+    "scripts/run_worldsim_v4_v33_abstain_scene.py",
     "scripts/build_worldsim_v4_v33_registration.py",
     "scripts/prepare_worldsim_v32_s1_prompts.py",
     "scripts/validate_worldsim_v32_s1.py",
@@ -79,12 +88,14 @@ SNAPSHOT_RELPATHS = (
     "tests/test_worldsim_v4_v33_spatial_delta.py",
     "tests/test_run_worldsim_v4_v33_spatial_delta.py",
     "tests/test_finalize_worldsim_v4_v33_scene_chain.py",
+    "tests/test_run_worldsim_v4_v33_abstain_scene.py",
     "tests/test_build_worldsim_v4_v33_registration.py",
     "tests/test_build_worldsim_v4_v33_actor_registry.py",
     "tests/test_prepare_worldsim_v32_s1_prompts.py",
     "tests/test_worldsim_v4_semantic_split.py",
     "tests/test_worldsim_v33_evaluation_partition.py",
     "tests/test_worldsim_v4_v33_replay.py",
+    "tests/test_worldsim_v4_v33_cli.py",
 )
 
 
@@ -222,6 +233,68 @@ def _single_checkpoint_registration_state(value: Any) -> dict[str, Any]:
     }
 
 
+def _v33_no_actor_proof_state(chain: Mapping[str, Any]) -> dict[str, Any]:
+    """验证 ABSTAIN_NO_ACTOR 来自冻结 registry 的真实 0-Gaussian D0 actor。"""
+    proof = chain.get("abstention")
+    if not isinstance(proof, Mapping) or proof.get("reason") != V33_NO_ACTOR_REASON:
+        return {"state": "not_declared", "exact": False}
+    registry_spec = proof.get("actor_registry")
+    actor = proof.get("actor")
+    if not isinstance(registry_spec, Mapping) or not isinstance(actor, Mapping):
+        return {"state": "invalid_schema", "exact": False}
+    actual = _path_state(registry_spec.get("path"))
+    bytes_exact = actual.get("bytes") == registry_spec.get("bytes")
+    sha256_exact = actual.get("sha256") == registry_spec.get("sha256")
+    if not (actual["exists"] and bytes_exact and sha256_exact):
+        return {
+            "state": "registry_mismatch",
+            "exact": False,
+            "registry": actual,
+            "bytes_exact": bytes_exact,
+            "sha256_exact": sha256_exact,
+        }
+    registry = json.loads(Path(str(actual["path"])).read_text(encoding="utf-8"))
+    token = str(actor.get("instance_token"))
+    actor_id = actor.get("dataset_instance_id")
+    matches = [
+        row
+        for row in registry.get("actors", [])
+        if isinstance(row, Mapping)
+        and str(row.get("instance_token")) == token
+        and row.get("processed_true_instance_id") == actor_id
+    ]
+    registry_row = matches[0] if len(matches) == 1 else {}
+    slice_row = (
+        registry_row.get("checkpoint_tensor_slice", {})
+        if isinstance(registry_row, Mapping)
+        else {}
+    )
+    availability = str(registry_row.get("availability"))
+    actor_exact = bool(
+        len(matches) == 1
+        and availability == actor.get("availability")
+        and availability != "available"
+        and registry_row.get("rigid_model_index") is None
+        and slice_row.get("gaussian_count") == 0
+        and slice_row.get("flat_index_ranges_half_open") == []
+    )
+    checkpoint_exact = registry.get("checkpoint_sha256") == chain.get(
+        "base_checkpoint_sha256"
+    )
+    exact = actor_exact and checkpoint_exact
+    return {
+        "state": "exact" if exact else "actor_contract_mismatch",
+        "exact": exact,
+        "registry": actual,
+        "bytes_exact": bytes_exact,
+        "sha256_exact": sha256_exact,
+        "actor_exact": actor_exact,
+        "checkpoint_exact": checkpoint_exact,
+        "availability": availability,
+        "gaussian_count": slice_row.get("gaussian_count"),
+    }
+
+
 def _v33_chain_registration_state(
     value: Any, *, expected_scene: str
 ) -> dict[str, Any]:
@@ -291,20 +364,34 @@ def _v33_chain_registration_state(
     chain_semantics_exact = False
     terminal_exact = False
     stage_states: dict[str, Any] = {}
+    no_actor_proof: dict[str, Any] = {"state": "not_checked", "exact": False}
     if all_files_exact:
         chain = json.loads(Path(files["scene_chain.json"]["path"]).read_text(encoding="utf-8"))
+        no_actor_proof = _v33_no_actor_proof_state(chain)
         stages = chain.get("stages", {}) if isinstance(chain, Mapping) else {}
         for stage in V33_REQUIRED_STAGES:
             row = stages.get(stage, {}) if isinstance(stages, Mapping) else {}
             status = row.get("status") if isinstance(row, Mapping) else None
             reason = row.get("reason") if isinstance(row, Mapping) else None
-            valid = status == "done" or (
+            optional_abstain = (
                 stage in V33_ABSTAIN_STAGES
                 and status == "abstain"
                 and isinstance(reason, str)
                 and bool(reason.strip())
             )
-            stage_states[stage] = {"status": status, "reason": reason, "valid": valid}
+            no_actor_abstain = (
+                stage in V33_NO_ACTOR_STAGES
+                and status == "abstain"
+                and reason == V33_NO_ACTOR_REASON
+                and no_actor_proof["exact"]
+            )
+            valid = status == "done" or optional_abstain or no_actor_abstain
+            stage_states[stage] = {
+                "status": status,
+                "reason": reason,
+                "valid": valid,
+                "no_actor_abstain": no_actor_abstain,
+            }
         render = json.loads(
             Path(files["render_manifest.json"]["path"]).read_text(encoding="utf-8")
         )
@@ -359,6 +446,7 @@ def _v33_chain_registration_state(
         "chain_semantics_exact": chain_semantics_exact,
         "terminal_exact": terminal_exact,
         "stage_states": stage_states,
+        "no_actor_proof": no_actor_proof,
         "evidence": evidence,
         "files": files,
     }

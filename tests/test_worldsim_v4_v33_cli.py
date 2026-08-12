@@ -18,6 +18,7 @@ ENTRYPOINTS = (
     "materialize_worldsim_v4_v33_semantic_config.py",
     "materialize_worldsim_v4_v33_spatial_config.py",
     "run_worldsim_v4_v33_instance_field.py",
+    "run_worldsim_v4_v33_abstain_scene.py",
     "run_worldsim_v4_v33_semantic_lift.py",
     "run_worldsim_v4_v33_spatial_delta.py",
 )

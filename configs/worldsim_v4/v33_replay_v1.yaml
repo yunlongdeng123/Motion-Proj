@@ -8,8 +8,16 @@ algorithm:
   implementation_commit: e6663e1
   required_stages:
     [semantic_lift, instance_field, roadpatch, asset_harvester, spatial_delta, semantic_render]
-  allow_abstain_stages: [roadpatch, asset_harvester, semantic_render]
+  allow_abstain_stages:
+    [semantic_lift, instance_field, roadpatch, asset_harvester, spatial_delta, semantic_render]
   base_rgb_immutable: true
+
+abstain_no_actor:
+  reason: ABSTAIN_NO_ACTOR
+  render_camera_id: 0
+  development_view_count: 3
+  view_selection: first_development_frames
+  semantic_render_status: done
 
 inputs:
   cohort_config: configs/worldsim_v4/nuscenes_cohort_v1.yaml
