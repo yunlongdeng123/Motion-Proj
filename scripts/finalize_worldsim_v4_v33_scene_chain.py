@@ -12,6 +12,7 @@ import shutil
 import sys
 from typing import Any, Mapping
 
+import numpy as np
 from PIL import Image
 import yaml
 
@@ -73,8 +74,103 @@ def resize_target(source: Path, target: Path, *, width: int, height: int) -> Non
     rgb.save(target, format="PNG")
 
 
+def load_development_actor_masks(
+    instance_run: Path, *, instance_stage: Mapping[str, Any]
+) -> dict[tuple[int, int], dict[str, Any]]:
+    """读取并强校验 instance evaluation 产生的 development actor target。"""
+    eval_summary_path = instance_run / "eval_targets" / "summary.json"
+    mask_manifest_path = (
+        instance_run
+        / "eval_targets"
+        / "artifacts"
+        / "masks"
+        / "mask_manifest.json"
+    )
+    for label, path in (
+        ("instance eval summary", eval_summary_path),
+        ("instance eval mask manifest", mask_manifest_path),
+    ):
+        if not path.is_file():
+            raise V33ReplayError(f"{label} 缺失: {path}")
+    if instance_stage.get("eval_summary_sha256") != sha256_file(eval_summary_path):
+        raise V33ReplayError("instance eval summary SHA 漂移")
+    eval_summary = json.loads(eval_summary_path.read_text(encoding="utf-8"))
+    if (
+        eval_summary.get("status") != "done"
+        or eval_summary.get("evaluation_partition") != "development"
+        or eval_summary.get("optimization_forbidden") is not True
+    ):
+        raise V33ReplayError("instance actor target 不是冻结 development evaluation")
+    if eval_summary.get("mask_manifest_sha256") != sha256_file(mask_manifest_path):
+        raise V33ReplayError("instance eval mask manifest SHA 漂移")
+    declared_manifest = Path(eval_summary["mask_manifest"]).resolve()
+    if declared_manifest != mask_manifest_path.resolve():
+        raise V33ReplayError("instance eval mask manifest 路径漂移")
+
+    manifest = json.loads(mask_manifest_path.read_text(encoding="utf-8"))
+    if (
+        manifest.get("evaluation_partition") != "development"
+        or manifest.get("optimization_forbidden") is not True
+    ):
+        raise V33ReplayError("actor mask manifest 不是 development-only")
+    masks: dict[tuple[int, int], dict[str, Any]] = {}
+    rows = manifest.get("masks", [])
+    accepted_count = sum(
+        bool(row.get("accepted")) and int(row.get("positive_pixels", 0)) > 0
+        for row in rows
+    )
+    if accepted_count != int(eval_summary.get("accepted_mask_count", -1)):
+        raise V33ReplayError("accepted mask 总数与 eval summary 不一致")
+    development_frames = {int(value) for value in manifest.get("evaluation_frames", [])}
+    for row in rows:
+        if row.get("role") != "high_support":
+            continue
+        if not bool(row.get("accepted")) or int(row.get("positive_pixels", 0)) <= 0:
+            continue
+        key = (int(row["frame"]), int(row["camera_id"]))
+        if key[0] not in development_frames:
+            raise V33ReplayError(f"actor mask frame 不在 development partition: {key}")
+        if key in masks:
+            raise V33ReplayError(f"重复 accepted high_support actor mask: {key}")
+        source = Path(row["mask"]).resolve()
+        try:
+            source.relative_to(instance_run.resolve())
+        except ValueError as error:
+            raise V33ReplayError(f"actor mask 不在 instance run 内: {source}") from error
+        if not source.is_file() or sha256_file(source) != row.get("mask_sha256"):
+            raise V33ReplayError(f"actor mask 缺失或 SHA 漂移: {key}")
+        masks[key] = dict(row)
+    if not masks:
+        raise V33ReplayError("缺少 accepted development high_support actor mask")
+    return masks
+
+
+def materialize_actor_mask(
+    row: Mapping[str, Any], target: Path, *, width: int, height: int
+) -> None:
+    source = Path(row["mask"])
+    with np.load(source, allow_pickle=False) as archive:
+        if "binary" not in archive.files:
+            raise V33ReplayError(f"actor mask 缺少 binary array: {source}")
+        value = np.asarray(archive["binary"])
+    if value.shape != (height, width):
+        raise V33ReplayError(
+            f"actor mask shape 漂移: expected={(height, width)} actual={value.shape}"
+        )
+    binary = value.astype(bool, copy=False)
+    positive = int(binary.sum())
+    if positive <= 0 or positive != int(row["positive_pixels"]):
+        raise V33ReplayError("actor mask positive pixel 计数漂移")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    Image.fromarray(binary.astype(np.uint8) * 255, mode="L").save(target, format="PNG")
+
+
 def build_records(
-    *, spatial_run: Path, spatial_config: Mapping[str, Any], output_dir: Path
+    *,
+    spatial_run: Path,
+    spatial_config: Mapping[str, Any],
+    actor_masks: Mapping[tuple[int, int], Mapping[str, Any]],
+    output_dir: Path,
 ) -> list[dict[str, Any]]:
     evaluation = json.loads(
         (spatial_run / "evaluation" / "summary.json").read_text(encoding="utf-8")
@@ -94,16 +190,18 @@ def build_records(
         render_dir = spatial_run / "evaluation" / "artifacts" / "renders" / f"f{frame:03d}_c{camera}"
         prediction = render_dir / "base_only.png"
         source_target = processed / "images" / f"{frame:03d}_{camera}.jpg"
-        dynamic_mask = processed / "dynamic_masks" / "all" / f"{frame:03d}_{camera}.png"
-        for label, path in (
-            ("prediction", prediction),
-            ("target", source_target),
-            ("dynamic_mask", dynamic_mask),
-        ):
+        for label, path in (("prediction", prediction), ("target", source_target)):
             if not path.is_file():
                 raise V33ReplayError(f"{label} 缺失: {path}")
+        actor_row = actor_masks.get((frame, camera))
+        if actor_row is None:
+            raise V33ReplayError(
+                f"render row 缺少 accepted development actor mask: {(frame, camera)}"
+            )
         target = output_dir / "targets" / f"f{frame:03d}_c{camera}.png"
         resize_target(source_target, target, width=width, height=height)
+        dynamic_mask = output_dir / "actor_masks" / f"f{frame:03d}_c{camera}.png"
+        materialize_actor_mask(actor_row, dynamic_mask, width=width, height=height)
         egocar = output_dir / "egocar_masks" / f"f{frame:03d}_c{camera}.png"
         egocar.parent.mkdir(parents=True, exist_ok=True)
         Image.new("L", (width, height), color=0).save(egocar, format="PNG")
@@ -118,6 +216,10 @@ def build_records(
                 "target_sha256": sha256_file(target),
                 "dynamic_mask": str(dynamic_mask),
                 "dynamic_mask_sha256": sha256_file(dynamic_mask),
+                "dynamic_mask_source": "accepted_high_support_sam2_development_mask",
+                "dynamic_mask_source_npz": str(Path(actor_row["mask"]).resolve()),
+                "dynamic_mask_source_npz_sha256": actor_row["mask_sha256"],
+                "dynamic_mask_positive_pixels": int(actor_row["positive_pixels"]),
                 "egocar_mask": str(egocar),
                 "egocar_mask_sha256": sha256_file(egocar),
             }
@@ -188,6 +290,9 @@ def main() -> None:
     rows = build_records(
         spatial_run=args.spatial_run.resolve(),
         spatial_config=spatial_config,
+        actor_masks=load_development_actor_masks(
+            args.instance_run.resolve(), instance_stage=instance["summary"]
+        ),
         output_dir=args.run_dir / "artifacts",
     )
     render_manifest = {
