@@ -73,6 +73,7 @@ def build_registry(
     checkpoints = {}
     for scene in expected:
         run = Path(run_bindings[scene])
+        scene_index = int(config["scenes"][scene])
         status = load_json(run / "status.json")
         summary = load_json(run / "summary.json")
         manifest = load_json(run / "manifest.json")
@@ -85,6 +86,7 @@ def build_registry(
             or summary.get("status") != "done"
             or summary.get("mode") != "formal"
             or summary.get("scene") != scene
+            or summary.get("scene_index") != scene_index
             or summary.get("iterations") != 30000
             or summary.get("project_git", {}).get("dirty") is not False
             or summary.get("test_quality_read") is not False
@@ -112,6 +114,7 @@ def build_registry(
             raise ValidationCheckpointRegistryError(f"manifest checkpoint drift: {scene}")
         checkpoints[scene] = {
             **checkpoint,
+            "scene_index": scene_index,
             "run": str(run),
             "source_config": str(source_config),
             "source_config_sha256": sha256_file(source_config),

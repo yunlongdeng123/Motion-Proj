@@ -146,9 +146,16 @@ def resolve_scene_contracts(
         if scene_role == "development":
             scene_index = int(scene_contract[scene]["scene_index"])
         else:
-            if "scene_index" not in record:
-                raise V33ReplayError(f"D0 validation record 缺少 scene_index：{scene}")
-            scene_index = int(record["scene_index"])
+            if "scene_index" not in checkpoint:
+                raise V33ReplayError(
+                    f"validation checkpoint registry 缺少 scene_index：{scene}"
+                )
+            scene_index = int(checkpoint["scene_index"])
+            if (
+                "scene_index" in record
+                and int(record["scene_index"]) != scene_index
+            ):
+                raise V33ReplayError(f"D0/registry validation scene_index 漂移：{scene}")
         processed_scene = processed_root / f"{scene_index:03d}"
         instances_path = processed_scene / "instances" / "instances_info.json"
         if not instances_path.is_file():

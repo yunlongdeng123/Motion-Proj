@@ -50,6 +50,7 @@ def fixture(tmp_path: Path) -> tuple[Path, dict[str, Path]]:
         summary = {
             "status": "done",
             "scene": scene,
+            "scene_index": config["scenes"][scene],
             "mode": "formal",
             "iterations": 30000,
             "checkpoint": checkpoint_row,
@@ -88,6 +89,7 @@ def test_build_registry_binds_six_exact_formal_checkpoints(tmp_path: Path) -> No
     assert result["status"] == "done"
     assert result["scene_order"] == list(runs)
     assert len(result["checkpoints"]) == 6
+    assert result["checkpoints"]["scene-0001"]["scene_index"] == 0
     assert result["test_quality_read"] is False
 
 
@@ -96,6 +98,19 @@ def test_registry_rejects_dirty_formal_run(tmp_path: Path) -> None:
     first = next(iter(runs.values()))
     summary = json.loads((first / "summary.json").read_text())
     summary["project_git"]["dirty"] = True
+    write_json(first / "summary.json", summary)
+    status = json.loads((first / "status.json").read_text())
+    status["summary_sha256"] = sha(first / "summary.json")
+    write_json(first / "status.json", status)
+    with pytest.raises(ValidationCheckpointRegistryError, match="formal contract"):
+        build_registry(config_path=config, run_bindings=runs)
+
+
+def test_registry_rejects_scene_index_drift(tmp_path: Path) -> None:
+    config, runs = fixture(tmp_path)
+    first = next(iter(runs.values()))
+    summary = json.loads((first / "summary.json").read_text())
+    summary["scene_index"] = 999
     write_json(first / "summary.json", summary)
     status = json.loads((first / "status.json").read_text())
     status["summary_sha256"] = sha(first / "summary.json")

@@ -46,6 +46,7 @@ def _fixture(tmp_path: Path) -> tuple[dict, Path]:
             "path": str(checkpoint),
             "bytes": checkpoint.stat().st_size,
             "sha256": _sha(checkpoint),
+            "scene_index": index,
         }
         records.append(
             {
@@ -203,6 +204,40 @@ def test_validation_rejects_registry_scene_drift(tmp_path: Path) -> None:
     config["inputs"]["checkpoint_registry"] = "configs/validation_registry.yaml"
 
     with pytest.raises(V33ReplayError, match="scene 集合"):
+        resolve_scene_contracts(config, project_root=project)
+
+
+def test_validation_rejects_registry_scene_index_drift(tmp_path: Path) -> None:
+    config, project = _fixture(tmp_path)
+    cohort_path = project / "configs" / "cohort.yaml"
+    cohort = yaml.safe_load(cohort_path.read_text(encoding="utf-8"))
+    scenes = cohort["freeze"]["scene_roles"].pop("development")
+    cohort["freeze"]["scene_roles"]["validation"] = scenes
+    for row in cohort["freeze"]["scene_records"]:
+        row["role"] = "validation"
+        row["scene_index"] = int(row["scene"].removeprefix("scene-"))
+    cohort_path.write_text(yaml.safe_dump(cohort), encoding="utf-8")
+    config["inputs"]["cohort_config_sha256"] = _sha(cohort_path)
+    config["scene_source"]["split"] = "validation"
+    matrix = yaml.safe_load((project / "configs" / "matrix.yaml").read_text())
+    checkpoints = matrix["baselines"]["streetgs"]["checkpoints"]
+    checkpoints[scenes[0]]["scene_index"] = 999
+    registry_path = project / "configs" / "validation_registry.yaml"
+    registry_path.write_text(
+        yaml.safe_dump(
+            {
+                "schema_version": "worldsim_v4_streetgs_checkpoint_registry_v1",
+                "split": "validation",
+                "partition_contract": "sample_index_mod_5",
+                "test_quality_read": False,
+                "checkpoints": checkpoints,
+            }
+        ),
+        encoding="utf-8",
+    )
+    config["inputs"]["checkpoint_registry"] = "configs/validation_registry.yaml"
+
+    with pytest.raises(V33ReplayError, match="scene_index"):
         resolve_scene_contracts(config, project_root=project)
 
 

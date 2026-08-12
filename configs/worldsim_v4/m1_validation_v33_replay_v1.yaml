@@ -1,0 +1,113 @@
+schema_version: worldsim_v4_v33_replay_v1
+task_id: WS-V4-M1-EVIDENCE-FIELD-01
+status: running
+created_at: '2026-08-12'
+algorithm:
+  name: V3.3 frozen
+  implementation_commit: e6663e1
+  required_stages:
+  - semantic_lift
+  - instance_field
+  - roadpatch
+  - asset_harvester
+  - spatial_delta
+  - semantic_render
+  allow_abstain_stages:
+  - semantic_lift
+  - instance_field
+  - roadpatch
+  - asset_harvester
+  - spatial_delta
+  - semantic_render
+  base_rgb_immutable: true
+abstain_no_actor:
+  reason: ABSTAIN_NO_ACTOR
+  render_camera_id: 0
+  development_view_count: 3
+  view_selection: first_development_frames
+  semantic_render_status: done
+inputs:
+  cohort_config: configs/worldsim_v4/nuscenes_cohort_v1.yaml
+  cohort_config_sha256: ed47c0da2c76e14b3b0a0e7a8b4d9b580bdf37e4c69a1d5a389b965e88c667a1
+  baseline_matrix: configs/worldsim_v4/baseline_matrix_v1.yaml
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  raw_metadata: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta/v1.0-trainval
+  checkpoint_registry: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m1_validation_checkpoint_registry_v1.yaml
+  checkpoint_registry_sha256: 7c5efee36ddf11d3d11de1ac6fc85bf7620b2f37d8de92269c523682ae22ad99
+scene_source:
+  split: validation
+  high_support_role: high_support
+  boundary_support_role: difficult
+  checkpoint_source: m1_validation_streetgs_registry
+  derive_actor_ids_from_instances_info: true
+  derive_rigid_model_indices_from_actor_registry: true
+frame_partition:
+  modulus: 5
+  train_remainders:
+  - 0
+  - 1
+  - 3
+  development_remainder: 2
+  heldout_remainder: 4
+  test_quality_read: false
+semantic_lift:
+  template: configs/worldsim_v32/s1_semantic_lift_v3.yaml
+  template_sha256: 377cd95999dcc02d15782fce06940952826c410d5f4df13846e5dd4c58304960
+  cameras:
+  - id: 0
+    name: CAM_FRONT
+  - id: 1
+    name: CAM_FRONT_LEFT
+  - id: 2
+    name: CAM_FRONT_RIGHT
+  unavailable_actor_policy: omit_with_explicit_abstention
+  optimization_partitions:
+  - train
+  evaluation_partitions:
+  - development
+instance_field:
+  template: configs/worldsim_v33/s1_instance_field_v1.yaml
+  template_sha256: 9afa48aa1ff5ebbb290da564e901f25c48ac1f6ee16f97379f936457acdc3150
+  formal_selected_arm: O1_dual_opacity
+  evaluation_partition: development
+  smoke_arm_selection_reused_from_frozen_v33: true
+spatial_delta:
+  template: configs/worldsim_v33/s4_spatial_delta_v1.yaml
+  template_sha256: 4b318a67786e576d56b6ea57d91528252fa290f0a53bd3a2f5d45dbae1c3508a
+  executable_stacks_without_scene_specific_assets:
+  - base_only
+  - erase
+  optional_upstream_stages:
+  - roadpatch
+  - asset_harvester
+  base_rows_deleted: 0
+unified_evaluator:
+  metrics_config: configs/worldsim_v4/metrics_v1.yaml
+  torch_home: /root/autodl-tmp/cache/torch
+  alexnet_weight:
+    path: /root/autodl-tmp/cache/torch/hub/checkpoints/alexnet-owt-7be5be79.pth
+    sha256: 7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02
+  lpips_alex_weight:
+    path: /root/autodl-tmp/envs/drivestudio/lib/python3.9/site-packages/lpips/weights/v0.1/alex.pth
+    sha256: df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0
+runtimes:
+  cuda_visible_devices: '0'
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  sam2_checkout: /root/autodl-tmp/third_party/worldsim_v32/sam2
+  sam2_python: /root/autodl-tmp/envs/worldsim-v33-sam2/bin/python
+gates:
+  expected_scene_count: 6
+  require_exact_base_checkpoint: true
+  require_available_high_actor: false
+  retain_unavailable_high_as_abstain: true
+  retain_unavailable_boundary_as_abstain: true
+  require_complete_scene_chain: true
+  no_test_quality_read: true
+validation_protocol:
+  outer_cohort_role: validation
+  within_scene_evaluation_partition: development
+  development_frozen_method_selection_reused: true
+  validation_optimization_forbidden: true
+  heldout_content_read: false
+  test_quality_read: false
