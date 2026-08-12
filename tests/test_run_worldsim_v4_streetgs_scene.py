@@ -7,7 +7,12 @@ import sys
 
 import pytest
 
-from scripts.run_worldsim_v4_streetgs_scene import StreetGSTrainingError, build_train_command, validate_config
+from scripts.run_worldsim_v4_streetgs_scene import (
+    StreetGSTrainingError,
+    build_train_command,
+    expected_scene_frames,
+    validate_config,
+)
 
 
 def config(tmp_path: Path) -> dict:
@@ -22,6 +27,8 @@ def config(tmp_path: Path) -> dict:
         "data": {
             "dataset_config": "nuscenes/3cams",
             "processed_root": "/data/trainval",
+            "expected_frames": 196,
+            "expected_cameras": 6,
             "start_timestep": 0,
             "end_timestep": -1,
             "load_smpl": False,
@@ -66,13 +73,40 @@ def test_m1_validation_reconstruction_uses_frozen_validation_scene_contract(
         "scene-1012": 770,
         "scene-0450": 364,
     }
+    value["data"]["expected_frames_by_scene"] = {
+        "scene-0071": 196,
+        "scene-0317": 191,
+        "scene-0450": 196,
+        "scene-0862": 196,
+        "scene-1012": 196,
+        "scene-1089": 196,
+    }
     result = validate_config(value, tmp_path)
     assert result["task_id"] == "WS-V4-M1-EVIDENCE-FIELD-01"
+    assert expected_scene_frames(value, "scene-0317") == 191
     command, _, iterations = build_train_command(
         value, "scene-0071", "profile100", tmp_path / "run"
     )
     assert iterations == 100
     assert "data.scene_idx=68" in command
+
+
+def test_m1_validation_reconstruction_rejects_frame_drift(tmp_path: Path) -> None:
+    value = config(tmp_path)
+    value["task_id"] = "WS-V4-M1-EVIDENCE-FIELD-01"
+    value["scenes"] = {
+        "scene-0071": 68,
+        "scene-1089": 829,
+        "scene-0317": 251,
+        "scene-0862": 652,
+        "scene-1012": 770,
+        "scene-0450": 364,
+    }
+    value["data"]["expected_frames_by_scene"] = {
+        scene: 196 for scene in value["scenes"]
+    }
+    with pytest.raises(StreetGSTrainingError, match="frame"):
+        validate_config(value, tmp_path)
 
 
 @pytest.mark.parametrize(

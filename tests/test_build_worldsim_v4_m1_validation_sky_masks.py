@@ -6,6 +6,7 @@ import pytest
 
 from scripts.build_worldsim_v4_sky_masks import (
     SkyMaskError,
+    expected_sky_counts,
     source_snapshot_relpaths,
     validate_config,
 )
@@ -24,6 +25,22 @@ def validation_config() -> dict:
             "cameras": [0, 1, 2],
             "expected_timesteps": 196,
             "expected_masks": 588,
+            "expected_timesteps_by_scene": {
+                "scene-0071": 196,
+                "scene-0317": 191,
+                "scene-0450": 196,
+                "scene-0862": 196,
+                "scene-1012": 196,
+                "scene-1089": 196,
+            },
+            "expected_masks_by_scene": {
+                "scene-0071": 588,
+                "scene-0317": 573,
+                "scene-0450": 588,
+                "scene-0862": 588,
+                "scene-1012": 588,
+                "scene-1089": 588,
+            },
             "scenes": {
                 "scene-0071": 68,
                 "scene-0317": 251,
@@ -45,12 +62,20 @@ def test_validation_sky_mask_config_freezes_exact_six_scenes() -> None:
         "scene_count": 6,
         "expected_masks": 588,
     }
+    assert expected_sky_counts(validation_config(), "scene-0317") == (191, 573)
 
 
 def test_validation_sky_mask_config_rejects_scene_drift() -> None:
     value = copy.deepcopy(validation_config())
     value["data"]["scenes"]["scene-0071"] = 69
     with pytest.raises(SkyMaskError, match="scene"):
+        validate_config(value)
+
+
+def test_validation_sky_mask_config_rejects_frame_drift() -> None:
+    value = copy.deepcopy(validation_config())
+    value["data"]["expected_timesteps_by_scene"]["scene-0317"] = 196
+    with pytest.raises(SkyMaskError, match="per-scene frame"):
         validate_config(value)
 
 

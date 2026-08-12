@@ -49,6 +49,17 @@ SCENE_CONTRACTS = {
         "scene-0450": 364,
     },
 }
+FRAME_CONTRACTS = {
+    TASK_ID: {scene: 196 for scene in SCENE_CONTRACTS[TASK_ID]},
+    M1_TASK_ID: {
+        "scene-0071": 196,
+        "scene-0317": 191,
+        "scene-0450": 196,
+        "scene-0862": 196,
+        "scene-1012": 196,
+        "scene-1089": 196,
+    },
+}
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/streetgs_training_v1.yaml",
     "configs/worldsim_v4/m1_validation_reconstruction_v1.yaml",
@@ -97,6 +108,18 @@ def _git(path: Path, *args: str) -> str:
     return process.stdout.strip()
 
 
+def expected_scene_frames(config: Mapping[str, Any], scene: str) -> int:
+    data = config.get("data", {})
+    rows = data.get("expected_frames_by_scene")
+    try:
+        frames = int(rows[scene]) if isinstance(rows, Mapping) else int(data["expected_frames"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise StreetGSTrainingError(f"scene frame contract 缺失：{scene}") from error
+    if frames <= 0:
+        raise StreetGSTrainingError(f"scene frame contract 非法：{scene}: {frames}")
+    return frames
+
+
 def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, Any]:
     task_id = config.get("task_id")
     if (
@@ -124,6 +147,12 @@ def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, 
     scenes = config.get("scenes", {})
     if scenes != SCENE_CONTRACTS[task_id]:
         raise StreetGSTrainingError("六场景 index 合同漂移")
+    observed_frames = {
+        scene: expected_scene_frames(config, scene)
+        for scene in scenes
+    }
+    if observed_frames != FRAME_CONTRACTS[task_id]:
+        raise StreetGSTrainingError("六场景 frame 合同漂移")
     return {
         "task_id": task_id,
         "scene_count": len(scenes),
@@ -270,7 +299,11 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str, mode: 
         raise StreetGSTrainingError("DriveStudio patch reverse-check 失败")
     scene_index = int(config["scenes"][scene])
     processed = Path(config["data"]["processed_root"]) / scene_directory_name(scene_index)
-    data_validation = validate_processed_scene(processed, int(config["data"]["expected_frames"]), int(config["data"]["expected_cameras"]))
+    data_validation = validate_processed_scene(
+        processed,
+        expected_scene_frames(config, scene),
+        int(config["data"]["expected_cameras"]),
+    )
 
     for name in ("artifacts", "logs", "source_snapshot", "stages", "work_dirs"):
         (run_dir / name).mkdir(parents=True, exist_ok=False)

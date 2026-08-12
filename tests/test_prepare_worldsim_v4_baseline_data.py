@@ -4,7 +4,14 @@ import copy
 
 import pytest
 
-from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, scene_directory_name, validate_config, validate_processed_scene
+from scripts.prepare_worldsim_v4_baseline_data import (
+    BaselineDataError,
+    M1_FRAME_CONTRACT,
+    expected_scene_frames,
+    scene_directory_name,
+    validate_config,
+    validate_processed_scene,
+)
 
 
 SCENES = ["scene-0230", "scene-0242", "scene-0255", "scene-0048", "scene-0994", "scene-0139"]
@@ -53,13 +60,37 @@ def test_m1_validation_data_config_requires_all_six_frozen_scenes() -> None:
     value["task_id"] = "WS-V4-M1-EVIDENCE-FIELD-01"
     value["protocol"]["cohort_role"] = "validation"
     value["scenes"] = {
-        scene: {"scene_index": index, "state": "extract_and_preprocess"}
+        scene: {
+            "scene_index": index,
+            "state": "extract_and_preprocess",
+            "expected_frames_10hz": M1_FRAME_CONTRACT[scene],
+        }
         for index, scene in enumerate(VALIDATION_SCENES)
     }
     value["gates"]["expected_extract_scene_count"] = 6
     result = validate_config(value, cohort())
     assert result["cohort_role"] == "validation"
     assert result["extract_scenes"] == sorted(VALIDATION_SCENES)
+    assert expected_scene_frames(value, "scene-0317") == 191
+    assert expected_scene_frames(value, "scene-0071") == 196
+
+
+def test_m1_validation_data_config_rejects_per_scene_frame_drift() -> None:
+    value = config()
+    value["task_id"] = "WS-V4-M1-EVIDENCE-FIELD-01"
+    value["protocol"]["cohort_role"] = "validation"
+    value["scenes"] = {
+        scene: {
+            "scene_index": index,
+            "state": "extract_and_preprocess",
+            "expected_frames_10hz": M1_FRAME_CONTRACT[scene],
+        }
+        for index, scene in enumerate(VALIDATION_SCENES)
+    }
+    value["scenes"]["scene-0317"]["expected_frames_10hz"] = 196
+    value["gates"]["expected_extract_scene_count"] = 6
+    with pytest.raises(BaselineDataError, match="per-scene frame"):
+        validate_config(value, cohort())
 
 
 @pytest.mark.parametrize(

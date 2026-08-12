@@ -40,6 +40,17 @@ TASK_SCENES = {
         "scene-1089": 829,
     },
 }
+TASK_FRAME_COUNTS = {
+    DEFAULT_TASK_ID: {scene: 196 for scene in TASK_SCENES[DEFAULT_TASK_ID]},
+    "WS-V4-M1-EVIDENCE-FIELD-01": {
+        "scene-0071": 196,
+        "scene-0317": 191,
+        "scene-0450": 196,
+        "scene-0862": 196,
+        "scene-1012": 196,
+        "scene-1089": 196,
+    },
+}
 SOURCE_SNAPSHOT_RELPATHS = (
     "scripts/build_worldsim_v4_sky_masks.py",
     "tests/test_build_worldsim_v4_sky_masks.py",
@@ -99,6 +110,24 @@ def source_snapshot_relpaths(config_path: Path, project_root: Path) -> tuple[str
     return (config_relpath, *SOURCE_SNAPSHOT_RELPATHS)
 
 
+def expected_sky_counts(config: Mapping[str, Any], scene: str) -> tuple[int, int]:
+    data = config.get("data", {})
+    timestep_rows = data.get("expected_timesteps_by_scene")
+    mask_rows = data.get("expected_masks_by_scene")
+    try:
+        if isinstance(timestep_rows, Mapping) and isinstance(mask_rows, Mapping):
+            timesteps = int(timestep_rows[scene])
+            masks = int(mask_rows[scene])
+        else:
+            timesteps = int(data["expected_timesteps"])
+            masks = int(data["expected_masks"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise SkyMaskError(f"scene sky count contract 缺失：{scene}") from error
+    if timesteps <= 0 or masks != timesteps * len(data.get("cameras", [])):
+        raise SkyMaskError(f"scene sky count contract 非法：{scene}: {timesteps}/{masks}")
+    return timesteps, masks
+
+
 def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     if config.get("schema_version") != "worldsim_v4_sky_masks_v1" or config.get("status") != "running":
         raise SkyMaskError("sky-mask config schema/task/status 漂移")
@@ -110,10 +139,26 @@ def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     if model.get("revision") != "2c6f153e4c23c229e2fa2b188eb250607e030cd8" or model.get("local_files_only") is not True:
         raise SkyMaskError("SegFormer revision/local-only 合同漂移")
     data = config.get("data", {})
-    if data.get("cameras") != [0, 1, 2] or data.get("expected_timesteps") != 196 or data.get("expected_masks") != 588:
+    if data.get("cameras") != [0, 1, 2]:
         raise SkyMaskError("camera/timestep/mask 合同漂移")
     if data.get("scenes") != expected_scenes:
         raise SkyMaskError("sky-mask scene 集合漂移")
+    expected_frames = TASK_FRAME_COUNTS[str(task_id)]
+    if task_id == DEFAULT_TASK_ID:
+        if data.get("expected_timesteps") != 196 or data.get("expected_masks") != 588:
+            raise SkyMaskError("camera/timestep/mask 合同漂移")
+    else:
+        if data.get("expected_timesteps_by_scene") != expected_frames:
+            raise SkyMaskError("sky-mask per-scene frame contract 漂移")
+        expected_masks = {scene: frames * 3 for scene, frames in expected_frames.items()}
+        if data.get("expected_masks_by_scene") != expected_masks:
+            raise SkyMaskError("sky-mask per-scene mask contract 漂移")
+    observed_frames = {
+        scene: expected_sky_counts(config, scene)[0]
+        for scene in expected_scenes
+    }
+    if observed_frames != expected_frames:
+        raise SkyMaskError("sky-mask per-scene frame contract 漂移")
     runtime = config.get("runtime", {})
     if runtime.get("generation_network_access") is not False or runtime.get("no_test_quality_read") is not True:
         raise SkyMaskError("generation-network/test-unread 合同漂移")
@@ -189,10 +234,11 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
         raise SkyMaskError(f"scene 未冻结：{scene}")
     snapshot = audit_snapshot(config)
     scene_index = int(config["data"]["scenes"][scene])
+    expected_timesteps, expected_masks = expected_sky_counts(config, scene)
     scene_root = Path(config["data"]["processed_root"]) / scene_directory_name(scene_index)
     images = sorted(path for path in (scene_root / "images").glob("*.jpg") if int(path.stem.rsplit("_", 1)[1]) in set(config["data"]["cameras"]))
-    if len(images) != int(config["data"]["expected_masks"]):
-        raise SkyMaskError(f"训练相机 image count {len(images)} != 588")
+    if len(images) != expected_masks:
+        raise SkyMaskError(f"训练相机 image count {len(images)} != {expected_masks}")
     target = scene_root / "sky_masks"
     partial = scene_root / f"sky_masks.partial.{run_dir.name}"
     precreated_empty_target = validate_output_paths(target, partial)
@@ -238,7 +284,7 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
             logits = functional.interpolate(logits, size=(height, width), mode="bilinear", align_corners=False)
             mask = logits.argmax(dim=1)[0].eq(sky_id).cpu().numpy().astype(np.uint8) * 255
         output = partial / f"{image_path.stem}.png"
-        Image.fromarray(mask, mode="L").save(output)
+        Image.fromarray(mask).save(output)
         if output.stat().st_size == 0:
             raise SkyMaskError(f"空 sky mask：{output}")
         rows.append({"image": image_path.name, "mask": output.name, "bytes": output.stat().st_size, "sha256": sha256_file(output), "sky_fraction": float((mask > 0).mean())})
@@ -248,9 +294,9 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
             append_jsonl(run_dir / "resource.jsonl", sample)
             peak_gpu = max(peak_gpu, int(sample["gpu"]["memory_used_mib"]))
             peak_memory = max(peak_memory, int(sample["memory_current_bytes"]))
-    if len(rows) != 588 or {row["mask"] for row in rows} != {f"{path.stem}.png" for path in images}:
+    if len(rows) != expected_masks or {row["mask"] for row in rows} != {f"{path.stem}.png" for path in images}:
         raise SkyMaskError("sky-mask 输出集合漂移")
-    manifest = {"schema_version": "worldsim_v4_sky_mask_manifest_v1", "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "model": snapshot, "sky_class_id": sky_id, "sky_class_label": labels[sky_id], "image_count": len(images), "mask_count": len(rows), "mean_sky_fraction": float(np.mean([row["sky_fraction"] for row in rows])), "files": rows, "network_accessed": False, "test_quality_read": False}
+    manifest = {"schema_version": "worldsim_v4_sky_mask_manifest_v1", "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "expected_timesteps": expected_timesteps, "expected_masks": expected_masks, "model": snapshot, "sky_class_id": sky_id, "sky_class_label": labels[sky_id], "image_count": len(images), "mask_count": len(rows), "mean_sky_fraction": float(np.mean([row["sky_fraction"] for row in rows])), "files": rows, "network_accessed": False, "test_quality_read": False}
     _write_json(run_dir / "artifacts/sky_mask_manifest.json", manifest)
     del model, processor, inputs, logits
     gc_collect = getattr(torch.cuda, "empty_cache", None)

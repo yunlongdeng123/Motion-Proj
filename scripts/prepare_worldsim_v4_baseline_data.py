@@ -21,6 +21,14 @@ import yaml
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
 M1_TASK_ID = "WS-V4-M1-EVIDENCE-FIELD-01"
+M1_FRAME_CONTRACT = {
+    "scene-0071": 196,
+    "scene-0317": 191,
+    "scene-0450": 196,
+    "scene-0862": 196,
+    "scene-1012": 196,
+    "scene-1089": 196,
+}
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_data_v1.yaml",
     "configs/worldsim_v4/m1_validation_data_v1.yaml",
@@ -100,12 +108,36 @@ def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dic
     )
     if set(extracting) != expected_extracting:
         raise BaselineDataError(f"{expected_role} extract scene set 漂移")
+    if task_id == M1_TASK_ID:
+        frame_contract = {
+            scene: int(record.get("expected_frames_10hz", -1))
+            for scene, record in scenes.items()
+        }
+        if frame_contract != M1_FRAME_CONTRACT:
+            raise BaselineDataError("validation per-scene frame contract 漂移")
     return {
         "task_id": task_id,
         "cohort_role": expected_role,
         "scenes": list(scenes),
         "extract_scenes": extracting,
     }
+
+
+def expected_scene_frames(config: Mapping[str, Any], scene: str) -> int:
+    record = config.get("scenes", {}).get(scene)
+    if not isinstance(record, Mapping):
+        raise BaselineDataError(f"scene 未冻结：{scene}")
+    value = record.get(
+        "expected_frames_10hz",
+        config.get("gates", {}).get("expected_frames_10hz"),
+    )
+    try:
+        frames = int(value)
+    except (TypeError, ValueError) as error:
+        raise BaselineDataError(f"scene expected_frames_10hz 非法：{scene}: {value}") from error
+    if frames <= 0:
+        raise BaselineDataError(f"scene expected_frames_10hz 必须为正数：{scene}: {frames}")
+    return frames
 
 
 def _resource_state(path: Path) -> dict[str, Any]:
@@ -335,8 +367,13 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
             raise BaselineDataError(f"raw payload bytes 漂移：{path}")
     scene_index = int(record["scene_index"])
     scene_root = processed_root / "trainval" / scene_directory_name(scene_index)
-    if scene_root.exists() or scene_root.is_symlink():
-        raise BaselineDataError(f"processed scene target 已存在，禁止覆盖：{scene_root}")
+    expected_frames = expected_scene_frames(config, scene)
+    expected_cameras = int(config["gates"]["expected_cameras"])
+    if scene_root.is_symlink():
+        raise BaselineDataError(f"extract scene target 禁止为 symlink：{scene_root}")
+    reused_existing_output = scene_root.exists()
+    if reused_existing_output:
+        validate_processed_scene(scene_root, expected_frames, expected_cameras)
     pre = _resource_state(Path("/root/autodl-tmp"))
     minimum = int(config["gates"]["minimum_disk_free_gib"]) * 2**30
     if pre["disk_free_bytes"] < minimum:
@@ -358,12 +395,20 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
     environment["PYTHONPATH"] = f"{project_root}:/root/autodl-tmp/third_party/drivestudio"
     started = time.monotonic()
     log_path = run_dir / "logs/preprocess.log"
-    with log_path.open("xb") as log:
-        process = subprocess.run(command, cwd=project_root, env=environment, stdout=log, stderr=subprocess.STDOUT, timeout=3600, check=False)
+    if reused_existing_output:
+        log_path.write_text(
+            "verified and reused complete processed scene from a prior fail-closed run\n",
+            encoding="utf-8",
+        )
+        return_code = 0
+    else:
+        with log_path.open("xb") as log:
+            process = subprocess.run(command, cwd=project_root, env=environment, stdout=log, stderr=subprocess.STDOUT, timeout=3600, check=False)
+        return_code = process.returncode
     elapsed = time.monotonic() - started
-    if process.returncode != 0:
-        raise BaselineDataError(f"preprocess return code={process.returncode}；见 {log_path}")
-    validation = validate_processed_scene(scene_root, int(config["gates"]["expected_frames_10hz"]), int(config["gates"]["expected_cameras"]))
+    if return_code != 0:
+        raise BaselineDataError(f"preprocess return code={return_code}；见 {log_path}")
+    validation = validate_processed_scene(scene_root, expected_frames, expected_cameras)
     artifact = {
         "schema_version": "worldsim_v4_processed_scene_v1",
         "task_id": task_id,
@@ -371,6 +416,8 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
         "scene_index": scene_index,
         "status": "done",
         "command": command,
+        "command_executed": not reused_existing_output,
+        "reused_existing_output": reused_existing_output,
         "duration_seconds": elapsed,
         "raw_manifest": {"path": str(raw_manifest), "bytes": raw_manifest.stat().st_size, "sha256": sha256_file(raw_manifest)},
         "reused_processed": reused,
