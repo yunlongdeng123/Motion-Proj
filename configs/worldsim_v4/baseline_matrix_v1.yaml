@@ -156,8 +156,28 @@ baselines:
     canonical_read_only: true
     required_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
     legacy_executable_scenes: [scene-0230]
-    executable_scene_chains: {}
-    missing_scenes: [scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+    executable_scene_chains:
+      scene-0994:
+        run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T055400Z__v33-scene0994-scene-chain-s0-r85
+        algorithm_commit: e6663e1
+        base_checkpoint_sha256: 3e2b2534f79833b57fe976fdc1e49e31e5d26b04a3b62b83bc8b184e7f653aea
+        summary_sha256: 8476d543d26b457113ff67ffd7fb9ca6131856f5a261f5a6aad9a2bb5d32919e
+        manifest_sha256: ad1cdd9549326140ca1e433ea9989f8af446dcd99e4eb7fe2d1c62bae0f72d93
+        status_sha256: 99491c671721ecbf5e344b000a53b2397343d1f499cc27bd1e6c2dc3c1cfee36
+        files:
+          scene_chain.json:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T055400Z__v33-scene0994-scene-chain-s0-r85/scene_chain.json
+            bytes: 4497
+            sha256: 6c3847b16253399f986ecef694d32e852ea52f37782293051a55bc0564422c64
+          render_manifest.json:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T055400Z__v33-scene0994-scene-chain-s0-r85/render_manifest.json
+            bytes: 3163
+            sha256: a6cee6eef7f48f5fd84806eba8ef61aa9faa4194200f0fe4d2d92db62e4bba8d
+          metrics.json:
+            path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T055400Z__v33-scene0994-scene-chain-s0-r85/metrics.json
+            bytes: 2708
+            sha256: c1c58dd581ca8ebf35600f1c7fed365a382b41e263e920e9c7b70392d78d9cbf
+    missing_scenes: [scene-0242, scene-0255, scene-0048, scene-0139]
     source_run: /root/autodl-tmp/runs/worldsim_v33/WS-V33-R0-INTEGRATION-01/20260810T222701Z__r0-integration-canonical-s0-r7
   ad_gs:
     tier: A
