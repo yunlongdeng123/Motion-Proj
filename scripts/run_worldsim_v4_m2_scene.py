@@ -97,6 +97,22 @@ def _write_json(path: Path, payload: Any) -> None:
     atomic_json(path, _json_safe(payload))
 
 
+def _snapshot_input_scene_config(config_path: Path, run_dir: Path) -> dict[str, Any]:
+    source = config_path.resolve()
+    if not source.is_file():
+        raise M2SceneRunError(f"materialized scene config does not exist: {source}")
+    snapshot_dir = run_dir / "source_snapshot"
+    snapshot_dir.mkdir(exist_ok=True)
+    target = snapshot_dir / "materialized_scene_config.yaml"
+    shutil.copy2(source, target)
+    return {
+        "source_path": str(source),
+        "snapshot_path": str(target),
+        "sha256": sha256_file(target),
+        "bytes": target.stat().st_size,
+    }
+
+
 def _git_head() -> str:
     return subprocess.check_output(
         ["git", "-C", str(PROJECT_ROOT), "rev-parse", "HEAD"], text=True
@@ -841,10 +857,17 @@ def _process_request(
     }
 
 
-def run(config: Mapping[str, Any], run_dir: Path, *, max_requests: int | None) -> dict[str, Any]:
+def run(
+    config: Mapping[str, Any],
+    run_dir: Path,
+    *,
+    max_requests: int | None,
+    input_config_path: Path,
+) -> dict[str, Any]:
     started = time.monotonic()
     verified = preflight(config, phase="smoke" if max_requests else "formal")
     run_dir.mkdir(parents=True)
+    input_scene_config = _snapshot_input_scene_config(input_config_path, run_dir)
     _write_json(
         run_dir / "status.json",
         {"task_id": TASK_ID, "status": "running", "scene": config["scene"]},
@@ -858,6 +881,7 @@ def run(config: Mapping[str, Any], run_dir: Path, *, max_requests: int | None) -
             "reason": config["reason"],
             "retained_in_denominator": True,
             "request_count": 0,
+            "input_scene_config": input_scene_config,
             "heldout_content_read": False,
             "test_quality_read": False,
             "project_git_head": _git_head(),
@@ -909,7 +933,7 @@ def run(config: Mapping[str, Any], run_dir: Path, *, max_requests: int | None) -
     if checkpoint_after != checkpoint_before:
         raise M2SceneRunError("M2 source checkpoint 被修改")
     source_snapshot = run_dir / "source_snapshot"
-    source_snapshot.mkdir()
+    source_snapshot.mkdir(exist_ok=True)
     for source in (
         Path(config["source_config"]["path"]),
         Path(__file__),
@@ -929,6 +953,7 @@ def run(config: Mapping[str, Any], run_dir: Path, *, max_requests: int | None) -
         "requests": rows,
         "native_donor_index": patch_audit,
         "verified_inputs": verified,
+        "input_scene_config": input_scene_config,
         "checkpoint_sha256_before": checkpoint_before,
         "checkpoint_sha256_after": checkpoint_after,
         "checkpoint_immutable": True,
@@ -969,6 +994,7 @@ def main() -> int:
             config,
             args.run_dir.resolve(),
             max_requests=args.max_requests,
+            input_config_path=args.config.resolve(),
         )
         print(
             json.dumps(

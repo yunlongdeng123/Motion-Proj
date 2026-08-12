@@ -7,6 +7,7 @@ from scripts.run_worldsim_v4_m2_scene import (
     _cap_delta,
     _depth_mae,
     _matched_arm_records,
+    _snapshot_input_scene_config,
     preflight,
 )
 
@@ -55,6 +56,19 @@ def test_matched_arm_records_keep_failed_and_router_rows() -> None:
         "pending_development_selection",
     ]
     assert rows[2]["reasons"] == ["ABSTAIN_X"]
+
+
+def test_snapshot_input_scene_config_is_content_bound(tmp_path) -> None:
+    source = tmp_path / "scene.yaml"
+    source.write_text("scene: scene-a\n", encoding="utf-8")
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    binding = _snapshot_input_scene_config(source, run_dir)
+    snapshot = run_dir / "source_snapshot/materialized_scene_config.yaml"
+    assert snapshot.read_bytes() == source.read_bytes()
+    assert binding["snapshot_path"] == str(snapshot)
+    assert len(binding["sha256"]) == 64
+    assert binding["bytes"] == source.stat().st_size
 
 
 def test_preflight_abstain_retains_no_test_read() -> None:
