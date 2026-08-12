@@ -1,5 +1,41 @@
 # Experiments
 
+## V4 当前注册表补充（2026-08-12）
+
+| Task ID | 状态 | 当前证据 / 下一门禁 |
+|---|---|---|
+| `WS-V4-B0-MATCHED-BASELINES-01` | done | 六场 strict matched baseline 与最终审计 r117 已冻结；commit `55232a4/9e322fa` |
+| `WS-V4-M1-EVIDENCE-FIELD-01` | running | smoke r121 与 development r124 gate 均通过；r126 已冻结选择，当前只允许六场 validation confirmation |
+| `WS-V4-M2-REPAIR-ROUTER-01` | pending | 等 M1 validation 闭环后执行 development matched router；不得提前读取 test quality |
+| `WS-V4-M3-TEMPORAL-DELTA-01` | pending | 等 M2 development 冻结后执行 2–4 s nuScenes clips |
+| `WS-V4-E0-NUSCENES-SCALE-01` | pending | 先完成 6 validation；18 test 仍封存且只能在 test freeze commit 后读取一次 |
+| `WS-V4-D1-KITTI-ADAPTER-01` | blocked | 等用户自行复制真实 KITTI；禁止下载、禁止用 synthetic fixture 冒充数据集完成 |
+
+### M1 development canonical
+
+- run：`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T121734Z__m1-development6-s0-r124`；
+  source=`451073a0ff592d2bd69240d0f33f9124c567eeac`，seed=`0`，单卡 RTX 3090。
+- frozen arm=`raw__risk_100`，calibration=`raw`，threshold=`0.5`，temporal retention=`0.75`；
+  scene accounting=`6 required / 2 evaluable / 4 abstain`。
+- 相对 V3.3 O1：Boundary F1=`+0.1255247811`、FN semantic mass=`+0.0054849633`、
+  Brier=`-0.0115803990`、ECE=`-0.0311158595`；M1 预注册 gate=`pass`。
+- base RGB 与 checkpoint before/after exact；peak CUDA allocated/reserved=
+  `8,802,204,672 / 8,927,576,064 bytes`；heldout/test quality 均未读。
+- freeze audit r126=`done`；配置冻结提交=`b39d49b`。validation 数据/reconstruction 配置提交=`06d56ee`。
+
+### M1 validation 数据提取
+
+- r127：错误使用 DriveStudio Python，因缺 `ijson` 在提取前 fail-closed。
+- r128：本地官方 10-shard 扫描期间 SSH 超时断管，terminal=`blocked/BrokenPipeError`；已写入约
+  `6.7 GiB` raw union 的非空文件保留复用。
+- r129：detached launcher 使用了不存在的 `/root/miniconda3/envs/motionproj/bin/python`，未形成正式 run；
+  正确环境位于 `/root/autodl-tmp/envs/motionproj`。
+- r130：detached parent PID=1，`done`；10-shard scan wall=`3,521.8796 s`，精确绑定
+  `10,647` 个 sensor members，六场 required count=`1773/1747/1778/1784/1783/1782`；
+  summary/inventory SHA=`6f0b0933...76854c / 41b2d5eb...ee5c`，Git=`06d56ee` clean，
+  `no_download=true`、test quality 未读。`extracted_this_run=0` 表示完整复用 r128 已原子写入的非空文件。
+
+
 - 更新时间：2026-08-12
 - 当前路线：WorldSim V4 / EviDelta-GS
 - 当前执行授权：`WS-V4-B0-MATCHED-BASELINES-01` 6-development-scene evaluator/baseline；不得读取 test quality

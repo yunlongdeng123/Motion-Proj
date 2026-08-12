@@ -1,5 +1,24 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V4 M1 / validation 新增防重复结论（2026-08-12）
+
+- `V4-F30`：同一 scene 的历史 V3.3 train mask 不能自动视为符合 V4 冻结的
+  `sample_index mod 5` partition。scene-0230 的 development target 审计发现真实 train/evaluation
+  frame overlap，因此必须 `ABSTAIN_LEGACY_SPLIT_LEAK`；不得放宽 split、删除该 scene denominator，
+  或把旧 heldout 结果改名为 development。
+- `V4-F31`：M1 六场景质量均值只允许在可评 scenes 上计算，但 coverage denominator 必须保持全部六场。
+  r124 的 `2 evaluable + 4 abstain` 是协议事实，不得把 2/2 改写成 6/6 成功或静默删除 abstain。
+- `V4-F32`：validation 只能复用 development 冻结的 evidence arm、calibrator、mask threshold 与 temporal
+  retention；禁止在六个 validation scenes 上再次执行 arm search、calibration fit 或 threshold search。
+- `V4-F33`：长时间 archive scan 不能依附会超时断开的 SSH stdout。r128 的 10 个 worker 在扫描约
+  58 分钟后因外层 SSH 断管触发 `BrokenPipeError`；这不是数据缺失，也不得覆盖该 run。重试必须使用
+  stdin=`/dev/null`、stdout/stderr 文件重定向、parent PID=1 的 detached 进程，并复用已提取的非空文件。
+- `V4-F34`：Python 环境必须按 stage 显式区分。validation raw extraction 需要
+  `/root/autodl-tmp/envs/motionproj/bin/python`（含 `ijson`）；StreetGS/V3.3 GPU runtime 使用
+  `/root/autodl-tmp/envs/drivestudio/bin/python`。r127/r129 分别保留缺依赖与错误解释器路径证据，
+  不通过临时安装或删除失败记录掩盖环境错误。
+
+
 > **最后更新**：2026-08-12
 > **当前范围**：V4 当前门禁、V3.3/V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见

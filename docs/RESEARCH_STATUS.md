@@ -1,5 +1,37 @@
 # Research Status
 
+## V4 当前状态（2026-08-12，M1 development freeze 后）
+
+- 当前路线：`WorldSim V4 / EviDelta-GS paper-first`，分支
+  `research/worldsim-v4-evidelta`，当前已登记实现提交 `06d56ee`。
+- 最新有效完成任务：`WS-V4-M1-EVIDENCE-FIELD-01` 的
+  `6-scene development freeze`；当前任务为同一任务的 6-scene nuScenes validation
+  只读确认。KITTI 继续等待用户自行复制，禁止下载、禁止质量运行。
+- B0 已在六个 development scenes 完整收口并冻结；最终只读审计：
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T112848Z__b0-final-audit-s0-r117`。
+- M1 两场景 smoke canonical：
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T115302Z__m1-smoke2-risk-s0-r121`；
+  选择 `raw__risk_100 + raw calibration + threshold=0.5`，gate=`pass`。
+- M1 六场景 development canonical：
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T121734Z__m1-development6-s0-r124`；
+  全六场保留 denominator，`scene-0994/0139` 可评，`scene-0230/0242/0255/0048`
+  显式 abstain，Boundary F1 scene mean delta=`+0.1255247811`、FN semantic mass
+  delta=`+0.0054849633`、Brier delta=`-0.0115803990`、ECE delta=`-0.0311158595`，
+  base RGB/checkpoint exact，heldout/test quality 未读。
+- M1 development freeze 审计：
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T122636Z__m1-development-freeze-audit-s0-r126`；
+  frozen selection=`risk_100/raw/0.5/temporal_retention_0.75`，后续 validation 禁止重搜、拟合或改阈值。
+- validation 数据准备由 `06d56ee` 冻结六场景配置；r127 因错误 Python 环境缺 `ijson` 失败，
+  r128 因 SSH 超时断管触发 `BrokenPipeError`，两者均保留。detached 重试
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T134400Z__m1-validation-data-extract6-s0-r130`，
+  已完成本地 10 个官方 nuScenes blobs shard 扫描并精确绑定 `10,647` 个成员，
+  `status/summary/manifest/inventory SHA=fac0a587...3476e / 6f0b0933...76854c /
+  eb6eeb9a...76d4 / 41b2d5eb...ee5c`，`no_download=true`、test quality 未读。
+- 下一步：逐场景 preprocess → StreetGS profile/30k → V3.3 evidence chain →
+  使用 frozen M1 参数做 validation confirmation；validation 完成前不读取 18-scene test quality。
+
+## V4 启动期历史快照（以下进度行已由上方当前状态取代）
+
 - 更新时间：2026-08-12
 - 当前路线：WorldSim V4 / EviDelta-GS paper-first 扩展
 - 最新有效完成任务：`WS-V4-D0-NUSCENES-COHORT-01`
