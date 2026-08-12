@@ -287,6 +287,7 @@ def materialize_scene_config(
         },
         "runtime": source["runtime"],
         "asset_build": config["asset_build"],
+        "risk": config["risk"],
         "candidate_availability": {
             "OBSERVED": "ready_cross_view_train_only",
             "TELEA": "ready_deterministic_unseen_completion",
