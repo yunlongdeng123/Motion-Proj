@@ -141,7 +141,6 @@ def test_materializes_erase_only_spatial_config(tmp_path: Path) -> None:
             "development_views": [[5, 0]],
             "heldout_confirmation_views": [[20, 0]],
         },
-        "resources": {"minimum_free_disk_gib": 20},
     }
 
     config = build_spatial_config(
@@ -157,4 +156,5 @@ def test_materializes_erase_only_spatial_config(tmp_path: Path) -> None:
     assert set(config["stage_abstentions"]) == {"roadpatch", "asset_harvester"}
     assert config["evaluation"]["edit_target_view"] == [2, 0]
     assert config["evaluation"]["heldout_confirmation_views"] == []
+    assert config["resources"] == {}
     assert config["provenance"]["heldout_content_read"] is False

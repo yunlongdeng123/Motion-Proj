@@ -163,7 +163,7 @@ def build_spatial_config(
             "heldout_confirmation_views": [],
         },
         "gates": gates,
-        "resources": dict(template["resources"]),
+        "resources": dict(template.get("resources", {})),
         "runtimes": {
             "drivestudio_checkout": replay["runtimes"]["drivestudio_checkout"],
             "drivestudio_python": replay["runtimes"]["drivestudio_python"],
