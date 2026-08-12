@@ -21,6 +21,14 @@ if str(PROJECT) not in sys.path:
 
 _ACTIVE_RUN_DIR: Path | None = None
 
+SUPPORTED_TASK_IDS = frozenset(
+    {
+        "WS-V33-S4-SPATIAL-DELTA-01",
+        "WS-V4-B0-MATCHED-BASELINES-01",
+        "WS-V4-M1-EVIDENCE-FIELD-01",
+    }
+)
+
 from motion_proj.worldsim_v33.instance_field import load_instance_field  # noqa: E402
 from motion_proj.worldsim_v33.roadpatch import (  # noqa: E402
     load_patch_delta,
@@ -110,10 +118,7 @@ def main() -> int:
         "worldsim_v4_v33_spatial_delta_v1",
     }:
         raise ValueError("S4 config schema version 漂移")
-    if config.get("task_id") not in {
-        "WS-V33-S4-SPATIAL-DELTA-01",
-        "WS-V4-B0-MATCHED-BASELINES-01",
-    }:
+    if config.get("task_id") not in SUPPORTED_TASK_IDS:
         raise ValueError("S4 task_id 漂移")
     if tuple(config["composition"]["order"]) != (
         "ERASE",

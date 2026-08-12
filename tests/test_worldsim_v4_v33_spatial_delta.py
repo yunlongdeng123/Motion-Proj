@@ -6,7 +6,10 @@ from pathlib import Path
 
 import yaml
 
-from scripts.build_worldsim_v33_s4_spatial_delta import available_stack_ids
+from scripts.build_worldsim_v33_s4_spatial_delta import (
+    SUPPORTED_TASK_IDS,
+    available_stack_ids,
+)
 from scripts.materialize_worldsim_v4_v33_spatial_config import build_spatial_config
 
 
@@ -29,6 +32,10 @@ def test_available_stacks_fail_safe_without_optional_assets() -> None:
         "erase",
         "actor_override",
     ]
+
+
+def test_spatial_builder_accepts_m1_validation_task() -> None:
+    assert "WS-V4-M1-EVIDENCE-FIELD-01" in SUPPORTED_TASK_IDS
 
 
 def test_materializes_erase_only_spatial_config(tmp_path: Path) -> None:
