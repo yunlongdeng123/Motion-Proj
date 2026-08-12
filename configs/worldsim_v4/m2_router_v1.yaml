@@ -18,6 +18,50 @@ execution_gate:
   validation_read_only: true
   test_quality_read: false
 
+protocol:
+  development_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+  validation_scenes: [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
+  partition_contract: sample_index_mod_5
+  target_partition: development
+  target_remainder: 2
+  heldout_remainder: 4
+  support_offsets: [-1, 1]
+  support_partition: train_only
+  retain_all_accepted_masks: true
+  retain_blocked_abstain_in_denominator: true
+  heldout_content_read: false
+  test_quality_read: false
+
+inputs:
+  m1_development_run:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T121734Z__m1-development6-s0-r124
+    summary_sha256: 249eccd51c71890f80a3d21dae249a9cb13795eb19999dd9d11ca7134cdb1548
+    manifest_sha256: 7a9ee973a1abac0509ae0394e588d17d72f9df6f280d69884103969fed71ed10
+  m1_rejection_audit:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T210150Z__m1-validation-rejection-audit-s0-r201
+    summary_sha256: 470338f225a0ea22e4d5df75d71e86a516c142bd766d1a3ed08009a55fe8fec2
+
+asset_build:
+  projection:
+    source_stride: 1
+    absolute_depth_tolerance_m: 0.5
+    relative_depth_tolerance: 0.1
+    minimum_source_opacity: 0.5
+    inpaint_radius_pixels: 5
+  gaussians:
+    target_stride: 2
+    scale_multiplier: 0.8
+    minimum_scale_m: 0.01
+    maximum_scale_m: 0.12
+    voxel_size_m: 0.02
+    opacity: 0.3
+  builders:
+    OBSERVED: cross_view_depth_splat_train_only
+    TELEA: opencv_telea_deterministic_unseen_pixels
+    DONOR: native_checkpoint_background_gaussians
+    GENERATED: unavailable_no_frozen_model
+  generated_unavailable_action: ABSTAIN_GENERATED_MODEL_UNAVAILABLE
+
 candidate_contract:
   methods: [OBSERVED, DONOR, GENERATED]
   abstain_action: ABSTAIN
