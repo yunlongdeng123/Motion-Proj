@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
 import yaml
 
 from motion_proj.worldsim_v4.v33_replay import (
@@ -49,6 +50,7 @@ def _fixture(tmp_path: Path) -> tuple[dict, Path]:
         records.append(
             {
                 "scene": scene,
+                "scene_index": index,
                 "role": "development",
                 "actors": {
                     "high_support": {"instance_token": high, "category": "vehicle.car"},
@@ -135,6 +137,73 @@ def test_resolve_scene_contracts_rejects_checkpoint_tamper(tmp_path: Path) -> No
         assert "bytes 漂移" in str(error) or "SHA 漂移" in str(error)
     else:
         raise AssertionError("checkpoint tamper 必须 fail closed")
+
+
+def test_validation_uses_independent_content_addressed_checkpoint_registry(
+    tmp_path: Path,
+) -> None:
+    config, project = _fixture(tmp_path)
+    cohort_path = project / "configs" / "cohort.yaml"
+    cohort = yaml.safe_load(cohort_path.read_text(encoding="utf-8"))
+    scenes = cohort["freeze"]["scene_roles"].pop("development")
+    cohort["freeze"]["scene_roles"]["validation"] = scenes
+    for row in cohort["freeze"]["scene_records"]:
+        row["role"] = "validation"
+    cohort_path.write_text(yaml.safe_dump(cohort), encoding="utf-8")
+    config["inputs"]["cohort_config_sha256"] = _sha(cohort_path)
+    config["scene_source"]["split"] = "validation"
+    matrix = yaml.safe_load((project / "configs" / "matrix.yaml").read_text())
+    registry = {
+        "schema_version": "worldsim_v4_streetgs_checkpoint_registry_v1",
+        "task_id": "WS-V4-M1-EVIDENCE-FIELD-01",
+        "split": "validation",
+        "partition_contract": "sample_index_mod_5",
+        "test_quality_read": False,
+        "checkpoints": matrix["baselines"]["streetgs"]["checkpoints"],
+    }
+    registry_path = project / "configs" / "validation_registry.yaml"
+    registry_path.write_text(yaml.safe_dump(registry), encoding="utf-8")
+    config["inputs"]["checkpoint_registry"] = "configs/validation_registry.yaml"
+    config["inputs"]["checkpoint_registry_sha256"] = _sha(registry_path)
+
+    rows = resolve_scene_contracts(config, project_root=project)
+
+    assert len(rows) == 6
+    assert all(row["cohort_role"] == "validation" for row in rows)
+    assert rows[0]["scene_index"] == 1
+
+
+def test_validation_rejects_registry_scene_drift(tmp_path: Path) -> None:
+    config, project = _fixture(tmp_path)
+    cohort_path = project / "configs" / "cohort.yaml"
+    cohort = yaml.safe_load(cohort_path.read_text(encoding="utf-8"))
+    scenes = cohort["freeze"]["scene_roles"].pop("development")
+    cohort["freeze"]["scene_roles"]["validation"] = scenes
+    for row in cohort["freeze"]["scene_records"]:
+        row["role"] = "validation"
+    cohort_path.write_text(yaml.safe_dump(cohort), encoding="utf-8")
+    config["inputs"]["cohort_config_sha256"] = _sha(cohort_path)
+    config["scene_source"]["split"] = "validation"
+    matrix = yaml.safe_load((project / "configs" / "matrix.yaml").read_text())
+    checkpoints = matrix["baselines"]["streetgs"]["checkpoints"]
+    checkpoints.pop(scenes[-1])
+    registry_path = project / "configs" / "validation_registry.yaml"
+    registry_path.write_text(
+        yaml.safe_dump(
+            {
+                "schema_version": "worldsim_v4_streetgs_checkpoint_registry_v1",
+                "split": "validation",
+                "partition_contract": "sample_index_mod_5",
+                "test_quality_read": False,
+                "checkpoints": checkpoints,
+            }
+        ),
+        encoding="utf-8",
+    )
+    config["inputs"]["checkpoint_registry"] = "configs/validation_registry.yaml"
+
+    with pytest.raises(V33ReplayError, match="scene 集合"):
+        resolve_scene_contracts(config, project_root=project)
 
 
 def test_bind_actor_registry_requires_available_high_actor(tmp_path: Path) -> None:

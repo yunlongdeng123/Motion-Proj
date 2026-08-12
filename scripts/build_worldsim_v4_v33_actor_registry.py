@@ -99,7 +99,7 @@ def build_environment(
     return environment
 
 
-def _manifest(run_dir: Path) -> dict[str, Any]:
+def _manifest(run_dir: Path, *, task_id: str = TASK_ID) -> dict[str, Any]:
     rows = []
     for path in sorted(run_dir.rglob("*")):
         if not path.is_file() or path.name in {"manifest.json", "status.json"}:
@@ -113,7 +113,7 @@ def _manifest(run_dir: Path) -> dict[str, Any]:
         )
     return {
         "schema_version": "worldsim_v4_v33_registry_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "files": rows,
     }
 
@@ -129,6 +129,7 @@ def run(
     if run_dir.exists():
         raise FileExistsError(f"run 目录已存在，禁止覆盖：{run_dir}")
     replay_config = load_yaml(replay_config_path)
+    task_id = str(replay_config.get("task_id", TASK_ID))
     inputs = json.loads(resolved_inputs_path.read_text(encoding="utf-8"))
     scene_row = resolve_scene_row(inputs, scene)
     checkpoint = Path(scene_row["base_checkpoint"]["path"])
@@ -159,7 +160,7 @@ def run(
     atomic_json(run_dir / "resolved_scene.json", scene_row)
     status = {
         "schema_version": "worldsim_v4_v33_registry_status_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "status": "running",
         "test_quality_read": False,
@@ -210,7 +211,7 @@ def run(
     atomic_json(run_dir / "artifacts" / "bound_scene.json", bound)
     summary = {
         "schema_version": "worldsim_v4_v33_registry_summary_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "status": "done",
         "algorithm_commit": inputs["algorithm_commit"],
@@ -243,7 +244,9 @@ def run(
         "finished_at_utc": datetime.now(timezone.utc).isoformat(),
     }
     atomic_json(run_dir / "summary.json", summary)
-    atomic_json(run_dir / "manifest.json", _manifest(run_dir))
+    atomic_json(
+        run_dir / "manifest.json", _manifest(run_dir, task_id=task_id)
+    )
     status.update(
         status="done",
         summary_sha256=sha256_file(run_dir / "summary.json"),
@@ -273,13 +276,17 @@ def main() -> None:
         )
     except Exception as error:
         if not run_preexisted and run_dir.is_dir():
+            try:
+                failure_task_id = str(load_yaml(args.config.resolve()).get("task_id", TASK_ID))
+            except Exception:
+                failure_task_id = TASK_ID
             status_path = run_dir / "status.json"
             try:
                 status = json.loads(status_path.read_text(encoding="utf-8"))
             except Exception:
                 status = {
                     "schema_version": "worldsim_v4_v33_registry_status_v1",
-                    "task_id": TASK_ID,
+                    "task_id": failure_task_id,
                     "scene": args.scene,
                 }
             status.update(

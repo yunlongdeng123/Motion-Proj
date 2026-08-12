@@ -45,6 +45,17 @@ def atomic_json(path: Path, payload: object) -> None:
     os.replace(temporary, path)
 
 
+def run_root_for(config: Mapping[str, Any]) -> Path:
+    task_id = str(config.get("task_id", TASK_ID))
+    return Path(
+        str(
+            config.get("provenance", {}).get(
+                "run_root", f"/root/autodl-tmp/runs/worldsim_v4/{task_id}"
+            )
+        )
+    )
+
+
 def build_commands(
     *, config_path: Path, run_dir: Path, project_root: Path, config: Mapping[str, Any]
 ) -> list[list[str]]:
@@ -132,7 +143,7 @@ def gpu_compute_processes() -> list[str]:
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
-def manifest(run_dir: Path) -> dict[str, Any]:
+def manifest(run_dir: Path, *, task_id: str = TASK_ID) -> dict[str, Any]:
     rows = []
     for path in sorted(run_dir.rglob("*")):
         if not path.is_file() or path.name in {"wrapper_manifest.json", "status.json"}:
@@ -146,7 +157,7 @@ def manifest(run_dir: Path) -> dict[str, Any]:
         )
     return {
         "schema_version": "worldsim_v4_v33_instance_wrapper_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "files": rows,
     }
 
@@ -154,9 +165,11 @@ def manifest(run_dir: Path) -> dict[str, Any]:
 def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
     if run_dir.exists():
         raise FileExistsError(f"run 目录已存在，禁止覆盖：{run_dir}")
-    if RUN_ROOT.resolve() not in run_dir.resolve().parents:
-        raise V33ReplayError(f"instance run 必须位于冻结根目录：{RUN_ROOT}")
     config = load_yaml(config_path)
+    task_id = str(config.get("task_id", TASK_ID))
+    run_root = run_root_for(config)
+    if run_root.resolve() not in run_dir.resolve().parents:
+        raise V33ReplayError(f"instance run 必须位于冻结根目录：{run_root}")
     if config.get("schema_version") != "worldsim_v4_v33_instance_field_v1":
         raise V33ReplayError("instance config schema 漂移")
     provenance = config.get("provenance", {})
@@ -195,7 +208,7 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
         shutil.copy2(source, target)
     status = {
         "schema_version": "worldsim_v4_v33_instance_status_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": config["scene"]["name"],
         "stage": "instance_field",
         "status": "running",
@@ -210,7 +223,7 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
     atomic_json(run_dir / "status.json", status)
     atomic_json(
         run_dir / "instance_field" / "status.json",
-        {"status": "running", "phase": "formal", "task_id": TASK_ID},
+        {"status": "running", "phase": "formal", "task_id": task_id},
     )
     environment = os.environ.copy()
     environment["PYTHONPATH"] = (
@@ -252,7 +265,7 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
         raise V33ReplayError("instance terminal summary partition 漂移")
     stage_summary = {
         "schema_version": "worldsim_v4_v33_instance_stage_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": config["scene"]["name"],
         "status": "done",
         "stage": "instance_field",
@@ -271,7 +284,9 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
         "finished_at_utc": datetime.now(timezone.utc).isoformat(),
     }
     atomic_json(run_dir / "stage_summary.json", stage_summary)
-    atomic_json(run_dir / "wrapper_manifest.json", manifest(run_dir))
+    atomic_json(
+        run_dir / "wrapper_manifest.json", manifest(run_dir, task_id=task_id)
+    )
     status.update(
         status="done",
         development_content_read=True,
@@ -300,11 +315,15 @@ def main() -> None:
     except Exception as error:
         if not preexisted and run_dir.is_dir():
             try:
+                failure_task_id = str(load_yaml(args.config.resolve()).get("task_id", TASK_ID))
+            except Exception:
+                failure_task_id = TASK_ID
+            try:
                 status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
             except Exception:
                 status = {
                     "schema_version": "worldsim_v4_v33_instance_status_v1",
-                    "task_id": TASK_ID,
+                    "task_id": failure_task_id,
                     "stage": "instance_field",
                 }
             status.update(

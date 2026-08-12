@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Any, Mapping, Protocol
 
 import numpy as np
 from scipy.optimize import minimize
@@ -122,6 +122,35 @@ class BetaCalibrator:
             "negative_log_coefficient": float(self.negative_log_coefficient),
             "intercept": float(self.intercept),
         }
+
+
+def calibrator_from_dict(payload: Mapping[str, Any]) -> ProbabilityCalibrator:
+    """只从 development 冻结参数恢复 calibrator，不重新拟合。"""
+
+    name = payload.get("name")
+    if name == "raw":
+        if set(payload) != {"name"}:
+            raise ValueError("raw calibrator payload has unexpected parameters")
+        return RawCalibrator()
+    if name == "temperature":
+        if set(payload) != {"name", "temperature"}:
+            raise ValueError("temperature calibrator payload is incomplete")
+        return TemperatureCalibrator(float(payload["temperature"]))
+    if name == "beta":
+        expected = {
+            "name",
+            "positive_log_coefficient",
+            "negative_log_coefficient",
+            "intercept",
+        }
+        if set(payload) != expected:
+            raise ValueError("beta calibrator payload is incomplete")
+        return BetaCalibrator(
+            positive_log_coefficient=float(payload["positive_log_coefficient"]),
+            negative_log_coefficient=float(payload["negative_log_coefficient"]),
+            intercept=float(payload["intercept"]),
+        )
+    raise ValueError(f"unsupported calibrator payload: {name}")
 
 
 def _weighted_log_loss(

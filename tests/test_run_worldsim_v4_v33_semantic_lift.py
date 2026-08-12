@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from scripts.run_worldsim_v4_v33_semantic_lift import RUN_ROOT, build_commands
+from scripts.run_worldsim_v4_v33_semantic_lift import (
+    RUN_ROOT,
+    build_commands,
+    run_root_for,
+)
 
 
 def test_build_commands_runs_train_only_semantics_and_v4_finalizer() -> None:
@@ -29,3 +33,10 @@ def test_build_commands_runs_train_only_semantics_and_v4_finalizer() -> None:
     assert commands[3][1].endswith("lift_worldsim_v32_semantics.py")
     assert commands[4][commands[4].index("--run-root") + 1] == str(RUN_ROOT)
     assert all("heldout" not in " ".join(command) for command in commands)
+
+
+def test_validation_task_uses_its_own_run_namespace() -> None:
+    config = {"task_id": "WS-V4-M1-EVIDENCE-FIELD-01"}
+    assert run_root_for(config) == Path(
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01"
+    )

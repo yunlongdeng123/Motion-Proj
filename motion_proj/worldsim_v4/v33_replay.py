@@ -84,20 +84,45 @@ def resolve_scene_contracts(
     if v33.get("implementation_commit") != algorithm.get("implementation_commit"):
         raise V33ReplayError("V3.3 implementation commit 漂移")
 
+    scene_role = str(replay_config.get("scene_source", {}).get("split"))
+    if scene_role not in {"development", "validation"}:
+        raise V33ReplayError("V3.3 replay 只允许 development/validation scene role")
     expected_scenes = list(
-        cohort.get("freeze", {}).get("scene_roles", {}).get("development", [])
+        cohort.get("freeze", {}).get("scene_roles", {}).get(scene_role, [])
     )
     if len(expected_scenes) != int(replay_config["gates"]["expected_scene_count"]):
-        raise V33ReplayError("development scene 数量漂移")
+        raise V33ReplayError(f"{scene_role} scene 数量漂移")
     scene_contract = matrix.get("scene_contract", {})
-    if set(expected_scenes) != set(scene_contract):
+    if scene_role == "development" and set(expected_scenes) != set(scene_contract):
         raise V33ReplayError("D0 与 B0 scene 集合不一致")
     records = {
         str(row["scene"]): row
         for row in cohort["freeze"]["scene_records"]
-        if row.get("role") == replay_config["scene_source"]["split"]
+        if row.get("role") == scene_role
     }
-    checkpoints = matrix["baselines"]["streetgs"].get("checkpoints", {})
+    registry_relative = inputs.get("checkpoint_registry")
+    if registry_relative is None:
+        if scene_role != "development":
+            raise V33ReplayError("validation replay 必须绑定独立 checkpoint registry")
+        checkpoints = matrix["baselines"]["streetgs"].get("checkpoints", {})
+    else:
+        registry_path = root / str(registry_relative)
+        registry = load_yaml(registry_path)
+        if (
+            registry.get("schema_version")
+            != "worldsim_v4_streetgs_checkpoint_registry_v1"
+            or registry.get("split") != scene_role
+            or registry.get("partition_contract") != "sample_index_mod_5"
+            or registry.get("test_quality_read") is not False
+        ):
+            raise V33ReplayError("StreetGS checkpoint registry 合同漂移")
+        if "checkpoint_registry_sha256" in inputs and sha256_file(
+            registry_path
+        ) != inputs["checkpoint_registry_sha256"]:
+            raise V33ReplayError("StreetGS checkpoint registry SHA 漂移")
+        checkpoints = registry.get("checkpoints", {})
+        if set(checkpoints) != set(expected_scenes):
+            raise V33ReplayError("StreetGS checkpoint registry scene 集合漂移")
     processed_root = Path(str(inputs["processed_root"]))
     output: list[dict[str, Any]] = []
     for scene in expected_scenes:
@@ -110,10 +135,20 @@ def resolve_scene_contracts(
             raise V33ReplayError(f"StreetGS base checkpoint 缺失或 bytes 漂移：{scene}")
         if sha256_file(path) != checkpoint.get("sha256"):
             raise V33ReplayError(f"StreetGS base checkpoint SHA 漂移：{scene}")
-        source_config = path.parent / "config.yaml"
+        source_config = Path(
+            str(checkpoint.get("source_config", path.parent / "config.yaml"))
+        )
         if not source_config.is_file():
             raise V33ReplayError(f"StreetGS source config 缺失：{scene}")
-        scene_index = int(scene_contract[scene]["scene_index"])
+        expected_source_sha = checkpoint.get("source_config_sha256")
+        if expected_source_sha is not None and sha256_file(source_config) != expected_source_sha:
+            raise V33ReplayError(f"StreetGS source config SHA 漂移：{scene}")
+        if scene_role == "development":
+            scene_index = int(scene_contract[scene]["scene_index"])
+        else:
+            if "scene_index" not in record:
+                raise V33ReplayError(f"D0 validation record 缺少 scene_index：{scene}")
+            scene_index = int(record["scene_index"])
         processed_scene = processed_root / f"{scene_index:03d}"
         instances_path = processed_scene / "instances" / "instances_info.json"
         if not instances_path.is_file():
@@ -155,6 +190,7 @@ def resolve_scene_contracts(
                     },
                 },
                 "continuous_clip": dict(record["continuous_clip"]),
+                "cohort_role": scene_role,
                 "test_quality_read": False,
             }
         )
