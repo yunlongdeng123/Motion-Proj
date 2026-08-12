@@ -4,6 +4,9 @@ import sys
 import types
 from pathlib import Path
 
+import pytest
+import torch
+
 
 SCRIPT = (
     Path(__file__).parents[1]
@@ -86,3 +89,24 @@ def test_requested_filtered_actor_is_retained_as_explicit_unavailable() -> None:
     assert actor["rigid_model_index"] is None
     assert actor["checkpoint_tensor_slice"]["gaussian_count"] == 0
     assert result["requested_unavailable_actor_count"] == 1
+
+
+def test_rigid_checkpoint_contract_allows_exact_empty_model() -> None:
+    assert MODULE.rigid_checkpoint_contract(None, ordered_init_columns=[]) == ([], 0)
+
+
+def test_rigid_checkpoint_contract_rejects_missing_nonempty_model() -> None:
+    with pytest.raises(RuntimeError, match="initialization is nonempty"):
+        MODULE.rigid_checkpoint_contract(None, ordered_init_columns=[3])
+
+
+def test_rigid_checkpoint_contract_reads_checkpoint_identity_tensors() -> None:
+    point_ids, count = MODULE.rigid_checkpoint_contract(
+        {
+            "points_ids": torch.tensor([[0], [1], [1]]),
+            "instances_trans": torch.empty(2, 2, 4, 4),
+        },
+        ordered_init_columns=[3, 7],
+    )
+    assert point_ids == [0, 1, 1]
+    assert count == 2

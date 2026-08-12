@@ -9,6 +9,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from typing import Optional
 
 import torch
 from omegaconf import OmegaConf
@@ -160,6 +161,22 @@ def add_requested_unavailable_actors(
     return result
 
 
+def rigid_checkpoint_contract(
+    rigid: Optional[dict], *, ordered_init_columns: list[int]
+) -> tuple[list[int], int]:
+    """Return the exact RigidNodes identity tensors, allowing a truly empty model."""
+    if rigid is None:
+        if ordered_init_columns:
+            raise RuntimeError(
+                "checkpoint has no RigidNodes state but initialization is nonempty"
+            )
+        return [], 0
+    return (
+        [int(value) for value in rigid["points_ids"].reshape(-1).tolist()],
+        int(rigid["instances_trans"].shape[1]),
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", type=Path, required=True)
@@ -204,10 +221,10 @@ def main() -> None:
 
     checkpoint = torch.load(args.checkpoint, map_location="cpu")
     rigid = checkpoint["models"].get("RigidNodes")
-    if rigid is None:
-        raise RuntimeError("checkpoint has no RigidNodes state")
-    point_ids = rigid["points_ids"].reshape(-1).tolist()
-    instance_count = int(rigid["instances_trans"].shape[1])
+    ordered_init_columns = [int(value) for value in init.keys()]
+    point_ids, instance_count = rigid_checkpoint_contract(
+        rigid, ordered_init_columns=ordered_init_columns
+    )
     registry = build_drivestudio_registry(
         scene_id=str(int(config.data.scene_idx)),
         scene_name=args.scene_name,
@@ -215,7 +232,7 @@ def main() -> None:
         processed_instances=processed_instances,
         raw_instance_chains=chains,
         dataset_true_ids=dataset.pixel_source.instances_true_id.cpu().tolist(),
-        ordered_init_columns=[int(value) for value in init.keys()],
+        ordered_init_columns=ordered_init_columns,
         checkpoint_point_ids=point_ids,
         checkpoint_instance_count=instance_count,
     )
@@ -226,7 +243,7 @@ def main() -> None:
         raw_instance_chains=chains,
         dataset_true_ids=dataset.pixel_source.instances_true_id.cpu().tolist(),
         dataset_model_types=dataset.pixel_source.instances_model_types.cpu().tolist(),
-        ordered_init_columns=[int(value) for value in init.keys()],
+        ordered_init_columns=ordered_init_columns,
         rigid_model_type=int(ModelType.RigidNodes),
     )
     selected = dict(
