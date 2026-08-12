@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from scripts.build_worldsim_v4_v33_actor_registry import build_command, resolve_scene_row
+from scripts.build_worldsim_v4_v33_actor_registry import (
+    build_command,
+    build_environment,
+    resolve_scene_row,
+)
 
 
 def test_resolve_scene_row_requires_exact_scene_and_no_test_read() -> None:
@@ -27,6 +31,7 @@ def test_build_command_uses_d0_high_actor_and_exact_base(tmp_path: Path) -> None
     }
     config = {
         "runtimes": {
+            "cuda_visible_devices": "0",
             "drivestudio_python": "/env/bin/python",
             "drivestudio_checkout": "/third_party/drivestudio",
         },
@@ -44,3 +49,17 @@ def test_build_command_uses_d0_high_actor_and_exact_base(tmp_path: Path) -> None
     assert command[command.index("--selected-token") + 1] == "high-token"
     assert command[command.index("--scene-name") + 1] == "scene-0242"
     assert command[command.index("--checkpoint") + 1] == "/runs/base.pth"
+
+
+def test_registry_environment_keeps_frozen_cuda_visible(tmp_path: Path) -> None:
+    config = {
+        "runtimes": {
+            "cuda_visible_devices": "0",
+            "drivestudio_checkout": "/third_party/drivestudio",
+        }
+    }
+
+    environment = build_environment(project_root=tmp_path, replay_config=config)
+
+    assert environment["CUDA_VISIBLE_DEVICES"] == "0"
+    assert environment["PYTHONPATH"] == f"{tmp_path}:/third_party/drivestudio"

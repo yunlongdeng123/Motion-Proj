@@ -81,6 +81,19 @@ def build_command(
     ]
 
 
+def build_environment(
+    *, project_root: Path, replay_config: Mapping[str, Any]
+) -> dict[str, str]:
+    environment = os.environ.copy()
+    environment["CUDA_VISIBLE_DEVICES"] = str(
+        replay_config["runtimes"]["cuda_visible_devices"]
+    )
+    environment["PYTHONPATH"] = (
+        f"{project_root}:{replay_config['runtimes']['drivestudio_checkout']}"
+    )
+    return environment
+
+
 def _manifest(run_dir: Path) -> dict[str, Any]:
     rows = []
     for path in sorted(run_dir.rglob("*")):
@@ -155,10 +168,9 @@ def run(
         scene_row=scene_row,
         output=registry_path,
     )
-    environment = os.environ.copy()
-    environment["CUDA_VISIBLE_DEVICES"] = ""
-    environment["PYTHONPATH"] = (
-        f"{project_root}:{replay_config['runtimes']['drivestudio_checkout']}"
+    environment = build_environment(
+        project_root=project_root,
+        replay_config=replay_config,
     )
     with (run_dir / "logs" / "registry.log").open("xb") as log:
         process = subprocess.run(
@@ -209,6 +221,10 @@ def run(
                 )
             }
             for role, actor in bound["actors"].items()
+        },
+        "runtime": {
+            "dataset_device": "cuda",
+            "cuda_visible_devices": environment["CUDA_VISIBLE_DEVICES"],
         },
         "model_inference_started": False,
         "training_started": False,
