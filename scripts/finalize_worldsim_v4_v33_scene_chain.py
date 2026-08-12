@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import sys
-from typing import Any, Mapping
+from typing import Any, Mapping, Optional
 
 import numpy as np
 from PIL import Image
@@ -42,7 +42,11 @@ def atomic_json(path: Path, payload: object) -> None:
 
 
 def load_terminal_stage(
-    run_dir: Path, *, expected_scene: str, expected_stage: str
+    run_dir: Path,
+    *,
+    expected_scene: str,
+    expected_stage: str,
+    expected_task_id: Optional[str] = None,
 ) -> dict[str, Any]:
     status_path = run_dir / "status.json"
     summary_path = run_dir / "stage_summary.json"
@@ -52,6 +56,10 @@ def load_terminal_stage(
         raise V33ReplayError(f"{expected_stage} 尚未完成")
     if summary.get("scene") != expected_scene or summary.get("stage") != expected_stage:
         raise V33ReplayError(f"{expected_stage} scene/stage 漂移")
+    if expected_task_id is not None and any(
+        payload.get("task_id") != expected_task_id for payload in (status, summary)
+    ):
+        raise V33ReplayError(f"{expected_stage} task_id 漂移")
     if summary.get("heldout_content_read") is not False or summary.get(
         "test_quality_read"
     ) is not False:
@@ -243,7 +251,7 @@ def build_lpips_model(replay: Mapping[str, Any]):
     return model
 
 
-def manifest(run_dir: Path) -> dict[str, Any]:
+def manifest(run_dir: Path, *, task_id: str = TASK_ID) -> dict[str, Any]:
     files = []
     for path in sorted(run_dir.rglob("*")):
         if not path.is_file() or path.name in {"manifest.json", "status.json"}:
@@ -257,7 +265,7 @@ def manifest(run_dir: Path) -> dict[str, Any]:
         )
     return {
         "schema_version": "worldsim_v4_v33_scene_chain_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "files": files,
     }
 
@@ -275,15 +283,27 @@ def main() -> None:
         raise FileExistsError(f"scene chain run 已存在：{args.run_dir}")
     replay = load_yaml(args.replay_config)
     spatial_config = load_yaml(args.spatial_config)
+    task_id = str(replay.get("task_id", TASK_ID))
+    if spatial_config.get("task_id") != task_id:
+        raise V33ReplayError("spatial config task_id 与 replay 不一致")
     scene = str(spatial_config["scene"]["name"])
     semantic = load_terminal_stage(
-        args.semantic_run.resolve(), expected_scene=scene, expected_stage="semantic_lift"
+        args.semantic_run.resolve(),
+        expected_scene=scene,
+        expected_stage="semantic_lift",
+        expected_task_id=task_id,
     )
     instance = load_terminal_stage(
-        args.instance_run.resolve(), expected_scene=scene, expected_stage="instance_field"
+        args.instance_run.resolve(),
+        expected_scene=scene,
+        expected_stage="instance_field",
+        expected_task_id=task_id,
     )
     spatial = load_terminal_stage(
-        args.spatial_run.resolve(), expected_scene=scene, expected_stage="spatial_delta"
+        args.spatial_run.resolve(),
+        expected_scene=scene,
+        expected_stage="spatial_delta",
+        expected_task_id=task_id,
     )
     args.run_dir.mkdir(parents=True)
     (args.run_dir / "artifacts").mkdir()
@@ -297,7 +317,7 @@ def main() -> None:
     )
     render_manifest = {
         "schema_version": "worldsim_v4_v33_render_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "split": "development",
         "test_quality_read": False,
@@ -309,7 +329,7 @@ def main() -> None:
     )
     metrics = {
         "schema_version": "worldsim_v4_v33_scene_metrics_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "split": "development",
         "test_quality_read": False,
@@ -320,7 +340,7 @@ def main() -> None:
     abstentions = spatial_config["stage_abstentions"]
     chain = {
         "schema_version": "worldsim_v4_v33_scene_chain_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "algorithm_commit": replay["algorithm"]["implementation_commit"],
         "base_checkpoint_sha256": spatial_config["inputs"]["checkpoint"]["sha256"],
@@ -344,7 +364,7 @@ def main() -> None:
     now = datetime.now(timezone.utc).isoformat()
     summary = {
         "schema_version": "worldsim_v4_v33_scene_chain_summary_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "status": "done",
         "algorithm_commit": chain["algorithm_commit"],
@@ -356,12 +376,14 @@ def main() -> None:
         "finished_at_utc": now,
     }
     atomic_json(args.run_dir / "summary.json", summary)
-    atomic_json(args.run_dir / "manifest.json", manifest(args.run_dir))
+    atomic_json(
+        args.run_dir / "manifest.json", manifest(args.run_dir, task_id=task_id)
+    )
     atomic_json(
         args.run_dir / "status.json",
         {
             "schema_version": "worldsim_v4_v33_scene_chain_status_v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "scene": scene,
             "status": "done",
             "summary_sha256": sha256_file(args.run_dir / "summary.json"),

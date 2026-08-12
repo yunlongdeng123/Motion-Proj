@@ -24,6 +24,17 @@ TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
 RUN_ROOT = Path(f"/root/autodl-tmp/runs/worldsim_v4/{TASK_ID}")
 
 
+def run_root_for(config: Mapping[str, Any]) -> Path:
+    task_id = str(config.get("task_id", TASK_ID))
+    return Path(
+        str(
+            config.get("provenance", {}).get(
+                "run_root", f"/root/autodl-tmp/runs/worldsim_v4/{task_id}"
+            )
+        )
+    )
+
+
 def atomic_json(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + f".partial.{os.getpid()}")
@@ -69,9 +80,11 @@ def build_commands(
 def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, Any]:
     if run_dir.exists():
         raise FileExistsError(f"run 目录已存在，禁止覆盖：{run_dir}")
-    if RUN_ROOT.resolve() not in run_dir.resolve().parents:
-        raise V33ReplayError(f"spatial run 必须位于冻结根目录：{RUN_ROOT}")
     config = load_yaml(config_path)
+    task_id = str(config.get("task_id", TASK_ID))
+    run_root = run_root_for(config)
+    if run_root.resolve() not in run_dir.resolve().parents:
+        raise V33ReplayError(f"spatial run 必须位于冻结根目录：{run_root}")
     if config.get("schema_version") != "worldsim_v4_v33_spatial_delta_v1":
         raise V33ReplayError("spatial config schema 漂移")
     provenance = config.get("provenance", {})
@@ -98,7 +111,7 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
     shutil.copy2(config_path, run_dir / "resolved.yaml")
     status = {
         "schema_version": "worldsim_v4_v33_spatial_status_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": config["scene"]["name"],
         "stage": "spatial_delta",
         "status": "running",
@@ -146,7 +159,7 @@ def run(*, config_path: Path, run_dir: Path, project_root: Path) -> dict[str, An
         raise V33ReplayError("spatial evaluation 未通过")
     stage_summary = {
         "schema_version": "worldsim_v4_v33_spatial_stage_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": config["scene"]["name"],
         "status": "done",
         "stage": "spatial_delta",
@@ -192,7 +205,13 @@ def main() -> None:
             try:
                 status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
             except Exception:
-                status = {"task_id": TASK_ID, "stage": "spatial_delta"}
+                try:
+                    failure_task_id = str(
+                        load_yaml(args.config.resolve()).get("task_id", TASK_ID)
+                    )
+                except Exception:
+                    failure_task_id = TASK_ID
+                status = {"task_id": failure_task_id, "stage": "spatial_delta"}
             status.update(
                 status="failed", reason=type(error).__name__, error=str(error),
                 heldout_content_read=False, test_quality_read=False,

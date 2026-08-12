@@ -5,7 +5,9 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+import pytest
 
+from motion_proj.worldsim_v4.v33_replay import V33ReplayError
 from scripts.finalize_worldsim_v4_v33_scene_chain import (
     build_records,
     load_development_actor_masks,
@@ -18,6 +20,7 @@ def test_terminal_stage_requires_exact_summary_and_no_sealed_read(tmp_path: Path
     run = tmp_path / "semantic"
     run.mkdir()
     summary = {
+        "task_id": "WS-V4-M1-EVIDENCE-FIELD-01",
         "status": "done",
         "scene": "scene-0255",
         "stage": "semantic_lift",
@@ -28,6 +31,7 @@ def test_terminal_stage_requires_exact_summary_and_no_sealed_read(tmp_path: Path
     (run / "status.json").write_text(
         json.dumps(
             {
+                "task_id": "WS-V4-M1-EVIDENCE-FIELD-01",
                 "status": "done",
                 "stage_summary_sha256": sha256_file(run / "stage_summary.json"),
             }
@@ -35,10 +39,44 @@ def test_terminal_stage_requires_exact_summary_and_no_sealed_read(tmp_path: Path
     )
 
     result = load_terminal_stage(
-        run, expected_scene="scene-0255", expected_stage="semantic_lift"
+        run,
+        expected_scene="scene-0255",
+        expected_stage="semantic_lift",
+        expected_task_id="WS-V4-M1-EVIDENCE-FIELD-01",
     )
 
     assert result["summary"]["test_quality_read"] is False
+
+
+def test_terminal_stage_rejects_task_id_drift(tmp_path: Path) -> None:
+    run = tmp_path / "semantic"
+    run.mkdir()
+    summary = {
+        "task_id": "WS-V4-B0-MATCHED-BASELINES-01",
+        "status": "done",
+        "scene": "scene-0255",
+        "stage": "semantic_lift",
+        "heldout_content_read": False,
+        "test_quality_read": False,
+    }
+    (run / "stage_summary.json").write_text(json.dumps(summary))
+    (run / "status.json").write_text(
+        json.dumps(
+            {
+                "task_id": "WS-V4-B0-MATCHED-BASELINES-01",
+                "status": "done",
+                "stage_summary_sha256": sha256_file(run / "stage_summary.json"),
+            }
+        )
+    )
+
+    with pytest.raises(V33ReplayError, match="task_id"):
+        load_terminal_stage(
+            run,
+            expected_scene="scene-0255",
+            expected_stage="semantic_lift",
+            expected_task_id="WS-V4-M1-EVIDENCE-FIELD-01",
+        )
 
 
 def test_build_records_uses_only_dev_base_render_and_real_target(tmp_path: Path) -> None:

@@ -209,7 +209,18 @@ def save_mask(path: Path, value: np.ndarray, *, shape: tuple[int, int]) -> int:
     return int(mask.sum())
 
 
-def manifest(run_dir: Path) -> dict[str, Any]:
+def run_root_for(replay: Mapping[str, Any]) -> Path:
+    task_id = str(replay.get("task_id", TASK_ID))
+    return Path(
+        str(
+            replay.get("provenance", {}).get(
+                "run_root", f"/root/autodl-tmp/runs/worldsim_v4/{task_id}"
+            )
+        )
+    )
+
+
+def manifest(run_dir: Path, *, task_id: str = TASK_ID) -> dict[str, Any]:
     files = []
     for path in sorted(run_dir.rglob("*")):
         if not path.is_file() or path.name in {"manifest.json", "status.json"}:
@@ -223,7 +234,7 @@ def manifest(run_dir: Path) -> dict[str, Any]:
         )
     return {
         "schema_version": "worldsim_v4_v33_scene_chain_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "files": files,
     }
 
@@ -251,9 +262,11 @@ def run(
 ) -> dict[str, Any]:
     if run_dir.exists():
         raise FileExistsError(f"run 目录已存在，禁止覆盖：{run_dir}")
-    if RUN_ROOT.resolve() not in run_dir.resolve().parents:
-        raise V33ReplayError(f"abstain run 必须位于冻结根目录：{RUN_ROOT}")
     replay = load_yaml(replay_config_path)
+    task_id = str(replay.get("task_id", TASK_ID))
+    run_root = run_root_for(replay)
+    if run_root.resolve() not in run_dir.resolve().parents:
+        raise V33ReplayError(f"abstain run 必须位于冻结根目录：{run_root}")
     bound = json.loads(bound_scene_path.read_text(encoding="utf-8"))
     proof = validate_no_actor_contract(replay, bound)
     views = select_development_views(replay, bound)
@@ -285,7 +298,7 @@ def run(
         run_dir / "status.json",
         {
             "schema_version": "worldsim_v4_v33_scene_chain_status_v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "scene": bound["scene"],
             "status": "running",
             "test_quality_read": False,
@@ -357,7 +370,7 @@ def run(
         )
     render_manifest = {
         "schema_version": "worldsim_v4_v33_render_manifest_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": bound["scene"],
         "split": "development",
         "abstention_reason": ABSTAIN_REASON,
@@ -370,7 +383,7 @@ def run(
     )
     metrics = {
         "schema_version": "worldsim_v4_v33_scene_metrics_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": bound["scene"],
         "split": "development",
         "abstention_reason": ABSTAIN_REASON,
@@ -403,7 +416,7 @@ def run(
     }
     chain = {
         "schema_version": "worldsim_v4_v33_scene_chain_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": bound["scene"],
         "algorithm_commit": replay["algorithm"]["implementation_commit"],
         "base_checkpoint_sha256": checkpoint_before,
@@ -427,7 +440,7 @@ def run(
     finished = datetime.now(timezone.utc).isoformat()
     summary = {
         "schema_version": "worldsim_v4_v33_scene_chain_summary_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": bound["scene"],
         "status": "done",
         "algorithm_commit": chain["algorithm_commit"],
@@ -444,12 +457,12 @@ def run(
         "finished_at_utc": finished,
     }
     atomic_json(run_dir / "summary.json", summary)
-    atomic_json(run_dir / "manifest.json", manifest(run_dir))
+    atomic_json(run_dir / "manifest.json", manifest(run_dir, task_id=task_id))
     atomic_json(
         run_dir / "status.json",
         {
             "schema_version": "worldsim_v4_v33_scene_chain_status_v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "scene": bound["scene"],
             "status": "done",
             "summary_sha256": sha256_file(run_dir / "summary.json"),
@@ -484,7 +497,13 @@ def main() -> None:
                     (run_dir / "status.json").read_text(encoding="utf-8")
                 )
             except Exception:
-                status = {"task_id": TASK_ID}
+                try:
+                    failure_task_id = str(
+                        load_yaml(args.replay_config.resolve()).get("task_id", TASK_ID)
+                    )
+                except Exception:
+                    failure_task_id = TASK_ID
+                status = {"task_id": failure_task_id}
             status.update(
                 status="failed",
                 reason=type(error).__name__,

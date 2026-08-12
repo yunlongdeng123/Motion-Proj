@@ -8,6 +8,7 @@ import pytest
 
 from motion_proj.worldsim_v4.v33_replay import V33ReplayError
 from scripts.run_worldsim_v4_v33_abstain_scene import (
+    run_root_for,
     select_development_views,
     validate_no_actor_contract,
 )
@@ -106,3 +107,8 @@ def test_rejects_available_or_nonempty_actor(tmp_path: Path) -> None:
     with pytest.raises(V33ReplayError, match="只允许不可用"):
         validate_no_actor_contract(replay, bound)
 
+
+def test_abstain_runner_derives_validation_run_root_from_task_id() -> None:
+    assert run_root_for({"task_id": "WS-V4-M1-EVIDENCE-FIELD-01"}) == Path(
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01"
+    )
