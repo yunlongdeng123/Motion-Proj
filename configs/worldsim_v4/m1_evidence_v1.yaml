@@ -1,6 +1,6 @@
 schema_version: worldsim_v4_m1_evidence_v1
 task_id: WS-V4-M1-EVIDENCE-FIELD-01
-status: running
+status: development_candidate
 created_at: "2026-08-12"
 
 protocol:
@@ -56,6 +56,37 @@ smoke_result:
     metrics.json: {sha256: b58fe22a4595a78cb947cd5a4cff5134347a589a46082c3db96f88600f869d93}
     calibration.json: {sha256: d2b02187108c0823880a1c7ba582934890df67422deeeb62c60ae0b59b1ef193}
     manifest.json: {sha256: e797deea6ea680b9a3113e8cf6b1fc80fbe0abbddd453ac336139e1896960439}
+
+development_result:
+  status: done
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T121734Z__m1-development6-s0-r124
+  project_git_head: 451073a0ff592d2bd69240d0f33f9124c567eeac
+  scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+  evaluable_scenes: [scene-0994, scene-0139]
+  abstain_scenes: [scene-0230, scene-0242, scene-0255, scene-0048]
+  required_scene_count: 6
+  evaluable_scene_count: 2
+  abstain_scene_count: 4
+  gate_status: pass
+  selected_evidence_arm: raw__risk_100
+  selected_calibration: raw
+  selected_mask_thresholds: {v33_o1: 0.5, raw: 0.5, temperature: 0.5, beta: 0.15}
+  files:
+    status.json: {sha256: e27fab213fd6814384569a1a3f1b4986e70b68ce5bca9ed774cffe7cd3dc8cb8}
+    summary.json: {sha256: 249eccd51c71890f80a3d21dae249a9cb13795eb19999dd9d11ca7134cdb1548}
+    metrics.json: {sha256: 8659683b4f45b8978d8df6ce0759eb101e8536fc9e0d325c4af619adef9ec038}
+    calibration.json: {sha256: 5abec5e9f79ea9f184d1a8b3ccc33d5ea354808eaa24bda81c4abdc6d1854469}
+    manifest.json: {sha256: 7a9ee973a1abac0509ae0394e588d17d72f9df6f280d69884103969fed71ed10}
+
+frozen_selection:
+  source: six_scene_development
+  evidence_arm: raw__risk_100
+  uncertainty_penalty: 1.0
+  calibration: raw
+  mask_threshold: 0.5
+  temporal_retention: 0.75
+  validation_optimization_forbidden: true
+  test_quality_read: false
 
 evidence:
   prior:
