@@ -20,8 +20,10 @@ import yaml
 
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
+M1_TASK_ID = "WS-V4-M1-EVIDENCE-FIELD-01"
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_data_v1.yaml",
+    "configs/worldsim_v4/m1_validation_data_v1.yaml",
     "configs/worldsim_v4/nuscenes_cohort_v1.yaml",
     "scripts/prepare_worldsim_v4_baseline_data.py",
     "scripts/prepare_dr_v2_drivestudio_scene.py",
@@ -69,8 +71,12 @@ def _load_script(path: Path, name: str):
 
 
 def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dict[str, Any]:
-    if config.get("schema_version") != "worldsim_v4_baseline_data_v1" or config.get("task_id") != TASK_ID:
-        raise BaselineDataError("B0 data config schema/task 漂移")
+    task_id = config.get("task_id")
+    if (
+        config.get("schema_version") != "worldsim_v4_baseline_data_v1"
+        or task_id not in {TASK_ID, M1_TASK_ID}
+    ):
+        raise BaselineDataError("V4 data config schema/task 漂移")
     if config.get("status") != "running":
         raise BaselineDataError("B0 data config 必须保持 running")
     protocol = config.get("protocol", {})
@@ -78,15 +84,28 @@ def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dic
     if protocol.get("sensors") != expected_sensors or protocol.get("no_download") is not True or protocol.get("test_quality_read") is not False:
         raise BaselineDataError("sensor/no-download/test-unread 合同漂移")
     scenes = config.get("scenes", {})
-    frozen = cohort.get("freeze", {}).get("scene_roles", {}).get("development", [])
+    expected_role = "development" if task_id == TASK_ID else "validation"
+    if protocol.get("cohort_role", expected_role) != expected_role:
+        raise BaselineDataError("data cohort role 漂移")
+    frozen = cohort.get("freeze", {}).get("scene_roles", {}).get(expected_role, [])
     if len(scenes) != 6 or set(scenes) != set(frozen):
-        raise BaselineDataError("data scenes 必须精确匹配 D0 development")
+        raise BaselineDataError(f"data scenes 必须精确匹配 D0 {expected_role}")
     extracting = sorted(scene for scene, row in scenes.items() if row.get("state") == "extract_and_preprocess")
     if len(extracting) != int(config["gates"]["expected_extract_scene_count"]):
         raise BaselineDataError("extract scene count 漂移")
-    if set(extracting) != {"scene-0048", "scene-0994", "scene-0139"}:
-        raise BaselineDataError("只允许提取三个冻结缺失场景")
-    return {"scenes": list(scenes), "extract_scenes": extracting}
+    expected_extracting = (
+        {"scene-0048", "scene-0994", "scene-0139"}
+        if expected_role == "development"
+        else set(frozen)
+    )
+    if set(extracting) != expected_extracting:
+        raise BaselineDataError(f"{expected_role} extract scene set 漂移")
+    return {
+        "task_id": task_id,
+        "cohort_role": expected_role,
+        "scenes": list(scenes),
+        "extract_scenes": extracting,
+    }
 
 
 def _resource_state(path: Path) -> dict[str, Any]:
@@ -113,6 +132,7 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
     config = _load_yaml(config_path)
     cohort = _load_yaml(project_root / "configs/worldsim_v4/nuscenes_cohort_v1.yaml")
     validated = validate_config(config, cohort)
+    task_id = str(validated["task_id"])
     dataset = config["dataset"]
     meta_root = Path(dataset["metadata_root"])
     metadata = meta_root / "v1.0-trainval"
@@ -136,12 +156,12 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
     payloads = {scene: scene_helper.collect_required(metadata, scene) for scene in validated["extract_scenes"]}
     required = {row["filename"] for payload in payloads.values() for row in payload["sample_data"]}
     if len(required) != sum(len(payload["sample_data"]) for payload in payloads.values()):
-        raise BaselineDataError("三个场景出现重复 sensor filename")
+        raise BaselineDataError("scene sensor filename 出现跨场景重复")
     raw_root.mkdir(parents=True, exist_ok=True)
     archive_helper.link_metadata(metadata, raw_root)
     auxiliary = archive_helper.link_auxiliary_files(meta_root, raw_root)
     started = time.monotonic()
-    index_path = manifest_root / "worldsim_v4_b0_missing3_member_shards.json"
+    index_path = manifest_root / f"worldsim_v4_{validated['cohort_role']}_member_shards.json"
     mapping, extracted = archive_helper.scan_shards(
         tar_dir=tar_root,
         members=required,
@@ -160,7 +180,7 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
             files.append({"filename": name, "bytes": path.stat().st_size, "sha256": sha256_file(path), "shard": mapping[name], "extracted_this_run": name in extracted})
         scene_manifest = {
             "schema_version": "worldsim_v4_raw_scene_manifest_v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "scene_name": scene,
             "scene_index": int(config["scenes"][scene]["scene_index"]),
             "scene_token": payload["scene_token"],
@@ -176,7 +196,7 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
     elapsed = time.monotonic() - started
     inventory = {
         "schema_version": "worldsim_v4_raw_union_inventory_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "status": "done",
         "raw_root": str(raw_root),
         "scene_manifests": scene_manifests,
@@ -211,8 +231,8 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
     _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "missing_scene_raw_extract_complete", "status": "done"})
     summary = {
         "schema_version": "worldsim_v4_b0_data_summary_v1",
-        "task_id": TASK_ID,
-        "stage": "extract_missing3",
+        "task_id": task_id,
+        "stage": "extract_scene_data",
         "status": "done",
         "finished_at_utc": now,
         "scenes": validated["extract_scenes"],
@@ -227,9 +247,9 @@ def run_extract(config_path: Path, run_dir: Path, project_root: Path) -> dict[st
         "test_quality_read": False,
     }
     _write_json(run_dir / "summary.json", summary)
-    _write_json(run_dir / "status.json", {"task_id": TASK_ID, "stage": "extract_missing3", "status": "done", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
+    _write_json(run_dir / "status.json", {"task_id": task_id, "stage": "extract_scene_data", "status": "done", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_b0_data_run_manifest_v1", "task_id": TASK_ID, "status": "done", "artifacts": artifacts, "download_attempted": False, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_data_run_manifest_v1", "task_id": task_id, "status": "done", "artifacts": artifacts, "download_attempted": False, "test_quality_read": False})
     return summary
 
 
@@ -294,7 +314,8 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
         raise BaselineDataError(f"run 目录已存在，禁止复用：{run_dir}")
     config = _load_yaml(config_path)
     cohort = _load_yaml(project_root / "configs/worldsim_v4/nuscenes_cohort_v1.yaml")
-    validate_config(config, cohort)
+    validated = validate_config(config, cohort)
+    task_id = str(validated["task_id"])
     record = config["scenes"].get(scene)
     if not isinstance(record, Mapping) or record.get("state") != "extract_and_preprocess":
         raise BaselineDataError(f"scene 不属于待 preprocess 集合：{scene}")
@@ -345,7 +366,7 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
     validation = validate_processed_scene(scene_root, int(config["gates"]["expected_frames_10hz"]), int(config["gates"]["expected_cameras"]))
     artifact = {
         "schema_version": "worldsim_v4_processed_scene_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "scene": scene,
         "scene_index": scene_index,
         "status": "done",
@@ -374,7 +395,7 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
     _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "scene_preprocess_complete", "scene": scene, "status": "done"})
     summary = {
         "schema_version": "worldsim_v4_b0_data_summary_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "stage": "preprocess_scene",
         "status": "done",
         "finished_at_utc": now,
@@ -389,9 +410,9 @@ def run_preprocess(config_path: Path, run_dir: Path, project_root: Path, scene: 
         "test_quality_read": False,
     }
     _write_json(run_dir / "summary.json", summary)
-    _write_json(run_dir / "status.json", {"task_id": TASK_ID, "stage": "preprocess_scene", "status": "done", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
+    _write_json(run_dir / "status.json", {"task_id": task_id, "stage": "preprocess_scene", "status": "done", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_b0_data_run_manifest_v1", "task_id": TASK_ID, "status": "done", "artifacts": artifacts, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_data_run_manifest_v1", "task_id": task_id, "status": "done", "artifacts": artifacts, "test_quality_read": False})
     return summary
 
 
@@ -404,6 +425,10 @@ def record_blocked(config_path: Path, run_dir: Path, project_root: Path, error: 
     if config_path.is_file() and not (run_dir / "resolved.yaml").exists():
         shutil.copy2(config_path, run_dir / "resolved.yaml")
     now = datetime.now(timezone.utc).isoformat()
+    try:
+        task_id = str(_load_yaml(config_path).get("task_id", TASK_ID))
+    except Exception:
+        task_id = TASK_ID
     event = {"at_utc": now, "event": f"{stage}_blocked", "error_type": type(error).__name__, "message": str(error)}
     with (run_dir / "events.jsonl").open("ab") as handle:
         handle.write(canonical_json_bytes(event))
@@ -415,7 +440,7 @@ def record_blocked(config_path: Path, run_dir: Path, project_root: Path, error: 
     _write_json(run_dir / "fingerprint.json", fingerprint)
     summary = {
         "schema_version": "worldsim_v4_b0_data_summary_v1",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "stage": stage,
         "status": "blocked",
         "finished_at_utc": now,
@@ -428,9 +453,9 @@ def record_blocked(config_path: Path, run_dir: Path, project_root: Path, error: 
         "test_quality_read": False,
     }
     _write_json(run_dir / "summary.json", summary)
-    _write_json(run_dir / "status.json", {"task_id": TASK_ID, "stage": stage, "status": "blocked", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
+    _write_json(run_dir / "status.json", {"task_id": task_id, "stage": stage, "status": "blocked", "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_b0_data_run_manifest_v1", "task_id": TASK_ID, "status": "blocked", "artifacts": artifacts, "download_attempted": False, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_data_run_manifest_v1", "task_id": task_id, "status": "blocked", "artifacts": artifacts, "download_attempted": False, "test_quality_read": False})
 
 
 def main() -> None:
@@ -442,7 +467,7 @@ def main() -> None:
     parser.add_argument("--project-root", default=Path("."), type=Path)
     args = parser.parse_args()
     existed_before = args.run_dir.resolve().exists()
-    failure_stage = "extract_missing3" if args.stage == "extract" else "preprocess_scene"
+    failure_stage = "extract_scene_data" if args.stage == "extract" else "preprocess_scene"
     try:
         if args.stage == "extract":
             summary = run_extract(args.config, args.run_dir, args.project_root)

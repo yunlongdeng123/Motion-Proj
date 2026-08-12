@@ -8,6 +8,10 @@ from scripts.prepare_worldsim_v4_baseline_data import BaselineDataError, scene_d
 
 
 SCENES = ["scene-0230", "scene-0242", "scene-0255", "scene-0048", "scene-0994", "scene-0139"]
+VALIDATION_SCENES = [
+    "scene-0071", "scene-1089", "scene-0317",
+    "scene-0862", "scene-1012", "scene-0450",
+]
 
 
 def config() -> dict:
@@ -29,12 +33,33 @@ def config() -> dict:
 
 
 def cohort() -> dict:
-    return {"freeze": {"scene_roles": {"development": SCENES}}}
+    return {
+        "freeze": {
+            "scene_roles": {
+                "development": SCENES,
+                "validation": VALIDATION_SCENES,
+            }
+        }
+    }
 
 
 def test_data_config_matches_frozen_development_and_missing_three() -> None:
     result = validate_config(config(), cohort())
     assert result["extract_scenes"] == ["scene-0048", "scene-0139", "scene-0994"]
+
+
+def test_m1_validation_data_config_requires_all_six_frozen_scenes() -> None:
+    value = config()
+    value["task_id"] = "WS-V4-M1-EVIDENCE-FIELD-01"
+    value["protocol"]["cohort_role"] = "validation"
+    value["scenes"] = {
+        scene: {"scene_index": index, "state": "extract_and_preprocess"}
+        for index, scene in enumerate(VALIDATION_SCENES)
+    }
+    value["gates"]["expected_extract_scene_count"] = 6
+    result = validate_config(value, cohort())
+    assert result["cohort_role"] == "validation"
+    assert result["extract_scenes"] == sorted(VALIDATION_SCENES)
 
 
 @pytest.mark.parametrize(

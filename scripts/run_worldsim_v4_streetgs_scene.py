@@ -30,8 +30,28 @@ from scripts.prepare_worldsim_v4_baseline_data import scene_directory_name, vali
 
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
+M1_TASK_ID = "WS-V4-M1-EVIDENCE-FIELD-01"
+SCENE_CONTRACTS = {
+    TASK_ID: {
+        "scene-0230": 179,
+        "scene-0242": 191,
+        "scene-0255": 204,
+        "scene-0048": 45,
+        "scene-0994": 752,
+        "scene-0139": 110,
+    },
+    M1_TASK_ID: {
+        "scene-0071": 68,
+        "scene-1089": 829,
+        "scene-0317": 251,
+        "scene-0862": 652,
+        "scene-1012": 770,
+        "scene-0450": 364,
+    },
+}
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/streetgs_training_v1.yaml",
+    "configs/worldsim_v4/m1_validation_reconstruction_v1.yaml",
     "configs/worldsim_v4/baseline_data_v1.yaml",
     "scripts/run_worldsim_v4_streetgs_scene.py",
     "scripts/prepare_worldsim_v3_drivestudio.py",
@@ -78,7 +98,12 @@ def _git(path: Path, *args: str) -> str:
 
 
 def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, Any]:
-    if config.get("schema_version") != "worldsim_v4_streetgs_training_v1" or config.get("task_id") != TASK_ID or config.get("status") != "running":
+    task_id = config.get("task_id")
+    if (
+        config.get("schema_version") != "worldsim_v4_streetgs_training_v1"
+        or task_id not in SCENE_CONTRACTS
+        or config.get("status") != "running"
+    ):
         raise StreetGSTrainingError("StreetGS config schema/task/status 漂移")
     implementation = config.get("implementation", {})
     patch = project_root / str(implementation.get("compatibility_patch"))
@@ -97,9 +122,13 @@ def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, 
     if int(config.get("data", {}).get("test_image_stride", -1)) != 0:
         raise StreetGSTrainingError("matched partition 禁止 stride split")
     scenes = config.get("scenes", {})
-    if scenes != {"scene-0230": 179, "scene-0242": 191, "scene-0255": 204, "scene-0048": 45, "scene-0994": 752, "scene-0139": 110}:
+    if scenes != SCENE_CONTRACTS[task_id]:
         raise StreetGSTrainingError("六场景 index 合同漂移")
-    return {"scene_count": len(scenes), "patch_sha256": sha256_file(patch)}
+    return {
+        "task_id": task_id,
+        "scene_count": len(scenes),
+        "patch_sha256": sha256_file(patch),
+    }
 
 
 def _memory_value(path: str) -> int | None:
@@ -228,7 +257,8 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str, mode: 
     if run_dir.exists():
         raise StreetGSTrainingError(f"run 目录已存在，禁止复用：{run_dir}")
     config = _load_yaml(config_path)
-    validate_config(config, project_root)
+    validated = validate_config(config, project_root)
+    task_id = str(validated["task_id"])
     if scene not in config["scenes"] or mode not in config["training"]["modes"]:
         raise StreetGSTrainingError("scene/mode 未冻结")
     upstream = Path(config["implementation"]["upstream_root"])
@@ -318,12 +348,12 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str, mode: 
     _write_json(run_dir / "fingerprint.json", fingerprint)
     now = datetime.now(timezone.utc).isoformat()
     _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "streetgs_training_complete", "scene": scene, "mode": mode, "status": "done"})
-    summary = {"schema_version": "worldsim_v4_streetgs_summary_v1", "task_id": TASK_ID, "status": "done", "scene": scene, "scene_index": scene_index, "mode": mode, "iterations": iterations, "finished_at_utc": now, "duration_seconds": elapsed, "checkpoint": checkpoint_row, "resources": {"peak_gpu_memory_mib": peak_gpu, "peak_cgroup_memory_bytes": peak_memory}, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "project_git": {"head": _git(project_root, "rev-parse", "HEAD"), "branch": _git(project_root, "branch", "--show-current"), "dirty": bool(_git(project_root, "status", "--porcelain"))}, "training_started": True, "model_inference_started": False, "test_quality_read": False}
+    summary = {"schema_version": "worldsim_v4_streetgs_summary_v1", "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "mode": mode, "iterations": iterations, "finished_at_utc": now, "duration_seconds": elapsed, "checkpoint": checkpoint_row, "resources": {"peak_gpu_memory_mib": peak_gpu, "peak_cgroup_memory_bytes": peak_memory}, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "project_git": {"head": _git(project_root, "rev-parse", "HEAD"), "branch": _git(project_root, "branch", "--show-current"), "dirty": bool(_git(project_root, "status", "--porcelain"))}, "training_started": True, "model_inference_started": False, "test_quality_read": False}
     _write_json(run_dir / "summary.json", summary)
-    _write_json(run_dir / "status.json", {"task_id": TASK_ID, "status": "done", "scene": scene, "mode": mode, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
+    _write_json(run_dir / "status.json", {"task_id": task_id, "status": "done", "scene": scene, "mode": mode, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json" and not path.is_relative_to(run_dir / "work_dirs")}
     artifacts["work_dirs_checkpoint"] = checkpoint_row
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_streetgs_run_manifest_v1", "task_id": TASK_ID, "status": "done", "scene": scene, "mode": mode, "artifacts": artifacts, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_streetgs_run_manifest_v1", "task_id": task_id, "status": "done", "scene": scene, "mode": mode, "artifacts": artifacts, "test_quality_read": False})
     return summary
 
 
@@ -338,11 +368,15 @@ def record_blocked(config_path: Path, run_dir: Path, project_root: Path, scene: 
     append_jsonl(run_dir / "events.jsonl", event)
     fingerprint = {"config_sha256": sha256_file(config_path) if config_path.is_file() else None, "project_head": _git(project_root, "rev-parse", "HEAD"), "error": event}
     _write_json(run_dir / "fingerprint.json", fingerprint)
-    summary = {"schema_version": "worldsim_v4_streetgs_summary_v1", "task_id": TASK_ID, "status": "blocked", "scene": scene, "mode": mode, "finished_at_utc": now, "reason": "streetgs_training_failed", "error": event, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "training_started": (run_dir / "resource.jsonl").exists(), "model_inference_started": False, "test_quality_read": False}
+    try:
+        task_id = str(_load_yaml(config_path).get("task_id", TASK_ID))
+    except Exception:
+        task_id = TASK_ID
+    summary = {"schema_version": "worldsim_v4_streetgs_summary_v1", "task_id": task_id, "status": "blocked", "scene": scene, "mode": mode, "finished_at_utc": now, "reason": "streetgs_training_failed", "error": event, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "training_started": (run_dir / "resource.jsonl").exists(), "model_inference_started": False, "test_quality_read": False}
     _write_json(run_dir / "summary.json", summary)
-    _write_json(run_dir / "status.json", {"task_id": TASK_ID, "status": "blocked", "scene": scene, "mode": mode, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
+    _write_json(run_dir / "status.json", {"task_id": task_id, "status": "blocked", "scene": scene, "mode": mode, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json" and not path.is_relative_to(run_dir / "work_dirs")}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_streetgs_run_manifest_v1", "task_id": TASK_ID, "status": "blocked", "scene": scene, "mode": mode, "artifacts": artifacts, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_streetgs_run_manifest_v1", "task_id": task_id, "status": "blocked", "scene": scene, "mode": mode, "artifacts": artifacts, "test_quality_read": False})
 
 
 def main() -> None:

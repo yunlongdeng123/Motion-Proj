@@ -1,0 +1,52 @@
+schema_version: worldsim_v4_streetgs_training_v1
+task_id: WS-V4-M1-EVIDENCE-FIELD-01
+status: running
+created_at: "2026-08-12"
+implementation:
+  upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  expected_git_status: M datasets/driving_dataset.py
+  compatibility_patch: compatibility/DriveStudio-2026-08-05.patch
+  compatibility_patch_sha256: 8da6bd078609d29d74c2d8eba3e648b941d5a0cc17f472f4daca172788ae953b
+  environment: /root/autodl-tmp/envs/drivestudio
+  config_file: configs/streetgs.yaml
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  dataset_config: nuscenes/3cams
+  start_timestep: 0
+  end_timestep: -1
+  test_image_stride: 0
+  frame_partition:
+    modulus: 5
+    development_remainder: 2
+    heldout_remainder: 4
+    train_remainders: [0, 1, 3]
+  load_smpl: false
+  expected_frames: 196
+  expected_cameras: 6
+scenes:
+  scene-0071: 68
+  scene-1089: 829
+  scene-0317: 251
+  scene-0862: 652
+  scene-1012: 770
+  scene-0450: 364
+training:
+  seed: 0
+  modes: {profile100: 100, formal: 30000}
+  save_only_final_checkpoint: true
+  post_train_render: false
+resources:
+  minimum_gpu_memory_mib: 24000
+  maximum_gpu_used_at_start_mib: 2048
+  minimum_cgroup_memory_gib: 32
+  minimum_disk_free_at_start_gib: 60
+  stop_disk_free_gib: 20
+  stop_cgroup_ratio: 0.90
+  stop_cgroup_consecutive_samples: 2
+  sample_interval_seconds: 10
+  timeout_seconds: {profile100: 900, formal: 9000}
+gates:
+  checkpoint_step_exact: true
+  checkpoint_finite: true
+  no_test_quality_read: true
