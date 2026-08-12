@@ -65,6 +65,7 @@ SNAPSHOT_RELPATHS = (
     "scripts/finalize_worldsim_v4_v33_scene_chain.py",
     "scripts/run_worldsim_v4_v33_abstain_scene.py",
     "scripts/build_worldsim_v4_v33_registration.py",
+    "scripts/build_worldsim_v4_adgs_registration.py",
     "scripts/prepare_worldsim_v32_s1_prompts.py",
     "scripts/validate_worldsim_v32_s1.py",
     "scripts/build_worldsim_v32_sam_masks.py",
@@ -90,6 +91,7 @@ SNAPSHOT_RELPATHS = (
     "tests/test_finalize_worldsim_v4_v33_scene_chain.py",
     "tests/test_run_worldsim_v4_v33_abstain_scene.py",
     "tests/test_build_worldsim_v4_v33_registration.py",
+    "tests/test_build_worldsim_v4_adgs_registration.py",
     "tests/test_build_worldsim_v4_v33_actor_registry.py",
     "tests/test_prepare_worldsim_v32_s1_prompts.py",
     "tests/test_worldsim_v4_semantic_split.py",
@@ -161,7 +163,11 @@ def _checkpoint_registration_state(value: Any) -> dict[str, Any]:
     run = Path(str(value.get("run", "")))
     run_state = _path_state(run, kind="dir") if value.get("run") else {"path": None, "exists": False, "state": "not_registered"}
     evidence: dict[str, Any] = {}
-    for name, field in (("fingerprint.json", "fingerprint_sha256"), ("manifest.json", "manifest_sha256")):
+    for name, field in (
+        ("fingerprint.json", "fingerprint_sha256"),
+        ("manifest.json", "manifest_sha256"),
+        ("summary.json", "summary_sha256"),
+    ):
         actual = _path_state(run / name) if run_state["exists"] else _path_state(None)
         expected_sha256 = value.get(field)
         evidence[name] = {

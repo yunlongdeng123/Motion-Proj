@@ -22,8 +22,10 @@ def _registration(tmp_path: Path) -> dict:
     tmp_path.mkdir(parents=True, exist_ok=True)
     fingerprint = tmp_path / "fingerprint.json"
     manifest = tmp_path / "manifest.json"
+    summary = tmp_path / "summary.json"
     fingerprint.write_bytes(b"fingerprint")
     manifest.write_bytes(b"manifest")
+    summary.write_bytes(b"summary")
     files = {}
     for name, payload in {
         "point_cloud.ply": b"point-cloud",
@@ -42,6 +44,7 @@ def _registration(tmp_path: Path) -> dict:
         "step": 60000,
         "fingerprint_sha256": _sha256(fingerprint),
         "manifest_sha256": _sha256(manifest),
+        "summary_sha256": _sha256(summary),
         "files": files,
     }
 
