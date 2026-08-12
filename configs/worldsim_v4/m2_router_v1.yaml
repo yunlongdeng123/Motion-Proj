@@ -1,0 +1,49 @@
+schema_version: worldsim_v4_m2_router_v1
+task_id: WS-V4-M2-REPAIR-ROUTER-01
+status: pending
+created_at: "2026-08-12"
+
+execution_gate:
+  requires_m1_validation_done: true
+  current_state: locked_waiting_for_m1_validation
+  dataset: nuScenes
+  tuning_split: development
+  validation_read_only: true
+  test_quality_read: false
+
+candidate_contract:
+  methods: [OBSERVED, DONOR, GENERATED]
+  abstain_action: ABSTAIN
+  require_content_addressed_gaussian_asset: true
+  require_all_risk_terms_persisted: true
+  provenance_priority: [observed_cross_view, native_scene_donor, generated_model]
+
+risk:
+  formula: weighted_sum_v1
+  weights:
+    photo: 1.0
+    geometry: 1.0
+    temporal: 1.0
+    uncertainty: 1.0
+    compute_cost: 0.1
+  development_threshold_candidates: [0.4, 0.6, 0.8, 1.0, 1.2, 1.5]
+  selection_unit: scene
+  tie_priority: [OBSERVED, DONOR, GENERATED]
+
+ablations:
+  matched_repair_arms: [ABSTAIN, OBSERVED, TELEA, ROADPATCH, GENERATED, RISK_ROUTER]
+  hard_priority: [OBSERVED, DONOR, GENERATED]
+  same_base: true
+  same_hole: true
+  same_view: true
+  same_resolution: true
+
+selective_evaluation:
+  requested_coverages: [0.25, 0.5, 0.75, 1.0]
+  require_abstain_error_gt_accepted_error: true
+  retain_failed_blocked_abstain_in_denominator: true
+
+immutability:
+  base_checkpoint_mutation: false
+  abstain_is_atomic_noop: true
+  rollback_checkpoint_sha_exact: true
