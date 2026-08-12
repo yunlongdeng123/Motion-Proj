@@ -61,6 +61,44 @@ asset_build:
     DONOR: native_checkpoint_background_gaussians
     GENERATED: unavailable_no_frozen_model
   generated_unavailable_action: ABSTAIN_GENERATED_MODEL_UNAVAILABLE
+  donor:
+    patch_sizes_m: [1.0, 2.0, 4.0]
+    thresholds:
+      minimum_rows: 16
+      maximum_actor_semantic: 0.2
+      minimum_visibility_mass: 1.0
+      minimum_train_view_observations: 1
+      minimum_multi_camera_count: 1
+      minimum_multi_camera_rows: 1
+      maximum_plane_residual_m: 0.12
+      minimum_abs_plane_normal_vertical: 0.85
+      maximum_vertical_range_m: 0.75
+      maximum_scale_m: 0.35
+    anchor:
+      bottom_quantile: 0.6
+      robust_quantiles: [0.05, 0.95]
+      minimum_anchor_pixels: 16
+      minimum_cross_view_observed_pixels: 1
+      context_ring_pixels: 8
+    search:
+      top_k: 5
+      weights: {geometry: 1.0, appearance: 2.0, semantic: 2.0, visibility: 0.5}
+      minimum_spatial_separation_m: 5.0
+      minimum_tangent_confidence: 0.0
+      maximum_abs_yaw_radians: 0.7853981633974483
+      maximum_abs_vertical_offset_m: 0.5
+    delta:
+      opacity_feather_width_m: 0.3
+      maximum_rgb_affine: 0.05
+      minimum_scale_m: 0.01
+      maximum_scale_m: 0.25
+      duplicate_radius_m: 0.005
+      maximum_rows_per_target: 512
+  risk_normalization:
+    photo_l1_uint8: 25.0
+    geometry_mae_m: 0.5
+    temporal_std_uint8: 50.0
+    gaussian_count: 512
 
 candidate_contract:
   methods: [OBSERVED, DONOR, GENERATED]
