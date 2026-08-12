@@ -336,6 +336,7 @@ def aggregate_methods(
     *,
     methods: Sequence[str],
     evaluation: Mapping[str, Any],
+    thresholds: Mapping[str, float] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     per_scene: dict[str, Any] = {}
     for scene in sorted({str(sample["scene"]) for sample in samples}):
@@ -347,7 +348,11 @@ def aggregate_methods(
                 metrics = score_prediction(
                     sample["probabilities"][method],
                     sample["target"],
-                    threshold=float(evaluation["mask_threshold"]),
+                    threshold=float(
+                        thresholds.get(method, evaluation["mask_threshold"])
+                        if thresholds is not None
+                        else evaluation["mask_threshold"]
+                    ),
                     boundary_tolerance_pixels=float(
                         evaluation["boundary_tolerance_pixels"]
                     ),
@@ -443,6 +448,35 @@ def choose_evidence_arm(
             -scene_mean[name]["ece"],
             name,
         ),
+    )
+
+
+def choose_mask_threshold(
+    search: Mapping[float, Mapping[str, float]],
+    *,
+    reference: Mapping[str, float],
+    false_negative_mass_max_degradation: float,
+) -> float:
+    if not search:
+        raise ValueError("mask-threshold search is empty")
+    eligible = [
+        threshold
+        for threshold, metrics in search.items()
+        if metrics["false_negative_semantic_mass"]
+        <= reference["false_negative_semantic_mass"]
+        + false_negative_mass_max_degradation
+    ]
+    pool = eligible or list(search)
+    return float(
+        max(
+            pool,
+            key=lambda threshold: (
+                search[threshold]["boundary_f1"],
+                search[threshold]["iou"],
+                -search[threshold]["false_positive_semantic_mass"],
+                threshold,
+            ),
+        )
     )
 
 
@@ -745,10 +779,50 @@ def run(
             raw.reshape(-1)
         ).reshape(raw.shape).astype(np.float32)
     methods = ["v33_o1", "raw", "temperature", "beta"]
+    _, reference_scene_mean = aggregate_methods(
+        samples,
+        methods=["v33_o1"],
+        evaluation=configs[0]["evaluation"],
+        thresholds={
+            "v33_o1": float(configs[0]["evaluation"]["mask_threshold"])
+        },
+    )
+    reference_metrics = reference_scene_mean["v33_o1"]
+    threshold_candidates = [
+        float(value)
+        for value in configs[0]["evaluation"]["mask_threshold_candidates"]
+    ]
+    method_thresholds = {
+        "v33_o1": float(configs[0]["evaluation"]["mask_threshold"])
+    }
+    threshold_search = {}
+    for method in ("raw", "temperature", "beta"):
+        rows = {}
+        for threshold in threshold_candidates:
+            _, candidate_scene_mean = aggregate_methods(
+                samples,
+                methods=[method],
+                evaluation=configs[0]["evaluation"],
+                thresholds={method: threshold},
+            )
+            rows[threshold] = candidate_scene_mean[method]
+        selected_threshold = choose_mask_threshold(
+            rows,
+            reference=reference_metrics,
+            false_negative_mass_max_degradation=float(
+                configs[0]["evaluation"]["threshold_fn_mass_max_degradation"]
+            ),
+        )
+        method_thresholds[method] = selected_threshold
+        threshold_search[method] = {
+            "selected": selected_threshold,
+            "candidates": {str(key): value for key, value in rows.items()},
+        }
     per_scene, scene_mean = aggregate_methods(
         samples,
         methods=methods,
         evaluation=configs[0]["evaluation"],
+        thresholds=method_thresholds,
     )
     selected_calibration = choose_calibration(
         scene_mean,
@@ -804,6 +878,8 @@ def run(
         "scene_mean": scene_mean,
         "selected_calibration": selected_calibration,
         "selected_evidence_arm": selected_arm,
+        "selected_mask_thresholds": method_thresholds,
+        "mask_threshold_search": threshold_search,
         "evidence_arm_search": {
             "per_scene": arm_per_scene,
             "scene_mean": arm_scene_mean,
@@ -821,6 +897,8 @@ def run(
         "scene_records": scene_records,
         "selected_calibration": selected_calibration,
         "selected_evidence_arm": selected_arm,
+        "selected_mask_threshold": method_thresholds[selected_calibration],
+        "selected_mask_thresholds": method_thresholds,
         "gate_preview": preview,
         "base_rgb_render_checks": base_rgb_checks,
         "checkpoint_checks": checkpoint_checks,

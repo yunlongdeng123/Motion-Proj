@@ -57,6 +57,9 @@ calibration:
 
 evaluation:
   mask_threshold: 0.5
+  mask_threshold_candidates:
+    [0.01, 0.02, 0.03, 0.04, 0.05, 0.075, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50]
+  threshold_fn_mass_max_degradation: 0.01
   candidate_policy: development_posterior_arm_search
   candidate_arms:
     owned_only: null

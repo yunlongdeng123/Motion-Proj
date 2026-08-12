@@ -8,6 +8,7 @@ from scripts.run_worldsim_v4_m1 import (
     candidate_probability_vectors,
     choose_calibration,
     choose_evidence_arm,
+    choose_mask_threshold,
     gate_preview,
 )
 
@@ -92,3 +93,25 @@ def test_evidence_arm_selection_preserves_fn_then_maximizes_boundary() -> None:
         ["raw__wide", "raw__narrow"],
         false_negative_mass_max_degradation=0.01,
     ) == "raw__narrow"
+
+
+def test_mask_threshold_selection_respects_fn_gate_then_boundary() -> None:
+    search = {
+        0.1: {
+            "false_negative_semantic_mass": 0.05,
+            "boundary_f1": 0.25,
+            "iou": 0.2,
+            "false_positive_semantic_mass": 0.3,
+        },
+        0.5: {
+            "false_negative_semantic_mass": 0.5,
+            "boundary_f1": 0.8,
+            "iou": 0.7,
+            "false_positive_semantic_mass": 0.1,
+        },
+    }
+    assert choose_mask_threshold(
+        search,
+        reference={"false_negative_semantic_mass": 0.1},
+        false_negative_mass_max_degradation=0.01,
+    ) == 0.1
