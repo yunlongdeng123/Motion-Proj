@@ -57,7 +57,7 @@ asset_build:
     opacity: 0.3
   builders:
     OBSERVED: cross_view_depth_splat_train_only
-    TELEA: opencv_telea_deterministic_unseen_pixels
+    TELEA: opencv_telea_deterministic_full_same_hole
     DONOR: native_checkpoint_background_gaussians
     GENERATED: unavailable_no_frozen_model
   generated_unavailable_action: ABSTAIN_GENERATED_MODEL_UNAVAILABLE
@@ -110,12 +110,17 @@ candidate_contract:
 risk:
   formula: weighted_sum_v1
   weights:
-    photo: 1.0
-    geometry: 1.0
-    temporal: 1.0
-    uncertainty: 1.0
+    photo: 0.25
+    geometry: 0.25
+    temporal: 0.25
+    uncertainty: 0.25
     compute_cost: 0.1
-  development_threshold_candidates: [0.4, 0.6, 0.8, 1.0, 1.2, 1.5]
+  development_weight_candidates:
+    - {name: balanced, photo: 0.25, geometry: 0.25, temporal: 0.25, uncertainty: 0.25, compute_cost: 0.1}
+    - {name: evidence_priority, photo: 0.30, geometry: 0.30, temporal: 0.15, uncertainty: 0.25, compute_cost: 0.1}
+    - {name: uncertainty_forward, photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.1}
+    - {name: geometry_forward, photo: 0.20, geometry: 0.40, temporal: 0.15, uncertainty: 0.25, compute_cost: 0.1}
+  development_threshold_candidates: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
   selection_unit: scene
   tie_priority: [OBSERVED, DONOR, GENERATED]
 

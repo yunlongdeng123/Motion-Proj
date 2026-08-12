@@ -100,7 +100,8 @@ def _fixture(tmp_path: Path, *, abstain: bool = False) -> tuple[Path, Path]:
         "protocol": {"development_scenes": [scene], "partition_contract": "sample_index_mod_5", "target_partition": "development", "target_remainder": 2, "heldout_remainder": 4, "support_offsets": [-1, 1], "support_partition": "train_only", "retain_all_accepted_masks": True, "heldout_content_read": False, "test_quality_read": False},
         "inputs": {"m1_development_run": {"path": str(run), "summary_sha256": sha256_file(run / "summary.json"), "manifest_sha256": sha256_file(run / "manifest.json")}},
         "asset_build": {"builders": {}},
-        "risk": {"weights": {"photo": 1.0, "geometry": 1.0, "temporal": 1.0, "uncertainty": 1.0, "compute_cost": 0.1}},
+        "risk": {"weights": {"photo": 0.25, "geometry": 0.25, "temporal": 0.25, "uncertainty": 0.25, "compute_cost": 0.1}},
+        "ablations": {"matched_repair_arms": ["ABSTAIN", "OBSERVED", "TELEA", "ROADPATCH", "GENERATED", "RISK_ROUTER"]},
     })
     return config, source_path
 
@@ -113,7 +114,9 @@ def test_materialize_ready_scene_keeps_all_masks_and_train_only_support(tmp_path
     assert result["requests"][0]["support_views"] == [[6, 0], [8, 0]]
     assert result["all_accepted_masks_retained"] is True
     assert result["candidate_availability"]["GENERATED"] == "abstain_no_frozen_model"
+    assert result["candidate_availability"]["TELEA"] == "ready_deterministic_full_same_hole"
     assert result["risk"]["weights"]["compute_cost"] == 0.1
+    assert result["ablations"]["matched_repair_arms"][0] == "ABSTAIN"
     assert result["test_quality_read"] is False
 
 

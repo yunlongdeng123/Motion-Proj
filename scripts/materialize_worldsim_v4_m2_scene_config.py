@@ -288,9 +288,10 @@ def materialize_scene_config(
         "runtime": source["runtime"],
         "asset_build": config["asset_build"],
         "risk": config["risk"],
+        "ablations": config["ablations"],
         "candidate_availability": {
             "OBSERVED": "ready_cross_view_train_only",
-            "TELEA": "ready_deterministic_unseen_completion",
+            "TELEA": "ready_deterministic_full_same_hole",
             "DONOR": "ready_native_checkpoint_builder",
             "GENERATED": "abstain_no_frozen_model",
         },

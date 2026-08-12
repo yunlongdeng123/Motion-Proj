@@ -15,6 +15,7 @@ import time
 import traceback
 from typing import Any, Mapping
 
+import cv2
 import imageio.v2 as imageio
 import numpy as np
 from scipy.ndimage import binary_dilation
@@ -348,6 +349,66 @@ def _evaluate_render(
     return result
 
 
+def _atomic_abstain_metrics(metrics: Mapping[str, Any]) -> dict[str, Any]:
+    """Record R0 as the exact base/no-operation arm, never as a repair success."""
+
+    result = dict(metrics)
+    result.update(
+        {
+            "hole_effect_pixels": 0,
+            "hole_coverage": 0.0,
+            "operation_success": False,
+            "atomic_noop": True,
+        }
+    )
+    result["edit_error"] = float(
+        np.mean(
+            [
+                min(float(result["hole_cross_view_l1_uint8"]) / 25.0, 1.0),
+                min(float(result["hole_geometry_mae_m"]) / 0.5, 1.0),
+                1.0,
+            ]
+        )
+    )
+    return result
+
+
+def _matched_arm_records(
+    *,
+    expected_arms: list[str],
+    candidate_records: list[dict[str, Any]],
+    failures: list[dict[str, Any]],
+    abstain_metrics: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    """Make every frozen matched arm explicit, including unavailable/failed arms."""
+
+    if len(expected_arms) != len(set(expected_arms)):
+        raise M2SceneRunError("matched repair arms must be unique")
+    candidates = {str(row["arm"]): row for row in candidate_records}
+    failed: dict[str, list[str]] = {}
+    for row in failures:
+        failed.setdefault(str(row["arm"]), []).append(str(row["error"]))
+    output: list[dict[str, Any]] = []
+    for arm in expected_arms:
+        if arm == "ABSTAIN":
+            output.append(
+                {"arm": arm, "status": "atomic_noop", "metrics": dict(abstain_metrics)}
+            )
+        elif arm == "RISK_ROUTER":
+            output.append({"arm": arm, "status": "pending_development_selection"})
+        elif arm in candidates:
+            output.append({"arm": arm, "status": "executed", **candidates[arm]})
+        else:
+            output.append(
+                {
+                    "arm": arm,
+                    "status": "abstain",
+                    "reasons": failed.get(arm, ["ABSTAIN_CANDIDATE_UNAVAILABLE"]),
+                }
+            )
+    return output
+
+
 def _candidate_from_asset(
     *,
     candidate_id: str,
@@ -355,7 +416,7 @@ def _candidate_from_asset(
     provenance: str,
     binding: Any,
     metrics: Mapping[str, Any],
-    cross_audit: Mapping[str, Any],
+    temporal_std_uint8: float | None,
     uncertainty: float,
     normalization: Mapping[str, float],
     evidence: Mapping[str, Any],
@@ -363,9 +424,7 @@ def _candidate_from_asset(
     risks = normalized_repair_risks(
         photo_l1_uint8=float(metrics["hole_cross_view_l1_uint8"]),
         geometry_mae_m=float(metrics["hole_geometry_mae_m"]),
-        temporal_std_uint8=cross_audit.get(
-            "temporal_color_std_uint8_mean_multi_support"
-        ),
+        temporal_std_uint8=temporal_std_uint8,
         uncertainty=float(uncertainty),
         gaussian_count=int(binding.gaussian_count),
         normalization=normalization,
@@ -495,6 +554,7 @@ def _process_request(
     candidate_objects: list[RepairCandidate] = []
     assets: dict[str, Mapping[str, np.ndarray]] = {}
     normalization = config["asset_build"]["risk_normalization"]
+    temporal_std = cross_audit.get("temporal_color_std_uint8_mean_multi_support")
 
     def register(
         *,
@@ -504,6 +564,7 @@ def _process_request(
         asset: Mapping[str, np.ndarray],
         uncertainty: float,
         evidence: Mapping[str, Any],
+        temporal_std_uint8: float | None = None,
     ) -> dict[str, Any]:
         candidate_id = str(np.asarray(asset["candidate_id"]).item())
         asset_path = request_dir / "assets" / f"{arm.lower()}.npz"
@@ -529,13 +590,15 @@ def _process_request(
             trainer=trainer,
             device=device,
         )
+        metrics["operation_success"] = True
+        metrics["atomic_noop"] = False
         candidate = _candidate_from_asset(
             candidate_id=candidate_id,
             method=method,
             provenance=provenance,
             binding=binding,
             metrics=metrics,
-            cross_audit=cross_audit,
+            temporal_std_uint8=temporal_std_uint8,
             uncertainty=uncertainty,
             normalization=normalization,
             evidence=evidence,
@@ -588,52 +651,59 @@ def _process_request(
                 asset=asset,
                 uncertainty=1.0 - observed_fraction,
                 evidence={"cross_view": cross_audit, "observed_fraction": observed_fraction},
+                temporal_std_uint8=temporal_std,
             )
         except Exception as exc:
             failures.append({"arm": "OBSERVED", "error": f"{type(exc).__name__}: {exc}"})
     else:
         failures.append({"arm": "OBSERVED", "error": "ABSTAIN_NO_CROSS_VIEW_SUPPORT"})
 
-    if unseen.any():
-        try:
-            points = completion_points_from_view(
-                rgb=completed,
-                depth=base["background_depth"],
-                mask=unseen,
-                observed_cross_view=np.zeros_like(mask),
-                intrinsics=base["intrinsics"],
-                camera_to_world=base["camera_to_world"],
-                stride=int(gaussian_cfg["target_stride"]),
-                scale_multiplier=float(gaussian_cfg["scale_multiplier"]),
-                minimum_scale_m=float(gaussian_cfg["minimum_scale_m"]),
-                maximum_scale_m=float(gaussian_cfg["maximum_scale_m"]),
-            )
-            asset = completion_points_to_repair_asset(
-                points,
-                candidate_id=f"{request['request_id']}__telea",
-                method="GENERATED",
-                provenance="generated_telea",
-                features_rest_shape=rest_shape,
-                opacity=float(gaussian_cfg["opacity"]),
-                target_frame=frame,
-                target_camera_id=camera_id,
-            )
-            register(
-                arm="TELEA",
-                method="GENERATED",
-                provenance="generated_telea",
-                asset=asset,
-                uncertainty=float(0.5 + 0.5 * unseen.sum() / max(mask.sum(), 1)),
-                evidence={
-                    "cross_view": cross_audit,
-                    "unseen_fraction": float(unseen.sum() / max(mask.sum(), 1)),
-                    "inpaint": "opencv_telea_deterministic",
-                },
-            )
-        except Exception as exc:
-            failures.append({"arm": "TELEA", "error": f"{type(exc).__name__}: {exc}"})
-    else:
-        failures.append({"arm": "TELEA", "error": "ABSTAIN_NO_UNSEEN_PIXELS"})
+    try:
+        full_inpaint = cv2.inpaint(
+            cv2.cvtColor(erase_render["rgb"], cv2.COLOR_RGB2BGR),
+            mask.astype(np.uint8) * 255,
+            float(config["asset_build"]["projection"]["inpaint_radius_pixels"]),
+            cv2.INPAINT_TELEA,
+        )
+        full_inpaint = cv2.cvtColor(full_inpaint, cv2.COLOR_BGR2RGB)
+        imageio.imwrite(request_dir / "telea_full_same_hole_diagnostic.png", full_inpaint)
+        points = completion_points_from_view(
+            rgb=full_inpaint,
+            depth=base["background_depth"],
+            mask=mask,
+            observed_cross_view=np.zeros_like(mask),
+            intrinsics=base["intrinsics"],
+            camera_to_world=base["camera_to_world"],
+            stride=int(gaussian_cfg["target_stride"]),
+            scale_multiplier=float(gaussian_cfg["scale_multiplier"]),
+            minimum_scale_m=float(gaussian_cfg["minimum_scale_m"]),
+            maximum_scale_m=float(gaussian_cfg["maximum_scale_m"]),
+        )
+        asset = completion_points_to_repair_asset(
+            points,
+            candidate_id=f"{request['request_id']}__telea",
+            method="GENERATED",
+            provenance="generated_telea",
+            features_rest_shape=rest_shape,
+            opacity=float(gaussian_cfg["opacity"]),
+            target_frame=frame,
+            target_camera_id=camera_id,
+        )
+        register(
+            arm="TELEA",
+            method="GENERATED",
+            provenance="generated_telea",
+            asset=asset,
+            uncertainty=0.8,
+            evidence={
+                "inpaint": "opencv_telea_deterministic_full_same_hole",
+                "same_hole_pixels": int(mask.sum()),
+                "uses_cross_view_rgb": False,
+            },
+            temporal_std_uint8=None,
+        )
+    except Exception as exc:
+        failures.append({"arm": "TELEA", "error": f"{type(exc).__name__}: {exc}"})
 
     try:
         donor_cfg = config["asset_build"]["donor"]
@@ -720,6 +790,7 @@ def _process_request(
                 "top5_patch_ids": [row.patch_id for row in donor_candidates],
                 "manifest": donor_manifest,
             },
+            temporal_std_uint8=None,
         )
     except Exception as exc:
         failures.append({"arm": "ROADPATCH", "error": f"{type(exc).__name__}: {exc}"})
@@ -731,6 +802,25 @@ def _process_request(
         }
     )
     candidate_records.sort(key=lambda row: row["arm"])
+    abstain_metrics = _atomic_abstain_metrics(
+        _evaluate_render(
+            rendered=base,
+            base=base,
+            erase=erase_render,
+            mask=mask,
+            observed=observed,
+            cross_rgb=cross_rgb,
+            background_depth_reference=base["background_depth"],
+            trainer=trainer,
+            device=device,
+        )
+    )
+    matched_arms = _matched_arm_records(
+        expected_arms=list(config["ablations"]["matched_repair_arms"]),
+        candidate_records=candidate_records,
+        failures=failures,
+        abstain_metrics=abstain_metrics,
+    )
     return {
         "request_id": request["request_id"],
         "frame": frame,
@@ -742,6 +832,7 @@ def _process_request(
         "candidate_count": len(candidate_records),
         "candidates": candidate_records,
         "candidate_failures": failures,
+        "matched_arms": matched_arms,
         "generated_model_executable": False,
         "development_content_read": True,
         "development_optimization_read": False,
