@@ -162,7 +162,10 @@ def resolve_scene_contracts(
 
 
 def bind_actor_registry(
-    scene_contract: Mapping[str, Any], registry: Mapping[str, Any]
+    scene_contract: Mapping[str, Any],
+    registry: Mapping[str, Any],
+    *,
+    require_high_available: bool = True,
 ) -> dict[str, Any]:
     actors = registry.get("actors", [])
     by_token = {
@@ -178,7 +181,11 @@ def bind_actor_registry(
         if row is None:
             raise V33ReplayError(f"actor registry 缺少 {role}：{token}")
         availability = str(row.get("availability"))
-        if role == "high_support" and availability != "available":
+        if (
+            role == "high_support"
+            and require_high_available
+            and availability != "available"
+        ):
             raise V33ReplayError(f"high actor 不可用：{token} / {availability}")
         if int(row.get("processed_true_instance_id", -1)) != int(
             actor["dataset_instance_id"]

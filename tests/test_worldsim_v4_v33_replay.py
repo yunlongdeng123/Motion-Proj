@@ -163,3 +163,32 @@ def test_bind_actor_registry_requires_available_high_actor(tmp_path: Path) -> No
         assert "high actor 不可用" in str(error)
     else:
         raise AssertionError("unavailable high actor 必须 fail closed")
+
+
+def test_bind_actor_registry_can_retain_unavailable_high_as_abstain(
+    tmp_path: Path,
+) -> None:
+    config, project = _fixture(tmp_path)
+    scene = resolve_scene_contracts(config, project_root=project)[0]
+    registry = {
+        "actors": [
+            {
+                "instance_token": "high-1",
+                "processed_true_instance_id": 11,
+                "availability": "unavailable_initialization_filter",
+                "rigid_model_index": None,
+            },
+            {
+                "instance_token": "boundary-1",
+                "processed_true_instance_id": 22,
+                "availability": "unavailable_initialization_filter",
+                "rigid_model_index": None,
+            },
+        ]
+    }
+
+    bound = bind_actor_registry(scene, registry, require_high_available=False)
+
+    assert bound["actors"]["high_support"]["availability"] == (
+        "unavailable_initialization_filter"
+    )

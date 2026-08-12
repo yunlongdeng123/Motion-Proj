@@ -49,6 +49,13 @@ def test_build_command_uses_d0_high_actor_and_exact_base(tmp_path: Path) -> None
     assert command[command.index("--selected-token") + 1] == "high-token"
     assert command[command.index("--scene-name") + 1] == "scene-0242"
     assert command[command.index("--checkpoint") + 1] == "/runs/base.pth"
+    assert "--allow-missing-selected" in command
+    requested = [
+        command[index + 1]
+        for index, value in enumerate(command)
+        if value == "--requested-token"
+    ]
+    assert requested == ["high-token", "boundary-token"]
 
 
 def test_registry_environment_keeps_frozen_cuda_visible(tmp_path: Path) -> None:

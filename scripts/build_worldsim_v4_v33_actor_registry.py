@@ -76,6 +76,11 @@ def build_command(
         str(scene_row["scene"]),
         "--selected-token",
         str(scene_row["actors"]["high_support"]["instance_token"]),
+        "--requested-token",
+        str(scene_row["actors"]["high_support"]["instance_token"]),
+        "--requested-token",
+        str(scene_row["actors"]["boundary_support"]["instance_token"]),
+        "--allow-missing-selected",
         "--output",
         str(output),
     ]
@@ -185,7 +190,13 @@ def run(
     if process.returncode != 0:
         raise V33ReplayError(f"actor registry child 失败：exit={process.returncode}")
     registry = json.loads(registry_path.read_text(encoding="utf-8"))
-    bound = bind_actor_registry(scene_row, registry)
+    bound = bind_actor_registry(
+        scene_row,
+        registry,
+        require_high_available=bool(
+            replay_config["gates"]["require_available_high_actor"]
+        ),
+    )
     bound.update(
         schema_version="worldsim_v4_v33_bound_scene_v1",
         actor_registry={
