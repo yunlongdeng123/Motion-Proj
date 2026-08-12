@@ -1,16 +1,27 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
+import json
+from pathlib import Path
 
 import numpy as np
+import pytest
 
 from scripts.run_worldsim_v4_m1 import (
+    M1RunError,
     candidate_probability_vectors,
     choose_calibration,
     choose_evidence_arm,
     choose_mask_threshold,
     gate_preview,
+    verified_smoke_result,
 )
+
+
+def _json(path: Path, payload: object) -> str:
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def test_calibration_selection_uses_brier_then_ece_then_boundary() -> None:
@@ -118,3 +129,52 @@ def test_mask_threshold_selection_respects_fn_gate_then_boundary() -> None:
         reference={"false_negative_semantic_mass": 0.1},
         false_negative_mass_max_degradation=0.01,
     ) == 0.1
+
+
+def test_registered_smoke_result_is_content_addressed(tmp_path: Path) -> None:
+    selected_thresholds = {
+        "v33_o1": 0.5,
+        "raw": 0.5,
+        "temperature": 0.5,
+        "beta": 0.15,
+    }
+    payloads = {
+        "status.json": {
+            "status": "done",
+            "phase": "two_scene_smoke",
+            "heldout_content_read": False,
+            "test_quality_read": False,
+        },
+        "summary.json": {
+            "scenes": ["scene-a", "scene-b"],
+            "project_git_head": "abc",
+            "selected_evidence_arm": "raw__risk_100",
+            "selected_calibration": "raw",
+            "selected_mask_thresholds": selected_thresholds,
+            "gate_preview": {"status": "pass"},
+        },
+        "metrics.json": {"gate_preview": {"status": "pass"}},
+        "calibration.json": {"selected": "raw"},
+        "manifest.json": {"status": "done"},
+    }
+    files = {
+        name: {"sha256": _json(tmp_path / name, payload)}
+        for name, payload in payloads.items()
+    }
+    config = {
+        "smoke_result": {
+            "status": "done",
+            "run": str(tmp_path),
+            "project_git_head": "abc",
+            "scenes": ["scene-a", "scene-b"],
+            "selected_evidence_arm": "raw__risk_100",
+            "selected_calibration": "raw",
+            "selected_mask_thresholds": selected_thresholds,
+            "gate_preview_status": "pass",
+            "files": files,
+        }
+    }
+    assert verified_smoke_result(config)["selected_evidence_arm"] == "raw__risk_100"
+    (tmp_path / "metrics.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(M1RunError, match="SHA drift"):
+        verified_smoke_result(config)

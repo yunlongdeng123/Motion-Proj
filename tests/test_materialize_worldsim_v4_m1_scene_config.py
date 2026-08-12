@@ -156,3 +156,92 @@ def test_materialize_preserves_registered_no_actor_abstention(tmp_path: Path) ->
     )
     assert payload["status"] == "abstain"
     assert payload["reason"] == "ABSTAIN_NO_ACTOR"
+
+
+def test_materialize_fail_closed_legacy_split_leak_abstention(tmp_path: Path) -> None:
+    train_manifest = tmp_path / "train_masks.json"
+    mask_manifest = tmp_path / "development_masks.json"
+    audit_status = tmp_path / "audit_status.json"
+    legacy_config = tmp_path / "legacy.yaml"
+    matrix_path = tmp_path / "matrix.yaml"
+    config_path = tmp_path / "m1.yaml"
+    _json(train_manifest, {"masks": [{"frame": 5}, {"frame": 6}]})
+    _json(
+        mask_manifest,
+        {
+            "evaluation_partition": "development",
+            "evaluation_frames": [5],
+            "optimization_forbidden": True,
+        },
+    )
+    _json(
+        audit_status,
+        {"status": "failed", "evaluation_partition": "development"},
+    )
+    _yaml(
+        legacy_config,
+        {
+            "scene": {"name": "scene-a"},
+            "inputs": {
+                "train_mask_manifest": str(train_manifest),
+                "train_mask_manifest_sha256": sha256_file(train_manifest),
+            },
+        },
+    )
+    _yaml(
+        matrix_path,
+        {
+            "baselines": {
+                "v33_frozen": {
+                    "implementation_commit": "frozen",
+                    "legacy_executable_scenes": ["scene-a"],
+                    "executable_scene_chains": {},
+                }
+            }
+        },
+    )
+    _yaml(
+        config_path,
+        {
+            "schema_version": "worldsim_v4_m1_evidence_v1",
+            "task_id": "WS-V4-M1-EVIDENCE-FIELD-01",
+            "protocol": {
+                "development_scenes": ["scene-a"],
+                "abstain_no_actor_scenes": [],
+                "development_abstentions": {
+                    "scene-a": {
+                        "reason": "ABSTAIN_LEGACY_SPLIT_LEAK",
+                        "source": "legacy",
+                        "legacy_config": {
+                            "path": str(legacy_config),
+                            "sha256": sha256_file(legacy_config),
+                        },
+                        "development_target_audit": {
+                            "run": str(tmp_path),
+                            "status": {
+                                "path": str(audit_status),
+                                "sha256": sha256_file(audit_status),
+                            },
+                            "mask_manifest": {
+                                "path": str(mask_manifest),
+                                "sha256": sha256_file(mask_manifest),
+                            },
+                        },
+                    }
+                },
+                "test_quality_read": False,
+            },
+            "inputs": {"baseline_matrix": "matrix.yaml"},
+            "evidence": {},
+            "calibration": {},
+            "evaluation": {},
+            "immutability": {},
+            "gates": {},
+        },
+    )
+    payload = materialize_scene_config(
+        project_root=tmp_path, config_path=config_path, scene="scene-a"
+    )
+    assert payload["status"] == "abstain"
+    assert payload["reason"] == "ABSTAIN_LEGACY_SPLIT_LEAK"
+    assert payload["v33_legacy_abstention"]["overlap_frames"] == [5]

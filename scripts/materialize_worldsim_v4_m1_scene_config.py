@@ -68,6 +68,87 @@ def _copy_parameters(config: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _materialize_legacy_abstention(
+    *,
+    config: Mapping[str, Any],
+    matrix: Mapping[str, Any],
+    scene: str,
+    common: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    specification = config["protocol"].get("development_abstentions", {}).get(scene)
+    if specification is None:
+        return None
+    frozen = matrix["baselines"]["v33_frozen"]
+    if scene not in frozen.get("legacy_executable_scenes", []):
+        raise M1MaterializationError("legacy abstention is not registered by B0")
+    if scene in frozen.get("executable_scene_chains", {}):
+        raise M1MaterializationError("legacy abstention unexpectedly has a scene chain")
+    if specification.get("reason") != "ABSTAIN_LEGACY_SPLIT_LEAK":
+        raise M1MaterializationError("legacy abstention reason drift")
+
+    legacy_config_binding = _verified(
+        specification["legacy_config"]["path"],
+        specification["legacy_config"]["sha256"],
+        label="legacy V3.3 config",
+    )
+    legacy_config = _load_yaml(Path(legacy_config_binding["path"]))
+    if legacy_config.get("scene", {}).get("name") != scene:
+        raise M1MaterializationError("legacy V3.3 config scene drift")
+    audit = specification["development_target_audit"]
+    status_binding = _verified(
+        audit["status"]["path"], audit["status"]["sha256"], label="legacy split audit status"
+    )
+    status = _load_json(status_binding["path"])
+    if (
+        status.get("status") != "failed"
+        or status.get("evaluation_partition") != "development"
+    ):
+        raise M1MaterializationError("legacy split audit did not fail on development")
+    mask_binding = _verified(
+        audit["mask_manifest"]["path"],
+        audit["mask_manifest"]["sha256"],
+        label="legacy development mask manifest",
+    )
+    masks = _load_json(mask_binding["path"])
+    if (
+        masks.get("evaluation_partition") != "development"
+        or masks.get("optimization_forbidden") is not True
+    ):
+        raise M1MaterializationError("legacy development mask contract drift")
+    train_binding = _verified(
+        legacy_config["inputs"]["train_mask_manifest"],
+        legacy_config["inputs"]["train_mask_manifest_sha256"],
+        label="legacy train mask manifest",
+    )
+    train = _load_json(train_binding["path"])
+    development_frames = {int(value) for value in masks["evaluation_frames"]}
+    overlap = sorted(
+        {
+            int(row["frame"])
+            for row in train.get("masks", [])
+            if int(row["frame"]) in development_frames
+        }
+    )
+    if not overlap:
+        raise M1MaterializationError("legacy split-leak abstention lacks observed overlap")
+    return {
+        **common,
+        "status": "abstain",
+        "reason": specification["reason"],
+        "actors": {},
+        "v33_legacy_abstention": {
+            "source": specification["source"],
+            "algorithm_commit": frozen["implementation_commit"],
+            "legacy_config": legacy_config_binding,
+            "audit_run": audit["run"],
+            "audit_status": status_binding,
+            "development_mask_manifest": mask_binding,
+            "train_mask_manifest": train_binding,
+            "overlap_frames": overlap,
+        },
+    }
+
+
 def materialize_scene_config(
     *, project_root: Path, config_path: Path, scene: str
 ) -> dict[str, Any]:
@@ -82,19 +163,9 @@ def materialize_scene_config(
 
     matrix_path = project_root / config["inputs"]["baseline_matrix"]
     matrix = _load_yaml(matrix_path)
-    chains = matrix["baselines"]["v33_frozen"]["executable_scene_chains"]
-    if scene not in chains:
-        raise M1MaterializationError(f"scene lacks a registered V3.3 chain: {scene}")
-    registration = chains[scene]
-    chain_file = registration["files"]["scene_chain.json"]
-    chain_binding = _verified(
-        chain_file["path"], chain_file["sha256"], label="V3.3 scene chain"
-    )
-    chain = _load_json(chain_binding["path"])
-    if chain.get("scene") != scene or chain.get("test_quality_read") is not False:
-        raise M1MaterializationError("V3.3 scene-chain identity/test contract drift")
-    instance_stage = chain["stages"]["instance_field"]
-    common = {
+    frozen = matrix["baselines"]["v33_frozen"]
+    chains = frozen["executable_scene_chains"]
+    base_common = {
         "schema_version": "worldsim_v4_m1_scene_v1",
         "task_id": config["task_id"],
         "scene": scene,
@@ -107,12 +178,31 @@ def materialize_scene_config(
             "path": str(matrix_path),
             "sha256": sha256_file(matrix_path),
         },
-        "v33_scene_chain": chain_binding,
-        "v33_algorithm_commit": registration["algorithm_commit"],
         "development_content_read": False,
         "heldout_content_read": False,
         "test_quality_read": False,
         **_copy_parameters(config),
+    }
+    legacy = _materialize_legacy_abstention(
+        config=config, matrix=matrix, scene=scene, common=base_common
+    )
+    if legacy is not None:
+        return legacy
+    if scene not in chains:
+        raise M1MaterializationError(f"scene lacks a registered V3.3 chain: {scene}")
+    registration = chains[scene]
+    chain_file = registration["files"]["scene_chain.json"]
+    chain_binding = _verified(
+        chain_file["path"], chain_file["sha256"], label="V3.3 scene chain"
+    )
+    chain = _load_json(chain_binding["path"])
+    if chain.get("scene") != scene or chain.get("test_quality_read") is not False:
+        raise M1MaterializationError("V3.3 scene-chain identity/test contract drift")
+    instance_stage = chain["stages"]["instance_field"]
+    common = {
+        **base_common,
+        "v33_scene_chain": chain_binding,
+        "v33_algorithm_commit": registration["algorithm_commit"],
     }
     if instance_stage["status"] == "abstain":
         if scene not in protocol["abstain_no_actor_scenes"]:

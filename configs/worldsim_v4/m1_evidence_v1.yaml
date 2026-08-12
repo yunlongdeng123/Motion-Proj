@@ -14,6 +14,21 @@ protocol:
   validation_scenes:
     [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
   abstain_no_actor_scenes: [scene-0242, scene-0255, scene-0048]
+  development_abstentions:
+    scene-0230:
+      reason: ABSTAIN_LEGACY_SPLIT_LEAK
+      source: frozen_v33_legacy_scene
+      legacy_config:
+        path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260810T183154Z__s1-instance-field-formal-s0-r9/artifacts/source_snapshot/s1_instance_field_v1.yaml
+        sha256: 9afa48aa1ff5ebbb290da564e901f25c48ac1f6ee16f97379f936457acdc3150
+      development_target_audit:
+        run: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260812T120856Z__s1-scene0230-development-targets-s0-r10
+        status:
+          path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260812T120856Z__s1-scene0230-development-targets-s0-r10/status.json
+          sha256: c0173fd9f867b184c8fb4968345addfce8bb62330b8e063fd19d6e3d37076226
+        mask_manifest:
+          path: /root/autodl-tmp/runs/worldsim_v33/WS-V33-S1-OBJECT-AWARE-GS-01/20260812T120856Z__s1-scene0230-development-targets-s0-r10/artifacts/masks/mask_manifest.json
+          sha256: 9b81162b818d5cd504b25c57d6b1040f932208477e941b228e8a067fa4e8c432
   calibration_fit_split: development
   calibration_fit_reuse_for_scoring: true
   calibration_fit_reuse_note: smoke_and_development_model_selection_only_validation_is_read_only
@@ -23,8 +38,24 @@ inputs:
   baseline_matrix: configs/worldsim_v4/baseline_matrix_v1.yaml
   v33_replay_config: configs/worldsim_v4/v33_replay_v1.yaml
   required_v33_arm: O1_dual_opacity
-  require_v33_scene_chain: true
+  require_v33_scene_chain_or_registered_legacy_abstention: true
   require_source_hashes_exact: true
+
+smoke_result:
+  status: done
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T115302Z__m1-smoke2-risk-s0-r121
+  project_git_head: 4905123c71cf3df01463e3195d7debbb10ea8a3d
+  scenes: [scene-0994, scene-0139]
+  selected_evidence_arm: raw__risk_100
+  selected_calibration: raw
+  selected_mask_thresholds: {v33_o1: 0.5, raw: 0.5, temperature: 0.5, beta: 0.15}
+  gate_preview_status: pass
+  files:
+    status.json: {sha256: 20ddf900ac288d50fab69a41bc51610953db334a231e89f94ede5f793221ac9f}
+    summary.json: {sha256: 045002080f6cf851764f08ca593904cd7d9f401dbf25826a9f040ca3961d671d}
+    metrics.json: {sha256: b58fe22a4595a78cb947cd5a4cff5134347a589a46082c3db96f88600f869d93}
+    calibration.json: {sha256: d2b02187108c0823880a1c7ba582934890df67422deeeb62c60ae0b59b1ef193}
+    manifest.json: {sha256: e797deea6ea680b9a3113e8cf6b1fc80fbe0abbddd453ac336139e1896960439}
 
 evidence:
   prior:

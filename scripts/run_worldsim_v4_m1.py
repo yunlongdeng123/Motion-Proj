@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the two-scene WorldSim V4 M1 evidence-field smoke."""
+"""Run WorldSim V4 M1 smoke or six-scene development selection."""
 
 from __future__ import annotations
 
@@ -131,6 +131,61 @@ def _verified(binding: Mapping[str, Any], *, label: str) -> Path:
             f"{label} SHA drift: expected={binding['sha256']} actual={actual}"
         )
     return path
+
+
+def verified_smoke_result(config: Mapping[str, Any]) -> dict[str, Any]:
+    registration = config.get("smoke_result")
+    if not isinstance(registration, Mapping) or registration.get("status") != "done":
+        raise M1RunError("development selection requires a registered smoke result")
+    run_dir = Path(registration["run"])
+    verified = {}
+    for name, binding in registration["files"].items():
+        verified[name] = {
+            "path": str(
+                _verified(
+                    {"path": str(run_dir / name), "sha256": binding["sha256"]},
+                    label=f"registered smoke/{name}",
+                )
+            ),
+            "sha256": binding["sha256"],
+        }
+    status = load_json(Path(verified["status.json"]["path"]))
+    summary = load_json(Path(verified["summary.json"]["path"]))
+    metrics = load_json(Path(verified["metrics.json"]["path"]))
+    calibration = load_json(Path(verified["calibration.json"]["path"]))
+    if (
+        status.get("status") != "done"
+        or status.get("phase") != "two_scene_smoke"
+        or status.get("heldout_content_read") is not False
+        or status.get("test_quality_read") is not False
+    ):
+        raise M1RunError("registered smoke status contract drift")
+    if (
+        summary.get("scenes") != registration.get("scenes")
+        or summary.get("project_git_head") != registration.get("project_git_head")
+        or summary.get("selected_evidence_arm")
+        != registration.get("selected_evidence_arm")
+        or summary.get("selected_calibration")
+        != registration.get("selected_calibration")
+        or summary.get("selected_mask_thresholds")
+        != registration.get("selected_mask_thresholds")
+        or summary.get("gate_preview", {}).get("status")
+        != registration.get("gate_preview_status")
+    ):
+        raise M1RunError("registered smoke summary selection drift")
+    if (
+        metrics.get("gate_preview", {}).get("status") != "pass"
+        or calibration.get("selected") != registration.get("selected_calibration")
+    ):
+        raise M1RunError("registered smoke metrics/calibration drift")
+    return {
+        "run": str(run_dir),
+        "project_git_head": registration["project_git_head"],
+        "selected_evidence_arm": registration["selected_evidence_arm"],
+        "selected_calibration": registration["selected_calibration"],
+        "selected_mask_thresholds": registration["selected_mask_thresholds"],
+        "files": verified,
+    }
 
 
 def accepted_evaluation_rows(scene_config: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -479,6 +534,7 @@ def choose_mask_threshold(
 def gate_preview(
     *, reference: Mapping[str, float], candidate: Mapping[str, float],
     gates: Mapping[str, Any], base_rgb_exact: bool,
+    scope: str = "two_scene_development_smoke_preview_not_frozen_m1_decision",
 ) -> dict[str, Any]:
     boundary_delta = candidate["boundary_f1"] - reference["boundary_f1"]
     fn_delta = (
@@ -506,49 +562,76 @@ def gate_preview(
             "ece": float(ece_delta),
             "brier": float(brier_delta),
         },
-        "scope": "two_scene_development_smoke_preview_not_frozen_m1_decision",
+        "scope": scope,
     }
 
 
 def run(
-    *, project_root: Path, run_dir: Path, scene_config_paths: Sequence[Path]
+    *,
+    project_root: Path,
+    run_dir: Path,
+    scene_config_paths: Sequence[Path],
+    phase: str = "smoke",
 ) -> dict[str, Any]:
     if run_dir.exists():
         raise FileExistsError(f"run directory exists: {run_dir}")
     if RUN_ROOT.resolve() not in run_dir.resolve().parents:
         raise M1RunError(f"M1 run must be under {RUN_ROOT}")
-    if len(scene_config_paths) != 2:
-        raise M1RunError("M1 smoke requires exactly two scene configs")
+    if phase not in {"smoke", "development"}:
+        raise M1RunError(f"unsupported M1 phase: {phase}")
     git_head = subprocess.check_output(
         ["git", "-C", str(project_root), "rev-parse", "HEAD"], text=True
     ).strip()
     if subprocess.check_output(
         ["git", "-C", str(project_root), "status", "--porcelain"], text=True
     ).strip():
-        raise M1RunError("formal M1 smoke requires a clean project")
+        raise M1RunError("formal M1 run requires a clean project")
     if gpu_compute_processes():
         raise M1RunError("GPU preflight is not empty")
     configs = [load_yaml(path) for path in scene_config_paths]
-    if any(config.get("status") != "ready" for config in configs):
-        raise M1RunError("M1 smoke scene config is not ready")
+    allowed_statuses = {"ready"} if phase == "smoke" else {"ready", "abstain"}
+    if any(config.get("status") not in allowed_statuses for config in configs):
+        raise M1RunError("M1 scene config has a non-terminal/non-eligible status")
     scenes = [config["scene"] for config in configs]
     source_m1_config = _verified(configs[0]["source_config"], label="M1 source config")
-    expected = list(load_yaml(source_m1_config)["protocol"]["smoke_scenes"])
-    if scenes != expected or len(set(scenes)) != 2:
-        raise M1RunError(f"M1 smoke scene order/set drift: expected={expected} actual={scenes}")
+    source_config = load_yaml(source_m1_config)
+    expected_key = "smoke_scenes" if phase == "smoke" else "development_scenes"
+    expected = list(source_config["protocol"][expected_key])
+    if scenes != expected or len(set(scenes)) != len(expected):
+        raise M1RunError(
+            f"M1 {phase} scene order/set drift: expected={expected} actual={scenes}"
+        )
+    if any(
+        Path(config["source_config"]["path"]).resolve() != source_m1_config.resolve()
+        or config["source_config"]["sha256"] != configs[0]["source_config"]["sha256"]
+        for config in configs
+    ):
+        raise M1RunError("M1 scene configs do not share one frozen source config")
     if any(
         config.get(name) is not False
         for config in configs
         for name in ("development_content_read", "heldout_content_read", "test_quality_read")
     ):
         raise M1RunError("M1 scene config provenance is not sealed")
+    ready_configs = [config for config in configs if config["status"] == "ready"]
+    if len(ready_configs) < 2:
+        raise M1RunError("M1 run requires at least two evaluable development scenes")
     if any(
         config["evaluation"].get("candidate_policy")
         != "development_uncertainty_penalty_search"
         or not isinstance(config["evaluation"].get("candidate_arms"), Mapping)
-        for config in configs
+        for config in ready_configs
     ):
         raise M1RunError("M1 render-candidate policy drift")
+    smoke_prerequisite = (
+        verified_smoke_result(source_config) if phase == "development" else None
+    )
+    phase_name = "two_scene_smoke" if phase == "smoke" else "six_scene_development"
+    gate_scope = (
+        "two_scene_development_smoke_preview_not_frozen_m1_decision"
+        if phase == "smoke"
+        else "six_scene_development_freeze_candidate"
+    )
 
     started = time.monotonic()
     run_dir.mkdir(parents=True)
@@ -566,7 +649,7 @@ def run(
         "schema_version": "worldsim_v4_m1_status_v1",
         "task_id": TASK_ID,
         "status": "running",
-        "phase": "two_scene_smoke",
+        "phase": phase_name,
         "scenes": scenes,
         "project_git_head": git_head,
         "development_content_read": False,
@@ -579,12 +662,20 @@ def run(
     torch.cuda.set_device(device)
     torch.cuda.reset_peak_memory_stats(device)
     samples: list[dict[str, Any]] = []
-    scene_records = []
+    scene_records = [
+        {
+            "scene": config["scene"],
+            "status": "abstain",
+            "reason": config["reason"],
+        }
+        for config in configs
+        if config["status"] == "abstain"
+    ]
     base_rgb_checks = []
     checkpoint_checks = []
     temporal_records = []
 
-    for scene_config in configs:
+    for scene_config in ready_configs:
         from motion_proj.worldsim_v33.instance_field import load_instance_field
         from scripts.lift_worldsim_v32_semantics import build_runtime
 
@@ -709,6 +800,7 @@ def run(
         scene_records.append(
             {
                 "scene": scene,
+                "status": "done",
                 "evaluation_view_count": len(rows),
                 "states": {
                     role: {
@@ -736,18 +828,18 @@ def run(
         torch.cuda.empty_cache()
 
     arm_methods = [
-        f"raw__{name}" for name in configs[0]["evaluation"]["candidate_arms"]
+        f"raw__{name}" for name in ready_configs[0]["evaluation"]["candidate_arms"]
     ]
     arm_per_scene, arm_scene_mean = aggregate_methods(
         samples,
         methods=["v33_o1", *arm_methods],
-        evaluation=configs[0]["evaluation"],
+        evaluation=ready_configs[0]["evaluation"],
     )
     selected_arm = choose_evidence_arm(
         arm_scene_mean,
         arm_methods,
         false_negative_mass_max_degradation=float(
-            configs[0]["evaluation"]["candidate_arm_fn_mass_max_degradation"]
+            ready_configs[0]["evaluation"]["candidate_arm_fn_mass_max_degradation"]
         ),
     )
     for sample in samples:
@@ -756,7 +848,7 @@ def run(
         [sample["probabilities"]["raw"].reshape(-1) for sample in samples]
     )
     pooled_target = np.concatenate([sample["target"].reshape(-1) for sample in samples])
-    calibration_config = configs[0]["calibration"]
+    calibration_config = ready_configs[0]["calibration"]
     calibrators = {
         "raw": RawCalibrator(),
         "temperature": fit_temperature(pooled_probability, pooled_target),
@@ -778,18 +870,18 @@ def run(
     _, reference_scene_mean = aggregate_methods(
         samples,
         methods=["v33_o1"],
-        evaluation=configs[0]["evaluation"],
+        evaluation=ready_configs[0]["evaluation"],
         thresholds={
-            "v33_o1": float(configs[0]["evaluation"]["mask_threshold"])
+            "v33_o1": float(ready_configs[0]["evaluation"]["mask_threshold"])
         },
     )
     reference_metrics = reference_scene_mean["v33_o1"]
     threshold_candidates = [
         float(value)
-        for value in configs[0]["evaluation"]["mask_threshold_candidates"]
+        for value in ready_configs[0]["evaluation"]["mask_threshold_candidates"]
     ]
     method_thresholds = {
-        "v33_o1": float(configs[0]["evaluation"]["mask_threshold"])
+        "v33_o1": float(ready_configs[0]["evaluation"]["mask_threshold"])
     }
     threshold_search = {}
     for method in ("raw", "temperature", "beta"):
@@ -798,7 +890,7 @@ def run(
             _, candidate_scene_mean = aggregate_methods(
                 samples,
                 methods=[method],
-                evaluation=configs[0]["evaluation"],
+                evaluation=ready_configs[0]["evaluation"],
                 thresholds={method: threshold},
             )
             rows[threshold] = candidate_scene_mean[method]
@@ -806,7 +898,7 @@ def run(
             rows,
             reference=reference_metrics,
             false_negative_mass_max_degradation=float(
-                configs[0]["evaluation"]["threshold_fn_mass_max_degradation"]
+                ready_configs[0]["evaluation"]["threshold_fn_mass_max_degradation"]
             ),
         )
         method_thresholds[method] = selected_threshold
@@ -817,7 +909,7 @@ def run(
     per_scene, scene_mean = aggregate_methods(
         samples,
         methods=methods,
-        evaluation=configs[0]["evaluation"],
+        evaluation=ready_configs[0]["evaluation"],
         thresholds=method_thresholds,
     )
     selected_calibration = choose_calibration(
@@ -838,8 +930,9 @@ def run(
     preview = gate_preview(
         reference=scene_mean["v33_o1"],
         candidate=scene_mean[selected_calibration],
-        gates=configs[0]["gates"],
+        gates=ready_configs[0]["gates"],
         base_rgb_exact=rgb_exact and checkpoint_exact,
+        scope=gate_scope,
     )
     for sample in samples:
         stem = f"{sample['role']}__f{sample['frame']:03d}__c{sample['camera_id']}"
@@ -860,9 +953,10 @@ def run(
     calibration_payload = {
         "schema_version": "worldsim_v4_m1_calibration_v1",
         "fit_partition": "development",
-        "fit_scene_count": len(configs),
+        "fit_scene_count": len(ready_configs),
         "fit_pixel_count": int(pooled_target.size),
-        "development_fit_reused_for_smoke_scoring": True,
+        "development_fit_reused_for_smoke_scoring": phase == "smoke",
+        "selection_phase": phase_name,
         "candidates": {name: calibrator.to_dict() for name, calibrator in calibrators.items()},
         "selected": selected_calibration,
     }
@@ -881,14 +975,26 @@ def run(
             "scene_mean": arm_scene_mean,
         },
         "gate_preview": preview,
+        "cohort_accounting": {
+            "required_scene_count": len(configs),
+            "evaluable_scene_count": len(ready_configs),
+            "abstain_scene_count": len(configs) - len(ready_configs),
+            "evaluable_fraction": len(ready_configs) / len(configs),
+            "quality_metric_denominator": "evaluable_scenes_only",
+            "coverage_denominator": "all_required_scenes",
+        },
     }
     atomic_json(run_dir / "metrics.json", metrics_payload)
     summary = {
         "schema_version": "worldsim_v4_m1_summary_v1",
         "task_id": TASK_ID,
         "status": "done",
-        "phase": "two_scene_smoke",
+        "phase": phase_name,
         "scenes": scenes,
+        "evaluable_scenes": [config["scene"] for config in ready_configs],
+        "abstain_scenes": [
+            config["scene"] for config in configs if config["status"] == "abstain"
+        ],
         "project_git_head": git_head,
         "scene_records": scene_records,
         "selected_calibration": selected_calibration,
@@ -896,6 +1002,8 @@ def run(
         "selected_mask_threshold": method_thresholds[selected_calibration],
         "selected_mask_thresholds": method_thresholds,
         "gate_preview": preview,
+        "cohort_accounting": metrics_payload["cohort_accounting"],
+        "smoke_prerequisite": smoke_prerequisite,
         "base_rgb_render_checks": base_rgb_checks,
         "checkpoint_checks": checkpoint_checks,
         "temporal_memory_checks": temporal_records,
@@ -945,12 +1053,14 @@ def main() -> None:
     parser.add_argument("--project-root", type=Path, default=PROJECT_ROOT)
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--scene-config", type=Path, action="append", required=True)
+    parser.add_argument("--phase", choices=("smoke", "development"), default="smoke")
     args = parser.parse_args()
     try:
         summary = run(
             project_root=args.project_root.resolve(),
             run_dir=args.run_dir.resolve(),
             scene_config_paths=[path.resolve() for path in args.scene_config],
+            phase=args.phase,
         )
     except Exception as error:
         if args.run_dir.exists():
