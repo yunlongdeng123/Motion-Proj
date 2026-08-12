@@ -1,6 +1,6 @@
 schema_version: worldsim_v4_m1_evidence_v1
 task_id: WS-V4-M1-EVIDENCE-FIELD-01
-status: development_frozen
+status: rejected
 created_at: "2026-08-12"
 
 protocol:
@@ -96,6 +96,41 @@ development_freeze_audit:
     status.json: {sha256: a0ee772324b7b4441383b3928a10bae3a10ca6b133e08f3863d46601ac974b4d}
     summary.json: {sha256: 902b95ff9c208b60773a3a475e9e476610722786d5f9a28ceda3468ec215aac6}
     manifest.json: {sha256: f316f286c8ed88cc2d0e3d6d0365fd041e531485ef0f59a40e0999f8dc8f3bb8}
+
+validation_result:
+  status: done
+  gate_status: reject
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+  project_git_head: 2b8e026aaa3307e413316fd2fe77c1309e13f3d4
+  scenes: [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
+  evaluable_scenes: [scene-0071, scene-0317, scene-0450]
+  abstain_scenes: [scene-1089, scene-0862, scene-1012]
+  required_scene_count: 6
+  evaluable_scene_count: 3
+  abstain_scene_count: 3
+  required_directional_support_scene_count: 4
+  directional_support_scene_count: 0
+  mean_deltas:
+    boundary_f1: -0.06646233458990042
+    false_negative_semantic_mass: 0.008374126826829587
+    ece: 0.002497249972357861
+    brier: 0.0024487361934127025
+  base_rgb_exact: true
+  checkpoint_exact: true
+  arm_search_performed: false
+  calibration_fit_performed: false
+  threshold_search_performed: false
+  files:
+    status.json: {sha256: a78b594493e970ba17dcece3d435a3321a71362becbb9afac4655af82eb1804a}
+    summary.json: {sha256: 57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309}
+    metrics.json: {sha256: 0ae07b58822d7be37e5220a781d951725e802404ce52881c1281bb7974e1d504}
+    manifest.json: {sha256: 43af8f881667da578ebd567bca2c9dd17492fc270d8be1a5cfe1d849af05ede5}
+
+rejection_policy:
+  m1_feature_expansion_authorized: false
+  m2_fallback_authorized: true
+  m2_fallback_scope: evidence_routed_delta_compiler
+  test_quality_read: false
 
 evidence:
   prior:

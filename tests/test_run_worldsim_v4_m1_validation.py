@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import pytest
 
-from scripts.run_worldsim_v4_m1_validation import validation_confirmation_gate
+from scripts.run_worldsim_v4_m1 import M1RunError
+from scripts.run_worldsim_v4_m1_validation import (
+    validation_confirmation_gate,
+    verify_runtime_python,
+)
 
 
 def method(boundary: float, fn: float, ece: float, brier: float) -> dict:
@@ -127,3 +131,30 @@ def test_validation_gate_rejects_base_mutation_even_with_quality_gain() -> None:
     )
     assert result["status"] == "reject"
     assert result["checks"]["base_rgb_and_checkpoint_exact"] is False
+
+
+def test_validation_runtime_requires_one_frozen_drivestudio_python(tmp_path) -> None:
+    runtime = tmp_path / "env" / "bin" / "python"
+    configs = [
+        {"status": "ready", "runtime": {"drivestudio_python": str(runtime)}},
+        {"status": "abstain"},
+        {"status": "ready", "runtime": {"drivestudio_python": str(runtime)}},
+    ]
+    assert verify_runtime_python(configs, executable=runtime) == str(runtime.resolve())
+    with pytest.raises(M1RunError, match="frozen DriveStudio Python"):
+        verify_runtime_python(configs, executable=tmp_path / "other-python")
+
+
+def test_validation_runtime_rejects_scene_drift(tmp_path) -> None:
+    configs = [
+        {
+            "status": "ready",
+            "runtime": {"drivestudio_python": str(tmp_path / "python-a")},
+        },
+        {
+            "status": "ready",
+            "runtime": {"drivestudio_python": str(tmp_path / "python-b")},
+        },
+    ]
+    with pytest.raises(M1RunError, match="runtime Python drift"):
+        verify_runtime_python(configs, executable=tmp_path / "python-a")

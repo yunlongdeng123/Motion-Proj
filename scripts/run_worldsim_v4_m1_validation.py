@@ -194,6 +194,26 @@ def validation_confirmation_gate(
     }
 
 
+def verify_runtime_python(
+    configs: Sequence[Mapping[str, Any]], *, executable: str | Path
+) -> str:
+    ready = [config for config in configs if config.get("status") == "ready"]
+    expected = {
+        Path(str(config["runtime"]["drivestudio_python"])).resolve()
+        for config in ready
+    }
+    if len(expected) != 1:
+        raise M1RunError(f"validation runtime Python drift: {sorted(map(str, expected))}")
+    expected_python = next(iter(expected))
+    actual_python = Path(executable).resolve()
+    if actual_python != expected_python:
+        raise M1RunError(
+            "M1 validation must run with the frozen DriveStudio Python: "
+            f"expected={expected_python} actual={actual_python}"
+        )
+    return str(expected_python)
+
+
 def run(
     *,
     project_root: Path,
@@ -248,6 +268,7 @@ def run(
     ready_configs = [config for config in configs if config["status"] == "ready"]
     if not ready_configs:
         raise M1RunError("validation has no evaluable scene")
+    runtime_python = verify_runtime_python(configs, executable=sys.executable)
     for config in ready_configs:
         arms = config["evaluation"].get("candidate_arms", {})
         if selected_arm.removeprefix("raw__") not in arms:
@@ -273,6 +294,7 @@ def run(
         "scenes": scenes,
         "project_git_head": git_head,
         "development_frozen_selection_read": True,
+        "runtime_python": runtime_python,
         "validation_content_read": False,
         "heldout_content_read": False,
         "test_quality_read": False,

@@ -5,7 +5,14 @@ created_at: "2026-08-12"
 
 execution_gate:
   requires_m1_validation_done: true
-  current_state: locked_waiting_for_m1_validation
+  current_state: unlocked_m1_validation_completed_rejected_fallback
+  m1_task_status: rejected
+  m1_validation_status: done
+  m1_confirmation_status: reject
+  fallback_scope: evidence_routed_delta_compiler
+  m1_feature_expansion_authorized: false
+  m1_validation_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+  m1_validation_summary_sha256: 57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309
   dataset: nuScenes
   tuning_split: development
   validation_read_only: true
