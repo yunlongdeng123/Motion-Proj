@@ -5,12 +5,12 @@
 `WS-V4-B0-MATCHED-BASELINES-01` 保持 `running`。统一评测、scene-level 统计、工程指标、6 个 development
 scenes 的 DriveStudio 输入与 sky masks 已经落地。2026-08-12 复核发现：早先 r17/r20/r22/r24/r26/r28
 使用的是 `test_image_stride=10`，不能满足冻结的 `sample_index mod 5` 三分区合同；这些 run 只保留为
-native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 3/6 / AD-GS 1/6`。
+native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V3.3 1/6 / StreetGS 6/6 / AD-GS 1/6`。
 
 | baseline | 当前 executable scenes | 需要 | 事实边界 |
 |---|---:|---:|---|
 | V3.3 frozen | 1 | 6 | scene-0230 canonical release 与其外部 base 仍可解析；其余五 scene 未物化完整链 |
-| Native StreetGS | 3 | 6 | scene-0230/0242/0255 strict mod5 30k r32/r46/r48 可执行；旧 stride=10 runs 只作协议不匹配 provenance |
+| Native StreetGS | 6 | 6 | 六场景 strict mod5 30k r32/r46/r48/r50/r52/r54 均可执行；旧 stride=10 runs 只作协议不匹配 provenance |
 | AD-GS | 1 | 6 | scene-0230 strict train-only 60k r44 已由内容寻址审计登记；其余五 scene 尚待重建 |
 
 ## 冻结协议
@@ -119,6 +119,19 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
   fingerprint/manifest/summary=`c5c3ebf4...163f1 / 7325ab82...b4a31 / 7e3636b6...73834`；
 - registry 提交=`af8efb9`；r49=`20260811T222138Z__baseline-streetgs-scene0255-registration-s0-r49` 得到 coverage=
   `StreetGS/V3.3/AD-GS=3/1/1`，inventory/fingerprint SHA=`79b6b1d0...c86c85f / bd822e61...9641a`，project clean。
+- scene-0048 strict r50=`20260811T222252Z__streetgs-scene0048-matched-formal30k-s0-r50`，30k done，wall=
+  `2,179.8120 s`；checkpoint=`332,725,750 bytes / 70d02a0b...b00d2`，Background/Rigid=`1,030,993/15,717`，
+  peak GPU/cgroup=`23,694 MiB / 24,690,905,088 bytes`，OOM/kill=`0/0`；r51 coverage=`4/1/1`；
+- scene-0994 strict r52=`20260811T230118Z__streetgs-scene0994-matched-formal30k-s0-r52`，30k done，wall=
+  `1,806.3743 s`；checkpoint=`279,185,462 bytes / 3e2b2534...3aea`，Background/Rigid=`819,952/932`，
+  peak GPU/cgroup=`20,970 MiB / 25,157,746,688 bytes`，181 个资源样本事件全 `0`；r53 coverage=`5/1/1`；
+- scene-0139 strict r54=`20260811T233650Z__streetgs-scene0139-matched-formal30k-s0-r54`，30k done，wall=
+  `2,069.0543 s`；checkpoint=`314,307,830 bytes / 4fff4452...8dfe`，Background/Rigid=`962,074/7,219`，
+  peak GPU/cgroup=`23,056 MiB / 26,057,687,040 bytes`，207 个资源样本事件全 `0`；六场均无 test/full render；
+- registry 提交=`a4ee23a`；r55=`20260812T001330Z__baseline-streetgs-sixscene-registration-s0-r55` 在 clean HEAD
+  得到 coverage=`StreetGS/V3.3/AD-GS=6/1/1`，inventory/fingerprint SHA=
+  `8bc6259631206d8d75b2ad5199a36fe81ab23265fc267a5b033483c18f1be3a1 /
+  4f12c1d2a11b332131a7483b5b065c09aacaba5e3f14149193973073f2f32372`；B0 仍为 running。
 
 ## AD-GS exact source、权重与环境恢复
 
@@ -181,6 +194,6 @@ native/provenance，不再计入 matched coverage。当前严格 coverage 为 `V
 
 ## 下一动作
 
-依次完成 StreetGS 其余三场 strict mod5 重跑，再补齐 AD-GS 与 V3.3 其余五场景 same-split。
+StreetGS strict mod5 六场景已齐；下一步串行补齐 AD-GS 与 V3.3 其余五场景 same-split。
 B0 只有在三种方法均达到 6/6 且统一 evaluator 生成完整 scene rows 后才可
 `done`，M1 在此之前不启动。

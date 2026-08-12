@@ -96,6 +96,10 @@
   `point_cloud/deform/env` 三文件 bytes/SHA、fingerprint/manifest、source HEAD、六修改文件与兼容补丁全部精确后，
   才由 r45 从 `AD-GS 0/6` 更新为 `1/6`；StreetGS 同样从“存在即计数”收紧为 runtime+bytes+SHA 精确。
   `AD-GS-2026-07-27.patch` 是 zero-context patch，reverse-check 必须显式传 `--unidiff-zero`，否则会产生审计假阴性。
+- `V4-F33`：单个方法达到 6/6 不等于 B0 完成。StreetGS r32/r46/r48/r50/r52/r54 已按 strict mod5、
+  checkpoint bytes/SHA 与 clean r55 inventory 收口为 6/6，但 V3.3/AD-GS 仍各为 1/6，统一 evaluator 也尚未生成
+  完整 scene rows；不得据此启动 M1、读取 test quality，或把 inventory 的 `matched_baseline_assets_incomplete`
+  倒写成 StreetGS 失败。后续只补缺失方法/场景并保留旧 inventory。
 
 ## V4 P0 防重复结论（2026-08-11）
 
