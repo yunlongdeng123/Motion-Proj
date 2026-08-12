@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from types import SimpleNamespace
 from pathlib import Path
 
+import pytest
 import yaml
 
 from scripts import run_worldsim_v4_baselines as baselines
@@ -382,3 +384,52 @@ def test_audit_counts_only_exact_adgs_runtime_and_checkpoint(tmp_path: Path, mon
     assert scene["runtime_ready"] is True
     assert scene["checkpoint"]["all_files_exact"] is True
     assert scene["checkpoint"]["evidence_exact"] is True
+
+
+def test_done_matrix_requires_exact_completion_audit(tmp_path: Path) -> None:
+    run = tmp_path / "audit"
+    (run / "artifacts").mkdir(parents=True)
+    summary = {
+        "status": "done",
+        "executable_scene_counts": {
+            "streetgs": 6,
+            "v33_frozen": 6,
+            "ad_gs": 6,
+        },
+        "project_git": {"head": "frozen-head"},
+        "model_inference_started": False,
+        "training_started": False,
+        "test_quality_read": False,
+    }
+    rows = {
+        run / "status.json": {"status": "done"},
+        run / "summary.json": summary,
+        run / "fingerprint.json": {},
+        run / "manifest.json": {},
+        run / "artifacts" / "baseline_inventory.json": {},
+    }
+    for path, payload in rows.items():
+        path.write_text(json.dumps(payload), encoding="utf-8")
+    matrix = {
+        "status": "done",
+        "completion_audit": {
+            "status": "done",
+            "run": str(run),
+            "project_git_head": "frozen-head",
+            "executable_scene_counts": summary["executable_scene_counts"],
+            "model_inference_started": False,
+            "training_started": False,
+            "test_quality_read": False,
+            "status_sha256": _sha256(run / "status.json"),
+            "summary_sha256": _sha256(run / "summary.json"),
+            "fingerprint_sha256": _sha256(run / "fingerprint.json"),
+            "manifest_sha256": _sha256(run / "manifest.json"),
+            "inventory_sha256": _sha256(
+                run / "artifacts" / "baseline_inventory.json"
+            ),
+        },
+    }
+    baselines._validate_matrix_lifecycle(matrix)
+    matrix["completion_audit"]["summary_sha256"] = "0" * 64
+    with pytest.raises(baselines.BaselineAuditError, match="summary_sha256"):
+        baselines._validate_matrix_lifecycle(matrix)

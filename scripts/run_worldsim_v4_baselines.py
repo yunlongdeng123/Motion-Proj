@@ -476,12 +476,54 @@ def _validate_metrics(config: Mapping[str, Any]) -> None:
         raise BaselineAuditError("scene-level 统计或 denominator 合同漂移")
 
 
+def _validate_matrix_lifecycle(matrix: Mapping[str, Any]) -> None:
+    status = matrix.get("status")
+    if status == "running":
+        return
+    if status != "done":
+        raise BaselineAuditError("B0 matrix 状态必须是 running 或 done")
+    audit = matrix.get("completion_audit")
+    expected_counts = {name: 6 for name in REQUIRED_METHODS}
+    if not isinstance(audit, Mapping) or audit.get("status") != "done":
+        raise BaselineAuditError("done B0 matrix 缺少成功 completion_audit")
+    if audit.get("executable_scene_counts") != expected_counts:
+        raise BaselineAuditError("completion_audit 不是 6x3 executable matrix")
+    if any(
+        audit.get(name) is not False
+        for name in ("model_inference_started", "training_started", "test_quality_read")
+    ):
+        raise BaselineAuditError("completion_audit 运行/数据访问 provenance 漂移")
+    run = Path(str(audit.get("run", "")))
+    files = {
+        "status_sha256": run / "status.json",
+        "summary_sha256": run / "summary.json",
+        "fingerprint_sha256": run / "fingerprint.json",
+        "manifest_sha256": run / "manifest.json",
+        "inventory_sha256": run / "artifacts" / "baseline_inventory.json",
+    }
+    for field, path in files.items():
+        if not path.is_file() or sha256_file(path) != audit.get(field):
+            raise BaselineAuditError(f"completion_audit {field} 内容漂移")
+    summary = json.loads(files["summary_sha256"].read_text(encoding="utf-8"))
+    if (
+        summary.get("status") != "done"
+        or summary.get("executable_scene_counts") != expected_counts
+        or summary.get("project_git", {}).get("head") != audit.get("project_git_head")
+        or any(
+            summary.get(name) is not False
+            for name in ("model_inference_started", "training_started", "test_quality_read")
+        )
+    ):
+        raise BaselineAuditError("completion_audit terminal summary 漂移")
+
+
 def audit_matrix(matrix_path: Path, project_root: Path) -> dict[str, Any]:
     matrix_path = matrix_path.resolve()
     project_root = project_root.resolve()
     matrix = _load_yaml(matrix_path)
-    if matrix.get("task_id") != TASK_ID or matrix.get("status") != "running":
-        raise BaselineAuditError("B0 matrix 必须是 running 状态且 task_id 精确")
+    if matrix.get("task_id") != TASK_ID:
+        raise BaselineAuditError("B0 matrix task_id 漂移")
+    _validate_matrix_lifecycle(matrix)
     metrics_path = project_root / str(matrix["metrics_config"])
     cohort_path = project_root / str(matrix["cohort_config"])
     metrics = _load_yaml(metrics_path)
