@@ -272,6 +272,43 @@ def mean_numeric(rows: Sequence[Mapping[str, Any]]) -> dict[str, float]:
     return {name: float(np.mean([float(row[name]) for row in rows])) for name in names}
 
 
+def candidate_probability_vectors(
+    *,
+    field: Mapping[str, np.ndarray],
+    state: Mapping[str, np.ndarray],
+    actor_instance_id: int,
+    candidate_arms: Mapping[str, float | None],
+) -> tuple[np.ndarray, dict[str, np.ndarray]]:
+    """Build one common Gaussian support and zero-pad every development arm."""
+
+    if not candidate_arms or "owned_only" not in candidate_arms:
+        raise ValueError("candidate arms must include owned_only")
+    if candidate_arms["owned_only"] is not None:
+        raise ValueError("owned_only threshold must be null")
+    hard = np.asarray(field["hard_instance_id"], dtype=np.int32)
+    posterior = np.asarray(state["posterior"], dtype=np.float32)
+    o1 = np.asarray(field["instance_opacity"], dtype=np.float32)
+    if not (hard.shape == posterior.shape == o1.shape):
+        raise ValueError("field/state Gaussian shapes differ")
+    owned = hard == int(actor_instance_id)
+    masks: dict[str, np.ndarray] = {"raw__owned_only": owned}
+    for name, threshold in candidate_arms.items():
+        if name == "owned_only":
+            continue
+        value = float(threshold) if threshold is not None else float("nan")
+        if not np.isfinite(value) or not 0.0 < value <= 1.0:
+            raise ValueError(f"candidate arm {name} threshold is invalid")
+        masks[f"raw__{name}"] = owned | (posterior >= value)
+    common = np.logical_or.reduce(list(masks.values()))
+    ids = np.flatnonzero(common)
+    if ids.size == 0:
+        raise ValueError("candidate arm union is empty")
+    vectors = {"v33_o1": np.where(owned[ids], o1[ids], 0.0).astype(np.float32)}
+    for name, mask in masks.items():
+        vectors[name] = np.where(mask[ids], posterior[ids], 0.0).astype(np.float32)
+    return ids, vectors
+
+
 def score_prediction(
     probability: np.ndarray,
     target: np.ndarray,
@@ -380,6 +417,35 @@ def choose_calibration(
     )
 
 
+def choose_evidence_arm(
+    scene_mean: Mapping[str, Mapping[str, float]],
+    candidates: Sequence[str],
+    *,
+    false_negative_mass_max_degradation: float,
+) -> str:
+    if not candidates or any(name not in scene_mean for name in candidates):
+        raise ValueError("evidence-arm metrics are incomplete")
+    reference = scene_mean["v33_o1"]
+    eligible = [
+        name
+        for name in candidates
+        if scene_mean[name]["false_negative_semantic_mass"]
+        <= reference["false_negative_semantic_mass"]
+        + false_negative_mass_max_degradation
+    ]
+    pool = eligible or list(candidates)
+    return max(
+        pool,
+        key=lambda name: (
+            scene_mean[name]["boundary_f1"],
+            scene_mean[name]["iou"],
+            -scene_mean[name]["brier"],
+            -scene_mean[name]["ece"],
+            name,
+        ),
+    )
+
+
 def gate_preview(
     *, reference: Mapping[str, float], candidate: Mapping[str, float],
     gates: Mapping[str, Any], base_rgb_exact: bool,
@@ -448,8 +514,8 @@ def run(
         raise M1RunError("M1 scene config provenance is not sealed")
     if any(
         config["evaluation"].get("candidate_policy")
-        != "o1_owned_union_positive_evidence"
-        or int(config["evaluation"].get("minimum_positive_views", 0)) <= 0
+        != "development_posterior_arm_search"
+        or not isinstance(config["evaluation"].get("candidate_arms"), Mapping)
         for config in configs
     ):
         raise M1RunError("M1 render-candidate policy drift")
@@ -553,39 +619,27 @@ def run(
         )
         for row in rows:
             role = str(row["role"])
-            selected = selected_ids[role]
             state = states[role]
-            minimum_positive_views = int(
-                scene_config["evaluation"]["minimum_positive_views"]
+            actor_id = int(
+                scene_config["actors"][role]["dataset_instance_id"]
             )
-            candidate = np.union1d(
-                selected,
-                np.flatnonzero(
-                    np.asarray(state["positive_count"]) >= minimum_positive_views
-                ),
+            candidate, vectors = candidate_probability_vectors(
+                field=field,
+                state=state,
+                actor_instance_id=actor_id,
+                candidate_arms=scene_config["evaluation"]["candidate_arms"],
             )
-            v33_ids = torch.from_numpy(selected.astype(np.int64)).to(device)
-            m1_ids = torch.from_numpy(candidate.astype(np.int64)).to(device)
-            v33 = np.asarray(field["instance_opacity"], dtype=np.float32)[selected]
-            raw = np.asarray(state["posterior"], dtype=np.float32)[candidate]
-            v33_render = _render_probabilities(
+            global_ids = torch.from_numpy(candidate.astype(np.int64)).to(device)
+            method_names = list(vectors)
+            rendered = _render_probabilities(
                 trainer=trainer,
                 dataset=dataset,
                 frame=int(row["frame"]),
                 camera=int(row["camera_id"]),
-                global_ids=v33_ids,
-                probabilities=[v33],
+                global_ids=global_ids,
+                probabilities=[vectors[name] for name in method_names],
                 device=device,
-            )[0]
-            raw_render = _render_probabilities(
-                trainer=trainer,
-                dataset=dataset,
-                frame=int(row["frame"]),
-                camera=int(row["camera_id"]),
-                global_ids=m1_ids,
-                probabilities=[raw],
-                device=device,
-            )[0]
+            )
             with np.load(row["mask"], allow_pickle=False) as arrays:
                 target = arrays["binary"].astype(bool)
             samples.append(
@@ -597,8 +651,8 @@ def run(
                     "target": target,
                     "ece_bins": int(scene_config["calibration"]["ece_bins"]),
                     "probabilities": {
-                        "v33_o1": v33_render.astype(np.float32),
-                        "raw": raw_render.astype(np.float32),
+                        name: value.astype(np.float32)
+                        for name, value in zip(method_names, rendered)
                     },
                 }
             )
@@ -630,24 +684,18 @@ def run(
                     role: {
                         **evidence_state_summary(state),
                         "render_candidate_count": int(
-                            np.count_nonzero(
-                                (
-                                    np.asarray(field["hard_instance_id"])
-                                    == int(
-                                        scene_config["actors"][role][
-                                            "dataset_instance_id"
-                                        ]
-                                    )
-                                )
-                                | (
-                                    np.asarray(state["positive_count"])
-                                    >= int(
-                                        scene_config["evaluation"][
-                                            "minimum_positive_views"
-                                        ]
-                                    )
-                                )
-                            )
+                            candidate_probability_vectors(
+                                field=field,
+                                state=state,
+                                actor_instance_id=int(
+                                    scene_config["actors"][role][
+                                        "dataset_instance_id"
+                                    ]
+                                ),
+                                candidate_arms=scene_config["evaluation"][
+                                    "candidate_arms"
+                                ],
+                            )[0].size
                         ),
                     }
                     for role, state in states.items()
@@ -657,6 +705,23 @@ def run(
         del trainer, dataset, field, states
         torch.cuda.empty_cache()
 
+    arm_methods = [
+        f"raw__{name}" for name in configs[0]["evaluation"]["candidate_arms"]
+    ]
+    arm_per_scene, arm_scene_mean = aggregate_methods(
+        samples,
+        methods=["v33_o1", *arm_methods],
+        evaluation=configs[0]["evaluation"],
+    )
+    selected_arm = choose_evidence_arm(
+        arm_scene_mean,
+        arm_methods,
+        false_negative_mass_max_degradation=float(
+            configs[0]["evaluation"]["candidate_arm_fn_mass_max_degradation"]
+        ),
+    )
+    for sample in samples:
+        sample["probabilities"]["raw"] = sample["probabilities"][selected_arm]
     pooled_probability = np.concatenate(
         [sample["probabilities"]["raw"].reshape(-1) for sample in samples]
     )
@@ -738,6 +803,11 @@ def run(
         "per_scene": per_scene,
         "scene_mean": scene_mean,
         "selected_calibration": selected_calibration,
+        "selected_evidence_arm": selected_arm,
+        "evidence_arm_search": {
+            "per_scene": arm_per_scene,
+            "scene_mean": arm_scene_mean,
+        },
         "gate_preview": preview,
     }
     atomic_json(run_dir / "metrics.json", metrics_payload)
@@ -750,6 +820,7 @@ def run(
         "project_git_head": git_head,
         "scene_records": scene_records,
         "selected_calibration": selected_calibration,
+        "selected_evidence_arm": selected_arm,
         "gate_preview": preview,
         "base_rgb_render_checks": base_rgb_checks,
         "checkpoint_checks": checkpoint_checks,

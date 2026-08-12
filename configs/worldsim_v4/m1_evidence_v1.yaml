@@ -57,8 +57,15 @@ calibration:
 
 evaluation:
   mask_threshold: 0.5
-  candidate_policy: o1_owned_union_positive_evidence
-  minimum_positive_views: 1
+  candidate_policy: development_posterior_arm_search
+  candidate_arms:
+    owned_only: null
+    posterior_090: 0.90
+    posterior_080: 0.80
+    posterior_070: 0.70
+    posterior_060: 0.60
+    posterior_050: 0.50
+  candidate_arm_fn_mass_max_degradation: 0.01
   boundary_tolerance_pixels: 3.0
   metrics: [iou, boundary_f1, false_positive_semantic_mass,
             false_negative_semantic_mass, ece, brier]
