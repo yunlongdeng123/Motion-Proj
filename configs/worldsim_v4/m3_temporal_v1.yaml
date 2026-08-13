@@ -23,12 +23,24 @@ execution_gate:
   validation_read_only: true
   test_quality_read: false
 
+inputs:
+  cohort:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/nuscenes_cohort_v1.yaml
+    sha256: ed47c0da2c76e14b3b0a0e7a8b4d9b580bdf37e4c69a1d5a389b965e88c667a1
+  scene_inventory:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_scene_inventory_v1.yaml
+    sha256: b9a678c53d760821bd9522bb09f26ff2c8e05a3991fc4713aabadce70fd66146
+
 clip:
   minimum_seconds: 2.0
   maximum_seconds: 4.0
   operations: [REMOVE, LATERAL, INSERT]
   camera_reduction_forbidden: true
   resolution_reduction_forbidden: true
+  sample_protocol: seven_consecutive_nuscenes_keyframes
+  processed_keyframe_stride: 5
+  camera_ids: [0, 1, 2]
+  internal_flow_resolution: [160, 90]
 
 trajectory:
   representation: uniform_cubic_bspline_se3
@@ -36,6 +48,34 @@ trajectory:
   minimum_control_points: 4
   acceleration_regularization: true
   parameters_frozen_on: development
+  development_search:
+    control_point_count: [4, 5, 6]
+    acceleration_regularization: [0.05, 0.10]
+    evidence_retention: [0.50, 0.75, 0.90]
+    warp_blend_alpha: [0.10, 0.25, 0.40]
+  selected_parameters: null
+
+operations:
+  REMOVE:
+    composition: [BASE, ERASE]
+  LATERAL:
+    composition: [BASE, ERASE, INSERT_SAME_ACTOR_ASSET]
+    actor_local_translation_m: [0.0, 1.0, 0.0]
+  INSERT:
+    composition: [BASE, ERASE, INSERT_SAME_ACTOR_ASSET]
+    actor_local_translation_m: [0.5, -2.0, 0.0]
+  minimum_rendered_effect_pixels: 16
+
+temporal_evidence:
+  source: rendered_cross_camera_actor_support
+  uses_rejected_m1_posterior: false
+  rationale: M1 的 validation 负结论保持冻结；M3 只使用当前 clip 可观测的真实渲染支持量。
+
+warp_regularization:
+  source_flow: frozen_base_rgb_farneback_current_to_previous
+  operates_on: edited_minus_base_rgb_delta
+  output_resolution_reduced: false
+  remove_bypass_exact: true
 
 ablations:
   arms: [FRAME_INDEPENDENT, LINEAR, CUBIC_BSPLINE,
@@ -45,8 +85,10 @@ ablations:
   same_edit_request: true
 
 metrics:
-  [temporal_lpips, warp_l1, warp_lpips, frame_flicker, mask_iou_jitter,
-   boundary_f1_jitter, identity_switch, centroid_jitter, contact_region_jitter]
+  [psnr, ssim, lpips_alex, temporal_lpips, warp_l1, warp_lpips,
+   frame_flicker, mask_iou_jitter, boundary_f1_jitter, identity_switch,
+   trajectory_rmse, centroid_jitter, contact_region_jitter,
+   semantic_reintroduction, rollback_exact]
 
 gates:
   operation_success_non_degradation: true

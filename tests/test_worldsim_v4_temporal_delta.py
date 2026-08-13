@@ -8,6 +8,7 @@ from motion_proj.worldsim_v4.se3_bspline import (
     UniformCubicSE3Spline,
     cubic_basis,
     se3_exp,
+    se3_log,
 )
 from motion_proj.worldsim_v4.temporal_compiler import (
     TemporalEditRequest,
@@ -20,6 +21,14 @@ from motion_proj.worldsim_v4.temporal_metrics import (
     mask_iou_jitter,
     relative_error_improvement,
     warp_l1,
+)
+from motion_proj.worldsim_v4.temporal_protocol import (
+    apply_actor_local_translation,
+    build_arm_trajectories,
+    evidence_memory_weights,
+    fit_uniform_cubic_se3,
+    resample_se3_transforms,
+    uniform_cubic_design,
 )
 
 
@@ -41,6 +50,11 @@ def test_se3_exp_rotation_is_rigid() -> None:
     rotation = transform[:3, :3]
     assert np.allclose(rotation.T @ rotation, np.eye(3), atol=1e-12)
     assert np.linalg.det(rotation) == pytest.approx(1.0)
+
+
+def test_se3_log_roundtrip() -> None:
+    twist = np.asarray([1.0, -2.0, 0.5, 0.1, -0.2, 0.3])
+    assert np.allclose(se3_log(se3_exp(twist)), twist, atol=1e-10)
 
 
 def test_constant_control_twist_has_zero_acceleration_energy() -> None:
@@ -131,3 +145,57 @@ def test_centroid_and_identity_metrics() -> None:
     assert centroid_acceleration_jitter(linear) == pytest.approx(0.0)
     assert identity_switch_count([1, 1, None, 2, 2, 3]) == 2
     assert relative_error_improvement(1.0, 0.85) == pytest.approx(0.15)
+
+
+def test_uniform_cubic_design_is_partition_of_unity() -> None:
+    design = uniform_cubic_design(7, 5)
+    assert design.shape == (7, 5)
+    assert np.allclose(design.sum(axis=1), 1.0)
+    assert np.all(design >= 0.0)
+
+
+def test_evidence_memory_retains_neighbor_support() -> None:
+    weights = evidence_memory_weights(
+        np.asarray([0.0, 0.0, 1.0, 0.0, 0.0]), retention=0.5
+    )
+    assert weights.tolist() == pytest.approx([0.25, 0.5, 1.0, 0.5, 0.25])
+
+
+def test_cubic_fit_reduces_translation_acceleration() -> None:
+    transforms = np.repeat(np.eye(4)[None], 7, axis=0)
+    transforms[:, 0, 3] = np.asarray([0.0, 1.0, 2.1, 2.9, 4.2, 4.8, 6.2])
+    fitted = fit_uniform_cubic_se3(
+        transforms,
+        control_point_count=4,
+        acceleration_regularization=0.1,
+    )
+    source_acceleration = np.diff(transforms[:, :3, 3], n=2, axis=0)
+    fitted_acceleration = np.diff(fitted.transforms[:, :3, 3], n=2, axis=0)
+    assert np.mean(fitted_acceleration**2) < np.mean(source_acceleration**2)
+    assert fitted.source_rmse_m > 0.0
+
+
+def test_actor_local_translation_and_all_arms() -> None:
+    source = np.repeat(np.eye(4)[None], 7, axis=0)
+    source[:, 0, 3] = np.linspace(0.0, 3.0, 7)
+    arms = build_arm_trajectories(
+        source,
+        support=np.arange(1.0, 8.0),
+        control_point_count=4,
+        evidence_retention=0.75,
+        acceleration_regularization=0.1,
+    )
+    assert set(arms) == {
+        "FRAME_INDEPENDENT",
+        "LINEAR",
+        "CUBIC_BSPLINE",
+        "CUBIC_BSPLINE_TEMPORAL_EVIDENCE",
+        "FULL_WARP_REGULARIZED",
+    }
+    shifted = apply_actor_local_translation(
+        arms["FRAME_INDEPENDENT"].transforms, np.asarray([0.0, 1.0, 0.0])
+    )
+    assert np.allclose(shifted[:, 1, 3], 1.0)
+    dense = resample_se3_transforms(shifted, 31)
+    assert dense.shape == (31, 4, 4)
+    assert np.allclose(dense[::5], shifted)

@@ -40,6 +40,57 @@ def se3_exp(twist: np.ndarray) -> np.ndarray:
     return transform
 
 
+def se3_log(transform: np.ndarray) -> np.ndarray:
+    """把齐次变换映射回 `[translation, rotation]` twist。"""
+
+    value = np.asarray(transform, dtype=np.float64)
+    if value.shape != (4, 4) or not np.isfinite(value).all():
+        raise ValueError("transform must be a finite 4x4 matrix")
+    if not np.allclose(value[3], np.asarray([0.0, 0.0, 0.0, 1.0]), atol=1e-10):
+        raise ValueError("transform must have a homogeneous final row")
+    rotation_matrix = value[:3, :3]
+    if not np.allclose(rotation_matrix.T @ rotation_matrix, np.eye(3), atol=1e-8):
+        raise ValueError("transform rotation must be orthonormal")
+    if not np.isclose(np.linalg.det(rotation_matrix), 1.0, atol=1e-8):
+        raise ValueError("transform rotation must have determinant one")
+
+    cosine = float(np.clip((np.trace(rotation_matrix) - 1.0) / 2.0, -1.0, 1.0))
+    theta = math.acos(cosine)
+    if theta < 1e-8:
+        omega = 0.5 * (rotation_matrix - rotation_matrix.T)
+    elif math.pi - theta < 1e-5:
+        # 近 pi 时反对称项病态，直接从对角项恢复旋转轴。
+        axis = np.sqrt(np.maximum((np.diag(rotation_matrix) + 1.0) / 2.0, 0.0))
+        largest = int(np.argmax(axis))
+        if axis[largest] < 1e-8:
+            raise ValueError("rotation logarithm is numerically singular")
+        for index in range(3):
+            if index != largest:
+                axis[index] = (
+                    rotation_matrix[largest, index]
+                    + rotation_matrix[index, largest]
+                ) / (4.0 * axis[largest])
+        axis /= np.linalg.norm(axis)
+        omega = _skew(axis * theta)
+    else:
+        omega = theta / (2.0 * math.sin(theta)) * (
+            rotation_matrix - rotation_matrix.T
+        )
+    rotation = np.asarray([omega[2, 1], omega[0, 2], omega[1, 0]])
+    theta = float(np.linalg.norm(rotation))
+    omega_squared = omega @ omega
+    if theta < 1e-8:
+        inverse_left_jacobian = np.eye(3) - 0.5 * omega + omega_squared / 12.0
+    else:
+        coefficient = (
+            1.0 / theta**2
+            - (1.0 + math.cos(theta)) / (2.0 * theta * math.sin(theta))
+        )
+        inverse_left_jacobian = np.eye(3) - 0.5 * omega + coefficient * omega_squared
+    translation = inverse_left_jacobian @ value[:3, 3]
+    return np.concatenate([translation, rotation])
+
+
 def cubic_basis(unit_time: float) -> np.ndarray:
     u = float(unit_time)
     if not math.isfinite(u) or u < 0.0 or u > 1.0:

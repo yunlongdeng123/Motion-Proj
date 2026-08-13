@@ -1,0 +1,34 @@
+schema_version: worldsim_v4_m3_development_selection_v1
+task_id: WS-V4-M3-TEMPORAL-DELTA-01
+m3_config:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_temporal_v1.yaml
+  sha256: 6186eaca57bada2229e358c8b83404cfd8422a6a9753cfba0615c4ad1864621c
+scene_inventory:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_scene_inventory_v1.yaml
+  sha256: b9a678c53d760821bd9522bb09f26ff2c8e05a3991fc4713aabadce70fd66146
+development_scene_runs:
+  scene-0994:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T072100Z__m3-development-scene0994-zero-support-abstain-s0-r226
+    summary_sha256: 0501f3fb6e2bfbde5726ca8deb6c9cae8216d4b4afe6ba2875fab7cffa6f19bd
+    manifest_sha256: 94bf57cc6a27a5422ab802f6fd61bfe3bdcb5aaeab32b0b9320fc55a332246b6
+  scene-0139:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T071650Z__m3-development-scene0139-lateral-diagnostic-s0-r225
+    summary_sha256: 785074cace4e129647b57e209d13131def00123ed5836c1542956422ec736844
+    manifest_sha256: 082fd5cc936ea21677491a516a8fcae4d05d1023b07a9aed48cc812d17865846
+warp_sweep:
+  path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T072430Z__m3-development-warp-alpha-sweep-s0-r227
+  summary_sha256: 8f84bffc02114c581ce26b54f38b4523c6c6089be0afc12564bc5a9cc446840d
+  manifest_sha256: b76796ffce624dcce4aed35b5cb6cc52e4d7d30f0d4df6d038815f6dadb68477
+selection:
+  development_scene_denominator: 6
+  minimum_evaluable_scene_count: 1
+  retain_registry_abstains: true
+  retain_zero_render_support_abstains: true
+  maximum_scene_trajectory_rmse_m: 0.01
+  trajectory_primary: minimum_mean_acceleration_energy
+  trajectory_tie_break: [mean_source_rmse_m, control_point_count,
+                         acceleration_regularization, evidence_retention]
+  warp_primary: minimum_warp_l1_delta
+  temporal_error_relative_improvement_min: 0.10
+  require_operation_success_non_degradation: true
+  test_quality_read: false
