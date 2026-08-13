@@ -142,14 +142,31 @@ def _verify(binding: Mapping[str, Any], label: str) -> Path:
 
 
 def preflight(config: Mapping[str, Any], *, phase: str) -> dict[str, Any]:
+    partition = config.get("partition")
     if (
         config.get("schema_version") != "worldsim_v4_m2_scene_v1"
         or config.get("task_id") != TASK_ID
-        or config.get("partition") != "development"
+        or partition not in {"development", "validation"}
         or config.get("heldout_content_read") is not False
         or config.get("test_quality_read") is not False
     ):
         raise M2SceneRunError("M2 scene contract 漂移")
+    if partition == "validation" and (
+        config.get("validation_optimization_read") is not False
+        or config.get("development_freeze", {}).get("validation_optimization_forbidden")
+        is not True
+    ):
+        raise M2SceneRunError("M2 validation freeze contract drift")
+    if partition == "validation" and config.get("status") == "ready":
+        frozen = config.get("frozen_router", {})
+        risk = config.get("risk", {})
+        if (
+            frozen.get("weights") != risk.get("weights")
+            or float(frozen.get("threshold", -1.0))
+            != float(risk.get("threshold", -2.0))
+            or frozen.get("tie_priority") != risk.get("tie_priority")
+        ):
+            raise M2SceneRunError("M2 validation router parameters drift")
     if phase == "formal" and _git_dirty():
         raise M2SceneRunError("M2 formal run 要求 clean git worktree")
     verified: dict[str, Any] = {}
@@ -162,8 +179,13 @@ def preflight(config: Mapping[str, Any], *, phase: str) -> dict[str, Any]:
                 "bytes": path.stat().st_size,
             }
     if config.get("status") == "ready":
-        if not config.get("requests") or not config.get("all_accepted_masks_retained"):
+        complete = config.get("all_accepted_masks_retained") or config.get(
+            "all_accepted_masks_accounted"
+        )
+        if not config.get("requests") or not complete:
             raise M2SceneRunError("ready scene 未保留完整 request set")
+        target_remainder = int(config.get("target_remainder", 2))
+        heldout_remainder = int(config.get("heldout_remainder", 4))
         for request in config["requests"]:
             _verify(request["target_mask"], f"{request['request_id']}:mask")
             _verify(
@@ -171,10 +193,10 @@ def preflight(config: Mapping[str, Any], *, phase: str) -> dict[str, Any]:
                 f"{request['request_id']}:groundtruth",
             )
             frame = int(request["frame"])
-            if frame % 5 != 2:
+            if frame % 5 != target_remainder:
                 raise M2SceneRunError("M2 target 不是 development remainder=2")
             for support_frame, _ in request["support_views"]:
-                if int(support_frame) % 5 in {2, 4}:
+                if int(support_frame) % 5 in {target_remainder, heldout_remainder}:
                     raise M2SceneRunError("M2 support 混入 development/heldout")
     return verified
 
@@ -850,8 +872,10 @@ def _process_request(
         "candidate_failures": failures,
         "matched_arms": matched_arms,
         "generated_model_executable": False,
-        "development_content_read": True,
+        "development_content_read": config["partition"] == "development",
         "development_optimization_read": False,
+        "validation_content_read": config["partition"] == "validation",
+        "validation_optimization_read": False,
         "heldout_content_read": False,
         "test_quality_read": False,
     }
@@ -877,11 +901,18 @@ def run(
             "schema_version": "worldsim_v4_m2_scene_summary_v1",
             "task_id": TASK_ID,
             "scene": config["scene"],
+            "partition": config["partition"],
             "status": "abstain",
             "reason": config["reason"],
             "retained_in_denominator": True,
             "request_count": 0,
+            "blocked_request_count": int(config.get("blocked_request_count", 0)),
+            "total_request_count": int(config.get("total_request_count", 0)),
             "input_scene_config": input_scene_config,
+            "development_content_read": False,
+            "development_optimization_read": False,
+            "validation_content_read": config["partition"] == "validation",
+            "validation_optimization_read": False,
             "heldout_content_read": False,
             "test_quality_read": False,
             "project_git_head": _git_head(),
@@ -945,10 +976,22 @@ def run(
         "schema_version": "worldsim_v4_m2_scene_summary_v1",
         "task_id": TASK_ID,
         "scene": config["scene"],
+        "partition": config["partition"],
         "status": "done",
-        "phase": "smoke" if max_requests is not None else "formal_development",
+        "phase": (
+            "smoke"
+            if max_requests is not None
+            else (
+                "formal_development"
+                if config["partition"] == "development"
+                else "formal_validation"
+            )
+        ),
         "request_count": len(rows),
         "frozen_request_count": int(config["request_count"]),
+        "blocked_request_count": int(config.get("blocked_request_count", 0)),
+        "blocked_requests": config.get("blocked_requests", []),
+        "total_request_count": int(config.get("total_request_count", len(rows))),
         "candidate_count": sum(int(row["candidate_count"]) for row in rows),
         "requests": rows,
         "native_donor_index": patch_audit,
@@ -960,12 +1003,15 @@ def run(
         "duration_seconds": time.monotonic() - started,
         "peak_cuda_allocated_bytes": int(torch.cuda.max_memory_allocated(device)),
         "peak_cuda_reserved_bytes": int(torch.cuda.max_memory_reserved(device)),
-        "development_content_read": True,
+        "development_content_read": config["partition"] == "development",
         "development_optimization_read": False,
+        "validation_content_read": config["partition"] == "validation",
+        "validation_optimization_read": False,
         "heldout_content_read": False,
         "test_quality_read": False,
         "project_git_head": _git_head(),
         "project_git_dirty": _git_dirty(),
+        "frozen_router": config.get("frozen_router"),
     }
     _write_json(run_dir / "summary.json", summary)
     _write_json(

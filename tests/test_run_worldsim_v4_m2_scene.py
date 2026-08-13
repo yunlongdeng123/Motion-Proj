@@ -83,3 +83,48 @@ def test_preflight_abstain_retains_no_test_read() -> None:
         "test_quality_read": False,
     }
     assert preflight(config, phase="smoke") == {}
+
+
+def test_preflight_accepts_frozen_validation_abstain() -> None:
+    config = {
+        "schema_version": "worldsim_v4_m2_scene_v1",
+        "task_id": "WS-V4-M2-REPAIR-ROUTER-01",
+        "partition": "validation",
+        "scene": "scene-val",
+        "status": "abstain",
+        "inputs": {},
+        "development_freeze": {"validation_optimization_forbidden": True},
+        "validation_optimization_read": False,
+        "heldout_content_read": False,
+        "test_quality_read": False,
+    }
+    assert preflight(config, phase="smoke") == {}
+
+
+def test_preflight_rejects_validation_router_parameter_drift() -> None:
+    config = {
+        "schema_version": "worldsim_v4_m2_scene_v1",
+        "task_id": "WS-V4-M2-REPAIR-ROUTER-01",
+        "partition": "validation",
+        "scene": "scene-val",
+        "status": "ready",
+        "inputs": {},
+        "development_freeze": {"validation_optimization_forbidden": True},
+        "validation_optimization_read": False,
+        "heldout_content_read": False,
+        "test_quality_read": False,
+        "frozen_router": {
+            "weights": {"photo": 0.2},
+            "threshold": 1.0,
+            "tie_priority": ["OBSERVED", "DONOR", "GENERATED"],
+        },
+        "risk": {
+            "weights": {"photo": 0.3},
+            "threshold": 1.0,
+            "tie_priority": ["OBSERVED", "DONOR", "GENERATED"],
+        },
+    }
+    import pytest
+
+    with pytest.raises(Exception, match="router parameters drift"):
+        preflight(config, phase="smoke")
