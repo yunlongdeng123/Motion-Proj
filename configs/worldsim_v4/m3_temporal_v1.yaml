@@ -53,7 +53,19 @@ trajectory:
     acceleration_regularization: [0.05, 0.10]
     evidence_retention: [0.50, 0.75, 0.90]
     warp_blend_alpha: [0.10, 0.25, 0.40]
-  selected_parameters: null
+  development_freeze:
+    run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T073800Z__m3-development-parameter-freeze-s0-r231
+    summary_sha256: 5b18cbf6fb2ae0c00f8a80f7f6fc621d8552628e57adee18246189bbbf1436cc
+    manifest_sha256: 72af073a813871fdaee6865485a89fe502dec68ec82b6034ee5663afad84cdcc
+    source_commit: f47e9bbf4368d561d31876e2cc5543f48452cd76
+    scene_denominator: 6
+    evaluable_scene_count: 1
+    abstain_scene_count: 5
+  selected_parameters:
+    control_point_count: 4
+    acceleration_regularization: 0.10
+    evidence_retention: 0.50
+    warp_blend_alpha: 0.40
 
 operations:
   REMOVE:
