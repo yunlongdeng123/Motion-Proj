@@ -1,0 +1,36 @@
+schema_version: worldsim_v4_m3_validation_selection_v1
+task_id: WS-V4-M3-TEMPORAL-DELTA-01
+m3_config:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_temporal_v1.yaml
+  sha256: 174ff2570b7e191579644ed45f3884c31f78cf9e540c7b882c1f89acab64edad
+scene_inventory:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_scene_inventory_v1.yaml
+  sha256: b9a678c53d760821bd9522bb09f26ff2c8e05a3991fc4713aabadce70fd66146
+development_freeze:
+  path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T073800Z__m3-development-parameter-freeze-s0-r231
+  summary_sha256: 5b18cbf6fb2ae0c00f8a80f7f6fc621d8552628e57adee18246189bbbf1436cc
+  manifest_sha256: 72af073a813871fdaee6865485a89fe502dec68ec82b6034ee5663afad84cdcc
+validation_scene_runs:
+  scene-0071: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074300Z__m3-validation-scene0071-formal-s0-r235, summary_sha256: 1f40877296dfa6da6a98f0de569392251a2a1beb142e1571756c7ac33044a083, manifest_sha256: bad1be93fb187a9062c1ac56a53da81520d0f02695dc79a7395eaab2a3192074}
+  scene-1089: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene1089-abstain-s0-r232, summary_sha256: e12cec73179be765db31529a816f299889620a09993df3888cf37b00bd9972ad, manifest_sha256: 23d02f651623e1ebf408d4bb216422627f703bebab502822d7f3a6a23acf6626}
+  scene-0317: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074700Z__m3-validation-scene0317-formal-s0-r236, summary_sha256: 5e0a8049ec09b3dd61d57daac312828347b1763847a0cd758f65eeabadbf4fdc, manifest_sha256: 8094b29c8c781fd9172e50f1e03901fbf514cd97e726794c93af5cf9721b423a}
+  scene-0862: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene0862-abstain-s0-r233, summary_sha256: 7d36013b6a7d43c832ec8224ccebc4385b6106607c5ebf011c44c5e9b92f9b9e, manifest_sha256: 3cef17545bfdd32e0b95d222be73bb9f5562e73b67ae2d64121ba858d2411dd1}
+  scene-1012: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene1012-abstain-s0-r234, summary_sha256: 709e7b871c4e630dc1671ed69912a729c153b27f5cac8cfcc3f19583a3b45ffd, manifest_sha256: 46ae1b3683b5ec95f453043508256c4402980bbdf1343d84bcc446f9b0735870}
+  scene-0450: {path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T075100Z__m3-validation-scene0450-formal-s0-r237, summary_sha256: ae953805c61e2fa127bdce7951b481a772274f401055d77c9c9293659868e022, manifest_sha256: 53981adbf7e5777e00ed208190ad49bc731f5f2a12bb33a43d1a2f7b9245224c}
+aggregation:
+  scene_denominator: 6
+  operations: [REMOVE, LATERAL, INSERT]
+  baseline_arm: FRAME_INDEPENDENT
+  candidate_arm: FULL_WARP_REGULARIZED
+  reduction: equal_scene_operation_mean
+  retain_abstains: true
+  remove_bypass_exact: true
+gates:
+  operation_success_non_degradation: true
+  temporal_error_relative_improvement_min: 0.10
+  temporal_error_either: [warp_l1_delta, temporal_lpips]
+  identity_switch_relative_reduction_min: 0.25
+  allow_identity_zero_remains_zero: true
+  deleted_semantic_reintroduction: 0
+  rollback_exact_fraction: 1.0
+  test_quality_read: false

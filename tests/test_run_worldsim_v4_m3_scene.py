@@ -24,6 +24,13 @@ SWEEP_SPEC = importlib.util.spec_from_file_location(
 assert SWEEP_SPEC is not None and SWEEP_SPEC.loader is not None
 SWEEP = importlib.util.module_from_spec(SWEEP_SPEC)
 SWEEP_SPEC.loader.exec_module(SWEEP)
+AGG_SPEC = importlib.util.spec_from_file_location(
+    "aggregate_worldsim_v4_m3_validation",
+    ROOT / "scripts/aggregate_worldsim_v4_m3_validation.py",
+)
+assert AGG_SPEC is not None and AGG_SPEC.loader is not None
+AGG = importlib.util.module_from_spec(AGG_SPEC)
+AGG_SPEC.loader.exec_module(AGG)
 
 
 def test_m3_inventory_freezes_six_plus_six_without_test() -> None:
@@ -113,3 +120,144 @@ def test_zero_alpha_warp_variant_is_evidence_exact(tmp_path: Path) -> None:
     assert warp_l1 > 0.0
     assert success
     assert set(by_frame) == set(frames)
+
+
+def test_validation_aggregate_retains_abstains_and_remove_zero_gain(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    selected = {
+        "control_point_count": 4,
+        "acceleration_regularization": 0.1,
+        "evidence_retention": 0.5,
+        "warp_blend_alpha": 0.4,
+    }
+
+    def write_binding(path: Path, payload: dict) -> dict:
+        path.mkdir(parents=True)
+        RUNNER.atomic_json(path / "summary.json", payload)
+        RUNNER.atomic_json(path / "manifest.json", {"files": []})
+        return {
+            "path": str(path),
+            "summary_sha256": RUNNER.sha256_file(path / "summary.json"),
+            "manifest_sha256": RUNNER.sha256_file(path / "manifest.json"),
+        }
+
+    m3_path = tmp_path / "m3.yaml"
+    m3_path.write_text(
+        yaml.safe_dump({"trajectory": {"selected_parameters": selected}})
+    )
+    inventory_path = tmp_path / "inventory.yaml"
+    inventory_path.write_text(
+        yaml.safe_dump(
+            {
+                "scenes": {
+                    f"scene-{index}": {"partition": "validation"}
+                    for index in range(6)
+                }
+            }
+        )
+    )
+    development = write_binding(
+        tmp_path / "development", {"selected_parameters": selected, "test_quality_read": False}
+    )
+    scene_runs = {}
+    for index in range(6):
+        if index >= 3:
+            payload = {
+                "scene": f"scene-{index}",
+                "partition": "validation",
+                "status": "abstain",
+                "reason": "unavailable",
+                "project_git_dirty": False,
+                "development_content_read": False,
+                "development_optimization_read": False,
+                "validation_optimization_read": False,
+                "test_quality_read": False,
+            }
+        else:
+            sequences = []
+            for operation in ("REMOVE", "LATERAL", "INSERT"):
+                for arm in (
+                    "FRAME_INDEPENDENT",
+                    "LINEAR",
+                    "CUBIC_BSPLINE",
+                    "CUBIC_BSPLINE_TEMPORAL_EVIDENCE",
+                    "FULL_WARP_REGULARIZED",
+                ):
+                    candidate = arm == "FULL_WARP_REGULARIZED"
+                    remove = operation == "REMOVE"
+                    sequences.append(
+                        {
+                            "operation": operation,
+                            "arm": arm,
+                            "operation_success": True,
+                            "warp_l1_delta": 1.0 if remove or not candidate else 0.5,
+                            "temporal_lpips": 1.0 if remove or not candidate else 0.8,
+                            "identity_switch": 0,
+                            "semantic_reintroduction_pixels": 0,
+                            "rollback_exact": True,
+                            "non_target_psnr": 20.0,
+                            "non_target_ssim": 0.8,
+                            "non_target_lpips_alex": 0.2,
+                        }
+                    )
+            payload = {
+                "scene": f"scene-{index}",
+                "partition": "validation",
+                "status": "done",
+                "parameters": selected,
+                "operations": ["REMOVE", "LATERAL", "INSERT"],
+                "arms": [
+                    "FRAME_INDEPENDENT",
+                    "LINEAR",
+                    "CUBIC_BSPLINE",
+                    "CUBIC_BSPLINE_TEMPORAL_EVIDENCE",
+                    "FULL_WARP_REGULARIZED",
+                ],
+                "checkpoint_immutable": True,
+                "rollback_exact": True,
+                "sequences": sequences,
+                "project_git_dirty": False,
+                "development_content_read": False,
+                "development_optimization_read": False,
+                "validation_optimization_read": False,
+                "test_quality_read": False,
+            }
+        scene_runs[f"scene-{index}"] = write_binding(
+            tmp_path / f"run-{index}", payload
+        )
+    config = {
+        "m3_config": {"path": str(m3_path), "sha256": RUNNER.sha256_file(m3_path)},
+        "scene_inventory": {
+            "path": str(inventory_path),
+            "sha256": RUNNER.sha256_file(inventory_path),
+        },
+        "development_freeze": development,
+        "validation_scene_runs": scene_runs,
+        "aggregation": {
+            "scene_denominator": 6,
+            "operations": ["REMOVE", "LATERAL", "INSERT"],
+            "baseline_arm": "FRAME_INDEPENDENT",
+            "candidate_arm": "FULL_WARP_REGULARIZED",
+            "reduction": "equal_scene_operation_mean",
+        },
+        "gates": {
+            "temporal_error_relative_improvement_min": 0.1,
+            "identity_switch_relative_reduction_min": 0.25,
+            "allow_identity_zero_remains_zero": True,
+            "deleted_semantic_reintroduction": 0,
+            "rollback_exact_fraction": 1.0,
+        },
+    }
+    config_path = tmp_path / "validation.yaml"
+    config_path.write_text(yaml.safe_dump(config))
+    monkeypatch.setattr(AGG, "git_dirty", lambda: False)
+    monkeypatch.setattr(AGG, "git_head", lambda: "a" * 40)
+    summary = AGG.run(config_path=config_path, run_dir=tmp_path / "aggregate")
+    assert summary["scene_denominator"] == 6
+    assert summary["evaluable_scene_count"] == 3
+    assert summary["abstain_scene_count"] == 3
+    assert summary["scene_operation_denominator"] == 9
+    # REMOVE 的零增益仍占九个 paired rows，因此 warp 改善为 1/3。
+    assert summary["aggregate"]["warp_l1_relative_improvement"] == pytest.approx(1 / 3)
+    assert summary["validation_gate_passed"]
