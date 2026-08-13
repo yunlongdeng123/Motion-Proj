@@ -1,0 +1,50 @@
+schema_version: worldsim_v4_m2_validation_selection_v1
+task_id: WS-V4-M2-REPAIR-ROUTER-01
+status: pending
+partition: validation
+dataset: nuScenes
+
+validation_protocol:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m2_validation_v1.yaml
+  sha256: 451ace588a33428c17302cf4e21e25d2a69a3f41987bfff1fd53feedb4081d8c
+  project_git_head: af826780f93e867e27010016468aacfc485c9acb
+
+development_freeze:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T233139Z__m2-development-router-selection-s0-r212
+  summary_sha256: 93e166d9bed748fcd96adb94ff314b73059caa05d32d7941a6b490d7246430a9
+  expected_best_matched_non_router: TELEA
+  expected_weight_name: uncertainty_forward
+  expected_weights: {photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.10}
+  expected_threshold: 1.0
+  expected_tie_priority: [OBSERVED, DONOR, GENERATED]
+
+scene_runs:
+  scene-0071:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-0071-s0-r219
+    summary_sha256: 8c442e699efadb8fcbc8738f2c16f953c702479e39d70b1ad5e54b558b2d631e
+  scene-1089:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-1089-s0-r216
+    summary_sha256: ef8e1f0b4b473a53a2dcabd003efdb3d1cac7bbb5a4455bec88587720450dd60
+  scene-0317:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005626Z__m2-validation-scene-0317-s0-r220
+    summary_sha256: 74706f2ab4ab89e237fb53d1215f1a68c41a3c345e383e4cf5cd19358d6573c0
+  scene-0862:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-0862-s0-r217
+    summary_sha256: 20dca30d422a025ca3928cdfb6b617877c85c2c0b2716f7a3f41395b80937ca7
+  scene-1012:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-1012-s0-r218
+    summary_sha256: ab59d9c3a62a0795a7797ac91aa56b5d716e268337514a049e508ec5a55c1ba9
+  scene-0450:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T063405Z__m2-validation-scene-0450-s0-r221
+    summary_sha256: 4c882f65a0281caeeae9c85608d272a8c4306a2be8d2b8a26cabe91a48a76bac
+
+reporting:
+  retain_all_six_scenes_in_denominator: true
+  retain_role_abstain_requests_in_denominator: true
+  requested_selective_coverages: [0.25, 0.5, 0.75, 1.0]
+  development_content_read: false
+  development_optimization_read: false
+  validation_content_read: true
+  validation_optimization_read: false
+  heldout_content_read: false
+  test_quality_read: false
