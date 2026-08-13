@@ -73,6 +73,44 @@ def test_scene_contract_rejects_test_partition() -> None:
         )
 
 
+def test_scene_contract_accepts_test_only_with_authorization() -> None:
+    clip = {
+        "start_index": 3,
+        "end_index": 9,
+        "duration_s": 3.0,
+        "actor_instance_token": "token",
+        "sample_tokens": [f"sample-{index}" for index in range(7)],
+    }
+    config = {"clip": {"camera_ids": [0, 1, 2]}}
+    inventory = {
+        "camera_ids": [0, 1, 2],
+        "scenes": {
+            "scene-x": {
+                "partition": "test",
+                "clip": {key: clip[key] for key in ("start_index", "end_index", "duration_s")},
+                "instance_token": "token",
+            }
+        },
+    }
+    cohort = {
+        "freeze": {
+            "scene_records": [
+                {"scene": "scene-x", "role": "test", "continuous_clip": clip}
+            ]
+        }
+    }
+
+    binding, record = RUNNER.validate_scene_contract(
+        config=config,
+        inventory=inventory,
+        cohort=cohort,
+        scene="scene-x",
+        test_authorized=True,
+    )
+    assert binding["partition"] == "test"
+    assert record["role"] == "test"
+
+
 def test_effect_mask_and_boundary_f1_known_values() -> None:
     left = np.zeros((16, 16, 3), dtype=np.uint8)
     right = left.copy()

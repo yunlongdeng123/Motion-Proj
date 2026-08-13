@@ -37,6 +37,11 @@ from motion_proj.worldsim_v4.temporal_protocol import (  # noqa: E402
     evidence_memory_weights,
     resample_se3_transforms,
 )
+from motion_proj.worldsim_v4.test_freeze import (  # noqa: E402
+    TestFreezeError,
+    exclusive_json,
+    validate_test_attempt,
+)
 
 
 TASK_ID = "WS-V4-M3-TEMPORAL-DELTA-01"
@@ -762,12 +767,15 @@ def validate_scene_contract(
     inventory: Mapping[str, Any],
     cohort: Mapping[str, Any],
     scene: str,
+    test_authorized: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if scene not in inventory["scenes"]:
         raise M3SceneRunError(f"scene 不在 M3 inventory: {scene}")
     binding = inventory["scenes"][scene]
-    if binding["partition"] not in {"development", "validation"}:
+    if binding["partition"] == "test" and not test_authorized:
         raise M3SceneRunError("M3 scene runner 禁止读取 test partition")
+    if binding["partition"] not in {"development", "validation", "test"}:
+        raise M3SceneRunError("M3 scene partition 非法")
     records = [
         row for row in cohort["freeze"]["scene_records"] if row["scene"] == scene
     ]
@@ -804,6 +812,8 @@ def run(
     warp_alpha: float,
     operations: tuple[str, ...],
     diagnostic: bool,
+    test_freeze_path: Path | None = None,
+    test_attempt_path: Path | None = None,
 ) -> dict[str, Any]:
     started = time.monotonic()
     if run_dir.exists():
@@ -813,6 +823,25 @@ def run(
     source_snapshot.mkdir()
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     inventory = yaml.safe_load(inventory_path.read_text(encoding="utf-8"))
+    preview = inventory.get("scenes", {}).get(scene, {})
+    test_context = None
+    if preview.get("partition") == "test":
+        if test_freeze_path is None or test_attempt_path is None:
+            raise M3SceneRunError(
+                "test partition requires committed freeze and exact-once attempt"
+            )
+        try:
+            test_context = validate_test_attempt(
+                freeze_path=test_freeze_path,
+                attempt_path=test_attempt_path,
+                project_root=PROJECT_ROOT,
+                scene=scene,
+                run_dir=run_dir,
+                config_path=config_path,
+                inventory_path=inventory_path,
+            )
+        except TestFreezeError as error:
+            raise M3SceneRunError(str(error)) from error
     cohort_path = verify_binding(inventory["cohort"], "D0 cohort")
     cohort = yaml.safe_load(cohort_path.read_text(encoding="utf-8"))
     binding, cohort_record = validate_scene_contract(
@@ -820,13 +849,18 @@ def run(
         inventory=inventory,
         cohort=cohort,
         scene=scene,
+        test_authorized=test_context is not None,
     )
     for source in (config_path, inventory_path, cohort_path, Path(__file__)):
         shutil.copy2(source, source_snapshot / source.name)
+    if test_context is not None:
+        shutil.copy2(test_freeze_path, source_snapshot / "V4_TEST_FREEZE.json")
+        shutil.copy2(test_attempt_path, source_snapshot / "test_attempt.json")
     for source in (
         PROJECT_ROOT / "motion_proj/worldsim_v4/se3_bspline.py",
         PROJECT_ROOT / "motion_proj/worldsim_v4/temporal_protocol.py",
         PROJECT_ROOT / "motion_proj/worldsim_v4/temporal_metrics.py",
+        PROJECT_ROOT / "motion_proj/worldsim_v4/test_freeze.py",
     ):
         shutil.copy2(source, source_snapshot / source.name)
 
@@ -853,6 +887,9 @@ def run(
     if binding["partition"] == "validation":
         if selected is None or parameters != selected:
             raise M3SceneRunError("validation 必须使用 development freeze 参数")
+    if binding["partition"] == "test":
+        if selected is None or parameters != selected:
+            raise M3SceneRunError("test 必须使用 development freeze 参数")
     if binding["partition"] == "development" and selected is not None and not diagnostic:
         if parameters != selected:
             raise M3SceneRunError("freeze 后 development formal 只能使用选定参数")
@@ -911,8 +948,26 @@ def run(
         "clip": cohort_record["continuous_clip"],
         "camera_ids": list(config["clip"]["camera_ids"]),
         "binding": binding,
+        "test_attempt": (
+            None
+            if test_context is None
+            else {
+                "attempt_id": test_context["plan"]["attempt_id"],
+                "attempt_sha256": test_context["attempt_sha256"],
+                **test_context["provenance"],
+            }
+        ),
         "test_quality_read": False,
     }
+    test_attempt_audit = (
+        None
+        if test_context is None
+        else {
+            "attempt_id": test_context["plan"]["attempt_id"],
+            "attempt_sha256": test_context["attempt_sha256"],
+            **test_context["provenance"],
+        }
+    )
     (run_dir / "resolved_config.yaml").write_text(
         yaml.safe_dump(resolved, sort_keys=False, allow_unicode=True), encoding="utf-8"
     )
@@ -934,7 +989,10 @@ def run(
             "development_optimization_read": False,
             "validation_content_read": False,
             "validation_optimization_read": False,
+            "test_scene_attempted": binding["partition"] == "test",
+            "test_content_read": False,
             "test_quality_read": False,
+            "test_attempt": test_attempt_audit,
             "project_git_head": git_head(),
             "project_git_dirty": git_dirty(),
             "duration_seconds": time.monotonic() - started,
@@ -948,6 +1006,11 @@ def run(
                 "project_git_head": git_head(),
                 "project_git_dirty": git_dirty(),
                 "cuda_used": False,
+                "test_attempt_id": (
+                    None
+                    if test_context is None
+                    else test_context["plan"]["attempt_id"]
+                ),
                 "test_quality_read": False,
             },
         )
@@ -961,12 +1024,28 @@ def run(
                 "status": "done",
                 "summary_sha256": sha256_file(run_dir / "summary.json"),
                 "manifest_sha256": sha256_file(run_dir / "manifest.json"),
+                "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
+                "test_quality_read": False,
             },
         )
         return summary
 
     if not torch.cuda.is_available():
         raise M3SceneRunError("M3 real renderer 需要 CUDA")
+    test_quality_read = binding["partition"] == "test"
+    if test_quality_read:
+        exclusive_json(
+            run_dir / "test_read_started.json",
+            {
+                "schema_version": "worldsim_v4_test_read_started_v1",
+                "task_id": TASK_ID,
+                "scene": scene,
+                "attempt_id": test_context["plan"]["attempt_id"],
+                "attempt_sha256": test_context["attempt_sha256"],
+                "freeze_sha256": test_context["provenance"]["freeze_sha256"],
+                "state": "test_content_read_started",
+            },
+        )
     torch.cuda.set_device(0)
     torch.cuda.reset_peak_memory_stats(0)
     drivestudio_root = Path(inventory["drivestudio_checkout"])
@@ -1112,7 +1191,10 @@ def run(
             "development_optimization_read": False,
             "validation_content_read": binding["partition"] == "validation",
             "validation_optimization_read": False,
-            "test_quality_read": False,
+            "test_scene_attempted": binding["partition"] == "test",
+            "test_content_read": test_quality_read,
+            "test_quality_read": test_quality_read,
+            "test_attempt": test_attempt_audit,
             "project_git_head": git_head(),
             "project_git_dirty": git_dirty(),
             "duration_seconds": time.monotonic() - started,
@@ -1134,7 +1216,7 @@ def run(
                 "parameters_sha256": canonical_sha256(parameters),
                 "cuda_device": torch.cuda.get_device_name(0),
                 "torch_version": torch.__version__,
-                "test_quality_read": False,
+                "test_quality_read": test_quality_read,
             },
         )
         manifest = output_manifest(run_dir)
@@ -1148,6 +1230,7 @@ def run(
                 "summary_sha256": sha256_file(run_dir / "summary.json"),
                 "manifest_sha256": sha256_file(run_dir / "manifest.json"),
                 "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
+                "test_quality_read": test_quality_read,
             },
         )
         return summary
@@ -1278,7 +1361,10 @@ def run(
         "development_optimization_read": False,
         "validation_content_read": binding["partition"] == "validation",
         "validation_optimization_read": False,
-        "test_quality_read": False,
+        "test_scene_attempted": binding["partition"] == "test",
+        "test_content_read": test_quality_read,
+        "test_quality_read": test_quality_read,
+        "test_attempt": test_attempt_audit,
         "project_git_head": git_head(),
         "project_git_dirty": git_dirty(),
         "duration_seconds": time.monotonic() - started,
@@ -1300,7 +1386,7 @@ def run(
             "parameters_sha256": canonical_sha256(parameters),
             "cuda_device": torch.cuda.get_device_name(0),
             "torch_version": torch.__version__,
-            "test_quality_read": False,
+            "test_quality_read": test_quality_read,
         },
     )
     manifest = output_manifest(run_dir)
@@ -1314,6 +1400,7 @@ def run(
             "summary_sha256": sha256_file(run_dir / "summary.json"),
             "manifest_sha256": sha256_file(run_dir / "manifest.json"),
             "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
+            "test_quality_read": test_quality_read,
         },
     )
     return summary
@@ -1339,6 +1426,8 @@ def main() -> int:
     parser.add_argument("--warp-alpha", type=float, required=True)
     parser.add_argument("--operations", nargs="+", default=list(OPERATIONS))
     parser.add_argument("--diagnostic", action="store_true")
+    parser.add_argument("--test-freeze", type=Path)
+    parser.add_argument("--test-attempt", type=Path)
     args = parser.parse_args()
     try:
         summary = run(
@@ -1352,6 +1441,12 @@ def main() -> int:
             warp_alpha=args.warp_alpha,
             operations=tuple(args.operations),
             diagnostic=args.diagnostic,
+            test_freeze_path=(
+                None if args.test_freeze is None else args.test_freeze.resolve()
+            ),
+            test_attempt_path=(
+                None if args.test_attempt is None else args.test_attempt.resolve()
+            ),
         )
         print(
             json.dumps(
@@ -1375,7 +1470,9 @@ def main() -> int:
                 "error_type": type(exc).__name__,
                 "error": str(exc),
                 "traceback": traceback.format_exc(),
-                "test_quality_read": False,
+                "test_quality_read": (
+                    args.run_dir.resolve().joinpath("test_read_started.json").is_file()
+                ),
             },
         )
         raise
