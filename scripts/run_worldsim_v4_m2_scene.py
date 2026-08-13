@@ -198,6 +198,14 @@ def preflight(config: Mapping[str, Any], *, phase: str) -> dict[str, Any]:
             for support_frame, _ in request["support_views"]:
                 if int(support_frame) % 5 in {target_remainder, heldout_remainder}:
                     raise M2SceneRunError("M2 support 混入 development/heldout")
+        for request in config.get("blocked_requests", []):
+            _verify(request["target_mask"], f"{request['request_id']}:blocked-mask")
+            _verify(
+                request["groundtruth_with_actor"],
+                f"{request['request_id']}:blocked-groundtruth",
+            )
+            if not str(request.get("reason", "")).startswith("ABSTAIN_"):
+                raise M2SceneRunError("blocked validation request lacks ABSTAIN reason")
     return verified
 
 
@@ -881,6 +889,91 @@ def _process_request(
     }
 
 
+def _process_blocked_request(
+    *,
+    config: Mapping[str, Any],
+    request: Mapping[str, Any],
+    trainer: Any,
+    dataset: Any,
+    device: torch.device,
+    request_dir: Path,
+) -> dict[str, Any]:
+    """Measure the exact R0/no-op arm when no role-matched erase asset exists."""
+
+    request_dir.mkdir(parents=True)
+    frame, camera_id = int(request["frame"]), int(request["camera_id"])
+    mask = load_binary_mask(Path(request["target_mask"]["path"]))
+    base = render_snapshot(
+        trainer=trainer, dataset=dataset, frame=frame, camera_id=camera_id, device=device
+    )
+    supports = []
+    for support_frame, support_camera in request["support_views"]:
+        snapshot = render_snapshot(
+            trainer=trainer,
+            dataset=dataset,
+            frame=int(support_frame),
+            camera_id=int(support_camera),
+            device=device,
+        )
+        snapshot["frame"] = int(support_frame)
+        snapshot["camera_id"] = int(support_camera)
+        supports.append(snapshot)
+    cross_rgb, observed, cross_audit = combine_cross_view_splats(
+        supports=supports,
+        target=base,
+        target_mask=mask,
+        projection=config["asset_build"]["projection"],
+    )
+    abstain_metrics = _atomic_abstain_metrics(
+        _evaluate_render(
+            rendered=base,
+            base=base,
+            erase=base,
+            mask=mask,
+            observed=observed,
+            cross_rgb=cross_rgb,
+            background_depth_reference=base["background_depth"],
+            trainer=trainer,
+            device=device,
+        )
+    )
+    imageio.imwrite(request_dir / "base_atomic_noop.png", base["rgb"])
+    imageio.imwrite(request_dir / "mask.png", mask.astype(np.uint8) * 255)
+    imageio.imwrite(request_dir / "cross_view_observed.png", observed.astype(np.uint8) * 255)
+    reason = str(request["reason"])
+    failures = [
+        {"arm": arm, "error": reason}
+        for arm in config["ablations"]["matched_repair_arms"]
+        if arm not in {"ABSTAIN", "RISK_ROUTER"}
+    ]
+    return {
+        "request_id": request["request_id"],
+        "frame": frame,
+        "camera_id": camera_id,
+        "role": request["role"],
+        "status": "abstain",
+        "reason": reason,
+        "mask_pixels": int(mask.sum()),
+        "observed_pixels": int(observed.sum()),
+        "cross_view_audit": cross_audit,
+        "candidate_count": 0,
+        "candidates": [],
+        "candidate_failures": failures,
+        "matched_arms": _matched_arm_records(
+            expected_arms=list(config["ablations"]["matched_repair_arms"]),
+            candidate_records=[],
+            failures=failures,
+            abstain_metrics=abstain_metrics,
+        ),
+        "development_content_read": False,
+        "development_optimization_read": False,
+        "validation_content_read": True,
+        "validation_optimization_read": False,
+        "heldout_content_read": False,
+        "test_quality_read": False,
+    }
+
+
 def run(
     config: Mapping[str, Any],
     run_dir: Path,
@@ -960,6 +1053,28 @@ def run(
                 request_dir=run_dir / "artifacts/requests" / request["request_id"],
             )
         )
+    blocked_rows = []
+    blocked_requests = [] if max_requests is not None else list(
+        config.get("blocked_requests", [])
+    )
+    for index, request in enumerate(blocked_requests, start=1):
+        print(
+            f"M2 {config['scene']} blocked request {index}/{len(blocked_requests)} "
+            f"{request['request_id']}",
+            flush=True,
+        )
+        blocked_rows.append(
+            _process_blocked_request(
+                config=config,
+                request=request,
+                trainer=trainer,
+                dataset=dataset,
+                device=device,
+                request_dir=run_dir
+                / "artifacts/blocked_requests"
+                / request["request_id"],
+            )
+        )
     checkpoint_after = sha256_file(checkpoint)
     if checkpoint_after != checkpoint_before:
         raise M2SceneRunError("M2 source checkpoint 被修改")
@@ -990,7 +1105,8 @@ def run(
         "request_count": len(rows),
         "frozen_request_count": int(config["request_count"]),
         "blocked_request_count": int(config.get("blocked_request_count", 0)),
-        "blocked_requests": config.get("blocked_requests", []),
+        "blocked_requests": blocked_rows,
+        "blocked_requests_measured": max_requests is None,
         "total_request_count": int(config.get("total_request_count", len(rows))),
         "candidate_count": sum(int(row["candidate_count"]) for row in rows),
         "requests": rows,
