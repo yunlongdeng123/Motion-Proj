@@ -109,6 +109,7 @@ SNAPSHOT_RELPATHS = (
     "scripts/run_worldsim_v4_streetgs_scene.py",
     "scripts/prepare_worldsim_v3_drivestudio.py",
     "compatibility/DriveStudio-2026-08-05.patch",
+    "compatibility/DriveStudio-2026-08-13-m3-test-timeline.patch",
     "motion_proj/worldsim_v3/drivestudio_compat.py",
     "tests/test_run_worldsim_v4_streetgs_scene.py",
 )

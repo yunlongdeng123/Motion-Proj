@@ -1,0 +1,98 @@
+diff --git a/datasets/driving_dataset.py b/datasets/driving_dataset.py
+--- a/datasets/driving_dataset.py
++++ b/datasets/driving_dataset.py
+@@ -16,4 +16,7 @@ from utils.visualization import get_layout
+ from utils.visualization import get_layout
+ from utils.geometry import transform_points
+ from utils.camera import get_interp_novel_trajectories
++from motion_proj.worldsim_v3.drivestudio_compat import (
++    concatenate_paired_lidar_chunks,
++)
+ from utils.misc import export_points_to_ply, import_str
+@@ -344,7 +347,11 @@ class DrivingDataset(SceneDataset):
+         logger.info(f"Aggregating lidar points across {self.frame_num} frames")
+         for ins_id in instance_dict:
+-            instance_dict[ins_id]["pts"] = torch.cat(instance_dict[ins_id]["pts"], dim=0)
+-            instance_dict[ins_id]["colors"] = torch.cat(instance_dict[ins_id]["colors"], dim=0)
++            points, colors = concatenate_paired_lidar_chunks(
++                instance_dict[ins_id]["pts"],
++                instance_dict[ins_id]["colors"],
++            )
++            instance_dict[ins_id]["pts"] = points
++            instance_dict[ins_id]["colors"] = colors
+             # instance_dict[ins_id]["flows"] = torch.cat(instance_dict[ins_id]["flows"], dim=0)
+             instance_dict[ins_id]["num_pts"] = instance_dict[ins_id]["pts"].shape[0]
+             if instance_dict[ins_id]["num_pts"] > instance_max_pts:
+@@ -582,7 +589,34 @@ class DrivingDataset(SceneDataset):
+         return valid_mask
+
+     def split_train_test(self):
+-        if self.data_cfg.pixel_source.test_image_stride != 0:
++        partition_modulus = int(
++            self.data_cfg.pixel_source.get("partition_modulus", 0)
++        )
++        excluded_remainders = list(
++            self.data_cfg.pixel_source.get("excluded_remainders", [])
++        )
++        if partition_modulus > 0:
++            if not excluded_remainders:
++                raise ValueError(
++                    "partition_modulus requires non-empty excluded_remainders"
++                )
++            if len(set(excluded_remainders)) != len(excluded_remainders):
++                raise ValueError("excluded_remainders must be unique")
++            if any(
++                int(remainder) < 0 or int(remainder) >= partition_modulus
++                for remainder in excluded_remainders
++            ):
++                raise ValueError("excluded_remainders outside partition modulus")
++            excluded = {int(remainder) for remainder in excluded_remainders}
++            test_timesteps = np.array(
++                [
++                    timestep
++                    for timestep in range(self.num_img_timesteps)
++                    if timestep % partition_modulus in excluded
++                ],
++                dtype=np.int64,
++            )
++        elif self.data_cfg.pixel_source.test_image_stride != 0:
+             test_timesteps = np.arange(
+                 # it makes no sense to have test timesteps before the start timestep
+                 self.data_cfg.pixel_source.test_image_stride,
+@@ -590,7 +624,7 @@ class DrivingDataset(SceneDataset):
+                 self.data_cfg.pixel_source.test_image_stride,
+             )
+         else:
+-            test_timesteps = []
++            test_timesteps = np.array([], dtype=np.int64)
+         train_timesteps = np.array(
+             [i for i in range(self.num_img_timesteps) if i not in test_timesteps]
+         )
+diff --git a/datasets/nuscenes/nuscenes_sourceloader.py b/datasets/nuscenes/nuscenes_sourceloader.py
+--- a/datasets/nuscenes/nuscenes_sourceloader.py
++++ b/datasets/nuscenes/nuscenes_sourceloader.py
+@@ -11,6 +11,10 @@ from torch import Tensor
+ from torch import Tensor
+ from tqdm import tqdm, trange
+
++from motion_proj.worldsim_v3.drivestudio_compat import (
++    dense_instance_frame_count,
++)
++
+ from datasets.base.scene_dataset import ModelType
+ from datasets.base.lidar_source import SceneLidarSource
+ from datasets.base.pixel_source import CameraData, ScenePixelSource
+@@ -204,7 +208,11 @@ class NuScenesPixelSource(ScenePixelSource):
+             frame_instances = json.load(f)
+         # get pose of each instance at each frame
+         # shape (num_frames, num_instances, 4, 4)
+         num_instances = len(instances_info)
+-        num_full_frames = len(frame_instances)
++        num_full_frames = dense_instance_frame_count(
++            frame_instances,
++            instances_info,
++            self.end_timestep,
++        )
+         instances_pose = np.zeros((num_full_frames, num_instances, 4, 4))
+         instances_size = np.zeros((num_full_frames, num_instances, 3))
+         instances_true_id = np.arange(num_instances)

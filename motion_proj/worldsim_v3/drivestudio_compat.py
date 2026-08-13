@@ -2,10 +2,44 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
+from typing import Any
 
 import torch
 from torch import Tensor
+
+
+def dense_instance_frame_count(
+    frame_instances: Mapping[str, Any],
+    instances_info: Mapping[str, Any],
+    minimum_frame_count: int,
+) -> int:
+    """Return a safe dense timeline length for sparse instance annotations.
+
+    NuScenes preprocessing may omit ``frame_instances`` keys for frames with
+    no visible instances.  The upstream loader indexes its dense arrays by the
+    original frame numbers, so ``len(frame_instances)`` is not a valid array
+    length for such scenes.  Include the configured camera timeline and every
+    frame index referenced by either instance JSON file.
+    """
+
+    if minimum_frame_count < 0:
+        raise ValueError("minimum_frame_count must be non-negative")
+
+    frame_indices: list[int] = []
+    try:
+        frame_indices.extend(int(frame_idx) for frame_idx in frame_instances)
+        for instance in instances_info.values():
+            frame_indices.extend(
+                int(frame_idx)
+                for frame_idx in instance["frame_annotations"]["frame_idx"]
+            )
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("invalid instance timeline annotations") from error
+
+    if any(frame_idx < 0 for frame_idx in frame_indices):
+        raise ValueError("instance frame indices must be non-negative")
+    return max([minimum_frame_count, *(frame_idx + 1 for frame_idx in frame_indices)])
 
 
 def concatenate_paired_lidar_chunks(

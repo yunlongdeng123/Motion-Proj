@@ -6,7 +6,33 @@ import torch
 from motion_proj.worldsim_v3 import drivestudio_compat
 from motion_proj.worldsim_v3.drivestudio_compat import (
     concatenate_paired_lidar_chunks,
+    dense_instance_frame_count,
 )
+
+
+def test_dense_instance_frame_count_preserves_sparse_full_timeline() -> None:
+    frame_instances = {"0": [0], "1": [], "178": [0], "200": [0]}
+    instances_info = {
+        "0": {"frame_annotations": {"frame_idx": [0, 178, 200]}}
+    }
+
+    assert dense_instance_frame_count(frame_instances, instances_info, 201) == 201
+
+
+def test_dense_instance_frame_count_covers_annotations_and_rejects_bad_indices() -> None:
+    assert dense_instance_frame_count(
+        {"0": []},
+        {"0": {"frame_annotations": {"frame_idx": [205]}}},
+        201,
+    ) == 206
+    with pytest.raises(ValueError, match="non-negative"):
+        dense_instance_frame_count({"-1": []}, {}, 201)
+    with pytest.raises(ValueError, match="invalid"):
+        dense_instance_frame_count(
+            {"0": []},
+            {"0": {"frame_annotations": {}}},
+            201,
+        )
 
 
 def test_filters_empty_pairs_and_preserves_order(monkeypatch) -> None:
