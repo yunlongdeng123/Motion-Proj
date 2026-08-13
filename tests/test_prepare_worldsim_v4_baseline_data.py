@@ -7,6 +7,7 @@ import pytest
 from scripts.prepare_worldsim_v4_baseline_data import (
     BaselineDataError,
     M1_FRAME_CONTRACT,
+    M3_TEST_FRAME_CONTRACT,
     expected_scene_frames,
     scene_directory_name,
     validate_config,
@@ -19,6 +20,7 @@ VALIDATION_SCENES = [
     "scene-0071", "scene-1089", "scene-0317",
     "scene-0862", "scene-1012", "scene-0450",
 ]
+TEST_SCENES = list(M3_TEST_FRAME_CONTRACT)
 
 
 def config() -> dict:
@@ -45,6 +47,7 @@ def cohort() -> dict:
             "scene_roles": {
                 "development": SCENES,
                 "validation": VALIDATION_SCENES,
+                "test": TEST_SCENES,
             }
         }
     }
@@ -90,6 +93,43 @@ def test_m1_validation_data_config_rejects_per_scene_frame_drift() -> None:
     value["scenes"]["scene-0317"]["expected_frames_10hz"] = 196
     value["gates"]["expected_extract_scene_count"] = 6
     with pytest.raises(BaselineDataError, match="per-scene frame"):
+        validate_config(value, cohort())
+
+
+def test_m3_test_data_config_requires_exact_eighteen_without_quality_read() -> None:
+    value = config()
+    value["task_id"] = "WS-V4-M3-TEMPORAL-DELTA-01"
+    value["protocol"]["cohort_role"] = "test"
+    value["scenes"] = {
+        scene: {
+            "scene_index": index,
+            "state": "extract_and_preprocess",
+            "expected_frames_10hz": M3_TEST_FRAME_CONTRACT[scene],
+        }
+        for index, scene in enumerate(TEST_SCENES)
+    }
+    value["gates"]["expected_extract_scene_count"] = 18
+    result = validate_config(value, cohort())
+    assert result["cohort_role"] == "test"
+    assert result["extract_scenes"] == sorted(TEST_SCENES)
+    assert value["protocol"]["test_quality_read"] is False
+
+
+def test_m3_test_data_config_rejects_frame_drift() -> None:
+    value = config()
+    value["task_id"] = "WS-V4-M3-TEMPORAL-DELTA-01"
+    value["protocol"]["cohort_role"] = "test"
+    value["scenes"] = {
+        scene: {
+            "scene_index": index,
+            "state": "extract_and_preprocess",
+            "expected_frames_10hz": M3_TEST_FRAME_CONTRACT[scene],
+        }
+        for index, scene in enumerate(TEST_SCENES)
+    }
+    value["scenes"]["scene-0919"]["expected_frames_10hz"] = 196
+    value["gates"]["expected_extract_scene_count"] = 18
+    with pytest.raises(BaselineDataError, match="test per-scene frame"):
         validate_config(value, cohort())
 
 

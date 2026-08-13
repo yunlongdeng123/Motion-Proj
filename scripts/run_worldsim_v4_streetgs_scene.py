@@ -31,6 +31,7 @@ from scripts.prepare_worldsim_v4_baseline_data import scene_directory_name, vali
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
 M1_TASK_ID = "WS-V4-M1-EVIDENCE-FIELD-01"
+M3_TASK_ID = "WS-V4-M3-TEMPORAL-DELTA-01"
 SCENE_CONTRACTS = {
     TASK_ID: {
         "scene-0230": 179,
@@ -48,6 +49,26 @@ SCENE_CONTRACTS = {
         "scene-1012": 770,
         "scene-0450": 364,
     },
+    M3_TASK_ID: {
+        "scene-0919": 704,
+        "scene-0100": 82,
+        "scene-0520": 410,
+        "scene-0634": 488,
+        "scene-1062": 802,
+        "scene-0626": 482,
+        "scene-0015": 14,
+        "scene-0552": 436,
+        "scene-0924": 709,
+        "scene-0906": 692,
+        "scene-0519": 409,
+        "scene-0781": 604,
+        "scene-1072": 812,
+        "scene-0554": 438,
+        "scene-0911": 697,
+        "scene-0966": 731,
+        "scene-0800": 620,
+        "scene-0632": 486,
+    },
 }
 FRAME_CONTRACTS = {
     TASK_ID: {scene: 196 for scene in SCENE_CONTRACTS[TASK_ID]},
@@ -59,10 +80,31 @@ FRAME_CONTRACTS = {
         "scene-1012": 196,
         "scene-1089": 196,
     },
+    M3_TASK_ID: {
+        "scene-0919": 201,
+        "scene-0100": 196,
+        "scene-0520": 201,
+        "scene-0634": 196,
+        "scene-1062": 196,
+        "scene-0626": 196,
+        "scene-0015": 196,
+        "scene-0552": 201,
+        "scene-0924": 196,
+        "scene-0906": 201,
+        "scene-0519": 201,
+        "scene-0781": 196,
+        "scene-1072": 196,
+        "scene-0554": 201,
+        "scene-0911": 196,
+        "scene-0966": 201,
+        "scene-0800": 196,
+        "scene-0632": 196,
+    },
 }
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/streetgs_training_v1.yaml",
     "configs/worldsim_v4/m1_validation_reconstruction_v1.yaml",
+    "configs/worldsim_v4/m3_test_reconstruction_v1.yaml",
     "configs/worldsim_v4/baseline_data_v1.yaml",
     "scripts/run_worldsim_v4_streetgs_scene.py",
     "scripts/prepare_worldsim_v3_drivestudio.py",
@@ -146,13 +188,13 @@ def validate_config(config: Mapping[str, Any], project_root: Path) -> dict[str, 
         raise StreetGSTrainingError("matched partition 禁止 stride split")
     scenes = config.get("scenes", {})
     if scenes != SCENE_CONTRACTS[task_id]:
-        raise StreetGSTrainingError("六场景 index 合同漂移")
+        raise StreetGSTrainingError("冻结场景 index 合同漂移")
     observed_frames = {
         scene: expected_scene_frames(config, scene)
         for scene in scenes
     }
     if observed_frames != FRAME_CONTRACTS[task_id]:
-        raise StreetGSTrainingError("六场景 frame 合同漂移")
+        raise StreetGSTrainingError("冻结场景 frame 合同漂移")
     return {
         "task_id": task_id,
         "scene_count": len(scenes),

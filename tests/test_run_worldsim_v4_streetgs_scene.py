@@ -8,6 +8,8 @@ import sys
 import pytest
 
 from scripts.run_worldsim_v4_streetgs_scene import (
+    FRAME_CONTRACTS,
+    SCENE_CONTRACTS,
     StreetGSTrainingError,
     build_train_command,
     expected_scene_frames,
@@ -109,6 +111,22 @@ def test_m1_validation_reconstruction_rejects_frame_drift(tmp_path: Path) -> Non
         validate_config(value, tmp_path)
 
 
+def test_m3_test_reconstruction_uses_exact_eighteen_train_only(tmp_path: Path) -> None:
+    value = config(tmp_path)
+    value["task_id"] = "WS-V4-M3-TEMPORAL-DELTA-01"
+    value["scenes"] = SCENE_CONTRACTS[value["task_id"]]
+    value["data"]["expected_frames_by_scene"] = FRAME_CONTRACTS[value["task_id"]]
+    result = validate_config(value, tmp_path)
+    assert result["scene_count"] == 18
+    command, _, iterations = build_train_command(
+        value, "scene-0919", "formal", tmp_path / "run"
+    )
+    assert iterations == 30000
+    assert "data.scene_idx=704" in command
+    assert "+data.pixel_source.excluded_remainders=[2,4]" in command
+    assert "render.render_test=false" in command
+
+
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
@@ -116,7 +134,7 @@ def test_m1_validation_reconstruction_rejects_frame_drift(tmp_path: Path) -> Non
         (lambda value: value["training"]["modes"].update(formal=1000), "seed/iteration"),
         (lambda value: value["data"]["frame_partition"].update(heldout_remainder=3), "frame partition"),
         (lambda value: value["data"].update(test_image_stride=10), "stride split"),
-        (lambda value: value["scenes"].pop("scene-0994"), "六场景"),
+        (lambda value: value["scenes"].pop("scene-0994"), "冻结场景"),
     ],
 )
 def test_training_config_fails_closed(tmp_path: Path, mutation, message: str) -> None:

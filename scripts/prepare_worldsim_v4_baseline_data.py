@@ -21,6 +21,7 @@ import yaml
 
 TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
 M1_TASK_ID = "WS-V4-M1-EVIDENCE-FIELD-01"
+M3_TASK_ID = "WS-V4-M3-TEMPORAL-DELTA-01"
 M1_FRAME_CONTRACT = {
     "scene-0071": 196,
     "scene-0317": 191,
@@ -29,9 +30,35 @@ M1_FRAME_CONTRACT = {
     "scene-1012": 196,
     "scene-1089": 196,
 }
+M3_TEST_FRAME_CONTRACT = {
+    "scene-0919": 201,
+    "scene-0100": 196,
+    "scene-0520": 201,
+    "scene-0634": 196,
+    "scene-1062": 196,
+    "scene-0626": 196,
+    "scene-0015": 196,
+    "scene-0552": 201,
+    "scene-0924": 196,
+    "scene-0906": 201,
+    "scene-0519": 201,
+    "scene-0781": 196,
+    "scene-1072": 196,
+    "scene-0554": 201,
+    "scene-0911": 196,
+    "scene-0966": 201,
+    "scene-0800": 196,
+    "scene-0632": 196,
+}
+ROLE_BY_TASK = {
+    TASK_ID: "development",
+    M1_TASK_ID: "validation",
+    M3_TASK_ID: "test",
+}
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v4/baseline_data_v1.yaml",
     "configs/worldsim_v4/m1_validation_data_v1.yaml",
+    "configs/worldsim_v4/m3_test_data_v1.yaml",
     "configs/worldsim_v4/nuscenes_cohort_v1.yaml",
     "scripts/prepare_worldsim_v4_baseline_data.py",
     "scripts/prepare_dr_v2_drivestudio_scene.py",
@@ -82,7 +109,7 @@ def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dic
     task_id = config.get("task_id")
     if (
         config.get("schema_version") != "worldsim_v4_baseline_data_v1"
-        or task_id not in {TASK_ID, M1_TASK_ID}
+        or task_id not in ROLE_BY_TASK
     ):
         raise BaselineDataError("V4 data config schema/task 漂移")
     if config.get("status") != "running":
@@ -92,11 +119,12 @@ def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dic
     if protocol.get("sensors") != expected_sensors or protocol.get("no_download") is not True or protocol.get("test_quality_read") is not False:
         raise BaselineDataError("sensor/no-download/test-unread 合同漂移")
     scenes = config.get("scenes", {})
-    expected_role = "development" if task_id == TASK_ID else "validation"
+    expected_role = ROLE_BY_TASK[str(task_id)]
     if protocol.get("cohort_role", expected_role) != expected_role:
         raise BaselineDataError("data cohort role 漂移")
     frozen = cohort.get("freeze", {}).get("scene_roles", {}).get(expected_role, [])
-    if len(scenes) != 6 or set(scenes) != set(frozen):
+    expected_scene_count = 18 if expected_role == "test" else 6
+    if len(scenes) != expected_scene_count or set(scenes) != set(frozen):
         raise BaselineDataError(f"data scenes 必须精确匹配 D0 {expected_role}")
     extracting = sorted(scene for scene, row in scenes.items() if row.get("state") == "extract_and_preprocess")
     if len(extracting) != int(config["gates"]["expected_extract_scene_count"]):
@@ -115,6 +143,13 @@ def validate_config(config: Mapping[str, Any], cohort: Mapping[str, Any]) -> dic
         }
         if frame_contract != M1_FRAME_CONTRACT:
             raise BaselineDataError("validation per-scene frame contract 漂移")
+    if task_id == M3_TASK_ID:
+        frame_contract = {
+            scene: int(record.get("expected_frames_10hz", -1))
+            for scene, record in scenes.items()
+        }
+        if frame_contract != M3_TEST_FRAME_CONTRACT:
+            raise BaselineDataError("test per-scene frame contract 漂移")
     return {
         "task_id": task_id,
         "cohort_role": expected_role,
