@@ -1,5 +1,15 @@
 # Research Status
 
+## V4 M1/M2/M3 与 18-scene exact-once test 收口（2026-08-13）
+
+- M1 结论继续冻结为 `rejected`：canonical validation r200 为 `3 evaluable + 3 abstain`、方向支持 `0/6`，r201 禁止 M1 feature expansion；没有把后续 M2/M3 结果倒写成 M1 成功。
+- M2 风险路由 r222 通过：冻结 `uncertainty_forward / threshold=1.0` 与 `TELEA` comparator，`83/154` accepted、`71/154` abstain；hole geometry MAE 仍明确退化 `+3.3908096237 m`。
+- M3 validation r238 通过：`3 evaluable + 3 abstain`；warp L1 relative improvement=`0.3041063132`，temporal LPIPS relative improvement=`0.0264715072`；冻结参数=`4 control points / acceleration 0.10 / retention 0.50 / alpha 0.40`。
+- 18-scene test canonical aggregate=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T225624Z__m3-test-aggregate18-s0-r335`（`20260813T225624Z__m3-test-aggregate18-s0-r335`）；exact-once attempt/completion=`18/18`，完整 denominator=`12 evaluable + 6 abstain = 18`，结论=`confirmed`，test gate=`true`（`5/5` checks passed）。
+- test aggregate：warp L1 baseline/candidate/relative improvement=`0.0618690015/0.0405895766/0.3439432407`；temporal LPIPS baseline/candidate/relative improvement=`0.0263505519/0.0220381359/0.1636556253`。
+- 冻结与读取合同：source commit=`029d819e0abb63d2edacb811be9ea2153589e92f`，freeze-only commit=`83cb82872bf747c2b1c79fbc2a9982320f972413`，freeze SHA=`0b11d80057560202037d34a4eb9df10853461d7b5d3c6a333f9975d5105d1efb`；18 个 attempt 在读取前以 exclusive marker 消费，聚合器未重读 test source content，parameter/threshold search 均为 false。
+- 结论边界：只覆盖冻结的 nuScenes 18 scenes、三前向相机、2–4 s 连续 clips 与单 RTX 3090；不外推 KITTI、闭环安全、长时序或 repair geometry dominance。aggregate summary SHA=`64d1a47c290c218cb3baecf66fd7a8eed2a7c65b793e30195b71e57af7f12519`，pre-closeout HEAD=`83cb82872bf747c2b1c79fbc2a9982320f972413`。
+
 ## V4 当前状态（2026-08-13，M2 validation 通过后）
 
 - 当前路线：`WorldSim V4 / EviDelta-GS paper-first`，分支

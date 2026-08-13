@@ -1,5 +1,14 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
+
+- `V4-F40`：r258 因 18 场 sky masks 尚未齐全而 fail-closed，r277 因上游假定 instance timeline 稠密而在 scene-0919 暴露稀疏时间轴合同错误；两者都是资产/兼容性失败，不是模型质量失败。只允许以提交 `d5a4794e` 的稀疏 timeline 兼容修复及 r278 100-step smoke 解锁正式训练，不得覆盖失败 run 或提前读 test quality。
+- `V4-F41`：M3 validation r238 的完整 denominator 是 `3 evaluable + 3 abstain = 6`。30.4106% warp L1 改善与 2.6470% temporal LPIPS 改善只来自可评场景；不得删除 abstain、写成 6/6 质量成功，或外推到长时序/非三前向相机。
+- `V4-F42`：REMOVE 使用 exact bypass，零时序增益是冻结组合合同的结果；M3 通过依赖预注册的 across-operation temporal gate，不代表每个 operation 都严格改善。不得事后取消 bypass、改 operation 权重或只报告 LATERAL/INSERT。
+- `V4-F43`：M2 晋级不消除 geometry 风险。hole geometry MAE 的 signed improvement 为 `-3.3908096237 m`（即误差退化 `+3.3908096237 m`）；18-scene 时序结论无论为 `confirmed`，都不得改写成 repair geometry dominance。
+- `V4-F44`：18-scene test 使用 committed freeze 与 exact-once ledger；每场 attempt marker 在任何 test content/quality read 前以 exclusive create 写入，已消费 attempt 禁止重跑。canonical ledger=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T222011Z__m3-test-exact-once-ledger-s0`，attempt/completion=`18/18`；聚合器只读 run evidence，未重读 test source content。
+- `V4-F45`：test 的 abstain 必须留在 18-scene denominator。canonical `20260813T225624Z__m3-test-aggregate18-s0-r335` 为 `12 evaluable + 6 abstain`、conclusion=`confirmed`；不得把 evaluable-only gate 写成全 18 场成功，也不得因 `not_confirmed` 复用同一 test 调参或因 `confirmed` 扩大声明边界。
+
 ## V4 M1 rejection / M2 validation 新增防重复结论（2026-08-13）
 
 - `V4-F35`：M1 的 development 正结果不能覆盖 scene-disjoint validation 负结果。validation 只有

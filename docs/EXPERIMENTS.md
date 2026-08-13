@@ -1,5 +1,25 @@
 # Experiments
 
+## V4 M3 validation / 18-scene exact-once test 注册（2026-08-13）
+
+| Task ID | 状态 | canonical evidence |
+|---|---|---|
+| `WS-V4-M1-EVIDENCE-FIELD-01` | rejected | r200=`3 evaluable + 3 abstain`、directional support=`0/6`；r201 rejection audit |
+| `WS-V4-M2-REPAIR-ROUTER-01` | done | r222 gate passed；router=`uncertainty_forward@1.0`，accepted/abstain=`83/71`，geometry tradeoff=`+3.3908096237 m` |
+| `WS-V4-M3-TEMPORAL-DELTA-01` | done | r238 validation passed；`20260813T225624Z__m3-test-aggregate18-s0-r335` test conclusion=`confirmed`，denominator=`12+6=18` |
+
+### M3 validation freeze
+
+- canonical=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T075800Z__m3-validation-confirmation-s0-r238`；全部预注册门通过，test freeze authorized，test quality 尚未读取。
+- frozen parameters=`{"acceleration_regularization": 0.1, "control_point_count": 4, "evidence_retention": 0.5, "warp_blend_alpha": 0.4}`；validation optimization/read=`false`，3 个 abstain 保留在 6-scene denominator。
+
+### 18-scene test
+
+- freeze=`/root/autodl-tmp/motion_proj/V4_TEST_FREEZE.json`；freeze-only commit=`83cb82872bf747c2b1c79fbc2a9982320f972413`，source parent=`029d819e0abb63d2edacb811be9ea2153589e92f`，execution plan 固定 r317–r334。
+- ledger=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T222011Z__m3-test-exact-once-ledger-s0`；attempt/completion=`18/18`，quality-read scene count 由冻结资产可执行性决定，所有 abstain 保留在 18-scene denominator。
+- aggregate=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T225624Z__m3-test-aggregate18-s0-r335`（`20260813T225624Z__m3-test-aggregate18-s0-r335`，r335）；evaluable/abstain=`12/6`，gate=`true`，conclusion=`confirmed`。
+- 没有 test-time parameter search、threshold search 或 source-content reread；失败/非确认也按预注册合同收口，不触发同一 test 的第二次读取。
+
 ## V4 当前注册表补充（2026-08-13，覆盖下方旧进度行）
 
 | Task ID | 状态 | 当前证据 / 下一门禁 |
