@@ -1,5 +1,32 @@
 # Research Status
 
+## V4 当前状态（2026-08-13，M2 validation 通过后）
+
+- 当前路线：`WorldSim V4 / EviDelta-GS paper-first`，分支
+  `research/worldsim-v4-evidelta`；M2 validation 聚合实现提交=`1cc90b1`。
+- `WS-V4-M1-EVIDENCE-FIELD-01` 已冻结为 `rejected`。canonical validation=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200`；
+  `3 evaluable + 3 abstain`，方向支持=`0/6`（门槛 `>=4/6`），Boundary F1/Brier/ECE delta=
+  `-0.0664623346/+0.0024487362/+0.0024972500`。base RGB/checkpoint exact，未重搜参数，test quality 未读；
+  rejection audit=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T210150Z__m1-validation-rejection-audit-s0-r201`。
+- `WS-V4-M2-REPAIR-ROUTER-01` 已完成并通过 validation。development freeze=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T233139Z__m2-development-router-selection-s0-r212`；
+  frozen router=`uncertainty_forward / threshold=1.0`，matched baseline=`TELEA`。
+- M2 canonical validation=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222`；
+  六场 denominator=`3 evaluable + 3 scene abstain`，请求 denominator=`154`，其中 role-asset abstain=`24`；
+  router accepted/abstain=`83/71`，coverage=`0.5389610390`。相对 frozen TELEA 的 scene-balanced delta：
+  PSNR=`+0.0539729695 dB`、SSIM=`+0.0004358785`、LPIPS=`-0.0007536737`、hole PSNR=
+  `+3.1797798583 dB`、static LiDAR MAE=`+0.0000499586 m`；abstain-error minus accepted-error=
+  `+0.1241311528`。全部冻结门通过，summary/manifest/status SHA=
+  `6bfeb3c6...b1a95 / 702cdb48...47dd / 4fcc7b6e...e75b`，test quality 未读。
+- M2 的 hole geometry MAE 相对 TELEA 退化 `+3.3908096237 m`；由于预注册门只要求 hole PSNR/LPIPS/geometry
+  至少一个主端点改善，M2 可以晋级但不能宣称 repair geometry dominance。
+- 当前唯一授权：`WS-V4-M3-TEMPORAL-DELTA-01` 的 development 2–4 s 连续 clip 协议、实现与验证。
+  M3 必须先比较 frame-independent/linear/cubic/evidence-memory/full arms；未通过 M3 前不得生成
+  `V4_TEST_FREEZE.json`，不得读取 18-scene test quality。
+
 ## V4 当前状态（2026-08-12，M1 development freeze 后）
 
 - 当前路线：`WorldSim V4 / EviDelta-GS paper-first`，分支

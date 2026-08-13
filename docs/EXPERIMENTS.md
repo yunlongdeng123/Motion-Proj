@@ -1,5 +1,48 @@
 # Experiments
 
+## V4 当前注册表补充（2026-08-13，覆盖下方旧进度行）
+
+| Task ID | 状态 | 当前证据 / 下一门禁 |
+|---|---|---|
+| `WS-V4-B0-MATCHED-BASELINES-01` | done | 六场 strict matched baseline 与最终审计 r117 已冻结 |
+| `WS-V4-M1-EVIDENCE-FIELD-01` | rejected | validation r200=`3 evaluable + 3 abstain`、方向支持 `0/6`；rejection audit r201；禁止扩 feature |
+| `WS-V4-M2-REPAIR-ROUTER-01` | done | development r212 冻结 router/TELEA；validation r222 全部门通过，`m3_authorized=true` |
+| `WS-V4-M3-TEMPORAL-DELTA-01` | running | M2 已解锁；当前只允许 6-development-scene 2–4 s clips，先 smoke→freeze→validation |
+| `WS-V4-E0-NUSCENES-SCALE-01` | pending | M3 通过后先生成 test-freeze commit；18 test 仍未读且只能只读一次 |
+| `WS-V4-D1-KITTI-ADAPTER-01` | blocked | 等用户自行复制真实 KITTI；禁止下载、禁止以 synthetic fixture 冒充完成 |
+
+### M1 validation rejection freeze
+
+- canonical=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200`；
+  `3/6` evaluable，方向支持=`0/6`，Boundary F1/FN mass/Brier/ECE delta=
+  `-0.0664623346/+0.0083741268/+0.0024487362/+0.0024972500`；confirmation=`reject`。
+- rejection audit=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T210150Z__m1-validation-rejection-audit-s0-r201`；
+  task=`rejected`，M1 feature expansion=false，M2 fallback scope=`evidence_routed_delta_compiler`。
+- frozen development selection 未改，base RGB/checkpoint exact，validation arm/calibration/threshold search=false；
+  test quality read=false。冻结提交=`b7a8fdf`。
+
+### M2 development freeze / validation closeout
+
+- development scene runs r206–r211 保留全部 `6` scenes；selection r212=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T233139Z__m2-development-router-selection-s0-r212`；
+  frozen weights=`uncertainty_forward`、threshold=`1.0`、tie=`OBSERVED/DONOR/GENERATED`，best matched
+  non-router=`TELEA`，development gate passed。
+- validation scene runs r216–r221：scene-0071/0317/0450 formal done，scene-1089/0862/1012 retained
+  `ABSTAIN_NO_ACTOR`；scene-0317 的 boundary role 另有 24 个 measured atomic abstain。checkpoint 全部 before/after exact，
+  validation optimization=false，test quality read=false。
+- canonical aggregate=
+  `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222`；
+  source=`1cc90b1865ef24f3bbef0add775d0fdf4be0d491`，`6 scenes / 154 requests / 214 candidates`，
+  evaluable/scene-abstain=`3/3`、role-asset-abstain=`24`、accepted/abstain=`83/71`。
+- 相对 development-frozen TELEA：global PSNR/SSIM/LPIPS delta=
+  `+0.0539729695/+0.0004358785/-0.0007536737`，hole PSNR=`+3.1797798583 dB`，static LiDAR MAE
+  degradation=`+0.0000499586 m`，selective separation=`+0.1241311528`；全部 gate passed。
+  hole geometry MAE 同时退化 `+3.3908096237 m`，必须作为 tradeoff 报告。
+- summary/manifest/status SHA=`6bfeb3c6...b1a95 / 702cdb48...47dd / 4fcc7b6e...e75b`；manifest
+  `8/8` inventory exact；实现/绑定提交=`1cc90b1`；M3 解锁，18 test 仍未授权。
+
 ## V4 当前注册表补充（2026-08-12）
 
 | Task ID | 状态 | 当前证据 / 下一门禁 |

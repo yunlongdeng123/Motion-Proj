@@ -1,11 +1,23 @@
 schema_version: worldsim_v4_m3_temporal_v1
 task_id: WS-V4-M3-TEMPORAL-DELTA-01
-status: pending
+status: running
 created_at: "2026-08-12"
 
 execution_gate:
-  requires_m2_development_frozen: true
-  current_state: locked_waiting_for_m2
+  requires_m2_validation_passed: true
+  current_state: unlocked_m2_validation_passed
+  m2_task_status: done
+  m2_validation_gate_passed: true
+  m2_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222
+  m2_summary_sha256: 6bfeb3c6a1e8f1905da936d4e83c93828c030a301ee9d4bedae081c7cc6b1a95
+  m2_manifest_sha256: 702cdb487643bbe633a164d24b9664f35bebc754186fb0845cec4b46250447dd
+  m2_source_commit: 1cc90b1865ef24f3bbef0add775d0fdf4be0d491
+  m2_frozen_router:
+    weight_name: uncertainty_forward
+    weights: {photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.10}
+    threshold: 1.0
+    tie_priority: [OBSERVED, DONOR, GENERATED]
+  m2_frozen_matched_non_router: TELEA
   dataset: nuScenes
   tuning_split: development
   validation_read_only: true

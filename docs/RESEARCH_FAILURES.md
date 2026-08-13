@@ -1,5 +1,23 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V4 M1 rejection / M2 validation 新增防重复结论（2026-08-13）
+
+- `V4-F35`：M1 的 development 正结果不能覆盖 scene-disjoint validation 负结果。validation 只有
+  `3/6` scenes 可评，方向支持=`0/6`，Boundary F1/Brier/ECE 均反向；base/checkpoint exact 且没有 validation
+  重搜。M1 必须保持 `rejected`，不得继续加 feature、transformer、改 threshold，或把 M2 成功倒写成 M1 成功。
+- `V4-F36`：M2 validation 的完整 denominator 是 `6 scenes / 154 requests`。scene-1089/0862/1012 的
+  `ABSTAIN_NO_ACTOR` 和 scene-0317 的 24 个 `ABSTAIN_NO_ROLE_MATCHED_ERASE_PACKAGE` 都必须保留；不得只用
+  130 个具备 role asset 的请求或 3 个可评场景改写 coverage。canonical coverage 固定为 `83/154=0.5389610390`。
+- `V4-F37`：validation 不允许重新选择 baseline、risk weights 或 threshold。matched baseline 必须沿用 development
+  冻结的 `TELEA`，router 必须沿用 `uncertainty_forward/threshold=1.0`。即使 validation 上其他 arm 的 composite
+  error 更低，也不得事后改 comparator 或路由 operating point。
+- `V4-F38`：M2 通过的是预注册的合取门，不是所有 repair 轴支配。相对 TELEA，router 的 global PSNR/SSIM/LPIPS、
+  hole PSNR、static LiDAR 和 selective-risk separation 通过，但 hole geometry MAE 从 `2.1435024986 m` 退化到
+  `5.5343121223 m`。不得把 `hole_any_endpoint` 通过写成 geometry 改善、真值背景恢复或全面优于 Telea。
+- `V4-F39`：selective-risk 成立只表示 frozen uncertainty 排序在当前 validation 请求上有误差分离：abstained
+  counterfactual error 比 accepted 高 `0.1241311528`。它不证明 71 个 abstain 已被成功修复，也不允许把 abstain
+  从 usable-yield 分母删除。M3 与 18-test 必须继续同时报告 coverage、abstain、blocked 和 worst-case。
+
 ## V4 M1 / validation 新增防重复结论（2026-08-12）
 
 - `V4-F30`：同一 scene 的历史 V3.3 train mask 不能自动视为符合 V4 冻结的
