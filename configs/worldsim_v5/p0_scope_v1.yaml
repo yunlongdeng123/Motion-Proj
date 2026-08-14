@@ -1,6 +1,6 @@
 schema_version: worldsim_v5_p0_scope_v1
 task_id: WS-V5-P0-SCOPE-FREEZE-01
-status: running
+status: done
 audited_at: "2026-08-14"
 
 project:
@@ -77,6 +77,18 @@ forensic_results:
       manifest.json: {sha256: 427c19a43e6dc2f376a39153d7f72fb6c8d9f1fb81f738e4d36706aaf2473dbe}
       fingerprint.json: {sha256: 528fd890ee37de20df042ba6d986f4c8c1fd5848a54e753ee879db9976901c10}
 
+p0_result:
+  status: done
+  conclusion: p0_scope_and_forensic_contracts_closed
+  run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-P0-SCOPE-FREEZE-01/20260814T091100Z__p0-scope-closeout-s0-r001
+  project_git_head: 28c1d607de0a0ba72895806184348db4d3216de0
+  files:
+    status.json: {sha256: 6c87a66ab5d133effaf7d445443b7ae36ad02d8088395e083a4398e82a8259f9}
+    summary.json: {sha256: ca4248cff7085d8d5a57c842827b1a549b6d1d82fa95c2f81a2976c1192f5d38}
+    manifest.json: {sha256: 52e122392203254f89fc49deae93d8d50371aa5a1176d9a4d8aa03a5b452a338}
+    fingerprint.json: {sha256: 7c1dc86c5d0b1601cb1c91a144c9f2fc010b955efd811954e4d60df507dd4b21}
+  resolved_config_sha256: 40c52fcf1c4a010a12e363c90c3b5741f6d589c53291a73493ff8a4b97e0a228
+
 scientific_scope:
   title: "StructDelta-GS: Structured, Geometry-Safe and Physics-Constrained Gaussian Editing for Driving World Simulation"
   central_problem: >-
@@ -145,12 +157,13 @@ statistics:
   retain_failed_blocked_abstain_denominator: true
 
 authorization:
+  phase: post_p0_pre_fresh_cohort_freeze
   allowed_now:
-    - WS-V5-P0-SCOPE-FREEZE-01
-    - WS-V5-M1-D0-BAYES-FORENSICS-01
-    - WS-V5-M2-D0-GEOMETRY-FORENSICS-01
+    - WS-V5-D0-NUSCENES-FRESH-COHORT-01
+    - m1_evidence_schema_instrumentation
+    - m2_reference_and_staged_geometry_instrumentation
     - result_blind_dataset_and_adapter_audit
-  forbidden_until_p0_and_forensics_close:
+  forbidden_until_fresh_cohort_freeze:
     - full_m1_implementation
     - full_m2_implementation
     - full_m3_implementation
@@ -161,8 +174,8 @@ authorization:
     - diffusion_or_transformer_expansion
 
 task_registry:
-  WS-V5-P0-SCOPE-FREEZE-01: running
-  WS-V5-D0-NUSCENES-FRESH-COHORT-01: pending
+  WS-V5-P0-SCOPE-FREEZE-01: done
+  WS-V5-D0-NUSCENES-FRESH-COHORT-01: running
   WS-V5-M1-D0-BAYES-FORENSICS-01: done
   WS-V5-M1-STRUCTURED-OWNERSHIP-01: pending
   WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01: pending
@@ -188,7 +201,7 @@ outputs:
   fresh_cohort: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
 
 closeout_gate:
-  status: running
+  status: done
   requires:
     - all_output_paths_exist
     - p0_contract_tests_pass

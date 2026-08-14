@@ -8,7 +8,8 @@
 - `WS-V5-M2-D0-GEOMETRY-FORENSICS-01=done`：canonical run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-D0-GEOMETRY-FORENSICS-01/20260814T090600Z__m2-d0-geometry-forensics-s0-r001`，summary SHA=`33708f5165c04fb22a79bc985da36caf1b907fef8d038ac789e31b1debc5e0c0`，conclusion=`risk_saturation_and_blocked_evidence_missing_contract_frozen`。
 - M2 runner 从 6 个 scene summary 重建 `154 requests / 214 candidates`，复现 saturation=`192/214`、same-risk/different-MAE collision=`57/130`、accepted geometry oracle=`62/83`、positive regret=`21/83`，并复现 accepted/risk-abstain/role-asset-blocked 的 full-denominator scene-balanced delta=`+3.390809623732304 m`。
 - 两个 formal run 均来自同一 clean freeze commit，包含 resolved config、fingerprint、JSONL events、manifest、status、summary、source snapshot 与 run-local audit artifact；fresh/test quality、training、parameter/router search 均为 false。
-- `WS-V5-P0-SCOPE-FREEZE-01` 仍为 `running`，但 closeout 输入已经齐备；下一门禁是从 evidence-registration clean commit 执行 `scripts/audit_worldsim_v5_p0.py`。P0 正式 audit 完成前，fresh cohort quality、完整 M1/M2/M3、KITTI quality/调参仍未授权。
+- `WS-V5-P0-SCOPE-FREEZE-01=done`：formal closeout=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-P0-SCOPE-FREEZE-01/20260814T091100Z__p0-scope-closeout-s0-r001`，source commit=`28c1d607de0a0ba72895806184348db4d3216de0`，summary SHA=`ca4248cff7085d8d5a57c842827b1a549b6d1d82fa95c2f81a2976c1192f5d38`，conclusion=`p0_scope_and_forensic_contracts_closed`，run 内合同测试通过。
+- 当前阶段转为 `post_p0_pre_fresh_cohort_freeze`：`WS-V5-D0-NUSCENES-FRESH-COHORT-01=running`；只允许结果盲 8/8/20 metadata selection、M1 evidence schema 与 M2 reference/staged-geometry instrumentation。scene 冻结前仍禁止完整 M1/M2/M3、新模型大训练、fresh validation/test quality 与 KITTI 方法调参。
 
 ## V5 P0 / KITTI archive 审计（2026-08-14）
 

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -100,8 +101,8 @@ def audit_registered_forensic(
 def audit(scope: Mapping[str, Any], project: Path, current_head: str) -> dict[str, Any]:
     if scope.get("schema_version") != "worldsim_v5_p0_scope_v1":
         raise ForensicAuditError("P0 scope schema drift")
-    if scope.get("task_id") != TASK_ID or scope.get("status") != "running":
-        raise ForensicAuditError("P0 scope is not registered running")
+    if scope.get("task_id") != TASK_ID or scope.get("status") not in {"running", "done"}:
+        raise ForensicAuditError("P0 scope is not registered running/done")
     project_cfg = scope["project"]
     freeze_commit = str(project_cfg["p0_freeze_commit"])
     if not freeze_commit or project_cfg.get("resolved_plan_commit") != freeze_commit:
@@ -127,8 +128,11 @@ def audit(scope: Mapping[str, Any], project: Path, current_head: str) -> dict[st
     ).splitlines()
     validate_freeze_file_set(actual_files, list(project_cfg["freeze_commit_files"]))
 
-    plan = project / str(project_cfg["plan_path"])
-    plan_sha = sha256_file(plan)
+    plan_path = str(project_cfg["plan_path"])
+    plan_blob = subprocess.check_output(
+        ["git", "-C", str(project), "show", f"{freeze_commit}:{plan_path}"]
+    )
+    plan_sha = hashlib.sha256(plan_blob).hexdigest()
     if plan_sha != project_cfg.get("resolved_plan_sha256"):
         raise ForensicAuditError(
             f"P0 resolved plan SHA drift: expected={project_cfg.get('resolved_plan_sha256')} actual={plan_sha}"
@@ -145,7 +149,9 @@ def audit(scope: Mapping[str, Any], project: Path, current_head: str) -> dict[st
         }
 
     gate = scope["closeout_gate"]
-    if gate.get("status") != "running" or set(gate.get("requires", [])) != EXPECTED_REQUIREMENTS:
+    if gate.get("status") not in {"running", "done"} or set(
+        gate.get("requires", [])
+    ) != EXPECTED_REQUIREMENTS:
         raise ForensicAuditError("P0 closeout requirements drift")
     for key in (
         "training_started",

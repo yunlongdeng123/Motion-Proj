@@ -11,17 +11,17 @@ def _yaml(path: Path) -> dict:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
 
-def test_v5_p0_scope_authorizes_only_first_phase() -> None:
+def test_v5_p0_scope_closes_into_result_blind_cohort_phase() -> None:
     scope = _yaml(ROOT / "configs/worldsim_v5/p0_scope_v1.yaml")
     assert scope["schema_version"] == "worldsim_v5_p0_scope_v1"
-    assert scope["status"] == "running"
+    assert scope["status"] == "done"
     assert set(scope["task_registry"].values()) <= ALLOWED_STATUSES
     assert scope["task_registry"]["WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01"] == "pending"
     assert scope["task_registry"]["WS-V5-D1-KITTI-ADAPTER-01"] == "blocked"
     assert scope["authorization"]["allowed_now"] == [
-        "WS-V5-P0-SCOPE-FREEZE-01",
-        "WS-V5-M1-D0-BAYES-FORENSICS-01",
-        "WS-V5-M2-D0-GEOMETRY-FORENSICS-01",
+        "WS-V5-D0-NUSCENES-FRESH-COHORT-01",
+        "m1_evidence_schema_instrumentation",
+        "m2_reference_and_staged_geometry_instrumentation",
         "result_blind_dataset_and_adapter_audit",
     ]
     assert scope["closeout_gate"]["training_started"] is False
@@ -60,7 +60,7 @@ def test_v5_navigation_and_forensic_boundaries_are_explicit() -> None:
     plan = (ROOT / "docs/WORLDSIM_V5_STRUCTDELTA_PLAN.md").read_text(encoding="utf-8")
     m1 = (ROOT / "docs/WS_V5_M1_FAILURE_FORENSICS.md").read_text(encoding="utf-8")
     m2 = (ROOT / "docs/WS_V5_M2_GEOMETRY_FORENSICS.md").read_text(encoding="utf-8")
-    assert "WS-V5-P0-SCOPE-FREEZE-01=running" in plan
+    assert "WS-V5-P0-SCOPE-FREEZE-01=done" in plan
     assert "fresh quality 未读" in plan
     assert "per-view observation" in m1
     assert "blocked_evidence_missing" in m1
@@ -89,5 +89,8 @@ def test_p0_forensic_machine_contracts_are_registered() -> None:
     assert scope["forensic_results"]["m2"]["status"] == "done"
     assert scope["task_registry"]["WS-V5-M1-D0-BAYES-FORENSICS-01"] == "done"
     assert scope["task_registry"]["WS-V5-M2-D0-GEOMETRY-FORENSICS-01"] == "done"
+    assert scope["task_registry"]["WS-V5-D0-NUSCENES-FRESH-COHORT-01"] == "running"
+    assert scope["p0_result"]["status"] == "done"
+    assert scope["closeout_gate"]["status"] == "done"
     assert m1["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]
     assert m2["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]
