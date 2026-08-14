@@ -1,0 +1,65 @@
+schema_version: worldsim_v5_m1_development_replication_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: result_blind_three_scene_replication
+seed: 20260814
+
+selection:
+  source: frozen_development_cohort_order
+  source_cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+  policy: first_three_scenes_without_quality_read
+  scenes: [scene-0471, scene-1087, scene-0379]
+  scene_indices: [382, 827, 296]
+  selection_used_quality: false
+
+frozen_method:
+  sam_config_template: configs/worldsim_v5/m1_sam_diagnostic_scene0471_v1.yaml
+  unary_config_template: configs/worldsim_v5/m1_unary_diagnostic_scene0471_v1.yaml
+  graph_config_template: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+  evidence_frames: [0, 40, 80, 120, 160]
+  evaluation_frames: [2, 42, 82, 122, 162]
+  cameras: [0, 1, 2]
+  unary_arms: [B0, B1, B3]
+  graph_unary_inputs: [B1, B3]
+  graph_arms: [G0, G1, G2, G3]
+  probability_threshold: 0.5
+  boundary_tolerance_px: 3
+  ece_bins: 15
+  graph_candidate_k: 6
+  graph_diffusion_rate: 0.25
+  graph_diffusion_iterations: 2
+  parameter_search_performed: false
+
+scene_status:
+  scene-0471:
+    status: done
+    sam_summary_sha256: d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487
+    unary_summary_sha256: dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d
+    graph_summary_sha256: c64e52a9de2a43cbb89564cbf61610746fdec210eb2a4f0efb32bc6463f7faf1
+  scene-1087:
+    status: pending
+    sam_config: configs/worldsim_v5/m1_sam_diagnostic_scene1087_v1.yaml
+  scene-0379:
+    status: pending
+    sam_config: configs/worldsim_v5/m1_sam_diagnostic_scene0379_v1.yaml
+
+replication_gate:
+  denominator: 6_scene_by_unary_cells
+  graph_arm: G3
+  comparator: same_unary_G0
+  minimum_positive_boundary_f1_cells: 4
+  mean_boundary_f1_delta_minimum: 0.0
+  mean_false_negative_semantic_mass_delta_maximum: 0.01
+  require_g3_cross_proxy_affinity_below_g1_each_scene: true
+  automatic_validation_unlock: false
+  automatic_semantic_split_unlock: false
+  formal_arm_selection_allowed: false
+
+restrictions:
+  development_content_read: true
+  validation_content_read: false
+  validation_parameter_search: false
+  test_content_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  new_large_model_training: false
