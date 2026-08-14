@@ -10,6 +10,11 @@
 - official testing split 不含 `label_02`；带 GT 的 V5 cross-domain formal pool 只能在结果前从 21 个 training sequences 冻结，testing 只允许无标签 engineering smoke。
 - 本次 download/extraction/quality/training/parameter-search=`0/0/0/0/0`。当前 free=`99.800 GiB`，预计解压后 free=`36.710 GiB`；后续只允许同文件系统 `.partial` staging、post-extract 审计和原子发布，保留原 ZIP，不覆盖公共盘。
 - 下一步：先完成 V5 P0 scope/failure forensics；KITTI 路线需冻结缺帧 common-frame/abstain 合同、修复 calibration/OXTS parser，再执行 2-sequence adapter smoke。上述门通过前不冻结 10-sequence formal，不运行 cross-domain quality。
+- P0/forensic 输出已建立：`configs/worldsim_v5/p0_scope_v1.yaml`、`configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml`、`docs/WS_V5_M1_FAILURE_FORENSICS.md`、`docs/WS_V5_M2_GEOMETRY_FORENSICS.md`；四者当前分别为 `running/pending/running/running`，不是完成声明。
+- M1-D0 已确认历史 r200 只有 `3 evaluable + 3 abstain` 且 `0/6` directional support；四个 canonical state 的 `18.82%–30.68%` Gaussian 没有正/负 observation count，state 又未持久化 per-view observation、投影 boundary distance、center/covariance 或 topology disagreement，因此现有产物不足以判定是 unary reliability 还是 topology 根因。
+- M2-D0 已对 r222 全 `154` request 回溯：`130` 个有候选、`24` 个 role-asset blocked，共 `214` candidates；`192/214=89.72%` 的 geometry risk 饱和为 1，所有未归一化 rendered MAE `>=0.5 m` 的 `192/192` candidates 均失去 tail 排序。
+- M2 accepted-only 的同请求比较并不退化：`83` accepted 上 router/TELEA scene-balanced geometry MAE=`1.62295/2.01453 m`，delta=`-0.39158 m`；总表 `+3.39081 m` 主要来自 `47` 个 risk-abstain 以 atomic no-op 保留在 denominator。V4 geometry caveat 继续成立，但不得误写成“accepted candidate 普遍比 TELEA 差”。
+- 当前 forensic 结论只允许启动缺失字段采集与 evaluator/reference 审计；禁止根据 V4 validation 重调 0.5 m normalization、router weights/threshold 或直接实现 graph/geometry-first/full M1/M2。
 
 ## V4 终局归档与路线关闭（2026-08-14）
 

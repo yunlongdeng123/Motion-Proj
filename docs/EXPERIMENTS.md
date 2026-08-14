@@ -14,6 +14,20 @@
 - storage gate 通过：free before=`99.800 GiB`、预计 extract=`63.090 GiB`、20 GiB safety margin 后 expected free=`36.710 GiB`。本 run download/extraction/quality/training/parameter-search=`0/0/0/0/0`。
 - 验证：`python -m pytest -q tests/test_audit_worldsim_v5_kitti_archives.py tests/test_worldsim_v4_kitti_track_id.py`=`10 passed`；canonical JSON 解析与内嵌 manifest SHA-256 重算必须通过后再提交。
 
+## V5 P0 / retrospective forensics 启动（2026-08-14）
+
+| Task ID | 状态 | 当前证据 / 边界 |
+|---|---|---|
+| `WS-V5-P0-SCOPE-FREEZE-01` | running | `configs/worldsim_v5/p0_scope_v1.yaml`；科学问题与禁止项已登记，freeze commit 尚未生成 |
+| `WS-V5-D0-NUSCENES-FRESH-COHORT-01` | pending | `configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml`；只冻结 8/8/20、seed derivation 与 V4 30-scene exclusion，scene list 为空 |
+| `WS-V5-M1-D0-BAYES-FORENSICS-01` | running | `docs/WS_V5_M1_FAILURE_FORENSICS.md`；读取 V4 r200/r201 historical diagnostic，未读 fresh quality |
+| `WS-V5-M2-D0-GEOMETRY-FORENSICS-01` | running | `docs/WS_V5_M2_GEOMETRY_FORENSICS.md`；读取 V4 r212/r219–r222 historical diagnostic，未改 V4 artifacts |
+
+- P0 start HEAD=`79dafff0c520ab3cbb8d8d73acfd87bb9225b427`；V5 plan start SHA=`abdeeec7aaa6d08efc0f30bd92c46325e3666e1f42d1f7965bed88913ac0edd0`。
+- M1 evidence binding：r200 summary/metrics/manifest SHA=`57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309 / 0ae07b58822d7be37e5220a781d951725e802404ce52881c1281bb7974e1d504 / 43af8f881667da578ebd567bca2c9dd17492fc270d8be1a5cfe1d849af05ede5`；r201 summary SHA=`470338f225a0ea22e4d5df75d71e86a516c142bd766d1a3ed08009a55fe8fec2`。
+- M2 evidence binding：r212 summary SHA=`93e166d9bed748fcd96adb94ff314b73059caa05d32d7941a6b490d7246430a9`；r222 summary/manifest/router-decisions/table SHA=`6bfeb3c6a1e8f1905da936d4e83c93828c030a301ee9d4bedae081c7cc6b1a95 / 702cdb487643bbe633a164d24b9664f35bebc754186fb0845cec4b46250447dd / e59ce5f17e6c3271825875c057e0d777ad9aca95f0ef4b8e07b74d946022caf3 / c7bcadfef2b23b3889c0d130eaf634c3faeca3f4c17abd76898152517b0a86fb`。
+- 本阶段只读取 V4 historical artifacts 并生成文档/config；fresh nuScenes content/quality、KITTI quality、training、parameter search=`0/0/0/0/0`。
+
 ## V4 终局文档归档（2026-08-14）
 
 | Task ID | 状态 | canonical evidence |

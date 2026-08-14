@@ -1,0 +1,160 @@
+schema_version: worldsim_v5_p0_scope_v1
+task_id: WS-V5-P0-SCOPE-FREEZE-01
+status: running
+audited_at: "2026-08-14"
+
+project:
+  branch: research/worldsim-v5-structdelta
+  source_head_at_start: 79dafff0c520ab3cbb8d8d73acfd87bb9225b427
+  plan_path: docs/WORLDSIM_V5_STRUCTDELTA_PLAN.md
+  plan_sha256_at_start: abdeeec7aaa6d08efc0f30bd92c46325e3666e1f42d1f7965bed88913ac0edd0
+  run_namespace: /root/autodl-tmp/runs/worldsim_v5
+  hardware: NVIDIA GeForce RTX 3090 24GB
+  p0_freeze_commit: null
+  resolved_plan_sha256: null
+
+v4_read_only_bindings:
+  closeout_source_head: 403c5703a755c999d42a5ec3eb063db6cc751761
+  archive_commit: c7e4c969a95536d26d0a17a1c0d1d548f9a247dc
+  archive_root: docs/archive/2026-08/worldsim-v4-final
+  archive_sha256sum_sha256: 947f045024e67d6fa1576fe2e8469adc6d9841e894860d7614ca1caeda820e21
+  m1:
+    task_status: rejected
+    validation_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+    rejection_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T210150Z__m1-validation-rejection-audit-s0-r201
+    denominator: {required: 6, evaluable: 3, abstain: 3}
+    directional_support: 0
+  m2:
+    task_status: done
+    conclusion: done_with_geometry_caveat
+    development_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T233139Z__m2-development-router-selection-s0-r212
+    validation_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222
+    request_denominator: 154
+    accepted: 83
+    abstain: 71
+    hole_geometry_mae_degradation_m: 3.390809623732304
+  m3:
+    task_status: done
+    conclusion: confirmed
+    test_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T225624Z__m3-test-aggregate18-s0-r335
+    closeout_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T225805Z__m1-m2-m3-test-closeout-audit-s0-r336
+    denominator: {required: 18, evaluable: 12, abstain: 6}
+    v4_test_reuse: historical_diagnostic_only
+
+scientific_scope:
+  title: "StructDelta-GS: Structured, Geometry-Safe and Physics-Constrained Gaussian Editing for Driving World Simulation"
+  central_problem: >-
+    将 observation reliability、Gaussian physical topology、geometry feasibility、selective uncertainty
+    和 temporal constraints 分层建模，而不是压入单一 posterior 或 scalar risk。
+  contribution_limit: 4
+  contributions:
+    - structured_gaussian_ownership
+    - geometry_feasible_selective_repair
+    - constraint_projected_temporal_delta
+    - transactional_reversible_gaussian_editing
+  explicit_non_claims:
+    - full_world_model
+    - closed_loop_safety_sota
+    - physics_simulator
+    - guaranteed_collision_free_planning
+    - generated_content_is_ground_truth
+    - universal_cross_city_or_weather_generalization
+
+method_boundaries:
+  immutable_base: true
+  m1:
+    hypothesis: reliability_aware_bayesian_unary_plus_physical_topology
+    first_task: WS-V5-M1-D0-BAYES-FORENSICS-01
+    transformer_expansion_allowed: false
+    semantic_split_task_status: pending
+    semantic_split_unlock: boundary_ambiguity_is_dominant_after_graph
+  m2:
+    hypothesis: geometry_temporal_feasibility_before_risk_selection
+    first_task: WS-V5-M2-D0-GEOMETRY-FORENSICS-01
+    geometry_is_hard_gate: true
+    old_validation_parameter_refit_allowed: false
+  m3:
+    hypothesis: desired_motion_projected_to_physical_constraints
+    v4_bspline_role: numerical_parameterization_and_frozen_comparator
+    local_residual_default: disabled
+  rollback_render_sha_exact: true
+
+dataset_protocol:
+  nuscenes:
+    version: v1.0-trainval
+    fresh_scene_counts: {development: 8, validation: 8, test: 20}
+    total_fresh_scenes: 36
+    v4_scene_exclusion_count: 30
+    scene_disjoint_from_v4: true
+    selection_uses_model_results: false
+    selection_config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+    test_requires_freeze_artifact: V5_TEST_FREEZE.json
+    test_read_count: 1
+  kitti:
+    archive_audit_status: done
+    adapter_status: blocked
+    archive_manifest_sha256: 56388fc64e36c77ebac5a6ee761aa1a17297faeb876347715e8c6e9d52ec23a7
+    smoke_sequences: 2
+    formal_sequences: 10
+    formal_pool: labeled_training_only
+    parameter_source: frozen_nuscenes_v5_only
+    kitti_parameter_search: false
+
+statistics:
+  unit: scene
+  summaries: [mean, median, std, iqr, scene_bootstrap_ci95]
+  pairwise: [paired_bootstrap, permutation, wilcoxon_signed_rank]
+  random_final_candidate_seeds: 3
+  deterministic_modules_require_byte_exact_replay: true
+  retain_failed_blocked_abstain_denominator: true
+
+authorization:
+  allowed_now:
+    - WS-V5-P0-SCOPE-FREEZE-01
+    - WS-V5-M1-D0-BAYES-FORENSICS-01
+    - WS-V5-M2-D0-GEOMETRY-FORENSICS-01
+    - result_blind_dataset_and_adapter_audit
+  forbidden_until_p0_and_forensics_close:
+    - full_m1_implementation
+    - full_m2_implementation
+    - full_m3_implementation
+    - new_large_model_training
+    - fresh_validation_parameter_search
+    - fresh_test_quality_read
+    - kitti_method_parameter_search
+    - diffusion_or_transformer_expansion
+
+task_registry:
+  WS-V5-P0-SCOPE-FREEZE-01: running
+  WS-V5-D0-NUSCENES-FRESH-COHORT-01: pending
+  WS-V5-M1-D0-BAYES-FORENSICS-01: running
+  WS-V5-M1-STRUCTURED-OWNERSHIP-01: pending
+  WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01: pending
+  WS-V5-M2-D0-GEOMETRY-FORENSICS-01: running
+  WS-V5-M2-GEOMETRY-FIRST-REPAIR-01: pending
+  WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01: pending
+  WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01: pending
+  WS-V5-E0-NUSCENES-TEST-01: pending
+  WS-V5-D1-KITTI-ADAPTER-01: blocked
+  WS-V5-E1-KITTI-CROSSDATA-01: pending
+
+outputs:
+  plan: docs/WORLDSIM_V5_STRUCTDELTA_PLAN.md
+  m1_forensics: docs/WS_V5_M1_FAILURE_FORENSICS.md
+  m2_forensics: docs/WS_V5_M2_GEOMETRY_FORENSICS.md
+  p0_scope: configs/worldsim_v5/p0_scope_v1.yaml
+  fresh_cohort: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+
+closeout_gate:
+  status: pending
+  requires:
+    - all_output_paths_exist
+    - p0_contract_tests_pass
+    - m1_missing_evidence_collection_contract_frozen
+    - m2_reference_and_pre_post_geometry_contract_frozen
+    - plan_and_resolved_config_sha256_recorded
+    - freeze_only_commit
+  training_started: false
+  fresh_quality_read: false
+  kitti_quality_read: false
+  parameter_search_performed: false

@@ -1,0 +1,136 @@
+schema_version: worldsim_v5_nuscenes_fresh_cohort_v1
+task_id: WS-V5-D0-NUSCENES-FRESH-COHORT-01
+status: pending
+created_at: "2026-08-14"
+
+project:
+  branch: research/worldsim-v5-structdelta
+  p0_task: WS-V5-P0-SCOPE-FREEZE-01
+  p0_status: running
+  source_head_at_contract_start: 79dafff0c520ab3cbb8d8d73acfd87bb9225b427
+  training: false
+  model_inference: false
+  fresh_quality_read: false
+
+dataset:
+  name: nuScenes
+  version: v1.0-trainval
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  source_archive: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval/v1.0-trainval_meta.tgz
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  public_archive_read_only: true
+
+selection:
+  state: pending_metadata_only_selection
+  seed: 2216484596
+  seed_derivation:
+    source: sha256_utf8_task_id_first_32_bits_big_endian
+    task_id_sha256: 841cdef4c4ba6dc082af89476a83431d7099a0271e5c5ba4a88e2c458f682f30
+  selection_uses_model_results: false
+  allowed_metadata_fields:
+    - official_split
+    - location
+    - time_of_day
+    - weather
+    - road_geometry
+    - intersection
+    - actor_density
+    - occlusion
+    - actor_motion
+    - actor_distance
+    - lidar_support
+    - sam_boundary_complexity_proxy
+    - actor_class
+  forbidden_selection_fields:
+    - reconstruction_quality
+    - edit_quality
+    - m1_quality
+    - m2_quality
+    - m3_quality
+    - test_metric
+
+protocol:
+  scene_counts: {development: 8, validation: 8, test: 20}
+  total_scene_count: 36
+  official_split_contract:
+    development: train
+    validation: train
+    test: val
+  cameras: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT]
+  lidar: LIDAR_TOP
+  continuous_clip_seconds: [2.0, 4.0]
+  frame_partition:
+    heldout: sample_index_mod_5_eq_4
+    development: sample_index_mod_5_eq_2
+    train: remaining
+  absent_actor_policy: retain_as_ABSTAIN_NO_ACTOR
+  scene_disjoint_across_roles: true
+  scene_disjoint_from_v4: true
+  test_read_count: 1
+  test_requires_freeze_artifact: V5_TEST_FREEZE.json
+
+v4_exclusion:
+  source_config: configs/worldsim_v4/nuscenes_cohort_v1.yaml
+  expected_count: 30
+  scenes:
+    - scene-0230
+    - scene-0242
+    - scene-0255
+    - scene-0048
+    - scene-0994
+    - scene-0139
+    - scene-0071
+    - scene-1089
+    - scene-0317
+    - scene-0862
+    - scene-1012
+    - scene-0450
+    - scene-0919
+    - scene-0100
+    - scene-0520
+    - scene-0634
+    - scene-1062
+    - scene-0626
+    - scene-0015
+    - scene-0552
+    - scene-0924
+    - scene-0906
+    - scene-0519
+    - scene-0781
+    - scene-1072
+    - scene-0554
+    - scene-0911
+    - scene-0966
+    - scene-0800
+    - scene-0632
+
+freeze:
+  selection_status: pending
+  cohort_sha256: null
+  scene_roles:
+    development: []
+    validation: []
+    test: []
+  scene_records: []
+  result_blind_selection_required: true
+  metadata_inventory_sha256: null
+  builder_source_sha256: null
+
+gates:
+  expected_v4_exclusion_count: 30
+  expected_fresh_development_count: 8
+  expected_fresh_validation_count: 8
+  expected_fresh_test_count: 20
+  all_roles_scene_disjoint: pending
+  all_selected_scenes_exclude_v4: pending
+  official_split_contract_exact: pending
+  deterministic_replay_exact: pending
+  quality_read_before_freeze: false
+
+restrictions:
+  sensor_blob_expansion_for_selection: false
+  training: false
+  model_inference: false
+  parameter_search: false
+  fresh_test_quality_read: false
+  v4_scene_confirmatory_reuse: false

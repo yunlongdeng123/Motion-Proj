@@ -41,6 +41,10 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 - [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)：V5 KITTI 压缩包、frame gate、存储预算和 adapter 阻塞结论；
 - [`KITTI_TRACKING_ARCHIVE_METADATA_V5.json`](KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：逐 archive、split、sequence 和 class/track metadata；
 - [`KITTI_TRACKING_ARCHIVES_V5.sha256`](KITTI_TRACKING_ARCHIVES_V5.sha256)：7 个原始 ZIP 的标准 SHA-256 清单；
+- [`WS_V5_M1_FAILURE_FORENSICS.md`](WS_V5_M1_FAILURE_FORENSICS.md)：V4 M1 rejection 的 V5 retrospective 诊断与缺失证据边界；
+- [`WS_V5_M2_GEOMETRY_FORENSICS.md`](WS_V5_M2_GEOMETRY_FORENSICS.md)：V4 M2 `+3.3908 m` 的 risk saturation、oracle regret 与 denominator 分解；
+- [`../configs/worldsim_v5/p0_scope_v1.yaml`](../configs/worldsim_v5/p0_scope_v1.yaml)：V5 P0 科学范围、claim、门禁和授权；
+- [`../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml`](../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml)：fresh 8/8/20 结果前 cohort 合同，当前尚未选择 scenes；
 - [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：驻留/非驻留边界；
 - [`archive/2026-08/worldsim-v4-final/SHA256SUMS`](archive/2026-08/worldsim-v4-final/SHA256SUMS)：V4 终局包完整性。
 
