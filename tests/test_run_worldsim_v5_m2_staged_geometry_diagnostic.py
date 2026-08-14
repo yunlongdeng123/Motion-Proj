@@ -54,6 +54,16 @@ def test_mechanism_conclusion_abstains_on_short_denominator() -> None:
     assert result["g3_unlocked_for_next_development_run"] is False
 
 
+def test_four_evaluable_and_two_unavailable_preserve_frozen_denominator() -> None:
+    rows = [_row(0.1, 0.0) for _ in range(4)] + [
+        {"status": "abstain", "reason": "ABSTAIN_SAM_MASK_UNAVAILABLE"},
+        {"status": "abstain", "reason": "ABSTAIN_SAM_MASK_UNAVAILABLE"},
+    ]
+    result = mechanism_conclusion(rows, _gates())
+    assert result["evaluable_view_count"] == 4
+    assert result["conclusion"] == "g0_and_gaussianization_not_primary_on_model_proxy"
+
+
 def test_config_freezes_development_only_contract(tmp_path: Path) -> None:
     path = tmp_path / "config.yaml"
     path.write_text(

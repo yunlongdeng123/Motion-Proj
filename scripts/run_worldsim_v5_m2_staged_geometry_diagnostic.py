@@ -195,8 +195,13 @@ def _load_mask_rows(config: Mapping[str, Any]) -> tuple[Path, list[dict[str, Any
     actual = {(int(row["frame"]), int(row["camera_id"])) for row in rows}
     if actual != expected or len(rows) != len(expected):
         raise M2StagedGeometryError("SAM frozen view denominator 不完整")
-    if any(row.get("mask_quality_accepted") is not True for row in rows):
-        raise M2StagedGeometryError("冻结 M2 view 含未通过质量门的 mask")
+    available = sum(row.get("mask_quality_accepted") is True for row in rows)
+    if available != int(config["view_protocol"]["expected_available_view_count"]):
+        raise M2StagedGeometryError("SAM frozen available-view denominator 漂移")
+    if len(rows) - available != int(
+        config["view_protocol"]["expected_unavailable_view_count"]
+    ):
+        raise M2StagedGeometryError("SAM frozen unavailable-view denominator 漂移")
     return manifest_path.parent.parent, sorted(
         rows, key=lambda row: (int(row["frame"]), int(row["camera_id"]))
     )
@@ -295,6 +300,22 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             frame = int(mask_row["frame"])
             camera = int(mask_row["camera_id"])
             row: dict[str, Any] = {"frame": frame, "camera_id": camera}
+            if mask_row.get("mask_quality_accepted") is not True:
+                row.update(
+                    {
+                        "status": "abstain",
+                        "reason": "ABSTAIN_SAM_MASK_UNAVAILABLE",
+                        "accepted_box_count": int(mask_row.get("accepted_box_count", 0)),
+                        "box_count": int(mask_row.get("box_count", 0)),
+                    }
+                )
+                view_rows.append(row)
+                print(
+                    f"M2 staged geometry {view_index + 1}/{len(mask_rows)} "
+                    f"frame={frame} camera={camera} status=abstain",
+                    flush=True,
+                )
+                continue
             try:
                 base = render_snapshot(
                     trainer=trainer, dataset=dataset, frame=frame, camera_id=camera, device=device

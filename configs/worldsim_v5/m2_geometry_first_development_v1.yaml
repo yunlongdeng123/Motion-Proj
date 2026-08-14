@@ -44,6 +44,9 @@ view_protocol:
   cameras: [0, 1, 2]
   expected_view_count: 6
   target_mask_source: frozen_r036_accepted_sam_union
+  unavailable_view_policy: retain_as_ABSTAIN_SAM_MASK_UNAVAILABLE
+  expected_available_view_count: 4
+  expected_unavailable_view_count: 2
   target_mask_dilation_pixels: 2
   support_ring_inner_pixels: 4
   support_ring_outer_pixels: 36
