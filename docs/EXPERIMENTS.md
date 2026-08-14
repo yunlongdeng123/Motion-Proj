@@ -1,5 +1,19 @@
 # Experiments
 
+## V5 M1 formal30k / SAM / structured unary（2026-08-14）
+
+| Run | 状态 | 关键分母 | 审计结论 |
+|---|---|---|---|
+| r035 `m1-formal30k-batch-audit` | done | `8/8 scenes × 30k` | 8 份 formal run/checkpoint 全量重哈希一致；validation/test quality 未读 |
+| r036 `m1-scene0471-sam-sparse` | done | `30 views / 18 accepted` | frozen SAM evidence；17 actors、62/61 prompt/accepted boxes；无网络 |
+| r037 `m1-scene0471-unary-diagnostic` | done | `859,613 Gaussians / 15 evidence / 8+7 eval` | B0/B1/B3 机制诊断；checkpoint exact；无搜索、无 graph、无 held-out |
+
+- r035 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172300Z__m1-formal30k-batch-audit-s0-r035`；summary/status/fingerprint/manifest SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b / 0c941a372125e1f893bc31c15eed2cb55dbfef33fc005bf2b8122edec7626607 / ea3d7f8aadef39c7c99b2cd610091fb20e4a386ba6f8a987d16358eaaee6fb8e / bba0892345225f5d4527402943d17b7806207714c7a9355641eda3b2cda72119`。
+- r036 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036`；summary/status/fingerprint/manifest/mask-manifest SHA=`d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487 / 7fda172e7fb9e07ab520b563b2e358fb0ac70c734f7c32f2039d901a7be690c4 / 9e8181fad12ac76f0c0ffbd25cf3d39061e3893960d167f1b5497b42e51b79a1 / 3cd9728cd47622752a80d20635e254b05b31fc13126659c7c03d06b7be3fc13e / f7a9f5e9f022c8f8685be89e7cdd7d808f13081106c56b07e5c87260ac72a213`。
+- r037 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037`；summary/status/fingerprint/manifest/diagnostics/resolved-config SHA=`dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d / fb68e06d174a5e6a6859a50c07392b6895102feecf3944e712dc9861de1736ce / 70d2f878e9042b632d4f3355cc350d02ae661127c738130019506aa77c4480e4 / 80ff775de6a4fc4c748cf3ec9570c2ab0ce10e817fbe5cdcd1bef69eeee871c4 / 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755 / a09ac4f9359df36e1c9ff90fdba83da5de5cac519eb52979d6444211df50e291`。
+- B1/B3 均相对 B0 提升 scene0471 的 2D IoU、Boundary F1 与三项 calibration，并降低 FP semantic mass；但 FN semantic mass 分别增加 `+0.0915315/+0.0954773`，超过计划 validation 容忍量 `+0.01`。本次只登记 unary 方向支持与 FN tradeoff，不做 arm selection，不把单 scene SAM-proxy 诊断写成 validation 通过。
+- 可复用表格、8-scene base 明细与失败边界见 `docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md`；机器可读轻量索引见 `docs/archive/2026-08/worldsim-v5-m1/M1_R035_R037_METADATA.json`。
+
 ## V5 KITTI Tracking adapter smoke（2026-08-14）
 
 - extraction canonical r001=`1805 files / 2,104,258,586 bytes`，summary/manifest SHA=`0ba90a7496d8f8a41dd147ef13579c9ad8d0a25aea7ee829d275ca162df1c363 / 96585bf46127f2fd5eca0a123afe068be6f3922bc73e0362d3019af4c25bc8b3`。
@@ -7,7 +21,7 @@
 - adapter canonical r003=`done`：0000/0001 coverage=`1.0 / 0.9910514541387024`，0001 显式 LiDAR abstain=`[177,178,179,180]`；summary/status/fingerprint/manifest SHA=`3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b / 404b204ed1a7ff26a1bd6f277e80d6a2e4c66690ef29f0452678cb1506b76dd2 / 2df0f6535f63509f61fe6f72c483955a98c01a9010bd0b71bdfff7364ab5be56 / 099f136af9f519820412d0d3f25fbaaacb969706dd8e4536c7864b27c7fb90ec`。
 - 本 smoke 未读方法质量、未训练、未推理、未调参，也未冻结 10-sequence cross-domain pool。
 
-## V5 M1 structured evidence / development 数据闭环（2026-08-14）
+## V5 M1 structured evidence / development 数据闭环（历史执行快照；由上节取代）
 
 - base reconstruction profile batch r019–r026=`8/8 done`：每场 100 steps，checkpoint bytes 合计=`2,592,731,152`、训练耗时合计=`463.532647 s`、peak GPU=`9142 MiB`；8 个 summary 与 checkpoint 均重新哈希通过，source=`200ece4ebe59031b5546f285d2251482446ab162` clean。
 - profile summary SHA（scene 0471/1087/0379/0998/0359/0875/0535/0436）=`8c419b3edd9c1e6bac13d82071d659bbe5039de742c9ff2af96105f89e2dcd2f / d2e6ffc128caed3c025930be64e061bfc2af3e4e045cfb3654e8a4673a688202 / 0a570a9774accbe795999322709681a8ed232eb889eb1576df5b6bff2fbb8f8f / f8bbcf00e55a78dff527dadabb13f73641cbc8b40afa1e80a9da1eac52447c66 / 6372b8bb14fc3b641f9838ed1e1527a727f7b8e44ead924b1a73458feb594624 / fa5897d304804e4c19b4e5ae6e8a5d7effbf8d416fb6fa7c7f1031239c7d6cbc / 21686ac5d31bd3b3e71c4c0a1ec23de2545f0cb66b1434bffa04d871e8e94b39 / ef27a83d2af8b991efdd3f73e6cab8089e9837ea7cfd8691e1b23df980fac080`。

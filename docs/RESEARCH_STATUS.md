@@ -1,12 +1,20 @@
 # Research Status
 
+## V5 M1 30k 正式基线与 scene0471 unary 诊断闭环（2026-08-14）
+
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`structured_unary_diagnostic_complete_graph_protocol_pending`。8-scene 30k reconstruction 已全部完成并由 r035 逐 run、逐 checkpoint 重哈希：`8/8 scenes × 30,000 steps`，总耗时=`18,392.900160 s`、checkpoint bytes=`2,920,094,512`，峰值 GPU/cgroup=`24,054 MiB / 27,706,277,888 bytes`；r035 summary SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b`。
+- scene0471 冻结 SAM 证据 r036=`done`：`30` 个预注册视图中 `18` 个 available/accepted，`17` 个 prompt actors、`62` 个 prompt boxes、`61` 个 accepted boxes；network/held-out/method inference=`false/false/false`，summary SHA=`d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487`。
+- structured unary r037=`done`：不可变 checkpoint SHA 前后均为 `496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa`；`859,613` Gaussians、`15` evidence views、`8 accepted + 7 abstained` evaluation views；耗时=`555.199743 s`、峰值 GPU=`13,987 MiB`。summary/diagnostics SHA=`dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d / 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755`。
+- 相对冻结 B0，B1 的 2D `ΔIoU/ΔBoundary-F1/ΔBrier/ΔECE/ΔNLL/ΔFP-mass/ΔFN-mass`=`+0.116665/+0.107437/-0.101739/-0.110983/-0.214462/-0.142929/+0.091532`；B3=`+0.116161/+0.105079/-0.103467/-0.112431/-0.305104/-0.138453/+0.095477`。即 reliability-aware unary 有明确单场方向支持，但以显著 FN 增加换取 FP/calibration/boundary 改善。
+- 裁决=`unary_direction_supported_single_scene_fn_tradeoff_graph_not_auto_unlocked`：不选择 B1/B3、不声明 validation 成功、不自动启动 graph。下一门是先冻结 graph 机制诊断协议；validation/test/KITTI quality 与参数搜索仍未授权。附录入口=`docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md` 与 `docs/archive/2026-08/worldsim-v5-m1/APPENDIX_INDEX.md`。
+
 ## V5 KITTI 真实 adapter smoke 闭环（2026-08-14）
 
 - `WS-V5-D1-KITTI-ADAPTER-01=done`：选择性抽取 0000/0001=`1805 files / 2,104,258,586 bytes`，raw manifest file/content SHA=`a3c77ab82bb29d2b34f615743a4e0393d611fb634826900c3756193127450928 / 98685653d4488b53a6ab94890629347b11cc43793b78b05c6b05738fcf46d83f`；原 ZIP 保留。
 - adapter canonical r003 summary SHA=`3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b`。0000 multimodal=`154/154`；0001=`443/447`，frames `177–180` 缺 LiDAR 并显式 abstain。mixed calibration、30-field OXTS、pose chain、PNG、LiDAR `N×4`/双目投影、label/track gates 全通过。
 - metadata 入口=`docs/KITTI_TRACKING_ADAPTER_SMOKE_V5.md` 与 `.json`。本结论 supersede 早期 `adapter=blocked` 工程状态，但不改写 archive audit 当时事实；method quality/training/inference/search/cross-domain authorization=`false/false/false/false/false`。
 
-## V5 M1 development 数据闭环与 base reconstruction 入口（2026-08-14）
+## V5 M1 development 数据闭环与 base reconstruction 入口（历史执行快照；由上节取代）
 
 - 8-scene `profile100` gate 已完成：r019–r026 全部 `done`，每场 checkpoint step=`100` 且 Gaussian means finite；总训练耗时=`463.532647 s`、checkpoint bytes=`2,592,731,152`，峰值 GPU/cgroup=`9142 MiB / 24,595,931,136 bytes`，8 份 checkpoint 全量 SHA 复核一致。source commit=`200ece4ebe59031b5546f285d2251482446ab162`，validation/test quality read=`false/false`。
 - 30k 只能使用 `configs/worldsim_v5/m1_development_reconstruction_formal_v1.yaml`：它除 sky gate 外还绑定 8 份 profile summary/status/fingerprint/run-manifest/checkpoint identity；runner 对 formal 强制全量复核该 gate，缺失时 fail-closed。当前仍无 reconstruction quality 或 arm selection。

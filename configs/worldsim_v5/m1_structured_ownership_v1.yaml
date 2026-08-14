@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: structured_unary_mechanism_smoke
+phase: structured_unary_diagnostic_complete_graph_protocol_pending
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -163,8 +163,53 @@ data_readiness:
     network_accessed: false
     heldout_quality_read: false
     method_inference_started: false
-  state: formal30k_complete_scene0471_sam_complete_unary_pending
-  quality_read: false
+  scene0471_unary_diagnostic:
+    status: done
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037
+    source_commit: 3fec3ab41a4d0b245b2cb55cd1354f2339532146
+    scene: scene-0471
+    gaussian_count: 859613
+    evidence_view_count: 15
+    accepted_evaluation_view_count: 8
+    abstained_evaluation_view_count: 7
+    frozen_threshold: 0.5
+    duration_seconds: 555.1997426208109
+    peak_gpu_memory_mib: 13987
+    summary_sha256: dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d
+    status_sha256: fb68e06d174a5e6a6859a50c07392b6895102feecf3944e712dc9861de1736ce
+    fingerprint_sha256: 70d2f878e9042b632d4f3355cc350d02ae661127c738130019506aa77c4480e4
+    manifest_sha256: 80ff775de6a4fc4c748cf3ec9570c2ab0ce10e817fbe5cdcd1bef69eeee871c4
+    diagnostics_sha256: 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755
+    resolved_config_sha256: a09ac4f9359df36e1c9ff90fdba83da5de5cac519eb52979d6444211df50e291
+    checkpoint_sha256_before: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    checkpoint_sha256_after: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    evaluation_delta_vs_b0:
+      B1:
+        iou_at_frozen_threshold: 0.11666507693137063
+        boundary_f1: 0.10743665110268119
+        brier: -0.10173909952604845
+        ece: -0.11098253838494421
+        nll: -0.21446246372953237
+        false_positive_semantic_mass: -0.14292856086977537
+        false_negative_semantic_mass: 0.09153150245388808
+      B3:
+        iou_at_frozen_threshold: 0.11616133655872563
+        boundary_f1: 0.10507856889222822
+        brier: -0.10346743866826738
+        ece: -0.112431400938953
+        nll: -0.3051043073697426
+        false_positive_semantic_mass: -0.13845306831802684
+        false_negative_semantic_mass: 0.09547725994227951
+    conclusion: unary_direction_supported_single_scene_fn_tradeoff_graph_not_auto_unlocked
+    arm_selected: false
+    graph_inference_started: false
+    parameter_search_performed: false
+    validation_quality_read: false
+    heldout_quality_read: false
+    method_inference_started: true
+  state: formal30k_complete_scene0471_unary_complete_graph_protocol_pending
+  quality_read: true
+  quality_scope: scene0471_development_mechanism_diagnostic_only
 
 evidence_contract:
   per_gaussian: motion_proj/worldsim_v5/evidence_schema.py:GAUSSIAN_ROW_FIELDS
@@ -202,7 +247,7 @@ unary_development_arms:
   parameter_source: result_blind_mechanistic_defaults
 
 graph:
-  status: disabled_until_unary_diagnostic
+  status: locked_pending_preregistered_graph_protocol
   candidate_knn_only: true
   transformer_allowed: false
   semantic_split_allowed: false
@@ -217,5 +262,5 @@ restrictions:
   training_started: true
   training_iteration_started: true
   segmentation_inference_started: true
-  method_inference_started: false
+  method_inference_started: true
   new_large_model_training: false

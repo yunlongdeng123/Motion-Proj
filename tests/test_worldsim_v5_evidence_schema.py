@@ -230,7 +230,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "structured_unary_mechanism_smoke"
+    assert config["phase"] == "structured_unary_diagnostic_complete_graph_protocol_pending"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
     assert config["data_readiness"]["processed_total_bytes"] == 2497238886
@@ -242,7 +242,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "formal30k_complete_scene0471_sam_complete_unary_pending"
+        == "formal30k_complete_scene0471_unary_complete_graph_protocol_pending"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -268,12 +268,23 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert sam["view_count"] == 30
     assert sam["accepted_view_count"] == 18
     assert sam["heldout_quality_read"] is False
+    unary = config["data_readiness"]["scene0471_unary_diagnostic"]
+    assert unary["status"] == "done"
+    assert unary["gaussian_count"] == 859613
+    assert unary["accepted_evaluation_view_count"] == 8
+    assert unary["abstained_evaluation_view_count"] == 7
+    assert unary["checkpoint_sha256_before"] == unary["checkpoint_sha256_after"]
+    assert unary["evaluation_delta_vs_b0"]["B1"]["boundary_f1"] > 0.10
+    assert unary["evaluation_delta_vs_b0"]["B1"]["false_negative_semantic_mass"] > 0.09
+    assert unary["arm_selected"] is False
+    assert unary["graph_inference_started"] is False
+    assert unary["parameter_search_performed"] is False
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]
         == 14220
     )
-    assert config["graph"]["status"] == "disabled_until_unary_diagnostic"
+    assert config["graph"]["status"] == "locked_pending_preregistered_graph_protocol"
     assert config["unary_development_arms"]["B0"].startswith("hard_unweighted")
     assert config["unary_development_arms"]["B1"].startswith(
         "reliability_weighted_hard"
@@ -286,6 +297,6 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert config["restrictions"]["training_started"] is True
     assert config["restrictions"]["training_iteration_started"] is True
     assert config["restrictions"]["segmentation_inference_started"] is True
-    assert config["restrictions"]["method_inference_started"] is False
+    assert config["restrictions"]["method_inference_started"] is True
     assert config["restrictions"]["validation_content_read"] is False
     assert config["restrictions"]["test_quality_read"] is False

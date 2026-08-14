@@ -7,6 +7,8 @@
 - `V5-F22`：ownership posterior 不是新的 Gaussian opacity。若直接把 posterior 当 opacity，会给原 base 中近透明的 Gaussian 注入虚假 semantic mass。所有 2D ownership evaluation 必须渲染 `immutable base opacity × ownership probability`，并在运行前后复核 base checkpoint SHA；不得用 posterior-only rasterization 形成虚假 IoU/Boundary F1 改善。
 - `V5-F23`：scene0471 的 annotation prompt 集与 checkpoint RigidNodes 表示没有天然一一对应。冻结规则选出 `17` 个轨迹大于 1 m 的非自行车 vehicle（`15 car + 2 construction`），而 formal checkpoint 只有 `15` 个 RigidNodes instances；差异可能来自无足够 LiDAR 的标注 actor。2D SAM union 与 3D base-model proxy 必须分别报告，不得把表示缺口静默算成 unary FN、删除 prompt 或补造 Gaussian。
 - `V5-F24`：直接调用 `process_camera/collect_gaussians` 会绕过 `SceneGraphTrainer.forward()` 中的 timeline 设置；若不显式按 `normed_time` 更新 `trainer.cur_frame` 与各 Gaussian model 的 `set_cur_frame`，动态 actor 会被错误地固定在旧帧。V5 sidecar runner 必须复现该状态迁移并做 nearest-timestamp 回归测试；仅图像 frame ID 正确不足以证明动态 Gaussian pose 正确。
+- `V5-F25`：scene0471 r037 的 B1/B3 虽同时改善 IoU、Boundary F1、Brier、ECE、NLL 与 FP semantic mass，但 2D FN semantic mass 相对 B0 分别增加 `+0.0915315/+0.0954773`，明显超过计划 validation gate 的 `+0.01` 容忍量。不得只摘录正指标把 r037 写成 M1 成功，也不得以 aggregate calibration 改善掩盖漏检代价；后续 graph 诊断必须逐臂保留 FN、per-view denominator 与 abstain。
+- `V5-F26`：r037 是单个 development scene、固定 `0.5` 阈值、`8 accepted + 7 abstained` evaluation views 上的 SAM-proxy 机制诊断；它能推翻“reliability-aware unary 完全无方向信号”，但不能证明 topology graph 必要、不能选择 B1/B3、不能代表 8-scene validation。graph 只能在单独预注册协议后启动，禁止根据 r037 结果补调 unary 参数、读取 validation 或直接扩展 Transformer/semantic split。
 
 ## V5 KITTI archive / adapter 新增防重复结论（2026-08-14）
 
