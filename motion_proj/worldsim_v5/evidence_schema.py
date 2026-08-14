@@ -19,6 +19,7 @@ GAUSSIAN_ROW_FIELDS = {
     "center",
     "covariance",
     "normal_proxy",
+    "normal_available",
     "prior",
     "unary_posterior",
     "unary_uncertainty",
@@ -27,7 +28,9 @@ GAUSSIAN_ROW_FIELDS = {
     "boundary_ambiguity",
     "depth_support",
     "lidar_support",
+    "lidar_support_available",
     "motion_consistency",
+    "motion_consistency_available",
 }
 GAUSSIAN_SCALARS = {"scene", "role"}
 OBSERVATION_FIELDS = {
@@ -38,17 +41,21 @@ OBSERVATION_FIELDS = {
     "projected_pixel",
     "visibility",
     "sam_probability",
+    "sam_logit",
+    "sam_probability_available",
+    "mask_quality_accepted",
     "mask_boundary_distance",
     "depth_residual",
     "depth_consistent",
     "lidar_support",
+    "lidar_support_available",
     "view_angle_cosine",
     "positive_observation",
     "negative_observation",
     "reliability",
     "contribution_weight",
 }
-OBSERVATION_SCALARS = {"scene", "role"}
+OBSERVATION_SCALARS = {"scene", "role", "sam_probability_source"}
 EDGE_FIELDS = {
     "source_gaussian_id",
     "target_gaussian_id",
@@ -117,6 +124,9 @@ def validate_gaussian_table(table: Mapping[str, np.ndarray]) -> None:
         "depth_support",
         "lidar_support",
         "motion_consistency",
+        "normal_available",
+        "lidar_support_available",
+        "motion_consistency_available",
     ):
         _validate_probability(name, np.asarray(table[name]))
     effective = np.asarray(table["effective_evidence_count"], dtype=np.float64)
@@ -128,6 +138,22 @@ def validate_gaussian_table(table: Mapping[str, np.ndarray]) -> None:
     covariance = np.asarray(table["covariance"], dtype=np.float64)
     if not np.allclose(covariance, np.swapaxes(covariance, 1, 2), atol=1e-6):
         raise ValueError("covariance 必须对称")
+    if np.any(np.linalg.eigvalsh(covariance) <= 0.0):
+        raise ValueError("covariance 必须正定")
+    normal = np.asarray(table["normal_proxy"], dtype=np.float64)
+    normal_available = np.asarray(table["normal_available"], dtype=bool)
+    if np.any(
+        np.abs(np.linalg.norm(normal[normal_available], axis=1) - 1.0) > 1e-4
+    ):
+        raise ValueError("available normal_proxy 必须为单位向量")
+    for value_name, availability_name in (
+        ("lidar_support", "lidar_support_available"),
+        ("motion_consistency", "motion_consistency_available"),
+    ):
+        values = np.asarray(table[value_name], dtype=np.float64)
+        available = np.asarray(table[availability_name], dtype=bool)
+        if np.any(values[~available] != 0.0):
+            raise ValueError(f"unavailable {value_name} 必须显式为 0")
 
 
 def validate_observation_chunk(
@@ -149,15 +175,24 @@ def validate_observation_chunk(
     for name in (
         "visibility",
         "sam_probability",
+        "sam_probability_available",
+        "mask_quality_accepted",
         "depth_consistent",
         "lidar_support",
+        "lidar_support_available",
         "view_angle_cosine",
         "positive_observation",
         "negative_observation",
         "reliability",
     ):
         _validate_probability(name, np.asarray(chunk[name]))
-    for name in ("projected_pixel", "mask_boundary_distance", "depth_residual", "contribution_weight"):
+    for name in (
+        "projected_pixel",
+        "sam_logit",
+        "mask_boundary_distance",
+        "depth_residual",
+        "contribution_weight",
+    ):
         value = np.asarray(chunk[name], dtype=np.float64)
         if not np.isfinite(value).all():
             raise ValueError(f"observation {name} 必须有限")
@@ -167,6 +202,14 @@ def validate_observation_chunk(
     negative = np.asarray(chunk["negative_observation"], dtype=np.float64)
     if np.any((positive + negative) > 1.0 + 1e-6):
         raise ValueError("positive/negative observation 不得同时为真")
+    accepted = np.asarray(chunk["mask_quality_accepted"], dtype=bool)
+    probability_available = np.asarray(chunk["sam_probability_available"], dtype=bool)
+    if np.any((positive + negative)[~(accepted & probability_available)] != 0.0):
+        raise ValueError("rejected/unavailable SAM observation 不得伪装成正负证据")
+    lidar = np.asarray(chunk["lidar_support"], dtype=np.float64)
+    lidar_available = np.asarray(chunk["lidar_support_available"], dtype=bool)
+    if np.any(lidar[~lidar_available] != 0.0):
+        raise ValueError("unavailable observation lidar_support 必须显式为 0")
 
 
 def validate_edge_table(table: Mapping[str, np.ndarray], *, gaussian_count: int) -> None:

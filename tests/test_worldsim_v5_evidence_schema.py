@@ -4,7 +4,12 @@ import numpy as np
 import pytest
 import yaml
 
-from motion_proj.worldsim_v5.bayesian_unary import effective_count_unary
+from motion_proj.worldsim_v5.bayesian_unary import (
+    accumulate_effective_count_statistics,
+    effective_count_unary,
+    empty_effective_count_statistics,
+    finalize_effective_count_unary,
+)
 from motion_proj.worldsim_v5.evidence_schema import (
     atomic_save_npz,
     sha256_file,
@@ -22,6 +27,7 @@ def _observations() -> dict[str, np.ndarray]:
     return {
         "scene": np.asarray("scene-0001"),
         "role": np.asarray("high_support"),
+        "sam_probability_source": np.asarray("sigmoid_sam2_logit"),
         "gaussian_id": np.asarray([0, 0, 1, 1], dtype=np.int64),
         "view_id": np.arange(count, dtype=np.int32),
         "frame_id": np.asarray([2, 7, 2, 7], dtype=np.int32),
@@ -29,10 +35,14 @@ def _observations() -> dict[str, np.ndarray]:
         "projected_pixel": np.asarray([[10, 20], [11, 20], [4, 5], [5, 5]], dtype=np.float32),
         "visibility": np.asarray([1.0, 0.8, 1.0, 1.0], dtype=np.float32),
         "sam_probability": np.asarray([0.95, 0.9, 0.8, 0.2], dtype=np.float32),
+        "sam_logit": np.asarray([2.94, 2.20, 1.39, -1.39], dtype=np.float32),
+        "sam_probability_available": np.ones(count, dtype=np.int8),
+        "mask_quality_accepted": np.ones(count, dtype=np.int8),
         "mask_boundary_distance": np.asarray([8.0, 6.0, 0.1, -0.1], dtype=np.float32),
         "depth_residual": np.asarray([0.1, 0.2, 0.1, 0.1], dtype=np.float32),
         "depth_consistent": np.ones(count, dtype=np.int8),
         "lidar_support": np.asarray([1, 1, 0, 0], dtype=np.int8),
+        "lidar_support_available": np.ones(count, dtype=np.int8),
         "view_angle_cosine": np.asarray([1.0, 0.9, 1.0, 1.0], dtype=np.float32),
         "positive_observation": np.asarray([1, 1, 1, 0], dtype=np.int8),
         "negative_observation": np.asarray([0, 0, 0, 1], dtype=np.int8),
@@ -58,6 +68,39 @@ def test_observation_schema_and_effective_count_unary_preserve_disagreement() ->
     assert result["boundary_ambiguity"][1] > result["boundary_ambiguity"][0]
 
 
+def test_streaming_effective_count_matches_batch() -> None:
+    observations = _observations()
+    batch = effective_count_unary(
+        prior_probability=np.asarray([0.1, 0.1]),
+        prior_strength=2.0,
+        observations=observations,
+        sam_confidence_floor=0.1,
+        boundary_distance_scale_px=4.0,
+        depth_residual_scale_m=0.5,
+    )
+    statistics = empty_effective_count_statistics(2)
+    for indices in (np.asarray([0, 1]), np.asarray([2, 3])):
+        chunk = {
+            name: value if np.asarray(value).shape == () else np.asarray(value)[indices]
+            for name, value in observations.items()
+        }
+        accumulate_effective_count_statistics(
+            statistics,
+            observations=chunk,
+            gaussian_count=2,
+            sam_confidence_floor=0.1,
+            boundary_distance_scale_px=4.0,
+            depth_residual_scale_m=0.5,
+        )
+    streamed = finalize_effective_count_unary(
+        prior_probability=np.asarray([0.1, 0.1]),
+        prior_strength=2.0,
+        statistics=statistics,
+    )
+    for name in streamed:
+        assert np.allclose(streamed[name], batch[name])
+
+
 def test_structured_npz_is_byte_stable_and_validates_geometry(tmp_path: Path) -> None:
     table = {
         "scene": np.asarray("scene-0001"),
@@ -68,6 +111,7 @@ def test_structured_npz_is_byte_stable_and_validates_geometry(tmp_path: Path) ->
         "center": np.asarray([[0, 0, 0], [1, 0, 0]], dtype=np.float32),
         "covariance": np.stack((np.eye(3), np.eye(3))).astype(np.float32),
         "normal_proxy": np.asarray([[0, 0, 1], [0, 0, 1]], dtype=np.float32),
+        "normal_available": np.ones(2, dtype=np.int8),
         "prior": np.asarray([0.1, 0.1], dtype=np.float32),
         "unary_posterior": np.asarray([0.8, 0.2], dtype=np.float32),
         "unary_uncertainty": np.asarray([0.2, 0.3], dtype=np.float32),
@@ -76,7 +120,9 @@ def test_structured_npz_is_byte_stable_and_validates_geometry(tmp_path: Path) ->
         "boundary_ambiguity": np.asarray([0.1, 0.9], dtype=np.float32),
         "depth_support": np.asarray([1.0, 0.5], dtype=np.float32),
         "lidar_support": np.asarray([1.0, 0.0], dtype=np.float32),
+        "lidar_support_available": np.ones(2, dtype=np.int8),
         "motion_consistency": np.asarray([1.0, 1.0], dtype=np.float32),
+        "motion_consistency_available": np.ones(2, dtype=np.int8),
     }
     validate_gaussian_table(table)
     first, second = tmp_path / "first.npz", tmp_path / "second.npz"
@@ -116,10 +162,14 @@ def test_m1_contract_starts_with_instrumentation_and_frozen_development_only() -
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "evidence_schema_instrumentation"
+    assert config["phase"] == "development_preprocess"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 0
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
+    assert (
+        config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]
+        == 14220
+    )
     assert config["graph"]["status"] == "disabled_until_unary_diagnostic"
     assert config["graph"]["transformer_allowed"] is False
     assert config["restrictions"]["validation_content_read"] is False

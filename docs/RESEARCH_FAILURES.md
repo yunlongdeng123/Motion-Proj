@@ -15,6 +15,8 @@
 - `V5-F11`：P0 freeze-only commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19` 只冻结 scope、historical bindings、missing-evidence schema 与审计器。它不包含 fresh scene selection、模型实现或质量结果；任何后续工作必须通过 P0 formal audit，并继续保持 fresh/test/KITTI quality 未读与 parameter search=false。
 - `V5-F12`：fresh 8/8/20 的冻结只使用官方 split、scene context、actor annotation/LiDAR-count metadata proxy 与 sensor-keyframe completeness；没有展开图像/LiDAR blob，也没有读取 reconstruction/edit/M1/M2/M3 quality。20 个 test scene 的身份出现在 freeze manifest 不等于 test quality 已读；`V5_TEST_FREEZE.json` 与 exact-once ledger 形成前，禁止加载其内容或指标。
 - `V5-F13`：fresh development cohort 冻结后，8 个 scene 的 processed 为 `0/8`；三前向相机+LiDAR keyframe 的 `0/1280` 只是早期粗审计，不能作为 DriveStudio 10Hz preprocess 的完整分母。核对上游后，真实合同是六相机+`LIDAR_TOP` 的完整 keyframe/sweep 时间链，metadata-only 精确分母为 `14,220` files、当前 `0` present。这是 selective extraction/preprocess 工程前置，不是 M1 质量失败；不得退回 V4 scenes、替换 frozen cohort、提前读 validation，或为省事解压全部约 294 GB blobs。必须一次扫描 metadata、按 member→archive 选择性抽取，并保留逐 scene/sensor/file denominator 与内容哈希。
+- `V5-F14`：V4 semantic mask NPZ 实际保留 SAM2 `logits/raw_binary/binary`，因此 V5 不得把最终 binary 当作唯一 confidence，也不得为补 confidence 重新运行或更换 SAM。V5 使用 frozen logit 的 sigmoid 作为 observation probability；quality gate rejected mask 仍保留 raw logit 供诊断，但必须把 positive/negative/reliability 全部置零并显式记录 availability，禁止把拒绝样本误当作背景负证据。
+- `V5-F15`：Gaussian 最小 covariance 主轴只能作为 renderer-native surface-normal proxy，不是 LiDAR/mesh ground-truth normal；其符号还具有本征向量二义性。V5 必须用 reference camera 定向、验证 covariance 正定与 available normal 单位范数，并把 `normal_is_ground_truth=false` 固化进 config。若 graph 改善，不能据此宣称已恢复真实表面法线。
 
 ## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
 

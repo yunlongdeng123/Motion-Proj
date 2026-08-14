@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: evidence_schema_instrumentation
+phase: development_preprocess
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -36,21 +36,43 @@ data_readiness:
   exact_preprocess_raw_contract:
     scope: six_cameras_plus_lidar_full_sample_data_chain
     required_files: 14220
-    present_files: 0
+    present_files: 14220
+    total_bytes: 3996996012
     scene_count: 8
-    identity_or_quality_content_read: false
+    raw_payload_bytes_read_for_extraction_and_hash: true
+    sensor_payload_decoded_for_quality: false
     preparation_script: scripts/prepare_worldsim_v5_drivestudio_raw.py
     manifest: /root/autodl-tmp/data/worldsim_v5/manifests/m1_development_raw_batch_v1.json
+    manifest_content_sha256: 65fc5363ca13f9124fe6165a84a7857339943d64b87a756127950ab19c4611b6
+    manifest_file_sha256: d244638a88943c3757a0fb00494766cf5f7ce30ba1bcd5d9e6c6bf18f0d06fd3
+    member_shard_index_sha256: c26b21cee11c405a708a569e7c3e40d5afef3d8cb005a5d48fd9576e4f342a52
+    extraction_run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T095000Z__m1-development-raw-extract-s0-r001
   processed_scene_count: 0
-  state: selective_raw_extraction_and_preprocess_required
+  preprocess_runner: scripts/preprocess_worldsim_v5_m1_development.py
+  state: raw_complete_preprocess_required
   quality_read: false
 
 evidence_contract:
   per_gaussian: motion_proj/worldsim_v5/evidence_schema.py:GAUSSIAN_ROW_FIELDS
   per_view_observation: motion_proj/worldsim_v5/evidence_schema.py:OBSERVATION_FIELDS
   per_edge: motion_proj/worldsim_v5/evidence_schema.py:EDGE_FIELDS
+  observation_builder: motion_proj/worldsim_v5/observation_builder.py
+  geometry_builder: motion_proj/worldsim_v5/geometry_evidence.py
+  streaming_accumulator: motion_proj/worldsim_v5/structured_evidence.py
   storage: deterministic_chunked_npz_run_local
   checkpoint_mutation: forbidden
+  sam_probability_source: sigmoid_sam2_logit
+  rejected_mask_policy: persist_raw_logit_but_zero_positive_negative_and_reliability
+  unavailable_evidence_policy: explicit_availability_bit_and_zero_payload
+  sparse_observation:
+    minimum_contribution_weight: 0.0001
+    selection_source: result_blind_renderer_numerical_floor
+    report_dropped_count_and_mass: true
+  gaussian_geometry:
+    covariance_source: activated_scale_and_wxyz_quaternion
+    normal_proxy: smallest_covariance_eigenvector_facing_reference_camera
+    normal_is_ground_truth: false
+  graph_consumes_unary_before_diagnostic: false
 
 unary_development_arms:
   B0: v4_beta_bernoulli_frozen_comparator
