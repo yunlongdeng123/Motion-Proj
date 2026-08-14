@@ -1,6 +1,6 @@
 # Experiments
 
-## V5 M2 geometry-first r001–r009（2026-08-14）
+## V5 M2 geometry-first / Gaussianization r001–r011（2026-08-14）
 
 | Run | 状态 | 正式分母/阶段 | 结论 |
 |---|---|---|---|
@@ -13,11 +13,15 @@
 | r007 per-actor G0/G2 | blocked | serializer 前已计算，未形成 summary | arm tuple 变量遮蔽导致 `KeyError: 0`；无方法结论 |
 | r008 per-actor G0/G2 | done | `22+1` | improvement=`8/22`，mean/median delta=`+3.005506/+1.620793m`，G2 rejected |
 | r009 per-actor G0/G3 | done | `22+1` | improvement=`11/22`，mean/median delta=`+0.103693/-1.489037m`，G3 rejected |
+| r010 Gaussianization launch | blocked | formal prepare 前 | launcher 预建目录触发 overwrite guard；无 GPU、无方法读数 |
+| r011 `2×2` Gaussianization factors | done | `22 evaluable+1 abstain` | BASE exact=`22/22`；DENSE/DENSE_OPAQUE 改善=`20/22、19/22`，OPAQUE=`0/22`；density 机制受支持，未选择方法臂 |
 
 - r004/r005/r006/r008/r009 summary SHA=`e931c09fa4c1f6ca34b9b302bc5902cf9d1b183d77f6eaaeecea1083d27911a5 / b93c4be44c597762a899e46ef4c89c5a25ca1c54e09824ceca4d82c46f18eb15 / 015a507471cb18fa728d98548d1714c8898125e4f165c0f662e797bdfca30fb9 / 906bfc7b569265d6806e25b42bb855352b64b4e1cdb4562fb267aadf72efcf92 / 8a253325f5b689239712b6de3e862ddfd1b1b10adb82ac6583286c755ef0d06c`。
 - surface gate 在结果前固定为：`>=18` evaluable、`>=14` 请求改善 `>=0.5m`、mean/median delta 均 `<0`。没有 arm 通过；G0 也不是 safe candidate，只是比较基准。
+- r011 机制门固定为 `>=18` evaluable、`>=14` 请求改善 `>=0.1m`、mean/median candidate−BASE 均 `<0`。DENSE−BASE mean/median=`-0.424179/-0.480927m`，OPAQUE−BASE=`+0.059686/+0.065773m`；DENSE_OPAQUE 比 DENSE 又退化 `+0.035533m`。这支持 density 因子，不授权按 r011 选择 stride-1 method。
 - reference=`base_background_depth_model_proxy_not_ground_truth`；r005 confidence mean/median=`0.0585/0.0582`，independent GT claim=false。validation/test/KITTI quality 与 router search/refit 均未发生。
-- 详细路径、所有 terminal/manifest/fingerprint/diagnostics SHA 与 appendix 表见 `docs/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md` 和 `docs/archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json`。
+- r011 summary/status/fingerprint/manifest/diagnostics SHA=`47a08899b5e82e8297029b58d56aabfc0fee7afd1822d6b498d9a1734de87204 / 5a4a3ebb764afc50e4b715d0968acd3601c279e315bbab809d5780c1eb23d076 / 35338750eb6656c811ec41b33c6955dccd137b1ed3b32ed20f88d5e78343bf5c / acc977a3200af4f211d69dddf5b5b8de609e66e8902db72b8dacfeda60f3cc28 / 234adf931e6b0abc0808b0858e38c40f7b76f119ed8b32881d3a16150231b1cf`；manifest inventory=`31/31 exact`。
+- 详细路径和 appendix 表见 `docs/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`、`M2_R001_R009_METADATA.json` 与 `M2_R010_R011_GAUSSIANIZATION_METADATA.json`。
 
 ## V5 M1B boundary-residual forensic（2026-08-14）
 

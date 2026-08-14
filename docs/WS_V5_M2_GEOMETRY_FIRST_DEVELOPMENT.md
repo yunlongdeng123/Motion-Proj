@@ -3,7 +3,7 @@
 - Task：`WS-V5-M2-GEOMETRY-FIRST-REPAIR-01`
 - 日期：`2026-08-14`
 - 当前状态：`running`
-- 当前阶段：`per_actor_surface_sequence_closed_gaussianization_forensics_next`
+- 当前阶段：`gaussianization_density_mechanism_supported_representation_repair_next`
 - 数据范围：仅 frozen development `scene-0471`；validation/test/KITTI quality 均未读取
 - 参考范围：`base_background_depth_model_proxy_not_ground_truth`
 
@@ -20,7 +20,7 @@
 
 门槛在读取 arm 结果前固定为：至少 `18` 个可评请求；至少 `14` 个请求改善 `>=0.5m`；mean 与 median candidate−G0 raw MAE 都必须小于 `0`。G3 虽然中位数改善，但只有 `11/22` 广泛支持且均值仍轻微退化，不能按事后均值/中位数择优。
 
-因此当前没有 geometry-safe candidate，`WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01` 继续锁定。下一步只允许拆解 G0 的 raw→pre-Gaussian→post-render 表示误差；不得跳到 router、validation 或神经 surface model。
+因此当前没有 geometry-safe candidate，`WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01` 继续锁定。r011 已把 G0 的 raw→Gaussian asset→post-render 附加误差定位到 stride-2 稀疏采样；下一步只允许冻结一个 representation repair 并重新过独立 development gate，不得跳到 router、validation 或神经 surface model。
 
 ## 2. 请求单位修正
 
@@ -48,6 +48,17 @@ r005 在逐 actor G0 上得到：
 
 这证明 G0 raw builder 与 Gaussianization 都有问题，但不允许把与 base background proxy 的误差写成真实道路 GT 误差。低 reference confidence 必须与所有 MAE 同表出现；独立几何 claim 继续为 `false`。
 
+r011 用 `BASE / OPAQUE / DENSE / DENSE_OPAQUE` 四个结果前冻结臂做 `2×2` 机制取证，并对 r005 的 mask、reference、raw、pre、post float16 与 BASE common mask 做 `22/22 exact` replay。四臂共同评估没有丢失任何 baseline pixel：
+
+| 对比 | `>=0.1m` 改善 | candidate−BASE mean MAE | median | 机制解释 |
+|---|---:|---:|---:|---|
+| OPAQUE−BASE | `0/22` | `+0.059686m` | `+0.065773m` | 单独提高 opacity 退化，alpha/background mixing 不受支持 |
+| DENSE−BASE | `20/22` | `-0.424179m` | `-0.480927m` | stride `2→1` 广泛改善，density arm 过冻结机制门 |
+| DENSE_OPAQUE−BASE | `19/22` | `-0.388647m` | `-0.441758m` | 过门，但弱于 DENSE |
+| DENSE_OPAQUE−DENSE | `0/22` | `+0.035533m` | `+0.039717m` | 在 dense 条件继续增 opacity 仍退化 |
+
+标准 `2×2` 描述性对比的 density main effect mean/median=`-0.436256/-0.493625m`，opacity main effect=`+0.047609/+0.052537m`，interaction=`-0.024153/-0.026682m`。正式 summary 使用保守词汇 `multiple_gaussianization_factors_have_broad_mechanism_support`，因为 DENSE 与 DENSE_OPAQUE 两臂都过门；结合 OPAQUE 两个条件都退化，当前可归因解释是“density 必要、opacity 不受支持”，不是选择 DENSE 为正式方法。
+
 ## 4. 正式运行时间线
 
 所有运行位于：
@@ -65,8 +76,10 @@ r005 在逐 actor G0 上得到：
 | r007 `20260814T202900Z__m2-scene0471-per-actor-g0-g2-raw-s0-r007` | blocked | `8a729de6` | runner 局部指标字典覆盖 frozen arm tuple，artifact serialize `KeyError: 0`；无方法结论 |
 | r008 `20260814T203200Z__m2-scene0471-per-actor-g0-g2-raw-s0-r008` | done | `cdf329eb` | G2 改善 `8/22`，mean/median delta=`+3.0055/+1.6208m`，rejected |
 | r009 `20260814T203700Z__m2-scene0471-per-actor-g0-g3-raw-s0-r009` | done | `cc6c9058` | G3 改善 `11/22`，mean/median delta=`+0.1037/-1.4890m`，rejected |
+| r010 `20260814T205600Z__m2-scene0471-gaussianization-factors-s0-r010` | blocked | `5daeaedc` | launcher 为日志重定向预建 run 目录，formal overwrite guard 在模型加载前拒绝；无 GPU、无方法读数 |
+| r011 `20260814T205700Z__m2-scene0471-gaussianization-factors-s0-r011` | done | `5daeaedc` | BASE `22/22 exact`；DENSE/DENSE_OPAQUE 分别 `20/22`、`19/22` 改善，OPAQUE `0/22`；density 机制受支持，未选择方法臂 |
 
-r007 的变量遮蔽由 commit `cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e` 修复，并以独立 r008 重跑。r001/r007 目录和 terminal 不覆盖、不复用。
+r007 的变量遮蔽由 commit `cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e` 修复，并以独立 r008 重跑。r010 是启动器目录生命周期错误，r011 改为外部日志后完成；r001/r007/r010 目录和 terminal 均不覆盖、不复用。
 
 ## 5. 关键完整性哈希
 
@@ -81,8 +94,10 @@ r007 的变量遮蔽由 commit `cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e` 修复
 | r007 | n/a | `876220e27cd38e49f620c01b61800a1b20449fb75c68d21a1281aa9e76462303` | n/a |
 | r008 | `906bfc7b569265d6806e25b42bb855352b64b4e1cdb4562fb267aadf72efcf92` | `874c9f907365fbcbcccd1ad3073eb3495f962e70c0d491630431f2935e738fb3` | `2298fa0792805b12f01e8be661e9f16b86e203839ec764c35acbccbea0564252` |
 | r009 | `8a253325f5b689239712b6de3e862ddfd1b1b10adb82ac6583286c755ef0d06c` | `a40727fb94dd64141cee37f83626811261c65222923f7897abaa33179f722426` | `d22fa44fa6a10cec29ed4bdd1481950211f069f73106469715914c038fce79b3` |
+| r010 | n/a | `ae6724c2fba28d5c51b43fbe68a3a79754a0ee10acfcc09dabbadbd678d8f92d` | n/a |
+| r011 | `47a08899b5e82e8297029b58d56aabfc0fee7afd1822d6b498d9a1734de87204` | `5a4a3ebb764afc50e4b715d0968acd3601c279e315bbab809d5780c1eb23d076` | `234adf931e6b0abc0808b0858e38c40f7b76f119ed8b32881d3a16150231b1cf` |
 
-完整 fingerprint/manifest/resolved/events 哈希与机器可读字段见 [`archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json`](archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json)。
+完整 fingerprint/manifest/resolved/events 哈希与机器可读字段见 [`archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json`](archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json) 和 [`archive/2026-08/worldsim-v5-m2/M2_R010_R011_GAUSSIANIZATION_METADATA.json`](archive/2026-08/worldsim-v5-m2/M2_R010_R011_GAUSSIANIZATION_METADATA.json)。r011 manifest `31/31` inventory files 已重哈希，无错误。
 
 ## 6. 技术报告附录边界
 
@@ -92,6 +107,7 @@ r007 的变量遮蔽由 commit `cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e` 修复
 - frozen scene0471 model proxy 上，G1/G2/G3 均未稳定超过 G0；
 - G0 本身在 22/22 请求上未过 absolute raw gate，且 16/22 存在主要 Gaussianization 附加误差；
 - 当前证据支持继续诊断 representation/rendering，不支持选择新 surface 或改 router。
+- stride-1 density 在 model proxy 上广泛减少 post-render representation gap；opacity `0.85→0.99` 在 sparse/dense 两个条件都退化。
 
 不得写：
 
@@ -99,3 +115,4 @@ r007 的变量遮蔽由 commit `cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e` 修复
 - G3 因中位数改善而通过；
 - union-mask r002/r003 是逐 actor 方法比较；
 - scene0471 development proxy 等价于 validation、KITTI 或独立 geometry GT。
+- DENSE 已成为正式 geometry-safe method、router 已解锁，或应直接把 stride-1 带入 validation。

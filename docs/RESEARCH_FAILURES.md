@@ -10,6 +10,10 @@
 - `V5-F39`：G3 quadratic 的 median delta=`-1.489037m` 不能覆盖 mean=`+0.103693m` 与 improvement count=`11/22<14/22`。r009 已按冻结 gate rejected；不得事后将判据改成 median-only，也不得沿用 request-unit 错误的 r003 作为相反证据。
 - `V5-F40`：blocked terminal 必须与方法失败分离。r001 是 unavailable-view denominator 合同错误；r007 是 artifact serializer 局部变量遮蔽导致 `KeyError: 0`。两者没有可用质量 summary，不能进入 arm 均值，也不能覆盖目录或改 terminal；修复只允许新 run ID。
 - `V5-F41`：G1/G2/G3 全部 rejected 且 G0 raw `22/22` fail，当前不存在 safe candidate。按照 V5 causal order，feasibility-first router、validation 和神经 surface 都不得解锁；下一步只能先诊断/修复 Gaussianization representation 与 alpha compositing，之后重新经过独立 development gate。
+- `V5-F42`：formal run 的目标目录必须由 runner 原子创建，不能为了 stdout 重定向提前 `mkdir`。r010 在任何模型加载/GPU/质量读取前被 overwrite guard 拒绝；其 blocked terminal、events 和 run.log 保留。修复只改变 launcher，把日志放到 run 外部并用新 r011；不得删除 r010 或把它计入方法分母。
+- `V5-F43`：提高 Gaussian asset opacity 不能修复当前 representation gap。r011 的 OPAQUE−BASE 在 `0/22` 请求改善 `>=0.1m`，mean/median post-MAE delta=`+0.059686/+0.065773m`；在 dense 条件下继续提高 opacity 也退化 `+0.035533m`。禁止继续提高 opacity、改 alpha 阈值或把 background mixing 写成已支持机制。
+- `V5-F44`：stride `2→1` 的 DENSE arm 在 `20/22` 请求改善，mean/median delta=`-0.424179/-0.480927m`，但这是 frozen scene0471 model proxy 上的机制取证，不是 geometry-safe method selection。G0 raw 仍 `22/22` absolute fail，validation/KITTI/独立 GT 均未读取；不得直接把 stride-1 送入 validation、改 router，或把 post-render 改善写成真实道路恢复。
+- `V5-F45`：factorial arm 通过数必须解释为因素对比，不能按臂名投票。r011 中 DENSE 与 DENSE_OPAQUE 都过门，正式 summary 因此保守写作 `multiple_gaussianization_factors_have_broad_mechanism_support`；但 OPAQUE 在 sparse/dense 两个条件都退化，描述性 density/opacity main effect=`-0.436256/+0.047609m`。后续只允许冻结 density representation repair 并重新过独立 gate，不能把组合臂通过误写成 opacity 或 interaction 获支持。
 
 ## V5 M1 structured unary 新增防重复结论（2026-08-14）
 

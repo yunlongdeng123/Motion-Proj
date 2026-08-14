@@ -1,0 +1,148 @@
+{
+  "schema_version": "worldsim_v5_m2_gaussianization_archive_v1",
+  "generated_at_utc": "2026-08-14T20:59:00Z",
+  "task_id": "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01",
+  "task_status": "running",
+  "phase": "gaussianization_density_mechanism_supported_representation_repair_next",
+  "scope": {
+    "partition": "development",
+    "scene": "scene-0471",
+    "request_unit": "one_actor_one_view_one_hole",
+    "request_count": 23,
+    "evaluable_request_count": 22,
+    "abstain_request_count": 1,
+    "validation_quality_read": false,
+    "heldout_quality_read": false,
+    "test_quality_read": false,
+    "kitti_quality_read": false,
+    "parameter_search_performed": false,
+    "method_arm_selection_performed": false,
+    "router_refit_performed": false,
+    "reference": "base_background_depth_model_proxy_not_ground_truth",
+    "independent_geometry_claim_allowed": false
+  },
+  "frozen_factorial_design": {
+    "surface": "G0_ROBUST_PLANE",
+    "arms": [
+      {"id": "BASE", "stride": 2, "scale_multiplier": 1.25, "opacity": 0.85},
+      {"id": "OPAQUE", "stride": 2, "scale_multiplier": 1.25, "opacity": 0.99},
+      {"id": "DENSE", "stride": 1, "scale_multiplier": 1.25, "opacity": 0.85},
+      {"id": "DENSE_OPAQUE", "stride": 1, "scale_multiplier": 1.25, "opacity": 0.99}
+    ],
+    "gate": {
+      "minimum_evaluable_request_count": 18,
+      "minimum_post_mae_improvement_m": 0.1,
+      "minimum_improvement_request_count": 14,
+      "require_mean_delta_below_m": 0.0,
+      "require_median_delta_below_m": 0.0,
+      "baseline_replay_must_be_exact": true
+    }
+  },
+  "results": {
+    "baseline_replay_exact_count": 22,
+    "baseline_vs_common_pixel_loss": 0,
+    "formal_conclusion": "multiple_gaussianization_factors_have_broad_mechanism_support",
+    "supported_diagnostic_arms": ["DENSE", "DENSE_OPAQUE"],
+    "method_arm_selected": false,
+    "arm_contrasts_m": {
+      "OPAQUE_minus_BASE": {
+        "improvement_request_count": 0,
+        "mean": 0.059685799508612,
+        "median": 0.06577265804649812,
+        "minimum": 0.00007727342966412643,
+        "maximum": 0.10850983928563274
+      },
+      "DENSE_minus_BASE": {
+        "improvement_request_count": 20,
+        "mean": -0.4241791032477598,
+        "median": -0.4809268153287749,
+        "minimum": -0.8087445522876493,
+        "maximum": -0.0005062207322241927
+      },
+      "DENSE_OPAQUE_minus_BASE": {
+        "improvement_request_count": 19,
+        "mean": -0.38864650024038616,
+        "median": -0.44175832977378704,
+        "minimum": -0.7430700703433786,
+        "maximum": -0.0004648466621242249
+      },
+      "DENSE_OPAQUE_minus_DENSE": {
+        "improvement_request_count": 0,
+        "mean": 0.035532603007373716,
+        "median": 0.03971744974084945,
+        "minimum": 0.00004137407009996777,
+        "maximum": 0.06567448194427072
+      }
+    },
+    "factorial_contrasts_m": {
+      "density_main_effect": {"mean": -0.43625570149837894, "median": -0.49362477656092096},
+      "opacity_main_effect": {"mean": 0.04760920125799286, "median": 0.0525369028514191},
+      "density_opacity_interaction": {"mean": -0.02415319650123824, "median": -0.026681648448002804}
+    },
+    "macro_post_mae_m": {
+      "BASE": {"mean": 9.005594113700793, "median": 9.004034497878202},
+      "OPAQUE": {"mean": 9.065279913209407, "median": 9.074749285201552},
+      "DENSE": {"mean": 8.581415010453034, "median": 8.573101988680646},
+      "DENSE_OPAQUE": {"mean": 8.61694761346041, "median": 8.614380139430285}
+    },
+    "macro_representation_gap_mae_m": {
+      "BASE": {"mean": 3.1951923126124124, "median": 2.5044076532736232},
+      "OPAQUE": {"mean": 3.2545013697353635, "median": 2.5423002553942204},
+      "DENSE": {"mean": 2.7707485536879695, "median": 2.1897302031657655},
+      "DENSE_OPAQUE": {"mean": 2.806143322309694, "median": 2.240705505652043}
+    },
+    "gaussian_count_macro": {
+      "BASE": {"mean": 2199.3636363636365, "median": 672.5, "maximum": 29412},
+      "DENSE": {"mean": 8813.40909090909, "median": 2691.0, "maximum": 118022}
+    },
+    "interpretation": "density_is_supported_as_the_primary_representation_mechanism_while_opacity_is_not_supported",
+    "interpretation_is_method_selection": false
+  },
+  "runs": [
+    {
+      "id": "r010",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T205600Z__m2-scene0471-gaussianization-factors-s0-r010",
+      "source_commit": "5daeaedc704eafe0a451dcaea08d29b39cd428dd",
+      "status": "blocked",
+      "launch_failure_before_prepare": true,
+      "gpu_or_quality_read": false,
+      "reason": "launcher_precreated_run_directory_and_formal_overwrite_guard_rejected_it",
+      "bytes": 1804,
+      "hashes": {
+        "status": "ae6724c2fba28d5c51b43fbe68a3a79754a0ee10acfcc09dabbadbd678d8f92d",
+        "events": "3e5e22eb7663a31238162235f1d368e49af1d8d8837b10d9bd273555799c4af4",
+        "run_log": "3ee35fa1a6a73e9a399054d5e249d41930348eb37e5bf0eecfd7b92f0305abfb"
+      }
+    },
+    {
+      "id": "r011",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T205700Z__m2-scene0471-gaussianization-factors-s0-r011",
+      "source_commit": "5daeaedc704eafe0a451dcaea08d29b39cd428dd",
+      "status": "done",
+      "duration_seconds": 79.0406336132437,
+      "peak_gpu_memory_mib": 7455,
+      "checkpoint_sha256_before": "496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa",
+      "checkpoint_sha256_after": "496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa",
+      "bytes": 63207008,
+      "request_artifact_count": 22,
+      "manifest_inventory_count": 31,
+      "manifest_inventory_error_count": 0,
+      "hashes": {
+        "summary": "47a08899b5e82e8297029b58d56aabfc0fee7afd1822d6b498d9a1734de87204",
+        "status": "5a4a3ebb764afc50e4b715d0968acd3601c279e315bbab809d5780c1eb23d076",
+        "fingerprint": "35338750eb6656c811ec41b33c6955dccd137b1ed3b32ed20f88d5e78343bf5c",
+        "manifest": "acc977a3200af4f211d69dddf5b5b8de609e66e8902db72b8dacfeda60f3cc28",
+        "resolved_config": "ada9ddd0150812eea4e0462a88f0b07559ae6471774f9ea719f4e1374f247116",
+        "events": "000fc246f9045067f0217785dd1653a8fae14943664201fb73f9bade66a03373",
+        "diagnostics": "234adf931e6b0abc0808b0858e38c40f7b76f119ed8b32881d3a16150231b1cf"
+      }
+    }
+  ],
+  "next_gate": {
+    "allowed": "freeze_one_density_representation_repair_and_retest_on_the_same_development_request_protocol",
+    "router_unlocked": false,
+    "validation_unlocked": false,
+    "kitti_method_tuning_unlocked": false,
+    "neural_surface_unlocked": false
+  }
+}
