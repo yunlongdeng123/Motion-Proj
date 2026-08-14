@@ -2,13 +2,13 @@
 
 - Task：`WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01`
 - 日期：`2026-08-14`
-- 当前状态：`running`
-- 当前阶段：`trajectory_mechanism_insufficient_no_renderer_unlock`
+- 当前状态：`rejected`
+- 当前阶段：`m3_rejected_constraint_projection_not_needed_on_frozen_requests`
 - 数据范围：fresh development 8 scenes；validation/test/KITTI quality 均未读取
 
 ## 1. 当前结论
 
-M3 的 result-blind 协议、8-scene clip inventory 和 T2–T5 轨迹投影实现已经冻结，但当前 LATERAL/INSERT 请求没有足够的 T2 物理违例信号，不能支持 constraint projection，也没有解锁 renderer、collision gate、method selection 或 validation。
+M3 的 result-blind 协议、8-scene clip inventory 和 T2–T5 轨迹投影实现已经冻结。当前 LATERAL/INSERT 请求没有足够的 T2 物理违例信号，r006 已把任务正式收口为 `rejected`；renderer、collision gate、method selection 与 validation 从未解锁。
 
 测量修正后的 r005 是当前权威机制结果：`15/16` T2 请求本来就是 safe，剩余 `1/16` 只有 `2` 项违例；T5 将其降为 `1` 项，总体 reduction=`50%`，但低于预注册的最小 `8` 个 T2-violation evaluable requests。正式结论为 `m3_constraint_projection_insufficient_t2_violation_signal`。
 
@@ -29,6 +29,7 @@ M3 的 result-blind 协议、8-scene clip inventory 和 T2–T5 轨迹投影实�
 | r003 `20260814T225000Z__m3-development-clip-inventory-s0-r003` | done | 8/8 fresh development scenes 各冻结 1 个七 keyframe vehicle clip；0 abstain；只读 annotation metadata |
 | r004 `20260814T230000Z__m3-constraint-mechanism-s0-r004` | done | T2 violations=`38`，T5=`34`，但全部 T2 违例均为 heading-velocity；T5 产生 `20` yaw-rate + `14` heading，门为 insufficient |
 | r005 `20260814T231500Z__m3-constraint-mechanism-measurement-v2-s0-r005` | done | 低速 heading unobservable、允许 reverse、convergence=zero violations 后 exact replay；T2/T5=`2/1`，evaluable=`1/16`，仍 insufficient |
+| r006 `20260814T234500Z__m3-rejection-closeout-s0-r006` | done / task rejected | 绑定 r001–r005；禁止 post-hoc stress-template search；保留 V4 temporal 仅作 historical baseline |
 
 ## 4. r004→r005 测量修正
 
@@ -46,6 +47,8 @@ r004 的 `38` 个 T2 违例全部来自 heading-velocity mismatch；T5 的逐帧
 
 ## 6. 复开条件
 
-当前禁止为了凑足 `8` 个 evaluable 而降低 heading speed floor、禁止取消 reverse 语义、禁止降低物理 caps 或改 r005 分母。下一步若继续，只能注册与计划一致的新 desired-motion hypothesis（例如明确的加速、制动、lane-change stress request），使用新 task/config/run，并明确标为 development hypothesis；或者停止 physics branch，不得用 V4 `FRAME_INDEPENDENT` 统计替代 T2 证据。
+当前禁止为了凑足 `8` 个 evaluable 而降低 heading speed floor、取消 reverse 语义、降低物理 caps、改 r005 分母或事后扩大 stress template。physics branch 已由 r006 关闭；未来复开必须是独立新路线、新科研假设和新冻结数据协议，不得用 V4 `FRAME_INDEPENDENT` 统计替代 T2 证据。
 
-机器元数据：[`archive/2026-08/worldsim-v5-m3/M3_R001_R005_METADATA.json`](archive/2026-08/worldsim-v5-m3/M3_R001_R005_METADATA.json)。
+r006 summary SHA=`9dfc72a614cd9e8a2849f214e47f988c5792a0b9e104f76c45df8185d0022ac6`，decision ledger SHA=`b904d0e5687d48a3be28013156e9faa76279caee8018ba63ddae70a6303c6660`。
+
+机器元数据：[`archive/2026-08/worldsim-v5-m3/M3_R001_R006_METADATA.json`](archive/2026-08/worldsim-v5-m3/M3_R001_R006_METADATA.json)。

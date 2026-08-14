@@ -1,8 +1,8 @@
 {
   "schema_version": "worldsim_v5_m3_r001_r005_archive_v1",
   "task_id": "WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01",
-  "task_status": "running",
-  "current_conclusion": "m3_constraint_projection_insufficient_t2_violation_signal",
+  "task_status": "rejected",
+  "current_conclusion": "m3_rejected_constraint_projection_not_needed_on_frozen_requests",
   "runs": {
     "r001": {
       "run_id": "20260814T223000Z__m3-protocol-audit-s0-r001",
@@ -45,6 +45,15 @@
       "conclusion": "m3_constraint_projection_insufficient_t2_violation_signal",
       "metrics": {"request_count": 16, "t2_violation_evaluable_request_count": 1, "t2_safe_request_count": 15, "t2_total_violation_count": 2, "t5_total_violation_count": 1, "t5_improved_evaluable_request_count": 1, "t2_safe_request_regression_count": 0, "relative_reduction": 0.5, "endpoint_pass_request_count": 16, "contact_pass_request_count": 16},
       "sha256": {"summary.json": "56fd2223c3693dcd4d9cb605b140aa0b981642cfccec9fead96cea96851c6f29", "status.json": "7bd7aba3382e3eaff283ef5a07a0f4cb3aca6cc0e19cecb192d122d1ef21d23a", "manifest.json": "dd00bf269ef2fb313ef634eb09411ea814d68b826dc9e1b83c91680ace01babf", "fingerprint.json": "f550336d8df6af81b2a6dd48edcfbd97410f618d4b583cd70b25abe2ec1843aa", "artifacts/trajectory_diagnostics.json": "3ba7c2eb3663ed7c92392adb19076eb3678abedc3cffe6a609c67a90f26e9d62", "artifacts/mechanism_decision.json": "3e2299e49febe3a2a875f654b188a02ae25c81ae923842016945948483742452"}
+    },
+    "r006": {
+      "run_id": "20260814T234500Z__m3-rejection-closeout-s0-r006",
+      "status": "done",
+      "task_status": "rejected",
+      "source_commit": "129f4df35846fceb0a7326ff91ac63db5a377b84",
+      "conclusion": "m3_rejected_constraint_projection_not_needed_on_frozen_requests",
+      "decision": {"completed_run_count": 4, "blocked_run_count": 1, "renderer_unlocked": false, "collision_gate_assessed": false, "method_arm_selected": false, "validation_unlocked": false, "test_unlocked": false, "post_hoc_stress_template_search_forbidden": true},
+      "sha256": {"summary.json": "9dfc72a614cd9e8a2849f214e47f988c5792a0b9e104f76c45df8185d0022ac6", "status.json": "4fe5428296aae7e49732ac1e996ed8fe69965f39ec3ed47c115ef9ccba7b4166", "manifest.json": "498586ae5494c8eff7c2534c481544f1d32c789014a90b69865834cad4b66e5e", "fingerprint.json": "25611bf53727309fbd495dd806b42c94688553e9868e2ceb43679bbc17665a20", "resolved_config.yaml": "80a222a84a0f17af863a84b7adf38e834ad4056f4332bcb9636028a5ef6d7d7d", "events.jsonl": "d008071520aeb3aa62d2a794c610eb35b5668ac89d4e7506645dad5b8cf309bf", "artifacts/decision_ledger.json": "b904d0e5687d48a3be28013156e9faa76279caee8018ba63ddae70a6303c6660"}
     }
   },
   "locks": {"renderer_unlocked": false, "collision_gate_assessed": false, "method_arm_selected": false, "validation_unlocked": false, "test_unlocked": false, "kitti_parameter_tuning": false}

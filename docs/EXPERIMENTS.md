@@ -9,6 +9,7 @@
 | r003 clip inventory | done | 8 scenes | `8 ready + 0 abstain`，各 7 keyframes；annotation metadata-only | trajectory mechanism metrics unlocked |
 | r004 mechanism v1 | done | 16 requests | T2/T5 violations=`38/34`；evaluable=`7`；improved=`5`；safe regressions=`2` | insufficient；heading measurement artifact |
 | r005 measurement v2 | done | 16 requests | T2 safe/evaluable=`15/1`；T2/T5=`2/1`；reduction=`50%`；endpoint/contact=`16/16` | insufficient；nonconfirmatory replay，无 unlock |
+| r006 rejection closeout | done / task rejected | `4 completed + 1 blocked` | renderer/collision/method/validation/test 全 false | `m3_rejected_constraint_projection_not_needed_on_frozen_requests` |
 
 - r005 只修正 heading 可观测性、reverse 语义和 convergence 定义，desired templates、T2–T5、caps、分母与 gate threshold 全部 exact replay。
 - r005 summary/status/diagnostics/decision SHA=`56fd2223.../7bd7aba3.../3ba7c2eb.../3e2299e4...`；完整 r001–r005 哈希见 M3 archive metadata。

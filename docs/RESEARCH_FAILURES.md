@@ -9,6 +9,7 @@
 - `V5-F56`：POCS 更新量固定点不等于物理可行。r004 T5 的逐帧 heading correction 产生 `20` yaw-rate + `14` heading violations，却曾报告 converged；现在只有剩余 total violations=`0` 才允许 convergence。禁止用旧 converged flag 支持方法。
 - `V5-F57`：r005 exact replay 后 T2=`15/16 safe`，仅 `1/16` request 有 `2` 项违例；T5 降到 `1` 项，但预注册最小 evaluable 是 `8`。当前结论必须是 insufficient signal，不能因相对 reduction=`50%` 而解锁 renderer、选择 arm 或进入 validation。
 - `V5-F58`：不得通过降低 heading speed floor、取消 reverse、降低物理 caps、删除 T2-safe requests 或改 minimum-evaluable gate 来“修复”r005。复开只能注册新的 desired-motion hypothesis 与新 run，明确保留 result-aware development 身份；collision/render/validation 仍需独立门。
+- `V5-F59`：r006 已把 V5 constraint-projection M3 正式收口为 `rejected`。禁止事后扩大 lane shift/acceleration stress template 来人为制造 T2 violations；V4 M3 时序正结果继续成立，但只能写作历史 baseline，不能倒写 V5 constraint projection 成功。未来复开必须是独立新路线与新冻结协议。
 
 ## V5 M2 cross-view scaffold 与拒绝收口新增防重复结论（2026-08-14）
 
