@@ -1,0 +1,129 @@
+schema_version: worldsim_v5_m3_protocol_audit_v1
+task_id: WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01
+status: running
+phase: result_blind_protocol_and_evidence_audit
+created_at: "2026-08-14"
+
+scope:
+  gpu_required: false
+  training: false
+  model_inference: false
+  development_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  parameter_search_performed: false
+  method_arm_selection_performed: false
+  historical_v4_quality_read: true
+  historical_v4_role: diagnostic_only_not_v5_comparator_statistics
+
+frozen_inputs:
+  m2_closeout_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T221000Z__m2-geometry-first-closeout-s0-r015/summary.json
+    sha256: 27a6613d4428fbadaf45a7e9f606bdb1819a9a5b712bb7f03171af0fe70a0c01
+  m2_closeout_status:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T221000Z__m2-geometry-first-closeout-s0-r015/status.json
+    sha256: b8f6e66f9ece686cdeff58d15b3c6eaafac184f13ee364aa590b960da8006f1e
+  fresh_cohort:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+    sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+  development_base_audit_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172300Z__m1-formal30k-batch-audit-s0-r035/summary.json
+    sha256: 4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b
+  development_base_audit_status:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172300Z__m1-formal30k-batch-audit-s0-r035/status.json
+    sha256: 0c941a372125e1f893bc31c15eed2cb55dbfef33fc005bf2b8122edec7626607
+  v4_frozen_temporal_config:
+    path: /root/autodl-tmp/motion_proj/docs/archive/2026-08/worldsim-v4-final/evidence/m3-validation-r238/source_snapshot/m3_temporal_v1.yaml
+    sha256: 174ff2570b7e191579644ed45f3884c31f78cf9e540c7b882c1f89acab64edad
+  v4_validation_summary:
+    path: /root/autodl-tmp/motion_proj/docs/archive/2026-08/worldsim-v4-final/evidence/m3-validation-r238/summary.json
+    sha256: 87a5d7b9cd20d26f60e7f4f94f604f8bc4a9af64b968ea156ce79326bb46da5e
+  v4_test_summary:
+    path: /root/autodl-tmp/motion_proj/docs/archive/2026-08/worldsim-v4-final/evidence/m3-test-r335/summary.json
+    sha256: 64d1a47c290c218cb3baecf66fd7a8eed2a7c65b793e30195b71e57af7f12519
+
+protocol:
+  dataset: nuScenes
+  fresh_development_scenes: [scene-0471, scene-1087, scene-0379, scene-0998,
+                             scene-0359, scene-0875, scene-0535, scene-0436]
+  clip_seconds: [2.0, 4.0]
+  keyframes: 7
+  camera_ids: [0, 1, 2]
+  operations: [REMOVE, LATERAL, INSERT]
+  trajectory_primary_operations: [LATERAL, INSERT]
+  remove_policy: exact_bypass_retained_for_operation_semantic_and_rollback_only
+  remove_physics_denominator: false
+  request_unit: one_scene_one_operation_one_clip
+  retain_abstain_in_scene_denominator: true
+  target_interior_reference_available_to_method: false
+
+arms:
+  diagnostic_only: [T0_FRAME_INDEPENDENT, T1_LINEAR]
+  comparator: T2_V4_FROZEN_SE3_BSPLINE
+  candidates:
+    - T3_MINIMUM_JERK
+    - T4_MINIMUM_JERK_ROAD_CONTACT
+    - T5_T4_VEHICLE_KINEMATICS
+  optional_local_residual:
+    enabled: false
+    reason: M1_rejected_no_transferable_topology_graph_and_no_global_failure_evidence_yet
+  matched_contract: same_base_same_clip_same_actor_asset_same_desired_trajectory
+
+physical_constraints:
+  provenance: result_blind_conservative_engineering_caps
+  maximum_speed_mps: 30.0
+  maximum_acceleration_mps2: 6.0
+  maximum_deceleration_mps2: 8.0
+  maximum_yaw_rate_radps: 0.75
+  maximum_lateral_acceleration_mps2: 5.0
+  maximum_heading_velocity_mismatch_rad: 0.35
+  maximum_contact_error_m: 0.20
+  collision_overlap_tolerance_m2: 0.0
+  endpoint_translation_tolerance_m: 0.10
+  endpoint_yaw_tolerance_rad: 0.05
+
+development_gates:
+  comparator: T2_V4_FROZEN_SE3_BSPLINE
+  gate_a_visual_temporal:
+    rule: either
+    warp_l1_relative_improvement_min: 0.10
+    temporal_lpips_relative_improvement_min: 0.10
+  gate_b_physical:
+    visual_temporal_noncritical_regression_max: 0.02
+    physical_violation_relative_reduction_min: 0.50
+  conjunction:
+    require_gate_a_or_gate_b: true
+    operation_success_non_degradation: true
+    deleted_semantic_reintroduction_pixels_max: 0
+    rollback_exact_fraction_min: 1.0
+    endpoint_constraints_pass: true
+  selection_order: [all_conjunction_gates, physical_violation_count,
+                    mean_jerk_energy, desired_trajectory_rmse, arm_order]
+
+evidence_boundaries:
+  v4_validation_and_test_metrics: historical_diagnostic_only
+  v4_canonical_baseline: FRAME_INDEPENDENT
+  v5_required_comparator: T2_V4_FROZEN_SE3_BSPLINE
+  reuse_v4_aggregate_as_v5_comparator_evidence: false
+  m2_geometry_claim_reuse: false
+  m3_success_may_rewrite_m2: false
+  fresh_validation_unlock: false
+  fresh_test_unlock: false
+  kitti_parameter_tuning: false
+
+expected_audit:
+  conclusion: m3_result_blind_protocol_frozen_development_implementation_unlocked
+  fresh_development_scene_count: 8
+  completed_base_scene_count: 8
+  m2_task_status: rejected
+  m2_router_unlocked: false
+  v4_validation_scene_denominator: 6
+  v4_validation_evaluable_scene_count: 3
+  v4_test_scene_denominator: 18
+  v4_test_evaluable_scene_count: 12
+  v4_statistics_reusable_for_v5_claim: false
+  development_implementation_unlocked: true
+  development_quality_unlocked: false
+  validation_unlocked: false
+  test_unlocked: false
