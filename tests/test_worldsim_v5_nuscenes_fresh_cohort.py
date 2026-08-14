@@ -55,11 +55,17 @@ def test_fresh_config_is_post_p0_and_result_blind() -> None:
             encoding="utf-8"
         )
     )
-    assert config["status"] == "running"
+    assert config["status"] == "done"
     assert config["project"]["p0_status"] == "done"
     assert tuple(config["selection"]["allowed_metadata_fields"]) == SELECTION_FIELDS
     assert config["selection"]["selection_uses_model_results"] is False
     assert config["restrictions"]["sensor_blob_expansion_for_selection"] is False
     assert config["restrictions"]["fresh_test_quality_read"] is False
     assert len(config["v4_exclusion"]["scenes"]) == 30
-    assert config["freeze"]["scene_records"] == []
+    assert config["freeze"]["selection_status"] == "frozen"
+    assert len(config["freeze"]["scene_records"]) == 36
+    assert not set(
+        scene
+        for role_scenes in config["freeze"]["scene_roles"].values()
+        for scene in role_scenes
+    ) & set(config["v4_exclusion"]["scenes"])

@@ -46,12 +46,17 @@ def test_fresh_cohort_contract_excludes_every_v4_scene() -> None:
         "test": 20,
     }
     assert fresh["protocol"]["total_scene_count"] == 36
-    assert fresh["freeze"]["selection_status"] == "pending"
-    assert fresh["freeze"]["scene_roles"] == {
-        "development": [],
-        "validation": [],
-        "test": [],
+    assert fresh["freeze"]["selection_status"] == "frozen"
+    assert {role: len(scenes) for role, scenes in fresh["freeze"]["scene_roles"].items()} == {
+        "development": 8,
+        "validation": 8,
+        "test": 20,
     }
+    assert not set(
+        scene
+        for scenes in fresh["freeze"]["scene_roles"].values()
+        for scene in scenes
+    ) & old_scenes
     assert fresh["restrictions"]["fresh_test_quality_read"] is False
     assert fresh["restrictions"]["v4_scene_confirmatory_reuse"] is False
 

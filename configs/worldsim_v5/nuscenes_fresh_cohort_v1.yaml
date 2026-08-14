@@ -1,6 +1,6 @@
 schema_version: worldsim_v5_nuscenes_fresh_cohort_v1
 task_id: WS-V5-D0-NUSCENES-FRESH-COHORT-01
-status: running
+status: done
 created_at: "2026-08-14"
 
 project:
@@ -22,7 +22,7 @@ dataset:
   public_archive_read_only: true
 
 selection:
-  state: running_metadata_only_selection
+  state: frozen_result_blind_metadata_selection
   seed: 2216484596
   seed_derivation:
     source: sha256_utf8_task_id_first_32_bits_big_endian
@@ -113,26 +113,69 @@ v4_exclusion:
     - scene-0632
 
 freeze:
-  selection_status: pending
-  cohort_sha256: null
+  selection_status: frozen
+  cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
   scene_roles:
-    development: []
-    validation: []
-    test: []
-  scene_records: []
+    development: [scene-0471, scene-1087, scene-0379, scene-0998, scene-0359, scene-0875, scene-0535, scene-0436]
+    validation: [scene-0170, scene-0364, scene-0997, scene-0384, scene-0129, scene-0640, scene-0977, scene-1053]
+    test: [scene-0016, scene-0627, scene-0523, scene-0344, scene-1059, scene-0330, scene-0923, scene-1071, scene-0784, scene-0963, scene-0771, scene-0039, scene-0635, scene-0099, scene-0101, scene-1066, scene-0630, scene-0910, scene-0556, scene-1068]
+  scene_records:
+    - {scene: scene-0471, scene_token: 010fb5bcc7984d0f8f07f99e02366df1, role: development, official_split: train}
+    - {scene: scene-1087, scene_token: f143809fc26c4bb296f4f367b0954c26, role: development, official_split: train}
+    - {scene: scene-0379, scene_token: 90d616aaefc4429380388205ebb23398, role: development, official_split: train}
+    - {scene: scene-0998, scene_token: 242ac1b59fec4e0c9c200ffca81775e2, role: development, official_split: train}
+    - {scene: scene-0359, scene_token: 2987b4494fcc4639bdd6d714a94b2c72, role: development, official_split: train}
+    - {scene: scene-0875, scene_token: 13be0238abba499e95ba4e6404b22223, role: development, official_split: train}
+    - {scene: scene-0535, scene_token: 7b4a37ecca84421fbc22ad15e8b00ed8, role: development, official_split: train}
+    - {scene: scene-0436, scene_token: 773e6b4f990f4044bed5ea7036ea7c3b, role: development, official_split: train}
+    - {scene: scene-0170, scene_token: ab6eea0e06c84f70be411a9d36636a7a, role: validation, official_split: train}
+    - {scene: scene-0364, scene_token: f13bd38bf9b64d579a63d4e7d750f592, role: validation, official_split: train}
+    - {scene: scene-0997, scene_token: 599c50b42e294116bd702c9e5cc830a3, role: validation, official_split: train}
+    - {scene: scene-0384, scene_token: 25f40f7316954a3e978e24d691e1a117, role: validation, official_split: train}
+    - {scene: scene-0129, scene_token: ef5f216134a94e308697ab4c75402a20, role: validation, official_split: train}
+    - {scene: scene-0640, scene_token: 55162149a9464d5bb0b0ebd914567e09, role: validation, official_split: train}
+    - {scene: scene-0977, scene_token: 1319a9c0288f4ff9ae32d3f33b3bae17, role: validation, official_split: train}
+    - {scene: scene-1053, scene_token: 4ed628299b1e45a3a73704e8cf8287a9, role: validation, official_split: train}
+    - {scene: scene-0016, scene_token: efa5c96f05594f41a2498eb9f2e7ad99, role: test, official_split: val}
+    - {scene: scene-0627, scene_token: 5301151d8b6a42b0b252e95634bd3995, role: test, official_split: val}
+    - {scene: scene-0523, scene_token: d7bacba9119840f78f3c804134ceece0, role: test, official_split: val}
+    - {scene: scene-0344, scene_token: 6d872d1448814fd189e631b1187c3771, role: test, official_split: val}
+    - {scene: scene-1059, scene_token: 034dee1695304630b0692da8c1f153fc, role: test, official_split: val}
+    - {scene: scene-0330, scene_token: 3927699fa562451a98bb13bf8405361d, role: test, official_split: val}
+    - {scene: scene-0923, scene_token: ee48ee50025e40b4ae27dbdf84d92825, role: test, official_split: val}
+    - {scene: scene-1071, scene_token: 0dae482684ce4cd69a7258f55bc98d73, role: test, official_split: val}
+    - {scene: scene-0784, scene_token: 50ff554b3ecb4d208849d042b7643715, role: test, official_split: val}
+    - {scene: scene-0963, scene_token: 4efbf4c0b77f467385fc2e19da45c989, role: test, official_split: val}
+    - {scene: scene-0771, scene_token: 21a7ba093614493b83838b9656b3558d, role: test, official_split: val}
+    - {scene: scene-0039, scene_token: 8edbc31083ab4fb187626e5b3c0411f7, role: test, official_split: val}
+    - {scene: scene-0635, scene_token: 7bd098ac88cb4221addd19202a7ea5de, role: test, official_split: val}
+    - {scene: scene-0099, scene_token: 5af9c7f124d84e7e9ac729fafa40ea01, role: test, official_split: val}
+    - {scene: scene-0101, scene_token: 01452fbfbf4543af8acdfd3e8a1ee806, role: test, official_split: val}
+    - {scene: scene-1066, scene_token: afbc2583cc324938b2e8931d42c83e6b, role: test, official_split: val}
+    - {scene: scene-0630, scene_token: 9068766ee9374872a380fe75fcfb299e, role: test, official_split: val}
+    - {scene: scene-0910, scene_token: a7d073bc435b4356a0a9a5ebfb61f229, role: test, official_split: val}
+    - {scene: scene-0556, scene_token: b94fbf78579f4ff5ab5dbd897d5e3199, role: test, official_split: val}
+    - {scene: scene-1068, scene_token: e8834785d9ff4783a5950281a4579943, role: test, official_split: val}
   result_blind_selection_required: true
-  metadata_inventory_sha256: null
-  builder_source_sha256: null
+  metadata_inventory_sha256: 63d0a70646615a5bc074faacee9838a8c7c4729a6e091a143435588ba53829f9
+  diagnostic_builder_source_sha256: 5ac9f742b00191c3cc668abd570f889869dc264631d06f3ce2b47e2f9c7db943
+  diagnostic_selector_source_sha256: 0f9cde6dc4bba177be682921095083feae9f5671bb96864d5961248e5d423fdc
+  candidate_inventory_sha256: 5be022825b7eb98bfc9ddbd1b22e85e1bdf9b9b9d23e8fda9b647b05bf73079f
+  source_diagnostic:
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-D0-NUSCENES-FRESH-COHORT-01/20260814T094000Z__fresh-cohort-diagnostic-s2216484596-r001
+    project_git_head: 07eb6dbbbcbccdd4dc4661bcb68b63c5ae742fb0
+    cohort_artifact_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+    summary_sha256: 71ab45ec53a0da513ac4bdce56d641f791fd6d5b6dcad0b895b841cbb6aa58c8
 
 gates:
   expected_v4_exclusion_count: 30
   expected_fresh_development_count: 8
   expected_fresh_validation_count: 8
   expected_fresh_test_count: 20
-  all_roles_scene_disjoint: pending
-  all_selected_scenes_exclude_v4: pending
-  official_split_contract_exact: pending
-  deterministic_replay_exact: pending
+  all_roles_scene_disjoint: true
+  all_selected_scenes_exclude_v4: true
+  official_split_contract_exact: true
+  deterministic_replay_exact: true
   quality_read_before_freeze: false
 
 restrictions:

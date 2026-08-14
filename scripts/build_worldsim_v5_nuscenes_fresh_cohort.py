@@ -32,9 +32,11 @@ from worldsim_v5_forensics_common import (
     atomic_text,
     copy_source_snapshot,
     inventory_files,
+    load_json_mapping,
     prepare_formal_run,
     sha256_file,
     utc_now,
+    verify_file,
     write_events,
     write_resolved_config,
 )
@@ -71,6 +73,18 @@ def _scene_roles(manifest: Mapping[str, Any]) -> dict[str, list[str]]:
         role: [str(row["scene"]) for row in manifest["scenes"] if row["role"] == role]
         for role in ("development", "validation", "test")
     }
+
+
+def _frozen_scene_records(manifest: Mapping[str, Any]) -> list[dict[str, str]]:
+    return [
+        {
+            "scene": str(row["scene"]),
+            "scene_token": str(row["scene_token"]),
+            "role": str(row["role"]),
+            "official_split": str(row["official_split"]),
+        }
+        for row in manifest["scenes"]
+    ]
 
 
 def _candidate_summary(row: Mapping[str, Any]) -> dict[str, Any]:
@@ -129,10 +143,38 @@ def build(config: Mapping[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any
             raise CohortError("V5 D0 frozen cohort SHA drift")
         if roles != freeze["scene_roles"]:
             raise CohortError("V5 D0 frozen scene roles drift")
-        if manifest["scenes"] != freeze["scene_records"]:
+        if _frozen_scene_records(manifest) != freeze["scene_records"]:
             raise CohortError("V5 D0 frozen scene records drift")
         if manifest["metadata_inventory_sha256"] != freeze["metadata_inventory_sha256"]:
             raise CohortError("V5 D0 metadata inventory SHA drift")
+        diagnostic = freeze.get("source_diagnostic", {})
+        diagnostic_run = Path(str(diagnostic.get("run", "")))
+        cohort_record = verify_file(
+            diagnostic_run / "artifacts/nuscenes_fresh_cohort.json",
+            str(diagnostic.get("cohort_artifact_sha256")),
+        )
+        summary_record = verify_file(
+            diagnostic_run / "summary.json", str(diagnostic.get("summary_sha256"))
+        )
+        verify_file(
+            diagnostic_run
+            / "source_snapshot/scripts/build_worldsim_v5_nuscenes_fresh_cohort.py",
+            str(freeze["diagnostic_builder_source_sha256"]),
+        )
+        verify_file(
+            diagnostic_run / "source_snapshot/motion_proj/worldsim_v5/datasets/nuscenes.py",
+            str(freeze["diagnostic_selector_source_sha256"]),
+        )
+        diagnostic_manifest = load_json_mapping(Path(cohort_record["path"]))
+        diagnostic_summary = load_json_mapping(Path(summary_record["path"]))
+        if diagnostic_manifest != manifest:
+            raise CohortError("V5 D0 diagnostic/full frozen manifest drift")
+        if (
+            diagnostic_summary.get("conclusion") != "metadata_selection_diagnostic"
+            or diagnostic_summary.get("fresh_quality_read") is not False
+            or diagnostic_summary.get("parameter_search_performed") is not False
+        ):
+            raise CohortError("V5 D0 diagnostic provenance drift")
     return manifest, candidates, frozen
 
 
@@ -177,6 +219,8 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
             for row in sorted(candidates, key=lambda item: item["scene"])
         ),
     )
+    if frozen and sha256_file(candidate_path) != config["freeze"]["candidate_inventory_sha256"]:
+        raise CohortError("V5 D0 frozen candidate inventory SHA drift")
     atomic_text(artifacts / "split.sha256", f"{cohort_sha}  nuscenes_fresh_cohort.json\n")
     events = write_events(
         run_dir,
@@ -207,6 +251,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         "excluded_v4_scene_count": manifest["excluded_v4_scene_count"],
         "metadata_inventory_sha256": manifest["metadata_inventory_sha256"],
         "candidate_inventory_sha256": sha256_file(candidate_path),
+        "source_diagnostic": config["freeze"].get("source_diagnostic") if frozen else None,
         "deterministic_replay_exact": True,
         "selection_uses_model_results": False,
         "sensor_blob_expansion_for_selection": False,
