@@ -1,0 +1,82 @@
+schema_version: worldsim_v5_m1_graph_diagnostic_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: structured_graph_mechanism_smoke
+seed: 20260814
+
+inputs:
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/checkpoint_final.pth
+    sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/config.yaml
+    sha256: eb22faea313c57c09884a69a7b42a2d36374268b6973fd09315249273de29c6d
+  compatibility_patch:
+    path: /root/autodl-tmp/motion_proj/compatibility/DriveStudio-2026-08-13-m3-test-timeline.patch
+    sha256: c3c0914f16af2b54026262a92f2bd3537a803e53b94488b1313882f2619f2b7d
+  unary_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/summary.json
+    sha256: dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d
+  unary_status:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/status.json
+    sha256: fb68e06d174a5e6a6859a50c07392b6895102feecf3944e712dc9861de1736ce
+  unary_fingerprint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/fingerprint.json
+    sha256: 70d2f878e9042b632d4f3355cc350d02ae661127c738130019506aa77c4480e4
+  unary_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/manifest.json
+    sha256: 80ff775de6a4fc4c748cf3ec9570c2ab0ce10e817fbe5cdcd1bef69eeee871c4
+  unary_diagnostics:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/artifacts/diagnostics.json
+    sha256: 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755
+  unary_b1_gaussians:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/artifacts/gaussians/B1.npz
+    sha256: a734698eadfbf495a110a14091fd58111283ad0aca54e94b86b6c62d92b1812a
+  unary_b3_gaussians:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/artifacts/gaussians/B3.npz
+    sha256: 2e10345fab29edf77c33e19cba6f1001da8c820a1fd8cdcd5750f2b05dda65e1
+
+scene:
+  name: scene-0471
+  index: 382
+  ownership_role: moving_rigid_union
+
+graph:
+  unary_inputs: [B1, B3]
+  arms: [G0, G1, G2, G3]
+  candidate_k: 6
+  query_workers: 8
+  edge_chunk_size: 500000
+  normal_affinity_power: 2.0
+  diffusion_rate: 0.25
+  diffusion_iterations: 2
+  minimum_affinity_sum: 1.0e-8
+  parameter_source: result_blind_mechanistic_defaults
+  bandwidth_source: positive_median_of_frozen_geometry_edges
+  base_model_consumed_by_graph: false
+  arm_contract:
+    G0: immutable_unary_no_graph
+    G1: directed_euclidean_knn_effective_count_anchored_diffusion
+    G2: G1_candidates_symmetric_mahalanobis_and_normal_affinity
+    G3: G2_plus_one_minus_max_boundary_ambiguity_barrier
+
+evaluation:
+  target_source: frozen_r037_evaluation_npz
+  probability_threshold: 0.5
+  boundary_tolerance_px: 3
+  ece_bins: 15
+  comparator: same_unary_G0
+  direction_only_mechanism_diagnostic: true
+  automatic_validation_unlock: false
+  automatic_semantic_split_unlock: false
+
+resources:
+  maximum_gpu_allocated_at_start_mib: 512
+
+runtime:
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_expected_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py
