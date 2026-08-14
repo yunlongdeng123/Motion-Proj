@@ -58,6 +58,44 @@ def test_quadratic_surface_is_available_but_not_implicitly_selected() -> None:
     assert depth_error_summary(result.depth, depth, target)["mae_m"] < 1e-4
 
 
+def test_g1_piecewise_plane_uses_local_hole_sides() -> None:
+    height, width = 72, 96
+    intrinsics = np.asarray(
+        [[100.0, 0.0, 47.5], [0.0, 100.0, 35.5], [0.0, 0.0, 1.0]]
+    )
+    rows, columns = np.indices((height, width), dtype=np.float64)
+    x = (columns - intrinsics[0, 2]) / intrinsics[0, 0]
+    y = (rows - intrinsics[1, 2]) / intrinsics[1, 1]
+    target = np.zeros((height, width), dtype=bool)
+    target[22:50, 31:65] = True
+    dy = (rows - 35.5) / 28.0
+    dx = (columns - 47.5) / 34.0
+    labels = np.argmax(np.stack((-dy, dx, dy, -dx), axis=-1), axis=-1)
+    coefficients = np.asarray(
+        [[0.090, 0.010, -0.010], [0.075, 0.020, 0.005],
+         [0.110, -0.005, 0.020], [0.085, -0.020, -0.005]]
+    )
+    inverse = np.empty_like(x)
+    for piece in range(4):
+        selected = labels == piece
+        inverse[selected] = (
+            coefficients[piece, 0]
+            + coefficients[piece, 1] * x[selected]
+            + coefficients[piece, 2] * y[selected]
+        )
+    depth = (1.0 / inverse).astype(np.float32)
+    result = fit_inverse_depth_surface(
+        depth=depth,
+        support_mask=~target,
+        target_mask=target,
+        intrinsics=intrinsics,
+        model="G1_PIECEWISE_PLANE",
+        minimum_support_points=128,
+    )
+    assert result.coefficients.shape == (4, 3)
+    assert depth_error_summary(result.depth, depth, target)["mae_m"] < 1e-3
+
+
 def test_insufficient_support_fails_closed() -> None:
     depth, intrinsics = _plane_depth()
     target = np.zeros_like(depth, dtype=bool)

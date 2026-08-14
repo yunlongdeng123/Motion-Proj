@@ -10,7 +10,11 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 
-SURFACE_MODELS = ("G0_ROBUST_PLANE", "G3_ROBUST_QUADRATIC")
+SURFACE_MODELS = (
+    "G0_ROBUST_PLANE",
+    "G1_PIECEWISE_PLANE",
+    "G3_ROBUST_QUADRATIC",
+)
 RISK_MAPPINGS = ("R0_CLIP", "R1_LOG", "R2_PSEUDO_HUBER", "R3_QUANTILE", "R4_CALIBRATED_LOG")
 
 
@@ -71,7 +75,7 @@ def _normalized_coordinates(shape: tuple[int, int], intrinsics: np.ndarray) -> t
 
 
 def _design_matrix(x: np.ndarray, y: np.ndarray, model: str) -> np.ndarray:
-    if model == "G0_ROBUST_PLANE":
+    if model in {"G0_ROBUST_PLANE", "G1_PIECEWISE_PLANE"}:
         return np.column_stack((np.ones(x.size), x, y))
     if model == "G3_ROBUST_QUADRATIC":
         return np.column_stack((np.ones(x.size), x, y, x * x, x * y, y * y))
@@ -94,6 +98,152 @@ def _weighted_lstsq(
     if not math.isfinite(condition) or condition > 1e14:
         raise GeometryRepairError(f"surface normal matrix 退化: condition={condition}")
     return np.linalg.solve(normal, right), condition
+
+
+def _robust_lstsq(
+    design: np.ndarray,
+    target: np.ndarray,
+    *,
+    huber_delta: float,
+    maximum_iterations: int,
+    ridge: float,
+) -> tuple[np.ndarray, int, float, np.ndarray]:
+    weights = np.ones(target.size, dtype=np.float64)
+    coefficients = np.zeros(design.shape[1], dtype=np.float64)
+    condition = float("nan")
+    iterations = 0
+    for iterations in range(1, int(maximum_iterations) + 1):
+        updated, condition = _weighted_lstsq(design, target, weights, ridge)
+        residual = design @ updated - target
+        scale = max(1.4826 * float(np.median(np.abs(residual))), 1e-8)
+        normalized = np.abs(residual) / (float(huber_delta) * scale)
+        new_weights = np.ones_like(normalized)
+        tail = normalized > 1.0
+        new_weights[tail] = 1.0 / normalized[tail]
+        converged = np.allclose(updated, coefficients, rtol=0.0, atol=1e-12)
+        coefficients = updated
+        weights = new_weights
+        if converged:
+            break
+    return coefficients, iterations, condition, design @ coefficients - target
+
+
+def _piece_labels(target: np.ndarray) -> np.ndarray:
+    rows, columns = np.indices(target.shape, dtype=np.float64)
+    target_rows, target_columns = np.nonzero(target)
+    center_row = float(np.mean(target_rows))
+    center_column = float(np.mean(target_columns))
+    row_scale = max(float(target_rows.max() - target_rows.min() + 1), 1.0)
+    column_scale = max(float(target_columns.max() - target_columns.min() + 1), 1.0)
+    dy = (rows - center_row) / row_scale
+    dx = (columns - center_column) / column_scale
+    # 固定顺序为 top/right/bottom/left；argmax 在平局时确定性选更早的 side。
+    return np.argmax(np.stack((-dy, dx, dy, -dx), axis=-1), axis=-1).astype(np.int8)
+
+
+def _fit_piecewise_surface(
+    *,
+    values: np.ndarray,
+    valid_support: np.ndarray,
+    target: np.ndarray,
+    x: np.ndarray,
+    y: np.ndarray,
+    minimum_support_points: int,
+    huber_delta: float,
+    maximum_iterations: int,
+    ridge: float,
+    minimum_depth_m: float,
+    maximum_depth_m: float,
+) -> SurfaceFitResult:
+    labels = _piece_labels(target)
+    support_design = _design_matrix(
+        x[valid_support], y[valid_support], "G0_ROBUST_PLANE"
+    )
+    inverse_depth = 1.0 / values[valid_support]
+    global_fit = _robust_lstsq(
+        support_design,
+        inverse_depth,
+        huber_delta=huber_delta,
+        maximum_iterations=maximum_iterations,
+        ridge=ridge,
+    )
+    coefficients: list[np.ndarray] = []
+    iterations: list[int] = []
+    conditions: list[float] = []
+    minimum_piece_points = max(16, int(minimum_support_points) // 8)
+    for piece in range(4):
+        selected = valid_support & (labels == piece)
+        if int(selected.sum()) < minimum_piece_points:
+            coefficients.append(global_fit[0].copy())
+            iterations.append(global_fit[1])
+            conditions.append(global_fit[2])
+            continue
+        fit = _robust_lstsq(
+            _design_matrix(x[selected], y[selected], "G0_ROBUST_PLANE"),
+            1.0 / values[selected],
+            huber_delta=huber_delta,
+            maximum_iterations=maximum_iterations,
+            ridge=ridge,
+        )
+        coefficients.append(fit[0])
+        iterations.append(fit[1])
+        conditions.append(fit[2])
+    coefficient_array = np.asarray(coefficients, dtype=np.float64)
+    support_labels = labels[valid_support]
+    support_prediction = np.empty(inverse_depth.shape, dtype=np.float64)
+    for piece in range(4):
+        selected = support_labels == piece
+        support_prediction[selected] = (
+            support_design[selected] @ coefficient_array[piece]
+        )
+    support_valid = support_prediction > 1.0 / float(maximum_depth_m)
+    metric_residual = np.full(inverse_depth.size, np.nan, dtype=np.float64)
+    metric_residual[support_valid] = np.abs(
+        1.0 / support_prediction[support_valid]
+        - values[valid_support][support_valid]
+    )
+    finite_metric = metric_residual[np.isfinite(metric_residual)]
+    if finite_metric.size == 0:
+        raise GeometryRepairError("ABSTAIN_INVALID_PIECEWISE_SURFACE")
+
+    target_labels = labels[target]
+    target_design = _design_matrix(x[target], y[target], "G0_ROBUST_PLANE")
+    target_inverse_depth = np.empty(target_design.shape[0], dtype=np.float64)
+    for piece in range(4):
+        selected = target_labels == piece
+        target_inverse_depth[selected] = target_design[selected] @ coefficient_array[piece]
+    target_depth = np.full(values.shape, np.nan, dtype=np.float32)
+    target_indices = np.flatnonzero(target)
+    allowed = (
+        np.isfinite(target_inverse_depth)
+        & (target_inverse_depth >= 1.0 / float(maximum_depth_m))
+        & (target_inverse_depth <= 1.0 / float(minimum_depth_m))
+    )
+    target_depth.reshape(-1)[target_indices[allowed]] = (
+        1.0 / target_inverse_depth[allowed]
+    ).astype(np.float32)
+    predicted_valid = np.isfinite(target_depth) & target
+    if not predicted_valid.any():
+        raise GeometryRepairError("ABSTAIN_NO_VALID_PIECEWISE_TARGET_SURFACE")
+    support_xy = np.column_stack((x[valid_support], y[valid_support]))
+    target_xy = np.column_stack((x[predicted_valid], y[predicted_valid]))
+    distance, _ = cKDTree(support_xy).query(target_xy, k=1, workers=1)
+    inverse_residual = np.abs(support_prediction - inverse_depth)
+    return SurfaceFitResult(
+        model="G1_PIECEWISE_PLANE",
+        depth=target_depth,
+        valid=predicted_valid,
+        coefficients=coefficient_array,
+        support_count=int(valid_support.sum()),
+        iterations=max(iterations),
+        inverse_depth_residual_median=float(np.median(inverse_residual)),
+        inverse_depth_residual_p90=float(np.quantile(inverse_residual, 0.90)),
+        surface_fit_residual_median_m=float(np.median(finite_metric)),
+        surface_fit_residual_p90_m=float(np.quantile(finite_metric, 0.90)),
+        extrapolation_distance_mean=float(np.mean(distance)),
+        extrapolation_distance_p95=float(np.quantile(distance, 0.95)),
+        condition_number=max(conditions),
+    )
 
 
 def fit_inverse_depth_surface(
@@ -125,7 +275,10 @@ def fit_inverse_depth_surface(
         & (values >= float(minimum_depth_m))
         & (values <= float(maximum_depth_m))
     )
-    required = max(int(minimum_support_points), 3 if model == SURFACE_MODELS[0] else 6)
+    required = max(
+        int(minimum_support_points),
+        3 if model in {"G0_ROBUST_PLANE", "G1_PIECEWISE_PLANE"} else 6,
+    )
     count = int(valid_support.sum())
     if count < required:
         raise GeometryRepairError(f"ABSTAIN_INSUFFICIENT_GEOMETRY_SUPPORT:{count}<{required}")
@@ -133,26 +286,29 @@ def fit_inverse_depth_surface(
         raise GeometryRepairError("ABSTAIN_EMPTY_TARGET_MASK")
 
     x, y = _normalized_coordinates(values.shape, intrinsics)
+    if model == "G1_PIECEWISE_PLANE":
+        return _fit_piecewise_surface(
+            values=values,
+            valid_support=valid_support,
+            target=target,
+            x=x,
+            y=y,
+            minimum_support_points=minimum_support_points,
+            huber_delta=huber_delta,
+            maximum_iterations=maximum_iterations,
+            ridge=ridge,
+            minimum_depth_m=minimum_depth_m,
+            maximum_depth_m=maximum_depth_m,
+        )
     design = _design_matrix(x[valid_support], y[valid_support], model)
     inverse_depth = 1.0 / values[valid_support]
-    weights = np.ones(count, dtype=np.float64)
-    coefficients = np.zeros(design.shape[1], dtype=np.float64)
-    condition = float("nan")
-    iterations = 0
-    for iterations in range(1, int(maximum_iterations) + 1):
-        updated, condition = _weighted_lstsq(design, inverse_depth, weights, ridge)
-        residual = design @ updated - inverse_depth
-        scale = max(1.4826 * float(np.median(np.abs(residual))), 1e-8)
-        normalized = np.abs(residual) / (float(huber_delta) * scale)
-        new_weights = np.ones_like(normalized)
-        tail = normalized > 1.0
-        new_weights[tail] = 1.0 / normalized[tail]
-        if np.allclose(updated, coefficients, rtol=0.0, atol=1e-12):
-            coefficients = updated
-            weights = new_weights
-            break
-        coefficients = updated
-        weights = new_weights
+    coefficients, iterations, condition, residual = _robust_lstsq(
+        design,
+        inverse_depth,
+        huber_delta=huber_delta,
+        maximum_iterations=maximum_iterations,
+        ridge=ridge,
+    )
 
     support_prediction = design @ coefficients
     support_valid = support_prediction > 1.0 / float(maximum_depth_m)
@@ -184,7 +340,7 @@ def fit_inverse_depth_surface(
     support_xy = np.column_stack((x[valid_support], y[valid_support]))
     target_xy = np.column_stack((x[predicted_valid], y[predicted_valid]))
     distance, _ = cKDTree(support_xy).query(target_xy, k=1, workers=1)
-    inverse_residual = np.abs(design @ coefficients - inverse_depth)
+    inverse_residual = np.abs(residual)
     return SurfaceFitResult(
         model=model,
         depth=target_depth,
