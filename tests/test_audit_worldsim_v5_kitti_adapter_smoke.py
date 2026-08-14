@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -80,3 +81,24 @@ def test_direct_script_entry_resolves_project_imports() -> None:
     )
     assert process.returncode == 0, process.stderr
     assert "--run-dir" in process.stdout
+
+
+def test_committed_adapter_metadata_preserves_gap_denominator() -> None:
+    project = Path(__file__).resolve().parents[1]
+    metadata = json.loads(
+        (project / "docs/KITTI_TRACKING_ADAPTER_SMOKE_V5.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert metadata["status"] == "done"
+    assert metadata["raw_manifest"]["file_count"] == 1805
+    assert metadata["sequences"]["0000"]["evaluable_multimodal"] == 154
+    assert metadata["sequences"]["0001"]["full_denominator"] == 447
+    assert metadata["sequences"]["0001"]["evaluable_multimodal"] == 443
+    assert metadata["sequences"]["0001"]["lidar_missing_abstain_frames"] == [
+        177,
+        178,
+        179,
+        180,
+    ]
+    assert metadata["restrictions"]["quality_read"] is False

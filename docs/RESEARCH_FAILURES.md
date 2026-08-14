@@ -21,6 +21,7 @@
 
 ## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
 
+- `V5-F19`：Python 包内单测通过不等于脚本可从仓库根直接启动。KITTI audit r002 attempt 在读取任何 payload 前因 `ModuleNotFoundError: motion_proj` 失败；import 发生在 runner main 前，因此没有生成 run 目录。不得伪造 r002 terminal、复用该 ID 或把它写成数据/坐标质量失败。修复必须在 package import 前显式加入 project root，并增加 `script.py --help` 直接入口回归测试；提交 `43fe090...` 后以 r003 新 ID 完成真实 smoke。
 - `V5-F18`：单场或部分场景的 100-step 成功不能解锁全量 formal，也不能解释成 reconstruction 质量成功。必须保留 8-scene denominator，每场验证 step-100 checkpoint、finite means、summary/status/fingerprint/run-manifest、clean source 与 checkpoint bytes/SHA；formal runner 必须再次读取已提交的 cohort binding。r019–r026 的 `8/8 done` 只证明训练链路与资源门可用，尚未读取 development quality，也不允许跳过 30k base、改用 profile checkpoint 做 structured ownership 结论。
 - `V5-F17`：sky mask 文件存在不等于训练输入已合法绑定。V5 必须同时验证 8 个独立 run 的 summary、run manifest、sky-mask manifest、冻结 SegFormer revision、`frames×3` denominator 与全部 PNG bytes/SHA，并把这些 identity 通过新 overlay 绑定到不可变 reconstruction base 配置；不得回写被 r003 引用的 base 配置、只数文件名后开训，或把 segmentation inference 误写成 method inference。r011–r018 已按该协议闭合 `4704/4704`，只解锁 `profile100`，不直接解锁 30k formal 或质量结论。
 

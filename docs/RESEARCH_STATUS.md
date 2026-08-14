@@ -1,5 +1,11 @@
 # Research Status
 
+## V5 KITTI 真实 adapter smoke 闭环（2026-08-14）
+
+- `WS-V5-D1-KITTI-ADAPTER-01=done`：选择性抽取 0000/0001=`1805 files / 2,104,258,586 bytes`，raw manifest file/content SHA=`a3c77ab82bb29d2b34f615743a4e0393d611fb634826900c3756193127450928 / 98685653d4488b53a6ab94890629347b11cc43793b78b05c6b05738fcf46d83f`；原 ZIP 保留。
+- adapter canonical r003 summary SHA=`3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b`。0000 multimodal=`154/154`；0001=`443/447`，frames `177–180` 缺 LiDAR 并显式 abstain。mixed calibration、30-field OXTS、pose chain、PNG、LiDAR `N×4`/双目投影、label/track gates 全通过。
+- metadata 入口=`docs/KITTI_TRACKING_ADAPTER_SMOKE_V5.md` 与 `.json`。本结论 supersede 早期 `adapter=blocked` 工程状态，但不改写 archive audit 当时事实；method quality/training/inference/search/cross-domain authorization=`false/false/false/false/false`。
+
 ## V5 M1 development 数据闭环与 base reconstruction 入口（2026-08-14）
 
 - 8-scene `profile100` gate 已完成：r019–r026 全部 `done`，每场 checkpoint step=`100` 且 Gaussian means finite；总训练耗时=`463.532647 s`、checkpoint bytes=`2,592,731,152`，峰值 GPU/cgroup=`9142 MiB / 24,595,931,136 bytes`，8 份 checkpoint 全量 SHA 复核一致。source commit=`200ece4ebe59031b5546f285d2251482446ab162`，validation/test quality read=`false/false`。

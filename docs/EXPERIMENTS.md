@@ -1,5 +1,12 @@
 # Experiments
 
+## V5 KITTI Tracking adapter smoke（2026-08-14）
+
+- extraction canonical r001=`1805 files / 2,104,258,586 bytes`，summary/manifest SHA=`0ba90a7496d8f8a41dd147ef13579c9ad8d0a25aea7ee829d275ca162df1c363 / 96585bf46127f2fd5eca0a123afe068be6f3922bc73e0362d3019af4c25bc8b3`。
+- 直接 audit attempt r002 在任何 payload read 前因 project import root 缺失失败，且因 module import 发生在 runner main 前未生成 run 目录；修复提交=`43fe090db160d6c9bceb6974937a4c20a2d7a760`，未复用该 attempt ID。
+- adapter canonical r003=`done`：0000/0001 coverage=`1.0 / 0.9910514541387024`，0001 显式 LiDAR abstain=`[177,178,179,180]`；summary/status/fingerprint/manifest SHA=`3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b / 404b204ed1a7ff26a1bd6f277e80d6a2e4c66690ef29f0452678cb1506b76dd2 / 2df0f6535f63509f61fe6f72c483955a98c01a9010bd0b71bdfff7364ab5be56 / 099f136af9f519820412d0d3f25fbaaacb969706dd8e4536c7864b27c7fb90ec`。
+- 本 smoke 未读方法质量、未训练、未推理、未调参，也未冻结 10-sequence cross-domain pool。
+
 ## V5 M1 structured evidence / development 数据闭环（2026-08-14）
 
 - base reconstruction profile batch r019–r026=`8/8 done`：每场 100 steps，checkpoint bytes 合计=`2,592,731,152`、训练耗时合计=`463.532647 s`、peak GPU=`9142 MiB`；8 个 summary 与 checkpoint 均重新哈希通过，source=`200ece4ebe59031b5546f285d2251482446ab162` clean。

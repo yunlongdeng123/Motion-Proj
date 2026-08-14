@@ -1,0 +1,58 @@
+{
+  "schema_version": "worldsim_v5_kitti_adapter_smoke_metadata_v1",
+  "task_id": "WS-V5-D1-KITTI-ADAPTER-01",
+  "status": "done",
+  "dataset_root": "/root/autodl-tmp/data/worldsim_v5/kitti_tracking_smoke",
+  "raw_manifest": {
+    "path": "/root/autodl-tmp/data/worldsim_v5/manifests/kitti_tracking_smoke_raw_v1.json",
+    "file_sha256": "a3c77ab82bb29d2b34f615743a4e0393d611fb634826900c3756193127450928",
+    "content_sha256": "98685653d4488b53a6ab94890629347b11cc43793b78b05c6b05738fcf46d83f",
+    "file_count": 1805,
+    "uncompressed_bytes": 2104258586
+  },
+  "extraction_run": {
+    "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-D1-KITTI-ADAPTER-01/20260814T121500Z__kitti-smoke-extract-0000-0001-s0-r001",
+    "source_commit": "5855bb0ee812b5d280e8a8d2ffc4512cfcf4d68b",
+    "summary_sha256": "0ba90a7496d8f8a41dd147ef13579c9ad8d0a25aea7ee829d275ca162df1c363",
+    "manifest_sha256": "96585bf46127f2fd5eca0a123afe068be6f3922bc73e0362d3019af4c25bc8b3"
+  },
+  "adapter_run": {
+    "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-D1-KITTI-ADAPTER-01/20260814T122500Z__kitti-adapter-smoke-0000-0001-s0-r003",
+    "source_commit": "43fe090db160d6c9bceb6974937a4c20a2d7a760",
+    "summary_sha256": "3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b",
+    "status_sha256": "404b204ed1a7ff26a1bd6f277e80d6a2e4c66690ef29f0452678cb1506b76dd2",
+    "fingerprint_sha256": "2df0f6535f63509f61fe6f72c483955a98c01a9010bd0b71bdfff7364ab5be56",
+    "manifest_sha256": "099f136af9f519820412d0d3f25fbaaacb969706dd8e4536c7864b27c7fb90ec"
+  },
+  "sequences": {
+    "0000": {
+      "full_denominator": 154,
+      "evaluable_multimodal": 154,
+      "coverage": 1.0,
+      "lidar_missing_abstain_frames": [],
+      "oxts_rows": 154,
+      "label_rows": 1089,
+      "nonnegative_track_ids": 15,
+      "stereo_baseline_m": 0.5327254279298227,
+      "artifact_sha256": "24860afef9ce9b63bd3dbd2f9f182f8030489a2e73d659d85baef3c8a5725fa1"
+    },
+    "0001": {
+      "full_denominator": 447,
+      "evaluable_multimodal": 443,
+      "coverage": 0.9910514541387024,
+      "lidar_missing_abstain_frames": [177, 178, 179, 180],
+      "oxts_rows": 447,
+      "label_rows": 4271,
+      "nonnegative_track_ids": 98,
+      "stereo_baseline_m": 0.5327254279298227,
+      "artifact_sha256": "7fcf3c9fc76d885c866c0698d41599a8b1bd535b4861abcaa574272414870169"
+    }
+  },
+  "restrictions": {
+    "quality_read": false,
+    "method_training_started": false,
+    "method_inference_started": false,
+    "parameter_search": false,
+    "cross_domain_method_authorized": false
+  }
+}
