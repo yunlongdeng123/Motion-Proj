@@ -1,0 +1,61 @@
+schema_version: worldsim_v5_kitti_adapter_smoke_v1
+task_id: WS-V5-D1-KITTI-ADAPTER-01
+status: running
+phase: adapter_smoke
+created_at: "2026-08-14"
+
+archive_audit:
+  path: /root/autodl-tmp/motion_proj/docs/KITTI_TRACKING_ARCHIVE_METADATA_V5.json
+  file_sha256: bac136664ce8beb4473d66849a20e76a147361ba0e138b45462ec722e5e7c967
+
+raw_manifest:
+  path: /root/autodl-tmp/data/worldsim_v5/manifests/kitti_tracking_smoke_raw_v1.json
+  file_sha256: a3c77ab82bb29d2b34f615743a4e0393d611fb634826900c3756193127450928
+  content_sha256: 98685653d4488b53a6ab94890629347b11cc43793b78b05c6b05738fcf46d83f
+
+dataset_root: /root/autodl-tmp/data/worldsim_v5/kitti_tracking_smoke
+
+sequences:
+  "0000":
+    image_02: 154
+    image_03: 154
+    velodyne: 154
+    full_denominator: 154
+    lidar_missing_abstain_frames: []
+  "0001":
+    image_02: 447
+    image_03: 447
+    velodyne: 443
+    full_denominator: 447
+    lidar_missing_abstain_frames: [177, 178, 179, 180]
+
+sensor_policy:
+  full_denominator: stereo_frame_union
+  evaluable_multimodal: stereo_pair_intersection_lidar
+  missing_lidar: explicit_abstain
+  silent_intersection: forbidden
+  lidar_imputation: forbidden
+
+coordinate_contract:
+  calibration_parser: mixed_colon_and_whitespace_rows
+  oxts_parser: official_30_field_geodetic_pose
+  lidar_to_rectified_camera: R_rect_x_Tr_velo_cam
+  world_from_rectified_camera: world_from_imu_x_inverse_Tr_imu_velo_x_inverse_R_rect
+
+gates:
+  raw_payload_full_rehash: true
+  frame_denominator_exact: true
+  known_lidar_gap_explicit: true
+  calibration_finite_and_right_handed: true
+  stereo_baseline_plausible: true
+  oxts_pose_chain_valid: true
+  label_and_track_identity_exact: true
+  sampled_image_decode: true
+  sampled_lidar_projection: true
+
+restrictions:
+  method_parameter_search: false
+  method_training: false
+  method_inference: false
+  quality_read: false
+  cross_domain_claim: false
