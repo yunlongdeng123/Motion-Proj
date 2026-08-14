@@ -1,0 +1,50 @@
+schema_version: worldsim_v5_m3_closeout_v1
+task_id: WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01
+status: running
+phase: development_rejection_closeout
+created_at: "2026-08-14"
+
+blocked_terminal:
+  r002: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T224500Z__m3-development-clip-inventory-s0-r002/status.json, sha256: fb81c6172f26678ac701b51d596fcbca441ecce1e4f84f522c26b6ef37f5bee4}
+
+completed_runs:
+  r001:
+    summary: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001/summary.json, sha256: 996db58c98600e289e76661c3973aedbecd35c19a092eac4ba99310f5d1ba4e9}
+    status: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001/status.json, sha256: ded2929e8461479bc8f3eb80d85396308f70dada58063a34f313c257a70838f6}
+  r003:
+    summary: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T225000Z__m3-development-clip-inventory-s0-r003/summary.json, sha256: d0cd1ef022b805132a0543509585c3979a4d996fae10c508db48c10c8bcdc544}
+    status: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T225000Z__m3-development-clip-inventory-s0-r003/status.json, sha256: ffc5756fdcb0fe3c59e1e3f78796ef16e9d69910b68ba3537902c9f3529fbfcc}
+  r004:
+    summary: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T230000Z__m3-constraint-mechanism-s0-r004/summary.json, sha256: a10e713dc0b157513cf7ec2853461bf1847bcf18aee0cd1cd49dc0bbb9d887ac}
+    status: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T230000Z__m3-constraint-mechanism-s0-r004/status.json, sha256: 9e474f15bd9f903db97d17f65c391bbce9ecdbff88efe24b297d0b4d7d1e82b2}
+  r005:
+    summary: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T231500Z__m3-constraint-mechanism-measurement-v2-s0-r005/summary.json, sha256: 56fd2223c3693dcd4d9cb605b140aa0b981642cfccec9fead96cea96851c6f29}
+    status: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T231500Z__m3-constraint-mechanism-measurement-v2-s0-r005/status.json, sha256: 7bd7aba3382e3eaff283ef5a07a0f4cb3aca6cc0e19cecb192d122d1ef21d23a}
+
+expected_decision:
+  final_task_status: rejected
+  conclusion: m3_rejected_constraint_projection_not_needed_on_frozen_requests
+  request_count: 16
+  t2_safe_request_count: 15
+  t2_violation_evaluable_request_count: 1
+  t2_total_violation_count: 2
+  t5_total_violation_count: 1
+  minimum_required_evaluable_request_count: 8
+  render_unlocked: false
+  collision_gate_assessed: false
+  method_arm_selected: false
+  validation_unlocked: false
+  test_unlocked: false
+  preserve_v4_temporal_result_as_historical_baseline: true
+  post_hoc_stress_template_search_forbidden: true
+
+scope:
+  gpu_required: false
+  image_read: false
+  renderer_started: false
+  development_render_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  parameter_search_performed: false
+  method_arm_selection_performed: false
