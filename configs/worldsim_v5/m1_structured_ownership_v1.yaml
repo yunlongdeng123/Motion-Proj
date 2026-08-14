@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: development_base_reconstruction
+phase: structured_unary_mechanism_smoke
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -124,7 +124,46 @@ data_readiness:
       scene-0875: fa5897d304804e4c19b4e5ae6e8a5d7effbf8d416fb6fa7c7f1031239c7d6cbc
       scene-0535: 21686ac5d31bd3b3e71c4c0a1ec23de2545f0cb66b1434bffa04d871e8e94b39
       scene-0436: ef27a83d2af8b991efdd3f73e6cab8089e9837ea7cfd8691e1b23df980fac080
-  state: profile100_complete_formal30k_pending
+  formal30k_gate:
+    status: done
+    audit_run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172300Z__m1-formal30k-batch-audit-s0-r035
+    audit_source_commit: 6ce988b4d4e02ab920b2a6f19878d827145473cc
+    formal_source_commit: 267faba485148a6e60e79864848c8376016b6369
+    formal_config_sha256: b13453d25621e1ba7d5fbe01c69bf0560c506822a2337fdac62d3de05fc1abf3
+    scene_count: 8
+    completed_scene_count: 8
+    iteration_count_each: 30000
+    total_duration_seconds: 18392.900159636512
+    total_checkpoint_bytes: 2920094512
+    maximum_peak_gpu_memory_mib: 24054
+    maximum_peak_cgroup_memory_bytes: 27706277888
+    all_checkpoint_payload_rehashed_exact: true
+    summary_sha256: 4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b
+    status_sha256: 0c941a372125e1f893bc31c15eed2cb55dbfef33fc005bf2b8122edec7626607
+    fingerprint_sha256: ea3d7f8aadef39c7c99b2cd610091fb20e4a386ba6f8a987d16358eaaee6fb8e
+    manifest_sha256: bba0892345225f5d4527402943d17b7806207714c7a9355641eda3b2cda72119
+    validation_quality_read: false
+    test_quality_read: false
+    model_inference_started: false
+  scene0471_sam_diagnostic:
+    status: done
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036
+    source_commit: 6ce988b4d4e02ab920b2a6f19878d827145473cc
+    view_count: 30
+    available_view_count: 18
+    accepted_view_count: 18
+    prompt_actor_count: 17
+    prompt_box_count: 62
+    accepted_box_count: 61
+    summary_sha256: d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487
+    status_sha256: 7fda172e7fb9e07ab520b563b2e358fb0ac70c734f7c32f2039d901a7be690c4
+    fingerprint_sha256: 9e8181fad12ac76f0c0ffbd25cf3d39061e3893960d167f1b5497b42e51b79a1
+    manifest_sha256: 3cd9728cd47622752a80d20635e254b05b31fc13126659c7c03d06b7be3fc13e
+    mask_manifest_sha256: f7a9f5e9f022c8f8685be89e7cdd7d808f13081106c56b07e5c87260ac72a213
+    network_accessed: false
+    heldout_quality_read: false
+    method_inference_started: false
+  state: formal30k_complete_scene0471_sam_complete_unary_pending
   quality_read: false
 
 evidence_contract:

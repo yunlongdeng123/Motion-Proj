@@ -230,7 +230,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "development_base_reconstruction"
+    assert config["phase"] == "structured_unary_mechanism_smoke"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
     assert config["data_readiness"]["processed_total_bytes"] == 2497238886
@@ -242,7 +242,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "profile100_complete_formal30k_pending"
+        == "formal30k_complete_scene0471_sam_complete_unary_pending"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -258,6 +258,16 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert profile["scene_count"] == 8
     assert profile["iteration_count_each"] == 100
     assert profile["all_checkpoint_payload_rehashed_exact"] is True
+    formal = config["data_readiness"]["formal30k_gate"]
+    assert formal["status"] == "done"
+    assert formal["scene_count"] == formal["completed_scene_count"] == 8
+    assert formal["iteration_count_each"] == 30000
+    assert formal["all_checkpoint_payload_rehashed_exact"] is True
+    sam = config["data_readiness"]["scene0471_sam_diagnostic"]
+    assert sam["status"] == "done"
+    assert sam["view_count"] == 30
+    assert sam["accepted_view_count"] == 18
+    assert sam["heldout_quality_read"] is False
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]

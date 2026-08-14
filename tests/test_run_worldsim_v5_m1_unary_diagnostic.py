@@ -65,3 +65,14 @@ def test_collect_gaussians_sets_nearest_frozen_timeline_frame() -> None:
     assert int(trainer.models["RigidNodes"].frame.item()) == 1
     assert trainer.models["RigidNodes"].in_test_set is True
     assert int(gaussians["image_ids"]) == 7
+
+
+def test_scene0471_unary_config_freezes_distinct_arms_without_graph_unlock() -> None:
+    config = RUNNER.load_config(
+        Path(__file__).resolve().parents[1]
+        / "configs/worldsim_v5/m1_unary_diagnostic_scene0471_v1.yaml"
+    )
+    assert config["unary"]["arms"] == ["B0", "B1", "B3"]
+    assert config["evaluation"]["automatic_graph_unlock"] is False
+    assert config["evaluation"]["direction_only_mechanism_diagnostic"] is True
+    assert config["scene"]["reference_geometry_frame"] == 0
