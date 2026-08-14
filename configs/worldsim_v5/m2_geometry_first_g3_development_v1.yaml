@@ -1,0 +1,105 @@
+schema_version: worldsim_v5_m2_surface_ablation_v1
+task_id: WS-V5-M2-GEOMETRY-FIRST-REPAIR-01
+status: running
+phase: g3_surface_ablation
+seed: 20260814
+
+scope:
+  partition: development
+  purpose: matched_surface_mechanism_identification_only
+  validation_quality_read: false
+  heldout_quality_read: false
+  test_quality_read: false
+  parameter_search_performed: false
+  router_refit_performed: false
+
+inputs:
+  formal_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/summary.json
+    sha256: 29ab0802c6e5d74c3bdbb333bf220b8c942facb9a2ff0a265f4535efcef581ef
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/checkpoint_final.pth
+    sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/config.yaml
+    sha256: eb22faea313c57c09884a69a7b42a2d36374268b6973fd09315249273de29c6d
+  sam_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036/summary.json
+    sha256: d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487
+  sam_mask_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036/artifacts/mask_manifest.json
+    sha256: f7a9f5e9f022c8f8685be89e7cdd7d808f13081106c56b07e5c87260ac72a213
+  g0_staged_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T195500Z__m2-staged-geometry-scene0471-s0-r002/summary.json
+    sha256: 094d1078401f790b05e4851735736088af8731dda52029433755b08d5ef348ca
+  g0_staged_diagnostics:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T195500Z__m2-staged-geometry-scene0471-s0-r002/artifacts/diagnostics.json
+    sha256: 10f391dd72b3b3fed9879779f8d9bda1f5f49e43d849a3df7e69488834336f6d
+
+scene:
+  name: scene-0471
+  index: 382
+  processed_scene_dir: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382
+
+view_protocol:
+  selection: unchanged_from_r002_first_two_frozen_development_frames_all_three_cameras
+  result_blind: true
+  frames: [2, 42]
+  cameras: [0, 1, 2]
+  expected_view_count: 6
+  expected_available_view_count: 4
+  expected_unavailable_view_count: 2
+  unavailable_view_policy: retain_as_ABSTAIN_SAM_MASK_UNAVAILABLE
+  target_mask_dilation_pixels: 2
+  support_ring_inner_pixels: 4
+  support_ring_outer_pixels: 36
+  comparison_mask: intersection_of_reference_and_all_arm_raw_pre_post_valid_pixels
+
+reference:
+  source: base_background_depth_model_proxy_not_ground_truth
+  independent_geometry_claim_allowed: false
+  confidence:
+    formula: sqrt(reference_coverage_times_exp_negative_lidar_mae_over_scale)
+    agreement_scale_m: 0.5
+
+surface:
+  support_source: erased_base_background_depth_ring
+  matched_models: [G0_ROBUST_PLANE, G3_ROBUST_QUADRATIC]
+  minimum_support_points: 512
+  huber_delta: 1.5
+  maximum_iterations: 12
+  minimum_depth_m: 0.1
+  maximum_depth_m: 120.0
+
+gaussianization:
+  stride: 2
+  scale_multiplier: 1.25
+  minimum_scale_m: 0.01
+  maximum_scale_m: 0.35
+  opacity: 0.85
+  appearance_source: telea_diagnostic_only
+  geometry_controls_position: true
+
+unlock_binding:
+  source_run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T195500Z__m2-staged-geometry-scene0471-s0-r002
+  source_conclusion: g0_candidate_builder_is_primary_mechanism_on_model_proxy
+  source_g3_unlock_failure_view_count: 4
+  source_g3_unlocked: true
+  source_reference_scope: model_derived_proxy_not_independent_ground_truth
+
+selection_gate:
+  minimum_evaluable_views: 4
+  minimum_g3_raw_improvement_m: 0.50
+  minimum_g3_raw_improvement_view_count: 3
+  require_mean_g3_raw_delta_below_m: 0.0
+  maximum_mean_g3_post_render_regression_m: 0.10
+  no_automatic_validation: true
+  no_automatic_router_refit: true
+
+runtime:
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_expected_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
