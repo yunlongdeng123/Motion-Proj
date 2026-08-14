@@ -1,5 +1,18 @@
 # Experiments
 
+## V5 M3 protocol / clip inventory / trajectory mechanism r001–r005（2026-08-14）
+
+| Run | 状态 | 分母 | 主要结果 | 结论 |
+|---|---|---:|---|---|
+| r001 protocol audit | done | 8 fresh dev bases | T2=V4 frozen B-spline；T3–T5；REMOVE 不进 physics；V4 aggregate 不复用 | implementation only unlocked |
+| r002 clip inventory | blocked | 0 quality reads | config 缺 `protocol_audit.conclusion`，streaming 前 KeyError | 工程 blocked；新 r003 修复 |
+| r003 clip inventory | done | 8 scenes | `8 ready + 0 abstain`，各 7 keyframes；annotation metadata-only | trajectory mechanism metrics unlocked |
+| r004 mechanism v1 | done | 16 requests | T2/T5 violations=`38/34`；evaluable=`7`；improved=`5`；safe regressions=`2` | insufficient；heading measurement artifact |
+| r005 measurement v2 | done | 16 requests | T2 safe/evaluable=`15/1`；T2/T5=`2/1`；reduction=`50%`；endpoint/contact=`16/16` | insufficient；nonconfirmatory replay，无 unlock |
+
+- r005 只修正 heading 可观测性、reverse 语义和 convergence 定义，desired templates、T2–T5、caps、分母与 gate threshold 全部 exact replay。
+- r005 summary/status/diagnostics/decision SHA=`56fd2223.../7bd7aba3.../3ba7c2eb.../3e2299e4...`；完整 r001–r005 哈希见 M3 archive metadata。
+
 ## V5 M2 cross-view scaffold / formal closeout r012–r015（2026-08-14）
 
 | Run | 状态 | 冻结变量 | 主要结果 | 结论 |

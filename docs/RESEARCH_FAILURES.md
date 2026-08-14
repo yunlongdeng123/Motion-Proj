@@ -1,5 +1,15 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V5 M3 constraint projection 新增防重复结论（2026-08-14）
+
+- `V5-F52`：V4 M3 canonical r238/r335 的 baseline 是 `FRAME_INDEPENDENT`，不是 V5 要求的 `T2_V4_FROZEN_SE3_BSPLINE`。V4 的 `30.41%/34.39%` warp 改善不能直接成为 V5 T2 comparator 证据；V5 必须在同一 fresh clip 上重跑 T2–T5。
+- `V5-F53`：M2 rejected 后，M3 REMOVE 不能隐式复用 geometry-safe repair。REMOVE 只保留 exact bypass、semantic reintroduction 与 rollback checks，不进入 trajectory physics denominator；M3 正结果永远不得倒写 M2 成功。
+- `V5-F54`：r002 是 config identity blocked，不是 clip inventory 质量失败。缺少 `protocol_audit.conclusion` 在 annotation streaming 前触发 KeyError；无图片/LiDAR blob/quality/GPU 读数。terminal 保留，只以新 r003 修复。
+- `V5-F55`：低速位置抖动不能定义 velocity heading，倒车也不是 heading inconsistency。r004 的 T2 38 项违例全部来自旧 heading metric；禁止用 speed>`0.1m/s` 且 forward-only 的结果宣称 projection 有大幅物理改善。当前修正规则是 speed>`1m/s` 且 forward/reverse mismatch 取小者。
+- `V5-F56`：POCS 更新量固定点不等于物理可行。r004 T5 的逐帧 heading correction 产生 `20` yaw-rate + `14` heading violations，却曾报告 converged；现在只有剩余 total violations=`0` 才允许 convergence。禁止用旧 converged flag 支持方法。
+- `V5-F57`：r005 exact replay 后 T2=`15/16 safe`，仅 `1/16` request 有 `2` 项违例；T5 降到 `1` 项，但预注册最小 evaluable 是 `8`。当前结论必须是 insufficient signal，不能因相对 reduction=`50%` 而解锁 renderer、选择 arm 或进入 validation。
+- `V5-F58`：不得通过降低 heading speed floor、取消 reverse、降低物理 caps、删除 T2-safe requests 或改 minimum-evaluable gate 来“修复”r005。复开只能注册新的 desired-motion hypothesis 与新 run，明确保留 result-aware development 身份；collision/render/validation 仍需独立门。
+
 ## V5 M2 cross-view scaffold 与拒绝收口新增防重复结论（2026-08-14）
 
 - `V5-F46`：repair asset provenance 必须来自已有不可变枚举。r012 使用新字符串 `cross_view_background_depth_scaffold`，在首个 asset、GPU 与方法质量读取前被拒绝；该 terminal 是工程 blocked，不是 G4 质量结果。修复只改为既有 `native_scene_donor` 并新建 r013，不覆盖 r012。

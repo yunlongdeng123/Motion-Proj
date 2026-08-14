@@ -9,6 +9,13 @@
 - 非神经 M2 candidate sequence 已关闭；不得事后调 threshold/source grid/fusion/extrapolation。下一独立任务为 `WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01`，先做 result-blind protocol/evidence audit，不读取 fresh validation/test quality。
 - 证据入口：[`WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`](WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md) 与 [`archive/2026-08/worldsim-v5-m2/M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json`](archive/2026-08/worldsim-v5-m2/M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json)。
 
+## M3 development 快照（2026-08-14）
+
+- r001 已冻结 T2=V4 B-spline、T3 minimum-jerk、T4 contact、T5 kinematics；V4 canonical aggregate 的 baseline 为 frame-independent，不能替代 V5 T2 statistics。
+- r003 在 8/8 fresh development scenes 冻结七 keyframe clips。r004 暴露 heading measurement artifact；r005 在 low-speed unobservable、reverse-aware、zero-residual convergence 下 exact replay。
+- r005 T2 safe/evaluable=`15/1`，T2/T5 physical violations=`2/1`，低于预注册 minimum evaluable=`8`，结论=`m3_constraint_projection_insufficient_t2_violation_signal`。
+- renderer/collision/method/validation/test 均未解锁。复开需新 desired-motion hypothesis，禁止改 r005 threshold/denominator；见 [`WS_V5_M3_DEVELOPMENT.md`](WS_V5_M3_DEVELOPMENT.md)。
+
 - **项目根目录**：`/root/autodl-tmp/motion_proj`
 - **V4 主计划**：`docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md`
 - **V5 建议分支**：`research/worldsim-v5-structdelta`

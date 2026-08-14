@@ -1,5 +1,13 @@
 # Research Status
 
+## V5 M3 协议与轨迹机制 r001–r005：信号不足，renderer 未解锁（2026-08-14）
+
+- `WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01=running`，当前阶段=`trajectory_mechanism_insufficient_no_renderer_unlock`。r001 已冻结 T2–T5、物理 caps、REMOVE 隔离和 quality locks；V4 r238/r335 的 baseline=`FRAME_INDEPENDENT`，不得当作 V5 T2 comparator statistics。
+- r003 使用 annotation metadata-only 在 8/8 fresh development scenes 冻结各一个 `7 keyframes / 3.0s` vehicle clip，0 abstain；图片、LiDAR blob、reconstruction/edit quality 均未读取。r002 因 YAML 缺 conclusion 在 streaming 前 blocked，terminal 保留。
+- r004 初始 T2/T5 violation=`38/34`，但 T2 的 38 项全部来自 heading-velocity measurement；T5 把它们换成 `20 yaw-rate + 14 heading`，并对 2 个 T2-safe 请求回归。该结果为 insufficient，不解锁 renderer。
+- r005 进行 result-aware measurement correction：speed<=`1m/s` 时 heading unobservable、允许 reverse、只有 zero residual violations 才称 convergence。exact replay 后 T2 safe=`15/16`、evaluable=`1/16`、T2/T5 violations=`2/1`；虽 reduction=`50%`，但远低于预注册 minimum evaluable=`8`，正式结论仍为 `m3_constraint_projection_insufficient_t2_violation_signal`。
+- collision/render gates 未评估，method arm 未选择，validation/test/KITTI 继续锁定。完整归档见 `docs/WS_V5_M3_DEVELOPMENT.md` 与 `docs/archive/2026-08/worldsim-v5-m3/M3_R001_R005_METADATA.json`。
+
 ## V5 M2 正式拒绝收口，下一独立任务转入 M3 协议冻结（2026-08-14）
 
 - `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01=rejected`。r015 汇总 `8` 个 completed 与 `4` 个 blocked terminal，正式结论=`m2_rejected_no_absolute_geometry_safe_candidate`；method arm、router refit、validation unlock、parameter search 和 neural surface automatic unlock 均为 false。
