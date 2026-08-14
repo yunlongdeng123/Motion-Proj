@@ -1,6 +1,10 @@
 # Motion-Proj 文档导航
 
 - 更新时间：2026-08-14
+- 当前路线：`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`
+- 当前授权：`WS-V5-P0-SCOPE-FREEZE-01=running`；完整 M1/M2/M3、fresh test quality 和 KITTI 调参仍未授权
+- V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
+- KITTI archive audit：[`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)，状态=`blocked_dataset_adapter`
 - 最新关闭路线：`WorldSim V4 / EviDelta-GS`
 - V4 终态：`M1 rejected / M2 done with geometry caveat / M3 confirmed`
 - V4 当前执行授权：`none_v4_closed`
@@ -34,6 +38,9 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 - [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前路线、授权、commit、证据路径和下一步；
 - [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：仍约束后续路线的负结论；
 - [`EXPERIMENTS.md`](EXPERIMENTS.md)：完整实验台账；
+- [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)：V5 KITTI 压缩包、frame gate、存储预算和 adapter 阻塞结论；
+- [`KITTI_TRACKING_ARCHIVE_METADATA_V5.json`](KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：逐 archive、split、sequence 和 class/track metadata；
+- [`KITTI_TRACKING_ARCHIVES_V5.sha256`](KITTI_TRACKING_ARCHIVES_V5.sha256)：7 个原始 ZIP 的标准 SHA-256 清单；
 - [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：驻留/非驻留边界；
 - [`archive/2026-08/worldsim-v4-final/SHA256SUMS`](archive/2026-08/worldsim-v4-final/SHA256SUMS)：V4 终局包完整性。
 
@@ -41,7 +48,7 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 
 V4 计划、P0/D0/B0/KITTI 审计和更早 V3/V2 计划继续保留在 `docs/` 根目录，原因是冻结 config、run manifest、source snapshot 和历史链接引用原路径。它们是 compatibility copies，不是当前任务入口。
 
-V5 计划草案 `WORLDSIM_V5_STRUCTDELTA_PLAN.md` 必须在 V5 分支完成 P0 scope freeze 后才成为执行协议；计划本身不授权完整 M1/M2/M3、fresh test 读取或 KITTI 调参。
+V5 计划 `WORLDSIM_V5_STRUCTDELTA_PLAN.md` 已进入 P0 scope freeze，但 P0 尚未收口；计划本身不授权完整 M1/M2/M3、fresh test 读取或 KITTI 调参。KITTI 7 个原始 ZIP 已完成 archive-level 审计，但真实 adapter 在 common-frame policy、calibration 与 OXTS 修复及 2-sequence smoke 完成前保持 `blocked`。
 
 ## 归档索引
 

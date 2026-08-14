@@ -1,5 +1,19 @@
 # Experiments
 
+## V5 KITTI Tracking archive / metadata 审计（2026-08-14）
+
+| Task ID | 状态 | canonical evidence |
+|---|---|---|
+| `WS-V5-D1-KITTI-ARCHIVE-AUDIT-01` | done | `docs/KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`、`docs/KITTI_TRACKING_ARCHIVE_METADATA_V5.json`；manifest=`56388fc64e36c77ebac5a6ee761aa1a17297faeb876347715e8c6e9d52ec23a7` |
+| `WS-V5-D1-KITTI-ADAPTER-01` | blocked | `training/0001` LiDAR 缺 `000177`–`000180`；calibration/OXTS parser 待修复；尚无真实 2-sequence smoke |
+
+- archive auditor source HEAD=`1b64d668a90796666af7de8d53a6b8d4eaba7839`；7 个原始 ZIP 的 SHA-256 冻结在 `docs/KITTI_TRACKING_ARCHIVES_V5.sha256`，全 archive bytes 已读取，小包 `ZipFile.testzip()` 通过，大包未额外做全 payload 解码 CRC。
+- 7 包 total=`67,746,799,901 bytes`（`63.094 GiB / 67.747 GB`），central members：velodyne/image_02/image_03=`19,099/19,103/19,103`，label/oxts/calib/devkit=`21/50/50/20`。
+- training/testing=`21/29 sequences`，image frame denominator=`8,008/11,095`。除 `training/0001` 的 4 个 LiDAR frame gap 外，stereo/LiDAR exact alignment、label timeline、OXTS row count、calibration key 和 devkit seqmap gates 均通过。
+- metadata 记录每个 training sequence 的 sensor frames、label rows、annotated frames、track/class 分布、OXTS 行宽与 calibration keys；testing split 显式保持 label=`N/A`，不虚构 GT。
+- storage gate 通过：free before=`99.800 GiB`、预计 extract=`63.090 GiB`、20 GiB safety margin 后 expected free=`36.710 GiB`。本 run download/extraction/quality/training/parameter-search=`0/0/0/0/0`。
+- 验证：`python -m pytest -q tests/test_audit_worldsim_v5_kitti_archives.py tests/test_worldsim_v4_kitti_track_id.py`=`10 passed`；canonical JSON 解析与内嵌 manifest SHA-256 重算必须通过后再提交。
+
 ## V4 终局文档归档（2026-08-14）
 
 | Task ID | 状态 | canonical evidence |

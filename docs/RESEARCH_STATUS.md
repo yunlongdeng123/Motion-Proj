@@ -1,5 +1,16 @@
 # Research Status
 
+## V5 P0 / KITTI archive 审计（2026-08-14）
+
+- 当前路线=`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`；`WS-V5-P0-SCOPE-FREEZE-01=running`。当前只授权 P0、M1-D0、M2-D0 和结果前数据/适配器审计，不授权完整 M1/M2/M3、新模型大训练、fresh test quality 或 KITTI 参数搜索。
+- `WS-V5-D1-KITTI-ARCHIVE-AUDIT-01=done`：7 个 ZIP 的 central directory、路径安全、序列集合、小包 payload CRC、全 archive SHA-256 和解压磁盘预算均已审计。审计实现 source HEAD=`1b64d668a90796666af7de8d53a6b8d4eaba7839`，manifest SHA=`56388fc64e36c77ebac5a6ee761aa1a17297faeb876347715e8c6e9d52ec23a7`。
+- 权威证据：`docs/KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`、`docs/KITTI_TRACKING_ARCHIVE_METADATA_V5.json`、`docs/KITTI_TRACKING_ARCHIVES_V5.sha256`。7 包总计=`67,746,799,901 bytes`（`63.094 GiB / 67.747 GB`）；training/testing=`21/29 sequences`、image frames=`8,008/11,095`。
+- `WS-V5-D1-KITTI-ADAPTER-01=blocked`：唯一 archive gate failure 为 `sensor_frame_alignment`。`training/0001` 的 stereo frame=`447/447`，LiDAR=`443`，缺 `000177`–`000180`；不得静默取交集后把 coverage 写成完整序列。
+- adapter 另有两项实现 blocker：官方 `R_rect/Tr_velo_cam/Tr_imu_velo` calibration 行无冒号，V4 parser 会漏读；官方 OXTS 每行是 30-field 导航记录，V4 loader 会误当 12-value `3×4` pose。二者必须在 V5 修复并通过 2-sequence 坐标/投影/pose/track-ID smoke。
+- official testing split 不含 `label_02`；带 GT 的 V5 cross-domain formal pool 只能在结果前从 21 个 training sequences 冻结，testing 只允许无标签 engineering smoke。
+- 本次 download/extraction/quality/training/parameter-search=`0/0/0/0/0`。当前 free=`99.800 GiB`，预计解压后 free=`36.710 GiB`；后续只允许同文件系统 `.partial` staging、post-extract 审计和原子发布，保留原 ZIP，不覆盖公共盘。
+- 下一步：先完成 V5 P0 scope/failure forensics；KITTI 路线需冻结缺帧 common-frame/abstain 合同、修复 calibration/OXTS parser，再执行 2-sequence adapter smoke。上述门通过前不冻结 10-sequence formal，不运行 cross-domain quality。
+
 ## V4 终局归档与路线关闭（2026-08-14）
 
 - `WorldSim V4 / EviDelta-GS` 已关闭；V4 分支当前执行授权=`none_v4_closed`，不得从旧计划或历史 terminal 恢复 pending 任务。

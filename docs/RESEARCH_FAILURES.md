@@ -1,5 +1,13 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V5 KITTI archive / adapter 新增防重复结论（2026-08-14）
+
+- `V5-F01`：官方 KITTI Tracking calibration 不是统一的 `key: values` 语法。实际 `P0`–`P3` 行带冒号，`R_rect`、`Tr_velo_cam`、`Tr_imu_velo` 行不带冒号；V4 `_read_numeric_table()` 会静默忽略后三类行，真实 adapter 将缺失 rectification/extrinsic。V5 必须同时解析 colon/whitespace 两种格式，并对矩阵 shape、finite、handedness 和投影做 2-sequence smoke；不得把 zip layout ready 写成 calibration gate 已通过。
+- `V5-F02`：官方 tracking OXTS 每行是 `30` 个导航/IMU 字段，不是 12-value `3×4` world pose。V4 `_load_pose_matrices()` 会截取前 12 个值并错误解释为位姿，行数与 sensor frame 相等也不能证明 object/world/camera chain 正确。V5 必须按官方语义从 latitude/longitude/altitude/roll/pitch/yaw 构造 pose，并结合 `Tr_imu_velo` 验证坐标链；禁止直接复用 V4 OXTS path 当 pose matrix。
+- `V5-F03`：central directory 可读、成员集合对齐和全 archive SHA-256 只证明压缩包可冻结、可进入 staging，不等于真实 adapter 已完成。合法晋级仍需要独立 `.partial` 解压、post-extract member/frame audit、2-sequence 坐标/pose/track-ID smoke 和新 manifest；不得从 archive metadata 直接写 `WS-V5-D1-KITTI-ADAPTER-01=done`。
+- `V5-F04`：KITTI Tracking 官方 testing split 没有 `label_02`。testing sequences 可用于无标签 adapter/engineering smoke，但不能进入需要 track/box GT 的 cross-domain 质量主表。V5 10-sequence formal 必须从 21 个 labeled training sequences 中在结果前冻结；不得用 testing split 扩大带 GT denominator。
+- `V5-F05`：实际 archive 的 `training/0001` 不是三传感器全帧严格对齐：`image_02/image_03/velodyne=447/447/443`，LiDAR 缺 `000177`–`000180`。这不是 ZIP 损坏或全 KITTI 缺失，但会使“每帧都有 stereo+LiDAR”的 adapter 合同失败。V5 必须在结果前冻结 common-frame/abstain 与 coverage denominator，逐序列记录被排除帧；不得静默 `set` 取交集、补造 LiDAR、删掉 0001 或写成 447/447 完整 multimodal coverage。
+
 ## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
 
 - `V4-F40`：r258 因 18 场 sky masks 尚未齐全而 fail-closed，r277 因上游假定 instance timeline 稠密而在 scene-0919 暴露稀疏时间轴合同错误；两者都是资产/兼容性失败，不是模型质量失败。只允许以提交 `d5a4794e` 的稀疏 timeline 兼容修复及 r278 100-step smoke 解锁正式训练，不得覆盖失败 run 或提前读 test quality。
