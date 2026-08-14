@@ -1,0 +1,61 @@
+schema_version: worldsim_v5_m1b_boundary_residual_forensics_v1
+task_id: WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01
+status: running
+seed: 20260814
+
+inputs:
+  scene0471:
+    scene: scene-0471
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038
+    summary: {path: summary.json, sha256: c64e52a9de2a43cbb89564cbf61610746fdec210eb2a4f0efb32bc6463f7faf1}
+    status: {path: status.json, sha256: 2dc9234c7ea2bc5b45f30d22f6626a84a88044537764ccae2983a6338ba30dbf}
+    fingerprint: {path: fingerprint.json, sha256: cbd9619893048592b23fb5149b5eab447e3aefcf642cd2ae3f91cd66cdf518fc}
+    manifest: {path: manifest.json, sha256: 83ad4099f61bfb0566f38f9fd30f4197897ac825b36b2c0de1d00dddad23f027}
+    diagnostics: {path: artifacts/diagnostics.json, sha256: ab81462375a2ea7faec73051aec807808f41426e872f954a249fdee19bfb9d2b}
+  scene1087:
+    scene: scene-1087
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190405Z__m1-scene1087-graph-diagnostic-s0-r045
+    summary: {path: summary.json, sha256: 8e54d359ae97121bae5c3e6495126ddf94b60916ebe40023e32434dbb5762c78}
+    status: {path: status.json, sha256: 11b22206b14428f5fec9f3ea17810c55d195e2b48006c1e6240520fd2dfa1609}
+    fingerprint: {path: fingerprint.json, sha256: 15e69fac27739aa4e59174fef8802d0a302b19c0511347f78d65d5bea4037526}
+    manifest: {path: manifest.json, sha256: 1b9f7c59457860552db3065daf6466245cb3655c35e2aa8f61f7893cd54f5b84}
+    diagnostics: {path: artifacts/diagnostics.json, sha256: ea43d11f5a8926ffbb99ef40065c2e159c9e95f7a07723ee30042f3116054e3c}
+  scene0379:
+    scene: scene-0379
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190715Z__m1-scene0379-graph-diagnostic-s0-r046
+    summary: {path: summary.json, sha256: 65a24024e2d9a62d3db5583f87eabf1edf57a402bed9650001ac43e1bf10eb34}
+    status: {path: status.json, sha256: d813babaa6a148be948843dce233bc0bfb49551ede6a561fcdfeabf26b4c824c}
+    fingerprint: {path: fingerprint.json, sha256: d07f58d80bc6665c1718d19bfdb831468b5e9444a817d104aec6b0af1b29b2f1}
+    manifest: {path: manifest.json, sha256: 4e148d11dbbb0c441a4423033b3c25820b487705d5fc168d67467d75de4ae0f9}
+    diagnostics: {path: artifacts/diagnostics.json, sha256: adbafa7e978a22642f15f0c47cfba9be8bce5c8e469c65482aa2b562bca2dc46}
+
+analysis:
+  unary_inputs: [B1, B3]
+  graph_arms: [G0, G3]
+  probability_threshold: 0.5
+  boundary_band_iterations: 3
+  boundary_operator: target_internal_boundary_then_scipy_binary_dilation_default_connectivity
+  aggregation: sum_views_within_scene_then_equal_weight_scene_by_unary_cells
+  boundary_primary_cell:
+    minimum_boundary_classification_error_share: 0.5
+    minimum_boundary_semantic_error_mass_share: 0.5
+    minimum_boundary_error_enrichment: 2.0
+
+gate:
+  denominator: 6_scene_by_unary_g0_cells
+  minimum_boundary_primary_cells: 4
+  minimum_mean_boundary_classification_error_share: 0.5
+  minimum_mean_boundary_semantic_error_mass_share: 0.5
+  automatic_semantic_split_unlock: false
+  semantic_split_protocol_freeze_only_if_passed: true
+
+restrictions:
+  development_evaluation_artifact_read: true
+  development_source_image_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  parameter_search_performed: false
+  training_performed: false
+  graph_parameter_change: false
+  semantic_split_started: false
