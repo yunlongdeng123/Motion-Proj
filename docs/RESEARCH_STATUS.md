@@ -1,5 +1,12 @@
 # Research Status
 
+## V5 M1 精确原始载荷准备（2026-08-14）
+
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；新增 metadata-only batch planner=`scripts/prepare_worldsim_v5_drivestudio_raw.py`，绑定 frozen development identity，不读取图像/LiDAR 内容质量、validation/test quality 或历史结果。
+- DriveStudio 10Hz 上游真实输入合同为六路相机 + `LIDAR_TOP` 的完整 `sample_data` 时间链（含 keyframe/sweep），不是此前三前向相机 + LiDAR keyframe 的 `1280` 项粗审计。一次流式 metadata 重算得到 `8 scenes / 14,220 files / 0 present`；逐 scene、逐传感器分母已写入 M1 config。
+- 抽取协议固定为：复用现有非空 sensor member；合并既有 member→shard 审计证据；对仍缺的成员至多单遍扫描十个本地官方 blob shard；只原子落盘命中成员；逐文件记录 bytes/SHA-256/source/shard，并生成 scene 与 batch manifest。禁止铺开约 294 GB 全量 blobs。
+- 当前还没有执行 raw extraction 或 preprocess，故 raw=`0/14,220`、processed=`0/8`，graph 继续 `disabled`。下一步在固定 source commit 上执行选择性抽取，然后逐 scene 运行 DriveStudio preprocess 与结构完整性审计。
+
 ## V5 P0 forensic 正式证据注册（2026-08-14）
 
 - freeze-only commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`，冻结文件仅为 P0/M1-D0/M2-D0 config、forensic runner、文档与测试；resolved plan SHA=`cc5f697357b9cc3a4051862563cd124e9fc3cc3a877096ab9f76e318e5e2f9b3`。

@@ -21,10 +21,26 @@ fresh_cohort_binding:
 
 data_readiness:
   raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
-  processed_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval
+  raw_root_role: shared_content_addressed_sensor_store
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta/v1.0-trainval
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
   audited_at: "2026-08-14"
   development_raw_required_keyframes: 1280
   development_raw_present_keyframes: 0
+  coarse_keyframe_audit:
+    scope: three_front_cameras_plus_lidar_keyframes
+    required: 1280
+    present: 0
+    superseded_for_preprocess_readiness: true
+  exact_preprocess_raw_contract:
+    scope: six_cameras_plus_lidar_full_sample_data_chain
+    required_files: 14220
+    present_files: 0
+    scene_count: 8
+    identity_or_quality_content_read: false
+    preparation_script: scripts/prepare_worldsim_v5_drivestudio_raw.py
+    manifest: /root/autodl-tmp/data/worldsim_v5/manifests/m1_development_raw_batch_v1.json
   processed_scene_count: 0
   state: selective_raw_extraction_and_preprocess_required
   quality_read: false

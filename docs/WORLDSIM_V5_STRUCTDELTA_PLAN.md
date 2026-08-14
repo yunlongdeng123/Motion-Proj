@@ -21,7 +21,7 @@
 - `WS-V5-P0-SCOPE-FREEZE-01=done`；formal closeout=`20260814T091100Z__p0-scope-closeout-s0-r001`，summary SHA=`ca4248cff7085d8d5a57c842827b1a549b6d1d82fa95c2f81a2976c1192f5d38`。
 - `WS-V5-D0-NUSCENES-FRESH-COHORT-01=done`；8/8/20 与 V4 30-scene exclusion 已按 metadata-only 协议冻结，cohort SHA=`553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1`，fresh quality 未读。
 - `WS-V5-M1-D0-BAYES-FORENSICS-01=done`；formal evidence 与缺失字段采集合约见 [`WS_V5_M1_FAILURE_FORENSICS.md`](WS_V5_M1_FAILURE_FORENSICS.md)。
-- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；当前只执行 evidence schema / effective-count unary instrumentation；8 个 development scene 的 selective raw extraction 与 preprocess 尚未完成，graph 仍 disabled。
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；当前执行 evidence schema / effective-count unary instrumentation 与 result-blind raw preparation。DriveStudio 精确输入为六相机+`LIDAR_TOP` 完整时间链，metadata plan=`14,220 files / 0 present`；8 个 development scene 的 selective extraction 与 preprocess 尚未完成，graph 仍 disabled。
 - `WS-V5-M2-D0-GEOMETRY-FORENSICS-01=done`；154-request 机器重算与 staged-geometry 合约见 [`WS_V5_M2_GEOMETRY_FORENSICS.md`](WS_V5_M2_GEOMETRY_FORENSICS.md)。
 - `WS-V5-D1-KITTI-ARCHIVE-AUDIT-01=done`，但 `WS-V5-D1-KITTI-ADAPTER-01=blocked`；见 [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)。
 - 当前只开放冻结 development scenes 上的 M1 structured ownership 与 M2 geometry-first/evidence-schema 工作；validation parameter search、完整 M3、新模型大训练、fresh test quality 与 KITTI 方法调参继续禁止。
