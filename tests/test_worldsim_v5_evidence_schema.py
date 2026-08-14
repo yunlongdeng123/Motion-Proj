@@ -155,14 +155,14 @@ def test_edge_schema_rejects_cross_table_index_drift() -> None:
         validate_edge_table(edges, gaussian_count=2)
 
 
-def test_m1_contract_binds_processed_development_before_reconstruction() -> None:
+def test_m1_contract_binds_processed_development_before_sky_masks() -> None:
     config = yaml.safe_load(
         (ROOT / "configs/worldsim_v5/m1_structured_ownership_v1.yaml").read_text(
             encoding="utf-8"
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "development_base_reconstruction"
+    assert config["phase"] == "development_derived_sky_masks"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
     assert config["data_readiness"]["processed_total_bytes"] == 2497238886
@@ -174,8 +174,10 @@ def test_m1_contract_binds_processed_development_before_reconstruction() -> None
     )
     assert (
         config["data_readiness"]["state"]
-        == "processed_complete_base_checkpoint_required"
+        == "processed_complete_derived_sky_masks_required"
     )
+    assert config["data_readiness"]["derived_sky_masks"]["required_count"] == 4704
+    assert config["data_readiness"]["blocked_base_profile"]["status"] == "blocked"
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]

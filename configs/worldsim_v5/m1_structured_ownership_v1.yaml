@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: development_base_reconstruction
+phase: development_derived_sky_masks
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -73,7 +73,21 @@ data_readiness:
     quality_read: false
     training_started: false
     model_inference_started: false
-  state: processed_complete_base_checkpoint_required
+  derived_sky_masks:
+    required_cameras: [0, 1, 2]
+    required_count: 4704
+    present_count: 0
+    generator_config: configs/worldsim_v5/m1_development_sky_masks_v1.yaml
+    model_revision: 2c6f153e4c23c229e2fa2b188eb250607e030cd8
+    network_access: false
+    quality_read: false
+  blocked_base_profile:
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T111900Z__m1-development-base-scene0471-profile100-s0-r003
+    status: blocked
+    reason: derived_sky_masks_missing_before_training_step
+    summary_sha256: a2802430984ab369143be609088df514e3ed0943563b23ee0a5b3bee02e214f7
+    training_iteration_started: false
+  state: processed_complete_derived_sky_masks_required
   quality_read: false
 
 evidence_contract:

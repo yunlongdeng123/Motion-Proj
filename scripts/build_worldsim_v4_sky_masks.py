@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""使用已审计本地 SegFormer 快照原子生成 V4 StreetGS sky masks。"""
+"""使用已审计本地 SegFormer 快照原子生成 V4/V5 StreetGS sky masks。"""
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ from scripts.prepare_worldsim_v4_baseline_data import scene_directory_name
 
 
 DEFAULT_TASK_ID = "WS-V4-B0-MATCHED-BASELINES-01"
+V5_TASK_ID = "WS-V5-M1-STRUCTURED-OWNERSHIP-01"
 TASK_SCENES = {
     DEFAULT_TASK_ID: {
         "scene-0048": 45,
@@ -59,6 +60,16 @@ TASK_SCENES = {
         "scene-0800": 620,
         "scene-0632": 486,
     },
+    V5_TASK_ID: {
+        "scene-0471": 382,
+        "scene-1087": 827,
+        "scene-0379": 296,
+        "scene-0998": 756,
+        "scene-0359": 276,
+        "scene-0875": 663,
+        "scene-0535": 425,
+        "scene-0436": 350,
+    },
 }
 TASK_FRAME_COUNTS = {
     DEFAULT_TASK_ID: {scene: 196 for scene in TASK_SCENES[DEFAULT_TASK_ID]},
@@ -90,12 +101,27 @@ TASK_FRAME_COUNTS = {
         "scene-0800": 196,
         "scene-0632": 196,
     },
+    V5_TASK_ID: {
+        "scene-0471": 196,
+        "scene-1087": 196,
+        "scene-0379": 191,
+        "scene-0998": 196,
+        "scene-0359": 196,
+        "scene-0875": 196,
+        "scene-0535": 201,
+        "scene-0436": 196,
+    },
 }
 SOURCE_SNAPSHOT_RELPATHS = (
     "scripts/build_worldsim_v4_sky_masks.py",
     "tests/test_build_worldsim_v4_sky_masks.py",
     "tests/test_build_worldsim_v4_m1_validation_sky_masks.py",
     "tests/test_build_worldsim_v4_m3_test_sky_masks.py",
+)
+V5_SOURCE_SNAPSHOT_RELPATHS = (
+    "scripts/build_worldsim_v4_sky_masks.py",
+    "scripts/run_worldsim_v5_streetgs_scene.py",
+    "tests/test_build_worldsim_v5_sky_masks.py",
 )
 
 
@@ -148,7 +174,13 @@ def source_snapshot_relpaths(config_path: Path, project_root: Path) -> tuple[str
         config_relpath = config_path.relative_to(project_root).as_posix()
     except ValueError as error:
         raise SkyMaskError("sky-mask config must be inside the project root") from error
-    return (config_relpath, *SOURCE_SNAPSHOT_RELPATHS)
+    task_id = configured_task_id(config_path)
+    relpaths = (
+        V5_SOURCE_SNAPSHOT_RELPATHS
+        if task_id == V5_TASK_ID
+        else SOURCE_SNAPSHOT_RELPATHS
+    )
+    return (config_relpath, *relpaths)
 
 
 def expected_sky_counts(config: Mapping[str, Any], scene: str) -> tuple[int, int]:
@@ -170,9 +202,14 @@ def expected_sky_counts(config: Mapping[str, Any], scene: str) -> tuple[int, int
 
 
 def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
-    if config.get("schema_version") != "worldsim_v4_sky_masks_v1" or config.get("status") != "running":
-        raise SkyMaskError("sky-mask config schema/task/status 漂移")
     task_id = config.get("task_id")
+    expected_schema = (
+        "worldsim_v5_sky_masks_v1"
+        if task_id == V5_TASK_ID
+        else "worldsim_v4_sky_masks_v1"
+    )
+    if config.get("schema_version") != expected_schema or config.get("status") != "running":
+        raise SkyMaskError("sky-mask config schema/task/status 漂移")
     expected_scenes = TASK_SCENES.get(str(task_id))
     if expected_scenes is None:
         raise SkyMaskError("sky-mask config schema/task/status 漂移")
@@ -203,7 +240,19 @@ def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     runtime = config.get("runtime", {})
     if runtime.get("generation_network_access") is not False or runtime.get("no_test_quality_read") is not True:
         raise SkyMaskError("generation-network/test-unread 合同漂移")
-    return {"scene_count": len(expected_scenes), "expected_masks": 588}
+    if task_id == V5_TASK_ID:
+        binding = config.get("preprocess_reconstruction_config", {})
+        path = Path(str(binding.get("path", "")))
+        if not path.is_file() or sha256_file(path) != binding.get("sha256"):
+            raise SkyMaskError("V5 preprocess/reconstruction binding 漂移")
+    return {
+        "scene_count": len(expected_scenes),
+        "expected_masks": (
+            sum(expected_sky_counts(config, scene)[1] for scene in expected_scenes)
+            if task_id == V5_TASK_ID
+            else 588
+        ),
+    }
 
 
 def audit_snapshot(config: Mapping[str, Any]) -> dict[str, Any]:
@@ -255,6 +304,11 @@ def validate_output_paths(target: Path, partial: Path) -> bool:
     return True
 
 
+def output_schema(task_id: str, artifact: str) -> str:
+    prefix = "worldsim_v5" if task_id == V5_TASK_ID else "worldsim_v4"
+    return f"{prefix}_sky_mask_{artifact}_v1"
+
+
 def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dict[str, Any]:
     import numpy as np
     import torch
@@ -277,6 +331,19 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
     scene_index = int(config["data"]["scenes"][scene])
     expected_timesteps, expected_masks = expected_sky_counts(config, scene)
     scene_root = Path(config["data"]["processed_root"]) / scene_directory_name(scene_index)
+    preprocess_validation = None
+    if task_id == V5_TASK_ID:
+        from scripts.run_worldsim_v5_streetgs_scene import (
+            _verified_preprocess_artifact,
+        )
+
+        reconstruction_path = Path(
+            config["preprocess_reconstruction_config"]["path"]
+        )
+        reconstruction_config = _load_yaml(reconstruction_path)
+        preprocess_validation = _verified_preprocess_artifact(
+            reconstruction_config, scene, verify_payload=True
+        )
     images = sorted(path for path in (scene_root / "images").glob("*.jpg") if int(path.stem.rsplit("_", 1)[1]) in set(config["data"]["cameras"]))
     if len(images) != expected_masks:
         raise SkyMaskError(f"训练相机 image count {len(images)} != {expected_masks}")
@@ -337,7 +404,7 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
             peak_memory = max(peak_memory, int(sample["memory_current_bytes"]))
     if len(rows) != expected_masks or {row["mask"] for row in rows} != {f"{path.stem}.png" for path in images}:
         raise SkyMaskError("sky-mask 输出集合漂移")
-    manifest = {"schema_version": "worldsim_v4_sky_mask_manifest_v1", "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "expected_timesteps": expected_timesteps, "expected_masks": expected_masks, "model": snapshot, "sky_class_id": sky_id, "sky_class_label": labels[sky_id], "image_count": len(images), "mask_count": len(rows), "mean_sky_fraction": float(np.mean([row["sky_fraction"] for row in rows])), "files": rows, "network_accessed": False, "test_quality_read": False}
+    manifest = {"schema_version": output_schema(task_id, "manifest"), "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "expected_timesteps": expected_timesteps, "expected_masks": expected_masks, "model": snapshot, "sky_class_id": sky_id, "sky_class_label": labels[sky_id], "image_count": len(images), "mask_count": len(rows), "mean_sky_fraction": float(np.mean([row["sky_fraction"] for row in rows])), "files": rows, "preprocess_validation": preprocess_validation, "network_accessed": False, "test_quality_read": False}
     _write_json(run_dir / "artifacts/sky_mask_manifest.json", manifest)
     del model, processor, inputs, logits
     gc_collect = getattr(torch.cuda, "empty_cache", None)
@@ -350,15 +417,15 @@ def run(config_path: Path, run_dir: Path, project_root: Path, scene: str) -> dic
     post = resource_sample("completed", len(rows))
     append_jsonl(run_dir / "resource.jsonl", post)
     project_git = {"head": _git(project_root, "rev-parse", "HEAD"), "branch": _git(project_root, "branch", "--show-current"), "dirty": bool(_git(project_root, "status", "--porcelain"))}
-    fingerprint = {"config_sha256": sha256_file(config_path), "manifest_sha256": sha256_file(run_dir / "artifacts/sky_mask_manifest.json"), "model": snapshot, "project_git": project_git, "source_snapshots": {relpath: sha256_file(run_dir / "source_snapshot" / relpath) for relpath in snapshot_relpaths}}
+    fingerprint = {"config_sha256": sha256_file(config_path), "manifest_sha256": sha256_file(run_dir / "artifacts/sky_mask_manifest.json"), "model": snapshot, "preprocess_validation": preprocess_validation, "project_git": project_git, "source_snapshots": {relpath: sha256_file(run_dir / "source_snapshot" / relpath) for relpath in snapshot_relpaths}}
     _write_json(run_dir / "fingerprint.json", fingerprint)
     now = datetime.now(timezone.utc).isoformat()
     _write_json(run_dir / "events.jsonl", {"at_utc": now, "event": "sky_masks_complete", "scene": scene, "status": "done"})
-    summary = {"schema_version": "worldsim_v4_sky_mask_summary_v1", "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "finished_at_utc": now, "duration_seconds": elapsed, "mask_count": len(rows), "mean_sky_fraction": manifest["mean_sky_fraction"], "manifest_sha256": fingerprint["manifest_sha256"], "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "resources": {"peak_gpu_memory_mib": peak_gpu, "peak_cgroup_memory_bytes": peak_memory}, "project_git": project_git, "network_accessed": False, "test_quality_read": False}
+    summary = {"schema_version": output_schema(task_id, "summary"), "task_id": task_id, "status": "done", "scene": scene, "scene_index": scene_index, "finished_at_utc": now, "duration_seconds": elapsed, "mask_count": len(rows), "mean_sky_fraction": manifest["mean_sky_fraction"], "manifest_sha256": fingerprint["manifest_sha256"], "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "resources": {"peak_gpu_memory_mib": peak_gpu, "peak_cgroup_memory_bytes": peak_memory}, "project_git": project_git, "checkpoint": "N/A_derived_sky_masks", "segmentation_inference_started": True, "method_inference_started": False, "network_accessed": False, "test_quality_read": False}
     _write_json(run_dir / "summary.json", summary)
     _write_json(run_dir / "status.json", {"task_id": task_id, "status": "done", "scene": scene, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_sky_mask_run_manifest_v1", "task_id": task_id, "status": "done", "scene": scene, "artifacts": artifacts, "network_accessed": False, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": output_schema(task_id, "run_manifest"), "task_id": task_id, "status": "done", "scene": scene, "artifacts": artifacts, "network_accessed": False, "test_quality_read": False})
     return summary
 
 
@@ -373,15 +440,15 @@ def record_blocked(config_path: Path, run_dir: Path, scene: str, error: BaseExce
     event = {"at_utc": now, "event": "sky_masks_blocked", "scene": scene, "error_type": type(error).__name__, "message": str(error)}
     append_jsonl(run_dir / "events.jsonl", event)
     _write_json(run_dir / "fingerprint.json", {"config_sha256": sha256_file(config_path) if config_path.is_file() else None, "error": event})
-    summary = {"schema_version": "worldsim_v4_sky_mask_summary_v1", "task_id": task_id, "status": "blocked", "scene": scene, "finished_at_utc": now, "reason": "sky_mask_stage_failed", "error": event, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "network_accessed": False, "test_quality_read": False}
+    summary = {"schema_version": output_schema(task_id, "summary"), "task_id": task_id, "status": "blocked", "scene": scene, "finished_at_utc": now, "reason": "sky_mask_stage_failed", "error": event, "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"), "checkpoint": "N/A_derived_sky_masks", "segmentation_inference_started": False, "method_inference_started": False, "network_accessed": False, "test_quality_read": False}
     _write_json(run_dir / "summary.json", summary)
     _write_json(run_dir / "status.json", {"task_id": task_id, "status": "blocked", "scene": scene, "finished_at_utc": now, "summary_sha256": sha256_file(run_dir / "summary.json")})
     artifacts = {str(path.relative_to(run_dir)): {"bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in sorted(run_dir.rglob("*")) if path.is_file() and path.name != "manifest.json"}
-    _write_json(run_dir / "manifest.json", {"schema_version": "worldsim_v4_sky_mask_run_manifest_v1", "task_id": task_id, "status": "blocked", "scene": scene, "artifacts": artifacts, "network_accessed": False, "test_quality_read": False})
+    _write_json(run_dir / "manifest.json", {"schema_version": output_schema(task_id, "run_manifest"), "task_id": task_id, "status": "blocked", "scene": scene, "artifacts": artifacts, "network_accessed": False, "test_quality_read": False})
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="生成 WorldSim V4 本地 sky masks")
+    parser = argparse.ArgumentParser(description="生成 WorldSim V4/V5 本地 sky masks")
     parser.add_argument("--config", required=True, type=Path)
     parser.add_argument("--run-dir", required=True, type=Path)
     parser.add_argument("--project-root", default=Path("."), type=Path)

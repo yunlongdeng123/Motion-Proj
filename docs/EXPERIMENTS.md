@@ -12,7 +12,8 @@
 - raw preparation canonical r001：十个本地官方 shard 单遍扫描命中=`0/0/0/3486/3555/1820/0/1780/1786/1793`，总计=`14,220 files / 3,996,996,012 bytes`；没有铺开约 294 GB 全量 blobs。batch manifest content SHA=`65fc5363ca13f9124fe6165a84a7857339943d64b87a756127950ab19c4611b6`，formal summary SHA=`0c164e46873ecca4e2878d2d9937960d9b1df916ee25e92d075abc9d1ea0c213`。
 - preprocess canonical r002：`8/8 scenes / 2,497,238,886 bytes / 1148.674389 s`；每场景均验证 images/extrinsics/intrinsics/LiDAR/LiDAR pose/三类 dynamic mask/两份 instance JSON，并生成完整逐文件 inventory 后原子发布。timeline=`191 frames(scene-0379) / 201(scene-0535) / 196(other six)`，不得静默裁成共同长度。
 - r002 summary/status/fingerprint/manifest SHA=`dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0 / 21702f7442824a2e7fd5e66b120511fc3c28121f68d8c711c521c7e858eacfa7 / 147c6d4d4024e12ea26b1e9f0cf7ebb9723d334aa83e1ec199a86c7529eb7a2c / c7140b4001bcfb108e83b5569a5d25a1176f61c66a3dcb1c5d17c3ddfa10f391`；checkpoint 明确为 `N/A_data_preparation`。
-- 下一步先执行 8-scene StreetGS `profile100` 合同/资源门，再运行 30k immutable base reconstruction；正式 unary development diagnostic 前 graph=`disabled`，B2 hierarchical/Transformer/semantic split 均未授权。本项 quality/training/inference/arm-selection 目前仍=`0/0/0/0`。
+- 首个 base profile r003 在 loader 初始化、训练 step 0 前因 `sky_masks/000_0.png` 缺失终止，status/summary SHA=`950931fda48ed436f2410424be4c01c6f391cf9333516cfcb8503ecff7f5165f / a2802430984ab369143be609088df514e3ed0943563b23ee0a5b3bee02e214f7`。分类=`derived_input_missing`，不是模型质量失败；run 保留且不复用。
+- 当前先以冻结本地 SegFormer、offline/atomic 协议派生三训练相机 `4704` sky masks，并为每个 mask 保存 bytes/SHA/sky fraction；之后以新 run ID 重跑 8-scene `profile100`，再运行 30k immutable base。正式 unary diagnostic 前 graph=`disabled`，B2 hierarchical/Transformer/semantic split 均未授权；quality/训练迭代/method inference/arm-selection 仍=`0/0/0/0`。
 
 ## V5 fresh nuScenes 8/8/20 metadata-only freeze（2026-08-14）
 
