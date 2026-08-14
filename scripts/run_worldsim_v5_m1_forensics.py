@@ -97,7 +97,7 @@ def missing_collection_fields(
 def audit(config: Mapping[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     if config.get("schema_version") != "worldsim_v5_m1_forensics_v1":
         raise ForensicAuditError("M1 forensic config schema drift")
-    if config.get("task_id") != TASK_ID or config.get("status") != "running":
+    if config.get("task_id") != TASK_ID or config.get("status") not in {"running", "done"}:
         raise ForensicAuditError("M1 forensic task registration drift")
     restrictions = config["restrictions"]
     for key in (

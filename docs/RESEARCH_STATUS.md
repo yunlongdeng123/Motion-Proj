@@ -1,5 +1,15 @@
 # Research Status
 
+## V5 P0 forensic 正式证据注册（2026-08-14）
+
+- freeze-only commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`，冻结文件仅为 P0/M1-D0/M2-D0 config、forensic runner、文档与测试；resolved plan SHA=`cc5f697357b9cc3a4051862563cd124e9fc3cc3a877096ab9f76e318e5e2f9b3`。
+- `WS-V5-M1-D0-BAYES-FORENSICS-01=done`：canonical run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-D0-BAYES-FORENSICS-01/20260814T090500Z__m1-d0-bayes-forensics-s0-r001`，summary SHA=`55006fff260d1bdacb8781492abc3b9f9c6f8bcb5351d2644ad9311c7034d82f`，conclusion=`blocked_evidence_missing_contract_frozen`。
+- M1 runner 已重新校验 r200 三个 terminal JSON 与四份 state NPZ SHA，并逐份重算 O1-proxy recall、posterior extreme、low-uncertainty、unobserved 与 mixed-observation 分母；现有 state 仍缺 per-view observation、projected boundary、center/covariance 与 topology 字段。D0 完成只表示诊断和下一轮采集合同冻结，不表示缺失证据已恢复，也不改写 V4 M1=`rejected`。
+- `WS-V5-M2-D0-GEOMETRY-FORENSICS-01=done`：canonical run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-D0-GEOMETRY-FORENSICS-01/20260814T090600Z__m2-d0-geometry-forensics-s0-r001`，summary SHA=`33708f5165c04fb22a79bc985da36caf1b907fef8d038ac789e31b1debc5e0c0`，conclusion=`risk_saturation_and_blocked_evidence_missing_contract_frozen`。
+- M2 runner 从 6 个 scene summary 重建 `154 requests / 214 candidates`，复现 saturation=`192/214`、same-risk/different-MAE collision=`57/130`、accepted geometry oracle=`62/83`、positive regret=`21/83`，并复现 accepted/risk-abstain/role-asset-blocked 的 full-denominator scene-balanced delta=`+3.390809623732304 m`。
+- 两个 formal run 均来自同一 clean freeze commit，包含 resolved config、fingerprint、JSONL events、manifest、status、summary、source snapshot 与 run-local audit artifact；fresh/test quality、training、parameter/router search 均为 false。
+- `WS-V5-P0-SCOPE-FREEZE-01` 仍为 `running`，但 closeout 输入已经齐备；下一门禁是从 evidence-registration clean commit 执行 `scripts/audit_worldsim_v5_p0.py`。P0 正式 audit 完成前，fresh cohort quality、完整 M1/M2/M3、KITTI quality/调参仍未授权。
+
 ## V5 P0 / KITTI archive 审计（2026-08-14）
 
 - 当前路线=`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`；`WS-V5-P0-SCOPE-FREEZE-01=running`。当前只授权 P0、M1-D0、M2-D0 和结果前数据/适配器审计，不授权完整 M1/M2/M3、新模型大训练、fresh test quality 或 KITTI 参数搜索。

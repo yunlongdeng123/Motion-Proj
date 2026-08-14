@@ -2,7 +2,7 @@
 
 - Task：`WS-V5-M2-D0-GEOMETRY-FORENSICS-01`
 - 日期：`2026-08-14`
-- 状态：`running`
+- 状态：`done`
 - 范围：只读 V4 r212/r219–r222 historical diagnostic；未改 V4 artifact，未调 router
 
 ## 1. 问题与 canonical 绑定
@@ -117,3 +117,12 @@ accepted / abstain_reason / coverage_denominator
 - 共享正式产物协议：`scripts/worldsim_v5_forensics_common.py`
 
 runner 必须逐文件校验 r222 terminal artifacts 与 6 个 scene summary SHA，验证 V4 `clip(MAE/0.5, 0, 1)` 映射，重建 154-request/214-candidate 分母、risk collision、retrospective geometry oracle、accepted/risk-abstain/role-asset-blocked 分解，并把 reference 与 raw→pre-Gaussian→post-render 缺失字段写入 run-local `artifacts/geometry_audit.json`。它只做 historical diagnosis，不重拟合 router、不删 abstain、不读取 fresh/test quality，也不授权 full M2。
+
+正式审计已完成：
+
+- run：`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-D0-GEOMETRY-FORENSICS-01/20260814T090600Z__m2-d0-geometry-forensics-s0-r001`
+- source commit：`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`
+- summary SHA：`33708f5165c04fb22a79bc985da36caf1b907fef8d038ac789e31b1debc5e0c0`
+- conclusion：`risk_saturation_and_blocked_evidence_missing_contract_frozen`
+
+该结论完成了 D0 分母与缺失证据合同的冻结；它不把 rendered background-depth reference 宣称为真实道路 GT，也不允许在旧 validation 上选择新 mapping。

@@ -2,7 +2,7 @@
 
 - Task：`WS-V5-M1-D0-BAYES-FORENSICS-01`
 - 日期：`2026-08-14`
-- 状态：`running`
+- 状态：`done`
 - 范围：只读 V4 historical diagnostic；未读 fresh nuScenes / KITTI quality，未训练、未调参
 
 ## 1. 已冻结事实
@@ -89,3 +89,12 @@ local_topology_mean / topology_disagreement
 - 共享正式产物协议：`scripts/worldsim_v5_forensics_common.py`
 
 runner 必须逐文件校验 r200 的 summary / metrics / manifest 与 4 份 state NPZ SHA，重新计算 O1-proxy target recall、posterior extreme、低 uncertainty、unobserved、mixed positive/negative 等分母，并把缺失的 per-view、geometry、topology 字段写入 run-local `artifacts/state_audit.json`。正式 run 必须来自 clean git commit，并包含 resolved config、fingerprint、JSONL event、manifest、status、summary 与 source snapshot；它不授权 full M1，也不读取 fresh/test quality。
+
+正式审计已完成：
+
+- run：`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-D0-BAYES-FORENSICS-01/20260814T090500Z__m1-d0-bayes-forensics-s0-r001`
+- source commit：`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`
+- summary SHA：`55006fff260d1bdacb8781492abc3b9f9c6f8bcb5351d2644ad9311c7034d82f`
+- conclusion：`blocked_evidence_missing_contract_frozen`
+
+该结论表示 D0 诊断和下一轮采集合同已经收口，不表示缺失证据已被补齐，也不改变 V4 M1 的 `rejected` 结论。

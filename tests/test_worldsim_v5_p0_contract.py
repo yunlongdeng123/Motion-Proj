@@ -82,3 +82,12 @@ def test_p0_forensic_machine_contracts_are_registered() -> None:
     assert m2["output_contract"]["geometry_audit"] == "artifacts/geometry_audit.json"
     assert "m1_formal_forensic_run_done" in scope["closeout_gate"]["requires"]
     assert "m2_formal_forensic_run_done" in scope["closeout_gate"]["requires"]
+    assert scope["project"]["p0_freeze_commit"] == (
+        "dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19"
+    )
+    assert scope["forensic_results"]["m1"]["status"] == "done"
+    assert scope["forensic_results"]["m2"]["status"] == "done"
+    assert scope["task_registry"]["WS-V5-M1-D0-BAYES-FORENSICS-01"] == "done"
+    assert scope["task_registry"]["WS-V5-M2-D0-GEOMETRY-FORENSICS-01"] == "done"
+    assert m1["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]
+    assert m2["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]

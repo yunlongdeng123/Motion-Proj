@@ -1,5 +1,19 @@
 # Experiments
 
+## V5 P0 M1/M2 retrospective forensic 正式审计（2026-08-14）
+
+| Task ID | 状态 | canonical evidence |
+|---|---|---|
+| `WS-V5-P0-SCOPE-FREEZE-01` | running | freeze-only commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`；resolved plan SHA=`cc5f697357b9cc3a4051862563cd124e9fc3cc3a877096ab9f76e318e5e2f9b3`；formal closeout audit 待执行 |
+| `WS-V5-M1-D0-BAYES-FORENSICS-01` | done | r001=`20260814T090500Z__m1-d0-bayes-forensics-s0-r001`；summary SHA=`55006fff260d1bdacb8781492abc3b9f9c6f8bcb5351d2644ad9311c7034d82f` |
+| `WS-V5-M2-D0-GEOMETRY-FORENSICS-01` | done | r001=`20260814T090600Z__m2-d0-geometry-forensics-s0-r001`；summary SHA=`33708f5165c04fb22a79bc985da36caf1b907fef8d038ac789e31b1debc5e0c0` |
+
+- M1 formal run 逐文件验证 r200 summary/metrics/manifest 和四份 state NPZ SHA；重算四个 state 的 O1-proxy target、posterior、uncertainty、unobserved 与 mixed-view 分母，并将缺失的 per-view/geometry/topology 字段写入 `artifacts/state_audit.json`。结论=`blocked_evidence_missing_contract_frozen`，V4 M1 仍为 `rejected`。
+- M2 formal run 逐文件验证 r222 summary/manifest/router/table 和六个 scene summary SHA；复现 request/candidate=`154/214`、saturation=`192/214`、same-risk collision=`57/130`、accepted oracle exact/positive-regret=`62/21`、accepted mean/max regret=`0.3083979811/7.7560878992 m`。
+- denominator decomposition：accepted `83` 的 router/TELEA request mean=`1.6585427687/2.0334827211 m`、delta=`-0.3749399524 m`；risk-abstain `47` 的 delta=`+13.9746599451 m`；role-asset blocked `24` delta=`0`；full `154` request mean delta=`+4.0629155933 m`、scene-balanced delta=`+3.3908096237 m`。
+- 产物协议：两个 run 均包含 `resolved_config.yaml / fingerprint.json / events.jsonl / summary.json / manifest.json / status.json / source_snapshot / artifacts/*_audit.json`；checkpoint 明确为 historical audit 不适用，而非漏交。
+- provenance：source commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19`；fresh quality/test quality/training/parameter search/router refit=`false/false/false/false/false`。当前 V5 测试集合=`12 passed`，P0 formal closeout audit 尚未运行。
+
 ## V5 KITTI Tracking archive / metadata 审计（2026-08-14）
 
 | Task ID | 状态 | canonical evidence |

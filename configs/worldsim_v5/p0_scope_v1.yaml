@@ -10,8 +10,20 @@ project:
   plan_sha256_at_start: abdeeec7aaa6d08efc0f30bd92c46325e3666e1f42d1f7965bed88913ac0edd0
   run_namespace: /root/autodl-tmp/runs/worldsim_v5
   hardware: NVIDIA GeForce RTX 3090 24GB
-  p0_freeze_commit: null
-  resolved_plan_sha256: null
+  p0_freeze_commit: dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19
+  resolved_plan_commit: dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19
+  resolved_plan_sha256: cc5f697357b9cc3a4051862563cd124e9fc3cc3a877096ab9f76e318e5e2f9b3
+  freeze_commit_files:
+    - configs/worldsim_v5/m1_forensics_v1.yaml
+    - configs/worldsim_v5/m2_forensics_v1.yaml
+    - configs/worldsim_v5/p0_scope_v1.yaml
+    - docs/WS_V5_M1_FAILURE_FORENSICS.md
+    - docs/WS_V5_M2_GEOMETRY_FORENSICS.md
+    - scripts/run_worldsim_v5_m1_forensics.py
+    - scripts/run_worldsim_v5_m2_forensics.py
+    - scripts/worldsim_v5_forensics_common.py
+    - tests/test_worldsim_v5_forensics.py
+    - tests/test_worldsim_v5_p0_contract.py
 
 v4_read_only_bindings:
   closeout_source_head: 403c5703a755c999d42a5ec3eb063db6cc751761
@@ -40,6 +52,30 @@ v4_read_only_bindings:
     closeout_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T225805Z__m1-m2-m3-test-closeout-audit-s0-r336
     denominator: {required: 18, evaluable: 12, abstain: 6}
     v4_test_reuse: historical_diagnostic_only
+
+forensic_results:
+  m1:
+    task_id: WS-V5-M1-D0-BAYES-FORENSICS-01
+    status: done
+    conclusion: blocked_evidence_missing_contract_frozen
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-D0-BAYES-FORENSICS-01/20260814T090500Z__m1-d0-bayes-forensics-s0-r001
+    project_git_head: dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19
+    files:
+      status.json: {sha256: 1a985135cbf6afbe1cdcc0585557d174a5ec57b9e0e814e89a943955a98289dd}
+      summary.json: {sha256: 55006fff260d1bdacb8781492abc3b9f9c6f8bcb5351d2644ad9311c7034d82f}
+      manifest.json: {sha256: de2caec74a2299552ebb11dc1f30b287c69af39e247376496f83fddc9d52f76f}
+      fingerprint.json: {sha256: c165be93fc3560c8c5e09e7f76ed3d97985327a14726188a89dbaa998d675c07}
+  m2:
+    task_id: WS-V5-M2-D0-GEOMETRY-FORENSICS-01
+    status: done
+    conclusion: risk_saturation_and_blocked_evidence_missing_contract_frozen
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-D0-GEOMETRY-FORENSICS-01/20260814T090600Z__m2-d0-geometry-forensics-s0-r001
+    project_git_head: dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19
+    files:
+      status.json: {sha256: c934e8471f4b79f17c53f878cd2d977d62019ec1a5f2b7194cfef609accd2bef}
+      summary.json: {sha256: 33708f5165c04fb22a79bc985da36caf1b907fef8d038ac789e31b1debc5e0c0}
+      manifest.json: {sha256: 427c19a43e6dc2f376a39153d7f72fb6c8d9f1fb81f738e4d36706aaf2473dbe}
+      fingerprint.json: {sha256: 528fd890ee37de20df042ba6d986f4c8c1fd5848a54e753ee879db9976901c10}
 
 scientific_scope:
   title: "StructDelta-GS: Structured, Geometry-Safe and Physics-Constrained Gaussian Editing for Driving World Simulation"
@@ -127,10 +163,10 @@ authorization:
 task_registry:
   WS-V5-P0-SCOPE-FREEZE-01: running
   WS-V5-D0-NUSCENES-FRESH-COHORT-01: pending
-  WS-V5-M1-D0-BAYES-FORENSICS-01: running
+  WS-V5-M1-D0-BAYES-FORENSICS-01: done
   WS-V5-M1-STRUCTURED-OWNERSHIP-01: pending
   WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01: pending
-  WS-V5-M2-D0-GEOMETRY-FORENSICS-01: running
+  WS-V5-M2-D0-GEOMETRY-FORENSICS-01: done
   WS-V5-M2-GEOMETRY-FIRST-REPAIR-01: pending
   WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01: pending
   WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01: pending
@@ -147,11 +183,12 @@ outputs:
   m1_forensics_runner: scripts/run_worldsim_v5_m1_forensics.py
   m2_forensics_runner: scripts/run_worldsim_v5_m2_forensics.py
   forensics_common: scripts/worldsim_v5_forensics_common.py
+  p0_auditor: scripts/audit_worldsim_v5_p0.py
   p0_scope: configs/worldsim_v5/p0_scope_v1.yaml
   fresh_cohort: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
 
 closeout_gate:
-  status: pending
+  status: running
   requires:
     - all_output_paths_exist
     - p0_contract_tests_pass
