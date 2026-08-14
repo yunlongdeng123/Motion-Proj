@@ -1,12 +1,13 @@
 schema_version: worldsim_v5_nuscenes_fresh_cohort_v1
 task_id: WS-V5-D0-NUSCENES-FRESH-COHORT-01
-status: pending
+status: running
 created_at: "2026-08-14"
 
 project:
   branch: research/worldsim-v5-structdelta
   p0_task: WS-V5-P0-SCOPE-FREEZE-01
-  p0_status: running
+  p0_status: done
+  p0_run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-P0-SCOPE-FREEZE-01/20260814T091100Z__p0-scope-closeout-s0-r001
   source_head_at_contract_start: 79dafff0c520ab3cbb8d8d73acfd87bb9225b427
   training: false
   model_inference: false
@@ -21,7 +22,7 @@ dataset:
   public_archive_read_only: true
 
 selection:
-  state: pending_metadata_only_selection
+  state: running_metadata_only_selection
   seed: 2216484596
   seed_derivation:
     source: sha256_utf8_task_id_first_32_bits_big_endian
@@ -33,14 +34,13 @@ selection:
     - time_of_day
     - weather
     - road_geometry
-    - intersection
-    - actor_density
-    - occlusion
-    - actor_motion
-    - actor_distance
-    - lidar_support
-    - sam_boundary_complexity_proxy
     - actor_class
+    - speed_regime
+    - distance_regime
+    - occlusion
+    - donor_support_metadata_proxy
+    - sensor_contract
+    - eligible_actor_count
   forbidden_selection_fields:
     - reconstruction_quality
     - edit_quality
@@ -48,6 +48,13 @@ selection:
     - m2_quality
     - m3_quality
     - test_metric
+    - psnr
+    - ssim
+    - lpips
+    - boundary_f1
+    - iou
+    - model_score
+    - render_quality
 
 protocol:
   scene_counts: {development: 8, validation: 8, test: 20}
@@ -59,6 +66,7 @@ protocol:
   cameras: [CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT]
   lidar: LIDAR_TOP
   continuous_clip_seconds: [2.0, 4.0]
+  continuous_clip_keyframes: 7
   frame_partition:
     heldout: sample_index_mod_5_eq_4
     development: sample_index_mod_5_eq_2
@@ -134,3 +142,8 @@ restrictions:
   parameter_search: false
   fresh_test_quality_read: false
   v4_scene_confirmatory_reuse: false
+
+implementation:
+  builder: scripts/build_worldsim_v5_nuscenes_fresh_cohort.py
+  selector: motion_proj/worldsim_v5/datasets/nuscenes.py
+  candidate_source: v4_metadata_parser_reused_without_v4_selected_scenes
