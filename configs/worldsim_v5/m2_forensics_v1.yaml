@@ -1,0 +1,142 @@
+schema_version: worldsim_v5_m2_forensics_v1
+task_id: WS-V5-M2-D0-GEOMETRY-FORENSICS-01
+status: running
+scope: v4_historical_diagnostic_only
+
+restrictions:
+  fresh_quality_read: false
+  test_quality_read: false
+  parameter_search_performed: false
+  router_refit_performed: false
+  training_performed: false
+
+historical_binding:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222
+  files:
+    summary.json:
+      path: summary.json
+      sha256: 6bfeb3c6a1e8f1905da936d4e83c93828c030a301ee9d4bedae081c7cc6b1a95
+    manifest.json:
+      path: manifest.json
+      sha256: 702cdb487643bbe633a164d24b9664f35bebc754186fb0845cec4b46250447dd
+    router_decisions.json:
+      path: artifacts/router_decisions.json
+      sha256: e59ce5f17e6c3271825875c057e0d777ad9aca95f0ef4b8e07b74d946022caf3
+    matched_repair_table.json:
+      path: artifacts/matched_repair_table.json
+      sha256: c7bcadfef2b23b3889c0d130eaf634c3faeca3f4c17abd76898152517b0a86fb
+  scene_summary_files:
+    scene-0071:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-0071-s0-r219/summary.json
+      sha256: 8c442e699efadb8fcbc8738f2c16f953c702479e39d70b1ad5e54b558b2d631e
+    scene-0317:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005626Z__m2-validation-scene-0317-s0-r220/summary.json
+      sha256: 74706f2ab4ab89e237fb53d1215f1a68c41a3c345e383e4cf5cd19358d6573c0
+    scene-0450:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T063405Z__m2-validation-scene-0450-s0-r221/summary.json
+      sha256: 4c882f65a0281caeeae9c85608d272a8c4306a2be8d2b8a26cabe91a48a76bac
+    scene-0862:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-0862-s0-r217/summary.json
+      sha256: 20dca30d422a025ca3928cdfb6b617877c85c2c0b2716f7a3f41395b80937ca7
+    scene-1012:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-1012-s0-r218/summary.json
+      sha256: ab59d9c3a62a0795a7797ac91aa56b5d716e268337514a049e508ec5a55c1ba9
+    scene-1089:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T005211Z__m2-validation-scene-1089-s0-r216/summary.json
+      sha256: ef8e1f0b4b473a53a2dcabd003efdb3d1cac7bbb5a4455bec88587720450dd60
+
+frozen_v4_mapping:
+  formula: clip(hole_geometry_mae_m / mae_saturation_scale_m, 0, 1)
+  mae_saturation_scale_m: 0.5
+  refit_allowed: false
+
+future_collection_contract:
+  identity_and_reference:
+    - request_id
+    - scene
+    - frame
+    - camera
+    - role
+    - reference_source
+    - reference_confidence
+    - observed_reference_pixels
+  staged_geometry:
+    - raw_surface_model
+    - raw_geometry_error
+    - pre_gaussianization_geometry_error
+    - post_gaussianization_render_error
+    - hole_depth_mae
+    - hole_depth_median
+    - hole_depth_relative
+    - hole_depth_p90
+    - hole_depth_p95
+  support_and_uncertainty:
+    - geometry_support
+    - lidar_support
+    - multi_view_depth_support
+    - surface_fit_residual
+    - extrapolation_distance
+    - occlusion_uncertainty
+  routing_and_denominator:
+    - selected_candidate
+    - geometry_oracle_candidate
+    - oracle_regret
+    - accepted
+    - abstain_reason
+    - coverage_denominator
+
+required_blocked_evidence:
+  - reference_source
+  - reference_confidence
+  - raw_surface_model
+  - raw_geometry_error
+  - pre_gaussianization_geometry_error
+  - post_gaussianization_render_error
+  - surface_fit_residual
+  - extrapolation_distance
+  - occlusion_uncertainty
+
+expected_historical_result:
+  request_count: 154
+  measured_request_count: 130
+  candidate_count: 214
+  arm_counts: {OBSERVED: 76, ROADPATCH: 8, TELEA: 130}
+  saturation_counts: {OBSERVED: 60, ROADPATCH: 3, TELEA: 129}
+  saturation_fraction: 0.897196261682243
+  unique_risk_count: 23
+  unique_risk_count_by_arm: {OBSERVED: 17, ROADPATCH: 6, TELEA: 2}
+  threshold_saturation_checks:
+    "0.5": {candidate_count: 192, saturated_count: 192}
+    "1.0": {candidate_count: 161, saturated_count: 161}
+    "2.0": {candidate_count: 63, saturated_count: 63}
+    "5.0": {candidate_count: 14, saturated_count: 14}
+  same_risk_different_mae_request_count: 57
+  router: {accepted_count: 83, abstain_count: 71}
+  geometry_oracle:
+    measured_request_count: 130
+    oracle_arm_counts: {OBSERVED: 54, ROADPATCH: 7, TELEA: 69}
+    accepted_count: 83
+    accepted_exact_oracle_count: 62
+    accepted_positive_regret_count: 21
+    accepted_regret_mean_m: 0.3083979811
+    accepted_regret_median_m: 0.0
+    accepted_regret_max_m: 7.7560878992
+    accepted_regret_sum_m: 25.5970324315
+    positive_regret_selected_arm_counts: {OBSERVED: 19, TELEA: 2}
+  denominator_decomposition:
+    accepted: {count: 83}
+    risk_abstain: {count: 47}
+    role_asset_blocked: {count: 24}
+    full_denominator:
+      count: 154
+      scene_balanced_delta_m: 3.390809623732304
+
+output_contract:
+  geometry_audit: artifacts/geometry_audit.json
+  resolved_config: resolved_config.yaml
+  fingerprint: fingerprint.json
+  events: events.jsonl
+  summary: summary.json
+  manifest: manifest.json
+  status: status.json
+  source_snapshot: source_snapshot/

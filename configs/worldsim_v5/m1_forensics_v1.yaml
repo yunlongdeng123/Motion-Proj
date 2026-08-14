@@ -1,0 +1,132 @@
+schema_version: worldsim_v5_m1_forensics_v1
+task_id: WS-V5-M1-D0-BAYES-FORENSICS-01
+status: running
+scope: v4_historical_diagnostic_only
+
+restrictions:
+  fresh_quality_read: false
+  test_quality_read: false
+  parameter_search_performed: false
+  training_performed: false
+
+historical_binding:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+  files:
+    summary.json:
+      path: summary.json
+      sha256: 57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309
+    metrics.json:
+      path: metrics.json
+      sha256: 0ae07b58822d7be37e5220a781d951725e802404ce52881c1281bb7974e1d504
+    manifest.json:
+      path: manifest.json
+      sha256: 43af8f881667da578ebd567bca2c9dd17492fc270d8be1a5cfe1d849af05ede5
+  state_files:
+    - scene: scene-0071
+      role: high_support
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0071/high_support.npz
+      sha256: 27613aeb653e68ed535fe3a8bdd0013b7b845f90601272b9069c7b6973475de2
+    - scene: scene-0317
+      role: boundary_support
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0317/boundary_support.npz
+      sha256: 283f3b69cdca380cde286219e00777a0293b200555924103370083ae6c0047d8
+    - scene: scene-0317
+      role: high_support
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0317/high_support.npz
+      sha256: a7bbfa87a1c3f42bab842318fcf87d81163161d0ae055bf74dafb9c94c7e1a48
+    - scene: scene-0450
+      role: high_support
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0450/high_support.npz
+      sha256: 7283d36e61bec9bbabce84565a1bae134c3a1d4ab5db66add55dd442937ccb82
+
+historical_state_schema:
+  required_fields:
+    - actor_instance_id
+    - actor_token
+    - alpha
+    - authenticity
+    - base_index
+    - base_model
+    - beta
+    - depth_weight
+    - gaussian_id
+    - hard_instance_id
+    - joint_weight
+    - lidar_weight
+    - mask_evidence
+    - mask_weight
+    - negative_count
+    - positive_count
+    - posterior
+    - source_instance_opacity
+    - uncertainty
+    - visibility_weight
+
+future_collection_contract:
+  per_gaussian:
+    - scene
+    - role
+    - gaussian_id
+    - base_model
+    - base_index
+    - center
+    - covariance
+    - normal_proxy
+    - effective_evidence_count
+    - prior
+    - unary_posterior
+    - unary_uncertainty
+  per_observation:
+    - scene
+    - role
+    - gaussian_id
+    - view_id
+    - frame_id
+    - projected_pixel
+    - visibility
+    - sam_probability
+    - mask_boundary_distance
+    - depth_residual
+    - lidar_support
+    - view_angle
+    - positive_observation
+    - negative_observation
+  per_edge:
+    - scene
+    - role
+    - gaussian_id
+    - knn_ids
+    - edge_affinity
+    - boundary_barrier
+    - local_topology_mean
+    - topology_disagreement
+
+required_blocked_evidence:
+  - center
+  - covariance
+  - view_id
+  - frame_id
+  - sam_probability
+  - mask_boundary_distance
+  - depth_residual
+  - knn_ids
+  - edge_affinity
+  - topology_disagreement
+
+expected_historical_result:
+  counts:
+    required_scene_count: 6
+    evaluable_scene_count: 3
+    abstain_scene_count: 3
+    directional_support_scene_count: 0
+    state_count: 4
+
+output_contract:
+  state_audit: artifacts/state_audit.json
+  resolved_config: resolved_config.yaml
+  fingerprint: fingerprint.json
+  events: events.jsonl
+  summary: summary.json
+  manifest: manifest.json
+  status: status.json
+  source_snapshot: source_snapshot/

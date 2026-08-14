@@ -107,3 +107,13 @@ accepted / abstain_reason / coverage_denominator
 3. fresh development 冻结后才拟合 mapping 与 feasibility threshold；validation/test 只读。
 4. 主表同时报告 accepted geometry、abstain geometry、full-denominator geometry、coverage 与 valid edit yield。
 5. 若 candidate 全部不满足可信 reference 下的 geometry gate，先做 geometry-first candidate；只有存在 safe candidate 仍选错时才改 feasibility-first router。
+
+## 8. Machine-reproducible freeze contract
+
+本页的 saturation、oracle regret 与 denominator decomposition 由下列冻结入口重算：
+
+- resolved config：`configs/worldsim_v5/m2_forensics_v1.yaml`
+- fail-closed runner：`scripts/run_worldsim_v5_m2_forensics.py`
+- 共享正式产物协议：`scripts/worldsim_v5_forensics_common.py`
+
+runner 必须逐文件校验 r222 terminal artifacts 与 6 个 scene summary SHA，验证 V4 `clip(MAE/0.5, 0, 1)` 映射，重建 154-request/214-candidate 分母、risk collision、retrospective geometry oracle、accepted/risk-abstain/role-asset-blocked 分解，并把 reference 与 raw→pre-Gaussian→post-render 缺失字段写入 run-local `artifacts/geometry_audit.json`。它只做 historical diagnosis，不重拟合 router、不删 abstain、不读取 fresh/test quality，也不授权 full M2。

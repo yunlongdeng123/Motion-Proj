@@ -142,6 +142,11 @@ outputs:
   plan: docs/WORLDSIM_V5_STRUCTDELTA_PLAN.md
   m1_forensics: docs/WS_V5_M1_FAILURE_FORENSICS.md
   m2_forensics: docs/WS_V5_M2_GEOMETRY_FORENSICS.md
+  m1_forensics_config: configs/worldsim_v5/m1_forensics_v1.yaml
+  m2_forensics_config: configs/worldsim_v5/m2_forensics_v1.yaml
+  m1_forensics_runner: scripts/run_worldsim_v5_m1_forensics.py
+  m2_forensics_runner: scripts/run_worldsim_v5_m2_forensics.py
+  forensics_common: scripts/worldsim_v5_forensics_common.py
   p0_scope: configs/worldsim_v5/p0_scope_v1.yaml
   fresh_cohort: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
 
@@ -152,6 +157,8 @@ closeout_gate:
     - p0_contract_tests_pass
     - m1_missing_evidence_collection_contract_frozen
     - m2_reference_and_pre_post_geometry_contract_frozen
+    - m1_formal_forensic_run_done
+    - m2_formal_forensic_run_done
     - plan_and_resolved_config_sha256_recorded
     - freeze_only_commit
   training_started: false

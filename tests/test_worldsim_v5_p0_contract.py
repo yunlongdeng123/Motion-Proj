@@ -66,3 +66,19 @@ def test_v5_navigation_and_forensic_boundaries_are_explicit() -> None:
     assert "blocked_evidence_missing" in m1
     assert "192/214" in m2
     assert "accepted-only repair 并未" in m2
+    assert "m1_forensics_v1.yaml" in m1
+    assert "m2_forensics_v1.yaml" in m2
+
+
+def test_p0_forensic_machine_contracts_are_registered() -> None:
+    scope = _yaml(ROOT / "configs/worldsim_v5/p0_scope_v1.yaml")
+    m1 = _yaml(ROOT / "configs/worldsim_v5/m1_forensics_v1.yaml")
+    m2 = _yaml(ROOT / "configs/worldsim_v5/m2_forensics_v1.yaml")
+    assert m1["scope"] == "v4_historical_diagnostic_only"
+    assert m2["scope"] == "v4_historical_diagnostic_only"
+    assert m1["restrictions"]["parameter_search_performed"] is False
+    assert m2["restrictions"]["router_refit_performed"] is False
+    assert m1["output_contract"]["state_audit"] == "artifacts/state_audit.json"
+    assert m2["output_contract"]["geometry_audit"] == "artifacts/geometry_audit.json"
+    assert "m1_formal_forensic_run_done" in scope["closeout_gate"]["requires"]
+    assert "m2_formal_forensic_run_done" in scope["closeout_gate"]["requires"]

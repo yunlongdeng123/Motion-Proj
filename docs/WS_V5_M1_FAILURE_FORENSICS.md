@@ -79,3 +79,13 @@ local_topology_mean / topology_disagreement
 2. 在 V4 historical scenes 上只做 diagnostic 分层：boundary/interior、observed/unobserved、O1-target/non-target、LiDAR support、view disagreement。
 3. fresh cohort 冻结后，先比较 V4 Beta 与 reliability-aware unary；unary 未改善前禁止扩大 graph。
 4. graph 只在 unary 可解释后启动，并必须先报告 cross-boundary leakage；不得直接加入 Transformer 或解锁 semantic split。
+
+## 7. Machine-reproducible freeze contract
+
+本页的统计不得继续只靠人工抄录。冻结入口为：
+
+- resolved config：`configs/worldsim_v5/m1_forensics_v1.yaml`
+- fail-closed runner：`scripts/run_worldsim_v5_m1_forensics.py`
+- 共享正式产物协议：`scripts/worldsim_v5_forensics_common.py`
+
+runner 必须逐文件校验 r200 的 summary / metrics / manifest 与 4 份 state NPZ SHA，重新计算 O1-proxy target recall、posterior extreme、低 uncertainty、unobserved、mixed positive/negative 等分母，并把缺失的 per-view、geometry、topology 字段写入 run-local `artifacts/state_audit.json`。正式 run 必须来自 clean git commit，并包含 resolved config、fingerprint、JSONL event、manifest、status、summary 与 source snapshot；它不授权 full M1，也不读取 fresh/test quality。
