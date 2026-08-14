@@ -230,7 +230,9 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "structured_unary_diagnostic_complete_graph_protocol_pending"
+    assert config["phase"] == (
+        "structured_graph_mechanism_supported_development_replication_pending"
+    )
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
     assert config["data_readiness"]["processed_total_bytes"] == 2497238886
@@ -242,7 +244,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "formal30k_complete_scene0471_unary_complete_graph_protocol_pending"
+        == "formal30k_complete_scene0471_graph_complete_development_replication_pending"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -279,12 +281,30 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert unary["arm_selected"] is False
     assert unary["graph_inference_started"] is False
     assert unary["parameter_search_performed"] is False
+    graph_result = config["data_readiness"]["scene0471_graph_diagnostic"]
+    assert graph_result["status"] == "done"
+    assert graph_result["edge_count"] == 5157678
+    assert graph_result["candidate_k"] == 6
+    assert graph_result["checkpoint_sha256_before"] == graph_result["checkpoint_sha256_after"]
+    assert graph_result["g0_replay_r037_float16_exact"] == {"B1": True, "B3": True}
+    assert graph_result["topology_cross_proxy_affinity_ratio"]["G3"] < (
+        graph_result["topology_cross_proxy_affinity_ratio"]["G1"]
+    )
+    assert graph_result["evaluation_delta_vs_same_unary_g0"]["B1_G3"]["boundary_f1"] > 0.008
+    assert graph_result["evaluation_delta_vs_same_unary_g0"]["B1_G3"]["false_negative_semantic_mass"] < 0.002
+    assert graph_result["mechanism_preference"] == "G3"
+    assert graph_result["formal_arm_selected"] is False
+    assert graph_result["semantic_split_started"] is False
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]
         == 14220
     )
-    assert config["graph"]["status"] == "locked_pending_preregistered_graph_protocol"
+    assert config["graph"]["status"] == (
+        "scene0471_mechanism_supported_development_replication_pending"
+    )
+    assert config["graph"]["base_model_consumed_by_graph"] is False
+    assert config["graph"]["formal_arm_selected"] is False
     assert config["unary_development_arms"]["B0"].startswith("hard_unweighted")
     assert config["unary_development_arms"]["B1"].startswith(
         "reliability_weighted_hard"

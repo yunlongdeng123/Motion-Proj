@@ -1,18 +1,21 @@
 # Experiments
 
-## V5 M1 formal30k / SAM / structured unary（2026-08-14）
+## V5 M1 formal30k / SAM / structured unary / physical graph（2026-08-14）
 
 | Run | 状态 | 关键分母 | 审计结论 |
 |---|---|---|---|
 | r035 `m1-formal30k-batch-audit` | done | `8/8 scenes × 30k` | 8 份 formal run/checkpoint 全量重哈希一致；validation/test quality 未读 |
 | r036 `m1-scene0471-sam-sparse` | done | `30 views / 18 accepted` | frozen SAM evidence；17 actors、62/61 prompt/accepted boxes；无网络 |
 | r037 `m1-scene0471-unary-diagnostic` | done | `859,613 Gaussians / 15 evidence / 8+7 eval` | B0/B1/B3 机制诊断；checkpoint exact；无搜索、无 graph、无 held-out |
+| r038 `m1-scene0471-graph-diagnostic` | done | `859,613 Gaussians / 5,157,678 edges / 8 eval` | B1/B3×G0–G3；G0 exact replay；无搜索、无 validation/held-out |
 
 - r035 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172300Z__m1-formal30k-batch-audit-s0-r035`；summary/status/fingerprint/manifest SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b / 0c941a372125e1f893bc31c15eed2cb55dbfef33fc005bf2b8122edec7626607 / ea3d7f8aadef39c7c99b2cd610091fb20e4a386ba6f8a987d16358eaaee6fb8e / bba0892345225f5d4527402943d17b7806207714c7a9355641eda3b2cda72119`。
 - r036 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036`；summary/status/fingerprint/manifest/mask-manifest SHA=`d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487 / 7fda172e7fb9e07ab520b563b2e358fb0ac70c734f7c32f2039d901a7be690c4 / 9e8181fad12ac76f0c0ffbd25cf3d39061e3893960d167f1b5497b42e51b79a1 / 3cd9728cd47622752a80d20635e254b05b31fc13126659c7c03d06b7be3fc13e / f7a9f5e9f022c8f8685be89e7cdd7d808f13081106c56b07e5c87260ac72a213`。
 - r037 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037`；summary/status/fingerprint/manifest/diagnostics/resolved-config SHA=`dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d / fb68e06d174a5e6a6859a50c07392b6895102feecf3944e712dc9861de1736ce / 70d2f878e9042b632d4f3355cc350d02ae661127c738130019506aa77c4480e4 / 80ff775de6a4fc4c748cf3ec9570c2ab0ce10e817fbe5cdcd1bef69eeee871c4 / 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755 / a09ac4f9359df36e1c9ff90fdba83da5de5cac519eb52979d6444211df50e291`。
 - B1/B3 均相对 B0 提升 scene0471 的 2D IoU、Boundary F1 与三项 calibration，并降低 FP semantic mass；但 FN semantic mass 分别增加 `+0.0915315/+0.0954773`，超过计划 validation 容忍量 `+0.01`。本次只登记 unary 方向支持与 FN tradeoff，不做 arm selection，不把单 scene SAM-proxy 诊断写成 validation 通过。
-- 可复用表格、8-scene base 明细与失败边界见 `docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md`；机器可读轻量索引见 `docs/archive/2026-08/worldsim-v5-m1/M1_R035_R037_METADATA.json`。
+- r038 canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038`；summary/status/fingerprint/manifest/diagnostics/edges/posteriors/resolved-config SHA=`c64e52a9de2a43cbb89564cbf61610746fdec210eb2a4f0efb32bc6463f7faf1 / 2dc9234c7ea2bc5b45f30d22f6626a84a88044537764ccae2983a6338ba30dbf / cbd9619893048592b23fb5149b5eab447e3aefcf642cd2ae3f91cd66cdf518fc / 83ad4099f61bfb0566f38f9fd30f4197897ac825b36b2c0de1d00dddad23f027 / ab81462375a2ea7faec73051aec807808f41426e872f954a249fdee19bfb9d2b / dcf9a846d21068c40a1ebb0b0334f58f3939f6b1df8da80b3184be7ea3956406 / f6dd79138e30f55798c8f16a635b078e98999d6a9db861242b9df6960accd6d3 / 52959aaad0d29175507e815e7657f91ec1a7a4402ab3a25af793513e6ed9e749`。
+- G3 在 B1/B3 两个 unary 输入上都取得小幅、同方向 2D 改善，FN 增量均小于 `0.002`；物理 affinity 与 barrier 还把 proxy cross-boundary affinity 相对 Euclidean G1 降低约 `51.94%`。但 Gaussian membership proxy 的 IoU/Boundary F1 退化，且所有结果只来自 scene0471；当前只保留 G3 mechanism preference，formal arm selection=`false`。
+- 可复用表格、8-scene base 明细与失败边界见 `docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md`；机器可读轻量索引见 `docs/archive/2026-08/worldsim-v5-m1/M1_R035_R037_METADATA.json` 与 `M1_R038_GRAPH_METADATA.json`。
 
 ## V5 KITTI Tracking adapter smoke（2026-08-14）
 

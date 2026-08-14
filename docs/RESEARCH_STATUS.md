@@ -1,12 +1,13 @@
 # Research Status
 
-## V5 M1 30k 正式基线与 scene0471 unary 诊断闭环（2026-08-14）
+## V5 M1 30k 正式基线与 scene0471 unary/graph 诊断闭环（2026-08-14）
 
-- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`structured_unary_diagnostic_complete_graph_protocol_pending`。8-scene 30k reconstruction 已全部完成并由 r035 逐 run、逐 checkpoint 重哈希：`8/8 scenes × 30,000 steps`，总耗时=`18,392.900160 s`、checkpoint bytes=`2,920,094,512`，峰值 GPU/cgroup=`24,054 MiB / 27,706,277,888 bytes`；r035 summary SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b`。
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`structured_graph_mechanism_supported_development_replication_pending`。8-scene 30k reconstruction 已全部完成并由 r035 逐 run、逐 checkpoint 重哈希：`8/8 scenes × 30,000 steps`，总耗时=`18,392.900160 s`、checkpoint bytes=`2,920,094,512`，峰值 GPU/cgroup=`24,054 MiB / 27,706,277,888 bytes`；r035 summary SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b`。
 - scene0471 冻结 SAM 证据 r036=`done`：`30` 个预注册视图中 `18` 个 available/accepted，`17` 个 prompt actors、`62` 个 prompt boxes、`61` 个 accepted boxes；network/held-out/method inference=`false/false/false`，summary SHA=`d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487`。
 - structured unary r037=`done`：不可变 checkpoint SHA 前后均为 `496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa`；`859,613` Gaussians、`15` evidence views、`8 accepted + 7 abstained` evaluation views；耗时=`555.199743 s`、峰值 GPU=`13,987 MiB`。summary/diagnostics SHA=`dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d / 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755`。
 - 相对冻结 B0，B1 的 2D `ΔIoU/ΔBoundary-F1/ΔBrier/ΔECE/ΔNLL/ΔFP-mass/ΔFN-mass`=`+0.116665/+0.107437/-0.101739/-0.110983/-0.214462/-0.142929/+0.091532`；B3=`+0.116161/+0.105079/-0.103467/-0.112431/-0.305104/-0.138453/+0.095477`。即 reliability-aware unary 有明确单场方向支持，但以显著 FN 增加换取 FP/calibration/boundary 改善。
-- 裁决=`unary_direction_supported_single_scene_fn_tradeoff_graph_not_auto_unlocked`：不选择 B1/B3、不声明 validation 成功、不自动启动 graph。下一门是先冻结 graph 机制诊断协议；validation/test/KITTI quality 与参数搜索仍未授权。附录入口=`docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md` 与 `docs/archive/2026-08/worldsim-v5-m1/APPENDIX_INDEX.md`。
+- physical graph r038=`done`：`859,613` Gaussians、directed KNN `k=6`、`5,157,678` edges，G0 对 r037 的 B1/B3 float16 render 均逐像素 exact replay；checkpoint SHA 前后 exact。G3 相对同 unary G0 的 2D `ΔBoundary-F1/ΔIoU/ΔFN-mass` 为 B1=`+0.008585/+0.006530/+0.001491`、B3=`+0.006245/+0.006256/+0.001061`；cross-proxy affinity ratio 从 G1=`0.0083646` 降至 G2/G3=`0.0051204/0.0040198`。summary/diagnostics SHA=`c64e52a9de2a43cbb89564cbf61610746fdec210eb2a4f0efb32bc6463f7faf1 / ab81462375a2ea7faec73051aec807808f41426e872f954a249fdee19bfb9d2b`。
+- 裁决=`physical_graph_direction_supported_single_scene_small_effect_replication_required`：G3 仅登记为 mechanism preference，不是 formal arm selection；不声明 validation 成功，不解锁 semantic split。下一门是 result-blind development replication protocol；validation/test/KITTI quality 与参数搜索仍未授权。附录入口=`docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md` 与 `docs/archive/2026-08/worldsim-v5-m1/APPENDIX_INDEX.md`。
 
 ## V5 KITTI 真实 adapter smoke 闭环（2026-08-14）
 

@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: structured_unary_diagnostic_complete_graph_protocol_pending
+phase: structured_graph_mechanism_supported_development_replication_pending
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -207,7 +207,57 @@ data_readiness:
     validation_quality_read: false
     heldout_quality_read: false
     method_inference_started: true
-  state: formal30k_complete_scene0471_unary_complete_graph_protocol_pending
+  scene0471_graph_diagnostic:
+    status: done
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038
+    source_commit: a18f7224a19a206a89021191987f5fb0ac6bdc02
+    scene: scene-0471
+    gaussian_count: 859613
+    edge_count: 5157678
+    candidate_k: 6
+    evaluation_view_count: 8
+    duration_seconds: 129.03933485411108
+    peak_gpu_memory_mib: 7190
+    summary_sha256: c64e52a9de2a43cbb89564cbf61610746fdec210eb2a4f0efb32bc6463f7faf1
+    status_sha256: 2dc9234c7ea2bc5b45f30d22f6626a84a88044537764ccae2983a6338ba30dbf
+    fingerprint_sha256: cbd9619893048592b23fb5149b5eab447e3aefcf642cd2ae3f91cd66cdf518fc
+    manifest_sha256: 83ad4099f61bfb0566f38f9fd30f4197897ac825b36b2c0de1d00dddad23f027
+    diagnostics_sha256: ab81462375a2ea7faec73051aec807808f41426e872f954a249fdee19bfb9d2b
+    edge_artifact_sha256: dcf9a846d21068c40a1ebb0b0334f58f3939f6b1df8da80b3184be7ea3956406
+    posterior_artifact_sha256: f6dd79138e30f55798c8f16a635b078e98999d6a9db861242b9df6960accd6d3
+    resolved_config_sha256: 52959aaad0d29175507e815e7657f91ec1a7a4402ab3a25af793513e6ed9e749
+    checkpoint_sha256_before: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    checkpoint_sha256_after: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    g0_replay_r037_float16_exact: {B1: true, B3: true}
+    topology_cross_proxy_affinity_ratio:
+      G1: 0.008364604522594044
+      G2: 0.005120414730301735
+      G3: 0.004019813991933914
+    evaluation_delta_vs_same_unary_g0:
+      B1_G3:
+        iou_at_frozen_threshold: 0.006529879277970718
+        boundary_f1: 0.008585080990452743
+        brier: -0.001448124599707043
+        ece: -0.002406399427582001
+        nll: -0.03317704119388787
+        false_positive_semantic_mass: -0.00320291119318801
+        false_negative_semantic_mass: 0.0014910135282067416
+      B3_G3:
+        iou_at_frozen_threshold: 0.006255583572072232
+        boundary_f1: 0.00624536879573373
+        brier: -0.001371454776170844
+        ece: -0.002495949238290371
+        nll: -0.003972169330505149
+        false_positive_semantic_mass: -0.003532842327470073
+        false_negative_semantic_mass: 0.0010607625912595897
+    conclusion: physical_graph_direction_supported_single_scene_small_effect_replication_required
+    mechanism_preference: G3
+    formal_arm_selected: false
+    parameter_search_performed: false
+    validation_quality_read: false
+    heldout_quality_read: false
+    semantic_split_started: false
+  state: formal30k_complete_scene0471_graph_complete_development_replication_pending
   quality_read: true
   quality_scope: scene0471_development_mechanism_diagnostic_only
 
@@ -247,8 +297,15 @@ unary_development_arms:
   parameter_source: result_blind_mechanistic_defaults
 
 graph:
-  status: locked_pending_preregistered_graph_protocol
+  status: scene0471_mechanism_supported_development_replication_pending
   candidate_knn_only: true
+  frozen_diagnostic_config: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+  candidate_k: 6
+  input_unaries: [B1, B3]
+  arms: [G0, G1, G2, G3]
+  base_model_consumed_by_graph: false
+  scene0471_mechanism_preference: G3
+  formal_arm_selected: false
   transformer_allowed: false
   semantic_split_allowed: false
 
