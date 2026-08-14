@@ -558,7 +558,8 @@ def render_markdown(manifest: Mapping[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "大包约 67 GiB，未额外执行全量 ZIP entry CRC 解码；本次读取了全部 archive bytes 生成 SHA-256，"
+            f"压缩包总计约 `{_gib(storage['archive_bytes'])} GiB`（`{storage['archive_bytes'] / 1_000_000_000:.3f} GB`），"
+            "未额外执行全量 ZIP entry CRC 解码；本次读取了全部 archive bytes 生成 SHA-256，"
             "并对小包执行 `ZipFile.testzip()`。解压 staging 后仍需按 member size、frame alignment 和抽样 payload 再审计。",
             "",
             "## 3. Gate",
