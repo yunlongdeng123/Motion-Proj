@@ -1,0 +1,104 @@
+schema_version: worldsim_v4_m2_validation_v1
+task_id: WS-V4-M2-REPAIR-ROUTER-01
+status: pending
+partition: validation
+dataset: nuScenes
+
+candidate_protocol:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m2_router_v1.yaml
+  sha256: bf635fc85c19c2ea4a35d8952f8124fcd16ff90ce38df11fcdceebe86ccfeba8
+
+development_freeze:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T233139Z__m2-development-router-selection-s0-r212
+  summary_sha256: 93e166d9bed748fcd96adb94ff314b73059caa05d32d7941a6b490d7246430a9
+  manifest_sha256: 2fe3f87d3096ac53a5596f154d496a972a43194beab90cf428c060e04d9cc289
+  project_git_head: e94ad17a46dd81ac911ced6f412b30890ae42caf
+  weight_name: uncertainty_forward
+  weights: {photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.10}
+  threshold: 1.0
+  tie_priority: [OBSERVED, DONOR, GENERATED]
+  validation_optimization_forbidden: true
+
+m1_validation:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+  summary_sha256: 57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309
+
+scene_inputs:
+  scene-0071:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203856Z__m1-validation-scene0071-config-s0-r193/resolved.yaml
+      sha256: 8827bf660bd498982804bbabf106b55667f202b8b046cfdd7123a053f1ad634c
+    actor_assets:
+      high_support:
+        evidence_state:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0071/high_support.npz
+          sha256: 27613aeb653e68ed535fe3a8bdd0013b7b845f90601272b9069c7b6973475de2
+        erase_package:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T201148Z__m1-validation-v33-scene0071-spatial-delta-s0-r174/package/artifacts/worldsim_asset/package_manifest.json
+          sha256: 4837ebbd486694c741dfd922dc9c1b6b6fb1f1716560875471a35f889afbd8b8
+  scene-1089:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203908Z__m1-validation-scene1089-config-s0-r194/resolved.yaml
+      sha256: f7d65acd16e5dee4fe0f50d19e2872f0338f400e124a3753d621daa47ceb1c3a
+    actor_assets: {}
+  scene-0317:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203920Z__m1-validation-scene0317-config-s0-r195/resolved.yaml
+      sha256: 9f1e79c67141ac0db787bfd5a3f1760e25749eb5ff5607af02ff1fd985d08995
+    actor_assets:
+      high_support:
+        evidence_state:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0317/high_support.npz
+          sha256: a7bbfa87a1c3f42bab842318fcf87d81163161d0ae055bf74dafb9c94c7e1a48
+        erase_package:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T202709Z__m1-validation-v33-scene0317-spatial-delta-s0-r182/package/artifacts/worldsim_asset/package_manifest.json
+          sha256: 5e540111bbddfb5c4f8a67f7c410e818ba7b2bd9a1382533c0104c09528a78bf
+      boundary_support:
+        abstain_reason: ABSTAIN_NO_ROLE_MATCHED_ERASE_PACKAGE
+  scene-0862:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203933Z__m1-validation-scene0862-config-s0-r196/resolved.yaml
+      sha256: 6aa7bde30c55d04b684a2388d237f94c10f0f1928e4d6f05a70e577dcc2be046
+    actor_assets: {}
+  scene-1012:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203946Z__m1-validation-scene1012-config-s0-r197/resolved.yaml
+      sha256: c0da02f90a0a33d1d3339e06df5b3cbc322d8277b32fe096a67a1a03b8b09969
+    actor_assets: {}
+  scene-0450:
+    m1_scene_config:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203957Z__m1-validation-scene0450-config-s0-r198/resolved.yaml
+      sha256: e5df9c9988e6a26c982f65f80c41fc4dc014a388efc80e56971e0c305d507579
+    actor_assets:
+      high_support:
+        evidence_state:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200/artifacts/states/scene-0450/high_support.npz
+          sha256: 7283d36e61bec9bbabce84565a1bae134c3a1d4ab5db66add55dd442937ccb82
+        erase_package:
+          path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203645Z__m1-validation-v33-scene0450-spatial-delta-s0-r190/package/artifacts/worldsim_asset/package_manifest.json
+          sha256: 25f0f4d548dee32fe046faa8c0db130cedcf9176213af7dc4d6deb63101b2543
+
+protocol:
+  scene_order: [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
+  partition_contract: sample_index_mod_5
+  target_partition_within_validation_scene: development
+  target_remainder: 2
+  heldout_remainder: 4
+  support_offsets: [-1, 1]
+  support_partition: train_only
+  retain_all_accepted_masks: true
+  retain_scene_and_role_abstain_in_denominator: true
+  validation_optimization_forbidden: true
+  heldout_content_read: false
+  test_quality_read: false
+
+acceptance_gates:
+  comparison: best_matched_non_router_by_scene_balanced_policy_edit_error
+  unavailable_arm_action: atomic_abstain
+  global_valid: {psnr_delta_db_min: -0.10, ssim_delta_min: -0.002, lpips_delta_max: 0.01}
+  hole_endpoints:
+    require_any_strict_improvement: true
+    metrics: {hole_cross_view_psnr_db: maximize, hole_geometry_mae_m: minimize}
+    same_view_background_gt_metrics: undefined_not_scored
+  static_lidar_depth_mae_degradation_m_max: 0.02
+  selective: {require_abstain_error_gt_accepted_error: true}

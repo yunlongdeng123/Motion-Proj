@@ -1,0 +1,143 @@
+schema_version: worldsim_v4_m2_router_v1
+task_id: WS-V4-M2-REPAIR-ROUTER-01
+status: pending
+created_at: "2026-08-12"
+
+execution_gate:
+  requires_m1_validation_done: true
+  current_state: unlocked_m1_validation_completed_rejected_fallback
+  m1_task_status: rejected
+  m1_validation_status: done
+  m1_confirmation_status: reject
+  fallback_scope: evidence_routed_delta_compiler
+  m1_feature_expansion_authorized: false
+  m1_validation_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T204156Z__m1-validation-six-scene-confirmation-s0-r200
+  m1_validation_summary_sha256: 57d732ba13e46cd57758d5a272d1fbb2d4e21c8a85e41a2b59a849ee975d0309
+  dataset: nuScenes
+  tuning_split: development
+  validation_read_only: true
+  test_quality_read: false
+
+protocol:
+  development_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+  validation_scenes: [scene-0071, scene-1089, scene-0317, scene-0862, scene-1012, scene-0450]
+  partition_contract: sample_index_mod_5
+  target_partition: development
+  target_remainder: 2
+  heldout_remainder: 4
+  support_offsets: [-1, 1]
+  support_partition: train_only
+  retain_all_accepted_masks: true
+  retain_blocked_abstain_in_denominator: true
+  heldout_content_read: false
+  test_quality_read: false
+
+inputs:
+  m1_development_run:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T121734Z__m1-development6-s0-r124
+    summary_sha256: 249eccd51c71890f80a3d21dae249a9cb13795eb19999dd9d11ca7134cdb1548
+    manifest_sha256: 7a9ee973a1abac0509ae0394e588d17d72f9df6f280d69884103969fed71ed10
+  m1_rejection_audit:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T210150Z__m1-validation-rejection-audit-s0-r201
+    summary_sha256: 470338f225a0ea22e4d5df75d71e86a516c142bd766d1a3ed08009a55fe8fec2
+
+asset_build:
+  projection:
+    source_stride: 1
+    absolute_depth_tolerance_m: 0.5
+    relative_depth_tolerance: 0.1
+    minimum_source_opacity: 0.5
+    inpaint_radius_pixels: 5
+  gaussians:
+    target_stride: 2
+    scale_multiplier: 0.8
+    minimum_scale_m: 0.01
+    maximum_scale_m: 0.12
+    voxel_size_m: 0.02
+    opacity: 0.3
+  builders:
+    OBSERVED: cross_view_depth_splat_train_only
+    TELEA: opencv_telea_deterministic_full_same_hole
+    DONOR: native_checkpoint_background_gaussians
+    GENERATED: unavailable_no_frozen_model
+  generated_unavailable_action: ABSTAIN_GENERATED_MODEL_UNAVAILABLE
+  donor:
+    patch_sizes_m: [1.0, 2.0, 4.0]
+    thresholds:
+      minimum_rows: 16
+      maximum_actor_semantic: 0.2
+      minimum_visibility_mass: 1.0
+      minimum_train_view_observations: 1
+      minimum_multi_camera_count: 1
+      minimum_multi_camera_rows: 1
+      maximum_plane_residual_m: 0.12
+      minimum_abs_plane_normal_vertical: 0.85
+      maximum_vertical_range_m: 0.75
+      maximum_scale_m: 0.35
+    anchor:
+      bottom_quantile: 0.6
+      robust_quantiles: [0.05, 0.95]
+      minimum_anchor_pixels: 16
+      minimum_cross_view_observed_pixels: 1
+      context_ring_pixels: 8
+    search:
+      top_k: 5
+      weights: {geometry: 1.0, appearance: 2.0, semantic: 2.0, visibility: 0.5}
+      minimum_spatial_separation_m: 5.0
+      minimum_tangent_confidence: 0.0
+      maximum_abs_yaw_radians: 0.7853981633974483
+      maximum_abs_vertical_offset_m: 0.5
+    delta:
+      opacity_feather_width_m: 0.3
+      maximum_rgb_affine: 0.05
+      minimum_scale_m: 0.01
+      maximum_scale_m: 0.25
+      duplicate_radius_m: 0.005
+      maximum_rows_per_target: 512
+  risk_normalization:
+    photo_l1_uint8: 25.0
+    geometry_mae_m: 0.5
+    temporal_std_uint8: 50.0
+    gaussian_count: 512
+
+candidate_contract:
+  methods: [OBSERVED, DONOR, GENERATED]
+  abstain_action: ABSTAIN
+  require_content_addressed_gaussian_asset: true
+  require_all_risk_terms_persisted: true
+  provenance_priority: [observed_cross_view, native_scene_donor, generated_model]
+
+risk:
+  formula: weighted_sum_v1
+  weights:
+    photo: 0.25
+    geometry: 0.25
+    temporal: 0.25
+    uncertainty: 0.25
+    compute_cost: 0.1
+  development_weight_candidates:
+    - {name: balanced, photo: 0.25, geometry: 0.25, temporal: 0.25, uncertainty: 0.25, compute_cost: 0.1}
+    - {name: evidence_priority, photo: 0.30, geometry: 0.30, temporal: 0.15, uncertainty: 0.25, compute_cost: 0.1}
+    - {name: uncertainty_forward, photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.1}
+    - {name: geometry_forward, photo: 0.20, geometry: 0.40, temporal: 0.15, uncertainty: 0.25, compute_cost: 0.1}
+  development_threshold_candidates: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  selection_unit: scene
+  tie_priority: [OBSERVED, DONOR, GENERATED]
+
+ablations:
+  matched_repair_arms: [ABSTAIN, OBSERVED, TELEA, ROADPATCH, GENERATED, RISK_ROUTER]
+  hard_priority: [OBSERVED, DONOR, GENERATED]
+  same_base: true
+  same_hole: true
+  same_view: true
+  same_resolution: true
+
+selective_evaluation:
+  requested_coverages: [0.25, 0.5, 0.75, 1.0]
+  require_abstain_error_gt_accepted_error: true
+  retain_failed_blocked_abstain_in_denominator: true
+
+immutability:
+  base_checkpoint_mutation: false
+  abstain_is_atomic_noop: true
+  rollback_checkpoint_sha_exact: true

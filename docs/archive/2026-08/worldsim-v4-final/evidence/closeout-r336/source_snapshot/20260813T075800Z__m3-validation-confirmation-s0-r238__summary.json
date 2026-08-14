@@ -1,0 +1,121 @@
+{
+  "abstain_scene_count": 3,
+  "aggregate": {
+    "baseline_temporal_lpips": 0.018632819776200637,
+    "baseline_warp_l1_delta": 0.05713019727708294,
+    "candidate_temporal_lpips": 0.018139580952909833,
+    "candidate_warp_l1_delta": 0.03975654361286895,
+    "non_target_lpips_alex_delta": -0.0005969471303085799,
+    "non_target_psnr_delta": 0.01579575113350747,
+    "non_target_ssim_delta": 0.00014382166547722964,
+    "temporal_lpips_relative_improvement": 0.02647150722301348,
+    "warp_l1_relative_improvement": 0.30410631316309517
+  },
+  "baseline_arm": "FRAME_INDEPENDENT",
+  "candidate_arm": "FULL_WARP_REGULARIZED",
+  "development_content_read": false,
+  "development_optimization_read": false,
+  "duration_seconds": 0.08956917561590672,
+  "evaluable_scene_count": 3,
+  "gates": {
+    "deleted_semantic_reintroduction": {
+      "passed": true,
+      "threshold": 0,
+      "value": 0
+    },
+    "identity_switch": {
+      "baseline": 0,
+      "candidate": 0,
+      "passed": true
+    },
+    "operation_success_non_degradation": {
+      "baseline": 9,
+      "candidate": 9,
+      "passed": true
+    },
+    "rollback_exact_fraction": {
+      "passed": true,
+      "threshold": 1.0,
+      "value": 1.0
+    },
+    "temporal_error_relative_improvement": {
+      "passed": true,
+      "rule": "either",
+      "temporal_lpips": 0.02647150722301348,
+      "threshold": 0.1,
+      "warp_l1": 0.30410631316309517
+    }
+  },
+  "limitations": [
+    "仅 3/6 validation scenes 可评，其余三场按冻结 actor registry 保留 abstain",
+    "REMOVE 因 remove_bypass_exact 在五臂间完全一致，零 temporal improvement 仍保留在九序列聚合",
+    "证据只支持冻结三操作/三前向相机/2–4 秒 clip，不外推到任意角色或视角"
+  ],
+  "partition": "validation",
+  "project_git_dirty": false,
+  "project_git_head": "d6abc28bf7f5b80d47323318a21de70f92d70244",
+  "reduction": "equal_scene_operation_mean",
+  "scene_denominator": 6,
+  "scene_operation_denominator": 9,
+  "scenes": [
+    {
+      "reason": null,
+      "retained_in_denominator": true,
+      "scene": "scene-0071",
+      "sequence_count": 15,
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074300Z__m3-validation-scene0071-formal-s0-r235",
+      "status": "evaluable"
+    },
+    {
+      "reason": "unavailable_model_type",
+      "retained_in_denominator": true,
+      "scene": "scene-1089",
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene1089-abstain-s0-r232",
+      "status": "abstain"
+    },
+    {
+      "reason": null,
+      "retained_in_denominator": true,
+      "scene": "scene-0317",
+      "sequence_count": 15,
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074700Z__m3-validation-scene0317-formal-s0-r236",
+      "status": "evaluable"
+    },
+    {
+      "reason": "unavailable_initialization_filter",
+      "retained_in_denominator": true,
+      "scene": "scene-0862",
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene0862-abstain-s0-r233",
+      "status": "abstain"
+    },
+    {
+      "reason": "unavailable_initialization_filter",
+      "retained_in_denominator": true,
+      "scene": "scene-1012",
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T074200Z__m3-validation-scene1012-abstain-s0-r234",
+      "status": "abstain"
+    },
+    {
+      "reason": null,
+      "retained_in_denominator": true,
+      "scene": "scene-0450",
+      "sequence_count": 15,
+      "source_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T075100Z__m3-validation-scene0450-formal-s0-r237",
+      "status": "evaluable"
+    }
+  ],
+  "schema_version": "worldsim_v4_m3_validation_summary_v1",
+  "selected_parameters": {
+    "acceleration_regularization": 0.1,
+    "control_point_count": 4,
+    "evidence_retention": 0.5,
+    "warp_blend_alpha": 0.4
+  },
+  "status": "done",
+  "task_id": "WS-V4-M3-TEMPORAL-DELTA-01",
+  "test_freeze_authorized": true,
+  "test_quality_read": false,
+  "validation_content_read": true,
+  "validation_gate_passed": true,
+  "validation_optimization_read": false
+}

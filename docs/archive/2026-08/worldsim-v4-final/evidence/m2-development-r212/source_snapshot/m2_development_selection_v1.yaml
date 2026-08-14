@@ -1,0 +1,68 @@
+schema_version: worldsim_v4_m2_development_selection_v1
+task_id: WS-V4-M2-REPAIR-ROUTER-01
+status: pending
+partition: development
+dataset: nuScenes
+
+candidate_protocol:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m2_router_v1.yaml
+  sha256: bf635fc85c19c2ea4a35d8952f8124fcd16ff90ce38df11fcdceebe86ccfeba8
+  project_git_head: 8c8b3b1a6a6b4ddfaf460fbdc367d3e836bbbede
+
+scene_runs:
+  scene-0230:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0230-s0-r206
+    summary_sha256: bbd468ff410fb2d435aac7e8492effcdd56157a7be6450f3e0ffb7f5477832b3
+  scene-0242:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0242-s0-r207
+    summary_sha256: cfdb8d9e757eabe98212f6961b6f68b7e3f6cbaead2a4179d192f1a524b09b8a
+  scene-0255:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0255-s0-r208
+    summary_sha256: 3d5fdc80c68d11500deea1116a6b39e87141d8ba9b0997814704a4b0e302a59c
+  scene-0048:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0048-s0-r209
+    summary_sha256: 8b74498dbfb93a379778bb1784f1520ce7c5ac373a0132b454226bcf0e38dc50
+  scene-0994:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0994-s0-r210
+    summary_sha256: 9f496ee5876100e4c037d846313b59de3bcfc16253c815fed04907abca1f54a9
+  scene-0139:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T231131Z__m2-development-scene-0139-s0-r211
+    summary_sha256: d53eeae62b9ec86c70d173d2a33b44d5255b6a2aa23dcea309c847d9fff65ded
+
+selection:
+  unit: scene
+  objective: minimize_scene_balanced_policy_edit_error
+  actual_error_on_abstain: atomic_noop_edit_error
+  abstained_group_error: lowest_risk_candidate_counterfactual_edit_error
+  require_nonempty_accepted_and_abstained_groups: true
+  require_meaningful_abstention: true
+  tie_break:
+    - request_mean_policy_edit_error
+    - maximum_request_coverage
+    - weight_grid_order
+    - threshold_grid_order
+
+acceptance_gates:
+  comparison: best_matched_non_router_by_scene_balanced_policy_edit_error
+  unavailable_arm_action: atomic_abstain
+  global_valid:
+    psnr_delta_db_min: -0.10
+    ssim_delta_min: -0.002
+    lpips_delta_max: 0.01
+  hole_endpoints:
+    require_any_strict_improvement: true
+    metrics:
+      hole_cross_view_psnr_db: maximize
+      hole_geometry_mae_m: minimize
+    same_view_background_gt_metrics: undefined_not_scored
+  static_lidar_depth_mae_degradation_m_max: 0.02
+  selective:
+    require_abstain_error_gt_accepted_error: true
+
+reporting:
+  retain_all_six_scenes_in_denominator: true
+  report_request_and_scene_balanced_metrics: true
+  report_composite_edit_error_even_when_not_a_gate: true
+  requested_selective_coverages: [0.25, 0.5, 0.75, 1.0]
+  heldout_content_read: false
+  test_quality_read: false

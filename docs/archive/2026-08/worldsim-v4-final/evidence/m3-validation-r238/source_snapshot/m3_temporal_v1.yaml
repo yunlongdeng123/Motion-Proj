@@ -1,0 +1,116 @@
+schema_version: worldsim_v4_m3_temporal_v1
+task_id: WS-V4-M3-TEMPORAL-DELTA-01
+status: running
+created_at: "2026-08-12"
+
+execution_gate:
+  requires_m2_validation_passed: true
+  current_state: unlocked_m2_validation_passed
+  m2_task_status: done
+  m2_validation_gate_passed: true
+  m2_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260813T064330Z__m2-validation-confirmation-s0-r222
+  m2_summary_sha256: 6bfeb3c6a1e8f1905da936d4e83c93828c030a301ee9d4bedae081c7cc6b1a95
+  m2_manifest_sha256: 702cdb487643bbe633a164d24b9664f35bebc754186fb0845cec4b46250447dd
+  m2_source_commit: 1cc90b1865ef24f3bbef0add775d0fdf4be0d491
+  m2_frozen_router:
+    weight_name: uncertainty_forward
+    weights: {photo: 0.20, geometry: 0.20, temporal: 0.20, uncertainty: 0.40, compute_cost: 0.10}
+    threshold: 1.0
+    tie_priority: [OBSERVED, DONOR, GENERATED]
+  m2_frozen_matched_non_router: TELEA
+  dataset: nuScenes
+  tuning_split: development
+  validation_read_only: true
+  test_quality_read: false
+
+inputs:
+  cohort:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/nuscenes_cohort_v1.yaml
+    sha256: ed47c0da2c76e14b3b0a0e7a8b4d9b580bdf37e4c69a1d5a389b965e88c667a1
+  scene_inventory:
+    path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m3_scene_inventory_v1.yaml
+    sha256: b9a678c53d760821bd9522bb09f26ff2c8e05a3991fc4713aabadce70fd66146
+
+clip:
+  minimum_seconds: 2.0
+  maximum_seconds: 4.0
+  operations: [REMOVE, LATERAL, INSERT]
+  camera_reduction_forbidden: true
+  resolution_reduction_forbidden: true
+  sample_protocol: seven_consecutive_nuscenes_keyframes
+  processed_keyframe_stride: 5
+  camera_ids: [0, 1, 2]
+  internal_flow_resolution: [160, 90]
+
+trajectory:
+  representation: uniform_cubic_bspline_se3
+  twist_order: [tx, ty, tz, rx, ry, rz]
+  minimum_control_points: 4
+  acceleration_regularization: true
+  parameters_frozen_on: development
+  development_search:
+    control_point_count: [4, 5, 6]
+    acceleration_regularization: [0.05, 0.10]
+    evidence_retention: [0.50, 0.75, 0.90]
+    warp_blend_alpha: [0.10, 0.25, 0.40]
+  development_freeze:
+    run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T073800Z__m3-development-parameter-freeze-s0-r231
+    summary_sha256: 5b18cbf6fb2ae0c00f8a80f7f6fc621d8552628e57adee18246189bbbf1436cc
+    manifest_sha256: 72af073a813871fdaee6865485a89fe502dec68ec82b6034ee5663afad84cdcc
+    source_commit: f47e9bbf4368d561d31876e2cc5543f48452cd76
+    scene_denominator: 6
+    evaluable_scene_count: 1
+    abstain_scene_count: 5
+  selected_parameters:
+    control_point_count: 4
+    acceleration_regularization: 0.10
+    evidence_retention: 0.50
+    warp_blend_alpha: 0.40
+
+operations:
+  REMOVE:
+    composition: [BASE, ERASE]
+  LATERAL:
+    composition: [BASE, ERASE, INSERT_SAME_ACTOR_ASSET]
+    actor_local_translation_m: [0.0, 1.0, 0.0]
+  INSERT:
+    composition: [BASE, ERASE, INSERT_SAME_ACTOR_ASSET]
+    actor_local_translation_m: [0.5, -2.0, 0.0]
+  minimum_rendered_effect_pixels: 16
+
+temporal_evidence:
+  source: rendered_cross_camera_actor_support
+  uses_rejected_m1_posterior: false
+  rationale: M1 的 validation 负结论保持冻结；M3 只使用当前 clip 可观测的真实渲染支持量。
+
+warp_regularization:
+  source_flow: frozen_base_rgb_farneback_current_to_previous
+  operates_on: edited_minus_base_rgb_delta
+  output_resolution_reduced: false
+  remove_bypass_exact: true
+
+ablations:
+  arms: [FRAME_INDEPENDENT, LINEAR, CUBIC_BSPLINE,
+         CUBIC_BSPLINE_TEMPORAL_EVIDENCE, FULL_WARP_REGULARIZED]
+  same_base: true
+  same_clip: true
+  same_edit_request: true
+
+metrics:
+  [psnr, ssim, lpips_alex, temporal_lpips, warp_l1, warp_lpips,
+   frame_flicker, mask_iou_jitter, boundary_f1_jitter, identity_switch,
+   trajectory_rmse, centroid_jitter, contact_region_jitter,
+   semantic_reintroduction, rollback_exact]
+
+gates:
+  operation_success_non_degradation: true
+  temporal_error_relative_improvement_min: 0.10
+  identity_switch_relative_reduction_min: 0.25
+  allow_identity_zero_remains_zero: true
+  deleted_semantic_reintroduction: 0
+  rollback_exact_fraction: 1.0
+
+immutability:
+  base_checkpoint_mutation: false
+  composition_order: [BASE, ERASE, INSERT]
+  rollback_render_sha_exact: true

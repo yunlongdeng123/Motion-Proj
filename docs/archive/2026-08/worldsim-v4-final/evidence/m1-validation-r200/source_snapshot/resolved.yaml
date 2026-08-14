@@ -1,0 +1,554 @@
+schema_version: worldsim_v4_m1_scene_v1
+task_id: WS-V4-M1-EVIDENCE-FIELD-01
+scene: scene-0450
+partition: validation
+source_config:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v4/m1_evidence_v1.yaml
+  sha256: ca4e76527090bab4f79abc958effd9cd080aa597694413c4fca773985ce0f344
+development_content_read: false
+validation_content_read: false
+heldout_content_read: false
+test_quality_read: false
+evidence:
+  prior:
+    source: v33_o1_instance_opacity
+    strength: 2.0
+    unassigned_probability: 0.0001
+  update:
+    source: frozen_train_only_v32_semantic_sidecar
+    factors:
+    - mask
+    - visibility
+    - depth
+    - lidar
+    visibility_saturation_mass: 1.0
+    mask_confidence_floor: 0.25
+    depth_confidence_floor: 0.25
+    lidar_confidence_floor: 0.5
+  authenticity:
+    lidar_supported: 1.0
+    observed_cross_view: 0.8
+  temporal:
+    retention: 0.75
+    freeze_on: development
+calibration:
+  candidates:
+  - raw
+  - temperature
+  - beta
+  target: rendered_evidence_probability
+  ece_bins: 15
+  beta_l2_regularization: 1.0e-06
+  selection_order:
+  - brier
+  - ece
+  - boundary_f1
+  non_selected_metric_max_degradation: 0.01
+  boundary_f1_max_degradation: 0.01
+  false_negative_mass_max_degradation: 0.01
+evaluation:
+  mask_threshold: 0.5
+  mask_threshold_candidates:
+  - 0.01
+  - 0.02
+  - 0.03
+  - 0.04
+  - 0.05
+  - 0.075
+  - 0.1
+  - 0.15
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  - 0.55
+  - 0.6
+  - 0.65
+  - 0.7
+  - 0.75
+  - 0.8
+  - 0.85
+  - 0.9
+  - 0.95
+  threshold_fn_mass_max_degradation: 0.01
+  candidate_policy: development_uncertainty_penalty_search
+  candidate_arms:
+    risk_000: 0.0
+    risk_025: 0.25
+    risk_050: 0.5
+    risk_100: 1.0
+    risk_200: 2.0
+    risk_400: 4.0
+  candidate_arm_fn_mass_max_degradation: 0.01
+  boundary_tolerance_pixels: 3.0
+  metrics:
+  - iou
+  - boundary_f1
+  - false_positive_semantic_mass
+  - false_negative_semantic_mass
+  - ece
+  - brier
+  reference: v33_o1
+  scene_aggregation: unweighted_mean
+  retain_failed_blocked_abstain_in_denominator: true
+immutability:
+  sidecar_only: true
+  base_geometry_requires_grad: false
+  checkpoint_sha_before_after_exact: true
+  base_rgb_render_sha_exact: true
+gates:
+  boundary_f1_scene_mean_delta_min: 0.03
+  false_negative_semantic_mass_delta_max: 0.01
+  require_ece_or_brier_improvement: true
+  other_calibration_metric_max_degradation: 0.01
+  base_rgb_exact: true
+  reject_if_failed: true
+status: ready
+actors:
+  high_support:
+    instance_token: d5674474b0dd426692ca72737f24c330
+    dataset_instance_id: 11
+    rigid_model_index: 6
+    semantic_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T202903Z__m1-validation-v33-scene0450-semantic-lift-s0-r186/artifacts/semantic_sidecar/high_support.npz
+      sha256: c73632d9c95b979bb920e7c96e59279c65f63af92f7a30e2cf8f9e1b9551d4e8
+      bytes: 20248348
+inputs:
+  checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170227Z__m1-validation-streetgs-scene0450-formal30k-s0-r144/work_dirs/worldsim_v4_streetgs/scene0450_formal_s0/checkpoint_final.pth
+    sha256: 1ad367b13bcef45ab11c6317379130fada3a8fa6383c87a66891b1e52e29ded7
+    bytes: 265259190
+  drivestudio_source_config:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170227Z__m1-validation-streetgs-scene0450-formal30k-s0-r144/work_dirs/worldsim_v4_streetgs/scene0450_formal_s0/config.yaml
+    sha256: 29b16082b31e1973f03f96d29d09490609cef612516a30aafbe4e2e4b38128f3
+    bytes: 3931
+  v33_o1_instance_field:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203415Z__m1-validation-v33-scene0450-instance-field-s0-r188/instance_field/artifacts/O1_dual_opacity/instance_field.npz
+    sha256: 51df1894c6ac247ae6d551aae3578ea87c70915c97f2a867e170dd7996e37ac0
+    bytes: 2949639
+  development_evaluation_masks:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203415Z__m1-validation-v33-scene0450-instance-field-s0-r188/eval_targets/artifacts/masks/mask_manifest.json
+    sha256: 26c917b8fd8ae8faea2d8f3ce069ba7d140d437c370c362f2463f24151215ae1
+    bytes: 53091
+  processed_scene_dir: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/364
+runtime:
+  sam_python: /root/autodl-tmp/envs/worldsim-v33-sam2/bin/python
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+v33_reference:
+  aggregate:
+    boundary_f1: 0.35692047093284723
+    false_negative_semantic_mass: 0.1884928240687881
+    false_positive_semantic_mass: 0.3545247984842322
+    identity_present: 0.9444444444444444
+    iou: 0.534925536988575
+    normalized_boundary_distance: 0.08842044433007433
+    predicted_positive_pixels: 36609.61111111111
+    target_positive_pixels: 47038.083333333336
+  rows:
+  - role: high_support
+    frame: 2
+    camera_id: 0
+    iou: 0.32819722650231126
+    boundary_f1: 0.25684448207733557
+    normalized_boundary_distance: 0.016462785521820678
+    false_positive_semantic_mass: 0.6406579502319696
+    false_negative_semantic_mass: 0.20891364902506965
+    predicted_positive_pixels: 2371.0
+    target_positive_pixels: 1077.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 7
+    camera_id: 0
+    iou: 0.36149691358024694
+    boundary_f1: 0.35680383392470394
+    normalized_boundary_distance: 0.017805938093444912
+    false_positive_semantic_mass: 0.6335549472037544
+    false_negative_semantic_mass: 0.0360082304526749
+    predicted_positive_pixels: 2557.0
+    target_positive_pixels: 972.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 12
+    camera_id: 0
+    iou: 0.323943661971831
+    boundary_f1: 0.3405248752213815
+    normalized_boundary_distance: 0.020103337665805982
+    false_positive_semantic_mass: 0.6717892425905598
+    false_negative_semantic_mass: 0.03858520900321544
+    predicted_positive_pixels: 2733.0
+    target_positive_pixels: 933.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 17
+    camera_id: 0
+    iou: 0.31844138394356736
+    boundary_f1: 0.35509861949809257
+    normalized_boundary_distance: 0.017358657167446067
+    false_positive_semantic_mass: 0.6687631027253669
+    false_negative_semantic_mass: 0.10818438381937912
+    predicted_positive_pixels: 2862.0
+    target_positive_pixels: 1063.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 22
+    camera_id: 0
+    iou: 0.4608208955223881
+    boundary_f1: 0.3818488866649988
+    normalized_boundary_distance: 0.01937261149188578
+    false_positive_semantic_mass: 0.5301204819277109
+    false_negative_semantic_mass: 0.04015544041450777
+    predicted_positive_pixels: 3154.0
+    target_positive_pixels: 1544.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 27
+    camera_id: 0
+    iou: 0.5681101233151706
+    boundary_f1: 0.4526806980022359
+    normalized_boundary_distance: 0.019029315099749006
+    false_positive_semantic_mass: 0.4241279069767442
+    false_negative_semantic_mass: 0.023175542406311637
+    predicted_positive_pixels: 3440.0
+    target_positive_pixels: 2028.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 32
+    camera_id: 0
+    iou: 0.561130182202271
+    boundary_f1: 0.47876797644660857
+    normalized_boundary_distance: 0.020355942083973688
+    false_positive_semantic_mass: 0.4388698177977291
+    false_negative_semantic_mass: 0.0
+    predicted_positive_pixels: 3787.0
+    target_positive_pixels: 2125.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 37
+    camera_id: 0
+    iou: 0.5462700661000944
+    boundary_f1: 0.41090776459482076
+    normalized_boundary_distance: 0.02163840532882276
+    false_positive_semantic_mass: 0.4498335710889206
+    false_negative_semantic_mass: 0.012798634812286689
+    predicted_positive_pixels: 4206.0
+    target_positive_pixels: 2344.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 42
+    camera_id: 0
+    iou: 0.543375231815372
+    boundary_f1: 0.35706527308125835
+    normalized_boundary_distance: 0.02357652231509008
+    false_positive_semantic_mass: 0.44774869109947646
+    false_negative_semantic_mass: 0.028729281767955802
+    predicted_positive_pixels: 4775.0
+    target_positive_pixels: 2715.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 47
+    camera_id: 0
+    iou: 0.5469739619985925
+    boundary_f1: 0.2904957372908115
+    normalized_boundary_distance: 0.02706724091528051
+    false_positive_semantic_mass: 0.4529297906035545
+    false_negative_semantic_mass: 0.0003215434083601286
+    predicted_positive_pixels: 5683.0
+    target_positive_pixels: 3110.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 52
+    camera_id: 0
+    iou: 0.559167379526661
+    boundary_f1: 0.254495965782055
+    normalized_boundary_distance: 0.03058351570033661
+    false_positive_semantic_mass: 0.44083262047333904
+    false_negative_semantic_mass: 0.0
+    predicted_positive_pixels: 7014.0
+    target_positive_pixels: 3922.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 52
+    camera_id: 2
+    iou: 0.8086860912589334
+    boundary_f1: 0.8300698879383058
+    normalized_boundary_distance: 0.00175409721818046
+    false_positive_semantic_mass: 0.18953168044077134
+    false_negative_semantic_mass: 0.002711864406779661
+    predicted_positive_pixels: 1815.0
+    target_positive_pixels: 1475.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 57
+    camera_id: 0
+    iou: 0.5989341983317887
+    boundary_f1: 0.2811320754716981
+    normalized_boundary_distance: 0.031103453595762748
+    false_positive_semantic_mass: 0.4010658016682113
+    false_negative_semantic_mass: 0.0
+    predicted_positive_pixels: 8632.0
+    target_positive_pixels: 5170.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 57
+    camera_id: 2
+    iou: 0.8477287268074216
+    boundary_f1: 0.7911345112600444
+    normalized_boundary_distance: 0.0020375514367662584
+    false_positive_semantic_mass: 0.15227127319257838
+    false_negative_semantic_mass: 0.0
+    predicted_positive_pixels: 3126.0
+    target_positive_pixels: 2650.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 62
+    camera_id: 0
+    iou: 0.6170849420849421
+    boundary_f1: 0.2919022724847967
+    normalized_boundary_distance: 0.032382758066142936
+    false_positive_semantic_mass: 0.3829150579150579
+    false_negative_semantic_mass: 0.0
+    predicted_positive_pixels: 10360.0
+    target_positive_pixels: 6393.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 62
+    camera_id: 2
+    iou: 0.886924150767799
+    boundary_f1: 0.8984927622742873
+    normalized_boundary_distance: 0.0010847320213048298
+    false_positive_semantic_mass: 0.08934543717152413
+    false_negative_semantic_mass: 0.02854230377166157
+    predicted_positive_pixels: 2093.0
+    target_positive_pixels: 1962.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 67
+    camera_id: 0
+    iou: 0.6472478907191643
+    boundary_f1: 0.3178493657660121
+    normalized_boundary_distance: 0.0332365427042618
+    false_positive_semantic_mass: 0.3303682766647269
+    false_negative_semantic_mass: 0.04910872388147798
+    predicted_positive_pixels: 12029.0
+    target_positive_pixels: 8471.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 72
+    camera_id: 0
+    iou: 0.6709034695980762
+    boundary_f1: 0.3866956330593706
+    normalized_boundary_distance: 0.030376421176201117
+    false_positive_semantic_mass: 0.3105761084439424
+    false_negative_semantic_mass: 0.03849940921622686
+    predicted_positive_pixels: 14164.0
+    target_positive_pixels: 10156.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 77
+    camera_id: 0
+    iou: 0.6688041399482506
+    boundary_f1: 0.3665443550147394
+    normalized_boundary_distance: 0.03270058635930083
+    false_positive_semantic_mass: 0.3162344010581402
+    false_negative_semantic_mass: 0.03168010424301653
+    predicted_positive_pixels: 17389.0
+    target_positive_pixels: 12279.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 82
+    camera_id: 0
+    iou: 0.6984195901354637
+    boundary_f1: 0.4380392528681142
+    normalized_boundary_distance: 0.033997866688625374
+    false_positive_semantic_mass: 0.2924565647679789
+    false_negative_semantic_mass: 0.018128547885002746
+    predicted_positive_pixels: 22735.0
+    target_positive_pixels: 16383.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 87
+    camera_id: 0
+    iou: 0.739139609900214
+    boundary_f1: 0.4923971964780623
+    normalized_boundary_distance: 0.035028378694596074
+    false_positive_semantic_mass: 0.2510157323965175
+    false_negative_semantic_mass: 0.01747214875370682
+    predicted_positive_pixels: 32735.0
+    target_positive_pixels: 24954.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 92
+    camera_id: 0
+    iou: 0.7421233331436484
+    boundary_f1: 0.42500456170103146
+    normalized_boundary_distance: 0.03709176575166792
+    false_positive_semantic_mass: 0.23951327605644754
+    false_negative_semantic_mass: 0.03151224100799564
+    predicted_positive_pixels: 51446.0
+    target_positive_pixels: 40397.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 92
+    camera_id: 1
+    iou: 0.0
+    boundary_f1: 0.0
+    normalized_boundary_distance: 1.0
+    false_positive_semantic_mass: 0.0
+    false_negative_semantic_mass: 1.0
+    predicted_positive_pixels: 0.0
+    target_positive_pixels: 166032.0
+    identity_present: 0.0
+  - role: high_support
+    frame: 92
+    camera_id: 2
+    iou: 0.8196063443531435
+    boundary_f1: 0.7164059366225433
+    normalized_boundary_distance: 0.006193856504135071
+    false_positive_semantic_mass: 0.0119788067265607
+    false_negative_semantic_mass: 0.17216753522486006
+    predicted_positive_pixels: 17364.0
+    target_positive_pixels: 20724.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 97
+    camera_id: 0
+    iou: 0.548283213135574
+    boundary_f1: 0.3185248522249898
+    normalized_boundary_distance: 0.04219251813129317
+    false_positive_semantic_mass: 0.42202777977001604
+    false_negative_semantic_mass: 0.08566241821413713
+    predicted_positive_pixels: 41829.0
+    target_positive_pixels: 26441.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 97
+    camera_id: 2
+    iou: 0.9435755031030965
+    boundary_f1: 0.6840108751869766
+    normalized_boundary_distance: 0.003547173457620811
+    false_positive_semantic_mass: 0.04732468585326307
+    false_negative_semantic_mass: 0.010021587658177861
+    predicted_positive_pixels: 59208.0
+    target_positive_pixels: 56977.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 102
+    camera_id: 0
+    iou: 0.3607311552843928
+    boundary_f1: 0.2366729587933881
+    normalized_boundary_distance: 0.02121667194682326
+    false_positive_semantic_mass: 0.5843349586120875
+    false_negative_semantic_mass: 0.26813077115048667
+    predicted_positive_pixels: 35276.0
+    target_positive_pixels: 20035.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 102
+    camera_id: 1
+    iou: 0.0
+    boundary_f1: 0.0
+    normalized_boundary_distance: 1.0
+    false_positive_semantic_mass: 0.0
+    false_negative_semantic_mass: 1.0
+    predicted_positive_pixels: 0.0
+    target_positive_pixels: 220862.0
+    identity_present: 0.0
+  - role: high_support
+    frame: 102
+    camera_id: 2
+    iou: 0.8379181623682962
+    boundary_f1: 0.39500036323268833
+    normalized_boundary_distance: 0.017881879899071654
+    false_positive_semantic_mass: 0.13491557379321817
+    false_negative_semantic_mass: 0.03612361112541319
+    predicted_positive_pixels: 108201.0
+    target_positive_pixels: 97111.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 107
+    camera_id: 0
+    iou: 0.1774593551942684
+    boundary_f1: 0.11924035484607107
+    normalized_boundary_distance: 0.07394184617519554
+    false_positive_semantic_mass: 0.02562350529552443
+    false_negative_semantic_mass: 0.8217086109275368
+    predicted_positive_pixels: 20489.0
+    target_positive_pixels: 111974.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 107
+    camera_id: 2
+    iou: 0.7039399678195617
+    boundary_f1: 0.2102831097954049
+    normalized_boundary_distance: 0.025666672096727804
+    false_positive_semantic_mass: 0.1646756669989693
+    false_negative_semantic_mass: 0.18262982986955012
+    predicted_positive_pixels: 177549.0
+    target_positive_pixels: 181449.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 112
+    camera_id: 2
+    iou: 0.751703834706466
+    boundary_f1: 0.23429214527162331
+    normalized_boundary_distance: 0.04373228096837723
+    false_positive_semantic_mass: 0.2283115891088835
+    false_negative_semantic_mass: 0.03330397941990195
+    predicted_positive_pixels: 180661.0
+    target_positive_pixels: 144217.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 117
+    camera_id: 2
+    iou: 0.5851170125680165
+    boundary_f1: 0.24649040175586298
+    normalized_boundary_distance: 0.023430566693319298
+    false_positive_semantic_mass: 0.34815932407966205
+    false_negative_semantic_mass: 0.1488946285514162
+    predicted_positive_pixels: 149130.0
+    target_positive_pixels: 114215.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 122
+    camera_id: 2
+    iou: 0.24070226623051308
+    boundary_f1: 0.11359968955333316
+    normalized_boundary_distance: 0.07336226828797962
+    false_positive_semantic_mass: 0.5760344145184627
+    false_negative_semantic_mass: 0.6423242192845608
+    predicted_positive_pixels: 154121.0
+    target_positive_pixels: 182685.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 127
+    camera_id: 2
+    iou: 0.24371832201013696
+    boundary_f1: 0.10213174109360763
+    normalized_boundary_distance: 0.0883011745537749
+    false_positive_semantic_mass: 0.46564618106030087
+    false_negative_semantic_mass: 0.6905632438627363
+    predicted_positive_pixels: 114194.0
+    target_positive_pixels: 197197.0
+    identity_present: 1.0
+  - role: high_support
+    frame: 132
+    camera_id: 2
+    iou: 0.000641025641025641
+    boundary_f1: 0.0176885383052468
+    normalized_boundary_distance: 0.2595206620718912
+    false_positive_semantic_mass: 0.9993385271203881
+    false_negative_semantic_mass: 0.9796839729119639
+    predicted_positive_pixels: 40818.0
+    target_positive_pixels: 1329.0
+    identity_present: 1.0
+validation_instance_run:
+  run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203415Z__m1-validation-v33-scene0450-instance-field-s0-r188
+  status:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203415Z__m1-validation-v33-scene0450-instance-field-s0-r188/status.json
+    sha256: 9ddc6df28caead174301799b81eb7c5a9b488ec179100233d63834afc9806689
+    bytes: 669
+  stage_summary:
+    path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T203415Z__m1-validation-v33-scene0450-instance-field-s0-r188/stage_summary.json
+    sha256: 2ffc17b50865410b007aa4e340557e0a1b2fd71b27d6ef3c5858fcd5fc5a897c
+    bytes: 856

@@ -1,0 +1,142 @@
+{
+  "best_matched_non_router": "TELEA",
+  "candidate_count": 37,
+  "candidate_protocol": {
+    "path": "/root/autodl-tmp/motion_proj/configs/worldsim_v4/m2_router_v1.yaml",
+    "project_git_head": "8c8b3b1a6a6b4ddfaf460fbdc367d3e836bbbede",
+    "sha256": "bf635fc85c19c2ea4a35d8952f8124fcd16ff90ce38df11fcdceebe86ccfeba8"
+  },
+  "composite_edit_error_is_acceptance_gate": false,
+  "dataset": "nuScenes",
+  "development_content_read": true,
+  "development_gate": {
+    "all_gates_passed": true,
+    "baseline_arm": "TELEA",
+    "checks": {
+      "global_lpips": {
+        "passed": true,
+        "threshold": 0.01,
+        "value": -0.00027741061953401314
+      },
+      "global_psnr": {
+        "passed": true,
+        "threshold": -0.1,
+        "value": 0.010404815402846879
+      },
+      "global_ssim": {
+        "passed": true,
+        "threshold": -0.002,
+        "value": 0.00016423222744776922
+      },
+      "hole_any_endpoint": {
+        "endpoints": [
+          {
+            "baseline": 17.683516157379707,
+            "direction": "maximize",
+            "metric": "hole_cross_view_psnr_db",
+            "router": 19.945358923649312,
+            "signed_improvement": 2.2618427662696057,
+            "strictly_improved": true
+          },
+          {
+            "baseline": 1.6595783978700638,
+            "direction": "minimize",
+            "metric": "hole_geometry_mae_m",
+            "router": 1.6806798342328806,
+            "signed_improvement": -0.021101436362816806,
+            "strictly_improved": false
+          }
+        ],
+        "passed": true
+      },
+      "meaningful_abstention": {
+        "passed": true,
+        "threshold": 0.0,
+        "value": 0.08389631703229605
+      },
+      "static_lidar": {
+        "passed": true,
+        "threshold": 0.02,
+        "value": 1.0539132815234886e-05
+      }
+    },
+    "same_view_background_gt_metrics": "undefined_not_scored"
+  },
+  "development_gate_passed": true,
+  "development_optimization_read": true,
+  "evaluable_scene_count": 2,
+  "frozen_router": {
+    "selection_objective": "minimize_scene_balanced_policy_edit_error",
+    "selection_unit": "scene",
+    "threshold": 1.0,
+    "tie_priority": [
+      "OBSERVED",
+      "DONOR",
+      "GENERATED"
+    ],
+    "weight_name": "uncertainty_forward",
+    "weights": {
+      "compute_cost": 0.1,
+      "geometry": 0.2,
+      "photo": 0.2,
+      "temporal": 0.2,
+      "uncertainty": 0.4
+    }
+  },
+  "heldout_content_read": false,
+  "partition": "development",
+  "phase": "six_scene_development_selection",
+  "project_git_dirty": false,
+  "project_git_head": "e94ad17a46dd81ac911ced6f412b30890ae42caf",
+  "request_count": 28,
+  "retained_abstain_scene_count": 4,
+  "router_minus_baseline_scene_balanced_composite_edit_error": 0.002891501458701762,
+  "scene_count": 6,
+  "scene_summary_bindings": {
+    "scene-0048": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0048-s0-r209",
+      "summary_sha256": "8b74498dbfb93a379778bb1784f1520ce7c5ac373a0132b454226bcf0e38dc50"
+    },
+    "scene-0139": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T231131Z__m2-development-scene-0139-s0-r211",
+      "summary_sha256": "d53eeae62b9ec86c70d173d2a33b44d5255b6a2aa23dcea309c847d9fff65ded"
+    },
+    "scene-0230": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0230-s0-r206",
+      "summary_sha256": "bbd468ff410fb2d435aac7e8492effcdd56157a7be6450f3e0ffb7f5477832b3"
+    },
+    "scene-0242": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0242-s0-r207",
+      "summary_sha256": "cfdb8d9e757eabe98212f6961b6f68b7e3f6cbaead2a4179d192f1a524b09b8a"
+    },
+    "scene-0255": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0255-s0-r208",
+      "summary_sha256": "3d5fdc80c68d11500deea1116a6b39e87141d8ba9b0997814704a4b0e302a59c"
+    },
+    "scene-0994": {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/20260812T230956Z__m2-development-scene-0994-s0-r210",
+      "summary_sha256": "9f496ee5876100e4c037d846313b59de3bcfc16253c815fed04907abca1f54a9"
+    }
+  },
+  "schema_version": "worldsim_v4_m2_development_summary_v1",
+  "selection_statistics": {
+    "abstain_count": 3,
+    "abstain_minus_accepted_counterfactual_error": 0.08389631703229605,
+    "abstained_counterfactual_mean_error": 0.7380087067353168,
+    "accepted_arm_counts": {
+      "OBSERVED": 7,
+      "TELEA": 18
+    },
+    "accepted_count": 25,
+    "accepted_counterfactual_mean_error": 0.6541123897030208,
+    "meaningful_abstention_gate": true,
+    "request_count": 28,
+    "request_coverage": 0.8928571428571429,
+    "request_mean_policy_edit_error": 0.6911717765205543,
+    "scene_balanced_policy_edit_error": 0.6801427341327952
+  },
+  "status": "done",
+  "task_id": "WS-V4-M2-REPAIR-ROUTER-01",
+  "test_quality_read": false,
+  "validation_authorized": true
+}

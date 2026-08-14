@@ -1,0 +1,53 @@
+{
+  "all_gates_passed": true,
+  "baseline_arm": "TELEA",
+  "checks": {
+    "global_lpips": {
+      "passed": true,
+      "threshold": 0.01,
+      "value": -0.0007536736978352998
+    },
+    "global_psnr": {
+      "passed": true,
+      "threshold": -0.1,
+      "value": 0.05397296950180319
+    },
+    "global_ssim": {
+      "passed": true,
+      "threshold": -0.002,
+      "value": 0.0004358785122081654
+    },
+    "hole_any_endpoint": {
+      "endpoints": [
+        {
+          "baseline": 23.294220075332436,
+          "direction": "maximize",
+          "metric": "hole_cross_view_psnr_db",
+          "router": 26.473999933646393,
+          "signed_improvement": 3.1797798583139567,
+          "strictly_improved": true
+        },
+        {
+          "baseline": 2.1435024986079565,
+          "direction": "minimize",
+          "metric": "hole_geometry_mae_m",
+          "router": 5.5343121223402605,
+          "signed_improvement": -3.390809623732304,
+          "strictly_improved": false
+        }
+      ],
+      "passed": true
+    },
+    "meaningful_abstention": {
+      "passed": true,
+      "threshold": 0.0,
+      "value": 0.1241311527704092
+    },
+    "static_lidar": {
+      "passed": true,
+      "threshold": 0.02,
+      "value": 4.995860843270972e-05
+    }
+  },
+  "same_view_background_gt_metrics": "undefined_not_scored"
+}
