@@ -2,6 +2,8 @@
 
 ## V5 M1 development 数据闭环与 base reconstruction 入口（2026-08-14）
 
+- 8-scene `profile100` gate 已完成：r019–r026 全部 `done`，每场 checkpoint step=`100` 且 Gaussian means finite；总训练耗时=`463.532647 s`、checkpoint bytes=`2,592,731,152`，峰值 GPU/cgroup=`9142 MiB / 24,595,931,136 bytes`，8 份 checkpoint 全量 SHA 复核一致。source commit=`200ece4ebe59031b5546f285d2251482446ab162`，validation/test quality read=`false/false`。
+- 30k 只能使用 `configs/worldsim_v5/m1_development_reconstruction_formal_v1.yaml`：它除 sky gate 外还绑定 8 份 profile summary/status/fingerprint/run-manifest/checkpoint identity；runner 对 formal 强制全量复核该 gate，缺失时 fail-closed。当前仍无 reconstruction quality 或 arm selection。
 - 派生 sky-mask gate 已完成：8/8 scenes、`4704/4704` PNG、`14,058,820 bytes`，逐文件 bytes/SHA 全量复核一致；总推理耗时=`1067.213706 s`，加权 mean sky fraction=`0.0655167343`，峰值 GPU=`4168 MiB`。8 个 run 均来自 clean commit=`282ff528af5ca8455014271a3a492e8b9c344991`，network/test quality/method inference=`false/false/false`。
 - 训练输入改用不可变 base 配置的 sky-bound overlay：`configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml` 绑定原配置 SHA=`c55f39a089da1beaf8ba00a5eb9dda3c26f997486a8950e2002256e4f0dbc748`、8 份 summary/run-manifest/sky-manifest SHA；原配置不改写。当前下一门为 8-scene `profile100`，通过前不启动 30k formal 或 structured unary quality。
 

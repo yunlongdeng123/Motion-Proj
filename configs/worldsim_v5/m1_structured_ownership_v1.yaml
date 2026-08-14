@@ -104,7 +104,27 @@ data_readiness:
     reason: derived_sky_masks_missing_before_training_step
     summary_sha256: a2802430984ab369143be609088df514e3ed0943563b23ee0a5b3bee02e214f7
     training_iteration_started: false
-  state: processed_and_sky_masks_complete_profile100_pending
+  profile100_gate:
+    status: done
+    source_commit: 200ece4ebe59031b5546f285d2251482446ab162
+    formal_training_config: configs/worldsim_v5/m1_development_reconstruction_formal_v1.yaml
+    scene_count: 8
+    iteration_count_each: 100
+    total_duration_seconds: 463.5326468255371
+    total_checkpoint_bytes: 2592731152
+    peak_gpu_memory_mib: 9142
+    peak_cgroup_memory_bytes: 24595931136
+    all_checkpoint_payload_rehashed_exact: true
+    scene_summary_sha256:
+      scene-0471: 8c419b3edd9c1e6bac13d82071d659bbe5039de742c9ff2af96105f89e2dcd2f
+      scene-1087: d2e6ffc128caed3c025930be64e061bfc2af3e4e045cfb3654e8a4673a688202
+      scene-0379: 0a570a9774accbe795999322709681a8ed232eb889eb1576df5b6bff2fbb8f8f
+      scene-0998: f8bbcf00e55a78dff527dadabb13f73641cbc8b40afa1e80a9da1eac52447c66
+      scene-0359: 6372b8bb14fc3b641f9838ed1e1527a727f7b8e44ead924b1a73458feb594624
+      scene-0875: fa5897d304804e4c19b4e5ae6e8a5d7effbf8d416fb6fa7c7f1031239c7d6cbc
+      scene-0535: 21686ac5d31bd3b3e71c4c0a1ec23de2545f0cb66b1434bffa04d871e8e94b39
+      scene-0436: ef27a83d2af8b991efdd3f73e6cab8089e9837ea7cfd8691e1b23df980fac080
+  state: profile100_complete_formal30k_pending
   quality_read: false
 
 evidence_contract:
@@ -156,7 +176,7 @@ restrictions:
   test_quality_read: false
   kitti_quality_read: false
   training_started: true
-  training_iteration_started: false
+  training_iteration_started: true
   segmentation_inference_started: true
   method_inference_started: false
   new_large_model_training: false

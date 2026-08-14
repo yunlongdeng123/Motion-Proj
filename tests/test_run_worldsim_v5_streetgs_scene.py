@@ -14,6 +14,7 @@ from scripts.run_worldsim_v5_streetgs_scene import (
     FRAME_CONTRACT,
     SCENE_CONTRACT,
     V5StreetGSTrainingError,
+    _verified_profile100_cohort,
     build_train_command,
     load_training_config,
     sha256_file,
@@ -202,6 +203,76 @@ def _fixture(tmp_path: Path) -> dict:
     }
 
 
+def _with_profile100_binding(config: dict, tmp_path: Path) -> dict:
+    source_commit = "200ece4ebe59031b5546f285d2251482446ab162"
+    scene_runs = {}
+    for scene in SCENE_CONTRACT:
+        run = tmp_path / "profile_runs" / scene
+        checkpoint = run / "work_dirs" / "checkpoint_final.pth"
+        checkpoint.parent.mkdir(parents=True, exist_ok=True)
+        checkpoint.write_bytes(("profile-" + scene).encode())
+        _write_json(run / "fingerprint.json", {"scene": scene})
+        _write_json(
+            run / "manifest.json",
+            {
+                "schema_version": "worldsim_v5_streetgs_run_manifest_v1",
+                "task_id": "WS-V5-M1-STRUCTURED-OWNERSHIP-01",
+                "status": "done",
+                "scene": scene,
+                "mode": "profile100",
+            },
+        )
+        _write_json(
+            run / "summary.json",
+            {
+                "schema_version": "worldsim_v5_streetgs_summary_v1",
+                "task_id": "WS-V5-M1-STRUCTURED-OWNERSHIP-01",
+                "status": "done",
+                "scene": scene,
+                "mode": "profile100",
+                "iterations": 100,
+                "checkpoint": {
+                    "path": str(checkpoint),
+                    "step": 100,
+                    "means_finite": True,
+                    "bytes": checkpoint.stat().st_size,
+                    "sha256": sha256_file(checkpoint),
+                },
+                "project_git": {
+                    "head": source_commit,
+                    "branch": "research/worldsim-v5-structdelta",
+                    "dirty": False,
+                },
+                "training_started": True,
+                "model_inference_started": False,
+                "validation_quality_read": False,
+                "test_quality_read": False,
+            },
+        )
+        _write_json(
+            run / "status.json",
+            {
+                "status": "done",
+                "summary_sha256": sha256_file(run / "summary.json"),
+            },
+        )
+        scene_runs[scene] = {
+            "run": str(run),
+            "summary_sha256": sha256_file(run / "summary.json"),
+            "status_sha256": sha256_file(run / "status.json"),
+            "fingerprint_sha256": sha256_file(run / "fingerprint.json"),
+            "run_manifest_sha256": sha256_file(run / "manifest.json"),
+            "checkpoint_sha256": sha256_file(checkpoint),
+            "checkpoint_bytes": checkpoint.stat().st_size,
+        }
+    config["profile100_binding"] = {
+        "source_commit": source_commit,
+        "scene_count": 8,
+        "scene_runs": scene_runs,
+    }
+    return config
+
+
 def test_v5_training_contract_binds_fresh_cohort_and_preprocess(tmp_path: Path) -> None:
     config = _fixture(tmp_path)
     result = validate_config(config, tmp_path)
@@ -218,12 +289,27 @@ def test_v5_training_contract_binds_fresh_cohort_and_preprocess(tmp_path: Path) 
     assert checkpoint.name == "checkpoint_final.pth"
 
 
+def test_formal_binding_requires_all_profile100_checkpoints(tmp_path: Path) -> None:
+    config = _with_profile100_binding(_fixture(tmp_path), tmp_path)
+    result = _verified_profile100_cohort(config, verify_payload=True)
+    assert result["scene_count"] == 8
+    assert result["payload_rehashed"] is True
+
+    checkpoint = Path(
+        config["profile100_binding"]["scene_runs"]["scene-0471"]["run"]
+    ) / "work_dirs/checkpoint_final.pth"
+    checkpoint.write_bytes(b"drift")
+    with pytest.raises(V5StreetGSTrainingError, match="profile100"):
+        _verified_profile100_cohort(config, verify_payload=True)
+
+
 def test_sky_bound_overlay_resolves_immutable_base(tmp_path: Path) -> None:
     base = _fixture(tmp_path)
     base.pop("sky_mask_binding")
     base_path = tmp_path / "base.yaml"
     base_path.write_text(yaml.safe_dump(base, sort_keys=False), encoding="utf-8")
     overlay_path = tmp_path / "overlay.yaml"
+    bound = _with_profile100_binding(_fixture(tmp_path), tmp_path)
     overlay = {
         "schema_version": "worldsim_v5_streetgs_training_binding_v1",
         "task_id": "WS-V5-M1-STRUCTURED-OWNERSHIP-01",
@@ -233,7 +319,8 @@ def test_sky_bound_overlay_resolves_immutable_base(tmp_path: Path) -> None:
             "path": base_path.name,
             "sha256": sha256_file(base_path),
         },
-        "sky_mask_binding": _fixture(tmp_path)["sky_mask_binding"],
+        "sky_mask_binding": bound["sky_mask_binding"],
+        "profile100_binding": bound["profile100_binding"],
     }
     overlay_path.write_text(
         yaml.safe_dump(overlay, sort_keys=False), encoding="utf-8"
@@ -243,6 +330,7 @@ def test_sky_bound_overlay_resolves_immutable_base(tmp_path: Path) -> None:
 
     assert resolved["schema_version"] == "worldsim_v5_streetgs_training_v1"
     assert resolved["sky_mask_binding"] == overlay["sky_mask_binding"]
+    assert resolved["profile100_binding"] == overlay["profile100_binding"]
     assert binding == {
         "overlay_path": str(overlay_path),
         "overlay_sha256": sha256_file(overlay_path),

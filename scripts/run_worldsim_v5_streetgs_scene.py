@@ -95,6 +95,8 @@ def load_training_config(
         raise V5StreetGSTrainingError("base reconstruction config schema/immutability 漂移")
     resolved = dict(base)
     resolved["sky_mask_binding"] = raw.get("sky_mask_binding")
+    if "profile100_binding" in raw:
+        resolved["profile100_binding"] = raw.get("profile100_binding")
     binding = {
         "overlay_path": str(config_path),
         "overlay_sha256": sha256_file(config_path),
@@ -282,6 +284,98 @@ def _verified_sky_mask_artifact(
     }
 
 
+def _verified_profile100_cohort(
+    config: Mapping[str, Any], *, verify_payload: bool
+) -> dict[str, Any] | None:
+    binding = config.get("profile100_binding")
+    if binding is None:
+        return None
+    if (
+        not isinstance(binding, Mapping)
+        or binding.get("source_commit")
+        != "200ece4ebe59031b5546f285d2251482446ab162"
+        or int(binding.get("scene_count", -1)) != len(SCENE_CONTRACT)
+        or not isinstance(binding.get("scene_runs"), Mapping)
+        or set(binding["scene_runs"]) != set(SCENE_CONTRACT)
+    ):
+        raise V5StreetGSTrainingError("profile100 cohort binding 合同漂移")
+    verified: dict[str, Any] = {}
+    for scene in SCENE_CONTRACT:
+        row = binding["scene_runs"][scene]
+        run_dir = Path(str(row.get("run", "")))
+        paths = {
+            "summary": run_dir / "summary.json",
+            "status": run_dir / "status.json",
+            "fingerprint": run_dir / "fingerprint.json",
+            "manifest": run_dir / "manifest.json",
+        }
+        expected_hashes = {
+            "summary": row.get("summary_sha256"),
+            "status": row.get("status_sha256"),
+            "fingerprint": row.get("fingerprint_sha256"),
+            "manifest": row.get("run_manifest_sha256"),
+        }
+        for name, path in paths.items():
+            if not path.is_file() or sha256_file(path) != expected_hashes[name]:
+                raise V5StreetGSTrainingError(
+                    f"profile100 run artifact 漂移：{scene}/{name}"
+                )
+        summary = json.loads(paths["summary"].read_text(encoding="utf-8"))
+        status = json.loads(paths["status"].read_text(encoding="utf-8"))
+        manifest = json.loads(paths["manifest"].read_text(encoding="utf-8"))
+        checkpoint = Path(str(summary.get("checkpoint", {}).get("path", "")))
+        if (
+            summary.get("schema_version") != "worldsim_v5_streetgs_summary_v1"
+            or summary.get("task_id") != TASK_ID
+            or summary.get("status") != "done"
+            or summary.get("scene") != scene
+            or summary.get("mode") != "profile100"
+            or int(summary.get("iterations", -1)) != 100
+            or int(summary.get("checkpoint", {}).get("step", -1)) != 100
+            or summary.get("checkpoint", {}).get("means_finite") is not True
+            or summary.get("checkpoint", {}).get("sha256")
+            != row.get("checkpoint_sha256")
+            or int(summary.get("checkpoint", {}).get("bytes", -1))
+            != int(row.get("checkpoint_bytes", -2))
+            or summary.get("project_git")
+            != {
+                "head": binding["source_commit"],
+                "branch": "research/worldsim-v5-structdelta",
+                "dirty": False,
+            }
+            or summary.get("training_started") is not True
+            or summary.get("model_inference_started") is not False
+            or summary.get("validation_quality_read") is not False
+            or summary.get("test_quality_read") is not False
+            or status.get("status") != "done"
+            or status.get("summary_sha256") != expected_hashes["summary"]
+            or manifest.get("schema_version")
+            != "worldsim_v5_streetgs_run_manifest_v1"
+            or manifest.get("status") != "done"
+            or manifest.get("scene") != scene
+            or manifest.get("mode") != "profile100"
+            or not checkpoint.is_file()
+            or not checkpoint.resolve().is_relative_to(run_dir.resolve())
+            or checkpoint.stat().st_size != int(row.get("checkpoint_bytes", -1))
+        ):
+            raise V5StreetGSTrainingError(f"profile100 run 合同漂移：{scene}")
+        if verify_payload and sha256_file(checkpoint) != row["checkpoint_sha256"]:
+            raise V5StreetGSTrainingError(f"profile100 checkpoint 漂移：{scene}")
+        verified[scene] = {
+            "run": str(run_dir),
+            "summary_sha256": expected_hashes["summary"],
+            "checkpoint_sha256": row["checkpoint_sha256"],
+            "checkpoint_bytes": int(row["checkpoint_bytes"]),
+            "payload_rehashed": verify_payload,
+        }
+    return {
+        "source_commit": binding["source_commit"],
+        "scene_count": len(verified),
+        "scene_runs": verified,
+        "payload_rehashed": verify_payload,
+    }
+
+
 def validate_config(
     config: Mapping[str, Any], project_root: Path, *, verify_payload: bool = False
 ) -> dict[str, Any]:
@@ -403,10 +497,14 @@ def validate_config(
         or restrictions.get("post_train_render") is not False
     ):
         raise V5StreetGSTrainingError("quality/render restriction 漂移")
+    profile100_binding = _verified_profile100_cohort(
+        config, verify_payload=verify_payload
+    )
     return {
         "scene_count": len(SCENE_CONTRACT),
         "preprocess_bindings": bindings,
         "sky_mask_bindings": sky_bindings,
+        "profile100_binding": profile100_binding,
     }
 
 
@@ -478,6 +576,15 @@ def run(
     validated = validate_config(config, project_root, verify_payload=False)
     if scene not in SCENE_CONTRACT or mode not in config["training"]["modes"]:
         raise V5StreetGSTrainingError("scene/mode 未冻结")
+    profile100_gate = validated["profile100_binding"]
+    if mode == "formal":
+        profile100_gate = _verified_profile100_cohort(
+            config, verify_payload=True
+        )
+        if profile100_gate is None:
+            raise V5StreetGSTrainingError("formal run 缺少 8-scene profile100 gate")
+    elif profile100_gate is not None:
+        raise V5StreetGSTrainingError("profile100 run 不得使用 formal-bound config")
     if _git(project_root, "status", "--porcelain"):
         raise V5StreetGSTrainingError("正式 StreetGS run 要求 clean project worktree")
     upstream = Path(config["implementation"]["upstream_root"])
@@ -675,6 +782,7 @@ def run(
             for key, value in sky_mask_binding.items()
             if key != "relative_paths"
         },
+        "profile100_gate": profile100_gate,
         "upstream": {
             "head": _git(upstream, "rev-parse", "HEAD"),
             "status": _git(upstream, "status", "--short"),
@@ -715,6 +823,11 @@ def run(
         },
         "preprocess_inventory_sha256": preprocess_binding["inventory_sha256"],
         "sky_mask_artifact_sha256": sky_mask_binding["artifact_sha256"],
+        "profile100_gate_source_commit": (
+            profile100_gate["source_commit"]
+            if profile100_gate is not None
+            else None
+        ),
         "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
         "project_git": {
             "head": _git(project_root, "rev-parse", "HEAD"),

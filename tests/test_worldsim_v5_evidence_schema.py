@@ -174,7 +174,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "processed_and_sky_masks_complete_profile100_pending"
+        == "profile100_complete_formal30k_pending"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -185,6 +185,11 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
         == "configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml"
     )
     assert config["data_readiness"]["blocked_base_profile"]["status"] == "blocked"
+    profile = config["data_readiness"]["profile100_gate"]
+    assert profile["status"] == "done"
+    assert profile["scene_count"] == 8
+    assert profile["iteration_count_each"] == 100
+    assert profile["all_checkpoint_payload_rehashed_exact"] is True
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]
@@ -194,7 +199,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert config["graph"]["transformer_allowed"] is False
     assert config["restrictions"]["development_content_read"] is True
     assert config["restrictions"]["training_started"] is True
-    assert config["restrictions"]["training_iteration_started"] is False
+    assert config["restrictions"]["training_iteration_started"] is True
     assert config["restrictions"]["segmentation_inference_started"] is True
     assert config["restrictions"]["method_inference_started"] is False
     assert config["restrictions"]["validation_content_read"] is False
