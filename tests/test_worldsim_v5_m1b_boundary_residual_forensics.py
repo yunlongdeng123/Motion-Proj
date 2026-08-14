@@ -57,6 +57,10 @@ def test_config_freezes_boundary_gate_without_automatic_unlock() -> None:
     config = MODULE.load_config(
         ROOT / "configs/worldsim_v5/m1b_boundary_residual_forensics_v1.yaml"
     )
+    assert config["status"] == "done"
+    assert config["formal_result"]["conclusion"] == (
+        "boundary_ambiguity_not_primary_semantic_split_remains_locked"
+    )
     assert [row["scene"] for row in config["inputs"].values()] == [
         "scene-0471",
         "scene-1087",

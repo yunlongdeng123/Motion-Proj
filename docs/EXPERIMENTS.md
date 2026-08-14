@@ -1,5 +1,13 @@
 # Experiments
 
+## V5 M1B boundary-residual forensic（2026-08-14）
+
+- canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01/20260814T192757Z__m1b-d0-boundary-residual-forensics-s0-r001`，source=`bb4ebb5ee57f3dfd86b7189cc08e71a77e19e00f`。
+- r038/r045/r046 共 `12` 个冻结 evaluation views、`6` 个 scene×unary G0 cells；3px target boundary band 与三项 primary gate 在读取 NPZ 分布前冻结。
+- boundary-primary=`0/6`，mean boundary classification-error share=`0.4020948014`，mean boundary semantic-error mass share=`0.2483529331`；结论=`boundary_ambiguity_not_primary_semantic_split_remains_locked`。
+- summary/status/fingerprint/manifest/audit SHA=`ddecf415bd71fcf920b6fab5f38ee74edea93aa085b48a73947480c3c186c35d / 65ea0db4a1714b668923bd927ee7664c89bce34e133d3df97f622dbd78371e84 / 1e5605c0056274f03fdb0b3653528d1a2bb1b8801c7d1b190e8e8390e11c2e2b / a22b382d6a02d5821c38bc4fa061946abd13ef2300c05ad7f47051ab7b0b88a7 / fd128a3b19373473b97c07d7c8733c0640f526f338911e4247d8cba7bc515c35`。
+- semantic split 未授权、未启动；M1 当前正式收口为 rejected，V5 转入 M2。详见 `docs/WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md`。
+
 ## V5 M1 三场景 result-blind replication（2026-08-14）
 
 | Run | 状态 | 场景/阶段 | 关键分母或失败原因 |

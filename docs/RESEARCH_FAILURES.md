@@ -15,6 +15,7 @@
 - `V5-F30`：scene0471 的 `8 accepted + 7 abstain` 不能硬编码成 graph 的全场景分母。r044 在读取 scene1087 的绑定 unary 后被该常量 fail-closed；修复 `d55a067` 改为 summary/diagnostics 双重验证 accepted、abstain、总分母与 B1/B3 `(frame,camera)` 键，并要求 accepted>0。r044 是通用化合同失败，不是数据或 graph 质量失败；修复后只能使用新 run r045。
 - `V5-F31`：三场景 frozen SAM 的可用视图为 scene0471/1087/0379=`18/2/6`（各 30），对应 unary 可评估分母=`8+7 / 1+14 / 3+12`。scene1087 的负方向只来自 1 个可评估视图，不能扩大为总体失败；但 result-blind replication 必须保留该稀疏场景和全部 abstain，禁止删场景、补 prompt、补 mask 或只报告可评估视图较多的场景。
 - `V5-F32`：G3 三场景复制门正式失败。六个 `scene × unary` 单元只有 `3/6` 个 Boundary F1 为正（门槛 `>=4/6`）；虽然 mean ΔBoundary-F1=`+0.0016107723`、mean ΔFN-mass=`+0.0025676789` 单项通过，但 scene1087 的 G1 cross-proxy affinity 已为 `0`，G3=`1.2800523e-29`，逐场严格下降也失败。不得用正均值覆盖稳定性门、选择 G3、读取 validation 或直接堆 Transformer。semantic split 仍是条件任务，必须先用独立 boundary-residual forensic 证明 boundary ambiguity 是主要残差；当前不自动解锁。
+- `V5-F33`：boundary error enrichment 高不等于 boundary 是主要残差。r001 六个单元的 enrichment=`3.83×–280.98×`，但 boundary-primary=`0/6`，mean boundary classification/semantic-error share 只有 `0.402095/0.248353`。尤其 scene0379 虽约 68% threshold error 位于极小边界带，boundary semantic-error mass 仍只有 26%–36%；不得只引用 enrichment 解锁 split。M1B 条件未成立，semantic split/Transformer/validation 继续禁止，M1 structured ownership 收口为 rejected。
 
 ## V5 KITTI archive / adapter 新增防重复结论（2026-08-14）
 

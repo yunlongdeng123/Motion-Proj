@@ -1,0 +1,54 @@
+{
+  "schema_version": "worldsim_v5_m1b_boundary_residual_archive_v1",
+  "task_id": "WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01",
+  "date": "2026-08-14",
+  "run": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01/20260814T192757Z__m1b-d0-boundary-residual-forensics-s0-r001",
+  "source_commit": "bb4ebb5ee57f3dfd86b7189cc08e71a77e19e00f",
+  "input_graph_runs": ["r038", "r045", "r046"],
+  "evaluation_view_count": 12,
+  "cell_count": 6,
+  "frozen_definition": {
+    "probability_threshold": 0.5,
+    "boundary_band_iterations": 3,
+    "boundary_operator": "target_internal_boundary_then_scipy_binary_dilation_default_connectivity",
+    "minimum_boundary_classification_error_share": 0.5,
+    "minimum_boundary_semantic_error_mass_share": 0.5,
+    "minimum_boundary_error_enrichment": 2.0,
+    "minimum_boundary_primary_cells": 4
+  },
+  "cells": [
+    {"scene": "scene-0471", "unary": "B1", "boundary_primary": false, "boundary_pixel_fraction": 0.04859583333333333, "boundary_classification_error_share": 0.18595680753999605, "boundary_semantic_error_mass_share": 0.17316348225790842, "boundary_error_enrichment": 3.826599829340569, "boundary_false_positive_mass_share": 0.07327373270308009, "boundary_false_negative_mass_share": 0.3212949190277189},
+    {"scene": "scene-0471", "unary": "B3", "boundary_primary": false, "boundary_pixel_fraction": 0.04859583333333333, "boundary_classification_error_share": 0.18979433103395515, "boundary_semantic_error_mass_share": 0.16887337641704392, "boundary_error_enrichment": 3.9055679883519883, "boundary_false_positive_mass_share": 0.07125694157049123, "boundary_false_negative_mass_share": 0.3178241621680437},
+    {"scene": "scene-1087", "unary": "B1", "boundary_primary": false, "boundary_pixel_fraction": 0.02266666666666667, "boundary_classification_error_share": 0.3437844250487247, "boundary_semantic_error_mass_share": 0.28960017862480747, "boundary_error_enrichment": 15.166959928620207, "boundary_false_positive_mass_share": 0.25866883321499956, "boundary_false_negative_mass_share": 0.31764300018904623},
+    {"scene": "scene-1087", "unary": "B3", "boundary_primary": false, "boundary_pixel_fraction": 0.02266666666666667, "boundary_classification_error_share": 0.32452001301659616, "boundary_semantic_error_mass_share": 0.23801012076577588, "boundary_error_enrichment": 14.317059397791006, "boundary_false_positive_mass_share": 0.1751259499151234, "boundary_false_negative_mass_share": 0.30184539393780335},
+    {"scene": "scene-0379", "unary": "B1", "boundary_primary": false, "boundary_pixel_fraction": 0.002448148148148148, "boundary_classification_error_share": 0.6878761822871883, "boundary_semantic_error_mass_share": 0.35949370636047645, "boundary_error_enrichment": 280.9781682564914, "boundary_false_positive_mass_share": 0.15442449125956226, "boundary_false_negative_mass_share": 0.5791524619541141},
+    {"scene": "scene-0379", "unary": "B3", "boundary_primary": false, "boundary_pixel_fraction": 0.002448148148148148, "boundary_classification_error_share": 0.680637049455155, "boundary_semantic_error_mass_share": 0.2609767339637177, "boundary_error_enrichment": 278.02118510271083, "boundary_false_positive_mass_share": 0.09523693847896458, "boundary_false_negative_mass_share": 0.5771273705996081}
+  ],
+  "gate_result": {
+    "boundary_primary_cell_count": 0,
+    "minimum_boundary_primary_cells": 4,
+    "mean_boundary_classification_error_share": 0.4020948013969359,
+    "mean_boundary_semantic_error_mass_share": 0.24835293306495498,
+    "passed": false,
+    "conclusion": "boundary_ambiguity_not_primary_semantic_split_remains_locked",
+    "semantic_split_authorized_by_this_run": false
+  },
+  "sha256": {
+    "summary": "ddecf415bd71fcf920b6fab5f38ee74edea93aa085b48a73947480c3c186c35d",
+    "status": "65ea0db4a1714b668923bd927ee7664c89bce34e133d3df97f622dbd78371e84",
+    "fingerprint": "1e5605c0056274f03fdb0b3653528d1a2bb1b8801c7d1b190e8e8390e11c2e2b",
+    "manifest": "a22b382d6a02d5821c38bc4fa061946abd13ef2300c05ad7f47051ab7b0b88a7",
+    "boundary_residual_audit": "fd128a3b19373473b97c07d7c8733c0640f526f338911e4247d8cba7bc515c35",
+    "resolved_config": "f63c164c989b8ae65a3f814dca720659adf9aa5676b1125f9dbbb92d657dd861",
+    "events": "1da22caeea99b484fcb27db1177e6004f4206c7417594c4f0bdedfc1c1c16fb1"
+  },
+  "restrictions": {
+    "development_source_image_read": false,
+    "validation_quality_read": false,
+    "test_quality_read": false,
+    "kitti_quality_read": false,
+    "parameter_search_performed": false,
+    "training_performed": false,
+    "semantic_split_started": false
+  }
+}

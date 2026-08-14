@@ -9,10 +9,12 @@
 - `M1_R038_GRAPH_METADATA.json`：r038 graph 候选、bandwidth、arm delta、topology leakage 与完整哈希。
 - `docs/WS_V5_M1_DEVELOPMENT_REPLICATION.md`：r039–r046 三场景 SAM/unary/graph 复制、六单元门槛、基础设施阻塞与解释边界。
 - `M1_R039_R046_REPLICATION_METADATA.json`：机器可读的复制选择、run/hash、六单元 delta、topology 与 gate 裁决。
-- `docs/RESEARCH_FAILURES.md`：V5-F20–F32，包含 intersection inflation、arm collapse、opacity、timeline、FN tradeoff、单场外推、稀疏分母、SSH 断管、硬编码 denominator 与复制失败限制。
+- `docs/WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md`：3px boundary residual 分解、六单元 primary gate 与 M1B 不解锁结论。
+- `M1B_R001_BOUNDARY_RESIDUAL_METADATA.json`：r001 的机器可读 cell 指标、gate、run 与完整哈希。
+- `docs/RESEARCH_FAILURES.md`：V5-F20–F33，包含稀疏分母、复制失败、boundary enrichment 误读与 M1B 不解锁限制。
 
 ## 当前裁决
 
-`physical_graph_development_replication_rejected_3of6_boundary_support`
+`m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary`
 
-下一次追加只能使用新 run ID；不得覆盖 r035–r046 或改写其指标。validation/test/KITTI quality 仍未读；semantic split 只在独立 boundary-residual forensic 证明条件成立后另行冻结。
+M1/M1B 已停止；不得覆盖 r035–r046 或 M1B r001，不得改写指标或恢复 semantic split。validation/test/KITTI quality 仍未读；V5 后续转入 M2。

@@ -56,7 +56,10 @@ def load_config(path: Path) -> dict[str, Any]:
         "worldsim_v5_m1b_boundary_residual_forensics_v1"
     ):
         raise ForensicAuditError("boundary forensic config schema 漂移")
-    if payload.get("task_id") != TASK_ID or payload.get("status") != "running":
+    if payload.get("task_id") != TASK_ID or payload.get("status") not in {
+        "running",
+        "done",
+    }:
         raise ForensicAuditError("boundary forensic task/status 漂移")
     if tuple(row["scene"] for row in payload["inputs"].values()) != EXPECTED_SCENES:
         raise ForensicAuditError("boundary forensic scene 顺序或集合漂移")

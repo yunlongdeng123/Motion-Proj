@@ -229,9 +229,9 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
             encoding="utf-8"
         )
     )
-    assert config["status"] == "running"
+    assert config["status"] == "rejected"
     assert config["phase"] == (
-        "development_replication_rejected_boundary_residual_forensics_pending"
+        "m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary"
     )
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
@@ -244,7 +244,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "development_replication_rejected_boundary_residual_forensics_pending"
+        == "m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -308,6 +308,12 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert replication["formal_arm_selected"] is False
     assert replication["automatic_validation_unlock"] is False
     assert replication["semantic_split_allowed"] is False
+    boundary = config["data_readiness"]["boundary_residual_forensics"]
+    assert boundary["status"] == "done"
+    assert boundary["boundary_primary_cell_count"] == 0
+    assert boundary["mean_boundary_classification_error_share"] < 0.5
+    assert boundary["mean_boundary_semantic_error_mass_share"] < 0.5
+    assert boundary["semantic_split_authorized"] is False
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]

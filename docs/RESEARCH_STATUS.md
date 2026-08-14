@@ -1,5 +1,12 @@
 # Research Status
 
+## V5 M1/M1B development 收口：rejected（2026-08-14）
+
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=rejected`：三场景 graph replication 只有 `3/6` Boundary F1 单元正向，未达 `>=4/6`；validation、formal arm selection 均未解锁。
+- `WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01=done`：canonical r001 只读 r038/r045/r046 的 `12` 个 evaluation NPZ，boundary-primary=`0/6`，mean boundary classification/semantic-error share=`0.4020948014/0.2483529331`。summary SHA=`ddecf415bd71fcf920b6fab5f38ee74edea93aa085b48a73947480c3c186c35d`。
+- 结论=`boundary_ambiguity_not_primary_semantic_split_remains_locked`；`WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01` 的条件未成立，任务不启动。Transformer、split、M1 graph 调参与 validation quality 继续禁止。
+- V5 当前转入 M2 geometry-feasible repair routing。后续 M2/M3 的任何成功都不得倒写 M1；M1 负结论与完整哈希见 `docs/WS_V5_M1_DEVELOPMENT_REPLICATION.md` 和 `docs/WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md`。
+
 ## V5 M1 三场景 development replication 失败并进入 boundary-residual forensic（2026-08-14）
 
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`development_replication_rejected_boundary_residual_forensics_pending`。前三个 frozen development scenes=`scene0471/1087/0379` 按结果盲协议完成 SAM→unary→G0–G3 graph；选择时未读 quality，validation/test/KITTI quality 与参数搜索均未发生。

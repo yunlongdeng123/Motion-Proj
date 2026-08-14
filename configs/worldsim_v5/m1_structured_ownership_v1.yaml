@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
-status: running
-phase: development_replication_rejected_boundary_residual_forensics_pending
+status: rejected
+phase: m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -319,10 +319,29 @@ data_readiness:
     formal_arm_selected: false
     automatic_validation_unlock: false
     semantic_split_allowed: false
-    boundary_residual_forensics_pending: true
-  state: development_replication_rejected_boundary_residual_forensics_pending
+    boundary_residual_forensics_pending: false
+  boundary_residual_forensics:
+    status: done
+    task_id: WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01/20260814T192757Z__m1b-d0-boundary-residual-forensics-s0-r001
+    source_commit: bb4ebb5ee57f3dfd86b7189cc08e71a77e19e00f
+    evaluation_view_count: 12
+    cell_count: 6
+    boundary_primary_cell_count: 0
+    mean_boundary_classification_error_share: 0.4020948013969359
+    mean_boundary_semantic_error_mass_share: 0.24835293306495498
+    summary_sha256: ddecf415bd71fcf920b6fab5f38ee74edea93aa085b48a73947480c3c186c35d
+    status_sha256: 65ea0db4a1714b668923bd927ee7664c89bce34e133d3df97f622dbd78371e84
+    fingerprint_sha256: 1e5605c0056274f03fdb0b3653528d1a2bb1b8801c7d1b190e8e8390e11c2e2b
+    manifest_sha256: a22b382d6a02d5821c38bc4fa061946abd13ef2300c05ad7f47051ab7b0b88a7
+    audit_sha256: fd128a3b19373473b97c07d7c8733c0640f526f338911e4247d8cba7bc515c35
+    conclusion: boundary_ambiguity_not_primary_semantic_split_remains_locked
+    semantic_split_authorized: false
+    validation_quality_read: false
+    test_quality_read: false
+  state: m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary
   quality_read: true
-  quality_scope: three_scene_development_replication_only
+  quality_scope: three_scene_development_replication_and_boundary_forensic_only
 
 evidence_contract:
   per_gaussian: motion_proj/worldsim_v5/evidence_schema.py:GAUSSIAN_ROW_FIELDS
@@ -370,9 +389,12 @@ graph:
   base_model_consumed_by_graph: false
   scene0471_mechanism_preference: G3
   replication_conclusion: physical_graph_development_replication_rejected_3of6_boundary_support
+  final_m1_conclusion: m1_rejected_graph_replication_failed_boundary_ambiguity_not_primary
   formal_arm_selected: false
   transformer_allowed: false
   semantic_split_allowed: false
+  semantic_split_task_status: rejected
+  semantic_split_rejection_reason: boundary_ambiguity_not_primary
 
 restrictions:
   development_content_read: true
