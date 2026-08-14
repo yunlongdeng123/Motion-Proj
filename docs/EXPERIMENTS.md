@@ -1,17 +1,18 @@
 # Experiments
 
-## V5 M1 structured evidence schema / input readiness（2026-08-14）
+## V5 M1 structured evidence / development 数据闭环（2026-08-14）
 
 | Task ID | 状态 | 当前证据 / 边界 |
 |---|---|---|
-| `WS-V5-M1-STRUCTURED-OWNERSHIP-01` | running | `configs/worldsim_v5/m1_structured_ownership_v1.yaml`；只完成 schema/effective-count unary instrumentation，尚无 development quality |
+| `WS-V5-M1-STRUCTURED-OWNERSHIP-01` | running | schema/effective-count unary + `14,220/14,220` raw + `8/8` processed；尚无 development quality，当前进入 base reconstruction |
 
 - 新 schema=`motion_proj/worldsim_v5/evidence_schema.py`：per-Gaussian 保存 center/covariance/normal/prior/unary/uncertainty/effective count/view disagreement/boundary ambiguity/depth/LiDAR/motion；per-view 保存 Gaussian/view/frame/camera/pixel/SAM/boundary distance/depth residual/LiDAR/view-angle/positive-negative/reliability；per-edge 保存 Gaussian COO、Mahalanobis/normal/motion distance、boundary barrier 与 affinity。
 - unary=`motion_proj/worldsim_v5/bayesian_unary.py`：按 SAM confidence、visibility、boundary distance、depth residual 与 view angle 形成 observation reliability，再用 fractional effective positive/negative count 更新 Beta；同时输出 view disagreement 与 boundary ambiguity，不提前压成单一 scalar risk。
-- unit evidence：deterministic NPZ 两次写出 SHA exact；Gaussian geometry、observation index、edge index 与 probability range 均 fail-closed；当前相关测试=`5 passed`。
-- result-blind input readiness：fresh development scene index=`382/827/296/756/276/663/425/350`；processed root=`0/8`。`0/1280` 仅是三前向相机+LiDAR keyframe 粗审计；核对 DriveStudio 10Hz 上游后，精确合同改为六相机+`LIDAR_TOP` 完整时间链，单遍流式 metadata plan=`0/14,220 files`。
-- raw preparation runner=`scripts/prepare_worldsim_v5_drivestudio_raw.py`；默认只输出 metadata plan，只有 `--extract` 才复用既有文件、单遍扫描官方 shard、原子抽取命中 member，并生成逐文件 bytes/SHA/source/shard 与 scene/batch manifest。当前测试新增 `3 passed`，相关 V5 suite=`8 passed`；本项 quality/training/inference/arm-selection=`0/0/0/0`。
-- 下一步只执行 member-indexed selective extraction 与 DriveStudio preprocess；正式 unary development diagnostic 前 graph=`disabled`，B2 hierarchical/Transformer/semantic split 均未授权。
+- unit evidence：deterministic NPZ 两次写出 SHA exact；availability bit、SAM logit/probability、covariance、normal、observation/edge index 与 probability range 均 fail-closed；streaming 与 batch unary finalize 一致。当前 V5 定向 suite=`33 passed`。
+- raw preparation canonical r001：十个本地官方 shard 单遍扫描命中=`0/0/0/3486/3555/1820/0/1780/1786/1793`，总计=`14,220 files / 3,996,996,012 bytes`；没有铺开约 294 GB 全量 blobs。batch manifest content SHA=`65fc5363ca13f9124fe6165a84a7857339943d64b87a756127950ab19c4611b6`，formal summary SHA=`0c164e46873ecca4e2878d2d9937960d9b1df916ee25e92d075abc9d1ea0c213`。
+- preprocess canonical r002：`8/8 scenes / 2,497,238,886 bytes / 1148.674389 s`；每场景均验证 images/extrinsics/intrinsics/LiDAR/LiDAR pose/三类 dynamic mask/两份 instance JSON，并生成完整逐文件 inventory 后原子发布。timeline=`191 frames(scene-0379) / 201(scene-0535) / 196(other six)`，不得静默裁成共同长度。
+- r002 summary/status/fingerprint/manifest SHA=`dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0 / 21702f7442824a2e7fd5e66b120511fc3c28121f68d8c711c521c7e858eacfa7 / 147c6d4d4024e12ea26b1e9f0cf7ebb9723d334aa83e1ec199a86c7529eb7a2c / c7140b4001bcfb108e83b5569a5d25a1176f61c66a3dcb1c5d17c3ddfa10f391`；checkpoint 明确为 `N/A_data_preparation`。
+- 下一步先执行 8-scene StreetGS `profile100` 合同/资源门，再运行 30k immutable base reconstruction；正式 unary development diagnostic 前 graph=`disabled`，B2 hierarchical/Transformer/semantic split 均未授权。本项 quality/training/inference/arm-selection 目前仍=`0/0/0/0`。
 
 ## V5 fresh nuScenes 8/8/20 metadata-only freeze（2026-08-14）
 

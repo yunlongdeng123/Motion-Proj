@@ -1,0 +1,124 @@
+schema_version: worldsim_v5_streetgs_training_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: development_base_reconstruction
+created_at: "2026-08-14"
+
+implementation:
+  upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  expected_git_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py
+  compatibility_patch: compatibility/DriveStudio-2026-08-13-m3-test-timeline.patch
+  compatibility_patch_sha256: c3c0914f16af2b54026262a92f2bd3537a803e53b94488b1313882f2619f2b7d
+  environment: /root/autodl-tmp/envs/drivestudio
+  config_file: configs/streetgs.yaml
+
+fresh_cohort_binding:
+  config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+  config_sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+  cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+
+preprocess_binding:
+  run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002
+  source_commit: 23e13e2201f757fc02eaf5ef0677219e564d85da
+  summary_sha256: dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0
+  scene_artifacts:
+    scene-0471:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0471.json
+      file_sha256: 466fb2362495f35bf9cc8ec82a77ee3466acca57028139328c357e0063aae1ce
+      inventory_sha256: 9663f8b1dbf39add9c4b622502196401331e5fe6c6ff88258d1b1200b17fdb60
+    scene-1087:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-1087.json
+      file_sha256: ecbe3e7d8efd7d9070d030930f81efe8074921fceb23d0e3b470d5db8b7bfb86
+      inventory_sha256: 75299f98fa7a949efa36448df626c16649f92cd581b53803554df1ca60e87183
+    scene-0379:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0379.json
+      file_sha256: 7156dfeae6f993e87b4b263a4e2207d046ac22330828fd1fd19129f1285fdf29
+      inventory_sha256: 9efd655d1509f6c918ff7b9d2971e0c2e0a50479327cacf69b971545ff3f3ef4
+    scene-0998:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0998.json
+      file_sha256: d9755df4c2cf93b9a50b2a3e23efff07cf359135d8fc96966d9c6009608cb83c
+      inventory_sha256: 2c6c061c0c9dd52553c171b4312cbe50513e6ea4cf156950b10f9d56f74e831b
+    scene-0359:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0359.json
+      file_sha256: 372723212e29cf3a18c0f40b02d775f30f585ebc751fa131cc43a8a5516935ea
+      inventory_sha256: 55149923bf0a94e32f69529aaca624af2d4e2cb499590d6116baffe8b0e34297
+    scene-0875:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0875.json
+      file_sha256: 1ce5ac15af2091a17c19d766cbe2acc790c572fce7741d5914e2307347862a46
+      inventory_sha256: fbc1f8f2ac1e0f65a811868f427dfd0e32f397d95802f85b31eaa05771276f5e
+    scene-0535:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0535.json
+      file_sha256: c30ac4770ab7e588a6f80306e5bd32531453e8148a1c35c13be1d2b369625681
+      inventory_sha256: 31bb307e2d724e6a3f55342b9658150a40e42098a1a4a81b17d6c561f5912ecc
+    scene-0436:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002/artifacts/scene-0436.json
+      file_sha256: ba46b4c0cc0d703570d05c985a7f93fc5046335e9edf9aa5f7536e6b0b3f2746
+      inventory_sha256: f73a07467ef58f19a152ae570d5ce5d196f8c04a9f618b30e5f9858267743bc8
+
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  dataset_config: nuscenes/3cams
+  start_timestep: 0
+  end_timestep: -1
+  test_image_stride: 0
+  frame_partition:
+    modulus: 5
+    development_remainder: 2
+    heldout_remainder: 4
+    train_remainders: [0, 1, 3]
+  load_smpl: false
+  expected_cameras: 6
+  expected_frames_by_scene:
+    scene-0471: 196
+    scene-1087: 196
+    scene-0379: 191
+    scene-0998: 196
+    scene-0359: 196
+    scene-0875: 196
+    scene-0535: 201
+    scene-0436: 196
+
+scenes:
+  scene-0471: 382
+  scene-1087: 827
+  scene-0379: 296
+  scene-0998: 756
+  scene-0359: 276
+  scene-0875: 663
+  scene-0535: 425
+  scene-0436: 350
+
+training:
+  seed: 0
+  modes: {profile100: 100, formal: 30000}
+  save_only_final_checkpoint: true
+  post_train_render: false
+
+resources:
+  minimum_gpu_memory_mib: 24000
+  maximum_gpu_used_at_start_mib: 2048
+  minimum_cgroup_memory_gib: 32
+  minimum_disk_free_at_start_gib: 60
+  stop_disk_free_gib: 20
+  stop_cgroup_ratio: 0.90
+  stop_cgroup_consecutive_samples: 2
+  sample_interval_seconds: 10
+  timeout_seconds: {profile100: 900, formal: 9000}
+
+gates:
+  preprocess_inventory_rehash_exact: true
+  checkpoint_step_exact: true
+  checkpoint_finite: true
+  profile_all_scenes_before_formal: true
+  no_post_train_render: true
+  no_validation_or_test_quality_read: true
+
+restrictions:
+  validation_quality_read: false
+  test_quality_read: false
+  post_train_render: false
+  parameter_search: false
+  graph_inference: false

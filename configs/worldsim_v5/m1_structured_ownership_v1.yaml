@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: development_preprocess
+phase: development_base_reconstruction
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -47,9 +47,33 @@ data_readiness:
     manifest_file_sha256: d244638a88943c3757a0fb00494766cf5f7ce30ba1bcd5d9e6c6bf18f0d06fd3
     member_shard_index_sha256: c26b21cee11c405a708a569e7c3e40d5afef3d8cb005a5d48fd9576e4f342a52
     extraction_run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T095000Z__m1-development-raw-extract-s0-r001
-  processed_scene_count: 0
+  processed_scene_count: 8
+  processed_total_bytes: 2497238886
+  processed_frame_contract:
+    scene-0471: 196
+    scene-1087: 196
+    scene-0379: 191
+    scene-0998: 196
+    scene-0359: 196
+    scene-0875: 196
+    scene-0535: 201
+    scene-0436: 196
   preprocess_runner: scripts/preprocess_worldsim_v5_m1_development.py
-  state: raw_complete_preprocess_required
+  formal_preprocess:
+    run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002
+    source_commit: 23e13e2201f757fc02eaf5ef0677219e564d85da
+    duration_seconds: 1148.6743891499937
+    resolved_config_sha256: 64d0428a8588af0a16a42cca11088832dc8dec272c075f5f7a43a28723b981b0
+    summary_sha256: dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0
+    status_sha256: 21702f7442824a2e7fd5e66b120511fc3c28121f68d8c711c521c7e858eacfa7
+    fingerprint_sha256: 147c6d4d4024e12ea26b1e9f0cf7ebb9723d334aa83e1ec199a86c7529eb7a2c
+    manifest_sha256: c7140b4001bcfb108e83b5569a5d25a1176f61c66a3dcb1c5d17c3ddfa10f391
+    events_sha256: 4abc3523a6a8af4b22c9e0cf9418914aea38c43139240a56e9e8923918c18f22
+    checkpoint: N/A_data_preparation
+    quality_read: false
+    training_started: false
+    model_inference_started: false
+  state: processed_complete_base_checkpoint_required
   quality_read: false
 
 evidence_contract:

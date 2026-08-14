@@ -155,16 +155,27 @@ def test_edge_schema_rejects_cross_table_index_drift() -> None:
         validate_edge_table(edges, gaussian_count=2)
 
 
-def test_m1_contract_starts_with_instrumentation_and_frozen_development_only() -> None:
+def test_m1_contract_binds_processed_development_before_reconstruction() -> None:
     config = yaml.safe_load(
         (ROOT / "configs/worldsim_v5/m1_structured_ownership_v1.yaml").read_text(
             encoding="utf-8"
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "development_preprocess"
+    assert config["phase"] == "development_base_reconstruction"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
-    assert config["data_readiness"]["processed_scene_count"] == 0
+    assert config["data_readiness"]["processed_scene_count"] == 8
+    assert config["data_readiness"]["processed_total_bytes"] == 2497238886
+    assert config["data_readiness"]["processed_frame_contract"]["scene-0379"] == 191
+    assert config["data_readiness"]["processed_frame_contract"]["scene-0535"] == 201
+    assert (
+        config["data_readiness"]["formal_preprocess"]["summary_sha256"]
+        == "dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0"
+    )
+    assert (
+        config["data_readiness"]["state"]
+        == "processed_complete_base_checkpoint_required"
+    )
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]

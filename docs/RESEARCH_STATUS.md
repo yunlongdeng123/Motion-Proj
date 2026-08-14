@@ -1,11 +1,12 @@
 # Research Status
 
-## V5 M1 精确原始载荷准备（2026-08-14）
+## V5 M1 development 数据闭环与 base reconstruction 入口（2026-08-14）
 
-- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；新增 metadata-only batch planner=`scripts/prepare_worldsim_v5_drivestudio_raw.py`，绑定 frozen development identity，不读取图像/LiDAR 内容质量、validation/test quality 或历史结果。
-- DriveStudio 10Hz 上游真实输入合同为六路相机 + `LIDAR_TOP` 的完整 `sample_data` 时间链（含 keyframe/sweep），不是此前三前向相机 + LiDAR keyframe 的 `1280` 项粗审计。一次流式 metadata 重算得到 `8 scenes / 14,220 files / 0 present`；逐 scene、逐传感器分母已写入 M1 config。
-- 抽取协议固定为：复用现有非空 sensor member；合并既有 member→shard 审计证据；对仍缺的成员至多单遍扫描十个本地官方 blob shard；只原子落盘命中成员；逐文件记录 bytes/SHA-256/source/shard，并生成 scene 与 batch manifest。禁止铺开约 294 GB 全量 blobs。
-- 当前还没有执行 raw extraction 或 preprocess，故 raw=`0/14,220`、processed=`0/8`，graph 继续 `disabled`。下一步在固定 source commit 上执行选择性抽取，然后逐 scene 运行 DriveStudio preprocess 与结构完整性审计。
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；精确 raw selective extraction 与 8-scene DriveStudio preprocess 均已完成，当前阶段=`development_base_reconstruction`。graph 继续 `disabled_until_unary_diagnostic`，尚无 development quality、arm selection 或参数搜索。
+- raw formal run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T095000Z__m1-development-raw-extract-s0-r001`：六路相机 + `LIDAR_TOP` 完整 keyframe/sweep 时间链=`14,220/14,220 files`、`3,996,996,012 bytes`；batch manifest content/file SHA=`65fc5363ca13f9124fe6165a84a7857339943d64b87a756127950ab19c4611b6 / d244638a88943c3757a0fb00494766cf5f7ce30ba1bcd5d9e6c6bf18f0d06fd3`，summary SHA=`0c164e46873ecca4e2878d2d9937960d9b1df916ee25e92d075abc9d1ea0c213`。
+- preprocess canonical run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002`，source commit=`23e13e2201f757fc02eaf5ef0677219e564d85da`，`8/8 scenes`、`2,497,238,886 bytes`、耗时=`1148.674389 s`，summary/status/fingerprint/manifest SHA=`dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0 / 21702f7442824a2e7fd5e66b120511fc3c28121f68d8c711c521c7e858eacfa7 / 147c6d4d4024e12ea26b1e9f0cf7ebb9723d334aa83e1ec199a86c7529eb7a2c / c7140b4001bcfb108e83b5569a5d25a1176f61c66a3dcb1c5d17c3ddfa10f391`。
+- timeline 分母按真实 scene metadata 保留：`scene-0379=191 frames`、`scene-0535=201 frames`、其余六场景=`196 frames`；对应最终文件数=`6120 / 6440 / 6280×6`。这不是截断或缺帧，训练合同不得强行改写成统一 196。
+- 全过程 sensor payload 仅为抽取、预处理与 SHA/结构审计读取；`quality/training/model inference/validation/test read=false`。下一步在 clean commit 上先执行 8-scene `profile100` 资源/合同门，再启动 30k StreetGS immutable base；base checkpoint 就绪后才运行 structured unary diagnostic。
 
 ## V5 P0 forensic 正式证据注册（2026-08-14）
 
@@ -21,7 +22,7 @@
 - 当前阶段=`post_fresh_cohort_development_only`：只开放冻结 development scenes 上的 M1 structured ownership、M2 geometry-first 与 evidence/reference instrumentation。validation/test quality 尚未读取；M1B semantic split、完整 M3、新模型大训练、validation 参数搜索、KITTI 方法调参仍禁止。
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，第一子阶段只修复可观测性：已新增 deterministic chunked NPZ 合同，分别保存 per-Gaussian geometry/unary、per-view SAM/visibility/boundary/depth/view-angle observation 与 sparse per-edge topology；V4 aggregate state 不再作为 V5 唯一证据源。
 - reliability-aware effective-count unary 已实现纯函数与 byte-stable schema tests；B0/B1/B3 只在 development 比较，B2 hierarchical 延后，graph/Transformer/semantic split 继续 disabled。当前没有读取任何 development quality，也没有选择 arm 或参数。
-- 8 个 development scene 的 DriveStudio index=`382/827/296/756/276/663/425/350`；processed=`0/8`。三前向相机+LIDAR keyframe raw audit=`0/1280 present` 于现有 V4 selective raw root，因此下一工程动作是从官方 10 个 blobs archive 做 member-indexed selective extraction，再运行 preprocess；该 readiness 缺口不是模型负结果。
+- 8 个 development scene 的 DriveStudio index=`382/827/296/756/276/663/425/350`；raw=`14,220/14,220`、processed=`8/8`。此前 `0/1280` 仅是三前向相机+LiDAR keyframe 的已废弃粗审计；精确六相机+完整 LiDAR 时间链已由 selective extraction 和逐文件 SHA 证据取代。
 
 ## V5 P0 / KITTI archive 审计（2026-08-14）
 
