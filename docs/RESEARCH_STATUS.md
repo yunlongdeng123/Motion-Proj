@@ -1,5 +1,15 @@
 # Research Status
 
+## V5 M2 per-actor surface 序列收口，Gaussianization forensic 待执行（2026-08-14）
+
+- `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01=running`，当前阶段=`per_actor_surface_sequence_closed_gaussianization_forensics_next`。只使用 frozen development `scene0471`；validation/test/KITTI quality、parameter search 与 router refit 均为 false。
+- r004 把 r036 的 actor-union mask 恢复为正式修复语义：`23 actor-view requests = 22 accepted + 1 rejected`，逐 actor union 与原 mask 逐像素 exact；r002/r003 的 union-mask 结果只保留为 staged/instrumentation 负证据，不参与最终 arm 选择。
+- r005 的 G0 在 `22/22` 请求上 raw absolute gate fail，raw MAE mean/median=`8.5872/8.7151m`；Gaussianization primary=`16/22`，post MAE mean/median=`9.0056/9.0040m`。reference confidence mean/median=`0.0585/0.0582`，故全部数值仅是 base-background model proxy，不是独立 GT。
+- 结果前冻结的 broad-support gate 要求 `>=14/22` 请求改善至少 `0.5m`，且 mean/median candidate−G0 都小于 0。G1/G2/G3 分别只有 `5/8/11` 请求改善；mean delta=`+3.658565/+3.005506/+0.103693m`，因此全部 `rejected`。G3 虽 median delta=`-1.489037m`，仍不得事后按中位数选臂。
+- r001 与 r007 合法保留为 `blocked`：前者错误要求 6/6 views 都有 SAM；后者为 artifact serializer 的 arm tuple 变量遮蔽 `KeyError: 0`。二者均不是方法质量失败，均以新 run ID 修复，不覆盖 terminal。
+- 当前没有 geometry-safe candidate，`WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01` 继续锁定。下一步仅拆解 G0 raw→Gaussian asset→alpha/render 的 representation error；禁止进入 router、validation、神经 surface 或 KITTI 调参。
+- 人类可读归档=`docs/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`；附录/机器元数据=`docs/archive/2026-08/worldsim-v5-m2/APPENDIX_INDEX.md` 与 `M2_R001_R009_METADATA.json`。
+
 ## V5 M1/M1B development 收口：rejected（2026-08-14）
 
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=rejected`：三场景 graph replication 只有 `3/6` Boundary F1 单元正向，未达 `>=4/6`；validation、formal arm selection 均未解锁。

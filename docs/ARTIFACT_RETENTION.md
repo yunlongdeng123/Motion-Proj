@@ -6,6 +6,13 @@
 - 当前研究授权：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 - 终局证据入口：[`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)
 
+## 0. V5 M2 active addendum（2026-08-14）
+
+- `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01` 的 r001–r009 全部保留在 `/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/`；r001/r007 的 blocked terminal 不覆盖，r002/r003 的 union-mask artifact 保留为 request-unit 失败证据。
+- r004 的逐 actor mask manifest 与 mask payload、r005–r009 的 request NPZ/diagnostics、summary/status/fingerprint/manifest/resolved/events/source snapshot 都是后续 Gaussianization forensic 与技术报告附录的只读输入，当前禁止清理。
+- 轻量索引=`docs/archive/2026-08/worldsim-v5-m2/`；大型 checkpoint、request NPZ 与 render 仍驻留正式 run，不复制进 Git。
+- 当前不存在 safe geometry candidate；在 Gaussianization forensic 和新的 development gate 完成前，不得把 G0/G1/G2/G3 任一 arm 标记为 selected，也不得清理 r005 的 staged candidate assets。
+
 ## 1. 必须驻留的轻量证据
 
 | 类别 | 路径 | 用途 |

@@ -1,0 +1,145 @@
+{
+  "schema_version": "worldsim_v5_m2_development_archive_v1",
+  "generated_at_utc": "2026-08-14T20:40:00Z",
+  "task_id": "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01",
+  "task_status": "running",
+  "phase": "per_actor_surface_sequence_closed_gaussianization_forensics_next",
+  "scope": {
+    "partition": "development",
+    "scene": "scene-0471",
+    "validation_quality_read": false,
+    "test_quality_read": false,
+    "kitti_quality_read": false,
+    "parameter_search_performed": false,
+    "router_refit_performed": false,
+    "reference": "base_background_depth_model_proxy_not_ground_truth",
+    "independent_geometry_claim_allowed": false
+  },
+  "request_protocol": {
+    "unit": "one_actor_one_view_one_hole",
+    "request_count": 23,
+    "accepted_mask_count": 22,
+    "rejected_mask_count": 1,
+    "union_replay_exact": true,
+    "union_mask_for_geometry_forbidden": true
+  },
+  "selection_gate": {
+    "minimum_evaluable_request_count": 18,
+    "minimum_raw_improvement_m": 0.5,
+    "minimum_improvement_request_count": 14,
+    "require_mean_candidate_minus_g0_below_m": 0.0,
+    "require_median_candidate_minus_g0_below_m": 0.0
+  },
+  "surface_results": {
+    "G0_ROBUST_PLANE": {
+      "evaluable_request_count": 22,
+      "raw_absolute_fail_count": 22,
+      "raw_mae_mean_m": 8.5872,
+      "raw_mae_median_m": 8.7150631,
+      "gaussianization_primary_count": 16,
+      "conclusion": "per_actor_builder_and_gaussianization_both_fail"
+    },
+    "G1_PIECEWISE_PLANE": {
+      "evaluable_request_count": 22,
+      "improvement_request_count": 5,
+      "mean_candidate_minus_g0_raw_mae_m": 3.65856495,
+      "median_candidate_minus_g0_raw_mae_m": 2.30028248,
+      "conclusion": "g1_piecewise_surface_rejected_on_model_proxy"
+    },
+    "G2_MOVING_LEAST_SQUARES": {
+      "evaluable_request_count": 22,
+      "improvement_request_count": 8,
+      "mean_candidate_minus_g0_raw_mae_m": 3.0055064873916124,
+      "median_candidate_minus_g0_raw_mae_m": 1.6207927995993634,
+      "minimum_delta_m": -11.194128000270195,
+      "maximum_delta_m": 19.522882238247146,
+      "conclusion": "g2_moving_least_squares_surface_rejected_on_model_proxy"
+    },
+    "G3_ROBUST_QUADRATIC": {
+      "evaluable_request_count": 22,
+      "improvement_request_count": 11,
+      "mean_candidate_minus_g0_raw_mae_m": 0.10369256057532619,
+      "median_candidate_minus_g0_raw_mae_m": -1.4890367882540274,
+      "minimum_delta_m": -10.441855222037779,
+      "maximum_delta_m": 14.764988705148859,
+      "conclusion": "g3_quadratic_surface_rejected_on_model_proxy"
+    }
+  },
+  "runs": [
+    {
+      "id": "r001",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T195110Z__m2-staged-geometry-scene0471-s0-r001",
+      "source_commit": "46226b45ecd47162422e73c292abffdc8db82d49",
+      "status": "blocked",
+      "reason": "required_all_frozen_views_to_have_sam_masks",
+      "hashes": {"status": "b748de0705b5681611f7129ed6ac463d24ab99c6b52f8a3c86b2cc5f5510b36b", "resolved_config": "18098cd62ad317e700c6c68a0e72cb8ee8c2cbd3268f43ab9ad7504dd776f615", "events": "422a07f5dc703e60c84453e18748888c5782fd3367bd15d3dec24dc4c3690ad6"}
+    },
+    {
+      "id": "r002",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T195500Z__m2-staged-geometry-scene0471-s0-r002",
+      "source_commit": "31a147d3eba35aa891fafd1707ea5c42a5e83ab0",
+      "status": "done",
+      "request_unit": "actor_union_per_view_diagnostic_only",
+      "conclusion": "g0_candidate_builder_is_primary_mechanism_on_model_proxy",
+      "hashes": {"summary": "094d1078401f790b05e4851735736088af8731dda52029433755b08d5ef348ca", "status": "bc7e685c887fc3c6ed114187af2336fb122e447fce6e84dbe15a1326d852e4f1", "fingerprint": "861448b3163bb0a993eaa2ddccdabe9138ee7d1f8596e0b777e4b72b54337454", "manifest": "a0127774d78efc1647e897ae318b7ede62a4d8c1aa7d6c3f4495fbb5112bb334", "resolved_config": "09e78ce01a4ecc64a7a37e6fe92bb7291b7ddad2bb24f7cb97543acbeb29f039", "events": "be96bdd7ab149e5fe8850ab6ed26a917f13ffbc6f6913eedc9cc3cbdb878247f", "diagnostics": "10f391dd72b3b3fed9879779f8d9bda1f5f49e43d849a3df7e69488834336f6d"}
+    },
+    {
+      "id": "r003",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T200300Z__m2-g0-g3-surface-ablation-s0-r003",
+      "source_commit": "d9030f87e4e06b8e79bd61b9e502526b205ec04a",
+      "status": "done",
+      "request_unit": "actor_union_per_view_diagnostic_only",
+      "conclusion": "g3_surface_rejected_on_model_proxy",
+      "hashes": {"summary": "bf81094a0d175c37ce306eb8e035e27548c7c9e1ec18f374476438d6341a1963", "status": "e71cb07f5527a4959c92001793939ea7dfb6479ffd271036d38b80af464f7449", "fingerprint": "1953a1e263ae16d34ef959fcf34df2fa856d5fefbcd3f622a0ffd905ded241dc", "manifest": "f0ab4d42a01cb229c7972dbc537ef43fea4729ee1b8ba27fc86ee670747592ec", "resolved_config": "c2d8675f4636d9097183511ca509780bb25affe0f52e5ecf5badfefc7ebe6f12", "events": "e83af476328c30a5fb4922c658f5a7d94b257ba5d2e7eea3f2033915e38f2150", "diagnostics": "530a36693f439c2dd8a8ba647bbf8bebb8d74bea5ca3688baf27a5834fa1714d"}
+    },
+    {
+      "id": "r004",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T201100Z__m2-scene0471-per-actor-masks-s0-r004",
+      "source_commit": "607479e917103e42181dca1ba7846ac599c92680",
+      "status": "done",
+      "conclusion": "per_actor_repair_request_masks_materialized",
+      "hashes": {"summary": "e931c09fa4c1f6ca34b9b302bc5902cf9d1b183d77f6eaaeecea1083d27911a5", "status": "0b8250529d85e09cd29fdaab0f1fa75e1282f35b1863b6a5e0a14c80daccade6", "fingerprint": "56384bc41652f15489e4303db5ade92c9efff01098d44ca5d9be619c197a7576", "manifest": "634b042e1fee9f3e99641f4f98222f464e5b6cca08b77ad74d6cf948795e4727", "resolved_config": "86d2b235b0a69f186cecf4e718bd38357b4171d9290f47e5be747119aa8b7998", "events": "77d4f3fd8817c2c126f74a2dd3745059a7362f9c76be872b09b3ab2aa9116db3", "mask_manifest": "98b2d44d9bde0795a8956e6050a97ea5baefc89b57d278f06cd0ebe80f133ca1"}
+    },
+    {
+      "id": "r005",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T202000Z__m2-scene0471-per-actor-g0-s0-r005",
+      "source_commit": "64c26c6c14da6cfaebcd77cfed3868e293482fce",
+      "status": "done",
+      "conclusion": "per_actor_builder_and_gaussianization_both_fail",
+      "hashes": {"summary": "b93c4be44c597762a899e46ef4c89c5a25ca1c54e09824ceca4d82c46f18eb15", "status": "1f0f31b3b861ab9575e59ca8d833ae4462bfdd21f62f40c44b5f3986b3dbbde3", "fingerprint": "2fdfda8e1418e18af3ae50ff7b9aaaa6db6479762afebcd09ad9358969d4b9e6", "manifest": "1234aa8fa9b7500834dedec3b3ef059e32c8a0a77eb4b4a5dc166c1d8b3bf195", "resolved_config": "9de03e237a986a3596e3d53fe4fbce819cb84772720717daaf058011145031ae", "events": "f5784eac6389fc7ab4708ded3d4df18787ad7c6d8b555233ec13435fa5db5ea8", "diagnostics": "29914287f2a34bc0d84565e74a9379ab458b7e4d696f0c9acee4c9c7819beed2"}
+    },
+    {
+      "id": "r006",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T203000Z__m2-scene0471-per-actor-g0-g1-raw-s0-r006",
+      "source_commit": "d5f4e647589dc9f085437cb5e628b3e9510086d3",
+      "status": "done",
+      "conclusion": "g1_piecewise_surface_rejected_on_model_proxy",
+      "hashes": {"summary": "015a507471cb18fa728d98548d1714c8898125e4f165c0f662e797bdfca30fb9", "status": "5148458635aafcd7f4c47a81ea0a5ac4cf824602714c3a3eb57492efc5933955", "fingerprint": "725f5fa8504bda91ea082a47990c75e090f729a0a61d219432676bf5fafa10f9", "manifest": "cbded7b5358e4ed78995adab9f42fca4a07013eafb7409bc2b24a0c38a09f6df", "resolved_config": "38b39e63515d0190683542eb18bba67582304ae59d2337ed1fa45c630a46ec6d", "events": "83be41c7966782ebed6d4f034c22b44e227800152f9204559df1554892e46b0e", "diagnostics": "f54f03b09ec9b817dc8bb68a45b1da4fa4b821c3a0f69b94d34b18eae0695bdd"}
+    },
+    {
+      "id": "r007",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T202900Z__m2-scene0471-per-actor-g0-g2-raw-s0-r007",
+      "source_commit": "8a729de609e9ac9818481d121ddbbdcab2d823f4",
+      "status": "blocked",
+      "reason": "artifact_serialization_arm_tuple_shadowed_KeyError_0",
+      "hashes": {"status": "876220e27cd38e49f620c01b61800a1b20449fb75c68d21a1281aa9e76462303", "resolved_config": "87e6ff97fb0db0a6e6ab92b4c43f06e5e0f290795e8847f324c217e024cee50a", "events": "077f9aed8fa768701e2e8b2114689eba7f68a202a2664b6e4c43f4066fc50f20"}
+    },
+    {
+      "id": "r008",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T203200Z__m2-scene0471-per-actor-g0-g2-raw-s0-r008",
+      "source_commit": "cdf329eb8721f7a7bb2f6ab0a5cf62d5f1e1c59e",
+      "status": "done",
+      "conclusion": "g2_moving_least_squares_surface_rejected_on_model_proxy",
+      "hashes": {"summary": "906bfc7b569265d6806e25b42bb855352b64b4e1cdb4562fb267aadf72efcf92", "status": "874c9f907365fbcbcccd1ad3073eb3495f962e70c0d491630431f2935e738fb3", "fingerprint": "432814b24600de356ddd76ab1cb266b268be019e5b85d412bb4641f2f3b834fa", "manifest": "d7e17493afeb681a874873506527d0596a95fb812ca2a1e9108948f44252f28b", "resolved_config": "87e6ff97fb0db0a6e6ab92b4c43f06e5e0f290795e8847f324c217e024cee50a", "events": "f86256f1996ebc3365ae26213951648a141eb22b095cafffee5ff533d2544501", "diagnostics": "2298fa0792805b12f01e8be661e9f16b86e203839ec764c35acbccbea0564252"}
+    },
+    {
+      "id": "r009",
+      "path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T203700Z__m2-scene0471-per-actor-g0-g3-raw-s0-r009",
+      "source_commit": "cc6c90588f1d3971b2901f9fad953fe3d8cb1fd2",
+      "status": "done",
+      "conclusion": "g3_quadratic_surface_rejected_on_model_proxy",
+      "hashes": {"summary": "8a253325f5b689239712b6de3e862ddfd1b1b10adb82ac6583286c755ef0d06c", "status": "a40727fb94dd64141cee37f83626811261c65222923f7897abaa33179f722426", "fingerprint": "381ce85a09689589b092e526ccaf5fc8f5ff567da328a195302b8b77927a4649", "manifest": "c95be20b8b66b273740d0a3e2d33d8696071659ef6ea6f233e5fad2b7bcd8526", "resolved_config": "37fb816683df03c6a46b42ff1df42f6fd3169fd31bbf81a39d5e43dd8adec76b", "events": "f478878e264e9bd92510b2b0427b8daa0e99501bff6c66c304ae5c555f9f4fe2", "diagnostics": "d22fa44fa6a10cec29ed4bdd1481950211f069f73106469715914c038fce79b3"}
+    }
+  ],
+  "next_gate": "gaussianization_representation_and_alpha_compositing_forensics_only"
+}

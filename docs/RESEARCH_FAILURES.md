@@ -1,5 +1,16 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V5 M2 geometry-first 新增防重复结论（2026-08-14）
+
+- `V5-F34`：同一 view 的 actor-union mask 不是合法的一次修复 request。r002/r003 把多个 actor 合成一个 hole，最大 union 达 `152,410` pixels，导致大洞支配均值；r004 已恢复 `one_actor_one_view_one_hole`，得到 `23=22 accepted+1 rejected` 且 union pixel-exact replay。后续方法选择不得复用 union-mask 分母。
+- `V5-F35`：base renderer `background_depth` 是维护一致性 proxy，不是 same-view hidden-background GT。r005 的 reference confidence mean/median 只有 `0.0585/0.0582`，范围 `0–0.1557`；任何 raw/post MAE 必须与 `model_proxy_not_ground_truth` 同表，不得写成真实道路深度恢复。
+- `V5-F36`：G0 在逐 actor r005 上 raw absolute fail=`22/22`，raw MAE mean/median=`8.5872/8.7151m`；同时 Gaussianization primary=`16/22`。不得因为 G0 是最简单 arm 或相对复杂 surface 较稳，就把它写成 geometry-safe candidate。
+- `V5-F37`：G1 piecewise plane 只有 `5/22` 请求改善 `>=0.5m`，candidate−G0 mean/median=`+3.658565/+2.300282m`。它在当前 model proxy 上正式 rejected；禁止根据局部 side 拟合直觉继续调 piece 分区后复活同一 arm。
+- `V5-F38`：G2 MLS 的收益由少数洞驱动。它在一个 `118,022`-pixel actor 上改善 `11.194128m`，但仅 `8/22` 请求达到改善门，mean/median delta=`+3.005506/+1.620793m`。不得引用最大改善或自适应带宽完成度掩盖广泛稳定性失败。
+- `V5-F39`：G3 quadratic 的 median delta=`-1.489037m` 不能覆盖 mean=`+0.103693m` 与 improvement count=`11/22<14/22`。r009 已按冻结 gate rejected；不得事后将判据改成 median-only，也不得沿用 request-unit 错误的 r003 作为相反证据。
+- `V5-F40`：blocked terminal 必须与方法失败分离。r001 是 unavailable-view denominator 合同错误；r007 是 artifact serializer 局部变量遮蔽导致 `KeyError: 0`。两者没有可用质量 summary，不能进入 arm 均值，也不能覆盖目录或改 terminal；修复只允许新 run ID。
+- `V5-F41`：G1/G2/G3 全部 rejected 且 G0 raw `22/22` fail，当前不存在 safe candidate。按照 V5 causal order，feasibility-first router、validation 和神经 surface 都不得解锁；下一步只能先诊断/修复 Gaussianization representation 与 alpha compositing，之后重新经过独立 development gate。
+
 ## V5 M1 structured unary 新增防重复结论（2026-08-14）
 
 - `V5-F20`：renderer 的逐 pixel intersection 不是独立多视角证据；同一 Gaussian 在同一 view 覆盖更多像素时，若逐行更新 Beta，会把屏幕面积伪装成 view count。V5 必须先按 `Gaussian × view` 聚合 contribution，再以 `1-exp(-mass)` 形成饱和 visibility，B0/B1 每 Gaussian 每 view 最多一票；不得以原始 intersection 行数扩大 evidence denominator。

@@ -1,5 +1,24 @@
 # Experiments
 
+## V5 M2 geometry-first r001–r009（2026-08-14）
+
+| Run | 状态 | 正式分母/阶段 | 结论 |
+|---|---|---|---|
+| r001 staged G0 | blocked | 6 frozen views | 把 2 个 SAM-unavailable view 错当成必须有 mask；无方法结论 |
+| r002 staged G0 | done | 4 union-mask evaluable + 2 abstain | raw/pre mean=`21.760946m`，post mean=`6.392995m`；仅 staged diagnostic |
+| r003 union G0/G3 | done | 4 union-mask evaluable + 2 abstain | G3 raw improvement=`1/4`；后因 request unit 不等价，只作负证据 |
+| r004 per-actor masks | done | `23=22 accepted+1 rejected` | union pixel-exact replay；冻结正式 request unit |
+| r005 per-actor G0 | done | `22 evaluable+1 abstain` | raw fail=`22/22`；Gaussianization primary=`16/22` |
+| r006 per-actor G0/G1 | done | `22+1` | improvement=`5/22`，mean/median delta=`+3.658565/+2.300282m`，G1 rejected |
+| r007 per-actor G0/G2 | blocked | serializer 前已计算，未形成 summary | arm tuple 变量遮蔽导致 `KeyError: 0`；无方法结论 |
+| r008 per-actor G0/G2 | done | `22+1` | improvement=`8/22`，mean/median delta=`+3.005506/+1.620793m`，G2 rejected |
+| r009 per-actor G0/G3 | done | `22+1` | improvement=`11/22`，mean/median delta=`+0.103693/-1.489037m`，G3 rejected |
+
+- r004/r005/r006/r008/r009 summary SHA=`e931c09fa4c1f6ca34b9b302bc5902cf9d1b183d77f6eaaeecea1083d27911a5 / b93c4be44c597762a899e46ef4c89c5a25ca1c54e09824ceca4d82c46f18eb15 / 015a507471cb18fa728d98548d1714c8898125e4f165c0f662e797bdfca30fb9 / 906bfc7b569265d6806e25b42bb855352b64b4e1cdb4562fb267aadf72efcf92 / 8a253325f5b689239712b6de3e862ddfd1b1b10adb82ac6583286c755ef0d06c`。
+- surface gate 在结果前固定为：`>=18` evaluable、`>=14` 请求改善 `>=0.5m`、mean/median delta 均 `<0`。没有 arm 通过；G0 也不是 safe candidate，只是比较基准。
+- reference=`base_background_depth_model_proxy_not_ground_truth`；r005 confidence mean/median=`0.0585/0.0582`，independent GT claim=false。validation/test/KITTI quality 与 router search/refit 均未发生。
+- 详细路径、所有 terminal/manifest/fingerprint/diagnostics SHA 与 appendix 表见 `docs/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md` 和 `docs/archive/2026-08/worldsim-v5-m2/M2_R001_R009_METADATA.json`。
+
 ## V5 M1B boundary-residual forensic（2026-08-14）
 
 - canonical=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1B-D0-BOUNDARY-RESIDUAL-FORENSICS-01/20260814T192757Z__m1b-d0-boundary-residual-forensics-s0-r001`，source=`bb4ebb5ee57f3dfd86b7189cc08e71a77e19e00f`。

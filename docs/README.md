@@ -2,9 +2,9 @@
 
 - 更新时间：2026-08-14
 - 当前路线：`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`
-- 当前授权：`WS-V5-P0-SCOPE-FREEZE-01=running`；完整 M1/M2/M3、fresh test quality 和 KITTI 调参仍未授权
+- 当前授权：`WS-V5-M2-GEOMETRY-FIRST-REPAIR-01=running`；逐 actor G0–G3 surface 序列已关闭，当前只开放 Gaussianization forensic；fresh validation/test quality、router、完整 M3 和 KITTI 调参仍未授权
 - V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
-- KITTI archive audit：[`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)，状态=`blocked_dataset_adapter`
+- KITTI archive/adapter：[`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)、[`KITTI_TRACKING_ADAPTER_SMOKE_V5.md`](KITTI_TRACKING_ADAPTER_SMOKE_V5.md)，状态=`done`；0001 缺失 LiDAR `177–180` 以 abstain 保留
 - 最新关闭路线：`WorldSim V4 / EviDelta-GS`
 - V4 终态：`M1 rejected / M2 done with geometry caveat / M3 confirmed`
 - V4 当前执行授权：`none_v4_closed`
@@ -43,6 +43,8 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 - [`KITTI_TRACKING_ARCHIVES_V5.sha256`](KITTI_TRACKING_ARCHIVES_V5.sha256)：7 个原始 ZIP 的标准 SHA-256 清单；
 - [`WS_V5_M1_FAILURE_FORENSICS.md`](WS_V5_M1_FAILURE_FORENSICS.md)：V4 M1 rejection 的 V5 retrospective 诊断与缺失证据边界；
 - [`WS_V5_M2_GEOMETRY_FORENSICS.md`](WS_V5_M2_GEOMETRY_FORENSICS.md)：V4 M2 `+3.3908 m` 的 risk saturation、oracle regret 与 denominator 分解；
+- [`WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`](WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md)：V5 M2 r001–r009、逐 actor request 修正、G0–G3 失败结论与下一门禁；
+- [`archive/2026-08/worldsim-v5-m2/APPENDIX_INDEX.md`](archive/2026-08/worldsim-v5-m2/APPENDIX_INDEX.md)：M2 技术报告附录与机器元数据入口；
 - [`../configs/worldsim_v5/p0_scope_v1.yaml`](../configs/worldsim_v5/p0_scope_v1.yaml)：V5 P0 科学范围、claim、门禁和授权；
 - [`../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml`](../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml)：fresh 8/8/20 结果前 cohort 合同，当前尚未选择 scenes；
 - [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：驻留/非驻留边界；
