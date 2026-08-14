@@ -55,7 +55,7 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 
 V4 计划、P0/D0/B0/KITTI 审计和更早 V3/V2 计划继续保留在 `docs/` 根目录，原因是冻结 config、run manifest、source snapshot 和历史链接引用原路径。它们是 compatibility copies，不是当前任务入口。
 
-V5 计划 `WORLDSIM_V5_STRUCTDELTA_PLAN.md` 已进入 P0 scope freeze，但 P0 尚未收口；计划本身不授权完整 M1/M2/M3、fresh test 读取或 KITTI 调参。KITTI 7 个原始 ZIP 已完成 archive-level 审计，但真实 adapter 在 common-frame policy、calibration 与 OXTS 修复及 2-sequence smoke 完成前保持 `blocked`。
+V5 P0、fresh cohort、KITTI archive audit/adapter smoke 与 M1/M2/M3 development 均已收口；M1/M2/M3 最终均为 `rejected`，fresh validation/test 从未读取。KITTI 7 个原始 ZIP、common-frame policy、calibration/OXTS 检查和 2-sequence smoke 均为 `done`，但 KITTI 方法调参从未授权。
 
 ## 归档索引
 
