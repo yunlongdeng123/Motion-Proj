@@ -6,6 +6,8 @@
 
 用途：技术报告正文/附录的轻量事实入口；重型 checkpoint 与 NPZ 保留在不可变 run 目录。
 
+> 后续更新：三场景 result-blind replication 已完成且未通过 `>=4/6` Boundary F1 方向门。当前权威复制结论见 [`WS_V5_M1_DEVELOPMENT_REPLICATION.md`](WS_V5_M1_DEVELOPMENT_REPLICATION.md)；本页继续作为 r027–r038 单场机制阶段的不可变事实入口。
+
 ## 结论
 
 8 个 frozen development scenes 的 StreetGS base 均完成 30k，并由独立 r035 对 checkpoint bytes/SHA、run 终态与资源分母逐项复核。scene0471 的 frozen SAM evidence r036 与 unary diagnostic r037 均完成，base checkpoint 在推理前后字节完全一致。

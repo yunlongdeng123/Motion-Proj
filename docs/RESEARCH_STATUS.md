@@ -1,5 +1,13 @@
 # Research Status
 
+## V5 M1 三场景 development replication 失败并进入 boundary-residual forensic（2026-08-14）
+
+- `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`development_replication_rejected_boundary_residual_forensics_pending`。前三个 frozen development scenes=`scene0471/1087/0379` 按结果盲协议完成 SAM→unary→G0–G3 graph；选择时未读 quality，validation/test/KITTI quality 与参数搜索均未发生。
+- 稀疏 SAM 分母为 `18/30、2/30、6/30` available；unary evaluation 为 `8+7、1+14、3+12` accepted+abstain。scene1087/0379 的 canonical unary 为 r042/r043，checkpoint 前后 SHA exact；scene0471 延用 r037。
+- graph canonical 为 r038/r045/r046，G0 均逐像素 exact replay 所绑定 unary，base checkpoint 前后 exact。G3 对同 unary G0 的 Boundary F1 正向只有 `3/6`（要求 `>=4/6`）；mean ΔBoundary-F1=`+0.0016107723`、mean ΔFN-mass=`+0.0025676789`，但 topology `G3<G1` 仅 `2/3` 场景。
+- 裁决=`physical_graph_development_replication_rejected_3of6_boundary_support`；formal arm selection=false，validation unlock=false，Transformer/semantic split=false。下一步只允许复用现有 development artifacts 做 boundary ambiguity residual forensic，先证明 boundary 是主要残差，才可能条件启动 M1B；不得直接实现 split 或继续调 graph。
+- r041 的 SSH `BrokenPipeError` 与 r044 的硬编码 `8+7` 分母分别作为基础设施/合同失败保留；r042 与 r045 使用新编号完成。附录入口=`docs/WS_V5_M1_DEVELOPMENT_REPLICATION.md`。
+
 ## V5 M1 30k 正式基线与 scene0471 unary/graph 诊断闭环（2026-08-14）
 
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`，当前阶段=`structured_graph_mechanism_supported_development_replication_pending`。8-scene 30k reconstruction 已全部完成并由 r035 逐 run、逐 checkpoint 重哈希：`8/8 scenes × 30,000 steps`，总耗时=`18,392.900160 s`、checkpoint bytes=`2,920,094,512`，峰值 GPU/cgroup=`24,054 MiB / 27,706,277,888 bytes`；r035 summary SHA=`4a540d24cd8bfa18c9d63cdcbabe08dcded7a2de88de116695e431187cb6738b`。

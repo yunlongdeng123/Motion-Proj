@@ -231,7 +231,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert config["status"] == "running"
     assert config["phase"] == (
-        "structured_graph_mechanism_supported_development_replication_pending"
+        "development_replication_rejected_boundary_residual_forensics_pending"
     )
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
@@ -244,7 +244,7 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "formal30k_complete_scene0471_graph_complete_development_replication_pending"
+        == "development_replication_rejected_boundary_residual_forensics_pending"
     )
     sky = config["data_readiness"]["derived_sky_masks"]
     assert sky["required_count"] == sky["present_count"] == 4704
@@ -295,13 +295,26 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     assert graph_result["mechanism_preference"] == "G3"
     assert graph_result["formal_arm_selected"] is False
     assert graph_result["semantic_split_started"] is False
+    replication = config["data_readiness"]["development_replication"]
+    assert replication["status"] == "rejected"
+    assert replication["scenes"] == ["scene-0471", "scene-1087", "scene-0379"]
+    assert replication["selection_used_quality"] is False
+    assert replication["gate"]["positive_boundary_f1_cells"] == 3
+    assert replication["gate"]["minimum_positive_boundary_f1_cells"] == 4
+    assert replication["gate"]["mean_boundary_f1_delta"] > 0
+    assert replication["gate"]["mean_false_negative_semantic_mass_delta"] < 0.01
+    assert replication["gate"]["topology_scene_pass_count"] == 2
+    assert replication["gate"]["passed"] is False
+    assert replication["formal_arm_selected"] is False
+    assert replication["automatic_validation_unlock"] is False
+    assert replication["semantic_split_allowed"] is False
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
         config["data_readiness"]["exact_preprocess_raw_contract"]["present_files"]
         == 14220
     )
     assert config["graph"]["status"] == (
-        "scene0471_mechanism_supported_development_replication_pending"
+        "development_replication_rejected"
     )
     assert config["graph"]["base_model_consumed_by_graph"] is False
     assert config["graph"]["formal_arm_selected"] is False

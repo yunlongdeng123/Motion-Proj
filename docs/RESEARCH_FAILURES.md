@@ -11,6 +11,10 @@
 - `V5-F26`：r037 是单个 development scene、固定 `0.5` 阈值、`8 accepted + 7 abstained` evaluation views 上的 SAM-proxy 机制诊断；它能推翻“reliability-aware unary 完全无方向信号”，但不能证明 topology graph 必要、不能选择 B1/B3、不能代表 8-scene validation。graph 只能在单独预注册协议后启动，禁止根据 r037 结果补调 unary 参数、读取 validation 或直接扩展 Transformer/semantic split。
 - `V5-F27`：r038 的 G3 在 scene0471 2D SAM-proxy 上只带来 `+0.008585/+0.006245` Boundary F1（B1/B3），虽然方向一致且 FN 增量小于 `0.002`，但 Gaussian membership proxy 的 IoU 与 Boundary F1 同时退化。不得只摘录 2D 正指标把 graph 写成已通过，也不得只看 proxy 负指标否定全部图机制；两套口径都必须保留，并在 result-blind development replication 后再决定 formal arm。
 - `V5-F28`：r038 的 `cross_proxy_affinity_ratio` 使用 Background/RigidNodes membership 仅做事后 leakage 审计；graph candidate/affinity 明确不消费该字段。G1→G3 从 `0.0083646` 降到 `0.0040198` 证明物理 affinity 更少跨越 base proxy，不等于真实语义边界 GT 或 graph 必要性。禁止把 proxy 反馈进建图、据此调 k/扩散率，或直接解锁 semantic split/validation。
+- `V5-F29`：长时 sidecar 不能依赖 SSH stdout 生命周期。scene1087 unary r041 已完成主要计算，却在关闭的输出管道上写日志触发 `BrokenPipeError` 并合法标记 `blocked`；不得把它写成方法失败、覆盖目录或复用编号。正式长任务必须在启动时脱离 SSH 并把 stdout/stderr 重定向到独立日志；同一冻结配置以新编号 r042 完成，r041 继续作为基础设施失败证据。
+- `V5-F30`：scene0471 的 `8 accepted + 7 abstain` 不能硬编码成 graph 的全场景分母。r044 在读取 scene1087 的绑定 unary 后被该常量 fail-closed；修复 `d55a067` 改为 summary/diagnostics 双重验证 accepted、abstain、总分母与 B1/B3 `(frame,camera)` 键，并要求 accepted>0。r044 是通用化合同失败，不是数据或 graph 质量失败；修复后只能使用新 run r045。
+- `V5-F31`：三场景 frozen SAM 的可用视图为 scene0471/1087/0379=`18/2/6`（各 30），对应 unary 可评估分母=`8+7 / 1+14 / 3+12`。scene1087 的负方向只来自 1 个可评估视图，不能扩大为总体失败；但 result-blind replication 必须保留该稀疏场景和全部 abstain，禁止删场景、补 prompt、补 mask 或只报告可评估视图较多的场景。
+- `V5-F32`：G3 三场景复制门正式失败。六个 `scene × unary` 单元只有 `3/6` 个 Boundary F1 为正（门槛 `>=4/6`）；虽然 mean ΔBoundary-F1=`+0.0016107723`、mean ΔFN-mass=`+0.0025676789` 单项通过，但 scene1087 的 G1 cross-proxy affinity 已为 `0`，G3=`1.2800523e-29`，逐场严格下降也失败。不得用正均值覆盖稳定性门、选择 G3、读取 validation 或直接堆 Transformer。semantic split 仍是条件任务，必须先用独立 boundary-residual forensic 证明 boundary ambiguity 是主要残差；当前不自动解锁。
 
 ## V5 KITTI archive / adapter 新增防重复结论（2026-08-14）
 

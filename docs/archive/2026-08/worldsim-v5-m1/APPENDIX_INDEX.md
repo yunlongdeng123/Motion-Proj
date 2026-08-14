@@ -7,10 +7,12 @@
 - `docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md`：r027–r034 30k base 表、r035 audit、r036 frozen SAM、r037 unary、r038 physical graph 指标与解释边界。
 - `M1_R035_R037_METADATA.json`：机器可读的 run 路径、分母、指标、哈希和裁决。
 - `M1_R038_GRAPH_METADATA.json`：r038 graph 候选、bandwidth、arm delta、topology leakage 与完整哈希。
-- `docs/RESEARCH_FAILURES.md`：V5-F20–F28，包含 intersection inflation、arm collapse、opacity、actor representation、timeline、FN tradeoff、单场外推与 proxy leakage 限制。
+- `docs/WS_V5_M1_DEVELOPMENT_REPLICATION.md`：r039–r046 三场景 SAM/unary/graph 复制、六单元门槛、基础设施阻塞与解释边界。
+- `M1_R039_R046_REPLICATION_METADATA.json`：机器可读的复制选择、run/hash、六单元 delta、topology 与 gate 裁决。
+- `docs/RESEARCH_FAILURES.md`：V5-F20–F32，包含 intersection inflation、arm collapse、opacity、timeline、FN tradeoff、单场外推、稀疏分母、SSH 断管、硬编码 denominator 与复制失败限制。
 
 ## 当前裁决
 
-`physical_graph_direction_supported_single_scene_small_effect_replication_required`
+`physical_graph_development_replication_rejected_3of6_boundary_support`
 
-下一次追加只能使用新 run ID；不得覆盖 r035/r036/r037/r038 或改写其指标。validation/test/KITTI quality 仍未读。
+下一次追加只能使用新 run ID；不得覆盖 r035–r046 或改写其指标。validation/test/KITTI quality 仍未读；semantic split 只在独立 boundary-residual forensic 证明条件成立后另行冻结。

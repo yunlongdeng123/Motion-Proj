@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: structured_graph_mechanism_supported_development_replication_pending
+phase: development_replication_rejected_boundary_residual_forensics_pending
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -257,9 +257,72 @@ data_readiness:
     validation_quality_read: false
     heldout_quality_read: false
     semantic_split_started: false
-  state: formal30k_complete_scene0471_graph_complete_development_replication_pending
+  development_replication:
+    status: rejected
+    config: configs/worldsim_v5/m1_development_replication_v1.yaml
+    selection_policy: first_three_scenes_without_quality_read
+    scenes: [scene-0471, scene-1087, scene-0379]
+    scene_indices: [382, 827, 296]
+    selection_used_quality: false
+    sam:
+      scene1087:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T182142Z__m1-scene1087-sam-sparse-s0-r039
+        summary_sha256: 4b4f8d2b85809926adf02827203cfb9816fdabb49a9180617baee6fe06345f68
+        available_view_count: 2
+        view_count: 30
+      scene0379:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T182202Z__m1-scene0379-sam-sparse-s0-r040
+        summary_sha256: 47f33cb4baa49251a7ffdc4ff7133273504934cc84656c3a405e90c9c7cddbb6
+        available_view_count: 6
+        view_count: 30
+    unary:
+      scene1087:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T183210Z__m1-scene1087-unary-diagnostic-s0-r042
+        summary_sha256: d19cabd9a2bb48ded6e73ef6bf83a8073d3704198dd69ec628f39ddd98e47f8b
+        gaussian_count: 931223
+        accepted_evaluation_view_count: 1
+        abstained_evaluation_view_count: 14
+        checkpoint_exact: true
+      scene0379:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T184610Z__m1-scene0379-unary-diagnostic-s0-r043
+        summary_sha256: 1beff3d934c2628cb2b7a262d5e7ab75c4cf214db3bdf39cc51c59690140803d
+        gaussian_count: 1187291
+        accepted_evaluation_view_count: 3
+        abstained_evaluation_view_count: 12
+        checkpoint_exact: true
+    graph:
+      scene1087:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190405Z__m1-scene1087-graph-diagnostic-s0-r045
+        summary_sha256: 8e54d359ae97121bae5c3e6495126ddf94b60916ebe40023e32434dbb5762c78
+        edge_count: 5587338
+        g0_replay_unary_float16_exact: {B1: true, B3: true}
+        checkpoint_exact: true
+      scene0379:
+        run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190715Z__m1-scene0379-graph-diagnostic-s0-r046
+        summary_sha256: 65a24024e2d9a62d3db5583f87eabf1edf57a402bed9650001ac43e1bf10eb34
+        edge_count: 7123746
+        g0_replay_unary_float16_exact: {B1: true, B3: true}
+        checkpoint_exact: true
+    blocked_attempts:
+      r041: ssh_broken_pipe_superseded_by_r042
+      r044: scene0471_denominator_hardcode_superseded_by_r045_after_d55a067
+    gate:
+      denominator: 6_scene_by_unary_cells
+      positive_boundary_f1_cells: 3
+      minimum_positive_boundary_f1_cells: 4
+      mean_boundary_f1_delta: 0.0016107722561576794
+      mean_false_negative_semantic_mass_delta: 0.0025676789091405028
+      topology_scene_pass_count: 2
+      topology_scene_count: 3
+      passed: false
+    conclusion: physical_graph_development_replication_rejected_3of6_boundary_support
+    formal_arm_selected: false
+    automatic_validation_unlock: false
+    semantic_split_allowed: false
+    boundary_residual_forensics_pending: true
+  state: development_replication_rejected_boundary_residual_forensics_pending
   quality_read: true
-  quality_scope: scene0471_development_mechanism_diagnostic_only
+  quality_scope: three_scene_development_replication_only
 
 evidence_contract:
   per_gaussian: motion_proj/worldsim_v5/evidence_schema.py:GAUSSIAN_ROW_FIELDS
@@ -297,14 +360,16 @@ unary_development_arms:
   parameter_source: result_blind_mechanistic_defaults
 
 graph:
-  status: scene0471_mechanism_supported_development_replication_pending
+  status: development_replication_rejected
   candidate_knn_only: true
   frozen_diagnostic_config: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+  frozen_replication_config: configs/worldsim_v5/m1_development_replication_v1.yaml
   candidate_k: 6
   input_unaries: [B1, B3]
   arms: [G0, G1, G2, G3]
   base_model_consumed_by_graph: false
   scene0471_mechanism_preference: G3
+  replication_conclusion: physical_graph_development_replication_rejected_3of6_boundary_support
   formal_arm_selected: false
   transformer_allowed: false
   semantic_split_allowed: false

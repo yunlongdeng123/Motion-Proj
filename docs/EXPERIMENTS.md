@@ -1,5 +1,22 @@
 # Experiments
 
+## V5 M1 三场景 result-blind replication（2026-08-14）
+
+| Run | 状态 | 场景/阶段 | 关键分母或失败原因 |
+|---|---|---|---|
+| r039 | done | scene1087 SAM | `2/30` available，1 actor / 2 accepted boxes |
+| r040 | done | scene0379 SAM | `6/30` available，5 actors / 6 accepted boxes |
+| r041 | blocked | scene1087 unary attempt | SSH 输出管道关闭后 `BrokenPipeError`；保留、不覆盖 |
+| r042 | done | scene1087 unary | `931,223` Gaussians，`1 accepted + 14 abstain` |
+| r043 | done | scene0379 unary | `1,187,291` Gaussians，`3 accepted + 12 abstain` |
+| r044 | blocked | scene1087 graph attempt | scene0471 的 `8+7` 分母被硬编码；合同 fail-closed |
+| r045 | done | scene1087 graph | `5,587,338` edges，G0 exact replay r042 |
+| r046 | done | scene0379 graph | `7,123,746` edges，G0 exact replay r043 |
+
+- 复制 cohort 在结果前固定为前三个 development scenes=`0471/1087/0379`；六个 G3-vs-G0 单元中 Boundary F1 正向=`3/6`，低于 `>=4/6`。
+- 聚合 mean ΔBoundary-F1=`+0.0016107723`、mean ΔFN-mass=`+0.0025676789`；scene-level topology `G3<G1`=`2/3`。总裁决=`physical_graph_development_replication_rejected_3of6_boundary_support`。
+- validation/test/KITTI quality、parameter search、formal arm selection、semantic split/Transformer unlock 均为 false。完整表、run 路径与哈希见 `docs/WS_V5_M1_DEVELOPMENT_REPLICATION.md`，机器可读副本见 `docs/archive/2026-08/worldsim-v5-m1/M1_R039_R046_REPLICATION_METADATA.json`。
+
 ## V5 M1 formal30k / SAM / structured unary / physical graph（2026-08-14）
 
 | Run | 状态 | 关键分母 | 审计结论 |
