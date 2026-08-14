@@ -7,6 +7,7 @@ import argparse
 from collections import defaultdict
 import json
 from pathlib import Path
+import subprocess
 import sys
 import time
 from typing import Any, Iterable, Mapping
@@ -65,6 +66,10 @@ def load_config(path: Path) -> dict[str, Any]:
             raise M3ClipInventoryError(f"result-blind scope 漂移: {name}")
     if payload["clip_policy"].get("keyframe_count") != 7:
         raise M3ClipInventoryError("M3 clip denominator 必须为七 keyframes")
+    if payload["protocol_audit"].get("conclusion") != (
+        "m3_result_blind_protocol_frozen_development_implementation_unlocked"
+    ):
+        raise M3ClipInventoryError("M3 protocol audit conclusion 合约漂移")
     return payload
 
 
@@ -237,7 +242,7 @@ def build_inventory(config: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
+def _run_impl(config_path: Path, run_dir: Path) -> dict[str, Any]:
     config = load_config(config_path)
     source_head = prepare_formal_run(run_dir, TASK_ID, PROJECT)
     resolved = write_resolved_config(run_dir, config)
@@ -315,6 +320,36 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         events_record=events_record,
     )
     return {**summary, "formal_status": status}
+
+
+def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
+    try:
+        return _run_impl(config_path, run_dir)
+    except Exception as error:
+        if run_dir.is_dir() and not (run_dir / "status.json").exists():
+            source_head = subprocess.check_output(
+                ["git", "-C", str(PROJECT), "rev-parse", "HEAD"], text=True
+            ).strip()
+            atomic_json(
+                run_dir / "status.json",
+                {
+                    "schema_version": "worldsim_v5_m3_development_clip_inventory_status_v1",
+                    "task_id": TASK_ID,
+                    "task_status": "running",
+                    "status": "blocked",
+                    "source_commit": source_head,
+                    "summary_sha256": None,
+                    "manifest_sha256": None,
+                    "reason": f"{type(error).__name__}: {error}",
+                    "development_quality_read": False,
+                    "validation_quality_read": False,
+                    "test_quality_read": False,
+                    "kitti_quality_read": False,
+                    "gpu_started": False,
+                    "finished_at_utc": utc_now(),
+                },
+            )
+        raise
 
 
 def main() -> None:

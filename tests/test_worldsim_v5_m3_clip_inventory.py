@@ -83,6 +83,9 @@ def test_selection_uses_frozen_metadata_rank_not_quality() -> None:
 def test_config_keeps_all_quality_and_blob_reads_locked() -> None:
     config = load_config(PROJECT / "configs/worldsim_v5/m3_development_clip_inventory_v1.yaml")
     assert config["clip_policy"]["keyframe_count"] == 7
+    assert config["protocol_audit"]["conclusion"].endswith(
+        "development_implementation_unlocked"
+    )
     assert config["scope"]["image_read"] is False
     assert config["scope"]["lidar_blob_read"] is False
     assert config["scope"]["development_quality_read"] is False
