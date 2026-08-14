@@ -2,7 +2,7 @@
 
 本目录只保存已结束或冻结路线的计划、状态快照、实验凭证和维护证据，不构成当前执行授权。
 
-- [`worldsim-v5-m2/`](worldsim-v5-m2/APPENDIX_INDEX.md)：V5 M2 r001–r011 的逐 actor geometry-first 与 Gaussianization 因子取证索引、失败结论和机器元数据；任务本身仍在执行 density representation repair；
+- [`worldsim-v5-m2/`](worldsim-v5-m2/APPENDIX_INDEX.md)：V5 M2 r001–r015 的逐 actor geometry-first、Gaussianization、cross-view scaffold、覆盖率诊断与正式 rejection；含完整失败结论和机器元数据；
 - [`worldsim-v5-m1/`](worldsim-v5-m1/APPENDIX_INDEX.md)：V5 M1/M1B development rejection、复制与 boundary-residual 轻量附录；
 - [`worldsim-v4-final/`](worldsim-v4-final/README.md)：WorldSim V4 终局计划/账本快照、M1/M2/M3 canonical 轻量证据、技术报告附录索引与 SHA-256 清单；
 - [`worldsim-v4/`](worldsim-v4/)：V4 执行期间的集中恢复备份，只用于 byte-level 恢复，不是研究事实入口；

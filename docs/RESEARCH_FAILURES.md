@@ -1,5 +1,14 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V5 M2 cross-view scaffold 与拒绝收口新增防重复结论（2026-08-14）
+
+- `V5-F46`：repair asset provenance 必须来自已有不可变枚举。r012 使用新字符串 `cross_view_background_depth_scaffold`，在首个 asset、GPU 与方法质量读取前被拒绝；该 terminal 是工程 blocked，不是 G4 质量结果。修复只改为既有 `native_scene_donor` 并新建 r013，不覆盖 r012。
+- `V5-F47`：G4 的 Gaussianization 后改善 `17/22` 不能替代 raw 相对门。r013 raw 仅 `12/22`，低于冻结的 `14/22`，且 raw/post absolute-safe 均为 `0/22`；G4 必须保持 rejected。其 direct projection mean/median 仅约 `4.73%/0.78%`，不得靠 Gaussianization 或 fallback 隐藏覆盖不足。
+- `V5-F48`：G5 的相对支持不能覆盖绝对几何安全失败。r014 raw/post 改善=`15/22`、`19/22`，mean delta=`-3.270320/-4.023966m`，但 raw/post absolute-safe 仅 `1/22`、`0/22`；正式写法只能是“model proxy 上相对改善，未形成 geometry-safe candidate”，不得写成 M2 成功或跨视角恢复真实背景。
+- `V5-F49`：多相机投影覆盖不是独立真值。r014 any/direct/extrapolation/fallback mean=`60.40%/15.57%/47.99%/36.44%`，LiDAR projected mean≈`0.8%`；大量信息来自 bounded extrapolation 与 G0 fallback。禁止把 source 数量、投影覆盖率或 proxy MAE 当作 same-view hidden-background GT confidence。
+- `V5-F50`：G5 绝对门失败触发结果前 hard stop。禁止事后搜索 absolute threshold、camera/time source grid、fusion、disagreement、extrapolation radius、Gaussian stride/opacity，亦不得自动解锁神经 surface；任何复开必须是新科研假设、新 task、新冻结协议与独立 evidence source。
+- `V5-F51`：r015 已把 `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01` 正式收口为 `rejected`，method/router/validation 均未解锁。后续 M3 是独立任务，任何 M3 正结果不得倒写 M2 成功；`WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01` 保持 locked，不能在没有 geometry-safe candidate 时单独运行。
+
 ## V5 M2 geometry-first 新增防重复结论（2026-08-14）
 
 - `V5-F34`：同一 view 的 actor-union mask 不是合法的一次修复 request。r002/r003 把多个 actor 合成一个 hole，最大 union 达 `152,410` pixels，导致大洞支配均值；r004 已恢复 `one_actor_one_view_one_hole`，得到 `23=22 accepted+1 rejected` 且 union pixel-exact replay。后续方法选择不得复用 union-mask 分母。

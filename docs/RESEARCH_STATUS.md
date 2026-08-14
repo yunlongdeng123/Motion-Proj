@@ -1,8 +1,17 @@
 # Research Status
 
-## V5 M2 Gaussianization density 机制受支持，representation repair 待冻结（2026-08-14）
+## V5 M2 正式拒绝收口，下一独立任务转入 M3 协议冻结（2026-08-14）
 
-- `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01=running`，当前阶段=`gaussianization_density_mechanism_supported_representation_repair_next`。只使用 frozen development `scene0471`；validation/test/KITTI quality、parameter search、method-arm selection 与 router refit 均为 false。
+- `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01=rejected`。r015 汇总 `8` 个 completed 与 `4` 个 blocked terminal，正式结论=`m2_rejected_no_absolute_geometry_safe_candidate`；method arm、router refit、validation unlock、parameter search 和 neural surface automatic unlock 均为 false。
+- r013 G4 同相机跨时 scaffold 的 raw/post 改善数=`12/22`、`17/22`，raw absolute-safe=`0/22`，相对 raw 门失败；r014 G5 三相机 scaffold 的 raw/post 改善数=`15/22`、`19/22`，相对门成立，但 raw/post absolute-safe 只有 `1/22`、`0/22`，所以不能选择方法或进入 router/validation。
+- G5 覆盖诊断为 any projection/direct/extrapolation/fallback mean=`60.40%/15.57%/47.99%/36.44%`，LiDAR 投影覆盖均值约 `0.8%`。相对改善是真实 model-proxy 证据，但不是 same-view hidden-background ground truth；禁止事后改 threshold、source grid、fusion 或外推半径。
+- canonical closeout r015=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T221000Z__m2-geometry-first-closeout-s0-r015`；summary SHA=`27a6613d4428fbadaf45a7e9f606bdb1819a9a5b712bb7f03171af0fe70a0c01`，decision ledger SHA=`63b9e36bfbf734017c625910af24e226eb174e79fd0da0a33ac1b8cc6c21d715`，manifest `8/8 exact`。
+- `WS-V5-M2-GEOMETRY-FEASIBLE-ROUTER-01` 保持 `pending/locked`，不是 rejected 方法的补救入口。下一独立任务仅为 `WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01` 的 result-blind 协议/证据审查；fresh validation/test 与 KITTI 方法调参仍未授权。
+- 完整人类归档与机器元数据见 `docs/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md` 和 `docs/archive/2026-08/worldsim-v5-m2/M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json`。
+
+## V5 M2 Gaussianization density 机制中间快照（已由 r015 收口取代，2026-08-14）
+
+- 当时阶段为 `gaussianization_density_mechanism_supported_representation_repair_next`；该中间快照已由本文件首节的 r015 rejection 取代。全程只使用 frozen development `scene0471`；validation/test/KITTI quality、parameter search、method-arm selection 与 router refit 均为 false。
 - r004 把 r036 的 actor-union mask 恢复为正式修复语义：`23 actor-view requests = 22 accepted + 1 rejected`，逐 actor union 与原 mask 逐像素 exact；r002/r003 的 union-mask 结果只保留为 staged/instrumentation 负证据，不参与最终 arm 选择。
 - r005 的 G0 在 `22/22` 请求上 raw absolute gate fail，raw MAE mean/median=`8.5872/8.7151m`；Gaussianization primary=`16/22`，post MAE mean/median=`9.0056/9.0040m`。reference confidence mean/median=`0.0585/0.0582`，故全部数值仅是 base-background model proxy，不是独立 GT。
 - 结果前冻结的 broad-support gate 要求 `>=14/22` 请求改善至少 `0.5m`，且 mean/median candidate−G0 都小于 0。G1/G2/G3 分别只有 `5/8/11` 请求改善；mean delta=`+3.658565/+3.005506/+0.103693m`，因此全部 `rejected`。G3 虽 median delta=`-1.489037m`，仍不得事后按中位数选臂。

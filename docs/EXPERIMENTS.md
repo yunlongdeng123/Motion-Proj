@@ -1,5 +1,18 @@
 # Experiments
 
+## V5 M2 cross-view scaffold / formal closeout r012–r015（2026-08-14）
+
+| Run | 状态 | 冻结变量 | 主要结果 | 结论 |
+|---|---|---|---|---|
+| r012 G4 launch | blocked | 同相机 `±5/±10/±15` source grid；stride-1；12px bounded extrapolation | provenance schema 在首个 asset 拒绝；无 GPU/方法读数 | 工程 terminal 保留，使用既有 `native_scene_donor` 后新 run |
+| r013 G4 | done | target-reference-blind source projection；median fusion；G0 fallback | raw/post 改善=`12/22`、`17/22`；raw mean/median delta=`-1.188137/-0.655964m`；absolute-safe=`0/22,0/22` | `g4_cross_view_scaffold_relative_gate_rejected` |
+| r014 G5 | done | 三相机、同帧其他相机与 `±5/±10/±15`；其余门槛不变 | raw/post 改善=`15/22`、`19/22`；raw mean/median=`-3.270320/-2.785312m`；absolute-safe=`1/22,0/22` | relative supported，absolute-safe failed；无方法选择 |
+| r015 closeout | done / task rejected | 绑定 r001/r007/r010/r012 blocked 与 r004/r005/r006/r008/r009/r011/r013/r014 completed | completed/blocked=`8/4`；router/validation/neural unlock=false | `m2_rejected_no_absolute_geometry_safe_candidate`；next independent task=M3 |
+
+- r013/r014 均为 `23=22 evaluable+1 abstain`，r005 baseline replay=`22/22 exact`；target hole interior reference 不可供 candidate 使用，validation/test/KITTI quality 未读。
+- r014 G5 any/direct/extrapolated/fallback coverage mean=`60.40%/15.57%/47.99%/36.44%`；LiDAR projected mean≈`0.8%`。覆盖诊断只解释失败，不授权调参。
+- r015 summary/status/fingerprint/manifest/resolved/events/decision-ledger SHA 依次为 `27a6613d...`、`b8f6e66f...`、`0ac2b374...`、`56d1858a...`、`d9117bd8...`、`fb1eb1e6...`、`63b9e36b...`；manifest=`8/8 exact`。完整哈希见 M2 archive metadata。
+
 ## V5 M2 geometry-first / Gaussianization r001–r011（2026-08-14）
 
 | Run | 状态 | 正式分母/阶段 | 结论 |

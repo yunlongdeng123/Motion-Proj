@@ -2,12 +2,27 @@
 
 - Task：`WS-V5-M2-GEOMETRY-FIRST-REPAIR-01`
 - 日期：`2026-08-14`
-- 当前状态：`running`
-- 当前阶段：`gaussianization_density_mechanism_supported_representation_repair_next`
+- 当前状态：`rejected`
+- 当前阶段：`m2_rejected_no_absolute_geometry_safe_candidate`
 - 数据范围：仅 frozen development `scene-0471`；validation/test/KITTI quality 均未读取
 - 参考范围：`base_background_depth_model_proxy_not_ground_truth`
 
-## 1. 当前结论
+## 1. 最终收口结论（r012–r015）
+
+M2 已按冻结规则正式收口为 `rejected`，没有方法臂被选择，router、validation 和神经 surface 自动解锁均为 false。G5 多相机 scaffold 在 model-derived proxy 上通过相对门，但绝对几何安全请求只有 raw `1/22`、post `0/22`，因此不能把相对改善升级为 geometry-safe repair。
+
+| Run | Terminal | 相对结果 | 绝对几何安全 | 正式解释 |
+|---|---|---|---|---|
+| r012 G4 首次启动 | blocked | 无方法读数 | 无方法读数 | 新 provenance 字符串不在不可变 schema；以新 commit/run 修复，terminal 保留 |
+| r013 G4 同相机跨时 scaffold | done | raw/post 改善 `12/22`、`17/22`；raw mean/median delta=`-1.188137/-0.655964m` | raw/post=`0/22`、`0/22` | raw 相对门失败；覆盖率/外推依赖明显，G4 rejected |
+| r014 G5 三相机跨时 scaffold | done | raw/post 改善 `15/22`、`19/22`；raw mean/median=`-3.270320/-2.785312m` | raw/post=`1/22`、`0/22` | 相对证据成立，但绝对安全门失败；不得选择方法 |
+| r015 M2 closeout | done | 汇总 `8` 个 completed、`4` 个 blocked terminal | absolute gate=false | task=`rejected`；router/validation locked；下一独立任务为 M3 |
+
+G5 的投影覆盖均值为 `60.40%`，其中 direct 仅 `15.57%`、bounded extrapolation `47.99%`、G0 fallback `36.44%`，LiDAR 投影覆盖均值约 `0.8%`。这解释了为何较广的多相机来源能产生相对改善，却仍无法提供足够的 same-view hidden-background 绝对几何证据。按照结果前冻结的 hard stop，禁止事后搜索阈值、source grid、fusion 或外推半径，也不自动进入神经 surface。
+
+正式 closeout：`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T221000Z__m2-geometry-first-closeout-s0-r015`；summary SHA-256=`27a6613d4428fbadaf45a7e9f606bdb1819a9a5b712bb7f03171af0fe70a0c01`，decision ledger SHA-256=`63b9e36bfbf734017c625910af24e226eb174e79fd0da0a33ac1b8cc6c21d715`。r012–r015 的机器元数据见 [`archive/2026-08/worldsim-v5-m2/M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json`](archive/2026-08/worldsim-v5-m2/M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json)。
+
+## 1A. Surface 与 Gaussianization 中间结论
 
 逐 actor 修复单位上的非神经 surface 序列已经按计划完成 G0→G1→G2→G3。没有任何复杂 surface 通过相对 G0 的冻结广泛改善门：
 

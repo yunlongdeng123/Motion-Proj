@@ -1,0 +1,135 @@
+{
+  "schema_version": "worldsim_v5_m2_cross_view_closeout_archive_v1",
+  "archived_at_utc": "2026-08-14T22:15:00Z",
+  "task_id": "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01",
+  "task_status": "rejected",
+  "request_contract": {
+    "request_unit": "one_actor_one_view_one_hole",
+    "request_count": 23,
+    "evaluable_request_count": 22,
+    "abstain_request_count": 1,
+    "reference_scope": "model_derived_proxy_not_independent_ground_truth"
+  },
+  "runs": [
+    {
+      "run_id": "20260814T214000Z__m2-scene0471-g4-cross-view-scaffold-s0-r012",
+      "run_path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T214000Z__m2-scene0471-g4-cross-view-scaffold-s0-r012",
+      "source_commit": "d8f3d08bb4e6405a118fc8f6948998c90f36f197",
+      "status": "blocked",
+      "reason": "repair asset provenance 非法: cross_view_background_depth_scaffold",
+      "method_quality_read": false,
+      "sha256": {
+        "status.json": "6e8f37a260b958163d95a9f122865935e81de56519d424386d23693a37ead90c",
+        "events.jsonl": "4c3adf3a28c2137ef80a616dc89b9b0512876d71a3754106f04da306a66a366b",
+        "resolved_config.yaml": "4161300cb43648832ce3ac7fb5c6bc50f81a7b789666d17cd7aa18be51849361"
+      }
+    },
+    {
+      "run_id": "20260814T214230Z__m2-scene0471-g4-cross-view-scaffold-s0-r013",
+      "run_path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T214230Z__m2-scene0471-g4-cross-view-scaffold-s0-r013",
+      "source_commit": "34b6e452b1ed51a6930068acf83d6dd65a99c263",
+      "status": "done",
+      "conclusion": "g4_cross_view_scaffold_relative_gate_rejected",
+      "metrics": {
+        "baseline_replay_exact_count": 22,
+        "raw_improvement_request_count": 12,
+        "post_improvement_request_count": 17,
+        "raw_geometry_safe_request_count": 0,
+        "post_geometry_safe_request_count": 0,
+        "raw_candidate_minus_g0_mean_m": -1.1881371052309027,
+        "raw_candidate_minus_g0_median_m": -0.6559643637447481,
+        "post_candidate_minus_dense_baseline_mean_m": -2.3629424973558515,
+        "post_candidate_minus_dense_baseline_median_m": -1.6232702490099706,
+        "relative_gate_passed": false,
+        "absolute_geometry_safe_gate_passed": false
+      },
+      "sha256": {
+        "summary.json": "110b15f47bb7ba9698efcd45a399d772912173447a10a1bf41ba367b18d64d4d",
+        "status.json": "075fc432e413e980219bf59179c5170d3f86dad1ed77bf20c10fc791832032df",
+        "fingerprint.json": "849eb7a77a06bd7b10a57fef054f633615a91233df3cf1ce95ca6627b0a13969",
+        "manifest.json": "fed4590fc75757ced6af4c8e7367a224885aac011f96ade677fa135ce12ef554",
+        "resolved_config.yaml": "cd9d02c6dbc27b9408c3c4c6fb780f98f380c858ae919d8669340cba81ee0f7d",
+        "events.jsonl": "eb89248fe50d74e8126fe962bf5284c383aefbcd0b53138ddb02130b74a34dc7",
+        "artifacts/request_diagnostics.json": "3178312ffaf742837098ae584ed7f279354f13c1349663bc8491710d6aa19399"
+      },
+      "manifest_audit": {"inventory_count": 32, "exact_count": 32, "bytes": 36135583}
+    },
+    {
+      "run_id": "20260814T215000Z__m2-scene0471-g5-multicamera-scaffold-s0-r014",
+      "run_path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T215000Z__m2-scene0471-g5-multicamera-scaffold-s0-r014",
+      "source_commit": "3880c2264183a76c487c7e5ce1a3db5655e27969",
+      "status": "done",
+      "conclusion": "g5_multicamera_cross_view_scaffold_relative_supported_absolute_safe_gate_failed",
+      "metrics": {
+        "baseline_replay_exact_count": 22,
+        "raw_improvement_request_count": 15,
+        "post_improvement_request_count": 19,
+        "raw_geometry_safe_request_count": 1,
+        "post_geometry_safe_request_count": 0,
+        "raw_candidate_minus_g0_mean_m": -3.2703200248878916,
+        "raw_candidate_minus_g0_median_m": -2.785311887427321,
+        "post_candidate_minus_dense_baseline_mean_m": -4.023966361146836,
+        "post_candidate_minus_dense_baseline_median_m": -3.1303412336708454,
+        "relative_gate_passed": true,
+        "absolute_geometry_safe_gate_passed": false
+      },
+      "coverage_forensics": {
+        "any_projection_mean_fraction": 0.6040,
+        "direct_mean_fraction": 0.1557,
+        "extrapolated_mean_fraction": 0.4799,
+        "fallback_mean_fraction": 0.3644,
+        "lidar_projected_mean_fraction": 0.008
+      },
+      "sha256": {
+        "summary.json": "6c3ace9583e83699509f6b07009f5579998d54bce7efbbbadaf42ffa7ad79221",
+        "status.json": "e860eef1e89f3f790469b164232910be86f388bbb330516d912c3cdfd12cf572",
+        "fingerprint.json": "1c211503cd012daa166f37e52ae3bc0b97b6eead985c496a948539ee29fa9f8b",
+        "manifest.json": "807089a9a3a62f0ac0738330fad85d4b023447bb08cdb13a2a6e79b7d616f941",
+        "resolved_config.yaml": "1ab5cd3933bd72e0dec1c2f3745dfee5eacb2be7a6773dfc6ae6138ff9fd544e",
+        "events.jsonl": "2463b8ed819a08d94f99a8e8a264413e09ed47c9c60e6ddd24724bbf88d3fcce",
+        "artifacts/request_diagnostics.json": "5e9478f002c3d25cbc60c016205d8edea2bc305ae0477bfef211d9cf2ed2f34c"
+      },
+      "manifest_audit": {"inventory_count": 32, "exact_count": 32, "bytes": 37689866}
+    },
+    {
+      "run_id": "20260814T221000Z__m2-geometry-first-closeout-s0-r015",
+      "run_path": "/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T221000Z__m2-geometry-first-closeout-s0-r015",
+      "source_commit": "cea2f3712418c4d2301404f01f6eea76af94491a",
+      "status": "done",
+      "task_status": "rejected",
+      "conclusion": "m2_rejected_no_absolute_geometry_safe_candidate",
+      "decision": {
+        "completed_run_count": 8,
+        "blocked_run_count": 4,
+        "method_arm_selected": false,
+        "router_unlocked": false,
+        "validation_unlocked": false,
+        "neural_surface_automatic_unlock": false,
+        "parameter_search_performed": false,
+        "next_independent_task": "WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01"
+      },
+      "sha256": {
+        "summary.json": "27a6613d4428fbadaf45a7e9f606bdb1819a9a5b712bb7f03171af0fe70a0c01",
+        "status.json": "b8f6e66f9ece686cdeff58d15b3c6eaafac184f13ee364aa590b960da8006f1e",
+        "fingerprint.json": "0ac2b37413dee647ce6e775ac16debc0f81872c66d8ade0b2354f0a907ccbc50",
+        "manifest.json": "56d1858a710852df523f577031dbb6f2bb4ec51301406789b24fc3fbe075a29f",
+        "resolved_config.yaml": "d9117bd8e785eb47ee948da7f0ca655bbc3d5abab27e2cb1a43fc08da96d59d1",
+        "events.jsonl": "fb1eb1e61ee707e02bb9a4e0b425e9977ec87d48b9f68a96424ff2cc3280de95",
+        "artifacts/decision_ledger.json": "63b9e36bfbf734017c625910af24e226eb174e79fd0da0a33ac1b8cc6c21d715"
+      },
+      "manifest_audit": {"inventory_count": 8, "exact_count": 8}
+    }
+  ],
+  "frozen_decision": {
+    "density_mechanism_supported": true,
+    "opacity_mechanism_supported": false,
+    "g5_relative_gate_passed": true,
+    "absolute_geometry_safe_gate_passed": false,
+    "method_arm_selected": false,
+    "router_unlocked": false,
+    "validation_unlocked": false,
+    "non_neural_candidate_sequence_closed": true,
+    "post_hoc_threshold_source_grid_or_fusion_search_forbidden": true,
+    "next_independent_task": "WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01"
+  }
+}
