@@ -13,6 +13,7 @@ from scipy.spatial import cKDTree
 SURFACE_MODELS = (
     "G0_ROBUST_PLANE",
     "G1_PIECEWISE_PLANE",
+    "G2_MOVING_LEAST_SQUARES",
     "G3_ROBUST_QUADRATIC",
 )
 RISK_MAPPINGS = ("R0_CLIP", "R1_LOG", "R2_PSEUDO_HUBER", "R3_QUANTILE", "R4_CALIBRATED_LOG")
@@ -246,6 +247,151 @@ def _fit_piecewise_surface(
     )
 
 
+def _mls_predictions(
+    *,
+    support_pixels: np.ndarray,
+    support_inverse_depth: np.ndarray,
+    query_pixels: np.ndarray,
+    neighbor_count: int,
+    bandwidth_pixels: float,
+    minimum_weight: float,
+    ridge: float,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, float]:
+    """用自适应 kNN 带宽做逐查询点局部 affine inverse-depth 回归。"""
+
+    tree = cKDTree(support_pixels)
+    neighbors = min(int(neighbor_count), support_pixels.shape[0])
+    predictions = np.full(query_pixels.shape[0], np.nan, dtype=np.float64)
+    coefficients = np.full((query_pixels.shape[0], 3), np.nan, dtype=np.float64)
+    nearest = np.full(query_pixels.shape[0], np.nan, dtype=np.float64)
+    sampled_conditions: list[float] = []
+    chunk_size = 4096
+    for start in range(0, query_pixels.shape[0], chunk_size):
+        stop = min(start + chunk_size, query_pixels.shape[0])
+        query = query_pixels[start:stop]
+        distances, indices = tree.query(query, k=neighbors, workers=1)
+        if neighbors == 1:
+            distances = distances[:, None]
+            indices = indices[:, None]
+        adaptive = np.maximum(
+            float(bandwidth_pixels), np.maximum(distances[:, -1], 1e-6)
+        )
+        weights = np.exp(-0.5 * np.square(distances / adaptive[:, None]))
+        weights[weights < float(minimum_weight)] = 0.0
+        offsets = support_pixels[indices] - query[:, None, :]
+        design = np.empty((query.shape[0], neighbors, 3), dtype=np.float64)
+        design[..., 0] = 1.0
+        design[..., 1] = offsets[..., 1] / adaptive[:, None]
+        design[..., 2] = offsets[..., 0] / adaptive[:, None]
+        targets = support_inverse_depth[indices]
+        normal = np.einsum("nki,nk,nkj->nij", design, weights, design)
+        normal += np.eye(3, dtype=np.float64)[None, :, :] * float(ridge)
+        right = np.einsum("nki,nk,nk->ni", design, weights, targets)
+        solved = np.linalg.solve(normal, right)
+        valid = np.isfinite(solved).all(axis=1) & (weights.sum(axis=1) > 0.0)
+        predictions[start:stop][valid] = solved[valid, 0]
+        coefficients[start:stop][valid] = solved[valid]
+        nearest[start:stop] = distances[:, 0]
+        sample = np.linspace(
+            0, query.shape[0] - 1, min(32, query.shape[0]), dtype=int
+        )
+        sampled_conditions.extend(np.linalg.cond(normal[sample]).tolist())
+    finite_conditions = np.asarray(sampled_conditions, dtype=np.float64)
+    finite_conditions = finite_conditions[np.isfinite(finite_conditions)]
+    condition = (
+        float(np.max(finite_conditions)) if finite_conditions.size else math.inf
+    )
+    return predictions, coefficients, nearest, condition
+
+
+def _fit_mls_surface(
+    *,
+    values: np.ndarray,
+    valid_support: np.ndarray,
+    target: np.ndarray,
+    x: np.ndarray,
+    y: np.ndarray,
+    neighbor_count: int,
+    bandwidth_pixels: float,
+    minimum_weight: float,
+    ridge: float,
+    minimum_depth_m: float,
+    maximum_depth_m: float,
+) -> SurfaceFitResult:
+    rows, columns = np.indices(values.shape, dtype=np.float64)
+    support_pixels = np.column_stack(
+        (rows[valid_support], columns[valid_support])
+    )
+    support_inverse = 1.0 / values[valid_support]
+    target_pixels = np.column_stack((rows[target], columns[target]))
+    target_inverse, target_coefficients, _, target_condition = _mls_predictions(
+        support_pixels=support_pixels,
+        support_inverse_depth=support_inverse,
+        query_pixels=target_pixels,
+        neighbor_count=neighbor_count,
+        bandwidth_pixels=bandwidth_pixels,
+        minimum_weight=minimum_weight,
+        ridge=ridge,
+    )
+    target_depth = np.full(values.shape, np.nan, dtype=np.float32)
+    target_indices = np.flatnonzero(target)
+    allowed = (
+        np.isfinite(target_inverse)
+        & (target_inverse >= 1.0 / float(maximum_depth_m))
+        & (target_inverse <= 1.0 / float(minimum_depth_m))
+    )
+    target_depth.reshape(-1)[target_indices[allowed]] = (
+        1.0 / target_inverse[allowed]
+    ).astype(np.float32)
+    predicted_valid = np.isfinite(target_depth) & target
+    if not predicted_valid.any():
+        raise GeometryRepairError("ABSTAIN_NO_VALID_MLS_TARGET_SURFACE")
+
+    support_prediction, _, _, support_condition = _mls_predictions(
+        support_pixels=support_pixels,
+        support_inverse_depth=support_inverse,
+        query_pixels=support_pixels,
+        neighbor_count=neighbor_count,
+        bandwidth_pixels=bandwidth_pixels,
+        minimum_weight=minimum_weight,
+        ridge=ridge,
+    )
+    inverse_residual = np.abs(support_prediction - support_inverse)
+    support_valid = (
+        np.isfinite(support_prediction)
+        & (support_prediction >= 1.0 / float(maximum_depth_m))
+        & (support_prediction <= 1.0 / float(minimum_depth_m))
+    )
+    metric_residual = np.abs(
+        1.0 / support_prediction[support_valid]
+        - values[valid_support][support_valid]
+    )
+    if metric_residual.size == 0:
+        raise GeometryRepairError("ABSTAIN_INVALID_MLS_SURFACE")
+
+    support_xy = np.column_stack((x[valid_support], y[valid_support]))
+    target_xy = np.column_stack((x[predicted_valid], y[predicted_valid]))
+    distance, _ = cKDTree(support_xy).query(target_xy, k=1, workers=1)
+    finite_coefficients = target_coefficients[
+        np.isfinite(target_coefficients).all(axis=1)
+    ]
+    return SurfaceFitResult(
+        model="G2_MOVING_LEAST_SQUARES",
+        depth=target_depth,
+        valid=predicted_valid,
+        coefficients=np.median(finite_coefficients, axis=0),
+        support_count=int(valid_support.sum()),
+        iterations=1,
+        inverse_depth_residual_median=float(np.nanmedian(inverse_residual)),
+        inverse_depth_residual_p90=float(np.nanquantile(inverse_residual, 0.90)),
+        surface_fit_residual_median_m=float(np.median(metric_residual)),
+        surface_fit_residual_p90_m=float(np.quantile(metric_residual, 0.90)),
+        extrapolation_distance_mean=float(np.mean(distance)),
+        extrapolation_distance_p95=float(np.quantile(distance, 0.95)),
+        condition_number=max(target_condition, support_condition),
+    )
+
+
 def fit_inverse_depth_surface(
     *,
     depth: np.ndarray,
@@ -259,6 +405,9 @@ def fit_inverse_depth_surface(
     ridge: float = 1e-10,
     minimum_depth_m: float = 0.1,
     maximum_depth_m: float = 120.0,
+    mls_neighbor_count: int = 128,
+    mls_bandwidth_pixels: float = 18.0,
+    mls_minimum_weight: float = 1e-5,
 ) -> SurfaceFitResult:
     """用冻结 IRLS 拟合 inverse-depth；G0 对应真实 3D plane。"""
 
@@ -275,10 +424,8 @@ def fit_inverse_depth_surface(
         & (values >= float(minimum_depth_m))
         & (values <= float(maximum_depth_m))
     )
-    required = max(
-        int(minimum_support_points),
-        3 if model in {"G0_ROBUST_PLANE", "G1_PIECEWISE_PLANE"} else 6,
-    )
+    parameter_count = 6 if model == "G3_ROBUST_QUADRATIC" else 3
+    required = max(int(minimum_support_points), parameter_count)
     count = int(valid_support.sum())
     if count < required:
         raise GeometryRepairError(f"ABSTAIN_INSUFFICIENT_GEOMETRY_SUPPORT:{count}<{required}")
@@ -296,6 +443,26 @@ def fit_inverse_depth_surface(
             minimum_support_points=minimum_support_points,
             huber_delta=huber_delta,
             maximum_iterations=maximum_iterations,
+            ridge=ridge,
+            minimum_depth_m=minimum_depth_m,
+            maximum_depth_m=maximum_depth_m,
+        )
+    if model == "G2_MOVING_LEAST_SQUARES":
+        if (
+            int(mls_neighbor_count) < 3
+            or float(mls_bandwidth_pixels) <= 0.0
+            or not 0.0 <= float(mls_minimum_weight) < 1.0
+        ):
+            raise GeometryRepairError("G2 MLS 参数非法")
+        return _fit_mls_surface(
+            values=values,
+            valid_support=valid_support,
+            target=target,
+            x=x,
+            y=y,
+            neighbor_count=mls_neighbor_count,
+            bandwidth_pixels=mls_bandwidth_pixels,
+            minimum_weight=mls_minimum_weight,
             ridge=ridge,
             minimum_depth_m=minimum_depth_m,
             maximum_depth_m=maximum_depth_m,

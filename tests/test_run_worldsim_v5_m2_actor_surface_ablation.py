@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from scripts.run_worldsim_v5_m2_actor_surface_ablation import selection
+from pathlib import Path
+
+from scripts.run_worldsim_v5_m2_actor_surface_ablation import load_config, selection
 
 
 def _row(g0: float, g1: float) -> dict:
@@ -35,3 +37,41 @@ def test_g1_rejects_mean_only_outlier_win() -> None:
     result = selection(rows, _gate())
     assert result["gate_passed"] is False
     assert result["conclusion"] == "g1_piecewise_surface_rejected_on_model_proxy"
+
+
+def test_g2_uses_generic_frozen_gate() -> None:
+    arms = ("G0_ROBUST_PLANE", "G2_MOVING_LEAST_SQUARES")
+    rows = [
+        {
+            "status": "done",
+            "arms": {
+                arms[0]: {"raw_geometry_error": {"mae_m": 4.0}},
+                arms[1]: {"raw_geometry_error": {"mae_m": 3.0}},
+            },
+        }
+        for _ in range(18)
+    ]
+    gate = {
+        "minimum_evaluable_request_count": 18,
+        "minimum_candidate_raw_improvement_m": 0.5,
+        "minimum_candidate_raw_improvement_request_count": 14,
+        "require_mean_candidate_raw_delta_below_m": 0.0,
+        "require_median_candidate_raw_delta_below_m": 0.0,
+    }
+    result = selection(rows, gate, arms)
+    assert result["gate_passed"] is True
+    assert result["g2_raw_improvement_request_count"] == 18
+    assert result["conclusion"] == "g2_moving_least_squares_surface_supported_on_model_proxy"
+
+
+def test_g2_formal_config_freezes_next_surface_arm() -> None:
+    project = Path(__file__).resolve().parents[1]
+    config = load_config(
+        project / "configs/worldsim_v5/m2_actor_g0_g2_surface_scene0471_v1.yaml"
+    )
+    assert config["phase"] == "per_actor_g0_g2_raw_surface_ablation"
+    assert config["surface"]["matched_models"] == [
+        "G0_ROBUST_PLANE",
+        "G2_MOVING_LEAST_SQUARES",
+    ]
+    assert config["scope"]["gaussianization_started"] is False

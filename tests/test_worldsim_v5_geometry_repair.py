@@ -96,6 +96,25 @@ def test_g1_piecewise_plane_uses_local_hole_sides() -> None:
     assert depth_error_summary(result.depth, depth, target)["mae_m"] < 1e-3
 
 
+def test_g2_mls_recovers_planar_hole_with_adaptive_bandwidth() -> None:
+    depth, intrinsics = _plane_depth(height=72, width=96)
+    target = np.zeros_like(depth, dtype=bool)
+    target[18:54, 24:72] = True
+    result = fit_inverse_depth_surface(
+        depth=depth,
+        support_mask=~target,
+        target_mask=target,
+        intrinsics=intrinsics,
+        model="G2_MOVING_LEAST_SQUARES",
+        minimum_support_points=128,
+        mls_neighbor_count=96,
+        mls_bandwidth_pixels=12.0,
+    )
+    assert result.coefficients.shape == (3,)
+    assert int(result.valid.sum()) == int(target.sum())
+    assert depth_error_summary(result.depth, depth, target)["mae_m"] < 1e-3
+
+
 def test_insufficient_support_fails_closed() -> None:
     depth, intrinsics = _plane_depth()
     target = np.zeros_like(depth, dtype=bool)

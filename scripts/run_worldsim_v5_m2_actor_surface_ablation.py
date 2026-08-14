@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""在 per-actor requests 上隔离比较 G0/G1 raw surface。"""
+"""在 per-actor requests 上隔离比较冻结的 raw surface arms。"""
 
 from __future__ import annotations
 
@@ -47,6 +47,16 @@ from scripts.worldsim_v5_forensics_common import (
 TASK_ID = "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01"
 SCHEMA_VERSION = "worldsim_v5_m2_actor_surface_ablation_v1"
 ARMS = ("G0_ROBUST_PLANE", "G1_PIECEWISE_PLANE")
+SCHEMA_BINDINGS = {
+    SCHEMA_VERSION: (
+        "per_actor_g0_g1_raw_surface_ablation",
+        ARMS,
+    ),
+    "worldsim_v5_m2_actor_surface_ablation_v2": (
+        "per_actor_g0_g2_raw_surface_ablation",
+        ("G0_ROBUST_PLANE", "G2_MOVING_LEAST_SQUARES"),
+    ),
+}
 
 
 class M2ActorSurfaceError(RuntimeError):
@@ -55,13 +65,14 @@ class M2ActorSurfaceError(RuntimeError):
 
 def load_config(path: Path) -> dict[str, Any]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict) or payload.get("schema_version") != SCHEMA_VERSION:
+    if not isinstance(payload, dict) or payload.get("schema_version") not in SCHEMA_BINDINGS:
         raise M2ActorSurfaceError("M2 actor surface config schema 漂移")
+    phase, arms = SCHEMA_BINDINGS[payload["schema_version"]]
     if (
         payload.get("task_id") != TASK_ID
         or payload.get("status") != "running"
-        or payload.get("phase") != "per_actor_g0_g1_raw_surface_ablation"
-        or tuple(payload["surface"]["matched_models"]) != ARMS
+        or payload.get("phase") != phase
+        or tuple(payload["surface"]["matched_models"]) != arms
         or payload["request_protocol"]["unit"] != "one_actor_one_view_one_hole"
         or payload["request_protocol"]["union_mask_for_geometry_forbidden"] is not True
         or payload["scope"]["gaussianization_started"] is not False
@@ -78,40 +89,70 @@ def load_config(path: Path) -> dict[str, Any]:
             raise M2ActorSurfaceError(f"M2 actor surface restriction 漂移: {name}")
     if payload["reference"]["independent_geometry_claim_allowed"] is not False:
         raise M2ActorSurfaceError("model proxy 不得声明独立 GT")
-    if payload["unlock_binding"]["source_g1_unlocked"] is not True:
-        raise M2ActorSurfaceError("G1 未被 r005 gate 解锁")
+    if payload["schema_version"] == SCHEMA_VERSION:
+        if payload["unlock_binding"]["source_g1_unlocked"] is not True:
+            raise M2ActorSurfaceError("G1 未被 r005 gate 解锁")
+    elif payload["unlock_binding"]["source_next_model_unlocked"] != arms[1]:
+        raise M2ActorSurfaceError("G2 未按冻结序列解锁")
     return payload
 
 
-def selection(rows: list[Mapping[str, Any]], gate: Mapping[str, Any]) -> dict[str, Any]:
+def selection(
+    rows: list[Mapping[str, Any]],
+    gate: Mapping[str, Any],
+    arms: tuple[str, str] = ARMS,
+) -> dict[str, Any]:
+    baseline, candidate = arms
+    candidate_slug = candidate.split("_", 1)[0].lower()
     done = [row for row in rows if row.get("status") == "done"]
     deltas = [
-        float(row["arms"][ARMS[1]]["raw_geometry_error"]["mae_m"])
-        - float(row["arms"][ARMS[0]]["raw_geometry_error"]["mae_m"])
+        float(row["arms"][candidate]["raw_geometry_error"]["mae_m"])
+        - float(row["arms"][baseline]["raw_geometry_error"]["mae_m"])
         for row in done
     ]
+    improvement_m = gate.get(
+        "minimum_candidate_raw_improvement_m",
+        gate.get("minimum_g1_raw_improvement_m"),
+    )
+    improvement_count = gate.get(
+        "minimum_candidate_raw_improvement_request_count",
+        gate.get("minimum_g1_raw_improvement_request_count"),
+    )
+    mean_limit = gate.get(
+        "require_mean_candidate_raw_delta_below_m",
+        gate.get("require_mean_g1_raw_delta_below_m"),
+    )
+    median_limit = gate.get(
+        "require_median_candidate_raw_delta_below_m",
+        gate.get("require_median_g1_raw_delta_below_m"),
+    )
     improved = sum(
-        value <= -float(gate["minimum_g1_raw_improvement_m"]) for value in deltas
+        value <= -float(improvement_m) for value in deltas
     )
     mean_delta = float(np.mean(deltas)) if deltas else math.nan
     median_delta = float(np.median(deltas)) if deltas else math.nan
     passed = (
         len(done) >= int(gate["minimum_evaluable_request_count"])
-        and improved >= int(gate["minimum_g1_raw_improvement_request_count"])
-        and mean_delta < float(gate["require_mean_g1_raw_delta_below_m"])
-        and median_delta < float(gate["require_median_g1_raw_delta_below_m"])
+        and improved >= int(improvement_count)
+        and mean_delta < float(mean_limit)
+        and median_delta < float(median_limit)
     )
+    label = {
+        "G1_PIECEWISE_PLANE": "g1_piecewise_surface",
+        "G2_MOVING_LEAST_SQUARES": "g2_moving_least_squares_surface",
+        "G3_ROBUST_QUADRATIC": "g3_quadratic_surface",
+    }.get(candidate, candidate.lower())
     return {
         "conclusion": (
-            "g1_piecewise_surface_supported_on_model_proxy"
+            f"{label}_supported_on_model_proxy"
             if passed
-            else "g1_piecewise_surface_rejected_on_model_proxy"
+            else f"{label}_rejected_on_model_proxy"
         ),
         "gate_passed": passed,
         "evaluable_request_count": len(done),
-        "g1_raw_improvement_request_count": improved,
-        "mean_g1_minus_g0_raw_mae_m": mean_delta,
-        "median_g1_minus_g0_raw_mae_m": median_delta,
+        f"{candidate_slug}_raw_improvement_request_count": improved,
+        f"mean_{candidate_slug}_minus_g0_raw_mae_m": mean_delta,
+        f"median_{candidate_slug}_minus_g0_raw_mae_m": median_delta,
         "minimum_delta_m": float(np.min(deltas)) if deltas else math.nan,
         "maximum_delta_m": float(np.max(deltas)) if deltas else math.nan,
         "reference_scope": "model_derived_proxy_not_independent_ground_truth",
@@ -126,11 +167,12 @@ def _terminal(
     summary_sha256: str | None,
     manifest_sha256: str | None,
     reason: str | None,
+    schema_suffix: str = "v1",
 ) -> None:
     atomic_json(
         run_dir / "status.json",
         {
-            "schema_version": "worldsim_v5_m2_actor_surface_status_v1",
+            "schema_version": f"worldsim_v5_m2_actor_surface_status_{schema_suffix}",
             "task_id": TASK_ID,
             "task_status": "running",
             "status": status,
@@ -145,6 +187,8 @@ def _terminal(
 
 def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
     config = load_config(config_path)
+    arms = tuple(config["surface"]["matched_models"])
+    schema_suffix = "v2" if config["schema_version"].endswith("_v2") else "v1"
     source_head = prepare_formal_run(run_dir, TASK_ID, PROJECT)
     resolved = write_resolved_config(run_dir, config)
     events: list[dict[str, Any]] = [
@@ -156,16 +200,27 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             name: verify_file(binding["path"], binding["sha256"])
             for name, binding in config["inputs"].items()
         }
-        prior = json.loads(Path(inputs["g0_actor_summary"]["path"]).read_text())
-        if (
-            prior.get("status") != "done"
-            or prior.get("conclusion") != config["unlock_binding"]["source_conclusion"]
-            or prior.get("mechanism", {}).get("g1_unlocked_for_next_development_run")
-            is not True
-            or int(prior.get("evaluable_request_count", -1))
-            != int(config["unlock_binding"]["source_evaluable_request_count"])
-        ):
-            raise M2ActorSurfaceError("r005 G1 unlock binding 漂移")
+        unlock = config["unlock_binding"]
+        prior_key = unlock.get("summary_input_key", "g0_actor_summary")
+        prior = json.loads(Path(inputs[prior_key]["path"]).read_text())
+        prior_valid = (
+            prior.get("status") == "done"
+            and prior.get("conclusion") == unlock["source_conclusion"]
+            and int(prior.get("evaluable_request_count", -1))
+            == int(unlock["source_evaluable_request_count"])
+        )
+        if config["schema_version"] == SCHEMA_VERSION:
+            prior_valid = prior_valid and (
+                prior.get("mechanism", {}).get("g1_unlocked_for_next_development_run")
+                is True
+            )
+        else:
+            prior_valid = prior_valid and (
+                prior.get("selection", {}).get("gate_passed")
+                is bool(unlock["source_selection_gate_passed"])
+            )
+        if not prior_valid:
+            raise M2ActorSurfaceError("raw surface unlock binding 漂移")
         mask_root, requests = _load_requests(config)
         protocol = config["request_protocol"]
         if len(requests) != int(protocol["expected_request_count"]):
@@ -214,7 +269,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                     outer = binary_dilation(target, iterations=int(protocol["support_ring_outer_pixels"]))
                     support = outer & ~inner & ~np.asarray(base["dynamic_mask"], bool)
                     states: dict[str, Any] = {}
-                    for model in ARMS:
+                    for model in arms:
                         arm_started = time.perf_counter()
                         fit = fit_inverse_depth_surface(
                             depth=reference,
@@ -227,6 +282,9 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                             maximum_iterations=int(surface_cfg["maximum_iterations"]),
                             minimum_depth_m=float(surface_cfg["minimum_depth_m"]),
                             maximum_depth_m=float(surface_cfg["maximum_depth_m"]),
+                            mls_neighbor_count=int(surface_cfg.get("mls_neighbor_count", 128)),
+                            mls_bandwidth_pixels=float(surface_cfg.get("mls_bandwidth_pixels", 18.0)),
+                            mls_minimum_weight=float(surface_cfg.get("mls_minimum_weight", 1e-5)),
                         )
                         states[model] = {
                             "fit": fit,
@@ -263,8 +321,8 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                             "support_mask": support.astype(np.int8),
                             "common_evaluation_mask": common.astype(np.int8),
                             "reference_depth": reference.astype(np.float16),
-                            "g0_raw_depth": states[ARMS[0]]["fit"].depth.astype(np.float16),
-                            "g1_raw_depth": states[ARMS[1]]["fit"].depth.astype(np.float16),
+                            f"{arms[0].split('_', 1)[0].lower()}_raw_depth": states[arms[0]]["fit"].depth.astype(np.float16),
+                            f"{arms[1].split('_', 1)[0].lower()}_raw_depth": states[arms[1]]["fit"].depth.astype(np.float16),
                         },
                     )
                     row.update(
@@ -290,12 +348,12 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                     row.update({"status": "abstain", "reason": str(error)})
                 rows.append(row)
             print(
-                f"M2 actor G0/G1 raw {view_index + 1}/{len(grouped)} frame={frame} camera={camera} requests={len(view_requests)}",
+                f"M2 actor {arms[0].split('_', 1)[0]}/{arms[1].split('_', 1)[0]} raw {view_index + 1}/{len(grouped)} frame={frame} camera={camera} requests={len(view_requests)}",
                 flush=True,
             )
-        decision = selection(rows, config["selection_gate"])
+        decision = selection(rows, config["selection_gate"], arms)
         diagnostics = {
-            "schema_version": "worldsim_v5_m2_actor_surface_diagnostics_v1",
+            "schema_version": f"worldsim_v5_m2_actor_surface_diagnostics_{schema_suffix}",
             "task_id": TASK_ID,
             "status": "done",
             "scene": config["scene"]["name"],
@@ -325,7 +383,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             PROJECT,
         )
         summary = {
-            "schema_version": "worldsim_v5_m2_actor_surface_summary_v1",
+            "schema_version": f"worldsim_v5_m2_actor_surface_summary_{schema_suffix}",
             "task_id": TASK_ID,
             "task_status": "running",
             "status": "done",
@@ -356,7 +414,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
         atomic_json(
             run_dir / "fingerprint.json",
             {
-                "schema_version": "worldsim_v5_m2_actor_surface_fingerprint_v1",
+                "schema_version": f"worldsim_v5_m2_actor_surface_fingerprint_{schema_suffix}",
                 "task_id": TASK_ID,
                 "source_commit": source_head,
                 "source_clean": True,
@@ -375,7 +433,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
         events.append({"event": "run_done", "at_utc": utc_now(), **decision})
         write_events(run_dir, events)
         manifest = {
-            "schema_version": "worldsim_v5_m2_actor_surface_run_manifest_v1",
+            "schema_version": f"worldsim_v5_m2_actor_surface_run_manifest_{schema_suffix}",
             "task_id": TASK_ID,
             "status": "done",
             "inventory": inventory_files(run_dir, {"manifest.json", "status.json"}),
@@ -389,6 +447,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             summary_sha256=sha256_file(summary_path),
             manifest_sha256=sha256_file(manifest_path),
             reason=None,
+            schema_suffix=schema_suffix,
         )
         return summary
     except Exception as error:
@@ -401,6 +460,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             summary_sha256=None,
             manifest_sha256=None,
             reason=f"{type(error).__name__}: {error}",
+            schema_suffix=schema_suffix,
         )
         raise
 
