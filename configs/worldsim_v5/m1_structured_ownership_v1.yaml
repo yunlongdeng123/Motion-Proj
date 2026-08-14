@@ -1,0 +1,66 @@
+schema_version: worldsim_v5_m1_structured_ownership_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: evidence_schema_instrumentation
+
+fresh_cohort_binding:
+  config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+  config_sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+  cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+  development_scenes:
+    - {scene: scene-0471, scene_index: 382}
+    - {scene: scene-1087, scene_index: 827}
+    - {scene: scene-0379, scene_index: 296}
+    - {scene: scene-0998, scene_index: 756}
+    - {scene: scene-0359, scene_index: 276}
+    - {scene: scene-0875, scene_index: 663}
+    - {scene: scene-0535, scene_index: 425}
+    - {scene: scene-0436, scene_index: 350}
+  validation_quality_read: false
+  test_quality_read: false
+
+data_readiness:
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  processed_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval
+  audited_at: "2026-08-14"
+  development_raw_required_keyframes: 1280
+  development_raw_present_keyframes: 0
+  processed_scene_count: 0
+  state: selective_raw_extraction_and_preprocess_required
+  quality_read: false
+
+evidence_contract:
+  per_gaussian: motion_proj/worldsim_v5/evidence_schema.py:GAUSSIAN_ROW_FIELDS
+  per_view_observation: motion_proj/worldsim_v5/evidence_schema.py:OBSERVATION_FIELDS
+  per_edge: motion_proj/worldsim_v5/evidence_schema.py:EDGE_FIELDS
+  storage: deterministic_chunked_npz_run_local
+  checkpoint_mutation: forbidden
+
+unary_development_arms:
+  B0: v4_beta_bernoulli_frozen_comparator
+  B1: reliability_weighted_beta
+  B3: effective_count_bayesian_fusion
+  B2_hierarchical_beta: deferred_until_B1_B3_diagnostic
+  frozen_parameters:
+    prior_strength: 2.0
+    unassigned_probability: 0.0001
+    sam_confidence_floor: 0.10
+    boundary_distance_scale_px: 4.0
+    depth_residual_scale_m: 0.50
+  parameter_source: result_blind_mechanistic_defaults
+
+graph:
+  status: disabled_until_unary_diagnostic
+  candidate_knn_only: true
+  transformer_allowed: false
+  semantic_split_allowed: false
+
+restrictions:
+  development_content_read: false
+  validation_content_read: false
+  validation_parameter_search: false
+  test_content_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  training_started: false
+  new_large_model_training: false

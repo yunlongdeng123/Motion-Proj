@@ -177,7 +177,7 @@ task_registry:
   WS-V5-P0-SCOPE-FREEZE-01: done
   WS-V5-D0-NUSCENES-FRESH-COHORT-01: done
   WS-V5-M1-D0-BAYES-FORENSICS-01: done
-  WS-V5-M1-STRUCTURED-OWNERSHIP-01: pending
+  WS-V5-M1-STRUCTURED-OWNERSHIP-01: running
   WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01: pending
   WS-V5-M2-D0-GEOMETRY-FORENSICS-01: done
   WS-V5-M2-GEOMETRY-FIRST-REPAIR-01: pending
@@ -197,6 +197,9 @@ outputs:
   m2_forensics_runner: scripts/run_worldsim_v5_m2_forensics.py
   forensics_common: scripts/worldsim_v5_forensics_common.py
   p0_auditor: scripts/audit_worldsim_v5_p0.py
+  m1_structured_config: configs/worldsim_v5/m1_structured_ownership_v1.yaml
+  m1_evidence_schema: motion_proj/worldsim_v5/evidence_schema.py
+  m1_bayesian_unary: motion_proj/worldsim_v5/bayesian_unary.py
   p0_scope: configs/worldsim_v5/p0_scope_v1.yaml
   fresh_cohort: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
 

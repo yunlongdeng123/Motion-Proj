@@ -1,5 +1,17 @@
 # Experiments
 
+## V5 M1 structured evidence schema / input readiness（2026-08-14）
+
+| Task ID | 状态 | 当前证据 / 边界 |
+|---|---|---|
+| `WS-V5-M1-STRUCTURED-OWNERSHIP-01` | running | `configs/worldsim_v5/m1_structured_ownership_v1.yaml`；只完成 schema/effective-count unary instrumentation，尚无 development quality |
+
+- 新 schema=`motion_proj/worldsim_v5/evidence_schema.py`：per-Gaussian 保存 center/covariance/normal/prior/unary/uncertainty/effective count/view disagreement/boundary ambiguity/depth/LiDAR/motion；per-view 保存 Gaussian/view/frame/camera/pixel/SAM/boundary distance/depth residual/LiDAR/view-angle/positive-negative/reliability；per-edge 保存 Gaussian COO、Mahalanobis/normal/motion distance、boundary barrier 与 affinity。
+- unary=`motion_proj/worldsim_v5/bayesian_unary.py`：按 SAM confidence、visibility、boundary distance、depth residual 与 view angle 形成 observation reliability，再用 fractional effective positive/negative count 更新 Beta；同时输出 view disagreement 与 boundary ambiguity，不提前压成单一 scalar risk。
+- unit evidence：deterministic NPZ 两次写出 SHA exact；Gaussian geometry、observation index、edge index 与 probability range 均 fail-closed；当前相关测试=`5 passed`。
+- result-blind input readiness：fresh development scene index=`382/827/296/756/276/663/425/350`；processed root=`0/8`；现有 selective raw root 的三前向相机+LIDAR keyframes=`0/1280`。本项 quality/training/inference/arm-selection=`0/0/0/0`。
+- 下一步只做 member-indexed selective extraction 与 DriveStudio preprocess；正式 unary development diagnostic 前 graph=`disabled`，B2 hierarchical/Transformer/semantic split 均未授权。
+
 ## V5 fresh nuScenes 8/8/20 metadata-only freeze（2026-08-14）
 
 | Task ID | 状态 | canonical evidence |
