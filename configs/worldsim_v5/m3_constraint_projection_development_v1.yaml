@@ -1,0 +1,75 @@
+schema_version: worldsim_v5_m3_constraint_projection_development_v1
+task_id: WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01
+status: running
+phase: development_implementation_before_quality
+created_at: "2026-08-14"
+
+protocol_audit:
+  run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001
+  summary_sha256: 996db58c98600e289e76661c3973aedbecd35c19a092eac4ba99310f5d1ba4e9
+  status_sha256: ded2929e8461479bc8f3eb80d85396308f70dada58063a34f313c257a70838f6
+  protocol_lock_sha256: 7f57723dd94763a84030ca23863c7252936fcde19ad3bf4f9d483bf5ba30f3af
+  conclusion: m3_result_blind_protocol_frozen_development_implementation_unlocked
+
+scope:
+  development_only: true
+  implementation_and_synthetic_regression_only: true
+  development_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  parameter_search_performed: false
+  method_arm_selection_performed: false
+  gpu_required: false
+
+trajectory:
+  representation: planar_xy_z_yaw_with_v4_se3_bspline_adapter
+  minimum_frames: 7
+  endpoints_fixed: true
+  yaw_unwrap: true
+  t2_v4_comparator:
+    control_point_count: 4
+    acceleration_regularization: 0.10
+  t3_minimum_jerk:
+    objective: squared_sample_fidelity_plus_third_difference_energy
+    sample_fidelity_weight: 1.0
+    third_difference_weight: 5.0
+  t4_contact:
+    road_source: result_blind_actor_annotation_bottom_plane_interpolation
+    exact_z_projection: true
+  t5_kinematics:
+    solver: deterministic_pocs_v1
+    maximum_iterations: 200
+    convergence_tolerance: 1.0e-6
+    actor_collision_proxy: circular_footprint
+    actor_radius_m: 1.25
+
+physical_constraints:
+  maximum_speed_mps: 30.0
+  maximum_acceleration_mps2: 6.0
+  maximum_deceleration_mps2: 8.0
+  maximum_yaw_rate_radps: 0.75
+  maximum_lateral_acceleration_mps2: 5.0
+  maximum_heading_velocity_mismatch_rad: 0.35
+  maximum_contact_error_m: 0.20
+  collision_overlap_tolerance_m2: 0.0
+  endpoint_translation_tolerance_m: 0.10
+  endpoint_yaw_tolerance_rad: 0.05
+
+arms:
+  comparator: T2_V4_FROZEN_SE3_BSPLINE
+  sequence: [T2_V4_FROZEN_SE3_BSPLINE, T3_MINIMUM_JERK,
+             T4_MINIMUM_JERK_ROAD_CONTACT, T5_T4_VEHICLE_KINEMATICS]
+  optional_local_residual_enabled: false
+  remove_physics_denominator: false
+
+next_gate:
+  required_before_development_quality:
+    - exact_protocol_binding
+    - unit_and_synthetic_regression_pass
+    - result_blind_actor_clip_inventory
+    - t2_t5_same_input_replay_contract
+    - endpoint_and_rollback_contract
+  development_quality_unlocked: false
+  validation_unlocked: false
+  test_unlocked: false
