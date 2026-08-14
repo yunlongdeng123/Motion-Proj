@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
+import sys
 
 import numpy as np
 import pytest
@@ -61,3 +63,20 @@ def test_stereo_baseline_gate_is_metric_and_fail_closed() -> None:
     calibration["P3"][0, 3] = -1.0
     with pytest.raises(KittiAdapterSmokeError, match="baseline"):
         stereo_baseline_m(calibration)
+
+
+def test_direct_script_entry_resolves_project_imports() -> None:
+    project = Path(__file__).resolve().parents[1]
+    process = subprocess.run(
+        [
+            sys.executable,
+            str(project / "scripts/audit_worldsim_v5_kitti_adapter_smoke.py"),
+            "--help",
+        ],
+        cwd=project,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert process.returncode == 0, process.stderr
+    assert "--run-dir" in process.stdout

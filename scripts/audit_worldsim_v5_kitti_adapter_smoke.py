@@ -9,6 +9,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
@@ -16,6 +17,10 @@ from typing import Any, Mapping
 import numpy as np
 import yaml
 from PIL import Image
+
+PROJECT_IMPORT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_IMPORT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_IMPORT_ROOT))
 
 from motion_proj.worldsim_v5.datasets.kitti import (
     freeze_sensor_frame_policy,
@@ -30,7 +35,7 @@ from motion_proj.worldsim_v5.datasets.kitti import (
 
 TASK_ID = "WS-V5-D1-KITTI-ADAPTER-01"
 SCHEMA_VERSION = "worldsim_v5_kitti_adapter_smoke_v1"
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = PROJECT_IMPORT_ROOT
 SNAPSHOT_RELPATHS = (
     "configs/worldsim_v5/kitti_adapter_smoke_v1.yaml",
     "docs/KITTI_TRACKING_ARCHIVE_METADATA_V5.json",
