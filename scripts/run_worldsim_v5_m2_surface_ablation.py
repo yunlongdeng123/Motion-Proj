@@ -193,6 +193,7 @@ def _arm(
     inpaint: np.ndarray,
     erase_delta: Mapping[str, np.ndarray],
     config: Mapping[str, Any],
+    candidate_suffix: str = "",
 ) -> dict[str, Any]:
     from scripts.run_worldsim_v32_s2_3dgic import render_snapshot
 
@@ -225,7 +226,10 @@ def _arm(
     )
     asset = completion_points_to_repair_asset(
         points,
-        candidate_id=f"scene0471_f{frame:03d}_c{camera}_{model.lower()}",
+        candidate_id=(
+            f"scene0471_f{frame:03d}_c{camera}_{model.lower()}"
+            f"{'_' + candidate_suffix if candidate_suffix else ''}"
+        ),
         method="DONOR",
         provenance="native_scene_donor",
         features_rest_shape=tuple(trainer.models["Background"]._features_rest.shape[1:]),
