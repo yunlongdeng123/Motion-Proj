@@ -290,10 +290,14 @@ def _read_devkit_seqmaps(path: Path) -> dict[str, dict[str, dict[str, int]]]:
                     raise KittiArchiveAuditError(f"devkit seqmap 行非法：{line}")
                 sequence = fields[0]
                 start = int(fields[2])
-                end = int(fields[3])
-                if sequence in rows or start < 0 or end < start:
+                frame_count = int(fields[3])
+                if sequence in rows or start < 0 or frame_count <= 0:
                     raise KittiArchiveAuditError(f"devkit seqmap 范围非法：{line}")
-                rows[sequence] = {"start": start, "end": end, "frame_count": end - start + 1}
+                rows[sequence] = {
+                    "start": start,
+                    "frame_count": frame_count,
+                    "end_exclusive": start + frame_count,
+                }
             result[split] = rows
     return result
 
@@ -354,6 +358,7 @@ def build_metadata(
             for sequence in expected_ids:
                 sensor_frame_sets = [indexes[name].frames[split].get(sequence, set()) for name in sensor_components]
                 common_frames = set.intersection(*sensor_frame_sets) if sensor_frame_sets else set()
+                reference_frames = indexes["image_02"].frames[split].get(sequence, set())
                 record: dict[str, Any] = {
                     "split": split,
                     "sequence": sequence,
@@ -361,9 +366,18 @@ def build_metadata(
                         name: _frame_count(indexes[name], split, sequence)
                         for name in sensor_components
                     },
-                    "sensor_frame_sets_exact": bool(common_frames) and all(frames == common_frames for frames in sensor_frame_sets),
-                    "first_frame": min(common_frames) if common_frames else None,
-                    "last_frame": max(common_frames) if common_frames else None,
+                    "sensor_frame_sets_exact": bool(reference_frames) and all(frames == reference_frames for frames in sensor_frame_sets),
+                    "common_sensor_frame_count": len(common_frames),
+                    "first_frame": min(reference_frames) if reference_frames else None,
+                    "last_frame": max(reference_frames) if reference_frames else None,
+                    "missing_relative_to_image_02": {
+                        name: sorted(reference_frames - indexes[name].frames[split].get(sequence, set()))
+                        for name in ("image_03", "velodyne")
+                    },
+                    "extra_relative_to_image_02": {
+                        name: sorted(indexes[name].frames[split].get(sequence, set()) - reference_frames)
+                        for name in ("image_03", "velodyne")
+                    },
                 }
                 oxts_name = f"{split}/oxts/{sequence}.txt"
                 calib_name = f"{split}/calib/{sequence}.txt"
@@ -371,13 +385,13 @@ def build_metadata(
                 calibration = _calibration_metadata(_read_member_lines(calib_zip, calib_name))
                 record["oxts"] = oxts
                 record["calibration"] = calibration
-                oxts_rows_match = oxts_rows_match and oxts["row_count"] == len(common_frames)
+                oxts_rows_match = oxts_rows_match and oxts["row_count"] == len(reference_frames)
                 calibration_keys_present = calibration_keys_present and calibration["required_keys_present"]
                 if split == "training":
                     label_name = f"training/label_02/{sequence}.txt"
                     labels = _label_metadata(_read_member_lines(label_zip, label_name))
                     label_frames = {f"{frame:06d}" for frame in labels.pop("frame_ids")}
-                    labels["frames_within_sensor_frames"] = label_frames <= common_frames
+                    labels["frames_within_sensor_frames"] = label_frames <= reference_frames
                     label_frames_within_sensors = label_frames_within_sensors and labels["frames_within_sensor_frames"]
                     record["labels"] = labels
                 sequence_records.append(record)
@@ -403,7 +417,10 @@ def build_metadata(
             devkit_seqmap_matches = False
             continue
         for sequence, row in devkit_seqmaps[split].items():
-            expected_frames = {f"{frame:06d}" for frame in range(row["start"], row["end"] + 1)}
+            expected_frames = {
+                f"{frame:06d}"
+                for frame in range(row["start"], row["end_exclusive"])
+            }
             if indexes["image_02"].frames[split].get(sequence, set()) != expected_frames:
                 devkit_seqmap_matches = False
     archive_records = [indexes[spec.component].public for spec in ARCHIVE_SPECS]
@@ -552,6 +569,23 @@ def render_markdown(manifest: Mapping[str, Any]) -> str:
     )
     for name, passed in manifest["gates"].items():
         lines.append(f"| `{name}` | `{'PASS' if passed else 'FAIL'}` |")
+    mismatches = [row for row in manifest["sequence_records"] if not row["sensor_frame_sets_exact"]]
+    if mismatches:
+        lines.extend(["", "### 严格 frame alignment blocker", ""])
+        for row in mismatches:
+            missing = row["missing_relative_to_image_02"]
+            extra = row["extra_relative_to_image_02"]
+            lines.append(
+                f"- `{row['split']}/{row['sequence']}`：frame counts=`{row['frame_counts']}`，"
+                f"missing relative to image_02=`{missing}`，extra=`{extra}`。"
+            )
+        lines.extend(
+            [
+                "",
+                "在确认这是否为官方已知缺帧并冻结 common-frame/abstain 规则前，真实 adapter smoke 保持 blocked；"
+                "不得静默取交集后把 coverage 写成完整序列。",
+            ]
+        )
     lines.extend(
         [
             "",

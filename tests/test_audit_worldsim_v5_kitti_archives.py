@@ -68,10 +68,10 @@ def _build_archives(root: Path, *, drop_right_frame: bool = False) -> dict[str, 
         {
             "devkit/readme.txt": b"fixture",
             "devkit/python/data/tracking/evaluate_tracking.seqmap.training": (
-                b"0000 empty 000000 000001\n0001 empty 000000 000001\n"
+                b"0000 empty 000000 000002\n0001 empty 000000 000002\n"
             ),
             "devkit/python/data/tracking/evaluate_tracking.seqmap.test": (
-                b"0000 empty 000000 000001\n"
+                b"0000 empty 000000 000002\n"
             ),
         },
     )
