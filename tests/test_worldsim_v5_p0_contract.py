@@ -19,7 +19,8 @@ def test_v5_p0_scope_closes_into_result_blind_cohort_phase() -> None:
     assert scope["task_registry"]["WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01"] == "pending"
     assert scope["task_registry"]["WS-V5-D1-KITTI-ADAPTER-01"] == "blocked"
     assert scope["authorization"]["allowed_now"] == [
-        "WS-V5-D0-NUSCENES-FRESH-COHORT-01",
+        "WS-V5-M1-STRUCTURED-OWNERSHIP-01",
+        "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01",
         "m1_evidence_schema_instrumentation",
         "m2_reference_and_staged_geometry_instrumentation",
         "result_blind_dataset_and_adapter_audit",
@@ -77,6 +78,7 @@ def test_v5_navigation_and_forensic_boundaries_are_explicit() -> None:
 
 def test_p0_forensic_machine_contracts_are_registered() -> None:
     scope = _yaml(ROOT / "configs/worldsim_v5/p0_scope_v1.yaml")
+    fresh = _yaml(ROOT / "configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml")
     m1 = _yaml(ROOT / "configs/worldsim_v5/m1_forensics_v1.yaml")
     m2 = _yaml(ROOT / "configs/worldsim_v5/m2_forensics_v1.yaml")
     assert m1["scope"] == "v4_historical_diagnostic_only"
@@ -94,8 +96,10 @@ def test_p0_forensic_machine_contracts_are_registered() -> None:
     assert scope["forensic_results"]["m2"]["status"] == "done"
     assert scope["task_registry"]["WS-V5-M1-D0-BAYES-FORENSICS-01"] == "done"
     assert scope["task_registry"]["WS-V5-M2-D0-GEOMETRY-FORENSICS-01"] == "done"
-    assert scope["task_registry"]["WS-V5-D0-NUSCENES-FRESH-COHORT-01"] == "running"
+    assert scope["task_registry"]["WS-V5-D0-NUSCENES-FRESH-COHORT-01"] == "done"
     assert scope["p0_result"]["status"] == "done"
     assert scope["closeout_gate"]["status"] == "done"
+    assert scope["authorization"]["phase"] == "post_fresh_cohort_development_only"
+    assert fresh["freeze"]["formal_result"]["status"] == "done"
     assert m1["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]
     assert m2["formal_result"]["project_git_head"] == scope["project"]["p0_freeze_commit"]

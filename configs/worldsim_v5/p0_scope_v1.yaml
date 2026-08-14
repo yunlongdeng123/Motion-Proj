@@ -157,15 +157,15 @@ statistics:
   retain_failed_blocked_abstain_denominator: true
 
 authorization:
-  phase: post_p0_pre_fresh_cohort_freeze
+  phase: post_fresh_cohort_development_only
   allowed_now:
-    - WS-V5-D0-NUSCENES-FRESH-COHORT-01
+    - WS-V5-M1-STRUCTURED-OWNERSHIP-01
+    - WS-V5-M2-GEOMETRY-FIRST-REPAIR-01
     - m1_evidence_schema_instrumentation
     - m2_reference_and_staged_geometry_instrumentation
     - result_blind_dataset_and_adapter_audit
-  forbidden_until_fresh_cohort_freeze:
-    - full_m1_implementation
-    - full_m2_implementation
+  forbidden_during_development_only:
+    - m1b_semantic_split_without_unlock
     - full_m3_implementation
     - new_large_model_training
     - fresh_validation_parameter_search
@@ -175,7 +175,7 @@ authorization:
 
 task_registry:
   WS-V5-P0-SCOPE-FREEZE-01: done
-  WS-V5-D0-NUSCENES-FRESH-COHORT-01: running
+  WS-V5-D0-NUSCENES-FRESH-COHORT-01: done
   WS-V5-M1-D0-BAYES-FORENSICS-01: done
   WS-V5-M1-STRUCTURED-OWNERSHIP-01: pending
   WS-V5-M1B-REVERSIBLE-SEMANTIC-SPLIT-01: pending

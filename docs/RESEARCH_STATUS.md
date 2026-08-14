@@ -9,7 +9,9 @@
 - M2 runner 从 6 个 scene summary 重建 `154 requests / 214 candidates`，复现 saturation=`192/214`、same-risk/different-MAE collision=`57/130`、accepted geometry oracle=`62/83`、positive regret=`21/83`，并复现 accepted/risk-abstain/role-asset-blocked 的 full-denominator scene-balanced delta=`+3.390809623732304 m`。
 - 两个 formal run 均来自同一 clean freeze commit，包含 resolved config、fingerprint、JSONL events、manifest、status、summary、source snapshot 与 run-local audit artifact；fresh/test quality、training、parameter/router search 均为 false。
 - `WS-V5-P0-SCOPE-FREEZE-01=done`：formal closeout=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-P0-SCOPE-FREEZE-01/20260814T091100Z__p0-scope-closeout-s0-r001`，source commit=`28c1d607de0a0ba72895806184348db4d3216de0`，summary SHA=`ca4248cff7085d8d5a57c842827b1a549b6d1d82fa95c2f81a2976c1192f5d38`，conclusion=`p0_scope_and_forensic_contracts_closed`，run 内合同测试通过。
-- 当前阶段转为 `post_p0_pre_fresh_cohort_freeze`：`WS-V5-D0-NUSCENES-FRESH-COHORT-01=running`；只允许结果盲 8/8/20 metadata selection、M1 evidence schema 与 M2 reference/staged-geometry instrumentation。scene 冻结前仍禁止完整 M1/M2/M3、新模型大训练、fresh validation/test quality 与 KITTI 方法调参。
+- `WS-V5-D0-NUSCENES-FRESH-COHORT-01=done`：diagnostic r001 与 frozen replay r002 均由 metadata-only runner 生成；formal run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-D0-NUSCENES-FRESH-COHORT-01/20260814T100000Z__fresh-cohort-freeze-s2216484596-r002`，source commit=`8821bd9ad8c3f99b3b39829385728dc37533bb93`，summary SHA=`0ea5ff1f5fd16fc278269acbd11e9998c8e3e67d74245a55bdf89a5d09896aad`。
+- fresh cohort=`8 development + 8 validation + 20 test`，cohort SHA=`553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1`，metadata inventory SHA=`63d0a70646615a5bc074faacee9838a8c7c4729a6e091a143435588ba53829f9`；850-scene metadata pool、V4 30-scene exclusion、role disjoint、official split 与 deterministic replay 全通过。
+- 当前阶段=`post_fresh_cohort_development_only`：只开放冻结 development scenes 上的 M1 structured ownership、M2 geometry-first 与 evidence/reference instrumentation。validation/test quality 尚未读取；M1B semantic split、完整 M3、新模型大训练、validation 参数搜索、KITTI 方法调参仍禁止。
 
 ## V5 P0 / KITTI archive 审计（2026-08-14）
 

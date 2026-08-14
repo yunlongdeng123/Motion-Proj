@@ -1,5 +1,17 @@
 # Experiments
 
+## V5 fresh nuScenes 8/8/20 metadata-only freeze（2026-08-14）
+
+| Task ID | 状态 | canonical evidence |
+|---|---|---|
+| `WS-V5-D0-NUSCENES-FRESH-COHORT-01` | done | diagnostic r001 + frozen replay r002；cohort SHA=`553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1`；r002 summary SHA=`0ea5ff1f5fd16fc278269acbd11e9998c8e3e67d74245a55bdf89a5d09896aad` |
+
+- selection contract commit=`07eb6dbbbcbccdd4dc4661bcb68b63c5ae742fb0`；freeze commit=`8821bd9ad8c3f99b3b39829385728dc37533bb93`。diagnostic 与 formal replay 均遍历相同 850-scene raw metadata pool，并对完整 cohort artifact 做 byte-exact 比较。
+- development=`scene-0471/1087/0379/0998/0359/0875/0535/0436`；validation=`scene-0170/0364/0997/0384/0129/0640/0977/1053`；test=`scene-0016/0627/0523/0344/1059/0330/0923/1071/0784/0963/0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`。
+- 所有 36 scenes 与 V4 30-scene cohort 严格不相交；development/validation 来自 official train，test 来自 official val；required channels=`CAM_FRONT/CAM_FRONT_LEFT/CAM_FRONT_RIGHT/LIDAR_TOP`，frame partition 与 2–4 s actor clip 合同逐场验证。
+- metadata inventory SHA=`63d0a70646615a5bc074faacee9838a8c7c4729a6e091a143435588ba53829f9`，candidate JSONL SHA=`5be022825b7eb98bfc9ddbd1b22e85e1bdf9b9b9d23e8fda9b647b05bf73079f`；selection seed=`2216484596`。
+- sensor blob expansion/training/model inference/fresh quality/test quality/parameter search=`false/false/false/false/false/false`。本任务不构成任何模型质量结论；20 test scenes 只冻结身份，尚未消费 quality read。
+
 ## V5 P0 M1/M2 retrospective forensic 正式审计（2026-08-14）
 
 | Task ID | 状态 | canonical evidence |

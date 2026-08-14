@@ -13,6 +13,7 @@
 - `V5-F09`：`WS-V5-M1-D0-BAYES-FORENSICS-01=done` 只表示历史分母已机器重算、缺失字段采集合约已冻结。canonical conclusion=`blocked_evidence_missing_contract_frozen`；不得把 task done 改写成 evidence complete、graph 已验证、M1 rejection 被推翻或可直接训练 full structured ownership。
 - `V5-F10`：M2 的 retrospective geometry oracle 只按现有 rendered `hole_geometry_mae_m` 相对排序；其 reference 是 immutable base `Background_depth`，不是 same-view hidden-background GT。即使 `62/83` accepted 与该 oracle 一致，也不能证明 candidate 物理正确。必须先补 `reference_source/confidence` 与 raw→pre-Gaussian→post-render 三段误差，随后才允许在 fresh development 拟合 non-saturating mapping。
 - `V5-F11`：P0 freeze-only commit=`dfe7526c7a83ca12d7fa9f6c5a11a29ea7b27b19` 只冻结 scope、historical bindings、missing-evidence schema 与审计器。它不包含 fresh scene selection、模型实现或质量结果；任何后续工作必须通过 P0 formal audit，并继续保持 fresh/test/KITTI quality 未读与 parameter search=false。
+- `V5-F12`：fresh 8/8/20 的冻结只使用官方 split、scene context、actor annotation/LiDAR-count metadata proxy 与 sensor-keyframe completeness；没有展开图像/LiDAR blob，也没有读取 reconstruction/edit/M1/M2/M3 quality。20 个 test scene 的身份出现在 freeze manifest 不等于 test quality 已读；`V5_TEST_FREEZE.json` 与 exact-once ledger 形成前，禁止加载其内容或指标。
 
 ## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
 
