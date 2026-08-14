@@ -1,0 +1,116 @@
+schema_version: worldsim_v5_m2_geometry_first_development_v1
+task_id: WS-V5-M2-GEOMETRY-FIRST-REPAIR-01
+status: running
+phase: staged_geometry_contract_smoke
+seed: 20260814
+
+scope:
+  partition: development
+  purpose: mechanism_identification_only
+  validation_quality_read: false
+  heldout_quality_read: false
+  test_quality_read: false
+  parameter_search_performed: false
+  router_refit_performed: false
+
+inputs:
+  formal_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/summary.json
+    sha256: 29ab0802c6e5d74c3bdbb333bf220b8c942facb9a2ff0a265f4535efcef581ef
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/checkpoint_final.pth
+    sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/config.yaml
+    sha256: eb22faea313c57c09884a69a7b42a2d36374268b6973fd09315249273de29c6d
+  sam_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036/summary.json
+    sha256: d66f04a05a5a0ee8fb94b423e20296ec019bc8fe1e56ebc6c57fb1c80495d487
+  sam_mask_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T172400Z__m1-scene0471-sam-sparse-s0-r036/artifacts/mask_manifest.json
+    sha256: f7a9f5e9f022c8f8685be89e7cdd7d808f13081106c56b07e5c87260ac72a213
+
+scene:
+  name: scene-0471
+  index: 382
+  processed_scene_dir: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382
+  frame_count: 196
+  cameras: [0, 1, 2]
+
+view_protocol:
+  selection: first_two_frozen_development_evaluation_frames_all_three_cameras
+  result_blind: true
+  frames: [2, 42]
+  cameras: [0, 1, 2]
+  expected_view_count: 6
+  target_mask_source: frozen_r036_accepted_sam_union
+  target_mask_dilation_pixels: 2
+  support_ring_inner_pixels: 4
+  support_ring_outer_pixels: 36
+
+reference:
+  source: base_background_depth_model_proxy_not_ground_truth
+  independent_geometry_claim_allowed: false
+  confidence:
+    formula: sqrt(reference_coverage_times_exp_negative_lidar_mae_over_scale)
+    agreement_scale_m: 0.5
+  required_fields:
+    - reference_source
+    - reference_confidence
+    - observed_reference_pixels
+    - lidar_agreement_mae_m
+
+surface:
+  support_source: erased_base_background_depth_ring
+  sequential_models: [G0_ROBUST_PLANE, G3_ROBUST_QUADRATIC]
+  active_models: [G0_ROBUST_PLANE]
+  g3_locked_until_g0_gate: true
+  minimum_support_points: 512
+  huber_delta: 1.5
+  maximum_iterations: 12
+  minimum_depth_m: 0.1
+  maximum_depth_m: 120.0
+
+gaussianization:
+  stride: 2
+  scale_multiplier: 1.25
+  minimum_scale_m: 0.01
+  maximum_scale_m: 0.35
+  opacity: 0.85
+  appearance_source: telea_diagnostic_only
+  geometry_controls_position: true
+
+staged_geometry_contract:
+  - raw_surface_model
+  - raw_geometry_error
+  - pre_gaussianization_geometry_error
+  - post_gaussianization_render_error
+  - representation_gap
+  - surface_fit_residual
+  - extrapolation_distance
+  - geometry_support
+  - lidar_support
+  - multi_view_depth_support
+  - occlusion_uncertainty
+
+mechanism_gates:
+  minimum_evaluable_views: 4
+  gaussianization_primary:
+    minimum_view_count: 4
+    minimum_post_minus_pre_mae_m: 0.10
+  candidate_builder_primary:
+    minimum_view_count: 4
+    minimum_raw_mae_m: 0.50
+  unlock_g3_if:
+    minimum_g0_raw_failure_views: 3
+    g0_raw_failure_mae_m: 0.50
+  no_automatic_validation: true
+  no_automatic_router_refit: true
+
+runtime:
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_expected_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
