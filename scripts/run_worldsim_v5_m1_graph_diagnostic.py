@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""复用 r037 冻结 unary，执行 scene0471 的小型 graph mechanism 诊断。"""
+"""复用已绑定的冻结 unary 产物，执行小型 graph mechanism 诊断。"""
 
 from __future__ import annotations
 
@@ -138,6 +138,30 @@ def _write_terminal(
     )
 
 
+def _verified_evaluation_rows(
+    summary: Mapping[str, Any], diagnostics: Mapping[str, Any]
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    rows = diagnostics.get("evaluation_rows", {}).get("B1", [])
+    b3_rows = diagnostics.get("evaluation_rows", {}).get("B3", [])
+    accepted = int(summary.get("accepted_evaluation_view_count", -1))
+    abstained = int(summary.get("abstained_evaluation_view_count", -1))
+    total = int(summary.get("evaluation_view_count", -1))
+    row_keys = [(int(row["frame"]), int(row["camera_id"])) for row in rows]
+    b3_row_keys = [(int(row["frame"]), int(row["camera_id"])) for row in b3_rows]
+    if (
+        accepted <= 0
+        or len(rows) != accepted
+        or len(b3_rows) != accepted
+        or accepted + abstained != total
+        or int(diagnostics.get("accepted_evaluation_view_count", -1)) != accepted
+        or int(diagnostics.get("abstained_evaluation_view_count", -1)) != abstained
+        or int(diagnostics.get("evaluation_view_count", -1)) != total
+        or row_keys != b3_row_keys
+    ):
+        raise GraphDiagnosticError("frozen unary evaluation denominator 漂移")
+    return rows, b3_rows
+
+
 def _verify_unary_contract(
     config: Mapping[str, Any], inputs: Mapping[str, Mapping[str, Any]]
 ) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]], Path]:
@@ -162,7 +186,7 @@ def _verify_unary_contract(
         or summary.get("validation_quality_read") is not False
         or summary.get("heldout_quality_read") is not False
     ):
-        raise GraphDiagnosticError("r037 summary contract 漂移")
+        raise GraphDiagnosticError("frozen unary summary contract 漂移")
     if (
         status.get("status") != "done"
         or status.get("summary_sha256") != inputs["unary_summary"]["sha256"]
@@ -172,7 +196,7 @@ def _verify_unary_contract(
         or diagnostics.get("graph_inference_started") is not False
         or diagnostics.get("parameter_search_performed") is not False
     ):
-        raise GraphDiagnosticError("r037 terminal/fingerprint contract 漂移")
+        raise GraphDiagnosticError("frozen unary terminal/fingerprint contract 漂移")
     inventory = {row["path"]: row for row in manifest["inventory"]}
     unary_root = Path(inputs["unary_manifest"]["path"]).parent
     for unary, input_name in (
@@ -185,16 +209,10 @@ def _verify_unary_contract(
             or inventory[relative]["sha256"] != inputs[input_name]["sha256"]
             or Path(inputs[input_name]["path"]).resolve() != (unary_root / relative).resolve()
         ):
-            raise GraphDiagnosticError(f"r037 {unary} Gaussian inventory 漂移")
-    rows = diagnostics.get("evaluation_rows", {}).get("B1", [])
-    b3_rows = diagnostics.get("evaluation_rows", {}).get("B3", [])
-    if (
-        len(rows) != int(summary["accepted_evaluation_view_count"])
-        or len(rows) != 8
-        or len(b3_rows) != 8
-        or int(summary["abstained_evaluation_view_count"]) != 7
-    ):
-        raise GraphDiagnosticError("r037 evaluation denominator 漂移")
+            raise GraphDiagnosticError(
+                f"frozen unary {unary} Gaussian inventory 漂移"
+            )
+    rows, b3_rows = _verified_evaluation_rows(summary, diagnostics)
     for row in [*rows, *b3_rows]:
         relative = str(row["path"])
         record = inventory.get(relative)
@@ -204,7 +222,9 @@ def _verify_unary_contract(
             or record["sha256"] != row["sha256"]
             or sha256_file(path) != row["sha256"]
         ):
-            raise GraphDiagnosticError(f"r037 evaluation artifact 漂移: {relative}")
+            raise GraphDiagnosticError(
+                f"frozen unary evaluation artifact 漂移: {relative}"
+            )
     return summary, diagnostics, rows, unary_root
 
 
@@ -369,7 +389,9 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             not np.array_equal(base_model, tables["B1"]["base_model"])
             or not np.array_equal(base_index, tables["B1"]["base_index"])
         ):
-            raise GraphDiagnosticError("live checkpoint Gaussian layout 与 r037 漂移")
+            raise GraphDiagnosticError(
+                "live checkpoint Gaussian layout 与 frozen unary 漂移"
+            )
 
         evaluation_by_arm: dict[str, list[dict[str, Any]]] = {
             key: [] for key in posteriors
@@ -389,7 +411,9 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             if not np.array_equal(
                 frozen_by_unary["B3"]["target"], frozen_b1["target"]
             ):
-                raise GraphDiagnosticError("r037 B1/B3 evaluation target 漂移")
+                raise GraphDiagnosticError(
+                    "frozen unary B1/B3 evaluation target 漂移"
+                )
             image_infos, camera_infos, *_ = get_view_data(
                 dataset, frame, camera_id, device
             )
@@ -431,7 +455,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                             g0_replay_exact[unary] &= bool(exact)
                             if not exact:
                                 raise GraphDiagnosticError(
-                                    f"{unary} G0 未 exact replay r037 float16"
+                                    f"{unary} G0 未 exact replay frozen unary float16"
                                 )
                         metrics = _metric_row(
                             probability,
@@ -521,6 +545,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             "evaluation_aggregate": evaluation_aggregate,
             "evaluation_delta_vs_g0": evaluation_delta_vs_g0,
             "g0_replay_r037_float16_exact": g0_replay_exact,
+            "g0_replay_unary_float16_exact": g0_replay_exact,
             "parameter_search_performed": False,
             "validation_quality_read": False,
             "heldout_quality_read": False,
@@ -567,6 +592,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             "posterior_artifact_sha256": sha256_file(posterior_path),
             "diagnostics_sha256": sha256_file(diagnostics_path),
             "g0_replay_r037_float16_exact": g0_replay_exact,
+            "g0_replay_unary_float16_exact": g0_replay_exact,
             "arm_gaussian_metrics": gaussian_metrics,
             "arm_gaussian_delta_vs_g0": gaussian_delta_vs_g0,
             "arm_evaluation_aggregate": evaluation_aggregate,

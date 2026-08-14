@@ -75,6 +75,57 @@ def test_metric_row_uses_frozen_threshold_and_boundary_tolerance() -> None:
     assert metrics["brier"] < 0.05
 
 
+@pytest.mark.parametrize(("accepted", "abstained"), [(8, 7), (1, 14), (3, 12)])
+def test_evaluation_denominator_accepts_bound_unary_counts(
+    accepted: int, abstained: int
+) -> None:
+    rows = [
+        {"frame": index, "camera_id": index % 3, "path": f"B1/{index}.npz"}
+        for index in range(accepted)
+    ]
+    b3_rows = [dict(row) for row in rows]
+    summary = {
+        "accepted_evaluation_view_count": accepted,
+        "abstained_evaluation_view_count": abstained,
+        "evaluation_view_count": accepted + abstained,
+    }
+    diagnostics = {
+        "accepted_evaluation_view_count": accepted,
+        "abstained_evaluation_view_count": abstained,
+        "evaluation_view_count": accepted + abstained,
+        "evaluation_rows": {"B1": rows, "B3": b3_rows},
+    }
+    verified_b1, verified_b3 = MODULE._verified_evaluation_rows(
+        summary, diagnostics
+    )
+    assert verified_b1 == rows
+    assert verified_b3 == b3_rows
+
+
+def test_evaluation_denominator_rejects_zero_or_mismatched_rows() -> None:
+    summary = {
+        "accepted_evaluation_view_count": 0,
+        "abstained_evaluation_view_count": 15,
+        "evaluation_view_count": 15,
+    }
+    diagnostics = {
+        **summary,
+        "evaluation_rows": {"B1": [], "B3": []},
+    }
+    with pytest.raises(MODULE.GraphDiagnosticError, match="denominator"):
+        MODULE._verified_evaluation_rows(summary, diagnostics)
+
+    summary["accepted_evaluation_view_count"] = 1
+    summary["abstained_evaluation_view_count"] = 14
+    diagnostics.update(summary)
+    diagnostics["evaluation_rows"] = {
+        "B1": [{"frame": 2, "camera_id": 0}],
+        "B3": [{"frame": 2, "camera_id": 1}],
+    }
+    with pytest.raises(MODULE.GraphDiagnosticError, match="denominator"):
+        MODULE._verified_evaluation_rows(summary, diagnostics)
+
+
 def test_graph_runner_help_works_from_repo_root() -> None:
     result = subprocess.run(
         [sys.executable, str(SCRIPT), "--help"],
