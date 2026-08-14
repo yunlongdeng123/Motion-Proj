@@ -155,14 +155,14 @@ def test_edge_schema_rejects_cross_table_index_drift() -> None:
         validate_edge_table(edges, gaussian_count=2)
 
 
-def test_m1_contract_binds_processed_development_before_sky_masks() -> None:
+def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
     config = yaml.safe_load(
         (ROOT / "configs/worldsim_v5/m1_structured_ownership_v1.yaml").read_text(
             encoding="utf-8"
         )
     )
     assert config["status"] == "running"
-    assert config["phase"] == "development_derived_sky_masks"
+    assert config["phase"] == "development_base_reconstruction"
     assert len(config["fresh_cohort_binding"]["development_scenes"]) == 8
     assert config["data_readiness"]["processed_scene_count"] == 8
     assert config["data_readiness"]["processed_total_bytes"] == 2497238886
@@ -174,9 +174,16 @@ def test_m1_contract_binds_processed_development_before_sky_masks() -> None:
     )
     assert (
         config["data_readiness"]["state"]
-        == "processed_complete_derived_sky_masks_required"
+        == "processed_and_sky_masks_complete_profile100_pending"
     )
-    assert config["data_readiness"]["derived_sky_masks"]["required_count"] == 4704
+    sky = config["data_readiness"]["derived_sky_masks"]
+    assert sky["required_count"] == sky["present_count"] == 4704
+    assert sky["all_payload_rehashed_exact"] is True
+    assert len(sky["scene_summary_sha256"]) == 8
+    assert (
+        sky["training_binding_config"]
+        == "configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml"
+    )
     assert config["data_readiness"]["blocked_base_profile"]["status"] == "blocked"
     assert config["data_readiness"]["development_raw_present_keyframes"] == 0
     assert (
@@ -185,5 +192,10 @@ def test_m1_contract_binds_processed_development_before_sky_masks() -> None:
     )
     assert config["graph"]["status"] == "disabled_until_unary_diagnostic"
     assert config["graph"]["transformer_allowed"] is False
+    assert config["restrictions"]["development_content_read"] is True
+    assert config["restrictions"]["training_started"] is True
+    assert config["restrictions"]["training_iteration_started"] is False
+    assert config["restrictions"]["segmentation_inference_started"] is True
+    assert config["restrictions"]["method_inference_started"] is False
     assert config["restrictions"]["validation_content_read"] is False
     assert config["restrictions"]["test_quality_read"] is False

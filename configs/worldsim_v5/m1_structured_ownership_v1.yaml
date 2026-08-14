@@ -1,7 +1,7 @@
 schema_version: worldsim_v5_m1_structured_ownership_v1
 task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
 status: running
-phase: development_derived_sky_masks
+phase: development_base_reconstruction
 
 fresh_cohort_binding:
   config: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
@@ -76,18 +76,35 @@ data_readiness:
   derived_sky_masks:
     required_cameras: [0, 1, 2]
     required_count: 4704
-    present_count: 0
+    present_count: 4704
+    total_bytes: 14058820
+    aggregate_duration_seconds: 1067.2137058321387
+    weighted_mean_sky_fraction: 0.06551673428051775
+    source_commit: 282ff528af5ca8455014271a3a492e8b9c344991
     generator_config: configs/worldsim_v5/m1_development_sky_masks_v1.yaml
     model_revision: 2c6f153e4c23c229e2fa2b188eb250607e030cd8
     network_access: false
     quality_read: false
+    method_inference_started: false
+    segmentation_inference_started: true
+    all_payload_rehashed_exact: true
+    training_binding_config: configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml
+    scene_summary_sha256:
+      scene-0471: 97d509133f3907cfa04d486ab59a5d7801ba689f42d0d8b8decf87822551e208
+      scene-1087: 1158ea3c4b2bace8b1cfcd5435b1806f7ffd41bdfa7759af79c6dc6ac9c9fe73
+      scene-0379: 401ab6f5a25b55786fd2c6afffea3226901fb17436e1aaf6c3b94b16a4ce91a2
+      scene-0998: af2210cefbbc45bb656e5374e090c80e615aec69962542e607771ef3e108e2f3
+      scene-0359: 01a3b283034aef256620eed582951e452e7300bc78f3cfee9450085d6a16602a
+      scene-0875: 4b92a231e24fc2d302f3861fbb509358b9ac260a2fda24346363d76893c5d0ad
+      scene-0535: f8a56ca7d1797f884e7f6a1e73478fddddcc46c3faa3d0a84c301cb56a7107ab
+      scene-0436: c6d879aa538acee7c7334064773375ce5b13e160bc67aac61fcfde7d3a6356e3
   blocked_base_profile:
     run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T111900Z__m1-development-base-scene0471-profile100-s0-r003
     status: blocked
     reason: derived_sky_masks_missing_before_training_step
     summary_sha256: a2802430984ab369143be609088df514e3ed0943563b23ee0a5b3bee02e214f7
     training_iteration_started: false
-  state: processed_complete_derived_sky_masks_required
+  state: processed_and_sky_masks_complete_profile100_pending
   quality_read: false
 
 evidence_contract:
@@ -132,11 +149,14 @@ graph:
   semantic_split_allowed: false
 
 restrictions:
-  development_content_read: false
+  development_content_read: true
   validation_content_read: false
   validation_parameter_search: false
   test_content_read: false
   test_quality_read: false
   kitti_quality_read: false
-  training_started: false
+  training_started: true
+  training_iteration_started: false
+  segmentation_inference_started: true
+  method_inference_started: false
   new_large_model_training: false

@@ -2,6 +2,10 @@
 
 ## V5 M1 structured evidence / development 数据闭环（2026-08-14）
 
+- sky-mask canonical batch r011–r018 已完成：scene=`0471/1087/0379/0998/0359/0875/0535/0436`，mask denominator=`588/588/573/588/588/588/603/588=4704`，全 payload rehash exact；汇总 bytes/duration/weighted sky fraction=`14,058,820 / 1067.213706 s / 0.0655167343`。
+- summary SHA（按上述 scene 顺序）=`97d509133f3907cfa04d486ab59a5d7801ba689f42d0d8b8decf87822551e208 / 1158ea3c4b2bace8b1cfcd5435b1806f7ffd41bdfa7759af79c6dc6ac9c9fe73 / 401ab6f5a25b55786fd2c6afffea3226901fb17436e1aaf6c3b94b16a4ce91a2 / af2210cefbbc45bb656e5374e090c80e615aec69962542e607771ef3e108e2f3 / 01a3b283034aef256620eed582951e452e7300bc78f3cfee9450085d6a16602a / 4b92a231e24fc2d302f3861fbb509358b9ac260a2fda24346363d76893c5d0ad / f8a56ca7d1797f884e7f6a1e73478fddddcc46c3faa3d0a84c301cb56a7107ab / c6d879aa538acee7c7334064773375ce5b13e160bc67aac61fcfde7d3a6356e3`。
+- 新训练 overlay=`configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml`；它只叠加已核验的 sky-mask identity，原 base 配置保持字节不变。下一批 run 必须使用新 ID、clean source，并先完成全部 8 场 `profile100`。
+
 | Task ID | 状态 | 当前证据 / 边界 |
 |---|---|---|
 | `WS-V5-M1-STRUCTURED-OWNERSHIP-01` | running | schema/effective-count unary + `14,220/14,220` raw + `8/8` processed；尚无 development quality，当前进入 base reconstruction |

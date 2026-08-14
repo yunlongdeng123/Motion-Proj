@@ -2,6 +2,9 @@
 
 ## V5 M1 development 数据闭环与 base reconstruction 入口（2026-08-14）
 
+- 派生 sky-mask gate 已完成：8/8 scenes、`4704/4704` PNG、`14,058,820 bytes`，逐文件 bytes/SHA 全量复核一致；总推理耗时=`1067.213706 s`，加权 mean sky fraction=`0.0655167343`，峰值 GPU=`4168 MiB`。8 个 run 均来自 clean commit=`282ff528af5ca8455014271a3a492e8b9c344991`，network/test quality/method inference=`false/false/false`。
+- 训练输入改用不可变 base 配置的 sky-bound overlay：`configs/worldsim_v5/m1_development_reconstruction_skybound_v1.yaml` 绑定原配置 SHA=`c55f39a089da1beaf8ba00a5eb9dda3c26f997486a8950e2002256e4f0dbc748`、8 份 summary/run-manifest/sky-manifest SHA；原配置不改写。当前下一门为 8-scene `profile100`，通过前不启动 30k formal 或 structured unary quality。
+
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；精确 raw selective extraction 与 8-scene DriveStudio preprocess 均已完成，当前阶段=`development_base_reconstruction`。graph 继续 `disabled_until_unary_diagnostic`，尚无 development quality、arm selection 或参数搜索。
 - raw formal run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T095000Z__m1-development-raw-extract-s0-r001`：六路相机 + `LIDAR_TOP` 完整 keyframe/sweep 时间链=`14,220/14,220 files`、`3,996,996,012 bytes`；batch manifest content/file SHA=`65fc5363ca13f9124fe6165a84a7857339943d64b87a756127950ab19c4611b6 / d244638a88943c3757a0fb00494766cf5f7ce30ba1bcd5d9e6c6bf18f0d06fd3`，summary SHA=`0c164e46873ecca4e2878d2d9937960d9b1df916ee25e92d075abc9d1ea0c213`。
 - preprocess canonical run=`/root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T105300Z__m1-development-preprocess8-s0-r002`，source commit=`23e13e2201f757fc02eaf5ef0677219e564d85da`，`8/8 scenes`、`2,497,238,886 bytes`、耗时=`1148.674389 s`，summary/status/fingerprint/manifest SHA=`dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0 / 21702f7442824a2e7fd5e66b120511fc3c28121f68d8c711c521c7e858eacfa7 / 147c6d4d4024e12ea26b1e9f0cf7ebb9723d334aa83e1ec199a86c7529eb7a2c / c7140b4001bcfb108e83b5569a5d25a1176f61c66a3dcb1c5d17c3ddfa10f391`。

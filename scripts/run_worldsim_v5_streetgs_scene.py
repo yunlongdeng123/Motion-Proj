@@ -50,8 +50,7 @@ FRAME_CONTRACT = {
     "scene-0535": 201,
     "scene-0436": 196,
 }
-SNAPSHOT_RELPATHS = (
-    "configs/worldsim_v5/m1_development_reconstruction_v1.yaml",
+STATIC_SNAPSHOT_RELPATHS = (
     "configs/worldsim_v5/m1_structured_ownership_v1.yaml",
     "configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml",
     "scripts/run_worldsim_v5_streetgs_scene.py",
@@ -71,6 +70,38 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise V5StreetGSTrainingError(f"配置根节点必须为 mapping：{path}")
     return value
+
+
+def load_training_config(
+    config_path: Path, project_root: Path
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    raw = _load_yaml(config_path)
+    if raw.get("schema_version") != "worldsim_v5_streetgs_training_binding_v1":
+        return raw, None
+    if (
+        raw.get("task_id") != TASK_ID
+        or raw.get("status") != "running"
+        or raw.get("phase") != "development_base_reconstruction"
+    ):
+        raise V5StreetGSTrainingError("sky-bound training config 合同漂移")
+    base_binding = raw.get("base_config", {})
+    base_path = Path(str(base_binding.get("path", "")))
+    if not base_path.is_absolute():
+        base_path = project_root / base_path
+    if not base_path.is_file() or sha256_file(base_path) != base_binding.get("sha256"):
+        raise V5StreetGSTrainingError("base reconstruction config binding 漂移")
+    base = _load_yaml(base_path)
+    if base.get("schema_version") != SCHEMA_VERSION or "sky_mask_binding" in base:
+        raise V5StreetGSTrainingError("base reconstruction config schema/immutability 漂移")
+    resolved = dict(base)
+    resolved["sky_mask_binding"] = raw.get("sky_mask_binding")
+    binding = {
+        "overlay_path": str(config_path),
+        "overlay_sha256": sha256_file(config_path),
+        "base_path": str(base_path),
+        "base_sha256": base_binding["sha256"],
+    }
+    return resolved, binding
 
 
 def _write_json(path: Path, payload: Any) -> None:
@@ -99,7 +130,11 @@ def expected_scene_frames(config: Mapping[str, Any], scene: str) -> int:
 
 
 def _verified_preprocess_artifact(
-    config: Mapping[str, Any], scene: str, *, verify_payload: bool
+    config: Mapping[str, Any],
+    scene: str,
+    *,
+    verify_payload: bool,
+    allowed_extra_paths: set[str] | None = None,
 ) -> dict[str, Any]:
     row = config["preprocess_binding"]["scene_artifacts"][scene]
     path = Path(str(row["path"]))
@@ -150,7 +185,9 @@ def _verified_preprocess_artifact(
             for path in expected_output.rglob("*")
             if path.is_file()
         )
-        if sorted(expected_paths) != observed_paths:
+        extras = set(observed_paths) - set(expected_paths)
+        missing = set(expected_paths) - set(observed_paths)
+        if missing or extras != (allowed_extra_paths or set()):
             raise V5StreetGSTrainingError(f"processed payload 文件集合漂移：{scene}")
     else:
         total_bytes = sum(int(item["bytes"]) for item in inventory)
@@ -160,6 +197,87 @@ def _verified_preprocess_artifact(
         "inventory_sha256": row["inventory_sha256"],
         "file_count": len(inventory),
         "total_bytes": total_bytes,
+        "payload_rehashed": verify_payload,
+    }
+
+
+def _verified_sky_mask_artifact(
+    config: Mapping[str, Any], scene: str, *, verify_payload: bool
+) -> dict[str, Any]:
+    binding = config["sky_mask_binding"]
+    row = binding["scene_runs"][scene]
+    run_dir = Path(str(row["run"]))
+    summary_path = run_dir / "summary.json"
+    run_manifest_path = run_dir / "manifest.json"
+    artifact_path = run_dir / "artifacts/sky_mask_manifest.json"
+    expected_hashes = {
+        summary_path: row["summary_sha256"],
+        run_manifest_path: row["run_manifest_sha256"],
+        artifact_path: row["artifact_sha256"],
+    }
+    for path, expected_sha in expected_hashes.items():
+        if not path.is_file() or sha256_file(path) != expected_sha:
+            raise V5StreetGSTrainingError(f"sky-mask run artifact 漂移：{scene}/{path.name}")
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
+    expected_frames = FRAME_CONTRACT[scene]
+    expected_masks = expected_frames * len(binding["camera_ids"])
+    if (
+        summary.get("schema_version") != "worldsim_v5_sky_mask_summary_v1"
+        or summary.get("task_id") != TASK_ID
+        or summary.get("status") != "done"
+        or summary.get("scene") != scene
+        or int(summary.get("mask_count", -1)) != expected_masks
+        or summary.get("segmentation_inference_started") is not True
+        or summary.get("method_inference_started") is not False
+        or summary.get("network_accessed") is not False
+        or summary.get("test_quality_read") is not False
+    ):
+        raise V5StreetGSTrainingError(f"sky-mask summary 合同漂移：{scene}")
+    if (
+        artifact.get("schema_version") != "worldsim_v5_sky_mask_manifest_v1"
+        or artifact.get("task_id") != TASK_ID
+        or artifact.get("status") != "done"
+        or artifact.get("scene") != scene
+        or int(artifact.get("scene_index", -1)) != SCENE_CONTRACT[scene]
+        or int(artifact.get("expected_timesteps", -1)) != expected_frames
+        or int(artifact.get("mask_count", -1)) != expected_masks
+        or artifact.get("model", {}).get("revision")
+        != binding["model_revision"]
+        or artifact.get("network_accessed") is not False
+        or artifact.get("test_quality_read") is not False
+    ):
+        raise V5StreetGSTrainingError(f"sky-mask manifest 合同漂移：{scene}")
+    files = artifact.get("files")
+    if not isinstance(files, list) or len(files) != expected_masks:
+        raise V5StreetGSTrainingError(f"sky-mask file inventory 漂移：{scene}")
+    scene_root = Path(config["data"]["processed_root"]) / legacy.scene_directory_name(
+        SCENE_CONTRACT[scene]
+    )
+    sky_root = scene_root / "sky_masks"
+    relative_paths = {f"sky_masks/{item['mask']}" for item in files}
+    expected_names = {str(item["mask"]) for item in files}
+    if verify_payload:
+        for item in files:
+            path = sky_root / str(item["mask"])
+            if (
+                not path.is_file()
+                or path.stat().st_size != int(item["bytes"])
+                or sha256_file(path) != item["sha256"]
+            ):
+                raise V5StreetGSTrainingError(
+                    f"sky-mask payload 漂移：{scene}/{item['mask']}"
+                )
+        observed_names = {path.name for path in sky_root.glob("*.png")}
+        if observed_names != expected_names:
+            raise V5StreetGSTrainingError(f"sky-mask 输出集合漂移：{scene}")
+    return {
+        "run": str(run_dir),
+        "summary_sha256": row["summary_sha256"],
+        "run_manifest_sha256": row["run_manifest_sha256"],
+        "artifact_sha256": row["artifact_sha256"],
+        "mask_count": expected_masks,
+        "relative_paths": relative_paths,
         "payload_rehashed": verify_payload,
     }
 
@@ -253,9 +371,28 @@ def validate_config(
         SCENE_CONTRACT
     ):
         raise V5StreetGSTrainingError("preprocess scene artifact 集合漂移")
+    sky_binding = config.get("sky_mask_binding", {})
+    if (
+        sky_binding.get("model_revision")
+        != "2c6f153e4c23c229e2fa2b188eb250607e030cd8"
+        or sky_binding.get("camera_ids") != [0, 1, 2]
+        or int(sky_binding.get("total_mask_count", -1)) != 4704
+        or not isinstance(sky_binding.get("scene_runs"), Mapping)
+        or set(sky_binding["scene_runs"]) != set(SCENE_CONTRACT)
+    ):
+        raise V5StreetGSTrainingError("sky-mask binding 合同漂移")
+    sky_bindings = {
+        scene: _verified_sky_mask_artifact(
+            config, scene, verify_payload=verify_payload
+        )
+        for scene in SCENE_CONTRACT
+    }
     bindings = {
         scene: _verified_preprocess_artifact(
-            config, scene, verify_payload=verify_payload
+            config,
+            scene,
+            verify_payload=verify_payload,
+            allowed_extra_paths=sky_bindings[scene]["relative_paths"],
         )
         for scene in SCENE_CONTRACT
     }
@@ -266,7 +403,11 @@ def validate_config(
         or restrictions.get("post_train_render") is not False
     ):
         raise V5StreetGSTrainingError("quality/render restriction 漂移")
-    return {"scene_count": len(SCENE_CONTRACT), "preprocess_bindings": bindings}
+    return {
+        "scene_count": len(SCENE_CONTRACT),
+        "preprocess_bindings": bindings,
+        "sky_mask_bindings": sky_bindings,
+    }
 
 
 def build_train_command(
@@ -333,10 +474,12 @@ def run(
     )
     if run_dir.exists():
         raise V5StreetGSTrainingError(f"run 目录已存在，禁止复用：{run_dir}")
-    config = _load_yaml(config_path)
+    config, config_binding = load_training_config(config_path, project_root)
     validated = validate_config(config, project_root, verify_payload=False)
     if scene not in SCENE_CONTRACT or mode not in config["training"]["modes"]:
         raise V5StreetGSTrainingError("scene/mode 未冻结")
+    if _git(project_root, "status", "--porcelain"):
+        raise V5StreetGSTrainingError("正式 StreetGS run 要求 clean project worktree")
     upstream = Path(config["implementation"]["upstream_root"])
     if (
         _git(upstream, "rev-parse", "HEAD")
@@ -361,12 +504,20 @@ def run(
     data_validation = legacy.validate_processed_scene(
         processed, expected_scene_frames(config, scene), 6
     )
-    preprocess_binding = _verified_preprocess_artifact(
+    sky_mask_binding = _verified_sky_mask_artifact(
         config, scene, verify_payload=True
+    )
+    preprocess_binding = _verified_preprocess_artifact(
+        config,
+        scene,
+        verify_payload=True,
+        allowed_extra_paths=sky_mask_binding["relative_paths"],
     )
     for name in ("artifacts", "logs", "source_snapshot", "stages", "work_dirs"):
         (run_dir / name).mkdir(parents=True, exist_ok=False)
-    shutil.copy2(config_path, run_dir / "resolved.yaml")
+    (run_dir / "resolved.yaml").write_text(
+        yaml.safe_dump(config, allow_unicode=True, sort_keys=False), encoding="utf-8"
+    )
     stage_name = f"train_{mode}"
     pre = legacy.resource_sample(stage_name, "preflight")
     _append_jsonl(run_dir / "resource.jsonl", pre)
@@ -403,6 +554,16 @@ def run(
             stdout=log,
             stderr=subprocess.STDOUT,
             start_new_session=True,
+        )
+        _write_json(
+            run_dir / "stages" / "training_process_started.json",
+            {
+                "process_started": True,
+                "scene": scene,
+                "mode": mode,
+                "pid": ACTIVE_PROCESS.pid,
+                "started_at_utc": datetime.now(timezone.utc).isoformat(),
+            },
         )
         interval = float(config["resources"]["sample_interval_seconds"])
         timeout = float(config["resources"]["timeout_seconds"][mode])
@@ -481,7 +642,21 @@ def run(
     }
     _write_json(run_dir / "stages" / f"{stage_name}.json", stage)
     snapshots = {}
-    for relpath in SNAPSHOT_RELPATHS:
+    try:
+        config_relpath = config_path.relative_to(project_root).as_posix()
+    except ValueError as error:
+        raise V5StreetGSTrainingError("训练 config 必须位于 project root") from error
+    snapshot_relpaths = [config_relpath, *STATIC_SNAPSHOT_RELPATHS]
+    if config_binding is not None:
+        base_path = Path(config_binding["base_path"])
+        try:
+            base_relpath = base_path.relative_to(project_root).as_posix()
+        except ValueError as error:
+            raise V5StreetGSTrainingError(
+                "base reconstruction config 必须位于 project root"
+            ) from error
+        snapshot_relpaths.append(base_relpath)
+    for relpath in dict.fromkeys(snapshot_relpaths):
         source = project_root / relpath
         target = run_dir / "source_snapshot" / relpath
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -492,8 +667,14 @@ def run(
         }
     fingerprint = {
         "config_sha256": sha256_file(config_path),
+        "config_binding": config_binding,
         "data_validation": data_validation,
         "preprocess_binding": preprocess_binding,
+        "sky_mask_binding": {
+            key: value
+            for key, value in sky_mask_binding.items()
+            if key != "relative_paths"
+        },
         "upstream": {
             "head": _git(upstream, "rev-parse", "HEAD"),
             "status": _git(upstream, "status", "--short"),
@@ -533,6 +714,7 @@ def run(
             "peak_cgroup_memory_bytes": peak_memory,
         },
         "preprocess_inventory_sha256": preprocess_binding["inventory_sha256"],
+        "sky_mask_artifact_sha256": sky_mask_binding["artifact_sha256"],
         "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
         "project_git": {
             "head": _git(project_root, "rev-parse", "HEAD"),
@@ -623,7 +805,9 @@ def record_blocked(
         "reason": "streetgs_training_failed",
         "error": event,
         "fingerprint_sha256": sha256_file(run_dir / "fingerprint.json"),
-        "training_started": (run_dir / "resource.jsonl").exists(),
+        "training_started": (
+            run_dir / "stages" / "training_process_started.json"
+        ).exists(),
         "model_inference_started": False,
         "validation_quality_read": False,
         "test_quality_read": False,
