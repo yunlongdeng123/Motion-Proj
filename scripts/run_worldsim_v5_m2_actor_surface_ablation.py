@@ -63,6 +63,17 @@ class M2ActorSurfaceError(RuntimeError):
     """per-actor raw surface ablation 合约失败。"""
 
 
+def _raw_depth_payload(
+    states: Mapping[str, Mapping[str, Any]], arms: tuple[str, str]
+) -> dict[str, np.ndarray]:
+    return {
+        f"{model.split('_', 1)[0].lower()}_raw_depth": states[model][
+            "fit"
+        ].depth.astype(np.float16)
+        for model in arms
+    }
+
+
 def load_config(path: Path) -> dict[str, Any]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict) or payload.get("schema_version") not in SCHEMA_BINDINGS:
@@ -293,7 +304,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                     common = target & np.isfinite(reference) & (reference > 1e-4)
                     for state in states.values():
                         common &= np.isfinite(state["fit"].depth) & (state["fit"].depth > 1e-4)
-                    arms = {
+                    arm_metrics = {
                         model: {
                             "raw_geometry_error": depth_error_summary(
                                 state["fit"].depth, reference, common
@@ -321,8 +332,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                             "support_mask": support.astype(np.int8),
                             "common_evaluation_mask": common.astype(np.int8),
                             "reference_depth": reference.astype(np.float16),
-                            f"{arms[0].split('_', 1)[0].lower()}_raw_depth": states[arms[0]]["fit"].depth.astype(np.float16),
-                            f"{arms[1].split('_', 1)[0].lower()}_raw_depth": states[arms[1]]["fit"].depth.astype(np.float16),
+                            **_raw_depth_payload(states, arms),
                         },
                     )
                     row.update(
@@ -337,7 +347,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                                 "lidar_agreement_mae_m": lidar_mae,
                                 "independent_geometry_claim_allowed": False,
                             },
-                            "arms": arms,
+                            "arms": arm_metrics,
                             "artifact": {
                                 "path": str(artifact.relative_to(run_dir)),
                                 "sha256": sha256_file(artifact),

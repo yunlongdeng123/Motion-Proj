@@ -1,8 +1,15 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 
-from scripts.run_worldsim_v5_m2_actor_surface_ablation import load_config, selection
+import numpy as np
+
+from scripts.run_worldsim_v5_m2_actor_surface_ablation import (
+    _raw_depth_payload,
+    load_config,
+    selection,
+)
 
 
 def _row(g0: float, g1: float) -> dict:
@@ -75,3 +82,14 @@ def test_g2_formal_config_freezes_next_surface_arm() -> None:
         "G2_MOVING_LEAST_SQUARES",
     ]
     assert config["scope"]["gaussianization_started"] is False
+
+
+def test_artifact_payload_uses_model_names_not_metric_mapping_indices() -> None:
+    arms = ("G0_ROBUST_PLANE", "G2_MOVING_LEAST_SQUARES")
+    states = {
+        arms[0]: {"fit": SimpleNamespace(depth=np.asarray([[1.0]]))},
+        arms[1]: {"fit": SimpleNamespace(depth=np.asarray([[2.0]]))},
+    }
+    payload = _raw_depth_payload(states, arms)
+    assert sorted(payload) == ["g0_raw_depth", "g2_raw_depth"]
+    assert payload["g2_raw_depth"].dtype == np.float16
