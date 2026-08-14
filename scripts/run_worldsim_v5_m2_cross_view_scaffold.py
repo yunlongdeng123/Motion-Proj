@@ -83,6 +83,8 @@ def load_config(path: Path) -> dict[str, Any]:
         or payload["request_protocol"]["unit"] != "one_actor_one_view_one_hole"
         or payload["scaffold"]["id"] != "G4_CROSS_VIEW_DEPTH_SCAFFOLD"
         or payload["gaussianization"]["stride"] != 1
+        or payload["gaussianization"]["asset_provenance"]
+        != "native_scene_donor"
         or payload["projection"]["target_depth_passed_to_projection"] != "all_nan"
     ):
         raise M2CrossViewError("cross-view task/request/scaffold 合约漂移")
@@ -283,7 +285,7 @@ def _render_candidate(
         points,
         candidate_id=f"scene0471_f{frame:03d}_c{camera}_g4_cross_view_a{actor_id:03d}",
         method="DONOR",
-        provenance="cross_view_background_depth_scaffold",
+        provenance=str(gaussian["asset_provenance"]),
         features_rest_shape=tuple(trainer.models["Background"]._features_rest.shape[1:]),
         opacity=float(gaussian["opacity"]),
         target_frame=frame,

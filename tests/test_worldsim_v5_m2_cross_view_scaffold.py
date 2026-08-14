@@ -161,5 +161,6 @@ def test_formal_config_withholds_target_reference_and_forbids_search() -> None:
         "target_reference_interior_available_to_candidate"
     ] is False
     assert config["projection"]["target_depth_passed_to_projection"] == "all_nan"
+    assert config["gaussianization"]["asset_provenance"] == "native_scene_donor"
     assert config["scope"]["parameter_search_performed"] is False
     assert config["scope"]["method_arm_selection_performed"] is False
