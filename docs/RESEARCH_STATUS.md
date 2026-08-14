@@ -1,5 +1,14 @@
 # Research Status
 
+## V4 终局归档与路线关闭（2026-08-14）
+
+- `WorldSim V4 / EviDelta-GS` 已关闭；V4 分支当前执行授权=`none_v4_closed`，不得从旧计划或历史 terminal 恢复 pending 任务。
+- 终局文档/轻量证据包=`docs/archive/2026-08/worldsim-v4-final/`，归档提交=`c7e4c969a95536d26d0a17a1c0d1d548f9a247dc`；包内 `79` 个文件，其中 `78` 个内容文件由 `SHA256SUMS` 覆盖并在 Linux 端逐条校验通过，清单 SHA=`947f045024e67d6fa1576fe2e8469adc6d9841e894860d7614ca1caeda820e21`。
+- 归档冻结的 closeout source HEAD=`403c5703a755c999d42a5ec3eb063db6cc751761`；权威联合审计仍为 r336，M1=`rejected`、M2=`done_with_geometry_caveat`、M3 test=`confirmed`。
+- 附录入口=`docs/archive/2026-08/worldsim-v4-final/TECHNICAL_REPORT_APPENDIX_INDEX.md`；M1 r200/r201、M2 r212/r222、M3 r238/r335/r336 的 summary/status/manifest、主要逐项指标与冻结配置均有轻量副本。
+- `/root/autodl-tmp` 于 2026-08-13 到达 KITTI tracking 压缩包，但这不改变 V4 的 `blocked_local_dataset_missing` 历史事实，也不构成 V4 cross-domain 结果。压缩包仅作为 V5 新任务的待审计输入。
+- 下一路线只能在新分支 `research/worldsim-v5-structdelta` 上按 `WS-V5-P0-SCOPE-FREEZE-01` 启动；P0 前禁止完整 M1/M2/M3 实现、新模型大训练、fresh test quality 和 KITTI 调参。
+
 ## V4 M1/M2/M3 与 18-scene exact-once test 收口（2026-08-13）
 
 - M1 结论继续冻结为 `rejected`：canonical validation r200 为 `3 evaluable + 3 abstain`、方向支持 `0/6`，r201 禁止 M1 feature expansion；没有把后续 M2/M3 结果倒写成 M1 成功。

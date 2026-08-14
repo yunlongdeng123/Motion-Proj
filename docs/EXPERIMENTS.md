@@ -1,5 +1,16 @@
 # Experiments
 
+## V4 终局文档归档（2026-08-14）
+
+| Task ID | 状态 | canonical evidence |
+|---|---|---|
+| `WS-V4-DOC-ARCHIVE-01` | done | `docs/archive/2026-08/worldsim-v4-final/`；commit=`c7e4c969a95536d26d0a17a1c0d1d548f9a247dc`；`78/78` SHA-256 checks passed |
+
+- source closeout HEAD=`403c5703a755c999d42a5ec3eb063db6cc751761`；没有重跑、续写或修改任何 V4 canonical run。
+- 归档复制 M1 r200/r201、M2 r212/r222、M3 r238/r335/r336 的轻量证据，保留核心账本和 V4 计划/审计快照；checkpoint、渲染帧、训练缓存均未复制。
+- 附录索引明确绑定 M1 rejection、M2 `+3.3908096237 m` hole geometry 退化、M3 `12 evaluable + 6 abstain` test 结论与 exact-once provenance。
+- 验证：`sha256sum -c docs/archive/2026-08/worldsim-v4-final/SHA256SUMS`=`78/78 OK`；`git diff --cached --check`=passed。
+
 ## V4 M3 validation / 18-scene exact-once test 注册（2026-08-13）
 
 | Task ID | 状态 | canonical evidence |

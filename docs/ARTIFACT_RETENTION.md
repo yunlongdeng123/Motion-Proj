@@ -1,66 +1,68 @@
-# Motion-Proj V3.3 canonical 产物保留策略
+# Motion-Proj WorldSim V4 终局产物保留策略
 
-- 更新时间：2026-08-11
+- 更新时间：2026-08-14
+- 路线终态：`V4 closed / M1 rejected / M2 done with geometry caveat / M3 confirmed`
+- 终局归档提交：`c7e4c969a95536d26d0a17a1c0d1d548f9a247dc`
 - 当前研究授权：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
-- V3.3 终态：`R0 done / v33_supported`
-- 本次清理账本：
-  [`archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md`](archive/2026-08/pre-v3.3-cleanup/CLEANUP_MANIFEST.md)
+- 终局证据入口：[`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)
 
-## 1. V3.3 必须驻留
+## 1. 必须驻留的轻量证据
 
 | 类别 | 路径 | 用途 |
 |---|---|---|
-| 三场景 processed 数据 | `/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/{179,191,204}` | scene-0230/0242/0255 的图像、LiDAR、实例和相机事实源 |
-| V3.1 D2 final | `.../20260809T113230Z__a2-d2-formal30k-s0-r1/.../checkpoint_final.pth` | V3.3 immutable FP32 base |
-| V3.2 S1 canonical | `.../20260810T101739Z__s1-semantic-lift-s0-r6` | SAM2.1 fallback masks 与 semantic sidecars |
-| V3.2 S2 canonical | `.../20260810T121829Z__s2-3dgic-adapted-s0-r3` | generated-background baseline 与 provenance |
-| V3.2 S3 canonical | `.../20260810T112505Z__s3-asset-harvest-s0-r3` | manual 1/2-view actor baseline 与 selected actor asset |
-| V3.2 S4 canonical | `.../20260810T131909Z__s4-harmonizer-nontemporal-s0-r3` | semantic reintroduction 负对照和 optional diagnostic |
-| V3.2 R0 canonical | `.../20260810T134658Z__r0-final-integration-s0-r1` | mixed checkpoint、registry、semantic extension 与 exact chunk package |
-| V3.3 S1 canonical | `.../20260810T183154Z__s1-instance-field-formal-s0-r9` | O1 instance field 与 object-aware heldout 证据 |
-| V3.3 S2 canonical | `.../r10`、`.../r11`、`.../r12` | native patch index、RoadPatch delta 与 Inpaint360GS blocker |
-| V3.3 S3 canonical | high r2/r3/r4/r13/r14 | auto-view selection、A4 actor asset 与 heldout decision |
-| V3.3 S4 canonical | `.../20260810T221300Z__...-r7`、`.../20260810T221700Z__...-r8` | base+delta package、20/20 rollback 与真实渲染 |
-| V3.3 S5 canonical | `.../20260810T220500Z__...-r4` | G0 production、SAM2 reintroduction 证据与 G1 负结果 |
-| V3.3 R0 canonical | `.../20260810T222701Z__r0-integration-canonical-s0-r7` | 44-input ledger、76-file release、deterministic archive 与 standalone verifier |
-| 运行环境 | `/root/autodl-tmp/envs/{motionproj,drivestudio,worldsim-v32-asset-harvester}` | V3.3 主代码、StreetGS、Asset Harvester/Harmonizer |
-| 第三方与模型 | DriveStudio、Asset Harvester、Inpaint360GS、Harmonizer、必要 gsplat/nvdiffrast/PyTorch3D、Asset Harvester HF cache | V3.3 已知可复用依赖 |
-| 文档与清理证据 | `docs/`、`/root/autodl-tmp/cleanup_manifests/20260811-pre-v33-space-reclaim/` | 研究连续性、删除清单和恢复边界 |
+| V4 final archive | `docs/archive/2026-08/worldsim-v4-final/` | 计划/账本快照、附录索引、canonical 轻量证据与 SHA-256 清单 |
+| M1 validation/rejection | `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/{...r200,...r201}` | scene-disjoint rejection、calibration、逐 Gaussian/scene 诊断入口 |
+| M2 development/validation | `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M2-REPAIR-ROUTER-01/{...r212,...r222}` | frozen router、coverage、selective-risk 与 `+3.3908 m` geometry caveat |
+| M3 validation/test/closeout | `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/{...r238,...r335,...r336}` | frozen parameters、18-scene test、联合终局审计 |
+| exact-once ledger | `/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T222011Z__m3-test-exact-once-ledger-s0` | 18/18 attempt/completion 与消费标记 |
+| test freeze | `/root/autodl-tmp/motion_proj/V4_TEST_FREEZE.json` | source/freeze commit、split/config/asset SHA 和 test 协议 |
+| 冻结源码与协议 | `configs/worldsim_v4/`、V4 相关 `scripts/`、`tests/`、`docs/WORLDSIM_V4_EVIDELTA_GS_PLAN.md` | 公式—配置—代码—测试—指标对应关系 |
 
-上述 canonical 路径、关键模型和三场景 processed 数据不得原地改写。V3.3 必须使用新的 run namespace；任何输入
-变更都要通过新 task、冻结协议和 before/after SHA 审计。
+上述 canonical run 不得原地续写、重命名、删除 terminal 或覆盖失败/abstain。任何复现必须使用新 task、新 run ID 和新输出目录。
 
-R0 release archive SHA=`cffaad16e2d14e8274c41bb48b24be64c73d9fb6f41d1fe4792934adeab244a7`，
-content manifest SHA=`e386c14b6b29c74bd1316a31a3abefedf10a74530cfe3149cf9e040eb78a6c53`。至少保留
-`worldsim_v33_release.zip`、`content_manifest.json`、summary/status/source snapshots；release 内无完整 checkpoint，
-因此 D2 base checkpoint 和 actor registry 仍是独立必留 external references。
+## 2. 必须保留的外部资产引用
 
-## 2. 已转为 non-resident 的内容
+- V4 M1/M2/M3 canonical manifest 直接引用的 StreetGS/V3.3/AD-GS checkpoint、actor registry、sky mask、processed scene 和 validation/test staging；
+- V3.3 immutable base 与 V3.3 R0 release，保留规则沿用其 final manifest 和 `docs/archive/2026-08/worldsim-v3.3/` 过程证据；
+- nuScenes 官方 metadata 与 V4 30-scene cohort 的 scene/token/split 指纹；
+- `/root/autodl-tmp` 下 2026-08-13 到达的 KITTI tracking 压缩包在 V5 数据预检完成前不得删除或改名。
 
-- V3.2 及更早路线的非 canonical checkpoint、NPZ/NPY/PLY、图片、视频、panel 和生成候选；
-- V3.1 D2 canonical 的 5k/10k/15k/20k/25k 中间 checkpoint；final 保留；
-- DGGT、AD-GS、旧 SAM2 的 Conda 环境和 checkpoint；
-- 完整 nuScenes 镜像、AD-GS processed、OccGS/ReSim 数据以及三个 scene-specific raw staging 副本；
-- V1/V2/V3.1/V3.2 不再用于 V3.3 的第三方 checkout；
-- pip/Conda/torch/Hugging Face 通用缓存；Asset Harvester 离线 HF cache 例外；
-- Harmonizer 5,042,242,222-byte full `diffusion_harmonizer.pkl`；V3.3 使用的 non-temporal JIT 继续驻留。
+大型 checkpoint/processed scene 不复制进 Git。其驻留性由 canonical manifest、内容 SHA、路径和恢复来源共同确定；文档归档不是大型资产副本。
 
-旧 run 的 manifest、resolved config、JSON/Markdown summary、terminal、日志和 source snapshot 继续保留为轻量证据。
-大型载荷 non-resident 不改变历史 `done/blocked/rejected` 结论，也不授权原 run ID 重跑或补写。
+## 3. 可清理但本次未删除的内容
 
-## 3. 恢复规则
+- V4 diagnostic/noncanonical 中间 checkpoint、重复渲染、panel、临时 cache 和已经被 canonical run 取代的候选；
+- 失败 SSH launcher 的外部日志、重复 source checkout 和可从固定 commit 重建的包缓存；
+- 不再被任何 canonical manifest、测试或 V5 forensic 引用的中间数组。
 
-1. canonical 资产从驻留路径直接读取，并先核对清理账本中的 SHA-256；
-2. 被删除的包缓存、环境和公开 checkout 只在新任务明确需要时按固定 commit/revision 重建；
-3. 被删除的旧 run 大载荷不从旧 terminal 恢复执行；若未来研究确需复现，使用新 task ID、协议和 run；
-4. 被删除的 raw/历史数据只在 V3.3 之外出现新的数据需求时重新 staging，不得把 non-resident 写成数据损坏；
-5. 详细删除目标以外部 `delete_dirs.tsv` / `delete_files.tsv` 为准，其 SHA-256 见清理账本。
+本次任务只做文档与轻量证据归档，没有删除任何 run、checkpoint、数据集、环境或第三方依赖。未来清理必须先生成独立 `CLEANUP_MANIFEST`，列出绝对目标、bytes、SHA/恢复来源和 canonical 引用检查。
 
-## 4. 后续存储门槛
+## 4. KITTI 压缩包边界
 
-- 新环境或训练启动前可用空间至少 60 GiB；运行中始终保留 20 GiB；
-- canonical checkpoint、registry、package、provenance 和正式 terminal 优先保留；
-- 中间 checkpoint 只保留预注册要求的最小集合，阶段完成后优先清理；
-- cache 统一写 `/root/autodl-tmp/cache/`，不得恢复散落的 `pip_cache` 或多份 Conda package cache；
-- 大权重优先复用同文件系统驻留文件，禁止无理由复制；
-- 文档备份按 `AGENTS.md` 集中进入对应 `codex-backups/<日期-任务>/`。
+当前发现的 V5 待审计输入包括：
+
+- `/root/autodl-tmp/data_tracking_velodyne.zip`
+- `/root/autodl-tmp/data_tracking_image_2.zip`
+- `/root/autodl-tmp/data_tracking_image_3.zip`
+- `/root/autodl-tmp/data_tracking_label_2.zip`
+- `/root/autodl-tmp/data_tracking_oxts.zip`
+- `/root/autodl-tmp/data_tracking_calib.zip`
+- `/root/autodl-tmp/devkit_tracking.zip`
+
+在完成 central-directory、成员计数、序列覆盖、可用空间和 SHA 审计前禁止直接解压。KITTI 只在 nuScenes V5 方法冻结后用于 frozen cross-domain；adapter smoke 不授权参数调优。
+
+## 5. 恢复规则
+
+1. 先读 `RESEARCH_STATUS.md`、`RESEARCH_FAILURES.md`、`EXPERIMENTS.md`；
+2. 用 final archive 的 `SHA256SUMS` 校验轻量证据；
+3. 按 canonical manifest 核对大型外部引用，缺失应写成 `blocked_asset_missing`，不得冒充方法失败；
+4. V4 test attempt 已全部消费，禁止重跑或重新聚合 test source content；
+5. V5 forensic 可以只读 V4 scene/run，但新 confirmatory split 必须与 V4 30 scenes scene-disjoint；
+6. 新环境、数据 staging 和训练必须进入 V5 namespace，不得覆盖 V4 路径。
+
+## 6. 存储门槛
+
+- 新训练或大规模解压前可用空间至少 80 GiB，并预留 20 GiB 安全余量；
+- canonical manifest/summary/status/fingerprint/source snapshot 优先于可重建 cache；
+- cache 统一写 `/root/autodl-tmp/cache/`，大权重优先同文件系统复用；
+- 文档备份集中进入对应路线的 `codex-backups/<日期-任务>/`，不散落 `*.bak` 或 `*.codexbak.*`。
