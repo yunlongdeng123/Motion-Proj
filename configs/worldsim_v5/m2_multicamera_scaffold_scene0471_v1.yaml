@@ -1,12 +1,12 @@
-schema_version: worldsim_v5_m2_cross_view_scaffold_v1
+schema_version: worldsim_v5_m2_cross_view_scaffold_v2
 task_id: WS-V5-M2-GEOMETRY-FIRST-REPAIR-01
 status: running
-phase: g4_cross_view_depth_scaffold_development
+phase: g5_multicamera_cross_view_scaffold_development
 seed: 20260814
 
 scope:
   partition: development
-  purpose: single_frozen_candidate_gate
+  purpose: final_non_neural_candidate_gate
   validation_quality_read: false
   heldout_quality_read: false
   test_quality_read: false
@@ -43,6 +43,12 @@ inputs:
   gaussianization_diagnostics:
     path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T205700Z__m2-scene0471-gaussianization-factors-s0-r011/artifacts/diagnostics.json
     sha256: 234adf931e6b0abc0808b0858e38c40f7b76f119ed8b32881d3a16150231b1cf
+  g4_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T214230Z__m2-scene0471-g4-cross-view-scaffold-s0-r013/summary.json
+    sha256: 110b15f4bebe64cdcf3f6593da82efff96beb4f30b04dac37aa3c9ea10f74930
+  g4_diagnostics:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/20260814T214230Z__m2-scene0471-g4-cross-view-scaffold-s0-r013/artifacts/diagnostics.json
+    sha256: 3178312ffaf742837098ae584ed7f279354f13c1349663bc8491710d6aa19399
 
 unlock_binding:
   g0_conclusion: per_actor_builder_and_gaussianization_both_fail
@@ -52,6 +58,11 @@ unlock_binding:
   baseline_replay_exact_count: 22
   density_mechanism_supported: true
   opacity_mechanism_supported: false
+  g4:
+    conclusion: g4_cross_view_scaffold_relative_gate_rejected
+    raw_improvement_request_count: 12
+    absolute_geometry_safe_gate_passed: false
+    failure_mechanism: low_same_camera_cross_view_coverage
 
 scene:
   name: scene-0471
@@ -86,10 +97,14 @@ g0_fallback:
   maximum_depth_m: 120.0
 
 source_views:
-  mode: frozen_same_camera_temporal_offsets
+  mode: frozen_train_camera_temporal_grid
+  camera_ids: [0, 1, 2]
   temporal_offsets: [-15, -10, -5, 5, 10, 15]
+  include_same_frame_other_cameras: true
   target_view_forbidden: true
   validation_views_forbidden: true
+  expected_source_count_frame002: 11
+  expected_source_count_frame042: 20
   minimum_effective_source_views: 2
 
 projection:
@@ -100,8 +115,8 @@ projection:
   lidar_used_to_modify_candidate: false
 
 scaffold:
-  id: G4_CROSS_VIEW_DEPTH_SCAFFOLD
-  conclusion_prefix: g4_cross_view_scaffold
+  id: G5_MULTICAMERA_CROSS_VIEW_SCAFFOLD
+  conclusion_prefix: g5_multicamera_cross_view_scaffold
   fusion: per_pixel_median
   minimum_support_views: 2
   maximum_absolute_disagreement_m: 1.0
@@ -138,6 +153,11 @@ candidate_gate:
   no_automatic_validation: true
   no_automatic_router_refit: true
   no_automatic_method_selection: true
+
+stop_condition:
+  if_absolute_geometry_safe_gate_fails: close_non_neural_candidate_sequence
+  threshold_or_source_grid_search_after_result: forbidden
+  neural_surface_automatic_unlock: false
 
 runtime:
   drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0

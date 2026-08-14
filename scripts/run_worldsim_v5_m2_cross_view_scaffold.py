@@ -30,6 +30,7 @@ from motion_proj.worldsim_v4.repair_assets import temporary_repair_composition
 from motion_proj.worldsim_v4.repair_builders import completion_points_to_repair_asset
 from motion_proj.worldsim_v5.cross_view_scaffold import (
     CrossViewScaffoldError,
+    frozen_multicamera_source_views,
     frozen_source_views,
     fuse_cross_view_scaffold,
     lidar_agreement_audit,
@@ -59,7 +60,16 @@ from scripts.worldsim_v5_forensics_common import (
 
 
 TASK_ID = "WS-V5-M2-GEOMETRY-FIRST-REPAIR-01"
-SCHEMA_VERSION = "worldsim_v5_m2_cross_view_scaffold_v1"
+SCHEMA_CONTRACTS = {
+    "worldsim_v5_m2_cross_view_scaffold_v1": (
+        "g4_cross_view_depth_scaffold_development",
+        "G4_CROSS_VIEW_DEPTH_SCAFFOLD",
+    ),
+    "worldsim_v5_m2_cross_view_scaffold_v2": (
+        "g5_multicamera_cross_view_scaffold_development",
+        "G5_MULTICAMERA_CROSS_VIEW_SCAFFOLD",
+    ),
+}
 
 
 class M2CrossViewError(RuntimeError):
@@ -74,14 +84,18 @@ class PriorRun:
 
 def load_config(path: Path) -> dict[str, Any]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict) or payload.get("schema_version") != SCHEMA_VERSION:
+    if not isinstance(payload, dict) or payload.get("schema_version") not in SCHEMA_CONTRACTS:
         raise M2CrossViewError("cross-view config schema 漂移")
+    expected_phase, expected_scaffold = SCHEMA_CONTRACTS[payload["schema_version"]]
     if (
         payload.get("task_id") != TASK_ID
         or payload.get("status") != "running"
-        or payload.get("phase") != "g4_cross_view_depth_scaffold_development"
+        or payload.get("phase") != expected_phase
         or payload["request_protocol"]["unit"] != "one_actor_one_view_one_hole"
-        or payload["scaffold"]["id"] != "G4_CROSS_VIEW_DEPTH_SCAFFOLD"
+        or payload["scaffold"]["id"] != expected_scaffold
+        or not str(payload["scaffold"].get("conclusion_prefix", "")).startswith(
+            expected_scaffold.split("_")[0].lower()
+        )
         or payload["gaussianization"]["stride"] != 1
         or payload["gaussianization"]["asset_provenance"]
         != "native_scene_donor"
@@ -109,11 +123,27 @@ def load_config(path: Path) -> dict[str, Any]:
         raise M2CrossViewError("target reference/LiDAR/claim 边界漂移")
     if 0 in payload["source_views"]["temporal_offsets"]:
         raise M2CrossViewError("source views 不得含 target offset 0")
+    source_mode = payload["source_views"].get("mode")
+    if source_mode not in {
+        "frozen_same_camera_temporal_offsets",
+        "frozen_train_camera_temporal_grid",
+    }:
+        raise M2CrossViewError("source view mode 漂移")
+    if expected_scaffold.startswith("G5_"):
+        if (
+            source_mode != "frozen_train_camera_temporal_grid"
+            or payload["source_views"].get("camera_ids") != [0, 1, 2]
+            or payload["source_views"].get("include_same_frame_other_cameras")
+            is not True
+        ):
+            raise M2CrossViewError("G5 multicamera source grid 漂移")
     return payload
 
 
 def candidate_decision(
-    rows: list[Mapping[str, Any]], gate: Mapping[str, Any]
+    rows: list[Mapping[str, Any]],
+    gate: Mapping[str, Any],
+    conclusion_prefix: str = "g4_cross_view_scaffold",
 ) -> dict[str, Any]:
     done = [row for row in rows if row.get("status") == "done"]
     raw_deltas = [
@@ -181,13 +211,13 @@ def candidate_decision(
         <= float(gate["maximum_median_post_minus_raw_mae_m"])
     )
     if relative_passed and absolute_safe_passed and representation_passed:
-        conclusion = "g4_cross_view_scaffold_geometry_safe_on_model_proxy"
+        conclusion = f"{conclusion_prefix}_geometry_safe_on_model_proxy"
     elif relative_passed and representation_passed:
-        conclusion = "g4_cross_view_scaffold_relative_supported_absolute_safe_gate_failed"
+        conclusion = f"{conclusion_prefix}_relative_supported_absolute_safe_gate_failed"
     elif not representation_passed:
-        conclusion = "g4_cross_view_scaffold_gaussianization_nonregression_failed"
+        conclusion = f"{conclusion_prefix}_gaussianization_nonregression_failed"
     else:
-        conclusion = "g4_cross_view_scaffold_relative_gate_rejected"
+        conclusion = f"{conclusion_prefix}_relative_gate_rejected"
     return {
         "conclusion": conclusion,
         "evaluable_request_count": len(done),
@@ -221,6 +251,38 @@ def _prior(binding: Mapping[str, Any], expected: int) -> PriorRun:
     if len(rows) != expected:
         raise M2CrossViewError(f"prior request denominator 漂移: {path}")
     return PriorRun(path.parent.parent, rows)
+
+
+def _source_keys(
+    config: Mapping[str, Any], frame: int, camera: int
+) -> tuple[tuple[int, int], ...]:
+    source = config["source_views"]
+    scene = config["scene"]
+    if source["mode"] == "frozen_same_camera_temporal_offsets":
+        return frozen_source_views(
+            target_frame=frame,
+            camera_id=camera,
+            temporal_offsets=source["temporal_offsets"],
+            minimum_frame=int(scene["minimum_frame"]),
+            maximum_frame=int(scene["maximum_frame"]),
+        )
+    views = frozen_multicamera_source_views(
+        target_frame=frame,
+        target_camera_id=camera,
+        camera_ids=source["camera_ids"],
+        temporal_offsets=source["temporal_offsets"],
+        minimum_frame=int(scene["minimum_frame"]),
+        maximum_frame=int(scene["maximum_frame"]),
+        include_same_frame_other_cameras=bool(
+            source["include_same_frame_other_cameras"]
+        ),
+    )
+    expected_key = f"expected_source_count_frame{frame:03d}"
+    if expected_key in source and len(views) != int(source[expected_key]):
+        raise M2CrossViewError(
+            f"multicamera source denominator 漂移: {frame}={len(views)}"
+        )
+    return views
 
 
 def _terminal(
@@ -283,7 +345,10 @@ def _render_candidate(
         raise M2CrossViewError("G4 candidate Gaussian 为空")
     asset = completion_points_to_repair_asset(
         points,
-        candidate_id=f"scene0471_f{frame:03d}_c{camera}_g4_cross_view_a{actor_id:03d}",
+        candidate_id=(
+            f"scene0471_f{frame:03d}_c{camera}_"
+            f"{str(config['scaffold']['id']).lower()}_a{actor_id:03d}"
+        ),
         method="DONOR",
         provenance=str(gaussian["asset_provenance"]),
         features_rest_shape=tuple(trainer.models["Background"]._features_rest.shape[1:]),
@@ -348,6 +413,20 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
             or gaussian_summary.get("method_arm_selected") is not False
         ):
             raise M2CrossViewError("r005/r011 unlock binding 漂移")
+        if config["scaffold"]["id"] == "G5_MULTICAMERA_CROSS_VIEW_SCAFFOLD":
+            g4_summary = json.loads(Path(inputs["g4_summary"]["path"]).read_text())
+            expected_g4 = config["unlock_binding"]["g4"]
+            g4_decision = g4_summary.get("candidate_decision", {})
+            if (
+                g4_summary.get("status") != "done"
+                or g4_summary.get("conclusion") != expected_g4["conclusion"]
+                or g4_decision.get("raw_improvement_request_count")
+                != int(expected_g4["raw_improvement_request_count"])
+                or g4_decision.get("absolute_geometry_safe_gate_passed") is not False
+                or g4_summary.get("target_reference_interior_available_to_candidate")
+                is not False
+            ):
+                raise M2CrossViewError("r013 G4 unlock binding 漂移")
         mask_root, requests = _load_requests(config)
         protocol = config["request_protocol"]
         expected = int(protocol["expected_request_count"])
@@ -399,7 +478,6 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
 
         rows: list[dict[str, Any]] = []
         fallback_cfg = config["g0_fallback"]
-        source_cfg = config["source_views"]
         projection_cfg = config["projection"]
         scaffold_cfg = config["scaffold"]
         for view_index, ((frame, camera), view_requests) in enumerate(
@@ -407,13 +485,7 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
         ):
             base = snapshot(frame, camera)
             reference = np.asarray(base["background_depth"], dtype=np.float32)
-            source_keys = frozen_source_views(
-                target_frame=frame,
-                camera_id=camera,
-                temporal_offsets=source_cfg["temporal_offsets"],
-                minimum_frame=int(config["scene"]["minimum_frame"]),
-                maximum_frame=int(config["scene"]["maximum_frame"]),
-            )
+            source_keys = _source_keys(config, frame, camera)
             supports = [snapshot(*key) for key in source_keys]
             projected = project_background_depth_stack(
                 supports=supports,
@@ -678,10 +750,14 @@ def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
                     row.update({"status": "abstain", "reason": str(error)})
                 rows.append(row)
             print(
-                f"M2 G4 {view_index + 1}/{len(grouped)} frame={frame} camera={camera} sources={len(source_keys)} requests={len(view_requests)}",
+                f"M2 {config['scaffold']['id']} {view_index + 1}/{len(grouped)} frame={frame} camera={camera} sources={len(source_keys)} requests={len(view_requests)}",
                 flush=True,
             )
-        decision = candidate_decision(rows, config["candidate_gate"])
+        decision = candidate_decision(
+            rows,
+            config["candidate_gate"],
+            conclusion_prefix=str(config["scaffold"]["conclusion_prefix"]),
+        )
         if decision["baseline_replay_exact_count"] != decision[
             "evaluable_request_count"
         ]:

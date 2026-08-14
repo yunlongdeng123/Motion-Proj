@@ -133,6 +133,45 @@ def frozen_source_views(
     return views
 
 
+def frozen_multicamera_source_views(
+    *,
+    target_frame: int,
+    target_camera_id: int,
+    camera_ids: Sequence[int],
+    temporal_offsets: Sequence[int],
+    minimum_frame: int,
+    maximum_frame: int,
+    include_same_frame_other_cameras: bool,
+) -> tuple[tuple[int, int], ...]:
+    """冻结三训练相机的时空 source grid，并严格排除 target view。"""
+
+    cameras = tuple(int(value) for value in camera_ids)
+    offsets = tuple(int(value) for value in temporal_offsets)
+    if not cameras or len(set(cameras)) != len(cameras):
+        raise CrossViewScaffoldError("camera ids 必须非空且唯一")
+    if int(target_camera_id) not in cameras:
+        raise CrossViewScaffoldError("target camera 必须属于 frozen camera ids")
+    if not offsets or 0 in offsets or len(set(offsets)) != len(offsets):
+        raise CrossViewScaffoldError("temporal offsets 必须非空、唯一且不含 0")
+    views = {
+        (int(target_frame + offset), camera_id)
+        for offset in offsets
+        if minimum_frame <= target_frame + offset <= maximum_frame
+        for camera_id in cameras
+    }
+    if include_same_frame_other_cameras:
+        views.update(
+            (int(target_frame), camera_id)
+            for camera_id in cameras
+            if camera_id != int(target_camera_id)
+        )
+    views.discard((int(target_frame), int(target_camera_id)))
+    ordered = tuple(sorted(views))
+    if len(ordered) < 2:
+        raise CrossViewScaffoldError("有效 multicamera source views 少于 2")
+    return ordered
+
+
 def project_background_depth_stack(
     *,
     supports: Sequence[Mapping[str, Any]],

@@ -7,6 +7,7 @@ from pathlib import Path
 from motion_proj.worldsim_v5.cross_view_scaffold import (
     CrossViewScaffoldError,
     ProjectedDepthStack,
+    frozen_multicamera_source_views,
     frozen_source_views,
     fuse_cross_view_scaffold,
     lidar_agreement_audit,
@@ -35,6 +36,22 @@ def test_frozen_source_views_clip_scene_boundary_without_target_leakage() -> Non
         minimum_frame=0,
         maximum_frame=195,
     ) == ((7, 1), (12, 1), (17, 1))
+
+
+def test_frozen_multicamera_grid_adds_other_cameras_and_excludes_target() -> None:
+    views = frozen_multicamera_source_views(
+        target_frame=2,
+        target_camera_id=1,
+        camera_ids=(0, 1, 2),
+        temporal_offsets=(-15, -10, -5, 5, 10, 15),
+        minimum_frame=0,
+        maximum_frame=195,
+        include_same_frame_other_cameras=True,
+    )
+    assert len(views) == 11
+    assert (2, 1) not in views
+    assert (2, 0) in views and (2, 2) in views
+    assert (7, 0) in views and (17, 2) in views
 
 
 def test_fusion_requires_multiview_agreement_and_uses_bounded_extrapolation() -> None:
@@ -164,3 +181,24 @@ def test_formal_config_withholds_target_reference_and_forbids_search() -> None:
     assert config["gaussianization"]["asset_provenance"] == "native_scene_donor"
     assert config["scope"]["parameter_search_performed"] is False
     assert config["scope"]["method_arm_selection_performed"] is False
+
+
+def test_g5_config_changes_only_frozen_source_grid_and_keeps_gates() -> None:
+    project = Path(__file__).resolve().parents[1]
+    g4 = load_config(
+        project / "configs/worldsim_v5/m2_cross_view_scaffold_scene0471_v1.yaml"
+    )
+    g5 = load_config(
+        project / "configs/worldsim_v5/m2_multicamera_scaffold_scene0471_v1.yaml"
+    )
+    assert g5["source_views"]["camera_ids"] == [0, 1, 2]
+    assert g5["source_views"]["expected_source_count_frame002"] == 11
+    assert g5["source_views"]["expected_source_count_frame042"] == 20
+    assert g5["candidate_gate"] == g4["candidate_gate"]
+    assert g5["scaffold"]["minimum_support_views"] == g4["scaffold"][
+        "minimum_support_views"
+    ]
+    assert g5["scaffold"]["maximum_extrapolation_pixels"] == g4["scaffold"][
+        "maximum_extrapolation_pixels"
+    ]
+    assert g5["stop_condition"]["threshold_or_source_grid_search_after_result"] == "forbidden"
