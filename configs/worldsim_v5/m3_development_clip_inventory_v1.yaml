@@ -1,0 +1,87 @@
+schema_version: worldsim_v5_m3_development_clip_inventory_v1
+task_id: WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01
+status: running
+phase: result_blind_development_actor_clip_inventory
+created_at: "2026-08-14"
+
+protocol_audit:
+  run: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001
+  summary: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001/summary.json, sha256: 996db58c98600e289e76661c3973aedbecd35c19a092eac4ba99310f5d1ba4e9}
+  status: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001/status.json, sha256: ded2929e8461479bc8f3eb80d85396308f70dada58063a34f313c257a70838f6}
+  lock: {path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01/20260814T223000Z__m3-protocol-audit-s0-r001/artifacts/protocol_lock.json, sha256: 7f57723dd94763a84030ca23863c7252936fcde19ad3bf4f9d483bf5ba30f3af}
+
+cohort:
+  path: /root/autodl-tmp/motion_proj/configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+  sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+  development_scenes: [scene-0471, scene-1087, scene-0379, scene-0998,
+                       scene-0359, scene-0875, scene-0535, scene-0436]
+
+metadata:
+  root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta/v1.0-trainval
+  files:
+    scene.json: bdc3211bfbfda652d5e9dab73c45c7132925ca84f869bf45e8e14edeafb1d20b
+    sample.json: 6035ac58b6e971622be2bb1be15b917e7cb4e05ae984d6b339c27c1699c4ad9d
+    category.json: 30f64fb175e5bd7db99892d90f9034481bca491f26600c5c0d1a56106b198dfe
+    instance.json: 8f8b19496ce45353874714ce23a9df7f47f48cb6203df2dd456ea0247d146461
+    sample_annotation.json: 1f4f3835cb86f4efe49ccad3ae6f5f6a2d068422696de564c5892b5b06bea2a9
+  parser: ijson_3.5.1_streaming
+
+clip_policy:
+  keyframe_count: 7
+  expected_seconds: 3.0
+  maximum_timestamp_gap_seconds: 0.51
+  allowed_categories:
+    - vehicle.car
+    - vehicle.truck
+    - vehicle.bus.rigid
+    - vehicle.bus.bendy
+    - vehicle.emergency.ambulance
+    - vehicle.emergency.police
+  category_priority:
+    vehicle.car: 0
+    vehicle.truck: 1
+    vehicle.bus.rigid: 2
+    vehicle.bus.bendy: 3
+    vehicle.emergency.ambulance: 4
+    vehicle.emergency.police: 5
+  minimum_lidar_points_each_frame: 1
+  minimum_visibility_token_each_frame: 2
+  selection_rank:
+    - category_priority_ascending
+    - minimum_lidar_points_descending
+    - total_lidar_points_descending
+    - instance_token_ascending
+    - start_sample_index_ascending
+  one_clip_per_scene: true
+  absent_policy: retain_as_ABSTAIN_NO_ELIGIBLE_VEHICLE_CLIP
+  result_fields:
+    - sample_token
+    - timestamp
+    - translation
+    - size
+    - rotation
+    - bottom_z
+    - lidar_points
+    - visibility_token
+
+scope:
+  annotation_metadata_only: true
+  image_read: false
+  lidar_blob_read: false
+  reconstruction_quality_read: false
+  edit_quality_read: false
+  development_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_quality_read: false
+  model_inference: false
+  gpu_required: false
+  parameter_search_performed: false
+  method_arm_selection_performed: false
+
+next_gate:
+  freeze_inventory_before_desired_edit_templates: true
+  development_mechanism_metrics_unlocked_on_done: true
+  render_quality_unlocked: false
+  validation_unlocked: false
+  test_unlocked: false
