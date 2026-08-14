@@ -56,6 +56,10 @@ SCHEMA_BINDINGS = {
         "per_actor_g0_g2_raw_surface_ablation",
         ("G0_ROBUST_PLANE", "G2_MOVING_LEAST_SQUARES"),
     ),
+    "worldsim_v5_m2_actor_surface_ablation_v3": (
+        "per_actor_g0_g3_raw_surface_ablation",
+        ("G0_ROBUST_PLANE", "G3_ROBUST_QUADRATIC"),
+    ),
 }
 
 
@@ -199,7 +203,7 @@ def _terminal(
 def run(config_path: Path, run_dir: Path, device_name: str) -> dict[str, Any]:
     config = load_config(config_path)
     arms = tuple(config["surface"]["matched_models"])
-    schema_suffix = "v2" if config["schema_version"].endswith("_v2") else "v1"
+    schema_suffix = config["schema_version"].rsplit("_", 1)[-1]
     source_head = prepare_formal_run(run_dir, TASK_ID, PROJECT)
     resolved = write_resolved_config(run_dir, config)
     events: list[dict[str, Any]] = [

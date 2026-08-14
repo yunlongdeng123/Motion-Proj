@@ -84,6 +84,21 @@ def test_g2_formal_config_freezes_next_surface_arm() -> None:
     assert config["scope"]["gaussianization_started"] is False
 
 
+def test_g3_formal_config_is_last_non_neural_surface_arm() -> None:
+    project = Path(__file__).resolve().parents[1]
+    config = load_config(
+        project / "configs/worldsim_v5/m2_actor_g0_g3_surface_scene0471_v1.yaml"
+    )
+    assert config["phase"] == "per_actor_g0_g3_raw_surface_ablation"
+    assert config["surface"]["matched_models"] == [
+        "G0_ROBUST_PLANE",
+        "G3_ROBUST_QUADRATIC",
+    ]
+    assert config["unlock_binding"]["source_next_model_unlocked"] == config[
+        "surface"
+    ]["matched_models"][1]
+
+
 def test_artifact_payload_uses_model_names_not_metric_mapping_indices() -> None:
     arms = ("G0_ROBUST_PLANE", "G2_MOVING_LEAST_SQUARES")
     states = {
