@@ -87,3 +87,13 @@ def test_config_keeps_collision_render_and_method_selection_locked() -> None:
     assert config["gate"]["collision_gate_assessed"] is False
     assert config["gate"]["render_gate_assessed"] is False
     assert config["gate"]["method_selection_allowed"] is False
+
+
+def test_v2_measurement_replay_is_explicitly_nonconfirmatory() -> None:
+    config = load_config(
+        PROJECT / "configs/worldsim_v5/m3_constraint_projection_mechanism_v2.yaml"
+    )
+    assert config["scope"]["result_aware_measurement_correction"] is True
+    assert config["scope"]["confirmatory_claim_allowed"] is False
+    assert config["physical_constraints"]["minimum_heading_speed_mps"] == 1.0
+    assert config["physical_constraints"]["allow_reverse_heading"] is True

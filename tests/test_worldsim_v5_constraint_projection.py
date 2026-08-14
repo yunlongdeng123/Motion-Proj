@@ -7,6 +7,7 @@ from motion_proj.worldsim_v5.constraint_projection import (
     KinematicLimits,
     PlanarTrajectory,
     desired_trajectory_rmse_m,
+    heading_velocity_mismatch,
     minimum_jerk_smooth,
     project_road_contact,
     project_vehicle_kinematics,
@@ -115,3 +116,32 @@ def test_metrics_detect_each_major_violation_family() -> None:
     assert counts["lateral_acceleration"] > 0
     assert counts["contact"] > 0
     assert counts["collision"] > 0
+
+
+def test_heading_metric_ignores_low_speed_noise_and_allows_reverse() -> None:
+    mismatch = heading_velocity_mismatch(
+        np.asarray([0.0, 0.0]),
+        np.asarray([np.pi, np.pi / 2.0]),
+        allow_reverse=True,
+    )
+    assert mismatch[0] < 1e-12
+    assert np.isclose(mismatch[1], np.pi / 2.0)
+
+
+def test_convergence_never_claims_an_infeasible_projection() -> None:
+    desired = _trajectory()
+    road = np.zeros(len(desired.times))
+    projected, diagnostics = project_vehicle_kinematics(
+        desired,
+        limits=_limits(),
+        road_z=road,
+        maximum_iterations=2,
+        convergence_tolerance=1e9,
+    )
+    assert diagnostics["converged"] is (
+        diagnostics["metrics"]["total_violation_count"] == 0
+    )
+    assert diagnostics["feasible"] is (
+        diagnostics["metrics"]["total_violation_count"] == 0
+    )
+    assert projected.positions.shape == desired.positions.shape

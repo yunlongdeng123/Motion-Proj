@@ -21,6 +21,8 @@ class KinematicLimits:
     maximum_heading_velocity_mismatch_rad: float
     maximum_contact_error_m: float
     collision_overlap_tolerance_m2: float = 0.0
+    minimum_heading_speed_mps: float = 1.0
+    allow_reverse_heading: bool = True
 
     def __post_init__(self) -> None:
         values = (
@@ -31,6 +33,7 @@ class KinematicLimits:
             self.maximum_lateral_acceleration_mps2,
             self.maximum_heading_velocity_mismatch_rad,
             self.maximum_contact_error_m,
+            self.minimum_heading_speed_mps,
         )
         if not all(math.isfinite(value) and value > 0.0 for value in values):
             raise ValueError("kinematic limits 必须为有限正数")
@@ -39,6 +42,8 @@ class KinematicLimits:
             or self.collision_overlap_tolerance_m2 < 0.0
         ):
             raise ValueError("collision overlap tolerance 必须有限且非负")
+        if not isinstance(self.allow_reverse_heading, bool):
+            raise ValueError("allow_reverse_heading 必须为 bool")
 
 
 @dataclass(frozen=True)
@@ -165,6 +170,19 @@ def _angle_delta(left: float | np.ndarray, right: float | np.ndarray) -> np.ndar
     return (np.asarray(left) - np.asarray(right) + np.pi) % (2.0 * np.pi) - np.pi
 
 
+def heading_velocity_mismatch(
+    yaws: np.ndarray,
+    segment_heading: np.ndarray,
+    *,
+    allow_reverse: bool,
+) -> np.ndarray:
+    forward = np.abs(_angle_delta(yaws, segment_heading))
+    if not allow_reverse:
+        return forward
+    reverse = np.abs(_angle_delta(yaws + np.pi, segment_heading))
+    return np.minimum(forward, reverse)
+
+
 def _velocity(trajectory: PlanarTrajectory) -> tuple[np.ndarray, np.ndarray]:
     dt = np.diff(trajectory.times)
     velocity = np.diff(trajectory.positions[:, :2], axis=0) / dt[:, None]
@@ -189,8 +207,10 @@ def trajectory_metrics(
     )
     yaw_rate = np.abs(np.diff(trajectory.yaws) / dt)
     segment_heading = np.arctan2(velocity[:, 1], velocity[:, 0])
-    heading_mismatch = np.abs(
-        _angle_delta(trajectory.yaws[:-1], segment_heading)
+    heading_mismatch = heading_velocity_mismatch(
+        trajectory.yaws[:-1],
+        segment_heading,
+        allow_reverse=limits.allow_reverse_heading,
     )
     lateral_acceleration = speed * yaw_rate
     if len(acceleration) >= 2:
@@ -234,7 +254,7 @@ def trajectory_metrics(
         ),
         "heading_velocity": int(
             np.count_nonzero(
-                (speed > 0.1)
+                (speed > limits.minimum_heading_speed_mps)
                 & (heading_mismatch > limits.maximum_heading_velocity_mismatch_rad + 1e-9)
             )
         ),
@@ -254,7 +274,7 @@ def trajectory_metrics(
             lateral_acceleration.max(initial=0.0)
         ),
         "maximum_heading_velocity_mismatch_rad": float(
-            heading_mismatch[speed > 0.1].max(initial=0.0)
+            heading_mismatch[speed > limits.minimum_heading_speed_mps].max(initial=0.0)
         ),
         "maximum_contact_error_m": float(contact_error.max(initial=0.0)),
         "maximum_collision_depth_m": float(collision_depth_array.max(initial=0.0)),
@@ -376,11 +396,18 @@ def project_vehicle_kinematics(
         speed = np.linalg.norm(velocity, axis=1)
         headings = np.arctan2(velocity[:, 1], velocity[:, 0])
         for index in range(1, len(yaws) - 1):
-            if speed[index - 1] <= 0.1:
+            if speed[index - 1] <= limits.minimum_heading_speed_mps:
                 continue
-            mismatch = float(_angle_delta(yaws[index], headings[index - 1]))
+            targets = [headings[index - 1]]
+            if limits.allow_reverse_heading:
+                targets.append(headings[index - 1] + np.pi)
+            target = min(
+                targets,
+                key=lambda value: abs(float(_angle_delta(yaws[index], value))),
+            )
+            mismatch = float(_angle_delta(yaws[index], target))
             if abs(mismatch) > limits.maximum_heading_velocity_mismatch_rad:
-                yaws[index] = headings[index - 1] + math.copysign(
+                yaws[index] = target + math.copysign(
                     limits.maximum_heading_velocity_mismatch_rad, mismatch
                 )
         for index in range(1, len(positions) - 1):
@@ -404,7 +431,15 @@ def project_vehicle_kinematics(
             float(np.max(np.abs(yaws - before_yaws))),
         )
         if change <= convergence_tolerance:
-            converged = True
+            interim = PlanarTrajectory(trajectory.times, positions, yaws)
+            interim_metrics = trajectory_metrics(
+                interim,
+                limits=limits,
+                road_z=road,
+                obstacles=obstacles,
+                actor_radius_m=actor_radius_m,
+            )
+            converged = interim_metrics["total_violation_count"] == 0
             break
     projected = PlanarTrajectory(trajectory.times, positions, yaws)
     metrics = trajectory_metrics(
@@ -425,6 +460,7 @@ def project_vehicle_kinematics(
             np.max(np.abs(projected.yaws[[0, -1]] - endpoint_yaw))
         ),
         "metrics": metrics,
+        "feasible": metrics["total_violation_count"] == 0,
     }
     return projected, diagnostics
 

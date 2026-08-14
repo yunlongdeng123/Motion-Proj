@@ -44,7 +44,10 @@ from scripts.worldsim_v5_forensics_common import (
 
 
 TASK_ID = "WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01"
-SCHEMA_VERSION = "worldsim_v5_m3_constraint_projection_mechanism_v1"
+SCHEMA_VERSIONS = {
+    "worldsim_v5_m3_constraint_projection_mechanism_v1",
+    "worldsim_v5_m3_constraint_projection_mechanism_v2",
+}
 
 
 class M3ConstraintMechanismError(RuntimeError):
@@ -53,7 +56,7 @@ class M3ConstraintMechanismError(RuntimeError):
 
 def load_config(path: Path) -> dict[str, Any]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict) or payload.get("schema_version") != SCHEMA_VERSION:
+    if not isinstance(payload, dict) or payload.get("schema_version") not in SCHEMA_VERSIONS:
         raise M3ConstraintMechanismError("M3 mechanism config schema 漂移")
     if payload.get("task_id") != TASK_ID or payload.get("status") != "running":
         raise M3ConstraintMechanismError("M3 mechanism task/status 漂移")
@@ -131,6 +134,8 @@ def _limits(config: Mapping[str, Any]) -> KinematicLimits:
         ),
         maximum_contact_error_m=float(values["maximum_contact_error_m"]),
         collision_overlap_tolerance_m2=float(values["collision_overlap_tolerance_m2"]),
+        minimum_heading_speed_mps=float(values.get("minimum_heading_speed_mps", 1.0)),
+        allow_reverse_heading=bool(values.get("allow_reverse_heading", True)),
     )
 
 
@@ -236,8 +241,10 @@ def decide(rows: list[Mapping[str, Any]], config: Mapping[str, Any]) -> dict[str
     )
     if len(evaluable) < int(gate["minimum_t2_violation_evaluable_request_count"]):
         conclusion = "m3_constraint_projection_insufficient_t2_violation_signal"
-    elif mechanism_passed:
+    elif mechanism_passed and config["scope"].get("confirmatory_claim_allowed") is not False:
         conclusion = "m3_constraint_projection_mechanism_supported_collision_and_render_pending"
+    elif mechanism_passed:
+        conclusion = "m3_constraint_projection_exploratory_replay_supported_no_unlock"
     else:
         conclusion = "m3_constraint_projection_mechanism_gate_rejected"
     return {
@@ -258,7 +265,8 @@ def decide(rows: list[Mapping[str, Any]], config: Mapping[str, Any]) -> dict[str
         "render_gate_assessed": False,
         "method_arm_selected": False,
         "parameter_search_performed": False,
-        "matched_render_implementation_unlocked": mechanism_passed,
+        "matched_render_implementation_unlocked": mechanism_passed
+        and config["scope"].get("confirmatory_claim_allowed") is not False,
         "validation_unlocked": False,
         "test_unlocked": False,
     }
@@ -293,7 +301,7 @@ def _run_impl(config_path: Path, run_dir: Path) -> dict[str, Any]:
         run_dir,
         [
             config_path,
-            PROJECT / "configs/worldsim_v5/m3_constraint_projection_development_v1.yaml",
+            Path(config["implementation"]["config_path"]),
             PROJECT / "motion_proj/worldsim_v5/constraint_projection.py",
             PROJECT / "scripts/run_worldsim_v5_m3_constraint_mechanism.py",
             PROJECT / "tests/test_worldsim_v5_m3_constraint_mechanism.py",
