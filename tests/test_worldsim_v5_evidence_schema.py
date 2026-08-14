@@ -5,10 +5,14 @@ import pytest
 import yaml
 
 from motion_proj.worldsim_v5.bayesian_unary import (
+    accumulate_unary_arm_statistics,
     accumulate_effective_count_statistics,
     effective_count_unary,
     empty_effective_count_statistics,
+    empty_unary_arm_statistics,
     finalize_effective_count_unary,
+    finalize_unary_arms,
+    observation_reliability,
 )
 from motion_proj.worldsim_v5.evidence_schema import (
     atomic_save_npz,
@@ -68,6 +72,19 @@ def test_observation_schema_and_effective_count_unary_preserve_disagreement() ->
     assert result["boundary_ambiguity"][1] > result["boundary_ambiguity"][0]
 
 
+def test_depth_inconsistent_observation_has_zero_reliability() -> None:
+    observations = _observations()
+    observations["depth_consistent"] = np.asarray([0, 1, 1, 1], dtype=np.int8)
+    reliability = observation_reliability(
+        observations,
+        sam_confidence_floor=0.1,
+        boundary_distance_scale_px=4.0,
+        depth_residual_scale_m=0.5,
+    )
+    assert reliability[0] == 0.0
+    assert np.all(reliability[1:] > 0.0)
+
+
 def test_streaming_effective_count_matches_batch() -> None:
     observations = _observations()
     batch = effective_count_unary(
@@ -99,6 +116,57 @@ def test_streaming_effective_count_matches_batch() -> None:
     )
     for name in streamed:
         assert np.allclose(streamed[name], batch[name])
+
+
+def test_b0_b1_b3_are_mechanistically_distinct_and_streamable() -> None:
+    observations = _observations()
+    statistics = empty_unary_arm_statistics(2)
+    weights = accumulate_unary_arm_statistics(
+        statistics,
+        observations=observations,
+        gaussian_count=2,
+        sam_confidence_floor=0.1,
+        boundary_distance_scale_px=4.0,
+        depth_residual_scale_m=0.5,
+    )
+    arms = finalize_unary_arms(
+        prior_probability=np.asarray([0.1, 0.1]),
+        prior_strength=2.0,
+        statistics=statistics,
+    )
+    assert tuple(arms) == ("B0", "B1", "B3")
+    assert np.all(weights["B0"] == 1.0)
+    assert np.all(weights["B1"] < weights["B0"])
+    assert np.allclose(weights["B1"], weights["B3"])
+    assert not np.allclose(
+        arms["B0"]["unary_posterior"], arms["B1"]["unary_posterior"]
+    )
+    assert not np.allclose(
+        arms["B1"]["unary_posterior"], arms["B3"]["unary_posterior"]
+    )
+
+    streamed_statistics = empty_unary_arm_statistics(2)
+    for indices in (np.asarray([0, 2]), np.asarray([1, 3])):
+        chunk = {
+            name: value if np.asarray(value).shape == () else np.asarray(value)[indices]
+            for name, value in observations.items()
+        }
+        accumulate_unary_arm_statistics(
+            streamed_statistics,
+            observations=chunk,
+            gaussian_count=2,
+            sam_confidence_floor=0.1,
+            boundary_distance_scale_px=4.0,
+            depth_residual_scale_m=0.5,
+        )
+    streamed = finalize_unary_arms(
+        prior_probability=np.asarray([0.1, 0.1]),
+        prior_strength=2.0,
+        statistics=streamed_statistics,
+    )
+    for arm in arms:
+        for name in arms[arm]:
+            assert np.allclose(arms[arm][name], streamed[arm][name])
 
 
 def test_structured_npz_is_byte_stable_and_validates_geometry(tmp_path: Path) -> None:
@@ -196,6 +264,13 @@ def test_m1_contract_binds_processed_and_derived_sky_masks() -> None:
         == 14220
     )
     assert config["graph"]["status"] == "disabled_until_unary_diagnostic"
+    assert config["unary_development_arms"]["B0"].startswith("hard_unweighted")
+    assert config["unary_development_arms"]["B1"].startswith(
+        "reliability_weighted_hard"
+    )
+    assert config["unary_development_arms"]["B3"].startswith(
+        "reliability_weighted_soft_sam"
+    )
     assert config["graph"]["transformer_allowed"] is False
     assert config["restrictions"]["development_content_read"] is True
     assert config["restrictions"]["training_started"] is True

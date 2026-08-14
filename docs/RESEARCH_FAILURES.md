@@ -1,5 +1,13 @@
 # Motion-Proj 当前研究风险与防重复账本
 
+## V5 M1 structured unary 新增防重复结论（2026-08-14）
+
+- `V5-F20`：renderer 的逐 pixel intersection 不是独立多视角证据；同一 Gaussian 在同一 view 覆盖更多像素时，若逐行更新 Beta，会把屏幕面积伪装成 view count。V5 必须先按 `Gaussian × view` 聚合 contribution，再以 `1-exp(-mass)` 形成饱和 visibility，B0/B1 每 Gaussian 每 view 最多一票；不得以原始 intersection 行数扩大 evidence denominator。
+- `V5-F21`：只改 arm 名称不能形成 Bayesian ablation。若 B0/B1/B3 共享同一 soft signal 与同一 reliability，它们在代数上会退化为同一方法。结果读取前已冻结为 `B0=hard unweighted`、`B1=hard reliability-weighted`、`B3=soft SAM probability × reliability fractional count`；B2 继续延后，禁止在读到 scene0471 指标后改定义。
+- `V5-F22`：ownership posterior 不是新的 Gaussian opacity。若直接把 posterior 当 opacity，会给原 base 中近透明的 Gaussian 注入虚假 semantic mass。所有 2D ownership evaluation 必须渲染 `immutable base opacity × ownership probability`，并在运行前后复核 base checkpoint SHA；不得用 posterior-only rasterization 形成虚假 IoU/Boundary F1 改善。
+- `V5-F23`：scene0471 的 annotation prompt 集与 checkpoint RigidNodes 表示没有天然一一对应。冻结规则选出 `17` 个轨迹大于 1 m 的非自行车 vehicle（`15 car + 2 construction`），而 formal checkpoint 只有 `15` 个 RigidNodes instances；差异可能来自无足够 LiDAR 的标注 actor。2D SAM union 与 3D base-model proxy 必须分别报告，不得把表示缺口静默算成 unary FN、删除 prompt 或补造 Gaussian。
+- `V5-F24`：直接调用 `process_camera/collect_gaussians` 会绕过 `SceneGraphTrainer.forward()` 中的 timeline 设置；若不显式按 `normed_time` 更新 `trainer.cur_frame` 与各 Gaussian model 的 `set_cur_frame`，动态 actor 会被错误地固定在旧帧。V5 sidecar runner 必须复现该状态迁移并做 nearest-timestamp 回归测试；仅图像 frame ID 正确不足以证明动态 Gaussian pose 正确。
+
 ## V5 KITTI archive / adapter 新增防重复结论（2026-08-14）
 
 - `V5-F01`：官方 KITTI Tracking calibration 不是统一的 `key: values` 语法。实际 `P0`–`P3` 行带冒号，`R_rect`、`Tr_velo_cam`、`Tr_imu_velo` 行不带冒号；V4 `_read_numeric_table()` 会静默忽略后三类行，真实 adapter 将缺失 rectification/extrinsic。V5 必须同时解析 colon/whitespace 两种格式，并对矩阵 shape、finite、handedness 和投影做 2-sequence smoke；不得把 zip layout ready 写成 calibration gate 已通过。

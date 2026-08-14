@@ -23,7 +23,7 @@
 - `WS-V5-M1-D0-BAYES-FORENSICS-01=done`；formal evidence 与缺失字段采集合约见 [`WS_V5_M1_FAILURE_FORENSICS.md`](WS_V5_M1_FAILURE_FORENSICS.md)。
 - `WS-V5-M1-STRUCTURED-OWNERSHIP-01=running`；evidence schema / effective-count unary instrumentation、精确 raw selective extraction=`14,220/14,220 files` 与 DriveStudio preprocess=`8/8 scenes` 已完成。preprocess canonical r002 summary SHA=`dcdd3450328669c26eed0316e2088e1f501fad965ed10ad8d344c37fda36f9c0`；真实 timeline 为 `191/196/201` frames，当前进入 fresh-development StreetGS base reconstruction，graph 仍 disabled。
 - `WS-V5-M2-D0-GEOMETRY-FORENSICS-01=done`；154-request 机器重算与 staged-geometry 合约见 [`WS_V5_M2_GEOMETRY_FORENSICS.md`](WS_V5_M2_GEOMETRY_FORENSICS.md)。
-- `WS-V5-D1-KITTI-ARCHIVE-AUDIT-01=done`，但 `WS-V5-D1-KITTI-ADAPTER-01=blocked`；见 [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)。
+- `WS-V5-D1-KITTI-ARCHIVE-AUDIT-01=done`，`WS-V5-D1-KITTI-ADAPTER-01=done`；0000/0001 canonical r003 summary SHA=`3b27cb9fa9b06f563b690cc44b1466e622b578bc88294b450ed254e8192a970b`，0001 的 LiDAR 缺帧 `177–180` 以 abstain 保留；见 [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md) 与 [`KITTI_TRACKING_ADAPTER_SMOKE_V5.md`](KITTI_TRACKING_ADAPTER_SMOKE_V5.md)。
 - 当前只开放冻结 development scenes 上的 M1 structured ownership 与 M2 geometry-first/evidence-schema 工作；validation parameter search、完整 M3、新模型大训练、fresh test quality 与 KITTI 方法调参继续禁止。
 
 ---

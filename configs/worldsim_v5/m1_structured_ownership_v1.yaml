@@ -150,9 +150,9 @@ evidence_contract:
   graph_consumes_unary_before_diagnostic: false
 
 unary_development_arms:
-  B0: v4_beta_bernoulli_frozen_comparator
-  B1: reliability_weighted_beta
-  B3: effective_count_bayesian_fusion
+  B0: hard_unweighted_one_gaussian_one_view_beta_frozen_comparator
+  B1: reliability_weighted_hard_one_gaussian_one_view_beta
+  B3: reliability_weighted_soft_sam_fractional_effective_count_bayesian_fusion
   B2_hierarchical_beta: deferred_until_B1_B3_diagnostic
   frozen_parameters:
     prior_strength: 2.0

@@ -18,6 +18,8 @@ STATISTIC_FIELDS = (
     "depth_consistent_mass",
 )
 
+UNARY_ARM_NAMES = ("B0", "B1", "B3")
+
 
 def empty_effective_count_statistics(gaussian_count: int) -> dict[str, np.ndarray]:
     if gaussian_count < 1:
@@ -25,6 +27,166 @@ def empty_effective_count_statistics(gaussian_count: int) -> dict[str, np.ndarra
     return {
         name: np.zeros(gaussian_count, dtype=np.float64)
         for name in STATISTIC_FIELDS
+    }
+
+
+def empty_unary_arm_statistics(
+    gaussian_count: int,
+) -> dict[str, dict[str, np.ndarray]]:
+    """为冻结的 B0/B1/B3 development arms 创建互不共享的统计量。"""
+
+    return {
+        arm: empty_effective_count_statistics(gaussian_count)
+        for arm in UNARY_ARM_NAMES
+    }
+
+
+def _validate_arm_statistics(
+    statistics: Mapping[str, Mapping[str, np.ndarray]], gaussian_count: int
+) -> None:
+    if tuple(statistics) != UNARY_ARM_NAMES:
+        raise ValueError("unary arm 集合或顺序漂移")
+    for arm in UNARY_ARM_NAMES:
+        if set(statistics[arm]) != set(STATISTIC_FIELDS):
+            raise ValueError(f"{arm} statistics 字段漂移")
+        for name in STATISTIC_FIELDS:
+            value = np.asarray(statistics[arm][name])
+            if value.shape != (gaussian_count,) or value.dtype != np.float64:
+                raise ValueError(
+                    f"{arm} statistics/{name} 必须为 float64 ({gaussian_count},)"
+                )
+
+
+def _accumulate_signal_statistics(
+    statistics: dict[str, np.ndarray],
+    *,
+    gaussian_id: np.ndarray,
+    signal: np.ndarray,
+    weight: np.ndarray,
+    boundary_weight: np.ndarray,
+    depth_consistent: np.ndarray,
+    gaussian_count: int,
+) -> None:
+    positive = weight * signal
+    negative = weight * (1.0 - signal)
+    values = {
+        "positive_mass": np.bincount(
+            gaussian_id, weights=positive, minlength=gaussian_count
+        ),
+        "negative_mass": np.bincount(
+            gaussian_id, weights=negative, minlength=gaussian_count
+        ),
+        "effective_count": np.bincount(
+            gaussian_id, weights=weight, minlength=gaussian_count
+        ),
+        "weighted_square": np.bincount(
+            gaussian_id,
+            weights=weight * np.square(signal),
+            minlength=gaussian_count,
+        ),
+        "boundary_mass": np.bincount(
+            gaussian_id,
+            weights=weight * boundary_weight,
+            minlength=gaussian_count,
+        ),
+        "depth_consistent_mass": np.bincount(
+            gaussian_id,
+            weights=weight * depth_consistent,
+            minlength=gaussian_count,
+        ),
+    }
+    for name, value in values.items():
+        statistics[name] += value
+
+
+def accumulate_unary_arm_statistics(
+    statistics: dict[str, dict[str, np.ndarray]],
+    *,
+    observations: Mapping[str, np.ndarray],
+    gaussian_count: int,
+    sam_confidence_floor: float,
+    boundary_distance_scale_px: float,
+    depth_residual_scale_m: float,
+) -> dict[str, np.ndarray]:
+    """同时累积三条真实不同的 unary arm。
+
+    输入应当是一条 Gaussian 在一个 view 内聚合后的 observation，而不是逐像素
+    intersection。B0 复现未加权 hard Beta 计数；B1 对 hard observation 加
+    reliability；B3 对 SAM soft probability 做 fractional-count fusion。
+    """
+
+    _validate_arm_statistics(statistics, gaussian_count)
+    validate_observation_chunk(observations, gaussian_count=gaussian_count)
+    gaussian_id = np.asarray(observations["gaussian_id"], dtype=np.int64)
+    available = (
+        np.asarray(observations["mask_quality_accepted"], dtype=np.float64)
+        * np.asarray(observations["sam_probability_available"], dtype=np.float64)
+    )
+    reliability = observation_reliability(
+        observations,
+        sam_confidence_floor=sam_confidence_floor,
+        boundary_distance_scale_px=boundary_distance_scale_px,
+        depth_residual_scale_m=depth_residual_scale_m,
+    ).astype(np.float64)
+    reliability *= available
+    hard_positive = np.asarray(
+        observations["positive_observation"], dtype=np.float64
+    )
+    hard_negative = np.asarray(
+        observations["negative_observation"], dtype=np.float64
+    )
+    hard_denominator = hard_positive + hard_negative
+    hard_signal = (hard_positive > hard_negative).astype(np.float64)
+    hard_available = available * (hard_denominator > 0.0)
+    soft_signal = np.asarray(observations["sam_probability"], dtype=np.float64)
+    boundary_weight = np.exp(
+        -np.abs(
+            np.asarray(observations["mask_boundary_distance"], dtype=np.float64)
+        )
+        / boundary_distance_scale_px
+    )
+    depth_consistent = np.asarray(
+        observations["depth_consistent"], dtype=np.float64
+    )
+    arm_inputs = {
+        "B0": (hard_signal, hard_available),
+        "B1": (hard_signal, reliability * (hard_denominator > 0.0)),
+        "B3": (soft_signal, reliability),
+    }
+    for arm, (signal, weight) in arm_inputs.items():
+        _accumulate_signal_statistics(
+            statistics[arm],
+            gaussian_id=gaussian_id,
+            signal=signal,
+            weight=weight,
+            boundary_weight=boundary_weight,
+            depth_consistent=depth_consistent,
+            gaussian_count=gaussian_count,
+        )
+    return {
+        "B0": hard_available.astype(np.float32),
+        "B1": (reliability * (hard_denominator > 0.0)).astype(np.float32),
+        "B3": reliability.astype(np.float32),
+    }
+
+
+def finalize_unary_arms(
+    *,
+    prior_probability: np.ndarray,
+    prior_strength: float,
+    statistics: Mapping[str, Mapping[str, np.ndarray]],
+) -> dict[str, dict[str, np.ndarray]]:
+    """用同一冻结 prior 收口 B0/B1/B3，保持 arm 间唯一变量可解释。"""
+
+    prior = np.asarray(prior_probability, dtype=np.float64)
+    _validate_arm_statistics(statistics, prior.size)
+    return {
+        arm: finalize_effective_count_unary(
+            prior_probability=prior,
+            prior_strength=prior_strength,
+            statistics=statistics[arm],
+        )
+        for arm in UNARY_ARM_NAMES
     }
 
 
@@ -56,6 +218,9 @@ def observation_reliability(
     depth = np.exp(
         -np.abs(np.asarray(observations["depth_residual"], dtype=np.float64))
         / depth_residual_scale_m
+    )
+    depth *= np.clip(
+        np.asarray(observations["depth_consistent"], dtype=np.float64), 0.0, 1.0
     )
     view_angle = np.clip(
         np.asarray(observations["view_angle_cosine"], dtype=np.float64), 0.0, 1.0

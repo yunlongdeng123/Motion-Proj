@@ -77,6 +77,7 @@ def build_observation_chunk(
     sam_confidence_floor: float,
     boundary_distance_scale_px: float,
     depth_residual_scale_m: float,
+    sam_probability_available: bool = True,
 ) -> dict[str, np.ndarray]:
     gids = np.asarray(gaussian_id, dtype=np.int64)
     pids = np.asarray(pixel_id, dtype=np.int64)
@@ -121,10 +122,12 @@ def build_observation_chunk(
     )
     residual = np.where(np.isfinite(residual), residual, 0.0).astype(np.float32)
     boundary = signed_boundary_distance(binary_image).reshape(-1)[pids]
+    available = np.full(count, bool(sam_probability_available), dtype=np.int8)
     accepted = np.full(count, bool(mask_quality_accepted), dtype=np.int8)
+    usable = bool(mask_quality_accepted) and bool(sam_probability_available)
     sampled_binary = binary_image.reshape(-1)[pids]
-    positive = (sampled_binary & bool(mask_quality_accepted)).astype(np.int8)
-    negative = ((~sampled_binary) & bool(mask_quality_accepted)).astype(np.int8)
+    positive = (sampled_binary & usable).astype(np.int8)
+    negative = ((~sampled_binary) & usable).astype(np.int8)
     if lidar_support is None:
         lidar = np.zeros(count, dtype=np.float32)
         lidar_available = np.zeros(count, dtype=np.int8)
@@ -146,7 +149,7 @@ def build_observation_chunk(
         "visibility": np.clip(weights, 0.0, 1.0),
         "sam_probability": probability,
         "sam_logit": sampled_logits.astype(np.float32),
-        "sam_probability_available": np.ones(count, dtype=np.int8),
+        "sam_probability_available": available,
         "mask_quality_accepted": accepted,
         "mask_boundary_distance": boundary.astype(np.float32),
         "depth_residual": residual,
@@ -166,6 +169,6 @@ def build_observation_chunk(
         sam_confidence_floor=sam_confidence_floor,
         boundary_distance_scale_px=boundary_distance_scale_px,
         depth_residual_scale_m=depth_residual_scale_m,
-    ) * accepted.astype(np.float32)
+    ) * accepted.astype(np.float32) * available.astype(np.float32)
     validate_observation_chunk(chunk, gaussian_count=gaussian_count)
     return chunk

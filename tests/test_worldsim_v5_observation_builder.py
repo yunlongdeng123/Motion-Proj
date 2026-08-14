@@ -61,7 +61,7 @@ def test_observation_chunk_uses_logits_and_quality_gate() -> None:
     assert chunk["lidar_support_available"].tolist() == [0, 0]
     assert np.all(chunk["reliability"] > 0)
 
-    rejected = build_observation_chunk(
+    unavailable = build_observation_chunk(
         scene="scene-0471",
         role="actor",
         view_id=3,
@@ -77,7 +77,7 @@ def test_observation_chunk_uses_logits_and_quality_gate() -> None:
         first_hit_valid=np.ones((2, 2), dtype=bool),
         mask_logits=logits,
         mask_binary=binary,
-        mask_quality_accepted=False,
+        mask_quality_accepted=True,
         view_angle_cosine=np.asarray([1.0, 0.5], dtype=np.float32),
         lidar_support=None,
         depth_absolute_tolerance_m=0.25,
@@ -85,7 +85,9 @@ def test_observation_chunk_uses_logits_and_quality_gate() -> None:
         sam_confidence_floor=0.1,
         boundary_distance_scale_px=4.0,
         depth_residual_scale_m=0.5,
+        sam_probability_available=False,
     )
-    assert rejected["positive_observation"].tolist() == [0, 0]
-    assert rejected["negative_observation"].tolist() == [0, 0]
-    assert rejected["reliability"].tolist() == [0.0, 0.0]
+    assert unavailable["sam_probability_available"].tolist() == [0, 0]
+    assert unavailable["positive_observation"].tolist() == [0, 0]
+    assert unavailable["negative_observation"].tolist() == [0, 0]
+    assert unavailable["reliability"].tolist() == [0.0, 0.0]
