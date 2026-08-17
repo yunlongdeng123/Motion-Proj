@@ -1,5 +1,26 @@
 # Experiments
 
+## V5.1 Stage A A4 CIF-lite identifiability audit（2026-08-17）
+
+| Check | 0471 | 1087 | 0379 | 结论 |
+|---|---:|---:|---:|---|
+| Independent occupancy field in A2 | 0 | 0 | 0 | unavailable |
+| Constant occupancy=1 vs existing renderer | bit exact | bit exact | bit exact | no-op |
+| Reuse appearance opacity as occupancy | non-exact | non-exact | non-exact | double-count alpha / forbidden |
+
+- canonical r006=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T122000Z__m1-a4-cif-identifiability-audit-s20260814-r006`；
+  source=`cee8b66849e5c556a79e05c813d45f225efa7814`，duration=`0.323701 s`，conclusion=
+  `a4_cif_decoupling_rejected_no_independent_occupancy_observable`。
+- CIF official contract 区分 occupancy、conditional instance distribution、visibility 与 appearance opacity；V5.1 计划又
+  禁止完整 learned deformable field、identity calibration 与 resampling。用 visibility/count 估 occupancy 会重建 A1 已修复的
+  missingness conflation；constant one 则严格 no-op，故没有可归因 A4 quality arm。
+- r006 未读 evaluation artifact/quality、未运行 GPU/training/search。summary/status/fingerprint/manifest/diagnostics SHA=
+  `bb87357a834af3e2b2b9956ad193602a18961992cce27dc6c9486e7798087f18 /`
+  `a7eeef6c14cef04d2964ba6df8969bbc3c144ab6e2abc5f570b3db50d8fe2e6c /`
+  `ae6953d2108c2648d8f6a447d56a6649637ab83e8d059962098d43621e0bf9cd /`
+  `072ad60ae2525b1a3c4cc6869fc4f7ca58ab765e2268902713d543ddf4718c30 /`
+  `ba43869b4429b71aa513040af577c5cbea6f5fef09558c2b29605b8d14318aad`；failure delta=`V51-F07`。
+
 ## V5.1 Stage A A3 Kish effective-count pre-quality audit（2026-08-17）
 
 | Run | 状态 | Observed Gaussians | Meaningful cap change | Replacement amplified | Quality/GPU |

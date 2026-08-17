@@ -173,15 +173,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   失败；它没有读取 evaluation artifact/quality、启动 GPU renderer 或改变 posterior。v2 新配置绑定 r004 与 v1 hash，
   在新结果前把 meaningful gate 改为 absolute cap change>`1e-9`，同时继续报告相对量作诊断。禁止用近零分母的巨大
   相对数宣称机制有效，也禁止覆盖 r004 terminal；只能用新 r005 重放同一 45 份 evidence observation。
-- `V51-F07`（`algorithm/novelty`, `active; A4 pre-quality audit`）：CIF 原论文将 occupancy probability 与 conditional
+- `V51-F07`（`algorithm/novelty`, `rejected by A4 r006`）：CIF 原论文将 occupancy probability 与 conditional
   instance distribution 分开，并明确针对 appearance opacity 与 occupancy 混淆；其完整方法还包含 learned deformable
   Gaussian instance field、identity calibration 与 semantic resampling。V5.1 计划明确不引入后三类机制，而当前 renderer
   已把 appearance `base_opacity` 与 conditional ownership sidecar 相乘，A1 已分离 visibility eligibility，A2 已分离
   UNKNOWN。因而 A4 若把 `base_opacity` 当 occupancy，会在 renderer 中二次乘 alpha 且违反参考机制；若用
   visibility/effective-count，会再次把不可见误作不存在；若对已实例化 Gaussian 设 occupancy=1，则与现有 renderer
-  bit-exact no-op。当前只允许 A4 evidence/source contract audit，验证是否存在独立 occupancy observable；不存在时必须
-  在 quality read/GPU/training 前 rejected。禁止把已有 A1/A2 分解重新命名为 CIF 增益，或在结果后偷偷解锁完整 CIF
-  训练、校准/重采样。参考：[CVPR 2026 official paper](https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Consistent_Instance_Field_for_Dynamic_Scene_Understanding_CVPR_2026_paper.html)。
+  bit-exact no-op。r006 绑定三个 A2 posterior 与 renderer/visibility/abstention 源码，确认 occupancy field=`0/3`、
+  constant-one 对现有 renderer=`3/3 bit exact`，而复用 appearance opacity=`3/3 non-exact` 且会二次缩放。结论=
+  `a4_cif_decoupling_rejected_no_independent_occupancy_observable`；未读 evaluation artifact/quality、未启动 GPU/training。
+  禁止把已有 A1/A2 分解重新命名为 CIF 增益，或在结果后偷偷解锁完整 CIF 训练、校准/重采样。参考：
+  [CVPR 2026 official paper](https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Consistent_Instance_Field_for_Dynamic_Scene_Understanding_CVPR_2026_paper.html)。
 
 <a id="detail-v5"></a>
 

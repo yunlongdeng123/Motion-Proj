@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage A H 收口：A1/A2 保留，A3/A4 机制 rejected，下一步 freeze S screening（2026-08-17）
+
+- A4 canonical r006=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T122000Z__m1-a4-cif-identifiability-audit-s20260814-r006`，
+  source=`cee8b66`，conclusion=`a4_cif_decoupling_rejected_no_independent_occupancy_observable`。
+- 三场 A2 posterior 均无独立 occupancy field；现有 renderer 已分离 appearance base opacity 与 ownership sidecar，A1
+  已分离 visibility eligibility，A2 已分离 UNKNOWN。constant occupancy=1 在三场都与现有 renderer bit-exact；把
+  appearance opacity 再当 occupancy 则三场都 non-exact、等价于二次乘 alpha；用 visibility/count 又会混淆不存在与不可见。
+- r006 只做绑定 source/evidence contract audit，未读 evaluation artifact/quality、未启动 GPU/training/search；A4 不形成
+  quality arm，failure delta=`V51-F07`。summary/status/fingerprint/manifest/diagnostics SHA=
+  `bb87357a.../a7eeef6c.../ae6953d2.../072ad60a.../ba43869b...`。
+- Stage A H 决策：A1 visibility 与 A2 UNKNOWN 通过冻结 H gate；A3 Kish count 与 A4 CIF-lite 因机制不可识别/结构 no-op
+  在 quality 前 rejected。最多保留两臂的约束正好落在 A1/A2；下一步必须先做 freeze-only commit，绑定 candidate source、
+  threshold、S=`0998/0359`、一次性读取和停止条件，之后才允许读取 S quality。C/validation/test/KITTI 继续锁定。
+
 ## V5.1 Stage A A3 effective-count 机制预审 rejected，下一步只实现 A4 CIF 解耦（2026-08-17）
 
 - A3 r004/r005 都只读取 H/A1 evidence observations 与绑定的 A2 posterior，不读取 evaluation artifact/quality，

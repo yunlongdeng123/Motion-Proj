@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1/A2 通过 H gate；A3 mechanism rejected；下一门只实现 A4 CIF |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | Stage A H closed：A1/A2 retained，A3/A4 rejected；下一门 freeze S screening |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -36,11 +36,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/m1_unary_unknown_v1.yaml`
 - `configs/worldsim_v51/m1_effective_count_audit_v1.yaml`
 - `configs/worldsim_v51/m1_effective_count_audit_v2.yaml`
+- `configs/worldsim_v51/m1_cif_decoupling_audit_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
 - `scripts/replay_worldsim_v51_v5_unary.py`
 - `scripts/run_worldsim_v51_unary_visibility.py`
 - `scripts/run_worldsim_v51_unary_unknown.py`
 - `scripts/audit_worldsim_v51_effective_count.py`
+- `scripts/audit_worldsim_v51_cif_decoupling.py`
 
 正式状态、实验事实和失败事实仍分别以 `docs/RESEARCH_STATUS.md`、`docs/EXPERIMENTS.md` 与
 `docs/RESEARCH_FAILURES.md` 为准。
@@ -94,3 +96,12 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - mechanism result：no-epsilon Kish below fractional mass=`0`；meaningful absolute cap change=`0`；replacement
   amplification=`940,762/944,443`。公式没有 correlation observable，A3 rejected，不启动 quality/GPU arm。
 - 下一门：只做 A4 CIF-style visibility/occupancy/conditional-identity decoupling；S 与后续 Stage 保持锁定。
+
+## Stage A A4 canonical identifiability audit
+
+- canonical r006：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T122000Z__m1-a4-cif-identifiability-audit-s20260814-r006`
+- source commit：`cee8b66849e5c556a79e05c813d45f225efa7814`
+- A2 occupancy field=`0/3`；constant occupancy=1 与现有 renderer=`3/3 bit exact`；appearance opacity reuse=
+  `3/3 non-exact`。无独立 occupancy observable，A4 在 quality read/GPU/training 前 rejected。
+- Stage A H retained candidates=`A1,A2`；A3/A4 不进入候选。下一步必须 freeze-only 绑定 S screening，再一次性读取
+  S=`0998/0359`；C/validation/test/KITTI 继续锁定。

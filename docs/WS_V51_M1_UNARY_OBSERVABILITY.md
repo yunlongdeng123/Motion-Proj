@@ -143,12 +143,34 @@ meaningful cap change=`0`；replacement amplified=`940,762`。结论=
 `a3_kish_cap_rejected_structural_noop_not_correlation_aware`。两轮都没有读取 evaluation artifact/quality 或启动 GPU；
 因此没有 A3 质量臂，也不允许事后加入新 correlation feature 救回原公式。下一门只解锁独立 A4 CIF decoupling。
 
+## A4：CIF-Style Visibility / Occupancy / Conditional Identity Decoupling
+
+状态：`mechanism rejected before quality read`。
+
+[CIF 官方论文](https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Consistent_Instance_Field_for_Dynamic_Scene_Understanding_CVPR_2026_paper.html)
+明确区分 occupancy probability、conditional instance distribution、visibility 与 appearance opacity，并以 learned deformable
+field、identity calibration 和 semantic resampling 实现。当前计划明确排除后三类完整机制。
+
+r006 绑定 A2 三场 posterior 和现有 renderer/visibility/abstention 源码：A2 没有 occupancy field；renderer 已将
+appearance base opacity 与 conditional ownership sidecar 分离。将 occupancy 设为 1 在 `3/3` 场景与现有合成 bit-exact，
+没有新变量；复用 appearance opacity 则 `3/3 non-exact`，实际二次乘 alpha；使用 visibility/effective-count 又会把
+不可见误作不存在。canonical：
+
+```text
+/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/
+20260817T122000Z__m1-a4-cif-identifiability-audit-s20260814-r006
+```
+
+结论=`a4_cif_decoupling_rejected_no_independent_occupancy_observable`。r006 未读 evaluation quality、未启动 GPU/training，
+不存在 A4 quality arm。Stage A H 最终保留 A1/A2，下一步只能先冻结 S screening 合同。
+
 ## Failure ledger
 
-- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F06`。
+- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F07`。
 - A0 `failure_ledger_delta=none`。
 - A1 `failure_ledger_delta=none`。
 - A2 `failure_ledger_delta=none`；formal refs 包含 `V51-F04`。
 - A3 r005 `failure_ledger_delta=V51-F05/V51-F06`，机制在 quality read 前 rejected。
+- A4 r006 `failure_ledger_delta=V51-F07`，机制在 quality read 前 rejected。
 - `V51-F02` 只修正人工 float32 常数单测的错误 oracle；formal canonical metric 仍要求 delta 严格等于 0。
 - `V51-F03` 固化 configured/applied visibility threshold，避免 float32 边界静默改变 eligibility 分母。
