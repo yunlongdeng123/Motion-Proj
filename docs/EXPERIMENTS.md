@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage F F0h r039 recovery PASS / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039 /ba2f24f...a6b7 /
+  64b4c992...a8e5`；outcome=`recovery_pass`。resolved/summary/manifest/status/events SHA=`d09d8787...4d7a/
+  d720af4e...9505/28d8ce61...411a/0f9585ec...d8f8/97ddc77a...d6ed`。
+- classes=`success×4`，empty-cache checks/reference checks=`true×4`，control/target pair exact=true；8 次 cache release
+  由 trace 重放。audit=`8,625 bytes /fda57ee4...88ab /PASS`；resources=`24,118 MiB peak /458 MiB headroom /
+  17,972,154,368 cgroup /96.057126s /301 samples /0 errors`。
+- freeze=`stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml`；failure delta=`V51-F62 recovery_candidate_pass_
+  full_materialization_not_yet_resolved`。下一步只做 1087 15-view recovery，不读质量。
+
 ## V5.1 Stage F F0h r039 empty-cache execution parity 预注册（2026-08-18）
 
 - run=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`；config=

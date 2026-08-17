@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage F F0h r039 empty-cache parity PASS 已冻结（2026-08-18）
+
+- canonical r039=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`，source/tree=
+  `ba2f24f...a6b7/64b4c992...a8e5`，四臂全部 success；control/target 双 repeat 与 r034、r036/r038 reference
+  全部 bit-exact，8/8 pre-matmul empty-cache evidence 成立。
+- intervention 仅为 `torch.cuda.empty_cache()`，无 source/operator/tensor-content/method 变化。audit=
+  `20260818T163000Z__stage-f-f0h-r039-audit.json /8,625 bytes /fda57ee4...88ab /PASS`；manifest=
+  `39 entries /1,555,158 logical /518,169 regular`。
+- resources=`GPU 1→24,118/24,576 MiB，headroom 458 MiB /cgroup 17,972,154,368 bytes /96.057s /301 samples /
+  0 errors`。freeze=`configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml`。
+- `V51-F62` 仍未解除：r039 只建立 recovery candidate，不证明 1087 15-view 或 45-view 稳定。下一步只预注册 1087
+  单场 15-view empty-cache recovery；full materialization/quality/training/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0h pre-matmul empty-cache parity 已预注册（2026-08-18）
 
 - formal target=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`；authorization=r038 freeze=

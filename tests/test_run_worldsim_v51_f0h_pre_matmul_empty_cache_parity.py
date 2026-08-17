@@ -1,6 +1,8 @@
 from pathlib import Path
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -84,3 +86,21 @@ def test_f0h_r039_independent_audit_replays_recovery_parity() -> None:
     assert result["parity_checks"]["reference_checks"] == [True] * 4
     assert result["quality_read"] is False
     assert result["full_materialization"] is False
+
+
+def test_f0h_freeze_only_authorizes_scene1087_recovery_preregistration() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["outcome"] == "recovery_pass"
+    assert freeze["recovery_contract"]["all_reference_checks"] is True
+    assert freeze["interpretation"]["failure"] == "V51-F62"
+    assert freeze["governance"]["full_materialization_authorized"] is False
+    assert freeze["governance"]["next_phase"] == (
+        "scene1087_15_view_empty_cache_recovery_preregistration"
+    )

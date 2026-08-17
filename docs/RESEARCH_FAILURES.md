@@ -666,7 +666,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   frozen line58 matmul 前执行 `torch.cuda.empty_cache()`，不改 tensor/operator/grid/batch/AMP，并要求 control/target 双 repeat
   对既有 success hashes bit-exact；禁止把 cache observation 写成 OOM 或跳过 parity 直接 full materialization。r038 evidence=
   `summary e9db6152...8f46 /audit 16,025 bytes, a8cbdb5b...4047 /freeze
-  configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml`。
+  configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml`。r039 在每个 frozen matmul 前调用
+  `torch.cuda.empty_cache()`，A–B–A–B 四个 fresh process 全部成功；8 次 intervention 均有 before/after allocator 证据，
+  control/target 双 repeat 与 r034、r036/r038 success hashes 全部 exact，且资源门 PASS。因此 empty-cache 是当前合法的
+  execution recovery candidate，并推翻“释放 cache 必然改变 identity 输出”的担忧；但三视图 parity 不能外推 1087
+  15-view/全 45-view，`V51-F62` 仍 active。下一步只允许单场 1087 15-view recovery，禁止直接把 r039 写成 full
+  materialization ready。r039 evidence=`summary d720af4e...9505 /audit 8,625 bytes, fda57ee4...88ab /freeze
+  configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

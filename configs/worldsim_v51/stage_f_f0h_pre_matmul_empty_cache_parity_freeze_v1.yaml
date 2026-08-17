@@ -1,0 +1,78 @@
+schema_version: worldsim_v51_stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0h_pre_matmul_empty_cache_execution_recovery_parity_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039
+  source_commit: ba2f24f812f7a7cf3a9accf81fdf08c45e13a6b7
+  source_tree: 64b4c99298567b4cedf2fd8465d716d6ae61a8e5
+  status: done
+  outcome: recovery_pass
+  conclusion: pre_matmul_empty_cache_control_target_repeats_success_exact_execution_recovery_candidate
+  resolved_config: {bytes: 7375, sha256: d09d878712f84e77429b04ab9a12f0f8cabef68e58efa6c9269a8db38eb14d7a}
+  summary: {bytes: 163294, sha256: d720af4e8f588e13352a083eed9f71f19bafc0049e9bc253883068a7ffac9505}
+  manifest: {bytes: 7222, sha256: 28d8ce61af300c6172593477f7591a1dbb51e556e37029fb831b81c01bc6411a}
+  status_file: {bytes: 324, sha256: 0f9585ec265960eee01c0d24e6fdd54eaaa751a3231542290a840f342845d8f8}
+  events: {bytes: 162, sha256: 97ddc77a7b1d55343d0d9095c427ca3e8ca99488709fad1a61b38c804a03d6ed}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T163000Z__stage-f-f0h-r039-audit.json
+  bytes: 8625
+  sha256: fda57ee4d4a0836913cfc6cf070fdfe6bbac520a7f2ed42aad50260a8c1188ab
+  status: pass
+  empty_cache_call_count: 8
+  inventory: {entry_count: 39, logical_bytes: 1555158, regular_bytes_excluding_input_symlink_targets: 518169}
+
+recovery_contract:
+  intervention: torch_cuda_empty_cache_immediately_before_each_line58_matmul
+  upstream_source_mutation: false
+  operator_change: false
+  tensor_content_change: false
+  method: {sam_grid: 32, sam_batch: 64, amp: true, size: 480, temporal_setting: semionline}
+  attempts: [control_cache_1, target_cache_1, control_cache_2, target_cache_2]
+  all_attempts_success: true
+  all_empty_cache_evidence_present: true
+  control_pair_exact: true
+  target_pair_exact: true
+  all_reference_checks: true
+  control_reference: r034
+  target_reference: r036_r038_success
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24118
+  nvidia_headroom_mib: 458
+  cgroup_memory_peak_bytes: 17972154368
+  sample_count: 301
+  monitor_error_count: 0
+  wall_seconds: 96.05712615139782
+  all_preregistered_checks: true
+
+interpretation:
+  established:
+    - empty_cache_execution_intervention_preserves_control_and_target_output_identity
+    - four_fresh_process_replays_succeeded_with_eight_pre_matmul_cache_releases
+    - intervention_is_a_recovery_candidate_for_scene1087
+  not_established:
+    - full_15_view_scene1087_stability
+    - full_45_view_materialization_stability
+    - mask_quality
+    - allocator_cache_as_unique_root_cause
+  failure: V51-F62
+  failure_state: active_recovery_candidate_pass_full_materialization_not_resolved
+
+governance:
+  full_materialization_authorized: false
+  quality_read: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: scene1087_15_view_empty_cache_recovery_preregistration
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_recovery_candidate_pass_full_materialization_not_yet_resolved
