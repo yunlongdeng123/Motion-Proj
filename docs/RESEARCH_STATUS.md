@@ -1,5 +1,25 @@
 # Research Status
 
+## V5.1 Stage B 授权前预检：协议冲突与 DINOv2/24GB 门未闭合（2026-08-17）
+
+- `WS-V51-M1-B-LUDVIG-UPLIFT-01=pending/locked`；本轮只读预检，没有下载/clone 上游、实现方法、启动 run 或读取
+  C/validation/test/KITTI quality。预检合同见 `docs/WS_V51_STAGE_B_PREFLIGHT.md` 与
+  `configs/worldsim_v51/stage_b_preflight_v1.yaml`。
+- normative plan §10.8 允许 Stage A 全失败后以 U1/U2 进入 Stage B，但附录解锁条款要求 Stage A candidate 通过 S；
+  r007 恰为 A1–A4 全 rejected、fallback=`U2/B3`。该 governance conflict 登记为 `V51-F11`，必须由用户独立选择
+  fallback 授权或关闭 M1，执行者不得自行消解。
+- official LUDVIG upstream 已只读冻结到 `4461fc515439bb498a75d71738a1e73cf7a452ed`；第一版应为 DINOv2
+  ViT-g/14 registers、learning-free normalized renderer transpose、40-D PCA 参考点、immutable Gaussian + feature
+  sidecar。当前服务器没有对应官方 checkpoint，登记 `V51-F12`。
+- RTX 3090=`24576 MiB`；Stage A 单个 unary materialization 曾约 `20–22 GiB`。若获授权，执行序列必须拆成
+  freeze-only→operator parity→离线 DINO feature sidecar→释放 DINO 进程→renderer uplift→one-shot separation gate；
+  DINO 与 renderer 禁止同进程/同卡并发常驻。
+- normative plan 已由 P0 config 按 SHA 冻结；preflight 回归发现 Stage A closeout `3d33262` 曾加入 5 行进展，造成
+  inherited plan SHA drift 与 protocol regression=`2 failed / 1 passed`。本提交移除这 5 行、恢复原 SHA，并登记
+  `V51-F13`；进展仍在 short plan/status/experiments。授权后的规范统一必须走显式 supersession/migration。
+- 下一步只允许接收 Stage B 独立授权并做 freeze-only；checkpoint 下载、method implementation/run、Graph、backbone
+  search、C/validation/test/KITTI quality 继续锁定。failure delta=`V51-F11/F12/F13`。
+
 ## V5.1 Stage A 正式收口：A1/A2 S rejected，冻结 U2/B3（2026-08-17）
 
 - canonical r007=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T140000Z__m1-stage-a-s-screening-s20260814-r007`，

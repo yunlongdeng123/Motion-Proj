@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3 | H→S 小效应未复现、UNKNOWN coverage 不达门；pytest/import/dtype/分位数/机制可识别性/SSH 编排均显式审计 | `V51-F01`–`V51-F10` |
+| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3；Stage B 等待独立授权 | H→S 小效应未复现、UNKNOWN coverage 不达门；Stage B 解锁规则冲突、ViT-g 资产/24GB 合同与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F13` |
 
 ### 1.1 V1 汇总条目
 
@@ -206,6 +206,32 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   ratio=`34.5512%`，0359 仅=`0.7891%`，说明 H 分位数规则的场景依赖很强；同时 A2 conditional posterior 与 A1 相同，
   继承 `V51-F09` 的 conditional gate 失败。因此 A2 rejected，不能用较高 unknown recall 或 error separation 掩盖可用覆盖率
   不足，也不能在看到 S 后调整 Q25/Q75、布尔规则或 image threshold。证据：r007；failure delta=`V51-F09/F10`。
+- `V51-F11`（`protocol/governance`, `active`）：normative plan 对 Stage A 全失败后的解锁规则内部冲突。§10.8
+  明写“所有 Stage A arm 都失败”时保留 U1/U2 并进入 Stage B；附录“八、Stage A 后如何解锁”却只在 Stage A
+  candidate 通过 S 时允许 `WS-V51-M1-B-LUDVIG-UPLIFT-01`。r007 的真实状态正是 A1–A4 全 rejected、fallback=
+  `U2/B3`，因此执行者不能静默挑选有利条款，也不能把“进入 Stage B”的研究顺序当成独立授权。Stage B 保持
+  `pending/locked`；合法复开必须由用户明确选择“授权 U2/B3 fallback 进入 Stage B”或“按 candidate-pass 条款关闭
+  M1”，再用 freeze-only commit 统一 normative/short plan/config。该问题不是算法负结果，未读取 C/validation/test/KITTI
+  quality。证据：`docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md`、`configs/worldsim_v51/stage_a_closeout_v1.yaml`、
+  `docs/WS_V51_STAGE_B_PREFLIGHT.md`。
+- `V51-F12`（`engineering/resource/governance`, `active preflight risk`）：Stage B 的 faithful 第一版要求官方 DINOv2
+  ViT-g/14 registers，但 2026-08-17 只读审计只找到 Depth-Anything-V2 内部 DINOv2 模块，torch/HuggingFace cache
+  均无对应官方 checkpoint；“存在 DINOv2 源文件”不能写成 LUDVIG 资产已冻结。官方 LUDVIG README 记录的测试平台是
+  A6000 48GB，当前 RTX 3090 只有 24576 MiB，且 Stage A 单个 unary materialization 已实测约 20–22 GiB，因此
+  DINO extraction 与 DriveStudio renderer 禁止同进程或同卡并发常驻。授权后必须先冻结 upstream commit、官方模型来源、
+  checkpoint SHA/license、preprocess 与 PCA population/seed，再采用“离线 DINO sidecar→释放进程→renderer uplift”分段
+  执行；缺资产或 OOM 只记工程/resource terminal，不得写成 feature uplift 失败，也不得临时换小模型后仍称 faithful port。
+  证据：`configs/worldsim_v51/stage_b_preflight_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
+- `V51-F13`（`engineering/protocol`, `resolved without method execution`）：P0 scope config 已把 normative plan
+  SHA-256 冻结为 `3d7f7481...`，但 Stage A closeout commit `3d33262` 曾直接向该长计划加入 5 行执行进展，使当前
+  HEAD SHA 漂到 `b119cd56...`。Stage B preflight 运行 `pytest -q tests/test_worldsim_v51_protocol.py` 时因此得到
+  `2 failed / 1 passed`，即使本轮新增注记撤回后仍复现，证明这是 inherited drift。这推翻“冻结后的 normative plan
+  仍可作普通活文档窄改”的工程假设，不是 P0、Stage B 算法或数据失败。修复用新提交移除这 5 行，把当前状态继续保留
+  在 short plan/status/experiments，恢复原 plan SHA exact；不改写历史，也不只改 expected SHA 掩盖漂移。若用户授权后
+  确需统一解锁规则，必须建立显式 supersession/migration 并同步 P0 binding。失败时没有下载 checkpoint、启动
+  method/GPU run 或读取 C/validation/test/KITTI quality。证据：`3d33262`、
+  `configs/worldsim_v51/p0_m1_scope_v1.yaml`、`tests/test_worldsim_v51_protocol.py`、
+  `docs/WS_V51_STAGE_B_PREFLIGHT.md`。
 
 <a id="detail-v5"></a>
 

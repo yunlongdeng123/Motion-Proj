@@ -1,0 +1,65 @@
+schema_version: worldsim_v51_stage_b_preflight_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: pending_locked
+conclusion: stage_b_requires_authorization_protocol_reconciliation_and_asset_freeze
+audit_date: '2026-08-17'
+repository_commit: 3d332623eed5189c4c68464dfbda5922f18f3598
+
+authorization:
+  first_round_ended_after_stage_a: true
+  separate_stage_b_authorization_received: false
+  method_execution_allowed: false
+  quality_read_allowed: false
+
+protocol_conflict:
+  fallback_clause: all_stage_a_arms_fail_keep_u1_or_u2_and_enter_stage_b
+  unlock_clause: only_stage_a_candidate_passing_s_unlocks_stage_b
+  observed_stage_a_state: all_new_arms_rejected_fallback_u2_b3
+  silent_resolution_allowed: false
+  required_decision: authorize_u2_b3_fallback_or_close_m1
+
+upstream:
+  repository: https://github.com/naver/ludvig
+  main_commit: 4461fc515439bb498a75d71738a1e73cf7a452ed
+  paper: ICCV_2025_LUDVIG
+  first_backbone: dinov2_vitg14_registers
+  demo_pca_components: 40
+  optional_pruning_enabled: false
+  base_gaussian_immutable: true
+  feature_sidecar_only: true
+
+local_readiness:
+  gpu: NVIDIA_GeForce_RTX_3090
+  gpu_memory_mib: 24576
+  cgroup_memory_bytes: 96636764160
+  cgroup_cpu_cores: 14
+  official_vitg14_checkpoint_present: false
+  official_ludvig_checkout_present: false
+  depth_anything_internal_dinov2_is_faithful_asset: false
+  motionproj_dependencies_available: [torch, timm, transformers, sklearn, einops, xformers]
+  drivestudio_dependencies_available: [torch, timm, transformers, sklearn]
+  staged_processes_required: true
+  dino_and_renderer_same_process_allowed: false
+  same_gpu_concurrency_allowed: false
+
+proposed_execution_order:
+  - independent_freeze_only
+  - operator_only_parity
+  - offline_dino_image_feature_sidecar
+  - release_dino_gpu_process
+  - renderer_transpose_uplift
+  - one_shot_feature_separation_gate
+
+locks:
+  checkpoint_download: false
+  method_implementation: false
+  method_run: false
+  c_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  graph_implementation: false
+  backbone_search: false
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F24, V5-F26, V5-F29, V51-F08, V51-F09, V51-F10, V51-F11, V51-F12, V51-F13]
+failure_ledger_delta: [V51-F11, V51-F12, V51-F13]
