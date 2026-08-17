@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage E E0a r020 canonical structural result（2026-08-18）
+
+- run/source/tree=`20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020 / 4342ddb3...0c13 /
+  2a264757...e4645`；status=`done`。三场的 fine/medium/coarse 三档均通过 no-quality existence gate；首份
+  0471/fine sidecar NPZ byte repeat exact=`ad796cf7...e0b10`。
+- raw mean observed views 与 zero-observation Gaussian：0471=`1.400230 / 299,571`，1087=`0.028232 / 904,933`，
+  0379=`0.457917 / 760,253`。fine 档 rescue=`28,330/718/28,933`，node reduction=
+  `34.6662%/33.3629%/35.5885%`；coarse 虽有更大 union gain，但 seed mixing 只是诊断，不是选择依据。
+- summary/status/manifest/events SHA=`e96677e3...3c/9c9b95e0...25/d743c5ca...91/0506da6a...45c`；resources/
+  samples=`f35ce64f...f8/dcef9d62...7c`。independent audit=`6,130 bytes / 8df03b2a...5d34`，复算 9/9
+  assignments、45/45 view denominators、density metrics、gate 与 18-entry inventory exact。
+- quality/propagation/parameter-search/E1/E2 均 false，M2/M3=pending；本结果只解锁 E0b preregistration。
+  定向回归=`8 passed`；扩大回归按环境拆分后=`95 motionproj passed / 3 drivestudio passed`。
+  `failure_ledger_delta=V51-F34/F40 recurrence resolved / V51-F39 resolved / V51-F41 resolved`；freeze=
+  `configs/worldsim_v51/stage_e_e0a_superprimitive_probe_freeze_v1.yaml`。
+
 ## V5.1 Stage E r019 blocked / r020 recovery 预注册（2026-08-18）
 
 - r019 source=`2e1786b`，status=`blocked`，error=`frozen KNN contains nonpositive/nonfinite edge length`；完成

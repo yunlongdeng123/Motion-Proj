@@ -1,5 +1,13 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0a r020 收口
+
+r020 已在三场完成：三档 voxel level 均通过 no-quality observation-density gate，9 份 assignment、45 个训练视图分母、
+18-entry manifest 与 gate 由独立 auditor 复算 exact。该结果仅证明结构分组能增加 member-view union，不证明 BF1/IoU
+改善；尤其 1087 增益很小，0471 coarse seed mixing 明显增大，禁止按事后 density 最大值选 coarse。E0b 下一步只能先
+冻结 H-independent level selection 与 same-propagation raw-vs-voxel 合同，再运行新 matched A/B；E1/E2 仍锁定。
+`V51-F39 resolved by r020`，result freeze=`stage_e_e0a_superprimitive_probe_freeze_v1.yaml`。
+
 ## 2026-08-18 Stage E E0a r019 recovery
 
 r019 在 0379 edge-length quantile 前因 `34` 条 zero-length KNN edges blocked；0471/1087 partial 产物不作为方法证据。
@@ -57,7 +65,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | r019 zero-edge contract blocked；v2/r020 recovery 仅排除 scale quantile 的零长边，E0b/E1/E2 仍锁定 |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 structural gate PASS/frozen；下一门仅 E0b H-independent level selection + same-propagation preregistration |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -78,11 +86,11 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F40`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F41`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
   `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 resolved by v2/r012`；Stage D rejection
-  delta=`V51-F37 active`；Stage E recovery delta=`V51-F38/F40 resolved, V51-F39 pending r020`。
+  delta=`V51-F37 active`；Stage E recovery/audit delta=`V51-F38/F40/F41 resolved, V51-F39 resolved by r020`。
 
 ## 配置与入口
 

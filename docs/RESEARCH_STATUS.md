@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage E E0a r020 结构门通过并冻结（2026-08-18）
+
+- canonical r020=`20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020`，source/tree=
+  `4342ddb3...0c13/2a264757...e4645`，status=`done`，conclusion=
+  `e0a_structural_density_gate_pass_preregister_e0b_same_propagation`。三场 `q50/q75/q90` 全部通过 node reduction、
+  Gaussian-weighted observation union 严格增加与 raw-zero Gaussian rescue 三项结构门。
+- fine/medium/coarse node count：0471=`561,618/363,221/171,742`，1087=`620,540/414,262/230,295`，
+  0379=`764,752/497,260/257,892`；对应 union gain 分别为 0471=`0.133301/0.265919/0.507044`、
+  1087=`0.000771/0.002053/0.004459`、0379=`0.039214/0.094326/0.187572` views/Gaussian。
+- 独立审计逐项重建 9 份 world-origin voxel assignment 与 45 个 train-only visibility denominators，复算全部 density
+  metrics/gate、18-entry manifest 与 repeatability exact；report=`6,130 bytes / 8df03b2a...5d34`。run inventory=
+  `18 entries / 44,321,779 bytes`，完整 run=`20 files / 44,325,325 bytes`；GPU peak=`1 MiB`、cgroup peak=
+  `9,423,683,584 bytes`、159 samples、0 errors、wall=`182.733 s`。
+- 边界：E0a 只证明结构层能合并观测，不是质量提升。1087 即使 coarse gain 也仅 `0.004459`；0471 coarse seed-conflict
+  Gaussian fraction=`3.4661%`，因此不能按最大 density gain 事后挑 coarse。E0b 只能先用 H-independent、最小结构改动规则
+  冻结 level，再做 same-propagation matched A/B；E1 PanoGS、E2 AG²aussian、S/C/validation/test/KITTI 仍锁定，
+  M2/M3=pending。`V51-F39` 已由 v2/r020 完整重跑解决；result freeze=
+  `configs/worldsim_v51/stage_e_e0a_superprimitive_probe_freeze_v1.yaml`。
+
 ## V5.1 Stage E r019 blocked；E0a v2 recovery 已预注册（2026-08-18）
 
 - r019=`20260818T010000Z__m1-stage-e-e0a-density-s20260814-r019` 在 0471/1087 完成后、0379 voxel-size

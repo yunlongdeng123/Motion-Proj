@@ -1,0 +1,166 @@
+schema_version: worldsim_v51_stage_e_e0a_superprimitive_probe_freeze_v1
+task_id: WS-V51-M1-E-NODE-ELEVATION-01
+status: done
+frozen_at: "2026-08-18"
+
+source:
+  commit: 4342ddb3dd9766974924450c76ad57ff50e80c13
+  tree: 2a26475752b92f5eb8693dc8b5901634243e4645
+  config:
+    path: configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v2.yaml
+    sha256: ab2f8d781e2cbc782859c5639c7813b6d81c446822495f5d3bd3259b65bf6780
+  module:
+    path: motion_proj/worldsim_v51/superprimitive_probe.py
+    sha256: ee2f859d5a98139787408734c11ba2f43852cccc759739becd5b788ea3b901a9
+  runner:
+    path: scripts/run_worldsim_v51_e0a_superprimitive_probe.py
+    sha256: 0b10578484b116cf7d5ab8b76f2543934565a4d94f59e3a44cbc67b038ee7d0e
+
+canonical_run:
+  run_id: 20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020
+  source_commit: 4342ddb3dd9766974924450c76ad57ff50e80c13
+  source_tree: 2a26475752b92f5eb8693dc8b5901634243e4645
+  status: done
+  conclusion: e0a_structural_density_gate_pass_preregister_e0b_same_propagation
+  manifest_inventory_entries: 18
+  manifest_inventory_bytes: 44321779
+  total_run_files: 20
+  total_run_bytes: 44325325
+  hashes:
+    summary: e96677e380cf11ad5445ab9e461501c40e28043b672cacafdd482ba6c5a7dc3c
+    status: 9c9b95e09af1e8c911c88dc27de74a2f92e5656ec6265bc258bfd12c7f94f125
+    manifest: d743c5caf133665f78b810d42c4ce37e62d022be55cd1ddad25215ff7fd52391
+    events: 0506da6a75b874fb19c99eb4c0ad2c96aa3321bc9a977d19f9a8385df121c45c
+    resources: f35ce64f6f1ed17dffca2a06d00c6ce011b16deb10c30e7625b79b80a50862f8
+    resource_samples: dcef9d621f47e90e28637d70ba97d72da223ad9a8532b9ccac1e89fec4c38f7c
+
+gate:
+  pass: true
+  passing_scene_count: 3
+  scene_count: 3
+  passing_levels_per_scene:
+    scene-0471: [fine_q50, medium_q75, coarse_q90]
+    scene-1087: [fine_q50, medium_q75, coarse_q90]
+    scene-0379: [fine_q50, medium_q75, coarse_q90]
+  interpretation: structural_observation_density_only_not_quality_improvement
+
+scenes:
+  - scene: scene-0471
+    gaussian_count: 859613
+    raw_mean_observed_views: 1.400230103546596
+    raw_zero_observation_gaussians: 299571
+    levels:
+      fine_q50:
+        voxel_size_m: 0.1779450625181198
+        node_count: 561618
+        observation_union_gain_per_gaussian: 0.1333006829817604
+        rescued_zero_observation_gaussians: 28330
+        conflicting_seed_gaussian_fraction: 0.0048335704555422035
+        sidecar_sha256: ad796cf7ac0e823e9449e5b6bc6d5579701ce29a7c9b842d39426ccb363e0b10
+      medium_q75:
+        node_count: 363221
+        observation_union_gain_per_gaussian: 0.26591850053454286
+        rescued_zero_observation_gaussians: 61997
+        conflicting_seed_gaussian_fraction: 0.013494444593090146
+        sidecar_sha256: 89641cebd91360f0b125ac2bb31784ee5081e68ee9a37f31e5bf323315bbdb80
+      coarse_q90:
+        node_count: 171742
+        observation_union_gain_per_gaussian: 0.5070444490718498
+        rescued_zero_observation_gaussians: 120604
+        conflicting_seed_gaussian_fraction: 0.03466094626302767
+        sidecar_sha256: 2e3144cac48d11c33fa2ee14c7a12b1f73a8a613fcf1169bf16e95538729fc44
+  - scene: scene-1087
+    gaussian_count: 931223
+    raw_mean_observed_views: 0.02823169101278641
+    raw_zero_observation_gaussians: 904933
+    levels:
+      fine_q50:
+        voxel_size_m: 0.1435287594795227
+        node_count: 620540
+        observation_union_gain_per_gaussian: 0.0007710290660776205
+        rescued_zero_observation_gaussians: 718
+        conflicting_seed_gaussian_fraction: 0.0
+        sidecar_sha256: 22f2503f7ee5d5beb05ba767586e7480c7ea608745eaca5850b4bb7dc40c704d
+      medium_q75:
+        node_count: 414262
+        observation_union_gain_per_gaussian: 0.002053213891839012
+        rescued_zero_observation_gaussians: 1912
+        conflicting_seed_gaussian_fraction: 0.0
+        sidecar_sha256: 3aa34ee98f5fc5f78b4829582e5365a85c5b92fc7641dcb2949108da16d88d0d
+      coarse_q90:
+        node_count: 230295
+        observation_union_gain_per_gaussian: 0.004458652760939109
+        rescued_zero_observation_gaussians: 4152
+        conflicting_seed_gaussian_fraction: 0.0
+        sidecar_sha256: a0286a97a8f9c437473ff1773aecfb308fd77d2f2230ac2a0fd800bbe639bd5e
+  - scene: scene-0379
+    gaussian_count: 1187291
+    raw_mean_observed_views: 0.4579172250105492
+    raw_zero_observation_gaussians: 760253
+    zero_length_knn_edges: 34
+    levels:
+      fine_q50:
+        voxel_size_m: 0.14767728745937347
+        node_count: 764752
+        observation_union_gain_per_gaussian: 0.03921363844247114
+        rescued_zero_observation_gaussians: 28933
+        conflicting_seed_gaussian_fraction: 0.0009820675807363148
+        sidecar_sha256: d15905cf1510c6d77642688269ed097cfdd035f98756148e09737f077f9b4585
+      medium_q75:
+        node_count: 497260
+        observation_union_gain_per_gaussian: 0.09432649620017333
+        rescued_zero_observation_gaussians: 70242
+        conflicting_seed_gaussian_fraction: 0.0025191802178236
+        sidecar_sha256: 5518212a363652923d384ea771c5b22b036dc1a4d608e8ef8f3c16cd02bff390
+      coarse_q90:
+        node_count: 257892
+        observation_union_gain_per_gaussian: 0.18757153890663705
+        rescued_zero_observation_gaussians: 139114
+        conflicting_seed_gaussian_fraction: 0.0056313068994879945
+        sidecar_sha256: a3d17fc3dbd45d19f3451fb9b763c22a3f4a9e2295c6cd749ba5e0cdc1112a0d
+
+repeatability:
+  scene: scene-0471
+  level: fine_q50
+  node_count: 561618
+  byte_exact: true
+  sha256: ad796cf7ac0e823e9449e5b6bc6d5579701ce29a7c9b842d39426ccb363e0b10
+
+resources:
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 1
+  cgroup_memory_peak_bytes: 9423683584
+  sample_count: 159
+  monitor_error_count: 0
+  wall_seconds: 182.73267829604447
+  memory_events_unchanged: true
+
+independent_audit:
+  script: scripts/audit_worldsim_v51_e0a_probe.py
+  script_sha256: 54f36a3baf8c8bb3488a61b16f823503c620b044740306c9dc81888c3f939d09
+  report: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T013000Z__stage-e-e0a-r020-audit.json
+  report_sha256: 8df03b2a3d41c910fde23a0d3ca01076d5f1a43edc92e8bd90aadd0c60a35d34
+  report_bytes: 6130
+  status: passed
+  conclusion: r020_e0a_sidecars_density_metrics_and_gate_independently_replayed_exact
+  sidecar_assignments_exact: true
+  density_metrics_exact: true
+  manifest_exact: true
+
+governance:
+  selected_level: null
+  quality_read: false
+  propagation_executed: false
+  parameter_search: false
+  e1_panogs_execution: false
+  e2_ag2aussian_execution: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+  failure_ledger_delta: [V51-F34_recurrence_resolved, V51-F39_resolved, V51-F40_recurrence_resolved, V51-F41_resolved]
+  next_action: preregister_e0b_same_propagation_with_h_independent_level_selection
