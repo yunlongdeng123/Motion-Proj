@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage F F0a isolated environment/one-view smoke 已预注册（2026-08-18）
+
+- planned r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`。用 DriveStudio runtime 创建
+  `/root/autodl-tmp/envs/deva-v51-stage-f` 的 `--system-site-packages` 隔离 venv；只从独立 wheelhouse 安装 pinned/no-deps
+  `supervision=0.14.0/PuLP=2.7.0/gurobipy=10.0.3`，DEVA 与 Segment Anything 用冻结绝对 source path 注入，不改上游。
+- wheel 第一次下载后必须保存 filename/bytes/full SHA，再从本地 wheelhouse `--no-index` 安装；同时要求 Gurobi 与 PuLP
+  各完成一个 tiny binary optimum，不能静默把 Gurobi 不可用当成 faithful association 已就绪。
+- 唯一输入冻结为 scene-0471/frame0/camera0=`99,906 bytes /093d38e8...819e`；以 symlink staging 调 official
+  `demo_automatic.py`，完整保持 `chunk4/amp/semionline/size480/short-ID/suppress-small/IoU0.7`，只验一张 uint8 PNG、
+  `pred.json`、label range 与资源，不评价 mask quality。
+- 该视图少于 semionline `num_voting_frames=3`，因此 PASS 只证明 environment/model load/SAM forward/resource/output schema，
+  明确不证明 cross-view association。PASS 后仍需另行预注册 3-view association+repeatability smoke；full materialization/
+  identity training=false，H/S/C/validation/test/KITTI=false，F1/F2=false，M2/M3=pending。首稿手录 input SHA 漏一个
+  `d8`，formal-config test 在任何 run/env/GPU 前捕获并按 r026 manifest 恢复，见 `V51-F48 resolved`。
+
 ## V5.1 Stage F F0a r026 asset/source acquisition 已冻结（2026-08-18）
 
 - canonical r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`，source/tree=

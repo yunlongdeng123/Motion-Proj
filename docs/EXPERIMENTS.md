@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage F F0a isolated environment + one-view smoke 预注册（2026-08-18）
+
+- planned r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`；isolated venv 继承 frozen
+  DriveStudio packages，仅补 exact `supervision 0.14.0 /PuLP 2.7.0 /gurobipy 10.0.3` wheels 与 frozen source paths。
+  wheels 先落 partial wheelhouse、hash 后 atomic publish；base environment/upstream source 不修改。
+- environment gate 同时要求 exact import versions、source import paths、Gurobi tiny MILP optimal 与 PuLP/CBC fallback tiny MILP
+  optimal。缺 license/solver/package 是工程 blocked，不能切换模型或写成算法失败。
+- one-view=`0471/0/0`；official CLI 参数不变，允许 decode 1 input +1 output mask，检查 900×1600 uint8/label≤199/
+  pred.json exactly one annotation 与资源。它不达到 3-frame voting denominator，association claim=false、quality=false。
+- ceilings=`GPU 24,000 MiB /cgroup 60 GiB /wall 1,800s /disk-after >=40 GiB`；full materialization/training/
+  H/S/C/validation/test/KITTI=false，M2/M3=pending；failure refs 到 `V51-F48`，delta=
+  `V51-F48 resolved_before_formal_run`（one-view SHA 手录漏 `d8`，config test 捕获且无 run/env/GPU）。
+
 ## V5.1 Stage F F0a r026 canonical asset/source acquisition（2026-08-18）
 
 - run/source/tree=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026 /a77f458c...e7a1 /

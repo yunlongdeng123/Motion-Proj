@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging 与 identity-input contract 边界 | `V51-F01`–`V51-F47` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希与 identity-input contract 边界 | `V51-F01`–`V51-F48` |
 
 ### 1.1 V1 汇总条目
 
@@ -509,6 +509,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   远端默认存在”的工程假设，不影响 r026 的 `done` 或 asset hashes。后续远端命令必须从 Windows 使用 SSH alias，run
   证据计算由仓库 runner/auditor 完成，禁止临时依赖未冻结的 `bc/jq/python -c`。证据：r026 audit=`5a360f42...817c`，
   freeze=`configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml`。
+- `V51-F48`（`engineering/data-contract`, `resolved before formal r027`）：r027 prereg config 首稿手录
+  scene-0471/frame0/camera0 SHA 时，把 canonical `093d38e8d8d8f12...819e` 漏写一个 `d8` 成
+  `093d38e8d8f12...819e`。formal-config pytest 在任何 r027 run 目录、wheel/env mutation、GPU/model/image decode 前
+  fail-closed；远端 `sha256sum` 与 r026 已独立审计的 selected manifest 一致，证明是配置转录错误而非图像漂移。修复只从
+  r026 canonical record 恢复完整 SHA，并以原测试重跑；不得改图、重选 view、放宽 hash 或把该失败写成 SAM/DEVA 结果。
+  后续长 identity 必须由 manifest 机器传递并保留 config-validation test，禁止凭聊天摘要/截断 hash 手工补全。
 
 <a id="detail-v5"></a>
 

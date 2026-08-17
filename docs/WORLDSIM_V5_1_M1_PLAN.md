@@ -1,5 +1,12 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0a isolated environment/one-view smoke 预注册
+
+r027 只建立隔离、可追溯的 inference 环境并在唯一 0471/0/0 输入上运行 official automatic demo。依赖使用 pinned wheels
+与 frozen source path，Gurobi/PuLP 均需 tiny solver PASS；单图输出只做 schema/资源核对，不读 quality。由于 one-view 不足
+semionline 三帧 voting，本轮不允许声称 DEVA association 成立，也不解锁 45-view materialization；下一门必须是 3-view
+association+repeatability smoke。环境失败按工程 failure 留档后恢复，禁止换 SAM2、MobileSAM、GroundingDINO 或改 CLI 参数。
+
 ## 2026-08-18 Stage F F0a r026 收口与 environment smoke 解锁
 
 r026 已 exact 获取 DEVA/SAM-v1 权重、Grounded-Segment-Anything source，并冻结 45-view train-only input chain；独立审计
