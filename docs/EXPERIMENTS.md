@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage D r017 canonical D0 operator（2026-08-18）
+
+- run=`20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017`，source=`d3321bb`；三场 full raw-Gaussian
+  topology/affinity/growing 均完成，sidecar SHA 0471/1087/0379=`169054ad...5d55/37a4cadc...c6d1/`
+  `1e9c059c...3b5b5`。U2/B3 input arrays byte/array exact，D0 labels/posterior/assignment-level schema exact。
+- seed→final counts：0471 actor `47,369→52,764`、UNKNOWN `1,085`；1087 `236→244`、UNKNOWN `4`；0379
+  `607→621`、UNKNOWN `85`。affinity 的 jointly-visible topology 明显 scene-dependent，但当前禁止把结构统计解释成
+  BF1/IoU 结论。
+- resources=`9.38GB cgroup / 1MiB GPU /132.908s /65 valid samples /0 errors`，OOM counters 不变；manifest=
+  `13 files / 8,823,721 bytes`，run=`15 / 8,826,262 bytes`。freeze=`stage_d_progressive_operator_freeze_v1.yaml`；
+  quality/S/C/validation/test/KITTI=false，M2/M3=pending，failure delta=`V51-F36 resolved`。
+
 ## V5.1 Stage D D0 clean-room operator / full-H r017 预注册（2026-08-18）
 
 - module=`motion_proj/worldsim_v51/progressive_propagation.py`；formula pipeline=`exact 1/2-hop geometry topology →`

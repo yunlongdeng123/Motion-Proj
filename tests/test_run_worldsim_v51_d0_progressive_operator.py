@@ -23,6 +23,7 @@ from scripts.run_worldsim_v51_d0_progressive_operator import (
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_d_progressive_operator_v1.yaml"
+FREEZE = ROOT / "configs/worldsim_v51/stage_d_progressive_operator_freeze_v1.yaml"
 
 
 def test_d0_operator_config_preserves_method_and_all_quality_locks() -> None:
@@ -108,3 +109,30 @@ def test_d0_operator_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_d0_operator_freeze_binds_audited_no_quality_run() -> None:
+    freeze = yaml.safe_load(FREEZE.read_text(encoding="utf-8"))
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["status"] == "done"
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+    assert freeze["repeatability_probe"]["byte_exact"] is True
+    assert [scene["scene"] for scene in freeze["scenes"]] == [
+        "scene-0471",
+        "scene-1087",
+        "scene-0379",
+    ]
+    for scene in freeze["scenes"]:
+        assert scene["final_background_count"] + scene["final_actor_count"] + scene[
+            "final_unknown_count"
+        ] == scene["gaussian_count"]
+    assert freeze["locks"]["quality_read"] is False
+    assert freeze["locks"]["h_quality_read"] is False
+    assert freeze["locks"]["screening_quality_read"] is False
+    assert freeze["locks"]["validation_quality_read"] is False
+    assert freeze["locks"]["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

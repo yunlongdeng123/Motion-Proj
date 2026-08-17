@@ -1,0 +1,103 @@
+schema_version: worldsim_v51_stage_d_progressive_operator_freeze_v1
+task_id: WS-V51-M1-D-PROGRESSIVE-01
+status: done
+created_at: "2026-08-18"
+
+source:
+  commit: d3321bbb5135295d438f221273025a75dfa97034
+  tree: 7e04e944f1b9ed84b2770843bef730bac9166316b
+  config:
+    path: configs/worldsim_v51/stage_d_progressive_operator_v1.yaml
+    sha256: faf0978248cb400c1a57ef05ce2c22750e9fcfe98ddca9568f851db14db5db97
+  module:
+    path: motion_proj/worldsim_v51/progressive_propagation.py
+    sha256: 525cb4c85d8cdae5aba6567793cb233c4bbf002c13460d6cee73d1d4ba9512b0
+  runner:
+    path: scripts/run_worldsim_v51_d0_progressive_operator.py
+    sha256: b2d3bf046fc7a8ede0f67d74d7297eca7f547f28d6a4c8dcfb101a43d0addb15
+  tests:
+    operator:
+      path: tests/test_worldsim_v51_progressive_propagation.py
+      sha256: a8e7030c507d3bff2025e4eb59830d49286ff8933436996157eecf740d6a7198
+    runner:
+      path: tests/test_run_worldsim_v51_d0_progressive_operator.py
+      sha256: 25794d6d55695c4bf154ac032493407387877d81958057e4bd70ead2dc7d29dc
+
+canonical_run:
+  run_id: 20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017
+  status: done
+  conclusion: d0_full_h_operator_sidecars_ready_without_quality_read
+  hashes:
+    summary.json: febeef0d59d9b359e623f17c4caa77378d582da76a1e4daded1da3227183d05f
+    status.json: ac7e75482948a24987a0bf1e362ecdec6089d2bf9e509159f284d4ae166edb15
+    manifest.json: ec10bab2b76abf8c66deb91d01e929f24fe2cc353db9fc710019f96bc25693ed
+    events.jsonl: 03b5180cc22df1a89b30a010d00e50ff91d2defa7ffd7179be990eed353475b0
+    artifacts/resources.json: 6564e113f217fa40e9459795057b0423b809e82106a81113d6d74aa6fb94e387
+    artifacts/resource_samples.jsonl: 4f5820381d59daeb713cf2f09ece1f2126e45936c894485950f81b360c73a364
+  manifest_file_count: 13
+  manifest_total_bytes: 8823721
+  run_file_count: 15
+  run_total_bytes: 8826262
+
+repeatability_probe:
+  node_prefix_count: 4096
+  edge_count: 257
+  byte_exact: true
+  sha256: f1c6157a9f489ad3b327f985dfdf41408996dc2dff9ab093ff1c8db06b9d23c8
+
+scenes:
+  - scene: scene-0471
+    gaussian_count: 859613
+    direct_neighbor_count: 6641790
+    second_neighbor_count: 14363054
+    background_seed_count: 737395
+    actor_seed_count: 47369
+    final_background_count: 805764
+    final_actor_count: 52764
+    final_unknown_count: 1085
+    sidecar_sha256: 169054ad984909947f156b7bc00e770b94eb3a5d9e8d20241a5256825a405d55
+  - scene: scene-1087
+    gaussian_count: 931223
+    direct_neighbor_count: 7150770
+    second_neighbor_count: 15744408
+    background_seed_count: 929788
+    actor_seed_count: 236
+    final_background_count: 930975
+    final_actor_count: 244
+    final_unknown_count: 4
+    sidecar_sha256: 37a4cadcec35ea3a52cbaaf0afbd3fa815b4ae664a9e7e70e1f65014f964c6d1
+  - scene: scene-0379
+    gaussian_count: 1187291
+    direct_neighbor_count: 9155680
+    second_neighbor_count: 19063808
+    background_seed_count: 1185027
+    actor_seed_count: 607
+    final_background_count: 1186585
+    final_actor_count: 621
+    final_unknown_count: 85
+    sidecar_sha256: 1e9c059c9d9166e731c8d7c02653a8580dd49ada82d6f1c310f5027a8d93b5b5
+
+resources:
+  peak_cgroup_memory_bytes: 9381789696
+  peak_gpu_used_mib: 1
+  sample_count: 65
+  monitor_error_count: 0
+  total_wall_seconds: 132.90804413333535
+  memory_events_unchanged: true
+
+locks:
+  quality_read: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  parameter_search: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F32, V51-F33, V51-F34, V51-F35, V51-F36]
+failure_ledger_delta: [V51-F36_resolved]
+next_action: preregister_h_matched_evaluation_against_u2_b3_g0_and_u2_b3_g_v5

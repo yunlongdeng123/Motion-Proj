@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage D r017 D0 full-H operator 已冻结（2026-08-18）
+
+- canonical r017=`20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017`，source=`d3321bb`，status=`done`，
+  conclusion=`d0_full_h_operator_sidecars_ready_without_quality_read`；13/13 manifest entries、15 run files、三场 sidecar
+  arrays/seed immutability/UNKNOWN mapping/report denominators 全部独立审计 exact。4,096-node repeat NPZ byte-exact，SHA=
+  `f1c6157a...23c8`。
+- 0471/1087/0379 exact 1-hop neighbors=`6,641,790/7,150,770/9,155,680`，2-hop=
+  `14,363,054/15,744,408/19,063,808`；actor seeds=`47,369/236/607`，final actor=
+  `52,764/244/621`，final UNKNOWN=`1,085/4/85`。这些是方法结构/coverage 证据，不是质量 verdict。
+- resource PASS：cgroup peak=`9,381,789,696 bytes`，GPU=`1 MiB`，65 samples、0 errors、memory events exact，
+  wall=`132.908 s`。summary/status/manifest SHA=`febeef0d...d05f/ac7e7548...db15/ec10bab2...93ed`。
+- freeze=`stage_d_progressive_operator_freeze_v1.yaml`。H quality/render、S/C/validation/test/KITTI 未读，M2/M3=pending；
+  下一步必须先预注册 H matched evaluation，对比 U2/B3 G0 与 frozen V5 G3，不能先看质量或调 D0。
+
 ## V5.1 Stage D D0 sparse operator 已实现并预注册 full-H no-quality run（2026-08-18）
 
 - 新增 clean-room `progressive_propagation.py`：冻结 directed KNN 先对称化，再构造 exact 1/2-hop CSR；每个 Gaussian
