@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | Stage A H closed：A1/A2 retained，A3/A4 rejected；下一门 freeze S screening |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | Stage A H closed；S screening frozen；下一门 one-shot S SAM/evaluation |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -37,6 +37,9 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/m1_effective_count_audit_v1.yaml`
 - `configs/worldsim_v51/m1_effective_count_audit_v2.yaml`
 - `configs/worldsim_v51/m1_cif_decoupling_audit_v1.yaml`
+- `configs/worldsim_v51/stage_a_screening_freeze_v1.yaml`
+- `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
+- `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
 - `scripts/replay_worldsim_v51_v5_unary.py`
 - `scripts/run_worldsim_v51_unary_visibility.py`
@@ -105,3 +108,11 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
   `3/3 non-exact`。无独立 occupancy observable，A4 在 quality read/GPU/training 前 rejected。
 - Stage A H retained candidates=`A1,A2`；A3/A4 不进入候选。下一步必须 freeze-only 绑定 S screening，再一次性读取
   S=`0998/0359`；C/validation/test/KITTI 继续锁定。
+
+## Stage A S screening freeze
+
+- candidates=`A1/A2`；S=`0998/0359`；seed=`20260814`；SAM/split/checkpoint/operator 与 H exact inherited。
+- gate=`2/2 BF1 nonnegative + >=1/2 delta>=0.001 + mean BF1>0 + mean FN<=+0.02 + calibration caps`；A2
+  另需 mean coverage>=0.60 与 error concentration。
+- S 后最多保留一臂；优先 A2 selective PASS，否则 A1 conditional PASS，否则回退 U2。
+- r047/r048 与 one-shot read policy 见 `docs/WS_V51_STAGE_A_SCREENING_FREEZE.md`；执行前 S quality unread。

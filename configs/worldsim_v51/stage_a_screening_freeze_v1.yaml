@@ -1,0 +1,67 @@
+schema_version: worldsim_v51_stage_a_screening_freeze_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: frozen_before_s_quality_read
+phase: stage_a_screening
+seed: 20260814
+
+retained_candidates:
+  A1:
+    mechanism: visibility_masked_b3
+    implementation_commit: 38bc9b44c6c86d58173930aa019745b8a9a8e00b
+    config: configs/worldsim_v51/m1_unary_visibility_v1.yaml
+    config_sha256: 7518bc742ce4d2e65415dddd8b4cab502ed220057ba5ecc6b279a4c11974b78b
+  A2:
+    mechanism: a1_plus_semantic_unknown
+    implementation_commit: 7e783f1fe04cc05cdd206b56086ef0f02a4215ee
+    config: configs/worldsim_v51/m1_unary_unknown_v1.yaml
+    config_sha256: 4def2e54505f1cbd97d97517806118a3d09ce8e7fb9051f784d7d5827cea63d8
+
+rejected_h_mechanisms:
+  A3: a3_kish_cap_rejected_structural_noop_not_correlation_aware
+  A4: a4_cif_decoupling_rejected_no_independent_occupancy_observable
+
+screening_scenes: [scene-0998, scene-0359]
+screening_role_source: configs/worldsim_v51/development_roles_v1.yaml
+screening_read_policy: one_shot_after_this_freeze_commit
+
+sam_preparation:
+  runner: scripts/run_worldsim_v5_m1_sam_diagnostic.py
+  inherited_frozen_operator: V5_r036_r039_r040
+  configs:
+    scene-0998: configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml
+    scene-0359: configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml
+  planned_runs:
+    scene-0998: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130000Z__v51-stage-a-s-scene0998-sam-s20260814-r047
+    scene-0359: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130500Z__v51-stage-a-s-scene0359-sam-s20260814-r048
+
+screening_gate:
+  comparator: B3
+  required_scene_count: 2
+  boundary_f1_nonnegative_scene_count_minimum: 2
+  boundary_f1_clearly_positive_scene_count_minimum: 1
+  boundary_f1_clear_delta_minimum_inclusive: 0.001
+  mean_boundary_f1_delta_minimum_exclusive: 0.0
+  mean_false_negative_semantic_mass_delta_maximum: 0.02
+  calibration:
+    maximum_mean_brier_delta: 0.005
+    maximum_mean_ece_delta: 0.005
+  unknown_candidate:
+    mean_coverage_minimum: 0.60
+    abstained_subset_error_must_exceed_accepted: true
+
+selection_policy:
+  prefer_a2_if_a1_and_a2_conditional_gate_pass_and_a2_selective_gate_passes: true
+  fallback_to_a1_if_a1_passes_and_a2_selective_gate_fails: true
+  fallback_to_u2_if_no_retained_candidate_passes: true
+  maximum_survivors_after_s: 1
+  no_posthoc_threshold_or_candidate_change: true
+
+locks:
+  c_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  stage_b_start_before_s_closeout: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04, V51-F05, V51-F06, V51-F07]
+failure_ledger_delta: pending

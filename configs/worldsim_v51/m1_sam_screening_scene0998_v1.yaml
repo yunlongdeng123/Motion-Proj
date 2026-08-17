@@ -1,0 +1,62 @@
+schema_version: worldsim_v5_m1_sam_diagnostic_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: structured_unary_mechanism_smoke
+seed: 20260814
+
+inputs:
+  formal_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/summary.json
+    sha256: 654b8840dba6cb7051377e7d826e34a50095c974c37807117aec873540fada94
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/work_dirs/worldsim_v5_streetgs/scene0998_formal_s0/checkpoint_final.pth
+    sha256: 4ad88a7e3a8a1df83bbb01675a7945cf4b496b299e4d5e3f356ca061143c0516
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/work_dirs/worldsim_v5_streetgs/scene0998_formal_s0/config.yaml
+    sha256: 0d88302de4c10a6dc34820d864c1a6098369ffd27577fe188649998d3b8f6607
+
+scene:
+  name: scene-0998
+  index: 756
+  processed_scene_dir: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/756
+  instances_info_sha256: a27ec3484ef22cb5e5cc5a67ac87ddb8ee88aaa5fe6723c2a50bb931572ecf37
+  frame_count: 196
+  cameras:
+    - {id: 0, name: CAM_FRONT}
+    - {id: 1, name: CAM_FRONT_LEFT}
+    - {id: 2, name: CAM_FRONT_RIGHT}
+
+split:
+  modulus: 5
+  train_remainders: [0, 1, 3]
+  development_remainder: 2
+  heldout_remainder: 4
+  evidence_frames: [0, 40, 80, 120, 160]
+  evaluation_frames: [2, 42, 82, 122, 162]
+
+prompts:
+  actor_rule: moving_vehicle_non_bicycle
+  minimum_trajectory_m: 1.0
+  minimum_depth_m: 0.1
+  padding_fraction: 0.08
+  minimum_side_pixels: 8.0
+
+sam2:
+  source_checkout: /root/autodl-tmp/third_party/worldsim_v32/sam2
+  source_commit: 2b90b9f5ceec907a1c18123530e92e794ad901a4
+  model_config: configs/sam2.1/sam2.1_hiera_l.yaml
+  checkpoint: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+  checkpoint_sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+  mask_logit_threshold: 0.0
+  quality_gate:
+    minimum_positive_pixels: 32
+    minimum_prompt_bbox_iou: 0.02
+    maximum_mask_to_prompt_area_ratio: 6.0
+    maximum_centroid_to_prompt_diagonal: 1.0
+    minimum_temporal_iou: 0.02
+    maximum_temporal_centroid_jump_fraction: 0.12
+    maximum_temporal_area_ratio: 5.0
+
+outputs: {width: 800, height: 450, sidecar_only: true}
+resources: {maximum_gpu_allocated_at_start_mib: 512}
+runtimes: {sam_python: /root/autodl-tmp/envs/worldsim-v33-sam2/bin/python}

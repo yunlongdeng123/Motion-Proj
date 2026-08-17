@@ -1,5 +1,16 @@
 # Research Status
 
+## V5.1 Stage A S screening freeze 完成，等待 one-shot SAM/evaluation（2026-08-17）
+
+- retained candidates=`A1/A2`，S=`scene-0998/scene-0359`；A3/A4 rejected 结论保持。screening freeze=
+  `configs/worldsim_v51/stage_a_screening_freeze_v1.yaml`，人类可读合同=`docs/WS_V51_STAGE_A_SCREENING_FREEZE.md`。
+- gate 在 S quality read 前固定：`2/2` BF1 non-negative、至少 `1/2` BF1 delta>=`0.001`、mean BF1>0、
+  mean FN delta<=`+0.02`、mean Brier/ECE delta 各<=`+0.005`；A2 另需 mean coverage>=`0.60` 与
+  abstained error>accepted error。S 后最多保留一个 survivor。
+- 两场 SAM configs 已绑定 V5 r030/r031 formal checkpoint/source/instances SHA，并逐项继承 H 的 split、prompt、SAM
+  checkpoint 与 QC。计划 run 固定为 V5 task 下 r047/r048；执行前 S quality、heldout、C/validation/test/KITTI 均未读。
+- freeze failure refs 到 `V51-F07`，delta=`none`。后续不得因 r047/r048 或 screening quality 改阈值、候选或重跑。
+
 ## V5.1 Stage A H 收口：A1/A2 保留，A3/A4 机制 rejected，下一步 freeze S screening（2026-08-17）
 
 - A4 canonical r006=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T122000Z__m1-a4-cif-identifiability-audit-s20260814-r006`，
