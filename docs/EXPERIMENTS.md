@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage F F0k r042 input denominator PASS / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042 /858e0d1...64f0c /
+  8df9f291...996d`；45 views、90 projections、8,111,447 verified asset bytes；mask/image/quality reads=false。
+- input/summary/audit SHA=`6640b5e1...6817/6d5a1ffd...b341/108bb60a...082b`；freeze=
+  `stage_f_f0k_quality_alignment_input_freeze_freeze_v1.yaml`。下一步只预注册 F0l frozen-threshold execution。
+
 ## V5.1 Stage F F0k r042 quality/alignment input freeze 预注册（2026-08-18）
 
 - run=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`；只 hash/投影，不读 image/candidate/dynamic

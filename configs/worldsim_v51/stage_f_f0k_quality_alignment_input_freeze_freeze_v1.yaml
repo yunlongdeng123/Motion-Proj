@@ -1,0 +1,64 @@
+schema_version: worldsim_v51_stage_f_f0k_quality_alignment_input_freeze_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0k_quality_alignment_input_and_projection_denominator_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042
+  source_commit: 858e0d1de5a0939c1ef7a4490d4b43f531f64f0c
+  source_tree: 8df9f29199fb519a3438b1b07486a53f5d58996d
+  status: done
+  conclusion: f0k_quality_alignment_inputs_and_projection_denominator_frozen_mask_pixels_unread
+  resolved_config: {bytes: 4434, sha256: ba99612accc7256d941220c0219510ce5bba85bec44aeffee43117914ee30b53}
+  summary: {bytes: 110155, sha256: 6d5a1ffd7c4b9df2626143d256ba383ad1b4f3f2eaea5011a6465e034612b341}
+  input_manifest: {bytes: 103846, sha256: 6640b5e1a66b652c4a850e9d1fb978b882a110b7d9d1676942b5ae03902d6817, view_count: 45, projection_count: 90}
+  manifest: {bytes: 886, sha256: c2ace111f334e5a6495039c35e2c89e78a7850659b8322db42a396c477d3a951}
+  status_file: {bytes: 237, sha256: b4326ff7dd98f357417db7c7b6f3f9d65f7284cdc3afae6be99661ed238f7c46}
+  events: {bytes: 144, sha256: c9967a85b4b41f86d1c8104e209428191f1cabb49718edb0db83e432b9ead676}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T193000Z__stage-f-f0k-r042-audit.json
+  bytes: 1937
+  sha256: 108bb60aeda12747df144ce3c6577d1cfda1fb4c4667fd759db68b77f069082b
+  status: pass
+  verified_asset_logical_bytes: 8111447
+  inventory: {entry_count: 5, logical_bytes: 218706}
+
+gate_contract:
+  reference_semantics: drivestudio_dynamic_mask_union_used_only_as_train_only_foreground_support_not_instance_ground_truth
+  attribution: projected_box_pixels_excluding_pixels_covered_by_more_than_one_eligible_actor_box
+  eligible_actor_view_minimum_support_pixels: 64
+  eligible_track_minimum_views: 2
+  assignment: scene_local_maximum_weight_one_to_one_track_to_short_id_on_support_pixels
+  per_scene_thresholds:
+    minimum_eligible_tracks: 1
+    minimum_eligible_actor_views: 2
+    minimum_foreground_coverage: 0.70
+    minimum_one_to_one_assignment_recall: 0.35
+    minimum_assignment_efficiency: 0.75
+    minimum_persistent_track_fraction: 0.50
+  pass_requires: all_three_scenes_pass_all_thresholds
+
+locks:
+  candidate_mask_pixels_read: false
+  dynamic_mask_pixels_read: false
+  image_pixels_read: false
+  quality_metrics_read: false
+  threshold_search: false
+
+governance:
+  identity_training_authorized: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: f0l_train_only_mask_quality_identity_alignment_execution_preregistration
+
+failure_ledger_refs: [V51-F46, V51-F62, PIVOT-F05]
+failure_ledger_delta: none

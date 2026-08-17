@@ -1,5 +1,15 @@
 # Research Status
 
+## V5.1 Stage F F0k r042 quality/alignment denominator PASS 已冻结（2026-08-18）
+
+- canonical r042=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`，source/tree=
+  `858e0d1...64f0c/8df9f291...996d`；45-view exact assets 与 90 个 projected actor boxes 通过独立 hash/geometry replay。
+- input manifest=`103,846 bytes /6640b5e1...6817`；audit=`1,937 bytes /108bb60a...082b /PASS`；verified
+  asset logical bytes=`8,111,447`。candidate/dynamic/image pixels 与 quality metrics 全部保持 unread。
+- freeze=`configs/worldsim_v51/stage_f_f0k_quality_alignment_input_freeze_freeze_v1.yaml`；后续 F0l 必须逐场使用既定
+  `0.70/0.35/0.75/0.50` coverage/one-to-one recall/assignment efficiency/persistence 门。dynamic union 仅为 weak
+  foreground support，不是 instance truth；F0l 结果前不授权 training/H/S/C/validation/test/KITTI/F1/F2，M2/M3=pending。
+
 ## V5.1 Stage F F0k quality/identity-alignment 输入冻结已预注册（2026-08-18）
 
 - formal target=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`；auth=r041 freeze
