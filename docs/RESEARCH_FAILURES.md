@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF 工具与 partial staging 环境边界 | `V51-F01`–`V51-F45` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter 可行，待物化 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF 工具、partial staging 与 identity-input contract 边界 | `V51-F01`–`V51-F46` |
 
 ### 1.1 V1 汇总条目
 
@@ -445,7 +445,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   得到 `unexpected EOF`，随后发现远端没有 `jq`；两者均未写 run。改为 scp 冻结 JSON 后在本地只读解析，并由仓库
   auditor 完成正式审计。进入 Stage F 后又有一次含 `$f` 的远端 loop 被 PowerShell 提前展开，以及一次嵌套
   `python -c` 验证命令 SyntaxError；均在 formal r023 前、无 run/asset/repo 状态变化。该复发进一步说明远端临时解析
-  不是证据入口；正式 source audit 必须由仓库 runner 完成。
+  不是证据入口；正式 source audit 必须由仓库 runner 完成。r025 freeze 上传后的 YAML smoke 又因 PowerShell 中手写
+  `python -c` 反斜杠转义得到 `unterminated string literal`，紧接着尝试 stdin 单层命令仍被本地 quote stripping 破坏；
+  两次测试链都在该点停止且未修改 run/repo 文件。最终不再修补 shell quoting，改为仓库 pytest 直接加载 freeze YAML，
+  并配合 `git diff --check` 复核。该 recurrence 不影响此前已 PASS 的 r025 独立 auditor。
 - `V51-F41`（`engineering/environment`, `resolved during r020 audit`）：本地 `autodl-stage/motion_proj` 只是按约束用于
   `apply_patch` 的 partial staging tree，不包含完整 `motion_proj.worldsim_v5` package；误在该目录收集 E0a 联合测试时触发
   `ModuleNotFoundError`。这不是 canonical repo、r020 或 auditor 失败。修复为只在本地做语法检查/编辑，将新增文件同步到
@@ -476,13 +479,27 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   的 incomplete shell。合法 recovery 只新增 `repository_source_identity(PROJECT)` 显式绑定与参数顺序回归，用新 clean
   commit/r024 从头运行；r024 已越过 source identity 并执行到 adapter smoke 前，证明本项修复有效。不得删除 r023、
   手补 terminal 或借机改变 F0 source/method/data contract。
-- `V51-F45`（`engineering/runtime`, `recovery pending after r024`）：r024 完成 official source identity、代码语义与三场
+- `V51-F45`（`engineering/runtime`, `resolved by r025`）：r024 完成 official source identity、代码语义与三场
   train-only metadata/observation schema 的内存检查后，在 16D adapter smoke 前直接调用
   `torch.cuda.reset_peak_memory_stats(torch.device("cuda:0"))`；当前进程尚未初始化 CUDA context，PyTorch 返回
   `Invalid device argument 0: did you call init?`。r024 status=`blocked`，只有 resolved/status/events/resource samples
   四文件=`9,449 bytes`，没有 source report、CUDA render、SAM/DEVA/identity training 或 quality read。合法 recovery 只按
   `set_device → one-scalar allocation/context init → reset peak → smoke` 顺序执行并加入 call-order regression，新 r025 从头
-  重跑；禁止放宽 resource ceiling 或把已在内存检查过的数据结果从 blocked run 晋级。
+  重跑；r025 与独立 replay 均得到 `[1,32,32,16]` render、`189` positive-alpha pixels、`48/48` identity gradients、
+  base gradients absent，GPU peak=`310 MiB`，证明初始化顺序修复有效。禁止放宽 resource ceiling 或把已在 blocked run
+  内存检查过的数据结果晋级；canonical 只认 r025。
+- `V51-F46`（`data-contract/algorithm`, `active prerequisite after r025`）：Gaussian Grouping official identity mechanism
+  需要 SAM everything masks 经 DEVA semionline 关联后的跨视图一致 short IDs；r025 独立核对三场各 15 个 train-only
+  observation 后，45/45 只有 binary actor-union probability 等同一套 23 fields，没有任何
+  `instance/identity/object_id/mask_id/class_id` label。`instances_info/frame_instances` 中的 stable actor token 只描述场景级
+  track metadata，不提供每像素 mask；三个 formal checkpoint 也只能提供已训练 Gaussian state，不能反推出监督标签。
+  同时 official DEVA propagation 与 SAM ViT-H weights 均 absent，现有 SAM2.1 Hiera Large 虽有 checkpoint，但不符合上游
+  SAM-v1 everything-mode source contract。该缺口不否定 source core 或 frozen-base 16D adapter（两者 r025 PASS），但
+  `current_training_input_ready=false /identity_training_authorized=false`。合法下一步只能先预注册并执行 train-only F0a
+  asset acquisition + SAM/DEVA identity-mask materialization，冻结 URL/SHA、输出 schema、确定性、资源与 partial recovery；
+  禁止用 metadata、binary U2/B3、SAM2 或 evaluation target 代替，禁止在 materialization 冻结前启动 F0 training。
+  证据：r025 summary=`da4890d...988`、audit=`14d2b78b...8b64`、
+  `configs/worldsim_v51/stage_f_f0_source_preflight_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

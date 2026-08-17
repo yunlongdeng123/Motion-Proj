@@ -1,0 +1,232 @@
+schema_version: worldsim_v51_stage_f_f0_source_preflight_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+frozen_at: "2026-08-18"
+
+source:
+  commit: 8d68cad19a5fe706f5ab470ae3bdb273a9ef015c
+  tree: bb73109b4b7f5d41803fb4466d4f5f701d4606cd
+  config:
+    path: configs/worldsim_v51/stage_f_f0_source_preflight_v1.yaml
+    sha256: 7b67741c16f13882b33e4a7dadc2f6a7e7766b455b874f6bbb27812d342c2c1e
+  runner:
+    path: scripts/run_worldsim_v51_f0_source_preflight.py
+    sha256: 8e2c5c2c0248f987c6de074964dc984284545fa24d71da11a68dcb6dc915799c
+
+canonical_run:
+  run_id: 20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025
+  source_commit: 8d68cad19a5fe706f5ab470ae3bdb273a9ef015c
+  source_tree: bb73109b4b7f5d41803fb4466d4f5f701d4606cd
+  status: done
+  conclusion: f0_source_adapter_preflight_done_input_materialization_required
+  manifest_inventory_entries: 6
+  manifest_inventory_bytes: 29935
+  total_run_files: 8
+  total_run_bytes: 31328
+  hashes:
+    resolved_config: 7b67741c16f13882b33e4a7dadc2f6a7e7766b455b874f6bbb27812d342c2c1e
+    summary: da4890d7cc314ff877f9575050daa2f4dd1c199a693e7db0fa0e841a6b269988
+    status: 926ccfdbdfda507e2f6a982983978266822236fa908ac54fa280014b319482d3
+    manifest: 0d486f169152be21ab2126667042093e96c917160ee893c74b263269f54e9349
+    events: 86fe7f9dd407946003486e6d8d67b12faec5a1d9d2ef311ce8b89945084673f0
+    source_preflight_report: 9cadaef34052b130305db3842b19a73d616adcab757653858d93d2ffd56924d2
+    resources: 6166db7db315f9d714385556eeb48416102386941a36d67ced9b69d99344404f
+    resource_samples: 660e3ce7023bd64d8d114f1fbf685490122820cb373f9d7ab4a347bd65e5de5b
+
+official_source:
+  paper:
+    title: "Gaussian Grouping: Segment and Edit Anything in 3D Scenes"
+    venue: ECCV 2024
+    path: /root/autodl-tmp/third_party/gaussian-grouping-eccv2024-04195.pdf
+    bytes: 10225908
+    sha256: 61e8214501f4f9e8570595325d551e6dbc8223995eaaf115e4dc165d8c1eb823
+    pages: 18
+  repository:
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f
+    commit: 0ab60afed3385b717c985af1d30a20f7b0884c89
+    tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16
+    license: Apache-2.0
+    audited_file_count: 10
+    clean: true
+    hashes_and_semantic_tokens_exact: true
+
+faithful_mechanism:
+  masks: sam_everything_mode
+  association: deva_semionline_cross_view_consistent_short_ids
+  identity_encoding_dimension: 16
+  identity_sh_degree: 0
+  renderer: alpha_composited_identity_encoding
+  classifier: shared_linear_1x1_identity_to_scene_mask_count
+  identity_loss: pixel_cross_entropy_divided_by_log_scene_class_count
+  spatial_regularization:
+    metric: euclidean
+    neighbor_count: 5
+    sampled_points: 1000
+    maximum_candidate_points: 300000
+    interval_steps: 2
+    divergence: forward_kl_sample_to_neighbor
+    includes_self_as_code_topk_semantics: true
+    weight: 2.0
+  optimizer:
+    identity_learning_rate: 0.0025
+    classifier_learning_rate: 0.0005
+    iterations: 30000
+
+frozen_base_adaptation:
+  declaration: faithful_identity_mechanism_port_under_normative_frozen_base_constraint_not_exact_upstream_reproduction
+  geometry_frozen: true
+  appearance_frozen: true
+  opacity_frozen: true
+  dynamic_actor_poses_frozen: true
+  learn_identity_encoding_only: true
+  learn_shared_classifier_only: true
+  adapter_capability_pass: true
+  adapter_smoke:
+    render_shape: [1, 32, 32, 16]
+    alpha_positive_pixel_count: 189
+    identity_gradient_finite: true
+    identity_gradient_nonzero_count: 48
+    base_geometry_requires_grad: false
+    base_geometry_gradients_absent: true
+    loss: 0.0012892523081973195
+
+train_only_input_audit:
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  views_per_scene: 15
+  total_views: 45
+  image_pixels_read: false
+  mask_pixels_read: false
+  quality_read: false
+  checkpoint_loaded: false
+  associated_instance_identity_labels_present: false
+  common_observation_fields:
+    - camera_id
+    - contribution_weight
+    - depth_consistent
+    - depth_residual
+    - frame_id
+    - gaussian_id
+    - lidar_support
+    - lidar_support_available
+    - mask_boundary_distance
+    - mask_quality_accepted
+    - negative_observation
+    - positive_observation
+    - projected_pixel
+    - reliability
+    - role
+    - sam_logit
+    - sam_probability
+    - sam_probability_available
+    - sam_probability_source
+    - scene
+    - view_angle_cosine
+    - view_id
+    - visibility
+  scenes:
+    scene-0471:
+      index: 382
+      metadata_instances: 49
+      active_union: 47
+      repeated_instances: 37
+      active_per_frame: {0: 28, 40: 36, 80: 26, 120: 21, 160: 12}
+      active_classes:
+        human.pedestrian.adult: 9
+        vehicle.car: 32
+        vehicle.construction: 3
+        vehicle.motorcycle: 1
+        vehicle.truck: 2
+      checkpoint_bytes: 288937974
+      checkpoint_sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    scene-1087:
+      index: 827
+      metadata_instances: 7
+      active_union: 7
+      repeated_instances: 6
+      active_per_frame: {0: 0, 40: 1, 80: 3, 120: 6, 160: 7}
+      active_classes:
+        human.pedestrian.adult: 3
+        vehicle.bicycle: 2
+        vehicle.car: 2
+      checkpoint_bytes: 305219702
+      checkpoint_sha256: 84c34b837e8083a84a77de0662c6c702ce978a2e8e11a4038d487e1f6c9754be
+    scene-0379:
+      index: 296
+      metadata_instances: 34
+      active_union: 26
+      repeated_instances: 20
+      active_per_frame: {0: 19, 40: 20, 80: 13, 120: 2, 160: 5}
+      active_classes:
+        human.pedestrian.adult: 16
+        vehicle.bicycle: 4
+        vehicle.car: 5
+        vehicle.motorcycle: 1
+      checkpoint_bytes: 365700214
+      checkpoint_sha256: d77fa13f5ebe1d469222c3df78eb316d836178dca608d00c17f0af3a56d3042d
+
+assets:
+  upstream_deva_present: false
+  upstream_sam_vit_h_present: false
+  existing_sam2_present: true
+  existing_sam2_is_faithful_substitute: false
+  current_training_input_ready: false
+  identity_training_authorized: false
+
+resources:
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 310
+  torch_allocated_peak_mib: 0.3291015625
+  torch_reserved_peak_mib: 2.0
+  cgroup_memory_peak_bytes: 8810483712
+  valid_sample_count: 9
+  monitor_error_count: 0
+  wall_seconds: 3.154213858768344
+  gate_pass: true
+
+independent_audit:
+  script: scripts/audit_worldsim_v51_f0_source_preflight.py
+  script_sha256: 674710118d381be7e6d2125ebd5a95b8e7d6d6e23cda7397377ec8061d439b31
+  report: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T050000Z__stage-f-f0-r025-audit.json
+  report_sha256: 14d2b78b2dc7b6a9170989e6d7248611b37f51a92be86a3c36c4c96c220f8b64
+  report_bytes: 1602
+  status: passed
+  manifest_exact: true
+  source_exact: true
+  metadata_and_schema_replay_exact: true
+  adapter_replay_exact: true
+  resource_replay_exact: true
+
+recovery_history:
+  r023:
+    status: incomplete_before_status
+    failure: V51-F44
+    artifacts: 1
+    bytes: 7796
+  r024:
+    status: blocked
+    failure: V51-F45
+    artifacts: 4
+    bytes: 9449
+  r025:
+    status: done
+    failure_delta: V51-F45_resolved_V51-F46_active
+
+governance:
+  parameter_search: false
+  sam_execution: false
+  deva_execution: false
+  identity_training: false
+  f1_execution: false
+  f2_execution: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+  failure_ledger_delta: V51-F45_resolved_V51-F46_active
+  next_task: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+  next_phase: f0a_train_only_sam_deva_identity_mask_materialization_preregistration

@@ -4,6 +4,7 @@ import subprocess
 import sys
 
 import numpy as np
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +31,36 @@ def test_f0_source_preflight_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0_source_preflight_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0_source_preflight.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
+
+
+def test_f0_source_preflight_freeze_is_parseable_and_terminal() -> None:
+    freeze = yaml.safe_load(
+        (ROOT / "configs/worldsim_v51/stage_f_f0_source_preflight_freeze_v1.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["conclusion"] == (
+        "f0_source_adapter_preflight_done_input_materialization_required"
+    )
+    assert freeze["governance"]["next_phase"] == (
+        "f0a_train_only_sam_deva_identity_mask_materialization_preregistration"
+    )
 
 
 def test_summarize_instance_metadata_reports_stable_train_only_tracks() -> None:

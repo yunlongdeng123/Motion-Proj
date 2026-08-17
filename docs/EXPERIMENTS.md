@@ -1,5 +1,25 @@
 # Experiments
 
+## V5.1 Stage F F0 r025 canonical source/adapter preflight（2026-08-18）
+
+- run/source/tree=`20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025 /8d68cad1...15c /
+  bb73109b...6cd`；terminal=`done`，conclusion=`f0_source_adapter_preflight_done_input_materialization_required`。
+  official paper=`10,225,908 bytes /61e82145...823`；repo=`0ab60afe`、tree=`036936e1...fd16`、10 source-file
+  hashes/semantic tokens exact、Apache-2.0。
+- `0471/1087/0379` 各核对 `5 frames ×3 cameras=15` train-only views；45/45 NPZ schema 相同且无 associated instance
+  identity field。metadata `(total/active-union/repeated)`=`49/47/37, 7/7/6, 34/26/20`，只证明 stable tokens 与分母存在，
+  不能作为 pixel labels。三个 checkpoint 仅校验 size/SHA、loaded=false；image/mask pixels 与 quality 均未读。
+- 16D adapter replay exact：shape=`[1,32,32,16]`、alpha-positive=`189`、identity gradient nonzero=`48`、frozen-base
+  gradient absent、loss=`0.0012892523081973195`。resource=`310 MiB GPU /8,810,483,712 cgroup bytes /3.154s /
+  9 samples /0 errors`。
+- summary/status/manifest/events SHA=`da4890d...988/926ccfdb...d3/0d486f16...349/86fe7f9d...3f0`；manifest=
+  `6 entries /29,935 bytes`，full run=`8 files /31,328 bytes`；independent audit=`1,602 bytes /14d2b78b...8b64`。
+- result=`source_audit_pass=true /adapter_capability_pass=true /current_training_input_ready=false /
+  identity_training_authorized=false`。上游 DEVA/SAM-v1 assets absent，SAM2 non-substitute。failure delta=
+  `V51-F45 resolved /V51-F46 active`；下一动作只预注册 F0a train-only SAM+DEVA mask materialization，F1/F2=false，
+  S/C/validation/test/KITTI=false，M2/M3=pending。freeze=
+  `configs/worldsim_v51/stage_f_f0_source_preflight_freeze_v1.yaml`。
+
 ## V5.1 Stage F F0 faithful source/frozen-base adapter preflight 预注册（2026-08-18）
 
 - r023=`20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023` 在 status/monitor/data 前因 `_git`

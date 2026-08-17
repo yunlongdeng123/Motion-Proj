@@ -1,5 +1,27 @@
 # Research Status
 
+## V5.1 Stage F F0 r025 source/adapter preflight 已冻结（2026-08-18）
+
+- canonical r025=`20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025`，source/tree=
+  `8d68cad1...15c/bb73109b...6cd`，status=`done`，conclusion=
+  `f0_source_adapter_preflight_done_input_materialization_required`。独立审计重新核对 official PDF/repo、10 个 source files
+  与关键代码语义、45 个 train-only observation schema、三场 instance metadata、checkpoint identity、asset presence、
+  16D gsplat backward、resource samples 和全部 read/training locks，结果 exact/pass。
+- faithful source 核实为 `SAM everything → DEVA semionline cross-view short IDs → 16D identity encoding → alpha`
+  `compositing → shared 1×1 classifier + normalized CE + k=5/sample=1000 forward-KL`。本项目只允许在 frozen
+  geometry/appearance/opacity/dynamic poses 上学习 identity+classifier，因此登记为“faithful identity mechanism under
+  frozen-base adaptation”，不冒充上游 joint-reconstruction exact reproduction。
+- 三场各 `15` views、共 `45` 个现有 observation 都只有同一套 23 fields；没有 `instance/identity/object_id/mask_id/class_id`
+  字段。train-frame stable metadata 可用于核对分母，却不是 pixel identity labels。三个 formal checkpoint 分别只做
+  `288,937,974 /305,219,702 /365,700,214 bytes` 全 SHA 核对，均未 load；现有 SAM2 明确不是 SAM-v1/DEVA 的替代。
+- adapter smoke=`[1,32,32,16]`、positive-alpha pixels=`189`、identity nonzero gradients=`48/48`、base gradients absent；
+  GPU start/peak=`1/310 MiB`，cgroup=`8,810,483,712 bytes`，9 samples/0 errors，wall=`3.154 s`。manifest=
+  `6 entries /29,935 bytes`，完整 run=`8 files /31,328 bytes`；audit=`1,602 bytes /14d2b78b...8b64`。
+- `V51-F45 resolved`；新增 `V51-F46 active`：source/adapter 可行，但当前 binary actor-union evidence 与缺失的 upstream
+  DEVA/SAM-v1 权重使 identity training 未就绪。下一步只允许预注册 F0a train-only SAM+DEVA identity-mask materialization；
+  不下载即训练、不用 metadata/SAM2/quality target 冒充输入。H/S/C/validation/test/KITTI=false，F1/F2=false，
+  M2/M3=pending。freeze=`configs/worldsim_v51/stage_f_f0_source_preflight_freeze_v1.yaml`。
+
 ## V5.1 Stage F F0 source/adapter preflight 已预注册（2026-08-18）
 
 - task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`。Gaussian Grouping 官方 source 已冻结：ECCV 2024 paper=

@@ -1,5 +1,15 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0 r025 收口与 F0a 解锁
+
+r025 已在 source=`8d68cad1` 上完成并由独立 auditor 重放通过。Gaussian Grouping official source、faithful identity
+mechanism 与 frozen-base 16D gsplat adapter 都可执行；45 个 train-only observation 则一致缺少跨视图 instance identity
+labels，且 official DEVA/SAM-v1 权重尚不存在。该结论只解锁 F0a 的预注册：固定 train-only 45-view 输入、官方权重
+provenance/hash、SAM everything 与 DEVA semionline short-ID 输出 schema、确定性/资源/失败恢复合同，再单独执行资产获取与
+identity-mask materialization。不得把 stable actor metadata、binary U2/B3 evidence、SAM2 或 evaluation target 作为替代；
+不得直接开始 identity training。freeze=`stage_f_f0_source_preflight_freeze_v1.yaml`，failure delta=
+`V51-F45 resolved /V51-F46 active`；S/C/validation/test/KITTI 继续锁定，M2/M3=pending。
+
 ## 2026-08-18 Stage F F0 source/adapter preflight 预注册
 
 F0 不直接复用二值 ownership。官方 Gaussian Grouping 固定为 `SAM everything + DEVA cross-view short IDs + 16D`
