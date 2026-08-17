@@ -1,0 +1,71 @@
+schema_version: worldsim_v51_m1_unary_visibility_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: running
+phase: a1_visibility_masked_b3
+seed: 20260814
+
+inputs:
+  a0_baseline_config:
+    path: configs/worldsim_v51/m1_unary_baselines_v1.yaml
+    sha256: ba8fdcaa3368ca3f1f9d8cfc3248954b1bbacb0d328e24b46f9370b1bfff3f45
+  a0_run:
+    path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T102000Z__m1-a0-v5-unary-replay-s20260814-r001
+    summary_sha256: b9b33bbd8304bb184e9388b4c102a49236a30ded1ae7d10c071cfc9859914878
+    manifest_sha256: c4a5e4fdb7189cbfca0c756365f21ac6d981a6e9c30616548870c204c3103d3d
+
+scenes: [scene-0471, scene-1087, scene-0379]
+comparator: B3
+candidate: A1
+
+visibility:
+  statistic: one_minus_exp_negative_aggregated_contribution_mass
+  minimum_visibility: 0.01
+  threshold_selection:
+    quality_read: false
+    source: historical_evidence_distribution_only
+    rationale: precommitted_one_percent_saturated_alpha_contribution_floor
+  semantic_unavailable_policy: zero_positive_and_negative_update
+  low_visibility_policy: zero_positive_and_negative_update
+
+matched_ablation:
+  unchanged:
+    - prior_probability
+    - prior_strength
+    - sam_probability
+    - sam_confidence_floor
+    - boundary_distance_scale_px
+    - depth_residual_scale_m
+    - probability_threshold
+    - boundary_tolerance_px
+    - ece_bins
+    - base_checkpoint
+    - evaluation_views
+  only_variable: hard_semantic_visibility_eligibility
+
+evaluation:
+  metrics: [iou_at_frozen_threshold, boundary_f1, false_positive_semantic_mass, false_negative_semantic_mass, brier, ece, nll]
+  b3_gpu_rerender_must_be_byte_exact: true
+  scene_balanced_gate:
+    boundary_f1_positive_scene_count_minimum: 2
+    mean_boundary_f1_delta_minimum_exclusive: 0.0
+    mean_iou_delta_minimum: 0.0
+    mean_fn_semantic_mass_delta_maximum: 0.02
+    brier_or_ece_must_improve: true
+
+resources:
+  device: cuda:0
+  maximum_gpu_allocated_at_start_mib: 512
+
+restrictions:
+  unknown_state: false
+  effective_count_correction: false
+  cif_decoupling: false
+  graph: false
+  feature_uplift: false
+  parameter_search: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03]
+failure_ledger_delta: pending

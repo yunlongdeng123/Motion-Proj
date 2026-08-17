@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 freeze 与 Stage A A0 replay 是当前唯一授权 | pytest import root 与 float32 人工常数断言均在方法/数据读取前修复 | `V51-F01`–`V51-F02` |
+| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle 与 visibility 阈值 dtype 边界均在正式 A1 前修复 | `V51-F01`–`V51-F03` |
 
 ### 1.1 V1 汇总条目
 
@@ -137,6 +137,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   仍逐 bit 比较。禁止为了让 exact gate 通过而对 canonical metric 使用容差、舍入或字符串截断。失败时未启动正式 run、
   GPU renderer、方法推理或 validation/test/KITTI quality read。证据：`WS-V51-M1-A-UNARY-OBSERVABILITY-01`、
   `tests/test_replay_worldsim_v51_v5_unary.py`。
+- `V51-F03`（`engineering/evaluation`, `resolved`）：A1 规定 `visibility >= 0.01` 为 inclusive gate，但冻结 NPZ 中
+  visibility 是 `float32`；若直接与 Python double `0.01` 比较，存储的 `float32(0.01)` 会因表示略小而被误判为
+  false，首轮测试得到 `[False,False,False]` 而非 `[True,False,False]`。这会真实改变 observation denominator，不能靠
+  放宽单测解决。修复是在比较前把配置阈值量化为 observation dtype，同时在诊断中分别记录 configured/applied value；
+  门仍是 inclusive，未读取 evaluation quality 或搜索阈值。禁止用 epsilon、容差或事后改 threshold 隐式改变分母。
+  证据：`WS-V51-M1-A-UNARY-OBSERVABILITY-01`、`motion_proj/worldsim_v51/evidence/visibility.py`、
+  `tests/test_worldsim_v51_visibility.py`。
 
 <a id="detail-v5"></a>
 
