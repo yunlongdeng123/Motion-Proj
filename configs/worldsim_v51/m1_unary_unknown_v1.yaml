@@ -1,0 +1,98 @@
+schema_version: worldsim_v51_m1_unary_unknown_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: frozen_before_quality_read
+phase: a2_semantic_unknown
+seed: 20260814
+
+inputs:
+  a1_config:
+    path: configs/worldsim_v51/m1_unary_visibility_v1.yaml
+    sha256: 7518bc742ce4d2e65415dddd8b4cab502ed220057ba5ecc6b279a4c11974b78b
+  a1_run:
+    path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002
+    source_commit: 38bc9b44c6c86d58173930aa019745b8a9a8e00b
+    summary_sha256: 74246312e257b39edaba72b6750f68a3d61f8f5933a142c1063e759cf0dc2a79
+    manifest_sha256: fbec5f19e2a29547c2538aad0be59ee225a9973bb57d41aa706141a57377e092
+  a1_posteriors:
+    scene-0471:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002/artifacts/posteriors/scene-0471.npz
+      sha256: e3bc5146704fc26dae3faa283cd06ac87f1a380d83f99b203e51423176ac341e
+    scene-1087:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002/artifacts/posteriors/scene-1087.npz
+      sha256: 8d8049ffdc01f5219dd0bffb7031d2ded5811dd619630d8ba7ca812e1d960c70
+    scene-0379:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002/artifacts/posteriors/scene-0379.npz
+      sha256: e98fba400f4729a189296e276b881b462124dc8903e900b9b6b139fe4e5fd114
+
+scenes: [scene-0471, scene-1087, scene-0379]
+comparator: A1
+stage_a_reference: B3
+candidate: A2
+
+unknown:
+  calibration_population: pooled_h_a1_gaussians_with_positive_effective_observation_count
+  calibration_quality_read: false
+  quantiles:
+    low_effective_count: 0.25
+    high_posterior_entropy: 0.75
+    high_cross_view_disagreement: 0.75
+  frozen_thresholds:
+    effective_observation_count_maximum_inclusive: 0.19274792820215225
+    posterior_entropy_minimum_inclusive: 0.005402358970383594
+    cross_view_disagreement_minimum_inclusive: 8.494543610182426e-12
+  rule: high_entropy_and_low_count_or_high_disagreement
+  rule_expression: high_entropy AND (low_effective_count OR high_cross_view_disagreement)
+  probability_representation: hard_tristate_indicator
+  output_normalization: posterior_actor_plus_posterior_background_plus_unknown_equals_one
+  image_abstain_threshold: 0.5
+  threshold_selection:
+    source: pooled_h_a1_evidence_statistics_only
+    quality_read: false
+    rationale: preregistered_lower_and_upper_quartiles_on_observed_gaussians
+
+matched_ablation:
+  parent: A1
+  unchanged:
+    - visibility_eligibility
+    - prior_probability
+    - prior_strength
+    - sam_probability
+    - reliability
+    - probability_threshold
+    - boundary_tolerance_px
+    - ece_bins
+    - base_checkpoint
+    - evidence_views
+    - evaluation_views
+  only_variable: explicit_semantic_unknown_state
+
+evaluation:
+  conditional_semantic_metrics: [iou_at_frozen_threshold, boundary_f1, false_positive_semantic_mass, false_negative_semantic_mass, brier, ece, nll]
+  selective_metrics: [coverage, error_at_coverage, selective_semantic_risk, unknown_precision, unknown_recall_on_errors, accepted_subset_error, abstained_subset_error]
+  conditional_actor_render_must_match_a1_byte_exact: true
+  scene_balanced_gate:
+    boundary_f1_positive_scene_count_minimum_vs_b3: 2
+    mean_boundary_f1_delta_minimum_exclusive_vs_b3: 0.0
+    mean_iou_delta_minimum_vs_b3: 0.0
+    mean_fn_semantic_mass_delta_maximum_vs_b3: 0.02
+    brier_or_ece_must_improve_vs_b3: true
+    mean_coverage_minimum: 0.60
+    abstained_subset_error_must_exceed_accepted: true
+
+resources:
+  device: cuda:0
+  maximum_gpu_allocated_at_start_mib: 512
+
+restrictions:
+  effective_count_correction: false
+  cif_decoupling: false
+  graph: false
+  feature_uplift: false
+  parameter_search: false
+  evaluation_quality_used_for_thresholds: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04]
+failure_ledger_delta: pending

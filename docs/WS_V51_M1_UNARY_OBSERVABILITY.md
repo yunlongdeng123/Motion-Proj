@@ -82,14 +82,28 @@ checkpoint 前后 exact。A1 仍只是 H candidate：1087 只有一个 evaluatio
 
 ## A2：Semantic UNKNOWN / ABSTAIN
 
-状态：`pending/unlocked`。
+状态：`threshold frozen before quality read / implementation pending`。
 
 下一步只在 A1 posterior 上增加 UNKNOWN state 与 selective metrics；阈值只能来自 H evidence/training statistics，
 不得读取 evaluation quality 选择。A3 effective-count、A4 CIF、S scenes 与后续 Stage 继续锁定。
 
+冻结配置：`configs/worldsim_v51/m1_unary_unknown_v1.yaml`。校准总体只包含三个 H scene 中
+`A1_effective_evidence_count > 0` 的 Gaussian，固定下/上四分位阈值为：
+
+```text
+effective observation count <= 0.19274792820215225
+posterior entropy >= 0.005402358970383594
+cross-view disagreement >= 8.494543610182426e-12
+UNKNOWN = high entropy AND (low count OR high disagreement)
+image abstain threshold = 0.5
+```
+
+未观测 Gaussian 在 0379/1087 占 `67.39%/97.20%`；若在全量 Gaussian 上做 inclusive 分位数 OR，count 与
+disagreement 阈值会退化为 0 并造成 0 coverage。该失败假设已登记 `V51-F04`，不能在 A2 quality 读取后重新解释或调参。
+
 ## Failure ledger
 
-- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F03`。
+- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F04`。
 - A0 `failure_ledger_delta=none`。
 - A1 `failure_ledger_delta=none`。
 - `V51-F02` 只修正人工 float32 常数单测的错误 oracle；formal canonical metric 仍要求 delta 严格等于 0。

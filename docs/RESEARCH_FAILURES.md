@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle 与 visibility 阈值 dtype 边界均在正式 A1 前修复 | `V51-F01`–`V51-F03` |
+| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype 边界与全量 Gaussian 分位数退化均在对应正式 run 前修复 | `V51-F01`–`V51-F04` |
 
 ### 1.1 V1 汇总条目
 
@@ -144,6 +144,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   门仍是 inclusive，未读取 evaluation quality 或搜索阈值。禁止用 epsilon、容差或事后改 threshold 隐式改变分母。
   证据：`WS-V51-M1-A-UNARY-OBSERVABILITY-01`、`motion_proj/worldsim_v51/evidence/visibility.py`、
   `tests/test_worldsim_v51_visibility.py`。
+- `V51-F04`（`algorithm/protocol`, `resolved before A2 quality read`）：A2 首轮只读 evidence-statistics 检查发现，
+  若直接在“全部 Gaussian”上取 effective-count 下分位数、entropy/disagreement 上分位数并用 OR 组成 UNKNOWN，
+  scene-0379/1087 的 count 与 disagreement 分位数会同时退化为 `0`；inclusive `disagreement >= 0` 会把全部 Gaussian
+  判为 UNKNOWN，Gaussian coverage 直接变成 `0`。根因是未观测但由冻结 base-model prior 明确赋类的 Gaussian 占
+  `67.39%/97.20%`，它们不能和真正有 semantic observation 的校准总体混在一起。A2 在任何 evaluation artifact 或
+  quality metric 读取前，把阈值总体冻结为“三个 H scene 中 effective-count>0 的 A1 Gaussian pooled population”，并用
+  `high entropy AND (low count OR high disagreement)` 保留 entropy 作为必要条件；三个阈值固定为该总体的
+  `Q25(count)=0.19274792820215225`、`Q75(entropy)=0.005402358970383594`、
+  `Q75(disagreement)=8.494543610182426e-12`。禁止把全量分位数退化误写成 A2 方法负结果，也禁止在看到 A2 evaluation
+  quality 后改总体、分位点、布尔规则或图像 abstain threshold。证据：
+  `configs/worldsim_v51/m1_unary_unknown_v1.yaml` 与 A1 posterior SHA binding；S/validation/test/KITTI 仍未读取。
 
 <a id="detail-v5"></a>
 
