@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage B official DINOv2 source 已冻结，ViT-g 单图资源门已预注册（2026-08-17）
+
+- official source checkout=`/root/autodl-tmp/third_party/dinov2-v51-stage-b`，origin=
+  `https://github.com/facebookresearch/dinov2.git`，commit=`7764ea0f912e53c92e82eb78a2a1631e92725fc8`，tree=
+  `2a27257b79b0633b027a21014bc9360e3c1b3f43`，worktree clean；LICENSE/hubconf SHA-256=
+  `600cc67c...b7b2 / c1f5090e...a6f64`。源码仅放在 external third-party checkout，不 vendor 到项目仓库。
+- checkpoint 继续继承 r003 machine freeze：bytes=`4,546,140,349`，SHA-256=`746ecb8c...a283`。资源冒烟配置/runner=
+  `configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml` / `scripts/smoke_worldsim_v51_dinov2_resource.py`；
+  输入唯一固定为 scene-0471/index-382/frame-0/camera-0，JPEG bytes/SHA=`99,906 / 093d38e8...5819e`。
+- faithful contract 固定为 official `dinov2_vitg14_reg`、ViT-g/14 +4 register tokens、raw dim=`1536`、
+  `1600×900→1596×896` bilinear + ImageNet normalization、last-four normalized reshape output 均为
+  `[1,1536,64,114]`。checkpoint 在 CPU 严格加载，模型参数 FP32，GPU inference autocast FP16；不允许用更小模型、
+  更低分辨率或非官方实现替代。
+- resource gate 固定为 start NVIDIA used `≤2,048 MiB`、sampled peak `≤22,528 MiB`、cgroup peak `≤80 GiB`、
+  timeout=`900 s`、单 DINO 进程且 renderer 不并发。r004 只判 source/checkpoint/input/state-dict/output/resource；
+  PCA、feature sidecar、renderer、method/quality/H/S/C、validation/test/KITTI 均不读，M2/M3 保持 `pending`。
+- 下一步是在包含本预注册的 clean source commit 上执行唯一 r004。通过后才做 synthetic operator parity；OOM 或资源门失败
+  必须写入统一 failure ledger，并按既定 M1 路线推进，不得事后缩小 backbone/输入，也不得停止整个 M1。
+
 ## V5.1 Stage B 已授权：U2/B3 fallback + M1 自动换路线进入冻结（2026-08-17）
 
 - 用户已明确授权 Stage A 冻结 survivor=`U2/B3` 作为 fallback 进入 Stage B，并要求 M1 遇到单 arm、单 scene、

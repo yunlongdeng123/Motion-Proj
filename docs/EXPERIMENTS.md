@@ -1,5 +1,27 @@
 # Experiments
 
+## V5.1 Stage B DINOv2 ViT-g one-image resource smoke 预注册（2026-08-17）
+
+- task=`WS-V51-M1-B-LUDVIG-UPLIFT-01`；计划 canonical run suffix=
+  `m1-stage-b-dinov2-resource-smoke-s20260814-r004`。本门只验证 faithful official ViT-g 在 RTX 3090 上可装载、
+  严格匹配权重并生成预期张量，不产生 paper-method quality 结论。
+- source identity：external checkout=`/root/autodl-tmp/third_party/dinov2-v51-stage-b`，origin=
+  `https://github.com/facebookresearch/dinov2.git`，commit/tree=`7764ea0f...25fc8 / 2a27257b...12b3f43`，
+  worktree clean；LICENSE/hubconf SHA=`600cc67c...b7b2 / c1f5090e...a6f64`。
+- asset identity 继承 `configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml` SHA=`dfa17a4a...9f9fd`；checkpoint=
+  `/root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth`，bytes/SHA=
+  `4,546,140,349 / 746ecb8c...a283`。唯一输入 scene-0471/index-382/frame-0/camera-0 的 bytes/SHA=
+  `99,906 / 093d38e8...5819e`，原图 `1600×900`。
+- preprocessing/model contract：bilinear resize 到 `1596×896`、ImageNet mean/std；official
+  `dinov2_vitg14_reg`，patch=`14`、register tokens=`4`、raw dim=`1536`；strict `weights_only` CPU load，
+  FP32 参数 + FP16 autocast inference，last-four `norm=true/reshape=true` 输出必须逐层 exact 等于
+  `[1,1536,64,114]` 且 selected output finite。
+- resource contract：GPU start used `≤2,048 MiB`、sampled/torch peak `≤22,528 MiB`、cgroup peak `≤80 GiB`、
+  interval=`0.5 s`、timeout=`900 s`；single DINO process，renderer 不启动。禁止 smaller-model/resolution fallback。
+- config/runner=`configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml` /
+  `scripts/smoke_worldsim_v51_dinov2_resource.py`。PCA、feature persistence、method、quality、screening/confirmation、
+  validation/test/KITTI 均为 false；M2/M3=`pending`。failure refs=`V51-F12/F14/F15/F16`，delta 在 terminal 后填写。
+
 ## V5.1 Stage B 授权迁移 / formal freeze 预注册（2026-08-17）
 
 | Task | 状态 | 当前分母 | 本次允许 | 质量锁 |

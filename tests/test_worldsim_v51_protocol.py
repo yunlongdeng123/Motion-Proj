@@ -25,6 +25,10 @@ from scripts.fetch_worldsim_v51_dinov2_asset import (
 from scripts.fetch_worldsim_v51_dinov2_asset_parallel import (
     _ranges as parallel_ranges,
 )
+from scripts.smoke_worldsim_v51_dinov2_resource import (
+    _preprocess as preprocess_dino_smoke,
+    validate_config as validate_dino_resource_smoke,
+)
 
 
 def test_scope_and_development_roles_bind_v5_cohort() -> None:
@@ -136,3 +140,26 @@ def test_stage_b_parallel_download_and_terminal_asset_freeze_are_exact() -> None
     for relative, expected in asset_freeze["canonical_run"]["hashes"].items():
         assert (run / relative).is_file()
         assert sha256_file(run / relative) == expected
+
+
+def test_stage_b_dinov2_resource_smoke_binds_source_asset_and_input() -> None:
+    config, asset_freeze = validate_dino_resource_smoke(
+        ROOT / "configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml"
+    )
+    tensor = preprocess_dino_smoke(config)
+
+    assert asset_freeze["status"] == "done"
+    assert list(tensor.shape) == [1, 3, 896, 1596]
+    assert tensor.dtype.is_floating_point
+    assert config["model"]["entrypoint"] == "dinov2_vitg14_reg"
+    assert config["model"]["expected_output_shapes"] == [
+        [1, 1536, 64, 114],
+        [1, 1536, 64, 114],
+        [1, 1536, 64, 114],
+        [1, 1536, 64, 114],
+    ]
+    assert config["resources"]["maximum_gpu_peak_mib"] == 22528
+    assert config["locks"]["quality_read"] is False
+    assert config["locks"]["renderer_start"] is False
+    assert config["locks"]["m2_status"] == "pending"
+    assert config["locks"]["m3_status"] == "pending"

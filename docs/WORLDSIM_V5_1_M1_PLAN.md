@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r001 input freeze done；下一门只下载并完整 SHA 冻结 DINO asset |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r003 DINO asset + official source frozen；下一门 one-image ViT-g resource smoke |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,8 +32,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F15`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
-  delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`。
+- V5.1 新增 failure=`V51-F01`–`V51-F16`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+  delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`。
 
 ## 配置与入口
 
@@ -57,9 +57,11 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_dinov2_download_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
+- `scripts/smoke_worldsim_v51_dinov2_resource.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -186,5 +188,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - r002 single-connection 因持续低吞吐被精确停止并保留 blocked terminal/prefix，见 `V51-F16`；r003 以 14 ranges
   完成并通过 full SHA-256=`746ecb8c...a283` + S3 multipart ETag=`3d1b...-542`，`V51-F16 resolved`。当前下一门只冻结
   official DINOv2 source 并做 one-image resource smoke；asset 成功本身不解锁 H quality，之后仍需 operator parity。
+- official DINOv2 external checkout 已固定为 origin=`https://github.com/facebookresearch/dinov2.git`、commit/tree=
+  `7764ea0f...25fc8 / 2a27257b...12b3f43`、worktree clean。resource smoke 已在 quality read 前冻结唯一输入、
+  official ViT-g/14 registers 构造、strict state-dict、last-four `[1,1536,64,114]` 输出、FP32/FP16 策略以及
+  `22,528 MiB GPU / 80 GiB cgroup / 900 s` 门；禁止 smaller-model/resolution fallback，所有质量锁仍为 false。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。
