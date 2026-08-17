@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 
 import numpy as np
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,10 +20,10 @@ from motion_proj.worldsim_v51.feature_evaluation import (
     row_cosine,
     single_view_gaussian_feature,
 )
-from scripts.run_worldsim_v51_h_evaluation import validate_config
+from scripts.run_worldsim_v51_h_evaluation import _load_evaluation_config, validate_config
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_evaluation_v1.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_evaluation_v2.yaml"
 
 
 def test_row_cosine_uses_explicit_nonzero_denominator() -> None:
@@ -188,3 +189,23 @@ def test_h_evaluation_config_binds_proxy_split_gate_and_locks() -> None:
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+    assert config["resources"]["maximum_nvidia_peak_mib"] == 24000
+    assert config["resources"]["maximum_torch_reserved_peak_mib"] == 24000
+    assert config["recovery"]["reuse_blocked_outputs"] is False
+
+
+def test_h_evaluation_recovery_changes_only_two_resource_ceilings_and_metadata() -> None:
+    base = yaml.safe_load(
+        (ROOT / "configs/worldsim_v51/stage_b_h_evaluation_v1.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    merged = _load_evaluation_config(CONFIG)
+    assert merged["resources"]["maximum_nvidia_peak_mib"] == 24000
+    assert merged["resources"]["maximum_torch_reserved_peak_mib"] == 24000
+    merged["resources"]["maximum_nvidia_peak_mib"] = 22528
+    merged["resources"]["maximum_torch_reserved_peak_mib"] = 22528
+    merged.pop("recovery")
+    merged["failure_ledger_refs"] = base["failure_ledger_refs"]
+    merged["failure_ledger_delta"] = base["failure_ledger_delta"]
+    assert merged == base

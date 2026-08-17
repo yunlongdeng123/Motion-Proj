@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage B r014 resource blocked；r015 24,000 MiB recovery 待预注册（2026-08-18）
+
+- r014=`20260817T172012Z__m1-stage-b-h-evaluation-s20260814-r014`，source=`9b151c8`；90/90 views、3 scene reports
+  和 aggregate report 均已计算并在 gate 前持久化，但 NVIDIA/Torch reserved peak=`22,570/23,354 MiB` 超过共同
+  ceiling=`22,528 MiB`，故 formal status=`blocked`，禁止读取或引用其中 quality verdict。
+- cgroup=`14,305,161,216 bytes`，1,208 samples、0 monitor errors、duration=`897.647 s`，GPU 已释放。r014 共
+  `10 files`、无 partial；status/resources/report/progress/resource-samples SHA=`6409545b...f6d1/ffc98a00...674e/`
+  `510f82ec...227c/61475cb1...06ed/8fae05eb...7cf`。登记 `V51-F28`。
+- recovery 只能把 NVIDIA/Torch 两项 ceiling 提高到 `24,000 MiB`，其他 inputs/views/operator/proxy/pairs/gate/locks
+  全部继承 v1，并以新 r015 从原冻结输入完整重跑。第一次 blocked inventory 把 `events.jsonl` 误写为 `events.json`，
+  不影响任何 artifact；修正后登记 `V51-F29 resolved`。
+
 ## V5.1 Stage B H evaluation-only gate 已机器预注册（2026-08-18）
 
 - 计划 formal r014 只读 H：r012 frozen B0/B1 Gaussian features、r010 evidence features、r013 evaluation features，

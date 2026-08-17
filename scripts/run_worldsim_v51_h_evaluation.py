@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import gc
 import json
 from pathlib import Path
@@ -56,6 +57,66 @@ def _load_bound_manifest(spec: dict[str, Any], label: str) -> dict[str, Any]:
     return manifest
 
 
+def _load_evaluation_config(config_path: Path) -> dict[str, Any]:
+    raw = load_yaml(config_path)
+    if raw.get("schema_version") != "worldsim_v51_stage_b_h_evaluation_recovery_v1":
+        return raw
+    if raw.get("task_id") != "WS-V51-M1-B-LUDVIG-UPLIFT-01" or raw.get("status") != "running":
+        raise ProtocolError("H evaluation recovery task/status drift")
+    if set(raw) != {
+        "schema_version",
+        "task_id",
+        "status",
+        "base_config",
+        "recovery",
+        "resource_overrides",
+        "failure_ledger_refs",
+        "failure_ledger_delta",
+    }:
+        raise ProtocolError("H evaluation recovery fields drift")
+    base_spec = raw["base_config"]
+    base_path = PROJECT / base_spec["path"]
+    if not base_path.is_file() or sha256_file(base_path) != base_spec["sha256"]:
+        raise ProtocolError("H evaluation recovery base config identity drift")
+    base = load_yaml(base_path)
+    if base.get("schema_version") != base_spec["schema_version"]:
+        raise ProtocolError("H evaluation recovery base schema drift")
+    recovery = raw["recovery"]
+    blocked_run = Path(recovery["blocked_run"])
+    if recovery.get("blocked_status") != "blocked" or recovery.get(
+        "blocked_quality_read_for_recovery"
+    ) is not False:
+        raise ProtocolError("H evaluation recovery blocked contract drift")
+    if recovery.get("reuse_blocked_outputs") is not False:
+        raise ProtocolError("H evaluation recovery must not reuse blocked outputs")
+    for relative, expected in (
+        ("status.json", recovery["blocked_status_sha256"]),
+        ("artifacts/resources.json", recovery["blocked_resources_sha256"]),
+        ("artifacts/h_evaluation_report.json", recovery["blocked_report_sha256"]),
+    ):
+        path = blocked_run / relative
+        if not path.is_file() or sha256_file(path) != expected:
+            raise ProtocolError(f"H evaluation recovery blocked identity drift: {relative}")
+    if recovery.get("allowed_change") != "raise_nvidia_and_torch_resource_ceiling_only":
+        raise ProtocolError("H evaluation recovery allowed change drift")
+    overrides = raw["resource_overrides"]
+    if overrides != {
+        "maximum_nvidia_peak_mib": 24000,
+        "maximum_torch_reserved_peak_mib": 24000,
+    }:
+        raise ProtocolError("H evaluation recovery resource override drift")
+    if base["resources"]["maximum_nvidia_peak_mib"] != 22528 or base["resources"][
+        "maximum_torch_reserved_peak_mib"
+    ] != 22528:
+        raise ProtocolError("H evaluation recovery original ceilings drift")
+    merged = copy.deepcopy(base)
+    merged["resources"].update(overrides)
+    merged["recovery"] = copy.deepcopy(recovery)
+    merged["failure_ledger_refs"] = list(raw["failure_ledger_refs"])
+    merged["failure_ledger_delta"] = list(raw["failure_ledger_delta"])
+    return merged
+
+
 def _view_record_map(
     manifest: dict[str, Any], *, scenes: list[str], frames: list[int], cameras: list[int], label: str
 ) -> dict[str, dict[str, Any]]:
@@ -86,7 +147,7 @@ def validate_config(
     dict[str, dict[str, Any]],
     dict[str, dict[str, Any]],
 ]:
-    config = load_yaml(config_path)
+    config = _load_evaluation_config(config_path)
     if config.get("schema_version") != "worldsim_v51_stage_b_h_evaluation_v1":
         raise ProtocolError("H evaluation schema drift")
     if config.get("task_id") != "WS-V51-M1-B-LUDVIG-UPLIFT-01":
@@ -715,7 +776,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--config", type=Path, default=PROJECT / "configs/worldsim_v51/stage_b_h_evaluation_v1.yaml"
+        "--config", type=Path, default=PROJECT / "configs/worldsim_v51/stage_b_h_evaluation_v2.yaml"
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

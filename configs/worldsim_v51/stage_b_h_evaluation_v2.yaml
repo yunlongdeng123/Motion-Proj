@@ -1,0 +1,29 @@
+schema_version: worldsim_v51_stage_b_h_evaluation_recovery_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+
+base_config:
+  path: configs/worldsim_v51/stage_b_h_evaluation_v1.yaml
+  sha256: 8df3713ad41c66c3d045e0f567a1a8affafeab7a3a167106fb1b73c88fa3d450
+  schema_version: worldsim_v51_stage_b_h_evaluation_v1
+
+recovery:
+  blocked_run: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T172012Z__m1-stage-b-h-evaluation-s20260814-r014
+  blocked_status: blocked
+  blocked_reason: 'ProtocolError: H evaluation NVIDIA peak exceeded'
+  blocked_status_sha256: 6409545b8488ff41977f52231d2f77bb16a43e7b4458c18cfe1177a9ebcaf6d1
+  blocked_resources_sha256: ffc98a00d2373bbbf1638915fe1ee9caafc72bac1cee1aeb1a45c8df2bd5674e
+  blocked_report_sha256: 510f82ec468f829c32e5519e3d9b04bae1ded64bf4345516df69eb2bf417227c
+  observed_nvidia_peak_mib: 22570
+  observed_torch_reserved_peak_mib: 23354.0
+  observed_cgroup_peak_bytes: 14305161216
+  allowed_change: raise_nvidia_and_torch_resource_ceiling_only
+  blocked_quality_read_for_recovery: false
+  reuse_blocked_outputs: false
+
+resource_overrides:
+  maximum_nvidia_peak_mib: 24000
+  maximum_torch_reserved_peak_mib: 24000
+
+failure_ledger_refs: [V3-F01, V3-F07, V3-F18, V5-F20, V5-F22, V5-F23, V5-F24, V51-F14, V51-F15, V51-F19, V51-F20, V51-F21, V51-F22, V51-F23, V51-F24, V51-F25, V51-F26, V51-F27, V51-F28, V51-F29]
+failure_ledger_delta: [V51-F28, V51-F29]

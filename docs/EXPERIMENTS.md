@@ -1,5 +1,14 @@
 # Experiments
 
+## V5.1 Stage B r014 resource blocked / r015 recovery 预注册（2026-08-18）
+
+- r014 source=`9b151c8`，90/90 views 与三场 diagnostics 已写出，随后因 NVIDIA peak=`22,570>22,528 MiB`
+  fail-closed；Torch reserved=`23,354>22,528 MiB`，cgroup=`14,305,161,216 bytes`，duration=`897.647 s`。
+- blocked report 只做 SHA/bytes 封存，不读取 scene 或 aggregate quality；status=`6409545b...f6d1`，report=
+  `510f82ec...227c`，resources=`ffc98a00...674e`，resource samples=`8fae05eb...7cf`。failure delta=`V51-F28`。
+- v2/r015 唯一允许差异为 resource NVIDIA/Torch ceilings `22,528→24,000 MiB`；算法、split、pair/proxy、H gate、
+  quality locks 不变，禁止复用 blocked output。首次 inventory 的 `events.json` 文件名笔误登记 `V51-F29 resolved`。
+
 ## V5.1 Stage B H evaluation-only r014 预注册（2026-08-18）
 
 - inputs=`r012 uplift freeze + r010 evidence feature freeze + r013 evaluation feature freeze + 3 immutable H checkpoints`；

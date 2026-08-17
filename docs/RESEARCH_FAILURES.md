@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F27` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F29` |
 
 ### 1.1 V1 汇总条目
 
@@ -360,6 +360,19 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   docs scp 在本地以 `stat local ... No such file` 失败；远端 repo 和 run 均未被部分修改。修复只把三份 source path
   写成 `motion_proj/docs/...` 并逐项同步；防重复要求多 source scp 前先按当前 workdir 解析 source，且不能把部分成功
   的前序传输误当成整条命令成功。
+- `V51-F28`（`engineering/resource/protocol`, `active recovery preregistered`）：formal H evaluation r014 已完整处理
+  3 scenes、90/90 evidence/evaluation views并先持久化 3 scene reports 与完整只读 report，但 terminal resource gate
+  观测 NVIDIA peak=`22,570 MiB > 22,528 MiB`、Torch reserved=`23,354 MiB > 22,528 MiB`，因此 status 必须保持
+  `blocked`。cgroup peak=`14,305,161,216 bytes`，1,208 samples、0 monitor errors、duration=`897.647 s`，GPU 已释放；
+  这推翻的是“r012 的 22 GiB uplift ceiling 足以覆盖双向 evaluation sparse projection”的资源外推，不是 H gate verdict。
+  禁止读取 blocked r014 的 scene/aggregate quality、覆盖 run 或据其数值改 metric/pair/proxy/gate。合法恢复只允许新 v2/r015
+  把 NVIDIA/Torch ceiling 同时提高到 `24,000 MiB`（仍低于 24,576 MiB 卡容量），其余 base config 逐字继承，并从
+  r012/r010/r013 原冻结输入完整重跑。r014 status/resources/report/progress/resource-samples SHA=
+  `6409545b...f6d1/ffc98a00...674e/510f82ec...227c/61475cb1...06ed/8fae05eb...7cf`；10 files，无 partial。
+- `V51-F29`（`engineering/audit`, `resolved immediately`）：r014 blocked metadata 首次只读 hash 命令把实际
+  `events.jsonl` 误写成 `events.json`，`sha256sum` 因该单项不存在返回非零，使后续 `&& find` 没有执行；前面其余 hash
+  已正常输出，run/repo/quality 均未改变。修正为冻结 schema 的 `events.jsonl` 后 SHA=`31fff013...a7ce`，并完成 10-file
+  bytes inventory。后续 verifier 必须从 runner/schema 读取精确 artifact 名，不凭相邻 runner 猜扩展名。
 
 <a id="detail-v5"></a>
 
