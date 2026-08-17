@@ -1,5 +1,16 @@
 # Research Status
 
+## V5.1 Stage B r007 三层分辨率 blocked，r008 model-native recovery 已预注册（2026-08-17）
+
+- r007=`20260817T153300Z__m1-stage-b-one-view-contribution-s20260814-r007`，source=`e06b5ff`，DriveStudio env、dataset、
+  trainer/checkpoint 与单视图 renderer 均已启动，随后因预注册错误要求 renderer=`1600×900` 而 blocked；冻结 source
+  config 实际 `downscale_when_loading=[2,2,2]`，model-native renderer=`800×450`。0 intersection inventory/quality。
+- r007 status/events/resolved/resource-samples SHA=`da279515.../365d212b.../d08a5f96.../8b2ca135...`；`V51-F19` 因已越过
+  import 并到达 renderer 而 resolved，新增 `V51-F20` 记录重复踩中既有三层分辨率合同。
+- v3/r008 显式分开 sensor=`1600×900`、source downscale=`[2,2,2]`、model-native renderer=`800×450`，只修改尺寸
+  身份与错误诊断文本，view/checkpoint/floor/resource/locks 不变。DriveStudio loader 会基础设施性物化 image/mask/LiDAR，
+  但 runner 不消费这些值、不计算 feature/quality；该事实在 v3 config/report 中显式记录。
+
 ## V5.1 Stage B r006 interpreter blocked，r007 DriveStudio-env 恢复已预注册（2026-08-17）
 
 - canonical blocked r006=`20260817T152900Z__m1-stage-b-one-view-contribution-s20260814-r006`，source=`5e59443`；

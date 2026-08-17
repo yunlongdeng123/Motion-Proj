@@ -17,16 +17,22 @@ from scripts.smoke_worldsim_v51_one_view_contribution import (
 )
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml"
 
 
 def test_one_view_config_binds_operator_checkpoint_and_locks() -> None:
     config, operator_freeze = validate_config(CONFIG)
     assert operator_freeze["status"] == "done"
     assert config["scene"]["expected_total_gaussians"] == 859613
+    assert config["scene"]["sensor_image_size_wh"] == [1600, 900]
+    assert config["scene"]["source_downscale_when_loading"] == [2, 2, 2]
+    assert config["scene"]["model_native_renderer_size_wh"] == [800, 450]
     assert config["runtime"]["python"].endswith("/envs/drivestudio/bin/python")
     assert config["runtime"]["required_imports"] == ["pytorch3d", "gsplat"]
     assert config["contribution"]["consume_pixel_rgb_values"] is False
+    assert config["contribution"][
+        "dataset_infrastructure_materializes_image_mask_lidar"
+    ] is True
     assert config["contribution"]["consume_membership_proxy"] is False
     assert config["locks"]["method_quality_read"] is False
     assert config["locks"]["validation_quality_read"] is False

@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage B r007 renderer-size blocked / r008 recovery 预注册（2026-08-17）
+
+- r007=`20260817T153300Z__m1-stage-b-one-view-contribution-s20260814-r007`，source=`e06b5ff`，status=`blocked`，
+  reason=`ProtocolError: renderer width/height 漂移`。环境恢复成功并到达 renderer，但在 inventory 前 fail-closed；
+  denominator/feature/quality 数值仍为 0。
+- source config 与既有 V5 configs exact 证明 sensor=`1600×900` 经 `downscale_when_loading=[2,2,2]` 后 checkpoint/model
+  native render=`800×450`；v2 把 sensor 尺寸错误复用为 renderer 尺寸。登记 `V51-F20`。
+- r007 status/events/resolved/resource-samples SHA=`da279515.../365d212b.../d08a5f96.../8b2ca135...`；run 保留不复用。
+  v3/r008 只冻结三层尺寸并强化 observed/expected error，其他合同不变。
+- loader 基础设施 materialize image/mask/LiDAR=true，但 runner RGB/LiDAR/membership consumption=false；不把 loader I/O
+  冒充 feature/quality read。`V51-F19 resolved`，`V51-F20 active recovery preregistered`。
+
 ## V5.1 Stage B r006 blocked / r007 environment recovery 预注册（2026-08-17）
 
 - r006=`20260817T152900Z__m1-stage-b-one-view-contribution-s20260814-r006`，source=`5e59443`，status=`blocked`，

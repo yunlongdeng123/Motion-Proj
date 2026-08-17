@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view wrong-env 正在 exact recovery | `V51-F01`–`V51-F19` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view runtime/resolution 在 exact recovery | `V51-F01`–`V51-F20` |
 
 ### 1.1 V1 汇总条目
 
@@ -290,14 +290,23 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不推翻 r005 artifact、operator parity 或任一质量结论。修复只替换两处旧变量名，并重跑同一 20-test regression；
   禁止重跑/覆盖 r005 或修改 freeze 数字来绕过测试。证据：`tests/test_worldsim_v51_feature_uplift.py`、
   `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`。
-- `V51-F19`（`engineering/protocol`, `active recovery preregistered`）：one-H-view formal r006 在
+- `V51-F19`（`engineering/protocol`, `resolved by v2/r007 reaching renderer`）：one-H-view formal r006 在
   `_build_runtime()` 导入 DriveStudio `models.gaussians.basics` 时因 `ModuleNotFoundError: pytorch3d` blocked；v1 config 错把
   入口冻结为 motionproj Python，而历史 DriveStudio 运行合同使用独立 `/root/autodl-tmp/envs/drivestudio/bin/python`。
   terminal 发生在 dataset/trainer 构造和 renderer 启动前，0 intersection、0 denominator、0 quality；这推翻“主项目环境可
   直接承载 DriveStudio CUDA 依赖”的工程假设，不是 renderer/LUDVIG/资源失败。合法恢复必须保留 r006，以 v2 + 新 r007
   只替换 interpreter，并在 formal 内 exact 核对 executable、torch=`2.1.2+cu118`、CUDA=`11.8`、`pytorch3d/gsplat`
   imports；不得安装包污染 motionproj env 或改 view/floor/resource gate。证据：r006 status SHA=`06b74ec9...b4be3`、
-  `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml` 与 v2 recovery config。
+  `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml` 与 v2 recovery config。v2/r007 已 exact 使用该环境并完成
+  dataset/trainer/checkpoint/renderer 启动，本条因此 resolved；r007 的后续尺寸阻塞另记 `V51-F20`。
+- `V51-F20`（`engineering/protocol`, `active recovery preregistered`）：r007 到达真实单视图 renderer 后，v2 把 sensor
+  JPEG `1600×900` 错冻为 renderer width/height，触发 fail-closed。冻结 r027 source config 已明确三路
+  `downscale_when_loading=[2,2,2]`，现有 V5 SAM/actor configs 与历史 `V3-F18` 也记录 model-native=`800×450`；这是重复
+  违反三层尺寸合同，不是 renderer 或 contribution 质量失败。r007 在 intersection inventory 前停止，且旧错误文本未写出
+  observed/expected 数值。合法恢复必须保留 r007，以 v3/r008 显式同时冻结 sensor/downscale/model-native 三层尺寸并增强
+  错误文本；不得改 checkpoint、view、support floor 或把 800×450 写成降分辨率调参。loader 会基础设施性物化
+  image/mask/LiDAR，但 runner 不消费其值；二者须分开记录。证据：r007 status SHA=`da279515...8d3c9`、r027
+  `config.yaml` SHA=`eb22faea...9c6d`、`configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`。
 
 <a id="detail-v5"></a>
 

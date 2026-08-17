@@ -134,7 +134,7 @@ class ResourceMonitor:
 def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     config = load_yaml(config_path)
     if config.get("schema_version") != (
-        "worldsim_v51_stage_b_one_view_contribution_v2"
+        "worldsim_v51_stage_b_one_view_contribution_v3"
     ):
         raise ProtocolError("one-view contribution schema 漂移")
     if config.get("task_id") != "WS-V51-M1-B-LUDVIG-UPLIFT-01":
@@ -166,7 +166,9 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "frame": 0,
         "camera": 0,
         "image_index": 0,
-        "image_size_wh": [1600, 900],
+        "sensor_image_size_wh": [1600, 900],
+        "source_downscale_when_loading": [2, 2, 2],
+        "model_native_renderer_size_wh": [800, 450],
         "expected_background_gaussians": 809902,
         "expected_rigid_gaussians": 49711,
         "expected_total_gaussians": 859613,
@@ -174,6 +176,13 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     for name, expected in expected_scene.items():
         if scene.get(name) != expected:
             raise ProtocolError(f"one-view scene contract 漂移: {name}")
+    source_config = load_yaml(Path(config["inputs"]["source_config"]["path"]))
+    if source_config["data"]["scene_idx"] != scene["index"]:
+        raise ProtocolError("source config scene_idx 漂移")
+    if source_config["data"]["pixel_source"]["downscale_when_loading"] != scene[
+        "source_downscale_when_loading"
+    ]:
+        raise ProtocolError("source config downscale_when_loading 漂移")
 
     contribution = config["contribution"]
     expected_contribution = {
@@ -184,6 +193,7 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "expected_n_cameras": 1,
         "report_quantiles": [0.0, 0.25, 0.5, 0.75, 0.95, 0.99, 1.0],
         "persist_intersection_rows": False,
+        "dataset_infrastructure_materializes_image_mask_lidar": True,
         "consume_pixel_rgb_values": False,
         "consume_lidar_values": False,
         "consume_membership_proxy": False,
@@ -350,8 +360,12 @@ def _build_and_render(config: dict[str, Any]) -> tuple[dict[str, Any], Any]:
         n_cameras = int(trainer.info["n_cameras"])
         if n_cameras != int(config["contribution"]["expected_n_cameras"]):
             raise ProtocolError("renderer n_cameras 漂移")
-        if [width, height] != list(scene["image_size_wh"]):
-            raise ProtocolError("renderer width/height 漂移")
+        if [width, height] != list(scene["model_native_renderer_size_wh"]):
+            raise ProtocolError(
+                "renderer width/height 漂移: "
+                f"observed={[width, height]} expected="
+                f"{scene['model_native_renderer_size_wh']}"
+            )
         del projected, depths
         report = summarize_contributions(
             gaussian_id=gids,
@@ -377,6 +391,8 @@ def _build_and_render(config: dict[str, Any]) -> tuple[dict[str, Any], Any]:
                 "background_gaussian_count": background_count,
                 "rigid_gaussian_count": rigid_count,
                 "dataset_image_tensor_materialized": True,
+                "dataset_mask_tensors_materialized": True,
+                "dataset_lidar_tensor_materialized": True,
                 "pixel_rgb_values_consumed": False,
                 "lidar_values_consumed": False,
                 "membership_proxy_consumed": False,
@@ -551,7 +567,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()
