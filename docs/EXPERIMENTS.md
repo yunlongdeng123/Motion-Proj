@@ -1,5 +1,27 @@
 # Experiments
 
+## V5.1 Stage A A1 visibility-masked B3（2026-08-17）
+
+| Scene | Eval denominator | Valid obs ratio | ΔBF1 | ΔIoU | ΔFN mass | ΔBrier | ΔECE |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 0471 | 8 | 0.857484 | +0.000020836 | +0.000124291 | +0.000484780 | -0.000044421 | -0.000436149 |
+| 1087 | 1 | 0.967938 | 0.000000000 | 0.000000000 | +0.000000529 | -0.000000729 | +0.000010298 |
+| 0379 | 3 | 0.826925 | +0.003446302 | +0.001256639 | +0.002831752 | +0.000003233 | -0.000008710 |
+| scene-balanced mean | 3 scenes | — | +0.001155713 | +0.000460310 | +0.001105687 | -0.000013972 | -0.000144854 |
+
+- canonical r002=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002`；
+  source=`38bc9b44c6c86d58173930aa019745b8a9a8e00b`，seed=`20260814`，duration=`193.228059 s`，
+  peak GPU=`8382 MiB`。
+- A1 唯一变量为 hard visibility eligibility；configured/applied threshold=`0.01/0.009999999776482582`。
+  阈值来自 H evidence distribution，quality read=false；未引入 UNKNOWN/effective-count/CIF/feature/graph。
+- B3 GPU rerender=`12/12 byte exact`，B3 aggregate metric replay delta=`0`，checkpoint pre/post=`3/3 exact`。
+  A1 H gate 五项全部通过，BF1 positive scenes=`2/3`；正式结论仅为 candidate，未读 S/C/validation/test/KITTI。
+- summary/status/fingerprint/manifest SHA=`74246312e257b39edaba72b6750f68a3d61f8f5933a142c1063e759cf0dc2a79 /`
+  `c4dbac0d444fecc6f8154105122d2b8b811d283989a12ffcec80a31ff4691b73 /`
+  `3cca740c69d4ed33c3949d3d5b07ebf6a17c294af6e6d2366401fe540f665cd9 /`
+  `fbec5f19e2a29547c2538aad0be59ee225a9973bb57d41aa706141a57377e092`。
+- `failure_ledger_refs`：`V5-F20–F26/F29–F32`、`V51-F01–F03`；`failure_ledger_delta=none`。
+
 ## V5.1 Stage A A0 V5 unary exact replay（2026-08-17）
 
 | Run | 状态 | 实际重算分母 | Exact gate | 结论 |

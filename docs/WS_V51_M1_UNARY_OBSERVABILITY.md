@@ -50,7 +50,7 @@ c4a5e4fdb7189cbfca0c756365f21ac6d981a6e9c30616548870c204c3103d3d
 
 ## A1：Visibility-Masked Bayesian Update
 
-状态：`pending/unlocked`。
+状态：`H gate passed / candidate / S unread`。
 
 下一步只允许比较 U2/B3 与 A1/B3，唯一变量是 observation 是否具备 semantic update 资格：
 
@@ -60,10 +60,37 @@ visible + semantic available  -> 按冻结 B3 累积正/负 fractional count
 ```
 
 A1 不引入 UNKNOWN threshold、effective-count correction、CIF state、DINO、Graph、anchor、temporal 或 LiDAR
-kernel。先在 H=`0471/1087/0379` 做 matched diagnostic，之后才按 frozen gate 判断是否进入 S。
+kernel。canonical r002：
+
+```text
+/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/
+20260817T104000Z__m1-a1-visibility-h-s20260814-r002
+```
+
+| Scene | Eval views | Semantic-valid ratio | ΔBF1 | ΔIoU | ΔFN | ΔBrier | ΔECE |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 0471 | 8 | 0.857484 | +0.000020836 | +0.000124291 | +0.000484780 | -0.000044421 | -0.000436149 |
+| 1087 | 1 | 0.967938 | 0 | 0 | +0.000000529 | -0.000000729 | +0.000010298 |
+| 0379 | 3 | 0.826925 | +0.003446302 | +0.001256639 | +0.002831752 | +0.000003233 | -0.000008710 |
+
+scene-balanced mean ΔBF1/IoU/FN/Brier/ECE=
+`+0.001155713/+0.000460310/+0.001105687/-0.000013972/-0.000144854`；五项 H gate 全通过。
+
+B3 在本轮被当前 GPU 重新渲染，12/12 evaluation NPZ 与 canonical byte exact，aggregate metrics delta=`0`；三个
+checkpoint 前后 exact。A1 仍只是 H candidate：1087 只有一个 evaluation view，0471 的 BF1 增益只有约 `2.08e-5`，
+不能声明 scene-disjoint 稳定或直接进入 S。
+
+## A2：Semantic UNKNOWN / ABSTAIN
+
+状态：`pending/unlocked`。
+
+下一步只在 A1 posterior 上增加 UNKNOWN state 与 selective metrics；阈值只能来自 H evidence/training statistics，
+不得读取 evaluation quality 选择。A3 effective-count、A4 CIF、S scenes 与后续 Stage 继续锁定。
 
 ## Failure ledger
 
-- refs：`V5-F20–F26`、`V5-F29–F31`、`V51-F01/F02`。
+- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F03`。
 - A0 `failure_ledger_delta=none`。
+- A1 `failure_ledger_delta=none`。
 - `V51-F02` 只修正人工 float32 常数单测的错误 oracle；formal canonical metric 仍要求 delta 严格等于 0。
+- `V51-F03` 固化 configured/applied visibility threshold，避免 float32 边界静默改变 eligibility 分母。

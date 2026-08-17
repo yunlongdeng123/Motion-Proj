@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage A A1 visibility 通过 H gate，下一步只实现 A2 UNKNOWN（2026-08-17）
+
+- `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`；A1 canonical r002=`done`，conclusion=
+  `a1_visibility_passed_h_gate_candidate_for_stage_a`，source=`38bc9b4`，run=
+  `/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002`。
+- `visibility >= float32(0.01)` 只由 H evidence statistics 冻结，未读 evaluation quality；semantic-available observation
+  的保留率在 0471/1087/0379 为 `85.7484%/96.7938%/82.6925%`，低 visibility 与 semantic-unavailable observation
+  均执行 `Δalpha=Δbeta=0`。
+- B3 当前 GPU 重渲染在 `8+1+3=12` 个 accepted evaluation views 上与 V5 canonical NPZ `12/12 byte exact`，
+  7 项 aggregate metric delta 全为 0；三个 base checkpoint 前后 SHA exact。r002 耗时=`193.228 s`，峰值 GPU=
+  `8382 MiB`。
+- A1−B3 scene-balanced mean `ΔBoundary-F1/ΔIoU/ΔFN-mass/ΔBrier/ΔECE`=
+  `+0.001155713/+0.000460310/+0.001105687/-0.000013972/-0.000144854`；BF1 正向=`2/3`，
+  0471 仅 `+0.000020836`、1087=`0`、0379=`+0.003446302`。H gate 逐项通过，但效应很小且 1087 只有 1 个
+  evaluation view，因此只登记 Stage-A candidate，不宣称 scene-disjoint 稳定或方法成功，也不提前进入 S。
+- r002 summary/status/fingerprint/manifest SHA=`74246312.../c4dbac0d.../3cca740c.../fbec5f19...`；
+  `failure_ledger_refs=V5-F20–F26/F29–F32 + V51-F01–F03`，`failure_ledger_delta=none`。
+- 下一步只实现 A2 UNKNOWN/ABSTAIN，并以 A1 为 matched parent；A3/A4、S scenes、Stage B 和任何 Graph 仍锁定。
+
 ## V5.1 Stage A A0 exact replay 完成，下一门只解锁 A1 visibility（2026-08-17）
 
 - `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`，A0 canonical r001=`done`，conclusion=

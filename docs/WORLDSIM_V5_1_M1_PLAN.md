@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 r001 exact；下一门只实现 A1 visibility/missingness |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1 通过 H gate；下一门只实现 A2 UNKNOWN |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -55,3 +55,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - exact 结果：array mismatch=`0`；metric delta=`0.0`；每场 12 个核心 generation source SHA exact。
 - 边界：GPU renderer 未重跑；2D evaluation 只做 canonical artifact/source identity 复核。
 - 下一门：A1 visibility mask。A2/A3/A4、Stage B/C 与 Graph 均保持锁定。
+
+## Stage A A1 canonical evidence
+
+- run：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T104000Z__m1-a1-visibility-h-s20260814-r002`
+- source commit：`38bc9b44c6c86d58173930aa019745b8a9a8e00b`
+- B3 replay：12/12 GPU renders byte exact，3/3 checkpoints exact。
+- A1 H gate：BF1 positive scenes=`2/3`；mean ΔBF1/IoU/FN/Brier/ECE=
+  `+0.001155713/+0.000460310/+0.001105687/-0.000013972/-0.000144854`；五项 gate 全通过。
+- 边界：1087 只有 1 个 accepted view，且整体效应小；A1 只是未经过 S 的 candidate。
+- 下一门：只做 A2 UNKNOWN/ABSTAIN；A3/A4、S 与后续 Stage 保持锁定。
