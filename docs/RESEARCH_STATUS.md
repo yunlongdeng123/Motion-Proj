@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage F F0e scene-1087 CUDA fault localization 已预注册（2026-08-18）
+
+- task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`；
+  authorization 只来自 r035 blocked closeout=`4,271 bytes /3cb38341...93da /V51-F62 active`。
+- 输入锁为 r035 首次出错前的 exact scene-1087 frame0 cameras=`0/1/2`，逐文件 SHA/bytes 取 r026 train-only manifest；
+  两次独立 official subprocess 串行 replay。方法继续 grid32/upstream-batch64/AMP/size480/IoU0.7/semionline，唯一新增
+  execution diagnostic 是 `CUDA_LAUNCH_BLOCKING=1`；不改 upstream source，也不做参数搜索。
+- outcome matrix 预先冻结为：两次同位 CUBLAS failure→进入 source-neutral tensor/allocator instrumentation；两次 success 且
+  output exact→先做 1087 15-view blocking recovery；一成一败→CUDA runtime health/reproducibility gate；两次成功但不 exact→
+  faithful identity input 以 nonrepeatable 收口。unrecognized failure 直接 protocol blocked。
+- 本轮最多 schema-read `6` 张成功 mask，不读 nonzero/quality/actor alignment；任何输出均不补写 r035 或进入训练。
+  resources 仍锁 total/headroom/peak=`24,576/256/24,320 MiB`、cgroup<=60 GiB、wall<=600s、disk>=40 GiB。
+  full materialization/quality/training/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending；failure delta=`none`。
+
 ## V5.1 Stage F F0d r035 因 CUDA/CUBLAS 中断，已独立审计收口（2026-08-18）
 
 - canonical r035=`20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035`，source/tree=

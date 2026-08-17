@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0e r036 scene-1087 CUDA fault localization 预注册（2026-08-18）
+
+- formal target=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`；config=
+  `configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_v1.yaml`。authorization=r035 closeout
+  `3cb38341...93da`，只针对 `V51-F62`，不改变 r035 terminal。
+- exact inputs=`scene-1087/index827/frame0/camera0,1,2`；两次 `cuda_launch_blocking_replay_1/2` 串行且均为
+  grid32/batch64/AMP/size480/semionline。唯一 intervention=`CUDA_LAUNCH_BLOCKING=1`，用于把异步 CUDA 错误定位到同步调用；
+  source/assets/runtime/thresholds 与 r035 相同。
+- 预注册四分支 outcome，不按成功输出质量选 recovery；success 只检查 `900×1600 uint8` schema、文件 hash 和两次 exact，
+  expected failure 必须同时命中 `consensus_associated.py:58 /value @ affinity /CUBLAS_STATUS_INTERNAL_ERROR /
+  cublasGemmStridedBatchedExFix` 且不得发布 partial mask/pred。
+- input decode denominator=`6`，output schema reads<=`6`；quality/identity alignment/materialization/training/downstream
+  全 false，禁止 smaller-batch retry。resources=`24,576 total /256 headroom /24,320 peak MiB /60 GiB cgroup /600s`。
+
 ## V5.1 Stage F F0d r035 BLOCKED / independent audit（2026-08-18）
 
 - run/source/tree=`20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035 /e4d64d3...1424 /
