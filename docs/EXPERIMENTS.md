@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage F F0 faithful source/frozen-base adapter preflight 预注册（2026-08-18）
+
+- planned r023=`20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023`；official paper=
+  `ECCV 2024 /10,225,908 bytes /61e82145...823`，official code=`lkeab/gaussian-grouping@0ab60afe`、tree=
+  `036936e1...fd16`、Apache-2.0。冻结 repo 9 个关键文件与 paper identity，不 import/修改 upstream code。
+- faithful core=`SAM everything → DEVA semionline short-ID association → 16D view-independent identity encoding →`
+  `alpha compositing → shared 1×1 classifier + normalized 2D CE + k5/sample1000 Euclidean KNN forward-KL`；code-semantics
+  包括 top-k self、3D loss every 2 steps/weight 2、identity/classifier lr=`2.5e-3/5e-4`、30k iterations。
+- adaptation 只来自 normative frozen-base 约束：geometry/appearance/opacity/actor poses 不训练，仅探测 16D feature
+  rasterization 是否可微。三场只看 15 个 train-only image/observation 的存在性与 schema、instances metadata stable token；
+  image/mask pixels、quality/H/S/C/validation/test/KITTI 均不读。
+- 当前 expected gap=`binary actor-union observation has no cross-view instance identity labels + upstream DEVA/SAM-v1`
+  `checkpoints absent`；SAM2 checkpoint 只作已存在 non-substitute。preflight 完成的下一动作是另行预注册 F0a train-only
+  SAM+DEVA mask materialization，不直接训练 F0。F1/F2=false，M2/M3=pending；failure refs=
+  `V51-F31/F37/F42/F43`，prereg delta=`none`。
+
 ## V5.1 Stage E E0b r022 canonical H rejection（2026-08-18）
 
 - run/source/tree=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022 / 3a84be68...ade /

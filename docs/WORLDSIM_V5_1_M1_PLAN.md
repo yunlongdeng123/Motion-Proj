@@ -1,5 +1,24 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0 source/adapter preflight 预注册
+
+F0 不直接复用二值 ownership。官方 Gaussian Grouping 固定为 `SAM everything + DEVA cross-view short IDs + 16D`
+`identity encoding + differentiable identity rendering + shared classifier CE + k5 KNN KL`；source=
+`lkeab/gaussian-grouping@0ab60afe` 与 ECCV 2024 official PDF。由于 normative plan 要求 immutable base，本项目适配仅冻结
+geometry/appearance/opacity/actor pose，而保留 identity branch 的原机制；必须明确这不是上游 joint-reconstruction exact
+reproduction。r023 只核对 source、15 train-only views/scene 的 schema/instance metadata、上游 asset presence，并做小型
+16D renderer gradient smoke；不读 image/mask pixels 或 quality，不运行 SAM/DEVA/identity training。现有 observation 没有
+associated instance IDs 时，只解锁 F0a train-only mask materialization 的预注册。
+
+## 2026-08-18 Stage E r022 收口与 Stage F 解锁
+
+r022 已在 frozen H 12 views 上独立复算并拒绝 E0B：相对 U2/B3 的 scene-balanced BF1/IoU/FN=
+`-0.0002566/-0.0925468/+0.1899473`，相对 raw D0=`-0.0004762/-0.0210926/+0.0204707`；primary 与
+mechanism gate 均 FAIL。E1 PanoGS/E2 AG²aussian 永久停止，禁止根据 r022 回调 voxel level、aggregation 或 propagation。
+结果 freeze=`stage_e_e0b_h_evaluation_freeze_v1.yaml`，failure=`V51-F42`。下一任务严格使用 normative task id
+`WS-V51-M1-F-IDENTITY-EMBEDDING-01`，先冻结 Gaussian Grouping 官方论文/代码并做 no-quality source/adapter preflight；
+不得把现有 binary actor-union SAM evidence 冒充上游要求的 cross-view associated instance-ID masks。
+
 ## 2026-08-18 Stage E E0b H evaluation 预注册
 
 r022 在冻结 12 个 H views 上比较 `U2_B3_G0/D0/E0B`；只新渲染 E0B，U2/B3 与 D0 复用 frozen float16 artifacts。

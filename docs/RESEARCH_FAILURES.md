@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell 与 partial staging 环境边界 | `V51-F01`–`V51-F42` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、PDF 工具与 partial staging 环境边界 | `V51-F01`–`V51-F43` |
 
 ### 1.1 V1 汇总条目
 
@@ -443,7 +443,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   run；随即改为本地解析 YAML、远端只运行仓库 CLI/pytest。后续需要多语句远端分析时必须先落地仓库内 auditor，
   禁止临时内嵌脚本；单语句也不得跨两层 shell 手写嵌套引号。r022 审计前的旁路摘要查询再次因 heredoc 嵌套引号
   得到 `unexpected EOF`，随后发现远端没有 `jq`；两者均未写 run。改为 scp 冻结 JSON 后在本地只读解析，并由仓库
-  auditor 完成正式审计。该复发进一步说明远端临时解析不是证据入口。
+  auditor 完成正式审计。进入 Stage F 后又有一次含 `$f` 的远端 loop 被 PowerShell 提前展开，以及一次嵌套
+  `python -c` 验证命令 SyntaxError；均在 formal r023 前、无 run/asset/repo 状态变化。该复发进一步说明远端临时解析
+  不是证据入口；正式 source audit 必须由仓库 runner 完成。
 - `V51-F41`（`engineering/environment`, `resolved during r020 audit`）：本地 `autodl-stage/motion_proj` 只是按约束用于
   `apply_patch` 的 partial staging tree，不包含完整 `motion_proj.worldsim_v5` package；误在该目录收集 E0a 联合测试时触发
   `ModuleNotFoundError`。这不是 canonical repo、r020 或 auditor 失败。修复为只在本地做语法检查/编辑，将新增文件同步到
@@ -461,6 +463,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   voxel level、node aggregation、seed/threshold/hop、删除 0379 或重读 H；下一合法路线是 Gaussian Grouping faithful
   source audit 与 no-quality preflight。证据：r022 summary/manifest=`4964a2f0...3d4/3c5a2fbe...7aa`，independent dual-gate
   replay=`5ced73db...104f`，freeze=`configs/worldsim_v51/stage_e_e0b_h_evaluation_freeze_v1.yaml`。
+- `V51-F43`（`engineering/tooling`, `resolved before F0 preregistration`）：下载并哈希 Gaussian Grouping official PDF 后，
+  远端没有 `pdfinfo/pdftotext`；桌面依赖清单给出的 Poppler override/fallback 也不可执行。改用 bundled Python 的
+  `pdfplumber` 读 18 页，但首次输出受 Windows GBK 限制，遇到作者脚注符号触发 `UnicodeEncodeError`；只设置任务级
+  `PYTHONIOENCODING=utf-8` 后完成全文提取，并用已存在的 `pypdfium2` 渲染方法第 6–8 页检查公式与图示。没有安装
+  系统包、没有改 PDF、也未触及方法数据。后续 PDF source audit 优先复用 bundled Python 并显式 UTF-8，不假设远端或
+  dependency catalog 中声明的 Poppler binary 实际存在；工具缺失不得写成论文或算法证据。
 
 <a id="detail-v5"></a>
 

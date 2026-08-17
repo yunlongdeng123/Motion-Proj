@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.1 Stage F F0 source/adapter preflight 已预注册（2026-08-18）
+
+- task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`。Gaussian Grouping 官方 source 已冻结：ECCV 2024 paper=
+  `10,225,908 bytes /61e82145...823`，official repo=`lkeab/gaussian-grouping@0ab60afe`、tree=
+  `036936e1...fd16`、Apache-2.0。论文方法页与代码共同固定 identity dim=`16`、SH degree=`0`、alpha-composited
+  identity render、共享 1x1 classifier、2D CE、Euclidean `k=5` KNN KL、sample=`1000`、3D loss weight=`2`。
+- 忠实输入必须是 SAM everything masks 经 DEVA semionline 关联后的跨视图一致 short IDs。现有 V5 observation 只保存
+  binary moving-actor-union probability，instance IDs 明确未保留，不能拿 U2/B3 或 H target 代替 identity label。
+  预检只读取 `0/40/80/120/160 × cameras 0/1/2` 的 train-only 文件存在性、NPZ schema 与 instances metadata，
+  不读取 image/mask pixels 或任何 quality。
+- normative frozen-base adaptation 明确区别于上游 joint reconstruction：geometry/appearance/opacity/dynamic poses 全冻结，
+  只允许学习 16D identity encoding 与 shared classifier；上游 SAM+DEVA association、2D CE、3D KL 保持。禁止 Bayesian
+  init、DINO、anchor、UNKNOWN、evaluation labels 和 binary-union substitute。
+- preflight 将做 16-channel differentiable gsplat gradient smoke，核对 frozen base 无梯度；同时只报告上游 DEVA/SAM-v1
+  checkpoint 是否存在，不下载、不运行。预期当前 input-ready=false 时正常收口到 F0a train-only SAM+DEVA identity-mask
+  materialization 预注册，不得直接启动 identity training。H/S/C/validation/test/KITTI=false，F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage E r022 H rejected；已进入 Gaussian Grouping（2026-08-18）
 
 - canonical r022=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022`，source/tree=

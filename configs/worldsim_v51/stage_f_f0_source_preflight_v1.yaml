@@ -1,0 +1,181 @@
+schema_version: worldsim_v51_stage_f_f0_source_preflight_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0_faithful_source_and_frozen_base_adapter_preflight
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  normative_plan:
+    path: docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md
+    sha256: b4888476811842b37c6d1cb736cdc319e70b12054fc07dec3e9ca60d41fe9fc0
+  stage_e_rejection_freeze:
+    path: configs/worldsim_v51/stage_e_e0b_h_evaluation_freeze_v1.yaml
+    sha256: 956cab6ba94ce8cc07397ac2cb762bfc3e9eeb433c495017195db654bd88adfb
+    required_status: rejected
+    required_conclusion: e0b_rejected_stop_e1_e2_advance_gaussian_grouping
+    required_next_task: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+
+official_source:
+  paper:
+    title: "Gaussian Grouping: Segment and Edit Anything in 3D Scenes"
+    venue: ECCV 2024
+    official_url: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04195.pdf
+    path: /root/autodl-tmp/third_party/gaussian-grouping-eccv2024-04195.pdf
+    bytes: 10225908
+    sha256: 61e8214501f4f9e8570595325d551e6dbc8223995eaaf115e4dc165d8c1eb823
+    page_count: 18
+  repository:
+    url: https://github.com/lkeab/gaussian-grouping
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f
+    commit: 0ab60afed3385b717c985af1d30a20f7b0884c89
+    tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16
+    license: Apache-2.0
+    files:
+      LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+      README.md: ab81542853033ccd782562b575bb869d65f2fce4d7d1318cfde1218038a15ac7
+      train.py: 55f8989a19c0c6df57d0dbc19c55e315a33964933daf9e530e0b33eab806bcad
+      scene/gaussian_model.py: 306dc97fc2c54f947fecf50e176132d0b47996f4daf50513fc85a79263b22025
+      gaussian_renderer/__init__.py: 7c7ef10c89c6085b59b582e3d5af70c5170638bcc48c191482f87fdbc9c5608e
+      utils/loss_utils.py: b0ce08a69de40fec92812a173ab1e2efb1e4977421447b2ab72defc7f1b0b25e
+      arguments/__init__.py: 5ea28040ba29974b99386bb9dfe9545fa40614d553e9c18b9b0c829b2fd6e598
+      script/prepare_pseudo_label.sh: fb433d82db87b9ab0a17113f0dfea2287c47c991c6976d8fe83be74a502a0785
+      docs/train.md: 5e0c974a8fb2b1eef5ae45101107c290bb4469692b9e548b9a944adf0a382936
+      Tracking-Anything-with-DEVA/scripts/download_models.sh: f6b248db3ae9a6dc059e4b53c407be6a248ffd43a091a26b7a882951abed006b
+
+faithful_mechanism:
+  mask_generation: sam_everything_mode
+  mask_association: deva_semionline_cross_view_consistent_short_ids
+  identity_encoding_dimension: 16
+  identity_sh_degree: 0
+  differentiable_rendering: alpha_composited_identity_encoding
+  classifier: shared_linear_1x1_identity_to_scene_mask_count
+  identity_loss: pixel_cross_entropy_divided_by_log_scene_class_count
+  spatial_regularization:
+    center_metric: euclidean
+    neighbor_count: 5
+    sampled_points: 1000
+    maximum_candidate_points: 300000
+    interval_steps: 2
+    divergence: forward_kl_sample_to_neighbor
+    includes_self_as_code_topk_semantics: true
+    weight: 2.0
+  optimizer:
+    identity_learning_rate: 0.0025
+    classifier_learning_rate: 0.0005
+    iterations: 30000
+  upstream_training: joint_geometry_appearance_identity
+  upstream_declared_limitation: static_scene_no_dynamic_or_time_dependent_update
+
+frozen_base_adaptation:
+  declaration: faithful_identity_mechanism_port_under_normative_frozen_base_constraint_not_exact_upstream_reproduction
+  freeze_geometry: true
+  freeze_appearance: true
+  freeze_opacity: true
+  freeze_dynamic_actor_poses: true
+  learn_identity_encoding_only: true
+  learn_shared_classifier_only: true
+  preserve_upstream_mask_association: true
+  preserve_upstream_identity_dimension: true
+  preserve_upstream_2d_loss: true
+  preserve_upstream_3d_regularization: true
+  forbidden:
+    - bayesian_initialization
+    - dino_graph
+    - anchor
+    - unknown_innovation
+    - binary_actor_union_as_instance_id_substitute
+    - evaluation_target_as_training_label
+    - geometry_or_appearance_finetuning
+
+train_only_contract:
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  expected_views_per_scene: 15
+  image_pixels_read: false
+  mask_pixels_read: false
+  quality_metrics_read: false
+  metadata_only: true
+  scenes:
+    - scene: scene-0471
+      index: 382
+      graph_config:
+        path: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+        sha256: 53e14d5c22556a2e3dd4533f3b96203aab49fe4b401eece5d4a93de1c19b9090
+      processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382
+      instances_info_sha256: de2fafc8e4401f95c1218717f59c4394fe17fb60897380d7d25e90f1e89f2b15
+      frame_instances_sha256: 7e73630d820af2eb9b5a95c38a10abb188ef6873dd9da74808ce5bb560e09a85
+    - scene: scene-1087
+      index: 827
+      graph_config:
+        path: configs/worldsim_v5/m1_graph_diagnostic_scene1087_v1.yaml
+        sha256: cc7f44356c1bb7b215189b00c531b2be199f1d6e3d279066aaa93d8b20b39ea1
+      processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827
+      instances_info_sha256: 84cf94e091bf796a826e6b3e7de51c09b3f8ee7764122ccc116760ec9a3218da
+      frame_instances_sha256: 696ffd4f78a91c2c8305a6de51edc8d069d242e41428c7f2c1da96bd8e477ef9
+    - scene: scene-0379
+      index: 296
+      graph_config:
+        path: configs/worldsim_v5/m1_graph_diagnostic_scene0379_v1.yaml
+        sha256: 6c4aeca80e86885de43d0f16c2256b538e47f524dc742c002fad9143124afb8c
+      processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296
+      instances_info_sha256: 875e8e931cd25fe71ca7ae01b8d31a968dbc0106318d02c84dc17866dfbd4646
+      frame_instances_sha256: 9be479706c73236327ded298b51dd7b010a15d0ab7c61754039a87bd33568103
+
+asset_probe:
+  upstream_required:
+    deva:
+      path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA/saves/DEVA-propagation.pth
+      expected_present_before_preflight: false
+    sam_vit_h:
+      path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA/saves/sam_vit_h_4b8939.pth
+      expected_present_before_preflight: false
+  existing_non_substitute:
+    sam2_hiera_large:
+      path: /root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt
+      sha256: 2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318
+      faithful_substitute: false
+
+adapter_probe:
+  runtime: /root/autodl-tmp/envs/drivestudio/bin/python
+  device: cuda:0
+  identity_channels: 16
+  image_size: [32, 32]
+  require_nonzero_finite_identity_gradient: true
+  require_base_geometry_without_grad: true
+
+decision:
+  source_audit_pass_requires: all_official_source_identities_and_code_semantics_exact
+  adapter_capability_pass_requires: differentiable_16d_feature_rasterization_with_frozen_geometry
+  current_training_input_ready_requires: associated_instance_identity_label_present_in_every_train_view
+  expected_preflight_conclusion: f0_source_adapter_preflight_done_input_materialization_required
+  next_action: preregister_f0a_train_only_sam_deva_identity_mask_materialization
+
+resources:
+  monitor_interval_seconds: 0.25
+  maximum_nvidia_at_start_mib: 512
+  maximum_nvidia_peak_mib: 4096
+  maximum_torch_allocated_peak_mib: 2048
+  maximum_torch_reserved_peak_mib: 2048
+  maximum_cgroup_memory_bytes: 21474836480
+  maximum_wall_seconds: 600
+
+locks:
+  parameter_search: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  deva_execution: false
+  sam_execution: false
+  identity_training: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43]
+failure_ledger_delta: pending
