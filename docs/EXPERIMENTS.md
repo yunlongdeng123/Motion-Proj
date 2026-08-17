@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage D D0 H matched evaluation / r018 预注册（2026-08-18）
+
+- task/phase=`WS-V51-M1-D-PROGRESSIVE-01 / d0_h_matched_evaluation`；planned r018 只读 r017 frozen D0 与 V5
+  frozen H graph/evaluation artifacts，不重算 baseline、D0 或 target。arms=`U2_B3_G0/U2_B3_G_V5/D0`，三臂统一从
+  persisted float16 probability 计算同一 metrics；总分母固定 `12 views / 3 scenes`，cross-scene equal-scene。
+- gate=`positive BF1 scenes >=2 + mean BF1>0 + mean IoU>=0 + mean FN<=+0.02`。成功动作仅为 freeze D0 后
+  S exact-once；失败动作仅为 reject progressive、skip D1、advance super-primitive/anchor。禁止 parameter search、
+  baseline/D0 recompute、target/view change 和 S/C/validation/test/KITTI read。
+- identity/resource gates 包括 operator freeze、三场 graph config/run manifest、三场 D0 sidecar、live checkpoint
+  Gaussian layout、checkpoint immutability、GPU start/peak、Torch/cgroup/wall 与零 monitor error；runtime 固定 DriveStudio
+  torch `2.1.2+cu118`。failure refs=`V51-F31–V51-F36`，当前 prereg `failure_ledger_delta=none`。
+
 ## V5.1 Stage D r017 canonical D0 operator（2026-08-18）
 
 - run=`20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017`，source=`d3321bb`；三场 full raw-Gaussian

@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage D D0 H matched evaluation 已预注册（2026-08-18）
+
+- 新冻结 `stage_d_progressive_h_evaluation_v1.yaml`：H 只使用 V5 已接受的 0471/1087/0379、共 `8/1/3=12`
+  个 evaluation rows；主比较器为 immutable `U2/B3 G0`，同时报告 frozen V5 `U2/B3+G3`，候选只读取 r017 D0
+  sidecar。三臂均从持久化 `float16` probability 重新计算同一套 BF1/IoU/FN/FP/Brier/ECE/NLL，target 明确为
+  `frozen_v5_sam_binary_mask_proxy_not_ground_truth`，仅用于评测，绝不回流方法。
+- H gate 原样绑定 top-confidence plan §23.1：至少 `2/3` scene 的 BF1 delta 为正、scene-balanced BF1 delta `>0`、
+  IoU delta `>=0`、FN semantic-mass delta `<=+0.02`。PASS 才可冻结 D0 并 exact-once 读取 S；FAIL 必须
+  reject progressive、跳过 D1、自动进入 super-primitive/anchor，禁止按 H 结果调 threshold/edge/seed。
+- runner 对 graph manifest/NPZ、D0 freeze/sidecar、checkpoint before-after、实时 `(base_model,base_index)` 布局、
+  12-view denominator 和 float16 metric source 全部 fail-closed；GPU start `<=512 MiB`、peak `<=24,000 MiB`、
+  cgroup `<=80 GiB`。S/C/validation/test/KITTI 未读，M2/M3=pending；须在 clean prereg commit 后运行 r018。
+
 ## V5.1 Stage D r017 D0 full-H operator 已冻结（2026-08-18）
 
 - canonical r017=`20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017`，source=`d3321bb`，status=`done`，

@@ -1,5 +1,13 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage D D0 H matched evaluation 预注册
+
+r016 source/input preflight 与 r017 full-H no-quality operator 已冻结。下一门固定为 r018 H matched evaluation：只在
+`0471/1087/0379` 的 frozen 12 views 上比较 `U2/B3 G0`、frozen V5 `U2/B3+G3` 与 D0，三臂统一用持久化
+float16 probability 计算质量指标；SAM mask 是 evaluation-only proxy，不是 ground truth 或方法输入。H gate 严格继承
+normative plan §23.1。若 PASS，只解锁 frozen D0 的 S exact-once；若 FAIL，立即 reject progressive、skip D1 并按路线
+顺序进入 super-primitive/anchor，不得在 H 上调参。S/C/validation/test/KITTI 继续锁定，M2/M3 继续 pending。
+
 ## 2026-08-18 Stage B H evaluation-only 分相预注册
 
 为防止 heldout feature extraction 与方法质量读取发生隐式耦合，H evaluation-only 被拆成两个不可合并的阶段：
@@ -18,7 +26,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 `docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md` 为唯一 normative plan。这里不复制长计划，只维护当前阶段、授权和证据，
 避免两份计划发生漂移。
 
-## 当前阶段（2026-08-17）
+## 当前阶段（2026-08-18）
 
 | Task ID | 状态 | 当前证据/下一门 |
 |---|---|---|
@@ -26,7 +34,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
-| `WS-V51-M1-D-PROGRESSIVE-01` | running | r016 source/input preflight done；clean-room D0 sparse operator 已预注册并完成 pure tests，待 full-H no-quality run |
+| `WS-V51-M1-D-PROGRESSIVE-01` | running | r016 preflight、r017 D0 sidecar frozen；r018 H matched evaluation 已预注册，待 clean commit 后 exact run |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
