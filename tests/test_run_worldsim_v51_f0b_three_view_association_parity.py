@@ -11,6 +11,7 @@ from scripts.run_worldsim_v51_f0b_three_view_association_parity import (
     _parity_report,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0b_three_view_association_parity import audit
 
 
 def test_f0b_help_works_from_repo_root() -> None:
@@ -26,6 +27,21 @@ def test_f0b_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0b_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0b_three_view_association_parity.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
 
 
 def test_f0b_formal_config_validates_and_locks_train_only_inputs() -> None:
@@ -90,3 +106,20 @@ def test_f0b_parity_gate_requires_exact_batch_and_repeat_outputs() -> None:
     assert report["batch_mask_exact"] is False
     assert report["batch_metadata_exact"] is False
     assert report["all_required"] is False
+
+
+def test_f0b_r033_independent_audit_replays_blocked_pattern() -> None:
+    result = audit(
+        ROOT
+        / "configs/worldsim_v51/stage_f_f0b_three_view_association_parity_v1.yaml",
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["audited_run_status"] == "blocked"
+    assert result["parity"]["repeat_mask_exact"] is True
+    assert result["parity"]["batch_mask_exact"] is False
+    assert result["quality_read"] is False
