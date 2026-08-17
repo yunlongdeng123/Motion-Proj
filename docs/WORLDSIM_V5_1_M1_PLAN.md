@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r007 wrong-render-size blocked；r008 model-native 800×450 recovery 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r008 post-render 14,234 MiB resource blocked；r009 16 GiB recovery 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,10 +32,10 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F20`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F21`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
-  `V51-F19 resolved / V51-F20 active`。
+  `V51-F19/F20 resolved / V51-F21 active`。
 
 ## 配置与入口
 
@@ -66,6 +66,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`
+- `configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -219,5 +220,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   已验证的 frozen DriveStudio Python/torch/CUDA/import contract，其他输入、门和 locks 不变。
 - r007 证明 environment recovery 成功但因 v2 把 sensor `1600×900` 误作 model-native render 尺寸而 blocked；v3/r008
   exact 冻结 sensor/downscale/renderer=`1600×900 / [2,2,2] / 800×450`，见 `V51-F20`，其余合同不变。
+- r008 已按正确分辨率完成 renderer/contribution 汇总，但 observed NVIDIA peak=`14,234 MiB` 越过预注册
+  `12,288 MiB` ceiling 而 blocked；v4/r009 仅把 NVIDIA/Torch ceiling 提升到 `16,384 MiB` 并把失败诊断写入
+  移到资源 gate 前，见 `V51-F21`。不得借该工程恢复修改算法、数据、floor 或读取质量。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

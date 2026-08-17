@@ -134,7 +134,7 @@ class ResourceMonitor:
 def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     config = load_yaml(config_path)
     if config.get("schema_version") != (
-        "worldsim_v51_stage_b_one_view_contribution_v3"
+        "worldsim_v51_stage_b_one_view_contribution_v4"
     ):
         raise ProtocolError("one-view contribution schema 漂移")
     if config.get("task_id") != "WS-V51-M1-B-LUDVIG-UPLIFT-01":
@@ -474,6 +474,11 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         "monitor_error_count": len(monitor.samples) - len(valid_samples),
         "duration_seconds": duration,
     }
+    # Persist the read-only denominator and resource diagnostics before applying
+    # resource gates.  A blocked run must retain enough evidence to distinguish
+    # an engineering ceiling miss from a renderer or method failure.
+    _write_json(run_dir / "artifacts/contribution_inventory.json", report)
+    _write_json(run_dir / "artifacts/resources.json", resource)
     if resource["nvidia_smi_peak_used_mib"] > int(
         config["resources"]["maximum_nvidia_peak_mib"]
     ):
@@ -486,8 +491,6 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         config["resources"]["maximum_cgroup_peak_bytes"]
     ):
         raise ProtocolError("one-view contribution cgroup peak 超限")
-    _write_json(run_dir / "artifacts/contribution_inventory.json", report)
-    _write_json(run_dir / "artifacts/resources.json", resource)
     _write_jsonl(
         run_dir / "metrics.jsonl",
         [
@@ -567,7 +570,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

@@ -1,0 +1,104 @@
+schema_version: worldsim_v51_stage_b_one_view_contribution_v4
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: one_h_view_renderer_contribution_denominator_smoke
+seed: 20260814
+
+operator_freeze:
+  path: configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml
+  sha256: d523b0d890a99eae82fbdfd95c71470680a837ce13656b8a6310cbc6ab19e25e
+  required_status: done
+
+inputs:
+  formal_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/summary.json
+    sha256: 29ab0802c6e5d74c3bdbb333bf220b8c942facb9a2ff0a265f4535efcef581ef
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/checkpoint_final.pth
+    sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0471-formal30k-s0-r027/work_dirs/worldsim_v5_streetgs/scene0471_formal_s0/config.yaml
+    sha256: eb22faea313c57c09884a69a7b42a2d36374268b6973fd09315249273de29c6d
+  compatibility_patch:
+    path: /root/autodl-tmp/motion_proj/compatibility/DriveStudio-2026-08-13-m3-test-timeline.patch
+    sha256: c3c0914f16af2b54026262a92f2bd3537a803e53b94488b1313882f2619f2b7d
+
+scene:
+  name: scene-0471
+  index: 382
+  role: H
+  frame: 0
+  camera: 0
+  image_index: 0
+  image_path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/000_0.jpg
+  image_sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e
+  sensor_image_size_wh: [1600, 900]
+  source_downscale_when_loading: [2, 2, 2]
+  model_native_renderer_size_wh: [800, 450]
+  expected_background_gaussians: 809902
+  expected_rigid_gaussians: 49711
+  expected_total_gaussians: 859613
+
+contribution:
+  source: motion_proj.worldsim_v5.renderer_intersections
+  formula: alpha_times_transmittance_before_alpha
+  minimum_intersection_contribution: 0.0001
+  minimum_gaussian_view_mass: 0.001
+  expected_n_cameras: 1
+  report_quantiles: [0.0, 0.25, 0.5, 0.75, 0.95, 0.99, 1.0]
+  persist_intersection_rows: false
+  dataset_infrastructure_materializes_image_mask_lidar: true
+  consume_pixel_rgb_values: false
+  consume_lidar_values: false
+  consume_membership_proxy: false
+  compute_feature_or_quality_metrics: false
+
+runtime:
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
+  torch: 2.1.2+cu118
+  torch_cuda: '11.8'
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_expected_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py
+  required_imports: [pytorch3d, gsplat]
+
+resources:
+  maximum_nvidia_used_at_start_mib: 2048
+  maximum_nvidia_peak_mib: 16384
+  maximum_torch_reserved_peak_mib: 16384
+  maximum_cgroup_peak_bytes: 51539607552
+  sample_interval_seconds: 0.5
+  timeout_seconds: 900
+  dino_concurrent: false
+
+locks:
+  dino_model_load: false
+  pca_fit: false
+  feature_sidecar_persist: false
+  uplift_feature_compute: false
+  membership_proxy_read: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+recovery_from:
+  run_id: 20260817T153826Z__m1-stage-b-one-view-contribution-s20260814-r008
+  status: blocked
+  reason: renderer_completed_but_observed_nvidia_peak_14234_mib_exceeded_preregistered_12288_mib
+  status_sha256: 8b8ebe17c71b74bbb91c1e468e1bb4f1e8594b2f7ac344df2f61dac32b2118bf
+  resource_samples_sha256: fc0f97881ed2ee8313047532d4249b37386f704aa21c800cfe954dff25a90932
+  observed_nvidia_peak_mib: 14234
+  observed_cgroup_peak_bytes: 9598074880
+  recovery_changes:
+    - raise_nvidia_and_torch_ceiling_from_12288_to_16384_mib
+    - persist_denominator_and_resource_diagnostics_before_resource_gate
+
+failure_ledger_refs: [V3-F01, V3-F07, V3-F18, V5-F20, V5-F22, V5-F23, V5-F24, V51-F12, V51-F14, V51-F15, V51-F17, V51-F18, V51-F19, V51-F20, V51-F21]
+failure_ledger_delta: pending

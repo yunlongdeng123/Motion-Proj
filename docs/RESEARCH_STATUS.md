@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage B r008 资源上限 blocked，r009 16 GiB recovery 已预注册（2026-08-17）
+
+- r008=`20260817T153826Z__m1-stage-b-one-view-contribution-s20260814-r008`，source=`eb334fa`，已越过
+  DriveStudio import、dataset/trainer/checkpoint、`800×450` renderer 和 contribution 汇总；最终仅因 NVIDIA peak=
+  `14,234 MiB > 12,288 MiB` 而 fail-closed。cgroup peak=`9,598,074,880 bytes`，89 个采样、0 monitor error，
+  不是 OOM、renderer、LUDVIG 或质量失败。`V51-F20` 因正确尺寸已进入 post-render 资源门而 resolved；新增 `V51-F21`。
+- r008 status/events/resolved/resource-samples SHA=`8b8ebe17.../ed216a5b.../c284d64d.../fc0f9788...`；run 仅保留
+  4 个 terminal/config/resource 文件，未生成 summary，禁止覆盖或续写。
+- v4/r009 只把 NVIDIA/Torch reserved ceiling 从 `12,288` 提升到 `16,384 MiB`，仍低于 24 GiB 单卡容量；
+  同时把只读 denominator/resource 诊断移到资源门前持久化。scene/view/checkpoint、两级 floor、renderer、消费合同和
+  所有 quality/validation/test/KITTI/M2/M3 locks 均逐字继承；没有读取或据此调节任何方法质量。
+
 ## V5.1 Stage B r007 三层分辨率 blocked，r008 model-native recovery 已预注册（2026-08-17）
 
 - r007=`20260817T153300Z__m1-stage-b-one-view-contribution-s20260814-r007`，source=`e06b5ff`，DriveStudio env、dataset、

@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage B r008 resource blocked / r009 recovery 预注册（2026-08-17）
+
+- r008=`20260817T153826Z__m1-stage-b-one-view-contribution-s20260814-r008`，source=`eb334fa`，status=`blocked`，
+  reason=`ProtocolError: one-view contribution NVIDIA peak 超限`。正确的 model-native `800×450` renderer 已完成，
+  failure 发生在 contribution 汇总后的资源门，不是 denominator 或质量判定。
+- 资源事实：GPU start/min/peak=`4/4/14,234 MiB`，cgroup peak=`9,598,074,880 bytes`，valid/error samples=
+  `89/0`；预注册 NVIDIA ceiling=`12,288 MiB`。status/events/resolved/resource-samples SHA=
+  `8b8ebe17.../ed216a5b.../c284d64d.../fc0f9788...`，run=`18,502 bytes`，保留不复用。
+- failure delta=`V51-F21`；`V51-F20 resolved`。v4/r009 recovery 仅将 NVIDIA/Torch ceiling 提升为
+  `16,384 MiB` 并把诊断 artifact 写入提前到资源 gate 之前；所有算法、数据、floor、quality locks 不变。
+- 本次运行没有 summary/quality/feature/PCA；validation/test/KITTI 未读，M2/M3=`pending`。
+
 ## V5.1 Stage B r007 renderer-size blocked / r008 recovery 预注册（2026-08-17）
 
 - r007=`20260817T153300Z__m1-stage-b-one-view-contribution-s20260814-r007`，source=`e06b5ff`，status=`blocked`，

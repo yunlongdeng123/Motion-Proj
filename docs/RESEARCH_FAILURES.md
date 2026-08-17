@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view runtime/resolution 在 exact recovery | `V51-F01`–`V51-F20` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view resource ceiling 在 exact recovery | `V51-F01`–`V51-F21` |
 
 ### 1.1 V1 汇总条目
 
@@ -299,14 +299,23 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   imports；不得安装包污染 motionproj env 或改 view/floor/resource gate。证据：r006 status SHA=`06b74ec9...b4be3`、
   `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml` 与 v2 recovery config。v2/r007 已 exact 使用该环境并完成
   dataset/trainer/checkpoint/renderer 启动，本条因此 resolved；r007 的后续尺寸阻塞另记 `V51-F20`。
-- `V51-F20`（`engineering/protocol`, `active recovery preregistered`）：r007 到达真实单视图 renderer 后，v2 把 sensor
+- `V51-F20`（`engineering/protocol`, `resolved by v3/r008 reaching post-render resource gate`）：r007 到达真实单视图 renderer 后，v2 把 sensor
   JPEG `1600×900` 错冻为 renderer width/height，触发 fail-closed。冻结 r027 source config 已明确三路
   `downscale_when_loading=[2,2,2]`，现有 V5 SAM/actor configs 与历史 `V3-F18` 也记录 model-native=`800×450`；这是重复
   违反三层尺寸合同，不是 renderer 或 contribution 质量失败。r007 在 intersection inventory 前停止，且旧错误文本未写出
   observed/expected 数值。合法恢复必须保留 r007，以 v3/r008 显式同时冻结 sensor/downscale/model-native 三层尺寸并增强
   错误文本；不得改 checkpoint、view、support floor 或把 800×450 写成降分辨率调参。loader 会基础设施性物化
   image/mask/LiDAR，但 runner 不消费其值；二者须分开记录。证据：r007 status SHA=`da279515...8d3c9`、r027
-  `config.yaml` SHA=`eb22faea...9c6d`、`configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`。
+  `config.yaml` SHA=`eb22faea...9c6d`、`configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`。v3/r008 已按
+  `800×450` 完成 renderer 并进入 post-render 资源门，因此本条 resolved；后续资源阻塞另记 `V51-F21`。
+- `V51-F21`（`engineering/resource/protocol`, `active recovery preregistered`）：r008 在真实单视图 renderer 和
+  contribution 汇总完成后，NVIDIA peak=`14,234 MiB` 超过预注册 ceiling=`12,288 MiB`，故 status=`blocked`；
+  cgroup peak 仅 `9,598,074,880 bytes`，89 个采样无错误，进程正常退出且 GPU 已释放，不能误写成 OOM、renderer
+  或算法质量失败。原 runner 又在资源门通过后才写 contribution/resource artifact，使 blocked run 只保留
+  status/events/resolved/resource-samples；这会降低失败诊断可审计性。禁止覆盖 r008，合法恢复只能新建 v4/r009：
+  保持 scene/view/checkpoint/renderer/two-floor/quality locks 不变，仅把 NVIDIA/Torch ceiling 提升为 `16,384 MiB`
+  （仍低于 24 GiB），并在资源判定前先持久化只读 denominator/resource 诊断。r008 status/resource-samples SHA=
+  `8b8ebe17...b2118bf / fc0f9788...a90932`；不得用这次工程资源事实选择或调节算法质量。
 
 <a id="detail-v5"></a>
 

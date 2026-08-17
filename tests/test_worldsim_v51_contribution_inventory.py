@@ -17,7 +17,7 @@ from scripts.smoke_worldsim_v51_one_view_contribution import (
 )
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml"
 
 
 def test_one_view_config_binds_operator_checkpoint_and_locks() -> None:
@@ -39,6 +39,12 @@ def test_one_view_config_binds_operator_checkpoint_and_locks() -> None:
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+    assert config["resources"]["maximum_nvidia_peak_mib"] == 16384
+    assert config["resources"]["maximum_torch_reserved_peak_mib"] == 16384
+    assert config["recovery_from"]["observed_nvidia_peak_mib"] == 14234
+    assert config["recovery_from"]["status_sha256"] == (
+        "8b8ebe17c71b74bbb91c1e468e1bb4f1e8594b2f7ac344df2f61dac32b2118bf"
+    )
 
 
 def test_contribution_inventory_applies_both_floors_and_keeps_zero() -> None:
