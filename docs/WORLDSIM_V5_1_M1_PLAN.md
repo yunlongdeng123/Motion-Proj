@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r010 H feature/PCA PASS；r011 resource blocked；v2/r012 recovery 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r012 H 45-view B0/B1 uplift PASS；下一门为 H evaluation-only preregistration |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -35,7 +35,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - V5.1 新增 failure=`V51-F01`–`V51-F23`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
-  `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 active recovery preregistered`。
+  `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 resolved by v2/r012`。
 
 ## 配置与入口
 
@@ -72,6 +72,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_h_feature_pca_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_h_uplift_v1.yaml`
 - `configs/worldsim_v51/stage_b_h_uplift_v2.yaml`
+- `configs/worldsim_v51/stage_b_h_uplift_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -235,5 +236,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   result freeze 已绑定；r010 又完成 45-view DINO sidecar/seeded-PCA，首图 repeat、PCA state 和 45 sidecar identity exact，
   `V51-F14 resolved`。r011 完成 45-view uplift 计算后因 observed NVIDIA/Torch reserved=`20,554/20,202 MiB`
   越过 `18,432 MiB` 资源门而 blocked；v2/r012 只把两项 ceiling 提升为 `22,528 MiB`，见 `V51-F23`，quality 继续锁定。
+- r012 已从冻结输入完整重跑并通过：45/45 views、3/3 scenes、6 sidecars、3 checkpoint identities、19/19 manifest
+  entries exact；GPU/Torch reserved=`20,554/20,202 MiB`，cgroup=`14,450,888,704 bytes`。`V51-F23 resolved`，结果已冻结。
+  下一门只允许预注册 H evaluation-only proxy/repeatability/heldout reprojection，`V51-F15` 未解决前不得直接读 quality。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

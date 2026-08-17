@@ -1,5 +1,23 @@
 # Research Status
 
+## V5.1 Stage B r012 H 45-view B0/B1 uplift 门通过（2026-08-18）
+
+- canonical r012=`20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012`，source=`4fc07cb`，status=`done`，
+  conclusion=`h_45_view_b0_b1_gaussian_sidecars_ready_without_quality_read`。45/45 train-only views、3/3 H scenes、
+  6 个 `[N_gaussian,40]` B0/B1 sidecars 均完成；3 个 base checkpoint before/after SHA exact。
+- scene 0471/1087/0379 coverage=`0.8986823140/0.8479816328/0.8529442234`，covered Gaussian=
+  `772,519/789,660/1,012,693`，supported intersections=`368,806,013/580,912,738/360,850,116`，B0/B1 L2=
+  `1826.1010/2077.5490/1875.4642`；这只证明 uplift/denominator 与两臂 non-alias，不构成方法质量结论。
+- resource PASS：GPU start/peak=`1/20,554 MiB`，Torch allocated/reserved=`19,314.634/20,202 MiB`，cgroup=
+  `14,450,888,704 bytes`，846 samples、0 error、duration=`621.170 s`，成功后无活跃 GPU。`V51-F23 resolved`。
+- 独立审计 6/6 NPZ file/content SHA、dtype/shape/finite/nonnegative、19/19 manifest entries、3 checkpoint identities、
+  summary/status/fingerprint/locks 均 exact；sidecar=`811,046,036 bytes`，run=`21 files / 811,273,469 bytes`。
+  summary/status/manifest/fingerprint/sidecar-manifest SHA=`156d1a34...046e2/4574725d...7c34/752ade66...d0b/`
+  `6f1d5e7d...8e7f/77477253...5c78`，record chain=`bb7563ad...69d4`。
+- result freeze=`configs/worldsim_v51/stage_b_h_uplift_freeze_v1.yaml`。membership proxy/method quality 未读；S/C、
+  validation/test/KITTI 未读，M2/M3=`pending`。下一步只允许先预注册 H evaluation-only proxy/repeatability/heldout
+  reprojection 合同以处理 `V51-F15`，不得直接查看或调节质量结果。
+
 ## V5.1 Stage B r011 resource blocked，r012 22 GiB recovery 已预注册（2026-08-18）
 
 - canonical blocked r011=`20260817T161351Z__m1-stage-b-h-uplift-s20260814-r011`，source=`40f4d64`；45/45 H views、

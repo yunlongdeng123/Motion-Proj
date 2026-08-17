@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage B r012 canonical H uplift（2026-08-18）
+
+- run=`20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012`，source=`4fc07cb`，status=`done`；输入仍为 r005
+  operator freeze、r010 PCA/45 feature sidecars 与 V5 r027/r028/r029 immutable checkpoints，未复用 r011 blocked sidecar。
+- outputs=`3 scene reports + 6 Gaussian feature NPZ + identity manifest`；coverage 0471/1087/0379=
+  `0.8986823140/0.8479816328/0.8529442234`，B0/B1 L2=`1826.1010/2077.5490/1875.4642`，checkpoint 全 exact。
+- resources=`20,554 MiB NVIDIA / 20,202 MiB Torch reserved / 14,450,888,704-byte cgroup / 621.170 s`，
+  v2 22 GiB gate PASS。manifest=`19 files / 811,269,697 bytes`，run=`21 files / 811,273,469 bytes`；独立逐文件、
+  逐数组审计 exact。failure delta=`V51-F23 resolved`。
+- freeze=`stage_b_h_uplift_freeze_v1.yaml`；本 run 没有 proxy/quality，S/C/validation/test/KITTI 未读，M2/M3=pending。
+
 ## V5.1 Stage B r011 resource blocked / r012 recovery 预注册（2026-08-18）
 
 - r011=`20260817T161351Z__m1-stage-b-h-uplift-s20260814-r011`，source=`40f4d64`，status=`blocked`，reason=

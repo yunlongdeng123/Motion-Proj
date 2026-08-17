@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
+
+import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,6 +12,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_h_uplift import validate_config
+from motion_proj.worldsim_v51.feature_sidecar import array_sha256
+from motion_proj.worldsim_v51.protocol import sha256_file
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_uplift_v2.yaml"
@@ -44,3 +49,43 @@ def test_h_uplift_config_binds_three_scenes_45_views_and_quality_locks() -> None
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+
+
+def test_h_uplift_freeze_binds_terminal_manifest_and_sidecars() -> None:
+    import yaml
+
+    freeze = yaml.safe_load(
+        (
+            ROOT / "configs/worldsim_v51/stage_b_h_uplift_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert summary["report"]["processed_scene_count"] == 3
+    assert summary["report"]["processed_view_count"] == 45
+    assert all(item["immutable"] for item in summary["report"]["checkpoint_records"])
+    feature_manifest = json.loads(
+        (run / "artifacts/gaussian_feature_manifest.json").read_text(encoding="utf-8")
+    )
+    assert len(feature_manifest["records"]) == 6
+    for record in feature_manifest["records"]:
+        path = run / record["path"]
+        assert sha256_file(path) == record["file_sha256"]
+        with np.load(path, allow_pickle=False) as archive:
+            assert array_sha256(archive["feature"]) == record["feature_content_sha256"]
+            assert array_sha256(archive["weight"]) == record["weight_content_sha256"]
+            assert (
+                array_sha256(archive["supported_view_count"])
+                == record["supported_view_count_content_sha256"]
+            )
+    assert not list(run.rglob("*.partial*"))
+    assert summary["membership_proxy_read"] is False
+    assert summary["method_quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

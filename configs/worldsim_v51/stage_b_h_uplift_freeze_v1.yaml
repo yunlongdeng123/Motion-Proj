@@ -1,0 +1,132 @@
+schema_version: worldsim_v51_stage_b_h_uplift_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: h_45_view_b0_b1_gaussian_sidecars_frozen_without_quality_read
+
+canonical_run:
+  run_id: 20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012
+  source_commit: 4fc07cb168ba9fe1e7b812f8ec78af0fb2331afe
+  config_sha256: 632c77d29e1a5c72742d922beb049e329b879dba5b5394705e93a3166e8d776d
+  hashes:
+    summary.json: 156d1a34dd43b8f1d8d1e602021e5ee1c53e1dfb6e3674d2034ebd16ea9046e2
+    status.json: 4574725dfcaa85a4e70768f097eb247a13b63d6f11abd071ccadc3a2e5c47c34
+    manifest.json: 752ade6664a6e8a55848451035aaff9f6a02bebf014fe80684b6b10aa5bddd0b
+    fingerprint.json: 6f1d5e7db608f5f557ba2a28fea048dc5da2045aca338a590b460f8ccfd68e7f
+    resolved_config.yaml: 3a31708396c1d18974b587f94810f95f3e1303306789d00894a7217ca41b9293
+    metrics.jsonl: 899a42beeadb0eb0a5f315ff94a988a2d256475c7ec2dedf2d2c97c9f63f023d
+    events.jsonl: ccd89789f235317e01868fb01896ffbc41dab323fbf539a4d980ccb60748d364
+    resource_samples.jsonl: 653444034818cfa79e1409684bb66fa9aa855cb2a7336d8a5c50e2787cf173b3
+    artifacts/gaussian_feature_manifest.json: 77477253c3c82435833ab9578b3e450e1527dfa6b90435d00db55e6c324c5c78
+    artifacts/uplift_report.json: 25461cb74bcfec7ddec103a1c5d1785b075e6fbd51f89e3a909b6fc14ddac9fa
+    artifacts/resources.json: 4ffa6f14ce6551a969565882be26ac1c954248d758197fbe77d8cffe62ce33f1
+    artifacts/uplift_progress.json: 687b3b12607a7667018622e7ff77acd60946ebfa732730b4e0835c1c63bd8113
+    artifacts/scene_reports/scene-0471.json: af867617094186e0eae66ce7a7a5442f5f9facd021dbff2a73ac46bc832b384b
+    artifacts/scene_reports/scene-1087.json: cebcb77723ef8fd49f6cd68f3b7ac5ee32e1d11e0fed9c774302cc619416dace
+    artifacts/scene_reports/scene-0379.json: bf444a6db1b399010fc92c25daa61e42d46dccb3ef984fa24751093d70fdbb73
+
+identities:
+  operator_freeze_sha256: d523b0d890a99eae82fbdfd95c71470680a837ce13656b8a6310cbc6ab19e25e
+  feature_freeze_sha256: 94643d679fbb4a5cbe4b60ebfe4155ba3adcac6b4dc77a8d57532c463e534d52
+  pca_state_sha256: fe9eea728ed2f52db5bbe6d0b1c505dc3e3808b6fcf3ea5a2344f7d8473231c8
+  h_feature_record_chain_sha256: 4c3689daca67d0728706753bba28bb84d243c89520e2e708b9acef03ad9c3289
+  gaussian_feature_manifest_sha256: 77477253c3c82435833ab9578b3e450e1527dfa6b90435d00db55e6c324c5c78
+  gaussian_feature_record_chain_sha256: bb7563ad0e3a03b288154aed34fdf7577dee514484ab9f2bc5e9d99e244c69d4
+  checkpoint_before_after_exact: true
+  checkpoint_sha256:
+    scene-0471: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    scene-1087: 84c34b837e8083a84a77de0662c6c702ce978a2e8e11a4038d487e1f6c9754be
+    scene-0379: d77fa13f5ebe1d469222c3df78eb316d836178dca608d00c17f0af3a56d3042d
+
+uplift:
+  scene_count: 3
+  view_count: 45
+  views_per_scene: 15
+  feature_dimension: 40
+  renderer_size_wh: [800, 450]
+  minimum_intersection_contribution: 0.0001
+  minimum_gaussian_view_mass: 0.001
+  accumulator_dtype: float64
+  output_dtype: float32
+  sparse_transpose: scipy_csr_float64
+  dense_intersection_feature_materialization: false
+  b0: view_saturated_intersection
+  b1: normalized_renderer_transpose
+  optional_pruning: false
+
+scene_results:
+  - scene: scene-0471
+    gaussian_count: 859613
+    covered_gaussian_count: 772519
+    gaussian_coverage: 0.8986823140180523
+    supported_intersection_count: 368806013
+    supported_contribution_mass: 4861164.72050204
+    b0_b1_difference_l2: 1826.1010226663598
+  - scene: scene-1087
+    gaussian_count: 931223
+    covered_gaussian_count: 789660
+    gaussian_coverage: 0.8479816327560638
+    supported_intersection_count: 580912738
+    supported_contribution_mass: 5384602.526525009
+    b0_b1_difference_l2: 2077.548988223499
+  - scene: scene-0379
+    gaussian_count: 1187291
+    covered_gaussian_count: 1012693
+    gaussian_coverage: 0.8529442234464845
+    supported_intersection_count: 360850116
+    supported_contribution_mass: 5138394.856565812
+    b0_b1_difference_l2: 1875.464245910769
+
+sidecars:
+  record_count: 6
+  total_file_bytes: 811046036
+  feature_dtype: float32
+  weight_dtype: float64
+  supported_view_count_dtype: int32
+  file_sha_recheck: exact
+  array_content_sha_recheck: exact
+  finite_nonnegative_recheck: exact
+  partial_file_count_after_success: 0
+
+resources:
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 20554
+  torch_peak_allocated_mib: 19314.63427734375
+  torch_peak_reserved_mib: 20202.0
+  cgroup_memory_peak_bytes: 14450888704
+  disk_available_at_start_bytes: 84621426688
+  sample_count: 846
+  monitor_error_count: 0
+  duration_seconds: 621.1699323896319
+  nvidia_ceiling_mib: 22528
+  torch_reserved_ceiling_mib: 22528
+
+run_inventory:
+  manifest_file_count: 19
+  manifest_bytes: 811269697
+  run_file_count: 21
+  run_total_bytes: 811273469
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  h_feature_sidecar_read: true
+  h_renderer_started: true
+  uplift_feature_computed: true
+  pixel_rgb_values_consumed: false
+  lidar_values_consumed: false
+  membership_proxy_read: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_h_evaluation_only_proxy_repeatability_and_heldout_reprojection
+
+failure_ledger_refs: [V3-F01, V3-F07, V3-F18, V5-F20, V5-F22, V5-F23, V5-F24, V51-F14, V51-F15, V51-F19, V51-F20, V51-F21, V51-F22, V51-F23]
+failure_ledger_delta: [V51-F23]
