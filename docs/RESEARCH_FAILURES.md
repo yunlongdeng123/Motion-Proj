@@ -650,7 +650,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   证明 runtime 还不具备 materialization 所需的 repeatable execution。r036 resource 仍 PASS，成功输出未读质量且不能补写
   r035。下一步先做预注册 runtime health/control-vs-target reproducibility gate；禁止用第二次偶然成功直接重启 45-view。
   r036 evidence=`summary 32e59c85...3ea /audit 5,077 bytes, ec7cfa36...34f6 /freeze
-  configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml`。
+  configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml`。r037 用同卡、同 frozen method、同
+  `CUDA_LAUNCH_BLOCKING=1` 做 A–B–A–B：两次 0471 known-good control 均成功、mask/pred 彼此 exact 且与 r034 SHA
+  相同；夹在其间的两次 1087 target 均在相同 CUBLAS site 失败。故“整张 GPU/所有三视图已普遍失效”不成立，失败收窄为
+  target-path process instability；但 r036 曾有一次 target success，仍不能倒写 deterministic data failure。ECC/page/row 对
+  RTX3090 为 N/A，dmesg 又无权限，二者都不能冒充健康证明。合法下一步是 source-neutral trace，在不改 upstream 文件/
+  tensor 内容/方法参数的前提下记录 control/target matmul tensor metadata 与 allocator 状态；任何 trace 输出仍不得参与质量或
+  training。r037 evidence=`summary 5fd4a4e8...df8 /audit 8,245 bytes, 2fb76f32...d50d /freeze
+  configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

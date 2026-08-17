@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -83,3 +85,25 @@ def test_f0f_r037_independent_audit_replays_control_target_boundary() -> None:
         "expected_cublas_internal_failure",
     ]
     assert result["quality_read"] is False
+
+
+def test_f0f_freeze_keeps_target_instability_out_of_materialization() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["outcome"] == "control_stable_target_failure"
+    assert freeze["control"]["exact_pair"] is True
+    assert freeze["target"]["classifications"] == [
+        "expected_cublas_internal_failure",
+        "expected_cublas_internal_failure",
+    ]
+    assert freeze["interpretation"]["failure"] == "V51-F62"
+    assert freeze["governance"]["full_materialization_authorized"] is False
+    assert freeze["governance"]["next_phase"] == (
+        "source_neutral_target_tensor_allocator_instrumentation_preregistration"
+    )

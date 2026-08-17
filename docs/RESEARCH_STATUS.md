@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.1 Stage F F0f r037 control 稳定、target 不稳定，已冻结（2026-08-18）
+
+- canonical r037=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`，source/tree=
+  `3c692f4...cc3/ad8d798b...89c`，status=`done`，outcome=`control_stable_target_failure`。A–B–A–B 中两次
+  0471 control 均 success，三 mask/pred pair exact 且与 r034 SHA 完全相同；两次 1087 target 均在冻结 CUBLAS site
+  失败、0 mask/pred、非显式 OOM。
+- control mask SHA=`cbfc00d5...226/c11db011...f18/7ffe5683...593`、pred=`f5491453...156`；target stderr=
+  `35c3494d...c58/f6378ead...a5a`。结合 r036 的 target 一败一成，只能写作 target path process instability；不能写成
+  全局 GPU 故障，也不能写成 target deterministic 必败。
+- health probe：identity/temp/P-state 与 NVIDIA ECC/page/row 命令成功；RTX3090 ECC 等字段 N/A，只表示不可用，不算健康
+  PASS；dmesg 因权限拒绝不可观测。没有 GPU reset/driver mutation。resources=`peak/headroom 24,124/452 MiB /cgroup
+  17,969,901,568 bytes /86.805s /271 samples /0 errors`，全门 PASS。
+- audit=`20260818T143000Z__stage-f-f0f-r037-audit.json /8,245 bytes /2fb76f32...d50d /PASS`；freeze=
+  `configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml`。`V51-F62` 保持 active，并细化为
+  control stable/target unstable。下一步只预注册 source-neutral target tensor/allocator instrumentation；full materialization/
+  quality/alignment/training/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0f CUDA runtime health/reproducibility 已预注册（2026-08-18）
 
 - formal target=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`，authorization 只来自 r036 mixed freeze=

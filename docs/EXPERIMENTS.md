@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage F F0f r037 control-stable/target-failure / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037 /3c692f4...cc3 /
+  ad8d798b...89c`；outcome=`control_stable_target_failure`。resolved/summary/manifest/status/events SHA=
+  `1d29728a...04d/5fd4a4e8...df8/6b157621...26d/d66df2b8...e1bf/4184d2dd...7aab`。
+- A1/A2 control 均成功且 mask/pred exact，与 r034 identity 一致；B1/B2 target 均 CUBLAS expected failure、非显式 OOM、
+  0 partial output。pair checks=`control success/exact true/true，target success/exact false/false`。
+- health=`NVIDIA identity+ECC/page/row command rc0；ECC fields N/A；dmesg permission-denied rc1`，没有 reset/mutation；
+  resources=`24,124 MiB peak /452 MiB headroom /17,969,901,568 cgroup /86.805117s /271 samples /0 errors`。
+- audit=`8,245 bytes /2fb76f32...d50d /PASS`，manifest=`33 entries /1,217,783 logical /180,794 regular`；freeze=
+  `stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml`。failure delta=`V51-F62 refined_control_stable_
+  target_path_unstable`；下一步只做 source-neutral trace instrumentation，不读质量、不恢复 materialization。
+
 ## V5.1 Stage F F0f r037 runtime control-target reproducibility 预注册（2026-08-18）
 
 - run=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`；config=

@@ -1,0 +1,103 @@
+schema_version: worldsim_v51_stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0f_cuda_runtime_control_target_reproducibility_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037
+  source_commit: 3c692f4a4e2b5318e1f6961ba1a6d71502790cc3
+  source_tree: ad8d798bd1f51f031c4cb293569264cb7ab0689c
+  status: done
+  outcome: control_stable_target_failure
+  conclusion: control_two_replays_succeeded_exact_but_target_retained_cublas_instability
+  resolved_config: {bytes: 7971, sha256: 1d29728a8d841d66ce5b61cf9033dfb488899f8ba4dd780fe724bb0000d2e04d}
+  summary: {bytes: 12207, sha256: 5fd4a4e8a7b08174457cd65c7979cef7a393395ac13ad999880645133894cdf8}
+  manifest: {bytes: 6199, sha256: 6b157621638b7a2b9c915785bd443de2feaa59a8b7358ea640fa8538592e926d}
+  status_file: {bytes: 326, sha256: d66df2b8c80b40df5aa0215aaa68356be5a5c93e362346ef1d65d3db3f29e1bf}
+  events: {bytes: 162, sha256: 4184d2ddca3c73ae5942465c1bef1891af4dd03a6b27fe2e19ec4a5534f37aab}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T143000Z__stage-f-f0f-r037-audit.json
+  bytes: 8245
+  sha256: 2fb76f32e9dda43fec903950108db415ed49107c1faa80c7ae6483a1a24bd50d
+  status: pass
+  audited_run_status: done
+  inventory: {entry_count: 33, logical_bytes: 1217783, regular_bytes_excluding_input_symlink_targets: 180794}
+
+attempt_order:
+  - control_replay_1
+  - target_replay_1
+  - control_replay_2
+  - target_replay_2
+method: {sam_grid: 32, sam_batch: 64, amp: true, size: 480, temporal_setting: semionline, cuda_launch_blocking: true}
+
+control:
+  input_group: scene0471_camera0_frames0_40_80
+  classifications: [success, success]
+  exact_pair: true
+  exact_r034_output_identity: true
+  mask_sha256:
+    - cbfc00d5aa0bf6d0e8343bc186d09f83feffc68a4e5ad77b2742e3e435fa2226
+    - c11db011697d71f92370bb41fc6e7e0b438fb21b03a42bcec57e098f72dd9f18
+    - 7ffe568398ca4238073724608e293bfcb3a12e6d605344f1e5149bb12196c593
+  metadata_sha256: f5491453774af21fa8fafe7f188ca6f642adaf19590521f75c1b9e97c6319156
+
+target:
+  input_group: scene1087_frame0_cameras0_1_2
+  classifications: [expected_cublas_internal_failure, expected_cublas_internal_failure]
+  both_success: false
+  exact_pair: false
+  explicit_pytorch_oom: false
+  canonical_mask_count: 0
+  canonical_pred_json_count: 0
+  stderr_sha256:
+    - 35c3494d576c18a590d4f5bcb98a5e2d8acc86773f3b8107f0d323c60f90ec58
+    - f6378ead8e2872ecbd5b18b9c46d9cce8dff01a577e09cc81674c17456484a5a
+
+health_observability:
+  nvidia_identity_temperature_pstate: {returncode: 0, stdout_sha256: 891aee41c07514d73f8b2589b7a08c4f0c8b32f2c208a4178bed6bdcea0558fe}
+  nvidia_ecc_page_row: {returncode: 0, stdout_sha256: fd59794e1b78f212a245ea39712fb9c3be5cc6207070e87899ca096d5c72f544, consumer_gpu_ecc_fields: unavailable_not_pass}
+  dmesg_error_warning: {returncode: 1, stderr_sha256: eb7773ca6beb7854c1984fe13ca1a9c96b7c92861c48ec1f6e2c881c19f3084f, observability: permission_denied}
+  gpu_reset: false
+  driver_mutation: false
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24124
+  nvidia_headroom_mib: 452
+  cgroup_memory_peak_bytes: 17969901568
+  sample_count: 271
+  monitor_error_count: 0
+  wall_seconds: 86.80511660501361
+  all_preregistered_checks: true
+
+interpretation:
+  established:
+    - known_good_control_is_repeatable_and_bit_exact_in_same_abab_run
+    - target_path_failed_twice_at_frozen_cublas_site
+    - target_path_is_unstable_across_r036_and_r037_processes
+  not_established:
+    - globally_unhealthy_gpu
+    - deterministic_target_failure_because_r036_has_one_success
+    - out_of_memory_root_cause
+    - tensor_shape_or_allocator_root_cause
+    - mask_quality
+  failure: V51-F62
+  failure_state: active_control_stable_target_path_unstable
+
+governance:
+  full_materialization_authorized: false
+  quality_read: false
+  actor_identity_alignment_read: false
+  smaller_batch_retry: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: source_neutral_target_tensor_allocator_instrumentation_preregistration
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_refined_control_stable_target_path_unstable
