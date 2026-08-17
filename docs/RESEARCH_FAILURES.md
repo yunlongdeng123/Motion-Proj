@@ -1,4 +1,122 @@
-# Motion-Proj 当前研究风险与防重复账本
+# Motion-Proj 统一失败、风险与防重复账本
+
+> **最后更新**：2026-08-17
+> **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
+> **覆盖范围**：V1–V5、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
+
+本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
+历史快照；`WS_*_FAILURE_FORENSICS.md` 是专项诊断报告，不是第二本账。新路线、新版本和新实验不得再创建并行的
+`*_FAILURES.md` 事实源。
+
+## 0. 使用合同与渐进式导航
+
+### 0.1 渐进式读取
+
+1. 每次研究任务先读本节和“V1–V5 版本总览”，确认当前问题属于算法、数据、评测、协议、工程、资源还是治理风险。
+2. 根据 task、模块和关键词用 `rg` 定位 failure ID；只展开命中的完整条目及其相邻门禁，不默认一次加载全部长账本。
+3. 新计划至少引用一个直接相关 failure ID；涉及跨路线复用时，再读取对应版本详细章和 canonical evidence。
+4. 只有在做全局路线审计、迁移或报告附录时才通读全文件；归档快照仅在核对当时字节或历史编号时读取。
+
+### 0.2 渐进式写入
+
+1. 新坑先在当前版本详细章追加一个唯一 ID，再更新本文件顶部版本总览；不要复制整章或另建版本 failure 文档。
+2. 旧结论被新证据解除时不得删除原条目；在原条目追加 `resolved/superseded`、新证据、仍然成立的边界和新 ID。
+3. 写入只包含可复用的失败事实与防重复门禁；逐步日志、完整 stdout 和大表留在 run，实验结果表留在
+   `EXPERIMENTS.md`。
+4. 每个正式实验在启动前登记 `failure_ledger_refs`，收口时登记 `failure_ledger_delta`。任何 `blocked/rejected`、
+   前提被推翻、工程恢复、门禁失败或旧风险解除，都必须在同一逻辑提交中更新本文件；若确无新增，只在实验台账写
+   `failure_ledger_delta=none`，避免向失败账本灌入成功流水账。
+
+### 0.3 单条记录最小 schema
+
+| 字段 | 必填内容 |
+|---|---|
+| ID / 分类 | 唯一 `<路线>-FNN`；分类为 `algorithm/data/evaluation/protocol/engineering/resource/governance` 之一或组合 |
+| 状态 | `active/resolved/superseded`；实验 task 状态仍只用 `pending/running/blocked/done/rejected` |
+| 观察事实 | 分母、错误、指标、资源或 terminal；不把推断写成事实 |
+| 根因与推翻项 | 已确认根因，以及它推翻了哪个假设、实现合同或旧结论 |
+| 防重复与复开 | 禁止的事后调参/删分母/覆盖 run，以及合法复开需要的新证据 |
+| 证据 | task/run ID、commit、summary/manifest/文档路径；工程失败与算法 reject 分开 |
+
+### 0.4 目录
+
+- [V1–V5 版本总览与 V1/V2 汇总](#1-v1v5-版本总览与-v1v2-汇总)
+- [V5 详细账本](#detail-v5)
+- [V4 详细账本](#detail-v4)
+- [V3.3/V3.2/V3.1 详细账本](#detail-v3)
+- [V2 继承门禁](#detail-v2)
+- [V7/V7.1、N1/cut-in 与历史路线](#detail-legacy)
+- [跨路线原则与新实验检查表](#detail-cross-route)
+
+## 1. V1–V5 版本总览与 V1/V2 汇总
+
+| 版本 | 终态/核心推翻 | 主要工程坑 | 详细证据入口 |
+|---|---|---|---|
+| V1 | AD-GS 六场景复现成立，但 persistent identity 不存在；唯一候选与已有工作直接重合，M7 rejected，M8/M9 未授权 | DGGT `pointops2` PEP 517 隔离缺 torch；训练完成、评估依赖和容器生命周期必须分开 | 下方 `V1-F01`–`V1-F06`、`PIVOT-F14B/F15/F16`、V1 frozen archive |
+| V2 | M0–M4 闭环；M5 三场景压力测试只完成部分资产，不能写成路线完成；局部保持不等于删除后背景真实 | 空 shell PATH、CUDA/headers/包版本、devkit schema、SM 8.6、render 累积内存、子进程回收、空 actor slice | 下方 `V2-F01`–`V2-F09`、V2 继承门禁、`EXPERIMENTS.md` V2 注册表 |
+| V3/V3.1 | A1 保持 off；A2 是 boundary/全局/成本 tradeoff；A3 局部精修不晋级；P1 pruning rejected；P2/P3 只支持存储/资产拆分 claim | 相机标签、随机 CUDA 初始化、分辨率三层合同、runtime state key、资源 ceiling、前馈前置条件 | `V3-F01`–`V3-F25` |
+| V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
+| V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
+| V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
+
+### 1.1 V1 汇总条目
+
+- `V1-F01`（`algorithm/evaluation`, `active`）：AD-GS 六场景 exact reproduction 只证明 frozen baseline 可复现，
+  不证明对象级编辑、未知背景恢复或新方法成立。证据为 V1 M4 aggregate；禁止把复现分数重命名为贡献。
+- `V1-F02`（`engineering`, `resolved in V2`）：DGGT V1 在 input staging 前被 `pointops2` 的 PEP 517 隔离构建
+  缺少 torch 阻塞，没有质量/速度数字。V2 用固定 compiler/runtime/headers 和 upstream 非隔离安装解除工程前置；
+  V1 terminal 仍保持 blocked，详见 `PIVOT-F14B`。
+- `V1-F03`（`algorithm/data`, `active`）：六场景 pseudo ID 最长支持仅 `1/6/1/1/2/1` 帧，checkpoint 只有
+  二值 `obj`，`0/12` object slots 可评；`persistent_object_identity_unavailable` 不能靠事后几何关联回填。
+- `V1-F04`（`algorithm/governance`, `active`）：候选“恢复持久身份并绑定 actor 后做轨迹编辑”与 InstDrive、Director、
+  OmniRe、HorizonForge、G²Editor 直接重合；适配 AD-GS 是工程，不足以通过 novelty gate。M7 保持 rejected。
+- `V1-F05`（`protocol/evaluation`, `active`）：M7 拒绝后 M8/M9 未授权，0 seeds、0 proposed metrics、human verdict
+  为 `null`。禁止事后补 endpoint、把 0 coverage 写成提升或由 Codex 代填人评。
+- `V1-F06`（`data/governance`, `active`）：早期 cut-in 路线没有官方召回率分母，strict-v2 在 675 scenes 仅
+  `1 PASS / 1 scene`；这说明当前可验证事件池过稀，不说明 nuScenes 没有 cut-in。cut-in 只能作可选演示，不能再
+  承担主数据入口或论文成立条件。
+
+V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynamic-reconstruction-v1/`；其中的
+`RESEARCH_FAILURES.md` 是冻结快照，不再单独维护。
+
+### 1.2 V2 汇总条目
+
+- `V2-F01`（`engineering`, `resolved`）：非登录 shell 中裸 `python` 不在 PATH；runner 必须显式绑定解释器，
+  不运行 `conda init`，也不能把 PATH 错误写成网络/依赖失败。
+- `V2-F02`（`engineering`, `resolved`）：DGGT r1–r7 依次暴露 pip backtracking、CUDA compiler/runtime mismatch、
+  cusparse headers、transformers/diffusers/torch schema、`flow_vis` 和 retry schema；每次修复必须新 run，native 已完成
+  的阶段不被后续 common-eval blocked 覆盖。
+- `V2-F03`（`data/protocol`, `resolved`）：磁盘 `sample.json` 没有 devkit runtime `anns` 反向索引，Decimal、
+  invalid projection schema 和 nearest-sweep 也会破坏 exact mapping；最终必须以 exact `sample_token` 为主键。
+- `V2-F04`（`resource/protocol`, `active`）：30k checkpoint 完成不等于累积 full render 完成；后者在 577/588 时
+  越过 90% cgroup 合同并安全停止。训练与 post-render 必须分开裁决，不得删 checkpoint 或写成 OOM/方法失败。
+- `V2-F05`（`engineering`, `resolved`）：CUDA 扩展 import 成功不代表包含 RTX 3090 SM 8.6 kernel；必须从冻结源码
+  按目标 arch 重编并运行真实 forward/backward，不能只做 import smoke。
+- `V2-F06`（`data/evaluation`, `active`）：训练可把非目标 actor Gaussian slice 裁为空；registry 必须显式 unavailable，
+  选定 actor 必须非空，禁止静默删 denominator 或把空 slice 当成功删除。
+- `V2-F07`（`engineering/resource`, `resolved`）：外层 timeout 不会回收 `start_new_session=True` 的子进程；必须按
+  精确 PGID 清理并保留 interrupted terminal，长任务使用 detached controller 和独立日志。
+- `V2-F08`（`algorithm/protocol`, `active`）：M5 只完成 0230/0242 checkpoint 与 0255 诊断；三场景×两 actor×四编辑、
+  pseudo-hole/perception/final matrix 未完成。空 tensor `torch.cat` 是工程阻塞，不是 3DGS 方法失败，也不允许把部分资产
+  写成 M5 done。
+- `V2-F09`（`evaluation/algorithm`, `active`）：lateral/delete non-target PSNR 93/95 dB 主要是硬局部保持构造，
+  不能证明 source footprint 后背景、边界或时序真实；后续必须把 outside preservation 与 hole/depth/boundary/temporal
+  指标分开。
+
+### 1.3 V4 历史编号冲突校正
+
+2026-08-17 统一账本时发现，旧追加段落重复使用了 `V4-F30`–`V4-F33`。为保证后续引用唯一，本文件将 live canonical
+编号校正如下；archive 快照保持原字节和旧编号，不回写：
+
+- B0/D0 段的 `V4-F17`–`V4-F33` 保持不变；
+- 历史 M1 development/validation `V4-F30`–`V4-F34` → live `V4-F34`–`V4-F38`；
+- 历史 M1 rejection/M2 validation `V4-F35`–`V4-F39` → live `V4-F39`–`V4-F43`；
+- 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
+
+新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v5"></a>
 
 ## V5 M3 constraint projection 新增防重复结论（2026-08-14）
 
@@ -71,62 +189,61 @@
 - `V5-F15`：Gaussian 最小 covariance 主轴只能作为 renderer-native surface-normal proxy，不是 LiDAR/mesh ground-truth normal；其符号还具有本征向量二义性。V5 必须用 reference camera 定向、验证 covariance 正定与 available normal 单位范数，并把 `normal_is_ground_truth=false` 固化进 config。若 graph 改善，不能据此宣称已恢复真实表面法线。
 - `V5-F16`：DriveStudio 原生 nuScenes preprocess 完成不等于 StreetGS 训练输入已闭合；它生成 images/calibration/LiDAR/object/dynamic masks，但不生成 StreetGS loader 必需的三训练相机 `sky_masks`。V5 首个 profile r003 在任何训练迭代前因 `sky_masks/000_0.png` 缺失合法 `blocked`，summary SHA=`a2802430984ab369143be609088df514e3ed0943563b23ee0a5b3bee02e214f7`。这不是 reconstruction 质量失败，不得覆盖 r003、伪造空 mask 或把 preprocess 8/8 改写成失败；必须先用已冻结本地 SegFormer revision、offline/atomic 协议派生每 scene `frames×3` masks，绑定独立 manifest/SHA，再以新 run ID 重跑 profile。
 
-## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
-
 - `V5-F19`：Python 包内单测通过不等于脚本可从仓库根直接启动。KITTI audit r002 attempt 在读取任何 payload 前因 `ModuleNotFoundError: motion_proj` 失败；import 发生在 runner main 前，因此没有生成 run 目录。不得伪造 r002 terminal、复用该 ID 或把它写成数据/坐标质量失败。修复必须在 package import 前显式加入 project root，并增加 `script.py --help` 直接入口回归测试；提交 `43fe090...` 后以 r003 新 ID 完成真实 smoke。
 - `V5-F18`：单场或部分场景的 100-step 成功不能解锁全量 formal，也不能解释成 reconstruction 质量成功。必须保留 8-scene denominator，每场验证 step-100 checkpoint、finite means、summary/status/fingerprint/run-manifest、clean source 与 checkpoint bytes/SHA；formal runner 必须再次读取已提交的 cohort binding。r019–r026 的 `8/8 done` 只证明训练链路与资源门可用，尚未读取 development quality，也不允许跳过 30k base、改用 profile checkpoint 做 structured ownership 结论。
 - `V5-F17`：sky mask 文件存在不等于训练输入已合法绑定。V5 必须同时验证 8 个独立 run 的 summary、run manifest、sky-mask manifest、冻结 SegFormer revision、`frames×3` denominator 与全部 PNG bytes/SHA，并把这些 identity 通过新 overlay 绑定到不可变 reconstruction base 配置；不得回写被 r003 引用的 base 配置、只数文件名后开训，或把 segmentation inference 误写成 method inference。r011–r018 已按该协议闭合 `4704/4704`，只解锁 `profile100`，不直接解锁 30k formal 或质量结论。
 
+<a id="detail-v4"></a>
 
-- `V4-F40`：r258 因 18 场 sky masks 尚未齐全而 fail-closed，r277 因上游假定 instance timeline 稠密而在 scene-0919 暴露稀疏时间轴合同错误；两者都是资产/兼容性失败，不是模型质量失败。只允许以提交 `d5a4794e` 的稀疏 timeline 兼容修复及 r278 100-step smoke 解锁正式训练，不得覆盖失败 run 或提前读 test quality。
-- `V4-F41`：M3 validation r238 的完整 denominator 是 `3 evaluable + 3 abstain = 6`。30.4106% warp L1 改善与 2.6470% temporal LPIPS 改善只来自可评场景；不得删除 abstain、写成 6/6 质量成功，或外推到长时序/非三前向相机。
-- `V4-F42`：REMOVE 使用 exact bypass，零时序增益是冻结组合合同的结果；M3 通过依赖预注册的 across-operation temporal gate，不代表每个 operation 都严格改善。不得事后取消 bypass、改 operation 权重或只报告 LATERAL/INSERT。
-- `V4-F43`：M2 晋级不消除 geometry 风险。hole geometry MAE 的 signed improvement 为 `-3.3908096237 m`（即误差退化 `+3.3908096237 m`）；18-scene 时序结论无论为 `confirmed`，都不得改写成 repair geometry dominance。
-- `V4-F44`：18-scene test 使用 committed freeze 与 exact-once ledger；每场 attempt marker 在任何 test content/quality read 前以 exclusive create 写入，已消费 attempt 禁止重跑。canonical ledger=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T222011Z__m3-test-exact-once-ledger-s0`，attempt/completion=`18/18`；聚合器只读 run evidence，未重读 test source content。
-- `V4-F45`：test 的 abstain 必须留在 18-scene denominator。canonical `20260813T225624Z__m3-test-aggregate18-s0-r335` 为 `12 evaluable + 6 abstain`、conclusion=`confirmed`；不得把 evaluable-only gate 写成全 18 场成功，也不得因 `not_confirmed` 复用同一 test 调参或因 `confirmed` 扩大声明边界。
+## V4 M3 / 18-scene exact-once 防重复结论（2026-08-13）
+
+- `V4-F44`：r258 因 18 场 sky masks 尚未齐全而 fail-closed，r277 因上游假定 instance timeline 稠密而在 scene-0919 暴露稀疏时间轴合同错误；两者都是资产/兼容性失败，不是模型质量失败。只允许以提交 `d5a4794e` 的稀疏 timeline 兼容修复及 r278 100-step smoke 解锁正式训练，不得覆盖失败 run 或提前读 test quality。
+- `V4-F45`：M3 validation r238 的完整 denominator 是 `3 evaluable + 3 abstain = 6`。30.4106% warp L1 改善与 2.6470% temporal LPIPS 改善只来自可评场景；不得删除 abstain、写成 6/6 质量成功，或外推到长时序/非三前向相机。
+- `V4-F46`：REMOVE 使用 exact bypass，零时序增益是冻结组合合同的结果；M3 通过依赖预注册的 across-operation temporal gate，不代表每个 operation 都严格改善。不得事后取消 bypass、改 operation 权重或只报告 LATERAL/INSERT。
+- `V4-F47`：M2 晋级不消除 geometry 风险。hole geometry MAE 的 signed improvement 为 `-3.3908096237 m`（即误差退化 `+3.3908096237 m`）；18-scene 时序结论无论为 `confirmed`，都不得改写成 repair geometry dominance。
+- `V4-F48`：18-scene test 使用 committed freeze 与 exact-once ledger；每场 attempt marker 在任何 test content/quality read 前以 exclusive create 写入，已消费 attempt 禁止重跑。canonical ledger=`/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T222011Z__m3-test-exact-once-ledger-s0`，attempt/completion=`18/18`；聚合器只读 run evidence，未重读 test source content。
+- `V4-F49`：test 的 abstain 必须留在 18-scene denominator。canonical `20260813T225624Z__m3-test-aggregate18-s0-r335` 为 `12 evaluable + 6 abstain`、conclusion=`confirmed`；不得把 evaluable-only gate 写成全 18 场成功，也不得因 `not_confirmed` 复用同一 test 调参或因 `confirmed` 扩大声明边界。
 
 ## V4 M1 rejection / M2 validation 新增防重复结论（2026-08-13）
 
-- `V4-F35`：M1 的 development 正结果不能覆盖 scene-disjoint validation 负结果。validation 只有
+- `V4-F39`：M1 的 development 正结果不能覆盖 scene-disjoint validation 负结果。validation 只有
   `3/6` scenes 可评，方向支持=`0/6`，Boundary F1/Brier/ECE 均反向；base/checkpoint exact 且没有 validation
   重搜。M1 必须保持 `rejected`，不得继续加 feature、transformer、改 threshold，或把 M2 成功倒写成 M1 成功。
-- `V4-F36`：M2 validation 的完整 denominator 是 `6 scenes / 154 requests`。scene-1089/0862/1012 的
+- `V4-F40`：M2 validation 的完整 denominator 是 `6 scenes / 154 requests`。scene-1089/0862/1012 的
   `ABSTAIN_NO_ACTOR` 和 scene-0317 的 24 个 `ABSTAIN_NO_ROLE_MATCHED_ERASE_PACKAGE` 都必须保留；不得只用
   130 个具备 role asset 的请求或 3 个可评场景改写 coverage。canonical coverage 固定为 `83/154=0.5389610390`。
-- `V4-F37`：validation 不允许重新选择 baseline、risk weights 或 threshold。matched baseline 必须沿用 development
+- `V4-F41`：validation 不允许重新选择 baseline、risk weights 或 threshold。matched baseline 必须沿用 development
   冻结的 `TELEA`，router 必须沿用 `uncertainty_forward/threshold=1.0`。即使 validation 上其他 arm 的 composite
   error 更低，也不得事后改 comparator 或路由 operating point。
-- `V4-F38`：M2 通过的是预注册的合取门，不是所有 repair 轴支配。相对 TELEA，router 的 global PSNR/SSIM/LPIPS、
+- `V4-F42`：M2 通过的是预注册的合取门，不是所有 repair 轴支配。相对 TELEA，router 的 global PSNR/SSIM/LPIPS、
   hole PSNR、static LiDAR 和 selective-risk separation 通过，但 hole geometry MAE 从 `2.1435024986 m` 退化到
   `5.5343121223 m`。不得把 `hole_any_endpoint` 通过写成 geometry 改善、真值背景恢复或全面优于 Telea。
-- `V4-F39`：selective-risk 成立只表示 frozen uncertainty 排序在当前 validation 请求上有误差分离：abstained
+- `V4-F43`：selective-risk 成立只表示 frozen uncertainty 排序在当前 validation 请求上有误差分离：abstained
   counterfactual error 比 accepted 高 `0.1241311528`。它不证明 71 个 abstain 已被成功修复，也不允许把 abstain
   从 usable-yield 分母删除。M3 与 18-test 必须继续同时报告 coverage、abstain、blocked 和 worst-case。
 
 ## V4 M1 / validation 新增防重复结论（2026-08-12）
 
-- `V4-F30`：同一 scene 的历史 V3.3 train mask 不能自动视为符合 V4 冻结的
+- `V4-F34`：同一 scene 的历史 V3.3 train mask 不能自动视为符合 V4 冻结的
   `sample_index mod 5` partition。scene-0230 的 development target 审计发现真实 train/evaluation
   frame overlap，因此必须 `ABSTAIN_LEGACY_SPLIT_LEAK`；不得放宽 split、删除该 scene denominator，
   或把旧 heldout 结果改名为 development。
-- `V4-F31`：M1 六场景质量均值只允许在可评 scenes 上计算，但 coverage denominator 必须保持全部六场。
+- `V4-F35`：M1 六场景质量均值只允许在可评 scenes 上计算，但 coverage denominator 必须保持全部六场。
   r124 的 `2 evaluable + 4 abstain` 是协议事实，不得把 2/2 改写成 6/6 成功或静默删除 abstain。
-- `V4-F32`：validation 只能复用 development 冻结的 evidence arm、calibrator、mask threshold 与 temporal
+- `V4-F36`：validation 只能复用 development 冻结的 evidence arm、calibrator、mask threshold 与 temporal
   retention；禁止在六个 validation scenes 上再次执行 arm search、calibration fit 或 threshold search。
-- `V4-F33`：长时间 archive scan 不能依附会超时断开的 SSH stdout。r128 的 10 个 worker 在扫描约
+- `V4-F37`：长时间 archive scan 不能依附会超时断开的 SSH stdout。r128 的 10 个 worker 在扫描约
   58 分钟后因外层 SSH 断管触发 `BrokenPipeError`；这不是数据缺失，也不得覆盖该 run。重试必须使用
   stdin=`/dev/null`、stdout/stderr 文件重定向、parent PID=1 的 detached 进程，并复用已提取的非空文件。
-- `V4-F34`：Python 环境必须按 stage 显式区分。validation raw extraction 需要
+- `V4-F38`：Python 环境必须按 stage 显式区分。validation raw extraction 需要
   `/root/autodl-tmp/envs/motionproj/bin/python`（含 `ijson`）；StreetGS/V3.3 GPU runtime 使用
   `/root/autodl-tmp/envs/drivestudio/bin/python`。r127/r129 分别保留缺依赖与错误解释器路径证据，
   不通过临时安装或删除失败记录掩盖环境错误。
 
 
-> **最后更新**：2026-08-12
-> **当前范围**：V4 当前门禁、V3.3/V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
-> **历史账本**：完整 `RF-01`–`RF-18` 原文见
+> **历史合并注记（2026-08-12）**：以下 V4 D0/B0 与更早内容在当日从旧账本合入；当前权威元数据、目录和写入合同
+> 以上方 2026-08-17 统一入口为准。完整 `RF-01`–`RF-18` 原文见
 > [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
-> **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
@@ -240,6 +357,8 @@
 - `V4-F07`：formal run 通过不代表可跳过提交前 whitespace gate。P0 r1 使用的方法合同正确，但未跟踪计划的参考文献
   含 Markdown 行尾空格，`git diff --check` 拒绝提交；规范引用格式后 plan/config SHA 改变。r1 保留 noncanonical
   done，r2 对最终字节重新审计并成为 canonical；不得倒写或覆盖 r1。
+
+<a id="detail-v3"></a>
 
 ## V3.3 R0 防重复结论（2026-08-11）
 
@@ -736,6 +855,8 @@ R0 canonical 的 63/63 inputs、23/23 decisions、12/12 deliverables、26/26 man
 完整 world model、跨场景泛化、物理真实性或安全性。若主张涉及 A2/A3 方法，至少需要独立场景确认；若主张涉及
 部署收益，必须直接测量对应 runtime/working-set 端点。
 
+<a id="detail-v2"></a>
+
 ## V2 启动时必须先读的结论（2026-08-02）
 
 - `PIVOT-F03`：AD-GS exact reproduction 已完成；V2 只读最终 checkpoint/render/metrics，不重复训练。
@@ -751,6 +872,8 @@ R0 canonical 的 63/63 inputs、23/23 decisions、12/12 deliverables、26/26 man
   再做新的 novelty gate。
 
 存储清理只使历史环境和中间 checkpoint non-resident，不撤销上述失败，也不允许重新运行已关闭路线。
+
+<a id="detail-legacy"></a>
 
 ## N1 kinematics-first 第三次 reject 与第四版约束（2026-07-25）
 
@@ -1770,6 +1893,8 @@ process RSS 为 `337,154,048` bytes、cgroup current 为 `4,556,898,304` bytes�
 TP，仍只有 1 TP / 1 scene，低于 sparse 的 3/3。禁止为了形成池而把 ABSTAIN 提升为 PASS、恢复
 `receiver_branch_merge`、放宽 raw/parallel/receiver 时序门、事后改 scene 或把单例人工真实性外推为总体
 precision。准确结论是“当前冻结 strict v2 的 prospective pool 过稀”，不是“nuScenes 没有 cut-in”。
+
+<a id="detail-cross-route"></a>
 
 ## 4. 跨路线必须保留的原则
 

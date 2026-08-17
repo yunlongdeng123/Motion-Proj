@@ -47,15 +47,32 @@ writer.append(chunk)
 
 ## 研究连续性协议
 
-1. 每次开始工作先依次读取 `docs/RESEARCH_STATUS.md`、`docs/RESEARCH_FAILURES.md` 和 `docs/EXPERIMENTS.md`，再检查 Git 状态与相关 run manifest；不得仅依赖对话上下文。
+1. 每次开始工作先读 `docs/RESEARCH_STATUS.md` 当前节、`docs/RESEARCH_FAILURES.md` 顶部合同/目录/版本总览和
+   `docs/EXPERIMENTS.md` 当前注册表，再按 task ID、failure ID 与关键词渐进式展开相关详细条目和 run manifest；
+   不得仅依赖对话上下文，也不得无目标地把全部历史长文一次性载入。
 2. `docs/RESEARCH_STATUS.md` 是唯一当前状态与执行授权入口；`docs/archive/` 中的计划、报告、提示词即使含“当前任务”或“下一步”，也只能作为历史证据，不得据此启动实验。
 3. 新研究计划必须逐项引用 `docs/RESEARCH_FAILURES.md` 中相关负结论或未决风险，并写明为何新假设不只是重复调参、放宽阈值或重跑旧路线。
-4. 完成里程碑、修改研究决策、结束长实验或确认失败结论后，更新当前状态、research 踩坑账本或实验事实源。
+4. 完成里程碑、修改研究决策、结束长实验或确认失败结论后，更新当前状态、统一 failure ledger 和实验事实源。
 5. 任务 ID 保持稳定（如 `P0-GEOMETRY-01`）；计划状态只使用 `pending/running/blocked/done/rejected`。
 6. 状态更新必须包含日期、commit、证据路径和下一步。计划只写决策与阶段状态，原始 trial 日志留在运行目录。
 7. 正式实验必须使用不可复用的确定性 run ID，并保存 resolved config、manifest、fingerprint、JSONL 指标、checkpoint 和 summary。
 8. 任何人工评测在交给用户前，Codex 必须同时交付完整、可独立执行的评测提示词；不得只给 panel 路径、模板或简短 rubric。提示词必须写明评测目的与非目标、盲法与禁止读取的信息、素材范围、逐项 verdict 定义与优先级、边界例、JSONL 填写格式、聚合阈值、完成后的精确命令和下一阶段影响。提示词须在对话中完整呈现，并在仓库 `docs/` 或 run 内留存可追溯副本。
 9. 人工 verdict 只能由用户或其指定评审者填写；Codex 不得代填、推断或以自动 scorer 替代。后续人工评测若没有新的完整提示词，不得请求用户开始评测，也不得把结果用于研究晋级。
+
+## 统一 failure ledger 强制协议
+
+1. `docs/RESEARCH_FAILURES.md` 是唯一活跃失败事实源。禁止新建按版本拆分的 `*_FAILURES.md`；归档中的同名文件
+   只作历史快照，专项 `*_FAILURE_FORENSICS.md` 只作证据报告，不独立维护结论。
+2. 渐进式读取顺序固定为：顶部使用合同与版本总览 → `rg` 命中的 failure ID/机制 → 完整条目 → evidence/run。
+   只有做全局审计、迁移或报告附录时才通读全账本。
+3. 每个正式实验启动前必须在 plan/config/run metadata 登记 `failure_ledger_refs`；收口时必须登记
+   `failure_ledger_delta`。若没有新增失败，实验台账明确写 `none`；不得跳过复核。
+4. 出现 `blocked/rejected`、假设被推翻、数据/评测分母错误、工程恢复、资源停机、协议失效或旧风险解除时，
+   必须在同一逻辑提交中更新 `RESEARCH_FAILURES.md`，不能只写 status、run log 或聊天结论。
+5. 新条目使用唯一 `<路线>-FNN`，至少写分类、状态、观察事实、根因/推翻项、防重复/复开条件、task/run/commit
+   证据。工程失败与算法 reject 分开；成功修复不得删除旧失败，只追加 `resolved/superseded` 和剩余边界。
+6. 渐进式写入只追加或窄改相关版本章，并同步顶部版本总览；不得复制整本账、重排无关历史或创建平行账本。
+   提交前检查定义 ID 无重复、导航可达、引用路径存在，并与 `RESEARCH_STATUS.md`、`EXPERIMENTS.md` 一致。
 
 ## Git 提交规范（强制）
 

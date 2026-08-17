@@ -72,6 +72,8 @@ V5 P0、fresh cohort、KITTI archive audit/adapter smoke 与 M1/M2/M3 developmen
 
 - 根目录只维护当前事实源、长期环境/资产文档和 hash/link compatibility copies；
 - 完成、阻塞或拒绝任务后同步更新 STATUS / EXPERIMENTS / FAILURES；
+- `RESEARCH_FAILURES.md` 是唯一活跃 failure ledger；按顶部版本总览和 failure ID 渐进式读取/写入，禁止另建按版本
+  拆分的 failure 事实源；archive 同名文件只作冻结快照；
 - task 状态只使用 `pending/running/blocked/done/rejected`；
 - `blocked`、`rejected`、`abstain` 和 `done` 必须分开，且完整 denominator 不得删除；
 - 正式 run 的 config、manifest、fingerprint、summary、source snapshot 和关键 SHA 必须可追溯；
