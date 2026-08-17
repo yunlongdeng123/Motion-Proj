@@ -28,3 +28,14 @@ r047/r048 生成两场 SAM sidecar，并由一个新 V5.1 screening run 一次�
 工程尝试保留 terminal，以新 run 修复；不得因质量不理想重跑、改 threshold、换候选或打开 heldout/C/validation/test。
 
 Failure refs=`V5-F20–F26/F29–F32 + V51-F01–F07`；freeze 时 `failure_ledger_delta=none`。
+
+## Frozen materialization binding
+
+- SAM r047/r048 均为 `done`；0998/0359 accepted views=`24/18`，checkpoint 与输入 SHA exact。
+- B3/evidence materialization r049/r050 均为 `done`；evidence views=`15/15`，accepted evaluation views=`12/9`，
+  abstained views=`3/6`，checkpoint 前后 SHA exact，validation/heldout read=`false`。
+- r049/r050 的唯一用途是给 V5.1 screening 提供冻结、只读的 B3 observation/evaluation 输入；候选 A1/A2 的 S 质量
+  在本节写入时仍未读取。正式绑定见 `configs/worldsim_v51/stage_a_screening_v1.yaml`，runner 见
+  `scripts/run_worldsim_v51_stage_a_screening.py`。
+- 并行启动 wrapper 的 PID 转义问题登记为 `V51-F08`；它没有生成重复 run。根据单进程后段约 `20–22 GiB` 的实测
+  显存保留，r049/r050 改为串行执行，候选筛选同样保持单实例。

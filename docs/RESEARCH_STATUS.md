@@ -1,5 +1,16 @@
 # Research Status
 
+## V5.1 Stage A S 输入已精确绑定，等待唯一 candidate screening run（2026-08-17）
+
+- SAM r047/r048 与 B3/evidence materialization r049/r050 均已 `done`；0998/0359 的 evidence views=`15/15`、
+  accepted evaluation views=`12/9`、abstained=`3/6`，两个 30k checkpoint 前后 SHA exact，未读 validation/heldout。
+- canonical S binding=`configs/worldsim_v51/stage_a_screening_v1.yaml`；A1/A2 一次渲染筛选器=
+  `scripts/run_worldsim_v51_stage_a_screening.py`，相关 gate/回归 `10 passed`。本条写入时尚未读取 A1/A2 的 S quality。
+- PowerShell→SSH 后台 PID 转义使外层 wait 失效，但审计确认仅 r049 启动一次、r050 未启动；随后 r050 独立串行完成。
+  wrapper 问题与单卡并发资源假设登记为 `V51-F08`，没有重复 run 或方法分母污染。
+- 下一步只允许在 clean source commit 上执行一个 V5.1 screening run；候选/阈值/gate 不再改变，C、validation、test、
+  KITTI tuning 继续锁定。
+
 ## V5.1 Stage A S screening freeze 完成，等待 one-shot SAM/evaluation（2026-08-17）
 
 - retained candidates=`A1/A2`，S=`scene-0998/scene-0359`；A3/A4 rejected 结论保持。screening freeze=

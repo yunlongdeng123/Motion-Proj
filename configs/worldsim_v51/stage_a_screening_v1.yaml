@@ -1,0 +1,93 @@
+schema_version: worldsim_v51_stage_a_screening_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: frozen_before_candidate_s_quality_read
+phase: stage_a_screening
+seed: 20260814
+
+inputs:
+  screening_freeze:
+    path: configs/worldsim_v51/stage_a_screening_freeze_v1.yaml
+    sha256: a1850495ead4b6fd5d43c81f6a340af89fadd83e04ba87e8c64290668c60d165
+  a1_config:
+    path: configs/worldsim_v51/m1_unary_visibility_v1.yaml
+    sha256: 7518bc742ce4d2e65415dddd8b4cab502ed220057ba5ecc6b279a4c11974b78b
+  a2_config:
+    path: configs/worldsim_v51/m1_unary_unknown_v1.yaml
+    sha256: 4def2e54505f1cbd97d97517806118a3d09ce8e7fb9051f784d7d5827cea63d8
+  canonical_s_runs:
+    scene-0998:
+      run_id: 20260817T132000Z__v51-stage-a-s-scene0998-unary-s20260814-r049
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T132000Z__v51-stage-a-s-scene0998-unary-s20260814-r049
+      source_config:
+        path: configs/worldsim_v51/m1_unary_screening_scene0998_v1.yaml
+        sha256: 3a8989935a72ee886ed21596592624cfaed55dd3217d0f1ff97edebdc0ffaa81
+      hashes:
+        summary.json: 4cd6580fff75f14ad0040bb0a99da9ec829ad9f2747b4909cfa025e93e2fbfa0
+        status.json: 8662ae5bbabd08b177daf86cb3ef31a527d267de01bbacc8d95b489c991d6ff1
+        manifest.json: 26a8befbed2f76c55a7832f5ebebdf439b4f38b40182da7acb90d9ef19e69c66
+        fingerprint.json: 3806c58814448b0bfa4898e401e7b3e57684c1edc901489573e93e9d00aaa256
+      checkpoint_sha256: 4ad88a7e3a8a1df83bbb01675a7945cf4b496b299e4d5e3f356ca061143c0516
+      gaussian_count: 1657399
+      evidence_view_count: 15
+      evaluation_view_count: 15
+      accepted_evaluation_view_count: 12
+      abstained_evaluation_view_count: 3
+    scene-0359:
+      run_id: 20260817T133000Z__v51-stage-a-s-scene0359-unary-s20260814-r050
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T133000Z__v51-stage-a-s-scene0359-unary-s20260814-r050
+      source_config:
+        path: configs/worldsim_v51/m1_unary_screening_scene0359_v1.yaml
+        sha256: 1fab371b5ac4407b97fe4c5aed281ea279b2e72f78aad3c2dde217982d7e1f03
+      hashes:
+        summary.json: 7e2a841c565818f3ee3942107dd789d29f7233266d7445d752332112e7c17861
+        status.json: 9799e4afc11dcb0d7adcdc0040406b1ad2a368b079f50571c4d6506a64d0bf2e
+        manifest.json: 9041c0373b4bc4fc56b11c7688595966b7ee72dfd86c46ae9e2b7ef87bd81bb6
+        fingerprint.json: 95cd3f081052a5c8bf10ec1f5d6e10b189de785dae59885b4f3a9cb1f6cae980
+      checkpoint_sha256: ca1ec48e2acc3883405f4d1a25b7682e2de18abd1a93342b751d8cfc7c9b6048
+      gaussian_count: 1397756
+      evidence_view_count: 15
+      evaluation_view_count: 15
+      accepted_evaluation_view_count: 9
+      abstained_evaluation_view_count: 6
+
+scenes: [scene-0998, scene-0359]
+candidates: [A1, A2]
+comparator: B3
+
+screening_gate:
+  comparator: B3
+  required_scene_count: 2
+  boundary_f1_nonnegative_scene_count_minimum: 2
+  boundary_f1_clearly_positive_scene_count_minimum: 1
+  boundary_f1_clear_delta_minimum_inclusive: 0.001
+  mean_boundary_f1_delta_minimum_exclusive: 0.0
+  mean_false_negative_semantic_mass_delta_maximum: 0.02
+  calibration:
+    maximum_mean_brier_delta: 0.005
+    maximum_mean_ece_delta: 0.005
+  unknown_candidate:
+    mean_coverage_minimum: 0.60
+    abstained_subset_error_must_exceed_accepted: true
+
+selection_policy:
+  prefer_a2_if_a1_and_a2_conditional_gate_pass_and_a2_selective_gate_passes: true
+  fallback_to_a1_if_a1_passes_and_a2_selective_gate_fails: true
+  fallback_to_u2_if_no_retained_candidate_passes: true
+  maximum_survivors_after_s: 1
+  no_posthoc_threshold_or_candidate_change: true
+
+resources:
+  device: cuda:0
+  maximum_gpu_allocated_at_start_mib: 512
+
+restrictions:
+  parameter_search: false
+  candidate_family_change: false
+  threshold_change: false
+  c_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04, V51-F05, V51-F06, V51-F07, V51-F08]
+failure_ledger_delta: pending_stage_a_closeout

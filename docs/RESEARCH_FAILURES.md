@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype、分位数/近零误差及 A3/A4 可识别性均显式审计 | `V51-F01`–`V51-F07` |
+| V5.1 | M1-only 正在推进；P0/D0 与 Stage A H 已完成，S screening 已冻结 | pytest import、float32 oracle、visibility dtype、分位数/近零误差、A3/A4 可识别性与 SSH 编排均显式审计 | `V51-F01`–`V51-F08` |
 
 ### 1.1 V1 汇总条目
 
@@ -184,6 +184,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `a4_cif_decoupling_rejected_no_independent_occupancy_observable`；未读 evaluation artifact/quality、未启动 GPU/training。
   禁止把已有 A1/A2 分解重新命名为 CIF 增益，或在结果后偷偷解锁完整 CIF 训练、校准/重采样。参考：
   [CVPR 2026 official paper](https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Consistent_Instance_Field_for_Dynamic_Scene_Understanding_CVPR_2026_paper.html)。
+- `V51-F08`（`engineering/resource`, `resolved without duplicate run`）：首次尝试并行启动 S unary materialization 时，
+  PowerShell→SSH→远端 Bash 的多层转义把 `$!/$?` 保留成字面量，导致外层 `wait/test` 解析失败。只读 PID、GPU、run 目录
+  与 status 审计确认 scene-0998 只有一个正式进程，scene-0359 根本没有启动；因此保留 r049 单实例自然完成，再以独立前台
+  命令串行执行 r050。两者均为 `done`、checkpoint 前后 SHA exact，且无重复 scene/candidate 分母。3090 实测后段显存保留
+  分别达到约 `22 GiB/20 GiB`，也推翻了“两个 unary materialization 可安全共卡并发”的资源假设。以后 Windows 发起的远端
+  后台编排不得内联依赖 `$!/$?`；优先每个长 run 使用独立前台 SSH session，确需后台时使用远端脚本/控制器并单独审计
+  PID、日志与 terminal。wrapper 失败不得写成方法失败，也不得因外层 exit code 重跑已封口的 immutable run。证据：
+  r049/r050、source commit `6950597`、`configs/worldsim_v51/stage_a_screening_v1.yaml`。
 
 <a id="detail-v5"></a>
 
