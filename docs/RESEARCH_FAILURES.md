@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F29` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F31` |
 
 ### 1.1 V1 汇总条目
 
@@ -257,14 +257,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   repeat bit-exact，PCA state deterministic NPZ repeat byte-exact，45 个 sidecar 的 file/content SHA 全 exact，raw memmap
   成功后删除，PCA state SHA=`fe9eea72...3231c8`；因此本条 resolved。该解决只证明 feature/PCA 可复现，不证明
   LUDVIG uplift 或方法质量有效，S/C 仍只准 transform、不得 refit。
-- `V51-F15`（`evaluation/governance`, `active pre-quality risk`）：Stage B 的 same-actor/actor-background metric 可从
+- `V51-F15`（`evaluation/governance`, `resolved by r015 without promoting proxy to method input`）：Stage B 的 same-actor/actor-background metric 可从
   frozen `RigidNodes.points_ids[:,0]` 与 Background row 构造，但这是 base-model membership proxy，不是真实 ownership GT。
   若把该 proxy 输入 DINO/PCA/uplift/权重会形成标签泄漏；若只凭 proxy margin 解锁 Graph，则会把模型自身表示循环证明为
   语义正确。proposal 将其限制为 evaluation-only stratum，强制写
   `model_membership_proxy_not_ground_truth`，并同时报告不消费 membership 的 same-Gaussian repeatability 与 heldout DINO
   reprojection。无 eligible actor 的 scene 必须保留 abstain；不得降低 32-Gaussian eligibility、删 1087/0379 或只报大
   Rigid 场景。Stage B 未获授权，本轮没有产生 metric。证据：V5 formal30k r027–r034 metadata、
-  `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、`docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
+  `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、`docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。r015 已严格按
+  evaluation-only 声明执行：proxy 未进入 method/PCA/uplift，1087 因无 eligible actor 保留 abstain，同时报告不消费
+  membership 的 repeatability 与 heldout reprojection；治理风险因此 resolved，但方法因 margin 失败另记 `V51-F31`。
 - `V51-F16`（`engineering/resource`, `resolved by parallel r003`）：DINOv2 asset r002 在已 source network turbo、official URL、
   fixed target 与 curl resume 合同下运行约 `106 s`，连续 prefix 仅增长到 `26,566,656 / 4,546,140,349 bytes`；
   按稳定窗口外推需数小时。执行者精确核对并 `TERM` 唯一 curl PID，runner 以 `exit=-15` 写入 blocked terminal，
@@ -360,7 +362,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   docs scp 在本地以 `stat local ... No such file` 失败；远端 repo 和 run 均未被部分修改。修复只把三份 source path
   写成 `motion_proj/docs/...` 并逐项同步；防重复要求多 source scp 前先按当前 workdir 解析 source，且不能把部分成功
   的前序传输误当成整条命令成功。
-- `V51-F28`（`engineering/resource/protocol`, `active recovery preregistered`）：formal H evaluation r014 已完整处理
+- `V51-F28`（`engineering/resource/protocol`, `resolved by v2/r015`）：formal H evaluation r014 已完整处理
   3 scenes、90/90 evidence/evaluation views并先持久化 3 scene reports 与完整只读 report，但 terminal resource gate
   观测 NVIDIA peak=`22,570 MiB > 22,528 MiB`、Torch reserved=`23,354 MiB > 22,528 MiB`，因此 status 必须保持
   `blocked`。cgroup peak=`14,305,161,216 bytes`，1,208 samples、0 monitor errors、duration=`897.647 s`，GPU 已释放；
@@ -369,10 +371,25 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   把 NVIDIA/Torch ceiling 同时提高到 `24,000 MiB`（仍低于 24,576 MiB 卡容量），其余 base config 逐字继承，并从
   r012/r010/r013 原冻结输入完整重跑。r014 status/resources/report/progress/resource-samples SHA=
   `6409545b...f6d1/ffc98a00...674e/510f82ec...227c/61475cb1...06ed/8fae05eb...7cf`；10 files，无 partial。
+  v2/r015 从原 freeze 完整重跑，在同一 NVIDIA/Torch=`22,570/23,354 MiB` 下通过 `24,000 MiB` 门，故本条 resolved；
+  r015 的 H verdict 由独立质量门决定，不能倒写 r014 为成功。
 - `V51-F29`（`engineering/audit`, `resolved immediately`）：r014 blocked metadata 首次只读 hash 命令把实际
   `events.jsonl` 误写成 `events.json`，`sha256sum` 因该单项不存在返回非零，使后续 `&& find` 没有执行；前面其余 hash
   已正常输出，run/repo/quality 均未改变。修正为冻结 schema 的 `events.jsonl` 后 SHA=`31fff013...a7ce`，并完成 10-file
   bytes inventory。后续 verifier 必须从 runner/schema 读取精确 artifact 名，不凭相邻 runner 猜扩展名。
+- `V51-F30`（`engineering/audit`, `resolved during r015 closeout`）：独立 auditor 首先要求 blocked r014 与 recovery r015
+  report 在删除 `seconds` 后逐 Python float exact，得到 assertion failure。递归定位显示差异均为并行 CPU sparse/BLAS reduction
+  的末位浮点扰动；离散字段、denominator、checkpoint、gate verdict 全 exact。修正审计合同为离散字段 exact、float
+  absolute tolerance=`1e-12`，共 241 个差异，最大仅 `4.9760e-13`，复核 PASS。禁止把非 bit-exact reduction 误写成方法
+  不可复现，也不得用宽松相对容差掩盖 gate 翻转；任何离散/gate 差异或 float 超过 `1e-12` 仍须 fail。
+- `V51-F31`（`algorithm/evaluation`, `active rejected-route prevention`）：canonical r015 的 H gate 为 rejected。3 scenes
+  中仅 0471/0379 evaluable，B1 actor-background margins=`-0.121280/-0.098618`，正场景=`0/2`，scene-balanced=
+  `-0.109949<0`；1087 按冻结 32-Gaussian rule 无 eligible active actor，必须 abstain。Rigid coverage mean=`0.842910`
+  与 heldout reprojection `B1-B0=+0.022777` 均过门，说明 normalized transpose 能改善 2D feature reconstruction，
+  但不能证明 actor 内 feature 比最近 Background 更紧致；0471/0379 的 B0 margin 也已为负，且 B1 没有救回该前提。
+  这推翻 LUDVIG uplift 可直接支撑 driving Gaussian semantic graph 的核心假设，因此按预注册同时 reject raw LUDVIG graph，
+  不得降低 actor minimum、删除 1087、只报 reprojection 或先加 Bayesian/SAM/motion edge 救 graph。下一合法路线是独立
+  faithful progressive propagation；S/C/validation/test/KITTI 仍未读。
 
 <a id="detail-v5"></a>
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import sys
 
 import numpy as np
@@ -20,6 +21,7 @@ from motion_proj.worldsim_v51.feature_evaluation import (
     row_cosine,
     single_view_gaussian_feature,
 )
+from motion_proj.worldsim_v51.protocol import sha256_file
 from scripts.run_worldsim_v51_h_evaluation import _load_evaluation_config, validate_config
 
 
@@ -209,3 +211,28 @@ def test_h_evaluation_recovery_changes_only_two_resource_ceilings_and_metadata()
     merged["failure_ledger_refs"] = base["failure_ledger_refs"]
     merged["failure_ledger_delta"] = base["failure_ledger_delta"]
     assert merged == base
+
+
+def test_h_evaluation_freeze_binds_rejected_terminal_and_gate() -> None:
+    freeze = yaml.safe_load(
+        (ROOT / "configs/worldsim_v51/stage_b_h_evaluation_freeze_v1.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "rejected"
+    assert summary["report"]["h_gate"] == freeze["h_gate"]
+    assert summary["membership_declaration"] == "model_membership_proxy_not_ground_truth"
+    assert summary["proxy_as_method_input"] is False
+    assert summary["screening_quality_read"] is False
+    assert summary["confirmation_quality_read"] is False
+    assert summary["final_heldout_quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["next_action"]["action"] == (
+        "preregister_faithful_progressive_propagation_route_without_ludvig_raw_graph"
+    )

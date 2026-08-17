@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage B r015 canonical H evaluation reject（2026-08-18）
+
+- run=`20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015`，source=`0a79a56`，status=`rejected`；
+  H views=`45 evidence +45 evaluation`，3 checkpoint identities exact，final heldout/S/C/validation/test 未读。
+- per scene 0471/1087/0379：Rigid coverage=`0.931484/0.975410/0.621835`；B1 eligible actors=`13/0/1`；
+  B1 margin=`-0.121280/abstain/-0.098618`；heldout `B1-B0=+0.026951/+0.023009/+0.018372`。
+- gate checks=`evaluable PASS / positive-margin FAIL / mean-margin FAIL / rigid-coverage PASS / heldout PASS`；final=
+  `reject_ludvig_uplift_and_raw_graph`。repeatability B0/B1 也为 `0.859851/0.851373`、`0.870764/0.866528`、
+  `0.859621/0.853277`，没有提供 B1 跨视图优势。
+- resources=`22,570 MiB NVIDIA / 23,354 MiB Torch reserved / 14,221,561,856-byte cgroup / 896.320 s`，
+  v2 24,000 MiB gate PASS。audit=`12 manifest entries / 14 files / 314,994 bytes` exact；r014/r015 float max delta
+  `4.976e-13`，离散/gate exact。freeze=`stage_b_h_evaluation_freeze_v1.yaml`；failure delta=`V51-F15/F28/F30/F31`。
+
 ## V5.1 Stage B r014 resource blocked / r015 recovery 预注册（2026-08-18）
 
 - r014 source=`9b151c8`，90/90 views 与三场 diagnostics 已写出，随后因 NVIDIA peak=`22,570>22,528 MiB`

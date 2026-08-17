@@ -1,0 +1,128 @@
+schema_version: worldsim_v51_stage_b_h_evaluation_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: rejected
+phase: h_ludvig_uplift_and_raw_graph_rejected_by_pre_registered_evaluation_gate
+
+canonical_run:
+  run_id: 20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015
+  source_commit: 0a79a56f8c2aa9be0539dea661938447a15d5a8c
+  config_sha256: 66ba801143623c9297eafb754c9d3e68f1f9c002891f38ad6177b1f7e4e677a6
+  hashes:
+    summary.json: e97c761988d2463af0fa53a17f0ec715a55430cd8372ed83b21466747b941dcc
+    status.json: a6d6320447ee64e0779a36199f1dd186ac124dcf65634cbb35ef1c49a64547c3
+    manifest.json: 8a419eeea9d147afaa2704ff9704613dc6d21739e13bede796c4287c916d2b48
+    fingerprint.json: b2c420c42110d4702e471d509eadf3d20483f932670d19c3269cdfa2ee1434d5
+    resolved_config.yaml: 345c4699f315b97008c9f9904833c3e9e7bffbd01c3bae0b7bc54dc92796dd2b
+    metrics.jsonl: 5651a6d30306cbf282b75059ba991b8754e4c1293c683109b75e0b4d87212006
+    events.jsonl: 39cd13c3f996405b6f8ed3cc1e589f423472b1525c44086af8008091deb72702
+    resource_samples.jsonl: 1e5d8534f2b4e2d2aa4e8298e45c413f181ecd2106e4a0c6eab4189ac7f284b8
+    artifacts/h_evaluation_report.json: c3fcb859642bab61d7351d0921598fef694ae591f500f9ffd521c199acd58bed
+    artifacts/resources.json: 32f33e6894bc57a96a6681a4653d8842d27e876e991ad5462b98da1cc77abae9
+    artifacts/evaluation_progress.json: 61475cb1e3f33e496ff0e8999eccf2ec5c8b503f35bfc5509cdafb9e70d106ed
+    artifacts/scene_reports/scene-0471.json: 841657821eeae96b13cc6db5ce267f788d5df20b5bd753fa94f1a4be12b5c2da
+    artifacts/scene_reports/scene-1087.json: 289a91cb41fb125d2a5970aacc6d175bfdd2bf07319c0ec7e52a319aa0c02ed2
+    artifacts/scene_reports/scene-0379.json: faf8de3eba13c55efd24cd15db101c80b36511b895a1db9d3373ba0c37b30a84
+
+evaluation:
+  membership_declaration: model_membership_proxy_not_ground_truth
+  membership_usage: evaluation_only_never_method_pca_or_uplift_input
+  evidence_view_count: 45
+  evaluation_view_count: 45
+  final_heldout_remainder_read: false
+  minimum_actor_covered_gaussians: 32
+  maximum_pairs_per_actor: 4096
+  exact_common_b0_b1_reprojection_pixels: true
+  checkpoint_before_after_exact: true
+
+scene_results:
+  - scene: scene-0471
+    evaluable: true
+    eligible_actor_count_b1: 13
+    b0_actor_background_margin: -0.11648275500029098
+    b1_actor_background_margin: -0.1212799424957277
+    rigid_coverage: 0.9314839773893102
+    repeatability_b0: 0.859851149999723
+    repeatability_b1: 0.8513730602881474
+    heldout_b0_cosine: 0.7497657747743438
+    heldout_b1_cosine: 0.7767167543305865
+    heldout_b1_minus_b0: 0.026950979556242705
+  - scene: scene-1087
+    evaluable: false
+    eligible_actor_count_b1: 0
+    b0_actor_background_margin: null
+    b1_actor_background_margin: null
+    rigid_coverage: 0.9754098360655737
+    repeatability_b0: 0.8707635555070662
+    repeatability_b1: 0.8665280730467212
+    heldout_b0_cosine: 0.6874343801968451
+    heldout_b1_cosine: 0.7104433196617305
+    heldout_b1_minus_b0: 0.02300893946488536
+  - scene: scene-0379
+    evaluable: true
+    eligible_actor_count_b1: 1
+    b0_actor_background_margin: -0.09680083708238452
+    b1_actor_background_margin: -0.09861838210393958
+    rigid_coverage: 0.6218354430379747
+    repeatability_b0: 0.8596205362276533
+    repeatability_b1: 0.8532773234683532
+    heldout_b0_cosine: 0.7682527467042707
+    heldout_b1_cosine: 0.7866243629807739
+    heldout_b1_minus_b0: 0.01837161627650319
+
+h_gate:
+  pass: false
+  evaluable_scene_count: 2
+  positive_b1_margin_scene_count: 0
+  scene_balanced_b1_margin: -0.10994916229983365
+  scene_balanced_rigid_coverage: 0.8429097521642862
+  scene_balanced_heldout_b1_minus_b0: 0.02277717843254375
+  checks:
+    minimum_evaluable_scenes: true
+    minimum_positive_b1_margin_scenes: false
+    scene_balanced_b1_margin_positive: false
+    scene_balanced_rigid_coverage: true
+    scene_balanced_heldout_non_degradation: true
+
+resources:
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 22570
+  torch_peak_allocated_mib: 19993.02490234375
+  torch_peak_reserved_mib: 23354.0
+  cgroup_memory_peak_bytes: 14221561856
+  disk_available_at_start_bytes: 83759124480
+  sample_count: 1211
+  monitor_error_count: 0
+  duration_seconds: 896.320061204955
+  nvidia_ceiling_mib: 24000
+  torch_reserved_ceiling_mib: 24000
+
+audit:
+  manifest_inventory_count: 12
+  run_file_count: 14
+  run_total_bytes: 314994
+  blocked_r014_vs_r015_discrete_exact: true
+  float_absolute_tolerance: 1.0e-12
+  tolerated_float_difference_count: 241
+  maximum_float_difference: 4.976019596369952e-13
+  partial_file_count: 0
+
+locks:
+  membership_proxy_read_evaluation_only: true
+  proxy_as_method_input: false
+  h_method_quality_read: true
+  screening_quality_read: false
+  confirmation_quality_read: false
+  final_heldout_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_faithful_progressive_propagation_route_without_ludvig_raw_graph
+
+failure_ledger_refs: [V3-F01, V3-F07, V3-F18, V5-F20, V5-F22, V5-F23, V5-F24, V51-F14, V51-F15, V51-F19, V51-F20, V51-F21, V51-F22, V51-F23, V51-F24, V51-F25, V51-F26, V51-F27, V51-F28, V51-F29, V51-F30, V51-F31]
+failure_ledger_delta: [V51-F15, V51-F28, V51-F30, V51-F31]

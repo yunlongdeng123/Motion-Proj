@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage B r015 H gate rejected；LUDVIG uplift/raw graph 收口（2026-08-18）
+
+- canonical r015=`20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015`，source=`0a79a56`，status=`rejected`。
+  90/90 views、3 checkpoints before/after exact；membership 明确为 evaluation-only model proxy，未回流方法输入。
+- H gate：evaluable=`2/3` PASS；Rigid coverage mean=`0.8429098` PASS；heldout scene-balanced `B1-B0=+0.0227772`
+  PASS；但 positive B1 margin scenes=`0/2` FAIL，scene-balanced B1 actor-background margin=`-0.1099492` FAIL。
+  0471/0379 B1 margin=`-0.1212799/-0.0986184`；1087 无 >=32 covered active actor，按合同 abstain。
+- 关键结论：B1 在三场 heldout reprojection 都改善（`+0.026951/+0.023009/+0.018372`），但 actor feature 不比最近
+  Background 更紧致；因此不能用 2D 重投影提升冒充 semantic ownership，LUDVIG uplift 与 raw graph 同时 rejected。
+- resource PASS：NVIDIA/Torch reserved=`22,570/23,354 MiB <=24,000`，cgroup=`14,221,561,856 bytes`，
+  1,211 samples、0 errors、duration=`896.320 s`。独立 audit 12/12 manifest、14 files、gate/checkpoint/locks exact；
+  r014↔r015 离散 exact，241 个末位 float 差异 max=`4.976e-13<=1e-12`。
+- freeze=`stage_b_h_evaluation_freeze_v1.yaml`；`V51-F15/F28 resolved`，新增 `V51-F30 resolved`、`V51-F31`。
+  下一步跳过 raw LUDVIG graph，先预注册 faithful progressive propagation；S/C/validation/test/KITTI 未读，M2/M3 pending。
+
 ## V5.1 Stage B r014 resource blocked；r015 24,000 MiB recovery 待预注册（2026-08-18）
 
 - r014=`20260817T172012Z__m1-stage-b-h-evaluation-s20260814-r014`，source=`9b151c8`；90/90 views、3 scene reports
