@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage B r013 canonical H heldout features（2026-08-18）
+
+- run=`20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013`，source=`b359541`，status=`done`；精确读取
+  H frames=`2/42/82/122/162`，未触碰 remainder=`4`。checkpoint immutable，raw/transform first-repeat 均 bit-exact。
+- outputs=`45 deterministic [40,64,114] float32 NPZ`，feature manifest=`8824a8dc...f73c`，record chain=
+  `2ca3f8bc...9d50`，总 bytes=`48,452,027`；独立 auditor 对 45/45 files/arrays/identities/finite 与 55/55 terminal
+  inventory entries 全部 exact，run=`57 files / 48,547,857 bytes`。
+- resource=`6,702 MiB NVIDIA / 6,376 MiB Torch reserved / 17,320,468,480-byte cgroup / 70.806 s / 123 samples / 0 errors`。
+  freeze=`stage_b_h_eval_feature_freeze_v1.yaml`；failure delta=`V51-F24/F25/F26/F27 resolved`。
+- r013 不含 membership proxy、renderer、uplift feature 或 method quality read；S/C/validation/test/KITTI=false，
+  M2/M3=pending。下一门是另行 clean preregister H evaluation-only metrics/gate，不能先看质量。
+
 ## V5.1 Stage B H heldout feature r013 预注册（2026-08-18）
 
 - denominator=`3 H scenes × 5 evaluation frames × 3 cameras = 45 views`；frames 固定为
@@ -15,6 +27,10 @@
   DriveStudio uplift test 而得到 `1 failed / 9 passed`。未创建 run、未读 quality；登记 `V51-F24 resolved`，须按双环境重跑。
 - 随后的 PowerShell→SSH 聚合命令又因本地提前解释 `$(find ...)` 而在任何测试前失败；无 repo/GPU/quality 状态变化，
   登记 `V51-F25 resolved`，后续拆分成无 command substitution 的独立命令。
+- r013 post-run 首次 inspection 的多语句 Python `-c` 同样在 PowerShell 本地解析阶段失败；远端未执行，登记
+  `V51-F26 resolved`，独立 auditor 文件替代嵌套 source。
+- auditor 已传到 `/tmp`，但同一 scp 命令中的 docs source 相对 staging workdir 少一层 `motion_proj/` 而本地失败；
+  run/repo 无部分修改，登记 `V51-F27 resolved` 后按精确 source path 重传。
 
 ## V5.1 Stage B r012 canonical H uplift（2026-08-18）
 

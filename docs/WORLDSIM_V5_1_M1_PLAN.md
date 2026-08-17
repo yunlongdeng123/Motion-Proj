@@ -22,7 +22,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r012 uplift frozen；r013 heldout feature transform 已预注册，尚未读 quality |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r012 uplift、r013 heldout features 均 frozen；下一门先预注册 H evaluation-only quality |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

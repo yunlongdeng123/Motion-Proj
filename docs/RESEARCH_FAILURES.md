@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F25` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F27` |
 
 ### 1.1 V1 汇总条目
 
@@ -350,6 +350,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   命令，最终本地报 `-name is not recognized`、远端 bash 报 unmatched quote。测试没有启动、GPU 未使用、仓库未修改、
   quality 未读。防重复门禁：跨 PowerShell→SSH 的命令不得嵌套未转义命令替换；本次改为独立执行测试、`git diff --check`
   与只读 `find`，不使用 shell substitution 控制流。不得把 launcher quoting 失败计入算法或测试 verdict。
+- `V51-F26`（`engineering`, `resolved during r013 post-run audit`）：首次只读 r013 inspection 又把多语句 Python
+  `-c` 嵌入 PowerShell 的双引号 SSH 字符串，本地 parser 在远端执行前把 Python 括号误解释为 PowerShell，报
+  `An expression was expected after '('`；没有命令抵达远端、没有 artifact/repo/GPU/quality 状态变化。该问题与
+  `V51-F25` 同属跨 shell 引号边界，但触发面是嵌套 Python source。合法修复为用 `apply_patch` 创建独立只读 auditor、
+  `scp` 到精确 `/tmp` 路径后以固定参数执行；后续禁止在 PowerShell→SSH 双层命令中内嵌多语句 Python source。
+- `V51-F27`（`engineering`, `resolved during r013 post-run audit`）：同步 auditor 与三份台账时，命令工作目录是
+  local staging 根而三份 source path 误写成 `docs/...`，因此 auditor 已成功传到精确 `/tmp/audit_r013.py`，随后三个
+  docs scp 在本地以 `stat local ... No such file` 失败；远端 repo 和 run 均未被部分修改。修复只把三份 source path
+  写成 `motion_proj/docs/...` 并逐项同步；防重复要求多 source scp 前先按当前 workdir 解析 source，且不能把部分成功
+  的前序传输误当成整条命令成功。
 
 <a id="detail-v5"></a>
 

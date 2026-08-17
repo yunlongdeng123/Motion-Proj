@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage B r013 H heldout feature transform 已冻结（2026-08-18）
+
+- canonical r013=`20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013`，source=`b359541`，
+  status=`done`，conclusion=`h_heldout_dinov2_features_transformed_with_frozen_pca_without_quality_read`。
+  45/45 evaluation views、328,320 patches；official ViT-g params/keys=`1,136,486,912/568`，checkpoint before/after exact。
+- r010 frozen PCA 只做 transform、`fit=false`；首图 raw repeat 与首图 transform repeat 均 bit-exact。45 个
+  `[40,64,114] float32` sidecars 逐文件 SHA、逐数组 content SHA、shape/dtype/finite 独立审计 exact；feature bytes=
+  `48,452,027`，record chain=`2ca3f8bc...9d50`。
+- resource PASS：GPU start/peak=`1/6,702 MiB`，Torch allocated/reserved=`6,070.182/6,376 MiB`，cgroup=
+  `17,320,468,480 bytes`，123 samples、0 errors、duration=`70.806 s`；run=`57 files / 48,547,857 bytes`，无 partial/scratch。
+- summary/status/manifest/fingerprint/feature-manifest SHA=`8d630c35...e262/7742ec49...d7d8/15625e56...fbf3/`
+  `7613db20...501c/8824a8dc...f73c`。result freeze=`stage_b_h_eval_feature_freeze_v1.yaml`。
+- 本门未读 membership/uplift/method quality，未启动 renderer；S/C、validation/test/KITTI 未读，M2/M3=`pending`。
+  下一步只能先提交 H evaluation-only runner/config，再第一次读取 r012/r013 quality；`V51-F15` 仍 active。
+
 ## V5.1 Stage B H heldout feature transform 已预注册（2026-08-18）
 
 - 下一正式 run 计划为 `m1-stage-b-h-eval-feature-s20260814-r013`。它只从冻结 image manifest 精确选择
@@ -18,6 +33,10 @@
   tests 本身为 `8/8 PASS`。该调用错误登记为已解决 `V51-F24`，后续按冻结双环境分别复跑，不改 runtime contract。
 - 第二次聚合命令在 PowerShell→SSH 边界被本地提前解释 `$(find ...)`，测试未启动且无状态变化；登记已解决
   `V51-F25`，后续检查不再使用嵌套 command substitution。
+- r013 完成后的首次只读 inspection 又因双层 shell 内嵌多语句 Python `-c` 被本地 parser 拒绝；远端未执行且无
+  状态变化，登记已解决 `V51-F26`，改用独立只读 auditor 文件。
+- auditor/docs 首次 scp 又因 staging workdir 下漏写 `motion_proj/` 前缀而仅 auditor 成功、docs 未传；run/repo 未改，
+  登记已解决 `V51-F27`，按解析后的精确 source path 重传。
 
 ## V5.1 Stage B r012 H 45-view B0/B1 uplift 门通过（2026-08-18）
 

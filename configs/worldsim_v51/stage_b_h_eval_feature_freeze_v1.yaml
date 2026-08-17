@@ -1,0 +1,115 @@
+schema_version: worldsim_v51_stage_b_h_eval_feature_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: h_heldout_dinov2_features_transformed_with_frozen_pca_without_quality_read
+
+canonical_run:
+  run_id: 20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013
+  source_commit: b359541b5dcd39d6e9b805ef153f651fd700e86e
+  config_sha256: 6e9be119e71caa694a22041aa05a9358983989d2190310a46b673771fba383bb
+  hashes:
+    summary.json: 8d630c355d9d3b1738f32a588bf95611cd761aa7dfbdba2f12f068403724e262
+    status.json: 7742ec493a03ff2f57059c41ba5d22fb5871e33caf909dc385e0d46b487ed7d8
+    manifest.json: 15625e56893c07d588aba44f2058eeabd80c2fac01a4460ce56d2ff5541cfbf3
+    fingerprint.json: 7613db209a650f44709c2dc61abeb6c89c2ed2a47fee5698cc542d5bde10501c
+    resolved_config.yaml: b01ff82387f78296362751cdb5fd8b33dc7ed9404e611eb3892f16dff85cd578
+    metrics.jsonl: 38c53cd27f68ec9cc03995365e714270d3c9ffe0298100599d2f42360bcae67b
+    events.jsonl: 65f0cd27d27f51bae11c988ef5fdbffbcfc4d0e914cc13f65a4c929c4d2a4e2d
+    resource_samples.jsonl: 31b5e6f7174deb27f9ea272b6ac790dd153dd3b7aa662dea0233eb3e851ea76d
+    artifacts/h_eval_feature_manifest.json: 8824a8dcdc1313a700a2ebf5c635a212fffa9704c4899a269db6bded1ea7f73c
+    artifacts/h_eval_feature_report.json: b43478a12fc1731e23584a84bccc1bae16540e90b6f98b693772a8a0483ca449
+    artifacts/resources.json: c06d17642748f2fdb38ee29e342a3a6ae2f4b30759bb1d3fbbecdccba3af9478
+    artifacts/extraction_progress.json: a70f0ed3acd8ee93b28decafcec1d105b1a25cf2a21b388fcd3c5722011f47da
+
+identities:
+  official_source_commit: 7764ea0f912e53c92e82eb78a2a1631e92725fc8
+  checkpoint_sha256_before: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_sha256_after: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_immutable: true
+  pca_state_sha256: fe9eea728ed2f52db5bbe6d0b1c505dc3e3808b6fcf3ea5a2344f7d8473231c8
+  selected_record_chain_sha256: 6b26c8e5d644945c34c018d932505607fa4f9b7030743fdccfe228af8b70808e
+  feature_manifest_sha256: 8824a8dcdc1313a700a2ebf5c635a212fffa9704c4899a269db6bded1ea7f73c
+  feature_record_chain_sha256: 2ca3f8bce9b07fad64a971eb3bfeda2d978cbbaf86b4bbeee992480fd6df9d50
+
+feature_extraction:
+  scenes: [scene-0471, scene-1087, scene-0379]
+  frames: [2, 42, 82, 122, 162]
+  cameras: [0, 1, 2]
+  evaluation_remainder: 2
+  forbidden_heldout_remainder: 4
+  view_count: 45
+  patch_count: 328320
+  patches_per_view: 7296
+  raw_dimension: 1536
+  model_input_size_wh: [1596, 896]
+  patch_grid_hw: [64, 114]
+  selected_layer: last_of_four
+  inference_autocast: float16
+  raw_dtype: float32
+  first_raw_repeat_bit_exact: true
+  first_transform_repeat_bit_exact: true
+  parameter_count: 1136486912
+  state_dict_key_count: 568
+
+pca_transform:
+  fit: false
+  components: 40
+  feature_mean_dtype: float64
+  feature_std_dtype: float64
+  pca_mean_dtype: float32
+  components_dtype: float32
+  input_dtype: float32
+  output_dtype: float32
+
+sidecars:
+  record_count: 45
+  per_view_shape: [40, 64, 114]
+  dtype: float32
+  total_file_bytes: 48452027
+  file_sha_recheck: exact
+  content_sha_recheck: exact
+  finite_recheck: exact
+  partial_file_count_after_success: 0
+
+resources:
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 6702
+  torch_peak_allocated_mib: 6070.181640625
+  torch_peak_reserved_mib: 6376.0
+  cgroup_memory_peak_bytes: 17320468480
+  disk_available_at_start_bytes: 83809263616
+  sample_count: 123
+  monitor_error_count: 0
+  duration_seconds: 70.80643193423748
+  nvidia_ceiling_mib: 22528
+  torch_reserved_ceiling_mib: 22528
+
+run_inventory:
+  manifest_file_count: 55
+  run_file_count: 57
+  run_total_bytes: 48547857
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  h_heldout_pixels_read_for_feature_extraction: true
+  h_evidence_pixels_read: false
+  pca_fit: false
+  membership_proxy_read: false
+  renderer_started: false
+  uplift_feature_read: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_h_evaluation_only_proxy_repeatability_and_heldout_reprojection_before_quality_read
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V51-F14, V51-F15, V51-F16, V51-F19, V51-F20, V51-F21, V51-F22, V51-F23, V51-F24, V51-F25, V51-F26, V51-F27]
+failure_ledger_delta: [V51-F24, V51-F25, V51-F26, V51-F27]

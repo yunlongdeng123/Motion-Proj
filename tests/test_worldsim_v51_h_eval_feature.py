@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import sys
 
 import numpy as np
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +13,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_h_eval_feature import _transform, validate_config
+from motion_proj.worldsim_v51.feature_sidecar import array_sha256
+from motion_proj.worldsim_v51.protocol import sha256_file
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_eval_feature_v1.yaml"
@@ -82,3 +86,43 @@ def test_h_eval_feature_config_binds_exact_heldout_contract_and_locks() -> None:
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+
+
+def test_h_eval_feature_freeze_binds_terminal_manifest_and_sidecars() -> None:
+    freeze = yaml.safe_load(
+        (ROOT / "configs/worldsim_v51/stage_b_h_eval_feature_freeze_v1.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert summary["report"]["first_raw_repeat_bit_exact"] is True
+    assert summary["report"]["first_transform_repeat_bit_exact"] is True
+    assert summary["report"]["pca_fit"] is False
+    manifest = json.loads(
+        (run / "artifacts/h_eval_feature_manifest.json").read_text(encoding="utf-8")
+    )
+    assert len(manifest["records"]) == 45
+    for record in manifest["records"]:
+        path = run / record["path"]
+        assert sha256_file(path) == record["file_sha256"]
+        with np.load(path, allow_pickle=False) as archive:
+            assert archive.files == ["feature"]
+            feature = np.asarray(archive["feature"])
+            assert feature.shape == (40, 64, 114)
+            assert feature.dtype == np.float32
+            assert np.isfinite(feature).all()
+            assert array_sha256(feature) == record["content_sha256"]
+    assert freeze["locks"]["membership_proxy_read"] is False
+    assert freeze["locks"]["renderer_started"] is False
+    assert freeze["locks"]["uplift_feature_read"] is False
+    assert freeze["locks"]["method_quality_read"] is False
+    assert freeze["locks"]["validation_quality_read"] is False
+    assert freeze["locks"]["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"
