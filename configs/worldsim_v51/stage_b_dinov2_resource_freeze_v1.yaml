@@ -1,0 +1,85 @@
+schema_version: worldsim_v51_stage_b_dinov2_resource_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: official_dinov2_vitg14_reg4_one_image_resource_frozen
+
+canonical_run:
+  run_id: 20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004
+  source_commit: 935d2b27176d40b8e566c29c23a8f4122f97d5bd
+  config_sha256: f3c758504b3c3b5c3c6459bb84ff9b504c6329c7a1b3fe31c15d7e27e67ea1b3
+  hashes:
+    summary.json: 27ae3bd2d773e71cad30efee4916b27df70886449adc7d13225cb26a45d87176
+    status.json: 97f4dccc35473ebd5b205c2b52045e0cb32e1755f56c6fd4466798025e2e3ab3
+    manifest.json: fc8cf1ab831ad7fee13a30a8aea851edbde8b916779899ff0e521a0a39af5f6a
+    fingerprint.json: d99e0590b5306fa2cccb4ed22c48b442fd44157e743a7eb099bbc981d731a98a
+    resolved_config.yaml: 517e4f18dc4016bf2832c61127624d4ae567e68b84660debc3e49c3625cb4300
+    metrics.jsonl: ae236948863c87a538358521e178cfc0f78b47844bda65fc3a72f94718eb027f
+    events.jsonl: 5f9e083d5bbee1a73b96cb1d08bbcb05469ee7f165ce9ae9efd2ebea4587619c
+    resource_samples.jsonl: d569c2782137ccc264be3d2c20ea9740b4df2f29e80ad4dba0d0a4ff11e7f74d
+    artifacts/diagnostics.json: 59d9dbc01cea08d15c880504ed76bd7fa9e80ff13a30adc597bf9103f5b503f6
+    artifacts/resources.json: 5c6f74fe1e9fed388b159ed013dd92442e4b894cc3f6582985afef8283a5a6f1
+
+identities:
+  official_source_commit: 7764ea0f912e53c92e82eb78a2a1631e92725fc8
+  official_source_tree: 2a27257b79b0633b027a21014bc9360e3c1b3f43
+  checkpoint_sha256: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  input_sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e
+  parameter_count: 1136486912
+  state_dict_key_count: 568
+  strict_missing_key_count: 0
+  strict_unexpected_key_count: 0
+
+output:
+  shapes:
+    - [1, 1536, 64, 114]
+    - [1, 1536, 64, 114]
+    - [1, 1536, 64, 114]
+    - [1, 1536, 64, 114]
+  dtypes: [torch.float32, torch.float32, torch.float32, torch.float32]
+  selected_finite: true
+  selected_mean: 0.011102569289505482
+  selected_std_correction_1: 1.3353331089019775
+  selected_min: -14.273931503295898
+  selected_max: 17.151872634887695
+
+resources:
+  gpu_name: NVIDIA GeForce RTX 3090
+  gpu_total_mib: 24576
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 6702
+  torch_peak_allocated_mib: 6067.9560546875
+  torch_peak_reserved_mib: 6376.0
+  cgroup_memory_max_bytes: 96636764160
+  cgroup_memory_peak_bytes: 15701860352
+  sample_count: 49
+  monitor_error_count: 0
+  torch_allocated_after_cleanup_mib: 8.125
+  torch_reserved_after_cleanup_mib: 48.0
+
+run_inventory:
+  manifest_file_count: 8
+  manifest_bytes: 23039
+  run_total_bytes: 24854
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  pca_fit: false
+  feature_sidecar_persisted: false
+  renderer_started: false
+  method_inference_started: false
+  quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: freeze_and_verify_synthetic_b0_b1_operator_parity_before_h_quality
+
+failure_ledger_refs: [V51-F12, V51-F14, V51-F15, V51-F16]
+failure_ledger_delta: [V51-F12]

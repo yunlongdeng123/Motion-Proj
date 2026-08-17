@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage B DINOv2 ViT-g r004 canonical resource result（2026-08-17）
+
+- canonical run=`20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004`，source=`935d2b2`，
+  status=`done`；source/checkpoint/input identity exact，official ViT-g params=`1,136,486,912`，state-dict keys=`568`，
+  strict missing/unexpected=`0/0`。
+- last-four normalized reshape outputs=`4×[1,1536,64,114]`，dtype=`float32`、selected finite；selected mean/std/min/max=
+  `0.0111025693 / 1.3353331089 / -14.2739315 / 17.1518726`。该诊断不含 PCA、uplift、renderer 或质量 metric。
+- resources PASS：GPU start/sampled peak=`1/6,702 MiB`，Torch peak allocated/reserved=`6,067.956/6,376 MiB`，
+  cgroup peak=`15,701,860,352 bytes`，samples/errors=`49/0`；cleanup allocated/reserved=`8.125/48 MiB`。
+- summary/status/manifest/fingerprint/resolved/metrics/events/resource-samples/diagnostics/resources SHA=
+  `27ae3bd2.../97f4dccc.../fc8cf1ab.../d99e0590.../517e4f18.../ae236948.../5f9e083d.../d569c278.../`
+  `59d9dbc0.../5c6f74fe...`。manifest=`8 files / 23,039 bytes`、run=`24,854 bytes`，独立 recheck exact。
+- result freeze=`configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`；failure ledger delta=`V51-F12 resolved`。
+  quality/screening/confirmation/validation/test/KITTI=`false`，M2/M3=`pending`。下一门仅 synthetic B0/B1 operator parity。
+
 ## V5.1 Stage B DINOv2 ViT-g one-image resource smoke 预注册（2026-08-17）
 
 - task=`WS-V51-M1-B-LUDVIG-UPLIFT-01`；计划 canonical run suffix=

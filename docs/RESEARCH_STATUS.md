@@ -1,5 +1,23 @@
 # Research Status
 
+## V5.1 Stage B ViT-g r004 资源/张量门通过，下一门仅 operator parity（2026-08-17）
+
+- canonical r004=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004`，
+  source=`935d2b27176d40b8e566c29c23a8f4122f97d5bd`，status=`done`，conclusion=
+  `official_dinov2_vitg14_reg4_one_image_resource_and_shape_gate_passed`。
+- official ViT-g=`1,136,486,912` params；checkpoint=`568` keys，strict missing/unexpected=`0/0`。last-four output 均为
+  `[1,1536,64,114]`、dtype=`float32`、selected finite；这只证明官方 checkpoint/source/preprocess/forward 合同成立，
+  不构成 LUDVIG uplift 或任何 paper-method quality 结论。
+- resource gate PASS：GPU start/peak=`1/6,702 MiB`，Torch peak allocated/reserved=`6,067.956/6,376 MiB`，
+  cgroup peak/max=`15,701,860,352/96,636,764,160 bytes`，49 samples、0 monitor error；cleanup 后 Torch=
+  `8.125/48 MiB`。因此 `V51-F12` 的官方资产及 24GB faithful one-image resource 风险均 resolved，但 DINO 与 renderer
+  分进程/不并发合同继续有效。
+- r004 summary/status/manifest/fingerprint/resource-samples SHA=`27ae3bd2.../97f4dccc.../fc8cf1ab.../d99e0590.../`
+  `d569c278...`；manifest=`8 files / 23,039 bytes`、run=`24,854 bytes`，逐文件二次 SHA/bytes 复核 exact。machine freeze=
+  `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`。
+- PCA/feature sidecar/renderer/method/H/S/C quality/validation/test/KITTI 均未读，M2/M3=`pending`。下一步只允许先冻结并
+  通过 synthetic B0/B1 operator parity；`V51-F14/F15` 保持 active，H quality 仍锁定。
+
 ## V5.1 Stage B official DINOv2 source 已冻结，ViT-g 单图资源门已预注册（2026-08-17）
 
 - official source checkout=`/root/autodl-tmp/third_party/dinov2-v51-stage-b`，origin=

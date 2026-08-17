@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r003 DINO asset + official source frozen；下一门 one-image ViT-g resource smoke |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r004 official ViT-g resource/shape PASS；下一门 synthetic B0/B1 operator parity |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -58,6 +58,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml`
+- `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -192,5 +193,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   `7764ea0f...25fc8 / 2a27257b...12b3f43`、worktree clean。resource smoke 已在 quality read 前冻结唯一输入、
   official ViT-g/14 registers 构造、strict state-dict、last-four `[1,1536,64,114]` 输出、FP32/FP16 策略以及
   `22,528 MiB GPU / 80 GiB cgroup / 900 s` 门；禁止 smaller-model/resolution fallback，所有质量锁仍为 false。
+- canonical r004=`20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004` 在 source=`935d2b2` PASS：
+  strict keys=`568`、missing/unexpected=`0/0`，4 层输出均为 `[1,1536,64,114]`；GPU sampled/Torch reserved peak=
+  `6,702/6,376 MiB`，cgroup peak=`15,701,860,352 bytes`，manifest 二次复核 exact。`V51-F12=resolved`；下一门只做
+  synthetic B0/B1 operator parity，H/S/C quality 继续锁定。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

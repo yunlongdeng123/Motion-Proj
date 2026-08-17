@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
 
@@ -163,3 +164,30 @@ def test_stage_b_dinov2_resource_smoke_binds_source_asset_and_input() -> None:
     assert config["locks"]["renderer_start"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+
+
+def test_stage_b_dinov2_resource_freeze_binds_terminal_and_locks() -> None:
+    freeze = load_yaml(
+        ROOT / "configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml"
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert summary["conclusion"] == (
+        "official_dinov2_vitg14_reg4_one_image_resource_and_shape_gate_passed"
+    )
+    assert summary["source_commit"] == freeze["canonical_run"]["source_commit"]
+    assert summary["resource"]["output_shapes"] == freeze["output"]["shapes"]
+    assert summary["resource"]["nvidia_smi_peak_used_mib"] == 6702
+    assert summary["resource"]["strict_missing_key_count"] == 0
+    assert summary["resource"]["strict_unexpected_key_count"] == 0
+    assert summary["quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["next_action"]["action"].endswith("before_h_quality")
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

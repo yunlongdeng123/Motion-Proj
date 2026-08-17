@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B fallback 已获授权并进入 input/asset freeze | H→S 小效应未复现、UNKNOWN coverage 不达门；ViT-g/PCA/24GB、proxy leakage、单连接下载与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F16` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/单连接下载风险已解除 | `V51-F01`–`V51-F16` |
 
 ### 1.1 V1 汇总条目
 
@@ -217,7 +217,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   冻结字节；M2/M3 与 validation/test/KITTI 锁保持。该问题不是算法负结果，解除时仍未读取 C/validation/test/KITTI
   quality。证据：`docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md`、`configs/worldsim_v51/stage_a_closeout_v1.yaml`、
   `configs/worldsim_v51/stage_b_authorization_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
-- `V51-F12`（`engineering/resource/governance`, `active preflight risk`）：Stage B 的 faithful 第一版要求官方 DINOv2
+- `V51-F12`（`engineering/resource/governance`, `resolved by r003 asset + r004 resource smoke`）：Stage B 的 faithful 第一版要求官方 DINOv2
   ViT-g/14 registers，但 2026-08-17 只读审计只找到 Depth-Anything-V2 内部 DINOv2 模块，torch/HuggingFace cache
   均无对应官方 checkpoint；“存在 DINOv2 源文件”不能写成 LUDVIG 资产已冻结。官方 LUDVIG README 记录的测试平台是
   A6000 48GB，当前 RTX 3090 只有 24576 MiB，且 Stage A 单个 unary materialization 已实测约 20–22 GiB，因此
@@ -227,10 +227,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   feature 预分配在 GPU。V5.1 只允许先下载后全 SHA，再用 CPU memmap/40-D patch-grid streaming 与 dense-parity test
   保持语义；缺资产或 OOM 只记工程/resource terminal，不得写成 feature uplift 失败，也不得临时换小模型、降分辨率后
   仍称 faithful port。
-  资产缺失子项已由 r003 解除：official bytes=`4,546,140,349`、SHA-256=`746ecb8c...a283`，本地重算
-  8 MiB×542-part ETag exact；但 ViT-g 在 24GB 卡上的 model-load/one-image peak 与 DINO/renderer 分段资源合同尚未实测，
-  所以本条保持 active resource risk，不提前标 resolved。
-  证据：`configs/worldsim_v51/stage_b_preflight_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
+  资产缺失子项由 r003 解除：official bytes=`4,546,140,349`、SHA-256=`746ecb8c...a283`，本地重算
+  8 MiB×542-part ETag exact。r004 随后在 clean source=`935d2b2` 上以官方 commit=`7764ea0f...25fc8`、原始分辨率
+  预处理、ViT-g/14 registers 与 strict state dict 完成 one-image forward：params=`1,136,486,912`、keys=`568`、
+  missing/unexpected=`0/0`，4 个输出 shape 全 exact；GPU sampled/Torch reserved peak=`6,702/6,376 MiB`、cgroup peak=
+  `15,701,860,352 bytes`，显著低于预注册门，资源风险因此 resolved。该解除不代表 feature uplift 有效，也不解除
+  DINO→释放进程→renderer 的顺序合同；后续仍禁止同卡并发、临时换小模型/分辨率，且必须先过 operator parity。
+  证据：`configs/worldsim_v51/stage_b_preflight_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`、
+  `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`、r004 canonical run。
 - `V51-F13`（`engineering/protocol`, `resolved without method execution`）：P0 scope config 已把 normative plan
   SHA-256 冻结为 `3d7f7481...`，但 Stage A closeout commit `3d33262` 曾直接向该长计划加入 5 行执行进展，使当前
   HEAD SHA 漂到 `b119cd56...`。Stage B preflight 运行 `pytest -q tests/test_worldsim_v51_protocol.py` 时因此得到
@@ -269,8 +273,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002`、
   `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`。r003 以 14 ranges 在 `1504.935 s` 完成；逐段
   bytes/SHA、assembled full SHA=`746ecb8c...a283`、multipart ETag=`3d1b...-542` 与 terminal/manifest 二次复核全 exact，
-  final 原子发布后精确删除 `15 files / 4,546,140,349 bytes` staging。本条工程恢复因此 resolved；不改变仍 active 的
-  ViT-g 24GB resource smoke 风险 `V51-F12`。
+  final 原子发布后精确删除 `15 files / 4,546,140,349 bytes` staging。本条工程恢复因此 resolved；当时仍 active 的
+  ViT-g 24GB resource smoke 风险 `V51-F12` 后由 r004 独立解除。
 
 <a id="detail-v5"></a>
 
