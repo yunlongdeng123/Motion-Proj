@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage F F0d r035 45-view train-only materialization 预注册（2026-08-18）
+
+- task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035`；
+  config=`configs/worldsim_v51/stage_f_f0d_train_only_identity_mask_materialization_v1.yaml`，seed=`20260814`。
+  r034 freeze=`3,841 bytes /058b22d4...fb9`；r026 input=`45 records /7,530,010 bytes /653941ec...7a4 /
+  chain b3458c27...4d95`。
+- scenes=`0471(index382)→1087(827)→0379(296)`，各 `5 frames×3 cameras=15` views，三个 official subprocess 串行；
+  scene-local input/output 目录防止 15 种重复 filename 跨场覆盖，并隔离 short-ID namespace。method 固定 grid/batch=
+  `32/64`，不允许 smaller-batch retry。
+- pass requires exact `45 masks +3 pred.json`、每场 non-empty/stable-ID、output record chain、GPU headroom/resource gates；
+  logical decode/read=`45/45`。本轮 quality/actor-alignment/training/heldout/downstream 均 false；failure delta=
+  `none_at_preregistration`。PASS 后也只预注册 train-only mask quality/identity alignment。
+
 ## V5.1 Stage F F0c r034 canonical PASS / freeze（2026-08-18）
 
 - run/source/tree=`20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034 /27b1958...b48 /

@@ -1,0 +1,115 @@
+schema_version: worldsim_v51_stage_f_f0d_train_only_identity_mask_materialization_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0d_train_only_45_view_identity_mask_materialization
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0c_freeze:
+    path: configs/worldsim_v51/stage_f_f0c_upstream_batch_association_repeatability_freeze_v1.yaml
+    bytes: 3841
+    sha256: 058b22d4fd85959024b2428b81576866d648ffda73fa16636340b266976e2fb9
+    required_status: done
+    required_conclusion: f0c_upstream_batch64_three_view_association_repeatability_resource_smoke_done_full_materialization_preregistration_required
+    required_next_phase: train_only_full_identity_mask_materialization_preregistration
+
+sources:
+  gaussian_grouping: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f, commit: 0ab60afed3385b717c985af1d30a20f7b0884c89, tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16}
+  deva: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA, license: CC-BY-NC-SA-4.0, identity: contained_in_frozen_gaussian_grouping_tree}
+  grounded_segment_anything: {path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f, commit: 99fbbe789cf99ff851886bca0935da33586db86b, tree: 89c82ae86de908fec7caaa646df24015d354dc97}
+
+assets:
+  deva: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth, bytes: 276911801, sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48}
+  sam_vit_h: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth, bytes: 2564550879, sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e}
+  resnet18: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet18-5c106cde.pth, bytes: 46827520, sha256: 5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8}
+  resnet50: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet50-19c8e357.pth, bytes: 102502400, sha256: 19c8e3572231adff6824a2da93fd67b5986919a2e65f8b6007eab4edee220097}
+
+environment:
+  runtime: /root/autodl-tmp/envs/deva-v51-stage-f-v2/bin/python
+  packages:
+    - {distribution: supervision, version: 0.14.0, import_name: supervision}
+    - {distribution: PuLP, version: 2.7.0, import_name: pulp}
+    - {distribution: gurobipy, version: 12.0.3, import_name: gurobipy}
+  TORCH_HOME: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home
+  PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+
+input_manifest:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026/artifacts/train_only_image_manifest.json
+  bytes: 18410
+  sha256: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4
+  schema_version: worldsim_v51_f0a_train_only_image_manifest_v1
+  record_count: 45
+  total_bytes: 7530010
+  record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95
+  order: scene_then_frame_then_camera
+  split: train_only
+  image_pixels_decoded: false
+
+scene_contracts:
+  - {scene: scene-0471, scene_index: 382, frames: [0, 40, 80, 120, 160], cameras: [0, 1, 2], record_count: 15}
+  - {scene: scene-1087, scene_index: 827, frames: [0, 40, 80, 120, 160], cameras: [0, 1, 2], record_count: 15}
+  - {scene: scene-0379, scene_index: 296, frames: [0, 40, 80, 120, 160], cameras: [0, 1, 2], record_count: 15}
+staging:
+  method: symlink
+  boundary: one_input_directory_and_one_output_directory_per_scene
+  reason: duplicate_frame_camera_filenames_across_scenes_and_scene_local_identity_namespace
+  upstream_enumeration: lexicographic_sorted_os_listdir
+  expected_per_scene_order: frame_then_camera
+
+execution:
+  upstream_command: demo/demo_automatic.py
+  upstream: Gaussian_Grouping_DEVA_SAM_everything_semionline
+  common_arguments: {chunk_size: 4, amp: true, temporal_setting: semionline, size: 480, use_short_id: true, suppress_small_objects: true, SAM_PRED_IOU_THRESHOLD: 0.7}
+  arm: {sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+  scenes_execute_serially: true
+  expected_mask_count: 45
+  expected_pred_json_count: 3
+
+decision:
+  expected_conclusion: f0d_train_only_45_view_identity_mask_materialization_done_quality_gate_preregistration_required
+  pass_requires:
+    - exact_45_input_manifest_records_staged_in_three_scene_local_namespaces
+    - exact_45_uint8_short_id_masks_and_three_pred_json_files
+    - each_scene_has_nonempty_mask_and_short_id_present_in_at_least_two_views
+    - exact_output_materialization_record_chain
+    - physical_gpu_headroom_and_resource_gate
+  minimum_nonzero_masks_per_scene: 1
+  minimum_stable_short_id_views: 2
+  full_materialization_execution_authorized: true
+  identity_training_authorized: false
+  quality_gate_authorized: false
+  next_action: preregister_train_only_mask_quality_and_identity_alignment_gate
+  pass_does_not_establish: [mask_quality, actor_identity_alignment, grid64_quality_parity, identity_training_readiness, development_uplift_over_u2_b3]
+
+resources:
+  monitor_interval_seconds: 0.25
+  maximum_nvidia_at_start_mib: 512
+  required_nvidia_total_mib: 24576
+  required_nvidia_headroom_mib: 256
+  maximum_nvidia_peak_mib: 24320
+  maximum_cgroup_memory_bytes: 64424509440
+  maximum_wall_seconds: 1200
+  minimum_disk_free_bytes_after: 42949672960
+
+locks:
+  input_image_pixels_decoded_count: 45
+  output_mask_pixels_read_count: 45
+  full_materialization_execution: true
+  quality_read: false
+  parameter_search: false
+  smaller_batch_retry: false
+  identity_training: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F46, V51-F52, V51-F55, V51-F57, V51-F59, V51-F60, V51-F61, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration

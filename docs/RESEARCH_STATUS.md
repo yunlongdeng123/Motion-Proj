@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage F F0d 45-view train-only materialization 已预注册（2026-08-18）
+
+- task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=
+  `20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035`，source=本预注册提交，seed=`20260814`。
+  authorization 只来自 r034 freeze；输入严格复用 r026 manifest=`45 records /7,530,010 bytes /record-chain
+  b3458c27...4d95`，仅 train-only 三场，每场 frames=`0/40/80/120/160` × cameras=`0/1/2`。
+- 三场存在同名 `000_0.jpg` 等文件，且 short-ID namespace 必须 scene-local；因此每场独立 input/output directory、独立
+  official CLI subprocess，按 `scene-0471→1087→0379` 串行。场内 filename lexicographic order 恰为 frame→camera；禁止
+  把 45 张图放进同一目录覆盖文件或让 identity 跨 scene 传播。
+- method 固定 r034 的 grid32/upstream-batch64/size480/IoU0.7/semionline；输出分母锁为 `45 uint8 masks +3 pred.json`，
+  每场至少一张 non-empty mask、至少一个 short ID 跨两 views，并发布逐 record output chain。资源仍锁 card total/headroom/
+  peak=`24,576/256/24,320 MiB`、cgroup<=60 GiB、wall<=1,200s、disk>=40 GiB、0 monitor errors。
+- 本轮只执行 materialization，不读质量、不对齐 actor identity、不训练。`failure_ledger_refs=[V51-F31,F37,F42,F46,
+  F52,F55,F57,F59,F60,F61,PIVOT-F05]`，delta=`none`；若 PASS，下一步只允许预注册 train-only mask-quality 与
+  identity-alignment gate；H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0c r034 upstream batch64 PASS 已冻结（2026-08-18）
 
 - canonical r034=`20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034`，source/tree=
