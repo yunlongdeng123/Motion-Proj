@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0l_train_only_quality_identity_alignment import _assignment_metrics, _validate_config
+from scripts.audit_worldsim_v51_f0l_train_only_quality_identity_alignment import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0l_train_only_quality_identity_alignment_v1.yaml"
@@ -38,3 +39,19 @@ def test_assignment_metrics_penalize_short_id_collision():
     assert result["metrics"]["one_to_one_assignment_recall"] == 0.45
     assert result["metrics"]["assignment_efficiency"] == 0.5
     assert result["checks"]["assignment_efficiency"] is False
+
+
+def test_f0l_r043_independent_audit_confirms_algorithm_rejection():
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["audited_outcome"] == "rejected"
+    assert result["scene_pass_vector"] == [False, True, False]
+    assert result["threshold_search"] is False
+    assert result["identity_training_authorized"] is False
