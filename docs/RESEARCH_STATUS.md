@@ -16,7 +16,9 @@
 - r001 summary/status/manifest/fingerprint/image-manifest/checkpoint-manifest SHA=`f6aae6f6.../8b4c9aec.../`
   `8c50882e.../88a4fa17.../be19da2e.../8b84bf9a...`；run=`129,809 bytes`、manifest inventory=`7 files /
   123,976 bytes`。checkpoint download、DINO/renderer、feature extraction、quality/validation/test/KITTI read 均为 false。
-- 下一步使用 `source /etc/network_turbo` 下载官方 DINOv2 ViT-g/14 registers checkpoint，先写 `.partial`，
+- 下一步使用 `configs/worldsim_v51/stage_b_dinov2_download_v1.yaml` 与
+  `scripts/fetch_worldsim_v51_dinov2_asset.py`，在 `source /etc/network_turbo` 后下载官方 DINOv2 ViT-g/14
+  registers checkpoint，先写 `.partial`，
   以 bytes=`4,546,140,349` 和完整 SHA-256 校验后原子发布；随后依次做单进程资源 smoke、synthetic operator parity、
   H→S→C matched A/B。DINO 与 renderer 不同进程且不在同卡并发常驻。
 - M2/M3 保持 `pending`；validation/test/KITTI tuning 继续锁定。只有某个 M1 candidate 在 development confirmation

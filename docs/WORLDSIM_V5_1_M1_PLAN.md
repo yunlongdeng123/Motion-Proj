@@ -54,7 +54,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`
 - `configs/worldsim_v51/stage_b_authorization_v1.yaml`
 - `configs/worldsim_v51/stage_b_input_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_b_dinov2_download_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
+- `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`

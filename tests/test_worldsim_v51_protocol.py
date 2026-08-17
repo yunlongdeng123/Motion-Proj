@@ -18,6 +18,9 @@ from motion_proj.worldsim_v51.protocol import (
     validate_scope,
     validate_stage_b_authorization,
 )
+from scripts.fetch_worldsim_v51_dinov2_asset import (
+    validate_config as validate_dino_download,
+)
 
 
 def test_scope_and_development_roles_bind_v5_cohort() -> None:
@@ -80,3 +83,19 @@ def test_stage_b_route_reordering_fails_closed() -> None:
 
     with pytest.raises(ProtocolError, match="route 顺序"):
         validate_stage_b_authorization(ROOT, authorization)
+
+
+def test_stage_b_dinov2_download_binds_input_freeze_and_keeps_quality_locked() -> None:
+    config, freeze = validate_dino_download(
+        ROOT / "configs/worldsim_v51/stage_b_dinov2_download_v1.yaml"
+    )
+
+    assert freeze["status"] == "done"
+    assert freeze["frozen_denominators"]["image_count"] == 240
+    assert config["asset"]["content_length_bytes"] == 4546140349
+    assert config["asset"]["etag_is_sha256"] is False
+    assert config["locks"]["quality_read"] is False
+    assert config["locks"]["validation_quality_read"] is False
+    assert config["locks"]["test_quality_read"] is False
+    assert config["locks"]["m2_status"] == "pending"
+    assert config["locks"]["m3_status"] == "pending"

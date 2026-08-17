@@ -35,6 +35,18 @@
   `configs/worldsim_v51/stage_b_input_freeze_v1.yaml`。download/model/feature/quality/validation/test/KITTI=
   `false/false/false/false/false/false/false`，M2/M3=`pending/pending`；failure delta=`V51-F11`。
 
+### DINOv2 asset download 预注册
+
+- config=`configs/worldsim_v51/stage_b_dinov2_download_v1.yaml`，绑定 input freeze SHA=`16aafac7...7eb61`；runner=
+  `scripts/fetch_worldsim_v51_dinov2_asset.py`。仅允许 official URL→固定 target，使用 network turbo、curl resume、
+  5 retries、`.partial` staging，禁止覆盖尺寸错误的已有 final。
+- expected bytes=`4,546,140,349`，下载后保留至少 `10 GiB` free；multipart ETag 不作内容哈希。只有完整 bytes 与
+  SHA-256 双重验证后才 atomic publish。formal run 保存 resolved config、download log、JSONL events/metrics、asset
+  record、fingerprint、manifest、summary/status。
+- model load/feature/method/quality/validation/test/KITTI/GPU 均未授权于本 run；M2/M3=`pending`。failure refs=
+  `V51-F11–F15`，预注册 delta=`pending`；网络或 partial 失败只作工程 terminal，保留 partial 后使用新 run ID resume，
+  不得写成 DINO/LUDVIG 方法失败。
+
 ## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
 
 | Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |

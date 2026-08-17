@@ -1,0 +1,51 @@
+schema_version: worldsim_v51_stage_b_dinov2_download_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: stage_b_official_dinov2_asset_download
+
+input_freeze:
+  path: configs/worldsim_v51/stage_b_input_freeze_v1.yaml
+  sha256: 16aafac76838ee417eba741fbc89025a4a3d5c45b694b9b0b447ebdc3177eb61
+  required_status: done
+  required_image_count: 240
+  required_checkpoint_count: 8
+
+asset:
+  source: official_meta_dinov2_public_checkpoint
+  model: dinov2_vitg14_reg
+  url: https://dl.fbaipublicfiles.com/dinov2/dinov2_vitg14/dinov2_vitg14_reg4_pretrain.pth
+  target_path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+  partial_suffix: .partial
+  content_length_bytes: 4546140349
+  last_modified_utc: '2023-10-27T10:37:55Z'
+  etag: '3d1b1c4501eac45d83af24b811e3bea9-542'
+  etag_is_sha256: false
+  s3_version_id: T_6GA9ukHl7r7daSEhzWpsymxbGdAvFR
+  sha256: compute_after_full_download
+
+download:
+  client: curl
+  resume_partial: true
+  retry_count: 5
+  retry_all_errors: true
+  atomic_publish_after_size_and_sha256: true
+  overwrite_existing_final: false
+  network_turbo_required: true
+
+resources:
+  minimum_free_bytes_after_download: 10737418240
+  gpu_required: false
+  model_load_allowed: false
+
+locks:
+  feature_extraction: false
+  method_inference: false
+  quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F11, V51-F12, V51-F13, V51-F14, V51-F15]
+failure_ledger_delta: pending
