@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage F F0g r038 source-neutral tensor/allocator trace 预注册（2026-08-18）
+
+- run=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`；config=
+  `configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_v1.yaml`，auth=r037 freeze
+  `18fd02be...55b7`。
+- arms=`0471 temporal control_trace →1087 cross-camera target_trace`；官方参数与 `CUDA_LAUNCH_BLOCKING=1` 不变。
+  trace hook 仅在 upstream line58 pre-matmul、line59 post-matmul 或 exception 读取 tensor metadata 与 allocator counters；
+  frozen traced-file SHA=`a1b86e65...c5a6`。
+- 明确禁止 source edit、operator monkeypatch、tensor-content read、quality/alignment/full-materialization/training。成功输出最多
+  schema-read 6 masks；trace 只用于判断 shape/memory mechanism，不作为算法质量证据。
+
 ## V5.1 Stage F F0f r037 control-stable/target-failure / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037 /3c692f4...cc3 /

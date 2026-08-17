@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage F F0g source-neutral tensor/allocator instrumentation 已预注册（2026-08-18）
+
+- formal target=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`；authorization=r037 freeze=
+  `4,391 bytes /18fd02be...55b7`。顺序为 0471 known-good control trace→1087 target trace，各一次 fresh process；输入、
+  grid32/batch64/AMP/size480/thresholds 与 blocking 全冻结。
+- 新 launcher 通过 Python trace 在 frozen `consensus_associated.py` line58/59 的 matmul 前/后或异常时记录局部 tensor
+  `shape/dtype/device/stride/contiguous/numel/logical-bytes` 与 CUDA allocator counters。traced source=`5,985 bytes /
+  a1b86e65...c5a6`；不读 tensor 内容、不 monkeypatch 算子、不写第三方 source，run 后再次检查 checkout clean。
+- 这是 root-cause instrumentation，不是 recovery。无论 target 成败，trace/output 都不进 quality/materialization/training；
+  下一步只依据 control-target shape/allocator delta 判断是否可预注册代数等价的 memory-readout chunking，或关闭 faithful 路线。
+- denominator=`6 input decodes /<=6 schema reads`；resources 沿用 `24,576 total /256 headroom /24,320 peak MiB /
+  cgroup60 GiB /600s`。failure delta=`none`，M2/M3=pending。
+
 ## V5.1 Stage F F0f r037 control 稳定、target 不稳定，已冻结（2026-08-18）
 
 - canonical r037=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`，source/tree=
