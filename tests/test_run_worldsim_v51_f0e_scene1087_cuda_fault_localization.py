@@ -11,6 +11,7 @@ from scripts.run_worldsim_v51_f0e_scene1087_cuda_fault_localization import (
     _outcome,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0e_scene1087_cuda_fault_localization import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_v1.yaml"
@@ -69,3 +70,22 @@ def test_f0e_outcome_matrix_distinguishes_repeatability_boundaries() -> None:
         "metadata": {"sha256": "m"},
     }
     assert _outcome([succeeded, drifted])[0] == "success_nonexact"
+
+
+def test_f0e_r036_independent_audit_replays_mixed_outcome() -> None:
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["audited_run_status"] == "done"
+    assert result["outcome"] == "mixed"
+    assert [row["classification"] for row in result["attempts"]] == [
+        "expected_cublas_internal_failure",
+        "success",
+    ]
+    assert result["quality_read"] is False
