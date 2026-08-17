@@ -1,5 +1,15 @@
 # Experiments
 
+## V5.1 Stage F F0i r040 scene-1087 recovery PASS / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040 /9c8c503...9003 /
+  ff47087a...965e`；exact 15-view subprocess success，输出 `15 masks +pred.json`，6 次 pre-matmul empty-cache 全有证据。
+- resolved/summary/manifest/status/events SHA=`2d6f23f4...1a66/312a0277...a65/171f4fc5...2fcf/4cd8f7cc...fe4/
+  bd35805a...1cb`；audit=`9,254 bytes /1393c664...67c /PASS`。
+- resources=`24,118 MiB peak /458 MiB headroom /17,966,829,568 cgroup /29.030242s /89 samples /0 errors`；
+  freeze=`stage_f_f0i_scene1087_15_view_empty_cache_recovery_freeze_v1.yaml`。failure delta=`V51-F62 recovery_
+  candidate_pass_scene1087_15_view_full_materialization_not_yet_resolved`；下一步只预注册 fresh 45-view recovery。
+
 ## V5.1 Stage F F0i r040 scene-1087 15-view recovery 预注册（2026-08-18）
 
 - run=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`；exact 15 views，单 fresh process，

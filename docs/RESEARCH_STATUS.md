@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage F F0i r040 scene-1087 15-view recovery PASS 已冻结（2026-08-18）
+
+- canonical r040=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`，source/tree=
+  `9c8c503...9003/ff47087a...965e`；exact 15 inputs、`15 uint8 900×1600 masks +1 pred.json` 均通过独立重放。
+- frozen intervention 仍仅为每次 line58 matmul 前 `torch.cuda.empty_cache()`；6/6 matmul 有 before/after allocator
+  evidence，未修改 source/operator/tensor-content/method，未读 nonzero/quality。
+- audit=`20260818T173000Z__stage-f-f0i-r040-audit.json /9,254 bytes /1393c664...67c /PASS`；manifest=
+  `39 entries /3,779,879 logical /436,594 regular`。resources=`GPU 1→24,118/24,576 MiB，headroom 458 MiB /
+  cgroup 17,966,829,568 bytes /29.030s /89 samples /0 errors`。
+- `V51-F62` 仍 active：r040 建立 1087 单场 15-view recovery，不证明 fresh 三场 45-view 稳定。下一步只预注册 fresh
+  `0471→1087→0379` 三场 45-view empty-cache materialization；quality/training/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0i scene-1087 15-view recovery 已预注册（2026-08-18）
 
 - formal target=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`；auth=r039 freeze

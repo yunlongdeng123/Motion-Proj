@@ -1,0 +1,78 @@
+schema_version: worldsim_v51_stage_f_f0i_scene1087_15_view_empty_cache_recovery_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0i_scene1087_15_view_empty_cache_recovery_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040
+  source_commit: 9c8c5035844e2c02c4880c23e65d8c2306089003
+  source_tree: ff47087a156d453f1e9084b10010ac422c6965e8
+  status: done
+  conclusion: scene1087_15_view_empty_cache_recovery_done_fresh_45_view_recovery_preregistration_required
+  resolved_config: {bytes: 4548, sha256: 2d6f23f424384f921547d9289cadef7fe9b298539a82e12c12b33e80383f1a66}
+  summary: {bytes: 110537, sha256: 312a027770269356edf654ef6a0136bbf95de8ca056036140081cb6551b99365}
+  manifest: {bytes: 7161, sha256: 171f4fc5a946c17559fd37fc2e5fa5e83a617a60a7d3dea29d4e3d6ca0ac2fcf}
+  status_file: {bytes: 247, sha256: 4cd8f7ccddd14edb3a537340572d360543b067ef879541b6a3ad9e93be724fe4}
+  events: {bytes: 144, sha256: bd35805abcc1671f59aba08762af2da1ce34fc78580ce7361416596abe9051cb}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T173000Z__stage-f-f0i-r040-audit.json
+  bytes: 9254
+  sha256: 1393c664a7b4c90bf30d7394cdc452a7595ca2bc676656dac6497da8809f367c
+  status: pass
+  empty_cache_call_count: 6
+  inventory: {entry_count: 39, logical_bytes: 3779879, regular_bytes_excluding_input_symlink_targets: 436594}
+
+recovery_contract:
+  scene: scene-1087
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  exact_input_count: 15
+  intervention: torch_cuda_empty_cache_immediately_before_each_line58_matmul
+  upstream_source_mutation: false
+  operator_change: false
+  tensor_content_change: false
+  method: {sam_grid: 32, sam_batch: 64, amp: true, size: 480, temporal_setting: semionline}
+  attempt: scene1087_15_view_cache
+  attempt_success: true
+  schema_mask_count: 15
+  pred_json_count: 1
+  all_empty_cache_evidence_present: true
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24118
+  nvidia_headroom_mib: 458
+  cgroup_memory_peak_bytes: 17966829568
+  sample_count: 89
+  monitor_error_count: 0
+  wall_seconds: 29.030242083594203
+  all_preregistered_checks: true
+
+interpretation:
+  established:
+    - exact_scene1087_15_view_execution_completed_with_empty_cache_intervention
+    - all_15_schema_masks_and_pred_json_materialized
+    - all_six_observed_matmuls_have_pre_matmul_empty_cache_evidence
+  not_established:
+    - fresh_three_scene_45_view_materialization_stability
+    - mask_quality
+    - actor_identity_alignment
+    - allocator_cache_as_unique_root_cause
+  failure: V51-F62
+  failure_state: active_recovery_candidate_pass_scene1087_15_view_full_materialization_not_resolved
+
+governance:
+  full_materialization_authorized: false
+  quality_read: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: fresh_three_scene_45_view_empty_cache_materialization_preregistration
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_recovery_candidate_pass_scene1087_15_view_full_materialization_not_yet_resolved

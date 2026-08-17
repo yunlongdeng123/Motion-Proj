@@ -672,7 +672,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   execution recovery candidate，并推翻“释放 cache 必然改变 identity 输出”的担忧；但三视图 parity 不能外推 1087
   15-view/全 45-view，`V51-F62` 仍 active。下一步只允许单场 1087 15-view recovery，禁止直接把 r039 写成 full
   materialization ready。r039 evidence=`summary d720af4e...9505 /audit 8,625 bytes, fda57ee4...88ab /freeze
-  configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml`。
+  configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml`。r040 把同一 intervention 扩到 exact
+  scene-1087 15-view：单 fresh process 完成 `15 uint8 900×1600 masks +pred.json`，6/6 observed matmul 均有
+  empty-cache before/after 证据，resource gate 与独立审计全部 PASS；未读取 mask 内容质量。因此“该 recovery 只对三视图
+  probe 有效、扩到 1087 15-view 必然失败”已被推翻，但它仍不能外推 fresh 三场 45-view，`V51-F62` 保持 active。
+  下一步只允许预注册新目录、按 `0471→1087→0379` 串行的 45-view recovery；禁止续写 r035、复用 r035 partial、先读
+  r040 quality，或直接放行 identity training。r040 evidence=`summary 312a0277...a65 /audit 9,254 bytes,
+  1393c664...67c /freeze configs/worldsim_v51/stage_f_f0i_scene1087_15_view_empty_cache_recovery_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 
