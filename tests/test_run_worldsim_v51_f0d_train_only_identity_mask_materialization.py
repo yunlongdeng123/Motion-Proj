@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -100,3 +102,21 @@ def test_f0d_r035_independent_audit_replays_blocked_boundary() -> None:
     )
     assert result["failed_scene"]["explicit_pytorch_oom"] is False
     assert result["quality_read"] is False
+
+
+def test_f0d_r035_closeout_keeps_partial_materialization_blocked() -> None:
+    closeout = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0d_train_only_identity_mask_materialization_closeout_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert closeout["status"] == "blocked"
+    assert closeout["independent_audit"]["status"] == "pass"
+    assert closeout["independent_audit"]["audited_run_status"] == "blocked"
+    assert closeout["materialization_boundary"]["full_materialization_complete"] is False
+    assert closeout["failure"]["id"] == "V51-F62"
+    assert closeout["failure"]["state"] == "active"
+    assert closeout["governance"]["smaller_batch_retry"] is False
+    assert closeout["governance"]["identity_training_authorized"] is False

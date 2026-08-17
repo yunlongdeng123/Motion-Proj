@@ -1,0 +1,103 @@
+schema_version: worldsim_v51_stage_f_f0d_train_only_identity_mask_materialization_closeout_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: blocked
+phase: f0d_train_only_45_view_identity_mask_materialization_closeout
+closed_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035
+  source_commit: e4d64d368617259c7c14a65d83c1240694551424
+  source_tree: 25590428586f68f8be7b90ffd9412003bf0198a2
+  status: blocked
+  conclusion: scene0471_materialized_scene1087_cublas_internal_blocked_scene0379_not_started
+  resolved_config: {bytes: 6036, sha256: 04cc8045c061743363e2a85bd9eb389a6d9e46b096ba0558340cab164b63eb9b}
+  status_file: {bytes: 1171, sha256: c3f917bd4205acdb0f9feb6f34e2d12592feec12d9bb8de1e1cb8510ef074f61}
+  events: {bytes: 1106, sha256: 7d2221b5e486328b1f59a60cdba9719eda83b46a94d5f219b40ff97b56d140b7}
+  resource_samples: {bytes: 19572, sha256: d46d632d5a245267760bf2b542f601c740126d424230675a9f9b109b440e74e2}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T123000Z__stage-f-f0d-r035-audit.json
+  bytes: 25311
+  sha256: 6d217a7e560b006e4d17c59a5d8e0f81d422ed5d51f8cd8e0e577638a68f13e1
+  status: pass
+  audited_run_status: blocked
+  inventory: {entry_count: 55, logical_bytes: 5320231}
+
+materialization_boundary:
+  required: {scenes: 3, masks: 45, pred_json: 3}
+  complete: {scenes: 1, masks: 15, pred_json: 1}
+  attempted_scenes: 2
+  not_started_scenes: 1
+  full_materialization_complete: false
+  partial_outputs_are_not_canonical_full_materialization: true
+  scene_0471:
+    status: complete_no_quality_read
+    report: {bytes: 18648, sha256: 80778cba29a7850ea9925a628465b85931f66123eac491516aef033298da785a}
+    metadata: {bytes: 21639, sha256: 55767ccb2069c10c885fc6282596d30cc9f4729193b3180c6013783e05ec9653}
+    mask_count: 15
+    nonzero_mask_count: 14
+    zero_mask_count: 1
+    total_nonzero_pixels: 6527167
+    stable_short_id_count: 16
+  scene_1087:
+    status: failed_during_third_view_vote
+    progress_before_failure: 2_of_15
+    canonical_mask_count: 0
+    canonical_pred_json_count: 0
+    failure_class: CUDA_CUBLAS_STATUS_INTERNAL_ERROR
+    failure_site: consensus_associated.py:58_spatial_alignment_value_matmul_affinity
+    explicit_pytorch_oom: false
+    root_cause_confirmed: false
+    stderr: {bytes: 2188, sha256: f626efc6e7ba7c95f9fd5f2d555aac68b4d69261814d265b76c08becf4ef38a5}
+    stdout: {bytes: 1547, sha256: 2e18d21238aefadc9d7adf96d92ea23a2391e45ad60501a3740e3c4e3b966c74}
+  scene_0379: {status: not_started, staged_input_count: 0}
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_peak_mib: 24124
+  nvidia_headroom_mib: 452
+  cgroup_memory_peak_bytes: 17961271296
+  sample_count: 174
+  monitor_error_count: 0
+  event_wall_seconds: 55.993866
+  preregistered_peak_and_headroom_gate_passed_before_cuda_failure: true
+  resource_root_cause_proven: false
+
+failure:
+  id: V51-F62
+  class: engineering_cuda_runtime_resource_boundary
+  state: active
+  established:
+    - exact_scene1087_first_three_cross_camera_views_reach_spatial_alignment_vote
+    - half_precision_cublas_batched_gemm_returns_internal_error
+    - no_explicit_pytorch_oom_message
+    - sampled_gpu_peak_remains_below_preregistered_ceiling
+  not_established:
+    - mask_quality_failure
+    - deterministic_input_specific_failure
+    - out_of_memory_root_cause
+    - driver_fault_root_cause
+    - algorithmic_invalidity
+
+governance:
+  quality_read: false
+  actor_identity_alignment_read: false
+  smaller_batch_retry: false
+  identity_training_authorized: false
+  quality_gate_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: scene1087_three_view_cuda_fault_localization_preregistration
+  next_run_constraints:
+    - use_exact_scene1087_frame000_camera0_camera1_camera2_inputs
+    - keep_grid32_upstream_batch64_size480_amp_and_thresholds
+    - enable_cuda_launch_blocking_for_fault_localization
+    - do_not_read_mask_quality_or_select_outputs
+    - do_not_overwrite_or_resume_r035
+    - do_not_drop_or_reorder_scenes
+    - do_not_reduce_batch
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_active

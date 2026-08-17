@@ -1,5 +1,22 @@
 # Experiments
 
+## V5.1 Stage F F0d r035 BLOCKED / independent audit（2026-08-18）
+
+- run/source/tree=`20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035 /e4d64d3...1424 /
+  25590428...8a2`；status=`blocked`，结论=`scene0471_materialized_scene1087_cublas_internal_blocked_
+  scene0379_not_started`。resolved/status/events/resource-samples SHA=`04cc8045...b9b/c3f917bd...f61/
+  7d2221b5...0b7/d46d632d...4e2`。
+- 0471=`15 masks /14 non-empty /1 zero /6,527,167 nonzero pixels /16 stable IDs`，report/pred SHA=
+  `80778cba...85a/55767ccb...653`；1087 在进度 `2/15` 后于 three-frame spatial-alignment half-precision batched
+  GEMM 报 `CUBLAS_STATUS_INTERNAL_ERROR`，没有 mask/pred/report；0379 未启动。完整分母仅 `15/45 masks +1/3 pred`，
+  不发布 summary/manifest/materialization-manifest/resources，不把 partial 当 full materialization。
+- sampled resources=`GPU peak 24,124 MiB /452 MiB headroom /cgroup 17,961,271,296 bytes /174 samples /
+  0 errors`，event wall=`55.993866s`；数值仍在预注册资源门内，故 `root_cause_confirmed=false`、
+  `explicit_pytorch_oom=false`。stderr/stdout SHA=`f626efc6...8a5/2e18d212...c74`。
+- independent audit=`20260818T123000Z__stage-f-f0d-r035-audit.json /25,311 bytes /6d217a7e...13e1 /PASS`；
+  audit PASS 只表示 blocked 边界可重放。failure delta=`V51-F62 active`；下一步仅预注册 exact 1087 首三视图
+  `CUDA_LAUNCH_BLOCKING=1` fault localization，method 仍 grid32/upstream-batch64/AMP，不读质量、不缩 batch、不续写 r035。
+
 ## V5.1 Stage F F0d r035 45-view train-only materialization 预注册（2026-08-18）
 
 - task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035`；

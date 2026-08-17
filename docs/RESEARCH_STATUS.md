@@ -1,5 +1,26 @@
 # Research Status
 
+## V5.1 Stage F F0d r035 因 CUDA/CUBLAS 中断，已独立审计收口（2026-08-18）
+
+- canonical r035=`20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035`，source/tree=
+  `e4d64d3...1424/25590428...8a2`，terminal=`blocked`。0471 完成 `15 masks +1 pred.json`，其中 `14` 张
+  non-empty、`1` 张全背景，总 nonzero pixels=`6,527,167`、stable short IDs=`16`；这些只证明输出 schema/关联存在，
+  没有读取 mask quality。
+- 1087 的 15 个输入均 exact staged；official grid32/upstream-batch64/AMP subprocess 处理完前两张后，在第三张进入
+  three-frame vote，于 `consensus_associated.py:58 spatial_alignment` 的 `value @ affinity` 返回
+  `CUDA CUBLAS_STATUS_INTERNAL_ERROR`。它没有留下 mask/pred/report；0379 未启动。错误不是显式 PyTorch OOM，当前也没有
+  证据把它定为质量拒绝、确定性数据故障或具体 driver/resource 根因。
+- resource replay=`GPU peak 24,124/24,576 MiB，headroom 452 MiB /cgroup 17,961,271,296 bytes /174 samples /
+  0 errors /55.993866s`，仍在 r035 预注册 peak/headroom 门内；因此不能把 CUBLAS internal error 直接改写成 OOM，也不能
+  因“资源门数值通过”倒写 full materialization 成功。
+- independent audit=`20260818T123000Z__stage-f-f0d-r035-audit.json /25,311 bytes /6d217a7e...13e1 /PASS`，重放
+  30 个 staged symlink、0471 全部 mask/pred/report、1087 failure signature、资源和 `55 entries /5,320,231 logical bytes`
+  inventory。closeout=`configs/worldsim_v51/stage_f_f0d_train_only_identity_mask_materialization_closeout_v1.yaml`；
+  `V51-F62=active`。
+- r035 只形成 `15/45 masks、1/3 pred.json`，partial 不是 canonical full materialization。下一合法动作仅为预注册 1087
+  exact 首三视图的 `CUDA_LAUNCH_BLOCKING=1` 故障定位，保持 grid32/batch64/AMP/阈值；禁止缩 batch、删/换/重排场景、
+  覆盖/续跑 r035、读取质量或按输出选臂。identity training/quality/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0d 45-view train-only materialization 已预注册（2026-08-18）
 
 - task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=
