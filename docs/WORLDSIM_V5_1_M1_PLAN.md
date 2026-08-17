@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | `V51-F11` 解锁冲突待用户裁决；`V51-F12` 资产/24GB 合同待冻结 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | freeze proposal 已备好；`V51-F11` 仍待用户裁决 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -25,8 +25,8 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F13`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
-  delta=`V51-F11/F12/F13`。
+- V5.1 新增 failure=`V51-F01`–`V51-F15`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+  delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`。
 
 ## 配置与入口
 
@@ -43,6 +43,8 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/stage_a_closeout_v1.yaml`
 - `configs/worldsim_v51/stage_b_preflight_v1.yaml`
 - `docs/WS_V51_STAGE_B_PREFLIGHT.md`
+- `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`
+- `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -146,3 +148,14 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - normative plan 已由 P0 按 SHA 冻结；preflight 发现 Stage A closeout 的 5 行进展造成 inherited SHA drift，见
   `V51-F13`。纠正后长计划恢复原始 byte exact；进展留在本 short plan/status/experiments。授权后若改规范，需显式
   supersede/migrate P0 binding，不能静默改 expected SHA。
+
+## Stage B freeze-only proposal
+
+- draft config=`configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`，明确 `executable=false`；未获独立授权前不得
+  下载 checkpoint、实现 operator 或读取 feature quality。
+- H/S/C 沿用 `0471/1087/0379`、`0998/0359`、`0875/0535/0436`；每场固定 15 uplift +15 evaluation views，
+  240/240 image header exact、尺寸统一 1600×900，remainder 4 不读。
+- DINO identity、40-D H-only PCA、B0/B1 matched formula、sidecar/resource contract、proxy leakage 与 H→S→C gate 已
+  proposal 化；PCA 确定性见 `V51-F14`，membership proxy 边界见 `V51-F15`。
+- 授权后的下一提交仍只做 freeze-only/P0 supersession 与 image SHA，不直接启动模型；完整序列见
+  `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。

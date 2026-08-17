@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage B freeze-only proposal：资产/分母/operator/gate 已形成草案（2026-08-17）
+
+- `WS-V51-M1-B-LUDVIG-UPLIFT-01` 仍为 `pending/locked`；新增
+  `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md` 与 `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`，状态明确为
+  `draft_freeze_only_not_authorized`。本轮没有 checkpoint 下载、方法实现、GPU/model run 或 feature/质量读取。
+- official identity proposal：LUDVIG=`4461fc5`、Meta DINOv2=`7764ea0`、ViT-g/14 registers checkpoint URL/bytes=
+  `4,546,140,349`/S3 version/ETag 已只读记录；ETag 是 multipart，不替代下载后的完整 SHA-256。
+- 8 个开发 scene 沿用 H/S/C=`3/2/3`；每场固定 `5 evidence+5 evaluation frames × 3 front cameras=30` images，header
+  audit=`240/240`、尺寸统一 `1600×900`。H patch population=`328,320<500,000`，因此无需上游随机 subsample；
+  但 PCA solver/random state 与 CPU/GPU std 差异需显式冻结，登记 `V51-F14`。
+- B0 proposal=per-view contribution aggregation + `1-exp(-mass)` view saturation；B1=同 support 上
+  `sum(w*f)/(sum(w)+1e-8)` normalized transpose。DINO 与 renderer 分进程，40-D patch-grid sidecar + CPU chunked
+  scatter，禁止 dense 900×1600×40 落盘和同卡并发。
+- same-actor/actor-background 只用 frozen Rigid membership 作 evaluation proxy，不能进入 method，也不是真实 GT；
+  same-Gaussian repeatability 与 heldout DINO reprojection 必须同表，登记 `V51-F15`。H/S/C gate 与 abstain denominator
+  已在 proposal 预注册，但只有用户授权后才能转为 frozen。
+- 当前下一门仍是用户裁决 `U2/B3 fallback`。若授权，第一步只做 P0 supersession + 240 image SHA freeze；
+  validation/test/KITTI/Graph/backbone search 继续锁定。failure delta=`V51-F14/F15`，experiment delta=`none`。
+
 ## V5.1 Stage B 授权前预检：协议冲突与 DINOv2/24GB 门未闭合（2026-08-17）
 
 - `WS-V51-M1-B-LUDVIG-UPLIFT-01=pending/locked`；本轮只读预检，没有下载/clone 上游、实现方法、启动 run 或读取

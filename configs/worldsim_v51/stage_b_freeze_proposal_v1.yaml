@@ -1,0 +1,214 @@
+schema_version: worldsim_v51_stage_b_freeze_proposal_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: pending
+phase: draft_freeze_only_not_authorized
+proposal_date: '2026-08-17'
+proposal_commit_base: 911f65b35c678a0b2de6e09eb33c5a6491fa8a6e
+
+activation:
+  separate_stage_b_authorization_received: false
+  selected_protocol_branch: unresolved
+  required_user_decision: authorize_u2_b3_fallback_or_close_m1
+  executable: false
+  quality_read_allowed: false
+  checkpoint_download_allowed: false
+  method_implementation_allowed: false
+
+method_scope:
+  inherited_unary: U2_B3
+  arms: [B0_VIEW_SATURATED_INTERSECTION, B1_NORMALIZED_RENDERER_TRANSPOSE]
+  first_backbone: DINOv2_ViT_g14_registers
+  learning_free: true
+  base_gaussian_immutable: true
+  feature_sidecar_only: true
+  graph_diffusion_enabled: false
+  pruning_enabled: false
+  parameter_search: false
+
+upstream:
+  ludvig:
+    repository: https://github.com/naver/ludvig
+    commit: 4461fc515439bb498a75d71738a1e73cf7a452ed
+    license: non_commercial_with_notice_requirements
+    code_vendoring: false
+  dinov2:
+    repository: https://github.com/facebookresearch/dinov2
+    commit: 7764ea0f912e53c92e82eb78a2a1631e92725fc8
+    hub_entrypoint: dinov2_vitg14_reg
+    license: Apache-2.0
+  checkpoint:
+    url: https://dl.fbaipublicfiles.com/dinov2/dinov2_vitg14/dinov2_vitg14_reg4_pretrain.pth
+    proposed_path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+    content_length_bytes: 4546140349
+    last_modified_utc: '2023-10-27T10:37:55Z'
+    etag: '3d1b1c4501eac45d83af24b811e3bea9-542'
+    s3_version_id: T_6GA9ukHl7r7daSEhzWpsymxbGdAvFR
+    etag_is_sha256: false
+    sha256: pending_after_authorized_download
+
+feature_extraction:
+  input_image_size_wh: [1600, 900]
+  max_side_before_patch_floor: 1600
+  patch_size: 14
+  model_input_size_wh: [1596, 896]
+  patch_grid_hw: [64, 114]
+  raw_dimension: 1536
+  intermediate_layers_requested: 4
+  selected_layer: last_of_four
+  inference_autocast: fp16
+  raw_feature_accumulation_dtype: float32
+  image_normalization:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  resize_mode: bilinear
+  resize_align_corners: false
+
+pca:
+  fit_role: historical_diagnostic_evidence_only
+  fit_scenes: [scene-0471, scene-1087, scene-0379]
+  fit_views_per_scene: 15
+  fit_patch_count: 328320
+  upstream_subsample_cap: 500000
+  subsampling_applied: false
+  standardization_std_correction: 1
+  components: 40
+  solver: randomized
+  random_state: 20260814
+  whiten: false
+  fit_on_screening_or_confirmation: false
+  output_dtype: float32
+  persisted_state: [feature_mean, feature_std, pca_mean, components, singular_values]
+
+view_contract:
+  cameras: [0, 1, 2]
+  modulus: 5
+  train_remainders: [0, 1, 3]
+  uplift_evidence_frames: [0, 40, 80, 120, 160]
+  evaluation_remainder: 2
+  heldout_evaluation_frames: [2, 42, 82, 122, 162]
+  forbidden_heldout_remainder: 4
+  uplift_views_per_scene: 15
+  evaluation_views_per_scene: 15
+  image_files_per_scene: 30
+  image_sha_freeze_required_before_extraction: true
+
+roles:
+  historical_diagnostic:
+    quality_access: repeated_diagnostic_after_authorization
+    pca_fit: true
+    scenes:
+      - {scene: scene-0471, index: 382, image_files: 30, image_bytes: 3506079, background_gaussians: 809902, rigid_gaussians: 49711, checkpoint_sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa}
+      - {scene: scene-1087, index: 827, image_files: 30, image_bytes: 6703393, background_gaussians: 930979, rigid_gaussians: 244, checkpoint_sha256: 84c34b837e8083a84a77de0662c6c702ce978a2e8e11a4038d487e1f6c9754be}
+      - {scene: scene-0379, index: 296, image_files: 30, image_bytes: 4878422, background_gaussians: 1186659, rigid_gaussians: 632, checkpoint_sha256: d77fa13f5ebe1d469222c3df78eb316d836178dca608d00c17f0af3a56d3042d}
+  screening:
+    quality_access: exact_once_after_h_gate
+    pca_fit: false
+    scenes:
+      - {scene: scene-0998, index: 756, image_files: 30, image_bytes: 7871898, background_gaussians: 1578331, rigid_gaussians: 79068, checkpoint_sha256: 4ad88a7e3a8a1df83bbb01675a7945cf4b496b299e4d5e3f356ca061143c0516}
+      - {scene: scene-0359, index: 276, image_files: 30, image_bytes: 4607020, background_gaussians: 1387860, rigid_gaussians: 9896, checkpoint_sha256: ca1ec48e2acc3883405f4d1a25b7682e2de18abd1a93342b751d8cfc7c9b6048}
+  development_confirmation:
+    quality_access: exact_once_after_stage_b_family_freeze
+    pca_fit: false
+    scenes:
+      - {scene: scene-0875, index: 663, image_files: 30, image_bytes: 3621543, background_gaussians: 889059, rigid_gaussians: 59915, checkpoint_sha256: d72286163ff246c493747bbd29fba0723419d0138209b18917108043edde7cc7}
+      - {scene: scene-0535, index: 425, image_files: 30, image_bytes: 4381259, background_gaussians: 1162092, rigid_gaussians: 21981, checkpoint_sha256: a74669b2f22c6c4445fcf972d716b77b54be555ee2eedb88ac4ebfd118472838}
+      - {scene: scene-0436, index: 350, image_files: 30, image_bytes: 4177558, background_gaussians: 1140699, rigid_gaussians: 151229, checkpoint_sha256: ee03a8165bc1b335dab867c3b4066e0870fd550110b7f916e9fbdde9e7f5eb4a}
+
+operator:
+  common_support:
+    minimum_intersection_contribution: 0.0001
+    minimum_gaussian_view_mass: 0.001
+    denominator_epsilon: 1.0e-8
+  B0_VIEW_SATURATED_INTERSECTION:
+    per_view_feature: sum_pixel_weighted_feature_divided_by_view_mass
+    view_weight: one_minus_exp_negative_view_mass
+    final_feature: view_weighted_mean
+  B1_NORMALIZED_RENDERER_TRANSPOSE:
+    numerator: sum_all_views_and_pixels_weighted_feature
+    denominator: sum_all_views_and_pixels_weight
+    final_feature: numerator_divided_by_denominator_plus_epsilon
+  base_checkpoint_before_after_sha_exact: true
+  gaussian_row_order_exact: true
+  chunk_order_invariant: true
+
+sidecars:
+  raw_1536d_features: temporary_cpu_memmap_h_only
+  pca_patch_grid: per_view_float32_40x64x114
+  gaussian_features: per_arm_float32_gaussian_count_x40
+  gaussian_weight: per_arm_float32_gaussian_count
+  per_view_gaussian_features: diagnostics_only_chunked
+  dense_900x1600x40_materialization: false
+  lazy_bilinear_sampling_requires_dense_parity_test: true
+  required_identity_fields: [source_image_sha256, checkpoint_sha256, model_commit, model_checkpoint_sha256, pca_state_sha256, frame, camera, shape, dtype, content_sha256]
+
+metrics:
+  feature_repeatability: same_gaussian_cross_view_cosine
+  same_actor_cosine: deterministic_pairs_sharing_rigid_point_instance_id
+  actor_background_cosine: deterministic_actor_to_nearest_background_pairs
+  actor_background_margin: same_actor_cosine_minus_actor_background_cosine
+  heldout_reprojection_cosine: rendered_gaussian_feature_vs_frozen_dino_feature
+  gaussian_coverage: positive_weight_over_all_gaussians_by_model
+  eligible_actor_minimum_covered_gaussians: 32
+  maximum_pairs_per_actor: 4096
+  pair_seed: 20260814
+  membership_proxy_is_ground_truth: false
+  membership_proxy_consumed_by_method: false
+  report: [scene_denominator, actor_denominator, abstain_reason, wall_time_seconds, sidecar_bytes, peak_gpu_memory_mib, peak_cgroup_memory_bytes]
+
+draft_gates:
+  resource_smoke:
+    single_dino_process_only: true
+    maximum_gpu_peak_mib: 22528
+    maximum_cgroup_peak_bytes: 85899345920
+    no_model_or_resolution_substitution_after_oom: true
+  operator_parity:
+    required_checks: [manual_dense_equivalence, duplicate_index_accumulation, constant_feature_conservation, zero_denominator, chunk_order_invariance, lazy_bilinear_dense_equivalence]
+  historical_diagnostic:
+    minimum_evaluable_scenes: 2
+    positive_b1_margin_scene_count_minimum: 2
+    scene_balanced_b1_margin_minimum_exclusive: 0.0
+    mean_rigid_coverage_minimum: 0.60
+    heldout_reprojection_delta_b1_minus_b0_minimum: -0.01
+  screening:
+    required_evaluable_scenes: 2
+    positive_b1_margin_scene_count_minimum: 2
+    clearly_positive_b1_margin_minimum: 0.02
+    clearly_positive_scene_count_minimum: 1
+    scene_balanced_b1_margin_minimum_exclusive: 0.0
+    mean_rigid_coverage_minimum: 0.60
+    heldout_reprojection_delta_b1_minus_b0_minimum: -0.01
+  confirmation:
+    minimum_evaluable_scenes: 2
+    positive_b1_margin_scene_count_minimum: 2
+    clearly_positive_b1_margin_minimum: 0.02
+    clearly_positive_scene_count_minimum: 1
+    scene_balanced_b1_margin_minimum_exclusive: 0.0
+    mean_rigid_coverage_minimum: 0.60
+    heldout_reprojection_delta_b1_minus_b0_minimum: -0.01
+  failure_action: reject_feature_graph_path_and_keep_stage_c_locked
+  pass_action: freeze_b1_sidecar_then_request_stage_c_authorization
+
+execution_order_after_authorization:
+  - supersede_p0_binding_and_freeze_stage_b_contract
+  - download_and_sha256_checkpoint
+  - one_image_dino_resource_smoke
+  - synthetic_operator_parity
+  - historical_diagnostic_h
+  - freeze_candidate_without_parameter_search
+  - exact_once_screening_s
+  - freeze_stage_b_family
+  - exact_once_confirmation_c
+  - close_stage_b_and_keep_graph_locked_until_separate_authorization
+
+locks:
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  graph_implementation: false
+  stage_c_start: false
+  backbone_search: false
+  pca_refit_on_s_or_c: false
+  posthoc_pair_or_gate_change: false
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V5-F26, V5-F29, V5-F31, V51-F08, V51-F09, V51-F10, V51-F11, V51-F12, V51-F13, V51-F14, V51-F15]
+failure_ledger_delta: [V51-F14, V51-F15]

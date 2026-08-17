@@ -113,3 +113,13 @@ DriveStudio renderer 在同一 GPU 进程或同卡并发常驻；“依赖已安
 
 在这些项被冻结并得到独立授权前，不创建 method run、不下载权重、不读 C/validation/test/KITTI quality，也不实现
 Graph、SigLIP/CLIP/SAM backbone search 或参数搜索。
+
+## 7. 后续 freeze proposal（2026-08-17）
+
+在不改变 `pending/locked` 的前提下，资产 identity、240-image denominator、H-only deterministic PCA、matched B0/B1
+公式、24GB sidecar 流程、proxy 边界和 H→S→C draft gate 已收敛到：
+
+- `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`
+- `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`
+
+两者均明确 `draft/not authorized/executable=false`；本 preflight 的独立授权门与 quality locks 不变。

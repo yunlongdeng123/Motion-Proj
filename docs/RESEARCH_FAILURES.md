@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3；Stage B 等待独立授权 | H→S 小效应未复现、UNKNOWN coverage 不达门；Stage B 解锁规则冲突、ViT-g 资产/24GB 合同与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F13` |
+| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3；Stage B 等待独立授权 | H→S 小效应未复现、UNKNOWN coverage 不达门；Stage B 解锁、ViT-g/PCA/24GB、proxy leakage 与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F15` |
 
 ### 1.1 V1 汇总条目
 
@@ -220,7 +220,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   A6000 48GB，当前 RTX 3090 只有 24576 MiB，且 Stage A 单个 unary materialization 已实测约 20–22 GiB，因此
   DINO extraction 与 DriveStudio renderer 禁止同进程或同卡并发常驻。授权后必须先冻结 upstream commit、官方模型来源、
   checkpoint SHA/license、preprocess 与 PCA population/seed，再采用“离线 DINO sidecar→释放进程→renderer uplift”分段
-  执行；缺资产或 OOM 只记工程/resource terminal，不得写成 feature uplift 失败，也不得临时换小模型后仍称 faithful port。
+  执行。官方 checkpoint HEAD bytes=`4,546,140,349`，multipart ETag 不是 SHA；官方 extractor 又会把全 camera raw
+  feature 预分配在 GPU。V5.1 只允许先下载后全 SHA，再用 CPU memmap/40-D patch-grid streaming 与 dense-parity test
+  保持语义；缺资产或 OOM 只记工程/resource terminal，不得写成 feature uplift 失败，也不得临时换小模型、降分辨率后
+  仍称 faithful port。
   证据：`configs/worldsim_v51/stage_b_preflight_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
 - `V51-F13`（`engineering/protocol`, `resolved without method execution`）：P0 scope config 已把 normative plan
   SHA-256 冻结为 `3d7f7481...`，但 Stage A closeout commit `3d33262` 曾直接向该长计划加入 5 行执行进展，使当前
@@ -232,6 +235,23 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   method/GPU run 或读取 C/validation/test/KITTI quality。证据：`3d33262`、
   `configs/worldsim_v51/p0_m1_scope_v1.yaml`、`tests/test_worldsim_v51_protocol.py`、
   `docs/WS_V51_STAGE_B_PREFLIGHT.md`。
+- `V51-F14`（`engineering/protocol`, `active pre-quality risk`）：LUDVIG DINO extractor 的 PCA 路径不是天然确定性合同。
+  `PCA(n_components=40)` 没有 `random_state`，大矩阵会走 randomized solver；当 patch 数超过 500,000 时还用未设 seed
+  的 `np.random.choice` subsample。更隐蔽的是 GPU path 用 PyTorch `std`（默认 correction=1），CPU path 用 NumPy
+  `std`（correction=0），所以为省显存切到 CPU 会改变标准化与全部 feature。V5.1 proposal 冻结 H evidence=
+  `45 views×7,296 patches=328,320`，明确不触发 subsample；固定 std correction=1、randomized PCA
+  random_state=`20260814`、40-D、whiten=false，并把 scaler/PCA state 持久化后只 transform S/C。不得把 solver/seed/std
+  差异当作 backbone 增益或在 S/C refit；这是 reproducibility hardening，不是参数搜索。本轮未下载模型、提取 feature 或
+  读取质量。证据：LUDVIG `predictors/dino.py`、`configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、
+  `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
+- `V51-F15`（`evaluation/governance`, `active pre-quality risk`）：Stage B 的 same-actor/actor-background metric 可从
+  frozen `RigidNodes.points_ids[:,0]` 与 Background row 构造，但这是 base-model membership proxy，不是真实 ownership GT。
+  若把该 proxy 输入 DINO/PCA/uplift/权重会形成标签泄漏；若只凭 proxy margin 解锁 Graph，则会把模型自身表示循环证明为
+  语义正确。proposal 将其限制为 evaluation-only stratum，强制写
+  `model_membership_proxy_not_ground_truth`，并同时报告不消费 membership 的 same-Gaussian repeatability 与 heldout DINO
+  reprojection。无 eligible actor 的 scene 必须保留 abstain；不得降低 32-Gaussian eligibility、删 1087/0379 或只报大
+  Rigid 场景。Stage B 未获授权，本轮没有产生 metric。证据：V5 formal30k r027–r034 metadata、
+  `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、`docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
 
 <a id="detail-v5"></a>
 
