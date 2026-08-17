@@ -1,0 +1,65 @@
+schema_version: worldsim_v51_m1_cif_decoupling_audit_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: frozen_before_quality_read
+phase: a4_cif_decoupling_mechanism_audit
+seed: 20260814
+
+reference:
+  title: Consistent Instance Field for Dynamic Scene Understanding
+  venue: CVPR 2026
+  official_url: https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Consistent_Instance_Field_for_Dynamic_Scene_Understanding_CVPR_2026_paper.html
+  relevant_contract: occupancy_probability_and_conditional_instance_distribution_are_distinct_from_visibility_and_appearance_opacity
+  excluded_by_v51_plan: [full_deformable_field, learned_instance_embedding, identity_calibration, semantic_resampling]
+
+inputs:
+  a2_config:
+    path: configs/worldsim_v51/m1_unary_unknown_v1.yaml
+    sha256: 4def2e54505f1cbd97d97517806118a3d09ce8e7fb9051f784d7d5827cea63d8
+  a2_run:
+    path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003
+    summary_sha256: c9a821395da41b09fa124971c3f3e4e6f702987a3a587b208650294f85ae53b5
+    manifest_sha256: 56bf02070de0519946513a0b71404814ae79ee008ca7b5109e4e1c82f68b6c52
+  source_contracts:
+    ownership_renderer:
+      path: motion_proj/worldsim_v5/ownership_renderer.py
+      sha256: 0253c06e7e3114529b11407cde558ae9446c1c758f769c18b9e62fbfaa3ae0b0
+    visibility:
+      path: motion_proj/worldsim_v51/evidence/visibility.py
+      sha256: b42919279e7413d415fdce89e2f9721aac74bc5ff8050bac91d8de3972ded14b
+    abstention:
+      path: motion_proj/worldsim_v51/evidence/abstention.py
+      sha256: 7a8a209a08d13d8d59280827cb3ae622747cb4f73383a03586bd5aa967f98378
+
+scenes: [scene-0471, scene-1087, scene-0379]
+parent: A2
+candidate: A4
+
+occupancy_candidates:
+  appearance_opacity:
+    allowed: false
+    reason: conflates_radiance_alpha_with_existence_and_double_counts_renderer_opacity
+  visibility_or_effective_count:
+    allowed: false
+    reason: conflates_observability_or_missingness_with_existence
+  constant_one_for_instantiated_gaussian:
+    allowed: true
+    reason: only_result_blind_existence_state_without_new_supervision
+    expected_effect: exact_noop
+
+prequality_gate:
+  require_independent_occupancy_observable: true
+  reject_if_only_allowed_initialization_is_exact_noop: true
+  forbid_quality_arm_without_identifiable_only_variable: true
+
+restrictions:
+  evaluation_artifact_read: false
+  evaluation_quality_read: false
+  gpu_renderer: false
+  training: false
+  parameter_search: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04, V51-F05, V51-F06, V51-F07]
+failure_ledger_delta: pending
