@@ -1,5 +1,15 @@
 # Research Status
 
+## V5.1 Stage F F0a r027 license blocked；v2/r028 recovery 已预注册（2026-08-18）
+
+- r027 在 isolated venv 与三份 pinned wheels 完成后，于 Gurobi tiny model 创建处报 `License expired 2024-10-28`；
+  status=`blocked`，4 files=`12,861 bytes`。one-view CLI 尚未启动，DEVA/SAM 未加载，input/mask pixels=`0/0`，GPU/
+  quality 均未读；见 `V51-F49`。
+- 上游约束是 `gurobipy>=10.0.3`，v1 错把最低版本固定为 exact 10.0.3。v2 只换为当前 package index 可得的
+  `12.0.3` 并使用 fresh `python_wheels_v2`、`deva-v51-stage-f-v2`；source/assets/view/CLI/resource/locks 全部不变。
+  r027 import path probe 另产生 4 个 source-tree `__pycache__`，已精确清除并在 v2 禁止子进程写 bytecode（`V51-F50`）。
+  r028 仍必须先过 Gurobi 与 PuLP tiny optimum，不能绕过 license gate。materialization/training/quality=false，M2/M3=pending。
+
 ## V5.1 Stage F F0a isolated environment/one-view smoke 已预注册（2026-08-18）
 
 - planned r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`。用 DriveStudio runtime 创建

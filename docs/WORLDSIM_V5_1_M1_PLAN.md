@@ -1,5 +1,12 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0a environment smoke v2 recovery
+
+r027 因 exact Gurobi 10.0.3 内置 license 过期，在任何模型/input 执行前 blocked。r028 只把版本改为 upstream 下界内的
+12.0.3，并使用 fresh wheelhouse/venv 完整重跑；仍要求 Gurobi/PuLP tiny solver gate，不允许直接把 fallback 当 faithful。
+同时禁止子 Python 在 frozen source 写 bytecode；其余 one-view、official CLI、资源与 read locks 不变；见
+`V51-F49/F50`。
+
 ## 2026-08-18 Stage F F0a isolated environment/one-view smoke 预注册
 
 r027 只建立隔离、可追溯的 inference 环境并在唯一 0471/0/0 输入上运行 official automatic demo。依赖使用 pinned wheels

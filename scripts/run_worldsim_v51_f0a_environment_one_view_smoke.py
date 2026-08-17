@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -35,7 +36,10 @@ from scripts.run_worldsim_v51_h_uplift import (
 )
 
 
-SCHEMA = "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v1"
+SCHEMAS = {
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v1",
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v2",
+}
 TASK_ID = "WS-V51-M1-F-IDENTITY-EMBEDDING-01"
 
 
@@ -69,7 +73,7 @@ def repository_source_identity(project: Path = PROJECT) -> dict[str, str]:
 
 def _validate_config(config_path: Path) -> dict[str, Any]:
     config = _load_yaml(config_path)
-    if config.get("schema_version") != SCHEMA or config.get("task_id") != TASK_ID:
+    if config.get("schema_version") not in SCHEMAS or config.get("task_id") != TASK_ID:
         raise ProtocolError("F0a environment smoke config identity drift")
     if config.get("status") != "running" or int(config.get("seed", -1)) != 20260814:
         raise ProtocolError("F0a environment smoke status or seed drift")
@@ -378,6 +382,7 @@ def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> di
 
 
 def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
+    os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
     config = _validate_config(config_path)
     if run_dir.exists():
         raise ProtocolError(f"refusing to overwrite existing run: {run_dir}")
@@ -526,7 +531,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v1.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v2.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

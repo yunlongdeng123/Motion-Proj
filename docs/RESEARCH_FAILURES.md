@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希与 identity-input contract 边界 | `V51-F01`–`V51-F48` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license、bytecode source 污染与 identity-input contract 边界 | `V51-F01`–`V51-F50` |
 
 ### 1.1 V1 汇总条目
 
@@ -515,6 +515,21 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   fail-closed；远端 `sha256sum` 与 r026 已独立审计的 selected manifest 一致，证明是配置转录错误而非图像漂移。修复只从
   r026 canonical record 恢复完整 SHA，并以原测试重跑；不得改图、重选 view、放宽 hash 或把该失败写成 SAM/DEVA 结果。
   后续长 identity 必须由 manifest 机器传递并保留 config-validation test，禁止凭聊天摘要/截断 hash 手工补全。
+- `V51-F49`（`engineering/license/runtime`, `recovery pending after r027`）：r027 已 atomic 构建 isolated venv 并安装
+  exact `supervision=0.14.0/PuLP=2.7.0/gurobipy=10.0.3`，但第一个 Gurobi tiny MILP 在创建 model 时报告
+  `License expired 2024-10-28`，因此 status=`blocked`。失败发生在 one-view upstream CLI 前：没有加载 DEVA/SAM 权重、
+  没有 GPU model forward、没有 decode input/mask、没有 quality；4 files=`12,861 bytes`，不得把它写成 identity mechanism
+  或 association 失败。根因是把上游 `gurobipy>=10.0.3` 的最低版本误冻结成 exact 10.0.3，而该 wheel 的内置 restricted
+  runtime 已过期；服务器没有另一个 `gurobi.lic` 可续用。合法 recovery v2 只将 Gurobi 提升到当前 index 可得的
+  `12.0.3`（仍满足上游版本下界），使用全新 wheelhouse/venv/r028 重跑，其他 source/assets/input/CLI/resource/locks
+  不变；仍要求 Gurobi tiny optimum，禁止直接跳过 gate 或静默采用 PuLP 后声称 faithful。
+- `V51-F50`（`engineering/source-provenance`, `resolved before r028`）：r027 environment path verification 用子 Python
+  import frozen DEVA source，默认 bytecode policy 在 Gaussian Grouping checkout 内生成 4 个未跟踪 `__pycache__` 目录；
+  tracked diff 为 0，但后续 v2 config 的 clean-source gate 正确 fail-closed。该污染不是 upstream 修改、算法失败或 r028 run；
+  在确认 exact paths 后只删除这 4 个由本任务生成的 cache，并让 runner 的全部子进程继承
+  `PYTHONDONTWRITEBYTECODE=1`。第一次清理 wrapper 又因 PowerShell 提前处理 `$p` 而出现 quote EOF，未删除或修改任何
+  文件；随后改用 4 个显式绝对 target 完成清理，两个 external repo 恢复 clean。禁止把 `git status` 放宽为忽略 untracked，
+  也不得把 source tree 内 cache 纳入冻结；后续 import smoke 必须同时核对 commit/tree/clean。
 
 <a id="detail-v5"></a>
 

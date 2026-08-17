@@ -28,7 +28,7 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v1.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v2.yaml"
     )
     assert config["one_view"]["interpretation"]["association_capability_claim"] is False
     assert config["decision"]["materialization_authorized"] is False

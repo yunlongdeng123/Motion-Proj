@@ -1,5 +1,15 @@
 # Experiments
 
+## V5.1 Stage F F0a r027 blocked / v2 recovery 预注册（2026-08-18）
+
+- r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`，source=`1c0d8bf`，blocked at
+  Gurobi tiny model creation：exact 10.0.3 runtime license expired `2024-10-28`。resolved/status/events/resource SHA=
+  `2b7fd119...af6/162e1717...bd/3008f50f...73a/58b87ce7...9fd`；4 files=`12,861 bytes`。
+- wheels/venv 已构建，但无 environment report；one-view input 未 decode、DEVA/SAM/CLI/GPU 未执行、quality=false。
+  v2/r028 唯一语义变化是 `gurobipy 10.0.3 →12.0.3`，仍满足 upstream `>=10.0.3`；fresh wheelhouse/venv 避免污染
+  r027。import probe 产生的 4 个 untracked `__pycache__` 已清除，v2 禁止子进程写 bytecode（`V51-F50 resolved`）。
+  其余 inputs/args/gates/locks exact inherited；failure delta=`V51-F49 pending/V51-F50 resolved`。
+
 ## V5.1 Stage F F0a isolated environment + one-view smoke 预注册（2026-08-18）
 
 - planned r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`；isolated venv 继承 frozen
