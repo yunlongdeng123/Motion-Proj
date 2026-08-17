@@ -2,7 +2,9 @@
 
 ## V5.1 Stage F F0 faithful source/frozen-base adapter preflight 预注册（2026-08-18）
 
-- planned r023=`20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023`；official paper=
+- r023=`20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023` 在 status/monitor/data 前因 `_git`
+  helper 漏传 project 参数而 fail，只有 `resolved_config.yaml=7,796 bytes`，不是方法 run。recovery planned r024=
+  `20260818T044000Z__m1-stage-f-f0-source-preflight-s20260814-r024`；official paper=
   `ECCV 2024 /10,225,908 bytes /61e82145...823`，official code=`lkeab/gaussian-grouping@0ab60afe`、tree=
   `036936e1...fd16`、Apache-2.0。冻结 repo 9 个关键文件与 paper identity，不 import/修改 upstream code。
 - faithful core=`SAM everything → DEVA semionline short-ID association → 16D view-independent identity encoding →`
@@ -14,7 +16,7 @@
 - 当前 expected gap=`binary actor-union observation has no cross-view instance identity labels + upstream DEVA/SAM-v1`
   `checkpoints absent`；SAM2 checkpoint 只作已存在 non-substitute。preflight 完成的下一动作是另行预注册 F0a train-only
   SAM+DEVA mask materialization，不直接训练 F0。F1/F2=false，M2/M3=pending；failure refs=
-  `V51-F31/F37/F42/F43`，prereg delta=`none`。
+  `V51-F31/F37/F42/F43/F44`，recovery delta=`V51-F44`。
 
 ## V5.1 Stage E E0b r022 canonical H rejection（2026-08-18）
 

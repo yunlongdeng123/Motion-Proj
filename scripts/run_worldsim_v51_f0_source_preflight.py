@@ -70,6 +70,13 @@ def _git_at(repository: Path, *args: str) -> str:
     ).strip()
 
 
+def repository_source_identity(project: Path = PROJECT) -> dict[str, str]:
+    return {
+        "commit": _git(project, "rev-parse", "HEAD"),
+        "tree": _git(project, "rev-parse", "HEAD^{tree}"),
+    }
+
+
 def validate_config(config_path: Path) -> dict[str, Any]:
     config = _load_yaml(config_path)
     if config.get("schema_version") != SCHEMA:
@@ -334,8 +341,9 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         raise ProtocolError(f"refusing to overwrite existing run: {run_dir}")
     run_dir.mkdir(parents=True)
     _write_text(run_dir / "resolved_config.yaml", config_path.read_text(encoding="utf-8"))
-    source_commit = _git("rev-parse", "HEAD")
-    source_tree = _git("rev-parse", "HEAD^{tree}")
+    source_identity = repository_source_identity()
+    source_commit = source_identity["commit"]
+    source_tree = source_identity["tree"]
     events = [{"event": "run_started", "at_utc": _utc_now()}]
     _write_jsonl(run_dir / "events.jsonl", events)
     _write_json(

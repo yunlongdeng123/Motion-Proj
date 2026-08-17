@@ -151,6 +151,14 @@ decision:
   expected_preflight_conclusion: f0_source_adapter_preflight_done_input_materialization_required
   next_action: preregister_f0a_train_only_sam_deva_identity_mask_materialization
 
+recovery:
+  prior_run: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023
+  prior_terminal: absent_before_status_creation
+  prior_artifacts: [resolved_config.yaml]
+  failure: V51-F44
+  only_change: bind_PROJECT_as_first_argument_to_shared_git_helper
+  quality_or_method_state_read: false
+
 resources:
   monitor_interval_seconds: 0.25
   maximum_nvidia_at_start_mib: 512
@@ -177,5 +185,5 @@ locks:
   m2_status: pending
   m3_status: pending
 
-failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43]
-failure_ledger_delta: pending
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43, V51-F44]
+failure_ledger_delta: V51-F44_recovery_pending

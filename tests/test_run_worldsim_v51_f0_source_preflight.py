@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0_source_preflight import (
     observation_schema_report,
+    repository_source_identity,
     summarize_instance_metadata,
 )
 
@@ -64,3 +65,24 @@ def test_observation_schema_detects_explicit_identity_field(tmp_path: Path) -> N
     report = observation_schema_report([path])
     assert report["associated_instance_identity_labels_present"] is True
     assert report["identity_label_fields"] == ["instance_identity"]
+
+
+def test_repository_source_identity_binds_project_before_git_args(monkeypatch) -> None:
+    calls = []
+
+    def fake_git(project: Path, *args: str) -> str:
+        calls.append((project, args))
+        return "commit-value" if args[-1] == "HEAD" else "tree-value"
+
+    monkeypatch.setattr(
+        "scripts.run_worldsim_v51_f0_source_preflight._git", fake_git
+    )
+    project = Path("/tmp/frozen-project")
+    assert repository_source_identity(project) == {
+        "commit": "commit-value",
+        "tree": "tree-value",
+    }
+    assert calls == [
+        (project, ("rev-parse", "HEAD")),
+        (project, ("rev-parse", "HEAD^{tree}")),
+    ]

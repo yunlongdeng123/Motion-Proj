@@ -8,7 +8,8 @@ F0 不直接复用二值 ownership。官方 Gaussian Grouping 固定为 `SAM eve
 geometry/appearance/opacity/actor pose，而保留 identity branch 的原机制；必须明确这不是上游 joint-reconstruction exact
 reproduction。r023 只核对 source、15 train-only views/scene 的 schema/instance metadata、上游 asset presence，并做小型
 16D renderer gradient smoke；不读 image/mask pixels 或 quality，不运行 SAM/DEVA/identity training。现有 observation 没有
-associated instance IDs 时，只解锁 F0a train-only mask materialization 的预注册。
+associated instance IDs 时，只解锁 F0a train-only mask materialization 的预注册。r023 在 status 前因 shared git helper
+调用遗漏 project 参数而终止；只保留 resolved config。r024 只修复该工程参数并完整重跑，不改变 source/method/data 门。
 
 ## 2026-08-18 Stage E r022 收口与 Stage F 解锁
 
