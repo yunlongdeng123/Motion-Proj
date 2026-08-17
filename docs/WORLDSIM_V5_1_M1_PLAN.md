@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r005 synthetic operator parity PASS；下一门 one-H-view contribution inventory |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r005 operator PASS；r006 one-H-view contribution denominator 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -62,11 +62,13 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_operator_parity_v1.yaml`
 - `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
 - `scripts/smoke_worldsim_v51_dinov2_resource.py`
 - `scripts/audit_worldsim_v51_stage_b_operator_parity.py`
+- `scripts/smoke_worldsim_v51_one_view_contribution.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -207,5 +209,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - canonical r005=`20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005` 在 source=`1efa7dd` 以 11/11
   checks PASS；B0/B1 dense error=`0/0`、lazy error=`1.192e-7`、order bit-exact、arm difference L2=`0.0829221`，
   checkpoint immutable。下一门只做一个 H view contribution denominator smoke，仍不读取 feature/quality。
+- r006 已在结果前冻结 scene-0471/frame-0/camera-0、V5 r027 checkpoint、`1e-4/1e-3` 两级 support、12 GiB GPU/
+  48 GiB cgroup 门与 payload-consumption locks；只统计 renderer denominator，不保存 intersection rows、不消费 RGB/LiDAR/
+  membership、不计算 feature/quality。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

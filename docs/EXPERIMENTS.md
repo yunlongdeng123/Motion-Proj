@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage B one-H-view renderer contribution 预注册（2026-08-17）
+
+- planned r006=`m1-stage-b-one-view-contribution-s20260814-r006`；scene/frame/camera=`0471/0/0`，image index=`0`、
+  size=`1600×900`、SHA=`093d38e8...5819e`。formal base r027 summary/checkpoint/source config SHA 逐项继承，expected
+  Gaussian=`859,613`。
+- config/runner/test=`configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml`、
+  `scripts/smoke_worldsim_v51_one_view_contribution.py`、`tests/test_worldsim_v51_contribution_inventory.py`。
+  contribution=`alpha×T_before_alpha`，intersection floor=`1e-4`、Gaussian-view mass floor=`1e-3`。
+- frozen outputs 仅为 row/mass、两级 support、全局 Gaussian/pixel coverage、quantiles、resource 与 checkpoint
+  immutability；不持久化 intersection rows。dataset 可物化 image tensor，但 RGB/LiDAR values 不消费；membership proxy、
+  DINO、PCA、feature uplift 与 quality metrics 均不消费/不计算。
+- resource ceiling=`12,288 MiB NVIDIA/Torch reserved / 48 GiB cgroup / 900 s`；DINO concurrent=false。
+  validation/test/KITTI=false，M2/M3=pending；failure refs 已绑定，预注册 delta=`pending`。
+
 ## V5.1 Stage B r005 canonical synthetic operator result（2026-08-17）
 
 - run=`20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005`，source=`1efa7dd`，status=`done`；

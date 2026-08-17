@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage B one-H-view contribution denominator smoke 已预注册（2026-08-17）
+
+- planned r006 suffix=`m1-stage-b-one-view-contribution-s20260814-r006`；唯一 view=
+  scene-0471/index-382/H/frame-0/camera-0，沿用 V5 r027 immutable checkpoint/source config，预期 Gaussian=
+  `809,902 Background +49,711 Rigid =859,613`。operator freeze SHA=`d523b0d8...19e25e`。
+- runner=`scripts/smoke_worldsim_v51_one_view_contribution.py`，只构造 read-only DriveStudio trainer、执行一次
+  `renderer_intersections()` 并统计 raw/`≥1e-4` intersection、`≥1e-3` Gaussian-view mass、全局 Gaussian/pixel
+  coverage 与资源。完整 intersection rows 不落盘，checkpoint 前后 SHA 必须 exact。
+- 数据集基础设施会物化 image tensor，但 runner 只保留 `normed_time/img_idx`，不访问 RGB/LiDAR 数值；不消费
+  Background/Rigid membership proxy，不加载 DINO、不做 PCA/uplift feature、不计算任何 method/quality metric。该门只能
+  裁决真实 contribution denominator/资源是否 ready。
+- resource gate 预先固定为 NVIDIA/Torch reserved peak `≤12,288 MiB`、cgroup `≤48 GiB`、timeout=`900 s`；DINO 与
+  renderer 不并发。validation/test/KITTI 锁定，M2/M3=`pending`。通过后才允许冻结 H feature-sidecar/PCA 执行合同。
+
 ## V5.1 Stage B r005 synthetic operator parity 全通过，下一门仅一张 H view denominator smoke（2026-08-17）
 
 - canonical r005=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005`，
