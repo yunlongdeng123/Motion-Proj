@@ -10,6 +10,7 @@ from scripts.run_worldsim_v51_f0f_cuda_runtime_health_reproducibility import (
     _outcome,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0f_cuda_runtime_health_reproducibility import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_v1.yaml"
@@ -56,3 +57,29 @@ def test_f0f_outcome_matrix_separates_control_and_target_instability() -> None:
     assert _outcome([success, failed, success, success])[0] == "control_stable_target_failure"
     assert _outcome([failed, success, success, success])[0] == "control_failure"
     assert _outcome([success, success, success, _success("-drift")])[0] == "success_nonexact"
+
+
+def test_f0f_r037_independent_audit_replays_control_target_boundary() -> None:
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["outcome"] == "control_stable_target_failure"
+    assert result["pair_checks"] == {
+        "control_both_success": True,
+        "control_exact": True,
+        "target_both_success": False,
+        "target_exact": False,
+    }
+    assert [row["classification"] for row in result["attempts"]] == [
+        "success",
+        "expected_cublas_internal_failure",
+        "success",
+        "expected_cublas_internal_failure",
+    ]
+    assert result["quality_read"] is False
