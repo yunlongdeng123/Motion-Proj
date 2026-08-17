@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage B LUDVIG source/operator parity 已预注册，H quality 仍锁定（2026-08-17）
+
+- external LUDVIG checkout=`/root/autodl-tmp/third_party/ludvig-v51-stage-b`，origin=
+  `https://github.com/naver/ludvig.git`，commit/tree=`4461fc515439bb498a75d71738a1e73cf7a452ed /`
+  `4d1287b5a8c86b75e67358d3f03cc22d442fb70d`，worktree clean。`LICENSE.txt/NOTICE.txt/solver.py/apply_weights.cu`
+  SHA 已冻结；许可证为 non-commercial，源码不 vendor 到项目。
+- faithful audit 确认上游核心是逐 intersection 累加 `feature×alpha×T` 与 `alpha×T`，最终统一除以
+  `weights+1e-8`；optional pruning 保持禁用。本地 `motion_proj/worldsim_v51/feature_uplift.py` 只重实现冻结数学合同并
+  直接消费现有 `renderer_intersections` 的 contribution，不复制上游 CUDA，也不使用 membership proxy。
+- operator config/runner=`configs/worldsim_v51/stage_b_operator_parity_v1.yaml` /
+  `scripts/audit_worldsim_v51_stage_b_operator_parity.py`。B0/B1 共同 support 固定为 intersection `≥1e-4`、
+  Gaussian-view mass `≥1e-3`、epsilon=`1e-8`；内部 float64 canonical reduction、输出 float32、Gaussian row immutable。
+- formal r005 前冻结 9 个 synthetic cases：独立 dense reference、重复 index、两级 floor、zero denominator、constant
+  feature、row/chunk bit-exact、lazy bilinear 对 `align_corners=False` dense parity、B0/B1 non-alias。该门不加载 DINO、
+  不启动 renderer、不读真实 image feature/PCA/任何 quality，validation/test/KITTI 与 M2/M3 均锁定。
+- 首轮 pre-formal unit regression=`2 failed / 8 passed`：两处 failure 都来自同一个 synthetic fixture，把 24 个
+  intersection 全设为 `1e-4` 后 group mass=`0.0024`，并未低于 `0.001` view floor；其余检查已过。夹具改为仅 5 个
+  `1e-4`（mass=`0.0005`）后重跑，登记 `V51-F17`；未创建 formal run，也没有方法/质量失败。
+
 ## V5.1 Stage B ViT-g r004 资源/张量门通过，下一门仅 operator parity（2026-08-17）
 
 - canonical r004=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004`，

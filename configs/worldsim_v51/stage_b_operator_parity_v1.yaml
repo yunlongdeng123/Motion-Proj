@@ -1,0 +1,79 @@
+schema_version: worldsim_v51_stage_b_operator_parity_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: synthetic_b0_b1_and_lazy_bilinear_operator_parity
+seed: 20260814
+
+ludvig_source:
+  repository: https://github.com/naver/ludvig.git
+  path: /root/autodl-tmp/third_party/ludvig-v51-stage-b
+  commit: 4461fc515439bb498a75d71738a1e73cf7a452ed
+  tree: 4d1287b5a8c86b75e67358d3f03cc22d442fb70d
+  expected_git_status: ''
+  license: non-commercial
+  license_sha256: e696da2a23a73b3a83056615e2227067943ffc571c4de2f8b3bd36ba3d466443
+  notice_sha256: 1bb0b0714795c35437435f7e3eb4d5cbb227ede1b971f1c5e2207785eb28e868
+  solver_sha256: f01a80fe2a320ae5c4aebfc78dc16bfb0c9cd6bfe114f7f2935d5c24e286536d
+  apply_weights_cuda_sha256: d0178d4c6b588653f32c52128eb08bf4f1197631f5f27c2ae7a4b6e73d312d8c
+  vendored_into_project: false
+
+resource_freeze:
+  path: configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml
+  sha256: 5436d71e36be74bb95709a2fcb6f5bbbc10d021193abc780f1782c4559ea42aa
+  required_status: done
+
+checkpoint_immutability:
+  path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+  sha256: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  before_after_exact: true
+
+operator:
+  b0: view_saturated_current_intersection_lift
+  b1: normalized_renderer_transpose
+  minimum_intersection_contribution: 0.0001
+  minimum_gaussian_view_mass: 0.001
+  epsilon: 1.0e-8
+  accumulator_dtype: float64
+  output_dtype: float32
+  optional_pruning: false
+  gaussian_row_order_immutable: true
+  canonical_row_sort_for_chunk_order_invariance: true
+
+synthetic:
+  gaussian_count: 5
+  view_count: 2
+  pixel_count_per_view: 24
+  feature_dimension: 3
+  patch_grid_shape_chw: [3, 2, 3]
+  dense_image_shape_hw: [4, 6]
+  required_cases:
+    - independent_dense_reference
+    - repeated_gaussian_and_pixel_intersections
+    - below_intersection_floor
+    - below_gaussian_view_mass_floor
+    - zero_denominator_gaussian
+    - constant_feature_conservation
+    - row_and_chunk_order_invariance
+    - lazy_bilinear_dense_align_corners_false
+    - b0_b1_non_alias
+  maximum_feature_absolute_error: 1.0e-6
+  maximum_lazy_bilinear_absolute_error: 2.0e-6
+  order_invariance: bit_exact
+
+locks:
+  dino_model_load: false
+  pca_fit: false
+  feature_sidecar_persist: false
+  renderer_start: false
+  real_image_feature_read: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F12, V51-F14, V51-F15, V51-F16, V51-F17]
+failure_ledger_delta: pending

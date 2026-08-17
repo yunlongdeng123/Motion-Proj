@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/单连接下载风险已解除 | `V51-F01`–`V51-F16` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/下载/fixture 风险已解除 | `V51-F01`–`V51-F17` |
 
 ### 1.1 V1 汇总条目
 
@@ -275,6 +275,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   bytes/SHA、assembled full SHA=`746ecb8c...a283`、multipart ETag=`3d1b...-542` 与 terminal/manifest 二次复核全 exact，
   final 原子发布后精确删除 `15 files / 4,546,140,349 bytes` staging。本条工程恢复因此 resolved；当时仍 active 的
   ViT-g 24GB resource smoke 风险 `V51-F12` 后由 r004 独立解除。
+- `V51-F17`（`engineering/protocol`, `resolved before formal r005`）：synthetic operator parity 首轮 unit regression=
+  `2 failed / 8 passed`，两处 failure 都来自同一个 below-Gaussian-view-mass 夹具：它把 24 个 intersection 全设为
+  minimum contribution=`1e-4`，所以聚合 mass 实际为 `0.0024≥0.001`，被测算子正确保留该 group，而测试错误地要求
+  drop。这推翻的是“逐 intersection 在 floor 上就能构造低于 group floor”的夹具假设，不是 B0/B1 公式、dense oracle、
+  lazy bilinear 或 LUDVIG 方法失败。修复只把该 group 改成 5 个 `1e-4`、其余为 0，使 mass=`0.0005`；不改阈值、
+  operator、seed 或通过标准。失败发生在 formal r005 创建前，未加载 DINO/renderer、未读真实 feature 或质量；禁止用
+  降低 group floor 掩盖夹具错误。证据：`tests/test_worldsim_v51_feature_uplift.py`、
+  `scripts/audit_worldsim_v51_stage_b_operator_parity.py` 的 pre-formal regression。
 
 <a id="detail-v5"></a>
 

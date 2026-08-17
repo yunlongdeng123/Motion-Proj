@@ -1,5 +1,25 @@
 # Experiments
 
+## V5.1 Stage B synthetic B0/B1 operator parity 预注册（2026-08-17）
+
+- planned r005 suffix=`m1-stage-b-operator-parity-s20260814-r005`；source operator provenance 固定为 LUDVIG
+  `4461fc515439bb498a75d71738a1e73cf7a452ed`、tree=`4d1287b5...fb70d`，non-commercial license；external checkout
+  clean，project 不 vendor 上游源码。
+- 上游 `utils/solver.py::uplifting()` + `apply_weights.cu` 的 faithful denominator 是跨所有 view/pixel 的
+  `sum(alpha*T)`；numerator 是 `sum(feature*alpha*T)`。B1 原样实现 normalized transpose；B0 在同一 filtered
+  Gaussian-view support 上使用 `1-exp(-mass)` 后跨 view 聚合。optional pruning=false。
+- thresholds/dtype 固定为 intersection `≥1e-4`、Gaussian-view mass `≥1e-3`、epsilon=`1e-8`、float64 accumulator、
+  float32 output；canonical group ordering 必须让 row/chunk permutation bit-exact。lazy sampler 必须与
+  `torch.interpolate(mode=bilinear,align_corners=False)` 全 pixel dense map 在 `2e-6` 内一致。
+- config/module/runner/tests=`configs/worldsim_v51/stage_b_operator_parity_v1.yaml`、
+  `motion_proj/worldsim_v51/feature_uplift.py`、`scripts/audit_worldsim_v51_stage_b_operator_parity.py`、
+  `tests/test_worldsim_v51_feature_uplift.py`。checkpoint 在 formal 前后完整 SHA exact；failure delta 预注册=`pending`。
+- DINO/PCA/sidecar/renderer/真实 image feature/method quality/H/S/C/validation/test/KITTI 均为 false；M2/M3=`pending`。
+  synthetic PASS 只解锁一个 H-view contribution denominator smoke，不直接解锁 H quality。
+- pre-formal regression 首轮=`2 failed / 8 passed`，共同根因是 below-view-mass fixture 的 24×`1e-4=0.0024` 实际
+  高于 `0.001` floor；不是 operator parity 失败。修复只把该组改成 5×`1e-4=0.0005`，阈值、公式和 oracle 不变；
+  formal r005 尚未创建。failure delta=`V51-F17 resolved`。
+
 ## V5.1 Stage B DINOv2 ViT-g r004 canonical resource result（2026-08-17）
 
 - canonical run=`20260817T150400Z__m1-stage-b-dinov2-resource-smoke-s20260814-r004`，source=`935d2b2`，

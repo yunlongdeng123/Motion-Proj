@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r004 official ViT-g resource/shape PASS；下一门 synthetic B0/B1 operator parity |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r004 ViT-g PASS；r005 synthetic B0/B1 operator parity 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,8 +32,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F16`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
-  delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`。
+- V5.1 新增 failure=`V51-F01`–`V51-F17`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+  delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
+  operator pre-formal fixture delta=`V51-F17 resolved`。
 
 ## 配置与入口
 
@@ -59,10 +60,12 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_b_operator_parity_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
 - `scripts/smoke_worldsim_v51_dinov2_resource.py`
+- `scripts/audit_worldsim_v51_stage_b_operator_parity.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -197,5 +200,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   strict keys=`568`、missing/unexpected=`0/0`，4 层输出均为 `[1,1536,64,114]`；GPU sampled/Torch reserved peak=
   `6,702/6,376 MiB`，cgroup peak=`15,701,860,352 bytes`，manifest 二次复核 exact。`V51-F12=resolved`；下一门只做
   synthetic B0/B1 operator parity，H/S/C quality 继续锁定。
+- LUDVIG external source 已冻结到 commit/tree=`4461fc5 / 4d1287b5...fb70d`，non-commercial license 且不 vendor。
+  r005 在真实数据前只验证 normalized transpose、view-saturated B0、共同 support、duplicate/zero/chunk-order 与 lazy
+  bilinear dense parity；checkpoint 前后 SHA exact，所有 quality lock 保持 false。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。
