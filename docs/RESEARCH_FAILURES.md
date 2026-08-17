@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32 三视图 association 成立，但 batch parity/resource 门 blocked | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图边界、batch-size 输出敏感性 | `V51-F01`–`V51-F61` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32/upstream-batch64 三视图 association/repeatability/resource PASS，待 train-only materialization | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图边界、batch-size 输出敏感性 | `V51-F01`–`V51-F61` |
 
 ### 1.1 V1 汇总条目
 
@@ -607,7 +607,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   frame=`0/40/80` 完成 3-frame voting：三张 mask 全 non-empty，19 个 positive short IDs 至少跨 2 帧，且 batch32 repeat
   三 mask/metadata bit-exact，因此“one-view 不能证明 identity input”的前置边界已解除；该证据不读质量，也不解除 r033
   的 batch/resource 失败（`V51-F60/F61`）。
-- `V51-F60`（`algorithm/implementation-contract`, `active after r033`）：r033 预注册把同 grid32 的
+- `V51-F60`（`algorithm/implementation-contract`, `resolved for current method selection by r034; sensitivity boundary remains`）：r033 预注册把同 grid32 的
   `SAM_NUM_POINTS_PER_BATCH=32→16` 视为 execution-memory parity 臂，但 batch16 与 batch32 的三张短 ID mask 和 `pred.json`
   全不 exact。逐帧不同 label pixels=`208,647/288,527/244,696`，exact fraction=`0.855106/0.799634/0.830072`，binary
   foreground IoU=`0.961177/0.995201/0.969622`；batch32 IDs 含 `36/62/95`，batch16 含 `13/63/96`。与此同时
@@ -616,15 +616,22 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   但 r033 没有证明具体源码根因。禁止放宽 exact 门、用高 foreground IoU 冒充 identity parity，或从 batch16/32 中按结果
   挑一臂。合法恢复只允许在新 run 恢复 upstream default batch64、保持 grid32/输入/阈值不变并独立检查 repeatability、
   association 与资源；若 batch64 不可运行，则该 faithful-input 路径必须保持 blocked 而不是继续调 batch。证据：r033 source=
-  `191d3e4...12f`、parity=`7a6db15f...7ae`、audit=`a5a7d5c8...fa7d`。
-- `V51-F61`（`engineering/resource/protocol`, `active after r033`）：r033 三臂串行而非并发，independent audit 从 241 条
+  `191d3e4...12f`、parity=`7a6db15f...7ae`、audit=`a5a7d5c8...fa7d`。r034 恢复 upstream default batch64，保持
+  grid32/三帧/其他参数，primary↔repeat 三 mask/metadata bit-exact、association PASS；当前方法选择因此固定 batch64，不再
+  依赖被证伪的 batch32 execution-only 解释。本条的 batch-sensitive 事实仍是 active anti-regression boundary：后续任何
+  batch 改动都是方法变化，必须新协议且不能用 r034 质量作等价担保。
+- `V51-F61`（`engineering/resource/protocol`, `resolved by r034 physical-headroom contract; r033 remains failed`）：r033 三臂串行而非并发，independent audit 从 241 条
   resource samples 重算 NVIDIA peak=`24,116 MiB > 24,000 MiB`，超过预注册门 116 MiB；cgroup peak=
   `17,956,044,800 bytes`、event wall=`78.917s`、monitor errors=`0`。runner 先因 parity fail-closed，故没有执行后置 resource
   adjudication 或发布 `resources.json/summary/manifest`；这不能让已记录的 GPU 越门消失。它推翻“r032 one-view peak
   23,954 MiB 可直接外推到三视图三臂合同”的资源假设，不是 mask quality reject。禁止倒写 r033 为资源 PASS、事后把旧门
   提到 24,116，或把无 OOM 等同有安全余量。新 batch64 smoke 若修改 ceiling，必须在启动前绑定卡总显存、明确保留 headroom
   与复开理由；若 OOM/越新门则停止该 recovery，不得继续缩 batch 回到已证伪的 execution-only 解释。证据：r033 resource=
-  `db4e6d17...8e9c`、status=`e027888e...7234`、audit=`22,939 bytes /a5a7d5c8...fa7d`。
+  `db4e6d17...8e9c`、status=`e027888e...7234`、audit=`22,939 bytes /a5a7d5c8...fa7d`。r034 没有修改 r033 门，
+  而是新预注册 card total=`24,576 MiB`、minimum headroom=`256 MiB`、peak ceiling=`24,320 MiB`；upstream batch64 两臂
+  实测 peak=`24,092 MiB`、headroom=`484 MiB`、cgroup=`17,957,322,752 bytes`、142 samples/0 errors，全门通过并由
+  audit=`e0988f50...5258` 重放。因此当前三视图 upstream-batch64 resource prerequisite resolved；45-view materialization
+  仍需独立总时长/磁盘/输出分母门，不能从两臂 smoke 外推。
 
 <a id="detail-v5"></a>
 

@@ -1,0 +1,82 @@
+schema_version: worldsim_v51_stage_f_f0c_upstream_batch_association_repeatability_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+frozen_at: "2026-08-18"
+
+canonical_run:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034
+  source_commit: 27b1958aa6efbc3518088cc9b08ddefb2d1f7b48
+  source_tree: 552ba0185679420c181f9a3dc1ff1356a377758e
+  seed: 20260814
+  status: done
+  conclusion: f0c_upstream_batch64_three_view_association_repeatability_resource_smoke_done_full_materialization_preregistration_required
+  resolved_config: {bytes: 6771, sha256: bb5e6b3458db63904fc7c49e88869ad65efb6a98c0dd6141ea9ce9368a00799e}
+  summary: {bytes: 15648, sha256: 613f76ce81c121c93bcbbf74cc3c8cdba3e77cbf1783ddab64a0d46ef789dc30}
+  manifest: {bytes: 4105, sha256: a3efdb80178509177632d5726bf7e956006d17287e6fc83847d35625f07f1132, entry_count: 23, logical_bytes: 483584, regular_bytes_excluding_input_symlink_targets: 170340}
+  status_file: {bytes: 344, sha256: 0f0dae9c7dea48c92794982935f8a93839ecc8b16bfbb9cf50e02086d2812bc6}
+  events: {bytes: 162, sha256: d69415550329a31bd43fe010c9db04182f200af474d530a5f986a45a2babddeb}
+  repeatability_report: {bytes: 243, sha256: 449c3bcd24da0055a9d00005180cc9d131ed80d214144bfbf1c1b1c98a2b215f}
+  resources_file: {bytes: 286, sha256: d0cb51045f0ccae60724d0171197e76f2479d81c5ab357c8a40eb2ae501a0514}
+  resource_samples: {bytes: 15933, sha256: 1591bbfb5c6fd85dbc6dd3a3fc13fc3c43d8c24603ba77ebc8e0b8a92b1fb0f3}
+
+independent_audit:
+  tooling_commit: c2f3017
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T113000Z__stage-f-f0c-r034-audit.json
+  bytes: 4243
+  sha256: e0988f501e82fef96b316525c1c9f0e5a8d58a72cde95f5872f790ce53f25258
+  status: pass
+  replayed: [source_bound_config, input_symlinks, six_masks, metadata, association, repeatability, resource_samples, gpu_headroom, manifest_inventory, research_locks]
+  quality_read: false
+
+method_contract:
+  upstream: Gaussian_Grouping_DEVA_SAM_everything_semionline
+  image_size: [1600, 900]
+  internal_size: 480
+  sam_pred_iou_threshold: 0.7
+  sam_num_points_per_side: 32
+  sam_num_points_per_batch: 64
+  upstream_default_points_per_side: 64
+  upstream_default_points_per_batch: 64
+  upstream_default_batch_restored: true
+  grid32_resource_adaptation_retained: true
+  smaller_batch_retry_forbidden: true
+  prompt_denominator: 1024
+
+association_and_repeatability:
+  frames: [0, 40, 80]
+  camera: 0
+  mask_sha256:
+    - cbfc00d5aa0bf6d0e8343bc186d09f83feffc68a4e5ad77b2742e3e435fa2226
+    - c11db011697d71f92370bb41fc6e7e0b438fb21b03a42bcec57e098f72dd9f18
+    - 7ffe568398ca4238073724608e293bfcb3a12e6d605344f1e5149bb12196c593
+  metadata_sha256: f5491453774af21fa8fafe7f188ca6f642adaf19590521f75c1b9e97c6319156
+  nonzero_pixels: [1183290, 1257333, 954829]
+  stable_short_ids: [5, 12, 13, 14, 17, 25, 34, 48, 55, 56, 57, 58, 59, 60, 61, 63, 69, 72, 96]
+  all_masks_exact_on_repeat: true
+  metadata_exact_on_repeat: true
+  quality_claim: false
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24092
+  nvidia_headroom_mib: 484
+  required_headroom_mib: 256
+  cgroup_memory_peak_bytes: 17957322752
+  wall_seconds: 45.91681817546487
+  disk_free_after_bytes: 79934353408
+  sample_count: 142
+  monitor_error_count: 0
+  all_gates_pass: true
+
+governance:
+  failure_ledger_refs: [V51-F52, V51-F55, V51-F57, V51-F59, V51-F60, V51-F61, PIVOT-F05]
+  failure_ledger_delta: V51-F60_resolved_for_f0c_by_upstream_batch64_with_sensitivity_boundary_V51-F61_resolved_by_r034_headroom
+  quality_read: false
+  full_materialization_authorized: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: train_only_full_identity_mask_materialization_preregistration

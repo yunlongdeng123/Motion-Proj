@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -106,3 +108,21 @@ def test_f0c_r034_independent_audit_passes() -> None:
     assert result["repeatability"]["all_required_before_resource"] is True
     assert result["resources"]["nvidia_headroom_mib"] >= 256
     assert result["quality_read"] is False
+
+
+def test_f0c_freeze_is_terminal_and_keeps_materialization_locked() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0c_upstream_batch_association_repeatability_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["independent_audit"]["status"] == "pass"
+    assert freeze["method_contract"]["sam_num_points_per_batch"] == 64
+    assert freeze["resources"]["nvidia_headroom_mib"] >= 256
+    assert freeze["governance"]["full_materialization_authorized"] is False
+    assert freeze["governance"]["next_phase"] == (
+        "train_only_full_identity_mask_materialization_preregistration"
+    )

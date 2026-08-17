@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0c r034 canonical PASS / freeze（2026-08-18）
+
+- run/source/tree=`20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034 /27b1958...b48 /
+  552ba018...58e`；grid/batch=`32/64`，primary/repeat mask/pred exact，association/non-empty/stable-ID gates PASS。
+  resolved/summary/manifest/status/events SHA=`bb5e6b34...99e/613f76ce...c30/a3efdb80...132/0f0dae9c...bc6/
+  d6941555...deb`；manifest=`23 entries /483,584 logical /170,340 regular-excluding-input-target bytes`。
+- mask SHA=`cbfc00d5...226/c11db011...f18/7ffe5683...593`，metadata=`f5491453...156`，nonzero=
+  `1,183,290/1,257,333/954,829`，stable IDs=`19`。resource=`GPU peak 24,092 MiB /484 MiB headroom /
+  cgroup 17,957,322,752 bytes /45.917s /142 samples /0 errors`；全部 prereg checks true。
+- audit=`20260818T113000Z__stage-f-f0c-r034-audit.json /4,243 bytes /e0988f50...5258 /PASS`；freeze=
+  `stage_f_f0c_upstream_batch_association_repeatability_freeze_v1.yaml`。failure delta=
+  `V51-F60 resolved_for_f0c_with_batch_sensitivity_boundary / V51-F61 resolved_by_r034_headroom`；quality 和所有 downstream/
+  heldout locks 仍 false，下一步只预注册 45-view train-only materialization。
+
 ## V5.1 Stage F F0c r034 upstream batch64 recovery 预注册（2026-08-18）
 
 - task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034`；

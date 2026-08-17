@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.1 Stage F F0c r034 upstream batch64 PASS 已冻结（2026-08-18）
+
+- canonical r034=`20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034`，source/tree=
+  `27b1958...b48/552ba018...58e`，status=`done`，conclusion=
+  `f0c_upstream_batch64_three_view_association_repeatability_resource_smoke_done_full_materialization_preregistration_required`。
+  grid/batch=`32/64`，恢复 upstream default batch；primary/repeat 的三张 mask 与 metadata 全部 exact。
+- 三张 nonzero pixels=`1,183,290/1,257,333/954,829`，19 个 stable short IDs；mask SHA=
+  `cbfc00d5...226/c11db011...f18/7ffe5683...593`，metadata=`f5491453...156`。这建立 no-quality association/
+  repeatability contract，不建立 mask quality、grid64 quality parity 或 U2/B3 uplift。
+- resources=`GPU 1→24,092/24,576 MiB，headroom 484>=256 MiB /cgroup 17,957,322,752 bytes /45.917s /
+  142 samples /0 errors /disk 79,934,353,408 bytes`，全门 PASS。manifest=`23 entries /483,584 logical bytes`；
+  independent audit=`4,243 bytes /e0988f50...5258 /PASS`，完整重放 source/config/inputs/outputs/resources/locks。
+- freeze=`configs/worldsim_v51/stage_f_f0c_upstream_batch_association_repeatability_freeze_v1.yaml`；`V51-F60` 以固定
+  upstream batch64 解除当前方法选择但保留 batch-sensitive 边界，`V51-F61` 由 r034 新 headroom 合同解除，r033 旧失败
+  不倒写。下一步只允许预注册 r026 45-view train-only full identity-mask materialization；materialization/training 尚未授权，
+  quality/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0c upstream batch64 recovery 已预注册（2026-08-18）
 
 - task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=
