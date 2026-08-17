@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype、分位数退化与伪 correlation-aware count 均显式审计 | `V51-F01`–`V51-F05` |
+| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype、分位数退化、伪 correlation count 与近零相对误差均显式审计 | `V51-F01`–`V51-F06` |
 
 ### 1.1 V1 汇总条目
 
@@ -165,6 +165,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   数值影响与 replacement amplification；禁止读取 evaluation artifact/quality、运行 GPU renderer，或为挽救 A3
   事后加入相关系数/时间核/feature similarity。若审计复现结构 no-op，A3 应作为机制 rejected 记录，再决定是否按计划
   进入独立 A4，而不是制造无归因质量臂。
+- `V51-F06`（`engineering/evaluation`, `resolved without quality read`）：A3 audit v1/r004 用相对 cap change 判断
+  epsilon 是否产生“有意义修正”，但 0471/0379 存在 reliability=`1.401298464324817e-45` 的 float32 最小次正规数；
+  `epsilon=1e-12` 使这些近零 mass 的相对变化达到 `1.0`，尽管三个场景最大绝对 cap reduction 仅约
+  `2.5e-13`。r004 因此合法保留为 `done/inconclusive`，不是 A3 得到有效 concentration reduction，也不是方法质量
+  失败；它没有读取 evaluation artifact/quality、启动 GPU renderer 或改变 posterior。v2 新配置绑定 r004 与 v1 hash，
+  在新结果前把 meaningful gate 改为 absolute cap change>`1e-9`，同时继续报告相对量作诊断。禁止用近零分母的巨大
+  相对数宣称机制有效，也禁止覆盖 r004 terminal；只能用新 r005 重放同一 45 份 evidence observation。
 
 <a id="detail-v5"></a>
 

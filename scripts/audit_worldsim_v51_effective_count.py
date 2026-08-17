@@ -41,7 +41,7 @@ from scripts.worldsim_v5_forensics_common import (
 
 
 TASK_ID = "WS-V51-M1-A-UNARY-OBSERVABILITY-01"
-SCHEMA_VERSION = "worldsim_v51_m1_effective_count_audit_v1"
+SCHEMA_VERSION = "worldsim_v51_m1_effective_count_audit_v2"
 RUN_ROOT = Path("/root/autodl-tmp/runs/worldsim_v51")
 
 
@@ -159,7 +159,7 @@ def _scene_audit(
         )
     threshold = float(
         config["effective_count"]["prequality_mechanism_checks"][
-            "maximum_meaningful_relative_cap_change"
+            "maximum_meaningful_absolute_cap_change"
         ]
     )
     return {
@@ -176,7 +176,7 @@ def _scene_audit(
         "no_epsilon_kish_below_fractional_count": int((kish_zero < raw).sum()),
         "cap_changed_gaussian_count": int((cap_reduction > 0.0).sum()),
         "meaningful_cap_changed_gaussian_count": int(
-            (relative_cap_reduction > threshold).sum()
+            (cap_reduction > threshold).sum()
         ),
         "maximum_absolute_cap_reduction": float(cap_reduction.max(initial=0.0)),
         "maximum_relative_cap_reduction": float(
@@ -211,6 +211,15 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         raise EffectiveCountAuditError("A3 task/phase drift")
     if config.get("status") != "frozen_before_quality_read":
         raise EffectiveCountAuditError("A3 audit was not frozen before quality read")
+    supersedes = config["supersedes"]
+    verify_file(PROJECT / supersedes["config_path"], supersedes["config_sha256"])
+    superseded_run = Path(supersedes["run_path"])
+    verify_file(
+        superseded_run / "summary.json", supersedes["summary_sha256"]
+    )
+    verify_file(
+        superseded_run / "manifest.json", supersedes["manifest_sha256"]
+    )
     a1_binding = config["inputs"]["a1_config"]
     a2_binding = config["inputs"]["a2_config"]
     a1_path = PROJECT / a1_binding["path"]
@@ -260,7 +269,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
     atomic_json(
         diagnostics_path,
         {
-            "schema_version": "worldsim_v51_m1_a3_effective_count_diagnostics_v1",
+            "schema_version": "worldsim_v51_m1_a3_effective_count_diagnostics_v2",
             "task_id": TASK_ID,
             "status": "done",
             "checks": checks,
@@ -269,7 +278,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
     )
     rejected = all(checks.values())
     return {
-        "schema_version": "worldsim_v51_m1_a3_effective_count_summary_v1",
+        "schema_version": "worldsim_v51_m1_a3_effective_count_summary_v2",
         "task_id": TASK_ID,
         "status": "done",
         "phase": config["phase"],
@@ -301,7 +310,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         "test_quality_read": False,
         "kitti_method_tuning": False,
         "failure_ledger_refs": list(config["failure_ledger_refs"]),
-        "failure_ledger_delta": "V51-F05",
+        "failure_ledger_delta": "V51-F05,V51-F06",
     }
 
 
@@ -317,7 +326,7 @@ def _write_terminal(
     atomic_json(
         run_dir / "status.json",
         {
-            "schema_version": "worldsim_v51_m1_a3_effective_count_status_v1",
+            "schema_version": "worldsim_v51_m1_a3_effective_count_status_v2",
             "task_id": TASK_ID,
             "status": status,
             "source_commit": source_commit,
@@ -334,7 +343,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/m1_effective_count_audit_v1.yaml",
+        default=PROJECT / "configs/worldsim_v51/m1_effective_count_audit_v2.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()
@@ -366,7 +375,7 @@ def main() -> None:
         atomic_json(
             run_dir / "fingerprint.json",
             {
-                "schema_version": "worldsim_v51_m1_a3_effective_count_fingerprint_v1",
+                "schema_version": "worldsim_v51_m1_a3_effective_count_fingerprint_v2",
                 "task_id": TASK_ID,
                 "source_commit": source_commit,
                 "source_branch": V51_BRANCH,
@@ -382,7 +391,7 @@ def main() -> None:
         atomic_json(
             manifest_path,
             {
-                "schema_version": "worldsim_v51_m1_a3_effective_count_manifest_v1",
+                "schema_version": "worldsim_v51_m1_a3_effective_count_manifest_v2",
                 "task_id": TASK_ID,
                 "status": "done",
                 "inventory": inventory_files(

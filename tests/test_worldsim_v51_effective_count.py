@@ -58,7 +58,7 @@ def test_kish_formula_is_permutation_invariant_not_correlation_aware() -> None:
 
 def test_a3_audit_config_forbids_quality_read() -> None:
     config = yaml.safe_load(
-        (ROOT / "configs/worldsim_v51/m1_effective_count_audit_v1.yaml").read_text(
+        (ROOT / "configs/worldsim_v51/m1_effective_count_audit_v2.yaml").read_text(
             encoding="utf-8"
         )
     )
@@ -66,3 +66,6 @@ def test_a3_audit_config_forbids_quality_read() -> None:
     assert config["effective_count"]["correlation_observable_present"] is False
     assert config["restrictions"]["evaluation_artifact_read"] is False
     assert config["restrictions"]["gpu_renderer"] is False
+    assert config["effective_count"]["prequality_mechanism_checks"][
+        "maximum_meaningful_absolute_cap_change"
+    ] == 1e-9

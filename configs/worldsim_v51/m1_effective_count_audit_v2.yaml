@@ -1,0 +1,66 @@
+schema_version: worldsim_v51_m1_effective_count_audit_v2
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: frozen_before_quality_read
+phase: a3_kish_effective_count_mechanism_audit
+seed: 20260814
+
+supersedes:
+  config_path: configs/worldsim_v51/m1_effective_count_audit_v1.yaml
+  config_sha256: c0ea2306a1e7da1ec8b86480beed2d43c130eadb239151a99cce68e75d06ede5
+  run_path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T115000Z__m1-a3-effective-count-audit-s20260814-r004
+  summary_sha256: 8dafa86a8830bbc36823e1831456e097f26e31cf46891491bf2b12d2f5e57a8a
+  manifest_sha256: 9979806079ffd0d569bd562edab30a8b61e6ee0a557d3914f0078978baa17d98
+  reason: relative_change_is_undefined_as_meaningfulness_for_subnormal_fractional_mass
+
+inputs:
+  a1_config:
+    path: configs/worldsim_v51/m1_unary_visibility_v1.yaml
+    sha256: 7518bc742ce4d2e65415dddd8b4cab502ed220057ba5ecc6b279a4c11974b78b
+  a2_config:
+    path: configs/worldsim_v51/m1_unary_unknown_v1.yaml
+    sha256: 4def2e54505f1cbd97d97517806118a3d09ce8e7fb9051f784d7d5827cea63d8
+  a2_run:
+    path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003
+    source_commit: 7e783f1fe04cc05cdd206b56086ef0f02a4215ee
+    summary_sha256: c9a821395da41b09fa124971c3f3e4e6f702987a3a587b208650294f85ae53b5
+    manifest_sha256: 56bf02070de0519946513a0b71404814ae79ee008ca7b5109e4e1c82f68b6c52
+  a2_posteriors:
+    scene-0471:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003/artifacts/posteriors/scene-0471.npz
+      sha256: de11910cbe52803dadbb0aa5ac399287504136b9d74547d78a3b069e9e77e4d0
+    scene-1087:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003/artifacts/posteriors/scene-1087.npz
+      sha256: eae6a399fdded9906d1f2ea1b47eb134f0acc9ece3b260ee0a4e65310f0cfa0a
+    scene-0379:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003/artifacts/posteriors/scene-0379.npz
+      sha256: 889b2b8145fef4e2a2cef65745e92c8a70bccdce1de215328048a9d71c092b4e
+
+scenes: [scene-0471, scene-1087, scene-0379]
+parent: A2
+candidate: A3-1
+reference: A3-0
+
+effective_count:
+  formula: square_sum_weight_div_sum_square_weight_plus_epsilon
+  epsilon: 1.0e-12
+  proposed_use: cap_a3_0_fractional_concentration
+  weight_domain: closed_unit_interval
+  correlation_observable_present: false
+  prequality_mechanism_checks:
+    no_epsilon_kish_must_not_be_below_fractional_mass: true
+    maximum_meaningful_absolute_cap_change: 1.0e-9
+    replacement_amplification_must_be_reported: true
+
+restrictions:
+  evaluation_artifact_read: false
+  evaluation_quality_read: false
+  gpu_renderer: false
+  unknown_policy_change: false
+  visibility_policy_change: false
+  parameter_search: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04, V51-F05, V51-F06]
+failure_ledger_delta: pending
