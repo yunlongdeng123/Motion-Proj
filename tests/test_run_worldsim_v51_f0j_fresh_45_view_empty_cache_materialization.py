@@ -7,6 +7,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0g_target_tensor_allocator_instrumentation import _trace_command
 from scripts.run_worldsim_v51_f0j_fresh_45_view_empty_cache_materialization import _validate_config
+from scripts.audit_worldsim_v51_f0j_fresh_45_view_empty_cache_materialization import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0j_fresh_45_view_empty_cache_materialization_v1.yaml"
@@ -33,3 +34,21 @@ def test_f0j_all_scene_commands_preserve_batch64_and_enable_empty_cache():
         assert "--pre-matmul-empty-cache" in command
         assert command[command.index("--SAM_NUM_POINTS_PER_SIDE") + 1] == "32"
         assert command[command.index("--SAM_NUM_POINTS_PER_BATCH") + 1] == "64"
+
+
+def test_f0j_r041_independent_audit_replays_full_materialization():
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["inputs"]["count"] == 45
+    assert result["mask_count"] == 45
+    assert result["pred_json_count"] == 3
+    assert result["empty_cache_call_count"] > 0
+    assert result["quality_read"] is False
+    assert result["actor_identity_alignment_read"] is False
