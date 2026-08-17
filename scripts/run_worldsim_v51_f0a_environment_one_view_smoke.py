@@ -41,6 +41,7 @@ SCHEMAS = {
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v2",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v3",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v4",
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v5",
 }
 TASK_ID = "WS-V51-M1-F-IDENTITY-EMBEDDING-01"
 
@@ -125,6 +126,13 @@ def _validate_config(config_path: Path) -> dict[str, Any]:
             "SAM_NUM_POINTS_PER_BATCH": 64,
         }:
             raise ProtocolError("official SAM point grid or batch drift")
+        batch_override = config["one_view"]["arguments"].get(
+            "SAM_NUM_POINTS_PER_BATCH"
+        )
+        if config["schema_version"].endswith("_v4") and batch_override is not None:
+            raise ProtocolError("F0a v4 must keep the official SAM batch default")
+        if config["schema_version"].endswith("_v5") and batch_override != 32:
+            raise ProtocolError("F0a v5 must be the preregistered batch-32 recovery")
         for name, spec in hidden["assets"].items():
             if spec["url"] not in source_text:
                 raise ProtocolError(f"hidden torchvision URL drift: {name}")
@@ -392,14 +400,10 @@ def _prepare_torch_hub_assets(config: Mapping[str, Any]) -> dict[str, Any]:
     return {"torch_home": str(torch_home), "assets": records}
 
 
-def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> dict[str, Any]:
+def _one_view_command(
+    config: Mapping[str, Any], runtime: Path, input_dir: Path, output_dir: Path
+) -> list[str]:
     one = config["one_view"]
-    input_dir = run_dir / "artifacts/one_view_input"
-    output_dir = run_dir / "artifacts/one_view_output"
-    input_dir.mkdir(parents=True)
-    staged = input_dir / one["staging_filename"]
-    staged.symlink_to(Path(one["source_image"]["path"]))
-    deva_root = Path(config["sources"]["deva"]["path"])
     args = one["arguments"]
     command = [
         str(runtime),
@@ -424,6 +428,25 @@ def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> di
         "--SAM_PRED_IOU_THRESHOLD",
         str(args["SAM_PRED_IOU_THRESHOLD"]),
     ]
+    if "SAM_NUM_POINTS_PER_BATCH" in args:
+        command.extend(
+            [
+                "--SAM_NUM_POINTS_PER_BATCH",
+                str(args["SAM_NUM_POINTS_PER_BATCH"]),
+            ]
+        )
+    return command
+
+
+def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> dict[str, Any]:
+    one = config["one_view"]
+    input_dir = run_dir / "artifacts/one_view_input"
+    output_dir = run_dir / "artifacts/one_view_output"
+    input_dir.mkdir(parents=True)
+    staged = input_dir / one["staging_filename"]
+    staged.symlink_to(Path(one["source_image"]["path"]))
+    deva_root = Path(config["sources"]["deva"]["path"])
+    command = _one_view_command(config, runtime, input_dir, output_dir)
     stdout_path = run_dir / "artifacts/one_view_stdout.log"
     stderr_path = run_dir / "artifacts/one_view_stderr.log"
     subprocess_environment = os.environ.copy()
@@ -650,7 +673,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v4.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

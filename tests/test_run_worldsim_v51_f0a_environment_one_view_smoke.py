@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0a_environment_one_view_smoke import (
+    _one_view_command,
     _prepare_torch_hub_assets,
     _validate_config,
     parse_last_json_line,
@@ -31,7 +32,7 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v4.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml"
     )
     assert config["one_view"]["interpretation"]["association_capability_claim"] is False
     assert config["one_view"]["upstream_defaults"] == {
@@ -41,7 +42,23 @@ def test_f0a_environment_smoke_formal_config_validates() -> None:
     assert config["runtime_environment"]["PYTORCH_CUDA_ALLOC_CONF"] == (
         "max_split_size_mb:128"
     )
+    assert config["one_view"]["arguments"]["SAM_NUM_POINTS_PER_BATCH"] == 32
     assert config["decision"]["materialization_authorized"] is False
+
+
+def test_f0a_batch_recovery_changes_only_official_batch_cli_argument() -> None:
+    config = _validate_config(
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml"
+    )
+    command = _one_view_command(
+        config,
+        Path("/isolated/bin/python"),
+        Path("/input"),
+        Path("/output"),
+    )
+    index = command.index("--SAM_NUM_POINTS_PER_BATCH")
+    assert command[index + 1] == "32"
+    assert "--SAM_NUM_POINTS_PER_SIDE" not in command
 
 
 def test_parse_last_json_line_preserves_solver_banner() -> None:

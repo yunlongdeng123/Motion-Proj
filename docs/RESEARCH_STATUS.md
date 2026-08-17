@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage F F0a r030 allocator recovery blocked；v5/r031 batch recovery 已预注册（2026-08-18）
+
+- r030=`20260818T080000Z__m1-stage-f-f0a-environment-one-view-s20260814-r030`，source=`33c013d`，status=`blocked`。
+  dedicated `TORCH_HOME` 中 ResNet18/50 exact bytes/full SHA 与 prereg 一致、无 `.partial`，stderr 无 download，故
+  `V51-F53 resolved`；Gurobi/PuLP、source/view/official CLI 均未漂移。
+- allocator 已把 reserved-unallocated 从 r029 的 `5.77 GiB` 降到 `578.72 MiB`，但 SAM `64×64 / batch64` 在同一
+  `BatchMaskData.cat` 仍需 `9.49 GiB`、当时只有 `9.16 GiB` free；sampled GPU peak=`24,098 MiB`（超过 prereg
+  `24,000 MiB` gate），cgroup peak=`18,035,429,376 bytes`，101 samples/0 monitor errors。仍无 mask/`pred.json`/quality；
+  这证明 allocator-only 不足，见 `V51-F55`，仍非算法 reject。
+- v5/r031 只把上游明确暴露的 `SAM_NUM_POINTS_PER_BATCH=64→32`；point grid=`64`、size=`480`、IoU=`0.7`、其余
+  source/assets/view/CLI/resource/locks 全不变。该 knob 只降低并行批量，不减少 prompt denominator；PASS 也必须补
+  batch parity + 3-view association/repeatability，materialization/training 与 quality/H/S/C/validation/test/KITTI 继续 false，
+  F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0a r029 resource blocked；v4/r030 recovery 已预注册（2026-08-18）
 
 - r029=`20260818T073000Z__m1-stage-f-f0a-environment-one-view-s20260814-r029`，source=`3e87323`。v3 已正确

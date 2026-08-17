@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0a r030 blocked / v5 batch recovery 预注册（2026-08-18）
+
+- r030=`20260818T080000Z__m1-stage-f-f0a-environment-one-view-s20260814-r030`，source=`33c013d`；allocator-only recovery
+  仍在 official `64×64 / batch64` 的 `BatchMaskData.cat` OOM：request/free=`9.49/9.16 GiB`，allocated/
+  reserved-unallocated=`13.51 GiB/578.72 MiB`。GPU/cgroup peak=`24,098 MiB/18,035,429,376 bytes`，101 samples/
+  0 errors；6 files=`25,873 bytes`，mask/metadata/quality=false。
+- resolved/status/events/stdout/stderr/resource SHA=`7550586d...fc5/d38fd753...0f7/be114348...05d/abe1dce1...a03/
+  15d9bd12...bef/39060722...6ad`。专用 ResNet18/50 assets 的 bytes/SHA 均复核，stderr 不含下载，`.partial` absent；
+  `V51-F53 resolved`。原 `/root/.cache` 两文件暂留到后续 canonical audit，不提前删除。
+- v5/r031 只增加 official CLI `--SAM_NUM_POINTS_PER_BATCH 32`；point grid、image、threshold、models、allocator 与门禁不变。
+  DEVA 文档把该参数定义为并行处理的 point prompts 数；本轮只测资源/output schema，不读质量。PASS 后仍需 batch parity
+  与 3-view association+repeatability。一次只读 `rg` 的 alternation 被双层 shell 误解释，未改状态并已改为单关键词查询，
+  见 `V51-F56 resolved`。failure delta=`V51-F53 resolved / V51-F55 recovery_pending / V51-F56 resolved`。
+
 ## V5.1 Stage F F0a r029 blocked / v4 recovery 预注册（2026-08-18）
 
 - r029=`20260818T073000Z__m1-stage-f-f0a-environment-one-view-s20260814-r029`，source=`3e87323`；solver gates 已通过，
