@@ -1,5 +1,23 @@
 # Research Status
 
+## V5.1 Stage F F0b r033 blocked：batch 改变输出且显存越门（2026-08-18）
+
+- canonical r033=`20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033`，source/tree=
+  `191d3e4...12f/c4f32ec...e36`，terminal=`blocked`。primary batch32 与 repeat batch32 的三张 mask 和 `pred.json`
+  全部 exact SHA；三张均 non-empty，19 个 positive short IDs 至少跨 2 帧，故 r032 的 one-view identity-input 边界
+  `V51-F59` 已被三视图 association 子门解除，但不含任何质量结论。
+- batch16 与 batch32 的三帧 exact-label 差异分别为 `208,647/288,527/244,696 pixels`，exact fraction=
+  `0.855106/0.799634/0.830072`；binary foreground IoU=`0.961177/0.995201/0.969622`。batch32 IDs 含
+  `36/62/95`，batch16 则含 `13/63/96`，metadata SHA=`e841df5d...12c5` vs `89fde3ad...59cb`。由于同 batch
+  repeat bit-exact，这不是随机重跑抖动；`SAM_NUM_POINTS_PER_BATCH` 不能再被当成 execution-only knob，见 `V51-F60`。
+- independent audit=`22,939 bytes /a5a7d5c8...fa7d /PASS`，重算 9 masks、3 metadata、输入/source/config、parity、
+  resources 与锁；run inventory=`29 logical entries /544,368 bytes`。审计另发现 sampled GPU peak=`24,116 MiB`
+  超过 prereg `24,000 MiB`，cgroup=`17,956,044,800 bytes`、event wall=`78.917s`、241 samples/0 errors，见
+  `V51-F61`；runner 因 parity 先 fail-closed，未发布 done summary/manifest。
+- full materialization/identity training 仍未授权。下一合法步骤只允许预注册 grid32 + upstream-default batch64 的
+  同三视图 association/repeatability/resource smoke，以移除已证伪的 batch32 execution adaptation；不得倒写 r033、
+  事后放宽其 parity/24,000 门或读取 quality/H/S/C/validation/test/KITTI。F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0b 三视图 association/batch parity 已预注册（2026-08-18）
 
 - task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=

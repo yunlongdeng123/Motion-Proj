@@ -1,5 +1,22 @@
 # Experiments
 
+## V5.1 Stage F F0b r033 canonical blocked / 独立审计（2026-08-18）
+
+- run/source/tree=`20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033 /191d3e4...12f /
+  c4f32ec...e36`；status=`blocked`，resolved/status/events/parity/resource-samples SHA=
+  `9d155a88...56f9/e027888e...7234/8f35ca93...3b81/7a6db15f...7ae/db4e6d17...8e9c`。没有 done
+  summary/manifest；29 logical files=`544,368 bytes`（含三份输入 symlink logical targets）。
+- primary/repeat batch32 三 mask SHA 均为 `3263dc84...4c9a/bc46ecdb...b6b7/3efa06c8...116f`，metadata=
+  `e841df5d...12c5`，完全 repeatable；三 mask nonzero pixels=`1,149,652/1,253,787/978,729`，19 个 stable IDs，
+  association/non-empty 子门 PASS。batch16 三 mask 与 metadata SHA 全不同，逐帧 exact-label fraction=
+  `0.855106/0.799634/0.830072`，foreground IoU=`0.961177/0.995201/0.969622`，batch exact-parity FAIL。
+- sampled resources=`GPU 24,116 MiB /cgroup 17,956,044,800 bytes /78.917s /241 samples /0 errors`；GPU 超过
+  预注册 24,000 MiB，其他 recorded checks PASS。audit=`20260818T103000Z__stage-f-f0b-r033-audit.json /
+  22,939 bytes /a5a7d5c8...fa7d /PASS`；audit PASS 只表示 blocked 事实可独立重放。
+- failure delta=`V51-F59 resolved_with_three_view_association / V51-F60 active / V51-F61 active`。quality/H/S/C/
+  validation/test/KITTI/full-materialization/identity-training/F1/F2=false，M2/M3=`pending`；下一步仅预注册
+  grid32/upstream-batch64 同三视图 association/repeatability/resource smoke。
+
 ## V5.1 Stage F F0b r033 三视图 association/batch parity 预注册（2026-08-18）
 
 - task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033`；
