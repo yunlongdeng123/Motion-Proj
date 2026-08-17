@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0a_environment_one_view_smoke import (
     _validate_config,
+    parse_last_json_line,
 )
 
 
@@ -28,7 +29,19 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v2.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v3.yaml"
     )
     assert config["one_view"]["interpretation"]["association_capability_claim"] is False
     assert config["decision"]["materialization_authorized"] is False
+
+
+def test_parse_last_json_line_preserves_solver_banner() -> None:
+    payload = parse_last_json_line(
+        'Restricted license - for non-production use only\n{"status": 2, "solution": 1.0}\n',
+        "Gurobi",
+    )
+    assert payload == {
+        "status": 2,
+        "solution": 1.0,
+        "stdout_prefix": ["Restricted license - for non-production use only"],
+    }

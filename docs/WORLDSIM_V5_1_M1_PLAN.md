@@ -1,5 +1,10 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0a environment smoke v3 recovery
+
+r028 已证明 Gurobi 12.0.3 不再触发 expired-license，但 license banner 破坏了整段 JSON parser；仍未运行模型。r029 只把
+stdout 合同改为“最后非空行 JSON + 前置行留档”，不改 solver gate、环境或 one-view。见 `V51-F51`。
+
 ## 2026-08-18 Stage F F0a environment smoke v2 recovery
 
 r027 因 exact Gurobi 10.0.3 内置 license 过期，在任何模型/input 执行前 blocked。r028 只把版本改为 upstream 下界内的

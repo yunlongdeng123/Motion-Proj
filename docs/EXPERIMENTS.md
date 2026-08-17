@@ -1,5 +1,13 @@
 # Experiments
 
+## V5.1 Stage F F0a r028 blocked / v3 recovery 预注册（2026-08-18）
+
+- r028=`20260818T070000Z__m1-stage-f-f0a-environment-one-view-s20260814-r028`，source=`a1a179e`；Gurobi 12.0.3
+  tiny solve 不再报过期 license，但 license banner+terminal JSON 被整段解析而 `JSONDecodeError`。resolved/status/events/
+  resource SHA=`8ba1f8c0...7ff/76fe66b7...752/a7180aa9...c12/481ba9e8...c75`；4 files=`10,642 bytes`。
+- one-view/DEVA/SAM/input decode/quality 均 false。v3/r029 只解析最后非空 JSON 行并保存 banner；solver optimum 门与所有
+  method/data/resource locks 不变。failure delta=`V51-F51 recovery_pending`。
+
 ## V5.1 Stage F F0a r027 blocked / v2 recovery 预注册（2026-08-18）
 
 - r027=`20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027`，source=`1c0d8bf`，blocked at

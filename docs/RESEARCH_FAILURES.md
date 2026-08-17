@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license、bytecode source 污染与 identity-input contract 边界 | `V51-F01`–`V51-F50` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode source 污染与 identity-input contract 边界 | `V51-F01`–`V51-F51` |
 
 ### 1.1 V1 汇总条目
 
@@ -530,6 +530,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `PYTHONDONTWRITEBYTECODE=1`。第一次清理 wrapper 又因 PowerShell 提前处理 `$p` 而出现 quote EOF，未删除或修改任何
   文件；随后改用 4 个显式绝对 target 完成清理，两个 external repo 恢复 clean。禁止把 `git status` 放宽为忽略 untracked，
   也不得把 source tree 内 cache 纳入冻结；后续 import smoke 必须同时核对 commit/tree/clean。
+- `V51-F51`（`engineering/runner`, `recovery pending after r028`）：v2/r028 成功获取并安装
+  `gurobipy=12.0.3`，Gurobi 不再抛 license-expired/CalledProcessError；但 restricted-license banner 与 runner 自己打印的
+  JSON 同时写 stdout，v2 对整段 `json.loads` 而得到 `JSONDecodeError line 1 column 1`。r028 因此在 solver output parse
+  blocked，4 files=`10,642 bytes`；one-view CLI、DEVA/SAM load、input/mask decode 与 quality 仍全部未发生，不能把它写成
+  solver、association 或算法失败。v3/r029 唯一修复是解析最后一个非空 stdout 行为 JSON，并把前置 banner 原样存档；
+  solver status=`OPTIMAL` 与 solution=`1` 的门不放宽，环境/权重/view/CLI/resource/locks 全继承 v2。禁止粗暴丢弃全部
+  stdout、用正则猜数字或因 parser failure 绕过 Gurobi gate。
 
 <a id="detail-v5"></a>
 

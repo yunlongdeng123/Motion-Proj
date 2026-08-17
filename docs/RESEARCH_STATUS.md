@@ -1,5 +1,14 @@
 # Research Status
 
+## V5.1 Stage F F0a r028 stdout blocked；v3/r029 recovery 已预注册（2026-08-18）
+
+- r028 已用 `gurobipy=12.0.3` 越过 expired-license 异常，但 Gurobi 把 restricted-license banner 写在 JSON 前，runner
+  对整段 stdout 做 `json.loads` 而 blocked。4 files=`10,642 bytes`；没有 one-view CLI、DEVA/SAM load、input/mask decode
+  或 quality，见 `V51-F51`。
+- v3/r029 只改 solver stdout contract：最后一个非空行必须是 JSON，前置 banner 逐行保留在 report；Gurobi/PuLP 的
+  optimal status 与 solution=1 门不变，复用 exact v2 wheelhouse/venv。source/assets/view/CLI/resource/locks 不变，
+  materialization/training 仍未授权，M2/M3=pending。
+
 ## V5.1 Stage F F0a r027 license blocked；v2/r028 recovery 已预注册（2026-08-18）
 
 - r027 在 isolated venv 与三份 pinned wheels 完成后，于 Gurobi tiny model 创建处报 `License expired 2024-10-28`；

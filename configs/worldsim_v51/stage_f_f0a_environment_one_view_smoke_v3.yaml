@@ -1,0 +1,173 @@
+schema_version: worldsim_v51_stage_f_f0a_environment_one_view_smoke_v3
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0a_isolated_deva_environment_and_one_view_resource_smoke
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  asset_source_freeze:
+    path: configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml
+    sha256: 7cd5735eac789b66e1159c358e7bfe0b9e90ca5bcbb995fdfb158c0dc7874ae0
+    required_status: done
+    required_conclusion: f0a_assets_and_sources_frozen_environment_setup_required
+    required_next_phase: isolated_deva_environment_and_one_view_resource_smoke_preregistration
+
+sources:
+  gaussian_grouping:
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f
+    commit: 0ab60afed3385b717c985af1d30a20f7b0884c89
+    tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16
+  deva:
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA
+    license: CC-BY-NC-SA-4.0
+  grounded_segment_anything:
+    path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f
+    commit: 99fbbe789cf99ff851886bca0935da33586db86b
+    tree: 89c82ae86de908fec7caaa646df24015d354dc97
+    segment_anything_python_root: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f/segment_anything
+    license: Apache-2.0
+
+assets:
+  deva:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth
+    bytes: 276911801
+    sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48
+  sam_vit_h:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth
+    bytes: 2564550879
+    sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e
+
+environment:
+  base_runtime: /root/autodl-tmp/envs/drivestudio/bin/python
+  target: /root/autodl-tmp/envs/deva-v51-stage-f-v2
+  partial_suffix: .partial
+  system_site_packages: true
+  wheelhouse: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/python_wheels_v2
+  packages:
+    - {distribution: supervision, version: 0.14.0, import_name: supervision}
+    - {distribution: PuLP, version: 2.7.0, import_name: pulp}
+    - {distribution: gurobipy, version: 12.0.3, import_name: gurobipy}
+  pip_download:
+    no_dependencies: true
+    only_binary: ':all:'
+  pip_install:
+    no_dependencies: true
+    no_index: true
+  source_paths:
+    - /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA
+    - /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f/segment_anything
+  require_gurobi_tiny_binary_optimization: true
+  require_pulp_cbc_tiny_binary_optimization: true
+  forbidden:
+    - mutate_drive_studio_environment
+    - install_unpinned_dependency
+    - install_grounding_dino
+    - install_mobile_sam
+    - modify_upstream_source
+
+one_view:
+  scene: scene-0471
+  scene_index: 382
+  frame: 0
+  camera: 0
+  source_image:
+    path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/000_0.jpg
+    bytes: 99906
+    sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e
+    size_wh: [1600, 900]
+  staging_filename: 000_0.jpg
+  staging_method: symlink
+  upstream_command: demo/demo_automatic.py
+  arguments:
+    chunk_size: 4
+    amp: true
+    temporal_setting: semionline
+    size: 480
+    use_short_id: true
+    suppress_small_objects: true
+    SAM_PRED_IOU_THRESHOLD: 0.7
+  output_contract:
+    mask: Annotations/000_0.png
+    metadata: pred.json
+    mask_shape_hw: [900, 1600]
+    mask_dtype: uint8
+    label_minimum: 0
+    label_maximum: 199
+  interpretation:
+    purpose: dependency_model_load_sam_forward_and_resource_schema_smoke_only
+    association_capability_claim: false
+    quality_claim: false
+    note: one_view_is_shorter_than_semionline_num_voting_frames_and_does_not_test_cross_view_consensus
+
+recovery:
+  prior_runs:
+    - path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T063000Z__m1-stage-f-f0a-environment-one-view-s20260814-r027
+      status: blocked
+      source_commit: 1c0d8bf5332c3945aa1e6e2a9d4433bb834e2a2e
+      failure: V51-F49
+      image_pixels_decoded: false
+      sam_execution: false
+      deva_execution: false
+    - path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T070000Z__m1-stage-f-f0a-environment-one-view-s20260814-r028
+      status: blocked
+      source_commit: a1a179e02f82df113bb9685cf33102fa20694c4c
+      failure: V51-F51
+      image_pixels_decoded: false
+      sam_execution: false
+      deva_execution: false
+  only_changes:
+    - parse_last_nonempty_solver_stdout_line_as_json
+    - preserve_preceding_solver_license_banner_in_report
+  inherited_from_v2:
+    - gurobipy_12_0_3_within_upstream_greater_equal_10_0_3_contract
+    - v2_wheelhouse_and_isolated_environment
+    - suppress_python_bytecode_writes_in_frozen_external_source_trees
+  unchanged:
+    - source
+    - assets
+    - one_view
+    - cli_arguments
+    - resource_gates
+    - locks
+
+decision:
+  expected_conclusion: f0a_environment_and_one_view_resource_smoke_done_association_smoke_required
+  pass_requires:
+    - exact_isolated_environment_inventory
+    - gurobi_and_pulp_tiny_solver_smokes
+    - official_deva_and_sam_assets_loaded
+    - one_input_one_uint8_short_id_mask_and_pred_json
+    - resource_gate
+  materialization_authorized: false
+  identity_training_authorized: false
+  next_action: preregister_three_view_semionline_association_and_repeatability_smoke
+
+resources:
+  monitor_interval_seconds: 0.25
+  maximum_nvidia_at_start_mib: 512
+  maximum_nvidia_peak_mib: 24000
+  maximum_cgroup_memory_bytes: 64424509440
+  maximum_wall_seconds: 1800
+  minimum_disk_free_bytes_after: 42949672960
+
+locks:
+  image_pixels_decoded_count: 1
+  output_mask_pixels_read_count: 1
+  quality_read: false
+  parameter_search: false
+  full_materialization: false
+  identity_training: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43, V51-F45, V51-F46, V51-F47, V51-F48, V51-F49, V51-F50, V51-F51]
+failure_ledger_delta: V51-F51_recovery_pending

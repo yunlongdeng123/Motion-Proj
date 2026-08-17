@@ -39,6 +39,7 @@ from scripts.run_worldsim_v51_h_uplift import (
 SCHEMAS = {
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v1",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v2",
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v3",
 }
 TASK_ID = "WS-V51-M1-F-IDENTITY-EMBEDDING-01"
 
@@ -211,13 +212,31 @@ m += x
 status = m.solve(pulp.PULP_CBC_CMD(msg=0))
 print(json.dumps({'status': int(status), 'status_name': pulp.LpStatus[status], 'solution': float(x.value())}, sort_keys=True))
 """
-    gurobi = json.loads(subprocess.check_output([str(runtime), "-c", gurobi_script], text=True))
-    pulp = json.loads(subprocess.check_output([str(runtime), "-c", pulp_script], text=True))
+    gurobi = parse_last_json_line(
+        subprocess.check_output([str(runtime), "-c", gurobi_script], text=True), "Gurobi"
+    )
+    pulp = parse_last_json_line(
+        subprocess.check_output([str(runtime), "-c", pulp_script], text=True), "PuLP"
+    )
     if gurobi["solution"] != 1.0 or gurobi["status"] != 2:
         raise ProtocolError(f"Gurobi tiny solver smoke failed: {gurobi}")
     if pulp["solution"] != 1.0 or pulp["status_name"] != "Optimal":
         raise ProtocolError(f"PuLP tiny solver smoke failed: {pulp}")
     return {"gurobi": gurobi, "pulp": pulp}
+
+
+def parse_last_json_line(output: str, label: str) -> dict[str, Any]:
+    lines = [line.strip() for line in output.splitlines() if line.strip()]
+    if not lines:
+        raise ProtocolError(f"{label} solver emitted no stdout")
+    try:
+        payload = json.loads(lines[-1])
+    except json.JSONDecodeError as error:
+        raise ProtocolError(f"{label} solver terminal JSON drift: {lines[-1]!r}") from error
+    if not isinstance(payload, dict):
+        raise ProtocolError(f"{label} solver terminal payload must be a mapping")
+    payload["stdout_prefix"] = lines[:-1]
+    return payload
 
 
 def _build_environment(config: Mapping[str, Any], wheels: list[Mapping[str, Any]]) -> dict[str, Any]:
@@ -531,7 +550,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v2.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v3.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()
