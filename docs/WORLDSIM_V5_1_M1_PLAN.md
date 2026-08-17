@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r009 one-H-view denominator/resource PASS；下一闸 H feature-sidecar/PCA prereg |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r009 denominator PASS；r010 H feature-sidecar/seeded-PCA 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -68,12 +68,14 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_b_h_feature_pca_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
 - `scripts/smoke_worldsim_v51_dinov2_resource.py`
 - `scripts/audit_worldsim_v51_stage_b_operator_parity.py`
 - `scripts/smoke_worldsim_v51_one_view_contribution.py`
+- `scripts/run_worldsim_v51_h_feature_pca.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`

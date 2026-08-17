@@ -1,0 +1,144 @@
+schema_version: worldsim_v51_stage_b_h_feature_pca_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: h_dinov2_feature_sidecar_and_pca_without_quality
+seed: 20260814
+
+input_freeze:
+  path: configs/worldsim_v51/stage_b_input_freeze_v1.yaml
+  sha256: 16aafac76838ee417eba741fbc89025a4a3d5c45b694b9b0b447ebdc3177eb61
+  required_status: done
+  image_manifest_path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001/artifacts/image_manifest.json
+  image_manifest_sha256: be19da2e290f1c1641e1d60c7c736b812b7028e2fc3f3d980e66b46089f3943f
+  image_manifest_record_chain_sha256: 247e220fd2211d62959818bf3f9aab8a20c210e445b16407a4800e441fa54ab4
+
+dino_resource_freeze:
+  path: configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml
+  sha256: 5436d71e36be74bb95709a2fcb6f5bbbc10d021193abc780f1782c4559ea42aa
+  required_status: done
+
+contribution_freeze:
+  path: configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml
+  sha256: 2893729e0914bac2c878f1381c772502e7e04b56bccd7b62e50ac04b095b450b
+  required_status: done
+
+source:
+  repository: https://github.com/facebookresearch/dinov2.git
+  path: /root/autodl-tmp/third_party/dinov2-v51-stage-b
+  commit: 7764ea0f912e53c92e82eb78a2a1631e92725fc8
+  tree: 2a27257b79b0633b027a21014bc9360e3c1b3f43
+  expected_git_status: ''
+  license_sha256: 600cc67cc4cb2f5ea317dcfc687ad1c74dc4bec8782bbe9db0afd83513b935b7
+  hubconf_sha256: c1f5090e78ff940b72c076d2bf9c0310d1707c946b3d10e2d6f2b0bdf56a6f64
+
+checkpoint:
+  path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+  bytes: 4546140349
+  sha256: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+
+views:
+  role: historical_diagnostic
+  scenes: [scene-0471, scene-1087, scene-0379]
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  expected_view_count: 45
+  expected_image_size_wh: [1600, 900]
+  model_size_wh: [1596, 896]
+  patch_grid_hw: [64, 114]
+  patches_per_view: 7296
+  expected_patch_count: 328320
+  expected_raw_memmap_bytes: 2017198080
+
+model:
+  entrypoint: dinov2_vitg14_reg
+  architecture: vit_giant2
+  patch_size: 14
+  register_tokens: 4
+  raw_dimension: 1536
+  intermediate_layers: 4
+  selected_layer: last_of_four
+  reshape: true
+  norm: true
+  parameter_dtype: float32
+  inference_autocast: float16
+  expected_output_shape: [1, 1536, 64, 114]
+  strict_state_dict_load: true
+  weights_only_load: true
+  checkpoint_mmap: false
+  repeat_first_image_exact: true
+  normalization_mean: [0.485, 0.456, 0.406]
+  normalization_std: [0.229, 0.224, 0.225]
+  resize_mode: bilinear
+  resize_align_corners: false
+
+pca:
+  standardization_std_correction: 1
+  statistics_accumulator_dtype: float64
+  standardized_storage_dtype: float32
+  statistics_chunk_rows: 2048
+  components: 40
+  solver: randomized
+  random_state: 20260814
+  whiten: false
+  sklearn_version: 1.7.2
+  numpy_version: 1.26.4
+  scipy_version: 1.15.3
+  subsample_cap: 500000
+  subsampling_applied: false
+  output_dtype: float32
+  persisted_state: [feature_mean, feature_std, pca_mean, components, singular_values]
+  deterministic_npz_writer: true
+  pca_fit_on_screening_or_confirmation: false
+
+sidecars:
+  state_path: artifacts/pca_state.npz
+  feature_root: artifacts/features
+  manifest_path: artifacts/h_feature_manifest.json
+  feature_key: feature
+  per_view_shape: [40, 64, 114]
+  per_view_dtype: float32
+  expected_uncompressed_feature_bytes: 52531200
+  raw_1536d_memmap_temporary: true
+  raw_memmap_persist_after_success: false
+  dense_900x1600x40_materialization: false
+  required_identity_fields: [source_image_sha256, model_commit, model_checkpoint_sha256, pca_state_sha256, scene, scene_index, frame, camera, shape, dtype, content_sha256]
+
+environment:
+  python: /root/autodl-tmp/envs/motionproj/bin/python
+  torch: 2.4.1+cu121
+  torch_cuda: '12.1'
+  xformers: 0.0.28.post1
+  gpu: NVIDIA GeForce RTX 3090
+  gpu_total_mib: 24576
+  cgroup_memory_max_bytes: 96636764160
+  cpu_threads: 14
+
+resources:
+  maximum_gpu_used_at_start_mib: 2048
+  maximum_gpu_peak_mib: 22528
+  maximum_cgroup_peak_bytes: 85899345920
+  minimum_disk_available_bytes: 6442450944
+  sample_interval_seconds: 0.5
+  timeout_seconds: 3600
+  single_dino_process_only: true
+  renderer_concurrent: false
+  no_smaller_model_or_resolution_fallback: true
+
+locks:
+  h_pixels_read_for_feature_extraction: true
+  screening_pixels_read: false
+  confirmation_pixels_read: false
+  membership_proxy_read: false
+  renderer_start: false
+  uplift_feature_compute: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V51-F12, V51-F14, V51-F15, V51-F16, V51-F19, V51-F20, V51-F21, V51-F22]
+failure_ledger_delta: pending

@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage B H DINO feature-sidecar/PCA 已预注册（2026-08-17）
+
+- planned r010=`m1-stage-b-h-feature-pca-s20260814-r010`；只读取 historical diagnostic H=
+  `0471/1087/0379 × frames 0/40/80/120/160 × cameras 0/1/2 =45 views`，冻结 image manifest 240 records 中
+  exact 选择，patch population=`45×7,296=328,320`，低于 500,000 cap，禁止 subsample。
+- faithful contract：official DINOv2 ViT-g/14 registers exact checkpoint，`1596×896 → 1536×64×114`，取最近 4 层
+  的最后一层；逐图 fp16 autocast，raw float32 写 `2,017,198,080-byte` CPU memmap。首图重复推理必须 bit-exact。
+- `V51-F14` reproducibility hardening：固定两遍 float64 statistics、sample std correction=`1`、标准化存储 float32、
+  randomized PCA=`40D / random_state=20260814 / whiten=false / sklearn=1.7.2`；state 用 deterministic NPZ 二次写入
+  byte-exact，S/C 后续只能 transform、禁止 refit。
+- 每 view 持久化 `[40,64,114] float32` patch-grid sidecar 与 image/model/checkpoint/PCA/content 全身份；成功后删除
+  raw memmap。runner 不启动 renderer/uplift，不读 membership proxy 或任何 quality，S/C/validation/test/KITTI 未读，
+  M2/M3=`pending`。config/module/runner/test=`stage_b_h_feature_pca_v1.yaml`、`feature_sidecar.py`、
+  `run_worldsim_v51_h_feature_pca.py`、`test_worldsim_v51_feature_sidecar.py`。
+
 ## V5.1 Stage B r009 one-H-view denominator/resource 门通过（2026-08-17）
 
 - canonical r009=`20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009`，source=`7f0c6c9`，

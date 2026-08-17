@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage B H feature/PCA r010 预注册（2026-08-17）
+
+- input denominator=`3 H scenes / 45 views / 328,320 patches / raw 1536D`；image/source/checkpoint/resource/
+  one-view-contribution freezes 逐 SHA 绑定。仅 H RGB 用于 DINO feature extraction，其他角色和 quality 全锁。
+- extraction=`official ViT-g14-reg4, last-of-four, fp16 autocast, raw float32 CPU memmap`；first-view full feature
+  repeat 必须 bit-exact，45 个 raw feature 逐 content SHA，checkpoint before/after exact。
+- PCA=`dataset-level mean/std correction1, fixed two-pass float64 accumulator, standardized float32, randomized 40D,
+  seed 20260814, whiten=false, no subsample`；persisted state=`feature_mean/std + pca_mean/components/singular_values`。
+- outputs=`45 deterministic NPZ patch grids [40,64,114]`、identity manifest、resource/report；raw memmap 成功后不保留。
+  failure refs 含 `V51-F14/F15`，delta=`pending`；formal 前只允许 unit/config regression 和 clean prereg commit。
+
 ## V5.1 Stage B r009 canonical contribution denominator（2026-08-17）
 
 - run=`20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009`，source=`7f0c6c9`，status=`done`；
