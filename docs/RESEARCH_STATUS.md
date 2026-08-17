@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage F F0c upstream batch64 recovery 已预注册（2026-08-18）
+
+- task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=
+  `20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034`，source=本预注册提交，seed=`20260814`。
+  r033 closeout 被固定为 blocked authorization；data/source/assets/三帧/official CLI 与 r033 相同，唯一方法恢复是把
+  `SAM_NUM_POINTS_PER_BATCH=32→64` 恢复为 upstream default，grid32 作为 `V51-F57` 已记录的 24GB 必要适配保留。
+- r034 只串行执行 `primary_batch64→repeat_batch64`；要求三张 mask 与 `pred.json` repeat exact、至少一张 non-empty、
+  至少一个 short ID 跨至少两帧，并锁 exact input/output read denominator=`6/6`。不再把 batch16/32 当 execution-only
+  选项，也不按 r033 结果挑选较好输出。
+- 新 run 在启动前锁 `RTX 3090 total=24,576 MiB`，预注册 `256 MiB` headroom，因此 peak ceiling=`24,320 MiB`；
+  这是 r034 的物理资源合同，不倒改 r033 的 24,000 门。若 batch64 OOM、peak>24,320、headroom<256 或 repeat/
+  association 失败，则关闭该 faithful recovery，不再缩 batch 重试。
+- `failure_ledger_refs=[V51-F31,F37,F42,F46,F52,F55,F57,F59,F60,F61,PIVOT-F05]`，delta=`none`；
+  materialization/training/quality/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。全部 gate PASS 也只授权
+  预注册 train-only full identity-mask materialization。
+
 ## V5.1 Stage F F0b r033 blocked：batch 改变输出且显存越门（2026-08-18）
 
 - canonical r033=`20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033`，source/tree=

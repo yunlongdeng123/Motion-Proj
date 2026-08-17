@@ -1,0 +1,76 @@
+schema_version: worldsim_v51_stage_f_f0b_association_parity_closeout_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: blocked
+closed_at: "2026-08-18"
+conclusion: f0b_blocked_batch_sensitive_and_resource_ceiling_upstream_batch64_recovery_required
+
+canonical_run:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033
+  source_commit: 191d3e41239d45fe59cb0d437566b90c4c0db12f
+  source_tree: c4f32ec64849e5dd0628c3548d53260c65b2be36
+  seed: 20260814
+  status: blocked
+  resolved_config: {bytes: 6774, sha256: 9d155a886a0a7456f6f3f99f58963d1c0cd0ede5c8fb19b48cd2e221223b56f9}
+  status_file: {bytes: 495, sha256: e027888ee24ad97eb3dde6c334561f254ed4f4f5a41e5fc0f9dff46875ca7234}
+  events: {bytes: 427, sha256: 8f35ca938af98c84c4b41d24b77a271d1497447e3fb18a8855f9f02660b53b81}
+  parity_report: {bytes: 238, sha256: 7a6db15f5251a701c5b569942ab97ecbf20e27e01e3578e901af0d54887a17ae}
+  resource_samples: {bytes: 27108, sha256: db4e6d17f767f1bee017bdf10cebb43bf8b62ca3b063b888d61a73b53bb48e9c}
+  inventory: {logical_entries: 29, logical_bytes: 544368, regular_bytes_excluding_input_symlink_targets: 231124}
+  done_summary_absent: true
+  done_manifest_absent: true
+
+independent_audit:
+  tooling_commit: 67fca8c
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T103000Z__stage-f-f0b-r033-audit.json
+  bytes: 22939
+  sha256: a5a7d5c83dc5f65186b5b2a3892185715e30fc7f0b445ebdec16126524d3fa7d
+  status: pass
+  audited_run_status: blocked
+  quality_read: false
+
+association_subgate:
+  status: pass
+  batch: 32
+  mask_sha256:
+    - 3263dc84b454330c263163e69b09e5f6462a2df1f18e53882bf9d8af79b64c9a
+    - bc46ecdb38737879f420a96098448f4e2cdb4ca9b4aed3db64f5072e5b3ab6b7
+    - 3efa06c85116d5a762f68c06bb4c4208897b293ead321d3e65be10845c9a116f
+  metadata_sha256: e841df5d569673ab44bfd37b79cf26ab5f7746fb6416508be8af2dd1229312c5
+  nonzero_pixels: [1149652, 1253787, 978729]
+  stable_short_id_count: 19
+  primary_repeat_mask_exact: true
+  primary_repeat_metadata_exact: true
+  resolves: V51-F59
+  does_not_establish: [mask_quality, grid64_quality_parity, materialization_readiness]
+
+batch_parity_subgate:
+  status: failed
+  primary_batch: 32
+  parity_batch: 16
+  exact_label_fraction: [0.85510625, 0.7996340277777778, 0.8300722222222222]
+  foreground_iou: [0.9611766614467361, 0.9952009864991991, 0.9696218087919546]
+  primary_metadata_sha256: e841df5d569673ab44bfd37b79cf26ab5f7746fb6416508be8af2dd1229312c5
+  parity_metadata_sha256: 89fde3ad800fd2da64f277ba1b0650db308dccd97a803c676ab6746113b659cb
+  failure: V51-F60
+
+resources:
+  nvidia_peak_mib: 24116
+  preregistered_nvidia_peak_mib: 24000
+  nvidia_peak_pass: false
+  cgroup_memory_peak_bytes: 17956044800
+  event_elapsed_seconds: 78.917195
+  sample_count: 241
+  monitor_error_count: 0
+  failure: V51-F61
+
+governance:
+  failure_ledger_refs: [V51-F52, V51-F55, V51-F57, V51-F59, V51-F60, V51-F61]
+  failure_ledger_delta: V51-F59_resolved_V51-F60_active_V51-F61_active
+  quality_read: false
+  materialization_authorized: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: grid32_upstream_batch64_three_view_association_repeatability_resource_smoke_preregistration

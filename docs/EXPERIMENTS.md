@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage F F0c r034 upstream batch64 recovery 预注册（2026-08-18）
+
+- task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034`；
+  config=`configs/worldsim_v51/stage_f_f0c_upstream_batch_association_repeatability_v1.yaml`，seed=`20260814`，
+  split=`train_only`。authorization=`stage_f_f0b_association_parity_closeout_v1.yaml /3,289 bytes /f51ee482...0ba9`。
+- arms=`grid32/batch64 primary → grid32/batch64 repeat`；batch64 是 upstream default，禁止 smaller-batch retry。
+  输入仍是 r026 manifest 的 scene-0471/index382/camera0 frame0/40/80；pass requires mask/pred exact repeat、non-empty、
+  stable-ID>=2 frames 与全部资源门，不读质量。
+- card total/headroom/peak=`24,576/256/24,320 MiB`，另锁 start<=512 MiB、cgroup<=60 GiB、wall<=1,200s、
+  disk>=40 GiB、monitor errors=0。该新门不追认 r033；若失败则按 `V51-F60/F61/PIVOT-F05` 关闭 faithful recovery。
+  failure delta=`none_at_preregistration`；所有 downstream/heldout locks 保持 false，M2/M3=`pending`。
+
 ## V5.1 Stage F F0b r033 canonical blocked / 独立审计（2026-08-18）
 
 - run/source/tree=`20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033 /191d3e4...12f /
