@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | U2/B3 fallback 已获明确授权；先做 r001 input freeze，再下载/哈希 DINO asset |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r001 input freeze done；下一门只下载并完整 SHA 冻结 DINO asset |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -53,6 +53,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`
 - `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`
 - `configs/worldsim_v51/stage_b_authorization_v1.yaml`
+- `configs/worldsim_v51/stage_b_input_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
@@ -174,7 +175,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - explicit authorization overlay=`configs/worldsim_v51/stage_b_authorization_v1.yaml`；它选择 §10.8 的 U2/B3 fallback，
   显式 supersede 第一轮 stage lock 与 appendix candidate-pass-only 分支，但保持 normative plan、P0、Stage A 和 proposal
   原字节。`V51-F11=resolved by explicit user authorization`。
-- 当前只运行 `scripts/freeze_worldsim_v51_stage_b.py` 的 r001：冻结 240 张图和 8 个 checkpoint/Gaussian counts，
-  质量读取、feature extraction、checkpoint download 均为 false。r001 通过后才下载并完整 SHA 校验官方 DINO asset。
+- canonical r001=`20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001`，source=`2214961`；240 张图=
+  `39,747,172 bytes`、8 个 checkpoint/Gaussian counts、terminal/manifest 均 exact。质量读取、feature extraction、
+  checkpoint download 均为 false；machine freeze=`configs/worldsim_v51/stage_b_input_freeze_v1.yaml`。
+- 当前下一门只下载并完整 SHA 校验官方 DINO asset；下载成功本身不解锁 H quality，仍需资源 smoke 与 operator parity。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

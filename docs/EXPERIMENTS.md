@@ -20,6 +20,21 @@
 - r001 不下载 checkpoint、不启动 DINO/renderer、feature extraction、quality read 或 parameter search。通过后另以
   资产下载/完整 SHA terminal 冻结官方 DINO checkpoint；H→S→C 的 gate 与 PCA/operator 字段继续逐字继承 proposal。
 
+### r001 canonical result
+
+- run=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001`；
+  source=`22149613b9fc958b2bb5351300dd53fdc0d3d221`；status=`done`；conclusion=
+  `stage_b_authorized_u2_b3_fallback_and_input_identity_frozen`。
+- image denominator=`240 files / 39,747,172 bytes`，record-chain SHA=`247e220f...54ab4`；8 个 scene 的尺寸、
+  scene/frame/camera、逐文件 SHA 均 exact。checkpoint denominator=`8`，record-chain SHA=`4c7e5eec...15c0d`；
+  V5 r027–r034 checkpoint SHA 与 Background/RigidNodes counts 全部 exact。
+- summary/status/manifest/fingerprint/resolved/metrics/events/image-manifest/checkpoint-manifest SHA=
+  `f6aae6f6.../8b4c9aec.../8c50882e.../88a4fa17.../3e18161b.../95dd03a9.../0428475a.../be19da2e.../`
+  `8b84bf9a...`；manifest inventory=`7 files / 123,976 bytes`，run total=`129,809 bytes`，二次逐文件复核通过。
+- authorization config SHA=`34fc22ad...78e0a`；machine freeze=
+  `configs/worldsim_v51/stage_b_input_freeze_v1.yaml`。download/model/feature/quality/validation/test/KITTI=
+  `false/false/false/false/false/false/false`，M2/M3=`pending/pending`；failure delta=`V51-F11`。
+
 ## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
 
 | Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |

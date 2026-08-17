@@ -1,0 +1,51 @@
+schema_version: worldsim_v51_stage_b_input_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: stage_b_authorization_and_input_identity_frozen
+seed: 20260814
+
+canonical_run:
+  run_id: 20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001
+  source_commit: 22149613b9fc958b2bb5351300dd53fdc0d3d221
+  authorization_config_sha256: 34fc22ad3802563e5acbc13162314f5115a7066a1e009deba7a413843bc78e0a
+  hashes:
+    summary.json: f6aae6f69ad81fcff990089d7e3a74840aeb33eee5a2c075ad2418fa607632ca
+    status.json: 8b4c9aecefc086d2ff623cd46c151be5cbe5f65ad977fe27d7c81c0f5362e03a
+    manifest.json: 8c50882e8ccb3c83695f4f6b635a7ecb4350aaa0526b4f166eefd1d3c575afce
+    fingerprint.json: 88a4fa17ba6c4e5d36bafbe36aa350884fb1f9468de7a8d3925460ec4e6ce7b3
+    resolved_config.yaml: 3e18161bc1077bbcf51e08c532b827240dc2f2dd98fa88016c47ad2b0a3d550c
+    metrics.jsonl: 95dd03a9a64cd3975ab83f1b71203cd2d3336459fa9151417047de258f332331
+    events.jsonl: 0428475a7f010e1e4bb3f78e270674e155fad45ed8c4d22bf6fba93ce0d20348
+    artifacts/image_manifest.json: be19da2e290f1c1641e1d60c7c736b812b7028e2fc3f3d980e66b46089f3943f
+    artifacts/checkpoint_manifest.json: 8b84bf9aa9b4edc168e58b961f0a1aa51b1cefce6592850c0baf720bea52e205
+
+frozen_denominators:
+  roles: {historical_diagnostic: 3, screening: 2, development_confirmation: 3}
+  image_count: 240
+  image_bytes: 39747172
+  image_record_chain_sha256: 247e220fd2211d62959818bf3f9aab8a20c210e445b16407a4800e441fa54ab4
+  checkpoint_count: 8
+  checkpoint_record_chain_sha256: 4c7e5eecc126c193528df3a4ab063869f2dce2d294fe8439caaf9a56d9d15c0d
+  manifest_inventory_files: 7
+  manifest_inventory_bytes: 123976
+
+execution_facts:
+  checkpoint_download_started: false
+  model_inference_started: false
+  feature_extraction_started: false
+  quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: download_and_sha256_official_dinov2_vitg14_reg4_checkpoint
+  partial_then_atomic_publish: true
+  expected_bytes: 4546140349
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V5-F26, V5-F29, V5-F31, V51-F08, V51-F09, V51-F10, V51-F11, V51-F12, V51-F13, V51-F14, V51-F15]
+failure_ledger_delta: [V51-F11]
