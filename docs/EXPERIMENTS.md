@@ -1,5 +1,25 @@
 # Experiments
 
+## V5.1 Stage A A0 V5 unary exact replay（2026-08-17）
+
+| Run | 状态 | 实际重算分母 | Exact gate | 结论 |
+|---|---|---:|---|---|
+| r001 A0 replay | done | 3 H scenes；45 observation files；9 arm×scene | 54 array groups=`0 mismatch`；54 Gaussian metric deltas=`0.0` | A0 passed；只解锁 A1 |
+
+- canonical=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T102000Z__m1-a0-v5-unary-replay-s20260814-r001`，
+  source=`1e2361658b85e1f12145867164238ce81ecb55ea`，config SHA=`ba8fdcaa...`。
+- r037/r042/r043 每场 B0/B1/B3 的 `unary_posterior/unary_uncertainty/effective_evidence_count/`
+  `multi_view_disagreement/boundary_ambiguity/depth_support` 均逐 bit exact；Gaussian Brier/ECE/IoU/NLL/FP/FN
+  按原实现重算且逐 float delta=`0.0`。
+- 2D evaluation 本轮未重新执行 GPU renderer；证据边界是 canonical evaluation artifact bytes、manifest 与每场 12 个
+  核心 generation source SHA exact。该边界不影响 A0 Bayesian 累积逻辑复现，但不能被写成新的 2D quality run。
+- summary/status/fingerprint/manifest SHA=`b9b33bbd8304bb184e9388b4c102a49236a30ded1ae7d10c071cfc9859914878 /`
+  `5d695add5efb535da91da619f520f6a3f7c9b78b717e612e03422279e435e432 /`
+  `6c7466b3a2f8dfb4fe905841fcfe91bce230200862fba56e843811a237d700ae /`
+  `c4a5e4fdb7189cbfca0c756365f21ac6d981a6e9c30616548870c204c3103d3d`。
+- `failure_ledger_refs`：`V5-F20–F26/F29–F31`、`V51-F01/F02`；`failure_ledger_delta=none`。
+  无 method inference、parameter search、validation/test quality read 或 KITTI tuning。
+
 ## V5.1 M1-only P0/D0 start audit（2026-08-17）
 
 | Task / Run | 状态 | 冻结分母 | 结果 | 下一门 |

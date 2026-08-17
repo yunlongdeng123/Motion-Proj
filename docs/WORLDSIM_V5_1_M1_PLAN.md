@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | 159 个 canonical 文件 exact，下一门是 B0/B1/B3 posterior/metric replay |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 r001 exact；下一门只实现 A1 visibility/missingness |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -45,3 +45,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - summary/manifest SHA：`6d495ce26c211843e69dd9034dccfc916f17311dc59edaf5e7115ed32723ef9c /`
   `8ab0ad66eddedece7cfe6db4871172b07ae2c80430c8ddba156df76ce2941dc5`
 - canonical inventory：r037/r042/r043=`65/44/50 files`，总计 `680,254,598 bytes`，逐文件 exact。
+
+## Stage A A0 canonical evidence
+
+- run：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T102000Z__m1-a0-v5-unary-replay-s20260814-r001`
+- source commit：`1e2361658b85e1f12145867164238ce81ecb55ea`
+- conclusion：`a0_v5_b0_b1_b3_posterior_and_gaussian_metrics_bit_exact`
+- exact 分母：45 observation files；9 arm×scene；54 posterior/statistic arrays；54 Gaussian metric values。
+- exact 结果：array mismatch=`0`；metric delta=`0.0`；每场 12 个核心 generation source SHA exact。
+- 边界：GPU renderer 未重跑；2D evaluation 只做 canonical artifact/source identity 复核。
+- 下一门：A1 visibility mask。A2/A3/A4、Stage B/C 与 Graph 均保持锁定。

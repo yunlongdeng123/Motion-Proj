@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage A A0 exact replay 完成，下一门只解锁 A1 visibility（2026-08-17）
+
+- `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`，A0 canonical r001=`done`，conclusion=
+  `a0_v5_b0_b1_b3_posterior_and_gaussian_metrics_bit_exact`；source=`1e23616`，run=
+  `/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T102000Z__m1-a0-v5-unary-replay-s20260814-r001`。
+- r037/r042/r043 的 `45` 份 evidence observation 被当前代码实际重算；`3 scenes × 3 arms × 6 fields=54`
+  组 posterior/statistics 数组均为 `0` bit mismatch，9 个 arm×scene 的 Brier/ECE/IoU/NLL/FP/FN Gaussian
+  metric delta 全为 `0.0`。
+- 每个 canonical run 的 12 个核心生成源码与当前分支逐 SHA exact，159-file manifest inventory、checkpoint 与
+  evaluation artifact 继续 exact。边界：本轮没有重新执行 GPU renderer；2D evidence 是 canonical bytes + generation
+  source exact，不把它写成一次新的 2D render quality read。
+- r001 summary/status/fingerprint/manifest SHA=`b9b33bbd.../5d695add.../6c7466b3.../c4a5e4fd...`；
+  `failure_ledger_refs=V5-F20–F26/F29–F31 + V51-F01/F02`，`failure_ledger_delta=none`。
+- A0 通过后只解锁 A1 `visibility / semantic decoupling`：不可见 observation 对 Beta posterior 的正负更新都必须为
+  0。A2 UNKNOWN、A3 effective count、A4 CIF 与任何 Graph/uplift 仍未授权，必须逐机制 matched ablation。
+
 ## V5.1 M1-only P0/D0 冻结完成，Stage A A0 进入 exact replay（2026-08-17）
 
 - `WS-V51-P0-M1-SCOPE-FREEZE-01=done`、`WS-V51-D0-DEV-ROLE-FREEZE-01=done`；实现提交=`58953a5`，
