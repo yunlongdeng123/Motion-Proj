@@ -16,6 +16,7 @@ from motion_proj.worldsim_v51.protocol import (
     load_yaml,
     validate_development_roles,
     validate_scope,
+    validate_stage_b_authorization,
 )
 
 
@@ -52,3 +53,30 @@ def test_scope_requires_m2_m3_pending() -> None:
 
     with pytest.raises(ProtocolError, match="M2/M3"):
         validate_scope(ROOT, scope)
+
+
+def test_stage_b_authorization_preserves_u2_b3_and_quality_locks() -> None:
+    authorization = load_yaml(
+        ROOT / "configs/worldsim_v51/stage_b_authorization_v1.yaml"
+    )
+
+    report = validate_stage_b_authorization(ROOT, authorization)
+
+    assert report["authorized_fallback"] == "U2_B3"
+    assert report["expected_image_count"] == 240
+    assert report["expected_image_bytes"] == 39747172
+    assert report["validation_quality_read"] is False
+    assert report["test_quality_read"] is False
+    assert report["m2_status"] == "pending"
+    assert report["m3_status"] == "pending"
+
+
+def test_stage_b_route_reordering_fails_closed() -> None:
+    authorization = load_yaml(
+        ROOT / "configs/worldsim_v51/stage_b_authorization_v1.yaml"
+    )
+    routes = authorization["m1_route_policy"]["route_order"]
+    routes[0], routes[1] = routes[1], routes[0]
+
+    with pytest.raises(ProtocolError, match="route 顺序"):
+        validate_stage_b_authorization(ROOT, authorization)

@@ -1,0 +1,93 @@
+schema_version: worldsim_v51_stage_b_authorization_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: stage_b_authorized_freeze_and_asset_identity
+authorization_date: '2026-08-17'
+
+authorization:
+  source: explicit_user_instruction
+  decision: authorize_u2_b3_fallback_and_continue_m1_autonomously
+  supersedes:
+    - p0_first_round_later_stages_locked
+    - normative_appendix_candidate_pass_only_branch
+    - stage_b_separate_authorization_block
+  preserves:
+    - normative_plan_bytes
+    - historical_p0_and_stage_a_artifacts
+    - frozen_u2_b3_baseline
+    - h_s_c_scene_roles_and_order
+  single_failure_stops_m1: false
+  failure_action: record_terminal_and_ledger_then_advance_to_next_frozen_route
+
+bindings:
+  normative_plan:
+    path: docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md
+    sha256: 3d7f74813db79b00b71b522391ff2d953bb480ef6a25179c1919ef3acc54d733
+  p0_scope:
+    path: configs/worldsim_v51/p0_m1_scope_v1.yaml
+    sha256: 19f51059e8dc58ba8d1e5a064d89aa1710cf218aeea81b843e0f16f523de53bf
+  development_roles:
+    path: configs/worldsim_v51/development_roles_v1.yaml
+    sha256: eb0281d6de6e353e55d258b9304b4bef9a6c53f35094af57bda3bdc7e5a9577d
+  stage_a_closeout:
+    path: configs/worldsim_v51/stage_a_closeout_v1.yaml
+    sha256: 325b0d7efeef200eb62f20e2485e37fe7febd66ea2444e172a972ede28abf50a
+    required_survivor: U2_B3
+  freeze_proposal:
+    path: configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml
+    sha256: ebb9552caffcf6e55861e0a2fb68ffb4f81c99bf7a428b6d2c2b7d7d1885df09
+  v5_formal_batch:
+    path: configs/worldsim_v5/m1_formal_batch_audit_v1.yaml
+    sha256: e6543dafed50da4699368ec0801d98a5e12a300a1423fbaf5722dc44e8a46896
+
+activation:
+  selected_protocol_branch: section_10_8_u2_b3_fallback_explicitly_authorized
+  executable: true
+  checkpoint_download_allowed: true
+  method_implementation_allowed: true
+  historical_diagnostic_quality_read_allowed: true
+  screening_quality_read_allowed_only_after_h_gate: true
+  confirmation_quality_read_allowed_only_after_family_freeze: true
+  graph_implementation_allowed_only_after_faithful_uplift_pass: true
+
+m1_route_policy:
+  invariant_baseline: U2_B3
+  faithful_port_first: true
+  innovation_allowed_only_after_faithful_port_pass: true
+  route_order:
+    - {order: 1, route: LUDVIG_UPLIFT_AND_SEMANTIC_GRAPH, status: running}
+    - {order: 2, route: PROGRESSIVE_PROPAGATION, status: pending}
+    - {order: 3, route: SUPER_PRIMITIVE_OR_ANCHOR, status: pending}
+    - {order: 4, route: GAUSSIAN_GROUPING, status: pending}
+    - {order: 5, route: TRACE3D, status: pending}
+    - {order: 6, route: BKI_OR_GRAPH_FREE, status: pending}
+  per_route_execution:
+    - freeze_matched_ab_contract_before_quality
+    - port_paper_method_without_innovation
+    - reject_and_advance_if_faithful_port_fails
+    - innovate_only_if_faithful_port_passes
+    - require_stable_development_confirmation_gain_over_u2_b3
+    - consume_fresh_validation_once_only_after_candidate_freeze
+
+image_identity:
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  filename_template: '{frame:03d}_{camera}.jpg'
+  expected_width: 1600
+  expected_height: 900
+  expected_scenes: 8
+  expected_images_per_scene: 30
+  expected_total_images: 240
+  expected_total_bytes: 39747172
+  manifest_required_before_feature_extraction: true
+
+quality_locks:
+  validation_quality_read: false
+  validation_parameter_search: false
+  test_quality_read: false
+  test_parameter_search: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V5-F26, V5-F29, V5-F31, V51-F08, V51-F09, V51-F10, V51-F11, V51-F12, V51-F13, V51-F14, V51-F15]
+failure_ledger_delta: [V51-F11]

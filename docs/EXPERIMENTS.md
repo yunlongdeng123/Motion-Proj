@@ -1,5 +1,25 @@
 # Experiments
 
+## V5.1 Stage B 授权迁移 / formal freeze 预注册（2026-08-17）
+
+| Task | 状态 | 当前分母 | 本次允许 | 质量锁 |
+|---|---|---|---|---|
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | H/S/C=`3/2/3`；images=`240`；base checkpoints=`8` | authorization migration + input SHA freeze | H/S/C quality 在 r001 均不读；validation/test/KITTI 锁定 |
+| `WS-V51-M2` | pending | 0 | none | locked |
+| `WS-V51-M3` | pending | 0 | none | locked |
+
+- explicit authorization 选择 normative plan §10.8 的 `U2/B3 fallback` 分支并解除 Stage B 独立授权锁；旧 P0、Stage A
+  与 `draft_freeze_only_not_authorized` proposal 均保持原字节，新的 executable overlay=
+  `configs/worldsim_v51/stage_b_authorization_v1.yaml`。`V51-F11` 由 governance active 转为 resolved，不倒写 r007。
+- route order 预先冻结为 LUDVIG uplift/semantic graph→progressive propagation→super-primitive/anchor→Gaussian
+  Grouping→Trace3D→BKI/graph-free；所有 arm 保留 `U2/B3` matched baseline。paper faithful port 失败时写 immutable
+  terminal + unified failure ledger 并进入下一路线；通过后才允许机制创新。
+- formal r001 runner=`scripts/freeze_worldsim_v51_stage_b.py`，只读并哈希 240 张固定 JPEG 与 V5 r027–r034 的 8 个
+  checkpoint，验证 image bytes/dimension、scene/frame/camera、checkpoint SHA、Gaussian counts 与 validation/test
+  未读字段。预注册 failure refs=`V5-F20/F22/F23/F24/F26/F29/F31`、`V51-F08–F15`；本次治理 delta=`V51-F11`。
+- r001 不下载 checkpoint、不启动 DINO/renderer、feature extraction、quality read 或 parameter search。通过后另以
+  资产下载/完整 SHA terminal 冻结官方 DINO checkpoint；H→S→C 的 gate 与 PCA/operator 字段继续逐字继承 proposal。
+
 ## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
 
 | Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |

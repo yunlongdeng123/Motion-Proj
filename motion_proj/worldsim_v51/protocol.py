@@ -27,6 +27,15 @@ DEVELOPMENT_ROLE_ORDER = (
     "scene-0535",
     "scene-0436",
 )
+STAGE_B_TASK = "WS-V51-M1-B-LUDVIG-UPLIFT-01"
+STAGE_B_ROUTE_ORDER = (
+    "LUDVIG_UPLIFT_AND_SEMANTIC_GRAPH",
+    "PROGRESSIVE_PROPAGATION",
+    "SUPER_PRIMITIVE_OR_ANCHOR",
+    "GAUSSIAN_GROUPING",
+    "TRACE3D",
+    "BKI_OR_GRAPH_FREE",
+)
 
 
 class ProtocolError(RuntimeError):
@@ -146,6 +155,99 @@ def validate_development_roles(
         "test_scene_count": len(test),
         "validation_quality_read": False,
         "test_quality_read": False,
+    }
+
+
+def validate_stage_b_authorization(
+    project: Path, config: Mapping[str, Any]
+) -> dict[str, Any]:
+    """校验用户对 U2/B3 fallback 与 M1 连续路线的显式授权 overlay。"""
+
+    if config.get("schema_version") != "worldsim_v51_stage_b_authorization_v1":
+        raise ProtocolError("Stage B authorization schema 漂移")
+    if config.get("task_id") != STAGE_B_TASK or config.get("status") != "running":
+        raise ProtocolError("Stage B task/status 漂移")
+    authorization = config["authorization"]
+    if authorization.get("decision") != (
+        "authorize_u2_b3_fallback_and_continue_m1_autonomously"
+    ):
+        raise ProtocolError("Stage B fallback 授权漂移")
+    if authorization.get("single_failure_stops_m1") is not False:
+        raise ProtocolError("单次失败不得停止 M1")
+
+    bindings: dict[str, Path] = {}
+    for name, spec in config["bindings"].items():
+        path = project / str(spec["path"])
+        if not path.is_file() or sha256_file(path) != spec["sha256"]:
+            raise ProtocolError(f"Stage B binding 漂移: {name}")
+        bindings[name] = path
+
+    closeout = load_yaml(bindings["stage_a_closeout"])
+    required_survivor = config["bindings"]["stage_a_closeout"][
+        "required_survivor"
+    ]
+    if closeout.get("stage_a_arms", {}).get("survivor") != required_survivor:
+        raise ProtocolError("Stage A survivor 不再是 U2/B3")
+
+    proposal = load_yaml(bindings["freeze_proposal"])
+    if proposal.get("task_id") != STAGE_B_TASK:
+        raise ProtocolError("Stage B proposal task 漂移")
+    if proposal.get("activation", {}).get("executable") is not False:
+        raise ProtocolError("历史 proposal 不得被原地改成 executable")
+
+    routes = config["m1_route_policy"]["route_order"]
+    if tuple(item["route"] for item in routes) != STAGE_B_ROUTE_ORDER:
+        raise ProtocolError("M1 route 顺序漂移")
+    if routes[0].get("status") != "running" or any(
+        item.get("status") != "pending" for item in routes[1:]
+    ):
+        raise ProtocolError("M1 route 初始状态漂移")
+    if config["m1_route_policy"].get("invariant_baseline") != "U2_B3":
+        raise ProtocolError("U2/B3 baseline 未保持")
+
+    locks = config["quality_locks"]
+    for name in (
+        "validation_quality_read",
+        "validation_parameter_search",
+        "test_quality_read",
+        "test_parameter_search",
+        "kitti_method_tuning",
+    ):
+        if locks.get(name) is not False:
+            raise ProtocolError(f"Stage B quality lock 漂移: {name}")
+    if locks.get("m2_status") != "pending" or locks.get("m3_status") != "pending":
+        raise ProtocolError("M2/M3 必须保持 pending")
+
+    proposal_scenes = []
+    proposal_bytes = 0
+    for role in ("historical_diagnostic", "screening", "development_confirmation"):
+        for scene in proposal["roles"][role]["scenes"]:
+            proposal_scenes.append(scene["scene"])
+            proposal_bytes += int(scene["image_bytes"])
+    image_identity = config["image_identity"]
+    if tuple(proposal_scenes) != DEVELOPMENT_ROLE_ORDER:
+        raise ProtocolError("Stage B proposal H/S/C 场景漂移")
+    if int(image_identity["expected_total_bytes"]) != proposal_bytes:
+        raise ProtocolError("Stage B image bytes 分母漂移")
+    if int(image_identity["expected_total_images"]) != (
+        len(proposal_scenes) * int(image_identity["expected_images_per_scene"])
+    ):
+        raise ProtocolError("Stage B image count 分母漂移")
+
+    return {
+        "task_id": STAGE_B_TASK,
+        "status": "running",
+        "authorized_fallback": required_survivor,
+        "route_order": list(STAGE_B_ROUTE_ORDER),
+        "binding_sha256": {
+            name: config["bindings"][name]["sha256"] for name in bindings
+        },
+        "expected_image_count": int(image_identity["expected_total_images"]),
+        "expected_image_bytes": int(image_identity["expected_total_bytes"]),
+        "validation_quality_read": False,
+        "test_quality_read": False,
+        "m2_status": "pending",
+        "m3_status": "pending",
     }
 
 

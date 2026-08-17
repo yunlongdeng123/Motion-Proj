@@ -11,15 +11,22 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | freeze proposal 已备好；`V51-F11` 仍待用户裁决 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | U2/B3 fallback 已获明确授权；先做 r001 input freeze，再下载/哈希 DINO asset |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
-## 第一轮授权
+## 授权历史与当前边界
 
-只允许 P0、development role freeze 与 Stage A。Historical diagnostic=`0471/1087/0379`，
-screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-scene validation 与
-20-scene test 继续不可读；KITTI 不用于方法调参。
+第一轮只允许 P0、development role freeze 与 Stage A；这些历史 artifact 保持不变。2026-08-17 用户明确授权
+`U2/B3 fallback` 进入 Stage B，并授权 M1 在单 arm/scene/工程/paper failure 后留档并按冻结顺序自动换路线。
+Historical diagnostic=`0471/1087/0379`，screening=`0998/0359`，development confirmation=
+`0875/0535/0436` 不变。V5 的 8-scene validation 与 20-scene test 继续不可读；KITTI 不用于方法调参；M2/M3
+保持 `pending`。
+
+M1 路线顺序固定为 LUDVIG uplift/semantic graph→progressive propagation→super-primitive/anchor→Gaussian
+Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；无效则 rejected 并进入下一条，有效后才允许创新；
+所有 matched A/B 始终保留 U2/B3。只有 development confirmation 上稳定优于 U2/B3 的冻结 candidate 才能一次性
+进入 fresh validation，test 仅供最终候选 exact-once 使用。
 
 ## Failure ledger 绑定
 
@@ -45,6 +52,8 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `docs/WS_V51_STAGE_B_PREFLIGHT.md`
 - `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`
 - `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`
+- `configs/worldsim_v51/stage_b_authorization_v1.yaml`
+- `scripts/freeze_worldsim_v51_stage_b.py`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -159,3 +168,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
   proposal 化；PCA 确定性见 `V51-F14`，membership proxy 边界见 `V51-F15`。
 - 授权后的下一提交仍只做 freeze-only/P0 supersession 与 image SHA，不直接启动模型；完整序列见
   `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
+
+## Stage B 授权迁移与当前执行
+
+- explicit authorization overlay=`configs/worldsim_v51/stage_b_authorization_v1.yaml`；它选择 §10.8 的 U2/B3 fallback，
+  显式 supersede 第一轮 stage lock 与 appendix candidate-pass-only 分支，但保持 normative plan、P0、Stage A 和 proposal
+  原字节。`V51-F11=resolved by explicit user authorization`。
+- 当前只运行 `scripts/freeze_worldsim_v51_stage_b.py` 的 r001：冻结 240 张图和 8 个 checkpoint/Gaussian counts，
+  质量读取、feature extraction、checkpoint download 均为 false。r001 通过后才下载并完整 SHA 校验官方 DINO asset。
+- 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
+  路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3；Stage B 等待独立授权 | H→S 小效应未复现、UNKNOWN coverage 不达门；Stage B 解锁、ViT-g/PCA/24GB、proxy leakage 与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F15` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B fallback 已获授权并进入 input/asset freeze | H→S 小效应未复现、UNKNOWN coverage 不达门；ViT-g/PCA/24GB、proxy leakage 与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F15` |
 
 ### 1.1 V1 汇总条目
 
@@ -206,14 +206,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   ratio=`34.5512%`，0359 仅=`0.7891%`，说明 H 分位数规则的场景依赖很强；同时 A2 conditional posterior 与 A1 相同，
   继承 `V51-F09` 的 conditional gate 失败。因此 A2 rejected，不能用较高 unknown recall 或 error separation 掩盖可用覆盖率
   不足，也不能在看到 S 后调整 Q25/Q75、布尔规则或 image threshold。证据：r007；failure delta=`V51-F09/F10`。
-- `V51-F11`（`protocol/governance`, `active`）：normative plan 对 Stage A 全失败后的解锁规则内部冲突。§10.8
+- `V51-F11`（`protocol/governance`, `resolved by explicit user authorization on 2026-08-17`）：normative plan 对 Stage A 全失败后的解锁规则内部冲突。§10.8
   明写“所有 Stage A arm 都失败”时保留 U1/U2 并进入 Stage B；附录“八、Stage A 后如何解锁”却只在 Stage A
   candidate 通过 S 时允许 `WS-V51-M1-B-LUDVIG-UPLIFT-01`。r007 的真实状态正是 A1–A4 全 rejected、fallback=
   `U2/B3`，因此执行者不能静默挑选有利条款，也不能把“进入 Stage B”的研究顺序当成独立授权。Stage B 保持
   `pending/locked`；合法复开必须由用户明确选择“授权 U2/B3 fallback 进入 Stage B”或“按 candidate-pass 条款关闭
-  M1”，再用 freeze-only commit 统一 normative/short plan/config。该问题不是算法负结果，未读取 C/validation/test/KITTI
+  M1”，再用 freeze-only commit 统一 normative/short plan/config。用户于 2026-08-17 明确选择“授权 U2/B3 fallback
+  继续 M1”，并要求单 arm/scene/工程/paper failure 留档后自动进入下一冻结路线；因此本治理阻塞解除，但原条款冲突和
+  r007 结论不删除。解法采用 executable authorization overlay 绑定原 normative/P0/Stage A/proposal SHA，不原地改写
+  冻结字节；M2/M3 与 validation/test/KITTI 锁保持。该问题不是算法负结果，解除时仍未读取 C/validation/test/KITTI
   quality。证据：`docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md`、`configs/worldsim_v51/stage_a_closeout_v1.yaml`、
-  `docs/WS_V51_STAGE_B_PREFLIGHT.md`。
+  `configs/worldsim_v51/stage_b_authorization_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
 - `V51-F12`（`engineering/resource/governance`, `active preflight risk`）：Stage B 的 faithful 第一版要求官方 DINOv2
   ViT-g/14 registers，但 2026-08-17 只读审计只找到 Depth-Anything-V2 内部 DINOv2 模块，torch/HuggingFace cache
   均无对应官方 checkpoint；“存在 DINOv2 源文件”不能写成 LUDVIG 资产已冻结。官方 LUDVIG README 记录的测试平台是

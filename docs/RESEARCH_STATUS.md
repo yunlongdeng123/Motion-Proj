@@ -1,5 +1,25 @@
 # Research Status
 
+## V5.1 Stage B 已授权：U2/B3 fallback + M1 自动换路线进入冻结（2026-08-17）
+
+- 用户已明确授权 Stage A 冻结 survivor=`U2/B3` 作为 fallback 进入 Stage B，并要求 M1 遇到单 arm、单 scene、
+  单次工程错误或 paper idea 失败时留档后自动进入下一路线；`V51-F11` 的 governance 阻塞因此 `resolved`，历史冲突
+  仍保留。授权 overlay=`configs/worldsim_v51/stage_b_authorization_v1.yaml`，绑定 normative plan、P0、H/S/C roles、
+  Stage A closeout、freeze proposal 与 V5 formal30k batch 的原始 SHA，不改写历史 proposal 或 normative plan 字节。
+- `WS-V51-M1-B-LUDVIG-UPLIFT-01=running`；当前只执行 freeze/asset identity。第一条路线固定为 faithful LUDVIG
+  uplift→条件性 semantic graph，U2/B3 始终作为 matched baseline；原样迁移无效即 rejected 并进入 progressive
+  propagation→super-primitive/anchor→Gaussian Grouping→Trace3D→BKI/graph-free，原样有效后才允许创新。
+- 新 runner=`scripts/freeze_worldsim_v51_stage_b.py`；正式 r001 将在 clean commit 上逐文件冻结 `240` 张
+  `1600×900` JPEG（expected bytes=`39,747,172`）与 `8` 个 V5 30k checkpoint/Gaussian 分母，输出 resolved config、
+  image/checkpoint manifest、fingerprint、JSONL metrics/events、summary/status。该 run 不下载权重、不提取 feature、
+  不读取质量。
+- r001 通过后才使用 `source /etc/network_turbo` 下载官方 DINOv2 ViT-g/14 registers checkpoint，先写 `.partial`，
+  以 bytes=`4,546,140,349` 和完整 SHA-256 校验后原子发布；随后依次做单进程资源 smoke、synthetic operator parity、
+  H→S→C matched A/B。DINO 与 renderer 不同进程且不在同卡并发常驻。
+- M2/M3 保持 `pending`；validation/test/KITTI tuning 继续锁定。只有某个 M1 candidate 在 development confirmation
+  稳定优于 U2/B3 并冻结后，才允许 exact-once fresh validation；test 只在最终候选上 exact-once。当前 source base=
+  `a0ef9a29043369d117c06c49766d9d9dbff2863e`，formal source commit 与 canonical run 将在 r001 收口时补录。
+
 ## V5.1 Stage B freeze-only proposal：资产/分母/operator/gate 已形成草案（2026-08-17）
 
 - `WS-V51-M1-B-LUDVIG-UPLIFT-01` 仍为 `pending/locked`；新增
