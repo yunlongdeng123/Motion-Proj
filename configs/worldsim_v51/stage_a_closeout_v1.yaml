@@ -1,0 +1,50 @@
+schema_version: worldsim_v51_stage_a_closeout_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: done
+conclusion: stage_a_no_new_unary_candidate_freeze_u2_b3
+seed: 20260814
+
+canonical_screening_run:
+  run_id: 20260817T140000Z__m1-stage-a-s-screening-s20260814-r007
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T140000Z__m1-stage-a-s-screening-s20260814-r007
+  source_commit: dc24f28e1de21b0fb5d1cbb41c959c3d51624a38
+  hashes:
+    summary.json: 094b4ae1aa9e35830952ee9bfb5cb03a2cb990cf43f79a1f63a23ba28f78e20c
+    status.json: 03d319da5e876c78f3ca14ca83d39fc990882caacc048c0d01c1ba520a50a993
+    manifest.json: 7f60d0974fa0ab0ab472bb95b0eadc1a453e7f58dbddd7aff7553b8308f69a0e
+    fingerprint.json: 67f1001d81b77af2c733cc9163b20cf3442c55ff773e55667e8aa51af2e8f6c6
+    artifacts/diagnostics.json: 15834f48f3f3cb1b996a208c9c3d4bf6bab696c160d433fda8210b52153f6e67
+
+stage_a_arms:
+  A1: rejected_s_replication_gate
+  A2: rejected_s_conditional_and_coverage_gates
+  A3: rejected_structural_noop_not_correlation_aware
+  A4: rejected_no_independent_occupancy_observable
+  survivor: U2_B3
+
+screening_result:
+  boundary_f1_nonnegative_scene_count: 1
+  boundary_f1_clearly_positive_scene_count: 0
+  scene_balanced_mean_boundary_f1_delta: -0.00001652926424278167
+  scene_balanced_mean_iou_delta: 0.0006564935843798858
+  scene_balanced_mean_false_negative_semantic_mass_delta: 0.0003605359865503921
+  scene_balanced_mean_brier_delta: -0.00015947722040960495
+  scene_balanced_mean_ece_delta: -0.00018409817873007214
+  a2_scene_balanced_mean_coverage: 0.5574348765432099
+  a2_scene_balanced_mean_accepted_subset_error: 0.014841559768915357
+  a2_scene_balanced_mean_abstained_subset_error: 0.1343926313441344
+
+next_stage:
+  task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+  status: pending_locked_until_separate_authorization
+  inherited_unary: U2_B3
+
+locks:
+  continue_bayesian_family: false
+  development_confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31, V5-F32, V51-F01, V51-F02, V51-F03, V51-F04, V51-F05, V51-F06, V51-F07, V51-F08, V51-F09, V51-F10]
+failure_ledger_delta: [V51-F09, V51-F10]

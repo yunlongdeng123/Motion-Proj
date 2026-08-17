@@ -1,5 +1,28 @@
 # Experiments
 
+## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
+
+| Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0998 | 12 | -0.0000904944 | +0.000997358 | +0.000353190 | -0.000307524 | -0.000331509 | 0.250105 | 0.0289614 | 0.209930 |
+| 0359 | 9 | +0.0000574359 | +0.000315630 | +0.000367882 | -0.000011430 | -0.000036688 | 0.864765 | 0.0007217 | 0.0588556 |
+| scene-balanced | 2 | -0.0000165293 | +0.000656494 | +0.000360536 | -0.000159477 | -0.000184098 | 0.557435 | 0.0148416 | 0.134393 |
+
+- canonical r007=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T140000Z__m1-stage-a-s-screening-s20260814-r007`；
+  source=`dc24f28e1de21b0fb5d1cbb41c959c3d51624a38`，duration=`254.024654 s`，peak GPU=`8393 MiB`。
+- 输入链：SAM r047/r048 → immutable B3/evidence r049/r050 → single candidate r007；accepted evaluation denominator=
+  `12+9=21`。A1 conditional 与 A2 conditional 共用同一 render；A2 只额外渲染 UNKNOWN，未重复 candidate/scene 分母。
+- A1 gate：BF1 nonnegative=`1/2<2`、clearly positive=`0/2<1`、mean BF1<0，FAIL；FN/Brier/ECE caps 通过不改变
+  合取裁决。A2 selective：两场 error concentration 均成立，但 mean coverage=`0.557435<0.60`，FAIL；A2 还继承 A1
+  conditional FAIL。final survivor=`U2_B3`，Stage A 不再继续 Bayesian family。
+- 0998/0359 UNKNOWN Gaussian ratio=`34.5512%/0.7891%`，只登记为场景依赖诊断，不据此事后调阈值。两 checkpoint
+  前后 exact；parameter search、C/validation/test/KITTI read/tuning 均为 false。
+- summary/status/manifest/fingerprint/diagnostics SHA=`094b4ae1aa9e35830952ee9bfb5cb03a2cb990cf43f79a1f63a23ba28f78e20c /`
+  `03d319da5e876c78f3ca14ca83d39fc990882caacc048c0d01c1ba520a50a993 /`
+  `7f60d0974fa0ab0ab472bb95b0eadc1a453e7f58dbddd7aff7553b8308f69a0e /`
+  `67f1001d81b77af2c733cc9163b20cf3442c55ff773e55667e8aa51af2e8f6c6 /`
+  `15834f48f3f3cb1b996a208c9c3d4bf6bab696c160d433fda8210b52153f6e67`；failure delta=`V51-F09/F10`。
+
 ## V5.1 Stage A A4 CIF-lite identifiability audit（2026-08-17）
 
 | Check | 0471 | 1087 | 0379 | 结论 |

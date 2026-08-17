@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 与 Stage A H 已完成，S screening 已冻结 | pytest import、float32 oracle、visibility dtype、分位数/近零误差、A3/A4 可识别性与 SSH 编排均显式审计 | `V51-F01`–`V51-F08` |
+| V5.1 | M1-only 正在推进；Stage A 无新 unary survivor，冻结 U2/B3 | H→S 小效应未复现、UNKNOWN coverage 不达门；pytest/import/dtype/分位数/机制可识别性/SSH 编排均显式审计 | `V51-F01`–`V51-F10` |
 
 ### 1.1 V1 汇总条目
 
@@ -192,6 +192,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   后台编排不得内联依赖 `$!/$?`；优先每个长 run 使用独立前台 SSH session，确需后台时使用远端脚本/控制器并单独审计
   PID、日志与 terminal。wrapper 失败不得写成方法失败，也不得因外层 exit code 重跑已封口的 immutable run。证据：
   r049/r050、source commit `6950597`、`configs/worldsim_v51/stage_a_screening_v1.yaml`。
+- `V51-F09`（`algorithm/evaluation`, `rejected by Stage A r007`）：A1 visibility 在 H 上通过的 scene-balanced
+  `ΔBoundary-F1=+0.001155713` 没有在预注册 S=`0998/0359` 上复现。S 两场 delta 分别为
+  `-0.0000904944/+0.0000574359`，只有 `1/2` 非负、`0/2` 达到 clearly-positive `+0.001`，均值为
+  `-0.0000165293`；尽管 mean IoU/Brier/ECE 略改善且 FN 增量仍在门内，冻结 gate 是合取，A1 必须 rejected。
+  这推翻“hard visibility eligibility 的 H 小效应可跨开发场景稳定复制”，不是 Bayesian U2/B3 基线失败。禁止根据 IoU
+  或 calibration 的微小正向分量保留 A1、删除 0998、放宽 clearly-positive 门或在同一 S 上重选 visibility threshold。
+  合法复开需要新机制、新任务和未读场景；V5.1 当前冻结 U2/B3，不再继续复杂化 Bayesian family。证据：r007、
+  `configs/worldsim_v51/stage_a_closeout_v1.yaml`。
+- `V51-F10`（`algorithm/evaluation`, `rejected by Stage A r007`）：A2 UNKNOWN 在 S 上仍能集中错误：scene-balanced
+  accepted/abstained error=`0.0148416/0.134393`，两场均有非空 denominator；但 coverage 在 0998/0359 为
+  `0.250105/0.864765`，scene-balanced mean=`0.557435<0.60`，未通过冻结 selective gate。0998 的 UNKNOWN Gaussian
+  ratio=`34.5512%`，0359 仅=`0.7891%`，说明 H 分位数规则的场景依赖很强；同时 A2 conditional posterior 与 A1 相同，
+  继承 `V51-F09` 的 conditional gate 失败。因此 A2 rejected，不能用较高 unknown recall 或 error separation 掩盖可用覆盖率
+  不足，也不能在看到 S 后调整 Q25/Q75、布尔规则或 image threshold。证据：r007；failure delta=`V51-F09/F10`。
 
 <a id="detail-v5"></a>
 

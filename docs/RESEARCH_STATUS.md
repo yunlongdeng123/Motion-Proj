@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage A 正式收口：A1/A2 S rejected，冻结 U2/B3（2026-08-17）
+
+- canonical r007=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T140000Z__m1-stage-a-s-screening-s20260814-r007`，
+  source=`dc24f28`，status=`done`，conclusion=`stage_a_screening_selected_u2_b3`，duration=`254.025 s`，peak GPU=`8393 MiB`。
+- A1 S gate FAIL：0998/0359 `ΔBF1=-0.0000904944/+0.0000574359`；nonnegative=`1/2`、clearly positive=`0/2`、
+  mean=`-0.0000165293`。mean IoU/Brier/ECE 虽分别为 `+0.000656494/-0.000159477/-0.000184098`，但预注册合取门
+  不允许摘取局部正项，A1 rejected（`V51-F09`）。
+- A2 selective gate FAIL：mean coverage=`0.557435<0.60`；accepted/abstained error=`0.0148416/0.134393`，错误集中
+  成立但覆盖率不足，且 conditional 部分继承 A1 失败，A2 rejected（`V51-F10`）。A3/A4 原机制 rejection 保持。
+- Stage A task=`done`，唯一 survivor=`U2/B3`；不得继续 Bayesian family。r007 checkpoint=`2/2 exact`，parameter search、
+  C/validation/test/KITTI read/tuning 均为 false。closeout=`configs/worldsim_v51/stage_a_closeout_v1.yaml`。
+- summary/status/manifest/fingerprint/diagnostics SHA=`094b4ae1.../03d319da.../7f60d097.../67f1001d.../15834f48...`；
+  failure delta=`V51-F09/F10`。Stage B 仍按第一轮授权保持 pending/locked，需独立授权后才可冻结并启动。
+
 ## V5.1 Stage A S 输入已精确绑定，等待唯一 candidate screening run（2026-08-17）
 
 - SAM r047/r048 与 B3/evidence materialization r049/r050 均已 `done`；0998/0359 的 evidence views=`15/15`、

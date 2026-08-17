@@ -10,8 +10,8 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | Stage A H closed；S screening frozen；下一门 one-shot S SAM/evaluation |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | 等待 Stage B 独立授权；继承 U2/B3 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -25,7 +25,7 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- 本轮 freeze 实现尚无新增 failure，`failure_ledger_delta=none`；每个正式 run 收口时重新复核。
+- V5.1 新增 failure=`V51-F01`–`V51-F10`；Stage A closeout delta=`V51-F09/F10`。
 
 ## 配置与入口
 
@@ -38,6 +38,8 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/m1_effective_count_audit_v2.yaml`
 - `configs/worldsim_v51/m1_cif_decoupling_audit_v1.yaml`
 - `configs/worldsim_v51/stage_a_screening_freeze_v1.yaml`
+- `configs/worldsim_v51/stage_a_screening_v1.yaml`
+- `configs/worldsim_v51/stage_a_closeout_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0998_v1.yaml`
 - `configs/worldsim_v51/m1_sam_screening_scene0359_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
@@ -46,6 +48,7 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `scripts/run_worldsim_v51_unary_unknown.py`
 - `scripts/audit_worldsim_v51_effective_count.py`
 - `scripts/audit_worldsim_v51_cif_decoupling.py`
+- `scripts/run_worldsim_v51_stage_a_screening.py`
 
 正式状态、实验事实和失败事实仍分别以 `docs/RESEARCH_STATUS.md`、`docs/EXPERIMENTS.md` 与
 `docs/RESEARCH_FAILURES.md` 为准。
@@ -116,3 +119,14 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
   另需 mean coverage>=0.60 与 error concentration。
 - S 后最多保留一臂；优先 A2 selective PASS，否则 A1 conditional PASS，否则回退 U2。
 - r047/r048 与 one-shot read policy 见 `docs/WS_V51_STAGE_A_SCREENING_FREEZE.md`；执行前 S quality unread。
+
+## Stage A S canonical result / closeout
+
+- canonical r007：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T140000Z__m1-stage-a-s-screening-s20260814-r007`
+- source=`dc24f28e1de21b0fb5d1cbb41c959c3d51624a38`；status=`done`；conclusion=`stage_a_screening_selected_u2_b3`。
+- A1：BF1 nonnegative=`1/2`、clearly positive=`0/2`、scene-balanced mean=`-0.0000165293`，S gate FAIL。
+- A2：mean coverage=`0.557435<0.60`；error separation=`+0.119551`，但 selective gate FAIL，且 conditional 继承 A1 FAIL。
+- Stage A 新 arm 全部 rejected；冻结 `U2/B3`，不再继续 Bayesian family。closeout=
+  `configs/worldsim_v51/stage_a_closeout_v1.yaml`；failure delta=`V51-F09/F10`。
+- 第一轮授权到此完成。Stage B 仍 `pending/locked`，C/validation/test/KITTI 继续不可读；不得把 plan 中“进入 Stage B”
+  解释为自动授权执行。

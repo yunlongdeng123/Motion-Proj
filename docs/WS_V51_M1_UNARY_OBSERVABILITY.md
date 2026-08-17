@@ -2,9 +2,9 @@
 
 ## 当前结论
 
-`WS-V51-M1-A-UNARY-OBSERVABILITY-01` 正在执行。A0 已证明当前分支能从 V5 冻结 observations 对
-r037/r042/r043 的 B0/B1/B3 Bayesian posterior 与 Gaussian metrics 做 exact replay；因此下一步可以只改变
-visibility/missingness 机制，避免基线漂移干扰归因。
+`WS-V51-M1-A-UNARY-OBSERVABILITY-01` 已 `done`。A0 exact replay 成立；A1/A2 虽通过 H gate，但在冻结 S r007
+分别未通过 Boundary-F1 replication 与 UNKNOWN coverage gate；A3/A4 又在质量读取前因结构 no-op/不可识别被否决。
+Stage A 最终没有新 unary survivor，冻结 U2/B3，不再继续 Bayesian family。
 
 ## A0：V5 Bayesian Unary Exact Replay
 
@@ -50,7 +50,7 @@ c4a5e4fdb7189cbfca0c756365f21ac6d981a6e9c30616548870c204c3103d3d
 
 ## A1：Visibility-Masked Bayesian Update
 
-状态：`H gate passed / candidate / S unread`。
+状态：`H gate passed / S replication rejected`。
 
 下一步只允许比较 U2/B3 与 A1/B3，唯一变量是 observation 是否具备 semantic update 资格：
 
@@ -82,7 +82,7 @@ checkpoint 前后 exact。A1 仍只是 H candidate：1087 只有一个 evaluatio
 
 ## A2：Semantic UNKNOWN / ABSTAIN
 
-状态：`H gate passed / candidate / S unread`。
+状态：`H gate passed / S conditional and coverage rejected`。
 
 下一步只在 A1 posterior 上增加 UNKNOWN state 与 selective metrics；阈值只能来自 H evidence/training statistics，
 不得读取 evaluation quality 选择。A3 effective-count、A4 CIF、S scenes 与后续 Stage 继续锁定。
@@ -162,7 +162,26 @@ appearance base opacity 与 conditional ownership sidecar 分离。将 occupancy
 ```
 
 结论=`a4_cif_decoupling_rejected_no_independent_occupancy_observable`。r006 未读 evaluation quality、未启动 GPU/training，
-不存在 A4 quality arm。Stage A H 最终保留 A1/A2，下一步只能先冻结 S screening 合同。
+不存在 A4 quality arm。Stage A H 最终保留 A1/A2，随后按冻结 S screening 合同执行 r007。
+
+## Stage A S closeout
+
+Canonical r007：
+
+```text
+/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/
+20260817T140000Z__m1-stage-a-s-screening-s20260814-r007
+```
+
+| Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A2 coverage | Accepted error | Abstained error |
+|---|---:|---:|---:|---:|---:|---:|
+| 0998 | 12 | -0.0000904944 | +0.000997358 | 0.250105 | 0.0289614 | 0.209930 |
+| 0359 | 9 | +0.0000574359 | +0.000315630 | 0.864765 | 0.0007217 | 0.0588556 |
+| scene-balanced | 2 | -0.0000165293 | +0.000656494 | 0.557435 | 0.0148416 | 0.134393 |
+
+A1 只有 `1/2` scene BF1 nonnegative，`0/2` clearly positive，mean BF1<0；A2 mean coverage 低于冻结 `0.60`，
+且 conditional posterior 继承 A1 失败。故唯一 survivor=`U2_B3`。checkpoint=`2/2 exact`，未搜索参数、未读
+C/validation/test/KITTI。failure delta=`V51-F09/F10`。
 
 ## Failure ledger
 

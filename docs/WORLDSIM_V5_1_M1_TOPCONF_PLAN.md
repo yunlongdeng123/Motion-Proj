@@ -4,6 +4,11 @@
 > **目标**：只推进 M1，把已经在 V5 中显示正信号的 Bayesian Unary 升级成一个 **可跨场景稳定工作、可严格消融、具有顶会论文方法贡献潜力** 的 Gaussian ownership / semantic sidecar 方法。
 > **M2 / M3**：全部冻结为 `pending`，V5.1 期间不推进、不调参、不占用研究预算。
 
+> **执行进展（2026-08-17）**：Stage A 已按 H→S 协议收口。A1/A2 在 H 过门，但 S r007 分别因
+> Boundary-F1 复制门与 UNKNOWN coverage 门失败；A3/A4 已在质量读取前因机制 no-op/不可识别 rejected。
+> 当前冻结 U2/B3，不再继续 Bayesian family。Stage B 尚未获得第二轮独立授权，保持 `pending/locked`；详见
+> `configs/worldsim_v51/stage_a_closeout_v1.yaml`、`docs/EXPERIMENTS.md` 与 `V51-F09/F10`。
+
 ---
 
 # 0. 一页执行结论

@@ -39,3 +39,10 @@ Failure refs=`V5-F20–F26/F29–F32 + V51-F01–F07`；freeze 时 `failure_ledg
   `scripts/run_worldsim_v51_stage_a_screening.py`。
 - 并行启动 wrapper 的 PID 转义问题登记为 `V51-F08`；它没有生成重复 run。根据单进程后段约 `20–22 GiB` 的实测
   显存保留，r049/r050 改为串行执行，候选筛选同样保持单实例。
+
+## Execution result
+
+r007=`done`，source=`dc24f28`，结论=`stage_a_screening_selected_u2_b3`。A1 的 BF1 nonnegative/clearly-positive=
+`1/2, 0/2`，mean delta=`-0.0000165293`；A2 mean coverage=`0.557435<0.60`。因此 A1/A2 均 rejected，冻结
+U2/B3；不得重跑或改门。完整结果见 `configs/worldsim_v51/stage_a_closeout_v1.yaml`、`docs/EXPERIMENTS.md` 和
+`V51-F09/F10`。
