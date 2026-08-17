@@ -1,5 +1,16 @@
 # Research Status
 
+## V5.1 Stage F F0k quality/identity-alignment 输入冻结已预注册（2026-08-18）
+
+- formal target=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`；auth=r041 freeze
+  `3,811 bytes /12692b2e...bd0c`。本轮只冻结 45 candidate masks、45 DriveStudio dynamic-union masks、相机矩阵、
+  instance metadata 与 3D-box projected denominator 的路径/bytes/SHA；不 decode image 或任何 mask。
+- dynamic mask 明确只作 train-only actor-foreground weak support，绝不当 instance-ID 真值。重叠 projected boxes 的像素
+  在后续归因中排除；actor-view 至少 64 support pixels，track 至少 2 views；scene-local track↔short-ID 用最大权一对一匹配。
+- 后续门已在读像素前冻结：每场至少 `1 track/2 actor-views`，foreground coverage≥0.70、one-to-one assignment recall
+  ≥0.35、assignment efficiency≥0.75、persistent-track fraction≥0.50，三场必须全门 PASS。F0k 只建立 denominator；
+  quality/training/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0j r041 fresh 45-view materialization PASS 已冻结（2026-08-18）
 
 - canonical r041=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`，source/tree=

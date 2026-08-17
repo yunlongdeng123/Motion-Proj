@@ -1,0 +1,61 @@
+schema_version: worldsim_v51_stage_f_f0k_quality_alignment_input_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0k_train_only_quality_identity_alignment_input_freeze
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0j_freeze:
+    path: configs/worldsim_v51/stage_f_f0j_fresh_45_view_empty_cache_materialization_freeze_v1.yaml
+    bytes: 3811
+    sha256: 12692b2e759f87e06207d678d1833b499d22ec1f7c35974971f1c3594978bd0c
+    required_status: done
+    required_next_phase: train_only_mask_quality_and_identity_alignment_gate_preregistration
+
+materialization:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041
+  manifest: {path: artifacts/materialization_manifest.json, bytes: 12399, sha256: 32b5d8d3eee0469b18b6dba810522e90acd86c6318021c61d7e5666264291b7f, output_record_chain_sha256: f1c1b44e4ddfb748380abff45e209ee767bfca55337741df72ec265c447af1d3}
+  attempts:
+    scene-0471: scene0471_15_view_cache
+    scene-1087: scene1087_15_view_cache
+    scene-0379: scene0379_15_view_cache
+
+source_image_manifest: {path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026/artifacts/train_only_image_manifest.json, bytes: 18410, sha256: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4, record_count: 45, record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95}
+
+scenes:
+  - {scene: scene-0471, index: 382, processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382, instances_info_sha256: de2fafc8e4401f95c1218717f59c4394fe17fb60897380d7d25e90f1e89f2b15, frame_instances_sha256: 7e73630d820af2eb9b5a95c38a10abb188ef6873dd9da74808ce5bb560e09a85}
+  - {scene: scene-1087, index: 827, processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827, instances_info_sha256: 84cf94e091bf796a826e6b3e7de51c09b3f8ee7764122ccc116760ec9a3218da, frame_instances_sha256: 696ffd4f78a91c2c8305a6de51edc8d069d242e41428c7f2c1da96bd8e477ef9}
+  - {scene: scene-0379, index: 296, processed_scene: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296, instances_info_sha256: 875e8e931cd25fe71ca7ae01b8d31a968dbc0106318d02c84dc17866dfbd4646, frame_instances_sha256: 9be479706c73236327ded298b51dd7b010a15d0ab7c61754039a87bd33568103}
+
+views: {frames: [0, 40, 80, 120, 160], cameras: [0, 1, 2], width: 1600, height: 900, expected_count: 45}
+projection: {minimum_depth_m: 0.1, padding_fraction: 0.0, minimum_side_pixels: 8.0, minimum_box_area_pixels: 256}
+quality_gate_preregistration:
+  reference_semantics: drivestudio_dynamic_mask_union_used_only_as_train_only_foreground_support_not_instance_ground_truth
+  attribution: projected_box_pixels_excluding_pixels_covered_by_more_than_one_eligible_actor_box
+  eligible_actor_view_minimum_support_pixels: 64
+  eligible_track_minimum_views: 2
+  assignment: scene_local_maximum_weight_one_to_one_track_to_short_id_on_support_pixels
+  metrics:
+    - foreground_coverage
+    - independent_best_identity_recall
+    - one_to_one_assignment_recall
+    - assignment_efficiency
+    - persistent_track_fraction
+  per_scene_thresholds:
+    minimum_eligible_tracks: 1
+    minimum_eligible_actor_views: 2
+    minimum_foreground_coverage: 0.70
+    minimum_one_to_one_assignment_recall: 0.35
+    minimum_assignment_efficiency: 0.75
+    minimum_persistent_track_fraction: 0.50
+  pass_requires: all_three_scenes_pass_all_thresholds
+
+decision:
+  expected_conclusion: f0k_quality_alignment_inputs_and_projection_denominator_frozen_mask_pixels_unread
+  next_action: preregister_f0l_train_only_mask_quality_identity_alignment_execution
+
+resources: {maximum_wall_seconds: 180, maximum_cgroup_memory_bytes: 34359738368, minimum_disk_free_bytes_after: 42949672960}
+locks: {candidate_mask_pixels_read: false, dynamic_mask_pixels_read: false, image_pixels_read: false, quality_metrics_read: false, threshold_search: false, identity_training: false, h_quality_read: false, screening_quality_read: false, confirmation_quality_read: false, validation_quality_read: false, test_quality_read: false, kitti_method_tuning: false, f1_execution: false, f2_execution: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F46, V51-F62, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration

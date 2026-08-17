@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage F F0k r042 quality/alignment input freeze 预注册（2026-08-18）
+
+- run=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`；只 hash/投影，不读 image/candidate/dynamic
+  mask pixels。冻结 exact 45-view candidate/reference/camera/metadata 与 eligible projected actor denominator。
+- weak-reference 只定义 actor foreground support；identity 由 scene-local 3D track 对 DEVA short ID 的一对一匹配评估。
+  thresholds 在 mask read 前固定为 per-scene coverage/assignment-recall/efficiency/persistence=`0.70/0.35/0.75/0.50`。
+
 ## V5.1 Stage F F0j r041 full materialization PASS / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041 /27dfaa8...150a /
