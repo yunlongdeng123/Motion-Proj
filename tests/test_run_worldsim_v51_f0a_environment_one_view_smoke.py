@@ -32,7 +32,7 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v6.yaml"
     )
     assert config["one_view"]["interpretation"]["association_capability_claim"] is False
     assert config["one_view"]["upstream_defaults"] == {
@@ -43,12 +43,13 @@ def test_f0a_environment_smoke_formal_config_validates() -> None:
         "max_split_size_mb:128"
     )
     assert config["one_view"]["arguments"]["SAM_NUM_POINTS_PER_BATCH"] == 32
+    assert config["one_view"]["arguments"]["SAM_NUM_POINTS_PER_SIDE"] == 32
     assert config["decision"]["materialization_authorized"] is False
 
 
-def test_f0a_batch_recovery_changes_only_official_batch_cli_argument() -> None:
+def test_f0a_grid_recovery_uses_preregistered_official_cli_arguments() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v6.yaml"
     )
     command = _one_view_command(
         config,
@@ -58,7 +59,8 @@ def test_f0a_batch_recovery_changes_only_official_batch_cli_argument() -> None:
     )
     index = command.index("--SAM_NUM_POINTS_PER_BATCH")
     assert command[index + 1] == "32"
-    assert "--SAM_NUM_POINTS_PER_SIDE" not in command
+    index = command.index("--SAM_NUM_POINTS_PER_SIDE")
+    assert command[index + 1] == "32"
 
 
 def test_parse_last_json_line_preserves_solver_banner() -> None:

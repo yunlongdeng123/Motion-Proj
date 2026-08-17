@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage F F0a r031 blocked / v6 grid recovery 预注册（2026-08-18）
+
+- r031=`20260818T083000Z__m1-stage-f-f0a-environment-one-view-s20260814-r031`，source=`2e96f05`；CLI stdout 固定
+  points-side/batch=`64/32`，仍在 cumulative `BatchMaskData.cat` OOM，request/free=`9.32/9.31 GiB`。GPU/cgroup peak=
+  `24,066 MiB/18,052,734,976 bytes`，119 samples/0 errors；6 files=`28,677 bytes`，mask/metadata/quality=false。
+- resolved/status/events/stdout/stderr/resource SHA=`101a0297...fb4/99d081ee...e23/20ca8fe5...fea/27e8e672...633/
+  b822aab6...692/0a06475d...af4`。external source clean、run immutable，batch change 生效但不足，见 `V51-F57`。
+- v6/r032 唯一变化为 official `--SAM_NUM_POINTS_PER_SIDE 32`，prompt denominator=`1024`；batch32、image、threshold、
+  models、allocator 和 resource/locks 不变。该资源适配由 DEVA `docs/DEMO.md` 明确建议；不读 mask quality，也不宣称与
+  64-grid parity。PASS 后预注册同 grid 的 batch parity 和 3-view association/repeatability。failure delta=
+  `V51-F57 recovery_pending`。
+
 ## V5.1 Stage F F0a r030 blocked / v5 batch recovery 预注册（2026-08-18）
 
 - r030=`20260818T080000Z__m1-stage-f-f0a-environment-one-view-s20260814-r030`，source=`33c013d`；allocator-only recovery

@@ -42,6 +42,7 @@ SCHEMAS = {
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v3",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v4",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v5",
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v6",
 }
 TASK_ID = "WS-V51-M1-F-IDENTITY-EMBEDDING-01"
 
@@ -129,10 +130,22 @@ def _validate_config(config_path: Path) -> dict[str, Any]:
         batch_override = config["one_view"]["arguments"].get(
             "SAM_NUM_POINTS_PER_BATCH"
         )
-        if config["schema_version"].endswith("_v4") and batch_override is not None:
-            raise ProtocolError("F0a v4 must keep the official SAM batch default")
-        if config["schema_version"].endswith("_v5") and batch_override != 32:
-            raise ProtocolError("F0a v5 must be the preregistered batch-32 recovery")
+        side_override = config["one_view"]["arguments"].get(
+            "SAM_NUM_POINTS_PER_SIDE"
+        )
+        schema = config["schema_version"]
+        if schema.endswith("_v4") and (
+            batch_override is not None or side_override is not None
+        ):
+            raise ProtocolError("F0a v4 must keep the official SAM point defaults")
+        if schema.endswith("_v5") and (
+            batch_override != 32 or side_override is not None
+        ):
+            raise ProtocolError("F0a v5 must be the preregistered batch-only recovery")
+        if schema.endswith("_v6") and (
+            batch_override != 32 or side_override != 32
+        ):
+            raise ProtocolError("F0a v6 must be the preregistered 32x32 grid recovery")
         for name, spec in hidden["assets"].items():
             if spec["url"] not in source_text:
                 raise ProtocolError(f"hidden torchvision URL drift: {name}")
@@ -435,6 +448,13 @@ def _one_view_command(
                 str(args["SAM_NUM_POINTS_PER_BATCH"]),
             ]
         )
+    if "SAM_NUM_POINTS_PER_SIDE" in args:
+        command.extend(
+            [
+                "--SAM_NUM_POINTS_PER_SIDE",
+                str(args["SAM_NUM_POINTS_PER_SIDE"]),
+            ]
+        )
     return command
 
 
@@ -673,7 +693,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v5.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v6.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage F F0a r031 batch32 blocked；v6/r032 grid32 recovery 已预注册（2026-08-18）
+
+- r031=`20260818T083000Z__m1-stage-f-f0a-environment-one-view-s20260814-r031`，source=`2e96f05`，official CLI 确认
+  batch=`32`，但同一 `BatchMaskData.cat` 仍 OOM：request/free=`9.32/9.31 GiB`，allocated/reserved-unallocated=
+  `13.34 GiB/599.11 MiB`；sampled GPU/cgroup peak=`24,066 MiB/18,052,734,976 bytes`，119 samples/0 errors。没有
+  mask/metadata/quality，batch-only 不足且不构成算法 reject，见 `V51-F57`。
+- r030/r031 的最终 allocation 仅 `9.49→9.32 GiB`，说明峰值由 64×64=`4096` prompts 的累计 masks 主导，而不是 batch
+  staging。继续 batch16 属于重复调参，未授权。DEVA 官方文档明确建议降低 `SAM_NUM_POINTS_PER_SIDE` 以减少 automatic SAM
+  queries，因此 v6/r032 只把 grid=`64→32`（4096→1024），batch 固定 32；其他 source/assets/view/size/IoU/resource/locks
+  不变。
+- grid32 是有来源的资源适配，不冒充 exact-default 复现；PASS 后必须在同一 grid 做 batch32↔16 parity，并做 3-view
+  association/repeatability 与后续质量门。materialization/training、H/S/C/validation/test/KITTI=false，F1/F2=false，
+  M2/M3=pending。
+
 ## V5.1 Stage F F0a r030 allocator recovery blocked；v5/r031 batch recovery 已预注册（2026-08-18）
 
 - r030=`20260818T080000Z__m1-stage-f-f0a-environment-one-view-s20260814-r030`，source=`33c013d`，status=`blocked`。
