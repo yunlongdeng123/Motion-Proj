@@ -1,0 +1,64 @@
+schema_version: worldsim_v51_stage_d_progressive_preflight_freeze_v1
+task_id: WS-V51-M1-D-PROGRESSIVE-01
+status: done
+created_at: "2026-08-18"
+
+source:
+  commit: 99a626b6b2577b5a3da159150fae022ac68bb3b2
+  preregistration:
+    path: configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml
+    sha256: 3daf8b48db424fffc1fd5e8b98b02e429b4ae4bbffc5482c25876258e4909936
+  auditor:
+    path: scripts/audit_worldsim_v51_d0_preflight.py
+    sha256: dbda18e1faf17e15718b2383242bdeb567c185d87013853adfbb455741428a7e
+  regression:
+    path: tests/test_worldsim_v51_d0_preflight.py
+    sha256: 2afb458e08325c8b97aead0702275d2df8a310eb1b6971948710201ea2fc84dc
+
+canonical_run:
+  run_id: 20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016
+  report:
+    path: preflight_report.json
+    bytes: 10433
+    sha256: b84cb7192706429191f425ad0857e0b095b7bb64ecad908b1705431e50084b7b
+  byte_exact_replay: true
+  status: done
+  conclusion: d0_faithful_port_inputs_and_source_ready_without_quality_read
+
+verified_denominators:
+  inventory_file_count: 29
+  scenes:
+    - scene: scene-0471
+      gaussian_count: 859613
+      directed_edge_count: 5157678
+      evaluation_view_count: 8
+    - scene: scene-1087
+      gaussian_count: 931223
+      directed_edge_count: 5587338
+      evaluation_view_count: 1
+    - scene: scene-0379
+      gaussian_count: 1187291
+      directed_edge_count: 7123746
+      evaluation_view_count: 3
+
+upstream:
+  repository: "https://github.com/yd-yin/SAI3D.git"
+  commit: 1d9a6a2393c5005276c28cb9eb95391d799d1279
+  tree: 732092499e0ab6187999818f347f9543968b7370
+  explicit_license_file_present: false
+  implementation_policy: clean_room_reimplementation_from_paper_equations_no_upstream_code_copy
+
+locks:
+  quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F32, V51-F33, V51-F34, V51-F35]
+failure_ledger_delta: none
+next_action: implement_and_test_clean_room_d0_sparse_operator_without_quality_read

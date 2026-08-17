@@ -1,5 +1,16 @@
 # Research Status
 
+## V5.1 Stage D r016 D0 preflight 已冻结（2026-08-18）
+
+- canonical r016=`20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016`，source=`99a626b`，status=`done`，
+  conclusion=`d0_faithful_port_inputs_and_source_ready_without_quality_read`。29 个 project/upstream/input identities 全部
+  exact；独立 replay report byte-exact，SHA=`b84cb719...4b7b`，bytes=`10,433`。
+- scene 0471/1087/0379 Gaussian=`859,613/931,223/1,187,291`、directed KNN edges=
+  `5,157,678/5,587,338/7,123,746`、matched evaluation views=`8/1/3`，均与冻结 V5 输入一致。
+- SAI3D upstream commit/tree/source hashes 与“无显式 LICENSE”inventory 通过；实现继续执行 clean-room policy。
+  本 run 只 hash quality-bearing diagnostics，没有解析其 payload；H/S/C/validation/test quality 均未读，M2/M3=pending。
+  freeze=`configs/worldsim_v51/stage_d_progressive_preflight_freeze_v1.yaml`。下一步只实现/测试 D0 sparse operator。
+
 ## V5.1 Stage D D0 faithful progressive preflight 已预注册（2026-08-18）
 
 - 路线已按冻结顺序从 rejected LUDVIG uplift/raw graph 自动推进到

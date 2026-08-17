@@ -11,10 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from motion_proj.worldsim_v51.protocol import sha256_file
 from scripts.audit_worldsim_v51_d0_preflight import THRESHOLDS, validate_config
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml"
+FREEZE = ROOT / "configs/worldsim_v51/stage_d_progressive_preflight_freeze_v1.yaml"
 
 
 def test_d0_preregistration_freezes_faithful_mechanism_and_route() -> None:
@@ -72,3 +74,21 @@ def test_d0_preflight_help_works_from_repo_root() -> None:
     )
     assert "--config" in result.stdout
     assert "--output" in result.stdout
+
+
+def test_d0_preflight_freeze_binds_byte_exact_no_quality_run() -> None:
+    freeze = yaml.safe_load(FREEZE.read_text(encoding="utf-8"))
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["byte_exact_replay"] is True
+    report_spec = freeze["canonical_run"]["report"]
+    report = Path(freeze["canonical_run"]["path"]) / report_spec["path"]
+    assert report.is_file()
+    assert report.stat().st_size == report_spec["bytes"]
+    assert sha256_file(report) == report_spec["sha256"]
+    assert freeze["locks"]["quality_read"] is False
+    assert freeze["locks"]["screening_quality_read"] is False
+    assert freeze["locks"]["confirmation_quality_read"] is False
+    assert freeze["locks"]["validation_quality_read"] is False
+    assert freeze["locks"]["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

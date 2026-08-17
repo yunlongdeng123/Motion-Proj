@@ -1,5 +1,14 @@
 # Experiments
 
+## V5.1 Stage D r016 canonical D0 preflight（2026-08-18）
+
+- run=`20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016`，source=`99a626b`，report=
+  `10,433 bytes / b84cb719...4b7b`；第二次独立执行与 canonical byte exact。
+- checks=`29 identities + 3 Gaussian counts + 3 directed-edge denominators + 3 evaluation-view denominators +`
+  `U2/B3 survivor + LUDVIG rejected terminal + upstream commit/tree/license inventory`，全部 PASS。
+- 本 run 未解析 diagnostics/evaluation quality，只对其文件做 SHA identity；quality/S/C/validation/test/KITTI=false，
+  M2/M3=pending。freeze=`stage_d_progressive_preflight_freeze_v1.yaml`，failure delta=`none`。
+
 ## V5.1 Stage D D0 progressive preflight 预注册（2026-08-18）
 
 - task/arm=`WS-V51-M1-D-PROGRESSIVE-01 / D0`；paper-zero source=official SAI3D CVPR 2024，repo commit/tree=
