@@ -118,7 +118,12 @@ def _write_trace(path: Path, payload: Mapping[str, Any]) -> None:
     temporary.replace(path)
 
 
-def launch(target_script: Path, target_args: list[str], trace_output: Path) -> None:
+def launch(
+    target_script: Path,
+    target_args: list[str],
+    trace_output: Path,
+    pre_matmul_empty_cache: bool = False,
+) -> None:
     import torch
 
     target_script = target_script.resolve()
@@ -133,6 +138,7 @@ def launch(target_script: Path, target_args: list[str], trace_output: Path) -> N
         },
         "tensor_content_read": False,
         "operator_monkeypatch": False,
+        "pre_matmul_empty_cache": pre_matmul_empty_cache,
         "events": [],
     }
     frame_calls: dict[int, int] = {}
@@ -143,13 +149,17 @@ def launch(target_script: Path, target_args: list[str], trace_output: Path) -> N
             frame_calls[frame_id] = len(frame_calls)
         call_index = frame_calls[frame_id]
         if event == "line" and frame.f_lineno in (58, 59):
-            payload["events"].append(
-                {
-                    "event": "pre_matmul" if frame.f_lineno == 58 else "post_matmul",
-                    "call_index": call_index,
-                    **_frame_snapshot(frame, torch),
-                }
-            )
+            record = {
+                "event": "pre_matmul" if frame.f_lineno == 58 else "post_matmul",
+                "call_index": call_index,
+            }
+            if frame.f_lineno == 58 and pre_matmul_empty_cache:
+                before = allocator_metadata(torch)
+                torch.cuda.empty_cache()
+                after = allocator_metadata(torch)
+                record["empty_cache"] = {"before": before, "after": after}
+            record.update(_frame_snapshot(frame, torch))
+            payload["events"].append(record)
         elif event == "exception":
             exception_type, exception, _ = arg
             payload["events"].append(
@@ -198,12 +208,18 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--trace-output", type=Path, required=True)
     parser.add_argument("--target-script", type=Path, required=True)
+    parser.add_argument("--pre-matmul-empty-cache", action="store_true")
     parser.add_argument("target_args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     target_args = list(args.target_args)
     if target_args and target_args[0] == "--":
         target_args = target_args[1:]
-    launch(args.target_script, target_args, args.trace_output.resolve())
+    launch(
+        args.target_script,
+        target_args,
+        args.trace_output.resolve(),
+        pre_matmul_empty_cache=args.pre_matmul_empty_cache,
+    )
 
 
 if __name__ == "__main__":

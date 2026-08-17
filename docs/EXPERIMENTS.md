@@ -1,5 +1,14 @@
 # Experiments
 
+## V5.1 Stage F F0h r039 empty-cache execution parity 预注册（2026-08-18）
+
+- run=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`；config=
+  `configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_v1.yaml`，auth=r038 freeze `ff3e8692...03ca`。
+- intervention=`torch.cuda.empty_cache immediately before each line58 matmul`；source/tensor/operator/method unchanged。
+  A–B–A–B 四进程分别是 control/target 双 repeat；trace 必须逐 matmul 落盘 before/after allocator evidence。
+- pass 要求四臂 success、control/target 各 pair exact 且 exact 对齐既有 success hashes、资源全门 PASS。nonexact 或任一
+  CUBLAS failure 都拒绝；不读 mask 内容质量，PASS 后也只做 1087 15-view recovery preregistration。
+
 ## V5.1 Stage F F0g r038 both-success trace / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038 /da2169d...a5f3 /

@@ -1,0 +1,110 @@
+schema_version: worldsim_v51_stage_f_f0h_pre_matmul_empty_cache_parity_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0h_pre_matmul_empty_cache_execution_recovery_parity
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0g_freeze:
+    path: configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml
+    bytes: 4289
+    sha256: ff3e8692504c4ed72f3f4d8cb3a474a43d27d98b3cda83802529feaf2cec03ca
+    required_status: done
+    required_failure: V51-F62
+    required_next_phase: pre_matmul_empty_cache_execution_recovery_parity_preregistration
+
+sources:
+  gaussian_grouping: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f, commit: 0ab60afed3385b717c985af1d30a20f7b0884c89, tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16}
+  deva: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA, identity: contained_in_frozen_gaussian_grouping_tree}
+  grounded_segment_anything: {path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f, commit: 99fbbe789cf99ff851886bca0935da33586db86b, tree: 89c82ae86de908fec7caaa646df24015d354dc97}
+  traced_file: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA/deva/inference/consensus_associated.py, bytes: 5985, sha256: a1b86e65df14d0224b4e0dc6e141bf3a34b1996e84b9792480864057d6aec5a6, pre_matmul_line: 58}
+
+assets:
+  deva: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth, bytes: 276911801, sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48}
+  sam_vit_h: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth, bytes: 2564550879, sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e}
+  resnet18: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet18-5c106cde.pth, bytes: 46827520, sha256: 5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8}
+  resnet50: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet50-19c8e357.pth, bytes: 102502400, sha256: 19c8e3572231adff6824a2da93fd67b5986919a2e65f8b6007eab4edee220097}
+
+environment:
+  runtime: /root/autodl-tmp/envs/deva-v51-stage-f-v2/bin/python
+  TORCH_HOME: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home
+  PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+  CUDA_LAUNCH_BLOCKING: "1"
+
+input_groups:
+  control:
+    inputs:
+      - {scene: scene-0471, frame: 0, camera: 0, staging_filename: 000_0.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/000_0.jpg, bytes: 99906, sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e}
+      - {scene: scene-0471, frame: 40, camera: 0, staging_filename: 040_0.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/040_0.jpg, bytes: 101393, sha256: 391b1a4785c5c958f44c71eb3721ea450f6418a8abf3cc339e0428dbb7f03ec6}
+      - {scene: scene-0471, frame: 80, camera: 0, staging_filename: 080_0.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/080_0.jpg, bytes: 111945, sha256: 015e07836e518d875d6f748717a11fbdfc8c91d0e043f7871a7010c16cffbee8}
+    reference:
+      mask_sha256: [cbfc00d5aa0bf6d0e8343bc186d09f83feffc68a4e5ad77b2742e3e435fa2226, c11db011697d71f92370bb41fc6e7e0b438fb21b03a42bcec57e098f72dd9f18, 7ffe568398ca4238073724608e293bfcb3a12e6d605344f1e5149bb12196c593]
+      metadata_sha256: f5491453774af21fa8fafe7f188ca6f642adaf19590521f75c1b9e97c6319156
+  target:
+    inputs:
+      - {scene: scene-1087, frame: 0, camera: 0, staging_filename: 000_0.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827/images/000_0.jpg, bytes: 252530, sha256: 6a79658ba49f221313ffa36020082f186745c98c2d0c3450c283e1c5bf556f85}
+      - {scene: scene-1087, frame: 0, camera: 1, staging_filename: 000_1.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827/images/000_1.jpg, bytes: 199934, sha256: 44555d4a3f37cddffda57bbb60f8e02ee1da509e6d844a9e10fbc0b118c08a49}
+      - {scene: scene-1087, frame: 0, camera: 2, staging_filename: 000_2.jpg, path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827/images/000_2.jpg, bytes: 271281, sha256: 7ab7f68f30a240243ce7914830a400adc00d3a67b4306dd72493f63f54a99bf8}
+    reference:
+      mask_sha256: [6d679a37a6db7f55176ad00c05442a7892d62072d94643ea619a1bfb31f86e1c, c9768bbd50ad03c0192e4eb94a5ecc8110bf145d92e373c26f69d135c671af02, 1d46fa81206387b4be8d9429a64cf0b209c12abad511c2d05ba0f07901e91a6d]
+      metadata_sha256: 10d55216a5314eb2ffa2c03142e9d5dbd7160096957daaca0b988893f56da650
+
+execution:
+  upstream_command: demo/demo_automatic.py
+  trace_launcher: scripts/worldsim_v51_cuda_trace_launcher.py
+  pre_matmul_empty_cache: true
+  common_arguments: {chunk_size: 4, amp: true, temporal_setting: semionline, size: 480, use_short_id: true, suppress_small_objects: true, SAM_PRED_IOU_THRESHOLD: 0.7}
+  attempts:
+    - {name: control_cache_1, input_group: control, sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+    - {name: target_cache_1, input_group: target, sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+    - {name: control_cache_2, input_group: control, sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+    - {name: target_cache_2, input_group: target, sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+  execution_recovery:
+    call: torch.cuda.empty_cache
+    location: immediately_before_each_consensus_associated_line58_memory_readout_matmul
+    tensor_content_change: false
+    operator_change: false
+    upstream_source_change: false
+  expected_failure_markers: [CUBLAS_STATUS_INTERNAL_ERROR, cublasGemmStridedBatchedExFix]
+
+decision:
+  pass_conclusion: pre_matmul_empty_cache_control_target_repeats_success_exact_execution_recovery_candidate
+  failure_conclusion: pre_matmul_empty_cache_did_not_stabilize_control_target_execution
+  nonexact_conclusion: pre_matmul_empty_cache_changed_identity_outputs_recovery_rejected
+  pass_requires: [all_four_attempts_success, control_pair_exact_reference, target_pair_exact_reference, empty_cache_called_before_all_matmuls, resource_gate]
+  full_materialization_authorized: false
+  quality_read: false
+  identity_training_authorized: false
+  next_action_on_pass: preregister_scene1087_15_view_empty_cache_recovery
+  next_action_on_failure: close_gaussian_grouping_faithful_input_route
+
+resources:
+  monitor_interval_seconds: 0.25
+  maximum_nvidia_at_start_mib: 512
+  required_nvidia_total_mib: 24576
+  required_nvidia_headroom_mib: 256
+  maximum_nvidia_peak_mib: 24320
+  maximum_cgroup_memory_bytes: 64424509440
+  maximum_wall_seconds: 900
+  minimum_disk_free_bytes_after: 42949672960
+
+locks:
+  input_image_pixels_decoded_count: 12
+  output_schema_reads_maximum: 12
+  upstream_source_mutation: false
+  operator_change: false
+  tensor_content_change: false
+  smaller_batch_retry: false
+  full_materialization: false
+  quality_read: false
+  identity_training: false
+  validation_quality_read: false
+  test_quality_read: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration

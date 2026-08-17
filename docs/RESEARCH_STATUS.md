@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage F F0h pre-matmul empty-cache parity 已预注册（2026-08-18）
+
+- formal target=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`；authorization=r038 freeze=
+  `4,289 bytes /ff3e8692...03ca`。唯一 intervention 是在 frozen `memory_readout=value@affinity` 前调用
+  `torch.cuda.empty_cache()`；不改 tensor 内容、算子、upstream source、grid32/batch64/AMP/size480/阈值。
+- 四臂 A–B–A–B=`control_cache_1→target_cache_1→control_cache_2→target_cache_2`，均 fresh process。每个 trace 必须
+  证明两次 matmul 前都调用 empty-cache 且 driver-free 不下降；四臂必须全部成功。
+- control 三 mask/pred 必须同时 exact 对齐 r034 reference=`cbfc00d5...226/c11db011...f18/7ffe5683...593 /
+  f5491453...156`；target 必须 exact 对齐 r036/r038 success=`6d679a37...e1c/c9768bbd...f02/1d46fa81...a6d /
+  10d55216...650`。failure 或 nonexact 均拒绝 recovery；PASS 也只允许预注册 1087 15-view recovery。
+- resources=`24,576 total /256 headroom /24,320 peak MiB /cgroup60 GiB /900s`；full materialization/quality/training/
+  validation/test/KITTI/F1/F2=false，M2/M3=pending，failure delta=`none`。
+
 ## V5.1 Stage F F0g r038 tensor/allocator trace 已冻结（2026-08-18）
 
 - canonical r038=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`，source/tree=

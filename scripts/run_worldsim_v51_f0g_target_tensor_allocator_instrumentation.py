@@ -97,16 +97,17 @@ def _trace_command(
 ) -> list[str]:
     official = _arm_command(config, attempt, input_dir, output_dir)
     target_script = Path(config["sources"]["deva"]["path"]) / official[1]
-    return [
+    command = [
         official[0],
         str(PROJECT / config["execution"]["trace_launcher"]),
         "--trace-output",
         str(trace_path),
         "--target-script",
         str(target_script),
-        "--",
-        *official[2:],
     ]
+    if config["execution"].get("pre_matmul_empty_cache") is True:
+        command.append("--pre-matmul-empty-cache")
+    return [*command, "--", *official[2:]]
 
 
 def _run_trace_attempt(
