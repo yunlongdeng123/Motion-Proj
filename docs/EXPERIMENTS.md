@@ -1,5 +1,14 @@
 # Experiments
 
+## V5.1 Stage F F0l r043 REJECT / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043 /70293de...e4f0 /
+  d1d6ddfb...349c`；scene pass=`0471 FAIL /1087 PASS /0379 FAIL`，all-scenes contract rejected。
+- coverage=`0.122784/0.859091/0.238278`；one-to-one recall=`0.080747/0.505009/0.202933`；
+  persistence=`0/0.5/0`。audit=`4,210 bytes /f478fbd9...4320 /PASS`；threshold search=false。
+- freeze=`stage_f_f0l_train_only_quality_identity_alignment_freeze_v1.yaml`；failure=`V51-F63`。Gaussian Grouping
+  F1/F2/training stopped；下一步仅 Trace3D official source/method/adapter preflight。
+
 ## V5.1 Stage F F0l r043 train-only quality/alignment 预注册（2026-08-18）
 
 - run=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`；exact read denominator=`45 candidate masks +

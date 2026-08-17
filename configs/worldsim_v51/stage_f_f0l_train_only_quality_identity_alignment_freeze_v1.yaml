@@ -1,0 +1,88 @@
+schema_version: worldsim_v51_stage_f_f0l_train_only_quality_identity_alignment_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: rejected
+phase: f0l_faithful_gaussian_grouping_quality_identity_alignment_closeout
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043
+  source_commit: 70293de6bcdadc6b44a5505ab6c29ce24bf4e4f0
+  source_tree: d1d6ddfb70a1cf1047d5638018fa246dd04b349c
+  status: done
+  outcome: rejected
+  conclusion: f0l_faithful_gaussian_grouping_rejected_train_only_quality_or_identity_alignment_gate
+  resolved_config: {bytes: 3105, sha256: 4ee62b9a87ff29d1c9b80c0f437b231ab442a2224ed6e62d4f3afedcf4c7e91a}
+  summary: {bytes: 25221, sha256: f13c8094cd40721edf33d957c788ebe1f9743f2a13e1e397abc5d662eba6da8a}
+  quality_alignment_report: {bytes: 24186, sha256: b1e4bb4019824a78e6e28bebe74df378366b36c02d1d86bdf8d6d5c4382f95ed}
+  manifest: {bytes: 876, sha256: 4089eef3665167fb1eb9be1cb384a6f2cfa7c73d6bf488838237ab2c4cc5da78}
+  status_file: {bytes: 266, sha256: 5783c38a86305f6b631e75d4e65a87989ad67f3239c62635c0eae6cbb00f048f}
+  events: {bytes: 167, sha256: 12afe432dfd060ce7fd5675e5a13c50a9d60ea82ae31c879947a68aaf9b9a591}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T203000Z__stage-f-f0l-r043-audit.json
+  bytes: 4210
+  sha256: f478fbd9997359c920cbd061f9bf41b3be9f7c8b7f64a7a01929951060bf4320
+  status: pass
+  audited_outcome: rejected
+  scene_pass_vector: [false, true, false]
+  inventory: {entry_count: 5, logical_bytes: 52807}
+
+scene_results:
+  scene-0471:
+    eligible_tracks: 8
+    eligible_actor_views: 19
+    support_pixels: 428240
+    foreground_coverage: 0.12278395292359424
+    one_to_one_assignment_recall: 0.08074677750793947
+    assignment_efficiency: 0.9373542965573326
+    persistent_track_fraction: 0.0
+    pass: false
+  scene-1087:
+    eligible_tracks: 2
+    eligible_actor_views: 4
+    support_pixels: 16869
+    foreground_coverage: 0.8590906396348331
+    one_to_one_assignment_recall: 0.5050091884521904
+    assignment_efficiency: 1.0
+    persistent_track_fraction: 0.5
+    pass: true
+  scene-0379:
+    eligible_tracks: 3
+    eligible_actor_views: 7
+    support_pixels: 80041
+    foreground_coverage: 0.2382778825851751
+    one_to_one_assignment_recall: 0.20293349658300122
+    assignment_efficiency: 1.0
+    persistent_track_fraction: 0.0
+    pass: false
+
+interpretation:
+  established:
+    - faithful_gaussian_grouping_masks_fail_two_of_three_train_only_scene_quality_identity_alignment_gates
+    - scene1087_pass_does_not_rescue_all_three_scene_contract
+    - failure_is_algorithm_quality_alignment_rejection_not_engineering_block
+  limitations:
+    - dynamic_union_is_weak_foreground_support_not_instance_ground_truth
+    - conclusion_is_scoped_to_frozen_three_scene_driving_adapter_and_view_order
+  not_established:
+    - universal_gaussian_grouping_failure
+    - heldout_or_kitti_quality
+    - identity_training_result
+
+governance:
+  gaussian_grouping_route: closed_rejected
+  f1_execution: false
+  f2_execution: false
+  identity_training_authorized: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  m2_status: pending
+  m3_status: pending
+  next_task: WS-V51-M1-G-AMBIGUITY-01
+  next_phase: trace3d_source_method_adapter_preflight_preregistration
+
+failure_ledger_refs: [V51-F46, V51-F62, V51-F63, PIVOT-F05]
+failure_ledger_delta: V51-F63_faithful_gaussian_grouping_rejected_train_only_quality_identity_alignment_gate

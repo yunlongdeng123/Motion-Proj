@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage F F0l r043 Gaussian Grouping 已拒绝并关闭（2026-08-18）
+
+- canonical r043=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`，source/tree=
+  `70293de...e4f0/d1d6ddfb...349c`；outcome=`rejected`，独立审计 scene pass vector=`[FAIL,PASS,FAIL]`。
+- 0471 metrics=`8 tracks/19 actor-views/428,240 support；coverage 0.122784；one-to-one recall 0.080747；
+  efficiency 0.937354；persistence 0`。1087=`2/4/16,869；0.859091；0.505009；1.0；0.5`，全门 PASS。
+  0379=`3/7/80,041；0.238278；0.202933；1.0；0`，FAIL。
+- audit=`20260818T203000Z__stage-f-f0l-r043-audit.json /4,210 bytes /f478fbd9...4320 /PASS`；freeze=
+  `configs/worldsim_v51/stage_f_f0l_train_only_quality_identity_alignment_freeze_v1.yaml`；failure=`V51-F63`。
+- 该结论是当前三场、冻结 view order/weak-support adapter 上的算法 quality/alignment reject，不是工程 blocked，也不外推
+  普遍 Gaussian Grouping 失效；F1/F2 与 identity training 永久停止。下一任务=`WS-V51-M1-G-AMBIGUITY-01`，只预注册
+  Trace3D official source/method/immutable-base adapter preflight；H/S/C/validation/test/KITTI=false，M2/M3=pending。
+
 ## V5.1 Stage F F0l train-only quality/identity-alignment gate 已预注册（2026-08-18）
 
 - formal target=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`；auth=r042 freeze

@@ -687,6 +687,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   注册质量/对齐门，禁止把“45 个文件存在”写成算法有效。r041 evidence=`summary f3ee3ad1...c183 /materialization
   32b5d8d3...1b7f /audit 18,462 bytes, acd5a91b...31d2 /freeze configs/worldsim_v51/stage_f_f0j_fresh_45_view_
   empty_cache_materialization_freeze_v1.yaml`。
+- `V51-F63`（`algorithm/instance-quality-alignment`, `rejected`）：faithful Gaussian Grouping 的 45-view materialization 在
+  F0l 首次读取 frozen train-only weak support 后，只通过 scene-1087，scene-0471/0379 均失败。0471 的 foreground
+  coverage/one-to-one identity recall/persistent-track fraction=`0.122784/0.080747/0`，0379=`0.238278/0.202933/0`，分别远低于
+  读像素前冻结的 `0.70/0.35/0.50`；两场 assignment efficiency=`0.937/1.0`，说明问题不是主要由 short-ID collision
+  造成，而是 actor support 大量未覆盖且同一 3D track 的 assigned ID 没有跨两个 eligible views 持续。1087 的
+  `0.859091/0.505009/0.5` 全门通过不能覆盖 all-three-scene contract。该负结论推翻“只要 full materialization 稳定，
+  faithful DEVA short IDs 就足以作为当前 driving identity training 输入”；它不是 CUDA/资源 blocked，也不允许训练后再救。
+  限制：DriveStudio dynamic union 只作 foreground weak support，3D projected boxes 只作 track attribution，不是真值 instance
+  segmentation；因此结论严格限于当前三场、frame→camera view order 与 adapter，不能外推为 Gaussian Grouping 普遍无效。
+  F1/F2/identity training 关闭，下一步按冻结路线进入 Trace3D source/method/immutable-base adapter preflight。证据：r043
+  summary=`f13c8094...da8a`、report=`b1e4bb40...95ed`、audit=`4,210 bytes /f478fbd9...4320`、freeze=
+  `configs/worldsim_v51/stage_f_f0l_train_only_quality_identity_alignment_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 
