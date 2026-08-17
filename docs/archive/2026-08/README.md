@@ -6,8 +6,7 @@
 - [`worldsim-v5-m3/`](worldsim-v5-m3/M3_R001_R006_METADATA.json)：V5 M3 r001–r006 的 result-blind 协议、clip inventory、blocked terminal、constraint-projection 机制失败、measurement correction 与正式 rejection 哈希；
 - [`worldsim-v5-m1/`](worldsim-v5-m1/APPENDIX_INDEX.md)：V5 M1/M1B development rejection、复制与 boundary-residual 轻量附录；
 - [`worldsim-v4-final/`](worldsim-v4-final/README.md)：WorldSim V4 终局计划/账本快照、M1/M2/M3 canonical 轻量证据、技术报告附录索引与 SHA-256 清单；
-- [`worldsim-v4/`](worldsim-v4/)：V4 执行期间的集中恢复备份，只用于 byte-level 恢复，不是研究事实入口；
-- [`worldsim-v3.3/`](worldsim-v3.3/)：WorldSim V3.3 过程备份与兼容材料；
+- [`worldsim-v4-cleanup-2026-08-17/`](worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md)：V4 终局包复核、`tmp`/`mnt` 清理、文档备份移除和保留边界；
 - [`worldsim-v3.2/`](worldsim-v3.2/README.md)：WorldSim V3.2 终局计划、S0 审计、R0 快照和 SHA-256 清单；
 - [`worldsim-v3.1/`](worldsim-v3.1/README.md)：WorldSim V3/V3.1 计划、R0 收口快照和 SHA-256 清单；
 - [`pre-v3.3-cleanup/`](pre-v3.3-cleanup/CLEANUP_MANIFEST.md)：V3.3 启动前清理范围、释放空间、保留资产 SHA 与恢复边界；

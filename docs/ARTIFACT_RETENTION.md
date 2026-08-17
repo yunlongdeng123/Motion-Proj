@@ -30,7 +30,8 @@
 ## 2. 必须保留的外部资产引用
 
 - V4 M1/M2/M3 canonical manifest 直接引用的 StreetGS/V3.3/AD-GS checkpoint、actor registry、sky mask、processed scene 和 validation/test staging；
-- V3.3 immutable base 与 V3.3 R0 release，保留规则沿用其 final manifest 和 `docs/archive/2026-08/worldsim-v3.3/` 过程证据；
+- V3.3 immutable base 与 V3.3 R0 release，保留规则沿用其 final manifest 和 canonical run 证据；编辑过程恢复副本已按
+  2026-08-17 文档清理策略移除；
 - nuScenes 官方 metadata 与 V4 30-scene cohort 的 scene/token/split 指纹；
 - `/root/autodl-tmp` 下 2026-08-13 到达的 KITTI tracking 压缩包在 V5 数据预检完成前不得删除或改名。
 
@@ -72,4 +73,12 @@
 - 新训练或大规模解压前可用空间至少 80 GiB，并预留 20 GiB 安全余量；
 - canonical manifest/summary/status/fingerprint/source snapshot 优先于可重建 cache；
 - cache 统一写 `/root/autodl-tmp/cache/`，大权重优先同文件系统复用；
-- 文档备份集中进入对应路线的 `codex-backups/<日期-任务>/`，不散落 `*.bak` 或 `*.codexbak.*`。
+- `docs/` 下不保留任何编辑过程备份或 `codex-backups/` 目录；已跟踪文档依靠 Git 历史恢复，短期恢复副本必须放在
+  仓库外并在任务完成后删除。
+
+## 7. 2026-08-17 清理登记
+
+- V4 终局轻量包在清理前后均通过 `78/78` SHA-256 校验；canonical run、冻结配置、源码和测试均未删除。
+- 两个 scratch `tmp` 清空但保留目录，旧 `/root/autodl-tmp/mnt` staging 产物删除；`docs/` 内编辑过程备份全部移除。
+- 绝对路径、清理前大小、引用检查、不可恢复边界和保留项见
+  [`archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md`](archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md)。

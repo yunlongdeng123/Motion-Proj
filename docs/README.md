@@ -1,6 +1,6 @@
 # Motion-Proj 文档导航
 
-- 更新时间：2026-08-14
+- 更新时间：2026-08-17
 - 当前路线：`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`
 - 当前授权：`none_v5_closed`；M1/M2/M3 均已正式 rejected。M3 r006 确认 frozen LATERAL/INSERT 上 T2=`15/16 safe`、constraint projection 不需要；renderer、collision gate、method selection、fresh validation/test 与 KITTI 方法调参均未解锁
 - V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
@@ -10,6 +10,7 @@
 - V4 当前执行授权：`none_v4_closed`
 - V4 终局归档：[`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)
 - 技术报告附录入口：[`archive/2026-08/worldsim-v4-final/TECHNICAL_REPORT_APPENDIX_INDEX.md`](archive/2026-08/worldsim-v4-final/TECHNICAL_REPORT_APPENDIX_INDEX.md)
+- V4 文档/临时产物清理登记：[`archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md`](archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md)
 
 ## 恢复顺序
 
@@ -74,4 +75,5 @@ V5 P0、fresh cohort、KITTI archive audit/adapter smoke 与 M1/M2/M3 developmen
 - task 状态只使用 `pending/running/blocked/done/rejected`；
 - `blocked`、`rejected`、`abstain` 和 `done` 必须分开，且完整 denominator 不得删除；
 - 正式 run 的 config、manifest、fingerprint、summary、source snapshot 和关键 SHA 必须可追溯；
+- `docs/` 下不保留 `*.bak`、`*.codexbak.*`、编辑器备份或 `codex-backups/` 目录；恢复依赖 Git 历史和 canonical 快照；
 - 人工 verdict 只能由用户或指定评审者填写。

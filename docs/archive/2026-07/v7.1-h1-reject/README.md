@@ -2,7 +2,7 @@
 
 > **归档日期**：2026-07-24
 > **权威状态**：[`../../../RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)
-> **用途**：保留 V7.1 执行计划、H1 reject 收口证据和编辑历史；不构成当前授权。
+> **用途**：保留 V7.1 执行计划和 H1 reject 收口证据；不构成当前授权。
 
 ## 内容
 
@@ -11,11 +11,10 @@
 - `V7_1_H1_REJECT_RETROSPECTIVE.md`：收口复盘；
 - `RESEARCH_STATUS_H1_REJECT_SNAPSHOT.md`：转向前状态快照；
 - `RESEARCH_FAILURES_H1_REJECT_SNAPSHOT.md`：详细补账前失败快照；
-- `EXPERIMENTS_H1_REJECT_SNAPSHOT.md`：实验事实快照；
-- `codex-backups/`：2026-07-23 至 2026-07-24 自动编辑备份。
+- `EXPERIMENTS_H1_REJECT_SNAPSHOT.md`：实验事实快照。
 
-`codex-backups/` 只用于审计文档演化，不能覆盖活跃文档或 run 产物。其文件名、大小和 SHA256 由本目录
-`SHA256SUMS` 固结。所有 run 数值仍以原始 run 目录和活跃 `EXPERIMENTS.md` 为准。
+2026-08-17 按仓库统一规则移除编辑过程恢复副本；研究事实继续由上述冻结快照、原始 run 目录和活跃
+`EXPERIMENTS.md` 共同约束。`SHA256SUMS` 已只固结保留的 canonical 文档。
 
 ## 终局
 
