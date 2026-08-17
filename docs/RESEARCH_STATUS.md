@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage B H 45-view B0/B1 uplift 已预注册（2026-08-18）
+
+- planned r011=`m1-stage-b-h-uplift-s20260814-r011`；3 H scenes 各固定 train-only `5 frames×3 cameras=15 views`，
+  逐 scene 构造只读 DriveStudio trainer，renderer 使用 model-native `800×450`；base checkpoints、source configs、
+  r010 45 feature sidecars、PCA state 与 r005 operator freeze 全部逐 SHA 绑定。
+- 为避免把单 view 约 3,200 万 supported intersections 展开为 `[N,40]`，新增 faithful sparse transpose：先以
+  SciPy CSR float64 聚合 Gaussian×pixel contribution，再与 dense pixel feature 相乘得到 per-view numerator/mass；
+  两级 floor、B0 saturation、B1 normalization 与 r005 数学合同不变。synthetic streaming vs dense parity 必须通过。
+- 输出每 scene×arm=`6` 个 deterministic Gaussian sidecar：feature=`[N_gaussian,40] float32`、weight=float64、
+  supported-view-count=int32；保留共同 coverage、逐 view denominator、B0/B1 non-alias 和 checkpoint immutability。
+- 本门只计算 feature uplift 和结构 denominator，不消费 RGB/LiDAR/membership proxy，不读取 method quality；S/C、
+  validation/test/KITTI 未读，M2/M3=`pending`。`V51-F15` 继续 active，必须在后续独立 evaluation-only 合同处理。
+
 ## V5.1 Stage B r010 H feature-sidecar/PCA 门通过（2026-08-18）
 
 - canonical r010=`20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010`，source=`11c35fd`，status=`done`，

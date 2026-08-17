@@ -239,3 +239,181 @@ def sample_patch_grid_bilinear(
     )
     sampled = top * (1.0 - y_weight[:, None]) + bottom * y_weight[:, None]
     return sampled.astype(grid.dtype, copy=False)
+
+
+def initialize_streaming_uplift(
+    *, gaussian_count: int, feature_dimension: int
+) -> dict[str, Any]:
+    """创建逐 view 累积的 B0/B1 float64 状态。"""
+    if int(gaussian_count) <= 0 or int(feature_dimension) <= 0:
+        raise ValueError("streaming uplift shape 必须为正")
+    shape = (int(gaussian_count), int(feature_dimension))
+    return {
+        "b0_numerator": np.zeros(shape, dtype=np.float64),
+        "b0_denominator": np.zeros(int(gaussian_count), dtype=np.float64),
+        "b1_numerator": np.zeros(shape, dtype=np.float64),
+        "b1_denominator": np.zeros(int(gaussian_count), dtype=np.float64),
+        "supported_view_count": np.zeros(int(gaussian_count), dtype=np.int32),
+        "input_intersection_count": 0,
+        "supported_intersection_count": 0,
+        "gaussian_view_count_before_mass_floor": 0,
+        "supported_gaussian_view_count": 0,
+        "total_contribution_mass_after_intersection_floor": 0.0,
+        "supported_contribution_mass": 0.0,
+        "processed_view_count": 0,
+    }
+
+
+def accumulate_streaming_uplift_view(
+    state: dict[str, Any],
+    *,
+    gaussian_id: np.ndarray,
+    pixel_id: np.ndarray,
+    contribution_weight: np.ndarray,
+    patch_grid: np.ndarray,
+    image_height: int,
+    image_width: int,
+    minimum_intersection_contribution: float = 1e-4,
+    minimum_gaussian_view_mass: float = 1e-3,
+    epsilon: float = 1e-8,
+) -> dict[str, Any]:
+    """用稀疏 renderer transpose 累积一个 view，避免展开 `[intersection,D]`。"""
+    from scipy import sparse
+
+    gids = np.asarray(gaussian_id, dtype=np.int64)
+    pixels = np.asarray(pixel_id, dtype=np.int64)
+    weights = np.asarray(contribution_weight, dtype=np.float64)
+    grid = np.asarray(patch_grid)
+    gaussian_count, feature_dimension = state["b1_numerator"].shape
+    if gids.ndim != 1 or pixels.shape != gids.shape or weights.shape != gids.shape:
+        raise ValueError("streaming intersection arrays 必须一一对齐")
+    if grid.ndim != 3 or grid.shape[0] != feature_dimension:
+        raise ValueError("streaming patch grid dimension 漂移")
+    if np.any((gids < 0) | (gids >= gaussian_count)):
+        raise ValueError("streaming gaussian_id 越界")
+    pixel_count = int(image_height) * int(image_width)
+    if np.any((pixels < 0) | (pixels >= pixel_count)):
+        raise ValueError("streaming pixel_id 越界")
+    if not np.isfinite(weights).all() or np.any(weights < 0.0):
+        raise ValueError("streaming contribution 非 finite 非负")
+    for value in (
+        minimum_intersection_contribution,
+        minimum_gaussian_view_mass,
+        epsilon,
+    ):
+        if not np.isfinite(value) or float(value) <= 0.0:
+            raise ValueError("streaming floor/epsilon 必须为有限正数")
+
+    selected = weights >= float(minimum_intersection_contribution)
+    selected_gids = gids[selected]
+    selected_pixels = pixels[selected]
+    selected_weights = weights[selected]
+    state["input_intersection_count"] += int(gids.size)
+    state["supported_intersection_count"] += int(selected.sum())
+    state["processed_view_count"] += 1
+    if selected_gids.size == 0:
+        return {
+            "input_intersection_count": int(gids.size),
+            "supported_intersection_count": 0,
+            "gaussian_view_count_before_mass_floor": 0,
+            "supported_gaussian_view_count": 0,
+            "supported_contribution_mass": 0.0,
+        }
+
+    # 与 dense align_corners=False interpolation 等价，但只物化每 pixel feature，
+    # 不物化可能达到数千万行的 intersection×feature 张量。
+    dense_pixel_features = sample_patch_grid_bilinear(
+        grid,
+        np.arange(pixel_count, dtype=np.int64),
+        image_height=int(image_height),
+        image_width=int(image_width),
+    ).astype(np.float64)
+    transpose = sparse.coo_matrix(
+        (selected_weights, (selected_gids, selected_pixels)),
+        shape=(gaussian_count, pixel_count),
+        dtype=np.float64,
+    ).tocsr()
+    mass = np.asarray(transpose.sum(axis=1)).reshape(-1)
+    numerator = np.asarray(transpose @ dense_pixel_features, dtype=np.float64)
+    before = mass > 0.0
+    keep = mass >= float(minimum_gaussian_view_mass)
+    before_count = int(before.sum())
+    keep_count = int(keep.sum())
+    total_mass = float(mass.sum())
+    supported_mass = float(mass[keep].sum())
+    state["gaussian_view_count_before_mass_floor"] += before_count
+    state["supported_gaussian_view_count"] += keep_count
+    state["total_contribution_mass_after_intersection_floor"] += total_mass
+    state["supported_contribution_mass"] += supported_mass
+    if keep_count:
+        keep_ids = np.flatnonzero(keep)
+        kept_mass = mass[keep_ids]
+        kept_numerator = numerator[keep_ids]
+        saturation = -np.expm1(-kept_mass)
+        view_feature = kept_numerator / (kept_mass[:, None] + float(epsilon))
+        state["b0_numerator"][keep_ids] += saturation[:, None] * view_feature
+        state["b0_denominator"][keep_ids] += saturation
+        state["b1_numerator"][keep_ids] += kept_numerator
+        state["b1_denominator"][keep_ids] += kept_mass
+        state["supported_view_count"][keep_ids] += 1
+    return {
+        "input_intersection_count": int(gids.size),
+        "supported_intersection_count": int(selected.sum()),
+        "gaussian_view_count_before_mass_floor": before_count,
+        "supported_gaussian_view_count": keep_count,
+        "supported_contribution_mass": supported_mass,
+    }
+
+
+def finalize_streaming_uplift(
+    state: dict[str, Any], *, epsilon: float = 1e-8
+) -> dict[str, Any]:
+    """完成流式 B0/B1，并保留共同 coverage/denominator。"""
+    b0_denominator = np.asarray(state["b0_denominator"], dtype=np.float64)
+    b1_denominator = np.asarray(state["b1_denominator"], dtype=np.float64)
+    b0 = np.zeros_like(state["b0_numerator"], dtype=np.float64)
+    b1 = np.zeros_like(state["b1_numerator"], dtype=np.float64)
+    covered = b1_denominator > 0.0
+    b0[covered] = state["b0_numerator"][covered] / (
+        b0_denominator[covered, None] + float(epsilon)
+    )
+    b1[covered] = state["b1_numerator"][covered] / (
+        b1_denominator[covered, None] + float(epsilon)
+    )
+    report = {
+        "input_intersection_count": int(state["input_intersection_count"]),
+        "supported_intersection_count": int(state["supported_intersection_count"]),
+        "gaussian_view_count_before_mass_floor": int(
+            state["gaussian_view_count_before_mass_floor"]
+        ),
+        "supported_gaussian_view_count": int(
+            state["supported_gaussian_view_count"]
+        ),
+        "dropped_gaussian_view_count": int(
+            state["gaussian_view_count_before_mass_floor"]
+            - state["supported_gaussian_view_count"]
+        ),
+        "covered_gaussian_count": int(covered.sum()),
+        "total_contribution_mass_after_intersection_floor": float(
+            state["total_contribution_mass_after_intersection_floor"]
+        ),
+        "supported_contribution_mass": float(
+            state["supported_contribution_mass"]
+        ),
+        "processed_view_count": int(state["processed_view_count"]),
+        "accumulator_dtype": "float64",
+        "output_dtype": "float32",
+        "ludvig_upstream_commit": LUDVIG_UPSTREAM_COMMIT,
+        "ludvig_license": LUDVIG_LICENSE,
+        "optional_pruning": False,
+    }
+    return {
+        "b0_feature": b0.astype(np.float32),
+        "b1_feature": b1.astype(np.float32),
+        "b0_denominator": b0_denominator,
+        "b1_denominator": b1_denominator,
+        "supported_view_count": np.asarray(
+            state["supported_view_count"], dtype=np.int32
+        ),
+        "report": report,
+    }

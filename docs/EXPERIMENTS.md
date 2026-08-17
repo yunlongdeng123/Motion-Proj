@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage B H uplift r011 预注册（2026-08-18）
+
+- inputs=`r005 operator freeze + r010 PCA/45 patch-grid sidecars + H r027/r028/r029 checkpoints/configs`；view order=
+  `scene 0471→1087→0379, frame 0/40/80/120/160, camera 0/1/2`，image index=`frame×3+camera`。
+- common support=`intersection≥1e-4, Gaussian-view mass≥1e-3, epsilon=1e-8`；B0/B1 唯一差异保持 view saturation
+  vs normalized renderer mass。CSR float64 实现不生成 intersection×40 dense tensor。
+- formal outputs=`3 scene reports + 6 Gaussian feature NPZ + identity manifest + resource evidence`；checkpoints 前后 exact，
+  B0/B1 coverage 必须相同且 feature L2 difference>0。failure delta=`pending`。
+- locks：dataset loader 可基础设施物化 image/mask/LiDAR，但 runner 仅取 timestamp/image-id/camera；不消费其值，
+  不读 membership proxy/quality，S/C/validation/test/KITTI=false，M2/M3=pending。
+
 ## V5.1 Stage B r010 canonical H feature/PCA（2026-08-18）
 
 - run=`20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010`，source=`11c35fd`，status=`done`；

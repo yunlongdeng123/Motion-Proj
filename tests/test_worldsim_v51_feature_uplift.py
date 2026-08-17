@@ -15,6 +15,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from motion_proj.worldsim_v51.feature_uplift import (
+    accumulate_streaming_uplift_view,
+    finalize_streaming_uplift,
+    initialize_streaming_uplift,
     sample_patch_grid_bilinear,
     uplift_b0_b1,
 )
@@ -197,3 +200,60 @@ def test_operator_parity_freeze_binds_terminal_and_quality_locks() -> None:
     assert summary["test_quality_read"] is False
     assert freeze["locks"]["m2_status"] == "pending"
     assert freeze["locks"]["m3_status"] == "pending"
+
+
+def test_streaming_sparse_uplift_matches_dense_operator() -> None:
+    grid0 = np.arange(24, dtype=np.float32).reshape(2, 3, 4) / 10.0
+    grid1 = np.flip(grid0, axis=2).copy()
+    view_rows = [
+        (
+            np.asarray([0, 0, 1, 1, 2, 3, 3]),
+            np.asarray([0, 1, 2, 3, 4, 5, 6]),
+            np.asarray([0.2, 0.3, 0.4, 0.00001, 0.5, 0.6, 0.0001]),
+            grid0,
+        ),
+        (
+            np.asarray([0, 1, 1, 2, 2, 3]),
+            np.asarray([7, 6, 5, 4, 3, 2]),
+            np.asarray([0.7, 0.8, 0.2, 0.4, 0.2, 0.3]),
+            grid1,
+        ),
+    ]
+    state = initialize_streaming_uplift(gaussian_count=5, feature_dimension=2)
+    dense_gids = []
+    dense_views = []
+    dense_weights = []
+    dense_features = []
+    for view_id, (gids, pixels, weights, grid) in enumerate(view_rows):
+        accumulate_streaming_uplift_view(
+            state,
+            gaussian_id=gids,
+            pixel_id=pixels,
+            contribution_weight=weights,
+            patch_grid=grid,
+            image_height=3,
+            image_width=4,
+        )
+        dense_gids.append(gids)
+        dense_views.append(np.full(gids.shape, view_id))
+        dense_weights.append(weights)
+        dense_features.append(
+            sample_patch_grid_bilinear(
+                grid, pixels, image_height=3, image_width=4
+            )
+        )
+    streaming = finalize_streaming_uplift(state)
+    dense = uplift_b0_b1(
+        gaussian_id=np.concatenate(dense_gids),
+        view_id=np.concatenate(dense_views),
+        contribution_weight=np.concatenate(dense_weights),
+        pixel_features=np.concatenate(dense_features),
+        gaussian_count=5,
+    )
+    np.testing.assert_allclose(streaming["b0_feature"], dense["b0_feature"], atol=2e-7)
+    np.testing.assert_allclose(streaming["b1_feature"], dense["b1_feature"], atol=2e-7)
+    np.testing.assert_allclose(streaming["b0_denominator"], dense["b0_denominator"])
+    np.testing.assert_allclose(streaming["b1_denominator"], dense["b1_denominator"])
+    np.testing.assert_array_equal(
+        streaming["supported_view_count"], dense["supported_view_count"]
+    )
