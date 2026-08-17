@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 import subprocess
 import sys
@@ -7,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0a_environment_one_view_smoke import (
+    _prepare_torch_hub_assets,
     _validate_config,
     parse_last_json_line,
 )
@@ -29,9 +31,16 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
     config = _validate_config(
-        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v3.yaml"
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v4.yaml"
     )
     assert config["one_view"]["interpretation"]["association_capability_claim"] is False
+    assert config["one_view"]["upstream_defaults"] == {
+        "SAM_NUM_POINTS_PER_SIDE": 64,
+        "SAM_NUM_POINTS_PER_BATCH": 64,
+    }
+    assert config["runtime_environment"]["PYTORCH_CUDA_ALLOC_CONF"] == (
+        "max_split_size_mb:128"
+    )
     assert config["decision"]["materialization_authorized"] is False
 
 
@@ -45,3 +54,28 @@ def test_parse_last_json_line_preserves_solver_banner() -> None:
         "solution": 1.0,
         "stdout_prefix": ["Restricted license - for non-production use only"],
     }
+
+
+def test_prepare_torch_hub_assets_copies_then_reuses_exact_asset(tmp_path: Path) -> None:
+    source = tmp_path / "source.pth"
+    source.write_bytes(b"frozen torchvision weight")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    config = {
+        "torch_home": str(tmp_path / "torch-home"),
+        "partial_suffix": ".partial",
+        "assets": {
+            "resnet": {
+                "source_cache_path": str(source),
+                "filename": "resnet.pth",
+                "url": "https://example.invalid/resnet.pth",
+                "bytes": source.stat().st_size,
+                "sha256": digest,
+            }
+        },
+    }
+    first = _prepare_torch_hub_assets(config)
+    second = _prepare_torch_hub_assets(config)
+    assert first["assets"][0]["acquisition"] == "copied_then_atomic_publish"
+    assert second["assets"][0]["acquisition"] == "reused_exact_canonical_asset"
+    assert first["assets"][0]["sha256"] == digest
+    assert not (tmp_path / "torch-home/hub/checkpoints/resnet.pth.partial").exists()

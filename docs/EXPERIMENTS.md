@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage F F0a r029 blocked / v4 recovery 预注册（2026-08-18）
+
+- r029=`20260818T073000Z__m1-stage-f-f0a-environment-one-view-s20260814-r029`，source=`3e87323`；solver gates 已通过，
+  official CLI 首图 SAM forward 在 `torch.cat` 尝试分配 `6.74 GiB` 时 OOM，sampled GPU peak=`17,246 MiB`。
+  resolved/status/events/stdout/stderr/resource SHA=`14e58821...674/ff75bad...f66/f7de78f3...ac5/35110989...4d6/
+  205266c9...403/a0d825a8...01a`；6 files=`22,458 bytes`。input decoded=true、DEVA/SAM loaded=true，mask/
+  `pred.json`/quality=false；不得解释为 identity/association 质量结论。
+- r029 首次暴露并下载 DEVA 隐式 torchvision ResNet50/18；v4/r030 冻结 URL/bytes/full SHA，并从原 cache 原子发布到
+  `/root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints`。subprocess 固定 `TORCH_HOME`，避免
+  后续网络/用户 cache 漂移。
+- v4 的唯一执行恢复是 allocator `max_split_size_mb:128`；SAM point grid/batch=`64/64` 与所有 method/data/resource/
+  locks 不变。若仍 OOM，必须保留 r030 blocked 后另行预注册 batch-only adaptation，不得同轮改 size/grid/IoU。
+  首次预提交 wrapper 被 PowerShell 提前剥掉远端 commit-message 引号，在 Git/正式 run 前退出；改用文件化消息，见
+  `V51-F54 resolved`。failure delta=`V51-F51 resolved / V51-F52+V51-F53 recovery_pending / V51-F54 resolved`。
+
 ## V5.1 Stage F F0a r028 blocked / v3 recovery 预注册（2026-08-18）
 
 - r028=`20260818T070000Z__m1-stage-f-f0a-environment-one-view-s20260814-r028`，source=`a1a179e`；Gurobi 12.0.3

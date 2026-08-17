@@ -40,6 +40,7 @@ SCHEMAS = {
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v1",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v2",
     "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v3",
+    "worldsim_v51_stage_f_f0a_environment_one_view_smoke_v4",
 }
 TASK_ID = "WS-V51-M1-F-IDENTITY-EMBEDDING-01"
 
@@ -57,6 +58,14 @@ def _verify(path: Path, digest: str, label: str, expected_bytes: int | None = No
     if expected_bytes is not None and path.stat().st_size != expected_bytes:
         raise ProtocolError(f"byte drift: {label}: {path}")
     return path
+
+
+def _matches_file(path: Path, digest: str, expected_bytes: int) -> bool:
+    return (
+        path.is_file()
+        and path.stat().st_size == expected_bytes
+        and sha256_file(path) == digest
+    )
 
 
 def _git_at(repository: Path, *args: str) -> str:
@@ -101,6 +110,33 @@ def _validate_config(config_path: Path) -> dict[str, Any]:
             raise ProtocolError(f"source checkout not clean: {name}")
     for name, spec in config["assets"].items():
         _verify(Path(spec["path"]), spec["sha256"], name, int(spec["bytes"]))
+    hidden = config.get("hidden_torchvision_assets")
+    if hidden is not None:
+        source_text = Path(hidden["upstream_source_file"]).read_text(encoding="utf-8")
+        torch_home = Path(hidden["torch_home"])
+        runtime_environment = config.get("runtime_environment", {})
+        if runtime_environment.get("TORCH_HOME") != str(torch_home):
+            raise ProtocolError("dedicated TORCH_HOME contract drift")
+        if runtime_environment.get("PYTORCH_CUDA_ALLOC_CONF") != "max_split_size_mb:128":
+            raise ProtocolError("F0a v4 CUDA allocator recovery drift")
+        upstream_defaults = config["one_view"].get("upstream_defaults", {})
+        if upstream_defaults != {
+            "SAM_NUM_POINTS_PER_SIDE": 64,
+            "SAM_NUM_POINTS_PER_BATCH": 64,
+        }:
+            raise ProtocolError("official SAM point grid or batch drift")
+        for name, spec in hidden["assets"].items():
+            if spec["url"] not in source_text:
+                raise ProtocolError(f"hidden torchvision URL drift: {name}")
+            target = torch_home / "hub/checkpoints" / spec["filename"]
+            source = Path(spec["source_cache_path"])
+            digest = str(spec["sha256"])
+            expected_bytes = int(spec["bytes"])
+            if not (
+                _matches_file(target, digest, expected_bytes)
+                or _matches_file(source, digest, expected_bytes)
+            ):
+                raise ProtocolError(f"hidden torchvision asset unavailable: {name}")
     image = config["one_view"]["source_image"]
     _verify(Path(image["path"]), image["sha256"], "one-view image", int(image["bytes"]))
     if config["decision"].get("materialization_authorized") is not False:
@@ -319,6 +355,43 @@ def _build_environment(config: Mapping[str, Any], wheels: list[Mapping[str, Any]
     }
 
 
+def _prepare_torch_hub_assets(config: Mapping[str, Any]) -> dict[str, Any]:
+    torch_home = Path(config["torch_home"])
+    checkpoint_dir = torch_home / "hub/checkpoints"
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    records = []
+    for name, spec in sorted(config["assets"].items()):
+        source = Path(spec["source_cache_path"])
+        target = checkpoint_dir / spec["filename"]
+        digest = str(spec["sha256"])
+        expected_bytes = int(spec["bytes"])
+        partial = target.with_name(f"{target.name}{config['partial_suffix']}")
+        if target.exists():
+            _verify(target, digest, name, expected_bytes)
+            acquisition = "reused_exact_canonical_asset"
+        else:
+            _verify(source, digest, f"{name} source cache", expected_bytes)
+            if partial.exists():
+                raise ProtocolError(f"partial hidden asset requires explicit recovery: {partial}")
+            shutil.copyfile(source, partial)
+            _verify(partial, digest, f"{name} partial", expected_bytes)
+            partial.replace(target)
+            acquisition = "copied_then_atomic_publish"
+        records.append(
+            {
+                "name": name,
+                "url": spec["url"],
+                "filename": spec["filename"],
+                "path": str(target),
+                "bytes": target.stat().st_size,
+                "sha256": sha256_file(target),
+                "acquisition": acquisition,
+                "partial_path_absent_after_publish": not partial.exists(),
+            }
+        )
+    return {"torch_home": str(torch_home), "assets": records}
+
+
 def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> dict[str, Any]:
     one = config["one_view"]
     input_dir = run_dir / "artifacts/one_view_input"
@@ -353,10 +426,23 @@ def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> di
     ]
     stdout_path = run_dir / "artifacts/one_view_stdout.log"
     stderr_path = run_dir / "artifacts/one_view_stderr.log"
+    subprocess_environment = os.environ.copy()
+    subprocess_environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    runtime_environment = config.get("runtime_environment", {})
+    for name in ("TORCH_HOME", "PYTORCH_CUDA_ALLOC_CONF"):
+        if name in runtime_environment:
+            subprocess_environment[name] = str(runtime_environment[name])
     with stdout_path.open("w", encoding="utf-8") as stdout, stderr_path.open(
         "w", encoding="utf-8"
     ) as stderr:
-        subprocess.run(command, cwd=deva_root, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            command,
+            cwd=deva_root,
+            stdout=stdout,
+            stderr=stderr,
+            check=True,
+            env=subprocess_environment,
+        )
     contract = one["output_contract"]
     mask_path = output_dir / contract["mask"]
     metadata_path = output_dir / contract["metadata"]
@@ -397,6 +483,15 @@ def _run_one_view(config: Mapping[str, Any], run_dir: Path, runtime: Path) -> di
         "output_mask_pixels_read_count": 1,
         "association_capability_claim": False,
         "quality_claim": False,
+        "runtime_environment": {
+            "TORCH_HOME": subprocess_environment.get("TORCH_HOME"),
+            "PYTORCH_CUDA_ALLOC_CONF": subprocess_environment.get(
+                "PYTORCH_CUDA_ALLOC_CONF"
+            ),
+            "PYTHONDONTWRITEBYTECODE": subprocess_environment[
+                "PYTHONDONTWRITEBYTECODE"
+            ],
+        },
     }
 
 
@@ -430,6 +525,11 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         wheels = _acquire_wheels(environment_config)
         environment = _build_environment(environment_config, wheels)
         solvers = _solver_smokes(Path(environment["runtime"]))
+        if "hidden_torchvision_assets" in config:
+            hidden_assets = _prepare_torch_hub_assets(
+                config["hidden_torchvision_assets"]
+            )
+            environment["hidden_torchvision_assets"] = hidden_assets
         one_view = _run_one_view(config, run_dir, Path(environment["runtime"]))
         environment["solver_smokes"] = solvers
         _write_json(run_dir / "artifacts/environment_lock.json", environment)
@@ -550,7 +650,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v3.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v4.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

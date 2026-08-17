@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage F F0a r029 resource blocked；v4/r030 recovery 已预注册（2026-08-18）
+
+- r029=`20260818T073000Z__m1-stage-f-f0a-environment-one-view-s20260814-r029`，source=`3e87323`。v3 已正确
+  解析并保留 Gurobi restricted-license banner，Gurobi/PuLP optimum gate 均越过；official DEVA+SAM CLI 随后加载模型并
+  decode 唯一输入，但 SAM ViT-H everything mask 在首图尝试再分配 `6.74 GiB` 时 OOM。allocator 报进程占用
+  `16.83 GiB`、PyTorch allocated/reserved-unallocated=`10.74/5.77 GiB`，resource monitor peak=`17,246 MiB`；没有
+  mask、`pred.json` 或 quality，故是 `V51-F52` 工程资源 blocked，不是 Gaussian Grouping/association 算法 reject。
+- 首次模型加载还暴露 DEVA `resnet.py` 的隐式 `model_zoo.load_url`：ResNet50/18 分别下载到 `/root/.cache`，exact
+  bytes/SHA=`102,502,400/19c8e357...097` 与 `46,827,520/5c106cde...13f8`，见 `V51-F53`。v4/r030 先把两份
+  权重原子发布到专用 `TORCH_HOME` 并冻结 URL/bytes/full SHA，再令 upstream 子进程只读该 cache。
+- r030 的唯一资源恢复是 `PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128`；source、DEVA/SAM 权重、唯一 view、official
+  CLI、`size=480`、IoU=`0.7`、SAM grid/batch=`64/64`、resource/locks 全不变。仍不授权 materialization/training，
+  quality/H/S/C/validation/test/KITTI=false，F1/F2=false，M2/M3=pending。预提交双层 shell 引号复发已在 Git/run 前
+  fail-closed，并切换为文件化 commit message（`V51-F54 resolved`）。
+
 ## V5.1 Stage F F0a r028 stdout blocked；v3/r029 recovery 已预注册（2026-08-18）
 
 - r028 已用 `gurobipy=12.0.3` 越过 expired-license 异常，但 Gurobi 把 restricted-license banner 写在 JSON 前，runner

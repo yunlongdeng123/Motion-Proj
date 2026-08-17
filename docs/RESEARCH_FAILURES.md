@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode source 污染与 identity-input contract 边界 | `V51-F01`–`V51-F51` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，one-view 首次 SAM forward 被资源阻塞 | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 显存峰值与 identity-input contract 边界 | `V51-F01`–`V51-F54` |
 
 ### 1.1 V1 汇总条目
 
@@ -515,14 +515,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   fail-closed；远端 `sha256sum` 与 r026 已独立审计的 selected manifest 一致，证明是配置转录错误而非图像漂移。修复只从
   r026 canonical record 恢复完整 SHA，并以原测试重跑；不得改图、重选 view、放宽 hash 或把该失败写成 SAM/DEVA 结果。
   后续长 identity 必须由 manifest 机器传递并保留 config-validation test，禁止凭聊天摘要/截断 hash 手工补全。
-- `V51-F49`（`engineering/license/runtime`, `recovery pending after r027`）：r027 已 atomic 构建 isolated venv 并安装
+- `V51-F49`（`engineering/license/runtime`, `resolved by r028/r029`）：r027 已 atomic 构建 isolated venv 并安装
   exact `supervision=0.14.0/PuLP=2.7.0/gurobipy=10.0.3`，但第一个 Gurobi tiny MILP 在创建 model 时报告
   `License expired 2024-10-28`，因此 status=`blocked`。失败发生在 one-view upstream CLI 前：没有加载 DEVA/SAM 权重、
   没有 GPU model forward、没有 decode input/mask、没有 quality；4 files=`12,861 bytes`，不得把它写成 identity mechanism
   或 association 失败。根因是把上游 `gurobipy>=10.0.3` 的最低版本误冻结成 exact 10.0.3，而该 wheel 的内置 restricted
   runtime 已过期；服务器没有另一个 `gurobi.lic` 可续用。合法 recovery v2 只将 Gurobi 提升到当前 index 可得的
   `12.0.3`（仍满足上游版本下界），使用全新 wheelhouse/venv/r028 重跑，其他 source/assets/input/CLI/resource/locks
-  不变；仍要求 Gurobi tiny optimum，禁止直接跳过 gate 或静默采用 PuLP 后声称 faithful。
+  不变；仍要求 Gurobi tiny optimum，禁止直接跳过 gate 或静默采用 PuLP 后声称 faithful。r028/r029 的 Gurobi 12.0.3
+  tiny model 均得到 status=`2`、solution=`1.0`，因此 license 前置已解除；后续 stdout 与 GPU failures 分别独立记账。
 - `V51-F50`（`engineering/source-provenance`, `resolved before r028`）：r027 environment path verification 用子 Python
   import frozen DEVA source，默认 bytecode policy 在 Gaussian Grouping checkout 内生成 4 个未跟踪 `__pycache__` 目录；
   tracked diff 为 0，但后续 v2 config 的 clean-source gate 正确 fail-closed。该污染不是 upstream 修改、算法失败或 r028 run；
@@ -530,13 +531,38 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `PYTHONDONTWRITEBYTECODE=1`。第一次清理 wrapper 又因 PowerShell 提前处理 `$p` 而出现 quote EOF，未删除或修改任何
   文件；随后改用 4 个显式绝对 target 完成清理，两个 external repo 恢复 clean。禁止把 `git status` 放宽为忽略 untracked，
   也不得把 source tree 内 cache 纳入冻结；后续 import smoke 必须同时核对 commit/tree/clean。
-- `V51-F51`（`engineering/runner`, `recovery pending after r028`）：v2/r028 成功获取并安装
+- `V51-F51`（`engineering/runner`, `resolved by r029`）：v2/r028 成功获取并安装
   `gurobipy=12.0.3`，Gurobi 不再抛 license-expired/CalledProcessError；但 restricted-license banner 与 runner 自己打印的
   JSON 同时写 stdout，v2 对整段 `json.loads` 而得到 `JSONDecodeError line 1 column 1`。r028 因此在 solver output parse
   blocked，4 files=`10,642 bytes`；one-view CLI、DEVA/SAM load、input/mask decode 与 quality 仍全部未发生，不能把它写成
   solver、association 或算法失败。v3/r029 唯一修复是解析最后一个非空 stdout 行为 JSON，并把前置 banner 原样存档；
   solver status=`OPTIMAL` 与 solution=`1` 的门不放宽，环境/权重/view/CLI/resource/locks 全继承 v2。禁止粗暴丢弃全部
-  stdout、用正则猜数字或因 parser failure 绕过 Gurobi gate。
+  stdout、用正则猜数字或因 parser failure 绕过 Gurobi gate。r029 已越过两种 solver gate 并启动 official CLI，证明
+  terminal-line parser 恢复有效；r029 后续 OOM 另记 `V51-F52`，不得倒写本项未解决。
+- `V51-F52`（`engineering/resource`, `recovery pending after r029`）：r029 首次完整越过 environment、Gurobi/PuLP 和
+  official model-load gate，在唯一 scene-0471/frame0/camera0 输入上执行 SAM ViT-H everything mask；上游默认
+  points-per-side/batch=`64/64`，在 `BatchMaskData.cat` 尝试再分配 `6.74 GiB` 时 CUDA OOM。错误现场为 GPU total/free=
+  `23.56/6.72 GiB`、process=`16.83 GiB`、PyTorch allocated/reserved-unallocated=`10.74/5.77 GiB`，独立 resource samples
+  peak=`17,246 MiB`。r029 status=`blocked`，6 files=`22,458 bytes`，没有 mask、`pred.json`、identity quality 或 cross-view
+  association denominator；这推翻“24GB 可直接运行 official default one-view”的资源假设，不推翻 Gaussian Grouping 算法。
+  第一合法 recovery/r030 只设置 allocator `max_split_size_mb:128`，source/view/size/IoU/grid/batch/ceilings 均不变；若仍
+  OOM，必须保留 r030 后另行预注册 `SAM_NUM_POINTS_PER_BATCH` 单变量 batching adaptation，并补 parity/repeatability，禁止
+  同轮缩图、改 grid/阈值或把工程失败写成 algorithm reject。证据：r029 stderr=`205266c9...403`、resource=
+  `a0d825a8...01a`、status=`ff75badc...f66`。
+- `V51-F53`（`engineering/source-provenance`, `recovery pending after r029`）：r029 模型构造首次触发冻结 DEVA source
+  `deva/model/resnet.py` 中的 `model_zoo.load_url`，隐式从 PyTorch URL 下载 ResNet50/18 到用户级 `/root/.cache`。两份
+  资产分别为 `102,502,400 bytes /19c8e357...097` 与 `46,827,520 bytes /5c106cde...13f8`；此前 F0a asset freeze 未枚举
+  这项 transitive dependency，故“官方 DEVA+SAM 两权重已经覆盖全部模型资产”的来源合同被推翻。合法 recovery 固定 source
+  literal URL、bytes/full SHA，把 exact cache 原子复制到专用
+  `/root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints`，并让 subprocess 固定 `TORCH_HOME`；禁止
+  继续依赖用户 cache、重新下载未验 hash、修改 frozen upstream 或把 ResNet 权重混称 DEVA checkpoint。canonical 目标独立
+  审计前不得删除原 cache；审计后只允许精确清理由本次生成且 hash 匹配的两个源文件。
+- `V51-F54`（`engineering/orchestration`, `resolved before prereg commit`）：第一次提交 v4 时把包含括号与多段正文的
+  `git commit -m` 放进 Windows PowerShell→SSH→bash 双层命令；本地层提前剥掉远端参数引号，bash 在 Conventional Commit
+  标题的 `(` 前直接 syntax error。失败发生在 Git 创建 commit、push、r030 run 或 canonical asset publish 之前；staged diff
+  保持不变，不是 config、test 或算法失败。这是 `V51-F47` 跨 shell 合同的复发：恢复改为在本地用 patch 生成独立 commit
+  message 文件、scp 到远端临时路径，再以 `git commit -F` 单参数读取；禁止继续手工嵌套长 `-m`、省略正文或覆盖 staged
+  内容。提交后必须精确删除临时 message，并重查 branch/status/commit。
 
 <a id="detail-v5"></a>
 

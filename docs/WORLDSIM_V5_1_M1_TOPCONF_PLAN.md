@@ -1821,6 +1821,11 @@ SAM mask
 
 > Gaussian Grouping 的原机制，在 dynamic driving actor 上能否 work。
 
+执行状态（2026-08-18）：F0 source/16D frozen-base adapter 与 official DEVA/SAM assets 已通过前置冻结；r029 首次 official
+one-view SAM forward 因 24GB 显存峰值 blocked（`V51-F52`），并暴露未枚举的 DEVA ResNet18/50 依赖（`V51-F53`）。当前只
+允许 v4/r030 固定 transitive assets 与 allocator；SAM grid/batch、图像大小、阈值和方法语义保持。one-view resource/schema
+PASS 后仍须 3-view semionline association+repeatability smoke；在此之前 materialization、F0 training、F1/F2 均未授权。
+
 ---
 
 # 15.2 F1：Bayesian-Calibrated Identity Seed
