@@ -1,0 +1,50 @@
+schema_version: worldsim_v51_stage_f_f0l_train_only_quality_identity_alignment_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0l_train_only_mask_quality_identity_alignment_gate
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0k_freeze:
+    path: configs/worldsim_v51/stage_f_f0k_quality_alignment_input_freeze_freeze_v1.yaml
+    bytes: 2922
+    sha256: e6b54e9495e531097b06cd475565d2fef9d559af2a454305577aaad1b13b9c4a
+    required_status: done
+    required_next_phase: f0l_train_only_mask_quality_identity_alignment_execution_preregistration
+
+inputs:
+  manifest: {path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042/artifacts/quality_alignment_input_manifest.json, bytes: 103846, sha256: 6640b5e1a66b652c4a850e9d1fb978b882a110b7d9d1676942b5ae03902d6817, view_count: 45, projection_count: 90}
+  candidate_semantics: faithful_gaussian_grouping_sam_everything_deva_scene_local_short_ids
+  weak_reference_semantics: drivestudio_dynamic_mask_union_train_only_foreground_support_not_instance_ground_truth
+
+evaluation:
+  candidate_foreground: short_id_greater_than_zero
+  dynamic_foreground: pixel_greater_than_zero
+  projected_box_rasterization: floor_xy0_ceil_xy1_half_open_clipped
+  attribution: exclude_pixels_covered_by_more_than_one_projected_actor_box
+  eligible_actor_view_minimum_support_pixels: 64
+  eligible_track_minimum_views: 2
+  assignment: scene_local_maximum_weight_one_to_one_track_to_positive_short_id_on_support_pixels
+  metrics: [foreground_coverage, independent_best_identity_recall, one_to_one_assignment_recall, assignment_efficiency, persistent_track_fraction]
+  per_scene_thresholds:
+    minimum_eligible_tracks: 1
+    minimum_eligible_actor_views: 2
+    minimum_foreground_coverage: 0.70
+    minimum_one_to_one_assignment_recall: 0.35
+    minimum_assignment_efficiency: 0.75
+    minimum_persistent_track_fraction: 0.50
+  pass_requires: all_three_scenes_pass_all_thresholds
+
+decision:
+  pass_outcome: pass
+  pass_conclusion: f0l_faithful_identity_masks_pass_train_only_quality_alignment_gate_identity_training_smoke_preregistration_required
+  pass_next_action: preregister_f0m_frozen_base_identity_training_smoke
+  reject_outcome: rejected
+  reject_conclusion: f0l_faithful_gaussian_grouping_rejected_train_only_quality_or_identity_alignment_gate
+  reject_next_action: close_gaussian_grouping_and_preregister_trace3d_source_preflight
+
+resources: {maximum_wall_seconds: 180, maximum_cgroup_memory_bytes: 34359738368, minimum_disk_free_bytes_after: 42949672960}
+locks: {candidate_mask_pixel_reads: 45, dynamic_mask_pixel_reads: 45, image_pixels_read: false, threshold_search: false, identity_training: false, h_quality_read: false, screening_quality_read: false, confirmation_quality_read: false, validation_quality_read: false, test_quality_read: false, kitti_method_tuning: false, f1_execution: false, f2_execution: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F46, V51-F62, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration

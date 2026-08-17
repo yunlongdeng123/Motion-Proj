@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage F F0l r043 train-only quality/alignment 预注册（2026-08-18）
+
+- run=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`；exact read denominator=`45 candidate masks +
+  45 dynamic weak-support masks`，RGB=0。scene-local maximum-weight one-to-one track↔short-ID assignment。
+- per-scene gates=`tracks/views≥1/2, coverage≥0.70, assigned recall≥0.35, efficiency≥0.75, persistence≥0.50`；
+  all-three PASS 才解锁 training smoke，FAIL 自动拒绝 Gaussian Grouping 并转 Trace3D；不做 threshold search。
+
 ## V5.1 Stage F F0k r042 input denominator PASS / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042 /858e0d1...64f0c /

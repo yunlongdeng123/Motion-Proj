@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage F F0l train-only quality/identity-alignment gate 已预注册（2026-08-18）
+
+- formal target=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`；auth=r042 freeze
+  `2,922 bytes /e6b54e94...b9c4`，input manifest=`45 views /90 projections /6640b5e1...6817`。
+- 首次且仅按冻结分母读取 `45 candidate +45 dynamic-union` masks；不读 RGB。box rasterization=`floor low/ceil high/
+  half-open/clipped`；重叠 actor boxes 像素排除。dynamic union 只给 actor foreground support，不提供 instance identity。
+- 每场以 3D instance token 对 positive DEVA short ID 做最大权一对一匹配；冻结门为 eligible tracks/views≥`1/2`、
+  foreground coverage≥0.70、one-to-one recall≥0.35、assignment efficiency≥0.75、persistence≥0.50，三场全过才 PASS。
+- PASS 只解锁 frozen-base identity-training smoke 预注册；任一门 FAIL 则 faithful Gaussian Grouping 在当前 train-only
+  质量/对齐证据上 rejected，并关闭该路线、转 Trace3D source preflight。threshold search/training/H/S/C/validation/test/
+  KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0k r042 quality/alignment denominator PASS 已冻结（2026-08-18）
 
 - canonical r042=`20260818T190000Z__m1-stage-f-f0k-quality-input-freeze-s20260814-r042`，source/tree=
