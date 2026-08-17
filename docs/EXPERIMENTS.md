@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage F F0j r041 fresh 45-view recovery 预注册（2026-08-18）
+
+- run=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`；auth=r040 freeze
+  `ac390557...baca`。fresh exact 45 inputs，scene-local `0471→1087→0379` 三进程串行，禁止 r035 partial reuse。
+- method=`grid32/batch64/AMP + pre-line58-matmul empty-cache`；pass=`45 schema masks +3 pred +every intervention
+  evidence +output chain +resources`。本轮不读 mask nonzero/quality/identity alignment，PASS 后只预注册相应质量门。
+
 ## V5.1 Stage F F0i r040 scene-1087 recovery PASS / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040 /9c8c503...9003 /

@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage F F0j fresh 45-view empty-cache materialization 已预注册（2026-08-18）
+
+- formal target=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`；authorization 仅来自 r040
+  freeze=`3,252 bytes /ac390557...baca`。新目录从 exact r026 45-record manifest 重建输入，不续写或复用 r035 partial。
+- 三个 scene-local fresh subprocess 严格串行 `0471→1087→0379`；grid32/upstream-batch64/AMP/size480/thresholds
+  不变，唯一 recovery intervention 仍是每次 frozen line58 matmul 前 `torch.cuda.empty_cache()`。
+- PASS 分母=`45 uint8 900×1600 schema masks +3 pred.json +all observed matmul intervention evidence +output chain +
+  resource gate`。只读 schema/hash，不读 nonzero、mask quality 或 actor identity alignment。
+- resources=`24,576 total /256 headroom /24,320 peak MiB /cgroup60 GiB /1,200s /disk40 GiB`；失败立即保留 blocked
+  terminal 并更新 V51-F62。PASS 也只授权预注册 train-only quality/identity-alignment gate；training/validation/test/KITTI/
+  F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0i r040 scene-1087 15-view recovery PASS 已冻结（2026-08-18）
 
 - canonical r040=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`，source/tree=
