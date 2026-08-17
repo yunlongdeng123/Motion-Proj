@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage F F0a asset/source acquisition 已预注册（2026-08-18）
+
+- planned r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`。本轮只顺序获取并 full-SHA
+  DEVA propagation (`276,911,801 bytes`) 与 SAM ViT-H (`2,564,550,879 bytes`)；URL 必须逐字存在于 frozen upstream
+  `download_models.sh`，下载使用 `.partial + resume + exact-byte gate + atomic publish`，不写入 clean Gaussian Grouping repo。
+- 同轮把上游安装说明要求的 `hkchengrex/Grounded-Segment-Anything@99fbbe78` clone 到独立 third-party 路径，并要求
+  clean commit、`segment_anything/segment_anything` subtree 与 Apache-2.0 license。vendored DEVA source 保持
+  `CC-BY-NC-SA-4.0`，仅用于本学术研究流程；不安装或修改 upstream source。
+- 45-view 输入继承 Stage B frozen image manifest：只选 historical-diagnostic 的
+  `0471/1087/0379 × frames 0/40/80/120/160 × cameras 0/1/2`，按 scene→frame→camera 排序，逐文件验证 size/SHA，
+  不 decode pixels、不 staging images、不运行 SAM/DEVA。
+- future faithful CLI 已冻结 `chunk=4/amp/semionline/size=480/use_short_id/suppress_small_objects/SAM IoU=0.7` 及所有
+  relevant upstream defaults；未来输出必须每场 15 张 uint8 short-ID PNG、input/output stem 一一对应，并保存 label histogram/
+  mask SHA 与 `pred.json`。本次只探测当前环境，明确不安装依赖；预计缺 `segment_anything/supervision/hickle/pulp/gurobipy/
+  thinplate`，下一步必须另行预注册 isolated environment + one-view resource smoke。
+- materialization/identity training=false，quality/H/S/C/validation/test/KITTI=false，F1/F2=false，M2/M3=pending；
+  `failure_ledger_refs` 到 `V51-F46`，prereg delta=`none`。config=
+  `configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_v1.yaml`。
+
 ## V5.1 Stage F F0 r025 source/adapter preflight 已冻结（2026-08-18）
 
 - canonical r025=`20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025`，source/tree=

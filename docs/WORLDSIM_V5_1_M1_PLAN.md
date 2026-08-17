@@ -1,5 +1,14 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0a asset/source acquisition 预注册
+
+F0a 先拆出一个不可混入方法质量的 acquisition gate。r026 只冻结 upstream-declared DEVA/SAM-v1 权重的 full SHA、
+Grounded-Segment-Anything fork exact source，以及 45 张 train-only 原图的 inherited SHA denominator；下载 sequential、
+partial-resumable、exact-byte 后 atomic publish，不 decode image/mask、不运行模型。当前 DriveStudio 环境缺失的自动分割依赖
+只报告，不原地安装；r026 PASS 后下一门是 isolated environment + one-view resource smoke 的新预注册，仍不直接全量
+materialize。CLI 参数、scene/frame/camera order 和 short-ID PNG/pred.json schema 已提前冻结，禁止借环境恢复换 SAM2、
+调 IoU/size/chunk 或读取 quality。M2/M3=pending。
+
 ## 2026-08-18 Stage F F0 r025 收口与 F0a 解锁
 
 r025 已在 source=`8d68cad1` 上完成并由独立 auditor 重放通过。Gaussian Grouping official source、faithful identity

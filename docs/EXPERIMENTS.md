@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage F F0a asset/source acquisition 预注册（2026-08-18）
+
+- planned r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`；只获取 official DEVA/SAM-v1 assets
+  与 `Grounded-Segment-Anything@99fbbe78` source，顺序下载、partial resume、exact bytes、full SHA、atomic publish。
+  expected asset bytes=`276,911,801 +2,564,550,879`；第一次 acquisition 的 SHA 作为结果冻结，绝不按内容选模型。
+- source provenance：Gaussian Grouping=`0ab60afe/Apache-2.0`；vendored DEVA=`frozen files/CC-BY-NC-SA-4.0`；
+  Grounded-Segment-Anything fork 要求 exact commit/clean/segment_anything subtree/Apache-2.0。资产放
+  `/root/autodl-tmp/models/gaussian_grouping_v51_stage_f`，不污染 upstream checkout。
+- input denominator 绑定 frozen 240-record manifest=`be19da2e...943`，再确定性过滤出 45 个 train-only H records；
+  原图只做 byte/SHA identity read，pixels decoded=false。future mask CLI/output schema 已固定，但本 run 的
+  SAM/DEVA/materialization/training 均 false。
+- DriveStudio runtime 仅做 module-presence probe、不 mutate；缺失依赖将在下一 clean prereg 中放进 isolated venv，先做
+  one-view resource smoke，不能在 r026 临时 pip install。quality/S/C/validation/test/KITTI=false，F1/F2=false，
+  M2/M3=pending；failure refs=`V51-F31/F37/F42–F46`，delta=`none_at_preregistration`。
+
 ## V5.1 Stage F F0 r025 canonical source/adapter preflight（2026-08-18）
 
 - run/source/tree=`20260818T045000Z__m1-stage-f-f0-source-preflight-s20260814-r025 /8d68cad1...15c /
