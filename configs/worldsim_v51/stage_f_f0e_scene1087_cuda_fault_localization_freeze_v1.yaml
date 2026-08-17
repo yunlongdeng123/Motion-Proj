@@ -1,0 +1,105 @@
+schema_version: worldsim_v51_stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0e_scene1087_first_three_view_cuda_fault_localization_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036
+  source_commit: 223f943d7593f5d8a962cb9ec5f32333789576e0
+  source_tree: bb8166dfe18787faa5569cb53bc7d7a30bec77ae
+  status: done
+  outcome: mixed
+  conclusion: cuda_launch_blocking_replays_mixed_r035_fault_is_not_deterministic_under_current_probe
+  resolved_config: {bytes: 6468, sha256: 8a09a0a51e435809f859be55e62a24f9cccb454a295182e03e46d98a26b6a801}
+  summary: {bytes: 6295, sha256: 32e59c851dea1e5973e5ddf1e7cd6f527815135fd39085b6485235d54cea53ea}
+  manifest: {bytes: 3030, sha256: 7af30c35afd00132ea6c1c06165e58f01aa40656389932de9027145aabcfa704}
+  status_file: {bytes: 325, sha256: db5366e8f74a0f06077cccbc700eb50e40ff81b91ebf58fd756ac8c7ab8dab3d}
+  events: {bytes: 162, sha256: b975c0354289ea5e0c75fb8254f2df803f81c1bb86f74fea61f64a03590347af}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T133000Z__stage-f-f0e-r036-audit.json
+  bytes: 5077
+  sha256: ec7cfa3610e98a829f6fdfcf6486c59d0d8641f654304520b434eadd4f6634f6
+  status: pass
+  audited_run_status: done
+  inventory: {entry_count: 16, logical_bytes: 795861, regular_bytes_excluding_input_symlink_targets: 72116}
+
+probe_contract:
+  scene: scene-1087
+  inputs: [000_0.jpg, 000_1.jpg, 000_2.jpg]
+  exact_input_count: 3
+  attempts: 2
+  method: {sam_grid: 32, sam_batch: 64, amp: true, size: 480, temporal_setting: semionline, sam_pred_iou_threshold: 0.7}
+  execution_diagnostic: {CUDA_LAUNCH_BLOCKING: "1"}
+  method_parameter_change: false
+  quality_read: false
+
+attempts:
+  - name: cuda_launch_blocking_replay_1
+    classification: expected_cublas_internal_failure
+    returncode: 1
+    explicit_pytorch_oom: false
+    canonical_mask_count: 0
+    canonical_pred_json: false
+    stderr: {bytes: 2210, sha256: 56bec693fad744e85457289933073528617c17d98577db75312d904739346ea2}
+    stdout: {bytes: 1542, sha256: 45785f734aaa893142ccd7f8e790e206f346aebaceb9c7672f009cdf961fbbe2}
+  - name: cuda_launch_blocking_replay_2
+    classification: success
+    returncode: 0
+    schema_mask_count: 3
+    mask_sha256:
+      - 6d679a37a6db7f55176ad00c05442a7892d62072d94643ea619a1bfb31f86e1c
+      - c9768bbd50ad03c0192e4eb94a5ecc8110bf145d92e373c26f69d135c671af02
+      - 1d46fa81206387b4be8d9429a64cf0b209c12abad511c2d05ba0f07901e91a6d
+    metadata: {bytes: 2738, sha256: 10d55216a5314eb2ffa2c03142e9d5dbd7160096957daaca0b988893f56da650}
+    stderr: {bytes: 285, sha256: 995f200e25489037b0bd441e1744cbe1b23e896bec8a02a25f1514fbe3e25640}
+    stdout: {bytes: 1650, sha256: 5d8d817d657a925848ab233fff44b21456988ae73f5ba71f2ba61ab534ef3f9f}
+
+runtime:
+  gpu: NVIDIA_GeForce_RTX_3090
+  driver: 595.58.03
+  nvidia_reported_cuda: "13.2"
+  torch: 2.1.2+cu118
+  torch_cuda: "11.8"
+  cudnn: 8700
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24124
+  nvidia_headroom_mib: 452
+  cgroup_memory_peak_bytes: 17964371968
+  sample_count: 134
+  monitor_error_count: 0
+  wall_seconds: 43.10670765861869
+  all_preregistered_checks: true
+
+interpretation:
+  established:
+    - r035_cublas_failure_reproduced_once_with_synchronous_launch_reporting
+    - exact_second_fresh_process_succeeded_with_three_schema_valid_outputs
+    - failure_is_not_deterministic_under_this_two_replay_probe
+  not_established:
+    - mask_quality
+    - safe_full_materialization_recovery
+    - data_or_shape_deterministic_root_cause
+    - out_of_memory_root_cause
+    - healthy_reproducible_cuda_runtime
+  failure: V51-F62
+  failure_state: active_refined_as_nondeterministic_under_blocking_probe
+
+governance:
+  full_materialization_authorized: false
+  quality_read: false
+  actor_identity_alignment_read: false
+  smaller_batch_retry: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: cuda_runtime_health_and_reproducibility_gate_preregistration
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_refined_as_nondeterministic_under_blocking_probe

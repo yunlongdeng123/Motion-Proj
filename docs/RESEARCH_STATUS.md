@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage F F0e r036 mixed CUDA replay 已冻结（2026-08-18）
+
+- canonical r036=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`，source/tree=
+  `223f943...6e0/bb8166df...7ae`，status=`done`，outcome=`mixed`。同一组 1087 frame0 cameras0/1/2、同一
+  grid32/batch64/AMP 和 `CUDA_LAUNCH_BLOCKING=1` 下，replay1 在原 GEMM 位置返回 CUBLAS internal error，
+  replay2 则成功产出 `3` 张 `900×1600 uint8` mask 与 `pred.json`。
+- replay1 stderr/stdout=`56bec693...ea2/45785f73...be2`，不是显式 OOM且无 partial output；replay2 mask SHA=
+  `6d679a37...e1c/c9768bbd...f02/1d46fa81...a6d`，metadata=`10d55216...650`。这些成功输出只做 schema/hash，
+  未读 nonzero/quality，不能补写 r035。
+- runtime=`driver 595.58.03 /torch 2.1.2+cu118 /torch CUDA 11.8 /cuDNN 8700`；resources=`GPU 1→24,124/
+  24,576 MiB，headroom 452 MiB /cgroup 17,964,371,968 bytes /43.107s /134 samples /0 errors`，全部门 PASS。
+- audit=`20260818T133000Z__stage-f-f0e-r036-audit.json /5,077 bytes /ec7cfa36...34f6 /PASS`；freeze=
+  `configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml`。`V51-F62` 细化为当前 probe 下
+  process-to-process nondeterministic，仍 active；下一步只预注册 CUDA runtime health/reproducibility gate，full
+  materialization/quality/training/H/S/C/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0e scene-1087 CUDA fault localization 已预注册（2026-08-18）
 
 - task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`；

@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage F F0e r036 mixed / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036 /223f943...6e0 /
+  bb8166df...7ae`；outcome=`mixed`，conclusion=`cuda_launch_blocking_replays_mixed_r035_fault_is_not_deterministic_
+  under_current_probe`。resolved/summary/manifest/status/events SHA=`8a09a0a5...801/32e59c85...3ea/7af30c35...704/
+  db5366e8...b3d/b975c035...7af`。
+- exact replay1=`expected_cublas_internal_failure`，returncode1，0 mask/pred，非显式 OOM；replay2=`success`，3 个
+  schema-valid mask SHA=`6d679a37...e1c/c9768bbd...f02/1d46fa81...a6d`，pred=`10d55216...650`。两臂只差新进程
+  次序，无输入/方法/diagnostic 参数差异，因此当前 probe 不支持 deterministic data/shape failure。
+- resources=`peak/headroom 24,124/452 MiB /cgroup 17,964,371,968 bytes /43.106708s /134 samples /0 errors`；
+  audit=`5,077 bytes /ec7cfa36...34f6 /PASS`，manifest=`16 entries /795,861 logical /72,116 regular-excluding-input`。
+- failure delta=`V51-F62 refined_as_nondeterministic_under_blocking_probe`；freeze=
+  `stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml`。下一步是 runtime health/reproducibility gate；仍不读质量、
+  不缩 batch、不恢复 full materialization。
+
 ## V5.1 Stage F F0e r036 scene-1087 CUDA fault localization 预注册（2026-08-18）
 
 - formal target=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`；config=

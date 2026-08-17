@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32/upstream-batch64 三视图 association/repeatability/resource PASS，45-view materialization 在 1087 CUBLAS internal error 后进入 fault localization | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图边界、batch-size 输出敏感性、跨视图 vote 的 CUDA/CUBLAS 中断 | `V51-F01`–`V51-F62` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32/upstream-batch64 三视图 association/repeatability/resource PASS，45-view materialization 在 1087 CUBLAS internal error 后进入 runtime health/reproducibility gate | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图边界、batch-size 输出敏感性、跨进程非确定的 CUDA/CUBLAS 中断 | `V51-F01`–`V51-F62` |
 
 ### 1.1 V1 汇总条目
 
@@ -644,7 +644,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   的配置，或读取 partial quality 再选 recovery。合法下一步只能新预注册 exact 1087 `000_0/000_1/000_2` 三视图，保持
   grid32/batch64/AMP/size480/thresholds 并启用 `CUDA_LAUNCH_BLOCKING=1` 定位是否可重放；diagnostic 输出不得进入质量或
   training。证据：r035 source=`e4d64d3...1424`、status/events/resource-samples=`c3f917bd...f61/7d2221b5...0b7/
-  d46d632d...4e2`、stderr=`f626efc6...8a5`、audit=`25,311 bytes /6d217a7e...13e1 /PASS`。
+  d46d632d...4e2`、stderr=`f626efc6...8a5`、audit=`25,311 bytes /6d217a7e...13e1 /PASS`。r036 在 exact
+  1087 首三视图、相同 method 且 `CUDA_LAUNCH_BLOCKING=1` 下串行 fresh-process replay 两次：第一次在相同 GEMM
+  位置复现、第二次成功并生成 3 个 schema-valid mask/pred，故 deterministic input/shape 必现假设被推翻；与此同时一成一败
+  证明 runtime 还不具备 materialization 所需的 repeatable execution。r036 resource 仍 PASS，成功输出未读质量且不能补写
+  r035。下一步先做预注册 runtime health/control-vs-target reproducibility gate；禁止用第二次偶然成功直接重启 45-view。
+  r036 evidence=`summary 32e59c85...3ea /audit 5,077 bytes, ec7cfa36...34f6 /freeze
+  configs/worldsim_v51/stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -89,3 +91,22 @@ def test_f0e_r036_independent_audit_replays_mixed_outcome() -> None:
         "success",
     ]
     assert result["quality_read"] is False
+
+
+def test_f0e_freeze_keeps_mixed_outcome_out_of_materialization() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0e_scene1087_cuda_fault_localization_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["outcome"] == "mixed"
+    assert freeze["independent_audit"]["status"] == "pass"
+    assert freeze["interpretation"]["failure"] == "V51-F62"
+    assert freeze["governance"]["full_materialization_authorized"] is False
+    assert freeze["governance"]["smaller_batch_retry"] is False
+    assert freeze["governance"]["next_phase"] == (
+        "cuda_runtime_health_and_reproducibility_gate_preregistration"
+    )
