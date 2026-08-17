@@ -1,6 +1,6 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-17
+> **最后更新**：2026-08-18
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V5.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F23` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g/operator/H uplift 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；evaluation-only proxy governance 仍 active | `V51-F01`–`V51-F25` |
 
 ### 1.1 V1 汇总条目
 
@@ -338,6 +338,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `configs/worldsim_v51/stage_b_h_uplift_v1.yaml` 与 v2 recovery config。v2/r012 从原冻结输入完整重跑，在相同 observed
   NVIDIA/Torch reserved=`20,554/20,202 MiB` 下通过 22 GiB 门；6/6 sidecar、19/19 manifest、3 checkpoint 与全部 locks
   独立审计 exact，因此本条 resolved。该解决不证明 B0/B1 方法质量有效，`V51-F15` 仍须由预注册 evaluation-only 门处理。
+- `V51-F24`（`engineering/protocol`, `resolved before formal r013`）：H heldout feature 预注册回归中，新 runner/sidecar
+  测试已在 frozen motionproj interpreter 得到 `8 passed`，但随后一次聚合命令又在同一 interpreter 调用依赖 DriveStudio
+  runtime 的 `test_worldsim_v51_h_uplift.py`，该测试按合同报告 runtime mismatch，汇总为 `1 failed / 9 passed`。这只是测试
+  调用环境错误，未创建 formal run、未启动 GPU、未读 membership/uplift quality，不能写成 H uplift 或 heldout transform 失败。
+  合法修复是按 `V51-F19` 的环境分层分别执行：DINO/sidecar/heldout tests 使用 motionproj Python，renderer/uplift tests
+  使用 drivestudio Python；禁止为让聚合命令通过而改任一冻结 runtime config 或向主环境安装 DriveStudio CUDA 依赖。
+  r013 config 将本条纳入 `failure_ledger_refs`，并须在 clean prereg commit 前保留两个解释器各自的 PASS 证据。
+- `V51-F25`（`engineering`, `resolved before formal r013`）：从 Windows PowerShell 发出的第二次聚合 SSH 命令在
+  双引号内包含 `$(find ...)`；本地 shell 在 SSH 前提前解释该命令替换，并把远端 `find -name` 片段误当成 PowerShell
+  命令，最终本地报 `-name is not recognized`、远端 bash 报 unmatched quote。测试没有启动、GPU 未使用、仓库未修改、
+  quality 未读。防重复门禁：跨 PowerShell→SSH 的命令不得嵌套未转义命令替换；本次改为独立执行测试、`git diff --check`
+  与只读 `find`，不使用 shell substitution 控制流。不得把 launcher quoting 失败计入算法或测试 verdict。
 
 <a id="detail-v5"></a>
 

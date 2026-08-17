@@ -1,6 +1,23 @@
 # WorldSim V5.1 M1-Only Research Plan
 ## Observability-Aware Bayesian Gaussian Ownership for Driving World Simulation
 
+## 2026-08-18 machine amendment：H evaluation-only two-phase contract
+
+本 amendment 只把既有 Stage B 指标与 split 原则机器化，不改变方法路线或 validation/test exact-once 约束。
+
+- Phase A（r013）只读 H evaluation frames=`2/42/82/122/162`、cameras=`0/1/2`，用 r010 frozen PCA
+  transform official DINOv2 features；PCA fit、membership proxy、renderer、uplift feature 与 quality read 全为 false。
+- Phase B 必须在 Phase A result freeze 后另行 clean preregister，且首次读取 r012 B0/B1 质量前固定：
+  same-Gaussian cross-view cosine repeatability、same-actor cosine、actor-background cosine/margin、heldout
+  reprojection cosine、Background/Rigid coverage、pair sampling 与 abstention。
+- membership 只能声明为 `model_membership_proxy_not_ground_truth`，仅供 evaluation，不得作为方法、PCA 或 uplift 输入。
+  每 actor 至少 32 个 covered Gaussian，最多 4,096 pairs，seed=`20260814`；无 eligible actor 的 scene abstain。
+- H pass gate 固定为：至少 2/3 scenes evaluable；至少 2 scenes 的 B1 actor-background margin `>0`；scene-balanced
+  B1 margin mean `>0`；mean Rigid coverage `>=0.60`；heldout reprojection cosine 的 scene-balanced
+  `B1-B0 >= -0.01`。未过 H gate 不得读取 S/C，过门后也只能按既有 S→C development 顺序推进。
+- final heldout remainder=`4`、validation/test、KITTI、M2/M3 保持锁定；`V51-F15` 在 Phase B proxy/evaluation
+  证据审计完成前保持 active。
+
 > **目标**：只推进 M1，把已经在 V5 中显示正信号的 Bayesian Unary 升级成一个 **可跨场景稳定工作、可严格消融、具有顶会论文方法贡献潜力** 的 Gaussian ownership / semantic sidecar 方法。
 > **M2 / M3**：全部冻结为 `pending`，V5.1 期间不推进、不调参、不占用研究预算。
 

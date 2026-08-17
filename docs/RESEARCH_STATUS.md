@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage B H heldout feature transform 已预注册（2026-08-18）
+
+- 下一正式 run 计划为 `m1-stage-b-h-eval-feature-s20260814-r013`。它只从冻结 image manifest 精确选择
+  `0471/1087/0379 × frames 2/42/82/122/162 × cameras 0/1/2 = 45` 个 H evaluation views；这些 frame
+  全部满足 `frame % 5 == 2`，并显式排除 `frame % 5 == 4` 的最终 heldout remainder。
+- 使用 r010 已冻结的 official DINOv2 ViT-g/14-reg4 与 PCA state；只执行 transform，`fit=false`，不得重估
+  mean/std/PCA。首个 raw feature 重复推理和首个 PCA transform 均须 bit-exact；输出 45 个
+  `[40,64,114] float32` deterministic sidecars，逐项绑定 image/model/checkpoint/PCA/content identity。
+- 本门只授权为随后 H evaluation-only runner 准备 heldout feature：不读取 r012 uplift 数值、不读取
+  Background/Rigid membership proxy、不启动 renderer、不计算或查看任何 method quality。S/C、validation/test/KITTI
+  继续锁定，M2/M3=`pending`；`V51-F15` 仍 active。
+- config/runner/test=`configs/worldsim_v51/stage_b_h_eval_feature_v1.yaml`、
+  `scripts/run_worldsim_v51_h_eval_feature.py`、`tests/test_worldsim_v51_h_eval_feature.py`。只有 clean prereg commit
+  与 regression 通过后才能创建 r013；本门结果还不能判定 H gate。
+- 首次聚合 regression 把 DriveStudio uplift test 误放入 motionproj interpreter，得到 `1 failed / 9 passed`；新 heldout
+  tests 本身为 `8/8 PASS`。该调用错误登记为已解决 `V51-F24`，后续按冻结双环境分别复跑，不改 runtime contract。
+- 第二次聚合命令在 PowerShell→SSH 边界被本地提前解释 `$(find ...)`，测试未启动且无状态变化；登记已解决
+  `V51-F25`，后续检查不再使用嵌套 command substitution。
+
 ## V5.1 Stage B r012 H 45-view B0/B1 uplift 门通过（2026-08-18）
 
 - canonical r012=`20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012`，source=`4fc07cb`，status=`done`，

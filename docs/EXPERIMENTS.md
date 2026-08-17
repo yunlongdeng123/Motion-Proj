@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage B H heldout feature r013 预注册（2026-08-18）
+
+- denominator=`3 H scenes × 5 evaluation frames × 3 cameras = 45 views`；frames 固定为
+  `2/42/82/122/162`，只读 evaluation remainder=`2`，禁止触碰 final heldout remainder=`4`。
+- extraction=`official ViT-g14-reg4 / 1596×896 / last-of-four / raw float32`；transform 只消费 r010 frozen
+  `feature_mean/std + pca_mean/components`，PCA refit/subsample/search 全部禁止。首图 raw inference 与 transform
+  分别做一次 bit-exact repeat。
+- planned outputs=`45 deterministic [40,64,114] float32 NPZ + identity manifest + resource/report`；checkpoint
+  before/after SHA 必须 exact。resource gate=`22,528 MiB NVIDIA/Torch reserved / 80 GiB cgroup / 1,800 s`。
+- 本阶段 `membership_proxy/renderer/uplift_feature/method_quality=false`，不能查看 r012 B0/B1 质量；
+  S/C/validation/test/KITTI=false，M2/M3=pending。failure refs 含 active `V51-F15`，delta=`pending`。
+- pre-formal regression 首轮新 heldout suite=`8 passed`；一次附加聚合命令因错误地用 motionproj Python 调用
+  DriveStudio uplift test 而得到 `1 failed / 9 passed`。未创建 run、未读 quality；登记 `V51-F24 resolved`，须按双环境重跑。
+- 随后的 PowerShell→SSH 聚合命令又因本地提前解释 `$(find ...)` 而在任何测试前失败；无 repo/GPU/quality 状态变化，
+  登记 `V51-F25 resolved`，后续拆分成无 command substitution 的独立命令。
+
 ## V5.1 Stage B r012 canonical H uplift（2026-08-18）
 
 - run=`20260817T163100Z__m1-stage-b-h-uplift-s20260814-r012`，source=`4fc07cb`，status=`done`；输入仍为 r005
