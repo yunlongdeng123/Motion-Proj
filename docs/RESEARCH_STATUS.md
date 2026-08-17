@@ -1,5 +1,23 @@
 # Research Status
 
+## V5.1 M1-only P0/D0 冻结完成，Stage A A0 进入 exact replay（2026-08-17）
+
+- `WS-V51-P0-M1-SCOPE-FREEZE-01=done`、`WS-V51-D0-DEV-ROLE-FREEZE-01=done`；实现提交=`58953a5`，
+  canonical start audit=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-P0-M1-SCOPE-FREEZE-01/20260817T101000Z__p0-start-audit-s0-r001`，
+  conclusion=`v51_m1_scope_roles_and_v5_inputs_frozen`。
+- V5.1 branch=`research/worldsim-v5.1-m1`，immutable V5 parent=`44d0e4a`；normative plan SHA=`3d7f7481...`，
+  原 V5 cohort file/cohort SHA=`6d8caf19.../55337315...`。当前只授权 P0、D0 与 Stage A，M2/M3 保持 `pending`，
+  Stage B 及 Graph/anchor/identity/BKI 等后续路线继续锁定。
+- Development 角色按原 cohort 顺序 exact 冻结：H=`0471/1087/0379`，S=`0998/0359`，
+  C=`0875/0535/0436`；8-scene validation 与 20-scene test quality 均未读，KITTI method tuning=false。
+- r001 对 r037/r042/r043 的 `65+44+50=159` 个 manifest 文件、合计 `680,254,598 bytes` 逐 bytes/SHA 复核，
+  三个 checkpoint、summary、status、fingerprint、manifest、diagnostics 与 resolved config 均 exact；r001
+  summary/status/fingerprint/manifest SHA=`6d495ce2.../8a724b06.../b52b63d3.../8ab0ad66...`。
+- `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`，当前唯一下一门是 A0：用冻结 observation 重算
+  B0/B1/B3 posterior/统计并对 canonical table 做 bit-exact replay，再决定是否启动 A1 visibility mask。
+- 首轮 pytest collection 因仓库根未注入 `sys.path` 被阻塞，修复后 `4 passed`；该工程教训登记为
+  `V51-F01=resolved`，没有方法推理或质量读取，不能计入算法分母。
+
 ## V1–V5 统一 failure ledger 治理：done（2026-08-17）
 
 - `DOC-FAILURE-LEDGER-01=done`，治理提交=`4e512d9`；`docs/RESEARCH_FAILURES.md` 现为唯一活跃失败事实源，

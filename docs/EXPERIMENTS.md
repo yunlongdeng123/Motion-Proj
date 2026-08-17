@@ -1,5 +1,24 @@
 # Experiments
 
+## V5.1 M1-only P0/D0 start audit（2026-08-17）
+
+| Task / Run | 状态 | 冻结分母 | 结果 | 下一门 |
+|---|---|---|---|---|
+| `WS-V51-P0-M1-SCOPE-FREEZE-01` r001 | done | M1-only scope；V5 parent `44d0e4a` | scope/授权/quality locks exact；M2/M3 pending | P0 closed |
+| `WS-V51-D0-DEV-ROLE-FREEZE-01` r001 | done | H/S/C=`3/2/3`；validation/test=`8/20` | 原 V5 cohort 顺序 exact；validation/test quality unread | D0 closed |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` A0 binding | running | r037/r042/r043=`159 files / 680,254,598 bytes` | canonical inputs、manifest inventory 与 checkpoint identity exact | posterior/metric exact replay |
+
+- canonical=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-P0-M1-SCOPE-FREEZE-01/20260817T101000Z__p0-start-audit-s0-r001`，
+  source=`58953a57557b97f449c4d83db7d11132ddda5e73`；summary/status/fingerprint/manifest SHA=
+  `6d495ce26c211843e69dd9034dccfc916f17311dc59edaf5e7115ed32723ef9c / 8a724b06563ff1cc4181f0760db9dc0013fc9897d7a38a3d3bdc08005fd1bd93 /`
+  `b52b63d342034fa9c2fabe858ad0f1d18d5ee6d67e9c67472e82c725aa643958 / 8ab0ad66eddedece7cfe6db4871172b07ae2c80430c8ddba156df76ce2941dc5`。
+- `failure_ledger_refs`：`V5-F09/F11–F14/F18/F20–F26/F29–F33`；`failure_ledger_delta`：start audit=`none`，
+  实现阶段新增并已解除测试入口工程失败 `V51-F01`。
+- 首轮窄测最初在 collection 阶段因 repo root 未注入而 blocked；修复后
+  `pytest -q tests/test_worldsim_v51_protocol.py tests/test_audit_worldsim_v51_start.py`=`4 passed`，
+  `python scripts/audit_worldsim_v51_start.py --help` 通过。无训练、方法推理、parameter search、
+  validation/test quality read 或 KITTI tuning。
+
 ## V1–V5 failure ledger 治理登记（2026-08-17）
 
 | Task ID | 状态 | 输入范围 | 结果 | 研究边界 |

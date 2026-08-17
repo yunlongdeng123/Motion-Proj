@@ -8,9 +8,9 @@
 
 | Task ID | 状态 | 当前证据/下一门 |
 |---|---|---|
-| `WS-V51-P0-M1-SCOPE-FREEZE-01` | running | scope config 与审计器已实现，待 clean commit 后 formal audit |
-| `WS-V51-D0-DEV-ROLE-FREEZE-01` | running | H/S/C 固定为 `3/2/3`，待 formal audit |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 canonical bindings 已冻结，下一门是 B0/B1/B3 exact replay |
+| `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
+| `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | 159 个 canonical 文件 exact，下一门是 B0/B1/B3 posterior/metric replay |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -36,3 +36,12 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 
 正式状态、实验事实和失败事实仍分别以 `docs/RESEARCH_STATUS.md`、`docs/EXPERIMENTS.md` 与
 `docs/RESEARCH_FAILURES.md` 为准。
+
+## P0/D0 canonical evidence
+
+- run：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-P0-M1-SCOPE-FREEZE-01/20260817T101000Z__p0-start-audit-s0-r001`
+- source commit：`58953a57557b97f449c4d83db7d11132ddda5e73`
+- conclusion：`v51_m1_scope_roles_and_v5_inputs_frozen`
+- summary/manifest SHA：`6d495ce26c211843e69dd9034dccfc916f17311dc59edaf5e7115ed32723ef9c /`
+  `8ab0ad66eddedece7cfe6db4871172b07ae2c80430c8ddba156df76ce2941dc5`
+- canonical inventory：r037/r042/r043=`65/44/50 files`，总计 `680,254,598 bytes`，逐文件 exact。
