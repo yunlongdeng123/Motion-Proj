@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage E E0a no-quality structural probe 已预注册（2026-08-18）
+
+- Stage E 第一小步固定为 `E0a simple voxel structural observation-density probe`，不是 PanoGS 复现，也不声称方法
+  质量。三档 voxel size 只由各场 frozen directed-KNN 正边长的 `q50/q75/q90` 导出，world-origin grid、无 level
+  选择、无 learned anchor、无 DINO/motion/SAM probability/base-model membership/quality target、无传播或参数搜索。
+- raw comparator 为一 Gaussian 一 node；voxel node 的 observation 仅取 15 个 frozen train-only views 中 member
+  availability/reliability/visibility 的 union。逐场至少一档同时满足 node count 严格减少、Gaussian-weighted union views
+  严格增加、至少救回一个 raw-zero-observation Gaussian 才 PASS；seed conflict 只报告，不能用于选 level。
+- E0a PASS 只解锁 E0b `same propagation, raw Gaussian vs voxel super-primitive` 的预注册；FAIL 则 reject node
+  elevation、停止 E1/E2 并进入 Gaussian Grouping。PanoGS official paper/repo 已绑定 CVPR 2025、commit=`8dfb69b`、
+  Apache-2.0，但 E1 execution 仍锁定；AG²aussian E2 同样锁定。H/S/C/validation/test/KITTI 未读，M2/M3=pending。
+
 ## V5.1 Stage D r018 H rejected；已自动进入 Stage E（2026-08-18）
 
 - canonical r018=`20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018`，source=`2cd98b3`，

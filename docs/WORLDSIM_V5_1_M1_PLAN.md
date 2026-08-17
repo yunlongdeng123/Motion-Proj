@@ -1,5 +1,13 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0a 分相预注册
+
+为避免 observation-density 结构证据与传播质量混在一次运行中，E0 被拆成两相。E0a 只将 frozen raw Gaussian 按
+KNN edge-length `q50/q75/q90` 三档做 world-origin voxel grouping，检查 member-view union 是否在每场严格提高且能救回
+raw zero-observation Gaussian；不选 voxel level、不运行 propagation、不读任何 quality。PASS 后才允许另行冻结 E0b
+的 same-edge/same-propagation raw-vs-voxel 对照；FAIL 直接停止 E1/E2 并转 Gaussian Grouping。PanoGS 论文/代码仅作为
+后续 E1 provenance 冻结，E0a 不得称为 PanoGS faithful port。
+
 ## 2026-08-18 Stage D 收口与 Stage E 解锁
 
 r018 在冻结 H 12 views 上被正式拒绝：BF1 positive scenes=`2/3`、mean BF1=`+0.0002196`，但 mean IoU=
@@ -42,7 +50,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | 只解锁 E0 simple voxel super-primitive structural/density preflight；E1/E2 仍锁定 |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a no-quality density probe 已预注册；PASS 才可预注册 E0b same-propagation，E1/E2 仍锁定 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

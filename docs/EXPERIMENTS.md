@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage E E0a simple voxel structural probe 预注册（2026-08-18）
+
+- task/arm=`WS-V51-M1-E-NODE-ELEVATION-01 / E0A`；输入只继承 frozen B3 center/unary、V5 KNN edges 与 D0
+  的 15 train-only availability/reliability/visibility rows。levels=`edge-length q50/q75/q90`，不预选 resolution；输出
+  逐 Gaussian deterministic voxel node-id sidecar 与 observation-density/seed-mixing diagnostics。
+- gate 是 no-quality existence gate：每场至少一档严格减少 node、提高 Gaussian-weighted member-view union、救回
+  raw zero-observation Gaussian。它不渲染、不传播、不计算 BF1/IoU，不读取已用完的 r018 H 或 S/C/validation/test；
+  PASS 后仍须另行预注册 E0b same-propagation matched A/B，不能把 density gain 写成算法提升。
+- source context：PanoGS official paper=`CVPR 2025 / 3,396,570 bytes / 1d206aeb...f49c`，official repo=
+  `zhaihongjia/PanoGS@8dfb69b`、tree=`c7cc9b4`、Apache-2.0；E0 被明确分类为 internal simple control，E1/PanoGS
+  faithful execution 与 E2/AG²aussian 仍 locked。failure refs=`V51-F31/V51-F37`，prereg delta=`none`。
+
 ## V5.1 Stage D r018 canonical H rejection（2026-08-18）
 
 - run=`20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018`，source/tree=
