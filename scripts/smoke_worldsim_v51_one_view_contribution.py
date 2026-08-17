@@ -134,7 +134,7 @@ class ResourceMonitor:
 def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     config = load_yaml(config_path)
     if config.get("schema_version") != (
-        "worldsim_v51_stage_b_one_view_contribution_v1"
+        "worldsim_v51_stage_b_one_view_contribution_v2"
     ):
         raise ProtocolError("one-view contribution schema 漂移")
     if config.get("task_id") != "WS-V51-M1-B-LUDVIG-UPLIFT-01":
@@ -194,6 +194,12 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             raise ProtocolError(f"one-view contribution contract 漂移: {name}")
 
     runtime = config["runtime"]
+    if runtime.get("python") != "/root/autodl-tmp/envs/drivestudio/bin/python":
+        raise ProtocolError("one-view contribution 必须绑定 DriveStudio interpreter")
+    if runtime.get("torch") != "2.1.2+cu118" or runtime.get("torch_cuda") != "11.8":
+        raise ProtocolError("DriveStudio torch/CUDA contract 漂移")
+    if runtime.get("required_imports") != ["pytorch3d", "gsplat"]:
+        raise ProtocolError("DriveStudio required imports 漂移")
     upstream = Path(runtime["drivestudio_checkout"])
     if _git(upstream, "rev-parse", "HEAD") != runtime["drivestudio_commit"]:
         raise ProtocolError("DriveStudio source commit 漂移")
@@ -388,6 +394,12 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
     if branch != V51_BRANCH or _git(PROJECT, "status", "--short"):
         raise ProtocolError("one-view contribution 要求 V5.1 branch clean worktree")
     config, operator_freeze = validate_config(config_path)
+    if Path(sys.executable).resolve() != Path(config["runtime"]["python"]).resolve():
+        raise ProtocolError("formal one-view contribution 使用了错误 interpreter")
+    if torch.__version__ != config["runtime"]["torch"]:
+        raise ProtocolError("formal one-view contribution torch version 漂移")
+    if torch.version.cuda != config["runtime"]["torch_cuda"]:
+        raise ProtocolError("formal one-view contribution torch CUDA 漂移")
     _write_text(
         run_dir / "resolved_config.yaml",
         yaml.safe_dump(
@@ -539,7 +551,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

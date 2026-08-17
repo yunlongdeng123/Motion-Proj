@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r005 operator PASS；r006 one-H-view contribution denominator 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r006 wrong-env blocked；r007 DriveStudio-env exact recovery 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,9 +32,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F18`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F19`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
-  operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`。
+  operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006 environment delta=`V51-F19 active`。
 
 ## 配置与入口
 
@@ -63,6 +63,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_operator_parity_v1.yaml`
 - `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml`
+- `configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -212,5 +213,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - r006 已在结果前冻结 scene-0471/frame-0/camera-0、V5 r027 checkpoint、`1e-4/1e-3` 两级 support、12 GiB GPU/
   48 GiB cgroup 门与 payload-consumption locks；只统计 renderer denominator，不保存 intersection rows、不消费 RGB/LiDAR/
   membership、不计算 feature/quality。
+- r006 因 v1 错绑 motionproj interpreter、缺 `pytorch3d` 在 dataset/renderer 前 blocked，见 `V51-F19`；v2/r007 只改用
+  已验证的 frozen DriveStudio Python/torch/CUDA/import contract，其他输入、门和 locks 不变。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

@@ -17,13 +17,15 @@ from scripts.smoke_worldsim_v51_one_view_contribution import (
 )
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml"
 
 
 def test_one_view_config_binds_operator_checkpoint_and_locks() -> None:
     config, operator_freeze = validate_config(CONFIG)
     assert operator_freeze["status"] == "done"
     assert config["scene"]["expected_total_gaussians"] == 859613
+    assert config["runtime"]["python"].endswith("/envs/drivestudio/bin/python")
+    assert config["runtime"]["required_imports"] == ["pytorch3d", "gsplat"]
     assert config["contribution"]["consume_pixel_rgb_values"] is False
     assert config["contribution"]["consume_membership_proxy"] is False
     assert config["locks"]["method_quality_read"] is False

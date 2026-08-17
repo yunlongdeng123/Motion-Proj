@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage B r006 interpreter blocked，r007 DriveStudio-env 恢复已预注册（2026-08-17）
+
+- canonical blocked r006=`20260817T152900Z__m1-stage-b-one-view-contribution-s20260814-r006`，source=`5e59443`；
+  在 `_build_runtime()` import `pytorch3d` 时 `ModuleNotFoundError`，发生于 dataset/trainer 构造和 renderer 启动前。
+  status/events/resolved/resource-samples SHA=`06b74ec9.../914fa591.../1b2cb043.../f6157f3f...`。
+- 根因是 v1 config 错绑 `/root/autodl-tmp/envs/motionproj/bin/python`；冻结 DriveStudio runner 实际需要独立
+  `/root/autodl-tmp/envs/drivestudio/bin/python`。后者已只读确认 torch=`2.1.2+cu118`、CUDA=`11.8`、
+  `pytorch3d` 与 `gsplat` 可 import。登记 `V51-F19`，不是 renderer/LUDVIG/资源或质量失败。
+- recovery config=`configs/worldsim_v51/stage_b_one_view_contribution_v2.yaml`；只改变 interpreter/env contract，
+  scene/view/checkpoint、operator freeze、两级 floor、资源门与所有 consumption/quality locks 原字继承。formal run 还会核对
+  `sys.executable` 与 torch/CUDA exact；新 run ID=r007，禁止覆盖或续写 r006。
+
 ## V5.1 Stage B one-H-view contribution denominator smoke 已预注册（2026-08-17）
 
 - planned r006 suffix=`m1-stage-b-one-view-contribution-s20260814-r006`；唯一 view=

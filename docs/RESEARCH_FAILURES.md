@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/下载/operator-test 风险已解除 | `V51-F01`–`V51-F18` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view wrong-env 正在 exact recovery | `V51-F01`–`V51-F19` |
 
 ### 1.1 V1 汇总条目
 
@@ -290,6 +290,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不推翻 r005 artifact、operator parity 或任一质量结论。修复只替换两处旧变量名，并重跑同一 20-test regression；
   禁止重跑/覆盖 r005 或修改 freeze 数字来绕过测试。证据：`tests/test_worldsim_v51_feature_uplift.py`、
   `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`。
+- `V51-F19`（`engineering/protocol`, `active recovery preregistered`）：one-H-view formal r006 在
+  `_build_runtime()` 导入 DriveStudio `models.gaussians.basics` 时因 `ModuleNotFoundError: pytorch3d` blocked；v1 config 错把
+  入口冻结为 motionproj Python，而历史 DriveStudio 运行合同使用独立 `/root/autodl-tmp/envs/drivestudio/bin/python`。
+  terminal 发生在 dataset/trainer 构造和 renderer 启动前，0 intersection、0 denominator、0 quality；这推翻“主项目环境可
+  直接承载 DriveStudio CUDA 依赖”的工程假设，不是 renderer/LUDVIG/资源失败。合法恢复必须保留 r006，以 v2 + 新 r007
+  只替换 interpreter，并在 formal 内 exact 核对 executable、torch=`2.1.2+cu118`、CUDA=`11.8`、`pytorch3d/gsplat`
+  imports；不得安装包污染 motionproj env 或改 view/floor/resource gate。证据：r006 status SHA=`06b74ec9...b4be3`、
+  `configs/worldsim_v51/stage_b_one_view_contribution_v1.yaml` 与 v2 recovery config。
 
 <a id="detail-v5"></a>
 

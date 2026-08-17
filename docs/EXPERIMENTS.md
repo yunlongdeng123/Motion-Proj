@@ -1,5 +1,16 @@
 # Experiments
 
+## V5.1 Stage B r006 blocked / r007 environment recovery 预注册（2026-08-17）
+
+- r006=`20260817T152900Z__m1-stage-b-one-view-contribution-s20260814-r006`，source=`5e59443`，status=`blocked`，
+  reason=`ModuleNotFoundError: No module named 'pytorch3d'`。阻塞点在 import，dataset/trainer/renderer/intersection 均未启动，
+  没有 denominator 或质量数值。
+- r006 status/events/resolved/resource-samples SHA=`06b74ec9.../914fa591.../1b2cb043.../f6157f3f...`；run 仅 4 个
+  terminal/config/resource 文件，保留且不复用。failure delta=`V51-F19`。
+- v2 只把 runtime 从 `motionproj` 改为 frozen `drivestudio` interpreter，并绑定 torch/CUDA=
+  `2.1.2+cu118 / 11.8`、required imports=`pytorch3d,gsplat`；预检 import 已通过。planned recovery r007 使用新 run ID。
+- denominator、view、checkpoint、resource 与 no-quality locks 全部逐字继承 v1；不能借恢复改 floor/场景/分辨率或输出。
+
 ## V5.1 Stage B one-H-view renderer contribution 预注册（2026-08-17）
 
 - planned r006=`m1-stage-b-one-view-contribution-s20260814-r006`；scene/frame/camera=`0471/0/0`，image index=`0`、
