@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0b r033 三视图 association/batch parity 预注册（2026-08-18）
+
+- task/run=`WS-V51-M1-F-IDENTITY-EMBEDDING-01 /20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033`；
+  config=`configs/worldsim_v51/stage_f_f0b_three_view_association_parity_v1.yaml`，seed=`20260814`，split=`train_only`。
+  r026 manifest=`18,410 bytes /653941ec...7a4 /45 records /record-chain b3458c27...4d95`；选择同相机三帧
+  `000_0/040_0/080_0.jpg`，输入图片在三臂共 decode=`9` 次，输出 mask 共读取=`9` 次。
+- arms 固定为 `grid32/batch32 primary → grid32/batch16 parity → grid32/batch32 repeat`；batch16 是同 grid
+  的 execution-memory parity，不改变 prompt denominator。PASS 必须同时满足两组 mask/pred exact SHA、primary
+  non-empty-mask>=1、positive short-ID 跨>=2帧、GPU<=24,000 MiB、cgroup<=60 GiB、wall<=1,800s、disk>=40 GiB、
+  monitor errors=0。
+- 本轮不是 quality run，不建立 grid64 quality parity、mask quality、full materialization、identity-training readiness
+  或 U2/B3 uplift；quality/H/S/C/validation/test/KITTI/F1/F2 均锁定 false，M2/M3=`pending`。failure refs=
+  `V51-F31/F37/F42/F43/F46/F49/F52/F53/F55/F57/F59`；`failure_ledger_delta=none_at_preregistration`。
+
 ## V5.1 Stage F F0a r032 canonical resource/schema PASS（2026-08-18）
 
 - run/source/tree=`20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032 /29a160a...b52 /

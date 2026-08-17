@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage F F0b 三视图 association/batch parity 已预注册（2026-08-18）
+
+- task=`WS-V51-M1-F-IDENTITY-EMBEDDING-01`；formal target=
+  `20260818T100000Z__m1-stage-f-f0b-association-parity-s20260814-r033`，source=本预注册提交，seed=`20260814`。
+  授权只来自 r032 freeze；输入只取 r026 已冻结 45-view train-only manifest 中 `scene-0471/index382/camera0`
+  的 frame=`0/40/80`，逐文件 bytes/full SHA 锁定，不读 H/S/C/validation/test/KITTI。
+- 三臂在同一个不可复用 run 内串行执行：primary=`grid32/batch32`、parity=`grid32/batch16`、repeat=
+  `grid32/batch32`。除 batch parity 臂的 `SAM_NUM_POINTS_PER_BATCH` 外，official source/assets、1024 prompts、size480、
+  IoU0.7、semionline 与输入完全相同；要求三张 mask 与 `pred.json` 在 primary↔parity、primary↔repeat 间 exact SHA 一致。
+- association 结构门要求 primary 至少 1 张 non-empty mask，且至少 1 个 positive short ID 跨至少 2 帧出现；这只检验
+  3-frame voting/association 是否产生可重复的 identity input，不读 mask quality，也不证明 grid32 与 upstream grid64
+  的质量等价。GPU/cgroup/wall/disk/monitor 门沿用 r032，三臂串行避免同时占卡。
+- `failure_ledger_refs=[V51-F31,F37,F42,F43,F46,F49,F52,F53,F55,F57,F59]`，预注册 delta=`none`；
+  `full_materialization/identity_training/F1/F2=false`，M2/M3=`pending`。仅当 exact parity、repeatability、non-empty、
+  stable short-ID 与资源门全部 PASS，下一步才允许预注册 train-only full identity-mask materialization。
+
 ## V5.1 Stage F F0a r032 resource/schema PASS 已冻结（2026-08-18）
 
 - canonical r032=`20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032`，source/tree=

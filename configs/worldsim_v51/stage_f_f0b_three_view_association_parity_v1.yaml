@@ -1,0 +1,170 @@
+schema_version: worldsim_v51_stage_f_f0b_three_view_association_parity_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0b_three_view_semionline_association_batch_parity_and_repeatability
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0a_environment_freeze:
+    path: configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_freeze_v1.yaml
+    sha256: 1372e2e097d88cc833b3e64c5328338cc5c5fd12fe8b50a46f06497dbd4d1ba0
+    required_status: done
+    required_conclusion: f0a_environment_and_one_view_resource_smoke_done_grid_quality_batch_parity_and_association_smoke_required
+    required_next_phase: same_grid_batch_parity_and_three_view_semionline_association_repeatability_smoke_preregistration
+
+sources:
+  gaussian_grouping:
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f
+    commit: 0ab60afed3385b717c985af1d30a20f7b0884c89
+    tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16
+  deva:
+    path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA
+    license: CC-BY-NC-SA-4.0
+    identity: contained_in_frozen_gaussian_grouping_tree
+  grounded_segment_anything:
+    path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f
+    commit: 99fbbe789cf99ff851886bca0935da33586db86b
+    tree: 89c82ae86de908fec7caaa646df24015d354dc97
+
+assets:
+  deva:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth
+    bytes: 276911801
+    sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48
+  sam_vit_h:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth
+    bytes: 2564550879
+    sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e
+  resnet18:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet18-5c106cde.pth
+    bytes: 46827520
+    sha256: 5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8
+  resnet50:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet50-19c8e357.pth
+    bytes: 102502400
+    sha256: 19c8e3572231adff6824a2da93fd67b5986919a2e65f8b6007eab4edee220097
+
+environment:
+  runtime: /root/autodl-tmp/envs/deva-v51-stage-f-v2/bin/python
+  packages:
+    - {distribution: supervision, version: 0.14.0, import_name: supervision}
+    - {distribution: PuLP, version: 2.7.0, import_name: pulp}
+    - {distribution: gurobipy, version: 12.0.3, import_name: gurobipy}
+  TORCH_HOME: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home
+  PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+
+input_provenance:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026/artifacts/train_only_image_manifest.json
+  bytes: 18410
+  sha256: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4
+  record_count: 45
+  record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95
+  split: train_only
+  image_pixels_decoded: false
+
+inputs:
+  - scene: scene-0471
+    scene_index: 382
+    frame: 0
+    camera: 0
+    role: historical_diagnostic
+    path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/000_0.jpg
+    staging_filename: 000_0.jpg
+    bytes: 99906
+    sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e
+    size_wh: [1600, 900]
+  - scene: scene-0471
+    scene_index: 382
+    frame: 40
+    camera: 0
+    role: historical_diagnostic
+    path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/040_0.jpg
+    staging_filename: 040_0.jpg
+    bytes: 101393
+    sha256: 391b1a4785c5c958f44c71eb3721ea450f6418a8abf3cc339e0428dbb7f03ec6
+    size_wh: [1600, 900]
+  - scene: scene-0471
+    scene_index: 382
+    frame: 80
+    camera: 0
+    role: historical_diagnostic
+    path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/382/images/080_0.jpg
+    staging_filename: 080_0.jpg
+    bytes: 111945
+    sha256: 015e07836e518d875d6f748717a11fbdfc8c91d0e043f7871a7010c16cffbee8
+    size_wh: [1600, 900]
+
+execution:
+  upstream_command: demo/demo_automatic.py
+  upstream: Gaussian_Grouping_DEVA_SAM_everything_semionline
+  common_arguments:
+    chunk_size: 4
+    amp: true
+    temporal_setting: semionline
+    size: 480
+    use_short_id: true
+    suppress_small_objects: true
+    SAM_PRED_IOU_THRESHOLD: 0.7
+  arms:
+    - {name: primary_batch32, sam_num_points_per_side: 32, sam_num_points_per_batch: 32}
+    - {name: parity_batch16, sam_num_points_per_side: 32, sam_num_points_per_batch: 16}
+    - {name: repeat_batch32, sam_num_points_per_side: 32, sam_num_points_per_batch: 32}
+  interpretation:
+    batch_arm_changes_only_sam_num_points_per_batch: true
+    repeat_arm_exactly_matches_primary: true
+    prompt_grid_adaptation_inherited_from_f0a: documented_deva_resource_recovery
+    upstream_default_points_per_side: 64
+    upstream_default_points_per_batch: 64
+    prompt_denominator: 1024
+
+decision:
+  expected_conclusion: f0b_three_view_association_and_batch_parity_done_full_materialization_preregistration_required
+  pass_requires:
+    - primary_has_at_least_one_nonzero_mask
+    - primary_has_at_least_one_short_id_present_in_at_least_two_frames
+    - primary_and_batch16_mask_sha256_are_exact
+    - primary_and_batch16_pred_json_sha256_are_exact
+    - primary_and_repeat_mask_sha256_are_exact
+    - primary_and_repeat_pred_json_sha256_are_exact
+    - resource_gate
+  minimum_nonzero_masks: 1
+  minimum_stable_short_id_frames: 2
+  materialization_authorized: false
+  identity_training_authorized: false
+  next_action: preregister_train_only_full_identity_mask_materialization
+  pass_does_not_establish:
+    - prompt_grid_quality_parity_with_upstream_default_grid64
+    - mask_quality
+    - full_train_only_materialization
+    - identity_training_readiness
+    - development_uplift_over_u2_b3
+
+resources:
+  monitor_interval_seconds: 0.25
+  maximum_nvidia_at_start_mib: 512
+  maximum_nvidia_peak_mib: 24000
+  maximum_cgroup_memory_bytes: 64424509440
+  maximum_wall_seconds: 1800
+  minimum_disk_free_bytes_after: 42949672960
+
+locks:
+  input_image_pixels_decoded_count: 9
+  output_mask_pixels_read_count: 9
+  quality_read: false
+  parameter_search: false
+  full_materialization: false
+  identity_training: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43, V51-F46, V51-F49, V51-F52, V51-F53, V51-F55, V51-F57, V51-F59]
+failure_ledger_delta: none_at_preregistration
