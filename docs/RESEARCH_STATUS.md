@@ -1,5 +1,19 @@
 # Research Status
 
+## V4 文档归档复核与临时产物清理：done（2026-08-17）
+
+- `WS-V4-DOC-CLEANUP-02=done`，清理提交=`3598ef7a`；V4 终局包清理前后均通过 `78/78` SHA-256 校验，
+  `M1 rejected / M2 done with geometry caveat / M3 confirmed` 及 `none_v4_closed` 均未改写。
+- 已清空 `/root/autodl-tmp/motion_proj/tmp`（4 files / 8,985,579 bytes）和 `/root/autodl-tmp/tmp`
+  （58 files / 402,855 bytes），两目录保留为空；已删除无仓库引用的 `/root/autodl-tmp/mnt`
+  （154 files / 126,234,111 bytes）。
+- `docs/` 内 6 个编辑恢复目录、233 个目录内副本及 50 个散落副本已删除；最终文件名/目录扫描为 `0`。
+  后续 `docs/` 只保留 canonical 快照、实验凭证、清理清单与完整性 manifest，恢复依赖 Git 历史。
+- `/root/autodl-tmp/motion_proj/work/codex-backups/` 因 V4 失败账本明确引用 partial scene 资产而保留；canonical
+  run、冻结配置/源码/测试、KITTI、nuScenes、checkpoint 和环境均未清理。
+- 完整绝对路径、清理前规模、`mnt` 内容摘要、不可恢复边界和保留项见
+  `docs/archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md`。
+
 ## V5 M3 r001–r006 正式收口：rejected（2026-08-14）
 
 - `WS-V5-M3-CONSTRAINT-PROJECTED-TEMPORAL-01=rejected`，r006 conclusion=`m3_rejected_constraint_projection_not_needed_on_frozen_requests`。r001 已冻结 T2–T5、物理 caps、REMOVE 隔离和 quality locks；V4 r238/r335 的 baseline=`FRAME_INDEPENDENT`，不得当作 V5 T2 comparator statistics。

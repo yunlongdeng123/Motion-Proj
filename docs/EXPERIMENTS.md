@@ -1,5 +1,17 @@
 # Experiments
 
+## V4 文档归档/存储维护（2026-08-17）
+
+| Task ID | 状态 | 输入范围 | 结果 | 研究边界 |
+|---|---|---|---|---|
+| `WS-V4-DOC-CLEANUP-02` | done | V4 final archive、两个 scratch `tmp`、旧 `mnt` staging、`docs/` 编辑恢复副本 | V4 SHA=`78/78 OK`；`tmp`=`0/0 entries`；`mnt=absent`；`docs backup=0`；commit=`3598ef7a` | 无训练/推理/quality read；不改变 V4/V5 结论或授权 |
+
+- 删除前规模：两个 `tmp` 合计 `9,388,434 bytes / 62 files`；`mnt=126,234,111 bytes / 154 files`；
+  `docs` 恢复副本=`233 + 50 files`。V7.1 H1 reject 的 `SHA256SUMS` 已按保留的 7 个 canonical 文档重建并通过。
+- 保留 `/root/autodl-tmp/motion_proj/work/codex-backups/`（`1,647 files / 979,529,557 bytes`），因为
+  `RESEARCH_FAILURES.md` 仍引用其中的 AD-GS partial scene；该目录不是本次普通 scratch 清理目标。
+- 完整清理清单：`docs/archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md`。
+
 ## V5 M3 protocol / clip inventory / trajectory mechanism r001–r005（2026-08-14）
 
 | Run | 状态 | 分母 | 主要结果 | 结论 |
