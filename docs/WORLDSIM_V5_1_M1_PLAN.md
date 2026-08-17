@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1/A2 通过 H gate；下一门只实现 A3 effective count |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1/A2 通过 H gate；A3 mechanism rejected；下一门只实现 A4 CIF |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -34,10 +34,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/m1_unary_baselines_v1.yaml`
 - `configs/worldsim_v51/m1_unary_visibility_v1.yaml`
 - `configs/worldsim_v51/m1_unary_unknown_v1.yaml`
+- `configs/worldsim_v51/m1_effective_count_audit_v1.yaml`
+- `configs/worldsim_v51/m1_effective_count_audit_v2.yaml`
 - `scripts/audit_worldsim_v51_start.py`
 - `scripts/replay_worldsim_v51_v5_unary.py`
 - `scripts/run_worldsim_v51_unary_visibility.py`
 - `scripts/run_worldsim_v51_unary_unknown.py`
+- `scripts/audit_worldsim_v51_effective_count.py`
 
 正式状态、实验事实和失败事实仍分别以 `docs/RESEARCH_STATUS.md`、`docs/EXPERIMENTS.md` 与
 `docs/RESEARCH_FAILURES.md` 为准。
@@ -81,3 +84,13 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
   error separation=`+0.149358`；全部 checks PASS。
 - 边界：0471 coverage=`0.464865`，低于逐场 60%；冻结 gate 是 scene-balanced mean，A2 只作 H candidate。
 - 下一门：只做 A3 correlation-aware effective count；A4、S 与后续 Stage 保持锁定。
+
+## Stage A A3 canonical mechanism audit
+
+- r004：relative change 被 subnormal reliability denominator 污染，保留 `done/inconclusive`，见 `V51-F06`。
+- canonical r005：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T120000Z__m1-a3-effective-count-audit-v2-s20260814-r005`
+- source commit：`150b0721cb0e0acf630846d815a7ab2f287ceea8`
+- parent exact：45 observations；3/3 A2 effective-count arrays float32 exact；observed Gaussian=`944,443`。
+- mechanism result：no-epsilon Kish below fractional mass=`0`；meaningful absolute cap change=`0`；replacement
+  amplification=`940,762/944,443`。公式没有 correlation observable，A3 rejected，不启动 quality/GPU arm。
+- 下一门：只做 A4 CIF-style visibility/occupancy/conditional-identity decoupling；S 与后续 Stage 保持锁定。

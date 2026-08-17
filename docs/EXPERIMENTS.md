@@ -1,5 +1,26 @@
 # Experiments
 
+## V5.1 Stage A A3 Kish effective-count pre-quality audit（2026-08-17）
+
+| Run | 状态 | Observed Gaussians | Meaningful cap change | Replacement amplified | Quality/GPU |
+|---|---|---:|---:|---:|---|
+| r004 v1 | done / inconclusive | 944,443 | 相对门被 subnormal denominator 污染 | 940,762 | none / none |
+| r005 v2 | done / mechanism rejected | 944,443 | 0 above absolute `1e-9` | 940,762 (99.6102%) | none / none |
+
+- canonical r005=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T120000Z__m1-a3-effective-count-audit-v2-s20260814-r005`；
+  source=`150b0721cb0e0acf630846d815a7ab2f287ceea8`，duration=`4.219242 s`。
+- r005 对 0471/1087/0379 的 A2 parent effective count 全部 float32 exact；无 epsilon 的 Kish count 在
+  `944,443/944,443` Gaussian 上均不低于 A3-0 fractional concentration。作为 cap 没有有意义变化，直接 replacement
+  则在 `99.6102%` Gaussian 上提高 concentration；formula 不含 correlation observable。
+- r004 最大 absolute cap reduction 只有约 `2.5e-13`，但 float32 最小次正规 reliability=`1.401298e-45` 使相对量
+  达 1.0；v2/r005 绑定旧 run/config SHA 后修正 audit endpoint，详见 `V51-F06`。两轮均未读 evaluation artifact/quality、
+  未启动 renderer、未搜索参数；A3 机制 rejected，不产生质量臂。
+- r005 summary/status/fingerprint/manifest/diagnostics SHA=`9e599c5f1d2efe4cfc6f6e92d6ce234d0d36e9c564d445348d622a07bb753987 /`
+  `1cde89f295b6b60f619323d055973192b1879aca8378eba12a4a42da32dea091 /`
+  `7e6c728b068f6f36d152b83434c551ca50eca334617fa38c4278e39e0bdeacee /`
+  `2f3d7f017e99a03cacd2f5e6cf70aadfcf89ba4436b249373fc0a04d5ad15f1c /`
+  `a147843a0f3f8167822fa1e26aceb6122d32a00d98cf34c42bb9ff00af29e32a`；failure delta=`V51-F05/F06`。
+
 ## V5.1 Stage A A2 semantic UNKNOWN / ABSTAIN（2026-08-17）
 
 | Scene | Eval views | Gaussian UNKNOWN | Coverage | Error@coverage | Accepted abs error | Abstained abs error | UNKNOWN recall on errors |

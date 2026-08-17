@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage A A3 effective-count 机制预审 rejected，下一步只实现 A4 CIF 解耦（2026-08-17）
+
+- A3 r004/r005 都只读取 H/A1 evidence observations 与绑定的 A2 posterior，不读取 evaluation artifact/quality，
+  不启动 GPU renderer。r004 因近零分母的相对变化病理收口为 `done/inconclusive`；`V51-F06` 记录并由新 v2/r005
+  以 absolute cap change>`1e-9` 修正，旧 terminal 不覆盖。
+- canonical r005=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T120000Z__m1-a3-effective-count-audit-v2-s20260814-r005`，
+  source=`150b072`，conclusion=`a3_kish_cap_rejected_structural_noop_not_correlation_aware`。
+- 45 份 evidence observation 对 A2 parent effective-count `3/3 float32 exact`；pooled positive-count Gaussian=
+  `944,443`。无 epsilon 时 `n_eff<sum(r)` 数量=`0`，absolute cap change>`1e-9` 数量=`0`，证明 proposed cap
+  是结构 no-op；直接用 `n_eff` 替换则放大 `940,762/944,443=99.6102%` Gaussian concentration。
+- 该公式只有 `sum(r)` 与 `sum(r^2)`，没有 view-pair correlation observable，不能支持“相关视图不应按独立证据累计”
+  的命题。A3 因机制不成立直接 rejected，不生成无归因质量数字，也不修改 A2/UNKNOWN 或 A1 visibility。
+- r005 duration=`4.219 s`；summary/status/fingerprint/manifest/diagnostics SHA=
+  `9e599c5f.../1cde89f2.../7e6c728b.../2f3d7f01.../a147843a...`；failure delta=`V51-F05/F06`。
+  下一步只解锁 A4 visibility/occupancy/conditional-identity probabilistic decoupling；S 与 Stage B/C 继续锁定。
+
 ## V5.1 Stage A A2 UNKNOWN 通过 H gate，下一步只实现 A3 effective count（2026-08-17）
 
 - `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`；A2 canonical r003=`done`，conclusion=

@@ -155,16 +155,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `Q75(disagreement)=8.494543610182426e-12`。禁止把全量分位数退化误写成 A2 方法负结果，也禁止在看到 A2 evaluation
   quality 后改总体、分位点、布尔规则或图像 abstain threshold。证据：
   `configs/worldsim_v51/m1_unary_unknown_v1.yaml` 与 A1 posterior SHA binding；S/validation/test/KITTI 仍未读取。
-- `V51-F05`（`algorithm/protocol`, `active; A3 pre-quality audit`）：计划 A3-1 提议以
+- `V51-F05`（`algorithm/protocol`, `rejected by A3 r005`）：计划 A3-1 提议以
   `n_eff=(sum r)^2/(sum r^2+epsilon)` 限制 A3-0 的 fractional concentration `sum r`，并解释为
   correlation-aware。但 A1 reliability 逐 observation 严格在 `[0,1]`，因此忽略仅用于数值稳定的 epsilon 时恒有
   `sum r^2 <= sum r`，进而 `n_eff >= sum r`：作为上限必然是 no-op，直接替换则会提高而非降低 posterior
   concentration。更根本的是该式只见单 observation 权重及其平方和，没有任何 view-pair correlation observable；
   调换 view 顺序或相关结构而保持权重集合时结果不变，不能支持“10 个高度相关 view 不等于 10 个独立证据”的命题。
-  当前只允许执行 `configs/worldsim_v51/m1_effective_count_audit_v1.yaml` 绑定的 H evidence-only 审计，量化 epsilon
-  数值影响与 replacement amplification；禁止读取 evaluation artifact/quality、运行 GPU renderer，或为挽救 A3
-  事后加入相关系数/时间核/feature similarity。若审计复现结构 no-op，A3 应作为机制 rejected 记录，再决定是否按计划
-  进入独立 A4，而不是制造无归因质量臂。
+  r005 用 v2 evidence-only audit 对 `944,443` 个 positive-count Gaussian 复现：无 epsilon 时
+  `n_eff<sum(r)` 为 `0`，absolute cap change>`1e-9` 为 `0`；若直接 replacement，`940,762/944,443=99.6102%`
+  Gaussian concentration 被放大。结论=`a3_kish_cap_rejected_structural_noop_not_correlation_aware`；A3 不启动 GPU
+  quality arm，按原计划只解锁独立 A4。禁止为挽救 A3 事后加入相关系数/时间核/feature similarity；那将是新机制，
+  不是原 A3-1 的修复。r005 未读 evaluation artifact/quality、validation/test/KITTI，failure delta=`V51-F05/F06`。
 - `V51-F06`（`engineering/evaluation`, `resolved without quality read`）：A3 audit v1/r004 用相对 cap change 判断
   epsilon 是否产生“有意义修正”，但 0471/0379 存在 reliability=`1.401298464324817e-45` 的 float32 最小次正规数；
   `epsilon=1e-12` 使这些近零 mass 的相对变化达到 `1.0`，尽管三个场景最大绝对 cap reduction 仅约

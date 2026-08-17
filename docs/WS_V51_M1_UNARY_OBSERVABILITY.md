@@ -122,11 +122,33 @@ conditional metric delta 全为 0；因此 A2 的证据是错误集中/选择性
 仍只有单个 evaluation view。A2 仅进入 H candidate 集合，不能提前读 S。下一门只解锁 A3 correlation-aware
 effective count；A4/CIF、S 与后续 Stage 仍锁定。
 
+## A3：Correlation-Aware Effective Count
+
+状态：`mechanism rejected before quality read`。
+
+计划公式 `n_eff=(sum r)^2/(sum r^2+epsilon)` 在 A1 reliability `r∈[0,1]` 下，无 epsilon 时恒有
+`n_eff>=sum(r)`；作为 A3-0 fractional concentration 的 cap 是 no-op，直接 replacement 则会增强置信度。该式也没有
+任何 view-pair correlation observable，不能区分相同权重集合下的独立/相关视图。
+
+r004 首轮相对变化门被 `1.401298e-45` subnormal reliability 污染，保留 `done/inconclusive`；新配置 v2 以
+absolute cap change>`1e-9` 重放同一 45 份 evidence observation。canonical r005：
+
+```text
+/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/
+20260817T120000Z__m1-a3-effective-count-audit-v2-s20260814-r005
+```
+
+结果：A2 effective-count `3/3 float32 exact`；observed Gaussian=`944,443`；无 epsilon 时低于原 concentration=`0`；
+meaningful cap change=`0`；replacement amplified=`940,762`。结论=
+`a3_kish_cap_rejected_structural_noop_not_correlation_aware`。两轮都没有读取 evaluation artifact/quality 或启动 GPU；
+因此没有 A3 质量臂，也不允许事后加入新 correlation feature 救回原公式。下一门只解锁独立 A4 CIF decoupling。
+
 ## Failure ledger
 
-- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F04`。
+- refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F06`。
 - A0 `failure_ledger_delta=none`。
 - A1 `failure_ledger_delta=none`。
 - A2 `failure_ledger_delta=none`；formal refs 包含 `V51-F04`。
+- A3 r005 `failure_ledger_delta=V51-F05/V51-F06`，机制在 quality read 前 rejected。
 - `V51-F02` 只修正人工 float32 常数单测的错误 oracle；formal canonical metric 仍要求 delta 严格等于 0。
 - `V51-F03` 固化 configured/applied visibility threshold，避免 float32 边界静默改变 eligibility 分母。
