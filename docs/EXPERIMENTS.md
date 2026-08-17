@@ -47,6 +47,20 @@
   `V51-F11–F15`，预注册 delta=`pending`；网络或 partial 失败只作工程 terminal，保留 partial 后使用新 run ID resume，
   不得写成 DINO/LUDVIG 方法失败。
 
+### r002 single-connection blocked / parallel recovery 预注册
+
+- r002=`20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002`，source=`2c92061`；在 turbo proxy 下约
+  `106 s` 后 prefix=`26,566,656/4,546,140,349 bytes`，持续吞吐不足。执行者只终止 PID identity exact 的 curl；
+  runner 自行写 `blocked / curl exit=-15 / partial_retained_for_resume=true`，final 不存在。
+- r002 status/events/metrics/download-log/resolved SHA=`e5f3273c.../96741d85.../bf604adc.../46a2950c.../8997fd3a...`；
+  prefix SHA=`934ef5aa...e2265`。failure delta=`V51-F16`，分类为工程/资源恢复，不进入方法分母。
+- recovery config=`configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`，runner=
+  `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`。冻结 prefix 后把剩余 bytes 切成 14 个无 gap/overlap HTTP ranges；
+  每段必须 range bytes + SHA exact，最终 assembly 同时校验 full SHA-256 与 S3 multipart ETag（part size=`8 MiB`、
+  count=`542`、expected=`3d1b...-542`）。通过后 atomic publish 并只清理精确 prefix/segment staging。
+- recovery 仍使用 official URL + network turbo；不换镜像/模型/分辨率。model/feature/method/quality/GPU 均为 false，
+  validation/test/KITTI 锁定，M2/M3=`pending`。
+
 ## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
 
 | Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |

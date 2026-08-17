@@ -1,0 +1,71 @@
+schema_version: worldsim_v51_stage_b_dinov2_download_parallel_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: running
+phase: stage_b_official_dinov2_asset_parallel_resume
+
+input_freeze:
+  path: configs/worldsim_v51/stage_b_input_freeze_v1.yaml
+  sha256: 16aafac76838ee417eba741fbc89025a4a3d5c45b694b9b0b447ebdc3177eb61
+
+blocked_parent_run:
+  run_id: 20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002
+  source_commit: 2c9206164f3c58bd51993ffe2d05c1f22b3f1064
+  conclusion: blocked_operator_stopped_sustained_single_connection_low_throughput
+  hashes:
+    status.json: e5f3273cc3735e67a1221bc8ca2f5fe2d97f3172848037d3e16d42b78f4363c6
+    events.jsonl: 96741d8524e38958017b79fdf213fe8c050f1f36765454d4cd6fa1d22d4f7e3d
+    metrics.jsonl: bf604adceb12113cf952b2f242abe24798e476badc3607e57da5bcbcf3fce4fb
+    download.log: 46a2950c53feb769f7ae69556aac31f8eabe717b93f6ff15755dee9f80a4c384
+    resolved_config.yaml: 8997fd3a6d1e2b3d07c7a0648fa31f184f37bedf51f5b70f300abd7d51734c4d
+
+asset:
+  url: https://dl.fbaipublicfiles.com/dinov2/dinov2_vitg14/dinov2_vitg14_reg4_pretrain.pth
+  target_path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+  content_length_bytes: 4546140349
+  last_modified_utc: '2023-10-27T10:37:55Z'
+  etag: '3d1b1c4501eac45d83af24b811e3bea9-542'
+  s3_version_id: T_6GA9ukHl7r7daSEhzWpsymxbGdAvFR
+
+frozen_prefix:
+  path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth.partial
+  bytes: 26566656
+  sha256: 934ef5aab62898fd9ab2242541fa746cc0daa183357fd52cd051e56c206e2265
+
+parallel_download:
+  client: curl
+  segment_count: 14
+  retry_count: 5
+  retry_all_errors: true
+  accept_encoding: identity
+  parts_dir: /root/autodl-tmp/models/dinov2/.dinov2_vitg14_reg4_pretrain.parts
+  assembled_path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth.assembled.partial
+  require_empty_parts_dir_at_start: true
+  atomic_publish_after_all_integrity_gates: true
+  cleanup_prefix_and_parts_after_publish: true
+  network_turbo_required: true
+
+integrity:
+  full_sha256_required: true
+  multipart_etag:
+    part_size_bytes: 8388608
+    expected_part_count: 542
+    expected: 3d1b1c4501eac45d83af24b811e3bea9-542
+
+resources:
+  minimum_free_bytes_after_temporary_assembly: 10737418240
+  gpu_required: false
+  model_load_allowed: false
+
+locks:
+  feature_extraction: false
+  method_inference: false
+  quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F11, V51-F12, V51-F13, V51-F14, V51-F15, V51-F16]
+failure_ledger_delta: pending

@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B fallback 已获授权并进入 input/asset freeze | H→S 小效应未复现、UNKNOWN coverage 不达门；ViT-g/PCA/24GB、proxy leakage 与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F15` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B fallback 已获授权并进入 input/asset freeze | H→S 小效应未复现、UNKNOWN coverage 不达门；ViT-g/PCA/24GB、proxy leakage、单连接下载与 frozen-plan 迁移均显式审计 | `V51-F01`–`V51-F16` |
 
 ### 1.1 V1 汇总条目
 
@@ -255,6 +255,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   reprojection。无 eligible actor 的 scene 必须保留 abstain；不得降低 32-Gaussian eligibility、删 1087/0379 或只报大
   Rigid 场景。Stage B 未获授权，本轮没有产生 metric。证据：V5 formal30k r027–r034 metadata、
   `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、`docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
+- `V51-F16`（`engineering/resource`, `active recovery`）：DINOv2 asset r002 在已 source network turbo、official URL、
+  fixed target 与 curl resume 合同下运行约 `106 s`，连续 prefix 仅增长到 `26,566,656 / 4,546,140,349 bytes`；
+  按稳定窗口外推需数小时。执行者精确核对并 `TERM` 唯一 curl PID，runner 以 `exit=-15` 写入 blocked terminal，
+  final asset 不存在，`.partial` 及其 SHA=`934ef5aa...e2265` 保留。该事实推翻“代理单连接足以在合理实验窗口完成 4.5 GB
+  official asset”的工程假设，不是 checkpoint 损坏、DINO/LUDVIG 方法或 GPU 失败。合法恢复必须新 run ID，冻结 prefix
+  bytes/SHA，以互不重叠的 fixed HTTP ranges 并行下载；每段验证 range bytes/SHA，assembly 后同时通过 full SHA-256 与
+  S3 multipart ETag=`3d1b...-542`（8 MiB×542 parts）才可原子发布。禁止覆盖 r002、删除 prefix 后假装首次下载、
+  使用镜像/不同权重或只凭 total bytes/remote ETag 宣称完成。证据：
+  `20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002`、
+  `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`。
 
 <a id="detail-v5"></a>
 

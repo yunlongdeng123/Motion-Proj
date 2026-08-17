@@ -21,6 +21,10 @@ from motion_proj.worldsim_v51.protocol import (
 from scripts.fetch_worldsim_v51_dinov2_asset import (
     validate_config as validate_dino_download,
 )
+from scripts.fetch_worldsim_v51_dinov2_asset_parallel import (
+    _ranges as parallel_ranges,
+    validate_config as validate_parallel_dino_download,
+)
 
 
 def test_scope_and_development_roles_bind_v5_cohort() -> None:
@@ -97,5 +101,26 @@ def test_stage_b_dinov2_download_binds_input_freeze_and_keeps_quality_locked() -
     assert config["locks"]["quality_read"] is False
     assert config["locks"]["validation_quality_read"] is False
     assert config["locks"]["test_quality_read"] is False
+    assert config["locks"]["m2_status"] == "pending"
+    assert config["locks"]["m3_status"] == "pending"
+
+
+def test_stage_b_parallel_download_binds_blocked_parent_and_exact_ranges() -> None:
+    config, freeze = validate_parallel_dino_download(
+        ROOT / "configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml"
+    )
+    start = config["frozen_prefix"]["bytes"]
+    stop = config["asset"]["content_length_bytes"]
+    ranges = parallel_ranges(
+        start, stop, config["parallel_download"]["segment_count"]
+    )
+
+    assert freeze["status"] == "done"
+    assert len(ranges) == 14
+    assert ranges[0][0] == start
+    assert ranges[-1][1] == stop - 1
+    assert sum(last - first + 1 for first, last in ranges) == stop - start
+    assert config["integrity"]["multipart_etag"]["expected_part_count"] == 542
+    assert config["locks"]["quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"

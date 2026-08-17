@@ -21,9 +21,14 @@
   registers checkpoint，先写 `.partial`，
   以 bytes=`4,546,140,349` 和完整 SHA-256 校验后原子发布；随后依次做单进程资源 smoke、synthetic operator parity、
   H→S→C matched A/B。DINO 与 renderer 不同进程且不在同卡并发常驻。
+- r002 单连接在 `106 s` 后只有 `26,566,656 bytes`，执行者保留 prefix 并精确停止唯一 curl；terminal=`blocked`、
+  curl exit=`-15`，不是方法失败，登记 `V51-F16`。下一 run 改用 14 个互不重叠 frozen ranges；逐段 bytes/SHA、
+  assembled full SHA-256 与 8 MiB×542-part S3 ETag 必须全通过后才 atomic publish，配置/runner=
+  `stage_b_dinov2_download_parallel_v1.yaml` / `fetch_worldsim_v51_dinov2_asset_parallel.py`。
 - M2/M3 保持 `pending`；validation/test/KITTI tuning 继续锁定。只有某个 M1 candidate 在 development confirmation
   稳定优于 U2/B3 并冻结后，才允许 exact-once fresh validation；test 只在最终候选上 exact-once。当前 source base=
-  `22149613b9fc958b2bb5351300dd53fdc0d3d221`；r001 failure delta=`V51-F11`，没有新增方法失败。
+  `2c9206164f3c58bd51993ffe2d05c1f22b3f1064`；r001 failure delta=`V51-F11`，r002 engineering delta=
+  `V51-F16`，没有新增方法失败。
 
 ## V5.1 Stage B freeze-only proposal：资产/分母/operator/gate 已形成草案（2026-08-17）
 
