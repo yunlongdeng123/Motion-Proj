@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active，one-view resource ceiling 在 exact recovery | `V51-F01`–`V51-F21` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator/one-view denominator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active | `V51-F01`–`V51-F22` |
 
 ### 1.1 V1 汇总条目
 
@@ -308,14 +308,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   image/mask/LiDAR，但 runner 不消费其值；二者须分开记录。证据：r007 status SHA=`da279515...8d3c9`、r027
   `config.yaml` SHA=`eb22faea...9c6d`、`configs/worldsim_v51/stage_b_one_view_contribution_v3.yaml`。v3/r008 已按
   `800×450` 完成 renderer 并进入 post-render 资源门，因此本条 resolved；后续资源阻塞另记 `V51-F21`。
-- `V51-F21`（`engineering/resource/protocol`, `active recovery preregistered`）：r008 在真实单视图 renderer 和
+- `V51-F21`（`engineering/resource/protocol`, `resolved by v4/r009`）：r008 在真实单视图 renderer 和
   contribution 汇总完成后，NVIDIA peak=`14,234 MiB` 超过预注册 ceiling=`12,288 MiB`，故 status=`blocked`；
   cgroup peak 仅 `9,598,074,880 bytes`，89 个采样无错误，进程正常退出且 GPU 已释放，不能误写成 OOM、renderer
   或算法质量失败。原 runner 又在资源门通过后才写 contribution/resource artifact，使 blocked run 只保留
   status/events/resolved/resource-samples；这会降低失败诊断可审计性。禁止覆盖 r008，合法恢复只能新建 v4/r009：
   保持 scene/view/checkpoint/renderer/two-floor/quality locks 不变，仅把 NVIDIA/Torch ceiling 提升为 `16,384 MiB`
   （仍低于 24 GiB），并在资源判定前先持久化只读 denominator/resource 诊断。r008 status/resource-samples SHA=
-  `8b8ebe17...b2118bf / fc0f9788...a90932`；不得用这次工程资源事实选择或调节算法质量。
+  `8b8ebe17...b2118bf / fc0f9788...a90932`；不得用这次工程资源事实选择或调节算法质量。v4/r009 已在
+  `14,234 MiB NVIDIA / 13,882 MiB Torch reserved / 9,593,946,112 bytes cgroup` 下通过，诊断 artifacts 也在 gate 前
+  持久化，因此本条 resolved；冻结结果见 `stage_b_one_view_contribution_freeze_v1.yaml`。
+- `V51-F22`（`engineering/audit`, `resolved immediately`）：r009 完成后的第一次独立逐文件 verifier 把 manifest
+  payload key 硬编码为 `files`，但该 runner 的冻结 schema 使用 `inventory`，只读命令因此 `KeyError: 'files'`；
+  formal r009 及任何 artifact 均未改变。修正 verifier 按冻结 schema 读取 `inventory` 后，8/8 manifest entries 的
+  SHA/bytes exact，run=`10 files / 28,156 bytes`。后续 verifier 必须先读 schema/key，不能跨 runner 猜测 manifest 字段。
 
 <a id="detail-v5"></a>
 

@@ -1,0 +1,100 @@
+schema_version: worldsim_v51_stage_b_one_view_contribution_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: one_h_view_renderer_contribution_denominator_frozen
+
+canonical_run:
+  run_id: 20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009
+  source_commit: 7f0c6c96da463c52fb42c5cfc220e4949f233f93
+  config_sha256: 53b4f0c490faa5ae134a80c7639c28ec6c5dc51ff1fcc534559197e5fbd9b8a5f
+  hashes:
+    summary.json: b1e2282a51cf2a4d8de4cab034c7bc694b147d01f795cc7a1b4ecbcd1570c3b6
+    status.json: c0bd350103a34893db111950f2572b526bdb4270d305f42302598338493837ec
+    manifest.json: 6439a1a92d15d525ab9f9d141548382a48cd45b81ab343a21376a9229b053fbb
+    fingerprint.json: 4376c1395f651268315d645a93f13968d89795aea1a265a2cbd27e5bdb146ee5
+    resolved_config.yaml: 902e28bde6960bc1e5b8bfa24be6f32d7be919aafbf6b291afef648079e59cf2
+    metrics.jsonl: df3c8a28ff5098468e0f642281bffd9d9f158f056a50a45924dacd58ce36de19
+    events.jsonl: a19cf3051dcf3d7762c37e352376f6111ff6715dcfa1aa2b7ff1e5e6ac9f8346
+    resource_samples.jsonl: deb3ecadee12f6af7784e4d7cece1171f88b900c7aebb6308547bf68e23cf123
+    artifacts/contribution_inventory.json: b29f200e36acb690ea6b71aa036ce8c2d61bdd3141015135620557cc9e8a365c
+    artifacts/resources.json: 092be4bfe5899d65925e98bcf5553fea1bafa43e29c8f84800d8245c3c26cea5
+
+scene:
+  name: scene-0471
+  index: 382
+  role: H
+  frame: 0
+  camera: 0
+  image_index: 0
+  sensor_image_size_wh: [1600, 900]
+  source_downscale_when_loading: [2, 2, 2]
+  model_native_renderer_size_wh: [800, 450]
+  gaussian_count: 859613
+  background_gaussian_count: 809902
+  rigid_gaussian_count: 49711
+
+denominator:
+  raw_intersection_count: 47378525
+  supported_intersection_count: 32030248
+  dropped_intersection_count: 15348277
+  minimum_intersection_contribution: 0.0001
+  raw_contribution_mass: 299051.8056241838
+  supported_contribution_mass: 298668.30385007715
+  dropped_contribution_mass: 383.5017741050733
+  gaussian_with_intersection_support: 355759
+  gaussian_after_view_mass_floor: 313764
+  gaussian_dropped_by_view_mass_floor: 41995
+  minimum_gaussian_view_mass: 0.001
+  gaussian_coverage_before_mass_floor: 0.413859492585617
+  gaussian_coverage_after_mass_floor: 0.3650061132160635
+  pixel_count: 360000
+  pixel_with_intersection_support: 360000
+  maximum_supported_intersections_per_gaussian: 65040
+  maximum_supported_intersections_per_pixel: 365
+  intersection_rows_persisted: false
+
+resources:
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 14234
+  torch_peak_allocated_mib: 13389.9912109375
+  torch_peak_reserved_mib: 13882.0
+  cgroup_memory_peak_bytes: 9593946112
+  sample_count: 88
+  monitor_error_count: 0
+  duration_seconds: 61.1090596858412
+
+run_inventory:
+  manifest_file_count: 8
+  manifest_bytes: 26331
+  run_file_count: 10
+  run_total_bytes: 28156
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  dataset_image_tensor_materialized: true
+  dataset_mask_tensors_materialized: true
+  dataset_lidar_tensor_materialized: true
+  pixel_rgb_values_consumed: false
+  lidar_values_consumed: false
+  membership_proxy_consumed: false
+  dino_model_load: false
+  pca_fit: false
+  feature_sidecar_persisted: false
+  uplift_feature_computed: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  checkpoint_immutable: true
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_h_dinov2_feature_sidecar_and_pca_contract_without_quality_read
+
+failure_ledger_refs: [V3-F01, V3-F07, V3-F18, V5-F20, V5-F22, V5-F23, V5-F24, V51-F12, V51-F14, V51-F15, V51-F17, V51-F18, V51-F19, V51-F20, V51-F21, V51-F22]
+failure_ledger_delta: [V51-F21, V51-F22]

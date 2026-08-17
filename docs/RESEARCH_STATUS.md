@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.1 Stage B r009 one-H-view denominator/resource 门通过（2026-08-17）
+
+- canonical r009=`20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009`，source=`7f0c6c9`，
+  status=`done`，conclusion=`one_h_view_renderer_contribution_denominator_ready`；checkpoint before/after SHA=
+  `496356ca...3cfa` exact。正确三层尺寸=`1600×900 / [2,2,2] / 800×450`。
+- 真实 denominator：raw/supported intersections=`47,378,525 / 32,030,248`，raw/supported/dropped mass=
+  `299,051.805624 / 298,668.303850 / 383.501774`；Gaussian support before/after `1e-3` mass floor=
+  `355,759 / 313,764`，drop=`41,995`，全局 coverage=`41.385949% → 36.500611%`；全部 360,000 pixels 有支持。
+- 资源：GPU start/peak=`1/14,234 MiB`，Torch allocated/reserved peak=`13,389.991/13,882 MiB`，cgroup=
+  `9,593,946,112 bytes`，88 samples、0 error、61.109 s，cleanup 后无活跃 GPU 进程；`V51-F21 resolved`。
+- summary/status/manifest/fingerprint/inventory/resources SHA=`b1e2282a.../c0bd3501.../6439a1a9.../4376c139.../`
+  `b29f200e.../092be4bf...`；manifest=`8 files / 26,331 bytes`，run=`10 files / 28,156 bytes`，逐文件二次
+  SHA/bytes exact。首次独立 verifier 误读 manifest key=`files`，实际 schema 为 `inventory`，立即修正并登记已解决 `V51-F22`。
+- result freeze=`configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml`。loader materialize image/mask/LiDAR=
+  true，但 RGB/LiDAR/membership consumption=false；DINO/PCA/uplift/quality/validation/test/KITTI 未读，M2/M3=`pending`。
+  下一步只允许预注册 H DINO feature sidecar 与 PCA 合同，不得直接读 quality。
+
 ## V5.1 Stage B r008 资源上限 blocked，r009 16 GiB recovery 已预注册（2026-08-17）
 
 - r008=`20260817T153826Z__m1-stage-b-one-view-contribution-s20260814-r008`，source=`eb334fa`，已越过

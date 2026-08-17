@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import sys
 
 import numpy as np
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +17,7 @@ from scripts.smoke_worldsim_v51_one_view_contribution import (
     summarize_contributions,
     validate_config,
 )
+from motion_proj.worldsim_v51.protocol import sha256_file
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml"
@@ -93,3 +96,33 @@ def test_contribution_inventory_rejects_invalid_rows(
     payload[name] = value
     with pytest.raises(ValueError, match=message):
         summarize_contributions(**payload)
+
+
+def test_one_view_contribution_freeze_binds_terminal_and_locks() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert summary["conclusion"] == "one_h_view_renderer_contribution_denominator_ready"
+    assert summary["source_commit"] == freeze["canonical_run"]["source_commit"]
+    assert summary["checkpoint_immutable"] is True
+    assert summary["contribution_inventory"]["gaussian_after_view_mass_floor"] == 313764
+    assert summary["contribution_inventory"]["intersection_rows_persisted"] is False
+    assert summary["resource"]["nvidia_smi_peak_used_mib"] == 14234
+    assert summary["pixel_rgb_values_consumed"] is False
+    assert summary["lidar_values_consumed"] is False
+    assert summary["membership_proxy_read"] is False
+    assert summary["method_quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

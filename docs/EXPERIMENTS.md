@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage B r009 canonical contribution denominator（2026-08-17）
+
+- run=`20260817T154359Z__m1-stage-b-one-view-contribution-s20260814-r009`，source=`7f0c6c9`，status=`done`；
+  scene/view=`0471/H/frame0/camera0`，model-native=`800×450`，Gaussian=`859,613`，checkpoint immutable。
+- raw=`47,378,525 rows / 299,051.805624 mass`；intersection floor `1e-4` 后=`32,030,248 rows /
+  298,668.303850 mass`；view-mass floor `1e-3` 后=`313,764 Gaussian`，global coverage=`0.3650061132`；
+  `41,995` 个有 intersection support 的 Gaussian 因 view mass 不足被丢弃。完整 rows 不落盘。
+- GPU start/peak=`1/14,234 MiB`，Torch allocated/reserved=`13,389.991/13,882 MiB`，cgroup peak=
+  `9,593,946,112 bytes`，duration=`61.109 s`，resource gate PASS。summary/status/manifest/fingerprint=
+  `b1e2282a.../c0bd3501.../6439a1a9.../4376c139...`；manifest recheck=`8/8 exact`。
+- result freeze=`configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml`；failure delta=
+  `V51-F21 resolved + V51-F22 resolved`。本 run 没有 feature/PCA/quality，validation/test/KITTI 锁未触碰。
+
 ## V5.1 Stage B r008 resource blocked / r009 recovery 预注册（2026-08-17）
 
 - r008=`20260817T153826Z__m1-stage-b-one-view-contribution-s20260814-r008`，source=`eb334fa`，status=`blocked`，
