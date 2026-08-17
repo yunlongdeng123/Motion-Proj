@@ -657,7 +657,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   RTX3090 为 N/A，dmesg 又无权限，二者都不能冒充健康证明。合法下一步是 source-neutral trace，在不改 upstream 文件/
   tensor 内容/方法参数的前提下记录 control/target matmul tensor metadata 与 allocator 状态；任何 trace 输出仍不得参与质量或
   training。r037 evidence=`summary 5fd4a4e8...df8 /audit 8,245 bytes, 2fb76f32...d50d /freeze
-  configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml`。
+  configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_freeze_v1.yaml`。r038 source-neutral trace 的 control/
+  target 都成功且输出分别 exact 对齐 r034/r036 success；control 两个 matmul 是 `26/36 objects`，target 是 `3/52`，两侧
+  affinity 都为 `[1,1620,1620]`，故“target 首个 matmul 更大所以必败”被直接推翻。更关键的 allocator observation 是：
+  control pre-matmul driver-free 仅约 `35/55 MiB`、allocator retry=`0`；target success process 已发生一次 allocator retry，
+  cache 被释放后 pre-matmul free 约 `18.15/17.23 GiB`。这使 allocator-cache/CUBLAS-workspace state 成为有证据的 active
+  hypothesis，但不是根因证明：trace timing 可能扰动执行，且 control 在低 free 下仍成功。合法 recovery 只允许预注册在
+  frozen line58 matmul 前执行 `torch.cuda.empty_cache()`，不改 tensor/operator/grid/batch/AMP，并要求 control/target 双 repeat
+  对既有 success hashes bit-exact；禁止把 cache observation 写成 OOM 或跳过 parity 直接 full materialization。r038 evidence=
+  `summary e9db6152...8f46 /audit 16,025 bytes, a8cbdb5b...4047 /freeze
+  configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

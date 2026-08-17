@@ -1,0 +1,97 @@
+schema_version: worldsim_v51_stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+phase: f0g_source_neutral_control_target_tensor_allocator_instrumentation_freeze
+frozen_at: "2026-08-18"
+
+canonical_run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038
+  source_commit: da2169d261439ed39c958277543204d22ff2a5f3
+  source_tree: 9a00a2671650c66dd1e831b1c360956dc6db50a0
+  status: done
+  outcome: both_success
+  conclusion: control_and_target_trace_succeeded_tensor_allocator_snapshots_captured
+  resolved_config: {bytes: 6771, sha256: 2124e720dfe54690b97e808f8f2655b34a4f84a20eb7db2060e6559ec2ec43d6}
+  summary: {bytes: 73736, sha256: e9db6152393a9770af3111d1aa062f1cee75c0cc00d1d85e588787cd2e578f46}
+  manifest: {bytes: 4554, sha256: ebcdfba13246bdd42dce8bd75b583ddf60bcbac705412d91a7c52d0bba7ac339}
+  status_file: {bytes: 305, sha256: 1cc45c035119b10c5b0247ca8a31b741f8b271f9d33a366f3c1aef6b7b4f8d54}
+  events: {bytes: 162, sha256: a07ca06106c48876d6ae7e93ada0a0c8fd8ddfc1c90be5d005d15ad270876593}
+
+independent_audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T153000Z__stage-f-f0g-r038-audit.json
+  bytes: 16025
+  sha256: a8cbdb5b0a3ade5cac333f3ad43b225c744b033d8ef8301cb79deabab5484047
+  status: pass
+  audited_run_status: done
+  inventory: {entry_count: 25, logical_bytes: 1284692, regular_bytes_excluding_input_symlink_targets: 247703}
+
+source_neutral_contract:
+  traced_file: {bytes: 5985, sha256: a1b86e65df14d0224b4e0dc6e141bf3a34b1996e84b9792480864057d6aec5a6}
+  upstream_source_mutation: false
+  operator_monkeypatch: false
+  tensor_content_read: false
+  control_trace: {bytes: 24832, sha256: 4e556703fbe994fdb308561c577e11be3a6466c2f48f214c7eb1f403eabc99a2}
+  target_trace: {bytes: 24814, sha256: cd80c17906056ea1fcb4bb469a3bdf714e55b9c2e6d8008c8a593efcb7b55492}
+
+control:
+  status: success
+  num_objects_by_matmul: [26, 36]
+  value_shapes: [[1, 13312, 1620], [1, 18432, 1620]]
+  affinity_shapes: [[1, 1620, 1620], [1, 1620, 1620]]
+  pre_matmul_free_bytes: [36765696, 57737216]
+  allocator_retries: [0, 0]
+  masks_exact_r034: true
+
+target:
+  status: success
+  num_objects_by_matmul: [3, 52]
+  value_shapes: [[1, 1536, 1620], [1, 26624, 1620]]
+  affinity_shapes: [[1, 1620, 1620], [1, 1620, 1620]]
+  pre_matmul_free_bytes: [19494141952, 18502189056]
+  allocator_retries: [1, 1]
+  masks_exact_r036_success: true
+
+mechanism:
+  observations:
+    - target_first_matmul_has_3_objects_less_than_control_first_26
+    - target_success_process_had_one_allocator_retry_and_large_cache_release_before_matmul
+    - control_succeeded_without_allocator_retry_despite_only_35_to_55_mib_driver_free
+    - tensor_shapes_are_valid_contiguous_and_dimensionally_compatible
+  rejected_inference:
+    - target_first_matmul_is_larger_than_control_and_therefore_deterministically_fails
+  active_hypothesis: allocator_cache_or_cublas_workspace_state_contributes_to_process_instability
+  root_cause_proven: false
+  trace_timing_may_perturb_runtime: true
+  failure: V51-F62
+  failure_state: active_allocator_cache_workspace_hypothesis
+
+resources:
+  nvidia_total_mib: 24576
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 24118
+  nvidia_headroom_mib: 458
+  cgroup_memory_peak_bytes: 17968336896
+  sample_count: 151
+  monitor_error_count: 0
+  wall_seconds: 48.69759623706341
+  all_preregistered_checks: true
+
+governance:
+  full_materialization_authorized: false
+  quality_read: false
+  actor_identity_alignment_read: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: pre_matmul_empty_cache_execution_recovery_parity_preregistration
+  recovery_constraints:
+    - call_torch_cuda_empty_cache_immediately_before_each_frozen_memory_readout_matmul
+    - do_not_modify_tensor_content_or_operator
+    - preserve_grid32_batch64_amp_size480_thresholds
+    - require_control_and_target_repeat_bit_exact_against_existing_success_hashes
+    - do_not_authorize_full_materialization_from_single_recovery_run
+
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: V51-F62_refined_allocator_cache_workspace_hypothesis_not_root_cause_proof

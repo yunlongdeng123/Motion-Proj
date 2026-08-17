@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0g r038 both-success trace / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038 /da2169d...a5f3 /
+  9a00a267...50a0`；resolved/summary/manifest/status/events SHA=`2124e720...43d6/e9db6152...8f46/ebcdfba1...c339/
+  1cc45c03...8d54/a07ca061...6593`，outcome=`both_success`。
+- control calls=`objects 26/36，free 36,765,696/57,737,216 bytes，allocator retries 0/0`；target calls=`objects 3/52，
+  free 19,494,141,952/18,502,189,056 bytes，retries 1/1`；affinity 固定 `[1,1620,1620]`。target first smaller，
+  排除“首个 target matmul 单纯更大”解释；cache/workspace 仅 hypothesis，不是 root-cause proof。
+- trace SHA=`control 4e556703...99a2 /target cd80c179...5492`；outputs 与既有 success exact。audit=`16,025 bytes /
+  a8cbdb5b...4047 /PASS`，manifest=`25 entries /1,284,692 logical /247,703 regular`；resources=`24,118 MiB peak /
+  458 MiB headroom /48.697596s /151 samples /0 errors`。
+- freeze=`stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml`；failure delta=`V51-F62 refined_allocator_
+  cache_workspace_hypothesis_not_root_cause_proof`。下一门为 empty-cache execution parity，不读质量、不直接 materialize。
+
 ## V5.1 Stage F F0g r038 source-neutral tensor/allocator trace 预注册（2026-08-18）
 
 - run=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`；config=

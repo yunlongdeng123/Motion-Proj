@@ -3,6 +3,7 @@ import subprocess
 import sys
 
 import torch
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -96,3 +97,22 @@ def test_f0g_r038_independent_audit_replays_tensor_allocator_boundary() -> None:
     assert observation["target_first_matmul_is_smaller_than_control_first"] is True
     assert observation["allocator_cache_state_is_proven_root_cause"] is False
     assert result["quality_read"] is False
+
+
+def test_f0g_freeze_keeps_allocator_observation_as_hypothesis() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/"
+            "stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["outcome"] == "both_success"
+    assert freeze["source_neutral_contract"]["upstream_source_mutation"] is False
+    assert freeze["mechanism"]["root_cause_proven"] is False
+    assert freeze["mechanism"]["failure"] == "V51-F62"
+    assert freeze["governance"]["full_materialization_authorized"] is False
+    assert freeze["governance"]["next_phase"] == (
+        "pre_matmul_empty_cache_execution_recovery_parity_preregistration"
+    )

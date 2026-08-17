@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage F F0g r038 tensor/allocator trace 已冻结（2026-08-18）
+
+- canonical r038=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`，source/tree=
+  `da2169d...a5f3/9a00a267...50a0`，control/target trace 都 success；两侧成功 mask/pred 分别与 r034、r036 success
+  bit-exact。trace source 未修改、无 operator monkeypatch、未读 tensor content。
+- control 两个 matmul objects=`26/36`、value shapes=`[1,13312,1620]/[1,18432,1620]`，pre-matmul driver-free=
+  `36,765,696/57,737,216 bytes`，allocator retries=`0/0`；target objects=`3/52`、value shapes=
+  `[1,1536,1620]/[1,26624,1620]`，free=`19,494,141,952/18,502,189,056`，allocator retries=`1/1`。
+  两侧 affinity 都是 `[1,1620,1620]`，tensor contiguous/dimension valid。
+- 因 target 首次 matmul 只有 3 objects，远小于 control 的 26，“target 首个 shape 更大所以确定性失败”被推翻。target
+  success 与一次 allocator retry/cache release 同时出现，支持 cache/CUBLAS workspace state hypothesis；但 trace timing 本身
+  可能扰动 runtime，且 control 在极低 driver-free 下也成功，因此 `root_cause_proven=false`。
+- audit=`20260818T153000Z__stage-f-f0g-r038-audit.json /16,025 bytes /a8cbdb5b...4047 /PASS`；freeze=
+  `configs/worldsim_v51/stage_f_f0g_target_tensor_allocator_instrumentation_freeze_v1.yaml`。resources=`peak 24,118 MiB /
+  headroom 458 MiB /cgroup 17,968,336,896 bytes /48.698s /151 samples /0 errors`。
+- 下一步只预注册 pre-matmul `torch.cuda.empty_cache()` execution recovery parity：不改 tensor/operator/方法参数，control 与
+  target 各两次，必须对已有 success hashes bit-exact；单次 recovery 不授权 full materialization。`V51-F62` 仍 active，
+  quality/alignment/training/validation/test/KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0g source-neutral tensor/allocator instrumentation 已预注册（2026-08-18）
 
 - formal target=`20260818T150000Z__m1-stage-f-f0g-tensor-trace-s20260814-r038`；authorization=r037 freeze=
