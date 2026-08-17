@@ -1821,11 +1821,10 @@ SAM mask
 
 > Gaussian Grouping 的原机制，在 dynamic driving actor 上能否 work。
 
-执行状态（2026-08-18）：F0 source/16D frozen-base adapter 与 official DEVA/SAM assets 已通过前置冻结；ResNet18/50
-transitive assets 已固定（`V51-F53 resolved`）。allocator-only 与 batch=`64→32` 均无法让 default grid64 one-view SAM
-在 24GB 上完成（`V51-F52/V51-F55/V51-F57`），最终累计规模而非 batch staging 是主因。当前只允许按 DEVA 官方资源建议
-令 v6/r032 `SAM_NUM_POINTS_PER_SIDE=32`（1024 prompts），batch32、图像大小、阈值与其余方法语义保持；该适配不冒充
-default-grid parity。resource/schema PASS 后仍须同-grid batch parity 与 3-view association+repeatability；在此之前
+执行状态（2026-08-18）：F0 source/16D frozen-base adapter、official DEVA/SAM/ResNet assets 已冻结。default grid64 在 24GB
+因累计 masks blocked（`V51-F52/V51-F55/V51-F57`）；DEVA-documented grid32 r032 已通过 one-view resource/schema 和独立
+审计，但输出全背景只反映 view 数少于 semionline 三帧门（`V51-F59`），不证明 quality/association。当前只允许预注册
+same-grid batch32↔16 parity 与至少 3-view semionline association+repeatability；non-empty stable short IDs 成立前，
 materialization、F0 training、F1/F2 均未授权。
 
 ---

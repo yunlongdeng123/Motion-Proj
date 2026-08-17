@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，one-view SAM prompt-grid 资源恢复中 | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值与 identity-input contract 边界 | `V51-F01`–`V51-F57` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32 one-view resource/schema PASS，待 association | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图全背景与 identity-input contract 边界 | `V51-F01`–`V51-F59` |
 
 ### 1.1 V1 汇总条目
 
@@ -558,7 +558,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   继续依赖用户 cache、重新下载未验 hash、修改 frozen upstream 或把 ResNet 权重混称 DEVA checkpoint。canonical 目标独立
   审计前不得删除原 cache；审计后只允许精确清理由本次生成且 hash 匹配的两个源文件。r030 前置已把两份资产原子发布到
   dedicated target；独立复核 bytes/full SHA、无 `.partial`，且 official CLI stderr 没有 download 行，证明 `TORCH_HOME`
-  生效。本项来源缺口已解除，但原 cache 暂留到成功 canonical run 审计后再精确清理。
+  生效。本项来源缺口已解除。r032 canonical audit PASS 后，两份原 cache 源副本已按 exact path 精确删除；dedicated
+  `TORCH_HOME` copies full SHA 保持，后续不再依赖用户 cache 或网络。
 - `V51-F54`（`engineering/orchestration`, `resolved before prereg commit`）：第一次提交 v4 时把包含括号与多段正文的
   `git commit -m` 放进 Windows PowerShell→SSH→bash 双层命令；本地层提前剥掉远端参数引号，bash 在 Conventional Commit
   标题的 `(` 前直接 syntax error。失败发生在 Git 创建 commit、push、r030 run 或 canonical asset publish 之前；staged diff
@@ -579,7 +580,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `points_per_batch: command not found`。没有 repo/run/asset 状态变化；恢复为单关键词、无 pipe 的 `rg`，定位到 DEVA
   `docs/DEMO.md`、`ext_eval_args.py` 和 `automatic_sam.py`：参数默认 64，定义为每批并行 point prompts，并直接传给 SAM
   `points_per_batch`。今后临时只读 SSH 查询也必须避开嵌套 alternation/pipe，复杂查询落到本地或正式 auditor。
-- `V51-F57`（`engineering/resource`, `recovery pending after r031`）：r031 精确执行 v5 的唯一变化
+- `V51-F57`（`engineering/resource`, `resolved for 24GB by r032 grid32; default-grid boundary remains`）：r031 精确执行 v5 的唯一变化
   `SAM_NUM_POINTS_PER_BATCH=64→32`，stdout 确认 side/batch=`64/32`，但仍在同一 `MaskData.cat` 累积点 OOM：request/free=
   `9.32/9.31 GiB`、allocated/reserved-unallocated=`13.34 GiB/599.11 MiB`，GPU peak=`24,066 MiB`、cgroup peak=
   `18,052,734,976 bytes`、119 samples/0 errors。6 files=`28,677 bytes`，mask/metadata/quality 均 absent。相对 r030 的
@@ -588,7 +589,21 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   建议降低 `SAM_NUM_POINTS_PER_SIDE` 来减少 automatic queries。下一合法 recovery/r032 只设 side=`32`（1024 prompts），
   batch=`32` 与其他参数/门禁不动；它必须标作 documented resource adaptation，成功后需同-grid batch parity、3-view
   association/repeatability 和后续质量门，禁止把 resource PASS 冒充 default-grid parity。证据：r031 stderr=
-  `b822aab6...692`、resource=`0a06475d...af4`、status=`99d081ee...e23`。
+  `b822aab6...692`、resource=`0a06475d...af4`、status=`99d081ee...e23`。r032 以 side/batch=`32/32` 在 GPU peak
+  `23,954 MiB` 内完成 output schema，解除当前 24GB execution prerequisite；但 default grid64 仍不可运行，grid32 quality/
+  association 尚未证明，不能删除 r029–r031 或声称 exact-default parity。
+- `V51-F58`（`engineering/orchestration`, `resolved after r032 audit`）：按 `V51-F53` 清理门禁删除两份用户 cache 前，首次
+  wrapper 用嵌套 `$(sha256sum ... | cut -d " " -f1)`；PowerShell/SSH/bash 再次破坏 delimiter 引号，`cut` 在第一个
+  `&&` 前退出，两份文件均未删除。已有 r032 independent audit 保存 source/canonical full SHA，恢复改为无 pipe/无命令替换
+  的两个显式 `rm -f`，随后验证源路径 absent 且 canonical SHA 分别保持 `5c106cde...13f8/19c8e357...0097`。禁止在双层
+  shell 中拼 checksum parser；以后先由 auditor 落证据，再用 exact path 单动作清理并独立验证。
+- `V51-F59`（`protocol/data-contract`, `active after r032`）：r032 的 mask 是合法 `900×1600 uint8`，但 histogram=
+  `{0:1,440,000}`。这不是 SAM grid32 quality reject：唯一输入少于 semionline `num_voting_frames=3`，upstream flush 没有形成
+  cross-view consensus，因此 all-background 正是预先声明的 one-view 边界。它同时推翻“one-view resource PASS 可证明
+  identity masks ready”的隐含推断。下一步必须在冻结 grid32 上做 same-grid batch parity，并用至少 3 个按时序排序的
+  train-only views 检查 non-empty masks、stable short IDs、repeatability 与资源；在此之前禁止 full materialization、identity
+  training 或把 annotation_count=1 当成实例覆盖。证据：r032 mask=`0bf854a1...59d`、audit=`cebe07fd...cd5`、freeze=
+  `configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

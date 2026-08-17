@@ -1,0 +1,136 @@
+schema_version: worldsim_v51_stage_f_f0a_environment_one_view_smoke_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+frozen_at: "2026-08-18"
+
+canonical_run:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032
+  source_commit: 29a160af752f940504d1e9879db61e13e2b72b52
+  source_tree: 4681c2650b880bcb59bc24d1cbed0c70a491810d
+  seed: 20260814
+  status: done
+  conclusion: f0a_environment_and_one_view_resource_smoke_done_grid_quality_batch_parity_and_association_smoke_required
+  resolved_config:
+    bytes: 9154
+    sha256: 03957ede03691bbd279c329dd5b3cda12daa3867e5046977cda14d636d1e4e34
+  summary:
+    bytes: 13127
+    sha256: f94d0ac54879f668cd8cc70b38bc70520de0db01701c1c770e362b2e424ec64e
+  manifest:
+    bytes: 2292
+    sha256: ede8f38b4c6bc0e996feab6ea26c5984fa1b14fca3f9ce51105bf5bbb986e4ab
+    entry_count: 13
+    logical_bytes: 157563
+  status_file:
+    bytes: 329
+    sha256: 949067c17e4ed146fccfbb603f707e0b5b669d35af9f34c23bb26504b8dbbb8c
+  regular_file_bytes_excluding_symlink_target: 60278
+
+independent_audit:
+  tooling_commit: 4a5cc1f
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T093000Z__stage-f-f0a-r032-audit.json
+  bytes: 1687
+  sha256: cebe07fdd79e93697483ce0c12472fdff6eab99771d0938c896857e6abf7ccd5
+  status: pass
+  replayed:
+    - manifest_inventory
+    - project_source_commit_and_tree
+    - external_source_commit_tree_and_cleanliness
+    - hidden_torchvision_assets
+    - exact_wheels_and_import_versions
+    - gurobi_and_pulp_solver_smokes
+    - one_view_output_schema_and_hashes
+    - resource_samples_and_ceilings
+    - research_locks
+
+method_and_resource_contract:
+  upstream: Gaussian_Grouping_DEVA_SAM_everything_semionline
+  image_size: [1600, 900]
+  internal_size: 480
+  sam_pred_iou_threshold: 0.7
+  sam_num_points_per_side: 32
+  sam_num_points_per_batch: 32
+  prompt_denominator: 1024
+  upstream_default_points_per_side: 64
+  upstream_default_points_per_batch: 64
+  adaptation: documented_deva_prompt_grid_resource_recovery
+  default_grid_resource_attempts: [r029, r030, r031]
+  default_grid_resource_result: blocked_on_24gb_before_mask_output
+  default_grid_parity_claim: false
+
+environment:
+  runtime: /root/autodl-tmp/envs/deva-v51-stage-f-v2/bin/python
+  packages:
+    supervision: 0.14.0
+    pulp: 2.7.0
+    gurobipy: 12.0.3
+  wheels:
+    supervision: {bytes: 63265, sha256: 7f03f1ed16ac2ac6e6dd3436cdc54073d32e4185ddc2ea8344b6ae509ea21d67}
+    pulp: {bytes: 14251631, sha256: b6de42c929e80325bf44cc7a2997f02535440800c376b9eb8cb7b4670ed53769}
+    gurobipy: {bytes: 14490641, sha256: 940e21dfcb82fbbadeba893f4d01d3348f0d595692fac56f4e28a4199f541b18}
+  solver_smokes:
+    gurobi: {status: 2, solution: 1.0, version: [12, 0, 3]}
+    pulp: {status: 1, status_name: Optimal, solution: 1.0}
+  runtime_environment:
+    TORCH_HOME: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home
+    PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+    PYTHONDONTWRITEBYTECODE: "1"
+
+hidden_torchvision_assets:
+  resnet18:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet18-5c106cde.pth
+    bytes: 46827520
+    sha256: 5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8
+  resnet50:
+    path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet50-19c8e357.pth
+    bytes: 102502400
+    sha256: 19c8e3572231adff6824a2da93fd67b5986919a2e65f8b6007eab4edee220097
+  partial_paths_absent: true
+  original_user_cache_cleanup:
+    status: done_after_canonical_audit
+    removed:
+      - /root/.cache/torch/hub/checkpoints/resnet18-5c106cde.pth
+      - /root/.cache/torch/hub/checkpoints/resnet50-19c8e357.pth
+    recoverable_from_canonical_torch_home: true
+
+one_view_output:
+  input_sha256: 093d38e8d8d8f12efa782a59c0b7ea43c07c2104252a03074ee400f21895819e
+  mask:
+    path: artifacts/one_view_output/Annotations/000_0.png
+    bytes: 1476
+    sha256: 0bf854a15e791ec8a906c8349c1a5db1a1709893206ea2f9774abe4b8120159d
+    shape_hw: [900, 1600]
+    dtype: uint8
+    histogram: {"0": 1440000}
+  metadata:
+    path: artifacts/one_view_output/pred.json
+    bytes: 120
+    sha256: 35fbd75a97456ea9cd8f9ab66fa7c35adfa206ad258aee89b62d8737fe6c5e8d
+    annotation_count: 1
+  interpretation:
+    resource_and_schema_pass: true
+    all_background_expected_from_one_view_shorter_than_three_frame_voting: true
+    quality_claim: false
+    association_capability_claim: false
+
+resources:
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 23954
+  cgroup_memory_peak_bytes: 18044903424
+  wall_seconds: 22.49425512738526
+  disk_free_after_bytes: 79936520192
+  sample_count: 71
+  monitor_error_count: 0
+  all_gates_pass: true
+
+governance:
+  failure_ledger_refs: [V51-F46, V51-F49, V51-F50, V51-F51, V51-F52, V51-F53, V51-F54, V51-F55, V51-F56, V51-F57, V51-F58, V51-F59]
+  failure_ledger_delta: V51-F57_resolved_with_grid32_boundary_V51-F58_resolved_V51-F59_active
+  quality_read: false
+  materialization_authorized: false
+  identity_training_authorized: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  next_phase: same_grid_batch_parity_and_three_view_semionline_association_repeatability_smoke_preregistration

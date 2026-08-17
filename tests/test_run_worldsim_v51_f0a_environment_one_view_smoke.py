@@ -3,6 +3,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -58,6 +60,19 @@ def test_f0a_environment_smoke_r032_audit_passes() -> None:
     assert result["status"] == "pass"
     assert result["mask_histogram"] == {"0": 1440000}
     assert result["quality_read"] is False
+
+
+def test_f0a_environment_smoke_freeze_is_terminal_and_locked() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["independent_audit"]["status"] == "pass"
+    assert freeze["one_view_output"]["interpretation"]["quality_claim"] is False
+    assert freeze["governance"]["materialization_authorized"] is False
 
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:

@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage F F0a r032 canonical resource/schema PASS（2026-08-18）
+
+- run/source/tree=`20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032 /29a160a...b52 /
+  4681c265...10d`；terminal=`done`，grid/batch=`32/32`、1024 prompts，solver/env/assets/CLI/output/resource gates PASS。
+  summary/manifest/status SHA=`f94d0ac5...64e/ede8f38b...e4ab/949067c1...b8c`；manifest logical=`13 entries /
+  157,563 bytes`。
+- mask=`1,476 bytes /0bf854a1...59d /900×1600 uint8 /all 1,440,000 pixels label0`，pred.json=`120 bytes /
+  35fbd75a...5e8 /1 annotation`。这是 one-view<3 voting frames 的 schema boundary；quality/association claims=false，
+  不能把 all-background 写成算法失败或成功。
+- resources=`GPU peak 23,954 MiB /cgroup 18,044,903,424 bytes /22.494s /71 samples /0 errors`；audit=
+  `1,687 bytes /cebe07fd...cd5 /PASS`。两份原 `/root/.cache` ResNet 源副本在 canonical audit 后精确删除，canonical
+  `TORCH_HOME` 保留。freeze=`stage_f_f0a_environment_one_view_smoke_freeze_v1.yaml`；failure delta=
+  `V51-F57 resolved_with_grid32_boundary / V51-F58 resolved / V51-F59 active`。
+
 ## V5.1 Stage F F0a r031 blocked / v6 grid recovery 预注册（2026-08-18）
 
 - r031=`20260818T083000Z__m1-stage-f-f0a-environment-one-view-s20260814-r031`，source=`2e96f05`；CLI stdout 固定

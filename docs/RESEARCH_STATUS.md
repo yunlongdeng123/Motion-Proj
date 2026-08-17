@@ -1,5 +1,23 @@
 # Research Status
 
+## V5.1 Stage F F0a r032 resource/schema PASS 已冻结（2026-08-18）
+
+- canonical r032=`20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032`，source/tree=
+  `29a160a...b52/4681c265...10d`，status=`done`，conclusion=
+  `f0a_environment_and_one_view_resource_smoke_done_grid_quality_batch_parity_and_association_smoke_required`。grid/batch=
+  `32/32`、1024 prompts；环境、两种 solver、DEVA/SAM/ResNet assets 与 output schema 全通过。
+- resource=`GPU 1→23,954 MiB /cgroup 18,044,903,424 bytes /wall 22.494s /71 samples /0 errors`，所有 prereg gate
+  PASS。manifest=`13 logical entries /157,563 bytes`；mask=`900×1600 uint8 /0bf854a1...59d`、metadata=
+  `35fbd75a...5e8/1 annotation`。mask histogram=`{0:1,440,000}` 是单视图短于 3-frame voting 的预期边界，只证明
+  resource/schema，不证明 non-empty mask、association 或 quality（`V51-F59 active`）。
+- independent audit=`1,687 bytes /cebe07fd...cd5`，重放 manifest/source/assets/wheels/solvers/output/resources/locks
+  全 PASS；freeze=`configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_freeze_v1.yaml`。审计后已精确删除 r029
+  生成的两份 `/root/.cache` 源副本，canonical `TORCH_HOME` full SHA 保持；首次清理 wrapper 的 `cut` 引号失败未删除任何
+  文件，随后无管道恢复完成（`V51-F58 resolved`）。
+- 下一步只允许预注册 same-grid batch32↔16 parity + 至少 3-view semionline association/repeatability；在 non-empty、
+  stable short-ID 与资源门完成前，full materialization/identity training=false，quality/H/S/C/validation/test/KITTI=false，
+  F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0a r031 batch32 blocked；v6/r032 grid32 recovery 已预注册（2026-08-18）
 
 - r031=`20260818T083000Z__m1-stage-f-f0a-environment-one-view-s20260814-r031`，source=`2e96f05`，official CLI 确认
