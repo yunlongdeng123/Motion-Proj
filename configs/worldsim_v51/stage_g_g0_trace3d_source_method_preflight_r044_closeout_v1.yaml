@@ -1,0 +1,43 @@
+schema_version: worldsim_v51_stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: blocked
+phase: g0_trace3d_source_preflight_r044_missing_pdfinfo_closeout
+closed_at: "2026-08-18"
+
+run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-G-AMBIGUITY-01/20260818T210000Z__m1-stage-g-g0-trace3d-source-s20260814-r044
+  source_commit: 7fd637a46afdae900f1adcac3e65d77f65bf7211
+  observed_terminal: running_status_left_by_uncaught_preflight_exception
+  failure: FileNotFoundError_pdfinfo_executable_absent
+  resolved_config: {bytes: 3402, sha256: 837eb202261cd2d4defa7b909661be888c0d478cd2c2e55eb560adb4fd603a57}
+  status_file: {bytes: 130, sha256: f365e0ba50508a50bfedda17f82d40aee20cd94bbc453d1cf98596fb937c9d24}
+  events: {bytes: 71, sha256: 54338d3a5f6f6719cd0af1c155b37027dec7461d9a5a0505606252752c6958c1}
+  source_report_published: false
+  summary_published: false
+  quality_read: false
+
+published_assets:
+  paper: {path: /root/autodl-tmp/third_party/trace3d-iccv2025.pdf, bytes: 2390825, sha256: d50eda076feb29ff84ac0d2c5d2d6c23d74cf8e6bcb70c0467b1a20618d647e4}
+  repository: {path: /root/autodl-tmp/third_party/trace3d-v51-stage-g, commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442, tree: 22d30d19c0226e353e5caf527a29eff02d36a05d, clean: true}
+  atomic_publication_completed_before_failure: true
+
+interpretation:
+  established:
+    - official_assets_were_atomically_published_at_expected_repository_commit
+    - failure_occurred_in_page_count_tool_after_acquisition
+  not_established:
+    - paper_page_count
+    - repository_method_semantic_audit
+    - source_preflight_completion
+  classification: engineering_tool_availability_blocked
+
+recovery:
+  only_changes:
+    - reuse_and_reverify_exact_published_assets
+    - replace_external_pdfinfo_with_standard_library_pdf_page_marker_count
+    - preserve_all_source_method_adapter_and_read_locks
+  forbid: [delete_published_assets, redownload_assets, source_execution, submodule_initialization, quality_read]
+  next_phase: trace3d_source_method_preflight_v2_preregistration
+
+failure_ledger_refs: [V51-F63, V51-F64, PIVOT-F05]
+failure_ledger_delta: V51-F64_active_missing_pdfinfo_after_atomic_asset_publication

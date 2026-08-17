@@ -1,5 +1,14 @@
 # Research Status
 
+## V5.1 Stage G G0 r044 因缺少 pdfinfo 中断（2026-08-18）
+
+- r044 在 official PDF 与 repo=`7465ad94...c442/tree 22d30d19...a05d` 已原子发布后，调用不存在的 `pdfinfo`
+  时报 `FileNotFoundError`；run 仅有 resolved/status(running)/start-event，无 source report/summary，保持原状不补写。
+- published paper=`2,390,825 bytes /d50eda07...47e4`；repo clean。没有执行 Trace3D source、init submodules、下载模型
+  或读取 image/mask/quality；这是 `V51-F64` 工具可用性 blocked，不是 Trace3D 方法失败。
+- recovery 只允许新目录 exact 复核并复用已发布资产、以标准库 PDF page marker 计数替代 external `pdfinfo`；禁止删除/
+  重下资产或扩大读集。closeout=`stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml`。
+
 ## V5.1 Stage G G0 Trace3D source/method preflight 已预注册（2026-08-18）
 
 - task=`WS-V51-M1-G-AMBIGUITY-01`，formal target=`20260818T210000Z__m1-stage-g-g0-trace3d-source-s20260814-r044`；

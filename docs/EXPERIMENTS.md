@@ -1,5 +1,11 @@
 # Experiments
 
+## V5.1 Stage G G0 r044 BLOCKED：pdfinfo 缺失（2026-08-18）
+
+- official paper/repo atomic publish 已完成，随后 page-count 调用因 `pdfinfo` 不存在中断；run terminal 未写完，保留
+  running evidence，不冒充 done。paper=`2,390,825/d50eda07...47e4`；repo=`7465ad94...c442/22d30d19...a05d/clean`。
+- failure=`V51-F64`；v2 仅复用 exact assets 并改标准库 page marker count，不执行源码或读质量。
+
 ## V5.1 Stage G G0 r044 Trace3D source/method preflight 预注册（2026-08-18）
 
 - target=`trace-3d/Trace3D@7465ad94...c442 + official ICCV 2025 PDF`；只 acquisition/hash/source semantics/
