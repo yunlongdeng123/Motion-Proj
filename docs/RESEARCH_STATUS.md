@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage D D0 sparse operator 已实现并预注册 full-H no-quality run（2026-08-18）
+
+- 新增 clean-room `progressive_propagation.py`：冻结 directed KNN 先对称化，再构造 exact 1/2-hop CSR；每个 Gaussian
+  的逐视图 SAM soft probability 映射为 L2-normalized `[1-p,p]`，pair affinity 为共同有效 visibility-product 加权
+  cosine；region affinity 按 member count 与 distance decay=`0.5` 聚合。
+- U2/B3 posterior 只产生 immutable actor/background high-confidence seeds；每级 threshold 到 fixed point 后再降阈值，
+  actor/background 同时过门时取更高 region affinity，exact tie 与最终无支持节点保持 UNKNOWN=`0.5`。没有 one-shot
+  smoothing、DINO uplift、learned/gated/motion edge、node change 或参数搜索。
+- pure regression=`9 passed`，覆盖公式、visibility、exact distance-2、strict→relaxed expansion、UNKNOWN/tie、边顺序
+  确定性、manifest validity/neutral fill、future-quality fail-closed 和 CLI。首个 UNKNOWN fixture 误把可由 Background
+  合法扩张的节点当孤立点，登记 `V51-F36 resolved` 后用真正无支持节点修正。
+- full-H operator config=`stage_d_progressive_operator_v1.yaml`：只读 15 train-only views/scene，生成三场 D0 sidecar 与
+  4,096-node byte-exact repeat probe；70 GiB cgroup、5,400 s total、GPU<=1 GiB fail-closed。H quality/render、S/C、
+  validation/test/KITTI 未读，M2/M3=pending；须先 clean commit 再运行。
+
 ## V5.1 Stage D r016 D0 preflight 已冻结（2026-08-18）
 
 - canonical r016=`20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016`，source=`99a626b`，status=`done`，

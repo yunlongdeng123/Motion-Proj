@@ -26,7 +26,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
-| `WS-V51-M1-D-PROGRESSIVE-01` | pending | 下一路线；先做 faithful progressive propagation 预注册，不读 S/C |
+| `WS-V51-M1-D-PROGRESSIVE-01` | running | r016 source/input preflight done；clean-room D0 sparse operator 已预注册并完成 pure tests，待 full-H no-quality run |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

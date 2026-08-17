@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F35` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F36` |
 
 ### 1.1 V1 汇总条目
 
@@ -407,6 +407,11 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   17 行 append-only 更新，当前 SHA=`b4888476...`；旧 validator 只允许单 hash，导致 4 个既有 protocol tests 在真实
   route assertion 前 fail。禁止改写两份历史 freeze 的 recorded SHA。修复在 validator 中显式固定
   `base hash → authorized append hash` 两状态链，第三种状态仍 fail-closed，并增加 current/historical 双 hash 回归。
+- `V51-F36`（`engineering/test`, `resolved before formal D0 operator run`）：首个 progressive expansion unit fixture
+  预期 `p=0.5` 节点最终 UNKNOWN，却把该节点直接连到 `p=0.01` Background seed。两者 L2-normalized binary
+  distribution cosine 约 `0.714`，高于冻结最低 threshold=`0.5`，故算子把它合法扩张为 Background；失败的是 fixture
+  的“无支持”假设，不是算法。修复只删除这条边，使该节点真正孤立；其余阈值/公式/实现不变，5/5 operator tests PASS。
+  禁止为满足错误预期而提高阈值、加入 confidence gate 或改变 UNKNOWN 语义。
 
 <a id="detail-v5"></a>
 

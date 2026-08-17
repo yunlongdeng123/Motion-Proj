@@ -1,0 +1,88 @@
+schema_version: worldsim_v51_stage_d_progressive_operator_v1
+task_id: WS-V51-M1-D-PROGRESSIVE-01
+status: running
+phase: d0_faithful_operator_without_quality_read
+created_at: "2026-08-18"
+seed: 20260814
+
+preflight_freeze:
+  path: configs/worldsim_v51/stage_d_progressive_preflight_freeze_v1.yaml
+  sha256: 02aded4ce7de3180e647cbc985888409473fb4608c57aee69aeef35a64751223
+  required_status: done
+  required_conclusion: d0_faithful_port_inputs_and_source_ready_without_quality_read
+
+method:
+  arm: D0
+  invariant_baseline: U2_B3
+  node: raw_gaussian
+  topology: frozen_v5_directed_euclidean_knn_symmetrized
+  maximum_logical_distance: 2
+  semantic_distribution: l2_normalized_binary_vector_one_minus_p_and_p
+  pair_similarity: cosine
+  view_confidence: common_valid_visibility_product
+  region_affinity: member_count_and_logical_distance_weighted_mean
+  logical_distance_decay: 0.5
+  progressive_thresholds: [0.9, 0.8, 0.7, 0.6, 0.5]
+  actor_seed_minimum: 0.9
+  background_seed_maximum: 0.1
+  unknown_probability: 0.5
+  expansion_schedule: strict_to_relaxed_until_fixed_point_per_level
+  conflict_policy: larger_region_affinity_wins_exact_tie_remains_unknown
+  parameter_search: false
+  upstream_code_import: false
+
+observation_contract:
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  view_order: frame_major_then_camera
+  expected_view_count_per_scene: 15
+  probability_field: sam_probability
+  availability_fields: [sam_probability_available, mask_quality_accepted]
+  positive_reliability_required: true
+  visibility_field: visibility
+  invalid_view_probability_fill: 0.5
+  invalid_view_visibility_fill: 0.0
+  use_evaluation_views: false
+
+execution:
+  scenes: [scene-0471, scene-1087, scene-0379]
+  affinity_chunk_size: 250000
+  maximum_rounds_per_threshold: null
+  deterministic_npz: true
+  repeatability_probe:
+    enabled: true
+    node_prefix_count: 4096
+    byte_exact: true
+  output_fields:
+    - gaussian_id
+    - u2_b3_posterior
+    - d0_label
+    - d0_posterior
+    - assignment_level
+
+resources:
+  monitor_interval_seconds: 2.0
+  maximum_cgroup_memory_bytes: 75161927680
+  maximum_wall_seconds_per_scene: 1800
+  maximum_total_wall_seconds: 5400
+  require_cuda: false
+  maximum_gpu_used_mib: 1024
+
+locks:
+  parse_v5_quality_diagnostics: false
+  render_evaluation_views: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  parameter_search: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F32, V51-F33, V51-F34, V51-F35, V51-F36]
+failure_ledger_delta: pending
+success_conclusion: d0_full_h_operator_sidecars_ready_without_quality_read
+next_action_on_success: freeze_operator_then_preregister_h_matched_evaluation

@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage D D0 clean-room operator / full-H r017 预注册（2026-08-18）
+
+- module=`motion_proj/worldsim_v51/progressive_propagation.py`；formula pipeline=`exact 1/2-hop geometry topology →`
+  `visibility-weighted multi-view soft-binary cosine → member/distance-weighted region affinity → 0.9…0.5 fixed-point growing`。
+  U2/B3 为 seed/baseline，未观测或 exact conflict 最终 UNKNOWN，upstream code import=false。
+- tests=`5 operator +4 runner/config =9 passed`；包括 edge-order exact determinism 和 deterministic NPZ input loader。
+  初始 UNKNOWN fixture 实际与 Background 相邻且 cosine≈`0.714`，在 frozen `0.5` level 被吸收是正确行为；fixture
+  纠正为孤立 node，登记 `V51-F36 resolved`，没有 formal result 或 quality read。
+- planned r017=`m1-stage-d-d0-operator-s20260814-r017`；输入为 r016 freeze + 三场 frozen B3/15 train-only observation
+  sidecars/V5 KNN topology，只输出 labels/posterior/assignment-level、affinity/propagation diagnostics 和 resource evidence。
+  不解析 V5 quality diagnostics、不 render evaluation；S/C/validation/test/KITTI=false，M2/M3=pending。
+
 ## V5.1 Stage D r016 canonical D0 preflight（2026-08-18）
 
 - run=`20260818T000000Z__m1-stage-d-d0-preflight-s20260814-r016`，source=`99a626b`，report=
