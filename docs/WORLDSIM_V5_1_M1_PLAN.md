@@ -1,5 +1,12 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0b H evaluation 预注册
+
+r022 在冻结 12 个 H views 上比较 `U2_B3_G0/D0/E0B`；只新渲染 E0B，U2/B3 与 D0 复用 frozen float16 artifacts。
+primary gate 继承 Stage D，mechanism gate 额外要求 E0B 相对 D0 在至少两场 BF1 不退、scene-balanced BF1 严格为正、
+IoU 不退、FN 不增；两组 gate 必须同时 PASS。PASS 才解锁 E1 PanoGS preregistration；FAIL 后 E1/E2 永久锁定并转
+Gaussian Grouping。r022 后禁止回看 fine/medium/coarse 或调 aggregation/propagation。
+
 ## 2026-08-18 Stage E E0b r021 operator 收口
 
 r021 在 `fine_q50` node 上完成 no-quality same-propagation，full operator 独立 replay exact；三场相对 D0 改变
@@ -82,7 +89,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 + E0b r021 operator frozen；下一门只允许三臂 matched H preregistration，E1/E2 locked |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 + E0b r021 frozen；三臂 r022 matched H 已预注册，E1/E2 locked |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

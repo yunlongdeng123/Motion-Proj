@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage E E0b H matched evaluation 已预注册（2026-08-18）
+
+- r022 将是 E0B 在 frozen H 上的唯一质量读取：12 views/3 scenes，三臂=`U2_B3_G0/D0/E0B`，全部以 persisted
+  float16 probability、同一 frozen SAM proxy target 和同一 per-view/per-scene 聚合评估。U2/B3 与 D0 直接复用 frozen
+  V5/r018 artifacts，不重算；只渲染 frozen r021 E0B posterior。
+- primary gate 完整继承 Stage D：E0B vs U2/B3 需 BF1 positive scenes `>=2/3`、scene-balanced BF1 `>0`、IoU
+  `>=0`、FN delta `<=+0.02`。mechanism gate 另要求 E0B vs D0 的 BF1 nonnegative scenes `>=2/3`、mean BF1
+  `>0`、mean IoU `>=0`、mean FN delta `<=0`；两门同时 PASS 才接受。
+- PASS 只解锁 E1 PanoGS faithful-port preregistration；FAIL 则 reject simple node elevation、停止 E1/E2 并按固定路线
+  进入 Gaussian Grouping。不得因 1087 的近 no-op 预先改 level，也不得在 r022 后回头调 node aggregation/threshold。
+  S/C/validation/test/KITTI 仍锁定，M2/M3=pending。
+
 ## V5.1 Stage E E0b r021 no-quality operator 已冻结（2026-08-18）
 
 - canonical r021=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021`，source/tree=

@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage E E0b r022 matched H evaluation 预注册（2026-08-18）
+
+- planned run=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022`；输入只绑定 frozen U2/B3 G0
+  renders、r018 raw D0 float16 renders、r021 E0B Gaussian posterior 和原 12 个 H targets。baseline/D0/target/view 均
+  不重算或改变，candidate render 持久化为 float16 后再计算七项 metric。
+- primary gate vs U2/B3=`BF1 positive scenes>=2 + mean BF1>0 + mean IoU>=0 + mean FN<=+0.02`；mechanism
+  gate vs D0=`BF1 nonnegative scenes>=2 + mean BF1>0 + mean IoU>=0 + mean FN<=0`。decision 为两门 AND，
+  不能用 external baseline、单场收益或 calibration 抵消 IoU/FN failure。
+- pass→freeze E0B 并预注册 E1 PanoGS faithful port；fail→`E0B rejected / E1,E2 stopped / next Gaussian Grouping`。
+  parameter search、S/C/validation/test/KITTI=false，M2/M3=pending；failure refs=
+  `V51-F31/F34/F37/F39/F40/F41`，prereg delta=`none`。
+
 ## V5.1 Stage E E0b r021 canonical no-quality operator（2026-08-18）
 
 - run/source/tree=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021 / e573fe4f...2b74 /

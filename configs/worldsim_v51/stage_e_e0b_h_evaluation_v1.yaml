@@ -1,0 +1,160 @@
+schema_version: worldsim_v51_stage_e_e0b_h_evaluation_v1
+task_id: WS-V51-M1-E-NODE-ELEVATION-01
+status: running
+phase: e0b_h_matched_evaluation
+created_at: "2026-08-18"
+seed: 20260814
+
+operator_freeze:
+  path: configs/worldsim_v51/stage_e_e0b_same_propagation_freeze_v1.yaml
+  sha256: 51220347a1a53af1f19c6d04ba419d3cc1bf3000856cc163947b289d097d2821
+  required_status: done
+  required_conclusion: e0b_fine_q50_same_propagation_sidecars_ready_without_quality_read
+
+d0_h_rejection_freeze:
+  path: configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml
+  sha256: a5641735494ffcd8c4766055a14be00bd3f2add15be29d3a9ea88df6a6e4d446
+  required_status: rejected
+  required_conclusion: d0_progressive_rejected_skip_d1_advance_super_primitive_or_anchor
+
+reference_implementation:
+  graph_runner:
+    path: scripts/run_worldsim_v5_m1_graph_diagnostic.py
+    sha256: c654de2fb8a0bbecb8daf28f5f84be6f6475ae363d0fa7172b61809137d2f7f0
+  ownership_renderer:
+    path: motion_proj/worldsim_v5/ownership_renderer.py
+    sha256: 0253c06e7e3114529b11407cde558ae9446c1c758f769c18b9e62fbfaa3ae0b0
+  evidence_schema:
+    path: motion_proj/worldsim_v5/evidence_schema.py
+    sha256: 43b7aab8ecc7733c774f98346dbf2b551766f993fc6b8da7d67b2e87ba73bad3
+
+arms:
+  primary_comparator: U2_B3_G0
+  mechanism_comparator: D0
+  candidate: E0B
+  frozen_graph_directory_map:
+    U2_B3_G0: B3_G0
+  d0_input: frozen_r018_persisted_float16_probability
+  candidate_input: frozen_r021_e0b_posterior
+  matched_target_required: true
+  persisted_probability_dtype: float16
+
+d0_h_run:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018
+  manifest_sha256: 792660e33bcff3257b1c8d428a1076cc61445a6cbae76c4e191fcbb583d3010c
+  required_status: rejected
+
+scenes:
+  - scene: scene-0471
+    expected_evaluation_view_count: 8
+    graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+      sha256: 53e14d5c22556a2e3dd4533f3b96203aab49fe4b401eece5d4a93de1c19b9090
+    graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038
+      manifest_sha256: 83ad4099f61bfb0566f38f9fd30f4197897ac825b36b2c0de1d00dddad23f027
+    e0b_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021/artifacts/sidecars/scene-0471.npz
+      sha256: 1b2b7827a7e2829c342cbae6e49f920445cd5880db9f00ba2cecdf881a25fc2f
+  - scene: scene-1087
+    expected_evaluation_view_count: 1
+    graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene1087_v1.yaml
+      sha256: cc7f44356c1bb7b215189b00c531b2be199f1d6e3d279066aaa93d8b20b39ea1
+    graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190405Z__m1-scene1087-graph-diagnostic-s0-r045
+      manifest_sha256: 1b9f7c59457860552db3065daf6466245cb3655c35e2aa8f61f7893cd54f5b84
+    e0b_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021/artifacts/sidecars/scene-1087.npz
+      sha256: 2cac0cf93ccfe12c198bbc9c3056e912db7b29ebf1e2d5770da7f45303b663ea
+  - scene: scene-0379
+    expected_evaluation_view_count: 3
+    graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene0379_v1.yaml
+      sha256: 6c4aeca80e86885de43d0f16c2256b538e47f524dc742c002fad9143124afb8c
+    graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190715Z__m1-scene0379-graph-diagnostic-s0-r046
+      manifest_sha256: 4e148d11dbbb0c441a4423033b3c25820b487705d5fc168d67467d75de4ae0f9
+    e0b_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021/artifacts/sidecars/scene-0379.npz
+      sha256: 5b8d33db37b55ccee3d1d3960add0a30029ea495edef3a89a854a65e78542f1f
+
+evaluation:
+  target_declaration: frozen_v5_sam_binary_mask_proxy_not_ground_truth
+  target_usage: evaluation_only_never_method_input
+  target_source: frozen_v5_b3_g0_evaluation_npz
+  view_set: exact_frozen_v5_accepted_evaluation_rows
+  expected_total_view_count: 12
+  probability_threshold: 0.5
+  boundary_tolerance_px: 3
+  ece_bins: 15
+  metric_source_precision: persisted_float16_for_all_arms
+  scene_aggregation: equal_view
+  cross_scene_aggregation: equal_scene
+  metrics:
+    - boundary_f1
+    - iou_at_frozen_threshold
+    - false_negative_semantic_mass
+    - false_positive_semantic_mass
+    - brier
+    - ece
+    - nll
+
+primary_h_gate_vs_u2_b3_g0:
+  source: inherited_stage_d_h_gate
+  scene_count: 3
+  minimum_positive_boundary_f1_scenes: 2
+  minimum_scene_balanced_boundary_f1_delta_exclusive: 0.0
+  minimum_scene_balanced_iou_delta: 0.0
+  maximum_scene_balanced_false_negative_semantic_mass_delta: 0.02
+
+mechanism_h_gate_vs_d0:
+  source: frozen_before_e0b_h_quality_read
+  scene_count: 3
+  minimum_nonnegative_boundary_f1_scenes: 2
+  minimum_scene_balanced_boundary_f1_delta_exclusive: 0.0
+  minimum_scene_balanced_iou_delta: 0.0
+  maximum_scene_balanced_false_negative_semantic_mass_delta: 0.0
+
+decision:
+  pass_requires: primary_and_mechanism_gates
+  pass_action: freeze_e0b_then_preregister_e1_panogs_faithful_port
+  fail_action: reject_simple_node_elevation_stop_e1_e2_advance_gaussian_grouping
+
+runtime:
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
+  torch: 2.1.2+cu118
+  torch_cuda: "11.8"
+  numpy: 1.23.5
+  scipy: 1.9.1
+  cpu_threads: 14
+
+resources:
+  monitor_interval_seconds: 1.0
+  maximum_nvidia_at_start_mib: 512
+  maximum_nvidia_peak_mib: 24000
+  maximum_torch_allocated_peak_mib: 24000
+  maximum_torch_reserved_peak_mib: 24000
+  maximum_cgroup_memory_bytes: 85899345920
+  maximum_wall_seconds: 3600
+
+locks:
+  parameter_search: false
+  e0b_recompute: false
+  d0_recompute: false
+  baseline_recompute: false
+  target_change: false
+  view_change: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  e1_panogs_execution: false
+  e2_ag2aussian_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F34, V51-F37, V51-F39, V51-F40, V51-F41]
+failure_ledger_delta: pending
