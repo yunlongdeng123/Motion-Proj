@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage D r018 canonical H rejection（2026-08-18）
+
+- run=`20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018`，source/tree=
+  `2cd98b31...02cf/ccf42d68...ee4`，status=`rejected`；12/12 D0 renders、U2/B3 G0 与 frozen V5 G3 inputs、
+  target、float16 precision、per-view metrics、equal-view/equal-scene aggregates 全部独立复算 exact。
+- H checks=`BF1 positive scenes PASS (2/3) / mean BF1 PASS (+0.0002196) / IoU FAIL (-0.0714543) /`
+  `FN safeguard FAIL (+0.1694766 > +0.02)`。scene `(BF1,IoU,FN)` delta：0471=
+  `(+0.122773,+0.165451,+0.080830)`，1087=`(+0.056899,-0.159417,+0.218146)`，0379=
+  `(-0.179014,-0.220397,+0.209454)`。因此 progressive rejected、D1 skipped、next=Stage E E0。
+- manifest=`21 entries / 1,175,047 bytes`，run=`23 files / 1,179,119 bytes`；summary/status/manifest SHA=
+  `b08c7276...62d6/7273c30b...ba95/792660e3...010c`。audit report=`3,888 bytes / 18c12f4d...0d2`；
+  resources=`10,724 MiB GPU / 11.36GB cgroup /124.897s /108 valid /0 errors`。
+- failure delta=`V51-F37 active`；禁止 D0/D1 recovery tuning。S/C/validation/test/KITTI=false，M2/M3=pending；
+  result freeze=`configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml`。
+
 ## V5.1 Stage D D0 H matched evaluation / r018 预注册（2026-08-18）
 
 - task/phase=`WS-V51-M1-D-PROGRESSIVE-01 / d0_h_matched_evaluation`；planned r018 只读 r017 frozen D0 与 V5

@@ -1,0 +1,98 @@
+schema_version: worldsim_v51_stage_d_progressive_h_evaluation_freeze_v1
+task_id: WS-V51-M1-D-PROGRESSIVE-01
+status: rejected
+frozen_at: "2026-08-18"
+
+input_contract:
+  path: configs/worldsim_v51/stage_d_progressive_h_evaluation_v1.yaml
+  sha256: 04aad77a1d7e69b0a9b63b70370854235e0fea687a8acf48c54ad21ae43bd6aa
+
+canonical_run:
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018
+  source_commit: 2cd98b31df98bf3b75a050f09cb8e7dbd83702cf
+  source_tree: ccf42d68a09c3cdee030082807df73a87b289ee4
+  status: rejected
+  conclusion: d0_progressive_rejected_skip_d1_advance_super_primitive_or_anchor
+  total_view_count: 12
+  per_scene_view_count:
+    scene-0471: 8
+    scene-1087: 1
+    scene-0379: 3
+  manifest_inventory_entries: 21
+  manifest_inventory_bytes: 1175047
+  total_run_files: 23
+  total_run_bytes: 1179119
+  hashes:
+    summary: b08c72760bc73f73a850a968fc0d8b59c0a42b2d8fe335a870a0a752263b62d6
+    status: 7273c30b17b8b6b1a43ed785e6b9e8f6f9345abaa11b5c6c33c3a66eda8eba95
+    manifest: 792660e33bcff3257b1c8d428a1076cc61445a6cbae76c4e191fcbb583d3010c
+    events: a38447c5ef832ea59aa251ebfdc9ea19e7c1db184bcf3ace28a21efe6bb25786
+    h_evaluation_report: 84b54c2ea99225bdea803c440a8a594a900579ca4b081ac9958db60deaa28371
+    resources: 93b6f6a5490228cf5552cc6a06d8b3dd96c5e5d10de4f495cdc7ef2592f8dd4d
+    resource_samples: 3ea7541a53923ee9d9333c9ce9f09f0ac85ff1cdbabf89b18096cc39345ee5ca
+
+h_gate:
+  pass: false
+  positive_boundary_f1_scene_count: 2
+  checks:
+    positive_boundary_f1_scene_count: true
+    scene_balanced_boundary_f1_positive: true
+    scene_balanced_iou_nonnegative: false
+    scene_balanced_false_negative_safeguard: false
+  scene_balanced_delta_vs_u2_b3_g0:
+    boundary_f1: 0.00021960452025671096
+    iou_at_frozen_threshold: -0.07145427219538798
+    false_negative_semantic_mass: 0.16947658361415086
+    false_positive_semantic_mass: -0.033556371115632436
+    brier: -0.006436819727781509
+    ece: -0.009100794176996488
+    nll: 0.10519936699072997
+  scene_delta_vs_u2_b3_g0:
+    scene-0471:
+      boundary_f1: 0.12277297344338467
+      iou_at_frozen_threshold: 0.16545131315522454
+      false_negative_semantic_mass: 0.08083036408224481
+    scene-1087:
+      boundary_f1: 0.05689943221664484
+      iou_at_frozen_threshold: -0.15941744671274383
+      false_negative_semantic_mass: 0.21814579151079394
+    scene-0379:
+      boundary_f1: -0.17901359209925938
+      iou_at_frozen_threshold: -0.22039668302864468
+      false_negative_semantic_mass: 0.20945359524941382
+
+resources:
+  nvidia_start_mib: 4
+  nvidia_peak_mib: 10724
+  torch_allocated_peak_mib: 10062.11865234375
+  torch_reserved_peak_mib: 10372.0
+  cgroup_memory_peak_bytes: 11357159424
+  valid_sample_count: 108
+  monitor_error_count: 0
+  wall_seconds: 124.89686890132725
+  gate_pass: true
+
+independent_audit:
+  script: scripts/audit_worldsim_v51_d0_h_evaluation.py
+  script_sha256: b654ba7bc537f2babe583ac405b5906d29cd55649d4fa73c115da7f1e148f6c2
+  report_sha256: 18c12f4d7ff693a9ae91df51bdc36aa534c73a85e1dc85cea6756ef5027810d2
+  report_bytes: 3888
+  status: passed
+  conclusion: r018_rejected_result_and_matched_metric_gate_replay_exact
+  metric_replay_exact: true
+  checkpoint_exact: true
+  manifest_exact: true
+
+governance:
+  parameter_search: false
+  d1_authorized: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+  failure_ledger_delta: V51-F37
+  next_task: WS-V51-M1-E-NODE-ELEVATION-01
+  next_phase: e0_simple_voxel_super_primitive_structural_preflight

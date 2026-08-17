@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F36` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 与 raw-Gaussian progressive 均被 H reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive 降 FP 但 IoU/FN 跨场失稳 | `V51-F01`–`V51-F37` |
 
 ### 1.1 V1 汇总条目
 
@@ -412,6 +412,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   distribution cosine 约 `0.714`，高于冻结最低 threshold=`0.5`，故算子把它合法扩张为 Background；失败的是 fixture
   的“无支持”假设，不是算法。修复只删除这条边，使该节点真正孤立；其余阈值/公式/实现不变，5/5 operator tests PASS。
   禁止为满足错误预期而提高阈值、加入 confidence gate 或改变 UNKNOWN 语义。
+- `V51-F37`（`algorithm/evaluation`, `active; D0 rejected by r018`）：faithful SAI3D-style raw-Gaussian progressive
+  propagation 在 frozen H matched 12 views 上只通过 BF1 两项门：positive scene=`2/3`、scene-balanced BF1=
+  `+0.0002196`；IoU=`-0.0714543<0` 与 FN semantic mass=`+0.1694766>+0.02` 同时 FAIL。0471 的
+  BF1/IoU 有改善，但 FN 仍 `+0.080830`；1087/0379 的 IoU=`-0.159417/-0.220397`、FN=
+  `+0.218146/+0.209454`，说明减少 FP/提高部分 calibration 并不能补偿 actor 漏检和跨场不稳定。这推翻“在 raw
+  Gaussian 上按冻结 KNN 与多视图 SAM affinity 做 progressive growing 可稳定优于 U2/B3”的假设，不推翻所有 graph
+  或 super-primitive 路线。D1 永久跳过；禁止按 r018 调 thresholds/hops/seeds/affinity 或重读 H。合法后续只有按冻结
+  顺序进入 Stage E，先以 no-quality E0 检查 node elevation 是否提高 observation density，再按其门禁决定 E1/E2。
+  证据：r018，source=`2cd98b3`，summary/manifest=`b08c7276...62d6/792660e3...010c`，independent metric/gate
+  replay=`18c12f4d...0d2`，freeze=`configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

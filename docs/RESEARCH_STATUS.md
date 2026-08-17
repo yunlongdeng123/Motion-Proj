@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage D r018 H rejected；已自动进入 Stage E（2026-08-18）
+
+- canonical r018=`20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018`，source=`2cd98b3`，
+  status=`rejected`，conclusion=`d0_progressive_rejected_skip_d1_advance_super_primitive_or_anchor`。三场
+  `8/1/3=12` matched views、三臂 float16 metric replay、checkpoint/layout、21-entry manifest 均独立审计 exact。
+- 相对 U2/B3 G0，D0 的 scene-balanced delta：BF1=`+0.0002196`、IoU=`-0.0714543`、FN semantic mass=
+  `+0.1694766`、FP=`-0.0335564`、Brier=`-0.0064368`、ECE=`-0.0091008`、NLL=`+0.1051994`。BF1 正向
+  scene=`2/3`，但 IoU 与 FN 两个安全门 FAIL；0471/1087/0379 的 BF1 delta=`+0.122773/+0.056899/-0.179014`。
+- 结论只是否定 raw-Gaussian faithful progressive propagation 的跨场稳定性：它能减少 FP/部分 calibration error，
+  但在 1087/0379 明显牺牲 IoU 并增加漏检；不得由此声称 graph 整体无效，也不得在 H 调 threshold/seed/edge。
+  D1 禁止，`V51-F37 active`；路线已自动切到 `WS-V51-M1-E-NODE-ELEVATION-01 / E0`。
+- resource PASS：GPU start/peak=`4/10,724 MiB`，Torch allocated/reserved=`10,062.119/10,372 MiB`，cgroup=
+  `11,357,159,424 bytes`，108 samples、0 errors、wall=`124.897 s`。freeze=
+  `stage_d_progressive_h_evaluation_freeze_v1.yaml`；S/C/validation/test/KITTI 未读，M2/M3=pending。
+
 ## V5.1 Stage D D0 H matched evaluation 已预注册（2026-08-18）
 
 - 新冻结 `stage_d_progressive_h_evaluation_v1.yaml`：H 只使用 V5 已接受的 0471/1087/0379、共 `8/1/3=12`
