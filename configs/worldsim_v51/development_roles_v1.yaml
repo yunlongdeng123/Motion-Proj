@@ -1,0 +1,41 @@
+schema_version: worldsim_v51_development_roles_v1
+task_id: WS-V51-D0-DEV-ROLE-FREEZE-01
+status: done
+created_at: "2026-08-17"
+
+source_cohort:
+  path: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+  file_sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+  cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+
+roles:
+  historical_diagnostic:
+    quality_access: repeated_diagnostic_allowed
+    scenes: [scene-0471, scene-1087, scene-0379]
+  screening:
+    quality_access: exact_once_per_frozen_candidate
+    scenes: [scene-0998, scene-0359]
+  development_confirmation:
+    quality_access: exact_once_after_family_freeze
+    scenes: [scene-0875, scene-0535, scene-0436]
+
+clean_cohorts:
+  validation:
+    expected_scene_count: 8
+    quality_read: false
+    tuning: false
+  test:
+    expected_scene_count: 20
+    quality_read: false
+    exact_once: true
+    requires_freeze_artifact: V51_TEST_FREEZE.json
+
+restrictions:
+  scene_reselection: false
+  screening_parameter_refit: false
+  confirmation_parameter_refit: false
+  validation_parameter_refit: false
+  test_parameter_refit: false
+
+failure_ledger_refs: [V5-F12, V5-F18, V5-F26, V5-F31, V5-F32, V5-F33]
+failure_ledger_delta: none

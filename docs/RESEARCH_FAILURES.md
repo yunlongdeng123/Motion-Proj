@@ -2,7 +2,7 @@
 
 > **最后更新**：2026-08-17
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V5、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V5.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -41,7 +41,8 @@
 
 ### 0.4 目录
 
-- [V1–V5 版本总览与 V1/V2 汇总](#1-v1v5-版本总览与-v1v2-汇总)
+- [V1–V5.1 版本总览与 V1/V2 汇总](#1-v1v51-版本总览与-v1v2-汇总)
+- [V5.1 详细账本](#detail-v51)
 - [V5 详细账本](#detail-v5)
 - [V4 详细账本](#detail-v4)
 - [V3.3/V3.2/V3.1 详细账本](#detail-v3)
@@ -49,7 +50,7 @@
 - [V7/V7.1、N1/cut-in 与历史路线](#detail-legacy)
 - [跨路线原则与新实验检查表](#detail-cross-route)
 
-## 1. V1–V5 版本总览与 V1/V2 汇总
+## 1. V1–V5.1 版本总览与 V1/V2 汇总
 
 | 版本 | 终态/核心推翻 | 主要工程坑 | 详细证据入口 |
 |---|---|---|---|
@@ -59,6 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
+| V5.1 | M1-only 正在推进；P0/D0 freeze 与 Stage A A0 replay 是当前唯一授权 | 首轮测试入口未注入仓库根导致 collection blocked，已在方法/数据读取前修复 | `V51-F01` 起 |
 
 ### 1.1 V1 汇总条目
 
@@ -115,6 +117,19 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v51"></a>
+
+## V5.1 M1-only 新增防重复结论（2026-08-17）
+
+- `V51-F01`（`engineering`, `resolved`）：首轮执行
+  `pytest -q tests/test_worldsim_v51_protocol.py tests/test_audit_worldsim_v51_start.py` 在 collection 阶段因测试文件直接
+  import `motion_proj.worldsim_v51`、但未显式把仓库根加入 `sys.path` 而报 `ModuleNotFoundError: motion_proj`；同轮
+  `python scripts/audit_worldsim_v51_start.py --help` 已通过，所以该 terminal 推翻的是“pytest 启动环境总会自动注入
+  repo root”的工程假设，不是 P0 协议或算法失败。修复在测试 import 前按绝对 `ROOT` 注入路径并以原命令回归；失败时
+  没有运行方法、读取 validation/test/KITTI quality 或产生质量数字。后续直接脚本与测试入口都必须有独立 import smoke，
+  禁止把 collection error 计入方法分母。证据：`WS-V51-P0-M1-SCOPE-FREEZE-01`、
+  `tests/test_worldsim_v51_protocol.py`、`tests/test_audit_worldsim_v51_start.py`。
 
 <a id="detail-v5"></a>
 

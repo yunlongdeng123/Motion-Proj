@@ -1,0 +1,75 @@
+schema_version: worldsim_v51_p0_m1_scope_v1
+task_id: WS-V51-P0-M1-SCOPE-FREEZE-01
+status: done
+created_at: "2026-08-17"
+
+project:
+  branch: research/worldsim-v5.1-m1
+  v5_canonical_head: 44d0e4a2468112b89a454992ecd9177d65184067
+  normative_plan:
+    path: docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md
+    sha256: 3d7f74813db79b00b71b522391ff2d953bb480ef6a25179c1919ef3acc54d733
+  execution_plan: docs/WORLDSIM_V5_1_M1_PLAN.md
+
+scope:
+  allowed:
+    - m1_semantic_observation
+    - m1_bayesian_unary
+    - m1_semantic_feature_uplift
+    - m1_graph_grouping_propagation
+    - m1_semantic_sidecar
+    - m1_evaluator
+    - m1_only_paper_artifacts
+  forbidden:
+    - m2_repair
+    - m2_geometry
+    - m2_router
+    - m3_temporal_delta
+    - m3_constraint_projection
+    - new_diffusion_model
+    - new_driving_reconstruction_backbone
+    - streetgs_base_retraining_parameter_search
+    - ad_gs_modification
+    - fresh_validation_tuning
+    - fresh_test_tuning
+
+first_round_authorization:
+  tasks:
+    - WS-V51-P0-M1-SCOPE-FREEZE-01
+    - WS-V51-D0-DEV-ROLE-FREEZE-01
+    - WS-V51-M1-A-UNARY-OBSERVABILITY-01
+  later_stages_locked: true
+  m2_status: pending
+  m3_status: pending
+
+data_locks:
+  source_cohort:
+    path: configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml
+    file_sha256: 6d8caf1973f090248de237b01788d086bf52ef41c294726b80fd6590a357e7f3
+    cohort_sha256: 553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  sam_threshold_search: false
+  base_reconstruction_change: false
+
+failure_ledger_refs:
+  - V5-F09
+  - V5-F11
+  - V5-F12
+  - V5-F13
+  - V5-F14
+  - V5-F18
+  - V5-F20
+  - V5-F21
+  - V5-F22
+  - V5-F23
+  - V5-F24
+  - V5-F25
+  - V5-F26
+  - V5-F29
+  - V5-F30
+  - V5-F31
+  - V5-F32
+  - V5-F33
+failure_ledger_delta: none

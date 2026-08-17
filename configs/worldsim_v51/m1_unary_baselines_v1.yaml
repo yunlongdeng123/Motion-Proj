@@ -1,0 +1,68 @@
+schema_version: worldsim_v51_m1_unary_baselines_v1
+task_id: WS-V51-M1-A-UNARY-OBSERVABILITY-01
+status: running
+phase: a0_exact_replay
+seed: 20260814
+
+source_configs:
+  scene-0471: configs/worldsim_v5/m1_unary_diagnostic_scene0471_v1.yaml
+  scene-1087: configs/worldsim_v5/m1_unary_diagnostic_scene1087_v1.yaml
+  scene-0379: configs/worldsim_v5/m1_unary_diagnostic_scene0379_v1.yaml
+
+arms: [B0, B1, B3]
+replay_contract:
+  unary_arrays_bit_exact: true
+  gaussian_metrics_exact: true
+  evaluation_artifacts_sha_bound: true
+  canonical_manifest_inventory_exact: true
+  checkpoint_sha_bound: true
+
+canonical_runs:
+  scene-0471:
+    run_id: r037
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037
+    checkpoint_sha256: 496356ca2d8f31b4e8593b294eebba1f068a0c7fddbd86ab1717c377a1793cfa
+    gaussian_count: 859613
+    evidence_view_count: 15
+    accepted_evaluation_view_count: 8
+    abstained_evaluation_view_count: 7
+    hashes:
+      summary.json: dd8b2a9e5f09f130f948c9de2b6b8eaa5bea9ab714278bed7fa56a633dd7a22d
+      status.json: fb68e06d174a5e6a6859a50c07392b6895102feecf3944e712dc9861de1736ce
+      fingerprint.json: 70d2f878e9042b632d4f3355cc350d02ae661127c738130019506aa77c4480e4
+      manifest.json: 80ff775de6a4fc4c748cf3ec9570c2ab0ce10e817fbe5cdcd1bef69eeee871c4
+      artifacts/diagnostics.json: 88e256b9f07149cdfbf94da26e7d59b83c2071cb4485e41cf80717f0eac0d755
+      resolved_config.yaml: a09ac4f9359df36e1c9ff90fdba83da5de5cac519eb52979d6444211df50e291
+  scene-1087:
+    run_id: r042
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T183210Z__m1-scene1087-unary-diagnostic-s0-r042
+    checkpoint_sha256: 84c34b837e8083a84a77de0662c6c702ce978a2e8e11a4038d487e1f6c9754be
+    gaussian_count: 931223
+    evidence_view_count: 15
+    accepted_evaluation_view_count: 1
+    abstained_evaluation_view_count: 14
+    hashes:
+      summary.json: d19cabd9a2bb48ded6e73ef6bf83a8073d3704198dd69ec628f39ddd98e47f8b
+      status.json: b35c7c89d8ad8520268b269cf6caa7db4c0628ccf01df130d66d98197cc79cd0
+      fingerprint.json: 834a34f292bcf0be34856391f21ecd8e1408fa142d77301af8c8f55d9025b05d
+      manifest.json: 77b3965b4514c08b33f8ce70aed26aa661c9f14349559c992fc1f4729d73214a
+      artifacts/diagnostics.json: e97e8d46fdff8a80792aec68280d08ca28d08ac854de860c8a0025215cbeb2db
+      resolved_config.yaml: ed069385ce6bd1393ab2ed789fe42d9b1bb08f9b031c6b75677eb686fb9c1057
+  scene-0379:
+    run_id: r043
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T184610Z__m1-scene0379-unary-diagnostic-s0-r043
+    checkpoint_sha256: d77fa13f5ebe1d469222c3df78eb316d836178dca608d00c17f0af3a56d3042d
+    gaussian_count: 1187291
+    evidence_view_count: 15
+    accepted_evaluation_view_count: 3
+    abstained_evaluation_view_count: 12
+    hashes:
+      summary.json: 1beff3d934c2628cb2b7a262d5e7ab75c4cf214db3bdf39cc51c59690140803d
+      status.json: 4887bb53a0665acff666fa072eb21eb0485bde45e016987655889f0edfb4f39b
+      fingerprint.json: 00b2e10d49fdb0b3f6dc37b980b25814a8a5d9d2e26ba22769fcd487d19430bc
+      manifest.json: 4cee48fdd0cc59f6ec2b95841db79ce32edfdb83a64c7d651ff22d49af458a05
+      artifacts/diagnostics.json: f539be1ce74bdd5eb10dc3d7525f4225299b1d98c7ff4e649144187caf876008
+      resolved_config.yaml: 1561bbd065c8dbc535a3eb0d82283f02498f27ba51bd729979f2cd674bafb404
+
+failure_ledger_refs: [V5-F20, V5-F21, V5-F22, V5-F23, V5-F24, V5-F25, V5-F26, V5-F29, V5-F30, V5-F31]
+failure_ledger_delta: pending
