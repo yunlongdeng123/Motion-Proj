@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage B H evaluation-only r014 预注册（2026-08-18）
+
+- inputs=`r012 uplift freeze + r010 evidence feature freeze + r013 evaluation feature freeze + 3 immutable H checkpoints`；
+  view denominator=`3 scenes × (15 evidence + 15 evaluation)=90`，final heldout remainder=`4` 不读。
+- proxy=`model_membership_proxy_not_ground_truth`，evaluation-only。reference=`frame80/camera1`；active Rigid actor
+  至少 32 covered rows，pair cap=4,096，seed 由 `SHA256(20260814|scene|actor)` 固定；actor 内 equal，scene equal。
+- repeatability 逐 evidence view 比较 frozen aggregate feature 与同 Gaussian single-view transpose；actor margin=
+  same-actor pair cosine minus actor-to-nearest-covered-Background cosine；heldout reprojection 逐 view 在 exact common
+  B0/B1 pixel denominator 上比较 frozen DINO target。
+- gate=`evaluable scenes>=2; positive B1-margin scenes>=2; mean B1 margin>0; mean Rigid coverage>=0.60;`
+  `mean heldout(B1-B0)>=-0.01`。resource=`22,528 MiB NVIDIA/Torch / 80 GiB cgroup / 7,200 s`。
+- 当前只允许 pure/config regression 与 clean prereg commit，尚未读取 quality。S/C/validation/test/KITTI=false，
+  M2/M3=pending；failure refs 包含 active `V51-F15`，delta=`pending`。
+
 ## V5.1 Stage B r013 canonical H heldout features（2026-08-18）
 
 - run=`20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013`，source=`b359541`，status=`done`；精确读取

@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage B H evaluation-only gate 已机器预注册（2026-08-18）
+
+- 计划 formal r014 只读 H：r012 frozen B0/B1 Gaussian features、r010 evidence features、r013 evaluation features，
+  并用相同 base checkpoint 重渲染 `45 evidence + 45 evaluation` views；最终 heldout remainder=`4` 不可读。
+- membership 固定声明为 `model_membership_proxy_not_ground_truth`，只在 evaluation 使用 `RigidNodes.point_ids`、
+  reference frame 80 的 active flag 与 world means；不得回流为 method/PCA/uplift 输入。每 actor 至少 32 covered
+  Gaussian，最多 4,096 deterministic unordered pairs；最近 Background 用 frozen world geometry 的 cKDTree workers=1。
+- 指标冻结为 aggregate→single-view same-Gaussian cosine repeatability、same-actor cosine、nearest-background cosine/
+  margin、heldout renderer reprojection cosine 和 Background/Rigid coverage；B0/B1 reprojection 使用 exact common pixels。
+- H gate：至少 2/3 scenes evaluable、至少 2 scene B1 margin>0、scene-balanced B1 margin>0、mean Rigid
+  coverage>=0.60、scene-balanced heldout `B1-B0>=-0.01`。未过门则同时 reject uplift/raw LUDVIG graph 并自动转下条
+  frozen route；过门也只解锁 S exact-once。
+- config/module/runner/test=`stage_b_h_evaluation_v1.yaml`、`feature_evaluation.py`、
+  `run_worldsim_v51_h_evaluation.py`、`test_worldsim_v51_feature_evaluation.py`。在 clean prereg commit 前仍未读取
+  r012/r013 quality；S/C/validation/test/KITTI 锁定，M2/M3=`pending`。
+
 ## V5.1 Stage B r013 H heldout feature transform 已冻结（2026-08-18）
 
 - canonical r013=`20260817T170028Z__m1-stage-b-h-eval-feature-s20260814-r013`，source=`b359541`，

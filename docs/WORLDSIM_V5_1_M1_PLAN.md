@@ -11,6 +11,9 @@
 
 最终 heldout remainder=`4`、S/C、validation/test、KITTI 与 M2/M3 不因本分相解锁。
 
+r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述顺序完成预注册。r014 的 clean commit 是第一次
+读取 r012/r013 数值的必要前置；H pass 只解锁 S exact-once，H fail 按冻结路线跳过 raw LUDVIG graph。
+
 本文件是 V5.1 M1 的短执行入口；完整规范、方法树、门槛与第一轮约束以
 `docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md` 为唯一 normative plan。这里不复制长计划，只维护当前阶段、授权和证据，
 避免两份计划发生漂移。
@@ -22,7 +25,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r012 uplift、r013 heldout features 均 frozen；下一门先预注册 H evaluation-only quality |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r012/r013 frozen；r014 evaluation-only gate 已预注册、尚未读 quality |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
