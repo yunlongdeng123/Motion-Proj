@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage G G0 Trace3D source/method preflight 已预注册（2026-08-18）
+
+- task=`WS-V51-M1-G-AMBIGUITY-01`，formal target=`20260818T210000Z__m1-stage-g-g0-trace3d-source-s20260814-r044`；
+  auth=r043 rejected closeout `3,645 bytes /27b744e7...1a0e`。official repo=`trace-3d/Trace3D@7465ad94...c442`，
+  official ICCV 2025 paper 从 CVF URL sequential/partial/atomic 获取。
+- 本轮只冻结 paper/repo/license/files/submodule pointers/dependency 与方法语义：GIT reverse rasterization、跨共视图
+  majority-vote patch merge、ambiguous Gaussian 与原论文 split/prune density-control 边界；不 init submodules、不执行源码/
+  下载模型/读 image-mask-quality。
+- normative immutable base 初始只允许 reverse-tracing capability 与 no-quality disagreement diagnostic；原论文 split/prune/
+  density control、geometry/appearance/opacity/pose update 全锁定。因此后续是 Trace3D-style diagnostic adapter，不冒充 full
+  upstream training reproduction；training/H/S/C/validation/test/KITTI=false，M2/M3=pending。
+
 ## V5.1 Stage F F0l r043 Gaussian Grouping 已拒绝并关闭（2026-08-18）
 
 - canonical r043=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043`，source/tree=

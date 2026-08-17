@@ -1,5 +1,13 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage G G0 Trace3D source/method preflight 预注册
+
+Gaussian Grouping 因 r043 在冻结 train-only quality/identity-alignment gate 上仅 `1/3` scenes PASS 而关闭；F1/F2/training
+不再执行。G0 先 exact 获取 Trace3D ICCV 2025 official paper 与 `trace-3d/Trace3D@7465ad94`，冻结 GIT reverse
+rasterization、patch merge、ambiguous-Gaussian density control 的原论文边界。本轮不 init submodules、不执行模型或读质量。
+由于 normative base immutable，首个 adapter 只允许 no-quality reverse-tracing capability/disagreement diagnostic；split/prune
+继续禁止，且必须明确这不是 full upstream training reproduction。见 `V51-F63`。
+
 ## 2026-08-18 Stage F F0a environment smoke v3 recovery
 
 r028 已证明 Gurobi 12.0.3 不再触发 expired-license，但 license banner 破坏了整段 JSON parser；仍未运行模型。r029 只把

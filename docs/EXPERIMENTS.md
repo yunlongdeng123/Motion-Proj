@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage G G0 r044 Trace3D source/method preflight 预注册（2026-08-18）
+
+- target=`trace-3d/Trace3D@7465ad94...c442 + official ICCV 2025 PDF`；只 acquisition/hash/source semantics/
+  dependency/submodule audit，source execution/model download/image-mask-quality reads=false。
+- faithful method 包含 GIT reverse tracing、patch merge 与 ambiguous-Gaussian split/prune；immutable-base 首门只准 capability+
+  no-quality disagreement diagnostic，明确不是 full training reproduction。
+
 ## V5.1 Stage F F0l r043 REJECT / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043 /70293de...e4f0 /
