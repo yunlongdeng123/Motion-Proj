@@ -11,6 +11,7 @@ from scripts.run_worldsim_v51_f0d_train_only_identity_mask_materialization impor
     _scene_command,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0d_train_only_identity_mask_materialization import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0d_train_only_identity_mask_materialization_v1.yaml"
@@ -29,6 +30,21 @@ def test_f0d_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0d_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0d_train_only_identity_mask_materialization.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
 
 
 def test_f0d_config_validates_exact_45_view_scene_local_contract() -> None:
@@ -64,3 +80,23 @@ def test_f0d_output_record_chain_is_order_and_content_sensitive() -> None:
     changed = [dict(row) for row in rows]
     changed[1]["mask_sha256"] = "c"
     assert first != _record_chain(changed)
+
+
+def test_f0d_r035_independent_audit_replays_blocked_boundary() -> None:
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T120000Z__m1-stage-f-f0d-train-materialization-s20260814-r035"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["audited_run_status"] == "blocked"
+    assert result["materialization"]["canonical_mask_count"] == 15
+    assert result["materialization"]["complete"] is False
+    assert result["failed_scene"]["failure_class"] == (
+        "CUDA_CUBLAS_STATUS_INTERNAL_ERROR"
+    )
+    assert result["failed_scene"]["explicit_pytorch_oom"] is False
+    assert result["quality_read"] is False
