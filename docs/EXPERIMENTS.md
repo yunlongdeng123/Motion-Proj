@@ -1,5 +1,11 @@
 # Experiments
 
+## V5.1 Stage F F0i r040 scene-1087 15-view recovery 预注册（2026-08-18）
+
+- run=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`；exact 15 views，单 fresh process，
+  grid32/batch64/AMP + line58 empty-cache。pass=`15 schema masks +pred +all intervention evidence +resources`；quality/
+  full-materialization/training=false，PASS 后只允许 fresh 45-view recovery preregistration。
+
 ## V5.1 Stage F F0h r039 recovery PASS / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039 /ba2f24f...a6b7 /

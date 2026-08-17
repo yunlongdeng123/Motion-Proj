@@ -1,0 +1,46 @@
+schema_version: worldsim_v51_stage_f_f0i_scene1087_15_view_empty_cache_recovery_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: running
+phase: f0i_scene1087_15_view_empty_cache_recovery
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  f0h_freeze: {path: configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_freeze_v1.yaml, bytes: 3294, sha256: c83cd16903b936c32b65f7223f8b665917472cb7f832de0df74858d0f8f0d72a, required_status: done, required_failure: V51-F62, required_next_phase: scene1087_15_view_empty_cache_recovery_preregistration}
+
+sources:
+  gaussian_grouping: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f, commit: 0ab60afed3385b717c985af1d30a20f7b0884c89, tree: 036936e106305a03e3cb2a6612c0a4b5e240fd16}
+  deva: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA}
+  grounded_segment_anything: {path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f, commit: 99fbbe789cf99ff851886bca0935da33586db86b, tree: 89c82ae86de908fec7caaa646df24015d354dc97}
+  traced_file: {path: /root/autodl-tmp/third_party/gaussian-grouping-v51-stage-f/Tracking-Anything-with-DEVA/deva/inference/consensus_associated.py, bytes: 5985, sha256: a1b86e65df14d0224b4e0dc6e141bf3a34b1996e84b9792480864057d6aec5a6}
+assets:
+  deva: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth, bytes: 276911801, sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48}
+  sam_vit_h: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth, bytes: 2564550879, sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e}
+  resnet18: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet18-5c106cde.pth, bytes: 46827520, sha256: 5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8}
+  resnet50: {path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home/hub/checkpoints/resnet50-19c8e357.pth, bytes: 102502400, sha256: 19c8e3572231adff6824a2da93fd67b5986919a2e65f8b6007eab4edee220097}
+environment: {runtime: /root/autodl-tmp/envs/deva-v51-stage-f-v2/bin/python, TORCH_HOME: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/torch_home, PYTORCH_CUDA_ALLOC_CONF: "max_split_size_mb:128", CUDA_LAUNCH_BLOCKING: "1"}
+
+input_manifest: {path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026/artifacts/train_only_image_manifest.json, bytes: 18410, sha256: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4, record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95}
+scene: {name: scene-1087, scene_index: 827, frames: [0, 40, 80, 120, 160], cameras: [0, 1, 2], record_count: 15}
+
+execution:
+  upstream_command: demo/demo_automatic.py
+  trace_launcher: scripts/worldsim_v51_cuda_trace_launcher.py
+  pre_matmul_empty_cache: true
+  common_arguments: {chunk_size: 4, amp: true, temporal_setting: semionline, size: 480, use_short_id: true, suppress_small_objects: true, SAM_PRED_IOU_THRESHOLD: 0.7}
+  attempt: {name: scene1087_15_view_cache, input_group: target, sam_num_points_per_side: 32, sam_num_points_per_batch: 64}
+  expected_mask_count: 15
+  expected_pred_json_count: 1
+
+decision:
+  expected_conclusion: scene1087_15_view_empty_cache_recovery_done_fresh_45_view_recovery_preregistration_required
+  pass_requires: [exact_15_inputs, exact_15_schema_masks_and_pred, empty_cache_before_every_matmul, resource_gate]
+  full_materialization_authorized: false
+  quality_read: false
+  identity_training_authorized: false
+  next_action: preregister_fresh_three_scene_45_view_empty_cache_materialization
+
+resources: {monitor_interval_seconds: 0.25, maximum_nvidia_at_start_mib: 512, required_nvidia_total_mib: 24576, required_nvidia_headroom_mib: 256, maximum_nvidia_peak_mib: 24320, maximum_cgroup_memory_bytes: 64424509440, maximum_wall_seconds: 600, minimum_disk_free_bytes_after: 42949672960}
+locks: {input_image_pixels_decoded_count: 15, output_schema_reads_count: 15, upstream_source_mutation: false, operator_change: false, tensor_content_change: false, smaller_batch_retry: false, full_materialization: false, quality_read: false, identity_training: false, validation_quality_read: false, test_quality_read: false, f1_execution: false, f2_execution: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F60, V51-F61, V51-F62, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration

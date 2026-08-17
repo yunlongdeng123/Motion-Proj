@@ -1,5 +1,12 @@
 # Research Status
 
+## V5.1 Stage F F0i scene-1087 15-view recovery 已预注册（2026-08-18）
+
+- formal target=`20260818T170000Z__m1-stage-f-f0i-scene1087-recovery-s20260814-r040`；auth=r039 freeze
+  `3,294 bytes /c83cd169...d72a`。exact scene-1087 15 train-only views，grid32/batch64/AMP 与 pre-matmul empty-cache 不变。
+- 本轮只验证 `15 uint8 masks +1 pred.json` schema、每次 matmul intervention evidence 与资源；不读 nonzero/quality，
+  不续写 r035。PASS 后只预注册 fresh 三场 45-view recovery，full materialization 仍 false。
+
 ## V5.1 Stage F F0h r039 empty-cache parity PASS 已冻结（2026-08-18）
 
 - canonical r039=`20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039`，source/tree=
