@@ -1,0 +1,75 @@
+schema_version: worldsim_v5_m1_unary_diagnostic_v1
+task_id: WS-V5-M1-STRUCTURED-OWNERSHIP-01
+status: running
+phase: structured_unary_mechanism_smoke
+seed: 20260814
+
+inputs:
+  formal_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/summary.json
+    sha256: 654b8840dba6cb7051377e7d826e34a50095c974c37807117aec873540fada94
+  formal_checkpoint:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/work_dirs/worldsim_v5_streetgs/scene0998_formal_s0/checkpoint_final.pth
+    sha256: 4ad88a7e3a8a1df83bbb01675a7945cf4b496b299e4d5e3f356ca061143c0516
+  source_config:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T124500Z__m1-development-base-scene0998-formal30k-s0-r030/work_dirs/worldsim_v5_streetgs/scene0998_formal_s0/config.yaml
+    sha256: 0d88302de4c10a6dc34820d864c1a6098369ffd27577fe188649998d3b8f6607
+  instances_info:
+    path: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/756/instances/instances_info.json
+    sha256: a27ec3484ef22cb5e5cc5a67ac87ddb8ee88aaa5fe6723c2a50bb931572ecf37
+  compatibility_patch:
+    path: /root/autodl-tmp/motion_proj/compatibility/DriveStudio-2026-08-13-m3-test-timeline.patch
+    sha256: c3c0914f16af2b54026262a92f2bd3537a803e53b94488b1313882f2619f2b7d
+  sam_summary:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130000Z__v51-stage-a-s-scene0998-sam-s20260814-r047/summary.json
+    sha256: a149bf091303314bd51a26656f2b621589741556991bafe3bdacf35953a12e96
+  sam_mask_manifest:
+    path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130000Z__v51-stage-a-s-scene0998-sam-s20260814-r047/artifacts/mask_manifest.json
+    sha256: d0bfade6042133b8aeb14bed0b794f8d72937f31e4ddd965e7c27e57fccba7b8
+
+scene:
+  name: scene-0998
+  index: 756
+  reference_geometry_frame: 0
+  reference_geometry_camera: 0
+  ownership_role: moving_rigid_union
+
+unary:
+  arms: [B0, B1, B3]
+  prior_strength: 2.0
+  unassigned_probability: 0.0001
+  sam_confidence_floor: 0.10
+  boundary_distance_scale_px: 4.0
+  depth_residual_scale_m: 0.50
+  arm_contract:
+    B0: hard_unweighted_one_gaussian_one_view
+    B1: reliability_weighted_hard_one_gaussian_one_view
+    B3: reliability_weighted_soft_sam_fractional_count
+
+evidence:
+  minimum_contribution_weight: 0.0001
+  minimum_aggregated_contribution_mass: 0.001
+  first_hit_alpha_threshold: 0.5
+  depth_absolute_tolerance_m: 0.35
+  depth_relative_tolerance: 0.08
+  same_view_intersection_policy: aggregate_to_one_gaussian_observation
+  normal_proxy_policy: reference_frame_smallest_covariance_axis
+
+evaluation:
+  probability_threshold: 0.5
+  boundary_tolerance_px: 3
+  ece_bins: 15
+  comparator: B0
+  direction_only_mechanism_diagnostic: true
+  automatic_graph_unlock: false
+
+resources:
+  maximum_gpu_allocated_at_start_mib: 512
+
+runtime:
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+  drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  drivestudio_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_expected_status: |-
+    M datasets/driving_dataset.py
+     M datasets/nuscenes/nuscenes_sourceloader.py

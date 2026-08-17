@@ -34,6 +34,20 @@ sam_preparation:
     scene-0998: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130000Z__v51-stage-a-s-scene0998-sam-s20260814-r047
     scene-0359: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T130500Z__v51-stage-a-s-scene0359-sam-s20260814-r048
 
+unary_screening_materialization:
+  runner: scripts/run_worldsim_v5_m1_unary_diagnostic.py
+  purpose: materialize_frozen_b3_observations_and_evaluation_targets_once_per_s_scene
+  configs:
+    scene-0998: configs/worldsim_v51/m1_unary_screening_scene0998_v1.yaml
+    scene-0359: configs/worldsim_v51/m1_unary_screening_scene0359_v1.yaml
+  planned_runs:
+    scene-0998: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T132000Z__v51-stage-a-s-scene0998-unary-s20260814-r049
+    scene-0359: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260817T133000Z__v51-stage-a-s-scene0359-unary-s20260814-r050
+  constraints:
+    no_candidate_or_threshold_change_after_materialization: true
+    b3_artifacts_are_read_only_inputs_to_v51_screening: true
+    each_candidate_scene_pair_is_evaluated_once: true
+
 screening_gate:
   comparator: B3
   required_scene_count: 2
