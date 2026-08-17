@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage B r010 H feature-sidecar/PCA 门通过（2026-08-18）
+
+- canonical r010=`20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010`，source=`11c35fd`，status=`done`，
+  conclusion=`h_dinov2_feature_sidecars_and_seeded_pca_ready_without_quality_read`。45/45 H views、328,320 patches，
+  official ViT-g params/keys=`1,136,486,912/568`，strict missing/unexpected=`0/0`，checkpoint before/after exact。
+- 首图 full raw feature 重复推理 bit-exact；两遍 correction=1 stats + seeded randomized 40-D PCA 完成，PCA state SHA=
+  `fe9eea72...3231c8`，deterministic NPZ 二次写入 byte-exact。45 个 `[40,64,114] float32` sidecar file/content
+  identity 全部复核 exact，总 bytes=`48,447,248`；raw `2,017,198,080-byte` memmap 成功后已删除，scratch 不存在。
+- resource：GPU start/peak=`1/6,702 MiB`，Torch allocated/reserved=`6,070.182/6,376 MiB`，cgroup=
+  `15,635,017,728 bytes`，172 samples、0 error，duration=`104.472 s`。manifest=`57 files / 48,826,634 bytes`，
+  run=`59 files / 48,837,077 bytes`，逐文件 SHA/bytes exact。
+- summary/status/manifest/fingerprint/feature-manifest/PCA-state SHA=`c6b81374.../1e8b78da.../160efe34.../c5cacfc4.../`
+  `c9b4f669.../fe9eea72...`；result freeze=`configs/worldsim_v51/stage_b_h_feature_pca_freeze_v1.yaml`，`V51-F14 resolved`。
+- H RGB 仅用于 feature extraction；membership proxy、renderer/uplift 和 method quality 未读，S/C/validation/test/KITTI 未读，
+  M2/M3=`pending`。下一步仅预注册 H 45-view B0/B1 uplift，不得直接评价质量。
+
 ## V5.1 Stage B H DINO feature-sidecar/PCA 已预注册（2026-08-17）
 
 - planned r010=`m1-stage-b-h-feature-pca-s20260814-r010`；只读取 historical diagnostic H=

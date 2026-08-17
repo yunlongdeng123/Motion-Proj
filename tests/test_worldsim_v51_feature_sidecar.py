@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import sys
 
 import numpy as np
@@ -127,3 +128,39 @@ def test_h_feature_pca_config_binds_exact_45_view_contract_and_locks() -> None:
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+
+
+def test_h_feature_pca_freeze_binds_terminal_manifest_and_sidecars() -> None:
+    import yaml
+
+    freeze = yaml.safe_load(
+        (
+            ROOT / "configs/worldsim_v51/stage_b_h_feature_pca_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    from motion_proj.worldsim_v51.protocol import sha256_file
+
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert summary["report"]["first_image_repeat_bit_exact"] is True
+    assert summary["report"]["raw_memmap_persisted_after_success"] is False
+    assert not (run / "scratch").exists()
+    feature_manifest = json.loads(
+        (run / "artifacts/h_feature_manifest.json").read_text(encoding="utf-8")
+    )
+    assert len(feature_manifest["records"]) == 45
+    for record in feature_manifest["records"]:
+        path = run / record["path"]
+        assert sha256_file(path) == record["file_sha256"]
+        with np.load(path, allow_pickle=False) as archive:
+            validate_sidecar_identity(record, archive["feature"])
+    assert summary["membership_proxy_read"] is False
+    assert summary["method_quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

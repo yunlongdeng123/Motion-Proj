@@ -1,0 +1,124 @@
+schema_version: worldsim_v51_stage_b_h_feature_pca_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: h_dinov2_feature_sidecars_and_seeded_pca_frozen
+
+canonical_run:
+  run_id: 20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010
+  source_commit: 11c35fdcc439ac03aeb6650c23647acacff47f52
+  config_sha256: cb0c3c41fa1d94a17c6696dd65459ca7c6118c5779bf0515751a8ee00a03b662
+  hashes:
+    summary.json: c6b8137478f1f863a12061bc678cc99d7a75eefd033ab0fb567769d3f1b2837a
+    status.json: 1e8b78da688e71fca5f5f86f3b6fc4ec17a3a22132f32cee4b183e2394c9fa3e
+    manifest.json: 160efe341105ad5012c4b6aabcb0ca2f9f3bdec4762ed0d05b1ff296e2abeeab
+    fingerprint.json: c5cacfc481e00ad71bcc01aecf1635366aa44c83a4088312397c53af462785f4
+    resolved_config.yaml: 6f7520fa5bed7e39cc7ef18eb3597e663561a51ebf72f1d2555b764c19625eb3
+    metrics.jsonl: 208dfa58651d049b31b34680360d345c73df29f7142fc9d38e17e449f952bef0
+    events.jsonl: 0c409bbe46fa9078c8365813596375bf94c0bf9df83042cd1b131cfdeeea2bdc
+    resource_samples.jsonl: 482870a92f8f5cc417ee6ccea05cc848423a7249e26fde0e3a78906b6f9b47fc
+    artifacts/pca_state.npz: fe9eea728ed2f52db5bbe6d0b1c505dc3e3808b6fcf3ea5a2344f7d8473231c8
+    artifacts/h_feature_manifest.json: c9b4f669ba87a0a917e42ef06624849a67c4a81c80dd93e70364097d7d316aad
+    artifacts/raw_extraction_manifest.json: c83dd4d9bf63cd9cdd5bdfe4cb7d852ab300fd1913f9387caed9dedfda3fc7f1
+    artifacts/feature_pca_report.json: 11b230c7754ca53b32798757d1ddfa7b30e5e74d25ab64165e373647b7450c21
+    artifacts/resources.json: 3ca29699b251e79f3d38693064e888f0cacec514e221bd2c5b6d7825d82554b7
+
+identities:
+  official_source_commit: 7764ea0f912e53c92e82eb78a2a1631e92725fc8
+  checkpoint_sha256_before: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_sha256_after: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_immutable: true
+  h_input_record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95
+  raw_extraction_record_chain_sha256: 251495411e66a2c66bbe4b59d9756644d47dc8c037186d54579073518b98536d
+  pca_state_sha256: fe9eea728ed2f52db5bbe6d0b1c505dc3e3808b6fcf3ea5a2344f7d8473231c8
+  feature_manifest_sha256: c9b4f669ba87a0a917e42ef06624849a67c4a81c80dd93e70364097d7d316aad
+  feature_record_chain_sha256: 4c3689daca67d0728706753bba28bb84d243c89520e2e708b9acef03ad9c3289
+
+feature_extraction:
+  view_count: 45
+  patch_count: 328320
+  patches_per_view: 7296
+  raw_dimension: 1536
+  model_input_size_wh: [1596, 896]
+  patch_grid_hw: [64, 114]
+  selected_layer: last_of_four
+  inference_autocast: float16
+  raw_dtype: float32
+  first_image_repeat_bit_exact: true
+  parameter_count: 1136486912
+  state_dict_key_count: 568
+  strict_missing_key_count: 0
+  strict_unexpected_key_count: 0
+  raw_memmap_bytes_during_run: 2017198080
+  raw_memmap_persisted_after_success: false
+
+pca:
+  components: 40
+  solver: randomized
+  random_state: 20260814
+  whiten: false
+  subsampling_applied: false
+  standardization_std_correction: 1
+  feature_mean_dtype: float64
+  feature_std_dtype: float64
+  pca_mean_dtype: float32
+  components_dtype: float32
+  singular_values_dtype: float32
+  feature_mean_range: [-3.3247441363280714, 5.097819490224548]
+  feature_std_range: [0.3481580349837959, 5.20012959633716]
+  singular_value_range: [1523.8765869140625, 4507.3291015625]
+  deterministic_npz_repeat: byte_exact
+
+sidecars:
+  record_count: 45
+  per_view_shape: [40, 64, 114]
+  dtype: float32
+  total_file_bytes: 48447248
+  file_sha_recheck: exact
+  content_sha_recheck: exact
+  content_error_count: 0
+
+resources:
+  gpu_used_at_start_mib: 1
+  nvidia_smi_peak_used_mib: 6702
+  torch_peak_allocated_mib: 6070.181640625
+  torch_peak_reserved_mib: 6376.0
+  cgroup_memory_peak_bytes: 15635017728
+  disk_available_at_start_bytes: 85482835968
+  sample_count: 172
+  monitor_error_count: 0
+  duration_seconds: 104.47202005982399
+
+run_inventory:
+  manifest_file_count: 57
+  manifest_bytes: 48826634
+  run_file_count: 59
+  run_total_bytes: 48837077
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  h_pixels_read_for_feature_extraction: true
+  screening_pixels_read: false
+  confirmation_pixels_read: false
+  feature_sidecar_persisted: true
+  pca_fit: true
+  pca_fit_role: historical_diagnostic_only
+  pca_refit_on_screening_or_confirmation: false
+  membership_proxy_read: false
+  renderer_started: false
+  uplift_feature_computed: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_h_multiview_b0_b1_uplift_without_quality_read
+
+failure_ledger_refs: [V5-F20, V5-F22, V5-F23, V5-F24, V51-F12, V51-F14, V51-F15, V51-F16, V51-F19, V51-F20, V51-F21, V51-F22]
+failure_ledger_delta: [V51-F14]

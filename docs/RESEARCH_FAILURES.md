@@ -245,7 +245,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   method/GPU run 或读取 C/validation/test/KITTI quality。证据：`3d33262`、
   `configs/worldsim_v51/p0_m1_scope_v1.yaml`、`tests/test_worldsim_v51_protocol.py`、
   `docs/WS_V51_STAGE_B_PREFLIGHT.md`。
-- `V51-F14`（`engineering/protocol`, `active pre-quality risk`）：LUDVIG DINO extractor 的 PCA 路径不是天然确定性合同。
+- `V51-F14`（`engineering/protocol`, `resolved by r010`）：LUDVIG DINO extractor 的 PCA 路径不是天然确定性合同。
   `PCA(n_components=40)` 没有 `random_state`，大矩阵会走 randomized solver；当 patch 数超过 500,000 时还用未设 seed
   的 `np.random.choice` subsample。更隐蔽的是 GPU path 用 PyTorch `std`（默认 correction=1），CPU path 用 NumPy
   `std`（correction=0），所以为省显存切到 CPU 会改变标准化与全部 feature。V5.1 proposal 冻结 H evidence=
@@ -253,7 +253,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   random_state=`20260814`、40-D、whiten=false，并把 scaler/PCA state 持久化后只 transform S/C。不得把 solver/seed/std
   差异当作 backbone 增益或在 S/C refit；这是 reproducibility hardening，不是参数搜索。本轮未下载模型、提取 feature 或
   读取质量。证据：LUDVIG `predictors/dino.py`、`configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、
-  `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
+  `docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。r010 已对 45 H views exact 执行该 hardened contract：首图 raw feature
+  repeat bit-exact，PCA state deterministic NPZ repeat byte-exact，45 个 sidecar 的 file/content SHA 全 exact，raw memmap
+  成功后删除，PCA state SHA=`fe9eea72...3231c8`；因此本条 resolved。该解决只证明 feature/PCA 可复现，不证明
+  LUDVIG uplift 或方法质量有效，S/C 仍只准 transform、不得 refit。
 - `V51-F15`（`evaluation/governance`, `active pre-quality risk`）：Stage B 的 same-actor/actor-background metric 可从
   frozen `RigidNodes.points_ids[:,0]` 与 Background row 构造，但这是 base-model membership proxy，不是真实 ownership GT。
   若把该 proxy 输入 DINO/PCA/uplift/权重会形成标签泄漏；若只凭 proxy margin 解锁 Graph，则会把模型自身表示循环证明为

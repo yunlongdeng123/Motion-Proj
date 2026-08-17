@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r009 denominator PASS；r010 H feature-sidecar/seeded-PCA 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r010 H feature/PCA PASS；下一闸 H 45-view B0/B1 uplift prereg |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -69,6 +69,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_one_view_contribution_v4.yaml`
 - `configs/worldsim_v51/stage_b_one_view_contribution_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_h_feature_pca_v1.yaml`
+- `configs/worldsim_v51/stage_b_h_feature_pca_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -228,6 +229,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   移到资源 gate 前，见 `V51-F21`。不得借该工程恢复修改算法、数据、floor 或读取质量。
 - r009 已通过：raw/supported intersections=`47,378,525/32,030,248`，`1e-3` 后 Gaussian=`313,764/859,613`
   （coverage=`0.3650061132`），GPU/Torch reserved=`14,234/13,882 MiB`；checkpoint exact，manifest 8/8 exact。
-  result freeze 已绑定，下一步只预注册 H DINO feature-sidecar/PCA 合同，`V51-F14` 仍 active，quality 继续锁定。
+  result freeze 已绑定；r010 又完成 45-view DINO sidecar/seeded-PCA，首图 repeat、PCA state 和 45 sidecar identity exact，
+  `V51-F14 resolved`。下一步只预注册 H 45-view B0/B1 uplift，quality 继续锁定。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

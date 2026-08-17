@@ -1,5 +1,17 @@
 # Experiments
 
+## V5.1 Stage B r010 canonical H feature/PCA（2026-08-18）
+
+- run=`20260817T155859Z__m1-stage-b-h-feature-pca-s20260814-r010`，source=`11c35fd`，status=`done`；
+  45 H images、328,320×1,536 raw population，first image repeat bit-exact，DINO checkpoint immutable。
+- PCA state：mean/std float64、PCA mean/components/singular values float32，correction=`1`、randomized `40D`、seed=
+  `20260814`、whiten=false、subsample=false；state SHA=`fe9eea72...3231c8`，repeat writer byte-exact。
+- feature manifest=`45 records`、chain SHA=`4c3689da...c3289`；所有 NPZ `[40,64,114] float32` 的 file SHA 和
+  array content SHA 二次复核无错误。raw memmap 按成功合同删除。
+- resources=`6,702 MiB NVIDIA / 6,376 MiB Torch reserved / 15,635,017,728 bytes cgroup / 104.472 s`；
+  summary/status/manifest=`c6b81374.../1e8b78da.../160efe34...`。failure delta=`V51-F14 resolved`。
+- freeze=`stage_b_h_feature_pca_freeze_v1.yaml`；本 run 不含 renderer/uplift/proxy/quality，S/C/validation/test/KITTI 未读。
+
 ## V5.1 Stage B H feature/PCA r010 预注册（2026-08-17）
 
 - input denominator=`3 H scenes / 45 views / 328,320 patches / raw 1536D`；image/source/checkpoint/resource/
