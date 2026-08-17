@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage E E0b r021 canonical no-quality operator（2026-08-18）
+
+- run/source/tree=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021 / e573fe4f...2b74 /
+  d47edb41...d802`，status=`done`。fine node count=`561,618/620,540/764,752`；directed quotient edges=
+  `2,991,329/3,289,464/4,037,917`；exact-distance 1/2-hop neighbors=`3,862,658/9,141,772`、
+  `4,226,568/10,201,080`、`5,211,750/11,766,570`。
+- final actor/background/UNKNOWN nodes：0471=`11,703/549,640/275`，1087=`183/620,353/4`，
+  0379=`257/764,434/61`；Gaussian posterior changed vs D0=`4,065/1/475`。这些只是 operator diagnostics，
+  未渲染也未读取 quality。
+- summary/status/manifest/events SHA=`bb17f82f...ae0/1682b276...89a/8b9059e5...ccd/ae9cefe1...5b6`；sidecar SHA=
+  `1b2b7827...c2f/2cac0cf9...3ea/5b8d33db...f1f`。full replay audit=`2,635 bytes / 1e5a0564...650c`，
+  三场 output arrays、node-constant readout、13-entry manifest 与 resource maxima exact。
+- repeat prefix=`4,096 nodes /24,289 directed quotient edges / byte exact /925375c8...809`；resource=
+  `1 MiB GPU /9,532,755,968 cgroup bytes /92.608 s`。failure delta=`none`；quality/E1/E2/validation/test/KITTI=false，
+  M2/M3=pending；freeze=`configs/worldsim_v51/stage_e_e0b_same_propagation_freeze_v1.yaml`。
+
 ## V5.1 Stage E E0b fine-q50 same-propagation 预注册（2026-08-18）
 
 - planned run=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021`；arm=`E0B`，selected level=

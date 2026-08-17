@@ -1,5 +1,13 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0b r021 operator 收口
+
+r021 在 `fine_q50` node 上完成 no-quality same-propagation，full operator 独立 replay exact；三场相对 D0 改变
+`4,065/1/475` 个 Gaussian posterior，说明 1087 几乎 no-op，但这不是 H quality 结论，禁止改 level/aggregation/threshold。
+下一门只能先冻结三臂 matched H evaluator：主门继承 D0 对 U2/B3 的四项门，机制门同时要求 E0B 相对 D0 的 BF1/IoU/FN
+不退化并有 scene-balanced BF1 正增益。H PASS 才能预注册 E1 PanoGS；FAIL 则收口 E0、锁定 E1/E2 并自动进入
+Gaussian Grouping。freeze=`stage_e_e0b_same_propagation_freeze_v1.yaml`。
+
 ## 2026-08-18 Stage E E0b same-propagation 预注册
 
 E0b 的 level 在任何新 H quality read 前冻结为 `fine_q50`：对 E0a 三场共同 PASS levels 按原 edge-length quantile 升序
@@ -74,7 +82,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 frozen；E0b fine-q50 same-propagation r021 已预注册，quality/E1/E2 locked |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 + E0b r021 operator frozen；下一门只允许三臂 matched H preregistration，E1/E2 locked |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

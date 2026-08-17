@@ -1,5 +1,21 @@
 # Research Status
 
+## V5.1 Stage E E0b r021 no-quality operator 已冻结（2026-08-18）
+
+- canonical r021=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021`，source/tree=
+  `e573fe4f...2b74/d47edb41...d802`，status=`done`，conclusion=
+  `e0b_fine_q50_same_propagation_sidecars_ready_without_quality_read`。三场 node/quotient directed edges=
+  `561,618/2,991,329`、`620,540/3,289,464`、`764,752/4,037,917`。
+- 相对 frozen raw D0，E0B posterior 改变的 Gaussian count/fraction 为 0471=`4,065/0.472887%`、
+  1087=`1/0.000107%`、0379=`475/0.040007%`。这证明 operator 不是全局 no-op，但不含质量含义；1087 几乎不变是
+  后续 matched H 的重要风险，禁止据此改 coarse level、aggregation 或 threshold。
+- 独立 auditor 从 frozen B3/45 observations/raw KNN/fine assignment 重建 node evidence、quotient、1/2-hop affinity、
+  progressive result 与 Gaussian broadcast，三场 full arrays exact。manifest=`13 entries / 18,222,912 bytes`，完整 run=
+  `15 files / 18,225,498 bytes`；audit=`2,635 bytes / 1e5a0564...650c`。
+- resource=`1 MiB GPU / 9,532,755,968 bytes cgroup /45 samples /0 errors /92.608 s`；quality/E1/E2=false，
+  M2/M3=pending。下一门只允许先预注册 H matched `U2/B3 G0 vs D0 vs E0B`，freeze=
+  `configs/worldsim_v51/stage_e_e0b_same_propagation_freeze_v1.yaml`。
+
 ## V5.1 Stage E E0b same-propagation 已预注册（2026-08-18）
 
 - E0b 冻结使用各场 `fine_q50`：选择规则是在 E0a 三场共同通过的 level 中按 frozen edge-length quantile 升序取第一档，
