@@ -1,5 +1,18 @@
 # Research Status
 
+## V1–V5 统一 failure ledger 治理：done（2026-08-17）
+
+- `DOC-FAILURE-LEDGER-01=done`，治理提交=`4e512d9`；`docs/RESEARCH_FAILURES.md` 现为唯一活跃失败事实源，
+  archive 同名文档保持不可变快照，专项 `*_FAILURE_FORENSICS.md` 只保留为证据报告。
+- 顶部新增渐进式读取/写入合同、最小条目 schema、版本总览与显式目录；V1/V2 的算法推翻、工程阻塞、资源和
+  评测边界分别收敛为 `V1-F01`–`V1-F06` 与 `V2-F01`–`V2-F09`，V3–V5 继续链接现有详细账本。
+- 旧 V4 追加段曾重复使用 `V4-F30`–`V4-F33`；live canonical 已校正为连续唯一的 `V4-F01`–`V4-F49`，
+  并保留 historical→live 映射。旧 commit、run 和 archive 的历史编号不回写。
+- 后续正式实验必须在启动前登记 `failure_ledger_refs`，收口时登记 `failure_ledger_delta`；出现 blocked/rejected、
+  假设推翻、分母错误、工程/资源/协议失败或风险解除时，与 status/experiments 在同一逻辑提交中更新统一账本。
+- 本次只做研究治理与历史整理，没有训练、推理、数据/quality read、split/seed/fingerprint 变化，也没有改写
+  V1–V5 的科学终态或当前执行授权。定义条目审计=`207` 且重复 ID=`0`，V4 连续性=`49/49`，`docs` backup=`0`。
+
 ## V4 文档归档复核与临时产物清理：done（2026-08-17）
 
 - `WS-V4-DOC-CLEANUP-02=done`，清理提交=`3598ef7a`；V4 终局包清理前后均通过 `78/78` SHA-256 校验，

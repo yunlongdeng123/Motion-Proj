@@ -1,5 +1,19 @@
 # Experiments
 
+## V1–V5 failure ledger 治理登记（2026-08-17）
+
+| Task ID | 状态 | 输入范围 | 结果 | 研究边界 |
+|---|---|---|---|---|
+| `DOC-FAILURE-LEDGER-01` | done | `AGENTS.md`、docs 导航、V1–V5 失败/风险历史与 archive 证据 | 唯一 live ledger；V1=`F01–F06`、V2=`F01–F09` 汇总；V4 live=`F01–F49` 唯一连续；commit=`4e512d9` | 没有训练、推理、quality/data read、split/seed/fingerprint 或科学结论变化 |
+
+- `failure_ledger_refs`：V1 frozen archive、`PIVOT-F03/F14B/F15/F16`、V2 注册表、现有 V3/V4/V5 条目。
+- `failure_ledger_delta`：登记 V1/V2 紧凑 canonical 条目，校正 V4 重复编号并保留 historical→live 映射；
+  没有新增方法质量结论，也没有删除或解除既有失败。
+- 治理验证：live definition bullets=`207`、duplicate IDs=`0`、V4 IDs=`49/49` contiguous、显式导航 anchors=`6`、
+  `docs/` backup files/directories=`0/0`；`git diff --check` 通过。
+- 后续实验在 plan/config/run metadata 写 `failure_ledger_refs`，结束时在本台账写 `failure_ledger_delta`；若无新增写
+  `none`，若出现失败、推翻或解除则同一逻辑提交更新 `docs/RESEARCH_FAILURES.md`。
+
 ## V4 文档归档/存储维护（2026-08-17）
 
 | Task ID | 状态 | 输入范围 | 结果 | 研究边界 |
