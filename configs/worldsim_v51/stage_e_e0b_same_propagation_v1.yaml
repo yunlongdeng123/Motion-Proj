@@ -1,0 +1,189 @@
+schema_version: worldsim_v51_stage_e_e0b_same_propagation_v1
+task_id: WS-V51-M1-E-NODE-ELEVATION-01
+status: running
+phase: e0b_fine_q50_same_propagation_without_quality_read
+created_at: "2026-08-18"
+seed: 20260814
+
+e0a_freeze:
+  path: configs/worldsim_v51/stage_e_e0a_superprimitive_probe_freeze_v1.yaml
+  sha256: cd22bc251a3032a2b2d1815b3d45d66901225e8ea5d93fc240a89ee62b692751
+  required_status: done
+  required_conclusion: e0a_structural_density_gate_pass_preregister_e0b_same_propagation
+  required_gate_pass: true
+
+stage_d_operator_freeze:
+  path: configs/worldsim_v51/stage_d_progressive_operator_freeze_v1.yaml
+  sha256: a586dd0538d53d428c4ca217cce145fdf538fcb657a1f82b16dc46cb5cbeb983
+  required_status: done
+  required_conclusion: d0_full_h_operator_sidecars_ready_without_quality_read
+
+stage_d_rejection_freeze:
+  path: configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml
+  sha256: a5641735494ffcd8c4766055a14be00bd3f2add15be29d3a9ea88df6a6e4d446
+  required_status: rejected
+  required_conclusion: d0_progressive_rejected_skip_d1_advance_super_primitive_or_anchor
+
+frozen_implementation:
+  progressive_module:
+    path: motion_proj/worldsim_v51/progressive_propagation.py
+    sha256: 525cb4c85d8cdae5aba6567793cb233c4bbf002c13460d6cee73d1d4ba9512b0
+  d0_observation_loader:
+    path: scripts/run_worldsim_v51_d0_progressive_operator.py
+    sha256: b2d3bf046fc7a8ede0f67d74d7297eca7f547f28d6a4c8dcfb101a43d0addb15
+  evidence_schema:
+    path: motion_proj/worldsim_v5/evidence_schema.py
+    sha256: 43b7aab8ecc7733c774f98346dbf2b551766f993fc6b8da7d67b2e87ba73bad3
+
+paper_route_context:
+  e0_classification: internal_simple_voxel_control_not_panogs_reproduction
+  e1_panogs_status: locked_until_e0b_matched_h_gate_pass
+  e2_ag2aussian_status: locked_until_e0_gate_and_separate_adaptation_preregistration
+
+level_selection:
+  eligible_rule: level_passes_all_e0a_structural_checks_in_all_three_scenes
+  eligible_levels: [fine_q50, medium_q75, coarse_q90]
+  rank_source: frozen_edge_length_quantile_ascending
+  rank_order: [fine_q50, medium_q75, coarse_q90]
+  selected_level: fine_q50
+  selected_quantile: 0.5
+  policy: first_eligible_level_minimum_intervention
+  quality_metric_consumed: false
+  density_gain_used_for_ranking: false
+  seed_conflict_used_for_ranking: false
+  parameter_search: false
+
+method:
+  arm: E0B
+  invariant_baseline: U2_B3
+  mechanism_comparator: D0_raw_gaussian_progressive
+  node: e0a_fine_q50_world_origin_voxel
+  node_unary: unweighted_member_arithmetic_mean_of_u2_b3_posterior
+  node_view_probability: member_visibility_weighted_mean_of_valid_sam_probability
+  node_view_visibility: maximum_valid_member_visibility
+  invalid_node_view_probability_fill: 0.5
+  invalid_node_view_visibility_fill: 0.0
+  topology: quotient_of_frozen_v5_directed_knn_drop_self_deduplicate_then_symmetrize
+  maximum_logical_distance: 2
+  semantic_distribution: l2_normalized_binary_vector_one_minus_p_and_p
+  pair_similarity: cosine
+  view_confidence: common_valid_visibility_product
+  region_affinity: member_count_and_logical_distance_weighted_mean
+  logical_distance_decay: 0.5
+  progressive_thresholds: [0.9, 0.8, 0.7, 0.6, 0.5]
+  actor_seed_minimum: 0.9
+  background_seed_maximum: 0.1
+  unknown_probability: 0.5
+  expansion_schedule: strict_to_relaxed_until_fixed_point_per_level
+  conflict_policy: larger_region_affinity_wins_exact_tie_remains_unknown
+  gaussian_readout: broadcast_node_label_posterior_and_assignment_level_to_members
+  parameter_search: false
+
+observation_contract:
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  view_order: frame_major_then_camera
+  expected_view_count_per_scene: 15
+  source: exact_frozen_d0_train_only_observation_rows
+  probability_field: sam_probability
+  availability_fields: [sam_probability_available, mask_quality_accepted]
+  positive_reliability_required: true
+  visibility_field: visibility
+  use_evaluation_views: false
+
+scenes:
+  - scene: scene-0471
+    gaussian_count: 859613
+    node_count: 561618
+    node_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020/artifacts/sidecars/scene-0471/fine_q50.npz
+      sha256: ad796cf7ac0e823e9449e5b6bc6d5579701ce29a7c9b842d39426ccb363e0b10
+    d0_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017/artifacts/sidecars/scene-0471.npz
+      sha256: 169054ad984909947f156b7bc00e770b94eb3a5d9e8d20241a5256825a405d55
+  - scene: scene-1087
+    gaussian_count: 931223
+    node_count: 620540
+    node_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020/artifacts/sidecars/scene-1087/fine_q50.npz
+      sha256: 22f2503f7ee5d5beb05ba767586e7480c7ea608745eaca5850b4bb7dc40c704d
+    d0_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017/artifacts/sidecars/scene-1087.npz
+      sha256: 37a4cadcec35ea3a52cbaaf0afbd3fa815b4ae664a9e7e70e1f65014f964c6d1
+  - scene: scene-0379
+    gaussian_count: 1187291
+    node_count: 764752
+    node_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020/artifacts/sidecars/scene-0379/fine_q50.npz
+      sha256: d15905cf1510c6d77642688269ed097cfdd035f98756148e09737f077f9b4585
+    d0_sidecar:
+      path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-D-PROGRESSIVE-01/20260818T001000Z__m1-stage-d-d0-operator-s20260814-r017/artifacts/sidecars/scene-0379.npz
+      sha256: 1e9c059c9d9166e731c8d7c02653a8580dd49ada82d6f1c310f5027a8d93b5b5
+
+execution:
+  scenes: [scene-0471, scene-1087, scene-0379]
+  affinity_chunk_size: 250000
+  maximum_rounds_per_threshold: null
+  deterministic_npz: true
+  repeatability_probe:
+    enabled: true
+    node_prefix_count: 4096
+    byte_exact: true
+  output_fields:
+    - gaussian_id
+    - node_id
+    - u2_b3_posterior
+    - d0_raw_posterior
+    - e0b_label
+    - e0b_posterior
+    - assignment_level
+
+operator_success_conclusion: e0b_fine_q50_same_propagation_sidecars_ready_without_quality_read
+operator_next_action: freeze_e0b_operator_then_preregister_matched_h_evaluation
+
+future_h_gate_preregistration_boundary:
+  primary_comparator: U2_B3_G0
+  mechanism_comparator: D0
+  candidate: E0B
+  required_primary_gate: inherit_stage_d_h_gate_without_change
+  additional_mechanism_gate:
+    minimum_nonnegative_boundary_f1_scenes_vs_d0: 2
+    minimum_scene_balanced_boundary_f1_delta_vs_d0_exclusive: 0.0
+    minimum_scene_balanced_iou_delta_vs_d0: 0.0
+    maximum_scene_balanced_false_negative_semantic_mass_delta_vs_d0: 0.0
+  pass_action: freeze_e0b_then_preregister_e1_panogs_faithful_port
+  fail_action: reject_simple_node_elevation_stop_e1_e2_advance_gaussian_grouping
+  quality_read_in_this_run: false
+
+runtime:
+  python: /root/autodl-tmp/envs/motionproj/bin/python
+  numpy: 1.26.4
+  scipy: 1.15.3
+  cpu_threads: 14
+
+resources:
+  monitor_interval_seconds: 2.0
+  maximum_cgroup_memory_bytes: 75161927680
+  maximum_wall_seconds_per_scene: 1800
+  maximum_total_wall_seconds: 5400
+  require_cuda: false
+  maximum_gpu_used_mib: 1024
+
+locks:
+  parse_v5_quality_diagnostics: false
+  render_evaluation_views: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  parameter_search: false
+  e1_panogs_execution: false
+  e2_ag2aussian_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F34, V51-F37, V51-F39, V51-F40, V51-F41]
+failure_ledger_delta: pending

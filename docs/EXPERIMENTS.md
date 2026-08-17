@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.1 Stage E E0b fine-q50 same-propagation 预注册（2026-08-18）
+
+- planned run=`20260818T014000Z__m1-stage-e-e0b-operator-s20260814-r021`；arm=`E0B`，selected level=
+  `fine_q50`。三档均通过 E0a 时按 quantile ascending 取第一档，明确不使用 density gain、seed conflict 或 quality
+  选择 level；这是 H-independent minimum-intervention rule。
+- node evidence=`mean member unary / visibility-weighted valid member SAM probability / max member visibility`；topology=
+  frozen raw directed KNN 的 quotient（drop self + directed dedup）后沿用 D0 exact 1/2-hop。除 node elevation、evidence
+  aggregation 和 Gaussian broadcast 外，D0 propagation threshold/affinity/seed/UNKNOWN/fixed-point 合同 byte-semantic 不变。
+- 输出保留 U2/B3 unary、frozen raw D0 posterior 与 E0B posterior，便于后续 matched H；本 run 只报告 topology、seed、
+  propagation、与 D0 非质量差异和资源，不解析 evaluation artifact。future H primary gate 继承 D0 对 U2/B3 的四门，另要求
+  E0B vs D0 至少 2/3 scene BF1 nonnegative、mean BF1 `>0`、mean IoU `>=0`、mean FN delta `<=0`。
+- H/S/C/validation/test/KITTI quality=false，E1/E2=false，M2/M3=pending；failure refs=
+  `V51-F31/F34/F37/F39/F40/F41`，prereg delta=`none`。
+
 ## V5.1 Stage E E0a r020 canonical structural result（2026-08-18）
 
 - run/source/tree=`20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020 / 4342ddb3...0c13 /

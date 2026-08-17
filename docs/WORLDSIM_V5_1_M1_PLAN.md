@@ -1,5 +1,14 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0b same-propagation 预注册
+
+E0b 的 level 在任何新 H quality read 前冻结为 `fine_q50`：对 E0a 三场共同 PASS levels 按原 edge-length quantile 升序
+取第一档，执行 minimum intervention；density gain 与 seed conflict 均不参与排序。将 frozen raw KNN quotient 到 voxel
+node，node unary 取 member mean，逐 view probability 取 visibility-weighted mean、visibility 取 maximum；其余 D0 seed、
+cosine affinity、exact two-hop、decay、threshold、fixed-point 与 UNKNOWN 全部不变。r021 只做 no-quality operator；完成并
+冻结前不得读取 H 或执行 E1/E2。future H 同时对 U2/B3 主基线和 D0 mechanism comparator 设门，失败即收口 simple node
+elevation、停止 E1/E2、转 Gaussian Grouping。
+
 ## 2026-08-18 Stage E E0a r020 收口
 
 r020 已在三场完成：三档 voxel level 均通过 no-quality observation-density gate，9 份 assignment、45 个训练视图分母、
@@ -65,7 +74,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 structural gate PASS/frozen；下一门仅 E0b H-independent level selection + same-propagation preregistration |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 frozen；E0b fine-q50 same-propagation r021 已预注册，quality/E1/E2 locked |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 

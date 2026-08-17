@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage E E0b same-propagation 已预注册（2026-08-18）
+
+- E0b 冻结使用各场 `fine_q50`：选择规则是在 E0a 三场共同通过的 level 中按 frozen edge-length quantile 升序取第一档，
+  即最小结构干预；不按 density gain、seed conflict 或任何 H quality 排名，也不搜索 resolution。
+- 唯一机制变化是 raw Gaussian→voxel node：node unary 为 member U2/B3 posterior 算术均值；逐 view SAM probability
+  为有效 member 的 visibility-weighted mean，node visibility 取有效 member maximum；frozen directed KNN 映射到 node 后
+  去 self-loop/deduplicate，再按 D0 原算子 symmetrize、构造 exact 2-hop。
+- seeds=`0.9/0.1`、soft binary cosine、visibility-product affinity、distance decay=`0.5`、progressive thresholds=
+  `[0.9,0.8,0.7,0.6,0.5]`、fixed-point schedule、UNKNOWN=`0.5` 全部与 D0 相同，node 结果常量广播回 member
+  Gaussians。r021 只生成 full-H no-quality operator sidecar，不渲染、不读 H/S/C/validation/test/KITTI quality。
+- r021 PASS 后仍须先冻结 operator，再另行预注册 H matched `U2/B3 G0 vs D0 vs E0B`；E1 PanoGS/E2 AG²aussian
+  继续锁定，M2/M3=pending。config=`configs/worldsim_v51/stage_e_e0b_same_propagation_v1.yaml`。
+
 ## V5.1 Stage E E0a r020 结构门通过并冻结（2026-08-18）
 
 - canonical r020=`20260818T012000Z__m1-stage-e-e0a-density-s20260814-r020`，source/tree=
