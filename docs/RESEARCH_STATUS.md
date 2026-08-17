@@ -1,16 +1,24 @@
 # Research Status
 
-## V5.1 Stage E E0b H matched evaluation 已预注册（2026-08-18）
+## V5.1 Stage E r022 H rejected；已进入 Gaussian Grouping（2026-08-18）
 
-- r022 将是 E0B 在 frozen H 上的唯一质量读取：12 views/3 scenes，三臂=`U2_B3_G0/D0/E0B`，全部以 persisted
-  float16 probability、同一 frozen SAM proxy target 和同一 per-view/per-scene 聚合评估。U2/B3 与 D0 直接复用 frozen
-  V5/r018 artifacts，不重算；只渲染 frozen r021 E0B posterior。
-- primary gate 完整继承 Stage D：E0B vs U2/B3 需 BF1 positive scenes `>=2/3`、scene-balanced BF1 `>0`、IoU
-  `>=0`、FN delta `<=+0.02`。mechanism gate 另要求 E0B vs D0 的 BF1 nonnegative scenes `>=2/3`、mean BF1
-  `>0`、mean IoU `>=0`、mean FN delta `<=0`；两门同时 PASS 才接受。
-- PASS 只解锁 E1 PanoGS faithful-port preregistration；FAIL 则 reject simple node elevation、停止 E1/E2 并按固定路线
-  进入 Gaussian Grouping。不得因 1087 的近 no-op 预先改 level，也不得在 r022 后回头调 node aggregation/threshold。
-  S/C/validation/test/KITTI 仍锁定，M2/M3=pending。
+- canonical r022=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022`，source/tree=
+  `3a84be68...ade/1bc14e34...12`，status=`rejected`，conclusion=
+  `e0b_rejected_stop_e1_e2_advance_gaussian_grouping`。12 个 frozen H views 上的 U2/B3、D0、E0B 三臂 target、
+  persisted float16 precision、逐 view metrics、equal-view/equal-scene aggregates 与 checkpoint immutability 均独立复算 exact。
+- primary gate vs U2/B3：BF1 positive scenes=`2/3` PASS，但 scene-balanced BF1=`-0.0002566`、IoU=
+  `-0.0925468`、FN=`+0.1899473` 全 FAIL。机制门 vs D0 更直接显示 node elevation 没有稳定增益：BF1 nonnegative
+  scenes=`1/3`，mean BF1=`-0.0004762`、IoU=`-0.0210926`、FN=`+0.0204707`，四项全部 FAIL。
+- 逐场 `(ΔBF1, ΔIoU, ΔFN)` 相对 U2/B3：0471=`(+0.124700,+0.166308,+0.075097)`、1087=
+  `(+0.056490,-0.158934,+0.217539)`、0379=`(-0.181960,-0.285014,+0.277206)`；相对 D0：0471=
+  `(+0.001927,+0.000857,-0.005733)`、1087=`(-0.000410,+0.000483,-0.000607)`、0379=
+  `(-0.002946,-0.064618,+0.067752)`。结论是否定 `fine_q50 + mean/max node evidence + 原 D0 propagation` 的稳定性，
+  不是否定一切节点或图方法。
+- manifest=`21 entries /1,197,572 bytes`，完整 run=`23 files /1,201,649 bytes`；audit=`6,314 bytes /
+  5ced73db...104f`。GPU start/peak=`4/10,724 MiB`，cgroup peak=`11,474,419,712 bytes`，124 samples、
+  0 errors、wall=`151.543 s`。`V51-F42 active`；E1 PanoGS/E2 AG²aussian 停止，禁止依据 r022 回调 voxel
+  level/aggregation/threshold 或重读 H。S/C/validation/test/KITTI 未读，M2/M3=pending；下一步只允许 Gaussian Grouping
+  faithful source audit 与 no-quality preflight。freeze=`configs/worldsim_v51/stage_e_e0b_h_evaluation_freeze_v1.yaml`。
 
 ## V5.1 Stage E E0b r021 no-quality operator 已冻结（2026-08-18）
 

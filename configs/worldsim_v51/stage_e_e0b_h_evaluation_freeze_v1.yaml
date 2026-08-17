@@ -1,0 +1,127 @@
+schema_version: worldsim_v51_stage_e_e0b_h_evaluation_freeze_v1
+task_id: WS-V51-M1-E-NODE-ELEVATION-01
+status: rejected
+frozen_at: "2026-08-18"
+
+source:
+  commit: 3a84be68483324cd3176c636242a6612d8950ade
+  tree: 1bc14e34954149151a9ff1ca2e34206fdd1b5712
+  config:
+    path: configs/worldsim_v51/stage_e_e0b_h_evaluation_v1.yaml
+    sha256: 2935d1dbd0a47b8381ece46a50e2e0e7497cc9e0b80e8c7f766e1916c26283e6
+  gate_module:
+    path: motion_proj/worldsim_v51/superprimitive_evaluation.py
+    sha256: f18a931757308b965579060142398bb571620e9bcd6275b265c3fb638d4294cd
+  runner:
+    path: scripts/run_worldsim_v51_e0b_h_evaluation.py
+    sha256: 41cf030b48b5df521f438917415074cc3e7dc210751658fa901ddb3cdf702aec
+
+canonical_run:
+  run_id: 20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022
+  source_commit: 3a84be68483324cd3176c636242a6612d8950ade
+  source_tree: 1bc14e34954149151a9ff1ca2e34206fdd1b5712
+  status: rejected
+  conclusion: e0b_rejected_stop_e1_e2_advance_gaussian_grouping
+  total_view_count: 12
+  per_scene_view_count:
+    scene-0471: 8
+    scene-1087: 1
+    scene-0379: 3
+  manifest_inventory_entries: 21
+  manifest_inventory_bytes: 1197572
+  total_run_files: 23
+  total_run_bytes: 1201649
+  hashes:
+    resolved_config: 2935d1dbd0a47b8381ece46a50e2e0e7497cc9e0b80e8c7f766e1916c26283e6
+    summary: 4964a2f0e0a44ab8b06183478fc05bbb0d99348d04670736a814f26c084793d4
+    status: 848fcd5125add625cead19078c2c55fd8fcbc30e66337d475b47db31bdfa1682
+    manifest: 3c5a2fbebba110b9db75cf3b123a687346bdc15b0077363283da87ada58497aa
+    events: 7cb8704a3ded2a838a01d28e996acc549e0ce6da86e6dab213c8257c6ee3b8f4
+    h_evaluation_report: 2002fa7881af72139231a514b5c3301458e95e68e40c8347048c53dd8444b640
+    resources: c0f8d140d40f2855a22d5c94ad73c7c1d4134d52b8fea76fba16e8b37a60cbc3
+    resource_samples: a8b90de180b08a4607b02b1cbe99e951ebad363ac5f61d8384a072925cb2294a
+
+h_gate:
+  pass: false
+  primary_vs_u2_b3_g0:
+    pass: false
+    positive_boundary_f1_scene_count: 2
+    checks:
+      positive_boundary_f1_scene_count: true
+      scene_balanced_boundary_f1_positive: false
+      scene_balanced_iou_nonnegative: false
+      scene_balanced_false_negative_safeguard: false
+    scene_balanced_delta:
+      boundary_f1: -0.00025660116778040515
+      iou_at_frozen_threshold: -0.09254682375810934
+      false_negative_semantic_mass: 0.18994730362354106
+      false_positive_semantic_mass: -0.0332767448084572
+      brier: -0.00627168061510396
+      ece: -0.008905730021147086
+      nll: 0.10179929383940524
+  mechanism_vs_d0:
+    pass: false
+    nonnegative_boundary_f1_scene_count: 1
+    checks:
+      nonnegative_boundary_f1_scene_count: false
+      scene_balanced_boundary_f1_positive: false
+      scene_balanced_iou_nonnegative: false
+      scene_balanced_false_negative_nonincreasing: false
+    scene_balanced_delta:
+      boundary_f1: -0.0004762056880371161
+      iou_at_frozen_threshold: -0.021092551562721346
+      false_negative_semantic_mass: 0.020470720009390226
+      false_positive_semantic_mass: 0.00027962630717523045
+      brier: 0.00016513911267754957
+      ece: 0.00019506415584940226
+      nll: -0.003400073151324736
+  scene_delta_boundary_iou_fn:
+    scene-0471:
+      vs_u2_b3_g0: [0.12470042842968837, 0.16630799759644066, 0.07509697929678305]
+      vs_d0: [0.0019274549863037005, 0.0008566844412161156, -0.005733384785461759]
+    scene-1087:
+      vs_u2_b3_g0: [0.056489643495027275, -0.15893420085178656, 0.21753900086566147]
+      vs_d0: [-0.0004097887216175655, 0.00048324586095727096, -0.0006067906451324712]
+    scene-0379:
+      vs_u2_b3_g0: [-0.18195987542805686, -0.2850142680189821, 0.2772059307081787]
+      vs_d0: [-0.0029462833287974832, -0.06461758499033743, 0.06775233545876491]
+
+resources:
+  nvidia_start_mib: 4
+  nvidia_peak_mib: 10724
+  torch_allocated_peak_mib: 10062.11865234375
+  torch_reserved_peak_mib: 10372.0
+  cgroup_memory_peak_bytes: 11474419712
+  valid_sample_count: 124
+  monitor_error_count: 0
+  wall_seconds: 151.54315900802612
+  gate_pass: true
+
+independent_audit:
+  script: scripts/audit_worldsim_v51_e0b_h_evaluation.py
+  script_sha256: 448cebf1b32dba9c20559a91f20757c0ab0092664736dd11f58f49ea79e72071
+  report: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T021000Z__stage-e-e0b-r022-audit.json
+  report_sha256: 5ced73db701228a5fd44485e9b57b107817519747d3a2cdb0fbf1b177426104f
+  report_bytes: 6314
+  status: passed
+  conclusion: r022_rejected_result_and_dual_matched_h_gate_replay_exact
+  metric_replay_exact: true
+  checkpoint_exact: true
+  manifest_exact: true
+
+governance:
+  parameter_search: false
+  e0b_recompute: false
+  e1_panogs_execution: false
+  e2_ag2aussian_execution: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+  failure_ledger_delta: V51-F42
+  next_task: WS-V51-M1-F-GAUSSIAN-GROUPING-01
+  next_phase: gaussian_grouping_faithful_source_audit_and_no_quality_preflight

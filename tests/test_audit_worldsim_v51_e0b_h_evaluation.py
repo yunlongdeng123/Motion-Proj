@@ -1,0 +1,22 @@
+from pathlib import Path
+import subprocess
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_r022_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_e0b_h_evaluation.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--run-dir" in result.stdout
+    assert "--output" in result.stdout

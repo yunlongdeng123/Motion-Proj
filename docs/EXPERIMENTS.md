@@ -1,5 +1,24 @@
 # Experiments
 
+## V5.1 Stage E E0b r022 canonical H rejection（2026-08-18）
+
+- run/source/tree=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022 / 3a84be68...ade /
+  1bc14e34...12`，status=`rejected`。12 views 的 frozen U2/B3 G0、r018 D0、r021 E0B 三臂 persisted
+  float16 probability 与同一 target 独立复算 exact；checkpoint、per-scene report、21-entry manifest 与 dual gate exact。
+- primary E0B-vs-U2/B3 gate：positive BF1 scenes=`2/3 PASS`，但 mean BF1/IoU/FN=
+  `-0.0002566/-0.0925468/+0.1899473`，后三项 FAIL。mechanism E0B-vs-D0 gate：nonnegative BF1 scenes=
+  `1/3`，mean BF1/IoU/FN=`-0.0004762/-0.0210926/+0.0204707`，四项全 FAIL。
+- scene `(BF1,IoU,FN)` vs U2/B3：0471=`(+0.124700,+0.166308,+0.075097)`、1087=
+  `(+0.056490,-0.158934,+0.217539)`、0379=`(-0.181960,-0.285014,+0.277206)`；vs D0：0471=
+  `(+0.001927,+0.000857,-0.005733)`、1087=`(-0.000410,+0.000483,-0.000607)`、0379=
+  `(-0.002946,-0.064618,+0.067752)`。
+- summary/status/manifest/events SHA=`4964a2f0...3d4/848fcd51...682/3c5a2fbe...7aa/7cb8704a...b8f`；run=
+  `23 files /1,201,649 bytes`，audit=`6,314 bytes /5ced73db...104f`。resource=`10,724 MiB GPU /
+  11,474,419,712 cgroup bytes /151.543s /124 valid /0 errors`。
+- failure delta=`V51-F40/F41 recurrence resolved + V51-F42 active`；E0B rejected，E1/E2 stopped，禁止 H tuning/
+  reread；S/C/validation/test/KITTI=false，M2/M3=pending。next=`Gaussian Grouping faithful source audit + no-quality
+  preflight`；freeze=`configs/worldsim_v51/stage_e_e0b_h_evaluation_freeze_v1.yaml`。
+
 ## V5.1 Stage E E0b r022 matched H evaluation 预注册（2026-08-18）
 
 - planned run=`20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022`；输入只绑定 frozen U2/B3 G0

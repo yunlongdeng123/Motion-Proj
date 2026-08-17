@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 与 raw-Gaussian progressive 均被 H reject；E0a 结构密度门通过但不等于质量提升 | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive 降 FP 但 IoU/FN 跨场失稳；零长 KNN、跨 shell 与 partial staging 环境边界 | `V51-F01`–`V51-F41` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell 与 partial staging 环境边界 | `V51-F01`–`V51-F42` |
 
 ### 1.1 V1 汇总条目
 
@@ -441,12 +441,26 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `scripts/audit_worldsim_v51_e0a_edges.py`；CLI test PASS，三场 edge identity/zero/nonfinite/positive quantile 审计完成，
   report=`30493d5d...bc5`。r020 freeze 时又误用一次跨 PowerShell/SSH inline `python -c`，只产生远端 SyntaxError、未写入
   run；随即改为本地解析 YAML、远端只运行仓库 CLI/pytest。后续需要多语句远端分析时必须先落地仓库内 auditor，
-  禁止临时内嵌脚本；单语句也不得跨两层 shell 手写嵌套引号。
+  禁止临时内嵌脚本；单语句也不得跨两层 shell 手写嵌套引号。r022 审计前的旁路摘要查询再次因 heredoc 嵌套引号
+  得到 `unexpected EOF`，随后发现远端没有 `jq`；两者均未写 run。改为 scp 冻结 JSON 后在本地只读解析，并由仓库
+  auditor 完成正式审计。该复发进一步说明远端临时解析不是证据入口。
 - `V51-F41`（`engineering/environment`, `resolved during r020 audit`）：本地 `autodl-stage/motion_proj` 只是按约束用于
   `apply_patch` 的 partial staging tree，不包含完整 `motion_proj.worldsim_v5` package；误在该目录收集 E0a 联合测试时触发
   `ModuleNotFoundError`。这不是 canonical repo、r020 或 auditor 失败。修复为只在本地做语法检查/编辑，将新增文件同步到
   远端完整 clean checkout 后运行同一测试，结果 `8 passed`；随后 r020 独立审计通过。后续不得把 partial staging 当作
-  可运行 checkout，也不得为迎合该环境复制缺失 package 或修改 import path。
+  可运行 checkout，也不得为迎合该环境复制缺失 package 或修改 import path。r022 审计阶段在同一 staging tree 误跑
+  `git diff --check`，因它不含 `.git` 只打印 usage；命令没有修改文件，正式 CLI test 与审计仍在远端完整 checkout PASS。
+- `V51-F42`（`algorithm/evaluation`, `active; E0B rejected by r022`）：simple voxel super-primitive control 的
+  `fine_q50 + member-unary mean + visibility-weighted SAM mean + max visibility + frozen D0 propagation` 在 frozen H matched
+  12 views 上未能优于 U2/B3，也未能稳定优于 raw D0。相对 U2/B3 虽有 BF1 positive scenes=`2/3`，scene-balanced
+  BF1=`-0.0002566`、IoU=`-0.0925468`、FN=`+0.1899473` 全部 FAIL；相对 D0 的 BF1 nonnegative scenes 仅
+  `1/3`，mean BF1=`-0.0004762`、IoU=`-0.0210926`、FN=`+0.0204707`，四项机制门全 FAIL。0379 相对 D0
+  `ΔIoU=-0.064618 / ΔFN=+0.067752`，说明确定性 voxel 合并与 member evidence 平均会扩散弱/错误证据，结构密度提升
+  不能推出语义质量提升；1087 的近 no-op 也未形成可泛化收益。该结果只推翻这套 simple node-elevation 实例，不推翻
+  faithful Gaussian Grouping 或所有 graph/node 方法。E1 PanoGS 与 E2 AG²aussian 按预注册停止，禁止依据 r022 调
+  voxel level、node aggregation、seed/threshold/hop、删除 0379 或重读 H；下一合法路线是 Gaussian Grouping faithful
+  source audit 与 no-quality preflight。证据：r022 summary/manifest=`4964a2f0...3d4/3c5a2fbe...7aa`，independent dual-gate
+  replay=`5ced73db...104f`，freeze=`configs/worldsim_v51/stage_e_e0b_h_evaluation_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 
