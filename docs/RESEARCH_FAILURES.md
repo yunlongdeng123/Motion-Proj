@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype 边界与全量 Gaussian 分位数退化均在对应正式 run 前修复 | `V51-F01`–`V51-F04` |
+| V5.1 | M1-only 正在推进；P0/D0 已完成，Stage A 逐机制推进 | pytest import、float32 oracle、visibility dtype、分位数退化与伪 correlation-aware count 均显式审计 | `V51-F01`–`V51-F05` |
 
 ### 1.1 V1 汇总条目
 
@@ -155,6 +155,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `Q75(disagreement)=8.494543610182426e-12`。禁止把全量分位数退化误写成 A2 方法负结果，也禁止在看到 A2 evaluation
   quality 后改总体、分位点、布尔规则或图像 abstain threshold。证据：
   `configs/worldsim_v51/m1_unary_unknown_v1.yaml` 与 A1 posterior SHA binding；S/validation/test/KITTI 仍未读取。
+- `V51-F05`（`algorithm/protocol`, `active; A3 pre-quality audit`）：计划 A3-1 提议以
+  `n_eff=(sum r)^2/(sum r^2+epsilon)` 限制 A3-0 的 fractional concentration `sum r`，并解释为
+  correlation-aware。但 A1 reliability 逐 observation 严格在 `[0,1]`，因此忽略仅用于数值稳定的 epsilon 时恒有
+  `sum r^2 <= sum r`，进而 `n_eff >= sum r`：作为上限必然是 no-op，直接替换则会提高而非降低 posterior
+  concentration。更根本的是该式只见单 observation 权重及其平方和，没有任何 view-pair correlation observable；
+  调换 view 顺序或相关结构而保持权重集合时结果不变，不能支持“10 个高度相关 view 不等于 10 个独立证据”的命题。
+  当前只允许执行 `configs/worldsim_v51/m1_effective_count_audit_v1.yaml` 绑定的 H evidence-only 审计，量化 epsilon
+  数值影响与 replacement amplification；禁止读取 evaluation artifact/quality、运行 GPU renderer，或为挽救 A3
+  事后加入相关系数/时间核/feature similarity。若审计复现结构 no-op，A3 应作为机制 rejected 记录，再决定是否按计划
+  进入独立 A4，而不是制造无归因质量臂。
 
 <a id="detail-v5"></a>
 
