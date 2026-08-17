@@ -1,5 +1,25 @@
 # Research Status
 
+## V5.1 Stage B r005 synthetic operator parity 全通过，下一门仅一张 H view denominator smoke（2026-08-17）
+
+- canonical r005=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005`，
+  source=`1efa7dd321f7318d10f257d2a4ff2333d357b131`，status=`done`，conclusion=
+  `synthetic_b0_b1_and_lazy_bilinear_operator_parity_passed`。
+- 11/11 checks PASS：B0/B1 对独立 dense oracle max error=`0/0`，constant error=`0`，lazy bilinear 对
+  `align_corners=False` dense max error=`1.1920929e-7`，row/chunk permutation bit-exact；duplicate、intersection floor、
+  view-mass floor、zero denominator、float32 output、pruning disabled 全 exact。
+- synthetic denominator=`240 intersections → 173 supported`，Gaussian-view=`8 → 7 supported +1 dropped`，covered
+  Gaussian=`4/5`；B0/B1 L2 difference=`0.0829221`，排除两臂实现别名。checkpoint 前后完整 SHA 均=
+  `746ecb8c...a283`。
+- r005 summary/status/manifest/fingerprint/parity-report SHA=`d15b82d1.../5683bf42.../0fc3fe51.../340c6b83.../`
+  `c0a4319c...`；manifest=`6 files / 12,521 bytes`、run=`14,025 bytes`，逐文件二次 SHA/bytes exact。machine freeze=
+  `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`；failure delta=`none`。
+- 该 PASS 只证明纯 operator 数学/采样合同，不证明 renderer contribution inventory 或 feature quality。下一步只预注册并
+  执行一个 H view 的 contribution denominator smoke；DINO/PCA/真实 feature/quality/validation/test/KITTI 仍不可读，
+  M2/M3=`pending`。
+- result-freeze 首轮 regression=`1 failed / 19 passed`：新增测试把局部变量从 `validate_freeze` 简化为 `freeze` 后，两条
+  parity 断言漏改旧名而 `NameError`；此前 run SHA/assert 已通过。只修变量名并登记 `V51-F18`，不改变 r005 结果。
+
 ## V5.1 Stage B LUDVIG source/operator parity 已预注册，H quality 仍锁定（2026-08-17）
 
 - external LUDVIG checkout=`/root/autodl-tmp/third_party/ludvig-v51-stage-b`，origin=

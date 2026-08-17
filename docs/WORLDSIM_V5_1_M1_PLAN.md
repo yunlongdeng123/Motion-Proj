@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r004 ViT-g PASS；r005 synthetic B0/B1 operator parity 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r005 synthetic operator parity PASS；下一门 one-H-view contribution inventory |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,9 +32,9 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F17`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F18`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
-  operator pre-formal fixture delta=`V51-F17 resolved`。
+  operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`。
 
 ## 配置与入口
 
@@ -61,6 +61,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_dinov2_resource_smoke_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_resource_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_operator_parity_v1.yaml`
+- `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -203,5 +204,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - LUDVIG external source 已冻结到 commit/tree=`4461fc5 / 4d1287b5...fb70d`，non-commercial license 且不 vendor。
   r005 在真实数据前只验证 normalized transpose、view-saturated B0、共同 support、duplicate/zero/chunk-order 与 lazy
   bilinear dense parity；checkpoint 前后 SHA exact，所有 quality lock 保持 false。
+- canonical r005=`20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005` 在 source=`1efa7dd` 以 11/11
+  checks PASS；B0/B1 dense error=`0/0`、lazy error=`1.192e-7`、order bit-exact、arm difference L2=`0.0829221`，
+  checkpoint immutable。下一门只做一个 H view contribution denominator smoke，仍不读取 feature/quality。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
 
@@ -17,6 +18,7 @@ from motion_proj.worldsim_v51.feature_uplift import (
     sample_patch_grid_bilinear,
     uplift_b0_b1,
 )
+from motion_proj.worldsim_v51.protocol import load_yaml, sha256_file
 from scripts.audit_worldsim_v51_stage_b_operator_parity import (
     _independent_dense_reference,
     _synthetic_payload,
@@ -173,3 +175,25 @@ def test_full_synthetic_parity_suite_passes() -> None:
     assert report["b0_max_absolute_error"] <= 1e-6
     assert report["b1_max_absolute_error"] <= 1e-6
     assert report["lazy_bilinear_max_absolute_error"] <= 2e-6
+
+
+def test_operator_parity_freeze_binds_terminal_and_quality_locks() -> None:
+    freeze = load_yaml(
+        ROOT / "configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml"
+    )
+    run = Path(freeze["canonical_run"]["path"])
+    for relative, expected in freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "done"
+    assert all(summary["report"]["checks"].values())
+    assert summary["checkpoint_immutable"] is True
+    assert freeze["parity"]["b0_max_absolute_error"] == 0.0
+    assert freeze["parity"]["b1_max_absolute_error"] == 0.0
+    assert summary["real_image_feature_read"] is False
+    assert summary["method_quality_read"] is False
+    assert summary["validation_quality_read"] is False
+    assert summary["test_quality_read"] is False
+    assert freeze["locks"]["m2_status"] == "pending"
+    assert freeze["locks"]["m3_status"] == "pending"

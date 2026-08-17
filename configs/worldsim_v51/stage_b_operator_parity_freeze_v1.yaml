@@ -1,0 +1,86 @@
+schema_version: worldsim_v51_stage_b_operator_parity_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: synthetic_b0_b1_and_lazy_bilinear_operator_parity_frozen
+
+canonical_run:
+  run_id: 20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005
+  source_commit: 1efa7dd321f7318d10f257d2a4ff2333d357b131
+  config_sha256: dddb6e07214a74b2739ced355872073558d17f1b48a820fb589f84d6823cc315
+  hashes:
+    summary.json: d15b82d1ecab0335f14bf045553df075c52df58523f74415b291cded060b555c
+    status.json: 5683bf420964a727ef9d7469a245d05bff9414f031e6ceb66d8e38dfcf9ce2ef
+    manifest.json: 0fc3fe51fd4033f4399c07d9a2271fea082803cec8b2a83b8092885508ac95ce
+    fingerprint.json: 340c6b83541fb82308c9b9561e4543aa372b600b6cbdbd81307c5f3c81cfa906
+    resolved_config.yaml: f95b7a037cb969a39785af406bab38d923ec30216047525e054dddb299b85f6c
+    metrics.jsonl: c741d16744674e13c65f4729867ce85946b71d86f0dd39c16097a5571a87a386
+    events.jsonl: 0ec9e5bf779c63dd246643786fba51dd85d49306f8b9b7f7604c64d6a3de0a50
+    artifacts/parity_report.json: c0a4319c5312c9e3697a7ff1c5ad2d023944852312f0b7f77f46b583c46afb1d
+
+provenance:
+  ludvig_source_commit: 4461fc515439bb498a75d71738a1e73cf7a452ed
+  ludvig_source_tree: 4d1287b5a8c86b75e67358d3f03cc22d442fb70d
+  ludvig_license: non-commercial
+  ludvig_vendored_into_project: false
+  checkpoint_sha256_before: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_sha256_after: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  checkpoint_immutable: true
+
+parity:
+  independent_dense_reference: true
+  repeated_gaussian_and_pixel_intersections: true
+  below_intersection_floor: true
+  below_gaussian_view_mass_floor: true
+  zero_denominator_gaussian: true
+  constant_feature_conservation: true
+  row_and_chunk_order_invariance: true
+  lazy_bilinear_dense_align_corners_false: true
+  b0_b1_non_alias: true
+  output_dtype_float32: true
+  optional_pruning_disabled: true
+  b0_max_absolute_error: 0.0
+  b1_max_absolute_error: 0.0
+  constant_feature_max_absolute_error: 0.0
+  lazy_bilinear_max_absolute_error: 1.1920928955078125e-7
+  b0_b1_difference_l2: 0.08292213082313538
+  input_intersection_count: 240
+  supported_intersection_count: 173
+  gaussian_view_count_before_mass_floor: 8
+  supported_gaussian_view_count: 7
+  dropped_gaussian_view_count: 1
+  covered_gaussian_count: 4
+  duration_seconds: 0.024069273844361305
+
+content_hashes:
+  b0_feature_sha256: 31ad514fc323054fc0a02db79d3473338e7f5a2980448d22e692a3995d10bb43
+  b1_feature_sha256: e3de0223a05cb6bc23a0cfce78586334d2e41560ef7505e81e92efa7a82fb320
+  lazy_feature_sha256: 386e52562f88977534f4551e213203c24759fb77d4ea665a79c68f1f8916ba17
+
+run_inventory:
+  manifest_file_count: 6
+  manifest_bytes: 12521
+  run_total_bytes: 14025
+  terminal_manifest_file_sha_recheck: exact
+
+locks:
+  dino_model_load: false
+  pca_fit: false
+  feature_sidecar_persisted: false
+  renderer_started: false
+  real_image_feature_read: false
+  method_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: preregister_one_h_view_contribution_inventory_without_feature_or_quality_read
+
+failure_ledger_refs: [V51-F12, V51-F14, V51-F15, V51-F16, V51-F17]
+failure_ledger_delta: none

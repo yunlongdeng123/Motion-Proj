@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/下载/fixture 风险已解除 | `V51-F01`–`V51-F17` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/shape 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy leakage 仍 active，24GB/下载/operator-test 风险已解除 | `V51-F01`–`V51-F18` |
 
 ### 1.1 V1 汇总条目
 
@@ -282,7 +282,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   lazy bilinear 或 LUDVIG 方法失败。修复只把该 group 改成 5 个 `1e-4`、其余为 0，使 mass=`0.0005`；不改阈值、
   operator、seed 或通过标准。失败发生在 formal r005 创建前，未加载 DINO/renderer、未读真实 feature 或质量；禁止用
   降低 group floor 掩盖夹具错误。证据：`tests/test_worldsim_v51_feature_uplift.py`、
-  `scripts/audit_worldsim_v51_stage_b_operator_parity.py` 的 pre-formal regression。
+  `scripts/audit_worldsim_v51_stage_b_operator_parity.py` 的 pre-formal regression。修正后 19/19 regression PASS；formal
+  r005 又以 11/11 checks PASS，并真实观测 `8 Gaussian-view → 7 kept + 1 dropped`，确认本条 resolved。
+- `V51-F18`（`engineering`, `resolved before r005 result-freeze commit`）：新增 result-freeze test 先通过 canonical run
+  文件存在/SHA、summary status/checks/checkpoint immutable，随后因把局部变量 `validate_freeze` 简化为 `freeze` 时漏改
+  两条 parity 断言，得到 `NameError` 与 `1 failed / 19 passed`。这推翻“机械重命名后所有引用自然一致”的测试维护假设，
+  不推翻 r005 artifact、operator parity 或任一质量结论。修复只替换两处旧变量名，并重跑同一 20-test regression；
+  禁止重跑/覆盖 r005 或修改 freeze 数字来绕过测试。证据：`tests/test_worldsim_v51_feature_uplift.py`、
+  `configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

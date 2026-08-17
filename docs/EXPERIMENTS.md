@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage B r005 canonical synthetic operator result（2026-08-17）
+
+- run=`20260817T151900Z__m1-stage-b-operator-parity-s20260814-r005`，source=`1efa7dd`，status=`done`；
+  LUDVIG commit/tree/license exact，不 vendor；checkpoint before/after SHA=`746ecb8c...a283` exact。
+- parity：dense oracle B0/B1 max error=`0/0`；constant=`0`；lazy bilinear=`1.1920929e-7≤2e-6`；row/chunk
+  order bit-exact；B0/B1 difference L2=`0.0829221>1e-4`。全部 11 checks PASS。
+- support fixture=`240 input / 173 intersection-supported`，Gaussian-view=`8 before / 7 kept / 1 dropped`，covered=
+  `4/5`；两级 frozen floor 与 zero denominator 都被真实触发，不是 vacuous pass。
+- summary/status/manifest/fingerprint/resolved/metrics/events/parity-report SHA=`d15b82d1.../5683bf42.../0fc3fe51.../`
+  `340c6b83.../f95b7a03.../c741d167.../0ec9e5bf.../c0a4319c...`；manifest=`6 files / 12,521 bytes`、
+  run=`14,025 bytes`，独立 recheck exact。
+- result freeze=`configs/worldsim_v51/stage_b_operator_parity_freeze_v1.yaml`；failure delta=`none`。DINO/PCA/renderer/
+  real feature/quality/validation/test/KITTI=false，M2/M3=pending；下一门只做一个 H view contribution inventory。
+- result-freeze regression 首轮=`1 failed / 19 passed`，原因是测试变量 `validate_freeze→freeze` 重命名漏改两条断言；
+  run hash/assert 已先通过。修复仅改测试名，登记 `V51-F18 resolved`；r005 immutable summary 的 delta 仍为 `none`。
+
 ## V5.1 Stage B synthetic B0/B1 operator parity 预注册（2026-08-17）
 
 - planned r005 suffix=`m1-stage-b-operator-parity-s20260814-r005`；source operator provenance 固定为 LUDVIG
