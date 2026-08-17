@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage D D0 progressive preflight 预注册（2026-08-18）
+
+- task/arm=`WS-V51-M1-D-PROGRESSIVE-01 / D0`；paper-zero source=official SAI3D CVPR 2024，repo commit/tree=
+  `1d9a6a2/7320924`。仓库无显式 LICENSE，执行 policy=`clean_room_reimplementation_from_paper_equations_no_upstream_code_copy`。
+- faithful port=`raw Gaussian + frozen KNN geometry adjacency + visibility-weighted multi-view SAM soft binary cosine +`
+  `region-to-node weighted affinity`；固定 hop=`2`、decay=`0.5`、thresholds=`0.9/0.8/0.7/0.6/0.5`、U2/B3
+  high-confidence seeds、exact tie/final unsupported=`UNKNOWN`。禁止 DINO uplift、learned parameter、Bayesian/SAM/motion
+  innovation、node coarsening、threshold search 和 one-shot global smoothing。
+- H inputs 只绑定 V5 immutable r037/r042/r043 B3 unary 与 r038/r045/r046 topology/manifest，预计 `12` matched
+  evaluation views；当前 preflight 只 hash，不解析 quality-bearing diagnostics。H gate 固定为 BF1 positive scenes `>=2/3`、
+  mean BF1 `>0`、mean IoU delta `>=0`、mean FN delta `<=+0.02`；失败即 skip D1 并转 Stage E。
+- D0 regression=`4 passed`。扩大回归暴露旧 plan-hash 单值 validator 与一次错误解释器聚合，分别登记并修复为
+  authorized append hash chain、双环境分组；formal preflight 必须在 clean prereg commit 后运行。
+  S/C/validation/test/KITTI quality=false，M2/M3=pending；failure refs=`V51-F31–F35`。
+
 ## V5.1 Stage B r015 canonical H evaluation reject（2026-08-18）
 
 - run=`20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015`，source=`0a79a56`，status=`rejected`；

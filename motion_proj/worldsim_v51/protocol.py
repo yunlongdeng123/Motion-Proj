@@ -12,6 +12,12 @@ import yaml
 
 V5_CANONICAL_HEAD = "44d0e4a2468112b89a454992ecd9177d65184067"
 V51_BRANCH = "research/worldsim-v5.1-m1"
+NORMATIVE_PLAN_BASE_SHA256 = (
+    "3d7f74813db79b00b71b522391ff2d953bb480ef6a25179c1919ef3acc54d733"
+)
+NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256 = (
+    "b4888476811842b37c6d1cb736cdc319e70b12054fc07dec3e9ca60d41fe9fc0"
+)
 AUTHORIZED_FIRST_ROUND = (
     "WS-V51-P0-M1-SCOPE-FREEZE-01",
     "WS-V51-D0-DEV-ROLE-FREEZE-01",
@@ -57,6 +63,29 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return payload
 
 
+def _validate_normative_plan_binding(path: Path, recorded_sha256: str) -> str:
+    """Accept the immutable P0 hash or the later authorized append-only plan hash.
+
+    P0 and the Stage-B authorization deliberately retain the hash observed when
+    they were frozen.  Commit b359541 appended the H evaluation contract to the
+    normative plan without rewriting either historical record.  This explicit
+    two-hash chain keeps those records immutable while still failing closed on
+    any third plan state.
+    """
+
+    if not path.is_file():
+        raise ProtocolError(f"normative plan missing: {path}")
+    if recorded_sha256 != NORMATIVE_PLAN_BASE_SHA256:
+        raise ProtocolError("normative plan historical binding drift")
+    observed = sha256_file(path)
+    if observed not in (
+        NORMATIVE_PLAN_BASE_SHA256,
+        NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256,
+    ):
+        raise ProtocolError("V5.1 normative plan SHA 漂移")
+    return observed
+
+
 def _expect_file(project: Path, spec: Mapping[str, Any]) -> Path:
     path = project / str(spec["path"])
     if not path.is_file():
@@ -78,8 +107,9 @@ def validate_scope(project: Path, config: Mapping[str, Any]) -> dict[str, Any]:
     if project_cfg.get("v5_canonical_head") != V5_CANONICAL_HEAD:
         raise ProtocolError("V5 canonical HEAD 漂移")
     plan = project / project_cfg["normative_plan"]["path"]
-    if sha256_file(plan) != project_cfg["normative_plan"]["sha256"]:
-        raise ProtocolError("V5.1 normative plan SHA 漂移")
+    observed_plan_sha256 = _validate_normative_plan_binding(
+        plan, project_cfg["normative_plan"]["sha256"]
+    )
     authorization = config["first_round_authorization"]
     if tuple(authorization["tasks"]) != AUTHORIZED_FIRST_ROUND:
         raise ProtocolError("第一轮授权集合或顺序漂移")
@@ -106,7 +136,8 @@ def validate_scope(project: Path, config: Mapping[str, Any]) -> dict[str, Any]:
         raise ProtocolError("P0 缺 failure_ledger_refs")
     return {
         "task_id": config["task_id"],
-        "normative_plan_sha256": project_cfg["normative_plan"]["sha256"],
+        "normative_plan_sha256": observed_plan_sha256,
+        "normative_plan_historical_sha256": project_cfg["normative_plan"]["sha256"],
         "cohort_file_sha256": locks["source_cohort"]["file_sha256"],
         "cohort_sha256": observed_cohort_sha,
         "failure_ledger_refs": list(config["failure_ledger_refs"]),
@@ -178,7 +209,9 @@ def validate_stage_b_authorization(
     bindings: dict[str, Path] = {}
     for name, spec in config["bindings"].items():
         path = project / str(spec["path"])
-        if not path.is_file() or sha256_file(path) != spec["sha256"]:
+        if name == "normative_plan":
+            _validate_normative_plan_binding(path, spec["sha256"])
+        elif not path.is_file() or sha256_file(path) != spec["sha256"]:
             raise ProtocolError(f"Stage B binding 漂移: {name}")
         bindings[name] = path
 

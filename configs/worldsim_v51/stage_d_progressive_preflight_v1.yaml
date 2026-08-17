@@ -1,0 +1,205 @@
+schema_version: worldsim_v51_stage_d_progressive_preflight_v1
+task_id: WS-V51-M1-D-PROGRESSIVE-01
+status: preregistered
+created_at: "2026-08-18"
+seed: 20260814
+
+route:
+  family: progressive_propagation
+  arm: D0
+  paper_zero_before_innovation: true
+  previous_route: LUDVIG_UPLIFT_AND_SEMANTIC_GRAPH
+  previous_route_status: rejected
+  next_route_on_rejection: SUPER_PRIMITIVE_OR_ANCHOR
+  invariant_baseline: U2_B3
+  c0_available: false
+  c0_reason: raw_ludvig_graph_rejected_with_uplift_gate
+
+project_bindings:
+  normative_plan:
+    path: docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md
+    sha256: b4888476811842b37c6d1cb736cdc319e70b12054fc07dec3e9ca60d41fe9fc0
+  development_roles:
+    path: configs/worldsim_v51/development_roles_v1.yaml
+    sha256: eb0281d6de6e353e55d258b9304b4bef9a6c53f35094af57bda3bdc7e5a9577d
+  authorization:
+    path: configs/worldsim_v51/stage_b_authorization_v1.yaml
+    sha256: 34fc22ad3802563e5acbc13162314f5115a7066a1e009deba7a413843bc78e0a
+  stage_a_closeout:
+    path: configs/worldsim_v51/stage_a_closeout_v1.yaml
+    sha256: 325b0d7efeef200eb62f20e2485e37fe7febd66ea2444e172a972ede28abf50a
+    required_survivor: U2_B3
+  rejected_ludvig_freeze:
+    path: configs/worldsim_v51/stage_b_h_evaluation_freeze_v1.yaml
+    sha256: dedbc81aaa6d7d926efb80b191cc9e32d0d172e6e165902f5b11983b36759332
+    required_status: rejected
+
+paper_source:
+  title: "SAI3D: Segment Any Instance in 3D Scenes"
+  venue: CVPR 2024
+  official_paper_page: "https://openaccess.thecvf.com/content/CVPR2024/html/Yin_SAI3D_Segment_Any_Instance_in_3D_Scenes_CVPR_2024_paper.html"
+  official_supplement: "https://openaccess.thecvf.com/content/CVPR2024/supplemental/Yin_SAI3D_Segment_Any_CVPR_2024_supplemental.pdf"
+  official_repository: "https://github.com/yd-yin/SAI3D.git"
+  checkout: /root/autodl-tmp/third_party/sai3d-v51-stage-d
+  branch: master
+  commit: 1d9a6a2393c5005276c28cb9eb95391d799d1279
+  tree: 732092499e0ab6187999818f347f9543968b7370
+  committed_at: "2024-03-29T16:48:38+08:00"
+  files:
+    README.md: b2a463addcf75c26a1ef4677d50d04d1f31f941174f077a2b65f0f50909c38c1
+    sai3d.py: 4eeee7de32c44e4284a2437e41733903ae4ffacddbb04348532d890f598a3e23
+    sai3d_base.py: 3f3b6cea7ea376a1ebfcea9f5a321ea50e737e748ee326f93f9b735cf7ff5cea
+  license_inventory:
+    explicit_license_file_present: false
+    policy: clean_room_reimplementation_from_paper_equations_no_upstream_code_copy
+
+faithful_mechanism:
+  node: raw_gaussian
+  node_change: false
+  topology: frozen_v5_directed_euclidean_knn_symmetrized
+  direct_candidate_k: 6
+  maximum_logical_distance: 2
+  semantic_source: frozen_train_only_multiview_sam_soft_probability
+  semantic_distribution: l2_normalized_binary_vector_one_minus_p_and_p
+  pair_similarity: cosine
+  view_confidence: common_valid_visibility_product
+  pair_affinity: confidence_weighted_mean_similarity
+  region_affinity: member_count_and_logical_distance_weighted_mean
+  logical_distance_decay: 0.5
+  progressive_thresholds: [0.9, 0.8, 0.7, 0.6, 0.5]
+  threshold_source: upstream_default_0p9_0p5_5
+  high_confidence_actor_seed_minimum: 0.9
+  high_confidence_background_seed_maximum: 0.1
+  seed_source: frozen_u2_b3_posterior
+  seed_mutation: false
+  expansion_schedule: strict_to_relaxed_until_fixed_point_per_level
+  conflict_policy: larger_region_affinity_wins_exact_tie_remains_unknown
+  final_unknown_policy: explicit_unknown_probability_0p5
+  global_one_shot_smoothing: false
+  small_region_forced_merge: false
+  parameter_search: false
+
+interface_adaptation:
+  upstream_primitive: superpoint
+  project_primitive: raw_gaussian
+  reason: normative_stage_d_requires_propagation_change_before_node_change
+  upstream_semantic_label: sam_instance_mask_distribution
+  project_semantic_label: frozen_binary_actor_union_sam_soft_distribution
+  reason_semantic: m1_target_is_binary_moving_rigid_ownership_and_instance_ids_were_not_retained
+  invariant_mechanism:
+    - geometry_restricted_neighbors
+    - visibility_weighted_multiview_label_distribution_similarity
+    - dynamic_region_to_candidate_affinity
+    - high_to_low_progressive_thresholds
+    - logical_distance_decay
+  prohibited_additions:
+    - ludvig_dinov2_uplift
+    - learned_parameters
+    - bayesian_gate_beyond_frozen_seed
+    - sam_threshold_search
+    - motion_edge
+    - node_coarsening
+    - validation_or_test_feedback
+
+historical_inputs:
+  - scene: scene-0471
+    expected_gaussian_count: 859613
+    expected_evaluation_view_count: 8
+    v5_graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene0471_v1.yaml
+      sha256: 53e14d5c22556a2e3dd4533f3b96203aab49fe4b401eece5d4a93de1c19b9090
+    b3_unary:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T173032Z__m1-scene0471-unary-diagnostic-s0-r037/artifacts/gaussians/B3.npz
+      sha256: 2e10345fab29edf77c33e19cba6f1001da8c820a1fd8cdcd5750f2b05dda65e1
+    v5_graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038
+      run_id: 20260814T180451Z__m1-scene0471-graph-diagnostic-s0-r038
+      files:
+        status.json: 2dc9234c7ea2bc5b45f30d22f6626a84a88044537764ccae2983a6338ba30dbf
+        manifest.json: 83ad4099f61bfb0566f38f9fd30f4197897ac825b36b2c0de1d00dddad23f027
+        artifacts/diagnostics.json: ab81462375a2ea7faec73051aec807808f41426e872f954a249fdee19bfb9d2b
+        artifacts/graph/edges.npz: dcf9a846d21068c40a1ebb0b0334f58f3939f6b1df8da80b3184be7ea3956406
+        artifacts/graph/posteriors.npz: f6dd79138e30f55798c8f16a635b078e98999d6a9db861242b9df6960accd6d3
+  - scene: scene-1087
+    expected_gaussian_count: 931223
+    expected_evaluation_view_count: 1
+    v5_graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene1087_v1.yaml
+      sha256: cc7f44356c1bb7b215189b00c531b2be199f1d6e3d279066aaa93d8b20b39ea1
+    b3_unary:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T183210Z__m1-scene1087-unary-diagnostic-s0-r042/artifacts/gaussians/B3.npz
+      sha256: 96a45b9f029e1551143f87599cebae6aa1594fc8c826a124dd4c7a433b460b8b
+    v5_graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190405Z__m1-scene1087-graph-diagnostic-s0-r045
+      run_id: 20260814T190405Z__m1-scene1087-graph-diagnostic-s0-r045
+      files:
+        status.json: 11b22206b14428f5fec9f3ea17810c55d195e2b48006c1e6240520fd2dfa1609
+        manifest.json: 1b9f7c59457860552db3065daf6466245cb3655c35e2aa8f61f7893cd54f5b84
+        artifacts/diagnostics.json: ea43d11f5a8926ffbb99ef40065c2e159c9e95f7a07723ee30042f3116054e3c
+        artifacts/graph/edges.npz: 1ca4ad905ef23e6cf53b58c9b0a0566811ab61e0754eec272029dde9da69dc3f
+        artifacts/graph/posteriors.npz: 0e2fb2ecbc3b90dd65e64f945e7ed52b1ea50d6459a920952ac50f976bc89ffe
+  - scene: scene-0379
+    expected_gaussian_count: 1187291
+    expected_evaluation_view_count: 3
+    v5_graph_config:
+      path: configs/worldsim_v5/m1_graph_diagnostic_scene0379_v1.yaml
+      sha256: 6c4aeca80e86885de43d0f16c2256b538e47f524dc742c002fad9143124afb8c
+    b3_unary:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T184610Z__m1-scene0379-unary-diagnostic-s0-r043/artifacts/gaussians/B3.npz
+      sha256: 51348e608e1e0ccf6aac1a5c2d46125acc562ccd0d6cc1f27cdd3e63b119f641
+    v5_graph_run:
+      path: /root/autodl-tmp/runs/worldsim_v5/WS-V5-M1-STRUCTURED-OWNERSHIP-01/20260814T190715Z__m1-scene0379-graph-diagnostic-s0-r046
+      run_id: 20260814T190715Z__m1-scene0379-graph-diagnostic-s0-r046
+      files:
+        status.json: d813babaa6a148be948843dce233bc0bfb49551ede6a561fcdfeabf26b4c824c
+        manifest.json: 4e148d11dbbb0c441a4423033b3c25820b487705d5fc168d67467d75de4ae0f9
+        artifacts/diagnostics.json: adbafa7e978a22642f15f0c47cfba9be8bce5c8e469c65482aa2b562bca2dc46
+        artifacts/graph/edges.npz: 09edc24d6427582068f717e2a4067463a6fb4093c0a71f7ccea625b56073aa18
+        artifacts/graph/posteriors.npz: 611d33672f1eec14c309e6a5b0da39a35c083cf32c55d56d036129f17afc29ce
+
+preflight:
+  quality_read: false
+  inspect_quality_payloads: false
+  verify_hashes_only_for_quality_bearing_artifacts: true
+  require_clean_worktree: true
+  require_cuda: false
+  operator_scope: cpu_sparse_mechanism_and_resource_preflight
+  maximum_cgroup_memory_bytes: 75161927680
+  maximum_wall_seconds_per_scene: 1800
+  required_checks:
+    - project_binding_identity
+    - upstream_commit_tree_and_file_identity
+    - upstream_license_inventory
+    - u2_b3_survivor_identity
+    - ludvig_rejected_terminal_identity
+    - three_h_scene_input_identity
+    - frozen_graph_topology_contract
+    - no_quality_read
+
+h_gate_after_operator_freeze:
+  comparator: U2_B3_G0
+  strong_external_baseline: U2_B3_G_V5
+  scene_count: 3
+  minimum_positive_boundary_f1_scenes: 2
+  minimum_scene_balanced_boundary_f1_delta_exclusive: 0.0
+  minimum_scene_balanced_iou_delta: 0.0
+  maximum_scene_balanced_false_negative_semantic_mass_delta: 0.02
+  parameter_search_after_read: false
+  pass_action: freeze_d0_then_run_s_exact_once
+  fail_action: reject_progressive_skip_d1_then_advance_super_primitive_or_anchor
+
+locks:
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  validation_parameter_search: false
+  test_quality_read: false
+  test_parameter_search: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F32, V51-F33, V51-F34, V51-F35]
+failure_ledger_delta: none
+next_action: implement_clean_room_d0_operator_and_unit_tests_without_quality_read

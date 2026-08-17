@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F31` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 已被 H evaluation reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 能重投影但不能形成 actor-background margin | `V51-F01`–`V51-F35` |
 
 ### 1.1 V1 汇总条目
 
@@ -390,6 +390,23 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   这推翻 LUDVIG uplift 可直接支撑 driving Gaussian semantic graph 的核心假设，因此按预注册同时 reject raw LUDVIG graph，
   不得降低 actor minimum、删除 1087、只报 reprojection 或先加 Bayesian/SAM/motion edge 救 graph。下一合法路线是独立
   faithful progressive propagation；S/C/validation/test/KITTI 仍未读。
+- `V51-F32`（`engineering/launcher`, `resolved before D0 preregistration`）：首次 D0 只读 inventory 把含
+  `U2|B3|Bayesian|...` 的正则直接嵌入 PowerShell→SSH 命令，外层 shell 抢先解释 `|`，导致远端 `sed` address
+  截断并把各 regex 分支误当命令；没有文件、run、GPU 或 quality 状态变化。后续统一把多行只读脚本 UTF-8 base64
+  编码后交给远端 `bash`，避免跨 shell parser 改写。不得把 launcher quoting failure 计入 D0 方法 verdict。
+- `V51-F33`（`engineering/runtime`, `resolved before D0 preregistration`）：第二次 artifact inventory 在远端使用裸
+  `python`，但主机 PATH 按合同没有该命令；三个 YAML path 已被 `rg` 只读打印，内嵌解析均未运行，也未改状态。
+  修正为显式 `/root/autodl-tmp/envs/motionproj/bin/python` 后完成 NPZ identity/count/quantile 审计。后续所有 V5.1
+  runner/auditor 必须使用冻结解释器绝对路径，禁止把 shell PATH 差异写成数据或算法失败。
+- `V51-F34`（`engineering/runtime`, `resolved before D0 preregistration`）：D0 扩大回归时又用 motionproj Python
+  调用了依赖 DriveStudio runtime identity 的 H evaluation config test，得到该项 runtime drift；D0 新测试本身已
+  `4/4 PASS`，没有 formal run、GPU 或 quality read。这是 `V51-F24` 的重复触发，说明仅在文档记环境分层不足。
+  后续回归命令按 suite 显式分为 motionproj 与 drivestudio 两组，并分别记录结果；不得改 runtime freeze 来迁就聚合命令。
+- `V51-F35`（`engineering/protocol`, `resolved before D0 preregistration`）：同一扩大回归发现 P0 scope 与 Stage-B
+  authorization 仍保留最初 top-plan SHA=`3d7f7481...`，而 commit `b359541` 为预注册 H heldout contract 对计划做了
+  17 行 append-only 更新，当前 SHA=`b4888476...`；旧 validator 只允许单 hash，导致 4 个既有 protocol tests 在真实
+  route assertion 前 fail。禁止改写两份历史 freeze 的 recorded SHA。修复在 validator 中显式固定
+  `base hash → authorized append hash` 两状态链，第三种状态仍 fail-closed，并增加 current/historical 双 hash 回归。
 
 <a id="detail-v5"></a>
 

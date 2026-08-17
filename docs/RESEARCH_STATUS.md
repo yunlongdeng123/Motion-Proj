@@ -1,5 +1,24 @@
 # Research Status
 
+## V5.1 Stage D D0 faithful progressive preflight 已预注册（2026-08-18）
+
+- 路线已按冻结顺序从 rejected LUDVIG uplift/raw graph 自动推进到
+  `WS-V51-M1-D-PROGRESSIVE-01 / D0`；U2/B3 继续作为 immutable matched baseline，C0 因上一路线拒绝不存在，
+  strong external baseline 保留 V5 `U2/B3+G3`。D0 若 H gate 失败，将 reject progressive、禁止 D1，并自动进入
+  super-primitive/anchor。
+- 官方 SAI3D source 固定为 commit=`1d9a6a2`、tree=`7320924`；上游仓库未提供显式 LICENSE，因此只按论文公式做
+  clean-room 实现，不复制上游源码。faithful contract 固定 raw Gaussian node、冻结 KNN geometry 邻接、共同可见的
+  多视图 SAM soft binary distribution cosine、逻辑距离 `<=2`、distance decay=`0.5`、progressive thresholds=
+  `[0.9,0.8,0.7,0.6,0.5]`，以及未充分支持节点最终 `UNKNOWN`，不做 one-shot smoothing 或参数搜索。
+- 三个 H historical inputs 已逐 SHA 绑定：Gaussian=`859,613/931,223/1,187,291`，directed KNN edges=
+  `5,157,678/5,587,338/7,123,746`，matched evaluation views=`8/1/3`。当前只允许 source/input/license/hash preflight
+  与 pure operator tests，不读取任何 quality payload。
+- H gate 预注册为 `>=2/3` scene BF1 positive、scene-balanced BF1 `>0`、IoU delta `>=0`、FN semantic mass delta
+  `<=+0.02`；通过才可冻结 D0 并 exact-once 读取 S。S/C/validation/test/KITTI quality 仍锁定，M2/M3=`pending`。
+  config/auditor/test=`stage_d_progressive_preflight_v1.yaml`、`audit_worldsim_v51_d0_preflight.py`、
+  `test_worldsim_v51_d0_preflight.py`。launcher/runtime/protocol 小坑登记 `V51-F32–F35 resolved`；其中旧 P0/Stage-B
+  plan hash 采用显式 `3d7f7481… → b4888476…` authorized append chain，历史 freeze 不改写。
+
 ## V5.1 Stage B r015 H gate rejected；LUDVIG uplift/raw graph 收口（2026-08-18）
 
 - canonical r015=`20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015`，source=`0a79a56`，status=`rejected`。
