@@ -10,6 +10,7 @@ from scripts.run_worldsim_v51_f0h_pre_matmul_empty_cache_parity import (
     _outcome,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0h_pre_matmul_empty_cache_parity import audit
 
 
 CONFIG = ROOT / "configs/worldsim_v51/stage_f_f0h_pre_matmul_empty_cache_parity_v1.yaml"
@@ -66,3 +67,20 @@ def test_f0h_outcome_requires_reference_exact_and_empty_cache_evidence() -> None
     drifted[1]["masks"] = [dict(row) for row in drifted[1]["masks"]]
     drifted[1]["masks"][0]["sha256"] = "drift"
     assert _outcome(config, drifted)[0] == "recovery_nonexact"
+
+
+def test_f0h_r039_independent_audit_replays_recovery_parity() -> None:
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T160000Z__m1-stage-f-f0h-empty-cache-parity-s20260814-r039"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["outcome"] == "recovery_pass"
+    assert result["empty_cache_call_count"] == 8
+    assert result["parity_checks"]["reference_checks"] == [True] * 4
+    assert result["quality_read"] is False
+    assert result["full_materialization"] is False
