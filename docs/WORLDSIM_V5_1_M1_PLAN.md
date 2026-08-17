@@ -1,5 +1,12 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage E E0a r019 recovery
+
+r019 在 0379 edge-length quantile 前因 `34` 条 zero-length KNN edges blocked；0471/1087 partial 产物不作为方法证据。
+v2/r020 只将 voxel size 明确为 positive-edge `q50/q75/q90`，所有 Gaussian 仍参与 voxel assignment，其他输入、门禁和
+quality locks 不变。r020 必须完整重跑；在它 terminal/freeze 前，E0b same-propagation、E1 PanoGS 与 E2 AG²aussian
+继续锁定。工程 delta=`V51-F38/F40 resolved`、`V51-F39 recovery pending`。
+
 ## 2026-08-18 Stage E E0a 分相预注册
 
 为避免 observation-density 结构证据与传播质量混在一次运行中，E0 被拆成两相。E0a 只将 frozen raw Gaussian 按
@@ -50,7 +57,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a no-quality density probe 已预注册；PASS 才可预注册 E0b same-propagation，E1/E2 仍锁定 |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | running | r019 zero-edge contract blocked；v2/r020 recovery 仅排除 scale quantile 的零长边，E0b/E1/E2 仍锁定 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -71,11 +78,11 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F37`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F40`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
   `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 resolved by v2/r012`；Stage D rejection
-  delta=`V51-F37 active`。
+  delta=`V51-F37 active`；Stage E recovery delta=`V51-F38/F40 resolved, V51-F39 pending r020`。
 
 ## 配置与入口
 

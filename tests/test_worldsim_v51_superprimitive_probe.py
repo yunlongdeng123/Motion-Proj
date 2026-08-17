@@ -29,6 +29,26 @@ def test_edge_quantile_sizes_and_voxel_assignment_are_deterministic() -> None:
     assert left.tolist() == [0, 0, 1, 2]
 
 
+def test_edge_quantiles_exclude_zero_length_without_dropping_nodes() -> None:
+    centers = np.array(
+        [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [3.0, 0.0, 0.0]],
+        dtype=np.float64,
+    )
+    sizes, report = edge_length_quantile_voxel_sizes(
+        centers,
+        np.array([0, 1, 2], dtype=np.int64),
+        np.array([1, 2, 3], dtype=np.int64),
+        (0.25, 0.5, 0.75),
+    )
+    assert report["edge_count"] == 3
+    assert report["positive_edge_count"] == 2
+    assert report["zero_edge_count"] == 1
+    assert sizes.tolist() == [1.25, 1.5, 1.75]
+    assignment, _ = voxel_assignments(centers, float(sizes[0]))
+    assert assignment.shape == (4,)
+    assert assignment[0] == assignment[1]
+
+
 def test_density_report_measures_union_rescue_and_seed_conflict() -> None:
     assignment = np.array([0, 0, 1, 1], dtype=np.int64)
     visibility = np.array(

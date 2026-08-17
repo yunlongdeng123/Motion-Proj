@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage E r019 blocked / r020 recovery 预注册（2026-08-18）
+
+- r019 source=`2e1786b`，status=`blocked`，error=`frozen KNN contains nonpositive/nonfinite edge length`；完成
+  0471/1087 后在 0379 edge-scale derivation 阻塞。status/events/resource-samples SHA=
+  `491ad90a...f3ff/60e8821e...5cc8/33f86bee...04f`；13 files / `28,114,119 bytes`，无 summary/manifest/terminal
+  gate，partial sidecars 不作方法证据。
+- read-only edge audit=`1,290 bytes / 30493d5d...bc5`：只有 0379 存在 `34/7,123,746` zero-length edges，
+  三场 nonfinite 均为 0 且都有数百万 positive edges。该事实推翻 v1 的 all-positive 输入前提，不推翻 voxel density
+  hypothesis；failure delta=`V51-F38 resolved / V51-F39 recovery pending / V51-F40 resolved`。
+- v2/r020 只把 size statistic 定义为 positive-edge q50/q75/q90；零长 edge 不参与 quantile，但不删除任何 Gaussian、
+  不改变 assignments/gate/views/quality locks。r020 从头完整重跑，禁止读取 r019 partial 数值来选 level；E0b/E1/E2
+  仍 locked，quality/S/C/validation/test/KITTI=false，M2/M3=pending。
+
 ## V5.1 Stage E E0a simple voxel structural probe 预注册（2026-08-18）
 
 - task/arm=`WS-V51-M1-E-NODE-ELEVATION-01 / E0A`；输入只继承 frozen B3 center/unary、V5 KNN edges 与 D0

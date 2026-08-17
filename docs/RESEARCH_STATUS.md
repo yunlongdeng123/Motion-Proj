@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage E r019 blocked；E0a v2 recovery 已预注册（2026-08-18）
+
+- r019=`20260818T010000Z__m1-stage-e-e0a-density-s20260814-r019` 在 0471/1087 完成后、0379 voxel-size
+  quantile 前 fail-closed：frozen 0379 KNN 的 `7,123,746` edges 中有 `34` 条零长度边，v1 错误要求所有 edge
+  length 严格为正。status=`blocked`，13 files / `28,114,119 bytes`；没有 terminal density gate、传播或 quality read，
+  两场 partial sidecar 不得晋级或复用为 canonical。
+- 独立 edge audit：0471/1087/0379 zero edges=`0/0/34`、nonfinite=`0/0/0`；positive q50/q75/q90 meters=
+  `0.177945/0.314480/0.626550`、`0.143529/0.233341/0.379943`、`0.147677/0.264845/0.487519`。
+  v2/r020 唯一变化是从 scale quantile 排除零长边，仍保留全部 Gaussian；levels/gate/inputs/locks 全部继承 v1。
+- `V51-F38/F40` 记录两次 PowerShell→SSH 旁路查询 quoting 复发，均未触及 run；现统一改为仓库内 CLI auditor。
+  `V51-F39` 记录 r019 工程阻塞。r020 必须从 frozen input 完整重跑，不读取 r019 partial method evidence；
+  E0b/E1/E2、H/S/C/validation/test/KITTI 仍锁定，M2/M3=pending。
+
 ## V5.1 Stage E E0a no-quality structural probe 已预注册（2026-08-18）
 
 - Stage E 第一小步固定为 `E0a simple voxel structural observation-density probe`，不是 PanoGS 复现，也不声称方法

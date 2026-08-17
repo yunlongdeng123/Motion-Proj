@@ -1,0 +1,161 @@
+schema_version: worldsim_v51_stage_e_e0a_superprimitive_probe_v2
+task_id: WS-V51-M1-E-NODE-ELEVATION-01
+status: running
+phase: e0a_simple_voxel_structural_observation_density_probe
+created_at: "2026-08-18"
+seed: 20260814
+
+recovery:
+  parent_config:
+    path: configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v1.yaml
+    sha256: c50a54a6eb7a6ae96ae1ba314e0c5590f4aecde1d98decc3c124a9bee28072bc
+  blocked_run:
+    path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-E-NODE-ELEVATION-01/20260818T010000Z__m1-stage-e-e0a-density-s20260814-r019
+    source_commit: 2e1786beac9dcdadef6985fdba9d244b37e29c2b
+    status: blocked
+    required_error: "SuperPrimitiveProbeError: frozen KNN contains nonpositive/nonfinite edge length"
+    file_count: 13
+    file_bytes: 28114119
+    hashes:
+      status.json: 491ad90ab3fd56fe899728f213e105c38bf6228b6f6fc118964cab7bce8ef3ff
+      events.jsonl: 60e8821ea5750bbc08b418590c3487e3f41e964e4b4afd73f54dff223b4f5cc8
+      artifacts/resource_samples.jsonl: 33f86bee3514444f861a7ef9f7adbff639990c94023e93e91680b35baae4f04f
+  edge_audit:
+    script:
+      path: scripts/audit_worldsim_v51_e0a_edges.py
+      sha256: 2b1a105bdde61140e3b9deef5221e639d10575c384cd0aefec2339d6a0024507
+    report:
+      path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T011000Z__stage-e-e0a-r019-edge-audit.json
+      bytes: 1290
+      sha256: 30493d5d1d7b4cebebbecdc43991f298f5210d72bf820688a72d7fcef5092bc5
+      conclusion: frozen_knn_edge_lengths_audited_with_zero_length_edges_explicit
+    scene_zero_edge_counts:
+      scene-0471: 0
+      scene-1087: 0
+      scene-0379: 34
+  only_change: exclude_zero_length_edges_from_voxel_scale_quantiles_without_dropping_any_gaussian
+
+stage_d_rejection_freeze:
+  path: configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml
+  sha256: a5641735494ffcd8c4766055a14be00bd3f2add15be29d3a9ea88df6a6e4d446
+  required_status: rejected
+  required_conclusion: d0_progressive_rejected_skip_d1_advance_super_primitive_or_anchor
+  required_next_task: WS-V51-M1-E-NODE-ELEVATION-01
+
+frozen_stage_d_inputs:
+  preregistration:
+    path: configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml
+    sha256: 3daf8b48db424fffc1fd5e8b98b02e429b4ae4bbffc5482c25876258e4909936
+  operator_config:
+    path: configs/worldsim_v51/stage_d_progressive_operator_v1.yaml
+    sha256: faf0978248cb400c1a57ef05ce2c22750e9fcfe98ddca9568f851db14db5db97
+  operator_freeze:
+    path: configs/worldsim_v51/stage_d_progressive_operator_freeze_v1.yaml
+    sha256: a586dd0538d53d428c4ca217cce145fdf538fcb657a1f82b16dc46cb5cbeb983
+  operator_runner:
+    path: scripts/run_worldsim_v51_d0_progressive_operator.py
+    sha256: b2d3bf046fc7a8ede0f67d74d7297eca7f547f28d6a4c8dcfb101a43d0addb15
+  evidence_schema:
+    path: motion_proj/worldsim_v5/evidence_schema.py
+    sha256: 43b7aab8ecc7733c774f98346dbf2b551766f993fc6b8da7d67b2e87ba73bad3
+
+paper_route_context:
+  e0_classification: internal_simple_voxel_control_not_panogs_reproduction
+  e1_status: locked_until_e0a_and_e0b_pass
+  e2_status: locked_until_e0_gate
+  panogs:
+    paper_title: "PanoGS: Gaussian-based Panoptic Segmentation for 3D Open Vocabulary Scene Understanding"
+    venue: CVPR 2025
+    official_paper_url: https://openaccess.thecvf.com/content/CVPR2025/papers/Zhai_PanoGS_Gaussian-based_Panoptic_Segmentation_for_3D_Open_Vocabulary_Scene_Understanding_CVPR_2025_paper.pdf
+    paper_path: /root/autodl-tmp/third_party/papers-v51-stage-e/panogs_cvpr2025.pdf
+    paper_bytes: 3396570
+    paper_sha256: 1d206aebca1a83de8eda5cd378123f80a68bf87eacb92c3e19a694b8df78f49c
+    repository: https://github.com/zhaihongjia/PanoGS.git
+    repository_path: /root/autodl-tmp/third_party/panogs-v51-stage-e
+    commit: 8dfb69b2110a1f7c05210b27f4826e9fd91ca247
+    tree: c7cc9b476d9ee65cf3d381d77b6c66eb162f284e
+    license: Apache-2.0
+    source_hashes:
+      LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+      README.md: 0d0508fd4a4f92d1c595266469fad1f02e2fff34e8fc059947c85bca3cc23529
+      run_segment.py: 60b6cf5179993656845f0c831bbe4a98e7c0ab56a611dbd7961dce4e7979094b
+      utils/seg_utils.py: 15d015e610670cda132ce9f36f5f3810e5e932950faec0ff50f71ba8061eaf75
+
+method:
+  arm: E0A
+  node_source: frozen_raw_gaussian_centers
+  grouping: world_origin_axis_aligned_voxel
+  voxel_size_source: frozen_directed_knn_edge_length_quantile
+  zero_length_edge_policy: exclude_from_scale_quantiles_preserve_all_gaussians
+  voxel_size_quantiles: [0.5, 0.75, 0.9]
+  level_names: [fine_q50, medium_q75, coarse_q90]
+  selected_level: null
+  learned_anchor: false
+  base_model_membership_consumed: false
+  dino_consumed: false
+  motion_consumed: false
+  sam_probability_consumed: false
+  quality_target_consumed: false
+  propagation_executed: false
+  parameter_search: false
+
+observation_contract:
+  source: exact_frozen_d0_train_only_observation_rows
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  expected_view_count_per_scene: 15
+  observed_definition: availability_and_positive_reliability_and_positive_visibility
+  node_observation: union_of_member_observed_views
+  raw_comparator: one_raw_gaussian_per_node
+  use_evaluation_views: false
+
+e0a_gate:
+  expected_scene_count: 3
+  per_scene_requirement: at_least_one_preregistered_level_passes_all_strict_checks
+  strict_checks:
+    - node_count_less_than_raw_gaussian_count
+    - gaussian_weighted_node_union_observed_views_greater_than_raw_mean
+    - rescued_zero_observation_gaussian_count_greater_than_zero
+  seed_conflict_is_diagnostic_not_a_selection_metric: true
+  pass_action: freeze_e0a_sidecars_then_preregister_e0b_same_propagation_control
+  fail_action: reject_node_elevation_stop_e1_e2_advance_gaussian_grouping
+
+execution:
+  scenes: [scene-0471, scene-1087, scene-0379]
+  deterministic_npz: true
+  full_assignment_array_repeat_exact: true
+  first_scene_first_level_npz_byte_exact: true
+  output_fields: [gaussian_id, node_id, voxel_size_m, node_count]
+
+runtime:
+  python: /root/autodl-tmp/envs/motionproj/bin/python
+  numpy: 1.26.4
+  scipy: 1.15.3
+  cpu_threads: 14
+
+resources:
+  monitor_interval_seconds: 1.0
+  maximum_nvidia_at_start_mib: 512
+  maximum_nvidia_peak_mib: 512
+  maximum_cgroup_memory_bytes: 64424509440
+  maximum_wall_seconds: 1800
+
+locks:
+  parse_v5_quality_diagnostics: false
+  render_evaluation_views: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  final_heldout_quality_read: false
+  kitti_method_tuning: false
+  parameter_search: false
+  e0b_propagation_execution: false
+  e1_panogs_execution: false
+  e2_ag2aussian_execution: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F38, V51-F39, V51-F40]
+failure_ledger_delta: pending

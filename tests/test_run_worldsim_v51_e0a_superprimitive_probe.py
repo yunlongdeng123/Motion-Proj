@@ -12,12 +12,15 @@ if str(ROOT) not in sys.path:
 from scripts.run_worldsim_v51_e0a_superprimitive_probe import validate_config
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v1.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v2.yaml"
 
 
 def test_e0a_config_freezes_route_levels_gate_and_locks() -> None:
     config, _, _ = validate_config(CONFIG)
     assert config["method"]["voxel_size_quantiles"] == [0.5, 0.75, 0.9]
+    assert config["method"]["zero_length_edge_policy"] == (
+        "exclude_from_scale_quantiles_preserve_all_gaussians"
+    )
     assert config["method"]["selected_level"] is None
     assert config["method"]["quality_target_consumed"] is False
     assert config["method"]["propagation_executed"] is False
@@ -29,6 +32,7 @@ def test_e0a_config_freezes_route_levels_gate_and_locks() -> None:
     assert config["locks"]["test_quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+    assert config["recovery"]["blocked_run"]["status"] == "blocked"
 
 
 def test_e0a_runner_help_works_from_repo_root() -> None:

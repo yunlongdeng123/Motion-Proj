@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 与 raw-Gaussian progressive 均被 H reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive 降 FP 但 IoU/FN 跨场失稳 | `V51-F01`–`V51-F37` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph 与 raw-Gaussian progressive 均被 H reject | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive 降 FP 但 IoU/FN 跨场失稳；E0a 零长 KNN/跨 shell recovery | `V51-F01`–`V51-F40` |
 
 ### 1.1 V1 汇总条目
 
@@ -422,6 +422,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   顺序进入 Stage E，先以 no-quality E0 检查 node elevation 是否提高 observation density，再按其门禁决定 E1/E2。
   证据：r018，source=`2cd98b3`，summary/manifest=`b08c7276...62d6/792660e3...010c`，independent metric/gate
   replay=`18c12f4d...0d2`，freeze=`configs/worldsim_v51/stage_d_progressive_h_evaluation_freeze_v1.yaml`。
+- `V51-F38`（`engineering/shell`, `resolved during r019 monitoring`）：旁路进度查询再次在 PowerShell→SSH 边界使用
+  `$run`，本地 shell 先展开变量并破坏远端引号，得到 `unexpected EOF`；正式 r019 进程独立运行、未受影响，也没有
+  repo/run 写入。后续监控只能使用绝对字面路径或仓库内 CLI，禁止跨 shell 传未编码变量。这是 `V51-F32` 的复发，
+  说明“已知坑”仍需由可执行入口而非记忆约束。
+- `V51-F39`（`engineering/data-contract`, `active; v2 recovery preregistered`）：formal r019 在 0471/1087 完成后，
+  因 0379 frozen KNN 含 `34/7,123,746` zero-length edges 而 blocked；v1 把“用于 voxel scale 的 edge length”错误
+  写成全量严格正值。三场 nonfinite edge 均为 0，0379 仍有 `7,123,712` positive edges，因此这是 quantile 输入合同
+  过强，不是算法质量、OOM 或 corrupted geometry。r019 terminal/13 files 保留，partial assignments 禁止晋级/复用。
+  合法 recovery v2 只排除零长 edge 的 scale statistic，保留全部 Gaussian，其他 quantiles/gate/views/locks byte-semantic
+  继承，并以新 r020 完整重跑；不得把 zero edge 直接删除出后续 topology，也不得借 recovery 改 voxel level。
+- `V51-F40`（`engineering/shell`, `resolved before r020`）：量化 F39 时首次 base64 远端 Python 命令仍错误嵌入双引号，
+  PowerShell 把 `base64.b64decode(...)` 当作本地命令，远端再次未执行。修复不是继续堆转义，而是新增可测试的只读
+  `scripts/audit_worldsim_v51_e0a_edges.py`；CLI test PASS，三场 edge identity/zero/nonfinite/positive quantile 审计完成，
+  report=`30493d5d...bc5`。后续需要多语句远端分析时必须先落地仓库内 auditor，禁止临时内嵌脚本。
 
 <a id="detail-v5"></a>
 

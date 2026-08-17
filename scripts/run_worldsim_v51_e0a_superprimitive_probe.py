@@ -40,7 +40,7 @@ from scripts.run_worldsim_v51_h_uplift import (
 )
 
 
-SCHEMA = "worldsim_v51_stage_e_e0a_superprimitive_probe_v1"
+SCHEMA = "worldsim_v51_stage_e_e0a_superprimitive_probe_v2"
 TASK_ID = "WS-V51-M1-E-NODE-ELEVATION-01"
 SCENES = ("scene-0471", "scene-1087", "scene-0379")
 LEVELS = ("fine_q50", "medium_q75", "coarse_q90")
@@ -128,6 +128,34 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any], 
     if int(config.get("seed", -1)) != 20260814:
         raise ProtocolError("E0a seed drift")
 
+    recovery = config["recovery"]
+    parent_config = PROJECT / recovery["parent_config"]["path"]
+    if not parent_config.is_file() or sha256_file(parent_config) != recovery["parent_config"]["sha256"]:
+        raise ProtocolError("E0a recovery parent-config drift")
+    blocked_run = Path(recovery["blocked_run"]["path"])
+    for name, expected in recovery["blocked_run"]["hashes"].items():
+        path = blocked_run / name
+        if not path.is_file() or sha256_file(path) != expected:
+            raise ProtocolError(f"E0a blocked-run evidence drift: {name}")
+    blocked_status = json.loads((blocked_run / "status.json").read_text(encoding="utf-8"))
+    if (
+        blocked_status.get("status") != "blocked"
+        or blocked_status.get("source_commit") != recovery["blocked_run"]["source_commit"]
+        or blocked_status.get("error") != recovery["blocked_run"]["required_error"]
+    ):
+        raise ProtocolError("E0a blocked-run terminal drift")
+    edge_audit = recovery["edge_audit"]
+    audit_script = PROJECT / edge_audit["script"]["path"]
+    if not audit_script.is_file() or sha256_file(audit_script) != edge_audit["script"]["sha256"]:
+        raise ProtocolError("E0a edge-audit script drift")
+    audit_report = Path(edge_audit["report"]["path"])
+    if (
+        not audit_report.is_file()
+        or audit_report.stat().st_size != int(edge_audit["report"]["bytes"])
+        or sha256_file(audit_report) != edge_audit["report"]["sha256"]
+    ):
+        raise ProtocolError("E0a edge-audit report drift")
+
     rejection_spec = config["stage_d_rejection_freeze"]
     rejection_path = PROJECT / rejection_spec["path"]
     if not rejection_path.is_file() or sha256_file(rejection_path) != rejection_spec["sha256"]:
@@ -186,6 +214,7 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any], 
         "node_source": "frozen_raw_gaussian_centers",
         "grouping": "world_origin_axis_aligned_voxel",
         "voxel_size_source": "frozen_directed_knn_edge_length_quantile",
+        "zero_length_edge_policy": "exclude_from_scale_quantiles_preserve_all_gaussians",
         "voxel_size_quantiles": [0.5, 0.75, 0.9],
         "level_names": list(LEVELS),
         "selected_level": None,
@@ -219,7 +248,13 @@ def validate_config(config_path: Path) -> tuple[dict[str, Any], dict[str, Any], 
         raise ProtocolError("E0a gate drift")
     if tuple(config["execution"]["scenes"]) != SCENES:
         raise ProtocolError("E0a scene order drift")
-    if config.get("failure_ledger_refs") != ["V51-F31", "V51-F37"]:
+    if config.get("failure_ledger_refs") != [
+        "V51-F31",
+        "V51-F37",
+        "V51-F38",
+        "V51-F39",
+        "V51-F40",
+    ]:
         raise ProtocolError("E0a failure-ledger binding drift")
     runtime = config["runtime"]
     observed_runtime = {
@@ -497,7 +532,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v1.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_e_e0a_superprimitive_probe_v2.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

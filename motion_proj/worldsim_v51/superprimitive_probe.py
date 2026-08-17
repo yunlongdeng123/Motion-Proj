@@ -44,14 +44,19 @@ def edge_length_quantile_voxel_sizes(
         raise SuperPrimitiveProbeError("quantiles must be strictly increasing within (0,1)")
 
     edge_lengths = np.linalg.norm(xyz[source] - xyz[target], axis=1).astype(np.float32)
-    positive = edge_lengths[np.isfinite(edge_lengths) & (edge_lengths > 0.0)]
-    if positive.size != edge_lengths.size:
-        raise SuperPrimitiveProbeError("frozen KNN contains nonpositive/nonfinite edge length")
+    finite = np.isfinite(edge_lengths)
+    if not np.all(finite):
+        raise SuperPrimitiveProbeError("frozen KNN contains nonfinite edge length")
+    positive = edge_lengths[edge_lengths > 0.0]
+    if positive.size == 0:
+        raise SuperPrimitiveProbeError("frozen KNN contains no positive edge length")
     sizes = np.quantile(positive, q, method="linear").astype(np.float64)
     if np.any(~np.isfinite(sizes)) or np.any(sizes <= 0.0) or np.any(sizes[1:] <= sizes[:-1]):
         raise SuperPrimitiveProbeError("edge quantiles do not define distinct positive levels")
     return sizes, {
         "edge_count": int(edge_lengths.size),
+        "positive_edge_count": int(positive.size),
+        "zero_edge_count": int(edge_lengths.size - positive.size),
         "minimum_edge_length_m": float(positive.min()),
         "maximum_edge_length_m": float(positive.max()),
         "mean_edge_length_m": float(positive.mean(dtype=np.float64)),
