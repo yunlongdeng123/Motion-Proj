@@ -10,7 +10,7 @@
 |---|---|---|
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
-| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1 通过 H gate；下一门只实现 A2 UNKNOWN |
+| `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | running | A0 exact；A1/A2 通过 H gate；下一门只实现 A3 effective count |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | pending/locked | Stage A 收口前禁止启动 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
@@ -32,7 +32,12 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
 - `configs/worldsim_v51/p0_m1_scope_v1.yaml`
 - `configs/worldsim_v51/development_roles_v1.yaml`
 - `configs/worldsim_v51/m1_unary_baselines_v1.yaml`
+- `configs/worldsim_v51/m1_unary_visibility_v1.yaml`
+- `configs/worldsim_v51/m1_unary_unknown_v1.yaml`
 - `scripts/audit_worldsim_v51_start.py`
+- `scripts/replay_worldsim_v51_v5_unary.py`
+- `scripts/run_worldsim_v51_unary_visibility.py`
+- `scripts/run_worldsim_v51_unary_unknown.py`
 
 正式状态、实验事实和失败事实仍分别以 `docs/RESEARCH_STATUS.md`、`docs/EXPERIMENTS.md` 与
 `docs/RESEARCH_FAILURES.md` 为准。
@@ -65,3 +70,14 @@ screening=`0998/0359`，development confirmation=`0875/0535/0436`。V5 的 8-sce
   `+0.001155713/+0.000460310/+0.001105687/-0.000013972/-0.000144854`；五项 gate 全通过。
 - 边界：1087 只有 1 个 accepted view，且整体效应小；A1 只是未经过 S 的 candidate。
 - 下一门：只做 A2 UNKNOWN/ABSTAIN；A3/A4、S 与后续 Stage 保持锁定。
+
+## Stage A A2 canonical evidence
+
+- run：`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003`
+- source commit：`7e783f1fe04cc05cdd206b56086ef0f02a4215ee`
+- threshold freeze：positive-count H/A1 pooled Gaussian=`944,443`；Q25 count/Q75 entropy/Q75 disagreement exact。
+- parent replay：A1 conditional render=`12/12 byte exact`；conditional metric delta A2−A1=`0`；checkpoint=`3/3 exact`。
+- selective H gate：scene-balanced coverage=`0.7199625`；accepted/abstained error=`0.0148914/0.164250`；
+  error separation=`+0.149358`；全部 checks PASS。
+- 边界：0471 coverage=`0.464865`，低于逐场 60%；冻结 gate 是 scene-balanced mean，A2 只作 H candidate。
+- 下一门：只做 A3 correlation-aware effective count；A4、S 与后续 Stage 保持锁定。

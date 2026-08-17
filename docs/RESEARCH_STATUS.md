@@ -1,5 +1,27 @@
 # Research Status
 
+## V5.1 Stage A A2 UNKNOWN 通过 H gate，下一步只实现 A3 effective count（2026-08-17）
+
+- `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`；A2 canonical r003=`done`，conclusion=
+  `a2_unknown_passed_h_gate_candidate_for_stage_a`，source=`7e783f1`，run=
+  `/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003`。
+- A2 thresholds 在 quality read 前由 `944,443` 个 pooled H/A1 positive-count Gaussian 冻结；规则为
+  `high entropy AND (low effective count OR high cross-view disagreement)`，图像 abstain threshold=`0.5`。
+  naive 全量 Gaussian inclusive quantile 会退化为 0 coverage，已登记 `V51-F04`，本轮未据 quality 调参。
+- A1 conditional semantics 保持不变：12/12 当前 GPU renders 与 r002 A1 NPZ byte exact，7 项 conditional metric
+  delta=`0`，三个 checkpoint 前后 SHA exact。因此 A2 相对 B3 的 BF1/IoU/FN/Brier/ECE 仍为 A1 的
+  `+0.001155713/+0.000460310/+0.001105687/-0.000013972/-0.000144854`，UNKNOWN 的新增价值只由 selective
+  endpoints 裁决，不能把 unchanged conditional quality 写成 A2 的额外质量增益。
+- 0471/1087/0379 coverage=`46.4865%/73.6836%/95.8186%`，UNKNOWN recall-on-errors=
+  `86.8498%/95.9160%/87.5421%`；scene-balanced coverage=`71.99625%`，accepted/abstained absolute error=
+  `0.0148914/0.164250`，error separation=`+0.149358`，全部预注册 selective checks 通过。
+- 重要边界：0471 单场 coverage 只有 `46.49%`，低于 60%；当前冻结 gate 要求的是 scene-balanced mean>=60%，
+  所以 r003 合法 PASS 但不能声明逐场稳定 coverage。1087 仍只有 1 个 evaluation view；A2 只登记 H candidate，
+  S/C/validation/test/KITTI 继续不可读。
+- r003 duration=`192.314 s`，peak GPU=`8393 MiB`；summary/status/fingerprint/manifest/diagnostics SHA=
+  `c9a82139.../cb67b786.../2c5f0600.../56bf0207.../206faa66...`；`failure_ledger_refs` 到 `V51-F04`，
+  `failure_ledger_delta=none`。下一门只实现 A3 correlation-aware effective count；A4、S 与 Stage B/C 仍锁定。
+
 ## V5.1 Stage A A1 visibility 通过 H gate，下一步只实现 A2 UNKNOWN（2026-08-17）
 
 - `WS-V51-M1-A-UNARY-OBSERVABILITY-01=running`；A1 canonical r002=`done`，conclusion=

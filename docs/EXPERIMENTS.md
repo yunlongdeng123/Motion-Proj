@@ -1,5 +1,31 @@
 # Experiments
 
+## V5.1 Stage A A2 semantic UNKNOWN / ABSTAIN（2026-08-17）
+
+| Scene | Eval views | Gaussian UNKNOWN | Coverage | Error@coverage | Accepted abs error | Abstained abs error | UNKNOWN recall on errors |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 0471 | 8 | 20.4240% | 46.4865% | 0.038468 | 0.040882 | 0.251780 | 86.8498% |
+| 1087 | 1 | 0.1749% | 73.6836% | 0.001892 | 0.003579 | 0.169013 | 95.9160% |
+| 0379 | 3 | 0.2478% | 95.8186% | 0.000143 | 0.000213 | 0.071956 | 87.5421% |
+| scene-balanced mean | 3 scenes | — | 71.99625% | — | 0.014891 | 0.164250 | — |
+
+- canonical r003=`/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/20260817T113000Z__m1-a2-unknown-h-s20260814-r003`；
+  source=`7e783f1fe04cc05cdd206b56086ef0f02a4215ee`，seed=`20260814`，duration=`192.314456 s`，
+  peak GPU=`8393 MiB`。
+- 阈值总体/规则/图像阈值在读取 r003 quality 前冻结为 positive-count H/A1 pooled Gaussian、
+  `Q25 count / Q75 entropy / Q75 disagreement`、`high entropy AND (low count OR high disagreement)`、`0.5`；
+  三个 posterior 输入逐 SHA 绑定，阈值从 `944,443` 个 Gaussian exact reproduction。
+- A1 conditional rerender=`12/12 byte exact`，conditional metrics A2−A1=`0`，checkpoints=`3/3 exact`。A2 的传统
+  BF1/IoU/calibration gate 因保持 A1 conditional posterior 而继续通过；selective gate 的 scene-balanced coverage=
+  `0.7199625`，abstained−accepted error=`+0.14935825`，全部场景同时存在 accepted/abstained denominator。
+- 0471 coverage=`0.4648653`，未达到逐场 60%；冻结合同只要求 scene-balanced mean 60%，故不倒写 r003 PASS，
+  但不得宣称 uniform coverage。1087 只有 1 个 evaluation view；A2 仍是 H-only candidate，不读 S/C/validation/test/KITTI。
+- summary/status/fingerprint/manifest/diagnostics SHA=`c9a821395da41b09fa124971c3f3e4e6f702987a3a587b208650294f85ae53b5 /`
+  `cb67b786ab8d8918d54c1c73907eaa51dd8ee185c63ac81670b11ca03cd0a7c0 /`
+  `2c5f06004f82c192c1b1b2893c643813cadcd08b00860240af6d0da20c9f01d3 /`
+  `56bf02070de0519946513a0b71404814ae79ee008ca7b5109e4e1c82f68b6c52 /`
+  `206faa66c393f1a9d95db75490ade57803dfbf2724daa2edce91e2699db8c9ff`；failure delta=`none`。
+
 ## V5.1 Stage A A1 visibility-masked B3（2026-08-17）
 
 | Scene | Eval denominator | Valid obs ratio | ΔBF1 | ΔIoU | ΔFN mass | ΔBrier | ΔECE |

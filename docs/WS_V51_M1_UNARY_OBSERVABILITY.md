@@ -82,7 +82,7 @@ checkpoint 前后 exact。A1 仍只是 H candidate：1087 只有一个 evaluatio
 
 ## A2：Semantic UNKNOWN / ABSTAIN
 
-状态：`threshold frozen before quality read / implementation pending`。
+状态：`H gate passed / candidate / S unread`。
 
 下一步只在 A1 posterior 上增加 UNKNOWN state 与 selective metrics；阈值只能来自 H evidence/training statistics，
 不得读取 evaluation quality 选择。A3 effective-count、A4 CIF、S scenes 与后续 Stage 继续锁定。
@@ -101,10 +101,32 @@ image abstain threshold = 0.5
 未观测 Gaussian 在 0379/1087 占 `67.39%/97.20%`；若在全量 Gaussian 上做 inclusive 分位数 OR，count 与
 disagreement 阈值会退化为 0 并造成 0 coverage。该失败假设已登记 `V51-F04`，不能在 A2 quality 读取后重新解释或调参。
 
+canonical r003：
+
+```text
+/root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-A-UNARY-OBSERVABILITY-01/
+20260817T113000Z__m1-a2-unknown-h-s20260814-r003
+```
+
+| Scene | Eval views | Gaussian UNKNOWN | Coverage | Accepted abs error | Abstained abs error | UNKNOWN recall/errors |
+|---|---:|---:|---:|---:|---:|---:|
+| 0471 | 8 | 0.204240 | 0.464865 | 0.040882 | 0.251780 | 0.868498 |
+| 1087 | 1 | 0.001749 | 0.736836 | 0.003579 | 0.169013 | 0.959160 |
+| 0379 | 3 | 0.002478 | 0.958186 | 0.000213 | 0.071956 | 0.875421 |
+
+scene-balanced coverage=`0.7199625`；accepted/abstained error=`0.0148914/0.164250`，UNKNOWN error separation=
+`+0.149358`，全部 selective checks 通过。A1 conditional posterior 独立重渲染 `12/12 byte exact`，A2−A1 七项
+conditional metric delta 全为 0；因此 A2 的证据是错误集中/选择性风险改进，而不是额外的 BF1/IoU 增益。
+
+限制：0471 coverage 只有 `46.49%`，冻结 gate 只要求 scene-balanced mean>=60%，所以 A2 不能写成逐场稳定；1087
+仍只有单个 evaluation view。A2 仅进入 H candidate 集合，不能提前读 S。下一门只解锁 A3 correlation-aware
+effective count；A4/CIF、S 与后续 Stage 仍锁定。
+
 ## Failure ledger
 
 - refs：`V5-F20–F26`、`V5-F29–F32`、`V51-F01–F04`。
 - A0 `failure_ledger_delta=none`。
 - A1 `failure_ledger_delta=none`。
+- A2 `failure_ledger_delta=none`；formal refs 包含 `V51-F04`。
 - `V51-F02` 只修正人工 float32 常数单测的错误 oracle；formal canonical metric 仍要求 delta 严格等于 0。
 - `V51-F03` 固化 configured/applied visibility threshold，避免 float32 边界静默改变 eligibility 分母。
