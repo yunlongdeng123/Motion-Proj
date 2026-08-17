@@ -1,0 +1,58 @@
+schema_version: worldsim_v51_stage_b_dinov2_asset_freeze_v1
+task_id: WS-V51-M1-B-LUDVIG-UPLIFT-01
+status: done
+phase: official_dinov2_vitg14_reg4_asset_frozen
+
+canonical_run:
+  run_id: 20260817T142400Z__m1-stage-b-dinov2-parallel-s20260814-r003
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T142400Z__m1-stage-b-dinov2-parallel-s20260814-r003
+  source_commit: de6221f6ec3a9fec08a620b7938800629226581e
+  config_sha256: f06fdedc61d549e39c157026dd718c60c4c311d632bea0c7723ba165afde5922
+  hashes:
+    summary.json: 6e79804a3ea5c1ff5edc5f8e4b77e3d0d8b6d3fe89fae1d02064409f99910a95
+    status.json: 16cc40ed7dabedb2340c6446b8496478de03aed609967d5f53a3d91eb8362d73
+    manifest.json: 98ce7751eb11d06b3743bba981b15d205137d5450277b831b26b6cef04d94081
+    fingerprint.json: 06e3464454159a19ad7e958e3762fe009a55191704af5ddb5edb9c185fb2c066
+    resolved_config.yaml: dccb1fce421234e28c3e8986a95ef31b56ba123fe31054192ac0fe982ccaea39
+    metrics.jsonl: f5acb8c79af893fc9df24331da7f4bba135526c3fcd2a8e922846522e0d5586b
+    events.jsonl: 2c2ef11b11a8846c4de5a83b73282479175ae860dd8adfe4f8b3c83ced46c3d1
+    artifacts/asset.json: b4913ccf0391bbb0770ccc82147acaba2ac7a8ec586db96903d828060903437a
+    artifacts/segments.json: 459e698ef582b931c124c4030b2a4c7ae396ecbfa3d66fe58eb3965574467258
+
+asset:
+  path: /root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth
+  bytes: 4546140349
+  sha256: 746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283
+  multipart_etag: 3d1b1c4501eac45d83af24b811e3bea9-542
+  multipart_part_size_bytes: 8388608
+  multipart_part_count: 542
+  s3_version_id: T_6GA9ukHl7r7daSEhzWpsymxbGdAvFR
+  download_seconds: 1504.934574637562
+  network_turbo: true
+  temporary_prefix_and_segments_removed: true
+  cleanup_file_count: 15
+  cleanup_bytes: 4546140349
+
+run_inventory:
+  file_count: 21
+  bytes: 961129
+  run_total_bytes: 969151
+  terminal_asset_sha_etag_manifest_recheck: exact
+
+locks:
+  model_load_started: false
+  feature_extraction_started: false
+  method_inference_started: false
+  quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+next_action:
+  status: pending
+  action: freeze_official_dinov2_source_then_one_image_vitg14_resource_smoke
+
+failure_ledger_refs: [V51-F11, V51-F12, V51-F13, V51-F14, V51-F15, V51-F16]
+failure_ledger_delta: [V51-F16]

@@ -25,10 +25,17 @@
   curl exit=`-15`，不是方法失败，登记 `V51-F16`。下一 run 改用 14 个互不重叠 frozen ranges；逐段 bytes/SHA、
   assembled full SHA-256 与 8 MiB×542-part S3 ETag 必须全通过后才 atomic publish，配置/runner=
   `stage_b_dinov2_download_parallel_v1.yaml` / `fetch_worldsim_v51_dinov2_asset_parallel.py`。
+- canonical r003=`20260817T142400Z__m1-stage-b-dinov2-parallel-s20260814-r003`，source=`de6221f`，14-range
+  download=`1504.935 s`；asset bytes/SHA=`4,546,140,349 / 746ecb8c...a283`，本地 8 MiB×542 multipart ETag=
+  `3d1b...-542` exact。逐段、terminal、manifest、final SHA/ETag 二次复核通过；r002 prefix +14 segments=
+  `15 files / 4,546,140,349 bytes` 在发布后精确清理，`V51-F16=resolved`。
+- r003 summary/status/manifest/fingerprint/asset/segments SHA=`6e79804a.../16cc40ed.../98ce7751.../06e34644.../`
+  `b4913ccf.../459e698e...`；machine freeze=`configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`。
+  下一门是冻结官方 DINOv2 source checkout 后做单图 ViT-g resource smoke；H quality 仍未解锁。
 - M2/M3 保持 `pending`；validation/test/KITTI tuning 继续锁定。只有某个 M1 candidate 在 development confirmation
   稳定优于 U2/B3 并冻结后，才允许 exact-once fresh validation；test 只在最终候选上 exact-once。当前 source base=
-  `2c9206164f3c58bd51993ffe2d05c1f22b3f1064`；r001 failure delta=`V51-F11`，r002 engineering delta=
-  `V51-F16`，没有新增方法失败。
+  `de6221f6ec3a9fec08a620b7938800629226581e`；r001 failure delta=`V51-F11`，r002→r003 engineering delta=
+  `V51-F16 resolved`，没有新增方法失败。
 
 ## V5.1 Stage B freeze-only proposal：资产/分母/operator/gate 已形成草案（2026-08-17）
 

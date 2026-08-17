@@ -227,6 +227,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   feature 预分配在 GPU。V5.1 只允许先下载后全 SHA，再用 CPU memmap/40-D patch-grid streaming 与 dense-parity test
   保持语义；缺资产或 OOM 只记工程/resource terminal，不得写成 feature uplift 失败，也不得临时换小模型、降分辨率后
   仍称 faithful port。
+  资产缺失子项已由 r003 解除：official bytes=`4,546,140,349`、SHA-256=`746ecb8c...a283`，本地重算
+  8 MiB×542-part ETag exact；但 ViT-g 在 24GB 卡上的 model-load/one-image peak 与 DINO/renderer 分段资源合同尚未实测，
+  所以本条保持 active resource risk，不提前标 resolved。
   证据：`configs/worldsim_v51/stage_b_preflight_v1.yaml`、`docs/WS_V51_STAGE_B_PREFLIGHT.md`。
 - `V51-F13`（`engineering/protocol`, `resolved without method execution`）：P0 scope config 已把 normative plan
   SHA-256 冻结为 `3d7f7481...`，但 Stage A closeout commit `3d33262` 曾直接向该长计划加入 5 行执行进展，使当前
@@ -255,7 +258,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   reprojection。无 eligible actor 的 scene 必须保留 abstain；不得降低 32-Gaussian eligibility、删 1087/0379 或只报大
   Rigid 场景。Stage B 未获授权，本轮没有产生 metric。证据：V5 formal30k r027–r034 metadata、
   `configs/worldsim_v51/stage_b_freeze_proposal_v1.yaml`、`docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md`。
-- `V51-F16`（`engineering/resource`, `active recovery`）：DINOv2 asset r002 在已 source network turbo、official URL、
+- `V51-F16`（`engineering/resource`, `resolved by parallel r003`）：DINOv2 asset r002 在已 source network turbo、official URL、
   fixed target 与 curl resume 合同下运行约 `106 s`，连续 prefix 仅增长到 `26,566,656 / 4,546,140,349 bytes`；
   按稳定窗口外推需数小时。执行者精确核对并 `TERM` 唯一 curl PID，runner 以 `exit=-15` 写入 blocked terminal，
   final asset 不存在，`.partial` 及其 SHA=`934ef5aa...e2265` 保留。该事实推翻“代理单连接足以在合理实验窗口完成 4.5 GB
@@ -264,7 +267,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   S3 multipart ETag=`3d1b...-542`（8 MiB×542 parts）才可原子发布。禁止覆盖 r002、删除 prefix 后假装首次下载、
   使用镜像/不同权重或只凭 total bytes/remote ETag 宣称完成。证据：
   `20260817T141600Z__m1-stage-b-dinov2-asset-s20260814-r002`、
-  `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`。
+  `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`。r003 以 14 ranges 在 `1504.935 s` 完成；逐段
+  bytes/SHA、assembled full SHA=`746ecb8c...a283`、multipart ETag=`3d1b...-542` 与 terminal/manifest 二次复核全 exact，
+  final 原子发布后精确删除 `15 files / 4,546,140,349 bytes` staging。本条工程恢复因此 resolved；不改变仍 active 的
+  ViT-g 24GB resource smoke 风险 `V51-F12`。
 
 <a id="detail-v5"></a>
 

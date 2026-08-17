@@ -61,6 +61,21 @@
 - recovery 仍使用 official URL + network turbo；不换镜像/模型/分辨率。model/feature/method/quality/GPU 均为 false，
   validation/test/KITTI 锁定，M2/M3=`pending`。
 
+### r003 canonical parallel asset result
+
+- r003=`20260817T142400Z__m1-stage-b-dinov2-parallel-s20260814-r003`，source=`de6221f`，status=`done`，
+  parallel download=`1504.934575 s`。14 segment 的 range bytes/SHA 全 exact；prefix=`26,566,656 bytes`。
+- published asset=`/root/autodl-tmp/models/dinov2/dinov2_vitg14_reg4_pretrain.pth`，bytes=
+  `4,546,140,349`，SHA-256=`746ecb8c6301c645c5c855be91687d274587d6e48fdaec4a729753160b34a283`；
+  local multipart ETag=`3d1b1c4501eac45d83af24b811e3bea9-542`、part=`8,388,608 bytes × 542`，与 official exact。
+- atomic publish 后清理 prefix+14 segments=`15 files / 4,546,140,349 bytes`；final free=`85,562,351,616 bytes`。
+  summary/status/manifest/fingerprint/resolved/metrics/events/asset/segments SHA=`6e79804a.../16cc40ed.../98ce7751.../`
+  `06e34644.../dccb1fce.../f5acb8c7.../2c2ef11b.../b4913ccf.../459e698e...`；manifest=`21 files /
+  961,129 bytes`，run=`969,151 bytes`，独立 terminal/asset ETag/manifest recheck exact。
+- machine freeze=`configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`；model load/feature/method/quality/
+  validation/test/KITTI=`false`，M2/M3=`pending`。failure delta=`V51-F16 resolved`；下一门仅 source freeze + one-image
+  ViT-g resource smoke，不直接读取 H quality。
+
 ## V5.1 Stage A S one-shot screening / closeout（2026-08-17）
 
 | Scene | Eval views | A1 ΔBF1 | A1 ΔIoU | A1 ΔFN | A1 ΔBrier | A1 ΔECE | A2 coverage | accepted error | abstained error |

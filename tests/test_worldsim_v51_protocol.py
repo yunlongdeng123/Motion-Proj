@@ -14,6 +14,7 @@ from motion_proj.worldsim_v51.protocol import (
     DEVELOPMENT_ROLE_ORDER,
     ProtocolError,
     load_yaml,
+    sha256_file,
     validate_development_roles,
     validate_scope,
     validate_stage_b_authorization,
@@ -23,7 +24,6 @@ from scripts.fetch_worldsim_v51_dinov2_asset import (
 )
 from scripts.fetch_worldsim_v51_dinov2_asset_parallel import (
     _ranges as parallel_ranges,
-    validate_config as validate_parallel_dino_download,
 )
 
 
@@ -105,9 +105,13 @@ def test_stage_b_dinov2_download_binds_input_freeze_and_keeps_quality_locked() -
     assert config["locks"]["m3_status"] == "pending"
 
 
-def test_stage_b_parallel_download_binds_blocked_parent_and_exact_ranges() -> None:
-    config, freeze = validate_parallel_dino_download(
+def test_stage_b_parallel_download_and_terminal_asset_freeze_are_exact() -> None:
+    config = load_yaml(
         ROOT / "configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml"
+    )
+    freeze = load_yaml(ROOT / config["input_freeze"]["path"])
+    asset_freeze = load_yaml(
+        ROOT / "configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml"
     )
     start = config["frozen_prefix"]["bytes"]
     stop = config["asset"]["content_length_bytes"]
@@ -124,3 +128,11 @@ def test_stage_b_parallel_download_binds_blocked_parent_and_exact_ranges() -> No
     assert config["locks"]["quality_read"] is False
     assert config["locks"]["m2_status"] == "pending"
     assert config["locks"]["m3_status"] == "pending"
+    assert asset_freeze["status"] == "done"
+    assert asset_freeze["asset"]["bytes"] == stop
+    assert asset_freeze["asset"]["multipart_part_count"] == 542
+    assert asset_freeze["asset"]["temporary_prefix_and_segments_removed"] is True
+    run = Path(asset_freeze["canonical_run"]["path"])
+    for relative, expected in asset_freeze["canonical_run"]["hashes"].items():
+        assert (run / relative).is_file()
+        assert sha256_file(run / relative) == expected

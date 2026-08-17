@@ -56,6 +56,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_input_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_download_v1.yaml`
 - `configs/worldsim_v51/stage_b_dinov2_download_parallel_v1.yaml`
+- `configs/worldsim_v51/stage_b_dinov2_asset_freeze_v1.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -182,8 +183,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - canonical r001=`20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001`，source=`2214961`；240 张图=
   `39,747,172 bytes`、8 个 checkpoint/Gaussian counts、terminal/manifest 均 exact。质量读取、feature extraction、
   checkpoint download 均为 false；machine freeze=`configs/worldsim_v51/stage_b_input_freeze_v1.yaml`。
-- r002 single-connection 因持续低吞吐被精确停止并保留 blocked terminal/prefix，见 `V51-F16`；当前下一门使用新 run
-  14-range 并行续传，并以 full SHA-256 + S3 multipart ETag 双门完整校验 official DINO asset。下载成功本身不解锁
-  H quality，仍需资源 smoke 与 operator parity。
+- r002 single-connection 因持续低吞吐被精确停止并保留 blocked terminal/prefix，见 `V51-F16`；r003 以 14 ranges
+  完成并通过 full SHA-256=`746ecb8c...a283` + S3 multipart ETag=`3d1b...-542`，`V51-F16 resolved`。当前下一门只冻结
+  official DINOv2 source 并做 one-image resource smoke；asset 成功本身不解锁 H quality，之后仍需 operator parity。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。
