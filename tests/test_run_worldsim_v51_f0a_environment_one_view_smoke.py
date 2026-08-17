@@ -13,6 +13,7 @@ from scripts.run_worldsim_v51_f0a_environment_one_view_smoke import (
     _validate_config,
     parse_last_json_line,
 )
+from scripts.audit_worldsim_v51_f0a_environment_one_view_smoke import audit
 
 
 def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
@@ -28,6 +29,35 @@ def test_f0a_environment_smoke_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0a_environment_smoke_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0a_environment_one_view_smoke.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
+
+
+def test_f0a_environment_smoke_r032_audit_passes() -> None:
+    result = audit(
+        ROOT / "configs/worldsim_v51/stage_f_f0a_environment_one_view_smoke_v6.yaml",
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T090000Z__m1-stage-f-f0a-environment-one-view-s20260814-r032"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["mask_histogram"] == {"0": 1440000}
+    assert result["quality_read"] is False
 
 
 def test_f0a_environment_smoke_formal_config_validates() -> None:
