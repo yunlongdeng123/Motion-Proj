@@ -11,6 +11,7 @@ from scripts.run_worldsim_v51_f0c_upstream_batch_association_repeatability impor
     _repeatability_report,
     _validate_config,
 )
+from scripts.audit_worldsim_v51_f0c_upstream_batch_association_repeatability import audit
 
 
 CONFIG = (
@@ -32,6 +33,21 @@ def test_f0c_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0c_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0c_upstream_batch_association_repeatability.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
 
 
 def test_f0c_formal_config_restores_upstream_batch_and_locks_headroom() -> None:
@@ -74,3 +90,19 @@ def test_f0c_repeatability_gate_requires_exact_outputs_and_association() -> None
     assert failing["all_masks_exact"] is False
     assert failing["metadata_exact"] is False
     assert failing["all_required_before_resource"] is False
+
+
+def test_f0c_r034_independent_audit_passes() -> None:
+    result = audit(
+        CONFIG,
+        Path(
+            "/root/autodl-tmp/runs/worldsim_v51/"
+            "WS-V51-M1-F-IDENTITY-EMBEDDING-01/"
+            "20260818T110000Z__m1-stage-f-f0c-upstream-batch-s20260814-r034"
+        ),
+    )
+    assert result["status"] == "pass"
+    assert result["audited_run_status"] == "done"
+    assert result["repeatability"]["all_required_before_resource"] is True
+    assert result["resources"]["nvidia_headroom_mib"] >= 256
+    assert result["quality_read"] is False
