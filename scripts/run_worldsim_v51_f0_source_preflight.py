@@ -77,6 +77,14 @@ def repository_source_identity(project: Path = PROJECT) -> dict[str, str]:
     }
 
 
+def initialize_cuda_peak_tracking(device: str) -> torch.device:
+    target = torch.device(device)
+    torch.cuda.set_device(target)
+    torch.empty(1, dtype=torch.float32, device=target)
+    torch.cuda.reset_peak_memory_stats(target)
+    return target
+
+
 def validate_config(config_path: Path) -> dict[str, Any]:
     config = _load_yaml(config_path)
     if config.get("schema_version") != SCHEMA:
@@ -480,7 +488,7 @@ def run(config_path: Path, run_dir: Path) -> dict[str, Any]:
         if training_input_ready:
             raise ProtocolError("expected current binary evidence gap disappeared before preregistration")
 
-        torch.cuda.reset_peak_memory_stats(torch.device(config["adapter_probe"]["device"]))
+        initialize_cuda_peak_tracking(config["adapter_probe"]["device"])
         adapter = differentiable_identity_render_smoke(
             config["adapter_probe"]["device"],
             int(config["adapter_probe"]["identity_channels"]),

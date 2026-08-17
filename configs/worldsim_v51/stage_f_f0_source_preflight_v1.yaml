@@ -152,11 +152,18 @@ decision:
   next_action: preregister_f0a_train_only_sam_deva_identity_mask_materialization
 
 recovery:
-  prior_run: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023
-  prior_terminal: absent_before_status_creation
-  prior_artifacts: [resolved_config.yaml]
-  failure: V51-F44
-  only_change: bind_PROJECT_as_first_argument_to_shared_git_helper
+  prior_runs:
+    - path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T043000Z__m1-stage-f-f0-source-preflight-s20260814-r023
+      terminal: absent_before_status_creation
+      artifacts: [resolved_config.yaml]
+      failure: V51-F44
+    - path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T044000Z__m1-stage-f-f0-source-preflight-s20260814-r024
+      terminal: blocked
+      artifacts: [resolved_config.yaml, status.json, events.jsonl, artifacts/resource_samples.jsonl]
+      failure: V51-F45
+  only_changes:
+    - bind_PROJECT_as_first_argument_to_shared_git_helper
+    - initialize_cuda_context_before_resetting_peak_memory_stats
   quality_or_method_state_read: false
 
 resources:
@@ -185,5 +192,5 @@ locks:
   m2_status: pending
   m3_status: pending
 
-failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43, V51-F44]
-failure_ledger_delta: V51-F44_recovery_pending
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F43, V51-F44, V51-F45]
+failure_ledger_delta: V51-F44_resolved_V51-F45_recovery_pending

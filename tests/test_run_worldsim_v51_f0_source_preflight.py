@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.run_worldsim_v51_f0_source_preflight import (
+    initialize_cuda_peak_tracking,
     observation_schema_report,
     repository_source_identity,
     summarize_instance_metadata,
@@ -85,4 +86,26 @@ def test_repository_source_identity_binds_project_before_git_args(monkeypatch) -
     assert calls == [
         (project, ("rev-parse", "HEAD")),
         (project, ("rev-parse", "HEAD^{tree}")),
+    ]
+
+
+def test_cuda_peak_tracking_initializes_device_before_reset(monkeypatch) -> None:
+    calls = []
+    monkeypatch.setattr(
+        "scripts.run_worldsim_v51_f0_source_preflight.torch.cuda.set_device",
+        lambda device: calls.append(("set_device", str(device))),
+    )
+    monkeypatch.setattr(
+        "scripts.run_worldsim_v51_f0_source_preflight.torch.empty",
+        lambda *args, **kwargs: calls.append(("allocate", str(kwargs["device"]))) or object(),
+    )
+    monkeypatch.setattr(
+        "scripts.run_worldsim_v51_f0_source_preflight.torch.cuda.reset_peak_memory_stats",
+        lambda device: calls.append(("reset", str(device))),
+    )
+    assert str(initialize_cuda_peak_tracking("cuda:0")) == "cuda:0"
+    assert calls == [
+        ("set_device", "cuda:0"),
+        ("allocate", "cuda:0"),
+        ("reset", "cuda:0"),
     ]

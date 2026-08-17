@@ -17,7 +17,9 @@
   checkpoint 是否存在，不下载、不运行。预期当前 input-ready=false 时正常收口到 F0a train-only SAM+DEVA identity-mask
   materialization 预注册，不得直接启动 identity training。H/S/C/validation/test/KITTI=false，F1/F2=false，M2/M3=pending。
 - 首次 r023 在创建 status 前因 shared `_git(project, *args)` 调用漏传 `PROJECT` 而只留下 resolved config；无 source/data/
-  GPU/quality read。`V51-F44` 的 recovery 只修正 helper 参数并增加回归，r024 将以新 clean commit 从头运行。
+  GPU/quality read。r024 已证明 `V51-F44` 修复有效并完成 source/train-only schema 内存检查，但在 16D smoke 前对尚未
+  初始化的 CUDA device 调 `reset_peak_memory_stats` 而 blocked；没有 report 或训练。`V51-F45` recovery 只先显式绑定并
+  初始化 device，再重置计数；r025 从头运行。
 
 ## V5.1 Stage E r022 H rejected；已进入 Gaussian Grouping（2026-08-18）
 

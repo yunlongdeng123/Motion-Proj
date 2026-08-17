@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper 签名、PDF 工具与 partial staging 环境边界 | `V51-F01`–`V51-F44` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；下一路线为 Gaussian Grouping | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF 工具与 partial staging 环境边界 | `V51-F01`–`V51-F45` |
 
 ### 1.1 V1 汇总条目
 
@@ -469,12 +469,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `PYTHONIOENCODING=utf-8` 后完成全文提取，并用已存在的 `pypdfium2` 渲染方法第 6–8 页检查公式与图示。没有安装
   系统包、没有改 PDF、也未触及方法数据。后续 PDF source audit 优先复用 bundled Python 并显式 UTF-8，不假设远端或
   dependency catalog 中声明的 Poppler binary 实际存在；工具缺失不得写成论文或算法证据。
-- `V51-F44`（`engineering/runner`, `recovery pending after r023`）：F0 source preflight runner 复用 Stage-B `_git`
+- `V51-F44`（`engineering/runner`, `resolved by r024`）：F0 source preflight runner 复用 Stage-B `_git`
   helper 时写成 `_git("rev-parse", "HEAD")`，但 helper 签名是 `_git(project, *args)`，实际调用变成
   `git -C rev-parse HEAD` 并在 source commit 读取处失败。r023 此时只创建 run 目录和 `resolved_config.yaml=7,796`
   bytes，尚未写 status、启动 resource monitor、读取 source/data/schema、运行 CUDA smoke 或读取任何 quality；它是不可晋级
   的 incomplete shell。合法 recovery 只新增 `repository_source_identity(PROJECT)` 显式绑定与参数顺序回归，用新 clean
-  commit/r024 从头运行；不得删除 r023、手补 terminal 或借机改变 F0 source/method/data contract。
+  commit/r024 从头运行；r024 已越过 source identity 并执行到 adapter smoke 前，证明本项修复有效。不得删除 r023、
+  手补 terminal 或借机改变 F0 source/method/data contract。
+- `V51-F45`（`engineering/runtime`, `recovery pending after r024`）：r024 完成 official source identity、代码语义与三场
+  train-only metadata/observation schema 的内存检查后，在 16D adapter smoke 前直接调用
+  `torch.cuda.reset_peak_memory_stats(torch.device("cuda:0"))`；当前进程尚未初始化 CUDA context，PyTorch 返回
+  `Invalid device argument 0: did you call init?`。r024 status=`blocked`，只有 resolved/status/events/resource samples
+  四文件=`9,449 bytes`，没有 source report、CUDA render、SAM/DEVA/identity training 或 quality read。合法 recovery 只按
+  `set_device → one-scalar allocation/context init → reset peak → smoke` 顺序执行并加入 call-order regression，新 r025 从头
+  重跑；禁止放宽 resource ceiling 或把已在内存检查过的数据结果从 blocked run 晋级。
 
 <a id="detail-v5"></a>
 
