@@ -1,5 +1,18 @@
 # Experiments
 
+## V5.1 Stage F F0f r037 runtime control-target reproducibility 预注册（2026-08-18）
+
+- run=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`；config=
+  `configs/worldsim_v51/stage_f_f0f_cuda_runtime_health_reproducibility_v1.yaml`，authorization=r036 freeze
+  `207b28f5...b62f`。
+- A–B–A–B=`0471 temporal same-camera control →1087 cross-camera target →control repeat →target repeat`；全部 official
+  grid32/upstream-batch64/AMP/size480/semionline，`CUDA_LAUNCH_BLOCKING=1`，fresh subprocess 串行。control/target 各自
+  必须 success pair mask+pred bit-exact；CUBLAS expected failure signature 沿用 r036。
+- 只读 health probes=`nvidia identity/temp/P-state +ECC/page/row +dmesg access`；不做 GPU reset/driver mutation。
+  预注册 outcome 区分全局 runtime failure、control 稳而 target 不稳、全部稳定、success nonexact；不按 mask 内容选结果。
+- input decode=`12`、output schema reads<=`12`，quality/alignment/materialization/training/downstream=false；资源上限沿用
+  `peak 24,320 MiB /headroom 256 MiB /cgroup 60 GiB /900s`。
+
 ## V5.1 Stage F F0e r036 mixed / audit / freeze（2026-08-18）
 
 - run/source/tree=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036 /223f943...6e0 /

@@ -1,5 +1,20 @@
 # Research Status
 
+## V5.1 Stage F F0f CUDA runtime health/reproducibility 已预注册（2026-08-18）
+
+- formal target=`20260818T140000Z__m1-stage-f-f0f-runtime-repro-s20260814-r037`，authorization 只来自 r036 mixed freeze=
+  `4,338 bytes /207b28f5...b62f`。执行顺序严格 A–B–A–B：A=0471 camera0 frames0/40/80（r034 known-good control），
+  B=1087 frame0 cameras0/1/2（r035/r036 target）。每臂 fresh process、串行、grid32/batch64/AMP 与
+  `CUDA_LAUNCH_BLOCKING=1` 全相同。
+- 同时只读采集 GPU identity/temperature/P-state、ECC/page-retirement/row-remapper 与 dmesg 访问结果；RTX3090 的 ECC N/A
+  不冒充 PASS，dmesg 若因权限拒绝只记录不可观测边界。不 reset GPU、不改 driver/runtime/source。
+- outcome 已冻结：A/B 各两次均 success+exact→先做 1087 15-view blocking recovery；A exact 而 B 仍失败→进入 target
+  tensor/allocator source-neutral instrumentation；A 也失败→runtime unhealthy 并暂停该 GPU 路线；任一成功 pair nonexact→
+  faithful identity input 以不可复现收口。任何成功输出都只做 schema/hash，不读质量。
+- denominator=`12 input decodes /<=12 schema mask reads`；resources=`24,576 total /256 headroom /24,320 peak MiB /
+  cgroup<=60 GiB /wall<=900s /disk>=40 GiB`。full materialization/quality/alignment/training/validation/test/KITTI/F1/F2=false，
+  M2/M3=pending；failure delta=`none_at_preregistration`。
+
 ## V5.1 Stage F F0e r036 mixed CUDA replay 已冻结（2026-08-18）
 
 - canonical r036=`20260818T130000Z__m1-stage-f-f0e-cuda-localization-s20260814-r036`，source/tree=
