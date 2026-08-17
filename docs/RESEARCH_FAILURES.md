@@ -632,7 +632,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   实测 peak=`24,092 MiB`、headroom=`484 MiB`、cgroup=`17,957,322,752 bytes`、142 samples/0 errors，全门通过并由
   audit=`e0988f50...5258` 重放。因此当前三视图 upstream-batch64 resource prerequisite resolved；45-view materialization
   仍需独立总时长/磁盘/输出分母门，不能从两臂 smoke 外推。
-- `V51-F62`（`engineering/CUDA-runtime/resource-boundary`, `active`）：r035 依冻结顺序串行做三场 45-view train-only
+- `V51-F62`（`engineering/CUDA-runtime/resource-boundary`, `resolved_recovery; root_cause_unproven`）：r035 依冻结顺序串行做三场 45-view train-only
   materialization；0471 已完成 `15 masks +pred.json`，但 1087 official grid32/upstream-batch64/AMP subprocess 处理前两张
   后，在第三张触发 three-frame vote，于 `consensus_associated.py:58 spatial_alignment` 的 `value @ affinity` 返回
   `CUDA CUBLAS_STATUS_INTERNAL_ERROR / cublasGemmStridedBatchedExFix`，因此 1087 没有 canonical mask/pred/report，0379
@@ -679,6 +679,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   下一步只允许预注册新目录、按 `0471→1087→0379` 串行的 45-view recovery；禁止续写 r035、复用 r035 partial、先读
   r040 quality，或直接放行 identity training。r040 evidence=`summary 312a0277...a65 /audit 9,254 bytes,
   1393c664...67c /freeze configs/worldsim_v51/stage_f_f0i_scene1087_15_view_empty_cache_recovery_freeze_v1.yaml`。
+  r041 再从 exact r026 manifest 新建三组 scene-local 输入，按 `0471→1087→0379` 三个 fresh process 串行执行；三场
+  全部成功，45/45 schema masks、3/3 pred、18/18 pre-matmul empty-cache evidence、output record chain 与资源门均由
+  独立审计重放。因此 r035 暴露的 full-materialization execution failure 已在 frozen empty-cache intervention 下解除，
+  `V51-F62` 改为 resolved recovery；但 trace timing/allocator-cache/CUBLAS workspace 中哪一个是唯一根因仍未证明，不能
+  写成 OOM root cause。该结论也完全不包含 mask quality、actor identity alignment 或 training readiness；下一步必须新预
+  注册质量/对齐门，禁止把“45 个文件存在”写成算法有效。r041 evidence=`summary f3ee3ad1...c183 /materialization
+  32b5d8d3...1b7f /audit 18,462 bytes, acd5a91b...31d2 /freeze configs/worldsim_v51/stage_f_f0j_fresh_45_view_
+  empty_cache_materialization_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

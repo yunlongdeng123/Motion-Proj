@@ -1,5 +1,15 @@
 # Experiments
 
+## V5.1 Stage F F0j r041 full materialization PASS / audit / freeze（2026-08-18）
+
+- run/source/tree=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041 /27dfaa8...150a /
+  9f433d16...abd2`；三 scene fresh success，`45 masks +3 pred`，18 次 pre-matmul empty-cache evidence 全通过。
+- resolved/summary/materialization/manifest/status/events SHA=`3db1a122...3091/f3ee3ad1...c183/32b5d8d3...1b7f/
+  551e42e5...e733/1dda9eb4...b763/2d76e728...f0b0`；output chain=`f1c1b44e...1d3`。
+- audit=`18,462 bytes /acd5a91b...31d2 /PASS`；resources=`24,118 MiB peak /458 MiB headroom /
+  17,981,091,840 cgroup /104.676977s /324 samples /0 errors`。freeze=`stage_f_f0j_fresh_45_view_empty_cache_
+  materialization_freeze_v1.yaml`；V51-F62 execution-only resolved、root cause unproven；质量与 identity alignment 未读。
+
 ## V5.1 Stage F F0j r041 fresh 45-view recovery 预注册（2026-08-18）
 
 - run=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`；auth=r040 freeze

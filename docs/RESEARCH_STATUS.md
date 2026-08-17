@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage F F0j r041 fresh 45-view materialization PASS 已冻结（2026-08-18）
+
+- canonical r041=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`，source/tree=
+  `27dfaa8...150a/9f433d16...abd2`。三个 scene-local fresh subprocess 全部 success；exact 45 inputs、`45 uint8
+  900×1600 masks +3 pred.json` 与 output chain 均通过独立重放。
+- 18/18 observed line58 matmul 均有 empty-cache before/after evidence；source/operator/tensor-content/grid32/batch64/AMP
+  未变。audit=`20260818T183000Z__stage-f-f0j-r041-audit.json /18,462 bytes /acd5a91b...31d2 /PASS`；
+  manifest=`108 entries /8,735,373 logical /1,205,363 regular`。
+- resources=`GPU 1→24,118/24,576 MiB，headroom 458 MiB /cgroup 17,981,091,840 bytes /104.677s /324 samples /
+  0 errors`。freeze=`configs/worldsim_v51/stage_f_f0j_fresh_45_view_empty_cache_materialization_freeze_v1.yaml`。
+- `V51-F62` 对 frozen empty-cache 45-view execution 已解除，但 allocator/CUBLAS 唯一根因未证明；该解除不包含 mask
+  quality、actor identity alignment 或 training readiness。下一步只预注册 train-only quality/alignment gate；validation/test/
+  KITTI/F1/F2=false，M2/M3=pending。
+
 ## V5.1 Stage F F0j fresh 45-view empty-cache materialization 已预注册（2026-08-18）
 
 - formal target=`20260818T180000Z__m1-stage-f-f0j-fresh-45-view-recovery-s20260814-r041`；authorization 仅来自 r040
