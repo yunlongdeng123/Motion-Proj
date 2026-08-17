@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator/one-view denominator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；PCA/proxy 仍 active | `V51-F01`–`V51-F22` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；Stage B official ViT-g resource/operator/one-view denominator 门通过 | H→S 小效应未复现、UNKNOWN coverage 不达门；proxy 与 H-uplift full-run GPU ceiling 仍 active | `V51-F01`–`V51-F23` |
 
 ### 1.1 V1 汇总条目
 
@@ -325,6 +325,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   payload key 硬编码为 `files`，但该 runner 的冻结 schema 使用 `inventory`，只读命令因此 `KeyError: 'files'`；
   formal r009 及任何 artifact 均未改变。修正 verifier 按冻结 schema 读取 `inventory` 后，8/8 manifest entries 的
   SHA/bytes exact，run=`10 files / 28,156 bytes`。后续 verifier 必须先读 schema/key，不能跨 runner 猜测 manifest 字段。
+- `V51-F23`（`engineering/resource/protocol`, `active recovery preregistered`）：H 45-view sparse uplift r011 已完整处理
+  3 scenes×15 views、写出 6 个 Gaussian feature sidecar 并证明 3 个 base checkpoint before/after exact，但 post-compute
+  NVIDIA peak=`20,554 MiB` 与 Torch reserved=`20,202 MiB` 超过 v1 预注册的共同 ceiling=`18,432 MiB`，故 formal status
+  必须保持 `blocked`。cgroup peak 仅 `13,328,011,264 bytes`，799 个 resource samples 无 monitor error，runner 正常释放 GPU；
+  这推翻的是“单-view 14,234 MiB 足以外推三场景 streaming full-run 低于 18 GiB”的资源假设，不推翻 sparse transpose、
+  B0/B1、DINO/PCA 或任何 method-quality 结论。合法恢复必须保留 r011 及其 gate 前诊断，以 v2 + 新 r012 从冻结原输入
+  完整重跑；唯一改变为 NVIDIA/Torch ceiling=`22,528 MiB`（仍低于 24 GiB），不得复用 blocked sidecar、改 scene/view/floor、
+  调整 operator 或读取 membership/quality。r011 失败证据已独立验证 6/6 NPZ file/content identity、manifest chain 与
+  checkpoint immutability exact；status/resources/report/manifest/resource-samples SHA=
+  `a450cdaf...0eee6/0312e190...8a37/98140571...99c9/88956448...dae6/76422821...ae9c`。配置证据为
+  `configs/worldsim_v51/stage_b_h_uplift_v1.yaml` 与 v2 recovery config。
 
 <a id="detail-v5"></a>
 

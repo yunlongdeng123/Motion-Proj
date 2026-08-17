@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
 from scripts.run_worldsim_v51_h_uplift import validate_config
 
 
-CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_uplift_v1.yaml"
+CONFIG = ROOT / "configs/worldsim_v51/stage_b_h_uplift_v2.yaml"
 
 
 def test_h_uplift_config_binds_three_scenes_45_views_and_quality_locks() -> None:
@@ -29,6 +29,11 @@ def test_h_uplift_config_binds_three_scenes_45_views_and_quality_locks() -> None
     assert config["operator"]["dense_intersection_feature_materialization"] is False
     assert config["operator"]["minimum_intersection_contribution"] == 1e-4
     assert config["operator"]["minimum_gaussian_view_mass"] == 1e-3
+    assert config["resources"]["maximum_nvidia_peak_mib"] == 22528
+    assert config["resources"]["maximum_torch_reserved_peak_mib"] == 22528
+    assert config["recovery"]["observed_nvidia_peak_mib"] == 20554
+    assert config["recovery"]["allowed_change"] == "raise_nvidia_and_torch_resource_ceiling_only"
+    assert config["failure_ledger_delta"] == ["V51-F23"]
     assert config["locks"]["h_feature_sidecar_read"] is True
     assert config["locks"]["h_renderer_start"] is True
     assert config["locks"]["uplift_feature_compute"] is True

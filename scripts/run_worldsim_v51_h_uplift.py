@@ -721,7 +721,7 @@ def main() -> None:
     parser.add_argument(
         "--config",
         type=Path,
-        default=PROJECT / "configs/worldsim_v51/stage_b_h_uplift_v1.yaml",
+        default=PROJECT / "configs/worldsim_v51/stage_b_h_uplift_v2.yaml",
     )
     parser.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args()

@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.1 Stage B r011 resource blocked，r012 22 GiB recovery 已预注册（2026-08-18）
+
+- canonical blocked r011=`20260817T161351Z__m1-stage-b-h-uplift-s20260814-r011`，source=`40f4d64`；45/45 H views、
+  3/3 scenes、6 个 B0/B1 Gaussian feature sidecar 和 3 个 checkpoint immutability audit 均已完成，随后仅因
+  NVIDIA peak=`20,554 MiB > 18,432 MiB` 而 fail-closed。Torch allocated/reserved=`19,314.634/20,202 MiB`，
+  cgroup peak=`13,328,011,264 bytes`，799 samples、0 monitor error、duration=`588.750 s`；不是 OOM、renderer、
+  sparse transpose、checkpoint 或算法质量失败。r011 保留 `blocked`，不得改写或复用。
+- r011 的只读 post-compute 证据已在资源门前持久化：processed=`45 views / 3 scenes`、sidecar=`6 / 811,045,640 bytes`；
+  Gaussian coverage 0471/1087/0379=`0.8986823140/0.8479816328/0.8529442234`，B0/B1 L2 difference=
+  `1826.1010/2077.5490/1875.4642`。独立审计 6/6 NPZ 的 file/content SHA、dtype/shape/finite/nonnegative、
+  manifest chain、3 个 checkpoint before/after 均 exact；这只封存 blocked 诊断，不能把 r011 冻结为 canonical 结果。
+- r011 status/resources/report/sidecar-manifest/resource-samples SHA=`a450cdaf...0eee6/0312e190...8a37/`
+  `98140571...99c9/88956448...dae6/76422821...ae9c`；sidecar record chain=`5339b880...8e12`，GPU 已释放。
+- 登记 `V51-F23`。v2/r012 仅把 NVIDIA/Torch reserved ceiling 从 `18,432` 提升到 `22,528 MiB`，仍低于
+  24 GiB 单卡容量；scene/view/order/checkpoint、r010 PCA/sidecars、两级 floor、B0/B1、sparse operator、cgroup/disk/timeout
+  与全部 quality/validation/test/KITTI/M2/M3 locks 原字继承。新 run ID 必须完整重跑，不读取 r011 产物作为输入。
+
 ## V5.1 Stage B H 45-view B0/B1 uplift 已预注册（2026-08-18）
 
 - planned r011=`m1-stage-b-h-uplift-s20260814-r011`；3 H scenes 各固定 train-only `5 frames×3 cameras=15 views`，

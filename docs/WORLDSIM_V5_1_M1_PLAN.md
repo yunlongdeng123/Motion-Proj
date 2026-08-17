@@ -11,7 +11,7 @@
 | `WS-V51-P0-M1-SCOPE-FREEZE-01` | done | r001 start audit；scope/授权/quality locks exact |
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
-| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r010 H feature/PCA PASS；r011 H 45-view B0/B1 sparse uplift 已预注册 |
+| `WS-V51-M1-B-LUDVIG-UPLIFT-01` | running | r010 H feature/PCA PASS；r011 resource blocked；v2/r012 recovery 已预注册 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -32,10 +32,10 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 
 - scope/data/protocol：`V5-F09`、`V5-F11`–`V5-F14`、`V5-F18`；
 - unary/evaluation：`V5-F20`–`V5-F26`、`V5-F29`–`V5-F33`；
-- V5.1 新增 failure=`V51-F01`–`V51-F22`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
+- V5.1 新增 failure=`V51-F01`–`V51-F23`；Stage A closeout delta=`V51-F09/F10`；Stage B preflight
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
-  `V51-F19/F20/F21/F22 resolved`。
+  `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 active recovery preregistered`。
 
 ## 配置与入口
 
@@ -71,6 +71,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - `configs/worldsim_v51/stage_b_h_feature_pca_v1.yaml`
 - `configs/worldsim_v51/stage_b_h_feature_pca_freeze_v1.yaml`
 - `configs/worldsim_v51/stage_b_h_uplift_v1.yaml`
+- `configs/worldsim_v51/stage_b_h_uplift_v2.yaml`
 - `scripts/freeze_worldsim_v51_stage_b.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset.py`
 - `scripts/fetch_worldsim_v51_dinov2_asset_parallel.py`
@@ -232,6 +233,7 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
 - r009 已通过：raw/supported intersections=`47,378,525/32,030,248`，`1e-3` 后 Gaussian=`313,764/859,613`
   （coverage=`0.3650061132`），GPU/Torch reserved=`14,234/13,882 MiB`；checkpoint exact，manifest 8/8 exact。
   result freeze 已绑定；r010 又完成 45-view DINO sidecar/seeded-PCA，首图 repeat、PCA state 和 45 sidecar identity exact，
-  `V51-F14 resolved`。下一步只预注册 H 45-view B0/B1 uplift，quality 继续锁定。
+  `V51-F14 resolved`。r011 完成 45-view uplift 计算后因 observed NVIDIA/Torch reserved=`20,554/20,202 MiB`
+  越过 `18,432 MiB` 资源门而 blocked；v2/r012 只把两项 ceiling 提升为 `22,528 MiB`，见 `V51-F23`，quality 继续锁定。
 - 后续仍严格执行 resource smoke→operator parity→H→S→C；H 失败只拒绝当前 faithful route 并进入下一条冻结 M1
   路线，不停止整个 M1。validation/test/KITTI 与 M2/M3 不因本次授权解锁。

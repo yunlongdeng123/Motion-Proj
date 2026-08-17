@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.1 Stage B r011 resource blocked / r012 recovery 预注册（2026-08-18）
+
+- r011=`20260817T161351Z__m1-stage-b-h-uplift-s20260814-r011`，source=`40f4d64`，status=`blocked`，reason=
+  `ProtocolError: H uplift NVIDIA peak 超限`。45/45 views、3 scene reports、6 NPZ sidecars 和 checkpoint before/after exact
+  已计算并落盘，但 resource gate 失败，禁止提升为 canonical result。
+- resource=`20,554 MiB NVIDIA / 19,314.634 MiB Torch allocated / 20,202 MiB Torch reserved /
+  13,328,011,264-byte cgroup / 588.750 s / 799 valid samples / 0 monitor errors`；pre-registered ceiling=
+  `18,432 MiB NVIDIA/Torch`。failure delta=`V51-F23`，属于预算低估，不是 OOM 或 method-quality negative。
+- blocked evidence audit=6/6 NPZ file/content identity exact，manifest chain=`5339b880...8e12`，status/resources/report/
+  manifest/resource-samples SHA=`a450cdaf...0eee6/0312e190...8a37/98140571...99c9/88956448...dae6/76422821...ae9c`；
+  该审计仅保证失败证据完整，不改变 blocked 状态。
+- recovery config=`stage_b_h_uplift_v2.yaml`；唯一允许差异为两项 GPU ceiling=`22,528 MiB`。r012 从原冻结输入完整重跑，
+  不复用 r011 sidecar；算法、view、PCA、support floor、resource cgroup/disk/timeout 和所有质量锁不变。
+- r011 没有读取 membership proxy/method quality，S/C/validation/test/KITTI 未读，M2/M3=`pending`。
+
 ## V5.1 Stage B H uplift r011 预注册（2026-08-18）
 
 - inputs=`r005 operator freeze + r010 PCA/45 patch-grid sidecars + H r027/r028/r029 checkpoints/configs`；view order=
