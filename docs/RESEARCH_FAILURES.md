@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；P0/D0 freeze 与 Stage A A0 replay 是当前唯一授权 | 首轮测试入口未注入仓库根导致 collection blocked，已在方法/数据读取前修复 | `V51-F01` 起 |
+| V5.1 | M1-only 正在推进；P0/D0 freeze 与 Stage A A0 replay 是当前唯一授权 | pytest import root 与 float32 人工常数断言均在方法/数据读取前修复 | `V51-F01`–`V51-F02` |
 
 ### 1.1 V1 汇总条目
 
@@ -130,6 +130,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   没有运行方法、读取 validation/test/KITTI quality 或产生质量数字。后续直接脚本与测试入口都必须有独立 import smoke，
   禁止把 collection error 计入方法分母。证据：`WS-V51-P0-M1-SCOPE-FREEZE-01`、
   `tests/test_worldsim_v51_protocol.py`、`tests/test_audit_worldsim_v51_start.py`。
+- `V51-F02`（`engineering/evaluation`, `resolved`）：A0 runner 的 metric 单测把输入 `float32(0.1)` 产生的
+  `0.10000000149011612` 与 Python 十进制 `0.1` 做严格相等，导致 `1 failed / 6 passed`；这推翻的是“人工十进制常数
+  可以作为 bit-exact 浮点 oracle”的测试假设，不是 frozen metric 定义或 A0 canonical replay 失败。修复只把人工常数
+  断言改为 `pytest.approx`；正式 A0 仍把同一实现重算值与 canonical JSON float 做 `delta == 0.0`，posterior/statistics
+  仍逐 bit 比较。禁止为了让 exact gate 通过而对 canonical metric 使用容差、舍入或字符串截断。失败时未启动正式 run、
+  GPU renderer、方法推理或 validation/test/KITTI quality read。证据：`WS-V51-M1-A-UNARY-OBSERVABILITY-01`、
+  `tests/test_replay_worldsim_v51_v5_unary.py`。
 
 <a id="detail-v5"></a>
 
