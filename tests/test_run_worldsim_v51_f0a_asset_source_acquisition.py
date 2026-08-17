@@ -3,6 +3,7 @@ import subprocess
 import sys
 
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +29,35 @@ def test_f0a_asset_source_help_works_from_repo_root() -> None:
         text=True,
     )
     assert "--run-dir" in result.stdout
+
+
+def test_f0a_asset_source_auditor_help_works_from_repo_root() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_worldsim_v51_f0a_asset_source_acquisition.py",
+            "--help",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--output" in result.stdout
+
+
+def test_f0a_asset_source_freeze_is_parseable_and_terminal() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    assert freeze["status"] == "done"
+    assert freeze["canonical_run"]["conclusion"] == (
+        "f0a_assets_and_sources_frozen_environment_setup_required"
+    )
+    assert freeze["governance"]["materialization_authorized"] is False
 
 
 def test_f0a_asset_source_formal_config_validates() -> None:

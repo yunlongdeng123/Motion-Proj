@@ -1,0 +1,132 @@
+schema_version: worldsim_v51_stage_f_f0a_asset_source_acquisition_freeze_v1
+task_id: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+status: done
+frozen_at: "2026-08-18"
+
+source:
+  commit: a77f458c7c353da987329f3f387b11a49111e7a1
+  tree: 1df5c234c61da2e5e634d4ea162ea2921394aaa3
+  config:
+    path: configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_v1.yaml
+    sha256: c194d6572ef26906072a55f57191f3bb8a46ceec7832cc822e50019ad91e95a1
+  runner:
+    path: scripts/run_worldsim_v51_f0a_asset_source_acquisition.py
+    sha256: 8d6805cd33e6a7f6c9c5e044c702c1f00ce6a53877866f351b4786af7e0a6c25
+
+canonical_run:
+  run_id: 20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026
+  path: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026
+  source_commit: a77f458c7c353da987329f3f387b11a49111e7a1
+  source_tree: 1df5c234c61da2e5e634d4ea162ea2921394aaa3
+  status: done
+  conclusion: f0a_assets_and_sources_frozen_environment_setup_required
+  manifest_inventory_entries: 7
+  manifest_inventory_bytes: 49468
+  total_run_files: 9
+  total_run_bytes: 51021
+  hashes:
+    resolved_config: c194d6572ef26906072a55f57191f3bb8a46ceec7832cc822e50019ad91e95a1
+    summary: b791ae619a6e3c1e5e818d1ecf4d700684ca5fe8709978bdd79337466aeeab00
+    status: b9490e67447d98aad3acb0b45ad5bcb6b5aa8c012ac0d5049ff94ce0971a6db1
+    manifest: 2521c2301f9b3ad6db341e61eb41b9440598b0baaa5044863031011f60a017fc
+    events: fd08466626d3328e4a6e02c598770bdaee1274f01d0752591f619e585db2b9b6
+    asset_source_report: 73731e721492c03e483b172b56ca53b6cb0b9605f44260141215a7f4d6cd2d6b
+    resources: 89bddd61ce9c77ea3bddf368344165ccea7fdd7df69c44d9ab94b046bfb871f6
+    resource_samples: 5b300d018ff9b725a184a7721f88ba86926da405274e2890309574eb8c95900c
+    train_only_image_manifest: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4
+
+grounded_segment_anything:
+  url: https://github.com/hkchengrex/Grounded-Segment-Anything.git
+  path: /root/autodl-tmp/third_party/grounded-segment-anything-v51-stage-f
+  commit: 99fbbe789cf99ff851886bca0935da33586db86b
+  tree: 89c82ae86de908fec7caaa646df24015d354dc97
+  required_subtree: segment_anything/segment_anything
+  license: Apache-2.0
+  license_sha256: 5e86c044d282430e38008f8cd6ed940708c400cced1461c493255d01eb64b891
+  clean: true
+  acquisition: cloned_then_exact_detached_checkout
+
+assets:
+  directory: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f
+  sequential: true
+  atomic_publish: true
+  partial_files_absent_after_publish: true
+  records:
+    deva_propagation:
+      path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/DEVA-propagation.pth
+      bytes: 276911801
+      sha256: 5273748214babcbf5bc7aaa23ed4ce5a52f278c974b6c0dafcfbd89fbde25e48
+      source: https://github.com/hkchengrex/Tracking-Anything-with-DEVA/releases/download/v1.0/DEVA-propagation.pth
+    sam_vit_h:
+      path: /root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth
+      bytes: 2564550879
+      sha256: a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e
+      source: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
+
+train_only_input:
+  source_manifest: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-B-LUDVIG-UPLIFT-01/20260817T141000Z__m1-stage-b-input-freeze-s20260814-r001/artifacts/image_manifest.json
+  source_manifest_sha256: be19da2e290f1c1641e1d60c7c736b812b7028e2fc3f3d980e66b46089f3943f
+  selected_manifest: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-F-IDENTITY-EMBEDDING-01/20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026/artifacts/train_only_image_manifest.json
+  selected_manifest_sha256: 653941ec5b5a6d6e73159c24dead7d57db0c2cc97315e454c3bbcf2b3df7d7a4
+  order: scene_then_frame_then_camera
+  scenes: [scene-0471, scene-1087, scene-0379]
+  frames: [0, 40, 80, 120, 160]
+  cameras: [0, 1, 2]
+  record_count: 45
+  views_per_scene: 15
+  total_bytes: 7530010
+  record_chain_sha256: b3458c27a7422a0a2a7849a127179c6b9d0a145800d21a60233de603936b4d95
+  image_size_wh: [1600, 900]
+  image_pixels_decoded: false
+  images_staged: false
+
+environment_probe:
+  runtime: /root/autodl-tmp/envs/drivestudio/bin/python
+  environment_mutated: false
+  expected_present_exact: [torch, torchvision, numpy, PIL, cv2, scipy, pycocotools, tqdm, git]
+  expected_absent_exact: [segment_anything, supervision, hickle, pulp, gurobipy, thinplate]
+  next_policy: isolated_venv_with_drive_studio_system_site_packages_and_pinned_missing_dependencies
+
+resources:
+  nvidia_start_mib: 1
+  nvidia_peak_mib: 1
+  cgroup_memory_peak_bytes: 11761352704
+  disk_free_before_bytes: 83420561408
+  disk_free_after_bytes: 80406933504
+  valid_sample_count: 153
+  monitor_error_count: 0
+  wall_seconds: 166.74187567457557
+  gate_pass: true
+
+independent_audit:
+  script: scripts/audit_worldsim_v51_f0a_asset_source_acquisition.py
+  script_sha256: b8b6b048a9db57e20bd36db4d2cad470b49164ee139c9ababd0419952d588ab5
+  report: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T060000Z__stage-f-f0a-r026-audit.json
+  report_sha256: 5a360f420f0ea1e18eff0045d1601a0f209b8994204f4bf0804302296695817c
+  report_bytes: 1396
+  status: passed
+  asset_hash_replay_exact: true
+  source_identity_exact: true
+  train_only_manifest_replay_exact: true
+  resource_replay_exact: true
+  locks_exact: true
+
+governance:
+  materialization_authorized: false
+  identity_training_authorized: false
+  parameter_search: false
+  sam_execution: false
+  deva_execution: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  f1_execution: false
+  f2_execution: false
+  m2_status: pending
+  m3_status: pending
+  failure_ledger_delta: V51-F47_resolved
+  next_task: WS-V51-M1-F-IDENTITY-EMBEDDING-01
+  next_phase: isolated_deva_environment_and_one_view_resource_smoke_preregistration

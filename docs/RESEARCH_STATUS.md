@@ -1,5 +1,25 @@
 # Research Status
 
+## V5.1 Stage F F0a r026 asset/source acquisition 已冻结（2026-08-18）
+
+- canonical r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`，source/tree=
+  `a77f458c...e7a1/1df5c234...aaa3`，status=`done`，conclusion=
+  `f0a_assets_and_sources_frozen_environment_setup_required`。独立审计重新 full-hash 两份权重、核对 external source
+  commit/tree/license/clean state、重建 45-view train-only manifest、重放 153 个 resource samples 与全部 locks，结果 PASS。
+- assets：DEVA=`276,911,801 bytes /52737482...5e48`，SAM ViT-H=`2,564,550,879 bytes /a7bf3b02...262e`；
+  都从 upstream-declared URL 顺序下载、exact bytes 后 atomic publish，`.partial` 已消失。Grounded-Segment-Anything=
+  `99fbbe78 /tree 89c82ae8...c97 /Apache-2.0`；Gaussian Grouping checkout 仍 clean。
+- train-only input=`45 files /7,530,010 bytes /chain b3458c27...4d95`，按 scene→frame→camera 排列并逐文件 SHA exact；
+  image pixels decoded=false、staged=false。environment mutated=false；DriveStudio runtime 的预计缺失模块集合
+  `segment_anything/supervision/hickle/pulp/gurobipy/thinplate` 与实测一致。
+- resource=`GPU 1 MiB /cgroup 11,761,352,704 bytes /wall 166.742s /153 samples /0 errors`；disk free=
+  `83,420,561,408 → 80,406,933,504 bytes`。manifest=`7 entries /49,468 bytes`，full run=`9 files /51,021 bytes`；
+  audit=`1,396 bytes /5a360f42...817c`。
+- `V51-F47 resolved` 记录本地/远端执行边界与缺失 `bc` 只读工具，不影响 run。下一步只允许预注册 isolated DEVA
+  environment + one-view resource smoke；SAM/DEVA materialization、identity training、quality/S/C/validation/test/KITTI
+  继续 false，F1/F2=false，M2/M3=pending。freeze=
+  `configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml`。
+
 ## V5.1 Stage F F0a asset/source acquisition 已预注册（2026-08-18）
 
 - planned r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`。本轮只顺序获取并 full-SHA

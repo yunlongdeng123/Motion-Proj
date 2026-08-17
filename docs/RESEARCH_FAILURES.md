@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter 可行，待物化 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF 工具、partial staging 与 identity-input contract 边界 | `V51-F01`–`V51-F46` |
+| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping source/adapter/assets 可行，待隔离环境与 identity masks | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging 与 identity-input contract 边界 | `V51-F01`–`V51-F47` |
 
 ### 1.1 V1 汇总条目
 
@@ -500,6 +500,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   禁止用 metadata、binary U2/B3、SAM2 或 evaluation target 代替，禁止在 materialization 冻结前启动 F0 training。
   证据：r025 summary=`da4890d...988`、audit=`14d2b78b...8b64`、
   `configs/worldsim_v51/stage_f_f0_source_preflight_freeze_v1.yaml`。
+- `V51-F47`（`engineering/orchestration/tooling`, `resolved during r026`）：首次启动 r026 时把远端 Linux command 与
+  `/root/autodl-tmp/motion_proj` workdir 直接交给桌面本地 `bash` tool，Windows 在建立 SSH 前返回
+  `CreateProcess ... 目录名称无效`；远端 run/path/assets 均尚不存在，因此这不是 r026 blocked terminal，修复为从本地
+  PowerShell 显式 `ssh wm-3090-0811` 后按原 prereg run ID 启动。r026 完成后只读汇总文件字节时又假设远端存在 `bc`，
+  在已打印 auditor hash 与 status/manifest size 后报 `bc: command not found`；它没有修改 run，完整字节数改由已审计的
+  manifest inventory 加 status/manifest exact size 得到 `51,021`。这两次都推翻“tool shell/workdir 与常用 CLI 可跨本地/
+  远端默认存在”的工程假设，不影响 r026 的 `done` 或 asset hashes。后续远端命令必须从 Windows 使用 SSH alias，run
+  证据计算由仓库 runner/auditor 完成，禁止临时依赖未冻结的 `bc/jq/python -c`。证据：r026 audit=`5a360f42...817c`，
+  freeze=`configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml`。
 
 <a id="detail-v5"></a>
 

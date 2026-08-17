@@ -1,5 +1,21 @@
 # Experiments
 
+## V5.1 Stage F F0a r026 canonical asset/source acquisition（2026-08-18）
+
+- run/source/tree=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026 /a77f458c...e7a1 /
+  1df5c234...aaa3`；terminal=`done`，conclusion=`f0a_assets_and_sources_frozen_environment_setup_required`。
+- acquired assets=`DEVA 276,911,801 bytes /52737482...5e48`、`SAM-v1 ViT-H 2,564,550,879 bytes /
+  a7bf3b02...262e`；两者 sequential、atomic、无残余 partial。Grounded-Segment-Anything fork=
+  `99fbbe78 /tree 89c82ae8...c97 /license 5e86c044...891 /clean`。
+- selected input manifest=`45 records /7,530,010 bytes /b3458c27...4d95`，三场各 15 views；source manifest、逐图
+  byte/SHA 与顺序由 auditor 独立重建 exact，pixels decoded=false、images staged=false。
+- resource=`1 MiB GPU /11,761,352,704 cgroup bytes /166.742s /153 valid /0 errors`；summary/status/manifest=
+  `b791ae61...b00/b9490e67...db1/2521c230...7fc`；run=`9 files /51,021 bytes`，audit=
+  `1,396 bytes /5a360f42...817c`。
+- environment probe exact、mutated=false；materialization/training/quality=false。failure delta=`V51-F47 resolved`；
+  next=`isolated DEVA environment + one-view resource smoke preregistration`，S/C/validation/test/KITTI=false，
+  F1/F2=false，M2/M3=pending。freeze=`configs/worldsim_v51/stage_f_f0a_asset_source_acquisition_freeze_v1.yaml`。
+
 ## V5.1 Stage F F0a asset/source acquisition 预注册（2026-08-18）
 
 - planned r026=`20260818T053000Z__m1-stage-f-f0a-asset-source-s20260814-r026`；只获取 official DEVA/SAM-v1 assets

@@ -1,5 +1,14 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-18 Stage F F0a r026 收口与 environment smoke 解锁
+
+r026 已 exact 获取 DEVA/SAM-v1 权重、Grounded-Segment-Anything source，并冻结 45-view train-only input chain；独立审计
+full-hash/replay PASS。该结果只解除“缺 source/assets”前置，不解除 materialization：当前 runtime 缺 6 个相关模块，且尚未
+验证 SAM ViT-H+DEVA 在 3090 上的单视图显存、输出 schema 或 short-ID determinism。下一步必须新预注册隔离 venv 的
+可复现安装来源/版本，再只用 scene-0471/frame0/camera0 做 one-view SAM/DEVA resource/schema smoke；不得直接跑 45 views，
+不得据 smoke 调 `size=480/IoU=0.7/chunk=4`，不得读取 mask quality。freeze=
+`stage_f_f0a_asset_source_acquisition_freeze_v1.yaml`，failure delta=`V51-F47 resolved`，M2/M3=pending。
+
 ## 2026-08-18 Stage F F0a asset/source acquisition 预注册
 
 F0a 先拆出一个不可混入方法质量的 acquisition gate。r026 只冻结 upstream-declared DEVA/SAM-v1 权重的 full SHA、
