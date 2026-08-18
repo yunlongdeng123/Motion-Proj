@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage G G0 r045 PASS / audit / freeze（2026-08-18）
+
+- run/source=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045 /ed39600...5651`；PDF
+  page markers=`11`，repo commit/tree/clean 与 5 组 method source marker/hash 全 PASS；source execution/quality read=false。
+- summary=`6,491 bytes /5e15c3df...b13`；audit=`2,311 bytes /053cf574...d3b /PASS`；failure `V51-F64`
+  resolved。freeze=`stage_g_g0_trace3d_source_method_preflight_freeze_v1.yaml`；下一步只预注册 frozen-base operator probe。
+
 ## V5.1 Stage G G0 r045 exact-asset recovery 预注册（2026-08-18）
 
 - run=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`；复用 r044 已原子发布的 exact

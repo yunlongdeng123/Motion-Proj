@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage G G0 r045 source/method preflight PASS 并冻结（2026-08-18）
+
+- canonical r045=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`，source/tree=
+  `ed39600...5651/75932029...52ef`；exact reuse paper/repo，stdlib page markers=`11`，network/redownload=false。
+- repo=`7465ad94...c442/tree 22d30d19...a05d/clean`，2 个 submodule pointers 均未初始化；5 组 tracing/
+  CUDA accumulation/patch repair/ambiguous refinement/density-control 源码合同共复核 `57,321` bytes，marker/hash 全通过。
+- summary/report/manifest SHA=`5e15c3df...b13/b0ae58cc...0fd/70329fab...dfd`；独立 audit=
+  `20260818T223000Z__stage-g-g0-r045-audit.json /2,311 bytes /053cf574...d3b /PASS`。资源门全过，wall=
+  `0.051832 s`、cgroup=`12,470,280,192 bytes`、disk free=`79,850,524,672 bytes`。
+- `V51-F64` 已解决；r044 仍保留 running 中断证据。freeze=
+  `configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_freeze_v1.yaml`。PASS 只允许预注册 immutable-base
+  reverse-tracing operator capability；不等于上游训练复现，split/prune/density-control/training/quality/validation/test/KITTI=false。
+
 ## V5.1 Stage G G0 r045 exact-asset recovery 已预注册（2026-08-18）
 
 - formal target=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`；auth=r044 closeout

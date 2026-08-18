@@ -699,14 +699,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   F1/F2/identity training 关闭，下一步按冻结路线进入 Trace3D source/method/immutable-base adapter preflight。证据：r043
   summary=`f13c8094...da8a`、report=`b1e4bb40...95ed`、audit=`4,210 bytes /f478fbd9...4320`、freeze=
   `configs/worldsim_v51/stage_f_f0l_train_only_quality_identity_alignment_freeze_v1.yaml`。
-- `V51-F64`（`engineering/tool-availability`, `active_recovery`）：Trace3D G0 r044 已成功原子发布 official PDF 与 exact
+- `V51-F64`（`engineering/tool-availability`, `resolved`）：Trace3D G0 r044 已成功原子发布 official PDF 与 exact
   repo commit/tree，随后仅在读取 PDF 页数时因系统没有 `pdfinfo` executable 抛出 `FileNotFoundError`。异常发生在任何
   repository semantic report、source execution、submodule initialization、model download 或 image/mask/quality read 前；run
   只留下 running status 与 start event，必须保留且不能事后补成 blocked/done。该失败推翻“AutoDL 默认具备 Poppler CLI”
   的工程假设，不涉及 Trace3D 方法可行性。合法恢复只在新 run exact 复核现有 paper=`2,390,825 bytes /d50eda07...47e4`
   与 repo=`7465ad94...c442/tree 22d30d19...a05d/clean`，用标准库 PDF `/Type /Page` marker 计数替代 external tool；不得
   删除或重下已发布资产，也不得借恢复 init submodules/执行源码/读质量。closeout=
-  `configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml`。
+  `configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml`。r045 以原资产 exact reuse、标准库
+  page-marker count=`11` 完成恢复；独立 audit `053cf574...d3b` PASS，故该工程失败关闭。r044 历史终态不倒写；本次修复不构成
+  Trace3D 方法成功或训练授权。
 
 <a id="detail-v5"></a>
 

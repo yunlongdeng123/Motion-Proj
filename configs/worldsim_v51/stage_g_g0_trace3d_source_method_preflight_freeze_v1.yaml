@@ -1,0 +1,62 @@
+schema_version: worldsim_v51_stage_g_g0_trace3d_source_method_preflight_freeze_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: done
+phase: g0_trace3d_source_method_preflight_frozen
+frozen_at: "2026-08-18"
+
+run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-G-AMBIGUITY-01/20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045
+  source_commit: ed39600d33fda13a187729c294ffe81b13885651
+  source_tree: 75932029be065cde2ba773684cd00d8392a552ef
+  resolved_config: {bytes: 4793, sha256: 9fb428629c7113faff8666a285ba56401f4be2ea3cb31bc704e25544e60acded}
+  summary: {bytes: 6491, sha256: 5e15c3dffc935cd6dc94fc52c1c87b1d58c4ccd74deabbec0bb25332c57ccb13}
+  source_report: {bytes: 5160, sha256: b0ae58cc8ce9604e098cdd69dd8f5217655383ada86950aeed1eeaebb92a20fd}
+  manifest: {bytes: 854, sha256: 70329fabad3d7a7edcf39e61da155dba53874fb99fd76a994ba71c5970f58dfd, entry_count: 5, logical_bytes: 16716}
+  status_file: {bytes: 231, sha256: 5b2fb77a751b673d58591b73a48aa70cf3df8cd10a80a3204bff2ce9784c745a}
+  events: {bytes: 144, sha256: e314bc69a9f185616c92e1e30982548aac2f7c74d61fd06fcf92568e444b9cb8}
+
+audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T223000Z__stage-g-g0-r045-audit.json
+  bytes: 2311
+  sha256: 053cf57474e7bc25038c75bfb65cfafd41a294e53bb3b7d2550d1845b4cd8d3b
+  status: pass
+
+official_assets:
+  paper: {path: /root/autodl-tmp/third_party/trace3d-iccv2025.pdf, bytes: 2390825, sha256: d50eda076feb29ff84ac0d2c5d2d6c23d74cf8e6bcb70c0467b1a20618d647e4, page_marker_count: 11}
+  repository: {path: /root/autodl-tmp/third_party/trace3d-v51-stage-g, commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442, tree: 22d30d19c0226e353e5caf527a29eff02d36a05d, clean: true, submodule_pointer_count: 2, submodules_initialized: false}
+  method_evidence: {contract_count: 5, verified_source_bytes: 57321, all_required_markers_present: true}
+
+result:
+  conclusion: trace3d_official_source_method_acquired_immutable_base_diagnostic_preflight_required
+  paper_method_contract_frozen: true
+  immutable_base_boundary_frozen: true
+  full_upstream_training_reproduction_claimed: false
+  assets_reused_exact: true
+  assets_redownloaded: false
+  source_code_execution: false
+  image_pixels_read: false
+  mask_pixels_read: false
+  quality_metrics_read: false
+  training: false
+  gaussian_mutation: false
+  resources: {wall_seconds: 0.05183200351893902, cgroup_memory_current_bytes: 12470280192, disk_free_after_bytes: 79850524672, all_checks_passed: true}
+
+governance:
+  next_task: WS-V51-M1-G-AMBIGUITY-01
+  next_phase: g0_frozen_base_reverse_tracing_operator_preflight_preregistration
+  only_authorized_next_action: preregister_operator_capability_preflight_without_quality_read_or_gaussian_mutation
+  gaussian_split_authorized: false
+  gaussian_prune_authorized: false
+  density_control_authorized: false
+  training_authorized: false
+  h_quality_read: false
+  screening_quality_read: false
+  confirmation_quality_read: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F63, V51-F64, PIVOT-F05]
+failure_ledger_delta: V51-F64_resolved_by_r045_exact_asset_standard_library_recovery
