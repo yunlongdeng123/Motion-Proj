@@ -709,6 +709,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml`。r045 以原资产 exact reuse、标准库
   page-marker count=`11` 完成恢复；独立 audit `053cf574...d3b` PASS，故该工程失败关闭。r044 历史终态不倒写；本次修复不构成
   Trace3D 方法成功或训练授权。
+- `V51-F65`（`engineering/algorithm-determinism`, `active_forensic`）：Trace3D exact unpatched CUDA extension 在 r046 的
+  preregistered synthetic class-response gates 上 PASS，但相同 config/input/extension 的独立 fresh-process audit 将 foreground
+  alpha weight 从 `0.0267562941` 重放为 `0.0056084292`（absolute diff=`0.0211478649`）；hard class vector 均为 `[0,1]`。
+  official `id_trace.cu` 在多个 pixel threads 面向同一 per-Gaussian/class global weight 时使用普通 `+=` 而不是原子累加，
+  这是与漂移相容的 source-level hazard，但一次跨进程差异尚不足以把根因写死。不得因 hard argmax 一致就进入真实 U2/B3
+  adapter，也不得事后给 r046 增加失败门或直接 patch upstream。合法下一步是在全新预注册 run 中以多个 fresh processes 同时
+  冻结 hard/alpha exact determinism；FAIL 时 faithful Trace3D operator rejected 并按路线转 BKI/graph-free，PASS 才允许预注册
+  real tensor/camera adapter。r046 capability PASS 与本风险并存，且都不构成质量证据。
 
 <a id="detail-v5"></a>
 

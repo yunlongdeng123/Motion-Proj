@@ -1,5 +1,19 @@
 # Research Status
 
+## V5.1 Stage G G0a r046 capability PASS；跨进程确定性 forensic 待执行（2026-08-18）
+
+- canonical r046=`20260818T230000Z__m1-stage-g-g0a-trace3d-capability-s20260814-r046`，source/tree=
+  `7c7ee17...33bd/4987f46d...d6e`；official source 1,490 entries clean/unpatched，wheel=`378,727 bytes /
+  471786c6...287`，extension=`1,386,928 bytes /f81ef6d6...f53`。
+- frozen synthetic gate 全 PASS：background/foreground hard=`[1,0]/[0,1]`，hard repeat exact，alpha finite/positive/bounded，
+  input tensors bitwise immutable；wall/GPU/cgroup=`73.872497 s /47,616 /13,375,209,472 bytes`。
+- independent audit=`20260818T233000Z__stage-g-g0a-r046-audit.json /3,149 bytes /ecc3d061...81c /PASS`；它重放
+  hard 结果一致，但 alpha 从原 run `0.0267562941` 变为 `0.0056084292`。该项不在 r046 的跨进程 exact gate 中，故不
+  倒写 capability PASS；但它阻止真实 adapter 自动解锁。
+- official `id_trace.cu` 对 global weights 使用普通 `+=`，与漂移相容但根因尚未证明；登记 `V51-F65`。freeze=
+  `stage_g_g0a_trace3d_reverse_tracing_capability_freeze_v1.yaml`。下一步只预注册多 fresh-process determinism forensic；
+  不 patch source、不读 checkpoint/camera/quality。FAIL 则 faithful Trace3D 关闭并转 `WS-V51-M1-H-GRAPHFREE-01`。
+
 ## V5.1 Stage G G0a r046 official reverse-tracing capability 已预注册（2026-08-18）
 
 - formal target=`20260818T230000Z__m1-stage-g-g0a-trace3d-capability-s20260814-r046`；auth=r045 freeze

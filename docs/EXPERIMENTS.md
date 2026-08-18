@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage G G0a r046 PASS / audit / determinism observation（2026-08-18）
+
+- exact upstream build 与 synthetic class-response/repeat/input-immutability gates PASS；wheel/extension=
+  `471786c6...287 /f81ef6d6...f53`。audit=`3,149 bytes /ecc3d061...81c /PASS`。
+- alpha-weight original/audit=`0.0267562941 /0.0056084292`，出现跨进程漂移；新增 `V51-F65`，不事后改 r046 gate，
+  但暂停真实 adapter。下一步为 frozen multi-process determinism forensic；失败即关闭 Trace3D 并转 graph-free。
+
 ## V5.1 Stage G G0a r046 reverse-tracing build/capability 预注册（2026-08-18）
 
 - exact official `diff-id-rasterization`（1,490 tracked entries）在 cu118 DriveStudio 环境中 `--no-index` 隔离构建，

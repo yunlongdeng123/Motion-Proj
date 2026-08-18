@@ -1,0 +1,76 @@
+schema_version: worldsim_v51_stage_g_g0a_trace3d_reverse_tracing_capability_freeze_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: done
+phase: g0a_official_reverse_tracing_capability_frozen_with_determinism_forensic_required
+frozen_at: "2026-08-18"
+
+run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-G-AMBIGUITY-01/20260818T230000Z__m1-stage-g-g0a-trace3d-capability-s20260814-r046
+  source_commit: 7c7ee1750b7a8e25e1945641d5df0d71d9bb33bd
+  source_tree: 4987f46d035adb79a3d654c9bbcff4483f3c6d6e
+  resolved_config: {bytes: 3816, sha256: bbbbd39f0b2c4e453c1e26c7601a367f24b2cb8ecf788f19ec8189c323b5c437}
+  summary: {bytes: 10297, sha256: fdc075a5ad1845ef2c740a34e0d35925c1ac627a5eb83a0e8d4de6780f0bef49}
+  build_report: {bytes: 2479, sha256: 6935c558f1662ab5375e3277a4d1e3eff3024a65350fcda264fa9a3887767b2b}
+  probe: {bytes: 5284, sha256: a5d787bf6851b7c02a958464d8cbcbeeed1f63e11a5328b3f0c772757fc03c3b}
+  manifest: {bytes: 1695, sha256: f2da759af6def9016e3a356720bf4573c67ed58e284a1b5126119ba2a7a719c2, entry_count: 10, logical_bytes: 404366}
+  status_file: {bytes: 233, sha256: ccca008d66ee82147a432436f59116b14e51bdf97cfbac2ce9398d2f67268b20}
+  events: {bytes: 144, sha256: df89a23ed9fba48f334dc2c1910bef8c72b2f7aacfd75c5f4c96eae9007bde63}
+
+audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260818T233000Z__stage-g-g0a-r046-audit.json
+  bytes: 3149
+  sha256: ecc3d06193ed43bedc8155b074509c7b9adb07a4a7577c634a30c7471759981c
+  status: pass
+
+build:
+  official_source: {commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442, tree: 22d30d19c0226e353e5caf527a29eff02d36a05d, tracked_entries: 1490, clean: true, patched: false}
+  wheel: {bytes: 378727, sha256: 471786c60215e1d619e302d35bc1cf7ff815f99428569f119a76ec4cc126e287}
+  extension: {bytes: 1386928, sha256: f81ef6d62a39d31de9d25b8a42023cd86e851aeb14394bef31d8d92f3dd8df53}
+  publish_target: /root/autodl-tmp/third_party/trace3d-diff-id-rasterization-v51-stage-g
+  network_access: false
+  source_patch_applied: false
+
+capability_result:
+  conclusion: official_trace3d_diff_id_extension_build_and_synthetic_reverse_tracing_capability_pass
+  background_hard: [[1.0, 0.0]]
+  foreground_hard: [[0.0, 1.0]]
+  foreground_hard_repeat: [[0.0, 1.0]]
+  original_alpha: [[0.0, 0.026756294071674347]]
+  independent_audit_background: [[1.0, 0.0]]
+  independent_audit_foreground: [[0.0, 1.0]]
+  independent_audit_alpha: [[0.0, 0.005608429200947285]]
+  preregistered_checks_passed: true
+  interpretation: synthetic_operator_class_response_capability_only
+  real_worldsim_adapter_supported: false
+  quality_supported: false
+
+new_observation:
+  cross_process_alpha_exact: false
+  alpha_absolute_difference: 0.021147864870727062
+  source_hazard: official_cuda_kernel_uses_non_atomic_global_weight_plus_equals
+  root_cause_proven: false
+  consequence: block_real_adapter_until_preregistered_cross_process_determinism_forensic
+
+resources: {wall_seconds: 73.87249724008143, cgroup_memory_current_bytes: 13375209472, torch_peak_gpu_memory_bytes: 47616, disk_free_after_bytes: 79847833600, all_checks_passed: true}
+
+governance:
+  next_task: WS-V51-M1-G-AMBIGUITY-01
+  next_phase: g0b_cross_process_reverse_tracing_determinism_forensic_preregistration
+  pass_action: preregister_frozen_u2_b3_real_tensor_camera_adapter_preflight_without_quality_read
+  fail_action: reject_faithful_trace3d_operator_and_advance_to_WS-V51-M1-H-GRAPHFREE-01
+  source_patch_authorized: false
+  real_checkpoint_read: false
+  camera_metadata_read: false
+  image_pixels_read: false
+  mask_pixels_read: false
+  quality_metrics_read: false
+  training_authorized: false
+  gaussian_mutation: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+failure_ledger_refs: [V51-F64, V51-F65, PIVOT-F05]
+failure_ledger_delta: V51-F65_active_cross_process_alpha_weight_drift_requires_result_blind_forensic
