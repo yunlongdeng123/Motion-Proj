@@ -1,5 +1,11 @@
 # Experiments
 
+## V5.1 Stage G G0b r047 cross-process determinism 预注册（2026-08-18）
+
+- exact same synthetic input/extension，`8 fresh processes × (hard 3 + alpha 2)`；hard/alpha unique vector count 均须为 1，
+  另锁 label response、finite/bounded 与 input immutable。source plain `+=` hazard 只审计，不 patch。
+- PASS 才允许 real adapter preflight；FAIL 直接以 faithful Trace3D operator rejected 收口并转 BKI/graph-free；不读质量。
+
 ## V5.1 Stage G G0a r046 PASS / audit / determinism observation（2026-08-18）
 
 - exact upstream build 与 synthetic class-response/repeat/input-immutability gates PASS；wheel/extension=

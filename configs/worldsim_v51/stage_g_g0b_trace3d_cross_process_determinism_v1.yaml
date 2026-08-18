@@ -1,0 +1,73 @@
+schema_version: worldsim_v51_stage_g_g0b_trace3d_cross_process_determinism_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: running
+phase: g0b_fresh_process_reverse_tracing_determinism_forensic
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  capability_freeze:
+    path: configs/worldsim_v51/stage_g_g0a_trace3d_reverse_tracing_capability_freeze_v1.yaml
+    bytes: 3896
+    sha256: 7971793908f9c18a7bb92590a7bef6711a4bc6b8ccd20d8e6f6967aa9576b1ba
+    required_status: done
+    required_next_task: WS-V51-M1-G-AMBIGUITY-01
+    required_next_phase: g0b_cross_process_reverse_tracing_determinism_forensic_preregistration
+    required_cross_process_alpha_exact: false
+
+runtime:
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
+  expected_torch: 2.1.2+cu118
+  expected_torch_cuda: "11.8"
+  package_root: /root/autodl-tmp/third_party/trace3d-diff-id-rasterization-v51-stage-g
+  extension:
+    path: diff_id_rasterization/_C.cpython-39-x86_64-linux-gnu.so
+    bytes: 1386928
+    sha256: f81ef6d62a39d31de9d25b8a42023cd86e851aeb14394bef31d8d92f3dd8df53
+  fresh_process_count: 8
+  execution: sequential
+  network_access: false
+
+official_source_hazard:
+  repository: /root/autodl-tmp/third_party/trace3d-v51-stage-g
+  commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442
+  path: submodules/diff-id-rasterization/cuda_rasterizer/id_trace.cu
+  bytes: 12695
+  sha256: 7d8ef4a5dfd7d210bbb42447c8614bf972da35d6a71f3451e36d72396133b630
+  function_begin: trace_renderCUDA(
+  function_end: void ID_TRACE::trace(
+  expected_plain_global_weight_increment_count: 2
+  expected_atomic_add_count: 0
+  interpretation_before_run: source_level_data_race_hazard_not_yet_proven_as_observed_drift_root_cause
+
+synthetic_probe:
+  inherited_exact_from: configs/worldsim_v51/stage_g_g0a_trace3d_reverse_tracing_capability_v1.yaml
+  inherited_config_bytes: 3816
+  inherited_config_sha256: bbbbd39f0b2c4e453c1e26c7601a367f24b2cb8ecf788f19ec8189c323b5c437
+  per_process_calls: [background_hard_once, foreground_hard_twice, foreground_alpha_twice]
+  exact_input: {height: 32, width: 32, means3d: [[0.0, 0.0, 2.0]], opacity: [[0.9]], scales_2d: [[0.1, 0.1]], rotations_wxyz: [[1.0, 0.0, 0.0, 0.0]]}
+
+gates:
+  all_processes_exit_zero: true
+  background_hard_all_exact: [[1.0, 0.0]]
+  foreground_hard_unique_vector_count_maximum: 1
+  foreground_hard_expected: [[0.0, 1.0]]
+  foreground_alpha_unique_vector_count_maximum: 1
+  alpha_all_finite_positive_and_not_above_corresponding_hard: true
+  every_process_input_tensors_bitwise_immutable: true
+  all_gates_required: true
+
+decision:
+  pass_outcome: pass
+  pass_next_action: preregister_frozen_u2_b3_real_tensor_camera_adapter_preflight_without_quality_read
+  fail_outcome: rejected
+  fail_conclusion: faithful_trace3d_reverse_tracing_operator_rejected_cross_process_nondeterminism
+  fail_next_task: WS-V51-M1-H-GRAPHFREE-01
+  fail_next_action: preregister_faithful_bki_graph_free_source_method_preflight
+  threshold_search_allowed: false
+  source_patch_allowed: false
+
+resources: {maximum_wall_seconds: 300, maximum_cgroup_memory_bytes: 34359738368, maximum_child_torch_peak_gpu_memory_bytes: 1073741824, minimum_disk_free_bytes_after: 32212254720}
+locks: {network_access: false, source_patch: false, official_source_mutation: false, real_checkpoint_read: false, camera_metadata_read: false, image_pixels_read: false, mask_pixels_read: false, quality_metrics_read: false, training: false, gaussian_mutation: false, h_quality_read: false, screening_quality_read: false, confirmation_quality_read: false, validation_quality_read: false, test_quality_read: false, kitti_method_tuning: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F65, PIVOT-F05]
+failure_ledger_delta: V51-F65_cross_process_forensic_preregistered

@@ -1,5 +1,17 @@
 # Research Status
 
+## V5.1 Stage G G0b r047 cross-process determinism forensic 已预注册（2026-08-18）
+
+- formal target=`20260819T000000Z__m1-stage-g-g0b-trace3d-determinism-s20260814-r047`；auth=r046 freeze
+  `3,896 bytes /79717939...1ba`，exact extension=`1,386,928 bytes /f81ef6d6...f53`。
+- 固定 `8` 个 sequential fresh Python/CUDA processes；每个进程对同一 synthetic input 做 background hard×1、foreground
+  hard×2、foreground alpha×2。hard 与 alpha 分别要求跨进程/进程内唯一 vector 数=`1`，同时要求 label response、finite/
+  bounded、input immutability；不调 scale/mask/threshold/process count。
+- source hazard 同步冻结：`id_trace.cu=12,695 bytes /7d8ef4a5...630`，`trace_renderCUDA` 内 global weight
+  plain `+=` 两处、`atomicAdd` 零处；该事实只作根因候选，不预判 forensic 结果。
+- PASS 才进入 real tensor/camera adapter preflight；FAIL 则 faithful Trace3D operator=`rejected`，不 patch 上游，自动转
+  `WS-V51-M1-H-GRAPHFREE-01` 的 faithful BKI source/method preflight。checkpoint/camera/image/mask/quality/training=false。
+
 ## V5.1 Stage G G0a r046 capability PASS；跨进程确定性 forensic 待执行（2026-08-18）
 
 - canonical r046=`20260818T230000Z__m1-stage-g-g0a-trace3d-capability-s20260814-r046`，source/tree=
