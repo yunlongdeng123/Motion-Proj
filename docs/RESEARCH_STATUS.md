@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage G G0 r045 exact-asset recovery 已预注册（2026-08-18）
+
+- formal target=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`；auth=r044 closeout
+  `2,211 bytes /19026cdb...15dd`。只复核并复用 paper=`2,390,825 bytes /d50eda07...47e4` 与 clean repo
+  `7465ad94...c442/tree 22d30d19...a05d`，network/redownload/delete=false。
+- 唯一实现变化是以 Python 标准库 regex `/Type\\s*/Page\\b` 统计 PDF page markers，替代缺失的 `pdfinfo`；接受范围
+  预先冻结为 `8..30`，不按结果修改。
+- source semantic audit 显式绑定 `gaussian_renderer/trace.py`、CUDA `id_trace.cu`、`merge_patches.py`、
+  `remove_ab_gaus.py` 与 `train_gaus.py` 的 exact markers/hash，区分 reverse tracing、patch reduction/repair、ambiguous
+  split/prune 与 ordinary density control。该轮仍不执行 upstream source、不 init submodules、不读 image/mask/quality。
+- immutable-base 边界、H/S/C/validation/test/KITTI=false 与 M2/M3=pending 原样保持；成功只解锁新的 frozen-base
+  reverse-tracing operator capability preflight 预注册，不解锁 split/prune/training。
+
 ## V5.1 Stage G G0 r044 因缺少 pdfinfo 中断（2026-08-18）
 
 - r044 在 official PDF 与 repo=`7465ad94...c442/tree 22d30d19...a05d` 已原子发布后，调用不存在的 `pdfinfo`

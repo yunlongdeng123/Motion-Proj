@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage G G0 r045 exact-asset recovery 预注册（2026-08-18）
+
+- run=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`；复用 r044 已原子发布的 exact
+  paper/repo，禁止网络、重下、删除、source execution、submodule init 与质量读取。
+- only change=`pdfinfo → Python stdlib /Type Page marker count`；同时按 exact file/marker/hash 审计 tracing CUDA、patch
+  merge/repair、ambiguous split/prune 与普通 density control 的源码位置。PASS 仅进入 frozen-base operator preflight。
+
 ## V5.1 Stage G G0 r044 BLOCKED：pdfinfo 缺失（2026-08-18）
 
 - official paper/repo atomic publish 已完成，随后 page-count 调用因 `pdfinfo` 不存在中断；run terminal 未写完，保留

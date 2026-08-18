@@ -1,0 +1,80 @@
+schema_version: worldsim_v51_stage_g_g0_trace3d_source_method_preflight_v2
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: running
+phase: g0_trace3d_exact_asset_source_method_recovery_preflight
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  r044_closeout:
+    path: configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml
+    bytes: 2211
+    sha256: 19026cdb2b20a687dbf45e8eedc4bb4c0ba9fc77f06552c5d756edb7cc8c15dd
+    required_status: blocked
+    required_failure: FileNotFoundError_pdfinfo_executable_absent
+    required_next_phase: trace3d_source_method_preflight_v2_preregistration
+
+published_assets:
+  paper:
+    title: "Trace3D: Consistent Segmentation Lifting via Gaussian Instance Tracing"
+    venue: ICCV 2025
+    official_url: https://openaccess.thecvf.com/content/ICCV2025/papers/Shen_Trace3D_Consistent_Segmentation_Lifting_via_Gaussian_Instance_Tracing_ICCV_2025_paper.pdf
+    path: /root/autodl-tmp/third_party/trace3d-iccv2025.pdf
+    bytes: 2390825
+    sha256: d50eda076feb29ff84ac0d2c5d2d6c23d74cf8e6bcb70c0467b1a20618d647e4
+    page_marker_count: {method: standard_library_regex_type_page, minimum: 8, maximum: 30}
+  repository:
+    url: https://github.com/trace-3d/Trace3D.git
+    path: /root/autodl-tmp/third_party/trace3d-v51-stage-g
+    commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442
+    tree: 22d30d19c0226e353e5caf527a29eff02d36a05d
+    license_expected: Apache-2.0
+    submodule_pointer_count: 2
+    require_clean: true
+    require_all_submodules_uninitialized: true
+
+paper_method_contract:
+  gaussian_instance_tracing: reverse_rasterization_maps_pixel_instance_probabilities_to_per_gaussian_per_view_weights
+  mask_consistency: trace_gaussian_support_then_argmax_and_patch_repair_across_views
+  ambiguity: gaussian_has_material_membership_in_multiple_instances
+  faithful_geometry_refinement: git_guided_split_and_prune_ambiguous_gaussians_during_training
+  implementation_scalability: per_view_N_by_T_weights_are_reduced_to_per_gaussian_patch_ids_before_cross_view_use
+
+method_source_map:
+  gaussian_instance_tracing:
+    path: gaussian_renderer/trace.py
+    required_markers: ["weights = torch.zeros((pc.get_opacity.shape[0], num_class+1)", "rasterizer.trace(", "return weights"]
+  cuda_reverse_accumulation:
+    path: submodules/diff-id-rasterization/cuda_rasterizer/id_trace.cu
+    required_markers: ["weights[int(collected_id[j] * (num_class+1) + C)] += alpha * T", "void ID_TRACE::trace("]
+  patch_reduction_and_repair:
+    path: merge_patches.py
+    required_markers: ["w = trace(", "w = torch.argmax(w, dim=-1)", "mask.repair(weights, miou_th=0.4)"]
+  ambiguous_gaussian_detection_and_refinement:
+    path: remove_ab_gaus.py
+    required_markers: ["def split_mask(", "ab = (value < soft_th) & seen", "gaussians.weights_split(", "gaussians.weights_prune("]
+  ordinary_density_control:
+    path: train_gaus.py
+    required_markers: ["gaussians.densify_and_prune("]
+
+normative_adapter_boundary:
+  immutable_base: true
+  initially_allowed: [source_semantic_audit, source_dependency_audit, reverse_tracing_operator_capability_probe, no_quality_disagreement_diagnostic]
+  initially_forbidden: [gaussian_split, gaussian_prune, density_control, geometry_update, appearance_update, opacity_update, actor_pose_update, contrastive_training, quality_read]
+  declaration: trace3d_style_disagreement_diagnostic_under_immutable_base_constraint_not_full_upstream_training_reproduction
+  future_gate: error_enrichment_at_least_2x_on_preregistered_development_semantic_errors
+
+recovery:
+  reuse_exact_published_assets: true
+  redownload_assets: false
+  only_changes: [reuse_and_reverify_exact_published_assets, replace_external_pdfinfo_with_standard_library_pdf_page_marker_count, preserve_all_source_method_adapter_and_read_locks]
+  forbidden: [delete_published_assets, redownload_assets, source_execution, submodule_initialization, quality_read]
+
+decision:
+  expected_conclusion: trace3d_official_source_method_acquired_immutable_base_diagnostic_preflight_required
+  next_action: preregister_g0_frozen_base_git_reverse_tracing_operator_preflight
+
+resources: {maximum_wall_seconds: 120, maximum_cgroup_memory_bytes: 34359738368, minimum_disk_free_bytes_after: 32212254720}
+locks: {network_access: false, source_code_execution: false, submodule_initialization: false, model_download: false, image_pixels_read: false, mask_pixels_read: false, quality_metrics_read: false, training: false, gaussian_mutation: false, h_quality_read: false, screening_quality_read: false, confirmation_quality_read: false, validation_quality_read: false, test_quality_read: false, kitti_method_tuning: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F63, V51-F64, PIVOT-F05]
+failure_ledger_delta: V51-F64_recovery_attempt_preregistered
