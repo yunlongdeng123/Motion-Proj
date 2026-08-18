@@ -1,5 +1,12 @@
 # Experiments
 
+## V5.1 Stage G G0a r046 reverse-tracing build/capability 预注册（2026-08-18）
+
+- exact official `diff-id-rasterization`（1,490 tracked entries）在 cu118 DriveStudio 环境中 `--no-index` 隔离构建，
+  source patch/environment mutation/submodule init=false；target 采用 `.partial → atomic rename`。
+- synthetic-only gate=`1 Gaussian + 32×32 label-0/label-1`，检查 background/foreground 响应、repeat bitwise、alpha bound、
+  input immutability。real U2/B3/checkpoint/camera/image/mask/quality=false；PASS 不能登记方法质量。
+
 ## V5.1 Stage G G0 r045 PASS / audit / freeze（2026-08-18）
 
 - run/source=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045 /ed39600...5651`；PDF

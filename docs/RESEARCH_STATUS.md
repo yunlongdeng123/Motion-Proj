@@ -1,5 +1,18 @@
 # Research Status
 
+## V5.1 Stage G G0a r046 official reverse-tracing capability 已预注册（2026-08-18）
+
+- formal target=`20260818T230000Z__m1-stage-g-g0a-trace3d-capability-s20260814-r046`；auth=r045 freeze
+  `3,207 bytes /3b4e9504...0dc1`。从 official repo `7465ad94...c442` 以 `git archive` 导出 exact
+  `diff-id-rasterization` subtree（`1,490` tracked entries /ls-tree SHA `8e37e910...9ee`），禁止 source patch。
+- 仅在隔离 target 构建：DriveStudio Python 3.9、torch `2.1.2+cu118`、CUDA/nvcc `11.8`、GCC `11.3`、
+  Ninja `1.13`、RTX3090 `sm_86`、`MAX_JOBS=12`；pip `--no-index --no-deps`，不改原环境或 official checkout。
+- synthetic operator gate 只有 1 个中心 2D Gaussian 与 `32×32` 全背景/全前景 label maps；要求 class response、hard-count
+  repeat exact、alpha-weight finite/bounded 与所有 input tensor bitwise immutable。它只证明官方 kernel 在本机可构建并有基本
+  reverse-tracing 能力，不证明真实 WorldSim tensor/camera adapter 或质量。
+- real checkpoint/camera metadata/image/mask/quality/training/parameter mutation/validation/test/KITTI=false。PASS 后仅允许预注册
+  frozen U2/B3 real tensor/camera adapter preflight，仍不读质量。
+
 ## V5.1 Stage G G0 r045 source/method preflight PASS 并冻结（2026-08-18）
 
 - canonical r045=`20260818T220000Z__m1-stage-g-g0-trace3d-source-recovery-s20260814-r045`，source/tree=

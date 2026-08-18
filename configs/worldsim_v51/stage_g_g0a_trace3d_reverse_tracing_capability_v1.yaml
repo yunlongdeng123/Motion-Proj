@@ -1,0 +1,81 @@
+schema_version: worldsim_v51_stage_g_g0a_trace3d_reverse_tracing_capability_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: running
+phase: g0a_official_diff_id_build_and_synthetic_reverse_tracing_capability
+created_at: "2026-08-18"
+seed: 20260814
+
+authorization:
+  source_preflight_freeze:
+    path: configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_freeze_v1.yaml
+    bytes: 3207
+    sha256: 3b4e9504d87a1a4c4868f4df51aef9f3717357d6a41d23d44fb897c0266c0dc1
+    required_status: done
+    required_next_task: WS-V51-M1-G-AMBIGUITY-01
+    required_next_phase: g0_frozen_base_reverse_tracing_operator_preflight_preregistration
+
+official_source:
+  repository: /root/autodl-tmp/third_party/trace3d-v51-stage-g
+  commit: 7465ad94d8e7e988513c1326bbc015e8b59cc442
+  tree: 22d30d19c0226e353e5caf527a29eff02d36a05d
+  subdirectory: submodules/diff-id-rasterization
+  tracked_entry_count: 1490
+  git_ls_tree_sha256: 8e37e910cf7ad1873d3fd23c4787d931e936126da10dbb865e0096104daea9ee
+  source_patch_allowed: false
+  source_execution_allowed: true
+  use_scope: academic_research_only
+
+build:
+  python: /root/autodl-tmp/envs/drivestudio/bin/python
+  expected_python: "3.9"
+  expected_torch: 2.1.2+cu118
+  expected_torch_cuda: "11.8"
+  cuda_home: /usr/local/cuda-11.8
+  expected_nvcc_release: "11.8"
+  expected_gcc: 11.3.0
+  expected_ninja_prefix: "1.13.0"
+  torch_cuda_arch_list: "8.6"
+  maximum_jobs: 12
+  pip_flags: [--no-deps, --no-build-isolation, --no-index, --no-cache-dir]
+  install_flags: [--no-deps, --no-index, --no-cache-dir, --no-compile]
+  package_name: diff_id_rasterization
+  package_version: 0.0.4
+  publish_target: /root/autodl-tmp/third_party/trace3d-diff-id-rasterization-v51-stage-g
+  atomic_partial_suffix: .partial
+  source_repository_must_remain_clean: true
+
+synthetic_probe:
+  purpose: operator_capability_only_not_quality_or_real_adapter_evidence
+  device: cuda:0
+  gpu_name: NVIDIA GeForce RTX 3090
+  compute_capability: [8, 6]
+  image: {height: 32, width: 32, tan_fovx: 1.0, tan_fovy: 1.0, znear: 0.01, zfar: 100.0}
+  gaussian:
+    count: 1
+    means3d: [[0.0, 0.0, 2.0]]
+    opacity: [[0.9]]
+    scales_2d: [[0.1, 0.1]]
+    rotations_wxyz: [[1.0, 0.0, 0.0, 0.0]]
+  masks:
+    class_count_excluding_background: 1
+    background_case: all_pixels_label_0
+    foreground_case: all_pixels_label_1
+  gates:
+    background_case_class0_positive: true
+    background_case_class1_zero: true
+    foreground_case_class0_zero: true
+    foreground_case_class1_positive: true
+    hard_count_repeat_bitwise_equal: true
+    alpha_weighted_class1_finite_positive_and_not_above_hard_count: true
+    input_tensors_bitwise_immutable: true
+  forbidden_claim: real_worldsim_adapter_or_quality_supported
+
+decision:
+  pass_conclusion: official_trace3d_diff_id_extension_build_and_synthetic_reverse_tracing_capability_pass
+  next_action: preregister_frozen_u2_b3_real_tensor_camera_adapter_preflight_without_quality_read
+  failure_action: preserve_blocked_run_record_unified_failure_and_preregister_narrow_build_or_operator_recovery
+
+resources: {maximum_wall_seconds: 900, maximum_cgroup_memory_bytes: 68719476736, maximum_torch_peak_gpu_memory_bytes: 1073741824, minimum_disk_free_bytes_after: 32212254720}
+locks: {network_access: false, official_source_mutation: false, submodule_initialization: false, model_download: false, real_checkpoint_read: false, camera_metadata_read: false, image_pixels_read: false, mask_pixels_read: false, quality_metrics_read: false, training: false, gaussian_mutation: false, h_quality_read: false, screening_quality_read: false, confirmation_quality_read: false, validation_quality_read: false, test_quality_read: false, kitti_method_tuning: false, m2_status: pending, m3_status: pending}
+failure_ledger_refs: [V51-F63, V51-F64, PIVOT-F05]
+failure_ledger_delta: none_at_preregistration
