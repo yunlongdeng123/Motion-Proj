@@ -47,6 +47,9 @@ def test_contract_freezes_ranking_before_quality() -> None:
     assert config["ranking_contract"]["scalar_composite_score"] == "forbidden"
     assert config["ranking_contract"]["tie_break"] == ["scene", "canonical_sample_index", "camera", "base"]
     assert config["metrics"]["geometry"]["status"] == "undefined_no_comparable_base_depth"
+    predicates = config["ranking_contract"]["failure_predicates"]
+    assert predicates["B-TEMPORAL"].startswith("disabled_unwarped_proxy")
+    assert predicates["B-MIXED"].startswith("derived_when_at_least_two")
 
 
 def test_discovery_view_schema_and_undefined_regions(tmp_path: Path) -> None:

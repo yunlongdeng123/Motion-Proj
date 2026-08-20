@@ -61,6 +61,17 @@ ranking_contract:
   axes: [GLOBAL_RGB, ACTOR_RGB, BOUNDARY, TEMPORAL_PROXY]
   leaderboard_top_k: 20
   panel_union_limit: 120
+  failure_predicates:
+    B-RGB-GLOBAL: global.pixel_count_ge_minimum_and_global.psnr_le_per_base_q10
+    B-ACTOR: actor.pixel_count_ge_64_and_actor.psnr_le_per_base_q10_and_actor.psnr_lt_static.psnr
+    B-BOUNDARY: boundary.pixel_count_ge_64_and_boundary.psnr_le_per_base_q10_and_boundary.psnr_lt_actor.psnr
+    B-GEOMETRY: disabled_undefined_no_comparable_base_depth
+    B-OCC: disabled_undefined_no_audited_visibility_transition
+    B-TEMPORAL: disabled_unwarped_proxy_cannot_trigger_label
+    B-SPARSE-OBS: disabled_no_audited_observability_denominator
+    B-IDENTITY: disabled_no_independent_identity_evidence
+    B-MIXED: derived_when_at_least_two_primary_labels_hold
+    B-UNRESOLVED: derived_when_no_executable_primary_label_holds
 streaming:
   keep_all_predictions_after_p2: false
   bounded_cache_bytes: 8589934592
