@@ -214,7 +214,9 @@ def build_leaderboards(
 def panel_union(leaderboards: Mapping[str, Any], limit: int = 120) -> set[str]:
     selected: set[str] = set()
     for base in sorted(leaderboards):
-        for axis in ("GLOBAL_RGB", "ACTOR_RGB", "BOUNDARY", "TEMPORAL_PROXY"):
+        # TEMPORAL_PROXY 明确不能触发 failure label，因此不能进入 P4 的
+        # “已标注事件”panel union；它只保留独立 leaderboard 供定位。
+        for axis in ("GLOBAL_RGB", "ACTOR_RGB", "BOUNDARY"):
             for table in ("severity_topk", "scene_coverage_topk"):
                 selected.update(row["case_id"] for row in leaderboards[base][axis][table])
     if len(selected) > limit:
