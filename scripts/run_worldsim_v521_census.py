@@ -82,8 +82,15 @@ def scene_records(records: list[dict[str, Any]], scene: str, partition: str = "d
 
 
 def find_asset(registry: Mapping[str, Any], base: str, scene: str) -> Mapping[str, Any]:
-    hits = [row for row in registry["assets"] if row["base"] == base and row["scene"] == scene]
-    if len(hits) != 1 or hits[0]["state"] != "PRESENT_EXACT":
+    hits = [
+        row
+        for row in registry["assets"]
+        if row["base"] == base
+        and row["scene"] == scene
+        and row["state"] == "PRESENT_EXACT"
+        and row.get("protocol") == "strict_mod5"
+    ]
+    if len(hits) != 1:
         raise RuntimeError(f"exact asset 非唯一：{base}/{scene}")
     return hits[0]
 
