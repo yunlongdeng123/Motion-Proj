@@ -1,0 +1,86 @@
+schema: worldsim_v521_p0_scope_freeze_v1
+task_id: WS-V521-P0-BASE-CENSUS-FREEZE-01
+date: '2026-08-20'
+status: pending
+plan:
+  path: docs/WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md
+  bytes: 54123
+  sha256: ce332dea92c9e94ce601308685f48b83410e648accad92dd120b7fae8d2e3c56
+execution:
+  required_branch: research/worldsim-v5.2.1-base-badcase-census
+  source_head_policy: actual_head_no_reset
+  gpu_policy: single_gpu_serial
+  streaming_metrics: true
+  full_render_retention: frozen_badcases_only
+quality_read_lock:
+  allowed_roles: [historical, discovery, confirmation]
+  p0_quality_read: false
+  confirmation_quality_before_p9: false
+  fresh_validation: false
+  fresh_test: false
+  kitti_method_tuning: false
+method_lock:
+  algorithm_modification: false
+  training: false
+  threshold_search: false
+  stage_h_bki_execution: false
+  rejected_arm_reopen: false
+v51_terminal:
+  terminal: closed_without_promoted_candidate
+  stage_h_status: pending
+  stage_h_executed: false
+  stage_h_disposition: superseded_by_v5_2_scope
+  retained_comparator: U2/B3
+  m2_status: pending
+  m3_status: pending
+partition:
+  unit: canonical_sample
+  unit_key: dataset|scene|sample_token_or_canonical_sample_index
+  encoding: UTF-8
+  digest: sha256
+  modulus: 5
+  confirmation_bucket: 0
+  discovery_buckets: [1, 2, 3, 4]
+  hash_excludes: [base, camera, actor]
+  temporal_cross_partition: undefined_cross_partition
+  membership_freeze_stage: P1.4
+candidate_sources:
+  streetgs_strict_mod5_scenes: [scene-0230, scene-0242, scene-0255, scene-0048, scene-0994, scene-0139]
+  adgs_historical_scenes: [scene-0230, scene-0242, scene-0255, scene-0295, scene-0518, scene-0749]
+  matched_scene_candidates: [scene-0230, scene-0242, scene-0255]
+  historical_semantic_scenes: [scene-0471, scene-1087, scene-0379, scene-0071, scene-0317, scene-0450]
+p1_membership_minimum_fields:
+  - dataset
+  - scene
+  - sample_token
+  - canonical_sample_index
+  - unit_key
+  - partition
+  - split_hash
+  - eligible_bases
+failure_ledger_refs:
+  - V1-F01
+  - V1-F03
+  - V4-F34
+  - V4-F39
+  - V4-F42
+  - V4-F45
+  - V4-F47
+  - V4-F49
+  - V5-F07
+  - V5-F31
+  - V5-F32
+  - V5-F33
+  - V5-F47
+  - V5-F48
+  - V5-F51
+  - V5-F52
+  - V5-F57
+  - V5-F59
+  - V51-F31
+  - V51-F37
+  - V51-F42
+  - V51-F63
+  - V51-F65
+  - V51-F66
+failure_ledger_delta: none
