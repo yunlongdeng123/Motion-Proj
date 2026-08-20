@@ -18,6 +18,8 @@ from motion_proj.worldsim_v521.attribution import build_attribution_package
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--run-id", required=True)
+    parser.add_argument("--source-commit", required=True)
     parser.add_argument("--review-cases", type=Path, required=True)
     parser.add_argument("--badcase-registry", type=Path, required=True)
     parser.add_argument("--matched-frame-registry", type=Path, required=True)
@@ -29,6 +31,8 @@ def _parse_args() -> argparse.Namespace:
 def main() -> None:
     args = _parse_args()
     manifest = build_attribution_package(
+        run_id=args.run_id,
+        source_commit=args.source_commit,
         review_cases_path=args.review_cases,
         badcase_registry_path=args.badcase_registry,
         matched_frame_registry_path=args.matched_frame_registry,

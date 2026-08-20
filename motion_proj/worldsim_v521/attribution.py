@@ -240,6 +240,8 @@ def build_attribution_records(
 
 def build_attribution_package(
     *,
+    run_id: str,
+    source_commit: str,
     review_cases_path: Path,
     badcase_registry_path: Path,
     matched_frame_registry_path: Path,
@@ -263,6 +265,7 @@ def build_attribution_package(
     _write_json(contract_path, contract)
 
     summary = {
+        "run_id": run_id,
         "task_id": annotation_config["task_id"],
         "outcome": "human_attribution_and_backtest_denominator_frozen",
         "total_cases": len(records),
@@ -274,6 +277,7 @@ def build_attribution_package(
         "causal_claim_status": annotation_config["causal_claim_status"],
     }
     status = {
+        "run_id": run_id,
         "task_id": annotation_config["task_id"],
         "status": "done",
         "outcome": summary["outcome"],
@@ -283,7 +287,9 @@ def build_attribution_package(
 
     manifest = {
         "schema_version": SCHEMA_VERSION,
+        "run_id": run_id,
         "task_id": annotation_config["task_id"],
+        "source_commit": source_commit,
         "status": "done",
         "review_date": annotation_config["review_date"],
         "reviewer_role": annotation_config["reviewer_role"],
