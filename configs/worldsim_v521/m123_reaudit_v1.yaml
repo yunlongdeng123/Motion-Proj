@@ -1,0 +1,30 @@
+schema: worldsim_v521_m123_reaudit_v1
+task_ids:
+  m1: WS-V521-P6-M1-REAUDIT-01
+  m2: WS-V521-P7-M2-REAUDIT-01
+  m3: WS-V521-P8-M3-REAUDIT-01
+status: frozen_before_exact_overlap_quality_read
+exact_overlap:
+  key: [dataset, scene, canonical_sample_index_or_sample_token, camera, target_sha256]
+  historical_aggregate_mapping_forbidden: true
+  minimum_independent_scenes: 2
+  minimum_valid_views_per_quadrant: 2
+quadrants:
+  base_good: global_psnr_gt_frozen_per_base_q10
+  base_bad: global_psnr_le_frozen_per_base_q10
+  m1_good: historical_frozen_ownership_predicate_pass
+  m1_bad: historical_frozen_ownership_predicate_fail
+  refit_thresholds: false
+m2:
+  router_refit: false
+  threshold_search: false
+  minimum_exact_mapped_requests: 2
+m3:
+  parameter_search: false
+  distinguish_v4_temporal_delta_from_v5_constraint_projection: true
+  minimum_exact_mapped_windows: 2
+quality_locks:
+  validation: false
+  test: false
+  kitti: false
+  confirmation_before_p9: false
