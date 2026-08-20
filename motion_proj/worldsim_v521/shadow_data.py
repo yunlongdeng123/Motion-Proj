@@ -10,7 +10,7 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 from PIL import Image
 
-from .census import CensusError, sha256_file, validate_discovery_record
+from .census import CensusError, sha256_file, validate_quality_record
 
 
 FRAME_COUNT = 196
@@ -47,6 +47,7 @@ def build_streetgs_shadow(
     shadow_root: str | Path,
     scene_index: int,
     discovery_records: Sequence[Mapping[str, Any]],
+    quality_partition: str = "discovery",
 ) -> dict[str, Any]:
     source = Path(source_scene).resolve()
     destination_root = Path(shadow_root).resolve()
@@ -55,10 +56,10 @@ def build_streetgs_shadow(
     if destination.exists() or partial.exists():
         raise CensusError(f"shadow 目标已存在：{destination}")
     for row in discovery_records:
-        validate_discovery_record(row)
-    discovery_frames = {int(row["frame"]) for row in discovery_records}
-    if len(discovery_records) != len(discovery_frames) * len(CAMERAS):
-        raise CensusError("Discovery scene registry 必须覆盖每个 sample 的三相机")
+        validate_quality_record(row, quality_partition)
+    quality_frames = {int(row["frame"]) for row in discovery_records}
+    if len(discovery_records) != len(quality_frames) * len(CAMERAS):
+        raise CensusError(f"{quality_partition} scene registry 必须覆盖每个 sample 的三相机")
     destination_root.mkdir(parents=True, exist_ok=True)
     partial.mkdir()
     skip = {"images", "dynamic_masks", "fine_dynamic_masks", "sky_masks"}
@@ -73,7 +74,7 @@ def build_streetgs_shadow(
     linked_original = 0
     linked_placeholder = 0
     for frame in range(FRAME_COUNT):
-        allow_pixels = frame % 5 in TRAIN_REMAINDERS or frame in discovery_frames
+        allow_pixels = frame % 5 in TRAIN_REMAINDERS or frame in quality_frames
         for camera in CAMERAS:
             stem = f"{frame:03d}_{camera}"
             image_source = source / "images" / f"{stem}.jpg" if allow_pixels else blanks["rgb"]
@@ -96,12 +97,13 @@ def build_streetgs_shadow(
         "scene_index": int(scene_index),
         "source": str(source),
         "destination": str(destination),
-        "discovery_frames": sorted(discovery_frames),
+        "quality_partition": quality_partition,
+        "quality_frames": sorted(quality_frames),
         "original_pixel_links": linked_original,
         "placeholder_pixel_links": linked_placeholder,
-        "confirmation_original_pixel_links": 0,
+        "confirmation_original_pixel_links": len(quality_frames) * len(CAMERAS) * 5 if quality_partition == "confirmation" else 0,
         "heldout_original_pixel_links": 0,
-        "quality_lock": "train_plus_discovery_only",
+        "quality_lock": f"train_plus_{quality_partition}_only",
     }
     _atomic_json(partial / "V521_SHADOW_MANIFEST.json", manifest)
     os.replace(partial, destination)
@@ -125,6 +127,7 @@ def build_adgs_discovery_adapter(
     source_scene: str | Path,
     destination: str | Path,
     discovery_records: Sequence[Mapping[str, Any]],
+    quality_partition: str = "discovery",
 ) -> dict[str, Any]:
     train = Path(train_adapter).resolve()
     source = Path(source_scene).resolve()
@@ -134,7 +137,7 @@ def build_adgs_discovery_adapter(
         raise CensusError(f"AD-GS adapter 目标已存在：{destination}")
     rows = sorted(discovery_records, key=lambda row: (int(row["frame"]), int(row["camera"])))
     for row in rows:
-        validate_discovery_record(row)
+        validate_quality_record(row, quality_partition)
     partial.mkdir(parents=True)
     for folder in ("image", "semantic", "sky", "depth", "flow"):
         (partial / folder).mkdir()
@@ -187,7 +190,7 @@ def build_adgs_discovery_adapter(
                 "scene": row["scene"],
                 "frame": frame,
                 "camera": camera,
-                "partition": "discovery",
+                "partition": quality_partition,
                 "target_source_sha256": row["target_sha256"],
             }
         )
@@ -205,11 +208,12 @@ def build_adgs_discovery_adapter(
         "source_scene": str(source),
         "destination": str(destination),
         "train_image_count": train_image_count,
-        "discovery_image_count": len(rows),
-        "confirmation_image_count": 0,
+        "discovery_image_count": len(rows) if quality_partition == "discovery" else 0,
+        "confirmation_image_count": len(rows) if quality_partition == "confirmation" else 0,
         "meta_sha256": sha256_file(partial / "meta.npz"),
         "render_map": render_map,
-        "quality_lock": "train_plus_discovery_only",
+        "quality_partition": quality_partition,
+        "quality_lock": f"train_plus_{quality_partition}_only",
     }
     _atomic_json(partial / "V521_ADAPTER_MANIFEST.json", manifest)
     os.replace(partial, destination)

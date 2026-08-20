@@ -72,15 +72,21 @@ def load_metric_mask(path: str | Path, protocol: CensusProtocol = CensusProtocol
     return array, digest
 
 
-def validate_discovery_record(record: Mapping[str, Any]) -> None:
-    if record.get("partition") != "discovery":
-        raise CensusError("P2 只允许 Discovery record")
+def validate_quality_record(record: Mapping[str, Any], allowed_partition: str) -> None:
+    if allowed_partition not in {"discovery", "confirmation"}:
+        raise CensusError(f"非法 census quality partition：{allowed_partition}")
+    if record.get("partition") != allowed_partition:
+        raise CensusError(f"只允许 {allowed_partition} record")
     if record.get("quality_decoded") not in (False, None):
         raise CensusError("P1 registry 必须来自 quality-blind freeze")
     if record.get("eligible_bases") != ["adgs", "streetgs"]:
         raise CensusError("eligible base denominator 漂移")
     if record.get("sample_token") is not None:
         raise CensusError("当前 processed cohort 必须使用 canonical_sample_index")
+
+
+def validate_discovery_record(record: Mapping[str, Any]) -> None:
+    validate_quality_record(record, "discovery")
 
 
 def geometry_undefined() -> dict[str, Any]:
@@ -128,8 +134,9 @@ def evaluate_discovery_view(
     renderer_provenance: Mapping[str, Any],
     resource: Mapping[str, Any],
     protocol: CensusProtocol = CensusProtocol(),
+    quality_partition: str = "discovery",
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    validate_discovery_record(record)
+    validate_quality_record(record, quality_partition)
     if base not in record["eligible_bases"]:
         raise CensusError(f"base 不在 frozen denominator：{base}")
     prediction, prediction_pixel_sha = load_metric_rgb(prediction_path, protocol)
@@ -161,7 +168,7 @@ def evaluate_discovery_view(
         "sample_token": record.get("sample_token"),
         "canonical_sample_index": int(record["canonical_sample_index"]),
         "camera": int(record["camera"]),
-        "partition": "discovery",
+        "partition": quality_partition,
     }
     metrics = {
         name: evaluation["regions"][name]
@@ -217,9 +224,10 @@ def temporal_proxy_row(
     earlier_dynamic: np.ndarray,
     later_dynamic: np.ndarray,
     protocol: CensusProtocol = CensusProtocol(),
+    quality_partition: str = "discovery",
 ) -> dict[str, Any]:
     for row in (earlier, later):
-        validate_discovery_record(row)
+        validate_quality_record(row, quality_partition)
     if earlier["scene"] != later["scene"] or earlier["camera"] != later["camera"]:
         raise CensusError("temporal window 必须同 scene/camera")
     residual_a = np.mean(np.abs(earlier_prediction - earlier_target), axis=-1)
@@ -242,7 +250,7 @@ def temporal_proxy_row(
         "entity_kind": "temporal_window",
         "scene": earlier["scene"],
         "camera": int(earlier["camera"]),
-        "partition": "discovery",
+        "partition": quality_partition,
         "window_id": f"{earlier['scene']}|c{int(earlier['camera'])}|f{frame_a:03d}-f{frame_b:03d}",
         "member_sample_tokens": [earlier.get("sample_token"), later.get("sample_token")],
         "member_canonical_sample_indices": [frame_a, frame_b],

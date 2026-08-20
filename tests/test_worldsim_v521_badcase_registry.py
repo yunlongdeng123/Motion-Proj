@@ -65,3 +65,18 @@ def test_leaderboard_has_severity_and_scene_coverage_tables() -> None:
     assert len(boards["severity_topk"]) == 12
     assert len(boards["scene_coverage_topk"]) == 4
     assert sum(item["scene"] == "scene-a" for item in boards["scene_coverage_topk"]) == 2
+
+
+def test_confirmation_registry_reuses_thresholds_without_refit() -> None:
+    rows = [row("adgs", "scene-a", 2, 10.0), row("adgs", "scene-b", 2, 11.0)]
+    minimums = {"global": 1, "static": 1, "actor": 64, "boundary": 64}
+    thresholds = freeze_thresholds(rows, minimums)
+    boards = build_leaderboards(rows, [], minimums)
+    registry = build_registry(
+        rows, [], thresholds, minimums, panel_union(boards, 120),
+        split_role="confirmation", evidence_tier="C",
+    )
+    assert registry
+    assert all(item["split_role"] == "confirmation" for item in registry)
+    assert all(item["evidence_tier"] == "C" for item in registry)
+    assert all(item["confirmation_verdict"] == "pending_class_verdict" for item in registry)

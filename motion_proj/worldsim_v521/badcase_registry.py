@@ -227,6 +227,7 @@ def panel_union(leaderboards: Mapping[str, Any], limit: int = 120) -> set[str]:
 def build_registry(
     base_rows: Sequence[Mapping[str, Any]], temporal_rows: Sequence[Mapping[str, Any]],
     thresholds: Mapping[str, Any], minimums: Mapping[str, int], selected: set[str],
+    *, split_role: str = "discovery", evidence_tier: str = "D",
 ) -> list[dict[str, Any]]:
     registry: list[dict[str, Any]] = []
     for row in base_rows:
@@ -245,7 +246,7 @@ def build_registry(
                 "frame": row["frame"], "sample_token": row.get("sample_token"),
                 "canonical_sample_index": row["canonical_sample_index"], "camera": row["camera"],
                 "entity_kind": "view", "actor_token": None, "temporal_window_id": None,
-                "evidence_tier": "D", "split_role": "discovery",
+                "evidence_tier": evidence_tier, "split_role": split_role,
                 "failure_axes": axes, "failure_class": classes,
                 "metrics": row["metrics"], "actor_context": row["actor_context"],
                 "m1_context": {"status": "not_exactly_mapped"},
@@ -254,7 +255,8 @@ def build_registry(
                     "dynamic_mask_sha256": row["dynamic_mask_sha256"],
                 },
                 "panel_path": None, "classification_status": "labeled",
-                "confirmation_verdict": "not_applicable", "selected_for_panel": identifier in selected,
+                "confirmation_verdict": "not_applicable" if split_role == "discovery" else "pending_class_verdict",
+                "selected_for_panel": identifier in selected,
                 "blocker_reason": None,
             }
         )
@@ -266,8 +268,8 @@ def build_registry(
                 "case_id": identifier, "event_ids": {}, "base": row["base"], "dataset": "nuscenes",
                 "scene": row["scene"], "frame": None, "sample_token": None,
                 "canonical_sample_index": None, "camera": row["camera"], "entity_kind": "temporal_window",
-                "actor_token": None, "temporal_window_id": row["window_id"], "evidence_tier": "D",
-                "split_role": "discovery", "failure_axes": ["TEMPORAL_PROXY"],
+                "actor_token": None, "temporal_window_id": row["window_id"], "evidence_tier": evidence_tier,
+                "split_role": split_role, "failure_axes": ["TEMPORAL_PROXY"],
                 "failure_class": ["B-UNRESOLVED"], "metrics": row["metrics"], "actor_context": {},
                 "m1_context": {"status": "not_exactly_mapped"}, "asset_provenance": {}, "panel_path": None,
                 "classification_status": "unresolved", "confirmation_verdict": "not_applicable",

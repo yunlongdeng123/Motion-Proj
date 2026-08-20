@@ -30,10 +30,11 @@ def main() -> None:
     parser.add_argument("--records", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--config", required=True, type=Path)
+    parser.add_argument("--partition", choices=("discovery", "confirmation"), default="discovery")
     args = parser.parse_args()
     rows = [json.loads(line) for line in args.records.read_text(encoding="utf-8").splitlines() if line.strip()]
-    if not rows or any(row.get("partition") != "discovery" for row in rows):
-        raise RuntimeError("records 必须为非空 Discovery-only")
+    if not rows or any(row.get("partition") != args.partition for row in rows):
+        raise RuntimeError(f"records 必须为非空 {args.partition}-only")
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     isolated_model = output / "model"
@@ -83,7 +84,7 @@ def main() -> None:
                 "scene": row["scene"],
                 "frame": int(row["frame"]),
                 "camera": int(row["camera"]),
-                "partition": "discovery",
+                "partition": args.partition,
                 "prediction_path": str(prediction.resolve()),
                 "prediction_sha256": sha256_file(prediction),
             }
@@ -100,8 +101,8 @@ def main() -> None:
         "checkpoint_sha256_before": before,
         "checkpoint_sha256_after": after,
         "adapter": str(args.adapter.resolve()),
-        "quality_partition": "discovery",
-        "confirmation_original_pixels_decoded": 0,
+        "quality_partition": args.partition,
+        "confirmation_original_pixels_decoded": len(render_rows) if args.partition == "confirmation" else 0,
         "views": len(render_rows),
         "render_seconds": time.monotonic() - started,
         "command": command,

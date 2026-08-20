@@ -31,6 +31,7 @@ def main() -> None:
     parser.add_argument("--shadow-root", required=True, type=Path)
     parser.add_argument("--records", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--partition", choices=("discovery", "confirmation"), default="discovery")
     parser.add_argument(
         "--upstream-root",
         type=Path,
@@ -53,8 +54,8 @@ def main() -> None:
     from utils.misc import import_str
 
     rows = [json.loads(line) for line in args.records.read_text(encoding="utf-8").splitlines() if line.strip()]
-    if not rows or any(row.get("partition") != "discovery" for row in rows):
-        raise RuntimeError("records 必须为非空 Discovery-only")
+    if not rows or any(row.get("partition") != args.partition for row in rows):
+        raise RuntimeError(f"records 必须为非空 {args.partition}-only")
     args.output.mkdir(parents=True, exist_ok=False)
     before = sha256_file(checkpoint)
     cfg = OmegaConf.load(log_dir / "config.yaml")
@@ -102,7 +103,7 @@ def main() -> None:
                     "scene": row["scene"],
                     "frame": int(row["frame"]),
                     "camera": int(row["camera"]),
-                    "partition": "discovery",
+                    "partition": args.partition,
                     "prediction_path": str(output.resolve()),
                     "prediction_sha256": sha256_file(output),
                     "render_seconds": time.monotonic() - start,
@@ -132,8 +133,8 @@ def main() -> None:
         "config": str((log_dir / "config.yaml").resolve()),
         "config_sha256": sha256_file(log_dir / "config.yaml"),
         "shadow_root": str(args.shadow_root.resolve()),
-        "quality_partition": "discovery",
-        "confirmation_original_pixels_decoded": 0,
+        "quality_partition": args.partition,
+        "confirmation_original_pixels_decoded": len(render_rows) if args.partition == "confirmation" else 0,
         "views": len(render_rows),
         "load_seconds": load_seconds,
         "peak_torch_allocated_bytes": int(torch.cuda.max_memory_allocated()),

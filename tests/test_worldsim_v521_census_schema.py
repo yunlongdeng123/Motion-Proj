@@ -84,12 +84,18 @@ def test_confirmation_fails_closed(tmp_path: Path) -> None:
     Image.new("L", (12, 8)).save(dynamic)
     record = frozen_record(target)
     record["partition"] = "confirmation"
-    with pytest.raises(CensusError, match="Discovery"):
+    with pytest.raises(CensusError, match="discovery"):
         evaluate_discovery_view(
             base="streetgs", record=record, prediction_path=target, dynamic_mask_path=dynamic,
             lpips_model=None, renderer_provenance={}, resource={},
             protocol=CensusProtocol(metric_width=12, metric_height=8),
         )
+    base_row, _ = evaluate_discovery_view(
+        base="streetgs", record=record, prediction_path=target, dynamic_mask_path=dynamic,
+        lpips_model=None, renderer_provenance={}, resource={},
+        protocol=CensusProtocol(metric_width=12, metric_height=8), quality_partition="confirmation",
+    )
+    assert base_row["partition"] == "confirmation"
 
 
 def test_temporal_proxy_cannot_name_temporal_failure(tmp_path: Path) -> None:
