@@ -1,5 +1,22 @@
 # Research Status
 
+## V5.2.1 P1 资产与分区 census 已通过；P2 Discovery-only 统一评估待执行（2026-08-20）
+- task family=`WS-V521-P0..P10`，overall status=`running`；P0=`done/p0_gate_pass`，P1=`done/p1_gate_pass`。P1 canonical run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T084604Z__p1-base-asset-census-s0-r001`，source HEAD=
+  `127b216`。P1 全程 quality bytes decoded=`0`，Confirmation 与 fresh validation/test/KITTI 仍为 unread。
+- exact matched denominator=`AD-GS + StreetGS × 6 scenes`：StreetGS 六个 `checkpoint_final.pth` 与 AD-GS 六组
+  `point_cloud/deform/env` 共 `12` 个 scene/base 资产全部按既有 manifest 命中；六场为
+  `0048/0139/0230/0242/0255/0994`，数据帧各 `39`，三相机共同 denominator=`234 samples / 702 views`。
+- 共享 sample hash 分区已在任何 Tier-D quality read 前冻结：Discovery=`192 samples / 576 views`，internal
+  Confirmation=`42 samples / 126 views`；partition key 不含 base/camera/actor，故同 sample 的两基座与三相机严格同分区。
+  freeze SHA=`3003f98e...a7345`，matched registry SHA=`a5680323...1389`。
+- coverage candidate=`complete_full`。V1 AD-GS 原生历史六场重载荷/渲染均为
+  `MISSING_BUT_MANIFESTED`，登记 `6` 条资产 blocker，禁止以重训补洞；StreetGS 旧 stride-10 六场为
+  `PROTOCOL_MISMATCH`，不混入当前 matched denominator。当前 exact checkpoint 足以按冻结协议重渲染两套基座。
+- 当前唯一下一步=`WS-V521-P2-DISCOVERY-CENSUS-01`：冻结指标方向/支持域/排序轴与面板模板后，仅解码
+  Discovery，串行重渲染并生成 frame/camera/actor/temporal 诊断；不计算总分，不读取 Confirmation。
+
+
 ## V5.2.1 P0 已通过；P1 资产 census 待执行（2026-08-20）
 
 - task family=`WS-V521-P0..P10`，overall status=`running`；P0=`done/p0_gate_pass`，canonical run=

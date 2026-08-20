@@ -1,5 +1,20 @@
 # Experiments
 
+## V5.2.1 P1 exact base asset / shared split census PASS（2026-08-20）
+- task=`WS-V521-P1-BASE-ASSET-CENSUS-01`，status=`done`，outcome=`p1_gate_pass`；canonical run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T084604Z__p1-base-asset-census-s0-r001`，source=`127b216`。
+- exact matched assets：AD-GS 六个 checkpoint bundle 与 StreetGS 六个 final checkpoint 全部命中既有冻结 hash；
+  scene set=`0048/0139/0230/0242/0255/0994`，matched denominator=`234 canonical samples / 702 three-camera views`，
+  coverage candidate=`complete_full`。
+- quality-blind split 已冻结：Discovery=`192 samples / 576 views`，Confirmation=`42 samples / 126 views`；
+  `BASE_ASSET_REGISTRY.json` SHA=`5afb4377...bcc4`，`DISCOVERY_CONFIRMATION_FREEZE.json` SHA=`3003f98e...a7345`，
+  `MATCHED_FRAME_REGISTRY.jsonl` SHA=`a5680323...1389`。quality bytes decoded=`0`。
+- historical-only audit：V1 AD-GS 六场 native checkpoint/render 为 `MISSING_BUT_MANIFESTED`，形成六条资产 blocker，
+  不以重训恢复；StreetGS 旧 stride-10 六场为 `PROTOCOL_MISMATCH`。两者均不污染当前 exact matched denominator。
+- 下一步只允许 P2 Discovery-only 串行重渲染/统一指标；Confirmation、fresh validation/test/KITTI、Stage H/BKI、
+  algorithm modification、training、threshold search 均保持 false。failure delta=`none`。
+
+
 ## V5.2.1 P0 protocol/provenance/resource freeze PASS（2026-08-20）
 
 - task=`WS-V521-P0-BASE-CENSUS-FREEZE-01`，status=`done`，outcome=`p0_gate_pass`；canonical run=
