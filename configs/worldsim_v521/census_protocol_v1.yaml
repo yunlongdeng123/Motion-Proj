@@ -55,10 +55,8 @@ ranking_contract:
     lpips_alex: higher_is_worse
     residual_change_l1: higher_is_worse
   quantile_operator:
-    implementation: per_scene_numpy_quantile_linear_then_median
+    implementation: numpy_quantile_linear
     scene_tail_quantile: 0.10
-    base_separation: per_base
-    undefined_policy: exclude_from_numeric_quantile_retain_in_coverage_denominator
   tie_break: [scene, canonical_sample_index, camera, base]
   axes: [GLOBAL_RGB, ACTOR_RGB, BOUNDARY, TEMPORAL_PROXY]
   leaderboard_top_k: 20
