@@ -320,10 +320,17 @@ def evaluate(census_run: Path, run_dir: Path) -> None:
             "classification_status": "labeled", "failure_axes": case["failure_axes"],
             "metric_row_sha256": sha256_json(case),
             "inputs": {
-                "target": {"path": pair["adgs"]["target_path"], "sha256": pair["adgs"]["target_sha256"]},
+                "target": {
+                    "path": pair["adgs"]["target_path"],
+                    "source_file_sha256": pair["adgs"]["target_source_sha256"],
+                    "decoded_metric_pixel_sha256": pair["adgs"]["target_sha256"],
+                },
                 "adgs": {"path": pair["adgs"]["prediction_path"], "sha256": pair["adgs"]["prediction_sha256"]},
                 "streetgs": {"path": pair["streetgs"]["prediction_path"], "sha256": pair["streetgs"]["prediction_sha256"]},
-                "dynamic_mask": {"path": pair["adgs"]["dynamic_mask_path"], "sha256": pair["adgs"]["dynamic_mask_sha256"]},
+                "dynamic_mask": {
+                    "path": pair["adgs"]["dynamic_mask_path"],
+                    "decoded_metric_pixel_sha256": pair["adgs"]["dynamic_mask_sha256"],
+                },
             },
             **panel,
         }
