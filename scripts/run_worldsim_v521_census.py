@@ -277,6 +277,24 @@ def evaluate(config_path: Path, run_dir: Path) -> None:
             target_array, _ = load_metric_rgb(record["target_path"], protocol)
             dynamic, _ = load_metric_mask(mask_path, protocol)
             decoded[key] = (pred_array, target_array, dynamic)
+    replay_source = base_rows[0]
+    replay_record = by_lookup[(replay_source["scene"], int(replay_source["frame"]), int(replay_source["camera"]))]
+    replay_prediction = mapping[
+        (replay_source["base"], replay_source["scene"], int(replay_source["frame"]), int(replay_source["camera"]))
+    ]
+    replay_mask = (
+        Path(replay_record["target_path"]).parents[1]
+        / "dynamic_masks" / "all"
+        / f"{int(replay_record['frame']):03d}_{int(replay_record['camera'])}.png"
+    )
+    replay_row, _ = evaluate_discovery_view(
+        base=replay_source["base"], record=replay_record,
+        prediction_path=replay_prediction["prediction_path"], dynamic_mask_path=replay_mask,
+        lpips_model=model, renderer_provenance=replay_source["renderer"], resource={}, protocol=protocol,
+    )
+    deterministic_metric_replay_gate = replay_row["metrics"] == replay_source["metrics"]
+    if not deterministic_metric_replay_gate:
+        raise RuntimeError("same-input metric replay 非 exact deterministic")
     target_hash_pairs: dict[tuple[str, int, int], set[str]] = defaultdict(set)
     for row in base_rows:
         target_hash_pairs[(row["scene"], row["frame"], row["camera"])].add(row["target_sha256"])
@@ -344,6 +362,9 @@ def evaluate(config_path: Path, run_dir: Path) -> None:
         "checkpoint_hash_gate": all(audit.get("checkpoint_sha256_before") == audit.get("checkpoint_sha256_after") for audit in audits),
         "target_hash_cross_base_gate": True,
         "finite_metric_gate": finite_gate,
+        "deterministic_metric_replay_gate": deterministic_metric_replay_gate,
+        "canonical_v4_evaluator_sha256": sha256_file(Path("motion_proj/worldsim_v4/evaluator.py")),
+        "canonical_v4_region_masks_sha256": sha256_file(Path("motion_proj/worldsim_v4/region_masks.py")),
         "lpips_backbone": "alex",
         "geometry_status": "undefined_no_comparable_base_depth",
         "actor_instance_status": "undefined_no_instance_region",
