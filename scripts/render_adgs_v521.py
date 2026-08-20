@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import time
 from pathlib import Path
@@ -38,6 +39,7 @@ def main() -> None:
     isolated_model = output / "model"
     isolated_model.mkdir()
     (isolated_model / "point_cloud").symlink_to((args.model_source.resolve() / "point_cloud"), target_is_directory=True)
+    shutil.copy2(args.model_source.resolve() / "cfg_args", isolated_model / "cfg_args")
     bundle_paths = sorted((args.model_source.resolve() / "point_cloud" / "iteration_60000").glob("*"))
     before = {path.name: sha256_file(path) for path in bundle_paths if path.is_file()}
     started = time.monotonic()
