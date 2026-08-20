@@ -1,9 +1,12 @@
 # Motion-Proj 文档导航
 
 - 更新时间：2026-08-20
-- 当前路线：`WorldSim V5.1 / M1-only closeout`，分支=`research/worldsim-v5.1-m1`
-- 当前授权：`none_v51_closed`；V5.1 M1=`closed_without_promoted_candidate`。Stage H 保持 `pending`、未执行，并由
-  V5.2 observation-source scope 取代；validation/test/KITTI 方法调参与 M2/M3 均未解锁
+- 当前路线：`WorldSim V5.2 / M123 causal bridge + autoresearch`，分支=`research/worldsim-v5.2.1-base-badcase-census`
+- 当前授权：`WS-V52-R0..R7 pending`；允许按
+  [`WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md`](WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md) 单卡无人值守执行一晚，
+  但必须先通过 Base Validity/causal bridge，fresh validation/test/KITTI 与 Stage H/BKI 继续锁定
+- V5.2.1 人工归因：[`WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md`](WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)，
+  `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`，回测 manifest=`run_manifests/worldsim-v5.2.1-human-review-attribution-v1/`
 - V5.1 终局归档：[`archive/2026-08/worldsim-v51-m1-closeout/`](archive/2026-08/worldsim-v51-m1-closeout/README.md)
 - V5.1 执行登记：[`WORLDSIM_V5_1_M1_PLAN.md`](WORLDSIM_V5_1_M1_PLAN.md)
 - V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
@@ -42,6 +45,8 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 - [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前路线、授权、commit、证据路径和下一步；
 - [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：仍约束后续路线的负结论；
 - [`EXPERIMENTS.md`](EXPERIMENTS.md)：完整实验台账；
+- [`WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md`](WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md)：V5.2 M1/M2/M3 因果桥、自动门禁与一晚调度；
+- [`WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md`](WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)：18-case 人工问题归因、数据来源和回测合同；
 - [`archive/2026-08/worldsim-v51-m1-closeout/README.md`](archive/2026-08/worldsim-v51-m1-closeout/README.md)：V5.1 M1 终局结论、证据矩阵和 V5.2 复开门禁；
 - [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)：V5 KITTI 压缩包、frame gate、存储预算和 adapter 阻塞结论；
 - [`KITTI_TRACKING_ARCHIVE_METADATA_V5.json`](KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：逐 archive、split、sequence 和 class/track metadata；

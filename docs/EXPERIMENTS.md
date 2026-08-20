@@ -1,5 +1,23 @@
 # Experiments
 
+## V5.2.1 P11 Human Attribution PASS / V5.2 M123 Autoresearch 注册（2026-08-20）
+
+- P11 task=`WS-V521-P11-HUMAN-ATTRIBUTION-01`，run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T130000Z__p11-human-review-attribution-s0-r001`，source=
+  `259958c4b773762e38d40ba7617c61b7425080ad`，status=`done`，outcome=
+  `human_attribution_and_backtest_denominator_frozen`。
+- 输入 exact SHA：review cases=`5f43792e...04f`、P10 badcase registry=`29d1ca2b...68bb`、matched frame registry=
+  `a5680323...1389`、人工 annotation config=`02c72ed9...43a7`；输出 cases/backtest contract=
+  `d89f4a4b...381f /8149ecb9...872f`。
+- denominator=`18`：`9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 ATTRIBUTION_UNRESOLVED`；eligible=
+  `5 Discovery design + 3 one-shot Confirmation`，全部为 StreetGS/nuscenes。人工 verdict 是视觉诊断假设，不构成 M1/M3
+  因果证明；P10 registry、threshold、predicate、K、split 和 panel selection 均未改变。
+- V5.2 autoresearch task family=`WS-V52-R0..R7` 已注册为 `pending`：R0 freeze → R1 Base Validity/causal bridge → R2 M1
+  TrackBayes → R3 M3 warp bridge/replay → R4 M2 safety → R5 factorial fusion → R6 one-shot Confirmation → R7 closeout。
+  用户授权最长 `12 h` unattended；无新人工 verdict 时不得由 Agent 代填。
+- fresh validation/test/KITTI quality=`false`，Stage H/BKI=`false`，本条无算法训练或新 candidate；failure delta=
+  `V52-F01/V52-F02`。
+
 ## V5.2.1 P9 one-shot Confirmation / P10 closeout PASS（2026-08-20）
 
 - P9 run=`20260820T103000Z__p9-one-shot-confirmation-s0-r001`；在 quality decode 前冻结 taxonomy、P5、M123、P4

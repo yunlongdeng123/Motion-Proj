@@ -1,5 +1,27 @@
 # Research Status
 
+## V5.2 P11 人工归因已冻结；M123 Autoresearch 待执行（2026-08-20）
+
+- task=`WS-V521-P11-HUMAN-ATTRIBUTION-01`，status=`done`，canonical run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T130000Z__p11-human-review-attribution-s0-r001`，source=
+  `259958c4b773762e38d40ba7617c61b7425080ad`。18/18 人工 review 形成只读 attribution layer；P10 原始
+  `BADCASE_REGISTRY.jsonl` 未回写。
+- research gate 冻结为 `BASE_FAILURE=9 / M123_ELIGIBLE=8 / ATTRIBUTION_UNRESOLVED=1`。8 个 eligible case 全部来自
+  StreetGS，分为 Discovery design=`5`（#05/#10/#11/#16/#17）与 one-shot Confirmation=`3`（#06/#12/#18）；后者不得
+  用于选 arm、阈值或指标。
+- 全部 case 的逻辑数据集为 `nuScenes trainval / DriveStudio 10Hz / three forward cameras`；逐 case scene index、target
+  path、split hash、target/prediction/mask/panel/metric SHA 已冻结在
+  `docs/run_manifests/worldsim-v5.2.1-human-review-attribution-v1/cases.jsonl`，SHA=`d89f4a4b...381f`；回测合同
+  SHA=`8149ecb9...872f`。
+- 人工诊断只支持 `visual_diagnostic_hypothesis_not_causal_proof`：M1 状态改为
+  `DIRECTION_SUPPORTED_CAUSAL_BRIDGE_PENDING`，M3=`SYMPTOM_OVERLAP_STRONG_EXACT_TEMPORAL_BRIDGE_PENDING`，M2=
+  `SAFETY_LAYER_PENDING`。新增约束=`V52-F01/V52-F02`。
+- 正式计划=[`WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md`](WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md)，machine contract=
+  `configs/worldsim_v52/m123_autoresearch_v1.yaml`，task family=`WS-V52-R0..R7`，status=`pending`。用户已授权单卡 RTX 3090
+  最长 `12 h` 无人值守自动执行，不需要逐阶段确认；Agent 不得代填任何新增人工 verdict。
+- 当前唯一执行入口=`WS-V52-R0-PREFLIGHT-01`，随后必须先跑 R1 Base Validity + pixel→Gaussian/temporal causal bridge。
+  fresh validation/test/KITTI quality、Confirmation tuning、Stage H/BKI、Graph/KNN 空间传播继续锁定。
+
 ## V5.2.1 Base Badcase Census 已冻结收口（2026-08-20）
 
 - task family=`WS-V521-P0..P10`，overall status=`done`，terminal outcome=`v521_base_badcase_basis_frozen`；P9 canonical=

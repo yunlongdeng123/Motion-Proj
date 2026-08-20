@@ -15,6 +15,7 @@
 | `autoresearch-e0-evaluator-s20260714-v3` | CoTracker3 重跑与扰动排序 machine pass | 后续 PA0 人审已完成；不标定绝对物理量 |
 | `p2-v2-gen04-track8-s20260713-59c3f05-net1` | 无 future-GT generated point-track gate 通过 | 只支持 object-track 基础设施 |
 | `p2-v2-replay05-review20-s20260713-8d750f3` | object-only replay 20-case review 通过 | 后续 endpoint capacity/locality gate 失败 |
+| `worldsim-v5.2.1-human-review-attribution-v1` | 18-case 人工归因、exact nuScenes provenance 与 5D/3C 回测分母 | V5.2 M1/M3 causal bridge 与 M2 safety 的冻结入口 |
 
 2026-07-15 之后的 Physics-DPO、UPO 与 candidate fallback 没有复制到本轻量目录；其正式证据位于：
 

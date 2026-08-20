@@ -50,7 +50,7 @@
 - [V7/V7.1、N1/cut-in 与历史路线](#detail-legacy)
 - [跨路线原则与新实验检查表](#detail-cross-route)
 
-## 1. V1–V5.1 版本总览与 V1/V2 汇总
+## 1. V1–V5.2 版本总览与 V1/V2 汇总
 
 | 版本 | 终态/核心推翻 | 主要工程坑 | 详细证据入口 |
 |---|---|---|---|
@@ -61,6 +61,7 @@
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
+| V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 
 ### 1.1 V1 汇总条目
 
@@ -117,6 +118,28 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v52"></a>
+
+## V5.2 人工归因与 M123 causal bridge 防重复结论（2026-08-20）
+
+- `V52-F01`（`evaluation/attribution`, `active`）：V5.2.1 的 `GLOBAL_RGB / ACTOR_RGB / BOUNDARY` failure label 是合法
+  census 结果，但不能自动解释为 M1/M2/M3 的模块失败。用户指定评审者对代表性 18-case package 完成 `18/18` 逐图复核后，
+  冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 ATTRIBUTION_UNRESOLVED`：AD-GS 的多条 actor/boundary case 实际由白屏、
+  单色、全局 smear 主导；即使 ownership 完美也无法恢复这些画面。不得用 BASE_FAILURE case 评价 TrackBayes、M3 delta 或
+  M2 router，也不得删除这些 case 来改善基座 aggregate。所有后续 M123 run 必须先执行 P0 Base Validity Gate，并在完整报告中
+  单独保留 base sentinels。证据=`WS-V521-P11-HUMAN-ATTRIBUTION-01`、canonical run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T130000Z__p11-human-review-attribution-s0-r001`、cases SHA=
+  `d89f4a4b...381f`。
+- `V52-F02`（`evaluation/causal-identification`, `active`）：8 个 StreetGS eligible case 的视觉症状与 M1 observation scarcity、
+  M3 actor trajectory/visibility 高度相容，但 panel 不能证明失败 pixel 恰好来自 low-observation/uncertain Gaussian，也不能证明
+  ghost 会被 actor-pose warp 解释。因此状态只能是 `DIRECTION_SUPPORTED_CAUSAL_BRIDGE_PENDING` /
+  `SYMPTOM_OVERLAP_STRONG_EXACT_TEMPORAL_BRIDGE_PENDING`，不得从人工诊断直接晋级 TrackBayes 或修改 M3。合法复开必须保持
+  Discovery design `5`（#05/#10/#11/#16/#17）与 one-shot Confirmation `3`（#06/#12/#18）分离，先冻结并执行 exact
+  pixel→Gaussian/U2-B3 observability bridge 与 `unwarped/flow-warped/pose-warped` temporal bridge；Confirmation 不得选 arm、
+  threshold 或 metric。M2 只消费已通过 candidate 的 uncertainty/validity 并决定 execute/abstain；geometry undefined 时不得
+  写 geometry-safe。证据=`docs/run_manifests/worldsim-v5.2.1-human-review-attribution-v1/` 与
+  `configs/worldsim_v52/m123_autoresearch_v1.yaml`。
 
 <a id="detail-v51"></a>
 

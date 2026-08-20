@@ -23,3 +23,23 @@ class-level verdict 见 `P9_CONFIRMATION_VERDICT.json`。
 
 P5 使用完整 census denominator；actor area、actor/static 与 boundary/actor residual ratio 可解释，distance、speed、LiDAR support、
 visibility、occlusion transition 全部如实缺测。Spearman 只作相关性，不写因果。
+
+## 18-case 人工复核归因层
+
+用户指定评审者已完成代表性 review package 的 `18/18` 逐图复核。该复核不回写原始
+`BADCASE_REGISTRY.jsonl`，而是在其上冻结独立 attribution layer：
+
+- `BASE_FAILURE=9`：global reconstruction 已失败，actor/boundary 指标不具备 M123 因果归因资格；
+- `M123_ELIGIBLE=8`：静态背景基本可用，动态 actor、boundary 或 ghost 是局部主问题；
+- `ATTRIBUTION_UNRESOLVED=1`：global 与 dynamic 同时失败，需先做 Base Validity/局部残差分解。
+
+8 个 eligible case 均来自 StreetGS，其中 Discovery design=`5`、one-shot Confirmation=`3`。当前最强 seed 为：
+
+- M1 observation scarcity：`BC-STREETGS-6132ad736366`、`BC-STREETGS-68c77ab5bc76`；
+- M3 actor motion：`BC-STREETGS-945caf2fc082`、`BC-STREETGS-62640d591ebc`、`BC-STREETGS-4305955afdfd`；
+- M1×M3 boundary coupling：`BC-STREETGS-b363a27e6231`、`BC-STREETGS-7e9c9ecf93da`，另有
+  `BC-STREETGS-84bf82336ee0` 的 dynamic decomposition/temporal ghost。
+
+这些是视觉诊断假设，不是 causal proof。完整 case→dataset/split/path/hash→问题→模块→回测指标映射见
+[`WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md`](WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md) 与
+`docs/run_manifests/worldsim-v5.2.1-human-review-attribution-v1/cases.jsonl`。
