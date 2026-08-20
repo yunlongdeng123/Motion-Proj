@@ -1,5 +1,19 @@
 # Experiments
 
+## V5.2.1 Base Badcase Census 预注册（2026-08-20）
+
+- task family=`WS-V521-P0..P10`，status=`pending`，formal run=`none`；计划=
+  `docs/WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md`（`54,123 bytes /sha256 ce332dea...3c56`），source base=
+  `a9dede0b327c20d744a1dea7d5d6eb99b4203012`。下一步仅 P0 protocol/provenance/resource freeze。
+- 研究问题：先建立 AD-GS/StreetGS 的 exact base asset/census denominator、frame/camera/actor/window failure taxonomy 与
+  deterministic `BC-*`/`BCE-*` registry，再判断 M1 ownership 是否独立于 base RGB/geometry badcase，以及 M2/M3 应保留为
+  core、downstream 还是 evidence-insufficient；Top-K panel 不进入 prevalence 分母。
+- split/quality lock：共享 canonical sample hash 不消费 base/camera/actor；P1 后、P2 前冻结具体 Discovery/Confirmation
+  membership；P2 只读 Discovery，P9 才 one-shot 读取 internal Confirmation。fresh validation/test/KITTI quality=false，
+  Stage H/BKI=false，algorithm modification/training/threshold search=false。
+- failure refs=`V1-F01/F03, V4-F34/F39/F42/F45/F47/F49, V5-F07/F31-F33/F47/F48/F51/F52/F57/F59,
+  V51-F31/F37/F42/F63/F65/F66`；failure delta=`none`（计划审阅未产生新实验、blocked/rejected 或解除项）。
+
 ## V5.1 M1 closeout / Stage H superseded（2026-08-20）
 
 - task=`WS-V51-M1-CLOSEOUT-01`，status=`done`，outcome=`closed_without_promoted_candidate`；这是对既有 r015/r018/
