@@ -1,0 +1,259 @@
+{
+  "schema_version": "worldsim-v5.2.1-human-review-annotations-v1",
+  "task_id": "WS-V521-P11-HUMAN-ATTRIBUTION-01",
+  "review_date": "2026-08-20",
+  "reviewer_role": "user_designated_human_reviewer",
+  "review_source_sha256": "eca9864aaef8f4d13c48819b357404a68aa14439cbe9069b82aba60d0d64c000",
+  "research_draft_sha256": "a01f15306d9764fbac85482f21c07da305412c9ce9aba84273115fa9f5530a49",
+  "causal_claim_status": "visual_diagnostic_hypothesis_not_causal_proof",
+  "canonical_inputs": {
+    "review_cases": "/root/autodl-tmp/runs/worldsim_v521/20260820T124000Z__manual-review-representative-s0-r002/REVIEW_CASES.jsonl",
+    "badcase_registry": "/root/autodl-tmp/runs/worldsim_v521/20260820T113000Z__p10-base-badcase-closeout-s0-r001/BADCASE_REGISTRY.jsonl",
+    "matched_frame_registry": "/root/autodl-tmp/runs/worldsim_v521/20260820T113000Z__p10-base-badcase-closeout-s0-r001/MATCHED_FRAME_REGISTRY.jsonl"
+  },
+  "metric_profiles": {
+    "BASE_SENTINEL": {
+      "primary_metrics": ["GLOBAL_PSNR", "GLOBAL_SSIM", "GLOBAL_LPIPS"],
+      "non_regression_metrics": [],
+      "required_bridges": ["none_not_a_m123_target"]
+    },
+    "MIXED_DIAGNOSTIC": {
+      "primary_metrics": ["GLOBAL_PSNR", "GLOBAL_SSIM", "GLOBAL_LPIPS", "ACTOR_PSNR", "ACTOR_SSIM", "ACTOR_LPIPS"],
+      "non_regression_metrics": [],
+      "required_bridges": ["base_validity_gate", "actor_local_residual_decomposition"]
+    },
+    "M1_OBSERVABILITY": {
+      "primary_metrics": ["OWNERSHIP_IOU", "OWNERSHIP_BOUNDARY_F1", "OWNERSHIP_FN_MASS", "OWNERSHIP_FP_MASS", "BRIER", "ECE", "NLL", "UNKNOWN_RECALL", "ACTOR_PSNR", "ACTOR_SSIM", "ACTOR_LPIPS"],
+      "non_regression_metrics": ["STATIC_PSNR_DROP", "GLOBAL_LPIPS_INCREASE", "BACKGROUND_FP_MASS_INCREASE"],
+      "required_bridges": ["pixel_to_gaussian_exact_mapping", "u2_b3_observation_count", "u2_b3_posterior", "unknown_mass", "visibility_support"]
+    },
+    "M3_TEMPORAL": {
+      "primary_metrics": ["UNWARPED_L1", "FLOW_WARPED_L1", "POSE_WARPED_L1", "TEMPORAL_LPIPS", "ACTOR_PSNR", "ACTOR_SSIM", "ACTOR_LPIPS", "BOUNDARY_PSNR", "BOUNDARY_SSIM", "BOUNDARY_LPIPS"],
+      "non_regression_metrics": ["STATIC_PSNR_DROP", "GLOBAL_LPIPS_INCREASE", "BACKGROUND_FP_MASS_INCREASE"],
+      "required_bridges": ["t_minus_1_t_t_plus_1_actor_crops", "flow_correspondence", "actor_pose_correspondence", "visibility_transition"]
+    },
+    "M13_COUPLING": {
+      "primary_metrics": ["OWNERSHIP_IOU", "OWNERSHIP_BOUNDARY_F1", "OWNERSHIP_FN_MASS", "OWNERSHIP_FP_MASS", "UNKNOWN_RECALL", "FLOW_WARPED_L1", "POSE_WARPED_L1", "TEMPORAL_LPIPS", "ACTOR_PSNR", "ACTOR_SSIM", "ACTOR_LPIPS", "BOUNDARY_PSNR", "BOUNDARY_SSIM", "BOUNDARY_LPIPS"],
+      "non_regression_metrics": ["STATIC_PSNR_DROP", "GLOBAL_LPIPS_INCREASE", "BACKGROUND_FP_MASS_INCREASE"],
+      "required_bridges": ["pixel_to_gaussian_exact_mapping", "u2_b3_observation_count", "u2_b3_posterior", "t_minus_1_t_t_plus_1_actor_crops", "flow_correspondence", "actor_pose_correspondence", "visibility_transition"]
+    }
+  },
+  "annotations": [
+    {
+      "review_order": 1,
+      "case_id": "BC-ADGS-027fa166e7f1",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "BASE_RENDER_CATASTROPHIC_WHITE",
+      "visual_observation": "AD-GS 几乎整张纯白，StreetGS 与 GT 基本正常。",
+      "suspected_causes": ["base_render_failure", "view_coverage_failure", "appearance_collapse"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "不用于评价 M1/M2/M3；仅作为基座失效哨兵。"
+    },
+    {
+      "review_order": 2,
+      "case_id": "BC-ADGS-aa2e7ae9273c",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "BASE_GLOBAL_APPEARANCE_COLLAPSE",
+      "visual_observation": "AD-GS 出现白粉色大面积崩溃，StreetGS 至少能恢复场景结构。",
+      "suspected_causes": ["base_novel_view_failure", "global_appearance_collapse"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "不用于 ownership 归因；只跟踪基座修复是否恢复全局 RGB。"
+    },
+    {
+      "review_order": 3,
+      "case_id": "BC-ADGS-5f105be6ff6c",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "BASE_RENDER_CATASTROPHIC_DARK",
+      "visual_observation": "AD-GS 几乎整张均匀暗褐色，StreetGS 很接近 GT。",
+      "suspected_causes": ["renderer_failure", "view_support_failure"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "不用于 M1/M2/M3 confirmation；仅确认同类 AD-GS 基座失效仍存在。"
+    },
+    {
+      "review_order": 4,
+      "case_id": "BC-STREETGS-12f3d4fb3c21",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "BASE_STATIC_HIGH_FREQUENCY_RECONSTRUCTION",
+      "visual_observation": "场景结构存在，但树木、叶片和静态高频纹理明显模糊。",
+      "suspected_causes": ["static_geometry_error", "static_appearance_error", "high_frequency_reconstruction_limit"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "属于基座重建问题，不进入 M123 主评测。"
+    },
+    {
+      "review_order": 5,
+      "case_id": "BC-STREETGS-945caf2fc082",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "ACTOR_GHOST_TRAJECTORY_MISALIGNMENT",
+      "visual_observation": "静态背景基本正常，大卡车出现拖影、重影和形态错误。",
+      "suspected_causes": ["actor_pose_error", "trajectory_misalignment", "canonical_representation_error"],
+      "primary_modules": ["M3"],
+      "secondary_modules": ["M1", "M2_SAFETY"],
+      "metric_profile": "M3_TEMPORAL",
+      "success_hypothesis": "若轨迹/规范坐标是主因，pose-warped residual 与 actor/boundary 指标应改善，静态背景不得回归。"
+    },
+    {
+      "review_order": 6,
+      "case_id": "BC-STREETGS-62640d591ebc",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "ACTOR_TRAJECTORY_VISIBILITY_COMPOSITING",
+      "visual_observation": "卡车主体模糊、错位、局部消失或重影，背景仍然正常。",
+      "suspected_causes": ["actor_trajectory_error", "visibility_error", "compositing_error"],
+      "primary_modules": ["M3"],
+      "secondary_modules": ["M1", "M2_SAFETY"],
+      "metric_profile": "M3_TEMPORAL",
+      "success_hypothesis": "作为 confirmation-only case，验证冻结 M3/M1 机制能否降低卡车 ghost 且不破坏背景。"
+    },
+    {
+      "review_order": 7,
+      "case_id": "BC-ADGS-f1cd1ab0eca6",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "GLOBAL_COLLAPSE_CONTAMINATES_ACTOR",
+      "visual_observation": "actor 区域很差，但整张 AD-GS 已经云雾状崩溃。",
+      "suspected_causes": ["global_base_failure", "actor_metric_contamination"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "禁止用于证明 M1 失败；actor 指标只作为污染示例。"
+    },
+    {
+      "review_order": 8,
+      "case_id": "BC-ADGS-ec59140d6d30",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "GLOBAL_COLLAPSE_CONTAMINATES_ACTOR",
+      "visual_observation": "AD-GS 几乎纯色，GT 中 actor 只占局部区域。",
+      "suspected_causes": ["global_base_failure", "actor_metric_contamination"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "即使 ownership 完美也无法恢复全局画面，因此不进入 M123 主评测。"
+    },
+    {
+      "review_order": 9,
+      "case_id": "BC-ADGS-d0ddc9f392e1",
+      "research_gate": "ATTRIBUTION_UNRESOLVED",
+      "issue_code": "GLOBAL_AND_DYNAMIC_MIXED_FAILURE",
+      "visual_observation": "整个画面强烈 smear，卡车也失败；StreetGS 明显更正常。",
+      "suspected_causes": ["global_base_failure", "dynamic_actor_failure", "mixed_attribution"],
+      "primary_modules": [],
+      "secondary_modules": ["M1", "M3"],
+      "metric_profile": "MIXED_DIAGNOSTIC",
+      "success_hypothesis": "必须先通过 Base Validity Gate 和局部残差分解，才能决定是否进入 M1/M3 回测。"
+    },
+    {
+      "review_order": 10,
+      "case_id": "BC-STREETGS-6132ad736366",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "SMALL_DISTANT_ACTOR_OBSERVABILITY",
+      "visual_observation": "背景非常接近 GT，远处多个小 actor 表示弱或缺失。",
+      "suspected_causes": ["observation_scarcity", "small_actor_support", "ownership_uncertainty"],
+      "primary_modules": ["M1"],
+      "secondary_modules": ["M2_SAFETY"],
+      "metric_profile": "M1_OBSERVABILITY",
+      "success_hypothesis": "若 observation scarcity 是主因，低观测 Gaussian 的 posterior/UNKNOWN 与 actor 残差应强相关，TrackBayes 应优先降低 FN。"
+    },
+    {
+      "review_order": 11,
+      "case_id": "BC-STREETGS-84bf82336ee0",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "DYNAMIC_DECOMPOSITION_TEMPORAL_GHOST",
+      "visual_observation": "自行车及附近动态区域出现透明、模糊和 ghost，背景相对稳定。",
+      "suspected_causes": ["static_dynamic_decomposition_error", "ownership_error", "temporal_mismatch"],
+      "primary_modules": ["M1", "M3"],
+      "secondary_modules": ["M2_SAFETY"],
+      "metric_profile": "M13_COUPLING",
+      "success_hypothesis": "ownership 与 warp diagnostic 必须拆开报告；只允许单独通过的机制进入融合。"
+    },
+    {
+      "review_order": 12,
+      "case_id": "BC-STREETGS-68c77ab5bc76",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "MULTI_SMALL_ACTOR_OBSERVABILITY",
+      "visual_observation": "多个远处小 actor 质量明显低，但静态背景正常。",
+      "suspected_causes": ["observation_scarcity", "trajectory_support_gap", "actor_appearance_gap"],
+      "primary_modules": ["M1"],
+      "secondary_modules": ["M2_SAFETY"],
+      "metric_profile": "M1_OBSERVABILITY",
+      "success_hypothesis": "作为 confirmation-only case，一次性确认冻结 M1 candidate 是否改善小目标 FN/UNKNOWN 与 actor RGB。"
+    },
+    {
+      "review_order": 13,
+      "case_id": "BC-ADGS-27f91d7e980e",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "GLOBAL_COLLAPSE_CONTAMINATES_BOUNDARY",
+      "visual_observation": "AD-GS 整体非常暗且严重模糊，动态边界只占失败的一小部分。",
+      "suspected_causes": ["global_base_failure", "boundary_metric_contamination"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "boundary 指标不具有 M1/M2 诊断价值。"
+    },
+    {
+      "review_order": 14,
+      "case_id": "BC-ADGS-bbf3276525d0",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "BASE_RENDER_CATASTROPHIC_MONOCHROME",
+      "visual_observation": "几乎整幅图变成统一蓝紫色。",
+      "suspected_causes": ["catastrophic_base_failure", "boundary_metric_contamination"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "完全排除出 M1 boundary evidence。"
+    },
+    {
+      "review_order": 15,
+      "case_id": "BC-ADGS-f288cd88450c",
+      "research_gate": "BASE_FAILURE",
+      "issue_code": "GLOBAL_SMEAR_CONTAMINATES_BOUNDARY",
+      "visual_observation": "全局 smear 明显，动态区域只是其中一小块。",
+      "suspected_causes": ["global_base_failure", "boundary_metric_contamination"],
+      "primary_modules": [],
+      "secondary_modules": [],
+      "metric_profile": "BASE_SENTINEL",
+      "success_hypothesis": "不用于验证 M1/M2；只作为基座污染哨兵。"
+    },
+    {
+      "review_order": 16,
+      "case_id": "BC-STREETGS-b363a27e6231",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "BOUNDARY_LEAKAGE_TRAJECTORY_OCCLUSION",
+      "visual_observation": "背景和大结构正常，施工人员/设备出现 ghost 和边界扩散。",
+      "suspected_causes": ["actor_gaussian_leakage", "ownership_error", "trajectory_error", "occlusion_compositing_error"],
+      "primary_modules": ["M1", "M3"],
+      "secondary_modules": ["M2_SAFETY"],
+      "metric_profile": "M13_COUPLING",
+      "success_hypothesis": "需要 ownership 与 temporal bridge 双独立改善；M2 只负责对不安全编辑 abstain。"
+    },
+    {
+      "review_order": 17,
+      "case_id": "BC-STREETGS-4305955afdfd",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "PEDESTRIAN_TEMPORAL_GHOST",
+      "visual_observation": "人的轮廓出现透明拖影或重复，背景比较稳定。",
+      "suspected_causes": ["temporal_pose_mismatch", "ownership_error", "nonrigid_actor_risk"],
+      "primary_modules": ["M3"],
+      "secondary_modules": ["M1", "M2_SAFETY"],
+      "metric_profile": "M13_COUPLING",
+      "success_hypothesis": "若 pose warp 显著降低残差则支持 M3；若不降低则优先检查 ownership/visibility。"
+    },
+    {
+      "review_order": 18,
+      "case_id": "BC-STREETGS-7e9c9ecf93da",
+      "research_gate": "M123_ELIGIBLE",
+      "issue_code": "DYNAMIC_BOUNDARY_VISIBILITY_COUPLING",
+      "visual_observation": "施工区域动态物体和边缘模糊并有局部 ghost，静态背景正常。",
+      "suspected_causes": ["static_dynamic_compositing_error", "visibility_error", "ownership_error", "trajectory_error"],
+      "primary_modules": ["M1", "M3"],
+      "secondary_modules": ["M2_SAFETY"],
+      "metric_profile": "M13_COUPLING",
+      "success_hypothesis": "作为 confirmation-only case，冻结候选必须同时改善动态边界/时序且满足背景非回归。"
+    }
+  ]
+}

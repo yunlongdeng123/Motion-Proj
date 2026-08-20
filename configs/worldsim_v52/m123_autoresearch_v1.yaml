@@ -1,0 +1,278 @@
+protocol_version: worldsim-v5.2-m123-autoresearch-v1
+task_family: WS-V52-R0..R7
+status: pending
+execution_authorization:
+  unattended_overnight: true
+  user_confirmation_required: false
+  human_verdict_auto_fill_allowed: false
+
+runtime:
+  accelerator: RTX_3090_24GB
+  max_wall_hours: 12
+  max_gpu_hours: 10
+  max_vram_mib: 23000
+  min_disk_free_gib: 40
+  run_root: /root/autodl-tmp/runs/worldsim_v52
+  detached_process_required: true
+  stdout_to_file_required: true
+  atomic_publish_required: true
+  seeds: [0]
+
+inputs:
+  attribution_manifest_dir: docs/run_manifests/worldsim-v5.2.1-human-review-attribution-v1
+  base_badcase_run: /root/autodl-tmp/runs/worldsim_v521/20260820T113000Z__p10-base-badcase-closeout-s0-r001
+  review_run: /root/autodl-tmp/runs/worldsim_v521/20260820T124000Z__manual-review-representative-s0-r002
+  m1_comparator: U2_B3
+  primary_base: streetgs
+  dataset: nuscenes
+  dataset_split: trainval
+
+data_locks:
+  design_case_ids:
+    - BC-STREETGS-945caf2fc082
+    - BC-STREETGS-6132ad736366
+    - BC-STREETGS-84bf82336ee0
+    - BC-STREETGS-b363a27e6231
+    - BC-STREETGS-4305955afdfd
+  confirmation_case_ids:
+    - BC-STREETGS-62640d591ebc
+    - BC-STREETGS-68c77ab5bc76
+    - BC-STREETGS-7e9c9ecf93da
+  base_failure_used_for_m123_primary_eval: false
+  confirmation_used_for_design: false
+  fresh_validation_read: false
+  test_read: false
+  kitti_quality_read: false
+  threshold_refit_on_confirmation: false
+  stage_h_bki_reopen: false
+
+failure_ledger_refs:
+  - V4-F39
+  - V4-F42
+  - V4-F45
+  - V4-F47
+  - V4-F49
+  - V5-F31
+  - V5-F32
+  - V5-F33
+  - V5-F47
+  - V5-F48
+  - V5-F51
+  - V5-F57
+  - V5-F59
+  - V51-F63
+  - V51-F65
+  - V51-F66
+  - V52-F01
+  - V52-F02
+
+stages:
+  - task_id: WS-V52-R0-PREFLIGHT-01
+    status: pending
+    budget_minutes: 30
+    purpose: 冻结源码、checkpoint、case/split、指标与资源，不读取新质量结果。
+    outputs:
+      - resolved.yaml
+      - manifest.json
+      - fingerprint.json
+      - resource_snapshot.json
+      - status.json
+    gate:
+      pass_if:
+        - git_worktree_clean
+        - attribution_manifest_hash_exact
+        - checkpoint_hash_exact
+        - design_confirmation_disjoint
+        - gpu_and_disk_within_budget
+      fail_action: reject_run_before_quality_read
+
+  - task_id: WS-V52-R1-BASE-VALIDITY-BRIDGE-01
+    status: pending
+    budget_minutes: 75
+    purpose: 建立 P0 Base Validity Gate，并把 actor residual 精确映射到 Gaussian observability/ownership 状态。
+    arms:
+      - R1-B0-global_static_sanity
+      - R1-B1-pixel_to_gaussian_exact_map
+      - R1-B2-u2_b3_posterior_observation_unknown
+      - R1-B3-actor_residual_observability_correlation
+    primary_outputs:
+      - BASE_VALIDITY.jsonl
+      - PIXEL_GAUSSIAN_BRIDGE.jsonl
+      - OBSERVABILITY_BUCKET_METRICS.jsonl
+      - R1_SUMMARY.json
+    gate:
+      pass_if:
+        - all_5_design_cases_base_valid
+        - exact_mapping_defined_on_at_least_4_of_5_cases
+        - low_observation_or_unknown_residual_enrichment_ge_1_5_on_at_least_3_of_5_cases
+        - supporting_scene_count_ge_2
+      pass_action: unlock_m1_and_m3_branches
+      fail_action: keep_m1_pending_continue_m3_bridge_and_m2_contract_audit
+
+  - task_id: WS-V52-R2-M1-TRACKBAYES-01
+    status: pending
+    budget_minutes: 240
+    depends_on: [WS-V52-R1-BASE-VALIDITY-BRIDGE-01]
+    purpose: 用新增时序 actor evidence 替代空间传播，形成可逆 ownership sidecar。
+    arms:
+      - M1-A0-U2_B3
+      - M1-O1-nuscenes_gt_track_hard_tube_oracle
+      - M1-O2-gt_track_canonical_bayesian_oracle
+      - M1-A1-static_residual_likelihood
+      - M1-A2-persistent_2d_actor_tube
+      - M1-A3-lidar_actor_anchoring
+      - M1-A4-actor_vs_world_canonical_model_selection
+      - M1-A5-track_conditioned_bayesian_posterior_unknown
+      - M1-A6-one_step_identity_motion_em
+    arm_policy:
+      - faithful_arms_run_separately_before_fusion
+      - missing_visibility_means_no_update
+      - no_knn_graph_diffusion_or_bki
+      - em_iterations_allowed: [0, 1]
+      - stationary_and_moving_actors_reported_separately
+    promotion_gate:
+      pass_if:
+        - ownership_boundary_f1_delta_ge_0_01_on_at_least_3_of_5_design_cases
+        - supporting_scene_count_ge_2
+        - scene_balanced_iou_delta_ge_0
+        - scene_balanced_fn_mass_delta_le_0_01
+        - calibration_brier_ece_nll_not_worse
+        - static_psnr_drop_le_0_30_db
+        - global_lpips_increase_le_0_01
+        - background_fp_mass_increase_le_0_01
+      pass_action: freeze_single_m1_candidate
+      fail_action: reject_failed_arms_keep_u2_b3_comparator
+
+  - task_id: WS-V52-R3-M3-TEMPORAL-BRIDGE-01
+    status: pending
+    budget_minutes: 150
+    purpose: 用同 case 的 t-1/t/t+1 区分 ownership、visibility 与 actor pose/trajectory 根因。
+    arms:
+      - M3-T0-unwarped
+      - M3-T1-optical_flow_warped
+      - M3-T2-frozen_actor_pose_warped
+      - M3-T3-v4_frozen_se3_delta_replay
+    primary_outputs:
+      - TEMPORAL_CORRESPONDENCE.jsonl
+      - ACTOR_CROP_METRICS.jsonl
+      - WARP_CAUSAL_BRIDGE.jsonl
+      - R3_SUMMARY.json
+    gate:
+      pass_if:
+        - correspondence_defined_on_at_least_3_of_4_discovery_m3_cases
+        - pose_or_flow_warp_reduction_ge_10_percent_on_at_least_3_cases
+        - supporting_scene_count_ge_2
+        - static_psnr_drop_le_0_30_db
+        - global_lpips_increase_le_0_01
+      branch_rules:
+        pose_warp_wins: retain_m3_se3_hypothesis
+        flow_warp_wins: route_to_visibility_or_nonrigid_motion_evidence
+        neither_wins: prioritize_m1_appearance_or_base_representation
+      fail_action: keep_v4_m3_historical_confirmation_do_not_modify_algorithm
+
+  - task_id: WS-V52-R4-M2-SAFETY-01
+    status: pending
+    budget_minutes: 75
+    purpose: 将 M2 固定为 risk-aware execution/abstention 层，不把 router 当作 repair 本身。
+    candidate_sources:
+      - frozen_m1_candidate_if_any
+      - frozen_m3_candidate_if_any
+    routing_features:
+      - base_validity
+      - ownership_unknown_mass
+      - actor_track_confidence
+      - visibility_support
+      - m1_m3_disagreement
+      - geometry_proxy_status
+    mandatory_abstain_if:
+      - base_validity_fail
+      - attribution_unresolved
+      - geometry_metric_undefined_for_geometry_claim
+      - actor_track_confidence_below_frozen_threshold
+    promotion_gate:
+      pass_if:
+        - full_denominator_reported_with_abstain
+        - accepted_candidate_primary_metric_improves
+        - selective_risk_positive
+        - full_denominator_geometry_mae_delta_le_0_when_defined
+        - no_base_failure_case_accepted
+      fail_action: keep_m2_as_abstention_only_or_reject_router_claim
+
+  - task_id: WS-V52-R5-FACTORIAL-FUSION-01
+    status: pending
+    budget_minutes: 90
+    purpose: 只融合已经分别通过的 M1/M3 组件，最后包装 M2 安全层。
+    allowed_arms:
+      - F0-base_comparator
+      - F1-best_m1_only
+      - F2-best_m3_only
+      - F3-best_m1_plus_m3
+      - F4-best_m1_plus_m3_plus_m2_safety
+    forbidden:
+      - fuse_failed_component
+      - tune_on_confirmation
+      - add_unregistered_teacher
+      - unlimited_em_iterations
+    gate:
+      pass_if:
+        - each_component_has_independent_pass
+        - fusion_beats_each_included_component_on_its_primary_axis
+        - all_non_regression_gates_pass
+      fail_action: retain_best_single_component
+
+  - task_id: WS-V52-R6-ONE-SHOT-CONFIRMATION-01
+    status: pending
+    budget_minutes: 90
+    purpose: 候选、阈值、case 顺序和判词全部冻结后，只读取 3 个 M123 confirmation cases 一次。
+    preconditions:
+      - single_candidate_frozen
+      - config_and_source_hash_frozen
+      - discovery_report_closed
+      - confirmation_attempt_ledger_exclusive_create
+    gate:
+      pass_if:
+        - at_least_2_of_3_cases_match_frozen_improvement_direction
+        - no_catastrophic_background_regression
+        - threshold_refit_false
+      fail_action: reject_candidate_without_confirmation_refit
+
+  - task_id: WS-V52-R7-CLOSEOUT-01
+    status: pending
+    budget_minutes: 60
+    purpose: 原子生成报告、failure delta、case-level before/after 面板与下一阶段决策。
+    required_outputs:
+      - FINAL_CASE_METRICS.jsonl
+      - FINAL_CASE_DELTAS.jsonl
+      - FINAL_PANEL_REGISTRY.jsonl
+      - DECISION.json
+      - SUMMARY.json
+      - manifest.json
+      - status.json
+      - docs_update.patch
+    terminal_states:
+      - done
+      - rejected
+      - blocked
+
+automatic_control:
+  stage_failure_mode: fail_closed
+  continue_independent_branches_after_failure: true
+  retry_engineering_failure_max: 1
+  retry_requires_new_run_id: true
+  quality_result_driven_retry_allowed: false
+  stop_on_gpu_oom_after_retry: true
+  stop_on_input_hash_drift: true
+  stop_on_split_leak: true
+  stop_on_nan_or_inf: true
+  stop_on_confirmation_reuse: true
+  on_human_review_needed: write_review_package_and_mark_branch_blocked_without_prompting
+  shutdown_when_complete: false
+
+reporting:
+  case_level_before_after_required: true
+  aggregate_without_case_table_forbidden: true
+  discovery_confirmation_separate: true
+  base_failure_sentinels_separate: true
+  undefined_metrics_preserved: true
+  causal_language_requires_bridge_pass: true
+  failure_ledger_delta_required: true
