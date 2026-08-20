@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -30,6 +31,11 @@ def main() -> None:
     parser.add_argument("--shadow-root", required=True, type=Path)
     parser.add_argument("--records", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument(
+        "--upstream-root",
+        type=Path,
+        default=Path("/root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0"),
+    )
     args = parser.parse_args()
     checkpoint = args.checkpoint.resolve()
     log_dir = checkpoint.parent
@@ -37,6 +43,9 @@ def main() -> None:
     if not backup.is_dir():
         raise RuntimeError(f"checkpoint source backup 缺失：{backup}")
     sys.path.insert(0, str(backup))
+    # checkpoint backup 不包含 large third_party/；只把训练时同 commit checkout
+    # 作为缺失模块 fallback，checkpoint 自带源码仍保持最高 import 优先级。
+    sys.path.append(str(args.upstream_root.resolve()))
 
     import torch
     from datasets.driving_dataset import DrivingDataset
@@ -111,6 +120,15 @@ def main() -> None:
         "checkpoint_sha256_before": before,
         "checkpoint_sha256_after": after,
         "source_backup": str(backup),
+        "third_party_fallback": str(args.upstream_root.resolve()),
+        "third_party_commit": subprocess.check_output(
+            ["git", "-C", str(args.upstream_root.resolve()), "rev-parse", "HEAD"], text=True
+        ).strip(),
+        "third_party_diff_sha256": __import__("hashlib").sha256(
+            subprocess.check_output(
+                ["git", "-C", str(args.upstream_root.resolve()), "diff", "--binary"]
+            )
+        ).hexdigest(),
         "config": str((log_dir / "config.yaml").resolve()),
         "config_sha256": sha256_file(log_dir / "config.yaml"),
         "shadow_root": str(args.shadow_root.resolve()),
