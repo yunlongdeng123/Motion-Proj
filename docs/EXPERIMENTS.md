@@ -1,5 +1,24 @@
 # Experiments
 
+## V5.2.1 P2–P8 Discovery census / taxonomy / re-audit PASS（2026-08-20）
+- P2 run=`20260820T091500Z__p2-discovery-base-census-s0-r001`：AD-GS/StreetGS × 6 scenes 全部 exact 重渲染，
+  Discovery=`576 views/base`，base/actor/temporal rows=`1,152/1,152/918`；LPIPS=`Alex`，V4 evaluator/mask source SHA=
+  `5dcbb6e9...731 /62158cc3...e8c`。checkpoint、target、finite、same-input replay gates 全 PASS；Confirmation decoded=`0`。
+- P3 frozen thresholds 使用 per-scene q10 后跨场等权 median；global/actor/boundary 独立 predicate 与 leaderboard，
+  scalar score=false。registry=`314`，panel union=`88`，taxonomy/registry/leaderboard SHA=
+  `8f494101...75ef /7ed78eb7...a23 /9a46b762...110`。
+- P4=`77` automatic labeled panels；P5 full-denominator scene-balanced case-rate mean AD-GS/StreetGS=
+  `0.285113/0.251939`，bootstrap CI95=`[0.076392,0.563973]/[0.124895,0.430075]`。
+  actor/static MSE ratio median=`1.403697/1.921242`；boundary/actor MSE ratio median=`0.716317/0.725970`。
+- legal undefined axes：comparable depth=`none`，visibility/occlusion/distance/speed/LiDAR denominator=`0/576`，
+  temporal=`459 proxy windows/base but no B-TEMPORAL`，actor instance=`undefined_no_instance_region`。
+- P6–P8：M1 exact overlap scenes=`0<2` → `M1_EVIDENCE_INSUFFICIENT_KEEP_PENDING`；M2 exact request mapping=`0` →
+  `M2_EVIDENCE_INSUFFICIENT`；M3 新 B-TEMPORAL denominator=`0` → `M3_EVIDENCE_INSUFFICIENT_KEEP_PENDING`。
+  V4 historical M3 confirmation 与 V5 constraint-projection rejection 均原样保留，不互相倒写。
+- 下一步仅 P9 one-shot internal Confirmation；threshold/K/predicate refit=false，fresh validation/test/KITTI=false，
+  Stage H/BKI=false，algorithm modification=false。failure delta=`none`。
+
+
 ## V5.2.1 P1 exact base asset / shared split census PASS（2026-08-20）
 - task=`WS-V521-P1-BASE-ASSET-CENSUS-01`，status=`done`，outcome=`p1_gate_pass`；canonical run=
   `/root/autodl-tmp/runs/worldsim_v521/20260820T084604Z__p1-base-asset-census-s0-r001`，source=`127b216`。

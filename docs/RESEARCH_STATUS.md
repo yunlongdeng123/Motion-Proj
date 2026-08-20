@@ -1,5 +1,28 @@
 # Research Status
 
+## V5.2.1 P2–P8 已通过；P9 one-shot Confirmation 待执行（2026-08-20）
+- P2 canonical=`/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001`，
+  outcome=`p2_gate_pass`。两基座各完成 Discovery `576` views，共 `1,152` base rows、`1,152` dynamic-union actor rows、
+  `918` defined same-partition temporal-proxy windows；checkpoint before/after、跨基座 target hash、finite metrics、same-input exact replay
+  全 PASS。BASE/ACTOR/TEMPORAL SHA=`8a2bacc2...e0e8 / 0c11b4a6...385c / 8d68106b...75eb`。
+- P3=`p3_gate_pass`：taxonomy SHA=`8f494101...75ef`，无 composite scalar；registry=`314` labeled view cases，
+  frozen panel union=`88`，其中满足 executable failure predicate 的 panel cases=`77`。AD-GS Discovery class counts
+  global/actor/boundary=`150/35/29`，StreetGS=`112/46/16`；完整 view denominator 均为 `576`。
+- P4 自动生成 `77` 个 matched panel（GT/AD-GS/StreetGS/residual/dynamic union/boundary），manual selection=`false`；
+  geometry tile 因 `undefined_no_comparable_base_depth` 如实省略。P5 使用完整分母：scene-balanced labeled-case rate mean
+  AD-GS/StreetGS=`0.285113/0.251939`；actor/static MSE ratio median=`1.403697/1.921242`；actor area 与 actor PSNR
+  Spearman rho=`0.103809/0.035612`，只作相关性。distance/speed/LiDAR/visibility/occlusion 均 `0/576 defined`。
+- temporal 仅为 `unwarped_temporal_proxy`，两基座 valid windows 各 `459`，不得触发 `B-TEMPORAL`；geometry、occlusion、
+  sparse-observability 与 identity 也因合法分母/annotation 缺失而 disabled，不用 proxy 补 GT。
+- P6/P7/P8 conclusion=`M1_EVIDENCE_INSUFFICIENT_KEEP_PENDING / M2_EVIDENCE_INSUFFICIENT /
+  M3_EVIDENCE_INSUFFICIENT_KEEP_PENDING`。新 base 六场与 frozen M1 scenes exact overlap=`0`，不足预注册的 2 场；
+  1087 的 mean observed views=`0.028232`、zero-observation Gaussians=`904,933` 历史证据保留，但 base RGB 状态不可回答。
+  M2 的 `154/214 requests/candidates` 与 `+3.3908096237 m` geometry caveat 保留；V4 M3 confirmed 与 V5 constraint rejection 分开。
+- Confirmation/fresh validation/test/KITTI quality read 仍为 `false/false/false/false`，Stage H/BKI=`not executed`，
+  algorithm candidates=`0`。当前唯一下一步=P9：先绑定 taxonomy/P5/M123/P4 SHA，再一次性重渲染 126 Confirmation views/base；
+  禁止 refit threshold、改 K 或改 predicate。
+
+
 ## V5.2.1 P1 资产与分区 census 已通过；P2 Discovery-only 统一评估待执行（2026-08-20）
 - task family=`WS-V521-P0..P10`，overall status=`running`；P0=`done/p0_gate_pass`，P1=`done/p1_gate_pass`。P1 canonical run=
   `/root/autodl-tmp/runs/worldsim_v521/20260820T084604Z__p1-base-asset-census-s0-r001`，source HEAD=
