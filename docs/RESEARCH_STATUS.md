@@ -1,11 +1,11 @@
 # Research Status
 
-## V5.2.1 Base Badcase Census 已授权、待执行（2026-08-20）
+## V5.2.1 P0 已通过；P1 资产 census 待执行（2026-08-20）
 
-- task family=`WS-V521-P0..P10`，status=`pending`，executed=`false`；执行计划=
-  `docs/WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md`（`54,123 bytes / sha256 ce332dea...3c56`），
-  authoring source base=`a9dede0b327c20d744a1dea7d5d6eb99b4203012`。实际执行 HEAD/branch 必须由 P0 重新冻结，
-  不得 reset 到 V5.1 authoring base `fc07b99...`。
+- task family=`WS-V521-P0..P10`，overall status=`running`；P0=`done/p0_gate_pass`，canonical run=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T083826Z__p0-base-census-freeze-s0-r001`。执行分支=
+  `research/worldsim-v5.2.1-base-badcase-census`，source HEAD=`831fafe302fef7ff2760ff17c1e51da91b9be03c`；计划 exact=
+  `54,123 bytes / sha256 ce332dea...3c56`，没有 reset 到 V5.1 authoring base。
 - scope=exact AD-GS/StreetGS asset audit → quality-blind shared sample partition freeze → Discovery-only frame/camera/actor/
   temporal census → axis-wise deterministic badcase registry/panels → M1/M2/M3 historical re-audit → one-shot internal
   Confirmation → closeout。V5.2.1 是诊断/问题复核，不提交算法 candidate。
@@ -14,8 +14,10 @@
   任何 Tier D quality read 前冻结具体 membership。
 - 核心防重复引用=`V1-F01/F03, V4-F34/F39/F42/F45/F47/F49, V5-F07/F31-F33/F47/F48/F51/F52/F57/F59,
   V51-F31/F37/F42/F63/F65/F66`；`BC-*`/`BCE-*` 只作 badcase 个案/事件 ID，不是新的 failure-ledger ID。
-- 当前唯一下一步=`WS-V521-P0-BASE-CENSUS-FREEZE-01`：先渐进式读取事实源、审计真实 repo/GPU/disk/cgroup、
-  冻结计划/质量锁/分区协议并建立 V5.2.1 执行分支；不得直接跳到 renderer、P2 quality 或 V5.2.2 方法设计。
+- P0 资源快照=`RTX 3090 24,576 MiB / used 1 MiB / disk free 75 GiB / cgroup memory.max 90 GiB`；
+  Stage H executed=`false`，fresh validation/test/KITTI quality read=`false`，quality bytes decoded=`0`。
+- 当前唯一下一步=`WS-V521-P1-BASE-ASSET-CENSUS-01`：按历史 manifest/freeze 定向核对 checkpoint/render/GT/split，
+  并在任何 Tier D quality decode 前冻结具体 Discovery/Confirmation membership；不得先开 P2 renderer。
 
 ## V5.1 M1 已收尾；Stage H pending 但由 V5.2 scope 取代（2026-08-20）
 
