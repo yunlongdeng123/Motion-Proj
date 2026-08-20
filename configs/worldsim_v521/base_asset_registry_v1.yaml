@@ -1,0 +1,74 @@
+schema: worldsim_v521_base_asset_registry_v1
+task_id: WS-V521-P1-BASE-ASSET-CENSUS-01
+date: '2026-08-20'
+status: pending
+source_head_policy: actual_clean_head
+inputs:
+  p0_freeze: configs/worldsim_v521/p0_scope_freeze_v1.yaml
+  baseline_matrix: configs/worldsim_v4/baseline_matrix_v1.yaml
+  baseline_data: configs/worldsim_v4/baseline_data_v1.yaml
+  streetgs_training: configs/worldsim_v4/streetgs_training_v1.yaml
+  adgs_training: configs/worldsim_v4/adgs_training_v1.yaml
+  adgs_historical_metrics: /root/autodl-tmp/runs/dynamic_recon/DR-M4-ADGS-6SCENE-01/20260728T141204__aggregate6-s0-wm3090/metrics.json
+cohort:
+  dataset: nuscenes
+  scenes:
+    scene-0230: {scene_index: 179}
+    scene-0242: {scene_index: 191}
+    scene-0255: {scene_index: 204}
+    scene-0048: {scene_index: 45}
+    scene-0994: {scene_index: 752}
+    scene-0139: {scene_index: 110}
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  expected_frames: 196
+  cameras: [0, 1, 2]
+  metric_resolution: [800, 450]
+  partition:
+    modulus: 5
+    development_remainder: 2
+    confirmation_bucket: 0
+source_recovery:
+  allow_isolated_clean_commit_plus_frozen_patch: true
+  mutate_current_third_party_checkout: false
+  retrain_missing_checkpoint: false
+  approximate_checkpoint_fallback: false
+outputs:
+  base_asset_registry: BASE_ASSET_REGISTRY.json
+  base_asset_report: BASE_ASSET_REGISTRY.md
+  matched_frames: MATCHED_FRAME_REGISTRY.jsonl
+  blockers: ASSET_BLOCKERS.jsonl
+  split_freeze: DISCOVERY_CONFIRMATION_FREEZE.json
+quality_read_lock:
+  image_decode: false
+  pixel_read: false
+  metric_compute: false
+  target_file_hash_only: true
+  fresh_validation: false
+  fresh_test: false
+  kitti: false
+failure_ledger_refs:
+  - V1-F01
+  - V1-F03
+  - V4-F34
+  - V4-F39
+  - V4-F42
+  - V4-F45
+  - V4-F47
+  - V4-F49
+  - V5-F07
+  - V5-F31
+  - V5-F32
+  - V5-F33
+  - V5-F47
+  - V5-F48
+  - V5-F51
+  - V5-F52
+  - V5-F57
+  - V5-F59
+  - V51-F31
+  - V51-F37
+  - V51-F42
+  - V51-F63
+  - V51-F65
+  - V51-F66
+failure_ledger_delta: none
