@@ -1,0 +1,75 @@
+schema: worldsim_v521_census_protocol_v1
+task_id: WS-V521-P2-BASE-CENSUS-EVAL-01
+date: '2026-08-20'
+status: frozen_before_discovery_quality_read
+bindings:
+  p1_run: /root/autodl-tmp/runs/worldsim_v521/20260820T084604Z__p1-base-asset-census-s0-r001
+  base_asset_registry_sha256: 5afb43779f412f043c7624ee84410fb03786a923bf8ab4928b057a663e70bcc4
+  split_freeze_sha256: 3003f98e6ffeee4c7242bed4c8c1d3e7ffa848dedfc89418cd402c3a9a7a7345
+  matched_frame_registry_sha256: a56803233415536bbc8a18f8581d88546400330cccbff1bd2a99eb6927331389
+partition:
+  allowed_quality_partition: discovery
+  confirmation_pixel_decode: false
+  fresh_validation_pixel_decode: false
+  fresh_test_pixel_decode: false
+  kitti_pixel_decode: false
+image:
+  color_space: srgb_uint8_decoded_to_float01
+  metric_resolution: [800, 450]
+  target_resize: PIL_LANCZOS
+  prediction_storage: lossless_png
+  mask_resize: PIL_NEAREST_nonzero
+  egocar_mask: undefined_asset_zero_mask_with_provenance
+metrics:
+  canonical_implementation: motion_proj.worldsim_v4.evaluator
+  lpips:
+    backbone: alex
+    package_version: '0.1.4'
+    crop_padding_pixels: 8
+    minimum_side_pixels: 64
+  regions:
+    global: full_image
+    static: not_dynamic_union_and_not_egocar
+    actor: drivestudio_dynamic_masks_all_nonzero_union_only
+    boundary: dynamic_mask_morphological_band_l1_radius_3px
+  geometry:
+    status: undefined_no_comparable_base_depth
+    cross_base_ranking: forbidden
+  actor_instance:
+    status: undefined_no_instance_region
+    dynamic_union_is_ground_truth_instance: false
+  temporal:
+    correspondence: none
+    status: unwarped_temporal_proxy
+    may_trigger_b_temporal: false
+ranking_contract:
+  scalar_composite_score: forbidden
+  minimum_support_pixels:
+    global: 1
+    static: 1024
+    actor: 64
+    boundary: 64
+  metric_directions:
+    psnr: lower_is_worse
+    ssim: lower_is_worse
+    lpips_alex: higher_is_worse
+    residual_change_l1: higher_is_worse
+  quantile_operator:
+    implementation: numpy_quantile_linear
+    scene_tail_quantile: 0.10
+  tie_break: [scene, canonical_sample_index, camera, base]
+  axes: [GLOBAL_RGB, ACTOR_RGB, BOUNDARY, TEMPORAL_PROXY]
+  leaderboard_top_k: 20
+  panel_union_limit: 120
+streaming:
+  keep_all_predictions_after_p2: false
+  bounded_cache_bytes: 8589934592
+  render_order: [streetgs, adgs]
+  gpu_processes: 1
+outputs:
+  base_metrics: BASE_CENSUS_METRICS.jsonl
+  actor_metrics: ACTOR_CENSUS_METRICS.jsonl
+  temporal_metrics: TEMPORAL_CENSUS_METRICS.jsonl
+  prediction_manifest: PREDICTION_MANIFEST.jsonl
+  renderer_audit: RENDERER_AUDIT.json
+  summary: summary.json
