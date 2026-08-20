@@ -1,0 +1,92 @@
+schema: worldsim_v51_m1_closeout_v1
+task_id: WS-V51-M1-CLOSEOUT-01
+date: '2026-08-20'
+status: done
+outcome: closed_without_promoted_candidate
+authoring_base_commit: fc07b9912db4df4a73b44d7a2363d9b3c6c88bc2
+
+scope:
+  version: V5.1
+  milestone: M1_only
+  m2_status: pending
+  m3_status: pending
+  validation_read: false
+  test_read: false
+  kitti_used_for_tuning: false
+
+frozen_baseline:
+  arms: [U2, B3]
+  disposition: retained_as_v5_2_comparator_only
+
+route_dispositions:
+  stage_b_ludvig_uplift_raw_graph: rejected
+  stage_d_progressive_propagation: rejected
+  stage_e_simple_voxel_superprimitive: rejected
+  stage_f_gaussian_grouping_identity: rejected
+  stage_g_trace3d_faithful_operator: rejected
+  stage_h_bki_graph_free:
+    status: pending
+    executed: false
+    disposition: superseded_by_v5_2_scope
+    expected_gain: low
+
+observed_evidence:
+  ludvig_uplift_raw_graph:
+    evaluable_scenes: 2
+    actor_background_margin_by_scene: [-0.121280, -0.098618]
+    actor_background_margin_scene_balanced: -0.109949
+    heldout_reprojection_delta: 0.022777
+    evidence_run: 20260817T173940Z__m1-stage-b-h-evaluation-s20260814-r015
+  progressive_propagation:
+    boundary_f1_delta_scene_balanced: 0.0002196
+    iou_delta_scene_balanced: -0.0714543
+    fn_semantic_mass_delta_scene_balanced: 0.1694766
+    evidence_run: 20260818T003000Z__m1-stage-d-d0-h-evaluation-s20260814-r018
+  simple_voxel_superprimitive:
+    observation_density_increased: true
+    boundary_f1_delta_vs_u2_b3: -0.0002566
+    iou_delta_vs_u2_b3: -0.0925468
+    fn_semantic_mass_delta_vs_u2_b3: 0.1899473
+    boundary_f1_delta_vs_raw_d0: -0.0004762
+    iou_delta_vs_raw_d0: -0.0210926
+    fn_semantic_mass_delta_vs_raw_d0: 0.0204707
+    evidence_run: 20260818T020000Z__m1-stage-e-e0b-h-evaluation-s20260814-r022
+  gaussian_grouping:
+    scene_pass_vector: [false, true, false]
+    scene_order: ['0471', '1087', '0379']
+    identity_recall: [0.080747, 0.505009, 0.202933]
+    persistent_track_fraction: [0.0, 0.5, 0.0]
+    evidence_run: 20260818T200000Z__m1-stage-f-f0l-quality-alignment-s20260814-r043
+  trace3d:
+    fresh_processes: 8
+    foreground_alpha_calls: 16
+    foreground_alpha_exact_values: [0.005608429200947285, 0.026756294071674347]
+    foreground_alpha_unique_count: 2
+    foreground_hard_unique_count: 1
+    evidence_run: 20260819T000000Z__m1-stage-g-g0b-trace3d-determinism-s20260814-r047
+    independent_audit: /root/autodl-tmp/runs/worldsim_v51/audits/20260819T003000Z__stage-g-g0b-r047-audit.json
+
+decision:
+  empirical_conclusion: effective_observations_are_structurally_missing
+  stage_h_inference: >-
+    BKI changes the propagation rule but still propagates existing local evidence to
+    unobserved nodes; it does not introduce a new evidence source. Given the repeated
+    V5.1 failures, its expected incremental gain is low.
+  non_claims:
+    - BKI was not executed or empirically rejected in V5.1.
+    - V5.1 does not prove all graph, Gaussian Grouping, or Trace3D variants invalid.
+    - V5.1 did not read validation, test, or KITTI quality for method selection.
+  v5_2_scope_requirement: >-
+    Any successor must first add or recover independent effective observations and
+    demonstrate their coverage, identity persistence, and reproducibility before
+    reopening propagation or completion.
+
+evidence:
+  stage_g_rejection_freeze: configs/worldsim_v51/stage_g_trace3d_faithful_operator_rejection_freeze_v1.yaml
+  closeout_report: docs/archive/2026-08/worldsim-v51-m1-closeout/README.md
+  experiments: docs/EXPERIMENTS.md
+  failure_ledger: docs/RESEARCH_FAILURES.md
+  research_status: docs/RESEARCH_STATUS.md
+
+failure_ledger_refs: [V51-F31, V51-F37, V51-F42, V51-F63, V51-F65]
+failure_ledger_delta: [V51-F66]

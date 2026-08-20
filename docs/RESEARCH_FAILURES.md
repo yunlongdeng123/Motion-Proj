@@ -1,6 +1,6 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-18
+> **最后更新**：2026-08-20
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V5.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
@@ -60,7 +60,7 @@
 | V3.2/V3.3 | S4 temporal 未完成、S5 语义生产链回退；RoadPatch/asset/release 只在冻结场景和协议成立，不构成跨场景 dominance | frozen base identity、empty-target、模型/视图可用性、类型/枚举严格比较、确定性 archive | `V32-*`、`V33-*` 详细章 |
 | V4 | M1 scene-disjoint validation rejected；M2 selective routing 成立但 geometry MAE 退化 `+3.3908 m`；M3 仅在冻结 18-scene exact-once test confirmed | cohort 非确定性、split leak、SSH 断管、解释器分层、CUDA arch、immutable run/staging、完整 denominator | live canonical `V4-F01`–`V4-F49` |
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
-| V5.1 | M1-only 正在推进；Stage A 冻结 U2/B3；LUDVIG uplift/raw graph、raw-Gaussian progressive 与 simple voxel-node elevation 均被 H reject；Gaussian Grouping grid32/upstream-batch64 三视图 association/repeatability/resource PASS，45-view materialization 在 1087 CUBLAS internal error 后进入 runtime health/reproducibility gate | H→S 小效应未复现、UNKNOWN coverage 不达门；uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；零长 KNN、跨 shell、helper/CUDA 初始化顺序、PDF/CLI 工具、partial staging、手录哈希、solver license/stdout、bytecode/source-cache provenance、SAM ViT-H 累积/显存峰值、单视图边界、batch-size 输出敏感性、跨进程非确定的 CUDA/CUBLAS 中断 | `V51-F01`–`V51-F62` |
+| V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 
 ### 1.1 V1 汇总条目
 
@@ -397,7 +397,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - `V51-F33`（`engineering/runtime`, `resolved before D0 preregistration`）：第二次 artifact inventory 在远端使用裸
   `python`，但主机 PATH 按合同没有该命令；三个 YAML path 已被 `rg` 只读打印，内嵌解析均未运行，也未改状态。
   修正为显式 `/root/autodl-tmp/envs/motionproj/bin/python` 后完成 NPZ identity/count/quantile 审计。后续所有 V5.1
-  runner/auditor 必须使用冻结解释器绝对路径，禁止把 shell PATH 差异写成数据或算法失败。
+  runner/auditor 必须使用冻结解释器绝对路径，禁止把 shell PATH 差异写成数据或算法失败。2026-08-20 收尾清理预审
+  首次又假设 `/usr/bin/python3` 存在并在任何 inventory 写入前失败；随后显式使用 `/root/miniconda3/bin/python` 运行同一
+  审计，候选集合未变化。该复发没有研究资产状态变化，进一步要求一次性维护的 cleanup 工具也必须绑定已探测的绝对解释器。
 - `V51-F34`（`engineering/runtime`, `resolved before D0 preregistration`）：D0 扩大回归时又用 motionproj Python
   调用了依赖 DriveStudio runtime identity 的 H evaluation config test，得到该项 runtime drift；D0 新测试本身已
   `4/4 PASS`，没有 formal run、GPU 或 quality read。这是 `V51-F24` 的重复触发，说明仅在文档记环境分层不足。
@@ -448,7 +450,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不是证据入口；正式 source audit 必须由仓库 runner 完成。r025 freeze 上传后的 YAML smoke 又因 PowerShell 中手写
   `python -c` 反斜杠转义得到 `unterminated string literal`，紧接着尝试 stdin 单层命令仍被本地 quote stripping 破坏；
   两次测试链都在该点停止且未修改 run/repo 文件。最终不再修补 shell quoting，改为仓库 pytest 直接加载 freeze YAML，
-  并配合 `git diff --check` 复核。该 recurrence 不影响此前已 PASS 的 r025 独立 auditor。
+  并配合 `git diff --check` 复核。该 recurrence 不影响此前已 PASS 的 r025 独立 auditor。2026-08-20 cleanup inventory 又有
+  两次 inline `awk`/shell-loop 因 PowerShell→SSH quoting 失败；两次均为只读、没有创建/修改/删除研究资产。最终把审计和
+  fail-closed deletion 放入固定 Python 文件，以 exact JSON plan 执行。禁止再为临时汇总跨两层 shell 拼循环、变量或 awk。
 - `V51-F41`（`engineering/environment`, `resolved during r020 audit`）：本地 `autodl-stage/motion_proj` 只是按约束用于
   `apply_patch` 的 partial staging tree，不包含完整 `motion_proj.worldsim_v5` package；误在该目录收集 E0a 联合测试时触发
   `ModuleNotFoundError`。这不是 canonical repo、r020 或 auditor 失败。修复为只在本地做语法检查/编辑，将新增文件同步到
@@ -709,7 +713,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `configs/worldsim_v51/stage_g_g0_trace3d_source_method_preflight_r044_closeout_v1.yaml`。r045 以原资产 exact reuse、标准库
   page-marker count=`11` 完成恢复；独立 audit `053cf574...d3b` PASS，故该工程失败关闭。r044 历史终态不倒写；本次修复不构成
   Trace3D 方法成功或训练授权。
-- `V51-F65`（`engineering/algorithm-determinism`, `active_forensic`）：Trace3D exact unpatched CUDA extension 在 r046 的
+- `V51-F65`（`engineering/algorithm-determinism`, `resolved_method_rejection`）：Trace3D exact unpatched CUDA extension 在 r046 的
   preregistered synthetic class-response gates 上 PASS，但相同 config/input/extension 的独立 fresh-process audit 将 foreground
   alpha weight 从 `0.0267562941` 重放为 `0.0056084292`（absolute diff=`0.0211478649`）；hard class vector 均为 `[0,1]`。
   official `id_trace.cu` 在多个 pixel threads 面向同一 per-Gaussian/class global weight 时使用普通 `+=` 而不是原子累加，
@@ -717,6 +721,22 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   adapter，也不得事后给 r046 增加失败门或直接 patch upstream。合法下一步是在全新预注册 run 中以多个 fresh processes 同时
   冻结 hard/alpha exact determinism；FAIL 时 faithful Trace3D operator rejected 并按路线转 BKI/graph-free，PASS 才允许预注册
   real tensor/camera adapter。r046 capability PASS 与本风险并存，且都不构成质量证据。
+  r047 按上述规则执行 8 个 fresh processes、每进程 hard 两次与 alpha 两次；16 个 hard vectors 均为 `[0,1]`，但
+  alpha exact vectors 为 `0.0056084292/0.0267562941` 两种，故唯一数 `2 > 1` 并被独立 audit `98c72ba7...d31`
+  重算确认。该结果足以拒绝当前 exact unpatched faithful operator，但仍不把普通 `+=` 写成已证明的唯一根因，也不外推
+  所有 Trace3D 实现。按预注册 failover 不 patch、不进入 real adapter，路线转 `WS-V51-M1-H-GRAPHFREE-01`。
+- `V51-F66`（`algorithm/governance`, `superseded`）：Stage H 的 faithful BKI/graph-free fallback 在 V5.1 内没有启动，
+  task status 保持 `pending`、execution=`false`，并由 V5.2 scope 取代；因此它既不是 done，也不是 empirical rejected。
+  收口依据是累计而非新增质量读数：r018 的 progressive propagation 只有 ΔBoundary-F1=`+0.0002196`，同时
+  ΔIoU=`-0.0714543`、ΔFN=`+0.1694766`；r022 的 simple voxel node 虽提高 observation density，相对 U2/B3 的
+  BF1/IoU/FN 仍为 `-0.0002566/-0.0925468/+0.1899473`；r043 的 0471/0379 identity recall 仅
+  `0.080747/0.202933` 且 persistence=`0/0`；r047 的 faithful Trace3D alpha 又不能跨 fresh process exact 重放。
+  这些事实共同推翻“在不改变 evidence source 的情况下继续替换传播器仍有较高边际收益”的 V5.1 资源分配假设；它们
+  支持当前瓶颈为 effective observation structural missing，但不证明 BKI 或所有空间 kernel 普遍无效。禁止在 V5.1
+  继续做 BKI source preflight、kernel/threshold 调参，或把 `superseded` 改写成 BKI reject。合法复开只能在 V5.2 先引入
+  独立新观测源，并在首次方法质量读取前冻结 coverage、identity persistence、fresh-process reproducibility 与跨场分母；
+  证据=`configs/worldsim_v51/m1_closeout_v1.yaml`、`docs/archive/2026-08/worldsim-v51-m1-closeout/README.md`，
+  authoring base=`fc07b99`，failure delta=`V51-F66`。
 
 <a id="detail-v5"></a>
 

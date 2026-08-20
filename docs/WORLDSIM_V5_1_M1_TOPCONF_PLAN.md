@@ -1,6 +1,20 @@
 # WorldSim V5.1 M1-Only Research Plan
 ## Observability-Aware Bayesian Gaussian Ownership for Driving World Simulation
 
+## 2026-08-20 terminal amendment：V5.1 closeout 与 Stage H disposition
+
+本 amendment 是 V5.1 的最终执行裁决；下文原始 task registry 与方法树保留 preregistration 历史，不再构成当前实验授权。
+
+- V5.1 terminal=`closed_without_promoted_candidate`；U2/B3 只保留为 V5.2 matched comparator。
+- Stage H task status=`pending`、executed=`false`、disposition=`superseded_by_v5.2_scope`。不得把该状态写成 BKI done 或
+  empirical rejected。
+- r018 progressive、r022 simple voxel node、r043 Gaussian Grouping 与 r047 Trace3D 的累计证据表明当前主要瓶颈是
+  effective observation structural missing；继续在同一 evidence source 上替换 propagation/completion 机制预期收益低。
+- V5.2 必须先引入并验证新的独立 observation source，冻结 coverage、identity persistence、fresh-process
+  reproducibility 与跨场分母；在此之前不重开 H0/H1/H2。
+- validation/test/KITTI/M2/M3 在 V5.1 均未解锁。当前事实源=`docs/RESEARCH_STATUS.md`，终局 freeze=
+  `configs/worldsim_v51/m1_closeout_v1.yaml`，归档=`docs/archive/2026-08/worldsim-v51-m1-closeout/`，failure=`V51-F66`。
+
 ## 2026-08-18 machine amendment：H evaluation-only two-phase contract
 
 本 amendment 只把既有 Stage B 指标与 split 原则机器化，不改变方法路线或 validation/test exact-once 约束。
@@ -1983,6 +1997,9 @@ child semantic nodes
 
 # 17. Stage H：Graph-Free Fallback
 
+> 2026-08-20 terminal disposition：`pending / not executed / superseded_by_v5.2_scope`。本节只保留历史
+> preregistration 设计，不再授权 V5.1 执行；详见顶部 terminal amendment 与 `V51-F66`。
+
 Task：
 
 ```text
@@ -3260,7 +3277,7 @@ memory gate
 | `WS-V51-M1-E-NODE-ELEVATION-01` | conditional | super-primitive / anchor |
 | `WS-V51-M1-F-IDENTITY-EMBEDDING-01` | conditional | Gaussian Grouping port |
 | `WS-V51-M1-G-AMBIGUITY-01` | conditional | Trace3D disagreement |
-| `WS-V51-M1-H-GRAPHFREE-01` | conditional | BKI / graph-free |
+| `WS-V51-M1-H-GRAPHFREE-01` | pending | BKI / graph-free；未执行，已由 V5.2 scope 取代 |
 | `WS-V51-M1-TEMP-ID-ASSOCIATION-01` | conditional | temporal pre-association |
 | `WS-V51-M1-VALIDATION-01` | pending | 8-scene validation |
 | `WS-V51-M1-TEST-01` | pending | 20-scene exact-once test |

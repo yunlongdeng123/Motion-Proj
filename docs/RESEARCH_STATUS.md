@@ -1,5 +1,34 @@
 # Research Status
 
+## V5.1 M1 已收尾；Stage H pending 但由 V5.2 scope 取代（2026-08-20）
+
+- terminal=`closed_without_promoted_candidate`；U2/B3 仅保留为 V5.2 matched comparator。M2/M3、validation、test 与
+  KITTI method tuning 在 V5.1 全程未解锁；authoring base=`fc07b99`，closeout freeze=
+  `configs/worldsim_v51/m1_closeout_v1.yaml`。
+- 累计实证指向 `effective_observations_are_structurally_missing`：progressive r018 的 scene-balanced
+  ΔBoundary-F1/ΔIoU/ΔFN=`+0.0002196/-0.0714543/+0.1694766`；simple voxel super-primitive 虽提高
+  observation density，r022 相对 U2/B3 仍为 `-0.0002566/-0.0925468/+0.1899473`；Gaussian Grouping r043
+  仅 1087 通过，0471/0379 identity recall=`0.080747/0.202933` 且 persistence=`0/0`；Trace3D r047 的 16 次
+  alpha 调用出现两个 exact 值。
+- Stage H task status=`pending`、executed=`false`、disposition=`superseded_by_v5.2_scope`。BKI 改变传播方式但不引入
+  新证据源，因此当前 expected gain=`low`；这是基于累计证据的 scope 决策，不是 BKI empirical rejection。
+- 下一研究入口只能是 V5.2 的新 observation-source scope：先冻结 coverage、identity persistence 与 fresh-process
+  reproducibility，再决定是否重开 propagation/completion。收尾归档=`docs/archive/2026-08/worldsim-v51-m1-closeout/`；
+  failure delta=`V51-F66`。
+
+## V5.1 Stage G Trace3D faithful operator 已拒绝并关闭（2026-08-18）
+
+- canonical r047=`20260819T000000Z__m1-stage-g-g0b-trace3d-determinism-s20260814-r047`，source/tree=
+  `e427022...7ec1/2b26037a...934e`；8 个 fresh processes 共 16 次 foreground alpha 调用出现两个 exact vector，
+  values=`0.0056084292/0.0267562941`，unique=`2 > gate 1`。hard 16 次均为 `[0,1]`，其余 gates 全 PASS。
+- official source hazard=`plain global += 2 /atomicAdd 0`；这支持 data-race 风险但不证明唯一根因。没有 threshold search、
+  source patch、真实 checkpoint/camera/image/mask/quality/training。
+- outcome=`rejected`；独立 audit=`20260819T003000Z__stage-g-g0b-r047-audit.json /3,880 bytes /
+  98c72ba7...d31 /PASS`，逐一重哈希 8 个 process rows 并重算裁决。`V51-F65` 关闭为 faithful operator rejection。
+- freeze=`configs/worldsim_v51/stage_g_trace3d_faithful_operator_rejection_freeze_v1.yaml`。不进入 real adapter、split/prune
+  或 patched Trace3D；r047 当时的 failover 指向 `WS-V51-M1-H-GRAPHFREE-01`，其后已由 2026-08-20 V5.1 closeout
+  冻结为 `pending + superseded_by_v5.2_scope`，未执行 BKI preflight。
+
 ## V5.1 Stage G G0b r047 cross-process determinism forensic 已预注册（2026-08-18）
 
 - formal target=`20260819T000000Z__m1-stage-g-g0b-trace3d-determinism-s20260814-r047`；auth=r046 freeze

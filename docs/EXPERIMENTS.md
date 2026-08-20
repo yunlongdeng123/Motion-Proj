@@ -1,5 +1,26 @@
 # Experiments
 
+## V5.1 M1 closeout / Stage H superseded（2026-08-20）
+
+- task=`WS-V51-M1-CLOSEOUT-01`，status=`done`，outcome=`closed_without_promoted_candidate`；这是对既有 r015/r018/
+  r022/r043/r047 的只读聚合与治理收口，没有新方法 run、没有 quality reread，也没有启动 BKI。
+- Stage H=`pending`、executed=`false`、disposition=`superseded_by_v5.2_scope`。`low_expected_gain` 是因为 BKI 仍将已有
+  局部证据通过空间 kernel 补全未观测节点，没有改变 evidence source；它不是 BKI empirical reject。
+- empirical conclusion=`effective_observations_are_structurally_missing`；V5.2 只有在新增独立观测源并先通过 coverage、
+  identity persistence、fresh-process determinism 后，才可重新讨论 propagation/completion。
+- freeze=`configs/worldsim_v51/m1_closeout_v1.yaml`；archive=`docs/archive/2026-08/worldsim-v51-m1-closeout/`；
+  failure refs=`V51-F31/F37/F42/F63/F65`，delta=`V51-F66`。validation/test/KITTI/training=false。
+- cleanup 采用 fixed inventory 串行删除 `156 targets /1,810 files /16,864,370 bytes` 的未跟踪编辑备份与可再生 cache；
+  unsafe=`0`、remaining=`0`，canonical runs/checkpoints/data/third-party source 未触及。完整逐目标记录见 archive。
+
+## V5.1 Stage G G0b r047 REJECT / audit / route closeout（2026-08-18）
+
+- `8 fresh processes /16 alpha calls` 得到 `0.0056084292` 与 `0.0267562941` 两个 vector，违反 unique≤1；hard
+  16 次 exact，其他 protocol/resource gates PASS。summary=`2,230 bytes /679b96e3...0b4`。
+- audit=`3,880 bytes /98c72ba7...d31 /PASS`；failure=`V51-F65 resolved-as-rejection`。不 patch 上游、不读真实数据/
+  质量；Trace3D faithful route closed。预注册 failover 原指向 `WS-V51-M1-H-GRAPHFREE-01`，但 Stage H 后续未执行并在
+  V5.1 closeout 中保持 `pending`、由 V5.2 scope 取代。
+
 ## V5.1 Stage G G0b r047 cross-process determinism 预注册（2026-08-18）
 
 - exact same synthetic input/extension，`8 fresh processes × (hard 3 + alpha 2)`；hard/alpha unique vector count 均须为 1，

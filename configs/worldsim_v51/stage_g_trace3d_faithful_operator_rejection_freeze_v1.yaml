@@ -1,0 +1,67 @@
+schema_version: worldsim_v51_stage_g_trace3d_faithful_operator_rejection_freeze_v1
+task_id: WS-V51-M1-G-AMBIGUITY-01
+status: done
+outcome: rejected
+phase: faithful_trace3d_operator_closed_cross_process_nondeterminism
+frozen_at: "2026-08-18"
+
+run:
+  run_dir: /root/autodl-tmp/runs/worldsim_v51/WS-V51-M1-G-AMBIGUITY-01/20260819T000000Z__m1-stage-g-g0b-trace3d-determinism-s20260814-r047
+  source_commit: e427022b4fdc6ed731d50de8ca9c6c6579a37ec1
+  source_tree: 2b26037a691f06cdf3649dc75f32bf6e4b2f934e
+  resolved_config: {bytes: 3754, sha256: 467a24657e3ad849e946f1609a370d639ca5fda68fe2453e3f86d64771e3d9c8}
+  summary: {bytes: 2230, sha256: 679b96e39d363b6fb78ef8f02cc3c6a2d646700b84e6f731944812766d1bd0b4}
+  forensic: {bytes: 988, sha256: e325c2dfb702b881ade43030358cff1220713ac25d028caa5ce377b54e4bc442}
+  manifest: {bytes: 2281, sha256: 57fc894dd343c239fdda59411a0887c6d1104ca23c039c47592b6900aa2ad311, entry_count: 14, logical_bytes: 11072}
+  status_file: {bytes: 251, sha256: 39a00252dd7a97007c989035a4afb1f6ee3c16b62e1edd46fc5cd7b875d32f5b}
+  events: {bytes: 167, sha256: b4e8dc7373f6ae9cc8259e18633b0723b1492078deffbc85dd410d714b51f9cd}
+
+audit:
+  path: /root/autodl-tmp/runs/worldsim_v51/audits/20260819T003000Z__stage-g-g0b-r047-audit.json
+  bytes: 3880
+  sha256: 98c72ba73378fe364a8c85502051fa218079c095a35baefb064759370d855d31
+  status: pass
+
+evidence:
+  fresh_process_count: 8
+  calls_per_process: {background_hard: 1, foreground_hard: 2, foreground_alpha: 2}
+  background_hard_all: [[1.0, 0.0]]
+  foreground_hard_unique_vectors: ["[[0.0,1.0]]"]
+  foreground_alpha_unique_vectors: ["[[0.0,0.005608429200947285]]", "[[0.0,0.026756294071674347]]"]
+  alpha_unique_count: 2
+  alpha_unique_count_gate_maximum: 1
+  failed_gate: foreground_alpha_unique_vector_count
+  all_other_protocol_checks_passed: true
+  source_hazard: {plain_global_weight_increment_count: 2, atomic_add_count: 0}
+  root_cause_proven: false
+  threshold_search: false
+  source_patch: false
+
+decision:
+  conclusion: faithful_trace3d_reverse_tracing_operator_rejected_cross_process_nondeterminism
+  scope: exact_unpatched_official_diff_id_extension_on_frozen_synthetic_probe
+  not_claimed: [universal_trace3d_method_invalidity, real_worldsim_quality_result, data_race_root_cause_proof]
+  real_tensor_camera_adapter_authorized: false
+  split_prune_training_authorized: false
+  trace3d_route_closed: true
+  upstream_patch_authorized: false
+
+governance:
+  next_task: WS-V51-M1-H-GRAPHFREE-01
+  next_phase: faithful_bki_graph_free_source_method_preflight_preregistration
+  only_authorized_next_action: acquire_and_audit_faithful_bki_source_method_before_adapter_or_quality_work
+  real_checkpoint_read: false
+  camera_metadata_read: false
+  image_pixels_read: false
+  mask_pixels_read: false
+  quality_metrics_read: false
+  training_authorized: false
+  validation_quality_read: false
+  test_quality_read: false
+  kitti_method_tuning: false
+  m2_status: pending
+  m3_status: pending
+
+resources: {wall_seconds: 20.796580959111452, cgroup_memory_current_bytes: 13296099328, maximum_child_torch_peak_gpu_memory_bytes: 45568, disk_free_after_bytes: 79846940672, all_checks_passed: true}
+failure_ledger_refs: [V51-F65, PIVOT-F05]
+failure_ledger_delta: V51-F65_resolved_as_faithful_trace3d_operator_rejection

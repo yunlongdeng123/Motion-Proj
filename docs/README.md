@@ -1,8 +1,11 @@
 # Motion-Proj 文档导航
 
-- 更新时间：2026-08-17
-- 当前路线：`WorldSim V5 / StructDelta`，分支=`research/worldsim-v5-structdelta`
-- 当前授权：`none_v5_closed`；M1/M2/M3 均已正式 rejected。M3 r006 确认 frozen LATERAL/INSERT 上 T2=`15/16 safe`、constraint projection 不需要；renderer、collision gate、method selection、fresh validation/test 与 KITTI 方法调参均未解锁
+- 更新时间：2026-08-20
+- 当前路线：`WorldSim V5.1 / M1-only closeout`，分支=`research/worldsim-v5.1-m1`
+- 当前授权：`none_v51_closed`；V5.1 M1=`closed_without_promoted_candidate`。Stage H 保持 `pending`、未执行，并由
+  V5.2 observation-source scope 取代；validation/test/KITTI 方法调参与 M2/M3 均未解锁
+- V5.1 终局归档：[`archive/2026-08/worldsim-v51-m1-closeout/`](archive/2026-08/worldsim-v51-m1-closeout/README.md)
+- V5.1 执行登记：[`WORLDSIM_V5_1_M1_PLAN.md`](WORLDSIM_V5_1_M1_PLAN.md)
 - V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
 - KITTI archive/adapter：[`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)、[`KITTI_TRACKING_ADAPTER_SMOKE_V5.md`](KITTI_TRACKING_ADAPTER_SMOKE_V5.md)，状态=`done`；0001 缺失 LiDAR `177–180` 以 abstain 保留
 - 最新关闭路线：`WorldSim V4 / EviDelta-GS`
@@ -18,8 +21,8 @@
 2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
 3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败、禁止重复项与复开条件；
 4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：canonical run、hash、指标和任务终态；
-5. [`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)：V4 final snapshot、附录索引和轻量 canonical evidence；
-6. [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：V4 canonical run、冻结资产和数据保留边界；
+5. [`archive/2026-08/worldsim-v51-m1-closeout/`](archive/2026-08/worldsim-v51-m1-closeout/README.md)：V5.1 终局结论、Stage H disposition 与清理证据；
+6. [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：canonical run、冻结资产和数据保留边界；
 7. [`ENVIRONMENT.md`](ENVIRONMENT.md)、[`THIRD_PARTY.md`](THIRD_PARTY.md)、[`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：环境、依赖和恢复事实。
 
 归档中的“当前任务”“下一步”和 agent 提示词只解释历史，不构成新执行授权。新路线必须先在 `RESEARCH_STATUS.md` 登记分支、task、split 和门禁。
@@ -39,6 +42,7 @@ V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正�
 - [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前路线、授权、commit、证据路径和下一步；
 - [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：仍约束后续路线的负结论；
 - [`EXPERIMENTS.md`](EXPERIMENTS.md)：完整实验台账；
+- [`archive/2026-08/worldsim-v51-m1-closeout/README.md`](archive/2026-08/worldsim-v51-m1-closeout/README.md)：V5.1 M1 终局结论、证据矩阵和 V5.2 复开门禁；
 - [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)：V5 KITTI 压缩包、frame gate、存储预算和 adapter 阻塞结论；
 - [`KITTI_TRACKING_ARCHIVE_METADATA_V5.json`](KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：逐 archive、split、sequence 和 class/track metadata；
 - [`KITTI_TRACKING_ARCHIVES_V5.sha256`](KITTI_TRACKING_ARCHIVES_V5.sha256)：7 个原始 ZIP 的标准 SHA-256 清单；
@@ -60,6 +64,7 @@ V5 P0、fresh cohort、KITTI archive audit/adapter smoke 与 M1/M2/M3 developmen
 
 ## 归档索引
 
+- [WorldSim V5.1 M1 收尾归档](archive/2026-08/worldsim-v51-m1-closeout/README.md)
 - [WorldSim V4 终局归档](archive/2026-08/worldsim-v4-final/README.md)
 - [WorldSim V3.2 终局归档](archive/2026-08/worldsim-v3.2/README.md)
 - [WorldSim V3.1 终局归档](archive/2026-08/worldsim-v3.1/README.md)

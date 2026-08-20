@@ -1,5 +1,18 @@
 # WorldSim V5.1 M1 执行登记
 
+## 2026-08-20 V5.1 M1 终局收口
+
+V5.1 M1 已以 `closed_without_promoted_candidate` 收尾。U2/B3 保留为 V5.2 matched comparator；validation、test、KITTI、
+M2/M3 均未解锁。累计 evidence 表明核心瓶颈是 effective observation structural missing，而不是仅靠更复杂空间拓扑或
+传播器即可解决：r018 progressive 的 BF1 微增伴随 IoU/FN 明显退化；r022 super-primitive 提高 density 后三项质量仍恶化；
+r043 的 identity route 两场 coverage/persistence 失败；r047 的 faithful Trace3D alpha 跨 fresh process 不可 exact 重放。
+
+Stage H 的 task status 保持 `pending`，没有执行 BKI source/method preflight；其 disposition 是
+`superseded_by_v5.2_scope`。BKI 的低预期收益来自它仍在传播已有局部证据而不引入新 evidence source，这是一项 scope/
+资源决策，不是 BKI empirical reject。V5.2 必须先提出并验证独立观测来源，再决定是否重开 propagation/completion。
+freeze=`configs/worldsim_v51/m1_closeout_v1.yaml`，archive=`docs/archive/2026-08/worldsim-v51-m1-closeout/`，failure=
+`V51-F66`。
+
 ## 2026-08-18 Stage G G0 Trace3D source/method preflight 预注册
 
 Gaussian Grouping 因 r043 在冻结 train-only quality/identity-alignment gate 上仅 `1/3` scenes PASS 而关闭；F1/F2/training
@@ -156,7 +169,7 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 `docs/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md` 为唯一 normative plan。这里不复制长计划，只维护当前阶段、授权和证据，
 避免两份计划发生漂移。
 
-## 当前阶段（2026-08-18）
+## 当前阶段（2026-08-20）
 
 | Task ID | 状态 | 当前证据/下一门 |
 |---|---|---|
@@ -164,8 +177,16 @@ r013 已冻结；r014 evaluation-only config/module/runner/test 现已按上述�
 | `WS-V51-D0-DEV-ROLE-FREEZE-01` | done | r001 start audit；H/S/C=`3/2/3` 与原 cohort exact |
 | `WS-V51-M1-A-UNARY-OBSERVABILITY-01` | done | r007 S screening：A1/A2 rejected；freeze U2/B3 |
 | `WS-V51-M1-B-LUDVIG-UPLIFT-01` | rejected | r015 H gate：reprojection PASS 但 actor margin FAIL；uplift/raw graph 均收口 |
+| `WS-V51-M1-C-SEMANTIC-GRAPH-01` | rejected | 随 r015 raw LUDVIG graph 收口；未用后续路线倒写 |
 | `WS-V51-M1-D-PROGRESSIVE-01` | rejected | r018：BF1 两门 PASS，但 IoU/FN FAIL；D1 skipped，freeze + `V51-F37` |
-| `WS-V51-M1-E-NODE-ELEVATION-01` | running | E0a r020 + E0b r021 frozen；三臂 r022 matched H 已预注册，E1/E2 locked |
+| `WS-V51-M1-E-NODE-ELEVATION-01` | rejected | r022：density 增加但相对 U2/B3 与 raw D0 的 BF1/IoU/FN 门均 FAIL |
+| `WS-V51-M1-F-IDENTITY-EMBEDDING-01` | rejected | r043：仅 1087 PASS；0471/0379 identity recall 与 persistence FAIL |
+| `WS-V51-M1-G-AMBIGUITY-01` | rejected | r047：hard count exact，但 alpha contribution 跨 fresh process 两值 |
+| `WS-V51-M1-H-GRAPHFREE-01` | pending | 未执行；`superseded_by_v5.2_scope`，不是 BKI empirical reject |
+| `WS-V51-M1-CLOSEOUT-01` | done | V5.1 closed without promoted candidate；V5.2 先解决新 observation source |
+| `WS-V51-M1-VALIDATION-01` | pending | 未授权、未读 |
+| `WS-V51-M1-TEST-01` | pending | 未授权、未读 |
+| `WS-V51-M1-KITTI-01` | pending | 未用于方法调参 |
 | `WS-V51-M2` | pending | 未授权 |
 | `WS-V51-M3` | pending | 未授权 |
 
@@ -190,7 +211,8 @@ Grouping→Trace3D→BKI/graph-free。每条路线先原样迁移论文方法；
   delta=`V51-F11/F12/F13`；freeze proposal delta=`V51-F14/F15`；asset recovery delta=`V51-F16 resolved`；
   operator pre-formal fixture/result-freeze test delta=`V51-F17/F18 resolved`；r006/r007 recovery delta=
   `V51-F19/F20/F21/F22 resolved`；H full-run resource delta=`V51-F23 resolved by v2/r012`；Stage D rejection
-  delta=`V51-F37 active`；Stage E recovery/audit delta=`V51-F38/F40/F41 resolved, V51-F39 resolved by r020`。
+  delta=`V51-F37 active`；Stage E recovery/audit delta=`V51-F38/F40/F41 resolved, V51-F39 resolved by r020`；
+  V5.1 closeout refs=`V51-F31/F37/F42/F63/F65`，delta=`V51-F66 superseded`。
 
 ## 配置与入口
 

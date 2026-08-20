@@ -2,6 +2,8 @@
 
 本目录只保存已结束或冻结路线的计划、状态快照、实验凭证和维护证据，不构成当前执行授权。
 
+- [`worldsim-v51-m1-closeout/`](worldsim-v51-m1-closeout/README.md)：V5.1 M1 无 promoted candidate 收尾、Stage H
+  `pending + superseded_by_v5.2_scope`、关键负证据矩阵、V5.2 复开门禁与逐目标 cleanup inventory/result；
 - [`worldsim-v5-m2/`](worldsim-v5-m2/APPENDIX_INDEX.md)：V5 M2 r001–r015 的逐 actor geometry-first、Gaussianization、cross-view scaffold、覆盖率诊断与正式 rejection；含完整失败结论和机器元数据；
 - [`worldsim-v5-m3/`](worldsim-v5-m3/M3_R001_R006_METADATA.json)：V5 M3 r001–r006 的 result-blind 协议、clip inventory、blocked terminal、constraint-projection 机制失败、measurement correction 与正式 rejection 哈希；
 - [`worldsim-v5-m1/`](worldsim-v5-m1/APPENDIX_INDEX.md)：V5 M1/M1B development rejection、复制与 boundary-residual 轻量附录；

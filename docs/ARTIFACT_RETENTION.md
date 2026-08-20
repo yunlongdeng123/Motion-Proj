@@ -1,12 +1,24 @@
-# Motion-Proj WorldSim V4 终局产物保留策略
+# Motion-Proj WorldSim 终局产物保留策略
 
-- 更新时间：2026-08-14
+- 更新时间：2026-08-20
 - 路线终态：`V4 closed / M1 rejected / M2 done with geometry caveat / M3 confirmed`
 - 终局归档提交：`c7e4c969a95536d26d0a17a1c0d1d548f9a247dc`
 - 当前研究授权：[`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)
 - 终局证据入口：[`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)
 
-## 0. V5 M2 active addendum（2026-08-14）
+## 0. V5.1 M1 closeout addendum（2026-08-20）
+
+- V5.1 M1 终态=`closed_without_promoted_candidate`；Stage H=`pending /not executed /
+  superseded_by_v5.2_scope`。轻量收尾入口=`archive/2026-08/worldsim-v51-m1-closeout/`。
+- `/root/autodl-tmp/runs/worldsim_v51/` 的 canonical run/audit、对应 freeze、U2/B3 baseline、正式 third-party source、
+  checkpoint 与 KITTI archives 继续保留；V5.2 完成新 observation-source freeze 前不得删除。
+- 本次只按 immutable JSON plan 删除未跟踪 `*.codexbak.*`、`__pycache__` 与 `.pytest_cache`：
+  `156 targets /1,810 files /16,864,370 bytes`，`unsafe=0`、删除后 remaining=`0`。逐目标路径/hash/recovery 见
+  `archive/2026-08/worldsim-v51-m1-closeout/cleanup_plan.json`，结果见相邻 `cleanup_result.json`。
+- 两个空目录 `/root/autodl-tmp/motion_proj/tmp`、`/root/autodl-tmp/tmp` 保留；`/root/autodl-tmp/mnt` 与 Trace3D
+  `.partial` build target 在预审时不存在。未删除任何正式 run、数据、模型、环境或 Git-tracked 文件。
+
+## 0.1 V5 M2 active addendum（2026-08-14）
 
 - `WS-V5-M2-GEOMETRY-FIRST-REPAIR-01` 的 r001–r009 全部保留在 `/root/autodl-tmp/runs/worldsim_v5/WS-V5-M2-GEOMETRY-FIRST-REPAIR-01/`；r001/r007 的 blocked terminal 不覆盖，r002/r003 的 union-mask artifact 保留为 request-unit 失败证据。
 - r004 的逐 actor mask manifest 与 mask payload、r005–r009 的 request NPZ/diagnostics、summary/status/fingerprint/manifest/resolved/events/source snapshot 都是后续 Gaussianization forensic 与技术报告附录的只读输入，当前禁止清理。
