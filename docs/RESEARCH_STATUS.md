@@ -1,5 +1,30 @@
 # Research Status
 
+## V5.2.1 Base Badcase Census 已冻结收口（2026-08-20）
+
+- task family=`WS-V521-P0..P10`，overall status=`done`，terminal outcome=`v521_base_badcase_basis_frozen`；P9 canonical=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001`，P10 canonical=
+  `/root/autodl-tmp/runs/worldsim_v521/20260820T113000Z__p10-base-badcase-closeout-s0-r001`，closeout source HEAD=
+  `f77ac76659f11a10dd5d4aa19e870ce04660f1f3`。
+- P9 在任何 Confirmation decode 前冻结协议，freeze SHA=`b70caa0f...76cf`；one-shot 完成 `126 views/base`、
+  `252` base rows、`252` actor rows、`36` temporal-proxy rows。`threshold_refit=false`、`ranking_k_changed=false`、
+  `failure_predicate_changed=false`，两基座的 `B-RGB-GLOBAL / B-ACTOR / B-BOUNDARY` 六个 class-level verdict 全部为
+  `direction_confirmed`。
+- Confirmation registry：AD-GS=`31 cases`（global/actor/boundary=`28/9/5`），StreetGS=`32 cases`
+  （`25/11/5`）；Discovery 保持 AD-GS=`169`、StreetGS=`145`。最终 `BADCASE_REGISTRY.jsonl=377` rows，
+  `PANEL_REGISTRY.jsonl=124` rows，SHA=`29d1ca2b...68bb /2a5fd7e0...4091`，coverage=`complete_full`。
+- 可冻结的问题定义仅为 `GLOBAL_RGB / ACTOR_RGB / BOUNDARY`。geometry=`undefined_no_comparable_base_depth`，
+  visibility/occlusion/identity 缺合法 denominator，temporal 仅为 unwarped proxy，均不得以 proxy 冒充 GT 或新 failure class。
+- M1/M2/M3 终态=`M1_EVIDENCE_INSUFFICIENT_KEEP_PENDING / M2_EVIDENCE_INSUFFICIENT /
+  M3_EVIDENCE_INSUFFICIENT_KEEP_PENDING`；算法 candidates=`0`。对直接进入 V5.2.2 模型结构设计为 **NoGo**；
+  下一阶段只允许建立 exact base/M1 same-view overlap，并补 actor identity、visibility/occlusion、可比 depth 与 correspondence evidence。
+- fresh validation/test/KITTI quality read=`false`，Stage H/BKI=`not executed`，无训练、threshold search 或算法改造。
+  受控清理仅移除可重建 render/staging：Discovery=`1,728 files /606,607,441 bytes`，Confirmation=
+  `378 files /119,392,106 bytes`；canonical metrics/panels/audits 全保留，可由冻结 checkpoint/data/split/renderer 再生成。
+- 最终报告：[`WORLDSIM_V5_2_1_BADCASE_REPORT.md`](WORLDSIM_V5_2_1_BADCASE_REPORT.md)、
+  [`WORLDSIM_V5_2_1_M123_REVIEW.md`](WORLDSIM_V5_2_1_M123_REVIEW.md)、
+  [`WORLDSIM_V5_2_1_CLOSEOUT.md`](WORLDSIM_V5_2_1_CLOSEOUT.md)。定向回归=`28 passed`。
+
 ## V5.2.1 P2–P8 已通过；P9 one-shot Confirmation 待执行（2026-08-20）
 - P2 canonical=`/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001`，
   outcome=`p2_gate_pass`。两基座各完成 Discovery `576` views，共 `1,152` base rows、`1,152` dynamic-union actor rows、

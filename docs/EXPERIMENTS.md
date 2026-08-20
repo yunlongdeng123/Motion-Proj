@@ -1,5 +1,24 @@
 # Experiments
 
+## V5.2.1 P9 one-shot Confirmation / P10 closeout PASS（2026-08-20）
+
+- P9 run=`20260820T103000Z__p9-one-shot-confirmation-s0-r001`；在 quality decode 前冻结 taxonomy、P5、M123、P4
+  exact SHA，protocol freeze SHA=`b70caa0f...76cf`。两套基座 × 6 scenes 的 `12/12` renderer audits 通过，
+  Confirmation=`126 views/base`，base/actor/temporal rows=`252/252/36`，checkpoint hash gate=`true`。
+- Confirmation 未 refit threshold、未改 K、未改 predicate；AD-GS global/actor/boundary=`28/9/5`，StreetGS=
+  `25/11/5`，六个 base×class direction 均 confirmed。registry=`63` unique view cases，automatic panels=`47`，
+  verdict/summary SHA=`8f5ca467...2b61 /33cbc03c...40ab`。
+- P10 run=`20260820T113000Z__p10-base-badcase-closeout-s0-r001`，outcome=`v521_base_badcase_basis_frozen`，
+  coverage=`complete_full`。最终 registry=`377` rows，panel registry=`124` rows；summary/decision/manifest SHA=
+  `f3e61102...056f /392c9dbb...8135 /bcbccded...8ebc`。
+- P6–P8 re-audit 结论保持 evidence-insufficient；最终 `ready_for_v522_algorithm_design=false`，next stage=
+  `exact base/M1 overlap + actor identity/visibility/depth/correspondence evidence alignment`，算法 candidate=`0`。
+- hash-first cleanup 删除 Discovery `1,728 files /606,607,441 bytes` 与 Confirmation
+  `378 files /119,392,106 bytes` 的未入选 prediction、重复 GT 和 staging；保留全部 canonical metrics、panels、audits，
+  recoverability=`regenerable_from_frozen_checkpoint_data_split_and_renderer`。
+- fresh validation/test/KITTI=`false`，Stage H/BKI=`false`，training/algorithm modification/threshold search=`false`；
+  完整 V5.2.1 定向测试=`28 passed`，failure delta=`none`。
+
 ## V5.2.1 P2–P8 Discovery census / taxonomy / re-audit PASS（2026-08-20）
 - P2 run=`20260820T091500Z__p2-discovery-base-census-s0-r001`：AD-GS/StreetGS × 6 scenes 全部 exact 重渲染，
   Discovery=`576 views/base`，base/actor/temporal rows=`1,152/1,152/918`；LPIPS=`Alex`，V4 evaluator/mask source SHA=
