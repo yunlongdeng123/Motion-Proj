@@ -231,6 +231,7 @@ def prediction_maps(run_dir: Path) -> tuple[dict[tuple[str, str, int, int], dict
             audit = json.loads((scene_dir / "RENDER_AUDIT.json").read_text(encoding="utf-8"))
             audits.append({"base": base, "scene": scene_dir.name, **audit})
             for row in rows:
+                row = {**row, "render_audit_path": str((scene_dir / "RENDER_AUDIT.json").resolve())}
                 key = (base, row["scene"], int(row["frame"]), int(row["camera"]))
                 if key in mapping:
                     raise RuntimeError(f"重复 prediction key：{key}")
@@ -266,7 +267,7 @@ def evaluate(config_path: Path, run_dir: Path) -> None:
                 prediction_path=prediction["prediction_path"],
                 dynamic_mask_path=mask_path,
                 lpips_model=model,
-                renderer_provenance={"render_audit": str(Path(prediction["prediction_path"]).parents[1] / "RENDER_AUDIT.json")},
+                renderer_provenance={"render_audit": prediction["render_audit_path"]},
                 resource={"render_seconds": prediction.get("render_seconds")},
                 protocol=protocol,
             )
