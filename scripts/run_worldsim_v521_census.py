@@ -203,6 +203,13 @@ def render(config_path: Path, run_dir: Path, only: str | None = None, scene: str
         if row["base"] == "adgs":
             adapter = Path(argv[argv.index("--adapter") + 1])
             row["zero_depth_link_repairs"] = repair_adgs_zero_depth_links(adapter)
+        output = Path(argv[argv.index("--output") + 1])
+        if (output / "RENDER_MAP.jsonl").is_file() and (output / "RENDER_AUDIT.json").is_file():
+            row["resume_status"] = "already_complete"
+            row["executed_argv"] = argv
+            continue
+        if output.exists():
+            raise RuntimeError(f"存在不完整 renderer output，fail-closed：{output}")
         completed = subprocess.run(argv, cwd=Path.cwd(), text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
         log = run_dir / "logs" / f"render_{row['base']}_{row['scene']}.log"
         log.parent.mkdir(parents=True, exist_ok=True)
@@ -211,6 +218,7 @@ def render(config_path: Path, run_dir: Path, only: str | None = None, scene: str
             raise RuntimeError(f"renderer failed: {row['base']}/{row['scene']}，见 {log}")
         row["wall_seconds"] = time.monotonic() - started
         row["executed_argv"] = argv
+        row["resume_status"] = "executed"
     atomic_json(run_dir / "RENDER_EXECUTION.json", {"executed": selected, "gpu_processes": 1})
 
 
