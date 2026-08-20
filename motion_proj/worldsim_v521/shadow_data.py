@@ -173,7 +173,7 @@ def build_adgs_discovery_adapter(
         with Image.open(source / "sky_masks" / f"{stem}.png") as opened:
             sky = opened.convert("L").resize(METRIC_SIZE, Image.Resampling.NEAREST)
             np.save(partial / "sky" / f"mask_{image_id:06d}.npy", (np.asarray(sky) > 0).astype(np.uint8))
-        _symlink(zero_depth, partial / "depth" / f"{image_id:06d}.npy")
+        os.link(zero_depth, partial / "depth" / f"{image_id:06d}.npy")
         world_to_camera = _aligned_world_to_camera(np.loadtxt(source / "extrinsics" / f"{stem}.txt"), origin)
         rotations.append(world_to_camera[:3, :3])
         translations.append(world_to_camera[:3, 3])
@@ -214,3 +214,18 @@ def build_adgs_discovery_adapter(
     _atomic_json(partial / "V521_ADAPTER_MANIFEST.json", manifest)
     os.replace(partial, destination)
     return manifest
+
+
+def repair_adgs_zero_depth_links(adapter: str | Path) -> int:
+    """只修复旧 prepare 产生、因 partial 原子改名而断开的 zero-depth 链接。"""
+    root = Path(adapter).resolve()
+    zero_depth = root / "depth" / ".v521_zero_depth.npy"
+    if not zero_depth.is_file():
+        raise CensusError(f"AD-GS zero-depth placeholder 缺失：{zero_depth}")
+    repaired = 0
+    for link in sorted((root / "depth").glob("[0-9][0-9][0-9][0-9][0-9][0-9].npy")):
+        if link.is_symlink() and not link.exists():
+            link.unlink()
+            os.link(zero_depth, link)
+            repaired += 1
+    return repaired

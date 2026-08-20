@@ -14,6 +14,7 @@ from motion_proj.worldsim_v521.census import (
     evaluate_discovery_view,
     temporal_proxy_row,
 )
+from motion_proj.worldsim_v521.shadow_data import repair_adgs_zero_depth_links
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -114,3 +115,18 @@ def test_duplicate_primary_key_rejected() -> None:
     rows = [{"base": "adgs", "scene": "s", "frame": 2, "camera": 0}] * 2
     with pytest.raises(CensusError, match="重复主键"):
         assert_unique_keys(rows, ("base", "scene", "frame", "camera"))
+
+
+def test_repair_only_broken_adgs_zero_depth_links(tmp_path: Path) -> None:
+    depth = tmp_path / "depth"
+    depth.mkdir()
+    zero = depth / ".v521_zero_depth.npy"
+    np.save(zero, np.zeros((2, 2, 1), dtype=np.float32))
+    broken = depth / "000354.npy"
+    broken.symlink_to(tmp_path / "renamed.partial" / "depth" / zero.name)
+    intact = depth / "000000.npy"
+    np.save(intact, np.ones((2, 2, 1), dtype=np.float32))
+    assert repair_adgs_zero_depth_links(tmp_path) == 1
+    assert broken.is_file() and not broken.is_symlink()
+    assert np.array_equal(np.load(broken), np.load(zero))
+    assert float(np.load(intact).sum()) == 4.0

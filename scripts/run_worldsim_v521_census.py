@@ -27,7 +27,11 @@ from motion_proj.worldsim_v521.census import (
     validate_discovery_record,
 )
 from motion_proj.worldsim_v521.protocol import atomic_json, atomic_jsonl, temporal_window_partition
-from motion_proj.worldsim_v521.shadow_data import build_adgs_discovery_adapter, build_streetgs_shadow
+from motion_proj.worldsim_v521.shadow_data import (
+    build_adgs_discovery_adapter,
+    build_streetgs_shadow,
+    repair_adgs_zero_depth_links,
+)
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -196,6 +200,9 @@ def render(config_path: Path, run_dir: Path, only: str | None = None, scene: str
         argv = list(row["argv"])
         if row["base"] == "streetgs":
             argv[0] = "/root/autodl-tmp/envs/drivestudio/bin/python"
+        if row["base"] == "adgs":
+            adapter = Path(argv[argv.index("--adapter") + 1])
+            row["zero_depth_link_repairs"] = repair_adgs_zero_depth_links(adapter)
         completed = subprocess.run(argv, cwd=Path.cwd(), text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
         log = run_dir / "logs" / f"render_{row['base']}_{row['scene']}.log"
         log.parent.mkdir(parents=True, exist_ok=True)
