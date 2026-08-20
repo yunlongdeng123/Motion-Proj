@@ -136,7 +136,7 @@ def prepare(config_path: Path, run_dir: Path) -> None:
                     "base": "streetgs",
                     "scene": scene,
                     "argv": [
-                        sys.executable,
+                        "/root/autodl-tmp/envs/drivestudio/bin/python",
                         "scripts/render_streetgs_v521.py",
                         "--checkpoint", street_asset["path"],
                         "--shadow-root", str(shadow_root),
@@ -193,13 +193,17 @@ def render(config_path: Path, run_dir: Path, only: str | None = None, scene: str
     selected = [row for row in payload["commands"] if (only is None or row["base"] == only) and (scene is None or row["scene"] == scene)]
     for row in selected:
         started = time.monotonic()
-        completed = subprocess.run(row["argv"], cwd=Path.cwd(), text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+        argv = list(row["argv"])
+        if row["base"] == "streetgs":
+            argv[0] = "/root/autodl-tmp/envs/drivestudio/bin/python"
+        completed = subprocess.run(argv, cwd=Path.cwd(), text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
         log = run_dir / "logs" / f"render_{row['base']}_{row['scene']}.log"
         log.parent.mkdir(parents=True, exist_ok=True)
         log.write_text(completed.stdout, encoding="utf-8")
         if completed.returncode != 0:
             raise RuntimeError(f"renderer failed: {row['base']}/{row['scene']}，见 {log}")
         row["wall_seconds"] = time.monotonic() - started
+        row["executed_argv"] = argv
     atomic_json(run_dir / "RENDER_EXECUTION.json", {"executed": selected, "gpu_processes": 1})
 
 
