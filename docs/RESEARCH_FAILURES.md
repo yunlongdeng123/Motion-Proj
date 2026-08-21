@@ -3740,3 +3740,9 @@ H-R82-001 第一次正式启动在创建 run directory、复制 package 或开�
 H-R82-002 run `20260821T215606Z__three-actor-package-s20260821-r1` 数值上通过全部 package gates：3个 actor、45个 payload、34,257 primitives、588 trajectory rows、195,658,443 bytes，三棵 actor package tree byte-exact且双 bake 完全一致。但 digest repair commit 只修正 source SHA256，遗漏把 YAML `hypothesis_id` 从已关闭的 `WS-V6-H-R82-001` 更新为 active 的 `WS-V6-H-R82-002`，因此 SUMMARY 错绑旧 hypothesis。该 run 不得作为 canonical acceptance。
 
 不得回写 run、把数值通过覆盖 provenance mismatch 或重新编号旧记录。H-R82-003 只把 YAML hypothesis binding 更新为 `WS-V6-H-R82-003`，保持已验证的 R70/R80/R81 hashes、bake bytes、所有 denominators、资源与 claim boundary 不变；新 commit/push 后重跑。
+
+### V6-F85：稀疏固定时点的 actor lifecycle 有效性不能替代前视相机可见性
+
+H-R95-001 canonical run `20260821T234324Z__scene0048-actor-visibility-s20260821-r1` 在第二个独立 scene0048 matched-formal30k checkpoint 上完整枚举9个 RigidNodes actor、196帧 lifecycle 与15,717个 primitives；source、partition、checkpoint immutability、GPU 和全部 denominator gate 均通过。但在预注册的 frames `[0,49,98,147,195]` 前视相机中，所有9个候选的 actor-only effect pixels 均为0，最大值仍为0，低于非平凡可见门64，因此 H-R95-001 正式 `rejected`。这证明固定五时点 lifecycle-active 不能推出 camera-visible support，并不否定 scene0048 checkpoint 或 actor 表示。
+
+不得删除64像素门、把非零 primitives/opacity 当作屏幕可见、改用事后选中的单帧，或追认 R95 为成功。H-R96-001 保持相同 checkpoint、9个候选、前视相机、opacity阈值0.01和选择规则，改为在单个冻结进程内穷举全部196帧的所有 lifecycle-active actor/frame 对；仅在完整分母上按最大 effect pixels、actor index、frame index确定性选择。若穷举仍为0，则保留第二次 rejection 并转向三相机覆盖实验，而不是继续猜前视帧。
