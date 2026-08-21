@@ -16,7 +16,8 @@ import yaml
 
 TASK_ID = "WS-V6-R27-ACTOR-THREE-FACTOR-VERIFICATION-01"
 R28_TASK_ID = "WS-V6-R28-ACTOR-FACTOR-TRUTH-PRODUCT-01"
-ALLOWED_TASK_IDS = {TASK_ID, R28_TASK_ID}
+R29_TASK_ID = "WS-V6-R29-ACTOR-FACTOR-TRUTH-REPORTED-01"
+ALLOWED_TASK_IDS = {TASK_ID, R28_TASK_ID, R29_TASK_ID}
 
 
 class R27ExperimentError(RuntimeError):
@@ -100,7 +101,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         r26 / "SEMANTIC_CONSENSUS.jsonl": sources["r26_semantic_sha256"],
     }
     r27 = None
-    if task_id == R28_TASK_ID:
+    if task_id in {R28_TASK_ID, R29_TASK_ID}:
         r27 = _resolve_runs_uri(sources["r27_run"])
         source_files.update(
             {
@@ -108,6 +109,18 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 r27 / "R27_GATE.json": sources["r27_gate_sha256"],
                 r27 / "ACTOR_FACTORIZED_DECISIONS.jsonl": sources[
                     "r27_decisions_sha256"
+                ],
+            }
+        )
+    r28 = None
+    if task_id == R29_TASK_ID:
+        r28 = _resolve_runs_uri(sources["r28_run"])
+        source_files.update(
+            {
+                r28 / "MANIFEST.json": sources["r28_manifest_sha256"],
+                r28 / "R28_GATE.json": sources["r28_gate_sha256"],
+                r28 / "ACTOR_FACTORIZED_DECISIONS.jsonl": sources[
+                    "r28_decisions_sha256"
                 ],
             }
         )
@@ -127,7 +140,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     if not r26_gate.get("checks", {}).get("passed"):
         raise R27ExperimentError("R26 semantic arm 未通过")
     r27_gate = None
-    if task_id == R28_TASK_ID:
+    if task_id in {R28_TASK_ID, R29_TASK_ID}:
         r27_gate = json.loads((r27 / "R27_GATE.json").read_text(encoding="utf-8"))
         failed_r27_checks = sorted(
             key
@@ -138,6 +151,18 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             raise R27ExperimentError("R28 必须保留 R27 rejected 状态")
         if failed_r27_checks != ["factor_truth_labels_consistent"]:
             raise R27ExperimentError("R27 失败集合不是冻结的 truth identity 缺陷")
+    r28_gate = None
+    if task_id == R29_TASK_ID:
+        r28_gate = json.loads((r28 / "R28_GATE.json").read_text(encoding="utf-8"))
+        failed_r28_checks = sorted(
+            key
+            for key, value in r28_gate.get("checks", {}).items()
+            if key != "passed" and not value
+        )
+        if r28_gate.get("checks", {}).get("passed") is not False:
+            raise R27ExperimentError("R29 必须保留 R28 rejected 状态")
+        if failed_r28_checks != ["factor_truth_disagreement_count_exact"]:
+            raise R27ExperimentError("R28 失败集合不是冻结的 diversity 计数缺陷")
 
     free_gib = shutil.disk_usage(run_root).free / (1024**3)
     if free_gib < float(config["resources"]["minimum_disk_free_gib"]):
@@ -258,7 +283,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         }
         if task_id == TASK_ID:
             checks["factor_truth_labels_consistent"] = truth_consistent
-        else:
+        elif task_id == R28_TASK_ID:
             checks.update(
                 {
                     "r27_rejection_retained": not r27_gate["checks"]["passed"],
@@ -271,17 +296,39 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     == int(config["cohort"]["expected_factor_truth_disagreement_count"]),
                 }
             )
+        else:
+            checks.update(
+                {
+                    "r27_rejection_retained": not r27_gate["checks"]["passed"],
+                    "r27_only_failed_truth_identity_assumption": True,
+                    "r28_rejection_retained": not r28_gate["checks"]["passed"],
+                    "r28_only_failed_unobserved_exact_diversity_count": True,
+                    "factor_truth_product_contract_frozen": config["fusion"][
+                        "joint_truth"
+                    ]
+                    == "photo_truth_safe_and_geometry_truth_safe_and_semantic_truth_safe",
+                    "factor_truth_diversity_transparently_reported": factor_truth_disagreement_count
+                    > 0,
+                }
+            )
         wall_seconds = time.monotonic() - started
         checks["wall_within_budget"] = wall_seconds <= float(
             config["resources"]["maximum_wall_seconds"]
         )
         checks["passed"] = all(checks.values())
         _write_json(
-            run_dir / ("R27_GATE.json" if task_id == TASK_ID else "R28_GATE.json"),
+            run_dir
+            / {
+                TASK_ID: "R27_GATE.json",
+                R28_TASK_ID: "R28_GATE.json",
+                R29_TASK_ID: "R29_GATE.json",
+            }[task_id],
             {
-                "schema_version": "worldsim_v6.r27_gate.v1"
-                if task_id == TASK_ID
-                else "worldsim_v6.r28_gate.v1",
+                "schema_version": {
+                    TASK_ID: "worldsim_v6.r27_gate.v1",
+                    R28_TASK_ID: "worldsim_v6.r28_gate.v1",
+                    R29_TASK_ID: "worldsim_v6.r29_gate.v1",
+                }[task_id],
                 "checks": checks,
                 "decision": "proceed_to_typed_actor_bake"
                 if checks["passed"]
@@ -338,7 +385,11 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         tracked = [
             "ACTOR_FACTORIZED_DECISIONS.jsonl",
-            "R27_GATE.json" if task_id == TASK_ID else "R28_GATE.json",
+            {
+                TASK_ID: "R27_GATE.json",
+                R28_TASK_ID: "R28_GATE.json",
+                R29_TASK_ID: "R29_GATE.json",
+            }[task_id],
             "METRICS.json",
             "SUMMARY.json",
             "RESOURCE_AUDIT.json",

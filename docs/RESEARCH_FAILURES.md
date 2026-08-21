@@ -3599,3 +3599,9 @@ H-R27-001 首个 formal run `20260821T160452Z__three-factor-s20260821-r1` 在组
 H-R27-001 canonical retry `20260821T160717Z__three-factor-s20260821-r1` 在六个 actor cases 上得到预期决策：`1` ACCEPT、`1` REJECT、`4` ABSTAIN，全部 factor decision disagreement 都 ABSTAIN，ACCEPT 的 joint truth-safe 为真，false-safe 为 `0`，coverage 为 `1/6`。但预注册合同额外要求 photo、geometry、semantic 三种 truth label 逐例相等；实际有两个 case 的 factor truths 不同，因此 run 按合同正式 `rejected`。
 
 不得删除这两个不一致 case 或追认 R27。photo truth 衡量 RGB 恢复、geometry truth 衡量 depth、semantic truth 衡量动态语义，它们本就可以独立真假。H-R28-001 保持全部 proposal、factor decisions、fusion 与风险门冻结，将 joint truth 明确定义为三种 factor truth 的逻辑 AND，并要求精确保留两个 cross-factor truth disagreements；R27 的唯一实质失败项必须仍是错误的 truth identity 假设。以后 factorized evaluator 必须区分 decision disagreement 与 truth-factor diversity。
+
+### V6-F61：未展开的聚合布尔失败不能用于猜测精确 factor-diversity 分母
+
+H-R28-001 canonical run `20260821T161052Z__three-factor-s20260821-r1` 正确使用 factor-truth product，并保持 `1` ACCEPT、`1` REJECT、`4` ABSTAIN、false-safe `0`；coverage、strict error removal、所有 disagreement ABSTAIN、source immutability 与 R27 rejection retention 全部通过。唯一失败是预注册把 cross-factor truth disagreement count 猜成 `2`，完整逐因子展开后实际为 `3`。
+
+R27 只给出了 truth-identity 聚合布尔失败，不能推出失败 case 的精确数量。不得追认 R28 或把实际值 `3` 再硬编码成安全门。H-R29-001 保持全部六例、factor decisions、factor truths、product、fusion 与质量门冻结，要求 factor truth diversity 非零且逐例透明报告；精确 diversity count 作为描述性输出，不参与资格。以后只能从已冻结的逐例 artifact 预注册精确计数，不能从 aggregate failure 反推。
