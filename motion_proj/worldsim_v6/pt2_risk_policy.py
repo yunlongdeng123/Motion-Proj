@@ -99,12 +99,12 @@ def _actors_by_frame(instances: Mapping[str, Any]) -> dict[int, list[tuple[np.nd
     return result
 
 
-def _actor_signed_clearance(
+def _actor_geometry(
     ego_pose: np.ndarray,
     actor_pose: np.ndarray,
     box_size: np.ndarray,
     ego_half: tuple[float, float],
-) -> float:
+) -> tuple[float, float, float]:
     relative = np.linalg.inv(ego_pose) @ actor_pose
     x, y = float(relative[0, 3]), float(relative[1, 3])
     yaw = math.atan2(float(relative[1, 0]), float(relative[0, 0]))
@@ -114,17 +114,20 @@ def _actor_signed_clearance(
     projected_hy = abs(math.sin(yaw)) * actor_hx + abs(math.cos(yaw)) * actor_hy
     dx = abs(x) - (ego_half[0] + projected_hx)
     dy = abs(y) - (ego_half[1] + projected_hy)
-    return max(dx, dy)
+    return max(dx, dy), abs(x), abs(y)
 
 
-def _clean_clearance(
+def _clean_geometry(
     ego_pose: np.ndarray,
     actors: list[tuple[np.ndarray, np.ndarray]],
     ego_half: tuple[float, float],
-) -> float:
+) -> tuple[float, float, float]:
     if not actors:
-        return 100.0
-    return min(_actor_signed_clearance(ego_pose, pose, size, ego_half) for pose, size in actors)
+        return 100.0, 100.0, 100.0
+    return min(
+        (_actor_geometry(ego_pose, pose, size, ego_half) for pose, size in actors),
+        key=lambda value: value[0],
+    )
 
 
 def _scene_rows(
@@ -143,10 +146,13 @@ def _scene_rows(
     for frame in sorted(poses):
         if frame < int(part["sample_start"]) or (frame - int(part["sample_start"])) % int(part["sample_stride"]):
             continue
-        clean = _clean_clearance(poses[frame], actors.get(frame, []), ego_half)
+        clean, clean_forward, clean_lateral = _clean_geometry(
+            poses[frame], actors.get(frame, []), ego_half
+        )
         clean_label = int(clean <= 0.0)
         real_rows.append(
             {"scene": spec["scene"], "frame": frame, "case_type": "logged_clean", "signed_clearance_m": clean,
+             "abs_forward_m": clean_forward, "abs_lateral_m": clean_lateral,
              "hazard_label": clean_label, "label_source": "logged_actor_geometry"}
         )
         for offset in geom["synthetic_clone_forward_offsets_m"]:
@@ -154,11 +160,25 @@ def _scene_rows(
             clone_local = np.eye(4, dtype=float)
             clone_local[0, 3] = float(offset)
             clone_world = poses[frame] @ clone_local
-            clone_clearance = _actor_signed_clearance(poses[frame], clone_world, actor_size, ego_half)
-            edited_clearance = min(clean, clone_clearance)
+            clone_clearance, clone_forward, clone_lateral = _actor_geometry(
+                poses[frame], clone_world, actor_size, ego_half
+            )
+            if clone_clearance <= clean:
+                edited_clearance, edited_forward, edited_lateral = (
+                    clone_clearance,
+                    clone_forward,
+                    clone_lateral,
+                )
+            else:
+                edited_clearance, edited_forward, edited_lateral = (
+                    clean,
+                    clean_forward,
+                    clean_lateral,
+                )
             synthetic_rows.append(
                 {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
                  "clone_forward_offset_m": float(offset), "signed_clearance_m": edited_clearance,
+                 "abs_forward_m": edited_forward, "abs_lateral_m": edited_lateral,
                  "hazard_label": int(edited_clearance <= 0.0), "stale_naive_label": clean_label,
                  "label_source": "recomputed_projected_aabb_dependency"}
             )
@@ -174,26 +194,64 @@ def _balanced_accuracy(labels: np.ndarray, predictions: np.ndarray) -> float:
     return float(sum(recalls) / len(recalls)) if recalls else 0.0
 
 
-def _fit_threshold(rows: list[dict[str, Any]], label_key: str) -> dict[str, Any]:
-    features = np.asarray([row["signed_clearance_m"] for row in rows], dtype=float)
+def _fit_policy(
+    rows: list[dict[str, Any]], label_key: str, training: Mapping[str, Any]
+) -> dict[str, Any]:
+    forward = np.asarray([row["abs_forward_m"] for row in rows], dtype=float)
+    lateral = np.asarray([row["abs_lateral_m"] for row in rows], dtype=float)
     labels = np.asarray([row[label_key] for row in rows], dtype=int)
-    unique = np.unique(features)
-    candidates = [float(unique[0] - 1.0), float(unique[-1] + 1.0)]
-    candidates.extend(float((left + right) * 0.5) for left, right in zip(unique[:-1], unique[1:]))
-    candidates.extend(float(value) for value in unique)
+    classes = np.unique(labels)
+    if len(classes) == 1:
+        predictions = np.full_like(labels, int(classes[0]))
+        return {
+            "policy_type": "constant",
+            "constant_hazard_prediction": int(classes[0]),
+            "train_balanced_accuracy": _balanced_accuracy(labels, predictions),
+            "train_rows": len(rows),
+            "train_positive_fraction": float(labels.mean()),
+        }
     scored = []
-    for threshold in candidates:
-        predictions = (features <= threshold).astype(int)
-        scored.append((_balanced_accuracy(labels, predictions), threshold))
-    best_score = max(score for score, _ in scored)
-    threshold = min((value for score, value in scored if score == best_score), key=lambda value: (abs(value), value))
-    return {"threshold_m": threshold, "train_balanced_accuracy": best_score, "train_rows": len(rows),
-            "train_positive_fraction": float(labels.mean())}
+    for forward_threshold in training["forward_threshold_candidates_m"]:
+        for lateral_threshold in training["lateral_threshold_candidates_m"]:
+            predictions = (
+                (forward <= float(forward_threshold))
+                & (lateral <= float(lateral_threshold))
+            ).astype(int)
+            score = _balanced_accuracy(labels, predictions)
+            area = float(forward_threshold) * float(lateral_threshold)
+            scored.append(
+                (score, area, float(forward_threshold), float(lateral_threshold))
+            )
+    best_score = max(row[0] for row in scored)
+    _, _, forward_threshold, lateral_threshold = min(
+        (row for row in scored if row[0] == best_score),
+        key=lambda row: (row[1], row[2], row[3]),
+    )
+    return {
+        "policy_type": "axis_aligned_rectangle",
+        "forward_threshold_m": forward_threshold,
+        "lateral_threshold_m": lateral_threshold,
+        "train_balanced_accuracy": best_score,
+        "train_rows": len(rows),
+        "train_positive_fraction": float(labels.mean()),
+    }
 
 
 def _evaluate(model: Mapping[str, Any], rows: list[dict[str, Any]]) -> dict[str, Any]:
     labels = np.asarray([row["hazard_label"] for row in rows], dtype=int)
-    predictions = np.asarray([int(row["signed_clearance_m"] <= model["threshold_m"]) for row in rows], dtype=int)
+    if model["policy_type"] == "constant":
+        predictions = np.full_like(labels, int(model["constant_hazard_prediction"]))
+    else:
+        predictions = np.asarray(
+            [
+                int(
+                    row["abs_forward_m"] <= model["forward_threshold_m"]
+                    and row["abs_lateral_m"] <= model["lateral_threshold_m"]
+                )
+                for row in rows
+            ],
+            dtype=int,
+        )
     positive = labels == 1
     negative = labels == 0
     false_safe = int(((predictions == 0) & positive).sum())
@@ -211,7 +269,11 @@ def _evaluate(model: Mapping[str, Any], rows: list[dict[str, Any]]) -> dict[str,
 
 
 def _train_and_evaluate(
-    train_real: list[dict[str, Any]], train_synthetic: list[dict[str, Any]], heldout: list[dict[str, Any]], arms: list[str]
+    train_real: list[dict[str, Any]],
+    train_synthetic: list[dict[str, Any]],
+    heldout: list[dict[str, Any]],
+    arms: list[str],
+    training: Mapping[str, Any],
 ) -> dict[str, Any]:
     result = {}
     for arm in arms:
@@ -224,7 +286,7 @@ def _train_and_evaluate(
             rows, label_key = [*train_real, *train_synthetic], "hazard_label"
         else:
             raise PT2RiskPolicyError(f"未知方法臂: {arm}")
-        model = _fit_threshold(rows, label_key)
+        model = _fit_policy(rows, label_key, training)
         result[arm] = {"model": model, "heldout": _evaluate(model, heldout)}
     return result
 
@@ -264,8 +326,12 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         heldout_rows = [*heldout_real, *heldout_synthetic]
         frozen_paths.extend(heldout_paths)
         hashes_before = {str(path): _sha256(path) for path in frozen_paths}
-        arms1 = _train_and_evaluate(train_real, train_synthetic, heldout_rows, list(config["arms"]))
-        arms2 = _train_and_evaluate(train_real, train_synthetic, heldout_rows, list(config["arms"]))
+        arms1 = _train_and_evaluate(
+            train_real, train_synthetic, heldout_rows, list(config["arms"]), config["training"]
+        )
+        arms2 = _train_and_evaluate(
+            train_real, train_synthetic, heldout_rows, list(config["arms"]), config["training"]
+        )
         repeat_exact = _canonical(arms1) == _canonical(arms2)
         _write_json(run_dir / "POLICY_ARMS.json", arms1)
         _write_jsonl(run_dir / "TRAIN_REAL_ROWS.jsonl", train_real)
@@ -276,7 +342,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     "source_sha256": hashes_before})
         v6 = arms1["real_plus_v6_verified_compiled"]["heldout"]
         naive = arms1["real_plus_naive_synthetic"]["heldout"]
-        reduction = naive["false_safe_rate"] - v6["false_safe_rate"]
+        real_only = arms1["real_only"]["heldout"]
+        reduction_naive = naive["false_safe_rate"] - v6["false_safe_rate"]
+        reduction_real_only = real_only["false_safe_rate"] - v6["false_safe_rate"]
         wall_seconds = time.monotonic() - started
         gate_cfg = config["gate"]
         checks = {
@@ -287,7 +355,10 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(gate_cfg["require_v6_balanced_accuracy_at_least"]),
             "v6_false_safe": v6["false_safe_rate"] <= float(gate_cfg["require_v6_false_safe_rate_at_most"]),
             "v6_safe_route_completion": v6["safe_route_completion"] >= float(gate_cfg["require_v6_safe_route_completion_at_least"]),
-            "false_safe_reduction_vs_naive": reduction >= float(gate_cfg["require_false_safe_reduction_vs_naive_at_least"]),
+            "false_safe_reduction_vs_real_only": reduction_real_only
+            >= float(gate_cfg["require_false_safe_reduction_vs_real_only_at_least"]),
+            "false_safe_reduction_vs_naive": reduction_naive
+            >= float(gate_cfg["require_false_safe_reduction_vs_naive_at_least"]),
             "training_repeat_exact": repeat_exact,
             "unsupported_metrics_abstain": all(str(value).startswith("ABSTAIN") for value in config["unsupported_metrics"].values()),
             "wall_within_budget": wall_seconds <= float(config["resources"]["maximum_wall_seconds"]),
@@ -296,13 +367,16 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         checks["passed"] = all(checks.values())
         gate = {"schema_version": "worldsim_v6.pt2_risk_policy_gate.v1", "checks": checks,
                 "decision": "accept_small_risk_policy_post_training" if checks["passed"] else "reject_pt2_risk_policy",
-                "false_safe_reduction_vs_naive": reduction, "unsupported_metrics": config["unsupported_metrics"]}
+                "false_safe_reduction_vs_real_only": reduction_real_only,
+                "false_safe_reduction_vs_naive": reduction_naive,
+                "unsupported_metrics": config["unsupported_metrics"]}
         _write_json(run_dir / "PT2_RISK_POLICY_GATE.json", gate)
         summary = {"schema_version": "worldsim_v6.pt2_risk_policy_summary.v1", "task_id": TASK_ID,
                    "hypothesis_id": config["hypothesis_id"], "status": "done" if checks["passed"] else "rejected",
                    "source_commit": source_commit, "train_scenes": [row["scene"] for row in config["train_scenes"]],
                    "heldout_scene": heldout_spec["scene"], "method_arms": arms1,
-                   "false_safe_reduction_vs_naive": reduction, "wall_seconds": wall_seconds,
+                   "false_safe_reduction_vs_real_only": reduction_real_only,
+                   "false_safe_reduction_vs_naive": reduction_naive, "wall_seconds": wall_seconds,
                    "training_started": True, "confirmation_content_read": False,
                    "claim_boundary": config["claim_boundary"], "unsupported_metrics": config["unsupported_metrics"]}
         _write_json(run_dir / "SUMMARY.json", summary)

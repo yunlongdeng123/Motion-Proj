@@ -1,0 +1,67 @@
+schema_version: worldsim_v6.pt2_risk_policy.v1
+task_id: WS-V6-PT2-RISK-POLICY-01
+hypothesis_id: WS-V6-H-PT2-002
+seed: 20260821
+dataset_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval
+train_scenes:
+  - scene: scene-0230
+    scene_index: 179
+    instances_sha256: d8bfe57d0ad7345e075d29b2ed64d14d3d12d06efbf1f7117012ba3e1563097c
+    lidar_pose_set_sha256: 01d50df6bf8b18d4ed3685f532b71e6a0081c90b8d401039dba03f2a87216a8a
+  - scene: scene-0242
+    scene_index: 191
+    instances_sha256: 5137cc1a489de7c281e2050e051a0210ec4c8d66a794fd6dd902627a586eb3bf
+    lidar_pose_set_sha256: d8304ae2ab1e9d83ed65584850aca816b2fe7109971405b0b053b080067cefca
+heldout_scene:
+  scene: scene-0255
+  scene_index: 204
+  instances_sha256: f1223054476454e1866a83323eae20f1840d07144264d80f193faaf9135081e8
+  lidar_pose_set_sha256: 4faa133963515c1d103f3a20503225814b13126200bf8091f1cec9e1812781a0
+partition:
+  expected_frame_count_per_scene: 196
+  sample_stride: 4
+  sample_start: 0
+geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  default_actor_length_m: 4.5
+  default_actor_width_m: 2.0
+  synthetic_clone_forward_offsets_m: [0.0, 3.0, 6.0, 9.0]
+  collision_rule: ego_frame_projected_aabb_signed_clearance_le_zero
+arms:
+  - real_only
+  - real_plus_naive_synthetic
+  - real_plus_v6_verified_compiled
+training:
+  policy_family: two_raw_relative_feature_axis_aligned_rectangle_erm
+  input_features: [abs_forward_m, abs_lateral_m]
+  forward_threshold_candidates_m: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 15.0, 20.0, 30.0, 50.0]
+  lateral_threshold_candidates_m: [0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 8.0, 10.0, 15.0, 20.0]
+  one_class_policy: constant_observed_class
+  tie_break: highest_balanced_accuracy_then_smallest_threshold_area_then_forward_then_lateral
+  repeat_count: 2
+gate:
+  require_independent_heldout_scene: true
+  require_v6_balanced_accuracy_at_least: 0.95
+  require_v6_false_safe_rate_at_most: 0.05
+  require_v6_safe_route_completion_at_least: 0.90
+  require_false_safe_reduction_vs_real_only_at_least: 0.50
+  require_false_safe_reduction_vs_naive_at_least: 0.50
+  require_training_repeat_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  comfort: ABSTAIN_NO_LONGITUDINAL_CONTROLLER
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+  confirmation_generalization: ABSTAIN_CONFIRMATION_LOCKED
+claim_boundary:
+  - development_small_risk_admission_policy_post_training
+  - raw_relative_position_features_do_not_include_signed_clearance_or_hazard_rule
+  - train_scene0230_scene0242_heldout_scene0255
+  - logged_clean_plus_fixed_actor_clone_offsets
+  - task_outcomes_are_false_safe_safe_route_completion_and_balanced_accuracy
+  - no_physical_collision_full_planner_closed_loop_or_confirmation_claim

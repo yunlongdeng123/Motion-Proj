@@ -3485,3 +3485,9 @@ H-R13-010 canonical run `20260821T130810Z__sceneir-sensor-binding-s20260821-r1` 
 H-PT1-001 首个 formal run `20260821T132127Z__regression-utility-s20260821-r1` 在读取 scene-0230 development contract 时 fail-closed。上游 H-R13-005 gate 的实际 decision 是 `accept_typed_dynamic_edit_dependency_closure`，初版 consumer 却硬编码了缩写 `accept_typed_dynamic_edits`，因此在读取 heldout replay、构造四类 mutation 或计算三臂 quality metric 前即抛出 `PT1RegressionError`；该 run 只有 `TERMINAL.json`，不得产生方法结论。
 
 修复把 scene-0230 与 scene-0242 两个上游 gate 的完整 accepted decision 值写入冻结 config，consumer 只按 config 精确比较。不得改变四类 stale-factor mutation、三方法臂、false-safe/detection gate、source hash、资源合同或 unsupported claim；修复后以新 run 重试 H-PT1-001。跨阶段消费者以后不得从 task 名或人类缩写猜测 structured gate value。
+
+### V6-F42：policy 输入不得直接包含 verifier 的 decision statistic
+
+H-PT2-001 canonical run `20260821T133158Z__risk-policy-s20260821-r1` 的数值 gate 全部为真，V6 arm 在 scene-0255 heldout 上达到 balanced accuracy `1.0`、false-safe `0`、safe-route completion `1.0`，并把 naive stale-label arm 的 false-safe 从 `1.0` 降为 `0`。但是 Real-only arm 同样达到 balanced accuracy `1.0` 和 false-safe `0`，尽管其 98 条训练行的 positive fraction 为 `0`。原因是 policy 直接接收 signed AABB clearance，而 hazard label 正是 `clearance<=0`；这等于把 verifier 判定边界编码进输入，Real-only 只需把阈值放在最小 logged clearance 以下就会偶然分开固定 synthetic offsets。
+
+因此该 run 只保留“naive stale labels 有害”的诊断，不晋级为 incremental post-training utility；初版 gate 缺少对 Real-only 的增益约束也是方法治理缺口。H-PT2-002 保持三场景、frame 分母、clone offsets、label、heldout 与任务指标不变，移除 signed clearance/AABB extent/hazard verdict，只向 policy 提供原始绝对 ego-relative forward/lateral position；固定 axis-aligned rectangle ERM 候选网格，并新增相对 Real-only 与 naive 两者 false-safe 至少降低 `0.50` 的 gate。以后任何 learned verifier/policy 实验必须审计 feature 是否直接重编码 label rule。

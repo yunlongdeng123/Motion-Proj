@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:26:00Z",
+  "updated_at_utc": "2026-08-21T13:35:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 27,
+  "iteration": 28,
   "active_task": "WS-V6-PT2-RISK-POLICY-01",
-  "active_hypothesis": "WS-V6-H-PT2-001",
-  "candidate": "verified_edit_label_small_risk_policy_post_training",
+  "active_hypothesis": "WS-V6-H-PT2-002",
+  "candidate": "raw_relative_feature_verified_edit_risk_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "e184c6feb02155737ea3350ff65a680b85606bb568f40370a3fc381d02e5da5e",
+  "dev_artifact_hash": "f272e283afed0f32f1c32fb1eca76027261a4ff90a71f8e2317e6880a9730df7",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "78d7ce094a2593867ab1e3879774852d66c66f599b33c6bd464270967bf20c51",
-  "last_reflection_id": "WS-V6-REFL-0029",
+  "failure_ledger_sha256": "0c2a38a889197845666cd695c276a9edeaf527257e4ebf6af583f07b745c8654",
+  "last_reflection_id": "WS-V6-REFL-0030",
   "last_completed": {
-    "task_id": "WS-V6-PT1-REGRESSION-UTILITY-01",
-    "run": "run://worldsim_v6/WS-V6-PT1-REGRESSION-UTILITY-01/20260821T132322Z__regression-utility-s20260821-r1",
-    "artifact_sha256": "e184c6feb02155737ea3350ff65a680b85606bb568f40370a3fc381d02e5da5e"
+    "task_id": "WS-V6-PT2-RISK-POLICY-01",
+    "run": "run://worldsim_v6/WS-V6-PT2-RISK-POLICY-01/20260821T133158Z__risk-policy-s20260821-r1",
+    "artifact_sha256": "f272e283afed0f32f1c32fb1eca76027261a4ff90a71f8e2317e6880a9730df7"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -54,7 +54,8 @@
     "r13_sceneir_sensor_binding_h011": "done_accepted_development_same_scene_actor_binding",
     "r13_worldsim_bounded_scope": "done_accepted_development",
     "pt1_regression_test_utility": "done_accepted_development_independent_scene",
-    "pt2_small_risk_policy_post_training": "active_pre_registered",
+    "pt2_signed_clearance_policy_h001": "done_diagnostic_rejected_feature_leakage",
+    "pt2_small_risk_policy_post_training": "active_pre_registered_raw_relative_features",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -63,8 +64,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_three_fixed_data_arms_for_continue_brake_risk_policy",
-    "evaluate_whole_scene0255_heldout_false_safe_and_safe_route_completion",
-    "accept_reject_or_mutate_pt2_without_relaxing_geometry_or_metric_gates"
+    "train_three_fixed_data_arms_using_raw_relative_position_only",
+    "require_v6_false_safe_reduction_vs_both_real_only_and_naive_on_scene0255",
+    "accept_reject_or_mutate_without_reintroducing_verifier_decision_features"
   ]
 }
