@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T09:45:00Z",
+  "updated_at_utc": "2026-08-21T09:53:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 5,
-  "active_task": "WS-V6-R6-FACTORIZED-VALIDITY-01",
-  "active_hypothesis": "WS-V6-H-R6-001",
-  "candidate": "conservative_task_conditioned_provenance_validity_v0",
+  "iteration": 6,
+  "active_task": "WS-V6-R7-ORACLE-MISSING-WORLD-01",
+  "active_hypothesis": "WS-V6-H-R7-001",
+  "candidate": "oracle_observation_patch_verify_bake_v0",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "d4888ee277376ac1f3f0ffca18089e590b2ab730d0fc522c5cd08c059a1aab33",
+  "dev_artifact_hash": "134099e75031cfd3615b4a7d7087c380c74451032a5faa734b6987768512f741",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "7767b1c13edf42829c28cc67d28ea315877e1b9d410e9f9f81aee89fe162af56",
-  "last_reflection_id": "WS-V6-REFL-0005",
+  "last_reflection_id": "WS-V6-REFL-0006",
   "last_completed": {
-    "task_id": "WS-V6-R5-PROVENANCE-01",
-    "run": "run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1",
-    "artifact_sha256": "d4888ee277376ac1f3f0ffca18089e590b2ab730d0fc522c5cd08c059a1aab33"
+    "task_id": "WS-V6-R6-FACTORIZED-VALIDITY-01",
+    "run": "run://worldsim_v6/WS-V6-R6-FACTORIZED-VALIDITY-01/20260821T094949Z__factorized-validity-s20260821-r1",
+    "artifact_sha256": "134099e75031cfd3615b4a7d7087c380c74451032a5faa734b6987768512f741"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -29,6 +29,7 @@
     "r3_support_deviation": "done_hypothesis_rejected",
     "r4_deterministic_runtime": "done",
     "r5_provenance": "done",
+    "r6_factorized_validity": "done_accepted_development",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -37,8 +38,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "freeze_task_failure_thresholds_and_factor_formulas",
-    "compare_v0_v1_v2_v3_and_factorized_selective_risk",
-    "decide_factorized_validity_or_reject_and_pivot"
+    "construct_four_frozen_pseudo_hole_types_from_hash_verified_r3_renders",
+    "run_oracle_and_corrupted_control_through_verifier_and_bake",
+    "decide_if_representation_verifier_bake_path_supports_generator_stage"
   ]
 }

@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6 R6 factorized validity 正式实验 development PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R6-FACTORIZED-VALIDITY-01/20260821T094949Z__factorized-validity-s20260821-r1`，source=`4ff4c644`；
+  gate/summary/manifest/terminal SHA=`134099e7...741 / c4d8b7ef...9a4 / e03977bb...a62 / 00773f3e...b65`。
+- 48 rows × 4 tasks × 5 methods：factorized photo/geometry/semantic false-safe 均 `0.0`，coverage=
+  `0.0833/0.2917/0.0833`；dynamics coverage=`0.0`，无独立 verifier 不产生 ACCEPT。
+- V3 worst-case false-safe=`0.5`，factorized gain=`0.5`；保留为 conservative development rule，禁止解释为
+  跨域 calibration 或 dynamics readiness。next=`WS-V6-R7-ORACLE-MISSING-WORLD-01`。
+
 ## WorldSim V6 R5 provenance field v1 正式实验 PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1`，source=`a3f93cef`；

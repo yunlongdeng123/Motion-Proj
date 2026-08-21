@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r7_oracle_missing_world.v1
+task_id: WS-V6-R7-ORACLE-MISSING-WORLD-01
+hypothesis_id: WS-V6-H-R7-001
+seed: 20260821
+sources:
+  recovery_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1
+  recovery_manifest_sha256: e866dae3b84c8960c424923465579b0e979ce7230c391b62192a1f4e8ed93acc
+  reused_render_evidence_sha256: 2b64171479077b7dd316b48d9f3e894537de33567f60814efca2b9d27c60f015
+  render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+cohort:
+  partition: development
+  confirmation_locked: true
+  scenes: [scene-0242, scene-0048]
+  frontends: [streetgs, ad_gs]
+  frame_indices: [52, 57]
+  hole_types: [missing_route_support, missing_side_view, disocclusion, actor_removal_hole]
+oracle_patch_contract:
+  schema: worldsim_v6.sceneir_observation_patch.v0
+  source_type: observed
+  generation_source: oracle_heldout_observation
+  baseline_fill_rgb: 0.0
+  baseline_fill_depth: 0.0
+  dynamic_opacity_threshold: 0.1
+  content_rgb_threshold: 0.03
+  minimum_mask_pixels: 256
+  decoy:
+    rgb_channel_permutation: [2, 0, 1]
+    depth_scale: 1.35
+    dynamic_mask_inverted: true
+verifier:
+  maximum_rgb_mae: 0.02
+  maximum_relative_depth_error: 0.05
+  minimum_dynamic_iou: 0.90
+  acceptance_requires_all_available_factors: true
+evaluation:
+  usable_rgb_absolute_error: 0.05
+  usable_depth_relative_error: 0.10
+  usable_dynamic_match: true
+gate:
+  minimum_oracle_acceptance: 0.95
+  maximum_decoy_acceptance: 0.05
+  minimum_median_photo_error_reduction: 0.90
+  minimum_median_eligible_depth_error_reduction: 0.90
+  minimum_per_hole_usable_coverage_gain: 0.50
+  require_outside_mask_exact: true
+  require_provenance_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 600
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - oracle_upper_bound_integration_benchmark
+  - development_pseudo_holes_not_dense_novel_view_ground_truth
+  - observation_plane_patch_extension_not_3d_generation
+  - no_generator
+  - no_training
+  - no_confirmation_read

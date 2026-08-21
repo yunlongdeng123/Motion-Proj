@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6 R6 factorized validity development PASS；R7 oracle extension 启动（2026-08-21）
+
+- R6 canonical=`run://worldsim_v6/WS-V6-R6-FACTORIZED-VALIDITY-01/20260821T094949Z__factorized-validity-s20260821-r1`；
+  factorized worst-case false-safe=`0.0`，V3 single scalar=`0.5`，gain=`0.5`。
+- factorized coverage：photo=`0.0833`、geometry=`0.2917`、semantic=`0.0833`、dynamics=`0.0`；前三项接受区域
+  均无 false-safe，dynamics 因无独立 verifier 全部 abstain。结论只限 development proxy，不是 confirmation calibration。
+- 当前 active=`WS-V6-R7-ORACLE-MISSING-WORLD-01`，hypothesis=`WS-V6-H-R7-001`：在训练 generator 前，先用
+  2 scenes × 2 frontends × 2 frames × 4 pseudo-holes 验证 oracle proposal、独立 verifier、provenance-preserving bake
+  与 corrupted decoy control 的完整路径。
+
 ## WorldSim V6 R5 provenance PASS；R6 factorized validity 启动（2026-08-21）
 
 - R5 canonical=`run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1`；
