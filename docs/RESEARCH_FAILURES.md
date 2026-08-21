@@ -3635,3 +3635,9 @@ H-R39-001 canonical retry `20260821T172656Z__static-contact-s20260821-r1` 在 82
 H-R41-001 首次正式启动在创建 run directory 或读取任何冻结 artifact 前因 `ModuleNotFoundError: No module named 'motion_proj'` 退出。R41 runner 缺少其他 WorldSim V6 runner 已使用的仓库根目录 `sys.path` 引导；实验主体、预注册 factor decisions 与 fusion contract 均未执行，因而这不是方法拒绝。
 
 修复只把 `scripts/worldsim_v6/run_r41_actor_edit_factor_fusion.py` 的仓库根目录插入 `sys.path`，不得修改 R37/R38/R40 hashes、两个 intervention、四因子 decisions、reject-dominates fusion、资源合同或 claim boundary。修复后必须新 commit/push，并以同一 H-R41-001 重跑；首次启动不得被追认为 canonical run。
+
+### V6-F67：手工绑定 source digest 必须逐字符比对实际 SHA256
+
+H-R41-001 第二次正式启动已进入 source verification，但在创建 run directory 或读取 factor decision rows 前拒绝 R37 `MANIFEST.json`。诊断显示配置值第 38 个字符误抄为 `f`：`...e8f42f5946...`，实际冻结 SHA256 为 `...e8f42c5946...`；两者长度均为 64，因此肉眼概览未能发现单字符漂移。源 artifact 本身未改变。
+
+不得跳过或放宽 `_verify`。修复只把 R37 manifest digest 的错误字符改为实际 `c`，其余 R37/R38/R40 hashes、interventions、factor decisions、fusion contract、资源与 claim boundary 全部冻结不变。新 commit/push 后仍按 H-R41-001 重跑，第二次启动不具 canonical authority。
