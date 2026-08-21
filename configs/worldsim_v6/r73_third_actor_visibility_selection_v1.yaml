@@ -1,0 +1,40 @@
+schema_version: worldsim_v6.r73_third_actor_visibility_selection.v1
+task_id: WS-V6-R73-THIRD-ACTOR-VISIBILITY-SELECTION-01
+hypothesis_id: WS-V6-H-R73-001
+seed: 20260821
+sources:
+  r54_run: runs://worldsim_v6/WS-V6-R54-RIGID-ACTOR-INVENTORY-01/20260821T190150Z__actor-inventory-s20260821-r1
+  r54_manifest_sha256: 6d14bc6ab9ddc94f20fcd62fc2c1085208f6997f800ce4a2617b3726e5ae2a16
+  r54_gate_sha256: e54398f11f559837fa75a7564a6db556c16b8524e012b7a0faaa3ccc1bfe0b68
+  r54_summary_sha256: 519ed4843235cca9f7c047debdfc1fd7ff398edf4c8355bfd18980ed79e9b766
+  r54_inventory_sha256: 0ee8f822a8a6a77753e8cab8aec54eb9d657a1b50002ed3d71bf99cfefaef2ba
+  r72_run: runs://worldsim_v6/WS-V6-R72-TWO-ACTOR-INCREMENTAL-PERCEPTION-01/20260821T210828Z__two-actor-perception-s20260821-r1
+  r72_manifest_sha256: 2b722f9cc1b128cc00077f05ae7d69936f8b99d1d199db9098e45c6476d365cd
+  r72_gate_sha256: 84ff89bb296d8d47b5ed45b4545c08ab8cfb77422cf01236b5c13f3581e97718
+  r72_summary_sha256: c8521d5642c015692c1fd4b300e3a8674e744cf8d4e4b38103f6a909771f50f8
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+selection:
+  frame_index: 57
+  excluded_actor_model_indices: [0, 2]
+  minimum_primitive_count: 1000
+  expected_candidate_indices: [3, 5, 6, 9, 12, 14]
+  selection_rule: maximum_actor_effect_pixels_then_minimum_actor_model_index
+  minimum_selected_effect_pixels: 256
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 210
+  maximum_wall_seconds: 240
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_third_actor_selection_for_three_actor_compiler_extension
+  - candidates_are_derived_before_render_from_frozen_r54_lifecycle_and_primitive_thresholds
+  - frame57_is_fixed_to_match_the_accepted_r71_and_r72_two_actor_observation
+  - selection_uses_maximum_native_actor_effect_pixels_with_actor_index_tie_break
+  - this_is_camera_visible_support_not_semantic_identity_or_edit_validity
+  - no_identity_physics_collision_planning_safety_or_confirmation_claim
+  - no_training_or_confirmation_read
