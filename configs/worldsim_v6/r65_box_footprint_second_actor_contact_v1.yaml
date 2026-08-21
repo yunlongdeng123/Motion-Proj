@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r65_box_footprint_second_actor_contact.v1
+task_id: WS-V6-R65-BOX-FOOTPRINT-SECOND-ACTOR-CONTACT-01
+hypothesis_id: WS-V6-H-R65-001
+seed: 20260821
+sources:
+  r64_run: runs://worldsim_v6/WS-V6-R64-RAW-LIDAR-SECOND-ACTOR-CONTACT-01/20260821T200653Z__raw-lidar-contact-s20260821-r1
+  r64_manifest_sha256: ed67b159aba474dd57165c4316a106ede816cb0cb18ac856d0f71592c131ccd1
+  r64_gate_sha256: 8d9644089aadfc0874129ddc05b888eb50a5a53cdf20c5302811ab2790248b57
+  r64_summary_sha256: ee68f380ca5c5e3dfe048df11f11a27fb2aaacd67b98ee7d09e618d9cae26341
+  r64_raw_union_sha256: 911f8da9b36c904bd2676c3d7523a7d45b68e249aa17e140615f9c886ac61447
+  r56_run: runs://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1
+  r56_gate_sha256: edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c
+  r56_package_manifest_sha256: 35dbda21f25de374d5f032e6685571edc4f2ae3b05a23c6001a4ce4f9458556a
+  r56_trajectory_geometry_sha256: f2ee809a81a15dd41694651bddee6160df25d4ca0c927d412e8ccb319327c914
+  processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+  instances_info_sha256: 5137cc1a489de7c281e2050e051a0210ec4c8d66a794fd6dd902627a586eb3bf
+  camera_front_start_sha256: 29540be4d522c5f3b94689a17e461388b62eb1676c7b674401e7bda04762de59
+cohort:
+  target_frame_index: 98
+  target_timestamp_us: 9800000
+  actor_model_index: 2
+  expected_primitive_count: 13490
+  expected_frame_validity: true
+mapping:
+  expected_instance_id: 7
+  expected_class_name: vehicle.truck
+  maximum_centroid_distance_m: 2.0
+  minimum_next_nearest_margin_m: 5.0
+  expected_size_lwh_m: [12.153, 3.182, 2.925]
+  maximum_size_error_m: 0.000001
+vertical_contract:
+  object_local_up_axis: z
+  object_bottom_local_z_sign: -1
+  world_vertical_axis_index: 1
+  maximum_local_up_world_y: -0.99
+footprint_contact:
+  outside_boundary_ring_width_m: 1.0
+  ground_height_quantile: 0.50
+  minimum_ring_lidar_candidates: 64
+  maximum_contact_error_m: 0.35
+interventions:
+  - id: actor2_logged_baseline
+    translation_delta_m: [0.0, 0.0, 0.0]
+    expected_contact_decision: ACCEPT
+  - id: actor2_r60_selected_translate_x_minus_1m
+    translation_delta_m: [-1.0, 0.0, 0.0]
+    expected_contact_decision: ACCEPT
+resources:
+  gpu: none
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_native_box_owned_footprint_contact_factor
+  - processed_instance7_is_bound_by_nearest_centroid_with_large_margin
+  - native_box_bottom_owns_actor_support_height_but_not_ground_height
+  - raw_static_lidar_median_in_fixed_one_meter_oriented_footprint_boundary_ring_owns_ground_proxy
+  - semantic_road_full_physics_dynamics_collision_planning_safety_and_confirmation_abstain

@@ -3704,3 +3704,9 @@ H-R62-001 canonical run `20260821T194813Z__actor2-lidar-contact-s20260821-r1` �
 H-R63-001 canonical run `20260821T195625Z__temporal-lidar-contact-s20260821-r1` 精确保留 R62 frame98 support，并从冻结21帧三相机数据得到 `149,723` 个 raw projected static observations、0.05m 去重后 `25,798` 个 world points；worker 双提取、坐标、窗口和 source gates 全部通过。但 logged 与 selected actor2 的2m邻域仍各为0点，两个 contact 均正式 `REJECT`。actor2 是 `vehicle.car` 且88--108帧间移动约 `1.97m`，因此失败说明相机投影稀疏子集在远距/遮挡区域不能承担 contact map，而不是简单增加同类帧数即可修复。
 
 不得扩大投影时间窗、放宽 contact gates 或用环带高度挑选靠近 actor anchor 的平面。H-R64-001 改用同一 processed scene 的21帧360度 raw LiDAR，按每帧全部标注3D box加0.10m固定边界排除动态点，再做0.05m world voxel union；45个 raw/pose/box 输入以预先计算的聚合 SHA256 冻结。contact evaluator、logged baseline、selected proposal与全部阈值保持不变，semantic road、physics、planning与safety继续ABSTAIN。
+
+### V6-F79：中心圆查询与 Gaussian 低分位 anchor 不适用于大尺寸 actor 的 box-filtered contact
+
+H-R64-001 canonical run `20260821T200653Z__raw-lidar-contact-s20260821-r1` 从21帧360度 LiDAR 获得 `729,568` 点，按全部标注 box 排除 `95,432` 个动态点并形成 `73,010` 个静态5cm voxels；source、变换、动态过滤与资源门均通过。但 actor2 logged 中心查询虽有37点，Gaussian y-5% anchor 与 ground proxy 相差 `2.415m`；selected 只有18点且误差 `0.934m`，两者正式 `REJECT`。审计发现 model actor2 唯一对应 processed instance7 `vehicle.truck`，其 local +z 映射到 world -y，所以 Gaussian y-5% 是上表面而非接触底面；同时12.153m长的 truck 在 box-filter 后中心区域本就形成观测空洞。
+
+不得继续把 R40 针对 actor0 偶然通过的中心/低分位定义当作跨 actor ground owner，也不得降低32点门。H-R65-001 显式绑定最近且有大间隔的 instance7 box，使用标注 local -z 底面拥有 contact anchor，并在 oriented footprint 外固定1m边界环查询 raw static voxels；环内用 median world-y 抑制不同高度表面，要求每个 intervention 至少64点、误差仍不超过0.35m。box只拥有几何位置，不提供 ground 高度；logged 与 selected 均须独立通过。
