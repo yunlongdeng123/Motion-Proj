@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6 G3 分支与控制面初始化完成；R1 启动（2026-08-21）
+
+- `WS-V6-G3-BRANCH-BOOTSTRAP-01=done`：从 `origin/main@e028c862da494d6fe85f6062eb231a80e9812978`
+  创建并推送 `research/worldsim-v6-world-compiler`；分支初始提交与 parent main 完全相同。
+- 首轮控制面已建立：运行计划、显式状态机、假设/反思追加账本、R1–R4 目录骨架，以及只在本机保存的
+  capability 映射约束。初始化不读取质量数据、不训练、不推理，也不形成算法结论。
+- next=`WS-V6-R1-FRONTEND-CAPABILITY-01`：冻结硬件/磁盘/环境/数据/checkpoint/third-party 能力快照，
+  对候选前端给出 `runnable / repairable / audit_only / unavailable` 结论并以最小 smoke 验证。
+
 ## WorldSim V6 G0 完成 / G1–G3 治理前置注册（2026-08-21）
 
 - `WS-V6-G0-REPO-CONVERGENCE-01=done`：完成 remote/fetch/branch/tag/submodule/LFS、ahead/behind 与 dirty status

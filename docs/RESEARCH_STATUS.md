@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6 G0–G3 已完成；R1 前端能力审计执行中（2026-08-21）
+
+- route=`WorldSim V6 / Verifiable World Compiler`，status=`researching`，active task=
+  `WS-V6-R1-FRONTEND-CAPABILITY-01`。新分支 `research/worldsim-v6-world-compiler` 已从
+  `origin/main@e028c862da494d6fe85f6062eb231a80e9812978` 精确创建并推送；branch initial 与 parent main
+  相同，未携带未提交工作树状态。
+- G0–G3 的机器证据位于 `docs/autoresearch/worldsim_v6/governance/`；V6 控制面由
+  `docs/WORLDSIM_V6_AUTORESEARCH_PLAN.md`、`AUTORESEARCH_STATE.json`、`HYPOTHESES.jsonl` 与
+  `REFLECTIONS.jsonl` 共同约束。当前尚未登记算法假设、候选或 dev/confirmation 质量结果。
+- R1 只做本机 capability、环境、数据、checkpoint 与候选前端的可执行性审计；真实绝对路径仅允许写入
+  Git 忽略的 `.local/worldsim_v6/capabilities.local.yaml`，提交配置只保存 logical URI。R1 通过前不启动
+  GPU 训练或方法质量实验。
+
 ## WorldSim V6 路线重置已启动；G0–G2 完成，G3 待执行（2026-08-21）
 
 - route=`WorldSim V6 / Verifiable World Compiler`，status=`active`。V5.1 已关闭；V5.2.1 的 badcase census 与人工归因已完成；
