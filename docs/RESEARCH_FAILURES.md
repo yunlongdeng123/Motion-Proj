@@ -3315,6 +3315,16 @@ R12 第一次启动命令在创建 run 目录、加载模型或执行 GPU 推理
 修复只在入口脚本中根据 `__file__` 把仓库根目录加入 `sys.path`，不改 R12 hypothesis、cohort、输入哈希、模型、
 阈值、gate 或资源合同。后续以完全相同命令重跑；任何模型或指标失败仍独立登记，不能用本次入口错误掩盖。
 
+### V6-F28：启用 CUDA 确定性算法前必须冻结 cuBLAS workspace 配置
+
+R12 首个有 run 目录的正式实例 `20260821T114117Z__logsim-s20260821-r1` 已完成两项静态 chunk 的 CPU
+重放构造并成功严格加载冻结 DeepLab checkpoint，但第一次 GPU forward 被 PyTorch fail-closed：代码启用了
+`torch.use_deterministic_algorithms(True)`，CUDA 10.2+ 的 cuBLAS 路径还要求进程启动前设置
+`CUBLAS_WORKSPACE_CONFIG=:4096:8`。该 run 保持 `blocked`，没有感知输出、完整 gate 或方法结论；也没有发生 OOM。
+
+修复只在启动感知子进程前加入这一确定性环境变量，继续保留 deterministic algorithms、同一 checkpoint、4 个输入、
+同一 cohort、阈值与资源上限。不得关闭确定性检查来换取通过；修复后新建独立 run 重试。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

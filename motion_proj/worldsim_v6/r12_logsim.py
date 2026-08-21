@@ -70,6 +70,8 @@ def _resolve_runs_uri(uri: str) -> Path:
 def _run_checked(command: list[str], cwd: Path, log_path: Path) -> None:
     env = os.environ.copy()
     env["PYTHONHASHSEED"] = "20260821"
+    # CUDA 10.2+ 的确定性 cuBLAS 路径要求在子进程启动前冻结 workspace 配置。
+    env["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     completed = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True)
     log_path.write_text(completed.stdout + completed.stderr, encoding="utf-8")
     if completed.returncode != 0:
