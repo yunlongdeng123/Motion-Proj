@@ -3246,6 +3246,17 @@ Python 3 运行时映射后的内建类型显式加入 safe globals。
 类型开放，不切换为 unrestricted pickle。模型、checkpoint、输入、seed、阈值与选择规则不变。
 以后审计跨 Python 版本的 checkpoint 时，GLOBAL 清单必须同时记录归档名与当前运行时解析后的类型名。
 
+### V6-F22：跨阶段 source manifest 必须复制机器实测完整 SHA
+
+R9 首次正式入口在创建 run 目录前 fail-closed：冻结配置把 R7 manifest 的
+`73dbb2ba11bc12bc...` 手工误抄为 `73dbb2ba11bc4e22...`。现场 `sha256sum` 与 R7 closeout 均确认
+源文件仍为 `73dbb2ba11bc12bc4e22ca13765af10d14ac5d183e1d529add5e6d619f2a4d0c`；因此没有 proposal、
+verifier、hidden target、训练、confirmation 或方法结果产生。
+
+修复只替换为机器实测的完整 source manifest SHA，不改变 R9 hypothesis、模型、cohort、arm、阈值、
+gate 或资源合同。这是与 V6-F12 同类的 provenance 抄录错误；后续跨 run 配置应由 manifest artifact
+自动生成，禁止再次从缩写或人工记忆恢复完整哈希。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
