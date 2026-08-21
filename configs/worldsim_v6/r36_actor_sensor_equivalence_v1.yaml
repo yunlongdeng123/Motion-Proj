@@ -1,0 +1,46 @@
+schema_version: worldsim_v6.r36_actor_sensor_equivalence.v1
+task_id: WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01
+hypothesis_id: WS-V6-H-R36-001
+seed: 20260821
+sources:
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_gate_sha256: 1bd1cc9129070e8015ad1247d51c99beca50e55270615599ecf84d92d39bc0e7
+  r35_summary_sha256: faa5c877aa6f40149ec160f81f004e5e5d5e08325fdd5784a067d889a3b2a8c6
+  r35_geometry_audit_sha256: 23d9421c871dfdb19d4dbfb4de1d31389849b9183ec2660905ddef7ff268a655
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  r35_trajectory_geometry_sha256: 524e95e9a3bb7e62c6989e8b06c8491280fbc770fe3731fb228d511a970b1297
+  r35_validity_sha256: 2936f2f21ea70ccd514d6c7b2746855a13313179fbf8c6dffb47604befea9dbd
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+cohort:
+  partition: development_same_scene_two_logged_frames
+  actor_model_index: 0
+  sceneir_actor_id: actor_0000
+  frame_indices: [52, 57]
+  camera_id: 0
+thresholds:
+  minimum_actor_effect_pixels: 256
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_same_scene_logged_frame_sensor_equivalence
+  - actor_0000_compiled_payload_replaces_native_actor_model_index_0
+  - full_rgb_depth_opacity_equivalence_in_frozen_streetgs_renderer
+  - actor_appearance_uses_payload_features_with_frozen_sh_evaluation
+  - no_novel_view_or_trajectory_dynamics_collision_semantic_planning_safety_claim
+  - no_training_or_confirmation_read
+

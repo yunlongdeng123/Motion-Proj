@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T16:48:00Z",
+  "updated_at_utc": "2026-08-21T17:03:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 66,
-  "active_task": "WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01",
-  "active_hypothesis": "WS-V6-H-R35-001",
-  "candidate": "identity_bound_gaussian_rigid_trajectory_expansion",
+  "iteration": 67,
+  "active_task": "WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01",
+  "active_hypothesis": "WS-V6-H-R36-001",
+  "candidate": "compiled_actor_frozen_streetgs_sensor_integration",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "93a205a27aba5d21a2b33597f87a81c72effe740ad58626bccc1ee5c6c417273",
+  "dev_artifact_hash": "1bd1cc9129070e8015ad1247d51c99beca50e55270615599ecf84d92d39bc0e7",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "2c3b2bcada6cab547a806e87fd6ac0d4921b34c84528609e9fc03bca4261ebeb",
-  "last_reflection_id": "WS-V6-REFL-0068",
+  "last_reflection_id": "WS-V6-REFL-0069",
   "last_completed": {
-    "task_id": "WS-V6-R34-IDENTITY-BOUND-ACTOR-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R34-IDENTITY-BOUND-ACTOR-LOGSIM-01/20260821T164446Z__actor-logsim-s20260821-r1",
-    "artifact_sha256": "93a205a27aba5d21a2b33597f87a81c72effe740ad58626bccc1ee5c6c417273"
+    "task_id": "WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01",
+    "run": "run://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1",
+    "artifact_sha256": "1bd1cc9129070e8015ad1247d51c99beca50e55270615599ecf84d92d39bc0e7"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -94,7 +94,8 @@
     "r32_actor_identity_factor_verification": "done_rejected_generated_layer_identity_component",
     "r33_observed_sceneir_actor_bundle": "done_accepted_development_identity_bound_baseline",
     "r34_identity_bound_actor_logsim": "done_accepted_development_detached_replay",
-    "r35_actor_rigid_trajectory_compiler": "active_pre_registered_logged_pose_expansion",
+    "r35_actor_rigid_trajectory_compiler": "done_accepted_development_logged_pose_expansion",
+    "r36_actor_sensor_equivalence": "active_pre_registered_native_renderer_integration",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -103,8 +104,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r34_closeout_and_r35_preregistration",
-    "compile_actor_0000_gaussians_into_196_logged_world_poses_twice",
-    "measure_rigid_inverse_and_radius_invariants"
+    "commit_r35_closeout_and_r36_preregistration",
+    "replace_native_actor_model_index_0_with_compiled_payload_at_frames_52_57",
+    "measure_full_rgb_depth_opacity_equivalence_and_repeat_exactness"
   ]
 }
