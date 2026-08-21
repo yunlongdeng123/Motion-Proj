@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T19:04:53Z",
+  "updated_at_utc": "2026-08-21T19:08:32Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 93,
-  "active_task": "WS-V6-R55-SECOND-ACTOR-SCENEIR-BUNDLE-01",
-  "active_hypothesis": "WS-V6-H-R55-001",
-  "candidate": "second_actor_sceneir_geometry_trajectory_lifecycle_bundle",
+  "iteration": 94,
+  "active_task": "WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01",
+  "active_hypothesis": "WS-V6-H-R56-001",
+  "candidate": "second_actor_logged_rigid_trajectory_compiler",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "e54398f11f559837fa75a7564a6db556c16b8524e012b7a0faaa3ccc1bfe0b68",
+  "dev_artifact_hash": "d63dde218cf0d5409e6f85b56e39c6406df2fa92f3fb4f69710ed0f76e0187fe",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "659bf619486b2b74d5f705bd4c36b0a44293af26904deeaa9fd1aff034b6d2fc",
-  "last_reflection_id": "WS-V6-REFL-0095",
+  "last_reflection_id": "WS-V6-REFL-0096",
   "last_completed": {
-    "task_id": "WS-V6-R54-RIGID-ACTOR-INVENTORY-01",
-    "run": "run://worldsim_v6/WS-V6-R54-RIGID-ACTOR-INVENTORY-01/20260821T190150Z__actor-inventory-s20260821-r1",
-    "artifact_sha256": "e54398f11f559837fa75a7564a6db556c16b8524e012b7a0faaa3ccc1bfe0b68"
+    "task_id": "WS-V6-R55-SECOND-ACTOR-SCENEIR-BUNDLE-01",
+    "run": "run://worldsim_v6/WS-V6-R55-SECOND-ACTOR-SCENEIR-BUNDLE-01/20260821T190754Z__actor2-bundle-s20260821-r1",
+    "artifact_sha256": "d63dde218cf0d5409e6f85b56e39c6406df2fa92f3fb4f69710ed0f76e0187fe"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -114,7 +114,8 @@
     "r52_lifecycle_gate3_ablation": "done_accepted_development_usable_frames_3_to_5",
     "r53_lifecycle_perception_regression": "done_accepted_development_downstream_label_regression_detected",
     "r54_rigid_actor_inventory": "done_accepted_development_27_actors_92170_primitives",
-    "r55_second_actor_sceneir_bundle": "active_pre_registered",
+    "r55_second_actor_sceneir_bundle": "done_accepted_development_actor2_exact_bundle",
+    "r56_second_actor_rigid_trajectory": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -123,8 +124,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_and_push_r54_acceptance_and_r55_actor2_bundle",
-    "select_maximum_non_actor0_primitive_actor2_from_frozen_inventory",
-    "package_actor2_geometry_logged_trajectory_and_native_lifecycle_exactly"
+    "commit_and_push_r55_acceptance_and_r56_actor2_trajectory_compiler",
+    "compile_13490_actor2_gaussians_across_196_logged_world_poses",
+    "require_exact_lifecycle_visibility_and_byte_exact_invariant_fields"
   ]
 }
