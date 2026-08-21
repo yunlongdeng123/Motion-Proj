@@ -1,0 +1,61 @@
+schema_version: worldsim_v6.r21_typed_semantic_contract.v1
+task_id: WS-V6-R21-TYPED-SEMANTIC-CONTRACT-01
+hypothesis_id: WS-V6-H-R21-001
+seed: 20260821
+sources:
+  r16_run: runs://worldsim_v6/WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01/20260821T150012Z__independent-arms-s20260821-r1
+  r16_manifest_sha256: 933232aab82ff9c62e7d559b4571274c7613a8dfc48ab7441c96b2d4dafbdac9
+  r16_gate_sha256: 297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7
+  r16_cases_sha256: 3610cec0cd8f07c0069216c8a183bbaf768819193dab0c4e5c6e6f6260c4f3ef
+  r16_per_case_arms_sha256: 6f40fa4b0b8b6c13d0da6709951b5c464df1fdc60646655c808c32d97d1e949b
+  proposal_directory: temporal_ecc_rgb_depth_reconstruction_proposals
+models:
+  deeplab:
+    id: Koushim/deeplabv3-resnet50-cityscapes
+    revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+    architecture: deeplabv3_resnet50
+    license: Apache-2.0
+    model_file: pytorch_model.bin
+    model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  segformer:
+    id: nvidia/segformer-b0-finetuned-cityscapes-1024-1024
+    revision: 21b3847fae21ddee674abd31129307b6a1235bd9
+    architecture: segformer_b0
+    license: NVIDIA-Source-Code-License-research-evaluation-only
+    model_file: pytorch_model.bin
+    model_sha256: 027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c
+    config_sha256: 649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9
+    preprocessor_sha256: d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_semantic_evidence_case_count: 12
+  evidence_hole_types: [disocclusion, actor_removal_hole]
+consensus:
+  decision_policy: typed_edit_semantic_contract
+  dynamic_class_ids: [11, 12, 13, 14, 15, 16, 17, 18]
+  minimum_dynamic_iou: 0.50
+  minimum_dynamic_iou_source: frozen_r16_p3_verifier_threshold
+  maximum_disocclusion_dynamic_pixels: 0
+  actor_removal_hole_contract: both_models_dynamic_mask_iou_at_least_0.50
+  disocclusion_contract: both_models_predict_zero_dynamic_pixels_in_hole
+  target_dynamic_read_by_decision: false
+  truth_label_source: immutable_r16_p3_truth_safe
+gate:
+  minimum_accept_coverage: 0.10
+  maximum_false_safe_rate: 0.10
+  minimum_false_safe_reduction_vs_p0: 0.25
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_typed_semantic_selective_risk_arm
+  - compiler_edit_type_is_declared_semantic_evidence
+  - architecture_consensus_not_independent_ground_truth
+  - cityscapes_dynamic_classes_only
+  - immutable_r16_truth_used_for_evaluation_only
+  - no_threshold_sweep_or_target_dynamic_decision_input
+  - p4_dynamics_remains_abstain
+  - no_factor_fusion_bake_training_or_confirmation_read

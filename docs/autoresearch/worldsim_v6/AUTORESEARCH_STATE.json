@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T15:18:00Z",
+  "updated_at_utc": "2026-08-21T15:27:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 50,
-  "active_task": "WS-V6-R20-SEMANTIC-CONSENSUS-01",
-  "active_hypothesis": "WS-V6-H-R20-001",
-  "candidate": "deeplab_segformer_dynamic_mask_consensus",
+  "iteration": 51,
+  "active_task": "WS-V6-R21-TYPED-SEMANTIC-CONTRACT-01",
+  "active_hypothesis": "WS-V6-H-R21-001",
+  "candidate": "compiler_edit_typed_semantic_contract",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f",
+  "dev_artifact_hash": "9517302f94b97342b1cb5e109e9824a433c13fec0f041042db1ba37f09d52dfe",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "0599482c39058241895c960e4f427598bb39ce5034dac773f05c6f1a7c454815",
-  "last_reflection_id": "WS-V6-REFL-0052",
+  "failure_ledger_sha256": "9ac4398452ae988cf57d7071f13d2eeed13d0c72a4935adac176f0cbff9428cd",
+  "last_reflection_id": "WS-V6-REFL-0053",
   "last_completed": {
-    "task_id": "WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01/20260821T151435Z__logsim-s20260821-r1",
-    "artifact_sha256": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f"
+    "task_id": "WS-V6-R20-SEMANTIC-CONSENSUS-01",
+    "run": "run://worldsim_v6/WS-V6-R20-SEMANTIC-CONSENSUS-01/20260821T152456Z__semantic-consensus-s20260821-r1",
+    "artifact_sha256": "9517302f94b97342b1cb5e109e9824a433c13fec0f041042db1ba37f09d52dfe"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -79,7 +79,8 @@
     "r17_rgbd_temporal_factorized_verification": "done_accepted_development_photo_geometry",
     "r18_rgbd_temporal_typed_bake": "done_accepted_development_static_only",
     "r19_rgbd_temporal_static_logsim": "done_accepted_development_static_scope",
-    "r20_semantic_consensus": "active_pre_registered_deeplab_segformer",
+    "r20_semantic_consensus": "done_rejected_correlated_disocclusion_false_safe",
+    "r21_typed_semantic_contract": "active_pre_registered_edit_typed",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -88,8 +89,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r19_closeout_and_r20_semantic_consensus",
-    "run_12_case_architecture_consensus_semantic_arm",
-    "retain_p4_abstention_and_fuse_only_if_semantic_arm_is_independently_eligible"
+    "commit_r20_rejection_and_r21_typed_semantic_contract",
+    "run_same_12_cases_with_actor_and_disocclusion_specific_contracts",
+    "retain_p4_abstention_and_fuse_only_if_typed_semantic_arm_is_eligible"
   ]
 }

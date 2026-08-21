@@ -3563,3 +3563,9 @@ Real-only factor heads 虽无最终 clean collision positives，但合法读取�
 H-R15-001 canonical run `20260821T145504Z__factorized-verification-s20260821-r1` 只消费 H-R14-001 独立通过的 P1 photo 与 P2 geometry decisions，按双 ACCEPT 才 ACCEPT、双 REJECT 才 REJECT、disagreement 全 ABSTAIN。28 cases 中只有 1 个 joint ACCEPT、13 个 ABSTAIN、14 个 REJECT；joint false-safe 为 `0`、相对 P0 reduction `0.89286`，但 accept coverage `0.03571` 未达到冻结 `0.05`，因此正式 `rejected`。
 
 不得用 OR、放宽 verifier threshold、把 disagreement 计作 ACCEPT 或把门改成 1 case 来恢复。RGB-only ECC proposal 对 photo 优化，却没有约束 geometry，导致两个独立有效 arm 的接受集合错位。H-R16-001 保留同一 temporal source、28-case denominator、P0-P4 thresholds 与后续 conjunction，仅把 outside-mask alignment image 改为等权 RGB gray + robust normalized render inverse-depth；render depth 只用于 proposal alignment，不充当 P2 truth。
+
+### V6-F55：无类型约束的双模型语义共识会形成相关性共同错误
+
+H-R20-001 canonical run `20260821T152456Z__semantic-consensus-s20260821-r1` 在冻结的 12 个 R16 semantic-evidence cases 上，以 DeepLabV3-ResNet50 与 SegFormer-B0 的 hole 内 dynamic-mask IoU `>=0.70` 作为唯一决策证据。该机制成功拒绝了 R16 原先唯一的边缘 false-safe `scene-0048__ad_gs__f057__actor_removal_hole`，但两个模型在 `scene-0048__ad_gs__f052__disocclusion` 上以 IoU `0.88267` 共同预测了错误动态内容，使 2 个 ACCEPT 中 1 个为 false-safe，false-safe rate `0.50`、相对 P0 reduction 仅 `0.08333`，正式 `rejected`。
+
+不得把架构不同等同于错误独立，也不得扫描 consensus threshold；相关模型会在编辑语义不同的 hole 上共同犯错。H-R21-001 保留相同模型、12-case denominator、truth 与质量门，新增由 compiler edit type 决定的 typed semantic contract：`actor_removal_hole` 沿用冻结的 `0.50` 双模型 dynamic IoU 门；`disocclusion` 只有两个模型在 hole 内都预测零 dynamic pixel 才可 ACCEPT。决策仍不读取 target dynamic truth，P4 保持 ABSTAIN。

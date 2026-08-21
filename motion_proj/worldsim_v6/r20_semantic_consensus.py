@@ -19,6 +19,7 @@ from PIL import Image
 from transformers import SegformerForSemanticSegmentation, SegformerImageProcessor
 
 TASK_ID = "WS-V6-R20-SEMANTIC-CONSENSUS-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R21-TYPED-SEMANTIC-CONTRACT-01"}
 
 
 class R20ExperimentError(RuntimeError):
@@ -136,7 +137,8 @@ def run_experiment(
         raise R20ExperimentError("正式 R20 run 禁止 dirty source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config.get("task_id") != TASK_ID:
+    task_id = str(config.get("task_id"))
+    if task_id not in ALLOWED_TASK_IDS:
         raise R20ExperimentError("R20 task_id 漂移")
     source_run = _resolve_runs_uri(config["sources"]["r16_run"])
     source_files = {
@@ -168,7 +170,7 @@ def run_experiment(
         raise R20ExperimentError("R20 磁盘资源不足")
 
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / (
+    run_dir = run_root / task_id / (
         f"{now.strftime('%Y%m%dT%H%M%SZ')}__semantic-consensus-s{config['seed']}-r1"
     )
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -196,6 +198,12 @@ def run_experiment(
         ).cuda().eval()
         dynamic_ids = set(int(value) for value in config["consensus"]["dynamic_class_ids"])
         minimum_iou = float(config["consensus"]["minimum_dynamic_iou"])
+        decision_policy = str(
+            config["consensus"].get("decision_policy", "untyped_model_consensus")
+        )
+        maximum_disocclusion_dynamic_pixels = int(
+            config["consensus"].get("maximum_disocclusion_dynamic_pixels", 0)
+        )
         proposal_directory = str(config["sources"]["proposal_directory"])
 
         rows: list[dict[str, Any]] = []
@@ -219,7 +227,28 @@ def run_experiment(
             deeplab_dynamic = np.isin(deeplab_labels, list(dynamic_ids))
             segformer_dynamic = np.isin(segformer_labels, list(dynamic_ids))
             consensus_iou = _masked_iou(deeplab_dynamic, segformer_dynamic, mask)
-            accepted = consensus_iou >= minimum_iou
+            deeplab_dynamic_pixels = int(np.count_nonzero(mask & deeplab_dynamic))
+            segformer_dynamic_pixels = int(np.count_nonzero(mask & segformer_dynamic))
+            if decision_policy == "typed_edit_semantic_contract":
+                if source_row["hole_type"] == "actor_removal_hole":
+                    accepted = consensus_iou >= minimum_iou
+                    decision_rule = "actor_dynamic_consensus"
+                elif source_row["hole_type"] == "disocclusion":
+                    accepted = (
+                        deeplab_dynamic_pixels <= maximum_disocclusion_dynamic_pixels
+                        and segformer_dynamic_pixels
+                        <= maximum_disocclusion_dynamic_pixels
+                    )
+                    decision_rule = "disocclusion_dynamic_absence"
+                else:
+                    raise R20ExperimentError(
+                        f"typed semantic hole_type 未冻结：{source_row['hole_type']}"
+                    )
+            elif decision_policy == "untyped_model_consensus":
+                accepted = consensus_iou >= minimum_iou
+                decision_rule = "untyped_dynamic_consensus"
+            else:
+                raise R20ExperimentError(f"未知 semantic decision policy：{decision_policy}")
             truth_safe = bool(source_row["P3"]["truth_safe"])
             rows.append(
                 {
@@ -228,12 +257,9 @@ def run_experiment(
                     "hole_type": source_row["hole_type"],
                     "proposal_sha256": source_row["proposal_sha256"],
                     "consensus_dynamic_iou": consensus_iou,
-                    "deeplab_dynamic_pixels_in_mask": int(
-                        np.count_nonzero(mask & deeplab_dynamic)
-                    ),
-                    "segformer_dynamic_pixels_in_mask": int(
-                        np.count_nonzero(mask & segformer_dynamic)
-                    ),
+                    "deeplab_dynamic_pixels_in_mask": deeplab_dynamic_pixels,
+                    "segformer_dynamic_pixels_in_mask": segformer_dynamic_pixels,
+                    "decision_rule": decision_rule,
                     "decision": "ACCEPT" if accepted else "REJECT",
                     "truth_safe": truth_safe,
                     "false_safe": bool(accepted and not truth_safe),
@@ -267,7 +293,7 @@ def run_experiment(
             <= float(gate_cfg["maximum_false_safe_rate"]),
             "minimum_false_safe_reduction_vs_p0": false_safe_reduction
             >= float(gate_cfg["minimum_false_safe_reduction_vs_p0"]),
-            "decision_uses_model_consensus_only": True,
+            "decision_uses_declared_semantic_evidence_only": True,
             "target_dynamic_not_read_by_decision": True,
             "architectures_distinct": config["models"]["deeplab"]["architecture"]
             != config["models"]["segformer"]["architecture"],
@@ -288,7 +314,8 @@ def run_experiment(
             if checks["passed"]
             else "reject_or_pivot_semantic_consensus",
         }
-        _write_json(run_dir / "R20_GATE.json", gate)
+        gate_name = "R20_GATE.json" if task_id == TASK_ID else "R21_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         metrics = {
             "schema_version": "worldsim_v6.r20_metrics.v1",
             "case_count": expected_count,
@@ -320,7 +347,7 @@ def run_experiment(
         )
         summary = {
             "schema_version": "worldsim_v6.r20_summary.v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "hypothesis_outcome": "accepted_development"
@@ -336,7 +363,7 @@ def run_experiment(
         _write_json(run_dir / "SUMMARY.json", summary)
         tracked = [
             "SEMANTIC_CONSENSUS.jsonl",
-            "R20_GATE.json",
+            gate_name,
             "METRICS.json",
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",
