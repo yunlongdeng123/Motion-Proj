@@ -1,0 +1,63 @@
+schema_version: worldsim_v6.r13_worldspace_fusion.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-003
+seed: 20260821
+sources:
+  base_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T120637Z__worldspace-route-s20260821-r1
+  base_manifest_sha256: 11ec32f2bc92819f0df61cc2055cd52b7d6eede445c081febf0320c663bce20f
+  base_gate_sha256: 845d9658cdde761450dd074b479ff3cae1e955c0af4e59fcae0bc938af8ef95f
+  base_route_metrics_sha256: ec2beb3d29d223ad6f2d70bbf2f9013164106186c66afe40fd3f5d9d779aaed9
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  support_frame_sha256:
+    52: c8bb2f3338265f47a7b9aaf20afb4eaa6e51822a0ba72153d01d6437316a9e38
+    57: 82994e06a5eaf6b528d7b2a8e39fab73458e981598d9ad232e5f2d78f562b337
+cohort:
+  partition: development
+  confirmation_locked: true
+  frame_indices: [52, 57]
+  case_ids:
+    52: scene-0242__ad_gs__f052__missing_route_support
+    57: scene-0242__ad_gs__f057__missing_route_support
+  route_deviations:
+    - {id: lateral_0.5m, variant: camera_lateral, lateral_m: 0.5, forward_m: 0.0}
+    - {id: lateral_1m, variant: camera_lateral, lateral_m: 1.0, forward_m: 0.0}
+    - {id: lateral_2m, variant: camera_lateral, lateral_m: 2.0, forward_m: 0.0}
+    - {id: lateral_3m, variant: camera_lateral, lateral_m: 3.0, forward_m: 0.0}
+    - {id: lateral_5m, variant: camera_lateral, lateral_m: 5.0, forward_m: 0.0}
+    - {id: forward_2m, variant: camera_forward_extension, lateral_m: 0.0, forward_m: 2.0}
+fusion:
+  method: deterministic_world_voxel_union
+  voxel_size_m: 0.05
+metrics:
+  resolution_px: [512, 288]
+  minimum_projected_pixels: 256
+  maximum_photo_mae: 0.12
+  maximum_geometry_mean_relative_error: 0.30
+  minimum_non_regression_lateral_route_m: 3.0
+  target_lateral_route_m: 5.0
+  minimum_fifth_meter_geometry_error_reduction: 0.25
+  require_fifth_meter_pass_both_frames: true
+gate:
+  require_fused_point_densification: true
+  require_route_non_regression: true
+  require_fifth_meter_extension: true
+  require_repeat_exact: true
+  require_source_immutable: true
+unsupported_metrics:
+  perception_failure: ABSTAIN_NO_OFFROUTE_PIXEL_LABEL_GROUND_TRUTH
+  planning_completion: ABSTAIN_NO_PLANNER
+  collision_correctness: ABSTAIN_STATIC_ROUTE_CHUNK
+  temporal_consistency: ABSTAIN_TWO_KEYFRAME_UNION_NOT_CONTINUOUS_VIDEO
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_two_keyframe_world_point_union
+  - same_cross_frontend_truth_proxy_and_thresholds_as_h_r13_002
+  - union_densification_not_surface_completion
+  - no_visibility_or_target_view_filtering
+  - unsupported_metrics_abstain
+  - no_training
+  - no_confirmation_read
