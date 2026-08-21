@@ -3103,6 +3103,20 @@ R3 第四次正式目录已成功完成 scene-0242 的 object-aware `Scene` 构�
 再深拷贝和修改外参；这与上游 `Camera.to()` 合同一致，不改变相机数值、checkpoint、renderer、指标或门槛。
 以后 lazy evaluation path 必须把 camera 作为一个设备一致的整体处理，不能只迁移新创建的 tensor。
 
+### V6-F10：structured array 拼接后必须使用字段索引，不能依赖 recarray 属性
+
+R3 第五次正式目录
+`20260821T091503Z__support-deviation-s20260821-r1` 已完成 2 场景 × 2 frontend 的全部 adapter、
+checkpoint restore、横向/前向/actor-edit 渲染和 worker audit，共 80 个 render；汇总阶段把 `np.rec.fromarrays`
+结果经 `np.concatenate` 拼接后得到 structured `ndarray`，代码仍以 `values.y/values.x` 访问字段，触发
+`AttributeError`。该 run 的 terminal 保留 `failed`，不得倒写为 done；渲染与 checkpoint 证据本身完整。
+
+修复统一改用 `values["y"]` 等 structured-array 字段索引。为避免无意义重跑冻结 renderer，建立独立
+analysis-only recovery run：先逐个重算全部 render SHA、核对每个 worker 的 render count、checkpoint 前后 hash、
+无训练/无确认集 audit 与 adapter 分区，再从只读失败目录计算指标；新目录记录原 run/commit/terminal hash、
+分析 commit 与聚合 content hash，原目录不修改。以后 post-render 工程失败可复用已验证的不可变证据，
+但必须新建 terminal 和完整 provenance，不能在原失败目录续写。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

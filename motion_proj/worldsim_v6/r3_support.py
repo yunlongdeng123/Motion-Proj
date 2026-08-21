@@ -77,17 +77,19 @@ def _project_observations(
     if not projected:
         raise R3AnalysisError("没有可投影 LiDAR observation")
     values = np.concatenate(projected)
-    linear = values.y.astype(np.int64) * width + values.x.astype(np.int64)
-    order = np.lexsort((values.z, linear))
+    linear = values["y"].astype(np.int64) * width + values["x"].astype(np.int64)
+    order = np.lexsort((values["z"], linear))
     ordered_linear = linear[order]
     first = np.r_[True, ordered_linear[1:] != ordered_linear[:-1]]
     selected = values[order[first]]
     return {
-        "x": selected.x.astype(np.int64),
-        "y": selected.y.astype(np.int64),
-        "z": selected.z.astype(np.float32),
-        "rgb": np.stack((selected.r, selected.g, selected.b), axis=-1).astype(np.float32),
-        "dynamic": selected.dynamic.astype(bool),
+        "x": selected["x"].astype(np.int64),
+        "y": selected["y"].astype(np.int64),
+        "z": selected["z"].astype(np.float32),
+        "rgb": np.stack(
+            (selected["r"], selected["g"], selected["b"]), axis=-1
+        ).astype(np.float32),
+        "dynamic": selected["dynamic"].astype(bool),
         "target_camera_to_world": target_c2w.astype(np.float32),
         "height": np.asarray(height),
         "width": np.asarray(width),
