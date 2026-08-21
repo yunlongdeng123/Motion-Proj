@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T17:48:27Z",
+  "updated_at_utc": "2026-08-21T17:53:02Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 77,
-  "active_task": "WS-V6-R42-ACTOR-TRANSLATION-PROPOSAL-SEARCH-01",
-  "active_hypothesis": "WS-V6-H-R42-001",
-  "candidate": "factor_aware_horizontal_actor_translation_proposal_search",
+  "iteration": 78,
+  "active_task": "WS-V6-R43-SELECTED-ACTOR-PROPOSAL-SENSOR-01",
+  "active_hypothesis": "WS-V6-H-R43-001",
+  "candidate": "selected_factor_aware_actor_proposal_native_renderer_verification",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "c6f015cbdf12ed75aee02e1cd58b2b84e966f29a0779e956f7b2b063ce8efba2",
+  "dev_artifact_hash": "6f2efe388a9b602ed6300561380358c413d6cde66d077be2c69ceb4022458aab",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "2973160ff23ec28b0cb8c11e86c35a219bf0ec9fa5fd95801c8fc0847090a549",
-  "last_reflection_id": "WS-V6-REFL-0079",
+  "last_reflection_id": "WS-V6-REFL-0080",
   "last_completed": {
-    "task_id": "WS-V6-R41-ACTOR-EDIT-FACTOR-FUSION-01",
-    "run": "run://worldsim_v6/WS-V6-R41-ACTOR-EDIT-FACTOR-FUSION-01/20260821T174448Z__factor-fusion-s20260821-r1",
-    "artifact_sha256": "c6f015cbdf12ed75aee02e1cd58b2b84e966f29a0779e956f7b2b063ce8efba2"
+    "task_id": "WS-V6-R42-ACTOR-TRANSLATION-PROPOSAL-SEARCH-01",
+    "run": "run://worldsim_v6/WS-V6-R42-ACTOR-TRANSLATION-PROPOSAL-SEARCH-01/20260821T174955Z__proposal-search-s20260821-r1",
+    "artifact_sha256": "6f2efe388a9b602ed6300561380358c413d6cde66d077be2c69ceb4022458aab"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -101,7 +101,8 @@
     "r39_actor_static_contact_factor": "done_rejected_v6_f65_background_gaussian_not_ground_contact",
     "r40_actor_lidar_contact_factor": "done_accepted_development_robust_logged_lidar_contact",
     "r41_actor_edit_factor_fusion": "done_accepted_development_complementary_factor_rejections",
-    "r42_actor_translation_proposal_search": "active_pre_registered",
+    "r42_actor_translation_proposal_search": "done_accepted_development_5_of_24_joint_accept_selected_minus_x_minus_z",
+    "r43_selected_actor_proposal_sensor": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -110,8 +111,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_and_push_r41_acceptance_and_r42_horizontal_grid_proposal_search",
-    "run_formal_factor_screening_over_24_frozen_candidates",
-    "if_selected_send_exact_proposal_to_native_renderer_verification"
+    "commit_and_push_r42_selection_and_r43_native_renderer_verification",
+    "run_exact_selected_minus_x_minus_z_proposal_at_frame57",
+    "if_renderer_conformant_bake_verified_proposal_into_typed_sceneir_package"
   ]
 }
