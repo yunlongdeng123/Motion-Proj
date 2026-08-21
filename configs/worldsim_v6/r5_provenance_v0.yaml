@@ -1,0 +1,35 @@
+schema_version: worldsim_v6.r5_provenance_profile.v1
+task_id: WS-V6-R5-PROVENANCE-01
+seed: 20260821
+source:
+  sceneir_package: runs://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1/sceneir_packages/streetgs_scene0230
+  sceneir_content_sha256: 8b3dd8639d244a87afb864b8109a27273a59fa3f5eaa7861338915d6bde93671
+fields:
+  - source_type
+  - sensor_support
+  - time_support
+  - view_support
+  - reconstruction_source
+  - generation_source
+source_type_enum: [observed, reconstructed, generated]
+encoding:
+  primitive_identity: source_indices_blob_reference
+  homogeneous_fields: per_chunk_broadcast_constant
+  heterogeneous_fields: content_addressed_column
+gate:
+  chunk_coverage: 1.0
+  actor_coverage: 1.0
+  primitive_coverage: 1.0
+  require_global_primitive_identity_unique: true
+  require_observed_reconstructed_generated_disjoint: true
+  fresh_reload_processes: 2
+resources:
+  gpu_required: false
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - provenance_coverage_not_reconstruction_quality
+  - absent_sensor_and_view_support_remain_unknown_not_inferred
+  - reconstructed_primitives_are_not_observed_ground_truth
+  - no_generation_source_for_current_sceneir
+  - no_training
+  - no_confirmation_read
