@@ -16,6 +16,7 @@ import yaml
 
 
 TASK_ID = "WS-V6-R11-BAKE-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R18-RGBD-TEMPORAL-TYPED-BAKE-01"}
 
 
 class R11ExperimentError(RuntimeError):
@@ -75,14 +76,19 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R11ExperimentError("正式 R11 run 禁止 dirty source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config.get("task_id") != TASK_ID:
+    task_id = str(config.get("task_id"))
+    if task_id not in ALLOWED_TASK_IDS:
         raise R11ExperimentError("R11 task_id 漂移")
     sources = config["sources"]
     r10_run = _resolve_runs_uri(sources["r10_run"])
     r9_run = _resolve_runs_uri(sources["r9_run"])
+    r10_gate_name = str(sources.get("r10_gate_file", "R10_GATE.json"))
+    proposal_directory = str(
+        sources.get("proposal_directory", "cross_frontend_reconstruction_proposals")
+    )
     source_files = {
         r10_run / "MANIFEST.json": sources["r10_manifest_sha256"],
-        r10_run / "R10_GATE.json": sources["r10_gate_sha256"],
+        r10_run / r10_gate_name: sources["r10_gate_sha256"],
         r10_run / "FACTORIZED_DECISIONS.jsonl": sources["r10_decisions_sha256"],
         r9_run / "MANIFEST.json": sources["r9_manifest_sha256"],
         r9_run / "CASES.jsonl": sources["r9_cases_sha256"],
@@ -93,7 +99,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     for path, expected_sha in source_files.items():
         if _sha256(path) != expected_sha:
             raise R11ExperimentError(f"source 漂移：{path.name}")
-    r10_gate = json.loads((r10_run / "R10_GATE.json").read_text(encoding="utf-8"))
+    r10_gate = json.loads((r10_run / r10_gate_name).read_text(encoding="utf-8"))
     if r10_gate["decision"] != "proceed_to_bake":
         raise R11ExperimentError("R10 未授权 bake")
     free_gib = shutil.disk_usage(run_root).free / (1024**3)
@@ -101,7 +107,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R11ExperimentError("R11 磁盘资源不足")
 
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / (
+    run_dir = run_root / task_id / (
         f"{now.strftime('%Y%m%dT%H%M%SZ')}__typed-bake-s{config['seed']}-r1"
     )
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -134,7 +140,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             hole_type = case["hole_type"]
             proposal_path = (
                 r9_run
-                / "cross_frontend_reconstruction_proposals"
+                / proposal_directory
                 / f"{case_id}__repeat1.npy"
             )
             proposal_sha = _sha256(proposal_path)
@@ -198,14 +204,26 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     {
                         "schema_version": "worldsim_v6.r11_provenance.v1",
                         "asset_id": f"static::{case_id}",
-                        "source_type": "reconstructed_cross_frontend",
-                        "sensor_support": "shared_frozen_r3_sensor_support",
+                        "source_type": str(
+                            config["package"].get(
+                                "proposal_source_type", "reconstructed_cross_frontend"
+                            )
+                        ),
+                        "sensor_support": str(
+                            config["package"].get(
+                                "sensor_support", "shared_frozen_r3_sensor_support"
+                            )
+                        ),
                         "time_support": int(case["frame_index"]),
                         "view_support": {
                             "target_frontend": case["frontend"],
                             "proposal_source_frontend": case["proposal_source_frontend"],
                         },
-                        "reconstruction_source": "r9_cross_frontend_reconstruction",
+                        "reconstruction_source": str(
+                            config["package"].get(
+                                "reconstruction_source", "r9_cross_frontend_reconstruction"
+                            )
+                        ),
                         "generation_source": None,
                         "source_proposal_sha256": proposal_sha,
                         "baked_payload_sha256": chunk_sha,
@@ -260,7 +278,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         source_immutable = all(
             _sha256(
                 r9_run
-                / "cross_frontend_reconstruction_proposals"
+                / proposal_directory
                 / f"{case_id}__repeat1.npy"
             )
             == source_sha
@@ -306,7 +324,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             if checks["passed"]
             else "reject_or_repair_bake",
         }
-        _write_json(run_dir / "R11_GATE.json", gate)
+        gate_name = "R11_GATE.json" if task_id == TASK_ID else "R18_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         package_files = [
             "package/ASSET_REGISTRY.jsonl",
             "package/PROVENANCE.jsonl",
@@ -339,7 +358,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         summary = {
             "schema_version": "worldsim_v6.r11_summary.v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "hypothesis_outcome": "accepted_development" if checks["passed"] else "rejected",
@@ -356,7 +375,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         }
         _write_json(run_dir / "SUMMARY.json", summary)
         tracked = [
-            "R11_GATE.json",
+            gate_name,
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",
             "package/PACKAGE_MANIFEST.json",
