@@ -1,0 +1,82 @@
+schema_version: worldsim_v6.pt3_risk_policy_training.v1
+task_id: WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01
+hypothesis_id: WS-V6-H-PT3-004
+seed: 20260821
+train_dataset_root: /root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval
+train_scenes:
+  - scene: scene-0230
+    scene_index: 179
+    instances_sha256: d8bfe57d0ad7345e075d29b2ed64d14d3d12d06efbf1f7117012ba3e1563097c
+    lidar_pose_set_sha256: 01d50df6bf8b18d4ed3685f532b71e6a0081c90b8d401039dba03f2a87216a8a
+  - scene: scene-0242
+    scene_index: 191
+    instances_sha256: 5137cc1a489de7c281e2050e051a0210ec4c8d66a794fd6dd902627a586eb3bf
+    lidar_pose_set_sha256: d8304ae2ab1e9d83ed65584850aca816b2fe7109971405b0b053b080067cefca
+heldout_dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+heldout_scene:
+  scene: scene-0048
+  scene_index: 45
+  instances_sha256: 68400502435873f90235197f39d5536da7919be81db63aa593045e37bed626a3
+  lidar_pose_set_sha256: 15ec9f91f54cb2e2ea737b6d8a43b0c899c74a3683706832c49343f208aaed0e
+partition:
+  expected_frame_count_per_scene: 196
+  sample_stride: 4
+  sample_start: 0
+train_geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  default_actor_length_m: 4.5
+  default_actor_width_m: 2.0
+  synthetic_clone_forward_offsets_m: [0.0, 2.0, 4.0, 6.0, 8.0]
+  synthetic_clone_lateral_offsets_m: [0.0, 1.0, 2.0, 3.0]
+  synthetic_actor_sizes_m: [[3.6, 1.6], [4.5, 2.0], [7.5, 2.5]]
+  synthetic_clone_yaw_offsets_deg: [0.0, 30.0, 60.0, 90.0]
+  collision_rule: factorized_projected_aabb_forward_and_lateral_overlap
+heldout_geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  default_actor_length_m: 4.5
+  default_actor_width_m: 2.0
+  synthetic_clone_forward_offsets_m: [1.0, 3.0, 4.5, 5.5, 7.5]
+  synthetic_clone_lateral_offsets_m: [0.5, 1.5, 2.5, 3.5]
+  synthetic_actor_sizes_m: [[4.0, 1.8], [6.0, 2.2], [9.0, 2.8]]
+  synthetic_clone_yaw_offsets_deg: [15.0, 45.0, 75.0]
+  collision_rule: factorized_projected_aabb_forward_and_lateral_overlap
+arms:
+  - real_only
+  - real_plus_naive_synthetic
+  - real_plus_v6_verified_compiled
+training:
+  policy_family: factorized_logistic_raw_box_geometry
+  input_features:
+    forward_head: [abs_forward_m, projected_half_forward_m]
+    lateral_head: [abs_lateral_m, projected_half_lateral_m]
+  feature_canonicalization_decimals: 9
+  factor_label_canonicalization_decimals: 9
+  learning_rate: 0.1
+  l2: 0.0001
+  steps: 1500
+  repeat_count: 2
+gate:
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_false_safe_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_false_safe_reduction_vs_real_only_at_least: 0.50
+  require_false_safe_reduction_vs_naive_at_least: 0.50
+  require_training_repeat_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  comfort: ABSTAIN_NO_LONGITUDINAL_CONTROLLER
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+  confirmation_generalization: ABSTAIN_CONFIRMATION_LOCKED
+claim_boundary:
+  - development_multi_size_yaw_factorized_raw_box_policy_training
+  - train_and_heldout_size_yaw_intervention_grids_are_disjoint
+  - position_and_projected_extent_inputs_only_no_signed_clearance_or_final_verdict
+  - train_scene0230_scene0242_heldout_new_scene0048
+  - no_physical_collision_full_planner_closed_loop_or_confirmation_claim

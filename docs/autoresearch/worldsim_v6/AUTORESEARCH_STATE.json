@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:52:00Z",
+  "updated_at_utc": "2026-08-21T13:57:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 32,
+  "iteration": 33,
   "active_task": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT3-003",
-  "candidate": "factorized_raw_box_geometry_overlap_policy",
+  "active_hypothesis": "WS-V6-H-PT3-004",
+  "candidate": "multi_size_yaw_factorized_box_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "3599a6673c069cbc3a6e9cdae7919f5574e90f7a737daa27af31d01a4d0d91d4",
+  "dev_artifact_hash": "7e9b6aed862764e980630259b940a8b845ced9c4fa98e4efd270f330343dfd6f",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "df452b7af5f2d2edcc06f536b363324b831a0f747b52d29bc62cd5762884ef8b",
-  "last_reflection_id": "WS-V6-REFL-0034",
+  "failure_ledger_sha256": "d0f125b33172528e04119be7ed0647f9bb1031319f700a4338e028ca458701e0",
+  "last_reflection_id": "WS-V6-REFL-0035",
   "last_completed": {
     "task_id": "WS-V6-PT2-RISK-POLICY-01",
-    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T134843Z__factorized-policy-training-s20260821-r1",
-    "artifact_sha256": "3599a6673c069cbc3a6e9cdae7919f5574e90f7a737daa27af31d01a4d0d91d4"
+    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T135421Z__factorized-policy-training-s20260821-r1",
+    "artifact_sha256": "7e9b6aed862764e980630259b940a8b845ced9c4fa98e4efd270f330343dfd6f"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -59,7 +59,8 @@
     "pt2_small_risk_policy_post_training": "done_accepted_development_fixed_forward_clone_scope",
     "pt3_frozen_policy_intervention_robustness": "done_rejected_zero_lateral_template",
     "pt3_position_only_grid_policy_h002": "done_rejected_box_extent_aliasing",
-    "pt3_factorized_intervention_policy_training": "active_pre_registered_raw_box_factor_heads",
+    "pt3_single_size_factor_heads_h003": "done_rejected_extent_coefficient_shift",
+    "pt3_factorized_intervention_policy_training": "active_pre_registered_multi_size_yaw",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -68,8 +69,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_forward_and_lateral_overlap_heads_from_raw_position_and_projected_extents",
-    "evaluate_disjoint_scene0048_grid_under_original_robustness_gates",
-    "accept_reject_without_signed_clearance_or_final_label_features"
+    "train_factor_heads_on_position_size_yaw_cartesian_interventions",
+    "evaluate_disjoint_position_size_yaw_grid_on_scene0048",
+    "retain_original_policy_robustness_and_incremental_gain_gates"
   ]
 }

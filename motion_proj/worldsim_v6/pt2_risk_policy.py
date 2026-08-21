@@ -140,7 +140,11 @@ def _scene_rows(
     part = config["partition"]
     geom = config["geometry"]
     ego_half = (0.5 * float(geom["ego_length_m"]), 0.5 * float(geom["ego_width_m"]))
-    actor_size = np.asarray([geom["default_actor_length_m"], geom["default_actor_width_m"]], dtype=float)
+    actor_sizes = geom.get(
+        "synthetic_actor_sizes_m",
+        [[geom["default_actor_length_m"], geom["default_actor_width_m"]]],
+    )
+    yaw_offsets_deg = geom.get("synthetic_clone_yaw_offsets_deg", [0.0])
     decimals = int(config["training"].get("feature_canonicalization_decimals", 15))
     label_decimals = int(config["training"].get("factor_label_canonicalization_decimals", 15))
     real_rows: list[dict[str, Any]] = []
@@ -175,61 +179,72 @@ def _scene_rows(
         lateral_offsets = geom.get("synthetic_clone_lateral_offsets_m", [0.0])
         for offset in geom["synthetic_clone_forward_offsets_m"]:
             for lateral_offset in lateral_offsets:
-            # clone 与 ego 同航向，位于冻结纵向 offset；feature 同时保留其他真实 actor 的最危险值。
-                clone_local = np.eye(4, dtype=float)
-                clone_local[0, 3] = float(offset)
-                clone_local[1, 3] = float(lateral_offset)
-                clone_world = poses[frame] @ clone_local
-                clone_geometry = _actor_geometry(
-                    poses[frame], clone_world, actor_size, ego_half
-                )
-                clone_clearance = clone_geometry[0]
-                if clone_clearance <= clean:
-                    edited_geometry = clone_geometry
-                else:
-                    edited_geometry = (
-                        clean,
-                        clean_forward,
-                        clean_lateral,
-                        clean_half_forward,
-                        clean_half_lateral,
-                        clean_forward_gap,
-                        clean_lateral_gap,
-                    )
-                (
-                    edited_clearance,
-                    edited_forward,
-                    edited_lateral,
-                    edited_half_forward,
-                    edited_half_lateral,
-                    edited_forward_gap,
-                    edited_lateral_gap,
-                ) = edited_geometry
-                edited_forward_overlap = int(
-                    round(edited_forward_gap, label_decimals) <= 0.0
-                )
-                edited_lateral_overlap = int(
-                    round(edited_lateral_gap, label_decimals) <= 0.0
-                )
-                edited_label = int(
-                    edited_forward_overlap and edited_lateral_overlap
-                )
-                synthetic_rows.append(
-                    {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
-                     "clone_forward_offset_m": float(offset),
-                     "clone_lateral_offset_m": float(lateral_offset),
-                     "signed_clearance_m": edited_clearance,
-                     "abs_forward_m": round(edited_forward, decimals),
-                     "abs_lateral_m": round(edited_lateral, decimals),
-                     "projected_half_forward_m": round(edited_half_forward, decimals),
-                     "projected_half_lateral_m": round(edited_half_lateral, decimals),
-                     "forward_overlap_label": edited_forward_overlap,
-                     "lateral_overlap_label": edited_lateral_overlap,
-                     "stale_naive_forward_overlap_label": clean_forward_overlap,
-                     "stale_naive_lateral_overlap_label": clean_lateral_overlap,
-                     "hazard_label": edited_label, "stale_naive_label": clean_label,
-                     "label_source": "recomputed_projected_aabb_dependency"}
-                )
+                for actor_size_values in actor_sizes:
+                    actor_size = np.asarray(actor_size_values, dtype=float)
+                    for yaw_offset_deg in yaw_offsets_deg:
+                        # clone 使用冻结 ego-relative 位姿/尺寸；feature 仍选择整场最危险 actor。
+                        clone_local = np.eye(4, dtype=float)
+                        yaw = math.radians(float(yaw_offset_deg))
+                        clone_local[:2, :2] = np.asarray(
+                            [[math.cos(yaw), -math.sin(yaw)], [math.sin(yaw), math.cos(yaw)]],
+                            dtype=float,
+                        )
+                        clone_local[0, 3] = float(offset)
+                        clone_local[1, 3] = float(lateral_offset)
+                        clone_world = poses[frame] @ clone_local
+                        clone_geometry = _actor_geometry(
+                            poses[frame], clone_world, actor_size, ego_half
+                        )
+                        clone_clearance = clone_geometry[0]
+                        if clone_clearance <= clean:
+                            edited_geometry = clone_geometry
+                        else:
+                            edited_geometry = (
+                                clean,
+                                clean_forward,
+                                clean_lateral,
+                                clean_half_forward,
+                                clean_half_lateral,
+                                clean_forward_gap,
+                                clean_lateral_gap,
+                            )
+                        (
+                            edited_clearance,
+                            edited_forward,
+                            edited_lateral,
+                            edited_half_forward,
+                            edited_half_lateral,
+                            edited_forward_gap,
+                            edited_lateral_gap,
+                        ) = edited_geometry
+                        edited_forward_overlap = int(
+                            round(edited_forward_gap, label_decimals) <= 0.0
+                        )
+                        edited_lateral_overlap = int(
+                            round(edited_lateral_gap, label_decimals) <= 0.0
+                        )
+                        edited_label = int(
+                            edited_forward_overlap and edited_lateral_overlap
+                        )
+                        synthetic_rows.append(
+                            {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
+                             "clone_forward_offset_m": float(offset),
+                             "clone_lateral_offset_m": float(lateral_offset),
+                             "clone_actor_length_m": float(actor_size[0]),
+                             "clone_actor_width_m": float(actor_size[1]),
+                             "clone_yaw_offset_deg": float(yaw_offset_deg),
+                             "signed_clearance_m": edited_clearance,
+                             "abs_forward_m": round(edited_forward, decimals),
+                             "abs_lateral_m": round(edited_lateral, decimals),
+                             "projected_half_forward_m": round(edited_half_forward, decimals),
+                             "projected_half_lateral_m": round(edited_half_lateral, decimals),
+                             "forward_overlap_label": edited_forward_overlap,
+                             "lateral_overlap_label": edited_lateral_overlap,
+                             "stale_naive_forward_overlap_label": clean_forward_overlap,
+                             "stale_naive_lateral_overlap_label": clean_lateral_overlap,
+                             "hazard_label": edited_label, "stale_naive_label": clean_label,
+                             "label_source": "recomputed_projected_aabb_dependency"}
+                        )
     return real_rows, synthetic_rows
 
 

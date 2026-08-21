@@ -95,9 +95,14 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         reduction_naive = naive["false_safe_rate"] - v6["false_safe_rate"]
         wall_seconds = time.monotonic() - started
         cfg = config["gate"]
+        train_sizes = {tuple(value) for value in config["train_geometry"].get("synthetic_actor_sizes_m", [])}
+        heldout_sizes = {tuple(value) for value in config["heldout_geometry"].get("synthetic_actor_sizes_m", [])}
         checks = {
             "new_heldout_scene": spec["scene"] not in {row["scene"] for row in config["train_scenes"]},
-            "disjoint_intervention_grids": set(config["train_geometry"]["synthetic_clone_forward_offsets_m"]).isdisjoint(config["heldout_geometry"]["synthetic_clone_forward_offsets_m"]) and set(config["train_geometry"]["synthetic_clone_lateral_offsets_m"]).isdisjoint(config["heldout_geometry"]["synthetic_clone_lateral_offsets_m"]),
+            "disjoint_intervention_grids": set(config["train_geometry"]["synthetic_clone_forward_offsets_m"]).isdisjoint(config["heldout_geometry"]["synthetic_clone_forward_offsets_m"])
+            and set(config["train_geometry"]["synthetic_clone_lateral_offsets_m"]).isdisjoint(config["heldout_geometry"]["synthetic_clone_lateral_offsets_m"])
+            and (not train_sizes or train_sizes.isdisjoint(heldout_sizes))
+            and set(config["train_geometry"].get("synthetic_clone_yaw_offsets_deg", [])).isdisjoint(config["heldout_geometry"].get("synthetic_clone_yaw_offsets_deg", [])),
             "heldout_has_both_outcomes": v6["hazard_count"] > 0 and v6["safe_count"] > 0,
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(cfg["require_v6_balanced_accuracy_at_least"]),
             "v6_false_safe": v6["false_safe_rate"] <= float(cfg["require_v6_false_safe_rate_at_most"]),

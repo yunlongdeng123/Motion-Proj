@@ -3509,3 +3509,9 @@ H-PT3-001 canonical run `20260821T134426Z__intervention-robustness-s20260821-r1`
 H-PT3-002 canonical run `20260821T134843Z__factorized-policy-training-s20260821-r1` 在 scene-0230/0242 完成 1,960 条二维 typed clone train rows，并在 scene-0048 的 980 条离散 half-offset edits 上评估。V6 相对两基线把 false-safe 从 `1.0` 降至 `0.4505208`、safe-route completion 保持 `1.0`，但 balanced accuracy 仅 `0.7747396`，未过冻结门，正式 `rejected`。
 
 诊断显示 position-only policy 为每条 episode 只保留 signed-clearance 最小 actor 的 `|x|/|y|`，却丢掉 projected box half-extent 与 yaw；远处 safe clone 会由更近但窄或旋转的真实 actor 取代特征，同一位置因此对应不同 overlap label。训练 lateral `2.0m` 恰在默认 box 边界，未 canonicalize 的 factor label 还出现 66/32 等浮点混合。H-PT3-003 保持数据、grid、三臂、heldout 和质量门，新增 raw projected half-extents，按 1e-9m canonicalize forward/lateral factor labels，分别训练两个 logistic overlap heads 后 AND；不得输入 signed clearance 或最终 hazard verdict。以后几何 policy 的 factor representation 必须保留决定接触边界的尺寸/朝向信息。
+
+### V6-F46：单一 synthetic box size/yaw 无法识别可迁移的 extent 系数
+
+H-PT3-003 canonical run `20260821T135421Z__factorized-policy-training-s20260821-r1` 使用 raw `|x|/|y|` 与 projected half-extents，分别训练 forward/lateral logistic overlap heads。V6 train overall balanced accuracy 为 `1.0`，forward/lateral factor train accuracy 为 `1.0/0.9986`，但在 disjoint scene-0048 grid 上 balanced accuracy `0.7963`、false-safe `0.22135`、safe-route completion `0.81395`，未过冻结门，正式 `rejected`；两基线 false-safe 均为 `1.0`。
+
+这不是优化未收敛，而是 synthetic train 全部采用默认 `4.5x2.0m`、relative yaw `0°`，projected extent 几乎常数，position 与 extent 的相反系数无法由 synthetic positives/negatives 识别，只能依赖稀疏真实 box 分布，换场景即漂移。H-PT3-004 保留 factor-head 架构、loss、task gates 与场景，扩展训练 denominator 为三种 size × 四种 yaw × 原 position grid；heldout 使用完全离散的三种 size × 三种 yaw。不得输入 signed gap 或固定解析碰撞公式来伪装 learning gain。以后 intervention coverage 必须同时报告 position、size 与 orientation factors。
