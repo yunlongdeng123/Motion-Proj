@@ -15,6 +15,7 @@ import yaml
 
 
 TASK_ID = "WS-V6-R10-FACTORIZED-VERIFICATION-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R15-TEMPORAL-FACTORIZED-VERIFICATION-01"}
 
 
 class R10ExperimentError(RuntimeError):
@@ -66,13 +67,15 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R10ExperimentError("正式 R10 run 禁止 dirty source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config.get("task_id") != TASK_ID:
+    task_id = str(config.get("task_id"))
+    if task_id not in ALLOWED_TASK_IDS:
         raise R10ExperimentError("R10 task_id 漂移")
     sources = config["sources"]
     r9_run = _resolve_runs_uri(sources["r9_run"])
+    source_gate_name = str(sources.get("gate_file", "R9_GATE.json"))
     source_files = {
         "MANIFEST.json": sources["r9_manifest_sha256"],
-        "R9_GATE.json": sources["r9_gate_sha256"],
+        source_gate_name: sources["r9_gate_sha256"],
         "verifier_worker/PER_CASE_ARMS.jsonl": sources["r9_per_case_arms_sha256"],
         "CASES.jsonl": sources["r9_cases_sha256"],
         "ARM_SUMMARIES.jsonl": sources["r9_arm_summaries_sha256"],
@@ -80,7 +83,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     for relative, expected_sha in source_files.items():
         if _sha256(r9_run / relative) != expected_sha:
             raise R10ExperimentError(f"R9 source 漂移：{relative}")
-    r9_gate = json.loads((r9_run / "R9_GATE.json").read_text(encoding="utf-8"))
+    r9_gate = json.loads((r9_run / source_gate_name).read_text(encoding="utf-8"))
     selected_arm_ids = [row["id"] for row in config["selected_arms"]]
     if selected_arm_ids != ["P1", "P2"]:
         raise R10ExperimentError("R10 selected arms 必须精确为 P1/P2")
@@ -91,7 +94,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R10ExperimentError("R10 磁盘资源不足")
 
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / (
+    run_dir = run_root / task_id / (
         f"{now.strftime('%Y%m%dT%H%M%SZ')}__factorized-verification-s{config['seed']}-r1"
     )
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -226,7 +229,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             if checks["passed"]
             else "reject_or_pivot_factorized_verification",
         }
-        _write_json(run_dir / "R10_GATE.json", gate)
+        gate_name = "R10_GATE.json" if task_id == TASK_ID else "R15_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         metrics = {
             "schema_version": "worldsim_v6.r10_metrics.v1",
             "case_count": expected,
@@ -260,7 +264,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         summary = {
             "schema_version": "worldsim_v6.r10_summary.v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "hypothesis_outcome": "accepted_development" if checks["passed"] else "rejected",
@@ -280,7 +284,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         tracked = [
             "FACTORIZED_DECISIONS.jsonl",
             "FACTOR_CALIBRATION.json",
-            "R10_GATE.json",
+            gate_name,
             "METRICS.json",
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",

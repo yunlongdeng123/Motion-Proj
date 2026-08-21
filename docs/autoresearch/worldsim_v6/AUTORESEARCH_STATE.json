@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:47:00Z",
+  "updated_at_utc": "2026-08-21T14:53:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 44,
-  "active_task": "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01",
-  "active_hypothesis": "WS-V6-H-R14-001",
-  "candidate": "masked_outside_ecc_adjacent_frame_reconstruction",
+  "iteration": 45,
+  "active_task": "WS-V6-R15-TEMPORAL-FACTORIZED-VERIFICATION-01",
+  "active_hypothesis": "WS-V6-H-R15-001",
+  "candidate": "temporal_ecc_p1_p2_factorized_verification",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "13e7bc48a0cdac0eedbcd3eab322f68267d9065786bf9491ce1303eb90f84fbe",
+  "dev_artifact_hash": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "4f08baf05979b6c9c7c836fc890c1d1ca17c4c34d6f5a1b5bec38cc97dff2748",
-  "last_reflection_id": "WS-V6-REFL-0046",
+  "last_reflection_id": "WS-V6-REFL-0047",
   "last_completed": {
-    "task_id": "WS-V6-PT8-CLOSED-LOOP-UTILITY-01",
-    "run": "run://worldsim_v6/WS-V6-PT8-CLOSED-LOOP-UTILITY-01/20260821T144333Z__closed-loop-utility-s20260821-r1",
-    "artifact_sha256": "13e7bc48a0cdac0eedbcd3eab322f68267d9065786bf9491ce1303eb90f84fbe"
+    "task_id": "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01",
+    "run": "run://worldsim_v6/WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01/20260821T145052Z__independent-arms-s20260821-r1",
+    "artifact_sha256": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -73,7 +73,8 @@
     "pt7_compositional_risk_confirmation": "done_rejected_false_safe_confirmation_consumed",
     "pt8_closed_loop_h001": "done_rejected_unstratified_unavoidable_hazards_and_no_gain",
     "pt8_closed_loop_utility": "done_rejected_no_incremental_gain_over_real_factor_supervision",
-    "r14_temporal_proposal_verifier_arms": "active_pre_registered_adjacent_frame_ecc",
+    "r14_temporal_proposal_verifier_arms": "done_accepted_development_p1_p2",
+    "r15_temporal_factorized_verification": "active_pre_registered_p1_p2_only",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -82,8 +83,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_temporal_ecc_proposal_and_unchanged_r9_verifier_contract",
-    "run_28_case_adjacent_frame_proposal_arm_ablation",
-    "promote_only_independently_eligible_verifier_factors"
+    "commit_exact_r14_source_hashes_and_p1_p2_fusion_contract",
+    "run_28_case_factorized_temporal_verification",
+    "abstain_on_semantic_dynamics_and_p1_p2_disagreement"
   ]
 }
