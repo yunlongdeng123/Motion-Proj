@@ -1,0 +1,67 @@
+schema_version: worldsim_v6.r26_typed_semantic_multisource.v1
+task_id: WS-V6-R26-TYPED-SEMANTIC-MULTISOURCE-01
+hypothesis_id: WS-V6-H-R26-001
+seed: 20260821
+sources:
+  proposal_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  proposal_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  proposal_gate_file: R24_GATE.json
+  proposal_gate_sha256: 171905dacadae1ea0b2af48eaa1fc8a86ba7ecfc1bd21ab7f000f28b248e58fd
+  proposal_cases_sha256: 23803466edc1dd238e42848664d556d629595c72f67d10490391a871c2941a0d
+  proposal_per_case_file: verifier_worker/PER_CASE_ARMS.jsonl
+  proposal_per_case_arms_sha256: 7171ed693a7188b74bd69be557accd43e8701267f8ef009f12cb11b2a1a0a72d
+  proposal_directory: typed_temporal_static_cross_frontend_actor_reconstruction_proposals
+  evaluation_run: runs://worldsim_v6/WS-V6-R25-ACTOR-ARM-PARETO-EVALUATION-01/20260821T155306Z__actor-pareto-s20260821-r1
+  evaluation_manifest_sha256: a0693f11f0565a078736326b9cc024cdda677fed6f4cf94032d943fc7a3473bb
+  evaluation_gate_sha256: 47d21244fff24585a1a3f78eb090a85d1ebe135158fc9b6ffb0ca902f330793d
+  evaluation_actor_pareto_sha256: 51f58ecbeb908724f2347d215b7b214c2e6a94cb0f3e62cdd138ccc0c1167672
+models:
+  deeplab:
+    id: Koushim/deeplabv3-resnet50-cityscapes
+    revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+    architecture: deeplabv3_resnet50
+    license: Apache-2.0
+    model_file: pytorch_model.bin
+    model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  segformer:
+    id: nvidia/segformer-b0-finetuned-cityscapes-1024-1024
+    revision: 21b3847fae21ddee674abd31129307b6a1235bd9
+    architecture: segformer_b0
+    license: NVIDIA-Source-Code-License-research-evaluation-only
+    model_file: pytorch_model.bin
+    model_sha256: 027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c
+    config_sha256: 649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9
+    preprocessor_sha256: d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_semantic_evidence_case_count: 12
+  evidence_hole_types: [disocclusion, actor_removal_hole]
+consensus:
+  decision_policy: typed_edit_semantic_contract
+  dynamic_class_ids: [11, 12, 13, 14, 15, 16, 17, 18]
+  minimum_dynamic_iou: 0.50
+  minimum_dynamic_iou_source: frozen_r16_p3_verifier_threshold
+  maximum_disocclusion_dynamic_pixels: 0
+  actor_removal_hole_contract: both_models_dynamic_mask_iou_at_least_0.50
+  disocclusion_contract: both_models_predict_zero_dynamic_pixels_in_hole
+  target_dynamic_read_by_decision: false
+  truth_label_source: immutable_r24_p3_truth_safe
+gate:
+  minimum_accept_coverage: 0.10
+  maximum_false_safe_rate: 0.10
+  minimum_false_safe_reduction_vs_p0: 0.25
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_typed_semantic_selective_risk_arm_on_multisource_proposals
+  - r24_rejection_retained_and_r25_actor_arm_authority_required
+  - compiler_edit_type_is_declared_semantic_evidence
+  - architecture_consensus_not_independent_ground_truth
+  - cityscapes_dynamic_classes_only
+  - immutable_r24_truth_used_for_evaluation_only
+  - no_threshold_sweep_or_target_dynamic_decision_input
+  - no_factor_fusion_bake_training_or_confirmation_read
