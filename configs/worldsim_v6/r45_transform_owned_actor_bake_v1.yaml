@@ -1,0 +1,39 @@
+schema_version: worldsim_v6.r45_transform_owned_actor_bake.v1
+task_id: WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01
+hypothesis_id: WS-V6-H-R45-001
+seed: 20260821
+sources:
+  r44_run: runs://worldsim_v6/WS-V6-R44-VERIFIED-ACTOR-PROPOSAL-BAKE-01/20260821T180210Z__verified-bake-s20260821-r1
+  r44_manifest_sha256: 71ba71d69b07083d5111ffdf212c9a5fc28a11b0262e1bb79f68950990679f34
+  r44_gate_sha256: 3d83e7bf5395d4a5c90e708ec35abd6443d992e00ed4811fbaa910bf77dbcd55
+  r44_summary_sha256: 2ca4e7230d932a63f77c3ed7dedd636c712d0e982f92ce11af309649d9ba1c1b
+  r43_run: runs://worldsim_v6/WS-V6-R43-SELECTED-ACTOR-PROPOSAL-SENSOR-01/20260821T175642Z__selected-sensor-s20260821-r1
+  r43_manifest_sha256: 79d43a7db4caa00b9b51ee1defc6e770fed6f529f72d557f837c7bda4fbfe993
+  r43_gate_sha256: fbacda7092bc392ed3fc63d24b4a232e7da95fe9d2750cd6610f53c418450915
+  r43_verified_proposal_sha256: d804843e657bb660728e91cef5c47887a32a39ef62ee0ae5ed1ddb820cc77c88
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  r35_trajectory_geometry_sha256: 524e95e9a3bb7e62c6989e8b06c8491280fbc770fe3731fb228d511a970b1297
+bake_contract:
+  asset_id: actor_0000
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  expected_trajectory_rows: 196
+  expected_actor_primitives: 12390
+  transform_dtype: float64
+  maximum_transform_composition_error_m: 0.0
+  package_status: baked_verified_development_transform_owned_proposal
+  package_schema: worldsim_v6.r45_transform_owned_actor_package.v1
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_transform_owned_bake_of_one_factor_and_renderer_verified_actor_translation
+  - base_actor_arrays_remain_byte_exact_and_edit_is_owned_by_float64_world_transform_trajectory
+  - runtime_composition_order_is_explicit_and_repeat_bake_is_byte_exact
+  - transform_bake_avoids_float32_geometry_rewrite_without_promoting_truth
+  - semantic_road_collision_physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
+
