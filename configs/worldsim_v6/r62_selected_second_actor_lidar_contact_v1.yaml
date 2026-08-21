@@ -1,0 +1,65 @@
+schema_version: worldsim_v6.r62_selected_second_actor_lidar_contact.v1
+task_id: WS-V6-R62-SELECTED-SECOND-ACTOR-LIDAR-CONTACT-01
+hypothesis_id: WS-V6-H-R62-001
+seed: 20260821
+sources:
+  r61_run: runs://worldsim_v6/WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01/20260821T193625Z__selected-actor2-sensor-s20260821-r1
+  r61_manifest_sha256: 199110abda13801edae4e4e3b2d98256bd3d1feec9298e18db3597dcd913251b
+  r61_gate_sha256: 23ecefc39d4f1af497021008d5792140eef3b414aab253b4a8aaa4c7974e4ffa
+  r61_summary_sha256: 39a973b2105037510b996fa2f9c71c32e92d0720af0d74308de1556ef401c959
+  r60_run: runs://worldsim_v6/WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01/20260821T193037Z__actor2-proposal-search-s20260821-r1
+  r60_selected_proposal_sha256: b75c90b4c6888ec7ef9ff5fe4ec402b2ea82523319a3bd12e5b5a2a885e25b8d
+  r56_run: runs://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1
+  r56_manifest_sha256: 4b9fc3101d7697efd7bd032b0fbaef4ea4e56ae9fd42e392f0ca469336c91dbc
+  r56_gate_sha256: edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c
+  r56_package_manifest_sha256: 35dbda21f25de374d5f032e6685571edc4f2ae3b05a23c6001a4ce4f9458556a
+  r56_trajectory_geometry_sha256: f2ee809a81a15dd41694651bddee6160df25d4ca0c927d412e8ccb319327c914
+  r40_run: runs://worldsim_v6/WS-V6-R40-ACTOR-LIDAR-CONTACT-FACTOR-01/20260821T173551Z__lidar-contact-s20260821-r1
+  r40_manifest_sha256: 24b45d7f99eb2e0b1c5263c171c11b0018b5938d2448c6b6378aa8ea9115a1b0
+  r40_gate_sha256: 07c2a05e01f5715f7c63a872d6d439771f30dac7f16147c0704567f51ae2b514
+  r40_summary_sha256: 707bf706bdd62d8ba9a02a1bab0b86f5ff5d65ebd6e032308a0612e8bf9d54b7
+  streetgs_config: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/config.yaml
+  streetgs_config_sha256: c8fa185036eb2b5ae8b6b4767daabb3688a678787769c86f827c2b3830ffe7a9
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+cohort:
+  partition: development_scene0242_frame98_same_frontend_logged_lidar
+  frame_index: 98
+  timestamp_us: 9800000
+  camera_ids: [0, 1, 2]
+  camera_count: 3
+  camera_downscale: 1
+  expected_actor_model_index: 2
+  expected_actor_primitives: 13490
+  expected_frame_validity: true
+  minimum_static_lidar_points: 4096
+coordinate_contract:
+  source: frozen_streetgs_frontend_world_frame
+  world_up_axis: y
+  vertical_axis_index: 1
+  horizontal_axis_indices: [0, 2]
+contact_query:
+  actor_support_quantile: 0.05
+  ground_height_quantile: 0.10
+  nearest_horizontal_candidates: 256
+  maximum_horizontal_radius_m: 2.0
+  minimum_lidar_candidates: 32
+  maximum_contact_error_m: 0.35
+interventions:
+  - id: actor2_logged_baseline
+    translation_delta_m: [0.0, 0.0, 0.0]
+    expected_lidar_contact_decision: ACCEPT
+  - id: actor2_r60_selected_translate_x_minus_1m
+    translation_delta_m: [-1.0, 0.0, 0.0]
+    expected_lidar_contact_decision: ACCEPT
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_frame98_same_frontend_logged_lidar_contact_factor
+  - exact_r60_selected_actor2_translation_after_interaction_and_renderer_acceptance
+  - dynamic_pixels_excluded_before_three_camera_metric_point_lift
+  - frozen_r40_robust_quantiles_radii_denominators_and_threshold_without_tuning
+  - local_lidar_contact_is_not_semantic_road_or_physics_ground_truth
+  - full_trajectory_dynamics_collision_planning_safety_and_confirmation_abstain
