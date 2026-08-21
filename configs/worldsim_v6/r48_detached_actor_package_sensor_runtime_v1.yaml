@@ -1,0 +1,62 @@
+schema_version: worldsim_v6.r48_detached_actor_package_sensor_runtime.v1
+task_id: WS-V6-R48-DETACHED-ACTOR-PACKAGE-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R48-001
+seed: 20260821
+sources:
+  r47_run: runs://worldsim_v6/WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01/20260821T181414Z__state-event-logsim-s20260821-r1
+  r47_manifest_sha256: b96b9409be15cbe14dfb3041e97876dae98b70f73e8652caa564f5ae8f376c2e
+  r47_gate_sha256: 70a3e8cd4c0f7a8096cf8274a170b33b7b193ba94d304b3ba69a3666e613dd18
+  r47_summary_sha256: 3f7747bc9601a3b8d34cd17bbf8c85c6072c92b58a6b09bac4fd4ca307f606b4
+  r47_event_trajectory_sha256: 527b985ee0c2fe2573a9473f7327450d30cebbe7a80d68cb155333b69fb7a7f0
+  r47_identity_audit_sha256: d7b5f51b12d5f698e031c14dfc10692c79c4b995a98cfb0cd0395f96484abdfd
+  detached_package: detached_package
+  detached_package_manifest_sha256: ea093368cfc4707db8b2c7ede1a6323c7702b6159219b6a3e02f13adc74cf173
+  r43_run: runs://worldsim_v6/WS-V6-R43-SELECTED-ACTOR-PROPOSAL-SENSOR-01/20260821T175642Z__selected-sensor-s20260821-r1
+  r43_manifest_sha256: 79d43a7db4caa00b9b51ee1defc6e770fed6f529f72d557f837c7bda4fbfe993
+  r43_gate_sha256: fbacda7092bc392ed3fc63d24b4a232e7da95fe9d2750cd6610f53c418450915
+  r43_verified_proposal_sha256: d804843e657bb660728e91cef5c47887a32a39ef62ee0ae5ed1ddb820cc77c88
+  r43_frame_metrics_sha256: ad35ad7de2b3b0fdb0adaff118cc0b190b70ba586093813695cf4d87722812ad
+  r43_sensor: translate_world_x_m1p0_z_m0p5/sensors/frame057.npz
+  r43_sensor_sha256: c01c2dfc4e9b2fcd1b8a3a6c61289663ab66ccf169a67e840421d36478a9719b
+  r36_run: runs://worldsim_v6/WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01/20260821T165828Z__sensor-equivalence-s20260821-r1
+  r36_manifest_sha256: 0f24d4e84f854f2fa3bea4a025e253cfaab8ffded02d63fe55ccff1ccacfedf3
+  r36_gate_sha256: e19b7fbc73d2180c3293630c2a89b68f4fe620e90471f4f3f889dc063cfd38ae
+  r36_baseline_sensor: worker/sensors/frame057.npz
+  r36_baseline_sensor_sha256: 2c42449bc9a13f928471caf431eb05981a49b58843288ddc856209d7f5a6b89e
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  frame_index: 57
+  actor_model_index: 0
+  required_worker_runtime_mode: transform_owned_package_direct
+  required_translation_source: package_transform_trajectory
+thresholds:
+  counterfactual_rgb_change_threshold: 0.00392156862745098
+  minimum_counterfactual_changed_pixels: 256
+  minimum_actor_effect_pixels: 256
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_direct_sensor_runtime_from_r47_detached_transform_owned_package
+  - worker_reads_translation_from_package_transform_trajectory_without_cli_delta
+  - sensor_arrays_must_match_the_canonical_r43_execution_exactly
+  - runtime_success_does_not_promote_semantic_physical_planning_or_safety_truth
+  - native_checkpoint_and_detached_package_remain_immutable
+  - no_training_or_confirmation_read
+

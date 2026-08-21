@@ -56,10 +56,10 @@ def main() -> int:
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     frames = [int(value) for value in args.frames.split(",")]
-    translation_delta = np.asarray(
+    cli_translation_delta = np.asarray(
         [float(value) for value in args.translation_delta_m.split(",")], dtype=np.float32
     )
-    if translation_delta.shape != (3,) or not np.isfinite(translation_delta).all():
+    if cli_translation_delta.shape != (3,) or not np.isfinite(cli_translation_delta).all():
         raise ValueError("translation delta 必须是三个有限数")
     output = args.output.resolve()
     sensor_dir = output / "sensors"
@@ -81,7 +81,26 @@ def main() -> int:
     checkpoint_before = _sha256(checkpoint)
     package_manifest_before = _sha256(package / "PACKAGE_MANIFEST.json")
     geometry = json.loads((package / "TRAJECTORY_GEOMETRY.json").read_text(encoding="utf-8"))
-    arrays = geometry["arrays"]
+    if "arrays" in geometry:
+        arrays = geometry["arrays"]
+        proposal_transforms = None
+        runtime_mode = "legacy_materialized_geometry_with_cli_translation"
+    elif "base_arrays" in geometry and "proposal_transform_world" in geometry:
+        if np.any(cli_translation_delta != 0):
+            raise ValueError("transform-owned package 禁止叠加 CLI translation")
+        arrays = geometry["base_arrays"]
+        transform_record = geometry["proposal_transform_world"]
+        proposal_transforms = np.load(package / transform_record["path"], allow_pickle=False)
+        if (
+            proposal_transforms.dtype != np.float64
+            or proposal_transforms.ndim != 3
+            or proposal_transforms.shape[1:] != (4, 4)
+            or not np.isfinite(proposal_transforms).all()
+        ):
+            raise ValueError("transform-owned package 的 float64 齐次变换合同漂移")
+        runtime_mode = "transform_owned_package_direct"
+    else:
+        raise ValueError("未支持的 actor package geometry schema")
     means_world = np.load(package / arrays["means_world_m"]["path"], allow_pickle=False)
     quaternions_world = np.load(
         package / arrays["quaternions_world_wxyz"]["path"], allow_pickle=False
@@ -94,6 +113,13 @@ def main() -> int:
     timestamp_to_index = {
         int(row["timestamp_us"]): index for index, row in enumerate(geometry["trajectory"])
     }
+    if proposal_transforms is not None and proposal_transforms.shape[0] != len(timestamp_to_index):
+        raise ValueError("transform trajectory denominator 漂移")
+
+    def translation_for_index(trajectory_index: int) -> np.ndarray:
+        if proposal_transforms is None:
+            return cli_translation_delta
+        return proposal_transforms[trajectory_index, :3, 3].astype(np.float32)
 
     cfg = OmegaConf.load(run_root / "config.yaml")
     cfg.data.preload_device = "cpu"
@@ -135,6 +161,7 @@ def main() -> int:
     def compiled_actor(frame_index: int, cam):
         timestamp_us = frame_index * 100000
         trajectory_index = timestamp_to_index[timestamp_us]
+        translation_delta = translation_for_index(trajectory_index)
         means = torch.from_numpy(means_world[trajectory_index]).cuda()
         means = means + torch.from_numpy(translation_delta).cuda()[None, :]
         quats = torch.from_numpy(quaternions_world[trajectory_index]).cuda()
@@ -193,6 +220,8 @@ def main() -> int:
     camera_downscale = trainer._get_downscale_factor()
     with torch.inference_mode():
         for frame_index in frames:
+            trajectory_index = timestamp_to_index[frame_index * 100000]
+            translation_delta = translation_for_index(trajectory_index)
             image_infos, camera_infos = dataset.full_image_set.get_image(
                 frame_index * 3, camera_downscale
             )
@@ -326,6 +355,11 @@ def main() -> int:
             "checkpoint_sha256_after": checkpoint_after,
             "package_manifest_sha256_before": package_manifest_before,
             "package_manifest_sha256_after": package_manifest_after,
+            "package_geometry_schema_version": geometry.get("schema_version"),
+            "runtime_mode": runtime_mode,
+            "translation_source": "package_transform_trajectory"
+            if proposal_transforms is not None
+            else "cli_argument",
             "upstream_commit": subprocess.check_output(
                 ["git", "-C", str(args.upstream_root.resolve()), "rev-parse", "HEAD"],
                 text=True,

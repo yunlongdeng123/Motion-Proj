@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T18:10:49Z",
+  "updated_at_utc": "2026-08-21T18:17:36Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 83,
-  "active_task": "WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R47-001",
-  "candidate": "detached_logsim_with_separate_state_and_event_identity",
+  "iteration": 84,
+  "active_task": "WS-V6-R48-DETACHED-ACTOR-PACKAGE-SENSOR-RUNTIME-01",
+  "active_hypothesis": "WS-V6-H-R48-001",
+  "candidate": "direct_streetgs_sensor_runtime_from_detached_transform_owned_package",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff",
+  "dev_artifact_hash": "70a3e8cd4c0f7a8096cf8274a170b33b7b193ba94d304b3ba69a3666e613dd18",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "a86f884f47283a54407439e81b85d64794fe3e1dfe1295470614e66b8f6366fa",
-  "last_reflection_id": "WS-V6-REFL-0085",
+  "last_reflection_id": "WS-V6-REFL-0086",
   "last_completed": {
-    "task_id": "WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01/20260821T181019Z__detached-logsim-s20260821-r1",
-    "artifact_sha256": "2029e2c7a4288f7c97af6fdce2241cd0344a27ab3d2b44eec19ecbd14e55c3ec"
+    "task_id": "WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01",
+    "run": "run://worldsim_v6/WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01/20260821T181414Z__state-event-logsim-s20260821-r1",
+    "artifact_sha256": "70a3e8cd4c0f7a8096cf8274a170b33b7b193ba94d304b3ba69a3666e613dd18"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -106,7 +106,8 @@
     "r44_verified_actor_proposal_bake": "done_rejected_v6_f69_float32_materialized_translation_error",
     "r45_transform_owned_actor_bake": "done_accepted_development_exact_float64_transform_ownership",
     "r46_detached_transform_package_logsim": "done_rejected_v6_f70_state_event_identity_conflation",
-    "r47_detached_state_event_logsim": "active_pre_registered",
+    "r47_detached_state_event_logsim": "done_accepted_development_196_events_142_states",
+    "r48_detached_actor_package_sensor_runtime": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -115,8 +116,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r46_rejection_and_r47_state_event_identity_schema",
-    "replay_196_detached_events_twice_preserving_142_unique_states",
-    "if_accepted_integrate_detached_package_with_sensor_runtime"
+    "commit_and_push_r47_acceptance_and_direct_package_sensor_adapter",
+    "run_streetgs_frame57_directly_from_r47_detached_package",
+    "require_sensor_arrays_exactly_match_r43_canonical_execution"
   ]
 }
