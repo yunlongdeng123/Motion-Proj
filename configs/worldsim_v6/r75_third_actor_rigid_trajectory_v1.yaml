@@ -1,0 +1,31 @@
+schema_version: worldsim_v6.r75_third_actor_rigid_trajectory.v1
+task_id: WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01
+hypothesis_id: WS-V6-H-R75-001
+seed: 20260821
+sources:
+  r74_run: runs://worldsim_v6/WS-V6-R74-THIRD-ACTOR-SCENEIR-BUNDLE-01/20260821T212030Z__actor5-bundle-s20260821-r1
+  r74_manifest_sha256: dfd2dc9688c5d133c4c0bc5344688c28eeed30b4642c1194f9c52bea9896a555
+  r74_gate_sha256: c0d4af7c112e7d52c3c9081d9f18619b3bdf245a612ed5f52c50cb71ba70339d
+  r74_summary_sha256: ebc796cb0eeec4550da54a045c1c6dbe3f9965293726f2e5d597ad19779fabb7
+  r74_package_manifest_sha256: e5a11c199a352a6bca4491d9bdf8ce93fab25b8d10eaf2973461df03c09e7fa6
+  r74_actor_bundle_sha256: 155468d9feffcbf906b5397ef2f7ed49d69c7757d42ceb0ab13e9334098bb5ae
+expected:
+  actor_model_index: 5
+  actor_id: actor_0005
+  chunk_id: streetgs_actor_0005
+  primitive_count: 8377
+  trajectory_rows: 196
+  lifecycle_sha256: 60c6140a59a49cf68d56a9911d7c883cbc2f6f9ec747aee8026860eb89d7846b
+  active_frame_count: 151
+  maximum_rigid_error_m: 0.0001
+  maximum_quaternion_norm_error: 0.00001
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_third_actor_logged_rigid_trajectory_compiler
+  - exact_rigid_application_of_196_logged_poses_to_8377_actor5_gaussians
+  - lifecycle_is_owned_and_active_for_151_of_196_frames
+  - invariant_gaussian_fields_remain_byte_exact
+  - actor5_sensor_semantic_identity_novel_dynamics_physical_planning_safety_and_confirmation_abstain
