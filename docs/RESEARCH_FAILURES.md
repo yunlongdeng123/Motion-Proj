@@ -3734,3 +3734,9 @@ H-R71-001 canonical run `20260821T205641Z__two-actor-sensor-s20260821-r1` 在 fr
 H-R82-001 第一次正式启动在创建 run directory、复制 package 或开始任何 bake 前，被冻结输入校验拒绝。R82 配置把 R70 `MANIFEST.json` 的实际 SHA256 `1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb5eb99f7795e6fe` 误抄为少一个 `5e` 字节组的 `1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb99f7795e6fe`；实际 artifact 与 R71 已使用的冻结 authority 均未变化。本次没有 run、gate、package 或方法结果。
 
 不得跳过 `_verify`、重新生成 R70 artifact、放宽 package denominator 或追认本次启动。H-R82-002 仅修正该 source digest，并保持 R70/R80/R81、三个 actor、45 payload、34,257 primitives、588 trajectory rows、双 bake exact、资源和 claim boundary 全部不变；必须在新 commit/push 后重试。
+
+### V6-F84：retry 配置的 hypothesis_id 必须与追加的预注册记录一致
+
+H-R82-002 run `20260821T215606Z__three-actor-package-s20260821-r1` 数值上通过全部 package gates：3个 actor、45个 payload、34,257 primitives、588 trajectory rows、195,658,443 bytes，三棵 actor package tree byte-exact且双 bake 完全一致。但 digest repair commit 只修正 source SHA256，遗漏把 YAML `hypothesis_id` 从已关闭的 `WS-V6-H-R82-001` 更新为 active 的 `WS-V6-H-R82-002`，因此 SUMMARY 错绑旧 hypothesis。该 run 不得作为 canonical acceptance。
+
+不得回写 run、把数值通过覆盖 provenance mismatch 或重新编号旧记录。H-R82-003 只把 YAML hypothesis binding 更新为 `WS-V6-H-R82-003`，保持已验证的 R70/R80/R81 hashes、bake bytes、所有 denominators、资源与 claim boundary 不变；新 commit/push 后重跑。
