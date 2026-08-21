@@ -1,0 +1,51 @@
+schema_version: worldsim_v6.r72_two_actor_incremental_perception.v1
+task_id: WS-V6-R72-TWO-ACTOR-INCREMENTAL-PERCEPTION-01
+hypothesis_id: WS-V6-H-R72-001
+seed: 20260821
+sources:
+  r71_run: runs://worldsim_v6/WS-V6-R71-TWO-ACTOR-SCENE-SENSOR-RUNTIME-01/20260821T210224Z__two-actor-sensor-s20260821-r1
+  r71_manifest_sha256: 02b20d0d17779a2e7ceaadff01b90df3647e1b3409ff670e38782e26e46c82be
+  r71_gate_sha256: 6a74165d8ffc2a919a4135305641a9baa4bae99cfade40dddac7263fe6e19ea7
+  r71_summary_sha256: 8ca82e4e46a7a75003cc2a4095d799a1d6e49591b420bd2937432f0d9fcd684f
+  r71_joint_sensor_effect_sha256: f9cc41046820c8d701f6fcde4b93ce37da63989c404cce7704ccbcb5f5d17775
+  r71_sensor: worker/sensors/frame057.npz
+  r71_sensor_sha256: 03933416a71f87d03559a5ba1d4f7bfce9e3b35003ac326c4159c1d08afc2b1b
+  r51_run: runs://worldsim_v6/WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01/20260821T184143Z__lifecycle-sensor-s20260821-r1
+  r51_manifest_sha256: 0973c764949a7c8e89a5601081e87eaa799c365434d0c39aa5c66ac0984e6b46
+  r51_gate_sha256: 6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7
+  r51_summary_sha256: aa0a12c8923a0e9827e513d9684952e83d912873757714b3053de0f2e5e6eef7
+  r51_sensor: worker/sensors/frame057.npz
+  r51_sensor_sha256: c01c2dfc4e9b2fcd1b8a3a6c61289663ab66ccf169a67e840421d36478a9719b
+  r36_run: runs://worldsim_v6/WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01/20260821T165828Z__sensor-equivalence-s20260821-r1
+  r36_manifest_sha256: 0f24d4e84f854f2fa3bea4a025e253cfaab8ffded02d63fe55ccff1ccacfedf3
+  r36_gate_sha256: e19b7fbc73d2180c3293630c2a89b68f4fe620e90471f4f3f889dc063cfd38ae
+  r36_summary_sha256: 53315c061d05d95ac10c15228c2b1d4fb05b65a05e1817521445f4555419c4dc
+  r36_sensor: worker/sensors/frame057.npz
+  r36_sensor_sha256: 2c42449bc9a13f928471caf431eb05981a49b58843288ddc856209d7f5a6b89e
+  r53_run: runs://worldsim_v6/WS-V6-R53-LIFECYCLE-PERCEPTION-REGRESSION-01/20260821T185745Z__lifecycle-perception-s20260821-r1
+  r53_manifest_sha256: 37ce3bb833ed88f29753e9491c492fe0ebde83f980daf02433448a54ad97dcff
+  r53_gate_sha256: f73f98fb07cdffc61967173f840f2bfe55ae8f403771f3a3e34a4543f32ca219
+  r53_summary_sha256: 5a330fc54e7bea65e43abeeb9e4df5e310daf78a2aff169d7754a62a8a70298c
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+evaluation:
+  frame_index: 57
+  variants: [logged, actor0_only, two_actor]
+  repeat_count: 2
+  rgb_change_epsilon: 0.000001
+  minimum_sensor_changed_pixels_per_increment: 256
+  minimum_changed_label_pixels_per_increment: 1
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 240
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_frozen_deeplab_incremental_perception_state_for_two_actor_scene_edit
+  - compares_logged_to_actor0_only_and_actor0_only_to_two_actor_at_the_same_frame57
+  - each_sensor_increment_and_each_label_increment_must_be_nonzero_under_frozen_thresholds
+  - output_is_deterministic_label_change_evidence_not_semantic_correctness_or_quality
+  - no_locality_causality_class_identity_physics_planning_safety_or_confirmation_claim
+  - all_three_sensor_artifacts_model_weights_and_authority_files_remain_immutable
+  - no_training_or_confirmation_read
