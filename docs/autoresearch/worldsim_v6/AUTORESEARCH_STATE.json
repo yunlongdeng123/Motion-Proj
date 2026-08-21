@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T20:45:33Z",
+  "updated_at_utc": "2026-08-21T20:50:47Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 111,
-  "active_task": "WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01",
-  "active_hypothesis": "WS-V6-H-R70-001",
-  "candidate": "content_addressed_two_actor_scene_edit_package",
+  "iteration": 112,
+  "active_task": "WS-V6-R71-TWO-ACTOR-SCENE-SENSOR-RUNTIME-01",
+  "active_hypothesis": "WS-V6-H-R71-001",
+  "candidate": "shared_native_compiled_sensor_runtime_from_two_actor_scene_package",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "5d3b071f7c64ab44c3e199b35fedea79331ec9be6d76f13a7a7806e0095248c8",
+  "dev_artifact_hash": "4ec7d074506347d44bbf83945a33cd11818c06d7d6d4ff17e31111cd6adea51d",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "7aaa95627c204d6e74808199a79ff3d1fb9be990a8b7f06ad1e68ebb570a5c1a",
-  "last_reflection_id": "WS-V6-REFL-0113",
+  "last_reflection_id": "WS-V6-REFL-0114",
   "last_completed": {
-    "task_id": "WS-V6-R69-TWO-ACTOR-JOINT-INTERACTION-01",
-    "run": "run://worldsim_v6/WS-V6-R69-TWO-ACTOR-JOINT-INTERACTION-01/20260821T204453Z__two-actor-joint-s20260821-r1",
-    "artifact_sha256": "5d3b071f7c64ab44c3e199b35fedea79331ec9be6d76f13a7a7806e0095248c8"
+    "task_id": "WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01",
+    "run": "run://worldsim_v6/WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T204940Z__two-actor-package-s20260821-r1",
+    "artifact_sha256": "4ec7d074506347d44bbf83945a33cd11818c06d7d6d4ff17e31111cd6adea51d"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -129,7 +129,8 @@
     "r67_transform_owned_second_actor_bake": "done_accepted_development_explicit_eight_arrays",
     "r68_transform_owned_second_actor_sensor_runtime": "done_accepted_development_bit_exact_r61",
     "r69_two_actor_joint_interaction": "done_accepted_development_zero_new_joint_overlap",
-    "r70_two_actor_scene_package_bake": "active_pre_registered",
+    "r70_two_actor_scene_package_bake": "done_accepted_development_repeat_exact",
+    "r71_two_actor_scene_sensor_runtime": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -138,9 +139,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "embed_both_accepted_actor_packages_under_distinct_actor_namespaces",
-    "bind_r69_joint_interaction_and_external_base_sceneir_identity",
-    "require_two_bakes_and_all_nested_actor_package_bytes_exact",
-    "preserve_per_actor_transform_lifecycle_ownership_and_typed_abstentions"
+    "load_r70_scene_package_once_and_apply_both_actor_transforms_at_frame98",
+    "compare_compiled_two_actor_field_replacement_to_native_shared_scene_edit",
+    "require_both_actor_effects_and_joint_nontrivial_change_vs_r57_logged_sensor",
+    "preserve_checkpoint_package_joint_conformance_and_abstentions"
   ]
 }

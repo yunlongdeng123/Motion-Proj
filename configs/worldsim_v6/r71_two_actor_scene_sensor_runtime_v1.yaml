@@ -1,0 +1,68 @@
+schema_version: worldsim_v6.r71_two_actor_scene_sensor_runtime.v1
+task_id: WS-V6-R71-TWO-ACTOR-SCENE-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R71-001
+seed: 20260821
+sources:
+  r70_run: runs://worldsim_v6/WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T204940Z__two-actor-package-s20260821-r1
+  r70_manifest_sha256: 1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb5eb99f7795e6fe
+  r70_gate_sha256: 4ec7d074506347d44bbf83945a33cd11818c06d7d6d4ff17e31111cd6adea51d
+  r70_summary_sha256: c75e9573acca0bb91158ef2387861234f8f9b28cbe7c1e3f505e3c0b9d1afb1e
+  r70_scene_package_manifest_sha256: 8287d39b6ed5e79d562d256b53c5d4c8efea645bd95b3c8752b2cac6fec2aa70
+  r70_scene_composition_sha256: 6b87b09efd94be2a8d4d3c22d3785877a2f91f81c3d05948827b9aebc3a8738a
+  r70_runtime_contract_sha256: 64c04fe15ed1554d296ff3a2b1bc75e02ad845acdfaa43a21cacf3a0d2ab905a
+  r70_validity_sha256: 8741d1f4569422e0eb932f63255466232995db05d8aff9f979b37f1ba889e9dd
+  r57_run: runs://worldsim_v6/WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01/20260821T191551Z__actor2-sensor-s20260821-r1
+  r57_manifest_sha256: 3a3d9174e6c95f4dc2651392c6f9c7921969bd0aca1ec41032a78faf700190aa
+  r57_gate_sha256: 294ff96906ce1a7d692755eb3b06554bd7ff6673a3a1bb1d4a0eda1da1388aa5
+  r57_summary_sha256: e0cd643182ec60b5ab0129b54c36141dddc0550e3a34282614a44751a36472d9
+  r57_frame98_sensor: worker/sensors/frame098.npz
+  r57_frame98_sensor_sha256: 70f1ffbee01e6d4de43325038b770b7574ddc24c290954ee518d5b0e1b2234c1
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  runtime_mode: multi_actor_transform_lifecycle_owned_scene_patch
+  frame_index: 98
+  actor_ids: [actor_0000, actor_0002]
+  actor_model_indices: [0, 2]
+  proposal_ids: [translate_world_x_m1p0_z_m0p5, actor2_translate_x_-1.0_z_+0.0]
+  translations_m:
+    actor_0000: [-1.0, 0.0, -0.5]
+    actor_0002: [-1.0, 0.0, 0.0]
+  expected_frame_validity:
+    actor_0000: true
+    actor_0002: true
+  expected_primitives:
+    actor_0000: 12390
+    actor_0002: 13490
+  required_translation_source: nested_package_transform_trajectory
+  required_lifecycle_source: nested_package_actor_frame_validity
+thresholds:
+  rgb_change_epsilon: 0.000001
+  minimum_joint_changed_rgb_pixels_vs_logged: 256
+  minimum_joint_actor_effect_pixels: 256
+  minimum_per_actor_effect_pixels: 32
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 240
+  maximum_wall_seconds: 270
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_shared_sensor_runtime_from_r70_two_actor_scene_edit_package
+  - native_authority_applies_both_actor_translations_in_one_checkpoint_state
+  - compiled_path_replaces_both_owned_actor_fields_then_renders_one_shared_scene
+  - both_nested_package_transforms_and_lifecycles_are_consumed_without_cli_edit_side_channels
+  - frame98_joint_edit_must_be_nontrivial_relative_to_frozen_logged_r57_sensor
+  - joint_aabb_conformance_is_preserved_but_semantic_collision_physics_dynamics_planning_safety_and_confirmation_abstain
+  - checkpoint_scene_package_and_frozen_authorities_remain_immutable
+  - no_training_or_confirmation_read
