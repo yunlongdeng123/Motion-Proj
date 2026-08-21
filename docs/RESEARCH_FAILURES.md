@@ -3551,3 +3551,9 @@ H-PT7-001 canonical run `20260821T143359Z__compositional-risk-confirmation-s2026
 H-PT8-001 canonical run `20260821T143902Z__closed-loop-utility-s20260821-r1` 在 360 个静止单 actor、五秒、jerk-limited 纵向 scenarios 上，将三个 frozen policy arms 作为相同三秒 preview controller 的碰撞信号。V6 collision rate `0.25`、safe completion `0.9375`、comfort `1.0`、balanced accuracy `0.84375`，未过冻结门，正式 `rejected`；Real-only 与 V6 完全相同，naive balanced accuracy `0.69554`。
 
 70 个 V6 collisions 按 6/8/10m/s 为 `3/22/45`，按 15/20/25/30/35m 初距为 `41/22/7/0/0`，并随 actor size 增大，说明原 denominator 把 t=0 已无法在同一 decel/jerk contract 下停车的场景也算成 policy false-safe。同时，Real-only equality 提醒后续必须审计它继承的 factor-label supervision；不得通过调 preview horizon 掩盖 baseline equality。H-PT8-002 只加入相同 dynamics 的 t=0 full-brake oracle，把 hazards 分为 avoidable/unavoidable，保留全部计数并只在 avoidable stratum 评价 policy collision；其余均不变。
+
+### V6-F53：真实 box factor supervision 已解释静止 AABB preview，不能人为削弱 Real-only 制造增益
+
+H-PT8-002 canonical run `20260821T144333Z__closed-loop-utility-s20260821-r1` 用同一 jerk/decel contract 的 t=0 full-brake oracle 将 280 个 uncontrolled hazards 分为 210 个 avoidable 与 70 个 unavoidable。V6 在 avoidable stratum collision `0`、safe completion `0.9375`、balanced accuracy `0.96875`，说明 H-PT8-001 的绝对 collision failure 来自可行性分母；但 Real-only 的三项指标完全相同，增量门仍失败，H-PT8-002 正式 `rejected`。
+
+Real-only factor heads 虽无最终 clean collision positives，但合法读取了 logged box 的 forward/lateral overlap factor labels，已经足以学习静止 AABB 边界。不得删除这些真实监督、重命名 baseline 或只比较更弱 naive 来制造 V6 closed-loop gain；该静止单 actor family 关闭。H-R14-001 转回 core compiler 的既有 H-C 缺口，测试邻帧 temporal evidence-conditioned proposal，不由 PT8 结果选择参数。

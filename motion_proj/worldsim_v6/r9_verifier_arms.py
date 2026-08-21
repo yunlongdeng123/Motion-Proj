@@ -14,6 +14,7 @@ from typing import Any, Mapping
 
 import numpy as np
 import yaml
+import cv2
 from PIL import Image
 
 from motion_proj.worldsim_v6.r7_oracle import (
@@ -27,6 +28,7 @@ from motion_proj.worldsim_v6.r8_generator import _asset_inventory, _resize_case
 
 
 TASK_ID = "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01"}
 
 
 class R9ExperimentError(RuntimeError):
@@ -148,7 +150,8 @@ def run_experiment(
         raise R9ExperimentError("正式 R9 run 禁止 dirty source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config.get("task_id") != TASK_ID:
+    task_id = str(config.get("task_id"))
+    if task_id not in ALLOWED_TASK_IDS:
         raise R9ExperimentError("R9 task_id 漂移")
     sources = config["sources"]
     r8_run = _resolve_runs_uri(sources["r8_run"])
@@ -163,6 +166,7 @@ def run_experiment(
         "big_lama",
         "sd15_inpainting",
         "cross_frontend_reconstruction",
+        "temporal_ecc_reconstruction",
     }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
     if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
@@ -190,7 +194,7 @@ def run_experiment(
         raise R9ExperimentError("R9 磁盘资源不足")
 
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / (
+    run_dir = run_root / task_id / (
         f"{now.strftime('%Y%m%dT%H%M%SZ')}__independent-arms-s{config['seed']}-r1"
     )
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -201,8 +205,8 @@ def run_experiment(
         verifier_output_dir = run_dir / "verifier_worker"
         generator_input_dir.mkdir()
         verifier_input_dir.mkdir()
-        cross_frontend_results: list[dict[str, Any]] = []
-        if selected_candidate == "cross_frontend_reconstruction":
+        reconstructed_results: list[dict[str, Any]] = []
+        if selected_candidate in {"cross_frontend_reconstruction", "temporal_ecc_reconstruction"}:
             proposal_dir.mkdir()
         r7_config = yaml.safe_load(
             (repo_root / "configs/worldsim_v6/r7_oracle_missing_world_v1.yaml").read_text(
@@ -316,6 +320,7 @@ def run_experiment(
                             hole_type=np.asarray(hole_type),
                         )
                         proposal_source_frontend = None
+                        proposal_source_frame = None
                         if selected_candidate == "cross_frontend_reconstruction":
                             proposal_source_frontend = (
                                 "ad_gs" if frontend == "streetgs" else "streetgs"
@@ -350,7 +355,7 @@ def run_experiment(
                             overlay[resized_mask] = alternate_rgb[resized_mask]
                             proposal_path = proposal_dir / f"{case_id}__repeat1.npy"
                             np.save(proposal_path, overlay, allow_pickle=False)
-                            cross_frontend_results.append(
+                            reconstructed_results.append(
                                 {
                                     "case_id": case_id,
                                     "source_frontend": proposal_source_frontend,
@@ -382,6 +387,94 @@ def run_experiment(
                                     "repeat_sha_exact": True,
                                 }
                             )
+                        elif selected_candidate == "temporal_ecc_reconstruction":
+                            proposal_source_frontend = frontend
+                            source_frame_map = {
+                                int(key): int(value)
+                                for key, value in config["proposal"]["source_frame_map"].items()
+                            }
+                            proposal_source_frame = source_frame_map[int(frame_index)]
+                            source_suffix = (
+                                "lat2m"
+                                if hole_type == "missing_side_view"
+                                else "actor_remove_all"
+                                if hole_type == "disocclusion"
+                                else "lat0m"
+                            )
+                            source_target = _required_render(
+                                render_root,
+                                scene,
+                                frontend,
+                                proposal_source_frame,
+                                source_suffix,
+                                render_map,
+                            )
+                            source_rgb = _resize_rgb(source_target["rgb"], size)
+                            template_gray = cv2.cvtColor(input_image, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
+                            source_gray = cv2.cvtColor(source_rgb, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
+                            warp = np.eye(3, dtype=np.float32)
+                            outside_mask = ((~resized_mask).astype(np.uint8) * 255)
+                            criteria = (
+                                cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,
+                                int(config["proposal"]["ecc_max_iterations"]),
+                                float(config["proposal"]["ecc_epsilon"]),
+                            )
+                            ecc_score, warp = cv2.findTransformECC(
+                                template_gray,
+                                source_gray,
+                                warp,
+                                cv2.MOTION_HOMOGRAPHY,
+                                criteria,
+                                outside_mask,
+                                int(config["proposal"]["ecc_gaussian_filter_size"]),
+                            )
+                            warped_rgb = cv2.warpPerspective(
+                                source_rgb,
+                                warp,
+                                size,
+                                flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP,
+                                borderMode=cv2.BORDER_REFLECT,
+                            )
+                            overlay = input_image.copy()
+                            overlay[resized_mask] = warped_rgb[resized_mask]
+                            proposal_path = proposal_dir / f"{case_id}__repeat1.npy"
+                            np.save(proposal_path, overlay, allow_pickle=False)
+                            reconstructed_results.append(
+                                {
+                                    "case_id": case_id,
+                                    "source_frontend": frontend,
+                                    "source_frame_index": proposal_source_frame,
+                                    "source_variant": source_suffix,
+                                    "alignment": "masked_outside_ecc_homography",
+                                    "ecc_score": float(ecc_score),
+                                    "warp_matrix": warp.tolist(),
+                                    "repeats": [
+                                        {
+                                            "repeat_index": 1,
+                                            "seed": config["seed"],
+                                            "latency_seconds": 0.0,
+                                            "finite": bool(np.isfinite(overlay).all()),
+                                            "masked_change": float(
+                                                np.mean(
+                                                    np.abs(
+                                                        overlay[resized_mask].astype(np.float32)
+                                                        - input_image[resized_mask].astype(np.float32)
+                                                    )
+                                                )
+                                                / 255.0
+                                            ),
+                                            "outside_mask_exact": bool(
+                                                np.array_equal(
+                                                    overlay[~resized_mask], input_image[~resized_mask]
+                                                )
+                                            ),
+                                            "output": proposal_path.name,
+                                            "output_sha256": _sha256(proposal_path),
+                                        }
+                                    ],
+                                    "repeat_sha_exact": True,
+                                }
+                            )
                         case_rows.append(
                             {
                                 "case_id": case_id,
@@ -392,6 +485,7 @@ def run_experiment(
                                 "mask_pixel_count": int(np.count_nonzero(resized_mask)),
                                 "semantic_evidence": semantic_evidence,
                                 "proposal_source_frontend": proposal_source_frontend,
+                                "proposal_source_frame": proposal_source_frame,
                                 "generator_input_sha256": _sha256(generator_path),
                                 "verifier_input_sha256": _sha256(verifier_path),
                             }
@@ -410,31 +504,31 @@ def run_experiment(
         python = Path("/root/autodl-tmp/envs/motionproj/bin/python")
         env = os.environ.copy()
         env["PYTHONPATH"] = str(repo_root)
-        if selected_candidate == "cross_frontend_reconstruction":
+        if selected_candidate in {"cross_frontend_reconstruction", "temporal_ecc_reconstruction"}:
             generator_result = {
-                "schema_version": "worldsim_v6.r9_cross_frontend_proposal.v1",
+                "schema_version": "worldsim_v6.r9_reconstructed_proposal.v1",
                 "candidate": selected_candidate,
-                "case_count": len(cross_frontend_results),
+                "case_count": len(reconstructed_results),
                 "repeat_count": 1,
                 "load_seconds": 0.0,
                 "peak_gpu_memory_mib": 0.0,
                 "median_latency_seconds": 0.0,
-                "all_repeats_successful": len(cross_frontend_results) == len(case_rows),
+                "all_repeats_successful": len(reconstructed_results) == len(case_rows),
                 "all_repeat_sha_exact": True,
                 "all_finite": True,
                 "all_nonzero_masked_change": all(
                     row["repeats"][0]["masked_change"] > 0.0
-                    for row in cross_frontend_results
+                    for row in reconstructed_results
                 ),
                 "all_outside_mask_exact": all(
                     row["repeats"][0]["outside_mask_exact"]
-                    for row in cross_frontend_results
+                    for row in reconstructed_results
                 ),
-                "cases": cross_frontend_results,
+                "cases": reconstructed_results,
             }
             _write_json(proposal_dir / "WORKER_RESULT.json", generator_result)
             (run_dir / "generator.log").write_text(
-                "cross_frontend_reconstruction: no learned generator executed\n",
+                f"{selected_candidate}: no learned generator executed\n",
                 encoding="utf-8",
             )
         else:
@@ -575,7 +669,8 @@ def run_experiment(
             if checks["passed"]
             else "reject_or_pivot_verifier_arms",
         }
-        _write_json(run_dir / "R9_GATE.json", gate)
+        gate_name = "R9_GATE.json" if task_id == TASK_ID else "R14_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         _write_json(
             run_dir / "RESOURCE_AUDIT.json",
             {
@@ -593,7 +688,7 @@ def run_experiment(
         )
         summary = {
             "schema_version": "worldsim_v6.r9_summary.v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "hypothesis_outcome": "accepted_development" if checks["passed"] else "rejected",
@@ -612,7 +707,7 @@ def run_experiment(
             "CASES.jsonl",
             "STRUCTURAL_ABSTAINS.jsonl",
             "ARM_SUMMARIES.jsonl",
-            "R9_GATE.json",
+            gate_name,
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",
             f"{selected_candidate}_proposals/WORKER_RESULT.json",
