@@ -1,0 +1,46 @@
+schema_version: worldsim_v6.r70_two_actor_scene_package_bake.v1
+task_id: WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01
+hypothesis_id: WS-V6-H-R70-001
+seed: 20260821
+sources:
+  r69_run: runs://worldsim_v6/WS-V6-R69-TWO-ACTOR-JOINT-INTERACTION-01/20260821T204453Z__two-actor-joint-s20260821-r1
+  r69_manifest_sha256: 812047d9b614839f10812a09381c24a3c8ad28c4dc999e66eb5ae0bb01a32756
+  r69_gate_sha256: 5d3b071f7c64ab44c3e199b35fedea79331ec9be6d76f13a7a7806e0095248c8
+  r69_summary_sha256: c2d967a43d10a2c82ca7cec4bd0983d4129c56929845e15aad8358b61f083add
+  r69_joint_interaction_decision_sha256: 7552c0e420a1d01649874388ea5eb9f7b5ea3db5901425940f7ea6797aed228e
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+  r50_run: runs://worldsim_v6/WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01/20260821T183317Z__lifecycle-bake-s20260821-r1
+  r50_manifest_sha256: db56890b79bcd6973ac8d9e4e57bb92231f9b9942b143fe3aa7240aef1187d2c
+  r50_gate_sha256: bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e
+  r50_package_manifest_sha256: c6bcd2022c74aaa040f797fb6f69718b5352c00eb94e4584141159e3462c9efe
+  r67_run: runs://worldsim_v6/WS-V6-R67-TRANSFORM-OWNED-SECOND-ACTOR-BAKE-01/20260821T202254Z__actor2-transform-bake-s20260821-r1
+  r67_manifest_sha256: 373f0f4b87d32ec4d6a74d4c51e49ab41d8fc2dbbfc85999f32a450db7b300cc
+  r67_gate_sha256: c4b465052a8cedb418fe2e0d19cabb0811e35902ad53ebc6b26520d853afda2e
+  r67_package_manifest_sha256: 13f62ae93ef8aa11bd04d157cdc6d9c5f61e288902464242d2b07d8758a7b303
+package_contract:
+  package_status: baked_development_two_actor_scene_edit
+  expected_actor_count: 2
+  expected_actor_ids: [actor_0000, actor_0002]
+  expected_actor_model_indices: [0, 2]
+  expected_proposal_ids: [translate_world_x_m1p0_z_m0p5, actor2_translate_x_-1.0_z_+0.0]
+  expected_translations_m:
+    actor_0000: [-1.0, 0.0, -0.5]
+    actor_0002: [-1.0, 0.0, 0.0]
+  expected_trajectory_rows_per_actor: 196
+  expected_combined_primitives: 25880
+  expected_source_files_per_actor_including_manifest: 14
+  expected_package_payload_files_excluding_scene_manifest: 31
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_content_addressed_two_actor_scene_edit_package
+  - embeds_both_actor_packages_byte_exact_under_distinct_actor_namespaces
+  - binds_r69_zero_new_joint_overlap_decision_and_external_base_sceneir_identity
+  - each_actor_retains_independent_float64_transform_and_native_lifecycle_ownership
+  - package_is_a_scene_edit_patch_and_does_not_duplicate_the_external_static_scene_or_checkpoint
+  - semantic_road_collision_physics_dynamics_response_planning_safety_and_confirmation_abstain
+  - repeat_bake_and_all_frozen_sources_remain_exact
+  - no_training_rendering_or_confirmation_read
