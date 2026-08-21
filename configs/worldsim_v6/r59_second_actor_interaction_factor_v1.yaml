@@ -1,0 +1,37 @@
+schema_version: worldsim_v6.r59_second_actor_interaction_factor.v1
+task_id: WS-V6-R59-SECOND-ACTOR-INTERACTION-FACTOR-01
+hypothesis_id: WS-V6-H-R59-001
+seed: 20260821
+sources:
+  r58_run: runs://worldsim_v6/WS-V6-R58-SECOND-ACTOR-TRANSLATION-SENSOR-01/20260821T192058Z__actor2-translation-s20260821-r1
+  r58_manifest_sha256: 81925d95a587afe572b69f682a3f6fd427262b2e63a8d188e4f721d363bc8201
+  r58_gate_sha256: f4976d19c9ea22b58d0c864db50736f6ddd1fb1cfa6a653aa07cff51cbf59da8
+  r58_summary_sha256: 72244a085ac4c68fb71677b409e82c539022ad53b203f95067033860cea0fa5e
+  r58_intervention_sha256: 4e8127a784cf687642ec1026bb5fcab7b118aa07f82d9b097c9c45758ed9992f
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+cohort:
+  actor_id: actor_0002
+  actor_model_index: 2
+  expected_actor_count: 27
+  expected_trajectory_rows: 196
+  timestamp_step_seconds: 0.1
+intervention:
+  id: actor2_translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_second_actor_full_trajectory_interaction_factor
+  - exact_constant_translation_self_kinematics_and_27_actor_sceneir_aabb_interaction
+  - accepts_only_if_no_new_aabb_overlap_events_versus_logged
+  - collision_is_deterministic_aabb_conformance_not_physics_truth
+  - contact_road_semantic_identity_dynamics_physical_planning_safety_and_confirmation_abstain
