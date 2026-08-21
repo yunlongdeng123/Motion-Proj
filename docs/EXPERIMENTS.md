@@ -9,8 +9,10 @@
   tracked/staged patch SHA 均为 empty-file SHA `e3b0c442...b855`。
 - 首次 direct `git fetch --all --prune --tags` 因远端 HTTPS 无进展被安全中止；为当前 AutoDL 主机建立独立代理后，
   同一命令成功。分类=`engineering recovery`，没有 run/quality/candidate，`failure_ledger_delta=none`。
-- `WS-V6-G1-DOCS-CLOSEOUT-01=running`：在 `research/worldsim-v5.1-m1` 登记 V5.2 terminal/V6 active、唯一
-  failure-ledger route-transition 条目与本计划，并在自审后普通 push；不得改写 V5.2 frozen plan bytes。
+- `WS-V6-G1-DOCS-CLOSEOUT-01=done`：canonical commit/tree=
+  `9bdabb3e249ce5a048a5a9b7b0ba8dc4774b3bb2 / c0af558fe4acfc524e84a67c9a540b7772cc1705`；在
+  `research/worldsim-v5.1-m1` 登记 V5.2 terminal/V6 active、`V6-F01` 与本计划。JSON/link/failure-ID/三账本
+  consistency、frozen V5.2 plan SHA regression 全 PASS，V5.2 frozen plan bytes 未改变，定向回归=`31 passed`。
 - `WS-V6-G2-BRANCH-CONVERGENCE-01=pending`：从最新 origin/main 创建 integration branch，动态枚举所有 remote 与
   具有独立提交的 local project refs，逐分支记录 include/exclude 原因，合并后执行 CPU/contract/integrity gate。
 - `WS-V6-G3-BRANCH-BOOTSTRAP-01=pending`：仅在 G2 gate 通过且 main 已 push 后创建并 push fresh V6 branch。

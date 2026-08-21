@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6 路线重置已启动；G0 完成，G1 执行中（2026-08-21）
+## WorldSim V6 路线重置已启动；G0/G1 完成，G2 待执行（2026-08-21）
 
 - route=`WorldSim V6 / Verifiable World Compiler`，status=`active`。V5.1 已关闭；V5.2.1 的 badcase census 与人工归因已完成；
   V5.2 TrackBayes continuation=`superseded_by_v6_direction_reset`。Stage H 从未执行，M1/M2/M3 只保留为历史证据与
@@ -10,11 +10,13 @@
   recovery ref=`refs/codex-recovery/pre-v6-20260821T071256Z`；唯一未跟踪文件为本 V6 plan，已按 bytes/SHA-256 保存，
   tracked/staged diff 均为空。证据见 `docs/autoresearch/worldsim_v6/governance/REPO_PREFLIGHT.json` 与
   `PRE_V6_WORKTREE_RECOVERY.json`。
-- 当前任务=`WS-V6-G1-DOCS-CLOSEOUT-01`，status=`running`；G2 branch convergence 与 G3 fresh V6 branch 均为
-  `pending`。在 G0–G3 完成前不启动任何 V6 GPU 实验，也不读取新的方法质量结果。
+- `WS-V6-G1-DOCS-CLOSEOUT-01=done`：canonical docs commit=
+  `9bdabb3e249ce5a048a5a9b7b0ba8dc4774b3bb2`，tree=`c0af558fe4acfc524e84a67c9a540b7772cc1705`；
+  JSON/link/failure-ID/三账本一致性与 V5.2 frozen-plan hash regression 均通过，定向回归=`31 passed`。G2 branch
+  convergence 与 G3 fresh V6 branch 均为 `pending`；在 G0–G3 完成前不启动任何 V6 GPU 实验。
 - 当前能力快照=`RTX 3090 24,576 MiB / used 1 MiB / disk free 75 GiB`，无 V6 GPU worker。首次直连 GitHub fetch
   无进展后已中止，使用当前主机独立代理隧道重试成功；该工程恢复没有算法或质量结论。
-- 下一步严格执行 G1 文档收口并 push `research/worldsim-v5.1-m1`，随后 G2 把所有项目分支收敛到 main、通过
+- 当前唯一下一步是普通 push `research/worldsim-v5.1-m1`，随后执行 G2：把所有项目分支收敛到 main、通过
   integration gate，再由 G3 创建并 push 全新 V6 分支。正式计划=
   [`WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md`](WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md)。
 
