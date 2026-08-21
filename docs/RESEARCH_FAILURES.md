@@ -3710,3 +3710,9 @@ H-R63-001 canonical run `20260821T195625Z__temporal-lidar-contact-s20260821-r1` 
 H-R64-001 canonical run `20260821T200653Z__raw-lidar-contact-s20260821-r1` 从21帧360度 LiDAR 获得 `729,568` 点，按全部标注 box 排除 `95,432` 个动态点并形成 `73,010` 个静态5cm voxels；source、变换、动态过滤与资源门均通过。但 actor2 logged 中心查询虽有37点，Gaussian y-5% anchor 与 ground proxy 相差 `2.415m`；selected 只有18点且误差 `0.934m`，两者正式 `REJECT`。审计发现 model actor2 唯一对应 processed instance7 `vehicle.truck`，其 local +z 映射到 world -y，所以 Gaussian y-5% 是上表面而非接触底面；同时12.153m长的 truck 在 box-filter 后中心区域本就形成观测空洞。
 
 不得继续把 R40 针对 actor0 偶然通过的中心/低分位定义当作跨 actor ground owner，也不得降低32点门。H-R65-001 显式绑定最近且有大间隔的 instance7 box，使用标注 local -z 底面拥有 contact anchor，并在 oriented footprint 外固定1m边界环查询 raw static voxels；环内用 median world-y 抑制不同高度表面，要求每个 intervention 至少64点、误差仍不超过0.35m。box只拥有几何位置，不提供 ground 高度；logged 与 selected 均须独立通过。
+
+### V6-F80：actor package schema 分母必须把独立 lifecycle 计入 base arrays
+
+H-R67-001 canonical run `20260821T202013Z__actor2-transform-bake-s20260821-r1` 成功产生 transform-owned package：float64 composition error 为0、双 bake byte-exact、196 transforms、13,490 primitives、四因子与 abstention 均正确，且所有源数组 hash 实际逐项相等。唯一失败是预注册把“7个 Gaussian/trajectory arrays”误写成 package 的完整 base array count=7；R56 还拥有独立 `actor_frame_validity`，实际键为8个，因此 `all_seven_base_arrays_byte_exact` 按合同正式失败。
+
+不得删除 lifecycle、追认 H-R67-001、忽略数量门或改变任何 package bytes。H-R67-002 保持相同 R66/R56、proposal、transform、composition、repeat、资源与 claim boundary，只把 schema 分母明确为8，并同时要求8个 hash 全等且 `actor_frame_validity` 必须存在；新 commit/push 后重跑，首 run 保持 rejected authority。
