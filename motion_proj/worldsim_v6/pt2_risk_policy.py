@@ -157,34 +157,39 @@ def _scene_rows(
              "abs_lateral_m": round(clean_lateral, decimals),
              "hazard_label": clean_label, "label_source": "logged_actor_geometry"}
         )
+        lateral_offsets = geom.get("synthetic_clone_lateral_offsets_m", [0.0])
         for offset in geom["synthetic_clone_forward_offsets_m"]:
+            for lateral_offset in lateral_offsets:
             # clone 与 ego 同航向，位于冻结纵向 offset；feature 同时保留其他真实 actor 的最危险值。
-            clone_local = np.eye(4, dtype=float)
-            clone_local[0, 3] = float(offset)
-            clone_world = poses[frame] @ clone_local
-            clone_clearance, clone_forward, clone_lateral = _actor_geometry(
-                poses[frame], clone_world, actor_size, ego_half
-            )
-            if clone_clearance <= clean:
-                edited_clearance, edited_forward, edited_lateral = (
-                    clone_clearance,
-                    clone_forward,
-                    clone_lateral,
+                clone_local = np.eye(4, dtype=float)
+                clone_local[0, 3] = float(offset)
+                clone_local[1, 3] = float(lateral_offset)
+                clone_world = poses[frame] @ clone_local
+                clone_clearance, clone_forward, clone_lateral = _actor_geometry(
+                    poses[frame], clone_world, actor_size, ego_half
                 )
-            else:
-                edited_clearance, edited_forward, edited_lateral = (
-                    clean,
-                    clean_forward,
-                    clean_lateral,
+                if clone_clearance <= clean:
+                    edited_clearance, edited_forward, edited_lateral = (
+                        clone_clearance,
+                        clone_forward,
+                        clone_lateral,
+                    )
+                else:
+                    edited_clearance, edited_forward, edited_lateral = (
+                        clean,
+                        clean_forward,
+                        clean_lateral,
+                    )
+                synthetic_rows.append(
+                    {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
+                     "clone_forward_offset_m": float(offset),
+                     "clone_lateral_offset_m": float(lateral_offset),
+                     "signed_clearance_m": edited_clearance,
+                     "abs_forward_m": round(edited_forward, decimals),
+                     "abs_lateral_m": round(edited_lateral, decimals),
+                     "hazard_label": int(edited_clearance <= 0.0), "stale_naive_label": clean_label,
+                     "label_source": "recomputed_projected_aabb_dependency"}
                 )
-            synthetic_rows.append(
-                {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
-                 "clone_forward_offset_m": float(offset), "signed_clearance_m": edited_clearance,
-                 "abs_forward_m": round(edited_forward, decimals),
-                 "abs_lateral_m": round(edited_lateral, decimals),
-                 "hazard_label": int(edited_clearance <= 0.0), "stale_naive_label": clean_label,
-                 "label_source": "recomputed_projected_aabb_dependency"}
-            )
     return real_rows, synthetic_rows
 
 

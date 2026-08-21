@@ -1,0 +1,51 @@
+schema_version: worldsim_v6.pt3_risk_policy_robustness.v1
+task_id: WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01
+hypothesis_id: WS-V6-H-PT3-001
+seed: 20260821
+policy_source:
+  run: runs://worldsim_v6/WS-V6-PT2-RISK-POLICY-01/20260821T133949Z__risk-policy-s20260821-r1
+  gate_sha256: 34dc42e269bfacea84ec68bd6715147f71fc7929148f5e4397897e4ecfa46c67
+  manifest_sha256: bf6e21175703659e1a072894ce198bce4ca66bbf6b804f8c6fcd5b5a8ea115f3
+  policy_arms_sha256: 570d510fea8f37fdbaa2e9ff32543b15c53edbe2bc0320498c07823b9c192b64
+heldout_dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+heldout_scene:
+  scene: scene-0048
+  scene_index: 45
+  instances_sha256: 68400502435873f90235197f39d5536da7919be81db63aa593045e37bed626a3
+  lidar_pose_set_sha256: 15ec9f91f54cb2e2ea737b6d8a43b0c899c74a3683706832c49343f208aaed0e
+partition:
+  expected_frame_count_per_scene: 196
+  sample_stride: 4
+  sample_start: 0
+geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  default_actor_length_m: 4.5
+  default_actor_width_m: 2.0
+  synthetic_clone_forward_offsets_m: [1.5, 4.5, 7.5]
+  synthetic_clone_lateral_offsets_m: [0.75, 1.5, 2.5]
+  collision_rule: ego_frame_projected_aabb_signed_clearance_le_zero
+training:
+  feature_canonicalization_decimals: 9
+gate:
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_false_safe_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_false_safe_reduction_vs_real_only_at_least: 0.50
+  require_false_safe_reduction_vs_naive_at_least: 0.50
+  require_repeat_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 60
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  policy_retraining: ABSTAIN_FROZEN_POLICY_EVALUATION_ONLY
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+  confirmation_generalization: ABSTAIN_CONFIRMATION_LOCKED
+claim_boundary:
+  - frozen_pt2_policy_intervention_shift_robustness
+  - new_scene0048_and_unseen_forward_lateral_clone_grid
+  - no_retraining_threshold_change_or_confirmation_read
+  - no_physical_collision_full_planner_or_closed_loop_claim
