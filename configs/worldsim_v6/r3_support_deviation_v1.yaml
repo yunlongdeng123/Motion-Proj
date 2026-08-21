@@ -1,0 +1,79 @@
+schema_version: worldsim_v6.r3_support_deviation_profile.v1
+task_id: WS-V6-R3-SUPPORT-DEVIATION-01
+hypothesis_id: WS-V6-H-R3-001
+seed: 20260821
+profile_scope: benchmark_profile_not_universal_method_config
+sources:
+  baseline_matrix: repo://configs/worldsim_v4/baseline_matrix_v1.yaml
+  streetgs_frontend: third_party://streetgs
+  adgs_frontend: third_party://ad_gs
+  streetgs_python: env://drivestudio
+  adgs_python: env://ad_gs
+  processed_data_from_frozen_v4_resolved_config: true
+cohort:
+  partition: development
+  confirmation_locked: true
+  scenes:
+    - scene: scene-0242
+      source_frame_indices: [52, 57]
+    - scene: scene-0048
+      source_frame_indices: [52, 57]
+  target_camera_id: 0
+  source_camera_ids: [0, 1, 2]
+  frontends: [streetgs, ad_gs]
+camera_deviation_profile:
+  axis: camera_local_x
+  lateral_offsets_m: [0.0, 0.5, 1.0, 2.0, 3.0, 5.0]
+  forward_extension_m: 2.0
+  route_turn:
+    enabled: false
+    reason: no_frozen_map_geometry_branch_certificate_in_r3_v1
+actor_edit_profile:
+  evaluated_at_lateral_offset_m: 0.0
+  operations:
+    - actor_remove_all
+    - actor_translate_all_local_x_1m
+    - actor_trajectory_time_shift_plus_2_frames
+support_signal:
+  kind: analytic_no_learned_parameters
+  components:
+    nearest_training_camera_position_scale_m: 2.0
+    nearest_training_camera_angle_scale_deg: 15.0
+    projected_lidar_support_normalized_to_logged: true
+  weights:
+    camera_position: 0.4
+    camera_angle: 0.2
+    observed_projection: 0.4
+metrics:
+  rgb_range: [0.0, 1.0]
+  actor_opacity_threshold: 0.1
+  boundary_radius_px: 3
+  minimum_global_projected_lidar_pixels: 256
+  minimum_actor_projected_lidar_pixels: 16
+  report:
+    - global_rgb_disagreement
+    - static_rgb_disagreement
+    - actor_rgb_disagreement
+    - actor_boundary_rgb_disagreement
+    - lidar_relative_depth_error
+    - temporal_change_error
+    - projected_observation_rgb_error
+ranking_gate:
+  predictor_direction: lower_support_means_higher_error
+  minimum_scene_count: 2
+  minimum_frontend_count: 2
+  minimum_support_spearman: 0.30
+  minimum_gain_over_distance_spearman: 0.05
+  minimum_distance_residual_spearman: 0.10
+  reject_learned_support_if_distance_gain_below: 0.05
+resources:
+  gpu: single_rtx_3090_24gb
+  max_concurrent_heavy_processes: 1
+  maximum_peak_gpu_memory_mib: 24000
+  minimum_disk_free_gib: 25
+  stop_cgroup_ratio: 0.90
+claim_boundary:
+  - two_scene_two_frontend_development_benchmark
+  - novel_views_use_sparse_observation_and_cross_frontend_consistency_not_dense_ground_truth
+  - no_confirmation_read
+  - no_training
