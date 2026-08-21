@@ -53,7 +53,8 @@ def _load_rgb(path: Path) -> np.ndarray:
     if image.ndim == 3 and image.shape[0] == 3:
         image = np.transpose(image, (1, 2, 0))
     image = image.astype(np.float32)
-    if float(np.nanmax(image)) <= 1.0 + 1.0e-6:
+    # renderer 浮点输出允许轻微超出 1；只有明显 0--255 输入才不做放大。
+    if float(np.nanmax(image)) <= 2.0:
         image = image * 255.0
     return np.rint(np.clip(image, 0.0, 255.0)).astype(np.uint8)
 

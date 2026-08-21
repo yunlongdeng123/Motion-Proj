@@ -3401,6 +3401,18 @@ H-R13-005 首个正式 run `20260821T122830Z__dynamic-edits-s20260821-r1` 的三
 四方法臂、actor/时间戳分母、碰撞计算、false-safe、资源合同或任何阈值。repeat 序号继续保留在各自运行记录内，但不得被当作
 compiled-world 内容漂移。
 
+### V6-F36：浮点 renderer RGB 归一化必须容忍轻微大于 1 的辐射 overshoot
+
+H-R13-006 首个正式 run `20260821T123716Z__actor-sensor-perception-s20260821-r1` 完成 16 次 DeepLab
+推理且精确复跑，但 AD-GS 两个 case 的 target RGB effect 被错误压到约 `0.00035`，继而使感知变化近零。StreetGS 两例保持
+约 `0.09` target effect。根因是 AD-GS 的归一化浮点 RGB 存在轻微 `>1` overshoot，初版主 runner 把它误判为 0--255
+后再除 255；worker 同样没有把它放大到 uint8 动态范围。该 run 的 AD-GS 指标无效，不能作为方法 rejection。
+
+修复把浮点 renderer 合同明确为最大值 `<=2.0` 时仍按归一化辐射值处理：主 runner 直接 clip 到 `[0,1]`，perception
+worker 乘 255 后 round/clip 为 uint8；只有明显大于 2 的数组才按 0--255 输入。冻结 render 字节、模型、case、mask、
+阈值、repeat、资源和 gate 全部不变。以后不同 frontend 的 RGB 必须由显式 range contract 归一化，禁止用严格 `max<=1`
+启发式区分编码。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

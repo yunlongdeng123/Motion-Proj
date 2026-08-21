@@ -72,7 +72,8 @@ def _rgb(path: Path) -> np.ndarray:
     if value.ndim == 3 and value.shape[0] == 3:
         value = np.transpose(value, (1, 2, 0))
     value = value.astype(np.float32)
-    if float(np.nanmax(value)) > 1.0 + 1.0e-6:
+    # AD-GS 浮点 RGB 可轻微 overshoot，2.0 以下仍按归一化辐射值处理。
+    if float(np.nanmax(value)) > 2.0:
         value /= 255.0
     return np.clip(value, 0.0, 1.0)
 
