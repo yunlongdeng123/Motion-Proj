@@ -3356,6 +3356,17 @@ H-R13-001 按预注册门槛正式 `rejected`，不得通过放宽 256-pixel、0
 H-R13-002 只替换深度来源：使用同帧冻结 logged LiDAR metric depth，并限定最近填充距离不超过 8 个
 512×288 像素；世界提升、四方法、12 个偏离、评估阈值、false-safe gate 和资源合同全部保持不变。
 
+### V6-F32：无可见性约束的关键帧点云 union 会放大遮挡错误而非扩展路线
+
+H-R13-003 canonical rejected run `20260821T121112Z__worldspace-fusion-s20260821-r1` 将两个 metric world chunk
+按冻结 5cm voxel 做无目标视角过滤的 union。57,997 个输入点因近表面重复被折叠为 5,868 点，没有形成预期 densification；
+共同 lateral route 从 `3.0m` 退化到 `2.0m`，5m mean geometry MRE 从 `9.0572` 升至 `10.6579`，
+相对变化为 `-17.67%`，两帧 5m 继续失败。因此假设正式 `rejected`，不是工程或资源 blocked。
+
+不得靠扫描更小 voxel 或放宽 photo/geometry 门槛复活该 union。H-R13-004 转向不同机制：保持 H-R13-002 的
+逐帧 world points 和 RGB，不做 union/densification；只用同一冻结 support 中三相机 logged LiDAR 投影到目标视角，
+在 4 像素邻域和 0.30 相对深度差内保留可见点。StreetGS truth proxy 只用于最终评估，不进入过滤。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

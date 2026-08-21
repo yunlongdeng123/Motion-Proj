@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T12:19:00Z",
+  "updated_at_utc": "2026-08-21T12:26:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 16,
+  "iteration": 17,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-003",
-  "candidate": "two_keyframe_world_voxel_union",
+  "active_hypothesis": "WS-V6-H-R13-004",
+  "candidate": "target_view_logged_lidar_visibility",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "845d9658cdde761450dd074b479ff3cae1e955c0af4e59fcae0bc938af8ef95f",
+  "dev_artifact_hash": "8da719c06b0fe71735a3826cb23c63e8fdc1ba84e8346515a79898bd956c9fc",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "853baff94da8797551cc5b5631e98d42724e3ef47bce709886efa1ba279b8412",
-  "last_reflection_id": "WS-V6-REFL-0018",
+  "failure_ledger_sha256": "2f7809c730d87394c05fe68b01ef83ae99af9a1771de18433d1ff1c2db7e6245",
+  "last_reflection_id": "WS-V6-REFL-0019",
   "last_completed": {
     "task_id": "WS-V6-R13-WORLDSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T120637Z__worldspace-route-s20260821-r1",
-    "artifact_sha256": "845d9658cdde761450dd074b479ff3cae1e955c0af4e59fcae0bc938af8ef95f"
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T121112Z__worldspace-fusion-s20260821-r1",
+    "artifact_sha256": "8da719c06b0fe71735a3826cb23c63e8fdc1ba84e8346515a79898bd956c9fc"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -42,6 +42,7 @@
     "r12_real_dynamic_logsim": "done_accepted_development_real_scene_scope",
     "r13_relative_depth_point_lift": "done_hypothesis_rejected_zero_offroute_coverage",
     "r13_logged_lidar_point_lift": "done_accepted_development_3m_lateral_2m_forward",
+    "r13_temporal_voxel_union": "done_hypothesis_rejected_route_regression",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -50,8 +51,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "fuse_two_metric_world_chunks_with_deterministic_5cm_voxel_union",
-    "rerun_same_route_metrics_without_target_view_filtering",
-    "test_5m_extension_and_3m_non_regression_with_unchanged_thresholds"
+    "project_frozen_three_camera_logged_lidar_into_each_target_view",
+    "filter_base_world_points_with_frozen_4px_and_0.30_depth_contract",
+    "test_5m_extension_and_3m_non_regression_with_unchanged_quality_thresholds"
   ]
 }
