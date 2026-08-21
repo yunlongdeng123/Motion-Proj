@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:02:00Z",
+  "updated_at_utc": "2026-08-21T13:11:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 23,
+  "iteration": 24,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-010",
-  "candidate": "same_scene_sceneir_sensor_actor_binding",
+  "active_hypothesis": "WS-V6-H-R13-011",
+  "candidate": "converter_denominator_sceneir_sensor_actor_binding",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555",
+  "dev_artifact_hash": "42cc76d62788ccaf06a6afc29187e8ceb09253d6df3b41fe7fb920762b0d7f72",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "9db63f597b6f4d49eeea9b378b9d6675eaae963c1bf474d3367f4deddb1763a0",
-  "last_reflection_id": "WS-V6-REFL-0025",
+  "failure_ledger_sha256": "342dc3792abeb333218efb194b0c8bf8f0daa059deae9d784f43bf7cdb35ace8",
+  "last_reflection_id": "WS-V6-REFL-0026",
   "last_completed": {
     "task_id": "WS-V6-R13-WORLDSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125905Z__actor-cohort-perception-s20260821-r1",
-    "artifact_sha256": "608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555"
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T130810Z__sceneir-sensor-binding-s20260821-r1",
+    "artifact_sha256": "42cc76d62788ccaf06a6afc29187e8ceb09253d6df3b41fe7fb920762b0d7f72"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -50,6 +50,7 @@
     "r13_remove_all_factorized_roi": "done_hypothesis_rejected_no_static_control",
     "r13_maximum_size_single_actor_perception": "done_hypothesis_rejected_perception_insensitive",
     "r13_complete_actor_cohort_perception": "done_accepted_development_sparse_coverage_1_of_12",
+    "r13_sceneir_sensor_binding_h010": "done_hypothesis_rejected_total_denominator_bookkeeping",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -58,8 +59,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "convert_scene0242_checkpoint_to_sceneir_with_actor_index_mapping",
-    "remove_actor_0000_and_fresh_replay_base_and_edited_packages_twice",
-    "bind_typed_dependency_closure_to_h_r13_009_sensor_perception_accept"
+    "rerun_same_scene_binding_with_converter_derived_total_denominators",
+    "close_same_scene_typed_actor_sensor_perception_chain_if_all_gates_pass",
+    "freeze_r13_bounded_claims_and_transition_to_next_unresolved_v6_axis"
   ]
 }

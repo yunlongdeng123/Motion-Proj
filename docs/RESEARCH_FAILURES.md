@@ -3473,3 +3473,9 @@ MAE 为 `0.0210/0.0286`，outside RGB MAE 仅约 `1e-6`；但 target DeepLab lab
 - [ ] 新路线是否只选择一个 primary hypothesis，并说明它具体解除 `V3-F18`–`V3-F25` 中哪一项？
 - [ ] 是否在任何训练、推理或新结果读取前冻结 matched baseline、主端点、资源门、停止条件和确认场景？
 - [ ] 是否避免把更小剪枝 fraction、提高旧资源 ceiling、全量读取 chunk 或继续调 R1 配方伪装成新研究？
+
+### V6-F40：可见 actor cohort 分母不得替代 SceneIR 全量 actor 分母
+
+H-R13-010 canonical run `20260821T130810Z__sceneir-sensor-binding-s20260821-r1` 正确完成同一 scene-0242 checkpoint 的 SceneIR 编译、model index `0` 到 `actor_0000` / `streetgs_actor_0000` / `12,390` primitives 的绑定、actor remove、两次 fresh replay，以及未受影响 actor state、trajectory、semantic label 和 collision pair 的精确保持；继承的 H-R13-009 V6 false-safe 仍为 `0`。但是 preregistration 把 H-R13-009 中“两帧均可见”的 `12` 个 actor cohort 错当成 checkpoint 转换后的 SceneIR 全量 actor 数，实际冻结 converter 输出为 `27` 个 actor；因此预注册的 `15→14`、`2940→2744`、`20580→17836` 与实际 `27→26`、`5292→5096`、`68796→63700` 不符，typed dependency-closure gate 按约定拒绝。
+
+该 run 保持 `rejected`，不能用其余检查通过来覆盖错误分母。恢复假设 H-R13-011 只把全量分母来源改为编辑前冻结 checkpoint 的 deterministic SceneIR converter 输出，并预注册上述实际总量；不修改 checkpoint、actor mapping、edit、replay、quality threshold、继承 verdict、资源合同或 unsupported claim。以后必须把 visibility/evaluation cohort 与 compiled-world total denominator 分别命名和冻结。

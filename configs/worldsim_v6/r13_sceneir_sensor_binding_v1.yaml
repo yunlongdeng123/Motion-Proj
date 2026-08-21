@@ -1,0 +1,61 @@
+schema_version: worldsim_v6.r13_sceneir_sensor_binding.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-011
+seed: 20260821
+sources:
+  actor_cohort_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125905Z__actor-cohort-perception-s20260821-r1
+  actor_cohort_manifest_sha256: e9711125300af16b564fa8130240e129f7225e6464079ac7bdae7f17b78afd3c
+  actor_cohort_gate_sha256: 608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555
+  actor_verdicts_sha256: d613116784408daa1f6741d89e4d2efe08ece073e7306312283ed30b59d3657e
+  typed_dynamic_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1
+  typed_dynamic_gate_sha256: ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_reconstructor_version: e59bda4fa681f829dbb1d65f0de582b0f633c450
+cohort:
+  partition: development_same_scene_binding
+  confirmation_locked: true
+  scene: scene-0242
+  denominator_source: frozen_checkpoint_sceneir_converter_output_before_edit
+  expected_base_actor_count: 27
+  expected_edited_actor_count: 26
+  expected_timestamp_count: 196
+  expected_base_trajectory_rows: 5292
+  expected_edited_trajectory_rows: 5096
+  expected_base_collision_rows: 68796
+  expected_edited_collision_rows: 63700
+  replay_count: 2
+binding:
+  accepted_frontend_model_index: 0
+  expected_sceneir_actor_id: actor_0000
+  expected_sceneir_chunk_id: streetgs_actor_0000
+  expected_actor_primitive_count: 12390
+  mapping_rule: actor_id_equals_zero_padded_checkpoint_points_ids_model_index
+edit:
+  id: remove_actor_0000
+  type: actor_remove
+gate:
+  require_actor_identity_and_primitive_count_binding: true
+  require_same_scene_checkpoint: true
+  require_actor_cohort_accept: true
+  require_typed_sceneir_removal_dependency_closure: true
+  require_unaffected_state_and_collision_exact: true
+  require_fresh_replay_exact: true
+  require_package_and_source_immutable: true
+  require_inherited_v6_false_safe_rate_zero: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+unsupported_metrics:
+  ad_gs_same_actor_binding: ABSTAIN_NO_PERSISTENT_PER_ACTOR_ID
+  semantic_correctness_ground_truth: ABSTAIN_INHERITED_PERCEPTION_LOCALITY_ONLY
+  planning_completion: ABSTAIN_NO_PLANNER
+  physical_collision_ground_truth: ABSTAIN_AABB_CONFORMANCE_ONLY
+claim_boundary:
+  - development_same_scene_sceneir_to_streetgs_model_index_binding
+  - accepted_actor_0000_only_not_all_actor_generalization
+  - actor_remove_dependency_closure_plus_existing_sensor_perception_evidence
+  - collision_is_aabb_conformance_not_physics_truth
+  - no_ad_gs_semantic_accuracy_planner_closed_loop_or_safety_claim
+  - no_training_or_confirmation_read
