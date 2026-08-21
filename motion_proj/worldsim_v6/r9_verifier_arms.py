@@ -32,6 +32,7 @@ ALLOWED_TASK_IDS = {
     TASK_ID,
     "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01",
     "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01",
+    "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
 }
 
 
@@ -89,6 +90,43 @@ def _resize_plane(
         Image.fromarray(plane.astype(np.float32), mode="F").resize(size, resampling),
         dtype=np.float32,
     )
+
+
+def _actor_mask_moment_affine(
+    source_mask: np.ndarray, target_mask: np.ndarray
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """仅用 source/target edit mask 的二阶矩冻结 actor 对齐。"""
+    source_yx = np.argwhere(source_mask)
+    target_yx = np.argwhere(target_mask)
+    if source_yx.shape[0] < 16 or target_yx.shape[0] < 16:
+        raise R9ExperimentError("actor mask registration evidence 不足")
+    source_center = source_yx.mean(axis=0)
+    target_center = target_yx.mean(axis=0)
+    source_std = np.maximum(source_yx.std(axis=0), 1.0)
+    target_std = np.maximum(target_yx.std(axis=0), 1.0)
+    scale_yx = target_std / source_std
+    matrix = np.asarray(
+        [
+            [
+                scale_yx[1],
+                0.0,
+                target_center[1] - scale_yx[1] * source_center[1],
+            ],
+            [
+                0.0,
+                scale_yx[0],
+                target_center[0] - scale_yx[0] * source_center[0],
+            ],
+        ],
+        dtype=np.float32,
+    )
+    return matrix, {
+        "source_mask_pixels": int(source_yx.shape[0]),
+        "target_mask_pixels": int(target_yx.shape[0]),
+        "source_center_yx": source_center.tolist(),
+        "target_center_yx": target_center.tolist(),
+        "scale_yx": scale_yx.tolist(),
+    }
 
 
 def _run_checked(command: list[str], cwd: Path, env: Mapping[str, str], log: Path) -> None:
@@ -172,6 +210,7 @@ def run_experiment(
         "cross_frontend_reconstruction",
         "temporal_ecc_reconstruction",
         "temporal_ecc_rgb_depth_reconstruction",
+        "temporal_ecc_rgb_depth_actor_mask_reconstruction",
     }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
     if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
@@ -215,6 +254,7 @@ def run_experiment(
             "cross_frontend_reconstruction",
             "temporal_ecc_reconstruction",
             "temporal_ecc_rgb_depth_reconstruction",
+            "temporal_ecc_rgb_depth_actor_mask_reconstruction",
         }:
             proposal_dir.mkdir()
         r7_config = yaml.safe_load(
@@ -399,6 +439,7 @@ def run_experiment(
                         elif selected_candidate in {
                             "temporal_ecc_reconstruction",
                             "temporal_ecc_rgb_depth_reconstruction",
+                            "temporal_ecc_rgb_depth_actor_mask_reconstruction",
                         }:
                             proposal_source_frontend = frontend
                             source_frame_map = {
@@ -422,11 +463,120 @@ def run_experiment(
                                 render_map,
                             )
                             source_rgb = _resize_rgb(source_target["rgb"], size)
+                            if (
+                                selected_candidate
+                                == "temporal_ecc_rgb_depth_actor_mask_reconstruction"
+                                and hole_type == "actor_removal_hole"
+                            ):
+                                source_removed = _required_render(
+                                    render_root,
+                                    scene,
+                                    frontend,
+                                    proposal_source_frame,
+                                    "actor_remove_all",
+                                    render_map,
+                                )
+                                source_actor_mask_native = _mask_for(
+                                    "actor_removal_hole",
+                                    source_target,
+                                    source_target,
+                                    source_removed,
+                                    r7_config["oracle_patch_contract"],
+                                )
+                                source_actor_mask = (
+                                    _resize_plane(
+                                        source_actor_mask_native.astype(np.float32),
+                                        size,
+                                        Image.Resampling.NEAREST,
+                                    )
+                                    > 0.5
+                                )
+                                actor_warp, actor_alignment = _actor_mask_moment_affine(
+                                    source_actor_mask, resized_mask
+                                )
+                                warped_rgb = cv2.warpAffine(
+                                    source_rgb,
+                                    actor_warp,
+                                    size,
+                                    flags=cv2.INTER_LINEAR,
+                                    borderMode=cv2.BORDER_REFLECT,
+                                )
+                                overlay = input_image.copy()
+                                overlay[resized_mask] = warped_rgb[resized_mask]
+                                proposal_path = proposal_dir / f"{case_id}__repeat1.npy"
+                                np.save(proposal_path, overlay, allow_pickle=False)
+                                reconstructed_results.append(
+                                    {
+                                        "case_id": case_id,
+                                        "source_frontend": frontend,
+                                        "source_frame_index": proposal_source_frame,
+                                        "source_variant": source_suffix,
+                                        "alignment": "actor_edit_mask_axis_aligned_second_moment_affine",
+                                        "alignment_channels": "source_actor_edit_mask_and_target_hole_mask",
+                                        "alignment_pixel_count": int(
+                                            np.count_nonzero(source_actor_mask)
+                                            + np.count_nonzero(resized_mask)
+                                        ),
+                                        "warp_matrix": actor_warp.tolist(),
+                                        "actor_alignment": actor_alignment,
+                                        "repeats": [
+                                            {
+                                                "repeat_index": 1,
+                                                "seed": config["seed"],
+                                                "latency_seconds": 0.0,
+                                                "finite": bool(np.isfinite(overlay).all()),
+                                                "masked_change": float(
+                                                    np.mean(
+                                                        np.abs(
+                                                            overlay[resized_mask].astype(
+                                                                np.float32
+                                                            )
+                                                            - input_image[resized_mask].astype(
+                                                                np.float32
+                                                            )
+                                                        )
+                                                    )
+                                                    / 255.0
+                                                ),
+                                                "outside_mask_exact": bool(
+                                                    np.array_equal(
+                                                        overlay[~resized_mask],
+                                                        input_image[~resized_mask],
+                                                    )
+                                                ),
+                                                "output": proposal_path.name,
+                                                "output_sha256": _sha256(proposal_path),
+                                            }
+                                        ],
+                                        "repeat_sha_exact": True,
+                                    }
+                                )
+                                case_rows.append(
+                                    {
+                                        "case_id": case_id,
+                                        "scene": scene,
+                                        "frontend": frontend,
+                                        "frame_index": int(frame_index),
+                                        "hole_type": hole_type,
+                                        "mask_pixel_count": int(
+                                            np.count_nonzero(resized_mask)
+                                        ),
+                                        "semantic_evidence": semantic_evidence,
+                                        "proposal_source_frontend": frontend,
+                                        "proposal_source_frame": proposal_source_frame,
+                                        "generator_input_sha256": _sha256(generator_path),
+                                        "verifier_input_sha256": _sha256(verifier_path),
+                                    }
+                                )
+                                continue
                             template_gray = cv2.cvtColor(input_image, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
                             source_gray = cv2.cvtColor(source_rgb, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
                             alignment_mask = ~resized_mask
                             alignment_channels = "rgb_gray"
-                            if selected_candidate == "temporal_ecc_rgb_depth_reconstruction":
+                            if selected_candidate in {
+                                "temporal_ecc_rgb_depth_reconstruction",
+                                "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+                            }:
                                 source_depth_plane = _plane(source_target["depth"], "depth").astype(np.float32)
                                 source_depth = _resize_plane(
                                     source_depth_plane, size, Image.Resampling.BILINEAR
@@ -573,6 +723,7 @@ def run_experiment(
             "cross_frontend_reconstruction",
             "temporal_ecc_reconstruction",
             "temporal_ecc_rgb_depth_reconstruction",
+            "temporal_ecc_rgb_depth_actor_mask_reconstruction",
         }:
             generator_result = {
                 "schema_version": "worldsim_v6.r9_reconstructed_proposal.v1",
@@ -710,6 +861,17 @@ def run_experiment(
         )
         _write_jsonl(run_dir / "ARM_SUMMARIES.jsonl", arm_rows)
         eligible_arms = [row["arm"] for row in arm_rows if row["eligible_for_r10"]]
+        actor_arm_rows: list[dict[str, Any]] = []
+        if task_id == "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01":
+            actor_rows = [
+                row for row in rows if row["hole_type"] == "actor_removal_hole"
+            ]
+            actor_expected = int(config["cohort"]["expected_actor_case_count"])
+            actor_arm_rows = [
+                _arm_summary(actor_rows, "P1", actor_expected, config["actor_gate"]),
+                _arm_summary(actor_rows, "P2", actor_expected, config["actor_gate"]),
+            ]
+            _write_jsonl(run_dir / "ACTOR_ARM_SUMMARIES.jsonl", actor_arm_rows)
         peak_mib = max(
             float(generator_result["peak_gpu_memory_mib"]),
             float(verifier_result["peak_gpu_memory_mib"]),
@@ -729,11 +891,29 @@ def run_experiment(
             "confirmation_not_read": True,
             "bake_not_started": True,
         }
+        if task_id == "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01":
+            checks.update(
+                {
+                    "actor_case_count_exact": sum(
+                        row["hole_type"] == "actor_removal_hole" for row in rows
+                    )
+                    == int(config["cohort"]["expected_actor_case_count"]),
+                    "actor_photo_and_geometry_both_eligible": [
+                        row["arm"]
+                        for row in actor_arm_rows
+                        if row["eligible_for_r10"]
+                    ]
+                    == ["P1", "P2"],
+                }
+            )
         checks["passed"] = all(checks.values())
         gate = {
             "schema_version": "worldsim_v6.r9_gate.v1",
             "checks": checks,
             "eligible_arms_for_r10": eligible_arms,
+            "actor_eligible_arms": [
+                row["arm"] for row in actor_arm_rows if row["eligible_for_r10"]
+            ],
             "decision": "proceed_to_factorized_verification"
             if checks["passed"]
             else "reject_or_pivot_verifier_arms",
@@ -742,6 +922,7 @@ def run_experiment(
             TASK_ID: "R9_GATE.json",
             "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01": "R14_GATE.json",
             "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01": "R16_GATE.json",
+            "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01": "R22_GATE.json",
         }[task_id]
         _write_json(run_dir / gate_name, gate)
         _write_json(
@@ -787,6 +968,8 @@ def run_experiment(
             "verifier_worker/PER_CASE_ARMS.jsonl",
             "verifier_worker/WORKER_RESULT.json",
         ]
+        if actor_arm_rows:
+            tracked.append("ACTOR_ARM_SUMMARIES.jsonl")
         manifest = {
             "schema_version": "worldsim_v6.r9_run_manifest.v1",
             "files": {
