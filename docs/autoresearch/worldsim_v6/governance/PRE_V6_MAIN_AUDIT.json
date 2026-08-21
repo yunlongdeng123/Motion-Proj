@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V6-G2-BRANCH-CONVERGENCE-01",
+  "status": "integration_gate_pass",
+  "integration_branch": "integration/pre-v6-20260821T072411Z",
+  "rollback_tag": "pre-v6-main-20260821T072411Z",
+  "origin_main_before": "44d0e4a2468112b89a454992ecd9177d65184067",
+  "merged_research_head": "9ca03c7700053c4ad000bb3ec39e3d22126489d2",
+  "tested_commit": "b08a2899ea4a11d5be522a3adc634ffa5c63237b",
+  "tested_tree": "d46eefd6d064efa45b68fc01e23f33ce2157c555",
+  "merge": {
+    "mode": "fast_forward_only",
+    "conflict_count": 0,
+    "branch_matrix_sha256": "b5bbae4f9291599b390072f68906bdb65ee6c048900d87f290eb7b5a163b548b",
+    "conflict_log_sha256": "126b3d36810c4ebb1cf920d54832c8aa3fffccf5efe63c8ac6fa8fa0a1bb1385"
+  },
+  "test_profiles": {
+    "motionproj": {
+      "result": "1443 passed, 1 skipped",
+      "skip_reason": "optional nuScenes v1.0-mini dataset smoke; mini split not extracted",
+      "repo_root_injected": true,
+      "excluded_exact_runtime_files": 4
+    },
+    "drivestudio_frozen_runtime": {
+      "python": "/root/autodl-tmp/envs/drivestudio/bin/python",
+      "torch": "2.1.2+cu118",
+      "cuda": "11.8",
+      "result": "15 passed"
+    },
+    "aggregate": "1458 passed, 1 skipped"
+  },
+  "additional_gates": {
+    "git_diff_check": "pass",
+    "config_parse": "284 YAML + 1 JSON",
+    "direct_import_smoke": "pass",
+    "direct_cli_help_smoke": "pass",
+    "failure_definition_duplicate_count": 0,
+    "v51_terminal_plan_sha256": "a0e764f3fb277b34db0dda59467fd879a4f35e440a71b7d2650c5625fd6dfe1d",
+    "v52_frozen_plan_sha256": "2620d13a7f96395d3ce1fefbc2725d667eedadabe61143a0e3f869a6eafa1417",
+    "p2_selected_checkpoint_sha256": "7be87e8b0bdaf86c4a8066fa99a8c8a0a691ba9b5ea1c91ebf7b7fbf60287448",
+    "p3_payload_exact": "158/158",
+    "instant_nurec_commit_tree_exact": "1ce2288e646548e61fea6100bc58de3acd4bc8d0/96e36fa4772f5ddada37dc3decb1be9d2e595dc0"
+  },
+  "recovery_runs": [
+    {"id": "20260821T073335Z__g2-p2-asset-recovery-s0-r1", "status": "blocked", "reason": "relative_protocol_path_before_snapshot"},
+    {"id": "20260821T073353Z__g2-p2-asset-recovery-s0-r2", "status": "done", "scope": "exact_asset_recovery_only"},
+    {"id": "20260821T073459Z__g2-p3-asset-recovery-s0-r1", "status": "done", "scope": "exact_payload_recovery_only"}
+  ],
+  "identity": {
+    "failure_ledger_sha256": "3bf0d0db231b3f704a9393c7defbb2e094c128cf52618fa2ff804836d1ad848c",
+    "protocol_sha256": "c48fb4c0f404434910da827ab3d99cc3d5dbc1cb4e9a0d1b40f413007d5fc9b5",
+    "protocol_test_sha256": "3b1e97c406bd2931f6701a78c0472d4e63e35fb3fb885f088d5bfc8826bc3c45"
+  },
+  "resources_after_gate": {
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "gpu_total_mib": 24576,
+    "gpu_used_mib": 1,
+    "disk_free_gib_approx": 73
+  },
+  "method_quality_runs": 0,
+  "failure_ledger_refs": ["V6-F01", "V6-F02", "V6-F03", "V6-F04"],
+  "failure_ledger_delta": ["V6-F02", "V6-F03", "V6-F04"],
+  "next_action": "fast_forward_main_after_audit_commit"
+}
