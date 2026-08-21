@@ -3575,3 +3575,9 @@ H-R20-001 canonical run `20260821T152456Z__semantic-consensus-s20260821-r1` 在�
 H-R22-001 canonical run `20260821T153531Z__independent-arms-s20260821-r1` 对六个 `actor_removal_hole` 只使用源 actor-edit mask 与目标已知 hole mask 的中心和轴向二阶矩，估计 axis-aligned affine 后搬运邻帧 actor RGB。actor 子集 P2 geometry 得到 `1/6` ACCEPT、false-safe `0` 并通过独立 gate，但 P1 photo 为 `0/6` ACCEPT，导致要求 P1/P2 同时独立合格的正式 gate 拒绝。四个 photo truth-safe cases 的 masked RGB MAE 仍为 `0.06299–0.07655`，高于冻结 `0.05`；整体 P1/P2 通过只来自未改变的非 actor cases，不能覆盖 actor 子集失败。
 
 不得放宽 P1 阈值或用整体分母掩盖 actor failure。轴对齐中心/尺度对齐无法表示邻帧 actor 的旋转、剪切和透视轮廓变化。H-R23-001 保留相同源/目标 masks、六个 actor 分母、非 actor RGB-D ECC、verifier 与全部 gates，只把 actor 配准改为：以二阶矩 affine 为初始化，在两个二值 edit-mask 的 signed-distance field 上执行一次冻结 homography ECC；仍不读取 target RGB/depth/dynamic。
+
+### V6-F57：edit-mask 轮廓 homography 仍不能建立跨时刻 actor 纹理对应
+
+H-R23-001 canonical run `20260821T154110Z__independent-arms-s20260821-r1` 在相同六个 actor cases 上，以 R22 moment affine 初始化 signed-distance-field homography ECC。actor P1 仍为 `0/6` ACCEPT，P2 仍只有 `1/6` ACCEPT；SDF warp 让若干 photo MAE 从 R22 的 `0.063–0.076` 恶化到 `0.069–0.116`，仅一个 case 改善至 `0.05748`，仍未过冻结 `0.05`。因此整体 P1/P2 合格仍不能覆盖 actor subset，正式 `rejected`。
+
+不得继续扫描 SDF ROI、iteration 或 photo threshold。二值 actor-edit support 约束的是轮廓，不携带姿态、可见面与光照的跨时刻纹理对应；更灵活的 homography 会扭曲错误纹理。既有 H-R9-003 已独立证明 same-time cross-frontend proposal 在 actor 子集上 P1 `4/6`、P2 `1/6` 且 false-safe 均为 `0`。H-R24-001 因此不再拟合 mask，而按 typed asset route 复用已验证来源：static/disocclusion 保持 R16 temporal RGB-D，actor_removal 使用同帧 cross-frontend；所有 verifier 与 actor gates 不变。

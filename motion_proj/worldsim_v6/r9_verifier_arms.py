@@ -34,6 +34,7 @@ ALLOWED_TASK_IDS = {
     "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01",
     "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
     "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
+    "WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01",
 }
 
 
@@ -275,6 +276,7 @@ def run_experiment(
         "temporal_ecc_rgb_depth_reconstruction",
         "temporal_ecc_rgb_depth_actor_mask_reconstruction",
         "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+        "typed_temporal_static_cross_frontend_actor_reconstruction",
     }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
     if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
@@ -320,6 +322,7 @@ def run_experiment(
             "temporal_ecc_rgb_depth_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+            "typed_temporal_static_cross_frontend_actor_reconstruction",
         }:
             proposal_dir.mkdir()
         r7_config = yaml.safe_load(
@@ -435,7 +438,11 @@ def run_experiment(
                         )
                         proposal_source_frontend = None
                         proposal_source_frame = None
-                        if selected_candidate == "cross_frontend_reconstruction":
+                        if selected_candidate == "cross_frontend_reconstruction" or (
+                            selected_candidate
+                            == "typed_temporal_static_cross_frontend_actor_reconstruction"
+                            and hole_type == "actor_removal_hole"
+                        ):
                             proposal_source_frontend = (
                                 "ad_gs" if frontend == "streetgs" else "streetgs"
                             )
@@ -506,6 +513,7 @@ def run_experiment(
                             "temporal_ecc_rgb_depth_reconstruction",
                             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
                             "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+                            "typed_temporal_static_cross_frontend_actor_reconstruction",
                         }:
                             proposal_source_frontend = frontend
                             source_frame_map = {
@@ -688,6 +696,7 @@ def run_experiment(
                                 "temporal_ecc_rgb_depth_reconstruction",
                                 "temporal_ecc_rgb_depth_actor_mask_reconstruction",
                                 "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+                                "typed_temporal_static_cross_frontend_actor_reconstruction",
                             }:
                                 source_depth_plane = _plane(source_target["depth"], "depth").astype(np.float32)
                                 source_depth = _resize_plane(
@@ -837,6 +846,7 @@ def run_experiment(
             "temporal_ecc_rgb_depth_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+            "typed_temporal_static_cross_frontend_actor_reconstruction",
         }:
             generator_result = {
                 "schema_version": "worldsim_v6.r9_reconstructed_proposal.v1",
@@ -978,6 +988,7 @@ def run_experiment(
         if task_id in {
             "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
             "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
+            "WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01",
         }:
             actor_rows = [
                 row for row in rows if row["hole_type"] == "actor_removal_hole"
@@ -1010,6 +1021,7 @@ def run_experiment(
         if task_id in {
             "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
             "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
+            "WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01",
         }:
             checks.update(
                 {
@@ -1043,6 +1055,7 @@ def run_experiment(
             "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01": "R16_GATE.json",
             "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01": "R22_GATE.json",
             "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01": "R23_GATE.json",
+            "WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01": "R24_GATE.json",
         }[task_id]
         _write_json(run_dir / gate_name, gate)
         _write_json(
