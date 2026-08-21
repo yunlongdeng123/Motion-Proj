@@ -3515,3 +3515,9 @@ H-PT3-002 canonical run `20260821T134843Z__factorized-policy-training-s20260821-
 H-PT3-003 canonical run `20260821T135421Z__factorized-policy-training-s20260821-r1` 使用 raw `|x|/|y|` 与 projected half-extents，分别训练 forward/lateral logistic overlap heads。V6 train overall balanced accuracy 为 `1.0`，forward/lateral factor train accuracy 为 `1.0/0.9986`，但在 disjoint scene-0048 grid 上 balanced accuracy `0.7963`、false-safe `0.22135`、safe-route completion `0.81395`，未过冻结门，正式 `rejected`；两基线 false-safe 均为 `1.0`。
 
 这不是优化未收敛，而是 synthetic train 全部采用默认 `4.5x2.0m`、relative yaw `0°`，projected extent 几乎常数，position 与 extent 的相反系数无法由 synthetic positives/negatives 识别，只能依赖稀疏真实 box 分布，换场景即漂移。H-PT3-004 保留 factor-head 架构、loss、task gates 与场景，扩展训练 denominator 为三种 size × 四种 yaw × 原 position grid；heldout 使用完全离散的三种 size × 三种 yaw。不得输入 signed gap 或固定解析碰撞公式来伪装 learning gain。以后 intervention coverage 必须同时报告 position、size 与 orientation factors。
+
+### V6-F47：factor head 的训练目标必须与冻结的 balanced 指标对齐
+
+H-PT3-004 canonical run `20260821T135942Z__factorized-policy-training-s20260821-r1` 在 23,520 条 multi-size/multi-yaw train interventions 与 8,820 条完全离散 heldout interventions 上运行。V6 把 false-safe 从 Real-only 的 `0.97133`、naive 的 `1.0` 降至 `0.14821`，但 balanced accuracy `0.85613`、safe-route completion `0.86047`，仍未通过冻结的 `0.90/0.10/0.90` 门，因此正式 `rejected`。
+
+训练的 lateral factor 正例比例为 `0.88174`，原始 unweighted BCE 按出现频率主导梯度，与 task 从一开始冻结的 balanced accuracy/false-safe/completion 三目标不一致；这会同时留下 `14.82%` false-safe 与 `13.95%` false brake。H-PT3-005 保持场景、position/size/yaw 分母、raw feature、标签、三臂、步数和所有 gate 不变，只让每个 factor head 的正负类别在 BCE 梯度中各占一半。不得通过调决策阈值、改 heldout 或放宽门来恢复。

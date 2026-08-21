@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:57:00Z",
+  "updated_at_utc": "2026-08-21T14:02:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 33,
+  "iteration": 34,
   "active_task": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT3-004",
-  "candidate": "multi_size_yaw_factorized_box_policy",
+  "active_hypothesis": "WS-V6-H-PT3-005",
+  "candidate": "class_balanced_multi_size_yaw_factorized_box_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "7e9b6aed862764e980630259b940a8b845ced9c4fa98e4efd270f330343dfd6f",
+  "dev_artifact_hash": "6f419c2937777e3794878701b9c049899c79201db4a5ce4552fa46df663f4921",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "d0f125b33172528e04119be7ed0647f9bb1031319f700a4338e028ca458701e0",
-  "last_reflection_id": "WS-V6-REFL-0035",
+  "failure_ledger_sha256": "c476424ced9e2dd25682e671365ecf66b1ca0b369bc5fe295023432c2ce5f5f1",
+  "last_reflection_id": "WS-V6-REFL-0036",
   "last_completed": {
-    "task_id": "WS-V6-PT2-RISK-POLICY-01",
-    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T135421Z__factorized-policy-training-s20260821-r1",
-    "artifact_sha256": "7e9b6aed862764e980630259b940a8b845ced9c4fa98e4efd270f330343dfd6f"
+    "task_id": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
+    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T135942Z__factorized-policy-training-s20260821-r1",
+    "artifact_sha256": "6f419c2937777e3794878701b9c049899c79201db4a5ce4552fa46df663f4921"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -60,7 +60,8 @@
     "pt3_frozen_policy_intervention_robustness": "done_rejected_zero_lateral_template",
     "pt3_position_only_grid_policy_h002": "done_rejected_box_extent_aliasing",
     "pt3_single_size_factor_heads_h003": "done_rejected_extent_coefficient_shift",
-    "pt3_factorized_intervention_policy_training": "active_pre_registered_multi_size_yaw",
+    "pt3_multi_size_yaw_factor_heads_h004": "done_rejected_unbalanced_objective",
+    "pt3_factorized_intervention_policy_training": "active_pre_registered_class_balanced_heads",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -69,8 +70,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_factor_heads_on_position_size_yaw_cartesian_interventions",
-    "evaluate_disjoint_position_size_yaw_grid_on_scene0048",
+    "train_class_balanced_factor_heads_on_frozen_position_size_yaw_interventions",
+    "evaluate_the_unchanged_disjoint_grid_on_scene0048",
     "retain_original_policy_robustness_and_incremental_gain_gates"
   ]
 }

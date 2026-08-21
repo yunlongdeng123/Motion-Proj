@@ -349,10 +349,24 @@ def _fit_logistic_head(
     weights = np.zeros(design.shape[1], dtype=float)
     learning_rate = float(training["learning_rate"])
     l2 = float(training["l2"])
+    objective = str(training.get("head_objective", "binary_cross_entropy"))
+    if objective == "balanced_binary_cross_entropy":
+        # 每个类别在梯度中各占一半，避免 factor 正负例比例主导决策边界。
+        positive = labels == 1
+        negative = labels == 0
+        sample_weights = np.where(
+            positive,
+            0.5 / int(positive.sum()),
+            0.5 / int(negative.sum()),
+        )
+    elif objective == "binary_cross_entropy":
+        sample_weights = np.full(len(labels), 1.0 / len(labels), dtype=float)
+    else:
+        raise PT2RiskPolicyError(f"未知 factor head objective: {objective}")
     for _ in range(int(training["steps"])):
         logits = np.clip(design @ weights, -40.0, 40.0)
         probabilities = 1.0 / (1.0 + np.exp(-logits))
-        gradient = design.T @ (probabilities - labels) / len(labels)
+        gradient = design.T @ ((probabilities - labels) * sample_weights)
         gradient[:-1] += l2 * weights[:-1]
         weights -= learning_rate * gradient
     predictions = (1.0 / (1.0 + np.exp(-np.clip(design @ weights, -40.0, 40.0))) >= 0.5).astype(int)
@@ -361,6 +375,7 @@ def _fit_logistic_head(
         "mean": mean.tolist(),
         "scale": scale.tolist(),
         "weights": weights.tolist(),
+        "objective": objective,
         "train_balanced_accuracy": _balanced_accuracy(labels, predictions),
         "train_positive_fraction": float(labels.mean()),
     }
