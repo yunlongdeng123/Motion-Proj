@@ -204,8 +204,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R3ExperimentError("AD-GS source commit 漂移")
     street_python = Path(street["environment"]) / "bin/python"
     adgs_python = Path(adgs["environment"]) / "bin/python"
-    primary_python = Path("/root/autodl-tmp/envs/motionproj/bin/python")
-    for python in (street_python, adgs_python, primary_python):
+    for python in (street_python, adgs_python):
         if not python.is_file():
             raise R3ExperimentError(f"Python 环境缺失：{python}")
 
@@ -236,7 +235,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 _run_process(
                     f"adapter-{scene}",
                     [
-                        str(primary_python),
+                        str(adgs_python),
                         str(repo_root / "scripts/prepare_worldsim_v4_adgs.py"),
                         "--source",
                         str(source_scene),

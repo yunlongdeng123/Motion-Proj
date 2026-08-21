@@ -3054,6 +3054,16 @@ S1 r2 在每个视图的数百万 ray/Gaussian intersections 上多次使用 `np
 终止，不得作为完成证据。r5 改用 `np.bincount(minlength=total)` 和向量化 view count，263-view lift wall
 `770.733s`，并保存完整 posterior schema。研究 runner 必须输出阶段进度；“CPU 持续运行”不能替代复杂度审计。
 
+### V6-F06：数据 adapter 的运行环境必须覆盖写出阶段依赖
+
+R3 首次正式目录
+`20260821T085802Z__support-deviation-s20260821-r1` 在完成 scene-0242 图像、标定与点云聚合后，
+于 `store_ply` 写出阶段因主环境缺少 `plyfile` 失败。该 run 保留 `failed` terminal，不改写为完成；
+失败发生在任何 checkpoint 推理、质量读取或确认集读取之前，因此不是方法负结果，也不是 GPU/数据资源不足。
+修复只把冻结的 adapter 命令路由到已经具备 AD-GS 依赖的 `/root/autodl-tmp/envs/adgs/bin/python`，
+不改变数据分区、场景、checkpoint、support 假设、指标或门槛。以后环境 readiness 必须覆盖 adapter 的最终序列化依赖，
+不能以脚本启动和主体循环成功代替端到端环境兼容性。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
