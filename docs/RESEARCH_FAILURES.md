@@ -3692,3 +3692,9 @@ H-R62-001 首次正式启动 `20260821T194222Z__actor2-lidar-contact-s20260821-r
 H-R62-001 第二次正式启动 `20260821T194557Z__actor2-lidar-contact-s20260821-r1` 已切换到拥有 `pytorch3d` 的冻结 DriveStudio Python，但仍在读取 frame98 前以 worker rc=1 失败，`TERMINAL.json` SHA256 为 `1dcea9a007b18df26c4ff420fd15e8e759a1b814a5ad09184a3a4d22001420b0`。独立复现显示冻结 `DrivingDataset` 还导入项目内 `motion_proj.worldsim_v3.drivestudio_compat`，而新 worker 只加入 checkpoint backup 与 upstream 路径，遗漏当前仓库根目录，触发 `ModuleNotFoundError: No module named 'motion_proj'`。
 
 修复只给 worker 增加显式 `--repo-root` 并在导入冻结 dataset 前插入 `sys.path`，同时令主进程在检查 rc 前落盘 worker stderr。不得改变 Python 环境、数据配置、proposal、frame、接触协议、阈值、预期方向或任何方法分母。新 commit/push 后仍按原 H-R62-001 重试；前两次启动都不具 canonical authority。
+
+### V6-F77：单帧投影 LiDAR 无局部点时不得把 contact 缺证据解释为 edit invalid
+
+H-R62-001 canonical run `20260821T194813Z__actor2-lidar-contact-s20260821-r1` 在 frame98 从三相机重复提取出完全一致的 `7,183` 个静态 logged-LiDAR world points，actor2 的13,490 primitives、生命周期、R60 proposal 与全部 authority 均精确绑定。但冻结2m局部查询在 logged 与 `[-1,0,0]m` 编辑中心附近都得到0个候选，最近水平距离分别为 `4.1758m` 与 `3.9666m`，因此两者 contact error 都不可计算并正式 `REJECT`。这证明的是单帧稀疏 support 不足，不是编辑破坏地面接触。
+
+不得放宽2m半径、降低32点分母、增大0.35m误差阈值、删除 logged baseline 控制，或把两个 REJECT 宣称为编辑无效。H-R63-001 固定使用 target frame98 前后各10帧的对称21帧窗口 `[88,108]`，逐帧排除 dynamic pixels、提升到同一 world frame，并沿用已接受 R13 的0.05m deterministic voxel union；随后完全复用 R40 的 quantile/radius/denominator/error 阈值评价同一个 logged/selected pair。semantic road、physics、planning 与 safety 继续 ABSTAIN。
