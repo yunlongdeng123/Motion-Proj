@@ -3064,6 +3064,20 @@ R3 首次正式目录
 不改变数据分区、场景、checkpoint、support 假设、指标或门槛。以后环境 readiness 必须覆盖 adapter 的最终序列化依赖，
 不能以脚本启动和主体循环成功代替端到端环境兼容性。
 
+### V6-F07：只读 renderer 的数据 loader 仍可能强制读取训练期辅助字段
+
+R3 第二次正式目录
+`20260821T090109Z__support-deviation-s20260821-r1` 已完成 scene-0242 adapter 和 StreetGS 全部冻结渲染，
+随后 AD-GS `Scene` 构造因 adapter 没有 `depth/000000.npy` 失败。V4 adapter 按设计只生成图像、语义、天空、
+位姿与点云，而 AD-GS nuScenes loader 即使在只读 checkpoint 渲染时仍无条件加载每张训练期 depth；源码检索确认
+`gaussian_renderer` 不读取 `viewpoint_camera.depth`，R3 指标也只使用 DriveStudio 导出的真实稀疏 LiDAR。
+因此该 run 保留 `failed` terminal，不改写为方法负结果。
+
+修复是在每个不可变新 run 的 adapter 内生成全零 float32 depth 占位文件，并写出独立 audit，明确标注
+`loader_field_only=true`、renderer/指标不消费以及真实几何证据来源；不修改 AD-GS checkout、checkpoint、
+开发/确认分区、指标或假设。以后复用训练代码做只读渲染时，必须区分 loader 的强制 schema 字段与实际计算依赖，
+占位值只能用于经源码证明不被实验结果消费的字段。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

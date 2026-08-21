@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+import numpy as np
 import yaml
 
 from motion_proj.worldsim_v6.r3_support import analyze_support_deviation
@@ -184,6 +185,36 @@ def _verify_adgs_bundle(row: Mapping[str, Any]) -> Path:
     return run / "model"
 
 
+def _materialize_inference_only_depth_placeholders(adapter: Path) -> dict[str, Any]:
+    """满足 AD-GS 强制 loader 字段；R3 renderer 与指标均不消费这些值。"""
+    manifest = json.loads((adapter / "adapter_manifest.json").read_text(encoding="utf-8"))
+    width, height = (int(value) for value in manifest["target_size"])
+    depth_dir = adapter / "depth"
+    image_paths = sorted((adapter / "image").glob("*.png"))
+    if not image_paths:
+        raise R3ExperimentError("AD-GS adapter 没有图像")
+    placeholder = np.zeros((height, width, 1), dtype=np.float32)
+    for image_path in image_paths:
+        target = depth_dir / f"{image_path.stem}.npy"
+        if target.exists():
+            raise R3ExperimentError(f"拒绝覆盖 adapter depth：{target}")
+        np.save(target, placeholder, allow_pickle=False)
+    audit = {
+        "schema_version": "worldsim_v6.r3_inference_only_depth_placeholder.v1",
+        "count": len(image_paths),
+        "shape": [height, width, 1],
+        "dtype": "float32",
+        "value": 0.0,
+        "common_file_sha256": _sha256(depth_dir / f"{image_paths[0].stem}.npy"),
+        "adgs_loader_field_only": True,
+        "adgs_renderer_consumes_depth": False,
+        "r3_metrics_consume_placeholder_depth": False,
+        "metric_depth_source": "DriveStudio sparse LiDAR exported by StreetGS worker",
+    }
+    _write_json(adapter / "R3_INFERENCE_ONLY_DEPTH_PLACEHOLDERS.json", audit)
+    return audit
+
+
 def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     repo_root = repo_root.resolve()
     if _git(repo_root, "status", "--porcelain"):
@@ -251,6 +282,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     monitor_gpu=False,
                 )
             )
+            _materialize_inference_only_depth_placeholders(adapter)
             street_output = run_dir / "renders" / scene / "streetgs"
             street_output.parent.mkdir(parents=True, exist_ok=True)
             resources["processes"].append(
@@ -349,6 +381,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             tracked.extend(
                 [
                     f"development_adapters/{scene}/adapter_manifest.json",
+                    f"development_adapters/{scene}/R3_INFERENCE_ONLY_DEPTH_PLACEHOLDERS.json",
                     f"renders/{scene}/streetgs/AUDIT.json",
                     f"renders/{scene}/streetgs/RENDER_MAP.jsonl",
                     f"renders/{scene}/ad_gs/AUDIT.json",
