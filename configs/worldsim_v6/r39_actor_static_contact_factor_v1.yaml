@@ -1,0 +1,52 @@
+schema_version: worldsim_v6.r39_actor_static_contact_factor.v1
+task_id: WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01
+hypothesis_id: WS-V6-H-R39-001
+seed: 20260821
+sources:
+  r38_run: runs://worldsim_v6/WS-V6-R38-ACTOR-INTERACTION-FACTOR-01/20260821T171936Z__interaction-factor-s20260821-r1
+  r38_manifest_sha256: 39f1fdd9097644bcbe686b11f7506fe8ca7c40b0b49d9d7826dcd5858108e97f
+  r38_gate_sha256: 47540052b893e17100e6910ccaad8ed29c31444e7fc7d8945bd84ce12f6a4f2c
+  r38_summary_sha256: 97bd3a895b2b09db02db4fccdc3657f6a51477c43db913e54f226ab041beb004
+  r38_decisions_sha256: 81cba0bf1bed95ed48b000b901ef3fddd0de0566cba49035002a140a965efe1c
+  r38_payloads_sha256: 3fc93255e291b39e58de39efbe054521569b31b6b39c913ceaddb5d606fa76b9
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+cohort:
+  partition: development_scene0242_full_logged_trajectory_static_contact
+  actor_id: actor_0000
+  expected_trajectory_rows: 196
+  expected_static_primitive_count: 824583
+coordinate_contract:
+  source: frozen_streetgs_frontend_world_frame
+  world_up_axis: y
+  vertical_axis_index: 1
+  horizontal_axis_indices: [0, 2]
+support_query:
+  nearest_horizontal_candidates: 256
+  maximum_horizontal_radius_m: 1.5
+  maximum_vertical_contact_error_m: 0.35
+  minimum_contact_points: 3
+interventions:
+  - id: translate_world_x_plus_1m
+    expected_static_contact_decision: ACCEPT
+  - id: translate_world_y_plus_1m
+    expected_static_contact_decision: REJECT
+gate:
+  minimum_logged_support_coverage: 0.80
+  minimum_absolute_support_coverage: 0.80
+  minimum_support_retention: 0.90
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_observed_static_gaussian_contact_factor
+  - streetgs_y_up_coordinate_contract_and_actor_aabb_bottom_support
+  - contact_is_local_static_geometry_evidence_not_semantic_road_truth
+  - horizontal_translation_expected_to_preserve_contact_vertical_translation_expected_to_break_contact
+  - physical_dynamics_semantic_road_collision_planning_and_safety_abstain
+  - no_training_or_confirmation_read
+
