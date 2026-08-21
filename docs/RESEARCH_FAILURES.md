@@ -3390,6 +3390,17 @@ V6 false-safe `0.0`，但两帧 5m 几何 MRE 仍为 `9.0323/9.4071`，photo MAE
 这个失效代理。路线偏移结论固定为 H-R13-002 已验证的 lateral `3m`、forward `2m`；后续直接进入计划尚未覆盖的 actor
 add/remove、trajectory modification 与 traffic-density typed edit 实验。
 
+### V6-F35：跨 run 回放内容等价比较必须排除非语义 repeat 序号
+
+H-R13-005 首个正式 run `20260821T122830Z__dynamic-edits-s20260821-r1` 的三个 V6 typed edit 均通过全部
+编辑、依赖闭包、时序和精确复跑检查，但总 gate 因 `base_matches_frozen_r12_replay=false` 保持 `rejected`。逐字段定位确认
+唯一差异是当前重新加载调用使用 `repeat_index=0`，而冻结文件 `DYNAMIC_REPLAY_REPEAT1.json` 记录 `repeat_index=1`；
+`replay_content_sha256` 及 actor、trajectory、semantic、collision、sensor、event 全部内容一致。
+
+修复只在跨 run 内容等价比较的两侧移除非语义 `repeat_index`，仍严格比较冻结内容 hash 和所有功能字段；不改三个 edit、
+四方法臂、actor/时间戳分母、碰撞计算、false-safe、资源合同或任何阈值。repeat 序号继续保留在各自运行记录内，但不得被当作
+compiled-world 内容漂移。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

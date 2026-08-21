@@ -341,7 +341,11 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         immutable_before = {str(path): _sha256(path) for path in frozen}
         base = _replay_once(package, 0)
         frozen_base = json.loads((r12 / "DYNAMIC_REPLAY_REPEAT1.json").read_text(encoding="utf-8"))
-        base_matches_r12 = _canonical(base) == _canonical(frozen_base)
+        comparable_base = dict(base)
+        comparable_frozen = dict(frozen_base)
+        comparable_base.pop("repeat_index")
+        comparable_frozen.pop("repeat_index")
+        base_matches_r12 = _canonical(comparable_base) == _canonical(comparable_frozen)
         cohort = config["cohort"]
         base_actor_count = len({row["actor_id"] for row in base["actor_states"]})
         base_timestamps = len({int(row["timestamp_us"]) for row in base["actor_states"]})
