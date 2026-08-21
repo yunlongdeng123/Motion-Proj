@@ -3367,6 +3367,17 @@ H-R13-003 canonical rejected run `20260821T121112Z__worldspace-fusion-s20260821-
 逐帧 world points 和 RGB，不做 union/densification；只用同一冻结 support 中三相机 logged LiDAR 投影到目标视角，
 在 4 像素邻域和 0.30 相对深度差内保留可见点。StreetGS truth proxy 只用于最终评估，不进入过滤。
 
+### V6-F33：跨阶段安全摘要必须读取冻结 schema 的完整方法键
+
+H-R13-004 首个正式 run `20260821T121825Z__worldspace-visibility-s20260821-r1` 已完成两次目标视角
+LiDAR 投影和全部 12 个偏移的指标计算，但在汇总继承 H-R13-002 的 V6 false-safe 时 fail-closed。冻结摘要使用
+`baseline_safety.v6_generate_verify_bake.false_safe_rate`，初版 runner 却读取了不存在的缩写键
+`baseline_safety.v6.joint_false_safe_rate`，因此抛出 `KeyError`，run 保持 `blocked`，没有形成 gate 或方法结论。
+
+修复只按冻结摘要的实际 schema 读取完整方法键和 `false_safe_rate` 字段；不改 world points、目标视角 LiDAR、4 像素/
+0.30 visibility 合同、12 个偏移、质量阈值、false-safe 数值或资源合同。以后跨阶段消费结构化摘要时，必须把完整方法标识和
+字段名纳入配置/manifest 合同，禁止用人工缩写推断 schema。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

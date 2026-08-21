@@ -298,7 +298,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         filtered_route = _common_lateral(rows, frames)
         fifth = [row for row in rows if row["deviation_id"] == "lateral_5m"]
         fifth_pass_both = len(fifth) == len(frames) and all(row["route_support_pass"] for row in fifth)
-        v6_false_safe_rate = float(base_summary["baseline_safety"]["v6"]["joint_false_safe_rate"])
+        v6_false_safe_rate = float(
+            base_summary["baseline_safety"]["v6_generate_verify_bake"]["false_safe_rate"]
+        )
         wall_seconds = time.monotonic() - started
         unsupported = config["unsupported_metrics"]
         checks = {
