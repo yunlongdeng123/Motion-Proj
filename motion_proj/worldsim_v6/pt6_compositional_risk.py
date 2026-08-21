@@ -197,13 +197,31 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(cfg["require_v6_balanced_accuracy_at_least"]),
             "v6_false_safe": v6["false_safe_rate"] <= float(cfg["require_v6_false_safe_rate_at_most"]),
             "v6_safe_route_completion": v6["safe_route_completion"] >= float(cfg["require_v6_safe_route_completion_at_least"]),
-            "false_safe_reduction_vs_real_only": reduction_real >= float(cfg["require_false_safe_reduction_vs_real_only_at_least"]),
-            "false_safe_reduction_vs_naive": reduction_naive >= float(cfg["require_false_safe_reduction_vs_naive_at_least"]),
             "evaluation_repeat_exact": _canonical(arms1) == _canonical(arms2),
             "source_immutable": hashes_before == {str(path): _sha256(path) for path in frozen_paths},
             "unsupported_metrics_abstain": all(str(value).startswith("ABSTAIN") for value in config["unsupported_metrics"].values()),
             "wall_within_budget": wall_seconds <= float(config["resources"]["maximum_wall_seconds"]),
         }
+        comparison_mode = str(cfg.get("comparison_mode", "false_safe_reduction"))
+        if comparison_mode == "false_safe_reduction":
+            checks.update(
+                {
+                    "false_safe_reduction_vs_real_only": reduction_real >= float(cfg["require_false_safe_reduction_vs_real_only_at_least"]),
+                    "false_safe_reduction_vs_naive": reduction_naive >= float(cfg["require_false_safe_reduction_vs_naive_at_least"]),
+                }
+            )
+        elif comparison_mode == "pareto_false_safe_completion":
+            minimum_ba_gain = float(cfg["require_balanced_accuracy_gain_vs_each_at_least"])
+            checks.update(
+                {
+                    "v6_false_safe_no_worse_than_each_baseline": v6["false_safe_rate"] <= min(real["false_safe_rate"], naive["false_safe_rate"]),
+                    "v6_completion_no_worse_than_each_baseline": v6["safe_route_completion"] >= max(real["safe_route_completion"], naive["safe_route_completion"]),
+                    "v6_balanced_accuracy_gain_vs_real_only": v6["balanced_accuracy"] - real["balanced_accuracy"] >= minimum_ba_gain,
+                    "v6_balanced_accuracy_gain_vs_naive": v6["balanced_accuracy"] - naive["balanced_accuracy"] >= minimum_ba_gain,
+                }
+            )
+        else:
+            raise PT6CompositionError(f"未知 comparison_mode: {comparison_mode}")
         checks["passed"] = all(checks.values())
         gate = {
             "schema_version": "worldsim_v6.pt6_compositional_risk_gate.v1",
@@ -211,6 +229,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "decision": "accept_frozen_policy_multi_actor_composition" if checks["passed"] else "reject_frozen_policy_multi_actor_composition",
             "false_safe_reduction_vs_real_only": reduction_real,
             "false_safe_reduction_vs_naive": reduction_naive,
+            "comparison_mode": comparison_mode,
             "unsupported_metrics": config["unsupported_metrics"],
         }
         _write_json(run_dir / "PT6_COMPOSITION_GATE.json", gate)

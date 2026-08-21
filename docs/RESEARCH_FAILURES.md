@@ -3533,3 +3533,9 @@ H-PT3-005 canonical run `20260821T140408Z__factorized-policy-training-s20260821-
 H-PT3-006 canonical run `20260821T140847Z__factorized-policy-training-s20260821-r1` 使用相同 raw features 与 multi-size/multi-yaw 分母，将两个 factor heads 换为 class-balanced linear max-margin。V6 的 forward、lateral 与 joint train balanced accuracy 均为 `1.0`；heldout false-safe 降到 `0.05226`，相对 Real-only/naive 的 reduction 为 `0.66264/0.62637`，三项均过门。但 safe-route completion 只有 `0.84790`，balanced accuracy `0.89782`，仍未通过冻结门，正式 `rejected`。
 
 原 train position 只有 forward `0/2/4/6/8` × lateral `0/1/2/3`，即使训练完全可分，最大间隔也可落在相邻采样位置之间；heldout 恰使用离散半步位置，暴露 `15.21%` false brake。H-PT3-007 只加密 train position denominator，新增位置全部与 heldout position set 离散，保持 size/yaw、heldout、features、SVM 和 gate 不变。不得调 SVM threshold 或删除 near-boundary heldout rows。
+
+### V6-F50：set aggregation 下不能只用 false-safe 单轴增益比较会过度刹车的基线
+
+H-PT6-001 canonical run `20260821T142626Z__compositional-risk-s20260821-r1` 在 scene0450 的 784 个双 clone episodes 上，用同一 frozen per-actor policy 对 logged actors 与两 clone 做 Boolean OR。V6 balanced accuracy/false-safe/completion 为 `1.0/0/1.0`；Real-only 为 `0.5/1.0/1.0`；naive 为 `0.52211/0.08844/0.13265`。V6 的全部绝对质量门通过，但相对 naive 的 false-safe reduction 最大只能是 `0.08844`，无法达到从 single-clone task 继承的 `0.50`，所以 H-PT6-001 仍正式 `rejected`。
+
+naive 并未获得可用策略，而是 set OR 后以 `86.73%` false-brake 换取较低 false-safe。H-PT6-002 不追认旧 run，保持 frozen policy、scene、episode、label 和绝对门不变，预注册 paired Pareto gate：V6 对每个 baseline 的 false-safe 不更差、completion 不更差，并且 balanced accuracy 至少高 `0.20`。以后 actor-set policy 不得只用某一风险轴的下降评价会全刹车的 baseline。
