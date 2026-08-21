@@ -1,0 +1,34 @@
+schema_version: worldsim_v6.r79_third_actor_factor_fusion.v1
+task_id: WS-V6-R79-THIRD-ACTOR-FACTOR-FUSION-01
+hypothesis_id: WS-V6-H-R79-001
+seed: 20260821
+sources:
+  r77_run: runs://worldsim_v6/WS-V6-R77-THIRD-ACTOR-EDIT-PROPOSAL-01/20260821T213324Z__actor5-edit-proposal-s20260821-r1
+  r77_manifest_sha256: 6cd78dd1353248889c25ee3000bc24f79896f107b67714241d3cf14831c2e25c
+  r77_gate_sha256: c7ef3212755c594b279757df2110e27ad1b00c09b97328f67cb2340bba6cecd2
+  r77_summary_sha256: c0bdf835dbbbe1994aab3c6f5d931ea7eb0f66c3702ca8aab62eef7df7d2136d
+  r77_selected_sha256: 9f20815c8189fedaa7c2bf3736cb46fdfde20c30db67696f9280c8d165bd6fec
+  r78_run: runs://worldsim_v6/WS-V6-R78-THIRD-ACTOR-BOX-FOOTPRINT-CONTACT-01/20260821T213849Z__box-footprint-contact-s20260821-r1
+  r78_manifest_sha256: 31909854fd8aa48cf5c64a4bd23ea3250452eacac50169317ded2e85a9bd3f1d
+  r78_gate_sha256: 52eae2d3414347f390b1256d9327b08610edbcd5d49ab8edc5d730fb8e298e0a
+  r78_summary_sha256: f87969bbfce78ccccd08aad0aec4a5efc4f6445cecdbd6b078917856b9d8c506
+  r78_decisions_sha256: 7d4f5cb7874fb78b3cc787e2d5383d9d7c48ac5eec8b00a437dda08b22b252db
+expected:
+  proposal_id: actor5_translate_x_+0.5_z_+0.0
+  contact_intervention_id: actor5_translate_x_+0.5_z_+0.0
+  translation_delta_m: [0.5, 0.0, 0.0]
+  factor_decisions:
+    renderer_execution: ACCEPT
+    self_kinematics: ACCEPT
+    aabb_interaction: ACCEPT
+    box_footprint_lidar_contact: ACCEPT
+  joint_admissibility: ACCEPT_CONFORMANCE
+resources:
+  gpu: none
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_third_actor_four_factor_conformance_fusion
+  - renderer_interaction_and_contact_factors_retain_independent_artifact_owners
+  - accept_conformance_is_not_semantic_road_full_physics_or_safety_truth
+  - dynamics_collision_response_planning_safety_and_confirmation_abstain
