@@ -1,0 +1,155 @@
+schema_version: worldsim_v6.r1_frontend_capability.v1
+task_id: WS-V6-R1-FRONTEND-CAPABILITY-01
+status: preregistered
+network_probe_at_utc: "2026-08-21T07:58:00Z"
+quality_data_read: false
+max_full_environment_attempts: 3
+
+candidates:
+  - id: streetgs
+    kind: optimization
+    paper: Street Gaussians for Modeling Dynamic Urban Scenes
+    official_source: https://github.com/ziyc/drivestudio
+    expected_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+    repo_uri: third_party://streetgs
+    env_uri: env://drivestudio
+    required_files: [models/gaussians/basics.py, tools/train.py]
+    license: {declared: MIT, evidence: checkout/LICENSE}
+    weights: {mode: existing_scene_optimized_checkpoints, remote_available: false}
+    minimum_checkpoint_count: 1
+    input_schema: DriveStudio nuScenes processed sequence with calibrated cameras and actor tracks
+    output_schema: Background and RigidNodes Gaussian sets plus per-frame actor transforms
+    gpu_requirement: {minimum_vram_mib: 16000, current_host_supported: true}
+    adapter_cost: low_existing_checkpoint_parser
+    selected_role: optimization_sceneir_reference
+
+  - id: ad_gs
+    kind: optimization
+    paper: "AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving"
+    official_source: https://github.com/JiaweiXu8/AD-GS
+    expected_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+    repo_uri: third_party://ad_gs
+    env_uri: env://ad_gs
+    required_files: [train.py, render.py]
+    license: {declared: not_provided_in_checkout, evidence: checkout_audit}
+    weights: {mode: existing_scene_optimized_checkpoints, remote_available: false}
+    minimum_checkpoint_count: 1
+    input_schema: AD-GS processed nuScenes images, calibration, depth, semantics and flow priors
+    output_schema: Gaussian point cloud with B-spline deformation and environment checkpoints
+    gpu_requirement: {minimum_vram_mib: 16000, current_host_supported: true}
+    adapter_cost: medium_ply_deformation_parser
+    selected_role: optimization_cross_frontend_reference
+
+  - id: citygs
+    kind: optimization
+    paper: CityGaussian
+    official_source: https://github.com/Linketic/CityGaussian
+    expected_commit: null
+    repo_uri: third_party://citygs
+    required_files: []
+    license: {declared: unknown_not_cloned, evidence: local_absence}
+    weights: {mode: none_local, remote_available: false}
+    minimum_checkpoint_count: 1
+    input_schema: city-scale calibrated image collection
+    output_schema: partitioned static Gaussian scene
+    gpu_requirement: {minimum_vram_mib: 12000, current_host_supported: true}
+    adapter_cost: unknown
+    selected_role: optional_optimization_frontend
+
+  - id: lihi_gs
+    kind: optimization
+    paper: LiHi-GS
+    official_source: unknown_not_locally_registered
+    expected_commit: null
+    repo_uri: third_party://lihi_gs
+    required_files: []
+    license: {declared: unknown_not_cloned, evidence: local_absence}
+    weights: {mode: none_local, remote_available: false}
+    minimum_checkpoint_count: 1
+    input_schema: driving image and LiDAR sequence
+    output_schema: hierarchical driving Gaussian scene
+    gpu_requirement: {minimum_vram_mib: 12000, current_host_supported: true}
+    adapter_cost: unknown
+    selected_role: optional_optimization_frontend
+
+  - id: recondrive
+    kind: feed_forward
+    paper: "ReconDrive: Fast Feed-Forward 4D Gaussian Splatting for Autonomous Driving Scene Reconstruction"
+    official_source: https://github.com/TuojingAI/ReconDrive
+    expected_commit: d2bc397b724d6cc021da22f8f57ad6af1cc53e3c
+    repo_uri: third_party://recondrive
+    env_uri: env://recondrive
+    required_files: [models/recondrive_model.py, scripts/inference.py, configs/nuscenes/recondrive.yaml]
+    license: {declared: Apache-2.0_in_README, evidence: LICENSE_file_missing_at_pinned_commit}
+    weights:
+      mode: public_huggingface_checkpoint
+      remote_available: true
+      source: https://huggingface.co/TuojingAI/ReconDrive
+      revision: 64a40402e38a6a56b899a14a6d629c7f07b509d7
+      artifact: recondrive_stage2.ckpt
+      bytes: 4595424264
+      upstream_md5: fd6ed379f136b3c17d0e27a5aec8c0b7
+    input_schema: nuScenes trainval plus project-specific interpolated 12 Hz metadata
+    output_schema: per-frame static-dynamic 4D Gaussian dictionaries with color, opacity, scale, rotation and velocity
+    gpu_requirement: {minimum_vram_mib: 24000, current_host_supported: true, single_gpu_inference: true}
+    adapter_cost: medium_sceneir_mapping_and_12hz_input_adapter
+    adapter_possible: true
+    selected_role: primary_feed_forward_sceneir_target
+
+  - id: tokengs
+    kind: feed_forward
+    paper: "TokenGS: Decoupling 3D Gaussian Prediction from Pixels with Learnable Tokens"
+    official_source: https://github.com/nv-tlabs/TokenGS
+    expected_commit: b16269c500a8894cda342bc9cf406e31169541e3
+    repo_uri: third_party://tokengs
+    env_uri: env://tokengs
+    required_files: [tokengs/evaluate.py, tokengs/options.py, pyproject.toml]
+    license: {declared: Apache-2.0, evidence: checkout/LICENSE}
+    weights:
+      mode: public_huggingface_safetensors
+      remote_available: true
+      source: https://huggingface.co/jiaweir/tokengs
+      artifact: checkpoints_26.06/kubric_dyn.safetensors
+    input_schema: DL3DV static or Kubric dynamic multi-view images, cameras and input-frame depth
+    output_schema: static and dynamic Gaussian tokens with emergent scene flow
+    gpu_requirement: {minimum_vram_mib: 16000, current_host_supported: true, cuda: "12.6+"}
+    adapter_cost: high_driving_camera_and_domain_adapter
+    adapter_possible: true
+    selected_role: secondary_feed_forward_schema_reference
+
+  - id: dggt
+    kind: feed_forward
+    paper: "DGGT: Feedforward 4D Reconstruction of Dynamic Driving Scenes using Unposed Images"
+    official_source: https://github.com/xiaomi-research/dggt
+    expected_commit: a3276d2bbe4cbb03bcc117830b1836110a27adeb
+    repo_uri: third_party://dggt
+    env_uri: env://dggt
+    required_files: [demo.py]
+    license: {declared: CC-BY-NC-4.0, evidence: frozen_historical_source_audit}
+    weights:
+      mode: public_model_previously_executed_then_cleaned
+      remote_available: true
+      revision: 735ac9a6486057b1eb886c33a8c6dc79e0b43214
+    input_schema: one or three unposed nuScenes camera views in an 18-window sequence
+    output_schema: dynamic 4D reconstruction tensors and rendered target views
+    gpu_requirement: {minimum_vram_mib: 16000, current_host_supported: true}
+    adapter_cost: medium_restore_or_parse_frozen_outputs
+    adapter_possible: true
+    allow_frozen_output_adapter: true
+    selected_role: fallback_feed_forward_frozen_output_adapter
+
+  - id: instant_nurec
+    kind: audit_only
+    paper: "Instant NuRec: Feed-Forward 3D Gaussian Reconstruction from Driving Logs"
+    official_source: https://github.com/NVIDIA/instant-nurec
+    expected_commit: 1ce2288e646548e61fea6100bc58de3acd4bc8d0
+    repo_uri: third_party://instant_nurec
+    env_uri: env://instant_nurec
+    required_files: [run_inference.py]
+    license: {declared: Apache-2.0, evidence: checkout/LICENSE.txt}
+    weights: {mode: gated_huggingface_model, remote_available: false}
+    input_schema: licensed NCore V4 calibrated camera clip
+    output_schema: standalone static Gaussian PLY and sky cubemap sidecar; full layered research output is not exported
+    gpu_requirement: {minimum_vram_mib: 24000, current_host_supported: conditional}
+    adapter_cost: high_license_input_and_export_scope_gap
+    selected_role: conditional_audit_only
