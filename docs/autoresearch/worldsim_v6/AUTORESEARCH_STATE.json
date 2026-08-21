@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:53:00Z",
+  "updated_at_utc": "2026-08-21T12:03:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 13,
-  "active_task": "WS-V6-R12-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R12-003",
-  "candidate": "real_streetgs_scene_dynamic_logsim_replay",
+  "iteration": 14,
+  "active_task": "WS-V6-R13-WORLDSIM-01",
+  "active_hypothesis": "WS-V6-H-R13-001",
+  "candidate": "verified_static_chunk_worldspace_lift",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "a95af0cc5e5f7ac866df5deaefc0c68824cb225f7b83235840d3e9402a0c257c",
+  "dev_artifact_hash": "b085713c549812f1787a3ffb913d9675b2db78bb8132f409ae9defd140e33bea",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "5f3bb62dae9c3eb50609abb94b42eab65f612bb19142e203d54dcf449d52fd18",
-  "last_reflection_id": "WS-V6-REFL-0015",
+  "last_reflection_id": "WS-V6-REFL-0016",
   "last_completed": {
     "task_id": "WS-V6-R12-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T114757Z__dynamic-logsim-s20260821-r1",
-    "artifact_sha256": "a95af0cc5e5f7ac866df5deaefc0c68824cb225f7b83235840d3e9402a0c257c"
+    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T115113Z__real-dynamic-logsim-s20260821-r1",
+    "artifact_sha256": "b085713c549812f1787a3ffb913d9675b2db78bb8132f409ae9defd140e33bea"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -39,6 +39,7 @@
     "r11_typed_bake": "done_accepted_development_static_only",
     "r12_static_sensor_logsim": "done_accepted_development_static_scope",
     "r12_dynamic_fixture_logsim": "done_accepted_development_conformance_fixture",
+    "r12_real_dynamic_logsim": "done_accepted_development_real_scene_scope",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -47,8 +48,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "replay_real_streetgs_23_actor_196_timestamp_scene_twice",
-    "measure_exact_trajectory_actor_semantic_and_collision_outputs",
-    "retain_sensor_calibration_and_event_abstain_then_decide_r13_scope"
+    "lift_two_verified_static_chunks_to_world_coordinates",
+    "project_world_chunks_across_six_route_deviations_and_compare_four_methods",
+    "measure_route_area_false_safe_photo_geometry_and_preserve_other_abstains"
   ]
 }
