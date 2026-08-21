@@ -1,0 +1,41 @@
+schema_version: worldsim_v6.r88_selective_perception_runtime_gate.v1
+task_id: WS-V6-R88-SELECTIVE-PERCEPTION-RUNTIME-GATE-01
+hypothesis_id: WS-V6-H-R88-001
+seed: 20260821
+sources:
+  r86_run: runs://worldsim_v6/WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01/20260821T222429Z__three-actor-full-episode-s20260821-r1
+  r86_manifest_sha256: 4ddbb72e335d8ede97a28f7d7c687bf3b7695508f5e58410195cab640559af98
+  r86_gate_sha256: e2d540bbc2a5a89ad258ff9cb2b81d7565ce8d4d24835ce4769f28c7795664a6
+  r86_full_episode_sensor_effect_sha256: 7c83c16ec6b256a64a3259138f62fd83fdbcad2deeec5e2ae10d5f1da8fb0ebc
+  r87_run: runs://worldsim_v6/WS-V6-R87-FULL-EPISODE-PERCEPTION-IMPACT-01/20260821T224421Z__full-episode-perception-s20260821-r1
+  r87_manifest_sha256: 62a510f6be7a584f962dd236f2196427e44958a272e772b508cf1127d4b7012c
+  r87_gate_sha256: dbd150871d659c4cd008c0223e00b23947a444c4c8f5f55632052a14d3d83891
+  r87_summary_sha256: c6d0deac17ea08fe0c0b7a669e6a3a0b3067c8cd7a341db00138b2acbee9b5f8
+  r87_full_episode_perception_impact_sha256: dca14147dae2addc6edced0751009f9e3da1638fdb6df0933153531a302ca2f0
+protocol:
+  frame_start: 0
+  frame_stop_exclusive: 196
+  split_modulus: 4
+  holdout_remainders: [2]
+  expected_calibration_count: 147
+  expected_holdout_count: 49
+  minimum_changed_label_pixels_for_target: 1
+  fixed_visible_threshold_pixels: 256
+thresholds:
+  minimum_holdout_precision: 0.95
+  minimum_holdout_recall: 0.95
+  minimum_holdout_f1: 0.95
+  minimum_skip_fraction_vs_any_active: 0.10
+  metric_tolerance: 0.000000000001
+resources:
+  device: cpu
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_selective_runtime_gate_for_triggering_expensive_frozen_perception_checks
+  - threshold_is_selected_only_on147_calibration_frames_and_evaluated_on49_disjoint_holdout_frames
+  - feature_is_compiler_owned_edited_vs_logged_rgb_changed_pixel_count
+  - target_is_any_frozen_deeplab_label_state_change_not_semantic_correctness
+  - compares_fixed256_visibility_any_active_lifecycle_and_all_three_active_lifecycle_baselines
+  - reports_holdout_precision_recall_f1_and_expensive_invocation_skip_fraction
+  - no_neural_training_local_causality_physics_planning_safety_or_confirmation_claim
