@@ -15,6 +15,7 @@ from typing import Any, Mapping
 import numpy as np
 import yaml
 from PIL import Image
+from scipy.ndimage import distance_transform_edt
 
 
 TASK_ID = "WS-V6-R13-WORLDSIM-01"
@@ -89,6 +90,33 @@ def _resize_depth(value: np.ndarray, width: int, height: int) -> np.ndarray:
         raise R13ExperimentError(f"depth plane 形状非法：{value.shape}")
     image = Image.fromarray(value.astype(np.float32), mode="F")
     return np.asarray(image.resize((width, height), Image.Resampling.NEAREST), dtype=np.float32)
+
+
+def _metric_lidar_depth(
+    value: np.ndarray, width: int, height: int, maximum_fill_distance_px: float
+) -> tuple[np.ndarray, np.ndarray]:
+    if value.ndim == 3 and value.shape[-1] == 1:
+        value = value[..., 0]
+    if value.ndim != 2:
+        raise R13ExperimentError(f"LiDAR depth plane 形状非法：{value.shape}")
+    source_y, source_x = np.nonzero(np.isfinite(value) & (value > 1.0e-6))
+    if source_x.size == 0:
+        raise R13ExperimentError("logged LiDAR depth 为空")
+    target_x = np.rint(source_x * (width - 1) / max(value.shape[1] - 1, 1)).astype(np.int64)
+    target_y = np.rint(source_y * (height - 1) / max(value.shape[0] - 1, 1)).astype(np.int64)
+    target_z = value[source_y, source_x].astype(np.float32)
+    linear = target_y * width + target_x
+    order = np.lexsort((target_z, linear))
+    ordered_linear = linear[order]
+    first = np.r_[True, ordered_linear[1:] != ordered_linear[:-1]]
+    selected = order[first]
+    sparse = np.full((height, width), np.nan, dtype=np.float32)
+    sparse[target_y[selected], target_x[selected]] = target_z[selected]
+    observed = np.isfinite(sparse)
+    distance, nearest = distance_transform_edt(~observed, return_indices=True)
+    filled = sparse[nearest[0], nearest[1]]
+    valid = distance <= float(maximum_fill_distance_px)
+    return filled.astype(np.float32), valid
 
 
 def _render_index(root: Path) -> dict[tuple[int, str, float], Path]:
@@ -272,14 +300,23 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 v6_rgb = np.asarray(archive["rgb_uint8"], dtype=np.uint8).astype(np.float32) / 255.0
             verifier_input = cross / "verifier_inputs" / f"{case_id}.npz"
             with np.load(verifier_input, allow_pickle=False) as archive:
-                depth = np.asarray(archive["target_depth"], dtype=np.float32)
-                depth_valid = np.asarray(archive["target_depth_valid"], dtype=bool)
+                verifier_depth = np.asarray(archive["target_depth"], dtype=np.float32)
+                verifier_depth_valid = np.asarray(archive["target_depth_valid"], dtype=bool)
             with np.load(street_root / f"support_frame_{frame:03d}.npz", allow_pickle=False) as support:
                 base_height, base_width = np.asarray(support["cam0_rgb"]).shape[:2]
                 intrinsics = np.asarray(support["cam0_intrinsics"], dtype=np.float64).copy()
                 intrinsics[0] *= width / base_width
                 intrinsics[1] *= height / base_height
                 camera_to_world = np.asarray(support["cam0_camera_to_world"], dtype=np.float64)
+                if config["world_lift"]["depth_source"] == "logged_lidar_nearest_within_radius":
+                    depth, depth_valid = _metric_lidar_depth(
+                        np.asarray(support["cam0_lidar_depth"]),
+                        width,
+                        height,
+                        float(config["world_lift"]["maximum_lidar_fill_distance_px"]),
+                    )
+                else:
+                    depth, depth_valid = verifier_depth, verifier_depth_valid
             points_world, keep = _lift_points(
                 coordinates, depth, depth_valid, intrinsics, camera_to_world
             )

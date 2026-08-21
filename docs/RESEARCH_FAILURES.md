@@ -3345,6 +3345,17 @@ fail-closed。该 renderer 保存合法的 `H×W×1` float depth，而 evaluator
 这与 V6-F13 的 plane normalization 原则一致，但本次记录覆盖独立的 R13 evaluator。不得改 depth 数值、插值模式、
 样本、四方法、阈值或 gate，修复后以新 run 重试。
 
+### V6-F31：verifier 相对深度不得直接解释为 WorldSim 米制相机 z
+
+H-R13-001 canonical rejected run `20260821T120310Z__worldspace-route-s20260821-r1` 成功把两个 R11 chunk
+封装为 58,273 个所谓世界点，但估计总面积仅 `0.01993 m²`，且 12/12 个非零路线偏离均为零投影覆盖，
+usable lateral route 为 `0.0 m`。V6 的 matched false-safe 仍为 `0/3`，相对 naive 的降低为 `0.8214`，
+所以拒绝原因不是安全 gate，而是 R9 depth 只为仿射对齐后的 verifier 几何比较服务，不能直接当作米制 z 做相机平移。
+
+H-R13-001 按预注册门槛正式 `rejected`，不得通过放宽 256-pixel、0.12 photo 或 0.30 geometry 门槛恢复。
+H-R13-002 只替换深度来源：使用同帧冻结 logged LiDAR metric depth，并限定最近填充距离不超过 8 个
+512×288 像素；世界提升、四方法、12 个偏离、评估阈值、false-safe gate 和资源合同全部保持不变。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

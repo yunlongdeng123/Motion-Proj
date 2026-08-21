@@ -1,0 +1,84 @@
+schema_version: worldsim_v6.r13_worldspace_route.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-002
+seed: 20260821
+sources:
+  r11_run: runs://worldsim_v6/WS-V6-R11-BAKE-01/20260821T112840Z__typed-bake-s20260821-r1
+  r11_manifest_sha256: 5b8ba68ee50860a875583463217e35992fbe556bdb3330c28ba99747c85356de
+  r11_package_manifest_sha256: f8fcc6b72eed946fd99c2359b50e4456efb63ca8867ecf91de93a5a85c013432
+  r9_cross_run: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_cross_manifest_sha256: 212c12ccbc83a7dd987c4dcc0e36cbaa61f1268fa3f3473dfd9dbd92fba7ffde
+  r9_big_lama_run: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1
+  r9_big_lama_manifest_sha256: 88fe0a97c9354ab75f164a84976c28f346151e2898997766502c88f3d1ee725f
+  r9_big_lama_arms_sha256: b49461a5ecea6345ebb687943bb1694ac924d02e517b5cff9ceac5ff5f352336
+  r10_run: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+  r10_manifest_sha256: 65792d153e7612f8abc16dac5cecd789860bd440fc6847d1449722a4b98b7060
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  ad_gs_render_map_sha256: 7d461f7a3ac9c67478ea5bf97a1b54065d1c4430a50dce4f536921185e75081b
+  streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  support_frame_sha256:
+    52: c8bb2f3338265f47a7b9aaf20afb4eaa6e51822a0ba72153d01d6437316a9e38
+    57: 82994e06a5eaf6b528d7b2a8e39fab73458e981598d9ad232e5f2d78f562b337
+cohort:
+  partition: development
+  confirmation_locked: true
+  scene: scene-0242
+  target_frontend: ad_gs
+  truth_proxy_frontend: streetgs
+  frame_indices: [52, 57]
+  case_ids:
+    - scene-0242__ad_gs__f052__missing_route_support
+    - scene-0242__ad_gs__f057__missing_route_support
+  route_deviations:
+    - {id: lateral_0.5m, variant: camera_lateral, lateral_m: 0.5, forward_m: 0.0}
+    - {id: lateral_1m, variant: camera_lateral, lateral_m: 1.0, forward_m: 0.0}
+    - {id: lateral_2m, variant: camera_lateral, lateral_m: 2.0, forward_m: 0.0}
+    - {id: lateral_3m, variant: camera_lateral, lateral_m: 3.0, forward_m: 0.0}
+    - {id: lateral_5m, variant: camera_lateral, lateral_m: 5.0, forward_m: 0.0}
+    - {id: forward_2m, variant: camera_forward_extension, lateral_m: 0.0, forward_m: 2.0}
+  expected_case_deviation_count: 12
+methods:
+  - native_reconstruction_only
+  - generator_only_big_lama
+  - reconstruction_plus_naive_generation
+  - v6_generate_verify_bake
+world_lift:
+  resolution_px: [512, 288]
+  depth_source: logged_lidar_nearest_within_radius
+  calibration_source: frozen_r3_logged_support
+  maximum_lidar_fill_distance_px: 8.0
+  rasterizer: nearest_pixel_z_buffer
+  surface_area_estimator: sum_z_squared_over_fx_fy
+metrics:
+  minimum_projected_pixels: 256
+  maximum_photo_mae: 0.12
+  maximum_geometry_mean_relative_error: 0.30
+  minimum_v6_passing_case_deviations: 2
+  minimum_usable_lateral_route_m: 0.5
+  maximum_v6_false_safe_rate: 0.0
+  minimum_false_safe_reduction_vs_naive: 0.25
+gate:
+  require_all_four_methods: true
+  require_world_space_chunks: true
+  require_repeat_exact: true
+  require_source_immutable: true
+  require_no_training_or_confirmation: true
+unsupported_metrics:
+  perception_failure: ABSTAIN_NO_OFFROUTE_PIXEL_LABEL_GROUND_TRUTH
+  planning_completion: ABSTAIN_NO_PLANNER
+  collision_correctness: ABSTAIN_STATIC_ROUTE_CHUNK
+  temporal_consistency: ABSTAIN_TWO_SPARSE_KEYFRAMES_ONLY
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_cross_frontend_truth_proxy
+  - logged_lidar_metric_depth_with_bounded_nearest_fill
+  - point_lifted_static_chunks_not_completed_3d_surfaces
+  - offroute_projection_functional_test_not_novel_view_ground_truth
+  - only_depth_source_changes_from_rejected_h_r13_001
+  - planning_collision_perception_temporal_metrics_abstain
+  - no_closed_loop_or_safety_claim
+  - no_training
+  - no_confirmation_read

@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T12:03:00Z",
+  "updated_at_utc": "2026-08-21T12:10:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 14,
+  "iteration": 15,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-001",
-  "candidate": "verified_static_chunk_worldspace_lift",
+  "active_hypothesis": "WS-V6-H-R13-002",
+  "candidate": "logged_lidar_metric_worldspace_lift",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "b085713c549812f1787a3ffb913d9675b2db78bb8132f409ae9defd140e33bea",
+  "dev_artifact_hash": "aa07c31d4d8fcfd801694f8d65f20079e47f34be88e1f38549c37e7e86124e5f",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "693167700ffe983f83597f9e60204f0116354ce0cebaf5b7d01e7cdd54843807",
-  "last_reflection_id": "WS-V6-REFL-0016",
+  "failure_ledger_sha256": "853baff94da8797551cc5b5631e98d42724e3ef47bce709886efa1ba279b8412",
+  "last_reflection_id": "WS-V6-REFL-0017",
   "last_completed": {
-    "task_id": "WS-V6-R12-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T115113Z__real-dynamic-logsim-s20260821-r1",
-    "artifact_sha256": "b085713c549812f1787a3ffb913d9675b2db78bb8132f409ae9defd140e33bea"
+    "task_id": "WS-V6-R13-WORLDSIM-01",
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T120310Z__worldspace-route-s20260821-r1",
+    "artifact_sha256": "aa07c31d4d8fcfd801694f8d65f20079e47f34be88e1f38549c37e7e86124e5f"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -40,6 +40,7 @@
     "r12_static_sensor_logsim": "done_accepted_development_static_scope",
     "r12_dynamic_fixture_logsim": "done_accepted_development_conformance_fixture",
     "r12_real_dynamic_logsim": "done_accepted_development_real_scene_scope",
+    "r13_relative_depth_point_lift": "done_hypothesis_rejected_zero_offroute_coverage",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -48,8 +49,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "lift_two_verified_static_chunks_to_world_coordinates",
-    "project_world_chunks_across_six_route_deviations_and_compare_four_methods",
-    "measure_route_area_false_safe_photo_geometry_and_preserve_other_abstains"
+    "replace_relative_verifier_depth_with_bounded_logged_lidar_metric_depth",
+    "rerun_same_two_chunks_six_route_deviations_and_four_methods",
+    "retain_all_photo_geometry_false_safe_and_abstention_thresholds"
   ]
 }
