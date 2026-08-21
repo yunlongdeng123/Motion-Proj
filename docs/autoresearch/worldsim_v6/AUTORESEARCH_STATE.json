@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T16:16:00Z",
+  "updated_at_utc": "2026-08-21T16:21:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 61,
-  "active_task": "WS-V6-R30-TYPED-ACTOR-BAKE-01",
-  "active_hypothesis": "WS-V6-H-R30-001",
-  "candidate": "standalone_actor_observation_plane_appearance_asset",
+  "iteration": 62,
+  "active_task": "WS-V6-R31-ACTOR-APPEARANCE-LOGSIM-01",
+  "active_hypothesis": "WS-V6-H-R31-001",
+  "candidate": "deterministic_actor_appearance_rgb_and_perception_replay",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "88d1e4e9ba2a903c691ca772e57344c2795d786b87129dc961897814f5556a5b",
+  "dev_artifact_hash": "68e4494a42d100e1cba34a0114b4283db023b0ea8377dbc910c86a5cbab3378b",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "f62b554a87e64ff2c30fd2b004ea3a2267cdf669c13d86e5ae276f7e4da586a3",
-  "last_reflection_id": "WS-V6-REFL-0063",
+  "last_reflection_id": "WS-V6-REFL-0064",
   "last_completed": {
-    "task_id": "WS-V6-R29-ACTOR-FACTOR-TRUTH-REPORTED-01",
-    "run": "run://worldsim_v6/WS-V6-R29-ACTOR-FACTOR-TRUTH-REPORTED-01/20260821T161358Z__three-factor-s20260821-r1",
-    "artifact_sha256": "88d1e4e9ba2a903c691ca772e57344c2795d786b87129dc961897814f5556a5b"
+    "task_id": "WS-V6-R30-TYPED-ACTOR-BAKE-01",
+    "run": "run://worldsim_v6/WS-V6-R30-TYPED-ACTOR-BAKE-01/20260821T161849Z__typed-actor-bake-s20260821-r1",
+    "artifact_sha256": "68e4494a42d100e1cba34a0114b4283db023b0ea8377dbc910c86a5cbab3378b"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -89,7 +89,8 @@
     "r27_actor_three_factor_verification": "done_rejected_invalid_cross_factor_truth_identity_gate",
     "r28_actor_factor_truth_product": "done_rejected_guessed_exact_truth_diversity_count",
     "r29_actor_factor_truth_reported": "done_accepted_development_three_factor_product",
-    "r30_typed_actor_bake": "active_pre_registered_appearance_only",
+    "r30_typed_actor_bake": "done_accepted_development_appearance_only_trajectory_abstain",
+    "r31_actor_appearance_logsim": "active_pre_registered_bounded_replay",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -98,8 +99,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r29_acceptance_and_r30_typed_actor_bake",
-    "bake_one_standalone_actor_appearance_payload_with_exact_reload",
-    "run_actor_logsim_without_trajectory_claim_if_r30_passes"
+    "commit_r30_acceptance_and_r31_actor_logsim",
+    "replay_one_actor_appearance_asset_twice_with_exact_rgb",
+    "measure_frozen_perception_repeatability_and_preserve_unsupported_abstains"
   ]
 }

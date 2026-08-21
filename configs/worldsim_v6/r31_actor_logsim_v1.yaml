@@ -1,0 +1,59 @@
+schema_version: worldsim_v6.r31_actor_logsim.v1
+task_id: WS-V6-R31-ACTOR-APPEARANCE-LOGSIM-01
+hypothesis_id: WS-V6-H-R31-001
+seed: 20260821
+sources:
+  r11_run: runs://worldsim_v6/WS-V6-R30-TYPED-ACTOR-BAKE-01/20260821T161849Z__typed-actor-bake-s20260821-r1
+  r11_manifest_sha256: 6e12e6de39c37b9f26de077d943e5f87e79130aac0228bf2d3334714d8fd54b4
+  r11_gate_file: R30_GATE.json
+  r11_gate_sha256: 68e4494a42d100e1cba34a0114b4283db023b0ea8377dbc910c86a5cbab3378b
+  r11_package_manifest_sha256: 7530860766f0642b8cfb8f4072c246f173507f456d248c3831e65d57faca1cd7
+  r9_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  proposal_directory: typed_temporal_static_cross_frontend_actor_reconstruction_proposals
+verifier_model:
+  id: Koushim/deeplabv3-resnet50-cityscapes
+  revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+  license: Apache-2.0
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_actor_appearance_asset_count: 1
+  replay_count: 2
+replay:
+  coordinate_space: observation_plane_512x288
+  sensor_stream: rgb
+  expected_sensor_mae: 0.0
+  require_source_proposal_exact: true
+  require_repeat_exact: true
+  require_perception_label_exact: true
+unsupported_factors:
+  trajectory: ABSTAIN_NO_DYNAMICS_VERIFIER
+  actor_identity: ABSTAIN_CASE_SCOPED_UNRESOLVED
+  actor_3d_pose: ABSTAIN_NOT_REPRESENTED
+  novel_view: ABSTAIN_NOT_REPRESENTED
+  event: ABSTAIN_NOT_REPRESENTED
+  sensor_calibration: ABSTAIN_NOT_REPRESENTED
+  collision: ABSTAIN_NOT_REPRESENTED
+gate:
+  require_all_actor_appearance_assets_replayed: true
+  require_sensor_exact: true
+  require_perception_repeat_exact: true
+  require_source_immutable: true
+  require_no_generator_runtime_dependency: true
+  require_trajectory_scope_abstain: true
+  require_unsupported_factors_abstain: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_actor_appearance_rgb_sensor_logsim_only
+  - exact_replay_of_baked_observation_plane_actor_appearance
+  - perception_repeatability_not_semantic_correctness
+  - actor_identity_pose_novel_view_trajectory_event_calibration_collision_abstain
+  - no_closed_loop_or_safety_claim
+  - no_training_or_confirmation_read
