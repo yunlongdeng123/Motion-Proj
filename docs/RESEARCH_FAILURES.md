@@ -3653,3 +3653,9 @@ H-R43-001 首个 formal run `20260821T175434Z__selected-sensor-s20260821-r1` 已
 H-R44-001 canonical run `20260821T180210Z__verified-bake-s20260821-r1` 成功生成自包含 68MB package，所有非 translation actor fields byte-exact、shifted means content-addressed、manifest 完整、双次 bake byte-exact，且 typed validity/abstention 全部保留。但把 `[-1,0,-0.5]` 直接加到原始 float32 world means 后，反算 translation 的最大误差为 `1.9073486328125e-6m`，超过预注册 `1e-6m`，因此 run 正式 `rejected`。
 
 不得把阈值放宽到 2e-6，也不得用舍入后的数组冒充精确 trajectory ownership。H-R45-001 改变表示机制：R35 的全部 actor arrays（包括 base world means）原样 byte-exact 保存，proposal translation 由独立 content-addressed float64 `T_delta_world` trajectory 拥有；runtime 明确按齐次变换组合 base world means。这样 edit 是显式、持久、可验证的，又不迫使高精度 transform 被吸收到 float32 geometry。R44 rejected package 仅保留为失败证据，不得供 runtime 使用。
+
+### V6-F70：trajectory event identity 不能要求每个 timestamp 的 state content hash 唯一
+
+H-R46-001 canonical run `20260821T181019Z__detached-logsim-s20260821-r1` 从完整复制的 detached R45 package 独立加载，196 行/每行 12,390 primitives、组合误差 `0`、导数不变误差 `1.42e-14`、两次 replay aggregate SHA256 完全相同，且 source package 在 copy 后未被 loader 使用。但预注册错误要求 196 个 state content hashes 全部不同；实际只有 `142` 个唯一状态。诊断显示唯一重复组覆盖 `14.1s` 到 `19.5s` 共 `55` 个 timestamp，表示同一个 stationary geometry state 被多个合法 trajectory events 引用。run 因此正式 `rejected`。
+
+不得给 state bytes 掺入 timestamp 以伪造不同 state，也不得删除静止尾段。H-R47-001 明确分离两种身份：`materialized_state_sha256` 继续只哈希几何内容、允许并精确报告 142 个唯一状态；`trajectory_event_sha256` 哈希 sequence index、timestamp、visibility、proposal id 与 state hash，必须对196个事件全部唯一。重复 state group 与55次静止尾段必须原样保留，detached replay、组合精度和 abstention 合同不变。

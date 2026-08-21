@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T18:08:50Z",
+  "updated_at_utc": "2026-08-21T18:10:49Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 82,
-  "active_task": "WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R46-001",
-  "candidate": "detached_logsim_for_transform_owned_actor_package",
+  "iteration": 83,
+  "active_task": "WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01",
+  "active_hypothesis": "WS-V6-H-R47-001",
+  "candidate": "detached_logsim_with_separate_state_and_event_identity",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "e66994e3b0a5626ce0957f2f1249a002d1a4607590f0d15795143cbb4348bf5d",
-  "last_reflection_id": "WS-V6-REFL-0084",
+  "failure_ledger_sha256": "a86f884f47283a54407439e81b85d64794fe3e1dfe1295470614e66b8f6366fa",
+  "last_reflection_id": "WS-V6-REFL-0085",
   "last_completed": {
-    "task_id": "WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01",
-    "run": "run://worldsim_v6/WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01/20260821T180636Z__transform-bake-s20260821-r1",
-    "artifact_sha256": "8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff"
+    "task_id": "WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01",
+    "run": "run://worldsim_v6/WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01/20260821T181019Z__detached-logsim-s20260821-r1",
+    "artifact_sha256": "2029e2c7a4288f7c97af6fdce2241cd0344a27ab3d2b44eec19ecbd14e55c3ec"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -105,7 +105,8 @@
     "r43_selected_actor_proposal_sensor": "done_accepted_development_native_renderer_conformance",
     "r44_verified_actor_proposal_bake": "done_rejected_v6_f69_float32_materialized_translation_error",
     "r45_transform_owned_actor_bake": "done_accepted_development_exact_float64_transform_ownership",
-    "r46_detached_transform_package_logsim": "active_pre_registered",
+    "r46_detached_transform_package_logsim": "done_rejected_v6_f70_state_event_identity_conflation",
+    "r47_detached_state_event_logsim": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -114,8 +115,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_and_push_r45_acceptance_and_r46_detached_logsim",
-    "copy_package_then_replay_196_states_twice_from_detached_root_only",
-    "if_replay_accepted_integrate_detached_package_with_sensor_runtime"
+    "commit_r46_rejection_and_r47_state_event_identity_schema",
+    "replay_196_detached_events_twice_preserving_142_unique_states",
+    "if_accepted_integrate_detached_package_with_sensor_runtime"
   ]
 }

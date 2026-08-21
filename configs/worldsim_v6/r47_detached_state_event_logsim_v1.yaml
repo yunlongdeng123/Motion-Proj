@@ -1,0 +1,38 @@
+schema_version: worldsim_v6.r47_detached_state_event_logsim.v1
+task_id: WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01
+hypothesis_id: WS-V6-H-R47-001
+seed: 20260821
+sources:
+  r46_run: runs://worldsim_v6/WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01/20260821T181019Z__detached-logsim-s20260821-r1
+  r46_manifest_sha256: 55fc13f29c30b95a1fede1aa218b4f61d895bbb16a7d2194ad1a15eade8d8f2b
+  r46_gate_sha256: 2029e2c7a4288f7c97af6fdce2241cd0344a27ab3d2b44eec19ecbd14e55c3ec
+  r46_summary_sha256: b64f1a259a4fc63222dc74aa08cf348f4cc95f3e78fd0f2ba1691e1a20554bce
+  r46_replay_trajectory_sha256: 138bb8f82980de3aab341a0def975aa1c9a233c8cdd14a5d2a7fe34c518d5307
+  r46_replay_audit_sha256: e22b1af89d46f350597c39388a70a57887f2781693a03d894b09e56aab3f0dfa
+  r45_run: runs://worldsim_v6/WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01/20260821T180636Z__transform-bake-s20260821-r1
+  r45_gate_sha256: 8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff
+  r45_package_manifest_sha256: ea093368cfc4707db8b2c7ede1a6323c7702b6159219b6a3e02f13adc74cf173
+replay_contract:
+  asset_id: actor_0000
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  expected_trajectory_event_count: 196
+  expected_unique_state_count: 142
+  expected_duplicate_state_group_count: 1
+  expected_maximum_state_repetitions: 55
+  stationary_tail_first_timestamp_us: 14100000
+  stationary_tail_last_timestamp_us: 19500000
+  maximum_composition_error_m: 0.0
+  maximum_derivative_invariance_error: 0.000000000001
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_detached_logsim_with_separate_state_content_and_trajectory_event_identity
+  - repeated_stationary_state_content_is_preserved_not_rewritten
+  - every_timestamp_event_is_uniquely_bound_to_sequence_time_visibility_proposal_and_state
+  - replay_consistency_does_not_promote_semantic_physical_planning_or_safety_truth
+  - sensor_runtime_is_deferred_to_the_next_stage
+  - no_training_or_confirmation_read
+
