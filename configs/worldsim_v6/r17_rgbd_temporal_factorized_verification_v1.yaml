@@ -1,0 +1,55 @@
+schema_version: worldsim_v6.r17_rgbd_temporal_factorized_verification.v1
+task_id: WS-V6-R17-RGBD-TEMPORAL-FACTORIZED-VERIFICATION-01
+hypothesis_id: WS-V6-H-R17-001
+seed: 20260821
+sources:
+  r9_run: runs://worldsim_v6/WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01/20260821T150012Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 933232aab82ff9c62e7d559b4571274c7613a8dfc48ab7441c96b2d4dafbdac9
+  gate_file: R16_GATE.json
+  r9_gate_sha256: 297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7
+  r9_per_case_arms_sha256: 6f40fa4b0b8b6c13d0da6709951b5c464df1fdc60646655c808c32d97d1e949b
+  r9_cases_sha256: 3610cec0cd8f07c0069216c8a183bbaf768819193dab0c4e5c6e6f6260c4f3ef
+  r9_arm_summaries_sha256: 1f2d110b72b68890959938f6618dc5d3f9dab206d520bfab3859265da28476ad
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_case_count: 28
+selected_arms:
+  - id: P1
+    factor: photo
+    r9_status: eligible_for_r10
+  - id: P2
+    factor: geometry
+    r9_status: eligible_for_r10
+excluded_arms:
+  - id: P3
+    factor: semantic
+    reason: r16_false_safe_rate_0.1667_exceeds_0.10
+  - id: P4
+    factor: dynamics
+    reason: temporal_source_is_not_independent_flow_or_trajectory_verifier
+fusion:
+  accept: all_selected_arms_accept
+  reject: all_selected_arms_reject
+  abstain: selected_arms_disagree_or_any_selected_arm_abstains
+  joint_truth: photo_truth_safe_and_geometry_truth_safe
+  semantic_validity: ABSTAIN
+  dynamics_validity: ABSTAIN
+gate:
+  minimum_accept_coverage: 0.05
+  maximum_false_safe_rate: 0.0
+  minimum_false_safe_reduction_vs_p0: 0.25
+  require_every_accept_joint_truth_safe: true
+  require_disagreement_to_abstain: true
+  require_only_r9_eligible_arms: true
+  require_non_target_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - matched_development_factorized_fusion_of_rgbd_temporal_proposals
+  - photo_and_geometry_only
+  - semantic_and_dynamics_explicit_abstain
+  - no_verified_trajectory_length_claim
+  - no_bake_training_or_confirmation_read

@@ -15,7 +15,11 @@ import yaml
 
 
 TASK_ID = "WS-V6-R10-FACTORIZED-VERIFICATION-01"
-ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R15-TEMPORAL-FACTORIZED-VERIFICATION-01"}
+ALLOWED_TASK_IDS = {
+    TASK_ID,
+    "WS-V6-R15-TEMPORAL-FACTORIZED-VERIFICATION-01",
+    "WS-V6-R17-RGBD-TEMPORAL-FACTORIZED-VERIFICATION-01",
+}
 
 
 class R10ExperimentError(RuntimeError):
@@ -229,7 +233,11 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             if checks["passed"]
             else "reject_or_pivot_factorized_verification",
         }
-        gate_name = "R10_GATE.json" if task_id == TASK_ID else "R15_GATE.json"
+        gate_name = {
+            TASK_ID: "R10_GATE.json",
+            "WS-V6-R15-TEMPORAL-FACTORIZED-VERIFICATION-01": "R15_GATE.json",
+            "WS-V6-R17-RGBD-TEMPORAL-FACTORIZED-VERIFICATION-01": "R17_GATE.json",
+        }[task_id]
         _write_json(run_dir / gate_name, gate)
         metrics = {
             "schema_version": "worldsim_v6.r10_metrics.v1",
