@@ -1,0 +1,34 @@
+schema_version: worldsim_v6.r46_detached_transform_package_logsim.v1
+task_id: WS-V6-R46-DETACHED-TRANSFORM-PACKAGE-LOGSIM-01
+hypothesis_id: WS-V6-H-R46-001
+seed: 20260821
+sources:
+  r45_run: runs://worldsim_v6/WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01/20260821T180636Z__transform-bake-s20260821-r1
+  r45_manifest_sha256: 90ccb0e05c4028096f0290b5843f5267ae8e8f38699af03711eb2e2b3571d714
+  r45_gate_sha256: 8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff
+  r45_summary_sha256: 09aadab29030571a776fa7348bf59ae4e92e8e85fd78529362b120c7e0c9af56
+  r45_package_manifest_sha256: ea093368cfc4707db8b2c7ede1a6323c7702b6159219b6a3e02f13adc74cf173
+  r45_trajectory_geometry_sha256: 874a13638486db28e541db96128430280f46a30293f56fdb7e9355572f00b347
+  r45_runtime_contract_sha256: 88b891772664b5f7da9cb3c86234d5ac4af49333c0cf8ed9b9e697f8c2c0faeb
+  r45_validity_sha256: c9821aa1be781d9596d0747e23ad9afc69b0676dfa5c81d3244abc8449eb4ec2
+  r45_provenance_sha256: 1d97b5e60b1ece7b48f85dce3f1ea46c6061890de7ab1ffeae89e249d68f6b80
+replay_contract:
+  asset_id: actor_0000
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  expected_trajectory_rows: 196
+  expected_actor_primitives: 12390
+  maximum_composition_error_m: 0.0
+  maximum_derivative_invariance_error: 0.000000000001
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_detached_logsim_of_transform_owned_verified_actor_package
+  - replay_loads_only_the_detached_package_after_copy
+  - each_of_196_materialized_actor_states_has_a_deterministic_content_hash
+  - replay_consistency_does_not_promote_semantic_physical_planning_or_safety_truth
+  - sensor_runtime_is_deferred_to_the_next_stage
+  - no_training_or_confirmation_read
+
