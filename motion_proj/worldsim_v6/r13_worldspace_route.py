@@ -135,6 +135,8 @@ def _project_points(
     x = x[keep]
     y = y[keep]
     z = z[keep]
+    if source_index.size == 0:
+        return x, y, z.astype(np.float32), source_index
     linear = y * width + x
     order = np.lexsort((z, linear))
     ordered_linear = linear[order]

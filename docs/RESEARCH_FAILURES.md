@@ -3325,6 +3325,16 @@ R12 首个有 run 目录的正式实例 `20260821T114117Z__logsim-s20260821-r1` 
 修复只在启动感知子进程前加入这一确定性环境变量，继续保留 deterministic algorithms、同一 checkpoint、4 个输入、
 同一 cohort、阈值与资源上限。不得关闭确定性检查来换取通过；修复后新建独立 run 重试。
 
+### V6-F29：世界空间 z-buffer 必须把空视锥投影作为有效零覆盖结果
+
+R13 首个正式 run `20260821T120059Z__worldspace-route-s20260821-r1` 已完成两个 verified chunk 的世界坐标
+提升，但部分大幅路线偏离没有任何点落入目标视锥。初版 z-buffer 仍为零长度索引构造了长度 1 的首元素布尔 mask，
+触发 `IndexError`。该 run 保持 `blocked`，没有完整 baseline matrix、gate 或方法结论，也不是资源失败。
+
+修复只在 z-buffer 中对零个可见点直接返回空的 x/y/z/source-index；下游按预注册协议记录
+`projected_pixel_count=0`、指标不可用且 route-support fail。不得删掉这些偏离、降低分母或将空投影改写成 ABSTAIN。
+其余输入、深度、标定、四方法、阈值、gate 和资源合同均不变，并以独立 run 重试。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
