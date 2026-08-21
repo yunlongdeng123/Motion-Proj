@@ -1,0 +1,78 @@
+schema_version: worldsim_v6.r13_dynamic_edits.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-005
+seed: 20260821
+sources:
+  r12_run: runs://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T115113Z__real-dynamic-logsim-s20260821-r1
+  r12_manifest_sha256: ffa473175b342e8aa154b3f349073458032d37d74cea119d782432bdd55041d2
+  r12_gate_sha256: b085713c549812f1787a3ffb913d9675b2db78bb8132f409ae9defd140e33bea
+  r12_replay_sha256: 5aa3301ebe2654673b9d5e4fc21aeb86f86a0c3f33a074bf125dd2c8ebc7dd28
+  r2_run: runs://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1
+  sceneir_package: sceneir_packages/streetgs_scene0230
+  sceneir_package_manifest_sha256: 1ccc74cf6b39f1efbb02d5eceaad802b812bc6cdb7d0bd3d683b8ffb94a18f15
+  sceneir_document_sha256: 7008ce0f27d394725d1e075abd4d04372c8467bd139b68ba2a0439aa949fc912
+cohort:
+  partition: development_real_checkpoint_scene
+  confirmation_locked: true
+  expected_base_actor_count: 23
+  expected_timestamp_count: 196
+  expected_base_trajectory_rows: 4508
+  expected_base_collision_rows: 49588
+  expected_base_positive_collisions: 2902
+  repeat_count: 2
+edits:
+  - id: remove_actor_0017
+    type: actor_remove
+    actor_id: actor_0017
+    expected_actor_count: 22
+    expected_trajectory_rows: 4312
+    expected_collision_rows: 45276
+  - id: shift_actor_0017_x20m
+    type: actor_trajectory_translation
+    actor_id: actor_0017
+    translation_delta_m: [20.0, 0.0, 0.0]
+    expected_actor_count: 23
+    expected_trajectory_rows: 4508
+    expected_collision_rows: 49588
+  - id: add_density_clone_actor_0001_x1m
+    type: actor_add_clone
+    source_actor_id: actor_0001
+    new_actor_id: actor_cf_density_0001
+    translation_delta_m: [1.0, 0.0, 0.0]
+    expected_actor_count: 24
+    expected_trajectory_rows: 4704
+    expected_collision_rows: 54096
+    minimum_new_positive_collisions: 196
+methods:
+  - native_reconstruction_only
+  - generator_only
+  - reconstruction_plus_naive_edit
+  - v6_typed_generate_verify_bake
+gate:
+  require_all_three_v6_edits_accept: true
+  require_v6_false_safe_rate_zero: true
+  require_naive_false_safe_rate_one: true
+  require_unaffected_actor_state_exact: true
+  require_unaffected_collision_pairs_exact: true
+  require_collision_recomputed: true
+  require_temporal_consistency: true
+  require_repeat_exact: true
+  require_source_immutable: true
+unsupported_metrics:
+  route_length_and_world_area: ABSTAIN_STATIC_ROUTE_SCOPE_CLOSED_SEPARATELY
+  perception_failure: ABSTAIN_NO_RENDERED_COUNTERFACTUAL_SENSOR
+  planning_completion: ABSTAIN_NO_PLANNER
+  physical_collision_ground_truth: ABSTAIN_AABB_CONFORMANCE_ONLY
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_real_sceneir_typed_edit_conformance
+  - actor_remove_trajectory_translation_and_one_actor_density_addition
+  - collision_correctness_is_deterministic_aabb_dependency_recomputation_not_physics_truth
+  - native_and_generator_only_arms_abstain_without_typed_edit_state
+  - naive_arm_models_stale_dependency_acceptance_and_is_expected_false_safe
+  - no_rendered_sensor_perception_planning_or_closed_loop_claim
+  - no_training
+  - no_confirmation_read

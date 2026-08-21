@@ -3378,6 +3378,18 @@ LiDAR 投影和全部 12 个偏移的指标计算，但在汇总继承 H-R13-002
 0.30 visibility 合同、12 个偏移、质量阈值、false-safe 数值或资源合同。以后跨阶段消费结构化摘要时，必须把完整方法标识和
 字段名纳入配置/manifest 合同，禁止用人工缩写推断 schema。
 
+### V6-F34：删除式可见性筛选不能补齐远路线新暴露表面，且 5m 深度代理失去米制有效性
+
+H-R13-004 canonical rejected run `20260821T121956Z__worldspace-visibility-s20260821-r1` 使用冻结三相机
+logged LiDAR 在每个目标视角执行 4 像素/0.30 相对深度筛选。它保持共同 lateral route `3.0m`、精确复跑、源不可变和
+V6 false-safe `0.0`，但两帧 5m 几何 MRE 仍为 `9.0323/9.4071`，photo MAE 为 `0.1404/0.1495`，
+两帧均失败；5m 仍保留约 `78%` 的旧点，说明仅删除矛盾点并未提供新暴露表面。
+
+独立诊断还显示，5m 目标视角投影后的实测 LiDAR 中位 z 约 `13.17/13.34m`，而 StreetGS 目标 depth proxy 中位数仅
+`1.30/1.22`，该 proxy 在此外推距离不能作为米制几何真值。不得扫描 visibility 阈值或放宽 photo/geometry gate 来追逐
+这个失效代理。路线偏移结论固定为 H-R13-002 已验证的 lateral `3m`、forward `2m`；后续直接进入计划尚未覆盖的 actor
+add/remove、trajectory modification 与 traffic-density typed edit 实验。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
