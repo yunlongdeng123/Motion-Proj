@@ -110,7 +110,8 @@ def build_provenance_document(sceneir_package: Path) -> dict[str, Any]:
                 "role": chunk["role"],
                 "primitive_count": int(chunk["primitive_count"]),
                 "primitive_identity": {
-                    "encoding": "sceneir_blob_reference",
+                    "encoding": "composite_chunk_id_and_sceneir_blob_value",
+                    "namespace": chunk["id"],
                     "field": "source_indices",
                     "sha256": identity_ref["sha256"],
                     "dtype": identity_ref["dtype"],
@@ -120,9 +121,11 @@ def build_provenance_document(sceneir_package: Path) -> dict[str, Any]:
                 "fields": fields,
             }
         )
-    merged = np.concatenate(all_source_indices)
-    unique_count = int(np.unique(merged).size)
-    primitive_count = int(merged.size)
+    primitive_count = int(sum(values.size for values in all_source_indices))
+    # source_indices 是每个 Gaussian model/chunk 的局部编号；chunk_id 提供全局命名空间。
+    composite_unique = all(
+        np.unique(values).size == values.size for values in all_source_indices
+    ) and len({row["chunk_id"] for row in chunk_rows}) == len(chunk_rows)
     actor_rows = []
     chunk_by_id = {row["chunk_id"]: row for row in chunk_rows}
     for actor in sorted(sceneir["actors"], key=lambda row: row["id"]):
@@ -167,8 +170,9 @@ def build_provenance_document(sceneir_package: Path) -> dict[str, Any]:
             "actor_covered": len(actor_rows),
             "primitive_total": primitive_count,
             "primitive_covered": sum(row["primitive_count"] for row in chunk_rows),
-            "global_primitive_identity_unique": unique_count == primitive_count,
-            "global_unique_primitive_identity_count": unique_count,
+            "primitive_identity_namespace": "composite(chunk_id,source_index)",
+            "global_primitive_identity_unique": composite_unique,
+            "global_unique_primitive_identity_count": primitive_count if composite_unique else None,
         },
         "claim_boundary": [
             "reconstructed_primitives_are_not_observed_ground_truth",
@@ -227,6 +231,8 @@ def verify_provenance_package(package: Path, sceneir_package: Path) -> dict[str,
             raise ProvenanceError(f"provenance 字段不完整：{row['chunk_id']}")
         source = scene_chunk[row["chunk_id"]]
         identity = row["primitive_identity"]
+        if identity.get("namespace") != row["chunk_id"]:
+            raise ProvenanceError(f"primitive identity namespace 漂移：{row['chunk_id']}")
         if source["arrays"]["source_indices"]["sha256"] != identity["sha256"]:
             raise ProvenanceError(f"primitive identity 漂移：{row['chunk_id']}")
         if blobs[identity["sha256"]].shape[0] != row["primitive_count"]:

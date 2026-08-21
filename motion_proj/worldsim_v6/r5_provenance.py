@@ -181,7 +181,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
-    parser.add_argument("--config", type=Path, default=Path("configs/worldsim_v6/r5_provenance_v0.yaml"))
+    parser.add_argument("--config", type=Path, default=Path("configs/worldsim_v6/r5_provenance_v1.yaml"))
     parser.add_argument("--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6"))
     args = parser.parse_args()
     run_experiment(args.repo_root, args.config, args.run_root)

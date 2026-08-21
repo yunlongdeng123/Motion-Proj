@@ -3117,6 +3117,18 @@ analysis-only recovery run：先逐个重算全部 render SHA、核对每个 wor
 分析 commit 与聚合 content hash，原目录不修改。以后 post-render 工程失败可复用已验证的不可变证据，
 但必须新建 terminal 和完整 provenance，不能在原失败目录续写。
 
+### V6-F11：Gaussian `source_indices` 是 chunk-local 身份，不能跨模型直接判全局唯一
+
+R5 v0 正式目录 `20260821T094101Z__provenance-s20260821-r1` 已生成 provenance package，并达到
+chunk=`24/24`、actor=`23/23`、primitive=`1,267,870/1,267,870` 覆盖；但 raw `source_indices` 的全局 unique
+count 只有 `1,095,606`，因此 100% identity gate fail-closed。原因是 StreetGS Background 与各 Rigid model
+分别维护局部 source-index 空间，actor 数值可与 Background 重叠；这不表示 primitive 丢失。
+
+v0 run 与 config 保持 failed/frozen。v1 不放宽全局唯一门，而把 primitive identity 改为
+`(chunk_id, source_index)` 复合键：先要求每个 chunk 内 source index 唯一，再要求 chunk id 唯一，二者合取形成
+全局唯一身份。provenance 字段、source-type 分离、覆盖率和无 confirmation/训练边界均不变。以后任何跨 chunk
+primitive registry 都必须显式携带命名空间，不能把上游局部索引误当全局主键。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
