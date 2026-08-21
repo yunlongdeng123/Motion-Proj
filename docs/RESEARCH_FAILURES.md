@@ -3557,3 +3557,9 @@ H-PT8-001 canonical run `20260821T143902Z__closed-loop-utility-s20260821-r1` 在
 H-PT8-002 canonical run `20260821T144333Z__closed-loop-utility-s20260821-r1` 用同一 jerk/decel contract 的 t=0 full-brake oracle 将 280 个 uncontrolled hazards 分为 210 个 avoidable 与 70 个 unavoidable。V6 在 avoidable stratum collision `0`、safe completion `0.9375`、balanced accuracy `0.96875`，说明 H-PT8-001 的绝对 collision failure 来自可行性分母；但 Real-only 的三项指标完全相同，增量门仍失败，H-PT8-002 正式 `rejected`。
 
 Real-only factor heads 虽无最终 clean collision positives，但合法读取了 logged box 的 forward/lateral overlap factor labels，已经足以学习静止 AABB 边界。不得删除这些真实监督、重命名 baseline 或只比较更弱 naive 来制造 V6 closed-loop gain；该静止单 actor family 关闭。H-R14-001 转回 core compiler 的既有 H-C 缺口，测试邻帧 temporal evidence-conditioned proposal，不由 PT8 结果选择参数。
+
+### V6-F54：独立 verifier arms 合格不等于 factor conjunction 有足够 usable coverage
+
+H-R15-001 canonical run `20260821T145504Z__factorized-verification-s20260821-r1` 只消费 H-R14-001 独立通过的 P1 photo 与 P2 geometry decisions，按双 ACCEPT 才 ACCEPT、双 REJECT 才 REJECT、disagreement 全 ABSTAIN。28 cases 中只有 1 个 joint ACCEPT、13 个 ABSTAIN、14 个 REJECT；joint false-safe 为 `0`、相对 P0 reduction `0.89286`，但 accept coverage `0.03571` 未达到冻结 `0.05`，因此正式 `rejected`。
+
+不得用 OR、放宽 verifier threshold、把 disagreement 计作 ACCEPT 或把门改成 1 case 来恢复。RGB-only ECC proposal 对 photo 优化，却没有约束 geometry，导致两个独立有效 arm 的接受集合错位。H-R16-001 保留同一 temporal source、28-case denominator、P0-P4 thresholds 与后续 conjunction，仅把 outside-mask alignment image 改为等权 RGB gray + robust normalized render inverse-depth；render depth 只用于 proposal alignment，不充当 P2 truth。

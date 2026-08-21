@@ -28,7 +28,11 @@ from motion_proj.worldsim_v6.r8_generator import _asset_inventory, _resize_case
 
 
 TASK_ID = "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01"
-ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01"}
+ALLOWED_TASK_IDS = {
+    TASK_ID,
+    "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01",
+    "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01",
+}
 
 
 class R9ExperimentError(RuntimeError):
@@ -167,6 +171,7 @@ def run_experiment(
         "sd15_inpainting",
         "cross_frontend_reconstruction",
         "temporal_ecc_reconstruction",
+        "temporal_ecc_rgb_depth_reconstruction",
     }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
     if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
@@ -206,7 +211,11 @@ def run_experiment(
         generator_input_dir.mkdir()
         verifier_input_dir.mkdir()
         reconstructed_results: list[dict[str, Any]] = []
-        if selected_candidate in {"cross_frontend_reconstruction", "temporal_ecc_reconstruction"}:
+        if selected_candidate in {
+            "cross_frontend_reconstruction",
+            "temporal_ecc_reconstruction",
+            "temporal_ecc_rgb_depth_reconstruction",
+        }:
             proposal_dir.mkdir()
         r7_config = yaml.safe_load(
             (repo_root / "configs/worldsim_v6/r7_oracle_missing_world_v1.yaml").read_text(
@@ -387,7 +396,10 @@ def run_experiment(
                                     "repeat_sha_exact": True,
                                 }
                             )
-                        elif selected_candidate == "temporal_ecc_reconstruction":
+                        elif selected_candidate in {
+                            "temporal_ecc_reconstruction",
+                            "temporal_ecc_rgb_depth_reconstruction",
+                        }:
                             proposal_source_frontend = frontend
                             source_frame_map = {
                                 int(key): int(value)
@@ -412,8 +424,59 @@ def run_experiment(
                             source_rgb = _resize_rgb(source_target["rgb"], size)
                             template_gray = cv2.cvtColor(input_image, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
                             source_gray = cv2.cvtColor(source_rgb, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
+                            alignment_mask = ~resized_mask
+                            alignment_channels = "rgb_gray"
+                            if selected_candidate == "temporal_ecc_rgb_depth_reconstruction":
+                                source_depth_plane = _plane(source_target["depth"], "depth").astype(np.float32)
+                                source_depth = _resize_plane(
+                                    source_depth_plane, size, Image.Resampling.BILINEAR
+                                )
+                                source_depth_valid = (
+                                    _resize_plane(
+                                        (
+                                            np.isfinite(source_depth_plane)
+                                            & (source_depth_plane > 1.0e-6)
+                                        ).astype(np.float32),
+                                        size,
+                                        Image.Resampling.NEAREST,
+                                    )
+                                    > 0.5
+                                )
+                                alignment_mask = (
+                                    alignment_mask
+                                    & target_depth_valid
+                                    & source_depth_valid
+                                )
+                                target_inverse = 1.0 / np.maximum(target_depth, 1.0e-6)
+                                source_inverse = 1.0 / np.maximum(source_depth, 1.0e-6)
+                                joint_values = np.concatenate(
+                                    [
+                                        target_inverse[alignment_mask],
+                                        source_inverse[alignment_mask],
+                                    ]
+                                )
+                                lower, upper = np.quantile(
+                                    joint_values,
+                                    config["proposal"]["depth_normalization_quantiles"],
+                                )
+                                scale = max(float(upper - lower), 1.0e-6)
+                                target_inverse = np.clip(
+                                    (target_inverse - float(lower)) / scale, 0.0, 1.0
+                                )
+                                source_inverse = np.clip(
+                                    (source_inverse - float(lower)) / scale, 0.0, 1.0
+                                )
+                                rgb_weight = float(config["proposal"]["alignment_rgb_weight"])
+                                depth_weight = float(
+                                    config["proposal"]["alignment_inverse_depth_weight"]
+                                )
+                                if abs(rgb_weight + depth_weight - 1.0) > 1.0e-9:
+                                    raise R9ExperimentError("RGB-D alignment 权重和必须为 1")
+                                template_gray = rgb_weight * template_gray + depth_weight * target_inverse
+                                source_gray = rgb_weight * source_gray + depth_weight * source_inverse
+                                alignment_channels = "equal_rgb_gray_and_render_inverse_depth"
                             warp = np.eye(3, dtype=np.float32)
-                            outside_mask = ((~resized_mask).astype(np.uint8) * 255)
+                            outside_mask = (alignment_mask.astype(np.uint8) * 255)
                             criteria = (
                                 cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,
                                 int(config["proposal"]["ecc_max_iterations"]),
@@ -446,6 +509,8 @@ def run_experiment(
                                     "source_frame_index": proposal_source_frame,
                                     "source_variant": source_suffix,
                                     "alignment": "masked_outside_ecc_homography",
+                                    "alignment_channels": alignment_channels,
+                                    "alignment_pixel_count": int(np.count_nonzero(alignment_mask)),
                                     "ecc_score": float(ecc_score),
                                     "warp_matrix": warp.tolist(),
                                     "repeats": [
@@ -504,7 +569,11 @@ def run_experiment(
         python = Path("/root/autodl-tmp/envs/motionproj/bin/python")
         env = os.environ.copy()
         env["PYTHONPATH"] = str(repo_root)
-        if selected_candidate in {"cross_frontend_reconstruction", "temporal_ecc_reconstruction"}:
+        if selected_candidate in {
+            "cross_frontend_reconstruction",
+            "temporal_ecc_reconstruction",
+            "temporal_ecc_rgb_depth_reconstruction",
+        }:
             generator_result = {
                 "schema_version": "worldsim_v6.r9_reconstructed_proposal.v1",
                 "candidate": selected_candidate,
@@ -669,7 +738,11 @@ def run_experiment(
             if checks["passed"]
             else "reject_or_pivot_verifier_arms",
         }
-        gate_name = "R9_GATE.json" if task_id == TASK_ID else "R14_GATE.json"
+        gate_name = {
+            TASK_ID: "R9_GATE.json",
+            "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01": "R14_GATE.json",
+            "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01": "R16_GATE.json",
+        }[task_id]
         _write_json(run_dir / gate_name, gate)
         _write_json(
             run_dir / "RESOURCE_AUDIT.json",
