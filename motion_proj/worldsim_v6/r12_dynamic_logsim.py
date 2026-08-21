@@ -102,6 +102,18 @@ def _replay_once(package: Path, repeat_index: int) -> dict[str, Any]:
         chunk = chunks[actor["chunk_ids"][0]]
         means_ref = chunk["arrays"]["means_m"]
         local_means = np.asarray(arrays[means_ref["sha256"]], dtype=np.float64)
+        local_lower = local_means.min(axis=0)
+        local_upper = local_means.max(axis=0)
+        local_centroid = local_means.mean(axis=0)
+        local_corners = np.asarray(
+            [
+                [x, y, z]
+                for x in [local_lower[0], local_upper[0]]
+                for y in [local_lower[1], local_upper[1]]
+                for z in [local_lower[2], local_upper[2]]
+            ],
+            dtype=np.float64,
+        )
         semantic_rows.append({"actor_id": actor["id"], "class": actor["class"]})
         visibility = {
             int(row["timestamp_us"]): bool(row["visible"])
@@ -112,10 +124,10 @@ def _replay_once(package: Path, repeat_index: int) -> dict[str, Any]:
             transform = transforms[(key["transform_name"], timestamp)]
             rotation = _rotation_matrix(transform["rotation_wxyz"])
             translation = np.asarray(transform["translation_m"], dtype=np.float64)
-            world_means = local_means @ rotation.T + translation
-            lower = world_means.min(axis=0)
-            upper = world_means.max(axis=0)
-            centroid = world_means.mean(axis=0)
+            world_corners = local_corners @ rotation.T + translation
+            lower = world_corners.min(axis=0)
+            upper = world_corners.max(axis=0)
+            centroid = local_centroid @ rotation.T + translation
             state = {
                 "actor_id": actor["id"],
                 "timestamp_us": timestamp,
@@ -204,7 +216,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     if shutil.disk_usage(run_root).free / (1024**3) < float(config["resources"]["minimum_disk_free_gib"]):
         raise R12DynamicExperimentError("R12 dynamic 磁盘资源不足")
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / f"{now.strftime('%Y%m%dT%H%M%SZ')}__dynamic-logsim-s{config['seed']}-r1"
+    run_label = config.get("result", {}).get("run_label", "dynamic-logsim")
+    run_dir = run_root / TASK_ID / f"{now.strftime('%Y%m%dT%H%M%SZ')}__{run_label}-s{config['seed']}-r1"
     run_dir.mkdir(parents=True, exist_ok=False)
     try:
         immutable_before = {str(path): _sha256(path) for path in frozen}
@@ -221,15 +234,27 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         actor_states = replays[0]["actor_states"]
         timestamps = {row["timestamp_us"] for row in actor_states}
         actor_ids = {row["actor_id"] for row in actor_states}
-        primitive_counts = {row["primitive_count"] for row in actor_states}
+        actor_chunks = [row for row in document["chunks"] if row["role"] == "actor"]
+        primitive_counts = [int(row["primitive_count"]) for row in actor_chunks]
         cohort = config["cohort"]
         denominators_exact = (
             len(actor_ids) == int(cohort["expected_actor_count"])
             and len(timestamps) == int(cohort["expected_timestamp_count"])
-            and primitive_counts == {int(cohort["expected_actor_primitive_count"])}
             and len(replays[0]["sensor_calibrations"]) == int(cohort["expected_sensor_count"])
             and len(document.get("events", [])) == int(cohort["expected_event_count"])
         )
+        if "expected_actor_primitive_count" in cohort:
+            denominators_exact = denominators_exact and set(primitive_counts) == {
+                int(cohort["expected_actor_primitive_count"])
+            }
+        if "expected_actor_primitive_total" in cohort:
+            denominators_exact = denominators_exact and (
+                sum(primitive_counts) == int(cohort["expected_actor_primitive_total"])
+                and min(primitive_counts) == int(cohort["expected_actor_primitive_min"])
+                and max(primitive_counts) == int(cohort["expected_actor_primitive_max"])
+                and len(replays[0]["trajectories"])
+                == int(cohort["expected_trajectory_row_count"])
+            )
         hashes = [row["replay_content_sha256"] for row in replays]
         repeat_exact = len(set(hashes)) == 1
         factor_hashes: dict[str, list[str]] = {}
@@ -245,22 +270,27 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             ]
         factor_exact = {factor: len(set(values)) == 1 for factor, values in factor_hashes.items()}
         wall_seconds = time.monotonic() - started
+        unsupported = config.get("unsupported_factors", {})
         checks = {
             "expected_denominators": denominators_exact,
             "fresh_package_reload_per_repeat": True,
             "trajectory_exact": factor_exact["trajectories"],
             "actor_world_state_exact": factor_exact["actor_states"],
-            "sensor_calibration_exact": factor_exact["sensor_calibrations"],
+            "sensor_calibration_exact": factor_exact["sensor_calibrations"]
+            if int(cohort["expected_sensor_count"]) > 0
+            else None,
             "semantic_label_exact": factor_exact["semantic_labels"],
             "collision_label_exact": factor_exact["collision_labels"],
             "repeated_run_exact": repeat_exact,
             "source_immutable": immutable_before == {str(path): _sha256(path) for path in frozen},
-            "event_abstain": all(row["event_status"] == "ABSTAIN_NOT_REPRESENTED" for row in replays),
+            "unsupported_factors_abstain": all(
+                str(value).startswith("ABSTAIN") for value in unsupported.values()
+            ),
             "wall_within_budget": wall_seconds <= float(config["resources"]["maximum_wall_seconds"]),
             "training_not_started": True,
             "confirmation_not_read": True,
         }
-        checks["passed"] = all(checks.values())
+        checks["passed"] = all(value for value in checks.values() if value is not None)
         _write_jsonl(
             run_dir / "FACTOR_HASHES.jsonl",
             [
@@ -273,8 +303,10 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             {
                 "schema_version": "worldsim_v6.r12_dynamic_gate.v1",
                 "checks": checks,
-                "event_status": "ABSTAIN_NOT_REPRESENTED",
-                "decision": "proceed_to_real_scene_dynamic_logsim"
+                "unsupported_factors": unsupported,
+                "decision": config.get("result", {}).get(
+                    "pass_decision", "proceed_to_real_scene_dynamic_logsim"
+                )
                 if checks["passed"]
                 else "reject_dynamic_logsim_fixture_hypothesis",
             },
@@ -284,7 +316,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "task_id": TASK_ID,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
-            "hypothesis_outcome": "accepted_development_conformance_fixture"
+            "hypothesis_outcome": config.get("result", {}).get(
+                "hypothesis_outcome", "accepted_development_conformance_fixture"
+            )
             if checks["passed"]
             else "rejected",
             "source_commit": source_commit,

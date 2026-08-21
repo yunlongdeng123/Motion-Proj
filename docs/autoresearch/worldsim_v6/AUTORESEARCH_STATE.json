@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:47:00Z",
+  "updated_at_utc": "2026-08-21T11:53:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 12,
+  "iteration": 13,
   "active_task": "WS-V6-R12-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R12-002",
-  "candidate": "sceneir_dynamic_state_logsim_replay",
+  "active_hypothesis": "WS-V6-H-R12-003",
+  "candidate": "real_streetgs_scene_dynamic_logsim_replay",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f",
+  "dev_artifact_hash": "a95af0cc5e5f7ac866df5deaefc0c68824cb225f7b83235840d3e9402a0c257c",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "5f3bb62dae9c3eb50609abb94b42eab65f612bb19142e203d54dcf449d52fd18",
-  "last_reflection_id": "WS-V6-REFL-0014",
+  "last_reflection_id": "WS-V6-REFL-0015",
   "last_completed": {
     "task_id": "WS-V6-R12-LOGSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T114224Z__logsim-s20260821-r1",
-    "artifact_sha256": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f"
+    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T114757Z__dynamic-logsim-s20260821-r1",
+    "artifact_sha256": "a95af0cc5e5f7ac866df5deaefc0c68824cb225f7b83235840d3e9402a0c257c"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -38,6 +38,7 @@
     "r10_factorized_verification": "done_accepted_development_photo_geometry",
     "r11_typed_bake": "done_accepted_development_static_only",
     "r12_static_sensor_logsim": "done_accepted_development_static_scope",
+    "r12_dynamic_fixture_logsim": "done_accepted_development_conformance_fixture",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -46,8 +47,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "replay_sceneir_actor_trajectories_twice_from_fresh_package_loads",
-    "measure_actor_sensor_calibration_semantic_and_collision_label_consistency",
-    "retain_event_abstain_and_seek_real_scene_dynamic_replay_next"
+    "replay_real_streetgs_23_actor_196_timestamp_scene_twice",
+    "measure_exact_trajectory_actor_semantic_and_collision_outputs",
+    "retain_sensor_calibration_and_event_abstain_then_decide_r13_scope"
   ]
 }
