@@ -1,0 +1,23 @@
+schema_version: worldsim_v6.sceneir_v0_experiment.v1
+task_id: WS-V6-R2-SCENEIR-V0-01
+seed: 20260821
+sources:
+  streetgs_matrix: repo://configs/worldsim_v4/baseline_matrix_v1.yaml
+  streetgs_scene: scene-0230
+  streetgs_checkpoint_sha256: 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1
+  streetgs_version: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  recondrive_repo: third_party://recondrive
+  recondrive_version: d2bc397b724d6cc021da22f8f57ad6af1cc53e3c
+equivalence:
+  timestamp_index: 97
+  absolute_tolerance: 2.0e-6
+  relative_tolerance: 2.0e-6
+fresh_process_reload_count: 1
+recondrive_conformance_fixture:
+  primitive_count: 4096
+  timestamps_us: [0, 83333]
+claim_boundary:
+  - representation_interface_only
+  - no_training
+  - no_model_inference
+  - no_quality_data_read
