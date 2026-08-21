@@ -1,0 +1,55 @@
+schema_version: worldsim_v6.r41_actor_edit_factor_fusion.v1
+task_id: WS-V6-R41-ACTOR-EDIT-FACTOR-FUSION-01
+hypothesis_id: WS-V6-H-R41-001
+seed: 20260821
+sources:
+  r37_run: runs://worldsim_v6/WS-V6-R37-ACTOR-TRAJECTORY-EDIT-SENSOR-EQUIVALENCE-01/20260821T171437Z__trajectory-edit-s20260821-r1
+  r37_manifest_sha256: d26ce57f7f65d0a02ebc68545790186ce8f42f5946b24594268147428efdd15b
+  r37_gate_sha256: 48494df2571ca5c87956d8bd0d889f2d7c0f42f23534ca5923c0ef153b909ee7
+  r37_summary_sha256: e9257d4659c489fff1e2a07a66f553ef5a0623432eafb4b2fb9c0682bfedcb7a
+  r37_metrics_sha256: 10636af97dcee51d96293a8d9345a61c57a52afa20aaf134f78313710d81494c
+  r38_run: runs://worldsim_v6/WS-V6-R38-ACTOR-INTERACTION-FACTOR-01/20260821T171936Z__interaction-factor-s20260821-r1
+  r38_manifest_sha256: 39f1fdd9097644bcbe686b11f7506fe8ca7c40b0b49d9d7826dcd5858108e97f
+  r38_gate_sha256: 47540052b893e17100e6910ccaad8ed29c31444e7fc7d8945bd84ce12f6a4f2c
+  r38_summary_sha256: 97bd3a895b2b09db02db4fccdc3657f6a51477c43db913e54f226ab041beb004
+  r38_decisions_sha256: 81cba0bf1bed95ed48b000b901ef3fddd0de0566cba49035002a140a965efe1c
+  r40_run: runs://worldsim_v6/WS-V6-R40-ACTOR-LIDAR-CONTACT-FACTOR-01/20260821T173551Z__lidar-contact-s20260821-r1
+  r40_manifest_sha256: 24b45d7f99eb2e0b1c5263c171c11b0018b5938d2448c6b6378aa8ea9115a1b0
+  r40_gate_sha256: 07c2a05e01f5715f7c63a872d6d439771f30dac7f16147c0704567f51ae2b514
+  r40_summary_sha256: 707bf706bdd62d8ba9a02a1bab0b86f5ff5d65ebd6e032308a0612e8bf9d54b7
+  r40_decisions_sha256: dd2f722380fa480427bd1f99b1b3a9a65812a6c8ce141d68a1270f909302aa83
+expected_interventions:
+  translate_world_x_plus_1m:
+    translation_delta_m: [1.0, 0.0, 0.0]
+    renderer_execution: ACCEPT
+    self_kinematics: ACCEPT
+    aabb_interaction: REJECT
+    lidar_contact: ACCEPT
+    joint_admissibility: REJECT
+    unique_rejecting_factor: aabb_interaction
+  translate_world_y_plus_1m:
+    translation_delta_m: [0.0, 1.0, 0.0]
+    renderer_execution: ACCEPT
+    self_kinematics: ACCEPT
+    aabb_interaction: ACCEPT
+    lidar_contact: REJECT
+    joint_admissibility: REJECT
+    unique_rejecting_factor: lidar_contact
+fusion_contract:
+  rule: reject_dominates_then_abstain_then_accept_conformance
+  factors: [renderer_execution, self_kinematics, aabb_interaction, lidar_contact]
+  expected_intervention_count: 2
+  expected_joint_reject_count: 2
+  expected_unique_reject_reason_count: 2
+resources:
+  gpu: none
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_factorized_trajectory_edit_admissibility_for_two_pre_registered_translations
+  - renderer_execution_is_compiled_native_equivalence_not_visual_or_physical_truth
+  - aabb_interaction_is_broad_phase_conformance_not_collision_truth
+  - lidar_contact_is_single_frame_observed_support_not_semantic_road_truth
+  - joint_reject_is_not_a_physical_safety_label
+  - full_physics_planning_safety_and_confirmation_abstain
+
