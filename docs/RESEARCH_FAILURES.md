@@ -3686,3 +3686,9 @@ H-R59-001 canonical run `20260821T192557Z__actor2-interaction-s20260821-r1` 将 
 H-R62-001 首次正式启动 `20260821T194222Z__actor2-lidar-contact-s20260821-r1` 在读取任何 frame98 support 或产生 contact decision 前失败，`TERMINAL.json` SHA256 为 `592ba630ce84d996ff478b7314a12bfe1d5e0aedb0762bc7270e99ceaa7565d7`。主实验从通用 `motionproj` 环境直接导入冻结 StreetGS `DrivingDataset`，其模型依赖链要求 `pytorch3d`，该环境未安装，因此抛出 `ModuleNotFoundError: No module named 'pytorch3d'`。这属于环境 ownership plumbing，不构成 contact 方法结果。
 
 修复新增隔离的 LiDAR support worker，并用配置中冻结的 DriveStudio Python 环境执行两次 frame98 三相机提取；主实验只读取两个 worker artifact、核验逐数组 repeat-exact 后运行原 contact evaluator。不得改变 R60 proposal、R61/R56/R40 authority、frame98、13,490 primitive denominator、动态像素排除、R40 quantile/radius/0.35m 阈值、预期 ACCEPT 方向、资源上限或 claim boundary。新 commit/push 后按原 H-R62-001 重试，首次启动不具 canonical authority。
+
+### V6-F76：隔离前端 worker 必须同时绑定项目包根目录
+
+H-R62-001 第二次正式启动 `20260821T194557Z__actor2-lidar-contact-s20260821-r1` 已切换到拥有 `pytorch3d` 的冻结 DriveStudio Python，但仍在读取 frame98 前以 worker rc=1 失败，`TERMINAL.json` SHA256 为 `1dcea9a007b18df26c4ff420fd15e8e759a1b814a5ad09184a3a4d22001420b0`。独立复现显示冻结 `DrivingDataset` 还导入项目内 `motion_proj.worldsim_v3.drivestudio_compat`，而新 worker 只加入 checkpoint backup 与 upstream 路径，遗漏当前仓库根目录，触发 `ModuleNotFoundError: No module named 'motion_proj'`。
+
+修复只给 worker 增加显式 `--repo-root` 并在导入冻结 dataset 前插入 `sys.path`，同时令主进程在检查 rc 前落盘 worker stderr。不得改变 Python 环境、数据配置、proposal、frame、接触协议、阈值、预期方向或任何方法分母。新 commit/push 后仍按原 H-R62-001 重试；前两次启动都不具 canonical authority。

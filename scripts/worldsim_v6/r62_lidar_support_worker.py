@@ -12,6 +12,7 @@ import numpy as np
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repo-root", required=True, type=Path)
     parser.add_argument("--streetgs-config", required=True, type=Path)
     parser.add_argument("--upstream-root", required=True, type=Path)
     parser.add_argument("--frame-index", required=True, type=int)
@@ -22,6 +23,7 @@ def main() -> int:
 
     camera_ids = [int(value) for value in args.camera_ids.split(",")]
     backup = args.streetgs_config.resolve().parent / "backup"
+    sys.path.insert(0, str(args.repo_root.resolve()))
     sys.path.insert(0, str(backup))
     sys.path.append(str(args.upstream_root.resolve()))
     from datasets.driving_dataset import DrivingDataset

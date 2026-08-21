@@ -107,6 +107,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         for output_path in (support_path_1, support_path_2):
             command = [
                 sources["drivestudio_python"], str(worker),
+                "--repo-root", str(repo_root),
                 "--streetgs-config", str(streetgs_config), "--upstream-root", str(upstream),
                 "--frame-index", str(cohort["frame_index"]),
                 "--camera-ids", ",".join(str(value) for value in camera_ids),
@@ -114,9 +115,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             ]
             completed = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, timeout=float(config["resources"]["maximum_support_worker_seconds"]))
             worker_logs.append(completed.stdout + "\n--- STDERR ---\n" + completed.stderr)
+            (run_dir / "support_worker.log").write_text("\n=== REPEAT ===\n".join(worker_logs), encoding="utf-8")
             if completed.returncode != 0:
                 raise R62ExperimentError(f"LiDAR support worker 失败：rc={completed.returncode}")
-        (run_dir / "support_worker.log").write_text("\n=== REPEAT ===\n".join(worker_logs), encoding="utf-8")
         support_1 = _load_support(support_path_1)
         support_2 = _load_support(support_path_2)
         support_repeat_exact = _array_bundle_sha256(support_1) == _array_bundle_sha256(support_2)
