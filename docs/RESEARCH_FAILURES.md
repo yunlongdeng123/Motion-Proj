@@ -3153,6 +3153,18 @@ R7 首个有 run 目录的正式实例
 继续 fail-closed；所有 depth/semantic verifier 和 usable-region 路径共同使用它。hypothesis、pseudo-hole、decoy、
 阈值和 source render 均不改变。
 
+### V6-F14：actor/disocclusion pseudo-hole 不能假设每个 frontend 都导出非空 dynamic opacity
+
+R7 第二个有 run 目录的正式实例
+`20260821T100228Z__oracle-missing-world-s20260821-r1` 已完成 scene-0242 与部分 scene-0048 cases，随后在
+scene-0048/StreetGS 的 disocclusion mask 上 fail-closed：该冻结 renderer 的 `dynamic_opacity` 在此帧为空，初版
+mask 得到 0 pixels，低于预注册 `256` denominator。该目录保持 `failed`，不汇报不完整 gate。
+
+修复不降低 minimum pixels，也不读取 confirmation，而是使用本实验本来就冻结的 `base` 与
+`actor_remove_all` 配对渲染：以 RGB 变化或同 frontend 可比 depth 变化，加上可用的 dynamic opacity，形成 actor
+evidence；disocclusion 对其确定性膨胀，actor-removal hole 使用原 evidence。这样 StreetGS/AD-GS 都以“实际 actor
+edit effect”而不是可选 buffer 的存在作为 denominator，其他 hole、verifier、decoy 与 gate 不变。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

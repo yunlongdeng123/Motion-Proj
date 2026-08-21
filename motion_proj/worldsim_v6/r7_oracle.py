@@ -130,11 +130,22 @@ def _mask_for(
     hole_type: str,
     target: Mapping[str, np.ndarray],
     base: Mapping[str, np.ndarray],
+    removed: Mapping[str, np.ndarray],
     dynamic_threshold: float,
 ) -> np.ndarray:
     height, width = target["rgb"].shape[:2]
     yy, xx = np.indices((height, width))
     dynamic = _plane(np.asarray(base["dynamic_opacity"]), "dynamic_opacity") > dynamic_threshold
+    base_rgb = np.clip(base["rgb"].astype(np.float32), 0.0, 1.0)
+    removed_rgb = np.clip(removed["rgb"].astype(np.float32), 0.0, 1.0)
+    actor_edit_change = np.mean(np.abs(base_rgb - removed_rgb), axis=2) > 0.01
+    base_depth = _plane(base["depth"], "depth").astype(np.float32)
+    removed_depth = _plane(removed["depth"], "depth").astype(np.float32)
+    comparable_depth = (base_depth > 1.0e-6) & (removed_depth > 1.0e-6)
+    actor_edit_change |= comparable_depth & (
+        np.abs(base_depth - removed_depth) / np.maximum(np.abs(base_depth), 1.0e-3) > 0.05
+    )
+    actor_evidence = dynamic | actor_edit_change
     if hole_type == "missing_route_support":
         y = yy / max(height - 1, 1)
         x = xx / max(width - 1, 1)
@@ -143,9 +154,9 @@ def _mask_for(
     if hole_type == "missing_side_view":
         return (xx >= int(round(width * 0.70))) & ~dynamic
     if hole_type == "disocclusion":
-        return _dilate(dynamic, radius=5)
+        return _dilate(actor_evidence, radius=5)
     if hole_type == "actor_removal_hole":
-        return dynamic
+        return actor_evidence
     raise R7ExperimentError(f"未知 hole type：{hole_type}")
 
 
@@ -392,7 +403,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     )
                     for hole_type in config["cohort"]["hole_types"]:
                         target = side if hole_type == "missing_side_view" else removed if hole_type == "disocclusion" else base
-                        mask = _mask_for(hole_type, target, base, dynamic_threshold)
+                        mask = _mask_for(hole_type, target, base, removed, dynamic_threshold)
                         mask_count = int(np.count_nonzero(mask))
                         if mask_count < minimum_mask:
                             raise R7ExperimentError(
