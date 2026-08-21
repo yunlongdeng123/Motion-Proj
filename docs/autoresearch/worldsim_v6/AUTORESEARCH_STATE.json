@@ -1,21 +1,21 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T15:59:00Z",
+  "updated_at_utc": "2026-08-21T16:05:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 57,
+  "iteration": 58,
   "active_task": "WS-V6-R27-ACTOR-THREE-FACTOR-VERIFICATION-01",
   "active_hypothesis": "WS-V6-H-R27-001",
-  "candidate": "actor_photo_geometry_semantic_conjunction",
+  "candidate": "actor_photo_geometry_semantic_conjunction_with_case_metadata_binding",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "90f64ae0ad680f4ebf739f28fce8dbce425777f3f2a588f45a7ef51df9aa5aa5",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "df4d7e17b6b2f31c4a2c2f1a99177c0f99a0d8456d7e8f0127eeba1c9d07083c",
-  "last_reflection_id": "WS-V6-REFL-0059",
+  "failure_ledger_sha256": "7e8cb853f661d06a942fd8a2cb7fd0c24e8b09d39d571483b13eaae896034556",
+  "last_reflection_id": "WS-V6-REFL-0060",
   "last_completed": {
     "task_id": "WS-V6-R26-TYPED-SEMANTIC-MULTISOURCE-01",
     "run": "run://worldsim_v6/WS-V6-R26-TYPED-SEMANTIC-MULTISOURCE-01/20260821T155657Z__semantic-consensus-s20260821-r1",
@@ -86,7 +86,7 @@
     "r24_typed_multisource_proposal": "done_rejected_infeasible_actor_p1_rate_delta",
     "r25_actor_arm_pareto_evaluation": "done_accepted_evaluation_protocol",
     "r26_typed_semantic_multisource": "done_accepted_development_zero_false_safe",
-    "r27_actor_three_factor_verification": "active_pre_registered_conjunction",
+    "r27_actor_three_factor_verification": "active_retry_after_failed_case_metadata_binding",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -95,8 +95,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r26_acceptance_and_r27_three_factor_protocol",
-    "evaluate_six_actor_cases_with_all_accept_all_reject_else_abstain",
+    "commit_v6_f59_and_bind_r24_cases_metadata",
+    "rerun_six_actor_cases_with_unchanged_conjunction_and_gates",
     "bake_only_jointly_accepted_actor_assets_if_r27_passes"
   ]
 }

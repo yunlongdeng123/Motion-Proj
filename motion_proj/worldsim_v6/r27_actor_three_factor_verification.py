@@ -85,6 +85,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     source_files = {
         r24 / "MANIFEST.json": sources["r24_manifest_sha256"],
         r24 / "R24_GATE.json": sources["r24_gate_sha256"],
+        r24 / "CASES.jsonl": sources["r24_cases_sha256"],
         r24 / "verifier_worker/PER_CASE_ARMS.jsonl": sources[
             "r24_per_case_arms_sha256"
         ],
@@ -123,6 +124,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     try:
         all_rows = _read_jsonl(r24 / "verifier_worker/PER_CASE_ARMS.jsonl")
         actor_rows = [row for row in all_rows if row["hole_type"] == "actor_removal_hole"]
+        case_index = {
+            row["case_id"]: row for row in _read_jsonl(r24 / "CASES.jsonl")
+        }
         semantic_rows = {
             row["case_id"]: row
             for row in _read_jsonl(r26 / "SEMANTIC_CONSENSUS.jsonl")
@@ -161,7 +165,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 {
                     "schema_version": "worldsim_v6.r27_actor_factorized_decision.v1",
                     "case_id": case_id,
-                    "mask_pixel_count": int(row["mask_pixel_count"]),
+                    "mask_pixel_count": int(case_index[case_id]["mask_pixel_count"]),
                     "proposal_sha256": row["proposal_sha256"],
                     "factorized_validity": factors,
                     "overall_decision": overall,

@@ -3587,3 +3587,9 @@ H-R23-001 canonical run `20260821T154110Z__independent-arms-s20260821-r1` 在相
 H-R24-001 canonical run `20260821T154603Z__independent-arms-s20260821-r1` 按 hole type 复用已接受的 R16 temporal RGB-D static source 与 H-R9-003 same-time cross-frontend actor source。actor 子集 P1 为 `4/6` ACCEPT、false-safe `0`，P2 为 `1/6` ACCEPT、false-safe `0`；两臂的绝对 coverage/risk 都通过。但 actor P1 的 P0 只有 `1/6` false-safe，最大可能 rate reduction 为 `0.16667`，无法达到从 28-case 全局臂继承的固定 `0.25`，因此要求 P1/P2 均合格的 H-R24-001 按原合同正式 `rejected`。
 
 不得追认 R24 gate，也不得删除唯一 P0 错误或降低风险要求。H-R25-001 保持 R24 proposals、decisions、truth 与 P1/P2 阈值完全冻结，只预注册适合六例小分母的 actor Pareto gate：每臂 coverage `>=0.10`、false-safe rate `<=0.10`，并且 false-safe count 相对 P0 至少严格减少 `1`。该离散计数门在两个臂上均可实现且仍要求实际消除错误；旧 R24 run 继续保持 rejected。
+
+### V6-F59：下游 factorized consumer 必须从拥有字段的冻结 artifact 读取 case metadata
+
+H-R27-001 首个 formal run `20260821T160452Z__three-factor-s20260821-r1` 在组装六个 actor factorized decision 时因 `KeyError: mask_pixel_count` 失败，仅产生 failed `TERMINAL.json`，未构造 gate 或方法结论。R24 的 `verifier_worker/PER_CASE_ARMS.jsonl` 拥有 factor decisions、truth 与 proposal hash，但 `mask_pixel_count` 的 schema owner 是同一 run 的 `CASES.jsonl`；初版 consumer 错把该 metadata 当作 arm row 字段。
+
+修复把冻结 R24 `CASES.jsonl` 及其 SHA256 加入 R27 source contract，并仅从 case-id index 读取 `mask_pixel_count`。不得改变 P1/P2/P3 decisions、truth、三因子合取规则、coverage/risk/count gate、R24 rejected 状态或确认集锁。该失败属于 artifact binding plumbing，不否定 H-R27-001，修复后以新 run 重试。
