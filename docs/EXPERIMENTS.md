@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6 R4 deterministic runtime v0 正式实验 PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R4-DETERMINISTIC-RUNTIME-01/20260821T093544Z__deterministic-runtime-s20260821-r1`；
+  gate/summary/manifest/terminal SHA=`c7434353...816 / 009a79ff...58d / 12ecc293...add / 7cd63d7d...947`。
+- 输入 SceneIR content=`8b3dd863...671`，`1,267,870` primitives、24 chunks、23 actors、168 unique blobs；
+  3 次 fresh process audit SHA 均为 `29323a6e...ca2`，package manifest 前后 exact。
+- `WORLD_STATE.json / LABELS.json / CHUNK_SELECTION.json / ACTOR_TRAJECTORY.json / RGB.npy` 五项均 byte-exact；
+  RGB `array_equal=true`，无需 tolerance。GPU/training/confirmation 均 false。
+- claim 仅限 compiler-owned diagnostic runtime determinism；next=`WS-V6-R5-PROVENANCE-01`。
+
 ## WorldSim V6 R3 support-deviation 正式实验完成 / hypothesis rejected（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1`；

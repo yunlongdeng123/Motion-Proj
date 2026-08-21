@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6 R4 deterministic runtime exact PASS；V6.1 provenance 启动（2026-08-21）
+
+- `WS-V6-R4-DETERMINISTIC-RUNTIME-01=done`，canonical=
+  `run://worldsim_v6/WS-V6-R4-DETERMINISTIC-RUNTIME-01/20260821T093544Z__deterministic-runtime-s20260821-r1`，
+  source=`71479cd8`。同一 real StreetGS SceneIR package 在 3 个独立 fresh processes 中产生 exact-identical
+  world state、labels、chunk selection、23-actor trajectory 与 `3×128×128×3 uint8` RGB。
+- exact SHA：world=`46032306...838`、labels=`d8ea3867...d8a`、chunks=`f30c3de6...f95`、trajectory=
+  `2d7134c2...0b3`、RGB=`e831aba3...65b`；未使用 float tolerance、GPU、训练或 confirmation。
+- RGB 是 runtime-owned top-down compiler diagnostic，因为 R2 reference package 没有 source sensor；本结果只证明
+  deterministic compiler contract，不证明 source-camera photorealistic quality。
+- V6.0 infrastructure gate 允许继续，但 R3 learned-support 保持 NO-GO；当前路线为
+  `go_to_provenance_verifier_without_learned_support`，active=`WS-V6-R5-PROVENANCE-01`。
+
 ## WorldSim V6 R3 已完成但 support 假设被拒绝；R4 deterministic runtime 启动（2026-08-21）
 
 - `WS-V6-R3-SUPPORT-DEVIATION-01=done`，canonical analysis recovery=
