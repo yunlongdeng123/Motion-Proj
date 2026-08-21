@@ -3306,6 +3306,15 @@ H-R9-002 同样是方法质量 `rejected`，不是工程/资源 blocked。
 使用另一 frontend 的对齐 RGB 填入 mask；P1–P4、truth、threshold、gate 和 denominator 原样保留。该 proposal
 仍标记 reconstructed，两个 frontend 来自同一传感器支持，不能解释为新增观测或独立 ground truth。
 
+### V6-F27：正式入口必须显式建立仓库模块搜索路径
+
+R12 第一次启动命令在创建 run 目录、加载模型或执行 GPU 推理前失败：直接运行
+`python scripts/worldsim_v6/run_logsim.py` 时，Python 只把脚本目录加入模块搜索路径，因而无法导入仓库根目录下的
+`motion_proj` 包并抛出 `ModuleNotFoundError`。该失败没有产生样本、指标或方法结论，也不是资源失败。
+
+修复只在入口脚本中根据 `__file__` 把仓库根目录加入 `sys.path`，不改 R12 hypothesis、cohort、输入哈希、模型、
+阈值、gate 或资源合同。后续以完全相同命令重跑；任何模型或指标失败仍独立登记，不能用本次入口错误掩盖。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
