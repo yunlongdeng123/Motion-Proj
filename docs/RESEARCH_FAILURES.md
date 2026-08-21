@@ -3569,3 +3569,9 @@ H-R15-001 canonical run `20260821T145504Z__factorized-verification-s20260821-r1`
 H-R20-001 canonical run `20260821T152456Z__semantic-consensus-s20260821-r1` 在冻结的 12 个 R16 semantic-evidence cases 上，以 DeepLabV3-ResNet50 与 SegFormer-B0 的 hole 内 dynamic-mask IoU `>=0.70` 作为唯一决策证据。该机制成功拒绝了 R16 原先唯一的边缘 false-safe `scene-0048__ad_gs__f057__actor_removal_hole`，但两个模型在 `scene-0048__ad_gs__f052__disocclusion` 上以 IoU `0.88267` 共同预测了错误动态内容，使 2 个 ACCEPT 中 1 个为 false-safe，false-safe rate `0.50`、相对 P0 reduction 仅 `0.08333`，正式 `rejected`。
 
 不得把架构不同等同于错误独立，也不得扫描 consensus threshold；相关模型会在编辑语义不同的 hole 上共同犯错。H-R21-001 保留相同模型、12-case denominator、truth 与质量门，新增由 compiler edit type 决定的 typed semantic contract：`actor_removal_hole` 沿用冻结的 `0.50` 双模型 dynamic IoU 门；`disocclusion` 只有两个模型在 hole 内都预测零 dynamic pixel 才可 ACCEPT。决策仍不读取 target dynamic truth，P4 保持 ABSTAIN。
+
+### V6-F56：actor edit-mask 的轴对齐二阶矩不足以恢复可接受的纹理对应
+
+H-R22-001 canonical run `20260821T153531Z__independent-arms-s20260821-r1` 对六个 `actor_removal_hole` 只使用源 actor-edit mask 与目标已知 hole mask 的中心和轴向二阶矩，估计 axis-aligned affine 后搬运邻帧 actor RGB。actor 子集 P2 geometry 得到 `1/6` ACCEPT、false-safe `0` 并通过独立 gate，但 P1 photo 为 `0/6` ACCEPT，导致要求 P1/P2 同时独立合格的正式 gate 拒绝。四个 photo truth-safe cases 的 masked RGB MAE 仍为 `0.06299–0.07655`，高于冻结 `0.05`；整体 P1/P2 通过只来自未改变的非 actor cases，不能覆盖 actor 子集失败。
+
+不得放宽 P1 阈值或用整体分母掩盖 actor failure。轴对齐中心/尺度对齐无法表示邻帧 actor 的旋转、剪切和透视轮廓变化。H-R23-001 保留相同源/目标 masks、六个 actor 分母、非 actor RGB-D ECC、verifier 与全部 gates，只把 actor 配准改为：以二阶矩 affine 为初始化，在两个二值 edit-mask 的 signed-distance field 上执行一次冻结 homography ECC；仍不读取 target RGB/depth/dynamic。

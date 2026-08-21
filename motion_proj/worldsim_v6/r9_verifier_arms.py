@@ -33,6 +33,7 @@ ALLOWED_TASK_IDS = {
     "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01",
     "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01",
     "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
+    "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
 }
 
 
@@ -129,6 +130,68 @@ def _actor_mask_moment_affine(
     }
 
 
+def _actor_mask_sdf_homography(
+    source_mask: np.ndarray,
+    target_mask: np.ndarray,
+    moment_affine: np.ndarray,
+    *,
+    maximum_iterations: int,
+    epsilon: float,
+    gaussian_filter_size: int,
+) -> tuple[np.ndarray, float, dict[str, Any]]:
+    """在已知 edit-mask 的 signed-distance field 上估计透视配准。"""
+    def signed_distance(mask: np.ndarray) -> np.ndarray:
+        binary = mask.astype(np.uint8)
+        inside = cv2.distanceTransform(binary, cv2.DIST_L2, 5)
+        outside = cv2.distanceTransform(1 - binary, cv2.DIST_L2, 5)
+        value = inside - outside
+        scale = max(float(np.quantile(np.abs(value), 0.95)), 1.0)
+        return np.clip(value / scale, -1.0, 1.0).astype(np.float32)
+
+    source_sdf = signed_distance(source_mask)
+    target_sdf = signed_distance(target_mask)
+    source_to_target = np.eye(3, dtype=np.float32)
+    source_to_target[:2] = moment_affine
+    warp = np.linalg.inv(source_to_target).astype(np.float32)
+    roi = cv2.dilate(
+        target_mask.astype(np.uint8),
+        np.ones((31, 31), dtype=np.uint8),
+        iterations=1,
+    )
+    criteria = (
+        cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,
+        maximum_iterations,
+        epsilon,
+    )
+    score, warp = cv2.findTransformECC(
+        target_sdf,
+        source_sdf,
+        warp,
+        cv2.MOTION_HOMOGRAPHY,
+        criteria,
+        roi * 255,
+        gaussian_filter_size,
+    )
+    warped_mask = cv2.warpPerspective(
+        source_mask.astype(np.uint8),
+        warp,
+        (target_mask.shape[1], target_mask.shape[0]),
+        flags=cv2.INTER_NEAREST | cv2.WARP_INVERSE_MAP,
+        borderMode=cv2.BORDER_CONSTANT,
+        borderValue=0,
+    ).astype(bool)
+    union = warped_mask | target_mask
+    mask_iou = (
+        1.0
+        if not np.any(union)
+        else float(np.count_nonzero(warped_mask & target_mask) / np.count_nonzero(union))
+    )
+    return warp, float(score), {
+        "sdf_roi_pixels": int(np.count_nonzero(roi)),
+        "registered_mask_iou": mask_iou,
+    }
+
+
 def _run_checked(command: list[str], cwd: Path, env: Mapping[str, str], log: Path) -> None:
     completed = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True)
     log.write_text(completed.stdout + completed.stderr, encoding="utf-8")
@@ -211,6 +274,7 @@ def run_experiment(
         "temporal_ecc_reconstruction",
         "temporal_ecc_rgb_depth_reconstruction",
         "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+        "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
     }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
     if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
@@ -255,6 +319,7 @@ def run_experiment(
             "temporal_ecc_reconstruction",
             "temporal_ecc_rgb_depth_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+            "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
         }:
             proposal_dir.mkdir()
         r7_config = yaml.safe_load(
@@ -440,6 +505,7 @@ def run_experiment(
                             "temporal_ecc_reconstruction",
                             "temporal_ecc_rgb_depth_reconstruction",
                             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+                            "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
                         }:
                             proposal_source_frontend = frontend
                             source_frame_map = {
@@ -465,7 +531,10 @@ def run_experiment(
                             source_rgb = _resize_rgb(source_target["rgb"], size)
                             if (
                                 selected_candidate
-                                == "temporal_ecc_rgb_depth_actor_mask_reconstruction"
+                                in {
+                                    "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+                                    "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
+                                }
                                 and hole_type == "actor_removal_hole"
                             ):
                                 source_removed = _required_render(
@@ -494,13 +563,55 @@ def run_experiment(
                                 actor_warp, actor_alignment = _actor_mask_moment_affine(
                                     source_actor_mask, resized_mask
                                 )
-                                warped_rgb = cv2.warpAffine(
-                                    source_rgb,
-                                    actor_warp,
-                                    size,
-                                    flags=cv2.INTER_LINEAR,
-                                    borderMode=cv2.BORDER_REFLECT,
-                                )
+                                if (
+                                    selected_candidate
+                                    == "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction"
+                                ):
+                                    sdf_warp, sdf_score, sdf_alignment = (
+                                        _actor_mask_sdf_homography(
+                                            source_actor_mask,
+                                            resized_mask,
+                                            actor_warp,
+                                            maximum_iterations=int(
+                                                config["proposal"][
+                                                    "actor_sdf_ecc_max_iterations"
+                                                ]
+                                            ),
+                                            epsilon=float(
+                                                config["proposal"]["actor_sdf_ecc_epsilon"]
+                                            ),
+                                            gaussian_filter_size=int(
+                                                config["proposal"][
+                                                    "actor_sdf_ecc_gaussian_filter_size"
+                                                ]
+                                            ),
+                                        )
+                                    )
+                                    warped_rgb = cv2.warpPerspective(
+                                        source_rgb,
+                                        sdf_warp,
+                                        size,
+                                        flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP,
+                                        borderMode=cv2.BORDER_REFLECT,
+                                    )
+                                    alignment_name = (
+                                        "actor_edit_mask_signed_distance_ecc_homography"
+                                    )
+                                    alignment_warp = sdf_warp
+                                    actor_alignment.update(sdf_alignment)
+                                    actor_alignment["sdf_ecc_score"] = sdf_score
+                                else:
+                                    warped_rgb = cv2.warpAffine(
+                                        source_rgb,
+                                        actor_warp,
+                                        size,
+                                        flags=cv2.INTER_LINEAR,
+                                        borderMode=cv2.BORDER_REFLECT,
+                                    )
+                                    alignment_name = (
+                                        "actor_edit_mask_axis_aligned_second_moment_affine"
+                                    )
+                                    alignment_warp = actor_warp
                                 overlay = input_image.copy()
                                 overlay[resized_mask] = warped_rgb[resized_mask]
                                 proposal_path = proposal_dir / f"{case_id}__repeat1.npy"
@@ -511,13 +622,13 @@ def run_experiment(
                                         "source_frontend": frontend,
                                         "source_frame_index": proposal_source_frame,
                                         "source_variant": source_suffix,
-                                        "alignment": "actor_edit_mask_axis_aligned_second_moment_affine",
+                                        "alignment": alignment_name,
                                         "alignment_channels": "source_actor_edit_mask_and_target_hole_mask",
                                         "alignment_pixel_count": int(
                                             np.count_nonzero(source_actor_mask)
                                             + np.count_nonzero(resized_mask)
                                         ),
-                                        "warp_matrix": actor_warp.tolist(),
+                                        "warp_matrix": alignment_warp.tolist(),
                                         "actor_alignment": actor_alignment,
                                         "repeats": [
                                             {
@@ -576,6 +687,7 @@ def run_experiment(
                             if selected_candidate in {
                                 "temporal_ecc_rgb_depth_reconstruction",
                                 "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+                                "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
                             }:
                                 source_depth_plane = _plane(source_target["depth"], "depth").astype(np.float32)
                                 source_depth = _resize_plane(
@@ -724,6 +836,7 @@ def run_experiment(
             "temporal_ecc_reconstruction",
             "temporal_ecc_rgb_depth_reconstruction",
             "temporal_ecc_rgb_depth_actor_mask_reconstruction",
+            "temporal_ecc_rgb_depth_actor_mask_sdf_reconstruction",
         }:
             generator_result = {
                 "schema_version": "worldsim_v6.r9_reconstructed_proposal.v1",
@@ -862,7 +975,10 @@ def run_experiment(
         _write_jsonl(run_dir / "ARM_SUMMARIES.jsonl", arm_rows)
         eligible_arms = [row["arm"] for row in arm_rows if row["eligible_for_r10"]]
         actor_arm_rows: list[dict[str, Any]] = []
-        if task_id == "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01":
+        if task_id in {
+            "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
+            "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
+        }:
             actor_rows = [
                 row for row in rows if row["hole_type"] == "actor_removal_hole"
             ]
@@ -891,7 +1007,10 @@ def run_experiment(
             "confirmation_not_read": True,
             "bake_not_started": True,
         }
-        if task_id == "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01":
+        if task_id in {
+            "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01",
+            "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01",
+        }:
             checks.update(
                 {
                     "actor_case_count_exact": sum(
@@ -923,6 +1042,7 @@ def run_experiment(
             "WS-V6-R14-TEMPORAL-PROPOSAL-VERIFIERS-01": "R14_GATE.json",
             "WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01": "R16_GATE.json",
             "WS-V6-R22-ACTOR-MASK-TEMPORAL-PROPOSAL-01": "R22_GATE.json",
+            "WS-V6-R23-ACTOR-MASK-SDF-TEMPORAL-PROPOSAL-01": "R23_GATE.json",
         }[task_id]
         _write_json(run_dir / gate_name, gate)
         _write_json(
