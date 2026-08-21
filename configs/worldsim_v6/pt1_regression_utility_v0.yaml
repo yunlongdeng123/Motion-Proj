@@ -1,0 +1,47 @@
+schema_version: worldsim_v6.pt1_regression_utility.v1
+task_id: WS-V6-PT1-REGRESSION-UTILITY-01
+hypothesis_id: WS-V6-H-PT1-001
+seed: 20260821
+contract_source:
+  scene: scene-0230
+  run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1
+  gate_file: R13_DYNAMIC_EDIT_GATE.json
+  gate_sha256: ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82
+heldout_scenario:
+  scene: scene-0242
+  run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  gate_file: R13_SCENEIR_SENSOR_BINDING_GATE.json
+  gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  removed_actor_id: actor_0000
+mutations:
+  - stale_actor_states
+  - stale_trajectories
+  - stale_semantic_labels
+  - stale_collision_labels
+arms:
+  - real_only
+  - real_plus_naive_synthetic
+  - real_plus_v6_verified_compiled
+gate:
+  expected_mutation_count: 4
+  require_clean_accept_all_arms: true
+  require_real_only_false_safe_rate: 1.0
+  require_naive_false_safe_rate_at_least: 0.5
+  require_v6_mutation_detection_rate: 1.0
+  require_v6_false_safe_rate: 0.0
+  require_repeat_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 60
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  planner_quality: ABSTAIN_REGRESSION_TEST_SET_NOT_PLANNER
+  policy_learning_gain: ABSTAIN_NO_TRAINING
+  physical_collision_truth: ABSTAIN_AABB_DEPENDENCY_REGRESSION_ONLY
+  confirmation_generalization: ABSTAIN_CONFIRMATION_LOCKED
+claim_boundary:
+  - downstream_regression_fault_detection_utility
+  - dependency_staleness_mutations_only
+  - contract_defined_on_scene0230_and_evaluated_on_independent_scene0242
+  - no_planner_il_rl_physical_safety_or_confirmation_claim

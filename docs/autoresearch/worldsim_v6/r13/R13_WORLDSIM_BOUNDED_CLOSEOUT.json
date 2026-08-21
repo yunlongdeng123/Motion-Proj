@@ -1,0 +1,30 @@
+{
+  "schema_version": "worldsim_v6.r13_bounded_closeout.v1",
+  "task_id": "WS-V6-R13-WORLDSIM-01",
+  "status": "done_accepted_development_bounded_scope",
+  "accepted_axes": {
+    "route_deviation": "logged_lidar_metric_world_lift_3m_lateral_2m_forward",
+    "typed_dynamic_edits": "actor_remove_shift_add_density_dependency_closure_3_of_3",
+    "sensor_perception": "streetgs_actor_locality_coverage_1_of_12_false_safe_0",
+    "same_scene_binding": "scene0242_model_index_0_to_actor_0000_typed_remove"
+  },
+  "rejected_axes": {
+    "relative_depth_metric_lift": "zero_offroute_coverage",
+    "fifth_meter_route_extension": "photo_geometry_failure_and_invalid_depth_proxy",
+    "remove_all_actor_perception": "global_receptive_field_nonlocality",
+    "largest_actor_selector": "perception_insensitive"
+  },
+  "explicit_abstentions": [
+    "new_route_branch_beyond_verified_3m_lateral_2m_forward",
+    "ad_gs_per_actor_identity_binding",
+    "semantic_accuracy_ground_truth",
+    "physical_collision_ground_truth",
+    "planning_completion",
+    "closed_loop_safety",
+    "confirmation_generalization"
+  ],
+  "v6_false_safe_rate_on_accepted_actor_perception_scope": 0.0,
+  "v6_false_safe_rate_on_typed_dynamic_edit_scope": 0.0,
+  "confirmation_locked": true,
+  "policy_post_training_unlock": "regression_test_set_only_initially"
+}
