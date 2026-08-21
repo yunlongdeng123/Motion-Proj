@@ -1,0 +1,65 @@
+schema_version: worldsim_v6.r68_transform_owned_second_actor_sensor_runtime.v1
+task_id: WS-V6-R68-TRANSFORM-OWNED-SECOND-ACTOR-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R68-001
+seed: 20260821
+sources:
+  r67_run: runs://worldsim_v6/WS-V6-R67-TRANSFORM-OWNED-SECOND-ACTOR-BAKE-01/20260821T202254Z__actor2-transform-bake-s20260821-r1
+  r67_manifest_sha256: 373f0f4b87d32ec4d6a74d4c51e49ab41d8fc2dbbfc85999f32a450db7b300cc
+  r67_gate_sha256: c4b465052a8cedb418fe2e0d19cabb0811e35902ad53ebc6b26520d853afda2e
+  r67_summary_sha256: 83caf9bd04db8abdd82f784f2263e015c20e3c751053a5692438233918a84a62
+  r67_package_manifest_sha256: 13f62ae93ef8aa11bd04d157cdc6d9c5f61e288902464242d2b07d8758a7b303
+  r67_trajectory_geometry_sha256: 725e32ae7c96c13d7bde659c5763d2a499bdc03e986eab67c741f3739666c426
+  r67_runtime_contract_sha256: c07f44cc7725cc4e99bafd870280b6a0681f0e50ea9a6aefafd80d195a3ef2e1
+  r67_validity_sha256: e46422609e15d850f41977d5a80f255b240ef700fa67c0fcd99320346d1529c6
+  r61_run: runs://worldsim_v6/WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01/20260821T193625Z__selected-actor2-sensor-s20260821-r1
+  r61_manifest_sha256: 199110abda13801edae4e4e3b2d98256bd3d1feec9298e18db3597dcd913251b
+  r61_gate_sha256: 23ecefc39d4f1af497021008d5792140eef3b414aab253b4a8aaa4c7974e4ffa
+  r61_summary_sha256: 39a973b2105037510b996fa2f9c71c32e92d0720af0d74308de1556ef401c959
+  r61_sensor: worker/sensors/frame098.npz
+  r61_sensor_sha256: a745f51a74ff75cd48c8d2b9743618b55a03800c367f0ee403913257f7bf3360
+  r57_run: runs://worldsim_v6/WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01/20260821T191551Z__actor2-sensor-s20260821-r1
+  r57_manifest_sha256: 3a3d9174e6c95f4dc2651392c6f9c7921969bd0aca1ec41032a78faf700190aa
+  r57_gate_sha256: 294ff96906ce1a7d692755eb3b06554bd7ff6673a3a1bb1d4a0eda1da1388aa5
+  r57_summary_sha256: e0cd643182ec60b5ab0129b54c36141dddc0550e3a34282614a44751a36472d9
+  r57_sensor: worker/sensors/frame098.npz
+  r57_sensor_sha256: 70f1ffbee01e6d4de43325038b770b7574ddc24c290954ee518d5b0e1b2234c1
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  asset_id: actor_0002
+  actor_model_index: 2
+  frame_index: 98
+  proposal_id: actor2_translate_x_-1.0_z_+0.0
+  translation_delta_m: [-1.0, 0.0, 0.0]
+  expected_frame_validity: true
+  required_worker_runtime_mode: transform_owned_package_direct
+  required_translation_source: package_transform_trajectory
+  required_lifecycle_source: package_actor_frame_validity
+thresholds:
+  rgb_change_epsilon: 0.000001
+  minimum_counterfactual_changed_pixels: 256
+  minimum_actor_effect_pixels: 256
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 210
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_direct_sensor_runtime_from_r67_transform_owned_actor2_package
+  - runtime_reads_edit_and_lifecycle_from_package_without_cli_translation
+  - six_sensor_arrays_must_match_canonical_r61_cli_execution_bit_exact
+  - edited_sensor_must_remain_nontrivial_relative_to_r57_logged_baseline
+  - four_factor_conformance_is_preserved_but_semantic_full_physics_planning_safety_and_confirmation_abstain
+  - checkpoint_package_and_frozen_authorities_remain_immutable
+  - no_training_or_confirmation_read
