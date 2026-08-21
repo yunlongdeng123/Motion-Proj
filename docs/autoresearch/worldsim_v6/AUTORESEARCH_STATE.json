@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T21:22:00Z",
+  "updated_at_utc": "2026-08-21T21:25:15Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 117,
-  "active_task": "WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01",
-  "active_hypothesis": "WS-V6-H-R75-001",
-  "candidate": "actor5_all_frame_logged_rigid_trajectory_compilation",
+  "iteration": 118,
+  "active_task": "WS-V6-R76-THIRD-ACTOR-SENSOR-EQUIVALENCE-01",
+  "active_hypothesis": "WS-V6-H-R76-001",
+  "candidate": "actor5_five_frame_native_compiled_sensor_equivalence",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "c0d4af7c112e7d52c3c9081d9f18619b3bdf245a612ed5f52c50cb71ba70339d",
+  "dev_artifact_hash": "3b644ea6407ce5329e75b5eda73c641b85fe19a7bc9938adf0de8bb04219d325",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "e798d0b619523ff7204a7cf9d6a345034815cf9133dbb0e2ba7075f09368a89f",
-  "last_reflection_id": "WS-V6-REFL-0119",
+  "last_reflection_id": "WS-V6-REFL-0120",
   "last_completed": {
-    "task_id": "WS-V6-R74-THIRD-ACTOR-SCENEIR-BUNDLE-01",
-    "run": "run://worldsim_v6/WS-V6-R74-THIRD-ACTOR-SCENEIR-BUNDLE-01/20260821T212030Z__actor5-bundle-s20260821-r1",
-    "artifact_sha256": "c0d4af7c112e7d52c3c9081d9f18619b3bdf245a612ed5f52c50cb71ba70339d"
+    "task_id": "WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01",
+    "run": "run://worldsim_v6/WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01/20260821T212335Z__actor5-trajectory-s20260821-r1",
+    "artifact_sha256": "3b644ea6407ce5329e75b5eda73c641b85fe19a7bc9938adf0de8bb04219d325"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -134,7 +134,8 @@
     "r72_two_actor_incremental_perception": "done_accepted_development_each_actor_increment_changes_frozen_labels",
     "r73_third_actor_visibility_selection": "done_accepted_development_actor5_137172_effect_pixels",
     "r74_third_actor_sceneir_bundle": "done_accepted_development_actor5_exact_bundle",
-    "r75_third_actor_rigid_trajectory": "active_pre_registered",
+    "r75_third_actor_rigid_trajectory": "done_accepted_development_actor5_196_pose_compilation",
+    "r76_third_actor_sensor_equivalence": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -143,9 +144,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "compile_actor5_local_gaussians_through_all196_logged_rigid_poses",
-    "preserve151_active_frame_lifecycle_and_invariant_fields",
-    "require_repeat_exact_and_rigid_inverse_roundtrip_tolerance",
-    "if_accepted_run_native_sensor_equivalence_at_frozen_frames"
+    "render_actor5_native_and_compiled_at_five_preregistered_active_frames",
+    "require_all_field_rgb_depth_opacity_thresholds_and_repeat_exactness",
+    "require_at_least_one_nontrivial_visible_actor_frame",
+    "if_accepted_begin_actor5_translation_proposal_measurement"
   ]
 }
