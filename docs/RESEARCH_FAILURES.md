@@ -3581,3 +3581,9 @@ H-R22-001 canonical run `20260821T153531Z__independent-arms-s20260821-r1` 对六
 H-R23-001 canonical run `20260821T154110Z__independent-arms-s20260821-r1` 在相同六个 actor cases 上，以 R22 moment affine 初始化 signed-distance-field homography ECC。actor P1 仍为 `0/6` ACCEPT，P2 仍只有 `1/6` ACCEPT；SDF warp 让若干 photo MAE 从 R22 的 `0.063–0.076` 恶化到 `0.069–0.116`，仅一个 case 改善至 `0.05748`，仍未过冻结 `0.05`。因此整体 P1/P2 合格仍不能覆盖 actor subset，正式 `rejected`。
 
 不得继续扫描 SDF ROI、iteration 或 photo threshold。二值 actor-edit support 约束的是轮廓，不携带姿态、可见面与光照的跨时刻纹理对应；更灵活的 homography 会扭曲错误纹理。既有 H-R9-003 已独立证明 same-time cross-frontend proposal 在 actor 子集上 P1 `4/6`、P2 `1/6` 且 false-safe 均为 `0`。H-R24-001 因此不再拟合 mask，而按 typed asset route 复用已验证来源：static/disocclusion 保持 R16 temporal RGB-D，actor_removal 使用同帧 cross-frontend；所有 verifier 与 actor gates 不变。
+
+### V6-F58：小 actor 分母上的固定 false-safe rate delta 可以数学上不可达
+
+H-R24-001 canonical run `20260821T154603Z__independent-arms-s20260821-r1` 按 hole type 复用已接受的 R16 temporal RGB-D static source 与 H-R9-003 same-time cross-frontend actor source。actor 子集 P1 为 `4/6` ACCEPT、false-safe `0`，P2 为 `1/6` ACCEPT、false-safe `0`；两臂的绝对 coverage/risk 都通过。但 actor P1 的 P0 只有 `1/6` false-safe，最大可能 rate reduction 为 `0.16667`，无法达到从 28-case 全局臂继承的固定 `0.25`，因此要求 P1/P2 均合格的 H-R24-001 按原合同正式 `rejected`。
+
+不得追认 R24 gate，也不得删除唯一 P0 错误或降低风险要求。H-R25-001 保持 R24 proposals、decisions、truth 与 P1/P2 阈值完全冻结，只预注册适合六例小分母的 actor Pareto gate：每臂 coverage `>=0.10`、false-safe rate `<=0.10`，并且 false-safe count 相对 P0 至少严格减少 `1`。该离散计数门在两个臂上均可实现且仍要求实际消除错误；旧 R24 run 继续保持 rejected。

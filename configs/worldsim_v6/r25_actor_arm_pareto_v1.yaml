@@ -1,0 +1,29 @@
+schema_version: worldsim_v6.r25_actor_arm_pareto.v1
+task_id: WS-V6-R25-ACTOR-ARM-PARETO-EVALUATION-01
+hypothesis_id: WS-V6-H-R25-001
+seed: 20260821
+sources:
+  r24_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  r24_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  r24_gate_sha256: 171905dacadae1ea0b2af48eaa1fc8a86ba7ecfc1bd21ab7f000f28b248e58fd
+  r24_actor_arm_summaries_sha256: b60ff8c74a391b01ec2b4da5d03ee4ede3bb0388a7a95b54d907c494f75dda94
+  r24_per_case_arms_sha256: 7171ed693a7188b74bd69be557accd43e8701267f8ef009f12cb11b2a1a0a72d
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_actor_case_count: 6
+selected_arms: [P1, P2]
+gate:
+  minimum_accept_coverage: 0.10
+  maximum_false_safe_rate: 0.10
+  minimum_false_safe_reduction_count: 1
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - evaluation_protocol_hypothesis_over_immutable_r24_outputs
+  - r24_original_gate_and_rejected_status_retained
+  - discrete_false_safe_count_reduction_for_six_case_actor_denominator
+  - no_new_proposal_verifier_inference_threshold_or_decision
+  - no_factor_fusion_bake_training_or_confirmation_read
