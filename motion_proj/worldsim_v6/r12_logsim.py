@@ -18,6 +18,7 @@ import yaml
 
 
 TASK_ID = "WS-V6-R12-LOGSIM-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01"}
 
 
 class R12ExperimentError(RuntimeError):
@@ -87,14 +88,19 @@ def run_experiment(
         raise R12ExperimentError("正式 R12 run 禁止 dirty source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config.get("task_id") != TASK_ID:
+    task_id = str(config.get("task_id"))
+    if task_id not in ALLOWED_TASK_IDS:
         raise R12ExperimentError("R12 task_id 漂移")
     sources = config["sources"]
     r11_run = _resolve_runs_uri(sources["r11_run"])
     r9_run = _resolve_runs_uri(sources["r9_run"])
+    r11_gate_name = str(sources.get("r11_gate_file", "R11_GATE.json"))
+    proposal_directory = str(
+        sources.get("proposal_directory", "cross_frontend_reconstruction_proposals")
+    )
     frozen_files = {
         r11_run / "MANIFEST.json": sources["r11_manifest_sha256"],
-        r11_run / "R11_GATE.json": sources["r11_gate_sha256"],
+        r11_run / r11_gate_name: sources["r11_gate_sha256"],
         r11_run / "package/PACKAGE_MANIFEST.json": sources["r11_package_manifest_sha256"],
         r9_run / "MANIFEST.json": sources["r9_manifest_sha256"],
         semantic_model_root / config["verifier_model"]["model_file"]: config["verifier_model"]["model_sha256"],
@@ -106,7 +112,7 @@ def run_experiment(
         raise R12ExperimentError("R12 磁盘资源不足")
 
     now = datetime.now(timezone.utc)
-    run_dir = run_root / TASK_ID / f"{now.strftime('%Y%m%dT%H%M%SZ')}__logsim-s{config['seed']}-r1"
+    run_dir = run_root / task_id / f"{now.strftime('%Y%m%dT%H%M%SZ')}__logsim-s{config['seed']}-r1"
     run_dir.mkdir(parents=True, exist_ok=False)
     try:
         replay_dir = run_dir / "replays"
@@ -132,7 +138,7 @@ def run_experiment(
             verifier_input = r9_run / "verifier_inputs" / f"{case_id}.npz"
             proposal = (
                 r9_run
-                / "cross_frontend_reconstruction_proposals"
+                / proposal_directory
                 / f"{case_id}__repeat1.npy"
             )
             if _sha256(proposal) != provenance[asset["asset_id"]]["source_proposal_sha256"]:
@@ -245,7 +251,7 @@ def run_experiment(
         }
         checks["passed"] = all(checks.values())
         _write_json(
-            run_dir / "R12_GATE.json",
+            run_dir / ("R12_GATE.json" if task_id == TASK_ID else "R19_GATE.json"),
             {
                 "schema_version": "worldsim_v6.r12_gate.v1",
                 "checks": checks,
@@ -259,7 +265,7 @@ def run_experiment(
         )
         summary = {
             "schema_version": "worldsim_v6.r12_summary.v1",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "hypothesis_outcome": "accepted_development_static_scope"
@@ -288,7 +294,7 @@ def run_experiment(
         }
         _write_json(run_dir / "SUMMARY.json", summary)
         tracked = [
-            "R12_GATE.json",
+            "R12_GATE.json" if task_id == TASK_ID else "R19_GATE.json",
             "SUMMARY.json",
             "REPLAY_INDEX.jsonl",
             "REPLAY_METRICS.jsonl",
@@ -323,7 +329,7 @@ def run_experiment(
             {
                 "schema_version": "worldsim_v6.terminal.v1",
                 "status": summary["status"],
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "hypothesis_id": config["hypothesis_id"],
                 "manifest_sha256": _sha256(run_dir / "MANIFEST.json"),
             },
@@ -335,7 +341,7 @@ def run_experiment(
             {
                 "schema_version": "worldsim_v6.terminal.v1",
                 "status": "blocked",
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "error_type": type(error).__name__,
                 "error": str(error),
             },

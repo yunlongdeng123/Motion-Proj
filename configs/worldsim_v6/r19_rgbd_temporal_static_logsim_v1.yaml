@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r19_rgbd_temporal_static_logsim.v1
+task_id: WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01
+hypothesis_id: WS-V6-H-R19-001
+seed: 20260821
+sources:
+  r11_run: runs://worldsim_v6/WS-V6-R18-RGBD-TEMPORAL-TYPED-BAKE-01/20260821T151134Z__typed-bake-s20260821-r1
+  r11_manifest_sha256: 33fddd9192752ac6b5aa81ea7ca14c51bf3b4968e663080323c5bb3f77e52c4b
+  r11_gate_file: R18_GATE.json
+  r11_gate_sha256: b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e
+  r11_package_manifest_sha256: c907234f751b85a95483738557e29c9e1e5204d40470d952912360a9d50ace1c
+  r9_run: runs://worldsim_v6/WS-V6-R16-RGBD-TEMPORAL-PROPOSAL-VERIFIERS-01/20260821T150012Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 933232aab82ff9c62e7d559b4571274c7613a8dfc48ab7441c96b2d4dafbdac9
+  proposal_directory: temporal_ecc_rgb_depth_reconstruction_proposals
+verifier_model:
+  id: Koushim/deeplabv3-resnet50-cityscapes
+  revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+  license: Apache-2.0
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_static_chunk_count: 2
+  replay_count: 2
+replay:
+  coordinate_space: observation_plane_512x288
+  sensor_stream: rgb
+  expected_sensor_mae: 0.0
+  require_source_proposal_exact: true
+  require_repeat_exact: true
+  require_perception_label_exact: true
+unsupported_factors:
+  trajectory: ABSTAIN_NOT_REPRESENTED
+  actor: ABSTAIN_NOT_REPRESENTED
+  event: ABSTAIN_NOT_REPRESENTED
+  sensor_calibration: ABSTAIN_NOT_REPRESENTED
+  collision: ABSTAIN_NOT_REPRESENTED
+gate:
+  require_all_static_assets_replayed: true
+  require_sensor_exact: true
+  require_perception_repeat_exact: true
+  require_source_immutable: true
+  require_no_generator_runtime_dependency: true
+  require_unsupported_factors_abstain: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_rgbd_temporal_static_sensor_logsim_only
+  - observed_support_reconstructed_rgb_not_new_observation
+  - perception_repeatability_not_semantic_correctness
+  - trajectory_actor_event_calibration_collision_not_represented
+  - no_closed_loop_or_safety_claim
+  - no_training
+  - no_confirmation_read
