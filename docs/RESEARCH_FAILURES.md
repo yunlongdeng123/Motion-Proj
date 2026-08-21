@@ -3269,6 +3269,17 @@ auxiliary head。run 保持 `failed`，未产生 arm verdict、融合或 bake，
 均不改变。以后冻结视觉 checkpoint 的结构审计必须覆盖所有 state-dict head，不能以“推理不消费”为由
 在 strict identity 前删除参数。
 
+### V6-F24：第三方 checkpoint 的主 head 与 auxiliary head 类数可能不一致
+
+R9 第二个正式 run `20260821T110616Z__independent-arms-s20260821-r1` 在启用 aux 结构后继续由
+strict load 拒绝：归档主 classifier 为 Cityscapes 19 类，但 `aux_classifier.4` 仍是 torchvision 默认
+21 类（权重 `21×256×1×1`），而统一 `num_classes=19` 构造出的 aux head 为 19 类。run 保持
+`failed`；28 proposals 已生成，但无 verifier verdict、融合或 bake。
+
+修复精确重建归档结构：主 head 保持 19 类，aux 最后一层单独恢复为 21 类，然后 strict load 全 state dict；
+aux 输出仍不被正式分数消费。模型权重、P3 动态类定义、cohort、threshold、gate 和资源合同均不改变。
+以后第三方 segmentation checkpoint 必须逐 head 审计 shape，不能假设所有 classifier 共用同一 label count。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

@@ -61,6 +61,8 @@ def _load_semantic_model(root: Path) -> torch.nn.Module:
         num_classes=19,
         aux_loss=True,
     )
+    # 该冻结归档的主 head 为 19 类，但保留了 torchvision 默认 21 类 auxiliary head。
+    model.aux_classifier[4] = torch.nn.Conv2d(256, 21, kernel_size=1)
     checkpoint = torch.load(root / "pytorch_model.bin", map_location="cpu", weights_only=True)
     if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
         checkpoint = checkpoint["state_dict"]
