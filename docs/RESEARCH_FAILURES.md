@@ -3670,3 +3670,8 @@ H-R49-001 canonical run `20260821T182444Z__multiframe-sensor-s20260821-r1` 在 f
 H-R53-001 首次正式启动 `20260821T185332Z__lifecycle-perception-s20260821-r1` 在产生任何感知输出前失败。冻结 R49/R51 sensor NPZ 使用 `native_rgb` 与 `compiled_rgb` 字段，而复用的旧 R13 worker 硬编码读取 `rgb`，因此抛出 `KeyError: rgb is not a file in the archive`；run 仅有输入 index 与错误日志，没有 label、gate 或方法结论。
 
 修复新增 R53 专用隔离 worker，唯一变化是显式读取 `compiled_rgb`；冻结 R52/R49/R51/model hashes、frames57/141/195、双重复、active exact control、inactive label-change gate、资源和 claim boundary 均不变。不得把 `native_rgb` 偷换为输入或先读取标签结果调阈值。新 commit/push 后按原 H-R53-001 重试，首次启动不具 canonical authority。
+### V6-F73：冻结 CUDA 感知 worker 必须在进程启动前绑定确定性 CuBLAS workspace
+
+H-R53-001 第二次正式启动 `20260821T185611Z__lifecycle-perception-s20260821-r1` 已正确读取 `compiled_rgb` 并加载冻结 DeepLabV3，但在首个 forward、任何 label 输出前被 `torch.use_deterministic_algorithms(True)` 拒绝：CUDA>=10.2 的 CuBLAS 需要进程启动前设置 `CUBLAS_WORKSPACE_CONFIG=:4096:8`。run 仍只有输入 index 与错误日志，没有方法结果。
+
+修复仅由 R53 主进程向隔离 worker 环境注入 `CUBLAS_WORKSPACE_CONFIG=:4096:8`，保持 deterministic algorithms 开启；不得关闭确定性模式。冻结 sources、模型、12 次推理分母、active/inactive gates、资源与 claim boundary 均不变。新 commit/push 后仍按原 H-R53-001 重试，第二次启动不具 canonical authority。

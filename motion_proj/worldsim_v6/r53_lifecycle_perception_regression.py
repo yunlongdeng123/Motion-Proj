@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -94,8 +95,10 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         "--model-root", str(model_root),
         "--output-dir", str(perception_dir),
     ]
+    worker_env = os.environ.copy()
+    worker_env["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     with log_path.open("w", encoding="utf-8") as log_stream:
-        subprocess.run(command, cwd=repo_root, stdout=log_stream, stderr=subprocess.STDOUT, check=True)
+        subprocess.run(command, cwd=repo_root, env=worker_env, stdout=log_stream, stderr=subprocess.STDOUT, check=True)
     worker = json.loads((perception_dir / "WORKER_RESULT.json").read_text(encoding="utf-8"))
     rows = _load_rows(perception_dir / "PERCEPTION_OUTPUTS.jsonl")
     grouped: dict[str, list[dict[str, Any]]] = {}
