@@ -1,0 +1,29 @@
+schema_version: worldsim_v6.r91_selective_policy_fresh_process_replay.v1
+task_id: WS-V6-R91-SELECTIVE-POLICY-FRESH-PROCESS-REPLAY-01
+hypothesis_id: WS-V6-H-R91-001
+seed: 20260821
+sources:
+  r86_run: runs://worldsim_v6/WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01/20260821T222429Z__three-actor-full-episode-s20260821-r1
+  r86_full_episode_sensor_effect_sha256: 7c83c16ec6b256a64a3259138f62fd83fdbcad2deeec5e2ae10d5f1da8fb0ebc
+  r90_run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  r90_manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  r90_gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  r90_summary_sha256: 17821981b3523ca312c557da502c91d356bc35b140f2e1641283317c2a296633
+  r90_package_manifest_sha256: 10a1ca84df092d96bdeb3be1fcfd077087793575c0410ee9f81f6e20ac50c40a
+  r90_policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+  r90_decisions_sha256: fd36f38f27d4c715c36cb649968300b59a40f1d93cec3939fffd3a51599cf87a
+runtime:
+  fresh_process_count: 2
+resources:
+  device: cpu
+  maximum_worker_seconds: 30
+  maximum_wall_seconds: 60
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_fresh_process_runtime_replay_of_content_addressed_selective_policy
+  - two_independent_python_processes_consume_only_policy_package_and_compiler_feature_map
+  - decisions_must_equal_baked196_frame_decisions_and_repeat_byte_exactly
+  - torch_and_frozen_perception_model_must_not_be_loaded_at_runtime
+  - policy_runtime_triggers151_and_skips45_expensive_perception_checks
+  - cross_scene_cross_model_semantic_correctness_local_causality_physics_planning_safety_abstain
+  - no_training_or_confirmation_read
