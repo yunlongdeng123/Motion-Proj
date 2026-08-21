@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T19:26:23Z",
+  "updated_at_utc": "2026-08-21T19:32:21Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 98,
-  "active_task": "WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01",
-  "active_hypothesis": "WS-V6-H-R60-001",
-  "candidate": "factor_aware_second_actor_frozen_xz_translation_grid",
+  "iteration": 99,
+  "active_task": "WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01",
+  "active_hypothesis": "WS-V6-H-R61-001",
+  "candidate": "factor_selected_second_actor_native_sensor_execution",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "f4976d19c9ea22b58d0c864db50736f6ddd1fb1cfa6a653aa07cff51cbf59da8",
+  "dev_artifact_hash": "904d66df19509920c0c48f8a07c5e7837bd12f3720c6e3cc54313a5be9bbfc31",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "d7f790a958e9b34784f0c22e4949999e5259e4cc5fb4e9d8ed67dcc8d132e65c",
-  "last_reflection_id": "WS-V6-REFL-0100",
+  "last_reflection_id": "WS-V6-REFL-0101",
   "last_completed": {
-    "task_id": "WS-V6-R59-SECOND-ACTOR-INTERACTION-FACTOR-01",
-    "run": "run://worldsim_v6/WS-V6-R59-SECOND-ACTOR-INTERACTION-FACTOR-01/20260821T192557Z__actor2-interaction-s20260821-r1",
-    "artifact_sha256": "f38433bec05be64331a55ff542c6e1fa1708cae29ddd1d3e6b25b88452225d6b"
+    "task_id": "WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01",
+    "run": "run://worldsim_v6/WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01/20260821T193037Z__actor2-proposal-search-s20260821-r1",
+    "artifact_sha256": "904d66df19509920c0c48f8a07c5e7837bd12f3720c6e3cc54313a5be9bbfc31"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -119,7 +119,8 @@
     "r57_second_actor_sensor_equivalence": "done_accepted_development_actor2_5_of_5_native_sensor",
     "r58_second_actor_translation_sensor": "done_accepted_development_22039_changed_pixels_native_conformant",
     "r59_second_actor_interaction_factor": "done_rejected_v6_f74_7_new_aabb_overlaps",
-    "r60_second_actor_proposal_search": "active_pre_registered",
+    "r60_second_actor_proposal_search": "done_accepted_development_12_of_80_selected_minus_x",
+    "r61_selected_second_actor_sensor": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -128,8 +129,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "record_v6_f74_and_commit_r59_rejection_with_r60_search",
-    "evaluate_80_frozen_actor2_xz_translations_against_27_actor_196_frame_aabbs",
-    "select_nearest_to_rejected_anchor_with_zero_new_overlap_events"
+    "render_r60_selected_actor2_translation_at_visible_frame98",
+    "require_native_sensor_equivalence_and_nontrivial_logged_baseline_change",
+    "then_evaluate_logged_lidar_contact_for_the_selected_edit"
   ]
 }

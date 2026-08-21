@@ -1,0 +1,56 @@
+schema_version: worldsim_v6.r61_selected_second_actor_sensor.v1
+task_id: WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01
+hypothesis_id: WS-V6-H-R61-001
+seed: 20260821
+sources:
+  r60_run: runs://worldsim_v6/WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01/20260821T193037Z__actor2-proposal-search-s20260821-r1
+  r60_manifest_sha256: a06ef5004bc6dc954c714fe945b84673af8f7e2069dc7fc4f1e7e6fd4053279a
+  r60_gate_sha256: 904d66df19509920c0c48f8a07c5e7837bd12f3720c6e3cc54313a5be9bbfc31
+  r60_summary_sha256: a32ac449e64b8c1c13ecb73e4a11ae07895ed6cd44eff8b66446e5a793e20444
+  r60_selected_proposal_sha256: b75c90b4c6888ec7ef9ff5fe4ec402b2ea82523319a3bd12e5b5a2a885e25b8d
+  r57_run: runs://worldsim_v6/WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01/20260821T191551Z__actor2-sensor-s20260821-r1
+  r57_manifest_sha256: 3a3d9174e6c95f4dc2651392c6f9c7921969bd0aca1ec41032a78faf700190aa
+  r57_gate_sha256: 294ff96906ce1a7d692755eb3b06554bd7ff6673a3a1bb1d4a0eda1da1388aa5
+  r57_summary_sha256: e0cd643182ec60b5ab0129b54c36141dddc0550e3a34282614a44751a36472d9
+  r57_frame98_sensor: worker/sensors/frame098.npz
+  r57_frame98_sensor_sha256: 70f1ffbee01e6d4de43325038b770b7574ddc24c290954ee518d5b0e1b2234c1
+  r56_run: runs://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1
+  r56_gate_sha256: edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c
+  r56_package_manifest_sha256: 35dbda21f25de374d5f032e6685571edc4f2ae3b05a23c6001a4ce4f9458556a
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+intervention:
+  actor_model_index: 2
+  frame_index: 98
+  expected_proposal_id: actor2_translate_x_-1.0_z_+0.0
+  translation_delta_m: [-1.0, 0.0, 0.0]
+  expected_frame_validity: true
+  maximum_new_overlap_events: 0
+  minimum_changed_rgb_pixels_vs_logged: 256
+  rgb_change_epsilon: 0.000001
+  required_runtime_mode: legacy_materialized_geometry_with_cli_translation
+  required_translation_source: cli_argument
+  required_lifecycle_source: package_actor_frame_validity
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 210
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_factor_selected_second_actor_sensor_conformance
+  - proposal_is_frozen_by_r60_zero_new_aabb_overlap_search_before_rendering
+  - edited_sensor_must_change_nontrivially_from_actor2_logged_baseline
+  - native_renderer_equivalence_and_aabb_interaction_are_not_contact_or_physical_validity
+  - contact_road_semantic_identity_dynamics_physical_planning_safety_and_confirmation_abstain
