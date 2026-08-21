@@ -196,9 +196,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             raise PT1RegressionError("heldout gate hash 漂移")
         if _sha256(heldout_manifest) != config["heldout_scenario"]["manifest_sha256"]:
             raise PT1RegressionError("heldout manifest hash 漂移")
-        if json.loads(contract_gate.read_text(encoding="utf-8"))["decision"] != "accept_typed_dynamic_edits":
+        if json.loads(contract_gate.read_text(encoding="utf-8"))["decision"] != config["contract_source"]["accepted_decision"]:
             raise PT1RegressionError("development dependency contract 未接受")
-        if json.loads(heldout_gate.read_text(encoding="utf-8"))["decision"] != "accept_same_scene_actor_dependency_sensor_binding":
+        if json.loads(heldout_gate.read_text(encoding="utf-8"))["decision"] != config["heldout_scenario"]["accepted_decision"]:
             raise PT1RegressionError("heldout compiled episode 未接受")
 
         base = json.loads((heldout_run / "BASE_REPLAY.json").read_text(encoding="utf-8"))
