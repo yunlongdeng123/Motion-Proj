@@ -3665,3 +3665,8 @@ H-R46-001 canonical run `20260821T181019Z__detached-logsim-s20260821-r1` 从完�
 H-R49-001 canonical run `20260821T182444Z__multiframe-sensor-s20260821-r1` 在 frames `[0,57,140,141,195]` 上把 R47 detached package 与 R35+同一 delta 两条 runtime 路径逐数组比较，5/5 sensor NPZ 完全相同，runtime modes、event/state identity、repeat、state restoration、package/checkpoint immutability 与资源门均通过。但两条 compiled 路径共同遗漏 native `RigidNodes.instances_fv`：frames 141/195 的 native actor 已 inactive、opacity 为零，compiled package 仍使用固定 observed opacity，导致最大 opacity field error `0.99643`、RGB MAE `0.00501`、depth MAE `0.44633m`。因此 run 正式 `rejected`；cross-path equality 只能证明两个 consumer 同错。
 
 不得删除141/195、放宽 sensor 阈值、把 actor effect 为0解释成无关，或继续把 stationary geometry state 等同于 active lifecycle。H-R50-001 从冻结 StreetGS native `instances_fv[:, actor_0000]` 提取完整196帧生命周期，预注册验证 frames0-140 active、141-195 inactive 的单次边界，并把 content-addressed bool lifecycle 作为独立字段 bake 进 transform-owned package。base geometry、proposal transform 与 R49 rejection 必须原样保留；后续 sensor runtime 必须用 lifecycle 乘 actor opacity。
+### V6-F72：下游 perception adapter 必须显式绑定 sensor NPZ 的拥有字段
+
+H-R53-001 首次正式启动 `20260821T185332Z__lifecycle-perception-s20260821-r1` 在产生任何感知输出前失败。冻结 R49/R51 sensor NPZ 使用 `native_rgb` 与 `compiled_rgb` 字段，而复用的旧 R13 worker 硬编码读取 `rgb`，因此抛出 `KeyError: rgb is not a file in the archive`；run 仅有输入 index 与错误日志，没有 label、gate 或方法结论。
+
+修复新增 R53 专用隔离 worker，唯一变化是显式读取 `compiled_rgb`；冻结 R52/R49/R51/model hashes、frames57/141/195、双重复、active exact control、inactive label-change gate、资源和 claim boundary 均不变。不得把 `native_rgb` 偷换为输入或先读取标签结果调阈值。新 commit/push 后按原 H-R53-001 重试，首次启动不具 canonical authority。

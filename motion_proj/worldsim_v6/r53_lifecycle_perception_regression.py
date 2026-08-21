@@ -89,7 +89,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     log_path = run_dir / "perception.log"
     command = [
         sys.executable,
-        str(repo_root / "scripts/worldsim_v6/r13_perception_worker.py"),
+        str(repo_root / "scripts/worldsim_v6/r53_perception_worker.py"),
         "--index", str(run_dir / "PERCEPTION_INPUT_INDEX.jsonl"),
         "--model-root", str(model_root),
         "--output-dir", str(perception_dir),
