@@ -1,0 +1,54 @@
+schema_version: worldsim_v6.r78_third_actor_box_footprint_contact.v1
+task_id: WS-V6-R78-THIRD-ACTOR-BOX-FOOTPRINT-CONTACT-01
+hypothesis_id: WS-V6-H-R78-001
+seed: 20260821
+sources:
+  r64_run: runs://worldsim_v6/WS-V6-R64-RAW-LIDAR-SECOND-ACTOR-CONTACT-01/20260821T200653Z__raw-lidar-contact-s20260821-r1
+  r64_manifest_sha256: ed67b159aba474dd57165c4316a106ede816cb0cb18ac856d0f71592c131ccd1
+  r64_gate_sha256: 8d9644089aadfc0874129ddc05b888eb50a5a53cdf20c5302811ab2790248b57
+  r64_summary_sha256: ee68f380ca5c5e3dfe048df11f11a27fb2aaacd67b98ee7d09e618d9cae26341
+  r64_raw_union_sha256: 911f8da9b36c904bd2676c3d7523a7d45b68e249aa17e140615f9c886ac61447
+  r77_run: runs://worldsim_v6/WS-V6-R77-THIRD-ACTOR-EDIT-PROPOSAL-01/20260821T213324Z__actor5-edit-proposal-s20260821-r1
+  r77_manifest_sha256: 6cd78dd1353248889c25ee3000bc24f79896f107b67714241d3cf14831c2e25c
+  r77_gate_sha256: c7ef3212755c594b279757df2110e27ad1b00c09b97328f67cb2340bba6cecd2
+  r77_summary_sha256: c0bdf835dbbbe1994aab3c6f5d931ea7eb0f66c3702ca8aab62eef7df7d2136d
+  r77_selection_sha256: 9f20815c8189fedaa7c2bf3736cb46fdfde20c30db67696f9280c8d165bd6fec
+  r75_run: runs://worldsim_v6/WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01/20260821T212335Z__actor5-trajectory-s20260821-r1
+  r75_gate_sha256: 3b644ea6407ce5329e75b5eda73c641b85fe19a7bc9938adf0de8bb04219d325
+  r75_package_manifest_sha256: 7311894a7b27b61981c126a08aa97e4b2d870ec6ad1fc476284cfedfdadaa420
+  r75_trajectory_geometry_sha256: 844b13c72486500e4bb687a8f74701757a83e5cbd321a8d93907a0058a68e6cb
+  processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+  instances_info_sha256: 5137cc1a489de7c281e2050e051a0210ec4c8d66a794fd6dd902627a586eb3bf
+  camera_front_start_sha256: 29540be4d522c5f3b94689a17e461388b62eb1676c7b674401e7bda04762de59
+cohort:
+  target_frame_index: 57
+  target_timestamp_us: 5700000
+  actor_model_index: 5
+  expected_primitive_count: 8377
+  expected_frame_validity: true
+selected_intervention:
+  expected_translation_delta_m: [0.5, 0.0, 0.0]
+mapping:
+  maximum_centroid_distance_m: 2.5
+  minimum_next_nearest_margin_m: 1.0
+vertical_contract:
+  object_local_up_axis: z
+  object_bottom_local_z_sign: -1
+  world_vertical_axis_index: 1
+  maximum_local_up_world_y: -0.99
+footprint_contact:
+  outside_boundary_ring_width_m: 1.0
+  ground_height_quantile: 0.50
+  minimum_ring_lidar_candidates: 64
+  maximum_contact_error_m: 0.35
+resources:
+  gpu: none
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_native_box_owned_footprint_contact_factor_for_actor5
+  - processed_instance_is_bound_by_nearest_centroid_with_preregistered_distance_and_margin
+  - native_box_bottom_owns_actor_support_height_but_not_ground_height
+  - raw_static_lidar_median_in_fixed_one_meter_oriented_footprint_boundary_ring_owns_ground_proxy
+  - both_logged_and_r77_selected_translation_must_pass_contact_threshold
+  - semantic_road_full_physics_dynamics_collision_planning_safety_and_confirmation_abstain
