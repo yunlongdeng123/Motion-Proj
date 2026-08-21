@@ -1,21 +1,21 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T17:15:00Z",
+  "updated_at_utc": "2026-08-21T17:12:06Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 68,
+  "iteration": 69,
   "active_task": "WS-V6-R37-ACTOR-TRAJECTORY-EDIT-SENSOR-EQUIVALENCE-01",
-  "active_hypothesis": "WS-V6-H-R37-001",
-  "candidate": "counterfactual_actor_pose_edit_native_compiled_sensor_equivalence",
+  "active_hypothesis": "WS-V6-H-R37-002",
+  "candidate": "counterfactual_actor_pose_edit_native_compiled_sensor_equivalence_governance_retry",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "e19b7fbc73d2180c3293630c2a89b68f4fe620e90471f4f3f889dc063cfd38ae",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "2c3b2bcada6cab547a806e87fd6ac0d4921b34c84528609e9fc03bca4261ebeb",
-  "last_reflection_id": "WS-V6-REFL-0070",
+  "failure_ledger_sha256": "7bc2f1e63c943713b9c9e99e297dbd0597f700b5b623f91706bec367648f66f1",
+  "last_reflection_id": "WS-V6-REFL-0071",
   "last_completed": {
     "task_id": "WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01",
     "run": "run://worldsim_v6/WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01/20260821T165828Z__sensor-equivalence-s20260821-r1",
@@ -96,7 +96,7 @@
     "r34_identity_bound_actor_logsim": "done_accepted_development_detached_replay",
     "r35_actor_rigid_trajectory_compiler": "done_accepted_development_logged_pose_expansion",
     "r36_actor_sensor_equivalence": "done_accepted_development_native_renderer_integration",
-    "r37_actor_trajectory_edit_sensor_equivalence": "active_pre_registered_two_axis_counterfactual",
+    "r37_actor_trajectory_edit_sensor_equivalence": "first_formal_rejected_v6_f63_retry_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -105,8 +105,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r36_closeout_and_r37_preregistration",
-    "render_one_meter_world_x_and_world_y_actor_trajectory_edits",
-    "compare_compiled_edits_to_native_in_memory_edits_and_restore_state"
+    "commit_v6_f63_and_h_r37_002_with_server_utc",
+    "rerun_unchanged_one_meter_world_x_and_world_y_actor_trajectory_edits",
+    "use_only_retry_as_canonical_r37_authority"
   ]
 }

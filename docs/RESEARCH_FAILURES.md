@@ -3611,3 +3611,9 @@ R27 只给出了 truth-identity 聚合布尔失败，不能推出失败 case 的
 H-R32-001 canonical run `20260821T163038Z__identity-factor-s20260821-r1` 用此前接受的 H-R13-009 model-index-0 removal support 与 H-R13-011 `actor_0000` binding，在 R30/R31 layer 内得到 `4,792` 个 identity pixels，覆盖 resized actor effect support 的 `91.02%`。P1 photo 在该 support 上仍 ACCEPT（MAE `0.043739`），且 photo/geometry/semantic 三种 truth evaluation 均 safe；但 P2 geometry mean relative error 为 `0.212180`，超过冻结 `0.20`，P3 DeepLab/SegFormer dynamic IoU 仅 `0.098330`，低于冻结 `0.50`，因此 identity-specific conjunction ABSTAIN，正式 `rejected`。
 
 不得用 aggregate R29 ACCEPT、truth-safe、接近 geometry 门或 target semantic IoU `0.9946` 覆盖独立 decision failure，也不得放宽阈值。R7/R30 的 actor layer 由 all-actor edit evidence 构成，整体可用不推出任一 identity component 可用。H-R33-001 不再修复 generated layer，而提取 H-R13-011 已接受的 observed-support SceneIR `actor_0000` Gaussian chunk 与 logged trajectory，作为明确标注的 baseline/runtime asset；generated identity route 保持 rejected。
+
+### V6-F63：预注册记录的声明时间不得晚于正式 run，即使 source commit 已先冻结
+
+H-R37-001 首个 formal run `20260821T170543Z__trajectory-edit-s20260821-r1` 的方法、阈值与源代码已在 run 前 commit/push，数值上也使两个 1m actor translations 都通过 compiled/native sensor equivalence；但 `HYPOTHESES.jsonl` 内手填的 `recorded_at_utc=2026-08-21T17:15:00Z` 晚于 run directory 的 `17:05:43Z`。该自相矛盾时间戳破坏了预注册审计的机器可验证顺序，因此该 run 不得作为 canonical acceptance，数值只可用于 failure diagnosis。
+
+不得回写旧记录、追认首 run 或仅凭 Git commit 顺序忽略结构化时间字段。H-R37-002 保持相同代码路径、两个 interventions、thresholds、source denominator 与资源合同，在服务器 `date -u` 实时时钟下追加新的预注册记录并重新 commit/push 后复跑；只有 retry 可成为 R37 canonical authority。
