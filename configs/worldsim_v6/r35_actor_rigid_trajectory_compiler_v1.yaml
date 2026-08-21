@@ -1,0 +1,34 @@
+schema_version: worldsim_v6.r35_actor_rigid_trajectory_compiler.v1
+task_id: WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01
+hypothesis_id: WS-V6-H-R35-001
+seed: 20260821
+sources:
+  r34_run: runs://worldsim_v6/WS-V6-R34-IDENTITY-BOUND-ACTOR-LOGSIM-01/20260821T164446Z__actor-logsim-s20260821-r1
+  r34_manifest_sha256: 5e32be391f92629b747451840da342751d981bc4317e026d32c06916acbd7401
+  r34_gate_sha256: 93a205a27aba5d21a2b33597f87a81c72effe740ad58626bccc1ee5c6c417273
+  r34_summary_sha256: 181f8dc289c68fe8168310b762da347a3842844395bf0ae3325ce72f19ba6074
+  r34_replay_audit_sha256: 61042622ddc9189e5bf3b0bb6bb328d6ff1a30f8ba20129e9829019ae279d868
+  package_manifest_sha256: c422e5ad9117def3875b9a6e168327aade0818099542ec6c015dc4ce48dfa921
+  actor_bundle_sha256: 7fa827e15a04dd3ff9e0ff919de28869cf3131c9181ecec4d2ca781fcca6ae50
+  validity_sha256: 0ad979fb3d1735bfcfcc3d47b5f9ed9b833972a50b3efb2bb1d620bb09511c09
+expected:
+  actor_id: actor_0000
+  chunk_id: streetgs_actor_0000
+  primitive_count: 12390
+  trajectory_rows: 196
+  maximum_rigid_error_m: 0.0001
+  maximum_quaternion_norm_error: 0.00001
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_logged_actor_rigid_trajectory_compiler
+  - observed_reconstructed_support_actor_0000_only
+  - exact_rigid_application_of_196_logged_poses_to_12390_gaussians
+  - scale_opacity_features_and_source_indices_remain_byte_exact
+  - rigid_kinematics_is_not_dynamics_or_physics_validation
+  - semantic_novel_trajectory_collision_sensor_planning_and_safety_abstain
+  - no_online_generator_model_network_or_source_run_runtime_dependency
+  - no_training_or_confirmation_read
+
