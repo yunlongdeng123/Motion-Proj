@@ -3335,6 +3335,16 @@ R13 首个正式 run `20260821T120059Z__worldspace-route-s20260821-r1` 已完成
 `projected_pixel_count=0`、指标不可用且 route-support fail。不得删掉这些偏离、降低分母或将空投影改写成 ABSTAIN。
 其余输入、深度、标定、四方法、阈值、gate 和资源合同均不变，并以独立 run 重试。
 
+### V6-F30：WorldSim evaluator 必须统一合法的 singleton-channel depth plane
+
+R13 第二个正式 run `20260821T120208Z__worldspace-route-s20260821-r1` 在加载偏离路线的 StreetGS depth 时
+fail-closed。该 renderer 保存合法的 `H×W×1` float depth，而 evaluator 的 PIL resize 入口只接收 `H×W`，
+因此抛出 `TypeError`。run 保持 `blocked`，尚无完整 48-row baseline matrix 或 gate；没有 GPU/内存问题。
+
+修复在 resize 前只接受 `H×W` 或 `H×W×1`，后者显式去掉最后 singleton channel；其他形状继续拒绝。
+这与 V6-F13 的 plane normalization 原则一致，但本次记录覆盖独立的 R13 evaluator。不得改 depth 数值、插值模式、
+样本、四方法、阈值或 gate，修复后以新 run 重试。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

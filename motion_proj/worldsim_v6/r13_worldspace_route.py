@@ -83,6 +83,10 @@ def _resize_rgb(value: np.ndarray, width: int, height: int) -> np.ndarray:
 
 
 def _resize_depth(value: np.ndarray, width: int, height: int) -> np.ndarray:
+    if value.ndim == 3 and value.shape[-1] == 1:
+        value = value[..., 0]
+    if value.ndim != 2:
+        raise R13ExperimentError(f"depth plane 形状非法：{value.shape}")
     image = Image.fromarray(value.astype(np.float32), mode="F")
     return np.asarray(image.resize((width, height), Image.Resampling.NEAREST), dtype=np.float32)
 
