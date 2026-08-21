@@ -104,7 +104,7 @@ def _actor_geometry(
     actor_pose: np.ndarray,
     box_size: np.ndarray,
     ego_half: tuple[float, float],
-) -> tuple[float, float, float]:
+) -> tuple[float, float, float, float, float, float, float]:
     relative = np.linalg.inv(ego_pose) @ actor_pose
     x, y = float(relative[0, 3]), float(relative[1, 3])
     yaw = math.atan2(float(relative[1, 0]), float(relative[0, 0]))
@@ -114,16 +114,16 @@ def _actor_geometry(
     projected_hy = abs(math.sin(yaw)) * actor_hx + abs(math.cos(yaw)) * actor_hy
     dx = abs(x) - (ego_half[0] + projected_hx)
     dy = abs(y) - (ego_half[1] + projected_hy)
-    return max(dx, dy), abs(x), abs(y)
+    return max(dx, dy), abs(x), abs(y), projected_hx, projected_hy, dx, dy
 
 
 def _clean_geometry(
     ego_pose: np.ndarray,
     actors: list[tuple[np.ndarray, np.ndarray]],
     ego_half: tuple[float, float],
-) -> tuple[float, float, float]:
+) -> tuple[float, float, float, float, float, float, float]:
     if not actors:
-        return 100.0, 100.0, 100.0
+        return 100.0, 100.0, 100.0, 0.0, 0.0, 100.0, 100.0
     return min(
         (_actor_geometry(ego_pose, pose, size, ego_half) for pose, size in actors),
         key=lambda value: value[0],
@@ -142,19 +142,34 @@ def _scene_rows(
     ego_half = (0.5 * float(geom["ego_length_m"]), 0.5 * float(geom["ego_width_m"]))
     actor_size = np.asarray([geom["default_actor_length_m"], geom["default_actor_width_m"]], dtype=float)
     decimals = int(config["training"].get("feature_canonicalization_decimals", 15))
+    label_decimals = int(config["training"].get("factor_label_canonicalization_decimals", 15))
     real_rows: list[dict[str, Any]] = []
     synthetic_rows: list[dict[str, Any]] = []
     for frame in sorted(poses):
         if frame < int(part["sample_start"]) or (frame - int(part["sample_start"])) % int(part["sample_stride"]):
             continue
-        clean, clean_forward, clean_lateral = _clean_geometry(
+        (
+            clean,
+            clean_forward,
+            clean_lateral,
+            clean_half_forward,
+            clean_half_lateral,
+            clean_forward_gap,
+            clean_lateral_gap,
+        ) = _clean_geometry(
             poses[frame], actors.get(frame, []), ego_half
         )
-        clean_label = int(clean <= 0.0)
+        clean_forward_overlap = int(round(clean_forward_gap, label_decimals) <= 0.0)
+        clean_lateral_overlap = int(round(clean_lateral_gap, label_decimals) <= 0.0)
+        clean_label = int(clean_forward_overlap and clean_lateral_overlap)
         real_rows.append(
             {"scene": spec["scene"], "frame": frame, "case_type": "logged_clean", "signed_clearance_m": clean,
              "abs_forward_m": round(clean_forward, decimals),
              "abs_lateral_m": round(clean_lateral, decimals),
+             "projected_half_forward_m": round(clean_half_forward, decimals),
+             "projected_half_lateral_m": round(clean_half_lateral, decimals),
+             "forward_overlap_label": clean_forward_overlap,
+             "lateral_overlap_label": clean_lateral_overlap,
              "hazard_label": clean_label, "label_source": "logged_actor_geometry"}
         )
         lateral_offsets = geom.get("synthetic_clone_lateral_offsets_m", [0.0])
@@ -165,21 +180,40 @@ def _scene_rows(
                 clone_local[0, 3] = float(offset)
                 clone_local[1, 3] = float(lateral_offset)
                 clone_world = poses[frame] @ clone_local
-                clone_clearance, clone_forward, clone_lateral = _actor_geometry(
+                clone_geometry = _actor_geometry(
                     poses[frame], clone_world, actor_size, ego_half
                 )
+                clone_clearance = clone_geometry[0]
                 if clone_clearance <= clean:
-                    edited_clearance, edited_forward, edited_lateral = (
-                        clone_clearance,
-                        clone_forward,
-                        clone_lateral,
-                    )
+                    edited_geometry = clone_geometry
                 else:
-                    edited_clearance, edited_forward, edited_lateral = (
+                    edited_geometry = (
                         clean,
                         clean_forward,
                         clean_lateral,
+                        clean_half_forward,
+                        clean_half_lateral,
+                        clean_forward_gap,
+                        clean_lateral_gap,
                     )
+                (
+                    edited_clearance,
+                    edited_forward,
+                    edited_lateral,
+                    edited_half_forward,
+                    edited_half_lateral,
+                    edited_forward_gap,
+                    edited_lateral_gap,
+                ) = edited_geometry
+                edited_forward_overlap = int(
+                    round(edited_forward_gap, label_decimals) <= 0.0
+                )
+                edited_lateral_overlap = int(
+                    round(edited_lateral_gap, label_decimals) <= 0.0
+                )
+                edited_label = int(
+                    edited_forward_overlap and edited_lateral_overlap
+                )
                 synthetic_rows.append(
                     {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
                      "clone_forward_offset_m": float(offset),
@@ -187,7 +221,13 @@ def _scene_rows(
                      "signed_clearance_m": edited_clearance,
                      "abs_forward_m": round(edited_forward, decimals),
                      "abs_lateral_m": round(edited_lateral, decimals),
-                     "hazard_label": int(edited_clearance <= 0.0), "stale_naive_label": clean_label,
+                     "projected_half_forward_m": round(edited_half_forward, decimals),
+                     "projected_half_lateral_m": round(edited_half_lateral, decimals),
+                     "forward_overlap_label": edited_forward_overlap,
+                     "lateral_overlap_label": edited_lateral_overlap,
+                     "stale_naive_forward_overlap_label": clean_forward_overlap,
+                     "stale_naive_lateral_overlap_label": clean_lateral_overlap,
+                     "hazard_label": edited_label, "stale_naive_label": clean_label,
                      "label_source": "recomputed_projected_aabb_dependency"}
                 )
     return real_rows, synthetic_rows
@@ -205,6 +245,36 @@ def _balanced_accuracy(labels: np.ndarray, predictions: np.ndarray) -> float:
 def _fit_policy(
     rows: list[dict[str, Any]], label_key: str, training: Mapping[str, Any]
 ) -> dict[str, Any]:
+    if training.get("policy_family") == "factorized_logistic_raw_box_geometry":
+        prefix = "stale_naive_" if label_key == "stale_naive_label" else ""
+        forward_features = np.asarray(
+            [[row["abs_forward_m"], row["projected_half_forward_m"]] for row in rows],
+            dtype=float,
+        )
+        lateral_features = np.asarray(
+            [[row["abs_lateral_m"], row["projected_half_lateral_m"]] for row in rows],
+            dtype=float,
+        )
+        forward_labels = np.asarray(
+            [row[f"{prefix}forward_overlap_label"] for row in rows], dtype=int
+        )
+        lateral_labels = np.asarray(
+            [row[f"{prefix}lateral_overlap_label"] for row in rows], dtype=int
+        )
+        forward_head = _fit_logistic_head(forward_features, forward_labels, training)
+        lateral_head = _fit_logistic_head(lateral_features, lateral_labels, training)
+        predictions = _predict_logistic_head(forward_head, forward_features) & _predict_logistic_head(
+            lateral_head, lateral_features
+        )
+        labels = np.asarray([row[label_key] for row in rows], dtype=int)
+        return {
+            "policy_type": "factorized_logistic",
+            "forward_head": forward_head,
+            "lateral_head": lateral_head,
+            "train_balanced_accuracy": _balanced_accuracy(labels, predictions.astype(int)),
+            "train_rows": len(rows),
+            "train_positive_fraction": float(labels.mean()),
+        }
     forward = np.asarray([row["abs_forward_m"] for row in rows], dtype=float)
     lateral = np.asarray([row["abs_lateral_m"] for row in rows], dtype=float)
     labels = np.asarray([row[label_key] for row in rows], dtype=int)
@@ -250,10 +320,65 @@ def _fit_policy(
     }
 
 
+def _fit_logistic_head(
+    features: np.ndarray, labels: np.ndarray, training: Mapping[str, Any]
+) -> dict[str, Any]:
+    classes = np.unique(labels)
+    if len(classes) == 1:
+        return {"head_type": "constant", "constant_prediction": int(classes[0])}
+    mean = features.mean(axis=0)
+    scale = features.std(axis=0)
+    scale[scale < 1e-9] = 1.0
+    normalized = (features - mean) / scale
+    design = np.concatenate([normalized, np.ones((len(normalized), 1))], axis=1)
+    weights = np.zeros(design.shape[1], dtype=float)
+    learning_rate = float(training["learning_rate"])
+    l2 = float(training["l2"])
+    for _ in range(int(training["steps"])):
+        logits = np.clip(design @ weights, -40.0, 40.0)
+        probabilities = 1.0 / (1.0 + np.exp(-logits))
+        gradient = design.T @ (probabilities - labels) / len(labels)
+        gradient[:-1] += l2 * weights[:-1]
+        weights -= learning_rate * gradient
+    predictions = (1.0 / (1.0 + np.exp(-np.clip(design @ weights, -40.0, 40.0))) >= 0.5).astype(int)
+    return {
+        "head_type": "logistic",
+        "mean": mean.tolist(),
+        "scale": scale.tolist(),
+        "weights": weights.tolist(),
+        "train_balanced_accuracy": _balanced_accuracy(labels, predictions),
+        "train_positive_fraction": float(labels.mean()),
+    }
+
+
+def _predict_logistic_head(head: Mapping[str, Any], features: np.ndarray) -> np.ndarray:
+    if head["head_type"] == "constant":
+        return np.full(len(features), bool(head["constant_prediction"]), dtype=bool)
+    mean = np.asarray(head["mean"], dtype=float)
+    scale = np.asarray(head["scale"], dtype=float)
+    weights = np.asarray(head["weights"], dtype=float)
+    normalized = (features - mean) / scale
+    design = np.concatenate([normalized, np.ones((len(normalized), 1))], axis=1)
+    return design @ weights >= 0.0
+
+
 def _evaluate(model: Mapping[str, Any], rows: list[dict[str, Any]]) -> dict[str, Any]:
     labels = np.asarray([row["hazard_label"] for row in rows], dtype=int)
     if model["policy_type"] == "constant":
         predictions = np.full_like(labels, int(model["constant_hazard_prediction"]))
+    elif model["policy_type"] == "factorized_logistic":
+        forward_features = np.asarray(
+            [[row["abs_forward_m"], row["projected_half_forward_m"]] for row in rows],
+            dtype=float,
+        )
+        lateral_features = np.asarray(
+            [[row["abs_lateral_m"], row["projected_half_lateral_m"]] for row in rows],
+            dtype=float,
+        )
+        predictions = (
+            _predict_logistic_head(model["forward_head"], forward_features)
+            & _predict_logistic_head(model["lateral_head"], lateral_features)
+        ).astype(int)
     else:
         predictions = np.asarray(
             [
@@ -294,7 +419,19 @@ def _train_and_evaluate(
             rows, label_key = train_real, "hazard_label"
         elif arm == "real_plus_naive_synthetic":
             rows, label_key = [*train_real, *train_synthetic], "stale_naive_label"
-            rows = [dict(row, stale_naive_label=row.get("stale_naive_label", row["hazard_label"])) for row in rows]
+            rows = [
+                dict(
+                    row,
+                    stale_naive_label=row.get("stale_naive_label", row["hazard_label"]),
+                    stale_naive_forward_overlap_label=row.get(
+                        "stale_naive_forward_overlap_label", row["forward_overlap_label"]
+                    ),
+                    stale_naive_lateral_overlap_label=row.get(
+                        "stale_naive_lateral_overlap_label", row["lateral_overlap_label"]
+                    ),
+                )
+                for row in rows
+            ]
         elif arm == "real_plus_v6_verified_compiled":
             rows, label_key = [*train_real, *train_synthetic], "hazard_label"
         else:

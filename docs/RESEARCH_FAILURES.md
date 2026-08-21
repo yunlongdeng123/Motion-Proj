@@ -3503,3 +3503,9 @@ H-PT2-002 canonical run `20260821T133626Z__risk-policy-s20260821-r1` 在移除 s
 H-PT3-001 canonical run `20260821T134426Z__intervention-robustness-s20260821-r1` 冻结 H-PT2-003 的全部 policy 参数，在未参与 PT2 训练或选择的 scene-0048 上评估 forward `1.5/4.5/7.5m` × nonzero lateral `0.75/1.5/2.5m` 的 441 个 edit rows，加 49 个 clean rows。分母含 232 hazards / 258 safe；冻结 V6 policy 的 lateral threshold 为 `0.0m`，因此对 232 hazards 检出 `0`，false-safe `1.0`，与 Real-only/naive constant policies 完全相同。source immutability、repeat exact、safe-route completion 均通过，所以是方法性 `rejected`。
 
 不得把 PT2 的跨场景同 intervention pass 写成二维 policy generalization，也不得只把冻结 lateral threshold 放宽。H-PT3-002 改变训练 evidence：在 scene-0230/0242 使用 forward `0/2/4/6/8m` × lateral `0/1/2/3m` 的完整 factorized typed-edit grid，V6 重算标签、naive 保留 stale labels；scene-0048 使用与训练离散的 half-offset grid，所有质量门不变。以后 policy coverage 必须按 intervention factor denominator 报告，不能只报 scene denominator。
+
+### V6-F45：最近 actor 的位置不足以表达 box overlap，必须保留 factorized extent
+
+H-PT3-002 canonical run `20260821T134843Z__factorized-policy-training-s20260821-r1` 在 scene-0230/0242 完成 1,960 条二维 typed clone train rows，并在 scene-0048 的 980 条离散 half-offset edits 上评估。V6 相对两基线把 false-safe 从 `1.0` 降至 `0.4505208`、safe-route completion 保持 `1.0`，但 balanced accuracy 仅 `0.7747396`，未过冻结门，正式 `rejected`。
+
+诊断显示 position-only policy 为每条 episode 只保留 signed-clearance 最小 actor 的 `|x|/|y|`，却丢掉 projected box half-extent 与 yaw；远处 safe clone 会由更近但窄或旋转的真实 actor 取代特征，同一位置因此对应不同 overlap label。训练 lateral `2.0m` 恰在默认 box 边界，未 canonicalize 的 factor label 还出现 66/32 等浮点混合。H-PT3-003 保持数据、grid、三臂、heldout 和质量门，新增 raw projected half-extents，按 1e-9m canonicalize forward/lateral factor labels，分别训练两个 logistic overlap heads 后 AND；不得输入 signed clearance 或最终 hazard verdict。以后几何 policy 的 factor representation 必须保留决定接触边界的尺寸/朝向信息。

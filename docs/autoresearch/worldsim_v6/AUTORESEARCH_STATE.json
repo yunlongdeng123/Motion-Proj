@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:47:00Z",
+  "updated_at_utc": "2026-08-21T13:52:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 31,
+  "iteration": 32,
   "active_task": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT3-002",
-  "candidate": "factorized_two_dimensional_typed_edit_policy_training",
+  "active_hypothesis": "WS-V6-H-PT3-003",
+  "candidate": "factorized_raw_box_geometry_overlap_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "5824bb5e332bc7ff87e67d457ddc2954e6a9b2485250b814895315c9c2d2ac32",
+  "dev_artifact_hash": "3599a6673c069cbc3a6e9cdae7919f5574e90f7a737daa27af31d01a4d0d91d4",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "9c8641aeb2bc6131bea2f57cacb9862aa70981cf0c9bda97e5e2e75c7818645d",
-  "last_reflection_id": "WS-V6-REFL-0033",
+  "failure_ledger_sha256": "df452b7af5f2d2edcc06f536b363324b831a0f747b52d29bc62cd5762884ef8b",
+  "last_reflection_id": "WS-V6-REFL-0034",
   "last_completed": {
     "task_id": "WS-V6-PT2-RISK-POLICY-01",
-    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T134426Z__intervention-robustness-s20260821-r1",
-    "artifact_sha256": "5824bb5e332bc7ff87e67d457ddc2954e6a9b2485250b814895315c9c2d2ac32"
+    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T134843Z__factorized-policy-training-s20260821-r1",
+    "artifact_sha256": "3599a6673c069cbc3a6e9cdae7919f5574e90f7a737daa27af31d01a4d0d91d4"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -58,7 +58,8 @@
     "pt2_raw_relative_policy_h002": "done_rejected_numeric_boundary_drift",
     "pt2_small_risk_policy_post_training": "done_accepted_development_fixed_forward_clone_scope",
     "pt3_frozen_policy_intervention_robustness": "done_rejected_zero_lateral_template",
-    "pt3_factorized_intervention_policy_training": "active_pre_registered",
+    "pt3_position_only_grid_policy_h002": "done_rejected_box_extent_aliasing",
+    "pt3_factorized_intervention_policy_training": "active_pre_registered_raw_box_factor_heads",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -67,8 +68,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_three_arms_on_factorized_forward_lateral_typed_edit_grid",
-    "evaluate_disjoint_half_offset_grid_on_new_scene0048",
-    "accept_reject_without_relaxing_intervention_robustness_gates"
+    "train_forward_and_lateral_overlap_heads_from_raw_position_and_projected_extents",
+    "evaluate_disjoint_scene0048_grid_under_original_robustness_gates",
+    "accept_reject_without_signed_clearance_or_final_label_features"
   ]
 }
