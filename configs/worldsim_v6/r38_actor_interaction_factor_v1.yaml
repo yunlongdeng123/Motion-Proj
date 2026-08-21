@@ -1,0 +1,39 @@
+schema_version: worldsim_v6.r38_actor_interaction_factor.v1
+task_id: WS-V6-R38-ACTOR-INTERACTION-FACTOR-01
+hypothesis_id: WS-V6-H-R38-001
+seed: 20260821
+sources:
+  r37_run: runs://worldsim_v6/WS-V6-R37-ACTOR-TRAJECTORY-EDIT-SENSOR-EQUIVALENCE-01/20260821T171437Z__trajectory-edit-s20260821-r1
+  r37_manifest_sha256: d26ce57f7f65d0a02ebc68545790186ce8f42c5946b24594268147428efdd15b
+  r37_gate_sha256: 48494df2571ca5c87956d8bd0d889f2d7c0f42f23534ca5923c0ef153b909ee7
+  r37_summary_sha256: e9257d4659c489fff1e2a07a66f553ef5a0623432eafb4b2fb9c0682bfedcb7a
+  r37_metrics_sha256: 10636af97dcee51d96293a8d9345a61c57a52afa20aaf134f78313710d81494c
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+cohort:
+  partition: development_scene0242_full_logged_trajectory
+  actor_id: actor_0000
+  expected_trajectory_rows: 196
+  timestamp_step_seconds: 0.1
+interventions:
+  - id: translate_world_x_plus_1m
+    translation_delta_m: [1.0, 0.0, 0.0]
+  - id: translate_world_y_plus_1m
+    translation_delta_m: [0.0, 1.0, 0.0]
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_factorized_actor_trajectory_interaction_verifier
+  - constant_translation_self_kinematics_and_sceneir_aabb_interaction_only
+  - collision_is_deterministic_aabb_conformance_not_physics_ground_truth
+  - interaction_accept_requires_zero_new_overlap_events_vs_logged
+  - road_support_physical_dynamics_semantic_planning_and_safety_abstain
+  - no_training_or_confirmation_read
