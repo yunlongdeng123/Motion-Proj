@@ -1,0 +1,41 @@
+schema_version: worldsim_v6.r89_lifecycle_phase_holdout_selector.v1
+task_id: WS-V6-R89-LIFECYCLE-PHASE-HOLDOUT-SELECTOR-01
+hypothesis_id: WS-V6-H-R89-001
+seed: 20260821
+sources:
+  r86_run: runs://worldsim_v6/WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01/20260821T222429Z__three-actor-full-episode-s20260821-r1
+  r86_gate_sha256: e2d540bbc2a5a89ad258ff9cb2b81d7565ce8d4d24835ce4769f28c7795664a6
+  r86_full_episode_sensor_effect_sha256: 7c83c16ec6b256a64a3259138f62fd83fdbcad2deeec5e2ae10d5f1da8fb0ebc
+  r87_run: runs://worldsim_v6/WS-V6-R87-FULL-EPISODE-PERCEPTION-IMPACT-01/20260821T224421Z__full-episode-perception-s20260821-r1
+  r87_gate_sha256: dbd150871d659c4cd008c0223e00b23947a444c4c8f5f55632052a14d3d83891
+  r87_full_episode_perception_impact_sha256: dca14147dae2addc6edced0751009f9e3da1638fdb6df0933153531a302ca2f0
+  r88_run: runs://worldsim_v6/WS-V6-R88-SELECTIVE-PERCEPTION-RUNTIME-GATE-01/20260821T225125Z__selective-perception-gate-s20260821-r1
+  r88_manifest_sha256: 91f388cf6ab32b9261ae2421fe15ce2c96035e942175a449cf17e46fcbfc42fa
+  r88_gate_sha256: 4735b7a1a8ab39339014f31b7f7f5a0a96a6ee29256439525585aac5bd088ab3
+  r88_summary_sha256: ae47e1e12ce4765675eaf234f23fc8eac963b3b62d6e91f2407d8a76315b0f20
+  r88_selective_gate_sha256: bbae79436449b205d3454ee6b97696643e6a59a1378901c07bac44ec9607652b
+protocol:
+  frame_start: 0
+  frame_stop_exclusive: 196
+  holdout_start: 141
+  holdout_stop_exclusive: 151
+  expected_calibration_count: 186
+  expected_holdout_count: 10
+  minimum_changed_label_pixels_for_target: 1
+  fixed_visible_threshold_pixels: 256
+thresholds:
+  minimum_phase_holdout_recall: 1.0
+  minimum_phase_holdout_f1: 1.0
+  minimum_recall_gain_over_fixed256: 0.05
+resources:
+  device: cpu
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_contiguous_lifecycle_phase_holdout_for_selective_perception_gate
+  - frames141_to150_actor0_inactive_actor5_active_are_never_used_for_threshold_selection
+  - calibration_uses_frames0_to140_and151_to195_with_both_positive_and_negative_targets
+  - feature_is_compiler_owned_edited_vs_logged_rgb_changed_pixels
+  - target_is_any_frozen_deeplab_state_change_not_semantic_correctness
+  - tests_within_episode_lifecycle_phase_transfer_not_cross_scene_or_cross_model_transfer
+  - no_neural_training_local_causality_physics_planning_safety_or_confirmation_claim
