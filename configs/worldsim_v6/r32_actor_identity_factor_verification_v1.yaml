@@ -1,0 +1,96 @@
+schema_version: worldsim_v6.r32_actor_identity_factor_verification.v1
+task_id: WS-V6-R32-ACTOR-IDENTITY-FACTOR-VERIFICATION-01
+hypothesis_id: WS-V6-H-R32-001
+seed: 20260821
+sources:
+  r24_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  r24_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  proposal_directory: typed_temporal_static_cross_frontend_actor_reconstruction_proposals
+  proposal_sha256: 543b4b4e98814cabd641c8ee0d71afc487f2755054bf918b21522a053493245f
+  verifier_input_sha256: cc72ca62aa0a698e93182f62d03e7b0534594428b467a7dbce8956d85babb9a0
+  r30_run: runs://worldsim_v6/WS-V6-R30-TYPED-ACTOR-BAKE-01/20260821T161849Z__typed-actor-bake-s20260821-r1
+  r30_manifest_sha256: 6e12e6de39c37b9f26de077d943e5f87e79130aac0228bf2d3334714d8fd54b4
+  r30_gate_sha256: 68e4494a42d100e1cba34a0114b4283db023b0ea8377dbc910c86a5cbab3378b
+  r30_registry_sha256: de6a5634ba887c28b2f7d3f7ab6b4617c0097209866d2da9c5f106f5c223ebac
+  r31_run: runs://worldsim_v6/WS-V6-R31-ACTOR-APPEARANCE-LOGSIM-01/20260821T162240Z__logsim-s20260821-r1
+  r31_manifest_sha256: 379b1ba57d8e480a76a0e0f86d3a3e2523224ea62064d4365e814e8feff23069
+  r31_gate_sha256: daadd2fa2159d27c97dde1154c5b1a050008569cc160c14bebac60e244b4dca0
+  actor_cohort_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125905Z__actor-cohort-perception-s20260821-r1
+  actor_cohort_manifest_sha256: e9711125300af16b564fa8130240e129f7225e6464079ac7bdae7f17b78afd3c
+  actor_cohort_gate_sha256: 608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555
+  actor_cohort_verdicts_sha256: d613116784408daa1f6741d89e4d2efe08ece073e7306312283ed30b59d3657e
+  actor_cohort_metrics_sha256: 847bb57e61b6e82fd43ec7afa83b3ee73521d99f4d9108c96955773427968d0e
+  actor_cohort_logged_file: streetgs/frame057_logged.npz
+  actor_cohort_logged_sha256: 808da7819ac48308edd1964ad75767f5bd5a2f27f2b03f65e416d3254337603a
+  actor_cohort_removed_file: streetgs/frame057_actor0000_removed.npz
+  actor_cohort_removed_sha256: 588b37fcbd1619a3eb935af762333a6455d7fdc2ea2cf48b29e13a2fc1eac965
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  sceneir_binding_audit_sha256: 0bffefc7df690121fa8f6e4e48a9719257bc01771bb697fdde9afb498be3cbea
+cohort:
+  partition: development
+  confirmation_locked: true
+  case_id: scene-0242__streetgs__f057__actor_removal_hole
+  frontend_model_index: 0
+  sceneir_actor_id: actor_0000
+  sceneir_chunk_id: streetgs_actor_0000
+identity_mask:
+  source: frozen_h_r13_009_logged_minus_model_index_0_removed
+  rgb_change_threshold: 0.00392156862745098
+  effect_mask_dilation_px: 8
+  expected_original_effect_pixels: 12830
+  resize: nearest_to_512x288
+  intersection: frozen_r24_actor_layer_mask
+  minimum_resized_identity_pixels: 1000
+  minimum_layer_support_recall: 0.80
+factors:
+  photo:
+    maximum_masked_rgb_mae: 0.05
+    truth_pixel_absolute_error: 0.05
+    truth_minimum_usable_fraction: 0.50
+  geometry:
+    alignment: affine_on_observed_outside_r24_layer_mask
+    minimum_alignment_pixels: 1024
+    maximum_masked_mean_relative_depth_error: 0.20
+    truth_pixel_relative_error: 0.20
+    truth_minimum_usable_fraction: 0.50
+  semantic:
+    decision: deeplab_segformer_dynamic_iou
+    minimum_dynamic_iou: 0.50
+    truth_evaluation: deeplab_target_dynamic_iou
+    truth_minimum_dynamic_iou: 0.70
+    dynamic_class_ids: [11, 12, 13, 14, 15, 16, 17, 18]
+  dynamics:
+    decision: ABSTAIN
+models:
+  depth:
+    id: depth-anything/Depth-Anything-V2-Small-hf
+    revision: 5426e4f0f36572d16453bbda7a8389317b1bef99
+    model_file: model.safetensors
+    model_sha256: 3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70
+  deeplab:
+    id: Koushim/deeplabv3-resnet50-cityscapes
+    revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+    model_file: pytorch_model.bin
+    model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  segformer:
+    id: nvidia/segformer-b0-finetuned-cityscapes-1024-1024
+    revision: 21b3847fae21ddee674abd31129307b6a1235bd9
+    model_file: pytorch_model.bin
+    model_sha256: 027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c
+    config_sha256: 649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9
+    preprocessor_sha256: d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_single_scene_single_frontend_single_actor_identity_binding
+  - model_index_0_to_sceneir_actor_0000_only
+  - identity_mask_from_prior_accepted_per_actor_removal_evidence
+  - photo_geometry_semantic_remeasured_on_identity_intersection
+  - target_truth_used_for_evaluation_only
+  - dynamics_and_trajectory_abstain
+  - no_bake_training_confirmation_planning_or_safety_claim
