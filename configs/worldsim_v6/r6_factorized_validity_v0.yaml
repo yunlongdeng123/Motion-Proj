@@ -1,0 +1,62 @@
+schema_version: worldsim_v6.r6_factorized_validity.v1
+task_id: WS-V6-R6-FACTORIZED-VALIDITY-01
+hypothesis_id: WS-V6-H-R6-001
+seed: 20260821
+source:
+  r3_case_metrics: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1/PER_CASE_METRICS.jsonl
+  r5_provenance_summary: runs://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1/SUMMARY.json
+  expected_rows: 48
+  expected_scenes: 2
+  expected_frontends: 2
+tasks:
+  photo:
+    risk_field: projected_observation_rgb_error
+    failure_threshold: 0.08
+    factor: exp_neg_global_rgb_disagreement
+    scale: 0.10
+  geometry:
+    risk_field: lidar_relative_depth_error
+    failure_threshold: 0.20
+    factor: logged_geometry_residual_times_camera_support
+    logged_residual_scale: 0.25
+    camera_distance_scale_m: 5.0
+  semantic:
+    risk_field: actor_boundary_rgb_disagreement
+    failure_threshold: 0.10
+    factor: exp_neg_actor_boundary_disagreement_with_actor_denominator
+    scale: 0.08
+  dynamics:
+    risk_field: temporal_change_error
+    failure_threshold: 0.01
+    factor: unknown_without_independent_dynamics_verifier
+baselines:
+  V0_distance_to_log: {kind: exp_neg_lateral_distance, scale_m: 2.0}
+  V1_view_count: {kind: projected_observation_support}
+  V2_reconstruction_residual: {kind: exp_neg_logged_downstream_error, scale: 0.10}
+  V3_single_scalar_confidence: {kind: r3_support_score}
+decision:
+  accept_threshold: 0.70
+  unknown_action: ABSTAIN
+metrics:
+  - coverage
+  - selective_risk
+  - false_safe_rate
+  - per_scene_coverage
+  - per_scene_false_safe_rate
+gate:
+  maximum_factor_false_safe_rate: 0.05
+  minimum_nonzero_factor_coverage: 0.08
+  required_nonzero_factors: [photo, geometry, semantic]
+  dynamics_accept_count: 0
+  minimum_worst_case_false_safe_gain_over_v3: 0.20
+  confirmation_locked: true
+resources:
+  gpu_required: false
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_proxy_benchmark_not_confirmation_calibration
+  - factor_formulas_are_frozen_rules_not_learned_models
+  - adgs_and_streetgs_depth_conventions_are_not_declared_equivalent
+  - dynamics_unknown_without_independent_verifier
+  - no_training
+  - no_confirmation_read

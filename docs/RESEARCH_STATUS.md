@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V6 R5 provenance PASS；R6 factorized validity 启动（2026-08-21）
+
+- R5 canonical=`run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1`；
+  chunk/actor/primitive coverage 均 `1.0`，两次 fresh reload exact，provenance content=`c91f7792...7fe`。
+- source-type primitive counts=`reconstructed 1,267,870 / observed 0 / generated 0`；六字段全覆盖，缺失 sensor/view
+  证据保持 unknown。v0 因误把 local source index 当全局主键 fail-closed；v1 使用 `(chunk_id,source_index)`，见 `V6-F11`。
+- 当前 active=`WS-V6-R6-FACTORIZED-VALIDITY-01`，hypothesis=`WS-V6-H-R6-001`；主门为 task-conditioned
+  false-safe，dynamics 无独立 verifier 时必须 abstain，不允许用总体 coverage 掩盖错误 ACCEPT。
+
 ## WorldSim V6 R4 deterministic runtime exact PASS；V6.1 provenance 启动（2026-08-21）
 
 - `WS-V6-R4-DETERMINISTIC-RUNTIME-01=done`，canonical=

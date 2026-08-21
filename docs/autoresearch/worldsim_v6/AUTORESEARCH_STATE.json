@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T09:37:00Z",
+  "updated_at_utc": "2026-08-21T09:45:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 4,
-  "active_task": "WS-V6-R5-PROVENANCE-01",
-  "active_hypothesis": null,
-  "candidate": "columnar_per_primitive_provenance_v0",
-  "frontend": "sceneir_v0",
-  "dev_artifact_hash": "c74343537fa866bd0289d0c70e4b4826f3e4509f7f02eccb9ac1ffabee655816",
+  "iteration": 5,
+  "active_task": "WS-V6-R6-FACTORIZED-VALIDITY-01",
+  "active_hypothesis": "WS-V6-H-R6-001",
+  "candidate": "conservative_task_conditioned_provenance_validity_v0",
+  "frontend": "streetgs_adgs_sceneir",
+  "dev_artifact_hash": "d4888ee277376ac1f3f0ffca18089e590b2ab730d0fc522c5cd08c059a1aab33",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "729b8c4769b6e31a7e30733acd024b0567c0da4f79c2795aecc5369994beda8c",
-  "last_reflection_id": "WS-V6-REFL-0004",
+  "failure_ledger_sha256": "7767b1c13edf42829c28cc67d28ea315877e1b9d410e9f9f81aee89fe162af56",
+  "last_reflection_id": "WS-V6-REFL-0005",
   "last_completed": {
-    "task_id": "WS-V6-R4-DETERMINISTIC-RUNTIME-01",
-    "run": "run://worldsim_v6/WS-V6-R4-DETERMINISTIC-RUNTIME-01/20260821T093544Z__deterministic-runtime-s20260821-r1",
-    "artifact_sha256": "c74343537fa866bd0289d0c70e4b4826f3e4509f7f02eccb9ac1ffabee655816"
+    "task_id": "WS-V6-R5-PROVENANCE-01",
+    "run": "run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1",
+    "artifact_sha256": "d4888ee277376ac1f3f0ffca18089e590b2ab730d0fc522c5cd08c059a1aab33"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -28,6 +28,7 @@
     "r2_sceneir_v0": "done",
     "r3_support_deviation": "done_hypothesis_rejected",
     "r4_deterministic_runtime": "done",
+    "r5_provenance": "done",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -36,8 +37,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "materialize_chunk_actor_primitive_provenance_fields",
-    "enforce_observed_reconstructed_generated_type_separation",
-    "audit_provenance_coverage_and_roundtrip"
+    "freeze_task_failure_thresholds_and_factor_formulas",
+    "compare_v0_v1_v2_v3_and_factorized_selective_risk",
+    "decide_factorized_validity_or_reject_and_pivot"
   ]
 }

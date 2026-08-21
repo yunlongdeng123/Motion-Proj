@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6 R5 provenance field v1 正式实验 PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R5-PROVENANCE-01/20260821T094242Z__provenance-s20260821-r1`，source=`a3f93cef`；
+  gate/summary/manifest/terminal SHA=`d4888ee2...b33 / a145e858...5ba / 6be1af73...034 / 58237201...89e`。
+- 24 chunks、23 actors、1,267,870 primitives 的 `source_type/sensor_support/time_support/view_support/
+  reconstruction_source/generation_source` 全覆盖；composite primitive identity unique，typed separation PASS。
+- 当前 package 全为 reconstructed；不把 reconstructed 写成 observed，不虚构 generation source；sensor/view support
+  为 unknown。v0 failed run=`20260821T094101Z__provenance-s20260821-r1` 保持 failed，见 `V6-F11`。
+- next=`WS-V6-R6-FACTORIZED-VALIDITY-01`。
+
 ## WorldSim V6 R4 deterministic runtime v0 正式实验 PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R4-DETERMINISTIC-RUNTIME-01/20260821T093544Z__deterministic-runtime-s20260821-r1`；
