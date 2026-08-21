@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6 R8 frozen proposal generator 正式实验 capability PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01/20260821T104759Z__frozen-generator-s20260821-r1`，
+  source=`42758ec`；gate/summary/manifest/terminal SHA=`5d9d01f7...a1d / a027152b...0ca / ed868118...a17 / 3d2153cd...e62`。
+- Big-LaMa 与 SD-v1.5 均 8/8 inference 成功并严格复现；Big-LaMa peak/median=`428 MiB / 0.037369 s`，
+  SD-v1.5=`2718 MiB / 0.786339 s`，按预注册资源优先级唯一选择 Big-LaMa。
+- 前五次 rejected run 及 adapter 失败完整保留，见 `V6-F16`–`V6-F21`；无训练、confirmation 或未验证 bake。
+  next=`WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01`。
+
 ## WorldSim V6 R7 oracle missing-world v1 正式实验 development PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1`，

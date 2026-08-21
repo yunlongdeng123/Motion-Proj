@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V6 R8 frozen generator capability PASS；R9 independent arms 启动（2026-08-21）
+
+- R8 canonical=`run://worldsim_v6/WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01/20260821T104759Z__frozen-generator-s20260821-r1`；
+  Big-LaMa 与 SD-v1.5 均完成 4 cases × 2 repeats，重复 SHA、finite/nonzero、outside-mask exact 全通过。
+- 按冻结顺序选择 Big-LaMa：peak/median latency=`428 MiB / 0.037369 s`，对比 SD-v1.5 的
+  `2718 MiB / 0.786339 s`；FLUX.1-Fill 因 gated/超本地合同只审计。该结论不包含生成质量或 bake 授权。
+- 当前 active=`WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01`，hypothesis=`WS-V6-H-R9-001`；在 28 个
+  evidence-eligible pseudo-holes 上分别运行 P0/P1/P2/P3/P4，禁止组合 verifier，P4 无时序证据全部 ABSTAIN。
+
 ## WorldSim V6 R7 oracle path development PASS；R8 frozen generator 启动（2026-08-21）
 
 - R7 canonical=`run://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1`；
