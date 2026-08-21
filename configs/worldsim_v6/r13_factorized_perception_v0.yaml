@@ -1,0 +1,68 @@
+schema_version: worldsim_v6.r13_factorized_perception.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-007
+seed: 20260821
+sources:
+  rejected_full_frame_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T123835Z__actor-sensor-perception-s20260821-r1
+  rejected_manifest_sha256: 35e851da7f3a1d32aeb14b05cc40c9fef7918131375e81fc2978fa9e66e3c4d9
+  rejected_gate_sha256: b46f633af1d64724590bd7f8867a503101b14102b515c156c0138c0cebb063e5
+  r13_dynamic_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1
+  r13_dynamic_gate_sha256: ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  ad_gs_render_map_sha256: 7d461f7a3ac9c67478ea5bf97a1b54065d1c4430a50dce4f536921185e75081b
+verifier_model:
+  id: Koushim/deeplabv3-resnet50-cityscapes
+  revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+  license: Apache-2.0
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development_factorized_roi
+  confirmation_locked: true
+  scene: scene-0242
+  frontends: [streetgs, ad_gs]
+  frame_indices: [52, 57]
+  operation: actor_remove_all
+  repeat_count: 2
+roi:
+  tile_size_px: 256
+  candidate_stride_px: 128
+  actor_opacity_threshold: 0.05
+  target_selection: maximum_actor_pixel_fraction
+  static_selection: minimum_actor_pixel_fraction_nonoverlapping_target
+  minimum_target_actor_fraction: 0.10
+  maximum_static_actor_fraction: 0.01
+metrics:
+  minimum_target_rgb_mae: 0.05
+  maximum_static_rgb_mae: 0.001
+  minimum_rgb_locality_enrichment: 50.0
+  minimum_target_perception_changed_fraction: 0.02
+  maximum_static_perception_changed_fraction: 0.02
+  minimum_perception_locality_enrichment: 2.0
+gate:
+  require_all_four_roi_cases_pass: true
+  require_perception_repeat_exact: true
+  require_full_frame_failure_reproduced_as_frozen_source: true
+  require_typed_dynamic_gate_passed: true
+  require_source_immutable: true
+  require_inherited_v6_false_safe_rate_zero: true
+  require_inherited_naive_false_safe_rate_one: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+unsupported_metrics:
+  full_frame_perception_locality: ABSTAIN_REJECTED_H_R13_006
+  semantic_correctness_ground_truth: ABSTAIN_ROI_CHANGE_LOCALITY_ONLY
+  planning_completion: ABSTAIN_NO_PLANNER
+  physical_collision_ground_truth: ABSTAIN_H_R13_005_AABB_CONFORMANCE_ONLY
+claim_boundary:
+  - development_factorized_target_and_static_roi_perception_verification
+  - roi_selection_uses_only_logged_dynamic_opacity_not_semantic_labels
+  - fixed_256px_tiles_and_128px_candidate_stride
+  - does_not_rescue_or_overwrite_rejected_full_frame_locality
+  - separate_render_and_typed_sceneir_cases
+  - no_training_planner_closed_loop_or_physical_safety_claim
+  - no_confirmation_read

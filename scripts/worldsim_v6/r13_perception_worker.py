@@ -89,7 +89,13 @@ def main() -> int:
         if not line:
             continue
         item = json.loads(line)
-        labels = _predict(model, _load_rgb(Path(item["render_path"])))
+        image = _load_rgb(Path(item["render_path"]))
+        if "crop_xywh" in item:
+            x, y, width, height = [int(value) for value in item["crop_xywh"]]
+            image = image[y : y + height, x : x + width]
+            if image.shape[:2] != (height, width):
+                raise ValueError(f"crop 越界：{item['crop_xywh']} -> {image.shape}")
+        labels = _predict(model, image)
         relative = f"{item['case_id']}__repeat{item['repeat_index']}.npy"
         output_path = args.output_dir / relative
         np.save(output_path, labels, allow_pickle=False)

@@ -3413,6 +3413,18 @@ worker 乘 255 后 round/clip 为 uint8；只有明显大于 2 的数组才按 0
 阈值、repeat、资源和 gate 全部不变。以后不同 frontend 的 RGB 必须由显式 range contract 归一化，禁止用严格 `max<=1`
 启发式区分编码。
 
+### V6-F37：局部 RGB 编辑不保证全帧感知输出局部，宽感受野必须进入 verifier 因子设计
+
+H-R13-006 canonical rejected run `20260821T123835Z__actor-sensor-perception-s20260821-r1` 在修复 RGB
+range 后确认 StreetGS/AD-GS 两帧共 4 个 actor-remove case 均具有强 sensor locality：target RGB MAE
+`0.0872--0.0954`、outside RGB MAE `0.000175--0.000399`、locality enrichment `224--498x`，16 次
+DeepLab 推理精确复跑且峰值仅 `688MiB`。但全帧 DeepLab 在 target 外仍改变 `6.34%--10.31%` 标签，4 个 case
+只有 AD-GS frame57 达到 2x perception locality，故假设按预注册 gate 正式 `rejected`。
+
+不得把 outside 2% 或 enrichment 2x 阈值调松，也不得因 RGB 局部就宣称 perception failure 已解决。H-R13-007 改用
+factorized ROI 机制：固定 256px tile/128px candidate stride，只根据 logged dynamic opacity 选择最高 actor fraction target
+和与其不重叠的最低 actor fraction static tile，对两者独立执行冻结模型；full-frame rejection 永久保留，不被 ROI 结果覆盖。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
