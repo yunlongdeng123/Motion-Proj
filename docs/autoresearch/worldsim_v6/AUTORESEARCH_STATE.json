@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:32:00Z",
+  "updated_at_utc": "2026-08-21T11:47:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 11,
+  "iteration": 12,
   "active_task": "WS-V6-R12-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R12-001",
-  "candidate": "static_rgb_logsim_exact_replay",
+  "active_hypothesis": "WS-V6-H-R12-002",
+  "candidate": "sceneir_dynamic_state_logsim_replay",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e",
+  "dev_artifact_hash": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "5f3bb62dae9c3eb50609abb94b42eab65f612bb19142e203d54dcf449d52fd18",
-  "last_reflection_id": "WS-V6-REFL-0013",
+  "last_reflection_id": "WS-V6-REFL-0014",
   "last_completed": {
-    "task_id": "WS-V6-R11-BAKE-01",
-    "run": "run://worldsim_v6/WS-V6-R11-BAKE-01/20260821T112840Z__typed-bake-s20260821-r1",
-    "artifact_sha256": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e"
+    "task_id": "WS-V6-R12-LOGSIM-01",
+    "run": "run://worldsim_v6/WS-V6-R12-LOGSIM-01/20260821T114224Z__logsim-s20260821-r1",
+    "artifact_sha256": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -37,6 +37,7 @@
     "r9_cross_frontend_verifier_arms": "done_accepted_development_p1_p2_only",
     "r10_factorized_verification": "done_accepted_development_photo_geometry",
     "r11_typed_bake": "done_accepted_development_static_only",
+    "r12_static_sensor_logsim": "done_accepted_development_static_scope",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -45,8 +46,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "replay_each_static_chunk_twice_from_identical_sensor_input",
-    "measure_exact_rgb_sensor_and_frozen_semantic_output_consistency",
-    "retain_structural_abstain_for_unrepresented_dynamic_factors"
+    "replay_sceneir_actor_trajectories_twice_from_fresh_package_loads",
+    "measure_actor_sensor_calibration_semantic_and_collision_label_consistency",
+    "retain_event_abstain_and_seek_real_scene_dynamic_replay_next"
   ]
 }

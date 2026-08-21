@@ -1,0 +1,47 @@
+schema_version: worldsim_v6.r12_dynamic_logsim.v1
+task_id: WS-V6-R12-LOGSIM-01
+hypothesis_id: WS-V6-H-R12-002
+seed: 20260821
+sources:
+  r2_run: runs://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1
+  r2_manifest_sha256: bf53c1721048283c6758f30cd20e2718d576b68d7519d589f2144ebc2b3576b8
+  sceneir_package: sceneir_packages/recondrive_schema_fixture
+  sceneir_package_manifest_sha256: ae6de040d12d11ee3f86a2c0d4679d1053cf58b5b348bd56668e9d098b6e704f
+  sceneir_document_sha256: dfbad26859595af77374225114d81f87b771db136eef30133e42b1bea7607bcd
+cohort:
+  partition: development_conformance_fixture
+  confirmation_locked: true
+  expected_actor_count: 2
+  expected_actor_primitive_count: 819
+  expected_timestamp_count: 2
+  expected_sensor_count: 1
+  expected_event_count: 0
+  replay_count: 2
+replay:
+  require_fresh_package_reload_per_repeat: true
+  require_trajectory_exact: true
+  require_actor_world_state_exact: true
+  require_sensor_calibration_exact: true
+  require_collision_label_exact: true
+  require_semantic_label_exact: true
+  require_repeat_exact: true
+unsupported_factors:
+  event: ABSTAIN_NOT_REPRESENTED
+gate:
+  require_expected_denominators: true
+  require_all_supported_outputs_exact: true
+  require_source_immutable: true
+  require_event_abstain: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_sceneir_conformance_fixture
+  - feedforward_schema_fixture_no_model_inference
+  - deterministic_functional_consistency_not_physical_accuracy
+  - collision_labels_are_aabb_replay_outputs_not_ground_truth
+  - semantic_labels_are_preserved_actor_classes_not_pixel_correctness
+  - events_not_represented
+  - no_training
+  - no_confirmation_read
