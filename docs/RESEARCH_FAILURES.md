@@ -3659,3 +3659,9 @@ H-R44-001 canonical run `20260821T180210Z__verified-bake-s20260821-r1` 成功生
 H-R46-001 canonical run `20260821T181019Z__detached-logsim-s20260821-r1` 从完整复制的 detached R45 package 独立加载，196 行/每行 12,390 primitives、组合误差 `0`、导数不变误差 `1.42e-14`、两次 replay aggregate SHA256 完全相同，且 source package 在 copy 后未被 loader 使用。但预注册错误要求 196 个 state content hashes 全部不同；实际只有 `142` 个唯一状态。诊断显示唯一重复组覆盖 `14.1s` 到 `19.5s` 共 `55` 个 timestamp，表示同一个 stationary geometry state 被多个合法 trajectory events 引用。run 因此正式 `rejected`。
 
 不得给 state bytes 掺入 timestamp 以伪造不同 state，也不得删除静止尾段。H-R47-001 明确分离两种身份：`materialized_state_sha256` 继续只哈希几何内容、允许并精确报告 142 个唯一状态；`trajectory_event_sha256` 哈希 sequence index、timestamp、visibility、proposal id 与 state hash，必须对196个事件全部唯一。重复 state group 与55次静止尾段必须原样保留，detached replay、组合精度和 abstention 合同不变。
+
+### V6-F71：actor geometry trajectory 必须同时拥有 native lifecycle，不能把 repeated terminal pose 当作 active actor
+
+H-R49-001 canonical run `20260821T182444Z__multiframe-sensor-s20260821-r1` 在 frames `[0,57,140,141,195]` 上把 R47 detached package 与 R35+同一 delta 两条 runtime 路径逐数组比较，5/5 sensor NPZ 完全相同，runtime modes、event/state identity、repeat、state restoration、package/checkpoint immutability 与资源门均通过。但两条 compiled 路径共同遗漏 native `RigidNodes.instances_fv`：frames 141/195 的 native actor 已 inactive、opacity 为零，compiled package 仍使用固定 observed opacity，导致最大 opacity field error `0.99643`、RGB MAE `0.00501`、depth MAE `0.44633m`。因此 run 正式 `rejected`；cross-path equality 只能证明两个 consumer 同错。
+
+不得删除141/195、放宽 sensor 阈值、把 actor effect 为0解释成无关，或继续把 stationary geometry state 等同于 active lifecycle。H-R50-001 从冻结 StreetGS native `instances_fv[:, actor_0000]` 提取完整196帧生命周期，预注册验证 frames0-140 active、141-195 inactive 的单次边界，并把 content-addressed bool lifecycle 作为独立字段 bake 进 transform-owned package。base geometry、proposal transform 与 R49 rejection 必须原样保留；后续 sensor runtime 必须用 lifecycle 乘 actor opacity。

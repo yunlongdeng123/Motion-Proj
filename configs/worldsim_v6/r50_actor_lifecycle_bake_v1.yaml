@@ -1,0 +1,45 @@
+schema_version: worldsim_v6.r50_actor_lifecycle_bake.v1
+task_id: WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01
+hypothesis_id: WS-V6-H-R50-001
+seed: 20260821
+sources:
+  r49_run: runs://worldsim_v6/WS-V6-R49-MULTIFRAME-DETACHED-SENSOR-RUNTIME-01/20260821T182444Z__multiframe-sensor-s20260821-r1
+  r49_manifest_sha256: e77f31daefb36c5a3c701339be867b2509d90073b2372b64ad89704c26681f09
+  r49_gate_sha256: e8075c61ad94396cbb98c872a67ffb14e6e8d6e65b6a9b7fbecef31bdfce2d83
+  r49_summary_sha256: f22faad62248acb89034838f2979498cff5d8f56e59db5a08ab0cbbafff3134b
+  r49_frame_comparisons_sha256: 9a51f8645a4d2b19211923630c5d199c15018ee3eed3ed4b6c48505c80131704
+  r45_run: runs://worldsim_v6/WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01/20260821T180636Z__transform-bake-s20260821-r1
+  r45_gate_sha256: 8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff
+  r45_package_manifest_sha256: ea093368cfc4707db8b2c7ede1a6323c7702b6159219b6a3e02f13adc74cf173
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+lifecycle_contract:
+  actor_model_index: 0
+  actor_id: actor_0000
+  expected_frame_count: 196
+  expected_primitive_count: 12390
+  expected_active_frame_count: 141
+  expected_inactive_frame_count: 55
+  expected_transition_indices: [141]
+  expected_active_first_frame: 0
+  expected_active_last_frame: 140
+  expected_inactive_first_frame: 141
+  expected_inactive_last_frame: 195
+  package_status: baked_verified_development_transform_and_lifecycle_owned_proposal
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_native_actor_lifecycle_extraction_and_typed_package_bake
+  - lifecycle_is_owned_separately_from_repeated_geometry_state_and_transform_trajectory
+  - base_arrays_and_proposal_transform_remain_byte_exact
+  - inactive_frames_are_not_deleted_and_runtime_must_mask_actor_opacity
+  - semantic_physical_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
+
