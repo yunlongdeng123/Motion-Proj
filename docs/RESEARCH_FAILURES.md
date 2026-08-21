@@ -3629,3 +3629,9 @@ H-R39-001 首个 formal attempt `20260821T172447Z__static-contact-s20260821-r1` 
 H-R39-001 canonical retry `20260821T172656Z__static-contact-s20260821-r1` 在 824,583 个 observed background Gaussians 上按冻结的 1.5m horizontal / 0.35m vertical / 3-point contract 查询 actor AABB bottom。logged support coverage 只有 `0.17857`，远低于 `0.80`；x+1m coverage `0.16837` 因绝对覆盖不足而 REJECT，y+1m coverage 反而为 `0.19388`，方向控制失败。run 正式 `rejected`。
 
 不得放宽 coverage、vertical tolerance 或把 retention 单独当 ACCEPT。background splats 混合道路、立面与其他表面，Gaussian AABB minimum 又受少量低端 primitives 支配，两者组合不是 ground-contact 语义。H-R40-001 转向冻结的同前端三相机 logged LiDAR：排除 dynamic pixels 后提升到 world frame，以 actor world-Gaussian y 轴 5% 分位作为 robust support anchor、局部 LiDAR y 轴 10% 分位作为 ground proxy，仅评估 R37 实际执行的 frame57；x/y directional controls 与物理/semantic-road abstention保留。
+
+### V6-F66：独立 runner 必须显式绑定仓库根目录后再导入项目包
+
+H-R41-001 首次正式启动在创建 run directory 或读取任何冻结 artifact 前因 `ModuleNotFoundError: No module named 'motion_proj'` 退出。R41 runner 缺少其他 WorldSim V6 runner 已使用的仓库根目录 `sys.path` 引导；实验主体、预注册 factor decisions 与 fusion contract 均未执行，因而这不是方法拒绝。
+
+修复只把 `scripts/worldsim_v6/run_r41_actor_edit_factor_fusion.py` 的仓库根目录插入 `sys.path`，不得修改 R37/R38/R40 hashes、两个 intervention、四因子 decisions、reject-dominates fusion、资源合同或 claim boundary。修复后必须新 commit/push，并以同一 H-R41-001 重跑；首次启动不得被追认为 canonical run。
