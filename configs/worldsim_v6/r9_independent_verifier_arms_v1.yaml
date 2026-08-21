@@ -1,0 +1,93 @@
+schema_version: worldsim_v6.r9_independent_verifier_arms.v1
+task_id: WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01
+hypothesis_id: WS-V6-H-R9-002
+seed: 20260821
+sources:
+  r8_run: runs://worldsim_v6/WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01/20260821T104759Z__frozen-generator-s20260821-r1
+  r8_manifest_sha256: ed868118762ee91fa47894af47d5fc2e99374c751fcd772f17ee6fa097776a17
+  selected_candidate: sd15_inpainting
+  selected_worker_result_sha256: 03628d5b0bcf5066c52683ec8fd0f6c822b41e7822b991bc4b410444d37e6953
+  selected_asset_content_sha256: 40a96edaa1c78013d367981bd35630b200c707def3e2001ae4df4af3ae9cfda6
+  r7_run: runs://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1
+  r7_manifest_sha256: 73dbb2ba11bc12bc4e22ca13765af10d14ac5d183e1d529add5e6d619f2a4d0c
+  render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+verifier_models:
+  geometry:
+    id: depth-anything/Depth-Anything-V2-Small-hf
+    revision: 5426e4f0f36572d16453bbda7a8389317b1bef99
+    license: Apache-2.0
+    model_file: model.safetensors
+    model_sha256: 3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70
+  semantic:
+    id: Koushim/deeplabv3-resnet50-cityscapes
+    revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+    license: Apache-2.0
+    model_file: pytorch_model.bin
+    model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development
+  confirmation_locked: true
+  scenes: [scene-0242, scene-0048]
+  frontends: [streetgs, ad_gs]
+  frame_indices: [52, 57]
+  hole_types: [missing_route_support, missing_side_view, disocclusion, actor_removal_hole]
+  expected_eligible_case_count: 28
+  expected_structural_abstain_count: 4
+  expected_semantic_evidence_case_count: 12
+proposal:
+  resolution_px: [512, 288]
+  repeat_count: 1
+  source_type: generated_proposal
+  bake_allowed: false
+  sd_prompt: photograph of an empty urban driving scene, continuous road surface, realistic lighting
+  sd_inference_steps: 20
+  sd_guidance_scale: 4.0
+arms:
+  P0:
+    name: no_verification
+    decision: accept_all_evaluable
+  P1:
+    name: photo
+    maximum_masked_rgb_mae: 0.05
+    truth_pixel_absolute_error: 0.05
+    truth_minimum_usable_fraction: 0.50
+  P2:
+    name: geometry
+    alignment: affine_least_squares_on_observed_outside_mask
+    minimum_alignment_pixels: 1024
+    maximum_masked_mean_relative_depth_error: 0.20
+    truth_pixel_relative_depth_error: 0.20
+    truth_minimum_usable_fraction: 0.50
+  P3:
+    name: semantic
+    evidence_hole_types: [disocclusion, actor_removal_hole]
+    dynamic_cityscapes_class_ids: [11, 12, 13, 14, 15, 16, 17, 18]
+    minimum_verifier_dynamic_iou: 0.50
+    truth_minimum_dynamic_iou: 0.70
+  P4:
+    name: dynamics
+    decision: abstain_all
+    reason: no_independent_temporal_proposal_or_flow_evidence
+gate:
+  minimum_accept_coverage: 0.10
+  maximum_false_safe_rate: 0.10
+  minimum_false_safe_reduction_vs_p0: 0.25
+  require_non_target_exact: true
+  require_independent_arm_outputs: true
+  require_p4_all_abstain: true
+  allow_arm_combination: false
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 8000
+  maximum_wall_seconds: 900
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - matched_development_pseudo_hole_arm_ablation
+  - generator_output_remains_proposal
+  - second_r8_capability_candidate_after_big_lama_quality_rejection
+  - same_verifier_thresholds_as_h_r9_001
+  - each_arm_scored_independently
+  - no_factor_fusion
+  - no_bake
+  - no_training
+  - no_confirmation_read

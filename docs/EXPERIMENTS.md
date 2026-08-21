@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6 R9 Big-LaMa independent verifier arms 正式实验 REJECTED（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1`，
+  source=`a7b8e7a`；gate/summary/manifest/terminal SHA=`07be410e...7fd / 6a74249f...626 / 88fe0a97...25f / 091bbec8...123`。
+- P1/P2=`0/28` ACCEPT；P3=`6/12` ACCEPT、false-safe=`0.1667`；P4=`28/28` ABSTAIN；eligible R10 arms=`[]`。
+  outside-mask exact、无融合/无 bake、peak=`428 MiB`，因此是质量门负结果而非工程或资源 blocked。
+- H-R9-002 冻结切换到 SD-v1.5；cohort、verifier、truth、threshold 与 gate 全不变。失败与 pivot 见 `V6-F25`。
+
 ## WorldSim V6 R8 frozen proposal generator 正式实验 capability PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01/20260821T104759Z__frozen-generator-s20260821-r1`，

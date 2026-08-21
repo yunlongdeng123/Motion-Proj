@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6 R9 Big-LaMa verifier arms REJECTED；SD-v1.5 matched pivot 启动（2026-08-21）
+
+- H-R9-001 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1`；
+  P1/P2 accept coverage 均为 `0/28`，P3=`6/12` ACCEPT 但 false-safe=`1/6=0.1667`，P4=`28/28` ABSTAIN；
+  因没有 arm 通过冻结门，Big-LaMa quality path 正式 rejected。
+- 当前 active hypothesis=`WS-V6-H-R9-002`：切换到 R8 capability 已通过的 SD-v1.5，保持同一 28-case、
+  verifier models、P1–P4 阈值和 gate，不进行 per-case generator 混选。
+
 ## WorldSim V6 R8 frozen generator capability PASS；R9 independent arms 启动（2026-08-21）
 
 - R8 canonical=`run://worldsim_v6/WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01/20260821T104759Z__frozen-generator-s20260821-r1`；

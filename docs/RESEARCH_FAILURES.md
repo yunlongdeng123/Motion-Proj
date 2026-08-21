@@ -3280,6 +3280,19 @@ strict load 拒绝：归档主 classifier 为 Cityscapes 19 类，但 `aux_class
 aux 输出仍不被正式分数消费。模型权重、P3 动态类定义、cohort、threshold、gate 和资源合同均不改变。
 以后第三方 segmentation checkpoint 必须逐 head 审计 shape，不能假设所有 classifier 共用同一 label count。
 
+### V6-F25：capability 最优的 generator 不等于 verifier-arm 质量最优
+
+R9 canonical rejected run `20260821T110743Z__independent-arms-s20260821-r1` 在 28 个 matched
+development pseudo-holes 上证明 Big-LaMa 虽是 R8 的资源最优候选，但没有 verifier arm 可进入 R10：P1/P2
+均 `0/28` ACCEPT；P3 在 12 个 actor-evidence cases 中接受 6 个，却有 1 个 false-safe，率 `1/6=0.1667`
+高于冻结 `0.10`；P4 正确 `28/28` ABSTAIN。P0 photo/geometry false-safe 均为 `1.0`，P3 为
+`0.5833`。outside-mask exact、无融合/无 bake/无 confirmation 均通过，峰值仅 `428 MiB`，不是资源失败。
+
+H-R9-001 正确裁决为 `rejected`，不得放宽 photo/depth/semantic 阈值或把全拒绝写成有效 verifier。
+新 H-R9-002 只切换到 R8 已完成 capability gate 的第二候选 SD-v1.5；沿用完全相同的 28-case cohort、
+hidden observations、P1–P4、truth 定义、threshold、gate、模型和资源上限。Big-LaMa 与 SD 结果必须分属
+独立不可变 run，禁止在看到 SD 结果后混合选择 per-case generator。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

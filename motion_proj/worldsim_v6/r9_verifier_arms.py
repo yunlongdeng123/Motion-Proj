@@ -23,7 +23,7 @@ from motion_proj.worldsim_v6.r7_oracle import (
     _plane,
     _required_render,
 )
-from motion_proj.worldsim_v6.r8_generator import _resize_case
+from motion_proj.worldsim_v6.r8_generator import _asset_inventory, _resize_case
 
 
 TASK_ID = "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01"
@@ -138,6 +138,7 @@ def run_experiment(
     config_path: Path,
     run_root: Path,
     big_lama_root: Path,
+    sd15_root: Path,
     depth_model_root: Path,
     semantic_model_root: Path,
 ) -> Path:
@@ -157,12 +158,23 @@ def run_experiment(
         raise R9ExperimentError("R8 source manifest 漂移")
     if _sha256(r7_run / "MANIFEST.json") != sources["r7_manifest_sha256"]:
         raise R9ExperimentError("R7 source manifest 漂移")
-    if _sha256(r8_run / "big_lama/WORKER_RESULT.json") != sources["selected_worker_result_sha256"]:
-        raise R9ExperimentError("R8 selected worker 漂移")
-    if _sha256(big_lama_root / "big-lama/models/best.ckpt") != sources[
-        "big_lama_checkpoint_sha256"
+    selected_candidate = str(sources["selected_candidate"])
+    if selected_candidate not in {"big_lama", "sd15_inpainting"}:
+        raise R9ExperimentError("R9 selected candidate 非冻结候选")
+    if _sha256(r8_run / selected_candidate / "WORKER_RESULT.json") != sources[
+        "selected_worker_result_sha256"
     ]:
-        raise R9ExperimentError("Big-LaMa checkpoint 漂移")
+        raise R9ExperimentError("R8 selected worker 漂移")
+    if selected_candidate == "big_lama":
+        selected_asset_sha256 = sources.get(
+            "selected_asset_content_sha256", sources.get("big_lama_checkpoint_sha256")
+        )
+        if _sha256(big_lama_root / "big-lama/models/best.ckpt") != selected_asset_sha256:
+            raise R9ExperimentError("Big-LaMa checkpoint 漂移")
+    else:
+        _, sd_content_sha256 = _asset_inventory(sd15_root)
+        if sd_content_sha256 != sources["selected_asset_content_sha256"]:
+            raise R9ExperimentError("SD-v1.5 snapshot 漂移")
     geometry_cfg = config["verifier_models"]["geometry"]
     semantic_cfg = config["verifier_models"]["semantic"]
     if _sha256(depth_model_root / geometry_cfg["model_file"]) != geometry_cfg["model_sha256"]:
@@ -181,7 +193,7 @@ def run_experiment(
     try:
         generator_input_dir = run_dir / "generator_inputs"
         verifier_input_dir = run_dir / "verifier_inputs"
-        proposal_dir = run_dir / "big_lama_proposals"
+        proposal_dir = run_dir / f"{selected_candidate}_proposals"
         verifier_output_dir = run_dir / "verifier_worker"
         generator_input_dir.mkdir()
         verifier_input_dir.mkdir()
@@ -328,17 +340,25 @@ def run_experiment(
                 str(python),
                 str(repo_root / "scripts/worldsim_v6/r8_generator_worker.py"),
                 "--candidate",
-                "big_lama",
+                selected_candidate,
                 "--input-dir",
                 str(generator_input_dir),
                 "--output-dir",
                 str(proposal_dir),
                 "--big-lama-root",
                 str(big_lama_root),
+                "--sd15-root",
+                str(sd15_root),
                 "--seed",
                 str(config["seed"]),
                 "--repeat-count",
                 str(config["proposal"]["repeat_count"]),
+                "--prompt",
+                str(config["proposal"].get("sd_prompt", "")),
+                "--inference-steps",
+                str(config["proposal"].get("sd_inference_steps", 20)),
+                "--guidance-scale",
+                str(config["proposal"].get("sd_guidance_scale", 4.0)),
             ],
             repo_root,
             env,
@@ -492,7 +512,7 @@ def run_experiment(
             "R9_GATE.json",
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",
-            "big_lama_proposals/WORKER_RESULT.json",
+            f"{selected_candidate}_proposals/WORKER_RESULT.json",
             "verifier_worker/PER_CASE_ARMS.jsonl",
             "verifier_worker/WORKER_RESULT.json",
         ]
@@ -536,7 +556,7 @@ def main() -> int:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("configs/worldsim_v6/r9_independent_verifier_arms_v0.yaml"),
+        default=Path("configs/worldsim_v6/r9_independent_verifier_arms_v1.yaml"),
     )
     parser.add_argument(
         "--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6")
@@ -545,6 +565,11 @@ def main() -> int:
         "--big-lama-root",
         type=Path,
         default=Path("/root/autodl-tmp/models/worldsim_v6/r8_lama"),
+    )
+    parser.add_argument(
+        "--sd15-root",
+        type=Path,
+        default=Path("/root/autodl-tmp/models/worldsim_v6/r8_sd15"),
     )
     parser.add_argument(
         "--depth-model-root",
@@ -562,6 +587,7 @@ def main() -> int:
         args.config,
         args.run_root,
         args.big_lama_root,
+        args.sd15_root,
         args.depth_model_root,
         args.semantic_model_root,
     )
