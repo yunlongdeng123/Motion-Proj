@@ -1,0 +1,56 @@
+schema_version: worldsim_v6.r51_lifecycle_aware_sensor_runtime.v1
+task_id: WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R51-001
+seed: 20260821
+sources:
+  r50_run: runs://worldsim_v6/WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01/20260821T183317Z__lifecycle-bake-s20260821-r1
+  r50_manifest_sha256: db56890b79bcd6973ac8d9e4e57bb92231f9b9942b143fe3aa7240aef1187d2c
+  r50_gate_sha256: bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e
+  r50_summary_sha256: 3b29820b4a0778de6a38e6d80ab8500c7cd4f11827bb8f8e69e63e1366e5ab0f
+  r50_package_manifest_sha256: c6bcd2022c74aaa040f797fb6f69718b5352c00eb94e4584141159e3462c9efe
+  r50_trajectory_geometry_sha256: 390ac86dc2b74c510bd0945ddb853ffff922ec25a9d7f5488bc2c3ea57ac4d69
+  r50_runtime_contract_sha256: 4a0b519e86562192c5786a73ba71f65b194bf1b6a01012a5eea06a1f8a193e24
+  r49_run: runs://worldsim_v6/WS-V6-R49-MULTIFRAME-DETACHED-SENSOR-RUNTIME-01/20260821T182444Z__multiframe-sensor-s20260821-r1
+  r49_gate_sha256: e8075c61ad94396cbb98c872a67ffb14e6e8d6e65b6a9b7fbecef31bdfce2d83
+  r49_summary_sha256: f22faad62248acb89034838f2979498cff5d8f56e59db5a08ab0cbbafff3134b
+  r48_run: runs://worldsim_v6/WS-V6-R48-DETACHED-ACTOR-PACKAGE-SENSOR-RUNTIME-01/20260821T181908Z__detached-sensor-s20260821-r1
+  r48_gate_sha256: 11453778499d9cd2c1b10b2cf19b8085effdf6d5c048479b1505b38675b71e8e
+  r48_frame57_sensor: worker/sensors/frame057.npz
+  r48_frame57_sensor_sha256: c01c2dfc4e9b2fcd1b8a3a6c61289663ab66ccf169a67e840421d36478a9719b
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  actor_model_index: 0
+  frame_indices: [0, 57, 140, 141, 195]
+  expected_frame_validity: [true, true, true, false, false]
+  required_runtime_mode: transform_owned_package_direct
+  required_translation_source: package_transform_trajectory
+  required_lifecycle_source: package_actor_frame_validity
+  minimum_frame57_actor_effect_pixels: 256
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 360
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_five_frame_lifecycle_aware_sensor_runtime
+  - direct_r50_package_owns_geometry_transform_and_actor_frame_validity
+  - inactive_frames_retain_event_identity_and_mask_compiled_actor_opacity
+  - active_frame57_must_remain_exactly_equal_to_r48_pre_lifecycle_sensor
+  - semantic_physical_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
+

@@ -115,6 +115,18 @@ def main() -> int:
     }
     if proposal_transforms is not None and proposal_transforms.shape[0] != len(timestamp_to_index):
         raise ValueError("transform trajectory denominator 漂移")
+    if "actor_frame_validity" in geometry:
+        lifecycle_record = geometry["actor_frame_validity"]
+        actor_frame_validity = np.load(package / lifecycle_record["path"], allow_pickle=False)
+        if (
+            actor_frame_validity.dtype != np.bool_
+            or actor_frame_validity.shape != (len(timestamp_to_index),)
+        ):
+            raise ValueError("actor lifecycle denominator 或 dtype 漂移")
+        lifecycle_source = "package_actor_frame_validity"
+    else:
+        actor_frame_validity = None
+        lifecycle_source = "legacy_implicit_always_active"
 
     def translation_for_index(trajectory_index: int) -> np.ndarray:
         if proposal_transforms is None:
@@ -173,11 +185,14 @@ def main() -> int:
         viewdirs = viewdirs / viewdirs.norm(dim=-1, keepdim=True)
         degree = min(rigid.step // rigid.ctrl_cfg.sh_degree_interval, rigid.sh_degree)
         rgbs = torch.clamp(spherical_harmonics(degree, viewdirs, colors) + 0.5, 0.0, 1.0)
+        opacities = device_arrays["opacities"]
+        if actor_frame_validity is not None and not bool(actor_frame_validity[trajectory_index]):
+            opacities = torch.zeros_like(opacities)
         return {
             "_means": means,
             "_quats": quats,
             "_scales": device_arrays["scales"],
-            "_opacities": device_arrays["opacities"],
+            "_opacities": opacities,
             "_rgbs": rgbs,
         }
 
@@ -309,6 +324,9 @@ def main() -> int:
                     "frame_index": frame_index,
                     "timestamp_us": frame_index * 100000,
                     "translation_delta_m": translation_delta.astype(float).tolist(),
+                    "package_actor_frame_valid": bool(actor_frame_validity[trajectory_index])
+                    if actor_frame_validity is not None
+                    else True,
                     "native_translation_state_restored_exact": translation_state_restored,
                     "actor_effect_pixels": effect_pixels,
                     "actor_nonzero_opacity_primitives": int(actor_support.sum().item()),
@@ -360,6 +378,7 @@ def main() -> int:
             "translation_source": "package_transform_trajectory"
             if proposal_transforms is not None
             else "cli_argument",
+            "lifecycle_source": lifecycle_source,
             "upstream_commit": subprocess.check_output(
                 ["git", "-C", str(args.upstream_root.resolve()), "rev-parse", "HEAD"],
                 text=True,
