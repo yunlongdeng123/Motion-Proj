@@ -3257,6 +3257,18 @@ verifier、hidden target、训练、confirmation 或方法结果产生。
 gate 或资源合同。这是与 V6-F12 同类的 provenance 抄录错误；后续跨 run 配置应由 manifest artifact
 自动生成，禁止再次从缩写或人工记忆恢复完整哈希。
 
+### V6-F23：冻结 semantic checkpoint 必须 strict 重建 auxiliary head
+
+R9 首个有 run 目录的正式实例 `20260821T110446Z__independent-arms-s20260821-r1` 已先生成全部
+28 个 Big-LaMa proposal，随后 semantic worker 在 strict load 时拒绝 checkpoint 中的
+`aux_classifier.*`：初版 adapter 以 `aux_loss=False` 构造 DeepLabV3，遗漏了训练 checkpoint 保留的官方
+auxiliary head。run 保持 `failed`，未产生 arm verdict、融合或 bake，也不是模型质量/资源负结论。
+
+修复只以 `aux_loss=True` 重建同一 19-class DeepLabV3-ResNet50，并继续 strict load 全部参数；正式推理
+仍只消费主输出 `out`，aux head 不参与 arm score。权重字节、cohort、proposal、threshold、gate 与资源合同
+均不改变。以后冻结视觉 checkpoint 的结构审计必须覆盖所有 state-dict head，不能以“推理不消费”为由
+在 strict identity 前删除参数。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

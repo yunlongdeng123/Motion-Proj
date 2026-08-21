@@ -59,7 +59,7 @@ def _load_semantic_model(root: Path) -> torch.nn.Module:
         weights=None,
         weights_backbone=None,
         num_classes=19,
-        aux_loss=False,
+        aux_loss=True,
     )
     checkpoint = torch.load(root / "pytorch_model.bin", map_location="cpu", weights_only=True)
     if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
