@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T19:12:38Z",
+  "updated_at_utc": "2026-08-21T19:17:45Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 95,
-  "active_task": "WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01",
-  "active_hypothesis": "WS-V6-H-R57-001",
-  "candidate": "second_actor_five_frame_native_sensor_equivalence",
+  "iteration": 96,
+  "active_task": "WS-V6-R58-SECOND-ACTOR-TRANSLATION-SENSOR-01",
+  "active_hypothesis": "WS-V6-H-R58-001",
+  "candidate": "second_actor_counterfactual_translation_native_sensor_conformance",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c",
+  "dev_artifact_hash": "294ff96906ce1a7d692755eb3b06554bd7ff6673a3a1bb1d4a0eda1da1388aa5",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "659bf619486b2b74d5f705bd4c36b0a44293af26904deeaa9fd1aff034b6d2fc",
-  "last_reflection_id": "WS-V6-REFL-0097",
+  "last_reflection_id": "WS-V6-REFL-0098",
   "last_completed": {
-    "task_id": "WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01",
-    "run": "run://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1",
-    "artifact_sha256": "edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c"
+    "task_id": "WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01",
+    "run": "run://worldsim_v6/WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01/20260821T191551Z__actor2-sensor-s20260821-r1",
+    "artifact_sha256": "294ff96906ce1a7d692755eb3b06554bd7ff6673a3a1bb1d4a0eda1da1388aa5"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -116,7 +116,8 @@
     "r54_rigid_actor_inventory": "done_accepted_development_27_actors_92170_primitives",
     "r55_second_actor_sceneir_bundle": "done_accepted_development_actor2_exact_bundle",
     "r56_second_actor_rigid_trajectory": "done_accepted_development_actor2_196_pose_compilation",
-    "r57_second_actor_sensor_equivalence": "active_pre_registered",
+    "r57_second_actor_sensor_equivalence": "done_accepted_development_actor2_5_of_5_native_sensor",
+    "r58_second_actor_translation_sensor": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -125,8 +126,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_and_push_r56_acceptance_and_r57_actor2_native_sensor_equivalence",
-    "render_actor2_package_and_native_streetgs_on_five_temporal_landmarks",
-    "require_all_thresholds_and_at_least_one_nontrivial_actor_effect"
+    "commit_and_push_r57_acceptance_and_r58_actor2_translation_sensor",
+    "apply_frozen_minus_x_minus_z_translation_to_actor2_at_visible_frame98",
+    "require_native_equivalence_and_nontrivial_change_from_logged_actor2_sensor"
   ]
 }
