@@ -45,8 +45,10 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
 
     r70_run = _resolve_runs_uri(sources["r70_run"])
     scene_package = r70_run / "package"
-    r57_run = _resolve_runs_uri(sources["r57_run"])
-    baseline_sensor = r57_run / sources["r57_frame98_sensor"]
+    baseline_run = _resolve_runs_uri(sources["baseline_run"])
+    baseline_sensor = baseline_run / sources["baseline_sensor"]
+    selection_r51_run = _resolve_runs_uri(sources["selection_r51_run"])
+    selection_r57_run = _resolve_runs_uri(sources["selection_r57_run"])
     checkpoint = Path(sources["streetgs_checkpoint"])
     upstream = Path(sources["streetgs_upstream_root"])
     frozen_files = {
@@ -57,10 +59,16 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         scene_package / "SCENE_COMPOSITION.json": sources["r70_scene_composition_sha256"],
         scene_package / "RUNTIME_CONTRACT.json": sources["r70_runtime_contract_sha256"],
         scene_package / "VALIDITY.json": sources["r70_validity_sha256"],
-        r57_run / "MANIFEST.json": sources["r57_manifest_sha256"],
-        r57_run / "R57_GATE.json": sources["r57_gate_sha256"],
-        r57_run / "SUMMARY.json": sources["r57_summary_sha256"],
-        baseline_sensor: sources["r57_frame98_sensor_sha256"],
+        baseline_run / "MANIFEST.json": sources["baseline_manifest_sha256"],
+        baseline_run / sources["baseline_gate_filename"]: sources["baseline_gate_sha256"],
+        baseline_run / "SUMMARY.json": sources["baseline_summary_sha256"],
+        baseline_sensor: sources["baseline_sensor_sha256"],
+        selection_r51_run / "worker/FRAME_METRICS.jsonl": sources[
+            "selection_r51_frame_metrics_sha256"
+        ],
+        selection_r57_run / "worker/FRAME_METRICS.jsonl": sources[
+            "selection_r57_frame_metrics_sha256"
+        ],
         checkpoint: sources["streetgs_checkpoint_sha256"],
     }
     for path, expected_sha in frozen_files.items():
@@ -73,7 +81,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         raise R71ExperimentError("R71 disk resource insufficient")
 
     r70_gate = json.loads((r70_run / "R70_GATE.json").read_text(encoding="utf-8"))
-    r57_gate = json.loads((r57_run / "R57_GATE.json").read_text(encoding="utf-8"))
+    baseline_gate = json.loads(
+        (baseline_run / sources["baseline_gate_filename"]).read_text(encoding="utf-8")
+    )
     composition = json.loads(
         (scene_package / "SCENE_COMPOSITION.json").read_text(encoding="utf-8")
     )
@@ -191,8 +201,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             actor["actor_id"]: actor["actor_package_manifest_sha256"] for actor in actors
         }
         checks = {
-            "r70_and_r57_authorities_accepted": bool(
-                r70_gate["checks"]["passed"] and r57_gate["checks"]["passed"]
+            "r70_and_logged_baseline_authorities_accepted": bool(
+                r70_gate["checks"]["passed"] and baseline_gate["checks"]["passed"]
             ),
             "scene_package_runtime_contract_exact": package_contract_exact,
             "worker_runtime_ownership_exact": bool(
@@ -266,7 +276,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             {
                 "schema_version": "worldsim_v6.r71_joint_sensor_effect.v1",
                 "frame_index": int(row["frame_index"]),
-                "logged_sensor_sha256": sources["r57_frame98_sensor_sha256"],
+                "logged_sensor_sha256": sources["baseline_sensor_sha256"],
                 "joint_sensor_sha256": row["sensor_sha256"],
                 "sensor_array_names": sensor_array_names,
                 "changed_rgb_pixels_vs_logged": changed_pixels,
@@ -373,7 +383,7 @@ def main() -> int:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("configs/worldsim_v6/r71_two_actor_scene_sensor_runtime_v1.yaml"),
+        default=Path("configs/worldsim_v6/r71_two_actor_scene_sensor_runtime_v2.yaml"),
     )
     parser.add_argument("--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6"))
     args = parser.parse_args()

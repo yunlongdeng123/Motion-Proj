@@ -3722,3 +3722,9 @@ H-R67-001 canonical run `20260821T202013Z__actor2-transform-bake-s20260821-r1` �
 H-R68-001 第一次启动尝试在创建 run directory、读取任何冻结 artifact 或启动 GPU worker 前退出。PowerShell 在 SSH 到达服务器前展开了双引号字符串中的 `$(git status --porcelain)` 与 `$(git rev-parse ...)`，本地当前目录不是 Git 仓库，继而使传给远端 bash 的引号不闭合。服务器只收到语法错误；没有 R68 run、sensor、gate 或方法结果产生。
 
 修复只把 SSH 的远端命令改为 PowerShell 单引号字面量，并把可执行 runner 的物理文件模式同步为已提交的 `100755`；不改 R68 代码、配置、冻结 source、frame98、actor2、transform/lifecycle ownership、sensor exactness、阈值、资源或 claim boundary。H-R68-001 保持 active，在 clean 且已 push 的同一 source commit 后重新启动。该失败是 launcher plumbing，不构成假设 rejection。
+
+### V6-F82：multi-actor sensor 证据帧必须让每个被编辑 actor 对相机具有独立可见支持
+
+H-R71-001 canonical run `20260821T205641Z__two-actor-sensor-s20260821-r1` 在 frame98 正确加载 R70，向 native checkpoint 同时应用 actor0/actor2 两个 transform，并在 compiled path 替换两组 owned fields。两组 field error、共享 RGB/depth/opacity、repeat、state restore、package/checkpoint immutability、资源和全部 abstention 均通过；但 actor0 虽 lifecycle active 且12,390个 opacity primitives 非零，其 camera effect pixels 为0。联合 sensor SHA256 因而与 R61/R68 actor2-only sensor 完全相同，只有 actor2 的19,785 effect pixels，按预注册的双 actor 可见门正式 rejected。
+
+不得删除 `both_actors_have_visible_effect`、把 active primitives 当作 camera evidence，或追认 frame98 为双 actor runtime 成功。冻结 R51 证据表明 actor0 在采样帧中只有 frame57 具有17,568 effect pixels；冻结 R57 表明 actor2 在相邻 frame49 和后续 frame98 分别具有17,290/19,700 effect pixels。H-R71-002 因此在任何新渲染前固定 frame57，并改用冻结 R36 frame57 logged sensor 作 counterfactual baseline；所有 runtime、field/sensor、每 actor>=32 pixels、joint>=256 pixels、资源和 abstention 门保持不变。若 actor2 在 frame57 仍不可见，则保留第二次 rejection 并转向独立的可见交集搜索，不得继续猜帧。
