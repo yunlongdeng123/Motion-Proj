@@ -9,6 +9,7 @@ import json
 import sys
 import time
 import types
+from collections import OrderedDict, defaultdict
 from pathlib import Path
 from typing import Any, Callable
 
@@ -71,6 +72,11 @@ def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.nda
             ListConfig,
             AnyNode,
             Any,
+            dict,
+            list,
+            int,
+            OrderedDict,
+            defaultdict,
         ]
     )
     sys.path.insert(0, str(source))

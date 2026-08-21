@@ -3235,6 +3235,17 @@ SD-v1.5 仍完整通过而双候选执行门仍失败。逐次靠异常暴露类
 这些精确类型后仍使用 `weights_only=True`，实验变量与选择规则不变。以后同类归档应先做静态类型清单，
 再建立最小安全白名单，避免把正式 run 当依赖探针。
 
+### V6-F21：Python 2 pickle 内建名迁移后也必须进入 safe-global 清单
+
+R8 第五轮正式目录 `20260821T104627Z__frozen-generator-s20260821-r1` 中，OmegaConf 类型完成
+白名单后，weights-only loader 继续拒绝由旧归档 `__builtin__.dict` 迁移得到的 `builtins.dict`；
+SD-v1.5 再次通过，双候选执行门仍保持 `rejected`。静态 GLOBAL 清单此前列出了旧模块名，但未把
+Python 3 运行时映射后的内建类型显式加入 safe globals。
+
+修复补入清单中出现的标准容器及迁移类型：`dict/list/int/OrderedDict/defaultdict`；仍不对白名单外
+类型开放，不切换为 unrestricted pickle。模型、checkpoint、输入、seed、阈值与选择规则不变。
+以后审计跨 Python 版本的 checkpoint 时，GLOBAL 清单必须同时记录归档名与当前运行时解析后的类型名。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
