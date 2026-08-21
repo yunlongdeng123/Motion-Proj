@@ -1,0 +1,52 @@
+schema_version: worldsim_v6.r28_actor_factor_truth_product.v1
+task_id: WS-V6-R28-ACTOR-FACTOR-TRUTH-PRODUCT-01
+hypothesis_id: WS-V6-H-R28-001
+seed: 20260821
+sources:
+  r24_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  r24_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  r24_gate_sha256: 171905dacadae1ea0b2af48eaa1fc8a86ba7ecfc1bd21ab7f000f28b248e58fd
+  r24_cases_sha256: 23803466edc1dd238e42848664d556d629595c72f67d10490391a871c2941a0d
+  r24_per_case_arms_sha256: 7171ed693a7188b74bd69be557accd43e8701267f8ef009f12cb11b2a1a0a72d
+  r25_run: runs://worldsim_v6/WS-V6-R25-ACTOR-ARM-PARETO-EVALUATION-01/20260821T155306Z__actor-pareto-s20260821-r1
+  r25_manifest_sha256: a0693f11f0565a078736326b9cc024cdda677fed6f4cf94032d943fc7a3473bb
+  r25_gate_sha256: 47d21244fff24585a1a3f78eb090a85d1ebe135158fc9b6ffb0ca902f330793d
+  r25_actor_pareto_sha256: 51f58ecbeb908724f2347d215b7b214c2e6a94cb0f3e62cdd138ccc0c1167672
+  r26_run: runs://worldsim_v6/WS-V6-R26-TYPED-SEMANTIC-MULTISOURCE-01/20260821T155657Z__semantic-consensus-s20260821-r1
+  r26_manifest_sha256: 0cbfd4c8778d63a7a31367efd33e4048fe0883aa3498d5531de53539738cc9fe
+  r26_gate_sha256: 90f64ae0ad680f4ebf739f28fce8dbce425777f3f2a588f45a7ef51df9aa5aa5
+  r26_semantic_sha256: 187a9b81896def9f5798af27192d698e6d7cf5e57c7f886eba6d0cab33ebf586
+  r27_run: runs://worldsim_v6/WS-V6-R27-ACTOR-THREE-FACTOR-VERIFICATION-01/20260821T160717Z__three-factor-s20260821-r1
+  r27_manifest_sha256: 9e0eba9a634a37a665c3a7280a0f0a2725b8845b88fe5f039db57a662ead68da
+  r27_gate_sha256: 3ddb2e623c01c65d0bde9f74565fc742a0bf81ea071a10096b0156afc7728bf1
+  r27_decisions_sha256: 2a813b28db534731fe84ec2fd28c7b70929cad57dfb5a5d7e657e3ab1f5d0574
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_actor_case_count: 6
+  expected_factor_truth_disagreement_count: 2
+selected_factors: [photo, geometry, semantic]
+excluded_factors:
+  dynamics: no_independent_trajectory_verifier
+fusion:
+  accept: all_selected_factors_accept
+  reject: all_selected_factors_reject
+  abstain: selected_factors_disagree
+  joint_truth: photo_truth_safe_and_geometry_truth_safe_and_semantic_truth_safe
+gate:
+  minimum_accept_coverage: 0.10
+  maximum_false_safe_rate: 0.10
+  minimum_false_safe_reduction_count: 1
+  require_every_accept_joint_truth_safe: true
+  require_disagreement_to_abstain: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - matched_development_actor_factorized_truth_product
+  - r27_rejection_retained_due_invalid_cross_factor_truth_identity_assumption
+  - photo_geometry_semantic_truths_are_factor_specific_and_joint_truth_is_and
+  - immutable_decisions_no_new_inference_or_threshold_change
+  - dynamics_and_verified_trajectory_explicit_abstain
+  - no_bake_training_or_confirmation_read

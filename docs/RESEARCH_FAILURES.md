@@ -3593,3 +3593,9 @@ H-R24-001 canonical run `20260821T154603Z__independent-arms-s20260821-r1` 按 ho
 H-R27-001 首个 formal run `20260821T160452Z__three-factor-s20260821-r1` 在组装六个 actor factorized decision 时因 `KeyError: mask_pixel_count` 失败，仅产生 failed `TERMINAL.json`，未构造 gate 或方法结论。R24 的 `verifier_worker/PER_CASE_ARMS.jsonl` 拥有 factor decisions、truth 与 proposal hash，但 `mask_pixel_count` 的 schema owner 是同一 run 的 `CASES.jsonl`；初版 consumer 错把该 metadata 当作 arm row 字段。
 
 修复把冻结 R24 `CASES.jsonl` 及其 SHA256 加入 R27 source contract，并仅从 case-id index 读取 `mask_pixel_count`。不得改变 P1/P2/P3 decisions、truth、三因子合取规则、coverage/risk/count gate、R24 rejected 状态或确认集锁。该失败属于 artifact binding plumbing，不否定 H-R27-001，修复后以新 run 重试。
+
+### V6-F60：factorized validity 的各因子 truth 应做逻辑积，不能要求逐例标签相等
+
+H-R27-001 canonical retry `20260821T160717Z__three-factor-s20260821-r1` 在六个 actor cases 上得到预期决策：`1` ACCEPT、`1` REJECT、`4` ABSTAIN，全部 factor decision disagreement 都 ABSTAIN，ACCEPT 的 joint truth-safe 为真，false-safe 为 `0`，coverage 为 `1/6`。但预注册合同额外要求 photo、geometry、semantic 三种 truth label 逐例相等；实际有两个 case 的 factor truths 不同，因此 run 按合同正式 `rejected`。
+
+不得删除这两个不一致 case 或追认 R27。photo truth 衡量 RGB 恢复、geometry truth 衡量 depth、semantic truth 衡量动态语义，它们本就可以独立真假。H-R28-001 保持全部 proposal、factor decisions、fusion 与风险门冻结，将 joint truth 明确定义为三种 factor truth 的逻辑 AND，并要求精确保留两个 cross-factor truth disagreements；R27 的唯一实质失败项必须仍是错误的 truth identity 假设。以后 factorized evaluator 必须区分 decision disagreement 与 truth-factor diversity。
