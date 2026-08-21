@@ -3491,3 +3491,9 @@ H-PT1-001 首个 formal run `20260821T132127Z__regression-utility-s20260821-r1` 
 H-PT2-001 canonical run `20260821T133158Z__risk-policy-s20260821-r1` 的数值 gate 全部为真，V6 arm 在 scene-0255 heldout 上达到 balanced accuracy `1.0`、false-safe `0`、safe-route completion `1.0`，并把 naive stale-label arm 的 false-safe 从 `1.0` 降为 `0`。但是 Real-only arm 同样达到 balanced accuracy `1.0` 和 false-safe `0`，尽管其 98 条训练行的 positive fraction 为 `0`。原因是 policy 直接接收 signed AABB clearance，而 hazard label 正是 `clearance<=0`；这等于把 verifier 判定边界编码进输入，Real-only 只需把阈值放在最小 logged clearance 以下就会偶然分开固定 synthetic offsets。
 
 因此该 run 只保留“naive stale labels 有害”的诊断，不晋级为 incremental post-training utility；初版 gate 缺少对 Real-only 的增益约束也是方法治理缺口。H-PT2-002 保持三场景、frame 分母、clone offsets、label、heldout 与任务指标不变，移除 signed clearance/AABB extent/hazard verdict，只向 policy 提供原始绝对 ego-relative forward/lateral position；固定 axis-aligned rectangle ERM 候选网格，并新增相对 Real-only 与 naive 两者 false-safe 至少降低 `0.50` 的 gate。以后任何 learned verifier/policy 实验必须审计 feature 是否直接重编码 label rule。
+
+### V6-F43：声明值经坐标变换后必须做远小于物理阈值间隔的数值 canonicalization
+
+H-PT2-002 canonical run `20260821T133626Z__risk-policy-s20260821-r1` 在移除 signed-clearance feature leakage 后，使 Real-only 与 naive arm 都成为 constant CONTINUE，heldout false-safe 均为 `1.0`；V6 raw-position rectangle policy 把 false-safe 降至 `0.1122449`，safe-route completion 保持 `1.0`，但 balanced accuracy `0.9438776` 与 false-safe 仍未达到冻结的 `0.95` / `0.05` 门，故方法正式 `rejected`。
+
+逐行诊断确认 11 个漏检全部是配置声明的 `3.0m` clone：`inv(T_ego) @ (T_ego @ T_offset)` 后 raw forward feature 变成 `3.00000000000011–3.00000000000045`，严格 `<=3.0` 比较失败；没有其他 hazard 漏检，也没有 false brake。H-PT2-003 只在 policy raw feature 写入前按 9 位小数 canonicalize（`1e-9m`），label 仍按未取整 signed clearance 计算；该尺度高于浮点漂移、但比最小候选阈值间隔小至少九个数量级。不得改样本、offset、threshold grid、label 或质量门。以后由声明变换生成的控制量必须把表示 canonicalization 与方法容差分开冻结。

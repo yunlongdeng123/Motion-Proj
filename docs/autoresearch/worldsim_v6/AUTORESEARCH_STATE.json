@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T13:35:00Z",
+  "updated_at_utc": "2026-08-21T13:39:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 28,
+  "iteration": 29,
   "active_task": "WS-V6-PT2-RISK-POLICY-01",
-  "active_hypothesis": "WS-V6-H-PT2-002",
-  "candidate": "raw_relative_feature_verified_edit_risk_policy",
+  "active_hypothesis": "WS-V6-H-PT2-003",
+  "candidate": "canonicalized_raw_relative_feature_risk_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "f272e283afed0f32f1c32fb1eca76027261a4ff90a71f8e2317e6880a9730df7",
+  "dev_artifact_hash": "fa551ac51cb421ef25cb83acc9a699d926e0f1d14a0a4fd84f0011a580d7f01a",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "0c2a38a889197845666cd695c276a9edeaf527257e4ebf6af583f07b745c8654",
-  "last_reflection_id": "WS-V6-REFL-0030",
+  "failure_ledger_sha256": "dcf208f6139daabed36aa95a14e7574e9d1bb05050e0de3b76643f8150a435f0",
+  "last_reflection_id": "WS-V6-REFL-0031",
   "last_completed": {
     "task_id": "WS-V6-PT2-RISK-POLICY-01",
-    "run": "run://worldsim_v6/WS-V6-PT2-RISK-POLICY-01/20260821T133158Z__risk-policy-s20260821-r1",
-    "artifact_sha256": "f272e283afed0f32f1c32fb1eca76027261a4ff90a71f8e2317e6880a9730df7"
+    "run": "run://worldsim_v6/WS-V6-PT2-RISK-POLICY-01/20260821T133626Z__risk-policy-s20260821-r1",
+    "artifact_sha256": "fa551ac51cb421ef25cb83acc9a699d926e0f1d14a0a4fd84f0011a580d7f01a"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -55,7 +55,8 @@
     "r13_worldsim_bounded_scope": "done_accepted_development",
     "pt1_regression_test_utility": "done_accepted_development_independent_scene",
     "pt2_signed_clearance_policy_h001": "done_diagnostic_rejected_feature_leakage",
-    "pt2_small_risk_policy_post_training": "active_pre_registered_raw_relative_features",
+    "pt2_raw_relative_policy_h002": "done_rejected_numeric_boundary_drift",
+    "pt2_small_risk_policy_post_training": "active_pre_registered_numeric_canonicalization",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -64,8 +65,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_three_fixed_data_arms_using_raw_relative_position_only",
-    "require_v6_false_safe_reduction_vs_both_real_only_and_naive_on_scene0255",
-    "accept_reject_or_mutate_without_reintroducing_verifier_decision_features"
+    "rerun_raw_relative_policy_with_1e_minus_9_meter_feature_canonicalization",
+    "retain_original_scene0255_metric_and_incremental_gain_gates",
+    "accept_reject_without_changing_rows_labels_or_threshold_grid"
   ]
 }

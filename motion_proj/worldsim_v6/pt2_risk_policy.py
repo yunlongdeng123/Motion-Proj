@@ -141,6 +141,7 @@ def _scene_rows(
     geom = config["geometry"]
     ego_half = (0.5 * float(geom["ego_length_m"]), 0.5 * float(geom["ego_width_m"]))
     actor_size = np.asarray([geom["default_actor_length_m"], geom["default_actor_width_m"]], dtype=float)
+    decimals = int(config["training"].get("feature_canonicalization_decimals", 15))
     real_rows: list[dict[str, Any]] = []
     synthetic_rows: list[dict[str, Any]] = []
     for frame in sorted(poses):
@@ -152,7 +153,8 @@ def _scene_rows(
         clean_label = int(clean <= 0.0)
         real_rows.append(
             {"scene": spec["scene"], "frame": frame, "case_type": "logged_clean", "signed_clearance_m": clean,
-             "abs_forward_m": clean_forward, "abs_lateral_m": clean_lateral,
+             "abs_forward_m": round(clean_forward, decimals),
+             "abs_lateral_m": round(clean_lateral, decimals),
              "hazard_label": clean_label, "label_source": "logged_actor_geometry"}
         )
         for offset in geom["synthetic_clone_forward_offsets_m"]:
@@ -178,7 +180,8 @@ def _scene_rows(
             synthetic_rows.append(
                 {"scene": spec["scene"], "frame": frame, "case_type": "typed_actor_clone",
                  "clone_forward_offset_m": float(offset), "signed_clearance_m": edited_clearance,
-                 "abs_forward_m": edited_forward, "abs_lateral_m": edited_lateral,
+                 "abs_forward_m": round(edited_forward, decimals),
+                 "abs_lateral_m": round(edited_lateral, decimals),
                  "hazard_label": int(edited_clearance <= 0.0), "stale_naive_label": clean_label,
                  "label_source": "recomputed_projected_aabb_dependency"}
             )
