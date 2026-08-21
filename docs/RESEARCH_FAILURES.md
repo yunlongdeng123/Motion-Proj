@@ -3539,3 +3539,9 @@ H-PT3-006 canonical run `20260821T140847Z__factorized-policy-training-s20260821-
 H-PT6-001 canonical run `20260821T142626Z__compositional-risk-s20260821-r1` 在 scene0450 的 784 个双 clone episodes 上，用同一 frozen per-actor policy 对 logged actors 与两 clone 做 Boolean OR。V6 balanced accuracy/false-safe/completion 为 `1.0/0/1.0`；Real-only 为 `0.5/1.0/1.0`；naive 为 `0.52211/0.08844/0.13265`。V6 的全部绝对质量门通过，但相对 naive 的 false-safe reduction 最大只能是 `0.08844`，无法达到从 single-clone task 继承的 `0.50`，所以 H-PT6-001 仍正式 `rejected`。
 
 naive 并未获得可用策略，而是 set OR 后以 `86.73%` false-brake 换取较低 false-safe。H-PT6-002 不追认旧 run，保持 frozen policy、scene、episode、label 和绝对门不变，预注册 paired Pareto gate：V6 对每个 baseline 的 false-safe 不更差、completion 不更差，并且 balanced accuracy 至少高 `0.20`。以后 actor-set policy 不得只用某一风险轴的下降评价会全刹车的 baseline。
+
+### V6-F51：multi-actor development 的完美结果未在 one-shot confirmation 保持 false-safe
+
+H-PT7-001 canonical run `20260821T143359Z__compositional-risk-confirmation-s20260821-r1` 在 attempt 先于质量读取、policy 与 H-PT6-002 gate 均冻结、scene0862 与八个 clone case tuples 全新的合同下，评估 784 个双 clone episodes。V6 balanced accuracy `0.92333`、safe-route completion `1.0`，且仍 Pareto 支配两基线；但 600 个 hazard 中漏掉 92 个，false-safe `0.15333`，超过冻结的 `0.10` 绝对门，因此 one-shot confirmation 正式 `rejected` 并消费。
+
+不得用 scene0862 的漏检分布为该 multi-actor candidate 调 policy、case、threshold 或 gate，也不得用其余 Pareto checks 通过覆盖 false-safe failure。该 family 关闭。后续 H-PT8-001 来自此前一直显式保留的 `ABSTAIN_NO_LONGITUDINAL_CONTROLLER`，使用预注册 kinematic scenario grid 开始独立的 closed-loop utility family，不读取 PT7 badcase 生成参数。
