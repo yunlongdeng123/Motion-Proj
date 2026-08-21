@@ -46,6 +46,19 @@ def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.nda
 
         lightning_stub.seed_everything = seed_everything
         sys.modules["pytorch_lightning"] = lightning_stub
+    # 官方归档混入了训练期 ModelCheckpoint；以无行为占位类满足安全反序列化。
+    checkpoint_type = type(
+        "ModelCheckpoint",
+        (),
+        {"__module__": "pytorch_lightning.callbacks.model_checkpoint"},
+    )
+    callbacks_stub = types.ModuleType("pytorch_lightning.callbacks")
+    model_checkpoint_stub = types.ModuleType("pytorch_lightning.callbacks.model_checkpoint")
+    model_checkpoint_stub.ModelCheckpoint = checkpoint_type
+    callbacks_stub.model_checkpoint = model_checkpoint_stub
+    sys.modules.setdefault("pytorch_lightning.callbacks", callbacks_stub)
+    sys.modules.setdefault("pytorch_lightning.callbacks.model_checkpoint", model_checkpoint_stub)
+    torch.serialization.add_safe_globals([checkpoint_type])
     sys.path.insert(0, str(source))
     from saicinpainting.training.modules import make_generator
 

@@ -3211,6 +3211,18 @@ R8 第二轮正式目录 `20260821T104107Z__frozen-generator-s20260821-r1` 中�
 以后第三方训练 checkpoint 的推理入口必须默认最小反序列化面，训练回调、优化器和日志对象不得成为
 部署环境的隐式依赖。
 
+### V6-F19：weights-only 仍需显式白名单化归档中的非张量全局类型
+
+R8 第三轮正式目录 `20260821T104241Z__frozen-generator-s20260821-r1` 中，Big-LaMa 的
+`weights_only=True` 正确拒绝了归档内未白名单化的
+`pytorch_lightning.callbacks.model_checkpoint.ModelCheckpoint`；SD-v1.5 再次完整通过，但
+双候选执行门仍未满足，所以该轮保持 `rejected`。这不是显存或模型能力失败。
+
+修复为该精确全局名注册无方法、无训练行为的占位类型，并只把该类型加入 PyTorch safe globals；
+checkpoint 继续以 `weights_only=True` 读取，后续仍只消费 `state_dict`。不引入 Lightning 训练栈，
+不执行 callback，也不改变任何正式实验变量。若归档再暴露未预注册类型则继续 fail-closed，禁止切回
+不受限反序列化来绕过门控。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
