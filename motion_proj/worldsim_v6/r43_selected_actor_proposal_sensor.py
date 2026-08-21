@@ -122,7 +122,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "--repo-root", str(repo_root), "--checkpoint", str(checkpoint), "--upstream-root", str(upstream),
             "--package", str(package), "--frames", str(config["cohort"]["frame_index"]),
             "--actor-model-index", str(config["cohort"]["actor_model_index"]),
-            "--translation-delta-m", ",".join(str(value) for value in delta), "--output", str(worker_dir),
+            f"--translation-delta-m={','.join(str(value) for value in delta)}", "--output", str(worker_dir),
         ]
         completed = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, timeout=float(config["resources"]["maximum_worker_seconds"]))
         (run_dir / f"{proposal['proposal_id']}.log").write_text(completed.stdout + "\n--- STDERR ---\n" + completed.stderr, encoding="utf-8")
@@ -223,4 +223,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

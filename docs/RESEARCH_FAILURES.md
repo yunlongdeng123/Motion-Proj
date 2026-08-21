@@ -3641,3 +3641,9 @@ H-R41-001 首次正式启动在创建 run directory 或读取任何冻结 artifa
 H-R41-001 第二次正式启动已进入 source verification，但在创建 run directory 或读取 factor decision rows 前拒绝 R37 `MANIFEST.json`。诊断显示配置值第 38 个字符误抄为 `f`：`...e8f42f5946...`，实际冻结 SHA256 为 `...e8f42c5946...`；两者长度均为 64，因此肉眼概览未能发现单字符漂移。源 artifact 本身未改变。
 
 不得跳过或放宽 `_verify`。修复只把 R37 manifest digest 的错误字符改为实际 `c`，其余 R37/R38/R40 hashes、interventions、factor decisions、fusion contract、资源与 claim boundary 全部冻结不变。新 commit/push 后仍按 H-R41-001 重跑，第二次启动不具 canonical authority。
+
+### V6-F68：负值向量 CLI 参数必须用 `--option=value` 绑定，避免 argparse 将其解释为新选项
+
+H-R43-001 首个 formal run `20260821T175434Z__selected-sensor-s20260821-r1` 已完成全部 source/proposal 绑定并创建 run，但 native worker 在加载 checkpoint 前以 rc=2 退出。日志明确为 `argument --translation-delta-m: expected one argument`：选中 proposal 以负数开头的字符串 `-1.0,0.0,-0.5` 被 argparse 解释成新的 option；此前 R37 的正值向量没有暴露这个入口问题。run 只有 failed `TERMINAL.json` 与 worker log，没有 sensor 或 gate。
+
+修复仅把调用形式从两个 argv token `--translation-delta-m`, `<negative-vector>` 改为单 token `--translation-delta-m=<negative-vector>`。不得修改 R42 proposal、translation、renderer worker、任何 sensor threshold、GPU 预算或 claim boundary。该错误不否定 H-R43-001；必须在新 commit/push 后按原假设重试，首 run 永不追认为 canonical。
