@@ -260,7 +260,11 @@ def _balanced_accuracy(labels: np.ndarray, predictions: np.ndarray) -> float:
 def _fit_policy(
     rows: list[dict[str, Any]], label_key: str, training: Mapping[str, Any]
 ) -> dict[str, Any]:
-    if training.get("policy_family") == "factorized_logistic_raw_box_geometry":
+    policy_family = training.get("policy_family")
+    if policy_family in {
+        "factorized_logistic_raw_box_geometry",
+        "factorized_linear_svm_raw_box_geometry",
+    }:
         prefix = "stale_naive_" if label_key == "stale_naive_label" else ""
         forward_features = np.asarray(
             [[row["abs_forward_m"], row["projected_half_forward_m"]] for row in rows],
@@ -276,14 +280,23 @@ def _fit_policy(
         lateral_labels = np.asarray(
             [row[f"{prefix}lateral_overlap_label"] for row in rows], dtype=int
         )
-        forward_head = _fit_logistic_head(forward_features, forward_labels, training)
-        lateral_head = _fit_logistic_head(lateral_features, lateral_labels, training)
+        head_fitter = (
+            _fit_linear_svm_head
+            if policy_family == "factorized_linear_svm_raw_box_geometry"
+            else _fit_logistic_head
+        )
+        forward_head = head_fitter(forward_features, forward_labels, training)
+        lateral_head = head_fitter(lateral_features, lateral_labels, training)
         predictions = _predict_logistic_head(forward_head, forward_features) & _predict_logistic_head(
             lateral_head, lateral_features
         )
         labels = np.asarray([row[label_key] for row in rows], dtype=int)
         return {
-            "policy_type": "factorized_logistic",
+            "policy_type": (
+                "factorized_linear_svm"
+                if policy_family == "factorized_linear_svm_raw_box_geometry"
+                else "factorized_logistic"
+            ),
             "forward_head": forward_head,
             "lateral_head": lateral_head,
             "train_balanced_accuracy": _balanced_accuracy(labels, predictions.astype(int)),
@@ -392,11 +405,50 @@ def _predict_logistic_head(head: Mapping[str, Any], features: np.ndarray) -> np.
     return design @ weights >= 0.0
 
 
+def _fit_linear_svm_head(
+    features: np.ndarray, labels: np.ndarray, training: Mapping[str, Any]
+) -> dict[str, Any]:
+    classes = np.unique(labels)
+    if len(classes) == 1:
+        return {"head_type": "constant", "constant_prediction": int(classes[0])}
+    from sklearn.svm import LinearSVC
+
+    mean = features.mean(axis=0)
+    scale = features.std(axis=0)
+    scale[scale < 1e-9] = 1.0
+    normalized = (features - mean) / scale
+    # 最大间隔目标直接惩罚边界内样本；类别权重只由训练标签确定。
+    classifier = LinearSVC(
+        C=float(training["svm_c"]),
+        class_weight="balanced",
+        dual=False,
+        fit_intercept=True,
+        max_iter=int(training["svm_max_iter"]),
+        tol=float(training["svm_tol"]),
+    )
+    classifier.fit(normalized, labels)
+    weights = np.concatenate(
+        [classifier.coef_.reshape(-1), classifier.intercept_.reshape(-1)]
+    )
+    design = np.concatenate([normalized, np.ones((len(normalized), 1))], axis=1)
+    predictions = (design @ weights >= 0.0).astype(int)
+    return {
+        "head_type": "linear_svm",
+        "mean": mean.tolist(),
+        "scale": scale.tolist(),
+        "weights": weights.tolist(),
+        "svm_c": float(training["svm_c"]),
+        "svm_n_iter": int(np.asarray(classifier.n_iter_).reshape(-1).max()),
+        "train_balanced_accuracy": _balanced_accuracy(labels, predictions),
+        "train_positive_fraction": float(labels.mean()),
+    }
+
+
 def _evaluate(model: Mapping[str, Any], rows: list[dict[str, Any]]) -> dict[str, Any]:
     labels = np.asarray([row["hazard_label"] for row in rows], dtype=int)
     if model["policy_type"] == "constant":
         predictions = np.full_like(labels, int(model["constant_hazard_prediction"]))
-    elif model["policy_type"] == "factorized_logistic":
+    elif model["policy_type"] in {"factorized_logistic", "factorized_linear_svm"}:
         forward_features = np.asarray(
             [[row["abs_forward_m"], row["projected_half_forward_m"]] for row in rows],
             dtype=float,

@@ -3521,3 +3521,9 @@ H-PT3-003 canonical run `20260821T135421Z__factorized-policy-training-s20260821-
 H-PT3-004 canonical run `20260821T135942Z__factorized-policy-training-s20260821-r1` 在 23,520 条 multi-size/multi-yaw train interventions 与 8,820 条完全离散 heldout interventions 上运行。V6 把 false-safe 从 Real-only 的 `0.97133`、naive 的 `1.0` 降至 `0.14821`，但 balanced accuracy `0.85613`、safe-route completion `0.86047`，仍未通过冻结的 `0.90/0.10/0.90` 门，因此正式 `rejected`。
 
 训练的 lateral factor 正例比例为 `0.88174`，原始 unweighted BCE 按出现频率主导梯度，与 task 从一开始冻结的 balanced accuracy/false-safe/completion 三目标不一致；这会同时留下 `14.82%` false-safe 与 `13.95%` false brake。H-PT3-005 保持场景、position/size/yaw 分母、raw feature、标签、三臂、步数和所有 gate 不变，只让每个 factor head 的正负类别在 BCE 梯度中各占一半。不得通过调决策阈值、改 heldout 或放宽门来恢复。
+
+### V6-F48：类别平衡 BCE 不是可分 factor boundary 的充分机制
+
+H-PT3-005 canonical run `20260821T140408Z__factorized-policy-training-s20260821-r1` 只把两个 logistic factor heads 改为正负类别总权重各半，其余数据、特征、三臂和 gate 均不变。V6 heldout balanced accuracy 降为 `0.82294`，false-safe 升为 `0.24746`，completion 为 `0.89334`；naive false-safe 也由 `1.0` 变为 `0.67863`，导致相对 naive 的 reduction 只有 `0.43116`。所有冻结质量门仍未通过，正式 `rejected`。
+
+两个 V6 head 的 train balanced accuracy 仍只有 `0.97503/0.96014`，说明仅重加权有限步 smooth BCE 并没有形成稳定分离 margin；它改变了错误权衡，却没有消除训练边界错误。H-PT3-006 保持相同 denominator、raw feature 和原 gate，改用 deterministic class-balanced linear max-margin heads，并保留两 head AND。不得再通过类别权重或阈值扫描恢复。
