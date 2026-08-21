@@ -22,6 +22,7 @@ sources:
   streetgs_config_sha256: c8fa185036eb2b5ae8b6b4767daabb3688a678787769c86f827c2b3830ffe7a9
   streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
   streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
 cohort:
   partition: development_scene0242_frame98_same_frontend_logged_lidar
   frame_index: 98
@@ -54,6 +55,7 @@ interventions:
     expected_lidar_contact_decision: ACCEPT
 resources:
   gpu: none
+  maximum_support_worker_seconds: 120
   maximum_wall_seconds: 180
   minimum_disk_free_gib: 10
 claim_boundary:

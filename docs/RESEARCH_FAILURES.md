@@ -3680,3 +3680,9 @@ H-R53-001 第二次正式启动 `20260821T185611Z__lifecycle-perception-s2026082
 H-R59-001 canonical run `20260821T192557Z__actor2-interaction-s20260821-r1` 将 R58 已通过 native renderer 的 `[-1,0,-0.5]m` translation 应用于 actor2 的完整196帧轨迹。self-kinematics 精确保持，最大 velocity/acceleration invariance error 仅 `8.88e-15/1.78e-13`；但相对 logged baseline 新增7个 AABB overlap events：actor0 在5.3--5.6s共4个，actor5 在6.2--6.4s共3个。因此 interaction factor 正式 `REJECT`，renderer conformance 不能提升为 edit validity。
 
 不得删除发生 overlap 的帧、放宽 AABB gate、用删除4个旧 overlap 抵消新增7个，或因为 R58 sensor 通过就覆盖 R59。H-R60-001 保留 R58/R59 与完整27 actor x196帧 denominator，冻结 x/z 各 `[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]m` 的80个非零 translation 网格，逐候选要求 self-kinematics ACCEPT 且新增 overlap 为0；按与被拒候选的距离、再按字典序选择最近可接受方案。contact、road、physics 与 safety 继续 ABSTAIN。
+
+### V6-F75：StreetGS 数据 support 提取必须由拥有完整前端依赖的冻结环境执行
+
+H-R62-001 首次正式启动 `20260821T194222Z__actor2-lidar-contact-s20260821-r1` 在读取任何 frame98 support 或产生 contact decision 前失败，`TERMINAL.json` SHA256 为 `592ba630ce84d996ff478b7314a12bfe1d5e0aedb0762bc7270e99ceaa7565d7`。主实验从通用 `motionproj` 环境直接导入冻结 StreetGS `DrivingDataset`，其模型依赖链要求 `pytorch3d`，该环境未安装，因此抛出 `ModuleNotFoundError: No module named 'pytorch3d'`。这属于环境 ownership plumbing，不构成 contact 方法结果。
+
+修复新增隔离的 LiDAR support worker，并用配置中冻结的 DriveStudio Python 环境执行两次 frame98 三相机提取；主实验只读取两个 worker artifact、核验逐数组 repeat-exact 后运行原 contact evaluator。不得改变 R60 proposal、R61/R56/R40 authority、frame98、13,490 primitive denominator、动态像素排除、R40 quantile/radius/0.35m 阈值、预期 ACCEPT 方向、资源上限或 claim boundary。新 commit/push 后按原 H-R62-001 重试，首次启动不具 canonical authority。

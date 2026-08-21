@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
-import sys
+import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -40,27 +40,9 @@ def _array_bundle_sha256(values: dict[str, np.ndarray]) -> str:
     return digest.hexdigest()
 
 
-def _extract_support(config_path: Path, upstream: Path, frame_index: int, camera_ids: list[int], downscale: int) -> dict[str, np.ndarray]:
-    # 只加载冻结数据集，不实例化或训练渲染模型。
-    run_root = config_path.parent
-    backup = run_root / "backup"
-    sys.path.insert(0, str(backup))
-    sys.path.append(str(upstream))
-    from datasets.driving_dataset import DrivingDataset
-    from omegaconf import OmegaConf
-
-    cfg = OmegaConf.load(config_path)
-    cfg.data.preload_device = "cpu"
-    dataset = DrivingDataset(data_cfg=cfg.data)
-    support: dict[str, np.ndarray] = {}
-    for camera_id in camera_ids:
-        image_infos, camera_infos = dataset.full_image_set.get_image(frame_index * len(camera_ids) + camera_id, downscale)
-        prefix = f"cam{camera_id}"
-        support[f"{prefix}_lidar_depth"] = image_infos["lidar_depth_map"].detach().cpu().numpy().astype(np.float32)
-        support[f"{prefix}_dynamic_mask"] = image_infos["dynamic_masks"].detach().cpu().numpy().astype(bool)
-        support[f"{prefix}_intrinsics"] = camera_infos["intrinsics"].detach().cpu().numpy().astype(np.float32)
-        support[f"{prefix}_camera_to_world"] = camera_infos["camera_to_world"].detach().cpu().numpy().astype(np.float32)
-    return support
+def _load_support(path: Path) -> dict[str, np.ndarray]:
+    with np.load(path, allow_pickle=False) as values:
+        return {name: np.asarray(values[name]) for name in values.files}
 
 
 def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
@@ -118,11 +100,26 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     try:
         cohort = config["cohort"]
         camera_ids = [int(value) for value in cohort["camera_ids"]]
-        support_1 = _extract_support(streetgs_config, upstream, int(cohort["frame_index"]), camera_ids, int(cohort["camera_downscale"]))
-        support_2 = _extract_support(streetgs_config, upstream, int(cohort["frame_index"]), camera_ids, int(cohort["camera_downscale"]))
+        support_path_1 = run_dir / "LIDAR_SUPPORT_FRAME098_REPEAT1.npz"
+        support_path_2 = run_dir / "LIDAR_SUPPORT_FRAME098_REPEAT2.npz"
+        worker = repo_root / "scripts/worldsim_v6/r62_lidar_support_worker.py"
+        worker_logs = []
+        for output_path in (support_path_1, support_path_2):
+            command = [
+                sources["drivestudio_python"], str(worker),
+                "--streetgs-config", str(streetgs_config), "--upstream-root", str(upstream),
+                "--frame-index", str(cohort["frame_index"]),
+                "--camera-ids", ",".join(str(value) for value in camera_ids),
+                "--camera-downscale", str(cohort["camera_downscale"]), "--output", str(output_path),
+            ]
+            completed = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, timeout=float(config["resources"]["maximum_support_worker_seconds"]))
+            worker_logs.append(completed.stdout + "\n--- STDERR ---\n" + completed.stderr)
+            if completed.returncode != 0:
+                raise R62ExperimentError(f"LiDAR support worker 失败：rc={completed.returncode}")
+        (run_dir / "support_worker.log").write_text("\n=== REPEAT ===\n".join(worker_logs), encoding="utf-8")
+        support_1 = _load_support(support_path_1)
+        support_2 = _load_support(support_path_2)
         support_repeat_exact = _array_bundle_sha256(support_1) == _array_bundle_sha256(support_2)
-        support_path = run_dir / "LIDAR_SUPPORT_FRAME098.npz"
-        np.savez_compressed(support_path, **support_1)
         lidar_points = _lift_static_lidar(support_1, int(cohort["camera_count"]))
 
         geometry = json.loads(geometry_path.read_text(encoding="utf-8"))
@@ -159,7 +156,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         status = "done" if checks["passed"] else "rejected"
         _write_json(run_dir / "R62_GATE.json", {"schema_version": "worldsim_v6.r62_gate.v1", "checks": checks, "decision": "accept_selected_second_actor_logged_lidar_contact" if checks["passed"] else "reject_or_repair_selected_second_actor_lidar_contact"})
         _write_json(run_dir / "RESOURCE_AUDIT.json", {"schema_version": "worldsim_v6.r62_resource_audit.v1", "gpu_used": False, "wall_seconds": wall_seconds, "disk_free_gib_at_start": free_gib, "training_started": False, "confirmation_content_read": False})
-        _write_json(run_dir / "SUPPORT_AUDIT.json", {"schema_version": "worldsim_v6.r62_support_audit.v1", "frame_index": int(cohort["frame_index"]), "camera_ids": camera_ids, "support_array_sha256": _array_bundle_sha256(support_1), "support_repeat_exact": support_repeat_exact, "static_lidar_point_count": int(lidar_points.shape[0]), "support_file_sha256": _sha256(support_path)})
+        _write_json(run_dir / "SUPPORT_AUDIT.json", {"schema_version": "worldsim_v6.r62_support_audit.v1", "frame_index": int(cohort["frame_index"]), "camera_ids": camera_ids, "support_array_sha256": _array_bundle_sha256(support_1), "support_repeat_exact": support_repeat_exact, "static_lidar_point_count": int(lidar_points.shape[0]), "support_file_sha256": [_sha256(support_path_1), _sha256(support_path_2)]})
         _write_json(run_dir / "SUMMARY.json", {
             "schema_version": "worldsim_v6.r62_summary.v1", "task_id": TASK_ID, "hypothesis_id": config["hypothesis_id"], "status": status,
             "hypothesis_outcome": "accepted_development_selected_second_actor_logged_lidar_contact" if checks["passed"] else "rejected", "source_commit": source_commit,
@@ -168,7 +165,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "logged_contact_decision": rows_1[0]["q_lidar_contact"], "selected_contact_decision": rows_1[1]["q_lidar_contact"],
             "semantic_road": "ABSTAIN", "physical_trajectory_validity": "ABSTAIN", "claim_boundary": config["claim_boundary"],
         })
-        tracked = ["R62_GATE.json", "SUMMARY.json", "LIDAR_CONTACT_DECISIONS.jsonl", "LIDAR_SUPPORT_FRAME098.npz", "SUPPORT_AUDIT.json", "RESOURCE_AUDIT.json"]
+        tracked = ["R62_GATE.json", "SUMMARY.json", "LIDAR_CONTACT_DECISIONS.jsonl", "LIDAR_SUPPORT_FRAME098_REPEAT1.npz", "LIDAR_SUPPORT_FRAME098_REPEAT2.npz", "SUPPORT_AUDIT.json", "RESOURCE_AUDIT.json", "support_worker.log"]
         _write_json(run_dir / "MANIFEST.json", {"schema_version": "worldsim_v6.r62_manifest.v1", "files": {name: {"bytes": (run_dir / name).stat().st_size, "sha256": _sha256(run_dir / name)} for name in tracked}})
         _write_json(run_dir / "TERMINAL.json", {"schema_version": "worldsim_v6.terminal.v1", "status": status, "manifest_sha256": _sha256(run_dir / "MANIFEST.json"), "summary_sha256": _sha256(run_dir / "SUMMARY.json")})
         print(str(run_dir), flush=True)

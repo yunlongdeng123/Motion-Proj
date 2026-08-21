@@ -1,21 +1,21 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T19:38:19Z",
+  "updated_at_utc": "2026-08-21T19:44:40Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 100,
+  "iteration": 101,
   "active_task": "WS-V6-R62-SELECTED-SECOND-ACTOR-LIDAR-CONTACT-01",
   "active_hypothesis": "WS-V6-H-R62-001",
-  "candidate": "factor_selected_second_actor_logged_lidar_contact",
+  "candidate": "factor_selected_second_actor_logged_lidar_contact_isolated_worker_retry",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "23ecefc39d4f1af497021008d5792140eef3b414aab253b4a8aaa4c7974e4ffa",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "d7f790a958e9b34784f0c22e4949999e5259e4cc5fb4e9d8ed67dcc8d132e65c",
-  "last_reflection_id": "WS-V6-REFL-0102",
+  "failure_ledger_sha256": "87ae6fe5dae63223cea4330a4c1579c5249b43d31090057be252c7a5e76cf6fc",
+  "last_reflection_id": "WS-V6-REFL-0103",
   "last_completed": {
     "task_id": "WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01",
     "run": "run://worldsim_v6/WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01/20260821T193625Z__selected-actor2-sensor-s20260821-r1",
@@ -121,7 +121,7 @@
     "r59_second_actor_interaction_factor": "done_rejected_v6_f74_7_new_aabb_overlaps",
     "r60_second_actor_proposal_search": "done_accepted_development_12_of_80_selected_minus_x",
     "r61_selected_second_actor_sensor": "done_accepted_development_21401_changed_pixels",
-    "r62_selected_second_actor_lidar_contact": "active_pre_registered",
+    "r62_selected_second_actor_lidar_contact": "active_retry_v6_f75_isolated_drivestudio_support_worker",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -130,8 +130,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "extract_frame98_three_camera_logged_lidar_from_frozen_streetgs_dataset",
-    "evaluate_logged_and_r60_selected_actor2_contact_with_frozen_r40_protocol",
-    "accept_or_record_failure_then_search_contact_aware_proposals"
+    "retry_unchanged_r62_with_support_extraction_owned_by_frozen_drivestudio_environment",
+    "require_two_support_worker_artifacts_to_be_array_exact",
+    "then_evaluate_logged_and_r60_selected_actor2_contact_with_frozen_r40_protocol"
   ]
 }
