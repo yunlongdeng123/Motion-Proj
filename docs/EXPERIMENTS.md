@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6 R1 capability audit 完成；R2 解锁（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T080610Z__r1-capability-s0-r1`，
+  source=`d981df7fdde5458eb3878193c4a76f6dcf926ad4`，config SHA=`6d576728...dfb`，local capability
+  SHA=`5b58e018...641`，matrix/summary/manifest/terminal SHA=
+  `dd101206...957 / 2025b5f9...9c / 0c8b40a6...035 / 4ed40819...da7`。
+- optimization：StreetGS=`executable`、AD-GS=`executable`，两者各有 `6` 场 exact checkpoint；CityGS 与
+  LiHi-GS=`unavailable/not local`。feed-forward：ReconDrive=`adaptable`、TokenGS=`adaptable`、DGGT=
+  `adaptable_from_frozen_outputs`；Instant NuRec=`audit_only`。
+- ReconDrive exact checkout=`d2bc397b724d6cc021da22f8f57ad6af1cc53e3c`，公开 stage-2 checkpoint probe=
+  `4,595,424,264 bytes / HF revision 64a40402...09d7`。当前 native 12 Hz input、local env 和 local weight
+  缺失，因此 R1 只选择它作为 primary adapter target，不宣称 inference 已跑。TokenGS exact=
+  `b16269c500a8894cda342bc9cf406e31169541e3`，需 driving camera/domain adapter。
+- gate=`2 optimization executable AND 3 feed-forward executable/adaptable`，PASS；全程没有质量读取、训练或推理。
+  首个 `20260821T081500Z__r1-capability-s0-r1` 为 dirty-source 非 canonical 实例，不参与 closeout，见 `V6-F05`。
+- tests=`11 passed`；next=`WS-V6-R2-SCENEIR-V0-01`，先冻结 frontend-neutral schema、round-trip 与 negative tests。
+
 ## WorldSim V6 G3 分支与控制面初始化完成；R1 启动（2026-08-21）
 
 - `WS-V6-G3-BRANCH-BOOTSTRAP-01=done`：从 `origin/main@e028c862da494d6fe85f6062eb231a80e9812978`

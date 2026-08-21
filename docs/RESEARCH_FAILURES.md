@@ -63,7 +63,7 @@
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
-| V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；当前 G0/G1 完成、G2 integration gate 通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout | `V6-F01`–`V6-F04`；G0/G1/G2 governance artifacts；V6 plan |
+| V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 
 ### 1.1 V1 汇总条目
 
@@ -156,6 +156,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   或 gate，只把该 exact terminal commit/hash 加入 fail-closed allowlist，并把回归期望指向 terminal hash；任何未知第四种
   状态仍拒绝。禁止用“任意后继 commit”或跳过 hash 来救测试。证据=`WS-V6-G2-BRANCH-CONVERGENCE-01`、
   `tests/test_worldsim_v51_protocol.py=9 passed`。
+- `V6-F05`（`engineering/provenance`, `resolved with noncanonical run retained`）：R1 首个实例
+  `20260821T081500Z__r1-capability-s0-r1` 在 capability runner/config/tests 仍未提交时执行，summary 如实记录
+  `source_dirty=true`；手工指定的目录时间标签还晚于真实完成时间。其能力事实虽通过，但不能作为 canonical closeout，旧目录
+  保留且不覆盖。修复是在 runner 创建 run 前读取 `git status --porcelain`，dirty 即 fail-closed；先提交
+  `d981df7fdde5458eb3878193c4a76f6dcf926ad4`，再由 runner 自动生成真实 UTC 标签的新实例
+  `20260821T080610Z__r1-capability-s0-r1`，其 `source_dirty=false`、gate PASS。以后不得用“内容看起来正确”绕过
+  source cleanliness 或手工修正旧 terminal；工程实例与 canonical evidence 必须分开登记。
 
 <a id="detail-v52"></a>
 

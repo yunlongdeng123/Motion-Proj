@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6 R1 capability gate 已通过；R2 SceneIR v0 执行中（2026-08-21）
+
+- `WS-V6-R1-FRONTEND-CAPABILITY-01=done`，canonical run=
+  `run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T080610Z__r1-capability-s0-r1`，source=
+  `d981df7fdde5458eb3878193c4a76f6dcf926ad4`，source dirty=`false`。能力门为
+  optimization executable=`2`、feed-forward executable/adaptable=`3`，因此 R2 已解锁。
+- StreetGS 与 AD-GS 均有可执行环境及 `6` 场 exact checkpoint；ReconDrive/TokenGS 为 `adaptable`，DGGT 可从
+  冻结历史输出适配。主 feed-forward SceneIR 目标固定为 ReconDrive；它已有 exact official checkout 和公开
+  `4,595,424,264-byte` stage-2 权重，但当前仍缺本地 runtime、权重及原生 12 Hz 输入，所以不得写成已执行 inference。
+- CityGS/LiHi-GS 本机不存在；Instant NuRec 维持 `audit_only`，其模型与 licensed NCore V4 输入均不满足。
+  R1 全程 `quality_data_read=false / training=false / inference=false`。canonical matrix SHA-256=
+  `dd10120624c8e33e6a12f6839e40226ced95a456fc80d56cad4c1810f6372957`。
+- 首个 capability run 因 source dirty 且手工时间标签漂移只保留为非 canonical 工程证据；runner 已改为 dirty source
+  fail-closed，见 `V6-F05`。当前 active task=`WS-V6-R2-SCENEIR-V0-01`，仍未登记算法 hypothesis 或质量候选。
+
 ## WorldSim V6 G0–G3 已完成；R1 前端能力审计执行中（2026-08-21）
 
 - route=`WorldSim V6 / Verifiable World Compiler`，status=`researching`，active task=

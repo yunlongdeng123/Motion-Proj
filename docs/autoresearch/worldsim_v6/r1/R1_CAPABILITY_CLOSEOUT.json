@@ -1,0 +1,42 @@
+{
+  "schema_version": "worldsim_v6.r1_closeout.v1",
+  "task_id": "WS-V6-R1-FRONTEND-CAPABILITY-01",
+  "status": "done",
+  "recorded_at_utc": "2026-08-21T08:10:00Z",
+  "canonical_run": "run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T080610Z__r1-capability-s0-r1",
+  "source_commit": "d981df7fdde5458eb3878193c4a76f6dcf926ad4",
+  "source_dirty": false,
+  "config_sha256": "6d5767284a25273991c377340396813f6b66035125ebb197aff29fa343537dfb",
+  "local_manifest_sha256": "5b58e018943fd3bfeedcb500f6af1fd237dffc74517f6f28bfad4ca1d2090641",
+  "artifacts": {
+    "FRONTEND_CAPABILITY_MATRIX.json": "dd10120624c8e33e6a12f6839e40226ced95a456fc80d56cad4c1810f6372957",
+    "ENVIRONMENT_SNAPSHOT.json": "adf2ab80a5913b0e4f09ddddf72efe200c01473b4391c06f5006b841cd50a3d8",
+    "summary.json": "2025b5f93483ffbde189c9093dc5e933724d5745f0104d635b3e95e12728359c",
+    "manifest.json": "0c8b40a6fdca092195c4426c23b70073cb0cfb5a47cfada56e9a889ace55f035",
+    "terminal.json": "4ed4081954e99009a510be2fdd0d72988dd2feecc40357bc1b224caf722b0da7"
+  },
+  "gate": {
+    "optimization_executable": 2,
+    "feed_forward_executable_or_adaptable": 3,
+    "passed": true
+  },
+  "selected": {
+    "optimization_reference": "streetgs",
+    "optimization_cross_frontend": "ad_gs",
+    "primary_feed_forward_adapter": "recondrive",
+    "secondary_schema_reference": "tokengs",
+    "frozen_output_fallback": "dggt",
+    "conditional_audit_only": "instant_nurec"
+  },
+  "noncanonical_runs": [
+    {
+      "run": "run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T081500Z__r1-capability-s0-r1",
+      "reason": "source_dirty_and_manual_timestamp_label_drift",
+      "failure_id": "V6-F05"
+    }
+  ],
+  "quality_data_read": false,
+  "training_started": false,
+  "model_inference_started": false,
+  "next_task": "WS-V6-R2-SCENEIR-V0-01"
+}

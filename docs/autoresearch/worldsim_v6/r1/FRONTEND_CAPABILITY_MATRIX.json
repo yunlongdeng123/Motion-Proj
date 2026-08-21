@@ -1,0 +1,364 @@
+{
+  "frontends": [
+    {
+      "adapter_cost": "low_existing_checkpoint_parser",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [],
+        "checkpoint_count": 6,
+        "env_python_exists": true,
+        "historical_run_count": 0,
+        "input_ready": true,
+        "repo_exact": true,
+        "required_files_complete": true
+      },
+      "candidate_id": "streetgs",
+      "commit": "e59bda4fa681f829dbb1d65f0de582b0f633c450",
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 16000
+      },
+      "input_schema": "DriveStudio nuScenes processed sequence with calibrated cameras and actor tracks",
+      "kind": "optimization",
+      "license": {
+        "checkout_files": [
+          "LICENSE"
+        ],
+        "declared": "MIT",
+        "evidence": "checkout/LICENSE"
+      },
+      "local_status": "executable",
+      "official_source": "https://github.com/ziyc/drivestudio",
+      "output_schema": "Background and RigidNodes Gaussian sets plus per-frame actor transforms",
+      "paper": "Street Gaussians for Modeling Dynamic Urban Scenes",
+      "selected_role": "optimization_sceneir_reference",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "existing_scene_optimized_checkpoints",
+        "remote_available": false
+      }
+    },
+    {
+      "adapter_cost": "medium_ply_deformation_parser",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [],
+        "checkpoint_count": 6,
+        "env_python_exists": true,
+        "historical_run_count": 0,
+        "input_ready": true,
+        "repo_exact": true,
+        "required_files_complete": true
+      },
+      "candidate_id": "ad_gs",
+      "commit": "9a208512e49c8ddbaa20387921d9648adcd21cb4",
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 16000
+      },
+      "input_schema": "AD-GS processed nuScenes images, calibration, depth, semantics and flow priors",
+      "kind": "optimization",
+      "license": {
+        "checkout_files": [],
+        "declared": "not_provided_in_checkout",
+        "evidence": "checkout_audit"
+      },
+      "local_status": "executable",
+      "official_source": "https://github.com/JiaweiXu8/AD-GS",
+      "output_schema": "Gaussian point cloud with B-spline deformation and environment checkpoints",
+      "paper": "AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving",
+      "selected_role": "optimization_cross_frontend_reference",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "existing_scene_optimized_checkpoints",
+        "remote_available": false
+      }
+    },
+    {
+      "adapter_cost": "unknown",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [
+          "exact_source_checkout_missing",
+          "runtime_environment_missing",
+          "executable_checkpoint_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 0,
+        "input_ready": false,
+        "repo_exact": false,
+        "required_files_complete": false
+      },
+      "candidate_id": "citygs",
+      "commit": null,
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 12000
+      },
+      "input_schema": "city-scale calibrated image collection",
+      "kind": "optimization",
+      "license": {
+        "checkout_files": [],
+        "declared": "unknown_not_cloned",
+        "evidence": "local_absence"
+      },
+      "local_status": "unavailable",
+      "official_source": "https://github.com/Linketic/CityGaussian",
+      "output_schema": "partitioned static Gaussian scene",
+      "paper": "CityGaussian",
+      "selected_role": "none",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "none_local",
+        "remote_available": false
+      }
+    },
+    {
+      "adapter_cost": "unknown",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [
+          "exact_source_checkout_missing",
+          "runtime_environment_missing",
+          "executable_checkpoint_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 0,
+        "input_ready": false,
+        "repo_exact": false,
+        "required_files_complete": false
+      },
+      "candidate_id": "lihi_gs",
+      "commit": null,
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 12000
+      },
+      "input_schema": "driving image and LiDAR sequence",
+      "kind": "optimization",
+      "license": {
+        "checkout_files": [],
+        "declared": "unknown_not_cloned",
+        "evidence": "local_absence"
+      },
+      "local_status": "unavailable",
+      "official_source": "unknown_not_locally_registered",
+      "output_schema": "hierarchical driving Gaussian scene",
+      "paper": "LiHi-GS",
+      "selected_role": "none",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "none_local",
+        "remote_available": false
+      }
+    },
+    {
+      "adapter_cost": "medium_sceneir_mapping_and_12hz_input_adapter",
+      "audit": {
+        "base_nuscenes_ready": true,
+        "blockers": [
+          "runtime_environment_missing",
+          "local_weights_missing",
+          "native_input_schema_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 0,
+        "input_ready": false,
+        "repo_exact": true,
+        "required_files_complete": true
+      },
+      "candidate_id": "recondrive",
+      "commit": "d2bc397b724d6cc021da22f8f57ad6af1cc53e3c",
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 24000,
+        "single_gpu_inference": true
+      },
+      "input_schema": "nuScenes trainval plus project-specific interpolated 12 Hz metadata",
+      "kind": "feed_forward",
+      "license": {
+        "checkout_files": [],
+        "declared": "Apache-2.0_in_README",
+        "evidence": "LICENSE_file_missing_at_pinned_commit"
+      },
+      "local_status": "adaptable",
+      "official_source": "https://github.com/TuojingAI/ReconDrive",
+      "output_schema": "per-frame static-dynamic 4D Gaussian dictionaries with color, opacity, scale, rotation and velocity",
+      "paper": "ReconDrive: Fast Feed-Forward 4D Gaussian Splatting for Autonomous Driving Scene Reconstruction",
+      "selected_role": "primary_feed_forward_sceneir_target",
+      "weights": {
+        "artifact": "recondrive_stage2.ckpt",
+        "bytes": 4595424264,
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "public_huggingface_checkpoint",
+        "remote_available": true,
+        "revision": "64a40402e38a6a56b899a14a6d629c7f07b509d7",
+        "source": "https://huggingface.co/TuojingAI/ReconDrive",
+        "upstream_md5": "fd6ed379f136b3c17d0e27a5aec8c0b7"
+      }
+    },
+    {
+      "adapter_cost": "high_driving_camera_and_domain_adapter",
+      "audit": {
+        "base_nuscenes_ready": true,
+        "blockers": [
+          "runtime_environment_missing",
+          "local_weights_missing",
+          "native_input_schema_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 0,
+        "input_ready": false,
+        "repo_exact": true,
+        "required_files_complete": true
+      },
+      "candidate_id": "tokengs",
+      "commit": "b16269c500a8894cda342bc9cf406e31169541e3",
+      "gpu_requirement": {
+        "cuda": "12.6+",
+        "current_host_supported": true,
+        "minimum_vram_mib": 16000
+      },
+      "input_schema": "DL3DV static or Kubric dynamic multi-view images, cameras and input-frame depth",
+      "kind": "feed_forward",
+      "license": {
+        "checkout_files": [
+          "LICENSE"
+        ],
+        "declared": "Apache-2.0",
+        "evidence": "checkout/LICENSE"
+      },
+      "local_status": "adaptable",
+      "official_source": "https://github.com/nv-tlabs/TokenGS",
+      "output_schema": "static and dynamic Gaussian tokens with emergent scene flow",
+      "paper": "TokenGS: Decoupling 3D Gaussian Prediction from Pixels with Learnable Tokens",
+      "selected_role": "secondary_feed_forward_schema_reference",
+      "weights": {
+        "artifact": "checkpoints_26.06/kubric_dyn.safetensors",
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "public_huggingface_safetensors",
+        "remote_available": true,
+        "source": "https://huggingface.co/jiaweir/tokengs"
+      }
+    },
+    {
+      "adapter_cost": "medium_restore_or_parse_frozen_outputs",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [
+          "exact_source_checkout_missing",
+          "required_source_files_missing",
+          "runtime_environment_missing",
+          "local_weights_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 9,
+        "input_ready": true,
+        "repo_exact": false,
+        "required_files_complete": false
+      },
+      "candidate_id": "dggt",
+      "commit": "a3276d2bbe4cbb03bcc117830b1836110a27adeb",
+      "gpu_requirement": {
+        "current_host_supported": true,
+        "minimum_vram_mib": 16000
+      },
+      "input_schema": "one or three unposed nuScenes camera views in an 18-window sequence",
+      "kind": "feed_forward",
+      "license": {
+        "checkout_files": [],
+        "declared": "CC-BY-NC-4.0",
+        "evidence": "frozen_historical_source_audit"
+      },
+      "local_status": "adaptable_from_frozen_outputs",
+      "official_source": "https://github.com/xiaomi-research/dggt",
+      "output_schema": "dynamic 4D reconstruction tensors and rendered target views",
+      "paper": "DGGT: Feedforward 4D Reconstruction of Dynamic Driving Scenes using Unposed Images",
+      "selected_role": "fallback_feed_forward_frozen_output_adapter",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "public_model_previously_executed_then_cleaned",
+        "remote_available": true,
+        "revision": "735ac9a6486057b1eb886c33a8c6dc79e0b43214"
+      }
+    },
+    {
+      "adapter_cost": "high_license_input_and_export_scope_gap",
+      "audit": {
+        "base_nuscenes_ready": false,
+        "blockers": [
+          "model_checkpoint_missing",
+          "licensed_input_contract_missing"
+        ],
+        "checkpoint_count": 0,
+        "env_python_exists": false,
+        "historical_run_count": 0,
+        "input_ready": false,
+        "repo_exact": true,
+        "required_files_complete": true
+      },
+      "candidate_id": "instant_nurec",
+      "commit": "1ce2288e646548e61fea6100bc58de3acd4bc8d0",
+      "gpu_requirement": {
+        "current_host_supported": "conditional",
+        "minimum_vram_mib": 24000
+      },
+      "input_schema": "licensed NCore V4 calibrated camera clip",
+      "kind": "audit_only",
+      "license": {
+        "checkout_files": [
+          "LICENSE.txt"
+        ],
+        "declared": "Apache-2.0",
+        "evidence": "checkout/LICENSE.txt"
+      },
+      "local_status": "audit_only",
+      "official_source": "https://github.com/NVIDIA/instant-nurec",
+      "output_schema": "standalone static Gaussian PLY and sky cubemap sidecar; full layered research output is not exported",
+      "paper": "Instant NuRec: Feed-Forward 3D Gaussian Reconstruction from Driving Logs",
+      "selected_role": "none",
+      "weights": {
+        "local_bytes": null,
+        "local_exists": false,
+        "local_sha256": null,
+        "mode": "gated_huggingface_model",
+        "remote_available": false
+      }
+    }
+  ],
+  "gate": {
+    "feed_forward_executable_or_adaptable": 3,
+    "optimization_executable": 2,
+    "passed": true
+  },
+  "gpu": {
+    "available": true,
+    "compute_capability": "8.6",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_vram_mib": 24576
+  },
+  "model_inference_started": false,
+  "quality_data_read": false,
+  "schema_version": "worldsim_v6.frontend_capability_matrix.v1",
+  "task_id": "WS-V6-R1-FRONTEND-CAPABILITY-01",
+  "training_started": false
+}
