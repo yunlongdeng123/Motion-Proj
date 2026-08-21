@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T12:54:00Z",
+  "updated_at_utc": "2026-08-21T13:02:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 22,
+  "iteration": 23,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-009",
-  "candidate": "complete_visible_actor_cohort_factorized_abstention",
+  "active_hypothesis": "WS-V6-H-R13-010",
+  "candidate": "same_scene_sceneir_sensor_actor_binding",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "4bab40b333d1496c55e9d9d7ba34732ff2aa904c9b4e0c139789fb69958b2a54",
+  "dev_artifact_hash": "608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "9db63f597b6f4d49eeea9b378b9d6675eaae963c1bf474d3367f4deddb1763a0",
-  "last_reflection_id": "WS-V6-REFL-0024",
+  "last_reflection_id": "WS-V6-REFL-0025",
   "last_completed": {
     "task_id": "WS-V6-R13-WORLDSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125151Z__single-actor-perception-s20260821-r1",
-    "artifact_sha256": "4bab40b333d1496c55e9d9d7ba34732ff2aa904c9b4e0c139789fb69958b2a54"
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125905Z__actor-cohort-perception-s20260821-r1",
+    "artifact_sha256": "608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -49,6 +49,7 @@
     "r13_full_frame_actor_perception_locality": "done_hypothesis_rejected_global_receptive_field",
     "r13_remove_all_factorized_roi": "done_hypothesis_rejected_no_static_control",
     "r13_maximum_size_single_actor_perception": "done_hypothesis_rejected_perception_insensitive",
+    "r13_complete_actor_cohort_perception": "done_accepted_development_sparse_coverage_1_of_12",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -57,8 +58,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "render_all_12_two_frame_visible_streetgs_actor_removals",
-    "run_52_exact_perception_inferences_without_outcome_selection",
-    "measure_verified_actor_coverage_and_false_safe_reduction_with_abstention"
+    "convert_scene0242_checkpoint_to_sceneir_with_actor_index_mapping",
+    "remove_actor_0000_and_fresh_replay_base_and_edited_packages_twice",
+    "bind_typed_dependency_closure_to_h_r13_009_sensor_perception_accept"
   ]
 }
