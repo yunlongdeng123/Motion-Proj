@@ -1,21 +1,21 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T17:21:08Z",
+  "updated_at_utc": "2026-08-21T17:25:04Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 71,
+  "iteration": 72,
   "active_task": "WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01",
   "active_hypothesis": "WS-V6-H-R39-001",
-  "candidate": "observed_static_gaussian_actor_ground_contact_factor",
+  "candidate": "observed_static_gaussian_actor_ground_contact_factor_metadata_binding_retry",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "47540052b893e17100e6910ccaad8ed29c31444e7fc7d8945bd84ce12f6a4f2c",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "7bc2f1e63c943713b9c9e99e297dbd0597f700b5b623f91706bec367648f66f1",
-  "last_reflection_id": "WS-V6-REFL-0073",
+  "failure_ledger_sha256": "b2b6f7a8e074a73a7c1c787ee0786df7bb23d9029840883fdf75e799e6e6fa91",
+  "last_reflection_id": "WS-V6-REFL-0074",
   "last_completed": {
     "task_id": "WS-V6-R38-ACTOR-INTERACTION-FACTOR-01",
     "run": "run://worldsim_v6/WS-V6-R38-ACTOR-INTERACTION-FACTOR-01/20260821T171936Z__interaction-factor-s20260821-r1",
@@ -98,7 +98,7 @@
     "r36_actor_sensor_equivalence": "done_accepted_development_native_renderer_integration",
     "r37_actor_trajectory_edit_sensor_equivalence": "done_accepted_development_governance_retry",
     "r38_actor_interaction_factor": "done_accepted_development_full_trajectory_factorization",
-    "r39_actor_static_contact_factor": "active_pre_registered_observed_static_support",
+    "r39_actor_static_contact_factor": "first_attempt_failed_v6_f64_metadata_binding_retry_active",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -107,8 +107,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r38_closeout_and_r39_preregistration",
-    "query_824583_observed_static_gaussians_near_actor_bottom_across_196_states",
+    "commit_v6_f64_and_bind_frozen_r38_translation_metadata",
+    "retry_same_static_contact_query_and_thresholds",
     "test_horizontal_contact_retention_and_vertical_contact_break_control"
   ]
 }

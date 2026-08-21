@@ -31,8 +31,10 @@ support_query:
   minimum_contact_points: 3
 interventions:
   - id: translate_world_x_plus_1m
+    translation_delta_m: [1.0, 0.0, 0.0]
     expected_static_contact_decision: ACCEPT
   - id: translate_world_y_plus_1m
+    translation_delta_m: [0.0, 1.0, 0.0]
     expected_static_contact_decision: REJECT
 gate:
   minimum_logged_support_coverage: 0.80
@@ -49,4 +51,3 @@ claim_boundary:
   - horizontal_translation_expected_to_preserve_contact_vertical_translation_expected_to_break_contact
   - physical_dynamics_semantic_road_collision_planning_and_safety_abstain
   - no_training_or_confirmation_read
-
