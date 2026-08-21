@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T16:33:00Z",
+  "updated_at_utc": "2026-08-21T16:39:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 64,
-  "active_task": "WS-V6-R33-OBSERVED-SCENEIR-ACTOR-BUNDLE-01",
-  "active_hypothesis": "WS-V6-H-R33-001",
-  "candidate": "observed_sceneir_actor_0000_gaussian_bundle_with_logged_trajectory",
+  "iteration": 65,
+  "active_task": "WS-V6-R34-IDENTITY-BOUND-ACTOR-LOGSIM-01",
+  "active_hypothesis": "WS-V6-H-R34-001",
+  "candidate": "detached_sceneir_actor_bundle_logged_trajectory_replay",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "efcb1791431cc58fbd6ca9428d6a02063ee13fa0696a87e761eab5f8f3cefeed",
+  "dev_artifact_hash": "9401020b1fe86194ae6be29c88347be92a98163339d41617136879c63c61c6f3",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "2c3b2bcada6cab547a806e87fd6ac0d4921b34c84528609e9fc03bca4261ebeb",
-  "last_reflection_id": "WS-V6-REFL-0066",
+  "last_reflection_id": "WS-V6-REFL-0067",
   "last_completed": {
-    "task_id": "WS-V6-R32-ACTOR-IDENTITY-FACTOR-VERIFICATION-01",
-    "run": "run://worldsim_v6/WS-V6-R32-ACTOR-IDENTITY-FACTOR-VERIFICATION-01/20260821T163038Z__identity-factor-s20260821-r1",
-    "artifact_sha256": "efcb1791431cc58fbd6ca9428d6a02063ee13fa0696a87e761eab5f8f3cefeed"
+    "task_id": "WS-V6-R33-OBSERVED-SCENEIR-ACTOR-BUNDLE-01",
+    "run": "run://worldsim_v6/WS-V6-R33-OBSERVED-SCENEIR-ACTOR-BUNDLE-01/20260821T163634Z__actor-bundle-s20260821-r1",
+    "artifact_sha256": "9401020b1fe86194ae6be29c88347be92a98163339d41617136879c63c61c6f3"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -92,7 +92,8 @@
     "r30_typed_actor_bake": "done_accepted_development_appearance_only_trajectory_abstain",
     "r31_actor_appearance_logsim": "done_accepted_development_bounded_replay",
     "r32_actor_identity_factor_verification": "done_rejected_generated_layer_identity_component",
-    "r33_observed_sceneir_actor_bundle": "active_pre_registered_identity_bound_baseline",
+    "r33_observed_sceneir_actor_bundle": "done_accepted_development_identity_bound_baseline",
+    "r34_identity_bound_actor_logsim": "active_pre_registered_detached_replay",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -101,8 +102,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r32_rejection_v6_f62_and_r33_observed_actor_bundle",
-    "extract_actor_0000_gaussian_blobs_and_196_logged_transforms",
-    "run_identity_bound_actor_bundle_replay_if_r33_passes"
+    "commit_r33_closeout_and_r34_preregistration",
+    "copy_r33_actor_package_to_detached_runtime_root",
+    "run_two_exact_geometry_and_logged_trajectory_replays"
   ]
 }

@@ -1,0 +1,34 @@
+schema_version: worldsim_v6.r34_actor_bundle_logsim.v1
+task_id: WS-V6-R34-IDENTITY-BOUND-ACTOR-LOGSIM-01
+hypothesis_id: WS-V6-H-R34-001
+seed: 20260821
+sources:
+  r33_run: runs://worldsim_v6/WS-V6-R33-OBSERVED-SCENEIR-ACTOR-BUNDLE-01/20260821T163634Z__actor-bundle-s20260821-r1
+  r33_manifest_sha256: afdc05b75f8b913243d0156b4a76619c128fc3ddbae32bc50939268ff59f2ad1
+  r33_gate_sha256: 9401020b1fe86194ae6be29c88347be92a98163339d41617136879c63c61c6f3
+  r33_summary_sha256: 5d7c6c1541a2e70614a46be3c29c9ad550e44e6e528c2479b4a3b4ea5f94e56c
+  r33_package_manifest_sha256: c422e5ad9117def3875b9a6e168327aade0818099542ec6c015dc4ce48dfa921
+  r33_actor_bundle_sha256: 7fa827e15a04dd3ff9e0ff919de28869cf3131c9181ecec4d2ca781fcca6ae50
+  r33_array_audit_sha256: 63b72af5581f9aa31f6d14e7e70cd9cfa5f68e65e0ba7520824bc2dd2430d586
+  r33_validity_sha256: 0ad979fb3d1735bfcfcc3d47b5f9ed9b833972a50b3efb2bb1d620bb09511c09
+  r33_runtime_dependency_audit_sha256: 5d24fad4cb35273b77f1a39a06073d9a6ce4a9ea6faed72f396a763a01613c4b
+expected:
+  actor_id: actor_0000
+  chunk_id: streetgs_actor_0000
+  primitive_count: 12390
+  trajectory_rows: 196
+  maximum_quaternion_norm_error: 0.0001
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_observed_reconstructed_support_actor_logsim
+  - detached_exact_gaussian_payload_and_logged_trajectory_replay
+  - streetgs_model_index_0_sceneir_actor_0000_only
+  - generated_identity_route_r32_remains_rejected
+  - actor_class_and_semantic_accuracy_unknown
+  - novel_trajectory_dynamics_collision_planning_and_safety_abstain
+  - no_online_generator_model_network_or_source_run_runtime_dependency
+  - no_training_or_confirmation_read
+
