@@ -1,0 +1,42 @@
+schema_version: worldsim_v6.r30_typed_actor_bake.v1
+task_id: WS-V6-R30-TYPED-ACTOR-BAKE-01
+hypothesis_id: WS-V6-H-R30-001
+seed: 20260821
+sources:
+  r29_run: runs://worldsim_v6/WS-V6-R29-ACTOR-FACTOR-TRUTH-REPORTED-01/20260821T161358Z__three-factor-s20260821-r1
+  r29_manifest_sha256: 99684aec273ce01ba3ff3d54023177d11b0271a2a0602740df12b4d1872ab4c6
+  r29_gate_sha256: 88d1e4e9ba2a903c691ca772e57344c2795d786b87129dc961897814f5556a5b
+  r29_decisions_sha256: 2345a28f9bf2d33a43bbea9b6fb5cf543a8773802c2621237acdcb925ab3309a
+  r24_run: runs://worldsim_v6/WS-V6-R24-TYPED-MULTISOURCE-PROPOSAL-01/20260821T154603Z__independent-arms-s20260821-r1
+  r24_manifest_sha256: 16e2e3ac1210657250b96cfd51b6c0420a3f98d04bb46418eddbd99dbe753729
+  r24_cases_sha256: 23803466edc1dd238e42848664d556d629595c72f67d10490391a871c2941a0d
+  r24_per_case_arms_sha256: 7171ed693a7188b74bd69be557accd43e8701267f8ef009f12cb11b2a1a0a72d
+  proposal_directory: typed_temporal_static_cross_frontend_actor_reconstruction_proposals
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_actor_accept_count: 1
+asset_typing:
+  asset_type: explicit_actor_observation_plane_appearance
+  appearance_required_factors: [photo, geometry, semantic]
+  trajectory_required_factors: [geometry, dynamics]
+  dynamics_policy: explicit_abstain_no_trajectory_bake
+package:
+  coordinate_space: observation_plane_512x288
+  payload: sparse_yx_rgb_uint8_with_bbox
+  generator_dependency_at_runtime: forbidden
+  provenance_required: true
+  validity_required: true
+  reload_exact_required: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_explicit_actor_observation_plane_appearance_asset
+  - actor_identity_case_scoped_and_unresolved
+  - no_3d_mesh_pose_or_novel_view_claim
+  - photo_geometry_semantic_accept_required
+  - dynamics_and_trajectory_explicit_abstain
+  - no_online_generator_model_weight_network_or_source_run_dependency
+  - no_training_or_confirmation_read
