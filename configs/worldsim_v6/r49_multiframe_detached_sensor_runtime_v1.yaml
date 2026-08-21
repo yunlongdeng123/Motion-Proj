@@ -1,0 +1,53 @@
+schema_version: worldsim_v6.r49_multiframe_detached_sensor_runtime.v1
+task_id: WS-V6-R49-MULTIFRAME-DETACHED-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R49-001
+seed: 20260821
+sources:
+  r48_run: runs://worldsim_v6/WS-V6-R48-DETACHED-ACTOR-PACKAGE-SENSOR-RUNTIME-01/20260821T181908Z__detached-sensor-s20260821-r1
+  r48_manifest_sha256: e73cc472119707ddbcb5e58b2049b67def4e8abb15745c8392e40a1f9f38bfc3
+  r48_gate_sha256: 11453778499d9cd2c1b10b2cf19b8085effdf6d5c048479b1505b38675b71e8e
+  r48_summary_sha256: 139f7a1782090cfaace68c75f48b4243bb8b21b7e0a5075dc15635cfe52d7cf8
+  r47_run: runs://worldsim_v6/WS-V6-R47-DETACHED-STATE-EVENT-LOGSIM-01/20260821T181414Z__state-event-logsim-s20260821-r1
+  r47_gate_sha256: 70a3e8cd4c0f7a8096cf8274a170b33b7b193ba94d304b3ba69a3666e613dd18
+  r47_event_trajectory_sha256: 527b985ee0c2fe2573a9473f7327450d30cebbe7a80d68cb155333b69fb7a7f0
+  detached_package: detached_package
+  detached_package_manifest_sha256: ea093368cfc4707db8b2c7ede1a6323c7702b6159219b6a3e02f13adc74cf173
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  actor_model_index: 0
+  frame_indices: [0, 57, 140, 141, 195]
+  stationary_boundary_frame: 141
+  stationary_tail_frame: 195
+  pre_stationary_frame: 140
+  minimum_frame57_actor_effect_pixels: 256
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 600
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_five_frame_temporal_sensor_runtime_equivalence
+  - direct_detached_package_path_is_compared_against_legacy_r35_plus_same_delta
+  - frames_cover_start_known_visible_pre_stationary_stationary_boundary_and_tail
+  - repeated_geometry_state_events_remain_distinct_while_both_runtime_paths_match
+  - semantic_physical_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
+
