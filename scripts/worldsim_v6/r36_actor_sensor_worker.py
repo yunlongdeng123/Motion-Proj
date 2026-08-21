@@ -48,9 +48,19 @@ def main() -> int:
     parser.add_argument("--package", required=True, type=Path)
     parser.add_argument("--frames", required=True)
     parser.add_argument("--actor-model-index", required=True, type=int)
+    parser.add_argument(
+        "--translation-delta-m",
+        default="0,0,0",
+        help="可选的 world-frame actor 轨迹平移，仅供后续反事实合同使用",
+    )
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     frames = [int(value) for value in args.frames.split(",")]
+    translation_delta = np.asarray(
+        [float(value) for value in args.translation_delta_m.split(",")], dtype=np.float32
+    )
+    if translation_delta.shape != (3,) or not np.isfinite(translation_delta).all():
+        raise ValueError("translation delta 必须是三个有限数")
     output = args.output.resolve()
     sensor_dir = output / "sensors"
     sensor_dir.mkdir(parents=True, exist_ok=False)
@@ -126,6 +136,7 @@ def main() -> int:
         timestamp_us = frame_index * 100000
         trajectory_index = timestamp_to_index[timestamp_us]
         means = torch.from_numpy(means_world[trajectory_index]).cuda()
+        means = means + torch.from_numpy(translation_delta).cuda()[None, :]
         quats = torch.from_numpy(quaternions_world[trajectory_index]).cuda()
         colors = torch.cat(
             (device_arrays["features_dc"][:, None, :], device_arrays["features_rest"]),
@@ -189,6 +200,11 @@ def main() -> int:
                 for key, value in values.items():
                     if isinstance(value, torch.Tensor):
                         values[key] = value.cuda(non_blocking=True)
+            translation_state_before = rigid.instances_trans.detach().clone()
+            if np.any(translation_delta != 0):
+                rigid.instances_trans[frame_index, int(args.actor_model_index)].add_(
+                    torch.from_numpy(translation_delta).cuda()
+                )
             native = trainer(image_infos, camera_infos)
             cam = trainer.process_camera(
                 camera_infos=camera_infos,
@@ -196,6 +212,10 @@ def main() -> int:
                 novel_view=False,
             )
             native_actor = rigid.get_gaussians(cam)
+            rigid.instances_trans.copy_(translation_state_before)
+            translation_state_restored = torch.equal(
+                rigid.instances_trans, translation_state_before
+            )
             compiled_1, compiled_actor_fields = render_with_compiled_actor(
                 frame_index, image_infos, cam
             )
@@ -259,6 +279,8 @@ def main() -> int:
                 {
                     "frame_index": frame_index,
                     "timestamp_us": frame_index * 100000,
+                    "translation_delta_m": translation_delta.astype(float).tolist(),
+                    "native_translation_state_restored_exact": translation_state_restored,
                     "actor_effect_pixels": effect_pixels,
                     "actor_nonzero_opacity_primitives": int(actor_support.sum().item()),
                     "native_actor_field_max_error": {
@@ -321,4 +343,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r37_actor_trajectory_edit_sensor.v1
+task_id: WS-V6-R37-ACTOR-TRAJECTORY-EDIT-SENSOR-EQUIVALENCE-01
+hypothesis_id: WS-V6-H-R37-001
+seed: 20260821
+sources:
+  r36_run: runs://worldsim_v6/WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01/20260821T165828Z__sensor-equivalence-s20260821-r1
+  r36_manifest_sha256: 0f24d4e84f854f2fa3bea4a025e253cfaab8ffded02d63fe55ccff1ccacfedf3
+  r36_gate_sha256: e19b7fbc73d2180c3293630c2a89b68f4fe620e90471f4f3f889dc063cfd38ae
+  r36_summary_sha256: 53315c061d05d95ac10c15228c2b1d4fb05b65a05e1817521445f4555419c4dc
+  r36_frame_metrics_sha256: bc944b1fa2d4542af6b40c2a7b8f3089d1964c0a71d7d40d65ceba765bf6658f
+  r36_baseline_sensor: worker/sensors/frame057.npz
+  r36_baseline_sensor_sha256: 2c42449bc9a13f928471caf431eb05981a49b58843288ddc856209d7f5a6b89e
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+cohort:
+  partition: development_same_scene_logged_camera_counterfactual_actor_pose
+  actor_model_index: 0
+  sceneir_actor_id: actor_0000
+  frame_index: 57
+  camera_id: 0
+interventions:
+  - id: translate_world_x_plus_1m
+    translation_delta_m: [1.0, 0.0, 0.0]
+  - id: translate_world_y_plus_1m
+    translation_delta_m: [0.0, 1.0, 0.0]
+thresholds:
+  counterfactual_rgb_change_threshold: 0.00392156862745098
+  minimum_counterfactual_changed_pixels: 256
+  minimum_actor_effect_pixels: 256
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_same_scene_actor_trajectory_edit_renderer_conformance
+  - two_pre_registered_one_meter_world_axis_translations_at_logged_frame57
+  - compiled_asset_and_native_in_memory_edit_sensor_equivalence
+  - representation_edit_is_not_physical_trajectory_or_dynamics_validity
+  - semantic_collision_novel_view_planning_and_safety_abstain
+  - native_checkpoint_state_restored_exact_and_file_immutable
+  - no_training_or_confirmation_read
+
