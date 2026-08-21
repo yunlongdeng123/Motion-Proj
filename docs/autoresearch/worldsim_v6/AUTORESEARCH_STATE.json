@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:26:00Z",
+  "updated_at_utc": "2026-08-21T11:32:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 10,
-  "active_task": "WS-V6-R11-BAKE-01",
-  "active_hypothesis": "WS-V6-H-R11-001",
-  "candidate": "typed_static_chunk_bake_with_actor_factor_abstain",
+  "iteration": 11,
+  "active_task": "WS-V6-R12-LOGSIM-01",
+  "active_hypothesis": "WS-V6-H-R12-001",
+  "candidate": "static_rgb_logsim_exact_replay",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364",
+  "dev_artifact_hash": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "c28ef3c2e2295981ef3f51f97ada02a0600713fd4ac39afbaa52af92b243c1d8",
-  "last_reflection_id": "WS-V6-REFL-0012",
+  "last_reflection_id": "WS-V6-REFL-0013",
   "last_completed": {
-    "task_id": "WS-V6-R10-FACTORIZED-VERIFICATION-01",
-    "run": "run://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1",
-    "artifact_sha256": "ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364"
+    "task_id": "WS-V6-R11-BAKE-01",
+    "run": "run://worldsim_v6/WS-V6-R11-BAKE-01/20260821T112840Z__typed-bake-s20260821-r1",
+    "artifact_sha256": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -36,6 +36,7 @@
     "r9_sd15_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
     "r9_cross_frontend_verifier_arms": "done_accepted_development_p1_p2_only",
     "r10_factorized_verification": "done_accepted_development_photo_geometry",
+    "r11_typed_bake": "done_accepted_development_static_only",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -44,8 +45,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "bake_two_static_route_chunks_with_sparse_explicit_payloads",
-    "abstain_actor_and_trajectory_bake_without_semantic_dynamics_validity",
-    "verify_reload_provenance_validity_and_no_generator_runtime_dependency"
+    "replay_each_static_chunk_twice_from_identical_sensor_input",
+    "measure_exact_rgb_sensor_and_frozen_semantic_output_consistency",
+    "retain_structural_abstain_for_unrepresented_dynamic_factors"
   ]
 }

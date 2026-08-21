@@ -1,0 +1,55 @@
+schema_version: worldsim_v6.r12_logsim.v1
+task_id: WS-V6-R12-LOGSIM-01
+hypothesis_id: WS-V6-H-R12-001
+seed: 20260821
+sources:
+  r11_run: runs://worldsim_v6/WS-V6-R11-BAKE-01/20260821T112840Z__typed-bake-s20260821-r1
+  r11_manifest_sha256: 5b8ba68ee50860a875583463217e35992fbe556bdb3330c28ba99747c85356de
+  r11_gate_sha256: b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e
+  r11_package_manifest_sha256: f8fcc6b72eed946fd99c2359b50e4456efb63ca8867ecf91de93a5a85c013432
+  r9_run: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 212c12ccbc83a7dd987c4dcc0e36cbaa61f1268fa3f3473dfd9dbd92fba7ffde
+verifier_model:
+  id: Koushim/deeplabv3-resnet50-cityscapes
+  revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+  license: Apache-2.0
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_static_chunk_count: 2
+  replay_count: 2
+replay:
+  coordinate_space: observation_plane_512x288
+  sensor_stream: rgb
+  expected_sensor_mae: 0.0
+  require_source_proposal_exact: true
+  require_repeat_exact: true
+  require_perception_label_exact: true
+unsupported_factors:
+  trajectory: ABSTAIN_NOT_REPRESENTED
+  actor: ABSTAIN_NOT_REPRESENTED
+  event: ABSTAIN_NOT_REPRESENTED
+  sensor_calibration: ABSTAIN_NOT_REPRESENTED
+  collision: ABSTAIN_NOT_REPRESENTED
+gate:
+  require_all_static_assets_replayed: true
+  require_sensor_exact: true
+  require_perception_repeat_exact: true
+  require_source_immutable: true
+  require_no_generator_runtime_dependency: true
+  require_unsupported_factors_abstain: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_static_sensor_logsim_only
+  - observed_support_reconstructed_rgb_not_new_observation
+  - perception_consistency_not_semantic_correctness
+  - trajectory_actor_event_calibration_collision_not_represented
+  - no_closed_loop_or_safety_claim
+  - no_training
+  - no_confirmation_read
