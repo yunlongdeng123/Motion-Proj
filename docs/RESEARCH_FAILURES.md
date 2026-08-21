@@ -3177,6 +3177,28 @@ scene-0048/StreetGS/frame-52 的 disocclusion mask 仍严格为 0。R3 冻结 `A
 仍保留全部 16 cases；actor/disocclusion 要求原冻结 evidence 至少 256 pixels，不合格的四项显式记录 structural
 ABSTAIN；剩余 28 oracle + 28 decoy 才进入完全相同的 verifier/bake 门禁。
 
+### V6-F16：冻结 LaMa 配置必须用 OmegaConf 解析字段引用
+
+R8 首轮正式目录 `20260821T103805Z__frozen-generator-s20260821-r1` 中，Big-LaMa 在构造
+FFC generator 时失败。官方 `config.yaml` 的 `downsample_conv_kwargs` 与
+`resnet_conv_kwargs` 使用 `${generator...}` 字段引用；直接用 PyYAML 读取会把引用保留为
+字符串，最终在通道比例转整数时触发 `ValueError`。该候选被如实记为 `failed`，首轮 gate
+保持 `rejected`，不改写为方法结论。
+
+修复只把 generator 子树改为 `OmegaConf.load` 后 `resolve=True`，仍使用同一官方配置、源码、
+checkpoint、输入、seed、阈值与选择规则；不解析或消费任何训练/确认数据。以后复用带插值的
+冻结配置时，必须在进入模型构造前解析并审计最终标量，不能把 YAML 语法读取成功当成配置已实例化。
+
+### V6-F17：扩散 inpaint 输出尺寸必须显式绑定冻结输入尺寸
+
+同一 R8 首轮中，SD-v1.5 pipeline 虽完成模型加载和推理，但未显式传入 `height/width`，输出采用
+默认 `512×512`，与冻结输入及 mask 的 `512×288` 不一致，overlay 布尔索引因此触发
+`IndexError`。该候选同样保留 `failed`，不是 GPU、权重或方法负结论。
+
+修复是在冻结 pipeline 调用中显式设置 `height=image.shape[0]`、`width=image.shape[1]`；不 resize
+实验输入、不改变 mask、prompt、steps、guidance、seed、候选或门槛。后续所有生成器 adapter
+必须把空间尺寸当作调用合同，并在 compositing 前 fail-closed 核对 image/mask/proposal 三者形状。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

@@ -14,7 +14,7 @@ from typing import Any, Callable
 
 import numpy as np
 import torch
-import yaml
+from omegaconf import OmegaConf
 from PIL import Image
 
 
@@ -49,8 +49,9 @@ def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.nda
     sys.path.insert(0, str(source))
     from saicinpainting.training.modules import make_generator
 
-    config = yaml.safe_load((model_root / "config.yaml").read_text(encoding="utf-8"))
-    generator_config = dict(config["generator"])
+    # 必须先解析官方配置的字段引用，否则比例字段会保留为插值字符串。
+    config = OmegaConf.load(model_root / "config.yaml")
+    generator_config = dict(OmegaConf.to_container(config.generator, resolve=True))
     kind = generator_config.pop("kind")
     model = make_generator(None, kind=kind, **generator_config)
     checkpoint = torch.load(
@@ -103,6 +104,8 @@ def _load_sd15(
             num_inference_steps=steps,
             guidance_scale=guidance_scale,
             generator=generator,
+            height=image.shape[0],
+            width=image.shape[1],
         ).images[0]
         return np.asarray(result, dtype=np.float32) / 255.0
 
