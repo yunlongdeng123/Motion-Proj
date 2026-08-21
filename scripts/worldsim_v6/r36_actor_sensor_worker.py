@@ -115,8 +115,8 @@ def main() -> int:
     }
     if proposal_transforms is not None and proposal_transforms.shape[0] != len(timestamp_to_index):
         raise ValueError("transform trajectory denominator 漂移")
-    if "actor_frame_validity" in geometry:
-        lifecycle_record = geometry["actor_frame_validity"]
+    lifecycle_record = geometry.get("actor_frame_validity", arrays.get("actor_frame_validity"))
+    if lifecycle_record is not None:
         actor_frame_validity = np.load(package / lifecycle_record["path"], allow_pickle=False)
         if (
             actor_frame_validity.dtype != np.bool_
@@ -374,6 +374,7 @@ def main() -> int:
             "package_manifest_sha256_before": package_manifest_before,
             "package_manifest_sha256_after": package_manifest_after,
             "package_geometry_schema_version": geometry.get("schema_version"),
+            "actor_model_index": int(args.actor_model_index),
             "runtime_mode": runtime_mode,
             "translation_source": "package_transform_trajectory"
             if proposal_transforms is not None

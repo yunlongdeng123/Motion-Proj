@@ -1,0 +1,45 @@
+schema_version: worldsim_v6.r57_second_actor_sensor_equivalence.v1
+task_id: WS-V6-R57-SECOND-ACTOR-SENSOR-EQUIVALENCE-01
+hypothesis_id: WS-V6-H-R57-001
+seed: 20260821
+sources:
+  r56_run: runs://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1
+  r56_manifest_sha256: 4b9fc3101d7697efd7bd032b0fbaef4ea4e56ae9fd42e392f0ca469336c91dbc
+  r56_gate_sha256: edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c
+  r56_summary_sha256: 6a9e713dbc440ae773edd31c5561e197a1184aa998c75b3affa63ffcdea9ead7
+  r56_package_manifest_sha256: 35dbda21f25de374d5f032e6685571edc4f2ae3b05a23c6001a4ce4f9458556a
+  r56_trajectory_geometry_sha256: f2ee809a81a15dd41694651bddee6160df25d4ca0c927d412e8ccb319327c914
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  actor_model_index: 2
+  frame_indices: [0, 49, 98, 147, 195]
+  expected_frame_validity: [true, true, true, true, true]
+  translation_delta_m: [0.0, 0.0, 0.0]
+  required_runtime_mode: legacy_materialized_geometry_with_cli_translation
+  required_translation_source: cli_argument
+  required_lifecycle_source: package_actor_frame_validity
+  minimum_maximum_actor_effect_pixels: 256
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 360
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_second_actor_five_frame_native_sensor_equivalence
+  - actor2_package_owns_world_geometry_and_lifecycle
+  - frames_are_even_temporal_landmarks_and_at_least_one_must_have_nontrivial_actor_effect
+  - no_actor_edit_or_new_trajectory_is_applied
+  - semantic_identity_novel_dynamics_physical_planning_safety_and_confirmation_abstain
