@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6 R7 oracle path development PASS；R8 frozen generator 启动（2026-08-21）
+
+- R7 canonical=`run://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1`；
+  28/28 oracle ACCEPT、28/28 corrupted control REJECT，photo/depth median reduction=`1.0/1.0`，四类 hole 最差
+  usable coverage gain=`0.999540`，outside-mask/provenance exact。
+- scene-0048/StreetGS 两帧没有任何 actor-remove effect，因此四个 actor/disocclusion cases 显式 structural ABSTAIN；
+  H-R7-001 的 32-case Cartesian denominator 已 invalidated，H-R7-002 的 evidence-eligible denominator 通过。
+- 当前 active=`WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01`，hypothesis=`WS-V6-H-R8-001`；Big-LaMa 与
+  SD-v1.5 inpainting 进入单卡 3090 实机 frozen inference，FLUX.1-Fill 因 gated/资源合同只审计不运行。
+
 ## WorldSim V6 R6 factorized validity development PASS；R7 oracle extension 启动（2026-08-21）
 
 - R6 canonical=`run://worldsim_v6/WS-V6-R6-FACTORIZED-VALIDITY-01/20260821T094949Z__factorized-validity-s20260821-r1`；

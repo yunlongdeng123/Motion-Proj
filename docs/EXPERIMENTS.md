@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6 R7 oracle missing-world v1 正式实验 development PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1`，
+  source=`68f1d149`；gate/summary/manifest/terminal SHA=`42180f5a...14e / fe760663...402 / 73dbb2ba...d0c / 388dc82c...012`。
+- eligible oracle/decoy=`28/28`，acceptance=`1.0/0.0`；photo/depth median reduction=`1.0/1.0`，四类 hole
+  minimum usable gain=`0.999540`，outside-mask/provenance exact；4 项 zero actor-effect 记录 structural ABSTAIN。
+- v0 32-case denominator 在完整 gate 前失效，工程/source 失败见 `V6-F12`–`V6-F15`；无 generator、训练或
+  confirmation。next=`WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01`。
+
 ## WorldSim V6 R6 factorized validity 正式实验 development PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R6-FACTORIZED-VALIDITY-01/20260821T094949Z__factorized-validity-s20260821-r1`，source=`4ff4c644`；

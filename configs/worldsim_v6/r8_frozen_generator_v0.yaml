@@ -1,0 +1,70 @@
+schema_version: worldsim_v6.r8_frozen_generator.v1
+task_id: WS-V6-R8-FROZEN-PROPOSAL-GENERATOR-01
+hypothesis_id: WS-V6-H-R8-001
+seed: 20260821
+sources:
+  r7_run: runs://worldsim_v6/WS-V6-R7-ORACLE-MISSING-WORLD-01/20260821T100653Z__oracle-missing-world-s20260821-r1
+  r7_manifest_sha256: 73dbb2ba11bc12bc4e22ca13765af10d14ac5d183e1d529add5e6d619f2a4d0c
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+candidates:
+  - id: big_lama
+    status_before_run: runnable_asset_acquired
+    code_url: https://github.com/advimman/lama.git
+    code_commit: 786f5936b27fb3dacd2b1ad799e4de968ea697e7
+    code_license: Apache-2.0
+    weight_repo: smartywu/big-lama
+    weight_revision: 05cb2be7f8dbe6ca7c6e78f4fc827a4b2baaa4a9
+    weight_zip_sha256: f1b358ca24093b93a106183b98a3dea6e8ed09f3b43ea7251eb2c81e7b4575f6
+    checkpoint_sha256: fccb7adffd53ec0974ee5503c3731c2c2f1e7e07856fd9228cdcc0b46fd5d423
+    checkpoint_bytes: 410046389
+    prompt_conditioned: false
+  - id: sd15_inpainting
+    status_before_run: downloading_ungated_public_asset
+    model_repo: stable-diffusion-v1-5/stable-diffusion-inpainting
+    model_revision: 8a4288a76071f7280aedbdb3253bdb9e9d5d84bb
+    model_license: CreativeML-OpenRAIL-M
+    prompt_conditioned: true
+    inference_steps: 20
+    guidance_scale: 4.0
+  - id: flux1_fill_dev
+    status_before_run: audit_only_gated_and_outside_local_storage_contract
+    model_repo: black-forest-labs/FLUX.1-Fill-dev
+    model_revision: 358293da0354175698b67ec8299acf928313a78a
+    model_license: FLUX.1-dev-Non-Commercial-v1.1.1
+    gated: true
+    repository_used_storage_bytes: 58052037720
+    single_weight_reported_size: 23.8_GB_hf_ui
+benchmark_cases:
+  - {scene: scene-0242, frontend: streetgs, frame_index: 52, hole_type: missing_route_support}
+  - {scene: scene-0048, frontend: streetgs, frame_index: 52, hole_type: missing_side_view}
+  - {scene: scene-0242, frontend: ad_gs, frame_index: 57, hole_type: disocclusion}
+  - {scene: scene-0048, frontend: ad_gs, frame_index: 57, hole_type: actor_removal_hole}
+inference:
+  repeat_count: 2
+  capability_resolution_px: [512, 288]
+  output_type: proposal
+  outside_mask_overlay_policy: copy_source_exact
+  sd_prompt: photograph of an empty urban driving scene, continuous road surface, realistic lighting
+selection_gate:
+  require_ungated_public_access: true
+  require_compatible_research_license: true
+  require_all_repeats_successful: true
+  require_repeat_sha_exact: true
+  require_finite_output: true
+  require_nonzero_masked_change: true
+  require_outside_mask_exact: true
+  maximum_peak_gpu_memory_mib: 24000
+  maximum_seconds_per_case: 120
+  select_exactly_one: true
+  tie_break_order: [lower_peak_gpu_memory, lower_median_latency, non_prompt_conditioned]
+resources:
+  gpu: single_rtx_3090_24gb
+  max_concurrent_heavy_processes: 1
+  minimum_disk_free_gib: 15
+claim_boundary:
+  - proposal_generator_capability_only
+  - every_output_typed_proposal
+  - no_unverified_bake
+  - no_quality_acceptance_claim
+  - no_training
+  - no_confirmation_read
