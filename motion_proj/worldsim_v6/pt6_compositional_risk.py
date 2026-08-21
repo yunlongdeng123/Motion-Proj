@@ -30,6 +30,7 @@ from motion_proj.worldsim_v6.pt2_risk_policy import (
 
 
 TASK_ID = "WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-PT7-COMPOSITIONAL-RISK-CONFIRMATION-01"}
 
 
 class PT6CompositionError(RuntimeError):
@@ -91,16 +92,42 @@ def _metrics(labels: np.ndarray, predictions: np.ndarray) -> dict[str, Any]:
     }
 
 
+def _case_signature(case: Mapping[str, Any]) -> tuple[Any, ...]:
+    return (
+        float(case["forward_m"]),
+        float(case["lateral_m"]),
+        tuple(float(value) for value in case["size_m"]),
+        float(case["yaw_deg"]),
+    )
+
+
 def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     repo_root = repo_root.resolve()
     config_path = (repo_root / config_path).resolve() if not config_path.is_absolute() else config_path
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config["task_id"] != TASK_ID:
+    task_id = str(config["task_id"])
+    phase = str(config.get("evaluation_phase", "development"))
+    if task_id not in ALLOWED_TASK_IDS or phase not in {"development", "confirmation"}:
         raise PT6CompositionError("task_id 不匹配")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = run_root / TASK_ID / f"{stamp}__compositional-risk-s{config['seed']}-r1"
+    run_dir = run_root / task_id / f"{stamp}__compositional-risk-{phase}-s{config['seed']}-r1"
     run_dir.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
+    if phase == "confirmation":
+        # confirmation attempt 必须先于 scene 内容和质量结果读取落盘。
+        _write_json(
+            run_dir / "ATTEMPT.json",
+            {
+                "schema_version": "worldsim_v6.pt7_composition_confirmation_attempt.v1",
+                "task_id": task_id,
+                "hypothesis_id": config["hypothesis_id"],
+                "created_at_utc": datetime.now(timezone.utc).isoformat(),
+                "attempt_created_before_quality_read": True,
+                "quality_read": False,
+                "scene": config["development_scene"]["scene"],
+                "status": "created",
+            },
+        )
     try:
         if shutil.disk_usage(run_root).free / (1024**3) < float(config["resources"]["minimum_disk_free_gib"]):
             raise PT6CompositionError("磁盘资源不足")
@@ -112,6 +139,15 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         if _sha256(policy_path) != frozen["policy_arms_sha256"]:
             raise PT6CompositionError("冻结 policy hash 漂移")
         policy_arms = json.loads(policy_path.read_text(encoding="utf-8"))
+        prior_gate_path = None
+        if config.get("required_prior_gate"):
+            prior = config["required_prior_gate"]
+            prior_gate_path = Path(prior["path"])
+            if _sha256(prior_gate_path) != prior["sha256"]:
+                raise PT6CompositionError("前序 compositional gate hash 漂移")
+            prior_gate = json.loads(prior_gate_path.read_text(encoding="utf-8"))
+            if prior_gate["decision"] != prior["required_decision"]:
+                raise PT6CompositionError("前序 compositional gate decision 不匹配")
         spec = config["development_scene"]
         instances, poses, paths = _load_scene_sources(
             Path(config["dataset_root"]),
@@ -125,6 +161,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         label_decimals = int(config["geometry"]["factor_label_canonicalization_decimals"])
         frozen_paths = [config_path, policy_path, *paths]
+        if prior_gate_path is not None:
+            frozen_paths.append(prior_gate_path)
         hashes_before = {str(path): _sha256(path) for path in frozen_paths}
         rows: list[dict[str, Any]] = []
         arm_predictions: dict[str, list[int]] = {arm: [] for arm in policy_arms}
@@ -191,7 +229,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         wall_seconds = time.monotonic() - started
         checks = {
             "frozen_policy_exact": True,
-            "new_development_scene": spec["scene"] not in set(config["prior_scenes"]),
+            f"new_{phase}_scene": spec["scene"] not in set(config["prior_scenes"]),
             "two_clone_cartesian_denominator": len(rows) == int(config["expected_episode_count"]),
             "both_outcomes_present": v6["hazard_count"] > 0 and v6["safe_count"] > 0,
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(cfg["require_v6_balanced_accuracy_at_least"]),
@@ -202,6 +240,21 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "unsupported_metrics_abstain": all(str(value).startswith("ABSTAIN") for value in config["unsupported_metrics"].values()),
             "wall_within_budget": wall_seconds <= float(config["resources"]["maximum_wall_seconds"]),
         }
+        if phase == "confirmation":
+            current_cases = {
+                _case_signature(case)
+                for case in [*config["clone_a_cases"], *config["clone_b_cases"]]
+            }
+            excluded_cases = {
+                _case_signature(case) for case in config["excluded_development_cases"]
+            }
+            checks.update(
+                {
+                    "attempt_created_before_quality_read": True,
+                    "prior_development_gate_frozen": prior_gate_path is not None,
+                    "confirmation_cases_disjoint": current_cases.isdisjoint(excluded_cases),
+                }
+            )
         comparison_mode = str(cfg.get("comparison_mode", "false_safe_reduction"))
         if comparison_mode == "false_safe_reduction":
             checks.update(
@@ -223,34 +276,49 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         else:
             raise PT6CompositionError(f"未知 comparison_mode: {comparison_mode}")
         checks["passed"] = all(checks.values())
+        accepted_decision = (
+            "accept_frozen_policy_multi_actor_composition"
+            if phase == "development"
+            else "accept_multi_actor_composition_confirmation"
+        )
+        rejected_decision = (
+            "reject_frozen_policy_multi_actor_composition"
+            if phase == "development"
+            else "reject_multi_actor_composition_confirmation"
+        )
         gate = {
-            "schema_version": "worldsim_v6.pt6_compositional_risk_gate.v1",
+            "schema_version": f"worldsim_v6.{phase}_compositional_risk_gate.v1",
             "checks": checks,
-            "decision": "accept_frozen_policy_multi_actor_composition" if checks["passed"] else "reject_frozen_policy_multi_actor_composition",
+            "decision": accepted_decision if checks["passed"] else rejected_decision,
             "false_safe_reduction_vs_real_only": reduction_real,
             "false_safe_reduction_vs_naive": reduction_naive,
             "comparison_mode": comparison_mode,
+            f"{phase}_attempt_consumed": phase == "confirmation",
             "unsupported_metrics": config["unsupported_metrics"],
         }
-        _write_json(run_dir / "PT6_COMPOSITION_GATE.json", gate)
+        gate_name = "PT6_COMPOSITION_GATE.json" if phase == "development" else "PT7_COMPOSITION_CONFIRMATION_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         summary = {
-            "schema_version": "worldsim_v6.pt6_compositional_risk_summary.v1",
-            "task_id": TASK_ID,
+            "schema_version": f"worldsim_v6.{phase}_compositional_risk_summary.v1",
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "source_commit": source_commit,
             "development_scene": spec["scene"],
+            "evaluation_phase": phase,
             "method_arms": arms1,
             "wall_seconds": wall_seconds,
             "claim_boundary": config["claim_boundary"],
             "unsupported_metrics": config["unsupported_metrics"],
         }
         _write_json(run_dir / "SUMMARY.json", summary)
-        tracked = ["COMPOSITION_ARMS.json", "COMPOSITION_EPISODES.jsonl", "SOURCE_AUDIT.json", "PT6_COMPOSITION_GATE.json", "SUMMARY.json"]
+        tracked = ["COMPOSITION_ARMS.json", "COMPOSITION_EPISODES.jsonl", "SOURCE_AUDIT.json", gate_name, "SUMMARY.json"]
+        if phase == "confirmation":
+            tracked.insert(0, "ATTEMPT.json")
         _write_json(
             run_dir / "MANIFEST.json",
             {
-                "schema_version": "worldsim_v6.pt6_compositional_risk_manifest.v1",
+                "schema_version": f"worldsim_v6.{phase}_compositional_risk_manifest.v1",
                 "source_commit": source_commit,
                 "config": str(config_path),
                 "files": {name: {"bytes": (run_dir / name).stat().st_size, "sha256": _sha256(run_dir / name)} for name in tracked},
@@ -258,13 +326,13 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         _write_json(
             run_dir / "TERMINAL.json",
-            {"schema_version": "worldsim_v6.terminal.v1", "status": summary["status"], "task_id": TASK_ID, "hypothesis_id": config["hypothesis_id"], "manifest_sha256": _sha256(run_dir / "MANIFEST.json")},
+            {"schema_version": "worldsim_v6.terminal.v1", "status": summary["status"], "task_id": task_id, "hypothesis_id": config["hypothesis_id"], f"{phase}_attempt_consumed": phase == "confirmation", "manifest_sha256": _sha256(run_dir / "MANIFEST.json")},
         )
         return run_dir
     except Exception as error:
         _write_json(
             run_dir / "TERMINAL.json",
-            {"schema_version": "worldsim_v6.terminal.v1", "status": "blocked", "task_id": TASK_ID, "error_type": type(error).__name__, "error": str(error)},
+            {"schema_version": "worldsim_v6.terminal.v1", "status": "blocked", "task_id": task_id, f"{phase}_attempt_consumed": phase == "confirmation", "error_type": type(error).__name__, "error": str(error)},
         )
         raise
 

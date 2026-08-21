@@ -1,24 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:29:00Z",
+  "updated_at_utc": "2026-08-21T14:32:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 40,
-  "active_task": "WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT6-002",
-  "candidate": "frozen_set_aggregation_with_paired_pareto_utility_gate",
+  "iteration": 41,
+  "active_task": "WS-V6-PT7-COMPOSITIONAL-RISK-CONFIRMATION-01",
+  "active_hypothesis": "WS-V6-H-PT7-001",
+  "candidate": "frozen_multi_actor_set_aggregation_pareto_protocol",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "2bc9ca8eff9a248e21def7bf0c378fd79ce604bfad702c4dd8d7561608e18d37",
+  "dev_artifact_hash": "c80bbcfdb81e9bebc77f807351828028a7b708f417488f58566ea33a6aa95a94",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
+  "compositional_confirmation_locked": false,
   "failure_ledger_sha256": "4bfc2658c02bcc71b0d3844adbe5337b4ad16ca4c2a495872fef6c0f480a9674",
-  "last_reflection_id": "WS-V6-REFL-0042",
+  "last_reflection_id": "WS-V6-REFL-0043",
   "last_completed": {
     "task_id": "WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01",
-    "run": "run://worldsim_v6/WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01/20260821T142626Z__compositional-risk-s20260821-r1",
-    "artifact_sha256": "2bc9ca8eff9a248e21def7bf0c378fd79ce604bfad702c4dd8d7561608e18d37"
+    "run": "run://worldsim_v6/WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01/20260821T142949Z__compositional-risk-s20260821-r1",
+    "artifact_sha256": "c80bbcfdb81e9bebc77f807351828028a7b708f417488f58566ea33a6aa95a94"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -68,7 +69,8 @@
     "pt4_risk_policy_confirmation": "done_accepted_exact_one_shot",
     "pt5_risk_policy_test": "done_accepted_exact_once",
     "pt6_compositional_risk_h001": "done_rejected_infeasible_one_axis_incremental_gate",
-    "pt6_compositional_risk_robustness": "active_pre_registered_paired_pareto_gate",
+    "pt6_compositional_risk_robustness": "done_accepted_development_paired_pareto_gate",
+    "pt7_compositional_risk_confirmation": "active_pre_registered_candidate_frozen",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -77,8 +79,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_paired_false_safe_completion_pareto_gate",
-    "re_evaluate_unchanged_scene0450_multi_actor_denominator",
+    "commit_frozen_multi_actor_confirmation_attempt_protocol",
+    "consume_one_shot_scene0862_multi_actor_confirmation",
     "retain_single_clone_candidate_and_test_as_immutable_closed_family"
   ]
 }

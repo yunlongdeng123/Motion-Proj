@@ -1,0 +1,69 @@
+schema_version: worldsim_v6.pt7_compositional_confirmation.v1
+task_id: WS-V6-PT7-COMPOSITIONAL-RISK-CONFIRMATION-01
+hypothesis_id: WS-V6-H-PT7-001
+evaluation_phase: confirmation
+seed: 20260821
+frozen_policy:
+  hypothesis_id: WS-V6-H-PT3-007
+  policy_arms_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1/POLICY_ARMS.json
+  policy_arms_sha256: 5e958fa28b095a9203359131ed891edd9c348b7eb07420fa1c42d1335a174131
+required_prior_gate:
+  path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01/20260821T142949Z__compositional-risk-s20260821-r1/PT6_COMPOSITION_GATE.json
+  sha256: c80bbcfdb81e9bebc77f807351828028a7b708f417488f58566ea33a6aa95a94
+  required_decision: accept_frozen_policy_multi_actor_composition
+dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+development_scene:
+  scene: scene-0862
+  scene_index: 652
+  instances_sha256: 12cc4fb28ce44273566a11b628b1b943fc59d4208bea702fd9119486896ab9a7
+  lidar_pose_set_sha256: 17d0d6fdc076fcafae153cc19d5aba0fc1491bcd85596826e91de43e7e537af8
+prior_scenes: [scene-0230, scene-0242, scene-0048, scene-0071, scene-0317, scene-0450]
+partition:
+  expected_frame_count: 196
+  sample_stride: 4
+  sample_start: 0
+geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  factor_label_canonicalization_decimals: 9
+clone_a_cases:
+  - {id: ca_near, forward_m: 2.4, lateral_m: 0.7, size_m: [4.6, 2.0], yaw_deg: 30.0}
+  - {id: ca_mid, forward_m: 5.4, lateral_m: 1.9, size_m: [6.4, 2.2], yaw_deg: 45.0}
+  - {id: ca_lateral, forward_m: 3.9, lateral_m: 4.2, size_m: [5.4, 2.1], yaw_deg: 40.0}
+  - {id: ca_far, forward_m: 7.9, lateral_m: 3.9, size_m: [4.4, 1.9], yaw_deg: 5.0}
+clone_b_cases:
+  - {id: cb_near, forward_m: 3.0, lateral_m: 1.2, size_m: [5.0, 2.0], yaw_deg: 40.0}
+  - {id: cb_forward, forward_m: 8.3, lateral_m: 1.2, size_m: [4.8, 2.0], yaw_deg: 20.0}
+  - {id: cb_lateral, forward_m: 3.3, lateral_m: 4.1, size_m: [6.0, 2.3], yaw_deg: 70.0}
+  - {id: cb_far, forward_m: 8.3, lateral_m: 4.1, size_m: [4.1, 1.7], yaw_deg: 5.0}
+excluded_development_cases:
+  - {forward_m: 2.2, lateral_m: 0.6, size_m: [4.3, 1.9], yaw_deg: 20.0}
+  - {forward_m: 5.2, lateral_m: 1.8, size_m: [6.8, 2.3], yaw_deg: 50.0}
+  - {forward_m: 3.7, lateral_m: 4.0, size_m: [5.0, 2.0], yaw_deg: 35.0}
+  - {forward_m: 7.7, lateral_m: 3.7, size_m: [4.0, 1.8], yaw_deg: 10.0}
+  - {forward_m: 2.9, lateral_m: 1.1, size_m: [5.2, 2.1], yaw_deg: 35.0}
+  - {forward_m: 8.1, lateral_m: 1.1, size_m: [4.6, 1.9], yaw_deg: 25.0}
+  - {forward_m: 3.1, lateral_m: 3.8, size_m: [5.8, 2.2], yaw_deg: 60.0}
+  - {forward_m: 8.1, lateral_m: 3.8, size_m: [4.2, 1.8], yaw_deg: 15.0}
+expected_episode_count: 784
+gate:
+  comparison_mode: pareto_false_safe_completion
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_false_safe_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_balanced_accuracy_gain_vs_each_at_least: 0.20
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  clone_clone_collision: ABSTAIN_EGO_CONFLICT_ONLY
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  comfort: ABSTAIN_NO_LONGITUDINAL_CONTROLLER
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+claim_boundary:
+  - exact_one_shot_confirmation_of_frozen_multi_actor_pareto_protocol
+  - new_scene0862_and_new_two_clone_cases
+  - no_parameter_gate_or_case_tuning_after_quality_read
+  - no_clone_clone_physical_collision_full_planner_or_closed_loop_claim
