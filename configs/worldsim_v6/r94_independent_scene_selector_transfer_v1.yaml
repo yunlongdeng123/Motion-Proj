@@ -1,0 +1,77 @@
+schema_version: worldsim_v6.r94_independent_scene_selector_transfer.v1
+task_id: WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01
+hypothesis_id: WS-V6-H-R94-001
+seed: 20260821
+sources:
+  r93_run: runs://worldsim_v6/WS-V6-R93-INDEPENDENT-SCENE-ACTOR-EDIT-COMPILER-01/20260821T232300Z__scene0230-actor12-edit-s20260821-r1
+  r93_manifest_sha256: 98cc497e94009d15396bc2e145cfe2528d75006c6a38b74e9cd91a3b2bff1e20
+  r93_gate_sha256: 9fcb3292321bfff0c6e2ece9cbf26f0836b87ee7d2392bb6454950bf56e63e6a
+  r93_summary_sha256: dc82fc9f4a92b188aca265c395cc391b6568c2557472de3158cb704703d9e848
+  r93_selected_proposal_sha256: f6a3e40a775279e4ddc886e97de3ff7ac3b4b24b2f2670ef8beda4b9c165db4f
+  r93_edit_sensor_comparison_sha256: 17ee687fb6b4b4f1574b62566829225270b3634041d4d58b520069391952da70
+  r93_package_manifest_sha256: 3305f351ce9ef39f128d80c7811f6764053bc9df2443c4b3d642cc01ea3f5706
+  r90_run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  r90_manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  r90_gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  r90_summary_sha256: 17821981b3523ca312c557da502c91d356bc35b140f2e1641283317c2a296633
+  r90_package_manifest_sha256: 10a1ca84df092d96bdeb3be1fcfd077087793575c0410ee9f81f6e20ac50c40a
+  r90_policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime:
+  scene: scene-0230
+  actor_id: actor_0012
+  actor_model_index: 12
+  proposal_id: scene0230_actor12_translate_x_-0.5_z_+0.0
+  translation_delta_m: [-0.5, 0.0, 0.0]
+  expected_primitive_count: 38541
+  frame_start: 0
+  frame_stop_exclusive: 196
+  frame_stride: 1
+  expected_frame_count: 196
+evaluation:
+  variants: [logged, edited]
+  rgb_keys:
+    logged: logged_rgb
+    edited: compiled_rgb
+  repeat_count: 2
+  perception_target_minimum_changed_label_pixels: 1
+  frozen_policy_threshold_pixels: 45
+  fixed_baseline_threshold_pixels: 256
+  minimum_positive_target_frames: 10
+  minimum_negative_target_frames: 10
+  minimum_transfer_precision: 0.90
+  minimum_transfer_recall: 0.90
+  minimum_transfer_f1: 0.90
+  minimum_skip_fraction: 0.20
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_sensor_worker_seconds: 1200
+  maximum_perception_worker_seconds: 1200
+  maximum_wall_seconds: 1800
+  maximum_sensor_output_bytes: 3000000000
+  maximum_perception_output_bytes: 1000000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - zero_calibration_transfer_of_scene0242_threshold45_to_independent_scene0230
+  - full196_frame_logged_edited_compiled_native_rgbd_sensor_replay_for_actor12_edit
+  - frozen_deeplab_label_change_is_the_expensive_check_target_with_two_exact_repeats
+  - selector_must_meet_preregistered_precision_recall_f1_and_skip_fraction_without_refitting
+  - perception_change_is_not_semantic_correctness_and_correlation_is_not_local_causality
+  - contact_road_dynamics_physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
