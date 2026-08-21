@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:21:00Z",
+  "updated_at_utc": "2026-08-21T11:26:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 9,
-  "active_task": "WS-V6-R10-FACTORIZED-VERIFICATION-01",
-  "active_hypothesis": "WS-V6-H-R10-001",
-  "candidate": "cross_frontend_factorized_photo_geometry_fusion",
+  "iteration": 10,
+  "active_task": "WS-V6-R11-BAKE-01",
+  "active_hypothesis": "WS-V6-H-R11-001",
+  "candidate": "typed_static_chunk_bake_with_actor_factor_abstain",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7",
+  "dev_artifact_hash": "ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "c28ef3c2e2295981ef3f51f97ada02a0600713fd4ac39afbaa52af92b243c1d8",
-  "last_reflection_id": "WS-V6-REFL-0011",
+  "last_reflection_id": "WS-V6-REFL-0012",
   "last_completed": {
-    "task_id": "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01",
-    "run": "run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1",
-    "artifact_sha256": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7"
+    "task_id": "WS-V6-R10-FACTORIZED-VERIFICATION-01",
+    "run": "run://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1",
+    "artifact_sha256": "ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -35,6 +35,7 @@
     "r9_big_lama_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
     "r9_sd15_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
     "r9_cross_frontend_verifier_arms": "done_accepted_development_p1_p2_only",
+    "r10_factorized_verification": "done_accepted_development_photo_geometry",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -43,8 +44,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "fuse_only_r9_eligible_p1_photo_and_p2_geometry",
-    "emit_accept_abstain_reject_and_factorized_validity_for_all_28_cases",
-    "proceed_to_r11_bake_only_if_r10_has_nonzero_false_safe_free_acceptance"
+    "bake_two_static_route_chunks_with_sparse_explicit_payloads",
+    "abstain_actor_and_trajectory_bake_without_semantic_dynamics_validity",
+    "verify_reload_provenance_validity_and_no_generator_runtime_dependency"
   ]
 }

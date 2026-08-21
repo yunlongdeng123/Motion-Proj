@@ -1,0 +1,53 @@
+schema_version: worldsim_v6.r11_bake.v1
+task_id: WS-V6-R11-BAKE-01
+hypothesis_id: WS-V6-H-R11-001
+seed: 20260821
+sources:
+  r10_run: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+  r10_manifest_sha256: 65792d153e7612f8abc16dac5cecd789860bd440fc6847d1449722a4b98b7060
+  r10_gate_sha256: ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364
+  r10_decisions_sha256: 7393421f4a27c301366423dab02c4fc3a704e62a90faf3e2d6be06fbb96e5f66
+  r9_run: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 212c12ccbc83a7dd987c4dcc0e36cbaa61f1268fa3f3473dfd9dbd92fba7ffde
+  r9_cases_sha256: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+  r9_per_case_arms_sha256: 862ce290455d2018a53b3eb19dfe45d5b63a8ffa5e18080435e73f09f987f68e
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_r10_accept_count: 3
+  expected_static_chunk_count: 2
+  expected_factor_incomplete_bake_abstain_count: 1
+asset_typing:
+  static_chunk_hole_types: [missing_route_support, missing_side_view]
+  static_required_factors: [photo, geometry]
+  actor_asset_hole_types: [disocclusion, actor_removal_hole]
+  actor_required_factors: [photo, geometry, semantic, dynamics]
+  trajectory_required_factors: [geometry, dynamics]
+package:
+  coordinate_space: observation_plane_512x288
+  chunk_payload: sparse_yx_rgb_uint8
+  generator_dependency_at_runtime: forbidden
+  provenance_required: true
+  validity_required: true
+  reload_exact_required: true
+gate:
+  require_all_r10_accepts_accounted: true
+  require_expected_static_chunks: true
+  require_factor_incomplete_actor_abstain: true
+  require_no_invalid_actor_or_trajectory_bake: true
+  require_payload_reload_exact: true
+  require_no_online_generator_dependency: true
+  require_provenance_and_validity_complete: true
+  require_source_proposals_immutable: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_observation_plane_patch_package
+  - static_chunks_only_when_photo_geometry_accept
+  - actor_and_trajectory_bake_abstain_without_semantic_dynamics
+  - reconstructed_source_not_new_observation
+  - no_online_generator_dependency
+  - no_training
+  - no_confirmation_read

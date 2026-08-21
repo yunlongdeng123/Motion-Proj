@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6 R10 factorized verification development PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1`，
+  source=`9262a89`；gate/summary/manifest/terminal SHA=`ecc70532...364 / 174dc8b5...868 / 65792d15...060 / 14c1a977...550`。
+- P1+P2 fusion=`3 ACCEPT / 7 ABSTAIN / 18 REJECT`；false-safe=`0`，vs P0 reduction=`0.8214`，
+  usable verified mask area=`0.09524`；semantic/dynamics 与 trajectory length 继续 ABSTAIN。
+- R11 只允许两个 static route chunks；actor-removal case 缺 semantic/dynamics，不得烘焙 actor/trajectory。
+
 ## WorldSim V6 R9 cross-frontend independent verifier arms development PASS（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1`，

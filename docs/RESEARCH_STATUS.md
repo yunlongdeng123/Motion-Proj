@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6 R10 factorized verification development PASS；R11 bake 启动（2026-08-21）
+
+- R10 canonical=`run://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1`；
+  `3 ACCEPT / 7 ABSTAIN / 18 REJECT`，accept coverage=`0.1071`，verified mask area=`0.09524`，false-safe=`0`。
+- 当前 active=`WS-V6-R11-BAKE-01`：两个 missing-route ACCEPT 可打包为显式 static chunks；一个
+  actor-removal ACCEPT 因 semantic/dynamics 仍 ABSTAIN，必须在 actor/trajectory bake 前再次 ABSTAIN。
+
 ## WorldSim V6 R9 cross-frontend arms development PASS；R10 factorized verification 启动（2026-08-21）
 
 - H-R9-003 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1`；
