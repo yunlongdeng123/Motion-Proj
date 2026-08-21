@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T12:40:00Z",
+  "updated_at_utc": "2026-08-21T12:46:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 20,
+  "iteration": 21,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-007",
-  "candidate": "factorized_target_static_roi_perception",
+  "active_hypothesis": "WS-V6-H-R13-008",
+  "candidate": "single_streetgs_actor_remove_perception_locality",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "b46f633af1d64724590bd7f8867a503101b14102b515c156c0138c0cebb063e5",
+  "dev_artifact_hash": "7fe496800d72db781f09f9b88254f4347791d42367aaa53d6acffa587264aca1",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "e49e28693eedccf0a8908812efaf5b2774ed1f1280594ace97d31ce5e1f0ed52",
-  "last_reflection_id": "WS-V6-REFL-0022",
+  "failure_ledger_sha256": "f73178c54559ceeb4ad3bddea822983e14a3789e4d6c7f549c0ab9e5a4383068",
+  "last_reflection_id": "WS-V6-REFL-0023",
   "last_completed": {
     "task_id": "WS-V6-R13-WORLDSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T123835Z__actor-sensor-perception-s20260821-r1",
-    "artifact_sha256": "b46f633af1d64724590bd7f8867a503101b14102b515c156c0138c0cebb063e5"
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T124443Z__factorized-perception-s20260821-r1",
+    "artifact_sha256": "7fe496800d72db781f09f9b88254f4347791d42367aaa53d6acffa587264aca1"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -47,6 +47,7 @@
     "r13_route_deviation_scope": "closed_accepted_development_3m_lateral_2m_forward",
     "r13_typed_dynamic_edits": "done_accepted_development_dependency_closure",
     "r13_full_frame_actor_perception_locality": "done_hypothesis_rejected_global_receptive_field",
+    "r13_remove_all_factorized_roi": "done_hypothesis_rejected_no_static_control",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -55,8 +56,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "select_frozen_target_and_static_rois_from_logged_actor_opacity",
-    "run_frozen_deeplab_twice_on_32_logged_and_edited_crops",
-    "test_factorized_rgb_and_perception_locality_without_overwriting_full_frame_rejection"
+    "select_single_streetgs_actor_from_frozen_visibility_and_point_count",
+    "render_logged_and_single_actor_removed_frames_with_checkpoint_restoration",
+    "run_frozen_perception_and_test_two_frame_target_outside_locality"
   ]
 }

@@ -3425,6 +3425,17 @@ DeepLab 推理精确复跑且峰值仅 `688MiB`。但全帧 DeepLab 在 target �
 factorized ROI 机制：固定 256px tile/128px candidate stride，只根据 logged dynamic opacity 选择最高 actor fraction target
 和与其不重叠的最低 actor fraction static tile，对两者独立执行冻结模型；full-frame rejection 永久保留，不被 ROI 结果覆盖。
 
+### V6-F38：remove-all 编辑不能为 factorized perception 提供无 actor 的静态 ROI 对照
+
+H-R13-007 canonical rejected run `20260821T124443Z__factorized-perception-s20260821-r1` 按冻结
+256px tile/128px stride，在每个 frontend/frame 选择最高 actor fraction target 与不重叠的最低 actor fraction static。
+四个 target 的 actor fraction 为 `0.753--0.936`，但四个所谓 static 仍为 `0.099--0.373`，全部超过预注册
+`0.01` 上限；static RGB MAE 也为 `0.0095--0.0267`，证明 remove-all 操作本身横跨全图，而不是 tile 选择偶然失败。
+
+不得扫描 tile 大小/stride 或放宽 static denominator。H-R13-008 改变真正的因果变量：利用 StreetGS 冻结 checkpoint 的
+per-Gaussian `point_ids` 与 `instances_fv`，只删除在两帧均可见且 Gaussian 数最多的单个 model actor；actor 选择不读取
+RGB/semantic outcome。冻结 AD-GS 不保留可审计 per-actor ID，必须 ABSTAIN，不得伪造跨 frontend 单 actor 对齐。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
