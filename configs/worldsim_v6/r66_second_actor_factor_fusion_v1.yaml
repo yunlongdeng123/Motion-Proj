@@ -1,0 +1,37 @@
+schema_version: worldsim_v6.r66_second_actor_factor_fusion.v1
+task_id: WS-V6-R66-SECOND-ACTOR-FACTOR-FUSION-01
+hypothesis_id: WS-V6-H-R66-001
+seed: 20260821
+sources:
+  r60_run: runs://worldsim_v6/WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01/20260821T193037Z__actor2-proposal-search-s20260821-r1
+  r60_manifest_sha256: a06ef5004bc6dc954c714fe945b84673af8f7e2069dc7fc4f1e7e6fd4053279a
+  r60_gate_sha256: 904d66df19509920c0c48f8a07c5e7837bd12f3720c6e3cc54313a5be9bbfc31
+  r60_selected_sha256: b75c90b4c6888ec7ef9ff5fe4ec402b2ea82523319a3bd12e5b5a2a885e25b8d
+  r61_run: runs://worldsim_v6/WS-V6-R61-SELECTED-SECOND-ACTOR-SENSOR-01/20260821T193625Z__selected-actor2-sensor-s20260821-r1
+  r61_manifest_sha256: 199110abda13801edae4e4e3b2d98256bd3d1feec9298e18db3597dcd913251b
+  r61_gate_sha256: 23ecefc39d4f1af497021008d5792140eef3b414aab253b4a8aaa4c7974e4ffa
+  r61_summary_sha256: 39a973b2105037510b996fa2f9c71c32e92d0720af0d74308de1556ef401c959
+  r65_run: runs://worldsim_v6/WS-V6-R65-BOX-FOOTPRINT-SECOND-ACTOR-CONTACT-01/20260821T201337Z__box-footprint-contact-s20260821-r1
+  r65_manifest_sha256: 0ef145f476119de6ae7de60abadb5b587a7049477b0e35c50616cd455a59f055
+  r65_gate_sha256: 2cfc252ab365111cde348f8955930f2b4ab6da804f59742ed761241f69c39d05
+  r65_summary_sha256: b378a61eac475969a8bd5da78e4d0927cbd61ab70c525efe7ae4c80540e431f9
+  r65_decisions_sha256: 51d7f8d9833f8339a44e05d638ec7cfa9cb7ffcff6df137c78d3cbb6224d035f
+expected:
+  proposal_id: actor2_translate_x_-1.0_z_+0.0
+  contact_intervention_id: actor2_r60_selected_translate_x_minus_1m
+  translation_delta_m: [-1.0, 0.0, 0.0]
+  factor_decisions:
+    renderer_execution: ACCEPT
+    self_kinematics: ACCEPT
+    aabb_interaction: ACCEPT
+    box_footprint_lidar_contact: ACCEPT
+  joint_admissibility: ACCEPT_CONFORMANCE
+resources:
+  gpu: none
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_second_actor_four_factor_conformance_fusion
+  - renderer_interaction_and_contact_factors_retain_independent_artifact_owners
+  - accept_conformance_is_not_semantic_road_full_physics_or_safety_truth
+  - dynamics_collision_response_planning_safety_and_confirmation_abstain
