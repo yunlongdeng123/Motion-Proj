@@ -3165,6 +3165,18 @@ mask 得到 0 pixels，低于预注册 `256` denominator。该目录保持 `fail
 evidence；disocclusion 对其确定性膨胀，actor-removal hole 使用原 evidence。这样 StreetGS/AD-GS 都以“实际 actor
 edit effect”而不是可选 buffer 的存在作为 denominator，其他 hole、verifier、decoy 与 gate 不变。
 
+### V6-F15：actor pseudo-hole denominator 必须先满足非空 actor-effect 证据
+
+R7 第三个失败目录 `20260821T100348Z__oracle-missing-world-s20260821-r1` 在使用 RGB/depth actor-edit evidence 后，
+scene-0048/StreetGS/frame-52 的 disocclusion mask 仍严格为 0。R3 冻结 `ACTOR_EDIT_EFFECTS.jsonl` 证实该 frontend
+在 scene-0048 的 frame 52/57 上，`actor_remove_all`、translate、time-shift 的 global effect 与 nonzero fraction
+全部为 0；因此这四个 actor-removal/disocclusion Cartesian cases 没有可构造的真实 pseudo-hole denominator。
+
+这不是 oracle verifier 的负结果。预注册 `WS-V6-H-R7-001` 因 32-case minimum experiment 无法实例化而标记
+`invalidated_pre_gate`，不倒写 gate。替代假设 `WS-V6-H-R7-002` 在 proposal 评分前冻结 eligibility：route/side
+仍保留全部 16 cases；actor/disocclusion 要求原冻结 evidence 至少 256 pixels，不合格的四项显式记录 structural
+ABSTAIN；剩余 28 oracle + 28 decoy 才进入完全相同的 verifier/bake 门禁。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
