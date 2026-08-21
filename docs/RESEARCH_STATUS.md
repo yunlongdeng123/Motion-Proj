@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6 R2 SceneIR v0 通过；R3 support-deviation 启动（2026-08-21）
+
+- `WS-V6-R2-SCENEIR-V0-01=done`，canonical run=
+  `run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1`，source=
+  `aeaa1cbee58521082d9d30e09a6288b89cb06c4c`，dirty=`false`。
+- SceneIR v0 已覆盖 typed frame、static/actor split、逐帧 `T_world_actor`、camera schema、provenance/support、
+  content-addressed blob、确定性序列化、render adapter 与 fresh-process reload。真实 StreetGS scene-0230 的
+  `1,267,870` 个 Gaussian（`23` actor）在第 `97` 帧通过 native→SceneIR→runtime view 等价；ReconDrive 标准
+  Gaussian 输出的 `4,096` primitive schema fixture 同样通过。
+- 本结论仅为 `representation_interface_only`；没有训练、模型推理或质量读取，也不构成新重建方法。当前 active=
+  `WS-V6-R3-SUPPORT-DEVIATION-01`，开始冻结至少两场景、两前端的 deviation/support/error benchmark。
+
 ## WorldSim V6 R1 capability gate 已通过；R2 SceneIR v0 执行中（2026-08-21）
 
 - `WS-V6-R1-FRONTEND-CAPABILITY-01=done`，canonical run=

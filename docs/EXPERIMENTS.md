@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6 R2 SceneIR v0 正式表示实验完成（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1`，source=
+  `aeaa1cbee58521082d9d30e09a6288b89cb06c4c`，summary/manifest/terminal SHA=
+  `98938eef...afb / bf53c172...6b8 / 77b2fd3a...1e6`。
+- StreetGS 真实 checkpoint SHA=`766648bf...cd1`：Background=`1,095,606`、RigidNodes=`172,264`、有效
+  actor=`23`；第 97 帧所有支持字段通过 `atol=rtol=2e-6` 的表示等价。SceneIR package content SHA=
+  `8b3dd8639d244a87afb864b8109a27273a59fa3f5eaa7861338915d6bde93671`。
+- ReconDrive exact source=`d2bc397b...e3c`；不运行模型，仅用其 `get_recontrast_data` 标准输出 schema 的
+  `4,096` primitive deterministic fixture 验证 static/actor split、camera、flow 与重组，content SHA=
+  `8f50be22a21d0678842e4f98b3f4201d8ff21b26e58085a953795e85970f7aff`。两 package 独立新进程重载均通过。
+- `quality_data_read=false / training=false / inference=false`；claim 仅限表示接口。next=
+  `WS-V6-R3-SUPPORT-DEVIATION-01`。
+
 ## WorldSim V6 R1 capability audit 完成；R2 解锁（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T080610Z__r1-capability-s0-r1`，

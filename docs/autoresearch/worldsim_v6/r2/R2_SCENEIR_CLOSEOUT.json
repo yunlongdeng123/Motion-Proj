@@ -1,0 +1,33 @@
+{
+  "schema_version": "worldsim_v6.r2_closeout.v1",
+  "task_id": "WS-V6-R2-SCENEIR-V0-01",
+  "status": "done",
+  "recorded_at_utc": "2026-08-21T08:31:00Z",
+  "canonical_run": "run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1",
+  "source_commit": "aeaa1cbee58521082d9d30e09a6288b89cb06c4c",
+  "source_dirty": false,
+  "artifacts": {
+    "REPRESENTATION_EQUIVALENCE.json": "d0c5576e7a2585b59104f279e274b0e128506c6f57d8a61ee269c6aceece7e9c",
+    "FRESH_PROCESS_RELOAD.json": "231de8e7e3d87a327a68a196b7e6b41e54d6e4a672ae92abda514a8317b56585",
+    "SUMMARY.json": "98938eefdd0a0054089002e05636fc682033d666e596d29e5bc82f5060e27afb",
+    "MANIFEST.json": "bf53c1721048283c6758f30cd20e2718d576b68d7519d589f2144ebc2b3576b8",
+    "TERMINAL_STATUS.json": "77b2fd3ac656fe0b27958aa9b1700240f69c148c53771540a3f71761db9711e6"
+  },
+  "gate": {
+    "optimization_frontend": "streetgs_real_checkpoint",
+    "feedforward_frontend": "recondrive_source_schema_fixture_no_inference",
+    "streetgs_primitive_count": 1267870,
+    "streetgs_actor_count": 23,
+    "representation_equivalence_passed": true,
+    "fresh_process_reload_passed": true
+  },
+  "claim_boundary": [
+    "representation_interface_only",
+    "no_new_reconstruction_method",
+    "no_training",
+    "no_model_inference",
+    "no_quality_data_read"
+  ],
+  "failure_ledger_refs": ["V6-F02"],
+  "next_task": "WS-V6-R3-SUPPORT-DEVIATION-01"
+}

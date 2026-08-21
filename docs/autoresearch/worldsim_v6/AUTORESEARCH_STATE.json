@@ -1,30 +1,31 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T08:10:00Z",
+  "updated_at_utc": "2026-08-21T08:31:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 1,
-  "active_task": "WS-V6-R2-SCENEIR-V0-01",
+  "iteration": 2,
+  "active_task": "WS-V6-R3-SUPPORT-DEVIATION-01",
   "active_hypothesis": null,
   "candidate": null,
-  "frontend": "recondrive",
+  "frontend": "streetgs_adgs",
   "dev_artifact_hash": null,
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "0b19e64441d97a6bdea3cb1346cde07f0f1b908d267e98ad0e0cfbdf0f273615",
-  "last_reflection_id": "WS-V6-REFL-0001",
+  "last_reflection_id": "WS-V6-REFL-0002",
   "last_completed": {
-    "task_id": "WS-V6-R1-FRONTEND-CAPABILITY-01",
-    "run": "run://worldsim_v6/WS-V6-R1-FRONTEND-CAPABILITY-01/20260821T080610Z__r1-capability-s0-r1",
-    "artifact_sha256": "dd10120624c8e33e6a12f6839e40226ced95a456fc80d56cad4c1810f6372957"
+    "task_id": "WS-V6-R2-SCENEIR-V0-01",
+    "run": "run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1",
+    "artifact_sha256": "d0c5576e7a2585b59104f279e274b0e128506c6f57d8a61ee269c6aceece7e9c"
   },
   "governance": {
     "g0_repo_convergence": "done",
     "g1_docs_closeout": "done",
     "g2_branch_convergence": "done",
     "g3_branch_bootstrap": "done",
-    "r1_frontend_capability": "done"
+    "r1_frontend_capability": "done",
+    "r2_sceneir_v0": "done"
   },
   "resource_contract": {
     "gpu": "single_rtx_3090_24gb",
@@ -32,9 +33,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "freeze_sceneir_v0_schema",
-    "implement_frontend_neutral_sceneir_models",
-    "implement_streetgs_and_recondrive_adapters",
-    "run_round_trip_and_negative_contract_tests"
+    "freeze_r3_two_scene_two_frontend_benchmark_profile",
+    "materialize_logged_and_deviated_camera_trajectories",
+    "measure_distance_baseline_support_and_downstream_errors",
+    "decide_support_model_vs_verifier_pivot"
   ]
 }
