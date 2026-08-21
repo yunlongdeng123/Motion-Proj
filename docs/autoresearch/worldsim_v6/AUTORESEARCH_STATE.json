@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:36:00Z",
+  "updated_at_utc": "2026-08-21T14:42:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 42,
+  "iteration": 43,
   "active_task": "WS-V6-PT8-CLOSED-LOOP-UTILITY-01",
-  "active_hypothesis": "WS-V6-H-PT8-001",
-  "candidate": "frozen_policy_kinematic_preview_controller",
+  "active_hypothesis": "WS-V6-H-PT8-002",
+  "candidate": "oracle_stratified_frozen_policy_kinematic_preview_controller",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "2f5362c908a67d04ade244fbf56fdf4f4c57ba0b46006c88cc06b36041b5ddbc",
+  "dev_artifact_hash": "d8ce1ad07b92fdcde24637de6e7f78bee6d2de924629ed742a41b14ebabb2e11",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "80f85b018af2dc9add5e1657340054fe2a95dfb7a911d214556b12ef565bff30",
-  "last_reflection_id": "WS-V6-REFL-0044",
+  "failure_ledger_sha256": "cbd9af111373f872f4d50318df0571c9bbf2eb9df75648a4c557002293613b42",
+  "last_reflection_id": "WS-V6-REFL-0045",
   "last_completed": {
-    "task_id": "WS-V6-PT7-COMPOSITIONAL-RISK-CONFIRMATION-01",
-    "run": "run://worldsim_v6/WS-V6-PT7-COMPOSITIONAL-RISK-CONFIRMATION-01/20260821T143359Z__compositional-risk-confirmation-s20260821-r1",
-    "artifact_sha256": "2f5362c908a67d04ade244fbf56fdf4f4c57ba0b46006c88cc06b36041b5ddbc"
+    "task_id": "WS-V6-PT8-CLOSED-LOOP-UTILITY-01",
+    "run": "run://worldsim_v6/WS-V6-PT8-CLOSED-LOOP-UTILITY-01/20260821T143902Z__closed-loop-utility-s20260821-r1",
+    "artifact_sha256": "d8ce1ad07b92fdcde24637de6e7f78bee6d2de924629ed742a41b14ebabb2e11"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -71,7 +71,8 @@
     "pt6_compositional_risk_h001": "done_rejected_infeasible_one_axis_incremental_gate",
     "pt6_compositional_risk_robustness": "done_accepted_development_paired_pareto_gate",
     "pt7_compositional_risk_confirmation": "done_rejected_false_safe_confirmation_consumed",
-    "pt8_closed_loop_utility": "active_pre_registered_kinematic_preview_controller",
+    "pt8_closed_loop_h001": "done_rejected_unstratified_unavoidable_hazards_and_no_gain",
+    "pt8_closed_loop_utility": "active_pre_registered_oracle_avoidable_stratification",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -80,8 +81,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_stationary_actor_kinematic_scenario_denominator",
-    "run_three_frozen_policy_arms_through_identical_preview_controller",
-    "measure_collision_safe_progress_stuck_and_comfort"
+    "commit_full_brake_oracle_feasibility_stratification",
+    "rerun_unchanged_three_arm_closed_loop_grid",
+    "retain_unavoidable_counts_and_test_incremental_gain_separately"
   ]
 }

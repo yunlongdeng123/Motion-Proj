@@ -74,7 +74,10 @@ def _uncontrolled_hazard(scenario: Mapping[str, Any], dynamics: Mapping[str, Any
 
 
 def _rollout(
-    model: Mapping[str, Any], scenario: Mapping[str, Any], dynamics: Mapping[str, Any]
+    model: Mapping[str, Any],
+    scenario: Mapping[str, Any],
+    dynamics: Mapping[str, Any],
+    force_brake: bool = False,
 ) -> dict[str, Any]:
     dt = float(dynamics["dt_seconds"])
     steps = int(round(float(dynamics["horizon_seconds"]) / dt))
@@ -98,19 +101,20 @@ def _rollout(
         if _is_collision(current_geometry, decimals):
             collided = True
             break
-        predicted_hazard = False
-        for preview_step in range(1, preview_steps + 1):
-            preview_x = ego_x + velocity * dt * preview_step
-            preview_geometry = _geometry(
-                float(scenario["actor_forward_m"]) - preview_x,
-                float(scenario["actor_lateral_m"]),
-                tuple(scenario["actor_size_m"]),
-                float(scenario["actor_yaw_deg"]),
-                ego_half,
-            )
-            if _predict_actor(model, preview_geometry):
-                predicted_hazard = True
-                break
+        predicted_hazard = force_brake
+        if not force_brake:
+            for preview_step in range(1, preview_steps + 1):
+                preview_x = ego_x + velocity * dt * preview_step
+                preview_geometry = _geometry(
+                    float(scenario["actor_forward_m"]) - preview_x,
+                    float(scenario["actor_lateral_m"]),
+                    tuple(scenario["actor_size_m"]),
+                    float(scenario["actor_yaw_deg"]),
+                    ego_half,
+                )
+                if _predict_actor(model, preview_geometry):
+                    predicted_hazard = True
+                    break
         desired_acceleration = -float(dynamics["maximum_deceleration_mps2"]) if predicted_hazard else 0.0
         jerk_limit = float(dynamics["jerk_limit_mps3"])
         delta_limit = jerk_limit * dt
@@ -139,9 +143,15 @@ def _rollout(
     }
 
 
-def _metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    hazards = [row for row in rows if row["uncontrolled_hazard"]]
+def _metrics(rows: list[dict[str, Any]], hazard_denominator: str) -> dict[str, Any]:
+    if hazard_denominator == "oracle_avoidable_only":
+        hazards = [row for row in rows if row["oracle_avoidable_hazard"]]
+    elif hazard_denominator == "all_uncontrolled_hazards":
+        hazards = [row for row in rows if row["uncontrolled_hazard"]]
+    else:
+        raise PT8ClosedLoopError(f"未知 hazard denominator: {hazard_denominator}")
     safe = [row for row in rows if not row["uncontrolled_hazard"]]
+    unavoidable = [row for row in rows if row.get("unavoidable_hazard", False)]
     hazard_success = np.asarray([not row["rollout"]["collided"] for row in hazards], dtype=int)
     safe_success = np.asarray(
         [not row["rollout"]["collided"] and row["rollout"]["safe_progress"] for row in safe],
@@ -155,6 +165,7 @@ def _metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "scenario_count": len(rows),
         "hazard_scenario_count": len(hazards),
+        "unavoidable_hazard_count": len(unavoidable),
         "safe_scenario_count": len(safe),
         "collision_rate_on_hazards": float(1.0 - hazard_success.mean()),
         "hazard_avoidance_rate": float(hazard_success.mean()),
@@ -203,6 +214,18 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 "actor_yaw_deg": float(yaw),
             }
             scenario["uncontrolled_hazard"] = _uncontrolled_hazard(scenario, config["dynamics"])
+            oracle_rollout = _rollout(
+                next(iter(policy_arms.values()))["model"],
+                scenario,
+                config["dynamics"],
+                force_brake=True,
+            )
+            scenario["oracle_avoidable_hazard"] = bool(
+                scenario["uncontrolled_hazard"] and not oracle_rollout["collided"]
+            )
+            scenario["unavoidable_hazard"] = bool(
+                scenario["uncontrolled_hazard"] and oracle_rollout["collided"]
+            )
             scenarios.append(scenario)
         arm_rows1 = {
             arm: [
@@ -218,8 +241,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             ]
             for arm, value in policy_arms.items()
         }
-        metrics1 = {arm: _metrics(rows) for arm, rows in arm_rows1.items()}
-        metrics2 = {arm: _metrics(rows) for arm, rows in arm_rows2.items()}
+        hazard_denominator = str(config.get("hazard_denominator", "all_uncontrolled_hazards"))
+        metrics1 = {arm: _metrics(rows, hazard_denominator) for arm, rows in arm_rows1.items()}
+        metrics2 = {arm: _metrics(rows, hazard_denominator) for arm, rows in arm_rows2.items()}
         _write_json(run_dir / "CLOSED_LOOP_ARMS.json", metrics1)
         _write_jsonl(
             run_dir / "CLOSED_LOOP_EPISODES.jsonl",
@@ -235,6 +259,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "frozen_policy_exact": True,
             "scenario_denominator_exact": len(scenarios) == int(config["expected_scenario_count"]),
             "both_outcomes_present": v6["hazard_scenario_count"] > 0 and v6["safe_scenario_count"] > 0,
+            "avoidable_hazard_fraction": v6["hazard_scenario_count"] / (v6["hazard_scenario_count"] + v6["unavoidable_hazard_count"]) >= float(cfg.get("require_avoidable_hazard_fraction_at_least", 0.0)),
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(cfg["require_v6_balanced_accuracy_at_least"]),
             "v6_collision_rate": v6["collision_rate_on_hazards"] <= float(cfg["require_v6_collision_rate_at_most"]),
             "v6_safe_route_completion": v6["safe_route_completion"] >= float(cfg["require_v6_safe_route_completion_at_least"]),

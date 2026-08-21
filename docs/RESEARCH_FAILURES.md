@@ -3545,3 +3545,9 @@ naive 并未获得可用策略，而是 set OR 后以 `86.73%` false-brake 换�
 H-PT7-001 canonical run `20260821T143359Z__compositional-risk-confirmation-s20260821-r1` 在 attempt 先于质量读取、policy 与 H-PT6-002 gate 均冻结、scene0862 与八个 clone case tuples 全新的合同下，评估 784 个双 clone episodes。V6 balanced accuracy `0.92333`、safe-route completion `1.0`，且仍 Pareto 支配两基线；但 600 个 hazard 中漏掉 92 个，false-safe `0.15333`，超过冻结的 `0.10` 绝对门，因此 one-shot confirmation 正式 `rejected` 并消费。
 
 不得用 scene0862 的漏检分布为该 multi-actor candidate 调 policy、case、threshold 或 gate，也不得用其余 Pareto checks 通过覆盖 false-safe failure。该 family 关闭。后续 H-PT8-001 来自此前一直显式保留的 `ABSTAIN_NO_LONGITUDINAL_CONTROLLER`，使用预注册 kinematic scenario grid 开始独立的 closed-loop utility family，不读取 PT7 badcase 生成参数。
+
+### V6-F52：closed-loop collision 分母必须区分 policy 可避免与动力学不可避免，并审计 Real-only 监督
+
+H-PT8-001 canonical run `20260821T143902Z__closed-loop-utility-s20260821-r1` 在 360 个静止单 actor、五秒、jerk-limited 纵向 scenarios 上，将三个 frozen policy arms 作为相同三秒 preview controller 的碰撞信号。V6 collision rate `0.25`、safe completion `0.9375`、comfort `1.0`、balanced accuracy `0.84375`，未过冻结门，正式 `rejected`；Real-only 与 V6 完全相同，naive balanced accuracy `0.69554`。
+
+70 个 V6 collisions 按 6/8/10m/s 为 `3/22/45`，按 15/20/25/30/35m 初距为 `41/22/7/0/0`，并随 actor size 增大，说明原 denominator 把 t=0 已无法在同一 decel/jerk contract 下停车的场景也算成 policy false-safe。同时，Real-only equality 提醒后续必须审计它继承的 factor-label supervision；不得通过调 preview horizon 掩盖 baseline equality。H-PT8-002 只加入相同 dynamics 的 t=0 full-brake oracle，把 hazards 分为 avoidable/unavoidable，保留全部计数并只在 avoidable stratum 评价 policy collision；其余均不变。

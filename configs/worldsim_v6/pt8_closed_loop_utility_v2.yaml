@@ -1,0 +1,44 @@
+schema_version: worldsim_v6.pt8_closed_loop_utility.v1
+task_id: WS-V6-PT8-CLOSED-LOOP-UTILITY-01
+hypothesis_id: WS-V6-H-PT8-002
+seed: 20260821
+frozen_policy:
+  hypothesis_id: WS-V6-H-PT3-007
+  policy_arms_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1/POLICY_ARMS.json
+  policy_arms_sha256: 5e958fa28b095a9203359131ed891edd9c348b7eb07420fa1c42d1335a174131
+scenario_grid:
+  initial_speeds_mps: [6.0, 8.0, 10.0]
+  actor_forward_m: [15.0, 20.0, 25.0, 30.0, 35.0]
+  actor_lateral_m: [0.5, 1.5, 2.5, 3.5]
+  actor_sizes_m: [[4.2, 1.9], [6.0, 2.2], [8.5, 2.7]]
+  actor_yaw_deg: [15.0, 45.0]
+expected_scenario_count: 360
+hazard_denominator: oracle_avoidable_only
+dynamics:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  dt_seconds: 0.1
+  horizon_seconds: 5.0
+  preview_seconds: 3.0
+  maximum_deceleration_mps2: 4.0
+  jerk_limit_mps3: 2.5
+  comfort_jerk_limit_mps3: 3.0
+  safe_progress_fraction: 0.90
+  label_canonicalization_decimals: 9
+gate:
+  require_avoidable_hazard_fraction_at_least: 0.50
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_collision_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_v6_comfort_rate_at_least: 0.99
+  require_balanced_accuracy_gain_vs_each_at_least: 0.20
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - development_stationary_single_actor_kinematic_preview_controller
+  - same_360_scenarios_policy_controller_and_absolute_gates_as_hpt8_001
+  - oracle_full_brake_only_stratifies_avoidable_and_unavoidable_hazards
+  - unavoidable_collisions_reported_but_excluded_from_policy_false_safe_denominator
+  - no_real_vehicle_dynamics_multi_actor_lane_change_or_physical_safety_claim
