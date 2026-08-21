@@ -3698,3 +3698,9 @@ H-R62-001 第二次正式启动 `20260821T194557Z__actor2-lidar-contact-s2026082
 H-R62-001 canonical run `20260821T194813Z__actor2-lidar-contact-s20260821-r1` 在 frame98 从三相机重复提取出完全一致的 `7,183` 个静态 logged-LiDAR world points，actor2 的13,490 primitives、生命周期、R60 proposal 与全部 authority 均精确绑定。但冻结2m局部查询在 logged 与 `[-1,0,0]m` 编辑中心附近都得到0个候选，最近水平距离分别为 `4.1758m` 与 `3.9666m`，因此两者 contact error 都不可计算并正式 `REJECT`。这证明的是单帧稀疏 support 不足，不是编辑破坏地面接触。
 
 不得放宽2m半径、降低32点分母、增大0.35m误差阈值、删除 logged baseline 控制，或把两个 REJECT 宣称为编辑无效。H-R63-001 固定使用 target frame98 前后各10帧的对称21帧窗口 `[88,108]`，逐帧排除 dynamic pixels、提升到同一 world frame，并沿用已接受 R13 的0.05m deterministic voxel union；随后完全复用 R40 的 quantile/radius/denominator/error 阈值评价同一个 logged/selected pair。semantic road、physics、planning 与 safety 继续 ABSTAIN。
+
+### V6-F78：相机投影 LiDAR 子集的时间融合仍可能无法覆盖远距 actor 接触邻域
+
+H-R63-001 canonical run `20260821T195625Z__temporal-lidar-contact-s20260821-r1` 精确保留 R62 frame98 support，并从冻结21帧三相机数据得到 `149,723` 个 raw projected static observations、0.05m 去重后 `25,798` 个 world points；worker 双提取、坐标、窗口和 source gates 全部通过。但 logged 与 selected actor2 的2m邻域仍各为0点，两个 contact 均正式 `REJECT`。actor2 是 `vehicle.car` 且88--108帧间移动约 `1.97m`，因此失败说明相机投影稀疏子集在远距/遮挡区域不能承担 contact map，而不是简单增加同类帧数即可修复。
+
+不得扩大投影时间窗、放宽 contact gates 或用环带高度挑选靠近 actor anchor 的平面。H-R64-001 改用同一 processed scene 的21帧360度 raw LiDAR，按每帧全部标注3D box加0.10m固定边界排除动态点，再做0.05m world voxel union；45个 raw/pose/box 输入以预先计算的聚合 SHA256 冻结。contact evaluator、logged baseline、selected proposal与全部阈值保持不变，semantic road、physics、planning与safety继续ABSTAIN。

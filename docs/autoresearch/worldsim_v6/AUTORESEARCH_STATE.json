@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T19:51:53Z",
+  "updated_at_utc": "2026-08-21T20:01:58Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 103,
-  "active_task": "WS-V6-R63-TEMPORAL-SECOND-ACTOR-LIDAR-CONTACT-01",
-  "active_hypothesis": "WS-V6-H-R63-001",
-  "candidate": "symmetric_21_frame_temporal_static_lidar_world_map_contact",
+  "iteration": 104,
+  "active_task": "WS-V6-R64-RAW-LIDAR-SECOND-ACTOR-CONTACT-01",
+  "active_hypothesis": "WS-V6-H-R64-001",
+  "candidate": "box_filtered_360_raw_lidar_temporal_contact",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "23ecefc39d4f1af497021008d5792140eef3b414aab253b4a8aaa4c7974e4ffa",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "d93077453818376267d961c6f36fedcb93b15cc6f45680a2da008a7e4023ea87",
-  "last_reflection_id": "WS-V6-REFL-0105",
+  "failure_ledger_sha256": "64679f18cf9a1c6e1eafb46336688bd202c388ee2a391ca77a6efe93d33d4689",
+  "last_reflection_id": "WS-V6-REFL-0106",
   "last_completed": {
-    "task_id": "WS-V6-R62-SELECTED-SECOND-ACTOR-LIDAR-CONTACT-01",
-    "run": "run://worldsim_v6/WS-V6-R62-SELECTED-SECOND-ACTOR-LIDAR-CONTACT-01/20260821T194813Z__actor2-lidar-contact-s20260821-r1",
-    "artifact_sha256": "9c2e3d70cf37416e9b1a3bf0b04b4c931a25704f38a23b5cbfc6b580f41f3859"
+    "task_id": "WS-V6-R63-TEMPORAL-SECOND-ACTOR-LIDAR-CONTACT-01",
+    "run": "run://worldsim_v6/WS-V6-R63-TEMPORAL-SECOND-ACTOR-LIDAR-CONTACT-01/20260821T195625Z__temporal-lidar-contact-s20260821-r1",
+    "artifact_sha256": "b06c2928f4a8a3559eace8c682f0c3b1c9ce6f1d2a8ccfce6564a5d8c646158d"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -122,7 +122,8 @@
     "r60_second_actor_proposal_search": "done_accepted_development_12_of_80_selected_minus_x",
     "r61_selected_second_actor_sensor": "done_accepted_development_21401_changed_pixels",
     "r62_selected_second_actor_lidar_contact": "done_rejected_v6_f77_zero_local_single_frame_lidar",
-    "r63_temporal_second_actor_lidar_contact": "active_pre_registered",
+    "r63_temporal_second_actor_lidar_contact": "done_rejected_v6_f78_camera_projected_temporal_support_empty",
+    "r64_raw_lidar_second_actor_contact": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -131,8 +132,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "extract_fixed_frames88_to108_three_camera_static_lidar_in_one_frozen_worker",
-    "build_deterministic_world_005m_voxel_union_without_contact_threshold_changes",
-    "evaluate_logged_and_r60_selected_actor2_against_the_temporal_support_map"
+    "load_frozen_frames88_to108_raw_360_lidar_and_aligned_poses",
+    "remove_all_annotated_dynamic_boxes_with_fixed_010m_margin_and_voxelize_at005m",
+    "evaluate_logged_and_selected_actor2_with_unchanged_r40_contact_gates"
   ]
 }
