@@ -3527,3 +3527,9 @@ H-PT3-004 canonical run `20260821T135942Z__factorized-policy-training-s20260821-
 H-PT3-005 canonical run `20260821T140408Z__factorized-policy-training-s20260821-r1` 只把两个 logistic factor heads 改为正负类别总权重各半，其余数据、特征、三臂和 gate 均不变。V6 heldout balanced accuracy 降为 `0.82294`，false-safe 升为 `0.24746`，completion 为 `0.89334`；naive false-safe 也由 `1.0` 变为 `0.67863`，导致相对 naive 的 reduction 只有 `0.43116`。所有冻结质量门仍未通过，正式 `rejected`。
 
 两个 V6 head 的 train balanced accuracy 仍只有 `0.97503/0.96014`，说明仅重加权有限步 smooth BCE 并没有形成稳定分离 margin；它改变了错误权衡，却没有消除训练边界错误。H-PT3-006 保持相同 denominator、raw feature 和原 gate，改用 deterministic class-balanced linear max-margin heads，并保留两 head AND。不得再通过类别权重或阈值扫描恢复。
+
+### V6-F49：可分训练集上的最大间隔仍受离散 intervention 支持分辨率约束
+
+H-PT3-006 canonical run `20260821T140847Z__factorized-policy-training-s20260821-r1` 使用相同 raw features 与 multi-size/multi-yaw 分母，将两个 factor heads 换为 class-balanced linear max-margin。V6 的 forward、lateral 与 joint train balanced accuracy 均为 `1.0`；heldout false-safe 降到 `0.05226`，相对 Real-only/naive 的 reduction 为 `0.66264/0.62637`，三项均过门。但 safe-route completion 只有 `0.84790`，balanced accuracy `0.89782`，仍未通过冻结门，正式 `rejected`。
+
+原 train position 只有 forward `0/2/4/6/8` × lateral `0/1/2/3`，即使训练完全可分，最大间隔也可落在相邻采样位置之间；heldout 恰使用离散半步位置，暴露 `15.21%` false brake。H-PT3-007 只加密 train position denominator，新增位置全部与 heldout position set 离散，保持 size/yaw、heldout、features、SVM 和 gate 不变。不得调 SVM threshold 或删除 near-boundary heldout rows。

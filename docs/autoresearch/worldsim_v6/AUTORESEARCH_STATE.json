@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:07:00Z",
+  "updated_at_utc": "2026-08-21T14:11:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 35,
+  "iteration": 36,
   "active_task": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT3-006",
-  "candidate": "max_margin_multi_size_yaw_factorized_box_policy",
+  "active_hypothesis": "WS-V6-H-PT3-007",
+  "candidate": "dense_position_max_margin_multi_size_yaw_factorized_box_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "87ef7b7254aef25e8d92b0f4e633e6aa90db738c322a4c3598b10e8a4792b109",
+  "dev_artifact_hash": "c52ccf345269e8aac8fe05bc2e3763fd396f362ac9acd6cbea40cce0b28ed453",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "9e718d4f0699a44a37a0f1bd612801e2a8a8052ea50c9e0a433dfd7b46fae4dc",
-  "last_reflection_id": "WS-V6-REFL-0037",
+  "failure_ledger_sha256": "c11e567d990d6a0d80ae8435059dd7e001a3e57f887596302e8adcb4056d8b9d",
+  "last_reflection_id": "WS-V6-REFL-0038",
   "last_completed": {
     "task_id": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T140408Z__factorized-policy-training-s20260821-r1",
-    "artifact_sha256": "87ef7b7254aef25e8d92b0f4e633e6aa90db738c322a4c3598b10e8a4792b109"
+    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T140847Z__factorized-policy-training-s20260821-r1",
+    "artifact_sha256": "c52ccf345269e8aac8fe05bc2e3763fd396f362ac9acd6cbea40cce0b28ed453"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -62,7 +62,8 @@
     "pt3_single_size_factor_heads_h003": "done_rejected_extent_coefficient_shift",
     "pt3_multi_size_yaw_factor_heads_h004": "done_rejected_unbalanced_objective",
     "pt3_class_balanced_factor_heads_h005": "done_rejected_no_separating_margin",
-    "pt3_factorized_intervention_policy_training": "active_pre_registered_max_margin_heads",
+    "pt3_max_margin_factor_heads_h006": "done_rejected_coarse_position_support",
+    "pt3_factorized_intervention_policy_training": "active_pre_registered_dense_position_support",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -71,7 +72,7 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_max_margin_factor_heads_on_frozen_position_size_yaw_interventions",
+    "train_max_margin_factor_heads_on_dense_disjoint_position_interventions",
     "evaluate_the_unchanged_disjoint_grid_on_scene0048",
     "retain_original_policy_robustness_and_incremental_gain_gates"
   ]
