@@ -1,0 +1,61 @@
+schema_version: worldsim_v6.r77_third_actor_edit_proposal.v1
+task_id: WS-V6-R77-THIRD-ACTOR-EDIT-PROPOSAL-01
+hypothesis_id: WS-V6-H-R77-001
+seed: 20260821
+sources:
+  r76_run: runs://worldsim_v6/WS-V6-R76-THIRD-ACTOR-SENSOR-EQUIVALENCE-01/20260821T212646Z__actor5-sensor-s20260821-r1
+  r76_manifest_sha256: e1ac6d12917e2c930577cb81783cb43ef43ee6efd3e9538dfe72ce2dcaab80cd
+  r76_gate_sha256: d7dda14901bd5cc43289a8491ecbe39bccbc16b12764bab13496713da3b417c4
+  r76_summary_sha256: 791681784ab74ad95a04f4258b6c10b5ba6606be2f0389f8fd3b63f13af412e0
+  r76_frame57_sensor: worker/sensors/frame057.npz
+  r76_frame57_sensor_sha256: bf74701588bdc3a9bf313372ce8642fcf5bfae56c2931e3d2c4835fe3ca8a1e4
+  r75_run: runs://worldsim_v6/WS-V6-R75-THIRD-ACTOR-RIGID-TRAJECTORY-01/20260821T212335Z__actor5-trajectory-s20260821-r1
+  r75_gate_sha256: 3b644ea6407ce5329e75b5eda73c641b85fe19a7bc9938adf0de8bb04219d325
+  r75_package_manifest_sha256: 7311894a7b27b61981c126a08aa97e4b2d870ec6ad1fc476284cfedfdadaa420
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+cohort:
+  actor_id: actor_0005
+  actor_model_index: 5
+  expected_actor_count: 27
+  expected_trajectory_rows: 196
+  timestamp_step_seconds: 0.1
+search:
+  x_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  z_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  expected_candidate_count: 80
+  minimum_translation_norm_m: 0.5
+  selection_rule: minimum_translation_norm_then_lexicographic_x_z_among_zero_new_overlap_candidates
+  sensor_frame_index: 57
+  rgb_change_epsilon: 0.000001
+  minimum_changed_rgb_pixels_vs_logged: 256
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 180
+  maximum_wall_seconds: 240
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_third_actor_interaction_safe_visible_translation_edit
+  - frozen80_candidate_xz_grid_and_full27_actor196_frame_aabb_factor
+  - selected_by_minimum_norm_then_lexicographic_rule_before_sensor_render
+  - selected_edit_must_change_frame57_sensor_and_match_native_renderer
+  - contact_road_semantic_identity_dynamics_physical_planning_safety_and_confirmation_abstain
