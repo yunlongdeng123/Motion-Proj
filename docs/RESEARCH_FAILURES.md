@@ -3223,6 +3223,18 @@ checkpoint 继续以 `weights_only=True` 读取，后续仍只消费 `state_dict
 不执行 callback，也不改变任何正式实验变量。若归档再暴露未预注册类型则继续 fail-closed，禁止切回
 不受限反序列化来绕过门控。
 
+### V6-F20：safe-global 修复必须基于静态完整清单，不能逐异常猜测
+
+R8 第四轮正式目录 `20260821T104432Z__frozen-generator-s20260821-r1` 在白名单化
+`ModelCheckpoint` 后继续 fail-closed，下一项未注册类型为 `omegaconf.dictconfig.DictConfig`；
+SD-v1.5 仍完整通过而双候选执行门仍失败。逐次靠异常暴露类型会无意义地重复正式运行。
+
+修复先用 `zipfile + pickletools` 静态读取官方 checkpoint 的 `data.pkl` GLOBAL 指令，不执行
+反序列化；完整非内建清单只有 OmegaConf 的 `ContainerMetadata/Metadata/DictConfig/ListConfig/AnyNode`、
+`typing.Any` 和已知 `ModelCheckpoint`，其余为 PyTorch tensor/标准容器重建函数。adapter 一次性白名单化
+这些精确类型后仍使用 `weights_only=True`，实验变量与选择规则不变。以后同类归档应先做静态类型清单，
+再建立最小安全白名单，避免把正式 run 当依赖探针。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

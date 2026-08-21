@@ -15,6 +15,10 @@ from typing import Any, Callable
 import numpy as np
 import torch
 from omegaconf import OmegaConf
+from omegaconf.base import ContainerMetadata, Metadata
+from omegaconf.dictconfig import DictConfig
+from omegaconf.listconfig import ListConfig
+from omegaconf.nodes import AnyNode
 from PIL import Image
 
 
@@ -58,7 +62,17 @@ def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.nda
     callbacks_stub.model_checkpoint = model_checkpoint_stub
     sys.modules.setdefault("pytorch_lightning.callbacks", callbacks_stub)
     sys.modules.setdefault("pytorch_lightning.callbacks.model_checkpoint", model_checkpoint_stub)
-    torch.serialization.add_safe_globals([checkpoint_type])
+    torch.serialization.add_safe_globals(
+        [
+            checkpoint_type,
+            ContainerMetadata,
+            Metadata,
+            DictConfig,
+            ListConfig,
+            AnyNode,
+            Any,
+        ]
+    )
     sys.path.insert(0, str(source))
     from saicinpainting.training.modules import make_generator
 
