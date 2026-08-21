@@ -1,23 +1,24 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T08:40:00Z",
+  "updated_at_utc": "2026-08-21T09:27:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 2,
-  "active_task": "WS-V6-R3-SUPPORT-DEVIATION-01",
-  "active_hypothesis": "WS-V6-H-R3-001",
-  "candidate": "analytic_position_angle_observation_support_v1",
-  "frontend": "streetgs_adgs",
-  "dev_artifact_hash": null,
+  "iteration": 3,
+  "active_task": "WS-V6-R4-DETERMINISTIC-RUNTIME-01",
+  "active_hypothesis": null,
+  "candidate": "deterministic_sceneir_runtime_v0",
+  "frontend": "sceneir_v0",
+  "dev_artifact_hash": "7ead0a6cef1a577c62ce12a9a95df032fdb0cea922dfc2110f879953b0d3b67d",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "0b19e64441d97a6bdea3cb1346cde07f0f1b908d267e98ad0e0cfbdf0f273615",
-  "last_reflection_id": "WS-V6-REFL-0002",
+  "failure_ledger_sha256": "729b8c4769b6e31a7e30733acd024b0567c0da4f79c2795aecc5369994beda8c",
+  "last_reflection_id": "WS-V6-REFL-0003",
   "last_completed": {
-    "task_id": "WS-V6-R2-SCENEIR-V0-01",
-    "run": "run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1",
-    "artifact_sha256": "d0c5576e7a2585b59104f279e274b0e128506c6f57d8a61ee269c6aceece7e9c"
+    "task_id": "WS-V6-R3-SUPPORT-DEVIATION-01",
+    "run": "run://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1",
+    "artifact_sha256": "7ead0a6cef1a577c62ce12a9a95df032fdb0cea922dfc2110f879953b0d3b67d",
+    "method_outcome": "rejected"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -25,7 +26,8 @@
     "g2_branch_convergence": "done",
     "g3_branch_bootstrap": "done",
     "r1_frontend_capability": "done",
-    "r2_sceneir_v0": "done"
+    "r2_sceneir_v0": "done",
+    "r3_support_deviation": "done_hypothesis_rejected"
   },
   "resource_contract": {
     "gpu": "single_rtx_3090_24gb",
@@ -33,8 +35,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "materialize_development_adapter_and_logged_deviated_camera_trajectories",
-    "measure_distance_baseline_support_and_downstream_errors",
-    "decide_support_model_vs_verifier_pivot"
+    "freeze_deterministic_runtime_episode_action_sensor_contract",
+    "execute_same_sceneir_package_in_three_fresh_processes",
+    "compare_exact_world_state_labels_chunks_and_actor_trajectory"
   ]
 }

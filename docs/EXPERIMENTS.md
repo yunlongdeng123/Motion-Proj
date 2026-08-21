@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6 R3 support-deviation 正式实验完成 / hypothesis rejected（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1`；
+  render source=`20260821T091503Z__support-deviation-s20260821-r1@5144426e`，analysis=`00d26348`；
+  ranking/summary/manifest/terminal SHA=`7ead0a6c...67d / 9dd3d767...50c / e866dae3...acc / 7f401392...a78`。
+- scene-0242/0048 × StreetGS/AD-GS × frame 52/57，lateral=`0/0.5/1/2/3/5 m`，另含 forward 2 m 与
+  actor remove/translate 1 m/trajectory +2 frames。80/80 render hash recovery 复核通过；checkpoint exact immutable。
+- aggregate downstream error 随 lateral offset 均值从 `0.167773` 增至 `0.296806`；四个 scene/frontend group 的
+  support ordering 均为正。但 support Spearman=`0.352456`、distance=`0.353105`、gain=`-0.000649`、
+  residual=`0.056063`，故冻结 gate=`FAIL`，method=`reject_or_revise_analytic_support_before_any_learned_model`。
+- AD-GS depth 与 StreetGS depth convention 不直接等价，AD-GS forward relative-depth proxy 约 `0.982`；因此 R3
+  只作 sparse observation/cross-frontend development benchmark，不宣称 dense GT、跨 frontend metric calibration
+  或安全闭环。actor edits 均产生非零 effect，但不是质量/真实性证明。
+- engineering failures=`V6-F06`–`V6-F10`；每个旧 run 保持 failed。资源通过，下一步=
+  `WS-V6-R4-DETERMINISTIC-RUNTIME-01`。
+
 ## WorldSim V6 R2 SceneIR v0 正式表示实验完成（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1`，source=

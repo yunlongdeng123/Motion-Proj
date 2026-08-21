@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6 R3 已完成但 support 假设被拒绝；R4 deterministic runtime 启动（2026-08-21）
+
+- `WS-V6-R3-SUPPORT-DEVIATION-01=done`，canonical analysis recovery=
+  `run://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T092516Z__support-deviation-analysis-recovery-s20260821-r1`；
+  两个 development scenes、StreetGS/AD-GS、48 个 lateral case、24 个 actor-edit effect 与 8 个 forward case 完整，
+  confirmation 未读、training=false，renderer peak reserved=`2,318 MiB`。
+- 假设 `WS-V6-H-R3-001=rejected`：support/distance Spearman=`0.352456/0.353105`，gain=`-0.000649`
+  未过 `0.05`，distance-residual=`0.056063` 未过 `0.10`；不得训练 learned support，也不得事后调门槛。
+  deviation failure structure 可测，但当前 support certificate 没有距离之外的有效增益。
+- 原始全渲染 failed run=`20260821T091503Z__support-deviation-s20260821-r1` 保持 failed；recovery 逐项重算 80 个
+  render SHA 并核对 checkpoint 前后不变、无训练/无确认集后才汇总，见 `V6-F10`。此前 adapter/loader/设备失败
+  见 `V6-F06`–`V6-F09`，均未改写旧 terminal。
+- learned-support 方向关闭；当前 active=`WS-V6-R4-DETERMINISTIC-RUNTIME-01`，完成 V6.0 deterministic gate 后
+  转 provenance/verifier，不把 R3 的 sparse/cross-frontend proxy 写成 dense novel-view ground truth。
+
 ## WorldSim V6 R2 SceneIR v0 通过；R3 support-deviation 启动（2026-08-21）
 
 - `WS-V6-R2-SCENEIR-V0-01=done`，canonical run=
