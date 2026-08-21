@@ -1,0 +1,35 @@
+schema_version: worldsim_v6.r44_verified_actor_proposal_bake.v1
+task_id: WS-V6-R44-VERIFIED-ACTOR-PROPOSAL-BAKE-01
+hypothesis_id: WS-V6-H-R44-001
+seed: 20260821
+sources:
+  r43_run: runs://worldsim_v6/WS-V6-R43-SELECTED-ACTOR-PROPOSAL-SENSOR-01/20260821T175642Z__selected-sensor-s20260821-r1
+  r43_manifest_sha256: 79d43a7db4caa00b9b51ee1defc6e770fed6f529f72d557f837c7bda4fbfe993
+  r43_gate_sha256: fbacda7092bc392ed3fc63d24b4a232e7da95fe9d2750cd6610f53c418450915
+  r43_summary_sha256: f90d51c9d9d6d326075095d204d60379180e4324aa6dfc8f736aca9497ca7091
+  r43_verified_proposal_sha256: d804843e657bb660728e91cef5c47887a32a39ef62ee0ae5ed1ddb820cc77c88
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  r35_trajectory_geometry_sha256: 524e95e9a3bb7e62c6989e8b06c8491280fbc770fe3731fb228d511a970b1297
+bake_contract:
+  asset_id: actor_0000
+  proposal_id: translate_world_x_m1p0_z_m0p5
+  translation_delta_m: [-1.0, 0.0, -0.5]
+  expected_trajectory_rows: 196
+  expected_actor_primitives: 12390
+  maximum_translation_bake_error_m: 0.000001
+  package_status: baked_verified_development_proposal
+  package_schema: worldsim_v6.r44_baked_actor_package.v1
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_typed_bake_of_one_factor_and_renderer_verified_actor_translation
+  - self_contained_actor_gaussian_and_196_state_world_trajectory_package
+  - byte_exact_repeat_bake_and_content_addressed_shifted_means
+  - bake_preserves_factor_and_renderer_evidence_without_promoting_truth
+  - semantic_road_collision_physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
+
