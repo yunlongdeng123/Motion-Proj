@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T21:56:36Z",
+  "updated_at_utc": "2026-08-21T22:02:10Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 126,
-  "active_task": "WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01",
-  "active_hypothesis": "WS-V6-H-R82-003",
-  "candidate": "actor0_actor2_actor5_content_addressed_scene_patch",
+  "iteration": 127,
+  "active_task": "WS-V6-R83-THREE-ACTOR-SCENE-SENSOR-RUNTIME-01",
+  "active_hypothesis": "WS-V6-H-R83-001",
+  "candidate": "three_actor_shared_sensor_runtime_frame57",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "418c6a0de2d8007d97216604a7f852845d28dfaaeabd3c8de2c8282390f466e4",
+  "dev_artifact_hash": "66b0c9784ac462e6e30ea086e3d85acfc18918629bc4626f23698fc509c3dfc2",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "f692e2e016e2a12c6f411ee3fa072c15f71b5b077c42eb35de021d86a0d6709b",
-  "last_reflection_id": "WS-V6-REFL-0128",
+  "last_reflection_id": "WS-V6-REFL-0129",
   "last_completed": {
-    "task_id": "WS-V6-R81-THREE-ACTOR-JOINT-INTERACTION-01",
-    "run": "run://worldsim_v6/WS-V6-R81-THREE-ACTOR-JOINT-INTERACTION-01/20260821T215002Z__three-actor-joint-s20260821-r1",
-    "artifact_sha256": "418c6a0de2d8007d97216604a7f852845d28dfaaeabd3c8de2c8282390f466e4"
+    "task_id": "WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01",
+    "run": "run://worldsim_v6/WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T215814Z__three-actor-package-s20260821-r1",
+    "artifact_sha256": "66b0c9784ac462e6e30ea086e3d85acfc18918629bc4626f23698fc509c3dfc2"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -141,7 +141,8 @@
     "r79_third_actor_factor_fusion": "done_accepted_development_four_factor_accept_conformance",
     "r80_transform_owned_third_actor_bake": "done_accepted_development_actor5_explicit_eight_arrays",
     "r81_three_actor_joint_interaction": "done_accepted_development_zero_new_joint_overlap",
-    "r82_three_actor_scene_package_bake": "active_pre_registered_retry_v6_f84_hypothesis_binding_only",
+    "r82_three_actor_scene_package_bake": "done_accepted_development_repeat_exact_h_r82_003",
+    "r83_three_actor_scene_sensor_runtime": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -150,9 +151,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "correct_only_the_r82_yaml_hypothesis_id_binding",
-    "preserve_all_verified_r82_package_inputs_denominators_bytes_and_gates",
-    "retry_from_clean_pushed_source_without_promoting_the_noncanonical_passed_run",
-    "if_accepted_run_three_actor_shared_sensor_runtime"
+    "render_frame57_with_actor0_actor2_actor5_transforms_and_lifecycles_owned_by_r82_package",
+    "require_each_actor_independent_visible_support_and_nontrivial_joint_change_vs_logged_sensor",
+    "compare_compiled_and_native_shared_sensor_arrays_and_repeat_exactness",
+    "if_accepted_test_actor5_incremental_frozen_perception_change_over_r71_two_actor_sensor"
   ]
 }

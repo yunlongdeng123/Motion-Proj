@@ -1,0 +1,79 @@
+schema_version: worldsim_v6.r83_three_actor_scene_sensor_runtime.v1
+task_id: WS-V6-R83-THREE-ACTOR-SCENE-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R83-001
+seed: 20260821
+sources:
+  r82_run: runs://worldsim_v6/WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T215814Z__three-actor-package-s20260821-r1
+  r82_manifest_sha256: 9367d1a3652ec20f41464d50ffd7d8df8c5e7a2cca980b5020abdd798055d519
+  r82_gate_sha256: 66b0c9784ac462e6e30ea086e3d85acfc18918629bc4626f23698fc509c3dfc2
+  r82_summary_sha256: 951673d0e5c57d59144df05405a5ed66f9c5ca7fb0924f3a4998801ac9d077c4
+  r82_scene_package_manifest_sha256: af4721bf97e61fcb6393a9ba60458efb5e564809aa602b1f3dd84b6c51a0ae4f
+  r82_scene_composition_sha256: 9d7f82bc0e7974b27ca0aa0f06dfce4ca83dd19312b78ff7ec481c688edce7bb
+  r82_runtime_contract_sha256: 67fca3f2efc04097ca5934ed3af37e6788aa5c6e77e0d616e231fbc6c27d8aff
+  r82_validity_sha256: e0fbe9415076666baea8942b83ea278236f3744dfdda8c0fd1f8d3ec005f4151
+  baseline_run: runs://worldsim_v6/WS-V6-R36-ACTOR-SENSOR-EQUIVALENCE-01/20260821T165828Z__sensor-equivalence-s20260821-r1
+  baseline_manifest_sha256: 0f24d4e84f854f2fa3bea4a025e253cfaab8ffded02d63fe55ccff1ccacfedf3
+  baseline_gate_filename: R36_GATE.json
+  baseline_gate_sha256: e19b7fbc73d2180c3293630c2a89b68f4fe620e90471f4f3f889dc063cfd38ae
+  baseline_summary_sha256: 53315c061d05d95ac10c15228c2b1d4fb05b65a05e1817521445f4555419c4dc
+  baseline_sensor: worker/sensors/frame057.npz
+  baseline_sensor_sha256: 2c42449bc9a13f928471caf431eb05981a49b58843288ddc856209d7f5a6b89e
+  selection_r71_run: runs://worldsim_v6/WS-V6-R71-TWO-ACTOR-SCENE-SENSOR-RUNTIME-01/20260821T210224Z__two-actor-sensor-s20260821-r1
+  selection_r71_gate_sha256: 6a74165d8ffc2a919a4135305641a9baa4bae99cfade40dddac7263fe6e19ea7
+  selection_r71_summary_sha256: 8ca82e4e46a7a75003cc2a4095d799a1d6e49591b420bd2937432f0d9fcd684f
+  selection_r71_joint_sensor_effect_sha256: f9cc41046820c8d701f6fcde4b93ce37da63989c404cce7704ccbcb5f5d17775
+  selection_r73_run: runs://worldsim_v6/WS-V6-R73-THIRD-ACTOR-VISIBILITY-SELECTION-01/20260821T211550Z__third-actor-visibility-s20260821-r1
+  selection_r73_gate_sha256: cef851d408e02b6243798fd5b5165907ebf0b7709e2a327c50b57469738d5231
+  selection_r73_summary_sha256: 1b5a0f8ed1a492c3cf1526e44f03420c180a8de955d0e192146c1b829aa0690e
+  selection_r73_selection_sha256: 4dc379c4c3cca26f64395d0404a3fed6de9ab2167af2b66f588000cc0515e174
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  runtime_mode: multi_actor_transform_lifecycle_owned_scene_patch
+  frame_index: 57
+  actor_ids: [actor_0000, actor_0002, actor_0005]
+  actor_model_indices: [0, 2, 5]
+  proposal_ids: [translate_world_x_m1p0_z_m0p5, actor2_translate_x_-1.0_z_+0.0, actor5_translate_x_+0.5_z_+0.0]
+  translations_m:
+    actor_0000: [-1.0, 0.0, -0.5]
+    actor_0002: [-1.0, 0.0, 0.0]
+    actor_0005: [0.5, 0.0, 0.0]
+  expected_frame_validity:
+    actor_0000: true
+    actor_0002: true
+    actor_0005: true
+  expected_primitives:
+    actor_0000: 12390
+    actor_0002: 13490
+    actor_0005: 8377
+  required_translation_source: nested_package_transform_trajectory
+  required_lifecycle_source: nested_package_actor_frame_validity
+thresholds:
+  rgb_change_epsilon: 0.000001
+  minimum_joint_changed_rgb_pixels_vs_logged: 256
+  minimum_joint_actor_effect_pixels: 256
+  minimum_per_actor_effect_pixels: 32
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 330
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_shared_sensor_runtime_from_r82_three_actor_scene_edit_package
+  - frame57_is_frozen_from_r71_two_actor_and_r73_actor5_positive_visible_support
+  - native_authority_applies_all_three_actor_translations_in_one_checkpoint_state
+  - compiled_path_replaces_all_three_owned_actor_fields_then_renders_one_shared_scene
+  - all_three_nested_package_transforms_and_lifecycles_are_consumed_without_cli_edit_side_channels
+  - every_actor_must_have_independent_visible_support_and_joint_edit_must_change_logged_sensor
+  - joint_aabb_conformance_is_preserved_but_semantic_collision_physics_dynamics_planning_safety_and_confirmation_abstain
