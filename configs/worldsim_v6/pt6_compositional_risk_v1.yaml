@@ -1,0 +1,55 @@
+schema_version: worldsim_v6.pt6_compositional_risk.v1
+task_id: WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01
+hypothesis_id: WS-V6-H-PT6-001
+seed: 20260821
+frozen_policy:
+  hypothesis_id: WS-V6-H-PT3-007
+  policy_arms_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1/POLICY_ARMS.json
+  policy_arms_sha256: 5e958fa28b095a9203359131ed891edd9c348b7eb07420fa1c42d1335a174131
+dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+development_scene:
+  scene: scene-0450
+  scene_index: 364
+  instances_sha256: ca00628a4f83bdd77afb5afaf7fdd8d4447b9607975b772009452e2fb5f4c30c
+  lidar_pose_set_sha256: 3ee56e394dc30ec61d60c21b860891bd0071b99f364dfcd32b4f157994b8e806
+prior_scenes: [scene-0230, scene-0242, scene-0048, scene-0071, scene-0317]
+partition:
+  expected_frame_count: 196
+  sample_stride: 4
+  sample_start: 0
+geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  factor_label_canonicalization_decimals: 9
+clone_a_cases:
+  - {id: a_near, forward_m: 2.2, lateral_m: 0.6, size_m: [4.3, 1.9], yaw_deg: 20.0}
+  - {id: a_mid, forward_m: 5.2, lateral_m: 1.8, size_m: [6.8, 2.3], yaw_deg: 50.0}
+  - {id: a_lateral, forward_m: 3.7, lateral_m: 4.0, size_m: [5.0, 2.0], yaw_deg: 35.0}
+  - {id: a_far, forward_m: 7.7, lateral_m: 3.7, size_m: [4.0, 1.8], yaw_deg: 10.0}
+clone_b_cases:
+  - {id: b_near, forward_m: 2.9, lateral_m: 1.1, size_m: [5.2, 2.1], yaw_deg: 35.0}
+  - {id: b_forward, forward_m: 8.1, lateral_m: 1.1, size_m: [4.6, 1.9], yaw_deg: 25.0}
+  - {id: b_lateral, forward_m: 3.1, lateral_m: 3.8, size_m: [5.8, 2.2], yaw_deg: 60.0}
+  - {id: b_far, forward_m: 8.1, lateral_m: 3.8, size_m: [4.2, 1.8], yaw_deg: 15.0}
+expected_episode_count: 784
+gate:
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_false_safe_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_false_safe_reduction_vs_real_only_at_least: 0.50
+  require_false_safe_reduction_vs_naive_at_least: 0.50
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  clone_clone_collision: ABSTAIN_EGO_CONFLICT_ONLY
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  comfort: ABSTAIN_NO_LONGITUDINAL_CONTROLLER
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+claim_boundary:
+  - development_two_simultaneous_clone_set_composition_on_new_scene0450
+  - frozen_per_actor_policy_with_boolean_or_set_aggregation
+  - logged_actors_and_both_clones_in_each_episode_denominator
+  - no_clone_clone_physical_collision_full_planner_or_closed_loop_claim

@@ -1,23 +1,24 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:19:00Z",
+  "updated_at_utc": "2026-08-21T14:23:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 38,
-  "active_task": "WS-V6-PT5-RISK-POLICY-TEST-01",
-  "active_hypothesis": "WS-V6-H-PT5-001",
-  "candidate": "frozen_hpt3_007_dense_position_max_margin_policy",
+  "iteration": 39,
+  "active_task": "WS-V6-PT6-COMPOSITIONAL-RISK-ROBUSTNESS-01",
+  "active_hypothesis": "WS-V6-H-PT6-001",
+  "candidate": "frozen_per_actor_policy_with_boolean_or_set_aggregation",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "2255a597b26542d8881272b20beb71a2689554a0c7250e247f86727657913293",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
+  "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "failure_ledger_sha256": "c11e567d990d6a0d80ae8435059dd7e001a3e57f887596302e8adcb4056d8b9d",
-  "last_reflection_id": "WS-V6-REFL-0040",
+  "last_reflection_id": "WS-V6-REFL-0041",
   "last_completed": {
-    "task_id": "WS-V6-PT4-RISK-POLICY-CONFIRMATION-01",
-    "run": "run://worldsim_v6/WS-V6-PT4-RISK-POLICY-CONFIRMATION-01/20260821T141721Z__risk-policy-confirmation-s20260821-r1",
-    "artifact_sha256": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a"
+    "task_id": "WS-V6-PT5-RISK-POLICY-TEST-01",
+    "run": "run://worldsim_v6/WS-V6-PT5-RISK-POLICY-TEST-01/20260821T142134Z__risk-policy-test-s20260821-r1",
+    "artifact_sha256": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -65,7 +66,8 @@
     "pt3_max_margin_factor_heads_h006": "done_rejected_coarse_position_support",
     "pt3_factorized_intervention_policy_training": "done_accepted_development_dense_position_support",
     "pt4_risk_policy_confirmation": "done_accepted_exact_one_shot",
-    "pt5_risk_policy_test": "active_pre_registered_exact_once",
+    "pt5_risk_policy_test": "done_accepted_exact_once",
+    "pt6_compositional_risk_robustness": "active_pre_registered_two_clone_set_aggregation",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -74,8 +76,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_exact_once_test_protocol_with_frozen_candidate_and_confirmation_gate",
-    "consume_exact_once_scene0317_test",
-    "close_or_reject_bounded_policy_utility_without_test_tuning"
+    "commit_two_clone_compositional_denominator_and_frozen_set_aggregation",
+    "evaluate_scene0450_multi_actor_episodes",
+    "retain_single_clone_candidate_and_test_as_immutable_closed_family"
   ]
 }
