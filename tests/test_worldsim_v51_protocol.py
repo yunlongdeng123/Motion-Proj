@@ -15,6 +15,7 @@ from motion_proj.worldsim_v51.protocol import (
     DEVELOPMENT_ROLE_ORDER,
     NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256,
     NORMATIVE_PLAN_BASE_SHA256,
+    NORMATIVE_PLAN_TERMINAL_CLOSEOUT_SHA256,
     ProtocolError,
     load_yaml,
     sha256_file,
@@ -45,7 +46,7 @@ def test_scope_and_development_roles_bind_v5_cohort() -> None:
         "553373159023218b44615be27aeeb5533a6c585be276e06425235fe09b6b48b1"
     )
     assert scope_report["normative_plan_sha256"] == (
-        NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256
+        NORMATIVE_PLAN_TERMINAL_CLOSEOUT_SHA256
     )
     assert scope_report["normative_plan_historical_sha256"] == (
         NORMATIVE_PLAN_BASE_SHA256

@@ -63,7 +63,7 @@
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
-| V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；当前仅完成 G0 仓库审计，尚无方法质量结论 | dirty worktree 必须先建 recovery ref；远端直连 fetch 可无进展，需在不改仓库事实的前提下使用当前主机独立代理恢复 | `V6-F01`；G0 governance artifacts；V6 plan |
+| V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；当前 G0/G1 完成、G2 integration gate 通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout | `V6-F01`–`V6-F04`；G0/G1/G2 governance artifacts；V6 plan |
 
 ### 1.1 V1 汇总条目
 
@@ -134,6 +134,28 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   KNN/Graph/BKI 或 cut-in mining 主线。证据=`WS-V6-G0-REPO-CONVERGENCE-01`、
   `docs/WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md`、
   `docs/autoresearch/worldsim_v6/governance/REPO_PREFLIGHT.json`；方法质量 run=`0`。
+- `V6-F02`（`engineering/protocol`, `resolved`）：G2 首次裸 `pytest -q` 在 collection 阶段出现 `12` 个
+  `motion_proj/scripts` import error，显式 `PYTHONPATH=$PWD` 后才执行测试；随后 motionproj interpreter 下的 4 个
+  V5.1 frozen-runtime tests 因预期 `/root/autodl-tmp/envs/drivestudio/bin/python / torch 2.1.2+cu118` 而失败，使用合同
+  指定解释器后对应四文件 `15 passed`。根因是 integration runner 把 repo import root 与历史 runtime profile 当成单一
+  环境默认值，不是 merge、算法或冻结结果漂移。以后全量 gate 必须显式注入 repo root，并按 config runtime 分组；不得
+  删除 exact-runtime tests 或放宽版本字段。证据=`WS-V6-G2-BRANCH-CONVERGENCE-01`、最终 motionproj
+  `1443 passed / 1 skipped` + DriveStudio `15 passed`。
+- `V6-F03`（`engineering/asset-integrity`, `resolved with retained asset boundary`）：G2 frozen-asset regression 发现
+  Instant NuRec official checkout、P2 selected checkpoint 和 P3 的 `158` 个 chunk payload 缺失，但 manifest、source
+  checkpoint 与冻结 hash 仍在；这会造成 5 个 asset-dependent tests 失败，不能倒写历史方法 reject。Instant NuRec 按 exact
+  public commit/tree 恢复；P2 从 immutable source 确定性重建并命中 `432,111,754 bytes / 7be87e8b...7448`；P3 重建
+  payload 对旧 manifest `158/158` bytes/hash exact 后只补缺失文件，未覆盖旧 manifest。P2 recovery r1 因传相对 protocol
+  path 在 snapshot 前 blocked，r2 改为绝对路径后成功；旧 r1 保留。以后清理 canonical selected asset 必须同步保留可执行
+  materializer 与 exact source，恢复只能新 run→逐 hash 比较→补缺失字节，禁止生成近似资产或改旧 manifest。证据=
+  `20260821T073335Z__g2-p2-asset-recovery-s0-r1`、`20260821T073353Z__g2-p2-asset-recovery-s0-r2`、
+  `20260821T073459Z__g2-p3-asset-recovery-s0-r1`、R0/P3 `23 passed`。
+- `V6-F04`（`protocol/governance`, `resolved`）：V5.1 `_validate_normative_plan_binding` 只允许 P0 base hash 与
+  `b359541` Stage-B append hash，但当前 canonical 文档已在 `a9dede0` 冻结 terminal closeout，SHA-256=
+  `a0e764f3...fe1d`；因此 4 个 protocol tests 在到达各自语义断言前统一被旧 allowlist 拦截。修复不改历史 config、plan
+  或 gate，只把该 exact terminal commit/hash 加入 fail-closed allowlist，并把回归期望指向 terminal hash；任何未知第四种
+  状态仍拒绝。禁止用“任意后继 commit”或跳过 hash 来救测试。证据=`WS-V6-G2-BRANCH-CONVERGENCE-01`、
+  `tests/test_worldsim_v51_protocol.py=9 passed`。
 
 <a id="detail-v52"></a>
 

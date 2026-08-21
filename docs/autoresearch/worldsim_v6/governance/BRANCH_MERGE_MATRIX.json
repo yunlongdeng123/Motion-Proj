@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V6-G2-BRANCH-CONVERGENCE-01",
+  "created_at_utc": "2026-08-21T07:24:11Z",
+  "origin_main_base": "44d0e4a2468112b89a454992ecd9177d65184067",
+  "integration_branch": "integration/pre-v6-20260821T072411Z",
+  "rollback_tag": "pre-v6-main-20260821T072411Z",
+  "latest_research_head": "9ca03c7700053c4ad000bb3ec39e3d22126489d2",
+  "merge_order": ["origin/research/worldsim-v5.1-m1"],
+  "merge_result": "fast_forward_no_conflict",
+  "remote_refs": [
+    {"ref": "origin/main", "head": "44d0e4a2468112b89a454992ecd9177d65184067", "action": "exclude", "reason": "integration_base"},
+    {"ref": "origin/research/worldsim-v3", "head": "144ed1900af1cdd40c5c0f22f0c566aba2be3fb2", "action": "already_merged", "reason": "ancestor_of_origin_main_and_latest_research"},
+    {"ref": "origin/research/worldsim-v4-evidelta", "head": "403c5703a755c999d42a5ec3eb063db6cc751761", "action": "already_merged", "reason": "ancestor_of_origin_main_and_latest_research"},
+    {"ref": "origin/research/worldsim-v5-structdelta", "head": "44d0e4a2468112b89a454992ecd9177d65184067", "action": "already_merged", "reason": "identical_to_origin_main"},
+    {"ref": "origin/research/worldsim-v5.1-m1", "head": "9ca03c7700053c4ad000bb3ec39e3d22126489d2", "action": "include", "reason": "latest_research_branch_with_147_commits_not_in_origin_main"}
+  ],
+  "local_refs": [
+    {"ref": "backup/docs-v7-cleanup-pre-20260722", "action": "exclude", "reason": "archive_only_and_ancestor_of_origin_main"},
+    {"ref": "main", "action": "exclude", "reason": "local_copy_of_integration_base"},
+    {"ref": "research/dynamic-editing-v2", "action": "already_merged", "reason": "ancestor_of_origin_main"},
+    {"ref": "research/worldsim-v3", "action": "already_merged", "reason": "ancestor_of_origin_main"},
+    {"ref": "research/worldsim-v3.2-semantic-repair", "action": "already_merged", "reason": "ancestor_of_origin_main"},
+    {"ref": "research/worldsim-v3.3-object-maintenance", "action": "already_merged", "reason": "ancestor_of_origin_main"},
+    {"ref": "research/worldsim-v4-evidelta", "action": "already_merged", "reason": "local_advanced_ref_is_ancestor_of_origin_main"},
+    {"ref": "research/worldsim-v5-structdelta", "action": "already_merged", "reason": "identical_to_origin_main"},
+    {"ref": "research/worldsim-v5.1-m1", "action": "covered_by_remote_include", "reason": "identical_to_origin_research_worldsim_v5_1_m1"},
+    {"ref": "research/worldsim-v5.2.1-base-badcase-census", "action": "already_merged", "reason": "ancestor_of_latest_research_with_zero_unique_commits"}
+  ],
+  "conflict_count": 0,
+  "silent_exclusions": 0
+}

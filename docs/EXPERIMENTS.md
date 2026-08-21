@@ -19,6 +19,26 @@
 - G0–G3 只产生治理/仓库事实；V6 尚无 SceneIR、frontend、support、validity、verifier、bake 或方法质量结论，GPU
   method run=`0`。failure refs=`V6-F01, V52-F01, V52-F02, PIVOT-F02, PIVOT-F03, PIVOT-F04`。
 
+### G2 integration gate 执行与恢复
+
+- integration=`integration/pre-v6-20260821T072411Z`，rollback=`pre-v6-main-20260821T072411Z@44d0e4a`；
+  branch matrix 证明 remote/local 历史项目分支均已被 main 或最新研究分支包含，唯一有效 merge 为
+  `origin/research/worldsim-v5.1-m1@9ca03c7` 的 `147` 个 main-unique commits，执行 `--ff-only`，conflict=`0`。
+- 首次裸 `pytest -q` 在 collection 因 repo root 未进入 console-script `sys.path` 得到 `12 errors / 0 tests run`；显式
+  `PYTHONPATH=$PWD` 后完整执行为 `1445 passed / 1 skipped / 13 failed`。失败中 4 项是把冻结 DriveStudio runtime
+  测试放到 motionproj interpreter，换 exact interpreter 后 `15 passed`；该组不是代码失败。
+- 外部资产恢复：公开 Instant NuRec checkout 按 frozen commit/tree `1ce2288/96e36fa` 精确恢复，回归=`8 passed`。
+  缺失 P2 checkpoint 由 immutable source checkpoint 重建为 `432,111,754 bytes / 7be87e8b...7448` exact；首个
+  recovery r1 因相对 protocol path 在 snapshot 前 blocked，r2 使用绝对路径成功。P3 `158` payloads 重建后逐项匹配
+  旧 manifest，原路径只补缺失字节、不覆盖 manifest；R0/P3 回归=`23 passed`。
+- V5.1 protocol 原 allowlist 只覆盖 P0 与 Stage-B hash，未覆盖 `a9dede0` terminal closeout hash `a0e764f3...fe1d`；
+  仅新增 exact terminal hash 常量和回归，保持旧配置 hash 不变，`tests/test_worldsim_v51_protocol.py=9 passed`。
+- 最终 gate：motionproj profile 排除 4 个专用-runtime test files 后=`1443 passed / 1 skipped`；DriveStudio profile=
+  `15 passed`；总计=`1458 passed / 1 skipped`。config=`284 YAML + 1 JSON` 全解析，CLI/import smoke、
+  `git diff --check`、failure definition duplicate=`0`、V5.1/V5.2 plan hash 与 P2/P3 asset identity 全 PASS。
+- G2 尚未产生方法质量结论，GPU method run=`0`；failure refs=`V6-F01, V6-F02, V6-F03, V6-F04, V51-F01,
+  PIVOT-F24, PIVOT-F29, PIVOT-F30`，failure delta=`V6-F02/V6-F03/V6-F04`。
+
 ## V5.2.1 P11 Human Attribution PASS / V5.2 M123 Autoresearch 注册（2026-08-20）
 
 - P11 task=`WS-V521-P11-HUMAN-ATTRIBUTION-01`，run=

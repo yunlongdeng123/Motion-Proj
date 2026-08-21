@@ -18,6 +18,9 @@ NORMATIVE_PLAN_BASE_SHA256 = (
 NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256 = (
     "b4888476811842b37c6d1cb736cdc319e70b12054fc07dec3e9ca60d41fe9fc0"
 )
+NORMATIVE_PLAN_TERMINAL_CLOSEOUT_SHA256 = (
+    "a0e764f3fb277b34db0dda59467fd879a4f35e440a71b7d2650c5625fd6dfe1d"
+)
 AUTHORIZED_FIRST_ROUND = (
     "WS-V51-P0-M1-SCOPE-FREEZE-01",
     "WS-V51-D0-DEV-ROLE-FREEZE-01",
@@ -64,13 +67,11 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 
 def _validate_normative_plan_binding(path: Path, recorded_sha256: str) -> str:
-    """Accept the immutable P0 hash or the later authorized append-only plan hash.
+    """接受冻结 P0、Stage B 追加版或最终收口版的精确哈希。
 
-    P0 and the Stage-B authorization deliberately retain the hash observed when
-    they were frozen.  Commit b359541 appended the H evaluation contract to the
-    normative plan without rewriting either historical record.  This explicit
-    two-hash chain keeps those records immutable while still failing closed on
-    any third plan state.
+    P0 和 Stage B 授权记录继续绑定最初哈希，不回写历史配置。提交 b359541
+    登记 Stage B 追加版，提交 a9dede0 则冻结 V5.1 terminal closeout。这里只
+    允许这三个有明确 Git 身份的状态；任何中间编辑或未知第四种状态仍 fail closed。
     """
 
     if not path.is_file():
@@ -81,6 +82,7 @@ def _validate_normative_plan_binding(path: Path, recorded_sha256: str) -> str:
     if observed not in (
         NORMATIVE_PLAN_BASE_SHA256,
         NORMATIVE_PLAN_AUTHORIZED_APPEND_SHA256,
+        NORMATIVE_PLAN_TERMINAL_CLOSEOUT_SHA256,
     ):
         raise ProtocolError("V5.1 normative plan SHA 漂移")
     return observed
