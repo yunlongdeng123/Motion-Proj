@@ -3497,3 +3497,9 @@ H-PT2-001 canonical run `20260821T133158Z__risk-policy-s20260821-r1` 的数值 g
 H-PT2-002 canonical run `20260821T133626Z__risk-policy-s20260821-r1` 在移除 signed-clearance feature leakage 后，使 Real-only 与 naive arm 都成为 constant CONTINUE，heldout false-safe 均为 `1.0`；V6 raw-position rectangle policy 把 false-safe 降至 `0.1122449`，safe-route completion 保持 `1.0`，但 balanced accuracy `0.9438776` 与 false-safe 仍未达到冻结的 `0.95` / `0.05` 门，故方法正式 `rejected`。
 
 逐行诊断确认 11 个漏检全部是配置声明的 `3.0m` clone：`inv(T_ego) @ (T_ego @ T_offset)` 后 raw forward feature 变成 `3.00000000000011–3.00000000000045`，严格 `<=3.0` 比较失败；没有其他 hazard 漏检，也没有 false brake。H-PT2-003 只在 policy raw feature 写入前按 9 位小数 canonicalize（`1e-9m`），label 仍按未取整 signed clearance 计算；该尺度高于浮点漂移、但比最小候选阈值间隔小至少九个数量级。不得改样本、offset、threshold grid、label 或质量门。以后由声明变换生成的控制量必须把表示 canonicalization 与方法容差分开冻结。
+
+### V6-F44：单一 zero-lateral intervention 训练不能支持二维风险泛化
+
+H-PT3-001 canonical run `20260821T134426Z__intervention-robustness-s20260821-r1` 冻结 H-PT2-003 的全部 policy 参数，在未参与 PT2 训练或选择的 scene-0048 上评估 forward `1.5/4.5/7.5m` × nonzero lateral `0.75/1.5/2.5m` 的 441 个 edit rows，加 49 个 clean rows。分母含 232 hazards / 258 safe；冻结 V6 policy 的 lateral threshold 为 `0.0m`，因此对 232 hazards 检出 `0`，false-safe `1.0`，与 Real-only/naive constant policies 完全相同。source immutability、repeat exact、safe-route completion 均通过，所以是方法性 `rejected`。
+
+不得把 PT2 的跨场景同 intervention pass 写成二维 policy generalization，也不得只把冻结 lateral threshold 放宽。H-PT3-002 改变训练 evidence：在 scene-0230/0242 使用 forward `0/2/4/6/8m` × lateral `0/1/2/3m` 的完整 factorized typed-edit grid，V6 重算标签、naive 保留 stale labels；scene-0048 使用与训练离散的 half-offset grid，所有质量门不变。以后 policy coverage 必须按 intervention factor denominator 报告，不能只报 scene denominator。

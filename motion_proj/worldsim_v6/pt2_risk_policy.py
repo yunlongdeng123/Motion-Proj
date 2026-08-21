@@ -231,10 +231,15 @@ def _fit_policy(
                 (score, area, float(forward_threshold), float(lateral_threshold))
             )
     best_score = max(row[0] for row in scored)
-    _, _, forward_threshold, lateral_threshold = min(
-        (row for row in scored if row[0] == best_score),
-        key=lambda row: (row[1], row[2], row[3]),
-    )
+    best_rows = [row for row in scored if row[0] == best_score]
+    if training.get("tie_break") == "highest_balanced_accuracy_then_largest_threshold_area_then_forward_then_lateral":
+        _, _, forward_threshold, lateral_threshold = max(
+            best_rows, key=lambda row: (row[1], row[2], row[3])
+        )
+    else:
+        _, _, forward_threshold, lateral_threshold = min(
+            best_rows, key=lambda row: (row[1], row[2], row[3])
+        )
     return {
         "policy_type": "axis_aligned_rectangle",
         "forward_threshold_m": forward_threshold,
