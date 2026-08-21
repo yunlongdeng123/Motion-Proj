@@ -25,6 +25,7 @@ from motion_proj.worldsim_v6.pt2_risk_policy import (
 
 
 TASK_ID = "WS-V6-PT4-RISK-POLICY-CONFIRMATION-01"
+ALLOWED_TASK_IDS = {TASK_ID, "WS-V6-PT5-RISK-POLICY-TEST-01"}
 
 
 class PT4ConfirmationError(RuntimeError):
@@ -44,24 +45,27 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     repo_root = repo_root.resolve()
     config_path = (repo_root / config_path).resolve() if not config_path.is_absolute() else config_path
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config["task_id"] != TASK_ID:
+    task_id = str(config["task_id"])
+    phase = str(config.get("evaluation_phase", "confirmation"))
+    if task_id not in ALLOWED_TASK_IDS or phase not in {"confirmation", "test"}:
         raise PT4ConfirmationError("task_id 不匹配")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = run_root / TASK_ID / f"{stamp}__risk-policy-confirmation-s{config['seed']}-r1"
+    run_dir = run_root / task_id / f"{stamp}__risk-policy-{phase}-s{config['seed']}-r1"
     run_dir.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
 
     # attempt 必须先于任何 confirmation scene 内容或质量结果读取落盘。
     attempt = {
-        "schema_version": "worldsim_v6.pt4_confirmation_attempt.v1",
-        "task_id": TASK_ID,
+        "schema_version": f"worldsim_v6.{phase}_attempt.v1",
+        "task_id": task_id,
         "hypothesis_id": config["hypothesis_id"],
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "attempt_created_before_quality_read": True,
-        "confirmation_quality_read": False,
+        "quality_read": False,
+        "evaluation_phase": phase,
         "candidate_gate_sha256": config["frozen_candidate"]["gate_sha256"],
         "candidate_policy_arms_sha256": config["frozen_candidate"]["policy_arms_sha256"],
-        "confirmation_scene": config["confirmation_scene"]["scene"],
+        f"{phase}_scene": config["confirmation_scene"]["scene"],
         "gate": config["gate"],
         "status": "created",
     }
@@ -83,6 +87,15 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         if candidate_gate["decision"] != "accept_factorized_intervention_policy_training":
             raise PT4ConfirmationError("冻结 candidate 未通过 development gate")
         policy_arms = json.loads(policy_arms_path.read_text(encoding="utf-8"))
+        prior_gate_path = None
+        if config.get("required_prior_gate"):
+            prior = config["required_prior_gate"]
+            prior_gate_path = Path(prior["path"])
+            if _sha256(prior_gate_path) != prior["sha256"]:
+                raise PT4ConfirmationError("前序 gate hash 漂移")
+            prior_gate = json.loads(prior_gate_path.read_text(encoding="utf-8"))
+            if prior_gate["decision"] != prior["required_decision"]:
+                raise PT4ConfirmationError("前序 gate decision 不匹配")
 
         expected_frames = int(config["partition"]["expected_frame_count_per_scene"])
         spec = config["confirmation_scene"]
@@ -94,6 +107,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         real_rows, synthetic_rows = _scene_rows(spec, instances, poses, scene_config)
         confirmation_rows = [*real_rows, *synthetic_rows]
         frozen_paths = [config_path, candidate_gate_path, policy_arms_path, *paths]
+        if prior_gate_path is not None:
+            frozen_paths.append(prior_gate_path)
         hashes_before = {str(path): _sha256(path) for path in frozen_paths}
         metrics1 = {
             arm: _evaluate(value["model"], confirmation_rows)
@@ -109,7 +124,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         _write_json(
             run_dir / "SOURCE_AUDIT.json",
             {
-                "confirmation_scene": spec["scene"],
+                f"{phase}_scene": spec["scene"],
                 "real_rows": len(real_rows),
                 "synthetic_rows": len(synthetic_rows),
                 "source_sha256": hashes_before,
@@ -133,9 +148,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "attempt_created_before_quality_read": True,
             "candidate_frozen_exact": True,
             "candidate_development_gate_accepted": True,
-            "new_confirmation_scene": spec["scene"] not in set(config["development_scenes"]),
-            "confirmation_factors_disjoint": factors_disjoint,
-            "confirmation_has_both_outcomes": v6["hazard_count"] > 0 and v6["safe_count"] > 0,
+            f"new_{phase}_scene": spec["scene"] not in set(config["development_scenes"]),
+            f"{phase}_factors_disjoint": factors_disjoint,
+            f"{phase}_has_both_outcomes": v6["hazard_count"] > 0 and v6["safe_count"] > 0,
             "v6_balanced_accuracy": v6["balanced_accuracy"] >= float(cfg["require_v6_balanced_accuracy_at_least"]),
             "v6_false_safe": v6["false_safe_rate"] <= float(cfg["require_v6_false_safe_rate_at_most"]),
             "v6_safe_route_completion": v6["safe_route_completion"] >= float(cfg["require_v6_safe_route_completion_at_least"]),
@@ -147,28 +162,39 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "wall_within_budget": wall_seconds <= float(config["resources"]["maximum_wall_seconds"]),
         }
         checks["passed"] = all(checks.values())
+        accepted_decision = (
+            "accept_risk_policy_confirmation"
+            if phase == "confirmation"
+            else "accept_risk_policy_exact_once_test"
+        )
+        rejected_decision = (
+            "reject_risk_policy_confirmation"
+            if phase == "confirmation"
+            else "reject_risk_policy_exact_once_test"
+        )
         gate = {
-            "schema_version": "worldsim_v6.pt4_risk_policy_confirmation_gate.v1",
+            "schema_version": f"worldsim_v6.{phase}_risk_policy_gate.v1",
             "checks": checks,
-            "decision": "accept_risk_policy_confirmation" if checks["passed"] else "reject_risk_policy_confirmation",
+            "decision": accepted_decision if checks["passed"] else rejected_decision,
             "false_safe_reduction_vs_real_only": reduction_real,
             "false_safe_reduction_vs_naive": reduction_naive,
-            "confirmation_attempt_consumed": True,
+            f"{phase}_attempt_consumed": True,
             "unsupported_metrics": config["unsupported_metrics"],
         }
-        _write_json(run_dir / "PT4_CONFIRMATION_GATE.json", gate)
+        gate_name = "PT4_CONFIRMATION_GATE.json" if phase == "confirmation" else "PT5_TEST_GATE.json"
+        _write_json(run_dir / gate_name, gate)
         summary = {
-            "schema_version": "worldsim_v6.pt4_risk_policy_confirmation_summary.v1",
-            "task_id": TASK_ID,
+            "schema_version": f"worldsim_v6.{phase}_risk_policy_summary.v1",
+            "task_id": task_id,
             "hypothesis_id": config["hypothesis_id"],
             "status": "done" if checks["passed"] else "rejected",
             "source_commit": source_commit,
             "frozen_candidate": frozen,
-            "confirmation_scene": spec["scene"],
+            f"{phase}_scene": spec["scene"],
             "method_arms": metrics1,
             "wall_seconds": wall_seconds,
-            "confirmation_attempt_consumed": True,
-            "confirmation_content_read": True,
+            f"{phase}_attempt_consumed": True,
+            f"{phase}_content_read": True,
             "claim_boundary": config["claim_boundary"],
             "unsupported_metrics": config["unsupported_metrics"],
         }
@@ -178,13 +204,13 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "CONFIRMATION_ARMS.json",
             "CONFIRMATION_ROWS.jsonl",
             "SOURCE_AUDIT.json",
-            "PT4_CONFIRMATION_GATE.json",
+            gate_name,
             "SUMMARY.json",
         ]
         _write_json(
             run_dir / "MANIFEST.json",
             {
-                "schema_version": "worldsim_v6.pt4_risk_policy_confirmation_manifest.v1",
+                "schema_version": f"worldsim_v6.{phase}_risk_policy_manifest.v1",
                 "source_commit": source_commit,
                 "config": str(config_path),
                 "files": {
@@ -198,9 +224,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             {
                 "schema_version": "worldsim_v6.terminal.v1",
                 "status": summary["status"],
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "hypothesis_id": config["hypothesis_id"],
-                "confirmation_attempt_consumed": True,
+                f"{phase}_attempt_consumed": True,
                 "manifest_sha256": _sha256(run_dir / "MANIFEST.json"),
             },
         )
@@ -211,8 +237,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             {
                 "schema_version": "worldsim_v6.terminal.v1",
                 "status": "blocked",
-                "task_id": TASK_ID,
-                "confirmation_attempt_consumed": True,
+                "task_id": task_id,
+                f"{phase}_attempt_consumed": True,
                 "error_type": type(error).__name__,
                 "error": str(error),
             },

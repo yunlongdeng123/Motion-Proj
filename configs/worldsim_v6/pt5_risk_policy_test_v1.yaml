@@ -1,0 +1,75 @@
+schema_version: worldsim_v6.pt5_risk_policy_test.v1
+task_id: WS-V6-PT5-RISK-POLICY-TEST-01
+hypothesis_id: WS-V6-H-PT5-001
+evaluation_phase: test
+seed: 20260821
+frozen_candidate:
+  hypothesis_id: WS-V6-H-PT3-007
+  source_commit: d9386b1
+  run: run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1
+  gate_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1/PT3_POLICY_TRAINING_GATE.json
+  gate_sha256: 2255a597b26542d8881272b20beb71a2689554a0c7250e247f86727657913293
+  policy_arms_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1/POLICY_ARMS.json
+  policy_arms_sha256: 5e958fa28b095a9203359131ed891edd9c348b7eb07420fa1c42d1335a174131
+required_prior_gate:
+  path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-PT4-RISK-POLICY-CONFIRMATION-01/20260821T141721Z__risk-policy-confirmation-s20260821-r1/PT4_CONFIRMATION_GATE.json
+  sha256: 39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a
+  required_decision: accept_risk_policy_confirmation
+confirmation_dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+confirmation_scene:
+  scene: scene-0317
+  scene_index: 251
+  instances_sha256: 2ba5e5c66c72769599d27c4fde74e61e818ca0b0c06f80458e8957bcc1854937
+  lidar_pose_set_sha256: ebf56a34940d79603c636cd047e535ff1db729be39e4964f4ef5908f139c54dc
+development_scenes: [scene-0230, scene-0242, scene-0048, scene-0071]
+partition:
+  expected_frame_count_per_scene: 191
+  sample_stride: 4
+  sample_start: 0
+training:
+  feature_canonicalization_decimals: 9
+  factor_label_canonicalization_decimals: 9
+development_geometries:
+  - synthetic_clone_forward_offsets_m: [0.0, 0.5, 1.5, 2.0, 2.5, 3.5, 4.0, 5.0, 6.0, 7.0, 8.0]
+    synthetic_clone_lateral_offsets_m: [0.0, 0.25, 0.75, 1.0, 1.25, 1.75, 2.0, 2.25, 2.75, 3.0, 3.25, 4.0]
+    synthetic_actor_sizes_m: [[3.6, 1.6], [4.5, 2.0], [7.5, 2.5]]
+    synthetic_clone_yaw_offsets_deg: [0.0, 30.0, 60.0, 90.0]
+  - synthetic_clone_forward_offsets_m: [1.0, 3.0, 4.5, 5.5, 7.5]
+    synthetic_clone_lateral_offsets_m: [0.5, 1.5, 2.5, 3.5]
+    synthetic_actor_sizes_m: [[4.0, 1.8], [6.0, 2.2], [9.0, 2.8]]
+    synthetic_clone_yaw_offsets_deg: [15.0, 45.0, 75.0]
+  - synthetic_clone_forward_offsets_m: [1.25, 2.75, 4.25, 5.75, 7.25]
+    synthetic_clone_lateral_offsets_m: [0.4, 1.4, 2.4, 3.4]
+    synthetic_actor_sizes_m: [[4.2, 1.9], [5.5, 2.1], [8.0, 2.6]]
+    synthetic_clone_yaw_offsets_deg: [10.0, 40.0, 70.0]
+confirmation_geometry:
+  ego_length_m: 4.8
+  ego_width_m: 2.0
+  default_actor_length_m: 4.5
+  default_actor_width_m: 2.0
+  synthetic_clone_forward_offsets_m: [1.1, 2.6, 4.1, 5.6, 7.1]
+  synthetic_clone_lateral_offsets_m: [0.35, 1.35, 2.35, 3.35]
+  synthetic_actor_sizes_m: [[3.9, 1.7], [6.5, 2.3], [8.5, 2.7]]
+  synthetic_clone_yaw_offsets_deg: [20.0, 50.0, 80.0]
+  collision_rule: factorized_projected_aabb_forward_and_lateral_overlap
+gate:
+  require_v6_balanced_accuracy_at_least: 0.90
+  require_v6_false_safe_rate_at_most: 0.10
+  require_v6_safe_route_completion_at_least: 0.90
+  require_false_safe_reduction_vs_real_only_at_least: 0.50
+  require_false_safe_reduction_vs_naive_at_least: 0.50
+  require_evaluation_repeat_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 5
+unsupported_metrics:
+  physical_collision_truth: ABSTAIN_PROJECTED_AABB_CONFORMANCE_ONLY
+  full_planner_completion: ABSTAIN_BINARY_CONTINUE_BRAKE_GATE_ONLY
+  comfort: ABSTAIN_NO_LONGITUDINAL_CONTROLLER
+  closed_loop_safety: ABSTAIN_NO_CLOSED_LOOP_DYNAMICS
+claim_boundary:
+  - exact_once_test_of_confirmation_accepted_frozen_hpt3_007_policy_family
+  - new_scene0317_and_position_size_yaw_levels_disjoint_from_development_and_confirmation
+  - projected_aabb_binary_continue_brake_conformance_only
+  - no_physical_collision_full_planner_closed_loop_or_broad_generalization_claim
