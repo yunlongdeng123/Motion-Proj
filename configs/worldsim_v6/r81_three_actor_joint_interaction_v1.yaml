@@ -1,0 +1,59 @@
+schema_version: worldsim_v6.r81_three_actor_joint_interaction.v1
+task_id: WS-V6-R81-THREE-ACTOR-JOINT-INTERACTION-01
+hypothesis_id: WS-V6-H-R81-001
+seed: 20260821
+sources:
+  r69_run: runs://worldsim_v6/WS-V6-R69-TWO-ACTOR-JOINT-INTERACTION-01/20260821T204453Z__two-actor-joint-s20260821-r1
+  r69_manifest_sha256: 812047d9b614839f10812a09381c24a3c8ad28c4dc999e66eb5ae0bb01a32756
+  r69_gate_sha256: 5d3b071f7c64ab44c3e199b35fedea79331ec9be6d76f13a7a7806e0095248c8
+  r69_summary_sha256: c2d967a43d10a2c82ca7cec4bd0983d4129c56929845e15aad8358b61f083add
+  r69_decision_sha256: 7552c0e420a1d01649874388ea5eb9f7b5ea3db5901425940f7ea6797aed228e
+  r79_run: runs://worldsim_v6/WS-V6-R79-THIRD-ACTOR-FACTOR-FUSION-01/20260821T214204Z__actor5-factor-fusion-s20260821-r1
+  r79_manifest_sha256: 0e65735c72d9784cabf2187708bd76af710a2e044bb0ac6b75f0b73a4de4d20f
+  r79_gate_sha256: 816e8bc381f86e269f0bfb53cd6d4f213e6bd45461d0d9ed4812fe1e92ad4b07
+  r79_summary_sha256: 1e0483ae2e197f743b233789aa483e34a52932764ddf26dddca7d24b71bf1ee5
+  r79_fused_decision_sha256: c55ab1a2b5ea6c5417e46a450d529e017c6e5e59d772b791b5bed6c18305bb81
+  r80_run: runs://worldsim_v6/WS-V6-R80-TRANSFORM-OWNED-THIRD-ACTOR-BAKE-01/20260821T214556Z__actor5-transform-bake-s20260821-r1
+  r80_manifest_sha256: 76bc3ca1d833485401ff0f752a1e0f526755b52cea8c4f3a6e129e623f84225c
+  r80_gate_sha256: 72a835ed29f100c0a6c9247c78571bec7bd85d313d6ee51ff0a0ad042c93db8f
+  r80_summary_sha256: aa63a8b8bfff3931432878a18ab320157ab468c1f9c00921d0a08d05b0dd07dd
+  r80_package_manifest_sha256: 193d503c72730fb112ccc2c74e3b1315765acf71264608b452c35ff8cc4f77b7
+  r80_trajectory_geometry_sha256: adef122a7549916e36d603ce495622a1d5d4c67387fc7e03fcf05823849153a6
+  r80_validity_sha256: b8052ce116b7b7b27a32531bd07cc874ea203e9b0a3f62ff952f9f514431395a
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+composition:
+  expected_actor_count: 27
+  expected_trajectory_rows_per_actor: 196
+  timestamp_step_seconds: 0.1
+  actors:
+    - actor_id: actor_0000
+      actor_model_index: 0
+      proposal_id: translate_world_x_m1p0_z_m0p5
+      translation_delta_m: [-1.0, 0.0, -0.5]
+    - actor_id: actor_0002
+      actor_model_index: 2
+      proposal_id: actor2_translate_x_-1.0_z_+0.0
+      translation_delta_m: [-1.0, 0.0, 0.0]
+    - actor_id: actor_0005
+      actor_model_index: 5
+      proposal_id: actor5_translate_x_+0.5_z_+0.0
+      translation_delta_m: [0.5, 0.0, 0.0]
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+  maximum_new_overlap_events: 0
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_joint_composition_of_three_individually_conformant_actor_edits
+  - full196_frame27_actor_sceneir_aabb_interaction_recomputed_after_all_three_edits
+  - accept_only_if_each_individual_edit_and_joint_edit_create_zero_new_overlap_events
+  - emergent_cross_edit_and_edited_pair_overlaps_are_reported_separately
+  - aabb_interaction_is_deterministic_conformance_not_collision_physics_or_safety_truth
+  - semantic_road_full_physics_dynamics_response_planning_safety_and_confirmation_abstain
