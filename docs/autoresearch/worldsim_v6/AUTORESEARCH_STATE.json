@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T12:26:00Z",
+  "updated_at_utc": "2026-08-21T12:31:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 18,
+  "iteration": 19,
   "active_task": "WS-V6-R13-WORLDSIM-01",
-  "active_hypothesis": "WS-V6-H-R13-005",
-  "candidate": "typed_dynamic_actor_edit_dependency_closure",
+  "active_hypothesis": "WS-V6-H-R13-006",
+  "candidate": "frozen_actor_sensor_perception_locality",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "5dcd1c9e27f55a528ebc24913abd8d1e9cd7fa66a290956f9cfd2c9fd5b25713",
+  "dev_artifact_hash": "ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "fd5d4b3038528fd6674cd7438451f277f48557b3ed0e846840d1162801e262b2",
-  "last_reflection_id": "WS-V6-REFL-0020",
+  "last_reflection_id": "WS-V6-REFL-0021",
   "last_completed": {
     "task_id": "WS-V6-R13-WORLDSIM-01",
-    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T121956Z__worldspace-visibility-s20260821-r1",
-    "artifact_sha256": "5dcd1c9e27f55a528ebc24913abd8d1e9cd7fa66a290956f9cfd2c9fd5b25713"
+    "run": "run://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1",
+    "artifact_sha256": "ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -45,6 +45,7 @@
     "r13_temporal_voxel_union": "done_hypothesis_rejected_route_regression",
     "r13_target_view_lidar_visibility": "done_hypothesis_rejected_no_fifth_meter_extension",
     "r13_route_deviation_scope": "closed_accepted_development_3m_lateral_2m_forward",
+    "r13_typed_dynamic_edits": "done_accepted_development_dependency_closure",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -53,8 +54,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "compile_remove_shift_and_add_actor_edits_on_real_sceneir",
-    "recompute_typed_trajectory_semantic_and_collision_dependencies",
-    "compare_native_generator_naive_and_v6_edit_arms_with_false_safe_accounting"
+    "consume_frozen_actor_remove_all_renders_from_both_frontends",
+    "run_frozen_deeplab_twice_on_logged_and_edited_sensor_frames",
+    "measure_target_and_outside_rgb_semantic_locality_with_false_safe_accounting"
   ]
 }

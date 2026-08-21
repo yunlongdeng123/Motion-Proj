@@ -1,0 +1,61 @@
+schema_version: worldsim_v6.r13_actor_sensor_perception.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-006
+seed: 20260821
+sources:
+  r13_dynamic_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1
+  r13_dynamic_manifest_sha256: c1b643b05d00e8a39723e2e72fc90e9b3cd05a27d7000ac09d46b3113499eacc
+  r13_dynamic_gate_sha256: ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  ad_gs_render_map_sha256: 7d461f7a3ac9c67478ea5bf97a1b54065d1c4430a50dce4f536921185e75081b
+verifier_model:
+  id: Koushim/deeplabv3-resnet50-cityscapes
+  revision: 2d37eb60f86c23265e44384e13faaf16c7ae26b4
+  license: Apache-2.0
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development_frozen_actor_render
+  confirmation_locked: true
+  scene: scene-0242
+  frontends: [streetgs, ad_gs]
+  frame_indices: [52, 57]
+  operation: actor_remove_all
+  repeat_count: 2
+metrics:
+  actor_opacity_threshold: 0.05
+  actor_mask_dilation_px: 8
+  minimum_target_rgb_mae: 0.05
+  maximum_outside_rgb_mae: 0.001
+  minimum_rgb_locality_enrichment: 50.0
+  maximum_outside_rgb_changed_fraction: 0.05
+  minimum_target_perception_changed_fraction: 0.02
+  maximum_outside_perception_changed_fraction: 0.02
+  minimum_perception_locality_enrichment: 2.0
+gate:
+  require_all_four_sensor_cases_pass: true
+  require_perception_repeat_exact: true
+  require_both_frontends: true
+  require_source_immutable: true
+  require_typed_dynamic_gate_passed: true
+  require_v6_false_safe_rate_zero: true
+  require_naive_false_safe_rate_one: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+unsupported_metrics:
+  semantic_correctness_ground_truth: ABSTAIN_PERCEPTION_CHANGE_LOCALITY_ONLY
+  planning_completion: ABSTAIN_NO_PLANNER
+  physical_collision_ground_truth: ABSTAIN_H_R13_005_AABB_CONFORMANCE_ONLY
+  end_to_end_same_sceneir_binding: ABSTAIN_R3_SCENE0242_RENDER_PRECEDES_R2_SCENE0230_PACKAGE
+claim_boundary:
+  - development_frozen_actor_remove_all_render_sensor_perception_locality
+  - two_frontends_two_logged_frames
+  - h_r13_005_typed_dependency_closure_and_h_r13_006_render_evidence_are_separate_cases
+  - perception_change_locality_not_semantic_correctness
+  - no_new_rendering_or_training
+  - no_planning_closed_loop_or_physical_safety_claim
+  - no_confirmation_read
