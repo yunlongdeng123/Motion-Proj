@@ -3716,3 +3716,9 @@ H-R64-001 canonical run `20260821T200653Z__raw-lidar-contact-s20260821-r1` 从21
 H-R67-001 canonical run `20260821T202013Z__actor2-transform-bake-s20260821-r1` 成功产生 transform-owned package：float64 composition error 为0、双 bake byte-exact、196 transforms、13,490 primitives、四因子与 abstention 均正确，且所有源数组 hash 实际逐项相等。唯一失败是预注册把“7个 Gaussian/trajectory arrays”误写成 package 的完整 base array count=7；R56 还拥有独立 `actor_frame_validity`，实际键为8个，因此 `all_seven_base_arrays_byte_exact` 按合同正式失败。
 
 不得删除 lifecycle、追认 H-R67-001、忽略数量门或改变任何 package bytes。H-R67-002 保持相同 R66/R56、proposal、transform、composition、repeat、资源与 claim boundary，只把 schema 分母明确为8，并同时要求8个 hash 全等且 `actor_frame_validity` 必须存在；新 commit/push 后重跑，首 run 保持 rejected authority。
+
+### V6-F81：本地 shell 不得展开远端 Git 预检的命令替换
+
+H-R68-001 第一次启动尝试在创建 run directory、读取任何冻结 artifact 或启动 GPU worker 前退出。PowerShell 在 SSH 到达服务器前展开了双引号字符串中的 `$(git status --porcelain)` 与 `$(git rev-parse ...)`，本地当前目录不是 Git 仓库，继而使传给远端 bash 的引号不闭合。服务器只收到语法错误；没有 R68 run、sensor、gate 或方法结果产生。
+
+修复只把 SSH 的远端命令改为 PowerShell 单引号字面量，并把可执行 runner 的物理文件模式同步为已提交的 `100755`；不改 R68 代码、配置、冻结 source、frame98、actor2、transform/lifecycle ownership、sensor exactness、阈值、资源或 claim boundary。H-R68-001 保持 active，在 clean 且已 push 的同一 source commit 后重新启动。该失败是 launcher plumbing，不构成假设 rejection。

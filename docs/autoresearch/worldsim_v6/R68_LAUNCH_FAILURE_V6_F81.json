@@ -1,0 +1,14 @@
+{
+  "schema_version": "worldsim_v6.failure.v1",
+  "failure_id": "V6-F81",
+  "task_id": "WS-V6-R68-TRANSFORM-OWNED-SECOND-ACTOR-SENSOR-RUNTIME-01",
+  "hypothesis_id": "WS-V6-H-R68-001",
+  "recorded_at_utc": "2026-08-21T20:32:28Z",
+  "status": "launcher_failed_before_run_creation",
+  "source_commit": "e3acd8e7f7533614dd1981511b643b516169a51f",
+  "run_created": false,
+  "gpu_worker_started": false,
+  "cause": "PowerShell expanded remote bash command substitutions inside a double-quoted SSH command and broke remote quoting",
+  "repair": "use a PowerShell single-quoted remote command and synchronize the runner worktree executable bit",
+  "hypothesis_disposition": "retain_active_and_retry_unchanged"
+}
