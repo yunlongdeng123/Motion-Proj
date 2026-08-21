@@ -1,0 +1,63 @@
+schema_version: worldsim_v6.r42_actor_translation_proposal_search.v1
+task_id: WS-V6-R42-ACTOR-TRANSLATION-PROPOSAL-SEARCH-01
+hypothesis_id: WS-V6-H-R42-001
+seed: 20260821
+sources:
+  r41_run: runs://worldsim_v6/WS-V6-R41-ACTOR-EDIT-FACTOR-FUSION-01/20260821T174448Z__factor-fusion-s20260821-r1
+  r41_manifest_sha256: 04be4bc0163425223d73286d1969b560cbe66279f9166fc1b2069f10588512d1
+  r41_gate_sha256: c6f015cbdf12ed75aee02e1cd58b2b84e966f29a0779e956f7b2b063ce8efba2
+  r41_summary_sha256: fd11834673f4bc976d86182b1a8ca8cd97cdf4ae472f0cbceca301dca37d9809
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  r35_trajectory_geometry_sha256: 524e95e9a3bb7e62c6989e8b06c8491280fbc770fe3731fb228d511a970b1297
+  r3_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  streetgs_support_file: renders/scene-0242/streetgs/support_frame_057.npz
+  streetgs_support_sha256: 82994e06a5eaf6b528d7b2a8e39fab73458e981598d9ad232e5f2d78f562b337
+cohort:
+  partition: development_scene0242_factor_aware_horizontal_translation_grid
+  actor_id: actor_0000
+  expected_trajectory_rows: 196
+  timestamp_step_seconds: 0.1
+  frame_index: 57
+  timestamp_us: 5700000
+  expected_actor_primitives: 12390
+  minimum_static_lidar_points: 4096
+proposal_grid:
+  world_x_m: [-1.0, -0.5, 0.0, 0.5, 1.0]
+  world_z_m: [-1.0, -0.5, 0.0, 0.5, 1.0]
+  world_y_m: 0.0
+  exclude_identity: true
+  expected_candidate_count: 24
+  selection_order:
+    - maximum_horizontal_displacement
+    - minimum_lidar_contact_error
+    - ascending_world_x
+    - ascending_world_z
+factor_contract:
+  maximum_kinematic_invariance_error: 0.000000001
+  actor_support_quantile: 0.05
+  ground_height_quantile: 0.10
+  nearest_horizontal_candidates: 256
+  maximum_horizontal_radius_m: 2.0
+  minimum_lidar_candidates: 32
+  maximum_contact_error_m: 0.35
+  minimum_joint_accept_count: 1
+resources:
+  gpu: none
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_factor_aware_horizontal_translation_proposal_search
+  - proposals_are_unbaked_and_unrendered_until_downstream_native_execution
+  - self_kinematics_and_aabb_interaction_are_conformance_factors_not_physics_truth
+  - logged_lidar_contact_is_frame57_support_not_semantic_road_truth
+  - selection_does_not_imply_visual_physical_planning_or_safety_validity
+  - confirmation_locked_and_no_training
+
