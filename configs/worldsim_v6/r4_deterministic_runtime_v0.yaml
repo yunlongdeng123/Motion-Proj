@@ -1,0 +1,53 @@
+schema_version: worldsim_v6.r4_deterministic_runtime.v1
+task_id: WS-V6-R4-DETERMINISTIC-RUNTIME-01
+seed: 20260821
+source:
+  sceneir_package: runs://worldsim_v6/WS-V6-R2-SCENEIR-V0-01/20260821T082835Z__sceneir-v0-s20260821-r1/sceneir_packages/streetgs_scene0230
+  sceneir_content_sha256: 8b3dd8639d244a87afb864b8109a27273a59fa3f5eaa7861338915d6bde93671
+  package_manifest_sha256: 1ccc74cf6b39f1efbb02d5eceaad802b812bc6cdb7d0bd3d683b8ffb94a18f15
+  sceneir_json_sha256: 7008ce0f27d394725d1e075abd4d04372c8467bd139b68ba2a0439aa949fc912
+fresh_process_count: 3
+episode:
+  id: r4_sceneir_runtime_episode_v0
+  initial_timestamp_us: 9700000
+  step_delta_us: 100000
+  step_count: 3
+action:
+  kind: deterministic_ego_translation
+  sensor_delta_per_step_m: [0.25, 0.0, 0.0]
+sensor:
+  id: compiler_topdown_rgb_v0
+  ownership: compiler_runtime_diagnostic_not_source_camera
+  model: orthographic_topdown_xy
+  initial_translation_m: [0.0, 0.0, 0.0]
+  resolution_px: [128, 128]
+  extent_m: 80.0
+  primitive_stride: 64
+  view_range_m: 80.0
+  rgb_semantics: deterministic_chunk_diagnostic_not_photorealistic_source_render
+labels:
+  collision_radius_m: 3.0
+  near_range_m: 20.0
+  mid_range_m: 50.0
+determinism_gate:
+  exact_files:
+    - WORLD_STATE.json
+    - LABELS.json
+    - CHUNK_SELECTION.json
+    - ACTOR_TRAJECTORY.json
+    - RGB.npy
+  world_state_exact: true
+  labels_exact: true
+  asset_chunk_selection_exact: true
+  actor_trajectory_exact: true
+  rgb_exact_required: true
+  visual_float_tolerance: null
+resources:
+  gpu_required: false
+  maximum_wall_seconds_per_process: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - deterministic_compiler_runtime_contract_not_photorealistic_quality
+  - runtime_owned_topdown_sensor_because_sceneir_reference_has_no_source_sensor
+  - no_training
+  - no_confirmation_read
