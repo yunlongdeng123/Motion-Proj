@@ -3092,6 +3092,17 @@ AD-GS 随后在 `readnuScenesInfo` 对 `obj_id[..., 0]` 索引时失败。通用
 新 adapter，checkpoint 与指标不变。以后给冻结模型换 evaluation camera 集时，应复用训练时与模型结构耦合的
 初始化/registry 资产，只替换经协议允许的观测与相机字段。
 
+### V6-F09：lazy camera 偏移前必须整体迁移设备，不能只新建 CUDA 外参
+
+R3 第四次正式目录已成功完成 scene-0242 的 object-aware `Scene` 构造与 checkpoint restore，
+在首个 novel camera 的 `full_proj_transform` 计算处失败：冻结 AD-GS 配置启用 `lazy_load_to_gpu`，
+原 camera 的 `projection_matrix` 留在 CPU，而 R3 worker 直接把新 `world_view_transform` 建在 CUDA，导致 BMM
+设备不一致。该 run 保留 `failed`，资源峰值远低于门槛，不属于方法或资源负结果。
+
+修复在任何偏移或编辑前调用上游 `Camera.cuda()`，一次性迁移 image/depth/semantic/sky 与全部变换矩阵，
+再深拷贝和修改外参；这与上游 `Camera.to()` 合同一致，不改变相机数值、checkpoint、renderer、指标或门槛。
+以后 lazy evaluation path 必须把 camera 作为一个设备一致的整体处理，不能只迁移新创建的 tensor。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

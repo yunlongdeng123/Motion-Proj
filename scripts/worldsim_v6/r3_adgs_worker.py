@@ -124,6 +124,8 @@ def main() -> int:
             base = views.get((frame_index, 0))
             if base is None:
                 raise RuntimeError(f"AD-GS development adapter 缺少 frame={frame_index}, camera=0")
+            # 冻结配置使用 lazy CPU camera；偏移矩阵与 rasterizer 要求整个 camera 同在 CUDA。
+            base.cuda()
             # development-only adapter 的本地归一化不能代替训练时 0..195 时间轴。
             base.time = frame_index / 195.0
             for lateral_offset in offsets:
