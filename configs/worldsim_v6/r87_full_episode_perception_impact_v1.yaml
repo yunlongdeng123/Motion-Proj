@@ -1,0 +1,54 @@
+schema_version: worldsim_v6.r87_full_episode_perception_impact.v1
+task_id: WS-V6-R87-FULL-EPISODE-PERCEPTION-IMPACT-01
+hypothesis_id: WS-V6-H-R87-001
+seed: 20260821
+sources:
+  r86_run: runs://worldsim_v6/WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01/20260821T222429Z__three-actor-full-episode-s20260821-r1
+  r86_manifest_sha256: 4ddbb72e335d8ede97a28f7d7c687bf3b7695508f5e58410195cab640559af98
+  r86_gate_sha256: e2d540bbc2a5a89ad258ff9cb2b81d7565ce8d4d24835ce4769f28c7795664a6
+  r86_summary_sha256: 5c14c650c68100a31c0dc967f47831db5f6c77e13f6f9872710bf97ed8c8aeec
+  r86_full_episode_sensor_effect_sha256: 7c83c16ec6b256a64a3259138f62fd83fdbcad2deeec5e2ae10d5f1da8fb0ebc
+  r86_resource_audit_sha256: 2b5bb3aaa183b3d490c3c5ce204ea9a734f346a9a5bcca6f8eebedcf95a66558
+  r53_run: runs://worldsim_v6/WS-V6-R53-LIFECYCLE-PERCEPTION-REGRESSION-01/20260821T185745Z__lifecycle-perception-s20260821-r1
+  r53_manifest_sha256: 37ce3bb833ed88f29753e9491c492fe0ebde83f980daf02433448a54ad97dcff
+  r53_gate_sha256: f73f98fb07cdffc61967173f840f2bfe55ae8f403771f3a3e34a4543f32ca219
+  r53_summary_sha256: 5a330fc54e7bea65e43abeeb9e4df5e310daf78a2aff169d7754a62a8a70298c
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+evaluation:
+  frame_start: 0
+  frame_stop_exclusive: 196
+  frame_stride: 1
+  expected_frame_count: 196
+  variants: [logged, edited]
+  rgb_keys:
+    logged: logged_rgb
+    edited: compiled_rgb
+  repeat_count: 2
+  minimum_sensor_changed_pixels_for_visible_frame: 256
+  expected_sensor_visible_frame_count: 149
+  minimum_changed_label_pixels_for_affected_frame: 1
+  minimum_perception_affected_frame_count: 10
+  minimum_visible_frame_perception_detection_rate: 0.05
+  minimum_total_changed_label_pixels: 1000
+  lifecycle_phases:
+    all_three_active: [0, 141]
+    actor2_actor5_active: [141, 151]
+    actor2_only_active: [151, 196]
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_worker_seconds: 1200
+  maximum_wall_seconds: 1230
+  maximum_output_bytes: 1000000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_full_episode_frozen_deeplab_impact_of_three_actor_compiled_edit
+  - compares_logged_rgb_and_compiled_edited_rgb_at_each_of196_identical_frame_indices
+  - two_deterministic_repeats_are_required_for_every_frame_and_variant
+  - reports_temporal_coverage_magnitude_continuity_and_lifecycle_phase_distribution
+  - perception_state_change_is_not_semantic_correctness_or_quality
+  - correlation_is_descriptive_and_not_local_causality
+  - physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
