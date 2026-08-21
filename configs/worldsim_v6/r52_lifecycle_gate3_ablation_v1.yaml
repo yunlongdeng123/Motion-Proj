@@ -1,0 +1,47 @@
+schema_version: worldsim_v6.r52_lifecycle_gate3_ablation.v1
+task_id: WS-V6-R52-LIFECYCLE-GATE3-ABLATION-01
+hypothesis_id: WS-V6-H-R52-001
+seed: 20260821
+sources:
+  r45_run: runs://worldsim_v6/WS-V6-R45-TRANSFORM-OWNED-ACTOR-BAKE-01/20260821T180636Z__transform-bake-s20260821-r1
+  r45_gate_sha256: 8c92e3f796338b91345727acba97c8ff9cb08688be94cc592d95529ab4430bff
+  r49_run: runs://worldsim_v6/WS-V6-R49-MULTIFRAME-DETACHED-SENSOR-RUNTIME-01/20260821T182444Z__multiframe-sensor-s20260821-r1
+  r49_gate_sha256: e8075c61ad94396cbb98c872a67ffb14e6e8d6e65b6a9b7fbecef31bdfce2d83
+  r49_summary_sha256: f22faad62248acb89034838f2979498cff5d8f56e59db5a08ab0cbbafff3134b
+  r49_direct_metrics_sha256: cd1f6f6b6a2fc25e507d4b647be5fd87ae163ef9201104e7b291c8db583fcdcd
+  r50_run: runs://worldsim_v6/WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01/20260821T183317Z__lifecycle-bake-s20260821-r1
+  r50_gate_sha256: bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e
+  r50_lifecycle_sha256: f050c764ad844ab8575fb16b4aba17a07fc1c2d9bd203966172eef99eda18bcb
+  r51_run: runs://worldsim_v6/WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01/20260821T184143Z__lifecycle-sensor-s20260821-r1
+  r51_gate_sha256: 6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7
+  r51_summary_sha256: aa0a12c8923a0e9827e513d9684952e83d912873757714b3053de0f2e5e6eef7
+  r51_manifest_sha256: 0973c764949a7c8e89a5601081e87eaa799c365434d0c39aa5c66ac0984e6b46
+  r51_metrics_sha256: 9ce9d3f57a43cd702e843f95b76b0866d69b8cb254e73505ab42331089a3f26c
+evaluation:
+  frame_indices: [0, 57, 140, 141, 195]
+  active_frames: [0, 57, 140]
+  inactive_frames: [141, 195]
+  expected_naive_pass_frames: [0, 57, 140]
+  expected_v6_pass_frames: [0, 57, 140, 141, 195]
+  expected_naive_lifecycle_false_active_frames: [141, 195]
+  expected_v6_lifecycle_false_active_frames: []
+  minimum_usable_frame_gain: 2
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: none_cpu_artifact_evaluation
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_paired_generate_verify_bake_ablation_on_five_pre_registered_frames
+  - naive_transform_only_bake_is_compared_to_lifecycle_aware_v6_bake
+  - usable_frame_gain_and_lifecycle_false_active_reduction_are_native_sensor_grounded
+  - causal_scope_is_isolated_by_exact_active_frame_sensors_and_preserved_base_arrays_transform
+  - not_full_196_frame_or_multi_actor_evaluation
+  - semantic_physical_planning_safety_and_confirmation_abstain

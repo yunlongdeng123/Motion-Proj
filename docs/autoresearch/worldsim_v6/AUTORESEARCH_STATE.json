@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T18:39:12Z",
+  "updated_at_utc": "2026-08-21T18:44:47Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 87,
-  "active_task": "WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01",
-  "active_hypothesis": "WS-V6-H-R51-001",
-  "candidate": "lifecycle_aware_detached_package_multiframe_sensor_runtime",
+  "iteration": 88,
+  "active_task": "WS-V6-R52-LIFECYCLE-GATE3-ABLATION-01",
+  "active_hypothesis": "WS-V6-H-R52-001",
+  "candidate": "paired_naive_bake_vs_lifecycle_aware_generate_verify_bake",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e",
+  "dev_artifact_hash": "6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "e664af4ed816e355eb45f54c5bac64df76bd25967b827c792f4823a401d96af9",
-  "last_reflection_id": "WS-V6-REFL-0089",
+  "last_reflection_id": "WS-V6-REFL-0090",
   "last_completed": {
-    "task_id": "WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01",
-    "run": "run://worldsim_v6/WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01/20260821T183317Z__lifecycle-bake-s20260821-r1",
-    "artifact_sha256": "bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e"
+    "task_id": "WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01",
+    "run": "run://worldsim_v6/WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01/20260821T184143Z__lifecycle-sensor-s20260821-r1",
+    "artifact_sha256": "6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -110,7 +110,8 @@
     "r48_detached_actor_package_sensor_runtime": "done_accepted_development_exact_r43_sensor_arrays",
     "r49_multiframe_detached_sensor_runtime": "done_rejected_v6_f71_missing_native_actor_lifecycle",
     "r50_actor_lifecycle_bake": "done_accepted_development_native_instances_fv",
-    "r51_lifecycle_aware_sensor_runtime": "active_pre_registered",
+    "r51_lifecycle_aware_sensor_runtime": "done_accepted_development_5_of_5_native_sensor_conformance",
+    "r52_lifecycle_gate3_ablation": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -119,8 +120,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_and_push_r50_acceptance_and_r51_lifecycle_runtime",
-    "run_direct_r50_package_on_frames_0_57_140_141_195",
-    "require_active_frame_equivalence_and_zero_inactive_actor_sensor_error"
+    "commit_and_push_r51_acceptance_and_r52_paired_ablation",
+    "compare_naive_transform_only_bake_against_lifecycle_aware_bake",
+    "quantify_usable_frame_gain_and_lifecycle_false_active_reduction"
   ]
 }
