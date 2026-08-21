@@ -3436,6 +3436,18 @@ H-R13-007 canonical rejected run `20260821T124443Z__factorized-perception-s20260
 per-Gaussian `point_ids` 与 `instances_fv`，只删除在两帧均可见且 Gaussian 数最多的单个 model actor；actor 选择不读取
 RGB/semantic outcome。冻结 AD-GS 不保留可审计 per-actor ID，必须 ABSTAIN，不得伪造跨 frontend 单 actor 对齐。
 
+### V6-F39：actor Gaussian 数量不等于下游感知敏感度，单启发式选择必须扩展为完整分母
+
+H-R13-008 canonical rejected run `20260821T125151Z__single-actor-perception-s20260821-r1` 从两帧均可见的
+12 个 StreetGS model actor 中，按最大 Gaussian 数且最小 index 的预注册规则选中 index `2`（`13,490` Gaussians）。
+logged rerender 对冻结 R3 RGB 的 MAE 为精确 `0`，单 actor 删除的 effect pixel 为 `10,271/9,047`，target RGB
+MAE 为 `0.0210/0.0286`，outside RGB MAE 仅约 `1e-6`；但 target DeepLab label change 只有
+`0.00068/0.0`，两帧都未达到冻结 2% 感知效应门。
+
+该负结论拒绝“Gaussian 最多 actor 最能触发 perception”的启发式，不得改选第二大 actor 当作同一假设 recovery，也不得放宽
+2% threshold。H-R13-009 一次性评估冻结 metadata 定义的全部 12 个 eligible actor，以固定完整分母报告 ACCEPT/ABSTAIN
+覆盖率；只有两帧都通过完全相同门槛的 actor 才可被 V6 接受，其余必须显式 abstain。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

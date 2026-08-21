@@ -1,0 +1,71 @@
+schema_version: worldsim_v6.r13_actor_cohort_perception.v1
+task_id: WS-V6-R13-WORLDSIM-01
+hypothesis_id: WS-V6-H-R13-009
+seed: 20260821
+sources:
+  rejected_single_actor_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125151Z__single-actor-perception-s20260821-r1
+  rejected_single_actor_manifest_sha256: 6c403967c157df79d81b5e0a21ff5a68c54cc9fec850ab4ec2976ea82b0fb145
+  rejected_single_actor_gate_sha256: 4bab40b333d1496c55e9d9d7ba34732ff2aa904c9b4e0c139789fb69958b2a54
+  typed_dynamic_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T122953Z__dynamic-edits-s20260821-r1
+  typed_dynamic_gate_sha256: ec7b0ac9b650b1fdef60c3769491149550dd263207c639ae4436079882e18b82
+  r3_render_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  r3_streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+verifier_model:
+  model_file: pytorch_model.bin
+  model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+cohort:
+  partition: development_complete_visible_actor_cohort
+  confirmation_locked: true
+  scene: scene-0242
+  frontend: streetgs
+  frame_indices: [52, 57]
+  camera_id: 0
+  repeat_count: 2
+  expected_eligible_actor_count: 12
+actor_selection:
+  eligibility: visible_in_both_frozen_frames
+  evaluation: all_eligible_model_indices_no_outcome_selection
+metrics:
+  rgb_change_threshold: 0.00392156862745098
+  effect_mask_dilation_px: 8
+  minimum_effect_pixels: 256
+  minimum_target_rgb_mae: 0.02
+  maximum_outside_rgb_mae: 0.001
+  minimum_rgb_locality_enrichment: 20.0
+  minimum_target_perception_changed_fraction: 0.02
+  maximum_outside_perception_changed_fraction: 0.02
+  minimum_perception_locality_enrichment: 2.0
+  maximum_logged_replay_rgb_mae: 0.000001
+  minimum_accepted_actor_count: 1
+  minimum_accepted_actor_coverage: 0.05
+  minimum_false_safe_reduction_vs_naive: 0.50
+gate:
+  require_complete_actor_denominator: true
+  require_nonzero_verified_actor_coverage: true
+  require_v6_false_safe_rate_zero: true
+  require_naive_false_safe_reduction: true
+  require_logged_replay_match_frozen_r3: true
+  require_perception_repeat_exact: true
+  require_checkpoint_and_source_immutable: true
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_wall_seconds: 300
+  minimum_disk_free_gib: 10
+unsupported_metrics:
+  rejected_actor_chunks: ABSTAIN_FAILED_FROZEN_PERCEPTION_LOCALITY
+  ad_gs_single_actor_edit: ABSTAIN_NO_PERSISTENT_PER_ACTOR_ID_IN_FROZEN_AD_GS_MODEL
+  sceneir_actor_id_binding: ABSTAIN_FRONTEND_MODEL_INDEX_NOT_SCENEIR_ACTOR_ID
+  semantic_correctness_ground_truth: ABSTAIN_PERCEPTION_CHANGE_LOCALITY_ONLY
+  planning_completion: ABSTAIN_NO_PLANNER
+claim_boundary:
+  - development_complete_two_frame_visible_streetgs_actor_cohort
+  - all_eligible_actor_model_indices_evaluated_without_outcome_selection
+  - acceptance_is_sparse_factorized_coverage_with_explicit_abstention
+  - same_thresholds_as_rejected_h_r13_008
+  - no_ad_gs_sceneir_identity_semantic_accuracy_planner_or_safety_claim
+  - no_training_or_confirmation_read

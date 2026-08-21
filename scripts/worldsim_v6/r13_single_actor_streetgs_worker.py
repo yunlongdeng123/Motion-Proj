@@ -44,6 +44,9 @@ def main() -> int:
     parser.add_argument("--upstream-root", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--frames", required=True)
+    parser.add_argument(
+        "--selection-mode", choices=("maximum", "all"), default="maximum"
+    )
     args = parser.parse_args()
     frames = [int(value) for value in args.frames.split(",")]
     output = args.output.resolve()
@@ -94,13 +97,23 @@ def main() -> int:
             eligible.append((int(count), model_index))
     if not eligible:
         raise RuntimeError("没有在两帧均可见的 StreetGS actor model index")
+    eligible_by_index = sorted(
+        ({"model_index": model_index, "gaussian_count": count} for count, model_index in eligible),
+        key=lambda row: row["model_index"],
+    )
     selected_count, selected_index = max(eligible, key=lambda row: (row[0], -row[1]))
-    selected_mask = point_ids == selected_index
+    selected_models = (
+        [(selected_index, selected_count)]
+        if args.selection_mode == "maximum"
+        else [(row["model_index"], row["gaussian_count"]) for row in eligible_by_index]
+    )
     selection = {
         "schema_version": "worldsim_v6.r13_single_actor_selection.v1",
         "selected_model_index": selected_index,
         "selected_gaussian_count": selected_count,
         "eligible_actor_count": len(eligible),
+        "eligible_actors": eligible_by_index,
+        "selection_mode": args.selection_mode,
         "frame_indices": frames,
         "selection_rule": "visible_in_both_frames_maximum_gaussian_count_then_smallest_index",
     }
@@ -130,19 +143,23 @@ def main() -> int:
                 }
             )
             opacity_before = rigid._opacities.detach().clone()
-            rigid._opacities[selected_mask] = -100.0
-            edited = trainer(image_infos, camera_infos)
-            rigid._opacities.copy_(opacity_before)
-            edited_name = f"frame{frame:03d}_single_actor_removed.npz"
-            _save_render(output / edited_name, edited)
-            rows.append(
-                {
-                    "frame_index": frame,
-                    "state": "edited",
-                    "path": edited_name,
-                    "sha256": _sha256(output / edited_name),
-                }
-            )
+            for model_index, gaussian_count in selected_models:
+                selected_mask = point_ids == model_index
+                rigid._opacities[selected_mask] = -100.0
+                edited = trainer(image_infos, camera_infos)
+                rigid._opacities.copy_(opacity_before)
+                edited_name = f"frame{frame:03d}_actor{model_index:04d}_removed.npz"
+                _save_render(output / edited_name, edited)
+                rows.append(
+                    {
+                        "frame_index": frame,
+                        "state": "edited",
+                        "model_index": model_index,
+                        "gaussian_count": gaussian_count,
+                        "path": edited_name,
+                        "sha256": _sha256(output / edited_name),
+                    }
+                )
     checkpoint_after = _sha256(checkpoint)
     if checkpoint_before != checkpoint_after:
         raise RuntimeError("StreetGS checkpoint before/after SHA 漂移")
