@@ -1,0 +1,36 @@
+schema_version: worldsim_v6.r67_transform_owned_second_actor_bake.v1
+task_id: WS-V6-R67-TRANSFORM-OWNED-SECOND-ACTOR-BAKE-01
+hypothesis_id: WS-V6-H-R67-001
+seed: 20260821
+sources:
+  r66_run: runs://worldsim_v6/WS-V6-R66-SECOND-ACTOR-FACTOR-FUSION-01/20260821T201643Z__actor2-factor-fusion-s20260821-r1
+  r66_manifest_sha256: 2ddfc28dc1b1232518d8490d03430deba43c1fdcce9e6b5c5461cca12dd70cea
+  r66_gate_sha256: c5313f323fb9e91b00f8ace3369a7ac3e9a6bfef0fcafdd6e7df817048e1485e
+  r66_summary_sha256: deae7ed34235d82821013d12cf7c2c864e513bd0ef273d247bda6a0d62de68d0
+  r66_fused_decision_sha256: cd56726ff901c38265ac1bc276cef23fcd29f4c01eff1bee1a52a1a102a18353
+  r56_run: runs://worldsim_v6/WS-V6-R56-SECOND-ACTOR-RIGID-TRAJECTORY-01/20260821T191138Z__actor2-trajectory-s20260821-r1
+  r56_manifest_sha256: 4b9fc3101d7697efd7bd032b0fbaef4ea4e56ae9fd42e392f0ca469336c91dbc
+  r56_gate_sha256: edb20c1108338b2eca3ba5c0795fa7d059a14a091386054da197de9b62c3da9c
+  r56_package_manifest_sha256: 35dbda21f25de374d5f032e6685571edc4f2ae3b05a23c6001a4ce4f9458556a
+  r56_trajectory_geometry_sha256: f2ee809a81a15dd41694651bddee6160df25d4ca0c927d412e8ccb319327c914
+bake_contract:
+  asset_id: actor_0002
+  actor_model_index: 2
+  proposal_id: actor2_translate_x_-1.0_z_+0.0
+  translation_delta_m: [-1.0, 0.0, 0.0]
+  expected_trajectory_rows: 196
+  expected_actor_primitives: 13490
+  expected_base_array_count: 7
+  transform_dtype: float64
+  maximum_transform_composition_error_m: 0.0
+  package_status: baked_four_factor_development_transform_owned_proposal
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_transform_owned_bake_of_four_factor_conformant_second_actor_edit
+  - all_seven_base_arrays_including_lifecycle_remain_byte_exact
+  - edit_is_owned_by_independent_float64_world_transform_trajectory
+  - runtime_composition_is_explicit_and_repeat_bake_is_byte_exact
+  - semantic_road_full_physics_dynamics_planning_safety_and_confirmation_abstain
