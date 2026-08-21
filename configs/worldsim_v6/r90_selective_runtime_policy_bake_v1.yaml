@@ -1,0 +1,36 @@
+schema_version: worldsim_v6.r90_selective_runtime_policy_bake.v1
+task_id: WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01
+hypothesis_id: WS-V6-H-R90-001
+seed: 20260821
+sources:
+  r86_run: runs://worldsim_v6/WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01/20260821T222429Z__three-actor-full-episode-s20260821-r1
+  r86_full_episode_sensor_effect_sha256: 7c83c16ec6b256a64a3259138f62fd83fdbcad2deeec5e2ae10d5f1da8fb0ebc
+  r87_run: runs://worldsim_v6/WS-V6-R87-FULL-EPISODE-PERCEPTION-IMPACT-01/20260821T224421Z__full-episode-perception-s20260821-r1
+  r87_full_episode_perception_impact_sha256: dca14147dae2addc6edced0751009f9e3da1638fdb6df0933153531a302ca2f0
+  r88_run: runs://worldsim_v6/WS-V6-R88-SELECTIVE-PERCEPTION-RUNTIME-GATE-01/20260821T225125Z__selective-perception-gate-s20260821-r1
+  r88_gate_sha256: 4735b7a1a8ab39339014f31b7f7f5a0a96a6ee29256439525585aac5bd088ab3
+  r88_selective_gate_sha256: bbae79436449b205d3454ee6b97696643e6a59a1378901c07bac44ec9607652b
+  r89_run: runs://worldsim_v6/WS-V6-R89-LIFECYCLE-PHASE-HOLDOUT-SELECTOR-01/20260821T225517Z__phase-holdout-selector-s20260821-r1
+  r89_manifest_sha256: d84368b763b8c6f155bc6f2fad9b75f40479601867f0861348120eedb17f49a4
+  r89_gate_sha256: 6bcb4e261118a94f895ac4c28732716cfaf8e459a45e35eb576fb9f7ab7b851d
+  r89_summary_sha256: 8c24fbaffd74a2330920348f46774b33229e021ad76e66cd4c0cded4a701d71f
+  r89_phase_holdout_result_sha256: 4b088b4b526b1bcb88866e0c346d9e127a02c0fe24af888e5d5f45ea5c16f326
+policy:
+  policy_id: selective_frozen_perception_check_v1
+  feature: edited_vs_logged_rgb_changed_pixels
+  threshold_pixels: 45
+  frame_count: 196
+  expected_trigger_count: 151
+  expected_skip_count: 45
+resources:
+  device: cpu
+  maximum_wall_seconds: 30
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_content_addressed_selective_runtime_policy_package
+  - policy_uses_compiler_owned_edited_vs_logged_rgb_changed_pixels_greater_equal45
+  - package_contains_feature_schema_policy_provenance_validity_and196_decisions
+  - double_bake_must_be_byte_exact_and_decisions_match_frozen_r87_perception_impact
+  - accepted_scope_is_same_episode_same_renderer_same_frozen_perception_model
+  - cross_scene_cross_model_semantic_correctness_local_causality_physics_planning_safety_abstain
+  - no_neural_training_or_confirmation_read
