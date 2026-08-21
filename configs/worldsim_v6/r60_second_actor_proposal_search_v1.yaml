@@ -1,0 +1,42 @@
+schema_version: worldsim_v6.r60_second_actor_proposal_search.v1
+task_id: WS-V6-R60-SECOND-ACTOR-PROPOSAL-SEARCH-01
+hypothesis_id: WS-V6-H-R60-001
+seed: 20260821
+sources:
+  r59_run: runs://worldsim_v6/WS-V6-R59-SECOND-ACTOR-INTERACTION-FACTOR-01/20260821T192557Z__actor2-interaction-s20260821-r1
+  r59_manifest_sha256: 869972592a9a5ca741420c59b4ddf8a284908e3f050133e81e481ff5931fcf28
+  r59_gate_sha256: f38433bec05be64331a55ff542c6e1fa1708cae29ddd1d3e6b25b88452225d6b
+  r59_summary_sha256: 9fbd0cf301abbdcca8ba8925557c617cb746712e8b38817807ace70526098550
+  r59_decision_sha256: a54e2edeeed4ff1223676f92f14d00bed299ae3e8e53730641e0017cc5853866
+  r58_run: runs://worldsim_v6/WS-V6-R58-SECOND-ACTOR-TRANSLATION-SENSOR-01/20260821T192058Z__actor2-translation-s20260821-r1
+  r58_gate_sha256: f4976d19c9ea22b58d0c864db50736f6ddd1fb1cfa6a653aa07cff51cbf59da8
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+cohort:
+  actor_id: actor_0002
+  expected_actor_count: 27
+  expected_trajectory_rows: 196
+  timestamp_step_seconds: 0.1
+search:
+  x_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  z_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  exclude_zero_translation: true
+  expected_candidate_count: 80
+  rejected_anchor_delta_m: [-1.0, 0.0, -0.5]
+  selection_rule: minimum_squared_distance_to_rejected_anchor_then_lexicographic_x_z
+  minimum_translation_norm_m: 0.5
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_factor_aware_second_actor_translation_proposal_search
+  - frozen_80_candidate_xz_grid_and_full_27_actor_196_frame_aabb_factor
+  - retains_r59_rejected_anchor_and_selects_nearest_zero_new_overlap_candidate
+  - contact_road_semantic_identity_dynamics_physical_planning_safety_and_confirmation_abstain

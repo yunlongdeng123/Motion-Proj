@@ -3675,3 +3675,8 @@ H-R53-001 首次正式启动 `20260821T185332Z__lifecycle-perception-s20260821-r
 H-R53-001 第二次正式启动 `20260821T185611Z__lifecycle-perception-s20260821-r1` 已正确读取 `compiled_rgb` 并加载冻结 DeepLabV3，但在首个 forward、任何 label 输出前被 `torch.use_deterministic_algorithms(True)` 拒绝：CUDA>=10.2 的 CuBLAS 需要进程启动前设置 `CUBLAS_WORKSPACE_CONFIG=:4096:8`。run 仍只有输入 index 与错误日志，没有方法结果。
 
 修复仅由 R53 主进程向隔离 worker 环境注入 `CUBLAS_WORKSPACE_CONFIG=:4096:8`，保持 deterministic algorithms 开启；不得关闭确定性模式。冻结 sources、模型、12 次推理分母、active/inactive gates、资源与 claim boundary 均不变。新 commit/push 后仍按原 H-R53-001 重试，第二次启动不具 canonical authority。
+### V6-F74：跨 actor 复用 renderer-conformant translation 不保证全轨迹 interaction 可接受
+
+H-R59-001 canonical run `20260821T192557Z__actor2-interaction-s20260821-r1` 将 R58 已通过 native renderer 的 `[-1,0,-0.5]m` translation 应用于 actor2 的完整196帧轨迹。self-kinematics 精确保持，最大 velocity/acceleration invariance error 仅 `8.88e-15/1.78e-13`；但相对 logged baseline 新增7个 AABB overlap events：actor0 在5.3--5.6s共4个，actor5 在6.2--6.4s共3个。因此 interaction factor 正式 `REJECT`，renderer conformance 不能提升为 edit validity。
+
+不得删除发生 overlap 的帧、放宽 AABB gate、用删除4个旧 overlap 抵消新增7个，或因为 R58 sensor 通过就覆盖 R59。H-R60-001 保留 R58/R59 与完整27 actor x196帧 denominator，冻结 x/z 各 `[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]m` 的80个非零 translation 网格，逐候选要求 self-kinematics ACCEPT 且新增 overlap 为0；按与被拒候选的距离、再按字典序选择最近可接受方案。contact、road、physics 与 safety 继续 ABSTAIN。
