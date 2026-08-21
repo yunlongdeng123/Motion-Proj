@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6 R9 cross-frontend independent verifier arms development PASS（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1`，
+  source=`9a3b333`；gate/summary/manifest/terminal SHA=`297f1220...ab7 / a3e79468...393 / 212c12cc...fde / b3351a1a...2cd`。
+- P1=`10/28` ACCEPT、coverage=`0.3571`、false-safe=`0`；P2=`3/28`、coverage=`0.1071`、false-safe=`0`；
+  P3 false-safe=`0.1667` 被排除，P4=`28/28` ABSTAIN。R10 只准融合 P1+P2。
+- proposal 来自同帧/同编辑的另一 frontend，仍是同 sensor support 的 reconstructed proposal，不是新增观测或 bake 授权。
+
 ## WorldSim V6 R9 SD-v1.5 independent verifier arms 正式实验 REJECTED（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1`，

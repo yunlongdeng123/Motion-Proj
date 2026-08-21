@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r10_factorized_verification.v1
+task_id: WS-V6-R10-FACTORIZED-VERIFICATION-01
+hypothesis_id: WS-V6-H-R10-001
+seed: 20260821
+sources:
+  r9_run: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_manifest_sha256: 212c12ccbc83a7dd987c4dcc0e36cbaa61f1268fa3f3473dfd9dbd92fba7ffde
+  r9_gate_sha256: 297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7
+  r9_per_case_arms_sha256: 862ce290455d2018a53b3eb19dfe45d5b63a8ffa5e18080435e73f09f987f68e
+  r9_cases_sha256: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+  r9_arm_summaries_sha256: d8cd9754d7be1864f08a4f6b80c7258adbe94c5689e036cc6e6704360220c48b
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_case_count: 28
+selected_arms:
+  - id: P1
+    factor: photo
+    r9_status: eligible_for_r10
+  - id: P2
+    factor: geometry
+    r9_status: eligible_for_r10
+excluded_arms:
+  - id: P3
+    factor: semantic
+    reason: r9_false_safe_rate_0.1667_exceeds_0.10
+  - id: P4
+    factor: dynamics
+    reason: no_independent_temporal_evidence
+fusion:
+  accept: all_selected_arms_accept
+  reject: all_selected_arms_reject
+  abstain: selected_arms_disagree_or_any_selected_arm_abstains
+  joint_truth: photo_truth_safe_and_geometry_truth_safe
+  semantic_validity: ABSTAIN
+  dynamics_validity: ABSTAIN
+gate:
+  minimum_accept_coverage: 0.05
+  maximum_false_safe_rate: 0.0
+  minimum_false_safe_reduction_vs_p0: 0.25
+  require_every_accept_joint_truth_safe: true
+  require_disagreement_to_abstain: true
+  require_only_r9_eligible_arms: true
+  require_non_target_exact: true
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - matched_development_factorized_fusion
+  - cross_frontend_reconstructed_proposals_only
+  - photo_and_geometry_only
+  - semantic_and_dynamics_explicit_abstain
+  - no_verified_trajectory_length_claim
+  - no_bake
+  - no_training
+  - no_confirmation_read

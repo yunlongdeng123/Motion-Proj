@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:15:00Z",
+  "updated_at_utc": "2026-08-21T11:21:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 8,
-  "active_task": "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01",
-  "active_hypothesis": "WS-V6-H-R9-003",
-  "candidate": "cross_frontend_reconstructed_proposal_independent_arms",
+  "iteration": 9,
+  "active_task": "WS-V6-R10-FACTORIZED-VERIFICATION-01",
+  "active_hypothesis": "WS-V6-H-R10-001",
+  "candidate": "cross_frontend_factorized_photo_geometry_fusion",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "b1ad614c292877493021616beee24a66ca57b76afab09917713af78c54c6bc51",
+  "dev_artifact_hash": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
   "failure_ledger_sha256": "c28ef3c2e2295981ef3f51f97ada02a0600713fd4ac39afbaa52af92b243c1d8",
-  "last_reflection_id": "WS-V6-REFL-0010",
+  "last_reflection_id": "WS-V6-REFL-0011",
   "last_completed": {
     "task_id": "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01",
-    "run": "run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1",
-    "artifact_sha256": "b1ad614c292877493021616beee24a66ca57b76afab09917713af78c54c6bc51"
+    "run": "run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1",
+    "artifact_sha256": "297f12202bdd084f181632d951d130c91aa983023a5874ca8da7c61218e81ab7"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -34,6 +34,7 @@
     "r8_frozen_proposal_generator": "done_accepted_capability_selected_big_lama",
     "r9_big_lama_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
     "r9_sd15_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
+    "r9_cross_frontend_verifier_arms": "done_accepted_development_p1_p2_only",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -42,8 +43,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "construct_bidirectional_cross_frontend_proposals_for_all_28_cases",
-    "reuse_exact_r9_verifier_models_thresholds_and_gates_without_tuning",
-    "proceed_to_r10_only_if_at_least_one_cross_frontend_arm_is_independently_eligible"
+    "fuse_only_r9_eligible_p1_photo_and_p2_geometry",
+    "emit_accept_abstain_reject_and_factorized_validity_for_all_28_cases",
+    "proceed_to_r11_bake_only_if_r10_has_nonzero_false_safe_free_acceptance"
   ]
 }

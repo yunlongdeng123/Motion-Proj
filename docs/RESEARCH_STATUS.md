@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6 R9 cross-frontend arms development PASS；R10 factorized verification 启动（2026-08-21）
+
+- H-R9-003 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1`；
+  P1=`10/28` ACCEPT、P2=`3/28` ACCEPT，二者 false-safe 均为 0，正式进入 R10；P3 因 `1/6` false-safe
+  排除，P4 因无独立时序证据继续 ABSTAIN。
+- 当前 active=`WS-V6-R10-FACTORIZED-VERIFICATION-01`，hypothesis=`WS-V6-H-R10-001`；只融合 P1+P2：
+  双 ACCEPT→ACCEPT，双 REJECT→REJECT，分歧/缺证据→ABSTAIN；semantic/dynamics validity 显式 ABSTAIN。
+
 ## WorldSim V6 R9 SD-v1.5 arms REJECTED；cross-frontend evidence pivot 启动（2026-08-21）
 
 - H-R9-002 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1`；
