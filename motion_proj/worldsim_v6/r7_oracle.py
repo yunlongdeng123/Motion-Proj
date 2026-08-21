@@ -131,19 +131,24 @@ def _mask_for(
     target: Mapping[str, np.ndarray],
     base: Mapping[str, np.ndarray],
     removed: Mapping[str, np.ndarray],
-    dynamic_threshold: float,
+    patch_config: Mapping[str, Any],
 ) -> np.ndarray:
     height, width = target["rgb"].shape[:2]
     yy, xx = np.indices((height, width))
-    dynamic = _plane(np.asarray(base["dynamic_opacity"]), "dynamic_opacity") > dynamic_threshold
+    dynamic = _plane(np.asarray(base["dynamic_opacity"]), "dynamic_opacity") > float(
+        patch_config["dynamic_opacity_threshold"]
+    )
     base_rgb = np.clip(base["rgb"].astype(np.float32), 0.0, 1.0)
     removed_rgb = np.clip(removed["rgb"].astype(np.float32), 0.0, 1.0)
-    actor_edit_change = np.mean(np.abs(base_rgb - removed_rgb), axis=2) > 0.01
+    actor_edit_change = np.mean(np.abs(base_rgb - removed_rgb), axis=2) > float(
+        patch_config["actor_edit_rgb_change_threshold"]
+    )
     base_depth = _plane(base["depth"], "depth").astype(np.float32)
     removed_depth = _plane(removed["depth"], "depth").astype(np.float32)
     comparable_depth = (base_depth > 1.0e-6) & (removed_depth > 1.0e-6)
     actor_edit_change |= comparable_depth & (
-        np.abs(base_depth - removed_depth) / np.maximum(np.abs(base_depth), 1.0e-3) > 0.05
+        np.abs(base_depth - removed_depth) / np.maximum(np.abs(base_depth), 1.0e-3)
+        > float(patch_config["actor_edit_relative_depth_change_threshold"])
     )
     actor_evidence = dynamic | actor_edit_change
     if hole_type == "missing_route_support":
@@ -381,8 +386,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         oracle_rows: list[dict[str, Any]] = []
         decoy_rows: list[dict[str, Any]] = []
         provenance_rows: list[dict[str, Any]] = []
+        structural_rows: list[dict[str, Any]] = []
         minimum_mask = int(config["oracle_patch_contract"]["minimum_mask_pixels"])
-        dynamic_threshold = float(config["oracle_patch_contract"]["dynamic_opacity_threshold"])
         for scene in config["cohort"]["scenes"]:
             for frontend in config["cohort"]["frontends"]:
                 render_map = render_maps[(scene, frontend)]
@@ -403,9 +408,31 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                     )
                     for hole_type in config["cohort"]["hole_types"]:
                         target = side if hole_type == "missing_side_view" else removed if hole_type == "disocclusion" else base
-                        mask = _mask_for(hole_type, target, base, removed, dynamic_threshold)
+                        mask = _mask_for(
+                            hole_type,
+                            target,
+                            base,
+                            removed,
+                            config["oracle_patch_contract"],
+                        )
                         mask_count = int(np.count_nonzero(mask))
                         if mask_count < minimum_mask:
+                            if hole_type in {"disocclusion", "actor_removal_hole"}:
+                                structural_rows.append(
+                                    {
+                                        "schema_version": "worldsim_v6.r7_structural_abstain.v1",
+                                        "case_id": f"{scene}__{frontend}__f{int(frame_index):03d}__{hole_type}",
+                                        "scene": scene,
+                                        "frontend": frontend,
+                                        "frame_index": int(frame_index),
+                                        "hole_type": hole_type,
+                                        "evidence_pixel_count": mask_count,
+                                        "minimum_required_pixels": minimum_mask,
+                                        "decision": "structural_abstain_before_proposal",
+                                        "reason": "no_nonempty_actor_edit_evidence_denominator",
+                                    }
+                                )
+                                continue
                             raise R7ExperimentError(
                                 f"hole mask 太小：{scene}/{frontend}/{frame_index}/{hole_type}={mask_count}"
                             )
@@ -476,14 +503,12 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                                 decoy_rows.append(row)
                             else:
                                 oracle_rows.append(row)
-        expected_cases = (
-            len(config["cohort"]["scenes"])
-            * len(config["cohort"]["frontends"])
-            * len(config["cohort"]["frame_indices"])
-            * len(config["cohort"]["hole_types"])
-        )
+        expected_cases = int(config["cohort"]["expected_eligible_case_count"])
+        expected_abstains = int(config["cohort"]["expected_structural_abstain_count"])
         if len(oracle_rows) != expected_cases or len(decoy_rows) != expected_cases:
             raise R7ExperimentError("R7 case denominator 漂移")
+        if len(structural_rows) != expected_abstains:
+            raise R7ExperimentError("R7 structural abstain denominator 漂移")
         hole_rows = []
         for hole_type in config["cohort"]["hole_types"]:
             subset = [row for row in oracle_rows if row["hole_type"] == hole_type]
@@ -539,6 +564,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "provenance_row_count": len(provenance_rows),
             "provenance_exact": len(provenance_rows) == expected_cases * 2
             and all(row["content_sha256"] for row in provenance_rows),
+            "structural_abstain_count": len(structural_rows),
         }
         gate_cfg = config["gate"]
         checks = {
@@ -554,6 +580,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             >= float(gate_cfg["minimum_per_hole_usable_coverage_gain"]),
             "outside_mask_exact_passed": aggregate["outside_mask_exact"],
             "provenance_exact_passed": bool(aggregate["provenance_exact"]),
+            "structural_abstain_count_passed": len(structural_rows) == expected_abstains,
         }
         checks["passed"] = all(checks.values())
         gate = {
@@ -568,6 +595,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         _write_jsonl(run_dir / "DECOY_CONTROLS.jsonl", decoy_rows)
         _write_jsonl(run_dir / "PROPOSAL_PROVENANCE.jsonl", provenance_rows)
         _write_jsonl(run_dir / "HOLE_TYPE_METRICS.jsonl", hole_rows)
+        _write_jsonl(run_dir / "STRUCTURAL_ABSTAINS.jsonl", structural_rows)
         _write_json(run_dir / "ORACLE_GATE.json", gate)
         elapsed = time.monotonic() - started
         _write_json(
@@ -590,6 +618,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "source_commit": source_commit,
             "oracle_case_count": len(oracle_rows),
             "decoy_case_count": len(decoy_rows),
+            "structural_abstain_count": len(structural_rows),
             "gate_passed": checks["passed"],
             "training_started": False,
             "confirmation_content_read": False,
@@ -601,6 +630,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "DECOY_CONTROLS.jsonl",
             "PROPOSAL_PROVENANCE.jsonl",
             "HOLE_TYPE_METRICS.jsonl",
+            "STRUCTURAL_ABSTAINS.jsonl",
             "ORACLE_GATE.json",
             "RESOURCE_AUDIT.json",
             "SUMMARY.json",
@@ -645,7 +675,7 @@ def main() -> int:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("configs/worldsim_v6/r7_oracle_missing_world_v0.yaml"),
+        default=Path("configs/worldsim_v6/r7_oracle_missing_world_v1.yaml"),
     )
     parser.add_argument(
         "--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6")
