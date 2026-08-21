@@ -54,8 +54,9 @@ def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.nda
     generator_config = dict(OmegaConf.to_container(config.generator, resolve=True))
     kind = generator_config.pop("kind")
     model = make_generator(None, kind=kind, **generator_config)
+    # 只读取 state_dict，避免反序列化 checkpoint 内未参与推理的训练回调对象。
     checkpoint = torch.load(
-        model_root / "models/best.ckpt", map_location="cpu", weights_only=False
+        model_root / "models/best.ckpt", map_location="cpu", weights_only=True
     )
     state = {
         key[len("generator.") :]: value

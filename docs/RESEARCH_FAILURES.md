@@ -3199,6 +3199,18 @@ checkpoint、输入、seed、阈值与选择规则；不解析或消费任何训
 实验输入、不改变 mask、prompt、steps、guidance、seed、候选或门槛。后续所有生成器 adapter
 必须把空间尺寸当作调用合同，并在 compositing 前 fail-closed 核对 image/mask/proposal 三者形状。
 
+### V6-F18：推理 adapter 不得反序列化 checkpoint 的训练器对象
+
+R8 第二轮正式目录 `20260821T104107Z__frozen-generator-s20260821-r1` 中，SD-v1.5 已完整通过
+4 cases × 2 repeats 的 capability/resource gate，但 Big-LaMa 在 `torch.load` 时尝试恢复 checkpoint
+中未参与推理的 Lightning callback，因轻量推理环境没有完整训练框架而失败。冻结规则要求两个 ungated
+候选都被实际执行，所以该轮仍如实 `rejected`；SD 的通过不能事后放松这条规则。
+
+修复改用 PyTorch `weights_only=True`，只读取 tensor/state_dict，再按冻结 generator 结构严格加载；
+不安装或执行训练器，不改变 checkpoint 字节、候选、案例、输入、seed、阈值、资源合同或选择规则。
+以后第三方训练 checkpoint 的推理入口必须默认最小反序列化面，训练回调、优化器和日志对象不得成为
+部署环境的隐式依赖。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
