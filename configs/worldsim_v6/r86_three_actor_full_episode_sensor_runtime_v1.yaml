@@ -1,0 +1,73 @@
+schema_version: worldsim_v6.r86_three_actor_full_episode_sensor_runtime.v1
+task_id: WS-V6-R86-THREE-ACTOR-FULL-EPISODE-SENSOR-RUNTIME-01
+hypothesis_id: WS-V6-H-R86-001
+seed: 20260821
+sources:
+  r82_run: runs://worldsim_v6/WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T215814Z__three-actor-package-s20260821-r1
+  r82_manifest_sha256: 9367d1a3652ec20f41464d50ffd7d8df8c5e7a2cca980b5020abdd798055d519
+  r82_gate_sha256: 66b0c9784ac462e6e30ea086e3d85acfc18918629bc4626f23698fc509c3dfc2
+  r82_summary_sha256: 951673d0e5c57d59144df05405a5ed66f9c5ca7fb0924f3a4998801ac9d077c4
+  r82_scene_package_manifest_sha256: af4721bf97e61fcb6393a9ba60458efb5e564809aa602b1f3dd84b6c51a0ae4f
+  r82_scene_composition_sha256: 9d7f82bc0e7974b27ca0aa0f06dfce4ca83dd19312b78ff7ec481c688edce7bb
+  r82_runtime_contract_sha256: 67fca3f2efc04097ca5934ed3af37e6788aa5c6e77e0d616e231fbc6c27d8aff
+  r82_validity_sha256: e0fbe9415076666baea8942b83ea278236f3744dfdda8c0fd1f8d3ec005f4151
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T210253Z__streetgs-scene0242-matched-formal30k-s0-r46/work_dirs/worldsim_v4_streetgs/scene0242_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dd41a34d877f64abf39c50ecf78d04fcccf238f4a2898cb45e5de5bba5452bc0
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime_contract:
+  runtime_mode: multi_actor_transform_lifecycle_owned_scene_patch
+  frame_start: 0
+  frame_stop_exclusive: 196
+  frame_stride: 1
+  expected_frame_count: 196
+  actor_ids: [actor_0000, actor_0002, actor_0005]
+  actor_model_indices: [0, 2, 5]
+  proposal_ids: [translate_world_x_m1p0_z_m0p5, actor2_translate_x_-1.0_z_+0.0, actor5_translate_x_+0.5_z_+0.0]
+  translations_m:
+    actor_0000: [-1.0, 0.0, -0.5]
+    actor_0002: [-1.0, 0.0, 0.0]
+    actor_0005: [0.5, 0.0, 0.0]
+  active_stop_exclusive:
+    actor_0000: 141
+    actor_0002: 196
+    actor_0005: 151
+  expected_active_frame_counts:
+    actor_0000: 141
+    actor_0002: 196
+    actor_0005: 151
+  expected_primitives:
+    actor_0000: 12390
+    actor_0002: 13490
+    actor_0005: 8377
+  required_translation_source: nested_package_transform_trajectory
+  required_lifecycle_source: nested_package_actor_frame_validity
+thresholds:
+  minimum_per_actor_max_effect_pixels: 32
+  minimum_joint_max_effect_pixels: 256
+  minimum_changed_pixels_for_visible_frame: 256
+  minimum_visible_edited_frame_count: 3
+  minimum_total_changed_rgb_pixels: 10000
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 1200
+  maximum_wall_seconds: 1230
+  maximum_output_bytes: 3000000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_full_196_frame_three_actor_transform_and_lifecycle_owned_replay
+  - every_frame_contains_logged_native_edited_and_compiled_edited_sensor_arrays
+  - compiled_edited_must_match_native_edited_and_repeat_exact_on_all_196_frames
+  - package_owns_all_three_transform_trajectories_and_independent_lifecycle_masks
+  - actor0_actor2_actor5_active_frame_counts_are_141_196_151
+  - edited_vs_logged_sensor_impact_is_measured_across_the_full_episode
+  - semantics_collision_physics_dynamics_planning_safety_and_confirmation_abstain
