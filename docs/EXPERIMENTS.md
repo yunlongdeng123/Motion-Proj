@@ -13,8 +13,9 @@
   `9bdabb3e249ce5a048a5a9b7b0ba8dc4774b3bb2 / c0af558fe4acfc524e84a67c9a540b7772cc1705`；在
   `research/worldsim-v5.1-m1` 登记 V5.2 terminal/V6 active、`V6-F01` 与本计划。JSON/link/failure-ID/三账本
   consistency、frozen V5.2 plan SHA regression 全 PASS，V5.2 frozen plan bytes 未改变，定向回归=`31 passed`。
-- `WS-V6-G2-BRANCH-CONVERGENCE-01=pending`：从最新 origin/main 创建 integration branch，动态枚举所有 remote 与
-  具有独立提交的 local project refs，逐分支记录 include/exclude 原因，合并后执行 CPU/contract/integrity gate。
+- `WS-V6-G2-BRANCH-CONVERGENCE-01=done`：integration=`integration/pre-v6-20260821T072411Z`，audit=
+  `166faa0ff977b403d46c030bb74c3a61dbfa788b`；main 从 `44d0e4a` 普通 fast-forward/push 到该 commit，rollback
+  tag 与 integration remote 均已发布。完整 branch matrix、恢复与 gate 见下方 G2 小节。
 - `WS-V6-G3-BRANCH-BOOTSTRAP-01=pending`：仅在 G2 gate 通过且 main 已 push 后创建并 push fresh V6 branch。
 - G0–G3 只产生治理/仓库事实；V6 尚无 SceneIR、frontend、support、validity、verifier、bake 或方法质量结论，GPU
   method run=`0`。failure refs=`V6-F01, V52-F01, V52-F02, PIVOT-F02, PIVOT-F03, PIVOT-F04`。

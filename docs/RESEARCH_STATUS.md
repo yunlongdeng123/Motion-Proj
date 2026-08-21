@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6 路线重置已启动；G0/G1 完成，G2 integration gate 通过（2026-08-21）
+## WorldSim V6 路线重置已启动；G0–G2 完成，G3 待执行（2026-08-21）
 
 - route=`WorldSim V6 / Verifiable World Compiler`，status=`active`。V5.1 已关闭；V5.2.1 的 badcase census 与人工归因已完成；
   V5.2 TrackBayes continuation=`superseded_by_v6_direction_reset`。Stage H 从未执行，M1/M2/M3 只保留为历史证据与
@@ -13,10 +13,12 @@
 - `WS-V6-G1-DOCS-CLOSEOUT-01=done`：canonical docs commit=
   `9bdabb3e249ce5a048a5a9b7b0ba8dc4774b3bb2`，tree=`c0af558fe4acfc524e84a67c9a540b7772cc1705`；
   JSON/link/failure-ID/三账本一致性与 V5.2 frozen-plan hash regression 均通过，定向回归=`31 passed`。
-- `WS-V6-G2-BRANCH-CONVERGENCE-01=running_closeout`：integration branch=
+- `WS-V6-G2-BRANCH-CONVERGENCE-01=done`：integration branch=
   `integration/pre-v6-20260821T072411Z`，rollback tag=`pre-v6-main-20260821T072411Z`。除最新
   `origin/research/worldsim-v5.1-m1` 含 main 之外 `147` 个提交外，其余 remote/local 项目分支均已是 main 或最新研究
-  分支 ancestor；因此唯一 merge 为 `44d0e4a→9ca03c7` fast-forward，conflict=`0`。
+  分支 ancestor；因此唯一 merge 为 `44d0e4a→9ca03c7` fast-forward，conflict=`0`。integration audit commit=
+  `166faa0ff977b403d46c030bb74c3a61dbfa788b`，main 已由 `44d0e4a` 普通 fast-forward 并 push 到该 commit；
+  integration remote 与 main remote 一致，rollback tag 已 push。
 - G2 gate 按 runtime profile 拆分执行：motionproj=`1443 passed / 1 skipped`，冻结 DriveStudio runtime=`15 passed`，
   合计=`1458 passed / 1 skipped`；另有 config parse=`284 YAML + 1 JSON`、CLI/import、failure-ID、frozen hash 与
   exact asset regression 全 PASS。首次单环境 full pytest 的 12 collection errors 与后续 13 failures 已分别通过显式
@@ -24,8 +26,8 @@
   `V6-F02`–`V6-F04`。
 - 当前能力快照=`RTX 3090 24,576 MiB / used 1 MiB / disk free 75 GiB`，无 V6 GPU worker。首次直连 GitHub fetch
   无进展后已中止，使用当前主机独立代理隧道重试成功；该工程恢复没有算法或质量结论。
-- 当前唯一下一步是提交 G2 审计并将 integration fast-forward 到 main、普通 push main；随后由 G3 创建并 push
-  全新 V6 分支。在 main/G3 完成前不启动任何 V6 GPU 实验。正式计划=
+- 当前唯一下一步是 G3：从最新 `origin/main@166faa0` 创建并 push 全新 V6 branch；在 G3 完成前不启动任何
+  V6 GPU 实验。正式计划=
   [`WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md`](WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md)。
 
 ## V5.2 P11 人工归因已冻结；M123 Autoresearch 待执行（2026-08-20）
