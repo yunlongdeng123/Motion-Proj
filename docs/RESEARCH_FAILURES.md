@@ -3078,6 +3078,20 @@ R3 第二次正式目录
 开发/确认分区、指标或假设。以后复用训练代码做只读渲染时，必须区分 loader 的强制 schema 字段与实际计算依赖，
 占位值只能用于经源码证明不被实验结果消费的字段。
 
+### V6-F08：通用场景点云不能替代 checkpoint 对应的 object-aware loader 资产
+
+R3 第三次正式目录
+`20260821T090552Z__support-deviation-s20260821-r1` 已再次完成 scene-0242 adapter 与 StreetGS 渲染，
+AD-GS 随后在 `readnuScenesInfo` 对 `obj_id[..., 0]` 索引时失败。通用 V4 adapter 生成的 `points3d.ply`
+只有 xyz/rgb/time，没有 AD-GS 训练 adapter 的 `obj` property；即使 checkpoint 加载随后会覆盖 Gaussian 初始化，
+`Scene` loader 仍先强制构造 object-aware point cloud。该 run 保留 `failed`，不是方法或资源负结果。
+
+修复不伪造 object id，而是把同一场景、同一冻结 checkpoint 训练时使用的
+`adgs_processed_v4/train/<scene>/points3d.ply` 复制进新 development adapter；绑定前验证 PLY header 的
+`property float obj`，记录通用点云 hash、冻结训练点云路径/hash 和复制后 hash。开发图像、位姿与分区继续来自
+新 adapter，checkpoint 与指标不变。以后给冻结模型换 evaluation camera 集时，应复用训练时与模型结构耦合的
+初始化/registry 资产，只替换经协议允许的观测与相机字段。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

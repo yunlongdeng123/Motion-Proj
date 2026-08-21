@@ -215,6 +215,35 @@ def _materialize_inference_only_depth_placeholders(adapter: Path) -> dict[str, A
     return audit
 
 
+def _bind_frozen_adgs_point_cloud(adapter: Path, training_adapter: Path) -> dict[str, Any]:
+    """把 development 相机绑定到 checkpoint 训练时的 object-aware 初始化点云。"""
+    target = adapter / "points3d.ply"
+    source = training_adapter / "points3d.ply"
+    if not target.is_file() or not source.is_file():
+        raise R3ExperimentError("AD-GS point cloud binding 输入缺失")
+    with source.open("rb") as stream:
+        header = stream.read(4096).split(b"end_header", 1)[0].decode("ascii", errors="strict")
+    if "property float obj" not in header:
+        raise R3ExperimentError("冻结 AD-GS 训练点云缺少 obj property")
+    generated_sha256 = _sha256(target)
+    source_sha256 = _sha256(source)
+    shutil.copyfile(source, target)
+    if _sha256(target) != source_sha256:
+        raise R3ExperimentError("AD-GS point cloud binding 复制后 hash 漂移")
+    audit = {
+        "schema_version": "worldsim_v6.r3_adgs_point_cloud_binding.v1",
+        "generated_unsegmented_point_cloud_sha256": generated_sha256,
+        "frozen_training_adapter": str(training_adapter),
+        "frozen_object_aware_point_cloud": str(source),
+        "frozen_object_aware_point_cloud_sha256": source_sha256,
+        "object_property_present": True,
+        "purpose": "checkpoint_scene_loader_initialization_only",
+        "checkpoint_parameters_override_initialization": True,
+    }
+    _write_json(adapter / "R3_ADGS_POINT_CLOUD_BINDING.json", audit)
+    return audit
+
+
 def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     repo_root = repo_root.resolve()
     if _git(repo_root, "status", "--porcelain"):
@@ -260,6 +289,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             adgs_model = _verify_adgs_bundle(adgs_row)
             resolved = yaml.safe_load((Path(adgs_row["run"]) / "resolved.yaml").read_text(encoding="utf-8"))
             source_scene = Path(resolved["data"]["source_root"]) / f"{scene_index:03d}"
+            training_adapter = Path(resolved["data"]["processed_root"]) / scene
             adapter = run_dir / "development_adapters" / scene
             adapter.parent.mkdir(parents=True, exist_ok=True)
             resources["processes"].append(
@@ -283,6 +313,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 )
             )
             _materialize_inference_only_depth_placeholders(adapter)
+            _bind_frozen_adgs_point_cloud(adapter, training_adapter)
             street_output = run_dir / "renders" / scene / "streetgs"
             street_output.parent.mkdir(parents=True, exist_ok=True)
             resources["processes"].append(
@@ -382,6 +413,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
                 [
                     f"development_adapters/{scene}/adapter_manifest.json",
                     f"development_adapters/{scene}/R3_INFERENCE_ONLY_DEPTH_PLACEHOLDERS.json",
+                    f"development_adapters/{scene}/R3_ADGS_POINT_CLOUD_BINDING.json",
                     f"renders/{scene}/streetgs/AUDIT.json",
                     f"renders/{scene}/streetgs/RENDER_MAP.jsonl",
                     f"renders/{scene}/ad_gs/AUDIT.json",
