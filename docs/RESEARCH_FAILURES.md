@@ -3605,3 +3605,9 @@ H-R27-001 canonical retry `20260821T160717Z__three-factor-s20260821-r1` 在六�
 H-R28-001 canonical run `20260821T161052Z__three-factor-s20260821-r1` 正确使用 factor-truth product，并保持 `1` ACCEPT、`1` REJECT、`4` ABSTAIN、false-safe `0`；coverage、strict error removal、所有 disagreement ABSTAIN、source immutability 与 R27 rejection retention 全部通过。唯一失败是预注册把 cross-factor truth disagreement count 猜成 `2`，完整逐因子展开后实际为 `3`。
 
 R27 只给出了 truth-identity 聚合布尔失败，不能推出失败 case 的精确数量。不得追认 R28 或把实际值 `3` 再硬编码成安全门。H-R29-001 保持全部六例、factor decisions、factor truths、product、fusion 与质量门冻结，要求 factor truth diversity 非零且逐例透明报告；精确 diversity count 作为描述性输出，不参与资格。以后只能从已冻结的逐例 artifact 预注册精确计数，不能从 aggregate failure 反推。
+
+### V6-F62：aggregate actor-layer validity 不能下放给单 actor identity component
+
+H-R32-001 canonical run `20260821T163038Z__identity-factor-s20260821-r1` 用此前接受的 H-R13-009 model-index-0 removal support 与 H-R13-011 `actor_0000` binding，在 R30/R31 layer 内得到 `4,792` 个 identity pixels，覆盖 resized actor effect support 的 `91.02%`。P1 photo 在该 support 上仍 ACCEPT（MAE `0.043739`），且 photo/geometry/semantic 三种 truth evaluation 均 safe；但 P2 geometry mean relative error 为 `0.212180`，超过冻结 `0.20`，P3 DeepLab/SegFormer dynamic IoU 仅 `0.098330`，低于冻结 `0.50`，因此 identity-specific conjunction ABSTAIN，正式 `rejected`。
+
+不得用 aggregate R29 ACCEPT、truth-safe、接近 geometry 门或 target semantic IoU `0.9946` 覆盖独立 decision failure，也不得放宽阈值。R7/R30 的 actor layer 由 all-actor edit evidence 构成，整体可用不推出任一 identity component 可用。H-R33-001 不再修复 generated layer，而提取 H-R13-011 已接受的 observed-support SceneIR `actor_0000` Gaussian chunk 与 logged trajectory，作为明确标注的 baseline/runtime asset；generated identity route 保持 rejected。

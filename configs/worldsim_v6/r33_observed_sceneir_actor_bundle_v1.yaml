@@ -1,0 +1,45 @@
+schema_version: worldsim_v6.r33_observed_sceneir_actor_bundle.v1
+task_id: WS-V6-R33-OBSERVED-SCENEIR-ACTOR-BUNDLE-01
+hypothesis_id: WS-V6-H-R33-001
+seed: 20260821
+sources:
+  actor_cohort_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T125905Z__actor-cohort-perception-s20260821-r1
+  actor_cohort_manifest_sha256: e9711125300af16b564fa8130240e129f7225e6464079ac7bdae7f17b78afd3c
+  actor_cohort_gate_sha256: 608919b9db9b21ba231ccd263636e5b01f70076c1db849a0708b616152a5f555
+  actor_cohort_verdicts_sha256: d613116784408daa1f6741d89e4d2efe08ece073e7306312283ed30b59d3657e
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  sceneir_binding_audit_sha256: 0bffefc7df690121fa8f6e4e48a9719257bc01771bb697fdde9afb498be3cbea
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+  r32_run: runs://worldsim_v6/WS-V6-R32-ACTOR-IDENTITY-FACTOR-VERIFICATION-01/20260821T163038Z__identity-factor-s20260821-r1
+  r32_manifest_sha256: 5330847a74c7f8fa90f4ce89368d084eaa86a0fd4d3b3b43fb81624b2dd7f785
+  r32_gate_sha256: efcb1791431cc58fbd6ca9428d6a02063ee13fa0696a87e761eab5f8f3cefeed
+  r32_result_sha256: d01b7188b24fdcd8f5622f82402c8e271499492ddc878ce8c043db9fa6a91e8d
+identity:
+  frontend_model_index: 0
+  sceneir_actor_id: actor_0000
+  sceneir_chunk_id: streetgs_actor_0000
+  expected_primitive_count: 12390
+  expected_trajectory_rows: 196
+  actor_class: unknown
+package:
+  asset_type: explicit_sceneir_gaussian_actor_with_logged_trajectory
+  source_scope: observed_reconstructed_support
+  required_gaussian_arrays: [means_m, scales_m, quaternions_wxyz, opacities, features_dc, features_rest, source_indices]
+  generator_dependency_at_runtime: forbidden
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_observed_reconstructed_support_actor_bundle
+  - streetgs_model_index_0_sceneir_actor_0000_only
+  - exact_gaussian_chunk_and_logged_trajectory_payload
+  - generated_identity_route_r32_remains_rejected
+  - actor_class_and_semantic_accuracy_unknown
+  - novel_trajectory_dynamics_adgs_planning_and_safety_abstain
+  - no_online_generator_model_network_or_source_run_runtime_dependency
+  - no_training_or_confirmation_read
