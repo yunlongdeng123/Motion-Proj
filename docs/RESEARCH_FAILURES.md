@@ -3129,6 +3129,18 @@ v0 run 与 config 保持 failed/frozen。v1 不放宽全局唯一门，而把 pr
 全局唯一身份。provenance 字段、source-type 分离、覆盖率和无 confirmation/训练边界均不变。以后任何跨 chunk
 primitive registry 都必须显式携带命名空间，不能把上游局部索引误当全局主键。
 
+### V6-F12：R7 source manifest 必须绑定实测完整 SHA，不能使用手工摘录值
+
+R7 首次正式入口在创建 run 目录与读取 render payload 前 fail-closed：预注册配置中的 R3 recovery manifest
+SHA 使用了手工摘录值 `e866dae3b84c...`，而冻结文件实测 SHA 为
+`e866dae35a4ff17fb75791ff395f45504f8f779d57e75121354b8be388595acc`。两者不一致，因此程序按 source
+identity contract 立即拒绝；没有 pseudo-hole、proposal、质量指标、训练或 confirmation 读取，也没有可写成
+`rejected` 的方法结果。
+
+修复只替换为 `sha256sum` 实测的完整 source manifest SHA；R7 hypothesis、cohort、hole 定义、verifier 阈值、
+decoy、gate 与资源合同均不改变。以后冻结跨 run source identity 时，必须从机器可读 artifact 或现场哈希复制完整值，
+不得从状态文档里的短写或人工记忆还原。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？
