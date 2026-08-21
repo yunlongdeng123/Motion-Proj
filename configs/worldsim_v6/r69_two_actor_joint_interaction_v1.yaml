@@ -1,0 +1,62 @@
+schema_version: worldsim_v6.r69_two_actor_joint_interaction.v1
+task_id: WS-V6-R69-TWO-ACTOR-JOINT-INTERACTION-01
+hypothesis_id: WS-V6-H-R69-001
+seed: 20260821
+sources:
+  r50_run: runs://worldsim_v6/WS-V6-R50-ACTOR-LIFECYCLE-BAKE-01/20260821T183317Z__lifecycle-bake-s20260821-r1
+  r50_manifest_sha256: db56890b79bcd6973ac8d9e4e57bb92231f9b9942b143fe3aa7240aef1187d2c
+  r50_gate_sha256: bb4876268e48093856b0f7e0431aad1aedb6c6f8d5b16ff6469471ec6451226e
+  r50_summary_sha256: 3b29820b4a0778de6a38e6d80ab8500c7cd4f11827bb8f8e69e63e1366e5ab0f
+  r50_package_manifest_sha256: c6bcd2022c74aaa040f797fb6f69718b5352c00eb94e4584141159e3462c9efe
+  r50_trajectory_geometry_sha256: 390ac86dc2b74c510bd0945ddb853ffff922ec25a9d7f5488bc2c3ea57ac4d69
+  r50_validity_sha256: c255efcecc428d9f82c8bf2c878152c8586b25a216e1c78c8cb162049690db44
+  r51_run: runs://worldsim_v6/WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01/20260821T184143Z__lifecycle-sensor-s20260821-r1
+  r51_manifest_sha256: 0973c764949a7c8e89a5601081e87eaa799c365434d0c39aa5c66ac0984e6b46
+  r51_gate_sha256: 6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7
+  r51_summary_sha256: aa0a12c8923a0e9827e513d9684952e83d912873757714b3053de0f2e5e6eef7
+  r67_run: runs://worldsim_v6/WS-V6-R67-TRANSFORM-OWNED-SECOND-ACTOR-BAKE-01/20260821T202254Z__actor2-transform-bake-s20260821-r1
+  r67_manifest_sha256: 373f0f4b87d32ec4d6a74d4c51e49ab41d8fc2dbbfc85999f32a450db7b300cc
+  r67_gate_sha256: c4b465052a8cedb418fe2e0d19cabb0811e35902ad53ebc6b26520d853afda2e
+  r67_summary_sha256: 83caf9bd04db8abdd82f784f2263e015c20e3c751053a5692438233918a84a62
+  r67_package_manifest_sha256: 13f62ae93ef8aa11bd04d157cdc6d9c5f61e288902464242d2b07d8758a7b303
+  r67_trajectory_geometry_sha256: 725e32ae7c96c13d7bde659c5763d2a499bdc03e986eab67c741f3739666c426
+  r67_validity_sha256: e46422609e15d850f41977d5a80f255b240ef700fa67c0fcd99320346d1529c6
+  r68_run: runs://worldsim_v6/WS-V6-R68-TRANSFORM-OWNED-SECOND-ACTOR-SENSOR-RUNTIME-01/20260821T203605Z__actor2-transform-runtime-s20260821-r1
+  r68_manifest_sha256: 00186a137bc0aa058c9cd17adbbbf544083a1f190b5d8daa4c29c991fff10ab3
+  r68_gate_sha256: 6a59bc4496e1a7742caab8386ff7db3a696cfa9a0daf2c1ecfc26ea32369c52f
+  r68_summary_sha256: c17ac23db9fa22326a27ed49bb2cc4178d7d94312c888161c194f307aa850a46
+  sceneir_binding_run: runs://worldsim_v6/WS-V6-R13-WORLDSIM-01/20260821T131353Z__sceneir-sensor-binding-s20260821-r1
+  sceneir_binding_manifest_sha256: 21a9214488dabff9eafd685436cd42dbb84f8c738e496f28d25fca89cfb88d24
+  sceneir_binding_gate_sha256: aab90358f9833a4cc2c7efffaee461ad560b7d059c9a5356bbe8442912fdff49
+  base_sceneir_package: sceneir_packages/streetgs_scene0242_base
+  base_sceneir_manifest_sha256: ba426da2e3bdf66c45efaf455ab25b2d867d3757187f66e4f1c74516f12bee26
+  base_sceneir_document_sha256: 9796289dca0c5dc15a2514d6cd48678e4b2a3bca635eb829ec6f584c49916822
+composition:
+  expected_actor_count: 27
+  expected_trajectory_rows_per_actor: 196
+  timestamp_step_seconds: 0.1
+  actors:
+    - actor_id: actor_0000
+      actor_model_index: 0
+      proposal_id: translate_world_x_m1p0_z_m0p5
+      translation_delta_m: [-1.0, 0.0, -0.5]
+    - actor_id: actor_0002
+      actor_model_index: 2
+      proposal_id: actor2_translate_x_-1.0_z_+0.0
+      translation_delta_m: [-1.0, 0.0, 0.0]
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+  maximum_new_overlap_events: 0
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_joint_composition_of_two_individually_conformant_actor_edits
+  - full_196_frame_27_actor_sceneir_aabb_interaction_recomputed_after_both_edits
+  - accept_only_if_each_individual_edit_and_the_joint_edit_create_zero_new_overlap_events
+  - emergent_cross_edit_overlap_is_reported_separately
+  - aabb_interaction_is_deterministic_conformance_not_collision_physics_or_safety_truth
+  - semantic_road_full_physics_dynamics_response_planning_safety_and_confirmation_abstain
+  - frozen_packages_and_sceneir_authorities_remain_immutable
+  - no_training_or_confirmation_read
