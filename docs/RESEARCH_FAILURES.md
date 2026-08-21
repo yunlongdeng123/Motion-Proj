@@ -3293,6 +3293,19 @@ H-R9-001 正确裁决为 `rejected`，不得放宽 photo/depth/semantic 阈值�
 hidden observations、P1–P4、truth 定义、threshold、gate、模型和资源上限。Big-LaMa 与 SD 结果必须分属
 独立不可变 run，禁止在看到 SD 结果后混合选择 per-case generator。
 
+### V6-F26：单图生成候选无法把不可观测 missing-world 内容变成可验证事实
+
+H-R9-002 canonical rejected run `20260821T111228Z__independent-arms-s20260821-r1` 用冻结
+SD-v1.5 替换 Big-LaMa，并保持所有 verifier 与 gate 不变。P1 仍 `0/28` ACCEPT；P2 仅 `2/28=0.0714`
+且低于冻结 `0.10` coverage；P3 与 Big-LaMa 同为 `6/12` ACCEPT、`1/6=0.1667` false-safe；P4
+`28/28` ABSTAIN。outside-mask exact，峰值 `2696 MiB`，无融合、bake、训练或 confirmation。因此
+H-R9-002 同样是方法质量 `rejected`，不是工程/资源 blocked。
+
+两种单图 inpainting 都失败后，不得调松阈值、按案例混选生成器或转向 gated 23.8GB FLUX 权重来规避
+负结果。新 H-R9-003 将唯一变量改为冻结 cross-frontend reconstructed proposal：同 scene/frame/edit variant
+使用另一 frontend 的对齐 RGB 填入 mask；P1–P4、truth、threshold、gate 和 denominator 原样保留。该 proposal
+仍标记 reconstructed，两个 frontend 来自同一传感器支持，不能解释为新增观测或独立 ground truth。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

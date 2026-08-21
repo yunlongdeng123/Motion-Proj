@@ -159,11 +159,15 @@ def run_experiment(
     if _sha256(r7_run / "MANIFEST.json") != sources["r7_manifest_sha256"]:
         raise R9ExperimentError("R7 source manifest 漂移")
     selected_candidate = str(sources["selected_candidate"])
-    if selected_candidate not in {"big_lama", "sd15_inpainting"}:
+    if selected_candidate not in {
+        "big_lama",
+        "sd15_inpainting",
+        "cross_frontend_reconstruction",
+    }:
         raise R9ExperimentError("R9 selected candidate 非冻结候选")
-    if _sha256(r8_run / selected_candidate / "WORKER_RESULT.json") != sources[
-        "selected_worker_result_sha256"
-    ]:
+    if selected_candidate in {"big_lama", "sd15_inpainting"} and _sha256(
+        r8_run / selected_candidate / "WORKER_RESULT.json"
+    ) != sources["selected_worker_result_sha256"]:
         raise R9ExperimentError("R8 selected worker 漂移")
     if selected_candidate == "big_lama":
         selected_asset_sha256 = sources.get(
@@ -171,7 +175,7 @@ def run_experiment(
         )
         if _sha256(big_lama_root / "big-lama/models/best.ckpt") != selected_asset_sha256:
             raise R9ExperimentError("Big-LaMa checkpoint 漂移")
-    else:
+    elif selected_candidate == "sd15_inpainting":
         _, sd_content_sha256 = _asset_inventory(sd15_root)
         if sd_content_sha256 != sources["selected_asset_content_sha256"]:
             raise R9ExperimentError("SD-v1.5 snapshot 漂移")
@@ -197,6 +201,9 @@ def run_experiment(
         verifier_output_dir = run_dir / "verifier_worker"
         generator_input_dir.mkdir()
         verifier_input_dir.mkdir()
+        cross_frontend_results: list[dict[str, Any]] = []
+        if selected_candidate == "cross_frontend_reconstruction":
+            proposal_dir.mkdir()
         r7_config = yaml.safe_load(
             (repo_root / "configs/worldsim_v6/r7_oracle_missing_world_v1.yaml").read_text(
                 encoding="utf-8"
@@ -308,6 +315,73 @@ def run_experiment(
                             semantic_evidence=np.asarray(semantic_evidence),
                             hole_type=np.asarray(hole_type),
                         )
+                        proposal_source_frontend = None
+                        if selected_candidate == "cross_frontend_reconstruction":
+                            proposal_source_frontend = (
+                                "ad_gs" if frontend == "streetgs" else "streetgs"
+                            )
+                            alternate_key = (scene, proposal_source_frontend)
+                            if alternate_key not in render_maps:
+                                render_maps[alternate_key] = _load_render_map(
+                                    render_root
+                                    / "renders"
+                                    / scene
+                                    / proposal_source_frontend
+                                    / "RENDER_MAP.jsonl"
+                                )
+                            alternate_map = render_maps[alternate_key]
+                            alternate_suffix = (
+                                "lat2m"
+                                if hole_type == "missing_side_view"
+                                else "actor_remove_all"
+                                if hole_type == "disocclusion"
+                                else "lat0m"
+                            )
+                            alternate_target = _required_render(
+                                render_root,
+                                scene,
+                                proposal_source_frontend,
+                                int(frame_index),
+                                alternate_suffix,
+                                alternate_map,
+                            )
+                            alternate_rgb = _resize_rgb(alternate_target["rgb"], size)
+                            overlay = input_image.copy()
+                            overlay[resized_mask] = alternate_rgb[resized_mask]
+                            proposal_path = proposal_dir / f"{case_id}__repeat1.npy"
+                            np.save(proposal_path, overlay, allow_pickle=False)
+                            cross_frontend_results.append(
+                                {
+                                    "case_id": case_id,
+                                    "source_frontend": proposal_source_frontend,
+                                    "source_variant": alternate_suffix,
+                                    "repeats": [
+                                        {
+                                            "repeat_index": 1,
+                                            "seed": config["seed"],
+                                            "latency_seconds": 0.0,
+                                            "finite": True,
+                                            "masked_change": float(
+                                                np.mean(
+                                                    np.abs(
+                                                        overlay[resized_mask].astype(np.float32)
+                                                        - input_image[resized_mask].astype(np.float32)
+                                                    )
+                                                )
+                                                / 255.0
+                                            ),
+                                            "outside_mask_exact": bool(
+                                                np.array_equal(
+                                                    overlay[~resized_mask], input_image[~resized_mask]
+                                                )
+                                            ),
+                                            "output": proposal_path.name,
+                                            "output_sha256": _sha256(proposal_path),
+                                        }
+                                    ],
+                                    "repeat_sha_exact": True,
+                                }
+                            )
                         case_rows.append(
                             {
                                 "case_id": case_id,
@@ -317,6 +391,7 @@ def run_experiment(
                                 "hole_type": hole_type,
                                 "mask_pixel_count": int(np.count_nonzero(resized_mask)),
                                 "semantic_evidence": semantic_evidence,
+                                "proposal_source_frontend": proposal_source_frontend,
                                 "generator_input_sha256": _sha256(generator_path),
                                 "verifier_input_sha256": _sha256(verifier_path),
                             }
@@ -335,38 +410,66 @@ def run_experiment(
         python = Path("/root/autodl-tmp/envs/motionproj/bin/python")
         env = os.environ.copy()
         env["PYTHONPATH"] = str(repo_root)
-        _run_checked(
-            [
-                str(python),
-                str(repo_root / "scripts/worldsim_v6/r8_generator_worker.py"),
-                "--candidate",
-                selected_candidate,
-                "--input-dir",
-                str(generator_input_dir),
-                "--output-dir",
-                str(proposal_dir),
-                "--big-lama-root",
-                str(big_lama_root),
-                "--sd15-root",
-                str(sd15_root),
-                "--seed",
-                str(config["seed"]),
-                "--repeat-count",
-                str(config["proposal"]["repeat_count"]),
-                "--prompt",
-                str(config["proposal"].get("sd_prompt", "")),
-                "--inference-steps",
-                str(config["proposal"].get("sd_inference_steps", 20)),
-                "--guidance-scale",
-                str(config["proposal"].get("sd_guidance_scale", 4.0)),
-            ],
-            repo_root,
-            env,
-            run_dir / "generator.log",
-        )
-        generator_result = json.loads(
-            (proposal_dir / "WORKER_RESULT.json").read_text(encoding="utf-8")
-        )
+        if selected_candidate == "cross_frontend_reconstruction":
+            generator_result = {
+                "schema_version": "worldsim_v6.r9_cross_frontend_proposal.v1",
+                "candidate": selected_candidate,
+                "case_count": len(cross_frontend_results),
+                "repeat_count": 1,
+                "load_seconds": 0.0,
+                "peak_gpu_memory_mib": 0.0,
+                "median_latency_seconds": 0.0,
+                "all_repeats_successful": len(cross_frontend_results) == len(case_rows),
+                "all_repeat_sha_exact": True,
+                "all_finite": True,
+                "all_nonzero_masked_change": all(
+                    row["repeats"][0]["masked_change"] > 0.0
+                    for row in cross_frontend_results
+                ),
+                "all_outside_mask_exact": all(
+                    row["repeats"][0]["outside_mask_exact"]
+                    for row in cross_frontend_results
+                ),
+                "cases": cross_frontend_results,
+            }
+            _write_json(proposal_dir / "WORKER_RESULT.json", generator_result)
+            (run_dir / "generator.log").write_text(
+                "cross_frontend_reconstruction: no learned generator executed\n",
+                encoding="utf-8",
+            )
+        else:
+            _run_checked(
+                [
+                    str(python),
+                    str(repo_root / "scripts/worldsim_v6/r8_generator_worker.py"),
+                    "--candidate",
+                    selected_candidate,
+                    "--input-dir",
+                    str(generator_input_dir),
+                    "--output-dir",
+                    str(proposal_dir),
+                    "--big-lama-root",
+                    str(big_lama_root),
+                    "--sd15-root",
+                    str(sd15_root),
+                    "--seed",
+                    str(config["seed"]),
+                    "--repeat-count",
+                    str(config["proposal"]["repeat_count"]),
+                    "--prompt",
+                    str(config["proposal"].get("sd_prompt", "")),
+                    "--inference-steps",
+                    str(config["proposal"].get("sd_inference_steps", 20)),
+                    "--guidance-scale",
+                    str(config["proposal"].get("sd_guidance_scale", 4.0)),
+                ],
+                repo_root,
+                env,
+                run_dir / "generator.log",
+            )
+            generator_result = json.loads(
+                (proposal_dir / "WORKER_RESULT.json").read_text(encoding="utf-8")
+            )
         if generator_result["case_count"] != len(case_rows):
             raise R9ExperimentError("R9 proposal denominator 漂移")
 
@@ -556,7 +659,7 @@ def main() -> int:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("configs/worldsim_v6/r9_independent_verifier_arms_v1.yaml"),
+        default=Path("configs/worldsim_v6/r9_independent_verifier_arms_v2.yaml"),
     )
     parser.add_argument(
         "--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6")

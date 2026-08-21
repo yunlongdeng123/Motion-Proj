@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6 R9 SD-v1.5 arms REJECTED；cross-frontend evidence pivot 启动（2026-08-21）
+
+- H-R9-002 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1`；
+  P1=`0/28`，P2=`2/28=0.0714`，P3 false-safe=`1/6=0.1667`，无 arm 可进入 R10；资源峰值 2696 MiB。
+- 当前 active hypothesis=`WS-V6-H-R9-003`：同 scene/frame/edit variant 使用另一冻结 frontend 构造
+  reconstructed proposal，保留全部 verifier/threshold/gate；它不增加 sensor evidence，也不授权 bake。
+
 ## WorldSim V6 R9 Big-LaMa verifier arms REJECTED；SD-v1.5 matched pivot 启动（2026-08-21）
 
 - H-R9-001 canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1`；

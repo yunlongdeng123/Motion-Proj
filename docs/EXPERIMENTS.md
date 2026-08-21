@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6 R9 SD-v1.5 independent verifier arms 正式实验 REJECTED（2026-08-21）
+
+- canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1`，
+  source=`95d2519`；gate/summary/manifest/terminal SHA=`07be410e...7fd / b1ad614c...c51 / 7db9a5fd...fb2 / 99912dd8...ff4`。
+- P1=`0/28`；P2=`2/28`，coverage `0.0714<0.10`；P3=`6/12`、false-safe `0.1667>0.10`；
+  P4=`28/28` ABSTAIN；eligible R10 arms=`[]`，peak=`2696 MiB`。
+- H-R9-003 冻结 cross-frontend reconstructed proposal；所有 arm 阈值与 gate 不变，边界见 `V6-F26`。
+
 ## WorldSim V6 R9 Big-LaMa independent verifier arms 正式实验 REJECTED（2026-08-21）
 
 - canonical=`run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1`，

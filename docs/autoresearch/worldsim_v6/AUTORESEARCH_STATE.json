@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T11:10:00Z",
+  "updated_at_utc": "2026-08-21T11:15:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
   "iteration": 8,
   "active_task": "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01",
-  "active_hypothesis": "WS-V6-H-R9-002",
-  "candidate": "sd15_independent_verifier_arms_p0_p1_p2_p3_p4",
+  "active_hypothesis": "WS-V6-H-R9-003",
+  "candidate": "cross_frontend_reconstructed_proposal_independent_arms",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "07be410e7cfd2c9d82406080550308ab711a04caca3544b9e9dea893fdbb07fd",
+  "dev_artifact_hash": "b1ad614c292877493021616beee24a66ca57b76afab09917713af78c54c6bc51",
   "confirmation_artifact_hash": null,
   "confirmation_locked": true,
-  "failure_ledger_sha256": "5b243cf513e881dc6427920b20933edbe087d0e436d9a84be53a81ec173d2c07",
-  "last_reflection_id": "WS-V6-REFL-0009",
+  "failure_ledger_sha256": "c28ef3c2e2295981ef3f51f97ada02a0600713fd4ac39afbaa52af92b243c1d8",
+  "last_reflection_id": "WS-V6-REFL-0010",
   "last_completed": {
     "task_id": "WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01",
-    "run": "run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1",
-    "artifact_sha256": "07be410e7cfd2c9d82406080550308ab711a04caca3544b9e9dea893fdbb07fd"
+    "run": "run://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111228Z__independent-arms-s20260821-r1",
+    "artifact_sha256": "b1ad614c292877493021616beee24a66ca57b76afab09917713af78c54c6bc51"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -33,6 +33,7 @@
     "r7_oracle_missing_world": "done_accepted_development",
     "r8_frozen_proposal_generator": "done_accepted_capability_selected_big_lama",
     "r9_big_lama_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
+    "r9_sd15_verifier_arms": "done_hypothesis_rejected_no_eligible_arms",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -41,8 +42,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "run_sd15_proposals_on_same_28_evidence_eligible_pseudo_holes",
+    "construct_bidirectional_cross_frontend_proposals_for_all_28_cases",
     "reuse_exact_r9_verifier_models_thresholds_and_gates_without_tuning",
-    "proceed_to_r10_only_if_at_least_one_sd15_arm_is_independently_eligible"
+    "proceed_to_r10_only_if_at_least_one_cross_frontend_arm_is_independently_eligible"
   ]
 }
