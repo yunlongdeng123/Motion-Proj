@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T15:13:00Z",
+  "updated_at_utc": "2026-08-21T15:18:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 49,
-  "active_task": "WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01",
-  "active_hypothesis": "WS-V6-H-R19-001",
-  "candidate": "compiled_static_chunk_sensor_and_perception_replay",
+  "iteration": 50,
+  "active_task": "WS-V6-R20-SEMANTIC-CONSENSUS-01",
+  "active_hypothesis": "WS-V6-H-R20-001",
+  "candidate": "deeplab_segformer_dynamic_mask_consensus",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e",
+  "dev_artifact_hash": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "0599482c39058241895c960e4f427598bb39ce5034dac773f05c6f1a7c454815",
-  "last_reflection_id": "WS-V6-REFL-0051",
+  "last_reflection_id": "WS-V6-REFL-0052",
   "last_completed": {
-    "task_id": "WS-V6-R18-RGBD-TEMPORAL-TYPED-BAKE-01",
-    "run": "run://worldsim_v6/WS-V6-R18-RGBD-TEMPORAL-TYPED-BAKE-01/20260821T151134Z__typed-bake-s20260821-r1",
-    "artifact_sha256": "b351950af9e8fb4f897debafb1ca56f1e8d0726236ea991d09d53c18b32bdf8e"
+    "task_id": "WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01",
+    "run": "run://worldsim_v6/WS-V6-R19-RGBD-TEMPORAL-STATIC-LOGSIM-01/20260821T151435Z__logsim-s20260821-r1",
+    "artifact_sha256": "234e949d366dfb1523ba22a15cef15e0c926be39f0edffce7ca858ecc275931f"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -78,7 +78,8 @@
     "r16_rgbd_temporal_proposal_verifier_arms": "done_accepted_development_p1_p2",
     "r17_rgbd_temporal_factorized_verification": "done_accepted_development_photo_geometry",
     "r18_rgbd_temporal_typed_bake": "done_accepted_development_static_only",
-    "r19_rgbd_temporal_static_logsim": "active_pre_registered_exact_replay",
+    "r19_rgbd_temporal_static_logsim": "done_accepted_development_static_scope",
+    "r20_semantic_consensus": "active_pre_registered_deeplab_segformer",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -87,8 +88,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_r18_closeout_and_r19_static_logsim",
-    "run_two_by_two_exact_sensor_and_perception_replay",
-    "retain_explicit_abstention_for_actor_event_calibration_collision_and_trajectory"
+    "commit_r19_closeout_and_r20_semantic_consensus",
+    "run_12_case_architecture_consensus_semantic_arm",
+    "retain_p4_abstention_and_fuse_only_if_semantic_arm_is_independently_eligible"
   ]
 }
