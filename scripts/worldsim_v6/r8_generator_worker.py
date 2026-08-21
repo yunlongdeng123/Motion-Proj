@@ -8,6 +8,7 @@ import hashlib
 import json
 import sys
 import time
+import types
 from pathlib import Path
 from typing import Any, Callable
 
@@ -35,6 +36,16 @@ def _write_json(path: Path, value: Any) -> None:
 def _load_big_lama(root: Path) -> Callable[[np.ndarray, np.ndarray, int], np.ndarray]:
     source = root / "source"
     model_root = root / "big-lama"
+    # LaMa 推理模块只需要 seed_everything；避免为未使用的训练器引入旧版 Lightning。
+    if "pytorch_lightning" not in sys.modules:
+        lightning_stub = types.ModuleType("pytorch_lightning")
+
+        def seed_everything(seed: int) -> int:
+            torch.manual_seed(seed)
+            return seed
+
+        lightning_stub.seed_everything = seed_everything
+        sys.modules["pytorch_lightning"] = lightning_stub
     sys.path.insert(0, str(source))
     from saicinpainting.training.modules import make_generator
 
