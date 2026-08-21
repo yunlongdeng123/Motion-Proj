@@ -3141,6 +3141,18 @@ identity contract 立即拒绝；没有 pseudo-hole、proposal、质量指标、
 decoy、gate 与资源合同均不改变。以后冻结跨 run source identity 时，必须从机器可读 artifact 或现场哈希复制完整值，
 不得从状态文档里的短写或人工记忆还原。
 
+### V6-F13：R7 verifier 必须显式归一 frontend 的 singleton-channel 维度
+
+R7 首个有 run 目录的正式实例
+`20260821T100107Z__oracle-missing-world-s20260821-r1` 在第一个 pseudo-hole mask 构造时失败：StreetGS/AD-GS
+冻结渲染对 depth/dynamic opacity 保留了 `H×W` 与 `H×W×1` 两种合法 singleton-channel 表示，初版代码无条件
+取 `[...,0]`，把二维 opacity 错切成长度 `H` 的向量，随后与 `H×W` mask 广播失败。该目录 terminal 保持
+`failed`；尚未形成完整 denominator、gate 或方法结论。
+
+修复新增唯一的 plane normalization：只接受 `H×W`、`H×W×1` 或 `1×H×W`，统一返回二维数组，其他形状
+继续 fail-closed；所有 depth/semantic verifier 和 usable-region 路径共同使用它。hypothesis、pseudo-hole、decoy、
+阈值和 source render 均不改变。
+
 ## 7. 历史新路线启动前附加检查
 
 - [ ] 是否明确说明该步骤直接服务于重建、编辑或可信评测，而不是重新做事件挖掘？

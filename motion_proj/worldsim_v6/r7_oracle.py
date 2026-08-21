@@ -115,6 +115,17 @@ def _dilate(mask: np.ndarray, radius: int) -> np.ndarray:
     return result
 
 
+def _plane(array: np.ndarray, name: str) -> np.ndarray:
+    """把 frontend 的 H×W 或 singleton-channel 输出归一为显式二维平面。"""
+    if array.ndim == 2:
+        return array
+    if array.ndim == 3 and array.shape[-1] == 1:
+        return array[..., 0]
+    if array.ndim == 3 and array.shape[0] == 1:
+        return array[0]
+    raise R7ExperimentError(f"{name} 不是二维 singleton-channel 平面：{array.shape}")
+
+
 def _mask_for(
     hole_type: str,
     target: Mapping[str, np.ndarray],
@@ -123,7 +134,7 @@ def _mask_for(
 ) -> np.ndarray:
     height, width = target["rgb"].shape[:2]
     yy, xx = np.indices((height, width))
-    dynamic = np.asarray(base["dynamic_opacity"])[..., 0] > dynamic_threshold
+    dynamic = _plane(np.asarray(base["dynamic_opacity"]), "dynamic_opacity") > dynamic_threshold
     if hole_type == "missing_route_support":
         y = yy / max(height - 1, 1)
         x = xx / max(width - 1, 1)
@@ -187,8 +198,8 @@ def _verify(
     proposal_rgb = np.clip(proposal["rgb"].astype(np.float32), 0.0, 1.0)
     target_rgb = np.clip(observation["rgb"].astype(np.float32), 0.0, 1.0)
     rgb_mae = float(np.mean(np.abs(proposal_rgb[mask] - target_rgb[mask])))
-    target_depth = observation["depth"][..., 0].astype(np.float32)
-    proposal_depth = proposal["depth"][..., 0].astype(np.float32)
+    target_depth = _plane(observation["depth"], "depth").astype(np.float32)
+    proposal_depth = _plane(proposal["depth"], "depth").astype(np.float32)
     depth_mask = mask & np.isfinite(target_depth) & (target_depth > 1.0e-6)
     depth_count = int(np.count_nonzero(depth_mask))
     depth_error = None
@@ -202,8 +213,8 @@ def _verify(
     dynamic_iou = None
     if semantic_available:
         threshold = float(config["oracle_patch_contract"]["dynamic_opacity_threshold"])
-        predicted = proposal["dynamic_opacity"][..., 0] > threshold
-        observed = observation["dynamic_opacity"][..., 0] > threshold
+        predicted = _plane(proposal["dynamic_opacity"], "dynamic_opacity") > threshold
+        observed = _plane(observation["dynamic_opacity"], "dynamic_opacity") > threshold
         union = mask & (predicted | observed)
         intersection = mask & predicted & observed
         dynamic_iou = (
@@ -242,8 +253,8 @@ def _bake(
 def _relative_depth_error(
     value: np.ndarray, target: np.ndarray, mask: np.ndarray
 ) -> tuple[float | None, np.ndarray]:
-    target_depth = target[..., 0].astype(np.float32)
-    value_depth = value[..., 0].astype(np.float32)
+    target_depth = _plane(target, "depth").astype(np.float32)
+    value_depth = _plane(value, "depth").astype(np.float32)
     valid = mask & np.isfinite(target_depth) & (target_depth > 1.0e-6)
     if not np.any(valid):
         return None, valid
@@ -270,8 +281,8 @@ def _evaluate(
     rgb_ok = rgb_per_pixel <= float(evaluation["usable_rgb_absolute_error"])
     depth_ok = np.ones_like(mask, dtype=bool)
     if np.any(depth_valid):
-        target_depth = target["depth"][..., 0].astype(np.float32)
-        value_depth = value["depth"][..., 0].astype(np.float32)
+        target_depth = _plane(target["depth"], "depth").astype(np.float32)
+        value_depth = _plane(value["depth"], "depth").astype(np.float32)
         relative = np.zeros_like(target_depth, dtype=np.float32)
         relative[depth_valid] = np.abs(value_depth[depth_valid] - target_depth[depth_valid]) / np.maximum(
             np.abs(target_depth[depth_valid]), 1.0e-3
@@ -283,8 +294,8 @@ def _evaluate(
     if semantic_available:
         threshold = float(config["oracle_patch_contract"]["dynamic_opacity_threshold"])
         semantic_ok = (
-            (value["dynamic_opacity"][..., 0] > threshold)
-            == (target["dynamic_opacity"][..., 0] > threshold)
+            (_plane(value["dynamic_opacity"], "dynamic_opacity") > threshold)
+            == (_plane(target["dynamic_opacity"], "dynamic_opacity") > threshold)
         )
     target_content = (
         np.max(np.abs(target_rgb), axis=2)
