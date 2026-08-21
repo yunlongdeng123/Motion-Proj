@@ -1,23 +1,23 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T14:11:00Z",
+  "updated_at_utc": "2026-08-21T14:15:00Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 36,
-  "active_task": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-PT3-007",
-  "candidate": "dense_position_max_margin_multi_size_yaw_factorized_box_policy",
+  "iteration": 37,
+  "active_task": "WS-V6-PT4-RISK-POLICY-CONFIRMATION-01",
+  "active_hypothesis": "WS-V6-H-PT4-001",
+  "candidate": "frozen_hpt3_007_dense_position_max_margin_policy",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "c52ccf345269e8aac8fe05bc2e3763fd396f362ac9acd6cbea40cce0b28ed453",
+  "dev_artifact_hash": "2255a597b26542d8881272b20beb71a2689554a0c7250e247f86727657913293",
   "confirmation_artifact_hash": null,
-  "confirmation_locked": true,
+  "confirmation_locked": false,
   "failure_ledger_sha256": "c11e567d990d6a0d80ae8435059dd7e001a3e57f887596302e8adcb4056d8b9d",
-  "last_reflection_id": "WS-V6-REFL-0038",
+  "last_reflection_id": "WS-V6-REFL-0039",
   "last_completed": {
     "task_id": "WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01",
-    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T140847Z__factorized-policy-training-s20260821-r1",
-    "artifact_sha256": "c52ccf345269e8aac8fe05bc2e3763fd396f362ac9acd6cbea40cce0b28ed453"
+    "run": "run://worldsim_v6/WS-V6-PT3-RISK-POLICY-ROBUSTNESS-01/20260821T141150Z__factorized-policy-training-s20260821-r1",
+    "artifact_sha256": "2255a597b26542d8881272b20beb71a2689554a0c7250e247f86727657913293"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -63,7 +63,8 @@
     "pt3_multi_size_yaw_factor_heads_h004": "done_rejected_unbalanced_objective",
     "pt3_class_balanced_factor_heads_h005": "done_rejected_no_separating_margin",
     "pt3_max_margin_factor_heads_h006": "done_rejected_coarse_position_support",
-    "pt3_factorized_intervention_policy_training": "active_pre_registered_dense_position_support",
+    "pt3_factorized_intervention_policy_training": "done_accepted_development_dense_position_support",
+    "pt4_risk_policy_confirmation": "active_pre_registered_candidate_frozen",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -72,8 +73,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "train_max_margin_factor_heads_on_dense_disjoint_position_interventions",
-    "evaluate_the_unchanged_disjoint_grid_on_scene0048",
-    "retain_original_policy_robustness_and_incremental_gain_gates"
+    "commit_frozen_candidate_and_confirmation_attempt_protocol",
+    "consume_exact_one_shot_scene0071_confirmation",
+    "promote_or_reject_without_tuning_from_confirmation"
   ]
 }
