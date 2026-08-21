@@ -1,0 +1,50 @@
+schema_version: worldsim_v6.r82_three_actor_scene_package_bake.v1
+task_id: WS-V6-R82-THREE-ACTOR-SCENE-PACKAGE-BAKE-01
+hypothesis_id: WS-V6-H-R82-001
+seed: 20260821
+sources:
+  r70_run: runs://worldsim_v6/WS-V6-R70-TWO-ACTOR-SCENE-PACKAGE-BAKE-01/20260821T204940Z__two-actor-package-s20260821-r1
+  r70_manifest_sha256: 1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb99f7795e6fe
+  r70_gate_sha256: 4ec7d074506347d44bbf83945a33cd11818c06d7d6d4ff17e31111cd6adea51d
+  r70_summary_sha256: c75e9573acca0bb91158ef2387861234f8f9b28cbe7c1e3f505e3c0b9d1afb1e
+  r70_scene_package_manifest_sha256: 8287d39b6ed5e79d562d256b53c5d4c8efea645bd95b3c8752b2cac6fec2aa70
+  r70_scene_composition_sha256: 6b87b09efd94be2a8d4d3c22d3785877a2f91f81c3d05948827b9aebc3a8738a
+  r70_runtime_contract_sha256: 64c04fe15ed1554d296ff3a2b1bc75e02ad845acdfaa43a21cacf3a0d2ab905a
+  r70_validity_sha256: 8741d1f4569422e0eb932f63255466232995db05d8aff9f979b37f1ba889e9dd
+  r80_run: runs://worldsim_v6/WS-V6-R80-TRANSFORM-OWNED-THIRD-ACTOR-BAKE-01/20260821T214556Z__actor5-transform-bake-s20260821-r1
+  r80_manifest_sha256: 76bc3ca1d833485401ff0f752a1e0f526755b52cea8c4f3a6e129e623f84225c
+  r80_gate_sha256: 72a835ed29f100c0a6c9247c78571bec7bd85d313d6ee51ff0a0ad042c93db8f
+  r80_package_manifest_sha256: 193d503c72730fb112ccc2c74e3b1315765acf71264608b452c35ff8cc4f77b7
+  r80_trajectory_geometry_sha256: adef122a7549916e36d603ce495622a1d5d4c67387fc7e03fcf05823849153a6
+  r80_validity_sha256: b8052ce116b7b7b27a32531bd07cc874ea203e9b0a3f62ff952f9f514431395a
+  r81_run: runs://worldsim_v6/WS-V6-R81-THREE-ACTOR-JOINT-INTERACTION-01/20260821T215002Z__three-actor-joint-s20260821-r1
+  r81_manifest_sha256: 3b0878460447c2c53d6fff65e50e5b4d20aef52a4d3ebb67e0feeb5812215aaf
+  r81_gate_sha256: 418c6a0de2d8007d97216604a7f852845d28dfaaeabd3c8de2c8282390f466e4
+  r81_summary_sha256: f0fef35123671ce4abea224b2ab56fa4a551b16cb9245c90f1708a9d398159ec
+  r81_decision_sha256: fba49dfb05288a649a449b2cddec5c1193e2a641035772f2d4b9234f842ede61
+package_contract:
+  package_status: baked_development_three_actor_scene_edit
+  expected_actor_count: 3
+  expected_actor_ids: [actor_0000, actor_0002, actor_0005]
+  expected_actor_model_indices: [0, 2, 5]
+  expected_proposal_ids: [translate_world_x_m1p0_z_m0p5, actor2_translate_x_-1.0_z_+0.0, actor5_translate_x_+0.5_z_+0.0]
+  expected_translations_m:
+    actor_0000: [-1.0, 0.0, -0.5]
+    actor_0002: [-1.0, 0.0, 0.0]
+    actor_0005: [0.5, 0.0, 0.0]
+  expected_trajectory_rows_per_actor: 196
+  expected_combined_primitives: 34257
+  expected_source_files_per_actor_including_manifest: 14
+  expected_package_payload_files_excluding_scene_manifest: 45
+resources:
+  gpu: none
+  maximum_wall_seconds: 240
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_content_addressed_three_actor_scene_edit_package
+  - embeds_all_three_actor_packages_byte_exact_under_distinct_actor_namespaces
+  - binds_r81_zero_new_joint_overlap_decision_and_r70_external_base_sceneir_identity
+  - each_actor_retains_independent_float64_transform_and_native_lifecycle_ownership
+  - package_is_a_scene_edit_patch_and_does_not_duplicate_external_static_scene_or_checkpoint
+  - semantic_road_collision_physics_dynamics_response_planning_safety_and_confirmation_abstain
+  - repeat_bake_and_all_frozen_sources_remain_exact
