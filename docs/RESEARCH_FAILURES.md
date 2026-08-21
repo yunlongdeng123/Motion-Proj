@@ -1,8 +1,8 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-20
+> **最后更新**：2026-08-21
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V5.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -41,7 +41,8 @@
 
 ### 0.4 目录
 
-- [V1–V5.1 版本总览与 V1/V2 汇总](#1-v1v51-版本总览与-v1v2-汇总)
+- [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
+- [V6 详细账本](#detail-v6)
 - [V5.1 详细账本](#detail-v51)
 - [V5 详细账本](#detail-v5)
 - [V4 详细账本](#detail-v4)
@@ -50,7 +51,7 @@
 - [V7/V7.1、N1/cut-in 与历史路线](#detail-legacy)
 - [跨路线原则与新实验检查表](#detail-cross-route)
 
-## 1. V1–V5.2 版本总览与 V1/V2 汇总
+## 1. V1–V6 版本总览与 V1/V2 汇总
 
 | 版本 | 终态/核心推翻 | 主要工程坑 | 详细证据入口 |
 |---|---|---|---|
@@ -62,6 +63,7 @@
 | V5 | M1/M2/M3 全部 rejected；structured graph 不稳定、无 absolute geometry-safe candidate、constraint projection 信号不足 | KITTI calib/OXTS 语义、缺 LiDAR 帧、provenance enum、launcher 原子目录、heading metric 和 long-run stdout | `V5-F01`–`V5-F59` |
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
+| V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；当前仅完成 G0 仓库审计，尚无方法质量结论 | dirty worktree 必须先建 recovery ref；远端直连 fetch 可无进展，需在不改仓库事实的前提下使用当前主机独立代理恢复 | `V6-F01`；G0 governance artifacts；V6 plan |
 
 ### 1.1 V1 汇总条目
 
@@ -118,6 +120,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v6"></a>
+
+## V6 可验证世界编译器新增防重复结论（2026-08-21）
+
+- `V6-F01`（`governance/research-direction`, `active`）：V5.2.1 的 badcase census、人工归因、Base Validity、
+  immutable run、exact-once、UNKNOWN/abstention 与 failure-ledger 纪律继续有效，但它们没有建立 TrackBayes/M3 的
+  causal bridge，也未解决偏离 logged trajectory 后的大场景扩展、生成内容可信固化和闭环复用。Stage H/BKI 从未执行，
+  不得写成算法 reject；V5.2 M123 autoresearch 主线状态为 `superseded_by_v6_direction_reset`，M1/M2/M3 只作为
+  SceneIR provenance、factorized validity 和 dynamics verifier 的子系统证据。V6 的合法复开边界是跨 frontend 的
+  SceneIR/support/provenance/verify/bake/deterministic-runtime 问题，禁止把 V6 再退化为 StreetGS repair、TrackBayes-only、
+  KNN/Graph/BKI 或 cut-in mining 主线。证据=`WS-V6-G0-REPO-CONVERGENCE-01`、
+  `docs/WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md`、
+  `docs/autoresearch/worldsim_v6/governance/REPO_PREFLIGHT.json`；方法质量 run=`0`。
 
 <a id="detail-v52"></a>
 

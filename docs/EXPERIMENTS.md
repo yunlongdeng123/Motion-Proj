@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6 G0 完成 / G1–G3 治理前置注册（2026-08-21）
+
+- `WS-V6-G0-REPO-CONVERGENCE-01=done`：完成 remote/fetch/branch/tag/submodule/LFS、ahead/behind 与 dirty status
+  审计；origin main=`44d0e4a2468112b89a454992ecd9177d65184067`，authoring HEAD=
+  `d95ce38731568bf5b79263d2996afdf39f9547c8`。唯一 untracked plan=`46,347 bytes / sha256
+  e97572ad4ac7f38a8ba5ed48f03e54a0483581769c45799f5fe5738e764114c4`，已建立唯一 recovery ref 与仓库外恢复包；
+  tracked/staged patch SHA 均为 empty-file SHA `e3b0c442...b855`。
+- 首次 direct `git fetch --all --prune --tags` 因远端 HTTPS 无进展被安全中止；为当前 AutoDL 主机建立独立代理后，
+  同一命令成功。分类=`engineering recovery`，没有 run/quality/candidate，`failure_ledger_delta=none`。
+- `WS-V6-G1-DOCS-CLOSEOUT-01=running`：在 `research/worldsim-v5.1-m1` 登记 V5.2 terminal/V6 active、唯一
+  failure-ledger route-transition 条目与本计划，并在自审后普通 push；不得改写 V5.2 frozen plan bytes。
+- `WS-V6-G2-BRANCH-CONVERGENCE-01=pending`：从最新 origin/main 创建 integration branch，动态枚举所有 remote 与
+  具有独立提交的 local project refs，逐分支记录 include/exclude 原因，合并后执行 CPU/contract/integrity gate。
+- `WS-V6-G3-BRANCH-BOOTSTRAP-01=pending`：仅在 G2 gate 通过且 main 已 push 后创建并 push fresh V6 branch。
+- G0–G3 只产生治理/仓库事实；V6 尚无 SceneIR、frontend、support、validity、verifier、bake 或方法质量结论，GPU
+  method run=`0`。failure refs=`V6-F01, V52-F01, V52-F02, PIVOT-F02, PIVOT-F03, PIVOT-F04`。
+
 ## V5.2.1 P11 Human Attribution PASS / V5.2 M123 Autoresearch 注册（2026-08-20）
 
 - P11 task=`WS-V521-P11-HUMAN-ATTRIBUTION-01`，run=
