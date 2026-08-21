@@ -1,0 +1,43 @@
+schema_version: worldsim_v6.r92_independent_scene_actor_visibility_inventory.v1
+task_id: WS-V6-R92-INDEPENDENT-SCENE-ACTOR-VISIBILITY-INVENTORY-01
+hypothesis_id: WS-V6-H-R92-001
+seed: 20260821
+sources:
+  scene: scene-0230
+  scene_index: 179
+  matched_formal_run: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32
+  matched_manifest_sha256: 976b8a83ac59ecd1462d49ee7dbf5382637b5be23d28606930f306867a329f01
+  matched_summary_sha256: 868a6352f0146a10605a2a7568d0c033129f165b811517dd802eeea125d63595
+  matched_status_sha256: 3c0932b5d8e2ca62f57e4e77df0f3461e4c9729946f27820f2249e43f8edb7d5
+  matched_fingerprint_sha256: 8b1a43b74f727658b0f2d9d1d00e72a2cc62fdeed886fbb0ab870b579788dde3
+  matched_resolved_sha256: 378e19e1aa376c12cd2f02dce8b7fc702e927c186756f9e4e9b971f8b98bce1d
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+inventory_contract:
+  expected_frame_count: 196
+  minimum_actor_model_count: 1
+  expected_rigid_primitive_count: 172264
+  require_all_point_ids_in_actor_range: true
+  require_primitive_partition_exact: true
+visibility_selection:
+  probe_frames: [0, 49, 98, 147, 195]
+  minimum_primitive_count: 1000
+  opacity_threshold: 0.01
+  selection_rule: maximum_actor_effect_pixels_then_minimum_actor_model_index_then_minimum_frame_index
+  minimum_selected_effect_pixels: 64
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 600
+  maximum_wall_seconds: 630
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - independent_scene0230_complete_rigidnodes_actor_and_lifecycle_inventory
+  - fixed_five_frame_native_visibility_search_selects_one_actor_frame_for_cross_scene_compiler_extension
+  - actor_candidates_are_derived_from_frozen_primitive_count_and_probe_frame_lifecycle_only
+  - selection_is_camera_visible_support_not_semantic_identity_or_edit_validity
+  - no_cross_scene_selector_transfer_semantic_correctness_physics_planning_safety_or_confirmation_claim
+  - no_training_or_confirmation_read

@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T23:01:01Z",
+  "updated_at_utc": "2026-08-21T23:07:18Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 135,
-  "active_task": "WS-V6-R91-SELECTIVE-POLICY-FRESH-PROCESS-REPLAY-01",
-  "active_hypothesis": "WS-V6-H-R91-001",
-  "candidate": "fresh_process_no_torch_selective_policy_replay",
+  "iteration": 136,
+  "active_task": "WS-V6-R92-INDEPENDENT-SCENE-ACTOR-VISIBILITY-INVENTORY-01",
+  "active_hypothesis": "WS-V6-H-R92-001",
+  "candidate": "independent_scene0230_actor_visibility_inventory",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a",
+  "dev_artifact_hash": "ab7209e57229f354e944c3ee1ec91bdc6a2cd0851e3a0c594f4bb6e04f8bd2c0",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "f692e2e016e2a12c6f411ee3fa072c15f71b5b077c42eb35de021d86a0d6709b",
-  "last_reflection_id": "WS-V6-REFL-0137",
+  "last_reflection_id": "WS-V6-REFL-0138",
   "last_completed": {
-    "task_id": "WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01",
-    "run": "run://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1",
-    "artifact_sha256": "7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a"
+    "task_id": "WS-V6-R91-SELECTIVE-POLICY-FRESH-PROCESS-REPLAY-01",
+    "run": "run://worldsim_v6/WS-V6-R91-SELECTIVE-POLICY-FRESH-PROCESS-REPLAY-01/20260821T230253Z__fresh-policy-replay-s20260821-r1",
+    "artifact_sha256": "ab7209e57229f354e944c3ee1ec91bdc6a2cd0851e3a0c594f4bb6e04f8bd2c0"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -150,7 +150,8 @@
     "r88_selective_perception_runtime_gate": "done_accepted_development_holdout_f1_1p0_skip_22p45_percent",
     "r89_lifecycle_phase_holdout_selector": "done_accepted_development_contiguous_phase_recall_1p0",
     "r90_selective_runtime_policy_bake": "done_accepted_development_content_addressed_repeat_exact",
-    "r91_selective_policy_fresh_process_replay": "active_pre_registered",
+    "r91_selective_policy_fresh_process_replay": "done_accepted_development_two_fresh_processes_no_torch",
+    "r92_independent_scene_actor_visibility_inventory": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -159,9 +160,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "launch_two_fresh_cpu_processes_with_only_r90_package_and_r86_feature_map",
-    "require_baked_decision_hash_and196_frame151_trigger45_skip_counts_exact",
-    "require_torch_and_perception_model_not_loaded_and_process_outputs_byte_exact",
-    "if_accepted_seek_cross_episode_or_cross_scene_transfer_assets_before_claiming_general_selector"
+    "inventory_all_scene0230_rigid_actors_and196_frame_lifecycles",
+    "render_fixed_frames0_49_98_147_195_for_all_eligible_actors",
+    "select_maximum_native_visible_actor_frame_pair_under_frozen_rule",
+    "if_accepted_compile_a_real_scene0230_actor_edit_before_testing_selector_transfer"
   ]
 }
