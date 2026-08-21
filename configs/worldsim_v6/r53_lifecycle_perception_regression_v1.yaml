@@ -1,0 +1,35 @@
+schema_version: worldsim_v6.r53_lifecycle_perception_regression.v1
+task_id: WS-V6-R53-LIFECYCLE-PERCEPTION-REGRESSION-01
+hypothesis_id: WS-V6-H-R53-001
+seed: 20260821
+sources:
+  r52_run: runs://worldsim_v6/WS-V6-R52-LIFECYCLE-GATE3-ABLATION-01/20260821T184809Z__lifecycle-gate3-s20260821-r1
+  r52_gate_sha256: 19abbbd49d641a196590537ee80d4f2386ca82f1acea785f21dd117df37f7091
+  r52_summary_sha256: 12f5ea94034e6903304f3f4318662dd24af201d79bd44b61a2b03eadefc59832
+  r49_run: runs://worldsim_v6/WS-V6-R49-MULTIFRAME-DETACHED-SENSOR-RUNTIME-01/20260821T182444Z__multiframe-sensor-s20260821-r1
+  r49_gate_sha256: e8075c61ad94396cbb98c872a67ffb14e6e8d6e65b6a9b7fbecef31bdfce2d83
+  r49_metrics_sha256: cd1f6f6b6a2fc25e507d4b647be5fd87ae163ef9201104e7b291c8db583fcdcd
+  r51_run: runs://worldsim_v6/WS-V6-R51-LIFECYCLE-AWARE-SENSOR-RUNTIME-01/20260821T184143Z__lifecycle-sensor-s20260821-r1
+  r51_gate_sha256: 6b40eedbc1ed64c14523c3b2f106bf6e4afd5fbd6ab3105601ad259c3e52c6c7
+  r51_metrics_sha256: 9ce9d3f57a43cd702e843f95b76b0866d69b8cb254e73505ab42331089a3f26c
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+evaluation:
+  active_control_frame: 57
+  inactive_frames: [141, 195]
+  repeat_count: 2
+  minimum_inactive_changed_label_pixels_per_frame: 1
+  expected_active_changed_label_pixels: 0
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 4000
+  maximum_wall_seconds: 240
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_frozen_deeplab_perception_regression_utility
+  - v6_inactive_sensors_are_native_exact_and_naive_transform_only_sensors_are_the_paired_baseline
+  - label_change_detectability_not_semantic_correctness
+  - active_frame_is_an_exact_sensor_and_perception_control
+  - two_inactive_frames_one_actor_only
+  - physical_planning_safety_and_confirmation_abstain
