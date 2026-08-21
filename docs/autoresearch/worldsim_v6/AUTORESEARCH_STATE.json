@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-21T17:25:04Z",
+  "updated_at_utc": "2026-08-21T17:33:33Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 72,
-  "active_task": "WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01",
-  "active_hypothesis": "WS-V6-H-R39-001",
-  "candidate": "observed_static_gaussian_actor_ground_contact_factor_metadata_binding_retry",
+  "iteration": 73,
+  "active_task": "WS-V6-R40-ACTOR-LIDAR-CONTACT-FACTOR-01",
+  "active_hypothesis": "WS-V6-H-R40-001",
+  "candidate": "same_frontend_logged_lidar_robust_actor_contact_factor",
   "frontend": "streetgs_adgs_sceneir",
   "dev_artifact_hash": "47540052b893e17100e6910ccaad8ed29c31444e7fc7d8945bd84ce12f6a4f2c",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "b2b6f7a8e074a73a7c1c787ee0786df7bb23d9029840883fdf75e799e6e6fa91",
-  "last_reflection_id": "WS-V6-REFL-0074",
+  "failure_ledger_sha256": "1dd7149db7def31920b30b2bbb57e7de67162cde990b36b39b92313566d5cf76",
+  "last_reflection_id": "WS-V6-REFL-0075",
   "last_completed": {
-    "task_id": "WS-V6-R38-ACTOR-INTERACTION-FACTOR-01",
-    "run": "run://worldsim_v6/WS-V6-R38-ACTOR-INTERACTION-FACTOR-01/20260821T171936Z__interaction-factor-s20260821-r1",
-    "artifact_sha256": "47540052b893e17100e6910ccaad8ed29c31444e7fc7d8945bd84ce12f6a4f2c"
+    "task_id": "WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01",
+    "run": "run://worldsim_v6/WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01/20260821T172656Z__static-contact-s20260821-r1",
+    "artifact_sha256": "7b29ce96648360890da3168d7866b43a7fc4b9194bdf8b4905c1840f98692e68"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -98,7 +98,8 @@
     "r36_actor_sensor_equivalence": "done_accepted_development_native_renderer_integration",
     "r37_actor_trajectory_edit_sensor_equivalence": "done_accepted_development_governance_retry",
     "r38_actor_interaction_factor": "done_accepted_development_full_trajectory_factorization",
-    "r39_actor_static_contact_factor": "first_attempt_failed_v6_f64_metadata_binding_retry_active",
+    "r39_actor_static_contact_factor": "done_rejected_v6_f65_background_gaussian_not_ground_contact",
+    "r40_actor_lidar_contact_factor": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -107,8 +108,8 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "commit_v6_f64_and_bind_frozen_r38_translation_metadata",
-    "retry_same_static_contact_query_and_thresholds",
-    "test_horizontal_contact_retention_and_vertical_contact_break_control"
+    "commit_and_push_r39_rejection_and_r40_logged_lidar_factor",
+    "run_formal_frame57_robust_lidar_contact_factor",
+    "if_accepted_fuse_r37_renderer_r38_interaction_r40_contact_decisions"
   ]
 }

@@ -1,0 +1,61 @@
+schema_version: worldsim_v6.r40_actor_lidar_contact_factor.v1
+task_id: WS-V6-R40-ACTOR-LIDAR-CONTACT-FACTOR-01
+hypothesis_id: WS-V6-H-R40-001
+seed: 20260821
+sources:
+  r39_run: runs://worldsim_v6/WS-V6-R39-ACTOR-STATIC-CONTACT-FACTOR-01/20260821T172656Z__static-contact-s20260821-r1
+  r39_manifest_sha256: e32dcb60fe619c81690937658400ff78c24cd29d91682b01057eba5f7a81ea8e
+  r39_gate_sha256: 7b29ce96648360890da3168d7866b43a7fc4b9194bdf8b4905c1840f98692e68
+  r39_summary_sha256: a1c2518be046231e9686ea07b1ce19611b7332addc91e75aff441701cfdc3142
+  r35_run: runs://worldsim_v6/WS-V6-R35-ACTOR-RIGID-TRAJECTORY-COMPILER-01/20260821T165004Z__rigid-trajectory-s20260821-r1
+  r35_manifest_sha256: eed1c50d5c5c417ff76fbaef4e166e93e4d145cd0ab6e21ef2caecf6042ccc0c
+  r35_package_manifest_sha256: 6834ec0f74baa33f08f109093eaec0aa375897718bab47bcc6cc4f99b2e58c2c
+  r35_trajectory_geometry_sha256: 524e95e9a3bb7e62c6989e8b06c8491280fbc770fe3731fb228d511a970b1297
+  r3_run: runs://worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1
+  streetgs_support_file: renders/scene-0242/streetgs/support_frame_057.npz
+  streetgs_support_sha256: 82994e06a5eaf6b528d7b2a8e39fab73458e981598d9ad232e5f2d78f562b337
+  streetgs_render_map: renders/scene-0242/streetgs/RENDER_MAP.jsonl
+  streetgs_render_map_sha256: fcfe7820dbd9eceb001be961f8e73bac129db29638b3281cbd421bbf541f6187
+  streetgs_audit: renders/scene-0242/streetgs/AUDIT.json
+  streetgs_audit_sha256: 1154a4ef5751d2b07f66d6a5c5231b543b029801a337d36fd668bfe3348fa51f
+cohort:
+  partition: development_scene0242_frame57_same_frontend_logged_lidar
+  frame_index: 57
+  timestamp_us: 5700000
+  camera_count: 3
+  expected_actor_primitives: 12390
+  minimum_static_lidar_points: 4096
+coordinate_contract:
+  source: frozen_streetgs_frontend_world_frame
+  world_up_axis: y
+  vertical_axis_index: 1
+  horizontal_axis_indices: [0, 2]
+contact_query:
+  actor_support_quantile: 0.05
+  ground_height_quantile: 0.10
+  nearest_horizontal_candidates: 256
+  maximum_horizontal_radius_m: 2.0
+  minimum_lidar_candidates: 32
+  maximum_contact_error_m: 0.35
+interventions:
+  - id: logged_baseline
+    translation_delta_m: [0.0, 0.0, 0.0]
+    expected_lidar_contact_decision: ACCEPT
+  - id: translate_world_x_plus_1m
+    translation_delta_m: [1.0, 0.0, 0.0]
+    expected_lidar_contact_decision: ACCEPT
+  - id: translate_world_y_plus_1m
+    translation_delta_m: [0.0, 1.0, 0.0]
+    expected_lidar_contact_decision: REJECT
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_same_frontend_frame57_logged_lidar_contact_factor
+  - dynamic_pixels_excluded_before_three_camera_metric_point_lift
+  - robust_actor_fifth_percentile_anchor_and_local_lidar_tenth_percentile_ground_proxy
+  - local_lidar_contact_is_not_semantic_road_or_physics_ground_truth
+  - full_trajectory_dynamics_collision_planning_and_safety_abstain
+  - no_training_or_confirmation_read
+

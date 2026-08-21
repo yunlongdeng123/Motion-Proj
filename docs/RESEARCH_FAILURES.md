@@ -3623,3 +3623,9 @@ H-R37-001 首个 formal run `20260821T170543Z__trajectory-edit-s20260821-r1` 的
 H-R39-001 首个 formal attempt `20260821T172447Z__static-contact-s20260821-r1` 在 static KD-tree 和任何 decision 生成前因 `KeyError: translation_delta_m` 失败，仅产生 failed `TERMINAL.json`。R39 config 为两个 intervention 写了预期 contact decision，但 consumer 在输出 decision row 时还读取 delta；delta 的事实 owner 是冻结 R38 payload/decision，初版 config 没有显式重复绑定。
 
 修复只在 R39 config 中补入与 R38 完全相同的 `[1,0,0]` 与 `[0,1,0]`，不得改动 static query、0.80 coverage、0.90 retention、directional control、资源合同或 source denominator。该失败属于 metadata plumbing，不读取或改变实验结果；H-R39-001 在新 commit/push 后按同一假设重试。
+
+### V6-F65：background Gaussian 密度与 actor AABB 极值不能充当 ground-contact evidence
+
+H-R39-001 canonical retry `20260821T172656Z__static-contact-s20260821-r1` 在 824,583 个 observed background Gaussians 上按冻结的 1.5m horizontal / 0.35m vertical / 3-point contract 查询 actor AABB bottom。logged support coverage 只有 `0.17857`，远低于 `0.80`；x+1m coverage `0.16837` 因绝对覆盖不足而 REJECT，y+1m coverage 反而为 `0.19388`，方向控制失败。run 正式 `rejected`。
+
+不得放宽 coverage、vertical tolerance 或把 retention 单独当 ACCEPT。background splats 混合道路、立面与其他表面，Gaussian AABB minimum 又受少量低端 primitives 支配，两者组合不是 ground-contact 语义。H-R40-001 转向冻结的同前端三相机 logged LiDAR：排除 dynamic pixels 后提升到 world frame，以 actor world-Gaussian y 轴 5% 分位作为 robust support anchor、局部 LiDAR y 轴 10% 分位作为 ground proxy，仅评估 R37 实际执行的 frame57；x/y directional controls 与物理/semantic-road abstention保留。
