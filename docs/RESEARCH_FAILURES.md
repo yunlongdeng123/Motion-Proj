@@ -3728,3 +3728,9 @@ H-R68-001 第一次启动尝试在创建 run directory、读取任何冻结 arti
 H-R71-001 canonical run `20260821T205641Z__two-actor-sensor-s20260821-r1` 在 frame98 正确加载 R70，向 native checkpoint 同时应用 actor0/actor2 两个 transform，并在 compiled path 替换两组 owned fields。两组 field error、共享 RGB/depth/opacity、repeat、state restore、package/checkpoint immutability、资源和全部 abstention 均通过；但 actor0 虽 lifecycle active 且12,390个 opacity primitives 非零，其 camera effect pixels 为0。联合 sensor SHA256 因而与 R61/R68 actor2-only sensor 完全相同，只有 actor2 的19,785 effect pixels，按预注册的双 actor 可见门正式 rejected。
 
 不得删除 `both_actors_have_visible_effect`、把 active primitives 当作 camera evidence，或追认 frame98 为双 actor runtime 成功。冻结 R51 证据表明 actor0 在采样帧中只有 frame57 具有17,568 effect pixels；冻结 R57 表明 actor2 在相邻 frame49 和后续 frame98 分别具有17,290/19,700 effect pixels。H-R71-002 因此在任何新渲染前固定 frame57，并改用冻结 R36 frame57 logged sensor 作 counterfactual baseline；所有 runtime、field/sensor、每 actor>=32 pixels、joint>=256 pixels、资源和 abstention 门保持不变。若 actor2 在 frame57 仍不可见，则保留第二次 rejection 并转向独立的可见交集搜索，不得继续猜帧。
+
+### V6-F83：手工复制 source SHA256 时不得遗漏重复的相邻字节组
+
+H-R82-001 第一次正式启动在创建 run directory、复制 package 或开始任何 bake 前，被冻结输入校验拒绝。R82 配置把 R70 `MANIFEST.json` 的实际 SHA256 `1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb5eb99f7795e6fe` 误抄为少一个 `5e` 字节组的 `1583baf70c760ab700992ef9573ceb6fe59f992527445ac5eb99f7795e6fe`；实际 artifact 与 R71 已使用的冻结 authority 均未变化。本次没有 run、gate、package 或方法结果。
+
+不得跳过 `_verify`、重新生成 R70 artifact、放宽 package denominator 或追认本次启动。H-R82-002 仅修正该 source digest，并保持 R70/R80/R81、三个 actor、45 payload、34,257 primitives、588 trajectory rows、双 bake exact、资源和 claim boundary 全部不变；必须在新 commit/push 后重试。
