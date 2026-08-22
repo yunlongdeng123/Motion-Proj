@@ -1,0 +1,34 @@
+schema_version: worldsim_v6.r126_binary_surrogate_package_replay.v1
+task_id: WS-V6-R126-BINARY-SURROGATE-PACKAGE-REPLAY-01
+hypothesis_id: WS-V6-H-R126-001
+seed: 20260821
+sources:
+  r125_run: runs://worldsim_v6/WS-V6-R125-BINARY-PERCEPTION-SURROGATE-CORPUS-RECOVERY-01/20260822T040332Z__binary-perception-surrogate-corpus-s20260821-r1
+  r125_manifest_sha256: 6bfdb70b80214217de634915b8ecdb16009515693681775480f922f2f7a4cb56
+  r125_gate_sha256: 408a7dd6be35a0712b2377fb92586f8fb87ef32c0538e0c445c39bf410627ae4
+  r125_summary_sha256: 2c4a377b7ac3d8833d40fe0c33b44b756774a50ea4570eb8c4b8b2019859df20
+  r125_surrogate_corpus_certificate_sha256: c2f6312649306a2d586d94727b68b350f7ef133b3e8dc49a481491b8a4db3215
+  r125_config_path: configs/worldsim_v6/r125_binary_perception_surrogate_corpus_recovery_v1.yaml
+  r125_config_sha256: bab82d2f4f9d2e6a1e69c84572a47147f88b14ba908cd15f957bb8294d5295ac
+runtime:
+  expected_condition_count: 11
+  expected_frame_count_per_condition: 196
+  expected_positive_frames: 1092
+  expected_negative_frames: 1064
+  expected_threshold_pixels: 45
+  minimum_changed_label_pixels: 1
+  fresh_process_count: 2
+resources:
+  execution: cpu_only_standard_library_fresh_process_replay
+  maximum_worker_seconds: 30
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 20000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - executable_content_addressed_binary_impact_surrogate_on_the_r125_bound_corpus_only
+  - package_binds_threshold45_ordered2156_features_frozen_binary_targets_and_expected_decisions
+  - two_independent_bakes_and_two_fresh_process_replays_must_be_byte_exact
+  - fresh_workers_use_python_standard_library_and_must_not_load_torch_or_perception_model
+  - prospective_unseen_condition_and_model_generalization_abstain
+  - label_identity_semantic_correctness_spatial_locality_physics_planning_safety_abstain
+  - no_gpu_training_or_confirmation_read
