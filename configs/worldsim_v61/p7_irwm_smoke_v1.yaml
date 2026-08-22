@@ -1,0 +1,79 @@
+schema_version: worldsim_v61.p7_irwm_smoke_config.v1
+task_id: WS-V61-P7-IRWM-3090-SMOKE-01
+hypothesis_id: WS-V61-H-P7-IRWM-001
+seed: 1
+sources:
+  me3_run: runs://worldsim_v61/WS-V61-ME3-PREDICTED-OCC-01/20260822T134559Z__predicted-occ-s1-r1
+  me3_files:
+    ME3_GATE.json: 508b355181e1dd453df42c55e8ddb710a1e88786ac6b52238400acefe6d61d74
+    SUMMARY.json: f6391f49fb89c3073775e71d8f07aad77bdd1bedc6b5b110630c1cc81f2cb721
+    TERMINAL.json: 25c01504b4901a23fdd7a7b3dfbe0494686c64e0384e09f17a0cbee0f85c74bd
+  official_repo: /root/autodl-tmp/third_party/ir-wm-a83e4a24
+  official_git_commit: a83e4a24a8dbf008e5fe4e02d7efb692c1bec582
+  source_archive:
+    path: source.tar.gz
+    bytes: 16465102
+    sha256: 1ef45ca6e7cbb4605ad8e40e57c89b910971289ab91c7402ccb88873e7923cb4
+  official_files:
+    projects/configs/e2e/MMO_MSO_with_plan_fully_decoupled.py: f000f49da1e88b5f686d5fcb75ee6072b66cfb47c02e1e55ab9e6a74f2dade55
+    projects/mmdet3d_plugin/bevformer/detectors/drive_occworldV2.py: a9b6e85b336cd33f9962d196c36fe8a549d3a4fbd0a8cbd8d63956178a8fb059
+    projects/mmdet3d_plugin/bevformer/dense_heads/world_head_v1.py: f81bf6c51d6bf6ecb1d7b3cbaab61a6d5edc5fa2cf290399cf22f7054e46b316
+    README.md: 0269ecd3da3e50470dea27f8bb52ca79578027fd20932d375bafca802384120c
+    LICENSE: 5ad8c213095c573921d7388edf93f6a9f54490b8ebf3b165ae8ef1947cf70846
+  official_config: projects/configs/e2e/MMO_MSO_with_plan_fully_decoupled.py
+  model_root: /root/autodl-tmp/models/ir-wm-36b16b55
+  model_revision: 36b16b55d21f773f080f5980b195aa2ece5b9358
+  checkpoint:
+    path: MMO_MSO_with_plan_fully_decoupled.pth
+    bytes: 941598147
+    sha256: 8e1816dc290df28f1e89d0b88eddb451b9ab20fc85a8ef6449d9226ceeacd1ce
+  temporal_metadata:
+    path: /root/autodl-tmp/models/gaussianworld-b43629eaecff/nuscenes_temporal_infos_train.pkl
+    bytes: 530760430
+    sha256: 302fcb86cc5be290a0b3987da3753034ae4eea0bb711fd75af5b80c27ca5ab54
+environment:
+  prefix: /root/autodl-tmp/envs/worldsim-v61-irwm
+  python: 3.8.20
+  torch: 1.10.1+cu111
+  mmcv-full: 1.4.0
+  mmdet: 2.14.0
+  mmsegmentation: 0.14.1
+  mmdet3d: 0.17.1
+  detectron2: 0.6
+input:
+  scene: scene-0048
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  frames: [42, 47, 52]
+  metadata_indices: [8, 9, 10]
+  camera_names: [CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT]
+  drivestudio_camera_ids: [0, 2, 1, 5, 3, 4]
+  expected_native_height: 900
+  expected_native_width: 1600
+  pad_size_divisor: 32
+  image_mean_bgr: [103.530, 116.280, 123.675]
+  image_std: [1.0, 1.0, 1.0]
+output_contract:
+  class_count: 17
+  raw_logits_shape: [1, 3, 1, 40000, 16, 17]
+  grid_shape: [200, 200, 16]
+  pc_range_m: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+  grid_size_m: 0.512
+  occupied_class_min: 1
+  occupied_class_max: 16
+  empty_class: 0
+  minimum_occupied_voxels: 1
+  minimum_free_voxels: 1
+resources:
+  gpu: 0
+  maximum_gpu_memory_gib: 22.0
+  maximum_wall_seconds: 1200
+  minimum_disk_free_gib: 45
+failure_ledger_refs: [V61-F03, V61-F09, V61-F10, V61-F11, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]
+claim_boundary:
+  - one_three_frame_six_camera_official_checkpoint_capability_only
+  - two_history_frames_plus_current_frame_at_official_2hz
+  - current_state_scene_encoder_and_official_occupancy_head_only
+  - no_future_decoder_or_planning_evaluation
+  - no_occupancy_ground_truth_o_method_o_eval_or_confirmation_read
+  - no_training_calibration_or_threshold_selection
+  - no_real_world_safety_claim
