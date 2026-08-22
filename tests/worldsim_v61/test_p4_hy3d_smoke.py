@@ -25,5 +25,13 @@ def test_p4_is_one_off_offline_voxel_capability_smoke() -> None:
         "fast_decode": False,
     }
     assert config["resources"]["network_during_formal_run"] == "disabled"
+    assert config["environment"]["installation_contract"] == (
+        "fixed_official_shape_inference_dependency_closure"
+    )
+    assert config["environment"]["excluded_non_inference_groups"] == [
+        "training",
+        "demo_ui",
+        "texture_and_mesh_postprocess",
+    ]
     assert config["license_boundary"]["no_model_or_output_distribution"]
     assert config["license_boundary"]["no_output_for_training_other_models"]

@@ -35,7 +35,9 @@ sources:
   dino_revision: 47b73eefe95e8d44ec3623f8890bd894b6ea2d6c
   dino_model_sha256: 399fba97a95f22c36834418bc69373364a99af3a1153da1c0fb31db567c92e23
 environment:
-  conda_prefix: /root/autodl-tmp/envs/worldsim-v61-hy3d-omni
+  python_prefix: /root/autodl-tmp/envs/worldsim-v61-hy3d-omni
+  installation_contract: fixed_official_shape_inference_dependency_closure
+  excluded_non_inference_groups: [training, demo_ui, texture_and_mesh_postprocess]
   hf_home: /root/autodl-tmp/models/hf-cache-worldsim-v61
   python_major_minor: "3.10"
   torch_version: 2.5.1+cu124
