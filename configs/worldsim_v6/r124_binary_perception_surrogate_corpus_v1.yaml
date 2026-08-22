@@ -1,0 +1,174 @@
+schema_version: worldsim_v6.r124_binary_perception_surrogate_corpus.v1
+task_id: WS-V6-R124-BINARY-PERCEPTION-SURROGATE-CORPUS-01
+hypothesis_id: WS-V6-H-R124-001
+seed: 20260821
+policy_source:
+  run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  gate_name: R90_GATE.json
+  gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  policy_path: package_a/POLICY.json
+  policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+conditions:
+  scene0230_actor12_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260821T233258Z__scene0230-selector-transfer-s20260821-r1
+    transfer_manifest_sha256: d1c818d02670d074fa1654d31d2e59e93155ebec9731d74acbc3e25f0b0aad2e
+    transfer_summary_sha256: 77f3dff3c4af6ee680e74c07380903c8b07daa508b435bfa87b47145c5201980
+    selector_transfer_sha256: 26e3a7121602b0d8eb80ef59502911607335c2c16eb553e507422842c891a955
+    authority_gate_name: R94_GATE.json
+    authority_gate_sha256: 4532677c91200ffbe4270eac45bc21ed63c142c157e8345623b935b7109e7951
+    scene: scene-0230
+    actor_count: 1
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0048_actor8_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R98-SECOND-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T001113Z__scene0048-selector-transfer-s20260821-r1
+    transfer_manifest_sha256: 853be94540bea983d69c8b7cf28881740859d35983eba866461d04f1fafc66e9
+    transfer_summary_sha256: a69e1b8fe521889507a8f24662d7d99063b293772fcc6617680135e22b7253a1
+    selector_transfer_sha256: 619fc1006899504a0c0220a9a9bb73b819d0b8c50bec6f1e7a5d8b92d8edd839
+    authority_run: runs://worldsim_v6/WS-V6-R99-SCENE0048-LIFECYCLE-GATE-REPAIR-01/20260822T002157Z__scene0048-lifecycle-gate-repair-s20260821-r1
+    authority_manifest_sha256: b3a021a4969bbea13f579424997c32472500221d2d1305c3011265e22c9883ca
+    authority_gate_name: R99_GATE.json
+    authority_gate_sha256: 67cc8f048ce4800b5a46e3d194cce8ed88108d88f4b03d669675d68eca6d6ac6
+    scene: scene-0048
+    actor_count: 1
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_actor34_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+    transfer_manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+    transfer_summary_sha256: f74b3224070717ecbc5edbe99ea9217659ee1848bff93f99af9552a82ef84fb1
+    selector_transfer_sha256: b426beb316d3035673289b4c34a64b68da0d83cbf06f70a6f59e253de2cfee04
+    authority_gate_name: R102_GATE.json
+    authority_gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+    scene: scene-0255
+    actor_count: 1
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_actor34_zplus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R104-ORTHOGONAL-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T010522Z__scene0255-orthogonal-intervention-s20260821-r1
+    transfer_manifest_sha256: 6c9c6fc59c11cf57838a306a464bba54f86f1d252ee0e881a66ab2d797f93c93
+    transfer_summary_sha256: c0c5368b59b477ea6c309b530af82f6566f3e7e3d73b5190a6dc8b4c9e5164ce
+    selector_transfer_sha256: 4e03f0ae878281044ca59770c5b7d8208bc526c3b0a17446314ff0bbcf319967
+    authority_gate_name: R104_GATE.json
+    authority_gate_sha256: 4475135a7f9d5c07f000cd945f13b5eecdf1a1dea5ed2bacb5aeacd3df8715bc
+    scene: scene-0255
+    actor_count: 1
+    direction: z_plus
+    magnitude_m: 0.5
+  scene0255_actor34_zplus0p25:
+    transfer_run: runs://worldsim_v6/WS-V6-R106-QUARTER-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T012232Z__scene0255-quarter-meter-intervention-s20260821-r1
+    transfer_manifest_sha256: 57953b0aedb2c731242252073c0f5cadee79e87f456706678eead0c2f231d308
+    transfer_summary_sha256: bf490c114d9de2c27ff335c74da50a56397d6c5c2a8b450363703e03845742cd
+    selector_transfer_sha256: 3a287196876a8cdbf5aed3f4b0e08bc7342f72f1903d31d06434ec504ad40f83
+    authority_gate_name: R106_GATE.json
+    authority_gate_sha256: 1e47aa906851820dcc5ae3938ad8a0685a9a043a681dc481a9fe6e76c0f7fe79
+    scene: scene-0255
+    actor_count: 1
+    direction: z_plus
+    magnitude_m: 0.25
+  scene0255_actor34_zplus0p125:
+    transfer_run: runs://worldsim_v6/WS-V6-R107-EIGHTH-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T013212Z__scene0255-eighth-meter-intervention-s20260821-r1
+    transfer_manifest_sha256: c6114a734b694aace8afde3580c65689cfe375eab75d813d83584a07855f0395
+    transfer_summary_sha256: 23c573adf841c92ab235d4147ed1f0500f382d8c3aaef6c4e579705c016dbdfc
+    selector_transfer_sha256: 31b9333dedcdd14d6de3fe5a24e95c847ee13b9fd58e72f613c5358d6ba4ed51
+    authority_gate_name: R107_GATE.json
+    authority_gate_sha256: dc32db9b4972a542ec1978e99039785a52d053d5403ac05b74710be2a78a527d
+    scene: scene-0255
+    actor_count: 1
+    direction: z_plus
+    magnitude_m: 0.125
+  scene0255_actor24_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R110-SCENE0255-ACTOR24-SINGLE-EDIT-SELECTOR-01/20260822T020910Z__scene0255-actor24-single-selector-s20260821-r1
+    transfer_manifest_sha256: e4571fd5db87e30de36af0e0e33dccf3835e181ef37492274507e3bbe1ad32f7
+    transfer_summary_sha256: 38c9d606767c7a7e323609bf0d59adcff29a26bbe2698a86e710dcd71aadd3fe
+    selector_transfer_sha256: 317644957e88bfad30e5a93c5aaf049db06766ce407376d4006df58dbecafc6e
+    authority_gate_name: R110_GATE.json
+    authority_gate_sha256: 5f1d53b01fca28b13162533dfd30ea059f0237ab03b8f39e46414447da067460
+    scene: scene-0255
+    actor_count: 1
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_two_actor_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R109-SCENE0255-TWO-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T015827Z__scene0255-two-actor-selector-s20260821-r1
+    transfer_manifest_sha256: 1c358a1dd0dce020c1e37494aad1cc1bda0ca2b82a0978d3738d54fd8b05738a
+    transfer_summary_sha256: 11d2b1f478e4f277cc5c54c8188b4cbfc0655444032b88f2eb9a046a62be6202
+    selector_transfer_sha256: 0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df58dbecafc6eafd91
+    authority_gate_name: R109_GATE.json
+    authority_gate_sha256: 383df9f490e516873229dc6c28486493960130d820f182e4cfbb8054e6782569
+    scene: scene-0255
+    actor_count: 2
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_three_actor_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R114-SCENE0255-THREE-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T024134Z__scene0255-three-actor-selector-s20260821-r1
+    transfer_manifest_sha256: a503b0b99631a32921307553f88b35f9e55eb7788f007ce4a835d91827d73b38
+    transfer_summary_sha256: 05842f3e531fb3cd4dd123ed9dab7549c83a77bba3f14f878a19e903fcc4ef62
+    selector_transfer_sha256: 1eb4684ecfdc7880ad3bf1c615de21202710ef45e1a8b051b8b8a73b5b02cc83
+    authority_gate_name: R114_GATE.json
+    authority_gate_sha256: 82dc65e7ecbd1a7a8e23c4036f6123e5ca75e0e4fc10fe2e37d6c32685e08f06
+    scene: scene-0255
+    actor_count: 3
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_four_actor_xminus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R118-SCENE0255-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T031020Z__scene0255-four-actor-selector-s20260821-r1
+    transfer_manifest_sha256: b6bd0640fdb7510fdb4ab1b35baf080d15ddf9c24381b7965db929340a374f4f
+    transfer_summary_sha256: 3900575bfb031238fe3f56f8e55f7b82b2a1ddcda182bfa809fbbfff5eb0e631
+    selector_transfer_sha256: 1b74c47ad57be5239bd8fc9f683b04a6571b460b4f19f207b915d58c0f684e1b
+    authority_gate_name: R118_GATE.json
+    authority_gate_sha256: c0a9a49d52aa6be48be86b4adcabcb7ee5bf7a903cae6cabd7681585a90dd183
+    scene: scene-0255
+    actor_count: 4
+    direction: x_minus
+    magnitude_m: 0.5
+  scene0255_four_actor_mixed_zplus0p5:
+    transfer_run: runs://worldsim_v6/WS-V6-R121-SCENE0255-ORTHOGONAL-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T033133Z__scene0255-orthogonal-four-actor-selector-s20260821-r1
+    transfer_manifest_sha256: 8f2a1d3d3bf781888bd6a66889d9a2982a1a8d0bc6ca9bad16cb9831257e9d59
+    transfer_summary_sha256: 8b408312f21bc7da1666cbc1544e080476da39c2e2b1af33d77d331a4f67d8c2
+    selector_transfer_sha256: 349ffe70ee535113c5f119da3e8d154be59bce3c1ea93b05da4dab7e041c35d2
+    authority_gate_name: R121_GATE.json
+    authority_gate_sha256: 2bf7556a676afc82f40cffc135f7fe4debd0d383122e1bae0a76f99509fe4784
+    scene: scene-0255
+    actor_count: 4
+    direction: mixed_x_minus_z_plus
+    magnitude_m: 0.5
+runtime:
+  condition_order:
+    - scene0230_actor12_xminus0p5
+    - scene0048_actor8_xminus0p5
+    - scene0255_actor34_xminus0p5
+    - scene0255_actor34_zplus0p5
+    - scene0255_actor34_zplus0p25
+    - scene0255_actor34_zplus0p125
+    - scene0255_actor24_xminus0p5
+    - scene0255_two_actor_xminus0p5
+    - scene0255_three_actor_xminus0p5
+    - scene0255_four_actor_xminus0p5
+    - scene0255_four_actor_mixed_zplus0p5
+  expected_condition_count: 11
+  expected_frame_count_per_condition: 196
+  expected_frozen_threshold_pixels: 45
+  minimum_changed_label_pixels: 1
+thresholds:
+  minimum_scene_count: 3
+  minimum_actor_count_levels: 4
+  minimum_direction_count: 3
+  minimum_magnitude_count: 3
+  minimum_positive_frames: 1000
+  minimum_negative_frames: 1000
+  minimum_positive_side_margin_pixels: 40
+resources:
+  execution: cpu_only_immutable_vector_aggregation
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 20000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - empirical_binary_equivalence_on_eleven_content_addressed_formal_conditions_only
+  - covers_three_scenes_actor_counts_one_to_four_x_and_z_directions_and0p125_to0p5m_magnitudes
+  - threshold45_is_frozen_from_r90_and_uses_zero_condition_calibration
+  - surrogate_target_is_any_changed_frozen_deeplab_label_pixel_not_semantic_correctness
+  - accepted_certificate_can_avoid_deeplab_for_binary_impact_on_bound_conditions_only
+  - prospective_unseen_scene_actor_edit_and_model_generalization_abstain
+  - label_identity_spatial_locality_physics_planning_safety_and_confirmation_abstain
+  - no_training_gpu_or_confirmation_read
