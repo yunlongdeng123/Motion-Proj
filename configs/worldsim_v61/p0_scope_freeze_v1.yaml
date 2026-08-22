@@ -1,0 +1,98 @@
+schema_version: worldsim_v61.p0_scope_freeze.v1
+task_id: WS-V61-P0-SCOPE-FREEZE-01
+hypothesis_id: WS-V61-H-P0-001
+seed: 20260822
+sources:
+  plan:
+    uri: repo://docs/WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md
+    sha256: 8ac5880133b3c1c595fc0a445325864f782bf2d9ea2016d61a0b18a3c8e038be
+  r10_manifest:
+    uri: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1/MANIFEST.json
+    sha256: 65792d153e7612f8abc16dac5cecd789860bd440fc6847d1449722a4b98b7060
+  r10_metrics:
+    uri: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1/METRICS.json
+    sha256: 25fe92632198aa26d668f3abe8c24bbb3695de53eac5f1533b8863baec889e89
+  r10_gate:
+    uri: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1/R10_GATE.json
+    sha256: ecc70532baac9b05b4ff428cbeae085d20f796b214d0d53197bb7e295fd20364
+  r10_decisions:
+    uri: runs://worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1/FACTORIZED_DECISIONS.jsonl
+    sha256: 7393421f4a27c301366423dab02c4fc3a704e62a90faf3e2d6be06fbb96e5f66
+  r9_manifest:
+    uri: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1/MANIFEST.json
+    sha256: 212c12ccbc83a7dd987c4dcc0e36cbaa61f1268fa3f3473dfd9dbd92fba7ffde
+  r9_cases:
+    uri: runs://worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1/CASES.jsonl
+    sha256: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+north_star: occupancy_authoritative_gaussian_rendered_task_verifiable_4d_world_compiler
+minimum_experiment_question: can_occupancy_controlled_3d_proposals_reach_at_least_5_of_28_with_zero_false_safe
+cohort:
+  partition: development
+  confirmation_locked: true
+  scenes: [scene-0242, scene-0048]
+  frontends: [streetgs, ad_gs]
+  frame_indices: [52, 57]
+  expected_case_count: 28
+expected_scene_mapping:
+  scene-0048: 45
+  scene-0242: 191
+raw_evidence:
+  scene-0048:
+    scene_index: 45
+    processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+    sweep_offsets_by_target:
+      52: {method: [-4, -2, 0], eval: [-3, -1, 1]}
+      57: {method: [-5, -3, -1], eval: [-4, -2, 0]}
+  scene-0242:
+    scene_index: 191
+    processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+    sweep_offsets_by_target:
+      52: {method: [-4, -2, 0], eval: [-3, -1, 1]}
+      57: {method: [-5, -3, -1], eval: [-4, -2, 0]}
+truth_tiers:
+  O_method: method_visible_even_offset_raw_lidar_sweeps_plus_native_boxes
+  O_eval: held_out_odd_offset_raw_lidar_sweeps_plus_native_boxes
+  O_predicted: not_started
+  O_asset: not_started
+  O_runtime: not_started
+r10_baseline:
+  case_count: 28
+  accept_count: 3
+  abstain_count: 7
+  reject_count: 18
+  accepted_mask_pixels: 107807
+  accepted_case_ids:
+    - scene-0242__ad_gs__f052__missing_route_support
+    - scene-0242__ad_gs__f057__missing_route_support
+    - scene-0242__streetgs__f057__actor_removal_hole
+failure_ledger_refs: [V6-F25, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]
+stage_order:
+  - P0_scope_freeze
+  - P1_SceneIR_O_truth_tiers
+  - P2_ME0_exact_occupancy_contract
+  - P3_ME1_oracle_occupancy_upper_bound
+  - P4_Hunyuan3D_Omni_3090_smoke
+  - P5_ME2_controlled_actor_generation
+  - P6_learned_occupancy_smoke
+  - P7_ME3_predicted_occupancy
+  - P8_ME4_multi_actor_false_safe_stress
+  - P9_LogSim_WorldSim
+  - P10_NWM_collision_critic
+  - P11_optional_RL
+stop_rules:
+  oracle_below_5_of_28: stop_model_integration_and_repair_compiler_or_evaluator
+  hunyuan_voxel_below_2_of_6: stop_prompt_seed_texture_tuning
+  predicted_occupancy_false_safe_above_zero: retain_unknown_and_abstain_without_threshold_relaxation
+  rl_gain_from_full_braking: reject_rl_route
+forbidden_shortcuts:
+  - reuse_legacy_occgs_as_formal_method
+  - gaussian_opacity_as_occupancy_probability
+  - generated_or_predicted_occupancy_as_ground_truth
+  - method_and_evaluator_share_same_occupancy_tensor
+  - lower_threshold_after_rejection
+  - tune_prompt_seed_or_texture_after_geometry_failure
+  - confirmation_read_or_hash_loop_before_development_gate
+resources:
+  gpu: none
+  maximum_wall_seconds: 120
+  minimum_disk_free_gib: 80

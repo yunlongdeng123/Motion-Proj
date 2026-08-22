@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.1 P0 范围冻结已预注册（2026-08-22）
+
+状态：`p0_pre_registered / formal_run_pending`
+
+当前 active hypothesis=`WS-V61-H-P0-001`，task=`WS-V61-P0-SCOPE-FREEZE-01`。V6 selector 研究族继续冻结，
+V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
+2D inpainting 或 per-case generator 混选。
+
+P0 精确绑定：
+
+- V6.1 plan SHA-256=`8ac58801...38be`；
+- R10 28-case baseline=`3 ACCEPT / 7 ABSTAIN / 18 REJECT`、false-safe=`0`、accepted mask pixels=`107807`；
+- scene mapping=`scene-0048 -> processed 045`、`scene-0242 -> processed 191`；
+- `O_method` 与 `O_eval` 使用不重叠的 raw LiDAR sweep 路径，confirmation 保持锁定；
+- failure refs=`V6-F25/V6-F26/V6-F65/V6-F71/V6-F78/V6-F79`。
+
+下一步：从干净提交运行 P0；通过后立即启动 `WS-V61-ME0-OCCIR-01`，实现 `T_dst_src`、oriented volume、
+actor identity/lifecycle、FREE/OCCUPIED/UNKNOWN 与 method/eval evidence disjointness。ME-1 oracle 若不能达到
+`5/28`，则停止 Hunyuan3D/learned Occupancy 接入并修 compiler/evaluator。
+
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 
 状态：`selector_research_family_frozen_closeout_complete`
