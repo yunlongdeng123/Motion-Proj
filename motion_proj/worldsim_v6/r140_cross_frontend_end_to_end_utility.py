@@ -238,8 +238,8 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "schema_version": "worldsim_v6.r140_resource_audit.v1",
             "wall_seconds": time.monotonic() - started,
             "gpu_used": False,
-            "training_started": false,
-            "confirmation_content_read": false,
+            "training_started": False,
+            "confirmation_content_read": False,
         },
     )
     tracked = [
