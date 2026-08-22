@@ -3205,5 +3205,28 @@ F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`c
 已 `done`：63 inputs、23 decisions、12 deliverables、26 manifest files 与 P3 package 全 exact；A0→A4 主表、
 Pareto、负结果/适用边界、复现 manifest 和最小离线可视化索引均已生成。V3.1 当前为 `none_plan_complete`。
 P4、A3 formal/R2–R4、D3/D4 与新训练/推理仍未授权，除非未来以独立任务重新预注册。
+
+## 13. WorldSim V6 selector 研究族最终注册表
+
+2026-08-22 在 `WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01` 后完成收口。R141 未执行；selector 研究族冻结，不再继续 threshold 13/45、新 actor、新方向或新 selector 机制。
+
+| Task | 状态 | Canonical evidence |
+| --- | --- | --- |
+| `WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01` | `rejected` | threshold 13 在 AD-GS frame 13 出现 1 FN；V6-F94。 |
+| `WS-V6-R136-ADGS-HELDOUT-POLICY-CONFIRMATION-01` | `rejected` | threshold 1 在唯一 heldout confirmation 出现 1 FP；V6-F95。 |
+| `WS-V6-R137-EXACT-INPUT-REUSE-CROSS-FRONTEND-01` | `done` | 157 帧、0 false reuse、调用减少 16.56%、628 hashes exact。 |
+| `WS-V6-R138-ADGS-ANTITHETIC-EXACT-INPUT-CONFIRMATION-01` | `rejected` | CLI infrastructure failure consumed；无方法结论；V6-F96。 |
+| `WS-V6-R139-ADGS-ORTHOGONAL-EXACT-INPUT-CONFIRMATION-01` | `done` | 39 帧 exact-once、0 false reuse、调用减少 17.95%、156 hashes exact。 |
+| `WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01` H001/H002 | `rejected` | 小写 Python boolean 导致 formal closeout 失败；V6-F97/V6-F98。 |
+| `WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01` H003 | `done` | 只做 `false → False` recovery；macro end-to-end reduction 8.78024%、worst 1.66365%、0 reconstruction errors。 |
+| `WS-V6-SELECTOR-RESEARCH-FAMILY-CLOSEOUT-01` | `done` | Selector family frozen；active hypothesis none；R141 not executed。 |
+
+R140 H003 canonical run：
+
+```text
+run://worldsim_v6/WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01/20260822T063937Z__end-to-end-utility-s20260821-r1
+```
+
+Scientific certificate SHA256=`913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`；gate SHA256=`ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`。Failure ledger delta 是 V6-F97/V6-F98 的 recovery closeout 注记；没有新增 failure ID。完整证据入口为 `docs/autoresearch/worldsim_v6/SELECTOR_RESEARCH_FAMILY_CLOSEOUT.md`。
 V3.1 计划和本文件的 R0 收口快照见
 [`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；归档内容不构成新的执行入口。

@@ -3820,3 +3820,9 @@ Do not hand-create missing success artifacts or promote the partial gate. H-R140
 H-R140-002 failed run `20260822T063601Z__end-to-end-utility-s20260821-r1` reproduced the same certificate and gate as H001, then failed on the immediately following `training_started: false` field. The first recovery changed only `gpu_used`, leaving two lowercase JSON booleans in Python source. Again, no GPU, training, confirmation read, or source mutation occurred, and the partial gate is not canonical.
 
 Do not promote either partial run or continue one-line-at-a-time repair. H-R140-003 is preregistered after an exhaustive `true|false|null` token search. It changes the exactly two remaining resource-audit values (`training_started`, `confirmation_content_read`) to Python `False` and updates the hypothesis binding; all scientific inputs, formulas, thresholds, denominators, budgets, and claim boundaries remain fixed.
+
+#### V6-F97/V6-F98 recovery 收口
+
+H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。
+
+该 recovery 不删除或重分类 V6-F97/V6-F98：两个失败目录继续保持不可变，只有 H-R140-003 是 canonical。完整 account 报告 StreetGS、AD-GS development 与 AD-GS exact-once confirmation 的端到端 reduction 分别为 13.5337%、11.1434% 与 1.66365%（macro 8.78024%、worst 1.66365%），reconstruction error 为 0。Selector 研究族在此次 recovery 后冻结；R141 未执行，本收口不授权继续 threshold、actor 或方向实验。
