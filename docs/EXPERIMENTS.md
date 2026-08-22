@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.1 ME-2 H001 infrastructure failure / H002 RECOVERY PRE-REGISTERED（2026-08-22）
+
+- H001 failed run=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T120008Z__hy3d-actor-s1234-r1`。
+  四个冻结输入已构造，但 A0 worker 在 model load/GPU inference 前因缺少官方 requirements 固定的
+  `pymeshlab==2022.2.post3` 导入失败；generated assets=`0`、method decisions=`0`，failure=`V61-F07`，
+  不构成 Hunyuan 方法 rejection。
+- H002 只安装并绑定该 exact dependency；`Hunyuan3DDiTFlowMatchingPipeline` 离线 import smoke 已通过。
+  四臂、models、4 units/6 cases、seeds、batch2、50 steps、octree256、compiler、gates、资源与 stop rule 全部不变。
+
 ## WorldSim V6.1 ME-2 Hunyuan actor 四臂 PRE-REGISTERED（2026-08-22）
 
 - task=`WS-V61-ME2-HY3D-OCC-ACTOR-01`，hypothesis=`WS-V61-H-ME2-001`，状态=`formal_ready`。

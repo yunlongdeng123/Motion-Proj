@@ -34,6 +34,12 @@ scene-0242 只过滤 actor4 truck 与 actor15 trailer 的精确铰接 contact：
 `0.09814m`、最大相对 yaw 步长 `0.07619°`；不放宽全局碰撞阈值。失败即停止 Hunyuan 路线，不做 prompt、
 texture、seed、steps、resolution 或 verifier threshold 调参。
 
+H-ME2-001 已创建 failed run `20260822T120008Z__hy3d-actor-s1234-r1`：所有 source gate 和4个输入构造完成，
+但 A0 worker 在载模/GPU推理前导入官方 Hunyuan3D-2.1 package 时缺少其 requirements 固定的
+`pymeshlab==2022.2.post3`（`V61-F07`）。没有生成 asset、method decision 或科学结论。H-ME2-002 只在隔离
+环境补齐该官方依赖并增加 exact version gate；一次离线 base pipeline import smoke 已通过。全部科学合同不变，
+从新干净提交重试。
+
 P0 精确绑定：
 
 - V6.1 plan SHA-256=`8ac58801...38be`；

@@ -1,6 +1,6 @@
 schema_version: worldsim_v61.me2_hy3d_actor.v1
 task_id: WS-V61-ME2-HY3D-OCC-ACTOR-01
-hypothesis_id: WS-V61-H-ME2-001
+hypothesis_id: WS-V61-H-ME2-002
 seed: 1234
 sources:
   p4_run: runs://worldsim_v61/WS-V61-P4-HY3D-OMNI-3090-SMOKE-01/20260822T112707Z__voxel-smoke-s1234-r1
@@ -54,6 +54,7 @@ sources:
   dino_revision: 47b73eefe95e8d44ec3623f8890bd894b6ea2d6c
 environment:
   python: /root/autodl-tmp/envs/worldsim-v61-hy3d-omni/bin/python
+  pymeshlab: 2022.2.post3
   hf_home: /root/autodl-tmp/models/hf-cache-worldsim-v61
   dino_cache_ref_path: hub/models--facebook--dinov2-large/refs/main
 raw_evidence:
@@ -182,4 +183,4 @@ claim_boundary:
   - exact_evidence_based_truck_trailer_relation_only
   - no_texture_prompt_seed_step_or_threshold_sweep
   - no_training_confirmation_closed_loop_or_real_world_safety_claim
-failure_ledger_refs: [V61-F03, V61-F04, V61-F05, V61-F06, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]
+failure_ledger_refs: [V61-F03, V61-F04, V61-F05, V61-F06, V61-F07, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]

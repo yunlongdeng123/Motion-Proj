@@ -61,6 +61,7 @@ def test_me2_preregistration_has_no_sweep_or_placeholder() -> None:
     raw = CONFIG_PATH.read_text(encoding="utf-8")
     assert "TO_FILL" not in raw
     config = yaml.safe_load(raw)
+    assert config["hypothesis_id"] == "WS-V61-H-ME2-002"
     assert config["arms"] == ["A0-image", "A1-bbox", "A2-point", "A3-voxel"]
     assert len(config["units"]) == 4
     assert len(config["case_to_unit"]) == 6
@@ -76,6 +77,7 @@ def test_me2_preregistration_has_no_sweep_or_placeholder() -> None:
     assert config["generation"]["omni_controls"]["num_inference_steps"] == 50
     assert config["generation"]["A0-image"]["octree_resolution"] == 256
     assert config["generation"]["omni_controls"]["octree_resolution"] == 256
+    assert config["environment"]["pymeshlab"] == "2022.2.post3"
     assert "no_texture_prompt_seed_step_or_threshold_sweep" in config["claim_boundary"]
 
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import os
 import platform
@@ -178,6 +179,8 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     if config.get("task_id") != TASK_ID:
         raise ME2ExperimentError("ME-2 task_id 漂移")
+    if importlib.metadata.version("pymeshlab") != str(config["environment"]["pymeshlab"]):
+        raise ME2ExperimentError("Hunyuan3D-2.1 pymeshlab dependency 漂移")
 
     p4_root = resolve_runs_uri(config["sources"]["p4_run"])
     me0_root = resolve_runs_uri(config["sources"]["me0_run"])

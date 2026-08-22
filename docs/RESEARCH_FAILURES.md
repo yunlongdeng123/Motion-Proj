@@ -3892,6 +3892,19 @@ revision token 与 40 字符 snapshot 目录不相等。该 run 仍未生成 mes
 40 字符内容；先单独执行一次 repo-id 的离线 DINO load smoke，只有它通过后才允许下一次正式 P4。模型与参数不变。
 修复后孤立 smoke 由 repo-id 离线载入 `Dinov2Model` 的 `304368640` 个参数，故解析卡点已关闭。
 
+### V61-F07：共享 shape 环境必须显式包含 image-only backend 的官方导入依赖
+
+H-ME2-001 failed run `20260822T120008Z__hy3d-actor-s1234-r1` 已通过全部冻结 source gate 并构造4个 actor
+inputs，随后 A0 worker 导入官方 Hunyuan3D-2.1 package 时失败。该 package 的 `__init__.py` 无条件导入
+`postprocessors.py`，后者依赖官方 `requirements.txt` 精确固定的 `pymeshlab==2022.2.post3`；既有 Omni
+shape-inference 环境没有这个 image-only backend 依赖。失败发生在模型载入、GPU inference、asset 生成和 method
+decision 之前；canonical run=`null`，不是 A0 或 A3 能力结论。
+
+不得跳过 A0、patch 官方 `__init__.py`、安装无关 texture/UI 全依赖、改变四臂或把本次追认为方法 rejected。
+H-ME2-002 只安装官方固定的 `pymeshlab==2022.2.post3`，在配置/runner 增加 exact version gate，并执行一次
+离线 base pipeline import smoke；该 smoke 已成功导入 `Hunyuan3DDiTFlowMatchingPipeline`。模型、权重、
+4 units/6 cases、seed、batch、steps、octree、compiler、truth separation、thresholds、资源和 stop rule 全部不变。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。
