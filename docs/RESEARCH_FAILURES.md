@@ -3770,3 +3770,9 @@ H-R111-001 canonical run `20260822T022113Z__scene0255-two-actor-factorial-s20260
 H-R116-001 首次正式启动在创建 run directory、读取冻结 artifact 或启动 GPU worker 前，以 `ModuleNotFoundError: No module named 'motion_proj.worldsim_v6.r116_scene0255_fourth_actor_edit_compiler'` 退出。入口脚本正确从项目包 `motion_proj.worldsim_v6` 导入主体，但实现文件被错误提交到 `scripts/worldsim_v6`；因此本次没有 run、gate、sensor、proposal、GPU 结果或方法结论，H-R116-001 按实现合同记为 infrastructure rejection。
 
 不得通过临时修改 `PYTHONPATH`、从未承诺的工作树文件导入、忽略失败启动或把它追认为 actor1 方法结果。H-R117-001 仅修复模块 ownership：主体放入 `motion_proj/worldsim_v6`，runner 仍位于 `scripts/worldsim_v6` 并从项目包导入；actor1、frame195、4,489 effect pixels、838 Gaussians、196-frame lifecycle、80 translations、所有 source hashes、阈值、资源上限和 claim boundary 保持不变。必须在新 commit/push 后从干净工作树重新正式运行。
+
+### V6-F90：RGB-difference 邻域不能假定覆盖冻结感知的全局标签响应
+
+H-R122-001 canonical run `20260822T034305Z__spatial-impact-locality-s20260821-r1` 精确绑定 R118/R121 两个四 actor 饱和方向的392帧 sensor 与 frozen-DeepLab arrays，所有 source hashes、逐文件 hashes、196/196 正帧和资源门均通过。但预注册把实际 `450x800` 图像误写为 `600x1200`，因此 shape gate 正式失败；更关键的是方法门也独立失败：RGB-diff mask 膨胀64px 后聚合标签召回仅 `0.604784`，最差帧仅 `0.027397`，不存在预注册网格内逐帧100%覆盖半径。R122 按合同正式 `rejected`，不得因 shape 书写错误而追认其空间局部性假设。
+
+不得只修正 shape 后删除 exact per-frame coverage、把60.48%聚合召回解释为稀疏验证成功、依赖平均 ROI 掩盖最差帧，或宣称 crop inference 等价。非 canonical 恢复诊断显示392/392帧所需半径均大于128px、391/392帧大于256px，中位所需半径约412px、最大约684px；固定256px平均已覆盖73.56%画面却仍只有92.90%标签召回。H-R123-001 必须用正确450x800分母和扩展半径网格正式复算这些非局部性边界，接受的结论应是拒绝 RGB-diff 膨胀稀疏机制，而不是放宽成近似覆盖。semantic correctness、crop equivalence、speedup、physics、planning 与 safety 继续 ABSTAIN。

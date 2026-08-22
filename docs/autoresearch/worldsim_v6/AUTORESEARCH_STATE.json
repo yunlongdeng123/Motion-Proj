@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-22T03:38:44Z",
+  "updated_at_utc": "2026-08-22T03:47:03Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 167,
-  "active_task": "WS-V6-R122-SCENE0255-SPATIAL-IMPACT-LOCALITY-01",
-  "active_hypothesis": "WS-V6-H-R122-001",
-  "candidate": "rgb_diff_dilated_sparse_roi_for_saturated_four_actor_impact",
+  "iteration": 168,
+  "active_task": "WS-V6-R123-SCENE0255-SPATIAL-NONLOCALITY-CERTIFICATE-01",
+  "active_hypothesis": "WS-V6-H-R123-001",
+  "candidate": "rgb_diff_dilation_spatial_nonlocality_negative_certificate",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "2bf7556a676afc82f40cffc135f7fe4debd0d383122e1bae0a76f99509fe4784",
+  "dev_artifact_hash": "25e920290e128c8b801b4975d1f9d7f396828f3a620cc494c3553bf2a0fe732a",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "d8656d21431a030838aa5ade55c769758955b689ae5e73895498a4c0793f5523",
-  "last_reflection_id": "WS-V6-REFL-0169",
+  "failure_ledger_sha256": "b2536750f498aa33d3d31ab8ce78afb8933dfb5e48b94f411c39360ec207f914",
+  "last_reflection_id": "WS-V6-REFL-0170",
   "last_completed": {
-    "task_id": "WS-V6-R121-SCENE0255-ORTHOGONAL-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01",
-    "run": "run://worldsim_v6/WS-V6-R121-SCENE0255-ORTHOGONAL-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T033133Z__scene0255-orthogonal-four-actor-selector-s20260821-r1",
-    "artifact_sha256": "2bf7556a676afc82f40cffc135f7fe4debd0d383122e1bae0a76f99509fe4784"
+    "task_id": "WS-V6-R122-SCENE0255-SPATIAL-IMPACT-LOCALITY-01",
+    "run": "run://worldsim_v6/WS-V6-R122-SCENE0255-SPATIAL-IMPACT-LOCALITY-01/20260822T034305Z__spatial-impact-locality-s20260821-r1",
+    "artifact_sha256": "25e920290e128c8b801b4975d1f9d7f396828f3a620cc494c3553bf2a0fe732a"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -181,7 +181,8 @@
     "r119_scene0255_composition_saturation_certificate": "done_accepted_development_zero_fn_implies_zero_skip",
     "r120_scene0255_orthogonal_fourth_actor_edit_compiler": "done_accepted_development_actor1_z_plus0p5",
     "r121_scene0255_orthogonal_four_actor_compositional_selector": "done_accepted_development_direction_robust_196_positive_zero_skip",
-    "r122_scene0255_spatial_impact_locality": "active_pre_registered",
+    "r122_scene0255_spatial_impact_locality": "done_rejected_v6_f90_shape_and_global_receptive_field",
+    "r123_scene0255_spatial_nonlocality_certificate": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -190,10 +191,10 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "bind_r118_minus_x_and_r121_z_plus0p5_sensor_and_label_arrays",
-    "construct_rgb_difference_masks_for392_saturated_frames",
-    "measure_label_change_recall_for_dilation_radii0_1_2_4_8_16_32_64",
-    "select_smallest_radius_with_exact_per_frame_label_coverage",
-    "require_mean_roi_fraction_at_most0p5_and_p95_at_most0p75"
+    "correct_image_denominator_to450x800_without_reinterpreting_r122",
+    "measure_exact_required_rgb_diff_dilation_radius_for_all392_frames",
+    "require_all_frames_above128_pixels_and_at_least391_above256_pixels",
+    "certify_radius256_covers_over70_percent_area_but_still_below95_percent_label_recall",
+    "reject_rgb_diff_dilation_as_sparse_spatial_verification_mechanism"
   ]
 }
