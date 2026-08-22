@@ -1,9 +1,9 @@
 {
   "schema_version": "worldsim_v61.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-22T14:52:22Z",
-  "status": "p7r_irwm_capability_passed_me3r_irwm_pre_registered",
-  "active_hypothesis_id": "WS-V61-H-ME3-IRWM-001",
-  "active_task_id": "WS-V61-ME3R-IRWM-PREDICTED-OCC-01",
+  "updated_at_utc": "2026-08-22T14:59:35Z",
+  "status": "v61_minimum_experiment_closed_negative",
+  "active_hypothesis_id": null,
+  "active_task_id": null,
   "north_star": "occupancy_authoritative_gaussian_rendered_task_verifiable_4d_world_compiler",
   "development_denominator": 28,
   "r10_accept_count": 3,
@@ -32,14 +32,16 @@
   "me2_primary_accept_count": 0,
   "me2_primary_false_safe_count": 0,
   "me2_outcome": "rejected_voxel_control_actor_upper_bound",
-  "last_failure_id": "V61-F12",
-  "last_failure_status": "resolved_by_p7r_irwm_capability_contract_recovery",
+  "last_failure_id": "V61-F13",
+  "last_failure_status": "scientific_rejection_irwm_predicted_occupancy_false_safe_10_of_10_accepts",
   "known_representation_limitations": [
     "V61-F03 canonical ME1 O3 scene0048 actor0 identity raster is incomplete; fixed for ME2/ME4 without rerunning O2"
   ],
   "stopped_routes": [
     "Hunyuan3D actor proposal after all fixed arms produced observed FREE-space conflicts",
-    "GaussianWorld argmax occupancy as safety authority after 10/10 accepted cases were false-safe"
+    "GaussianWorld argmax occupancy as safety authority after 10/10 accepted cases were false-safe",
+    "IR-WM current occupancy as safety authority after the only recovery also produced 10/10 false-safe accepts",
+    "V6.1 learned occupancy route closed; no backend, threshold, grid, window or verifier recovery remains authorized"
   ],
   "p6_backend": "GaussianWorld pretrained streaming",
   "p6_official_commit": "b43629eaecffd5a7cbaac1a55517766e6263e4fc",
@@ -112,6 +114,22 @@
   "me3r_is_only_scientific_recovery": true,
   "next_on_me3r_pass": "WS-V61-ME4-MULTIACTOR-RUNTIME-01",
   "next_on_me3r_fail": "close_v61_minimum_experiment_negative_no_more_learned_occupancy_recovery",
+  "me3r_canonical_run": "run://worldsim_v61/WS-V61-ME3R-IRWM-PREDICTED-OCC-01/20260822T145543Z__irwm-predicted-occ-s1-r1",
+  "me3r_source_commit": "6de27f5704914711e38090c7416d7145f2a610be",
+  "me3r_gate_sha256": "e990ee689ddf7cf2f1ed29a21412cfb433330662e013df67b84fa8a28062920f",
+  "me3r_arm_summaries_sha256": "0768530992748f3409b801433a18f690a5970ac6da9f9fd37a1b140d246278d1",
+  "me3r_summary_sha256": "abf0c711fc75971c96c83b0db226be53fbd9d9c6d064dca42be1fbb2bd0718cf",
+  "me3r_manifest_sha256": "1134b0db6e33dc0436863b984acc37b0e64509dac7f88b81d32aaa84feb129d6",
+  "me3r_terminal_sha256": "67e21afba39294c880ec93fce3ca93b3bab84fb2722a917851dbb109fc9c4ca6",
+  "me3r_primary_accept_count": 10,
+  "me3r_primary_false_safe_count": 10,
+  "me3r_primary_oracle_yield_fraction": 1.0,
+  "me3r_wall_seconds": 124.29696408100426,
+  "me3r_peak_gpu_memory_gib_upper_bound": 8.251458168029785,
+  "me3r_outcome": "rejected_irwm_predicted_occupancy_development",
+  "v61_closeout_decision": "minimum_experiment_negative_stop_before_me4",
+  "me4_status": "not_executed_not_authorized_after_me3r_failure",
   "next_on_p7_pass": "pre_register_single_ME3_IRWM_recovery_without_threshold_selection",
-  "next_on_p7_fail": "stop_learned_occupancy_route_and_close_v61_minimum_experiment_negative"
+  "next_on_p7_fail": "stop_learned_occupancy_route_and_close_v61_minimum_experiment_negative",
+  "next": "synthesize_arxiv_technical_report_from_frozen_artifacts_only"
 }

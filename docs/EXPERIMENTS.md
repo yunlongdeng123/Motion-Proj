@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.1 ME-3R IR-WM REJECTED / ROUTE CLOSED（2026-08-22）
+
+- canonical=`run://worldsim_v61/WS-V61-ME3R-IRWM-PREDICTED-OCC-01/20260822T145543Z__irwm-predicted-occ-s1-r1`，
+  source=`6de27f5704914711e38090c7416d7145f2a610be`，hypothesis=`WS-V61-H-ME3-IRWM-001`。
+- 两个 scene workers 真并行；4 target outputs、28 decisions、hidden O_eval 全部完成。primary=`10/28`、
+  false-safe=`10`、mask yield=`0.3983001361`、oracle fraction=`1.0`；唯一失败 gate=`predicted_zero_false_safe`。
+- hidden FREE conflict：route-support=`0.344..0.571`，actor/disocclusion=`0.106..0.173`；所有 accepted case
+  均超过固定0.05。不存在靠 coverage 或 depth 单项小修即可恢复的共同安全余量。
+- wall=`124.30s`、worker peak sum upper bound=`8.25GiB`、raycast peak=`0.52GiB`；无训练、confirmation、
+  calibration 或 threshold selection。
+- gate/arms/metrics/summary/resource/manifest/terminal=`e990ee68...920f / 07685309...78d1 / 37f75cb6...1ac4 /
+  abf0c711...18cf / 24b9fb4c...8900 / 1134b0db...29d6 / 67e21afb...ca6`；failure=`V61-F13`。
+- 唯一 ME-3 recovery 已消费，decision=`close_v61_minimum_experiment_negative_no_more_learned_occupancy_recovery`。
+  ME-4 未执行，不记 accepted/rejected；后续只进行技术报告合成。
+
 ## WorldSim V6.1 P7R PASS / ME-3R IR-WM ONLY RECOVERY PRE-REGISTERED（2026-08-22）
 
 - P7R canonical=`run://worldsim_v61/WS-V61-P7R-IRWM-CONTRACT-RECOVERY-01/20260822T144446Z__irwm-contract-recovery-s1-r1`，

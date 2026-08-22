@@ -3979,3 +3979,17 @@ Detectron2 使用官方 `0.6+cu111` wheel，而预注册只写 `0.6`；这不是
 H-P7-IRWM-002 使用独立 P7R task，精确绑定 H001 gate/report/output/manifest/terminal 和官方删除源码，只允许
 Detectron2 build suffix 与上述两项 source-proven unused missing keys；其余 H001 capability、truth-free、resource
 合同全部原样要求通过。任何额外 missing/unexpected key 或 artifact 漂移都停止 learned occupancy。
+### V61-F13：不同 predicted Occupancy capability 不能替代独立 observed-FREE safety authority
+
+H-ME3-IRWM-001 canonical run `20260822T145543Z__irwm-predicted-occ-s1-r1` 完成两个并行 scene workers、
+4 个 target occupancy、28 个 method decisions 和隐藏 O_eval 评分。IR-WM primary 与 oracle O2 都得到相同的
+`10/28 ACCEPT`、accepted mask yield=`0.3983001361`，但全部10例 false-safe。route-support 的 hidden
+FREE conflict=`0.344..0.571`，actor/disocclusion=`0.106..0.173`，均超过固定0.05；因此唯一顶层失败 gate 是
+`predicted_zero_false_safe`。正式 run 无训练、calibration、threshold selection、confirmation read 或 truth 泄漏，
+资源也在预算内，故这是科学机制 rejection，不是工程 blocked。
+
+GaussianWorld 与 IR-WM 使用不同官方时序机制、类别合同和网格，却都复现 oracle 的10例接受集合且得到10/10 false-safe。
+本证据拒绝在当前 development 协议中把 learned argmax occupancy 直接作为安全 authority；不否定两模型的 perception
+capability，也不产生现实安全声明。不得再换 backend、选 confidence threshold、改 checkpoint/grid/history window、
+放宽 verifier、用 O_eval 选阈值，或执行确定性零 yield 的 observed-FREE veto 冒充恢复。唯一 ME-3 recovery 已消费，
+ME-4 不授权；V6.1 minimum experiment 以负结论收口。
