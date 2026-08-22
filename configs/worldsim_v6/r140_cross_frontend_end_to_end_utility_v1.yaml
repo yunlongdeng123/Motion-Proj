@@ -1,0 +1,41 @@
+schema_version: worldsim_v6.r140_cross_frontend_end_to_end_utility.v1
+task_id: WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01
+hypothesis_id: WS-V6-H-R140-001
+seed: 20260821
+sources:
+  r130_run: runs://worldsim_v6/WS-V6-R130-ANTITHETIC-THRESHOLD13-HOLDOUT-01/20260822T044528Z__antithetic-threshold13-holdout-s20260821-r1
+  r130_resource_sha256: 9e55db2a57646c82c717416d8781ce9acdd03c6b88d4e7103ccd5d343db5b570
+  r131_run: runs://worldsim_v6/WS-V6-R131-SCENE0048-ORTHOGONAL-THRESHOLD13-HOLDOUT-01/20260822T050048Z__scene0048-orthogonal-threshold13-s20260821-r1
+  r131_resource_sha256: f78f2a28c89c9a0159de6445ba57eaa30543728ac8aaf39249066190f7692df5
+  r133_run: runs://worldsim_v6/WS-V6-R133-SELECTIVE-PERCEPTION-EXECUTION-01/20260822T052142Z__selective-perception-execution-s20260821-r1
+  r133_manifest_sha256: ff524f4e4b98f0240f69702a781d3aca8a5e73fb3b0e19669d4a8369202919f4
+  r133_gate_sha256: 5fb469fc2860bdffd9cecf60efd9d250413e0dff9825df30b9a523bacd57a0df
+  r133_result_sha256: ba1f9ee9d74e0ade161b35014523cab28aba6e358e4803eb9375dd997dc495b5
+  r133_resource_sha256: 5c2247b98c93ff26456b69bfed722805c492bccbc4471456194c4ef17647afd5
+  r134_run: runs://worldsim_v6/WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01/20260822T053744Z__adgs-cross-frontend-threshold13-s20260821-r2
+  r134_resource_sha256: 519a7cbc67a73474982cf0218b813100b1473468d6ec53ab114c43df722b4a50
+  r137_run: runs://worldsim_v6/WS-V6-R137-EXACT-INPUT-REUSE-CROSS-FRONTEND-01/20260822T060834Z__exact-input-reuse-s20260821-r1
+  r137_manifest_sha256: 4ea486f123724b5e6b63a0565bdc32057ca3c51611103629e5c8317f3916875e
+  r137_gate_sha256: 5d18ecbf9bed269d4ca9c7b830ed33a8a68a67760ea3a099f3c5dbb7cee1f464
+  r137_result_sha256: 624dea1380ac9e9377df134ba1026fc3301d490cf2e20c30fd5e4305c0d9641a
+  r137_resource_sha256: 181e7289c9ba47bf801e9b633c9903506f26bf6ff62c361449a7c3a435240a81
+  r139_run: runs://worldsim_v6/WS-V6-R139-ADGS-ORTHOGONAL-EXACT-INPUT-CONFIRMATION-01/20260822T062249Z__adgs-orthogonal-exact-input-s20260821-r1
+  r139_manifest_sha256: fa7ef91efc3e52469b415361cfdb1d92835cd3e26f37389019e03fc12e44bd8c
+  r139_gate_sha256: fb68f80e15d61440216d35514d1fd3a0564a01f9ab05bd2723ade42b3735dbb1
+  r139_confirmation_sha256: 02ff8155ea957fb73f675d403c2d537e33f04e3d164d39b500deaf78d2f4c95b
+  r139_resource_sha256: 2b7d0162fbc045dbd78413b66e4a30dbfa3fea414adc0909d4b7fe48fdf70c20
+evaluation:
+  minimum_worst_end_to_end_reduction_fraction: 0.01
+  minimum_macro_end_to_end_reduction_fraction: 0.05
+resources:
+  maximum_wall_seconds: 60
+  maximum_output_bytes: 10000000
+claim_boundary:
+  - shared_sensor_rendering_time_is_included_in_both_full_and_selective_pipeline_costs
+  - conditions_are_streetgs_cross_prospective_adgs_development_and_adgs_exact_once_confirmation
+  - timings_are_single_observed_worker_samples_not_statistically_replicated_benchmarks
+  - savings_do_not_include_sensor_rendering_optimization_or_parallel_overlap
+  - all_bound_selective_outputs_have_zero_reconstruction_errors
+  - r136_threshold_candidate_and_r138_antithetic_attempt_remain_rejected_or_failed
+  - throughput_latency_sla_semantic_correctness_physics_planning_safety_abstain
+  - no_gpu_training_confirmation_read_or_source_mutation
