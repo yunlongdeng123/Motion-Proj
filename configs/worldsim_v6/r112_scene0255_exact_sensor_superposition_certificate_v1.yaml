@@ -1,0 +1,36 @@
+schema_version: worldsim_v6.r112_scene0255_exact_sensor_superposition_certificate.v1
+task_id: WS-V6-R112-SCENE0255-EXACT-SENSOR-SUPERPOSITION-CERTIFICATE-01
+hypothesis_id: WS-V6-H-R112-001
+seed: 20260821
+sources:
+  r111_run: runs://worldsim_v6/WS-V6-R111-SCENE0255-TWO-ACTOR-FACTORIAL-INTERACTION-CERTIFICATE-01/20260822T022113Z__scene0255-two-actor-factorial-s20260821-r1
+  r111_gate_sha256: 703bea710f77558ac293aeed4faf33fee37ff56fce754913fe34802be5d86525
+  r111_summary_sha256: f8d12ddba6b8fa13166da7fb020dfd0a5c26bfc416c9da308e233dec77086124
+  r111_manifest_sha256: e84cf256afee1fda819f811175a451d83a3c9795416329caeddbb67d5776ccd4
+  r111_factorial_certificate_sha256: 03dc1dba3726d1e2fb046840e96f15a9dcf13721a6aab11d558613d727efb215
+  r111_frame_metrics_sha256: ef4636689c0155fce4a29459a98e1307c32298ec9ce78f122ad59dd02d4cd1a5
+runtime:
+  scene: scene-0255
+  expected_frame_count: 196
+thresholds:
+  minimum_pixel_union_f1: 0.995
+  maximum_pixel_symmetric_difference_fraction: 0.005
+  minimum_frame_union_f1: 1.0
+  minimum_selector_or_joint_f1: 1.0
+  minimum_actor34_marginal_frames: 5
+  minimum_actor24_marginal_frames: 20
+resources:
+  execution: cpu_only_immutable_recovery_certificate
+  maximum_wall_seconds: 60
+  maximum_output_bytes: 10000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - recovery_does_not_reinterpret_or_overwrite_r111_rejection
+  - compiled_rgb_four_cell_factorial_is_exactly_affine_for_all196_frames
+  - frozen_deeplab_joint_change_is_a_bounded_but_not_exact_union_of_single_change_masks
+  - pixel_union_f1_at_least0p995_and_symmetric_difference_fraction_at_most0p005
+  - both_actor_conditional_marginals_and_frame_level_union_are_preserved
+  - selector_or_composition_is_exact_only_for_this_scene0255_actor34_actor24_cohort
+  - exact_sensor_superposition_does_not_imply_semantic_or_physical_independence
+  - semantic_correctness_local_causality_contact_dynamics_physics_planning_safety_abstain
+  - no_training_gpu_or_confirmation_read

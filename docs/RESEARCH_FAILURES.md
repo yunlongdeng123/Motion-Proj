@@ -3758,3 +3758,9 @@ H-R98-001 canonical run `20260822T001113Z__scene0048-selector-transfer-s20260821
 H-R102-001 首次正式启动在创建 run directory、读取 sensor 或启动 GPU worker 前被冻结输入校验拒绝。配置误用了不存在的 scene0255 matched-baseline 路径 `20260812T132516Z__streetgs-scene0255-matched-formal30k-s0-r50`，并把 R101 摘要中截断/误记的 digest `dba249822f22317d926cc2953d0a433f6a95e6963d35e42750b8f7074dad6acd` 当作 authority；R101 实际已通过的冻结 checkpoint 是 `20260811T214009Z__streetgs-scene0255-matched-formal30k-s0-r48`，SHA256 为 `dba24982a3f25e162b5e293165258a588cf9bd7a49e54e05d0d052de703cb2d2`。本次没有 run、gate、sensor、perception 或方法结果。
 
 不得跳过 `_verify`、制造不存在的 checkpoint、把 launcher 失败解释成 selector rejection，或继续从人工摘要抄 authority。H-R102-002 只从已接受 R101 配置复制确切 checkpoint 路径与 SHA256，并更新 hypothesis binding；R101/R90 artifact、actor34 edit、196/784 分母、threshold45、逐帧 lifecycle 合同、资源与 claim boundary 全部不变。必须在新 commit/push 后重试。
+
+### V6-F88：零 AABB interaction 不意味着 RGB factorial interaction 必须非零
+
+H-R111-001 canonical run `20260822T022113Z__scene0255-two-actor-factorial-s20260821-r1` 精确绑定 R102 actor34-only、R110 actor24-only 与 R109 joint 的 00/10/01/11 冻结 sensor/perception arrays。三个 source 的 196/784 分母、repeat、logged cell 与 hashes 全部一致；actor34/actor24 条件边际分别覆盖 19/161 帧，joint 与 single-target union 的帧级 F1=1，像素 F1=0.999086，single-selector OR 对 joint target 的 F1=1。但预注册错误要求至少 1 个 RGB pixel 的 `rgb11-rgb10-rgb01+rgb00` 绝对残差超过 1/255；实际 196 帧的最大残差、平均残差与超阈像素数全部严格为 0，因此唯一 `sensor_factorial_interaction_detected` gate 失败，run 正式 `rejected`。
+
+不得删除该 gate、追认 R111 或把精确 superposition 描述成非线性 renderer evidence。H-R112-001 以 R111 rejection 为冻结诊断 authority，改测与观测一致的新机制：sensor 层必须逐值 exact affine superposition；下游冻结 DeepLab 允许有界的非线性 residual，但 joint/single-union 像素 F1 必须不低于 0.995、对称差比例不高于 0.005，两个 actor 条件边际与帧级/selector-OR exactness 仍须保留。semantic correctness、local causality、contact、dynamics、physics、planning 与 safety 继续 ABSTAIN。
