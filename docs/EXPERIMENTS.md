@@ -14,6 +14,8 @@
   accepted mask yield=`39.8300%`；O3=`6/28`、false-safe=`0`。
 - O2 原 R10 三例全部保留，新增3 actor与4 static/disocclusion；method decisions 在 O_eval 读取前固化，全部 gate PASS。
 - O3 actor rejection 保留 native swept OBB overlap 证据，不回改为 acceptance。wall=`3.60s`、peak GPU=`0.51GiB`。
+- `V61-F03`：canonical O3 的 scene-0048 raster 把合法 actor0 与 empty=0 混同；O2 主臂不受影响，O3 该部分
+  降格，后续 ME-2/ME-4 使用 empty=`-1` 修复且不重跑 ME-1 主实验。
 - gate/summary/metrics/manifest=`6aca5f2f...246d / 61713df4...afb9 / dbb1d0a3...ffb6 / 63ae8e56...e7d5`；
   failure_ledger_delta=`none`；next=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。
 

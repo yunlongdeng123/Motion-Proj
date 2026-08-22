@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from motion_proj.worldsim_v61.me1_oracle import (
+    _load_grid,
     fuse_two_factors,
     method_decision,
     me0_gate_passed,
@@ -26,6 +27,22 @@ def test_me0_gate_reads_nested_authority() -> None:
     assert me0_gate_passed({"checks": {"passed": True}})
     assert not me0_gate_passed({"passed": True})
     assert not me0_gate_passed({"checks": {"passed": False}})
+
+
+def test_actor_zero_is_not_confused_with_empty_sentinel(tmp_path) -> None:
+    path = tmp_path / "occ.npz"
+    np.savez_compressed(
+        path,
+        static_semantics=np.zeros((2, 2, 2), dtype=np.uint8),
+        actor_voxel_indices=np.asarray([[0, 0, 0], [1, 1, 1]], dtype=np.int32),
+        actor_instance_ids=np.asarray([0, 7], dtype=np.int32),
+        grid_origin_m=np.zeros(3, dtype=np.float64),
+        voxel_size_m=np.asarray(0.2, dtype=np.float64),
+    )
+    grid = _load_grid(path)
+    assert grid["actor_grid"][0, 0, 0] == 0
+    assert grid["actor_grid"][1, 1, 1] == 7
+    assert grid["actor_grid"][0, 1, 0] == -1
 
 
 def test_named_occupancy_gate_has_no_scalar_compensation() -> None:

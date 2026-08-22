@@ -145,7 +145,7 @@ def obb_intersects(
 def _load_grid(path: Path) -> dict[str, np.ndarray | float]:
     values = np.load(path, allow_pickle=False)
     semantics = np.asarray(values["static_semantics"], dtype=np.uint8).copy()
-    actor_grid = np.zeros(semantics.shape, dtype=np.int32)
+    actor_grid = np.full(semantics.shape, -1, dtype=np.int32)
     actor_indices = np.asarray(values["actor_voxel_indices"], dtype=np.int64)
     actor_ids = np.asarray(values["actor_instance_ids"], dtype=np.int32)
     semantics[actor_indices[:, 0], actor_indices[:, 1], actor_indices[:, 2]] = OCCUPIED
@@ -241,7 +241,7 @@ def _raycast(
         linear[start : start + directions.shape[0]] = local_linear
     depth_cpu = depth.reshape(height, width).cpu().numpy()
     linear_cpu = linear.reshape(height, width).cpu().numpy()
-    actor = np.zeros_like(linear_cpu, dtype=np.int32)
+    actor = np.full_like(linear_cpu, -1, dtype=np.int32)
     valid = linear_cpu >= 0
     actor[valid] = actor_grid.reshape(-1)[linear_cpu[valid]]
     return {"depth_m": depth_cpu, "voxel_linear": linear_cpu, "actor_instance_id": actor}
@@ -352,7 +352,7 @@ def _method_factors(
     actor_ids = sorted(
         int(value)
         for value in np.unique(np.asarray(raycast["actor_instance_id"], dtype=np.int32)[mask & valid])
-        if int(value) > 0
+        if int(value) >= 0
     )
     coverage = float(np.mean(valid[mask]))
     needs_actor = case["hole_type"] == "actor_removal_hole"

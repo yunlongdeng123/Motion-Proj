@@ -3848,6 +3848,16 @@ H-ME1-001 正式入口完成所有冻结文件 hash 校验后，把 `ME0_GATE.js
 H-ME1-002 只把读取路径修正为 `document["checks"]["passed"]` 并增加嵌套 schema 回归；28-case、五臂、source
 hashes、0.2m voxel/0.1m ray step、50% coverage、20% depth consistency、false-safe/stop rule 与资源预算全部不变。
 
+### V61-F03：合法 actor ID 0 不得与 raster 的空身份 sentinel 共用
+
+ME-2 actor control 准备审计发现，ME-0 的 scene-0048 sparse identity layer 合法包含 actor ID `0`，但 ME-1
+相机 raster 用零初始化 `actor_grid`，导致 actor0 与“该 voxel 无 actor”无法区分。ME-1 primary O2 的10个 ACCEPT
+全部来自 scene-0242，scene-0048 两个 actor case 均已由冻结 P1 REJECT，因此 O2=`10/28`、false-safe=`0`、
+mask yield 与 primary gate 不受影响；但 canonical ME-1 的 O3 scene-0048 identity/swept 诊断不能提升为完整 actor 结论。
+
+不得把 actor0 改号、删除 scene-0048、追认 O3 actor safety，或为此重跑 ME-1 主臂。后续实现把 empty sentinel 改为
+`-1` 并增加 actor0 回归；ME-2/ME-4 必须消费修复后的 identity raster，已落盘 ME-1 run 保持不可变。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。
