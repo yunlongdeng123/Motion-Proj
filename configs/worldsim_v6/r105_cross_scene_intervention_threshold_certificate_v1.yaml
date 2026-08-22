@@ -1,0 +1,84 @@
+schema_version: worldsim_v6.r105_cross_scene_intervention_threshold_certificate.v1
+task_id: WS-V6-R105-CROSS-SCENE-INTERVENTION-THRESHOLD-CERTIFICATE-01
+hypothesis_id: WS-V6-H-R105-001
+seed: 20260821
+policy_source:
+  run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  relative_path: package_a/POLICY.json
+  policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+episodes:
+  - episode_id: scene0230_x_minus
+    scene: scene-0230
+    intervention_direction: x_minus
+    vector_run: runs://worldsim_v6/WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260821T233258Z__scene0230-selector-transfer-s20260821-r1
+    vector_manifest_sha256: d1c818d02670d074fa1654d31d2e59e93155ebec9731d74acbc3e25f0b0aad2e
+    vector_gate_file: R94_GATE.json
+    vector_gate_sha256: 4532677c91200ffbe4270eac45bc21ed63c142c157e8345623b935b7109e7951
+    vector_gate_passed: true
+    selector_transfer_sha256: 26e3a7121602b0d8eb80ef59502911607335c2c16eb553e507422842c891a955
+    authority_run: runs://worldsim_v6/WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260821T233258Z__scene0230-selector-transfer-s20260821-r1
+    authority_manifest_sha256: d1c818d02670d074fa1654d31d2e59e93155ebec9731d74acbc3e25f0b0aad2e
+    authority_gate_file: R94_GATE.json
+    authority_gate_sha256: 4532677c91200ffbe4270eac45bc21ed63c142c157e8345623b935b7109e7951
+  - episode_id: scene0048_x_minus_repaired
+    scene: scene-0048
+    intervention_direction: x_minus
+    vector_run: runs://worldsim_v6/WS-V6-R98-SECOND-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T001113Z__scene0048-selector-transfer-s20260821-r1
+    vector_manifest_sha256: 853be94540bea983d69c8b7cf28881740859d35983eba866461d04f1fafc66e9
+    vector_gate_file: R98_GATE.json
+    vector_gate_sha256: bea929985c81ea7e3d9d1ac425c781174e2f38dcc128a4b0dcc454e990218fe6
+    vector_gate_passed: false
+    selector_transfer_sha256: 619fc1006899504a0c0220a9a9bb73b819d0b8c50bec6f1e7a5d8b92d8edd839
+    authority_run: runs://worldsim_v6/WS-V6-R99-SCENE0048-LIFECYCLE-GATE-REPAIR-01/20260822T002157Z__scene0048-lifecycle-gate-repair-s20260821-r1
+    authority_manifest_sha256: b3a021a4969bbea13f579424997c32472500221d2d1305c3011265e22c9883ca
+    authority_gate_file: R99_GATE.json
+    authority_gate_sha256: 67cc8f048ce4800b5a46e3d194cce8ed88108d88f4b03d669675d68eca6d6ac6
+    authority_evidence_file: LIFECYCLE_GATE_REPAIR.json
+    authority_evidence_sha256: 5249bba24ee06618bc95aa655183a5ca9ca579e151bb60f31c3e169d541a8eb7
+  - episode_id: scene0255_x_minus
+    scene: scene-0255
+    intervention_direction: x_minus
+    vector_run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+    vector_manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+    vector_gate_file: R102_GATE.json
+    vector_gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+    vector_gate_passed: true
+    selector_transfer_sha256: b426beb316d3035673289b4c34a64b68da0d83cbf06f70a6f59e253de2cfee04
+    authority_run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+    authority_manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+    authority_gate_file: R102_GATE.json
+    authority_gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+  - episode_id: scene0255_z_plus
+    scene: scene-0255
+    intervention_direction: z_plus
+    vector_run: runs://worldsim_v6/WS-V6-R104-ORTHOGONAL-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T010522Z__scene0255-orthogonal-intervention-s20260821-r1
+    vector_manifest_sha256: 6c9c6fc59c11cf57838a306a464bba54f86f1d252ee0e881a66ab2d797f93c93
+    vector_gate_file: R104_GATE.json
+    vector_gate_sha256: 4475135a7f9d5c07f000cd945f13b5eecdf1a1dea5ed2bacb5aeacd3df8715bc
+    vector_gate_passed: true
+    selector_transfer_sha256: 4e03f0ae878281044ca59770c5b7d8208bc526c3b0a17446314ff0bbcf319967
+    authority_run: runs://worldsim_v6/WS-V6-R104-ORTHOGONAL-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T010522Z__scene0255-orthogonal-intervention-s20260821-r1
+    authority_manifest_sha256: 6c9c6fc59c11cf57838a306a464bba54f86f1d252ee0e881a66ab2d797f93c93
+    authority_gate_file: R104_GATE.json
+    authority_gate_sha256: 4475135a7f9d5c07f000cd945f13b5eecdf1a1dea5ed2bacb5aeacd3df8715bc
+evaluation:
+  frozen_policy_threshold_pixels: 45
+  perception_target_minimum_changed_label_pixels: 1
+  expected_positive_count: 149
+  expected_negative_count: 635
+  minimum_perfect_integer_threshold_count: 100
+  minimum_two_sided_margin_pixels: 40
+resources:
+  compute: cpu_only_immutable_artifact_certificate
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 5000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - observed_episode_certificate_over784_frozen_frames_three_scenes_and_two_scene0255_directions
+  - certifies_the_integer_threshold_interval_that_exactly_separates_any_frozen_label_change_from_no_change
+  - scene0048_vectors_remain_from_rejected_r98_and_are_authorized_only_through_r99_repair_without_retroacceptance
+  - no_new_renderer_model_inference_training_or_target_calibration
+  - certificate_does_not_guarantee_unseen_scenes_interventions_or_semantic_correctness
+  - local_causality_contact_road_dynamics_physics_planning_safety_and_confirmation_abstain
