@@ -1,0 +1,86 @@
+schema_version: worldsim_v6.r104_orthogonal_intervention_selector_robustness.v1
+task_id: WS-V6-R104-ORTHOGONAL-INTERVENTION-SELECTOR-ROBUSTNESS-01
+hypothesis_id: WS-V6-H-R104-001
+seed: 20260821
+sources:
+  r101_run: runs://worldsim_v6/WS-V6-R101-THIRD-INDEPENDENT-SCENE-ACTOR-EDIT-COMPILER-01/20260822T003408Z__scene0255-actor34-edit-s20260821-r1
+  r101_manifest_sha256: 7b86a9dc1292e141f74e7ea53e7c31c7aa7e1ac68746905ee7466d2a01f038ab
+  r101_gate_sha256: 922c259182729e901d2d600a4f798eb11215b95347fdbfb00be4c9b42e224973
+  r101_summary_sha256: 702126029ce6faeb05b49abff7c81b8f31fd2fc5193cbfbdfac688445c8533cb
+  r101_selected_proposal_sha256: 4ed7c4a1395c41afaf05506147d115aa79e77a09736e82cc6c546b51d0e4ebc6
+  r101_edit_sensor_comparison_sha256: 0d62175d2a8dc2717ba377cc2c0212f5d507ac625075ebc36c0afb30f363dc47
+  r101_proposal_catalog_sha256: 69dd2e4991d3a4c0c94593cede35fd62fc687d16dfbbbdd9c16f4f2784b009d3
+  r101_package_manifest_sha256: 7a40af2084ae8de7be0db154b4e4b54e788f504a33e714c058ee1d8f7ad41f9d
+  r102_run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+  r102_manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+  r102_gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+  r102_summary_sha256: f74b3224070717ecbc5edbe99ea9217659ee1848bff93f99af9552a82ef84fb1
+  r102_selector_transfer_sha256: b426beb316d3035673289b4c34a64b68da0d83cbf06f70a6f59e253de2cfee04
+  r90_run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  r90_manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  r90_gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  r90_summary_sha256: 17821981b3523ca312c557da502c91d356bc35b140f2e1641283317c2a296633
+  r90_package_manifest_sha256: 10a1ca84df092d96bdeb3be1fcfd077087793575c0410ee9f81f6e20ac50c40a
+  r90_policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T214009Z__streetgs-scene0255-matched-formal30k-s0-r48/work_dirs/worldsim_v4_streetgs/scene0255_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dba24982a3f25e162b5e293165258a588cf9bd7a49e54e05d0d052de703cb2d2
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime:
+  scene: scene-0255
+  actor_id: actor_0034
+  actor_model_index: 34
+  proposal_id: scene0255_actor34_translate_x_+0.0_z_+0.5
+  translation_delta_m: [0.0, 0.0, 0.5]
+  expected_primitive_count: 5296
+  expected_active_frame_count: 31
+  frame_start: 0
+  frame_stop_exclusive: 196
+  frame_stride: 1
+  expected_frame_count: 196
+evaluation:
+  variants: [logged, edited]
+  rgb_keys:
+    logged: logged_rgb
+    edited: compiled_rgb
+  repeat_count: 2
+  perception_target_minimum_changed_label_pixels: 1
+  frozen_policy_threshold_pixels: 45
+  fixed_baseline_threshold_pixels: 256
+  minimum_positive_target_frames: 5
+  minimum_negative_target_frames: 100
+  minimum_transfer_precision: 0.90
+  minimum_transfer_recall: 0.90
+  minimum_transfer_f1: 0.90
+  minimum_skip_fraction: 0.20
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_sensor_worker_seconds: 1200
+  maximum_perception_worker_seconds: 1200
+  maximum_wall_seconds: 1800
+  maximum_sensor_output_bytes: 3000000000
+  maximum_perception_output_bytes: 1000000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - same_scene_intervention_robustness_of_scene0242_threshold45_on_scene0255_actor34
+  - orthogonal_equal_norm_z_plus0p5_edit_is_frozen_from_the_r101_accepted80_catalog
+  - full196_frame_logged_edited_compiled_native_rgbd_sensor_replay_for_the_orthogonal_edit
+  - frozen_deeplab_label_change_is_the_expensive_check_target_with_two_exact_repeats
+  - selector_must_meet_preregistered_precision_recall_f1_and_skip_fraction_without_refitting
+  - native31_frame_actor_lifecycle_is_the_runtime_baseline_and_package_validity_must_match_it_per_frame
+  - perception_change_is_not_semantic_correctness_and_correlation_is_not_local_causality
+  - contact_road_dynamics_physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
