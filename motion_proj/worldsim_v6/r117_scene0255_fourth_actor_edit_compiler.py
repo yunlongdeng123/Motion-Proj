@@ -1,4 +1,4 @@
-"""WorldSim V6 R116: compile a fourth visible actor edit in scene0255."""
+"""WorldSim V6 R117: compile a fourth visible actor edit in scene0255."""
 
 from __future__ import annotations
 
@@ -29,11 +29,11 @@ from motion_proj.worldsim_v6.sceneir import verify_sceneir, write_sceneir
 from motion_proj.worldsim_v6.sceneir_adapters import streetgs_to_sceneir
 
 
-TASK_ID = "WS-V6-R116-SCENE0255-FOURTH-ACTOR-EDIT-COMPILER-01"
+TASK_ID = "WS-V6-R117-SCENE0255-FOURTH-ACTOR-EDIT-COMPILER-01"
 
 
-class R116ExperimentError(RuntimeError):
-    """The preregistered R116 contract was violated."""
+class R117ExperimentError(RuntimeError):
+    """The preregistered R117 contract was violated."""
 
 
 def _write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -65,11 +65,11 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     started = time.monotonic()
     repo_root = repo_root.resolve()
     if _git(repo_root, "status", "--porcelain"):
-        raise R116ExperimentError("formal R116 run requires clean source")
+        raise R117ExperimentError("formal R117 run requires clean source")
     source_commit = _git(repo_root, "rev-parse", "HEAD")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     if config.get("task_id") != TASK_ID:
-        raise R116ExperimentError("R116 task_id drift")
+        raise R117ExperimentError("R117 task_id drift")
     sources = config["sources"]
     target = config["target"]
     search = config["search"]
@@ -95,9 +95,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     for path, expected in frozen_files.items():
         _verify(path, expected)
     if _git(upstream, "rev-parse", "HEAD") != sources["streetgs_upstream_commit"]:
-        raise R116ExperimentError("StreetGS upstream commit drift")
+        raise R117ExperimentError("StreetGS upstream commit drift")
     if shutil.disk_usage(run_root).free / (1024**3) < float(resources["minimum_disk_free_gib"]):
-        raise R116ExperimentError("R116 disk resource insufficient")
+        raise R117ExperimentError("R117 disk resource insufficient")
     r100_gate = json.loads((r100_run / "R100_GATE.json").read_text())
     selection = json.loads(selection_path.read_text())
     inventory = json.loads(inventory_path.read_text())
@@ -116,7 +116,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = run_root / TASK_ID / f"{now}__scene0255-actor1-edit-s{config['seed']}-r1"
     if run_dir.exists():
-        raise R116ExperimentError(f"formal run directory already exists: {run_dir}")
+        raise R117ExperimentError(f"formal run directory already exists: {run_dir}")
     run_dir.mkdir(parents=True)
     checkpoint_object = torch.load(checkpoint, map_location="cpu", weights_only=False)
     document_template, chunk_arrays = streetgs_to_sceneir(
@@ -137,7 +137,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         run_dir / "SCENEIR_EXPORT.json",
         {
-            "schema_version": "worldsim_v6.r116_sceneir_export.v1",
+            "schema_version": "worldsim_v6.r117_sceneir_export.v1",
             "scene": target["scene"],
             "checkpoint_sha256": sources["streetgs_checkpoint_sha256"],
             "sceneir_manifest_sha256": sceneir_manifest_sha,
@@ -156,7 +156,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     actor = next(row for row in document["actors"] if row["id"] == target["actor_id"])
     chunk = next(row for row in document["chunks"] if row["id"] == target["chunk_id"])
     if set(chunk["arrays"]) != REQUIRED_ARRAYS:
-        raise R116ExperimentError("actor1 Gaussian array set drift")
+        raise R117ExperimentError("actor1 Gaussian array set drift")
     transforms_by_key = {
         (row["name"], int(row["timestamp_us"])): row for row in document["transforms"]
     }
@@ -167,7 +167,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         timestamp = int(row["timestamp_us"])
         key = (row["transform_name"], timestamp)
         if key not in transforms_by_key or timestamp not in visibility:
-            raise R116ExperimentError(f"actor1 trajectory reference missing: {key}")
+            raise R117ExperimentError(f"actor1 trajectory reference missing: {key}")
         ordered_transforms.append(transforms_by_key[key])
         trajectory_metadata.append(
             {"timestamp_us": timestamp, "transform_name": row["transform_name"], "visible": visibility[timestamp]}
@@ -178,7 +178,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         source_path = base_package / reference["path"]
         manifest_row = source_manifest["files"].get(reference["path"])
         if manifest_row is None or manifest_row["sha256"] != reference["sha256"]:
-            raise R116ExperimentError(f"base manifest missing actor1 blob: {name}")
+            raise R117ExperimentError(f"base manifest missing actor1 blob: {name}")
         _verify(source_path, reference["sha256"])
         source_blobs[source_path] = reference["sha256"]
         arrays[name] = np.load(source_path, allow_pickle=False)
@@ -275,7 +275,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
     accepted_rows = [row for row in proposal_rows if row["joint_decision"] == "ACCEPT"]
     if not accepted_rows:
-        raise R116ExperimentError("no zero-new-overlap candidate in preregistered grid")
+        raise R117ExperimentError("no zero-new-overlap candidate in preregistered grid")
     selected = sorted(
         accepted_rows,
         key=lambda row: (
@@ -313,7 +313,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         "dtype": lifecycle.dtype.str,
     }
     geometry = {
-        "schema_version": "worldsim_v6.r116_trajectory_geometry.v1",
+        "schema_version": "worldsim_v6.r117_trajectory_geometry.v1",
         "asset_id": actor["id"],
         "chunk_id": chunk["id"],
         "frontend_model_index": actor_index,
@@ -336,7 +336,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         package / "ACTOR_BUNDLE.json",
         {
-            "schema_version": "worldsim_v6.r116_actor_bundle.v1",
+            "schema_version": "worldsim_v6.r117_actor_bundle.v1",
             "frontend_model_index": actor_index,
             "actor": actor,
             "chunk": chunk,
@@ -347,7 +347,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         package / "VALIDITY.json",
         {
-            "schema_version": "worldsim_v6.r116_validity.v1",
+            "schema_version": "worldsim_v6.r117_validity.v1",
             "identity_binding": "OBSERVED_MODEL_INDEX_BOUND",
             "logged_rigid_pose_application": "ACCEPT_CONFORMANCE",
             "native_lifecycle": "ACCEPT_EXACT",
@@ -364,7 +364,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         package / "PACKAGE_MANIFEST.json",
         {
-            "schema_version": "worldsim_v6.r116_package_manifest.v1",
+            "schema_version": "worldsim_v6.r117_package_manifest.v1",
             "files": {
                 name: {"bytes": (package / name).stat().st_size, "sha256": _sha256(package / name)}
                 for name in package_files
@@ -375,7 +375,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_jsonl(run_dir / "PROPOSAL_CATALOG.jsonl", proposal_rows)
     _write_json(
         run_dir / "SELECTED_PROPOSAL.json",
-        {"schema_version": "worldsim_v6.r116_selected_proposal.v1", "selection_rule": search["selection_rule"], "selected": selected},
+        {"schema_version": "worldsim_v6.r117_selected_proposal.v1", "selection_rule": search["selection_rule"], "selected": selected},
     )
 
     def run_worker(label: str, delta: list[float]) -> tuple[dict, dict, Path]:
@@ -395,7 +395,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             )
         rows = _load_rows(worker_dir / "FRAME_METRICS.jsonl")
         if len(rows) != 1:
-            raise R116ExperimentError(f"{label} sensor denominator drift")
+            raise R117ExperimentError(f"{label} sensor denominator drift")
         audit = json.loads((worker_dir / "WORKER_AUDIT.json").read_text())
         return rows[0], audit, worker_dir / rows[0]["sensor_path"]
 
@@ -408,7 +408,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     channel_axis = 0 if absolute.ndim == 3 and absolute.shape[0] == 3 else -1
     changed_pixels = int(np.sum(np.max(absolute, axis=channel_axis) > float(search["rgb_change_epsilon"])))
     comparison = {
-        "schema_version": "worldsim_v6.r116_edit_sensor_comparison.v1",
+        "schema_version": "worldsim_v6.r117_edit_sensor_comparison.v1",
         "frame_index": int(target["visibility_frame_index"]),
         "translation_delta_m": selected["translation_delta_m"],
         "changed_rgb_pixels_vs_logged": changed_pixels,
@@ -498,9 +498,9 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     }
     checks["passed"] = all(checks.values())
     _write_json(
-        run_dir / "R116_GATE.json",
+        run_dir / "R117_GATE.json",
         {
-            "schema_version": "worldsim_v6.r116_gate.v1", "checks": checks,
+            "schema_version": "worldsim_v6.r117_gate.v1", "checks": checks,
             "decision": "accept_scene0255_fourth_actor_edit_compiler"
             if checks["passed"] else "reject_or_repair_scene0255_fourth_actor_edit_compiler",
         },
@@ -508,7 +508,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         run_dir / "RESOURCE_AUDIT.json",
         {
-            "schema_version": "worldsim_v6.r116_resource_audit.v1",
+            "schema_version": "worldsim_v6.r117_resource_audit.v1",
             "peak_torch_reserved_mib": max(
                 baseline_audit["peak_torch_reserved_bytes"], edited_audit["peak_torch_reserved_bytes"]
             ) / (1024**2),
@@ -520,7 +520,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         },
     )
     summary = {
-        "schema_version": "worldsim_v6.r116_summary.v1",
+        "schema_version": "worldsim_v6.r117_summary.v1",
         "task_id": TASK_ID,
         "hypothesis_id": config["hypothesis_id"],
         "status": "done" if checks["passed"] else "rejected",
@@ -544,7 +544,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     }
     _write_json(run_dir / "SUMMARY.json", summary)
     tracked = [
-        "R116_GATE.json", "SUMMARY.json", "RESOURCE_AUDIT.json", "SCENEIR_EXPORT.json",
+        "R117_GATE.json", "SUMMARY.json", "RESOURCE_AUDIT.json", "SCENEIR_EXPORT.json",
         "PROPOSAL_CATALOG.jsonl",
         "SELECTED_PROPOSAL.json", "EDIT_SENSOR_COMPARISON.json",
         "sceneir_packages/streetgs_scene0255/MANIFEST.json",
@@ -559,7 +559,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _write_json(
         run_dir / "MANIFEST.json",
         {
-            "schema_version": "worldsim_v6.r116_manifest.v1",
+            "schema_version": "worldsim_v6.r117_manifest.v1",
             "files": {
                 name: {"bytes": (run_dir / name).stat().st_size, "sha256": _sha256(run_dir / name)}
                 for name in tracked
@@ -585,7 +585,7 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument(
         "--config", type=Path,
-        default=Path("configs/worldsim_v6/r116_scene0255_fourth_actor_edit_compiler_v1.yaml"),
+        default=Path("configs/worldsim_v6/r117_scene0255_fourth_actor_edit_compiler_v1.yaml"),
     )
     parser.add_argument("--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6"))
     args = parser.parse_args()

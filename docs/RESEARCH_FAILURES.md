@@ -3764,3 +3764,9 @@ H-R102-001 首次正式启动在创建 run directory、读取 sensor 或启动 G
 H-R111-001 canonical run `20260822T022113Z__scene0255-two-actor-factorial-s20260821-r1` 精确绑定 R102 actor34-only、R110 actor24-only 与 R109 joint 的 00/10/01/11 冻结 sensor/perception arrays。三个 source 的 196/784 分母、repeat、logged cell 与 hashes 全部一致；actor34/actor24 条件边际分别覆盖 19/161 帧，joint 与 single-target union 的帧级 F1=1，像素 F1=0.999086，single-selector OR 对 joint target 的 F1=1。但预注册错误要求至少 1 个 RGB pixel 的 `rgb11-rgb10-rgb01+rgb00` 绝对残差超过 1/255；实际 196 帧的最大残差、平均残差与超阈像素数全部严格为 0，因此唯一 `sensor_factorial_interaction_detected` gate 失败，run 正式 `rejected`。
 
 不得删除该 gate、追认 R111 或把精确 superposition 描述成非线性 renderer evidence。H-R112-001 以 R111 rejection 为冻结诊断 authority，改测与观测一致的新机制：sensor 层必须逐值 exact affine superposition；下游冻结 DeepLab 允许有界的非线性 residual，但 joint/single-union 像素 F1 必须不低于 0.995、对称差比例不高于 0.005，两个 actor 条件边际与帧级/selector-OR exactness 仍须保留。semantic correctness、local causality、contact、dynamics、physics、planning 与 safety 继续 ABSTAIN。
+
+### V6-F89：正式 runner 的模块归属必须与导入路径一致
+
+H-R116-001 首次正式启动在创建 run directory、读取冻结 artifact 或启动 GPU worker 前，以 `ModuleNotFoundError: No module named 'motion_proj.worldsim_v6.r116_scene0255_fourth_actor_edit_compiler'` 退出。入口脚本正确从项目包 `motion_proj.worldsim_v6` 导入主体，但实现文件被错误提交到 `scripts/worldsim_v6`；因此本次没有 run、gate、sensor、proposal、GPU 结果或方法结论，H-R116-001 按实现合同记为 infrastructure rejection。
+
+不得通过临时修改 `PYTHONPATH`、从未承诺的工作树文件导入、忽略失败启动或把它追认为 actor1 方法结果。H-R117-001 仅修复模块 ownership：主体放入 `motion_proj/worldsim_v6`，runner 仍位于 `scripts/worldsim_v6` 并从项目包导入；actor1、frame195、4,489 effect pixels、838 Gaussians、196-frame lifecycle、80 translations、所有 source hashes、阈值、资源上限和 claim boundary 保持不变。必须在新 commit/push 后从干净工作树重新正式运行。

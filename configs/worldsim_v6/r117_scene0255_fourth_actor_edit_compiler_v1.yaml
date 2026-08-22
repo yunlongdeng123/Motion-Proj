@@ -1,0 +1,67 @@
+schema_version: worldsim_v6.r117_scene0255_fourth_actor_edit_compiler.v1
+task_id: WS-V6-R117-SCENE0255-FOURTH-ACTOR-EDIT-COMPILER-01
+hypothesis_id: WS-V6-H-R117-001
+seed: 20260821
+sources:
+  r100_run: runs://worldsim_v6/WS-V6-R100-THIRD-INDEPENDENT-SCENE-EXHAUSTIVE-ACTOR-VISIBILITY-01/20260822T002754Z__scene0255-exhaustive-actor-visibility-s20260821-r1
+  r100_manifest_sha256: dfc788c434674c399371b94a85cdffdbe0ea860ee3d1a26e21d1cad03c8db5b4
+  r100_gate_sha256: 38afffc7621b500d214111642ba2732799eb8319916ca126fe8173ccff7a71f5
+  r100_summary_sha256: 229c2acd25e2bd5280406eea6347df6b69b5cd1c4bf2762b4323ca927dcf5fee
+  r100_selection_sha256: 097fa64f072c03303f92eac3763e220269d104a4a85d2fee47a6f3e2e2d77f7c
+  r100_inventory_sha256: aecf42ffa77d26fe5ef069667dbf7cc9e89b4e6af4f96ac6600eef74e53bcca8
+  r100_visibility_sha256: c33026c8508e374d1cc7a4cbacee9269cc23591931da806cd7933b090e04c1ad
+  r100_worker_audit_sha256: d6c910919b7a26744f4d4893d68f8b2e833b164d2c56f1d1cefb667797fedbd7
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T214009Z__streetgs-scene0255-matched-formal30k-s0-r48/work_dirs/worldsim_v4_streetgs/scene0255_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: dba24982a3f25e162b5e293165258a588cf9bd7a49e54e05d0d052de703cb2d2
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+target:
+  scene: scene-0255
+  excluded_actor_model_indices: [34, 24, 9]
+  actor_model_index: 1
+  actor_id: actor_0001
+  chunk_id: streetgs_actor_0001
+  primitive_count: 838
+  trajectory_rows: 196
+  active_frame_count: 196
+  lifecycle_sha256: 127a0dcf9c8f8f50d94fdeb28db13c17c9eccd6081bf7fc2976d80a11a0d21a6
+  visibility_frame_index: 195
+  native_effect_pixels: 4489
+  expected_base_actor_count: 32
+  expected_rigid_primitive_count: 38721
+search:
+  x_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  z_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  expected_candidate_count: 80
+  minimum_translation_norm_m: 0.5
+  selection_rule: minimum_translation_norm_then_lexicographic_x_z_among_zero_new_overlap_candidates
+  rgb_change_epsilon: 0.000001
+  minimum_changed_rgb_pixels_vs_logged: 256
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+  maximum_rigid_error_m: 0.0001
+  maximum_quaternion_norm_error: 0.00001
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 420
+  maximum_wall_seconds: 900
+  minimum_disk_free_gib: 8
+claim_boundary:
+  - fourth_highest_effect_r100_target_after_excluding_actor34_actor24_actor9_is_actor1_frame195
+  - fresh_scene0255_sceneir_export_plus_actor1_exact_bundle_and196_pose_rigid_compilation
+  - actor1_has196_frame_native_lifecycle_but_visibility_evidence_is_bound_to_frame195
+  - frozen80_candidate_world_xz_translation_search_with_full32_nonempty_actor_aabb_factor
+  - selected_edit_has_zero_new_actor_aabb_overlap_and_nontrivial_frame195_sensor_change
+  - logged_and_edited_compiled_sensors_must_each_conform_to_native_scene0255_renderer
+  - package_is_for_later_four_actor_composition_and_does_not_claim_selector_transfer
+  - contact_road_semantics_novel_dynamics_physics_planning_safety_abstain
+  - no_training_or_confirmation_read
