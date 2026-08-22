@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.1 ME-2 H003 Hunyuan actor 四臂 REJECTED（2026-08-22）
+
+- canonical=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T121848Z__hy3d-actor-s1234-r1`，
+  source=`98cec20ae808600309afd2066f7826b2d94ed0b9`，hypothesis=`WS-V61-H-ME2-003`。
+- 4 个唯一 unit、16 个生成资产、24 个 case-arm evaluation 全部完成；A0/A1/A2/A3 均=`0/6 ACCEPT`，
+  primary A3 false-safe=`0`，但 `primary_voxel_minimum_accept_count` 未通过。
+- 共同失败因子是所有四臂、所有 6 例都有 observed FREE-space conflict。A3 method conflict=`6..246`、hidden eval
+  conflict=`8..273`；其 coverage、hole coverage 与 silhouette 已非共同瓶颈，因此不授权 prompt/seed/texture/
+  steps/octree/threshold 调参，也不做 post-hoc clipping。
+- wall=`675.64s`、Omni worker=`604.11s`、peak GPU=`9.45GiB`；H002 A0 exact reuse wall=`232.82s`，
+  formal workers offline，无训练/confirmation read。
+- gate/arm-summary/summary/resource/manifest/terminal=`1eab2226...d86 / dc2222df...505 / 85e20dd9...e73 /
+  e438e93e...dde / f7fae41a...118 / 9b90d9eb...dc9`；failure ledger delta=`V61-F09`。
+- decision=`stop_hy3d_without_prompt_seed_texture_tuning`；next=`WS-V61-ME3-PREDICTED-OCC-01`。该结论只拒绝
+  Hunyuan actor proposal，不拒绝计划内独立的 learned occupancy 路线。
+
 ## WorldSim V6.1 ME-2 H002 infrastructure failure / H003 RECOVERY PRE-REGISTERED（2026-08-22）
 
 - H002 failed run=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T120519Z__hy3d-actor-s1234-r1`。

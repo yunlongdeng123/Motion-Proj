@@ -3923,3 +3923,16 @@ A1 的2-sample diffusion 与 VAE implicit query。runner 随后发现输出 mesh
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。
 
 该 recovery 不删除或重分类 V6-F97/V6-F98：两个失败目录继续保持不可变，只有 H-R140-003 是 canonical。完整 account 报告 StreetGS、AD-GS development 与 AD-GS exact-once confirmation 的端到端 reduction 分别为 13.5337%、11.1434% 与 1.66365%（macro 8.78024%、worst 1.66365%），reconstruction error 为 0。Selector 研究族在此次 recovery 后冻结；R141 未执行，本收口不授权继续 threshold、actor 或方向实验。
+
+### V61-F09：通用生成表面不能冒充场景观测一致的 Occupancy
+
+H-ME2-003 canonical run `20260822T121848Z__hy3d-actor-s1234-r1` 完成固定四臂各 6 例。A0 image、A1 bbox、
+A2 raw-LiDAR point 与 A3 O_method voxel 全部为 `0/6 ACCEPT`。主臂 A3 没有 false-safe，但每例都在 method 和
+独立 O_eval 中占据已观测 FREE cell；method conflict=`6..246`，eval conflict=`8..273`。所有四臂均有同一失败，
+而 A3 的 native coverage、hole coverage、silhouette 与 extent 多数已达到冻结下限，因此不是提示词、seed、纹理或
+单一轮廓阈值问题。
+
+该失败是科学机制 rejection：Hunyuan 输出的通用闭合 actor surface 没有把场景 FREE-space 作为硬约束，不能作为
+Occupancy-authoritative proposal。按预注册规则永久停止本版本 Hunyuan actor 路线；不得靠 prompt/seed/steps/
+octree sweep、放宽 FREE=0、事后 clipping 或 per-case 选择恢复。ME-3 学习式 occupancy 是计划中的独立机制，
+仍按 GaussianWorld→OccWorld→Drive-OccWorld→IR-WM→OccSora 优先级审计，不把本失败无依据外推到该路线。
