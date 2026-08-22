@@ -1,0 +1,57 @@
+schema_version: worldsim_v6.r103_cross_scene_selector_generalization.v1
+task_id: WS-V6-R103-CROSS-SCENE-SELECTOR-GENERALIZATION-01
+hypothesis_id: WS-V6-H-R103-001
+seed: 20260821
+policy_source:
+  run: runs://worldsim_v6/WS-V6-R90-SELECTIVE-RUNTIME-POLICY-BAKE-01/20260821T225913Z__selective-policy-bake-s20260821-r1
+  manifest_sha256: f527047e73134b545c5b322e69f11d38f0a6faf28bcb84bcecc9dd6a98a8af7e
+  gate_sha256: 7c4d34fbddd9bc8bc7e28d17712f2fe87cd66e3c19918e60d09d35f60bcf7b4a
+  relative_path: package_a/POLICY.json
+  policy_sha256: 3cb6bd831a0ebb48bd0702f251b86ee015a5bb4d186bb873d58f09852c0af9da
+targets:
+  - scene: scene-0230
+    run: runs://worldsim_v6/WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260821T233258Z__scene0230-selector-transfer-s20260821-r1
+    manifest_sha256: d1c818d02670d074fa1654d31d2e59e93155ebec9731d74acbc3e25f0b0aad2e
+    gate_file: R94_GATE.json
+    gate_sha256: 4532677c91200ffbe4270eac45bc21ed63c142c157e8345623b935b7109e7951
+    summary_sha256: 77f3dff3c4af6ee680e74c07380903c8b07daa508b435bfa87b47145c5201980
+    evidence_file: SELECTOR_TRANSFER.json
+    evidence_sha256: 26e3a7121602b0d8eb80ef59502911607335c2c16eb553e507422842c891a955
+    lifecycle_metrics_key: always_on_lifecycle_metrics
+  - scene: scene-0048
+    run: runs://worldsim_v6/WS-V6-R99-SCENE0048-LIFECYCLE-GATE-REPAIR-01/20260822T002157Z__scene0048-lifecycle-gate-repair-s20260821-r1
+    manifest_sha256: b3a021a4969bbea13f579424997c32472500221d2d1305c3011265e22c9883ca
+    gate_file: R99_GATE.json
+    gate_sha256: 67cc8f048ce4800b5a46e3d194cce8ed88108d88f4b03d669675d68eca6d6ac6
+    summary_sha256: 8766661e16db55477f014f7db1c82eb0b4cee0c523ce5e0eb05c660bd78f335d
+    evidence_file: LIFECYCLE_GATE_REPAIR.json
+    evidence_sha256: 5249bba24ee06618bc95aa655183a5ca9ca579e151bb60f31c3e169d541a8eb7
+    lifecycle_metrics_key: native_lifecycle_metrics
+  - scene: scene-0255
+    run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+    manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+    gate_file: R102_GATE.json
+    gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+    summary_sha256: f74b3224070717ecbc5edbe99ea9217659ee1848bff93f99af9552a82ef84fb1
+    evidence_file: SELECTOR_TRANSFER.json
+    evidence_sha256: b426beb316d3035673289b4c34a64b68da0d83cbf06f70a6f59e253de2cfee04
+    lifecycle_metrics_key: native_lifecycle_metrics
+evaluation:
+  frozen_policy_threshold_pixels: 45
+  expected_target_scenes: [scene-0230, scene-0048, scene-0255]
+  minimum_f1: 0.90
+  minimum_skip_fraction: 0.20
+  minimum_positive_prevalence_range: 0.20
+resources:
+  compute: cpu_only_immutable_artifact_aggregation
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 5000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - development_only_cross_scene_aggregation_of_three_previously_accepted_independent_target_authorities
+  - scene0242_threshold45_is_applied_with_zero_target_calibration_to588_total_target_frames
+  - reports_per_scene_macro_micro_and_worst_scene_selector_metrics
+  - compares_only_frozen_threshold45_fixed256_and_lifecycle_baselines_already_present_in_source_artifacts
+  - no_new_renderer_or_model_inference_and_no_training
+  - semantic_correctness_local_causality_contact_road_dynamics_physics_planning_safety_abstain
+  - confirmation_and_quality_claims_abstain
