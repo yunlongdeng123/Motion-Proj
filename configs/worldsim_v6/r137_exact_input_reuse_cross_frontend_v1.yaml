@@ -1,0 +1,48 @@
+schema_version: worldsim_v6.r137_exact_input_reuse_cross_frontend.v1
+task_id: WS-V6-R137-EXACT-INPUT-REUSE-CROSS-FRONTEND-01
+hypothesis_id: WS-V6-H-R137-001
+seed: 20260821
+sources:
+  r133_run: runs://worldsim_v6/WS-V6-R133-SELECTIVE-PERCEPTION-EXECUTION-01/20260822T052142Z__selective-perception-execution-s20260821-r1
+  r133_manifest_sha256: ff524f4e4b98f0240f69702a781d3aca8a5e73fb3b0e19669d4a8369202919f4
+  r133_gate_sha256: 5fb469fc2860bdffd9cecf60efd9d250413e0dff9825df30b9a523bacd57a0df
+  r133_summary_sha256: 8fb1b098d1e97e9006bccb0c7edc9c213efaa6c8f00c730e6d2ef78ccbcbd226
+  r133_result_sha256: ba1f9ee9d74e0ade161b35014523cab28aba6e358e4803eb9375dd997dc495b5
+  r133_resource_audit_sha256: 5c2247b98c93ff26456b69bfed722805c492bccbc4471456194c4ef17647afd5
+  r134_run: runs://worldsim_v6/WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01/20260822T053744Z__adgs-cross-frontend-threshold13-s20260821-r2
+  r134_manifest_sha256: a2624e4b5ce4a3f6849f67c807d6978c3881a5dea779fc819b0e77d13cbbf207
+  r134_gate_sha256: 0becd539d02f36ad8e9be7fabf57a58b993c2dcc06667fbf6260c0f00878a764
+  r134_summary_sha256: 5ebed26f4ad9f6b2a737fcc58a7a007a7c066139eb1a57ee94e971da3c745791
+  r134_transfer_sha256: 78c1c2f06fb9fdd92cbb6bf78329c0c75f2ee90293a61069e6a24e6845a50bd2
+  r134_resource_audit_sha256: 519a7cbc67a73474982cf0218b813100b1473468d6ec53ab114c43df722b4a50
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+runtime:
+  expected_frame_count: 157
+  expected_trigger_count: 131
+  expected_skip_count: 26
+  expected_full_invocations: 628
+  expected_selective_invocations: 524
+  expected_avoided_invocations: 104
+evaluation:
+  repeat_count: 2
+  minimum_invocation_reduction_fraction: 0.10
+  maximum_elapsed_ratio_vs_full_reference: 0.95
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 600
+  maximum_output_bytes: 500000000
+  minimum_disk_free_gib: 8
+claim_boundary:
+  - reuse_is_permitted_only_for_byte_identical_logged_and_compiled_rgb
+  - any_nonidentical_input_executes_without_a_learned_or_fitted_threshold
+  - adgs_development_executes_real_sparse_frozen_deeplab_and_reconstructs_all628_reference_hashes
+  - streetgs_evidence_is_bound_from_the_frozen_r133_real_execution_authority
+  - r136_confirmation_remains_rejected_consumed_and_is_not_read_or_used_for_fitting
+  - measured_savings_cover_perception_worker_calls_and_time_not_sensor_rendering
+  - one_streetgs_and_one_adgs_implementation_do_not_imply_unknown_frontend_efficiency
+  - semantic_correctness_identity_causality_contact_physics_planning_safety_abstain
+  - no_training_or_confirmation_read
