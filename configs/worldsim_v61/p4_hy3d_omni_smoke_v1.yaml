@@ -39,6 +39,8 @@ environment:
   installation_contract: fixed_official_shape_inference_dependency_closure
   excluded_non_inference_groups: [training, demo_ui, texture_and_mesh_postprocess]
   hf_home: /root/autodl-tmp/models/hf-cache-worldsim-v61
+  dino_cache_repo_dir: hub/models--facebook--dinov2-large
+  dino_cache_ref: refs/main
   python_major_minor: "3.10"
   torch_version: 2.5.1+cu124
 inference:
@@ -75,4 +77,4 @@ claim_boundary:
   - no_prompt_seed_texture_or_step_sweep
   - no_training_or_confirmation_read
   - no_model_or_output_distribution
-failure_ledger_refs: [V61-F01, V61-F02, V61-F04, V6-F25, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]
+failure_ledger_refs: [V61-F01, V61-F02, V61-F04, V61-F05, V6-F25, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]

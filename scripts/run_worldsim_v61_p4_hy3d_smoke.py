@@ -111,8 +111,15 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     if not torch.cuda.is_available():
         raise P4SmokeError("CUDA 不可用")
     hf_home = Path(config["environment"]["hf_home"])
-    dino_blobs = list(hf_home.glob("hub/models--facebook--dinov2-large/blobs/*"))
-    if not any(path.is_file() and sha256_file(path) == config["sources"]["dino_model_sha256"] for path in dino_blobs):
+    dino_cache = hf_home / config["environment"]["dino_cache_repo_dir"]
+    dino_ref = dino_cache / config["environment"]["dino_cache_ref"]
+    if not dino_ref.is_file() or dino_ref.read_text(encoding="utf-8").strip() != config["sources"]["dino_revision"]:
+        raise P4SmokeError("DINO cache ref 未绑定冻结 revision")
+    dino_snapshot = dino_cache / "snapshots" / config["sources"]["dino_revision"]
+    dino_model = dino_snapshot / "model.safetensors"
+    if not (dino_snapshot / "config.json").is_file() or not dino_model.is_file():
+        raise P4SmokeError("冻结 DINOv2-large snapshot 不完整")
+    if sha256_file(dino_model) != config["sources"]["dino_model_sha256"]:
         raise P4SmokeError("冻结 DINOv2-large blob 缺失或漂移")
 
     run_root.mkdir(parents=True, exist_ok=True)

@@ -3868,6 +3868,18 @@ P4 第一次正式入口在创建 run directory、载入模型或占用 GPU 前�
 不得跳过 source gate、改写模型文件或重复下载。修复只删除多录字符，并新增所有 model digest 必须是 64 位小写
 十六进制的回归测试；官方 commit、model/DINO revision、demo、seed、50 steps、512 octree、资源门与 stop rule 全部不变。
 
+### V61-F05：离线 Hugging Face repo-id 解析必须有显式 revision ref
+
+P4 第二次正式入口通过全部 source gate 并创建 failed run
+`20260822T111747Z__voxel-smoke-s1234-r1`；Omni DiT 与 VAE 均以 0 missing/0 unexpected 成功载入，随后
+`Dinov2Model.from_pretrained("facebook/dinov2-large")` 在离线模式失败。固定 snapshot 与三个文件已完整存在，但按
+exact commit 下载不会自动创建默认 `refs/main`；官方 encoder 只传 repo-id、未传 revision，因而无法把默认 main
+解析到已缓存 snapshot。该 run 没有生成 mesh/points 或 capability gate，不是模型能力 rejection。
+
+不得开启正式 run 网络、重复下载 DINO、改官方 encoder 或更换 backbone。修复只按 Hugging Face 标准 cache schema
+创建 `refs/main`，内容精确绑定已冻结 commit `47b73eefe95e8d44ec3623f8890bd894b6ea2d6c`；runner 在模型载入前
+验证 ref、snapshot、config 与 model SHA，之后仍保持 `HF_HUB_OFFLINE=1` 和 `TRANSFORMERS_OFFLINE=1`。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。

@@ -33,6 +33,11 @@ def test_p4_is_one_off_offline_voxel_capability_smoke() -> None:
         "demo_ui",
         "texture_and_mesh_postprocess",
     ]
+    assert config["environment"]["dino_cache_repo_dir"] == (
+        "hub/models--facebook--dinov2-large"
+    )
+    assert config["environment"]["dino_cache_ref"] == "refs/main"
+    assert len(config["sources"]["dino_revision"]) == 40
     assert config["license_boundary"]["no_model_or_output_distribution"]
     assert config["license_boundary"]["no_output_for_training_other_models"]
     assert all(

@@ -2,7 +2,7 @@
 
 ## WorldSim V6.1 ME-1 oracle upper bound 完成；P4 Hunyuan3D-Omni smoke 已预注册（2026-08-22）
 
-状态：`me1_done / p4_hy3d_omni_smoke_source_repair_pre_registered / formal_retry_pending`
+状态：`me1_done / p4_dino_offline_ref_repair_pre_registered / formal_retry_pending`
 
 当前 active hypothesis=`WS-V61-H-P4-001`，task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
@@ -75,6 +75,11 @@ P4 首次入口在 run/GPU 前发现 VAE digest 被手工多录一个尾字符�
 HTTP `X-Linked-ETag` 完全一致。只修正 65→64 字符的 provenance transcription，并新增 digest 结构回归；模型、
 权重、demo、seed、steps、octree、gate 与 stop rule 均不变。推理环境已按官方版本收窄为 shape-inference closure，
 `pip check`、CUDA、DINO cache 与官方 pipeline import 均通过，训练/UI/texture 后处理依赖不进入 P4。
+
+第二次入口已创建 failed run `20260822T111747Z__voxel-smoke-s1234-r1`：DiT/VAE 精确载入，DINO repo-id
+因 exact-commit cache 缺少默认 `refs/main` 而在离线解析处失败（`V61-F05`），尚未生成 mesh/points 或 capability
+结论。修复只建立标准 cache ref 并把它精确绑定冻结 DINO commit；runner 在载模前验证 ref、snapshot、config 与
+model SHA，正式入口继续完全离线，不修改官方源码、backbone 或任何推理参数。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 
