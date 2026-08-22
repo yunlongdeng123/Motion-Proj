@@ -1,0 +1,70 @@
+schema_version: worldsim_v6.r136_adgs_heldout_policy_confirmation.v1
+task_id: WS-V6-R136-ADGS-HELDOUT-POLICY-CONFIRMATION-01
+hypothesis_id: WS-V6-H-R136-001
+seed: 20260821
+sources:
+  r134_run: runs://worldsim_v6/WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01/20260822T053744Z__adgs-cross-frontend-threshold13-s20260821-r2
+  r134_manifest_sha256: a2624e4b5ce4a3f6849f67c807d6978c3881a5dea779fc819b0e77d13cbbf207
+  r134_gate_sha256: 0becd539d02f36ad8e9be7fabf57a58b993c2dcc06667fbf6260c0f00878a764
+  r134_summary_sha256: 5ebed26f4ad9f6b2a737fcc58a7a007a7c066139eb1a57ee94e971da3c745791
+  r135_run: runs://worldsim_v6/WS-V6-R135-FRONTEND-CONDITIONED-SURROGATE-POLICY-01/20260822T054543Z__frontend-conditioned-policy-s20260821-r1
+  r135_manifest_sha256: 85faf96555238fdde1ebe4f1d1546b952beea44c1d331ffe6e4d4631248f4165
+  r135_gate_sha256: 4b4e11c6882c866df9ce55bd82590b135e1853b7f9e77aac6f021e552ba9e145
+  r135_summary_sha256: 3c6184a17ed203260175fe63ea54670c12d7bd5834cfc4e59687faf2c37009fe
+  r135_package_manifest_sha256: 85401a7adc43dce646ad965ac769a47fc1aa6aecf8f7233df6e40659f34e6f0f
+  r135_policy_sha256: 835514eb6b51c6f7d3700481861268cb020dea5e5149a3ead15c60781b48a62a
+  r135_development_certificate_sha256: e95c2c75c94a4f09161d55b003d1c9ca388f3b2daf38409cba9c60a157c670b2
+  adgs_implementation_root: /root/autodl-tmp/third_party/AD-GS
+  adgs_implementation_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+  adgs_python: /root/autodl-tmp/envs/adgs/bin/python
+  adgs_model_root: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model
+  adgs_checkpoint_files:
+    point_cloud.ply:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/point_cloud.ply
+      sha256: c4fdfd9fa41c305448fc5d940c75eaf1130ba06a8623f5d36df45fb3629114e7
+    deform.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/deform.pth
+      sha256: 1abade5a3a96bde1c4ebe451521d1149b643c3742b8ac094e6d9fcbad23b89a7
+    env.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/env.pth
+      sha256: f941a6bccb371000fcb23d84f32480176ff7793cc015e843baf8bedffa500eef
+  adgs_source_scene: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  adgs_training_adapter: /root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0048
+  training_points3d_sha256: fc18dab754610705da11b9cafb87726a96c55a3a74591fd341fac7e421a8b187
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+runtime:
+  scene: scene-0048
+  camera_id: 0
+  partition_modulus: 5
+  heldout_remainder: 4
+  expected_heldout_frames: 39
+  adapter_included_partitions: [heldout, train]
+  expected_partition_image_counts: {development: 0, heldout: 117, train: 354}
+  translation_world_m: [0.5, 0.0, 0.0]
+evaluation:
+  repeat_count: 2
+  frozen_adgs_threshold_pixels: 1
+  minimum_changed_label_pixels: 1
+  minimum_positive_target_frames: 20
+  minimum_negative_target_frames: 5
+  minimum_skip_fraction: 0.10
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_adapter_seconds: 600
+  maximum_sensor_worker_seconds: 600
+  maximum_perception_worker_seconds: 600
+  maximum_wall_seconds: 1200
+  maximum_output_bytes: 2000000000
+  minimum_disk_free_gib: 8
+claim_boundary:
+  - exact_once_confirmation_attempt_is_created_before_any_heldout_quality_read
+  - only39_heldout_camera0_timesteps_enter_metrics_even_though_train_support_is_materialized
+  - adgs_threshold1_and_frontend_route_are_frozen_from_r135_without_calibration
+  - the_edit_matches_r134_aggregate_dynamic_worldx_plus0p5m
+  - confirmation_is_one_adgs_scene_and_edit_not_global_frontend_generalization
+  - perception_change_is_not_semantic_correctness_or_causal_localization
+  - identity_contact_road_dynamics_realism_physics_planning_safety_abstain
+  - no_training_and_confirmation_attempt_is_consumed_on_any_outcome

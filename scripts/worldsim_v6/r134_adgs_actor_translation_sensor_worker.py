@@ -65,6 +65,8 @@ def main() -> int:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--frames", required=True)
     parser.add_argument("--translation-world", required=True)
+    parser.add_argument("--test-partition-name", default="development")
+    parser.add_argument("--confirmation-content-read", action="store_true")
     args = parser.parse_args()
     frames = [int(value) for value in args.frames.split(",")]
     translation = np.asarray(
@@ -107,7 +109,7 @@ def main() -> int:
     view_partitions: dict[tuple[int, int], str] = {}
     for partition, cameras in (
         ("train", scene.getTrainCameras()),
-        ("development", scene.getTestCameras()),
+        (args.test_partition_name, scene.getTestCameras()),
     ):
         for view in cameras:
             key = (int(round(float(view.fid))), int(view.cam_id))
@@ -165,7 +167,7 @@ def main() -> int:
             "frame_count": len(rows),
             "partition_counts": {
                 partition: sum(row["adapter_partition"] == partition for row in rows)
-                for partition in ("train", "development")
+                for partition in ("train", args.test_partition_name)
             },
             "translation_world_m": translation.astype(float).tolist(),
             "checkpoint_sha256_before": checkpoint_before,
@@ -177,7 +179,7 @@ def main() -> int:
             "wall_seconds": time.monotonic() - started,
             "peak_gpu_memory_mib": float(torch.cuda.max_memory_allocated() / (1024**2)),
             "training_started": False,
-            "confirmation_content_read": False,
+            "confirmation_content_read": bool(args.confirmation_content_read),
         },
     )
     return 0
