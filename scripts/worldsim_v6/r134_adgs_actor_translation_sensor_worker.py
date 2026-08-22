@@ -103,9 +103,18 @@ def main() -> int:
     environment = EnvironmentMap(**model_args.env_args)
     scene = Scene(model_args, gaussians, environment, load_iteration=60000, shuffle=False)
     pipeline = SimpleNamespace(inv_depth=True, debug=False)
-    views = {
-        (int(round(float(view.fid))), int(view.cam_id)): view for view in scene.getTestCameras()
-    }
+    views: dict[tuple[int, int], Any] = {}
+    view_partitions: dict[tuple[int, int], str] = {}
+    for partition, cameras in (
+        ("train", scene.getTrainCameras()),
+        ("development", scene.getTestCameras()),
+    ):
+        for view in cameras:
+            key = (int(round(float(view.fid))), int(view.cam_id))
+            if key in views:
+                raise RuntimeError(f"duplicate AD-GS camera key across partitions: {key}")
+            views[key] = view
+            view_partitions[key] = partition
     delta = torch.tensor(translation, dtype=gaussians._obj_xyz.dtype, device="cuda")[None, :]
     rows: list[dict[str, Any]] = []
     with torch.inference_mode():
@@ -136,6 +145,7 @@ def main() -> int:
             rows.append(
                 {
                     "frame_index": frame,
+                    "adapter_partition": view_partitions[(frame, 0)],
                     "sensor_path": relative,
                     "sensor_sha256": _sha256(path),
                     "image_shape": list(logged_rgb.shape),
@@ -153,6 +163,10 @@ def main() -> int:
         {
             "schema_version": "worldsim_v6.r134_adgs_sensor_worker.v1",
             "frame_count": len(rows),
+            "partition_counts": {
+                partition: sum(row["adapter_partition"] == partition for row in rows)
+                for partition in ("train", "development")
+            },
             "translation_world_m": translation.astype(float).tolist(),
             "checkpoint_sha256_before": checkpoint_before,
             "checkpoint_sha256_after": checkpoint_after,

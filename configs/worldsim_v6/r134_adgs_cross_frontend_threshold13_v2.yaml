@@ -1,0 +1,70 @@
+schema_version: worldsim_v6.r134_adgs_cross_frontend_threshold13.v2
+task_id: WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01
+hypothesis_id: WS-V6-H-R134-002
+seed: 20260821
+sources:
+  r132_run: runs://worldsim_v6/WS-V6-R132-CROSS-PROSPECTIVE-THRESHOLD13-CERTIFICATE-01/20260822T051425Z__cross-prospective-threshold13-s20260821-r1
+  r132_manifest_sha256: 1ace1d2559dc1f274a8873dad65e9f4b0af568fe328e1cf018a500ab44220595
+  r132_gate_sha256: 1b781a563993d472fa689f39d384a89c3096f7e460f8c5841ea2cda08563bdef
+  r132_summary_sha256: 4a57d3278bd52d495878a2eefd1a32e2328471ce730a39d09962a03385dabf53
+  r132_certificate_sha256: fcb14358957e47ca14b47a863d16822eaa8e5b82e1a45263c178f64b8667bcd0
+  r133_run: runs://worldsim_v6/WS-V6-R133-SELECTIVE-PERCEPTION-EXECUTION-01/20260822T052142Z__selective-perception-execution-s20260821-r1
+  r133_manifest_sha256: ff524f4e4b98f0240f69702a781d3aca8a5e73fb3b0e19669d4a8369202919f4
+  r133_gate_sha256: 5fb469fc2860bdffd9cecf60efd9d250413e0dff9825df30b9a523bacd57a0df
+  r133_summary_sha256: 8fb1b098d1e97e9006bccb0c7edc9c213efaa6c8f00c730e6d2ef78ccbcbd226
+  r133_selective_execution_result_sha256: ba1f9ee9d74e0ade161b35014523cab28aba6e358e4803eb9375dd997dc495b5
+  adgs_implementation_root: /root/autodl-tmp/third_party/AD-GS
+  adgs_implementation_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+  adgs_python: /root/autodl-tmp/envs/adgs/bin/python
+  adgs_model_root: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model
+  adgs_checkpoint_files:
+    point_cloud.ply:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/point_cloud.ply
+      sha256: c4fdfd9fa41c305448fc5d940c75eaf1130ba06a8623f5d36df45fb3629114e7
+    deform.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/deform.pth
+      sha256: 1abade5a3a96bde1c4ebe451521d1149b643c3742b8ac094e6d9fcbad23b89a7
+    env.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/env.pth
+      sha256: f941a6bccb371000fcb23d84f32480176ff7793cc015e843baf8bedffa500eef
+  adgs_adapter_root: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R3-SUPPORT-DEVIATION-01/20260821T091503Z__support-deviation-s20260821-r1/development_adapters/scene-0048
+  adgs_adapter_tree_sha256: 5bf6b6241c9443e5e164a4e66f469e35e88cf62cccc47a4bab40262fbaf91e0a
+  adapter_manifest_sha256: 2e78e59bc8510e7182dff23dbd91943773acad3262e5c34202bdaed9ec26f5f3
+  adapter_binding_sha256: 20ef024f94ae5ce6948775b1476033e995037f079033bdb6d648c0b2f7008606
+  adapter_depth_placeholders_sha256: b32f815a729656565297dc554dbeaba138e930f10f0337a903622e5c6dc4c4d5
+  adapter_points3d_sha256: fc18dab754610705da11b9cafb87726a96c55a3a74591fd341fac7e421a8b187
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+runtime:
+  scene: scene-0048
+  camera_id: 0
+  included_partitions: [train, development]
+  expected_frame_count: 157
+  expected_partition_counts: {train: 118, development: 39}
+  translation_world_m: [0.5, 0.0, 0.0]
+evaluation:
+  repeat_count: 2
+  frozen_threshold_pixels: 13
+  minimum_changed_label_pixels: 1
+  minimum_positive_target_frames: 20
+  minimum_negative_target_frames: 20
+  minimum_skip_fraction: 0.10
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_sensor_worker_seconds: 1200
+  maximum_perception_worker_seconds: 1200
+  maximum_wall_seconds: 1800
+  maximum_output_bytes: 1500000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - first_direct_threshold13_transfer_from_streetgs_authorities_to_adgs_runtime
+  - exact157_train_and_development_camera0_frames_with_heldout_partition_excluded
+  - aggregate_dynamic_gaussian_worldx_plus0p5_edit_on_every_included_frame
+  - aggregate_adgs_dynamic_set_is_not_an_identity_bound_actor_edit
+  - threshold13_is_frozen_before_adgs_labels_and_receives_zero_target_calibration
+  - full_deeplab_replay_is_used_only_to_measure_the_unbiased_cross_frontend_target
+  - perception_change_is_not_semantic_correctness_or_causal_localization
+  - contact_road_dynamics_realism_physics_planning_safety_abstain
+  - no_training_or_confirmation_read

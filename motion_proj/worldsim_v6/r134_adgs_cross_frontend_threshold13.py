@@ -135,11 +135,19 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     if free_gib < float(resources["minimum_disk_free_gib"]):
         raise R134ExperimentError("R134 disk resource insufficient")
 
-    frames = list(range(int(runtime["frame_start"]), int(runtime["frame_stop_exclusive"])))
+    partition = json.loads((adapter / "partition.json").read_text(encoding="utf-8"))
+    frames = sorted(
+        {
+            int(row["timestep"])
+            for row in partition["rows"]
+            if int(row["camera"]) == int(runtime["camera_id"])
+            and row["partition"] in runtime["included_partitions"]
+        }
+    )
     if len(frames) != int(runtime["expected_frame_count"]):
         raise R134ExperimentError("R134 frame denominator drift")
     now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = run_root / TASK_ID / f"{now}__adgs-cross-frontend-threshold13-s{config['seed']}-r1"
+    run_dir = run_root / TASK_ID / f"{now}__adgs-cross-frontend-threshold13-s{config['seed']}-r2"
     run_dir.mkdir(parents=True, exist_ok=False)
     sensor_dir = run_dir / "sensor_worker"
     frames_text = ",".join(str(frame) for frame in frames)
@@ -290,8 +298,14 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         and adapter_tree_before == adapter_tree_after == sources["adgs_adapter_tree_sha256"]
         and all(_sha256(path) == expected for path, expected in frozen_files.items())
         and all(_sha256(path) == expected for path, expected in checkpoint_files.items()),
-        "full196_adgs_sensor_denominator_exact": len(sensor_rows)
+        "full157_train_development_adgs_sensor_denominator_exact": len(sensor_rows)
         == int(runtime["expected_frame_count"]),
+        "heldout_partition_excluded_and_partition_counts_exact": sensor_audit[
+            "partition_counts"
+        ]
+        == runtime["expected_partition_counts"]
+        and set(row["adapter_partition"] for row in sensor_rows)
+        == set(runtime["included_partitions"]),
         "aggregate_actor_edit_state_restored_all_frames": bool(
             sensor_audit["all_actor_state_restored_exact"]
         )
@@ -437,7 +451,7 @@ def main() -> int:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("configs/worldsim_v6/r134_adgs_cross_frontend_threshold13_v1.yaml"),
+        default=Path("configs/worldsim_v6/r134_adgs_cross_frontend_threshold13_v2.yaml"),
     )
     parser.add_argument("--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v6"))
     args = parser.parse_args()

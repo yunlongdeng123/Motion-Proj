@@ -3788,3 +3788,9 @@ H-R124-001 首次正式启动于 `2026-08-22T03:57:05Z` 前在创建 run directo
 H-R128-001 canonical run `20260822T042521Z__scene0230-orthogonal-holdout-s20260821-r1` 在预注册后新生成 scene0230 actor12 `[0,0,+0.5]m` 的196帧 sensor 与784个冻结 DeepLab 输出；所有 source、proposal、0新增 overlap、38,541 primitives、196帧 lifecycle、compiled/native sensor、repeat、GPU、wall 与 abstention gate 均通过。但 threshold45 在78个正帧中漏掉 frame77：RGB changed pixels 为26而 frozen-label changed pixels 为5，得到 TP77、FN1、TN118、FP0、recall0.987179、F1=0.993548。run 按 zero-error 合同正式 `rejected`。
 
 不得追认 R128、删除 frame77、把5个标签像素降为无关、放宽 F1/recall，或在同一 holdout 上改 threshold 后宣称前瞻成功。诊断显示全部118个负帧的最大 RGB feature 仍为0、78个正帧的最小值为26，使包含 R128 的开发并集精确阈值区间缩为 `[1,26]`。H-R129-001 必须把 R128 明确降格为 threshold-revision development evidence，与 R126 的2156行和 R127 的196行合并，按预注册 max-min margin 规则选择 threshold13并只声明开发集精确性；随后必须在另一个新条件上做独立前瞻检验。
+
+### V6-F93：AD-GS 全时域实验必须区分 train、development 与锁定的 heldout camera 分区
+
+H-R134-001 首次正式启动 `20260822T053238Z__adgs-cross-frontend-threshold13-s20260821-r1` 在任何 sensor 或 perception 输出产生前，于请求 frame0 时退出。冻结 R3 adapter 的196时间轴只物化了118个 train、39个 development 时间步并刻意排除39个 heldout 时间步；worker 仅从 `getTestCameras()` 建表，因此只看见 development，frame0 不存在。失败目录仅4 KiB、sensor 文件数为0，不构成 threshold13 或 cross-frontend 方法结论。
+
+不得把 heldout 图像补入 adapter、把缺帧静默删除后仍声称196分母、追认 H-R134-001，或把本次启动失败解释为 AD-GS transfer rejection。H-R134-002 只能合并 `getTrainCameras()` 与 `getTestCameras()`，从冻结 `partition.json` 预先导出 camera0 的精确118+39=157帧，并保持39个 heldout 未读；AD-GS checkpoint/edit、threshold13、正负支持、0 FP/FN、skip、资源门与所有 abstention 不变，新 commit/push 后重新正式运行。
