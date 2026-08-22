@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.1 ME-2 H002 infrastructure failure / H003 RECOVERY PRE-REGISTERED（2026-08-22）
+
+- H002 failed run=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T120519Z__hy3d-actor-s1234-r1`。
+  A0 已产生4个有效 mesh；Omni 完成首个2-sample A1 diffusion/decode 后，官方 vanilla extractor 只对
+  `grid_logits[0]` 做 marching cubes 并返回1个 mesh，runner 以 `1!=2` fail-closed。failure=`V61-F08`，
+  generated Omni assets/method decisions=`0/0`，无科学结论。
+- H003 保持 diffusion batch2 与逐样本 fixed generators，改为官方 pipeline 返回2份 latent，再逐份调用同一 VAE
+  batch1 decode/export。H002 的4个 A0 assets 只在旧 plan/input/report/asset hashes 全部精确后复用；不重复 A0。
+- model、control、seed、50 steps、octree256、guidance、compiler、O_method/O_eval、thresholds、resource 和 stop
+  rule 全部不变；新增2-latent→2次batch1 decode回归测试。
+
 ## WorldSim V6.1 ME-2 H001 infrastructure failure / H002 RECOVERY PRE-REGISTERED（2026-08-22）
 
 - H001 failed run=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T120008Z__hy3d-actor-s1234-r1`。

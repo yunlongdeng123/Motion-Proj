@@ -101,6 +101,40 @@ def run_image_base(plan: dict[str, Any], output_root: Path) -> list[dict[str, An
     return rows
 
 
+def decode_omni_latent_batch(
+    pipeline: Any,
+    latents: torch.Tensor,
+    plan: dict[str, Any],
+    *,
+    exporter: Any = None,
+) -> list[trimesh.Trimesh]:
+    """保持 diffusion batch=2，但按官方 vanilla extractor 的 batch=1 合同逐个解码。"""
+    if int(plan["decode_batch_size"]) != 1:
+        raise RuntimeError("Omni vanilla geometry extractor 只授权 decode_batch_size=1")
+    if exporter is None:
+        from hy3dshape.pipelines.utils import export_to_trimesh
+
+        exporter = export_to_trimesh
+    vae_dtype = next(pipeline.vae.parameters()).dtype
+    scaled = (latents / float(pipeline.scale_factor)).to(vae_dtype)
+    meshes: list[trimesh.Trimesh] = []
+    for index in range(int(scaled.shape[0])):
+        decoded = pipeline.vae.decode(
+            scaled[index : index + 1],
+            octree_depth=int(plan["octree_depth"]),
+            bounds=[-float(plan["box_v"])] * 3 + [float(plan["box_v"])] * 3,
+            mc_level=float(plan["mc_level"]),
+            num_chunks=int(plan["num_chunks"]),
+            octree_resolution=int(plan["octree_resolution"]),
+            mc_mode=str(plan["mc_mode"]),
+        )
+        exported = exporter(decoded)
+        if not isinstance(exported, list) or len(exported) != 1 or exported[0] is None:
+            raise RuntimeError(f"Omni serial decode mesh 数漂移: sample={index}")
+        meshes.append(exported[0])
+    return meshes
+
+
 def run_omni(plan: dict[str, Any], output_root: Path) -> list[dict[str, Any]]:
     repo = Path(plan["repo"])
     sys.path.insert(0, str(repo))
@@ -128,14 +162,23 @@ def run_omni(plan: dict[str, Any], output_root: Path) -> list[dict[str, Any]]:
             result = pipeline(
                 image=[unit["image_path"] for unit in group],
                 num_inference_steps=int(plan["num_inference_steps"]),
+                box_v=float(plan["box_v"]),
+                octree_depth=int(plan["octree_depth"]),
                 octree_resolution=int(plan["octree_resolution"]),
                 mc_level=float(plan["mc_level"]),
+                mc_mode=str(plan["mc_mode"]),
+                num_chunks=int(plan["num_chunks"]),
                 guidance_scale=float(plan["guidance_scale"]),
                 generator=generators,
                 fast_decode=False,
+                output_type="latent",
                 **kwargs,
             )
-            rows.extend(export_rows(list(result["shapes"][0]), group, arm, output_root))
+            latents = result["shapes"][0]
+            if not isinstance(latents, torch.Tensor) or int(latents.shape[0]) != len(group):
+                raise RuntimeError(f"Omni latent batch 数漂移: {getattr(latents, 'shape', None)}")
+            meshes = decode_omni_latent_batch(pipeline, latents, plan)
+            rows.extend(export_rows(meshes, group, arm, output_root))
     return rows
 
 

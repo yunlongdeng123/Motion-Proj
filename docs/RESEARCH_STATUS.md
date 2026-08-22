@@ -2,9 +2,9 @@
 
 ## WorldSim V6.1 P4 已通过；ME-2 四臂 actor 实验已预注册（2026-08-22）
 
-状态：`p4_done / me2_preregistered / formal_ready`
+状态：`p4_done / me2_h002_batch_decode_failure / h003_formal_retry_ready`
 
-当前 active hypothesis=`WS-V61-H-ME2-001`，task=`WS-V61-ME2-HY3D-OCC-ACTOR-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-ME2-003`，task=`WS-V61-ME2-HY3D-OCC-ACTOR-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -39,6 +39,12 @@ H-ME2-001 已创建 failed run `20260822T120008Z__hy3d-actor-s1234-r1`：所有 
 `pymeshlab==2022.2.post3`（`V61-F07`）。没有生成 asset、method decision 或科学结论。H-ME2-002 只在隔离
 环境补齐该官方依赖并增加 exact version gate；一次离线 base pipeline import smoke 已通过。全部科学合同不变，
 从新干净提交重试。
+
+H-ME2-002 failed run `20260822T120519Z__hy3d-actor-s1234-r1` 已完成4个有效 A0 mesh；Omni 也完成首个
+2-sample A1 diffusion/decode，但官方 vanilla extractor 把两份 SDF reshape 后只对 `grid_logits[0]` 做 marching
+cubes，因此只返回1个 mesh。runner 对 `1 != 2` fail-closed，没有静默丢弃第二例（`V61-F08`）。H-ME2-003
+保持 diffusion batch2，改为返回2份 latent 后逐份调用同一官方 VAE decode；只串行官方明确 batch1 的 mesh
+extraction。H002 A0 只在旧 plan/input/report/assets 全部精确后复用，不重复4次 GPU 生成；科学参数和 gate 不变。
 
 P0 精确绑定：
 

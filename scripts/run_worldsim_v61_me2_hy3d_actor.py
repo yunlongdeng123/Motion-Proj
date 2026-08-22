@@ -320,15 +320,48 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "HF_DATASETS_OFFLINE": "1",
             "CUDA_VISIBLE_DEVICES": "0",
         }
-        base_report = _worker(
-            worker_python,
-            worker_script,
-            run_dir / "A0_WORKER_PLAN.json",
-            run_dir / "raw_assets",
-            run_dir / "A0_WORKER_REPORT.json",
-            run_dir / "A0_WORKER.log",
-            worker_environment,
+        recovery_root = resolve_runs_uri(config["recovery"]["h002_failed_run"])
+        verify_files(recovery_root, config["recovery"]["exact_files"])
+        recovery_plan = json.loads(
+            (recovery_root / "A0_WORKER_PLAN.json").read_text(encoding="utf-8")
         )
+        for name in (
+            "backend",
+            "repo",
+            "model_root",
+            "global_seed",
+            "batch_size",
+            "num_inference_steps",
+            "guidance_scale",
+            "octree_resolution",
+            "mc_level",
+        ):
+            if recovery_plan[name] != base_plan[name]:
+                raise ME2ExperimentError(f"H002 A0 plan 漂移: {name}")
+        recovery_inputs = {
+            row["unit_id"]: row for row in read_jsonl(recovery_root / "INPUT_INDEX.jsonl")
+        }
+        for row in unit_rows:
+            old = recovery_inputs.get(row["unit_id"], {})
+            for name in ("seed", "actor_rgba_sha256", "controls_sha256"):
+                if old.get(name) != row[name]:
+                    raise ME2ExperimentError(f"H002 A0 input 漂移: {row['unit_id']}/{name}")
+        base_report = json.loads(
+            (recovery_root / "A0_WORKER_REPORT.json").read_text(encoding="utf-8")
+        )
+        if base_report.get("asset_count") != len(unit_rows):
+            raise ME2ExperimentError("H002 A0 asset denominator 漂移")
+        for asset in base_report["assets"]:
+            path = Path(asset["path"]).resolve()
+            if not path.is_relative_to(recovery_root) or sha256_file(path) != asset["sha256"]:
+                raise ME2ExperimentError(f"H002 A0 asset 漂移: {path}")
+        shutil.copyfile(
+            recovery_root / "A0_WORKER_REPORT.json", run_dir / "A0_WORKER_REPORT.json"
+        )
+        (run_dir / "A0_WORKER.log").write_text(
+            f"reused_exact_from={recovery_root}\n", encoding="utf-8"
+        )
+        base_reused_exact = True
         omni_report = _worker(
             worker_python,
             worker_script,
@@ -495,6 +528,7 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
         )
         checks = {
             "p4_and_me0_authority_passed": True,
+            "h002_a0_recovery_exact": base_reused_exact,
             "matched_four_arms_complete": all(
                 row["case_count"] == int(config["cohort"]["expected_case_count"])
                 for row in arm_summaries
@@ -531,6 +565,7 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
             "worker_torch": base_report["torch"],
             "worker_cuda": base_report["cuda"],
             "base_worker_wall_seconds": base_report["wall_seconds"],
+            "base_worker_reused_exact_from": str(recovery_root),
             "omni_worker_wall_seconds": omni_report["wall_seconds"],
             "peak_gpu_memory_gib": peak_gpu,
             "wall_seconds": elapsed,

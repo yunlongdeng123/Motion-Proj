@@ -3905,6 +3905,19 @@ H-ME2-002 只安装官方固定的 `pymeshlab==2022.2.post3`，在配置/runner 
 离线 base pipeline import smoke；该 smoke 已成功导入 `Hunyuan3DDiTFlowMatchingPipeline`。模型、权重、
 4 units/6 cases、seed、batch、steps、octree、compiler、truth separation、thresholds、资源和 stop rule 全部不变。
 
+### V61-F08：Omni diffusion 支持 batch>1，不代表默认 marching-cubes extractor 也支持
+
+H-ME2-002 failed run `20260822T120519Z__hy3d-actor-s1234-r1` 完成4个有效 A0 mesh，并成功载入 Omni、完成首个
+A1 的2-sample diffusion 与 VAE implicit query。runner 随后发现输出 mesh 数为1而输入数为2并 fail-closed。
+官方源码显示 `extract_geometry_vanilla` 虽把 logits reshape 为 `(batch_size,X,Y,Z)`，但 marching cubes 固定读取
+`grid_logits[0]`，wrapper 也固定返回一元素 list；因此第二份 latent 没有 mesh，不是随机空输出或 OOM。
+本次没有 A1/A2/A3 asset、method decision 或科学结论；canonical run=`null`。
+
+不得静默丢弃第二样本、把6-case缩为3-case、patch官方源码、把全部 diffusion 降为batch1后冒充并行，或改变生成
+参数。H-ME2-003 保持昂贵 diffusion batch2与逐样本generator，令官方 pipeline 返回两份 latent，再逐份调用同一
+官方 VAE 的 batch1 decode/export。H002 已完成的4个 A0 只在 plan、input hashes、report 与每个 asset hash 全部
+精确后复用，不重复GPU计算。模型、controls、seed、steps、octree、guidance、compiler、truth、threshold与stop rule不变。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。

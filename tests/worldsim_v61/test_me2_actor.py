@@ -5,10 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+import torch
 import trimesh
 import yaml
 
 from motion_proj.worldsim_v61.me2_actor import _fixed_sample, actor_state, canonicalize_mesh
+from scripts.run_worldsim_v61_me2_hy3d_worker import decode_omni_latent_batch
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -61,7 +63,7 @@ def test_me2_preregistration_has_no_sweep_or_placeholder() -> None:
     raw = CONFIG_PATH.read_text(encoding="utf-8")
     assert "TO_FILL" not in raw
     config = yaml.safe_load(raw)
-    assert config["hypothesis_id"] == "WS-V61-H-ME2-002"
+    assert config["hypothesis_id"] == "WS-V61-H-ME2-003"
     assert config["arms"] == ["A0-image", "A1-bbox", "A2-point", "A3-voxel"]
     assert len(config["units"]) == 4
     assert len(config["case_to_unit"]) == 6
@@ -77,6 +79,8 @@ def test_me2_preregistration_has_no_sweep_or_placeholder() -> None:
     assert config["generation"]["omni_controls"]["num_inference_steps"] == 50
     assert config["generation"]["A0-image"]["octree_resolution"] == 256
     assert config["generation"]["omni_controls"]["octree_resolution"] == 256
+    assert config["generation"]["omni_controls"]["batch_size"] == 2
+    assert config["generation"]["omni_controls"]["decode_batch_size"] == 1
     assert config["environment"]["pymeshlab"] == "2022.2.post3"
     assert "no_texture_prompt_seed_step_or_threshold_sweep" in config["claim_boundary"]
 
@@ -89,3 +93,40 @@ def test_only_exact_truck_trailer_pair_is_filtered() -> None:
         "scene-0242": [[4, 15]],
         "scene-0048": [],
     }
+
+
+def test_omni_diffusion_batch_is_decoded_one_sample_at_a_time() -> None:
+    class FakeVAE(torch.nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.anchor = torch.nn.Parameter(torch.zeros(1))
+            self.batch_sizes: list[int] = []
+
+        def decode(self, latents: torch.Tensor, **_: object) -> list[trimesh.Trimesh]:
+            self.batch_sizes.append(int(latents.shape[0]))
+            return [trimesh.creation.box()]
+
+    class FakePipeline:
+        scale_factor = 1.0
+
+        def __init__(self) -> None:
+            self.vae = FakeVAE()
+
+    pipeline = FakePipeline()
+    plan = {
+        "decode_batch_size": 1,
+        "octree_depth": 8,
+        "box_v": 1.01,
+        "mc_level": 0.0,
+        "num_chunks": 8000,
+        "octree_resolution": 256,
+        "mc_mode": "mc",
+    }
+    meshes = decode_omni_latent_batch(
+        pipeline,
+        torch.zeros((2, 4, 8)),
+        plan,
+        exporter=lambda values: values,
+    )
+    assert len(meshes) == 2
+    assert pipeline.vae.batch_sizes == [1, 1]
