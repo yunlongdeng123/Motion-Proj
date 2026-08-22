@@ -1,0 +1,92 @@
+schema_version: worldsim_v61.me1_oracle_occ.v1
+task_id: WS-V61-ME1-ORACLE-OCC-PROPOSAL-01
+hypothesis_id: WS-V61-H-ME1-001
+seed: 20260822
+sources:
+  me0_run: runs://worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+  me0_files:
+    ME0_GATE.json: 1e81807435ec1b6225a43369e3f53d22bf8fa4aaeb823701d589d0d2d27c8bb7
+    MANIFEST.json: 386d99abce176e83ee5529456d4fcdc9fae13ae4c235538da9c1ec9d0fde59ec
+    SUMMARY.json: 6e50644b8e4f1f57e8c7a402ae9d0ae636f9fbf9cc6d64858f1bf7b4258db14f
+    SCENEIR_O_INDEX.jsonl: efdf514607db05dccb0222933d4360e5616b60b73898a3811b7542fb2f12ef41
+    OCCUPANCY_CONTRACTS.jsonl: f5a26760474a0a83fe614b4ece7fc3359894b88671d0ad04efded039f30f0a59
+    CASE_BINDINGS.jsonl: 3d5e3125fcbe289ed094682a969d2bad02b6e18619e6208ac70626f7b5818c6c
+    SOURCE_TIER_AUDIT.json: 329d2e54acf85aab35eedb21b45481e9f9eb68259e4cc7389350e5864bd63a2c
+  b0_2d_run: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T110743Z__independent-arms-s20260821-r1
+  b0_2d_files:
+    SUMMARY.json: 6a74249f0d35a796698ba247a1e40b56963b77ae892f1fd4b7351f334f072626
+    ARM_SUMMARIES.jsonl: f98574a4a4fa02be019f13717fff3575d0435ce5e0c32249068c843ae7ef3a5c
+    verifier_worker/PER_CASE_ARMS.jsonl: b49461a5ecea6345ebb687943bb1694ac924d02e517b5cff9ceac5ff5f352336
+  r9_cross_run: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_cross_files:
+    CASES.jsonl: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+    SUMMARY.json: a3e7946829c4830ed34de3a4714b75127bd01bbdb821159244b58bcb2e0bf393
+    verifier_worker/PER_CASE_ARMS.jsonl: 862ce290455d2018a53b3eb19dfe45d5b63a8ffa5e18080435e73f09f987f68e
+  r10_run: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+  r10_files:
+    SUMMARY.json: 174dc8b56a5709c1aeb8f515d1b2ac09eae8cd222481d831aef1df8b073cb868
+    METRICS.json: 25fe92632198aa26d668f3abe8c24bbb3695de53eac5f1533b8863baec889e89
+    FACTORIZED_DECISIONS.jsonl: 7393421f4a27c301366423dab02c4fc3a704e62a90faf3e2d6be06fbb96e5f66
+raw_evidence:
+  scene-0048: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  scene-0242: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_case_count: 28
+  expected_r10_accept_ids:
+    - scene-0242__ad_gs__f052__missing_route_support
+    - scene-0242__ad_gs__f057__missing_route_support
+    - scene-0242__streetgs__f057__actor_removal_hole
+projection:
+  camera_id: 0
+  width: 512
+  height: 288
+  native_width: 1600
+  native_height: 900
+  near_m: 0.4
+  far_m: 60.0
+  step_m: 0.1
+  ray_batch_size: 8192
+  observed_support_dilation_voxels: 1
+method_gate:
+  minimum_surface_coverage: 0.50
+  require_nonempty_3d_candidate: true
+  require_closed_voxel_cells: true
+  actor_hole_requires_native_actor_identity: true
+independent_eval_gate:
+  maximum_free_space_conflict: 0.05
+  minimum_observed_surface_support: 0.80
+  maximum_unknown_volume_fraction: 0.20
+  minimum_projected_surface_coverage: 0.50
+  minimum_method_eval_depth_overlap: 0.50
+  maximum_median_relative_depth_error: 0.20
+runtime_4d:
+  interpolation_samples: 5
+  require_exact_native_lifecycle: true
+  require_rigid_native_poses: true
+  reject_actor_actor_swept_collision: true
+primary_gate:
+  arm: O2-OCC-GEOMETRY
+  minimum_accepted_cases: 5
+  maximum_false_safe_count: 0
+  minimum_accepted_mask_area_yield: 0.12
+  require_all_r10_accepts_retained: true
+  minimum_new_actor_cases: 1
+  minimum_new_static_or_disocclusion_cases: 1
+resources:
+  gpu: 0
+  maximum_cpu_workers: 4
+  maximum_wall_seconds: 600
+  maximum_gpu_memory_gib: 22
+  minimum_disk_free_gib: 80
+failure_ledger_refs: [V61-F01, V6-F25, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]
+claim_boundary:
+  - matched_28_case_development_oracle_upper_bound
+  - R10_appearance_is_frozen_and_not_retrained
+  - O_method_compiles_proposals_and_O_eval_only_scores_hidden_truth
+  - voxel_surface_is_collision_authority_not_gaussian_opacity
+  - B0_is_frozen_big_lama_2d_baseline_and_B1_is_frozen_R10
+  - no_confirmation_read
+  - no_model_training_or_threshold_sweep
+  - no_closed_loop_or_real_world_safety_claim

@@ -1,5 +1,25 @@
 # Experiments
 
+## WorldSim V6.1 ME-1 oracle Occupancy PRE-REGISTERED（2026-08-22）
+- task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`，hypothesis=`WS-V61-H-ME1-001`，状态=`formal_run_pending`。
+- 五臂=`B0-2D / B1-R10 / O1-GATE / O2-OCC-GEOMETRY / O3-OCC-4D`；primary=`O2-OCC-GEOMETRY`。
+- `O_method` 在 GPU 上以 0.1m step 光线抽取 0.2m closed voxel surface，绑定冻结 R9 proposal RGB；method decisions
+  在任何 `O_eval` tensor 读取前写入不可变 artifact。随后 `O_eval` 只报告 free conflict、observed support、unknown、
+  projected coverage、method/eval depth overlap 与相对深度误差以及 false-safe。
+- 沿用 R9 的 `coverage>=0.50`、`median relative depth error<=0.20`；一 voxel support tolerance；没有 scalar 补偿、
+  case 特判、模型训练或 threshold sweep。O3 对 native OBB 做 lifecycle/rigid pose/canonical size 与 5 点 swept SAT。
+- primary gate=`>=5/28`、false-safe=`0`、保留 R10 原 3 个 ACCEPT、新增至少 1 actor 和 1 static/disocclusion、
+  accepted mask-area yield>=12%。失败则停止 Hunyuan3D 与 learned Occupancy 接入。
+- failure_ledger_refs=`V61-F01,V6-F25,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；failure_ledger_delta=`none`（预注册）。
+
+## WorldSim V6.1 ME-0 SceneIR-O PASS（2026-08-22）
+- canonical=`run://worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1`，source=`5a3bc42`。
+- 4 scene/frame units、8 `O_method/O_eval` tiers、28 case bindings；method/eval raw LiDAR path 与 payload hash 全局互斥。
+- 三态非空、oriented actor volume anti-AABB、identity/lifecycle、source-removal→UNKNOWN、fresh spawned-process exact、
+  coordinate round-trip<=`2.14e-14m` 全通过；wall=`10.57s`，4 CPU workers，无 GPU/model/training/confirmation。
+- gate/summary/manifest/terminal SHA=`1e818074...8bb7 / 6e50644b...b14f / 386d99ab...59ec / 199c9cf3...f9a7`。
+- failure_ledger_delta=`none`；next=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`。
+
 ## WorldSim V6.1 ME-0 SceneIR-O PRE-REGISTERED（2026-08-22）
 
 - task=`WS-V61-ME0-OCCIR-01`，hypothesis=`WS-V61-H-ME0-001`，状态=`running`；formal run pending。

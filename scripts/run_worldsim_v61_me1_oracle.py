@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+"""运行 WorldSim V6.1 ME-1 oracle occupancy upper bound。"""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+
+from motion_proj.worldsim_v61.me1_oracle import run_experiment
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--repo-root", type=Path, required=True)
+    parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--run-root", type=Path, default=Path("/root/autodl-tmp/runs/worldsim_v61"))
+    args = parser.parse_args()
+    print(run_experiment(args.repo_root, args.config, args.run_root))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

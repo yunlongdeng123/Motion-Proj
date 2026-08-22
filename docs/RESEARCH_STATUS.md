@@ -1,10 +1,10 @@
 # Research Status
 
-## WorldSim V6.1 P0 完成；ME-0 SceneIR-O 已预注册（2026-08-22）
+## WorldSim V6.1 ME-0 完成；ME-1 oracle upper bound 已预注册（2026-08-22）
 
-状态：`p0_done / me0_pre_registered_implementation_validated / formal_run_pending`
+状态：`me0_done / me1_pre_registered / formal_run_pending`
 
-当前 active hypothesis=`WS-V61-H-ME0-001`，task=`WS-V61-ME0-OCCIR-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-ME1-001`，task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -29,9 +29,24 @@ source=`6247fd89068615f791b428c3296faf945e713c75`；gate/summary/manifest=`fb2a4
 2ed96578...7593`。全部 gate PASS；R10=`3/28`、false-safe=`0`、case identity 与 scene mapping exact，
 method/eval source paths disjoint。
 
-下一步：从干净提交正式运行 ME-0；实现已通过 6 个 targeted tests 和一个 scene/frame 真实数据 preflight。
-ME-0 通过后立即启动 ME-1 oracle upper bound；ME-1 oracle 若不能达到
-`5/28`，则停止 Hunyuan3D/learned Occupancy 接入并修 compiler/evaluator。
+ME-0 canonical：
+
+```text
+run://worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+```
+
+source=`5a3bc42eb68cfcda673df3c32d81479373b1bff3`；4 scene/frame units、8 truth tiers、28 case bindings 全部
+通过。`O_method/O_eval` 的 raw LiDAR path 与 payload hash 全局互斥；每格 UNKNOWN/FREE/OCCUPIED 非零；
+oriented actor volume、identity/lifecycle、source-removal→UNKNOWN、fresh-process content exact 与
+`<=2.14e-14m` round-trip 均通过。gate/summary/manifest=`1e818074...8bb7 / 6e50644b...b14f /
+386d99ab...59ec`；wall=`10.57s`，4 CPU workers，无训练/生成器/confirmation read。
+
+ME-1 预注册固定五臂：冻结 Big-LaMa 的 `B0-2D`、冻结 R10 的 `B1-R10`、不增 coverage 的 `O1-GATE`、
+主臂 `O2-OCC-GEOMETRY` 与带 native trajectory/lifecycle/swept OBB collision 的 `O3-OCC-4D`。编译只读
+`O_method`，先固化 method decisions，再让 `O_eval` 只计算 hidden truth/false-safe。阈值来自既有合同：
+0.2m voxel、0.1m ray step、R9 的 50% coverage 与 20% depth consistency；没有 case 特判或 threshold sweep。
+一次结构审计显示 10 个 P1-ACCEPT case 的 method mask coverage=`73.65%..94.78%`，故直接进入正式 run。
+若 O2 不能达到 `>=5/28`、false-safe=`0`、保留原3例并新增 actor+static/disocclusion，则停止模型接入。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 
