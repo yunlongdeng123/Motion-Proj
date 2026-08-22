@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-22T01:20:13Z",
+  "updated_at_utc": "2026-08-22T01:28:32Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 151,
-  "active_task": "WS-V6-R106-QUARTER-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01",
-  "active_hypothesis": "WS-V6-H-R106-001",
-  "candidate": "scene0255_actor34_z_plus0p25_weak_intervention_selector_robustness",
+  "iteration": 152,
+  "active_task": "WS-V6-R107-EIGHTH-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01",
+  "active_hypothesis": "WS-V6-H-R107-001",
+  "candidate": "scene0255_actor34_z_plus0p125_eighth_meter_selector_robustness",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "464a95be5ba0bd785f0d4cc9ed23ed34358ae6458ef5ccdc60a6e32b03d0c326",
+  "dev_artifact_hash": "1e47aa906851820dcc5ae3938ad8a0685a9a043a681dc481a9fe6e76c0f7fe79",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
   "failure_ledger_sha256": "dc501eb4c99dfc48740866fffe8f3df8399af5744c29e55c2e42e2d8947235d1",
-  "last_reflection_id": "WS-V6-REFL-0153",
+  "last_reflection_id": "WS-V6-REFL-0154",
   "last_completed": {
-    "task_id": "WS-V6-R105-CROSS-SCENE-INTERVENTION-THRESHOLD-CERTIFICATE-01",
-    "run": "run://worldsim_v6/WS-V6-R105-CROSS-SCENE-INTERVENTION-THRESHOLD-CERTIFICATE-01/20260822T011628Z__threshold-certificate-s20260821-r1",
-    "artifact_sha256": "464a95be5ba0bd785f0d4cc9ed23ed34358ae6458ef5ccdc60a6e32b03d0c326"
+    "task_id": "WS-V6-R106-QUARTER-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01",
+    "run": "run://worldsim_v6/WS-V6-R106-QUARTER-METER-INTERVENTION-SELECTOR-ROBUSTNESS-01/20260822T012232Z__scene0255-quarter-meter-intervention-s20260821-r1",
+    "artifact_sha256": "1e47aa906851820dcc5ae3938ad8a0685a9a043a681dc481a9fe6e76c0f7fe79"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -165,7 +165,8 @@
     "r103_cross_scene_selector_generalization": "done_accepted_development_588_frames_micro_macro_worst_f1_1",
     "r104_orthogonal_intervention_selector_robustness": "done_accepted_development_z_plus0p5_f1_1_skip_89p80_percent",
     "r105_cross_scene_intervention_threshold_certificate": "done_accepted_development_integer_interval_1_to_165_margin44",
-    "r106_quarter_meter_intervention_selector_robustness": "active_pre_registered",
+    "r106_quarter_meter_intervention_selector_robustness": "done_accepted_development_z_plus0p25_f1_1_skip_90p31_percent",
+    "r107_eighth_meter_intervention_selector_robustness": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -174,9 +175,9 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "compile_scene0255_actor34_z_plus0p25_intervention",
-    "check_full32_actor_aabb_and_self_kinematics_before_sensor_execution",
-    "render_all196_logged_and_quarter_meter_edited_frames",
+    "compile_scene0255_actor34_z_plus0p125_intervention",
+    "check_full32_actor_aabb_and_self_kinematics_for_the_eighth_meter_edit",
+    "render_all196_logged_and_eighth_meter_edited_frames",
     "evaluate_threshold45_on784_frozen_perception_outputs_without_calibration"
   ]
 }
