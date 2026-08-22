@@ -1,25 +1,25 @@
 {
   "schema_version": "worldsim_v6.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-22T04:21:01Z",
+  "updated_at_utc": "2026-08-22T04:36:33Z",
   "route": "WorldSim V6 / Verifiable World Compiler",
   "branch": "research/worldsim-v6-world-compiler",
   "status": "researching",
-  "iteration": 173,
-  "active_task": "WS-V6-R128-SCENE0230-ORTHOGONAL-SURROGATE-HOLDOUT-01",
-  "active_hypothesis": "WS-V6-H-R128-001",
-  "candidate": "prospective_scene0230_actor12_zplus0p5_binary_surrogate_holdout",
+  "iteration": 174,
+  "active_task": "WS-V6-R129-MAX-MARGIN-SURROGATE-POLICY-REVISION-01",
+  "active_hypothesis": "WS-V6-H-R129-001",
+  "candidate": "development_union_max_margin_threshold13_after_r128_failure",
   "frontend": "streetgs_adgs_sceneir",
-  "dev_artifact_hash": "71625c11a021d4d1bb873379aa4dc39273ef7ad5f2e60fc37c28b87d01e3a918",
+  "dev_artifact_hash": "97f1663ee805a28b7a35006bb958df20942180ac495877ad1001861248b63ec3",
   "confirmation_artifact_hash": "39f02a04377aefaa627f50ab45d23c190407664b63fc8b62d5d38f967bd6f28a",
   "test_artifact_hash": "46bf5761c6e32f4fd5ab53ed91718def45fd94ab6b40ea045d12b9db5101bb07",
   "confirmation_locked": true,
   "compositional_confirmation_locked": true,
-  "failure_ledger_sha256": "83ae3f65ff22048ccae6aab939b88762a2726e1254e5265c1a473ce896ee826c",
-  "last_reflection_id": "WS-V6-REFL-0175",
+  "failure_ledger_sha256": "8681fa41fb782f92f91fd8ecb5d1d26401dd12ecb20e8494165e1a74230271c8",
+  "last_reflection_id": "WS-V6-REFL-0176",
   "last_completed": {
-    "task_id": "WS-V6-R127-PROSPECTIVE-DIAGONAL-SURROGATE-HOLDOUT-01",
-    "run": "run://worldsim_v6/WS-V6-R127-PROSPECTIVE-DIAGONAL-SURROGATE-HOLDOUT-01/20260822T041453Z__prospective-diagonal-holdout-s20260821-r1",
-    "artifact_sha256": "71625c11a021d4d1bb873379aa4dc39273ef7ad5f2e60fc37c28b87d01e3a918"
+    "task_id": "WS-V6-R128-SCENE0230-ORTHOGONAL-SURROGATE-HOLDOUT-01",
+    "run": "run://worldsim_v6/WS-V6-R128-SCENE0230-ORTHOGONAL-SURROGATE-HOLDOUT-01/20260822T042521Z__scene0230-orthogonal-holdout-s20260821-r1",
+    "artifact_sha256": "97f1663ee805a28b7a35006bb958df20942180ac495877ad1001861248b63ec3"
   },
   "governance": {
     "g0_repo_convergence": "done",
@@ -187,7 +187,8 @@
     "r125_binary_perception_surrogate_corpus_recovery": "done_accepted_development_2156_frame_zero_error_interval_1_to_165",
     "r126_binary_surrogate_package_replay": "done_accepted_development_two_bakes_two_fresh_processes_zero_errors_no_torch",
     "r127_prospective_diagonal_surrogate_holdout": "done_accepted_development_first_prospective_19_positive_177_negative_zero_errors",
-    "r128_scene0230_orthogonal_surrogate_holdout": "active_pre_registered",
+    "r128_scene0230_orthogonal_surrogate_holdout": "done_rejected_v6_f92_one_false_negative_frame77_rgb26_labels5",
+    "r129_max_margin_surrogate_policy_revision": "active_pre_registered",
     "v6_0_decision": "go_to_provenance_verifier_without_learned_support"
   },
   "resource_contract": {
@@ -196,10 +197,10 @@
     "request_more_resources_only_on_hard_resource_block": true
   },
   "next_actions": [
-    "bind_scene0230_actor12_jointly_accepted_zplus0p5_candidate_before_rendering",
-    "test_a_second_scene_actor_and_orthogonal_direction_outside_r125_corpus",
-    "render196_sensor_frames_and_run784_frozen_deeplab_inferences",
-    "require_threshold45_zero_fp_zero_fn_and_nontrivial_skip_without_calibration",
-    "accept_or_record_rejection_and_select_the_next_prospective_mechanism"
+    "bind_r126_2156_rows_r127_196_rows_and_rejected_r128_196_rows_as_development_union",
+    "verify_the_only_threshold45_error_is_r128_frame77_rgb26_labels5",
+    "derive_exact_interval1_to26_and_select_threshold13_by_frozen_max_min_margin_rule",
+    "bake_revised_content_addressed_policy_without_claiming_r128_as_validation",
+    "test_threshold13_on_a_new_antithetic_intervention_next"
   ]
 }

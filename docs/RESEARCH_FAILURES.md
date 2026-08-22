@@ -3782,3 +3782,9 @@ H-R122-001 canonical run `20260822T034305Z__spatial-impact-locality-s20260821-r1
 H-R124-001 首次正式启动于 `2026-08-22T03:57:05Z` 前在创建 run directory、聚合任何向量或产生方法结果之前被 source verifier 拒绝。R109 `SELECTOR_TRANSFER.json` 的配置 digest 被人工转抄为 `0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df58dbecafc6eafd91`，而冻结磁盘文件的实际 SHA256 是 `0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df75406faeafd91`。本次没有 canonical run、gate、聚合向量、指标或科学结论，按 infrastructure/source-authority rejection 记录。
 
 不得跳过 `_verify`、修改 R109 artifact、追认 H-R124-001，或调整 threshold45、11条件、2156帧、类别支持、分离间隔及资源门来掩盖该错误。H-R125-001 只把 R109 selector digest 改为磁盘实值并更新 task/hypothesis identity；其余 policy/source authorities、condition corpus、门限、预期方向、资源合同和 claim boundary 全部保持不变，必须在新 commit/push 后从干净工作树正式运行。
+
+### V6-F92：语料内精确阈值不能未经新条件检验就提升为前瞻不变量
+
+H-R128-001 canonical run `20260822T042521Z__scene0230-orthogonal-holdout-s20260821-r1` 在预注册后新生成 scene0230 actor12 `[0,0,+0.5]m` 的196帧 sensor 与784个冻结 DeepLab 输出；所有 source、proposal、0新增 overlap、38,541 primitives、196帧 lifecycle、compiled/native sensor、repeat、GPU、wall 与 abstention gate 均通过。但 threshold45 在78个正帧中漏掉 frame77：RGB changed pixels 为26而 frozen-label changed pixels 为5，得到 TP77、FN1、TN118、FP0、recall0.987179、F1=0.993548。run 按 zero-error 合同正式 `rejected`。
+
+不得追认 R128、删除 frame77、把5个标签像素降为无关、放宽 F1/recall，或在同一 holdout 上改 threshold 后宣称前瞻成功。诊断显示全部118个负帧的最大 RGB feature 仍为0、78个正帧的最小值为26，使包含 R128 的开发并集精确阈值区间缩为 `[1,26]`。H-R129-001 必须把 R128 明确降格为 threshold-revision development evidence，与 R126 的2156行和 R127 的196行合并，按预注册 max-min margin 规则选择 threshold13并只声明开发集精确性；随后必须在另一个新条件上做独立前瞻检验。

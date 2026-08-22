@@ -1,0 +1,51 @@
+schema_version: worldsim_v6.r129_max_margin_surrogate_policy_revision.v1
+task_id: WS-V6-R129-MAX-MARGIN-SURROGATE-POLICY-REVISION-01
+hypothesis_id: WS-V6-H-R129-001
+seed: 20260821
+sources:
+  r126_run: runs://worldsim_v6/WS-V6-R126-BINARY-SURROGATE-PACKAGE-REPLAY-01/20260822T041012Z__binary-surrogate-package-replay-s20260821-r1
+  r126_manifest_sha256: 95bd68b5a3d8bd299459c7dfb288b8dcd5214dbf4cfc9a2427c62b247c18b1bc
+  r126_gate_sha256: 05a8c2a6edd17aa10a12bf22f1aab1bde17216c44936d1d30414fda91fb00c7a
+  r126_summary_sha256: 04e5e1fc1f43c8d1d9adb95aff27d0ccf5fcea9741027d63f0007f34944e8d7e
+  r126_package_manifest_sha256: 3a728a328e36e2f85850a0137912e2b73d5626f8f6e2cd1599f90072a8a3e207
+  r127_run: runs://worldsim_v6/WS-V6-R127-PROSPECTIVE-DIAGONAL-SURROGATE-HOLDOUT-01/20260822T041453Z__prospective-diagonal-holdout-s20260821-r1
+  r127_manifest_sha256: 4d55a289ece2ddca3b134f14a4bcd2c9209e899d357b61b65f585b83e8d8ab53
+  r127_gate_sha256: 71625c11a021d4d1bb873379aa4dc39273ef7ad5f2e60fc37c28b87d01e3a918
+  r127_summary_sha256: 6ee087a1e1135867ecd05d1514c1c184824933529146b9ba7f44843728fffe60
+  r127_selector_transfer_sha256: 1251c35ae1bbba0af54267727d4223ccc39b7f413c743db1b2b28e7e07620ad7
+  r128_run: runs://worldsim_v6/WS-V6-R128-SCENE0230-ORTHOGONAL-SURROGATE-HOLDOUT-01/20260822T042521Z__scene0230-orthogonal-holdout-s20260821-r1
+  r128_manifest_sha256: 732aec99fb77766245e60322ae55fd5b3f9ca3af2055e4d48c9433f917a5330f
+  r128_gate_sha256: 97f1663ee805a28b7a35006bb958df20942180ac495877ad1001861248b63ec3
+  r128_summary_sha256: 4da510b72c96556dc3be66d872fcff24f77c5409d853a0e10121714e95d8750b
+  r128_selector_transfer_sha256: e23ec92ddb39c078e018393e39c12de1e0e6cd0ca90184a607ebed1644e4f4cd
+runtime:
+  expected_r127_frames: 196
+  expected_r128_frames: 196
+  expected_total_rows: 2548
+  expected_positive_rows: 1189
+  expected_negative_rows: 1359
+  old_threshold_pixels: 45
+  expected_false_negative_frame: 77
+  expected_false_negative_rgb_pixels: 26
+  expected_false_negative_label_pixels: 5
+  expected_exact_interval: [1, 26]
+  expected_selected_threshold_pixels: 13
+  expected_selected_margin_pixels: 13
+  expected_r128_false_checks:
+    - passed
+    - prospective_zero_false_positive_and_false_negative
+    - zero_calibration_transfer_f1_gate
+    - zero_calibration_transfer_recall_gate
+resources:
+  execution: cpu_only_immutable_policy_revision
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 20000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - threshold13_is_fit_on_r126_r127_and_rejected_r128_development_union
+  - r128_is_not_reinterpreted_as_validation_or_acceptance
+  - max_min_margin_rule_and_lower_threshold_tie_break_are_frozen_before_execution
+  - revised_policy_requires_a_new_prospective_condition_before_any_generalization_claim
+  - target_is_binary_any_frozen_deeplab_label_change_not_semantic_correctness
+  - label_identity_local_causality_contact_road_physics_planning_safety_abstain
+  - no_gpu_training_or_confirmation_read
