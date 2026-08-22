@@ -1,0 +1,76 @@
+schema_version: worldsim_v61.p4_hy3d_omni_smoke.v1
+task_id: WS-V61-P4-HY3D-OMNI-3090-SMOKE-01
+hypothesis_id: WS-V61-H-P4-001
+seed: 1234
+sources:
+  me1_run: runs://worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+  me1_files:
+    ME1_GATE.json: 6aca5f2f70c18a4599bd545cc51a020e66a4217d7620d1967e58279b0482246d
+    SUMMARY.json: 61713df46260374c2d60474e6bcf79e12e405dac01ade7860cdc24c2e240afb9
+    METRICS.json: dbb1d0a3ada64246e779e9ecca156a3c145d86898b0bab272f4061c68797ffb6
+    MANIFEST.json: 63ae8e56526a60102cb06dabe28b7b7055f55c97601ca3b109b8a95b4865e7d5
+  official_repo: /root/autodl-tmp/third_party/hunyuan3d-omni-v61-me2
+  official_git_commit: 4d47c0cc2bd0c4281963a7314ab330a5af36bfa8
+  official_files:
+    License.txt: ccfc4916da352ffc9d01e85e8b0a00ebf5c23b41b97e6ee489a6b34b02f93276
+    Notice.txt: 9d6c71d536c40e2e0f2564778f20e75754ab705a3a245bd0f225a689ab17e1e7
+    inference.py: b052e8429a301c66ceb6a841c3e59cf16084486232418607e8a8dd393d492370
+    requirements.txt: d7ccaf1d56929f7490265c48cc6f0c65d4f73094d9befe21ce49730f6bf27445
+    demos/voxel/imgs/1c1ff58afbf4455ca80228d280f86aef.png: 6a80372666ae436f07220922a5d8155f0ce04d3a62d0e4e820449c1a24fa6210
+    demos/voxel/plys/1c1ff58afbf4455ca80228d280f86aef.ply: 1531945efbf309fc2a471262e5d6ddb537a7d9f085da66760590b367f3b5d8f1
+  model_root: /root/autodl-tmp/models/hunyuan3d-omni-70e803bfb4e1
+  model_repo_id: tencent/Hunyuan3D-Omni
+  model_revision: 70e803bfb4e127d534049d8ab8c8cb511780d485
+  model_files:
+    cond_encoder/config.json: 80d2b2388942ce3f5876f222e3dfc4fc19b4b4036cb9cd70a927de290fae2943
+    cond_encoder/pytorch_model.bin: f3f308e73153000ed566e985e2b1e38e9b40c12e23b7e6ecf89ce3ea1699c432
+    config.json: efea7858ac17dd786ae41e512d877f4f3ff638bf6f64b8ad3eeb7cae62eb9eae
+    image_processor/config.json: c99230533229adff9a536acebcbf1ff5c30ac4038eeb977b54bdb44e57aca458
+    model/config.json: c508943a4a85f56c285dd53c00d785569cbfae8261aff68a5547dc5e789053eb
+    model/pytorch_model.bin: 01c95e5f2588e324ebc05268231c92b3b1d9e83e5163723100ac958226c12a24
+    scheduler/config.json: 3300c973d4f140b4883d7de8e24aec59bba8eaef7f12e883530b7658b4171ad5
+    vae/config.json: e895305a8a487ff4c42a69712c0c8c6fd1dac22ad29b29dcf8c8801f646e08e8
+    vae/pytorch_model.bin: 379995ca170d8a899019125f389ba8692b2e35625ff64ddc3fdaa8c9302ac3402
+  dino_repo_id: facebook/dinov2-large
+  dino_revision: 47b73eefe95e8d44ec3623f8890bd894b6ea2d6c
+  dino_model_sha256: 399fba97a95f22c36834418bc69373364a99af3a1153da1c0fb31db567c92e23
+environment:
+  conda_prefix: /root/autodl-tmp/envs/worldsim-v61-hy3d-omni
+  hf_home: /root/autodl-tmp/models/hf-cache-worldsim-v61
+  python_major_minor: "3.10"
+  torch_version: 2.5.1+cu124
+inference:
+  control_type: voxel
+  input_image: demos/voxel/imgs/1c1ff58afbf4455ca80228d280f86aef.png
+  input_voxel: demos/voxel/plys/1c1ff58afbf4455ca80228d280f86aef.ply
+  surface_points: 81920
+  num_inference_steps: 50
+  octree_resolution: 512
+  mc_level: 0.0
+  guidance_scale: 4.5
+  use_ema: false
+  fast_decode: false
+gate:
+  require_mesh_vertices_and_faces: true
+  require_finite_mesh: true
+  require_sampled_points: true
+  maximum_gpu_memory_gib: 22
+  maximum_wall_seconds: 1200
+  minimum_disk_free_gib: 60
+license_boundary:
+  license: Tencent Hunyuan 3D Omni Community License Agreement
+  territory_excludes: [European Union, United Kingdom, South Korea]
+  research_execution_location: AutoDL host in China
+  no_model_or_output_distribution: true
+  no_output_for_training_other_models: true
+resources:
+  gpu: 0
+  cpu_workers: 1
+  network_during_formal_run: disabled
+claim_boundary:
+  - official_demo_voxel_control_capability_and_resource_smoke_only
+  - no_driving_actor_quality_claim
+  - no_prompt_seed_texture_or_step_sweep
+  - no_training_or_confirmation_read
+  - no_model_or_output_distribution
+failure_ledger_refs: [V61-F01, V61-F02, V6-F25, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]

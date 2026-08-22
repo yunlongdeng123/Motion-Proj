@@ -1,10 +1,10 @@
 # Research Status
 
-## WorldSim V6.1 ME-0 完成；ME-1 oracle upper bound 已预注册（2026-08-22）
+## WorldSim V6.1 ME-1 oracle upper bound 完成；P4 Hunyuan3D-Omni smoke 已预注册（2026-08-22）
 
-状态：`me0_done / me1_pre_registered / formal_run_pending`
+状态：`me1_done / p4_hy3d_omni_smoke_pre_registered / environment_bootstrap_pending`
 
-当前 active hypothesis=`WS-V61-H-ME1-002`，task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-P4-001`，task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -51,6 +51,24 @@ ME-1 预注册固定五臂：冻结 Big-LaMa 的 `B0-2D`、冻结 R10 的 `B1-R1
 H-ME1-001 在创建 run directory 或启动 GPU 前读取 ME-0 gate 时误把 authority 从 `checks.passed` 当成顶层
 `passed`，触发 `KeyError`；无 run、无方法结果，登记为 `V61-F02`。H-ME1-002 只修正该 schema 路径并增加回归测试，
 所有科学输入、arms、thresholds、预算与 stop rule 不变。
+
+ME-1 canonical：
+
+```text
+run://worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+```
+
+source=`e422f0528c2c98e80d3cfbd8052ccb106734d043`。B0=`0/28`；B1/O1 均为 `3/28`；primary O2=
+`10/28`、false-safe=`0`、accepted mask pixels=`450865`、yield=`39.83%`，保留原3例并新增3 actor+4
+static/disocclusion。O3=`6/28`、false-safe=`0`；actor 例被真实 native OBB overlap（主要 actor4/15）拒绝，
+不通过阈值豁免。wall=`3.60s`、peak=`0.51GiB`。gate/summary/metrics=`6aca5f2f...246d / 61713df4...afb9 /
+dbb1d0a3...ffb6`，ME-2 已解锁。
+
+P4 绑定 Hunyuan3D-Omni 官方 git commit=`4d47c0cc...bfa8`、HF model revision=`70e803bf...d485` 与
+DINOv2-large=`47b73eef...2d6c`。官方一手实现声明约10GB VRAM且支持 bbox/point/voxel；正式 smoke 固定官方 voxel
+demo、seed1234、50 steps、512 octree、无EMA/fast decode/sweep，离线运行并要求 mesh/points 有效、peak<22GiB。
+模型使用受 Tencent community license 的地域与用途限制；本轮只在中国 AutoDL 主机科研执行，不分发模型/输出，
+也不用于训练其他模型。P4 通过后直接跑固定6例 ME-2；失败则停止 Hunyuan 路线，不反复调安装/推理参数。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 

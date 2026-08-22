@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6.1 P4 Hunyuan3D-Omni 3090 smoke PRE-REGISTERED（2026-08-22）
+- task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`，hypothesis=`WS-V61-H-P4-001`，先建立隔离 Python3.10/
+  torch2.5.1+cu124 环境并下载内容寻址权重，不在 `motionproj` 环境混装。
+- official git=`4d47c0cc...bfa8`；HF model=`70e803bf...d485`；DINOv2-large=`47b73eef...2d6c`。
+- 固定官方 voxel demo 的一个样本、seed1234、50 steps、512 octree、guidance4.5；无 EMA/fast decode/参数 sweep。
+- formal run 必须 offline；mesh vertices/faces、finite、sampled points 均非零，peak<22GiB、wall<1200s、disk>=60GiB。
+- license boundary=仅中国 AutoDL 科研执行，不分发模型/输出，不把输出训练进其他模型；不产生驾驶 actor 质量声明。
+
+## WorldSim V6.1 ME-1 oracle Occupancy PASS（2026-08-22）
+- canonical=`run://worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1`，source=`e422f05`。
+- B0=`0/28`；B1=`3/7/18`；O1=`3/7/18`；O2=`10 ACCEPT/0 ABSTAIN/18 REJECT`，false-safe=`0`，
+  accepted mask yield=`39.8300%`；O3=`6/28`、false-safe=`0`。
+- O2 原 R10 三例全部保留，新增3 actor与4 static/disocclusion；method decisions 在 O_eval 读取前固化，全部 gate PASS。
+- O3 actor rejection 保留 native swept OBB overlap 证据，不回改为 acceptance。wall=`3.60s`、peak GPU=`0.51GiB`。
+- gate/summary/metrics/manifest=`6aca5f2f...246d / 61713df4...afb9 / dbb1d0a3...ffb6 / 63ae8e56...e7d5`；
+  failure_ledger_delta=`none`；next=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。
+
 ## WorldSim V6.1 ME-1 H001 infrastructure failure / H002 RECOVERY PRE-REGISTERED（2026-08-22）
 - H001 在 run/GPU 前因把 ME-0 gate authority `checks.passed` 误读为顶层 `passed` 而 `KeyError`；canonical=`null`，
   method result=`null`，failure=`V61-F02`。
