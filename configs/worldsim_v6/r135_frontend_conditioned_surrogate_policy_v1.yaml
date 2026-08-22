@@ -1,0 +1,45 @@
+schema_version: worldsim_v6.r135_frontend_conditioned_surrogate_policy.v1
+task_id: WS-V6-R135-FRONTEND-CONDITIONED-SURROGATE-POLICY-01
+hypothesis_id: WS-V6-H-R135-001
+seed: 20260821
+sources:
+  r132_run: runs://worldsim_v6/WS-V6-R132-CROSS-PROSPECTIVE-THRESHOLD13-CERTIFICATE-01/20260822T051425Z__cross-prospective-threshold13-s20260821-r1
+  r132_manifest_sha256: 1ace1d2559dc1f274a8873dad65e9f4b0af568fe328e1cf018a500ab44220595
+  r132_gate_sha256: 1b781a563993d472fa689f39d384a89c3096f7e460f8c5841ea2cda08563bdef
+  r132_certificate_sha256: fcb14358957e47ca14b47a863d16822eaa8e5b82e1a45263c178f64b8667bcd0
+  r133_run: runs://worldsim_v6/WS-V6-R133-SELECTIVE-PERCEPTION-EXECUTION-01/20260822T052142Z__selective-perception-execution-s20260821-r1
+  r133_manifest_sha256: ff524f4e4b98f0240f69702a781d3aca8a5e73fb3b0e19669d4a8369202919f4
+  r133_gate_sha256: 5fb469fc2860bdffd9cecf60efd9d250413e0dff9825df30b9a523bacd57a0df
+  r133_selective_execution_result_sha256: ba1f9ee9d74e0ade161b35014523cab28aba6e358e4803eb9375dd997dc495b5
+  r134_run: runs://worldsim_v6/WS-V6-R134-ADGS-CROSS-FRONTEND-THRESHOLD13-01/20260822T053744Z__adgs-cross-frontend-threshold13-s20260821-r2
+  r134_manifest_sha256: a2624e4b5ce4a3f6849f67c807d6978c3881a5dea779fc819b0e77d13cbbf207
+  r134_gate_sha256: 0becd539d02f36ad8e9be7fabf57a58b993c2dcc06667fbf6260c0f00878a764
+  r134_summary_sha256: 5ebed26f4ad9f6b2a737fcc58a7a007a7c066139eb1a57ee94e971da3c745791
+  r134_cross_frontend_transfer_sha256: 78c1c2f06fb9fdd92cbb6bf78329c0c75f2ee90293a61069e6a24e6845a50bd2
+runtime:
+  streetgs_threshold_pixels: 13
+  expected_rows: 157
+  expected_positive_rows: 131
+  expected_negative_rows: 26
+  expected_false_negative_frame: 13
+  expected_false_negative_rgb_pixels: 1
+  expected_false_negative_label_pixels: 1
+  expected_interval: [1, 1]
+  expected_r134_false_checks:
+    - passed
+    - cross_frontend_precision_recall_f1_one
+    - cross_frontend_zero_false_positive_and_false_negative
+resources:
+  execution: cpu_only_frontend_conditioned_policy_fit
+  maximum_wall_seconds: 120
+  maximum_output_bytes: 20000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - streetgs_threshold13_remains_bound_to_r132_r133_and_is_not_refit
+  - adgs_threshold1_is_fit_only_on_rejected_r134_train_development_rows
+  - r134_remains_rejected_and_is_not_reinterpreted_as_validation
+  - declared_frontend_is_an_explicit_policy_input_and_unknown_frontends_fail_closed
+  - adgs_interval1_to1_has_zero_positive_side_margin_and_requires_heldout_confirmation
+  - target_is_binary_frozen_deeplab_change_not_semantic_correctness
+  - identity_causality_contact_road_dynamics_physics_planning_safety_abstain
+  - no_heldout_gpu_training_or_confirmation_read

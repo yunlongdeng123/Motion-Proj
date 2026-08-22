@@ -3794,3 +3794,9 @@ H-R128-001 canonical run `20260822T042521Z__scene0230-orthogonal-holdout-s202608
 H-R134-001 首次正式启动 `20260822T053238Z__adgs-cross-frontend-threshold13-s20260821-r1` 在任何 sensor 或 perception 输出产生前，于请求 frame0 时退出。冻结 R3 adapter 的196时间轴只物化了118个 train、39个 development 时间步并刻意排除39个 heldout 时间步；worker 仅从 `getTestCameras()` 建表，因此只看见 development，frame0 不存在。失败目录仅4 KiB、sensor 文件数为0，不构成 threshold13 或 cross-frontend 方法结论。
 
 不得把 heldout 图像补入 adapter、把缺帧静默删除后仍声称196分母、追认 H-R134-001，或把本次启动失败解释为 AD-GS transfer rejection。H-R134-002 只能合并 `getTrainCameras()` 与 `getTestCameras()`，从冻结 `partition.json` 预先导出 camera0 的精确118+39=157帧，并保持39个 heldout 未读；AD-GS checkpoint/edit、threshold13、正负支持、0 FP/FN、skip、资源门与所有 abstention 不变，新 commit/push 后重新正式运行。
+
+### V6-F94：StreetGS 上冻结的单一 RGB 像素阈值不能直接宣称跨 frontend 不变
+
+H-R134-002 canonical run `20260822T053744Z__adgs-cross-frontend-threshold13-s20260821-r2` 在 heldout 未读的前提下完成 AD-GS scene0048 的118 train+39 development 帧、157组 logged/edited sensor 与628个重复精确 DeepLab 输出；checkpoint、adapter、aggregate actor state restoration、分区、GPU、wall 与所有 abstention gate 均通过。冻结 StreetGS threshold13 在131个正帧、26个负帧上得到 TP130、FN1、TN26、FP0、recall0.992366、F1=0.996169，唯一漏检为 train frame13：RGB changed pixels=1、label changed pixels=1；run 按0-error合同正式 `rejected`。
+
+不得追认 R134、删除 frame13、把1个标签像素降为无关、放宽 recall/F1，或把 AD-GS 数据用于回改 StreetGS threshold13 后仍称全局策略。诊断显示26个 AD-GS 负帧的最大 feature 为0、131个正帧的最小 feature 为1，开发区间是脆弱的单点 `[1,1]`。H-R135-001 只能显式声明 frontend-conditioned router：StreetGS 保持13，AD-GS 用 R134 开发集按预注册规则拟合为1；R134 保持 rejected，且 AD-GS 的39个 heldout 时间步必须在 policy freeze 后一次性验证。
