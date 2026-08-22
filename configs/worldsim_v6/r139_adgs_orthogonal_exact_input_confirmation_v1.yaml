@@ -1,0 +1,65 @@
+﻿schema_version: worldsim_v6.r139_adgs_orthogonal_exact_input_confirmation.v1
+task_id: WS-V6-R139-ADGS-ORTHOGONAL-EXACT-INPUT-CONFIRMATION-01
+hypothesis_id: WS-V6-H-R139-001
+seed: 20260821
+sources:
+  r137_run: runs://worldsim_v6/WS-V6-R137-EXACT-INPUT-REUSE-CROSS-FRONTEND-01/20260822T060834Z__exact-input-reuse-s20260821-r1
+  r137_manifest_sha256: 4ea486f123724b5e6b63a0565bdc32057ca3c51611103629e5c8317f3916875e
+  r137_gate_sha256: 5d18ecbf9bed269d4ca9c7b830ed33a8a68a67760ea3a099f3c5dbb7cee1f464
+  r137_summary_sha256: 017a96d02d17ab7c2001a9c428ce124f4aeb2a5cebab0cde077b82b9d7985175
+  r137_result_sha256: 624dea1380ac9e9377df134ba1026fc3301d490cf2e20c30fd5e4305c0d9641a
+  adgs_implementation_root: /root/autodl-tmp/third_party/AD-GS
+  adgs_implementation_commit: 9a208512e49c8ddbaa20387921d9648adcd21cb4
+  adgs_python: /root/autodl-tmp/envs/adgs/bin/python
+  adgs_model_root: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model
+  adgs_checkpoint_files:
+    point_cloud.ply:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/point_cloud.ply
+      sha256: c4fdfd9fa41c305448fc5d940c75eaf1130ba06a8623f5d36df45fb3629114e7
+    deform.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/deform.pth
+      sha256: 1abade5a3a96bde1c4ebe451521d1149b643c3742b8ac094e6d9fcbad23b89a7
+    env.pth:
+      path: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/env.pth
+      sha256: f941a6bccb371000fcb23d84f32480176ff7793cc015e843baf8bedffa500eef
+  adgs_source_scene: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  adgs_training_adapter: /root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0048
+  training_points3d_sha256: fc18dab754610705da11b9cafb87726a96c55a3a74591fd341fac7e421a8b187
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+runtime:
+  scene: scene-0048
+  camera_id: 0
+  partition_modulus: 5
+  heldout_remainder: 4
+  expected_heldout_frames: 39
+  adapter_included_partitions: [heldout, train]
+  expected_partition_image_counts: {development: 0, heldout: 117, train: 354}
+  translation_world_m: [0.0, 0.0, 0.5]
+  expected_full_invocations: 156
+evaluation:
+  repeat_count: 2
+  minimum_changed_input_frames: 20
+  minimum_identical_input_frames: 3
+  minimum_invocation_reduction_fraction: 0.05
+  maximum_elapsed_ratio_vs_full_reference: 0.95
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_adapter_seconds: 600
+  maximum_sensor_worker_seconds: 600
+  maximum_perception_worker_seconds: 300
+  maximum_wall_seconds: 1200
+  maximum_output_bytes: 2000000000
+  minimum_disk_free_gib: 8
+claim_boundary:
+  - exact_once_attempt_is_created_before_new_orthogonal_heldout_quality
+  - only39_heldout_camera0_frames_enter_confirmation_even_with_train_loader_support
+  - aggregate_dynamic_edit_is_worldz_plus0p5m_and_differs_from_r134_r136_worldx_plus0p5m
+  - reuse_is_permitted_only_for_byte_identical_rgb_without_a_numeric_threshold
+  - full_reference_and_real_selective_execution_are_both_inside_the_single_attempt
+  - cached_logged_output_reconstruction_must_match_all156_full_reference_hashes
+  - confirmation_is_one_adgs_scene_frontend_and_edit_not_global_generalization
+  - semantic_correctness_identity_causality_contact_physics_planning_safety_abstain
+  - no_training_and_confirmation_is_consumed_on_any_outcome
