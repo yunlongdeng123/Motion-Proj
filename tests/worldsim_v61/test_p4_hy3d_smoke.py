@@ -35,3 +35,7 @@ def test_p4_is_one_off_offline_voxel_capability_smoke() -> None:
     ]
     assert config["license_boundary"]["no_model_or_output_distribution"]
     assert config["license_boundary"]["no_output_for_training_other_models"]
+    assert all(
+        len(value) == 64 and set(value) <= set("0123456789abcdef")
+        for value in config["sources"]["model_files"].values()
+    )

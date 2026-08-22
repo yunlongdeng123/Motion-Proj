@@ -2,7 +2,7 @@
 
 ## WorldSim V6.1 ME-1 oracle upper bound 完成；P4 Hunyuan3D-Omni smoke 已预注册（2026-08-22）
 
-状态：`me1_done / p4_hy3d_omni_smoke_pre_registered / environment_bootstrap_pending`
+状态：`me1_done / p4_hy3d_omni_smoke_source_repair_pre_registered / formal_retry_pending`
 
 当前 active hypothesis=`WS-V61-H-P4-001`，task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
@@ -70,6 +70,11 @@ DINOv2-large=`47b73eef...2d6c`。官方一手实现声明约10GB VRAM且支持 b
 demo、seed1234、50 steps、512 octree、无EMA/fast decode/sweep，离线运行并要求 mesh/points 有效、peak<22GiB。
 模型使用受 Tencent community license 的地域与用途限制；本轮只在中国 AutoDL 主机科研执行，不分发模型/输出，
 也不用于训练其他模型。P4 通过后直接跑固定6例 ME-2；失败则停止 Hunyuan 路线，不反复调安装/推理参数。
+
+P4 首次入口在 run/GPU 前发现 VAE digest 被手工多录一个尾字符（`V61-F04`）；实际文件 SHA 与固定 revision
+HTTP `X-Linked-ETag` 完全一致。只修正 65→64 字符的 provenance transcription，并新增 digest 结构回归；模型、
+权重、demo、seed、steps、octree、gate 与 stop rule 均不变。推理环境已按官方版本收窄为 shape-inference closure，
+`pip check`、CUDA、DINO cache 与官方 pipeline import 均通过，训练/UI/texture 后处理依赖不进入 P4。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 
