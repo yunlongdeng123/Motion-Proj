@@ -103,6 +103,11 @@ def occupancy_gate(factors: Mapping[str, Any], thresholds: Mapping[str, float]) 
     )
 
 
+def me0_gate_passed(document: Mapping[str, Any]) -> bool:
+    """ME-0 gate 的 authority 位于 checks.passed。"""
+    return bool(document.get("checks", {}).get("passed", False))
+
+
 def obb_intersects(
     center_a: np.ndarray,
     rotation_a: np.ndarray,
@@ -439,7 +444,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     _verify_files(b0_root, config["sources"]["b0_2d_files"])
     _verify_files(r9_root, config["sources"]["r9_cross_files"])
     _verify_files(r10_root, config["sources"]["r10_files"])
-    if not json.loads((me0_root / "ME0_GATE.json").read_text(encoding="utf-8"))["passed"]:
+    if not me0_gate_passed(json.loads((me0_root / "ME0_GATE.json").read_text(encoding="utf-8"))):
         raise ME1ExperimentError("ME-0 未通过")
 
     cases = _read_jsonl(r9_root / "CASES.jsonl")

@@ -1,5 +1,11 @@
 # Experiments
 
+## WorldSim V6.1 ME-1 H001 infrastructure failure / H002 RECOVERY PRE-REGISTERED（2026-08-22）
+- H001 在 run/GPU 前因把 ME-0 gate authority `checks.passed` 误读为顶层 `passed` 而 `KeyError`；canonical=`null`，
+  method result=`null`，failure=`V61-F02`。
+- H002 只修正 frozen JSON schema 路径并新增 regression test；28-case、B0/B1/O1/O2/O3、0.2m/0.1m、
+  50% coverage、20% depth、primary gate、资源与 confirmation lock 全部不变。
+
 ## WorldSim V6.1 ME-1 oracle Occupancy PRE-REGISTERED（2026-08-22）
 - task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`，hypothesis=`WS-V61-H-ME1-001`，状态=`formal_run_pending`。
 - 五臂=`B0-2D / B1-R10 / O1-GATE / O2-OCC-GEOMETRY / O3-OCC-4D`；primary=`O2-OCC-GEOMETRY`。

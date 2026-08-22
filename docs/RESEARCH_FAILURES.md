@@ -3837,6 +3837,17 @@ H-R140-002 failed run `20260822T063601Z__end-to-end-utility-s20260821-r1` reprod
 
 Do not promote either partial run or continue one-line-at-a-time repair. H-R140-003 is preregistered after an exhaustive `true|false|null` token search. It changes the exactly two remaining resource-audit values (`training_started`, `confirmation_content_read`) to Python `False` and updates the hypothesis binding; all scientific inputs, formulas, thresholds, denominators, budgets, and claim boundaries remain fixed.
 
+### V61-F02：下游 runner 必须读取上游 gate 的真实嵌套 authority
+
+H-ME1-001 正式入口完成所有冻结文件 hash 校验后，把 `ME0_GATE.json` 的通过位误读为顶层 `passed`，而
+`worldsim_v61.me0_gate.v1` 的真实 authority 是 `checks.passed`。因此触发 `KeyError`；异常发生在 run directory
+创建、O_method/O_eval tensor 读取、GPU ray compiler、proposal 编译和任何方法计算之前。canonical run=`null`，
+不存在 oracle upper-bound 科学结果，不能把本次记成 method rejected。
+
+不得跳过 ME-0 authority、修改 canonical ME-0 artifact、放宽 ME-1 gate，或把 launcher failure 追认为科学 attempt。
+H-ME1-002 只把读取路径修正为 `document["checks"]["passed"]` 并增加嵌套 schema 回归；28-case、五臂、source
+hashes、0.2m voxel/0.1m ray step、50% coverage、20% depth consistency、false-safe/stop rule 与资源预算全部不变。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。

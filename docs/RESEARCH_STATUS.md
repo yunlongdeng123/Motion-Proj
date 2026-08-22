@@ -4,7 +4,7 @@
 
 状态：`me0_done / me1_pre_registered / formal_run_pending`
 
-当前 active hypothesis=`WS-V61-H-ME1-001`，task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-ME1-002`，task=`WS-V61-ME1-ORACLE-OCC-PROPOSAL-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -47,6 +47,10 @@ ME-1 预注册固定五臂：冻结 Big-LaMa 的 `B0-2D`、冻结 R10 的 `B1-R1
 0.2m voxel、0.1m ray step、R9 的 50% coverage 与 20% depth consistency；没有 case 特判或 threshold sweep。
 一次结构审计显示 10 个 P1-ACCEPT case 的 method mask coverage=`73.65%..94.78%`，故直接进入正式 run。
 若 O2 不能达到 `>=5/28`、false-safe=`0`、保留原3例并新增 actor+static/disocclusion，则停止模型接入。
+
+H-ME1-001 在创建 run directory 或启动 GPU 前读取 ME-0 gate 时误把 authority 从 `checks.passed` 当成顶层
+`passed`，触发 `KeyError`；无 run、无方法结果，登记为 `V61-F02`。H-ME1-002 只修正该 schema 路径并增加回归测试，
+所有科学输入、arms、thresholds、预算与 stop rule 不变。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 

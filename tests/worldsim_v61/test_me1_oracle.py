@@ -7,6 +7,7 @@ import numpy as np
 from motion_proj.worldsim_v61.me1_oracle import (
     fuse_two_factors,
     method_decision,
+    me0_gate_passed,
     obb_intersects,
     occupancy_gate,
 )
@@ -19,6 +20,12 @@ def test_r10_fusion_and_o2_decision_preserve_abstention() -> None:
     assert method_decision("ACCEPT", True) == "ACCEPT"
     assert method_decision("ACCEPT", False) == "ABSTAIN"
     assert method_decision("REJECT", True) == "REJECT"
+
+
+def test_me0_gate_reads_nested_authority() -> None:
+    assert me0_gate_passed({"checks": {"passed": True}})
+    assert not me0_gate_passed({"passed": True})
+    assert not me0_gate_passed({"checks": {"passed": False}})
 
 
 def test_named_occupancy_gate_has_no_scalar_compensation() -> None:
