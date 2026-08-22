@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.1 P7R PASS / ME-3R IR-WM ONLY RECOVERY PRE-REGISTERED（2026-08-22）
+
+- P7R canonical=`run://worldsim_v61/WS-V61-P7R-IRWM-CONTRACT-RECOVERY-01/20260822T144446Z__irwm-contract-recovery-s1-r1`，
+  source=`c42bf50809a8a6813d49c841be76f524edbb8bb7`；8/8 checks PASS，wall=`0.023s`，没有重复 GPU/model。
+- gate/summary/recovery/manifest/terminal=`16a5e910...9a1b / 964f174e...0b03 / e908b46c...0d63 /
+  24157602...5c7 / 4f50bfb7...8b8`。decision=`pre_register_single_me3_irwm_scientific_recovery`。
+- ME-3R task=`WS-V61-ME3R-IRWM-PREDICTED-OCC-01`，primary arm=`P1-IRWM-PREDICTED`。两个 scene workers
+  同卡并行；每个只载模一次并执行固定窗口 `42/47/52` 与 `47/52/57`，共产生4个 target occupancy。
+- mapping 固定为0=FREE、1..16=OCCUPIED、extent外=UNKNOWN；predicted FREE 不是真值，UNKNOWN 阻塞射线，
+  native identity 不补几何。28-case method decisions 先冻结，随后才读 O_eval。
+- gate=`>=8/28`、false-safe=`0`、strictly `>3/28`、mask yield>=80% oracle；peak<=22GiB、wall<=1800s。
+  这是唯一一次 ME-3 scientific recovery；失败后不再做 backend、threshold、grid、window 或 verifier recovery。
+
 ## WorldSim V6.1 P7 IR-WM H001 CONTRACT REJECTED / H002 RECOVERY PRE-REGISTERED（2026-08-22）
 
 - H001 canonical=`run://worldsim_v61/WS-V61-P7-IRWM-3090-SMOKE-01/20260822T143153Z__irwm-current-smoke-s1-r1`，

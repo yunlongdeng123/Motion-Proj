@@ -72,6 +72,62 @@ def resample_gaussianworld_classes(
     }
 
 
+def resample_irwm_classes(
+    class_label: np.ndarray,
+    target_spec: VoxelGridSpec,
+    *,
+    source_origin_m: tuple[float, float, float] = (-51.2, -51.2, -5.0),
+    source_voxel_size_m: float = 0.512,
+    empty_class: int = 0,
+    occupied_class_min: int = 1,
+    occupied_class_max: int = 16,
+) -> dict[str, np.ndarray]:
+    """按 IR-WM 官方 cell center 重采样；extent 外保留 UNKNOWN。"""
+    source = np.asarray(class_label, dtype=np.uint8)
+    if source.ndim != 3 or source.shape != (200, 200, 16):
+        raise ValueError(f"IR-WM class grid 尺寸非法: {source.shape}")
+    source_origin = np.asarray(source_origin_m, dtype=np.float64)
+    axes: list[np.ndarray] = []
+    valid_axes: list[np.ndarray] = []
+    for axis, size in enumerate(target_spec.shape):
+        centers = (
+            target_spec.origin[axis]
+            + (np.arange(size, dtype=np.float64) + 0.5) * target_spec.voxel_size_m
+        )
+        indices = np.floor(
+            (centers - source_origin[axis]) / float(source_voxel_size_m)
+        ).astype(np.int64)
+        valid = (indices >= 0) & (indices < source.shape[axis])
+        axes.append(np.clip(indices, 0, source.shape[axis] - 1))
+        valid_axes.append(valid)
+    sampled = source[np.ix_(axes[0], axes[1], axes[2])]
+    valid = (
+        valid_axes[0][:, None, None]
+        & valid_axes[1][None, :, None]
+        & valid_axes[2][None, None, :]
+    )
+    known = (sampled == int(empty_class)) | (
+        (sampled >= int(occupied_class_min))
+        & (sampled <= int(occupied_class_max))
+    )
+    if np.any(valid & ~known):
+        raise ValueError("IR-WM 出现冻结类别合同外的 label")
+    semantics = np.full(target_spec.shape, UNKNOWN, dtype=np.uint8)
+    semantics[valid & (sampled == int(empty_class))] = FREE
+    semantics[
+        valid
+        & (sampled >= int(occupied_class_min))
+        & (sampled <= int(occupied_class_max))
+    ] = OCCUPIED
+    predicted_class = np.full(target_spec.shape, 255, dtype=np.uint8)
+    predicted_class[valid] = sampled[valid]
+    return {
+        "semantics": semantics,
+        "predicted_class": predicted_class,
+        "source_valid": valid,
+    }
+
+
 def bind_native_actor_identity_without_geometry_fill(
     semantics: np.ndarray,
     target_spec: VoxelGridSpec,
