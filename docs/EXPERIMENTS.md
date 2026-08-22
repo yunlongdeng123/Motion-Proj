@@ -1,5 +1,27 @@
 # Experiments
 
+## WorldSim V6.1 ME-3 GaussianWorld predicted occupancy PRE-REGISTERED（2026-08-22）
+
+- task=`WS-V61-ME3-PREDICTED-OCC-01`，hypothesis=`WS-V61-H-ME3-GW-001`；P6 capability 已通过。
+- 两个 development scene 分别用一个官方 batch1 worker，在同一 RTX3090 并行；每个 scene 固定2Hz
+  `frames=[2,7,12,17,22,27,32,37,42,47,52,57]`，只取 target52/57，共4个 predicted units。
+- mapping 固定为 class0/extent外=`UNKNOWN`、class1..16=`OCCUPIED`、class17=`FREE`，不设 confidence threshold。
+  UNKNOWN 封住 ray；predicted FREE 不冒充观测真值。native OBB 只绑定已有 predicted OCCUPIED identity，不补几何。
+- method 只读 frozen R9 P1 photo、六相机 predicted occupancy 与 native identity；先固化28个 decisions，再读 O_eval
+  计算 hidden truth/false-safe。主门槛=`>=8/28`、false-safe=`0`、strictly `>3/28`，mask-area yield 至少保留
+  oracle O2 的80%。不训练、不 calibration、不 threshold/input/model sweep。
+
+## WorldSim V6.1 P6 GaussianWorld 3090 smoke PASS（2026-08-22）
+
+- canonical=`run://worldsim_v61/WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01/20260822T132526Z__gaussianworld-smoke-s1-r1`，
+  source=`95c842a883652f679cb1bee93bf1db0e3092c5b2`。
+- 官方 checkpoint missing/unexpected=`0/0`，output=`1×18×200×200×16` 且 finite；occupied=`29608`、
+  empty=`610392`、history anchor present。
+- inference=`0.8524s`、worker wall=`3.0384s`、peak=`2.1499GiB`；17项 gate 全部通过。未读取
+  SurroundOcc/O_method/O_eval/confirmation，未训练、calibration 或 threshold selection。
+- gate/summary/resource/manifest/terminal=`dd59fd9e...133 / da079429...b21 / b6dc3b48...9ac /
+  24b19cbb...0d9 / 8f886211...ab7`；decision=`enter_ME3_without_OccWorld_audit`。
+
 ## WorldSim V6.1 P6 GaussianWorld 3090 smoke PRE-REGISTERED（2026-08-22）
 
 - task=`WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01`，hypothesis=`WS-V61-H-P6-GW-001`。

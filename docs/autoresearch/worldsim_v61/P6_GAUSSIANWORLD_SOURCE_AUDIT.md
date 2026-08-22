@@ -56,3 +56,18 @@ MMSegmentation1.0.0、MMDetection3D1.1.1、spconv2.3.6，并只为 RTX3090 编�
 P6 若通过，直接预注册并执行一次 ME-3 development；若 P6 失败，只根据明确的 source/data/resource 根因决定是否
 审计 OccWorld，不调图像尺寸、camera order、权重、类别映射或模型参数。ME-3 若出现 false-safe，优先保留 UNKNOWN/
 abstain，禁止通过降低阈值恢复 yield。
+
+## P6 正式结果
+
+Canonical run：
+
+```text
+run://worldsim_v61/WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01/20260822T132526Z__gaussianworld-smoke-s1-r1
+```
+
+source=`95c842a883652f679cb1bee93bf1db0e3092c5b2`。官方 checkpoint 以 `0 missing / 0 unexpected`
+完整载入，输出 shape=`1×18×200×200×16` 且 finite；occupied=`29608`、empty=`610392`。单帧 inference=
+`0.8524s`、worker wall=`3.0384s`、peak=`2.1499GiB`，17 项 gate 全部通过。正式 worker 明确记录
+`surroundocc_label_read=false`、`training_started=false`、`confirmation_content_read=false`，dummy label 仍只提供
+shape。gate/summary/resource/manifest/terminal=`dd59fd9e...133 / da079429...b21 / b6dc3b48...9ac /
+24b19cbb...0d9 / 8f886211...ab7`。因此不审计 OccWorld，直接进入冻结的 ME-3 GaussianWorld development。

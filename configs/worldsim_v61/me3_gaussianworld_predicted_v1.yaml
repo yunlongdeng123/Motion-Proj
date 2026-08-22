@@ -1,0 +1,134 @@
+schema_version: worldsim_v61.me3_gaussianworld_predicted.v1
+task_id: WS-V61-ME3-PREDICTED-OCC-01
+hypothesis_id: WS-V61-H-ME3-GW-001
+seed: 1
+sources:
+  p6_run: runs://worldsim_v61/WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01/20260822T132526Z__gaussianworld-smoke-s1-r1
+  p6_files:
+    P6_GATE.json: dd59fd9e805e465a26c83b7b85adbe73f818cbea6622965ba79458cdbcacb133
+    SUMMARY.json: da0794294bbc078249035af714628dec41aa5b50ca0b7bae6ed675868c432b21
+    TERMINAL.json: 8f886211864279c47841dcad64f427d922252260f8835d581353c38d53590ab7
+  me0_run: runs://worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+  me0_files:
+    ME0_GATE.json: 1e81807435ec1b6225a43369e3f53d22bf8fa4aaeb823701d589d0d2d27c8bb7
+    MANIFEST.json: 386d99abce176e83ee5529456d4fcdc9fae13ae4c235538da9c1ec9d0fde59ec
+    SUMMARY.json: 6e50644b8e4f1f57e8c7a402ae9d0ae636f9fbf9cc6d64858f1bf7b4258db14f
+  me1_run: runs://worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+  me1_files:
+    ME1_GATE.json: 6aca5f2f70c18a4599bd545cc51a020e66a4217d7620d1967e58279b0482246d
+    SUMMARY.json: 61713df46260374c2d60474e6bcf79e12e405dac01ade7860cdc24c2e240afb9
+    ARM_SUMMARIES.jsonl: cd6f4af653a5d6aa3bc99ef2d849b9f1e3ed9626746716dbf1ac8dfd5d6cdd6c
+    PER_CASE.jsonl: 15925c9a4b5ffcd113fc3fba944e5910641efa97982fca2cb02dee9e9c9f74dc
+  r9_cross_run: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_cross_files:
+    CASES.jsonl: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+    verifier_worker/PER_CASE_ARMS.jsonl: 862ce290455d2018a53b3eb19dfe45d5b63a8ffa5e18080435e73f09f987f68e
+  r10_run: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+  r10_files:
+    FACTORIZED_DECISIONS.jsonl: 7393421f4a27c301366423dab02c4fc3a704e62a90faf3e2d6be06fbb96e5f66
+    SUMMARY.json: 174dc8b56a5709c1aeb8f515d1b2ac09eae8cd222481d831aef1df8b073cb868
+model:
+  official_repo: /root/autodl-tmp/third_party/gaussianworld-v61-me3
+  official_git_commit: b43629eaecffd5a7cbaac1a55517766e6263e4fc
+  official_config: config/nusc_surroundocc_stream_eval.py
+  model_root: /root/autodl-tmp/models/gaussianworld-b43629eaecff
+  files:
+    ckpt_stream.pth:
+      bytes: 298029831
+      sha256: 5477081191e6d7fb8ac880bf5b99230b944a7cea76b0d87175c789a51cb97be3
+    r101_dcn_fcos3d_pretrain.pth:
+      bytes: 177818375
+      sha256: 1ee46d1c3294a4ff51733013d1f27b08269c1435376dece9e8d70fa6c22a8ccf
+  output_contract:
+    class_count: 18
+    grid_shape: [200, 200, 16]
+    pc_range_m: [-50.0, -50.0, -5.0, 50.0, 50.0, 3.0]
+    grid_size_m: 0.5
+    noise_class: 0
+    occupied_class_min: 1
+    occupied_class_max: 16
+    empty_class: 17
+environment:
+  prefix: /root/autodl-tmp/envs/worldsim-v61-gaussianworld
+  python: 3.8.16
+  torch: 2.0.0+cu118
+  mmcv: 2.0.1
+  mmdet: 3.0.0
+  mmsegmentation: 1.0.0
+  mmdet3d: 1.1.1
+  spconv: 2.3.6
+raw_evidence:
+  scene-0048: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  scene-0242: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_case_count: 28
+  scenes: [scene-0048, scene-0242]
+streaming:
+  frames: [2, 7, 12, 17, 22, 27, 32, 37, 42, 47, 52, 57]
+  target_frames: [52, 57]
+  cadence_hz: 2
+  camera_names: [CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT]
+  camera_ids: [0, 2, 1, 5, 3, 4]
+  native_shape: [900, 1600]
+  final_shape: [864, 1600]
+target_grid:
+  frame: current_lidar
+  origin_m: [-20.0, -30.0, -3.0]
+  voxel_size_m: 0.2
+  shape: [300, 300, 40]
+  class_mapping:
+    "0": UNKNOWN
+    "1-16": OCCUPIED
+    "17": FREE
+    outside_source_extent: UNKNOWN
+projection:
+  camera_id: 0
+  width: 512
+  height: 288
+  native_width: 1600
+  native_height: 900
+  near_m: 0.4
+  far_m: 60.0
+  step_m: 0.1
+  ray_batch_size: 8192
+  observed_support_dilation_voxels: 1
+method_gate:
+  minimum_surface_coverage: 0.50
+  unknown_policy: blocks_ray_and_abstains
+  actor_hole_requires_native_identity_on_model_predicted_occupied_cell: true
+  predicted_free_is_not_observed_truth: true
+independent_eval_gate:
+  maximum_free_space_conflict: 0.05
+  minimum_observed_surface_support: 0.80
+  maximum_unknown_volume_fraction: 0.20
+  minimum_projected_surface_coverage: 0.50
+  minimum_method_eval_depth_overlap: 0.50
+  maximum_median_relative_depth_error: 0.20
+primary_gate:
+  arm: P1-GW-PREDICTED
+  minimum_accepted_cases: 8
+  maximum_false_safe_count: 0
+  must_exceed_accept_count: 3
+  minimum_oracle_yield_fraction: 0.80
+resources:
+  gpu: 0
+  parallel_scene_workers: 2
+  worker_cpu_threads: 4
+  maximum_cpu_workers: 8
+  worker_timeout_seconds: 1200
+  maximum_wall_seconds: 1800
+  maximum_gpu_memory_gib: 22
+  minimum_disk_free_gib: 60
+failure_ledger_refs: [V61-F03, V61-F09, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]
+claim_boundary:
+  - matched_28_case_development_only
+  - GaussianWorld_is_predicted_evidence_not_truth
+  - class_mapping_and_stream_schedule_are_fixed_without_threshold_selection
+  - predicted_UNKNOWN_blocks_rays_and_predicted_FREE_is_not_observed_FREE
+  - native_boxes_bind_identity_only_and_never_create_occupancy
+  - method_decisions_freeze_before_O_eval_is_loaded
+  - O_eval_only_scores_hidden_truth_and_false_safe
+  - two_scene_workers_parallelize_official_batch1_inference_on_one_RTX3090
+  - no_training_confirmation_read_or_real_world_safety_claim
