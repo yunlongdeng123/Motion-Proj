@@ -1,0 +1,58 @@
+schema_version: worldsim_v6.r119_scene0255_composition_saturation_certificate.v1
+task_id: WS-V6-R119-SCENE0255-COMPOSITION-SATURATION-CERTIFICATE-01
+hypothesis_id: WS-V6-H-R119-001
+seed: 20260821
+sources:
+  r102_run: runs://worldsim_v6/WS-V6-R102-THIRD-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T004756Z__scene0255-selector-transfer-s20260821-r1
+  r102_gate_sha256: 62a44f52815320bf968f4b702380c8e8d9a987fbe0f5d6dd95586a933152d16c
+  r102_summary_sha256: f74b3224070717ecbc5edbe99ea9217659ee1848bff93f99af9552a82ef84fb1
+  r102_manifest_sha256: b083ea9b680947d08ed112ddb031d435056bc8a782990eba720d21d3c498db75
+  r102_selector_transfer_sha256: b426beb316d3035673289b4c34a64b68da0d83cbf06f70a6f59e253de2cfee04
+  r109_run: runs://worldsim_v6/WS-V6-R109-SCENE0255-TWO-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T015827Z__scene0255-two-actor-selector-s20260821-r1
+  r109_gate_sha256: 383df9f490e516873229dc6c28486493960130d820f182e4cfbb8054e6782569
+  r109_summary_sha256: 11d2b1f478e4f277cc5c54c8188b4cbfc0655444032b88f2eb9a046a62be6202
+  r109_manifest_sha256: 1c358a1dd0dce020c1e37494aad1cc1bda0ca2b82a0978d3738d54fd8b05738a
+  r109_selector_transfer_sha256: 0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df75406faeafd91
+  r114_run: runs://worldsim_v6/WS-V6-R114-SCENE0255-THREE-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T024134Z__scene0255-three-actor-selector-s20260821-r1
+  r114_gate_sha256: 82dc65e7ecbd1a7a8e23c4036f6123e5ca75e0e4fc10fe2e37d6c32685e08f06
+  r114_summary_sha256: 05842f3e531fb3cd4dd123ed9dab7549c83a77bba3f14f878a19e903fcc4ef62
+  r114_manifest_sha256: a503b0b99631a32921307553f88b35f9e55eb7788f007ce4a835d91827d73b38
+  r114_selector_transfer_sha256: 1eb4684ecfdc7880ad3bf1c615de21202710ef45e1a8b051b8b8a73b5b02cc83
+  r118_run: runs://worldsim_v6/WS-V6-R118-SCENE0255-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T031020Z__scene0255-four-actor-selector-s20260821-r1
+  r118_gate_sha256: c0a9a49d52aa6be48be86b4adcabcb7ee5bf7a903cae6cabd7681585a90dd183
+  r118_summary_sha256: 3900575bfb031238fe3f56f8e55f7b82b2a1ddcda182bfa809fbbfff5eb0e631
+  r118_manifest_sha256: b6bd0640fdb7510fdb4ab1b35baf080d15ddf9c24381b7965db929340a374f4f
+  r118_selector_transfer_sha256: 1b74c47ad57be5239bd8fc9f683b04a6571b460b4f19f207b915d58c0f684e1b
+runtime:
+  scene: scene-0255
+  expected_frame_count: 196
+  minimum_changed_label_pixels: 1
+  frozen_policy_threshold_pixels: 45
+  edited_actor_count_by_stage:
+    actor34_only: 1
+    actor34_actor24: 2
+    actor34_actor24_actor9: 3
+    actor34_actor24_actor9_actor1: 4
+  expected_positive_frames_by_stage:
+    actor34_only: 19
+    actor34_actor24: 161
+    actor34_actor24_actor9: 191
+    actor34_actor24_actor9_actor1: 196
+thresholds:
+  minimum_added_positive_frames: 5
+  expected_four_actor_remaining_negative_frames: 0
+  expected_four_actor_skip_fraction: 0.0
+resources:
+  execution: cpu_only_immutable_aggregation
+  maximum_wall_seconds: 60
+  maximum_output_bytes: 10000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - observed_nested_scene0255_actor_addition_sequence_actor34_then_actor24_then_actor9_then_actor1
+  - positive_support_and_threshold45_triggers_are_compared_on_the_same196_frames
+  - each_stage_uses_immutable_formal_selector_transfer_vectors_without_refitting
+  - saturation_certificate_binds_the_observed_four_actor_outcome_without_extrapolating_fifth_actor_behavior
+  - target_is_frozen_deeplab_label_change_not_semantic_correctness
+  - four_actor_target_is_positive_on_all196_frames_so_any_zero_false_negative_policy_has_zero_skip
+  - contact_road_dynamics_physics_planning_safety_and_confirmation_abstain
+  - no_training_gpu_or_confirmation_read
