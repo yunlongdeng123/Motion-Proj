@@ -1,5 +1,31 @@
 # Experiments
 
+## WorldSim V6.1 ME-2 Hunyuan actor 四臂 PRE-REGISTERED（2026-08-22）
+
+- task=`WS-V61-ME2-HY3D-OCC-ACTOR-01`，hypothesis=`WS-V61-H-ME2-001`，状态=`formal_ready`。
+- 固定 arms=`A0-image / A1-bbox / A2-point / A3-voxel`；4 个唯一 actor units 映射到同一冻结 6-case actor
+  denominator，duplicate frontend 只复用 byte-exact asset。A0 绑定官方 Hunyuan3D-2.1 commit/model revision，
+  A1–A3 绑定已通过 P4 的 Omni commit/model revision。
+- input 统一为 Omni LHW 坐标；A2=`2048` deterministic raw-LiDAR actor points，A3=`8192` deterministic
+  O_method actor voxel centers。单次 no-model/no-O_eval 预检为 4/4 finite、raw actor points 非空、O_method actor
+  voxels=`10878..23088`、6-case minimum actor-hole coverage=`0.6322`。
+- 固定 seed=`1234..1237`、batch=`2`、50 steps、octree=`256`；最大 extent 下 decode spacing 约 `0.0604m`
+  小于 `0.2m` occupancy cell。无 prompt、texture、seed、step、resolution 或 threshold sweep。
+- compiler 只允许 aspect axis permutation + one uniform scale；method decisions 在读 O_eval 前固化。
+  surface support>=`0.80`、native actor coverage>=`0.20`、hole coverage>=`0.10`、silhouette IoU>=`0.05`，
+  FREE conflict 与 unfiltered swept collision 都必须为0。
+- scene-0242 只过滤证据绑定的 actor4 truck/actor15 trailer hitch pair；其余接触照常拒绝，不做全局 collision
+  relaxation。primary A3=`>=2/6` 且 false-safe=`0`；失败立即停止 Hunyuan 路线，不进入调参循环。
+
+## WorldSim V6.1 P4 Hunyuan3D-Omni 3090 smoke PASS（2026-08-22）
+
+- canonical=`run://worldsim_v61/WS-V61-P4-HY3D-OMNI-3090-SMOKE-01/20260822T112707Z__voxel-smoke-s1234-r1`，
+  source=`a97b2743935e3a7143d5b75da9e7bc5bac95e317`。
+- 完全离线生成有效 voxel-controlled mesh=`1,238,856 vertices / 2,477,728 faces` 与非空 finite sampled
+  points；wall=`235.16s`、peak=`7.90GiB`、disk start=`95.07GiB`，无训练或 confirmation read。
+- gate/summary/manifest/terminal=`23451b2d...5cf / 8133a65b...ab7 / 7c4783cb...9a2f2 / 177ce781...8a3`；
+  all PASS。`V61-F04/F05/F06` 继续保留，修复后不再重复 cache/weight 验证循环。
+
 ## WorldSim V6.1 P4 Hunyuan3D-Omni 3090 smoke PRE-REGISTERED（2026-08-22）
 - task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`，hypothesis=`WS-V61-H-P4-001`，先建立隔离 Python3.10/
   torch2.5.1+cu124 环境并下载内容寻址权重，不在 `motionproj` 环境混装。

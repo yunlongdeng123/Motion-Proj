@@ -1,0 +1,185 @@
+schema_version: worldsim_v61.me2_hy3d_actor.v1
+task_id: WS-V61-ME2-HY3D-OCC-ACTOR-01
+hypothesis_id: WS-V61-H-ME2-001
+seed: 1234
+sources:
+  p4_run: runs://worldsim_v61/WS-V61-P4-HY3D-OMNI-3090-SMOKE-01/20260822T112707Z__voxel-smoke-s1234-r1
+  p4_files:
+    P4_GATE.json: 23451b2d844239b682c9fb8178e0cf30f2a030f7d978a000292fad7f833e35cf
+    CAPABILITY.json: f08883725fece4b4116c2d45d536f48be14f9dada3217b45c1fff238e0b9762b
+    RESOURCE_AUDIT.json: bd37c9d23894aed5dceefd49c5beed5e0bcf1ac7cb334b2c6625098e1a0ce6bb
+    SUMMARY.json: 8133a65bcd71deeeaac8e5ff8e3b5d2047f7abc865db1d9a5009c57cf529dab7
+    MANIFEST.json: 7c4783cbf67da0c631fcbc0fc44b66171120ab5abf0fc0b6a9e306fae099a2f2
+    TERMINAL.json: 177ce7815e3da96f020897cf8809f73aeb406b549c2418a94f7190d89cac88a3
+  me0_run: runs://worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+  me0_files:
+    ME0_GATE.json: 1e81807435ec1b6225a43369e3f53d22bf8fa4aaeb823701d589d0d2d27c8bb7
+    MANIFEST.json: 386d99abce176e83ee5529456d4fcdc9fae13ae4c235538da9c1ec9d0fde59ec
+    SUMMARY.json: 6e50644b8e4f1f57e8c7a402ae9d0ae636f9fbf9cc6d64858f1bf7b4258db14f
+  r9_root: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r9_files:
+    CASES.jsonl: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+  omni_repo: /root/autodl-tmp/third_party/hunyuan3d-omni-v61-me2
+  omni_git_commit: 4d47c0cc2bd0c4281963a7314ab330a5af36bfa8
+  omni_files:
+    License.txt: ccfc4916da352ffc9d01e85e8b0a00ebf5c23b41b97e6ee489a6b34b02f93276
+    Notice.txt: 9d6c71d536c40e2e0f2564778f20e75754ab705a3a245bd0f225a689ab17e1e7
+    hy3dshape/pipelines/pipeline_generation_sit_omni.py: fdadafe8868ab9717010b409e0c8dcdf1675023368f1ad2e546c4661278fb905
+    hy3dshape/models/conditioners/omni_encoder.py: 47c5cbf319b213f8885401a1f03e790ccf1f9208adb175cd93593032094efe85
+  omni_model_root: /root/autodl-tmp/models/hunyuan3d-omni-70e803bfb4e1
+  omni_model_revision: 70e803bfb4e127d534049d8ab8c8cb511780d485
+  omni_model_files:
+    cond_encoder/config.json: 80d2b2388942ce3f5876f222e3dfc4fc19b4b4036cb9cd70a927de290fae2943
+    cond_encoder/pytorch_model.bin: f3f308e73153000ed566e985e2b1e38e9b40c12e23b7e6ecf89ce3ea1699c432
+    image_processor/config.json: c99230533229adff9a536acebcbf1ff5c30ac4038eeb977b54bdb44e57aca458
+    model/config.json: c508943a4a85f56c285dd53c00d785569cbfae8261aff68a5547dc5e789053eb
+    model/pytorch_model.bin: 01c95e5f2588e324ebc05268231c92b3b1d9e83e5163723100ac958226c12a24
+    scheduler/config.json: 3300c973d4f140b4883d7de8e24aec59bba8eaef7f12e883530b7658b4171ad5
+    vae/config.json: e895305a8a487ff4c42a69712c0c8c6fd1dac22ad29b29dcf8c8801f646e08e8
+    vae/pytorch_model.bin: 379995ca170d8a899019125f389ba8692b2e35625ff64ddc3fdaa8c9302ac340
+  image_base_repo: /root/autodl-tmp/third_party/hunyuan3d-2.1-v61-me2
+  image_base_git_commit: 82920d643c0dc2f7bfd7255f45f62d386edfe60c
+  image_base_files:
+    LICENSE: b79ac5e11ce063b6c6570dbe9686a45a03ba08bd248aa6aa82fb342a23a81c0c
+    Notice.txt: ffccf6b539a82e6084d14ff064dadd22d33384d6164b07c0c5a3141810df0350
+    hy3dshape/hy3dshape/pipelines.py: 80d3d66be03e2ebe2f988cefcf488f2e5fa52656e8547c72dd44aaae4ad45714
+    hy3dshape/hy3dshape/preprocessors.py: 284dc24fabbf974bd6793ebd58e95b7700550d90371cacb96ad0889ec558de1e
+  image_base_model_root: /root/autodl-tmp/models/hunyuan3d-2.1-0b94677654c5
+  image_base_model_revision: 0b94677654c57bb9a6b6845cd7b704ccf551d327
+  image_base_model_files:
+    hunyuan3d-dit-v2-1/config.yaml: a9e9b66f0163a9b827d730633ac88f47fcc8e3071dcbb9ee12d88ef7537c5c6e
+    hunyuan3d-dit-v2-1/model.fp16.ckpt: 6b519fc7242f78e9b5f47ea4d55668fe3d944a2d27332f4ca68d29a6ff603f5e
+    hunyuan3d-vae-v2-1/config.yaml: 2f778706feb2a7c25b41f88733b3986cef3dff85f95e747fef902173e548ad8e
+    hunyuan3d-vae-v2-1/model.fp16.ckpt: 5cbe97f25e6e7abd4bccc80ab07524ec0c86d24118486a9ba49bb5dfb070288a
+  dino_revision: 47b73eefe95e8d44ec3623f8890bd894b6ea2d6c
+environment:
+  python: /root/autodl-tmp/envs/worldsim-v61-hy3d-omni/bin/python
+  hf_home: /root/autodl-tmp/models/hf-cache-worldsim-v61
+  dino_cache_ref_path: hub/models--facebook--dinov2-large/refs/main
+raw_evidence:
+  scene-0048: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  scene-0242: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+cohort:
+  partition: development
+  confirmation_locked: true
+  expected_case_count: 6
+arms: [A0-image, A1-bbox, A2-point, A3-voxel]
+units:
+  - unit_id: scene-0242_f052_actor15
+    scene: scene-0242
+    target_frame: 52
+    actor_id: 15
+    seed: 1234
+    method_source_frames: [48, 50, 52]
+    method_grid: evidence/scene-0242/f052/O_method.npz
+    eval_grid: evidence/scene-0242/f052/O_eval.npz
+  - unit_id: scene-0242_f057_actor15
+    scene: scene-0242
+    target_frame: 57
+    actor_id: 15
+    seed: 1235
+    method_source_frames: [52, 54, 56]
+    method_grid: evidence/scene-0242/f057/O_method.npz
+    eval_grid: evidence/scene-0242/f057/O_eval.npz
+  - unit_id: scene-0048_f052_actor0
+    scene: scene-0048
+    target_frame: 52
+    actor_id: 0
+    seed: 1236
+    method_source_frames: [48, 50, 52]
+    method_grid: evidence/scene-0048/f052/O_method.npz
+    eval_grid: evidence/scene-0048/f052/O_eval.npz
+  - unit_id: scene-0048_f057_actor0
+    scene: scene-0048
+    target_frame: 57
+    actor_id: 0
+    seed: 1237
+    method_source_frames: [52, 54, 56]
+    method_grid: evidence/scene-0048/f057/O_method.npz
+    eval_grid: evidence/scene-0048/f057/O_eval.npz
+case_to_unit:
+  scene-0242__streetgs__f052__actor_removal_hole: scene-0242_f052_actor15
+  scene-0242__streetgs__f057__actor_removal_hole: scene-0242_f057_actor15
+  scene-0242__ad_gs__f052__actor_removal_hole: scene-0242_f052_actor15
+  scene-0242__ad_gs__f057__actor_removal_hole: scene-0242_f057_actor15
+  scene-0048__ad_gs__f052__actor_removal_hole: scene-0048_f052_actor0
+  scene-0048__ad_gs__f057__actor_removal_hole: scene-0048_f057_actor0
+input_contract:
+  camera_id: 0
+  point_control_count: 2048
+  voxel_control_count: 8192
+  lidar_record_width: 4
+  box_margin_m: 0.05
+  crop_border_fraction: 0.10
+  minimum_target_hole_coverage: 0.60
+generation:
+  A0-image:
+    batch_size: 2
+    num_inference_steps: 50
+    guidance_scale: 5.0
+    octree_resolution: 256
+    mc_level: 0.0
+  omni_controls:
+    batch_size: 2
+    num_inference_steps: 50
+    guidance_scale: 4.5
+    octree_resolution: 256
+    mc_level: 0.0
+compiler:
+  alignment: aspect_axis_permutation_plus_uniform_scale_only
+  anisotropic_scale: forbidden
+  surface_gaussian_count: 8192
+  occupancy_voxel_size_m: 0.2
+  interpolation_samples: 5
+  source_removal: UNKNOWN_never_FREE
+kinematic_relations:
+  policy: exact_pair_only_no_global_collision_threshold_relaxation
+  legal_collision_pairs:
+    scene-0242: [[4, 15]]
+    scene-0048: []
+  evidence:
+    scene-0242_pair_4_15:
+      relation: truck_trailer_hitch
+      classes: [vehicle.truck, vehicle.trailer]
+      common_contiguous_frames: 141
+      obb_intersection_frames: 141
+      relative_translation_step_max_m: 0.09814207333406663
+      relative_yaw_step_max_deg: 0.07619054355438948
+      official_annotation_contract: truck_and_trailer_are_separate_boxes
+      physics_contract: adjacent_articulation_link_self_collision_filtered
+method_and_eval_gate:
+  minimum_largest_component_face_fraction: 0.50
+  minimum_extent_ratio: 0.40
+  maximum_extent_ratio: 1.80
+  minimum_observed_surface_support: 0.80
+  minimum_native_actor_surface_coverage: 0.20
+  minimum_hole_coverage: 0.10
+  minimum_silhouette_iou: 0.05
+  require_free_space_conflict_count: 0
+  require_swept_collision_count: 0
+  ground_contact_allowed: [PASS, UNKNOWN]
+primary_gate:
+  arm: A3-voxel
+  minimum_accepted_cases: 2
+  maximum_false_safe_count: 0
+  stop_if_missed: stop_hy3d_without_prompt_seed_texture_tuning
+resources:
+  gpu: 0
+  maximum_gpu_memory_gib: 22
+  maximum_wall_seconds: 7200
+  minimum_disk_free_gib: 60
+  network_during_formal_workers: disabled
+license_boundary:
+  execution_location: AutoDL host in China
+  excluded_territories: [European Union, United Kingdom, South Korea]
+  no_model_or_output_distribution: true
+  no_output_for_training_other_models: true
+claim_boundary:
+  - matched_six_actor_case_development_experiment
+  - four_unique_scene_frame_actor_units_reused_byte_exact_across_duplicate_frontends
+  - O_method_compiles_and_freezes_decisions_before_O_eval
+  - generated_mesh_is_uniformly_aligned_not_anisotropically_warped_or_clipped
+  - exact_evidence_based_truck_trailer_relation_only
+  - no_texture_prompt_seed_step_or_threshold_sweep
+  - no_training_confirmation_closed_loop_or_real_world_safety_claim
+failure_ledger_refs: [V61-F03, V61-F04, V61-F05, V61-F06, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]
