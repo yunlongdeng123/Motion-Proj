@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.1 P7 IR-WM H001 CONTRACT REJECTED / H002 RECOVERY PRE-REGISTERED（2026-08-22）
+
+- H001 canonical=`run://worldsim_v61/WS-V61-P7-IRWM-3090-SMOKE-01/20260822T143153Z__irwm-current-smoke-s1-r1`，
+  source=`c5728207ce5ac9b0649afb61c9eedbe418b8d1c9`。一次正式 forward 已产生 finite
+  `1×3×1×40000×16×17` logits 与 `200×200×16` labels；occupied/free=`40778/599222`，
+  inference=`1.066s`、peak=`4.050GiB`。
+- truth-free、三帧六相机、输出 shape/class、资源、无 future/planning/training 等15项合同通过。形式 gate 只因
+  Detectron2 `0.6` 对 `0.6+cu111` 的字符串比较，以及两项 `reference_points` missing keys 而拒绝；failure=`V61-F12`。
+- 官方冻结源码明确在 `WorldBEVFormerHead.init_weights()` 删除整个 `transformer.reference_points`，且当前 BEV
+  extraction 不调用 detector decoder；这两项 missing keys 不是本次 occupancy forward 的随机未初始化有效参数。
+- H002 task=`WS-V61-P7R-IRWM-CONTRACT-RECOVERY-01`，analysis-only 复用 H001 immutable artifacts，不重跑模型。
+  只允许 CUDA wheel local suffix 与精确两项官方删除 key；任何额外漂移均 fail-closed。通过后才预注册唯一一次
+  ME3 IR-WM recovery，不做 checkpoint、input、threshold、grid 或 verifier sweep。
+
 ## WorldSim V6.1 ME-3 GaussianWorld REJECTED / IR-WM capability PRE-REGISTERED（2026-08-22）
 
 - canonical=`run://worldsim_v61/WS-V61-ME3-PREDICTED-OCC-01/20260822T134559Z__predicted-occ-s1-r1`，

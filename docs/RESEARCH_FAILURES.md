@@ -3967,3 +3967,15 @@ FREE 冒充 observed truth。已有 artifact 已证明把 observed O_method FREE
 无需创建零产出的重复 run。ReliOcc、α-OCC 与 OCCUQ 的可靠 uncertainty 需要训练/calibration，朴素 softmax/entropy
 也不支持无校准安全声明。后续只允许先做一次 IR-WM truth-free current-state capability smoke；通过后才消耗唯一一次
 ME-3 recovery，失败则停止 learned occupancy 并保留负结论。
+### V61-F12：checkpoint 的零 missing gate 必须区分未使用的官方删除参数与有效 forward state
+
+H-P7-IRWM-001 canonical run `20260822T143153Z__irwm-current-smoke-s1-r1` 已完成官方 IR-WM current-state GPU
+forward，并写出 finite/nonempty occupancy。17项 gate 中15项通过；失败项只有环境版本字符串和模型零 missing。
+Detectron2 使用官方 `0.6+cu111` wheel，而预注册只写 `0.6`；这不是不同 release。checkpoint 的唯一 missing keys
+为 `pts_bbox_head.transformer.reference_points.weight/bias`。冻结官方 `WorldBEVFormerHead.init_weights()` 明确删除
+整个 `transformer.reference_points`，其 detector decoder 在本次 `get_bev_features` current-state 路径不执行。
+
+不得改写 H001 的 rejected terminal、直接手工把 gate 改成 PASS、给 missing 参数调值，或重复完整 GPU forward。
+H-P7-IRWM-002 使用独立 P7R task，精确绑定 H001 gate/report/output/manifest/terminal 和官方删除源码，只允许
+Detectron2 build suffix 与上述两项 source-proven unused missing keys；其余 H001 capability、truth-free、resource
+合同全部原样要求通过。任何额外 missing/unexpected key 或 artifact 漂移都停止 learned occupancy。
