@@ -1,0 +1,58 @@
+schema_version: worldsim_v6.r133_selective_perception_execution.v1
+task_id: WS-V6-R133-SELECTIVE-PERCEPTION-EXECUTION-01
+hypothesis_id: WS-V6-H-R133-001
+seed: 20260821
+sources:
+  r130_run: runs://worldsim_v6/WS-V6-R130-ANTITHETIC-THRESHOLD13-HOLDOUT-01/20260822T044528Z__antithetic-threshold13-holdout-s20260821-r1
+  r130_manifest_sha256: c978adc9b485b0a1421e523e224eb1a8885bcf51e3e1a6589d5d42bb9e9c4b72
+  r130_gate_sha256: a3a94f9c8fe35ba7dc2fc2ed2a86914dfc3b806d7f72542c020c45275897ab14
+  r130_summary_sha256: b211436fc43568cf319bea269d47a4c4c31d8ac0ad519674f8db6ae244db3b3e
+  r130_selector_transfer_sha256: 1defb61b2eeed27dd68b62d28ba4eda9ad94566e03b6ec86981748138225f4ae
+  r130_resource_audit_sha256: 9e55db2a57646c82c717416d8781ce9acdd03c6b88d4e7103ccd5d343db5b570
+  r131_run: runs://worldsim_v6/WS-V6-R131-SCENE0048-ORTHOGONAL-THRESHOLD13-HOLDOUT-01/20260822T050048Z__scene0048-orthogonal-threshold13-s20260821-r1
+  r131_manifest_sha256: 3378aebe13b35a25c4a763168907a8d0e46a44cad7575e6693c5f83654344eac
+  r131_gate_sha256: a9c07af427f8399874e82c13ca40c352618034df21311b4503c8d212d567ae3f
+  r131_summary_sha256: bf781b0535f5b8f4d0e3b53721803974e11936263ae1ab9c543049003a342339
+  r131_selector_transfer_sha256: 6bd76737772e4e4fbd7905586af5e51091530089a5ca6ef7add1bcf4e192dde2
+  r131_resource_audit_sha256: f78f2a28c89c9a0159de6445ba57eaa30543728ac8aaf39249066190f7692df5
+  r132_run: runs://worldsim_v6/WS-V6-R132-CROSS-PROSPECTIVE-THRESHOLD13-CERTIFICATE-01/20260822T051425Z__cross-prospective-threshold13-s20260821-r1
+  r132_manifest_sha256: 1ace1d2559dc1f274a8873dad65e9f4b0af568fe328e1cf018a500ab44220595
+  r132_gate_sha256: 1b781a563993d472fa689f39d384a89c3096f7e460f8c5841ea2cda08563bdef
+  r132_summary_sha256: 4a57d3278bd52d495878a2eefd1a32e2328471ce730a39d09962a03385dabf53
+  r132_certificate_sha256: fcb14358957e47ca14b47a863d16822eaa8e5b82e1a45263c178f64b8667bcd0
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+runtime:
+  frozen_threshold_pixels: 13
+  frames_per_condition: 196
+  expected_frame_count: 392
+  expected_trigger_count: 106
+  expected_skip_count: 286
+  expected_condition_trigger_counts:
+    r130_scene0230_antithetic: 76
+    r131_scene0048_orthogonal: 30
+  expected_full_invocations: 1568
+  expected_selective_invocations: 424
+  expected_avoided_invocations: 1144
+  expected_reduction_fraction: 0.7295918367346939
+evaluation:
+  repeat_count: 2
+  metric_tolerance: 0.000000000001
+  maximum_elapsed_ratio_vs_full_reference: 0.50
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 300
+  maximum_wall_seconds: 600
+  maximum_output_bytes: 400000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - this_is_real_selective_frozen_perception_execution_on_r130_r131_sensor_arrays
+  - threshold13_and_the392_frame_decision_scope_are_bound_from_r132_without_refit
+  - only106_triggered_frames_receive_logged_and_edited_deeplab_inference
+  - triggered_outputs_must_be_repeat_exact_and_bit_exact_to_full_reference
+  - skipped_frames_reconstruct_binary_no_change_under_the_r132_certificate_scope
+  - measured_savings_cover_perception_worker_invocations_and_time_not_sensor_rendering
+  - semantic_correctness_label_identity_causality_contact_physics_planning_safety_abstain
+  - no_training_or_confirmation_read
