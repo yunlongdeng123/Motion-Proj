@@ -3776,3 +3776,9 @@ H-R116-001 首次正式启动在创建 run directory、读取冻结 artifact 或
 H-R122-001 canonical run `20260822T034305Z__spatial-impact-locality-s20260821-r1` 精确绑定 R118/R121 两个四 actor 饱和方向的392帧 sensor 与 frozen-DeepLab arrays，所有 source hashes、逐文件 hashes、196/196 正帧和资源门均通过。但预注册把实际 `450x800` 图像误写为 `600x1200`，因此 shape gate 正式失败；更关键的是方法门也独立失败：RGB-diff mask 膨胀64px 后聚合标签召回仅 `0.604784`，最差帧仅 `0.027397`，不存在预注册网格内逐帧100%覆盖半径。R122 按合同正式 `rejected`，不得因 shape 书写错误而追认其空间局部性假设。
 
 不得只修正 shape 后删除 exact per-frame coverage、把60.48%聚合召回解释为稀疏验证成功、依赖平均 ROI 掩盖最差帧，或宣称 crop inference 等价。非 canonical 恢复诊断显示392/392帧所需半径均大于128px、391/392帧大于256px，中位所需半径约412px、最大约684px；固定256px平均已覆盖73.56%画面却仍只有92.90%标签召回。H-R123-001 必须用正确450x800分母和扩展半径网格正式复算这些非局部性边界，接受的结论应是拒绝 RGB-diff 膨胀稀疏机制，而不是放宽成近似覆盖。semantic correctness、crop equivalence、speedup、physics、planning 与 safety 继续 ABSTAIN。
+
+### V6-F91：跨实验 source digest 必须直接复制磁盘 SHA256，不能依赖人工转抄
+
+H-R124-001 首次正式启动于 `2026-08-22T03:57:05Z` 前在创建 run directory、聚合任何向量或产生方法结果之前被 source verifier 拒绝。R109 `SELECTOR_TRANSFER.json` 的配置 digest 被人工转抄为 `0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df58dbecafc6eafd91`，而冻结磁盘文件的实际 SHA256 是 `0b972e5d0ff102c1eda06a2b077f769fe836f4b3d856242f4df75406faeafd91`。本次没有 canonical run、gate、聚合向量、指标或科学结论，按 infrastructure/source-authority rejection 记录。
+
+不得跳过 `_verify`、修改 R109 artifact、追认 H-R124-001，或调整 threshold45、11条件、2156帧、类别支持、分离间隔及资源门来掩盖该错误。H-R125-001 只把 R109 selector digest 改为磁盘实值并更新 task/hypothesis identity；其余 policy/source authorities、condition corpus、门限、预期方向、资源合同和 claim boundary 全部保持不变，必须在新 commit/push 后从干净工作树正式运行。
