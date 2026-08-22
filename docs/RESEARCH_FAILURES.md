@@ -3936,3 +3936,15 @@ A2 raw-LiDAR point 与 A3 O_method voxel 全部为 `0/6 ACCEPT`。主臂 A3 没�
 Occupancy-authoritative proposal。按预注册规则永久停止本版本 Hunyuan actor 路线；不得靠 prompt/seed/steps/
 octree sweep、放宽 FREE=0、事后 clipping 或 per-case 选择恢复。ME-3 学习式 occupancy 是计划中的独立机制，
 仍按 GaussianWorld→OccWorld→Drive-OccWorld→IR-WM→OccSora 优先级审计，不把本失败无依据外推到该路线。
+
+### V61-F10：tmux 正式入口必须由 wrapper 自举仓库根目录
+
+H-ME3-GW-001 的第一次正式入口从 source=`16c0efd8d570eaa15c5c4757ddfb434af8b61ede` 启动，但 tmux
+非登录环境没有仓库级 `PYTHONPATH`；Python 把 `scripts/` 而不是 repository root 放在 `sys.path[0]`，wrapper
+因此在导入 `motion_proj.worldsim_v61.me3_predicted_experiment` 时立即触发 `ModuleNotFoundError`。失败发生在 run
+directory 创建、source/artifact 读取、模型载入、GPU context、predicted occupancy 或 method decision 之前；
+canonical run=`null`，没有科学结果，不能记为 GaussianWorld rejection。
+
+H-ME3-GW-002 只在 wrapper 导入项目包前把 `Path(__file__).resolve().parents[1]` 加入 `sys.path`，并先用
+`--help` 做无 run/GPU 的入口 smoke。GaussianWorld commit/weights、两个并行 scene workers、seed、2Hz frame schedule、
+class mapping、UNKNOWN policy、28-case denominator、O_eval separation、thresholds、资源预算与 stop rule 全部不变。

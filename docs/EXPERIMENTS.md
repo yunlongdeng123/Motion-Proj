@@ -2,7 +2,9 @@
 
 ## WorldSim V6.1 ME-3 GaussianWorld predicted occupancy PRE-REGISTERED（2026-08-22）
 
-- task=`WS-V61-ME3-PREDICTED-OCC-01`，hypothesis=`WS-V61-H-ME3-GW-001`；P6 capability 已通过。
+- H-ME3-GW-001 首次入口在创建 run/GPU 前因 tmux 环境未提供 repo-root `PYTHONPATH` 失败（`V61-F10`）；
+  H-ME3-GW-002 只在 wrapper 内自举 repo root，科学输入、模型、时序、映射、门槛、预算与 stop rule 不变。
+- task=`WS-V61-ME3-PREDICTED-OCC-01`，active hypothesis=`WS-V61-H-ME3-GW-002`；P6 capability 已通过。
 - 两个 development scene 分别用一个官方 batch1 worker，在同一 RTX3090 并行；每个 scene 固定2Hz
   `frames=[2,7,12,17,22,27,32,37,42,47,52,57]`，只取 target52/57，共4个 predicted units。
 - mapping 固定为 class0/extent外=`UNKNOWN`、class1..16=`OCCUPIED`、class17=`FREE`，不设 confidence threshold。

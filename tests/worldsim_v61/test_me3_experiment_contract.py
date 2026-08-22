@@ -10,7 +10,7 @@ CONFIG_PATH = REPO_ROOT / "configs/worldsim_v61/me3_gaussianworld_predicted_v1.y
 def test_me3_freezes_stream_mapping_unknown_and_parallelism() -> None:
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     assert config["task_id"] == "WS-V61-ME3-PREDICTED-OCC-01"
-    assert config["hypothesis_id"] == "WS-V61-H-ME3-GW-001"
+    assert config["hypothesis_id"] == "WS-V61-H-ME3-GW-002"
     assert config["streaming"]["frames"] == list(range(2, 58, 5))
     assert config["streaming"]["target_frames"] == [52, 57]
     assert config["streaming"]["camera_ids"] == [0, 2, 1, 5, 3, 4]

@@ -23,6 +23,10 @@ ME-3 固定两个 scene-level 官方 batch1 worker 在同一 RTX3090 并行，�
 oracle 的 `>=80%` 且严格超过 V6 的3例。不训练、不 calibration、不 threshold sweep；若失败只允许先按具体失败因子
 查文献，再预注册一次不降低阈值的保守 recovery。
 
+H-ME3-GW-001 第一次正式入口在 run directory/GPU 前因 tmux 非登录环境缺少 repository root `PYTHONPATH` 而
+失败，登记 `V61-F10`，不存在模型或方法结论。H-ME3-GW-002 只让 wrapper 从自身路径自举 repo root；所有科学合同
+与预算不变，并在无 run/GPU 的 `--help` smoke 后从新干净提交重跑。
+
 ## WorldSim V6.1 ME-2 已完成并拒绝 Hunyuan 路线；ME-3 backend 审计中（2026-08-22）
 
 状态：`me2_rejected / hy3d_route_stopped / me3_backend_audit_in_progress`
