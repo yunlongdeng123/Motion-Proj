@@ -1,0 +1,108 @@
+schema_version: worldsim_v6.r130_antithetic_threshold13_holdout.v1
+task_id: WS-V6-R130-ANTITHETIC-THRESHOLD13-HOLDOUT-01
+hypothesis_id: WS-V6-H-R130-001
+seed: 20260821
+sources:
+  r93_run: runs://worldsim_v6/WS-V6-R93-INDEPENDENT-SCENE-ACTOR-EDIT-COMPILER-01/20260821T232300Z__scene0230-actor12-edit-s20260821-r1
+  r93_manifest_sha256: 98cc497e94009d15396bc2e145cfe2528d75006c6a38b74e9cd91a3b2bff1e20
+  r93_gate_sha256: 9fcb3292321bfff0c6e2ece9cbf26f0836b87ee7d2392bb6454950bf56e63e6a
+  r93_summary_sha256: dc82fc9f4a92b188aca265c395cc391b6568c2557472de3158cb704703d9e848
+  r93_selected_proposal_sha256: f6a3e40a775279e4ddc886e97de3ff7ac3b4b24b2f2670ef8beda4b9c165db4f
+  r93_edit_sensor_comparison_sha256: 17ee687fb6b4b4f1574b62566829225270b3634041d4d58b520069391952da70
+  r93_proposal_catalog_sha256: aada51adad92739475470d9487aa84f6f77c796df29bf3de9eb7a282a68dd561
+  r93_package_manifest_sha256: 3305f351ce9ef39f128d80c7811f6764053bc9df2443c4b3d642cc01ea3f5706
+  r94_run: runs://worldsim_v6/WS-V6-R94-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260821T233258Z__scene0230-selector-transfer-s20260821-r1
+  r94_manifest_sha256: d1c818d02670d074fa1654d31d2e59e93155ebec9731d74acbc3e25f0b0aad2e
+  r94_gate_sha256: 4532677c91200ffbe4270eac45bc21ed63c142c157e8345623b935b7109e7951
+  r94_summary_sha256: 77f3dff3c4af6ee680e74c07380903c8b07daa508b435bfa87b47145c5201980
+  r94_selector_transfer_sha256: 26e3a7121602b0d8eb80ef59502911607335c2c16eb553e507422842c891a955
+  r129_run: runs://worldsim_v6/WS-V6-R129-MAX-MARGIN-SURROGATE-POLICY-REVISION-01/20260822T044114Z__max-margin-policy-revision-s20260821-r1
+  r129_manifest_sha256: 22f0bb9d540ebb73117c15d8b59694c98edacecf018bfcaf6c2a1e6a2fadb5a0
+  r129_gate_sha256: b2a662902b82897910f47c2ff256970d5a44aadab769144d02c381ab80a9002d
+  r129_summary_sha256: 7b4404b2fd808229eb5db80946f4b311255ace4b708ae6e146c0df7e33a4fcfe
+  r129_package_manifest_sha256: 02e9b505cfa164f8781ff153188666f8a9239f0a7b5e94faa5c4afd16e4b8c90
+  r129_policy_sha256: 699ece9d9fdcda70cf1e6240a463c914346cfaa52274fc25de65b63ac2cad89a
+  r125_run: runs://worldsim_v6/WS-V6-R125-BINARY-PERCEPTION-SURROGATE-CORPUS-RECOVERY-01/20260822T040332Z__binary-perception-surrogate-corpus-s20260821-r1
+  r125_manifest_sha256: 6bfdb70b80214217de634915b8ecdb16009515693681775480f922f2f7a4cb56
+  r125_gate_sha256: 408a7dd6be35a0712b2377fb92586f8fb87ef32c0538e0c445c39bf410627ae4
+  r125_summary_sha256: 2c4a377b7ac3d8833d40fe0c33b44b756774a50ea4570eb8c4b8b2019859df20
+  r125_surrogate_corpus_certificate_sha256: c2f6312649306a2d586d94727b68b350f7ef133b3e8dc49a481491b8a4db3215
+  r126_run: runs://worldsim_v6/WS-V6-R126-BINARY-SURROGATE-PACKAGE-REPLAY-01/20260822T041012Z__binary-surrogate-package-replay-s20260821-r1
+  r126_manifest_sha256: 95bd68b5a3d8bd299459c7dfb288b8dcd5214dbf4cfc9a2427c62b247c18b1bc
+  r126_gate_sha256: 05a8c2a6edd17aa10a12bf22f1aab1bde17216c44936d1d30414fda91fb00c7a
+  r126_summary_sha256: 04e5e1fc1f43c8d1d9adb95aff27d0ccf5fcea9741027d63f0007f34944e8d7e
+  r126_package_manifest_sha256: 3a728a328e36e2f85850a0137912e2b73d5626f8f6e2cd1599f90072a8a3e207
+  r127_run: runs://worldsim_v6/WS-V6-R127-PROSPECTIVE-DIAGONAL-SURROGATE-HOLDOUT-01/20260822T041453Z__prospective-diagonal-holdout-s20260821-r1
+  r127_manifest_sha256: 4d55a289ece2ddca3b134f14a4bcd2c9209e899d357b61b65f585b83e8d8ab53
+  r127_gate_sha256: 71625c11a021d4d1bb873379aa4dc39273ef7ad5f2e60fc37c28b87d01e3a918
+  r127_summary_sha256: 6ee087a1e1135867ecd05d1514c1c184824933529146b9ba7f44843728fffe60
+  r127_selector_transfer_sha256: 1251c35ae1bbba0af54267727d4223ccc39b7f413c743db1b2b28e7e07620ad7
+  r128_run: runs://worldsim_v6/WS-V6-R128-SCENE0230-ORTHOGONAL-SURROGATE-HOLDOUT-01/20260822T042521Z__scene0230-orthogonal-holdout-s20260821-r1
+  r128_manifest_sha256: 732aec99fb77766245e60322ae55fd5b3f9ca3af2055e4d48c9433f917a5330f
+  r128_gate_sha256: 97f1663ee805a28b7a35006bb958df20942180ac495877ad1001861248b63ec3
+  r128_summary_sha256: 4da510b72c96556dc3be66d872fcff24f77c5409d853a0e10121714e95d8750b
+  r128_selector_transfer_sha256: e23ec92ddb39c078e018393e39c12de1e0e6cd0ca90184a607ebed1644e4f4cd
+  semantic_model_root: /root/autodl-tmp/models/worldsim_v6/r9_semantic_deeplab_cityscapes
+  semantic_model_file: pytorch_model.bin
+  semantic_model_sha256: 6bae1a4066afd4e3df71d78494fdfd7f623f0d3c3b022d0faec63fcb0a3cc18e
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154831Z__streetgs-scene0230-matched-formal30k-s0-r32/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: 766648bf954142dc6f4cac8b767623fdc5bff4e6eed766cc45d2a0680af97cd1
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+runtime:
+  scene: scene-0230
+  actor_id: actor_0012
+  actor_model_index: 12
+  proposal_id: scene0230_actor12_translate_x_+0.0_z_-0.5
+  translation_delta_m: [0.0, 0.0, -0.5]
+  r128_translation_delta_m: [0.0, 0.0, 0.5]
+  expected_primitive_count: 38541
+  expected_active_frame_count: 196
+  frame_start: 0
+  frame_stop_exclusive: 196
+  frame_stride: 1
+  expected_frame_count: 196
+evaluation:
+  variants: [logged, edited]
+  rgb_keys:
+    logged: logged_rgb
+    edited: compiled_rgb
+  repeat_count: 2
+  perception_target_minimum_changed_label_pixels: 1
+  frozen_policy_threshold_pixels: 13
+  fixed_baseline_threshold_pixels: 256
+  minimum_positive_target_frames: 10
+  minimum_negative_target_frames: 10
+  minimum_transfer_precision: 1.0
+  minimum_transfer_recall: 1.0
+  minimum_transfer_f1: 1.0
+  minimum_skip_fraction: 0.20
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_sensor_worker_seconds: 1200
+  maximum_perception_worker_seconds: 1200
+  maximum_wall_seconds: 1800
+  maximum_sensor_output_bytes: 3000000000
+  maximum_perception_output_bytes: 1000000000
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - first_prospective_validation_condition_for_the_r129_threshold13_revision
+  - antithetic_zminus0p5_actor12_edit_is_frozen_from_the_r93_accepted80_catalog
+  - candidate_has_zero_new_aabb_overlaps_and_is_distinct_from_r128_zplus0p5_development_edit
+  - full196_frame_logged_edited_compiled_native_rgbd_sensor_replay_for_the_antithetic_edit
+  - frozen_deeplab_label_change_is_the_expensive_check_target_with_two_exact_repeats
+  - threshold13_must_have_zero_false_positive_zero_false_negative_f1_one_and_skip_at_least0p20_without_refitting
+  - native196_frame_actor_lifecycle_is_the_runtime_baseline_and_package_validity_must_match_it_per_frame
+  - perception_change_is_not_semantic_correctness_and_correlation_is_not_local_causality
+  - contact_road_dynamics_physics_planning_safety_and_confirmation_abstain
+  - no_training_or_confirmation_read
