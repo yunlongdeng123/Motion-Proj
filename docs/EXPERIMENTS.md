@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.1 P6 GaussianWorld 3090 smoke PRE-REGISTERED（2026-08-22）
+
+- task=`WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01`，hypothesis=`WS-V61-H-P6-GW-001`。
+- 绑定官方 commit=`b43629e...4fc` 与 streaming checkpoint=`54770811...be3`；固定 scene-0048/frame52、
+  六相机顺序=`FRONT/FRONT_RIGHT/FRONT_LEFT/BACK/BACK_LEFT/BACK_RIGHT`、官方 `200×200×16 @0.5m` 输出。
+- dummy label 只提供 head spatial shape；不下载/读取 SurroundOcc label，不读 O_method/O_eval/confirmation，不训练、
+  不 calibration、不选择 threshold。要求模型 state 0 missing/0 unexpected、finite logits、occupied/empty 都非空、
+  peak `<22GiB`、wall `<1200s`。
+- 通过后直接预注册 ME-3 development；失败时只按 source/data/resource 根因审计一次 OccWorld，不做 GaussianWorld
+  参数或输入 sweep。
+
 ## WorldSim V6.1 ME-2 H003 Hunyuan actor 四臂 REJECTED（2026-08-22）
 
 - canonical=`run://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T121848Z__hy3d-actor-s1234-r1`，

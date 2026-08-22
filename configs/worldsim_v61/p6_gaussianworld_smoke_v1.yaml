@@ -1,0 +1,70 @@
+schema_version: worldsim_v61.p6_gaussianworld_smoke_config.v1
+task_id: WS-V61-P6-GAUSSIANWORLD-3090-SMOKE-01
+hypothesis_id: WS-V61-H-P6-GW-001
+seed: 1
+sources:
+  me1_run: runs://worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+  me1_files:
+    ME1_GATE.json: 6aca5f2f70c18a4599bd545cc51a020e66a4217d7620d1967e58279b0482246d
+    SUMMARY.json: 61713df46260374c2d60474e6bcf79e12e405dac01ade7860cdc24c2e240afb9
+  me2_run: runs://worldsim_v61/WS-V61-ME2-HY3D-OCC-ACTOR-01/20260822T121848Z__hy3d-actor-s1234-r1
+  me2_files:
+    ME2_GATE.json: 1eab2226dbbce0efdb9a8c5ab8f5f55757301784d3ce355bfd6b62465776bd86
+    SUMMARY.json: 85e20dd9ab049055272e77d825e2025ff1e8dcc5c03f9cf0b45feb5639e9fe73
+    TERMINAL.json: 9b90d9eb512b2af9392089f64dee8d775f978a98c9f54e44eb4dfa8f208b0dc9
+  official_repo: /root/autodl-tmp/third_party/gaussianworld-v61-me3
+  official_git_commit: b43629eaecffd5a7cbaac1a55517766e6263e4fc
+  official_config: config/nusc_surroundocc_stream_eval.py
+  model_root: /root/autodl-tmp/models/gaussianworld-b43629eaecff
+  model_files:
+    ckpt_stream.pth:
+      bytes: 298029831
+      sha256: 5477081191e6d7fb8ac880bf5b99230b944a7cea76b0d87175c789a51cb97be3
+    r101_dcn_fcos3d_pretrain.pth:
+      bytes: 177818375
+      sha256: 1ee46d1c3294a4ff51733013d1f27b08269c1435376dece9e8d70fa6c22a8ccf
+    nuscenes_temporal_infos_train.pkl:
+      bytes: 530760430
+      sha256: 302fcb86cc5be290a0b3987da3753034ae4eea0bb711fd75af5b80c27ca5ab54
+environment:
+  prefix: /root/autodl-tmp/envs/worldsim-v61-gaussianworld
+  python: 3.8.16
+  torch: 2.0.0+cu118
+  mmcv: 2.0.1
+  mmdet: 3.0.0
+  mmsegmentation: 1.0.0
+  mmdet3d: 1.1.1
+  spconv: 2.3.6
+input:
+  scene: scene-0048
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  frame: 52
+  camera_names: [CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT]
+  drivestudio_camera_ids: [0, 2, 1, 5, 3, 4]
+  expected_native_height: 900
+  expected_native_width: 1600
+  final_height: 864
+  final_width: 1600
+output_contract:
+  class_count: 18
+  grid_shape: [200, 200, 16]
+  pc_range_m: [-50.0, -50.0, -5.0, 50.0, 50.0, 3.0]
+  grid_size_m: 0.5
+  noise_class: 0
+  occupied_class_min: 1
+  occupied_class_max: 16
+  empty_class: 17
+  minimum_occupied_voxels: 1
+  minimum_empty_voxels: 1
+resources:
+  gpu: 0
+  maximum_gpu_memory_gib: 22.0
+  maximum_wall_seconds: 1200
+  minimum_disk_free_gib: 60
+failure_ledger_refs: [V61-F03, V61-F09, V6-F25, V6-F65, V6-F71, V6-F78, V6-F79]
+claim_boundary:
+  - one_frame_six_camera_official_checkpoint_capability_only
+  - dummy_label_is_shape_only_and_not_truth
+  - no_surroundocc_label_read
+  - no_training_calibration_confirmation_or_threshold_selection
+  - no_real_world_safety_claim
