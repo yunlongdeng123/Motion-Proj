@@ -2,9 +2,9 @@
 
 ## WorldSim V6.1 P0 范围冻结已预注册（2026-08-22）
 
-状态：`p0_pre_registered / formal_run_pending`
+状态：`p0_infrastructure_recovery_pre_registered / formal_retry_pending`
 
-当前 active hypothesis=`WS-V61-H-P0-001`，task=`WS-V61-P0-SCOPE-FREEZE-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-P0-002`，task=`WS-V61-P0-SCOPE-FREEZE-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -15,6 +15,9 @@ P0 精确绑定：
 - scene mapping=`scene-0048 -> processed 045`、`scene-0242 -> processed 191`；
 - `O_method` 与 `O_eval` 使用不重叠的 raw LiDAR sweep 路径，confirmation 保持锁定；
 - failure refs=`V6-F25/V6-F26/V6-F65/V6-F71/V6-F78/V6-F79`。
+
+H-P0-001 在创建 run 或读取任何科学输入前因新 namespace 不存在而触发 `FileNotFoundError`；GPU/训练/生成器均未启动，
+没有方法结论，登记为 `V61-F01`。H-P0-002 只在磁盘审计前创建精确 `runs/worldsim_v61` 路径，其余科学合同不变。
 
 下一步：从干净提交运行 P0；通过后立即启动 `WS-V61-ME0-OCCIR-01`，实现 `T_dst_src`、oriented volume、
 actor identity/lifecycle、FREE/OCCUPIED/UNKNOWN 与 method/eval evidence disjointness。ME-1 oracle 若不能达到

@@ -155,6 +155,12 @@ def _source_index(config: Mapping[str, Any]) -> tuple[list[dict[str, Any]], dict
     }
 
 
+def _prepare_run_root(run_root: Path) -> float:
+    """先建立精确 namespace，避免首次路线启动在资源审计前失败。"""
+    run_root.mkdir(parents=True, exist_ok=True)
+    return shutil.disk_usage(run_root).free / 1024**3
+
+
 def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     started = time.monotonic()
     repo_root = repo_root.resolve()
@@ -181,7 +187,7 @@ def run_experiment(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     r10_ids = sorted(row["case_id"] for row in decisions)
     index_rows, tier_audit = _source_index(config)
 
-    free_gib = shutil.disk_usage(run_root).free / 1024**3
+    free_gib = _prepare_run_root(run_root)
     now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = run_root / TASK_ID / f"{now}__scope-freeze-s{config['seed']}-r1"
     run_dir.mkdir(parents=True, exist_ok=False)

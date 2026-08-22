@@ -5,6 +5,7 @@ import pytest
 from motion_proj.worldsim_v61.p0_scope_freeze import (
     P0ContractError,
     _evaluate_r10_baseline,
+    _prepare_run_root,
     _resolve_uri,
 )
 
@@ -38,3 +39,10 @@ def test_r10_baseline_requires_exact_accepted_ids() -> None:
     assert _evaluate_r10_baseline(metrics, decisions, expected)["checks"]["passed"]
     expected["accepted_case_ids"] = ["b"]
     assert not _evaluate_r10_baseline(metrics, decisions, expected)["checks"]["passed"]
+
+
+def test_prepare_run_root_creates_missing_namespace(tmp_path: Path) -> None:
+    run_root = tmp_path / "runs/worldsim_v61"
+    assert not run_root.exists()
+    assert _prepare_run_root(run_root) > 0.0
+    assert run_root.is_dir()

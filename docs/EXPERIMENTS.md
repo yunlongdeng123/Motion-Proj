@@ -1,12 +1,14 @@
 # Experiments
 
-## WorldSim V6.1 P0 scope freeze PRE-REGISTERED（2026-08-22）
+## WorldSim V6.1 P0 scope freeze INFRASTRUCTURE RECOVERY（2026-08-22）
 
-- task=`WS-V61-P0-SCOPE-FREEZE-01`，hypothesis=`WS-V61-H-P0-001`，状态=`running`；正式 run 尚未启动。
+- task=`WS-V61-P0-SCOPE-FREEZE-01`。H-P0-001 在 run 创建、source read、GPU/训练前因缺失
+  `runs/worldsim_v61` namespace 被 `disk_usage` 拒绝；canonical run=`null`，无方法结论，failure=`V61-F01`。
+- recovery hypothesis=`WS-V61-H-P0-002`，状态=`running`；唯一改动为先创建精确 run namespace，再执行原资源审计。
 - 冻结 R10=`3/28`、false-safe=`0`、accepted mask pixels=`107807`；目标为 ME-1 oracle `>=5/28` 且
   false-safe=`0`，同时保留原 3 个 ACCEPT、新增至少 1 actor 与 1 static/disocclusion case。
 - `O_method/O_eval` raw LiDAR sweep 路径必须 disjoint；scene mapping=`0048->045 / 0242->191`；confirmation locked。
-- failure_ledger_refs=`V6-F25,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；failure_ledger_delta=`none`（预注册阶段）。
+- failure_ledger_refs=`V61-F01,V6-F25,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；H001 failure_ledger_delta=`V61-F01`。
 - 通过后 next=`WS-V61-ME0-OCCIR-01`；oracle `<5/28` 时停止模型接入，禁止阈值/提示词/seed 调参。
 
 ## WorldSim V6 R10 factorized verification development PASS（2026-08-21）

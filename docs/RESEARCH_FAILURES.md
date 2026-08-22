@@ -1,8 +1,8 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-21
+> **最后更新**：2026-08-22
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -42,6 +42,7 @@
 ### 0.4 目录
 
 - [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
+- [V6.1 详细账本](#detail-v61)
 - [V6 详细账本](#detail-v6)
 - [V5.1 详细账本](#detail-v51)
 - [V5 详细账本](#detail-v5)
@@ -64,6 +65,7 @@
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
+| V6.1 | Occupancy-authoritative world compiler 已完成 P0 预注册；尚无方法质量 run | 首次新路线启动不能假定 `runs/worldsim_v61` namespace 已存在；资源审计前须创建精确路径 | `V61-F01`；`WS-V61-P0-SCOPE-FREEZE-01` |
 
 ### 1.1 V1 汇总条目
 
@@ -120,6 +122,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v61"></a>
+
+## V6.1 Occupancy-verified world compiler 防重复结论（2026-08-22）
+
+- `V61-F01`（`engineering/protocol`, `active / repair committed`）：`WS-V61-H-P0-001` 首次正式启动在创建 run
+  directory、读取 R9/R10/raw evidence、GPU、训练或生成器之前，对尚不存在的
+  `/root/autodl-tmp/runs/worldsim_v61` 调用 `shutil.disk_usage`，触发 `FileNotFoundError`。没有 canonical run，
+  也没有方法结果；不得把它记成 Occupancy/SceneIR-O rejection。`WS-V61-H-P0-002` 只在资源审计前以
+  `mkdir(parents=True, exist_ok=True)` 创建精确 namespace，并增加缺失目录单测；R9/R10 hashes、28-case、scene mapping、
+  truth tiers、threshold/stop rules、资源门与 confirmation lock 全部不变。H002 从新干净提交正式复跑后才可把本条标为
+  `resolved`。
 
 <a id="detail-v6"></a>
 
