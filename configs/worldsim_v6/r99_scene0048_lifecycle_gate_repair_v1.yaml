@@ -1,0 +1,43 @@
+schema_version: worldsim_v6.r99_scene0048_lifecycle_gate_repair.v1
+task_id: WS-V6-R99-SCENE0048-LIFECYCLE-GATE-REPAIR-01
+hypothesis_id: WS-V6-H-R99-001
+seed: 20260821
+sources:
+  r98_run: runs://worldsim_v6/WS-V6-R98-SECOND-INDEPENDENT-SCENE-SELECTOR-TRANSFER-01/20260822T001113Z__scene0048-selector-transfer-s20260821-r1
+  r98_manifest_sha256: 853be94540bea983d69c8b7cf28881740859d35983eba866461d04f1fafc66e9
+  r98_gate_sha256: bea929985c81ea7e3d9d1ac425c781174e2f38dcc128a4b0dcc454e990218fe6
+  r98_summary_sha256: a69e1b8fe521889507a8f24662d7d99063b293772fcc6617680135e22b7253a1
+  r98_selector_transfer_sha256: 619fc1006899504a0c0220a9a9bb73b819d0b8c50bec6f1e7a5d8b92d8edd839
+  r97_run: runs://worldsim_v6/WS-V6-R97-SECOND-INDEPENDENT-SCENE-ACTOR-EDIT-COMPILER-01/20260822T000237Z__scene0048-actor8-edit-s20260821-r1
+  r97_manifest_sha256: 06111eb6e0308ace28ec3be6d8eff66e640587a2b8899bc1b8ad266e46e1fa6c
+  r97_gate_sha256: 328d37a7c737af9ee87f25a3bea4989dd6c2179e20b8c4f27388b4fd63fb0772
+  r97_package_manifest_sha256: 57176236323d3c5934e5c9eabe51ac8f585dbf5bff310b51d8af59ed9bcc6d62
+  lifecycle_sha256: 1033ab822396384b89f04b1a9728f00830d71aa7fbf22e013cdda88b6def527f
+expected:
+  actor_id: actor_0008
+  frame_count: 196
+  active_frame_count: 36
+  repeat_count: 2
+  target_minimum_changed_label_pixels: 1
+  frozen_threshold_pixels: 45
+  fixed_threshold_pixels: 256
+  true_positive: 30
+  true_negative: 166
+thresholds:
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: none
+  maximum_wall_seconds: 180
+claim_boundary:
+  - governance_repair_only_r98_remains_formally_rejected
+  - replaces_all_frames_lifecycle_true_with_exact_per_frame_native_lifecycle_equality
+  - independently_recomputes196_sensor_conformance_and784_saved_perception_outputs_without_model_inference
+  - threshold45_zero_calibration_metrics_are_rederived_from_immutable_r98_artifacts
+  - semantic_correctness_local_causality_physics_planning_safety_and_confirmation_abstain
+  - no_training_model_inference_or_confirmation_read

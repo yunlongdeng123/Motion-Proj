@@ -3746,3 +3746,9 @@ H-R82-002 run `20260821T215606Z__three-actor-package-s20260821-r1` 数值上通�
 H-R95-001 canonical run `20260821T234324Z__scene0048-actor-visibility-s20260821-r1` 在第二个独立 scene0048 matched-formal30k checkpoint 上完整枚举9个 RigidNodes actor、196帧 lifecycle 与15,717个 primitives；source、partition、checkpoint immutability、GPU 和全部 denominator gate 均通过。但在预注册的 frames `[0,49,98,147,195]` 前视相机中，所有9个候选的 actor-only effect pixels 均为0，最大值仍为0，低于非平凡可见门64，因此 H-R95-001 正式 `rejected`。这证明固定五时点 lifecycle-active 不能推出 camera-visible support，并不否定 scene0048 checkpoint 或 actor 表示。
 
 不得删除64像素门、把非零 primitives/opacity 当作屏幕可见、改用事后选中的单帧，或追认 R95 为成功。H-R96-001 保持相同 checkpoint、9个候选、前视相机、opacity阈值0.01和选择规则，改为在单个冻结进程内穷举全部196帧的所有 lifecycle-active actor/frame 对；仅在完整分母上按最大 effect pixels、actor index、frame index确定性选择。若穷举仍为0，则保留第二次 rejection 并转向三相机覆盖实验，而不是继续猜前视帧。
+
+### V6-F86：全时域 sensor conformance 不得要求生命周期外的 actor frame_valid 恒为真
+
+H-R98-001 canonical run `20260822T001113Z__scene0048-selector-transfer-s20260821-r1` 完成196帧 logged/edited RGBD、784次冻结 DeepLab 推理与全部资源/immutability 分母。零校准 threshold45 在 scene0048 得到 TP=30、TN=166、FP=0、FN=0，precision/recall/F1=1、skip=84.69%，优于 fixed256 的 F1=0.9831 与原生36帧 lifecycle 的 F1=0.9091。但预注册 gate 把 `package_actor_frame_valid` 作为196帧均须为真的 sensor-conformance 合取项；actor8 的冻结 lifecycle 正确地仅在 frames160..195 为真、frames0..159 为假，因此唯一方法检查 `all196_compiled_native_sensor_conformant` 与总 `passed` 为假，run 按合同正式 `rejected`。逐项诊断确认196/196帧数值 conformance、repeat 与 native state restoration 全部通过，最大 RGB MAE `1.36e-8`、depth MAE `6.19e-7m`。
+
+不得追认或回写 R98、不得把160个 inactive frame 改成 active、不得删除全196帧 sensor 数值门，也不得重跑昂贵推理来掩盖治理错误。H-R99-001 只把合同修正为“每帧 `package_actor_frame_valid` 必须与冻结 native lifecycle 精确相等”，从 R98 的内容寻址 sensor/perception artifacts 独立重算196帧 conformance、784输出重复性与 selector 指标；R98 保持 rejected，R99 作为新的 governance-repair authority。
