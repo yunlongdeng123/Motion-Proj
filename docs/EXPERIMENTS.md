@@ -1,15 +1,27 @@
 # Experiments
 
-## WorldSim V6.1 P0 scope freeze INFRASTRUCTURE RECOVERY（2026-08-22）
+## WorldSim V6.1 ME-0 SceneIR-O PRE-REGISTERED（2026-08-22）
+
+- task=`WS-V61-ME0-OCCIR-01`，hypothesis=`WS-V61-H-ME0-001`，状态=`running`；formal run pending。
+- 4 scene/frame units 并行构建 8 个 `O_method/O_eval` grid；0.2m target-LiDAR frame，显式 `T_dst_src`，
+  oriented-box sparse actor identity/lifecycle 层，static FREE/OCCUPIED/UNKNOWN 与 actor layer 分离。
+- method/eval 使用全局互斥的偶数/奇数 raw LiDAR payload；两批 fresh spawned-process 内容 exact；source removal 必须
+  恢复 UNKNOWN。6 targeted tests 与 scene-0242/f52 preflight 已通过；无 GPU/model/training/confirmation。
+- failure_ledger_refs=`V61-F01,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；failure_ledger_delta=`none`（预注册）。
+
+## WorldSim V6.1 P0 scope freeze PASS（2026-08-22）
 
 - task=`WS-V61-P0-SCOPE-FREEZE-01`。H-P0-001 在 run 创建、source read、GPU/训练前因缺失
   `runs/worldsim_v61` namespace 被 `disk_usage` 拒绝；canonical run=`null`，无方法结论，failure=`V61-F01`。
-- recovery hypothesis=`WS-V61-H-P0-002`，状态=`running`；唯一改动为先创建精确 run namespace，再执行原资源审计。
+- recovery hypothesis=`WS-V61-H-P0-002` 正式通过；canonical=
+  `run://worldsim_v61/WS-V61-P0-SCOPE-FREEZE-01/20260822T100812Z__scope-freeze-s20260822-r1`，source=`6247fd8`。
+- gate/summary/manifest SHA=`fb2a416a...ae40 / e53a86f2...907c / 2ed96578...7593`；全部 gate PASS，
+  method/eval source paths disjoint；`V61-F01` resolved。
 - 冻结 R10=`3/28`、false-safe=`0`、accepted mask pixels=`107807`；目标为 ME-1 oracle `>=5/28` 且
   false-safe=`0`，同时保留原 3 个 ACCEPT、新增至少 1 actor 与 1 static/disocclusion case。
 - `O_method/O_eval` raw LiDAR sweep 路径必须 disjoint；scene mapping=`0048->045 / 0242->191`；confirmation locked。
-- failure_ledger_refs=`V61-F01,V6-F25,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；H001 failure_ledger_delta=`V61-F01`。
-- 通过后 next=`WS-V61-ME0-OCCIR-01`；oracle `<5/28` 时停止模型接入，禁止阈值/提示词/seed 调参。
+- failure_ledger_refs=`V61-F01,V6-F25,V6-F26,V6-F65,V6-F71,V6-F78,V6-F79`；H002 failure_ledger_delta=`none`。
+- next=`WS-V61-ME0-OCCIR-01`；oracle `<5/28` 时停止模型接入，禁止阈值/提示词/seed 调参。
 
 ## WorldSim V6 R10 factorized verification development PASS（2026-08-21）
 

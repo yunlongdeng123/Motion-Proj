@@ -65,7 +65,7 @@
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
-| V6.1 | Occupancy-authoritative world compiler 已完成 P0 预注册；尚无方法质量 run | 首次新路线启动不能假定 `runs/worldsim_v61` namespace 已存在；资源审计前须创建精确路径 | `V61-F01`；`WS-V61-P0-SCOPE-FREEZE-01` |
+| V6.1 | P0 scope freeze 已通过；ME-0 SceneIR-O 已预注册，尚无 proposal 质量 run | 首次新路线启动不能假定 `runs/worldsim_v61` namespace 已存在；资源审计前须创建精确路径 | `V61-F01`（resolved）；P0 canonical run；ME-0 config |
 
 ### 1.1 V1 汇总条目
 
@@ -127,13 +127,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 
 ## V6.1 Occupancy-verified world compiler 防重复结论（2026-08-22）
 
-- `V61-F01`（`engineering/protocol`, `active / repair committed`）：`WS-V61-H-P0-001` 首次正式启动在创建 run
+- `V61-F01`（`engineering/protocol`, `resolved`）：`WS-V61-H-P0-001` 首次正式启动在创建 run
   directory、读取 R9/R10/raw evidence、GPU、训练或生成器之前，对尚不存在的
   `/root/autodl-tmp/runs/worldsim_v61` 调用 `shutil.disk_usage`，触发 `FileNotFoundError`。没有 canonical run，
   也没有方法结果；不得把它记成 Occupancy/SceneIR-O rejection。`WS-V61-H-P0-002` 只在资源审计前以
   `mkdir(parents=True, exist_ok=True)` 创建精确 namespace，并增加缺失目录单测；R9/R10 hashes、28-case、scene mapping、
-  truth tiers、threshold/stop rules、资源门与 confirmation lock 全部不变。H002 从新干净提交正式复跑后才可把本条标为
-  `resolved`。
+  truth tiers、threshold/stop rules、资源门与 confirmation lock 全部不变。H002 从干净提交 `6247fd8` 运行并使全部
+  P0 gate PASS；canonical=`run://worldsim_v61/WS-V61-P0-SCOPE-FREEZE-01/20260822T100812Z__scope-freeze-s20260822-r1`，
+  gate SHA=`fb2a416a...ae40`。仍然成立的边界：任何新路线 runner 都必须先创建自己的精确 namespace，禁止把父目录的
+  可用空间当成子 namespace 已存在。
 
 <a id="detail-v6"></a>
 

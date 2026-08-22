@@ -1,10 +1,10 @@
 # Research Status
 
-## WorldSim V6.1 P0 范围冻结已预注册（2026-08-22）
+## WorldSim V6.1 P0 完成；ME-0 SceneIR-O 已预注册（2026-08-22）
 
-状态：`p0_infrastructure_recovery_pre_registered / formal_retry_pending`
+状态：`p0_done / me0_pre_registered_implementation_validated / formal_run_pending`
 
-当前 active hypothesis=`WS-V61-H-P0-002`，task=`WS-V61-P0-SCOPE-FREEZE-01`。V6 selector 研究族继续冻结，
+当前 active hypothesis=`WS-V61-H-ME0-001`，task=`WS-V61-ME0-OCCIR-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
 2D inpainting 或 per-case generator 混选。
 
@@ -17,10 +17,20 @@ P0 精确绑定：
 - failure refs=`V6-F25/V6-F26/V6-F65/V6-F71/V6-F78/V6-F79`。
 
 H-P0-001 在创建 run 或读取任何科学输入前因新 namespace 不存在而触发 `FileNotFoundError`；GPU/训练/生成器均未启动，
-没有方法结论，登记为 `V61-F01`。H-P0-002 只在磁盘审计前创建精确 `runs/worldsim_v61` 路径，其余科学合同不变。
+没有方法结论，登记为 `V61-F01`。H-P0-002 只创建精确 run namespace 后正式通过，`V61-F01` 已 resolved。
 
-下一步：从干净提交运行 P0；通过后立即启动 `WS-V61-ME0-OCCIR-01`，实现 `T_dst_src`、oriented volume、
-actor identity/lifecycle、FREE/OCCUPIED/UNKNOWN 与 method/eval evidence disjointness。ME-1 oracle 若不能达到
+P0 canonical：
+
+```text
+run://worldsim_v61/WS-V61-P0-SCOPE-FREEZE-01/20260822T100812Z__scope-freeze-s20260822-r1
+```
+
+source=`6247fd89068615f791b428c3296faf945e713c75`；gate/summary/manifest=`fb2a416a...ae40 / e53a86f2...907c /
+2ed96578...7593`。全部 gate PASS；R10=`3/28`、false-safe=`0`、case identity 与 scene mapping exact，
+method/eval source paths disjoint。
+
+下一步：从干净提交正式运行 ME-0；实现已通过 6 个 targeted tests 和一个 scene/frame 真实数据 preflight。
+ME-0 通过后立即启动 ME-1 oracle upper bound；ME-1 oracle 若不能达到
 `5/28`，则停止 Hunyuan3D/learned Occupancy 接入并修 compiler/evaluator。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）

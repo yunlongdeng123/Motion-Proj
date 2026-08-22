@@ -1,0 +1,79 @@
+schema_version: worldsim_v61.me0_occir.v1
+task_id: WS-V61-ME0-OCCIR-01
+hypothesis_id: WS-V61-H-ME0-001
+seed: 20260822
+sources:
+  p0_run: runs://worldsim_v61/WS-V61-P0-SCOPE-FREEZE-01/20260822T100812Z__scope-freeze-s20260822-r1
+  p0_files:
+    P0_GATE.json: fb2a416a475952333c20af13f2d078890c2a9e23c99746e3e56f9a7d4b68ae40
+    SUMMARY.json: e53a86f23e0b56a752b3b4f1d0c11a7fa26f0ac427ca43239331dde8da4e907c
+    MANIFEST.json: 2ed965781d0945d93d2d74892323728874ba2b1eca5f6faa051d30f4b4497593
+    SCOPE_FREEZE.json: 129b6377b512118522bc2d274ae222849d22a61f845af34169c633603866b7df
+    SOURCE_INDEX.json: cce0d290a9b6b9a7edc873d22043ace0fe17a9bac63116a4caf02ca52f2a65bb
+    R10_BASELINE.json: 36e67a24e0719cfd227fc53ad77508135fdc73edb3444329663061780ec6041b
+  r9_cases_path: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1/CASES.jsonl
+  r9_cases_sha256: 5be214d5f585438803f7aad5d8ee77935d3eeb37fa65fd3a89d21e07a926b991
+cohort:
+  partition: development
+  confirmation_locked: true
+  scenes: [scene-0242, scene-0048]
+  frame_indices: [52, 57]
+  expected_case_count: 28
+raw_evidence:
+  scene-0048:
+    scene_index: 45
+    processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+    sweep_offsets_by_target:
+      52: {method: [-4, -2, 0], eval: [-3, -1, 1]}
+      57: {method: [-5, -3, -1], eval: [-4, -2, 0]}
+  scene-0242:
+    scene_index: 191
+    processed_scene_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+    sweep_offsets_by_target:
+      52: {method: [-4, -2, 0], eval: [-3, -1, 1]}
+      57: {method: [-5, -3, -1], eval: [-4, -2, 0]}
+grid:
+  frame: target_lidar
+  axis_convention: x_forward_y_left_z_up
+  units: meter
+  origin_m: [-20.0, -30.0, -3.0]
+  extent_m: [40.0, 30.0, 5.0]
+  voxel_size_m: 0.2
+raw_lidar:
+  point_record_float32_width: 4
+  xyz_columns: [0, 1, 2]
+  dynamic_box_margin_m: 0.05
+ray_carving:
+  maximum_rays_per_sweep: 4096
+  maximum_range_m: 80.0
+  selection: deterministic_uniform_input_index
+truth_contract:
+  labels: {unknown: 0, free: 1, occupied: 2}
+  actor_geometry: native_oriented_box_separate_sparse_identity_layer
+  source_removal: restore_unknown_never_free
+  O_method: globally_disjoint_even_frame_raw_lidar_payloads
+  O_eval: globally_disjoint_odd_frame_raw_lidar_payloads
+  predicted_occupancy: not_started
+  generated_occupancy: not_started
+gate:
+  maximum_roundtrip_error_m: 1.0e-9
+  require_oriented_volume: true
+  require_strict_aabb_anti_regression: true
+  require_all_three_states_nonzero: true
+  require_actor_identity_lifecycle: true
+  require_source_removal_unknown: true
+  require_method_eval_path_and_payload_hash_disjoint: true
+  require_fresh_process_exact: true
+failure_ledger_refs: [V61-F01, V6-F26, V6-F65, V6-F71, V6-F78, V6-F79]
+resources:
+  gpu: none
+  maximum_cpu_workers: 4
+  maximum_wall_seconds: 600
+  minimum_disk_free_gib: 80
+claim_boundary:
+  - representation_and_truth_tier_contract_only
+  - raw_lidar_and_native_box_observed_evidence
+  - no_learned_or_generated_occupancy
+  - no_proposal_quality_or_safe_acceptance_claim
+  - no_map_semantic_ground_contact_collision_planning_or_safety_claim
+  - no_confirmation_read
