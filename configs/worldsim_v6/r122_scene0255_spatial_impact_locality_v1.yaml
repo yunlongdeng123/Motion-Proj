@@ -1,0 +1,43 @@
+schema_version: worldsim_v6.r122_scene0255_spatial_impact_locality.v1
+task_id: WS-V6-R122-SCENE0255-SPATIAL-IMPACT-LOCALITY-01
+hypothesis_id: WS-V6-H-R122-001
+seed: 20260821
+sources:
+  x_minus_four_actor:
+    run: runs://worldsim_v6/WS-V6-R118-SCENE0255-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T031020Z__scene0255-four-actor-selector-s20260821-r1
+    manifest_sha256: b6bd0640fdb7510fdb4ab1b35baf080d15ddf9c24381b7965db929340a374f4f
+    gate_name: R118_GATE.json
+    gate_sha256: c0a9a49d52aa6be48be86b4adcabcb7ee5bf7a903cae6cabd7681585a90dd183
+    summary_sha256: 3900575bfb031238fe3f56f8e55f7b82b2a1ddcda182bfa809fbbfff5eb0e631
+    selector_transfer_sha256: 1b74c47ad57be5239bd8fc9f683b04a6571b460b4f19f207b915d58c0f684e1b
+  z_plus_four_actor:
+    run: runs://worldsim_v6/WS-V6-R121-SCENE0255-ORTHOGONAL-FOUR-ACTOR-COMPOSITIONAL-SELECTOR-01/20260822T033133Z__scene0255-orthogonal-four-actor-selector-s20260821-r1
+    manifest_sha256: 8f2a1d3d3bf781888bd6a66889d9a2982a1a8d0bc6ca9bad16cb9831257e9d59
+    gate_name: R121_GATE.json
+    gate_sha256: 2bf7556a676afc82f40cffc135f7fe4debd0d383122e1bae0a76f99509fe4784
+    summary_sha256: 8b408312f21bc7da1666cbc1544e080476da39c2e2b1af33d77d331a4f67d8c2
+    selector_transfer_sha256: 349ffe70ee535113c5f119da3e8d154be59bce3c1ea93b05da4dab7e041c35d2
+runtime:
+  source_order: [x_minus_four_actor, z_plus_four_actor]
+  expected_frame_count_per_source: 196
+  expected_image_shape: [600, 1200]
+  rgb_change_epsilon: 0.000001
+  dilation_radii_pixels: [0, 1, 2, 4, 8, 16, 32, 64]
+thresholds:
+  maximum_exact_coverage_radius_pixels: 64
+  maximum_mean_roi_fraction: 0.50
+  maximum_p95_roi_fraction: 0.75
+resources:
+  execution: cpu_only_immutable_spatial_analysis
+  maximum_wall_seconds: 300
+  maximum_output_bytes: 50000000
+  minimum_disk_free_gib: 5
+claim_boundary:
+  - observed_scene0255_four_actor_minus_x_and_orthogonal_z_plus0p5_saturated_runs_only
+  - roi_is_defined_by_euclidean_dilation_of_nonzero_logged_vs_edited_rgb_difference
+  - exact_coverage_means_every_changed_frozen_deeplab_label_pixel_lies_inside_the_roi
+  - selected_radius_is_the_smallest_preregistered_grid_radius_with_per_frame_exact_coverage
+  - sparse_roi_area_is_a_candidate_compute_proxy_not_measured_model_speedup
+  - crop_inference_equivalence_and_global_receptive_field_effects_abstain
+  - semantic_correctness_local_causality_physics_planning_safety_and_confirmation_abstain
+  - no_training_gpu_or_confirmation_read
