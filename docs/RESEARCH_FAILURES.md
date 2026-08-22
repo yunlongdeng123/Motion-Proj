@@ -3948,3 +3948,22 @@ canonical run=`null`，没有科学结果，不能记为 GaussianWorld rejection
 H-ME3-GW-002 只在 wrapper 导入项目包前把 `Path(__file__).resolve().parents[1]` 加入 `sys.path`，并先用
 `--help` 做无 run/GPU 的入口 smoke。GaussianWorld commit/weights、两个并行 scene workers、seed、2Hz frame schedule、
 class mapping、UNKNOWN policy、28-case denominator、O_eval separation、thresholds、资源预算与 stop rule 全部不变。
+
+
+### V61-F11：单卡 inference capability 通过不等于 predicted Occupancy 可以成为安全 authority
+
+H-ME3-GW-002 canonical run `20260822T134559Z__predicted-occ-s1-r1` 完成两个 scene worker、24 次官方 streaming
+inference、4 个 target occupancy、28 个 method decisions 和隐藏 O_eval 评分。预测臂与 oracle O2 得到相同的
+`10/28 ACCEPT` 和 mask-area yield=`0.3983001361`，但这10例全部 false-safe；route-support 例的 hidden
+observed-FREE conflict ratio=`0.766..0.958`，actor/disocclusion=`0.159..0.328`。run 正确以
+`predicted_zero_false_safe=false` 拒绝。P6 的 weight/output/资源 capability 结论仍有效，但不能提升为安全性结论。
+
+官方 GaussianWorld head、网格与类别源码，以及 DriveStudio nuScenes transform 源码和跨 metadata 数值对照都没有发现
+x/y/z、class17 empty、camera order 或 lidar2img 错误。小幅前相机矩阵差异来自 nuScenes 异步相机 timestamp，后相机
+在机器精度内一致。因此不得通过轴交换、投影修补或输入排列试错重开 GaussianWorld。
+
+不得用 O_eval 选 confidence threshold、降低 UNKNOWN/verifier 门、做 grid/schedule/checkpoint sweep，或把 predicted
+FREE 冒充 observed truth。已有 artifact 已证明把 observed O_method FREE 作为保守 veto 会让10个接受项全部 abstain；
+无需创建零产出的重复 run。ReliOcc、α-OCC 与 OCCUQ 的可靠 uncertainty 需要训练/calibration，朴素 softmax/entropy
+也不支持无校准安全声明。后续只允许先做一次 IR-WM truth-free current-state capability smoke；通过后才消耗唯一一次
+ME-3 recovery，失败则停止 learned occupancy 并保留负结论。

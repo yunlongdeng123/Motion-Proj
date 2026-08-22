@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6.1 ME-3 GaussianWorld REJECTED / IR-WM capability PRE-REGISTERED（2026-08-22）
+
+- canonical=`run://worldsim_v61/WS-V61-ME3-PREDICTED-OCC-01/20260822T134559Z__predicted-occ-s1-r1`，
+  source=`4c048ecd2db834ae494deb998947136f9918d9bb`；预测臂=`10/28 ACCEPT`、oracle yield fraction=`1.0`，但
+  false-safe=`10`，全部预测接受项都与 hidden observed FREE 冲突，故 status=`rejected`、failure=`V61-F11`。
+- 两 scene workers 真并行，4 target outputs/28 decisions 完整；wall=`28.36s`、peak sum upper bound=`4.47GiB`；
+  无训练、confirmation、calibration 或 threshold selection。
+- source/coordinate audit 未发现轴、class 或 lidar2img 适配错误。禁止 GaussianWorld confidence/grid/schedule/
+  verifier sweep；predicted-FREE/observed-FREE veto 会确定性地把10个接受项全部变为 abstain，不另跑零信息回测。
+- ReliOcc/α-OCC/OCCUQ 需要训练或 calibration；OccWorld 需要 past occupancy truth；Drive-OccWorld 主分支没有任务权重。
+  因此 active task=`WS-V61-P7-IRWM-3090-SMOKE-01`，hypothesis=`WS-V61-H-P7-IRWM-001`。
+- IR-WM smoke 绑定 official commit=`a83e4a24...b582`、HF revision=`36b16b55...9358`、fully-decoupled checkpoint
+  `941598147 bytes / 8e1816dc...1ce`；只读两历史帧六相机、标定和 ego motion，必须在不读 occupancy GT、O_method/
+  O_eval/confirmation 下产生 finite/nonempty current occupancy，state0/0、peak<22GiB、wall<1200s。
+- capability pass 后才允许唯一一次 separately preregistered ME3 IR-WM recovery；capability fail 直接停止 learned
+  occupancy 路线，不反复修环境或改模型参数。
+
 ## WorldSim V6.1 ME-3 GaussianWorld predicted occupancy PRE-REGISTERED（2026-08-22）
 
 - H-ME3-GW-001 首次入口在创建 run/GPU 前因 tmux 环境未提供 repo-root `PYTHONPATH` 失败（`V61-F10`）；

@@ -1,9 +1,9 @@
 {
   "schema_version": "worldsim_v61.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-22T13:46:00Z",
-  "status": "me3_h001_import_failure_h002_recovery_pre_registered",
-  "active_hypothesis_id": "WS-V61-H-ME3-GW-002",
-  "active_task_id": "WS-V61-ME3-PREDICTED-OCC-01",
+  "updated_at_utc": "2026-08-22T14:00:30Z",
+  "status": "me3_gaussianworld_rejected_irwm_capability_pre_registered",
+  "active_hypothesis_id": "WS-V61-H-P7-IRWM-001",
+  "active_task_id": "WS-V61-P7-IRWM-3090-SMOKE-01",
   "north_star": "occupancy_authoritative_gaussian_rendered_task_verifiable_4d_world_compiler",
   "development_denominator": 28,
   "r10_accept_count": 3,
@@ -32,13 +32,14 @@
   "me2_primary_accept_count": 0,
   "me2_primary_false_safe_count": 0,
   "me2_outcome": "rejected_voxel_control_actor_upper_bound",
-  "last_failure_id": "V61-F10",
-  "last_failure_status": "infrastructure_import_failure_before_run_directory_or_gpu",
+  "last_failure_id": "V61-F11",
+  "last_failure_status": "scientific_rejection_predicted_occupancy_false_safe_10_of_10_accepts",
   "known_representation_limitations": [
     "V61-F03 canonical ME1 O3 scene0048 actor0 identity raster is incomplete; fixed for ME2/ME4 without rerunning O2"
   ],
   "stopped_routes": [
-    "Hunyuan3D actor proposal after all fixed arms produced observed FREE-space conflicts"
+    "Hunyuan3D actor proposal after all fixed arms produced observed FREE-space conflicts",
+    "GaussianWorld argmax occupancy as safety authority after 10/10 accepted cases were false-safe"
   ],
   "p6_backend": "GaussianWorld pretrained streaming",
   "p6_official_commit": "b43629eaecffd5a7cbaac1a55517766e6263e4fc",
@@ -50,11 +51,42 @@
   "p6_inference_seconds": 0.8524136040359735,
   "p6_outcome": "accepted_gaussianworld_3090_capability",
   "me3_backend": "GaussianWorld pretrained streaming",
-  "me3_stream_frames": [2, 7, 12, 17, 22, 27, 32, 37, 42, 47, 52, 57],
-  "me3_target_frames": [52, 57],
+  "me3_stream_frames": [
+    2,
+    7,
+    12,
+    17,
+    22,
+    27,
+    32,
+    37,
+    42,
+    47,
+    52,
+    57
+  ],
+  "me3_target_frames": [
+    52,
+    57
+  ],
   "me3_parallel_scene_workers": 2,
   "me3_minimum_accept_count": 8,
   "me3_maximum_false_safe_count": 0,
   "next_on_pass": "WS-V61-ME4-MULTIACTOR-RUNTIME-01",
-  "next_on_fail": "literature_audit_then_one_me3_recovery_without_threshold_lowering"
+  "next_on_fail": "literature_audit_then_one_me3_recovery_without_threshold_lowering",
+  "me3_canonical_run": "run://worldsim_v61/WS-V61-ME3-PREDICTED-OCC-01/20260822T134559Z__predicted-occ-s1-r1",
+  "me3_source_commit": "4c048ecd2db834ae494deb998947136f9918d9bb",
+  "me3_gate_sha256": "508b355181e1dd453df42c55e8ddb710a1e88786ac6b52238400acefe6d61d74",
+  "me3_primary_accept_count": 10,
+  "me3_primary_false_safe_count": 10,
+  "me3_primary_oracle_yield_fraction": 1.0,
+  "me3_outcome": "rejected_gaussianworld_argmax_not_safety_authority",
+  "me3_dominant_failure": "all_10_accepted_cases_conflict_with_hidden_observed_free_space",
+  "p7_backend_candidate": "IR-WM fully-decoupled official pretrained",
+  "p7_official_commit": "a83e4a24a8dbf008e5fe4e02d7efb692c1bec582",
+  "p7_model_revision": "36b16b55d21f773f080f5980b195aa2ece5b9358",
+  "p7_checkpoint_sha256": "8e1816dc290df28f1e89d0b88eddb451b9ab20fc85a8ef6449d9226ceeacd1ce",
+  "p7_checkpoint_bytes": 941598147,
+  "next_on_p7_pass": "pre_register_single_ME3_IRWM_recovery_without_threshold_selection",
+  "next_on_p7_fail": "stop_learned_occupancy_route_and_close_v61_minimum_experiment_negative"
 }
