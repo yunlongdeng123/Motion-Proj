@@ -3752,3 +3752,9 @@ H-R95-001 canonical run `20260821T234324Z__scene0048-actor-visibility-s20260821-
 H-R98-001 canonical run `20260822T001113Z__scene0048-selector-transfer-s20260821-r1` 完成196帧 logged/edited RGBD、784次冻结 DeepLab 推理与全部资源/immutability 分母。零校准 threshold45 在 scene0048 得到 TP=30、TN=166、FP=0、FN=0，precision/recall/F1=1、skip=84.69%，优于 fixed256 的 F1=0.9831 与原生36帧 lifecycle 的 F1=0.9091。但预注册 gate 把 `package_actor_frame_valid` 作为196帧均须为真的 sensor-conformance 合取项；actor8 的冻结 lifecycle 正确地仅在 frames160..195 为真、frames0..159 为假，因此唯一方法检查 `all196_compiled_native_sensor_conformant` 与总 `passed` 为假，run 按合同正式 `rejected`。逐项诊断确认196/196帧数值 conformance、repeat 与 native state restoration 全部通过，最大 RGB MAE `1.36e-8`、depth MAE `6.19e-7m`。
 
 不得追认或回写 R98、不得把160个 inactive frame 改成 active、不得删除全196帧 sensor 数值门，也不得重跑昂贵推理来掩盖治理错误。H-R99-001 只把合同修正为“每帧 `package_actor_frame_valid` 必须与冻结 native lifecycle 精确相等”，从 R98 的内容寻址 sensor/perception artifacts 独立重算196帧 conformance、784输出重复性与 selector 指标；R98 保持 rejected，R99 作为新的 governance-repair authority。
+
+### V6-F87：跨场景配置不得凭摘要转抄 checkpoint authority
+
+H-R102-001 首次正式启动在创建 run directory、读取 sensor 或启动 GPU worker 前被冻结输入校验拒绝。配置误用了不存在的 scene0255 matched-baseline 路径 `20260812T132516Z__streetgs-scene0255-matched-formal30k-s0-r50`，并把 R101 摘要中截断/误记的 digest `dba249822f22317d926cc2953d0a433f6a95e6963d35e42750b8f7074dad6acd` 当作 authority；R101 实际已通过的冻结 checkpoint 是 `20260811T214009Z__streetgs-scene0255-matched-formal30k-s0-r48`，SHA256 为 `dba24982a3f25e162b5e293165258a588cf9bd7a49e54e05d0d052de703cb2d2`。本次没有 run、gate、sensor、perception 或方法结果。
+
+不得跳过 `_verify`、制造不存在的 checkpoint、把 launcher 失败解释成 selector rejection，或继续从人工摘要抄 authority。H-R102-002 只从已接受 R101 配置复制确切 checkpoint 路径与 SHA256，并更新 hypothesis binding；R101/R90 artifact、actor34 edit、196/784 分母、threshold45、逐帧 lifecycle 合同、资源与 claim boundary 全部不变。必须在新 commit/push 后重试。
