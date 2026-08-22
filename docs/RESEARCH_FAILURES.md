@@ -3880,6 +3880,18 @@ exact commit 下载不会自动创建默认 `refs/main`；官方 encoder 只传 
 创建 `refs/main`，内容精确绑定已冻结 commit `47b73eefe95e8d44ec3623f8890bd894b6ea2d6c`；runner 在模型载入前
 验证 ref、snapshot、config 与 model SHA，之后仍保持 `HF_HUB_OFFLINE=1` 和 `TRANSFORMERS_OFFLINE=1`。
 
+### V61-F06：Hugging Face cache ref 是无换行 commit token，不是普通文本行
+
+P4 第三次正式入口创建 failed run `20260822T112159Z__voxel-smoke-s1234-r1`，再次在相同 DINO 离线解析点失败。
+运行时常量确认 `huggingface_hub.HF_HUB_CACHE` 与 `transformers.TRANSFORMERS_CACHE` 都精确指向预期 cache root，
+排除了环境变量和根路径猜测。直接审计已安装 `huggingface_hub.file_download.try_to_load_from_cache` 发现，它对
+`refs/main` 使用原样 `f.read()`，不执行 `strip()`；由普通文本 staging 上传的 ref 是 41 bytes，尾部 `0a` 使
+revision token 与 40 字符 snapshot 目录不相等。该 run 仍未生成 mesh/points 或 capability 结果。
+
+不得继续猜 cache roots 或重复完整 P4。修复把精确目标 ref 机械规范化为 40 bytes，并让 runner 也要求 byte-exact
+40 字符内容；先单独执行一次 repo-id 的离线 DINO load smoke，只有它通过后才允许下一次正式 P4。模型与参数不变。
+修复后孤立 smoke 由 repo-id 离线载入 `Dinov2Model` 的 `304368640` 个参数，故解析卡点已关闭。
+
 #### V6-F97/V6-F98 recovery 收口
 
 H-R140-003 从干净且已推送的源提交 `a13759ba8db03e1f740ad93e246ca24f0ff2d7fa` 完成 canonical run `20260822T063937Z__end-to-end-utility-s20260821-r1`。Scientific certificate SHA256 为 `913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`，与两次 partial computation 完全一致；完整 gate、summary、manifest、resource audit 与 terminal 的 SHA256 依次为 `ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`、`50900ff99736055a10c32f4362176b7fc87862ae84667591077d6c17024e635b`、`1cc753b3c0a9489ced2a58b23035466ee26cba963d2abc56c84ebd4d057e5a62`、`06c110236591529d5fef5f4178bfed696b6c0ad0cfbce94c497896dc92230265` 与 `be263ba010cdb936fbd01dbfa0fe294b8022101aae348c95030d2a42d45fdb77`。

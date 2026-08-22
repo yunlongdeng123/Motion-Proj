@@ -2,7 +2,7 @@
 
 ## WorldSim V6.1 ME-1 oracle upper bound 完成；P4 Hunyuan3D-Omni smoke 已预注册（2026-08-22）
 
-状态：`me1_done / p4_dino_offline_ref_repair_pre_registered / formal_retry_pending`
+状态：`me1_done / p4_dino_ref_byte_contract_repaired / formal_retry_ready`
 
 当前 active hypothesis=`WS-V61-H-P4-001`，task=`WS-V61-P4-HY3D-OMNI-3090-SMOKE-01`。V6 selector 研究族继续冻结，
 V6.1 转向 Occupancy-authoritative、Gaussian-rendered、task-verifiable 的四维世界编译器，不再继续阈值、selector、
@@ -80,6 +80,11 @@ HTTP `X-Linked-ETag` 完全一致。只修正 65→64 字符的 provenance trans
 因 exact-commit cache 缺少默认 `refs/main` 而在离线解析处失败（`V61-F05`），尚未生成 mesh/points 或 capability
 结论。修复只建立标准 cache ref 并把它精确绑定冻结 DINO commit；runner 在载模前验证 ref、snapshot、config 与
 model SHA，正式入口继续完全离线，不修改官方源码、backbone 或任何推理参数。
+
+第三次入口 `20260822T112159Z__voxel-smoke-s1234-r1` 暴露了更精确的根因（`V61-F06`）：运行时 cache
+root 正确，但安装版本以原样 `f.read()` 解析 ref；staging 文件尾换行使 ref 为41 bytes，无法匹配40字符 snapshot。
+外部 cache ref 已规范化为 byte-exact token；孤立离线 repo-id smoke 成功载入 `Dinov2Model` 的
+`304368640` 个参数。只有该最小解析测试通过后才重新授权完整 P4，避免了继续重复载入12GB Omni 权重。
 
 ## WorldSim V6 收口：selector 研究族已冻结（2026-08-22）
 

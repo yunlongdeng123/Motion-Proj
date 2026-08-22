@@ -113,7 +113,7 @@ def run(repo_root: Path, config_path: Path, run_root: Path) -> Path:
     hf_home = Path(config["environment"]["hf_home"])
     dino_cache = hf_home / config["environment"]["dino_cache_repo_dir"]
     dino_ref = dino_cache / config["environment"]["dino_cache_ref"]
-    if not dino_ref.is_file() or dino_ref.read_text(encoding="utf-8").strip() != config["sources"]["dino_revision"]:
+    if not dino_ref.is_file() or dino_ref.read_text(encoding="utf-8") != config["sources"]["dino_revision"]:
         raise P4SmokeError("DINO cache ref 未绑定冻结 revision")
     dino_snapshot = dino_cache / "snapshots" / config["sources"]["dino_revision"]
     dino_model = dino_snapshot / "model.safetensors"
