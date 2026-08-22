@@ -1,0 +1,67 @@
+schema_version: worldsim_v6.r97_second_independent_scene_actor_edit_compiler.v1
+task_id: WS-V6-R97-SECOND-INDEPENDENT-SCENE-ACTOR-EDIT-COMPILER-01
+hypothesis_id: WS-V6-H-R97-001
+seed: 20260821
+sources:
+  r95_run: runs://worldsim_v6/WS-V6-R95-SECOND-INDEPENDENT-SCENE-ACTOR-VISIBILITY-01/20260821T234324Z__scene0048-actor-visibility-s20260821-r1
+  r95_manifest_sha256: d9076f3bd1bae1b564b30b128c41be1f4fee3c6a5b1c640f8cd10a9acdf023b3
+  r95_gate_sha256: 88da03cf7167f6b665b405b76109f7dde9ce1fdea94a901427d3ecf8b7aa7b91
+  r95_summary_sha256: e4066aa38d76a966f2fe73ce611e07e440c91f955f60b46a31d0ec4ad76c5973
+  r95_inventory_sha256: e3378518b8c0aa868fcdb59254111a4583b5a5d3ba1d595a1dd5abb1dc9e0b7e
+  r96_run: runs://worldsim_v6/WS-V6-R96-EXHAUSTIVE-FRONT-CAMERA-VISIBILITY-01/20260821T235034Z__scene0048-exhaustive-front-s20260821-r1
+  r96_manifest_sha256: a4092a9189355c81547cc859e6f2d837c0cdbe8e55f3a3238802daefcaf97b7d
+  r96_gate_sha256: 8248e2ad1f4808379a4c068605ed20fc313b3b3e17420a362338fa6ed6f8d775
+  r96_summary_sha256: 2393db8358c2296d904257258c67f066ff01380fa5855fb85b7a693130e5f79a
+  r96_selection_sha256: bca02bae3faa3b4cb7116a4b70686479fc54bf7a4179771a468709e10e134385
+  r96_visibility_sha256: e18ddf1ae934bcf28bd20e927d2b80d8c081465860e0905cfd5ae84901d20485
+  r96_worker_audit_sha256: 24807d7e4a400d0b1698be54fc0981e674cc67e273aa2369b1be32e08137bf74
+  streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T222252Z__streetgs-scene0048-matched-formal30k-s0-r50/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth
+  streetgs_checkpoint_sha256: 70d02a0bdd70705d1c0f185dba8b4e3eb1a97702ef8ec029f0d185a7b23b00d2
+  streetgs_upstream_root: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+  streetgs_upstream_commit: e59bda4fa681f829dbb1d65f0de582b0f633c450
+  drivestudio_python: /root/autodl-tmp/envs/drivestudio/bin/python
+target:
+  scene: scene-0048
+  actor_model_index: 8
+  actor_id: actor_0008
+  chunk_id: streetgs_actor_0008
+  primitive_count: 4584
+  trajectory_rows: 196
+  active_frame_count: 36
+  lifecycle_sha256: 1033ab822396384b89f04b1a9728f00830d71aa7fbf22e013cdda88b6def527f
+  visibility_frame_index: 187
+  native_effect_pixels: 10244
+  expected_base_actor_count: 9
+  expected_rigid_primitive_count: 15717
+search:
+  x_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  z_values_m: [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0]
+  expected_candidate_count: 80
+  minimum_translation_norm_m: 0.5
+  selection_rule: minimum_translation_norm_then_lexicographic_x_z_among_zero_new_overlap_candidates
+  rgb_change_epsilon: 0.000001
+  minimum_changed_rgb_pixels_vs_logged: 256
+thresholds:
+  maximum_kinematic_invariance_error: 0.000000001
+  maximum_rigid_error_m: 0.0001
+  maximum_quaternion_norm_error: 0.00001
+  maximum_means_error_m: 0.00005
+  maximum_quaternion_error: 0.00001
+  maximum_static_field_error: 0.00001
+  maximum_rgb_mae: 0.0002
+  maximum_rgb_p99_absolute_error: 0.003
+  maximum_depth_mae_m: 0.005
+  maximum_opacity_mae: 0.0002
+resources:
+  gpu: single_rtx_3090_24gb
+  maximum_peak_gpu_memory_mib: 23000
+  maximum_worker_seconds: 420
+  maximum_wall_seconds: 900
+  minimum_disk_free_gib: 10
+claim_boundary:
+  - fresh_scene0048_sceneir_export_plus_actor8_exact_bundle_and196_pose_rigid_compilation
+  - frozen80_candidate_world_xz_translation_search_with_full9_actor_aabb_factor
+  - selected_edit_has_zero_new_actor_aabb_overlap_and_nontrivial_frame187_sensor_change
+  - logged_and_edited_compiled_sensors_must_each_conform_to_native_scene0048_renderer
+  - contact_road_semantics_novel_dynamics_physics_planning_safety_and_selector_transfer_abstain
+  - no_training_or_confirmation_read
