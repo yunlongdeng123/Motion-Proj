@@ -1,8 +1,13 @@
 # Research Status
 
-## WorldSim V6.3 P3 surface probe r1 engineering failure / r2 ready（2026-08-24）
+## WorldSim V6.3 P3 surface probe r2 launcher failure / r3 ready（2026-08-24）
 
-状态：`v63_p3_probe_r1_engineering_blocked_r2_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_probe_r2_launcher_blocked_r3_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 r2=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151429Z__surface-probe-s20260824-r2`
+因外层launcher提前创建了本应由runner原子创建的新run directory而在入口触发`FileExistsError`；0 unit、0 surface、
+0 quality read。Python官方`pathlib.Path.mkdir(exist_ok=False)`合同确认目标已存在必须失败。恢复仅移除launcher的叶目录
+预创建，父目录已存在；登记`V63-F04 resolved`，冻结配置和source commit均不变，revision 3已就绪。
 
 P3 r1=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T150842Z__surface-probe-s20260824-r1`
 在surface extraction和任何quality判据之前失败：native-to-target helper错误地对长度分别为`300/300/40`的三条轴执行
@@ -67,7 +72,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步重跑唯一P3 probe revision 2，通过后直接构建D的完整surface corpus。
+P0/P1/P2/P2D 当前完成；下一步重跑唯一P3 probe revision 3，通过后直接构建D的完整surface corpus。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）

@@ -3,7 +3,7 @@
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
 - Status: `implementation ready / probe preregistered`
-- Current revision: `r2 engineering recovery ready`
+- Current revision: `r3 launcher recovery ready`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
 each method-visible current/swept envelope with identity preserved. Proposal geometry is declared before topology. Six-connected
@@ -24,4 +24,6 @@ calibration, confirmation or test read occurs in P3.
   (`300/300/40`) were incorrectly passed to `numpy.stack`. No scientific result was produced.
 - r2 returns the three coordinate axes independently, keeps out-of-native-range points explicitly invalid, scopes route-support type
   updates to the matching local surface, and validates normals as finite unit vectors. The frozen proposal, topology, patching, cohort and
-  gate contracts are unchanged. Failure=`V63-F03 resolved`.
+  gate contracts are unchanged. Its launcher incorrectly pre-created the immutable run leaf and stopped at entry with `FileExistsError`;
+  0 units and 0 quality reads. Failure=`V63-F03 resolved`, `V63-F04 resolved`.
+- r3 removes only that leaf-directory pre-creation. Source, config and all scientific contracts remain unchanged.

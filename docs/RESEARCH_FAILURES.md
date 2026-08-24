@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts；P3 r1另暴露非科研性的unequal-axis stack接口错误，已在任何surface/quality前修复 | `V63-F01`–`V63-F03`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
+| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts；P3 r1 unequal-axis接口与r2 run-dir launcher错误均在surface/quality前修复 | `V63-F01`–`V63-F04`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -163,6 +163,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   revision 2复用冻结配置。防重复：不同长度的坐标轴不得stack；native coverage必须作为显式映射事实交给后续模型处理，
   不得偷偷clip或删除proposal。证据=`docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
   `https://numpy.org/doc/2.0/reference/generated/numpy.stack.html`。
+
+- `V63-F04`（`engineering`, `resolved`）：P3 probe r2=`20260824T151429Z__surface-probe-s20260824-r2`
+  在runner入口触发`FileExistsError`：外层launcher先`mkdir`了叶run directory，runner为保护不可变run又显式拒绝已存在
+  路径。0 unit、0 surface、0 quality read；不能解释为F03恢复失败或科研结果。Python官方`Path.mkdir`说明默认
+  `exist_ok=False`时目标存在即抛`FileExistsError`。恢复只让launcher确保task父目录存在、把叶目录留给runner原子创建；
+  不修改源码、配置或科研合同。r2目录和console保留，revision 3使用新路径。防重复：带immutable-run自建语义的runner
+  不得由外层预建叶目录。证据=`docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
+  `https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir`。
 
 <a id="detail-v62"></a>
 

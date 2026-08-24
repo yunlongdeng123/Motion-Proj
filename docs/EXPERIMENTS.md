@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE PROBE R2 LAUNCHER FAILED / R3 READY（2026-08-24）
+
+- failed run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151429Z__surface-probe-s20260824-r2`；
+  terminal=`FileExistsError at runner entry`；unit/surface/quality read=`0/0/false`。
+- root cause=外层launcher提前`mkdir`叶run目录，而runner要求该目录不存在并自行原子创建；不是axis fix或surface算法失败。
+- recovery=只确保task父目录存在，把全新叶目录交给runner创建；source/config/scientific gate不变；failure ledger delta=
+  `V63-F04 resolved`；revision 3 ready。
+
 ## WorldSim V6.3 P3 SURFACE PROBE R1 ENGINEERING FAILED / R2 READY（2026-08-24）
 
 - failed run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T150842Z__surface-probe-s20260824-r1`；
