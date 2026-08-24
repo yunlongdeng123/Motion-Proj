@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.2 P6R LEGACY28 REJECTED / CPSC-LITE FAMILY CLOSED（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T102709Z__feature-dropout-legacy28-s0-r1`，
+  source=`d0e5950`，terminal=`rejected`；唯一pre-registered evidence-dropout recovery已消费。
+- B0/B1/B3/B5 ACCEPT=`10/10/4/4`，false-safe=`10/10/4/4`，mask-area=`0.39830/0.39830/0.09402/0.09402`。
+  B5 accepted FREE conflict mean/worst=`0.049166/0.087379`，R10=`2/3`，new Actor/static=`0/2`；四个accept与P6完全
+  相同，均为scene-0242 missing-route-support，故recovery没有移除false-safe decision。
+- source-valid UNKNOWN=`0.638518`，较P6 `0.827351`下降absolute `0.188833` / relative `22.82%`，但仍未过0.50；
+  safe-OCC retention=`1.0`，hard violations=`0/939,206`。这证明missing-feature exposure有作用但不足以建立hidden-surface
+  authority。
+- resource=`48.109s / 0.531876GiB / 2,293,068 pre-closeout bytes / 64.104GiB free`；IR-WM未重跑，method/candidate先于
+  O_eval写入，confirmation/test未读，无新增hash/checksum/fingerprint。
+- post-failure primary-source audit：RELIOcc/OCCUQ需要native head/features重训或校准，α-OCC/conformal需要独立Tier C，
+  selective classification不能认证剩余accept；均超出V6.2唯一recovery边界。failure ledger delta=
+  `V62-F06 recovery_exhausted_family_closed`。P7/P8不解锁，不执行第二recovery/sweep。
+
 ## WorldSim V6.2 P6R FORMAL TRAINING DONE / LEGACY RECOVERY READY（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101705Z__feature-dropout-train-s0-r2`，

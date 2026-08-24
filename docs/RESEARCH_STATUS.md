@@ -1,9 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 P6R formal training done / single legacy recovery ready（2026-08-24）
+## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 
-状态：`p6_legacy28_rejected / p6r_formal_training_done_legacy_ready`；active task=
-`WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01`。
+状态：`v62_cpsc_lite_family_closed_negative`；active task=`none`；P7/P8=`not unlocked`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -175,7 +174,20 @@ P6R formal r2 canonical=
 baseline `2.448369`降到`2.274951`，accuracy=`0.452581→0.462246`、safe-OCC retention=`0.872897→0.887356`，
 但hidden-FREE false-OCC=`0.399349→0.414406`；full-view也为`0.384568→0.401991`。不据单项风险事后改选epoch 0/3/4，
 best epoch 2按预注册复合目标冻结。训练未读legacy O_eval、confirmation/test，IR-WM未运行；下一步只执行一次完全相同
-legacy28 arms/gates的P6R recovery，失败即关闭CPSC-Lite。
+legacy28 arms/gates的P6R recovery。
+
+P6R legacy canonical=
+`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T102709Z__feature-dropout-legacy28-s0-r1`，
+source=`d0e5950`，terminal=`rejected`。B0/B1仍=`10/28,10 false-safe`；recovered B3/B5仍=`4/28,4 false-safe`，
+B5 mask-area=`0.094024`、accepted FREE conflict mean/worst=`0.049166/0.087379`、R10=`2/3`、new Actor/static=
+`0/2`。B5接受集合与P6相同，均为四个scene-0242 missing-route-support cases。UNKNOWN从`0.827351`降至
+`0.638518`，relative下降`22.82%`，但仍超过0.50且没有移除任何false-safe；safe-OCC retention=`1.0`，hard projection=
+`0/939,206 violations`。resource=`48.109s / 0.531876GiB / 2,293,068 pre-closeout bytes / 64.104GiB free`。
+
+失败后的一手来源复核显示，RELIOcc/OCCUQ需要原生head/features的重训或离线校准，α-OCC与conformal risk control需要
+独立calibration，selective classification也只把risk/coverage权衡显式化；它们都不能在“不第二recovery、不用O_eval
+调参、不重跑backbone”的V6.2边界内合法迁移。`V62-F06 active, recovery exhausted`；CPSC-Lite family按计划关闭，
+P7/P8/confirmation/test均不解锁。完整证据见`docs/autoresearch/worldsim_v62/P6R_EVIDENCE_DROPOUT_CLOSEOUT.md`。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

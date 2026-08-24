@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3/P2/P4/P5 passed；P6 legacy28以`4/28,4/4 false-safe` rejected；唯一P6R formal training已完成，待相同legacy gate一次复评 | P5 fresh selection改善不是legacy false-safe结论；argmax-only class prototype bridge触发82.7% source-valid UNKNOWN；query-wise projection不能提供hidden surface authority；P6R复合目标改善但prototype hidden-FREE单项未改善；自定义batch必须同步完整loss字段与实际证据视图；P6R legacy失败即关闭family；不得把O_eval引入训练/方法或用all-UNKNOWN冒充安全；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；V6.2 plan、P0–P6R autoresearch docs |
+| V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -182,7 +182,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P8；bridge claim始终是lossy artifact transfer，不是native sidecar parity。证据=`P6_LEGACY_INTERFACE.md`、
   `configs/worldsim_v62/p6_legacy28_v1.yaml`、`motion_proj/worldsim_v62/legacy_bridge.py`。
 
-- `V62-F06`（`algorithm/evaluation`, `active`）：P6 canonical=`20260824T095529Z__legacy28-s0-r1` 在同一28-case上
+- `V62-F06`（`algorithm/evaluation`, `active; recovery exhausted`）：P6 canonical=`20260824T095529Z__legacy28-s0-r1` 在同一28-case上
   B5仅`4/28 ACCEPT`且`4/4 false-safe`，mask-area=`0.09402`、R10=`2/3`、Actor新增=`0`；source-valid UNKNOWN=
   `0.82735` 超过0.50。B3与B5 case decision完全相同；B5 hard projection仍是`0/939206`违规，oracle accepted surface
   safe-OCC retention=`1.0`。B1虽把accepted FREE conflict从B0 mean/worst=`0.26748/0.57057`降到
@@ -195,6 +195,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P6R formal r2=`20260824T101705Z__feature-dropout-train-s0-r2` 已按冻结复合目标选best epoch2；objective改善但
   prototype hidden-FREE false-OCC为`0.41441`，尚未解除本条。只有未改门槛的legacy28 recovery可以裁决F06，训练
   selection不能替代false-safe结果。
+  唯一P6R legacy recovery=`20260824T102709Z__feature-dropout-legacy28-s0-r1` 仍为`4/28 ACCEPT,4/4 false-safe`，
+  接受集合完全相同；UNKNOWN虽从`0.827351`降到`0.638518`，仍超过0.50，mask-area=`0.094024`、R10=`2/3`、Actor
+  gain=`0`、worst FREE conflict=`0.087379`。因此missing-feature exposure缓解abstention但没有建立hidden-surface
+  authority，本条从“允许唯一recovery”更新为“recovery exhausted / family closed”。后续不得选择projection architecture
+  或set-valued head作为第二recovery，也不得绕行P7/P8 calibration。未来新版本复开至少要求native per-voxel logits/features、
+  独立calibration cohort与直接hidden-surface false-safe risk supervision，并在任何legacy评分前重新scope-freeze。
 
 - `V62-F07`（`engineering`, `resolved`）：P6R首次formal入口
   `20260824T101047Z__feature-dropout-train-s0-r1` 从source=`d8f69d0`创建run后，在pure-prototype baseline selection
