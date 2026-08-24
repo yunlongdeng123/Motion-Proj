@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3 hard projection passed；P2 六场景/72-unit/7.2M query formal passed；actor ROI 长尾与 P4 worker env PATH 已恢复；P4 probe retry ready | 不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F04`；V6.2 plan、P0/P1/P2/P3/P4 docs |
+| V6.2 | P3 hard projection、P2 72-unit/7.2M query formal、P4 new-scene query-aligned IR-WM probe 均 passed；actor ROI 与 worker PATH 已恢复 | 不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F04`；V6.2 plan、P0/P1/P2/P3/P4 docs |
 
 ### 1.1 V1 汇总条目
 
@@ -167,7 +167,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   IR-WM controller 也显式 prepend env `bin` 并冻结 `TORCH_CUDA_ARCH_LIST=8.6`。恢复仅复用同一环境合同：prepend
   env bin，设置 `PYTHONNOUSERSITE=1`、OMP/MKL threads、CUDA device与SM 8.6；不安装包、不改模型/输入/query或门槛。
   failed probe=`20260824T085711Z__prior-sidecar-probe-s1-r1`，无科学输出；防重复：用隔离 Python 启动 native/CUDA
-  worker时不得假设其 bin 自动进入 PATH，也不得把 loader import failure记成方法 rejection。
+  worker时不得假设其 bin 自动进入 PATH，也不得把 loader import failure记成方法 rejection。恢复后的同输入 r2=
+  `20260824T085956Z__prior-sidecar-probe-s1-r2` 已产生100k query-aligned sidecar，peak=`4.05GiB`、target evidence
+  read=`false`；因此 F04 保持 resolved，不新增 recovery。
 
 <a id="detail-v61"></a>
 

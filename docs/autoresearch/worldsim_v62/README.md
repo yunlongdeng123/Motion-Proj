@@ -10,6 +10,7 @@
 - `P2_ACTOR_SWEEP_RECOVERY.md`：P2 formal r1 当前 ROI actor 空池、文献迁移与定点恢复。
 - `P2_EVIDENCE_QUERY_DATASET.md`：P2 六场景、72-unit、7.2M query 正式数据集收口。
 - `P4_IRWM_SIDECAR_INTERFACE.md`：P4 frozen backend、query-aligned logits/latent schema 与单 probe 计划。
+- `P4_IRWM_SIDECAR_PROBE.md`：P4 新场景单 target 真模型 probe、资源与信息边界。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。

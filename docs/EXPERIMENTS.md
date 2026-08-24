@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P4 IR-WM QUERY-ALIGNED PROBE PASS / FORMAL READY（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T085956Z__prior-sidecar-probe-s1-r2`，
+  source=`ee4ae2d`，scene-0071/f017，frames=`[7,12,17]`，metadata=`[1,2,3]`，batch1/one worker。
+- query=`100,000`；source-valid=`97,434`、invalid=`2,566`；unique3D prior cells=`27,467` with 17 FP16 logits，
+  unique2D BEV cells=`5,633` with 256 FP16 features。sidecar=`4,002,647 bytes`。
+- model forward=`1.066s`，worker wall=`14.08s`，controller wall=`98.29s`（首次native extension启动在worker计时前），
+  peak=`4.0496GiB`。source logits含FREE和多个OCC classes；finite/nonempty contract passed。
+- model load unexpected=`0`；missing仅官方源码主动删除且已在V6.1 capability recovery解释的两项
+  `pts_bbox_head.transformer.reference_points.*`。这两项不进入当前 BEV/occupancy forward，不再增加 gate。
+- target evidence/occupancy GT/O_method/O_eval/confirmation/test=`not read`；training/future decoder/planner=`not started`；
+  hash/checksum/fingerprint=`not added`。failure ledger delta=`none`（F04 recovery已在前一里程碑记录）。
+- decision=`run_formal_6_scenes_72_targets_with_maximum_2_scene_workers`，不再增加 smoke。
+
 ## WorldSim V6.2 P4 PROBE R1 ENV BLOCKED / R2 RECOVERY READY（2026-08-24）
 
 - failed run=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T085711Z__prior-sidecar-probe-s1-r1`；

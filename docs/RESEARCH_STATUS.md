@@ -73,7 +73,14 @@ cells和两组 query→cell 索引；source extent 外 query 显式标为 prior-
 P4 probe r1=`20260824T085711Z__prior-sidecar-probe-s1-r1` 在 plugin import、GPU forward和sidecar前被
 `Ninja is required` 阻塞。env 内的 `bin/ninja` 已存在，根因是controller使用隔离 Python但未把同一 env bin prepend
 到 PATH。按 PyTorch cpp-extension 官方查找机制和 V6.1 成功 worker合同，恢复只补齐 PATH/PYTHONNOUSERSITE/
-OMP/MKL/CUDA arch 环境，不安装依赖、不改科学输入；`V62-F04 resolved`，probe r2 next。
+OMP/MKL/CUDA arch 环境，不安装依赖、不改科学输入；`V62-F04 resolved`，随后重跑同输入 probe r2。
+
+同输入 probe r2 canonical=
+`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T085956Z__prior-sidecar-probe-s1-r2` 已通过：
+100,000 queries 中97,434个 source-valid，去重为27,467个3D prior cells与5,633个2D BEV cells；输出=
+`4,002,647 bytes`，worker peak=`4.0496GiB`，official forward=`1.066s`，controller wall=`98.29s`（含首次native
+extension启动）。missing keys仅V6.1已知的两项官方删除 `reference_points`，unexpected=`0`；target evidence、
+confirmation、exact-once test均未读。P4 进入 formal 6-scene/72-target/max2-worker，不再追加 smoke。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
