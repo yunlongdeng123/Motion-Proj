@@ -1,8 +1,9 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P1 新颖性审计通过，P3 硬投影算子启动（2026-08-24）
+## WorldSim V6.2 CPSC P3 硬投影算子通过，P2 evidence-query dataset 启动（2026-08-24）
 
-状态：`p1_novelty_audit_passed / p3_projection_pre_registered`；active task=`WS-V62-P3-FEASIBILITY-PROJECTION-01`。
+状态：`p3_projection_passed / p2_evidence_query_dataset_pre_registered`；active task=
+`WS-V62-P2-EVIDENCE-QUERY-DATASET-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -19,10 +20,16 @@ bake/collision asset + world-simulation false-safe”的直接重合，novelty g
 `hard-evidence-constrained physical-state compilation` 的完整任务/接口/评测组合，不能把 uncertainty、三态、query、
 projection、conformal 或 evidence dropout 单独写成新贡献。
 
-迁移按 operator-first 执行：P3 先实现独立于 V6.1 重审计 runner 的小型 PyTorch closed-form projection，约束优先级固定为
-`contradiction > observed FREE/OCC > lifecycle > soft prior`；只在真实 fixture 稳定后，P2 再围绕该 contract 构建 query
-dataset。confirmation 与 exact-once test 继续未读、未解锁。完整 P1 见
-`docs/autoresearch/worldsim_v62/P1_NOVELTY_AUDIT.md`。
+P3 已实现独立于 V6.1 重审计 runner 的小型 PyTorch closed-form projection，约束优先级固定为
+`contradiction > observed FREE/OCC > lifecycle > soft prior`。单个 synthetic contract test=`1 passed`；真实
+scene-0048/f052 `O_method` fixture 抽样 48 query，hard FREE/OCC、contradiction/lifecycle→UNKNOWN 与 simplex 最大误差
+均为 `0`，梯度 finite，未约束 query 梯度非零；第二个 fresh process 结果一致。canonical=
+`run://worldsim_v62/WS-V62-P3-FEASIBILITY-PROJECTION-01/20260824T080731Z__projection-s0-r1`。
+
+P2 将围绕该 operator contract，从 nuScenes train split 仅按 metadata 选择 6 个 fresh development scenes；先冻结
+scene/target/sweep 分配，再构建 method evidence、dropout target 与 target evidence。confirmation 与 exact-once test
+继续未读、未解锁。完整 P1/P3 见 `docs/autoresearch/worldsim_v62/P1_NOVELTY_AUDIT.md` 和
+`docs/autoresearch/worldsim_v62/P3_FEASIBILITY_PROJECTION.md`。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

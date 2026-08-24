@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.2 P3 FEASIBILITY PROJECTION PASS / P2 PRE-REGISTERED（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P3-FEASIBILITY-PROJECTION-01/20260824T080731Z__projection-s0-r1`，
+  hypothesis=`WS-V62-H-P3-001`，outcome=`done_projection_contract_passed`。
+- 实现=`motion_proj/worldsim_v62/projection.py`：`[N,3]` tri-state logits 经 softmax 后，逐 query 以
+  `contradiction > observed FREE/OCC > outside lifecycle > soft prior` 做 closed-form projection；FREE/OCC/UNKNOWN
+  顺序固定为 `0/1/2`。约束行 exact one-hot，未约束行保留 softmax 与梯度。
+- synthetic：`pytest -q tests/worldsim_v62/test_projection.py` → `1 passed in 1.84s`；覆盖相互冲突证据、显式矛盾、
+  lifecycle、simplex、约束行零梯度与未约束行非零 finite 梯度。
+- real fixture：V6.1 scene-0048/f052 `O_method` 含 `3,600,000` static voxels 与 `28,248` actor voxels；按
+  FREE/OCC/UNKNOWN 各抽 16 个共 48 query。hard FREE/OCC、contradiction/lifecycle UNKNOWN、simplex 最大误差均
+  `0.0`，gradient finite，unconstrained gradient nonzero；新进程重复输出一致。
+- CPU only；没有模型、训练、O_eval、confirmation/test、哈希/校验和/指纹或大范围回归。failure ledger delta=`none`。
+- P2=`WS-V62-P2-EVIDENCE-QUERY-DATASET-01` 已预注册：metadata-only 选择 6 个 train scenes，每场至少 10 targets；
+  scene/target/sweep 先冻结，方法/留出目标分离，输出 active query rows，不读取 occupancy quality/proposal outcome。
+
 ## WorldSim V6.2 P1 NOVELTY AUDIT PASS / P3 PRE-REGISTERED（2026-08-24）
 
 - task=`WS-V62-P1-NOVELTY-AUDIT-01`，hypothesis=`WS-V62-H-P1-001`，outcome=`done_no_direct_overlap`；
