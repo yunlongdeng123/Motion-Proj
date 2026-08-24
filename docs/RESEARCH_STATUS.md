@@ -155,6 +155,13 @@ P5 task loss不变。固定`AdamW1e-4, FP16, batch16384, accum2, max6/min3/patie
 一次选点；不读legacy O_eval、不加capacity smoke。checkpoint冻结后只运行一次相同P6 gate的P6R；失败则关闭
 CPSC-Lite，不再选择第二种机制恢复。
 
+P6R 已按预注册实现、尚未训练：同一608,366-parameter CPSC-Lite student/teacher均从P5 best初始化，teacher冻结；每个
+train query独立以`p=0.5`切换到train-only class prototype logits/BEV，student损失为原P5 task loss加`0.25×teacher→
+student base-probability KL`。selection固定pure-prototype view，并同时报告full view；P5 evidential anneal从best epoch继续，
+不重置。配置=`configs/worldsim_v62/p6r_evidence_dropout_v1.yaml`，入口=
+`scripts/run_worldsim_v62_p6r_evidence_dropout.py`；静态合同/入口通过。下一步从干净提交直接跑唯一formal training，
+不加probe；failure ledger delta=`none`。
+
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
 `V62-F01,V61-F11,V61-F13`。

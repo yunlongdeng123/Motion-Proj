@@ -38,7 +38,10 @@ from motion_proj.worldsim_v62.legacy_bridge import (
 )
 
 
-TASK_ID = "WS-V62-P6-LEGACY28-ME-01"
+TASK_IDS = {
+    "WS-V62-P6-LEGACY28-ME-01",
+    "WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01",
+}
 PRIMARY_ARM = "B5-CPSC-LITE-PRECONFORMAL"
 RUNNABLE_ARMS = (
     "B0-IRWM-ARGMAX",
@@ -120,13 +123,15 @@ def _arm_summary(
 def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
     started = time.monotonic()
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    if config["task_id"] != TASK_ID:
+    task_id = str(config["task_id"])
+    if task_id not in TASK_IDS:
         raise ValueError("P6 task identity drift")
     source_commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=repo_root, text=True
     ).strip()
     now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = run_root / TASK_ID / f"{now}__legacy28-s0-r1"
+    run_tag = str(config.get("run_tag", "legacy28"))
+    run_dir = run_root / task_id / f"{now}__{run_tag}-s0-r1"
     run_dir.mkdir(parents=True, exist_ok=False)
     o_eval_read = False
     try:
@@ -464,7 +469,7 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         else:
             decision = "cpsc_lite_family_rejected_mechanism_recovery_only"
         gate = {
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "primary_arm": PRIMARY_ARM,
             "checks": checks,
             "primary_passed": primary_passed,
@@ -474,7 +479,7 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         _write_json(run_dir / "P6_GATE.json", gate)
         _write_jsonl(run_dir / "ARM_SUMMARIES.jsonl", arm_summaries)
         metrics = {
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "arm_summaries": arm_summaries,
             "safe_occ_retention": safe_occ_retention,
             "oracle_surface_voxel_count": oracle_surface_count,
@@ -503,7 +508,7 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         }
         _write_json(run_dir / "RESOURCE_AUDIT.json", resource)
         summary = {
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "source_commit": source_commit,
             "status": "done" if primary_passed or b1_stop_triggered else "rejected",
             "decision": decision,
@@ -522,7 +527,7 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         _write_json(
             run_dir / "MANIFEST.json",
             {
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "source_commit": source_commit,
                 "config_path": str(config_path),
                 "identity_policy": config["identity_policy"],
@@ -544,10 +549,10 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         _write_json(
             run_dir / "TERMINAL.json",
             {
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "status": summary["status"],
                 "canonical": True,
-                "run_uri": f"run://worldsim_v62/{TASK_ID}/{run_dir.name}",
+                "run_uri": f"run://worldsim_v62/{task_id}/{run_dir.name}",
             },
         )
         return run_dir
@@ -555,7 +560,7 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
         _write_json(
             run_dir / "TERMINAL.json",
             {
-                "task_id": TASK_ID,
+                "task_id": task_id,
                 "status": "failed",
                 "canonical": False,
                 "error_type": type(error).__name__,

@@ -12,6 +12,9 @@
 - resource=`47.195s / 0.53188GiB / 2,273,574 pre-closeout bytes / 64.11GiB free`。
 - sole recovery=`feature/evidence dropout + frozen full-view teacher consistency`：corruption p=`0.5`，KL weight=`0.25`，
   AdamW=`1e-4`，FP16 batch=`16384×accum2`，max/min/patience=`6/3/2`，seed0；不读legacy O_eval，不做probe/sweep。
+- implementation=`ready`：teacher/student同构且从P5 best加载，teacher frozen；per-query mixed full/prototype train view、pure
+  prototype selection、full-view companion metrics与continued evidential anneal均已实现。静态配置/语法/入口通过；
+  failure ledger delta=`none`，下一步唯一formal training。
 
 ## WorldSim V6.2 P6 LEGACY INTERFACE MIGRATED / FORMAL READY（2026-08-24）
 

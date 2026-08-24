@@ -1,0 +1,51 @@
+schema_version: worldsim_v62.p6r_evidence_dropout_config.v1
+task_id: WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01
+hypothesis_id: WS-V62-H-P6R-001
+seed: 0
+
+inputs:
+  p2_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2
+  p4_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T090444Z__prior-sidecars-s1-r1
+  p5_config: /root/autodl-tmp/motion_proj/configs/worldsim_v62/p5_cpsc_lite_v1.yaml
+  p5_best_model: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1/BEST_MODEL.pt
+  target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+
+split:
+  train_scenes: [scene-0071, scene-0317, scene-0862, scene-1012]
+  selection_scenes: [scene-0450, scene-1089]
+  train_unit_count: 48
+  selection_unit_count: 24
+
+recovery:
+  mechanism: per_query_prototype_feature_dropout_with_frozen_full_view_teacher
+  prototype_feature_probability: 0.5
+  consistency: teacher_to_student_base_probability_kl
+  consistency_weight: 0.25
+  teacher_frozen: true
+  student_initialization: p5_best
+  selection_view: pure_prototype
+
+training:
+  precision: fp16
+  query_batch_size: 16384
+  gradient_accumulation_steps: 2
+  optimizer: AdamW
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  gradient_clip_norm: 1.0
+  maximum_epochs: 6
+  minimum_epochs: 3
+  early_stop_patience: 2
+
+resources:
+  gpu: 0
+  maximum_gpu_memory_gib: 18
+  maximum_wall_seconds: 7200
+  maximum_incremental_disk_gib: 2
+  minimum_disk_free_gib: 40
+
+identity_policy: logical_path_semantic_version_task_run_git_no_hash
+legacy_o_eval_allowed: false
+confirmation_allowed: false
+exact_once_test_allowed: false
+failure_ledger_refs: [V62-F06, V62-F05, V62-F01, V61-F13]

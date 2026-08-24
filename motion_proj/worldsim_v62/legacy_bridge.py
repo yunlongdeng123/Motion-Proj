@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 from motion_proj.worldsim_v61.occupancy import FREE, OCCUPIED, UNKNOWN
-from motion_proj.worldsim_v62.cpsc_lite import CPSCLite, load_unit_arrays
+from motion_proj.worldsim_v62.cpsc_lite import CPSCLite, UnitArrays, load_unit_arrays
 from motion_proj.worldsim_v62.projection import (
     FREE_INDEX,
     OCCUPIED_INDEX,
@@ -128,6 +128,20 @@ def _query_features(
         ),
         axis=1,
     ).astype(np.float32)
+
+
+def bridge_unit_features(
+    unit: UnitArrays, prototypes: dict[str, np.ndarray]
+) -> tuple[np.ndarray, np.ndarray]:
+    """Build the pure prototype view corresponding to one frozen P2/P4 unit."""
+    classes = unit.prior_features[:, :17].argmax(axis=1).astype(np.int64)
+    prior_features, prior_tristate = _prototype_features(
+        classes, unit.prior_valid, prototypes
+    )
+    query_features = unit.query_features.copy()
+    method_one_hot = np.eye(3, dtype=np.float32)[unit.method_class]
+    query_features[:, -3:] = prior_tristate - method_one_hot
+    return prior_features, query_features
     return np.concatenate(
         (
             normalized_coordinates,
