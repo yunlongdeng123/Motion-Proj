@@ -1,0 +1,31 @@
+task: WS-V63-P0-SCOPE-GIT-01
+version: worldsim_v63
+status: frozen
+branch: research/worldsim-v6.3-surface-tail
+upstream:
+  branch: research/worldsim-v6.2-cpsc
+  status: v62_cpsc_lite_family_closed_negative
+  recovery_exhausted: true
+  p7_unlocked: false
+  p8_unlocked: false
+method_scope:
+  native_irwm_features: required
+  prototype_bridge: forbidden
+  proposal_surface_joint_model: required
+  exact_hard_projection: required
+  surface_tail_risk: required
+  positive_occupancy_authority: required
+  case_level_independent_calibration: required
+data_policy:
+  legacy_for_training_or_tuning: forbidden
+  confirmation_for_tuning: forbidden
+  test_for_tuning: forbidden
+  voxel_as_independent_calibration_unit: forbidden
+artifact_policy:
+  add_hash: false
+  add_checksum: false
+  add_fingerprint: false
+resource:
+  gpu: NVIDIA RTX 3090 24GB
+  resource_recovery_limit: 1
+  faithful_resource_failure_status: blocked_resource

@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.3 SurfNCC scope active（2026-08-24）
+
+状态：`v63_p0_scope_frozen / p1_novelty_prereg_in_progress`；active task=`WS-V63-P1-SCOPE-NOVELTY-01`。
+
+V6.2 的 `v62_cpsc_lite_family_closed_negative`、`V62-F06 recovery exhausted` 与 P7/P8 未解锁结论保持不变。
+按 V6.3 计划，V6.2 已经由临时 integration branch 以 fast-forward 合入 `main`，定向 projection test 在正确的
+`PYTHONPATH=.` 合同下为 `1 passed`，随后从同步后的 `main` 新建并推送独立分支
+`research/worldsim-v6.3-surface-tail`。首次定向测试因入口路径写错、第二次因未设置 repo-local import path 而在 collection
+阶段失败，均未读取数据或产生科学结果；已登记 `V63-F01 resolved`。
+
+V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent 与真实硬证据，对完整 proposal surface 做联合
+编码与 patch/proposal 尾部风险控制，经 scene-disjoint case-level 独立校准后才允许 singleton OCC 写入 Physical State。
+禁止 prototype bridge、legacy O_eval 调参、voxel-level 伪独立校准、mean query risk 替代 surface tail、用 all-UNKNOWN
+冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
+失败，才进入 `blocked_resource` 并向用户申请升级资源。
+
+P0 当前完成：上游/远端/资源/工作树继承已核对，V6.3 plan 已纳入分支，scope/config/autoresearch state 已建立；P1
+必须在任何 V6.3 质量结果前完成一手文献审计，并冻结 surface/patch/feature、CVaR、loss、case-level calibration、
+cohort、gates 与资源合同。当前没有运行 GPU 实验，也没有读取 legacy/confirmation/test quality。
+
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 
 状态：`v62_cpsc_lite_family_closed_negative`；active task=`none`；P7/P8=`not unlocked`。

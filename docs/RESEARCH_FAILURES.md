@@ -2,7 +2,7 @@
 
 > **最后更新**：2026-08-24
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6.2、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.3、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -42,6 +42,7 @@
 ### 0.4 目录
 
 - [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
+- [V6.3 详细账本](#detail-v63)
 - [V6.2 详细账本](#detail-v62)
 - [V6.1 详细账本](#detail-v61)
 - [V6 详细账本](#detail-v6)
@@ -68,6 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
+| V6.3 | SurfNCC scope active；P0/Git 继承完成，尚无方法质量结论 | 原生 feature、surface joint model、tail risk 与 case-level calibration 必须在 quality read 前冻结；首次定向 pytest 命令的路径/import 合同已修复 | `V63-F01`；`docs/autoresearch/worldsim_v63/SCOPE_FREEZE.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -124,6 +126,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v63"></a>
+
+## V6.3 SurfNCC 防重复结论（2026-08-24）
+
+- `V63-F01`（`engineering`, `resolved`）：P0 integration branch 的首次定向验证错误指向不存在的
+  `tests/test_worldsim_v62_projection.py`，第二次改到真实文件后又因 pytest 进程未包含 repo-local `PYTHONPATH` 而在
+  import collection 阶段触发 `ModuleNotFoundError: motion_proj`。两次均未读取数据/quality、未运行 GPU、未改变源码，
+  不是 V6.2 projection 回归或 V6.3 算法失败。唯一恢复是在同一 conda 环境用
+  `PYTHONPATH=. pytest -q tests/worldsim_v62/test_projection.py`，结果 `1 passed`。防重复：远端 repo 的定向 pytest
+  必须使用真实 `tests/<version>/...` 路径并显式提供 repo-local import path；不为这一入口错误增加 smoke/regression
+  矩阵。证据=`WS-V63-P0-SCOPE-GIT-01` 与 P0 shell terminal。
 
 <a id="detail-v62"></a>
 

@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.3 P0 SCOPE/GIT DONE / P1 NOVELTY IN PROGRESS（2026-08-24）
+
+- task=`WS-V63-P0-SCOPE-GIT-01`；branch=`research/worldsim-v6.3-surface-tail`。
+- V6.2 closed-negative 分支已通过临时 integration branch fast-forward 合入并推送 `main`；随后从最新 `main` 创建 V6.3
+  分支。正确入口的定向验证=`PYTHONPATH=. pytest -q tests/worldsim_v62/test_projection.py`，结果=`1 passed`。
+- 两次前置命令失败均发生于 pytest collection：第一次目标路径不存在，第二次缺少 repo-local `PYTHONPATH`；未读取任何
+  dataset/quality、未启动 GPU、未改变源码或科学合同。failure ledger delta=`V63-F01 resolved`。
+- P0 冻结：原生 logits/latent、proposal surface、patch CVaR、positive OCC authority、exact hard projection 与
+  independent case-level calibration 为唯一主线；prototype、legacy 调参、voxel calibration、all-UNKNOWN 与新增
+  hash/checksum/fingerprint 均禁止。
+- resource snapshot=`RTX 3090 24576 MiB, 1 MiB used, 0% util; /root/autodl-tmp 65 GiB free`。下一 task=
+  `WS-V63-P1-SCOPE-NOVELTY-01`；在 P1 freeze 前不执行质量实验。
+
 ## WorldSim V6.2 P6R LEGACY28 REJECTED / CPSC-LITE FAMILY CLOSED（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T102709Z__feature-dropout-legacy28-s0-r1`，
