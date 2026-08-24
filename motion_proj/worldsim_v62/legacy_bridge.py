@@ -128,6 +128,16 @@ def _query_features(
         ),
         axis=1,
     ).astype(np.float32)
+    return np.concatenate(
+        (
+            normalized_coordinates,
+            method_one_hot,
+            np.zeros((indices.shape[0], 1), dtype=np.float32),
+            actor_features,
+            prior_tristate - method_one_hot,
+        ),
+        axis=1,
+    ).astype(np.float32)
 
 
 def bridge_unit_features(
@@ -142,16 +152,6 @@ def bridge_unit_features(
     method_one_hot = np.eye(3, dtype=np.float32)[unit.method_class]
     query_features[:, -3:] = prior_tristate - method_one_hot
     return prior_features, query_features
-    return np.concatenate(
-        (
-            normalized_coordinates,
-            method_one_hot,
-            np.zeros((indices.shape[0], 1), dtype=np.float32),
-            actor_features,
-            prior_tristate - method_one_hot,
-        ),
-        axis=1,
-    ).astype(np.float32)
 
 
 def _tristate_to_semantics(class_index: np.ndarray) -> np.ndarray:

@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 P6 legacy28 rejected，唯一 evidence-dropout recovery 预注册（2026-08-24）
+## WorldSim V6.2 P6R batch-contract recovery ready（2026-08-24）
 
-状态：`p6_legacy28_rejected / p6r_evidence_dropout_pre_registered`；active task=
+状态：`p6_legacy28_rejected / p6r_batch_contract_recovery_ready`；active task=
 `WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
@@ -155,12 +155,18 @@ P5 task loss不变。固定`AdamW1e-4, FP16, batch16384, accum2, max6/min3/patie
 一次选点；不读legacy O_eval、不加capacity smoke。checkpoint冻结后只运行一次相同P6 gate的P6R；失败则关闭
 CPSC-Lite，不再选择第二种机制恢复。
 
-P6R 已按预注册实现、尚未训练：同一608,366-parameter CPSC-Lite student/teacher均从P5 best初始化，teacher冻结；每个
+P6R 已按预注册实现：同一608,366-parameter CPSC-Lite student/teacher均从P5 best初始化，teacher冻结；每个
 train query独立以`p=0.5`切换到train-only class prototype logits/BEV，student损失为原P5 task loss加`0.25×teacher→
 student base-probability KL`。selection固定pure-prototype view，并同时报告full view；P5 evidential anneal从best epoch继续，
 不重置。配置=`configs/worldsim_v62/p6r_evidence_dropout_v1.yaml`，入口=
-`scripts/run_worldsim_v62_p6r_evidence_dropout.py`；静态合同/入口通过。下一步从干净提交直接跑唯一formal training，
-不加probe；failure ledger delta=`none`。
+`scripts/run_worldsim_v62_p6r_evidence_dropout.py`。
+
+首次formal入口=`20260824T101047Z__feature-dropout-train-s0-r1` 在baseline selection、任何optimizer step之前因batch缺少
+`prior_tristate`触发`KeyError`；未形成checkpoint、未读取legacy O_eval，也没有科学质量结果。损失函数的完整batch读取
+已一次性核对；按PyTorch官方mapping batch合同，恢复让`prior_tristate`与输入证据视图同步：pure-prototype selection
+使用prototype三态，训练中的full/prototype逐query混合使用同一个`corrupt_prior[:,18:21]`。`V62-F07 resolved`；r1
+保持不可变。同次静态接口核对还把尚未执行的legacy `_query_features`返回语句归位，避免唯一复评路径返回`None`；没有
+新增失败run。下一步从修复提交直接运行revision 2，不加probe或额外回归。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

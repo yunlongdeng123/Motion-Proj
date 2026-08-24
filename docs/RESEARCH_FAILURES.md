@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3/P2/P4/P5 passed；P6 legacy28以`4/28,4/4 false-safe` rejected；唯一P6R evidence-dropout recovery预注册 | P5 fresh selection改善不是legacy false-safe结论；argmax-only class prototype bridge触发82.7% source-valid UNKNOWN；query-wise projection不能提供hidden surface authority；B1仍10/10 false-safe；B2/B4/M0不得伪造；P6R失败即关闭family；不得把O_eval引入训练/方法或用all-UNKNOWN冒充安全；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F06`；V6.2 plan、P0–P6 autoresearch docs |
+| V6.2 | P3/P2/P4/P5 passed；P6 legacy28以`4/28,4/4 false-safe` rejected；唯一P6R evidence-dropout recovery进入batch-contract r2 | P5 fresh selection改善不是legacy false-safe结论；argmax-only class prototype bridge触发82.7% source-valid UNKNOWN；query-wise projection不能提供hidden surface authority；B1仍10/10 false-safe；自定义batch必须同步完整loss字段与实际证据视图；P6R失败即关闭family；不得把O_eval引入训练/方法或用all-UNKNOWN冒充安全；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；V6.2 plan、P0–P6R autoresearch docs |
 
 ### 1.1 V1 汇总条目
 
@@ -192,6 +192,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   重跑IR-WM、删case、放松UNKNOWN/FREE gate或改选第二backend。唯一合法复开=`P6R evidence dropout`：依据CVPR 2022
   Modality-Agnostic Learning，只用P2/P4 train模拟`p=0.5` prototype feature loss，并由frozen full-view P5 teacher做
   `0.25 KL`一致性；相同P6 gate一次性复评。若P6R失败，CPSC-Lite关闭，不再换projection/set-valued recovery。
+
+- `V62-F07`（`engineering`, `resolved`）：P6R首次formal入口
+  `20260824T101047Z__feature-dropout-train-s0-r1` 从source=`d8f69d0`创建run后，在pure-prototype baseline selection
+  的首个`compute_cpsc_losses`调用触发`KeyError: prior_tristate`；optimizer steps=`0`、checkpoint=`0`、legacy O_eval
+  read=`0`，因此不是训练不稳定或机制rejection。根因是recovery runner自定义mapping batch漏传原P5 prior-preserve
+  loss需要的字段。PyTorch官方`torch.utils.data`说明mapping sample/batch由collation保留键，调用方必须完整提供约定字段；
+  恢复前已核对loss的全部batch访问，确认没有第二个遗漏键。修复不能把full-view先验静态塞入所有路径：selection传
+  `bridge_prior[:,18:21]`，训练传逐query混合后的`corrupt_prior[:,18:21]`，使loss与student实际证据视图一致。
+  failed r1保持不可变；revision 2只改batch合同与run revision，不改模型、数据、p/KL、loss权重、seed、资源或legacy
+  gate，不增probe/smoke/回归矩阵。证据：PyTorch DataLoader官方文档
+  `https://docs.pytorch.org/docs/stable/data.html`、P6R terminal/config/runner。
 
 <a id="detail-v61"></a>
 

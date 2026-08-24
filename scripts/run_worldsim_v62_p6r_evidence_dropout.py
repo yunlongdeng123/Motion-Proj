@@ -70,7 +70,11 @@ def _make_model(checkpoint: dict[str, Any], config: dict[str, Any]) -> CPSCLite:
     return model
 
 
-def _metadata(unit: UnitArrays, selected: np.ndarray) -> dict[str, np.ndarray]:
+def _metadata(
+    unit: UnitArrays,
+    selected: np.ndarray,
+    prior_tristate: np.ndarray,
+) -> dict[str, np.ndarray]:
     return {
         "target_class": unit.target_class[selected],
         "method_class": unit.method_class[selected],
@@ -79,6 +83,7 @@ def _metadata(unit: UnitArrays, selected: np.ndarray) -> dict[str, np.ndarray]:
         "contradiction": unit.contradiction[selected],
         "actor_bound": unit.actor_bound[selected],
         "prior_valid": unit.prior_valid[selected],
+        "prior_tristate": prior_tristate,
     }
 
 
@@ -204,7 +209,9 @@ def evaluate(
         for start in range(0, unit.query_count, batch_size):
             stop = min(unit.query_count, start + batch_size)
             selected = np.arange(start, stop, dtype=np.int64)
-            batch = _to_device(_metadata(unit, selected), device)
+            batch = _to_device(
+                _metadata(unit, selected, bridge_prior[selected, 18:21]), device
+            )
             full_prior = torch.from_numpy(unit.prior_features[selected]).to(device)
             full_query = torch.from_numpy(unit.query_features[selected]).to(device)
             bridge_output = _forward(
@@ -253,7 +260,10 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = run_root / TASK_ID / f"{now}__feature-dropout-train-s0-r1"
+    run_revision = int(config["run_revision"])
+    run_dir = run_root / TASK_ID / (
+        f"{now}__feature-dropout-train-s{seed}-r{run_revision}"
+    )
     run_dir.mkdir(parents=True, exist_ok=False)
     try:
         p5_config = yaml.safe_load(Path(config["inputs"]["p5_config"]).read_text())
@@ -334,7 +344,6 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
                 rng.shuffle(order)
                 for start in range(0, unit.query_count, batch_size):
                     selected = order[start : start + batch_size]
-                    batch = _to_device(_metadata(unit, selected), device)
                     full_prior = unit.prior_features[selected]
                     full_query = unit.query_features[selected]
                     use_bridge = rng.random(selected.size) < corruption_probability
@@ -342,6 +351,9 @@ def run(config_path: Path, repo_root: Path, run_root: Path) -> Path:
                     corrupt_query = full_query.copy()
                     corrupt_prior[use_bridge] = bridge_prior[selected][use_bridge]
                     corrupt_query[use_bridge] = bridge_query[selected][use_bridge]
+                    batch = _to_device(
+                        _metadata(unit, selected, corrupt_prior[:, 18:21]), device
+                    )
                     with torch.no_grad(), torch.cuda.amp.autocast(enabled=use_amp):
                         teacher_output = _forward(
                             teacher,

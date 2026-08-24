@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P6R FORMAL ENTRY BLOCKED / REVISION 2 READY（2026-08-24）
+
+- failed run=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101047Z__feature-dropout-train-s0-r1`，
+  source=`d8f69d0`，terminal=`failed: KeyError prior_tristate`；失败位于pure-prototype baseline selection，在0 optimizer
+  step、0 checkpoint、0 legacy O_eval read之前，不能记为evidence-dropout rejection。
+- 根因是recovery runner的自定义batch只传了7个metadata字段，遗漏原P5 task loss唯一额外需要的`prior_tristate`。
+  已核对`compute_cpsc_losses`的全部batch读取，无第二个遗漏字段；failure ledger delta=`V62-F07 resolved`。
+- revision 2语义修复：pure-prototype selection传`bridge_prior[:,18:21]`；训练传逐query mixed后的
+  `corrupt_prior[:,18:21]`。因此prior-preserve loss与student实际所见证据一致，不从full view泄漏先验。
+- 同次静态接口核对还在未执行的legacy recovery路径发现`_query_features`返回语句被早先helper插入位置截断；已把原返回
+  归位，未产生新run或科学失败，不另增failure ID。
+- `run_revision=2`；科学机制、p=`0.5`、KL=`0.25`、P5 losses、seed0、epoch/batch/resource合同与唯一legacy复评规则均不变。
+  不加capacity probe、smoke矩阵或额外回归；下一步从干净修复提交直接重跑formal。
+
 ## WorldSim V6.2 P6 LEGACY28 REJECTED / P6R EVIDENCE-DROPOUT PRE-REGISTERED（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P6-LEGACY28-ME-01/20260824T095529Z__legacy28-s0-r1`，source=
