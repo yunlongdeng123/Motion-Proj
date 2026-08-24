@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 schema-complete probe r6已通过并进入formal | 原生feature未改变pointwise unsafe accepts；P3修复axis/launcher/normal/schema及一次processed-index检查入口错误；全部历史run保留 | `V63-F01`–`V63-F07`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 schema-complete formal运行中；P4实现已staged但未执行 | P3修复axis/launcher/normal/schema/processed-index；P4合成AMP按官方指南改用BCE-with-logits；全部历史run保留 | `V63-F01`–`V63-F08`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -209,6 +209,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `[3,300,300,40]`且逐voxel FREE+OCC+UNKNOWN count恒等于3。防重复：raw processed目录只按cohort metadata中的
   `processed_index`解析，不从scene display name猜目录；这一入口错误不扩展smoke/regression。证据=P3 r6 pre-run shell与
   `configs/worldsim_v62/p2_development_cohort_v1.yaml`。
+
+- `V63-F08`（`engineering`, `resolved`）：P4尚未解锁执行时的temporary synthetic AMP interface r1在
+  `binary_cross_entropy(sigmoid(hidden_free/authority))`触发PyTorch RuntimeError；128个随机点、无真实surface/quality、
+  未创建正式run。PyTorch官方AMP文档明确说明BCELoss backward梯度可能无法用FP16表示，autocast因此主动拒绝，并要求
+  使用`binary_cross_entropy_with_logits`。恢复同时输出hidden-FREE/authority logits供loss使用，推理概率仍为sigmoid；
+  r2合成forward/backward finite，proposal-token gradient存在。防重复：FP16训练的二元head必须保留logits并在autocast
+  下用BCE-with-logits，不通过禁用AMP或转FP32绕开冻结precision。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  `https://docs.pytorch.org/docs/stable/amp.html#prefer-binary-cross-entropy-with-logits-over-binary-cross-entropy`。
 
 <a id="detail-v62"></a>
 

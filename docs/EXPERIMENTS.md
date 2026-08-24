@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.3 P4 CAPACITY IMPLEMENTATION STAGED / EXECUTION LOCKED（2026-08-24）
+
+- task=`WS-V63-P4-CAPACITY-01`；implementation/config/prereg staged；real unit/run=`none`，等待P3 formal pass。
+- frozen interface=`311D full native feature, hidden256, 2 point MLP, 2 six-neighbor blocks, 2 patch Transformer layers,
+  1 proposal token, CVaR.90, exact projection, fp16, 8192 points, accum4`。
+- temporary synthetic AMP r1 failed at `binary_cross_entropy(sigmoid)` before real data；official recovery exposes logits and uses
+  `binary_cross_entropy_with_logits`；r2 forward/backward finite，state/patch shapes=`[128,3]/[4]`。
+- outcome=`engineering interface recovered`；failure ledger delta=`V63-F08 resolved`；quality/calibration/H/T read=`false`。
+
 ## WorldSim V6.3 P3 72-UNIT FORMAL RUNNING（2026-08-24）
 
 - run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`；

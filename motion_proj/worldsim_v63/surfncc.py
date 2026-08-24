@@ -1,0 +1,563 @@
+"""Native surface compiler network and deterministic surface data interface."""
+
+from __future__ import annotations
+
+import json
+import math
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import torch
+from torch import Tensor, nn
+from torch.nn import functional as F
+
+from motion_proj.worldsim_v62.projection import (
+    FREE_INDEX,
+    OCCUPIED_INDEX,
+    UNKNOWN_INDEX,
+    project_feasible_tristate,
+)
+
+
+EVIDENCE_TO_CLASS = np.asarray([UNKNOWN_INDEX, FREE_INDEX, OCCUPIED_INDEX], dtype=np.int64)
+FEATURE_SLICES = {
+    "method_one_hot": slice(276, 279),
+    "method_contradiction": slice(279, 280),
+    "method_behind_hit": slice(280, 281),
+    "signed_distance": slice(281, 283),
+    "ray": slice(289, 294),
+    "temporal": slice(294, 298),
+    "actor": slice(298, 302),
+}
+POINT_FEATURE_DIMENSION = 311
+
+
+def cvar_tail(values: Tensor, alpha: float) -> Tensor:
+    """Differentiable empirical upper-tail CVaR with a frozen alpha."""
+    flat = values.reshape(-1)
+    if flat.numel() == 0:
+        return values.sum() * 0.0
+    count = max(1, int(math.ceil((1.0 - float(alpha)) * flat.numel())))
+    return torch.topk(flat, count, largest=True, sorted=False).values.mean()
+
+
+def _segment_mean(values: Tensor, index: Tensor, count: int) -> Tensor:
+    output = values.new_zeros((count, values.shape[1]))
+    output.index_add_(0, index, values)
+    denominator = torch.bincount(index, minlength=count).to(values.dtype).clamp_min(1.0)
+    return output / denominator[:, None]
+
+
+class SurfaceNeighborBlock(nn.Module):
+    def __init__(self, width: int) -> None:
+        super().__init__()
+        self.update = nn.Sequential(
+            nn.Linear(2 * width, width),
+            nn.GELU(),
+            nn.Linear(width, width),
+        )
+        self.norm = nn.LayerNorm(width)
+
+    def forward(self, hidden: Tensor, edge_index: Tensor) -> Tensor:
+        aggregate = torch.zeros_like(hidden)
+        degree = hidden.new_zeros((hidden.shape[0],))
+        if edge_index.numel():
+            source, target = edge_index
+            aggregate.index_add_(0, target, hidden[source])
+            degree.index_add_(0, target, torch.ones_like(target, dtype=hidden.dtype))
+        aggregate = aggregate / degree.clamp_min(1.0)[:, None]
+        return self.norm(hidden + self.update(torch.cat((hidden, aggregate), dim=1)))
+
+
+class SurfNCC(nn.Module):
+    """Two-block surface encoder with patch attention and one proposal token."""
+
+    def __init__(
+        self,
+        input_dimension: int,
+        *,
+        hidden_dimension: int = 256,
+        neighbor_blocks: int = 2,
+        patch_transformer_layers: int = 2,
+        attention_heads: int = 8,
+    ) -> None:
+        super().__init__()
+        self.point_mlp = nn.Sequential(
+            nn.LayerNorm(input_dimension),
+            nn.Linear(input_dimension, hidden_dimension),
+            nn.GELU(),
+            nn.Linear(hidden_dimension, hidden_dimension),
+            nn.GELU(),
+        )
+        self.neighbor_blocks = nn.ModuleList(
+            [SurfaceNeighborBlock(hidden_dimension) for _ in range(neighbor_blocks)]
+        )
+        layer = nn.TransformerEncoderLayer(
+            d_model=hidden_dimension,
+            nhead=attention_heads,
+            dim_feedforward=2 * hidden_dimension,
+            dropout=0.0,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
+        self.patch_encoder = nn.TransformerEncoder(layer, patch_transformer_layers)
+        self.proposal_token = nn.Parameter(torch.zeros(1, 1, hidden_dimension))
+        nn.init.normal_(self.proposal_token, std=0.02)
+        self.state_head = nn.Linear(hidden_dimension, 3)
+        self.hidden_free_head = nn.Linear(hidden_dimension, 1)
+        self.authority_head = nn.Linear(hidden_dimension, 1)
+        self.patch_risk_head = nn.Linear(hidden_dimension, 1)
+        self.proposal_risk_head = nn.Linear(hidden_dimension, 1)
+
+    def forward(
+        self,
+        point_features: Tensor,
+        edge_index: Tensor,
+        patch_index: Tensor,
+        method_class: Tensor,
+        contradiction: Tensor,
+        *,
+        cvar_alpha: float,
+    ) -> dict[str, Tensor]:
+        hidden = self.point_mlp(point_features)
+        for block in self.neighbor_blocks:
+            hidden = block(hidden, edge_index)
+        patch_count = int(patch_index.max().item()) + 1
+        patch_tokens = _segment_mean(hidden, patch_index, patch_count)
+        tokens = torch.cat(
+            (self.proposal_token.expand(1, -1, -1), patch_tokens[None]), dim=1
+        )
+        encoded = self.patch_encoder(tokens)[0]
+        proposal_token = encoded[0]
+        encoded_patches = encoded[1:]
+        fused = hidden + encoded_patches[patch_index] + proposal_token[None]
+
+        state_logits = self.state_head(fused)
+        base_probabilities = torch.softmax(state_logits, dim=-1)
+        projected = project_feasible_tristate(
+            state_logits,
+            observed_free=(method_class == FREE_INDEX) & ~contradiction,
+            observed_occupied=(method_class == OCCUPIED_INDEX) & ~contradiction,
+            contradiction=contradiction,
+        )
+        probabilities = projected.probabilities
+        hidden_free_logits = self.hidden_free_head(fused).squeeze(1)
+        authority_logits = self.authority_head(fused).squeeze(1)
+        hidden_free = torch.sigmoid(hidden_free_logits)
+        authority = torch.sigmoid(authority_logits)
+        point_risk = torch.clamp(
+            probabilities[:, OCCUPIED_INDEX] * hidden_free + 0.25 * (1.0 - authority),
+            min=0.0,
+            max=1.0,
+        )
+        patch_cvar = torch.stack(
+            [cvar_tail(point_risk[patch_index == patch], cvar_alpha) for patch in range(patch_count)]
+        )
+        return {
+            "base_probabilities": base_probabilities,
+            "probabilities": probabilities,
+            "constrained": projected.constrained,
+            "hidden_free": hidden_free,
+            "hidden_free_logits": hidden_free_logits,
+            "authority": authority,
+            "authority_logits": authority_logits,
+            "point_risk": point_risk,
+            "patch_cvar": patch_cvar,
+            "proposal_cvar": patch_cvar.max(),
+            "patch_risk_head": torch.sigmoid(self.patch_risk_head(encoded_patches)).squeeze(1),
+            "proposal_risk_head": torch.sigmoid(self.proposal_risk_head(proposal_token)).squeeze(0),
+        }
+
+
+@dataclass
+class SurfaceUnit:
+    scene: str
+    target_frame: int
+    arrays: dict[str, np.ndarray]
+    native_logits: np.ndarray
+    native_bev: np.ndarray
+    native_entropy: np.ndarray
+    native_margin: np.ndarray
+    native_source_valid: np.ndarray
+    target_class: np.ndarray
+    method_class: np.ndarray
+    proposal_index: np.ndarray
+    proposal_ids: list[str]
+
+
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+
+def load_surface_unit(
+    p3_run: Path,
+    native_run: Path,
+    scene: str,
+    target_frame: int,
+    *,
+    native_split: str = "development",
+) -> SurfaceUnit:
+    unit_dir = p3_run / "units" / scene / f"f{target_frame:03d}"
+    with np.load(unit_dir / "SURFACE_POINTS.npz", allow_pickle=False) as source:
+        arrays = {name: np.asarray(source[name]) for name in source.files}
+    native_dir = native_run / "units" / native_split / scene / f"f{target_frame:03d}"
+    native_indices = np.asarray(arrays["native_indices"], dtype=np.int64)
+    native_valid = np.asarray(arrays["native_valid"], dtype=bool)
+    logits_grid = np.load(native_dir / "NATIVE_LOGITS.npy", mmap_mode="r")
+    bev_grid = np.load(native_dir / "BEV_LATENT.npy", mmap_mode="r")
+    entropy_grid = np.load(native_dir / "ENTROPY.npy", mmap_mode="r")
+    margin_grid = np.load(native_dir / "MARGIN.npy", mmap_mode="r")
+    valid_grid = np.load(native_dir / "SOURCE_VALID.npy", mmap_mode="r")
+    clipped = np.stack(
+        [
+            np.clip(native_indices[:, axis], 0, logits_grid.shape[axis] - 1)
+            for axis in range(3)
+        ],
+        axis=1,
+    )
+    idx = tuple(clipped.T)
+    native_logits = np.asarray(logits_grid[idx], dtype=np.float32)
+    native_bev = np.asarray(bev_grid[clipped[:, 0], clipped[:, 1]], dtype=np.float32)
+    native_entropy = np.asarray(entropy_grid[idx], dtype=np.float32)
+    native_margin = np.asarray(margin_grid[idx], dtype=np.float32)
+    native_source_valid = native_valid & np.asarray(valid_grid[idx], dtype=bool)
+    native_logits[~native_source_valid] = 0.0
+    native_bev[~native_source_valid] = 0.0
+    native_entropy[~native_source_valid] = 1.0
+    native_margin[~native_source_valid] = 0.0
+
+    surfaces = _read_jsonl(unit_dir / "SURFACE_REGISTRY.jsonl")
+    proposal_ids = sorted({row["proposal_id"] for row in surfaces})
+    proposal_lookup = {value: index for index, value in enumerate(proposal_ids)}
+    surface_to_proposal = np.empty(len(surfaces), dtype=np.int32)
+    for row in surfaces:
+        surface_to_proposal[int(row["surface_index"])] = proposal_lookup[row["proposal_id"]]
+    proposal_index = surface_to_proposal[np.asarray(arrays["surface_index"], dtype=np.int64)]
+    return SurfaceUnit(
+        scene=scene,
+        target_frame=int(target_frame),
+        arrays=arrays,
+        native_logits=native_logits,
+        native_bev=native_bev,
+        native_entropy=native_entropy,
+        native_margin=native_margin,
+        native_source_valid=native_source_valid,
+        target_class=EVIDENCE_TO_CLASS[np.asarray(arrays["target_state"], dtype=np.int64)],
+        method_class=EVIDENCE_TO_CLASS[np.asarray(arrays["method_state"], dtype=np.int64)],
+        proposal_index=proposal_index,
+        proposal_ids=proposal_ids,
+    )
+
+
+def assemble_point_features(unit: SurfaceUnit, selected: np.ndarray) -> np.ndarray:
+    arrays = unit.arrays
+    chosen = np.asarray(selected, dtype=np.int64)
+    method_one_hot = np.eye(3, dtype=np.float32)[unit.method_class[chosen]]
+    hard = np.concatenate(
+        (
+            method_one_hot,
+            np.asarray(arrays["method_contradiction"])[chosen, None].astype(np.float32),
+            np.asarray(arrays["method_behind_hit"])[chosen, None].astype(np.float32),
+        ),
+        axis=1,
+    )
+    temporal = np.stack(
+        [
+            np.asarray(arrays[name], dtype=np.float32)[chosen]
+            for name in (
+                "temporal_free_count",
+                "temporal_occ_count",
+                "temporal_unknown_count",
+                "temporal_contradiction_count",
+            )
+        ],
+        axis=1,
+    ) / float(arrays["temporal_state_by_sweep"].shape[1])
+    actor = np.stack(
+        (
+            np.asarray(arrays["actor_id"])[chosen] >= 0,
+            np.asarray(arrays["actor_current_support"])[chosen],
+            np.asarray(arrays["actor_swept_support"])[chosen],
+            np.asarray(arrays["actor_observed_hit_support"])[chosen],
+        ),
+        axis=1,
+    ).astype(np.float32)
+    surface_type = np.eye(4, dtype=np.float32)[
+        np.asarray(arrays["surface_type"], dtype=np.int64)[chosen]
+    ]
+    authority = np.stack(
+        [
+            ((np.asarray(arrays["authority_bits"], dtype=np.uint8)[chosen] >> bit) & 1)
+            for bit in range(5)
+        ],
+        axis=1,
+    ).astype(np.float32)
+    return np.concatenate(
+        (
+            unit.native_logits[chosen],
+            unit.native_bev[chosen],
+            unit.native_entropy[chosen, None],
+            unit.native_margin[chosen, None],
+            unit.native_source_valid[chosen, None].astype(np.float32),
+            hard,
+            np.asarray(arrays["signed_distance_free_m"], dtype=np.float32)[chosen, None],
+            np.asarray(arrays["signed_distance_occupied_m"], dtype=np.float32)[chosen, None],
+            np.asarray(arrays["patch_local_coordinates_m"], dtype=np.float32)[chosen],
+            np.asarray(arrays["normals"], dtype=np.float32)[chosen],
+            np.asarray(arrays["ray_direction"], dtype=np.float32)[chosen],
+            np.asarray(arrays["ray_distance_m"], dtype=np.float32)[chosen, None],
+            np.asarray(arrays["ray_hit_order"], dtype=np.float32)[chosen, None],
+            temporal,
+            actor,
+            surface_type,
+            authority,
+        ),
+        axis=1,
+    ).astype(np.float32)
+
+
+def build_surface_edges(
+    grid_indices: np.ndarray,
+    surface_index: np.ndarray,
+    shape: tuple[int, int, int] = (300, 300, 40),
+) -> np.ndarray:
+    points = np.asarray(grid_indices, dtype=np.int64)
+    surfaces = np.asarray(surface_index, dtype=np.int64)
+    linear = np.ravel_multi_index(points.T, shape)
+    volume = int(np.prod(shape))
+    lookup = {int(surface * volume + cell): index for index, (surface, cell) in enumerate(zip(surfaces, linear))}
+    offsets = np.asarray(((1, 0, 0), (0, 1, 0), (0, 0, 1)), dtype=np.int64)
+    sources: list[int] = []
+    targets: list[int] = []
+    bounds = np.asarray(shape, dtype=np.int64)
+    for point_index, point in enumerate(points):
+        for offset in offsets:
+            neighbor = point + offset
+            if np.any(neighbor >= bounds):
+                continue
+            cell = int(np.ravel_multi_index(neighbor, shape))
+            neighbor_index = lookup.get(int(surfaces[point_index] * volume + cell))
+            if neighbor_index is not None:
+                sources.extend((point_index, neighbor_index))
+                targets.extend((neighbor_index, point_index))
+    return np.asarray((sources, targets), dtype=np.int64)
+
+
+def proposal_batch(unit: SurfaceUnit, proposal_index: int, point_limit: int) -> dict[str, np.ndarray]:
+    selected = np.flatnonzero(unit.proposal_index == int(proposal_index))
+    patch_values = np.asarray(unit.arrays["patch_index"], dtype=np.int64)[selected]
+    kept = []
+    count = 0
+    for patch in np.unique(patch_values):
+        members = selected[patch_values == patch]
+        if kept and count + members.shape[0] > int(point_limit):
+            break
+        kept.append(members)
+        count += int(members.shape[0])
+    selected = np.concatenate(kept)
+    global_patch = np.asarray(unit.arrays["patch_index"], dtype=np.int64)[selected]
+    _, local_patch = np.unique(global_patch, return_inverse=True)
+    edge_index = build_surface_edges(
+        np.asarray(unit.arrays["grid_indices"])[selected],
+        np.asarray(unit.arrays["surface_index"])[selected],
+    )
+    return {
+        "selected": selected,
+        "point_features": assemble_point_features(unit, selected),
+        "edge_index": edge_index,
+        "patch_index": local_patch.astype(np.int64),
+        "target_class": unit.target_class[selected],
+        "method_class": unit.method_class[selected],
+        "contradiction": np.asarray(unit.arrays["method_contradiction"])[selected].astype(bool),
+        "authority_target": (np.asarray(unit.arrays["authority_bits"])[selected] != 0),
+    }
+
+
+def capacity_proposal_indices(unit: SurfaceUnit) -> list[int]:
+    counts = np.bincount(unit.proposal_index, minlength=len(unit.proposal_ids))
+    actor_point = np.asarray(unit.arrays["actor_id"], dtype=np.int32) >= 0
+    actor_by_proposal = np.zeros(len(unit.proposal_ids), dtype=bool)
+    np.logical_or.at(actor_by_proposal, unit.proposal_index, actor_point)
+    result = []
+    for actor in (False, True):
+        candidates = np.flatnonzero(actor_by_proposal == actor)
+        if candidates.shape[0]:
+            result.append(int(candidates[np.argmax(counts[candidates])]))
+    return result
+
+
+def apply_structural_dropout(
+    unit: SurfaceUnit,
+    batch: dict[str, np.ndarray],
+    rng: np.random.Generator,
+    support_fraction: float,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Mask one applicable evidence family without changing target supervision."""
+    features = np.asarray(batch["point_features"], dtype=np.float32).copy()
+    selected = np.asarray(batch["selected"], dtype=np.int64)
+    arrays = unit.arrays
+    actor_applicable = bool(np.any(np.asarray(arrays["actor_id"])[selected] >= 0))
+    families = ["ray_bundle", "spatial_block", "temporal_window", "surface_patch"]
+    if actor_applicable:
+        families.append("actor_support")
+    family = families[int(rng.integers(0, len(families)))]
+    point_count = selected.shape[0]
+    mask = np.zeros(point_count, dtype=bool)
+    effective_method = np.asarray(batch["method_class"], dtype=np.int64).copy()
+    effective_contradiction = np.asarray(batch["contradiction"], dtype=bool).copy()
+    detail: dict[str, Any] = {"family": family, "support_fraction": float(support_fraction)}
+
+    if family == "ray_bundle":
+        values = np.asarray(arrays["ray_bundle_id"])[selected]
+        unique = np.unique(values)
+        count = max(1, int(math.ceil(float(support_fraction) * unique.shape[0])))
+        dropped = rng.choice(unique, size=count, replace=False)
+        mask = np.isin(values, dropped)
+        features[mask, FEATURE_SLICES["ray"]] = 0.0
+        detail["dropped_bundle_count"] = int(count)
+    elif family == "spatial_block":
+        coordinates = np.asarray(arrays["coordinates_m"], dtype=np.float32)[selected]
+        seed = coordinates[int(rng.integers(0, point_count))]
+        distance = np.max(np.abs(coordinates - seed[None]), axis=1)
+        count = max(1, int(math.ceil(float(support_fraction) * point_count)))
+        order = np.lexsort((np.arange(point_count), distance))
+        mask[order[:count]] = True
+        detail["dropped_point_count"] = int(count)
+    elif family == "surface_patch":
+        values = np.asarray(batch["patch_index"], dtype=np.int64)
+        unique = np.unique(values)
+        count = max(1, int(math.ceil(float(support_fraction) * unique.shape[0])))
+        dropped = rng.choice(unique, size=count, replace=False)
+        mask = np.isin(values, dropped)
+        detail["dropped_patch_count"] = int(count)
+    elif family == "actor_support":
+        support = np.flatnonzero(np.asarray(arrays["actor_observed_hit_support"])[selected])
+        if support.shape[0] == 0:
+            support = np.arange(point_count)
+        count = max(1, int(math.ceil(float(support_fraction) * support.shape[0])))
+        mask[rng.choice(support, size=count, replace=False)] = True
+        features[mask, 301] = 0.0
+        detail["dropped_actor_observation_count"] = int(count)
+    else:
+        states = np.asarray(arrays["temporal_state_by_sweep"], dtype=np.uint8)[selected].copy()
+        contradictions = np.asarray(
+            arrays["temporal_contradiction_by_sweep"], dtype=bool
+        )[selected].copy()
+        sweep_count = int(states.shape[1])
+        count = max(1, int(math.ceil(float(support_fraction) * sweep_count)))
+        dropped = np.sort(rng.choice(sweep_count, size=count, replace=False))
+        keep = np.ones(sweep_count, dtype=bool)
+        keep[dropped] = False
+        remaining = states[:, keep]
+        remaining_contradiction = contradictions[:, keep]
+        free = np.any(remaining == 1, axis=1)
+        occupied = np.any(remaining == 2, axis=1)
+        combined_contradiction = np.any(remaining_contradiction, axis=1) | (free & occupied)
+        method_class = np.full(point_count, UNKNOWN_INDEX, dtype=np.int64)
+        method_class[free & ~occupied] = FREE_INDEX
+        method_class[occupied & ~free] = OCCUPIED_INDEX
+        features[:, FEATURE_SLICES["method_one_hot"]] = np.eye(3, dtype=np.float32)[
+            method_class
+        ]
+        features[:, FEATURE_SLICES["method_contradiction"]] = combined_contradiction[:, None]
+        features[:, FEATURE_SLICES["method_behind_hit"]] = 0.0
+        features[:, FEATURE_SLICES["signed_distance"]] = 0.0
+        temporal = np.stack(
+            (
+                np.count_nonzero(remaining == 1, axis=1),
+                np.count_nonzero(remaining == 2, axis=1),
+                np.count_nonzero(remaining == 0, axis=1),
+                np.count_nonzero(remaining_contradiction, axis=1),
+            ),
+            axis=1,
+        ).astype(np.float32) / float(sweep_count)
+        features[:, FEATURE_SLICES["temporal"]] = temporal
+        features[:, 301] = np.any(remaining == 2, axis=1).astype(np.float32)
+        detail["dropped_sweeps"] = dropped.tolist()
+        effective_method = method_class
+        effective_contradiction = combined_contradiction
+
+    if family != "temporal_window":
+        features[mask, FEATURE_SLICES["method_one_hot"]] = np.asarray(
+            [0.0, 0.0, 1.0], dtype=np.float32
+        )
+        features[mask, FEATURE_SLICES["method_contradiction"]] = 0.0
+        features[mask, FEATURE_SLICES["method_behind_hit"]] = 0.0
+        features[mask, FEATURE_SLICES["signed_distance"]] = 0.0
+        effective_method[mask] = UNKNOWN_INDEX
+        effective_contradiction[mask] = False
+    detail["masked_point_count"] = int(np.count_nonzero(mask))
+    detail["point_count"] = int(point_count)
+    detail["_method_class"] = effective_method
+    detail["_contradiction"] = effective_contradiction
+    return features, detail
+
+
+def compute_surfncc_losses(
+    outputs: dict[str, Tensor],
+    batch: dict[str, Tensor],
+    *,
+    cvar_alpha: float,
+    weights: dict[str, float],
+) -> dict[str, Tensor]:
+    probabilities = outputs["probabilities"].float()
+    target = batch["target_class"].long()
+    method = batch["method_class"].long()
+    contradiction = batch["contradiction"].bool()
+    hard_mismatch = (
+        ((method == FREE_INDEX) & (target != FREE_INDEX))
+        | ((method == OCCUPIED_INDEX) & (target != OCCUPIED_INDEX))
+        | contradiction
+    )
+    supervised = ~hard_mismatch
+    state = probabilities.sum() * 0.0
+    if bool(supervised.any()):
+        state = F.nll_loss(
+            torch.log(probabilities[supervised].clamp_min(1e-8)), target[supervised]
+        )
+    hidden_free_mask = (target == FREE_INDEX) & (method == UNKNOWN_INDEX) & ~contradiction
+    retention_mask = (target == OCCUPIED_INDEX) & (method == UNKNOWN_INDEX) & ~contradiction
+    hidden_free_tail = cvar_tail(
+        probabilities[hidden_free_mask, OCCUPIED_INDEX], cvar_alpha
+    ) + F.binary_cross_entropy_with_logits(
+        outputs["hidden_free_logits"].float(), hidden_free_mask.float()
+    )
+    retention = cvar_tail(1.0 - probabilities[retention_mask, OCCUPIED_INDEX], cvar_alpha)
+    authority = F.binary_cross_entropy_with_logits(
+        outputs["authority_logits"].float(), batch["authority_target"].float()
+    )
+    edge_index = batch["edge_index"]
+    consistency = probabilities.sum() * 0.0
+    if edge_index.numel():
+        consistency = torch.abs(
+            probabilities[edge_index[0]] - probabilities[edge_index[1]]
+        ).mean()
+    head_consistency = F.mse_loss(
+        outputs["patch_risk_head"].float(), outputs["patch_cvar"].detach().float()
+    ) + F.mse_loss(
+        outputs["proposal_risk_head"].float(), outputs["proposal_cvar"].detach().float()
+    )
+    ranking = probabilities.sum() * 0.0
+    total = (
+        float(weights["state"]) * state
+        + float(weights["hidden_free_tail"]) * hidden_free_tail
+        + float(weights["safe_occ_retention"]) * retention
+        + float(weights["proposal_rank"]) * ranking
+        + float(weights["surface_consistency"]) * (consistency + head_consistency)
+        + float(weights["authority"]) * authority
+    )
+    return {
+        "total": total,
+        "state": state,
+        "hidden_free_tail": hidden_free_tail,
+        "safe_occ_retention": retention,
+        "proposal_rank": ranking,
+        "surface_consistency": consistency + head_consistency,
+        "authority": authority,
+        "supervised_count": supervised.sum(),
+        "hidden_free_count": hidden_free_mask.sum(),
+        "safe_occ_count": retention_mask.sum(),
+    }

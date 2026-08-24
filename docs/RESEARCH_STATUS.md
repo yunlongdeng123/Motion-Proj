@@ -8,6 +8,12 @@ P3 formal已启动：`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T15
 denominator=`6 scenes/72 targets`，maximum workers=`2`，source在启动时clean，配置与canonical r6 probe完全相同且无
 `limit-units`。运行期间不修改P3源码/配置；只并行准备尚未执行的P4 capacity实现。
 
+P4 capacity实现/配置/预注册已staged但保持execution locked：311D完整native surface输入、2 point MLP、2 exact
+6-neighbor blocks、2 patch Transformer layers、1 proposal token、CVaR.90、exact projection、8192 microbatch/accum4。
+合成AMP forward/backward r1按PyTorch预期拒绝`sigmoid + binary_cross_entropy`；官方AMP文档要求logit版，改为
+`binary_cross_entropy_with_logits`后r2 finite forward/backward通过，登记`V63-F08 resolved`。没有P4真实unit/run或
+quality read；P4仍须等P3 formal pass才执行。
+
 P3 canonical probe=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`
 已通过：`1 unit / 191 surfaces / 498 patches / 191 proposals / 152,226 points`，output=`3,055,106 bytes`，
 wall=`201.356s`。minimum normal-valid=`1.0`、maximum patch=`635<=2048`、8/8 negative contracts、
