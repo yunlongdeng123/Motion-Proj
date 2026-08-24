@@ -16,3 +16,18 @@ UNKNOWN at most 0.50, and zero hard violations. There is one formal run, no thre
 If Native B2 passes, prototype transfer was the dominant legacy root cause and B2 becomes a strong baseline; SurfNCC must still show
 fresh gain. If it fails, pointwise structure/risk remains a root cause and SurfNCC continues. P2D cannot unlock confirmation or serve as
 a fresh generalization claim.
+
+## Result
+
+Canonical:
+`run://worldsim_v63/WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01/20260824T145924Z__native-pointwise-s0-r1`.
+
+Native B2 was rejected: 4/28 accepted and all four were false-safe; accepted mask area was 0.094024, R10 retention 2/3, actor
+gain zero, accepted FREE conflict mean/worst 0.045783/0.092105, source-valid UNKNOWN 0.639211, safe-OCC retention 1.0 and hard
+violations 0/939206. The accepted set exactly matches the four scene-0242 missing-route-support cases retained by the prototype runs.
+Native features are therefore not sufficient for the frozen pointwise/mean-query architecture. Failure ledger delta: `V63-F02 active`.
+
+The post-result primary-source audit retained the P1-frozen migration: deterministic surface neighborhoods follow the efficiency
+lesson of [Point Transformer V3](https://openaccess.thecvf.com/content/CVPR2024/papers/Wu_Point_Transformer_V3_Simpler_Faster_Stronger_CVPR_2024_paper.pdf),
+while explicit FREE support follows [visibility-aware surface reconstruction](https://pmc.ncbi.nlm.nih.gov/articles/PMC4897344/).
+No P2D recovery or protocol change is authorized; P3 is unlocked.

@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v63",
-  "status": "v63_p2_native_sidecars_passed",
+  "status": "v63_p2d_native_pointwise_rejected_surface_root_active",
   "branch": "research/worldsim-v6.3-surface-tail",
-  "active_task": "WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01",
-  "active_hypothesis": "WS-V63-H-P2D-001",
-  "completed_stages": ["P0", "P1", "P2"],
-  "unlocked_stages": ["P2D"],
+  "active_task": "WS-V63-P3-SURFACE-CORPUS-01",
+  "active_hypothesis": "WS-V63-H-P3-001",
+  "completed_stages": ["P0", "P1", "P2", "P2D"],
+  "unlocked_stages": ["P3"],
   "confirmation_unlocked": false,
   "test_unlocked": false,
   "resource_contract": "single_rtx3090_24gb",
@@ -22,5 +22,8 @@
   "p2_probe_passed": true,
   "p2_formal_run": "run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1",
   "p2_formal_passed": true,
-  "next_action": "run the frozen native CPSC-Lite legacy28 retrospective diagnostic"
+  "p2d_run": "run://worldsim_v63/WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01/20260824T145924Z__native-pointwise-s0-r1",
+  "p2d_passed": false,
+  "p2d_outcome": "native_pointwise_legacy_gate_failed_surface_root_cause_remains",
+  "next_action": "build the frozen development surface corpus"
 }

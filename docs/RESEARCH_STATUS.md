@@ -1,12 +1,22 @@
 # Research Status
 
-## WorldSim V6.3 P2 native sidecars passed / P2D diagnostic next（2026-08-24）
+## WorldSim V6.3 P2D native pointwise rejected / P3 surface corpus next（2026-08-24）
 
-状态：`v63_p2_native_sidecars_passed`；active task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`。
+状态：`v63_p2d_native_pointwise_rejected_surface_root_active`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
 
 P2D native-to-pointwise interface与唯一 formal 已预注册：冻结 V6.2 P5 best，不训练、不调阈值，把 P2 完整 native
 logits/BEV 按真实网格坐标映射到 legacy 0.2m grid，并保持原 legacy28/P6 gate、method-before-O_eval 顺序。该诊断只有
 一次formal，不做capacity probe、seed或threshold sweep；结果无论正负均只裁决 prototype vs pointwise 根因。
+
+P2D canonical=`run://worldsim_v63/WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01/20260824T145924Z__native-pointwise-s0-r1`
+已正式rejected：Native B2=`4/28 ACCEPT,4/4 false-safe`，接受集合仍是四个scene-0242 missing-route-support cases；
+R10=`2/3`、Actor/static gain=`0/2`、mask-area=`0.094024`、FREE conflict mean/worst=`0.045783/0.092105`、
+UNKNOWN=`0.639211`、safe-OCC retention=`1.0`、hard violations=`0/939206`。恢复native feature没有改变决策集合，
+因此prototype不是主因，pointwise/mean-query结构根因成立，登记`V63-F02 active`。
+
+负结果后补查CVPR 2024 Point Transformer V3官方实现与visibility-aware surface reconstruction：可迁移点是高效确定性
+point neighborhood/serialized patch以及将FREE visibility显式置于surface边界，而不是扩大网络或重新调阈值。P1冻结
+的6-neighbor surface topology + patch CVaR方案保持不变；P2D不做recovery，直接进入P3 corpus。
 
 P2 原生接口已实现并冻结：复用已验证的 official IR-WM current forward，每 target 直接保存完整
 `200x200x16x17` logits、`200x200x256` BEV latent、argmax/entropy/margin/source-valid 为 memory-mappable arrays；
@@ -46,8 +56,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2 当前完成；下一步执行一次冻结 P5 + native legacy sidecar 的 P2D retrospective diagnostic。P2D允许读取
-legacy O_eval做机制裁决，但不训练、不调阈值，也不替代 fresh confirmation；calibration/confirmation/test保持sealed。
+P0/P1/P2/P2D 当前完成；下一步构建D的完整surface corpus。calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 

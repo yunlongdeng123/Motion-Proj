@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | SurfNCC scope active；P0/Git 继承完成，尚无方法质量结论 | 原生 feature、surface joint model、tail risk 与 case-level calibration 必须在 quality read 前冻结；首次定向 pytest 命令的路径/import 合同已修复 | `V63-F01`；`docs/autoresearch/worldsim_v63/SCOPE_FREEZE.md` |
+| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts，证明 prototype 不是主因；pointwise/mean-query 无法提供 hidden-surface authority | `V63-F01`–`V63-F02`；`P2D_NATIVE_POINTWISE_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -138,6 +138,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `PYTHONPATH=. pytest -q tests/worldsim_v62/test_projection.py`，结果 `1 passed`。防重复：远端 repo 的定向 pytest
   必须使用真实 `tests/<version>/...` 路径并显式提供 repo-local import path；不为这一入口错误增加 smoke/regression
   矩阵。证据=`WS-V63-P0-SCOPE-GIT-01` 与 P0 shell terminal。
+
+- `V63-F02`（`algorithm/evaluation`, `active`）：P2D canonical=
+  `20260824T145924Z__native-pointwise-s0-r1` 用冻结 P5 best 与真实 per-cell IR-WM logits/BEV 执行 unchanged legacy28
+  gate，Native B2仍为`4/28 ACCEPT,4/4 false-safe`，接受集合仍是scene-0242四个missing-route-support cases；R10=
+  `2/3`、Actor gain=`0`、static/disocclusion gain=`2`、mask-area=`0.094024`、accepted FREE conflict mean/worst=
+  `0.045783/0.092105`。source-valid UNKNOWN=`0.639211`，safe-OCC retention=`1.0`，hard violations=`0/939206`。
+  与prototype P6/P6R相同的接受集合和false-safe说明V62-F05的feature bridge是加重因素而非主因；已推翻“只要恢复
+  native feature，逐voxel CPSC即可获得hidden-surface authority”。防重复：不得对P2D重训、调threshold/seed/grid、
+  用legacy O_eval选epoch或把mean conflict过门包装成安全。按预注册迁移到P3：Point Transformer V3官方实现支持
+  efficient serialized point neighborhoods，visibility-aware reconstruction明确把FREE visibility作为surface约束，CVaR
+  直接优化局部尾部；V6.3只迁移已在P1冻结的deterministic surface topology + patch CVaR，不改变alpha/cohort/gates。
+  证据=`docs/autoresearch/worldsim_v63/P2D_NATIVE_POINTWISE_PREREG.md`、
+  `https://openaccess.thecvf.com/content/CVPR2024/papers/Wu_Point_Transformer_V3_Simpler_Faster_Stronger_CVPR_2024_paper.pdf`、
+  `https://pmc.ncbi.nlm.nih.gov/articles/PMC4897344/`。
 
 <a id="detail-v62"></a>
 

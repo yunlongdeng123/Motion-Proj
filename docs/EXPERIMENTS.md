@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.3 P2D NATIVE POINTWISE REJECTED / P3 UNLOCKED（2026-08-24）
+
+- canonical=`run://worldsim_v63/WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01/20260824T145924Z__native-pointwise-s0-r1`。
+- Native B2=`4/28 ACCEPT,4 false-safe,6 abstain`；accepted cases与V6.2 prototype完全相同；R10=`2/3`、Actor/static
+  gain=`0/2`、mask-area=`0.094024`、FREE conflict mean/worst=`0.045783/0.092105`。
+- anti-trivial=`safe-OCC 1.0, source-valid UNKNOWN .639211`；hard projection=`0/939206 violations`；resource=
+  `44.442s / .531876 GiB / 2.5MB`。
+- prototype=`false`、P5 training=`false`、method decisions before O_eval=`true`、calibration/H/T read=`false`。
+- outcome=`native_pointwise_legacy_gate_failed_surface_root_cause_remains`；failure ledger delta=`V63-F02 active`；不做
+  P2D recovery，下一 task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
 ## WorldSim V6.3 P2D NATIVE POINTWISE FORMAL PRE-REGISTERED（2026-08-24）
 
 - task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`；frozen model=V6.2 P5 best；training=`false`。
