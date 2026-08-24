@@ -1,0 +1,63 @@
+schema_version: worldsim_v63.p2_native_sidecars.v1
+task_id: WS-V63-P2-NATIVE-SIDECAR-01
+hypothesis_id: WS-V63-H-P2-001
+seed: 1
+inputs:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+backend:
+  identity: irwm_official_fully_decoupled_current_native
+  official_repo: /root/autodl-tmp/third_party/ir-wm-a83e4a24
+  official_config: projects/configs/e2e/MMO_MSO_with_plan_fully_decoupled.py
+  checkpoint_path: /root/autodl-tmp/models/ir-wm-36b16b55/MMO_MSO_with_plan_fully_decoupled.pth
+  temporal_metadata_path: /root/autodl-tmp/models/gaussianworld-b43629eaecff/nuscenes_temporal_infos_train.pkl
+  frozen: true
+  training_allowed: false
+environment:
+  prefix: /root/autodl-tmp/envs/worldsim-v61-irwm
+  python: /root/autodl-tmp/envs/worldsim-v61-irwm/bin/python
+streaming:
+  history_offsets: [-10, -5, 0]
+  metadata_origin_frame: 2
+  metadata_frame_stride: 5
+  camera_ids: [0, 2, 1, 5, 3, 4]
+  native_shape: [900, 1600]
+  pad_size_divisor: 32
+  image_mean_bgr: [103.530, 116.280, 123.675]
+  image_std: [1.0, 1.0, 1.0]
+output_contract:
+  raw_logits_shape: [1, 3, 1, 40000, 16, 17]
+  grid_shape: [200, 200, 16]
+  class_count: 17
+  source_origin_m: [-51.2, -51.2, -5.0]
+  source_voxel_size_m: 0.512
+  latent_feature_dimension: 256
+  precision: float16
+  arrays: [NATIVE_LOGITS.npy, BEV_LATENT.npy, ARGMAX.npy, ENTROPY.npy, MARGIN.npy, SOURCE_VALID.npy]
+cohorts:
+  development:
+    scenes:
+      - {name: scene-0071, processed_index: 68, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0317, processed_index: 251, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0450, processed_index: 364, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0862, processed_index: 652, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-1012, processed_index: 770, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-1089, processed_index: 829, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+  legacy:
+    scenes:
+      - {name: scene-0048, processed_index: 45, target_frames: [52, 57]}
+      - {name: scene-0242, processed_index: 191, target_frames: [52, 57]}
+resources:
+  gpu: 0
+  maximum_scene_workers: 2
+  worker_cpu_threads: 4
+  worker_timeout_seconds: 2400
+  maximum_gpu_memory_gib: 22
+  minimum_disk_free_gib: 20
+locks:
+  prototype_bridge: false
+  target_evidence_allowed: false
+  calibration_quality_allowed: false
+  confirmation_allowed: false
+  exact_once_test_allowed: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V62-F05, V62-F06, V63-F01]

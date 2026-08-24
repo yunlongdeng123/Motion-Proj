@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.3 P2 NATIVE SIDECAR INTERFACE READY / FORMAL PREREGISTERED（2026-08-24）
+
+- task=`WS-V63-P2-NATIVE-SIDECAR-01`；implementation=`full native memory-mappable arrays per target`。
+- 输出冻结为 logits `[200,200,16,17]`、BEV `[200,200,256]`、argmax/entropy/margin/source-valid；全部来自 official
+  current IR-WM forward 或其确定性 logits 变换，prototype=`false`。
+- 首轮 denominator=`D 6 scenes/72 targets + L 2 scenes/4 targets`；C/H/T deferred。仅运行一个
+  `scene-0071/f017` probe，通过后直接 formal；target/O_eval/calibration/H/T quality read=`false`。
+- resources=`max 2 scene workers, 22 GiB GPU ceiling, 20 GiB disk floor`；failure ledger delta=`none`。
+
 ## WorldSim V6.3 P1 NOVELTY/PROTOCOL FREEZE PASS / P2 READY（2026-08-24）
 
 - task=`WS-V63-P1-SCOPE-NOVELTY-01`；outcome=`novelty_gate_passed / protocol_frozen_before_quality`。
