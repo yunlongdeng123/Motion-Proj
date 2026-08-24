@@ -3,7 +3,7 @@
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
 - Status: `implementation ready / probe preregistered`
-- Current revision: `r3 launcher recovery ready`
+- Current revision: `r4 degenerate-normal recovery ready`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
 each method-visible current/swept envelope with identity preserved. Proposal geometry is declared before topology. Six-connected
@@ -27,3 +27,7 @@ calibration, confirmation or test read occurs in P3.
   gate contracts are unchanged. Its launcher incorrectly pre-created the immutable run leaf and stopped at entry with `FileExistsError`;
   0 units and 0 quality reads. Failure=`V63-F03 resolved`, `V63-F04 resolved`.
 - r3 removes only that leaf-directory pre-creation. Source, config and all scientific contracts remain unchanged.
+- r3 completed the full probe payload (`191 surfaces/498 patches/152226 points`) but failed the frozen unit-normal gate. The failure is
+  confined to symmetric tiny components (101 affected, including 85 singletons) whose exposed-face sum and centroid direction both
+  vanish. r4 deterministically orients only those ambiguous points toward the target sensor viewpoint; it preserves every proposal point,
+  topology edge, patch assignment and gate. Failure=`V63-F05 resolved`.

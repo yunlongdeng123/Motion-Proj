@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts；P3 r1 unequal-axis接口与r2 run-dir launcher错误均在surface/quality前修复 | `V63-F01`–`V63-F04`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
+| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts；P3先后修复axis、launcher与微小离散component法向量歧义 | `V63-F01`–`V63-F05`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -171,6 +171,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不修改源码、配置或科研合同。r2目录和console保留，revision 3使用新路径。防重复：带immutable-run自建语义的runner
   不得由外层预建叶目录。证据=`docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
   `https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir`。
+
+- `V63-F05`（`engineering/data-representation`, `resolved`）：P3 probe r3=
+  `20260824T151618Z__surface-probe-s20260824-r3`首次完整产出`191 surfaces/498 patches/152226 points`，但101个
+  微小static components的至少一点法向量无效（85个singleton，其余component size 3–11），令minimum normal-valid=
+  `0`、probe未过。根因不是surface缺失：对称孤立voxel的六个外露面法向量相消，centroid fallback在离散medial-axis点
+  也为零。Gradient-SDF说明SDF梯度给出normal但medial axis因最近surface不唯一而奇异；Open3D法向量接口要求需要时
+  显式按camera location定向。恢复只在face-sum和centroid fallback都为零时，用target sensor viewpoint给出确定性单位
+  方向，最后仅为sensor恰与点重合保留固定轴退路；不删除tiny proposal、不改变volume/topology/patch/cohort/gate。
+  r3及其完整诊断保持不可变，r4使用新run。防重复：不得把tiny components静默过滤来换取normal-valid=1，也不得使用
+  随机法向量。证据=`docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
+  `https://openaccess.thecvf.com/content/CVPR2022/papers/Sommer_Gradient-SDF_A_Semi-Implicit_Surface_Representation_for_3D_Reconstruction_CVPR_2022_paper.pdf`、
+  `https://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html`。
 
 <a id="detail-v62"></a>
 

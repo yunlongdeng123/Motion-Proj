@@ -198,7 +198,16 @@ def _compile_volume(
         proposal_id = f"{proposal_prefix}__c{component_id:05d}"
         surface_id = f"{proposal_id}__surface"
         point_start = sum(values.shape[0] for values in arrays["grid_indices"])
-        normal = surface_normals(component_indices, surface_points, target_spec.shape)
+        viewpoint_grid = (
+            -np.asarray(target_spec.origin, dtype=np.float32) / target_spec.voxel_size_m
+            - 0.5
+        )
+        normal = surface_normals(
+            component_indices,
+            surface_points,
+            target_spec.shape,
+            viewpoint_grid=viewpoint_grid,
+        )
         patch_members = partition_surface(
             surface_points,
             target_spec.shape,

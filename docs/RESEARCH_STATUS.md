@@ -1,8 +1,16 @@
 # Research Status
 
-## WorldSim V6.3 P3 surface probe r2 launcher failure / r3 ready（2026-08-24）
+## WorldSim V6.3 P3 surface probe r3 geometric diagnostic / r4 ready（2026-08-24）
 
-状态：`v63_p3_probe_r2_launcher_blocked_r3_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_probe_r3_normal_ambiguity_blocked_r4_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 r3=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151618Z__surface-probe-s20260824-r3`
+首次完整构建出`191 surfaces / 498 patches / 152,226 points`，wall=`194.540s`、output=`2,429,273 bytes`；
+native/evidence/registry/patch bounds/8项负向合同均完成，但`101`个微小static components（85个singleton，其余3–11
+voxels）存在离散对称法向量抵消，minimum normal-valid=`0`，所以probe诚实未过。Gradient-SDF一手论文说明SDF梯度
+在medial axis最近面不唯一处存在奇异性；Open3D官方接口也要求显式viewpoint orientation。r4仅对“外露面和+centroid
+方向都为零”的退化点使用target-sensor viewpoint确定方向，不删proposal、不改topology/patch/cohort/gate，登记
+`V63-F05 resolved`。
 
 P3 r2=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151429Z__surface-probe-s20260824-r2`
 因外层launcher提前创建了本应由runner原子创建的新run directory而在入口触发`FileExistsError`；0 unit、0 surface、
@@ -72,7 +80,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步重跑唯一P3 probe revision 3，通过后直接构建D的完整surface corpus。
+P0/P1/P2/P2D 当前完成；下一步重跑P3 probe revision 4，通过后直接构建D的完整surface corpus。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）

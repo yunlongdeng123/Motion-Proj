@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE PROBE R3 COMPLETE / NORMAL AMBIGUITY / R4 READY（2026-08-24）
+
+- canonical diagnostic=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151618Z__surface-probe-s20260824-r3`；
+  output=`191 surfaces / 498 patches / 191 proposals / 152,226 points / 2,429,273 bytes`。
+- resource=`194.540s wall`；patch max=`635 <= 2048`；hidden-FREE=`19,609`、target-OCC=`3,891`、authority=
+  `39,749`；8/8 negative contracts true；prototype/calibration/H/T read=`false/false/false`。
+- gate=`failed only minimum_normal_valid_fraction=0`：101个3D离散对称微小static components中至少一个normal抵消，
+  包含85 singleton；surface/patch/native/evidence输出均完成。
+- recovery=仅在face-sum与centroid fallback均为零时用target-sensor viewpoint确定单位法向量；proposal/topology/patch/
+  cohort/gate不变；failure ledger delta=`V63-F05 resolved`；revision 4 ready。
+
 ## WorldSim V6.3 P3 SURFACE PROBE R2 LAUNCHER FAILED / R3 READY（2026-08-24）
 
 - failed run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151429Z__surface-probe-s20260824-r2`；

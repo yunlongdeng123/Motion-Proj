@@ -37,8 +37,14 @@ def surface_normals(
     component_indices: np.ndarray,
     surface_indices: np.ndarray,
     shape: tuple[int, int, int],
+    viewpoint_grid: np.ndarray | None = None,
 ) -> np.ndarray:
-    """Compute outward normals from missing 6-neighbors."""
+    """Compute outward normals from missing 6-neighbors.
+
+    Symmetric tiny components can sit on the discrete medial axis and have a
+    zero summed face normal. Resolve only that ambiguity toward the sensor
+    viewpoint, which is outside the proposal and does not alter its topology.
+    """
     component_linear = set(_linear(component_indices, shape).tolist())
     normals = np.zeros((surface_indices.shape[0], 3), dtype=np.float32)
     shape_array = np.asarray(shape, dtype=np.int32)
@@ -57,6 +63,12 @@ def surface_normals(
         if norm <= 1e-8:
             outward = point.astype(np.float32) - component_indices.mean(axis=0)
             norm = float(np.linalg.norm(outward))
+        if norm <= 1e-8 and viewpoint_grid is not None:
+            outward = np.asarray(viewpoint_grid, dtype=np.float32) - point.astype(np.float32)
+            norm = float(np.linalg.norm(outward))
+        if norm <= 1e-8:
+            outward = NEIGHBOR_OFFSETS[0].astype(np.float32)
+            norm = 1.0
         normals[row_index] = outward / max(norm, 1e-8)
     return normals
 
