@@ -1,0 +1,75 @@
+schema_version: worldsim_v63.p2d_native_pointwise.v1
+task_id: WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01
+hypothesis_id: WS-V63-H-P2D-001
+seed: 0
+native_sidecars: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+sources:
+  me0: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+  me1: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+  me3r: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME3R-IRWM-PREDICTED-OCC-01/20260822T145543Z__irwm-predicted-occ-s1-r1
+  r9: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r10: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+p5:
+  config: /root/autodl-tmp/motion_proj/configs/worldsim_v62/p5_cpsc_lite_v1.yaml
+  best_model: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1/BEST_MODEL.pt
+  frozen: true
+  training_allowed: false
+cohort:
+  partition: frozen_v61_legacy28_retrospective_only
+  scenes: [scene-0048, scene-0242]
+  target_frames: [52, 57]
+  expected_case_count: 28
+raw_evidence:
+  scene-0048: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  scene-0242: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+  shape: [200, 200, 16]
+target_grid:
+  origin_m: [-20.0, -30.0, -3.0]
+  voxel_size_m: 0.2
+  shape: [300, 300, 40]
+projection:
+  camera_id: 0
+  width: 512
+  height: 288
+  native_width: 1600
+  native_height: 900
+  near_m: 0.4
+  far_m: 60.0
+  step_m: 0.1
+  ray_batch_size: 8192
+  observed_support_dilation_voxels: 1
+method_gate:
+  minimum_surface_coverage: 0.50
+independent_eval_gate:
+  maximum_free_space_conflict: 0.05
+  minimum_observed_surface_support: 0.80
+  maximum_unknown_volume_fraction: 0.20
+  minimum_projected_surface_coverage: 0.50
+  minimum_method_eval_depth_overlap: 0.50
+  maximum_median_relative_depth_error: 0.20
+primary_gate:
+  minimum_accept_count: 5
+  maximum_false_safe_count: 0
+  minimum_accepted_mask_area_yield: 0.12
+  maximum_accepted_free_conflict: 0.05
+  minimum_safe_occ_retention: 0.50
+  maximum_source_valid_unknown_fraction: 0.50
+resources:
+  gpu: 0
+  query_batch_size: 16384
+  maximum_gpu_memory_gib: 18
+  maximum_wall_seconds: 1800
+  minimum_disk_free_gib: 20
+locks:
+  prototype_bridge: false
+  training: false
+  threshold_tuning: false
+  legacy_for_selection: false
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V62-F05, V62-F06]

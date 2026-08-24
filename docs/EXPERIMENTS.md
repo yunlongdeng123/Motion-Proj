@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.3 P2D NATIVE POINTWISE FORMAL PRE-REGISTERED（2026-08-24）
+
+- task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`；frozen model=V6.2 P5 best；training=`false`。
+- native logits/BEV按冻结 origin/voxel坐标映射到legacy 0.2m grid；arms=`B0/B1/B3-native/B2-native-projected`；
+  denominator、P6 gate与method-before-O_eval顺序不变。
+- 只运行一次formal，无probe/seed/threshold/model sweep；calibration/H/T read=`false`；failure ledger delta=`none`。
+
 ## WorldSim V6.3 P2 NATIVE SIDECARS FORMAL PASS / P2D UNLOCKED（2026-08-24）
 
 - canonical=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1`。

@@ -4,6 +4,10 @@
 
 状态：`v63_p2_native_sidecars_passed`；active task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`。
 
+P2D native-to-pointwise interface与唯一 formal 已预注册：冻结 V6.2 P5 best，不训练、不调阈值，把 P2 完整 native
+logits/BEV 按真实网格坐标映射到 legacy 0.2m grid，并保持原 legacy28/P6 gate、method-before-O_eval 顺序。该诊断只有
+一次formal，不做capacity probe、seed或threshold sweep；结果无论正负均只裁决 prototype vs pointwise 根因。
+
 P2 原生接口已实现并冻结：复用已验证的 official IR-WM current forward，每 target 直接保存完整
 `200x200x16x17` logits、`200x200x256` BEV latent、argmax/entropy/margin/source-valid 为 memory-mappable arrays；
 不再依赖 V6.2 query-deduplicated sidecar，也不存在 prototype。首个 formal denominator 固定为 Tier D 72 targets +
