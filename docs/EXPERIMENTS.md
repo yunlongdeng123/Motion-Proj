@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE PROBE R5 AGGREGATE SCHEMA PASS / PER-SWEEP R6 READY（2026-08-24）
+
+- run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152843Z__surface-probe-s20260824-r5`；runner=
+  `passed=true`；`191 surfaces/498 patches/152226 points/3029206 bytes`；wall=`188.725s`。
+- added fields=signed FREE/OCC distance、patch-local xyz、method/target behind-hit、temporal FREE/OCC/UNKNOWN/contradiction
+  counts、ray distance + normalized hit order、actor observed-hit；normal-valid=`1.0`，8/8 negative contracts。
+- P4-loader audit=`formal withheld`：aggregate counts不能执行整段temporal-window dropout，仍缺每个method sweep的
+  state/contradiction。它是`V63-F06`同根schema补全，不是新算法失败。
+- revision 6=新增per-sweep矩阵与单一required-field completeness check；proposal/topology/labels/ratio/gates不变；
+  calibration/H/T read=`false`。r6通过后直接formal，不再增加probe。
+- pre-run narrow contract first used wrong processed path `000` and failed before loading scene files；frozen cohort resolves
+  `scene-0071 -> 068`，then state/contradiction shapes both=`[3,300,300,40]` and count identity passed；ledger delta additionally
+  `V63-F07 resolved`，no run created。
+
 ## WorldSim V6.3 P3 SURFACE PROBE R4 GEOMETRY PASS / SCHEMA GATE WITHHELD（2026-08-24）
 
 - run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152300Z__surface-probe-s20260824-r4`；runner=

@@ -3,7 +3,7 @@
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
 - Status: `implementation ready / probe preregistered`
-- Current revision: `r5 frozen-feature-schema recovery ready`
+- Current revision: `r6 per-sweep schema recovery ready / final probe`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
 each method-visible current/swept envelope with identity preserved. Proposal geometry is declared before topology. Six-connected
@@ -36,3 +36,6 @@ calibration, confirmation or test read occurs in P3.
   distance. r5 completes those frozen fields with exact EDT, relative coordinates and normalized per-bundle ordering, retains raw ray
   distance separately, and adds actor observed-hit support. No proposal, label, topology, patch or quality-selection contract changes.
   Failure=`V63-F06 resolved`.
+- r5 validated those aggregate fields, but the P4 loader audit showed temporal counts alone cannot implement frozen contiguous-window
+  dropout. r6 additionally stores method-sweep state and contradiction matrices per point and directly checks the P1-required payload
+  field list from config. This remains the same V63-F06 schema recovery. If r6 passes, no further probe is permitted before formal.

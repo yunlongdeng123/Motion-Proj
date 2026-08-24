@@ -119,11 +119,20 @@ def _temporal_support(
     method_frames: list[int],
     spec: VoxelGridSpec,
     cohort: dict[str, Any],
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+]:
     free_count = np.zeros(spec.shape, dtype=np.uint8)
     occupied_count = np.zeros(spec.shape, dtype=np.uint8)
     unknown_count = np.zeros(spec.shape, dtype=np.uint8)
     contradiction_count = np.zeros(spec.shape, dtype=np.uint8)
+    states_by_sweep = []
+    contradictions_by_sweep = []
     kwargs = {
         "record_width": int(cohort["raw_lidar"]["point_record_float32_width"]),
         "dynamic_box_margin_m": float(cohort["raw_lidar"]["dynamic_box_margin_m"]),
@@ -134,11 +143,21 @@ def _temporal_support(
     for frame in method_frames:
         grid = build_evidence_grid(scene_root, target_frame, [frame], spec, **kwargs)
         semantics = np.asarray(grid.arrays["semantics"])
+        contradiction = np.asarray(grid.arrays["contradiction"], dtype=bool)
         free_count += semantics == FREE
         occupied_count += semantics == OCCUPIED
         unknown_count += semantics == UNKNOWN
-        contradiction_count += np.asarray(grid.arrays["contradiction"], dtype=np.uint8)
-    return free_count, occupied_count, unknown_count, contradiction_count
+        contradiction_count += contradiction.astype(np.uint8)
+        states_by_sweep.append(semantics.astype(np.uint8))
+        contradictions_by_sweep.append(contradiction)
+    return (
+        free_count,
+        occupied_count,
+        unknown_count,
+        contradiction_count,
+        np.stack(states_by_sweep, axis=0),
+        np.stack(contradictions_by_sweep, axis=0),
+    )
 
 
 def _signed_distance_to_mask(mask: np.ndarray, voxel_size_m: float) -> np.ndarray:
@@ -165,6 +184,8 @@ def _compile_volume(
     temporal_occ: np.ndarray,
     temporal_unknown: np.ndarray,
     temporal_contradiction: np.ndarray,
+    temporal_state_by_sweep: np.ndarray,
+    temporal_contradiction_by_sweep: np.ndarray,
     signed_distance_free_m: np.ndarray,
     signed_distance_occupied_m: np.ndarray,
     actor_observed_volume: np.ndarray | None,
@@ -201,6 +222,8 @@ def _compile_volume(
             "temporal_occ_count",
             "temporal_unknown_count",
             "temporal_contradiction_count",
+            "temporal_state_by_sweep",
+            "temporal_contradiction_by_sweep",
             "ray_direction",
             "ray_distance_m",
             "ray_hit_order",
@@ -372,6 +395,12 @@ def _compile_volume(
         arrays["temporal_occ_count"].append(temporal_occ[idx].astype(np.uint8))
         arrays["temporal_unknown_count"].append(temporal_unknown[idx].astype(np.uint8))
         arrays["temporal_contradiction_count"].append(temporal_contradiction[idx].astype(np.uint8))
+        arrays["temporal_state_by_sweep"].append(
+            temporal_state_by_sweep[(slice(None),) + idx].T.astype(np.uint8)
+        )
+        arrays["temporal_contradiction_by_sweep"].append(
+            temporal_contradiction_by_sweep[(slice(None),) + idx].T.astype(bool)
+        )
         arrays["ray_direction"].append(direction.astype(np.float16))
         arrays["ray_distance_m"].append(distance.astype(np.float16))
         arrays["ray_hit_order"].append(ray_hit_order.astype(np.float16))
@@ -418,9 +447,14 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
     target_frames = [target_frame + int(value) for value in cohort["sweep_roles"]["target_evidence_offsets"]]
     if set(method_frames) & set(target_frames):
         raise RuntimeError("method/target frame overlap")
-    temporal_free, temporal_occ, temporal_unknown, temporal_contradiction = _temporal_support(
-        scene_root, target_frame, method_frames, spec, cohort
-    )
+    (
+        temporal_free,
+        temporal_occ,
+        temporal_unknown,
+        temporal_contradiction,
+        temporal_state_by_sweep,
+        temporal_contradiction_by_sweep,
+    ) = _temporal_support(scene_root, target_frame, method_frames, spec, cohort)
     method_semantics = np.asarray(method["semantics"])
     signed_distance_free_m = _signed_distance_to_mask(
         method_semantics == FREE, spec.voxel_size_m
@@ -473,6 +507,8 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
             temporal_occ=temporal_occ,
             temporal_unknown=temporal_unknown,
             temporal_contradiction=temporal_contradiction,
+            temporal_state_by_sweep=temporal_state_by_sweep,
+            temporal_contradiction_by_sweep=temporal_contradiction_by_sweep,
             signed_distance_free_m=signed_distance_free_m,
             signed_distance_occupied_m=signed_distance_occupied_m,
             actor_observed_volume=actor_hit_maps.get(actor_id),
@@ -638,6 +674,12 @@ def run(
     _write_jsonl(run_dir / "NATIVE_FEATURE_INDEX.jsonl", native_index)
     _write_jsonl(run_dir / "EVIDENCE_ROLE_INDEX.jsonl", evidence_roles)
     total_points = sum(int(row["point_count"]) for row in rows)
+    point_feature_fields = sorted(
+        {field for row in rows for field in row["point_feature_fields"]}
+    )
+    missing_point_feature_fields = sorted(
+        set(config["point_payload"]["required_fields"]) - set(point_feature_fields)
+    )
     summary = {
         "schema_version": "worldsim_v63.p3_surface_corpus_summary.v1",
         "task_id": TASK_ID,
@@ -648,9 +690,8 @@ def run(
         "patch_count": len(patches),
         "proposal_count": len(proposals),
         "point_count": total_points,
-        "point_feature_fields": sorted(
-            {field for row in rows for field in row["point_feature_fields"]}
-        ),
+        "point_feature_fields": point_feature_fields,
+        "missing_point_feature_fields": missing_point_feature_fields,
         "surface_type_counts": {
             name: sum(row["surface_type"] == name for row in surfaces)
             for name in SURFACE_TYPE
@@ -679,6 +720,7 @@ def run(
         and len(patches) > 0
         and total_points > 0
         and summary["minimum_normal_valid_fraction"] == 1.0
+        and not missing_point_feature_fields
         and summary["maximum_patch_point_count"] <= int(config["patch"]["maximum_points"])
         and all(negative_tests.values())
     )

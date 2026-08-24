@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生feature未改变pointwise unsafe accepts；P3修复axis/launcher/normal，并在formal前拦截冻结point schema缺字段 | `V63-F01`–`V63-F06`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
+| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生feature未改变pointwise unsafe accepts；P3修复axis/launcher/normal/schema及一次processed-index检查入口错误 | `V63-F01`–`V63-F07`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -191,11 +191,24 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   SurfNCC，故不得把r4写成完整P3 pass。恢复使用SciPy exact Euclidean distance transform按0.2m sampling生成仅依赖
   method-visible evidence的signed distances；patch coordinate减冻结patch centroid；hit order在每个surface ray bundle内按
   distance+lexicographic tie-break归一化，并另存raw distance；同时显式补behind-hit、temporal UNKNOWN与actor observed-hit。
-  无target信息进入proposal/feature decision、无新超参或quality选择。防重复：capacity前必须逐字段对齐P1 schema；不能用
-  字段名掩盖语义错位，也不能事后删掉冻结输入以让loader先跑。证据=
+  r5=`20260824T152843Z__surface-probe-s20260824-r5`验证上述aggregate字段后，P4 loader审计继续发现aggregate counts无法
+  执行冻结的整段temporal-window dropout；同一恢复因此再补每个method sweep的state/contradiction `[point,sweep]`
+  矩阵，并用配置中的单一required-field清单防止再次静默漏项。VideoMAE与MaST-Pre支持结构化时间mask应保留时间维，
+  但V6.3不迁移其高mask ratio/预训练目标。无target信息进入proposal/feature decision、无新超参或quality选择。
+  防重复：capacity前必须逐字段对齐P1 schema；不能用字段名掩盖语义错位、用aggregate冒充per-sweep，或事后删掉冻结输入
+  以让loader先跑。证据=
   `docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
   `https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.distance_transform_edt.html`、
-  `https://openaccess.thecvf.com/content/ICCV2021/papers/Zhao_Point_Transformer_ICCV_2021_paper.pdf`。
+  `https://openaccess.thecvf.com/content/ICCV2021/papers/Zhao_Point_Transformer_ICCV_2021_paper.pdf`、
+  `https://proceedings.neurips.cc/paper_files/paper/2022/file/416f9cb3276121c42eebb86352a4354a-Paper-Conference.pdf`、
+  `https://openaccess.thecvf.com/content/ICCV2023/papers/Shen_Masked_Spatio-Temporal_Structure_Prediction_for_Self-supervised_Learning_on_Point_Cloud_ICCV_2023_paper.pdf`。
+
+- `V63-F07`（`engineering`, `resolved`）：r6 pre-run per-sweep窄检查首次凭scene名猜测processed path为
+  `trainval/000`，在读取`instances_info.json`时触发`FileNotFoundError`；没有创建run或读取quality。冻结cohort是该映射的
+  唯一事实源，实际`scene-0071 processed_index=68`；改用`trainval/068`后检查通过，state与contradiction均为
+  `[3,300,300,40]`且逐voxel FREE+OCC+UNKNOWN count恒等于3。防重复：raw processed目录只按cohort metadata中的
+  `processed_index`解析，不从scene display name猜目录；这一入口错误不扩展smoke/regression。证据=P3 r6 pre-run shell与
+  `configs/worldsim_v62/p2_development_cohort_v1.yaml`。
 
 <a id="detail-v62"></a>
 

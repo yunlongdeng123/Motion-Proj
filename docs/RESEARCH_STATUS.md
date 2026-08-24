@@ -1,8 +1,23 @@
 # Research Status
 
-## WorldSim V6.3 P3 r4 geometry pass / frozen feature schema reconciliation r5 ready（2026-08-24）
+## WorldSim V6.3 P3 r5 aggregate schema pass / per-sweep completion r6 ready（2026-08-24）
 
-状态：`v63_p3_probe_r4_geometry_pass_schema_blocked_r5_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_probe_r5_aggregate_schema_pass_per_sweep_blocked_r6_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 r5=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152843Z__surface-probe-s20260824-r5`
+完成`191 surfaces/498 patches/152,226 points/3,029,206 bytes`，wall=`188.725s`、runner `passed=true`；新增
+signed distances、patch-local xyz、behind-hit、四类temporal counts、normalized ray order与actor observed-hit均可读取。
+但P4 structural-dropout loader设计审计确认：聚合temporal counts不能忠实执行冻结的整段`temporal_window` dropout，
+必须保留每个method sweep的state/contradiction。该发现仍属于同一`V63-F06` frozen-schema completeness根因；r5只记
+aggregate schema capability，不放行formal。
+
+r6增加`[point,sweep]` temporal state/contradiction矩阵，并把P1必需字段清单写入P3配置，runner只做一次直接缺字段检查。
+VideoMAE/Masked Spatio-Temporal Structure Prediction支持连续时空mask必须保留时间结构这一迁移，但mask比例仍使用P1冻结
+的25%，不迁移其预训练目标或高mask ratio。r6通过后不再加probe，直接72-unit formal。
+
+r6窄接口检查首次把scene名误当processed index并访问`trainval/000`，在文件打开前失败；立即读取冻结cohort得到
+`scene-0071 -> processed_index 68`后，同一检查通过，per-sweep shapes=`[3,300,300,40]`。登记`V63-F07 resolved`，
+未创建run、未改代码/科学合同，也不增加测试矩阵。
 
 P3 r4=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152300Z__surface-probe-s20260824-r4`
 通过几何/资源门：`191 surfaces / 498 patches / 152,226 points`，minimum normal-valid=`1.0`、patch max=`635`、
@@ -91,7 +106,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步运行P3 schema-complete probe revision 5，通过后直接构建D的完整surface corpus。
+P0/P1/P2/P2D 当前完成；下一步运行P3 per-sweep schema probe revision 6，通过后直接构建D的完整surface corpus。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）

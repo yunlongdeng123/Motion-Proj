@@ -24,8 +24,41 @@ point_payload:
   patch_coordinates: relative_to_patch_centroid
   hard_evidence: [state, contradiction, behind_hit]
   temporal_counts: [free, occupied, unknown, contradiction]
+  temporal_per_sweep: [state, contradiction]
   ray_hit_order: normalized_within_surface_ray_bundle
   actor_support: [identity, current, swept, observed_hit]
+  required_fields:
+    - grid_indices
+    - patch_local_coordinates_m
+    - normals
+    - surface_index
+    - patch_index
+    - native_indices
+    - native_valid
+    - method_state
+    - method_contradiction
+    - method_behind_hit
+    - target_state
+    - target_contradiction
+    - target_behind_hit
+    - signed_distance_free_m
+    - signed_distance_occupied_m
+    - temporal_free_count
+    - temporal_occ_count
+    - temporal_unknown_count
+    - temporal_contradiction_count
+    - temporal_state_by_sweep
+    - temporal_contradiction_by_sweep
+    - ray_direction
+    - ray_distance_m
+    - ray_hit_order
+    - ray_bundle_id
+    - actor_id
+    - actor_current_support
+    - actor_swept_support
+    - actor_observed_hit_support
+    - authority_bits
+    - surface_type
 resources:
   maximum_workers: 2
   minimum_disk_free_gib: 20
