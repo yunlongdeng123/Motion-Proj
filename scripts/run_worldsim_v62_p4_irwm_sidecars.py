@@ -43,6 +43,13 @@ def _run_worker(task: dict[str, Any]) -> dict[str, Any]:
     environment = os.environ.copy()
     environment["PYTHONPATH"] = task["repo_root"]
     environment["OMP_NUM_THREADS"] = str(task["cpu_threads"])
+    environment["MKL_NUM_THREADS"] = str(task["cpu_threads"])
+    environment["PYTHONNOUSERSITE"] = "1"
+    environment["CUDA_VISIBLE_DEVICES"] = str(task["gpu"])
+    environment["TORCH_CUDA_ARCH_LIST"] = "8.6"
+    environment["PATH"] = task["environment_bin"] + os.pathsep + environment.get(
+        "PATH", ""
+    )
     result = subprocess.run(
         command,
         text=True,
@@ -163,6 +170,8 @@ def run(
                 "log_path": str(log_path),
                 "repo_root": str(repo_root),
                 "cpu_threads": int(config["resources"]["worker_cpu_threads"]),
+                "gpu": int(config["resources"]["gpu"]),
+                "environment_bin": str(Path(config["environment"]["prefix"]) / "bin"),
                 "timeout_seconds": int(config["resources"]["worker_timeout_seconds"]),
             }
         )

@@ -70,6 +70,11 @@ P4 最薄接口已实现、尚未执行 GPU probe：官方 current occupancy hea
 cells和两组 query→cell 索引；source extent 外 query 显式标为 prior-invalid，留给 CPSC 输出 UNKNOWN/依赖硬证据。probe
 固定 `scene-0071/f017`、history=`[7,12,17]`，成功后直接2-worker全量72 units。failure ledger delta=`none`。
 
+P4 probe r1=`20260824T085711Z__prior-sidecar-probe-s1-r1` 在 plugin import、GPU forward和sidecar前被
+`Ninja is required` 阻塞。env 内的 `bin/ninja` 已存在，根因是controller使用隔离 Python但未把同一 env bin prepend
+到 PATH。按 PyTorch cpp-extension 官方查找机制和 V6.1 成功 worker合同，恢复只补齐 PATH/PYTHONNOUSERSITE/
+OMP/MKL/CUDA arch 环境，不安装依赖、不改科学输入；`V62-F04 resolved`，probe r2 next。
+
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
 `V62-F01,V61-F11,V61-F13`。

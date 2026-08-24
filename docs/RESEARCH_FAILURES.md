@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3 hard projection passed；P2 六场景/72-unit/7.2M query formal passed；actor 离开当前 ROI 长尾已用可见时序扫掠包络恢复；P4 active | 不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F03`；V6.2 plan、P0/P1/P2/P3 docs |
+| V6.2 | P3 hard projection passed；P2 六场景/72-unit/7.2M query formal passed；actor ROI 长尾与 P4 worker env PATH 已恢复；P4 probe retry ready | 不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F04`；V6.2 plan、P0/P1/P2/P3/P4 docs |
 
 ### 1.1 V1 汇总条目
 
@@ -159,6 +159,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `20260824T082601Z__query-dataset-s20260824-r1`，未完成 manifest、未用于训练或质量结论。恢复后的 formal r2=
   `20260824T083654Z__query-dataset-s20260824-r2` 已完成72/72 units、7.2M queries，combined actor pool 0空、
   source-role overlap=0；该成功不新增 failure ID。
+
+- `V62-F04`（`engineering`, `resolved`）：P4 probe r1 在 official IR-WM plugin import 阶段、GPU forward 与任何
+  sidecar 写入前失败；隔离 Python 可执行文件虽来自 `worldsim-v61-irwm`，controller 却继承外层 shell PATH，导致
+  PyTorch `cpp_extension.load()` 的 `verify_ninja_availability()` 找不到 env 内已安装的 `bin/ninja`。这不是缺依赖、
+  CUDA 不兼容、IR-WM 方法失败或数据失败。PyTorch 官方实现明确通过 PATH 调用 `ninja --version`，V6.1 已成功的
+  IR-WM controller 也显式 prepend env `bin` 并冻结 `TORCH_CUDA_ARCH_LIST=8.6`。恢复仅复用同一环境合同：prepend
+  env bin，设置 `PYTHONNOUSERSITE=1`、OMP/MKL threads、CUDA device与SM 8.6；不安装包、不改模型/输入/query或门槛。
+  failed probe=`20260824T085711Z__prior-sidecar-probe-s1-r1`，无科学输出；防重复：用隔离 Python 启动 native/CUDA
+  worker时不得假设其 bin 自动进入 PATH，也不得把 loader import failure记成方法 rejection。
 
 <a id="detail-v61"></a>
 

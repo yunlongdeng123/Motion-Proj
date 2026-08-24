@@ -46,3 +46,9 @@ queries, multiple fine-grid queries mapping to one 0.512 m source cell, and all 
 The only capability probe is `scene-0071/f017`, frames `[7,12,17]`, metadata indices `[1,2,3]`, batch1, one worker. It must
 produce finite, nonempty logits and latent mappings below the 22 GiB ceiling without target evidence. If it passes, P4 runs
 all six scenes and 72 targets with at most two scene workers; no additional smoke stage is inserted.
+
+Probe r1 (`20260824T085711Z__prior-sidecar-probe-s1-r1`) stopped before plugin import because the isolated environment's
+already-installed `ninja` executable was not on the inherited PATH. PyTorch's official `cpp_extension.load` invokes Ninja from
+PATH, and the V6.1 successful IR-WM controller already prepended the same environment bin. Recovery therefore binds the full
+existing environment (`PATH`, `PYTHONNOUSERSITE`, OMP/MKL threads, CUDA device, SM 8.6) without installing a package or changing
+the model/data/interface. This is `V62-F04 resolved`; the same probe is rerun as r2.

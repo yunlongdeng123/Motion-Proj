@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.2 P4 PROBE R1 ENV BLOCKED / R2 RECOVERY READY（2026-08-24）
+
+- failed run=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T085711Z__prior-sidecar-probe-s1-r1`；
+  terminal=`blocked_before_plugin_import_and_gpu_forward`，无 sidecar、无质量结果、target evidence未读。
+- error=`RuntimeError: Ninja is required to load C++ extensions`。`worldsim-v61-irwm/bin/ninja` 实际存在；controller
+  绑定了env Python却继承外层PATH，PyTorch `verify_ninja_availability()` 因此返回 false。failure=`V62-F04 resolved`。
+- 恢复完全复用 V6.1 已成功 IR-WM worker env：prepend env `bin`，`PYTHONNOUSERSITE=1`，OMP/MKL threads固定，
+  `CUDA_VISIBLE_DEVICES=0`，`TORCH_CUDA_ARCH_LIST=8.6`。不安装包、不改模型、checkpoint、scene、frames、query、
+  sidecar schema、资源 ceiling 或判据。
+- decision=`rerun_same_single_target_probe_as_r2_from_clean_commit`；failure ledger delta=`V62-F04 resolved`。
+
 ## WorldSim V6.2 P4 IR-WM SIDECAR PRE-REGISTERED / INTERFACE READY（2026-08-24）
 
 - task=`WS-V62-P4-IRWM-PRIOR-SIDECAR-01`，hypothesis=`WS-V62-H-P4-001`，status=`probe_ready_no_gpu_run`。
