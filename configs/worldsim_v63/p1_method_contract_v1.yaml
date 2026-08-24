@@ -1,0 +1,99 @@
+task: WS-V63-P1-SCOPE-NOVELTY-01
+hypothesis: WS-V63-H-P1-001
+status: frozen_before_v63_quality
+seed: 20260824
+native:
+  backend: frozen_irwm_official
+  grid_shape: [200, 200, 16]
+  class_count: 17
+  bev_shape: [200, 200, 256]
+  precision: float16
+  source_origin_m: [-51.2, -51.2, -5.0]
+  source_voxel_size_m: 0.512
+  extra_official_features: none_in_v1
+  prototype_or_fabricated_features: forbidden
+target_grid:
+  origin_m: [-20.0, -30.0, -3.0]
+  extent_m: [40.0, 30.0, 5.0]
+  voxel_size_m: 0.2
+surface:
+  connectivity: 6
+  construction: occupied_component_boundary
+  patch_partition: deterministic_geodesic_breadth_first
+  patch_min_points: 64
+  patch_target_points: 512
+  patch_max_points: 2048
+  small_component_policy: retain_and_report
+model:
+  hidden_dimension: 256
+  point_mlp_layers: 2
+  neighbor_blocks: 2
+  patch_transformer_layers: 2
+  proposal_tokens: 1
+  authority_threshold: 0.5
+risk:
+  point: clip(p_occupied_times_q_hidden_free_plus_0_25_one_minus_q_authority)
+  cvar_alpha: 0.90
+  proposal: maximum_patch_cvar
+  case: maximum_proposal_risk
+loss_weights:
+  state: 1.0
+  hidden_free_tail: 1.0
+  safe_occ_retention: 0.75
+  proposal_rank: 0.25
+  surface_consistency: 0.10
+  authority: 0.50
+  ranking_margin: 0.10
+dropout:
+  one_applicable_family_per_proposal: true
+  support_fraction: 0.25
+  families: [ray_bundle, spatial_block, temporal_window, surface_patch, actor_support]
+training:
+  optimizer: AdamW
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  precision: fp16
+  point_microbatch: 8192
+  gradient_accumulation: 4
+  max_epochs: 12
+  min_epochs: 4
+  patience: 3
+  primary_seed: 0
+cohorts:
+  targets: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+  development_train: [scene-0071, scene-0317, scene-0862, scene-1012]
+  development_selection: [scene-0450, scene-1089]
+  calibration: [scene-0919, scene-0634, scene-1062, scene-0626, scene-0015, scene-0552]
+  confirmation: [scene-0924, scene-0906, scene-1072]
+  exact_once_test: [scene-0519, scene-0554, scene-0911, scene-0966]
+  legacy: [scene-0048, scene-0242]
+calibration:
+  unit: target_case
+  target_risk: 0.05
+  confidence: 0.95
+  threshold_start: 0.0
+  threshold_stop: 1.0
+  threshold_step: 0.025
+  procedure: fixed_sequence_one_sided_exact_binomial
+  group_min_cases: 24
+gates:
+  hard_violations_max: 0
+  safe_occ_retention_min: 0.60
+  source_valid_unknown_max: 0.60
+  accepted_case_coverage_min: 0.10
+  accepted_surface_area_vs_native_b2_min_ratio: 1.0
+  b3_tail_relative_improvement_vs_b2_min: 0.02
+  b5_tail_relative_improvement_vs_best_b3_b4_min: 0.02
+  m0_false_safe_surrogate_relative_improvement_vs_b5_min: 0.02
+  independent_selection_scenes_min: 2
+resource:
+  gpu: 0
+  minimum_disk_free_gib: 20
+  full_native_estimated_unit_mb: 42.2
+  bounded_resource_recovery_limit: 1
+locks:
+  quality_used_for_freeze: false
+  legacy_tuning: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false

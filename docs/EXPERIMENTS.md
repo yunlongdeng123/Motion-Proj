@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.3 P1 NOVELTY/PROTOCOL FREEZE PASS / P2 READY（2026-08-24）
+
+- task=`WS-V63-P1-SCOPE-NOVELTY-01`；outcome=`novelty_gate_passed / protocol_frozen_before_quality`。
+- 一手审计覆盖 RELIOcc、OCCUQ、alpha-OCC、QueryOcc、EvOcc、CRC/NCRC、structured conformal segmentation、
+  Point/Set Transformer、CVaR 与 visibility-aware FREE-space surface reconstruction。组合贡献边界成立；单组件均非新贡献。
+- 冻结原生 sidecar=`200x200x16x17 FP16 logits + 200x200x256 FP16 BEV`；surface=6-connected boundary，patch=
+  `64/512/2048`；risk=`point hidden-FREE/authority -> patch CVaR.90 -> max proposal/case`。
+- 冻结 C/H/T=`6/3/4 scenes, 72/36/48 target cases`，与 D/L scene-disjoint；calibration=`epsilon .05,
+  confidence .95, fixed-sequence exact binomial, threshold 0..1 step .025`。
+- 完整训练权重/超参、P6 AB晋级幅度、anti-trivial/P7/P8/P9/P10 gates与资源边界已写入
+  `configs/worldsim_v63/p1_method_contract_v1.yaml`。quality read=`false`，GPU run=`none`，failure ledger delta=`none`。
+- 下一 task=`WS-V63-P2-NATIVE-SIDECAR-01`。
+
 ## WorldSim V6.3 P0 SCOPE/GIT DONE / P1 NOVELTY IN PROGRESS（2026-08-24）
 
 - task=`WS-V63-P0-SCOPE-GIT-01`；branch=`research/worldsim-v6.3-surface-tail`。

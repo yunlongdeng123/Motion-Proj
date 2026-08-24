@@ -1,8 +1,20 @@
 # Research Status
 
-## WorldSim V6.3 SurfNCC scope active（2026-08-24）
+## WorldSim V6.3 SurfNCC P1 protocol frozen / P2 native sidecar next（2026-08-24）
 
-状态：`v63_p0_scope_frozen / p1_novelty_prereg_in_progress`；active task=`WS-V63-P1-SCOPE-NOVELTY-01`。
+状态：`v63_p1_novelty_protocol_frozen`；active task=`WS-V63-P2-NATIVE-SIDECAR-01`。
+
+P1 已完成一手文献/官方仓库审计。RELIOcc/OCCUQ/alpha-OCC/EvOcc 已覆盖 Occupancy reliability、uncertainty、evidence
+与 conformal set 的单项；QueryOcc 覆盖连续4D query；Point/Set Transformer覆盖结构编码；CRC/NCRC/structured
+segmentation覆盖独立校准；CVaR与visibility-aware reconstruction覆盖尾部损失与FREE约束。未发现把原生 Occupancy
+feature、proposal surface、exact hard evidence、surface CVaR、positive OCC authority 与 case-level admission risk
+统一成驾驶 world compiler 的直接重合。novelty gate 只对该组合通过，任何单组件均不主张贡献。
+
+在任何 V6.3 quality read 前已冻结：完整 IR-WM `17D logits + 256D BEV` 原生 sidecar；6-connected proposal boundary；
+patch `64/512/2048`；256D two-block/two-transformer surface encoder；CVaR alpha=`0.90`；全部 loss/训练超参；Tier
+D/C/H/T/L scene-disjoint cohort；case score、`0..1 step .025` fixed-sequence exact-binomial calibration；risk target=
+`0.05@95%`；anti-trivial、P6–P10 gates 与单卡资源合同。C/H/T分别为6/3/4 fresh scenes、72/36/48 target cases；H/T
+保持 sealed。详见 `docs/autoresearch/worldsim_v63/P1_NOVELTY_PROTOCOL_FREEZE.md`。
 
 V6.2 的 `v62_cpsc_lite_family_closed_negative`、`V62-F06 recovery exhausted` 与 P7/P8 未解锁结论保持不变。
 按 V6.3 计划，V6.2 已经由临时 integration branch 以 fast-forward 合入 `main`，定向 projection test 在正确的
@@ -16,9 +28,8 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0 当前完成：上游/远端/资源/工作树继承已核对，V6.3 plan 已纳入分支，scope/config/autoresearch state 已建立；P1
-必须在任何 V6.3 质量结果前完成一手文献审计，并冻结 surface/patch/feature、CVaR、loss、case-level calibration、
-cohort、gates 与资源合同。当前没有运行 GPU 实验，也没有读取 legacy/confirmation/test quality。
+P0/P1 当前完成；下一步只实现并物化 P2 native sidecar。当前没有 V6.3 GPU quality 实验，也没有读取
+legacy/calibration/confirmation/test quality。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 
