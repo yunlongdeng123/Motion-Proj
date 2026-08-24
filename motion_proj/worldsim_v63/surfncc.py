@@ -121,19 +121,41 @@ class SurfNCC(nn.Module):
         contradiction: Tensor,
         *,
         cvar_alpha: float,
+        patch_proposal_index: Tensor | None = None,
     ) -> dict[str, Tensor]:
         hidden = self.point_mlp(point_features)
         for block in self.neighbor_blocks:
             hidden = block(hidden, edge_index)
         patch_count = int(patch_index.max().item()) + 1
         patch_tokens = _segment_mean(hidden, patch_index, patch_count)
-        tokens = torch.cat(
-            (self.proposal_token.expand(1, -1, -1), patch_tokens[None]), dim=1
+        if patch_proposal_index is None:
+            patch_proposal_index = torch.zeros(
+                patch_count, device=patch_index.device, dtype=torch.long
+            )
+        proposal_count = int(patch_proposal_index.max().item()) + 1
+        encoded_patches = torch.zeros_like(patch_tokens)
+        proposal_tokens = []
+        for proposal in range(proposal_count):
+            selected_patches = torch.nonzero(
+                patch_proposal_index == proposal, as_tuple=False
+            ).squeeze(1)
+            tokens = torch.cat(
+                (
+                    self.proposal_token.expand(1, -1, -1),
+                    patch_tokens[selected_patches][None],
+                ),
+                dim=1,
+            )
+            encoded = self.patch_encoder(tokens)[0]
+            proposal_tokens.append(encoded[0])
+            encoded_patches[selected_patches] = encoded[1:]
+        proposal_tokens = torch.stack(proposal_tokens, dim=0)
+        point_proposal_index = patch_proposal_index[patch_index]
+        fused = (
+            hidden
+            + encoded_patches[patch_index]
+            + proposal_tokens[point_proposal_index]
         )
-        encoded = self.patch_encoder(tokens)[0]
-        proposal_token = encoded[0]
-        encoded_patches = encoded[1:]
-        fused = hidden + encoded_patches[patch_index] + proposal_token[None]
 
         state_logits = self.state_head(fused)
         base_probabilities = torch.softmax(state_logits, dim=-1)
@@ -156,6 +178,12 @@ class SurfNCC(nn.Module):
         patch_cvar = torch.stack(
             [cvar_tail(point_risk[patch_index == patch], cvar_alpha) for patch in range(patch_count)]
         )
+        proposal_cvar = torch.stack(
+            [
+                patch_cvar[patch_proposal_index == proposal].max()
+                for proposal in range(proposal_count)
+            ]
+        )
         return {
             "base_probabilities": base_probabilities,
             "probabilities": probabilities,
@@ -166,9 +194,11 @@ class SurfNCC(nn.Module):
             "authority_logits": authority_logits,
             "point_risk": point_risk,
             "patch_cvar": patch_cvar,
-            "proposal_cvar": patch_cvar.max(),
+            "proposal_cvar": proposal_cvar,
             "patch_risk_head": torch.sigmoid(self.patch_risk_head(encoded_patches)).squeeze(1),
-            "proposal_risk_head": torch.sigmoid(self.proposal_risk_head(proposal_token)).squeeze(0),
+            "proposal_risk_head": torch.sigmoid(
+                self.proposal_risk_head(proposal_tokens)
+            ).squeeze(1),
         }
 
 
@@ -346,20 +376,17 @@ def build_surface_edges(
     return np.asarray((sources, targets), dtype=np.int64)
 
 
-def proposal_batch(unit: SurfaceUnit, proposal_index: int, point_limit: int) -> dict[str, np.ndarray]:
-    selected = np.flatnonzero(unit.proposal_index == int(proposal_index))
-    patch_values = np.asarray(unit.arrays["patch_index"], dtype=np.int64)[selected]
-    kept = []
-    count = 0
-    for patch in np.unique(patch_values):
-        members = selected[patch_values == patch]
-        if kept and count + members.shape[0] > int(point_limit):
-            break
-        kept.append(members)
-        count += int(members.shape[0])
-    selected = np.concatenate(kept)
+def _selected_batch(unit: SurfaceUnit, selected: np.ndarray) -> dict[str, np.ndarray]:
+    selected = np.asarray(selected, dtype=np.int64)
     global_patch = np.asarray(unit.arrays["patch_index"], dtype=np.int64)[selected]
-    _, local_patch = np.unique(global_patch, return_inverse=True)
+    unique_patch, local_patch = np.unique(global_patch, return_inverse=True)
+    patch_proposal_global = np.asarray(
+        [unit.proposal_index[selected[np.flatnonzero(global_patch == patch)[0]]] for patch in unique_patch],
+        dtype=np.int64,
+    )
+    proposal_global_index, patch_proposal_index = np.unique(
+        patch_proposal_global, return_inverse=True
+    )
     edge_index = build_surface_edges(
         np.asarray(unit.arrays["grid_indices"])[selected],
         np.asarray(unit.arrays["surface_index"])[selected],
@@ -369,11 +396,64 @@ def proposal_batch(unit: SurfaceUnit, proposal_index: int, point_limit: int) -> 
         "point_features": assemble_point_features(unit, selected),
         "edge_index": edge_index,
         "patch_index": local_patch.astype(np.int64),
+        "patch_proposal_index": patch_proposal_index.astype(np.int64),
+        "point_proposal_index": patch_proposal_index[local_patch].astype(np.int64),
+        "proposal_global_index": proposal_global_index.astype(np.int64),
         "target_class": unit.target_class[selected],
         "method_class": unit.method_class[selected],
         "contradiction": np.asarray(unit.arrays["method_contradiction"])[selected].astype(bool),
         "authority_target": (np.asarray(unit.arrays["authority_bits"])[selected] != 0),
     }
+
+
+def proposal_batches(
+    unit: SurfaceUnit, proposal_index: int, point_limit: int
+) -> list[dict[str, np.ndarray]]:
+    selected = np.flatnonzero(unit.proposal_index == int(proposal_index))
+    patch_values = np.asarray(unit.arrays["patch_index"], dtype=np.int64)[selected]
+    groups: list[np.ndarray] = []
+    kept: list[np.ndarray] = []
+    count = 0
+    for patch in np.unique(patch_values):
+        members = selected[patch_values == patch]
+        if kept and count + members.shape[0] > int(point_limit):
+            groups.append(np.concatenate(kept))
+            kept = []
+            count = 0
+        kept.append(members)
+        count += int(members.shape[0])
+    if kept:
+        groups.append(np.concatenate(kept))
+    return [_selected_batch(unit, group) for group in groups]
+
+
+def proposal_batch(unit: SurfaceUnit, proposal_index: int, point_limit: int) -> dict[str, np.ndarray]:
+    return proposal_batches(unit, proposal_index, point_limit)[0]
+
+
+def packed_unit_batches(unit: SurfaceUnit, point_limit: int) -> list[dict[str, np.ndarray]]:
+    global_patch = np.asarray(unit.arrays["patch_index"], dtype=np.int64)
+    groups: list[np.ndarray] = []
+    kept: list[np.ndarray] = []
+    count = 0
+    patch_order = sorted(
+        np.unique(global_patch).tolist(),
+        key=lambda patch: (
+            int(unit.proposal_index[np.flatnonzero(global_patch == patch)[0]]),
+            int(patch),
+        ),
+    )
+    for patch in patch_order:
+        members = np.flatnonzero(global_patch == patch)
+        if kept and count + members.shape[0] > int(point_limit):
+            groups.append(np.concatenate(kept))
+            kept = []
+            count = 0
+        kept.append(members)
+        count += int(members.shape[0])
+    if kept:
+        groups.append(np.concatenate(kept))
+    return [_selected_batch(unit, group) for group in groups]
 
 
 def capacity_proposal_indices(unit: SurfaceUnit) -> list[int]:
@@ -563,3 +643,15 @@ def compute_surfncc_losses(
         "hidden_free_count": hidden_free_mask.sum(),
         "safe_occ_count": retention_mask.sum(),
     }
+
+
+def proposal_rank_loss(
+    safe_outputs: dict[str, Tensor],
+    unsafe_outputs: dict[str, Tensor],
+    margin: float,
+) -> Tensor:
+    return torch.relu(
+        float(margin)
+        + safe_outputs["proposal_cvar"].float()
+        - unsafe_outputs["proposal_cvar"].float()
+    )

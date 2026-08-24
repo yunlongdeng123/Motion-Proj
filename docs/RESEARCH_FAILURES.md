@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 schema-complete formal运行中；P4实现已staged但未执行 | P3修复axis/launcher/normal/schema/processed-index；P4合成AMP按官方指南改用BCE-with-logits；全部历史run保留 | `V63-F01`–`V63-F08`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal运行中；P4实现staged；P5 packed接口预备但未执行 | P3修复axis/launcher/normal/schema/index；P4修复AMP BCE；packed接口修复NumPy/PyTorch nonzero API混用 | `V63-F01`–`V63-F09`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -217,6 +217,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   r2合成forward/backward finite，proposal-token gradient存在。防重复：FP16训练的二元head必须保留logits并在autocast
   下用BCE-with-logits，不通过禁用AMP或转FP32绕开冻结precision。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
   `https://docs.pytorch.org/docs/stable/amp.html#prefer-binary-cross-entropy-with-logits-over-binary-cross-entropy`。
+
+- `V63-F09`（`engineering`, `resolved`）：未来P5的packed-proposal synthetic r1把NumPy API名迁到PyTorch，调用不存在的
+  `torch.flatnonzero`而在token selection前失败；128随机点、无真实surface/quality、无正式P5 run。PyTorch官方提供
+  `torch.nonzero(input, as_tuple=False)`返回二维索引；对一维mask用`.squeeze(1)`得到所需索引。替换后r2完成2个proposal、
+  4个patch的FP16 forward/backward，proposal CVaR shape=`[2]`且Transformer/proposal-token gradient非零。防重复：
+  NumPy的`flatnonzero`不得假设存在于torch namespace；CUDA mask索引统一使用官方`torch.nonzero`/`torch.where`接口。
+  证据=temporary packed-interface terminal、`https://docs.pytorch.org/docs/stable/generated/torch.nonzero.html`。
 
 <a id="detail-v62"></a>
 

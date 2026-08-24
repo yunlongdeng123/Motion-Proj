@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.3 PACKED-PROPOSAL INTERFACE STAGED / P5 STILL LOCKED（2026-08-24）
+
+- purpose=让未来P5在8192-point microbatch中覆盖多个tiny proposals，同时每个proposal保持独立token；real P5 run=`none`。
+- synthetic r1 failed because PyTorch 2.4 has no `torch.flatnonzero`；official `torch.nonzero(..., as_tuple=False)` replacement
+  applied；r2 two-proposal forward/backward passed，proposal CVaR shape=`[2]`、Transformer/proposal-token gradients nonzero。
+- failure ledger delta=`V63-F09 resolved`；P4 single-proposal contract兼容；P5 execution remains locked behind P3/P4。
+
 ## WorldSim V6.3 P4 CAPACITY IMPLEMENTATION STAGED / EXECUTION LOCKED（2026-08-24）
 
 - task=`WS-V63-P4-CAPACITY-01`；implementation/config/prereg staged；real unit/run=`none`，等待P3 formal pass。

@@ -9,6 +9,9 @@ Temporary synthetic interface history: r1 was rejected by PyTorch autocast at pr
 recovery exposes hidden-FREE/authority logits and uses BCE-with-logits while preserving sigmoid inference. Synthetic r2 completed finite
 forward/backward with proposal-token gradient. Failure=`V63-F08 resolved`; no formal P4 run exists yet.
 
+The shared model also accepts packed patch tokens with one learned token per proposal for later full-denominator P5 throughput. P4 still
+passes one proposal per batch. A synthetic packed API typo was recovered via official `torch.nonzero`; failure=`V63-F09 resolved`.
+
 P4 uses exactly one train unit (`scene-0071/f017`) and one scene-disjoint selection unit (`scene-0450/f017`). Within each unit it
 chooses the largest static and largest actor proposal by point count only, then takes complete deterministic patches up to the frozen
 8192-point microbatch. This is a geometry/resource choice, not quality selection. Two AdamW optimizer steps with four-way gradient
