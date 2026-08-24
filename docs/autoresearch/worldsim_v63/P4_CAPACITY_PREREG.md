@@ -28,6 +28,10 @@ lose method hard evidence and distance features, while target fields remain supe
 calibration. VideoMAE and MaST-Pre motivate preserving structured temporal masks, but their objectives and high mask ratios are not
 migrated.
 
+For ray, spatial, patch and actor-observation masks, the affected points also lose temporal-count and observed-actor support features;
+otherwise those channels would leak the evidence that the hard-state channel claims was removed. Native logits/BEV remain visible as
+the frozen learned prior. Temporal-window masking instead recomputes the remaining-sweep counts and hard state explicitly.
+
 The probe passes only if losses/gradients are finite, hidden-FREE/CVaR and proposal-token gradients are nonzero, hard violations are
 zero, checkpoint reload and repeated forward are exact, both scenes execute, and peak allocated GPU memory is at most 22 GiB. It reports
 only capability, tensor counts, throughput and resources—no accuracy, false-safe or promotion conclusion. Calibration, confirmation and

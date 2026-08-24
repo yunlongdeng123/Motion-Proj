@@ -487,6 +487,8 @@ def apply_structural_dropout(
         features[mask, FEATURE_SLICES["method_contradiction"]] = 0.0
         features[mask, FEATURE_SLICES["method_behind_hit"]] = 0.0
         features[mask, FEATURE_SLICES["signed_distance"]] = 0.0
+        features[mask, FEATURE_SLICES["temporal"]] = 0.0
+        features[mask, 301] = 0.0
         effective_method[mask] = UNKNOWN_INDEX
         effective_contradiction[mask] = False
     detail["masked_point_count"] = int(np.count_nonzero(mask))

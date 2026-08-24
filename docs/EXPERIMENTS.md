@@ -7,6 +7,8 @@
   1 proposal token, CVaR.90, exact projection, fp16, 8192 points, accum4`。
 - temporary synthetic AMP r1 failed at `binary_cross_entropy(sigmoid)` before real data；official recovery exposes logits and uses
   `binary_cross_entropy_with_logits`；r2 forward/backward finite，state/patch shapes=`[128,3]/[4]`。
+- pre-run semantic audit additionally zeros temporal-count/observed-actor channels at non-temporal masked points，preventing support
+  leakage while keeping full native prior visible；no new parameter or run。
 - outcome=`engineering interface recovered`；failure ledger delta=`V63-F08 resolved`；quality/calibration/H/T read=`false`。
 
 ## WorldSim V6.3 P3 72-UNIT FORMAL RUNNING（2026-08-24）
