@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.2 P6 LEGACY28 REJECTED / P6R EVIDENCE-DROPOUT PRE-REGISTERED（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P6-LEGACY28-ME-01/20260824T095529Z__legacy28-s0-r1`，source=
+  `d14827d`，terminal=`rejected`；方法/candidate先于O_eval写入，IR-WM未重跑，confirmation/test未读。
+- B0/B1/B3/B5 ACCEPT=`10/10/4/4`，false-safe=`10/10/4/4`，mask-area=`0.39830/0.39830/0.09402/0.09402`。
+  B1 mean/worst FREE conflict=`0.05058/0.11722`，projection-only Stop 1未触发。
+- B5 R10 retained=`2/3`、new Actor/static=`0/2`；source-valid UNKNOWN=`0.82735`，safe-OCC retention=`1.0`，hard
+  violations=`0/939,206`。因此不是all-OCC deletion或projection bug，而是missing-feature shift下的高UNKNOWN仍夹带4个
+  hidden-unsafe route surfaces；failure ledger delta=`V62-F06 active`。
+- resource=`47.195s / 0.53188GiB / 2,273,574 pre-closeout bytes / 64.11GiB free`。
+- sole recovery=`feature/evidence dropout + frozen full-view teacher consistency`：corruption p=`0.5`，KL weight=`0.25`，
+  AdamW=`1e-4`，FP16 batch=`16384×accum2`，max/min/patience=`6/3/2`，seed0；不读legacy O_eval，不做probe/sweep。
+
 ## WorldSim V6.2 P6 LEGACY INTERFACE MIGRATED / FORMAL READY（2026-08-24）
 
 - blocker：canonical V6.1 ME3R只保存argmax class，没有P5需要的17 logits/256D BEV；IR-WM禁止重跑。B2的Tier-C

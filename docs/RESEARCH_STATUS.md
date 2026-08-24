@@ -1,9 +1,9 @@
 # Research Status
 
-## WorldSim V6.2 P5 CPSC-Lite 正式训练通过，P6 legacy28 启动（2026-08-24）
+## WorldSim V6.2 P6 legacy28 rejected，唯一 evidence-dropout recovery 预注册（2026-08-24）
 
-状态：`p5_cpsc_lite_formal_passed / p6_legacy28_active`；active task=
-`WS-V62-P6-LEGACY28-ME-01`。
+状态：`p6_legacy28_rejected / p6r_evidence_dropout_pre_registered`；active task=
+`WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -141,6 +141,19 @@ M0的grouped conformal按阶段计划要到P8才产生。`V62-F05 resolved_for_a
 `0.872897`、target accuracy=`0.452581`、UNKNOWN=`0.221945`、hard violations=`0`。P6 formal固定执行B0 replay、B1 hard
 clip、B3 evidential-no-projection与B5 pre-conformal；B5为primary，M0明确defer到P8。anti-trivial固定safe-OCC retention
 `>=0.50`和source-valid UNKNOWN`<=0.50`。接口实现完成后只做一次formal，不增加bridge/model/threshold sweep。
+
+P6 canonical=`run://worldsim_v62/WS-V62-P6-LEGACY28-ME-01/20260824T095529Z__legacy28-s0-r1`，source=
+`d14827d`，正式 rejected。B0=`10/28,10 false-safe`；B1=`10/28,10 false-safe`，虽把accepted mean/worst FREE
+conflict降到`0.05058/0.11722`，仍未触发projection-only Stop 1。B3与B5均=`4/28,4 false-safe`、mask-area=
+`0.09402`；B5只保留R10 `2/3`、Actor新增=`0`、static新增=`2`。hard projection=`0/939,206 violations`，oracle
+surface safe-OCC retention=`1.0`，但source-valid UNKNOWN=`0.82735`，说明主要失败是缺失logits/BEV的feature-shift与
+hidden surface authority，不是硬约束或已知OCC丢失。wall=`47.20s`、peak=`0.5319GiB`，IR-WM未重跑。
+
+`V62-F06 active`。按P6 stop rule与一手missing-modality文献，只授权一次evidence-dropout recovery：student从P5 best
+继续训练，train query以`p=0.5`替换为train-only class prototype，frozen full-feature teacher提供`0.25×KL`一致性；其余
+P5 task loss不变。固定`AdamW1e-4, FP16, batch16384, accum2, max6/min3/patience2, seed0`，pure prototype selection
+一次选点；不读legacy O_eval、不加capacity smoke。checkpoint冻结后只运行一次相同P6 gate的P6R；失败则关闭
+CPSC-Lite，不再选择第二种机制恢复。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

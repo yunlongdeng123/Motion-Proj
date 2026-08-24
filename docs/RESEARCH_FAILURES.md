@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3 projection、P2 query dataset、P4 frozen sidecars与P5 CPSC-Lite formal均passed；P6 argmax-only legacy interface已迁移、formal ready | P5 fresh selection改善不是legacy false-safe结论；V6.1只保存argmax，类原型bridge必须标为lossy，B2/B4/M0不得伪造；不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F05`；V6.2 plan、P0–P6 autoresearch docs |
+| V6.2 | P3/P2/P4/P5 passed；P6 legacy28以`4/28,4/4 false-safe` rejected；唯一P6R evidence-dropout recovery预注册 | P5 fresh selection改善不是legacy false-safe结论；argmax-only class prototype bridge触发82.7% source-valid UNKNOWN；query-wise projection不能提供hidden surface authority；B1仍10/10 false-safe；B2/B4/M0不得伪造；P6R失败即关闭family；不得把O_eval引入训练/方法或用all-UNKNOWN冒充安全；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F06`；V6.2 plan、P0–P6 autoresearch docs |
 
 ### 1.1 V1 汇总条目
 
@@ -181,6 +181,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `0.399349`、safe-OCC=`0.872897`、hard violation=`0`。合法P6只比较B0/B1/B3/B5，明确B2/B4 unavailable、M0 defer
   P8；bridge claim始终是lossy artifact transfer，不是native sidecar parity。证据=`P6_LEGACY_INTERFACE.md`、
   `configs/worldsim_v62/p6_legacy28_v1.yaml`、`motion_proj/worldsim_v62/legacy_bridge.py`。
+
+- `V62-F06`（`algorithm/evaluation`, `active`）：P6 canonical=`20260824T095529Z__legacy28-s0-r1` 在同一28-case上
+  B5仅`4/28 ACCEPT`且`4/4 false-safe`，mask-area=`0.09402`、R10=`2/3`、Actor新增=`0`；source-valid UNKNOWN=
+  `0.82735` 超过0.50。B3与B5 case decision完全相同；B5 hard projection仍是`0/939206`违规，oracle accepted surface
+  safe-OCC retention=`1.0`。B1虽把accepted FREE conflict从B0 mean/worst=`0.26748/0.57057`降到
+  `0.05058/0.11722`，但仍`10/10 false-safe`，所以简单hard clip既不安全也未触发Stop 1。根因边界：argmax-only
+  prototype input造成严重missing-feature shift，evidential head高UNKNOWN仍保留4个hidden-unsafe route surface；局部
+  projection只能保证观测cell，不能恢复丢失特征或证明隐藏表面。禁止用本次O_eval调threshold/prototype、改grid/window、
+  重跑IR-WM、删case、放松UNKNOWN/FREE gate或改选第二backend。唯一合法复开=`P6R evidence dropout`：依据CVPR 2022
+  Modality-Agnostic Learning，只用P2/P4 train模拟`p=0.5` prototype feature loss，并由frozen full-view P5 teacher做
+  `0.25 KL`一致性；相同P6 gate一次性复评。若P6R失败，CPSC-Lite关闭，不再换projection/set-valued recovery。
 
 <a id="detail-v61"></a>
 

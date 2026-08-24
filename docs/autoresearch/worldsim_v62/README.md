@@ -16,6 +16,7 @@
 - `P5_CPSC_LITE_CAPACITY_PROBE.md`：P5 真实loader/forward/backward/projection资源探针与formal决策。
 - `P5_CPSC_LITE_FORMAL.md`：P5 48/24-unit正式训练、projection-only对照、资源与P6决策。
 - `P6_LEGACY_INTERFACE.md`：V6.1 argmax-only artifact卡点、类原型迁移、arm可用性与formal冻结。
+- `P6_LEGACY_CLOSEOUT.md`：P6 rejection、四臂裁决、根因与唯一evidence-dropout recovery预注册。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。
