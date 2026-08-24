@@ -2,12 +2,16 @@
 
 ## WorldSim V6.3 SurfNCC P1 protocol frozen / P2 native sidecar next（2026-08-24）
 
-状态：`v63_p2_native_sidecar_preregistered`；active task=`WS-V63-P2-NATIVE-SIDECAR-01`。
+状态：`v63_p2_native_probe_passed / formal_ready`；active task=`WS-V63-P2-NATIVE-SIDECAR-01`。
 
 P2 原生接口已实现并冻结：复用已验证的 official IR-WM current forward，每 target 直接保存完整
 `200x200x16x17` logits、`200x200x256` BEV latent、argmax/entropy/margin/source-valid 为 memory-mappable arrays；
 不再依赖 V6.2 query-deduplicated sidecar，也不存在 prototype。首个 formal denominator 固定为 Tier D 72 targets +
 Tier L 4 targets；C/H/T按阶段解锁后生成。只允许一个 `scene-0071/f017` capability probe，通过即运行76-target formal。
+
+唯一 P2 probe=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1` 已通过：
+1 scene/1 target，完整原生数组=`46,081,727 bytes`，峰值 GPU=`4.0496 GiB`、wall=`25.19s`；fresh memory-map reload、
+shape/finite均成立，prototype/target/calibration/confirmation/test read均为false。下一步直接formal，不追加probe。
 
 P1 已完成一手文献/官方仓库审计。RELIOcc/OCCUQ/alpha-OCC/EvOcc 已覆盖 Occupancy reliability、uncertainty、evidence
 与 conformal set 的单项；QueryOcc 覆盖连续4D query；Point/Set Transformer覆盖结构编码；CRC/NCRC/structured

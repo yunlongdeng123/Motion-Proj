@@ -17,3 +17,8 @@ fresh memory-mapped reload, runtime and peak memory. This is the necessary P2 co
 
 Execution order: one `scene-0071/f017` resource/interface probe, followed directly by the 76-target formal if it passes. No additional
 smoke or regression matrix is authorized. The formal run must start from a clean pushed source and requires at least 20 GiB free disk.
+
+The probe passed at
+`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1`: 46,081,727 bytes,
+25.19 seconds and 4.0496 GiB peak, with complete finite arrays, fresh memory-map reload and all evidence seals intact. Formal is
+therefore authorized without changing implementation or configuration.

@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.3 P2 NATIVE SIDECAR PROBE PASS / FORMAL READY（2026-08-24）
+
+- canonical=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1`。
+- `scene-0071/f017` 完整 logits/BEV/argmax/entropy/margin/source-valid=`46,081,727 bytes`；native shapes=
+  `[200,200,16,17] / [200,200,256]`，finite与fresh memory-map reload通过。
+- resource=`25.19s wall / 4.0496 GiB peak`；prototype、target evidence、calibration、confirmation、exact-once read均
+  `false`。probe gate通过，下一步直接运行冻结的D+L 76-target formal；failure ledger delta=`none`。
+
 ## WorldSim V6.3 P2 NATIVE SIDECAR INTERFACE READY / FORMAL PREREGISTERED（2026-08-24）
 
 - task=`WS-V63-P2-NATIVE-SIDECAR-01`；implementation=`full native memory-mappable arrays per target`。
