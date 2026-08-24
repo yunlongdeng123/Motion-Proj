@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.3 P3 72-UNIT FORMAL RUNNING（2026-08-24）
+
+- run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`；
+  denominator=`6 scenes/72 targets`；maximum workers=`2`；source clean at launch。
+- configuration/schema与canonical r6 probe相同；`limit-units=none`；calibration/H/T read=`false`；当前不作质量结论。
+- estimated wall约2.0h、estimated output约0.22GiB，均在资源合同内；failure ledger delta=`none while running`。
+
 ## WorldSim V6.3 P3 SCHEMA-COMPLETE PROBE PASS / FORMAL READY（2026-08-24）
 
 - canonical=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`；

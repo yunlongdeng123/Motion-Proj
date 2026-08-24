@@ -2,7 +2,11 @@
 
 ## WorldSim V6.3 P3 schema-complete probe pass / 72-unit formal ready（2026-08-24）
 
-状态：`v63_p3_schema_complete_probe_pass_formal_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_formal_running`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 formal已启动：`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`；
+denominator=`6 scenes/72 targets`，maximum workers=`2`，source在启动时clean，配置与canonical r6 probe完全相同且无
+`limit-units`。运行期间不修改P3源码/配置；只并行准备尚未执行的P4 capacity实现。
 
 P3 canonical probe=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`
 已通过：`1 unit / 191 surfaces / 498 patches / 191 proposals / 152,226 points`，output=`3,055,106 bytes`，
@@ -116,7 +120,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；P3 probe通过，下一步运行完整D surface corpus formal。
+P0/P1/P2/P2D 当前完成；P3 probe通过，完整D surface corpus formal正在运行。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
