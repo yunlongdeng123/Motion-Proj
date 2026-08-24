@@ -1,0 +1,98 @@
+schema_version: worldsim_v62.p6_legacy28_config.v1
+task_id: WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01
+hypothesis_id: WS-V62-H-P6R-001
+run_tag: feature-dropout-legacy28
+seed: 0
+
+sources:
+  me0: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME0-OCCIR-01/20260822T101817Z__occir-s20260822-r1
+  me1: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME1-ORACLE-OCC-PROPOSAL-01/20260822T104207Z__oracle-occ-s20260822-r1
+  me3r: /root/autodl-tmp/runs/worldsim_v61/WS-V61-ME3R-IRWM-PREDICTED-OCC-01/20260822T145543Z__irwm-predicted-occ-s1-r1
+  r9: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R9-INDEPENDENT-VERIFIER-ARMS-01/20260821T111819Z__independent-arms-s20260821-r1
+  r10: /root/autodl-tmp/runs/worldsim_v6/WS-V6-R10-FACTORIZED-VERIFICATION-01/20260821T112323Z__factorized-verification-s20260821-r1
+
+p5:
+  config: /root/autodl-tmp/motion_proj/configs/worldsim_v62/p5_cpsc_lite_v1.yaml
+  best_model: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101705Z__feature-dropout-train-s0-r2/BEST_MODEL.pt
+  bridge: query_weighted_class_mean_logits_and_bev_from_p5_train_split_only
+  bridge_is_lossy: true
+  recovery_training: per_query_prototype_feature_dropout_with_frozen_full_view_teacher
+  legacy_o_eval_used_for_bridge_or_training: false
+
+cohort:
+  partition: frozen_v61_development_mechanism_benchmark
+  scenes: [scene-0048, scene-0242]
+  target_frames: [52, 57]
+  expected_case_count: 28
+
+raw_evidence:
+  scene-0048: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/045
+  scene-0242: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval/191
+
+target_grid:
+  origin_m: [-20.0, -30.0, -3.0]
+  voxel_size_m: 0.2
+  shape: [300, 300, 40]
+
+projection:
+  camera_id: 0
+  width: 512
+  height: 288
+  native_width: 1600
+  native_height: 900
+  near_m: 0.4
+  far_m: 60.0
+  step_m: 0.1
+  ray_batch_size: 8192
+  observed_support_dilation_voxels: 1
+
+method_gate:
+  minimum_surface_coverage: 0.50
+
+independent_eval_gate:
+  maximum_free_space_conflict: 0.05
+  minimum_observed_surface_support: 0.80
+  maximum_unknown_volume_fraction: 0.20
+  minimum_projected_surface_coverage: 0.50
+  minimum_method_eval_depth_overlap: 0.50
+  maximum_median_relative_depth_error: 0.20
+
+primary_gate:
+  minimum_accept_count: 5
+  maximum_false_safe_count: 0
+  minimum_accepted_mask_area_yield: 0.12
+  maximum_accepted_free_conflict: 0.05
+  minimum_safe_occ_retention: 0.50
+  maximum_source_valid_unknown_fraction: 0.50
+
+arm_availability:
+  B0: frozen_argmax_replay
+  B1: frozen_argmax_plus_method_hard_projection
+  B2: unavailable_legacy_artifact_has_no_logits_and_tier_c_threshold_calibration_is_locked
+  B3: recovered_p6r_evidential_base_probabilities_without_projection
+  B4: unavailable_p5_did_not_train_a_no_evidence_dropout_checkpoint
+  B5: recovered_p6r_projection_plus_pre_registered_evidence_dropout_without_conformal
+  M0: deferred_grouped_conformal_is_p8_after_fresh_development_and_calibration
+
+resources:
+  gpu: 0
+  query_batch_size: 16384
+  maximum_gpu_memory_gib: 18
+  maximum_wall_seconds: 1800
+  maximum_incremental_disk_gib: 2
+  minimum_disk_free_gib: 40
+
+identity_policy: logical_path_semantic_version_task_run_git_no_hash
+failure_ledger_refs: [V62-F07, V62-F06, V62-F05, V62-F01, V61-F03, V61-F11, V61-F13]
+claim_boundary:
+  - single_pre_registered_evidence_dropout_recovery
+  - same_frozen_legacy28_denominator_arms_and_gates_as_p6
+  - p6r_best_checkpoint_frozen_by_pre_registered_composite_selection_objective
+  - class_prototype_bridge_is_lossy_and_does_not_recover_per_voxel_uncertainty
+  - irwm_inference_is_not_rerun
+  - method_decisions_and_candidates_are_written_before_o_eval_is_loaded
+  - b2_b4_and_full_m0_are_not_fabricated_when_required_artifacts_or_calibration_do_not_exist
+  - failure_closes_cpsc_lite_without_second_recovery
+  - no_confirmation_or_exact_once_test_read
+  - no_scene_disjoint_generalization_or_real_world_safety_claim
+  - no_hash_checksum_fingerprint_or_content_addressing

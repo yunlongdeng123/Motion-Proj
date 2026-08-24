@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P6R FORMAL TRAINING DONE / LEGACY RECOVERY READY（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101705Z__feature-dropout-train-s0-r2`，
+  source=`fb0744b`，terminal=`done`；5 epochs、840 optimizer steps、best epoch=`2`，selection objective=
+  `2.448369 baseline → 2.274951 best`。
+- pure-prototype baseline/best：hidden-FREE false-OCC=`0.399349/0.414406`，safe-OCC retention=
+  `0.872897/0.887356`，accuracy=`0.452581/0.462246`，UNKNOWN=`0.221945/0.228375`；full-view hidden-FREE=
+  `0.384568/0.401991`。复合objective虽改善，hidden-FREE单项未改善；不事后切换到epoch 0/3/4。
+- exact hard constraints=`1,286,134 / 0 violations`；resource=`383.489s / 0.377805GiB / 2,475,348 bytes`，disk free=
+  `64.107GiB`。legacy O_eval/confirmation/test=`not read/not read/not read`，IR-WM=`not run`。
+- best checkpoint已按预注册复合selection冻结。配置=`configs/worldsim_v62/p6r_legacy28_v1.yaml`只替换P6R best model和run
+  identity，28-case、B0/B1/B3/B5、primary/anti-trivial gates完全沿用P6；failure ledger delta=`none`（V62-F06仍active）。
+  下一步执行唯一一次legacy recovery；不加probe/sweep/第二机制。
+
 ## WorldSim V6.2 P6R FORMAL ENTRY BLOCKED / REVISION 2 READY（2026-08-24）
 
 - failed run=`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101047Z__feature-dropout-train-s0-r1`，

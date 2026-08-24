@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 P6R batch-contract recovery ready（2026-08-24）
+## WorldSim V6.2 P6R formal training done / single legacy recovery ready（2026-08-24）
 
-状态：`p6_legacy28_rejected / p6r_batch_contract_recovery_ready`；active task=
+状态：`p6_legacy28_rejected / p6r_formal_training_done_legacy_ready`；active task=
 `WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
@@ -166,7 +166,16 @@ student base-probability KL`。selection固定pure-prototype view，并同时报
 已一次性核对；按PyTorch官方mapping batch合同，恢复让`prior_tristate`与输入证据视图同步：pure-prototype selection
 使用prototype三态，训练中的full/prototype逐query混合使用同一个`corrupt_prior[:,18:21]`。`V62-F07 resolved`；r1
 保持不可变。同次静态接口核对还把尚未执行的legacy `_query_features`返回语句归位，避免唯一复评路径返回`None`；没有
-新增失败run。下一步从修复提交直接运行revision 2，不加probe或额外回归。
+新增失败run。恢复提交=`fb0744b`。
+
+P6R formal r2 canonical=
+`run://worldsim_v62/WS-V62-P6R-EVIDENCE-DROPOUT-RECOVERY-01/20260824T101705Z__feature-dropout-train-s0-r2`
+已完成：5 epochs、840 optimizer steps，按冻结min3/patience2选择best epoch=`2`；wall=`383.489s`、FP16 peak=
+`0.377805GiB`、output=`2,475,348 bytes`、hard violations=`0/1,286,134`。pure-prototype composite objective从
+baseline `2.448369`降到`2.274951`，accuracy=`0.452581→0.462246`、safe-OCC retention=`0.872897→0.887356`，
+但hidden-FREE false-OCC=`0.399349→0.414406`；full-view也为`0.384568→0.401991`。不据单项风险事后改选epoch 0/3/4，
+best epoch 2按预注册复合目标冻结。训练未读legacy O_eval、confirmation/test，IR-WM未运行；下一步只执行一次完全相同
+legacy28 arms/gates的P6R recovery，失败即关闭CPSC-Lite。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
