@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P2 query probe 通过，全量 materialization 就绪（2026-08-24）
+## WorldSim V6.2 CPSC P2 actor 时序扫掠恢复通过，formal r2 就绪（2026-08-24）
 
-状态：`p2_query_probe_passed / p2_formal_materialization_ready`；active task=
+状态：`p2_actor_sweep_recovery_passed / p2_formal_rerun_ready`；active task=
 `WS-V62-P2-EVIDENCE-QUERY-DATASET-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
@@ -39,8 +39,18 @@ queries，六类 candidate pool 全部非空，source role overlap=`0`，disk=`2
 38,088/100,000。
 
 r1 probe 在科学执行前暴露 V6.1 evidence state=`U/F/O 0/1/2` 与 P3 model class index=`F/O/U 0/1/2` 的潜在歧义，
-没有被用于训练或结果；r2 已显式同时保存 `*_evidence_state` 与 `*_class_index`，登记 `V62-F02 resolved`。下一步从已推送
-的干净实现运行72-unit formal materialization；仍不读取 occupancy quality、proposal outcome、O_eval、confirmation/test。
+没有被用于训练或结果；r2 已显式同时保存 `*_evidence_state` 与 `*_class_index`，登记 `V62-F02 resolved`。其后启动的
+formal 仍不读取 occupancy quality、proposal outcome、O_eval、confirmation/test。
+
+首次72-unit formal r1=`20260824T082601Z__query-dataset-s20260824-r1` 在 `scene-1012/f152` 暴露
+instantaneous actor envelope 空池并终止，未形成最终 manifest、未进入训练或质量裁决。元数据定位显示该帧仍有4个 actor，
+只是全部位于冻结 ROI 外；其中一个 actor 在可见 method sweep f146 穿过 ROI。按 QueryOcc 相邻时刻查询与动态稀疏
+query 时序传播的思路，actor support 已改为 current target envelope 与 visible method-sweep envelopes 的并集；它只
+影响 actor query 坐标，不把 box 变成 hard OCC，也不读取 dropout/target evidence或改任何配额。
+
+定点 r5=`20260824T083403Z__actor-sweep-repro-s20260824-r5` exit=`0`：current actor envelope=`0`、visible
+swept envelope=`450` voxels、actor-type queries=`15000/15000`、total queries=`100000`。`V62-F03 resolved`；下一步
+从该恢复提交重跑 formal r2，不追加更多 smoke。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

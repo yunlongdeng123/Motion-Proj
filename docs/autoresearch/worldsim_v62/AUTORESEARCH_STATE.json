@@ -1,7 +1,7 @@
 {
   "schema_version": "worldsim_v62.autoresearch_state.v1",
-  "updated_at_utc": "2026-08-24T08:30:00Z",
-  "status": "p2_query_probe_passed_formal_materialization_ready",
+  "updated_at_utc": "2026-08-24T08:35:00Z",
+  "status": "p2_actor_sweep_recovery_passed_formal_rerun_ready",
   "active_task_id": "WS-V62-P2-EVIDENCE-QUERY-DATASET-01",
   "active_hypothesis_id": "WS-V62-H-P2-001",
   "branch": "research/worldsim-v6.2-cpsc",
@@ -27,7 +27,12 @@
   "p2_probe_query_count": 100000,
   "p2_probe_disk_bytes": 2036102,
   "p2_probe_wall_seconds": 2.9611263554543257,
-  "last_failure_id": "V62-F02",
-  "last_failure_status": "resolved_explicit_evidence_state_and_model_class_index",
-  "next": "run_72_unit_formal_query_materialization_from_clean_commit"
+  "p2_failed_formal_run": "run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082601Z__query-dataset-s20260824-r1",
+  "p2_actor_sweep_recovery_run": "run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083403Z__actor-sweep-repro-s20260824-r5",
+  "p2_actor_recovery_current_envelope_count": 0,
+  "p2_actor_recovery_swept_envelope_count": 450,
+  "p2_actor_recovery_type_query_count": 15000,
+  "last_failure_id": "V62-F03",
+  "last_failure_status": "resolved_visible_method_sweep_actor_query_support",
+  "next": "commit_push_recovery_then_rerun_72_unit_formal_materialization"
 }

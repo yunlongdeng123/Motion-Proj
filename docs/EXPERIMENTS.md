@@ -1,5 +1,23 @@
 # Experiments
 
+## WorldSim V6.2 P2 FORMAL R1 BLOCKED / ACTOR SWEEP RECOVERY PASS（2026-08-24）
+
+- formal r1=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082601Z__query-dataset-s20260824-r1`，
+  planned denominator=`6 scenes / 72 units / 7.2M queries`；在 `scene-1012/f152` 的 actor query pool=`0` 时按原实现
+  fail-fast，未生成顶层五个 manifest、未用于训练/质量结论。failure ledger delta=`V62-F03 resolved`。
+- 失败定位：该 target 当前4个 actor 都在冻结 ROI 外；不是 scene 无 actor，也不是输入缺失。可见 method frames=
+  `[146,150,152]`，actor 8 在 f146 仍位于 ROI 内，说明遗漏的是 enter/exit 的时序 query support。
+- 一手迁移依据：QueryOcc 在相邻帧独立采样4D时空 query；SparseOcc/OPUS 采用稀疏集合而非强制 dense denominator；
+  动态 query 工作采用时序传播/增删更新。因此恢复只把 actor query pool 定义为
+  `current target envelope ∪ visible method-sweep envelopes`，保持 actor quota=`15k`、total=`100k`，不改证据状态、
+  target split、ROI 或其他五类比例。
+- targeted canonical recovery=
+  `run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083403Z__actor-sweep-repro-s20260824-r5`，
+  exit=`0`、current envelope=`0`、visible swept envelope=`450`、actor-type queries=`15000`、total=`100000`、
+  wall=`2.62s`。swept box 只提供 query support，不成为 hard OCC；dropout/target evidence 未参与 method actor pool。
+- 资源 delta 仅为失败/定点 unit NPZ，GPU 未使用；未增加哈希、校验和、指纹、质量门或重复回归。下一动作：从恢复
+  提交启动完整 formal r2，失败 r1 保留用于回溯。
+
 ## WorldSim V6.2 P2 QUERY PROBE PASS / FORMAL READY（2026-08-24）
 
 - canonical probe=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082318Z__query-probe-s20260824-r2`，

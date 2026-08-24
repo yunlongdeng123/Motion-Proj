@@ -136,6 +136,20 @@ def build_query_arrays(
         np.asarray(method.arrays["actor_envelope_ids"], dtype=np.int32),
         shape,
     )
+    actor_current_support = np.isin(
+        query_linear,
+        _linear(
+            np.asarray(method.arrays["actor_current_envelope_indices"], dtype=np.int32),
+            shape,
+        ),
+    )
+    actor_swept_support = np.isin(
+        query_linear,
+        _linear(
+            np.asarray(method.arrays["actor_swept_envelope_indices"], dtype=np.int32),
+            shape,
+        ),
+    )
 
     method_state = flat_method[query_linear].astype(np.uint8)
     dropout_state = flat_dropout[query_linear].astype(np.uint8)
@@ -156,6 +170,8 @@ def build_query_arrays(
             target.arrays["contradiction"], dtype=bool
         ).reshape(-1)[query_linear],
         "actor_id": actor_ids,
+        "actor_current_support": actor_current_support,
+        "actor_swept_support": actor_swept_support,
         "grid_origin_m": np.asarray(method.arrays["grid_origin_m"], dtype=np.float64),
         "voxel_size_m": np.asarray(method.arrays["voxel_size_m"], dtype=np.float64),
         "grid_shape": np.asarray(shape, dtype=np.int64),
@@ -174,6 +190,8 @@ def build_query_arrays(
         },
         "target_supervised_count": int(np.count_nonzero(target_state != UNKNOWN)),
         "actor_query_count": int(np.count_nonzero(arrays["actor_id"] >= 0)),
+        "actor_current_query_count": int(np.count_nonzero(actor_current_support)),
+        "actor_swept_query_count": int(np.count_nonzero(actor_swept_support)),
         "evidence_state_encoding": {"unknown": 0, "free": 1, "occupied": 2},
         "model_class_index_encoding": {"free": 0, "occupied": 1, "unknown": 2},
     }

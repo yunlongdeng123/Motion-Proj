@@ -126,6 +126,8 @@ def build_evidence_grid(
     behind_hit = np.zeros(spec.shape, dtype=bool)
     actor_hit_indices: list[np.ndarray] = []
     actor_hit_ids: list[np.ndarray] = []
+    actor_swept_indices: list[np.ndarray] = []
+    actor_swept_ids: list[np.ndarray] = []
     raw_point_count = 0
     dynamic_point_count = 0
 
@@ -145,6 +147,20 @@ def build_evidence_grid(
             instances=instances,
             frame_instances=frame_instances,
         )
+
+        # Actor queries cover the visible temporal support, not only the
+        # instantaneous target ROI.  This retains actors that enter or leave
+        # the grid between method sweeps without turning their boxes into hard
+        # occupancy evidence.
+        for box in source_boxes:
+            indices, _ = voxelize_oriented_box(
+                spec, box["transform"], box["size_lwh"]
+            )
+            if indices.shape[0]:
+                actor_swept_indices.append(indices.astype(np.int32))
+                actor_swept_ids.append(
+                    np.full(indices.shape[0], int(box["actor_id"]), dtype=np.int32)
+                )
 
         point_actor = np.full(points_target.shape[0], -1, dtype=np.int32)
         for box in source_boxes:
@@ -208,8 +224,16 @@ def build_evidence_grid(
             )
 
     actor_hits, actor_ids = _unique_sparse(actor_hit_indices, actor_hit_ids, spec.shape)
-    actor_envelope, envelope_actor_ids = _unique_sparse(
+    actor_current_envelope, current_envelope_actor_ids = _unique_sparse(
         envelope_indices, envelope_ids, spec.shape
+    )
+    actor_swept_envelope, swept_envelope_actor_ids = _unique_sparse(
+        actor_swept_indices, actor_swept_ids, spec.shape
+    )
+    actor_envelope, envelope_actor_ids = _unique_sparse(
+        [actor_current_envelope, actor_swept_envelope],
+        [current_envelope_actor_ids, swept_envelope_actor_ids],
+        spec.shape,
     )
     contradiction = free_observed & occupied_observed
     semantics = np.full(spec.shape, UNKNOWN, dtype=np.uint8)
@@ -222,6 +246,10 @@ def build_evidence_grid(
         "behind_hit": behind_hit,
         "actor_hit_indices": actor_hits,
         "actor_hit_ids": actor_ids,
+        "actor_current_envelope_indices": actor_current_envelope,
+        "actor_current_envelope_ids": current_envelope_actor_ids,
+        "actor_swept_envelope_indices": actor_swept_envelope,
+        "actor_swept_envelope_ids": swept_envelope_actor_ids,
         "actor_envelope_indices": actor_envelope,
         "actor_envelope_ids": envelope_actor_ids,
         "grid_origin_m": np.asarray(spec.origin_m, dtype=np.float64),
@@ -237,6 +265,8 @@ def build_evidence_grid(
         "contradiction_count": int(np.count_nonzero(contradiction)),
         "behind_hit_count": int(np.count_nonzero(behind_hit & (semantics == UNKNOWN))),
         "actor_hit_count": int(actor_hits.shape[0]),
+        "actor_current_envelope_count": int(actor_current_envelope.shape[0]),
+        "actor_swept_envelope_count": int(actor_swept_envelope.shape[0]),
         "actor_envelope_count": int(actor_envelope.shape[0]),
         "actor_count": int(len(target_boxes)),
         "raw_point_count": raw_point_count,
