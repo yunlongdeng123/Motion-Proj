@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.2 P5 CPSC-LITE FORMAL TRAINING PASS（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1`，
+  source=`dd6ff70`，mode=`formal`；48 train units、24 scene-disjoint selection units、seed0。
+- 608,366 parameters；9 epochs、1,512 optimizer steps，按冻结min4/patience3提前停止；best epoch=`5`，best selection
+  objective=`2.0991646573`。FP16 peak=`0.37242GiB`，wall=`341.660s`，BEST/FINAL模型=`2,450,018/2,450,068 bytes`。
+- learned/projection-only：hidden-FREE false-OCC=`0.384568/0.453707`（absolute `-0.069139`，relative `-15.24%`）；
+  safe-OCC retention=`0.901058/0.900680`；target accuracy=`0.483756/0.356765`；predicted UNKNOWN=
+  `0.247579/0.087798`，unconstrained UNKNOWN=`0.469596/0.166530`。
+- exact hard constraints=`1,286,134 rows / 0 violations`；learned不是all-UNKNOWN，且没有靠牺牲safe-OCC取得
+  hidden-FREE改善。best objective trace=`2.27343,2.20886,2.14915,2.13588,2.15396,2.09916,2.18353,2.14426,2.21686`。
+- target evidence只作监督；query type/dropout/target不进model features；IR-WM resident=`false`；legacy O_eval、
+  confirmation、exact-once test均未读；hash/checksum/fingerprint未加。failure ledger delta=`none`。
+- decision=`close_P5_and_enter_WS-V62-P6-LEGACY28-ME-01`；不增加seed/smoke/regression矩阵。
+
 ## WorldSim V6.2 P5 CPSC-LITE CAPACITY PROBE PASS / FORMAL READY（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092410Z__cpsc-lite-capacity-s0-r1`，

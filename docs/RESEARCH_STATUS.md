@@ -1,9 +1,9 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P4 formal 完成，P5 CPSC-Lite 启动（2026-08-24）
+## WorldSim V6.2 P5 CPSC-Lite 正式训练通过，P6 legacy28 启动（2026-08-24）
 
-状态：`p4_irwm_sidecar_formal_passed / p5_cpsc_lite_active`；active task=
-`WS-V62-P5-CPSC-LITE-TRAIN-01`。
+状态：`p5_cpsc_lite_formal_passed / p6_legacy28_active`；active task=
+`WS-V62-P6-LEGACY28-ME-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -110,6 +110,25 @@ P5 capacity canonical=
 只作非退化诊断：target accuracy=`0.4233 vs 0.3713`、safe-OCC retention=`0.9569 vs 0.9502`、UNKNOWN fraction=
 `0.1773 vs 0.0767`，但hidden-FREE false-OCC=`0.2680 vs 0.2616` 尚未改善；因此不宣称质量pass/fail，只说明
 loader/forward/backward/projection/resource合同成立。下一步直接formal 48/24-unit bounded training，不调loss/threshold。
+
+P5 formal canonical=
+`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1` 已通过：
+48 train units、24 scene-disjoint selection units，608,366 parameters；9 epochs/1,512 optimizer steps 后按冻结 patience
+提前停止，best epoch=`5`，best selection objective=`2.099165`。FP16 peak=`0.3724GiB`、wall=`341.66s`；BEST/FINAL
+模型各约2.45MB，hard projection violations=`0/1,286,134`。
+
+最佳 learned 相比同一 selection 的 projection-only：hidden-FREE false-OCC=`0.38457 vs 0.45371`，绝对下降
+`0.06914`、相对下降`15.24%`；safe-OCC retention=`0.90106 vs 0.90068`，没有用UNKNOWN换取安全OCC丢失；target
+accuracy=`0.48376 vs 0.35677`。learned UNKNOWN=`0.24758`、unconstrained UNKNOWN=`0.46960`，并非all-UNKNOWN。
+target evidence仍只作监督，query type/dropout/target均未进入model features；IR-WM不驻留，legacy O_eval、confirmation、
+exact-once test均未读。P5 hypothesis在冻结配置上成立，failure ledger delta=`none`；不追加seed/smoke矩阵。
+
+P6 现按计划只做一次 frozen legacy28 matched mechanism benchmark：读取 V6.1 frozen IR-WM sidecar、ME0 O_method、ME1
+O_eval和R10 comparator，不重跑IR-WM。主门槛固定为`ACCEPT>=5/28, false-safe=0, R10=3/3 retained, >=1 Actor
+新增, >=1 static/disocclusion新增, accepted mask-area>=12%, accepted FREE conflict mean/worst<=0.05`；同时报告
+UNKNOWN/ABSTAIN和oracle accepted surface safe-OCC retention，防止all-UNKNOWN。legacy28只裁决机制，不宣称fresh
+scene generalization；失败时只允许先查一手来源后从projection architecture、evidence dropout、set-valued head三者中选
+一个机制级恢复，不做threshold/grid/window/backend/model-size sweep或删case。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

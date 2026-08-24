@@ -14,6 +14,7 @@
 - `P4_IRWM_PRIOR_SIDECARS.md`：P4 六场景、72-target frozen IR-WM sidecar 正式收口。
 - `P5_CPSC_LITE_DESIGN.md`：P5 scene-disjoint split、feature boundary、model/loss与单次capacity probe冻结。
 - `P5_CPSC_LITE_CAPACITY_PROBE.md`：P5 真实loader/forward/backward/projection资源探针与formal决策。
+- `P5_CPSC_LITE_FORMAL.md`：P5 48/24-unit正式训练、projection-only对照、资源与P6决策。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。
