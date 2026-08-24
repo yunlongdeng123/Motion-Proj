@@ -1,9 +1,9 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P2 actor 时序扫掠恢复通过，formal r2 就绪（2026-08-24）
+## WorldSim V6.2 CPSC P2 formal 完成，P4 IR-WM sidecar 启动（2026-08-24）
 
-状态：`p2_actor_sweep_recovery_passed / p2_formal_rerun_ready`；active task=
-`WS-V62-P2-EVIDENCE-QUERY-DATASET-01`。
+状态：`p2_formal_materialization_passed / p4_irwm_sidecar_active`；active task=
+`WS-V62-P4-IRWM-PRIOR-SIDECAR-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -49,8 +49,21 @@ query 时序传播的思路，actor support 已改为 current target envelope �
 影响 actor query 坐标，不把 box 变成 hard OCC，也不读取 dropout/target evidence或改任何配额。
 
 定点 r5=`20260824T083403Z__actor-sweep-repro-s20260824-r5` exit=`0`：current actor envelope=`0`、visible
-swept envelope=`450` voxels、actor-type queries=`15000/15000`、total queries=`100000`。`V62-F03 resolved`；下一步
-从该恢复提交重跑 formal r2，不追加更多 smoke。
+swept envelope=`450` voxels、actor-type queries=`15000/15000`、total queries=`100000`。`V62-F03 resolved`；据此
+从恢复提交直接重跑 formal r2，没有追加更多 smoke。
+
+formal r2 canonical=
+`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2` 已通过：
+`6 scenes / 72 units / 7,200,000 queries`，每场12 units，method/dropout/target source roles=`216/72/288` 且
+交集=`0`；六类 query 总数依冻结比例为 `1.8M/1.08M/1.8M/1.08M/1.08M/0.36M`。六类最小候选池=
+`156406/6860/6533/382175/167/2446`，72/72 combined actor pools 非空；唯一 current-envelope 空 unit 已由
+visible sweep support覆盖。target supervised rows=`2,639,153`，磁盘=`155,249,746 bytes`，wall=`151.47s`，
+confirmation/test read=`false/false`。failure ledger delta=`none`（正式成功不灌入 failure ledger）。
+
+P2 已收口，P4 预注册为复用 V6.1 frozen IR-WM environment/weights，在新 development scenes 上 batch1、scene worker
+串行或最多2个，抽取与同一 query coordinates 对齐的 prior logits/selected features；不训练 IR-WM、不读取 target
+evidence。用户约束覆盖原计划里的内容寻址/model hash 项：P4 只记录逻辑路径、语义版本、backend identity、task/run ID
+与 Git 提交，不新增哈希、校验和或指纹。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

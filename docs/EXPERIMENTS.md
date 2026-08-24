@@ -1,5 +1,23 @@
 # Experiments
 
+## WorldSim V6.2 P2 FORMAL MATERIALIZATION PASS（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2`，
+  source=`fc5a5f7`，outcome=`done_formal_evidence_query_dataset_passed`；`6 scenes / 72 units / 7,200,000 queries`，
+  每场12 units，72行 method/dropout/target/query manifests 全部形成。
+- 冻结六类 query totals：hard FREE=`1,800,000`、hard OCC=`1,080,000`、behind-hit UNKNOWN=`1,800,000`、
+  boundary=`1,080,000`、actor envelope=`1,080,000`、contradiction=`360,000`。对应最小 candidate pools=
+  `156406/6860/6533/382175/167/2446`，均非空；不足 quota 的稀疏类只做预注册的 unit-local 有放回抽样。
+- source role identities=`216 method / 72 dropout / 288 target`，三组 overlap=`0`；confirmation/test read=
+  `false/false`。target supervised query total=`2,639,153`，per-unit=`30,254..45,396`。
+- actor：current-envelope 空 unit=`1/72`、visible-swept 空=`0/72`、combined 空=`0/72`；actor-bound rows=
+  `1,383,331`，motion-compensated hit voxels total=`103,946`。这确认 `V62-F03` 恢复覆盖了 enter/exit 长尾，未删除
+  actor quota，也未把 swept box 升级为 hard OCC。
+- resource=`155,249,746 bytes / 151.469s / max unit 8.772s / two CPU workers`；GPU remained idle。没有重复
+  materialization、byte-exact/hash/checksum/fingerprint 或额外质量 gate。failure ledger delta=`none`。
+- decision=`close_P2_and_enter_P4_frozen_IRWM_prior_sidecar`。P4 只记录 logical path/semantic version/backend/task/run/Git
+  identity；用户“不加哈希/校验和/指纹”约束覆盖原计划的 content-address/model-hash条目。
+
 ## WorldSim V6.2 P2 FORMAL R1 BLOCKED / ACTOR SWEEP RECOVERY PASS（2026-08-24）
 
 - formal r1=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082601Z__query-dataset-s20260824-r1`，
