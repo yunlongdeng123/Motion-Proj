@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.2 P5 CPSC-LITE DESIGN FROZEN / CAPACITY PROBE READY（2026-08-24）
+
+- task=`WS-V62-P5-CPSC-LITE-TRAIN-01`，hypothesis=`WS-V62-H-P5-001`。metadata-only split：train=
+  `scene-0071/0317/0862/1012`=48 units，selection=`scene-0450/1089`=24 units；无模型结果/quality用于split。
+- inputs：P4 17-logit+256-latent sidecar，P2 query coordinates/method evidence/actor support；dropout与target evidence仅作
+  supervision，query type仅作分层指标，三者均不作为model feature。IR-WM process不驻留。
+- model=`prior/query adapters + 4x256 MLP + 2 residual blocks + evidential head + trust-scaled residual + 3 hard
+  projections`。method FREE/OCC及contradiction的投影优先级沿用P3，不可由trust head绕过。
+- loss weights：query/evidential/hidden-FREE/safe-OCC/actor-temporal/prior-preserve=
+  `1/0.05/2/1.5/0.25/0.05`；class weights=`1/1.5/0.5`。selection objective固定weighted total loss，同时记录
+  projection-only、hidden-FREE false-OCC、safe-OCC retention、UNKNOWN fraction与hard violation。
+- training=`seed0 only, FP16, 16,384 queries/batch, accumulation2, AdamW lr3e-4, max12 epochs, min4, patience3`。
+  用户精简验证约束覆盖plan的三seed smoke：只运行一次8-step capacity probe，随后直接formal。
+- resource ceiling=`peak<=18GiB, wall<=12h, disk<=20GiB`；legacy O_eval/confirmation/test与hash/checksum/fingerprint
+  均未读/未加。failure ledger delta=`none`。
+
 ## WorldSim V6.2 P4 IR-WM PRIOR SIDECARS FORMAL PASS（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T090444Z__prior-sidecars-s1-r1`，

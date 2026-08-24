@@ -95,6 +95,14 @@ P5 已预注册为只训练 prior adapter、query decoder、evidential head与pr
 legacy28 O_eval、confirmation或exact-once test，也不新增哈希/校验和/指纹。先审计最薄 loader/model/loss与单卡batch
 预算，再直接进入 bounded training，不铺设多轮 smoke/regression 矩阵。
 
+P5 design 已冻结：train=`scene-0071/0317/0862/1012`（48 units），scene-disjoint selection=
+`scene-0450/1089`（24 units）；后者只按预先冻结的 Boston rain 与 Holland Village night metadata选择。模型输入为17维
+prior logits、entropy/tri-state/source-valid、256维BEV latent、method evidence、normalized coordinates与actor support；
+query type、dropout evidence和target evidence明确不进模型。loss固定为query/evidential/hidden-FREE/safe-OCC/
+actor-temporal/prior-preserve，hard-conflict target不反向要求模型违反method硬证据。训练配置=`FP16, batch16384,
+accum2, AdamW 3e-4, max12 epochs, min4/patience3`，仅运行seed0。先做一次8 optimizer-step capacity probe，
+通过后直接全量训练；failure ledger delta=`none`。
+
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
 `V62-F01,V61-F11,V61-F13`。

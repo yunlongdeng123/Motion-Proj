@@ -1,0 +1,87 @@
+schema_version: worldsim_v62.p5_cpsc_lite_config.v1
+task_id: WS-V62-P5-CPSC-LITE-TRAIN-01
+hypothesis_id: WS-V62-H-P5-001
+seed: 0
+
+inputs:
+  p2_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2
+  p4_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T090444Z__prior-sidecars-s1-r1
+  target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+  legacy_o_eval_allowed: false
+  confirmation_allowed: false
+  exact_once_test_allowed: false
+
+split:
+  selection_basis: frozen_metadata_only_before_p5_training
+  train_scenes: [scene-0071, scene-0317, scene-0862, scene-1012]
+  selection_scenes: [scene-0450, scene-1089]
+  train_unit_count: 48
+  selection_unit_count: 24
+  rationale: train_boston_and_singapore_day_dusk_night_select_boston_rain_and_hollandvillage_night
+
+features:
+  prior_semantic_logits: 17
+  prior_entropy: true
+  prior_tristate: true
+  source_valid: true
+  selected_bev_latent: 256
+  normalized_query_coordinates: 3
+  method_evidence_one_hot: 3
+  method_contradiction: true
+  actor_bound_current_swept: 3
+  prior_method_residual: 3
+  query_type_is_model_input: false
+  dropout_evidence_is_model_input: false
+  target_evidence_is_model_input: false
+
+model:
+  hidden_width: 256
+  query_decoder_layers: 4
+  residual_blocks: 2
+  projection_iterations: 3
+  dropout: 0.05
+  evidential_classes: 3
+  states: [FREE, OCCUPIED, UNKNOWN]
+
+loss:
+  query_weight: 1.0
+  evidential_weight: 0.05
+  hidden_free_weight: 2.0
+  safe_occ_weight: 1.5
+  actor_temporal_weight: 0.25
+  prior_preserve_weight: 0.05
+  class_weights: [1.0, 1.5, 0.5]
+  evidential_anneal_epochs: 4
+  selection_objective: weighted_total_loss_on_scene_disjoint_selection
+  hard_conflict_targets_excluded_from_query_loss: true
+
+training:
+  precision: fp16
+  query_batch_size: 16384
+  gradient_accumulation_steps: 2
+  maximum_epochs: 12
+  minimum_epochs: 4
+  early_stop_patience: 3
+  optimizer: AdamW
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  gradient_clip_norm: 1.0
+  seed_policy: one_bounded_seed0_per_user_minimal_validation_constraint
+  checkpoint_policy: best_selection_objective_and_final
+
+capacity_probe:
+  train_scene: scene-0071
+  selection_scene: scene-0450
+  maximum_optimizer_steps: 8
+  purpose: loader_forward_backward_resource_contract_only
+
+resources:
+  gpu: 0
+  maximum_gpu_memory_gib: 18
+  maximum_wall_seconds: 43200
+  maximum_incremental_disk_gib: 20
+  minimum_disk_free_gib: 40
+
+identity_policy: logical_path_semantic_version_task_run_git_no_hash
+failure_ledger_refs: [V62-F01, V62-F03, V61-F11, V61-F13]
+next: implement_streaming_loader_cpsc_lite_losses_and_single_capacity_probe

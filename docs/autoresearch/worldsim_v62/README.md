@@ -12,6 +12,7 @@
 - `P4_IRWM_SIDECAR_INTERFACE.md`：P4 frozen backend、query-aligned logits/latent schema 与单 probe 计划。
 - `P4_IRWM_SIDECAR_PROBE.md`：P4 新场景单 target 真模型 probe、资源与信息边界。
 - `P4_IRWM_PRIOR_SIDECARS.md`：P4 六场景、72-target frozen IR-WM sidecar 正式收口。
+- `P5_CPSC_LITE_DESIGN.md`：P5 scene-disjoint split、feature boundary、model/loss与单次capacity probe冻结。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。
