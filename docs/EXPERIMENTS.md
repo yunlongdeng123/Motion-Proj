@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.3 P2 NATIVE SIDECARS FORMAL PASS / P2D UNLOCKED（2026-08-24）
+
+- canonical=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1`。
+- denominator=`D 6 scenes/72 targets + L 2 scenes/4 targets = 8 scenes/76 targets`；完整原生输出=
+  `3,502,211,483 bytes`，76/76 logits/BEV/derived arrays complete+finite+fresh mmap reload。
+- resource=`200.763s wall / 4.1314 GiB max worker peak / 8.2623 GiB two-worker peak-sum upper bound`。
+- prototype=`false`；target/calibration/confirmation/exact-once quality read均`false`；failure ledger delta=`none`。
+- P2 gate通过，下一 task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`。
+
 ## WorldSim V6.3 P2 NATIVE SIDECAR PROBE PASS / FORMAL READY（2026-08-24）
 
 - canonical=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1`。

@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.3 SurfNCC P1 protocol frozen / P2 native sidecar next（2026-08-24）
+## WorldSim V6.3 P2 native sidecars passed / P2D diagnostic next（2026-08-24）
 
-状态：`v63_p2_native_probe_passed / formal_ready`；active task=`WS-V63-P2-NATIVE-SIDECAR-01`。
+状态：`v63_p2_native_sidecars_passed`；active task=`WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01`。
 
 P2 原生接口已实现并冻结：复用已验证的 official IR-WM current forward，每 target 直接保存完整
 `200x200x16x17` logits、`200x200x256` BEV latent、argmax/entropy/margin/source-valid 为 memory-mappable arrays；
@@ -12,6 +12,11 @@ Tier L 4 targets；C/H/T按阶段解锁后生成。只允许一个 `scene-0071/f
 唯一 P2 probe=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1` 已通过：
 1 scene/1 target，完整原生数组=`46,081,727 bytes`，峰值 GPU=`4.0496 GiB`、wall=`25.19s`；fresh memory-map reload、
 shape/finite均成立，prototype/target/calibration/confirmation/test read均为false。下一步直接formal，不追加probe。
+
+P2 formal canonical=`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1` 已通过：
+8 scenes/76 targets（D=72,L=4），完整 sidecar=`3,502,211,483 bytes`，wall=`200.763s`；maximum worker peak=
+`4.1314 GiB`、two-worker peak-sum upper bound=`8.2623 GiB`。76/76 native tensors完整、finite并可fresh mmap reload；
+prototype/target/calibration/confirmation/test read均为false。P2 hypothesis成立，failure ledger delta=`none`；P2D已解锁。
 
 P1 已完成一手文献/官方仓库审计。RELIOcc/OCCUQ/alpha-OCC/EvOcc 已覆盖 Occupancy reliability、uncertainty、evidence
 与 conformal set 的单项；QueryOcc 覆盖连续4D query；Point/Set Transformer覆盖结构编码；CRC/NCRC/structured
@@ -37,8 +42,8 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1 当前完成；下一步执行 P2 probe/formal。当前没有 V6.3 GPU quality 实验，也没有读取
-legacy/calibration/confirmation/test quality。
+P0/P1/P2 当前完成；下一步执行一次冻结 P5 + native legacy sidecar 的 P2D retrospective diagnostic。P2D允许读取
+legacy O_eval做机制裁决，但不训练、不调阈值，也不替代 fresh confirmation；calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 

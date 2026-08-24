@@ -22,3 +22,8 @@ The probe passed at
 `run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1`: 46,081,727 bytes,
 25.19 seconds and 4.0496 GiB peak, with complete finite arrays, fresh memory-map reload and all evidence seals intact. Formal is
 therefore authorized without changing implementation or configuration.
+
+Formal canonical:
+`run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1`. It passed all 76 D/L targets,
+wrote 3,502,211,483 bytes in 200.763 seconds, and stayed within 4.1314 GiB per worker / 8.2623 GiB two-worker upper bound.
+All seals and the no-prototype contract remained intact. P2 is complete and P2D is unlocked.

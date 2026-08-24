@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v63",
-  "status": "v63_p1_novelty_protocol_frozen",
+  "status": "v63_p2_native_sidecars_passed",
   "branch": "research/worldsim-v6.3-surface-tail",
-  "active_task": "WS-V63-P2-NATIVE-SIDECAR-01",
-  "active_hypothesis": "WS-V63-H-P2-001",
-  "completed_stages": ["P0", "P1"],
-  "unlocked_stages": ["P2"],
+  "active_task": "WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01",
+  "active_hypothesis": "WS-V63-H-P2D-001",
+  "completed_stages": ["P0", "P1", "P2"],
+  "unlocked_stages": ["P2D"],
   "confirmation_unlocked": false,
   "test_unlocked": false,
   "resource_contract": "single_rtx3090_24gb",
@@ -20,5 +20,7 @@
   "last_failure_id": "V63-F01",
   "p2_probe_run": "run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T144921Z__native-probe-s1-r1",
   "p2_probe_passed": true,
-  "next_action": "run the frozen 76-target development plus legacy native sidecar formal"
+  "p2_formal_run": "run://worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1",
+  "p2_formal_passed": true,
+  "next_action": "run the frozen native CPSC-Lite legacy28 retrospective diagnostic"
 }
