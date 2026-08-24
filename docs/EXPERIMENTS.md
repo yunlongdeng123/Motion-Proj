@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE PROBE R1 ENGINEERING FAILED / R2 READY（2026-08-24）
+
+- failed run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T150842Z__surface-probe-s20260824-r1`；
+  terminal=`failed before surface/quality`，run bytes=`4 KB`。
+- failure=`ValueError: all input arrays must have the same shape`：target axes长度为`300/300/40`，不能执行
+  `numpy.stack`；没有产生surface、patch、proposal或quality数字。
+- recovery=返回三个独立axis arrays；同时完成局部surface-type索引、finite unit-normal统计与native-invalid显式保留的
+  pre-run code audit，不改变proposal/topology/cohort/gate。
+- outcome=`engineering recovery only`；calibration/H/T read=`false`；failure ledger delta=`V63-F03 resolved`；
+  同配置revision 2 ready。
+
 ## WorldSim V6.3 P3 SURFACE CORPUS IMPLEMENTED / PROBE PRE-REGISTERED（2026-08-24）
 
 - task=`WS-V63-P3-SURFACE-CORPUS-01`；D denominator=`6 scenes/72 targets`。

@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts，证明 prototype 不是主因；pointwise/mean-query 无法提供 hidden-surface authority | `V63-F01`–`V63-F02`；`P2D_NATIVE_POINTWISE_PREREG.md` |
+| V6.3 | P2D native pointwise retrospective rejected：`4/28,4/4 false-safe`；P3 surface family继续 | 原生 per-cell logits/BEV 未改变四个 unsafe accepts；P3 r1另暴露非科研性的unequal-axis stack接口错误，已在任何surface/quality前修复 | `V63-F01`–`V63-F03`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -152,6 +152,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   证据=`docs/autoresearch/worldsim_v63/P2D_NATIVE_POINTWISE_PREREG.md`、
   `https://openaccess.thecvf.com/content/CVPR2024/papers/Wu_Point_Transformer_V3_Simpler_Faster_Stronger_CVPR_2024_paper.pdf`、
   `https://pmc.ncbi.nlm.nih.gov/articles/PMC4897344/`。
+
+- `V63-F03`（`engineering`, `resolved`）：P3 probe r1=`20260824T150842Z__surface-probe-s20260824-r1`
+  在`_native_occupied_target_grid`对长度`300/300/40`的三个target-grid axis arrays调用`numpy.stack`时触发
+  `ValueError: all input arrays must have the same shape`。该返回值未被调用方消费，失败发生在surface extraction、
+  target supervision与任何quality gate之前，run仅4 KB，不能写成surface方法失败。NumPy官方`stack`合同要求每个输入
+  shape相同；恢复为返回三个独立axis arrays，并在同轮pre-run audit中把route-support类型更新限定到对应local surface、
+  法向量统计限定为finite unit vectors、target grid超出native z范围的点显式标为invalid而非用`100% valid`作错误门禁。
+  这些都是接口/统计修复，不改变proposal volume、6-connected topology、patch参数、cohort或科研门槛。r1不可覆盖；
+  revision 2复用冻结配置。防重复：不同长度的坐标轴不得stack；native coverage必须作为显式映射事实交给后续模型处理，
+  不得偷偷clip或删除proposal。证据=`docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
+  `https://numpy.org/doc/2.0/reference/generated/numpy.stack.html`。
 
 <a id="detail-v62"></a>
 

@@ -1,8 +1,14 @@
 # Research Status
 
-## WorldSim V6.3 P2D native pointwise rejected / P3 surface corpus next（2026-08-24）
+## WorldSim V6.3 P3 surface probe r1 engineering failure / r2 ready（2026-08-24）
 
-状态：`v63_p2d_native_pointwise_rejected_surface_root_active`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_probe_r1_engineering_blocked_r2_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 r1=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T150842Z__surface-probe-s20260824-r1`
+在surface extraction和任何quality判据之前失败：native-to-target helper错误地对长度分别为`300/300/40`的三条轴执行
+`numpy.stack`，触发same-shape合同错误。按NumPy官方接口将未被消费的轴元组原样返回，并在重跑前收紧route-support
+局部surface type更新、法向量有效统计与显式native-valid报告；均不改变冻结proposal/topology/science合同。r1保持不可变，
+登记`V63-F03 resolved`，同配置revision 2已就绪。
 
 P3实现/输入合同已冻结：static proposal=`native occupied + observed OCC - actor envelopes`，Actor proposal按method-visible
 current/swept actor ID分开；先声明volume再取6-connected boundary，拓扑不改几何。每点保存native mapping、normal、
@@ -61,7 +67,8 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步构建D的完整surface corpus。calibration/confirmation/test保持sealed。
+P0/P1/P2/P2D 当前完成；下一步重跑唯一P3 probe revision 2，通过后直接构建D的完整surface corpus。
+calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
 

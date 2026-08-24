@@ -74,7 +74,7 @@ def _native_occupied_target_grid(
     target_spec: VoxelGridSpec,
     source_origin_m: np.ndarray,
     source_voxel_size_m: float,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, tuple[np.ndarray, np.ndarray, np.ndarray], np.ndarray]:
     native_argmax = np.load(argmax_path, mmap_mode="r")
     axes = []
     valids = []
@@ -109,7 +109,7 @@ def _native_occupied_target_grid(
         clipped[1][None, :, None],
         clipped[2][None, None, :],
     ] > 0
-    return occupied & valid_grid, np.stack(axes, axis=0), valid_grid
+    return occupied & valid_grid, (axes[0], axes[1], axes[2]), valid_grid
 
 
 def _temporal_support(
