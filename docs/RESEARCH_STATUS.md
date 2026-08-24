@@ -130,6 +130,18 @@ UNKNOWN/ABSTAIN和oracle accepted surface safe-OCC retention，防止all-UNKNOWN
 scene generalization；失败时只允许先查一手来源后从projection architecture、evidence dropout、set-valued head三者中选
 一个机制级恢复，不做threshold/grid/window/backend/model-size sweep或删case。
 
+P6 接口审计发现计划文字与 canonical artifact 不一致：V6.1 ME3R 只保存`200×200×16 argmax class`，没有P5所需的
+17 logits/256D BEV；同时B2需要尚未允许的Tier-C threshold calibration，B4没有no-evidence-dropout checkpoint，full
+M0的grouped conformal按阶段计划要到P8才产生。`V62-F05 resolved_for_artifact_bounded_P6`：参考ProtoSeg的训练特征
+类原型，只用P5四场景train split按17个argmax class求query-weighted logits/BEV均值，legacy查表；明确承认它不能恢复
+逐cell uncertainty。不得重跑IR-WM、用O_eval拟合bridge或伪造B2/B4/M0。
+
+只读失真审计覆盖24个selection units/2.4M queries，bridge fit未读selection target：full/bridge预测一致=
+`0.896898`；bridge hidden-FREE false-OCC=`0.399349`，仍优于projection-only=`0.453707`；safe-OCC retention=
+`0.872897`、target accuracy=`0.452581`、UNKNOWN=`0.221945`、hard violations=`0`。P6 formal固定执行B0 replay、B1 hard
+clip、B3 evidential-no-projection与B5 pre-conformal；B5为primary，M0明确defer到P8。anti-trivial固定safe-OCC retention
+`>=0.50`和source-valid UNKNOWN`<=0.50`。接口实现完成后只做一次formal，不增加bridge/model/threshold sweep。
+
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
 `V62-F01,V61-F11,V61-F13`。

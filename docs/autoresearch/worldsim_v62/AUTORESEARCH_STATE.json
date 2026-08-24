@@ -1,7 +1,7 @@
 {
   "schema_version": "worldsim_v62.autoresearch_state.v1",
   "updated_at_utc": "2026-08-24T09:36:00Z",
-  "status": "p5_cpsc_lite_formal_passed_p6_legacy28_active",
+  "status": "p6_legacy_argmax_interface_migrated_formal_ready",
   "active_task_id": "WS-V62-P6-LEGACY28-ME-01",
   "active_hypothesis_id": "WS-V62-H-P6-001",
   "branch": "research/worldsim-v6.2-cpsc",
@@ -83,7 +83,15 @@
   "p5_projection_only_target_accuracy": 0.356765,
   "p5_formal_predicted_unknown_fraction": 0.24757916666666666,
   "p6_gate": "accept_at_least_5_of_28_false_safe_0_r10_3_of_3_actor_and_static_or_disocclusion_gain_mask_area_at_least_0.12_free_conflict_mean_and_worst_at_most_0.05",
-  "last_failure_id": "V62-F04",
-  "last_failure_status": "resolved_irwm_environment_bin_prepended_for_ninja_and_native_tools",
-  "next": "audit_frozen_legacy28_interfaces_then_run_single_matched_mechanism_benchmark"
+  "p6_legacy_native_feature_artifact": "argmax_class_only_no_logits_no_bev",
+  "p6_bridge": "query_weighted_class_mean_logits_and_bev_from_p5_train_split_only",
+  "p6_bridge_selection_prediction_agreement": 0.8968979166666666,
+  "p6_bridge_selection_hidden_free_false_occ_rate": 0.3993485542205697,
+  "p6_bridge_selection_safe_occ_retention_rate": 0.8728973728973729,
+  "p6_bridge_selection_hard_violation_rate": 0.0,
+  "p6_runnable_arms": ["B0", "B1", "B3", "B5"],
+  "p6_unavailable_or_deferred_arms": ["B2", "B4", "M0_until_P8"],
+  "last_failure_id": "V62-F05",
+  "last_failure_status": "resolved_for_artifact_bounded_p6_with_lossy_train_split_class_prototypes",
+  "next": "commit_push_p6_interface_then_run_single_formal_legacy28"
 }

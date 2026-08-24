@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P3 projection、P2 query dataset、P4 frozen sidecars与P5 CPSC-Lite formal均passed；P6 legacy28 active | P5在fresh selection上把hidden-FREE false-OCC相对降低15.24%且硬违规为0，但这不是legacy false-safe结论；不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F04`；V6.2 plan、P0–P6 autoresearch docs |
+| V6.2 | P3 projection、P2 query dataset、P4 frozen sidecars与P5 CPSC-Lite formal均passed；P6 argmax-only legacy interface已迁移、formal ready | P5 fresh selection改善不是legacy false-safe结论；V6.1只保存argmax，类原型bridge必须标为lossy，B2/B4/M0不得伪造；不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence/model 编码显式分开；actor 查询不得因当前 ROI 空而删除；隔离 env 必须把自己的 bin 放入 PATH；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F05`；V6.2 plan、P0–P6 autoresearch docs |
 
 ### 1.1 V1 汇总条目
 
@@ -170,6 +170,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   worker时不得假设其 bin 自动进入 PATH，也不得把 loader import failure记成方法 rejection。恢复后的同输入 r2=
   `20260824T085956Z__prior-sidecar-probe-s1-r2` 已产生100k query-aligned sidecar，peak=`4.05GiB`、target evidence
   read=`false`；因此 F04 保持 resolved，不新增 recovery。
+
+- `V62-F05`（`data/protocol`, `resolved for artifact-bounded P6`）：P6 接口审计推翻“V6.1 已冻结P5可直接消费的
+  prior sidecar”。canonical ME3R 的四个IR-WM输出仅有argmax `class_label[200,200,16]`、occupied mask和网格/pose，
+  没有17 logits或256D BEV；禁止重跑IR-WM，故逐cell uncertainty/latent不可精确恢复。阶段表还有第二处冲突：B2需要
+  Tier-C校准阈值、B4需要未训练的no-evidence-dropout checkpoint、full M0需要P8 grouped conformal，三者在P6均不存在。
+  防重复：不得从硬label伪造逐cell置信度、用legacy O_eval拟合adapter/threshold、重跑backbone、补训多臂或把B5冒充
+  conformal M0。参考CVPR 2022 ProtoSeg的非参数训练特征均值，恢复只用P5 train split按17 class求query-weighted
+  logits/BEV prototype并查表，P5保持frozen；24-unit只读失真审计agreement=`0.896898`、bridge hidden-FREE=
+  `0.399349`、safe-OCC=`0.872897`、hard violation=`0`。合法P6只比较B0/B1/B3/B5，明确B2/B4 unavailable、M0 defer
+  P8；bridge claim始终是lossy artifact transfer，不是native sidecar parity。证据=`P6_LEGACY_INTERFACE.md`、
+  `configs/worldsim_v62/p6_legacy28_v1.yaml`、`motion_proj/worldsim_v62/legacy_bridge.py`。
 
 <a id="detail-v61"></a>
 

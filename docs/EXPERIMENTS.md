@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.2 P6 LEGACY INTERFACE MIGRATED / FORMAL READY（2026-08-24）
+
+- blocker：canonical V6.1 ME3R只保存argmax class，没有P5需要的17 logits/256D BEV；IR-WM禁止重跑。B2的Tier-C
+  threshold、B4的no-dropout checkpoint和P8才产生的M0 conformal当前也不存在；`V62-F05 resolved`。
+- migration：只用P5 train split求17个query-weighted class prototype logits/BEV，legacy argmax查表；不读legacy O_eval、
+  不训练/改P5、不制造逐cell confidence。17/17 class非空。
+- 一次只读失真审计=`24 selection units / 2.4M queries`：full/bridge agreement=`0.896898`；bridge/full/projection-only
+  hidden-FREE false-OCC=`0.399349/0.384568/0.453707`；bridge safe-OCC retention=`0.872897`、accuracy=`0.452581`、
+  UNKNOWN=`0.221945`、hard violations=`0`。selection target未用于bridge fit。
+- formal arms固定为B0 replay、B1 hard clip、B3 evidential pre-projection、B5 projected pre-conformal；B2/B4不可用，M0
+  defer P8，不作伪对照。primary仍用计划5/28、0 false-safe、R10/Actor/static/mask-area/FREE-conflict gates；anti-trivial=
+  safe-OCC retention`>=0.50`、source-valid UNKNOWN`<=0.50`。
+- IR-WM inference/confirmation/test=`not started/not read/not read`；hash/checksum/fingerprint=`not added`。decision=
+  `commit_push_interface_then_single_formal_P6`；不增加smoke或bridge sweep。
+
 ## WorldSim V6.2 P5 CPSC-LITE FORMAL TRAINING PASS（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1`，
