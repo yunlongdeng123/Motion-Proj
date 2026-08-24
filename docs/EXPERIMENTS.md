@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P4 IR-WM PRIOR SIDECARS FORMAL PASS（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T090444Z__prior-sidecars-s1-r1`，
+  source=`ec68ced`，outcome=`done_formal_72_query_aligned_sidecars_passed`；6 scenes、72 targets、7.2M queries。
+- source-valid=`6,811,702/7,200,000=94.60697%`，invalid=`388,298`；per-unit valid=`91,305..97,434`。
+  unique3D prior cells/unit=`23,129..38,500`，unique2D BEV cells/unit=`4,973..10,364`，均非空。
+- 72 sidecars total=`368,162,079 bytes`；official inference total=`119.406s`，single inference=`1.036..2.213s`；
+  formal wall=`176.271s`。single-worker peak max=`4.1265GiB`，two-worker peak sum upper bound=`8.2523GiB`。
+- 每个scene model只加载一次并完成12 targets；6/6 workers unexpected keys=`0`，missing均为V6.1已解释的两项官方删除
+  `reference_points`。没有启动future decoder/planner/training，也没有读target evidence/occupancy GT/O_eval/confirmation/test。
+- identity=`logical path + semantic version + backend + task/run + Git`；没有hash/checksum/fingerprint、重复build或新增
+  quality gate。failure ledger delta=`none`。
+- decision=`close_P4_and_enter_WS-V62-P5-CPSC-LITE-TRAIN-01`；P5只读P2/P4 development artifacts，IR-WM不常驻。
+
 ## WorldSim V6.2 P4 IR-WM QUERY-ALIGNED PROBE PASS / FORMAL READY（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T085956Z__prior-sidecar-probe-s1-r2`，

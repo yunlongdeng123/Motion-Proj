@@ -1,9 +1,9 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P2 formal 完成，P4 IR-WM sidecar 启动（2026-08-24）
+## WorldSim V6.2 CPSC P4 formal 完成，P5 CPSC-Lite 启动（2026-08-24）
 
-状态：`p2_formal_materialization_passed / p4_irwm_sidecar_active`；active task=
-`WS-V62-P4-IRWM-PRIOR-SIDECAR-01`。
+状态：`p4_irwm_sidecar_formal_passed / p5_cpsc_lite_active`；active task=
+`WS-V62-P5-CPSC-LITE-TRAIN-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -81,6 +81,19 @@ OMP/MKL/CUDA arch 环境，不安装依赖、不改科学输入；`V62-F04 resol
 `4,002,647 bytes`，worker peak=`4.0496GiB`，official forward=`1.066s`，controller wall=`98.29s`（含首次native
 extension启动）。missing keys仅V6.1已知的两项官方删除 `reference_points`，unexpected=`0`；target evidence、
 confirmation、exact-once test均未读。P4 进入 formal 6-scene/72-target/max2-worker，不再追加 smoke。
+
+P4 formal canonical=
+`run://worldsim_v62/WS-V62-P4-IRWM-PRIOR-SIDECAR-01/20260824T090444Z__prior-sidecars-s1-r1` 已完成：
+6 scenes、72/72 targets、7.2M query mappings；source-valid=`6,811,702`（94.607%）、invalid=`388,298`，每unit
+valid最小=`91,305`。unique prior cells/unit=`23,129..38,500`，unique BEV cells/unit=`4,973..10,364`；sidecars=
+`368,162,079 bytes`。72次official inference合计=`119.41s`，formal wall=`176.27s`，single-worker peak=
+`4.1265GiB`、two-worker peak sum upper bound=`8.2523GiB`。6/6 workers unexpected keys=`0`，仅保留相同的两项
+官方删除 key记录；target evidence/confirmation/test read=`false/false/false`。failure ledger delta=`none`。
+
+P5 已预注册为只训练 prior adapter、query decoder、evidential head与projection-compatible residual；IR-WM 进程已退出且
+权重保持 frozen。输入仅为P2 query/evidence与P4 sidecars，development内部划分和目标函数在启动训练前冻结；不读取
+legacy28 O_eval、confirmation或exact-once test，也不新增哈希/校验和/指纹。先审计最薄 loader/model/loss与单卡batch
+预算，再直接进入 bounded training，不铺设多轮 smoke/regression 矩阵。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
