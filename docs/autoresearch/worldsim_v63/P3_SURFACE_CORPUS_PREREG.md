@@ -2,7 +2,7 @@
 
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
-- Status: `implementation ready / probe preregistered`
+- Status: `schema-complete probe passed / formal ready`
 - Current revision: `r6 per-sweep schema recovery ready / final probe`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
@@ -39,3 +39,6 @@ calibration, confirmation or test read occurs in P3.
 - r5 validated those aggregate fields, but the P4 loader audit showed temporal counts alone cannot implement frozen contiguous-window
   dropout. r6 additionally stores method-sweep state and contradiction matrices per point and directly checks the P1-required payload
   field list from config. This remains the same V63-F06 schema recovery. If r6 passes, no further probe is permitted before formal.
+- r6=`20260824T153526Z__surface-probe-s20260824-r6` passed with 152226 points, 498 bounded patches, unit normals, all eight negative
+  contracts and zero missing required fields. It is the canonical P3 probe. The next run is the complete 72-unit formal corpus with two
+  workers; no additional probe is authorized.

@@ -1,8 +1,18 @@
 # Research Status
 
-## WorldSim V6.3 P3 r5 aggregate schema pass / per-sweep completion r6 ready（2026-08-24）
+## WorldSim V6.3 P3 schema-complete probe pass / 72-unit formal ready（2026-08-24）
 
-状态：`v63_p3_probe_r5_aggregate_schema_pass_per_sweep_blocked_r6_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_schema_complete_probe_pass_formal_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 canonical probe=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`
+已通过：`1 unit / 191 surfaces / 498 patches / 191 proposals / 152,226 points`，output=`3,055,106 bytes`，
+wall=`201.356s`。minimum normal-valid=`1.0`、maximum patch=`635<=2048`、8/8 negative contracts、
+`missing_point_feature_fields=[]`；逐sweep state/contradiction、exact signed distances、patch-local coordinate、normalized
+ray order与全部native/evidence/actor/authority字段均存在。prototype/calibration/confirmation/test read均false。
+
+P3 probe gate正式通过，failure ledger delta=`none`（历史`V63-F03–F07`均保留且resolved）。下一步不再运行probe，
+直接以2 CPU workers materialize冻结Tier D `6 scenes/72 targets` formal；按201.4s/unit保守估计约2.0h，低于24h线，
+预计新增约0.22 GiB，磁盘61 GiB充足。
 
 P3 r5=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152843Z__surface-probe-s20260824-r5`
 完成`191 surfaces/498 patches/152,226 points/3,029,206 bytes`，wall=`188.725s`、runner `passed=true`；新增
@@ -106,7 +116,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步运行P3 per-sweep schema probe revision 6，通过后直接构建D的完整surface corpus。
+P0/P1/P2/P2D 当前完成；P3 probe通过，下一步运行完整D surface corpus formal。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）

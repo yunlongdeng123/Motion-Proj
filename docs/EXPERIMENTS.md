@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.3 P3 SCHEMA-COMPLETE PROBE PASS / FORMAL READY（2026-08-24）
+
+- canonical=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`；
+  terminal=`passed`；`1 unit/191 surfaces/498 patches/191 proposals/152226 points/3055106 bytes`。
+- resource=`201.356s wall`；normal-valid min=`1.0`；patch max=`635<=2048`；8/8 negative contracts；
+  `missing_point_feature_fields=[]`。
+- per-sweep state/contradiction shapes=`[point,3]`；native/evidence/distance/patch/ray/actor/authority schema完整；
+  prototype/calibration/H/T read=`false/false/false`。
+- failure ledger delta=`none`；P3 probe gate pass，下一步直接2-worker、72-unit formal，不再增加probe。
+
 ## WorldSim V6.3 P3 SURFACE PROBE R5 AGGREGATE SCHEMA PASS / PER-SWEEP R6 READY（2026-08-24）
 
 - run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152843Z__surface-probe-s20260824-r5`；runner=
