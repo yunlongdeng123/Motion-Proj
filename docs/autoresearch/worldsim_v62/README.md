@@ -9,6 +9,7 @@
 - `P2_QUERY_PROBE.md`：P2 单 unit 资源、类别分母与 label schema 探针。
 - `P2_ACTOR_SWEEP_RECOVERY.md`：P2 formal r1 当前 ROI actor 空池、文献迁移与定点恢复。
 - `P2_EVIDENCE_QUERY_DATASET.md`：P2 六场景、72-unit、7.2M query 正式数据集收口。
+- `P4_IRWM_SIDECAR_INTERFACE.md`：P4 frozen backend、query-aligned logits/latent schema 与单 probe 计划。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。

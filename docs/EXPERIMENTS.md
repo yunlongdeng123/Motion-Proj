@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P4 IR-WM SIDECAR PRE-REGISTERED / INTERFACE READY（2026-08-24）
+
+- task=`WS-V62-P4-IRWM-PRIOR-SIDECAR-01`，hypothesis=`WS-V62-H-P4-001`，status=`probe_ready_no_gpu_run`。
+  复用 V6.1 已通过 capability 的 official IR-WM source/environment/fully-decoupled checkpoint；不训练、不读 target
+  evidence/O_eval/confirmation/test。
+- current-state interface：final decoder logits=`200×200×16×17`，current `ref_bev`=`200×200×256`。P2 query
+  center按官方 `origin=[-51.2,-51.2,-5.0], voxel=0.512m` 映射；source extent外只标 prior-invalid。
+- 存储采用 deduplicated query alignment：`query→unique 3D prior cell→17 logits` 与
+  `query→unique 2D BEV cell→256 latent`，均为FP16；避免把同一 latent按100k query重复复制，不改变P2坐标或分母。
+- probe 固定新 development `scene-0071/f017`、2Hz frames=`[7,12,17]`、metadata indices=`[1,2,3]`、batch1、
+  单worker；只要求 finite/nonempty query-aligned sidecar、peak<22GiB。通过后直接 formal 6 scenes/72 targets/max2 workers。
+- identity policy=`logical path + semantic version + backend + task/run + Git`；没有新哈希、校验和、指纹或 content
+  addressing。failure ledger refs=`V62-F01,V61-F12,V61-F13`；delta=`none`。
+
 ## WorldSim V6.2 P2 FORMAL MATERIALIZATION PASS（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2`，

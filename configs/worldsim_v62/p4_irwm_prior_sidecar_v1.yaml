@@ -1,0 +1,63 @@
+schema_version: worldsim_v62.p4_irwm_prior_sidecar_config.v1
+task_id: WS-V62-P4-IRWM-PRIOR-SIDECAR-01
+hypothesis_id: WS-V62-H-P4-001
+seed: 1
+
+inputs:
+  p2_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  target_evidence_allowed: false
+  confirmation_allowed: false
+  exact_once_test_allowed: false
+
+backend:
+  identity: irwm_official_a83e4a24_model_revision_36b16b55_fully_decoupled
+  official_repo: /root/autodl-tmp/third_party/ir-wm-a83e4a24
+  official_config: projects/configs/e2e/MMO_MSO_with_plan_fully_decoupled.py
+  checkpoint_path: /root/autodl-tmp/models/ir-wm-36b16b55/MMO_MSO_with_plan_fully_decoupled.pth
+  temporal_metadata_path: /root/autodl-tmp/models/gaussianworld-b43629eaecff/nuscenes_temporal_infos_train.pkl
+  frozen: true
+  training_allowed: false
+
+environment:
+  prefix: /root/autodl-tmp/envs/worldsim-v61-irwm
+  python: /root/autodl-tmp/envs/worldsim-v61-irwm/bin/python
+
+streaming:
+  cadence_hz: 2
+  history_offsets: [-10, -5, 0]
+  metadata_origin_frame: 2
+  metadata_frame_stride: 5
+  camera_names: [CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT]
+  camera_ids: [0, 2, 1, 5, 3, 4]
+  native_shape: [900, 1600]
+  pad_size_divisor: 32
+  image_mean_bgr: [103.530, 116.280, 123.675]
+  image_std: [1.0, 1.0, 1.0]
+
+output_contract:
+  representation: deduplicated_query_aligned_cells
+  raw_logits_shape: [1, 3, 1, 40000, 16, 17]
+  grid_shape: [200, 200, 16]
+  class_count: 17
+  source_origin_m: [-51.2, -51.2, -5.0]
+  source_voxel_size_m: 0.512
+  latent_feature_dimension: 256
+  precision: float16
+  query_mapping: query_to_unique_3d_prior_cell_and_unique_2d_bev_cell
+  identity_policy: logical_path_semantic_version_backend_task_run_git_no_hash
+
+resources:
+  gpu: 0
+  maximum_scene_workers: 2
+  worker_cpu_threads: 4
+  worker_timeout_seconds: 2400
+  maximum_gpu_memory_gib: 22
+  minimum_disk_free_gib: 45
+
+probe:
+  scene: scene-0071
+  target_count: 1
+
+failure_ledger_refs: [V62-F01, V61-F12, V61-F13]
+next: one_new_scene_target_probe_then_formal_72_unit_materialization
