@@ -1,8 +1,8 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-22
+> **最后更新**：2026-08-24
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6.1、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.2、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -42,6 +42,7 @@
 ### 0.4 目录
 
 - [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
+- [V6.2 详细账本](#detail-v62)
 - [V6.1 详细账本](#detail-v61)
 - [V6 详细账本](#detail-v6)
 - [V5.1 详细账本](#detail-v51)
@@ -65,7 +66,8 @@
 | V5.1 | M1-only 已收尾、无 promoted candidate；U2/B3 保留为 V5.2 comparator。LUDVIG uplift/raw graph、progressive、simple voxel node、Gaussian Grouping 与 exact faithful Trace3D operator 均按各自冻结门 rejected；Stage H 未运行，保持 pending 并由 V5.2 observation-source scope 取代 | uplift 无 actor margin；progressive/node elevation 的 IoU/FN 跨场失稳；identity coverage/persistence 不足；Trace3D alpha 跨 fresh process 非确定；另有零长 KNN、跨 shell、解释器/helper/CUDA 初始化、PDF/CLI、partial staging、solver/license/stdout、bytecode/cache、SAM 显存、batch sensitivity 与 CUBLAS 恢复边界 | `V51-F01`–`V51-F66` |
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
-| V6.1 | P0 scope freeze 已通过；ME-0 SceneIR-O 已预注册，尚无 proposal 质量 run | 首次新路线启动不能假定 `runs/worldsim_v61` namespace 已存在；资源审计前须创建精确路径 | `V61-F01`（resolved）；P0 canonical run；ME-0 config |
+| V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
+| V6.2 | P0 scope frozen，P1 novelty audit active；研究 hard-evidence-constrained、selective FREE/OCC/UNKNOWN physical state completion | 不得把 O_eval 引入方法；不得用 all-UNKNOWN 冒充安全；按用户约束不新增哈希/校验和/指纹或重审计框架 | `V62-F01`；V6.2 plan、P0 scope freeze |
 
 ### 1.1 V1 汇总条目
 
@@ -122,6 +124,21 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v62"></a>
+
+## V6.2 CPSC 防重复结论（2026-08-24）
+
+- `V62-F01`（`algorithm/evaluation`, `active`）：V6.1 oracle Occupancy 在 legacy28 得到 `10/28 ACCEPT` 且
+  `0 false-safe`，说明物理状态补全存在真实上界；GaussianWorld 和 IR-WM 的 learned argmax Occupancy 都得到同一
+  `10/28` 表面支持，但各自接受项全部为 `10/10 false-safe`。已确认的共同根因是 dense learned prior 能覆盖 proposal，
+  却没有把真实 observed FREE 当作不可违反的前向约束；这推翻“感知型 argmax Occupancy 可直接成为 world compiler
+  物理权威”，不推翻 learned prior 作为软信息源。防重复：不得以第三 backend、confidence threshold、entropy、grid、
+  history window、checkpoint、verifier 放宽或 observed-FREE 事后全 veto 复开 V6.1。合法复开仅限 V6.2 CPSC：方法输入内
+  hard FREE/OCC、contradiction→UNKNOWN、可推翻 prior、anti-trivial coverage 和独立 false-safe 评测；若 B1 hard clip
+  已达 `>=5/28, 0 false-safe`，应诚实转为 projection-only compiler。证据=`V61-F11,V61-F13`、
+  `docs/autoresearch/worldsim_v61/V61_MINIMUM_EXPERIMENT_CLOSEOUT.md`、
+  `docs/WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md`。
 
 <a id="detail-v61"></a>
 

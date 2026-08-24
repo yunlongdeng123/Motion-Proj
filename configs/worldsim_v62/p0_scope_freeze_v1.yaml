@@ -1,0 +1,81 @@
+schema_version: worldsim_v62.p0_scope_freeze.v1
+task_id: WS-V62-P0-SCOPE-FREEZE-01
+hypothesis_id: WS-V62-H-P0-001
+created_at_utc: 2026-08-24T08:00:00Z
+branch: research/worldsim-v6.2-cpsc
+base: main@c8e9dee
+
+plan: repo://docs/WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md
+north_star: hard_evidence_constrained_selective_physical_state_completion
+
+user_overrides:
+  add_hash_checksum_or_fingerprint: false
+  excessive_validation_or_gating: false
+  validation_policy: one_narrow_check_per_material_mechanism_change
+  experiment_policy: small_milestones_commit_and_push
+
+v61_frozen_premise:
+  status: v61_minimum_experiment_closed_negative
+  legacy_case_count: 28
+  r10_accept_count: 3
+  oracle_accept_count: 10
+  oracle_false_safe_count: 0
+  gaussianworld_accept_count: 10
+  gaussianworld_false_safe_count: 10
+  irwm_accept_count: 10
+  irwm_false_safe_count: 10
+  immutable: true
+
+method_contract:
+  hard_evidence: [FREE, OCCUPIED, CONTRADICTION]
+  contradiction_output: UNKNOWN
+  learned_prior: frozen_IR-WM
+  prior_authority: defeasible_soft_prior
+  output_states: [FREE, OCCUPIED, UNKNOWN]
+  hidden_evaluator_is_method_input: false
+  irwm_training_allowed: false
+  third_backend_search_allowed: false
+
+logical_inputs:
+  legacy_mechanism_benchmark: run://worldsim_v61/frozen_legacy28
+  development: data://worldsim_v62/tier_D
+  calibration: data://worldsim_v62/tier_C
+  confirmation: data://worldsim_v62/tier_H_locked
+  exact_once_test: data://worldsim_v62/tier_T_locked
+
+legacy_gate:
+  minimum_accept_count: 5
+  maximum_false_safe_count: 0
+  retain_r10_accept_count: 3
+  minimum_new_actor_cases: 1
+  minimum_new_static_or_disocclusion_cases: 1
+  minimum_accepted_mask_area_fraction: 0.12
+  minimum_safe_occ_retention_fraction: 0.50
+  reject_all_unknown: true
+
+stage_order:
+  - P0_scope_freeze
+  - P1_novelty_audit
+  - P2_evidence_query_dataset
+  - P3_feasibility_projection
+  - P4_irwm_prior_sidecar
+  - P5_cpsc_lite_training
+  - P6_legacy28_minimum_experiment
+  - P7_fresh_development
+  - P8_grouped_conformal_calibration
+  - P9_one_shot_confirmation
+  - P10_exact_once_test
+
+resources_at_freeze:
+  gpu: NVIDIA_RTX_3090_24GB
+  gpu_idle: true
+  disk_free_gib_approx: 65
+  research_gpu_processes: 0
+  training_peak_vram_limit_gib: 18
+  hard_stop_peak_vram_gib: 22
+  training_wall_limit_hours: 12
+  incremental_disk_limit_gib: 20
+
+failure_ledger_refs: [V62-F01, V61-F11, V61-F13]
+outcome: done_scope_frozen
+next_task: WS-V62-P1-NOVELTY-AUDIT-01

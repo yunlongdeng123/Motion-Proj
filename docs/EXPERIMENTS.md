@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.2 P0 SCOPE FREEZE DONE / P1 PRE-REGISTERED（2026-08-24）
+
+- task=`WS-V62-P0-SCOPE-FREEZE-01`，branch=`research/worldsim-v6.2-cpsc`，base=`main@c8e9dee`，
+  outcome=`done_scope_frozen`；没有训练、推理、GPU 计算或 confirmation/test read。
+- V6.1 frozen premise：oracle=`10/28, 0 false-safe`；GaussianWorld 与 IR-WM 都是 `10/28`，但各自 accepted cases
+  全部 `10/10 false-safe`。V6.2 不修改或重跑这些终态。
+- CPSC 最小机制 gate 固定为 `>=5/28 ACCEPT`、`false-safe=0`、保留 R10 `3/3`、至少新增 1 actor 与
+  1 static/disocclusion、accepted mask-area `>=12%`，并用 safe-OCC retention/UNKNOWN 上限拒绝 all-UNKNOWN。
+- fresh 数据纪律固定为 development → calibration → one-shot confirmation → exact-once test；后两者保持未读。
+- 用户执行约束已写入 V6.2 合同：不新增哈希/校验和/指纹，不做过度校验和门控，只运行与当前机制风险相称的精简验证。
+- P0 resource snapshot：RTX 3090 24GB 空闲，磁盘约 65GB 可用，无研究 GPU 进程。failure ledger refs=
+  `V62-F01,V61-F11,V61-F13`，failure ledger delta=`V62-F01`（继承的研究根因，不是 P0 工程失败）。
+- P1=`WS-V62-P1-NOVELTY-AUDIT-01` 已预注册：只回答是否已有工作同时覆盖 hard FREE/OCC、learned prior、
+  selective UNKNOWN、proposal bake 与 world-simulation false-safe evaluation；发现直接重合时先改贡献，不编码。
+
 ## WorldSim V6.1 ME-3R IR-WM REJECTED / ROUTE CLOSED（2026-08-22）
 
 - canonical=`run://worldsim_v61/WS-V61-ME3R-IRWM-PREDICTED-OCC-01/20260822T145543Z__irwm-predicted-occ-s1-r1`，

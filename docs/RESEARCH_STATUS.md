@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.2 CPSC P0 范围已冻结，P1 新颖性审计启动（2026-08-24）
+
+状态：`p0_scope_frozen / p1_novelty_audit_in_progress`；active task=`WS-V62-P1-NOVELTY-AUDIT-01`。
+
+V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
+`v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
+FREE/OCC 作为前向硬约束、learned Occupancy 作为可推翻软先验，并对证据不足或矛盾区域输出 UNKNOWN。
+
+P0 冻结了 legacy28 机制门槛、fresh development/calibration/confirmation/test 的数据纪律、IR-WM frozen 边界和
+单卡 3090 资源上限。按用户约束，V6.2 新产物不加入哈希、校验和或指纹，也不复制 V6.1 的重审计/重门控体系；身份以
+逻辑路径、语义版本、task/run ID 和 Git 提交记录为准，只保留与科学结论直接相关的精简验证。
+
+当前资源快照：RTX 3090 24GB 空闲，`/root/autodl-tmp` 可用约 65GB，无在跑研究 GPU 进程。confirmation 与 exact-once
+test 保持未读、未解锁。P1 将先核对 ReliOcc、OCCUQ、alpha-OCC、EvOcc、QueryOcc、SUG-Occ、OccAny、
+GaussianFlowOcc 及硬约束投影相关工作；确认不存在“硬观测证据 + 可推翻 prior + selective UNKNOWN + proposal bake +
+world-simulation false-safe”直接重合后，才进入 P2/P3 实现。
+
+范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
+`docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；继承失败边界=`V62-F01,V61-F11,V61-F13`。
+
 ## WorldSim V6.1 minimum experiment 已负结论收口（2026-08-22）
 
 状态：`v61_minimum_experiment_closed_negative`；当前无 active hypothesis，ME-4 未执行且不再授权。
