@@ -103,6 +103,14 @@ actor-temporal/prior-preserve，hard-conflict target不反向要求模型违反m
 accum2, AdamW 3e-4, max12 epochs, min4/patience3`，仅运行seed0。先做一次8 optimizer-step capacity probe，
 通过后直接全量训练；failure ledger delta=`none`。
 
+P5 capacity canonical=
+`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092410Z__cpsc-lite-capacity-s0-r1` 已通过：
+3个train units、1个selection unit、8 optimizer steps，608,366 parameters，prior/query dims=`278/13`，FP16 peak=
+`0.3724GiB`、wall=`4.91s`，finite best objective=`2.13624`，hard violation=`0`。8步 learned 与projection-only
+只作非退化诊断：target accuracy=`0.4233 vs 0.3713`、safe-OCC retention=`0.9569 vs 0.9502`、UNKNOWN fraction=
+`0.1773 vs 0.0767`，但hidden-FREE false-OCC=`0.2680 vs 0.2616` 尚未改善；因此不宣称质量pass/fail，只说明
+loader/forward/backward/projection/resource合同成立。下一步直接formal 48/24-unit bounded training，不调loss/threshold。
+
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
 `V62-F01,V61-F11,V61-F13`。

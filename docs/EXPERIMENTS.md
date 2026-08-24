@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.2 P5 CPSC-LITE CAPACITY PROBE PASS / FORMAL READY（2026-08-24）
+
+- canonical=`run://worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092410Z__cpsc-lite-capacity-s0-r1`，
+  source=`1579780`，mode=`probe`；train=scene-0071前3 units，selection=scene-0450/f017，8 optimizer steps。
+- model=`608,366 params`，prior/query feature dims=`278/13`；FP16 peak=`0.37242GiB`，wall=`4.914s`，best/final
+  objective=`2.136239`，loss finite，BEST/FINAL checkpoints均形成。
+- selection exact constraints=`53,106 rows / 0 violations`；target accuracy learned/projection-only=`0.42334/0.37128`，
+  safe-OCC retention=`0.95694/0.95024`，predicted UNKNOWN=`0.17729/0.07665`，unconstrained UNKNOWN=
+  `0.33721/0.14579`。没有all-UNKNOWN collapse。
+- hidden-FREE denominator=`1,250`；learned false-OCC=`0.2680`，projection-only=`0.2616`。8-step probe尚未改善该主风险，
+  只通过capacity contract，不用于晋级/调参，也不据此修改loss、split、threshold或seed。
+- target evidence method input=`false`；IR-WM resident=`false`；legacy O_eval/confirmation/test未读；hash/checksum/
+  fingerprint未加。failure ledger delta=`none`。
+- decision=`run_formal_seed0_48_train_units_24_selection_units`，不再增加smoke。
+
 ## WorldSim V6.2 P5 CPSC-LITE DESIGN FROZEN / CAPACITY PROBE READY（2026-08-24）
 
 - task=`WS-V62-P5-CPSC-LITE-TRAIN-01`，hypothesis=`WS-V62-H-P5-001`。metadata-only split：train=
