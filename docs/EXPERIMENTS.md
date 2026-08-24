@@ -1,5 +1,23 @@
 # Experiments
 
+## WorldSim V6.2 P2 QUERY PROBE PASS / FORMAL READY（2026-08-24）
+
+- canonical probe=`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082318Z__query-probe-s20260824-r2`，
+  mode=`probe`，scene-0071/f017，outcome=`done_resource_and_query_denominator_passed`。
+- 100,000 queries exact quotas：hard FREE/OCC=`25k/15k`、behind-hit UNKNOWN=`25k`、boundary=`15k`、actor
+  envelope=`15k`、contradiction=`5k`。候选池最小值分别 `168487/11936/13282/382175/150158/5849`；不足配额的
+  hard OCC 只在本 training unit 内有放回过采样，不删 query class。
+- method evidence=`168,487 FREE / 11,936 OCC / 4,923 contradiction / 6,854 actor hits / 15 actors`；
+  motion-compensated dynamic points=`28,826`。query target supervision=`38,088/100,000`；actor-bound rows=
+  `36,786`。source role overlap=`0`。
+- resource=`2,036,102 bytes / 2.96s / CPU only`。按72 units 线性估计约140MiB且远低于2GiB P2预算；formal 固定
+  two workers，不再增加 smoke。
+- r1 probe=`20260824T082217Z__query-probe-s20260824-r1` 只完成相同资源/池探针，但字段 `method/target_state`
+  沿用 V6.1 `U/F/O=0/1/2`，可能与 P3 `F/O/U=0/1/2` 模型类别歧义；在任何训练/结果前废止。r2 同时保存明确的
+  `*_evidence_state` 和 remapped `*_class_index`，范围均0..2。failure ledger delta=`V62-F02 resolved`。
+- 未读 quality/O_eval/confirmation/test，无 GPU/model/hash/checksum/fingerprint。下一动作：从 clean commit 运行72-unit
+  formal materialization，生成计划要求的五个 manifest。
+
 ## WorldSim V6.2 P2 DEVELOPMENT COHORT FREEZE PASS（2026-08-24）
 
 - task=`WS-V62-P2-EVIDENCE-QUERY-DATASET-01`，substage=`cohort_freeze`，outcome=

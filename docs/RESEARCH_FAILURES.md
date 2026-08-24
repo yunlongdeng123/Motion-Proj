@@ -67,7 +67,7 @@
 | V5.2 | 18-case 人工复核冻结 `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`；M1/M3 症状匹配增强但 causal bridge 未通过，M2 降级为 safety/abstention | 原 census 的 actor/boundary 指标可被 global collapse 污染；eligible case 必须保持 `5 Discovery design + 3 one-shot Confirmation` | `V52-F01`–`V52-F02` |
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
-| V6.2 | P0 scope frozen，P1 novelty audit active；研究 hard-evidence-constrained、selective FREE/OCC/UNKNOWN physical state completion | 不得把 O_eval 引入方法；不得用 all-UNKNOWN 冒充安全；按用户约束不新增哈希/校验和/指纹或重审计框架 | `V62-F01`；V6.2 plan、P0 scope freeze |
+| V6.2 | P3 hard projection passed；P2 六场景/72-unit cohort frozen，query probe passed，formal materialization ready | 不得把 O_eval 引入方法或用 all-UNKNOWN 冒充安全；evidence state 与 model class index 编码必须显式分开；不新增哈希/校验和/指纹或重审计框架 | `V62-F01`–`V62-F02`；V6.2 plan、P0/P1/P2/P3 docs |
 
 ### 1.1 V1 汇总条目
 
@@ -139,6 +139,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   已达 `>=5/28, 0 false-safe`，应诚实转为 projection-only compiler。证据=`V61-F11,V61-F13`、
   `docs/autoresearch/worldsim_v61/V61_MINIMUM_EXPERIMENT_CLOSEOUT.md`、
   `docs/WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md`。
+- `V62-F02`（`data/protocol`, `resolved`）：P2 r1 query probe 的 `method/target_state` 沿用 V6.1 evidence 编码
+  `UNKNOWN/FREE/OCCUPIED=0/1/2`，而 P3 model distribution 固定 `FREE/OCCUPIED/UNKNOWN=0/1/2`；字段名未显式区分，
+  若直接训练会静默互换 UNKNOWN/FREE/OCC 标签。r1 只做 CPU 资源/池探针，未训练、未产出科学结果或 formal dataset。
+  r2 在任何 formal materialization 前把字段拆成 `*_evidence_state` 与 remapped `*_class_index`，并确认两者范围0..2；
+  canonical probe=`20260824T082318Z__query-probe-s20260824-r2`。防重复：loader 只能把 `target_class_index` 送入
+  three-state loss，把 `*_evidence_state` 作为 hard-evidence feature；禁止依赖裸整数碰巧相同或在 loader 中无名 remap。
 
 <a id="detail-v61"></a>
 

@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P2 development cohort 已冻结，query materialization 启动（2026-08-24）
+## WorldSim V6.2 CPSC P2 query probe 通过，全量 materialization 就绪（2026-08-24）
 
-状态：`p2_cohort_frozen / p2_query_materialization_in_progress`；active task=
+状态：`p2_query_probe_passed / p2_formal_materialization_ready`；active task=
 `WS-V62-P2-EVIDENCE-QUERY-DATASET-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
@@ -32,9 +32,15 @@ train，覆盖 Boston/Singapore、day/dusk/night、dry/rain。每场固定 12 �
 method candidate offsets=`[-6,-4,-2,0]`，每个 target 轮换留出一个 dropout sweep，其余三个作为 method input，独立
 target offsets=`[-5,-3,-1,1]`。所有 processed scene 均有 6-camera、LiDAR、pose，最短 scene 191 帧，覆盖最大 offset。
 
-下一步只实现 geometry/evidence query materializer；不读取 occupancy quality、proposal outcome、O_eval、confirmation 或
-test。完整 P1/P3/P2 cohort 见 `docs/autoresearch/worldsim_v62/`，P2 config=
-`configs/worldsim_v62/p2_development_cohort_v1.yaml`。
+P2 materializer 已在 scene-0071/f017 做单 unit、无质量读取的资源/类别探针。r2 canonical probe=
+`run://worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T082318Z__query-probe-s20260824-r2`：100k
+queries，六类 candidate pool 全部非空，source role overlap=`0`，disk=`2,036,102 bytes`，wall=`2.96s`。method 包含
+168,487 FREE、11,936 OCC、4,923 contradictions、6,854 motion-compensated actor hits；target supervised query=
+38,088/100,000。
+
+r1 probe 在科学执行前暴露 V6.1 evidence state=`U/F/O 0/1/2` 与 P3 model class index=`F/O/U 0/1/2` 的潜在歧义，
+没有被用于训练或结果；r2 已显式同时保存 `*_evidence_state` 与 `*_class_index`，登记 `V62-F02 resolved`。下一步从已推送
+的干净实现运行72-unit formal materialization；仍不读取 occupancy quality、proposal outcome、O_eval、confirmation/test。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=

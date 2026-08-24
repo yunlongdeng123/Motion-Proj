@@ -35,6 +35,37 @@ sweep_roles:
   target_evidence_offsets: [-5, -3, -1, 1]
   cross_target_window_overlap: false
 
+grid:
+  frame: target_lidar
+  axis_convention: x_forward_y_left_z_up
+  origin_m: [-20.0, -30.0, -3.0]
+  extent_m: [40.0, 30.0, 5.0]
+  voxel_size_m: 0.2
+
+raw_lidar:
+  point_record_float32_width: 4
+  dynamic_box_margin_m: 0.05
+
+ray_carving:
+  maximum_rays_per_sweep: 4096
+  maximum_range_m: 80.0
+  behind_hit_steps: 3
+
+queries:
+  seed: 20260824
+  count_per_target: 100000
+  quotas:
+    hard_free: 25000
+    hard_occupied: 15000
+    behind_hit_unknown: 25000
+    evidence_boundary: 15000
+    actor_envelope: 15000
+    contradiction: 5000
+  prior_features: attach_in_P4_at_same_query_coordinates
+  temporal_features: derive_from_visible_and_dropout_sweep_roles
+  evidence_state_encoding: {unknown: 0, free: 1, occupied: 2}
+  model_class_index_encoding: {free: 0, occupied: 1, unknown: 2}
+
 scenes:
   - name: scene-0071
     processed_index: 68
