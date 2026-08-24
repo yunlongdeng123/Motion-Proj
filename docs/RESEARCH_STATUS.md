@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P0 范围已冻结，P1 新颖性审计启动（2026-08-24）
+## WorldSim V6.2 CPSC P1 新颖性审计通过，P3 硬投影算子启动（2026-08-24）
 
-状态：`p0_scope_frozen / p1_novelty_audit_in_progress`；active task=`WS-V62-P1-NOVELTY-AUDIT-01`。
+状态：`p1_novelty_audit_passed / p3_projection_pre_registered`；active task=`WS-V62-P3-FEASIBILITY-PROJECTION-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
 `v61_minimum_experiment_closed_negative` 保持不可变；V6.2 不再遍历第三个 Occupancy backend，而是研究 CPSC：把真实
@@ -12,13 +12,21 @@ P0 冻结了 legacy28 机制门槛、fresh development/calibration/confirmation/
 单卡 3090 资源上限。按用户约束，V6.2 新产物不加入哈希、校验和或指纹，也不复制 V6.1 的重审计/重门控体系；身份以
 逻辑路径、语义版本、task/run ID 和 Git 提交记录为准，只保留与科学结论直接相关的精简验证。
 
-当前资源快照：RTX 3090 24GB 空闲，`/root/autodl-tmp` 可用约 65GB，无在跑研究 GPU 进程。confirmation 与 exact-once
-test 保持未读、未解锁。P1 将先核对 ReliOcc、OCCUQ、alpha-OCC、EvOcc、QueryOcc、SUG-Occ、OccAny、
-GaussianFlowOcc 及硬约束投影相关工作；确认不存在“硬观测证据 + 可推翻 prior + selective UNKNOWN + proposal bake +
-world-simulation false-safe”直接重合后，才进入 P2/P3 实现。
+P1 只读一手论文/官方仓库后未发现同时覆盖“硬观测 FREE/OCC + 可推翻 learned prior + selective UNKNOWN + proposal
+bake/collision asset + world-simulation false-safe”的直接重合，novelty gate 通过。但单组件均有强先例：ReliOcc/OCCUQ
+覆盖可靠性与 uncertainty，EvOcc 覆盖冲突/未知证据，alpha-OCC 覆盖分层保形集合，QueryOcc/DIO 覆盖 4D query 与
+留出补全，HardNet/可微投影覆盖硬约束，MultiSafe 已把 conformal 用于 false-safe 控制。因此 CPSC 的可主张贡献被收窄为
+`hard-evidence-constrained physical-state compilation` 的完整任务/接口/评测组合，不能把 uncertainty、三态、query、
+projection、conformal 或 evidence dropout 单独写成新贡献。
+
+迁移按 operator-first 执行：P3 先实现独立于 V6.1 重审计 runner 的小型 PyTorch closed-form projection，约束优先级固定为
+`contradiction > observed FREE/OCC > lifecycle > soft prior`；只在真实 fixture 稳定后，P2 再围绕该 contract 构建 query
+dataset。confirmation 与 exact-once test 继续未读、未解锁。完整 P1 见
+`docs/autoresearch/worldsim_v62/P1_NOVELTY_AUDIT.md`。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
-`docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；继承失败边界=`V62-F01,V61-F11,V61-F13`。
+`docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
+`V62-F01,V61-F11,V61-F13`。
 
 ## WorldSim V6.1 minimum experiment 已负结论收口（2026-08-22）
 

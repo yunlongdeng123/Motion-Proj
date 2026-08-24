@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6.2 P1 NOVELTY AUDIT PASS / P3 PRE-REGISTERED（2026-08-24）
+
+- task=`WS-V62-P1-NOVELTY-AUDIT-01`，hypothesis=`WS-V62-H-P1-001`，outcome=`done_no_direct_overlap`；
+  网络/CPU only，无训练、推理、GPU、数据 split 或 confirmation/test read。
+- 一手来源覆盖 ReliOcc、OCCUQ、alpha-OCC、EvOcc、QueryOcc、SUG-Occ、OccAny、GaussianFlowOcc、DIO、
+  Differentiable Projection、HardNet、PCFM、MultiSafe 与 world-model admissibility。逐组件均已有强先例，但未发现单一工作
+  同时实现 hard FREE/OCC、defeasible learned prior、selective UNKNOWN、proposal bake/collision asset 和 driving-world
+  false-safe evaluation。
+- novelty decision：CPSC 只主张该完整组合在 verifiable driving world compilation 中的任务与方法增量；不把
+  uncertainty head、FREE/OCC/UNKNOWN、4D query、evidence dropout、differentiable projection 或 conformal prediction
+  单独写成贡献。DIO 的 observation withholding 使 counterfactual evidence dropout 也只能作为训练机制。
+- project migration：复用 V6.1 `VoxelGridSpec`/ray/actor 语义与 frozen IR-WM 资产，但不复用其哈希驱动 runner；新增
+  `motion_proj/worldsim_v62` 小模块。P3 第一版只做 closed-form exact projection，不引入通用凸优化器、SparseConv 或
+  Transformer；约束项 separable，保留 unconstrained query 的梯度。
+- P3=`WS-V62-P3-FEASIBILITY-PROJECTION-01` 已预注册：一次 synthetic 单元验证覆盖 FREE/OCC/contradiction/lifecycle/
+  simplex/finite gradient，再用一个 V6.1 真实 evidence fixture 做窄集成检查。failure ledger delta=`none`。
+
 ## WorldSim V6.2 P0 SCOPE FREEZE DONE / P1 PRE-REGISTERED（2026-08-24）
 
 - task=`WS-V62-P0-SCOPE-FREEZE-01`，branch=`research/worldsim-v6.2-cpsc`，base=`main@c8e9dee`，
