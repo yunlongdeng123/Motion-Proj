@@ -1,0 +1,91 @@
+schema_version: worldsim_v62.p2_development_cohort.v1
+task_id: WS-V62-P2-EVIDENCE-QUERY-DATASET-01
+hypothesis_id: WS-V62-H-P2-001
+substage: cohort_freeze
+outcome: done_metadata_only_cohort_frozen
+
+selection:
+  official_dataset: nuScenes-v1.0-trainval
+  official_split: train
+  source_cohort: repo://configs/worldsim_v4/nuscenes_cohort_v1.yaml#validation
+  use_complete_source_cohort: true
+  use_model_or_quality_results: false
+  excluded_legacy_scenes: [scene-0048, scene-0242]
+  rationale: complete_pre_v62_metadata_only_scene_disjoint_cohort
+
+logical_roots:
+  metadata: data://worldsim_v4/drivestudio_raw_trainval/v1.0-trainval
+  processed: data://worldsim_v4/drivestudio_processed_10Hz/trainval
+
+sensors:
+  cameras: [CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT]
+  processed_camera_ids: [0, 1, 2, 3, 4, 5]
+  lidar: LIDAR_TOP
+
+targets:
+  frame_indices: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+  target_count_per_scene: 12
+  target_unit_count: 72
+  minimum_processed_frame_count: 191
+
+sweep_roles:
+  method_candidate_offsets: [-6, -4, -2, 0]
+  dropout_rule: method_candidate_offsets[target_ordinal_mod_4]
+  visible_method_count: 3
+  target_evidence_offsets: [-5, -3, -1, 1]
+  cross_target_window_overlap: false
+
+scenes:
+  - name: scene-0071
+    processed_index: 68
+    processed_frame_count: 196
+    location: boston-seaport
+    time_of_day: day
+    weather: dry_or_unspecified
+    eligible_actor_count_metadata: 32
+  - name: scene-0317
+    processed_index: 251
+    processed_frame_count: 191
+    location: singapore-queenstown
+    time_of_day: day
+    weather: dry_or_unspecified
+    eligible_actor_count_metadata: 6
+  - name: scene-0450
+    processed_index: 364
+    processed_frame_count: 196
+    location: boston-seaport
+    time_of_day: day
+    weather: rain
+    eligible_actor_count_metadata: 71
+  - name: scene-0862
+    processed_index: 652
+    processed_frame_count: 196
+    location: singapore-queenstown
+    time_of_day: dusk
+    weather: dry_or_unspecified
+    eligible_actor_count_metadata: 11
+  - name: scene-1012
+    processed_index: 770
+    processed_frame_count: 196
+    location: singapore-queenstown
+    time_of_day: night
+    weather: dry_or_unspecified
+    eligible_actor_count_metadata: 8
+  - name: scene-1089
+    processed_index: 829
+    processed_frame_count: 196
+    location: singapore-hollandvillage
+    time_of_day: night
+    weather: dry_or_unspecified
+    eligible_actor_count_metadata: 7
+
+locks:
+  occupancy_quality_read: false
+  proposal_outcome_read: false
+  legacy_O_eval_read: false
+  calibration_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  content_hash_checksum_fingerprint: false
+
+next_substage: geometry_evidence_query_materialization

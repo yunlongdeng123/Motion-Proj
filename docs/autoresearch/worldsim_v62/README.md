@@ -5,6 +5,7 @@
 - `SCOPE_FREEZE.md`：P0 科学范围、用户约束与资源边界。
 - `P1_NOVELTY_AUDIT.md`：P1 一手来源组件/组合新颖性审计与迁移边界。
 - `P3_FEASIBILITY_PROJECTION.md`：P3 最小硬投影实现、真实 fixture 与裁决。
+- `P2_COHORT_FREEZE.md`：P2 metadata-only 六场景、target 与 sweep 角色冻结。
 - `AUTORESEARCH_STATE.json`：唯一机器可读当前状态。
 - `HYPOTHESES.jsonl`：预注册假设与状态。
 - `REFLECTIONS.jsonl`：每轮观察、诊断、决策与去向。

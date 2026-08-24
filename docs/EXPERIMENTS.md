@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.2 P2 DEVELOPMENT COHORT FREEZE PASS（2026-08-24）
+
+- task=`WS-V62-P2-EVIDENCE-QUERY-DATASET-01`，substage=`cohort_freeze`，outcome=
+  `done_metadata_only_cohort_frozen`；P2 hypothesis 继续 active，尚未产出 query dataset。
+- cohort=`scene-0071/0317/0450/0862/1012/1089`：完整采用早于 V6.2 的 V4 metadata-only validation cohort，不按
+  模型、Occupancy、proposal 或渲染结果挑选；官方 split audit=`6 selected / 6 in nuScenes train`。
+- 覆盖：Boston/Singapore，day/dusk/night，dry/rain；metadata eligible actor count=`6..71`。processed inputs 全部具备
+  6-camera images/extrinsics、6 intrinsics、LiDAR 与 LiDAR pose；五场196帧，scene-0317为191帧。
+- 每场12 targets=`[17,32,47,62,77,92,107,122,137,152,167,182]`，总计72 target units。每 target 的
+  method candidate=`[-6,-4,-2,0]`，按 target ordinal 轮换留出一个 dropout sweep，target evidence=
+  `[-5,-3,-1,1]`；角色路径互斥，相邻 target 的 source window 不重叠。
+- 无模型、GPU、O_eval、quality、confirmation/test 或新完整性机制。failure ledger delta=`none`；下一 substage=
+  `geometry_evidence_query_materialization`。
+
 ## WorldSim V6.2 P3 FEASIBILITY PROJECTION PASS / P2 PRE-REGISTERED（2026-08-24）
 
 - canonical=`run://worldsim_v62/WS-V62-P3-FEASIBILITY-PROJECTION-01/20260824T080731Z__projection-s0-r1`，

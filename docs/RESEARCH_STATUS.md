@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.2 CPSC P3 硬投影算子通过，P2 evidence-query dataset 启动（2026-08-24）
+## WorldSim V6.2 CPSC P2 development cohort 已冻结，query materialization 启动（2026-08-24）
 
-状态：`p3_projection_passed / p2_evidence_query_dataset_pre_registered`；active task=
+状态：`p2_cohort_frozen / p2_query_materialization_in_progress`；active task=
 `WS-V62-P2-EVIDENCE-QUERY-DATASET-01`。
 
 V6.2 已从 V6.1 最小实验负结论的 `main@c8e9dee` 新建分支 `research/worldsim-v6.2-cpsc`。V6.1 终态
@@ -26,10 +26,15 @@ scene-0048/f052 `O_method` fixture 抽样 48 query，hard FREE/OCC、contradicti
 均为 `0`，梯度 finite，未约束 query 梯度非零；第二个 fresh process 结果一致。canonical=
 `run://worldsim_v62/WS-V62-P3-FEASIBILITY-PROJECTION-01/20260824T080731Z__projection-s0-r1`。
 
-P2 将围绕该 operator contract，从 nuScenes train split 仅按 metadata 选择 6 个 fresh development scenes；先冻结
-scene/target/sweep 分配，再构建 method evidence、dropout target 与 target evidence。confirmation 与 exact-once test
-继续未读、未解锁。完整 P1/P3 见 `docs/autoresearch/worldsim_v62/P1_NOVELTY_AUDIT.md` 和
-`docs/autoresearch/worldsim_v62/P3_FEASIBILITY_PROJECTION.md`。
+P2 已冻结 6 个 scene-disjoint development scenes：`scene-0071/0317/0450/0862/1012/1089`。该集合完整复用 V4 在
+V6.2 结果出现前、仅按 metadata 冻结的 validation 六场景，不从已有质量结果里选子集；6/6 均属于 nuScenes 官方
+train，覆盖 Boston/Singapore、day/dusk/night、dry/rain。每场固定 12 个 target=`17..182`、步长15，共72 units；
+method candidate offsets=`[-6,-4,-2,0]`，每个 target 轮换留出一个 dropout sweep，其余三个作为 method input，独立
+target offsets=`[-5,-3,-1,1]`。所有 processed scene 均有 6-camera、LiDAR、pose，最短 scene 191 帧，覆盖最大 offset。
+
+下一步只实现 geometry/evidence query materializer；不读取 occupancy quality、proposal outcome、O_eval、confirmation 或
+test。完整 P1/P3/P2 cohort 见 `docs/autoresearch/worldsim_v62/`，P2 config=
+`configs/worldsim_v62/p2_development_cohort_v1.yaml`。
 
 范围冻结见 `configs/worldsim_v62/p0_scope_freeze_v1.yaml` 与
 `docs/autoresearch/worldsim_v62/SCOPE_FREEZE.md`；P1 failure ledger delta=`none`，继承边界=
