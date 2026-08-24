@@ -19,6 +19,13 @@ proposal:
   actor_source: method_visible_current_and_swept_envelopes
   route_corridor: {x_min_m: 0.0, abs_y_max_m: 4.0, z_max_m: 1.0, minimum_fraction: 0.15}
   topology_changes_geometry: false
+point_payload:
+  signed_distance: exact_euclidean_to_method_visible_free_and_occupied
+  patch_coordinates: relative_to_patch_centroid
+  hard_evidence: [state, contradiction, behind_hit]
+  temporal_counts: [free, occupied, unknown, contradiction]
+  ray_hit_order: normalized_within_surface_ray_bundle
+  actor_support: [identity, current, swept, observed_hit]
 resources:
   maximum_workers: 2
   minimum_disk_free_gib: 20

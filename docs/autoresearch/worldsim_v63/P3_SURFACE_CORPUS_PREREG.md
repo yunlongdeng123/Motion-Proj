@@ -3,7 +3,7 @@
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
 - Status: `implementation ready / probe preregistered`
-- Current revision: `r4 degenerate-normal recovery ready`
+- Current revision: `r5 frozen-feature-schema recovery ready`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
 each method-visible current/swept envelope with identity preserved. Proposal geometry is declared before topology. Six-connected
@@ -31,3 +31,8 @@ calibration, confirmation or test read occurs in P3.
   confined to symmetric tiny components (101 affected, including 85 singletons) whose exposed-face sum and centroid direction both
   vanish. r4 deterministically orients only those ambiguous points toward the target sensor viewpoint; it preserves every proposal point,
   topology edge, patch assignment and gate. Failure=`V63-F05 resolved`.
+- r4 passed its implemented geometry gate with normal-valid 1.0, but a pre-formal comparison against P1 withheld full P3 promotion:
+  signed FREE/OCC distances, patch-local coordinates, behind-hit and temporal UNKNOWN were absent, while `ray_hit_order` contained raw
+  distance. r5 completes those frozen fields with exact EDT, relative coordinates and normalized per-bundle ordering, retains raw ray
+  distance separately, and adds actor observed-hit support. No proposal, label, topology, patch or quality-selection contract changes.
+  Failure=`V63-F06 resolved`.

@@ -14,6 +14,7 @@ from typing import Any
 
 import numpy as np
 import yaml
+from scipy import ndimage
 
 from motion_proj.worldsim_v61.occupancy import FREE, OCCUPIED, UNKNOWN, VoxelGridSpec
 from motion_proj.worldsim_v62.evidence import build_evidence_grid
@@ -118,9 +119,10 @@ def _temporal_support(
     method_frames: list[int],
     spec: VoxelGridSpec,
     cohort: dict[str, Any],
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     free_count = np.zeros(spec.shape, dtype=np.uint8)
     occupied_count = np.zeros(spec.shape, dtype=np.uint8)
+    unknown_count = np.zeros(spec.shape, dtype=np.uint8)
     contradiction_count = np.zeros(spec.shape, dtype=np.uint8)
     kwargs = {
         "record_width": int(cohort["raw_lidar"]["point_record_float32_width"]),
@@ -134,8 +136,18 @@ def _temporal_support(
         semantics = np.asarray(grid.arrays["semantics"])
         free_count += semantics == FREE
         occupied_count += semantics == OCCUPIED
+        unknown_count += semantics == UNKNOWN
         contradiction_count += np.asarray(grid.arrays["contradiction"], dtype=np.uint8)
-    return free_count, occupied_count, contradiction_count
+    return free_count, occupied_count, unknown_count, contradiction_count
+
+
+def _signed_distance_to_mask(mask: np.ndarray, voxel_size_m: float) -> np.ndarray:
+    values = np.asarray(mask, dtype=bool)
+    distance = ndimage.distance_transform_edt(~values, sampling=voxel_size_m).astype(np.float32)
+    if np.any(values):
+        inside = ndimage.distance_transform_edt(values, sampling=voxel_size_m)
+        distance[values] = -inside[values].astype(np.float32)
+    return distance
 
 
 def _compile_volume(
@@ -151,7 +163,11 @@ def _compile_volume(
     target: dict[str, np.ndarray],
     temporal_free: np.ndarray,
     temporal_occ: np.ndarray,
+    temporal_unknown: np.ndarray,
     temporal_contradiction: np.ndarray,
+    signed_distance_free_m: np.ndarray,
+    signed_distance_occupied_m: np.ndarray,
+    actor_observed_volume: np.ndarray | None,
     target_spec: VoxelGridSpec,
     source_origin_m: np.ndarray,
     source_voxel_size_m: float,
@@ -167,6 +183,7 @@ def _compile_volume(
         for name in (
             "grid_indices",
             "coordinates_m",
+            "patch_local_coordinates_m",
             "normals",
             "surface_index",
             "patch_index",
@@ -176,15 +193,22 @@ def _compile_volume(
             "target_state",
             "method_contradiction",
             "target_contradiction",
+            "method_behind_hit",
+            "target_behind_hit",
+            "signed_distance_free_m",
+            "signed_distance_occupied_m",
             "temporal_free_count",
             "temporal_occ_count",
+            "temporal_unknown_count",
             "temporal_contradiction_count",
             "ray_direction",
+            "ray_distance_m",
             "ray_hit_order",
             "ray_bundle_id",
             "actor_id",
             "actor_current_support",
             "actor_swept_support",
+            "actor_observed_hit_support",
             "authority_bits",
             "surface_type",
         )
@@ -234,6 +258,11 @@ def _compile_volume(
         if np.any(point_patch < 0):
             raise RuntimeError("unassigned surface point")
         coordinates = target_spec.indices_to_centers(surface_points).astype(np.float32)
+        patch_local_coordinates = np.empty_like(coordinates)
+        for members in patch_members:
+            patch_local_coordinates[members] = (
+                coordinates[members] - coordinates[members].mean(axis=0, keepdims=True)
+            )
         native_indices, native_valid = target_points_to_native_indices(
             coordinates,
             source_origin_m=source_origin_m,
@@ -246,17 +275,33 @@ def _compile_volume(
         azimuth = np.floor((np.arctan2(direction[:, 1], direction[:, 0]) + np.pi) / (2 * np.pi) * 72).astype(np.int32) % 72
         elevation = np.clip(np.floor((direction[:, 2] + 1.0) * 9).astype(np.int32), 0, 17)
         ray_bundle = azimuth * 18 + elevation
+        ray_hit_order = np.zeros(surface_points.shape[0], dtype=np.float32)
+        linear = np.ravel_multi_index(surface_points.T, target_spec.shape)
+        for bundle_id in np.unique(ray_bundle):
+            members = np.flatnonzero(ray_bundle == bundle_id)
+            ordered = members[np.lexsort((linear[members], distance[members]))]
+            if ordered.shape[0] > 1:
+                ray_hit_order[ordered] = np.arange(ordered.shape[0], dtype=np.float32) / float(
+                    ordered.shape[0] - 1
+                )
         idx = tuple(surface_points.T)
         method_state = np.asarray(method["semantics"])[idx]
         target_state = np.asarray(target["semantics"])[idx]
         method_contradiction = np.asarray(method["contradiction"])[idx]
         target_contradiction = np.asarray(target["contradiction"])[idx]
+        method_behind_hit = np.asarray(method["behind_hit"])[idx]
+        target_behind_hit = np.asarray(target["behind_hit"])[idx]
         closed = not bool(
             np.any(surface_points == 0)
             or np.any(surface_points == np.asarray(target_spec.shape)[None] - 1)
         )
         current_support = np.full(surface_points.shape[0], actor_current, dtype=bool)
         swept_support = np.full(surface_points.shape[0], actor_id >= 0, dtype=bool)
+        actor_observed_hit = (
+            np.asarray(actor_observed_volume, dtype=bool)[idx]
+            if actor_observed_volume is not None
+            else np.zeros(surface_points.shape[0], dtype=bool)
+        )
         authority = (
             (method_state == OCCUPIED).astype(np.uint8)
             | ((temporal_occ[idx] >= 2).astype(np.uint8) << 1)
@@ -309,6 +354,7 @@ def _compile_volume(
         )
         arrays["grid_indices"].append(surface_points.astype(np.int16))
         arrays["coordinates_m"].append(coordinates)
+        arrays["patch_local_coordinates_m"].append(patch_local_coordinates.astype(np.float16))
         arrays["normals"].append(normal.astype(np.float16))
         arrays["surface_index"].append(np.full(surface_points.shape[0], surface_index, dtype=np.int32))
         arrays["patch_index"].append(point_patch)
@@ -318,15 +364,22 @@ def _compile_volume(
         arrays["target_state"].append(target_state.astype(np.uint8))
         arrays["method_contradiction"].append(method_contradiction.astype(bool))
         arrays["target_contradiction"].append(target_contradiction.astype(bool))
+        arrays["method_behind_hit"].append(method_behind_hit.astype(bool))
+        arrays["target_behind_hit"].append(target_behind_hit.astype(bool))
+        arrays["signed_distance_free_m"].append(signed_distance_free_m[idx].astype(np.float16))
+        arrays["signed_distance_occupied_m"].append(signed_distance_occupied_m[idx].astype(np.float16))
         arrays["temporal_free_count"].append(temporal_free[idx].astype(np.uint8))
         arrays["temporal_occ_count"].append(temporal_occ[idx].astype(np.uint8))
+        arrays["temporal_unknown_count"].append(temporal_unknown[idx].astype(np.uint8))
         arrays["temporal_contradiction_count"].append(temporal_contradiction[idx].astype(np.uint8))
         arrays["ray_direction"].append(direction.astype(np.float16))
-        arrays["ray_hit_order"].append(distance.astype(np.float16))
+        arrays["ray_distance_m"].append(distance.astype(np.float16))
+        arrays["ray_hit_order"].append(ray_hit_order.astype(np.float16))
         arrays["ray_bundle_id"].append(ray_bundle.astype(np.int32))
         arrays["actor_id"].append(np.full(surface_points.shape[0], actor_id, dtype=np.int32))
         arrays["actor_current_support"].append(current_support)
         arrays["actor_swept_support"].append(swept_support)
+        arrays["actor_observed_hit_support"].append(actor_observed_hit)
         arrays["authority_bits"].append(authority)
         arrays["surface_type"].append(np.full(surface_points.shape[0], SURFACE_TYPE[surface_kind], dtype=np.uint8))
     return surfaces, patches, proposals, arrays
@@ -365,8 +418,15 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
     target_frames = [target_frame + int(value) for value in cohort["sweep_roles"]["target_evidence_offsets"]]
     if set(method_frames) & set(target_frames):
         raise RuntimeError("method/target frame overlap")
-    temporal_free, temporal_occ, temporal_contradiction = _temporal_support(
+    temporal_free, temporal_occ, temporal_unknown, temporal_contradiction = _temporal_support(
         scene_root, target_frame, method_frames, spec, cohort
+    )
+    method_semantics = np.asarray(method["semantics"])
+    signed_distance_free_m = _signed_distance_to_mask(
+        method_semantics == FREE, spec.voxel_size_m
+    )
+    signed_distance_occupied_m = _signed_distance_to_mask(
+        method_semantics == OCCUPIED, spec.voxel_size_m
     )
 
     actor_indices = np.asarray(method["actor_envelope_indices"], dtype=np.int32)
@@ -374,6 +434,11 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
     current_indices = np.asarray(method["actor_current_envelope_indices"], dtype=np.int32)
     current_ids = np.asarray(method["actor_current_envelope_ids"], dtype=np.int32)
     actor_maps = _actor_index_map(actor_indices, actor_ids, shape)
+    actor_hit_maps = _actor_index_map(
+        np.asarray(method["actor_hit_indices"], dtype=np.int32),
+        np.asarray(method["actor_hit_ids"], dtype=np.int32),
+        shape,
+    )
     current_actor_ids = set(int(value) for value in np.unique(current_ids) if int(value) >= 0)
     actor_union = _indices_mask(actor_indices, shape)
     static_volume = (native_occ | (np.asarray(method["semantics"]) == OCCUPIED)) & ~actor_union
@@ -406,7 +471,11 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
             target=target,
             temporal_free=temporal_free,
             temporal_occ=temporal_occ,
+            temporal_unknown=temporal_unknown,
             temporal_contradiction=temporal_contradiction,
+            signed_distance_free_m=signed_distance_free_m,
+            signed_distance_occupied_m=signed_distance_occupied_m,
+            actor_observed_volume=actor_hit_maps.get(actor_id),
             target_spec=spec,
             source_origin_m=np.asarray(config["native_grid"]["origin_m"], dtype=np.float64),
             source_voxel_size_m=float(config["native_grid"]["voxel_size_m"]),
@@ -471,6 +540,7 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
         "proposal_rows": unit_proposal_rows,
         "unit_path": str(unit_dir.relative_to(Path(task["run_dir"]))),
         "point_count": int(concatenated["grid_indices"].shape[0]),
+        "point_feature_fields": sorted(concatenated),
         "bytes": bytes_written,
         "wall_seconds": time.monotonic() - started,
     }
@@ -578,6 +648,9 @@ def run(
         "patch_count": len(patches),
         "proposal_count": len(proposals),
         "point_count": total_points,
+        "point_feature_fields": sorted(
+            {field for row in rows for field in row["point_feature_fields"]}
+        ),
         "surface_type_counts": {
             name: sum(row["surface_type"] == name for row in surfaces)
             for name in SURFACE_TYPE

@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE PROBE R4 GEOMETRY PASS / SCHEMA GATE WITHHELD（2026-08-24）
+
+- run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152300Z__surface-probe-s20260824-r4`；runner=
+  `passed=true`；`191 surfaces/498 patches/152226 points/2429675 bytes`；wall=`194.306s`。
+- geometry/resource=`minimum normal-valid 1.0, maximum patch 635<=2048, 8/8 negative contracts`；prototype/calibration/H/T
+  read=`false/false/false`。
+- pre-formal frozen-schema audit=`blocked`：缺signed FREE/OCC distance、patch-local xyz、behind-hit、temporal UNKNOWN；
+  `ray_hit_order`保存成raw distance而非bundle内normalized order。r4仅记geometry capability，不记完整P3 pass。
+- recovery=exact EDT + relative patch coordinate + explicit missing evidence/ray/actor fields；无quality-driven选择和新超参；
+  failure ledger delta=`V63-F06 resolved`；最后一个schema-complete revision 5 ready。
+
 ## WorldSim V6.3 P3 SURFACE PROBE R3 COMPLETE / NORMAL AMBIGUITY / R4 READY（2026-08-24）
 
 - canonical diagnostic=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151618Z__surface-probe-s20260824-r3`；

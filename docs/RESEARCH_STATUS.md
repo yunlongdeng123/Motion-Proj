@@ -1,8 +1,19 @@
 # Research Status
 
-## WorldSim V6.3 P3 surface probe r3 geometric diagnostic / r4 ready（2026-08-24）
+## WorldSim V6.3 P3 r4 geometry pass / frozen feature schema reconciliation r5 ready（2026-08-24）
 
-状态：`v63_p3_probe_r3_normal_ambiguity_blocked_r4_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p3_probe_r4_geometry_pass_schema_blocked_r5_ready`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+
+P3 r4=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152300Z__surface-probe-s20260824-r4`
+通过几何/资源门：`191 surfaces / 498 patches / 152,226 points`，minimum normal-valid=`1.0`、patch max=`635`、
+8/8 negative contracts、runner `passed=true`，wall=`194.306s`、output=`2,429,675 bytes`。但formal放行前与P1 frozen
+point schema逐字段对照发现：payload尚缺signed FREE/OCC distance、patch-local xyz、behind-hit与第四个temporal count，
+且`ray_hit_order`误存metric distance。r4只证明geometry capability，不能升级为完整P3 pass。
+
+按SciPy官方exact EDT补method-visible FREE/OCC signed distance；按Point Transformer的relative-position原则补patch-local
+coordinate；显式保存behind-hit、temporal UNKNOWN、ray distance和bundle内normalized hit order，并补actor observed-hit。
+这些是预冻结输入的实现补全，无新超参、无quality选择，不改变任何proposal/topology/label/gate；登记`V63-F06 resolved`，
+r5为最后一个schema-complete probe，通过后直接72-unit formal。
 
 P3 r3=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151618Z__surface-probe-s20260824-r3`
 首次完整构建出`191 surfaces / 498 patches / 152,226 points`，wall=`194.540s`、output=`2,429,273 bytes`；
@@ -80,7 +91,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；下一步重跑P3 probe revision 4，通过后直接构建D的完整surface corpus。
+P0/P1/P2/P2D 当前完成；下一步运行P3 schema-complete probe revision 5，通过后直接构建D的完整surface corpus。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
