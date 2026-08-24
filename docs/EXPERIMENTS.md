@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.3 P3 SURFACE CORPUS IMPLEMENTED / PROBE PRE-REGISTERED（2026-08-24）
+
+- task=`WS-V63-P3-SURFACE-CORPUS-01`；D denominator=`6 scenes/72 targets`。
+- proposal先于topology声明：static native/observed OCC与per-actor current/swept envelope；surface=6-connected boundary；
+  patch=`deterministic BFS 64/512/2048`；topology geometry mutation=`false`。
+- payload/registries覆盖native/evidence/temporal/ray/actor/authority/normal/target supervision；prototype=`false`。
+- 计划负向合同在run内执行一次；唯一probe=`scene-0071/f017`，通过后直接formal；calibration/H/T read=`false`；
+  failure ledger delta=`none`。
+
 ## WorldSim V6.3 P2D NATIVE POINTWISE REJECTED / P3 UNLOCKED（2026-08-24）
 
 - canonical=`run://worldsim_v63/WS-V63-P2D-NATIVE-POINTWISE-DIAGNOSTIC-01/20260824T145924Z__native-pointwise-s0-r1`。

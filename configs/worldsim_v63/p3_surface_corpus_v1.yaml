@@ -1,0 +1,32 @@
+schema_version: worldsim_v63.p3_surface_corpus.v1
+task_id: WS-V63-P3-SURFACE-CORPUS-01
+hypothesis_id: WS-V63-H-P3-001
+inputs:
+  p2_evidence_run: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2
+  p2_native_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+  development_cohort_config: /root/autodl-tmp/motion_proj/configs/worldsim_v62/p2_development_cohort_v1.yaml
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+  shape: [200, 200, 16]
+patch:
+  minimum_points: 64
+  target_points: 512
+  maximum_points: 2048
+proposal:
+  static_source: native_argmax_occupied_plus_observed_occupied
+  actor_source: method_visible_current_and_swept_envelopes
+  route_corridor: {x_min_m: 0.0, abs_y_max_m: 4.0, z_max_m: 1.0, minimum_fraction: 0.15}
+  topology_changes_geometry: false
+resources:
+  maximum_workers: 2
+  minimum_disk_free_gib: 20
+locks:
+  prototype_bridge: false
+  target_labels_only_for_supervision_and_corpus_stats: true
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V62-F06, V63-F02]

@@ -4,6 +4,11 @@
 
 状态：`v63_p2d_native_pointwise_rejected_surface_root_active`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
 
+P3实现/输入合同已冻结：static proposal=`native occupied + observed OCC - actor envelopes`，Actor proposal按method-visible
+current/swept actor ID分开；先声明volume再取6-connected boundary，拓扑不改几何。每点保存native mapping、normal、
+method/target/contradiction、逐method sweep时序support、ray bundle/order、actor identity/lifecycle与authority bits；patch按
+lexicographic BFS冻结为64/512/2048。仅运行一个`scene-0071/f017` probe，通过即72-unit formal。
+
 P2D native-to-pointwise interface与唯一 formal 已预注册：冻结 V6.2 P5 best，不训练、不调阈值，把 P2 完整 native
 logits/BEV 按真实网格坐标映射到 legacy 0.2m grid，并保持原 legacy28/P6 gate、method-before-O_eval 顺序。该诊断只有
 一次formal，不做capacity probe、seed或threshold sweep；结果无论正负均只裁决 prototype vs pointwise 根因。
