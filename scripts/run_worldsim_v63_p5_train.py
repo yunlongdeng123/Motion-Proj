@@ -547,6 +547,10 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.enable_flash_sdp(False)
+    torch.backends.cuda.enable_mem_efficient_sdp(False)
+    torch.backends.cuda.enable_math_sdp(True)
     device = torch.device(f"cuda:{int(config['resources']['gpu'])}")
     torch.cuda.set_device(device)
     torch.cuda.reset_peak_memory_stats(device)
@@ -563,7 +567,11 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
         lr=float(config["training"]["learning_rate"]),
         weight_decay=float(config["training"]["weight_decay"]),
     )
-    scaler = torch.cuda.amp.GradScaler(enabled=True)
+    scaler = torch.amp.GradScaler(
+        "cuda",
+        enabled=True,
+        init_scale=float(config["training"]["amp_initial_scale"]),
+    )
     alpha = float(config["risk"]["cvar_alpha"])
     accumulation = int(config["training"]["gradient_accumulation"])
     point_limit = int(config["training"]["point_microbatch"])
@@ -759,6 +767,9 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
         "passed": passed,
         "epoch_count": len(epoch_rows),
         "optimizer_steps": optimizer_step,
+        "amp_initial_scale": float(config["training"]["amp_initial_scale"]),
+        "amp_final_scale": float(scaler.get_scale()),
+        "attention_backend": str(config["training"]["attention_backend"]),
         "best_epoch": best_epoch,
         "best_objective": list(best_objective) if best_objective is not None else None,
         "best_selection": epoch_rows[best_epoch]["selection"] if best_epoch is not None else None,

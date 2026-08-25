@@ -25,6 +25,8 @@ training:
   learning_rate: 0.0002
   weight_decay: 0.01
   precision: fp16
+  amp_initial_scale: 1024.0
+  attention_backend: math
   point_microbatch: 8192
   gradient_accumulation: 4
   max_epochs: 12

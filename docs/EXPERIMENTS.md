@@ -19,7 +19,7 @@
   patch-local directed edges=`4/4`，且safe/unsafe分属不同chunk时unit ranking pair=`[(0,1)]`。没有真实训练或quality read；
   failure ledger delta=`V63-F11/F12/F13/F14 resolved_preexecution`。
 
-## WorldSim V6.3 P4 H-P4-002 COMPLETE-PROPOSAL CAPACITY READY（2026-08-25）
+## WorldSim V6.3 P4 H-P4-002 R1 ENGINEERING FAILED / R2 READY（2026-08-25）
 
 - H-P4-001=`withdrawn_preexecution`：前40个P3 units全部存在`>8192` proposal，最大=`173488` points，完整patch set最大
   `417`；first-chunk-only capacity不能测试冻结proposal token合同。真实P4 run/quality read均为`none/false`。
@@ -30,6 +30,13 @@
   heads求VJP，聚焦synthetic三条路径均finite/nonzero。既有gate与阈值不变。
 - earlier synthetic AMP与packed API工程恢复`V63-F08/F09`继续有效；新增failure ledger delta=
   `V63-F10/F15 resolved_preexecution`；P3 formal已pass，execution ready。
+- r1=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T045854Z__capacity-h002-s0-r1`；terminal=`passed=false`；
+  wall=`11.181s`、peak=`0.196070 GiB`、train/selection chunks=`16/16`、max full proposal points/patches=`117663/263`。
+- passing subcontracts=finite loss、direct CVaR gradients on all three heads、proposal-token gradient、hard violations=`0`、
+  checkpoint reload、both scene rows finite；failed=total gradient finite false、repeated/reload FP16 max diff both
+  `9.059906e-6 > exact 0`。quality/calibration/H/T read=`false/false/false`。
+- r2 bounded recovery=frozen FP16 with AMP initial scale `1024` plus deterministic math SDPA only；model/units/2 steps/accum4/
+  losses/gates/resources unchanged。failure delta=`V63-F17 active_recovery_ready`；r1 immutable。
 
 ## WorldSim V6.3 P3 72-UNIT FORMAL PASSED（2026-08-25）
 

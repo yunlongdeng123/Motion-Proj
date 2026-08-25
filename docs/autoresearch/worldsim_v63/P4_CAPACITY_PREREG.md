@@ -2,7 +2,7 @@
 
 - Task: `WS-V63-P4-CAPACITY-01`
 - Hypothesis: `WS-V63-H-P4-002`
-- Status: `implementation staged / execution ready after P3 formal pass`
+- Status: `r1 engineering failed / bounded r2 recovery ready`
 - Quality conclusion: forbidden
 
 Temporary synthetic interface history: r1 was rejected by PyTorch autocast at probability-form BCE before real data; the official AMP
@@ -63,3 +63,15 @@ The CVaR-gradient gate directly evaluates the VJP from `proposal_cvar.mean()` to
 `torch.autograd.grad`; it does not infer CVaR connectivity from a total gradient that also contains BCE. A focused synthetic returned
 finite nonzero gradients for all three heads. This corrects the measurement of the existing gate without adding a gate or denominator.
 Failure=`V63-F15 resolved_preexecution`.
+
+## H-P4-002 execution recovery
+
+R1=`20260825T045854Z__capacity-h002-s0-r1` exercised both complete train proposals and both complete selection proposals in 11.181
+seconds with 0.196070 GiB peak allocation. Losses and outputs were finite, direct proposal-CVaR gradients reached all three heads,
+proposal-token gradient was nonzero, hard violations were zero and checkpoint reload succeeded. It failed only because total FP16
+gradients contained nonfinite values and repeated/reloaded CUDA attention forwards differed by `9.059906e-6` from the exact-zero gate.
+
+The sole r2 recovery follows PyTorch's AMP and reproducibility guidance: retain FP16 but set the GradScaler initial scale to `1024`,
+disable flash and memory-efficient SDPA, enable math SDPA and deterministic algorithms. It does not alter model parameters, data,
+dropout, losses, optimizer settings, two steps, accumulation, pass gates or resource ceiling. R1 remains immutable and contains no
+quality conclusion. Failure=`V63-F17 active_recovery_ready`.

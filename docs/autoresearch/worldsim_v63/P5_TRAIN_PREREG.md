@@ -102,3 +102,7 @@ Thus ordinary weighted loss or target accuracy cannot overrule the frozen surfac
 promotion gates even though they follow tail risk in the P1-frozen checkpoint ordering. Selection labels come only from the two
 authorized Tier-D selection scenes. The best checkpoint and all semantic dropout selectors are saved without hashes, checksums or
 fingerprints. P5 produces a trained candidate but no promotion conclusion; only P6 matched AB can advance it. Tier C/H/T remain sealed.
+
+P5 inherits the P4 r1 numerical recovery before any training: FP16 GradScaler initial scale `1024`, deterministic algorithms and math
+SDPA only. This fixes execution numerics without changing the frozen optimizer, model, data, loss or selection protocol. P5 remains
+locked until P4 r2 passes.

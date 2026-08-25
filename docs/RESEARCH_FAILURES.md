@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 complete-proposal capacity ready；P5完整proposal接口预备但未执行 | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity及CVaR假梯度gate；P5修复nonzero API与chunk-local context/label/mask/authority/tail/ranking/edge及跨unit matching语义 | `V63-F01`–`V63-F16`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回，H002 r1数值工程失败、唯一有界r2 ready；P5完整proposal接口预备但未执行 | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA数值合同；P5修复nonzero API与chunk-local context/label/mask/authority/tail/ranking/edge及跨unit matching语义 | `V63-F01`–`V63-F17`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -313,6 +313,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
   `https://arxiv.org/abs/1803.09010`、
   `https://papers.neurips.cc/paper_files/paper/2024/file/605bbd006beee7e0589a51d6a50dcae1-Supplemental-Datasets_and_Benchmarks_Track.pdf`。
+
+- `V63-F17`（`engineering/numerics`, `active_recovery_ready`）：H-P4-002 r1 canonical=
+  `20260825T045854Z__capacity-h002-s0-r1`在11.181s完成全部2 train/2 selection complete proposals，peak仅
+  `0.196070 GiB`，finite loss、direct CVaR三head gradient、proposal-token gradient、hard violations=`0`、checkpoint
+  reload与selection finite均成立；但unscale后的total gradients含nonfinite，且same-model/reloaded FP16 forward max abs
+  difference均为`9.059906e-6`，所以冻结finite与exact-zero determinism gate诚实未过。没有quality conclusion、calibration、
+  confirmation或test read，不是资源/算法失败。PyTorch官方AMP文档说明默认initial scale可能使FP16 gradient overflow；
+  reproducibility文档说明CUDA SDPA不同backend/backward确定性不同，math backend配合deterministic algorithms可确定执行。
+  唯一有界r2恢复保留FP16但固定GradScaler initial scale=`1024`，禁用flash/memory-efficient SDPA、只启用math SDPA并开启
+  deterministic algorithms。模型、units、dropout、loss、optimizer LR/WD、2 steps、accum4、gate与22GiB ceiling均不变。
+  防重复：不得放宽exact-zero阈值、忽略nonfinite flag、增加steps或把r1写成quality negative；r2失败后必须按真实终态裁决。
+  证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  `https://docs.pytorch.org/docs/stable/amp.html`、
+  `https://docs.pytorch.org/docs/stable/notes/randomness.html`。
 
 <a id="detail-v62"></a>
 

@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.3 P3 formal passed / complete-proposal P4 capacity ready（2026-08-25）
+## WorldSim V6.3 P4 capacity r1 engineering failed / bounded recovery ready（2026-08-25）
 
-状态：`v63_p4_capacity_ready`；active task=`WS-V63-P4-CAPACITY-01`；active hypothesis=`WS-V63-H-P4-002`。
+状态：`v63_p4_capacity_recovery_ready`；active task=`WS-V63-P4-CAPACITY-01`；active hypothesis=`WS-V63-H-P4-002`。
 
 P3 canonical formal=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`
 正式通过：`6 scenes/72 targets`、`86,360 surfaces/111,282 patches/86,360 proposals/11,583,001 points`；
@@ -26,6 +26,14 @@ proposal interaction，不能证明冻结合同。按Set Transformer/Perceiver�
 P4原`cvar_gradient_nonzero`曾用会同时收到BCE梯度的hidden-free head总梯度做代理，可能假阳性；现用
 `autograd.grad(proposal_cvar.mean(), state/hidden-free/authority heads)`直接检查CVaR图，聚焦synthetic三条head路径均
 finite/nonzero，登记`V63-F15 resolved_preexecution`。既有gate含义被校正，未增加新gate或实验分母。
+
+P4 H002 r1=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T045854Z__capacity-h002-s0-r1`在11.181s终态
+`passed=false`：完整train/selection proposals执行，peak=`0.1961 GiB`、loss finite、direct CVaR三head gradient nonzero、
+proposal-token gradient nonzero、hard violations=`0`、checkpoint reload成功；但FP16总gradient出现nonfinite，且CUDA
+attention相同/重载forward max abs diff均=`9.0599e-6`，未过冻结的finite/exact-0 gate。PyTorch官方说明GradScaler初始
+scale可导致FP16 overflow，CUDA SDPA后端也有不同确定性；唯一有界恢复固定AMP initial scale=`1024`并禁用flash/
+memory-efficient SDPA、只用deterministic math backend。模型、FP16、units、steps、loss、gate与22GiB ceiling不变；
+登记`V63-F17 active_recovery_ready`，r1保持不可变，不写成算法失败。
 
 P5完整denominator实现也已staged但未执行：每个complete proposal在每epoch只生成一个semantic dropout selector，所有chunks
 继承全局actor/static、安全标签与point count；masked evidence同步移除temporal/observed-actor与证据派生authority通道，
