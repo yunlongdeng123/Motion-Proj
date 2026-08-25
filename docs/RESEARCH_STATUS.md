@@ -1,5 +1,34 @@
 # Research Status
 
+## WorldSim V6.3 P5 training capability passed / candidate rejected / P5D ready（2026-08-25）
+
+状态：`v63_p5_training_complete_candidate_rejected_p5d_ready`；active task=
+`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`；active hypothesis=`WS-V63-H-P5D-001`；P6=`locked`。
+
+P5 canonical=`run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`完成
+`7 epochs/1792 optimizer steps`，wall=`12111.626s (3.364h)`、peak=`0.403084 GiB`、finite training=`true`、累计
+hard violations=`0`，AMP initial/final均=`1024`、math SDPA与deterministic cuBLAS合同保持不变；train/selection仍严格为
+`4/2 scene-disjoint scenes`，calibration/confirmation/test均未读。runner的`passed=true`只证明完整denominator训练、数值、
+资源、硬投影和checkpoint产物能力，不是SurfNCC晋级结论。
+
+冻结lexicographic objective选择epoch 3为**best training-objective checkpoint**：hidden-FREE tail=`0.0145069`、matched
+rank surrogate=`0.0815163`、primary=`0.0960231`、hard violations=`0`。但同一checkpoint的safe-OCC retention=`0`、
+emitted-OCC coverage=`0.0371977 < 0.10`、source-valid UNKNOWN=`0.861807 > 0.60`，因此不满足P1/P5防all-UNKNOWN与晋级
+合同，`p5_candidate_promotable=false`。它不得称为best SurfNCC candidate，也不得解锁P6。epoch 6虽出现
+retention=`0.0002227`，其primary=`0.1285593`且仍远未过门，patience按冻结规则终止；不据此追选checkpoint。
+
+连续7个epoch与best checkpoint的hard violations均为0，支持observed FREE/OCC、contradiction、lifecycle与hard projection
+继续保持冻结；当前失败位于无直接硬证据曲面的learned risk/authority路径。`SafeOCCRetention=0`比低coverage更直接指向
+positive-authority collapse症状：危险/缺证据曲面与有正向OCC支持的安全曲面都被拒绝。根因尚不能在
+representation/supervision、risk-authority composition与weighted-objective optimization之间武断选择，登记
+`V63-F19 active_diagnostic_ready`。
+
+P5D已预注册为仅训练集、零更新的机制诊断：全部48个train units分别统计safe-OCC/hidden-FREE/UNKNOWN三组的
+`q_AUTH`、raw/post-projection `P(OCC)`、point/patch/proposal tail分布和三阶段decision转移；固定四个train target-17
+units测量tail/retention/authority直接梯度幅值与tail-retention cosine。它不重采structural dropout、不读selection/P6/
+calibration/H/T、不改threshold/gate/hard solver，也不增加seed/epoch/model/CVaR sweep。若证据支持objective collapse，
+下一训练hypothesis只允许另行预注册proxy/primal-dual constrained optimization；简单把`lambda_ret`调大不授权。
+
 ## WorldSim V6.3 P4 capacity passed / P5 training unlocked（2026-08-25）
 
 状态：`v63_p5_training_ready`；active task=`WS-V63-P5-SURFNCC-TRAIN-01`；active hypothesis=`WS-V63-H-P5-001`。

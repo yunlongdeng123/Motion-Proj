@@ -1,5 +1,28 @@
 # Experiments
 
+## WorldSim V6.3 P5 TRAINING PASS / SURFNCC CANDIDATE REJECTED / P5D READY（2026-08-25）
+
+- canonical=`run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`；task=
+  `WS-V63-P5-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5-001`；terminal capability=`passed=true`；candidate promotion=
+  `rejected`。
+- complete denominator=`48 train + 24 scene-disjoint selection units`；`7 epochs/1792 optimizer steps`；每epoch=
+  `1023 train batches/7912857 points/996 matched rank pairs`；wall=`12111.626s`、peak=`0.403084 GiB`、finite training、
+  hard violations=`0`、AMP scale=`1024 -> 1024`；calibration/confirmation/H/T read均false。
+- best training-objective checkpoint=`epoch 3`：hidden-FREE tail=`0.0145068676`、matched rank=`0.0815162664`、primary=
+  `0.0960231340`、accuracy-secondary=`0.882044683`。此称谓严格不等于best SurfNCC candidate。
+- nonpromotion facts：safe-OCC retention=`0 < 0.60`、emitted-OCC coverage=`0.0371977230 < 0.10`、source-valid UNKNOWN=
+  `0.8618065122 > 0.60`。runner pass只证明训练/资源/硬约束能力；checkpoint没有仿真可用的positive OCC authority，P6保持
+  locked。epoch 6 retention=`0.0002226924`仍不合格且primary=`0.1285592573`，不覆盖冻结best selection。
+- interpretation boundary：7个epoch hard violations恒为0，FREE/OCC hard projection、contradiction与lifecycle solver不回改；
+  当前只登记positive-authority collapse症状，尚未把根因写成ordinary underfit或objective collapse。failure ledger delta=
+  `V63-F19 active_diagnostic_ready`。
+- P5D task=`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`、hypothesis=`WS-V63-H-P5D-001`已预注册：全48个train
+  units画safe-OCC/hidden-FREE/UNKNOWN的`q_AUTH/P(OCC)/tail`分布，分离raw network、hard projection与authority veto，
+  再在冻结4-unit probe测tail/retention/authority直接梯度；training/optimizer/P6/H/T read=`false`。
+- literature migration：SelectiveNet把coverage作为选择性预测合同；Cotter ALT/ICML的proxy-Lagrangian允许用可微proxy训练、
+  原始离散rate做约束判断。若P5D支持objective collapse，只允许新hypothesis做constrained optimization，不做loss-weight、
+  epoch、seed、model size、CVaR alpha或gate sweep。
+
 ## WorldSim V6.3 P5 COMPLETE-PROPOSAL TRAINING READY（2026-08-25）
 
 - task=`WS-V63-P5-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5-001`；real P5 run=`none`；P4 capacity passed and execution unlocked。

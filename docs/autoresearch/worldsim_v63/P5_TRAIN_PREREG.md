@@ -2,8 +2,25 @@
 
 - Task: `WS-V63-P5-SURFNCC-TRAIN-01`
 - Hypothesis: `WS-V63-H-P5-001`
-- Status: `implementation staged / execution unlocked by P4 capacity pass`
+- Status: `terminal training capability passed / SurfNCC candidate rejected / P5D diagnostic required`
 - Seed: `0` (the only primary seed)
+
+## Terminal result and promotion boundary
+
+Canonical run=`run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1` completed
+7 epochs and 1792 optimizer steps in 12111.626 seconds at 0.403084 GiB peak. Training was finite, accumulated hard violations were zero,
+and no calibration, confirmation or exact-once test data was read. The runner's `passed=true` is therefore retained as a training/resource/
+hard-projection capability result.
+
+Epoch 3 is named only the **best training-objective checkpoint**. Its frozen objective primary is `0.0960231340`, but safe-OCC retention is
+`0`, emitted-OCC coverage is `0.0371977230`, and source-valid UNKNOWN is `0.8618065122`. It fails the unchanged `0.60/0.10/0.60`
+retention/coverage/UNKNOWN promotion requirements and is not a SurfNCC candidate. P6 remains locked. Epoch 6 reached only
+`0.0002226924` retention with a worse primary objective and does not authorize post-hoc checkpoint selection.
+
+This terminal is registered as `V63-F19 active_diagnostic_ready`: a positive-authority collapse symptom, not ordinary underfitting and not
+yet a proven weighted-objective root cause. The next authorized action is the no-update, train-only
+`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`; hard projection, lifecycle/ray constraints, seed, epochs, model size, CVaR alpha, loss
+weights and promotion gates stay frozen.
 
 ## Pre-execution structural audit and migration
 
