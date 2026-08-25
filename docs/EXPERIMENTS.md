@@ -1,8 +1,8 @@
 # Experiments
 
-## WorldSim V6.3 P5 COMPLETE-PROPOSAL TRAINING STAGED / LOCKED ON P4（2026-08-25）
+## WorldSim V6.3 P5 COMPLETE-PROPOSAL TRAINING READY（2026-08-25）
 
-- task=`WS-V63-P5-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5-001`；real P5 run=`none`；locked behind P4。
+- task=`WS-V63-P5-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5-001`；real P5 run=`none`；P4 capacity passed and execution unlocked。
 - denominator=`48 train + 24 scene-disjoint selection targets`；patch-boundary 8192-point chunks不删tiny/large surfaces，global
   patch/proposal identity重组完整context，每个proposal仅一个token；point-token no-graph cache在每次optimizer update后刷新。
 - proposal labels/full point counts与一个semantic dropout selector在chunking前冻结；masked evidence同步清除/recompute
@@ -19,7 +19,7 @@
   patch-local directed edges=`4/4`，且safe/unsafe分属不同chunk时unit ranking pair=`[(0,1)]`。没有真实训练或quality read；
   failure ledger delta=`V63-F11/F12/F13/F14 resolved_preexecution`。
 
-## WorldSim V6.3 P4 H-P4-002 R2 DETERMINISTIC ENTRANCE FAILED / R3 READY（2026-08-25）
+## WorldSim V6.3 P4 H-P4-002 R3 CAPACITY PASS（2026-08-25）
 
 - H-P4-001=`withdrawn_preexecution`：前40个P3 units全部存在`>8192` proposal，最大=`173488` points，完整patch set最大
   `417`；first-chunk-only capacity不能测试冻结proposal token合同。真实P4 run/quality read均为`none/false`。
@@ -40,8 +40,14 @@
   quality/calibration/H/T read，empty immutable run leaf。
 - r3 continues the same bounded recovery with `CUBLAS_WORKSPACE_CONFIG=:4096:8` bound before torch import and in the launcher；
   known workspace overhead约24 MiB，仍低于22 GiB ceiling。AMP initial scale `1024`、math SDPA、deterministic algorithms与
-  model/units/FP16/2 steps/accum4/losses/gates/resources unchanged。failure delta=`V63-F17/V63-F18 active_recovery_ready`；
-  r1/r2 immutable。
+  model/units/FP16/2 steps/accum4/losses/gates/resources unchanged。launch-time failure state=
+  `V63-F17/V63-F18 active_recovery_ready`；terminal r3后均resolved，r1/r2 immutable。
+- canonical r3=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T051200Z__capacity-h002-s0-r3`；terminal=
+  `passed=true`；wall=`11.863s`、peak=`0.256589 GiB`、train/selection=`2 proposals,16 chunks` each、maximum complete
+  proposal=`117663 points/263 patches`。
+- all gates passed=finite loss/unscaled gradient、direct CVaR gradients on state/hidden-free/authority heads、proposal-token
+  gradient、hard violations=`0`、checkpoint reload、repeat/reload diff=`0.0`；AMP scale initial/final=`1024`、workspace=
+  `:4096:8`。quality/calibration/H/T read=`false`；H-P4-002 supported，P5 unlocked，failure delta=`V63-F17/F18 resolved`。
 
 ## WorldSim V6.3 P3 72-UNIT FORMAL PASSED（2026-08-25）
 

@@ -2,7 +2,7 @@
 
 - Task: `WS-V63-P5-SURFNCC-TRAIN-01`
 - Hypothesis: `WS-V63-H-P5-001`
-- Status: `implementation staged / execution locked behind P4 capacity`
+- Status: `implementation staged / execution unlocked by P4 capacity pass`
 - Seed: `0` (the only primary seed)
 
 ## Pre-execution structural audit and migration
@@ -105,4 +105,4 @@ fingerprints. P5 produces a trained candidate but no promotion conclusion; only 
 
 P5 inherits the P4 numerical recovery before any training: FP16 GradScaler initial scale `1024`, deterministic algorithms, math SDPA
 only, and `CUBLAS_WORKSPACE_CONFIG=:4096:8` bound before torch import. This fixes execution numerics without changing the frozen
-optimizer, model, data, loss or selection protocol. P5 remains locked until P4 r3 passes.
+optimizer, model, data, loss or selection protocol. P4 canonical r3 passed this exact numerical contract, so P5 execution is unlocked.

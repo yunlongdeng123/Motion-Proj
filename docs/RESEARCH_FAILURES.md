@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回，H002 r1数值工程失败，r2在首次attention前暴露缺失cuBLAS确定性环境，r3同一有界恢复ready；P5完整proposal接口预备但未执行 | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA/cuBLAS数值合同；P5修复nonzero API与chunk-local context/label/mask/authority/tail/ranking/edge及跨unit matching语义 | `V63-F01`–`V63-F18`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 r3 capacity passed；P5完整proposal训练已解锁但未执行 | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA/cuBLAS数值合同；P5修复nonzero API与chunk-local context/label/mask/authority/tail/ranking/edge及跨unit matching语义 | `V63-F01`–`V63-F18`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -314,7 +314,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://arxiv.org/abs/1803.09010`、
   `https://papers.neurips.cc/paper_files/paper/2024/file/605bbd006beee7e0589a51d6a50dcae1-Supplemental-Datasets_and_Benchmarks_Track.pdf`。
 
-- `V63-F17`（`engineering/numerics`, `active_recovery_ready`）：H-P4-002 r1 canonical=
+- `V63-F17`（`engineering/numerics`, `resolved`）：H-P4-002 r1 canonical=
   `20260825T045854Z__capacity-h002-s0-r1`在11.181s完成全部2 train/2 selection complete proposals，peak仅
   `0.196070 GiB`，finite loss、direct CVaR三head gradient、proposal-token gradient、hard violations=`0`、checkpoint
   reload与selection finite均成立；但unscale后的total gradients含nonfinite，且same-model/reloaded FP16 forward max abs
@@ -323,12 +323,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   reproducibility文档说明CUDA SDPA不同backend/backward确定性不同，math backend配合deterministic algorithms可确定执行。
   唯一有界r2恢复保留FP16但固定GradScaler initial scale=`1024`，禁用flash/memory-efficient SDPA、只启用math SDPA并开启
   deterministic algorithms。模型、units、dropout、loss、optimizer LR/WD、2 steps、accum4、gate与22GiB ceiling均不变。
-  防重复：不得放宽exact-zero阈值、忽略nonfinite flag、增加steps或把r1写成quality negative；r2失败后必须按真实终态裁决。
+  r3=`20260825T051200Z__capacity-h002-s0-r3`在同一合同下以finite gradient与exact-zero repeat/reload正式通过。
+  防重复：不得放宽exact-zero阈值、忽略nonfinite flag、增加steps或把r1写成quality negative。
   证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
   `https://docs.pytorch.org/docs/stable/amp.html`、
   `https://docs.pytorch.org/docs/stable/notes/randomness.html`。
 
-- `V63-F18`（`engineering/runtime`, `active_recovery_ready`）：H-P4-002 r2 canonical=
+- `V63-F18`（`engineering/runtime`, `resolved`）：H-P4-002 r2 canonical=
   `20260825T050400Z__capacity-h002-s0-r2`在第一个CUDA math attention forward处被PyTorch deterministic-algorithm runtime
   拒绝：CUDA>=10.2的cuBLAS矩阵运算只有在进程启动前设置`CUBLAS_WORKSPACE_CONFIG=:4096:8`或`:16:8`后才允许确定执行。
   r2在任何optimizer step、capacity summary、quality/calibration/confirmation/test read之前终止，run leaf为空；因此它没有检验
@@ -336,7 +337,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   配置且增加约24 MiB，PyTorch deterministic文档对CUDA matmul给出同一前置条件。恢复把`:4096:8`同时绑定到launcher和
   runner的pre-torch-import环境，并由P4/P5配置显式记录；新增开销远低于22 GiB ceiling。r3继续F17的同一次有界恢复，
   model/data/FP16/AMP scale/SDPA backend/dropout/loss/optimizer/steps/accum/gates均不变。防重复：不得关闭determinism、放宽
-  exact-zero门或把入口异常写成capacity/quality失败。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  exact-zero门或把入口异常写成capacity/quality失败。r3实际peak=`0.256589 GiB`、wall=`11.863s`并正式passed，说明环境
+  恢复闭合而无需新增资源或协议变化。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
   `https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility`、
   `https://docs.pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html`。
 

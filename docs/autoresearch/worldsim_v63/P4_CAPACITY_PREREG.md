@@ -2,7 +2,7 @@
 
 - Task: `WS-V63-P4-CAPACITY-01`
 - Hypothesis: `WS-V63-H-P4-002`
-- Status: `r2 deterministic entrance failed / bounded r3 recovery ready`
+- Status: `r3 capacity passed / terminal`
 - Quality conclusion: forbidden
 
 Temporary synthetic interface history: r1 was rejected by PyTorch autocast at probability-form BCE before real data; the official AMP
@@ -74,7 +74,7 @@ gradients contained nonfinite values and repeated/reloaded CUDA attention forwar
 The sole bounded recovery follows PyTorch's AMP and reproducibility guidance: retain FP16 but set the GradScaler initial scale to `1024`,
 disable flash and memory-efficient SDPA, enable math SDPA and deterministic algorithms. It does not alter model parameters, data,
 dropout, losses, optimizer settings, two steps, accumulation, pass gates or resource ceiling. R1 remains immutable and contains no
-quality conclusion. Failure=`V63-F17 active_recovery_ready`.
+quality conclusion. Launch-time failure state=`V63-F17 active_recovery_ready`; terminal state=`resolved`.
 
 R2=`20260825T050400Z__capacity-h002-s0-r2` reached the first CUDA math-attention operation, where PyTorch correctly refused a
 deterministic cuBLAS matrix multiply because `CUBLAS_WORKSPACE_CONFIG` had not been set before process startup. It ended before any
@@ -82,4 +82,14 @@ optimizer step, capacity summary or quality read and therefore did not exercise 
 PyTorch document `:4096:8` as a deterministic workspace option; its approximately 24 MiB overhead remains negligible against the frozen
 22 GiB ceiling. R3 binds `CUBLAS_WORKSPACE_CONFIG=:4096:8` in the launcher and before torch import in the runner, while retaining every
 R1 recovery choice and every scientific gate. This is the same bounded recovery's first executable attempt, not a new recovery arm.
-R2 remains immutable and empty. Failure=`V63-F18 active_recovery_ready`.
+R2 remains immutable and empty. Launch-time failure state=`V63-F18 active_recovery_ready`; terminal state=`resolved`.
+
+## Terminal result
+
+Canonical R3=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T051200Z__capacity-h002-s0-r3` passed in 11.863 seconds.
+It executed two complete train proposals and two complete selection proposals across 16 chunks each; the largest complete proposal had
+117663 points and 263 patches. Peak allocation was 0.256589 GiB. Loss and unscaled gradients were finite, direct CVaR gradients reached
+the state, hidden-FREE and authority heads, proposal-token gradient was nonzero, hard violations were zero, checkpoint reload succeeded,
+and both repeated and reloaded forward differences were exactly zero. AMP scale remained 1024 and the cuBLAS workspace was `:4096:8`.
+No quality, calibration, confirmation or exact-once test data was read. H-P4-002 is supported as a capacity claim only; F17/F18 are
+resolved and the preregistered P5 training stage is unlocked.

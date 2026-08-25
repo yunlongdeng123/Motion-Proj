@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v63",
-  "status": "v63_p4_capacity_r3_recovery_ready",
+  "status": "v63_p5_training_ready",
   "branch": "research/worldsim-v6.3-surface-tail",
-  "active_task": "WS-V63-P4-CAPACITY-01",
-  "active_hypothesis": "WS-V63-H-P4-002",
-  "completed_stages": ["P0", "P1", "P2", "P2D", "P3"],
-  "unlocked_stages": ["P4"],
+  "active_task": "WS-V63-P5-SURFNCC-TRAIN-01",
+  "active_hypothesis": "WS-V63-H-P5-001",
+  "completed_stages": ["P0", "P1", "P2", "P2D", "P3", "P4"],
+  "unlocked_stages": ["P5"],
   "confirmation_unlocked": false,
   "test_unlocked": false,
   "resource_contract": "single_rtx3090_24gb",
@@ -39,8 +39,10 @@
   "p4_execution_unlocked": true,
   "p4_failed_run": "run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T045854Z__capacity-h002-s0-r1",
   "p4_failed_entrance_run": "run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T050400Z__capacity-h002-s0-r2",
-  "p4_recovery_ready": true,
+  "p4_run": "run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T051200Z__capacity-h002-s0-r3",
+  "p4_passed": true,
+  "p4_recovery_ready": false,
   "p5_packed_interface_staged": true,
-  "p5_execution_unlocked": false,
-  "next_action": "execute H-P4-002 r3 with the documented cuBLAS workspace as the first executable attempt of the bounded AMP-scale deterministic-math recovery"
+  "p5_execution_unlocked": true,
+  "next_action": "execute the preregistered full-denominator P5 SurfNCC training without an additional smoke"
 }

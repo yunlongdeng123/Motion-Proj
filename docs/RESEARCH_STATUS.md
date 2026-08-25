@@ -1,8 +1,8 @@
 # Research Status
 
-## WorldSim V6.3 P4 capacity r2 deterministic entrance failed / r3 recovery ready（2026-08-25）
+## WorldSim V6.3 P4 capacity passed / P5 training unlocked（2026-08-25）
 
-状态：`v63_p4_capacity_r3_recovery_ready`；active task=`WS-V63-P4-CAPACITY-01`；active hypothesis=`WS-V63-H-P4-002`。
+状态：`v63_p5_training_ready`；active task=`WS-V63-P5-SURFNCC-TRAIN-01`；active hypothesis=`WS-V63-H-P5-001`。
 
 P3 canonical formal=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`
 正式通过：`6 scenes/72 targets`、`86,360 surfaces/111,282 patches/86,360 proposals/11,583,001 points`；
@@ -33,17 +33,24 @@ proposal-token gradient nonzero、hard violations=`0`、checkpoint reload成功�
 attention相同/重载forward max abs diff均=`9.0599e-6`，未过冻结的finite/exact-0 gate。PyTorch官方说明GradScaler初始
 scale可导致FP16 overflow，CUDA SDPA后端也有不同确定性；唯一有界恢复固定AMP initial scale=`1024`并禁用flash/
 memory-efficient SDPA、只用deterministic math backend。模型、FP16、units、steps、loss、gate与22GiB ceiling不变；
-登记`V63-F17 active_recovery_ready`，r1保持不可变，不写成算法失败。
+当时登记`V63-F17 active_recovery_ready`；现已由r3闭合为resolved。r1保持不可变，不写成算法失败。
 
 P4 H002 r2=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T050400Z__capacity-h002-s0-r2`在第一次CUDA math
 attention forward、任何optimizer step或summary前被deterministic runtime拒绝：cuBLAS矩阵运算要求进程启动前设置
 `CUBLAS_WORKSPACE_CONFIG`。r2叶目录为空，quality/calibration/confirmation/test均未读，不能写成F17恢复或capacity失败。
 按NVIDIA cuBLAS与PyTorch官方确定性合同，r3在launcher和pre-torch-import runner双层固定`:4096:8`；约24 MiB workspace
 开销仍远低于22 GiB ceiling。除该运行时前置条件外，r1已冻结的AMP scale=`1024`、math SDPA、deterministic algorithms
-及所有模型/数据/FP16/dropout/loss/optimizer/steps/accum/gates均不变。登记`V63-F18 active_recovery_ready`；r3仍是
-F17唯一有界恢复的第一次实际执行。
+及所有模型/数据/FP16/dropout/loss/optimizer/steps/accum/gates均不变。当时登记`V63-F18 active_recovery_ready`；现已由
+r3闭合为resolved。r3仍是F17唯一有界恢复的第一次实际执行。
 
-P5完整denominator实现也已staged但未执行：每个complete proposal在每epoch只生成一个semantic dropout selector，所有chunks
+P4 canonical r3=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T051200Z__capacity-h002-s0-r3`在
+`11.863s`正式`passed=true`：train/selection各`2 complete proposals / 16 chunks`，maximum full proposal=
+`117,663 points / 263 patches`；peak=`0.256589 GiB`，AMP scale initial/final均=`1024`，loss与unscaled gradient finite，
+direct CVaR三head及proposal-token gradient nonzero，hard violations=`0`，checkpoint reload成功，repeat/reload max diff均
+`0.0`。quality/calibration/confirmation/test read均false。H-P4-002 supported，`V63-F17/F18 resolved`，P4收口并只解锁
+已预注册的P5完整denominator训练。
+
+P5完整denominator实现已staged并由P4 pass解锁、尚未执行：每个complete proposal在每epoch只生成一个semantic dropout selector，所有chunks
 继承全局actor/static、安全标签与point count；masked evidence同步移除temporal/observed-actor与证据派生authority通道，
 temporal-window则由保留sweeps重算。selection把全部chunks的hidden-FREE probability连接后计算exact proposal CVaR，
 完整patch context驱动proposal attention；训练仅声明memory-bounded stochastic CVaR surrogate。最终决策先保留硬投影，
@@ -172,7 +179,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D/P3 当前完成；P4 H-P4-002 capacity ready。
+P0/P1/P2/P2D/P3/P4 当前完成；P5 H-P5-001 training ready。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）
