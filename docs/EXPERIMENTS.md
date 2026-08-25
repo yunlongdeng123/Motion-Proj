@@ -19,6 +19,9 @@
 - P5D task=`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`、hypothesis=`WS-V63-H-P5D-001`已预注册：全48个train
   units画safe-OCC/hidden-FREE/UNKNOWN的`q_AUTH/P(OCC)/tail`分布，分离raw network、hard projection与authority veto，
   再在冻结4-unit probe测tail/retention/authority直接梯度；training/optimizer/P6/H/T read=`false`。
+- P5D implementation=`staged`：1000-bin streaming distribution、三阶段decision counts、binned AUC、六面板PNG与
+  raw/frozen-weighted分headgradient norms均由一个formal runner输出；不设自动根因quality gate，formal denominator仍为
+  全48 train units，gradient probe预先固定四个scene的target17。failure ledger delta=`V63-F19 diagnostic_implemented`。
 - literature migration：SelectiveNet把coverage作为选择性预测合同；Cotter ALT/ICML的proxy-Lagrangian允许用可微proxy训练、
   原始离散rate做约束判断。若P5D支持objective collapse，只允许新hypothesis做constrained optimization，不做loss-weight、
   epoch、seed、model size、CVaR alpha或gate sweep。

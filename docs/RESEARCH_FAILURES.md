@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 r3 capacity passed；P5训练能力passed但candidate因retention=0拒绝，P5D机制诊断ready | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA/cuBLAS数值合同；P5修复packing语义但出现positive-authority collapse症状，P6保持锁定 | `V63-F01`–`V63-F19`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 r3 capacity passed；P5训练能力passed但candidate因retention=0拒绝，P5D机制诊断implemented | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA/cuBLAS数值合同；P5修复packing语义但出现positive-authority collapse症状，P6保持锁定 | `V63-F01`–`V63-F19`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -342,7 +342,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility`、
   `https://docs.pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html`。
 
-- `V63-F19`（`algorithm/evaluation`, `active_diagnostic_ready`）：P5 canonical=
+- `V63-F19`（`algorithm/evaluation`, `active_diagnostic_implemented`）：P5 canonical=
   `run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`完成全部48个train与24个
   scene-disjoint selection units，`7 epochs/1792 steps`、finite training、peak=`0.403084 GiB`且累计hard violations=`0`；
   runner据此正确报告capacity/training `passed=true`。但冻结lexicographic objective选择的epoch 3仅是best
@@ -360,6 +360,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   只能另立proxy/primal-dual constrained-optimization hypothesis，把retention/coverage作为约束而非简单重加权。
   证据=`docs/autoresearch/worldsim_v63/P5_TRAIN_PREREG.md`、
   `docs/autoresearch/worldsim_v63/P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`、
+  `configs/worldsim_v63/p5d_authority_collapse_diagnostic_v1.yaml`、
+  `scripts/run_worldsim_v63_p5d_authority_diagnostic.py`、
   `https://proceedings.mlr.press/v97/geifman19a.html`、`https://proceedings.mlr.press/v98/cotter19a.html`、
   `https://proceedings.mlr.press/v97/cotter19b.html`。
 

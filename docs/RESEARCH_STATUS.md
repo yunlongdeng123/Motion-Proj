@@ -29,6 +29,11 @@ units测量tail/retention/authority直接梯度幅值与tail-retention cosine。
 calibration/H/T、不改threshold/gate/hard solver，也不增加seed/epoch/model/CVaR sweep。若证据支持objective collapse，
 下一训练hypothesis只允许另行预注册proxy/primal-dual constrained optimization；简单把`lambda_ret`调大不授权。
 
+P5D implementation已staged：配置=`configs/worldsim_v63/p5d_authority_collapse_diagnostic_v1.yaml`，runner=
+`scripts/run_worldsim_v63_p5d_authority_diagnostic.py`。分布使用固定1000-bin streaming histogram并输出一张六面板图；
+决策计数显式区分raw argmax、hard projection和authority veto；gradient probe同时报告raw/frozen-weighted全模型及分head
+L2 norm。summary只验证finite/完整train denominator/zero hard violation/resource，不用新的质量阈值自动判根因。
+
 ## WorldSim V6.3 P4 capacity passed / P5 training unlocked（2026-08-25）
 
 状态：`v63_p5_training_ready`；active task=`WS-V63-P5-SURFNCC-TRAIN-01`；active hypothesis=`WS-V63-H-P5-001`。

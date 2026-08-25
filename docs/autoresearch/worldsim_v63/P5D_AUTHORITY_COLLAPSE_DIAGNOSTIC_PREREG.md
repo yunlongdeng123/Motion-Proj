@@ -3,7 +3,7 @@
 - Task: `WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`
 - Hypothesis: `WS-V63-H-P5D-001`
 - Trigger: the terminal P5 best training-objective checkpoint has `SafeOCCRetention=0`
-- Status: `prepared; execution locked until the P5 terminal artifact confirms the trigger`
+- Status: `implementation staged; formal execution unlocked by terminal P5 retention=0`
 
 ## Scientific correction and scope
 
