@@ -43,6 +43,18 @@ increased hidden-FREE tail risk and emitted less than half the Native B2 area in
 arm are not executed. `WS-V63-H-P6-002` and `WS-V63-H-P6-003` close without quality read. P7 cannot start because P6 did not freeze a
 promotable M0. No V6.3 seed, model-size, alpha, epoch, threshold, gate or downstream-data recovery is authorized.
 
+## Report-writing boundary
+
+The P5 epoch-3 artifact is only the best scalar training-objective checkpoint and is not a candidate because its safe-OCC retention is
+zero. P5R epoch 6 is a promotable training-side candidate that legally unlocked P6, not a final method result. B3 epoch 1 is likewise only
+a feasible B3 training checkpoint: the common evaluator rejected it on both scenes. V6.3 therefore has no version-level best SurfNCC
+candidate.
+
+For the technical report, pooled values are descriptive and the frozen scene-level gate determines the hypothesis verdict. B4/B5/M0 and
+P7--P11 must be reported as not executed/locked, not as rejected arms. Legacy28 quality in P6, calibration, confirmation and exact-once
+test were never read, so this closeout supports no calibrated risk bound, held-out confirmation, deployment, or real-world safety claim.
+The complete report evidence map is `ARXIV_EVIDENCE_INDEX.md`.
+
 ## Future-only migration audit
 
 The terminal search points to a new-version direction rather than a V6.3 recovery:

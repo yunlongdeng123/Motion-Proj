@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.3 REPORT EVIDENCE FREEZE / NO NEW EXPERIMENT（2026-08-26）
+
+- action=`documentation-only canonical evidence audit`；new run=`none`；new quality read=`none`；failure ledger delta=`none`；
+  scientific state unchanged=`v63_surface_architecture_family_closed_negative_p7_locked`。
+- reconciled artifacts=P6 baseline `P6_EVAL_SUMMARY.json`、B3 `P6_B3_TRAIN_SUMMARY.json`、B3 common-eval
+  `P6_EVAL_SUMMARY.json`及其stage gate；共同分母=`24 selection units/2 scenes`。
+- frozen checkpoint vocabulary=P5 epoch3 `best training-objective checkpoint, not candidate`；P5R epoch6
+  `promotable training candidate`；P6 B3 epoch1 `feasible training candidate, stage rejected`；version-level candidate=`none`。
+- report-ready terminal result=B3 pooled common tail=`0.608174` vs B2=`0.491496`、area ratio=`0.455605`；scene-0450/
+  scene-1089 relative improvement=`-0.198523/-0.410083`且area ratio=`0.406270/0.499323`；support=`0/2`。
+- validation index=`docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`；详细终态=
+  `docs/autoresearch/worldsim_v63/P6_SURFACE_FAMILY_CLOSEOUT.md`。未增加smoke/regression矩阵，也未增加hash、checksum或
+  fingerprint；legacy/calibration/confirmation/test保持unread。
+
 ## WorldSim V6.3 P6 B3 STAGE REJECTED / SURFACE FAMILY CLOSED（2026-08-26）
 
 - canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260826T014500Z__b3-eval-s0-r1`；arm=`B3`；

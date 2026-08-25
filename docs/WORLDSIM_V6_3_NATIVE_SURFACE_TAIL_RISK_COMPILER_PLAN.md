@@ -12,6 +12,11 @@
 >
 > 状态：`pending`
 >
+> **执行终态注记（2026-08-26）**：上行`pending`是预注册时的冻结字段，不做事后回写。实际执行已在P6按Stop 2终止：
+> H-P6-001 rejected、surface architecture family closed、B4/B5/M0与P7--P11未执行/locked。报告入口见
+> `docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`，canonical终态见
+> `docs/autoresearch/worldsim_v63/P6_SURFACE_FAMILY_CLOSEOUT.md`；本注记不修改任何事前假设、门槛或stop rule。
+>
 > 上游终态：
 >
 > - V6.2 分支：`research/worldsim-v6.2-cpsc`

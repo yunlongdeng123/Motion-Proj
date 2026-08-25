@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V6.3 arXiv evidence frozen / documentation audit complete（2026-08-26）
+
+状态仍为`v63_surface_architecture_family_closed_negative_p7_locked`；本次只完成报告证据收口，没有新run、没有新failure ID，
+也没有改变任何实验、门槛或终态。报告单一入口=
+`docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`，已把P0--P6的canonical run、正/负机制结论、验证层级、
+失败分类、未执行臂与claim boundary映射到主计划第35节的技术报告结构。
+
+最重要的三级语义已冻结：P5 epoch3只能称`best training-objective checkpoint`，因retention=`0`而不是candidate；P5R
+epoch6只是在训练侧通过原gate并解锁P6；P6 B3 epoch1虽为feasible training candidate，最终仍在两scene得到`0/2`
+支持而被stage reject。因此V6.3没有version-level best SurfNCC candidate，B4/B5/M0和P7--P11为未执行/locked，不是
+rejected结果。
+
+文档审计逐项对照P6 baseline、B3 train、B3 eval三个canonical summary：共同分母=`24 units/2 scenes`，B2/B3
+pooled tail=`0.491496/0.608174`、OCC area=`2298450/1047186`，逐scene相对改善=`-19.852%/-41.008%`，与
+`RESEARCH_STATUS.md`、`EXPERIMENTS.md`、`RESEARCH_FAILURES.md`、state和P6 closeout一致。legacy、calibration、
+confirmation、exact-once test仍未读；当前只授权以冻结证据撰写技术报告，或为新版本重新预注册uncertainty与
+conditional-coverage方案。
+
 ## WorldSim V6.3 P6 B3 rejected / surface architecture family closed / P7 locked（2026-08-26）
 
 状态：`v63_surface_architecture_family_closed_negative_p7_locked`；completed task=`WS-V63-P6-DEVELOPMENT-AB-01`；
