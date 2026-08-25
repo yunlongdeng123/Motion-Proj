@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.3 P6 IMPLEMENTATION STAGED / BASELINE QUALITY UNREAD（2026-08-25）
+
+- task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=`WS-V63-H-P6-001`；formal P6 run=`none`；P6 quality read=`false`。
+- evaluator=`scripts/run_worldsim_v63_p6_development_ab.py`：B0/B1/B2共享24-unit、两scene denominator；B2使用冻结V6.2
+  CPSC-Lite checkpoint与真实V6.3 native logits/BEV，query batch=`16384`；surface arms统一报告surface hidden-FREE
+  worst-10% CVaR、proposal false-safe surrogate和逐scene anti-trivial gates。
+- trainer=`scripts/run_worldsim_v63_p6_ablation_train.py`：B3/B4/B5独立从P5 epoch3 model-only warm start、fresh AdamW、seed0
+  训练；仅hidden-FREE aggregator=`mean/max/cvar`变化，authority loss/veto关闭，原hard projection和三项primal-dual
+  coverage/retention约束保持不变。checkpoint selection在authority关闭时也使用无authority的`P(OCC)*q_HF` proposal risk。
+- focused implementation check=`passed`：四个相关Python文件compile；mean/CVaR/max数值与finite gradient、arm aggregator、
+  authority-disabled合同、B2 batch合同均通过。该检查不读取P6数据质量，不是capacity smoke或回归套件。
+- failure ledger delta=`none`；next=`commit/push clean implementation, then one formal B0/B1/B2 baseline evaluation`；
+  B3/B4/B5/M0、P7、calibration、legacy、confirmation、exact-once仍locked于顺序门。
+
 ## WorldSim V6.3 P6 MATCHED-AB PREREGISTERED / QUALITY NOT READ（2026-08-25）
 
 - task=`WS-V63-P6-DEVELOPMENT-AB-01`；hypothesis sequence=`H-P6-001 surface -> H-P6-002 CVaR -> H-P6-003 authority`；

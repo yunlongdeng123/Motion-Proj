@@ -27,6 +27,7 @@ from motion_proj.worldsim_v63.surfncc import (
     SurfNCC,
     apply_packed_structural_dropout,
     compute_surfncc_losses,
+    cvar_tail,
     load_surface_unit,
     packed_unit_batches,
     plan_packed_structural_dropout,
@@ -359,6 +360,7 @@ def _evaluate_selection(
     model.eval()
     alpha = float(config["risk"]["cvar_alpha"])
     authority_threshold = float(config["risk"]["authority_threshold"])
+    authority_enabled = bool(config["risk"].get("authority_enabled", True))
     point_limit = int(config["training"]["point_microbatch"])
     proposal_map: dict[tuple[str, int, int], dict[str, Any]] = {}
     hard_violations = 0
@@ -402,13 +404,36 @@ def _evaluate_selection(
                             global_patch_proposal,
                             alpha,
                         )
+                    if authority_enabled:
+                        selection_proposal_risk = outputs["proposal_cvar"]
+                    else:
+                        point_risk = (
+                            outputs["probabilities"].float()[:, OCCUPIED_INDEX]
+                            * outputs["hidden_free"].float()
+                        )
+                        patch_index = tensor_batch["patch_index"]
+                        patch_count = int(patch_index.max().item()) + 1
+                        patch_risk = torch.stack(
+                            [
+                                cvar_tail(point_risk[patch_index == patch], alpha)
+                                for patch in range(patch_count)
+                            ]
+                        )
+                        patch_proposal = tensor_batch["patch_proposal_index"]
+                        selection_proposal_risk = torch.stack(
+                            [
+                                patch_risk[patch_proposal == proposal].max()
+                                for proposal in range(int(raw_batch["proposal_actor"].shape[0]))
+                            ]
+                        )
                     probabilities = outputs["probabilities"].float()
                     predicted = probabilities.argmax(dim=1)
                     target = tensor_batch["target_class"]
                     method = tensor_batch["method_class"]
                     contradiction = tensor_batch["contradiction"]
                     learned_low_authority = (
-                        (method == UNKNOWN_INDEX)
+                        authority_enabled
+                        & (method == UNKNOWN_INDEX)
                         & ~contradiction
                         & (predicted == OCCUPIED_INDEX)
                         & (outputs["authority"] < authority_threshold)
@@ -480,7 +505,7 @@ def _evaluate_selection(
                         row["point_count"] = int(row["point_count"]) + int(counts[proposal])
                         row["risk"] = max(
                             float(row["risk"]),
-                            float(outputs["proposal_cvar"][proposal]),
+                            float(selection_proposal_risk[proposal]),
                         )
                         if bool(proposal_hidden_free.any()):
                             row["hidden_free_values"].extend(

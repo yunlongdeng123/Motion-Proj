@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.3 P6 matched-AB implementation staged / baseline formal ready（2026-08-25）
+
+状态：`v63_p6_implementation_staged_quality_unread`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
+`WS-V63-H-P6-001`；P6 quality read=`false`；下一合法动作仅为正式B0/B1/B2 baseline evaluation。
+
+P6实现已绑定冻结协议：`scripts/run_worldsim_v63_p6_development_ab.py`在同一24-unit、两scene denominator上实现B0 native
+argmax、B1 hard projection、B2冻结V6.2 CPSC-Lite与统一surface hidden-FREE worst-10% CVaR；
+`scripts/run_worldsim_v63_p6_ablation_train.py`从同一P5 epoch-3 model-only起点分别训练B3/B4/B5，只改变hidden-FREE
+aggregator=`mean/max/cvar`并关闭authority loss/veto。最终anti-trivial gate同时检查hard0、retention、source-valid UNKNOWN、
+case coverage、相对B2 accepted area和actor/static coverage；P7 threshold、calibration、legacy、confirmation与exact-once仍未读。
+
+实现审计补齐了两个非科学漂移：B2 query batch固定为`16384`；B3–B5 checkpoint selection的proposal rank改为无authority的
+`P(OCC)*q_HF`风险，避免训练已关闭authority而selection仍偷用旧`q_AUTH`组合。最终跨臂metric仍统一为冻结CVaR，不随
+训练aggregator改变。一次聚焦检查验证四个runner/module可编译、三个聚合器数值/梯度和arm合同正确；没有capacity smoke、
+额外seed、threshold或quality read。failure ledger delta=`none`；下一步在clean source提交后只运行B0/B1/B2 formal。
+
 ## WorldSim V6.3 P6 matched-AB protocol frozen / staged ablation training required（2026-08-25）
 
 状态：`v63_p6_preregistered_implementation_pending`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=

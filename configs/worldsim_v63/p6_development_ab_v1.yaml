@@ -16,6 +16,8 @@ cohort:
   targets: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
   train_unit_count: 48
   selection_unit_count: 24
+target_grid:
+  shape: [300, 300, 40]
 arms:
   B0:
     name: IR-WM-Argmax
@@ -83,6 +85,8 @@ training:
   min_epochs: 4
   patience: 3
   structural_dropout_seed: 20260824
+  structural_dropout_support_fraction: 0.25
+  structural_dropout_families: [ray_bundle, spatial_block, temporal_window, surface_patch, actor_support]
   base_loss_weights:
     state: 1.0
     hidden_free_tail: 1.0
@@ -96,6 +100,10 @@ training:
     emitted_occ_coverage_min: 0.10
     non_unknown_coverage_min: 0.40
     dual_step_size: 0.01
+    initial_multipliers:
+      safe_occ_retention: 0.0
+      emitted_occ_coverage: 0.0
+      non_unknown_coverage: 0.0
 evaluation:
   case_acceptance: at_least_one_final_emitted_occ_surface_point
   accepted_surface_area: final_emitted_occ_surface_point_count
@@ -116,6 +124,7 @@ gates:
   m0_false_safe_surrogate_relative_improvement_vs_b5_min: 0.02
 resources:
   gpu: 0
+  b2_query_batch_size: 16384
   gpu_peak_gib_max: 22.0
   minimum_disk_free_gib: 20
 locks:

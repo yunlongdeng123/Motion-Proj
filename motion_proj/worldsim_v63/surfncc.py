@@ -44,6 +44,20 @@ def cvar_tail(values: Tensor, alpha: float) -> Tensor:
     return torch.topk(flat, count, largest=True, sorted=False).values.mean()
 
 
+def aggregate_tail(values: Tensor, alpha: float, aggregator: str) -> Tensor:
+    """Reduce one risk set with a frozen matched-ablation operator."""
+    flat = values.reshape(-1)
+    if flat.numel() == 0:
+        return values.sum() * 0.0
+    if aggregator == "mean":
+        return flat.mean()
+    if aggregator == "max":
+        return flat.max()
+    if aggregator == "cvar":
+        return cvar_tail(flat, alpha)
+    raise ValueError(f"unsupported risk aggregator: {aggregator}")
+
+
 def _segment_mean(values: Tensor, index: Tensor, count: int) -> Tensor:
     output = values.new_zeros((count, values.shape[1]))
     output.index_add_(0, index, values)
@@ -891,6 +905,7 @@ def compute_surfncc_losses(
     *,
     cvar_alpha: float,
     weights: dict[str, float],
+    hidden_free_aggregator: str = "cvar",
 ) -> dict[str, Tensor]:
     probabilities = outputs["probabilities"].float()
     target = batch["target_class"].long()
@@ -914,7 +929,11 @@ def compute_surfncc_losses(
     point_proposal = batch.get("point_proposal_index")
     if point_proposal is None:
         hidden_free_tails.append(
-            cvar_tail(probabilities[hidden_free_mask, OCCUPIED_INDEX], cvar_alpha)
+            aggregate_tail(
+                probabilities[hidden_free_mask, OCCUPIED_INDEX],
+                cvar_alpha,
+                hidden_free_aggregator,
+            )
         )
         retention_tails.append(
             cvar_tail(1.0 - probabilities[retention_mask, OCCUPIED_INDEX], cvar_alpha)
@@ -925,9 +944,10 @@ def compute_surfncc_losses(
             selected = point_proposal == proposal
             if bool((selected & hidden_free_mask).any()):
                 hidden_free_tails.append(
-                    cvar_tail(
+                    aggregate_tail(
                         probabilities[selected & hidden_free_mask, OCCUPIED_INDEX],
                         cvar_alpha,
+                        hidden_free_aggregator,
                     )
                 )
             if bool((selected & retention_mask).any()):
