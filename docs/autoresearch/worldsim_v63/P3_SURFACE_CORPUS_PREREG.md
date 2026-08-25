@@ -2,8 +2,8 @@
 
 - Task: `WS-V63-P3-SURFACE-CORPUS-01`
 - Hypothesis: `WS-V63-H-P3-001`
-- Status: `schema-complete probe passed / formal ready`
-- Current revision: `r6 per-sweep schema recovery ready / final probe`
+- Status: `formal passed`
+- Current revision: `canonical formal r1 / additive future-statistics v2`
 
 For every D target, static proposals are native IR-WM occupied volume plus observed OCC, excluding actor envelopes; actor proposals are
 each method-visible current/swept envelope with identity preserved. Proposal geometry is declared before topology. Six-connected
@@ -17,6 +17,21 @@ construction. Registries are semantic JSONL paths without artifact hashes.
 The plan-required negative contracts execute once inside the run. One `scene-0071/f017` probe checks counts, patching and resource
 shape; success directly unlocks the complete 72-unit corpus with at most two CPU workers. No quality selection, architecture tuning,
 calibration, confirmation or test read occurs in P3.
+
+## Descriptive-statistic erratum
+
+The formal point payload is correct, but the canonical revision's registry field named `hidden_free_count` counts every target-FREE point
+instead of the intended `target==FREE && method==UNKNOWN && !method_contradiction` subset. No P4/P5 consumer uses that registry count;
+they derive labels from the original point arrays. The formal run remains immutable. One terminal recomputation over all 72 point arrays
+gives target FREE/OCC/UNKNOWN `1545584/335050/9702367` and correct hidden-FREE `688837`. Future materialization emits separate
+fields under additive summary/manifest `v2`; canonical formal remains immutable `v1`. Failure=`V63-F16 resolved`.
+
+## Formal result
+
+Canonical=`20260824T154059Z__surface-dl-s20260824-r1`; passed with 72 units from six scenes, 86360 surfaces, 111282 patches,
+86360 proposals and 11583001 points. Maximum patch size is 940, minimum normal-valid fraction is 1.0, all eight negative contracts
+pass and required-field delta is empty. Output is 333197992 bytes; wall is 47568.466 seconds and maximum unit wall is 3334.282 seconds.
+Prototype, calibration, confirmation and exact-once test reads are all false. P4 H-P4-002 is unlocked.
 
 ## Probe revision history
 
@@ -40,5 +55,6 @@ calibration, confirmation or test read occurs in P3.
   dropout. r6 additionally stores method-sweep state and contradiction matrices per point and directly checks the P1-required payload
   field list from config. This remains the same V63-F06 schema recovery. If r6 passes, no further probe is permitted before formal.
 - r6=`20260824T153526Z__surface-probe-s20260824-r6` passed with 152226 points, 498 bounded patches, unit normals, all eight negative
-  contracts and zero missing required fields. It is the canonical P3 probe. The next run is the complete 72-unit formal corpus with two
-  workers; no additional probe is authorized.
+  contracts and zero missing required fields. A point-array erratum recomputation gives target FREE/OCC/UNKNOWN
+  `19609/3891/128726` and correct hidden-FREE `8311`; its old registry value `19609` is target-FREE only. It is the canonical P3 probe.
+  The next run is the complete 72-unit formal corpus with two workers; no additional probe is authorized.

@@ -1,33 +1,58 @@
 # Research Status
 
-## WorldSim V6.3 P3 schema-complete probe pass / 72-unit formal ready（2026-08-24）
+## WorldSim V6.3 P3 formal passed / complete-proposal P4 capacity ready（2026-08-25）
 
-状态：`v63_p3_formal_running`；active task=`WS-V63-P3-SURFACE-CORPUS-01`。
+状态：`v63_p4_capacity_ready`；active task=`WS-V63-P4-CAPACITY-01`；active hypothesis=`WS-V63-H-P4-002`。
 
-P3 formal已启动：`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`；
-denominator=`6 scenes/72 targets`，maximum workers=`2`，source在启动时clean，配置与canonical r6 probe完全相同且无
-`limit-units`。运行期间不修改P3源码/配置；只并行准备尚未执行的P4 capacity实现。
+P3 canonical formal=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`
+正式通过：`6 scenes/72 targets`、`86,360 surfaces/111,282 patches/86,360 proposals/11,583,001 points`；
+surface type=`3,042 route-support / 82,499 static-disocclusion / 790 actor / 29 actor-swept`。minimum normal-valid=`1.0`、
+maximum patch=`940<=2048`、maximum surface=`181,752`、8/8 negative contracts、missing fields=`[]`、source overlap=`0`。
+output=`333,197,992 bytes`，wall=`47,568.466s`（`13.213h`），maximum unit wall=`3,334.282s`；source在启动和终态均clean，
+prototype/calibration/confirmation/test read均false。P3 hypothesis supported，P4 H-P4-002 execution正式解锁。
 
-P4 capacity实现/配置/预注册已staged但保持execution locked：311D完整native surface输入、2 point MLP、2 exact
-6-neighbor blocks、2 patch Transformer layers、1 proposal token、CVaR.90、exact projection、8192 microbatch/accum4。
-合成AMP forward/backward r1按PyTorch预期拒绝`sigmoid + binary_cross_entropy`；官方AMP文档要求logit版，改为
-`binary_cross_entropy_with_logits`后r2 finite forward/backward通过，登记`V63-F08 resolved`。没有P4真实unit/run或
-quality read；P4仍须等P3 formal pass才执行。
+P3终态前统计语义审计发现，run内`hidden_free_count`实际保存的是全部`target==FREE`，缺少
+`method==UNKNOWN && !method_contradiction`条件；point payload中的method/target/contradiction字段正确，P4/P5 loader及
+P5 loss/selection均从点字段重算，故语料和模型路径不受影响。正式run保持不可变；72个原始NPZ一次重算得到target
+FREE/OCC/UNKNOWN=`1,545,584/335,050/9,702,367`、correct hidden-FREE=`688,837`，旧summary的`1,545,584`
+不得按hidden-FREE引用。未来materializer以additive v2同时区分这些字段，登记`V63-F16 resolved`，不重跑正确语料。
 
-为P5完整denominator预备的packed-proposal接口允许一个8192-point batch含多个proposal、每个proposal仍有独立token。
-首个合成检查误用了不存在的`torch.flatnonzero`；按PyTorch官方接口改为
-`torch.nonzero(mask, as_tuple=False).squeeze(1)`后，2-proposal forward/backward与Transformer gradient通过，登记
-`V63-F09 resolved`。这不读取真实P5数据、不执行训练，也不改变P4的single-proposal probe合同。
+P4 H-P4-001已在任何真实P4运行或quality read前撤回：对P3最先完成40 units的method-only结构统计显示，40/40均有
+proposal超过8192 points，最大=`173488`，其完整patch set最大=`417`。只看largest proposal首个chunk会系统性丢失
+proposal interaction，不能证明冻结合同。按Set Transformer/Perceiver的分层set encoding迁移为H-P4-002：点图仍以
+8192-point chunks有界执行，但先汇总完整proposal的全部patch tokens，再运行2层patch attention与唯一proposal token；
+训练chunk以可微token替换no-graph cache中的对应位置。模型、units、2 optimizer steps、accum4与22 GiB ceiling均不变。
+登记`V63-F10 resolved_preexecution`；P4实现/配置/预注册已staged，P3 formal pass后执行已解锁。
+P4原`cvar_gradient_nonzero`曾用会同时收到BCE梯度的hidden-free head总梯度做代理，可能假阳性；现用
+`autograd.grad(proposal_cvar.mean(), state/hidden-free/authority heads)`直接检查CVaR图，聚焦synthetic三条head路径均
+finite/nonzero，登记`V63-F15 resolved_preexecution`。既有gate含义被校正，未增加新gate或实验分母。
+
+P5完整denominator实现也已staged但未执行：每个complete proposal在每epoch只生成一个semantic dropout selector，所有chunks
+继承全局actor/static、安全标签与point count；masked evidence同步移除temporal/observed-actor与证据派生authority通道，
+temporal-window则由保留sweeps重算。selection把全部chunks的hidden-FREE probability连接后计算exact proposal CVaR，
+完整patch context驱动proposal attention；训练仅声明memory-bounded stochastic CVaR surrogate。最终决策先保留硬投影，
+只把method-UNKNOWN且低authority的learned OCC转UNKNOWN，coverage/retention/accuracy共享同一decision。逐loss审计又发现
+ranking若只按chunk共现配对会漏掉完整unit的nearest-size pairs；现从unit metadata一次生成同stratum一对一匹配，并让当前
+完整patch-token cache通过可微proposal attention/risk head每unit计算一次，未采用Cross-Batch Memory的stale queue。
+selection端又发现曾把24个selection units合并后跨scene/frame配对；现与训练一致，严格在完整scene/frame unit内匹配并对
+有pair的unit等权平均，不允许跨案例规模巧合改变checkpoint排序，登记`V63-F14 resolved_preexecution`。
+另发现surface-wide edges会随相邻patch是否同chunk而漂移，现把两层6-neighbor local aggregation绑定完整冻结patch（从不切分、
+max2048），跨patch交互只走完整proposal attention；登记`V63-F11/F12/F13 resolved_preexecution`。聚焦审计中，
+modular-forward等价检查覆盖12 outputs且max abs difference=`0.0`；另以两个完整patch跨packing验证有向边数均为`4`，
+分属不同chunk的safe/unsafe proposals仍生成冻结pair=`[(0,1)]`，跨unit safe/unsafe则为`0 pair`。没有真实P5
+data/training、threshold搜索或新增
+smoke/regression矩阵。
 
 P3 canonical probe=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T153526Z__surface-probe-s20260824-r6`
 已通过：`1 unit / 191 surfaces / 498 patches / 191 proposals / 152,226 points`，output=`3,055,106 bytes`，
 wall=`201.356s`。minimum normal-valid=`1.0`、maximum patch=`635<=2048`、8/8 negative contracts、
 `missing_point_feature_fields=[]`；逐sweep state/contradiction、exact signed distances、patch-local coordinate、normalized
-ray order与全部native/evidence/actor/authority字段均存在。prototype/calibration/confirmation/test read均false。
+ray order与全部native/evidence/actor/authority字段均存在。按F16正确重算的target FREE/OCC/UNKNOWN=
+`19,609/3,891/128,726`、hidden-FREE=`8,311`；旧registry的`19,609`不得按hidden-FREE引用。
+prototype/calibration/confirmation/test read均false。
 
-P3 probe gate正式通过，failure ledger delta=`none`（历史`V63-F03–F07`均保留且resolved）。下一步不再运行probe，
-直接以2 CPU workers materialize冻结Tier D `6 scenes/72 targets` formal；按201.4s/unit保守估计约2.0h，低于24h线，
-预计新增约0.22 GiB，磁盘61 GiB充足。
+P3 probe gate与随后72-unit formal均正式通过（历史`V63-F03–F07`保留且resolved）；probe外推的2.0h低估了大量
+large surfaces，实际formal为13.213h，但仍低于24h资源线。下一步只执行预注册P4 H-P4-002，不再运行P3 probe/formal。
 
 P3 r5=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T152843Z__surface-probe-s20260824-r5`
 完成`191 surfaces/498 patches/152,226 points/3,029,206 bytes`，wall=`188.725s`、runner `passed=true`；新增
@@ -131,7 +156,7 @@ V6.3 北极星冻结为：使用原生 17D Occupancy logits、256D BEV latent �
 冒充安全，以及新建哈希/校验和/指纹机制。默认资源为单卡 RTX 3090 24GB；只有冻结最小配置在一次合法资源恢复后仍
 失败，才进入 `blocked_resource` 并向用户申请升级资源。
 
-P0/P1/P2/P2D 当前完成；P3 probe通过，完整D surface corpus formal正在运行。
+P0/P1/P2/P2D/P3 当前完成；P4 H-P4-002 capacity ready。
 calibration/confirmation/test保持sealed。
 
 ## WorldSim V6.2 CPSC-Lite family closed negative（2026-08-24）

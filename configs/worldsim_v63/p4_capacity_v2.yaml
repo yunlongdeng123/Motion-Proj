@@ -1,0 +1,60 @@
+schema_version: worldsim_v63.p4_capacity.v2
+task_id: WS-V63-P4-CAPACITY-01
+hypothesis_id: WS-V63-H-P4-002
+seed: 0
+inputs:
+  p3_surface_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1
+  p2_native_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+units:
+  train: {scene: scene-0071, target_frame: 17}
+  selection: {scene: scene-0450, target_frame: 17}
+  proposal_policy: largest_static_plus_largest_actor_by_point_count
+  proposal_context: complete_patch_set_with_point_microbatches
+model:
+  input_dimension: 311
+  hidden_dimension: 256
+  point_mlp_layers: 2
+  neighbor_blocks: 2
+  patch_transformer_layers: 2
+  attention_heads: 8
+  proposal_tokens: 1
+risk:
+  cvar_alpha: 0.90
+training:
+  optimizer: AdamW
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  precision: fp16
+  point_microbatch: 8192
+  gradient_accumulation: 4
+  optimizer_steps: 2
+dropout:
+  seed: 20260824
+  one_applicable_family_per_proposal: true
+  support_fraction: 0.25
+  families: [ray_bundle, spatial_block, temporal_window, surface_patch, actor_support]
+loss_weights:
+  state: 1.0
+  hidden_free_tail: 1.0
+  safe_occ_retention: 0.75
+  proposal_rank: 0.25
+  surface_consistency: 0.10
+  authority: 0.50
+pass_contract:
+  hard_violations_max: 0
+  missing_native_feature_dimension: 0
+  finite_loss_and_gradient: true
+  cvar_gradient_nonzero: true
+  proposal_token_gradient_nonzero: true
+  checkpoint_reload: true
+  repeated_forward_max_abs_difference: 0.0
+  gpu_peak_gib_max: 22.0
+resources:
+  gpu: 0
+  minimum_disk_free_gib: 20
+locks:
+  quality_conclusion: false
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false

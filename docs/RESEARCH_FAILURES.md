@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal运行中；P4实现staged；P5 packed接口预备但未执行 | P3修复axis/launcher/normal/schema/index；P4修复AMP BCE；packed接口修复NumPy/PyTorch nonzero API混用 | `V63-F01`–`V63-F09`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 complete-proposal capacity ready；P5完整proposal接口预备但未执行 | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity及CVaR假梯度gate；P5修复nonzero API与chunk-local context/label/mask/authority/tail/ranking/edge及跨unit matching语义 | `V63-F01`–`V63-F16`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -224,6 +224,95 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   4个patch的FP16 forward/backward，proposal CVaR shape=`[2]`且Transformer/proposal-token gradient非零。防重复：
   NumPy的`flatnonzero`不得假设存在于torch namespace；CUDA mask索引统一使用官方`torch.nonzero`/`torch.where`接口。
   证据=temporary packed-interface terminal、`https://docs.pytorch.org/docs/stable/generated/torch.nonzero.html`。
+
+- `V63-F10`（`engineering/protocol`, `resolved_preexecution`）：P4/P5正式执行前对首40个P3完成单元做method-only结构读取，
+  发现每个单元恰有一个surface超过冻结的8192-point microbatch（`40/40`，最大`173488` points）；这些大surface的完整
+  patch set平均`297.45`、最大`417` tokens。H-P4-001只取最大proposal的首chunk，既未覆盖全部点，也只让每个chunk
+  独立生成proposal token；这只能证明局部point memory，不能证明P1冻结的complete-proposal interaction。没有创建P4 run、
+  启动GPU或读取target quality。H-P4-001因此在执行前withdrawn；H-P4-002保持同一两个unit、模型宽度、两步AdamW、
+  accumulation4、CVaR/gate/resource不变，改为先按8192点编码完整patch，再把当前proposal的全部patch token汇合后运行
+  两层attention与唯一proposal token。Set Transformer与Perceiver支持用小型set/latent bottleneck承接大输入；本迁移
+  不增加learned token、删点、改分辨率或改denominator。未切块路径的12项输出模块化等价审计max abs diff=`0.0`。
+  防重复：capacity不得用首chunk冒充完整proposal；point microbatch只能切point graph，proposal identity与patch context
+  必须在上层重组。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  `https://proceedings.mlr.press/v97/lee19d.html`、`https://proceedings.mlr.press/v139/jaegle21a.html`。
+
+- `V63-F11`（`engineering/protocol`, `resolved_preexecution`）：同一次P5执行前审计发现packed chunk曾各自计算actor/safe/
+  unsafe标签、各自抽structural dropout，并在移除hard/temporal/actor-observed evidence后仍保留原`authority_bits`输入与
+  原authority标签；selection还把各chunk hidden-FREE CVaR的最大值当完整proposal CVaR。这会让同一proposal跨chunk
+  标签/selector漂移、从辅助authority通道看见已mask支持，并改变tail统计。没有真实P5 run、checkpoint或quality read。
+  恢复把actor/safe/unsafe/full point count绑定完整proposal；每epoch/proposal只抽一个semantic selector并由所有chunk
+  消费；遮蔽后从剩余method/temporal支持重算authority输入和监督，保留合法Actor current/swept与closure支持；selection
+  汇合全部hidden-FREE点后精确计算alpha0.90 proposal CVaR，并统一为hard projection优先、仅learned low-authority OCC
+  转UNKNOWN的最终decision后再统计coverage/UNKNOWN/accuracy。训练端明确保留内存受限的packed stochastic CVaR surrogate，
+  不冒充exact full-batch optimizer。MAE支持“encoder不可见mask输入、原semantic target仍监督”；minibatch risk文献提示
+  tail functional在小batch上可能有偏。防重复：任何evidence-derived辅助通道必须与mask同步；chunk-local统计不得冒充
+  proposal统计。证据=`docs/autoresearch/worldsim_v63/P5_TRAIN_PREREG.md`、
+  `https://openaccess.thecvf.com/content/CVPR2022/html/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.html`、
+  `https://arxiv.org/abs/2301.11724`、
+  `https://openaccess.thecvf.com/content/CVPR2025/papers/Kalble_EvOcc_Accurate_Semantic_Occupancy_for_Automated_Driving_Using_Evidence_Theory_CVPR_2025_paper.pdf`。
+
+- `V63-F12`（`engineering/protocol`, `resolved_preexecution`）：完整proposal context恢复后继续逐loss审计，发现ranking仍只在
+  当前packed chunk恰好共现的safe/unsafe proposals间配对；跨chunk的大proposal会多次占用同一safe对照，而不共现的
+  nearest-size pair永远没有loss。这违反P1冻结的complete-proposal、同actor/static stratum、nearest full-point-count
+  一对一匹配。没有真实P5 run、checkpoint或quality read。Cross-Batch Memory证明小batch pair mining可由历史embedding
+  扩展，但其stale queue与额外memory state在本项目无必要：每个unit的完整patch token set本来就小。恢复先从完整unit
+  metadata一次性生成一对一pair，再用当前权重的detached完整patch-token cache运行可微proposal attention/risk head，
+  每unit只施加一次全proposal ranking；point losses仍按8192 chunks有界。margin=`0.10`、weight=`0.25`、labels、cohort、
+  optimizer与denominator均不变，也没有新增queue/momentum/hyperparameter。防重复：proposal-level pair loss不得由chunk
+  共现关系定义；batching只能限制point graph，不能改变匹配集合。聚焦语义审计把safe/unsafe proposals置于两个不同chunk，
+  仍得到冻结unit pair=`[(0,1)]`。证据=
+  `docs/autoresearch/worldsim_v63/P5_TRAIN_PREREG.md`、
+  `https://openaccess.thecvf.com/content_CVPR_2020/html/Wang_Cross-Batch_Memory_for_Embedding_Learning_CVPR_2020_paper.html`。
+
+- `V63-F13`（`engineering/protocol`, `resolved_preexecution`）：batch invariance审计发现6-neighbor edge曾按surface identity
+  构建，但一个大surface按patch边界进入多个point chunks时，跨chunk patch边会被静默删除；同一对patch偶尔共处一个chunk
+  时该边又存在，因此输出依赖packing而非冻结几何。没有真实P4/P5 run、GPU结果或quality read。GraphSAINT明确指出induced
+  subgraph minibatch丢失外部边会产生sampling bias；Point-BERT则提供local patch先编码为token、再由Transformer组合的成熟
+  分层结构。V6.3不引入随机subgraph sampling、归一化估计或halo超参，而是把两层deterministic 6-neighbor aggregation的
+  local neighborhood明确绑定到已冻结的完整patch；patch最大2048且从不切分，所以边集合与8192 packing无关，跨patch交互
+  由完整proposal patch attention承担。proposal surface/6-connectivity、patch membership、模型层数、point features、cohort
+  与denominator不变。防重复：任何point microbatch必须保持local encoder的计算单元完整；不能让edge存在性取决于邻patch
+  是否碰巧同batch。两完整patch的聚焦语义审计得到full/split有向边数=`4/4`。证据=
+  `docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  `https://openreview.net/pdf?id=BJe8pkHFwS`、
+  `https://openaccess.thecvf.com/content/CVPR2022/html/Yu_Point-BERT_Pre-Training_3D_Point_Cloud_Transformers_With_Masked_Point_Modeling_CVPR_2022_paper.html`。
+
+- `V63-F14`（`engineering/protocol`, `resolved_preexecution`）：训练端已把matched ranking限定为完整scene/frame unit，
+  但selection汇总曾把24个selection units的proposal rows一次交给全局nearest-size matcher，因此safe/unsafe可跨scene/frame
+  配对；完整proposal risk虽正确，checkpoint objective仍会受跨案例规模巧合影响。没有真实P5 run、checkpoint或quality
+  read。CVPR 2016 lifted structured embedding与CVPR 2022 graph sampling都说明pair mining的候选关系/采样边界是目标的一部分，
+  不能把扩大候选池当作中性的batch实现。恢复仅按`(scene,target_frame)`分组执行原有actor/static、nearest full-point-count、
+  one-to-one matcher，再对有pair的unit loss等权平均；margin=`0.10`、weight=`0.25`、proposal risk、cohort、threshold与gate
+  均不变。聚焦synthetic把safe/unsafe分别置于两个unit得到`0 pair`。防重复：train/selection的proposal matching边界必须
+  同为完整unit；不得跨case挖pair或引入memory queue。证据=`docs/autoresearch/worldsim_v63/P5_TRAIN_PREREG.md`、
+  `https://openaccess.thecvf.com/content_cvpr_2016/html/Song_Deep_Metric_Learning_CVPR_2016_paper.html`、
+  `https://openaccess.thecvf.com/content/CVPR2022/html/Liao_Graph_Sampling_Based_Deep_Metric_Learning_for_Generalizable_Person_Re-Identification_CVPR_2022_paper.html`。
+
+- `V63-F15`（`engineering/evaluation`, `resolved_preexecution`）：P4已有`cvar_gradient_nonzero` gate曾在total loss backward后
+  检查`hidden_free_head.weight.grad`，但该head同时受BCE-with-logits监督；即使proposal CVaR图断开，BCE也足以让flag
+  为true，造成capacity假阳性。没有真实P4 run、quality read或scientific denominator。CVaR优化的一手工作明确把risk
+  objective的梯度作为优化对象，PyTorch官方`autograd.grad`提供指定outputs到inputs的直接VJP。恢复在原forward图上对
+  `proposal_cvar.mean()`分别向state/hidden-free/authority heads求梯度并只接受finite nonzero direct path；聚焦synthetic
+  三条head路径均通过。原gate名称、阈值、units、steps、模型与资源合同不变，也未新增回归矩阵。防重复：多项loss共享
+  parameter时，不得以总梯度证明某个特定loss已连通。证据=`docs/autoresearch/worldsim_v63/P4_CAPACITY_PREREG.md`、
+  `https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html`、
+  `https://proceedings.mlr.press/v235/kim24x.html`。
+
+- `V63-F16`（`data/evaluation`, `resolved`）：P3 formal终态前语义审计发现surface registry与summary字段
+  `hidden_free_count/hidden_free_point_count`实际只计算`target_state==FREE`，没有同时要求
+  `method_state==UNKNOWN && !method_contradiction`，所以该描述统计不能按hidden-FREE引用。point NPZ中的method/target/
+  contradiction、proposal/patch/native features均正确；P4不消费此计数，P5 training/selection从point arrays使用正确布尔
+  条件，因此不是标签污染或语料重建失败。NeurIPS dataset documentation实践强调保留旧版本并显式记录metadata限制。
+  恢复边界：不改写formal artifact；terminal后从72个原始NPZ一次重算得到target FREE/OCC/UNKNOWN=
+  `1545584/335050/9702367`、correct hidden-FREE=`688837`，已在三本账与P3 prereg登记勘误；未来materializer
+  以additive v2把`target_free/occupied/unknown`与正确`hidden_free`分字段输出。
+  canonical r6 probe一次重算得到target FREE/OCC/UNKNOWN=`19609/3891/128726`、correct hidden-FREE=`8311`，确认旧值
+  `19609`只是target-FREE。
+  禁止因描述字段误名重跑13.213小时正确point corpus，也禁止继续引用旧summary的hidden-FREE数字。证据=
+  `docs/autoresearch/worldsim_v63/P3_SURFACE_CORPUS_PREREG.md`、
+  `https://arxiv.org/abs/1803.09010`、
+  `https://papers.neurips.cc/paper_files/paper/2024/file/605bbd006beee7e0589a51d6a50dcae1-Supplemental-Datasets_and_Benchmarks_Track.pdf`。
 
 <a id="detail-v62"></a>
 

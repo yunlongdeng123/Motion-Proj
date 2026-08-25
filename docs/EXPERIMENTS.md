@@ -1,29 +1,50 @@
 # Experiments
 
-## WorldSim V6.3 PACKED-PROPOSAL INTERFACE STAGED / P5 STILL LOCKED（2026-08-24）
+## WorldSim V6.3 P5 COMPLETE-PROPOSAL TRAINING STAGED / LOCKED ON P4（2026-08-25）
 
-- purpose=让未来P5在8192-point microbatch中覆盖多个tiny proposals，同时每个proposal保持独立token；real P5 run=`none`。
-- synthetic r1 failed because PyTorch 2.4 has no `torch.flatnonzero`；official `torch.nonzero(..., as_tuple=False)` replacement
-  applied；r2 two-proposal forward/backward passed，proposal CVaR shape=`[2]`、Transformer/proposal-token gradients nonzero。
-- failure ledger delta=`V63-F09 resolved`；P4 single-proposal contract兼容；P5 execution remains locked behind P3/P4。
+- task=`WS-V63-P5-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5-001`；real P5 run=`none`；locked behind P4。
+- denominator=`48 train + 24 scene-disjoint selection targets`；patch-boundary 8192-point chunks不删tiny/large surfaces，global
+  patch/proposal identity重组完整context，每个proposal仅一个token；point-token no-graph cache在每次optimizer update后刷新。
+- proposal labels/full point counts与一个semantic dropout selector在chunking前冻结；masked evidence同步清除/recompute
+  temporal、observed-actor和evidence-derived authority；selection连接全部hidden-FREE values后计算exact proposal CVaR。
+- final decision=hard projection first，仅method-UNKNOWN learned OCC可被authority<0.50转UNKNOWN；primary checkpoint objective
+  保持冻结lexicographic tail-risk顺序；train-time CVaR明确为memory-bounded stochastic surrogate。
+- complete-unit ranking recovery=先按actor/static与nearest full-point-count生成一对一pairs，再由完整detached patch-token cache
+  运行可微proposal attention/risk head一次；不再依赖chunk共现，也不引入Cross-Batch Memory queue。
+- selection ranking recovery=每个scene/frame完整unit内独立匹配，再对有pair的unit等权平均；跨unit synthetic safe/unsafe
+  得到`0 pair`，不再让跨案例规模巧合改变checkpoint objective。
+- graph packing recovery=两层6-neighbor local blocks只在完整冻结patch内建边；patch从不切分，跨patch关系由完整proposal
+  attention承接，edge set不再取决于packing。
+- focused modular-forward audit覆盖12 outputs，unsplit max abs difference=`0.0`；packing semantic audit得到full/split
+  patch-local directed edges=`4/4`，且safe/unsafe分属不同chunk时unit ranking pair=`[(0,1)]`。没有真实训练或quality read；
+  failure ledger delta=`V63-F11/F12/F13/F14 resolved_preexecution`。
 
-## WorldSim V6.3 P4 CAPACITY IMPLEMENTATION STAGED / EXECUTION LOCKED（2026-08-24）
+## WorldSim V6.3 P4 H-P4-002 COMPLETE-PROPOSAL CAPACITY READY（2026-08-25）
 
-- task=`WS-V63-P4-CAPACITY-01`；implementation/config/prereg staged；real unit/run=`none`，等待P3 formal pass。
-- frozen interface=`311D full native feature, hidden256, 2 point MLP, 2 six-neighbor blocks, 2 patch Transformer layers,
-  1 proposal token, CVaR.90, exact projection, fp16, 8192 points, accum4`。
-- temporary synthetic AMP r1 failed at `binary_cross_entropy(sigmoid)` before real data；official recovery exposes logits and uses
-  `binary_cross_entropy_with_logits`；r2 forward/backward finite，state/patch shapes=`[128,3]/[4]`。
-- pre-run semantic audit additionally zeros temporal-count/observed-actor channels at non-temporal masked points，preventing support
-  leakage while keeping full native prior visible；no new parameter or run。
-- outcome=`engineering interface recovered`；failure ledger delta=`V63-F08 resolved`；quality/calibration/H/T read=`false`。
+- H-P4-001=`withdrawn_preexecution`：前40个P3 units全部存在`>8192` proposal，最大=`173488` points，完整patch set最大
+  `417`；first-chunk-only capacity不能测试冻结proposal token合同。真实P4 run/quality read均为`none/false`。
+- H-P4-002保持同一311D model、train/selection units、2 steps、accum4和22 GiB ceiling；所有point chunks先产生patch tokens，
+  完整proposal patch set再执行2-layer attention与唯一proposal token，当前chunk以可微token替换cache。
+- structural dropout在完整proposal级只抽一个selector并由全部chunks共享；proposal-head target为完整patch-risk-head maximum。
+- CVaR gate recovery=不再用混有BCE的hidden-free总梯度做代理；直接对`proposal_cvar.mean()`向state/hidden-free/authority
+  heads求VJP，聚焦synthetic三条路径均finite/nonzero。既有gate与阈值不变。
+- earlier synthetic AMP与packed API工程恢复`V63-F08/F09`继续有效；新增failure ledger delta=
+  `V63-F10/F15 resolved_preexecution`；P3 formal已pass，execution ready。
 
-## WorldSim V6.3 P3 72-UNIT FORMAL RUNNING（2026-08-24）
+## WorldSim V6.3 P3 72-UNIT FORMAL PASSED（2026-08-25）
 
 - run=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1`；
-  denominator=`6 scenes/72 targets`；maximum workers=`2`；source clean at launch。
-- configuration/schema与canonical r6 probe相同；`limit-units=none`；calibration/H/T read=`false`；当前不作质量结论。
-- estimated wall约2.0h、estimated output约0.22GiB，均在资源合同内；failure ledger delta=`none while running`。
+  terminal=`passed`；denominator=`6 scenes/72 targets`；source clean；maximum workers=`2`。
+- output=`86360 surfaces/111282 patches/86360 proposals/11583001 points/333197992 bytes`；surface types=
+  `3042 route-support/82499 static-disocclusion/790 actor/29 actor-swept`；small surfaces=`84857`；max surface/patch=
+  `181752/940`。
+- gate=`normal-valid min 1.0, missing fields [], patch<=2048, source overlap 0, 8/8 negative contracts`；wall=
+  `47568.466s (13.213h)`，max unit=`3334.282s`；prototype/calibration/H/T read=`false/false/false`。
+- detached monitor在已报告`TMUX=down, NPZ=72`后用裸`python` pretty-print summary而触发command-not-found；按继承的
+  `V2-F01`改用绑定解释器读取正式summary，runner/run均已正常终态，无新scientific failure ID。
+- immutable v1 summary的`hidden_free_point_count=1545584`实际为target-FREE。72 NPZ一次正确重算target
+  FREE/OCC/UNKNOWN=`1545584/335050/9702367`、hidden-FREE=`688837`；future additive v2修复，`V63-F16 resolved`。
+- failure ledger delta=`V63-F16 resolved descriptive-statistic erratum`；P3 hypothesis supported，P4 H-P4-002 unlocked。
 
 ## WorldSim V6.3 P3 SCHEMA-COMPLETE PROBE PASS / FORMAL READY（2026-08-24）
 
@@ -32,6 +53,7 @@
 - resource=`201.356s wall`；normal-valid min=`1.0`；patch max=`635<=2048`；8/8 negative contracts；
   `missing_point_feature_fields=[]`。
 - per-sweep state/contradiction shapes=`[point,3]`；native/evidence/distance/patch/ray/actor/authority schema完整；
+  corrected target FREE/OCC/UNKNOWN=`19609/3891/128726`、hidden-FREE=`8311`；旧registry的`19609`仅为target-FREE。
   prototype/calibration/H/T read=`false/false/false`。
 - failure ledger delta=`none`；P3 probe gate pass，下一步直接2-worker、72-unit formal，不再增加probe。
 
@@ -64,8 +86,8 @@
 
 - canonical diagnostic=`run://worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T151618Z__surface-probe-s20260824-r3`；
   output=`191 surfaces / 498 patches / 191 proposals / 152,226 points / 2,429,273 bytes`。
-- resource=`194.540s wall`；patch max=`635 <= 2048`；hidden-FREE=`19,609`、target-OCC=`3,891`、authority=
-  `39,749`；8/8 negative contracts true；prototype/calibration/H/T read=`false/false/false`。
+- resource=`194.540s wall`；patch max=`635 <= 2048`；legacy mislabeled target-FREE=`19,609`（不得引用为hidden-FREE）、
+  target-OCC=`3,891`、authority=`39,749`；8/8 negative contracts true；prototype/calibration/H/T read=`false/false/false`。
 - gate=`failed only minimum_normal_valid_fraction=0`：101个3D离散对称微小static components中至少一个normal抵消，
   包含85 singleton；surface/patch/native/evidence输出均完成。
 - recovery=仅在face-sum与centroid fallback均为零时用target-sensor viewpoint确定单位法向量；proposal/topology/patch/

@@ -1,0 +1,63 @@
+schema_version: worldsim_v63.p5_surfncc_train.v1
+task_id: WS-V63-P5-SURFNCC-TRAIN-01
+hypothesis_id: WS-V63-H-P5-001
+seed: 0
+inputs:
+  p3_surface_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1
+  p2_native_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+cohort:
+  train_scenes: [scene-0071, scene-0317, scene-0862, scene-1012]
+  selection_scenes: [scene-0450, scene-1089]
+  targets: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+model:
+  input_dimension: 311
+  hidden_dimension: 256
+  point_mlp_layers: 2
+  neighbor_blocks: 2
+  patch_transformer_layers: 2
+  attention_heads: 8
+  proposal_tokens: 1
+risk:
+  cvar_alpha: 0.90
+  authority_threshold: 0.50
+training:
+  optimizer: AdamW
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  precision: fp16
+  point_microbatch: 8192
+  gradient_accumulation: 4
+  max_epochs: 12
+  min_epochs: 4
+  patience: 3
+dropout:
+  seed: 20260824
+  one_applicable_family_per_proposal: true
+  support_fraction: 0.25
+  families: [ray_bundle, spatial_block, temporal_window, surface_patch, actor_support]
+loss_weights:
+  state: 1.0
+  hidden_free_tail: 1.0
+  safe_occ_retention: 0.75
+  proposal_rank: 0.25
+  surface_consistency: 0.10
+  authority: 0.50
+  ranking_margin: 0.10
+selection:
+  hard_violations_max: 0
+  safe_occ_retention_min: 0.60
+  emitted_occ_coverage_min: 0.10
+  primary: hidden_free_tail_plus_matched_rank
+  tiebreakers: [higher_safe_occ_retention, higher_emitted_occ_coverage, higher_target_accuracy]
+resources:
+  gpu: 0
+  gpu_peak_gib_max: 22.0
+  minimum_disk_free_gib: 20
+locks:
+  frozen_irwm: true
+  one_primary_seed: true
+  quality_selection_scenes_only: true
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false

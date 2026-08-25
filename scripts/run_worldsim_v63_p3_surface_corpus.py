@@ -333,7 +333,15 @@ def _compile_volume(
             | (np.full(surface_points.shape[0], closed, dtype=np.uint8) << 4)
         )
         point_stop = point_start + surface_points.shape[0]
-        hidden_free = int(np.count_nonzero(target_state == FREE))
+        target_free = int(np.count_nonzero(target_state == FREE))
+        target_unknown = int(np.count_nonzero(target_state == UNKNOWN))
+        hidden_free = int(
+            np.count_nonzero(
+                (target_state == FREE)
+                & (method_state == UNKNOWN)
+                & ~method_contradiction
+            )
+        )
         target_occ = int(np.count_nonzero(target_state == OCCUPIED))
         surfaces.append(
             {
@@ -350,7 +358,9 @@ def _compile_volume(
                 "point_stop": point_stop,
                 "closed_within_roi": closed,
                 "hidden_free_count": hidden_free,
+                "target_free_count": target_free,
                 "target_occupied_count": target_occ,
+                "target_unknown_count": target_unknown,
                 "authority_point_count": int(np.count_nonzero(authority)),
                 "normal_valid_fraction": float(
                     np.mean(
@@ -681,7 +691,7 @@ def run(
         set(config["point_payload"]["required_fields"]) - set(point_feature_fields)
     )
     summary = {
-        "schema_version": "worldsim_v63.p3_surface_corpus_summary.v1",
+        "schema_version": "worldsim_v63.p3_surface_corpus_summary.v2",
         "task_id": TASK_ID,
         "mode": "probe" if limit_units is not None else "formal",
         "unit_count": len(rows),
@@ -697,7 +707,9 @@ def run(
             for name in SURFACE_TYPE
         },
         "hidden_free_point_count": sum(int(row["hidden_free_count"]) for row in surfaces),
+        "target_free_point_count": sum(int(row["target_free_count"]) for row in surfaces),
         "target_occupied_point_count": sum(int(row["target_occupied_count"]) for row in surfaces),
+        "target_unknown_point_count": sum(int(row["target_unknown_count"]) for row in surfaces),
         "authority_point_count": sum(int(row["authority_point_count"]) for row in surfaces),
         "minimum_native_valid_fraction": min((float(row["native_valid_fraction"]) for row in surfaces), default=0.0),
         "minimum_normal_valid_fraction": min((float(row["normal_valid_fraction"]) for row in surfaces), default=0.0),
@@ -728,7 +740,7 @@ def run(
     _write_json(
         run_dir / "P3_MANIFEST.json",
         {
-            "schema_version": "worldsim_v63.p3_surface_corpus_manifest.v1",
+            "schema_version": "worldsim_v63.p3_surface_corpus_manifest.v2",
             "task_id": TASK_ID,
             "source_branch": subprocess.check_output(["git", "branch", "--show-current"], cwd=repo_root, text=True).strip(),
             "source_worktree_clean": True,
