@@ -20,6 +20,9 @@
   AdamW；retention/emit-OCC/non-UNKNOWN约束=`0.60/0.10/0.40`，exact hard projection不变，dual step=`0.01`且不sweep。
   只有exact discrete gates全过才保存candidate；P6继续locked。failure ledger delta=`V63-F19 root_confirmed_recovery_ready,
   V63-F20 resolved,V63-F21 resolved`。
+- P5R implementation=`staged/formal ready`：same 48+24 denominator、model/FP16/accum4/max12/min4/patience3；每个optimizer
+  step用同一accumulation window的exact discrete rates更新nonnegative dual，model用soft OCC/known proxy；输出best progress与
+  feasible candidate两个独立checkpoint，candidate文件在未过门时不存在。无额外capacity/smoke/regression run。
 
 ## WorldSim V6.3 P5 TRAINING PASS / SURFNCC CANDIDATE REJECTED / P5D READY（2026-08-25）
 

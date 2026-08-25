@@ -3,7 +3,7 @@
 - Task: `WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01`
 - Hypothesis: `WS-V63-H-P5R-001`
 - Trigger: P5D supports raw-network objective collapse and rejects authority-veto composition as the primary mechanism
-- Status: `protocol preregistered; implementation pending`
+- Status: `implementation staged; formal execution ready`
 - Seed: `0` (the only primary seed)
 
 ## Claim boundary
@@ -69,3 +69,7 @@ candidate promotion as separate booleans.
 
 If no feasible checkpoint exists, P5R stops without a seed/epoch/model/threshold/CVaR/dual-rate sweep and P6 stays locked. If a feasible
 checkpoint exists, only that candidate can enter the original P6 matched AB. No artifact hash, checksum or fingerprint is added.
+
+Implementation binding: `configs/worldsim_v63/p5r_constrained_surfncc_train_v1.yaml` and
+`scripts/run_worldsim_v63_p5r_constrained_train.py`. No separate capacity probe is added because P4 and P5 already exercised the unchanged
+model/context/FP16 denominator; the new dual state is three scalars and does not alter GPU capacity.

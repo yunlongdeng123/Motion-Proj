@@ -35,6 +35,13 @@ warm-start、fresh AdamW，保留模型/数据/dropout/FP16/CVaR/12 epochs/seed0
 emitted OCC coverage>=0.10和non-UNKNOWN coverage>=0.40作为约束，原离散rate更新dual、可微`P(OCC)*q_AUTH`更新model。
 dual step固定0.01且不sweep。只有四个原始离散gate全过的checkpoint可叫candidate；best progress永不冒充candidate。
 
+P5R implementation已staged并解锁formal execution：配置=
+`configs/worldsim_v63/p5r_constrained_surfncc_train_v1.yaml`，runner=
+`scripts/run_worldsim_v63_p5r_constrained_train.py`。每个原accumulation-4 optimizer step后，用同四batch的离散
+post-authority rates更新三个非负dual；model loss使用可微proxy violation。旧retention weighted term精确置0，其他state/
+tail/rank/consistency/authority权重保持不变。runner分别保存`BEST_PROGRESS`与仅feasible时存在的`BEST_CANDIDATE`，terminal
+也分开报告training capability和candidate promotion；不增加capacity probe或测试矩阵。
+
 ## WorldSim V6.3 P5 training capability passed / candidate rejected / P5D ready（2026-08-25）
 
 状态：`v63_p5d_h002_entrance_recovery_ready`；active task=
