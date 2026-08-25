@@ -1,9 +1,14 @@
 # WorldSim V6.3 P5D Positive-Authority Collapse Diagnostic Preregistration
 
 - Task: `WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`
-- Hypothesis: `WS-V63-H-P5D-001`
+- Hypothesis: `WS-V63-H-P5D-002`
 - Trigger: the terminal P5 best training-objective checkpoint has `SafeOCCRetention=0`
-- Status: `implementation staged; formal execution unlocked by terminal P5 retention=0`
+- Status: `H-P5D-001 entrance failed before run; H-P5D-002 bounded recovery ready`
+
+H-P5D-001 reached no run leaf, checkpoint/data read or GPU context because the disk-resource check targeted the not-yet-created task
+namespace. H-P5D-002 changes only that engineering precondition: the same 20 GiB check uses the nearest existing parent filesystem, after
+which the formal runner creates the new leaf. Every scientific and data-access contract below is unchanged. Failure=`V63-F20
+resolved_recovery_ready`.
 
 ## Scientific correction and scope
 

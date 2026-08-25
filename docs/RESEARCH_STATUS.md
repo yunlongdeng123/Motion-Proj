@@ -2,8 +2,8 @@
 
 ## WorldSim V6.3 P5 training capability passed / candidate rejected / P5D ready（2026-08-25）
 
-状态：`v63_p5_training_complete_candidate_rejected_p5d_ready`；active task=
-`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`；active hypothesis=`WS-V63-H-P5D-001`；P6=`locked`。
+状态：`v63_p5d_h002_entrance_recovery_ready`；active task=
+`WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`；active hypothesis=`WS-V63-H-P5D-002`；P6=`locked`。
 
 P5 canonical=`run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`完成
 `7 epochs/1792 optimizer steps`，wall=`12111.626s (3.364h)`、peak=`0.403084 GiB`、finite training=`true`、累计
@@ -33,6 +33,12 @@ P5D implementation已staged：配置=`configs/worldsim_v63/p5d_authority_collaps
 `scripts/run_worldsim_v63_p5d_authority_diagnostic.py`。分布使用固定1000-bin streaming histogram并输出一张六面板图；
 决策计数显式区分raw argmax、hard projection和authority veto；gradient probe同时报告raw/frozen-weighted全模型及分head
 L2 norm。summary只验证finite/完整train denominator/zero hard violation/resource，不用新的质量阈值自动判根因。
+
+H-P5D-001第一次formal入口在run directory、checkpoint/data read与GPU context前因新task namespace尚不存在而失败：runner
+把`shutil.disk_usage`直接调用在不存在的`run_dir.parent`，触发`FileNotFoundError`；没有run leaf或科学结果。Python官方合同
+要求`disk_usage(path)`接收已有filesystem path。登记`V63-F20 resolved_recovery_ready`；H-P5D-002只向上找到最近已存在父目录
+做同一20 GiB disk检查，仍由runner随后创建唯一leaf。diagnostic groups、checkpoint、48+4 units、FP16、阈值、梯度、资源与
+全部data locks不变，不新增smoke/regression矩阵。
 
 ## WorldSim V6.3 P4 capacity passed / P5 training unlocked（2026-08-25）
 

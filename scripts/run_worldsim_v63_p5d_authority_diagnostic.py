@@ -283,7 +283,10 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     if config["task_id"] != TASK_ID:
         raise ValueError("P5D task identity drift")
-    if shutil.disk_usage(run_dir.parent).free / 1024**3 < float(
+    disk_probe = run_dir.parent
+    while not disk_probe.exists():
+        disk_probe = disk_probe.parent
+    if shutil.disk_usage(disk_probe).free / 1024**3 < float(
         config["resources"]["minimum_disk_free_gib"]
     ):
         raise RuntimeError("insufficient disk before P5D")
