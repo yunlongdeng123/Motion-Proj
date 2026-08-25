@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.3 P6 MATCHED-AB PREREGISTERED / QUALITY NOT READ（2026-08-25）
+
+- task=`WS-V63-P6-DEVELOPMENT-AB-01`；hypothesis sequence=`H-P6-001 surface -> H-P6-002 CVaR -> H-P6-003 authority`；
+  P6 real run=`none`，quality read=`false`。
+- blocker closed before quality：post-hoc mean/max/CVaR on one M0 checkpoint cannot satisfy the frozen B5 relative-improvement gate because
+  decisions are identical and `mean<=CVaR<=max` on one distribution。迁移为架构/数据/seed/optimizer/denominator固定、各objective
+  独立训练的matched ablation；M0仍使用P5R epoch6，不重训。
+- common P6 evaluation：24 selection units与两scene均固定；surface hidden-FREE common metric统一为worst-10% CVaR；未校准
+  accepted case=`至少一个final OCC surface point`，accepted area=`final OCC surface point count`；P6禁止拟合`lambda`，P7拥有
+  threshold grid/calibration。
+- order/stop=`B0->B1->B2->B3`，H-P6-001失败则关闭surface family；通过后`B4->B5`，H-P6-002失败则关闭tail family；
+  通过后才评M0 authority。每阶段要求两scene分别支持、hard0、retention/UNKNOWN/case coverage/area/actor/static全过。
+- prereg=`docs/autoresearch/worldsim_v63/P6_DEVELOPMENT_AB_PREREG.md`；config=
+  `configs/worldsim_v63/p6_development_ab_v1.yaml`；stdin YAML parse确认arm order/task identity；next=
+  `implement only, no capacity smoke`。inline SSH quoting复发并入`V63-F22 resolved`，无项目变更或新failure ID。
+
 ## WorldSim V6.3 P5R CONSTRAINED RECOVERY PASS / TRUE CANDIDATE FROZEN / P6 UNLOCKED（2026-08-25）
 
 - canonical=

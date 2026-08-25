@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3/P4 passed；P5训练能力passed但candidate拒绝；P5D确认objective collapse；P5R constrained recovery冻结真正可晋级candidate | P5R epoch6四项exact gate全过，retention/coverage/non-UNKNOWN=`0.7212/0.1141/0.6861`，tail+rank=`0.5205`；V63-F19经约束优化闭合；P6解锁待预注册，P7/H/T仍锁定 | `V63-F01`–`V63-F22`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R冻结可晋级candidate；P6 matched AB已预注册未读质量 | P6不得对单一M0输出做post-hoc mean/max/CVaR伪消融；B3/B4/B5必须同起点独立训练并用common exact CVaR比较；case threshold留给P7 | `V63-F01`–`V63-F22`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md`；`P6_DEVELOPMENT_AB_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -410,8 +410,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `$(realpath /docs)`的保护命令也先被本地PowerShell解释并在任何删除动作前失败。两次均未修改
   `/root/autodl-tmp/motion_proj`、canonical run、checkpoint或Git工作树。只读`find`确认`/docs`全部是可由原仓库恢复的
   重复副本后，以显式绝对目标删除该树；随后不用变量或命令替换，以显式
-  `/tmp/worldsim_v63_pre_p5rclose_20260825T1440Z`成功备份七个文档。防重复：从PowerShell发送SSH文件操作时，不在
-  双引号命令中使用远端`$var`或`$(...)`；备份、清理目标使用已解析的显式绝对路径，并将备份与清理拆成可独立失败步骤。
+  `/tmp/worldsim_v63_pre_p5rclose_20260825T1440Z`成功备份七个文档。P6 prereg同步后的inline `python -c` YAML检查又因
+  同一PowerShell→SSH引号层在读文件前`SyntaxError`；改为将只读Python源码经stdin传给远端解释器后验证通过，项目仍未变。
+  防重复：从PowerShell发送SSH文件操作时，不在双引号命令中使用远端`$var`、`$(...)`或嵌套inline Python字符串；备份、
+  清理目标使用已解析的显式绝对路径并拆成独立步骤，结构验证统一经stdin发送。
 
 <a id="detail-v62"></a>
 

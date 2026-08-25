@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V6.3 P6 matched-AB protocol frozen / staged ablation training required（2026-08-25）
+
+状态：`v63_p6_preregistered_implementation_pending`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
+`WS-V63-H-P6-001`；P6 quality read=`not_started`；P7/legacy/H/T均locked。
+
+P6接口审计发现：若B3/B4/B5只在同一M0输出上事后替换mean/max/CVaR，三者state decisions相同，且固定非负分布满足
+`mean<=upper-tail CVaR<=max`，冻结的“B5相对better B3/B4改善>=2%”将数学上不可满足。P6因此预注册为独立matched loss
+ablations：B3/B4/B5从同一P5 epoch3 model-only起点、fresh AdamW、seed0、同一48+24 denominator分别训练，仅改变
+hidden-FREE aggregator=`mean/max/CVaR`并关闭authority loss/veto；其余model/data/dropout/FP16/hard projection/horizon和
+三项primal-dual anti-trivial约束完全一致。M0保持P5R epoch6冻结candidate，不重训。
+
+P6不在selection上选择case threshold。未校准anti-trivial acceptance固定为一个target unit最终至少发出一个OCC surface point；
+accepted area为发出OCC的surface point数，Actor/static按最终发出OCC的proposal计数。所有learned arms再用同一个exact
+surface hidden-FREE worst-10% CVaR比较，而不是各报训练aggregator。执行顺序冻结为B0→B1→B2→B3→B4→B5→M0；
+B3或B5阶段失败即按plan stop rule关闭后续family。协议=
+`docs/autoresearch/worldsim_v63/P6_DEVELOPMENT_AB_PREREG.md`，配置=
+`configs/worldsim_v63/p6_development_ab_v1.yaml`。下一步只实现baseline evaluator与通用B3/B4/B5 trainer，不做capacity
+smoke或P6 quality read。
+
+协议同步后的首次inline `python -c` YAML检查因PowerShell→SSH引号转义在文件读取前`SyntaxError`，项目内容未变；改为将
+只读Python经stdin传给远端解释器后，arm order与task identity验证通过。它并入既有`V63-F22`同类操作防重复，不新增failure。
+
 ## WorldSim V6.3 P5R constrained recovery passed / promotable SurfNCC candidate frozen / P6 unlocked（2026-08-25）
 
 状态：`v63_p5r_complete_candidate_promotable_p6_unlocked`；completed task=

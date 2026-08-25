@@ -1,0 +1,134 @@
+schema_version: worldsim_v63.p6_development_ab.v1
+task_id: WS-V63-P6-DEVELOPMENT-AB-01
+hypothesis_sequence: [WS-V63-H-P6-001, WS-V63-H-P6-002, WS-V63-H-P6-003]
+seed: 0
+inputs:
+  p2_native_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+  p3_surface_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1
+  p5_train_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1
+  p5r_run: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1
+  m0_checkpoint: /root/autodl-tmp/runs/worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1/SURFNCC_RECOVERY_BEST_CANDIDATE.pt
+  native_b2_config: /root/autodl-tmp/motion_proj/configs/worldsim_v62/p5_cpsc_lite_v1.yaml
+  native_b2_checkpoint: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P5-CPSC-LITE-TRAIN-01/20260824T092636Z__cpsc-lite-train-s0-r1/BEST_MODEL.pt
+cohort:
+  train_scenes: [scene-0071, scene-0317, scene-0862, scene-1012]
+  selection_scenes: [scene-0450, scene-1089]
+  targets: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]
+  train_unit_count: 48
+  selection_unit_count: 24
+arms:
+  B0:
+    name: IR-WM-Argmax
+    training: none
+    hard_projection: false
+    authority: false
+  B1:
+    name: Hard-Projection
+    training: none
+    hard_projection: true
+    authority: false
+  B2:
+    name: Native-CPSC-Lite
+    training: frozen_v62_checkpoint_with_native_features
+    risk_training_aggregator: query_mean
+    hard_projection: true
+    authority: false
+  B3:
+    name: Surface-Mean
+    training: independent_matched_ablation
+    risk_training_aggregator: mean
+    hard_projection: true
+    authority: false
+  B4:
+    name: Surface-Max
+    training: independent_matched_ablation
+    risk_training_aggregator: max
+    hard_projection: true
+    authority: false
+  B5:
+    name: Surface-CVaR
+    training: independent_matched_ablation
+    risk_training_aggregator: cvar
+    hard_projection: true
+    authority: false
+  M0:
+    name: SurfNCC
+    training: frozen_p5r_epoch6_candidate
+    risk_training_aggregator: cvar
+    hard_projection: true
+    authority: true
+model:
+  input_dimension: 311
+  hidden_dimension: 256
+  neighbor_blocks: 2
+  patch_transformer_layers: 2
+  attention_heads: 8
+risk:
+  cvar_alpha: 0.90
+  authority_threshold: 0.50
+  common_surface_free_conflict_metric: mean_of_surface_upper_tail_cvar
+  common_proposal_false_safe_surrogate: mean_of_proposal_upper_tail_emitted_occ_confidence
+training:
+  warm_start: p5_epoch3_model_only
+  optimizer: AdamW
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  precision: fp16
+  amp_initial_scale: 1024.0
+  attention_backend: math
+  cublas_workspace_config: ":4096:8"
+  point_microbatch: 8192
+  gradient_accumulation: 4
+  max_epochs: 12
+  min_epochs: 4
+  patience: 3
+  structural_dropout_seed: 20260824
+  base_loss_weights:
+    state: 1.0
+    hidden_free_tail: 1.0
+    safe_occ_retention: 0.0
+    proposal_rank: 0.25
+    surface_consistency: 0.10
+    authority: 0.0
+    ranking_margin: 0.10
+  constraints:
+    safe_occ_retention_min: 0.60
+    emitted_occ_coverage_min: 0.10
+    non_unknown_coverage_min: 0.40
+    dual_step_size: 0.01
+evaluation:
+  case_acceptance: at_least_one_final_emitted_occ_surface_point
+  accepted_surface_area: final_emitted_occ_surface_point_count
+  threshold_fitting: forbidden_until_p7
+  common_denominator: all_24_selection_units_and_both_selection_scenes
+  compare_each_scene_separately: true
+gates:
+  hard_violations_max: 0
+  safe_occ_retention_min: 0.60
+  source_valid_unknown_max: 0.60
+  accepted_case_coverage_min: 0.10
+  accepted_surface_area_vs_native_b2_min_ratio: 1.0
+  actor_accepted_proposal_count_min: 1
+  static_accepted_proposal_count_min: 1
+  independent_selection_scenes_min: 2
+  b3_common_tail_relative_improvement_vs_b2_min: 0.02
+  b5_common_tail_relative_improvement_vs_best_feasible_b3_b4_min: 0.02
+  m0_false_safe_surrogate_relative_improvement_vs_b5_min: 0.02
+resources:
+  gpu: 0
+  gpu_peak_gib_max: 22.0
+  minimum_disk_free_gib: 20
+locks:
+  arm_order: [B0, B1, B2, B3, B4, B5, M0]
+  stop_if_b3_fails: true
+  stop_if_b5_fails: true
+  independent_training_for_b3_b4_b5: true
+  same_warm_start_seed_data_model_optimizer_constraints: true
+  p6_threshold_selection: false
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  legacy_quality_read: false
+  lower_promotion_gate: false
+  extra_seed_or_risk_sweep: false
+  add_hash_checksum_fingerprint: false
