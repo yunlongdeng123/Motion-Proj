@@ -1,5 +1,26 @@
 # Experiments
 
+## WorldSim V6.3 P5D DIAGNOSTIC PASS / OBJECTIVE COLLAPSE / P5R PREREGISTERED（2026-08-25）
+
+- canonical=`run://worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01/20260825T084844Z__authority-diagnostic-s0-r2`；
+  H-P5D-002=`supported`；formal=`passed=true`；wall=`796.702s`、peak=`0.323995 GiB`、hard violations=`0`、optimizer=
+  `0 steps`；train units=`48`，gradient probe=`79 batches`；selection/P6/calibration/H/T read=`false`。
+- distribution denominator：safe-OCC=`62454`、hidden-FREE=`495817`、UNKNOWN=`6036885` points。safe-OCC raw/
+  projected/post-authority counts均为实际`[FREE,OCCUPIED,UNKNOWN]=[153,0,62301]`，authority veto=`0`；因此不是
+  projection或authority decision policy抹掉OCC。
+- raw network evidence：safe-OCC/hidden-FREE raw `P(OCC)` mean=`0.006459/0.004181`、binned AUC=`0.722684`；
+  `q_AUTH` median=`0.0205/0.0145`、AUC=`0.578070`。模型保留弱排序，但绝对OCC与authority均塌缩。
+- gradient evidence：retention loss mean/P50=`0.968547/0.996666`；weighted tail/retention全模型gradient mean=
+  `1.555512/0.281250`（`5.531x`），direct-tail ratio=`1.715x`、state-head ratio=`1.732x`；tail-retention cosine
+  mean/P50=`-0.411568/-0.370905` over77 batches。primary root=`objective optimization collapse`，次级=
+  evidence-authority supervision弱对齐；risk/authority composition root rejected。
+- descriptive erratum=`V63-F21 resolved`：`DECISION_STAGE_COUNTS.json.class_order`文字误写，但counts按冻结
+  `FREE=0/OCCUPIED=1/UNKNOWN=2`正确，其他artifacts不受影响；run immutable，runner future label已修正，不重跑。
+- next hypothesis=`WS-V63-H-P5R-001`：proxy primal-dual constrained training，从P5 epoch3 model-only warm-start，fresh
+  AdamW；retention/emit-OCC/non-UNKNOWN约束=`0.60/0.10/0.40`，exact hard projection不变，dual step=`0.01`且不sweep。
+  只有exact discrete gates全过才保存candidate；P6继续locked。failure ledger delta=`V63-F19 root_confirmed_recovery_ready,
+  V63-F20 resolved,V63-F21 resolved`。
+
 ## WorldSim V6.3 P5 TRAINING PASS / SURFNCC CANDIDATE REJECTED / P5D READY（2026-08-25）
 
 - canonical=`run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`；task=

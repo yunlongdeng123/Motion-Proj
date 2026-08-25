@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H001执行前撤回、H002 r3 capacity passed；P5训练能力passed但candidate因retention=0拒绝，P5D H002入口恢复ready | P3修复axis/launcher/normal/schema/index并收口hidden-FREE描述统计勘误；P4修复AMP BCE、首chunk伪capacity、CVaR假梯度gate及FP16/SDPA/cuBLAS数值合同；P5出现positive-authority collapse症状；P5D修复新namespace disk probe，P6保持锁定 | `V63-F01`–`V63-F20`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H002 capacity passed；P5训练能力passed但candidate拒绝；P5D诊断objective collapse，P5R constrained recovery已预注册 | P3/P4工程与协议恢复已闭合；P5D排除projection/authority veto并确认tail-retention梯度冲突；P5R只允许proxy primal-dual，不做简单重加权；P6锁定 | `V63-F01`–`V63-F21`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -342,7 +342,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility`、
   `https://docs.pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html`。
 
-- `V63-F19`（`algorithm/evaluation`, `active_diagnostic_implemented`）：P5 canonical=
+- `V63-F19`（`algorithm/evaluation`, `active_root_confirmed_recovery_ready`）：P5 canonical=
   `run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`完成全部48个train与24个
   scene-disjoint selection units，`7 epochs/1792 steps`、finite training、peak=`0.403084 GiB`且累计hard violations=`0`；
   runner据此正确报告capacity/training `passed=true`。但冻结lexicographic objective选择的epoch 3仅是best
@@ -351,6 +351,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不能用低false-safe或低tail掩盖零仿真效用。这是positive-authority collapse症状；现有证据尚不足以区分representation/
   supervision重叠、raw/post-projection decision composition或weighted-objective optimization collapse，故不得提前把根因写成
   ordinary underfit或任一优化结论。
+
+  P5D H002 canonical=`run://worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01/20260825T084844Z__authority-diagnostic-s0-r2`
+  已把根因收敛：safe-OCC raw/projected/post-authority decision均为实际`[FREE,OCCUPIED,UNKNOWN]=[153,0,62301]`且
+  authority veto=`0`，排除hard projection与decision composition；raw `P(OCC)`虽以AUC=`0.722684`保留弱排序，绝对
+  mean仅`0.006459`，`q_AUTH` AUC也仅`0.578070`。weighted tail/retention gradient mean比=`5.531x`，direct-tail与
+  state-head比分别=`1.715x/1.732x`，tail-retention cosine mean=`-0.411568`；retention loss mean=`0.968547`。
+  因此primary root确认为weighted-objective optimization collapse，evidence-authority supervision弱对齐为次级机制，
+  而不是solver或authority veto失败。
 
   防重复：不得增加epoch、换seed、加大模型、改变CVaR alpha、降低retention/coverage/UNKNOWN gate、提高
   `lambda_ret`，也不得回改已连续零违反的FREE/OCC projection、ray hard constraint、lifecycle或V6.2 solver。合法下一步仅为
@@ -365,7 +373,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://proceedings.mlr.press/v97/geifman19a.html`、`https://proceedings.mlr.press/v98/cotter19a.html`、
   `https://proceedings.mlr.press/v97/cotter19b.html`。
 
-- `V63-F20`（`engineering/runtime`, `resolved_recovery_ready`）：H-P5D-001第一次formal入口在创建run leaf、读取P5
+- `V63-F20`（`engineering/runtime`, `resolved`）：H-P5D-001第一次formal入口在创建run leaf、读取P5
   checkpoint/train arrays或建立CUDA context前，将`shutil.disk_usage`直接调用于尚不存在的
   `/root/autodl-tmp/runs/worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`，触发`FileNotFoundError`。
   新task namespace按设计尚未由runner创建，所以canonical run=`null`，没有任何分布、梯度或科学结论。Python官方
@@ -376,6 +384,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   增加smoke或质量读取。证据=`scripts/run_worldsim_v63_p5d_authority_diagnostic.py`、
   `https://docs.python.org/3/library/shutil.html#shutil.disk_usage`、
   `https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir`。
+
+- `V63-F21`（`evaluation/metadata`, `resolved`）：P5D H002 canonical的`DECISION_STAGE_COUNTS.json`把
+  `class_order`描述文字写成`UNKNOWN/FREE/OCCUPIED`，但生成counts的`torch.bincount`直接以argmax class index为bin，冻结
+  project constants实际为`FREE_INDEX=0/OCCUPIED_INDEX=1/UNKNOWN_INDEX=2`。因此三个counts数组本身、raw/projected/
+  post-authority等值关系、authority veto=`0`、全部distribution/gradient/summary均正确；错误只在数组标签文字。正确
+  safe-OCC counts为`FREE/OCCUPIED/UNKNOWN=153/0/62301`，不是旧文字顺序的解释。canonical artifact保持不可变，runner
+  future label已改成`FREE/OCCUPIED/UNKNOWN`；不为13分钟正确诊断重跑，也不改写artifact。防重复：任何class-count数组
+  必须从同模块index constants生成或明确按constants记录order，不凭tri-state自然语言习惯手写顺序。证据=
+  `motion_proj/worldsim_v62/projection.py`、`scripts/run_worldsim_v63_p5d_authority_diagnostic.py`、
+  `https://docs.pytorch.org/docs/stable/generated/torch.argmax.html`、
+  `https://docs.pytorch.org/docs/stable/generated/torch.bincount.html`。
 
 <a id="detail-v62"></a>
 

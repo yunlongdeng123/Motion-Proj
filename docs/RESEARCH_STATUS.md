@@ -1,5 +1,40 @@
 # Research Status
 
+## WorldSim V6.3 P5D objective-collapse diagnosis passed / P5R preregistered（2026-08-25）
+
+状态：`v63_p5d_complete_objective_collapse_confirmed_p5r_preregistered`；active task=
+`WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01`；active hypothesis=`WS-V63-H-P5R-001`；P6=`locked`。
+
+P5D canonical=`run://worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01/20260825T084844Z__authority-diagnostic-s0-r2`
+正式`passed=true`：完整读取`48 train units`，safe-OCC/hidden-FREE/UNKNOWN点数分别为
+`62454/495817/6036885`；固定target17四单元gradient probe=`79 batches/609288 points`；optimizer steps=`0`、training=
+`false`、hard violations=`0`、wall=`796.702s`、peak=`0.323995 GiB`。selection/P6/calibration/confirmation/test均未读。
+H-P5D-002 supported，H-P5D-001入口失败已由本run闭合，`V63-F20 resolved`。
+
+机制结论分三层：
+
+- `risk/authority composition failure`被排除为主因：safe-OCC的raw/post-projection/post-authority decision counts完全相同，
+  正确class index order=`FREE/OCCUPIED/UNKNOWN`下均为`153/0/62301`，authority veto=`0`；hard projection没有抹掉任何
+  usable OCC。
+- representation保留弱排序但authority supervision区分不足：safe-OCC vs hidden-FREE的raw `P(OCC)` binned AUC=
+  `0.722684`，但绝对均值仅`0.006459 vs 0.004181`；`q_AUTH` AUC仅`0.578070`，中位数=`0.0205 vs 0.0145`。
+  authority target prevalence在safe-OCC/hidden-FREE/UNKNOWN仅=`10.31%/8.26%/9.24%`，说明证据authority标签与安全OCC
+  语义只有弱对齐。
+- `objective optimization collapse`被支持为主根因：safe-OCC retention component loss mean=`0.968547`、P50=`0.996666`，
+  已近饱和；冻结权重后的tail training-term全模型gradient mean=`1.555512`，是retention `0.281250`的`5.531x`；仅看
+  direct tail仍为`1.715x`，state-head为`1.732x`。77个同时非零batch的tail-retention gradient cosine mean/P50=
+  `-0.411568/-0.370905`，显示系统性方向冲突。raw模型因而把safe OCC概率整体压扁，而不是最后policy拒绝。
+
+P5D artifact的`DECISION_STAGE_COUNTS.json`唯一描述性错误是`class_order`文字写成UNKNOWN/FREE/OCCUPIED；实际
+`torch.bincount`数组索引由冻结常量`FREE=0/OCCUPIED=1/UNKNOWN=2`决定，underlying counts、groups、distributions、
+gradients与机制结论均正确。canonical run保持不可变，runner已修正未来label，登记`V63-F21 resolved`，不为metadata文字
+重跑13分钟正确诊断。
+
+下一唯一训练hypothesis=`WS-V63-H-P5R-001`已预注册为proxy primal-dual constrained recovery：从P5 epoch3模型权重
+warm-start、fresh AdamW，保留模型/数据/dropout/FP16/CVaR/12 epochs/seed0/hard projection；把safe-OCC retention>=0.60、
+emitted OCC coverage>=0.10和non-UNKNOWN coverage>=0.40作为约束，原离散rate更新dual、可微`P(OCC)*q_AUTH`更新model。
+dual step固定0.01且不sweep。只有四个原始离散gate全过的checkpoint可叫candidate；best progress永不冒充candidate。
+
 ## WorldSim V6.3 P5 training capability passed / candidate rejected / P5D ready（2026-08-25）
 
 状态：`v63_p5d_h002_entrance_recovery_ready`；active task=

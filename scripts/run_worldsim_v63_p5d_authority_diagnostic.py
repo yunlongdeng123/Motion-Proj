@@ -440,7 +440,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
         run_dir / "DECISION_STAGE_COUNTS.json",
         {
             "schema_version": "worldsim_v63.p5d_decision_stage_counts.v1",
-            "class_order": ["UNKNOWN", "FREE", "OCCUPIED"],
+            "class_order": ["FREE", "OCCUPIED", "UNKNOWN"],
             "groups": decisions,
         },
     )

@@ -3,12 +3,28 @@
 - Task: `WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`
 - Hypothesis: `WS-V63-H-P5D-002`
 - Trigger: the terminal P5 best training-objective checkpoint has `SafeOCCRetention=0`
-- Status: `H-P5D-001 entrance failed before run; H-P5D-002 bounded recovery ready`
+- Status: `H-P5D-002 supported / objective-collapse mechanism confirmed / P5R unlocked`
 
 H-P5D-001 reached no run leaf, checkpoint/data read or GPU context because the disk-resource check targeted the not-yet-created task
 namespace. H-P5D-002 changes only that engineering precondition: the same 20 GiB check uses the nearest existing parent filesystem, after
 which the formal runner creates the new leaf. Every scientific and data-access contract below is unchanged. Failure=`V63-F20
 resolved_recovery_ready`.
+
+## Terminal result
+
+Canonical run=`run://worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01/20260825T084844Z__authority-diagnostic-s0-r2`
+passed the 48-unit train-only diagnostic in 796.702 seconds at 0.323995 GiB peak with zero hard violations and zero optimizer steps.
+Safe-OCC raw, projected and post-authority decisions were identical and emitted zero OCC; authority veto count was zero. Raw OCC retained
+some relative separation from hidden-FREE (binned AUC 0.722684), but its safe-OCC mean was only 0.006459. The frozen weighted tail gradient
+was 5.531 times the retention gradient on average, and their mean cosine was -0.411568 while retention loss was saturated near one.
+
+The evidence rejects risk/authority composition as the primary root, finds weak q_AUTH supervision separation, and supports weighted-objective
+optimization collapse as the primary root. H-P5D-002 is supported and only the separately preregistered P5R constrained recovery is unlocked.
+P6 remains locked.
+
+`DECISION_STAGE_COUNTS.json.class_order` contains a descriptive label erratum: the correct frozen order is
+`FREE/OCCUPIED/UNKNOWN`, not the written `UNKNOWN/FREE/OCCUPIED`. Underlying integer bins and all results are correct; the run stays
+immutable and future runner output is fixed. Failure=`V63-F21 resolved`.
 
 ## Scientific correction and scope
 
