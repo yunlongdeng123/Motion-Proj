@@ -1,5 +1,29 @@
 # Experiments
 
+## WorldSim V6.3 P5R CONSTRAINED RECOVERY PASS / TRUE CANDIDATE FROZEN / P6 UNLOCKED（2026-08-25）
+
+- canonical=
+  `run://worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1`；
+  task=`WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01`；hypothesis=`WS-V63-H-P5R-001 supported`；
+  terminal capability=`passed=true`；candidate promotion=`true`。
+- complete denominator=`48 train + 24 scene-disjoint selection units`；`10 epochs/2560 optimizer steps`；wall=
+  `18400.384s`、peak=`0.426807 GiB`、finite training、hard violations=`0`、AMP=`1024 -> 2048`；calibration/
+  confirmation/exact-once/P6/H/T read均false。warm-start仅加载P5 epoch-3 model，optimizer为fresh AdamW。
+- best feasible candidate=`epoch 6`：retention=`0.721226`、emitted-OCC coverage=`0.114148`、non-UNKNOWN=
+  `0.686101`（UNKNOWN=`0.313899`），四项exact gate全过；hidden-FREE tail=`0.464393`、matched-rank=
+  `0.056147`、candidate objective=`0.520541`、secondary accuracy=`0.420739`。checkpoint=
+  `SURFNCC_RECOVERY_BEST_CANDIDATE.pt`；它与best-progress产物语义分离。
+- trajectory：epoch 3首次feasible objective=`0.857654`；epoch 5=`0.620675`；epoch 6=`0.520541`。epoch 7–9均未
+  产生更优feasible candidate：epoch 8/9虽tail+rank=`0.430119/0.449681`，但coverage=`0.090615/0.098617`且
+  UNKNOWN=`0.617304/0.646926`失门。patience=`3`在epoch 9后终止，没有隐性追加epoch或超参sweep。
+- mechanism conclusion：proxy primal-dual约束优化打破P5 positive-authority collapse并恢复真正candidate，支持
+  H-P5R-001；但best checkpoint仍有tail=`0.464393`、accuracy=`0.420739`与coverage margin=`0.014148`的局限，只能
+  进入原P6 fresh matched AB，不能越级声称安全或部署性能。failure ledger delta=`V63-F19 resolved_by_constrained_recovery`；
+  文档备份期间的PowerShell→SSH变量/命令替换误解释创建了项目外`/docs`重复副本树，项目/run/Git均未改；精确检查后
+  已删除重复副本并以显式路径完成`/tmp/worldsim_v63_pre_p5rclose_20260825T1440Z`备份，登记`V63-F22 resolved`。
+- next=`WS-V63-P6-DEVELOPMENT-AB-01 preregistration`：冻结B0→B5→M0顺序与Native B2比较、surface encoder、CVaR、
+  authority head四个问题和原晋级门；P7/calibration/confirmation/test仍locked。
+
 ## WorldSim V6.3 P5D DIAGNOSTIC PASS / OBJECTIVE COLLAPSE / P5R PREREGISTERED（2026-08-25）
 
 - canonical=`run://worldsim_v63/WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01/20260825T084844Z__authority-diagnostic-s0-r2`；

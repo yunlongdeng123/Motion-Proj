@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3 formal `72/72` passed；P4 H002 capacity passed；P5训练能力passed但candidate拒绝；P5D诊断objective collapse，P5R constrained recovery formal ready | P3/P4工程与协议恢复已闭合；P5D排除projection/authority veto并确认tail-retention梯度冲突；P5R只允许proxy primal-dual，不做简单重加权；P6锁定 | `V63-F01`–`V63-F21`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3/P4 passed；P5训练能力passed但candidate拒绝；P5D确认objective collapse；P5R constrained recovery冻结真正可晋级candidate | P5R epoch6四项exact gate全过，retention/coverage/non-UNKNOWN=`0.7212/0.1141/0.6861`，tail+rank=`0.5205`；V63-F19经约束优化闭合；P6解锁待预注册，P7/H/T仍锁定 | `V63-F01`–`V63-F22`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -342,7 +342,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility`、
   `https://docs.pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html`。
 
-- `V63-F19`（`algorithm/evaluation`, `active_root_confirmed_recovery_ready`）：P5 canonical=
+- `V63-F19`（`algorithm/evaluation`, `resolved_by_constrained_recovery_p6_unlocked`）：P5 canonical=
   `run://worldsim_v63/WS-V63-P5-SURFNCC-TRAIN-01/20260825T051530Z__surfncc-train-s0-r1`完成全部48个train与24个
   scene-disjoint selection units，`7 epochs/1792 steps`、finite training、peak=`0.403084 GiB`且累计hard violations=`0`；
   runner据此正确报告capacity/training `passed=true`。但冻结lexicographic objective选择的epoch 3仅是best
@@ -360,12 +360,19 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   因此primary root确认为weighted-objective optimization collapse，evidence-authority supervision弱对齐为次级机制，
   而不是solver或authority veto失败。
 
+  P5R canonical=
+  `run://worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1`
+  以同一SurfNCC representation、数据、hard projection、seed0与P5 epoch3 model-only warm-start运行proxy primal-dual；
+  retention/emitted-OCC/non-UNKNOWN改为约束，旧weighted retention term置0。formal完成`10 epochs/2560 steps`、finite、
+  hard violations=`0`，未读P6/calibration/H/T。best feasible epoch6的retention=`0.721226`、coverage=`0.114148`、
+  non-UNKNOWN=`0.686101`，四项exact gate全过，tail+rank=`0.520541`，因此`candidate_promotable=true`并解锁P6。
+  epoch 7–9连续三轮没有更优feasible candidate后按patience停止；尤其epoch 8/9虽tail更低但coverage/UNKNOWN失门，未覆盖
+  epoch6。由此F19的positive-authority collapse已由约束优化闭合，而不是靠降低gate或回改solver闭合。
+
   防重复：不得增加epoch、换seed、加大模型、改变CVaR alpha、降低retention/coverage/UNKNOWN gate、提高
-  `lambda_ret`，也不得回改已连续零违反的FREE/OCC projection、ray hard constraint、lifecycle或V6.2 solver。合法下一步仅为
-  `WS-V63-P5D-AUTHORITY-COLLAPSE-DIAGNOSTIC-01`：用冻结best checkpoint在全部train units比较safe-OCC、hidden-FREE、
-  UNKNOWN三组的`q_AUTH`、raw/post-projection `P(OCC)`与point/patch/proposal tail分布，并用固定4-unit train probe直接
-  测量tail/retention/authority梯度幅值；不训练、不读selection/P6/calibration/H/T。若该证据支持objective collapse，
-  只能另立proxy/primal-dual constrained-optimization hypothesis，把retention/coverage作为约束而非简单重加权。
+  `lambda_ret`，也不得回改已连续零违反的FREE/OCC projection、ray hard constraint、lifecycle或V6.2 solver。P5R不再追加
+  recovery/sweep；合法下一步仅为冻结best candidate进入原P6 fresh matched AB。P6必须保留Native B2、surface encoder、
+  CVaR与authority消融及原晋级门；P5R的candidate pass不能冒充P6/校准/confirmation/deployment结论。
   证据=`docs/autoresearch/worldsim_v63/P5_TRAIN_PREREG.md`、
   `docs/autoresearch/worldsim_v63/P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`、
   `configs/worldsim_v63/p5d_authority_collapse_diagnostic_v1.yaml`、
@@ -397,6 +404,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `motion_proj/worldsim_v62/projection.py`、`scripts/run_worldsim_v63_p5d_authority_diagnostic.py`、
   `https://docs.pytorch.org/docs/stable/generated/torch.argmax.html`、
   `https://docs.pytorch.org/docs/stable/generated/torch.bincount.html`。
+
+- `V63-F22`（`engineering/operations`, `resolved`）：P5R terminal文档收口的首次SSH备份命令在本地PowerShell双引号中
+  使用远端`$b`，变量在发送前被本地展开，导致远端备份在复制前失败并在项目外创建`/docs`重复副本树；随后一次包含
+  `$(realpath /docs)`的保护命令也先被本地PowerShell解释并在任何删除动作前失败。两次均未修改
+  `/root/autodl-tmp/motion_proj`、canonical run、checkpoint或Git工作树。只读`find`确认`/docs`全部是可由原仓库恢复的
+  重复副本后，以显式绝对目标删除该树；随后不用变量或命令替换，以显式
+  `/tmp/worldsim_v63_pre_p5rclose_20260825T1440Z`成功备份七个文档。防重复：从PowerShell发送SSH文件操作时，不在
+  双引号命令中使用远端`$var`或`$(...)`；备份、清理目标使用已解析的显式绝对路径，并将备份与清理拆成可独立失败步骤。
 
 <a id="detail-v62"></a>
 

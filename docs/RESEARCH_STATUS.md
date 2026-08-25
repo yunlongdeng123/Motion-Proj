@@ -1,5 +1,42 @@
 # Research Status
 
+## WorldSim V6.3 P5R constrained recovery passed / promotable SurfNCC candidate frozen / P6 unlocked（2026-08-25）
+
+状态：`v63_p5r_complete_candidate_promotable_p6_unlocked`；completed task=
+`WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01`；supported hypothesis=`WS-V63-H-P5R-001`；next task=
+`WS-V63-P6-DEVELOPMENT-AB-01`；P6=`unlocked_pending_preregistration`，P7/confirmation/test仍locked。
+
+P5R canonical=
+`run://worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1`
+按预注册proxy primal-dual合同完成`10 epochs/2560 optimizer steps`，wall=`18400.384s (5.111h)`、peak=
+`0.426807 GiB`、finite training=`true`、累计hard violations=`0`。训练/selection仍为`4/2 scene-disjoint scenes`；
+calibration quality、confirmation、exact-once test与P6/H/T均未读。源码在formal期间保持clean，结束时GPU已释放，磁盘剩余约
+`60 GiB`。
+
+冻结best candidate为epoch 6，而不是普通argmin training loss：hard violations=`0`、safe-OCC retention=
+`0.721226>=0.60`、emitted-OCC coverage=`0.114148>=0.10`、source-valid non-UNKNOWN=`0.686101>=0.40`
+（UNKNOWN=`0.313899<=0.60`），四个exact gate全部通过；hidden-FREE tail=`0.464393`、matched-rank surrogate=
+`0.056147`，candidate objective=`0.520541`。它因此是真正`candidate_promotable=true`的SurfNCC checkpoint。
+secondary accuracy=`0.420739`偏低且coverage仅比门高`0.014148`，作为P6 matched-AB必须检验的局限完整保留，不能被
+promotion boolean掩盖。
+
+优化轨迹显示可行性与tail的真实张力：epoch 3首次全门可行但candidate objective=`0.857654`；epoch 5改善到
+`0.620675`；epoch 6改善到`0.520541`。epoch 7因UNKNOWN=`0.635813`失门，epoch 8虽tail+rank=`0.430119`但
+OCC coverage=`0.090615`且UNKNOWN=`0.617304`失门，epoch 9虽tail+rank=`0.449681`但coverage=`0.098617`且
+UNKNOWN=`0.646926`失门；因此它们都不能覆盖epoch 6。连续三轮无更优feasible candidate后按冻结patience=`3`停止，
+没有追加epoch/seed/model/threshold/CVaR/dual-rate sweep。final multipliers为retention/emit-OCC/non-UNKNOWN=
+`2.520619/0.0000295/1.537027`。
+
+该run支持`WS-V63-H-P5R-001`：保持同一representation、hard projection与数据合同，仅把retention、emitted-OCC和
+non-UNKNOWN作为约束，即可打破P5的positive-authority collapse并恢复可用candidate；它不证明P6 matched AB、独立校准、
+confirmation或deployment。P6现只解锁设计/预注册与一次正式fresh development matched AB；在冻结B0–B5/M0顺序、
+Native B2基线、surface/CVaR/authority消融与原晋级门前，不运行P6质量读。
+
+P5R文档收口的首次远端备份命令被本地PowerShell提前展开变量，误在远端根创建`/docs`重复副本树；后续一次带
+`$(...)`的清理保护也在破坏动作前被本地解释器拒绝。两次均未改项目工作树、run或原文件。精确列举后只删除可由原仓库
+恢复的`/docs`重复树，显式绝对路径备份已成功写入`/tmp/worldsim_v63_pre_p5rclose_20260825T1440Z`。登记
+`V63-F22 resolved`；以后PowerShell→SSH文件操作禁止插值远端变量/命令替换。
+
 ## WorldSim V6.3 P5D objective-collapse diagnosis passed / P5R preregistered（2026-08-25）
 
 状态：`v63_p5d_complete_objective_collapse_confirmed_p5r_preregistered`；active task=

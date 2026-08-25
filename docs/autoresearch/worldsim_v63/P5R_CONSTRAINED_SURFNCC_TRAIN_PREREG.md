@@ -3,14 +3,15 @@
 - Task: `WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01`
 - Hypothesis: `WS-V63-H-P5R-001`
 - Trigger: P5D supports raw-network objective collapse and rejects authority-veto composition as the primary mechanism
-- Status: `implementation staged; formal execution ready`
+- Status: `formal complete; hypothesis supported; promotable candidate frozen; P6 unlocked`
 - Seed: `0` (the only primary seed)
 
 ## Claim boundary
 
 P5R asks one question: can the unchanged SurfNCC representation recover a nondegenerate Physical State candidate when safe-OCC retention,
 emitted-OCC coverage and source-valid non-UNKNOWN coverage are optimized as constraints rather than weighted penalties? It does not claim a
-new architecture, hard solver, calibration procedure or deployment result. P6, calibration, confirmation and exact-once test remain locked.
+new architecture, hard solver, calibration procedure or deployment result. P6, calibration, confirmation and exact-once test remained locked
+during the formal run; only the terminal feasible candidate unlocks P6, while later stages remain locked.
 
 The starting model is the P5 epoch-3 best training-objective checkpoint, loaded model-only with a fresh AdamW optimizer. This is a recovery
 from the measured collapse, not a second random initialization. The 311D features, 256D width, two neighbor blocks, two patch-attention
@@ -73,3 +74,20 @@ checkpoint exists, only that candidate can enter the original P6 matched AB. No 
 Implementation binding: `configs/worldsim_v63/p5r_constrained_surfncc_train_v1.yaml` and
 `scripts/run_worldsim_v63_p5r_constrained_train.py`. No separate capacity probe is added because P4 and P5 already exercised the unchanged
 model/context/FP16 denominator; the new dual state is three scalars and does not alter GPU capacity.
+
+## Terminal result
+
+Canonical run=
+`run://worldsim_v63/WS-V63-P5R-CONSTRAINED-SURFNCC-TRAIN-01/20260825T091631Z__constrained-train-s0-r1` completed
+10 epochs and 2560 optimizer steps in 18400.384 seconds with 0.426807 GiB peak GPU memory, finite training and zero hard violations. It did
+not read P6, calibration, confirmation or exact-once test data.
+
+Epoch 6 is the frozen best feasible candidate: exact safe-OCC retention=0.721226, emitted-OCC coverage=0.114148, non-UNKNOWN
+coverage=0.686101, hidden-FREE tail=0.464393 and matched-rank surrogate=0.056147. All original discrete gates pass and the candidate
+objective is 0.520541; the separate secondary accuracy is 0.420739. Epochs 7--9 did not replace it. Epochs 8 and 9 had lower raw
+tail-plus-rank values but failed emitted-OCC and non-UNKNOWN coverage, so the runner correctly rejected them. Patience 3 stopped the run
+after epoch 9 without any additional epoch, seed, model, threshold, CVaR or dual-rate sweep.
+
+This supports `WS-V63-H-P5R-001`: constrained optimization recovered a genuine SurfNCC candidate from the measured weighted-objective
+collapse without modifying the representation or hard solver. The result unlocks only the original P6 fresh matched AB. It does not claim
+that the remaining tail risk, narrow coverage margin, secondary accuracy, calibration, confirmation or deployment requirements pass.
