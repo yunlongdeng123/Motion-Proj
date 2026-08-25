@@ -19,7 +19,7 @@
   patch-local directed edges=`4/4`，且safe/unsafe分属不同chunk时unit ranking pair=`[(0,1)]`。没有真实训练或quality read；
   failure ledger delta=`V63-F11/F12/F13/F14 resolved_preexecution`。
 
-## WorldSim V6.3 P4 H-P4-002 R1 ENGINEERING FAILED / R2 READY（2026-08-25）
+## WorldSim V6.3 P4 H-P4-002 R2 DETERMINISTIC ENTRANCE FAILED / R3 READY（2026-08-25）
 
 - H-P4-001=`withdrawn_preexecution`：前40个P3 units全部存在`>8192` proposal，最大=`173488` points，完整patch set最大
   `417`；first-chunk-only capacity不能测试冻结proposal token合同。真实P4 run/quality read均为`none/false`。
@@ -35,8 +35,13 @@
 - passing subcontracts=finite loss、direct CVaR gradients on all three heads、proposal-token gradient、hard violations=`0`、
   checkpoint reload、both scene rows finite；failed=total gradient finite false、repeated/reload FP16 max diff both
   `9.059906e-6 > exact 0`。quality/calibration/H/T read=`false/false/false`。
-- r2 bounded recovery=frozen FP16 with AMP initial scale `1024` plus deterministic math SDPA only；model/units/2 steps/accum4/
-  losses/gates/resources unchanged。failure delta=`V63-F17 active_recovery_ready`；r1 immutable。
+- r2=`run://worldsim_v63/WS-V63-P4-CAPACITY-01/20260825T050400Z__capacity-h002-s0-r2`；failed at first CUDA math
+  attention forward because deterministic cuBLAS required a process-start workspace config；no optimizer step、capacity summary、
+  quality/calibration/H/T read，empty immutable run leaf。
+- r3 continues the same bounded recovery with `CUBLAS_WORKSPACE_CONFIG=:4096:8` bound before torch import and in the launcher；
+  known workspace overhead约24 MiB，仍低于22 GiB ceiling。AMP initial scale `1024`、math SDPA、deterministic algorithms与
+  model/units/FP16/2 steps/accum4/losses/gates/resources unchanged。failure delta=`V63-F17/V63-F18 active_recovery_ready`；
+  r1/r2 immutable。
 
 ## WorldSim V6.3 P3 72-UNIT FORMAL PASSED（2026-08-25）
 

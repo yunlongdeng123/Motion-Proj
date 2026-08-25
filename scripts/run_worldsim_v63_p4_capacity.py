@@ -5,12 +5,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import shutil
 import subprocess
 import time
 from pathlib import Path
 from typing import Any
+
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import numpy as np
 import torch
@@ -527,6 +530,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, Any]:
         "amp_initial_scale": float(config["training"]["amp_initial_scale"]),
         "amp_final_scale": float(scaler.get_scale()),
         "attention_backend": str(config["training"]["attention_backend"]),
+        "cublas_workspace_config": os.environ["CUBLAS_WORKSPACE_CONFIG"],
         "train_proposal_count": len(prepared_train_groups),
         "selection_proposal_count": len(prepared_selection_groups),
         "train_chunk_count": sum(len(group) for group in prepared_train_groups),
