@@ -11,7 +11,9 @@
   coverage/retention约束保持不变。checkpoint selection在authority关闭时也使用无authority的`P(OCC)*q_HF` proposal risk。
 - focused implementation check=`passed`：四个相关Python文件compile；mean/CVaR/max数值与finite gradient、arm aggregator、
   authority-disabled合同、B2 batch合同均通过。该检查不读取P6数据质量，不是capacity smoke或回归套件。
-- failure ledger delta=`none`；next=`commit/push clean implementation, then one formal B0/B1/B2 baseline evaluation`；
+- first baseline entrance=`canonical null`：直接文件入口只把`scripts/`加入module path，`ModuleNotFoundError: motion_proj`发生在
+  run leaf/data/checkpoint/GPU之前；改用官方`python -m` module入口后`--help`通过。failure ledger delta=`V63-F23 resolved`。
+- next=`commit/push launcher recovery docs, then one formal B0/B1/B2 baseline evaluation`；
   B3/B4/B5/M0、P7、calibration、legacy、confirmation、exact-once仍locked于顺序门。
 
 ## WorldSim V6.3 P6 MATCHED-AB PREREGISTERED / QUALITY NOT READ（2026-08-25）

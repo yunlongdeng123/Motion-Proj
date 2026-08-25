@@ -16,6 +16,11 @@ case coverage、相对B2 accepted area和actor/static coverage；P7 threshold、
 训练aggregator改变。一次聚焦检查验证四个runner/module可编译、三个聚合器数值/梯度和arm合同正确；没有capacity smoke、
 额外seed、threshold或quality read。failure ledger delta=`none`；下一步在clean source提交后只运行B0/B1/B2 formal。
 
+首次baseline入口使用`python scripts/run_worldsim_v63_p6_development_ab.py`，在run leaf创建、数据/checkpoint/GPU读取前因
+`ModuleNotFoundError: motion_proj`终止，canonical run=`null`、P6 quality仍未读。Python官方路径合同说明直接脚本只把
+脚本目录加入`sys.path`，而`python -m`把当前repo root加入模块搜索路径；因此恢复仅改launcher为
+`python -m scripts.run_worldsim_v63_p6_development_ab`。`--help`入口验证通过，源码/配置/合同不变，登记`V63-F23 resolved`。
+
 ## WorldSim V6.3 P6 matched-AB protocol frozen / staged ablation training required（2026-08-25）
 
 状态：`v63_p6_preregistered_implementation_pending`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
