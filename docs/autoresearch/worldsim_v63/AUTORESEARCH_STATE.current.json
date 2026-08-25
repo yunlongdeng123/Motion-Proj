@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v63",
-  "status": "v63_p6_baselines_complete_b3_training_unlocked",
+  "status": "v63_p6_b3_training_complete_stage_eval_unlocked",
   "branch": "research/worldsim-v6.3-surface-tail",
   "active_task": "WS-V63-P6-DEVELOPMENT-AB-01",
   "active_hypothesis": "WS-V63-H-P6-001",
@@ -88,7 +88,16 @@
   "p6_b2_safe_occ_retention": 0.8510559328953717,
   "p6_b2_source_valid_unknown": 0.26628371547163426,
   "p6_b2_emitted_occ_count": 2298450,
+  "p6_b3_train_run": "run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T152000Z__b3-mean-s0-r1",
+  "p6_b3_training_capability_passed": true,
+  "p6_b3_training_candidate_promotable": true,
+  "p6_b3_best_training_candidate_epoch": 1,
+  "p6_b3_training_safe_occ_retention": 0.6368630070890399,
+  "p6_b3_training_emitted_occ_coverage": 0.2853255894046664,
+  "p6_b3_training_unknown_fraction": 0.5504111010358177,
+  "p6_b3_training_hidden_free_tail": 0.6081736112940477,
+  "p6_b3_stage_passed": null,
   "p6_arm_order": ["B0", "B1", "B2", "B3", "B4", "B5", "M0"],
-  "p6_active_stage": "B3_surface_mean_train_then_eval",
-  "next_action": "run the preregistered independent B3 Surface Mean training from the frozen P5 epoch 3 model only start"
+  "p6_active_stage": "B3_common_stage_evaluation",
+  "next_action": "evaluate the frozen B3 epoch 1 candidate against B2 on both selection scenes with the common exact CVaR and anti trivial gates"
 }

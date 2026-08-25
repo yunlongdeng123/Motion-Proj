@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.3 P6 B3 MEAN TRAIN COMPLETE / STAGE VERDICT PENDING（2026-08-26）
+
+- canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T152000Z__b3-mean-s0-r1`；arm=`B3`；
+  aggregator=`mean`；authority=`off`；`5 epochs/1280 steps`；wall=`9181.220s`、peak=`0.400373 GiB`、finite、
+  hard violations=`0`、training capability=`passed`；calibration/confirmation/test read=`false`。
+- best training candidate=`epoch 1`：hard=`0`、retention=`0.636863007`、OCC coverage=`0.285325589`、UNKNOWN=
+  `0.550411101`，训练内可行；tail=`0.608173611`、rank=`0.080258369`、candidate objective=`0.688431980`、
+  secondary accuracy=`0.621907751`。checkpoint=`SURFNCC_B3_BEST_CANDIDATE.pt`。
+- trajectory：epoch0 tail+rank=`0.491363`但retention/UNKNOWN失门；epoch2=`0.310256`但retention/coverage/UNKNOWN=
+  `0.336785/0.084310/0.791651`失门；epoch3仍三门不足；epoch4 retention=`0.714805`与coverage=`0.158337`过门，
+  但UNKNOWN=`0.698930`失门。连续三轮无更优feasible candidate后按patience3停止。
+- verdict=`training candidate only; H-P6-001 pending common evaluator`；下一步冻结epoch1，对两scene执行统一CVaR与B2 area/
+  anti-trivial stage gate。failure ledger delta=`none`；B4/B5/M0仍locked。
+
 ## WorldSim V6.3 P6 B0/B1/B2 BASELINES COMPLETE / B3 UNLOCKED（2026-08-25）
 
 - canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T151200Z__baselines-s0-r1`；arms=

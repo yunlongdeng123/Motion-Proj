@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V6.3 P6 B3 mean training complete / stage evaluation unlocked（2026-08-26）
+
+状态：`v63_p6_b3_training_complete_stage_eval_unlocked`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
+`WS-V63-H-P6-001`；B3 common-evaluation verdict=`pending`；B4/B5/M0仍locked。
+
+B3 training canonical=
+`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T152000Z__b3-mean-s0-r1`按冻结mean aggregator完成
+`5 epochs/1280 optimizer steps`，wall=`9181.220s (2.550h)`、peak=`0.400373 GiB`、finite=`true`、累计hard
+violations=`0`，48 train+24 selection denominator完整，GPU已释放。warm start仅加载P5 epoch3 model，fresh AdamW、seed0；
+authority loss/veto关闭，hard projection与三项primal-dual约束未改。
+
+唯一best training candidate为epoch 1：hard=`0`、retention=`0.636863`、OCC coverage=`0.285326`、UNKNOWN=
+`0.550411`，训练内四门可行；hidden-FREE common selection tail=`0.608174`、rank=`0.080258`、tail+rank=
+`0.688432`、secondary accuracy=`0.621908`。epoch 0 tail更低但retention/UNKNOWN失门；epoch 2 tail+rank=
+`0.310256`却retention/coverage/UNKNOWN=`0.336785/0.084310/0.791651`三门失败；epoch 3也失门；epoch 4 retention/
+coverage过门但UNKNOWN=`0.698930`失败。连续三轮无更优feasible candidate后按patience=`3`终止。
+
+因此`candidate_promotable=true`仅表示训练内checkpoint合同通过，不等于H-P6-001或B3 stage pass。下一步只用冻结epoch1
+checkpoint运行统一B3 evaluator，对两scene分别检查相对B2 area、actor/static、retention/UNKNOWN/case coverage与common
+surface CVaR改善>=2%；不重训、不选threshold。failure ledger delta=`none`。
+
 ## WorldSim V6.3 P6 native baselines complete / B3 Surface-Mean unlocked（2026-08-25）
 
 状态：`v63_p6_baselines_complete_b3_training_unlocked`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
