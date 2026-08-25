@@ -1,5 +1,23 @@
 # Experiments
 
+## WorldSim V6.3 P6 B0/B1/B2 BASELINES COMPLETE / B3 UNLOCKED（2026-08-25）
+
+- canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T151200Z__baselines-s0-r1`；arms=
+  `B0/B1/B2`；denominator=`24 units / 2 scenes / 72 arm-unit rows`；wall=`36.8725s`、peak=`0.100660 GiB`、
+  capability=`passed`；P6 quality read=`true`，threshold/legacy/calibration/confirmation/test read=`false`。
+- B0 pooled：hard violations=`420297`、common surface tail=`0.791097645`、retention=`0.945069`、OCC area=
+  `3171762`；不是可晋级hard-feasible arm。B1 pooled：hard=`0`、tail=`0.791097645`、retention=`0.945069`、
+  OCC area=`2921341`，说明projection修复硬证据但不改变冻结hidden-FREE风险分母。
+- Native B2 pooled：hard=`0`、common tail=`0.491496100`、proposal false-safe surrogate=`0.396839652`、retention=
+  `0.851055933`、source-valid UNKNOWN=`0.266283715`、accepted cases=`24/24`、OCC area=`2298450`、actor/static accepted=
+  `296/23562`、secondary accuracy=`0.329071012`。
+- B2 scene-0450：tail=`0.497850071`、retention=`0.839815128`、source-valid UNKNOWN=`0.346415484`、OCC area=
+  `1079847`、actor/static accepted=`258/8417`；scene-1089：tail=`0.465122075`、retention=`0.872731225`、UNKNOWN=
+  `0.176492587`、area=`1218603`、actor/static=`38/15145`。B3两scene的2% tail上限约=`0.487893/0.455820`，且area
+  不得低于上述各scene B2值。
+- verdict=`baseline comparator frozen; no P6 hypothesis verdict yet`；H-P6-001只解锁B3 independent mean training/eval；
+  failure ledger delta=`none`；B4/B5/M0仍locked。
+
 ## WorldSim V6.3 P6 IMPLEMENTATION STAGED / BASELINE QUALITY UNREAD（2026-08-25）
 
 - task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=`WS-V63-H-P6-001`；formal P6 run=`none`；P6 quality read=`false`。

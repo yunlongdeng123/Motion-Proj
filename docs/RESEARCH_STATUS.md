@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.3 P6 native baselines complete / B3 Surface-Mean unlocked（2026-08-25）
+
+状态：`v63_p6_baselines_complete_b3_training_unlocked`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
+`WS-V63-H-P6-001`；下一阶段=`B3 independent Surface-Mean train/eval`；B4/B5/M0仍locked。
+
+P6 baseline canonical=
+`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T151200Z__baselines-s0-r1`完成全部24个selection units、
+两独立scene与72条arm-unit records，wall=`36.8725s`、peak=`0.100660 GiB`、execution capability=`passed`。仅P6
+selection quality已读；threshold fitted=`false`，legacy/calibration/confirmation/exact-once均未读，源码clean且GPU已释放。
+
+B0 native argmax有`420297` hard violations；B1应用冻结projection后hard=`0`，但common hidden-FREE surface CVaR仍为
+`0.791098`。冻结Native B2进一步降到pooled=`0.491496`，逐scene=`0.497850/0.465122`；B2 hard=`0`、safe-OCC
+retention=`0.851056`、source-valid UNKNOWN=`0.266284`、accepted case coverage=`1.0`、emitted OCC area=
+`2298450 points (coverage 0.626256)`、actor/static accepted proposals=`296/23562`。逐scene B3比较所需accepted area基准=
+`1079847/1218603 points`，tail至少需分别低于约`0.487893/0.455820`才能达到冻结2% improvement。
+
+该结果只冻结B2 comparator，不支持H-P6-001，也不把高B2 coverage或低于B1的tail解释为安全晋级。按预注册顺序，下一步从
+同一P5 epoch3 model-only起点正式训练B3 mean arm；只有B3在两scene同时通过hard/retention/UNKNOWN/case/area/
+actor/static与tail门，才解锁B4。failure ledger delta=`none`。
+
 ## WorldSim V6.3 P6 matched-AB implementation staged / baseline formal ready（2026-08-25）
 
 状态：`v63_p6_implementation_staged_quality_unread`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=
