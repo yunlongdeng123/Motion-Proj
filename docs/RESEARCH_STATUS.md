@@ -1,5 +1,34 @@
 # Research Status
 
+## WorldSim V6.3 P6 B3 rejected / surface architecture family closed / P7 locked（2026-08-26）
+
+状态：`v63_surface_architecture_family_closed_negative_p7_locked`；completed task=`WS-V63-P6-DEVELOPMENT-AB-01`；
+rejected hypothesis=`WS-V63-H-P6-001`；`H-P6-002/H-P6-003=closed_without_execution`；P7–P11、legacy、calibration、
+confirmation与exact-once test均未解锁/未读取。
+
+B3 stage canonical=
+`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260826T014500Z__b3-eval-s0-r1`完整读取同一24-unit、两scene
+denominator，wall=`242.604s`、peak=`0.130475 GiB`、hard violations=`0`、execution capability=`passed`，但stage=
+`failed`、supporting scenes=`0/2`。pooled B3 common surface CVaR=`0.608174`，相对Native B2=`0.491496`恶化
+`23.74%`；OCC surface area=`1047186`，仅B2的`45.56%`；proposal false-safe surrogate=`0.515384`，也比B2
+`0.396840`恶化`29.87%`。
+
+逐scene失败是决定性的：scene-0450 tail=`0.596685 vs 0.497850`（相对改善=`-19.85%`）、area ratio=
+`0.406270`、source-valid UNKNOWN=`0.651678>0.60`；scene-1089 tail=`0.655861 vs 0.465122`（`-41.01%`）、
+area ratio=`0.499323`。两scene hard0、retention、case coverage、actor/static coverage都过门，scene-1089 UNKNOWN也过门，
+但两scene tail与area均失败，所以不存在可由pooled均值掩盖的局部支持。
+
+按主计划Stop 2，B3不优于Native B2即关闭surface architecture family，不继续B4 Surface-Max、B5 Surface-CVaR或M0
+authority，也没有frozen P6 M0可交给P7。训练内epoch1 candidate因此只证明约束能避免全UNKNOWN，不能升级为P6 candidate。
+失败登记=`V63-F24 active route-closed`；完整closeout=
+`docs/autoresearch/worldsim_v63/P6_SURFACE_FAMILY_CLOSEOUT.md`。
+
+遇到终态后已检索顶会/优秀开源：EvOcc（CVPR 2025）以evidential target显式建模unobserved/contradiction，ReliOcc
+（IJCAI 2025）与OCCUQ（ICRA 2025，开源）提供hybrid及feature-level aleatoric/epistemic uncertainty，UAI 2024
+conditional robust optimization联合优化decision risk与conditional coverage。若未来以新版本复开，应预注册新的uncertainty
+representation和scene/stratum-conditional coverage约束，并使用fresh development scenes；不得在V6.3上换seed、加模型、
+降低area/UNKNOWN门、直接跑CVaR或读取legacy/H/T救结果。当前V6.3 autoresearch按预注册终态完成。
+
 ## WorldSim V6.3 P6 B3 mean training complete / stage evaluation unlocked（2026-08-26）
 
 状态：`v63_p6_b3_training_complete_stage_eval_unlocked`；active task=`WS-V63-P6-DEVELOPMENT-AB-01`；active hypothesis=

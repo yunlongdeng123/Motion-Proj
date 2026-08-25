@@ -69,7 +69,7 @@
 | V6 | V5.2 TrackBayes 主线已由 world-compiler direction reset 取代；G0–G3 与 R1 capability gate 已通过，尚无方法质量结论 | pytest import/runtime profile 不能混用；历史外部资产可能只剩 manifest；冻结 plan 的 exact allowlist 必须显式纳入 terminal closeout；formal capability run 禁止 dirty source | `V6-F01`–`V6-F05`；G0–G3/R1 governance artifacts；V6 plan |
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
-| V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R冻结可晋级candidate；P6 baseline与B3 mean训练完成，B3 stage待评 | P6不得对单一M0输出做post-hoc mean/max/CVaR伪消融；B3/B4/B5必须同起点独立训练并用common exact CVaR比较；训练内candidate不得冒充逐scene stage pass；case threshold留给P7 | `V63-F01`–`V63-F23`；`P2D_NATIVE_POINTWISE_PREREG.md`；`P3_SURFACE_CORPUS_PREREG.md`；`P4_CAPACITY_PREREG.md`；`P5_TRAIN_PREREG.md`；`P5D_AUTHORITY_COLLAPSE_DIAGNOSTIC_PREREG.md`；`P5R_CONSTRAINED_SURFNCC_TRAIN_PREREG.md`；`P6_DEVELOPMENT_AB_PREREG.md` |
+| V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 
 ### 1.1 V1 汇总条目
 
@@ -424,6 +424,26 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   或已安装console entry point，不把direct-file import失败登记为算法reject，也不为此扩展smoke矩阵。证据=
   `https://docs.python.org/3/library/sys_path_init.html`、
   `https://packaging.python.org/en/latest/guides/creating-and-packaging-command-line-tools/`。
+
+- `V63-F24`（`algorithm/evaluation`, `active route-closed`）：P6 B3 Surface-Mean虽在训练内冻结epoch1 feasible checkpoint
+  （hard0、retention=`0.636863`、OCC coverage=`0.285326`、UNKNOWN=`0.550411`），但统一逐scene stage evaluator在两scene
+  都不优于冻结Native B2。scene-0450 common surface hidden-FREE CVaR=`0.596685 vs 0.497850`，相对改善=
+  `-19.852%`，accepted area ratio=`0.406270`且source-valid UNKNOWN=`0.651678>0.60`；scene-1089 tail=
+  `0.655861 vs 0.465122`，改善=`-41.008%`，area ratio=`0.499323`。两scene hard0、retention、case、actor/static过门，
+  说明失败不是hard solver回归或all-UNKNOWN，而是surface architecture在保留一定OCC后仍同时放大hidden-FREE tail并显著
+  收缩相对Native B2的写入面积。supporting scenes=`0/2`，H-P6-001 rejected。
+
+  主计划Stop2因此关闭surface architecture family：B4 Surface-Max、B5 Surface-CVaR和M0 authority均不执行，H-P6-002/
+  H-P6-003关闭未读，P7没有frozen P6 M0输入而保持locked；legacy/calibration/confirmation/test均未读。不得用pooled
+  retention、训练内candidate、较高accuracy或hard0掩盖逐scene tail/area失败，也不得换seed、加大模型、改CVaR alpha、
+  降低area/UNKNOWN/2%门或先读legacy/H/T复开。未来合法复开必须在新版本预注册feature-level aleatoric/epistemic
+  uncertainty与scene/stratum-conditional coverage约束，并使用fresh development denominator；相关候选仅为EvOcc
+  （CVPR 2025）、ReliOcc（IJCAI 2025）、OCCUQ（ICRA 2025开源）及UAI 2024 conditional robust optimization，不构成
+  V6.3 recovery授权。证据=`docs/autoresearch/worldsim_v63/P6_SURFACE_FAMILY_CLOSEOUT.md`、
+  `run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260826T014500Z__b3-eval-s0-r1`、
+  `https://openaccess.thecvf.com/content/CVPR2025/html/Kalble_EvOcc_Accurate_Semantic_Occupancy_for_Automated_Driving_Using_Evidence_Theory_CVPR_2025_paper.html`、
+  `https://www.ijcai.org/proceedings/2025/220`、`https://github.com/ika-rwth-aachen/OCCUQ`、
+  `https://proceedings.mlr.press/v244/chenreddy24a.html`。
 
 <a id="detail-v62"></a>
 

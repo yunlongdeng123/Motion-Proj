@@ -3,7 +3,7 @@
 - Task: `WS-V63-P6-DEVELOPMENT-AB-01`
 - Hypotheses: `WS-V63-H-P6-001`, `WS-V63-H-P6-002`, `WS-V63-H-P6-003`
 - Trigger: P5R froze a genuinely feasible epoch-6 SurfNCC candidate
-- Status: `protocol frozen; B0/B1/B2 baseline and B3 mean training complete; B3 common evaluation unlocked; B4/B5/M0 locked`
+- Status: `terminal; B3 rejected on both scenes; surface architecture family closed by Stop 2; B4/B5/M0 and P7 not executed`
 - Seed: `0` for every trained surface ablation
 
 ## Claim boundary

@@ -1,5 +1,23 @@
 # Experiments
 
+## WorldSim V6.3 P6 B3 STAGE REJECTED / SURFACE FAMILY CLOSED（2026-08-26）
+
+- canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260826T014500Z__b3-eval-s0-r1`；arm=`B3`；
+  checkpoint=`B3 train epoch1`；denominator=`24 units / 2 scenes`；wall=`242.604s`、peak=`0.130475 GiB`、hard=`0`；
+  P6 quality read=`true`，threshold fitted/legacy/calibration/confirmation/test read=`false`。
+- pooled B3：common tail=`0.608173613` vs B2=`0.491496100`，relative improvement=`-0.237393`；OCC area=
+  `1047186` vs B2=`2298450`，ratio=`0.455605`；proposal false-safe surrogate=`0.515384454` vs B2=`0.396839652`
+  （relative=`-0.298722`）；retention=`0.636863`、source-valid UNKNOWN=`0.554227`、accepted cases=`24/24`。
+- scene-0450：tail=`0.596684991 vs 0.497850071`、relative=`-0.198523`；area=`438709/1079847`、ratio=
+  `0.406270`；retention=`0.601623` pass、source-valid UNKNOWN=`0.651678` fail、hard/case/actor/static pass。
+- scene-1089：tail=`0.655860510 vs 0.465122075`、relative=`-0.410083`；area=`608477/1218603`、ratio=
+  `0.499323`；retention=`0.704815`、UNKNOWN=`0.445030`、hard/case/actor/static pass，但tail/area fail。
+- verdict=`H-P6-001 rejected, supporting scenes 0/2`；主计划Stop2触发，B4/B5/M0未执行，H-P6-002/003关闭未读；
+  P7–P11保持locked。failure ledger delta=`V63-F24 active route-closed`；closeout=
+  `docs/autoresearch/worldsim_v63/P6_SURFACE_FAMILY_CLOSEOUT.md`。
+- future-only migration audit：EvOcc/ReliOcc/OCCUQ的evidential、hybrid与feature-level uncertainty，加UAI 2024
+  conditional robust optimization的scene/stratum conditional coverage；只能作为新版本fresh protocol，不能救本run。
+
 ## WorldSim V6.3 P6 B3 MEAN TRAIN COMPLETE / STAGE VERDICT PENDING（2026-08-26）
 
 - canonical=`run://worldsim_v63/WS-V63-P6-DEVELOPMENT-AB-01/20260825T152000Z__b3-mean-s0-r1`；arm=`B3`；
