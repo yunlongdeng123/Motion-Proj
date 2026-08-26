@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 COMPACT FRESH SIDECAR PREREG（2026-08-26）
+
+- task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=`WS-V64-H-P2-001`；status=`preregistered / not run`。
+- fit scenes=`0100,0230,0632,0781`；evaluation scenes=`0800,0994`；`12 targets/scene, 72 total`；seed=`0`。
+- selection input=scene description、frame count、sensor completeness only；Occupancy/UQ/false-safe/model quality=`not read`。
+- extractor=冻结 IR-WM current-state native logits/BEV worker；prototype/training/target evidence=`false/false/false`。
+- expected resource=`single RTX 3090, <=8.3 GiB two-worker peak upper bound, about 3.4 GiB output`；formal run=`pending`。
+- failure ledger refs=`V63-F01,V63-F02,V63-F24,V64-F02,V64-F03`；delta=`none`；freeze=
+  `docs/autoresearch/worldsim_v64/P2_FRESH_COHORT_FREEZE.md`。
+
 ## WorldSim V6.4 NATIVE UQ RETROSPECTIVE COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1`；

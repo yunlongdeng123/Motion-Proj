@@ -18,6 +18,8 @@
   fresh V6.4 claim，也不允许由该结果读取 calibration/confirmation/test。
 - retrospective U2 已在两个旧 evaluation scene 都优于 U0，但 FPR@95TPR 仍高，只授权建立 fresh cohort，不授权
   authority/calibration claim。当前 `V64-F01--F03`均为 resolved engineering/operations，不得写成算法负结论。
+- compact fresh cohort 已从 V6.1–V6.3 未读 quality 的本机 processed scene 中按 metadata-only 冻结；不得把更早版本曾
+  出现过但未进入 V6.1–V6.3 UQ 路线的 scene 错判为 legacy，也不得用本轮后续质量回改 cohort。
 
 ### V6.3 报告使用边界（2026-08-26）
 

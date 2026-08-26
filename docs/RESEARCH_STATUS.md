@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 compact fresh sidecar 已冻结 / 待提取（2026-08-26）
+
+状态：`v64_fresh_native_sidecar_preregistered`；active task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=
+`WS-V64-H-P2-001`。V6.1–V6.3 quality ledger 排除 21 个 scene 后，本机已有 processed 且未进入该三版 quality 的候选
+为 9 个；只按 description、帧数与传感器完整性冻结 compact 6-scene cohort，不使用模型质量。
+
+fresh fit=`scene-0100,scene-0230,scene-0632,scene-0781`；fresh evaluation=
+`scene-0800,scene-0994`；每 scene 12 targets，共 72 units。完整冻结=
+`docs/autoresearch/worldsim_v64/P2_FRESH_COHORT_FREEZE.md`，配置=
+`configs/worldsim_v64/p2_fresh_native_sidecars_v1.yaml`。evaluation target 未读。
+
+提取直接复用 V6.3 已通过的 IR-WM native worker，不新增 smoke。预计输出约 3.4 GiB、双 worker 显存上界约 8.3 GiB，
+当前单卡 3090 与约 60 GiB 磁盘余量足够，无多卡需求。failure ledger delta=`none`。下一步提交并 push prereg 后
+直接执行一次 72-unit formal。
+
 ## WorldSim V6.4 U2 retrospective 有信号 / fresh cohort 下一步（2026-08-26）
 
 状态：`v64_retrospective_u2_signal_supported_fresh_cohort_next`；completed task=`WS-V64-P3-NATIVE-UQ-01`；
