@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 P6 CALIBRATION/CONFIRMATION COHORT PREREG（2026-08-26）
+
+- task/hypothesis=`WS-V64-P6-CALIBRATION-SIDECAR-01 / WS-V64-H-P6C-001`；quality read=`false`。
+- candidate pool=`700 train temporal - 21 V6.1--V6.3 - 6 current V64; >=40 samples -> 612`；selection=
+  `description-only, seed0, four strata`；model/target quality used=`false`。
+- calibration=`16 scenes / 4 per night,rain,construction,vulnerable-transit`；confirmation=`8 scenes / 2 per stratum`；
+  targets=`12 per scene / 288 total`；full list=`docs/autoresearch/worldsim_v64/P6_CALIBRATION_COHORT_FREEZE.md`。
+- preparation=`official local tar -> guarded temporary raw batch -> 24 DriveStudio processed -> remove recoverable temp raw`；existing raw
+  mutation/deletion=`none`；persistent projection=`~21.6 GiB`；projected remaining=`~34 GiB`。
+- native extraction=`2 workers / prior peak-sum upper bound 8.27 GiB / single RTX3090 sufficient`；hash/checksum/fingerprint=
+  `none`；extra smoke/regression=`none`；failure refs=`V63-F01,V63-F02,V63-F24,V64-F05,V64-F10,V64-F11`；delta=`none`。
+
 ## WorldSim V6.4 P5 SUPERVISED RISK PASS / RANKING-ONLY（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P5-SUPERVISED-RISK-01/20260826T093000Z__supervised-risk-s0-r1`；verdict=

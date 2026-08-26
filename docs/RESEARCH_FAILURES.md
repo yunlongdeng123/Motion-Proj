@@ -25,6 +25,8 @@
 - fresh UQ已在target quality读取前冻结为同一PCA-16/GMM-4和两条晋级门；同数据换seed、PCA/GMM或改scene均禁止。
 - fresh U2虽过相对门，但两scene内AUROC都约0.498且FPR95约0.96，登记`V64-F10 active`。后续只允许已冻结的
   fit-only PCA-16 logistic risk head执行一次；不得把监督标签用于evaluation拟合、扫描超参或扩展split。
+- U3已通过两fresh scene绝对AUROC门，但高FPR95保持`V64-F11 active`。独立calibration/confirmation已按metadata-only冻结为
+  `16+8 scenes`；当前与旧evaluation score均不得回流修改cohort、risk rule或head。
 
 ### V6.3 报告使用边界（2026-08-26）
 

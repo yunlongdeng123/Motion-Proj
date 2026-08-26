@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V6.4 独立 calibration/confirmation cohort 已冻结（2026-08-26）
+
+状态：`v64_calibration_confirmation_cohort_preregistered`；active task=
+`WS-V64-P6-CALIBRATION-SIDECAR-01`；active hypothesis=`WS-V64-H-P6C-001`；calibration/confirmation quality read=
+`false/false`。
+
+从冻结IR-WM train temporal metadata的700 scene中排除V6.1–V6.3精确21个quality/config scene与当前V64六scene，
+再要求>=40 samples，得到612个候选。只用description按night/rain/construction/vulnerable-transit四strata、seed0各取6个；
+每stratum前4个组成16-scene calibration，后2个组成8-scene untouched confirmation。总24 scene×12 target=`288 units`，
+未读取Occupancy/UQ/hidden-FREE/model quality。完整名单与索引=
+`docs/autoresearch/worldsim_v64/P6_CALIBRATION_COHORT_FREEZE.md`。
+
+资源策略：官方本地只读tar一次批量提取到精确临时目录，24个DriveStudio processed完成后删除该可重建raw batch；已有raw
+不变。预计processed+native持久化约`21.6 GiB`，从当前`56 GiB`保留约`34 GiB`；双worker显存沿用`8.27 GiB`上界，
+单3090足够。配置=`configs/worldsim_v64/p6_calibration_confirmation_sidecars_v1.yaml`；prep runner=
+`scripts/prepare_worldsim_v64_calibration_batch.py`；sidecar wrapper已泛化读取配置partition。只做编译、提交push，然后直接准备
+数据和288-unit sidecar；不加smoke/regression，不加hash/checksum/fingerprint。
+
 ## WorldSim V6.4 supervised hidden-FREE ranking 支持 / 独立校准下一步（2026-08-26）
 
 状态：`v64_supervised_risk_supported_selective_calibration_cohort_next`；completed task=

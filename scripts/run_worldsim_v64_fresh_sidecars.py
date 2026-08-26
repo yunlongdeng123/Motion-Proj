@@ -52,7 +52,7 @@ def main() -> int:
             temporary_path,
             repo_root,
             run_dir,
-            ["fresh_fit", "fresh_evaluation"],
+            list(overlay["cohorts"]),
             int(args.maximum_workers),
             None,
             None,
