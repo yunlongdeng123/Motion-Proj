@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 fresh evidence complete / exact-once next（2026-08-27）
+
+状态：`v64_p10r2_confirmation_evidence_complete_exact_once_next`；canonical=
+`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-EVIDENCE-01/20260826T201500Z__confirmation-evidence-s3-r1`；
+confirmation target/model-score read=`true/false`。
+
+冻结8 scene一次生成`96/96` evidence units，scene=`8`、reuse=`0`、source-role overlap=`0`、queries=`0`，disk=
+`94236671 bytes`，maximum unit/wall=`15.2590/108.8267s`，passed。没有恢复、policy/model变更或第二份evidence。
+下一步只按冻结M0/M1、2s/1.5m route与worst10 CVaR执行一次exact-once；closeout=
+`docs/autoresearch/worldsim_v64/P10R2_CONFIRMATION_EVIDENCE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R2 fresh native complete / evidence next（2026-08-27）
 
 状态：`v64_p10r2_confirmation_native_complete_evidence_next`；canonical=

@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 FRESH EVIDENCE COMPLETE（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-EVIDENCE-01/20260826T201500Z__confirmation-evidence-s3-r1`；
+- result=`8 scenes / 96 units / passed / 94236671 bytes`；reuse/query/source-role overlap=`0/0/0`；
+- maximum unit wall/total wall=`15.2590s/108.8267s`；target read=`true`；model-score read=`false`；
+- policy/model/route/tail changes=`none`；second evidence/hash/checksum/fingerprint/extra tests=`none`；
+- next=`one frozen M0-vs-M1 exact-once route-tail score`。
+
 ## WorldSim V6.4 P10R2 FRESH NATIVE COMPLETE（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-SIDECAR-01/20260826T201000Z__native-aggregate-s3-r1`；

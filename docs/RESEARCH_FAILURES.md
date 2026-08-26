@@ -462,6 +462,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   complete canonical processed重建。最终8/8 processed、8/8 native、96 targets全部通过。prep以新r2和
   `--reuse-temporary-raw`只读8个complete canonical scene，`0.8171s`写summary并删除raw，不重扫tar/重做preprocess。
   防重复：scene-ready阶段只有feeder拥有producer写权；prep在stream结束后只作reuse finalize。科学cohort/policy/target lock未变。
+  后续fresh evidence一次完成96/96 units、0 reuse与0 source-role overlap，未复发temporal membership、producer或partial问题；
+  V64-F23/F24保持关闭，不新增failure ID。target现已读，故此后只允许预注册exact-once scorer，不得再改M1或cohort。
 
 <a id="detail-v63"></a>
 
