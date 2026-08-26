@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P10G sparse Gaussian state adapter supported（2026-08-26）
+
+状态：`v64_p10g_sparse_gaussian_adapter_supported`；canonical=
+`run://worldsim_v64/WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01/20260826T181500Z__gaussian-state-adapter-s0-r1`；verdict=
+`supported_sparse_gaussian_state_adapter`；V64-F19=`resolved_by_sparse_gaussian_adapter`。
+
+96个P10M package全部转换并render：M0/C0 Gaussian count=`534581/460082`，conditional additional=`74499`；BEV support
+cells=`594772/553756`，gain=`41016`。fixed Gaussian=`scale 0.256m / identity rotation / opacity 0.95 / OCCUPIED`；output=
+`40148486 bytes`，GPU wall/peak RSS=`0.9840 s/0.8689 GiB`。consumer未访问target、model或StreetGS checkpoint，两项gate均PASS。
+结果支持sparse semantic Gaussian参数化与probabilistic BEV splat，不支持photorealistic render/sensor/collision/planning/safety。
+closeout=`docs/autoresearch/worldsim_v64/P10G_GAUSSIAN_STATE_ADAPTER_CLOSEOUT.md`；下一步转route/collision semantic consumer。
+
 ## WorldSim V6.4 P10G sparse Gaussian state adapter frozen（2026-08-26）
 
 状态：`v64_p10g_sparse_gaussian_adapter_preregistered`；active task/hypothesis=

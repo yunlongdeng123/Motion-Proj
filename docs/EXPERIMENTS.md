@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10G SPARSE GAUSSIAN STATE ADAPTER SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01/20260826T181500Z__gaussian-state-adapter-s0-r1`；
+- result=`96/96 packages rendered / 40148486 bytes`；V64-F19=`resolved_by_sparse_gaussian_adapter`；
+- M0/C0 Gaussians=`534581/460082`；additional=`74499`；BEV support=`594772/553756`；gain=`41016 cells`；
+- Gaussian=`scale 0.256m isotropic / identity / opacity 0.95 / OCCUPIED`；both minimal gates=`PASS`；
+- target/model/StreetGS access=`false/false/false`；GPU wall/peak RSS=`0.9840 s/0.8689 GiB`；
+- refit/sweep/hash/checksum/fingerprint/extra tests=`none`；
+- claim boundary=`sparse semantic Gaussian + BEV splat; no photorealistic/sensor/collision/planning/safety claim`。
+
 ## WorldSim V6.4 P10G SPARSE GAUSSIAN STATE ADAPTER FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01 / WS-V64-H-P10G-001`；run ID=`20260826T181500Z__gaussian-state-adapter-s0-r1`；

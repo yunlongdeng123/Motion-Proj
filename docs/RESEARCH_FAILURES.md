@@ -384,7 +384,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P10M formal随后一次完成96个package，M0比C0新增`74499`个emitted voxels且两项gate通过；state bake target read=false、
   runtime model/evidence access=false，没有新增failure ID。该结果不把voxel materialization外推为GS/sensor/collision authority。
 
-- `V64-F19`（`integration/resource`, `recovery_frozen_pre_run`）：P10M fresh cohort的8个nuScenes scene均无同场景StreetGS/
+- `V64-F19`（`integration/resource`, `resolved_by_sparse_gaussian_adapter`）：P10M fresh cohort的8个nuScenes scene均无同场景StreetGS/
   SceneIR checkpoint；旧V6 GS runtime只绑定其他scene，并以manifest SHA256/双bake bit-exact为入口，直接复用既不满足same-scene
   语义，也违反V6.4禁止新增hash/checksum/fingerprint的约束。不得把跨scene checkpoint硬接到fresh package、恢复旧hash治理，或把
   voxel package直接称为photorealistic GS。检索GaussianFormer的sparse semantic Gaussians、GaussianWorld的
@@ -393,6 +393,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   package，不读target/model/StreetGS。证据=`https://github.com/huang-yh/GaussianFormer`、
   `https://openaccess.thecvf.com/content/CVPR2025/papers/Zuo_GaussianWorld_Gaussian_World_Model_for_Streaming_3D_Occupancy_Prediction_CVPR_2025_paper.pdf`、
   `https://openaccess.thecvf.com/content/ICCV2025/papers/Gan_GaussianOcc_Fully_Self-supervised_and_Efficient_3D_Occupancy_Estimation_with_Gaussian_ICCV_2025_paper.pdf`。
+  formal P10G一次完成`96/96` package，生成`534581`个M0 semantic Gaussians并在GPU BEV splat获得相对C0
+  `+41016` support cells；target/model/StreetGS access均false，两项gate通过。因此“无法在no-hash/same-scene约束下进入任何
+  Gaussian consumer”的integration blocker关闭；photorealistic StreetGS/sensor binding仍不在该恢复声明内。
 
 <a id="detail-v63"></a>
 

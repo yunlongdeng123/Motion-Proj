@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10g_sparse_gaussian_adapter_preregistered",
+  "status": "v64_p10g_sparse_gaussian_adapter_supported",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01",
+  "active_task": "WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01 design",
   "active_hypothesis": "WS-V64-H-P4C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -236,5 +236,14 @@
   "p10g_target_model_streetgs_access": false,
   "p10g_gaussian_scale_m": 0.256,
   "p10g_gaussian_opacity": 0.95,
-  "next_action": "commit and push sparse Gaussian adapter freeze, then execute the single 96-package GPU BEV splat run"
+  "p10g_gaussian_state_adapter_verdict": "supported_sparse_gaussian_state_adapter",
+  "p10g_package_count": 96,
+  "p10g_m0_gaussian_count": 534581,
+  "p10g_c0_gaussian_count": 460082,
+  "p10g_additional_gaussian_count": 74499,
+  "p10g_c0_bev_support_cells": 553756,
+  "p10g_m0_bev_support_cells": 594772,
+  "p10g_additional_bev_support_cells": 41016,
+  "p10g_output_bytes": 40148486,
+  "next_action": "commit and push P10G closeout, then bind Gaussian BEV state to the smallest route or collision semantic consumer"
 }
