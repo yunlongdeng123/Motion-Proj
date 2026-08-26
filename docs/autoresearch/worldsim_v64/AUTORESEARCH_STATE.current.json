@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10c_route_conflict_audit_preregistered",
+  "status": "v64_p10t_route_tail_audit_preregistered",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01",
+  "active_task": "WS-V64-P10T-ROUTE-TAIL-AUDIT-01",
   "active_hypothesis": "WS-V64-H-P4C-001",
   "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER", "P10R_BOUNDED_ROUTE_EXPOSURE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
@@ -45,9 +45,10 @@
     "V64-F17",
     "V64-F18",
     "V64-F19",
-    "V64-F20"
+    "V64-F20",
+    "V64-F21"
   ],
-  "last_failure_id": "V64-F20",
+  "last_failure_id": "V64-F21",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -266,5 +267,17 @@
   "p10c_expected_case_count": 96,
   "p10c_maximum_m0_route_hidden_free_conflict_rate": 0.05,
   "p10c_policy_route_frozen": true,
-  "next_action": "commit and push route-conflict recovery freeze, then execute the single target-read severity audit without policy or route changes"
+  "p10c_route_conflict_audit_verdict": "supported_route_local_conflict_severity",
+  "p10c_c0_route_emitted_voxel_count": 9450,
+  "p10c_m0_route_emitted_voxel_count": 10013,
+  "p10c_additional_route_emitted_voxel_count": 563,
+  "p10c_c0_route_hidden_free_conflict_rate": 0.0035978835978835977,
+  "p10c_m0_route_hidden_free_conflict_rate": 0.004294417257565165,
+  "p10c_m0_case_failure_count_descriptive": 5,
+  "p10t_route_tail_audit_preregistered": true,
+  "p10t_route_tail_audit_run": "run://worldsim_v64/WS-V64-P10T-ROUTE-TAIL-AUDIT-01/20260826T190000Z__route-tail-audit-s0-r1",
+  "p10t_tail_fraction": 0.1,
+  "p10t_tail_count": 10,
+  "p10t_maximum_m0_empirical_cvar": 0.05,
+  "next_action": "commit and push P10C closeout plus empirical CVaR freeze, then execute the rows-only tail audit"
 }

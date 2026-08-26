@@ -401,7 +401,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P10R formal在36/96 cases得到`+375` route support cells并通过冻结门，但C0/M0 binary intercept均为96/96、additional intercept
   cases=0；这是明确的metric saturation边界而非新implementation failure。不得把support gain包装成更多collision case被拦截。
 
-- `V64-F20`（`evaluation/metric`, `recovery_frozen_pre_target_audit`）：P10R binary route intercept对C0/M0均为`96/96`，使case-level
+- `V64-F20`（`evaluation/metric`, `resolved_by_route_local_cell_severity`）：P10R binary route intercept对C0/M0均为`96/96`，使case-level
   hit metric完全饱和；虽然M0在36 cases新增375 support cells，但不能回答这些新增state是否把hidden FREE写成OCCUPIED。不得事后缩短
   horizon、缩小corridor或提高density threshold制造未饱和case。Waymo Occupancy Flow以固定current-ego grid做cell-level occupancy
   metric，Implicit Occupancy Flow允许planner在连续时空点query，soft collision optimization使用连续势能而非binary hit；迁移为
@@ -409,6 +409,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   conflict门保持原0.05，case failure只描述。证据=`https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/protos/occupancy_flow_metrics.proto`、
   `https://openaccess.thecvf.com/content/CVPR2023/html/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.html`、
   `https://openaccess.thecvf.com/content/CVPR2023W/E2EAD/papers/Kedia_Integrated_Perception_and_Planning_for_Autonomous_Vehicle_Navigation_An_Optimization-Based_CVPRW_2023_paper.pdf`。
+  P10C一次读取冻结target后得到M0 route emitted=`10013`、conflict=`43`、pooled rate=`0.004294`，并相对C0新增563 state；
+  cell-level severity因此成功打破binary metric saturation，本条关闭。但5/96局部case仍超0.05，转入V64-F21，不由pooled pass覆盖。
+
+- `V64-F21`（`evaluation/tail-risk`, `recovery_frozen_post_quality_no_policy_change`）：P10C pooled M0 route hidden-FREE rate虽仅
+  `0.004294`，仍有5/96 case局部超过0.05，最高`scene-0895/f152=0.106383`；其余包括`0876/f047=0.076923`、
+  `0876/f182=0.069444`、`0454/f122=0.063492`、`0895/f137=0.057692`。这阻止把pooled severity提升为route/collision
+  authority。不得在已读target上调policy、改route或挑scene。CVaR对最坏尾部而非均值进行风险汇总，且PAC-Bayesian CVaR工作
+  明确区分empirical tail与generalization bound；故只冻结alpha0.10/worst10 empirical audit，M0门仍0.05，不做优化或population
+  声明。证据=`https://proceedings.neurips.cc/paper/2015/hash/64223ccf70bbb65a3a4aceac37e21016-Abstract.html`、
+  `https://proceedings.neurips.cc/paper/2020/hash/d02e9bdc27a894e882fa0c9055c99722-Abstract.html`。
 
 <a id="detail-v63"></a>
 

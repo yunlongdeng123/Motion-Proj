@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V6.4 P10T empirical route-tail CVaR audit frozen（2026-08-26）
+
+状态：`v64_p10t_route_tail_audit_preregistered`；active task/hypothesis=
+`WS-V64-P10T-ROUTE-TAIL-AUDIT-01 / WS-V64-H-P10T-001`；V64-F21=`recovery_frozen_post_quality_no_policy_change`。
+
+P10C pooled conflict通过但5/96 route cases局部>0.05，故collision/route authority仍未解锁。参考risk-sensitive CVaR与PAC-Bayesian
+CVaR分析，冻结empirical top-decile mean：96 cases取worst 10，M0 CVaR门=`<=0.05`。只复用P10C rows，不重读target、不改
+policy/route/model，不扫tail fraction；结果只作empirical tail diagnostic，不称population bound。freeze=
+`docs/autoresearch/worldsim_v64/P10T_ROUTE_TAIL_AUDIT_FREEZE.md`。
+
+## WorldSim V6.4 P10C pooled route-local conflict supported / local tail remains（2026-08-26）
+
+状态：`v64_p10c_pooled_conflict_supported_local_tail_active`；canonical=
+`run://worldsim_v64/WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01/20260826T184500Z__route-conflict-audit-s0-r1`；verdict=
+`supported_route_local_conflict_severity`；V64-F20=`resolved_by_route_local_cell_severity`。
+
+C0/M0 route-emitted voxels=`9450/10013`，M0新增`563`；hidden-FREE conflicts=`34/43`，pooled rate=
+`0.003598/0.004294`，M0低于0.05，两项gate PASS。新增state带来9个新增conflict；M0仍有5/96 case局部rate>0.05，最高=
+`0.106383`，故仅支持pooled route-local severity，不支持per-case tail或collision authority。target read=`true`、collision GT=
+`false`、GPU wall=`4.1697s`。closeout=`docs/autoresearch/worldsim_v64/P10C_ROUTE_CONFLICT_AUDIT_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10C route-local conflict severity audit frozen（2026-08-26）
 
 状态：`v64_p10c_route_conflict_audit_preregistered`；active task/hypothesis=

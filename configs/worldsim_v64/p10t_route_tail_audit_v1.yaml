@@ -1,0 +1,25 @@
+schema_version: worldsim_v64.p10t_route_tail_audit.v1
+task_id: WS-V64-P10T-ROUTE-TAIL-AUDIT-01
+hypothesis_id: WS-V64-H-P10T-001
+seed: 2
+claim_boundary: empirical top-decile route-local hidden-FREE tail audit of frozen M0; no population CVaR bound, policy optimization, collision truth, planning, or safety claim
+inputs:
+  route_conflict_run: worldsim_v64/WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01/20260826T184500Z__route-conflict-audit-s0-r1
+tail:
+  measure: empirical_upper_tail_mean
+  fraction: 0.10
+  expected_tail_count: 10
+gates:
+  expected_case_count: 96
+  maximum_m0_empirical_cvar: 0.05
+verdict_on_pass: supported_empirical_route_tail
+verdict_on_failure: rejected_empirical_route_tail
+locks:
+  target_evidence_reread_allowed: false
+  model_or_policy_change_allowed: false
+  tail_fraction_sweep_allowed: false
+  content_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2015/hash/64223ccf70bbb65a3a4aceac37e21016-Abstract.html
+  - https://proceedings.neurips.cc/paper/2020/hash/d02e9bdc27a894e882fa0c9055c99722-Abstract.html
+failure_ledger_refs: [V63-F02, V63-F24, V64-F15, V64-F18, V64-F19, V64-F20, V64-F21]

@@ -1,5 +1,22 @@
 # Experiments
 
+## WorldSim V6.4 P10T EMPIRICAL ROUTE-TAIL CVAR FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10T-ROUTE-TAIL-AUDIT-01 / WS-V64-H-P10T-001`；run ID=`20260826T190000Z__route-tail-audit-s0-r1`；
+- source=`frozen P10C 96 rows`；target reread/model/policy/route change=`false/false/false/false`；
+- measure=`empirical worst 10/96 mean (alpha=0.10)`；gate=`M0 CVaR <=0.05`；fraction sweep=`none`；
+- V64-F21=`recovery_frozen_post_quality_no_policy_change`；hash/checksum/fingerprint/extra tests=`none`；
+- claim boundary=`empirical tail diagnostic only; no population bound/collision/planning/safety claim`。
+
+## WorldSim V6.4 P10C POOLED ROUTE-LOCAL CONFLICT SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01/20260826T184500Z__route-conflict-audit-s0-r1`；
+- C0/M0 route emitted=`9450/10013`；additional=`563`；hidden-FREE conflicts=`34/43`；additional conflicts=`9`；
+- pooled rates=`0.0035979/0.0042944`；M0 gate `<=0.05 PASS`；positive state gate=`PASS`；
+- M0 case failures above0.05=`5/96 descriptive`；maximum=`0.106383`；V64-F20=`resolved`；V64-F21=`active tail`；
+- target/model-refit/collision GT read=`true/false/false`；GPU wall/peak RSS=`4.1697s/0.7184GiB`；
+- claim boundary=`pooled route-local target conflict only; per-case tail/collision authority unsupported`。
+
 ## WorldSim V6.4 P10C ROUTE-LOCAL CONFLICT AUDIT FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01 / WS-V64-H-P10C-001`；run ID=`20260826T184500Z__route-conflict-audit-s0-r1`；
