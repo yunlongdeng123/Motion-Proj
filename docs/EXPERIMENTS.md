@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 VERSION CLOSEOUT / ARXIV INDEX COMPLETE（2026-08-27）
+
+- terminal state=`v64_research_complete_report_ready`；active task/hypothesis=`null/null`；
+- version result=`conditional compiler + untouched fixed-opportunity route result supported; collision critic terminal negative`；
+- strongest positive=`P10R4 96 cases; coverage delta 0; fixed CVaR delta -0.009904666; pooled density delta -0.002943254; lower/equal/higher 18/78/0`；
+- terminal negative=`P11R verified recall 0.62044 with 2 policy false-safe; P11D verified AUROC 0.71165->0.56274`；
+- new scientific run/GPU execution/test matrix=`none`；failure ledger delta=`none`；multi-GPU requirement=`false`；
+- report index=`docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`；closeout=`docs/autoresearch/worldsim_v64/V64_RESEARCH_FAMILY_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P11D ROWS-ONLY SHIFT DIAGNOSTIC COMPLETE（2026-08-27）
 
 - canonical/verdict=`run://worldsim_v64/WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01/20260827T040000Z__collision-critic-shift-s0-r1 / diagnosed_p11_cross_cohort_score_and_prior_shift`；

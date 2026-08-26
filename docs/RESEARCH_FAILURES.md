@@ -1,16 +1,24 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-26
+> **最后更新**：2026-08-27
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.4、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
-历史快照；`WS_*_FAILURE_FORENSICS.md` 是专项诊断报告，不是第二本账。V6.3报告索引
-`docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`只导航本账与canonical evidence，也不是第二本失败账。新路线、新版本和新实验不得再创建并行的
+历史快照；`WS_*_FAILURE_FORENSICS.md` 是专项诊断报告，不是第二本账。V6.3/V6.4报告索引
+`docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`与`docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`只导航本账与canonical evidence，也不是第二本失败账。新路线、新版本和新实验不得再创建并行的
 `*_FAILURES.md` 事实源。
 
-### V6.4 当前边界（2026-08-26）
+### V6.4 当前边界（2026-08-27）
+
+- V6.4已终态`v64_research_complete_report_ready`。正证据边界为P6R/P4C独立选择性校准和P10R4 untouched
+  fixed-opportunity exact empirical route-local risk；不支持population、physical collision、planning、closed-loop、RL或
+  safety claim。P11/P11R collision critic以`V64-F28 closed_negative_after_single_recovery`终止，P11D确认unsafe prior与
+  ranking同时跨cohort漂移，不授权第二次threshold recovery、大型NWM/RL或复开V6.4。
+- 版本收口与arXiv索引没有新增实验或failure ID。`V64-F25`只在P10R4独立固定机会分母层面解除；P10T/current-M0
+  `V64-F21`负结论及P10R2 selected-denominator relative non-improvement保持。详细终态见
+  `docs/autoresearch/worldsim_v64/V64_RESEARCH_FAMILY_CLOSEOUT.md`与`ARXIV_EVIDENCE_INDEX.md`。
 
 - V6.4 从`research/worldsim-v6.3-surface-tail@c192955`直接建立；`V63-F24`仍关闭 Surface family，新的合法路线只能研究
   native aleatoric/epistemic uncertainty、scene/stratum conditional risk 与独立 case-level calibration。
@@ -108,7 +116,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败；full-native MLP以40%通过独立校准与exact-once确认（1/96 failure）；conditional确认输入恢复中 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key、temporal split membership | `V64-F01`–`V64-F18`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md` |
+| V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记

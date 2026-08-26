@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 research complete / report ready（2026-08-27）
+
+状态：`v64_research_complete_report_ready`；V6.4科学执行终止，active task/hypothesis=`null/null`；本里程碑无新实验、
+无新failure ID。最终报告入口=`docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`，版本收口=
+`docs/autoresearch/worldsim_v64/V64_RESEARCH_FAMILY_CLOSEOUT.md`。
+
+最强正证据为P10R4 untouched 96-case fixed-opportunity exact-once：M0/M1 mean coverage同为`0.474969689`，M1使
+worst10 CVaR从`0.020725740`降至`0.010821074`，pooled density从`0.004944667`降至`0.002001413`，paired
+lower/equal/higher=`18/78/0`。最强负证据为P11/P11R：verified unsafe-action recall在原始/独立校准后evaluation仅
+`0.01087/0.62044`，P11D又确认unsafe prior与ranking同时漂移（AUROC `0.71165->0.56274`），故collision critic family
+terminal negative。支持边界只到原生不确定性、条件选择性状态编译和固定分母的exact empirical route-local risk；不支持
+population bound、physical collision、planning、closed-loop、RL或safety。单RTX3090足够，无多卡需求。
+
 ## WorldSim V6.4 P11D calibration-shift diagnostic complete（2026-08-27）
 
 状态：`v64_p11d_shift_diagnosed_report_closeout_next`；canonical=
