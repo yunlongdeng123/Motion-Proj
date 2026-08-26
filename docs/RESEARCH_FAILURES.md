@@ -398,6 +398,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   Gaussian consumer”的integration blocker关闭；photorealistic StreetGS/sensor binding仍不在该恢复声明内。
   后续P10R直接冻结为logged future-lidar route corridor semantic consumer；只读P10G package与pose，不产生新failure ID，也不
   用route overlay冒充photorealistic或collision recovery。
+  P10R formal在36/96 cases得到`+375` route support cells并通过冻结门，但C0/M0 binary intercept均为96/96、additional intercept
+  cases=0；这是明确的metric saturation边界而非新implementation failure。不得把support gain包装成更多collision case被拦截。
 
 <a id="detail-v63"></a>
 

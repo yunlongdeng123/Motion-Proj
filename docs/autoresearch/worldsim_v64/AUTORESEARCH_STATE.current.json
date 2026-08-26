@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10r_gaussian_route_consumer_preregistered",
+  "status": "v64_p10r_bounded_route_exposure_supported_binary_intercept_saturated",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01",
+  "active_task": "WS-V64-P4C-CATALOG-CLEANUP-01 and next collision-semantic design",
   "active_hypothesis": "WS-V64-H-P4C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER", "P10R_BOUNDED_ROUTE_EXPOSURE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -251,5 +251,14 @@
   "p10r_future_seconds": 2.0,
   "p10r_corridor_radius_m": 1.5,
   "p10r_target_model_collision_gt_read": false,
-  "next_action": "commit and push bounded route-consumer freeze, then execute the single 96-case logged-route overlay"
+  "p10r_gaussian_route_consumer_verdict": "supported_bounded_gaussian_route_exposure",
+  "p10r_total_logged_future_route_length_m": 1241.4030305234483,
+  "p10r_c0_route_support_cells": 12081,
+  "p10r_m0_route_support_cells": 12456,
+  "p10r_additional_route_support_cells": 375,
+  "p10r_positive_support_gain_case_count": 36,
+  "p10r_c0_route_intercept_case_count": 96,
+  "p10r_m0_route_intercept_case_count": 96,
+  "p10r_additional_route_intercept_case_count": 0,
+  "next_action": "commit and push P10R closeout, finish catalog/raw cleanup, then design a non-saturated collision-semantic severity consumer"
 }

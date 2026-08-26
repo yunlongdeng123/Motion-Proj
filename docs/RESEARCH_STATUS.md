@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P10R bounded Gaussian route exposure supported / binary intercept saturated（2026-08-26）
+
+状态：`v64_p10r_bounded_route_exposure_supported_binary_intercept_saturated`；canonical=
+`run://worldsim_v64/WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01/20260826T183000Z__gaussian-route-consumer-s0-r1`；verdict=
+`supported_bounded_gaussian_route_exposure`。
+
+96 case覆盖logged future route=`1241.4030m`；C0/M0 corridor support=`12081/12456 cells`，M0新增`375 cells`且分布于
+`36/96` cases，两项gate PASS。两臂binary route intercept均`96/96`，additional intercept cases=`0`，因此case-level binary
+interception已饱和，不能声称检测更多collision case。target/model/collision GT read=`false/false/false`，GPU wall/peak RSS=
+`0.7472 s/0.6907 GiB`。结果只支持logged-route semantic exposure的细粒度增量；closeout=
+`docs/autoresearch/worldsim_v64/P10R_GAUSSIAN_ROUTE_CONSUMER_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R bounded Gaussian route consumer frozen（2026-08-26）
 
 状态：`v64_p10r_gaussian_route_consumer_preregistered`；active task/hypothesis=

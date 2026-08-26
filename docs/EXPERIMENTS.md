@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R BOUNDED GAUSSIAN ROUTE EXPOSURE SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01/20260826T183000Z__gaussian-route-consumer-s0-r1`；
+- denominator=`96 cases / 1241.4030m logged future route`；C0/M0 route support=`12081/12456 cells`；gain=`375`；
+- positive support-gain cases=`36/96`；C0/M0 intercept cases=`96/96`；additional intercept cases=`0`；
+- verdict=`supported_bounded_gaussian_route_exposure`；both minimal gates=`PASS`；GPU wall/peak RSS=`0.7472 s/0.6907 GiB`；
+- target/model/collision GT read=`false/false/false`；hash/checksum/fingerprint/extra tests=`none`；
+- limitation=`binary route intercept saturated; no additional collision-case or safety claim`。
+
 ## WorldSim V6.4 P10R BOUNDED GAUSSIAN ROUTE CONSUMER FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01 / WS-V64-H-P10R-001`；run ID=`20260826T183000Z__gaussian-route-consumer-s0-r1`；
