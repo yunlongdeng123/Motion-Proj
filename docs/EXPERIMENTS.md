@@ -7,6 +7,7 @@
 - membership audit=`other 7 true; scene-0276 false`；replacement=`scene-0813(631), temporal member true, token-level peds description`；
 - reuse=`7 valid native leaves`；recompute valid scenes=`0`；policy/model/gates/case denominator change=`none`；
 - replacement prep/native=`164500Z/165000Z`；corrected aggregate/evidence/exact=`170000Z/171500Z/173000Z`；
+- catalog concurrency=`replacement writes separate worldsim_v64_p4c_replacement_member_shards.json; semantic union after both controllers`；
 - hash/checksum/fingerprint/extra test=`none`；next=`one-scene blind replacement prep`。
 
 ## WorldSim V6.4 P4C CONFIRMATION EXECUTION FREEZE（2026-08-26）

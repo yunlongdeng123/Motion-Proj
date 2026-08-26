@@ -121,13 +121,24 @@ def run(
         temporary_root.mkdir(parents=True)
         _link_static_dataset(metadata_root, temporary_root)
         helpers = load_asset_module(repo_root)
+        index_path = Path(
+            preparation.get(
+                "member_shard_index_path",
+                str(allowed_parent / "worldsim_v64_p6_member_shards.json"),
+            )
+        ).resolve()
+        if index_path.parent != allowed_parent or index_path.name not in {
+            "worldsim_v64_p6_member_shards.json",
+            "worldsim_v64_p4c_replacement_member_shards.json",
+        }:
+            raise RuntimeError(f"member-shard index path is outside the frozen target: {index_path}")
         helpers.link_existing_files(
             Path(preparation["raw_reuse_root"]), temporary_root, required
         )
         helpers.scan_shards(
             tar_dir=Path(preparation["public_tar_root"]),
             members=required,
-            index_path=allowed_parent / "worldsim_v64_p6_member_shards.json",
+            index_path=index_path,
             dst=temporary_root,
             workers=int(preparation["archive_workers"]),
         )

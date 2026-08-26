@@ -368,6 +368,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   IR-WM使用生成的temporal train/val infos，不能用未分割scene table替代membership。恢复保留7个valid leaf并只替换无效scene：
   从commit `4813438`重建seed2 fallback；`scene-0572`是`flipped`误命中substring `ped`，首个token-valid且temporal-member
   的vulnerable候选为`scene-0813(631)`。不得重选其余7 scene、改policy/model/gate或读取quality挑替换。
+  因v1 controller持有旧catalog snapshot，replacement写独立JSON并在两者结束后union，避免两个`os.replace` writer互相丢更新；
   证据=`https://github.com/APRIL-ZJU/IR-WM/blob/ir-wm/README.md`、`https://github.com/fundamentalvision/BEVFormer`和
   `docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
 

@@ -9,7 +9,8 @@ v1 scene-ready流水完成7个native scene；`scene-0276`在native output前因I
 
 恢复不重算7个有效scene，不改C0/M0/model/gate/denominator；只把无效vulnerable scene替换为冻结seed2 fallback中首个
 token-valid temporal member `scene-0813(631)`。replacement prep/native=`164500Z/165000Z`；aggregate/evidence/exact-once
-仍为`170000Z/171500Z/173000Z`。freeze=`docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
+仍为`170000Z/171500Z/173000Z`。replacement使用独立member-shard JSON，避免与仍持旧snapshot的v1 controller并发覆盖；
+两controller完成后再semantic union并atomic replace。freeze=`docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
 
 ## WorldSim V6.4 P4C scene-ready confirmation execution frozen（2026-08-26）
 
