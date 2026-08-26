@@ -18,8 +18,9 @@
   fresh V6.4 claim，也不允许由该结果读取 calibration/confirmation/test。
 - retrospective U2 已在两个旧 evaluation scene 都优于 U0，但 FPR@95TPR 仍高，只授权建立 fresh cohort，不授权
   authority/calibration claim。当前 `V64-F01--F03`均为 resolved engineering/operations，不得写成算法负结论。
-- compact fresh cohort 已从 V6.1–V6.3 未读 quality 的本机 processed scene 中按 metadata-only 冻结；不得把更早版本曾
-  出现过但未进入 V6.1–V6.3 UQ 路线的 scene 错判为 legacy，也不得用本轮后续质量回改 cohort。
+- compact fresh cohort 已从 V6.1–V6.3 未读 quality 的 scene 中按 metadata-only 冻结。r2 证明候选还必须存在于冻结的
+  train temporal metadata；恢复队列在任何 fresh quality read 前改冻并登记`V64-F05`。不得把更早版本曾出现过但未进入
+  V6.1–V6.3 UQ路线的scene错判为legacy，也不得用本轮后续质量回改cohort或复用r2部分产物。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -93,7 +94,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在 | `V64-F01`–`V64-F04`；`P3_RETROSPECTIVE_CLOSEOUT.md` |
+| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在、fresh scene需属于冻结train temporal metadata | `V64-F01`–`V64-F05`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_COHORT_FREEZE.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -185,6 +186,19 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   cohort、seed、资源门和 denominator 不变。防重复：disk probe 必须绑定已存在的挂载内路径，不把前置目录缺失写成磁盘
   不足或算法失败。证据=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`、
   `https://docs.python.org/3/library/shutil.html#shutil.disk_usage`。
+
+- `V64-F05`（`data/interface`, `resolved_pre_quality_read`）：fresh sidecar r2=
+  `20260826T081500Z__fresh-native-s0-r2`启动冻结 IR-WM worker 后，初始 cohort 中 val-split 的`scene-0100`与
+  `scene-0632`在`nuscenes_temporal_infos_train.pkl`查询处触发`KeyError`。`scene-0230`已完成12个native units，
+  worker wall=`35.8975 s`、peak GPU=`4.1305 GiB`，blocked run leaf总计`528 MiB`；其余scene未形成完整denominator，
+  canonical=`null`，target evidence与任何fresh quality均未读。根因是selector只核对processed/raw可用性，却漏掉冻结
+  extractor的train temporal metadata membership。检索IR-WM、BEVFormer与DriveStudio官方数据准备合同后，恢复仅在
+  pre-quality 阶段改冻为六个均在train temporal metadata、且未进入V6.1–V6.3 quality ledger的scene；evaluation两scene
+  从本机raw数据用官方DriveStudio流程物化。防重复：保留r2，不把12个部分unit混入r3，不生成val temporal metadata救旧
+  cohort，不改变seed/targets/model/UQ/门；r3必须使用全新exclusive leaf完成72-unit denominator。证据=
+  `docs/autoresearch/worldsim_v64/P2_FRESH_COHORT_FREEZE.md`、
+  `https://github.com/ziyc/drivestudio/blob/main/docs/NuScenes.md`、
+  `https://github.com/fundamentalvision/bevformer`、`https://github.com/APRIL-ZJU/IR-WM/blob/ir-wm/README.md`。
 
 <a id="detail-v63"></a>
 

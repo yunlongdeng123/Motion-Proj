@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_fresh_native_sidecar_entrance_recovery_ready",
+  "status": "v64_fresh_temporal_metadata_recovery_preregistered",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
@@ -29,9 +29,10 @@
     "V64-F01",
     "V64-F02",
     "V64-F03",
-    "V64-F04"
+    "V64-F04",
+    "V64-F05"
   ],
-  "last_failure_id": "V64-F04",
+  "last_failure_id": "V64-F05",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -41,10 +42,12 @@
   "p3_retrospective_scene_denominator": 2,
   "p2_fresh_preregistered": true,
   "p2_fresh_quality_read": false,
-  "p2_fresh_fit_scenes": ["scene-0100", "scene-0230", "scene-0632", "scene-0781"],
-  "p2_fresh_evaluation_scenes": ["scene-0800", "scene-0994"],
+  "p2_fresh_fit_scenes": ["scene-0139", "scene-0230", "scene-0255", "scene-0994"],
+  "p2_fresh_evaluation_scenes": ["scene-0359", "scene-0998"],
   "p2_fresh_target_count": 72,
   "p2_fresh_failed_entrance_run": null,
-  "p2_fresh_recovery": "create_existing_task_parent_before_disk_usage",
-  "next_action": "commit and push the pre-data directory recovery, then execute the unchanged 72-target extractor as r2"
+  "p2_fresh_blocked_partial_run": "run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T081500Z__fresh-native-s0-r2",
+  "p2_fresh_partial_units": 12,
+  "p2_fresh_recovery": "freeze_only_train_temporal_metadata_scenes_and_preprocess_eval_276_756",
+  "next_action": "commit and push the pre-quality metadata recovery, preprocess evaluation scene indices 276 and 756, then execute all 72 targets in a new r3 leaf"
 }

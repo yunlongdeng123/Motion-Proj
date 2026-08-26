@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V6.4 fresh temporal metadata 恢复已冻结（2026-08-26）
+
+状态：`v64_fresh_temporal_metadata_recovery_preregistered`；active task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；
+hypothesis=`WS-V64-H-P2-001`。r2=
+`run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T081500Z__fresh-native-s0-r2`为 blocked partial，
+不是 canonical：初始 cohort 中的 val-split scene 不在冻结的`nuscenes_temporal_infos_train.pkl`，`scene-0100`与
+`scene-0632`在 scene lookup 处 `KeyError`；只有`scene-0230`完成 12 units，run leaf=`528 MiB`、该 worker peak=
+`4.1305 GiB`。target evidence、Occupancy/UQ quality、calibration、confirmation与test均未读。
+
+按 IR-WM/BEVFormer temporal metadata 合同，pre-quality recovery 只加入 metadata capability 条件。新 fit=
+`scene-0139,scene-0230,scene-0255,scene-0994`；新 evaluation=`scene-0359,scene-0998`；仍为每scene 12 targets、
+总计72 units、seed0。六场景均未进入 V6.1–V6.3 quality ledger且存在于冻结 train temporal metadata；evaluation 两场景
+将从本机已有 raw nuScenes 通过官方 DriveStudio preprocessing 物化。r2 保留且不复用，正式运行使用独立 r3 leaf。
+
+本次登记=`V64-F05 resolved_pre_quality_read`；完整修订见
+`docs/autoresearch/worldsim_v64/P2_FRESH_COHORT_FREEZE.md`。单卡预算仍足够，无多卡需求。下一步先提交并push恢复冻结，
+再预处理 scene index `276/756`并直接执行r3，不增加smoke/regression。
+
 ## WorldSim V6.4 fresh sidecar 入口恢复已就绪（2026-08-26）
 
 `WS-V64-P2-FRESH-NATIVE-SIDECAR-01`首次 formal 入口在 run leaf、GPU、数据读取之前因 task 父目录不存在而失败；

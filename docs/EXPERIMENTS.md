@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.4 FRESH SIDECAR TEMPORAL-METADATA RECOVERY PREREG（2026-08-26）
+
+- task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；attempt=
+  `run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T081500Z__fresh-native-s0-r2`；
+  status=`blocked partial / non-canonical`。
+- observed=`scene-0100,scene-0632`在冻结 train temporal metadata lookup 返回`KeyError`；`scene-0230`完成
+  `12/12` native units，worker wall=`35.8975 s`、peak GPU=`4.1305 GiB`；整个 run leaf=`528 MiB`。
+- denominator=`12/72 materialized but 0/72 canonical`；target evidence/quality/calibration/confirmation/test read=
+  `false/false/false/false/false`；r2完整保留且禁止复用到r3。
+- root cause=最初 metadata-only selector 检查了 processed scene，却漏掉冻结 IR-WM extractor 必需的
+  `nuscenes_temporal_infos_train.pkl` membership；这不是算法或资源失败。
+- recovery=pre-quality 改冻 fit=`0139,0230,0255,0994`、evaluation=`0359,0998`，仍为`12 targets/scene,
+  72 total, seed0`。evaluation 两场景只通过本机 raw 数据和官方 DriveStudio preprocessing 物化；UQ/模型/门不变。
+- failure ledger delta=`V64-F05 resolved_pre_quality_read`；formal recovery=`r3 new exclusive leaf`；额外
+  smoke/regression=`none`。
+
 ## WorldSim V6.4 FRESH SIDECAR PRE-DATA ENTRANCE RECOVERY（2026-08-26）
 
 - task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；attempt=`20260826T081300Z__fresh-native-s0-r1`；canonical=`null`。
