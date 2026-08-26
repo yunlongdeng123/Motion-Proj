@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P11 bounded collision critic primary gate pass / unsafe recall rejected（2026-08-27）
+
+状态：`v64_p11_primary_gate_passed_unsafe_recall_rejected_recovery_next`；canonical=
+`run://worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1`；formal
+verdict=`supported_bounded_unc_verified_collision_critic`；V64-F28=`active_unsafe_recall_collapse`。
+
+Real-only/naive/verified selected-policy false-safe=`13/12/12`，mean progress均=`1.0`、stuck均=`0`，所以三项冻结gate PASS；
+但1248-action denominator上unsafe recall仅=`0.02174/0/0.01087`，false-safe=`180/184/182`。verified与naive在policy
+false-safe/reward完全相同，且Brier/ECE更差=`0.1743/0.1802` vs `0.1618/0.1441`，故UNC verification没有独立增量，
+三臂critics均不能作为collision authority。GPU wall/peak=`26.6467s/0.0737GiB`。合法恢复只允许用未读downstream action
+labels作独立解析阈值校准，再在另一未读action-label cohort exact-once；不得在已读P10R4调0.5门或重训。closeout=
+`docs/autoresearch/worldsim_v64/P11_BOUNDED_COLLISION_CRITIC_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P11 bounded collision critic frozen（2026-08-27）
 
 状态：`v64_p11_bounded_collision_critic_preregistered`；active task/hypothesis=

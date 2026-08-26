@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.4 P11 BOUNDED COLLISION CRITIC COMPLETE（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1`；
+- formal verdict/gates=`supported_bounded_unc_verified_collision_critic / 3 of 3 PASS`；large NWM=`not trained`；
+- training rows/positives Real-only=`384/3`，naive=`1152/191`，verified=`768/96`；test=`96 cases/1248 actions/184 unsafe`；
+- action recall Real-only/naive/verified=`0.02174/0/0.01087`；action false-safe=`180/184/182`；
+- policy false-safe=`13/12/12`；mean progress=`1/1/1`；stuck=`0/0/0`；reward=`0.82083/0.83333/0.83333`；
+- Brier=`0.18019/0.16176/0.17428`；ECE=`0.19408/0.14412/0.18018`；
+- interpretation=`frozen primary gate pass, but all critics rejected as collision authority; verified has no increment over naive`；
+- resources=`26.6467s wall / 1.0809GiB RSS / 0.0737GiB CUDA`；V64-F28=`active`；second test/retrain/sweep=`none`。
+
 ## WorldSim V6.4 P11 BOUNDED COLLISION CRITIC FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P11-BOUNDED-COLLISION-CRITIC-01 / WS-V64-H-P11-001`；formal run=`20260827T033000Z__bounded-collision-critic-s0-r1`；

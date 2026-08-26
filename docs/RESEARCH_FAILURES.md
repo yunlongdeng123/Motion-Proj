@@ -523,6 +523,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   test target/quality/model score仍未读。finalizer只登记8个complete canonical scene并删除可重建raw，故本条关闭；后续evidence或
   exact-once若失败必须按其实际阶段登记，不能重跑native或改cohort。
 
+- `V64-F28`（`algorithm/evaluation`, `active_unsafe_recall_collapse`）：P11 bounded critic formal run按预注册只以selected-policy
+  false-safe不劣与progress/stuck作gate，Real-only/naive/verified分别为`13/12/12` false-safe、progress均`1.0`、stuck均`0`，
+  因此formal verdict合法为supported。但完整1248-action主指标揭示三臂unsafe recall仅`2.17%/0/1.09%`，false-safe=
+  `180/184/182`；verified与naive的policy false-safe和reward完全相同，Brier/ECE反而更差。训练正例为`3/384`、
+  `191/1152`、`96/768`，说明固定0.5输出在长尾与跨cohort下没有形成violation critic authority；这不是全刹车作弊，
+  而是稀有unsafe识别塌缩。不得只引用三门PASS声称collision improvement，也不得在已读P10R4上调threshold、改lattice、
+  重训或另跑同test。参考CVPR 2019 class-balanced loss、ICLR 2021 logit adjustment与Recovery RL后，唯一有界复开是保留
+  已冻结模型，用从未生成action label的独立cohort解析选择一次unsafe-recall threshold，再在另一未读action-label cohort
+  exact-once；若progress/stuck或recall失败则关闭P11，不训练大型NWM/RL。证据=
+  `run://worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1`。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）
