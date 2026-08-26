@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P11R INDEPENDENT THRESHOLD CALIBRATION FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01 / WS-V64-H-P11R-001`；run=`20260827T034500Z__calibrated-collision-critic-s0-r1`；
+- source critics=`P11 models frozen; no retrain`；calibration=`P10R2 96-case downstream action labels`；
+- analytic rule=`per-arm 20th percentile of unsafe probabilities -> target recall 0.80; no threshold grid`；
+- exact evaluation=`P4C 96 cases x 13 actions; action labels unread at freeze`；P10R4 labels=`forbidden`；
+- gates=`verified recall>=0.80; policy false-safe no worse than both; progress>=0.50; stuck<=0.20`；
+- large NWM/RL/lattice-model-threshold sweep/second evaluation/hash/checksum/fingerprint/extra tests=`none`；V64-F28=`recovery_frozen`。
+
 ## WorldSim V6.4 P11 BOUNDED COLLISION CRITIC COMPLETE（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1`；

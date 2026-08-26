@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P11R independent threshold calibration frozen（2026-08-27）
+
+状态：`v64_p11r_independent_threshold_calibration_preregistered`；active task/hypothesis=
+`WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01 / WS-V64-H-P11R-001`；evaluation action labels read=`false`。
+
+V64-F28恢复不重训三critic、不改13-action lattice：P10R2 downstream actions独立校准，每臂以unsafe score的20%分位解析得到
+target recall=0.80的唯一threshold，无grid；threshold先落盘，之后P4C 96-case从未生成的action labels exact-once。gate只保留
+verified recall>=0.80、policy false-safe不劣及progress>=0.50/stuck<=0.20。P10R4标签不得进入恢复。large NWM/RL继续锁定。
+freeze=`docs/autoresearch/worldsim_v64/P11R_CALIBRATED_COLLISION_CRITIC_FREEZE.md`。
+
 ## WorldSim V6.4 P11 bounded collision critic primary gate pass / unsafe recall rejected（2026-08-27）
 
 状态：`v64_p11_primary_gate_passed_unsafe_recall_rejected_recovery_next`；canonical=

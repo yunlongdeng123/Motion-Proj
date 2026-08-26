@@ -533,6 +533,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   已冻结模型，用从未生成action label的独立cohort解析选择一次unsafe-recall threshold，再在另一未读action-label cohort
   exact-once；若progress/stuck或recall失败则关闭P11，不训练大型NWM/RL。证据=
   `run://worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1`。
+  恢复已冻结为P11R：三critic不重训；P10R2 action labels只作独立calibration，每臂用unsafe score的20%分位解析选择
+  target recall=0.80的单一threshold；threshold落盘后才允许生成P4C从未读取的action labels并exact-once。P10R4 labels、
+  threshold grid、lattice/feature/model修改和第二evaluation均禁止。门只包含recall、policy false-safe不劣与progress/stuck。
 
 <a id="detail-v63"></a>
 

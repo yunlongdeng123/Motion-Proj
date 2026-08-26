@@ -1,0 +1,81 @@
+schema_version: worldsim_v64.p11r_calibrated_collision_critic.v1
+task_id: WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01
+hypothesis_id: WS-V64-H-P11R-001
+seed: 0
+claim_boundary: independently calibrated bounded actor-envelope collision-proxy critic; no physical collision, population, planning, closed-loop, or safety claim
+inputs:
+  critic_run: worldsim_v64/WS-V64-P11-BOUNDED-COLLISION-CRITIC-01/20260827T033000Z__bounded-collision-critic-s0-r1
+  critic_models_relative_path: CRITIC_MODELS.json
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  calibration:
+    role: independent_action_label_calibration
+    evidence_run: worldsim_v64/WS-V64-P10R2-CONFIRMATION-EVIDENCE-01/20260826T201500Z__confirmation-evidence-s3-r1
+    native_run: worldsim_v64/WS-V64-P10R2-CONFIRMATION-SIDECAR-01/20260826T201000Z__native-aggregate-s3-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-1020, processed_index: 778, stratum: night}
+      - {name: scene-1016, processed_index: 774, stratum: night}
+      - {name: scene-0596, processed_index: 476, stratum: rain}
+      - {name: scene-0590, processed_index: 470, stratum: rain}
+      - {name: scene-0006, processed_index: 5, stratum: construction}
+      - {name: scene-0472, processed_index: 383, stratum: construction}
+      - {name: scene-0070, processed_index: 67, stratum: vulnerable_transit}
+      - {name: scene-0371, processed_index: 288, stratum: vulnerable_transit}
+  evaluation:
+    role: exact_once_unread_action_label_evaluation
+    evidence_run: worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1
+    native_run: worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-0992, processed_index: 751, stratum: night}
+      - {name: scene-1101, processed_index: 841, stratum: night}
+      - {name: scene-0454, processed_index: 368, stratum: rain}
+      - {name: scene-1102, processed_index: 842, stratum: rain}
+      - {name: scene-0876, processed_index: 664, stratum: construction}
+      - {name: scene-0895, processed_index: 681, stratum: construction}
+      - {name: scene-0321, processed_index: 253, stratum: vulnerable_transit}
+      - {name: scene-0813, processed_index: 631, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512, shape: [200, 200, 16]}
+route: {future_seconds: 2.0, future_frame_count: 20, corridor_radius_m: 1.5}
+policy:
+  m0_conditional_nominal_coverages: {construction: 0.50, night: 0.50, rain: 0.40, vulnerable_transit: 0.50}
+  m1_route_nominal_coverage_cap: 0.40
+action_lattice:
+  horizon_seconds: 2.0
+  progress_ratios: [0.25, 0.50, 0.75, 1.00]
+  lateral_offsets_m: [-1.50, 0.00, 1.50]
+  include_stop: true
+collision_proxy: {source: target_actor_swept_envelope, ego_corridor_radius_m: 1.5}
+calibration:
+  method: analytic_unsafe_probability_quantile
+  target_unsafe_action_recall: 0.80
+  per_arm: true
+critic:
+  source_models_frozen: true
+metrics:
+  primary: unsafe_action_recall_then_policy_collision_false_safe
+  calibration_bins: 10
+  stuck_progress_ratio: 0.20
+  maximum_planar_acceleration_mps2: 4.89
+gates:
+  minimum_verified_unsafe_action_recall: 0.80
+  verified_collision_false_safe_not_worse_than_both: true
+  minimum_verified_mean_progress_ratio: 0.50
+  maximum_verified_stuck_rate: 0.20
+verdict_on_pass: supported_independently_calibrated_unc_collision_critic
+verdict_on_no_increment: no_increment_over_real_only_calibrated_collision_critic
+verdict_on_failure: rejected_independently_calibrated_collision_critic
+locks:
+  source_critic_retraining_allowed: false
+  calibration_threshold_grid_allowed: false
+  evaluation_threshold_change_allowed: false
+  action_lattice_change_allowed: false
+  second_evaluation_allowed: false
+  large_nwm_training_allowed: false
+  content_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content_CVPR_2019/papers/Cui_Class-Balanced_Loss_Based_on_Effective_Number_of_Samples_CVPR_2019_paper.pdf
+  - https://openreview.net/forum?id=37nvvqkCo5
+  - https://github.com/abalakrishna123/recovery-rl
+failure_ledger_refs: [V64-F28]
