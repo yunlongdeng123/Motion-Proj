@@ -13,13 +13,11 @@ import joblib
 import yaml
 
 from motion_proj.worldsim_v64.native_voxel_uq import (
+    NativeBoundaryDensityUQ,
     evaluate_scene_native,
     sample_training_points_native,
 )
-from motion_proj.worldsim_v64.retrospective_uq import (
-    NativeFeatureDensityUQ,
-    pooled_metrics,
-)
+from motion_proj.worldsim_v64.retrospective_uq import pooled_metrics
 
 
 U0_NAMES = ("u0_max_probability", "u0_entropy", "u0_inverse_margin")
@@ -59,7 +57,9 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         native_origin_m=native_grid["origin_m"],
         native_voxel_size_m=float(native_grid["voxel_size_m"]),
     )
-    model = NativeFeatureDensityUQ(
+    if config["model"]["conditioning"] != "native_boundary_global":
+        raise ValueError("unsupported native-boundary conditioning")
+    model = NativeBoundaryDensityUQ(
         pca_dimension=int(config["model"]["pca_dimension"]),
         component_count=int(config["model"]["gmm_components"]),
         seed=int(config["seed"]),

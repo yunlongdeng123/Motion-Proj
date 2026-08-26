@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.4 native-voxel fit 接口恢复已冻结（2026-08-26）
+
+状态：`v64_native_voxel_global_gmm_recovery_preregistered`；active task=`WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`；
+hypothesis=`WS-V64-H-P4N-001`；evaluation score read=`false`。
+
+r1=`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T090000Z__fresh-native-voxel-uq-s0-r1`
+完成fit采样后，冻结occupied-boundary内预测FREE geometry组只有`43`点，小于GMM-4最低`80`点，在拟合阶段停止；
+run只有8 KiB resolved/status，无model、无evaluation metrics。登记=`V64-F09 resolved_pre_evaluation`。
+
+OCCUQ官方代码按真实voxel class收集feature，推理时跨类别密度边缘化；它不按待评region的预测类强制分别拟合。当前region
+本身已是occupied boundary，恢复固定为一个boundary-global diagonal GMM-4。PCA-16、4 components、seed0、50k/fit-scene、
+denominator、scene、targets、U0与两条gate均不变，不复制43点、不降样本线、不读evaluation补fit。完整修订=
+`docs/autoresearch/worldsim_v64/P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md`。
+
+下一步编译、提交push后仅执行r2=`20260826T091500Z__fresh-native-voxel-uq-s0-r2`；CPU-only，无多卡需求。
+
 ## WorldSim V6.4 overbuilt surface 已停止 / native-voxel UQ 恢复冻结（2026-08-26）
 
 状态：`v64_surface_resource_abort_native_voxel_uq_preregistered`；active task=

@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 NATIVE-VOXEL UQ R1 FIT BLOCKED / GLOBAL GMM RECOVERY PREREG（2026-08-26）
+
+- blocked=`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T090000Z__fresh-native-voxel-uq-s0-r1`；
+  stage=`fit before GMM/evaluation`；predicted-FREE fit group=`43 < 80 required`；run bytes=`8 KiB`。
+- model/evaluation score/gate read=`false/false/false`；scientific verdict=`none`；r1 retained=`true`。
+- official migration=OCCUQ fits voxel-class densities and marginalizes class log density; frozen occupied-boundary region uses one
+  `boundary-global diagonal GMM-4` instead of two sparse predicted-geometry GMMs。
+- unchanged=`PCA-16,components4,seed0,features,50k/fit-scene,6 scenes,72 targets,denominator,U0,gates`；
+  forbidden=`duplicate 43 points/lower sample requirement/use evaluation in fit/sweep`。
+- recovery config=`p4n_fresh_native_voxel_uq_v2.yaml`；run=`20260826T091500Z__fresh-native-voxel-uq-s0-r2`；
+  failure delta=`V64-F09 resolved_pre_evaluation`；extra smoke/regression=`none`。
+
 ## WorldSim V6.4 SURFACE RESOURCE ABORT / NATIVE-VOXEL UQ RECOVERY PREREG（2026-08-26）
 
 - partial=`run://worldsim_v64/WS-V64-P2S-FRESH-SURFACE-CORPUS-01/20260826T084500Z__fresh-surface-s0-r1`；

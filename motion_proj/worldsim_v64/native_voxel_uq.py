@@ -7,6 +7,9 @@ from typing import Mapping, Sequence
 
 import numpy as np
 from scipy import ndimage
+from sklearn.decomposition import PCA
+from sklearn.mixture import GaussianMixture
+from sklearn.preprocessing import StandardScaler
 
 from motion_proj.worldsim_v61.occupancy import FREE, OCCUPIED, UNKNOWN
 from motion_proj.worldsim_v64.retrospective_uq import (
@@ -15,6 +18,56 @@ from motion_proj.worldsim_v64.retrospective_uq import (
     _risk_coverage,
     _softmax_uncertainty,
 )
+
+
+class NativeBoundaryDensityUQ:
+    """在已冻结的 occupied-boundary denominator 上拟合单个 GMM。"""
+
+    def __init__(
+        self, *, pca_dimension: int, component_count: int, seed: int
+    ) -> None:
+        self.scaler = StandardScaler()
+        self.pca = PCA(
+            n_components=int(pca_dimension),
+            svd_solver="randomized",
+            random_state=int(seed),
+        )
+        self.model = GaussianMixture(
+            n_components=int(component_count),
+            covariance_type="diag",
+            reg_covar=1e-5,
+            max_iter=100,
+            n_init=1,
+            random_state=int(seed),
+        )
+        self.location = 0.0
+        self.scale = 1.0
+
+    def fit(
+        self, features: np.ndarray, logits: np.ndarray
+    ) -> "NativeBoundaryDensityUQ":
+        del logits
+        standardized = self.scaler.fit_transform(
+            np.asarray(features, dtype=np.float32)
+        )
+        projected = self.pca.fit_transform(standardized).astype(np.float32)
+        self.model.fit(projected)
+        raw = -self.model.score_samples(projected)
+        self.location = float(np.median(raw))
+        self.scale = max(
+            float(np.quantile(raw, 0.75) - np.quantile(raw, 0.25)), 1e-6
+        )
+        return self
+
+    def score(self, features: np.ndarray, logits: np.ndarray) -> np.ndarray:
+        del logits
+        standardized = self.scaler.transform(
+            np.asarray(features, dtype=np.float32)
+        )
+        projected = self.pca.transform(standardized).astype(np.float32)
+        return (
+            (-self.model.score_samples(projected) - self.location) / self.scale
+        ).astype(np.float32)
 
 
 def _unit_dirs(root: Path, scene: str) -> list[Path]:

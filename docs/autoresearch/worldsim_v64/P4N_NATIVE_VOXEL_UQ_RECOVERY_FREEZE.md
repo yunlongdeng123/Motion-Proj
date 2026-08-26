@@ -2,8 +2,9 @@
 
 - Task: `WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`
 - Hypothesis: `WS-V64-H-P4N-001`
-- Status: `preregistered / UQ scores unread`
-- Run: `20260826T090000Z__fresh-native-voxel-uq-s0-r1`
+- Status: `global-boundary GMM recovery preregistered / evaluation scores unread`
+- Blocked fit run: `20260826T090000Z__fresh-native-voxel-uq-s0-r1`
+- Recovery run: `20260826T091500Z__fresh-native-voxel-uq-s0-r2`
 
 ## Resource-triggered recovery
 
@@ -26,5 +27,15 @@ denominator。CuPy/cuCIM GPU EDT可加速旧surface路径，但仍保留无用�
 fit/evaluation scene、12 targets、seed0、50k fit points/scene、`17D logits+256D BEV`、PCA-16、GMM-4 diagonal、三种U0
 以及两条gate全部沿用原freeze：pooled AUROC gain `>=0.02`且scene support=`2/2`。evaluation标签不进入拟合；不做sweep。
 
-这次恢复发生在任何U0/U2 score读取前，但target evidence已物化；因此只允许这一个预注册native-voxel r1。无论结果如何，
-不得回到surface r1、换EDT实现、换denominator或参数救结果。CPU-only，单3090与多卡均不需要。
+这次恢复发生在任何U0/U2 score读取前，但target evidence已物化；初始只允许预注册native-voxel r1。r1随后触发下述
+fit-interface失败，且仍未读evaluation score，因此只追加一次显式r2恢复。r2无论结果如何，不得回到surface、换EDT实现、
+换denominator或参数救结果。CPU-only，单3090与多卡均不需要。
+
+## Fit-interface recovery
+
+native r1在四个fit scene完成采样后，occupied-boundary denominator内预测FREE组只有`43`点，少于原双geometry-group
+GMM-4的最低`80`点，在GMM拟合前停止；r1只有`resolved.yaml/status.json`共8 KiB，没有模型和evaluation score。
+
+OCCUQ官方实现按真实voxel类拟合密度，并在推理时跨类密度边缘化，而非要求每个待评region同时具备足量预测类。当前region
+已冻结为occupied boundary，合法恢复是对其整体拟合一个boundary-global diagonal GMM-4；PCA-16、组件数4、seed0、features、
+scenes、denominator与gate不变。v1/r1保持blocked，v2只允许r2一次；不得降最低样本数、复制43点或把evaluation混入fit。

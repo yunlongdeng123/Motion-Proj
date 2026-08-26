@@ -1,0 +1,44 @@
+schema_version: worldsim_v64.p4n_fresh_native_voxel_uq.v2
+task_id: WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01
+hypothesis_id: WS-V64-H-P4N-001
+seed: 0
+claim_boundary: fresh native-voxel feature-density mechanism only; no authority, calibration, conditional-coverage, LoRA, or downstream compiler claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3
+  native_partition_by_scene:
+    scene-0139: fresh_fit
+    scene-0230: fresh_fit
+    scene-0255: fresh_fit
+    scene-0994: fresh_fit
+    scene-0359: fresh_evaluation
+    scene-0998: fresh_evaluation
+partitions:
+  fit_scenes: [scene-0139, scene-0230, scene-0255, scene-0994]
+  evaluation_scenes: [scene-0359, scene-0998]
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+  shape: [200, 200, 16]
+denominator:
+  proposal: six_neighbor_boundary_of_native_argmax_occupied_union_method_observed_occupied
+  eligible: method_unknown_and_not_contradictory_and_target_roi_valid
+  duplicate_native_voxels: false
+sampling:
+  fit_points_per_scene: 50000
+model:
+  feature: native_logits_plus_bev
+  pca_dimension: 16
+  gmm_components: 4
+  covariance: diagonal
+  conditioning: native_boundary_global
+gates:
+  minimum_pooled_auroc_gain: 0.02
+  minimum_scene_support: 2
+locks:
+  evaluation_target_used_for_fit: false
+  parameter_sweep_allowed: false
+  surface_corpus_required: false
+  calibration_allowed: false
+  conditional_threshold_allowed: false
+failure_ledger_refs: [V63-F02, V63-F19, V63-F24, V64-F05, V64-F06, V64-F07, V64-F08, V64-F09]
