@@ -478,6 +478,11 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   不得借结果回调M1或解锁P11。证据=`https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/protos/occupancy_flow_metrics.proto`、
   `https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/`、
   `https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf`。
+  P10R3 canonical rows-only结果在consumed calibration与fresh confirmation的固定分母worst10均为M1更低：
+  `0.0132351->0.00455240`与`0.0216470->0.0149832`；pooled density也分别下降`0.00143870/0.00265563`。
+  这使“selected-only可变分母导致方向反转”成为一致的描述性诊断，但P10R3是在读过fresh confirmation后冻结，不能作为独立
+  confirmation；本条继续active，禁止据此回写P10R2 formal verdict或解锁P11。下一合法动作是先检索paired sparse-event
+  confirmatory设计，再决定是否在从未读quality的test cohort冻结一次固定分母exact-once，不能复用已读cohort做显著性包装。
 
 <a id="detail-v63"></a>
 

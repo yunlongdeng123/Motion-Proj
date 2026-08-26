@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10R3 fixed route-denominator diagnostic complete（2026-08-27）
+
+状态：`v64_p10r3_fixed_denominator_diagnostic_complete`；canonical=
+`run://worldsim_v64/WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01/20260827T013000Z__fixed-denominator-audit-s0-r1`；verdict=
+`diagnosed_fixed_denominator_direction_consistent`。
+
+固定route-eligible分母后，consumed calibration的M0/M1 pooled density=`0.00236358/0.000924879`、worst10 CVaR=
+`0.0132351/0.00455240`（delta=`-0.00868274`）；fresh confirmation对应=`0.00421776/0.00156213`与
+`0.0216470/0.0149832`（delta=`-0.00666382`）。方向在两cohort一致，支持selected-only可变分母解释，但该指标在读过
+confirmation后冻结，故仅为post-hoc诊断；V64-F25保持active、P11 comparative authority继续锁定。target/model/evidence
+reread=`false`，policy/sweep=`none`，CPU wall/peak RSS=`0.00264s/0.1680GiB`。closeout=
+`docs/autoresearch/worldsim_v64/P10R3_FIXED_ROUTE_DENOMINATOR_AUDIT_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R3 fixed route-denominator diagnostic frozen（2026-08-27）
 
 状态：`v64_p10r3_fixed_denominator_diagnostic_preregistered`；active task/hypothesis=

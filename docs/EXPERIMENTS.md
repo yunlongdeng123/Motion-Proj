@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R3 FIXED ROUTE-DENOMINATOR DIAGNOSTIC COMPLETE（2026-08-27）
+
+- canonical/verdict=`run://worldsim_v64/WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01/20260827T013000Z__fixed-denominator-audit-s0-r1 / diagnosed_fixed_denominator_direction_consistent`；
+- consumed calibration M0/M1 eligible=`9731/9731`、selected=`5912/3826`、conflicts=`23/9`；pooled density=`0.00236358/0.000924879`；worst10 CVaR=`0.0132351/0.00455240`；
+- fresh confirmation M0/M1 eligible=`12803/12803`、selected=`8117/4971`、conflicts=`54/20`；pooled density=`0.00421776/0.00156213`；worst10 CVaR=`0.0216470/0.0149832`；
+- M1-M0 CVaR=`-0.00868274/-0.00666382`（calibration/fresh），direction consistent=`true`；
+- target/model/evidence reread=`false`；policy/route/tail/denominator/threshold sweep=`none`；CPU wall/peak RSS=`0.00264s/0.1680GiB`；
+- authority=`post-hoc denominator diagnosis only; V64-F25 active; P11 comparative authority locked`。
+
 ## WorldSim V6.4 P10R3 FIXED ROUTE-DENOMINATOR DIAGNOSTIC FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01 / WS-V64-H-P10R3-001`；run=`20260827T013000Z__fixed-denominator-audit-s0-r1`；
