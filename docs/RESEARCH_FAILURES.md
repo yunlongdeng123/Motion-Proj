@@ -31,6 +31,8 @@
   producer-consumer，不重复已完成shard、不做无关GPU filler，confirmation仍保持锁定。
 - P6 prep r1又暴露固定`1176/196`不适用于`nbr_samples=41`的scene-1045；登记`V64-F13
   recovery_frozen_pre_quality`，恢复只使用metadata派生帧数并复用已完成raw/scene。
+- P6 r2已完成24场景并删除临时raw，`V64-F12/V64-F13`分别由producer-consumer与variable-length恢复；短SSH命令继承
+  stdin导致本地编排不退出，登记`V64-F14 resolved_operations`并按OpenSSH官方`-n`修复。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -104,7 +106,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数 | `V64-F01`–`V64-F13`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期 | `V64-F01`–`V64-F14`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -267,7 +269,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html`、
   `https://github.com/aangelopoulos/conformal-risk`。
 
-- `V64-F12`（`resource/operations`, `active_mitigation`）：P6正式准备入口扫描共享盘官方tar超过一小时后，已完成
+- `V64-F12`（`resource/operations`, `resolved_by_pipeline`）：P6正式准备入口扫描共享盘官方tar超过一小时后，已完成
   `9/10`个shard、临时raw约`14 GiB`、盘余量约`45 GiB`，但旧入口必须等全部raw和24个processed scene完成才启动
   IR-WM，观测GPU=`0% / 1 MiB`。24-scene native按既有6-scene输出外推约`13.3 GiB`，再叠加processed和临时raw，
   证明此前`~21.6 GiB`整批持久化估算缺少足够余量。该事实是I/O/调度阻塞，不是模型或数据质量结论。检索NVIDIA
@@ -279,7 +281,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `https://docs.nvidia.com/deeplearning/dali/archives/dali_190/user-guide/docs/advanced_topics_performance_tuning.html`、
   `https://github.com/webdataset/webdataset`。
 
-- `V64-F13`（`data/interface`, `recovery_frozen_pre_quality`）：prep r1在全部tar扫描完成、首个scene-1045官方
+- `V64-F13`（`data/interface`, `resolved_pre_quality_read`）：prep r1在全部tar扫描完成、首个scene-1045官方
   DriveStudio转换成功后，以`images=1206, lidar=201`对旧六场景硬编码的`1176/196`做比较并抛错。r1未读
   Occupancy/UQ/hidden-FREE或calibration/confirmation质量；临时raw和完整首场景均保留。根因是nuScenes scene记录有
   `nbr_samples`，而`interpolate_N=4`的官方DriveStudio时间表长度为`(nbr_samples-1)*5+1`；scene-1045的
@@ -289,6 +291,13 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`、
   `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T111500Z__calibration-native-scene-1045-s0-r1`、
   `https://github.com/ziyc/drivestudio`、`https://www.nuscenes.org/nuscenes?frame=0&sceneId=scene-0011&view=regular`。
+
+- `V64-F14`（`engineering/operations`, `resolved_pre_quality_read`）：Windows PowerShell中的两个长驻feed lane反复调用
+  短`ssh` readiness/publish命令；远端命令已经结束，但client继承PTY stdin后未退出，导致下一scene不推进。一次lane恢复时
+  scene-0810的原远端worker仍在运行，新wrapper只在发现run leaf已存在时抛`FileExistsError`，没有覆盖或重复GPU计算；
+  原worker随后正常完成`12/12`。OpenSSH官方手册明确后台/编排调用用`-n`禁止读取stdin；所有短检查、publish和wrapper调用
+  加`-n`后lane连续推进，双worker达到100% GPU。防重复：不得因client挂起杀未知远端进程或新建重复run；先查remote PID/
+  summary，再恢复缺失scene。证据=`https://man.openbsd.org/ssh`及P6逐scene run leaves。
 
 <a id="detail-v63"></a>
 

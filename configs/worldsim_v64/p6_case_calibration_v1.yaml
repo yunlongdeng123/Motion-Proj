@@ -1,0 +1,47 @@
+schema_version: worldsim_v64.p6_case_calibration.v1
+task_id: WS-V64-P6-CALIBRATION-01
+hypothesis_id: WS-V64-H-P6C-001
+seed: 0
+claim_boundary: independent case-level calibration of frozen U3 ranking; no confirmation, compiler authority, conditional guarantee, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6E-CALIBRATION-EVIDENCE-01/20260826T130000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+  risk_run: worldsim_v64/WS-V64-P5-SUPERVISED-RISK-01/20260826T093000Z__supervised-risk-s0-r1
+  risk_model_relative_path: RISK_MODEL/hidden_free_logistic.joblib
+  native_partition: fresh_calibration
+calibration_scenes:
+  - {name: scene-1045, stratum: night}
+  - {name: scene-1055, stratum: night}
+  - {name: scene-1051, stratum: night}
+  - {name: scene-1006, stratum: night}
+  - {name: scene-0901, stratum: rain}
+  - {name: scene-0810, stratum: rain}
+  - {name: scene-0458, stratum: rain}
+  - {name: scene-0885, stratum: rain}
+  - {name: scene-0047, stratum: construction}
+  - {name: scene-0203, stratum: construction}
+  - {name: scene-0768, stratum: construction}
+  - {name: scene-0259, stratum: construction}
+  - {name: scene-0405, stratum: vulnerable_transit}
+  - {name: scene-0439, stratum: vulnerable_transit}
+  - {name: scene-0060, stratum: vulnerable_transit}
+  - {name: scene-0656, stratum: vulnerable_transit}
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+  shape: [200, 200, 16]
+policy:
+  candidate_coverages: [0.05, 0.10, 0.20, 0.30, 0.40, 0.50]
+  hidden_free_conflict_threshold: 0.05
+  target_case_risk: 0.05
+  confidence: 0.95
+  simultaneous_selection: bonferroni_clopper_pearson
+  minimum_positive_coverage: 0.05
+locks:
+  risk_model_refit_allowed: false
+  score_transform_change_allowed: false
+  scene_or_stratum_specific_threshold_allowed: false
+  confirmation_read: false
+  exact_once_test_read: false
+  content_hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F10, V64-F11, V64-F12, V64-F13]

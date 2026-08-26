@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V6.4 P6 native cohort 完成 / case calibration 已冻结（2026-08-26）
+
+状态：`v64_p6_native_complete_case_calibration_preregistered`；completed prep=
+`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T112500Z__calibration-prep-s0-r2`；active task=
+`WS-V64-P6-CALIBRATION-01`；calibration/confirmation quality read=`false/false`。
+
+prep r2复用r1已扫描raw和完整scene-1045，按metadata派生的`(nbr_samples-1)*5+1`合同完成`24/24`场景：
+16 calibration + 8 confirmation，帧数按scene为`196`或`201`；wall=`2,286.7511 s`。成功后删除约`15 GiB`可重建
+临时raw，盘余量回到约`36 GiB`；已有raw不变。逐场景blind IR-WM sidecar完成`24 scenes / 288 targets`，每worker
+peak约`4.13 GiB`；只读取固定图像和时序metadata并生成native表征，没有读取hidden-FREE/UQ quality或confirmation target。
+
+I/O恢复采用两个DriveStudio producer与最多两个IR-WM consumer，实测双GPU worker达到`100%`利用率、约`14 GiB`
+device memory；单3090足够。`V64-F12`由流水线恢复，`V64-F13`由variable-length r2恢复。短SSH编排曾因继承stdin不退出，
+按OpenSSH官方`-n`合同修复并登记`V64-F14 resolved_operations`；远端worker与已完成artifact未重跑。
+
+下一里程碑只聚合不复制native数组，并在读取calibration target前冻结192-case协议：固定U3模型；候选coverage=
+`0.05,0.10,0.20,0.30,0.40,0.50`；case loss=`selected hidden-FREE conflict >0.05`；target risk/confidence=
+`0.05/0.95`；六候选使用Bonferroni one-sided Clopper-Pearson simultaneous upper bound，选最大通过coverage，全部失败则
+直接reject且不读confirmation。完整freeze=`docs/autoresearch/worldsim_v64/P6_CASE_CALIBRATION_FREEZE.md`。不加hash/
+checksum/fingerprint、smoke或回归矩阵。
+
 ## WorldSim V6.4 P6 I/O→GPU 流水线恢复进行中（2026-08-26）
 
 状态：`v64_p6_preparation_running_incremental_gpu_feed_armed`；active task=

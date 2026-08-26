@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V6.4 P6 NATIVE COMPLETE / CASE CALIBRATION PREREG（2026-08-26）
+
+- prep canonical=`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T112500Z__calibration-prep-s0-r2`；
+  result=`24/24 scenes, 16 calibration + 8 confirmation, 196 or 201 frames/scene, 2,286.7511 s`；quality read=`false`。
+- temporary raw=`~15 GiB removed after success, recoverable by public tar rescan`；free disk after cleanup=`~36 GiB`；existing raw
+  mutation/deletion=`none`。
+- native=`24 scenes / 288 targets / all scene probes passed / ~4.13 GiB peak per worker`；target evidence、calibration quality、
+  confirmation target和test读取=`false`；single RTX3090 sufficient。
+- pipeline observation=`up to 2 DriveStudio producers + 2 IR-WM consumers; GPU reached 100% and ~14 GiB device memory`；
+  failure delta=`V64-F12 resolved_by_pipeline,V64-F13 resolved_by_variable_length_r2,V64-F14 resolved_operations`。
+- calibration freeze=`192 case targets / fixed U3 / coverages 0.05..0.50 / conflict threshold 0.05 / epsilon 0.05 /
+  confidence 0.95 / Bonferroni Clopper-Pearson`；largest passing coverage only；confirmation read=`false`。
+- hash/checksum/fingerprint=`none`；extra smoke/regression=`none`；freeze=
+  `docs/autoresearch/worldsim_v64/P6_CASE_CALIBRATION_FREEZE.md`。
+
 ## WorldSim V6.4 P6 PREPARATION RUNNING / INCREMENTAL GPU FEED（2026-08-26）
 
 - run=`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`；
