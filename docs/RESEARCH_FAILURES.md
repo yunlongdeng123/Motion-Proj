@@ -428,6 +428,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   stratum coverage、2s/1.5m route与worst10 tail均不变。M1只可在该consumed cohort形成candidate，不能关闭本条；若两项冻结门
   通过，仍需metadata-only冻结全新temporal-member confirmation并exact-once确认。不得扫route cap、改尾部比例、重训模型，或用
   M1 calibration结果改写current M0 negative closeout。
+  P10R2 formal一次完成：总coverage delta=`0`，route selected `5912->3826`、hidden-FREE conflict `23->9`，route worst10
+  empirical CVaR `0.0220499->0.0114783`，M1最大case rate=`0.0454545`，两项candidate gate通过。该结果来自已消费cohort，
+  因此只支持进入fresh confirmation；V64-F21仍保持`closed_negative_tail_authority`且P11仍锁定。下一步不得复用该cohort作确认，
+  也不得因margin较大再扩route cap；只允许按metadata冻结未读质量的新temporal-member cohort并exact-once检验固定M1。
 
 <a id="detail-v63"></a>
 

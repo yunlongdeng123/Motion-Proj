@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 route-aware M1 calibration candidate supported（2026-08-26）
+
+状态：`v64_p10r2_route_aware_candidate_supported_confirmation_freeze_next`；canonical=
+`run://worldsim_v64/WS-V64-P10R2-ROUTE-AWARE-COMPILER-01/20260826T191500Z__route-aware-compiler-s0-r1`；verdict=
+`supported_route_aware_candidate_on_consumed_calibration`。
+
+在 consumed P6R development/calibration 的96 cases上，M0/M1 mean total coverage均为`0.4749505`，delta=`0`；route
+selected voxels由`5912`降至`3826`，hidden-FREE conflicts由`23`降至`9`。M0/M1 route worst10 empirical CVaR=
+`0.0220499/0.0114783`，M1最大case rate=`0.0454545`且0 case超过0.05，两项冻结门PASS。模型未重训、run中未选policy、
+new confirmation未读；GPU wall/peak RSS=`11.3438s/0.8849GiB`。这只支持M1 calibration candidate，不关闭current M0的
+V64-F21负结论，也不解锁P11。下一步只做metadata-only fresh temporal-member confirmation freeze，然后exact-once运行。
+closeout=`docs/autoresearch/worldsim_v64/P10R2_ROUTE_AWARE_COMPILER_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R2 route-aware M1 candidate frozen（2026-08-26）
 
 状态：`v64_p10r2_route_aware_candidate_preregistered`；active task/hypothesis=

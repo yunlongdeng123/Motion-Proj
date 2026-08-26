@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 ROUTE-AWARE M1 CALIBRATION CANDIDATE SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R2-ROUTE-AWARE-COMPILER-01/20260826T191500Z__route-aware-compiler-s0-r1`；verdict=`supported_route_aware_candidate_on_consumed_calibration`；
+- denominator=`consumed P6R development/calibration 8 scenes / 96 cases`；M0/M1 mean total coverage=`0.4749505/0.4749505`；delta=`0`；
+- M0/M1 route selected=`5912/3826`；route hidden-FREE conflicts=`23/9`；mean route coverage=`0.5174453/0.2919545`；
+- M0/M1 route worst10 CVaR=`0.0220499/0.0114783`；M1 maximum case rate=`0.0454545`；M1 case failures=`0/96`；
+- gates=`M1 CVaR <=0.05 PASS; total coverage preserved PASS`；GPU wall/peak RSS=`11.3438s/0.8849GiB`；
+- refit/runtime policy selection/new confirmation read=`false/false/false`；
+- authority=`calibration candidate only; current P10T/M0 negative immutable; fresh exact-once confirmation required`。
+
 ## WorldSim V6.4 P10R2 ROUTE-AWARE M1 CANDIDATE FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10R2-ROUTE-AWARE-COMPILER-01 / WS-V64-H-P10R2-001`；run ID=`20260826T191500Z__route-aware-compiler-s0-r1`；
