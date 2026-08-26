@@ -1,0 +1,34 @@
+schema_version: worldsim_v64.p10g_gaussian_state_adapter.v1
+task_id: WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01
+hypothesis_id: WS-V64-H-P10G-001
+seed: 2
+claim_boundary: sparse semantic Gaussian parameterization and probabilistic BEV splat of target-free M0 state; no photorealistic rendering, sensor replay, collision, planning, or safety claim
+inputs:
+  state_bake_run: worldsim_v64/WS-V64-P10M-CONDITIONAL-STATE-BAKE-01/20260826T180000Z__conditional-state-bake-s0-r1
+gaussian:
+  construction: one_gaussian_per_m0_emitted_voxel
+  isotropic_scale_m: 0.256
+  rotation: identity_wxyz
+  opacity: 0.95
+  semantic_state: OCCUPIED
+render:
+  mode: probabilistic_bev_gaussian_superposition
+  grid_shape_xy: [200, 200]
+  voxel_size_m: 0.512
+  support_threshold: 0.05
+gates:
+  expected_package_count: 96
+  require_positive_conditional_bev_support_gain: true
+verdict_on_pass: supported_sparse_gaussian_state_adapter
+verdict_on_failure: rejected_sparse_gaussian_state_adapter
+locks:
+  target_evidence_read_allowed: false
+  risk_model_access_allowed: false
+  streetgs_checkpoint_access_allowed: false
+  parameter_sweep_allowed: false
+  content_hash_checksum_fingerprint: false
+references:
+  - https://github.com/huang-yh/GaussianFormer
+  - https://openaccess.thecvf.com/content/CVPR2025/papers/Zuo_GaussianWorld_Gaussian_World_Model_for_Streaming_3D_Occupancy_Prediction_CVPR_2025_paper.pdf
+  - https://openaccess.thecvf.com/content/ICCV2025/papers/Gan_GaussianOcc_Fully_Self-supervised_and_Efficient_3D_Occupancy_Estimation_with_Gaussian_ICCV_2025_paper.pdf
+failure_ledger_refs: [V63-F02, V63-F24, V64-F15, V64-F18, V64-F19]

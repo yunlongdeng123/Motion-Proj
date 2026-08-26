@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10G SPARSE GAUSSIAN STATE ADAPTER FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01 / WS-V64-H-P10G-001`；run ID=`20260826T181500Z__gaussian-state-adapter-s0-r1`；
+- input=`96 P10M package only`；target/model/StreetGS access=`false/false/false`；V64-F19=`recovery_frozen_pre_run`；
+- Gaussian=`one per M0 OCCUPIED voxel; mean=center; scale=0.256m isotropic; rotation=identity; opacity=0.95`；
+- consumer=`GPU probabilistic BEV Gaussian superposition, 200x200, 0.512m/cell`；
+- gates=`96 rendered packages; positive M0-vs-C0 BEV support gain`；parameter sweep/extra tests/hash/checksum/fingerprint=`none`；
+- references=`GaussianFormer ECCV24; GaussianWorld CVPR25; GaussianOcc ICCV25`；
+- claim boundary=`sparse Gaussian parameterization and BEV splat only; no photorealistic/sensor/collision/planning/safety claim`。
+
 ## WorldSim V6.4 P10M TARGET-FREE CONDITIONAL STATE BAKE SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P10M-CONDITIONAL-STATE-BAKE-01/20260826T180000Z__conditional-state-bake-s0-r1`；

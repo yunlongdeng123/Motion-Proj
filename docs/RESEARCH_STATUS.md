@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10G sparse Gaussian state adapter frozen（2026-08-26）
+
+状态：`v64_p10g_sparse_gaussian_adapter_preregistered`；active task/hypothesis=
+`WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01 / WS-V64-H-P10G-001`；V64-F19=`recovery_frozen_pre_run`。
+
+fresh 8 scene没有同场景StreetGS checkpoint，旧V6 GS runtime又强绑定其他scene与hash-heavy governance，不能直接消费P10M。
+检索GaussianFormer、GaussianWorld与GaussianOcc后迁移最小共同表示：每个M0-emitted voxel映射为一个semantic Gaussian，mean=
+metric center、isotropic scale=`0.256m`、identity rotation、opacity=`0.95`、state=`OCCUPIED`；96 case在GPU上做probabilistic
+BEV Gaussian superposition。runner只读P10M package，不读target/model/StreetGS。仅要求96 package全部render且M0 BEV support gain>0；
+不做超参扫描或照片级/sensor/collision claim。freeze=`docs/autoresearch/worldsim_v64/P10G_GAUSSIAN_STATE_ADAPTER_FREEZE.md`。
+
 ## WorldSim V6.4 P10M target-free conditional state bake supported（2026-08-26）
 
 状态：`v64_p10m_target_free_state_bake_supported`；canonical=
