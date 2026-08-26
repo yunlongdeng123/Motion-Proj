@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.4 P4C scene-ready confirmation execution frozen（2026-08-26）
+
+状态：`v64_p4c_confirmation_execution_frozen`；active task=`WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01`；
+new confirmation target/model-score read=`false/false`。blind prep/per-scene native/aggregate/evidence/exact score canonical IDs已固定；
+temporary raw exact path=`/root/autodl-tmp/tmp/worldsim_v64_p4c_raw_batch`。一scene raw ready即preprocess并feed GPU，最多1个
+preprocess与2个GPU worker；prep controller负责catalog superset EOF与临时raw删除。执行冻结=
+`docs/autoresearch/worldsim_v64/P4C_CONFIRMATION_EXECUTION_FREEZE.md`。
+
 ## WorldSim V6.4 P4C conditional candidate supported / new confirmation input next（2026-08-26）
 
 状态：`v64_p4c_conditional_candidate_supported`；canonical=

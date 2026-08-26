@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P4C CONFIRMATION EXECUTION FREEZE（2026-08-26）
+
+- cohort/policy=`frozen before quality read`；target/model-score read=`false/false`；
+- prep/native prefix/aggregate=`161500Z prep / 162000Z scene-native / 170000Z aggregate`；
+- evidence/exact score=`171500Z / 173000Z`；denominator=`8 scenes / 96 cases`；
+- streaming=`one preprocess + up to two GPU workers; scene-ready feed; controller-owned temp cleanup/catalog EOF`；
+- available disk before entrance=`41 GiB`；hash/checksum/fingerprint/smoke/regression=`none`；next=`start blind prep and feeder`。
+
 ## WorldSim V6.4 P4C CONDITIONAL CANDIDATE SUPPORTED / P6R CATALOG FINALIZED（2026-08-26）
 
 - P4C canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-COMPILER-01/20260826T160000Z__conditional-compiler-s0-r1`；

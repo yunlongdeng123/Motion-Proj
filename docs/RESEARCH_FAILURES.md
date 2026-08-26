@@ -115,6 +115,8 @@ coverage map，并在任何新quality read前冻结新8-scene confirmation。若
 algorithm failure并关闭该candidate，不改mapping或扫描第二版本。
 新confirmation入口前free disk仅29 GiB；只回收精确的13 GiB pip下载缓存后为41 GiB，未删除formal run、模型、环境或processed
 资产。这是预防性可恢复空间管理，不新增failure ID。
+P4C确认执行继续直接复用V64-F16的scene-ready迁移并将新temporary raw改为独立精确路径；在target read前已冻结所有run ID、
+单preprocess/双GPU并发和controller cleanup ownership。入口未出现新failure。
 
 ### 1.1 V1 汇总条目
 

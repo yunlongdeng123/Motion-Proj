@@ -69,7 +69,11 @@ def run(
     scenes = _all_scenes(config)
     temporary_root = Path(preparation["temporary_raw_root"]).resolve()
     allowed_parent = Path("/root/autodl-tmp/tmp").resolve()
-    if temporary_root.parent != allowed_parent or temporary_root.name != "worldsim_v64_p6_raw_batch":
+    allowed_temporary_names = {
+        "worldsim_v64_p6_raw_batch",
+        "worldsim_v64_p4c_raw_batch",
+    }
+    if temporary_root.parent != allowed_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"temporary raw path is outside the frozen target: {temporary_root}")
     if temporary_root.exists() and not reuse_temporary_raw:
         raise FileExistsError(temporary_root)
