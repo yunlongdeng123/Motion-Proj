@@ -507,12 +507,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `85992 entries`。raw完成时双队列已完成0598/0462 native且GPU峰值均`4.1314GiB`，故本条关闭；若后续native/evidence
   出现科学或独立工程故障应另记，不得重开全量tar scan。
 
-- `V64-F27`（`io/execution`, `active_recovery`）：双preprocess独立target已完成scene-1084/1081，但DriveStudio实际将
+- `V64-F27`（`io/execution`, `resolved_by_exact_stage_path_and_reuse`）：双preprocess独立target已完成scene-1084/1081，但DriveStudio实际将
   `..._processed_824`重写到`..._processed_10Hz_824/trainval/824`；feeder按常规append查找`..._824_10Hz`，因此在
   canonical install/native前抛出。824/821 stage分别有完整`1206/201`与`1176/196` images/lidar且无native partial。
   parent已停，唯一in-flight 424/522不终止、不重复；修复只镜像DriveStudio既有字符串重写。进程退出后四scene原子安装，
   night两scene用冻结underlying native command与原计划run dirs直接供GPU，patched feeder随后同prefix复用。若任一stage计数
   不完整则只重建该scene；不得删除完整stage、换scene或读test quality。
+  恢复最终复用4个complete native leaf，并对其余4 scene完成同prefix native；最后两scene从stage ready到native启动仅等待
+  `0.0646/0.0625s`。aggregate为`8 scenes / 96 targets / 4423846058 bytes / passed`，峰值worker显存`4.1314GiB`；
+  test target/quality/model score仍未读。finalizer只登记8个complete canonical scene并删除可重建raw，故本条关闭；后续evidence或
+  exact-once若失败必须按其实际阶段登记，不能重跑native或改cohort。
 
 <a id="detail-v63"></a>
 

@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 untouched-test native complete / evidence next（2026-08-27）
+
+状态：`v64_p10r4_test_native_complete_evidence_next`；canonical native=
+`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T023000Z__native-aggregate-s4-r1`；test quality read=`false`。
+
+冻结8 scene已全部完成canonical processed与native sidecar，aggregate=`8 scenes / 96 targets / 4423846058 bytes / passed`，
+最大worker显存=`4.1314GiB`。双preprocess/双native feeder在最后两scene就绪后的native等待仅`0.0646/0.0625s`；
+finalizer只复用8个complete scene，`0.8328s`登记后删除约`6.2GiB`可重建raw。V64-F27由精确镜像DriveStudio路径重写并
+复用complete stage/native关闭。没有读取test target/quality/model score，也没有增加hash/checksum/fingerprint或测试矩阵。
+下一步只生成一次冻结96-unit evidence，再执行一次fixed-denominator exact-once。closeout=
+`docs/autoresearch/worldsim_v64/P10R4_TEST_SIDECAR_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R4 dual-stage path recovery frozen（2026-08-27）
 
 状态：`v64_p10r4_dual_stage_path_recovery_frozen`；V64-F27=`active_recovery`；test quality read=`false`。

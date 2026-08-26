@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 UNTOUCHED TEST NATIVE COMPLETE（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T023000Z__native-aggregate-s4-r1`；
+- aggregate=`8 scenes / 96 targets / 4423846058 bytes / passed`；maximum worker peak GPU=`4.131403446GiB`；
+- per-scene native wall=`45.3845--60.5114s`；last two ready-to-native waits=`0.0646/0.0625s`；
+- finalizer=`20260827T024500Z__test-prep-finalize-s4-r1 / 8 complete scenes reused / 0.8328s / temporary raw removed`；
+- test target/quality/model-score read=`false/false/false`；V64-F27=`resolved_by_exact_stage_path_and_reuse`；
+- hash/checksum/fingerprint/extra smoke/regression=`none`；next=`one frozen 96-unit evidence generation`。
+
 ## WorldSim V6.4 P10R4 DUAL-STAGE PATH RECOVERY FREEZE（2026-08-27）
 
 - failure=`V64-F27`; observation=`DriveStudio target ..._processed_824 -> ..._processed_10Hz_824, feeder expected ..._824_10Hz`；
