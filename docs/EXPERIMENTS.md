@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P11D ROWS-ONLY SHIFT DIAGNOSTIC COMPLETE（2026-08-27）
+
+- canonical/verdict=`run://worldsim_v64/WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01/20260827T040000Z__collision-critic-shift-s0-r1 / diagnosed_p11_cross_cohort_score_and_prior_shift`；
+- calibration/evaluation unsafe prior=`0.070513/0.109776`；delta=`+0.039263`；
+- verified unsafe q20/median delta=`-0.053282/-0.137452`；safe median delta=`-0.000025`；
+- verified AP=`0.247103->0.137399`；AUROC=`0.711648->0.562740`；
+- naive AP=`0.251027->0.160722`；AUROC=`0.765821->0.672722`；
+- interpretation=`unsafe ranking and prior both shift; threshold-only recovery unsupported`；
+- post-hoc/gate/native-evidence reread/GPU/model-threshold change/P11 reopen=`true/none/false/false/false/false`；wall/RSS=`0.0986s/0.1957GiB`。
+
 ## WorldSim V6.4 P11D ROWS-ONLY SHIFT DIAGNOSTIC FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01 / WS-V64-H-P11D-001`；run=`20260827T040000Z__collision-critic-shift-s0-r1`；

@@ -542,6 +542,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   recall与anti-trivial progress不能靠单一operating-point同时恢复。四门仅progress/stuck通过，P11R rejected，本条以negative
   terminal关闭P11；大型NWM/RL、再校准、换loss/model/lattice、第二evaluation均不解锁。后续只允许rows-only failure
   characterization和V6.4报告收口，不得创建新的P11科学attempt。
+  P11D rows-only诊断进一步显示calibration→evaluation unsafe prior=`0.07051->0.10978`，verified unsafe q20/median score却下移
+  `0.05328/0.13745`且safe median近乎不变；AP/AUROC=`0.24710/0.71165 -> 0.13740/0.56274`。这同时存在prior shift与
+  unsafe ranking degradation，不支持“只换一个threshold即可恢复”的解释。该诊断无gate、无native/evidence reread，不改P11
+  terminal；未来复开必须是新版本、新的可迁移violation representation与独立cohort，而不是本版本校准修补。
 
 <a id="detail-v63"></a>
 

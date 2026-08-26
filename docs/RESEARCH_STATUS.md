@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P11D calibration-shift diagnostic complete（2026-08-27）
+
+状态：`v64_p11d_shift_diagnosed_report_closeout_next`；canonical=
+`run://worldsim_v64/WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01/20260827T040000Z__collision-critic-shift-s0-r1`；
+verdict=`diagnosed_p11_cross_cohort_score_and_prior_shift`。
+
+calibration/evaluation unsafe prior=`0.07051/0.10978`，delta=`+0.03926`。verified unsafe q20/median score下移
+`-0.05328/-0.13745`，但safe median仅`-0.000025`；AP从`0.24710`降到`0.13740`，AUROC从`0.71165`降到
+`0.56274`。naive也出现AP/AUROC下降`-0.09030/-0.09310`。因此P11R失败不是可用单一阈值平移修复的prior shift，而是
+unsafe ranking跨cohort退化；V64-F28/P11 terminal negative得到机制诊断支持但不产生新authority。rows-only CPU wall/RSS=
+`0.0986s/0.1957GiB`。closeout=`docs/autoresearch/worldsim_v64/P11D_COLLISION_CRITIC_SHIFT_DIAGNOSTIC_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P11D rows-only calibration-shift diagnostic frozen（2026-08-27）
 
 状态：`v64_p11d_rows_only_shift_diagnostic_preregistered`；active task/hypothesis=
