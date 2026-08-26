@@ -338,13 +338,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   scene流水，最大worker显存`4.1314 GiB`；没有等待整批processed或启用多卡。故GPU-idle/全批屏障部分已恢复；superset
   catalog的剩余EOF写回和可重建临时raw删除仍由原prep controller收口，完成后再把V64-F16标为resolved。
 
-- `V64-F17`（`data/interface`, `recovery_frozen_pre_score`）：exact-once evidence r1完成33/96 units后，scene-1105 frame62
+- `V64-F17`（`data/interface`, `resolved_pre_score`）：exact-once evidence r1完成33/96 units后，scene-1105 frame62
   在`load_frame_boxes`用直接dict索引触发`KeyError`。processed审计显示该scene缺0--9、56--64的frame_instances键；这些
   frame在instances_info中逐一为0 annotation，`missing_with_annotations=[]`，不是sensor缺失或hidden target异常。nuScenes
   官方devkit对non-keyframe box使用相邻sample annotation插值，没有annotation时返回空/当前集合；故common loader把缺键解释为
   empty actor list。r2以hardlink复用33个完整NPZ、只算剩63；NPZ未存储的三个summary字段显式null，不伪造。禁止重算33、
   改scene/policy/gate或用target score挑恢复。证据=`https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/nuscenes.py`
   和`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EVIDENCE_RECOVERY_FREEZE.md`。
+  r2 canonical=`20260826T152500Z__confirmation-evidence-s0-r2`按上述合同完成`96/96`，其中33 hardlink复用、63新算，
+  query/role overlap均0，wall=`74.6360 s`；模型分数仍未读，故以pre-score状态关闭。
 
 <a id="detail-v63"></a>
 

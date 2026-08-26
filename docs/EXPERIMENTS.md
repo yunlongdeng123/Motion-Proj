@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P6R CONFIRMATION EVIDENCE R2 COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T152500Z__confirmation-evidence-s0-r2`；
+  result=`96 units / 8 scenes / passed`。
+- reused/new=`33 hardlinked / 63 computed`；query/source-role overlap=`0/0`；logical bytes=`83483823`；maximum-unit/wall=
+  `11.5779/74.6360 s`。
+- model score read=`false`；failure delta=`V64-F17 resolved_pre_score`；next=`one fixed 40% exact-once scoring run`。
+- refit/coverage selection/hash/checksum/fingerprint/extra tests=`none`。
+
 ## WorldSim V6.4 P6R CONFIRMATION EVIDENCE R1 FAILED / R2 RECOVERY（2026-08-26）
 
 - failed=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T151500Z__confirmation-evidence-s0-r1`；

@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P6R confirmation evidence complete / exact-once scoring next（2026-08-26）
+
+状态：`v64_p6r_confirmation_evidence_complete_scoring_next`；canonical=
+`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T152500Z__confirmation-evidence-s0-r2`；active task=
+`WS-V64-P6R-EXACT-ONCE-CONFIRMATION-01`；confirmation target/model-score read=`true/false`。
+
+r2完成`96/96 units / 8 scenes`：hardlink复用r1的33 units、只新算63；query/source-role overlap=`0/0`，logical disk=
+`83483823 bytes`，maximum new-unit/wall=`11.5779/74.6360 s`，passed。empty actor-frame恢复生效，V64-F17=
+`resolved_pre_score`。下一动作只以冻结MLP和nominal 40%执行一次96-case评分；不选coverage、不refit。closeout=
+`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EVIDENCE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P6R confirmation evidence r1 failed / empty-frame r2 frozen（2026-08-26）
 
 状态：`v64_p6r_confirmation_evidence_empty_frame_recovery_frozen`；failed run=
