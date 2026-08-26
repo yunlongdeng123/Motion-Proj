@@ -25,9 +25,15 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
     raw_root = Path(prep["temporary_raw_root"])
     metadata = Path(prep["metadata_root"]) / "v1.0-trainval"
     processed_root = Path(prep["processed_root"])
-    stage_target = Path("/root/autodl-tmp/tmp/worldsim_v64_p4c_prefetch_processed")
-    stage_root = Path("/root/autodl-tmp/tmp/worldsim_v64_p4c_prefetch_processed_10Hz/trainval")
-    preprocess_lock = threading.Lock()
+    stage_prefix = str(
+        prep.get(
+            "scene_ready_stage_prefix",
+            "/root/autodl-tmp/tmp/worldsim_v64_scene_ready_processed",
+        )
+    )
+    preprocess_slots = threading.Semaphore(
+        int(config["resources"].get("maximum_preprocess_workers", 1))
+    )
     gpu_slots = threading.Semaphore(int(config["resources"]["maximum_scene_workers"]))
     task_root.mkdir(parents=True, exist_ok=True)
     logs = task_root / "stream_logs"
@@ -68,8 +74,10 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
             time.sleep(5)
         raw_wait_seconds = time.monotonic() - waited
         if not canonical.exists():
-            with preprocess_lock:
+            with preprocess_slots:
                 if not canonical.exists():
+                    stage_target = Path(f"{stage_prefix}_{index:03d}")
+                    stage_root = Path(f"{stage_target}_10Hz/trainval")
                     staged = stage_root / f"{index:03d}"
                     if staged.exists():
                         shutil.rmtree(staged)

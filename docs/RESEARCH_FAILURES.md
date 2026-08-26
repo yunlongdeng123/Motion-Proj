@@ -498,6 +498,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   restricted scan必须失败并回到未猜测的全量扫描，不得换scene或读quality。科学合同与test unread状态不变。
   restricted r1在进入scan前因既有resume目录仍执行`mkdir(exist_ok=false)`退出；该run不含新增archive读、preprocess、GPU或
   target read。恢复只把显式`--resume-raw-scan`的mkdir改为`exist_ok=true`，默认新run防覆盖不变；以新r2继续，不新增failure ID。
+  r2使scene-0598 native以`45.4004s/4.1314GiB`完成，但单preprocess mutex下一scene转换超过2分钟，GPU再次出现供给缺口。
+  按既有DALI分离CPU/GPU queue依据，停止feeder parent但让唯一in-flight scene-0462预处理完成，保留0598 native；同prefix
+  feeder恢复为两个独立per-scene staging与`2 preprocess / 2 native` slots。不得对同scene启动第二owner；完整canonical/native
+  必须reuse。科学合同与test unread不变，本恢复仍归V64-F26。
 
 <a id="detail-v63"></a>
 

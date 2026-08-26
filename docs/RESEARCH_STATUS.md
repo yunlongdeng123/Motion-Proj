@@ -2,7 +2,7 @@
 
 ## WorldSim V6.4 P10R4 I/O shard recovery frozen（2026-08-27）
 
-状态：`v64_p10r4_io_shard_recovery_r2_ready`；V64-F26=`active_recovery`；test quality read=`false`。
+状态：`v64_p10r4_dual_preprocess_feeder_recovery_frozen`；V64-F26=`active_recovery`；test quality read=`false`。
 
 首个raw-only producer发现`14437` members均不在catalog，10个完整tgz并发约4分钟仅推进`4--10%`，GPU feeder无scene可用。
 检索CPython tarfile与ratarmount/rapidgzip后，未为一次性cohort新建十份seek index；迁移现有`71555`条semantic catalog的
@@ -14,6 +14,10 @@ preprocess/native owner。科学cohort/model/policy/target/route/denominator/tai
 首次restricted r1在扫描前因resume目录的`mkdir(exist_ok=false)`退出，未新增I/O或target read；定向修复只在显式
 `--resume-raw-scan`下允许既有冻结目录，默认防覆盖语义不变。canonical recovery改为
 `20260827T022000Z__test-raw-shard-recovery-s4-r2`。
+
+scene-0598 native已完成（`45.4004s/4.1314GiB`），但单preprocess mutex使GPU在scene-0462超过2分钟转换时空闲。
+保留0598完整native并让in-flight 0462完成后重启同prefix feeder；每scene使用独立staging，preprocess/native slots均冻结为2。
+该CPU/GPU分队列恢复不改scene、模型、policy、target或任何gate。
 
 ## WorldSim V6.4 P10R4 untouched-test fixed-denominator confirmation frozen（2026-08-27）
 

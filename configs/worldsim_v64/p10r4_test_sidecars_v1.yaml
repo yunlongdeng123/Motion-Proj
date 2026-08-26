@@ -13,6 +13,7 @@ preparation:
   processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
   archive_workers: 10
   archive_shards: ['05', '06', '07', '08', '10']
+  scene_ready_stage_prefix: /root/autodl-tmp/tmp/worldsim_v64_p10r4_scene_ready_processed
   preprocess_timeout_seconds: 3600
 cohorts:
   fresh_confirmation:
@@ -26,6 +27,6 @@ cohorts:
       - {name: scene-0598, processed_index: 478, stratum: construction, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
       - {name: scene-0527, processed_index: 417, stratum: vulnerable_transit, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
       - {name: scene-0668, processed_index: 522, stratum: vulnerable_transit, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
-resources: {gpu: 0, maximum_scene_workers: 2, worker_cpu_threads: 4, worker_timeout_seconds: 2400, maximum_gpu_memory_gib: 22, minimum_disk_free_gib: 10}
+resources: {gpu: 0, maximum_scene_workers: 2, maximum_preprocess_workers: 2, worker_cpu_threads: 4, worker_timeout_seconds: 2400, maximum_gpu_memory_gib: 22, minimum_disk_free_gib: 10}
 locks: {target_evidence_allowed: false, test_quality_allowed: false, exact_once_test_allowed: false, add_hash_checksum_fingerprint: false}
 failure_ledger_refs: [V63-F02, V63-F24, V64-F18, V64-F21, V64-F23, V64-F24, V64-F25]

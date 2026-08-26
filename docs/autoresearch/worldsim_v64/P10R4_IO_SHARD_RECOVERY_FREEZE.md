@@ -33,3 +33,9 @@ new hashes, checksums, fingerprints, smoke suite, or regression matrix.
 The first restricted entrance `20260827T021800Z__test-raw-shard-recovery-s4-r1` exited before scanning because the explicit
 resume path still used non-resume `mkdir` semantics. The bounded r2 fix permits an existing temporary root only under
 `--resume-raw-scan`; default new-run protection remains unchanged.
+
+After scene-0598 completed native in `45.4004s` at `4.1314GiB`, the single preprocessing mutex left the GPU idle while the
+next CPU conversion exceeded two minutes. The feeder is therefore restarted after preserving completed native scene-0598 and
+finishing the in-flight scene-0462 conversion. It uses two independent per-scene staging roots and a frozen maximum of two
+preprocess workers, matching the existing two native GPU slots. This is the already-referenced separated CPU/GPU queue
+migration; no scene has two owners, and complete canonical/native outputs are reused.
