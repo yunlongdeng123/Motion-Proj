@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10C route-local conflict severity audit frozen（2026-08-26）
+
+状态：`v64_p10c_route_conflict_audit_preregistered`；active task/hypothesis=
+`WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01 / WS-V64-H-P10C-001`；V64-F20=`recovery_frozen_pre_target_audit`。
+
+P10R binary intercept在两臂均96/96饱和，不能用于新增collision-case主张。参考Waymo cell-level occupancy metrics、Implicit
+Occupancy Flow的planner-query语义与soft collision potential，恢复固定为同一2s/1.5m corridor上的route-local hidden-FREE conflict。
+policy/route均不改；允许一次读取已锁定TARGET_EVIDENCE，只判断C0/M0 route-emitted voxels。仅要求M0新增route state>0且pooled
+route hidden-FREE conflict<=0.05；case failures只描述。collision GT/planner仍不读。freeze=
+`docs/autoresearch/worldsim_v64/P10C_ROUTE_CONFLICT_AUDIT_FREEZE.md`。
+
 ## WorldSim V6.4 P10R bounded Gaussian route exposure supported / binary intercept saturated（2026-08-26）
 
 状态：`v64_p10r_bounded_route_exposure_supported_binary_intercept_saturated`；canonical=

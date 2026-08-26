@@ -401,6 +401,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P10R formal在36/96 cases得到`+375` route support cells并通过冻结门，但C0/M0 binary intercept均为96/96、additional intercept
   cases=0；这是明确的metric saturation边界而非新implementation failure。不得把support gain包装成更多collision case被拦截。
 
+- `V64-F20`（`evaluation/metric`, `recovery_frozen_pre_target_audit`）：P10R binary route intercept对C0/M0均为`96/96`，使case-level
+  hit metric完全饱和；虽然M0在36 cases新增375 support cells，但不能回答这些新增state是否把hidden FREE写成OCCUPIED。不得事后缩短
+  horizon、缩小corridor或提高density threshold制造未饱和case。Waymo Occupancy Flow以固定current-ego grid做cell-level occupancy
+  metric，Implicit Occupancy Flow允许planner在连续时空点query，soft collision optimization使用连续势能而非binary hit；迁移为
+  同一冻结2s/1.5m corridor上的route-local target hidden-FREE rate。policy/model/route均不改，只允许一次target audit；pooled M0
+  conflict门保持原0.05，case failure只描述。证据=`https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/protos/occupancy_flow_metrics.proto`、
+  `https://openaccess.thecvf.com/content/CVPR2023/html/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.html`、
+  `https://openaccess.thecvf.com/content/CVPR2023W/E2EAD/papers/Kedia_Integrated_Perception_and_Planning_for_Autonomous_Vehicle_Navigation_An_Optimization-Based_CVPRW_2023_paper.pdf`。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）

@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10C ROUTE-LOCAL CONFLICT AUDIT FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10C-ROUTE-CONFLICT-AUDIT-01 / WS-V64-H-P10C-001`；run ID=`20260826T184500Z__route-conflict-audit-s0-r1`；
+- recovery basis=`Waymo occupancy cell metrics + planner-query occupancy + soft collision potential`；V64-F20=`recovery_frozen_pre_target_audit`；
+- policy/route=`unchanged C0/M0 + future 2s + 1.5m corridor`；denominator=`96 cases`；
+- target read=`allowed once after policy freeze`；model refit/collision GT/planner read=`false/false/false`；
+- gates=`positive additional M0 route state; pooled M0 route hidden-FREE conflict <=0.05`；case failures=`descriptive`；
+- parameter sweep/hash/checksum/fingerprint/extra tests=`none`；
+- claim boundary=`route-local target conflict severity only; no physical collision/planning/closed-loop/safety claim`。
+
 ## WorldSim V6.4 P10R BOUNDED GAUSSIAN ROUTE EXPOSURE SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01/20260826T183000Z__gaussian-route-consumer-s0-r1`；
