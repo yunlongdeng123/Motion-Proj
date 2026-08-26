@@ -96,7 +96,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | retrospective U2有信号；fresh sidecar/evidence通过；surface full-stack转native voxel；稀疏预测类条件GMM在评分前转boundary-global；fresh verdict未读 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类 | `V64-F01`–`V64-F09`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_SIDECAR_CLOSEOUT.md`；`P2E_FRESH_EVIDENCE_CLOSEOUT.md`；`P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md` |
+| V6.4 | retrospective U2有信号；fresh sidecar/evidence通过；surface full-stack转native voxel；boundary-global U2过相对门但场景内绝对区分弱 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移 | `V64-F01`–`V64-F10`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_SIDECAR_CLOSEOUT.md`；`P2E_FRESH_EVIDENCE_CLOSEOUT.md`；`P4N_FRESH_UQ_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -237,6 +237,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   43点、降80门、把evaluation并入fit或回到双组；v2只执行r2一次，其他输入/gate不变。证据=
   `docs/autoresearch/worldsim_v64/P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md`、
   `https://raw.githubusercontent.com/ika-rwth-aachen/OCCUQ/main/tools/gmm_utils.py`。
+
+- `V64-F10`（`algorithm/evaluation`, `active`）：native-voxel r2按冻结协议完成并通过相对门：pooled U2 AUROC=
+  `0.518545`、较最佳U0增`0.083047`，scene support=`2/2`。但两个scene内U2 AUROC仅`0.498387/0.498295`，
+  FPR@95TPR=`0.965465/0.960623`；scene-0359 AP低于prevalence，scene-0998的50% coverage risk高于prevalence。
+  pooled改善可能部分来自scene-level prevalence/score shift，不能包装成可靠场景内ranking、authority或calibration。
+  顶会迁移依据：OCCUQ将dense UQ supervision与feature GMM分工；ReliOcc采用plug-and-play hybrid voxel uncertainty；EvOcc
+  用evidence supervision显式建模unobserved/contradicting evidence。恢复只允许先冻结一个用四fit scenes hidden-FREE标签训练的
+  轻量risk head，再在相同两scene分母执行一次；禁止扫描GMM/PCA/seed/denominator/gate或读取更多split救结果。证据=
+  `docs/autoresearch/worldsim_v64/P4N_FRESH_UQ_CLOSEOUT.md`、`https://github.com/ika-rwth-aachen/OCCUQ`、
+  `https://doi.org/10.24963/ijcai.2025/220`、
+  `https://openaccess.thecvf.com/content/CVPR2025/papers/Kalble_EvOcc_Accurate_Semantic_Occupancy_for_Automated_Driving_Using_Evidence_Theory_CVPR_2025_paper.pdf`。
 
 <a id="detail-v63"></a>
 

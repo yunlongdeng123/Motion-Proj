@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.4 fresh native-voxel UQ 相对门通过 / 绝对能力弱（2026-08-26）
+
+状态：`v64_fresh_uq_relative_gate_pass_weak_absolute_supervised_risk_next`；completed task=
+`WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`；hypothesis=`WS-V64-H-P4N-001 supported_relative_only_weak_absolute`；canonical=
+`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T091500Z__fresh-native-voxel-uq-s0-r2`。
+
+四个fit scene固定采样`200,000`点；两个fresh evaluation scene完整评分`333,009`个unique native boundary voxels，
+hidden-FREE=`27,495`、prevalence=`0.082565`。pooled最佳U0/U2 AUROC=`0.435498/0.518545`，增量=
+`+0.083047`；AUPRC=`0.070965/0.085650`，scene support=`2/2`，故两条冻结相对门通过。CPU wall=
+`22.3767 s`、peak RSS=`1.0705 GiB`，无多卡需求。
+
+但scene-0359/0998的U2 AUROC分别仅`0.498387/0.498295`，FPR@95TPR=`0.965465/0.960623`；scene-0359
+AUPRC低于其prevalence，scene-0998在50% coverage的risk也高于prevalence。pooled提升可能部分来自跨scene的prevalence/
+score shift，不能升级为场景内可靠ranking。登记=`V64-F10 active algorithm/evaluation`；不扫描GMM/PCA/seed/分母/门槛，
+不解锁authority、calibration、conditional coverage或安全claim。完整收口=
+`docs/autoresearch/worldsim_v64/P4N_FRESH_UQ_CLOSEOUT.md`。
+
+检索OCCUQ、ReliOcc与EvOcc后，下一步只预注册一个fit-only supervised hidden-FREE risk head：复用同一PCA-16表示、
+同一200k fit点与同一333,009 evaluation分母，固定一次训练和一次fresh评分；不做额外smoke/regression或参数sweep。
+
 ## WorldSim V6.4 native-voxel fit 接口恢复已冻结（2026-08-26）
 
 状态：`v64_native_voxel_global_gmm_recovery_preregistered`；active task=`WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`；

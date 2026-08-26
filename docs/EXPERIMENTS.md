@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.4 NATIVE-VOXEL UQ R2 RELATIVE PASS / WEAK ABSOLUTE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T091500Z__fresh-native-voxel-uq-s0-r2`；
+  verdict=`supported_relative_only_weak_absolute`。
+- fit=`200,000` points；evaluation=`333,009` unique native boundary voxels；hidden-FREE=`27,495`；prevalence=`0.082565`。
+- pooled best-U0/U2 AUROC=`0.435498/0.518545`，gain=`+0.083047`；AUPRC=`0.070965/0.085650`；relative gates=
+  `gain>=0.02 true, scene support=2/2 true`。
+- scene-0359 U2 AUROC/AUPRC/FPR95=`0.498387/0.104552/0.965465`；scene-0998=
+  `0.498295/0.056673/0.960623`。因此只保留相对机制支持，不声称absolute ranking、authority或calibration。
+- runtime=`22.3767 s CPU-only`；peak RSS=`1.0705 GiB`；formal failure delta=`V64-F10 active`；extra smoke/regression=
+  `none`；closeout=`docs/autoresearch/worldsim_v64/P4N_FRESH_UQ_CLOSEOUT.md`。
+- 下一步只允许先冻结后执行一个fit-only supervised risk head；禁止在两evaluation scene上扫描GMM/PCA/seed/denominator/gate。
+
 ## WorldSim V6.4 NATIVE-VOXEL UQ R1 FIT BLOCKED / GLOBAL GMM RECOVERY PREREG（2026-08-26）
 
 - blocked=`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T090000Z__fresh-native-voxel-uq-s0-r1`；
