@@ -108,7 +108,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败，full-native MLP恢复以40%通过；exact-once confirmation evidence恢复中 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key | `V64-F01`–`V64-F17`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_CASE_CALIBRATION_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败；full-native MLP以40%通过独立校准与exact-once确认（1/96 failure） | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key | `V64-F01`–`V64-F17`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -324,6 +324,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P6R独立评分随后以0.05--0.40 coverage全部得到`0/96` failure和simultaneous UCB=`0.048647`，选择最大通过40%；
   50%为`3/96`、UCB=`0.103218`而正确拒绝。故失败以“新模型版本解决”关闭；原PCA16线性U3负结论不改写，且新
   confirmation仍未读。证据=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`。
+  exact-once confirmation只在冻结40%上读分一次，得到`1/96` failure；四strata分别`0/24,1/24,0/24,0/24`，
+  总体和分层gate均通过。V64-F15因此以独立校准加新确认的完整新版本证据收口，但不产生现实安全声明。
 
 - `V64-F16`（`resource/operations`, `active`）：exact-once新8 scene在现有raw cache均无payload；需要约24.8k sensor member。
   前一P6整批扫描虽已学习43033个member->shard映射，但`scan_shards`写回时只保留当前batch，故unseen batch仍会触发10个
@@ -347,6 +349,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   和`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EVIDENCE_RECOVERY_FREEZE.md`。
   r2 canonical=`20260826T152500Z__confirmation-evidence-s0-r2`按上述合同完成`96/96`，其中33 hardlink复用、63新算，
   query/role overlap均0，wall=`74.6360 s`；模型分数仍未读，故以pre-score状态关闭。
+  随后的exact-once评分成功消费该证据一次且未触发第二次恢复，确认本interface failure没有改变冻结策略或coverage。
 
 <a id="detail-v63"></a>
 

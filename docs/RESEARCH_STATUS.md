@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P6R exact-once confirmation supported（2026-08-26）
+
+状态：`v64_p6r_exact_once_supported_cleanup_running`；canonical=
+`run://worldsim_v64/WS-V64-P6R-EXACT-ONCE-CONFIRMATION-01/20260826T153500Z__exact-once-confirmation-s0-r1`；
+confirmation target/model-score read=`true/true`，model refit/policy selection=`false/false`。
+
+冻结full-native selective MLP只在独立校准选定的nominal 40%上读取一次96-case确认：mean realized coverage=
+`0.3999405`，failure=`1/96`，empirical case risk=`0.0104167`。construction/night/rain/vulnerable-transit分别为
+`0/24, 1/24, 0/24, 0/24`；冻结总体`<=4/96`与每stratum`<=1/24`两项gate均通过，verdict=
+`supported_exact_once_confirmation`。GPU score=`12.5902 s`，peak RSS=`0.7907 GiB`。该证据仅支持冻结策略的
+observed case-risk，不外推现实安全或下游compiler。当前只剩后台superset catalog EOF写回和临时raw回收；closeout=
+`docs/autoresearch/worldsim_v64/P6R_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P6R confirmation evidence complete / exact-once scoring next（2026-08-26）
 
 状态：`v64_p6r_confirmation_evidence_complete_scoring_next`；canonical=

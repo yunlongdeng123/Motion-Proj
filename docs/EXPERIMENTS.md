@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P6R EXACT-ONCE CONFIRMATION SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-EXACT-ONCE-CONFIRMATION-01/20260826T153500Z__exact-once-confirmation-s0-r1`；
+- frozen policy=`full273 MLP / nominal coverage 0.40`；cases/scenes=`96/8`；mean realized coverage=`0.3999405`；
+- failures/risk=`1/96 / 0.0104167`；construction/night/rain/vulnerable-transit=`0/24,1/24,0/24,0/24`；
+- gate=`overall <=4/96 PASS; each stratum <=1/24 PASS`；verdict=`supported_exact_once_confirmation`；
+- model refit/policy selection=`false/false`；GPU/wall/peak RSS=`true/12.5902 s/0.7907 GiB`；
+- claim boundary=`exact-once observed case-risk for the frozen policy; no real-world safety or downstream compiler claim`；
+- hashes/checksums/fingerprints/coverage sweep/extra regression=`none`。
+
 ## WorldSim V6.4 P6R CONFIRMATION EVIDENCE R2 COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T152500Z__confirmation-evidence-s0-r2`；
