@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10r4_test_native_complete_evidence_next",
+  "status": "v64_p10r4_test_evidence_complete_exact_once_next",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10R4-TEST-EVIDENCE-01",
+  "active_task": "WS-V64-P10R4-FIXED-DENOMINATOR-EXACT-ONCE-01",
   "active_hypothesis": "WS-V64-H-P10R4-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER", "P10R_BOUNDED_ROUTE_EXPOSURE", "P10C_ROUTE_CONFLICT", "P10T_ROUTE_TAIL_REJECTED", "P10R3_FIXED_DENOMINATOR_DIAGNOSTIC", "P10R4_TEST_NATIVE"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER", "P10R_BOUNDED_ROUTE_EXPOSURE", "P10C_ROUTE_CONFLICT", "P10T_ROUTE_TAIL_REJECTED", "P10R3_FIXED_DENOMINATOR_DIAGNOSTIC", "P10R4_TEST_NATIVE", "P10R4_TEST_EVIDENCE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -16,7 +16,7 @@
     "v64_selection": true,
     "calibration": true,
     "confirmation": true,
-    "test": false
+    "test": true
   },
   "failure_ledger_refs": [
     "V62-F01",
@@ -423,10 +423,18 @@
   "p10r4_native_passed": true,
   "p10r4_test_prep_finalize_run": "run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T024500Z__test-prep-finalize-s4-r1",
   "p10r4_temporary_raw_removed": true,
+  "p10r4_test_evidence_run": "run://worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1",
+  "p10r4_test_evidence_scene_count": 8,
+  "p10r4_test_evidence_unit_count": 96,
+  "p10r4_test_evidence_output_bytes": 118958863,
+  "p10r4_test_evidence_reused_unit_count": 0,
+  "p10r4_test_evidence_source_role_overlap_count": 0,
+  "p10r4_test_evidence_wall_seconds": 111.96461581997573,
+  "p10r4_test_evidence_passed": true,
   "p10r2_confirmation_prep_run_id": "20260826T193000Z__confirmation-prep-s3-r1",
   "p10r2_confirmation_native_aggregate_run_id": "20260826T201000Z__native-aggregate-s3-r1",
   "p10r2_confirmation_evidence_run_id": "20260826T201500Z__confirmation-evidence-s3-r1",
   "p10r2_exact_once_confirmation_run_id": "20260826T203000Z__exact-once-confirmation-s3-r1",
   "p11_locked_by_route_tail_rejection": true,
-  "next_action": "generate the single frozen 96-unit untouched-test evidence dataset, then run the preregistered fixed-denominator exact-once scorer"
+  "next_action": "run the preregistered fixed-denominator exact-once scorer once with the frozen M0 and M1 policies"
 }

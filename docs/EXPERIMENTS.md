@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 UNTOUCHED TEST EVIDENCE COMPLETE（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1`；
+- result=`8 scenes / 96 units / 118958863 bytes / passed`；reuse/query/source-role overlap=`0/0/0`；
+- maximum unit wall/total wall=`16.8897/111.9646s`；test target read=`true`；model-score read=`false`；
+- policy/model/route/tail/denominator/gates change=`none`；second evidence/hash/checksum/fingerprint/extra tests=`none`；
+- failure ledger delta=`none`；next=`one frozen M0-vs-M1 fixed-denominator exact-once score`。
+
 ## WorldSim V6.4 P10R4 UNTOUCHED TEST NATIVE COMPLETE（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T023000Z__native-aggregate-s4-r1`；

@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 untouched-test evidence complete / exact-once next（2026-08-27）
+
+状态：`v64_p10r4_test_evidence_complete_exact_once_next`；canonical=
+`run://worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1`；test target/model-score read=`true/false`。
+
+冻结test cohort一次生成`8 scenes / 96 units / 118958863 bytes`，reuse=`0`、source-role overlap=`0`、queries=`0`，
+maximum unit/wall=`16.8897/111.9646s`，passed。没有恢复、policy/model/route/tail/denominator/gate变更或第二份evidence；
+failure ledger delta=`none`。下一步只运行冻结M0/M1 fixed-denominator exact-once一次。closeout=
+`docs/autoresearch/worldsim_v64/P10R4_TEST_EVIDENCE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R4 untouched-test native complete / evidence next（2026-08-27）
 
 状态：`v64_p10r4_test_native_complete_evidence_next`；canonical native=
