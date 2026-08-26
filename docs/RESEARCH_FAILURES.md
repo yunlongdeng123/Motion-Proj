@@ -19,6 +19,9 @@
 - 版本收口与arXiv索引没有新增实验或failure ID。`V64-F25`只在P10R4独立固定机会分母层面解除；P10T/current-M0
   `V64-F21`负结论及P10R2 selected-denominator relative non-improvement保持。详细终态见
   `docs/autoresearch/worldsim_v64/V64_RESEARCH_FAMILY_CLOSEOUT.md`与`ARXIV_EVIDENCE_INDEX.md`。
+- shutdown前最终报告审计只读确认7个关键canonical run的目录与`summary.json/status.json`可用，并按既有`V64-F03`
+  合同在非登录shell激活`motionproj`后解析；没有重跑、重算、改结果或新增failure。arXiv写作交接见
+  `docs/autoresearch/worldsim_v64/V64_ARXIV_REPORT_HANDOFF.md`，本次failure ledger delta=`none`。
 
 - V6.4 从`research/worldsim-v6.3-surface-tail@c192955`直接建立；`V63-F24`仍关闭 Surface family，新的合法路线只能研究
   native aleatoric/epistemic uncertainty、scene/stratum conditional risk 与独立 case-level calibration。

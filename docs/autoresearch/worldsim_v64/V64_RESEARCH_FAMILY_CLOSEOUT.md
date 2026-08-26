@@ -70,6 +70,7 @@ experiment and no failure ID.
 ## Frozen report entry points
 
 - `docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`: canonical report-writing index.
+- `docs/autoresearch/worldsim_v64/V64_ARXIV_REPORT_HANDOFF.md`: copy-ready claims, validation audit, tables, figures, and authoring locks.
 - `docs/RESEARCH_STATUS.md`: chronological state and decisions.
 - `docs/EXPERIMENTS.md`: experiment registry and exact metrics.
 - `docs/RESEARCH_FAILURES.md`: only active failure/negative-evidence ledger.

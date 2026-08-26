@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
+
+- task=`WS-V64-REPORT-HANDOFF-01`；status=`done_documentation_only`；scientific run/GPU=`none/none`；
+- canonical artifacts checked=`P6R exact, P4C exact, P10R2 exact, P10R4 exact, P11, P11R, P11D`；directories present=`7/7`；
+- core files=`summary.json + status.json parse 7/7; CASE_METRICS/action rows/models retained where defined by stage`；
+- ledger/state agreement=`RESEARCH_STATUS + EXPERIMENTS + RESEARCH_FAILURES + AUTORESEARCH_STATE current`；result=`terminal consistent`；
+- report handoff=`docs/autoresearch/worldsim_v64/V64_ARXIV_REPORT_HANDOFF.md`；failure ledger delta=`none`；
+- rerun/recompute/smoke/regression/hash/checksum/fingerprint=`none`；next external action=`push then AutoDL shutdown`。
+
 ## WorldSim V6.4 VERSION CLOSEOUT / ARXIV INDEX COMPLETE（2026-08-27）
 
 - terminal state=`v64_research_complete_report_ready`；active task/hypothesis=`null/null`；

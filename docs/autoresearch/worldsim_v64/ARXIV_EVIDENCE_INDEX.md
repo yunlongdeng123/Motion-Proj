@@ -190,3 +190,14 @@ Unsupported:
 9. Limitations: empirical cohorts only, fixed proxies, no large NWM/RL, no closed-loop or safety claim.
 
 The concise terminal decision is frozen in `V64_RESEARCH_FAMILY_CLOSEOUT.md`.
+
+## 12. Final report-handoff validation
+
+Immediately before the requested remote shutdown, a documentation-only audit confirmed that the canonical P6R, P4C, P10R2, P10R4,
+P11, P11R, and P11D run directories remain present. Each of the seven core `summary.json` and `status.json` pairs parsed successfully;
+stage-defined case/action rows and critic models remain in their canonical leaves. The terminal machine state, three mandatory ledgers,
+this index, and the family closeout agree on the supported/unsupported boundary.
+
+No experiment was rerun or recomputed, and no smoke/regression matrix, hash, checksum, or fingerprint was added. Copy-ready claims,
+paper tables, figure guidance, validation inventory, failure grouping, and authoring locks are consolidated in
+`V64_ARXIV_REPORT_HANDOFF.md`.

@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.4 arXiv handoff validated / remote shutdown authorized（2026-08-27）
+
+状态保持`v64_research_complete_report_ready`；新增报告交接入口=
+`docs/autoresearch/worldsim_v64/V64_ARXIV_REPORT_HANDOFF.md`。本次只读审计确认P6R、P4C、P10R2、P10R4、P11、P11R、
+P11D共7个canonical run目录存在，核心`summary.json/status.json`均可解析，逐case/action与模型产物按stage保留；三本强制
+账本、terminal state、arXiv evidence index和family closeout一致。无新科学执行、GPU run、smoke/regression matrix或failure ID，
+也未加入hash/checksum/fingerprint。推送成功后按用户授权关闭AutoDL；V6.4内部无剩余task或unlocked stage。
+
 ## WorldSim V6.4 research complete / report ready（2026-08-27）
 
 状态：`v64_research_complete_report_ready`；V6.4科学执行终止，active task/hypothesis=`null/null`；本里程碑无新实验、
