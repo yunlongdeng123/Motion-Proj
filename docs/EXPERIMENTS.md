@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10T EMPIRICAL ROUTE-TAIL REJECTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10T-ROUTE-TAIL-AUDIT-01/20260826T190000Z__route-tail-audit-s0-r1`；
+- empirical worst10/96 CVaR C0/M0=`0.0504298/0.0517085`；M0-C0=`+0.0012787`；gate=`M0 <=0.05 FAIL`；
+- M0 pointwise cases above0.05=`5/96`；maximum=`0.106383`；verdict=`rejected_empirical_route_tail`；
+- target reread/model-policy change/tail sweep=`false/false/false`；CPU wall/peak RSS=`0.00076s/0.1673GiB`；
+- V64-F21=`closed_negative_tail_authority`；P11=`locked`；
+- claim boundary=`empirical negative tail result; P4C/P10M/P10G/P10R positive scopes remain, route/collision authority rejected`。
+
 ## WorldSim V6.4 P10T EMPIRICAL ROUTE-TAIL CVAR FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10T-ROUTE-TAIL-AUDIT-01 / WS-V64-H-P10T-001`；run ID=`20260826T190000Z__route-tail-audit-s0-r1`；

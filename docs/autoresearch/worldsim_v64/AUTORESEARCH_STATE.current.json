@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10t_route_tail_audit_preregistered",
+  "status": "v64_p10t_route_tail_rejected_p11_locked",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10T-ROUTE-TAIL-AUDIT-01",
+  "active_task": "WS-V64-P4C-CATALOG-CLEANUP-01 then route-aware recovery design",
   "active_hypothesis": "WS-V64-H-P4C-001",
   "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE", "P10G_SPARSE_GAUSSIAN_ADAPTER", "P10R_BOUNDED_ROUTE_EXPOSURE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
@@ -279,5 +279,12 @@
   "p10t_tail_fraction": 0.1,
   "p10t_tail_count": 10,
   "p10t_maximum_m0_empirical_cvar": 0.05,
-  "next_action": "commit and push P10C closeout plus empirical CVaR freeze, then execute the rows-only tail audit"
+  "p10t_route_tail_audit_verdict": "rejected_empirical_route_tail",
+  "p10t_c0_empirical_cvar": 0.05042978771947152,
+  "p10t_m0_empirical_cvar": 0.05170853114753883,
+  "p10t_m0_minus_c0_cvar": 0.0012787434280673096,
+  "p10t_m0_maximum_case_rate": 0.10638297872340426,
+  "p10t_m0_case_count_above_threshold": 5,
+  "p11_locked_by_route_tail_rejection": true,
+  "next_action": "commit and push negative route-tail closeout, finish catalog cleanup, then freeze a new-version route-aware recovery using independent data rather than retuning M0"
 }

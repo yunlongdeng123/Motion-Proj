@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10T empirical route-tail rejected / P11 locked（2026-08-26）
+
+状态：`v64_p10t_route_tail_rejected_p11_locked`；canonical=
+`run://worldsim_v64/WS-V64-P10T-ROUTE-TAIL-AUDIT-01/20260826T190000Z__route-tail-audit-s0-r1`；verdict=
+`rejected_empirical_route_tail`；V64-F21=`closed_negative_tail_authority`。
+
+冻结worst10/96 empirical CVaR：C0=`0.0504298`，M0=`0.0517085`，M0-C0=`+0.0012787`；M0超过0.05唯一gate，
+且仍有5个pointwise case>0.05，故current frozen M0的route/collision tail authority正式拒绝。该负结果不推翻P4C fresh
+case-risk、P10M materialization、P10G Gaussian splat或P10R pooled exposure；只禁止把它们提升为tail-safe collision/planning claim，
+并锁定P11。target未重读、policy/model未改，CPU wall=`0.00076s`。closeout=
+`docs/autoresearch/worldsim_v64/P10T_ROUTE_TAIL_AUDIT_CLOSEOUT.md`。合法下一研究只能是新版本route-aware conditional policy，需新
+calibration/confirmation合同，不能回调本次M0。
+
 ## WorldSim V6.4 P10T empirical route-tail CVaR audit frozen（2026-08-26）
 
 状态：`v64_p10t_route_tail_audit_preregistered`；active task/hypothesis=

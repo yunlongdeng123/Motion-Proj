@@ -412,13 +412,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P10C一次读取冻结target后得到M0 route emitted=`10013`、conflict=`43`、pooled rate=`0.004294`，并相对C0新增563 state；
   cell-level severity因此成功打破binary metric saturation，本条关闭。但5/96局部case仍超0.05，转入V64-F21，不由pooled pass覆盖。
 
-- `V64-F21`（`evaluation/tail-risk`, `recovery_frozen_post_quality_no_policy_change`）：P10C pooled M0 route hidden-FREE rate虽仅
+- `V64-F21`（`evaluation/tail-risk`, `closed_negative_tail_authority`）：P10C pooled M0 route hidden-FREE rate虽仅
   `0.004294`，仍有5/96 case局部超过0.05，最高`scene-0895/f152=0.106383`；其余包括`0876/f047=0.076923`、
   `0876/f182=0.069444`、`0454/f122=0.063492`、`0895/f137=0.057692`。这阻止把pooled severity提升为route/collision
   authority。不得在已读target上调policy、改route或挑scene。CVaR对最坏尾部而非均值进行风险汇总，且PAC-Bayesian CVaR工作
   明确区分empirical tail与generalization bound；故只冻结alpha0.10/worst10 empirical audit，M0门仍0.05，不做优化或population
   声明。证据=`https://proceedings.neurips.cc/paper/2015/hash/64223ccf70bbb65a3a4aceac37e21016-Abstract.html`、
   `https://proceedings.neurips.cc/paper/2020/hash/d02e9bdc27a894e882fa0c9055c99722-Abstract.html`。
+  P10T rows-only formal得到C0/M0 worst10 empirical CVaR=`0.0504298/0.0517085`，M0比C0高`0.0012787`且超过0.05；
+  verdict=`rejected_empirical_route_tail`。本次未重读target、未改policy或tail fraction。故current M0 route/collision tail authority
+  正式关闭并锁定P11；不得用P4C pooled/fresh pass、P10G support或P10R exposure覆盖该负结论。合法恢复必须是新版本、独立
+  calibration与新confirmation，不能回调本次frozen M0。
 
 <a id="detail-v63"></a>
 
