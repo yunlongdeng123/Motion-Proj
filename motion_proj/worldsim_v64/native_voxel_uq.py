@@ -8,6 +8,7 @@ from typing import Mapping, Sequence
 import numpy as np
 from scipy import ndimage
 from sklearn.decomposition import PCA
+from sklearn.linear_model import LogisticRegression
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
 
@@ -68,6 +69,49 @@ class NativeBoundaryDensityUQ:
         return (
             (-self.model.score_samples(projected) - self.location) / self.scale
         ).astype(np.float32)
+
+
+class NativeBoundarySupervisedRisk:
+    """复用冻结 PCA 表示，在 fit scenes 上学习 hidden-FREE 风险。"""
+
+    def __init__(
+        self,
+        *,
+        representation: NativeBoundaryDensityUQ,
+        regularization_c: float,
+        maximum_iterations: int,
+        seed: int,
+    ) -> None:
+        self.representation = representation
+        self.model = LogisticRegression(
+            C=float(regularization_c),
+            class_weight="balanced",
+            solver="lbfgs",
+            max_iter=int(maximum_iterations),
+            random_state=int(seed),
+        )
+
+    def _transform(self, features: np.ndarray) -> np.ndarray:
+        standardized = self.representation.scaler.transform(
+            np.asarray(features, dtype=np.float32)
+        )
+        return self.representation.pca.transform(standardized).astype(np.float32)
+
+    def fit(
+        self, features: np.ndarray, logits: np.ndarray, hidden_free: np.ndarray
+    ) -> "NativeBoundarySupervisedRisk":
+        del logits
+        labels = np.asarray(hidden_free, dtype=bool)
+        if np.unique(labels).size != 2:
+            raise RuntimeError("supervised risk fit requires both hidden-FREE classes")
+        self.model.fit(self._transform(features), labels)
+        return self
+
+    def score(self, features: np.ndarray, logits: np.ndarray) -> np.ndarray:
+        del logits
+        return self.model.predict_proba(self._transform(features))[:, 1].astype(
+            np.float32
+        )
 
 
 def _unit_dirs(root: Path, scene: str) -> list[Path]:
@@ -254,12 +298,33 @@ def evaluate_scene_native(
     native_origin_m: Sequence[float],
     native_voxel_size_m: float,
 ) -> tuple[dict[str, object], dict[str, np.ndarray]]:
+    return evaluate_scene_native_scores(
+        {"u2_feature_density": model},
+        evidence_root,
+        native_root,
+        scene,
+        partition_by_scene=partition_by_scene,
+        native_origin_m=native_origin_m,
+        native_voxel_size_m=native_voxel_size_m,
+    )
+
+
+def evaluate_scene_native_scores(
+    score_models: Mapping[str, object],
+    evidence_root: Path,
+    native_root: Path,
+    scene: str,
+    *,
+    partition_by_scene: Mapping[str, str],
+    native_origin_m: Sequence[float],
+    native_voxel_size_m: float,
+) -> tuple[dict[str, object], dict[str, np.ndarray]]:
     labels_parts = []
     score_parts: dict[str, list[np.ndarray]] = {
         "u0_max_probability": [],
         "u0_entropy": [],
         "u0_inverse_margin": [],
-        "u2_feature_density": [],
+        **{name: [] for name in score_models},
     }
     origin = np.asarray(native_origin_m, dtype=np.float64)
     for evidence_unit in _unit_dirs(evidence_root, scene):
@@ -275,9 +340,10 @@ def evaluate_scene_native(
         labels_parts.append(chunk.hidden_free)
         for name, values in _softmax_uncertainty(chunk.logits).items():
             score_parts[name].append(np.asarray(values, dtype=np.float32))
-        score_parts["u2_feature_density"].append(
-            model.score(chunk.features, chunk.logits)
-        )
+        for name, score_model in score_models.items():
+            score_parts[name].append(
+                score_model.score(chunk.features, chunk.logits)
+            )
     labels = np.concatenate(labels_parts)
     scores = {name: np.concatenate(parts) for name, parts in score_parts.items()}
     metrics = {

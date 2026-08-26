@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V6.4 fit-only supervised risk 已冻结 / 待一次执行（2026-08-26）
+
+状态：`v64_supervised_hidden_free_risk_preregistered`；active task=`WS-V64-P5-SUPERVISED-RISK-01`；active hypothesis=
+`WS-V64-H-P5-001`；evaluation score read=`false`。正式run固定为
+`20260826T093000Z__supervised-risk-s0-r1`。
+
+P4N已按`V64-F10`收口为relative-only/weak-absolute。检索OCCUQ、ReliOcc、EvOcc的supervised/hybrid uncertainty路线后，
+本恢复只复用P4N已拟合的StandardScaler+PCA-16，在四个fit scene的同一`200,000`点上用hidden-FREE标签拟合一个固定
+logistic head：`C=1,class_weight=balanced,lbfgs,max_iter=200,seed0`；不使用scene ID。两fresh evaluation scene、
+333,009点分母与U0/U2 comparator不变。
+
+唯一两门预先固定为pooled U3 AUROC `>=0.60`且两个scene各自AUROC均`>=0.55`。禁止参数/feature/seed/denominator/
+gate sweep、额外split或repeat；通过也只支持supervised ranking mechanism，不支持calibration、authority、conditional
+coverage、安全、LoRA或downstream compiler。完整freeze=
+`docs/autoresearch/worldsim_v64/P5_SUPERVISED_RISK_FREEZE.md`。只做源码编译后提交push并直接执行，无额外smoke/regression；
+CPU-only，无多卡需求。
+
 ## WorldSim V6.4 fresh native-voxel UQ 相对门通过 / 绝对能力弱（2026-08-26）
 
 状态：`v64_fresh_uq_relative_gate_pass_weak_absolute_supervised_risk_next`；completed task=

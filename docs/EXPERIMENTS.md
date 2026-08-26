@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.4 P5 FIT-ONLY SUPERVISED RISK PREREG（2026-08-26）
+
+- task/hypothesis=`WS-V64-P5-SUPERVISED-RISK-01 / WS-V64-H-P5-001`；formal run=
+  `20260826T093000Z__supervised-risk-s0-r1`；evaluation score read=`false`。
+- fit/eval/denominator=`same as P4N: 200,000 fit points; scene-0359/0998; 333,009 evaluation points`；evaluation label
+  used for fit=`false`。
+- representation=`P4N r2 frozen StandardScaler + PCA-16`；head=`logistic C1/balanced/lbfgs/max_iter200/seed0`；scene ID=
+  `disabled`。
+- gates=`pooled AUROC>=0.60 AND both scene AUROC>=0.55`；其他指标report-only；parameter/feature/seed/denominator/gate
+  sweep、extra split、repeat=`forbidden`。
+- claim boundary=`supervised ranking mechanism only`；calibration/authority/conditional coverage/safety=`locked`；failure refs=
+  `V63-F02,V63-F19,V63-F24,V64-F08,V64-F09,V64-F10`；delta=`none`；extra smoke/regression=`none`。
+- freeze=`docs/autoresearch/worldsim_v64/P5_SUPERVISED_RISK_FREEZE.md`；resource=`CPU-only / single-3090 host sufficient`。
+
 ## WorldSim V6.4 NATIVE-VOXEL UQ R2 RELATIVE PASS / WEAK ABSOLUTE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01/20260826T091500Z__fresh-native-voxel-uq-s0-r2`；

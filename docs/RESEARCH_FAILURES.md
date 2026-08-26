@@ -23,6 +23,8 @@
   V6.1–V6.3 UQ路线的scene错判为legacy，也不得用本轮后续质量回改cohort或复用r2部分产物。
 - r3 已完整生成6-scene/72-target native sidecar，单卡资源通过；这只是capability，不得提前写成fresh UQ成立。
 - fresh UQ已在target quality读取前冻结为同一PCA-16/GMM-4和两条晋级门；同数据换seed、PCA/GMM或改scene均禁止。
+- fresh U2虽过相对门，但两scene内AUROC都约0.498且FPR95约0.96，登记`V64-F10 active`。后续只允许已冻结的
+  fit-only PCA-16 logistic risk head执行一次；不得把监督标签用于evaluation拟合、扫描超参或扩展split。
 
 ### V6.3 报告使用边界（2026-08-26）
 
