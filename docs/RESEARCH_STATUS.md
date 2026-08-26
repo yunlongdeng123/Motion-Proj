@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V6.4 P6R split/model frozen / GPU training next（2026-08-26）
+
+状态：`v64_p6r_selective_mlp_preregistered`；active task/hypothesis=
+`WS-V64-P6R-SELECTIVE-MLP-01 / WS-V64-H-P6R-001`；development/calibration/new-confirmation quality read=
+`true/false/false`。
+
+P6已消费的16 scene转为development training；原8个untouched confirmation转为独立calibration。其target仍未读。
+在读取它们前，从剩余588个>=40-sample IR-WM train-temporal scene中只按name/description/sample count/exclusion和seed1
+冻结新confirmation：night=`1023,1105`，rain=`0903,0451`，construction=`0981,0537`，vulnerable-transit=
+`0789,0157`；没有使用Occupancy、hidden-FREE、UQ或模型分数。
+
+恢复模型固定为完整273D native输入的`273-128-64-1` MLP，GELU/dropout0.10，focal BCE gamma2/alpha0.75，
+AdamW lr1e-3/wd1e-4，20 epochs，batch16384，seed0；每development scene最多49152 points。禁止width/loss/seed/
+epoch/lr/sampling sweep，development AUROC仅描述，不作gate。模型落盘后才允许原8 scene一次独立校准；协议仍为5%--50%
+coverage、conflict 0.05、case risk 0.05、confidence 0.95和Bonferroni Clopper--Pearson。完整冻结=
+`docs/autoresearch/worldsim_v64/P6R_SELECTIVE_MLP_FREEZE.md`。不加hash/checksum/fingerprint或测试矩阵；单3090足够。
+
 ## WorldSim V6.4 P6 case calibration rejected / selective MLP recovery next（2026-08-26）
 
 状态：`v64_p6_case_calibration_rejected_selective_mlp_recovery_next`；completed task=

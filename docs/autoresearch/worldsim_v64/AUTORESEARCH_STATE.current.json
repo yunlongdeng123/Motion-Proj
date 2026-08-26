@@ -1,20 +1,20 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_calibration_confirmation_cohort_preregistered",
+  "status": "v64_p6r_selective_mlp_preregistered",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P6-CALIBRATION-SIDECAR-01",
-  "active_hypothesis": "WS-V64-H-P6C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK"],
-  "unlocked_stages": ["P6_CALIBRATION_SIDECAR"],
+  "active_task": "WS-V64-P6R-SELECTIVE-MLP-01",
+  "active_hypothesis": "WS-V64-H-P6R-001",
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED"],
+  "unlocked_stages": ["P6R_SELECTIVE_MLP_TRAINING"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
   "quality_read": {
     "v64_train": true,
     "v64_selection": true,
-    "calibration": false,
+    "calibration": true,
     "confirmation": false,
     "test": false
   },
@@ -36,9 +36,13 @@
     "V64-F08",
     "V64-F09",
     "V64-F10",
-    "V64-F11"
+    "V64-F11",
+    "V64-F12",
+    "V64-F13",
+    "V64-F14",
+    "V64-F15"
   ],
-  "last_failure_id": "V64-F11",
+  "last_failure_id": "V64-F15",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -109,5 +113,13 @@
   "p2_fresh_blocked_partial_run": "run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T081500Z__fresh-native-s0-r2",
   "p2_fresh_partial_units": 12,
   "p2_fresh_recovery": "freeze_only_train_temporal_metadata_scenes_and_preprocess_eval_276_756",
-  "next_action": "compile, commit, and push the frozen 16+8 cohort, then prepare 24 processed scenes and extract 288 native sidecars without reading target quality"
+  "p6_native_aggregate_run": "run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1",
+  "p6_case_calibration_run": "run://worldsim_v64/WS-V64-P6-CALIBRATION-01/20260826T131000Z__case-calibration-s0-r1",
+  "p6_case_calibration_verdict": "rejected_no_positive_coverage",
+  "p6r_preregistered": true,
+  "p6r_development_scene_count": 16,
+  "p6r_independent_calibration_scene_count": 8,
+  "p6r_new_confirmation_scenes": ["scene-1023", "scene-1105", "scene-0903", "scene-0451", "scene-0981", "scene-0537", "scene-0789", "scene-0157"],
+  "p6r_model": "full273_mlp_128_64_focal_bce_seed0",
+  "next_action": "commit and push the frozen P6R split and implementation, then run one full-native selective MLP training before independent calibration read"
 }

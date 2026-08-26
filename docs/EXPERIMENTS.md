@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.4 P6R SELECTIVE MLP PREREG（2026-08-26）
+
+- task/hypothesis=`WS-V64-P6R-SELECTIVE-MLP-01 / WS-V64-H-P6R-001`；route=`new model version after P6 rejection`。
+- split=`16 consumed development / former 8 quality-unread independent calibration / new 8 quality-unread confirmation`。
+- new confirmation=`night 1023,1105; rain 0903,0451; construction 0981,0537; vulnerable 0789,0157`；selection=
+  `remaining metadata-only pool, >=40 samples, prior-scene exclusion, shared seed1`；target/model quality used=`false`。
+- model=`full 273D -> 128 -> 64 -> 1, GELU, dropout .10, focal BCE gamma2 alpha.75, AdamW 1e-3/wd1e-4,
+  20 epochs, batch16384, seed0`；sampling=`49152 points/development scene`；sweep=`none`。
+- next=`commit/push frozen implementation, run one GPU training, then freeze artifact before independent calibration read`；single3090=
+  `sufficient`；hash/checksum/fingerprint=`none`；extra smoke/regression=`none`；failure delta=`none (V64-F15 remains active)`。
+
 ## WorldSim V6.4 P6 CASE CALIBRATION REJECTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6-CALIBRATION-01/20260826T131000Z__case-calibration-s0-r1`；verdict=

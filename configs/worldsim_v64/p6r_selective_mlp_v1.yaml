@@ -1,0 +1,51 @@
+schema_version: worldsim_v64.p6r_selective_mlp.v1
+task_id: WS-V64-P6R-SELECTIVE-MLP-01
+hypothesis_id: WS-V64-H-P6R-001
+seed: 0
+claim_boundary: development-only full-native hidden-FREE risk training; no independent calibration, confirmation, authority, conditional coverage, downstream compiler, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6E-CALIBRATION-EVIDENCE-01/20260826T130000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+  native_partition: fresh_calibration
+development_scenes:
+  - {name: scene-1045, stratum: night}
+  - {name: scene-1055, stratum: night}
+  - {name: scene-1051, stratum: night}
+  - {name: scene-1006, stratum: night}
+  - {name: scene-0901, stratum: rain}
+  - {name: scene-0810, stratum: rain}
+  - {name: scene-0458, stratum: rain}
+  - {name: scene-0885, stratum: rain}
+  - {name: scene-0047, stratum: construction}
+  - {name: scene-0203, stratum: construction}
+  - {name: scene-0768, stratum: construction}
+  - {name: scene-0259, stratum: construction}
+  - {name: scene-0405, stratum: vulnerable_transit}
+  - {name: scene-0439, stratum: vulnerable_transit}
+  - {name: scene-0060, stratum: vulnerable_transit}
+  - {name: scene-0656, stratum: vulnerable_transit}
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+sampling:
+  maximum_points_per_scene: 49152
+  source_units_per_scene: 12
+model:
+  feature: full_17d_logits_plus_256d_bev
+  hidden_dimensions: [128, 64]
+  dropout: 0.10
+  loss: focal_binary_cross_entropy
+  focal_gamma: 2.0
+  focal_alpha: 0.75
+  optimizer: adamw
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 20
+  batch_size: 16384
+locks:
+  independent_calibration_read: false
+  new_confirmation_read: false
+  parameter_sweep_allowed: false
+  scene_id_feature_allowed: false
+  hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F10, V64-F11, V64-F15]
