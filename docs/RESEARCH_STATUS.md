@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P4C confirmation evidence complete / exact-once next（2026-08-26）
+
+状态：`v64_p4c_confirmation_evidence_complete_scoring_next`；canonical=
+`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`；active task=
+`WS-V64-P4C-CONDITIONAL-EXACT-ONCE-CONFIRMATION-01`；confirmation target/model-score read=`true/false`。
+
+冻结corrected cohort一次完成`96 units / 8 scenes`，query/source-role overlap=`0/0`，disk=`90704718 bytes`，maximum unit/wall=
+`6.7895/51.9970 s`，passed；没有reuse、failure delta、policy选择或model refit。下一步只以冻结C0=`global 0.40`和M0=
+`rain 0.40; night/construction/vulnerable 0.50`执行一次exact-once评分。closeout=
+`docs/autoresearch/worldsim_v64/P4C_CONFIRMATION_EVIDENCE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P4C corrected native confirmation complete / evidence next（2026-08-26）
 
 状态：`v64_p4c_confirmation_native_complete_evidence_next`；canonical=

@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p4c_confirmation_native_complete_evidence_next",
+  "status": "v64_p4c_confirmation_evidence_complete_scoring_next",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01",
+  "active_task": "WS-V64-P4C-CONDITIONAL-EXACT-ONCE-CONFIRMATION-01",
   "active_hypothesis": "WS-V64-H-P4C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -181,7 +181,7 @@
   "p4c_disk_free_gib_after_recoverable_pip_cache_removal": 41,
   "p4c_recoverable_pip_cache_removed_gib": 13,
   "p4c_confirmation_execution_frozen": true,
-  "p4c_confirmation_target_read": false,
+  "p4c_confirmation_target_read": true,
   "p4c_confirmation_score_read": false,
   "p4c_confirmation_v1_completed_native_scene_count": 7,
   "p4c_confirmation_v1_failed_scene": "scene-0276",
@@ -199,5 +199,10 @@
   "p4c_confirmation_replacement_raw_wait_seconds": 716.9760900679976,
   "p4c_confirmation_replacement_native_wall_seconds": 45.253681937232614,
   "p4c_confirmation_evidence_run": "run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1",
-  "next_action": "commit and push corrected blind native closeout, then generate the single frozen 96-unit conditional confirmation evidence run"
+  "p4c_confirmation_evidence_unit_count": 96,
+  "p4c_confirmation_evidence_scene_count": 8,
+  "p4c_confirmation_evidence_bytes": 90704718,
+  "p4c_confirmation_evidence_wall_seconds": 51.99698299728334,
+  "p4c_confirmation_evidence_source_role_overlap_count": 0,
+  "next_action": "commit and push evidence closeout, then score frozen C0 and M0 exactly once without refit or coverage selection"
 }

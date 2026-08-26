@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P4C CONFIRMATION EVIDENCE COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`；
+- result=`96 units / 8 scenes / passed`；query/source-role overlap=`0/0`；reused units=`0`；
+- logical bytes/maximum-unit/wall=`90704718 / 6.7895 s / 51.9970 s`；model score read=`false`；
+- failure delta/model refit/policy selection=`none/false/false`；
+- hash/checksum/fingerprint/extra test=`none`；next=`one fixed C0/M0 exact-once scoring run`。
+
 ## WorldSim V6.4 P4C CORRECTED CONFIRMATION SIDECAR COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`；

@@ -375,6 +375,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `scene-0813`，得到`8 scenes/96 targets/4423846027 bytes`，maximum worker peak=`4.1314 GiB`。全过程未读取confirmation
   target/quality/model score，未改变C0/M0、模型、gate或96-case denominator，故本interface failure在quality read前关闭。
   canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`。
+  corrected evidence随后一次完成`96/96 units`、query/source-role overlap=`0/0`且未触发同类membership或actor-frame错误；
+  model score仍未读，没有新增failure ID。evidence=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`。
 
 <a id="detail-v63"></a>
 
