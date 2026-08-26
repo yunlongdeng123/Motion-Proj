@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10m_conditional_state_bake_preregistered",
+  "status": "v64_p10m_target_free_state_bake_supported",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P10M-CONDITIONAL-STATE-BAKE-01",
+  "active_task": "WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01 design",
   "active_hypothesis": "WS-V64-H-P4C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE", "P4C_CONFIRMATION_EVIDENCE", "P4C_EXACT_ONCE_CONFIRMATION", "P10M_TARGET_FREE_STATE_BAKE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -219,5 +219,15 @@
   "p10m_conditional_state_bake_run": "run://worldsim_v64/WS-V64-P10M-CONDITIONAL-STATE-BAKE-01/20260826T180000Z__conditional-state-bake-s0-r1",
   "p10m_expected_package_count": 96,
   "p10m_minimum_mean_coverage_uplift": 0.05,
-  "next_action": "commit and push target-free state-bake freeze, then execute the single formal 96-package materialization while catalog cleanup remains in background"
+  "p10m_conditional_state_bake_verdict": "supported_target_free_conditional_state_bake",
+  "p10m_package_count": 96,
+  "p10m_eligible_voxel_count": 1150300,
+  "p10m_c0_emitted_voxel_count": 460082,
+  "p10m_m0_emitted_voxel_count": 534581,
+  "p10m_additional_emitted_voxel_count": 74499,
+  "p10m_additional_emitted_volume_m3_nominal": 9999.086518272,
+  "p10m_output_bytes": 27780960,
+  "p10m_target_evidence_read": false,
+  "p10m_runtime_model_or_evidence_access": false,
+  "next_action": "commit and push P10M closeout, then research and freeze the smallest faithful occupancy-to-Gaussian downstream adapter"
 }

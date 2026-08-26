@@ -381,6 +381,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   没有触发第二次恢复、mapping选择或新failure。本条保持`resolved_pre_quality`，并由fresh positive result确认恢复没有改变合同。
   下游P10M state-bake在该结果后冻结为target-free materialization：只读METHOD/native/model并让package-only consumer读取结果；
   未发现新blocker或新增failure ID，不回开本条。
+  P10M formal随后一次完成96个package，M0比C0新增`74499`个emitted voxels且两项gate通过；state bake target read=false、
+  runtime model/evidence access=false，没有新增failure ID。该结果不把voxel materialization外推为GS/sensor/collision authority。
 
 <a id="detail-v63"></a>
 

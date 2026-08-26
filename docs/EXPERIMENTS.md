@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10M TARGET-FREE CONDITIONAL STATE BAKE SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P10M-CONDITIONAL-STATE-BAKE-01/20260826T180000Z__conditional-state-bake-s0-r1`；
+- result=`96 packages / 1150300 eligible voxels / 27780960 bytes`；target evidence read=`false`；
+- C0/M0 emitted=`460082/534581`；additional=`74499`；mean coverage uplift=`+0.0750164`；
+- additional by construction/night/rain/vulnerable=`25199/35221/0/14079`；nominal added voxel volume=`9999.0865 m3`；
+- package-only runtime model/evidence access=`false`；both minimal gates=`PASS`；GPU wall/peak RSS=`9.3996 s/0.7806 GiB`；
+- refit/policy selection/hash/checksum/fingerprint/extra tests=`none`；
+- claim boundary=`materialization only; GS rendering/collision/planning/safety untested`。
+
 ## WorldSim V6.4 P10M CONDITIONAL STATE BAKE FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P10M-CONDITIONAL-STATE-BAKE-01 / WS-V64-H-P10M-001`；run ID=`20260826T180000Z__conditional-state-bake-s0-r1`；

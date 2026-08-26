@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10M target-free conditional state bake supported（2026-08-26）
+
+状态：`v64_p10m_target_free_state_bake_supported`；canonical=
+`run://worldsim_v64/WS-V64-P10M-CONDITIONAL-STATE-BAKE-01/20260826T180000Z__conditional-state-bake-s0-r1`；verdict=
+`supported_target_free_conditional_state_bake`。
+
+96个fresh package覆盖`1150300`个eligible native boundary voxels：C0发射`460082`，M0发射`534581`，新增`74499`
+（construction/night/rain/vulnerable=`25199/35221/0/14079`），mean coverage uplift=`0.0750164`；以0.512m voxel计算的
+nominal additional emitted volume=`9999.0865 m3`。package-only runtime消费全部96个state package，不加载模型或evidence；state bake
+本身未读target evidence。两项gate均PASS，GPU wall/peak RSS=`9.3996 s/0.7806 GiB`，output=`27780960 bytes`。该结果只支持
+target-free state materialization，下一步研究真实GS adapter，不把nominal voxel volume写成物理/安全有效体积。closeout=
+`docs/autoresearch/worldsim_v64/P10M_CONDITIONAL_STATE_BAKE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10M target-free conditional state bake frozen（2026-08-26）
 
 状态：`v64_p10m_conditional_state_bake_preregistered`；active task/hypothesis=
