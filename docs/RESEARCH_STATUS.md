@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 fresh native complete / evidence next（2026-08-27）
+
+状态：`v64_p10r2_confirmation_native_complete_evidence_next`；canonical=
+`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-SIDECAR-01/20260826T201000Z__native-aggregate-s3-r1`；
+confirmation target/model-score read=`false/false`；V64-F23/F24=`resolved_by_ready_first_resume/producer_single_owner`。
+
+8 scene均完成canonical processed与12-target native：aggregate=`96 targets / 4423846005 bytes / passed`，最大worker显存=
+`4.1314GiB`。ready-first恢复复用6个complete native leaf，仅并行重建`0006/0371`；所有leaf wall=`44.45--59.72s`。
+tar catalog扩充至`71555 entries / 8585986 bytes`。prep r1在检测到双producer同时写288前终止，r2仅复用8个complete scene，
+`0.817s`完成登记并删除6.3GiB可重建raw；target/quality均未读。下一步只生成一次96-unit evidence，再运行固定M1 exact-once。
+closeout=`docs/autoresearch/worldsim_v64/P10R2_CONFIRMATION_SIDECAR_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R2 feeder lock-convoy recovery frozen（2026-08-27）
 
 状态：`v64_p10r2_feeder_resume_reuse_ready_native`；V64-F23=`recovery_frozen_pre_target`。

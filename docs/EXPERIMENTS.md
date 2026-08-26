@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 FRESH NATIVE COMPLETE（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-SIDECAR-01/20260826T201000Z__native-aggregate-s3-r1`；
+- aggregate=`8 scenes / 96 targets / 4423846005 bytes / passed`；maximum worker peak GPU=`4.1314GiB`；
+- per-leaf wall range=`44.4532--59.7230s`；final feeder restart=`6 complete leaves reused + 2 canonical scenes rebuilt concurrently`；
+- prep recovery=`r1 stopped before duplicate canonical write; r2 reused 8 complete scenes in 0.8171s; temporary raw removed`；
+- catalog=`71555 entries / 8585986 bytes`；disk free after persistent processed/native=`~27GiB`；
+- target/quality/model-score read=`false/false/false`；hash/checksum/fingerprint/extra tests=`none`；V64-F23/F24=`resolved`。
+
 ## WorldSim V6.4 P10R2 FEEDER LOCK-CONVOY RECOVERY FREEZE（2026-08-27）
 
 - observation=`processed scene-1020 ready while another thread held the single preprocess mutex; GPU waited behind CPU work`；

@@ -452,6 +452,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `passed=true,target_count=12` leaf，canonical processed直接绕过preprocess lock进入GPU semaphore。只丢弃当前可从raw重建的
   staging partial；cohort/model/policy/targets/gates/canonical IDs完全不变，target与model score仍未读。证据=
   `https://docs.nvidia.com/deeplearning/dali/user-guide/docs/pipeline.html`。
+  ready-first恢复最终复用6个complete leaf，并只对`0006/0371`启动两个GPU worker；8 leaf全部12/12通过，本条关闭为
+  `resolved_by_ready_first_resume`。
+
+- `V64-F24`（`resource/operations`, `resolved_by_producer_single_owner`）：全shard scan结束后，prep主循环与feeder各自成为
+  DriveStudio producer，先对不同scene并行有利，但随后同时开始`scene-0371(288)`，若均完成会竞争同一canonical目录。
+  在任何duplicate canonical write前终止较晚的prep producer/tree，保留feeder较早staging、已落盘catalog和全部complete outputs。
+  feeder第一次恢复还遇到`scene-0006`仅有run目录无summary的中断partial；确认无进程占用且仅1个未完成文件后精确删除并从
+  complete canonical processed重建。最终8/8 processed、8/8 native、96 targets全部通过。prep以新r2和
+  `--reuse-temporary-raw`只读8个complete canonical scene，`0.8171s`写summary并删除raw，不重扫tar/重做preprocess。
+  防重复：scene-ready阶段只有feeder拥有producer写权；prep在stream结束后只作reuse finalize。科学cohort/policy/target lock未变。
 
 <a id="detail-v63"></a>
 
