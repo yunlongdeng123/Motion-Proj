@@ -136,7 +136,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     selected = max(passing, key=lambda row: row["nominal_coverage"]) if passing else None
     policy = {
         "schema_version": "worldsim_v64.p6_case_policy.v1",
-        "score": "u3_supervised_hidden_free",
+        "score": str(config["policy"]["score"]),
         "selection_unit": "case_target",
         "selected_nominal_coverage": (
             None if selected is None else selected["nominal_coverage"]
@@ -173,7 +173,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "confirmation_read": False,
         "exact_once_test_read": False,
         "resources": {
-            "gpu_used": False,
+            "gpu_used": bool(config.get("resources", {}).get("gpu_used", False)),
             "wall_seconds": time.monotonic() - started,
             "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1024**2),
         },
