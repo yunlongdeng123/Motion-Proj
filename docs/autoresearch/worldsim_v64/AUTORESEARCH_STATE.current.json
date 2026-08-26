@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p4c_confirmation_temporal_membership_recovery_frozen",
+  "status": "v64_p4c_confirmation_native_complete_evidence_next",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01 replacement scene-0813",
+  "active_task": "WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01",
   "active_hypothesis": "WS-V64-H-P4C-001",
-  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION"],
+  "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED", "P6R_EXACT_ONCE_CONFIRMATION", "P4C_CONFIRMATION_NATIVE"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
   "resource_contract": "single_rtx3090_24gb",
   "semantic_identity_only": true,
@@ -192,6 +192,12 @@
   "p4c_confirmation_catalog_union_pending": true,
   "p4c_confirmation_prep_run": "run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T161500Z__confirmation-prep-s0-r1",
   "p4c_confirmation_native_aggregate_run": "run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1",
+  "p4c_confirmation_native_scene_count": 8,
+  "p4c_confirmation_native_target_count": 96,
+  "p4c_confirmation_native_output_bytes": 4423846027,
+  "p4c_confirmation_native_maximum_worker_peak_gpu_memory_gib": 4.13140344619751,
+  "p4c_confirmation_replacement_raw_wait_seconds": 716.9760900679976,
+  "p4c_confirmation_replacement_native_wall_seconds": 45.253681937232614,
   "p4c_confirmation_evidence_run": "run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1",
-  "next_action": "commit and push V64-F18 recovery before any target read, then materialize only replacement scene-0813 and aggregate the seven retained native leaves"
+  "next_action": "commit and push corrected blind native closeout, then generate the single frozen 96-unit conditional confirmation evidence run"
 }

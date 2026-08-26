@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P4C corrected native confirmation complete / evidence next（2026-08-26）
+
+状态：`v64_p4c_confirmation_native_complete_evidence_next`；canonical=
+`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`；active task=
+`WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01`；new confirmation target/model-score read=`false/false`。
+
+保留v1的7个有效native leaf，并以预冻结temporal member `scene-0813(631)`替换`scene-0276`；corrected aggregate完成
+`8 scenes / 96 targets / 4423846027 bytes`，maximum worker peak GPU memory=`4.1314 GiB`。replacement raw wait=
+`716.9761 s`，native wall=`45.2537 s`；sidecar阶段没有读取target、quality或模型分数，也没有改C0/M0/model/gate/denominator。
+V64-F18=`resolved_pre_quality`。下一步只生成冻结96-unit evidence，再执行一次fixed C0/M0 exact-once评分。完整收口=
+`docs/autoresearch/worldsim_v64/P4C_CONFIRMATION_SIDECAR_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P4C 7/8 blind native complete / temporal-member replacement frozen（2026-08-26）
 
 状态：`v64_p4c_confirmation_temporal_membership_recovery_frozen`；active task=

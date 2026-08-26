@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P4C CORRECTED CONFIRMATION SIDECAR COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`；
+- corrected cohort=`0992,1101,0454,1102,0876,0895,0321,0813`；retained/replacement native scenes=`7/1`；
+- result=`8 scenes / 96 targets / 4423846027 bytes / passed`；maximum worker peak GPU memory=`4.1314 GiB`；
+- replacement raw wait/native wall=`716.9761/45.2537 s`；target/quality/model-score read=`false/false/false`；
+- model/policy/gate/denominator change=`none`；V64-F18=`resolved_pre_quality`；catalog semantic union=`pending controller EOF`；
+- hash/checksum/fingerprint/extra test=`none`；next=`single frozen 96-unit evidence generation`。
+
 ## WorldSim V6.4 P4C TEMPORAL-MEMBERSHIP RECOVERY FREEZE（2026-08-26）
 
 - v1 blind native=`7/8 complete`；failed leaf=`20260826T162000Z__confirmation-native-scene-0276-s0-r1`；

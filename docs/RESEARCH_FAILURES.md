@@ -362,7 +362,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   query/role overlap均0，wall=`74.6360 s`；模型分数仍未读，故以pre-score状态关闭。
   随后的exact-once评分成功消费该证据一次且未触发第二次恢复，确认本interface failure没有改变冻结策略或coverage。
 
-- `V64-F18`（`data/interface`, `recovery_frozen_pre_quality`）：P4C v1 metadata-only selection只检查nuScenes scene table、
+- `V64-F18`（`data/interface`, `resolved_pre_quality`）：P4C v1 metadata-only selection只检查nuScenes scene table、
   sample count与used-scene ledger，漏掉IR-WM train temporal pickle membership。7个scene完成blind native；`scene-0276`
   DriveStudio完成后在worker读取`payload["infos"][scene]`处`KeyError`，native output/target/model score均未读。官方BEVFormer/
   IR-WM使用生成的temporal train/val infos，不能用未分割scene table替代membership。恢复保留7个valid leaf并只替换无效scene：
@@ -371,6 +371,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   因v1 controller持有旧catalog snapshot，replacement写独立JSON并在两者结束后union，避免两个`os.replace` writer互相丢更新；
   证据=`https://github.com/APRIL-ZJU/IR-WM/blob/ir-wm/README.md`、`https://github.com/fundamentalvision/BEVFormer`和
   `docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
+  冻结replacement随后完成raw准备、DriveStudio与blind IR-WM native；corrected aggregate复用7个valid leaf并加入
+  `scene-0813`，得到`8 scenes/96 targets/4423846027 bytes`，maximum worker peak=`4.1314 GiB`。全过程未读取confirmation
+  target/quality/model score，未改变C0/M0、模型、gate或96-case denominator，故本interface failure在quality read前关闭。
+  canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`。
 
 <a id="detail-v63"></a>
 
