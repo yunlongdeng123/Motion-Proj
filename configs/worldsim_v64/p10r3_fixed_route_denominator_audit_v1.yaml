@@ -1,0 +1,18 @@
+schema_version: worldsim_v64.p10r3_fixed_route_denominator_audit.v1
+task_id: WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01
+hypothesis_id: WS-V64-H-P10R3-001
+seed: 0
+claim_boundary: post-hoc rows-only diagnostic of fixed route-opportunity severity; no confirmatory relative effect, policy optimization, population bound, collision, planning, or safety claim
+inputs:
+  consumed_calibration: worldsim_v64/WS-V64-P10R2-ROUTE-AWARE-COMPILER-01/20260826T191500Z__route-aware-compiler-s0-r1
+  fresh_confirmation: worldsim_v64/WS-V64-P10R2-EXACT-ONCE-CONFIRMATION-01/20260826T203000Z__exact-once-confirmation-s3-r1
+denominator:
+  measure: route_hidden_free_conflict_count_divided_by_route_eligible_voxel_count
+  expected_case_count_per_cohort: 96
+tail: {measure: empirical_upper_tail_mean, fraction: 0.10, expected_tail_count: 10}
+locks: {target_evidence_reread_allowed: false, model_or_policy_change_allowed: false, route_or_tail_sweep_allowed: false, confirmatory_claim_allowed: false, content_hash_checksum_fingerprint: false}
+references:
+  - https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/protos/occupancy_flow_metrics.proto
+  - https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+failure_ledger_refs: [V64-F20, V64-F21, V64-F25]

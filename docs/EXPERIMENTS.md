@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R3 FIXED ROUTE-DENOMINATOR DIAGNOSTIC FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01 / WS-V64-H-P10R3-001`；run=`20260827T013000Z__fixed-denominator-audit-s0-r1`；
+- inputs=`P10R2 consumed calibration rows + fresh exact-once rows; 96 cases each`；
+- measure=`per-case route hidden-FREE conflict count / route-eligible voxel count fixed across arms`；tail=`worst10/96`；
+- outputs=`selected/conflict/eligible totals; pooled fixed density; arm CVaR; M1-M0 direction per cohort`；
+- confirmatory gate=`none`; post-hoc exploratory=`true`; target/model/evidence reread=`false`；
+- policy/route/tail/denominator sweep/hash/checksum/fingerprint/extra tests=`none`；V64-F25=`remains active`。
+
 ## WorldSim V6.4 P10R2 EXACT-ONCE ABSOLUTE PASS / RELATIVE EFFECT NOT CONFIRMED（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R2-EXACT-ONCE-CONFIRMATION-01/20260826T203000Z__exact-once-confirmation-s3-r1`；

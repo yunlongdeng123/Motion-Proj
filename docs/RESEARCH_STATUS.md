@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10R3 fixed route-denominator diagnostic frozen（2026-08-27）
+
+状态：`v64_p10r3_fixed_denominator_diagnostic_preregistered`；active task/hypothesis=
+`WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01 / WS-V64-H-P10R3-001`。
+
+V64-F25显示selected-only rate在M1更小分母下尾部方向反转。参考Waymo fixed ego-grid AUC/Soft-IoU与Implicit Occupancy
+Flow fixed spatial query，冻结rows-only诊断为每case `route conflict count / route-eligible count`，该分母在两臂间固定；在consumed
+calibration与fresh confirmation分别算同一worst10。只报告direction，不设confirmatory gate，不重读target/model/evidence、不改M1、
+不扫denominator/tail/route。结果不能关闭V64-F25或解锁P11。freeze=
+`docs/autoresearch/worldsim_v64/P10R3_FIXED_ROUTE_DENOMINATOR_AUDIT_FREEZE.md`。
+
 ## WorldSim V6.4 P10R2 exact-once absolute tail supported / relative effect not confirmed（2026-08-27）
 
 状态：`v64_p10r2_exact_once_absolute_supported_relative_tail_active`；canonical=

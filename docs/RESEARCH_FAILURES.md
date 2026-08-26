@@ -472,6 +472,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   稀疏离散事件支配。不得用absolute gate pass声称相对改善，也不得在已读confirmation上调route cap、tail fraction或挑case。
   合法下一步必须先检索denominator-stable sparse risk / occupancy-flow severity方法，再冻结rows-only诊断或新版本；P11 comparative
   authority保持锁定。current M0 P10T负结论与M1 absolute fresh pass分别保留，互不覆盖。
+  检索Waymo Occupancy Flow fixed ego-grid cell metrics、Occupancy Flow Fields与Implicit Occupancy Flow后，冻结P10R3为
+  `conflict count / route-eligible voxel count`的fixed-opportunity rows-only诊断，在consumed calibration与fresh confirmation分别
+  使用同一worst10。该post-hoc诊断无confirmatory gate，不可关闭本条；只用于判断selected-only可变分母是否解释方向反转，且
+  不得借结果回调M1或解锁P11。证据=`https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/protos/occupancy_flow_metrics.proto`、
+  `https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/`、
+  `https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf`。
 
 <a id="detail-v63"></a>
 
