@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_fresh_native_sidecar_preregistered",
+  "status": "v64_fresh_native_sidecar_entrance_recovery_ready",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
@@ -28,9 +28,10 @@
     "V63-F24",
     "V64-F01",
     "V64-F02",
-    "V64-F03"
+    "V64-F03",
+    "V64-F04"
   ],
-  "last_failure_id": "V64-F03",
+  "last_failure_id": "V64-F04",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -43,5 +44,7 @@
   "p2_fresh_fit_scenes": ["scene-0100", "scene-0230", "scene-0632", "scene-0781"],
   "p2_fresh_evaluation_scenes": ["scene-0800", "scene-0994"],
   "p2_fresh_target_count": 72,
-  "next_action": "commit and push the compact fresh cohort, then run the existing IR-WM native extractor once for all 72 targets"
+  "p2_fresh_failed_entrance_run": null,
+  "p2_fresh_recovery": "create_existing_task_parent_before_disk_usage",
+  "next_action": "commit and push the pre-data directory recovery, then execute the unchanged 72-target extractor as r2"
 }

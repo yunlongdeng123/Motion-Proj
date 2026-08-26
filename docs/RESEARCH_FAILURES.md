@@ -93,7 +93,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda | `V64-F01`–`V64-F03`；`P3_RETROSPECTIVE_CLOSEOUT.md` |
+| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在 | `V64-F01`–`V64-F04`；`P3_RETROSPECTIVE_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -177,6 +177,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   非登录 Python 命令显式激活环境；该错误不登记为算法或 formal run failure。证据=
   `run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1`、
   `https://docs.conda.io/projects/conda/en/25.1.x/dev-guide/deep-dives/activation.html`。
+
+- `V64-F04`（`engineering/runtime`, `resolved_pre_data_read`）：fresh sidecar 首次 formal 入口
+  `20260826T081300Z__fresh-native-s0-r1`在 wrapper 调用继承 runner 后，因 task parent 尚不存在而对
+  `shutil.disk_usage`触发 `FileNotFoundError`。run leaf 未创建，GPU、processed scene、IR-WM 与 quality 均未触达，
+  canonical run=`null`。恢复只在 wrapper 中先 `mkdir` task parent，再由未改的 runner 创建 exclusive run leaf；
+  cohort、seed、资源门和 denominator 不变。防重复：disk probe 必须绑定已存在的挂载内路径，不把前置目录缺失写成磁盘
+  不足或算法失败。证据=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`、
+  `https://docs.python.org/3/library/shutil.html#shutil.disk_usage`。
 
 <a id="detail-v63"></a>
 

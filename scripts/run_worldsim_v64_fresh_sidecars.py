@@ -21,6 +21,8 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = args.repo_root.resolve()
+    run_dir = args.run_dir.resolve()
+    run_dir.parent.mkdir(parents=True, exist_ok=True)
     overlay = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     base_path = repo_root / overlay["base_config"]
     resolved = yaml.safe_load(base_path.read_text(encoding="utf-8"))
@@ -49,13 +51,13 @@ def main() -> int:
         summary = run(
             temporary_path,
             repo_root,
-            args.run_dir.resolve(),
+            run_dir,
             ["fresh_fit", "fresh_evaluation"],
             int(args.maximum_workers),
             None,
             None,
         )
-        (args.run_dir.resolve() / "resolved.yaml").write_text(
+        (run_dir / "resolved.yaml").write_text(
             yaml.safe_dump(resolved, sort_keys=False, allow_unicode=True),
             encoding="utf-8",
         )

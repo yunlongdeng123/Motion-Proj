@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V6.4 fresh sidecar 入口恢复已就绪（2026-08-26）
+
+`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`首次 formal 入口在 run leaf、GPU、数据读取之前因 task 父目录不存在而失败；
+`shutil.disk_usage(run_dir.parent)`按 Python 合同要求现存路径，触发 `FileNotFoundError`。失败没有 canonical run、
+quality 或资源消耗，登记=`V64-F04 resolved_pre_data_read`。
+
+唯一恢复是在 wrapper 调用冻结 V6.3 extractor 前创建 task 父目录；cohort、72-unit denominator、IR-WM、seed、双 worker、
+磁盘门与输出合同均不变。恢复提交后直接用新 run ID `r2`执行，不增加 smoke。
+
 ## WorldSim V6.4 compact fresh sidecar 已冻结 / 待提取（2026-08-26）
 
 状态：`v64_fresh_native_sidecar_preregistered`；active task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=

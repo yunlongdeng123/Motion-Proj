@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.4 FRESH SIDECAR PRE-DATA ENTRANCE RECOVERY（2026-08-26）
+
+- task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；attempt=`20260826T081300Z__fresh-native-s0-r1`；canonical=`null`。
+- failure=`shutil.disk_usage`收到尚不存在的 task parent，run leaf/GPU/data/quality 前 `FileNotFoundError`；bytes=`0`。
+- recovery=只在 wrapper 中先创建 task parent，再调用未改的 V6.3 extractor；formal recovery run ID=`r2`。
+- failure ledger delta=`V64-F04 resolved_pre_data_read`；额外 smoke/regression=`none`。
+
 ## WorldSim V6.4 COMPACT FRESH SIDECAR PREREG（2026-08-26）
 
 - task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=`WS-V64-H-P2-001`；status=`preregistered / not run`。
