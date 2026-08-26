@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 P6R confirmation native complete / exact-once evidence next（2026-08-26）
+
+状态：`v64_p6r_confirmation_native_complete_evidence_next`；canonical=
+`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1`；active task=
+`WS-V64-P6R-CONFIRMATION-EVIDENCE-01`；confirmation target/quality read=`false/false`。
+
+冻结新cohort的8 scene全部完成blind IR-WM：`96 targets / 4423846018 bytes`，maximum worker peak=`4.1314 GiB`；aggregate
+只建symlink、不复制native数组。逐scene GPU wall均约`45.59--46.74 s`。模型、calibrated 40% policy和confirmation target均未
+在sidecar阶段读取或修改。
+
+V64-F16的scene-ready恢复已达成：按shard10→8/9→4/5→6→1/2优先组依次供给GPU，DriveStudio独占I/O窗口、IR-WM
+计算窗口恢复未完成scan，避免了全10-shard/全8-scene屏障。persistent superset catalog的EOF写回与临时raw删除仍由prep
+controller后台收口，不阻塞已完整native artifact。下一步只生成冻结96-unit confirmation evidence，然后fixed 40% exact-once
+评分。完整sidecar收口=`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_SIDECAR_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P6R confirmation execution frozen / indexed streaming recovery（2026-08-26）
 
 状态：`v64_p6r_confirmation_execution_preregistered`；active task=`WS-V64-P6R-CONFIRMATION-SIDECAR-01`；policy=

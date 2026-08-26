@@ -334,6 +334,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EXECUTION_FREEZE.md`。
   下游exact-once合同已在target read前固定为40% policy、overall最多4/96且每stratum最多1/24 loss；不以本I/O失败
   改变科学gate。
+  scene-ready priority scheduling已完成全部`8 scenes/96 blind targets`：先完成单shard/相关shard组，DriveStudio与IR-WM按
+  scene流水，最大worker显存`4.1314 GiB`；没有等待整批processed或启用多卡。故GPU-idle/全批屏障部分已恢复；superset
+  catalog的剩余EOF写回和可重建临时raw删除仍由原prep controller收口，完成后再把V64-F16标为resolved。
 
 <a id="detail-v63"></a>
 

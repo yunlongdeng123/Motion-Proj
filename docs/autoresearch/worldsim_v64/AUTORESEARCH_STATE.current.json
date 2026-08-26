@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p6r_confirmation_execution_preregistered",
+  "status": "v64_p6r_confirmation_native_complete_evidence_next",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
   "plan_commit": "ca930a0",
-  "active_task": "WS-V64-P6R-CONFIRMATION-SIDECAR-01",
+  "active_task": "WS-V64-P6R-CONFIRMATION-EVIDENCE-01",
   "active_hypothesis": "WS-V64-H-P6R-001",
   "completed_stages": ["P0", "P3_RETROSPECTIVE", "P2_FRESH_NATIVE", "P2_FRESH_EVIDENCE", "P4N_FRESH_UQ", "P5_SUPERVISED_RISK", "P6_NATIVE", "P6_CASE_CALIBRATION_REJECTED"],
   "unlocked_stages": ["P6R_EXACT_ONCE_CONFIRMATION"],
@@ -140,5 +140,11 @@
   "p6r_confirmation_quality_read": false,
   "p6r_confirmation_member_shard_catalog_mode": "persistent_superset",
   "p6r_confirmation_scene_ready_gpu_feed": true,
-  "next_action": "commit and push confirmation execution, then start one tar scan with scene-ready DriveStudio and IR-WM consumers for the frozen eight scenes"
+  "p6r_confirmation_native_run": "run://worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1",
+  "p6r_confirmation_native_scene_count": 8,
+  "p6r_confirmation_native_target_count": 96,
+  "p6r_confirmation_native_output_bytes": 4423846018,
+  "p6r_confirmation_native_maximum_worker_peak_gpu_memory_gib": 4.13140344619751,
+  "p6r_confirmation_catalog_cleanup_running": true,
+  "next_action": "commit and push the blind 96-target native milestone, then generate exact-once confirmation evidence once while the original prep controller finishes its catalog and temporary-raw cleanup"
 }

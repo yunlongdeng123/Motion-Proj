@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 P6R CONFIRMATION NATIVE COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1`；
+  result=`8 scenes / 96 targets / passed / 4423846018 bytes`。
+- maximum worker peak GPU=`4.1314 GiB`；per-scene GPU wall=`45.59--46.74 s`；single3090=`sufficient`。
+- dataflow=`priority shard groups + scene-ready DriveStudio + blind IR-WM`；GPU started after first relevant shard rather than full tar
+  cohort；aggregate=`symlinks, no array copies`。
+- confirmation target/quality read=`false/false`；model refit/policy change=`none`；failure delta=`V64-F16 recovery succeeded,
+  catalog EOF cleanup running`。
+- next=`96-unit confirmation evidence after this milestone push, then fixed 40% exact-once runner`；hash/checksum/fingerprint/extra
+  tests=`none`。
+
 ## WorldSim V6.4 P6R CONFIRMATION SIDECAR / INDEXED STREAMING PREREG（2026-08-26）
 
 - task=`WS-V64-P6R-CONFIRMATION-SIDECAR-01`；cohort=`8 frozen scenes / 96 targets`；confirmation quality read=`false`。
