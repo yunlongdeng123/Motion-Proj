@@ -496,6 +496,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   temporal range与已经原子落盘的exact-prefix files冻结到07。恢复只扫描`05,06,07,08,10`，保留all-shard尝试已完成文件，
   原workers停后只删除其`.partial.<pid>`；继续使用已运行的唯一feeder，不启动第二preprocess producer。若任一member找不到，
   restricted scan必须失败并回到未猜测的全量扫描，不得换scene或读quality。科学合同与test unread状态不变。
+  restricted r1在进入scan前因既有resume目录仍执行`mkdir(exist_ok=false)`退出；该run不含新增archive读、preprocess、GPU或
+  target read。恢复只把显式`--resume-raw-scan`的mkdir改为`exist_ok=true`，默认新run防覆盖不变；以新r2继续，不新增failure ID。
 
 <a id="detail-v63"></a>
 

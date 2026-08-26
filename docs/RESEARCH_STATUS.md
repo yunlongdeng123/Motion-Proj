@@ -2,7 +2,7 @@
 
 ## WorldSim V6.4 P10R4 I/O shard recovery frozen（2026-08-27）
 
-状态：`v64_p10r4_io_shard_recovery_frozen`；V64-F26=`active_recovery`；test quality read=`false`。
+状态：`v64_p10r4_io_shard_recovery_r2_ready`；V64-F26=`active_recovery`；test quality read=`false`。
 
 首个raw-only producer发现`14437` members均不在catalog，10个完整tgz并发约4分钟仅推进`4--10%`，GPU feeder无scene可用。
 检索CPython tarfile与ratarmount/rapidgzip后，未为一次性cohort新建十份seek index；迁移现有`71555`条semantic catalog的
@@ -10,6 +10,10 @@ capture-prefix证据，将扫描范围冻结为`05,06,07,08,10`。七scene由exa
 已落盘同prefix files绑定07。停止all-shard workers后保留原子完成文件，只清理其process-scoped partial；feeder继续作为唯一
 preprocess/native owner。科学cohort/model/policy/target/route/denominator/tail/gates不变。recovery=
 `docs/autoresearch/worldsim_v64/P10R4_IO_SHARD_RECOVERY_FREEZE.md`。
+
+首次restricted r1在扫描前因resume目录的`mkdir(exist_ok=false)`退出，未新增I/O或target read；定向修复只在显式
+`--resume-raw-scan`下允许既有冻结目录，默认防覆盖语义不变。canonical recovery改为
+`20260827T022000Z__test-raw-shard-recovery-s4-r2`。
 
 ## WorldSim V6.4 P10R4 untouched-test fixed-denominator confirmation frozen（2026-08-27）
 

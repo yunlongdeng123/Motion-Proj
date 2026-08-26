@@ -6,6 +6,7 @@
 - external basis=`CPython tarfile sequential compressed stream; ratarmount/rapidgzip indexed gzip`；
 - semantic catalog inference=`1084/1081->10, 0462->05, 0820->08, 0534/0598/0527->06, 0668->07`；
 - recovery=`20260827T021800Z__test-raw-shard-recovery-s4-r1; scan only 05/06/07/08/10; preserve complete atomic files; feeder single-owner continues`；
+- r1 entrance=`failed before scan: resume directory mkdir collision`; bounded fix=`exist_ok only when --resume-raw-scan`; canonical r2=`20260827T022000Z__test-raw-shard-recovery-s4-r2`；
 - unchanged=`8 scenes/96 targets, frozen M0/M1/model/route/denominator/worst10/gates, test quality unread`；
 - new hash/checksum/fingerprint/test suite=`none`；V64-F26=`active_recovery`。
 

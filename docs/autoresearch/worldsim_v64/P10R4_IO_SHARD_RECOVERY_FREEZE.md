@@ -2,7 +2,7 @@
 
 Date: 2026-08-27  
 Failure: `V64-F26`  
-Recovery raw run: `20260827T021800Z__test-raw-shard-recovery-s4-r1`
+Recovery raw run: `20260827T022000Z__test-raw-shard-recovery-s4-r2`
 
 The first raw-only producer found all 14,437 required members absent from the persistent catalog and launched ten concurrent
 full `.tgz` scans. After about four minutes every archive was only 4--10% complete, the shared NVMe workers were mostly in
@@ -29,3 +29,7 @@ The scene cohort, model, M0/M1 policy, target frames, route, denominator, tail, 
 quality-unread state do not change. The original raw-only run remains an operations-failed record. The already-running feeder
 remains the sole preprocess/native producer and resumes from complete raw files. This is an I/O recovery only; it creates no
 new hashes, checksums, fingerprints, smoke suite, or regression matrix.
+
+The first restricted entrance `20260827T021800Z__test-raw-shard-recovery-s4-r1` exited before scanning because the explicit
+resume path still used non-resume `mkdir` semantics. The bounded r2 fix permits an existing temporary root only under
+`--resume-raw-scan`; default new-run protection remains unchanged.

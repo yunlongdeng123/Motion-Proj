@@ -123,7 +123,7 @@ def run(
             for payload in payloads.values()
             for row in payload["sample_data"]
         }
-        temporary_root.mkdir(parents=True)
+        temporary_root.mkdir(parents=True, exist_ok=resume_raw_scan)
         _link_static_dataset(metadata_root, temporary_root)
         helpers = load_asset_module(repo_root)
         if preparation.get("archive_shards"):
