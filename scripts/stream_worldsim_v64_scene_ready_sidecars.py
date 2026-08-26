@@ -38,10 +38,30 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
         for scene in scenes
     }
 
+    def completed_native(run_dir: Path) -> dict[str, object] | None:
+        summary_path = run_dir / "P2_SUMMARY.json"
+        if not summary_path.is_file():
+            return None
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        if bool(summary.get("passed")) and int(summary.get("target_count", 0)) == 12:
+            return summary
+        return None
+
     def process(scene: dict[str, object]) -> dict[str, object]:
         name = str(scene["name"])
         index = int(scene["processed_index"])
         canonical = processed_root / f"{index:03d}"
+        run_id = f"{run_id_prefix}-{name}-s0-r1"
+        run_dir = task_root / run_id
+        existing = completed_native(run_dir)
+        if existing is not None:
+            return {
+                "scene": name,
+                "raw_wait_seconds": 0.0,
+                "run": str(run_dir),
+                "summary": existing,
+                "reused_complete_native": True,
+            }
         waited = time.monotonic()
         while not canonical.exists() and not all((raw_root / rel).is_file() for rel in requirements[name]):
             time.sleep(5)
@@ -66,8 +86,15 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
                     canonical.parent.mkdir(parents=True, exist_ok=True)
                     os.replace(staged, canonical)
 
-        run_id = f"{run_id_prefix}-{name}-s0-r1"
-        run_dir = task_root / run_id
+        existing = completed_native(run_dir)
+        if existing is not None:
+            return {
+                "scene": name,
+                "raw_wait_seconds": raw_wait_seconds,
+                "run": str(run_dir),
+                "summary": existing,
+                "reused_complete_native": True,
+            }
         with gpu_slots:
             command = [
                 sys.executable,
@@ -85,7 +112,13 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
             with (logs / f"native-{name}.log").open("wb") as handle:
                 subprocess.run(command, cwd=repo_root, env=environment, stdout=handle, stderr=subprocess.STDOUT, check=True)
         summary = json.loads((run_dir / "P2_SUMMARY.json").read_text(encoding="utf-8"))
-        return {"scene": name, "raw_wait_seconds": raw_wait_seconds, "run": str(run_dir), "summary": summary}
+        return {
+            "scene": name,
+            "raw_wait_seconds": raw_wait_seconds,
+            "run": str(run_dir),
+            "summary": summary,
+            "reused_complete_native": False,
+        }
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(scenes)) as pool:
         rows = list(pool.map(process, scenes))

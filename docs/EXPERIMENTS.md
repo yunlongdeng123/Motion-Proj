@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 FEEDER LOCK-CONVOY RECOVERY FREEZE（2026-08-27）
+
+- observation=`processed scene-1020 ready while another thread held the single preprocess mutex; GPU waited behind CPU work`；
+- preserved native leaves=`scene-0590,scene-0596,scene-0070; each passed 12/12 pre-target units`；
+- recovery=`restart same feeder prefix; reuse complete passed 12-target leaves; canonical processed bypasses preprocess lock and enters GPU queue`；
+- discarded=`only current recoverable staging partial`; cohort/model/policy/targets/gates/run IDs=`unchanged`；
+- external basis=`NVIDIA DALI asynchronous pipelined execution + separated CPU/GPU prefetch queues`；
+- hash/checksum/fingerprint/extra test=`none`；confirmation target/model-score read=`false/false`；V64-F23=`recovery frozen`。
+
 ## WorldSim V6.4 P4C OPTIONAL CATALOG CLEANUP STOP / I-O REASSIGN（2026-08-27）
 
 - prerequisite recheck=`P4C native aggregate, evidence summary, exact-once summary all non-empty`；

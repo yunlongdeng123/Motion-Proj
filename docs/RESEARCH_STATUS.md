@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 feeder lock-convoy recovery frozen（2026-08-27）
+
+状态：`v64_p10r2_feeder_resume_reuse_ready_native`；V64-F23=`recovery_frozen_pre_target`。
+
+10/10 tar scan完成且`0590/0596/0070` native各12 targets通过后，观察到已完整processed的`1020(778)`仍排在长耗时
+preprocess mutex之后，GPU出现head-of-line idle。参考NVIDIA DALI异步pipelined execution与separate CPU/GPU prefetch queue，
+恢复只改feeder调度：启动时复用`passed=true,target_count=12`的已有native leaf；canonical processed存在时绕过preprocess lock，
+立即申请GPU slot。冻结cohort/policy/model/targets/gates/run IDs均不变，不重算3个有效leaf；终止当前feeder及可重建staging partial后
+以同一prefix恢复。证据=`https://docs.nvidia.com/deeplearning/dali/user-guide/docs/pipeline.html`。
+
 ## WorldSim V6.4 P4C optional catalog cleanup stopped / I/O reassigned（2026-08-27）
 
 状态：`v64_p4c_optional_catalog_enrichment_abandoned_temp_removed`；V64-F22=`resolved_by_io_reassignment`。

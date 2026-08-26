@@ -445,6 +445,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   evidence、model、run artifacts及已有`57338-entry/6880063-byte`catalog。I/O随后只服务P10R2一套新扫描与scene-ready feeder；
   不新增hash/checksum/fingerprint，也不改变任何科学policy/gate/result。
 
+- `V64-F23`（`resource/scheduling`, `recovery_frozen_pre_target`）：P10R2 10-shard scan完成并成功流水化`0590/0596/0070`
+  三个native leaf后，`scene-1020(778)`已由第二producer写成canonical processed，但对应feeder线程仍排在另一长耗时
+  preprocess mutex后，形成head-of-line blocking并让GPU空闲。不得增加无关GPU filler或重算有效leaf。NVIDIA DALI明确以
+  asynchronous pipelined execution和分离CPU/GPU prefetch queues隐藏阶段时延；迁移为同一feeder prefix的可恢复调度：启动先复用
+  `passed=true,target_count=12` leaf，canonical processed直接绕过preprocess lock进入GPU semaphore。只丢弃当前可从raw重建的
+  staging partial；cohort/model/policy/targets/gates/canonical IDs完全不变，target与model score仍未读。证据=
+  `https://docs.nvidia.com/deeplearning/dali/user-guide/docs/pipeline.html`。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）
