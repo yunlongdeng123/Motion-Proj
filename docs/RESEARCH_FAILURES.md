@@ -2,13 +2,20 @@
 
 > **最后更新**：2026-08-26
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6.3、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.4、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
 历史快照；`WS_*_FAILURE_FORENSICS.md` 是专项诊断报告，不是第二本账。V6.3报告索引
 `docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`只导航本账与canonical evidence，也不是第二本失败账。新路线、新版本和新实验不得再创建并行的
 `*_FAILURES.md` 事实源。
+
+### V6.4 当前边界（2026-08-26）
+
+- V6.4 从`research/worldsim-v6.3-surface-tail@c192955`直接建立；`V63-F24`仍关闭 Surface family，新的合法路线只能研究
+  native aleatoric/epistemic uncertainty、scene/stratum conditional risk 与独立 case-level calibration。
+- P0 只完成 Git/文档前置，没有 V6.4 quality read 或 GPU run。当前唯一 V6.4 失败条目是已在质量读取前恢复的
+  `V64-F01`，不得写成算法负结论。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -53,6 +60,7 @@
 ### 0.4 目录
 
 - [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
+- [V6.4 详细账本](#detail-v64)
 - [V6.3 详细账本](#detail-v63)
 - [V6.2 详细账本](#detail-v62)
 - [V6.1 详细账本](#detail-v61)
@@ -81,6 +89,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
+| V6.4 | P0 scope/Git完成，P1 novelty/protocol已解锁；尚无方法质量结论 | 控制台`pytest`不自动加入仓库根目录，正式入口统一用`python -m pytest`；3090磁盘余量约60 GiB，P1必须冻结sidecar预算 | `V64-F01`；`docs/autoresearch/worldsim_v64/P0_SCOPE.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -137,6 +146,19 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
 - 历史 M3 `V4-F40`–`V4-F45` → live `V4-F44`–`V4-F49`。
 
 新文档、代码和 run manifest 只引用 live canonical ID；核对旧 commit/归档时同时记录“historical ID → live ID”。
+
+<a id="detail-v64"></a>
+
+## V6.4 原生不确定性编译器详细账本（2026-08-26）
+
+- `V64-F01`（`engineering/runtime`, `resolved_pre_quality_read`）：P0 定向投影测试首次使用控制台入口
+  `pytest -q tests/worldsim_v62/test_projection.py`，测试收集阶段即因仓库根目录未进入 `sys.path`触发
+  `ModuleNotFoundError: motion_proj`。失败发生在 formal run、GPU context、数据与 V6.4 quality read 之前；没有科学结果。
+  依据 pytest 官方 import-path 合同，仅把入口改为
+  `python -m pytest -q tests/worldsim_v62/test_projection.py`，结果 `1 passed in 1.59s`。防重复：仓库内测试统一用
+  `python -m pytest`；不为入口差异改包结构、污染环境或扩展回归矩阵。证据=
+  `WS-V64-P0-SCOPE-GIT-01`、`docs/autoresearch/worldsim_v64/P0_SCOPE.md`、
+  `https://docs.pytest.org/en/stable/explanation/pythonpath.html`。
 
 <a id="detail-v63"></a>
 

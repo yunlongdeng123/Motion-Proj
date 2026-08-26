@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.4 P0 SCOPE / GIT COMPLETE（2026-08-26）
+
+- task=`WS-V64-P0-SCOPE-GIT-01`；scientific run=`none`；quality read=`none`；GPU use=`none`；seed=`none`。
+- source branch=`research/worldsim-v6.3-surface-tail@c192955`；V6.4 branch=`research/worldsim-v6.4-native-uq`；plan commit=
+  `ca930a0`。V6.3 terminal、`V63-F24`与未读 downstream partitions 均原样继承，没有重开 Surface family。
+- Git integration=`origin/integration/worldsim-v6.3-to-main@c192955`；`origin/main`以普通 fast-forward 从`bcd4143`推进到
+  `c192955`，没有 force push。
+- first validation=`pytest -q tests/worldsim_v62/test_projection.py`，在 collection 前因`motion_proj`不可导入而失败；
+  recovery=`python -m pytest -q tests/worldsim_v62/test_projection.py`，结果=`1 passed in 1.59s`。没有增加其他 smoke/regression。
+- failure ledger refs=`V62-F01,V62-F05,V62-F06,V62-F07,V63-F02,V63-F19,V63-F24`；failure ledger delta=
+  `V64-F01 resolved_pre_quality_read`。
+- resource observation=`RTX 3090 24576 MiB idle; /root/autodl-tmp about 60 GiB free`；资源事实尚不构成 blocked，P1 将冻结
+  预算，P2 前重新评估。下一步=`WS-V64-P1-NOVELTY-PROTOCOL-01`。
+
 ## WorldSim V6.3 REPORT EVIDENCE FREEZE / NO NEW EXPERIMENT（2026-08-26）
 
 - action=`documentation-only canonical evidence audit`；new run=`none`；new quality read=`none`；failure ledger delta=`none`；

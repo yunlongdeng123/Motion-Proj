@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.4 P0 完成 / P1 已解锁（2026-08-26）
+
+状态：`v64_p0_complete_p1_unlocked`；分支=`research/worldsim-v6.4-native-uq`。分支从冻结的
+`research/worldsim-v6.3-surface-tail@c192955`直接建立，V6.4 计划提交=`ca930a0`，没有从 main 重新起线。V6.3 的
+`v63_surface_architecture_family_closed_negative_p7_locked`、`V63-F24`、B4/B5/M0 与 P7--P11 未执行/未读取边界保持不变。
+
+P0 Git 前置已完成：`origin/main`从`bcd4143`普通快进到`c192955`，并保留
+`origin/integration/worldsim-v6.3-to-main@c192955`。定向测试第一次用控制台`pytest`时在 collection 前因仓库根目录未进入
+`sys.path`而失败；按 pytest 官方入口合同改用`python -m pytest -q tests/worldsim_v62/test_projection.py`后为`1 passed`。
+该恢复没有创建 formal run、没有触达 GPU/数据/质量，也没有扩展测试矩阵；统一失败登记=`V64-F01 resolved_pre_quality_read`。
+
+P0 证据=`docs/autoresearch/worldsim_v64/P0_SCOPE.md`与
+`docs/autoresearch/worldsim_v64/AUTORESEARCH_STATE.current.json`。当前没有读取任何 V6.4 quality，默认资源仍为单卡
+RTX 3090 24GB；磁盘观测余量约`60 GiB`，P1 必须冻结 sidecar 磁盘预算与资源停止线。下一步只执行
+`WS-V64-P1-NOVELTY-PROTOCOL-01`：完成来源/许可证审计并冻结方法、fresh cohort、gates 与资源合同。
+
 ## WorldSim V6.3 arXiv evidence frozen / documentation audit complete（2026-08-26）
 
 状态仍为`v63_surface_architecture_family_closed_negative_p7_locked`；本次只完成报告证据收口，没有新run、没有新failure ID，
