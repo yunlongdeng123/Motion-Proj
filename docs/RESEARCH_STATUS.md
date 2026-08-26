@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P11R independently calibrated critic rejected / P11 closed（2026-08-27）
+
+状态：`v64_p11r_rejected_p11_closed`；canonical=
+`run://worldsim_v64/WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01/20260827T034500Z__calibrated-collision-critic-s0-r1`；
+verdict=`rejected_independently_calibrated_collision_critic`；V64-F28=`closed_negative_after_single_recovery`。
+
+P10R2 calibration的Real-only/naive/verified threshold=`4.25e-18/0.191678/0.084891`；verified calibration recall=
+`0.79545`。P4C exact evaluation中verified recall=`0.62044<0.80`，policy false-safe/progress/stuck=`2/0.87240/0.11458`；
+Real-only以`96/96` fallback stop获得false-safe0但progress0/stuck1，故comparison与anti-trivial不可同时满足。四门仅progress/stuck
+通过，recall与false-safe不劣失败。critic未重训，threshold先落盘，evaluation无selection。P11 family以负结论关闭；不得调分位、
+换threshold/lattice/model、第二evaluation或训练大型NWM/RL。GPU wall/peak=`26.5528s/0.0658GiB`。closeout=
+`docs/autoresearch/worldsim_v64/P11R_CALIBRATED_COLLISION_CRITIC_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P11R independent threshold calibration frozen（2026-08-27）
 
 状态：`v64_p11r_independent_threshold_calibration_preregistered`；active task/hypothesis=

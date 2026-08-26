@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.4 P11R CALIBRATED COLLISION CRITIC REJECTED（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01/20260827T034500Z__calibrated-collision-critic-s0-r1`；
+- verdict/gates=`rejected_independently_calibrated_collision_critic / 2 of 4 PASS`；source critics retrained=`false`；
+- calibration unsafe/actions=`88/1248`；threshold Real/naive/verified=`4.25e-18/0.191678/0.084891`；
+- calibration recall naive/verified=`0.79545/0.79545`；verified progress/stuck=`0.8125/0.1875`；
+- evaluation unsafe/actions=`137/1248`；recall Real/naive/verified=`1.0/0.61314/0.62044`；
+- policy false-safe=`0/3/2`；progress=`0/1/0.87240`；stuck=`1/0/0.11458`；
+- gates failed=`verified recall>=0.80; false-safe no worse than both`；passed=`progress>=0.50; stuck<=0.20`；
+- resources=`26.5528s wall / 0.9067GiB RSS / 0.0658GiB CUDA`；P11=`closed negative`；retrain/sweep/second eval/large NWM=`none`。
+
 ## WorldSim V6.4 P11R INDEPENDENT THRESHOLD CALIBRATION FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01 / WS-V64-H-P11R-001`；run=`20260827T034500Z__calibrated-collision-critic-s0-r1`；

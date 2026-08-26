@@ -523,7 +523,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   test target/quality/model score仍未读。finalizer只登记8个complete canonical scene并删除可重建raw，故本条关闭；后续evidence或
   exact-once若失败必须按其实际阶段登记，不能重跑native或改cohort。
 
-- `V64-F28`（`algorithm/evaluation`, `active_unsafe_recall_collapse`）：P11 bounded critic formal run按预注册只以selected-policy
+- `V64-F28`（`algorithm/evaluation`, `closed_negative_after_single_recovery`）：P11 bounded critic formal run按预注册只以selected-policy
   false-safe不劣与progress/stuck作gate，Real-only/naive/verified分别为`13/12/12` false-safe、progress均`1.0`、stuck均`0`，
   因此formal verdict合法为supported。但完整1248-action主指标揭示三臂unsafe recall仅`2.17%/0/1.09%`，false-safe=
   `180/184/182`；verified与naive的policy false-safe和reward完全相同，Brier/ECE反而更差。训练正例为`3/384`、
@@ -536,6 +536,12 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   恢复已冻结为P11R：三critic不重训；P10R2 action labels只作独立calibration，每臂用unsafe score的20%分位解析选择
   target recall=0.80的单一threshold；threshold落盘后才允许生成P4C从未读取的action labels并exact-once。P10R4 labels、
   threshold grid、lattice/feature/model修改和第二evaluation均禁止。门只包含recall、policy false-safe不劣与progress/stuck。
+  P11R最终threshold=`4.25e-18/0.191678/0.084891`；离散20%分位使naive/verified calibration recall均为`70/88=0.79545`，
+  未静默改quantile或重跑。P4C evaluation中verified recall进一步降至`85/137=0.62044`；其policy false-safe/progress/stuck=
+  `2/0.87240/0.11458`。Real-only threshold把全部action判unsafe，`96/96` fallback stop带来false-safe0但progress0/stuck1，说明
+  recall与anti-trivial progress不能靠单一operating-point同时恢复。四门仅progress/stuck通过，P11R rejected，本条以negative
+  terminal关闭P11；大型NWM/RL、再校准、换loss/model/lattice、第二evaluation均不解锁。后续只允许rows-only failure
+  characterization和V6.4报告收口，不得创建新的P11科学attempt。
 
 <a id="detail-v63"></a>
 
