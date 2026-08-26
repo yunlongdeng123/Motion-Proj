@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.4 P5 SUPERVISED RISK PASS / RANKING-ONLY（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P5-SUPERVISED-RISK-01/20260826T093000Z__supervised-risk-s0-r1`；verdict=
+  `supported_ranking_only`；fit=`200,000 points / 18,242 hidden-FREE / prevalence 0.091210`。
+- evaluation=`333,009 points / 27,495 hidden-FREE / prevalence 0.082565`；pooled U2/U3 AUROC=
+  `0.518545/0.658118`；gain=`+0.139573`；U3 AUPRC/FPR95=`0.148720/0.867738`。
+- scene-0359 U3 AUROC/AUPRC/FPR95=`0.640682/0.171993/0.859069`；scene-0998=
+  `0.636266/0.102831/0.907021`；frozen gates=`true/true`。
+- pooled U3 hidden-FREE risk at 10%/50% coverage=`0.032372/0.049098`，对比prevalence=`0.082565`；只作report，
+  没有事后threshold选择。
+- resources=`17.3115 s CPU-only / 0.8592 GiB RSS / 80 KiB output`；formal failure delta=`V64-F11 active limitation`；
+  extra smoke/regression=`none`；closeout=`docs/autoresearch/worldsim_v64/P5_SUPERVISED_RISK_CLOSEOUT.md`。
+- next=`metadata-only fresh calibration/confirmation cohort -> preregister selective risk control`；当前evaluation不得用于calibration。
+
 ## WorldSim V6.4 P5 FIT-ONLY SUPERVISED RISK PREREG（2026-08-26）
 
 - task/hypothesis=`WS-V64-P5-SUPERVISED-RISK-01 / WS-V64-H-P5-001`；formal run=

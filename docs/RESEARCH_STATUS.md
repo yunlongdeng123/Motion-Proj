@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V6.4 supervised hidden-FREE ranking 支持 / 独立校准下一步（2026-08-26）
+
+状态：`v64_supervised_risk_supported_selective_calibration_cohort_next`；completed task=
+`WS-V64-P5-SUPERVISED-RISK-01`；hypothesis=`WS-V64-H-P5-001 supported_ranking_only`；canonical=
+`run://worldsim_v64/WS-V64-P5-SUPERVISED-RISK-01/20260826T093000Z__supervised-risk-s0-r1`。
+
+固定logistic head在200,000 fit点（hidden-FREE=`18,242`）上训练，并对P4N完全相同的333,009点fresh denominator一次
+评分。pooled U2/U3 AUROC=`0.518545/0.658118`，gain=`+0.139573`；U3 AUPRC=`0.148720`；scene-0359/0998
+AUROC=`0.640682/0.636266`。两条绝对门`pooled>=0.60`与`both scenes>=0.55`全部通过。50% coverage pooled risk=
+`0.049098`，低于prevalence=`0.082565`和U2=`0.076917`。CPU wall=`17.3115 s`、peak RSS=`0.8592 GiB`，无多卡需求。
+
+该结果只支持supervised ranking transfer。pooled/scene FPR@95TPR仍为`0.867738/0.859069/0.907021`，因此登记
+`V64-F11 active algorithm/evaluation`，禁止calibration、authority或安全claim。完整收口=
+`docs/autoresearch/worldsim_v64/P5_SUPERVISED_RISK_CLOSEOUT.md`。
+
+按ICLR 2024 Conformal Risk Control及官方实现，下一步先从quality-unread场景metadata-only冻结新的scene-disjoint
+calibration与confirmation cohort；当前两evaluation scene不得参与阈值选择。先更新并push本里程碑，再做候选审计；不加重复
+训练或测试矩阵。
+
 ## WorldSim V6.4 fit-only supervised risk 已冻结 / 待一次执行（2026-08-26）
 
 状态：`v64_supervised_hidden_free_risk_preregistered`；active task=`WS-V64-P5-SUPERVISED-RISK-01`；active hypothesis=
