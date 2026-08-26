@@ -22,6 +22,7 @@
   train temporal metadata；恢复队列在任何 fresh quality read 前改冻并登记`V64-F05`。不得把更早版本曾出现过但未进入
   V6.1–V6.3 UQ路线的scene错判为legacy，也不得用本轮后续质量回改cohort或复用r2部分产物。
 - r3 已完整生成6-scene/72-target native sidecar，单卡资源通过；这只是capability，不得提前写成fresh UQ成立。
+- fresh UQ已在target quality读取前冻结为同一PCA-16/GMM-4和两条晋级门；同数据换seed、PCA/GMM或改scene均禁止。
 
 ### V6.3 报告使用边界（2026-08-26）
 

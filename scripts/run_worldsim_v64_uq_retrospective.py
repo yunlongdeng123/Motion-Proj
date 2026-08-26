@@ -45,12 +45,16 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     started = time.monotonic()
     native_root = runs_root / config["inputs"]["native_run"]
     surface_root = runs_root / config["inputs"]["surface_run"]
+    native_partition_by_scene = config["inputs"].get(
+        "native_partition_by_scene", {}
+    )
     train = sample_training_points(
         surface_root,
         native_root,
         config["partitions"]["fit_scenes"],
         maximum_points_per_scene=int(config["sampling"]["fit_points_per_scene"]),
         seed=int(config["seed"]),
+        native_partition_by_scene=native_partition_by_scene,
     )
     model = NativeFeatureDensityUQ(
         pca_dimension=int(config["model"]["pca_dimension"]),
@@ -68,6 +72,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
             native_root,
             scene,
             chunk_size=int(config["sampling"]["evaluation_chunk_size"]),
+            native_partition_by_scene=native_partition_by_scene,
         )
         scene_metrics.append(metrics)
         scene_arrays.append(arrays)
@@ -77,6 +82,11 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         for name in ("u0_max_probability", "u0_entropy", "u0_inverse_margin")
     )
     u2_auroc = pooled["scores"]["u2_feature_density"]["auroc"]
+    best_u0_auprc = max(
+        pooled["scores"][name]["auprc"]
+        for name in ("u0_max_probability", "u0_entropy", "u0_inverse_margin")
+    )
+    u2_auprc = pooled["scores"]["u2_feature_density"]["auprc"]
     support = sum(
         row["scores"]["u2_feature_density"]["auroc"]
         > max(
@@ -86,12 +96,27 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         for row in scene_metrics
     )
     wall = time.monotonic() - started
+    gates = config.get("gates")
+    gate_results = None
+    verdict = "diagnostic"
+    if gates is not None:
+        gate_results = {
+            "pooled_auroc_gain": float(u2_auroc - best_u0)
+            >= float(gates["minimum_pooled_auroc_gain"]),
+            "scene_support": int(support)
+            >= int(gates["minimum_scene_support"]),
+        }
+        verdict = "supported" if all(gate_results.values()) else "rejected"
     summary = {
         "task_id": config["task_id"],
         "hypothesis_id": config["hypothesis_id"],
         "status": "done",
-        "scope": "v63_retrospective_mechanism_only",
-        "fresh_v64_claim_allowed": False,
+        "scope": config.get("scope", "v63_retrospective_mechanism_only"),
+        "fresh_v64_claim_allowed": bool(
+            config.get("locks", {}).get("fresh_v64_claim_allowed", False)
+        ),
+        "claim_boundary": config.get("claim_boundary"),
+        "verdict": verdict,
         "fit_scenes": config["partitions"]["fit_scenes"],
         "evaluation_scenes": config["partitions"]["evaluation_scenes"],
         "fit_point_count": int(train.features.shape[0]),
@@ -102,8 +127,12 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
             "best_u0_auroc": float(best_u0),
             "u2_feature_density_auroc": float(u2_auroc),
             "u2_absolute_auroc_gain": float(u2_auroc - best_u0),
+            "best_u0_auprc": float(best_u0_auprc),
+            "u2_feature_density_auprc": float(u2_auprc),
+            "u2_absolute_auprc_gain": float(u2_auprc - best_u0_auprc),
             "u2_scene_support": int(support),
             "scene_denominator": len(scene_metrics),
+            "gate_results": gate_results,
         },
         "resources": {
             "gpu_used": False,

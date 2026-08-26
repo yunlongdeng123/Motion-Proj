@@ -1,0 +1,72 @@
+schema_version: worldsim_v64.p2s_fresh_surface_corpus.v1
+task_id: WS-V64-P2S-FRESH-SURFACE-CORPUS-01
+hypothesis_id: WS-V64-H-P4-001
+inputs:
+  p2_evidence_run: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1
+  p2_native_run: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3
+  development_cohort_config: /root/autodl-tmp/motion_proj/configs/worldsim_v64/p2e_fresh_evidence_v1.yaml
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  native_partition_by_scene:
+    scene-0139: fresh_fit
+    scene-0230: fresh_fit
+    scene-0255: fresh_fit
+    scene-0994: fresh_fit
+    scene-0359: fresh_evaluation
+    scene-0998: fresh_evaluation
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+  shape: [200, 200, 16]
+patch:
+  minimum_points: 64
+  target_points: 512
+  maximum_points: 2048
+proposal:
+  static_source: native_argmax_occupied_plus_observed_occupied
+  actor_source: method_visible_current_and_swept_envelopes
+  route_corridor: {x_min_m: 0.0, abs_y_max_m: 4.0, z_max_m: 1.0, minimum_fraction: 0.15}
+  topology_changes_geometry: false
+point_payload:
+  required_fields:
+    - grid_indices
+    - patch_local_coordinates_m
+    - normals
+    - surface_index
+    - patch_index
+    - native_indices
+    - native_valid
+    - method_state
+    - method_contradiction
+    - method_behind_hit
+    - target_state
+    - target_contradiction
+    - target_behind_hit
+    - signed_distance_free_m
+    - signed_distance_occupied_m
+    - temporal_free_count
+    - temporal_occ_count
+    - temporal_unknown_count
+    - temporal_contradiction_count
+    - temporal_state_by_sweep
+    - temporal_contradiction_by_sweep
+    - ray_direction
+    - ray_distance_m
+    - ray_hit_order
+    - ray_bundle_id
+    - actor_id
+    - actor_current_support
+    - actor_swept_support
+    - actor_observed_hit_support
+    - authority_bits
+    - surface_type
+resources:
+  maximum_workers: 2
+  minimum_disk_free_gib: 15
+locks:
+  prototype_bridge: false
+  target_labels_only_for_supervision_and_corpus_stats: true
+  calibration_quality_read: false
+  confirmation_read: false
+  exact_once_test_read: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V62-F06, V63-F02, V63-F03, V63-F04, V64-F05, V64-F06]

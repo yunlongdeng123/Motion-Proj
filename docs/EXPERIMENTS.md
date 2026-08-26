@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.4 FRESH EVIDENCE / UQ PREREG（2026-08-26）
+
+- tasks=`WS-V64-P2E-FRESH-EVIDENCE-01 -> WS-V64-P2S-FRESH-SURFACE-CORPUS-01 -> WS-V64-P4-FRESH-UQ-01`；
+  hypothesis=`WS-V64-H-P4-001`；target quality read=`false`。
+- fit=`0139,0230,0255,0994`；evaluation=`0359,0998`；`12 targets/scene, 72 total`；evaluation target used for fit=`false`。
+- evidence只物化surface需要的method/dropout/target grid；unused 100k query sampling=`disabled`，不加quota gate。
+- U2=`native logits+BEV/PCA-16/geometry-conditioned diagonal GMM-4/seed0`；U0=`max-probability,entropy,inverse-margin`。
+- gates=`pooled AUROC gain>=0.02 AND scene support=2/2`；AUPRC/FPR@95TPR/risk-coverage=`report only`；sweep=`none`。
+- fixed runs=`084000Z evidence r1 / 084500Z surface r1 / 085000Z UQ r1`；resource=`CPU, <=2 workers,
+  single-3090 sufficient`；extra smoke/regression=`none`。
+- failure ledger refs=`V62-F02,V62-F03,V62-F06,V63-F02,V63-F03,V63-F04,V63-F19,V63-F24,V64-F05,V64-F06`；
+  delta=`none`；freeze=`docs/autoresearch/worldsim_v64/P2E_P4_FRESH_UQ_FREEZE.md`。
+
 ## WorldSim V6.4 FRESH NATIVE SIDECAR FORMAL PASS（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3`；

@@ -1,0 +1,38 @@
+schema_version: worldsim_v64.p4_fresh_uq.v1
+task_id: WS-V64-P4-FRESH-UQ-01
+hypothesis_id: WS-V64-H-P4-001
+seed: 0
+scope: v64_fresh_native_feature_density
+claim_boundary: fresh U2-vs-U0 mechanism evidence only; no authority, calibration, conditional-coverage, or downstream compiler claim
+inputs:
+  native_run: worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3
+  surface_run: worldsim_v64/WS-V64-P2S-FRESH-SURFACE-CORPUS-01/20260826T084500Z__fresh-surface-s0-r1
+  native_partition_by_scene:
+    scene-0139: fresh_fit
+    scene-0230: fresh_fit
+    scene-0255: fresh_fit
+    scene-0994: fresh_fit
+    scene-0359: fresh_evaluation
+    scene-0998: fresh_evaluation
+partitions:
+  fit_scenes: [scene-0139, scene-0230, scene-0255, scene-0994]
+  evaluation_scenes: [scene-0359, scene-0998]
+sampling:
+  fit_points_per_scene: 50000
+  evaluation_chunk_size: 32768
+model:
+  feature: native_logits_plus_bev
+  pca_dimension: 16
+  gmm_components: 4
+  covariance: diagonal
+gates:
+  minimum_pooled_auroc_gain: 0.02
+  minimum_scene_support: 2
+locks:
+  fresh_v64_claim_allowed: true
+  evaluation_target_used_for_fit: false
+  surface_model_allowed: false
+  lora_allowed: false
+  calibration_allowed: false
+  conditional_threshold_allowed: false
+failure_ledger_refs: [V63-F02, V63-F19, V63-F24, V64-F05, V64-F06]

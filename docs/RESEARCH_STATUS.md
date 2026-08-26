@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 fresh evidence/UQ 已冻结 / 待直接执行（2026-08-26）
+
+状态：`v64_fresh_uq_preregistered_target_quality_unread`；active task=`WS-V64-P2E-FRESH-EVIDENCE-01`；active hypothesis=
+`WS-V64-H-P4-001`。直接链路为72-unit evidence→72-unit surface→一次UQ，不展开完整compiler、不加smoke/regression。
+fit=`0139,0230,0255,0994`；evaluation=`0359,0998`；evaluation target不进入fit。
+
+U2保持retrospective的`PCA-16/GMM-4 diagonal/seed0`，U0保持三种softmax基线。唯一两门为pooled AUROC gain `>=0.02`
+且scene support=`2/2`；其余指标只报告。通过也只支持fresh mechanism，禁止authority/calibration/conditional threshold/
+LoRA/downstream claim；失败则关闭当前PCA/GMM表示，不在同数据sweep。完整freeze=
+`docs/autoresearch/worldsim_v64/P2E_P4_FRESH_UQ_FREEZE.md`。
+
+实现仅让既有V6.2 evidence runner读取config task ID、让V6.3 surface runner读取scene→native partition映射，并让既有V6.4
+UQ runner读取同一映射与冻结gate；尚未读fresh target quality。预计三步均CPU，当前56 GiB磁盘和单3090足够，无多卡需求。
+下一步编译检查、提交并push，然后直接运行evidence r1。
+
 ## WorldSim V6.4 fresh native sidecar 完成 / fresh evidence 下一步（2026-08-26）
 
 状态：`v64_fresh_native_sidecars_complete_evidence_freeze_next`；completed task=

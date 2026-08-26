@@ -38,6 +38,22 @@ SURFACE_TYPE = {
 }
 
 
+def _native_unit_path(config: dict[str, Any], scene: str, target_frame: int) -> Path:
+    partition_by_scene = config["inputs"].get("native_partition_by_scene", {})
+    partition = str(
+        partition_by_scene.get(
+            scene, config["inputs"].get("native_partition", "development")
+        )
+    )
+    return (
+        Path(config["inputs"]["p2_native_run"])
+        / "units"
+        / partition
+        / scene
+        / f"f{int(target_frame):03d}"
+    )
+
+
 def _write_json(path: Path, value: Any) -> None:
     path.write_text(
         json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n",
@@ -433,7 +449,7 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
     target_ordinal = int(task["target_ordinal"])
     scene_root = Path(task["scene_root"])
     p2_unit = Path(config["inputs"]["p2_evidence_run"]) / "units" / scene / f"f{target_frame:03d}"
-    native_unit = Path(config["inputs"]["p2_native_run"]) / "units" / "development" / scene / f"f{target_frame:03d}"
+    native_unit = _native_unit_path(config, scene, target_frame)
     with np.load(p2_unit / "METHOD_EVIDENCE.npz", allow_pickle=False) as source:
         method = {name: np.asarray(source[name]) for name in source.files}
     with np.load(p2_unit / "TARGET_EVIDENCE.npz", allow_pickle=False) as source:
@@ -606,8 +622,8 @@ def run(
         raise RuntimeError("P3 formal requires clean source")
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     cohort = yaml.safe_load(Path(config["inputs"]["development_cohort_config"]).read_text())
-    if config["task_id"] != TASK_ID:
-        raise ValueError("P3 task identity drift")
+    task_id = str(config.get("task_id", TASK_ID))
+    run_dir.parent.mkdir(parents=True, exist_ok=True)
     free_gib = shutil.disk_usage(run_dir.parent).free / 1024**3
     if free_gib < float(config["resources"]["minimum_disk_free_gib"]):
         raise RuntimeError(f"insufficient disk before P3: {free_gib:.3f} GiB")
@@ -658,10 +674,7 @@ def run(
                 "frame_id": row["target_frame"],
                 "unit_path": row["unit_path"],
                 "native_sidecar": str(
-                    Path(config["inputs"]["p2_native_run"])
-                    / "units/development"
-                    / row["scene"]
-                    / f"f{int(row['target_frame']):03d}"
+                    _native_unit_path(config, row["scene"], row["target_frame"])
                 ),
                 "prototype_used": False,
             }
@@ -692,7 +705,7 @@ def run(
     )
     summary = {
         "schema_version": "worldsim_v63.p3_surface_corpus_summary.v2",
-        "task_id": TASK_ID,
+        "task_id": task_id,
         "mode": "probe" if limit_units is not None else "formal",
         "unit_count": len(rows),
         "scene_count": len({row["scene"] for row in rows}),
@@ -741,7 +754,7 @@ def run(
         run_dir / "P3_MANIFEST.json",
         {
             "schema_version": "worldsim_v63.p3_surface_corpus_manifest.v2",
-            "task_id": TASK_ID,
+            "task_id": task_id,
             "source_branch": subprocess.check_output(["git", "branch", "--show-current"], cwd=repo_root, text=True).strip(),
             "source_worktree_clean": True,
             "unit_rows": [{key: row[key] for key in ("scene", "target_frame", "unit_path", "point_count", "bytes")} for row in rows],

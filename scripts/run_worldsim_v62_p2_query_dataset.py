@@ -75,14 +75,24 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
     save_evidence_grid(dropout_path, dropout)
     save_evidence_grid(target_path, target)
 
-    query_arrays, query_summary = build_query_arrays(
-        method,
-        dropout,
-        target,
-        config["queries"],
-        int(config["queries"]["seed"]) + int(task["scene_ordinal"]) * 1000 + target_frame,
-    )
-    np.savez_compressed(query_path, **query_arrays)
+    if bool(config.get("queries", {}).get("enabled", True)):
+        query_arrays, query_summary = build_query_arrays(
+            method,
+            dropout,
+            target,
+            config["queries"],
+            int(config["queries"]["seed"])
+            + int(task["scene_ordinal"]) * 1000
+            + target_frame,
+        )
+        np.savez_compressed(query_path, **query_arrays)
+        query_summary["path"] = str(query_path.relative_to(run_dir))
+    else:
+        query_summary = {
+            "query_count": 0,
+            "candidate_pool_counts": {},
+            "path": None,
+        }
 
     source_roles = {
         "method": [str(scene_root / f"lidar/{frame:03d}.bin") for frame in method_frames],
@@ -107,7 +117,6 @@ def _unit(task: dict[str, Any]) -> dict[str, Any]:
         },
         "queries": {
             **query_summary,
-            "path": str(query_path.relative_to(run_dir)),
         },
         "wall_seconds": time.monotonic() - started,
     }
@@ -122,6 +131,7 @@ def run(
 ) -> dict[str, Any]:
     started = time.monotonic()
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    task_id = str(config.get("task_id", "WS-V62-P2-EVIDENCE-QUERY-DATASET-01"))
     if run_dir.exists():
         raise FileExistsError(run_dir)
     run_dir.mkdir(parents=True)
@@ -204,7 +214,7 @@ def run(
 
     split_manifest = {
         "schema_version": "worldsim_v62.p2_split_manifest.v1",
-        "task_id": "WS-V62-P2-EVIDENCE-QUERY-DATASET-01",
+        "task_id": task_id,
         "mode": "probe" if limit_units is not None else "formal",
         "scene_names": sorted({row["scene"] for row in rows}),
         "unit_count": len(rows),
@@ -218,16 +228,22 @@ def run(
     disk_bytes = sum(path.stat().st_size for path in run_dir.rglob("*") if path.is_file())
     summary = {
         "schema_version": "worldsim_v62.p2_summary.v1",
-        "task_id": "WS-V62-P2-EVIDENCE-QUERY-DATASET-01",
+        "task_id": task_id,
         "mode": split_manifest["mode"],
         "unit_count": len(rows),
         "scene_count": len(split_manifest["scene_names"]),
         "query_count": sum(row["queries"]["query_count"] for row in rows),
         "source_role_overlap_count": overlap_count,
-        "minimum_candidate_pool_counts": {
-            name: min(row["queries"]["candidate_pool_counts"][name] for row in rows)
-            for name in config["queries"]["quotas"]
-        },
+        "minimum_candidate_pool_counts": (
+            {
+                name: min(
+                    row["queries"]["candidate_pool_counts"][name] for row in rows
+                )
+                for name in config["queries"]["quotas"]
+            }
+            if bool(config.get("queries", {}).get("enabled", True))
+            else {}
+        ),
         "disk_bytes": disk_bytes,
         "maximum_unit_wall_seconds": max((row["wall_seconds"] for row in rows), default=0.0),
         "wall_seconds": time.monotonic() - started,

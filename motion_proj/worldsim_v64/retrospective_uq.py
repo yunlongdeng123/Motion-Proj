@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, Sequence
+from typing import Iterator, Mapping, Sequence
 
 import numpy as np
 from sklearn.decomposition import PCA
@@ -32,6 +32,20 @@ def _unit_dirs(root: Path, scene: str) -> list[Path]:
     if not units:
         raise RuntimeError(f"scene has no units: {scene}")
     return units
+
+
+def _native_unit_dir(
+    native_root: Path,
+    scene: str,
+    unit_name: str,
+    partition_by_scene: Mapping[str, str] | None,
+) -> Path:
+    partition = (
+        str(partition_by_scene.get(scene, "development"))
+        if partition_by_scene is not None
+        else "development"
+    )
+    return native_root / "units" / partition / scene / unit_name
 
 
 def _eligible_indices(surface_unit: Path) -> np.ndarray:
@@ -77,11 +91,14 @@ def iter_scene_chunks(
     scene: str,
     *,
     chunk_size: int,
+    native_partition_by_scene: Mapping[str, str] | None = None,
 ) -> Iterator[PointChunk]:
     """顺序读取一个 scene 的全部方法可见曲面点。"""
 
     for surface_unit in _unit_dirs(surface_root, scene):
-        native_unit = native_root / "units" / "development" / scene / surface_unit.name
+        native_unit = _native_unit_dir(
+            native_root, scene, surface_unit.name, native_partition_by_scene
+        )
         if not native_unit.is_dir():
             raise FileNotFoundError(f"missing native unit: {native_unit}")
         eligible = _eligible_indices(surface_unit)
@@ -100,6 +117,7 @@ def sample_training_points(
     *,
     maximum_points_per_scene: int,
     seed: int,
+    native_partition_by_scene: Mapping[str, str] | None = None,
 ) -> PointChunk:
     """按 scene 等额抽取 GMM 拟合点，selection target 不参与拟合。"""
 
@@ -113,7 +131,9 @@ def sample_training_points(
             eligible = _eligible_indices(surface_unit)
             if eligible.size > per_unit:
                 eligible = rng.choice(eligible, size=per_unit, replace=False)
-            native_unit = native_root / "units" / "development" / scene / surface_unit.name
+            native_unit = _native_unit_dir(
+                native_root, scene, surface_unit.name, native_partition_by_scene
+            )
             scene_parts.append(_load_points(surface_unit, native_unit, eligible))
         features = np.concatenate([part.features for part in scene_parts], axis=0)
         logits = np.concatenate([part.logits for part in scene_parts], axis=0)
@@ -260,6 +280,7 @@ def evaluate_scene(
     scene: str,
     *,
     chunk_size: int,
+    native_partition_by_scene: Mapping[str, str] | None = None,
 ) -> tuple[dict[str, object], dict[str, np.ndarray]]:
     """在一个完整 scene denominator 上计算 U0/U2。"""
 
@@ -271,7 +292,11 @@ def evaluate_scene(
         "u2_feature_density": [],
     }
     for chunk in iter_scene_chunks(
-        surface_root, native_root, scene, chunk_size=chunk_size
+        surface_root,
+        native_root,
+        scene,
+        chunk_size=chunk_size,
+        native_partition_by_scene=native_partition_by_scene,
     ):
         label_parts.append(chunk.hidden_free)
         for name, values in _softmax_uncertainty(chunk.logits).items():
