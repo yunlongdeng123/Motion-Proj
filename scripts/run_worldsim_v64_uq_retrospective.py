@@ -112,7 +112,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
             / (1024**2),
         },
         "failure_ledger_refs": config["failure_ledger_refs"],
-        "failure_ledger_delta": "pending_closeout",
+        "failure_ledger_delta": "none",
     }
     _write_json(run_dir / "summary.json", summary)
     with (run_dir / "metrics.jsonl").open("w", encoding="utf-8") as handle:

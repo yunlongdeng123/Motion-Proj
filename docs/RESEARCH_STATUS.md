@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.4 U2 retrospective 有信号 / fresh cohort 下一步（2026-08-26）
+
+状态：`v64_retrospective_u2_signal_supported_fresh_cohort_next`；completed task=`WS-V64-P3-NATIVE-UQ-01`；
+hypothesis=`WS-V64-H-P3-001 supported_retrospective`。canonical run=
+`run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1`。
+
+在 V6.3 旧机制集上，四个 fit scene 抽取 200,000 点拟合，两个 evaluation scene 的 3,169,645 个 eligible 点完整评分。
+U2 feature-density pooled AUROC/AUPRC=`0.550470/0.076027`，最佳 U0=`0.497324/0.059739`，绝对增量=
+`+0.053146/+0.016288`；FPR@95TPR 从`0.968577`降到`0.942892`。scene-0450 与 scene-1089 的 U2
+AUROC=`0.580307/0.530461`，都优于各自最佳 U0。50% coverage 的 hidden-FREE risk=`0.052620`，低于总体
+prevalence=`0.060847`，而最佳 U0 为`0.059330`。
+
+这只支持 native feature-density 存在可迁移信号；高 FPR@95TPR、旧 scene 与 scene-1089 的有限 separation 都禁止
+authority、校准或安全 claim。完整收口=`docs/autoresearch/worldsim_v64/P3_RETROSPECTIVE_CLOSEOUT.md`。运行使用 CPU，
+wall=`49.964 s`、peak RSS=`1.044 GiB`，无多卡需求。下一步直接选取小型 metadata-only fresh cohort，保持同一
+PCA-16/GMM-4/seed，不做 sweep。
+
+本里程碑运行内 failure delta=`none`；外围操作新增并恢复 `V64-F02`（GitHub push 未走 LocalTUN proxy）和
+`V64-F03`（非登录 summary reader 未激活 conda）。两者都没有改变 canonical run 或质量结果。
+
 ## WorldSim V6.4 最小 UQ 机制实验已冻结 / 待正式执行（2026-08-26）
 
 状态：`v64_core_uq_retrospective_preregistered`；active task=`WS-V64-P3-NATIVE-UQ-01`；hypothesis=

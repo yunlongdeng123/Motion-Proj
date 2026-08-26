@@ -16,8 +16,8 @@
   native aleatoric/epistemic uncertainty、scene/stratum conditional risk 与独立 case-level calibration。
 - 首个核心假设已冻结为原生 U0 对比 geometry-conditioned feature-density U2；旧 4+2 scene 只作机制诊断，禁止作为
   fresh V6.4 claim，也不允许由该结果读取 calibration/confirmation/test。
-- 当前没有 V6.4 quality read 或 GPU run。唯一 V6.4 失败条目是已在质量读取前恢复的
-  `V64-F01`，不得写成算法负结论。
+- retrospective U2 已在两个旧 evaluation scene 都优于 U0，但 FPR@95TPR 仍高，只授权建立 fresh cohort，不授权
+  authority/calibration claim。当前 `V64-F01--F03`均为 resolved engineering/operations，不得写成算法负结论。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -91,7 +91,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | P0完成；最小 native UQ retrospective 已预注册、尚未执行，无方法质量结论 | 控制台`pytest`不自动加入仓库根目录；旧scene只能作机制诊断，若有信号仍需fresh cohort | `V64-F01`；`P0_SCOPE.md`；`P1_CORE_UQ_FREEZE.md` |
+| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda | `V64-F01`–`V64-F03`；`P3_RETROSPECTIVE_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -161,6 +161,20 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `python -m pytest`；不为入口差异改包结构、污染环境或扩展回归矩阵。证据=
   `WS-V64-P0-SCOPE-GIT-01`、`docs/autoresearch/worldsim_v64/P0_SCOPE.md`、
   `https://docs.pytest.org/en/stable/explanation/pythonpath.html`。
+
+- `V64-F02`（`engineering/operations`, `resolved_pre_formal_run`）：UQ prereg commit 首次两次普通
+  `git push`在 30 秒窗口内无输出，远端 ref 保持 `04b343f`，本地 `f1764de`未丢失，formal run 尚未启动。GitHub
+  官方状态页显示 Git Operations operational；本地 `localtun sessions`确认当前 AutoDL session 的 remote proxy 后，
+  仅为该 push 显式设置 HTTP/HTTPS/ALL proxy，普通 push 成功推进远端到 `f1764de`。防重复：远端网络慢时先检查
+  GitHub 状态和当前 LocalTUN session；端口是会话级，禁止复用旧记忆值，也不 force push。证据=`f1764de`、
+  `https://www.githubstatus.com/`。
+
+- `V64-F03`（`engineering/runtime`, `resolved_post_run_read`）：canonical UQ run 已成功结束后，第一次只读 summary
+  命令在非登录 shell 直接调用裸 `python`，因环境未激活在读取文件前返回 `command not found`。按仓库环境合同 source
+  `conda.sh`并激活 `motionproj`后，同一只读程序完成逐 scene 指标读取；run、summary 与模型均未修改。防重复：任何
+  非登录 Python 命令显式激活环境；该错误不登记为算法或 formal run failure。证据=
+  `run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1`、
+  `https://docs.conda.io/projects/conda/en/25.1.x/dev-guide/deep-dives/activation.html`。
 
 <a id="detail-v63"></a>
 

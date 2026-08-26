@@ -1,5 +1,21 @@
 # Experiments
 
+## WorldSim V6.4 NATIVE UQ RETROSPECTIVE COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1`；
+  task=`WS-V64-P3-NATIVE-UQ-01`；hypothesis=`WS-V64-H-P3-001`；status=`done / supported_retrospective`。
+- fit=`4 scenes / 200,000 sampled points`；evaluation=`2 scenes / 3,169,645 complete eligible points`；seed=`0`；
+  evaluation target 未进入 scaler/PCA/GMM 拟合。
+- pooled best U0 AUROC/AUPRC=`0.497324/0.059739`；U2=`0.550470/0.076027`；delta=
+  `+0.053146/+0.016288`；FPR@95TPR=`0.968577 -> 0.942892`。
+- scene support=`2/2`：scene-0450 U2 AUROC/AUPRC=`0.580307/0.077317`；scene-1089=
+  `0.530461/0.076841`。50% coverage pooled hidden-FREE risk=`0.052620` vs prevalence=`0.060847`。
+- resource=`CPU only, 49.964 s, 1.044 GiB peak RSS`；GPU/multi-GPU=`not used/not needed`。
+- conclusion=原生 feature-density 信号值得 fresh 验证；旧 scene 结果不构成 V6.4 fresh claim，不解锁 authority、
+  calibration、LoRA 或下游。
+- run failure ledger delta=`none`；operations delta=`V64-F02,V64-F03 resolved`；closeout=
+  `docs/autoresearch/worldsim_v64/P3_RETROSPECTIVE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 NATIVE UQ RETROSPECTIVE PREREG（2026-08-26）
 
 - task=`WS-V64-P3-NATIVE-UQ-01`；hypothesis=`WS-V64-H-P3-001`；status=`preregistered / not run`；seed=`0`。
