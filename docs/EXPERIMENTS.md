@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 FRESH EVIDENCE FORMAL PASS（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1`；
+  task=`WS-V64-P2E-FRESH-EVIDENCE-01`；status=`done / surface unlocked`。
+- denominator=`6 scenes / 72 targets / 72 complete`；method/dropout/target evidence=`complete`；source role overlap=`0`。
+- query sampling=`disabled / 0`；output=`68,444,954 bytes`；wall=`118.2903 s`；maximum unit=`4.2750 s`；GPU=`none`。
+- fresh target quality read=`true`；U0/U2 metrics read=`false`；calibration/confirmation/test=`false/false/false`。
+- formal failure delta=`none`；launcher operation delta=`V64-F07 resolved_pre_run`；closeout=
+  `docs/autoresearch/worldsim_v64/P2E_FRESH_EVIDENCE_CLOSEOUT.md`；next=`fixed fresh surface r1`。
+
 ## WorldSim V6.4 FRESH EVIDENCE / UQ PREREG（2026-08-26）
 
 - tasks=`WS-V64-P2E-FRESH-EVIDENCE-01 -> WS-V64-P2S-FRESH-SURFACE-CORPUS-01 -> WS-V64-P4-FRESH-UQ-01`；

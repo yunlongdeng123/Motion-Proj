@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 fresh evidence 完成 / surface 下一步（2026-08-26）
+
+状态：`v64_fresh_evidence_complete_surface_next`；completed task=`WS-V64-P2E-FRESH-EVIDENCE-01`；active task=
+`WS-V64-P2S-FRESH-SURFACE-CORPUS-01`；hypothesis=`WS-V64-H-P4-001`。canonical=
+`run://worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1`。
+
+固定6 scene / 72 target全部通过：output=`68,444,954 bytes`、wall=`118.2903 s`、max unit=`4.2750 s`、
+source role overlap=`0`。unused query sampling关闭且`query_count=0`；method/dropout/target grid完整物化。fresh fit与evaluation
+target evidence从本里程碑起为已读，但尚未计算U0/U2指标或gate。calibration/confirmation/test未读；CPU-only，无多卡需求。
+
+首次launcher在本地PowerShell双引号内包含`$()`，被本地提前展开并在非repo目录报Git错误；远端run目录未创建。
+按Microsoft PowerShell解析合同去掉subexpression后，同一冻结输入执行唯一r1，登记=`V64-F07 resolved_pre_run`。
+完整收口=`docs/autoresearch/worldsim_v64/P2E_FRESH_EVIDENCE_CLOSEOUT.md`。下一步提交并push文档后直接运行固定surface r1，
+不增加probe/smoke。
+
 ## WorldSim V6.4 fresh evidence/UQ 已冻结 / 待直接执行（2026-08-26）
 
 状态：`v64_fresh_uq_preregistered_target_quality_unread`；active task=`WS-V64-P2E-FRESH-EVIDENCE-01`；active hypothesis=

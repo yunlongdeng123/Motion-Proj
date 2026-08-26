@@ -4,7 +4,7 @@
 - Surface task: `WS-V64-P2S-FRESH-SURFACE-CORPUS-01`
 - UQ task: `WS-V64-P4-FRESH-UQ-01`
 - Hypothesis: `WS-V64-H-P4-001`
-- Status: `preregistered / target quality unread`
+- Status: `evidence complete / surface pending`
 - Seed: `0`
 
 ## Direct path
@@ -42,3 +42,9 @@ PCA/GMM表示，不做同数据参数sweep。无论结果如何都不解锁autho
 
 不新增hash/checksum/fingerprint，不增加smoke/regression。代码只泛化既有task identity和native partition lookup；提交并push
 本freeze后直接读取fresh target evidence。
+
+## Evidence result
+
+canonical evidence r1已完成`72/72 units`，`68,444,954 bytes`、wall=`118.2903 s`、role overlap=`0`、queries=`0`。
+fresh target evidence现已读取，但U0/U2指标尚未读取；下一步固定surface r1，协议和gate不变。详见
+`docs/autoresearch/worldsim_v64/P2E_FRESH_EVIDENCE_CLOSEOUT.md`。
