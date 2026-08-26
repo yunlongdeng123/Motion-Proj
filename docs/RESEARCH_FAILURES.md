@@ -96,7 +96,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | retrospective U2 在旧两scene均优于U0；fresh native sidecar与evidence 72-unit均通过；fresh UQ verdict尚未读取 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在、fresh scene需属于冻结train temporal metadata、run summary文件名需先枚举、PowerShell双引号会提前展开`$()` | `V64-F01`–`V64-F07`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_SIDECAR_CLOSEOUT.md`；`P2E_FRESH_EVIDENCE_CLOSEOUT.md` |
+| V6.4 | retrospective U2 在旧两scene均优于U0；fresh native sidecar与evidence均通过；overbuilt surface因13.2h历史成本停止并迁移native voxel；fresh UQ verdict尚未读取 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary文件名、PowerShell`$()`、surface full-stack资源投影 | `V64-F01`–`V64-F08`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_SIDECAR_CLOSEOUT.md`；`P2E_FRESH_EVIDENCE_CLOSEOUT.md`；`P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -218,6 +218,16 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   参数不嵌入`$()`或`$var`远端shell表达式；状态检查拆成独立命令，不把本地解析错误写成formal failure。证据=
   `run://worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1`、
   `https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing`。
+
+- `V64-F08`（`resource/protocol`, `resolved_by_native_voxel_recovery`）：继承的V6.3 surface compiler历史formal为
+  `72 units / 47,568.47 s wall / 3,334.28 s max unit`。fresh surface r1运行约4分钟时仍为`0/72 units`、4 KiB，两个worker
+  CPU各约100%且无资源异常；照旧执行预计浪费约13小时，并生成当前UQ不消费的signed-distance、patch、normal、actor与
+  proposal registry。检索OCCUQ ICRA 2025的原生`200×200×16` voxel-level feature GMM，以及CuPy/cuCIM exact EDT后，
+  选择前者：在UQ score读取前按精确PGID停止并保留partial，预注册唯一native-boundary-voxel r1；不安装CuPy、不继续旧
+  full-stack。防重复：不得把partial写成算法失败，不得删除/覆盖r1；native r1后禁止回旧surface、换EDT/denominator或
+  sweep救结果。证据=`docs/autoresearch/worldsim_v64/P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md`、
+  `https://github.com/ika-rwth-aachen/OCCUQ`、
+  `https://docs.cupy.dev/en/latest/reference/generated/cupyx.scipy.ndimage.distance_transform_edt.html`。
 
 <a id="detail-v63"></a>
 

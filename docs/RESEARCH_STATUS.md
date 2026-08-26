@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V6.4 overbuilt surface 已停止 / native-voxel UQ 恢复冻结（2026-08-26）
+
+状态：`v64_surface_resource_abort_native_voxel_uq_preregistered`；active task=
+`WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`；active hypothesis=`WS-V64-H-P4N-001`；U0/U2 score read=`false`。
+
+冻结V6.3 surface compiler历史72-unit wall=`47,568.47 s (13.21 h)`、max unit=`3,334.28 s`。fresh surface r1=
+`run://worldsim_v64/WS-V64-P2S-FRESH-SURFACE-CORPUS-01/20260826T084500Z__fresh-surface-s0-r1`运行约4分钟仍为
+`0/72 units`，只产生4 KiB negative tests；其signed-distance/patch/normal/actor registry均不被UQ消费。已终止精确
+PGID `12735`并保留partial，登记=`V64-F08 resolved_by_native_voxel_recovery`。
+
+按OCCUQ的原生voxel-level GMM迁移为唯一native boundary denominator：native argmax OCC∪method observed OCC的6邻域边界，
+再限制method UNKNOWN、非contradiction、target ROI valid；不重复native voxel。scene/targets/seed/PCA-16/GMM-4/U0与两条
+AUROC gate均不变。完整freeze=`docs/autoresearch/worldsim_v64/P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md`。
+
+CuPy/cuCIM EDT虽可加速旧路径，但仍保留本任务无用全栈，故不安装依赖、不继续surface。新r1 CPU-only，单3090与多卡均
+不需要。下一步只做编译检查、提交push，然后执行`20260826T090000Z__fresh-native-voxel-uq-s0-r1`，不加probe。
+
 ## WorldSim V6.4 fresh evidence 完成 / surface 下一步（2026-08-26）
 
 状态：`v64_fresh_evidence_complete_surface_next`；completed task=`WS-V64-P2E-FRESH-EVIDENCE-01`；active task=

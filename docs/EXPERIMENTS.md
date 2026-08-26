@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 SURFACE RESOURCE ABORT / NATIVE-VOXEL UQ RECOVERY PREREG（2026-08-26）
+
+- partial=`run://worldsim_v64/WS-V64-P2S-FRESH-SURFACE-CORPUS-01/20260826T084500Z__fresh-surface-s0-r1`；
+  observed after about 4 min=`0/72 units, 4 KiB, workers healthy`；historical projection=`47,568.47 s full wall`。
+- decision=`resource-abort before UQ score`；exact PGID=`12735` terminated；partial retained=`true`；formal surface canonical=`null`。
+- recovery task=`WS-V64-P4N-FRESH-NATIVE-VOXEL-UQ-01`；run=`20260826T090000Z__fresh-native-voxel-uq-s0-r1`。
+- denominator=`unique 6-neighbor boundary voxels of native OCC union method observed OCC; method UNKNOWN; non-contradictory;
+  target ROI valid`；surface/EDT/patch/actor registry=`not required`。
+- model/gates unchanged=`PCA-16,GMM-4,seed0,50k/fit-scene; pooled AUROC gain>=0.02; support=2/2`；score read=`false`。
+- failure ledger delta=`V64-F08 resolved_by_native_voxel_recovery`；extra smoke/regression=`none`；freeze=
+  `docs/autoresearch/worldsim_v64/P4N_NATIVE_VOXEL_UQ_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.4 FRESH EVIDENCE FORMAL PASS（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P2E-FRESH-EVIDENCE-01/20260826T084000Z__fresh-evidence-s0-r1`；
