@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 P6R MLP trained / independent calibration frozen（2026-08-26）
+
+状态：`v64_p6r_selective_mlp_trained_independent_calibration_preregistered`；canonical=
+`run://worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1`；active task=
+`WS-V64-P6R-CALIBRATION-EVIDENCE-01`；independent-calibration/new-confirmation quality read=`false/false`。
+
+唯一冻结训练使用16个已消费development scene的`786054`个native-boundary点（273D），hidden-FREE=`59867`、prevalence=
+`0.0761614`。20-epoch focal loss从`0.0337864`单调降至`0.0251443`；development AUROC=`0.8811503`仅作描述，
+不作gate。GPU fit=`10.1545 s`，总wall=`34.1934 s`，peak RSS=`3.6301 GiB`，model=`177 KiB`。没有超参扫描。
+
+模型artifact现已冻结，原8个quality-unread scene获准一次独立case calibration；先生成`96`个无query evidence unit，再按原
+协议一次评分。新confirmation八scene继续锁定。配置=`configs/worldsim_v64/p6r_calibration_evidence_v1.yaml`与
+`configs/worldsim_v64/p6r_case_calibration_v1.yaml`；训练收口=
+`docs/autoresearch/worldsim_v64/P6R_SELECTIVE_MLP_TRAINING_CLOSEOUT.md`。不加hash/checksum/fingerprint、smoke或回归矩阵。
+
 ## WorldSim V6.4 P6R split/model frozen / GPU training next（2026-08-26）
 
 状态：`v64_p6r_selective_mlp_preregistered`；active task/hypothesis=

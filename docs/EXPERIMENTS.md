@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 P6R MLP TRAINED / CALIBRATION PREREG（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1`；verdict=
+  `development_training_complete`；calibration/new-confirmation read=`false/false`。
+- fit=`786054 points / 273D / 59867 positive / prevalence .0761614`；fixed loss=`.0337864 -> .0251443`；development
+  AUROC=`.8811503 descriptive only`。
+- resources=`10.1545 s GPU fit / 34.1934 s total / 3.6301 GiB RSS / 177 KiB model`；sweep=`none`。
+- independent calibration=`former confirmation 8 scenes / 96 cases / unchanged 5%--50% coverages and finite-sample protocol`；
+  evidence queries=`disabled`；new confirmation=`locked unread`。
+- next=`materialize 96 evidence units once, run frozen MLP case calibration once`；hash/checksum/fingerprint=`none`；extra
+  smoke/regression=`none`；failure delta=`none (V64-F15 recovery evaluation pending)`。
+
 ## WorldSim V6.4 P6R SELECTIVE MLP PREREG（2026-08-26）
 
 - task/hypothesis=`WS-V64-P6R-SELECTIVE-MLP-01 / WS-V64-H-P6R-001`；route=`new model version after P6 rejection`。

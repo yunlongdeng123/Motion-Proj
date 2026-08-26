@@ -1,0 +1,39 @@
+schema_version: worldsim_v64.p6r_case_calibration.v1
+task_id: WS-V64-P6R-CALIBRATION-01
+hypothesis_id: WS-V64-H-P6R-001
+seed: 0
+claim_boundary: independent case-level selective-risk calibration only; no confirmation, authority, downstream compiler, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+  native_partition: fresh_confirmation
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+calibration_scenes:
+  - {name: scene-1079, stratum: night}
+  - {name: scene-1097, stratum: night}
+  - {name: scene-1106, stratum: rain}
+  - {name: scene-0576, stratum: rain}
+  - {name: scene-0067, stratum: construction}
+  - {name: scene-0258, stratum: construction}
+  - {name: scene-1083, stratum: vulnerable_transit}
+  - {name: scene-0738, stratum: vulnerable_transit}
+native_grid:
+  origin_m: [-51.2, -51.2, -5.0]
+  voxel_size_m: 0.512
+policy:
+  score: full_native_selective_mlp_hidden_free
+  candidate_coverages: [0.05, 0.10, 0.20, 0.30, 0.40, 0.50]
+  minimum_positive_coverage: 0.05
+  hidden_free_conflict_threshold: 0.05
+  target_case_risk: 0.05
+  confidence: 0.95
+  simultaneous_selection: bonferroni_one_sided_clopper_pearson_over_six_coverages
+locks:
+  risk_model_refit_allowed: false
+  threshold_sweep_allowed: false
+  scene_specific_policy_allowed: false
+  new_confirmation_read: false
+  exact_once_test_read: false
+  content_hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F10, V64-F11, V64-F15]

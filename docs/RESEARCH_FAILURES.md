@@ -316,6 +316,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   confirmation按剩余metadata-only pool/seed1固定为`1023,1105,0903,0451,0981,0537,0789,0157`。模型固定为完整
   273D的`128/64` focal-loss MLP且不做超参扫描。此冻结没有读取新quality、没有产生新failure ID；详见
   `docs/autoresearch/worldsim_v64/P6R_SELECTIVE_MLP_FREEZE.md`。
+  第一阶段正式训练已完成：`786054` points，loss=`0.0337864->0.0251443`，development AUROC=`0.8811503`
+  （仅描述），GPU fit=`10.1545 s`。模型现已冻结且原8-scene calibration仍未读；这既不关闭V64-F15，也不产生新
+  failure。下一判定只来自预注册的96-case独立校准。
 
 <a id="detail-v63"></a>
 
