@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p10r4_dual_preprocess_feeder_recovery_frozen",
+  "status": "v64_p10r4_raw_complete_native_streaming",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
@@ -399,10 +399,20 @@
   "p10r4_first_complete_native_peak_gpu_gib": 4.13140344619751,
   "p10r4_maximum_preprocess_workers": 2,
   "p10r4_per_scene_preprocess_staging": true,
+  "p10r4_raw_shard_recovery_run": "run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T022000Z__test-raw-shard-recovery-s4-r2",
+  "p10r4_raw_shard_recovery_wall_seconds": 1807.8113639727235,
+  "p10r4_raw_required_member_count": 14437,
+  "p10r4_raw_found_member_count": 14437,
+  "p10r4_raw_found_by_shard": {"05": 5401, "06": 1824, "07": 1818, "08": 1783, "10": 3611},
+  "p10r4_catalog_entry_count": 85992,
+  "p10r4_catalog_bytes": 10318384,
+  "p10r4_io_failure_resolved": true,
+  "p10r4_complete_native_scenes": ["scene-0598", "scene-0462"],
+  "p10r4_complete_native_scene_count": 2,
   "p10r2_confirmation_prep_run_id": "20260826T193000Z__confirmation-prep-s3-r1",
   "p10r2_confirmation_native_aggregate_run_id": "20260826T201000Z__native-aggregate-s3-r1",
   "p10r2_confirmation_evidence_run_id": "20260826T201500Z__confirmation-evidence-s3-r1",
   "p10r2_exact_once_confirmation_run_id": "20260826T203000Z__exact-once-confirmation-s3-r1",
   "p11_locked_by_route_tail_rejection": true,
-  "next_action": "after the orphaned in-flight scene-0462 preprocess completes, atomically install it and restart the same feeder prefix with two independent preprocess slots"
+  "next_action": "continue the same-prefix dual-preprocess feeder for the remaining six target-free native scenes"
 }

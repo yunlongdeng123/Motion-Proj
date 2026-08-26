@@ -489,7 +489,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   terminal rejected并保持P11锁定，若通过也只关闭exact empirical cohort层面的relative问题。输入I/O改为单遍metadata与
   raw-only producer/单feeder，避免GPU因重复8次`sample_data.json`扫描或duplicate preprocess owner空等。
 
-- `V64-F26`（`io/execution`, `active_recovery`）：P10R4首个raw-only入口发现`14437` required members均不在持久catalog，
+- `V64-F26`（`io/execution`, `resolved_by_restricted_shards_and_dual_queue`）：P10R4首个raw-only入口发现`14437` required members均不在持久catalog，
   10个`.tgz`并发扫描约4分钟仅到`4--10%`，workers主要处于page wait且GPU尚无完整scene。CPython tarfile对gzip selected
   members仍需顺序流；ratarmount/rapidgzip可建seek-point index，但为一次性cohort新建10份index仍先消耗全量扫描。
   现有`71555`条semantic member→shard catalog显示七scene的capture prefix唯一落在05/06/08/10，`scene-0668`由相邻
@@ -502,6 +502,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   按既有DALI分离CPU/GPU queue依据，停止feeder parent但让唯一in-flight scene-0462预处理完成，保留0598 native；同prefix
   feeder恢复为两个独立per-scene staging与`2 preprocess / 2 native` slots。不得对同scene启动第二owner；完整canonical/native
   必须reuse。科学合同与test unread不变，本恢复仍归V64-F26。
+  canonical r2最终在`1807.8114s`扫描05/06/07/08/10并找齐`14437/14437`；per-shard命中
+  `5401/1824/1818/1783/3611`也揭示capture prefix会跨archive boundary，但冻结五分片union完整。catalog增至
+  `85992 entries`。raw完成时双队列已完成0598/0462 native且GPU峰值均`4.1314GiB`，故本条关闭；若后续native/evidence
+  出现科学或独立工程故障应另记，不得重开全量tar scan。
 
 <a id="detail-v63"></a>
 

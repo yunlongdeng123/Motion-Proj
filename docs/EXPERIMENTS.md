@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 RAW RECOVERY COMPLETE / NATIVE STREAMING（2026-08-27）
+
+- canonical raw=`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T022000Z__test-raw-shard-recovery-s4-r2`；wall=`1807.8114s`；
+- required/found=`14437/14437`; shard found=`05:5401,06:1824,07:1818,08:1783,10:3611`；V64-F26=`resolved`；
+- catalog=`85992 entries / 10318384 bytes`；temporary raw/free disk=`~6.2GiB/~21GiB`；
+- complete native=`scene-0598,scene-0462`; each=`12 targets / peak 4.1314GiB`; wall=`45.4004/45.3845s`；
+- test quality/target/model-score read=`false/false/false`；scientific contract change=`none`；next=`same-prefix feeder remaining 6 scenes`。
+
 ## WorldSim V6.4 P10R4 I/O SHARD RECOVERY FREEZE（2026-08-27）
 
 - failed entrance=`20260827T021000Z__test-raw-only-s4-r1`; observation=`14437 missing; ten tgz at 4--10% after ~4min; no GPU-ready scene`；

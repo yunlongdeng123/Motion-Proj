@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 raw recovery complete / native streaming（2026-08-27）
+
+状态：`v64_p10r4_raw_complete_native_streaming`；canonical raw=
+`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T022000Z__test-raw-shard-recovery-s4-r2`；V64-F26=`resolved`。
+
+restricted 05/06/07/08/10在`1807.8114s`找齐`14437/14437` members，命中=`5401/1824/1818/1783/3611`；catalog=
+`85992 entries / 10318384 bytes`，temporary raw=`~6.2GiB`，free disk=`~21GiB`。test quality/target/model score均未读。
+双preprocess feeder已有scene-0598/0462两份完整native，均`12/12` targets、peak GPU=`4.1314GiB`、wall=
+`45.4004/45.3845s`；其余scene沿用同prefix并复用完整leaf。closeout=
+`docs/autoresearch/worldsim_v64/P10R4_RAW_SHARD_RECOVERY_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R4 I/O shard recovery frozen（2026-08-27）
 
 状态：`v64_p10r4_dual_preprocess_feeder_recovery_frozen`；V64-F26=`active_recovery`；test quality read=`false`。
