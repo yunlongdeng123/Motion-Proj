@@ -13,3 +13,7 @@ The eight-scene, 96-case metadata-only cohort and both C0/M0 policies were froze
 The new raw batch has the exact recoverable path `/root/autodl-tmp/tmp/worldsim_v64_p4c_raw_batch`. Tar scan and DriveStudio preprocessing are CPU/I/O work. A scene-ready feeder starts preprocessing when all required members for one scene exist, then immediately starts its native GPU worker; at most one preprocess and two GPU workers run concurrently. The prep controller remains the owner of final temporary-raw deletion and superset catalog writeback.
 
 Sidecars do not read target quality. Target evidence is generated once after all native units exist, followed by one C0/M0 score run. The model and coverages cannot change, and no second confirmation, hash, checksum, fingerprint, smoke matrix, or regression matrix is permitted.
+
+## V2 metadata-only correction
+
+V1 omitted IR-WM temporal-pickle membership and therefore rejected `scene-0276` before native output. Per `P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`, only that scene is replaced by token-valid, temporal-member `scene-0813(631)`. The seven complete native leaves and all scientific locks are retained.

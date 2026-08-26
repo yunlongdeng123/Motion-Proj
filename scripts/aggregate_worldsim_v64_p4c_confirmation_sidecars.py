@@ -13,7 +13,14 @@ def _write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
-def run(config_path: Path, task_root: Path, run_dir: Path, run_id_prefix: str) -> dict[str, object]:
+def run(
+    config_path: Path,
+    task_root: Path,
+    run_dir: Path,
+    run_id_prefix: str,
+    replacement_scene: str | None,
+    replacement_run_id_prefix: str | None,
+) -> dict[str, object]:
     if run_dir.exists():
         raise FileExistsError(run_dir)
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
@@ -23,7 +30,12 @@ def run(config_path: Path, task_root: Path, run_dir: Path, run_id_prefix: str) -
     output_bytes = 0
     peak_gpu = 0.0
     for scene in scenes:
-        source = task_root / f"{run_id_prefix}-{scene}-s0-r1"
+        prefix = (
+            replacement_run_id_prefix
+            if scene == replacement_scene and replacement_run_id_prefix is not None
+            else run_id_prefix
+        )
+        source = task_root / f"{prefix}-{scene}-s0-r1"
         summary = json.loads((source / "P2_SUMMARY.json").read_text(encoding="utf-8"))
         manifest = json.loads((source / "P2_MANIFEST.json").read_text(encoding="utf-8"))
         destination = run_dir / "units" / "fresh_confirmation" / scene
@@ -55,8 +67,17 @@ def main() -> None:
     parser.add_argument("--task-root", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--run-id-prefix", required=True)
+    parser.add_argument("--replacement-scene")
+    parser.add_argument("--replacement-run-id-prefix")
     args = parser.parse_args()
-    print(json.dumps(run(args.config.resolve(), args.task_root.resolve(), args.run_dir.resolve(), args.run_id_prefix), indent=2))
+    print(json.dumps(run(
+        args.config.resolve(),
+        args.task_root.resolve(),
+        args.run_dir.resolve(),
+        args.run_id_prefix,
+        args.replacement_scene,
+        args.replacement_run_id_prefix,
+    ), indent=2))
 
 
 if __name__ == "__main__":

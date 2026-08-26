@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P4C 7/8 blind native complete / temporal-member replacement frozen（2026-08-26）
+
+状态：`v64_p4c_confirmation_temporal_membership_recovery_frozen`；active task=
+`WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01 replacement scene-0813`；target/model-score read=`false/false`。
+v1 scene-ready流水完成7个native scene；`scene-0276`在native output前因IR-WM train temporal pickle无该key而失败，V64-F18=
+`recovery_frozen_pre_quality`。已确认其余7 scene均为temporal member并完成12 targets。
+
+恢复不重算7个有效scene，不改C0/M0/model/gate/denominator；只把无效vulnerable scene替换为冻结seed2 fallback中首个
+token-valid temporal member `scene-0813(631)`。replacement prep/native=`164500Z/165000Z`；aggregate/evidence/exact-once
+仍为`170000Z/171500Z/173000Z`。freeze=`docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.4 P4C scene-ready confirmation execution frozen（2026-08-26）
 
 状态：`v64_p4c_confirmation_execution_frozen`；active task=`WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01`；

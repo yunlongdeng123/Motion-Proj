@@ -108,7 +108,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败；full-native MLP以40%通过独立校准与exact-once确认（1/96 failure） | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key | `V64-F01`–`V64-F17`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败；full-native MLP以40%通过独立校准与exact-once确认（1/96 failure）；conditional确认输入恢复中 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key、temporal split membership | `V64-F01`–`V64-F18`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
@@ -361,6 +361,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   r2 canonical=`20260826T152500Z__confirmation-evidence-s0-r2`按上述合同完成`96/96`，其中33 hardlink复用、63新算，
   query/role overlap均0，wall=`74.6360 s`；模型分数仍未读，故以pre-score状态关闭。
   随后的exact-once评分成功消费该证据一次且未触发第二次恢复，确认本interface failure没有改变冻结策略或coverage。
+
+- `V64-F18`（`data/interface`, `recovery_frozen_pre_quality`）：P4C v1 metadata-only selection只检查nuScenes scene table、
+  sample count与used-scene ledger，漏掉IR-WM train temporal pickle membership。7个scene完成blind native；`scene-0276`
+  DriveStudio完成后在worker读取`payload["infos"][scene]`处`KeyError`，native output/target/model score均未读。官方BEVFormer/
+  IR-WM使用生成的temporal train/val infos，不能用未分割scene table替代membership。恢复保留7个valid leaf并只替换无效scene：
+  从commit `4813438`重建seed2 fallback；`scene-0572`是`flipped`误命中substring `ped`，首个token-valid且temporal-member
+  的vulnerable候选为`scene-0813(631)`。不得重选其余7 scene、改policy/model/gate或读取quality挑替换。
+  证据=`https://github.com/APRIL-ZJU/IR-WM/blob/ir-wm/README.md`、`https://github.com/fundamentalvision/BEVFormer`和
+  `docs/autoresearch/worldsim_v64/P4C_TEMPORAL_MEMBERSHIP_RECOVERY_FREEZE.md`。
 
 <a id="detail-v63"></a>
 

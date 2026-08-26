@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P4C TEMPORAL-MEMBERSHIP RECOVERY FREEZE（2026-08-26）
+
+- v1 blind native=`7/8 complete`；failed leaf=`20260826T162000Z__confirmation-native-scene-0276-s0-r1`；
+- failure=`IR-WM temporal infos KeyError scene-0276 before native output`；target/model-score read=`false/false`；V64-F18=`recovery_frozen_pre_quality`；
+- membership audit=`other 7 true; scene-0276 false`；replacement=`scene-0813(631), temporal member true, token-level peds description`；
+- reuse=`7 valid native leaves`；recompute valid scenes=`0`；policy/model/gates/case denominator change=`none`；
+- replacement prep/native=`164500Z/165000Z`；corrected aggregate/evidence/exact=`170000Z/171500Z/173000Z`；
+- hash/checksum/fingerprint/extra test=`none`；next=`one-scene blind replacement prep`。
+
 ## WorldSim V6.4 P4C CONFIRMATION EXECUTION FREEZE（2026-08-26）
 
 - cohort/policy=`frozen before quality read`；target/model-score read=`false/false`；
