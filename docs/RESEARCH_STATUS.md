@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 P6R confirmation evidence r1 failed / empty-frame r2 frozen（2026-08-26）
+
+状态：`v64_p6r_confirmation_evidence_empty_frame_recovery_frozen`；failed run=
+`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T151500Z__confirmation-evidence-s0-r1`；active task=
+`WS-V64-P6R-CONFIRMATION-EVIDENCE-01 r2`；confirmation target/model-score read=`partial 33 units/false`。
+
+r1完成`33/96` units后在scene-1105 frame62触发`frame_instances['62'] KeyError`。该scene的0--9与56--64键缺失，
+但`instances_info`逐帧核对均为0 actor annotation，`missing_with_annotations=[]`；sensor/lidar/pose完整。依据nuScenes devkit
+non-keyframe annotation interpolation语义，缺键应解释为empty actor set。登记`V64-F17 recovery_frozen_pre_score`；common loader
+只改为`frame_instances.get(str(frame), [])`。
+
+r2不重算已完成33 units：NPZ以hardlink复用、不复制；NPZ可恢复的semantic/sparse counts写回manifest，未存储的actor/raw/
+dynamic point count显式为null；仅计算剩余63 units。40% policy、模型、case gate和scene均不变，尚未读取任何confirmation
+model score。freeze=`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EVIDENCE_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.4 P6R confirmation native complete / exact-once evidence next（2026-08-26）
 
 状态：`v64_p6r_confirmation_native_complete_evidence_next`；canonical=

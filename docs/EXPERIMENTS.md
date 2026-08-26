@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 P6R CONFIRMATION EVIDENCE R1 FAILED / R2 RECOVERY（2026-08-26）
+
+- failed=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T151500Z__confirmation-evidence-s0-r1`；
+  completed before failure=`33/96 units`；model score read=`false`。
+- failure=`scene-1105 frame 62 absent from frame_instances`；audit=`all missing frames have zero instance annotations;
+  missing_with_annotations=[]`；failure delta=`V64-F17 recovery_frozen_pre_score`。
+- external basis=`nuScenes devkit non-keyframe box interpolation and empty/current annotation semantics`；
+  `https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/nuscenes.py`。
+- recovery=`missing frame key -> empty actor list; hardlink reuse 33 complete units; compute remaining 63 only`；unavailable reused
+  row summary fields=`explicit null`；model/policy/gates=`unchanged`。
+- r2 target=`20260826T152500Z__confirmation-evidence-s0-r2`；hash/checksum/fingerprint/extra tests=`none`。
+
 ## WorldSim V6.4 P6R CONFIRMATION NATIVE COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1`；

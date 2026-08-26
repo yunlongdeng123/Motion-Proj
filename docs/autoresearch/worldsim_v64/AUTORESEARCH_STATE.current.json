@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p6r_confirmation_native_complete_evidence_next",
+  "status": "v64_p6r_confirmation_evidence_empty_frame_recovery_frozen",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
@@ -41,9 +41,10 @@
     "V64-F13",
     "V64-F14",
     "V64-F15",
-    "V64-F16"
+    "V64-F16",
+    "V64-F17"
   ],
-  "last_failure_id": "V64-F16",
+  "last_failure_id": "V64-F17",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -146,5 +147,9 @@
   "p6r_confirmation_native_output_bytes": 4423846018,
   "p6r_confirmation_native_maximum_worker_peak_gpu_memory_gib": 4.13140344619751,
   "p6r_confirmation_catalog_cleanup_running": true,
-  "next_action": "commit and push the blind 96-target native milestone, then generate exact-once confirmation evidence once while the original prep controller finishes its catalog and temporary-raw cleanup"
+  "p6r_confirmation_target_read": "partial_33_units",
+  "p6r_confirmation_score_read": false,
+  "p6r_confirmation_evidence_failed_run": "run://worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T151500Z__confirmation-evidence-s0-r1",
+  "p6r_confirmation_evidence_reuse_unit_count": 33,
+  "next_action": "commit and push the empty-actor-frame recovery, then hardlink-reuse 33 complete evidence units and compute only the remaining 63 in r2 before any model score read"
 }

@@ -188,7 +188,7 @@ def load_frame_boxes(
     if frame_instances is None:
         frame_instances = json.loads((scene_root / "instances/frame_instances.json").read_text(encoding="utf-8"))
     rows: list[dict[str, Any]] = []
-    for actor_id in sorted((int(value) for value in frame_instances[str(frame)])):
+    for actor_id in sorted((int(value) for value in frame_instances.get(str(frame), []))):
         info = instances[str(actor_id)]
         annotations = info["frame_annotations"]
         indices = [int(value) for value in annotations["frame_idx"]]

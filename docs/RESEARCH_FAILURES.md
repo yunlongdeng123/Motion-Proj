@@ -108,7 +108,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败，full-native MLP恢复以40%通过；exact-once confirmation待执行 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog | `V64-F01`–`V64-F16`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_CASE_CALIBRATION_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败，full-native MLP恢复以40%通过；exact-once confirmation evidence恢复中 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key | `V64-F01`–`V64-F17`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_CASE_CALIBRATION_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -337,6 +337,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   scene-ready priority scheduling已完成全部`8 scenes/96 blind targets`：先完成单shard/相关shard组，DriveStudio与IR-WM按
   scene流水，最大worker显存`4.1314 GiB`；没有等待整批processed或启用多卡。故GPU-idle/全批屏障部分已恢复；superset
   catalog的剩余EOF写回和可重建临时raw删除仍由原prep controller收口，完成后再把V64-F16标为resolved。
+
+- `V64-F17`（`data/interface`, `recovery_frozen_pre_score`）：exact-once evidence r1完成33/96 units后，scene-1105 frame62
+  在`load_frame_boxes`用直接dict索引触发`KeyError`。processed审计显示该scene缺0--9、56--64的frame_instances键；这些
+  frame在instances_info中逐一为0 annotation，`missing_with_annotations=[]`，不是sensor缺失或hidden target异常。nuScenes
+  官方devkit对non-keyframe box使用相邻sample annotation插值，没有annotation时返回空/当前集合；故common loader把缺键解释为
+  empty actor list。r2以hardlink复用33个完整NPZ、只算剩63；NPZ未存储的三个summary字段显式null，不伪造。禁止重算33、
+  改scene/policy/gate或用target score挑恢复。证据=`https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/nuscenes.py`
+  和`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EVIDENCE_RECOVERY_FREEZE.md`。
 
 <a id="detail-v63"></a>
 
