@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.4 P6R independent calibration supported / confirmation unlocked（2026-08-26）
+
+状态：`v64_p6r_calibration_supported_confirmation_unlocked`；canonical=
+`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`；verdict=
+`supported_selective_policy`；selected nominal coverage=`0.40`；new confirmation read=`false`。
+
+96个独立case中，coverage 0.05/0.10/0.20/0.30/0.40均为`0/96` failure，mean realized coverage分别为
+`0.049961/0.099963/0.199969/0.299958/0.399967`；Bonferroni one-sided Clopper--Pearson UCB统一为`0.048647`，
+低于0.05 target。50% coverage为`3/96`、empirical/UCB=`0.03125/0.103218`，三例均在rain，因此按最大通过规则选择40%，
+未越界挑50%。四strata在40%各`0/24` failure。GPU wall=`13.0083 s`、peak RSS=`0.7943 GiB`。
+
+V64-F15的PCA16线性U3拒绝保持不可变，但恢复状态改为`resolved_by_new_version`：完整273D MLP已通过独立有限样本校准。
+这仍不是confirmation、authority或现实安全声明。下一步只对预先冻结的新8 scene生成blind native/evidence并以40%策略exact-once
+确认，不 refit、不改policy。完整收口=`docs/autoresearch/worldsim_v64/P6R_CASE_CALIBRATION_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P6R independent evidence complete / calibration scoring next（2026-08-26）
 
 状态：`v64_p6r_independent_evidence_complete_calibration_scoring_next`；canonical=

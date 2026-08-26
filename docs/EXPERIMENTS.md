@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.4 P6R INDEPENDENT CALIBRATION SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`；verdict=
+  `supported_selective_policy`；denominator=`8 scenes / 96 cases / 4 strata`。
+- coverage `0.05/0.10/0.20/0.30/0.40` all=`0 failures / UCB .0486466`；mean realized=
+  `.0499607/.0999629/.1999692/.2999580/.3999668`。
+- coverage `.50`=`3 failures / empirical .03125 / UCB .1032179`，all three rain；largest passing selection=`.40`；
+  each stratum at selected coverage=`0/24 failures`。
+- resources=`13.0083 s GPU / .7943 GiB RSS`；new confirmation read=`false`；failure delta=
+  `V64-F15 resolved_by_new_version`；claim=`independent calibration only`。
+- next=`blind materialize frozen new 8 scenes, then exact-once confirmation at fixed .40`；refit/policy change/hash/checksum/
+  fingerprint/extra smoke/regression=`none`。
+
 ## WorldSim V6.4 P6R INDEPENDENT EVIDENCE COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1`；

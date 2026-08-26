@@ -301,7 +301,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   加`-n`后lane连续推进，双worker达到100% GPU。防重复：不得因client挂起杀未知远端进程或新建重复run；先查remote PID/
   summary，再恢复缺失scene。证据=`https://man.openbsd.org/ssh`及P6逐scene run leaves。
 
-- `V64-F15`（`algorithm/evaluation`, `active`）：冻结U3在16个独立calibration scene的192个case上没有任何正coverage
+- `V64-F15`（`algorithm/evaluation`, `resolved_by_new_version`）：冻结U3在16个独立calibration scene的192个case上没有任何正coverage
   通过case risk合同。最低5% coverage已有`41/192` failure，empirical risk=`0.213542`、simultaneous UCB=
   `0.292860`；night/vulnerable-transit分别`16/48`与`13/48`，所以不是Bonferroni或Clopper-Pearson过严。10%到50%
   coverage的failure继续增至`54,62,74,80,93`。根因边界是PCA16线性risk ranking不能跨新night/rain/construction/
@@ -321,6 +321,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   failure。下一判定只来自预注册的96-case独立校准。
   独立证据现已在模型冻结后一次完成`8 scenes/96 units`，source-role overlap与query均为0；尚未读取模型分数或选择
   coverage，故V64-F15状态不变且没有新增failure ID。
+  P6R独立评分随后以0.05--0.40 coverage全部得到`0/96` failure和simultaneous UCB=`0.048647`，选择最大通过40%；
+  50%为`3/96`、UCB=`0.103218`而正确拒绝。故失败以“新模型版本解决”关闭；原PCA16线性U3负结论不改写，且新
+  confirmation仍未读。证据=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`。
 
 <a id="detail-v63"></a>
 
