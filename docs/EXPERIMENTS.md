@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.4 P6 CASE CALIBRATION REJECTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6-CALIBRATION-01/20260826T131000Z__case-calibration-s0-r1`；verdict=
+  `rejected_no_positive_coverage`；denominator=`16 scenes / 192 cases / 4 strata`。
+- nominal coverage→failures/empirical risk/simultaneous UCB：`0.05→41/0.213542/0.292860`；
+  `0.10→54/0.281250/0.365775`；`0.20→62/0.322917/0.409553`；`0.30→74/0.385417/0.473895`；
+  `0.40→80/0.416667/0.505518`；`0.50→93/0.484375/0.572863`。
+- 5% stratum failures=`construction 4/48, night 16/48, rain 8/48, vulnerable-transit 13/48`；selected policy=`null`；
+  confirmation/test read=`false/false`。
+- resources=`45.2726 s CPU / 0.3484 GiB RSS`；failure delta=`V64-F15 active algorithm/evaluation`；closeout=
+  `docs/autoresearch/worldsim_v64/P6_CASE_CALIBRATION_CLOSEOUT.md`。
+- next legal recovery=`16 consumed scenes -> development training; frozen full-feature selective MLP; current untouched 8 -> calibration;
+  new metadata-only confirmation cohort`；no loss/width/seed sweep。
+
 ## WorldSim V6.4 P6 NATIVE COMPLETE / CASE CALIBRATION PREREG（2026-08-26）
 
 - prep canonical=`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T112500Z__calibration-prep-s0-r2`；

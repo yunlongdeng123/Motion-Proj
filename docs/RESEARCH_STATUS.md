@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V6.4 P6 case calibration rejected / selective MLP recovery next（2026-08-26）
+
+状态：`v64_p6_case_calibration_rejected_selective_mlp_recovery_next`；completed task=
+`WS-V64-P6-CALIBRATION-01`；hypothesis=`WS-V64-H-P6C-001 rejected`；canonical=
+`run://worldsim_v64/WS-V64-P6-CALIBRATION-01/20260826T131000Z__case-calibration-s0-r1`；confirmation target read=`false`。
+
+16 scene / 192 case按冻结协议一次评分。最低5% coverage仍有`41/192` case的selected hidden-FREE conflict超过0.05，
+empirical risk=`0.213542`、Bonferroni simultaneous upper bound=`0.292860`；construction/night/rain/vulnerable四strata失败=
+`4/16/8/13`（各48 cases）。coverage 0.10/0.20/0.30/0.40/0.50的失败数=`54/62/74/80/93`，没有任何正coverage
+满足risk upper bound<=0.05，故policy=`null`。CPU wall=`45.2726 s`、peak RSS=`0.3484 GiB`。
+
+这拒绝P5的PCA16线性U3作为新场景case-level controller；不是simultaneous bound过严，因为5% empirical risk本身已超过
+目标四倍。登记`V64-F15 active algorithm/evaluation`；禁止降低epsilon、提高conflict阈值、删night/vulnerable strata、
+增加未注册<5% coverage或读取confirmation救结果。完整收口=
+`docs/autoresearch/worldsim_v64/P6_CASE_CALIBRATION_CLOSEOUT.md`。
+
+检索ICML 2019 SelectiveNet、NeurIPS 2019 Deep Gamblers和ICCV 2017 Focal Loss后，下一恢复只允许新版本：已消费的16
+scene降为development training，用完整native feature训练一个固定小型selective MLP；当前8个quality-unread confirmation
+scene改作独立calibration，并在其读取前从剩余metadata-only pool冻结新的confirmation cohort。模型/训练/coverage协议必须先
+提交push；不扫描网络宽度、loss或seed。
+
 ## WorldSim V6.4 P6 native cohort 完成 / case calibration 已冻结（2026-08-26）
 
 状态：`v64_p6_native_complete_case_calibration_preregistered`；completed prep=

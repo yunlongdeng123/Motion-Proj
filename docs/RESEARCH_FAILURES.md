@@ -33,6 +33,8 @@
   recovery_frozen_pre_quality`，恢复只使用metadata派生帧数并复用已完成raw/scene。
 - P6 r2已完成24场景并删除临时raw，`V64-F12/V64-F13`分别由producer-consumer与variable-length恢复；短SSH命令继承
   stdin导致本地编排不退出，登记`V64-F14 resolved_operations`并按OpenSSH官方`-n`修复。
+- 独立192-case校准在最低5% coverage仍为`41/192` failure、risk/UCB=`0.2135/0.2929`，登记`V64-F15 active`；
+  confirmation target保持未读，禁止放宽risk合同或删stratum。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -106,7 +108,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期 | `V64-F01`–`V64-F14`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3通过fresh AUROC门但独立case calibration在全部coverage失败；authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期 | `V64-F01`–`V64-F15`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6_CASE_CALIBRATION_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -298,6 +300,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   原worker随后正常完成`12/12`。OpenSSH官方手册明确后台/编排调用用`-n`禁止读取stdin；所有短检查、publish和wrapper调用
   加`-n`后lane连续推进，双worker达到100% GPU。防重复：不得因client挂起杀未知远端进程或新建重复run；先查remote PID/
   summary，再恢复缺失scene。证据=`https://man.openbsd.org/ssh`及P6逐scene run leaves。
+
+- `V64-F15`（`algorithm/evaluation`, `active`）：冻结U3在16个独立calibration scene的192个case上没有任何正coverage
+  通过case risk合同。最低5% coverage已有`41/192` failure，empirical risk=`0.213542`、simultaneous UCB=
+  `0.292860`；night/vulnerable-transit分别`16/48`与`13/48`，所以不是Bonferroni或Clopper-Pearson过严。10%到50%
+  coverage的failure继续增至`54,62,74,80,93`。根因边界是PCA16线性risk ranking不能跨新night/rain/construction/
+  vulnerable场景提供case-level hidden-FREE控制；P5两scene AUROC通过不再足以解锁calibration/authority。confirmation target仍
+  未读。禁止降低epsilon=0.05、提高conflict threshold=0.05、删stratum、读confirmation选策略或添加<5%事后coverage。
+  合法复开必须是新模型版本：16个已消费scene只作development training，当前8个untouched scene作独立calibration，并先
+  metadata-only冻结新confirmation。迁移依据=`https://proceedings.mlr.press/v97/geifman19a`、
+  `https://proceedings.neurips.cc/paper/2019/hash/0c4b1eeb45c90b52bfb9d07943d855ab-Abstract.html`、
+  `https://openaccess.thecvf.com/content_iccv_2017/html/Lin_Focal_Loss_for_ICCV_2017_paper.html`；closeout=
+  `docs/autoresearch/worldsim_v64/P6_CASE_CALIBRATION_CLOSEOUT.md`。
 
 <a id="detail-v63"></a>
 
