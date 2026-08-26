@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 exact-once fixed-denominator relative confirmation supported（2026-08-27）
+
+状态：`v64_p10r4_exact_empirical_relative_supported_p11_bounded_design_next`；canonical=
+`run://worldsim_v64/WS-V64-P10R4-FIXED-DENOMINATOR-EXACT-ONCE-01/20260827T025000Z__exact-once-fixed-denominator-s4-r1`；
+verdict=`supported_exact_once_fixed_denominator_relative_confirmation`。
+
+untouched 96-case中M0/M1 mean total coverage均=`0.474969689`；fixed-denominator worst10 CVaR=
+`0.020725740/0.010821074`，M1-M0=`-0.009904666`；pooled conflict density=`0.004944667/0.002001413`，
+delta=`-0.002943254`。paired cases为M1 lower/equal/higher=`18/78/0`，描述性half-tie probability=`0.59375`。
+三项冻结gate全部PASS；无refit、runtime selection、sweep或second test。V64-F25仅在独立exact empirical cohort层面关闭，
+P10R2 formal和V64-F21 current-M0负结论不改写；population/collision/planning/closed-loop/safety仍不支持。P11只解锁
+不训练大型NWM的有界设计审计。GPU wall/peak RSS=`11.6233s/0.8798GiB`。closeout=
+`docs/autoresearch/worldsim_v64/P10R4_FIXED_DENOMINATOR_EXACT_ONCE_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R4 untouched-test evidence complete / exact-once next（2026-08-27）
 
 状态：`v64_p10r4_test_evidence_complete_exact_once_next`；canonical=

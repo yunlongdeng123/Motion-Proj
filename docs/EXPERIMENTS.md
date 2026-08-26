@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 FIXED-DENOMINATOR EXACT-ONCE SUPPORTED（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R4-FIXED-DENOMINATOR-EXACT-ONCE-01/20260827T025000Z__exact-once-fixed-denominator-s4-r1`；
+- verdict=`supported_exact_once_fixed_denominator_relative_confirmation`；cases=`96`；
+- M0/M1 mean coverage=`0.474969689/0.474969689`；delta=`0`；coverage gate=`PASS`；
+- M0/M1 fixed worst10 CVaR=`0.020725740/0.010821074`；delta=`-0.009904666`；gate=`PASS`；
+- M0/M1 pooled fixed density=`0.004944667/0.002001413`；delta=`-0.002943254`；gate=`PASS`；
+- paired lower/equal/higher=`18/78/0`；half-tie probability=`0.59375`（descriptive only）；
+- route selected/conflicts M0=`8760/84`，M1=`6425/34`；GPU wall/peak RSS=`11.6233s/0.8798GiB`；
+- model refit/runtime selection/sweep/second test/hash/checksum/fingerprint/extra tests=`none`；
+- authority=`untouched-cohort exact empirical fixed-opportunity comparison only; no population/collision/planning/closed-loop/safety claim`。
+
 ## WorldSim V6.4 P10R4 UNTOUCHED TEST EVIDENCE COMPLETE（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1`；

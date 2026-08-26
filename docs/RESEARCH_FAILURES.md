@@ -465,7 +465,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   后续fresh evidence一次完成96/96 units、0 reuse与0 source-role overlap，未复发temporal membership、producer或partial问题；
   V64-F23/F24保持关闭，不新增failure ID。target现已读，故此后只允许预注册exact-once scorer，不得再改M1或cohort。
 
-- `V64-F25`（`evaluation/generalization`, `active_relative_tail_generalization`）：P10R2 prereg的绝对M1 route CVaR门在fresh
+- `V64-F25`（`evaluation/generalization`, `resolved_exact_empirical_cohort_relative_confirmation`）：P10R2 prereg的绝对M1 route CVaR门在fresh
   96 cases通过（`0.0403133<=0.05`），总coverage严格保持，故formal verdict按合同为supported。但calibration中的相对改善没有
   确认：fresh M0 CVaR=`0.0391815`，M1-M0=`+0.0011318`；M1 pointwise failures从1增至2、maximum从`0.06818`升至
   `0.08333`。同时M1 route selected/conflicts从`8117/54`降到`4971/20`，说明绝对冲突质量下降但case-rate尾部受更小分母与
@@ -488,6 +488,11 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   coverage保持、fixed-denominator worst10不劣、pooled fixed density不劣。test未读前不设最小effect、不改M1；若失败则本条
   terminal rejected并保持P11锁定，若通过也只关闭exact empirical cohort层面的relative问题。输入I/O改为单遍metadata与
   raw-only producer/单feeder，避免GPU因重复8次`sample_data.json`扫描或duplicate preprocess owner空等。
+  P10R4唯一untouched exact-once最终三门全过：coverage delta=`0`，fixed-opportunity worst10 M0/M1=
+  `0.020725740/0.010821074`（delta=`-0.009904666`），pooled fixed density=`0.004944667/0.002001413`
+  （delta=`-0.002943254`）；paired M1 lower/equal/higher=`18/78/0`。因此本条只在独立96-case exact empirical cohort的相对
+  fixed-opportunity层面关闭，并解除由本条造成的P11 bounded-design锁。不得把它写成P10R2 selected-denominator formal重判，
+  也不覆盖V64-F21对current M0的负结论；population、physical collision、planning、closed-loop与safety仍无authority。
 
 - `V64-F26`（`io/execution`, `resolved_by_restricted_shards_and_dual_queue`）：P10R4首个raw-only入口发现`14437` required members均不在持久catalog，
   10个`.tgz`并发扫描约4分钟仅到`4--10%`，workers主要处于page wait且GPU尚无完整scene。CPython tarfile对gzip selected
