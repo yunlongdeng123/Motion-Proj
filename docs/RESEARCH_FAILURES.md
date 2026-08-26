@@ -110,6 +110,10 @@
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败；full-native MLP以40%通过独立校准与exact-once确认（1/96 failure） | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog、empty actor frame key | `V64-F01`–`V64-F17`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md` |
 
+P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
+coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
+algorithm failure并关闭该candidate，不改mapping或扫描第二版本。
+
 ### 1.1 V1 汇总条目
 
 - `V1-F01`（`algorithm/evaluation`, `active`）：AD-GS 六场景 exact reproduction 只证明 frozen baseline 可复现，

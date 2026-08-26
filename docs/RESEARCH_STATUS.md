@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P4C conditional compiler frozen / calibration replay next（2026-08-26）
+
+状态：`v64_p4c_conditional_compiler_frozen`；active task=`WS-V64-P4C-CONDITIONAL-COMPILER-01`。C0固定global
+40%；M0固定rain 40%、night/construction/vulnerable-transit 50%，沿用冻结MLP、risk order与0.05 conflict threshold；
+不做coverage sweep或refit。候选只来自已消费calibration上的既有结果：50%的3个failure全部在rain，其余strata为0。
+
+新96-case confirmation在quality read前以metadata seed2冻结为`0992/1101,0454/1102,0876/0895,0321/0276`，
+每stratum两scene。selection只读description、sample count和保守used-scene membership。下一步先formal replay已读calibration；
+若M0达到coverage uplift>=0.05且保持0 failure，才物化新confirmation。freeze=
+`docs/autoresearch/worldsim_v64/P4C_CONDITIONAL_COMPILER_FREEZE.md`。
+
 ## WorldSim V6.4 P6R exact-once confirmation supported（2026-08-26）
 
 状态：`v64_p6r_exact_once_supported_cleanup_running`；canonical=

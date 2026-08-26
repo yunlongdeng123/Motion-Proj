@@ -1,0 +1,43 @@
+schema_version: worldsim_v64.p4c_conditional_compiler.v1
+task_id: WS-V64-P4C-CONDITIONAL-COMPILER-01
+hypothesis_id: WS-V64-H-P4C-001
+seed: 0
+claim_boundary: frozen conditional-coverage candidate replay on already-consumed calibration only; no fresh confirmation, real-world safety, or downstream simulation claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+  native_partition: fresh_confirmation
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+scenes:
+  - {name: scene-1079, stratum: night}
+  - {name: scene-1097, stratum: night}
+  - {name: scene-1106, stratum: rain}
+  - {name: scene-0576, stratum: rain}
+  - {name: scene-0067, stratum: construction}
+  - {name: scene-0258, stratum: construction}
+  - {name: scene-1083, stratum: vulnerable_transit}
+  - {name: scene-0738, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+policy:
+  score: full_native_selective_mlp_hidden_free
+  global_nominal_coverage: 0.40
+  conditional_nominal_coverages:
+    construction: 0.50
+    night: 0.50
+    rain: 0.40
+    vulnerable_transit: 0.50
+  hidden_free_conflict_threshold: 0.05
+gates:
+  minimum_conditional_coverage_uplift: 0.05
+  maximum_conditional_failures: 0
+  maximum_conditional_failures_per_stratum: 0
+  require_not_more_failures_than_global: true
+verdict_on_pass: supported_conditional_candidate
+verdict_on_failure: rejected_conditional_candidate
+locks:
+  model_refit_allowed: false
+  coverage_sweep_allowed: false
+  confirmation_read_allowed: false
+  content_hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F15, V64-F16, V64-F17]

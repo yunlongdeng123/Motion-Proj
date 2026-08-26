@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P4C CONDITIONAL COMPILER FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P4C-CONDITIONAL-COMPILER-01 / WS-V64-H-P4C-001`；quality read at freeze=`none new`；
+- C0=`global 0.40`；M0=`rain 0.40; night/construction/vulnerable_transit 0.50`；model/refit/sweep=`frozen/false/false`；
+- calibration replay gate=`coverage uplift >=0.05; M0 overall/per-stratum failures=0; M0 failures <= C0`；
+- new confirmation metadata-only seed2=`night 0992/1101, rain 0454/1102, construction 0876/0895, vulnerable 0321/0276`；
+- confirmation gate frozen=`coverage uplift >=0.05; M0 failures <=4/96 overall and <=1/24 each stratum`；
+- hashes/checksums/fingerprints/smoke/regression=`none`；next=`single formal calibration replay`。
+
 ## WorldSim V6.4 P6R EXACT-ONCE CONFIRMATION SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-EXACT-ONCE-CONFIRMATION-01/20260826T153500Z__exact-once-confirmation-s0-r1`；
