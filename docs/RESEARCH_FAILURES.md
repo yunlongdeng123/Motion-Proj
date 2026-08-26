@@ -465,6 +465,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   后续fresh evidence一次完成96/96 units、0 reuse与0 source-role overlap，未复发temporal membership、producer或partial问题；
   V64-F23/F24保持关闭，不新增failure ID。target现已读，故此后只允许预注册exact-once scorer，不得再改M1或cohort。
 
+- `V64-F25`（`evaluation/generalization`, `active_relative_tail_generalization`）：P10R2 prereg的绝对M1 route CVaR门在fresh
+  96 cases通过（`0.0403133<=0.05`），总coverage严格保持，故formal verdict按合同为supported。但calibration中的相对改善没有
+  确认：fresh M0 CVaR=`0.0391815`，M1-M0=`+0.0011318`；M1 pointwise failures从1增至2、maximum从`0.06818`升至
+  `0.08333`。同时M1 route selected/conflicts从`8117/54`降到`4971/20`，说明绝对冲突质量下降但case-rate尾部受更小分母与
+  稀疏离散事件支配。不得用absolute gate pass声称相对改善，也不得在已读confirmation上调route cap、tail fraction或挑case。
+  合法下一步必须先检索denominator-stable sparse risk / occupancy-flow severity方法，再冻结rows-only诊断或新版本；P11 comparative
+  authority保持锁定。current M0 P10T负结论与M1 absolute fresh pass分别保留，互不覆盖。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）

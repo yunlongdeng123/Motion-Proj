@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 EXACT-ONCE ABSOLUTE PASS / RELATIVE EFFECT NOT CONFIRMED（2026-08-27）
+
+- canonical=`run://worldsim_v64/WS-V64-P10R2-EXACT-ONCE-CONFIRMATION-01/20260826T203000Z__exact-once-confirmation-s3-r1`；
+- verdict/gates=`supported_exact_once_route_aware_confirmation; M1 CVaR <=0.05 PASS; total coverage preserved PASS`；
+- M0/M1 mean total coverage=`0.4749745/0.4749745`；route selected=`8117/4971`；route conflicts=`54/20`；
+- M0/M1 route worst10 CVaR=`0.0391815/0.0403133`；M1-M0=`+0.0011318`；
+- M0/M1 pointwise route failures=`1/2`；maximum case rate=`0.0681818/0.0833333`；overall case failures=`0/0`；
+- new confirmation/model-score read=`true/true`；refit/runtime selection=`false/false`；GPU wall/peak RSS=`11.8041s/0.8843GiB`；
+- authority=`M1 absolute fresh empirical tail only; relative tail-rate improvement, population bound, collision/planning/safety unsupported`。
+
 ## WorldSim V6.4 P10R2 FRESH EVIDENCE COMPLETE（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R2-CONFIRMATION-EVIDENCE-01/20260826T201500Z__confirmation-evidence-s3-r1`；

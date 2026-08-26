@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 exact-once absolute tail supported / relative effect not confirmed（2026-08-27）
+
+状态：`v64_p10r2_exact_once_absolute_supported_relative_tail_active`；canonical=
+`run://worldsim_v64/WS-V64-P10R2-EXACT-ONCE-CONFIRMATION-01/20260826T203000Z__exact-once-confirmation-s3-r1`；verdict=
+`supported_exact_once_route_aware_confirmation`；V64-F25=`active_relative_tail_generalization`。
+
+fresh 96-case exact-once中M0/M1 total coverage均=`0.4749745`，delta=`0`；M1 route worst10 CVaR=`0.0403133<=0.05`，
+两项预注册gate PASS。M1把route selected/conflicts从`8117/54`降到`4971/20`，但fresh M0 CVaR更低=`0.0391815`，
+M1-M0=`+0.0011318`；pointwise failures=`1->2`，maximum=`0.06818->0.08333`。因此只支持M1自身的fresh observed
+absolute empirical tail门，不支持“route-aware相对M0改善tail rate”的主张；current M0历史P10T负结论仍不改写，P11相对收益权限
+继续锁定。model refit/runtime selection=`false/false`，GPU wall/peak RSS=`11.8041s/0.8843GiB`。closeout=
+`docs/autoresearch/worldsim_v64/P10R2_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P10R2 fresh evidence complete / exact-once next（2026-08-27）
 
 状态：`v64_p10r2_confirmation_evidence_complete_exact_once_next`；canonical=
