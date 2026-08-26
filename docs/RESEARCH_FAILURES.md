@@ -29,6 +29,8 @@
   `16+8 scenes`；当前与旧evaluation score均不得回流修改cohort、risk rule或head。
 - P6整批准备在共享盘扫描`>1 h`后仍为`9/10 shards`且GPU空闲，登记`V64-F12 active`；恢复采用scene-ready有界
   producer-consumer，不重复已完成shard、不做无关GPU filler，confirmation仍保持锁定。
+- P6 prep r1又暴露固定`1176/196`不适用于`nbr_samples=41`的scene-1045；登记`V64-F13
+  recovery_frozen_pre_quality`，恢复只使用metadata派生帧数并复用已完成raw/scene。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -102,7 +104,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障 | `V64-F01`–`V64-F12`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数 | `V64-F01`–`V64-F13`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -276,6 +278,17 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`、
   `https://docs.nvidia.com/deeplearning/dali/archives/dali_190/user-guide/docs/advanced_topics_performance_tuning.html`、
   `https://github.com/webdataset/webdataset`。
+
+- `V64-F13`（`data/interface`, `recovery_frozen_pre_quality`）：prep r1在全部tar扫描完成、首个scene-1045官方
+  DriveStudio转换成功后，以`images=1206, lidar=201`对旧六场景硬编码的`1176/196`做比较并抛错。r1未读
+  Occupancy/UQ/hidden-FREE或calibration/confirmation质量；临时raw和完整首场景均保留。根因是nuScenes scene记录有
+  `nbr_samples`，而`interpolate_N=4`的官方DriveStudio时间表长度为`(nbr_samples-1)*5+1`；scene-1045的
+  `nbr_samples=41`故应为201帧、六相机1206图，不是文件缺失或重复。恢复只从冻结metadata派生每scene期望数，并让新r2
+  显式复用现有临时raw和完整scene；不删除额外合法帧、不重扫tar、不改变12 target、cohort、seed或backend。首场景已独立
+  完成`12/12` native targets，证明201帧接口可供IR-WM消费，但不构成质量结论。证据=
+  `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`、
+  `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T111500Z__calibration-native-scene-1045-s0-r1`、
+  `https://github.com/ziyc/drivestudio`、`https://www.nuscenes.org/nuscenes?frame=0&sceneId=scene-0011&view=regular`。
 
 <a id="detail-v63"></a>
 

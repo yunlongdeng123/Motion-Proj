@@ -56,7 +56,12 @@ def _all_scenes(config: dict[str, object]) -> list[dict[str, object]]:
     return rows
 
 
-def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
+def run(
+    config_path: Path,
+    repo_root: Path,
+    run_dir: Path,
+    reuse_temporary_raw: bool = False,
+) -> dict[str, object]:
     if run_dir.exists():
         raise FileExistsError(run_dir)
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
@@ -66,8 +71,10 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     allowed_parent = Path("/root/autodl-tmp/tmp").resolve()
     if temporary_root.parent != allowed_parent or temporary_root.name != "worldsim_v64_p6_raw_batch":
         raise RuntimeError(f"temporary raw path is outside the frozen target: {temporary_root}")
-    if temporary_root.exists():
+    if temporary_root.exists() and not reuse_temporary_raw:
         raise FileExistsError(temporary_root)
+    if reuse_temporary_raw and not temporary_root.exists():
+        raise FileNotFoundError(temporary_root)
 
     run_dir.mkdir(parents=True)
     (run_dir / "logs").mkdir()
@@ -82,33 +89,43 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     metadata_root = Path(preparation["metadata_root"])
     metadata = metadata_root / "v1.0-trainval"
     processed_root = Path(preparation["processed_root"])
-    for scene in scenes:
-        destination = processed_root / f"{int(scene['processed_index']):03d}"
-        if destination.exists():
-            raise FileExistsError(destination)
-
-    payloads = {
-        str(scene["name"]): collect_required(metadata, str(scene["name"]))
+    metadata_scenes = {
+        str(row["name"]): row
+        for row in json.loads((metadata / "scene.json").read_text(encoding="utf-8"))
+    }
+    expected_frames = {
+        str(scene["name"]):
+        (int(metadata_scenes[str(scene["name"])]["nbr_samples"]) - 1) * 5 + 1
         for scene in scenes
     }
-    required = {
-        row["filename"]
-        for payload in payloads.values()
-        for row in payload["sample_data"]
-    }
-    temporary_root.mkdir(parents=True)
-    _link_static_dataset(metadata_root, temporary_root)
-    helpers = load_asset_module(repo_root)
-    helpers.link_existing_files(
-        Path(preparation["raw_reuse_root"]), temporary_root, required
-    )
-    helpers.scan_shards(
-        tar_dir=Path(preparation["public_tar_root"]),
-        members=required,
-        index_path=allowed_parent / "worldsim_v64_p6_member_shards.json",
-        dst=temporary_root,
-        workers=int(preparation["archive_workers"]),
-    )
+    for scene in scenes:
+        destination = processed_root / f"{int(scene['processed_index']):03d}"
+        if destination.exists() and not reuse_temporary_raw:
+            raise FileExistsError(destination)
+
+    if not reuse_temporary_raw:
+        payloads = {
+            str(scene["name"]): collect_required(metadata, str(scene["name"]))
+            for scene in scenes
+        }
+        required = {
+            row["filename"]
+            for payload in payloads.values()
+            for row in payload["sample_data"]
+        }
+        temporary_root.mkdir(parents=True)
+        _link_static_dataset(metadata_root, temporary_root)
+        helpers = load_asset_module(repo_root)
+        helpers.link_existing_files(
+            Path(preparation["raw_reuse_root"]), temporary_root, required
+        )
+        helpers.scan_shards(
+            tar_dir=Path(preparation["public_tar_root"]),
+            members=required,
+            index_path=allowed_parent / "worldsim_v64_p6_member_shards.json",
+            dst=temporary_root,
+            workers=int(preparation["archive_workers"]),
+        )
 
     scene_rows = []
     environment = os.environ.copy()
@@ -117,6 +134,29 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     )
     for scene in scenes:
         scene_started = time.monotonic()
+        destination = processed_root / f"{int(scene['processed_index']):03d}"
+        expected_lidar = expected_frames[str(scene["name"])]
+        expected_images = expected_lidar * 6
+        if destination.exists():
+            images = len(list((destination / "images").glob("*.jpg")))
+            lidar = len(list((destination / "lidar").glob("*.bin")))
+            if images != expected_images or lidar != expected_lidar:
+                raise RuntimeError(
+                    f"incomplete resume scene {scene['name']}: images={images}/{expected_images}, "
+                    f"lidar={lidar}/{expected_lidar}"
+                )
+            scene_rows.append(
+                {
+                    "partition": scene["partition"],
+                    "scene": scene["name"],
+                    "processed_index": int(scene["processed_index"]),
+                    "image_count": images,
+                    "lidar_count": lidar,
+                    "reused_complete_scene": True,
+                    "wall_seconds": time.monotonic() - scene_started,
+                }
+            )
+            continue
         command = [
             "/root/autodl-tmp/envs/drivestudio/bin/python",
             str(repo_root / "scripts/preprocess_dr_v2_nuscenes_single.py"),
@@ -140,12 +180,12 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
             )
         if process.returncode != 0:
             raise RuntimeError(f"preprocess failed for {scene['name']}: {log_path}")
-        destination = processed_root / f"{int(scene['processed_index']):03d}"
         images = len(list((destination / "images").glob("*.jpg")))
         lidar = len(list((destination / "lidar").glob("*.bin")))
-        if images != 1176 or lidar != 196:
+        if images != expected_images or lidar != expected_lidar:
             raise RuntimeError(
-                f"processed count mismatch for {scene['name']}: images={images}, lidar={lidar}"
+                f"processed count mismatch for {scene['name']}: "
+                f"images={images}/{expected_images}, lidar={lidar}/{expected_lidar}"
             )
         scene_rows.append(
             {
@@ -154,6 +194,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
                 "processed_index": int(scene["processed_index"]),
                 "image_count": images,
                 "lidar_count": lidar,
+                "reused_complete_scene": False,
                 "wall_seconds": time.monotonic() - scene_started,
             }
         )
@@ -171,6 +212,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
             row["partition"] == "fresh_confirmation" for row in scene_rows
         ),
         "temporary_raw_removed_after_success": True,
+        "reused_temporary_raw": reuse_temporary_raw,
         "scene_rows": scene_rows,
         "wall_seconds": wall,
         "quality_read": False,
@@ -188,8 +230,14 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument("--reuse-temporary-raw", action="store_true")
     args = parser.parse_args()
-    summary = run(args.config.resolve(), args.repo_root.resolve(), args.run_dir.resolve())
+    summary = run(
+        args.config.resolve(),
+        args.repo_root.resolve(),
+        args.run_dir.resolve(),
+        args.reuse_temporary_raw,
+    )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

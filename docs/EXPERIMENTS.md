@@ -12,6 +12,12 @@
   `https://github.com/webdataset/webdataset`。
 - hash/checksum/fingerprint=`none`；extra smoke/regression=`none`；failure delta=`V64-F12 active resource/operations`；
   multi-GPU need=`false`。
+- prep r1 stopped pre-quality after scene-1045 at `1206 images / 201 lidar` because the launcher hard-coded the prior-scene
+  `1176 / 196` count；official contract=`interpolate_N=4 => (nbr_samples-1)*5+1`；recovery=`reuse raw + metadata-derived count`；
+  failure delta additionally=`V64-F13 recovery_frozen_pre_quality`。
+- scene-1045 incremental native probe=
+  `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T111500Z__calibration-native-scene-1045-s0-r1`；
+  result=`12/12 targets, all native complete, 552,980,744 bytes, 46.2881 s, peak 4.1308 GiB`；quality read=`false`。
 
 ## WorldSim V6.4 P6 CALIBRATION/CONFIRMATION COHORT PREREG（2026-08-26）
 

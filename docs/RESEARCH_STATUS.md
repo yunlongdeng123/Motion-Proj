@@ -16,6 +16,12 @@ GPU仍为`0% / 1 MiB`；这暴露了“全量tar完成→全量processed完成�
 worker。先流水化16-scene calibration；校准模型冻结后才读取8-scene confirmation。这样不等待24场景整批完成，也不增加
 hash/checksum/fingerprint、quality gate、smoke或回归矩阵。单3090足够，不触发shutdown。
 
+最后一个shard完成后，prep r1在首个scene-1045完成官方DriveStudio处理后因旧固定计数`1176 images / 196 lidar`
+错误阻断；该scene按官方`interpolate_N=4`与metadata `nbr_samples=41`正确产生`1206 / 201`。登记`V64-F13
+recovery_frozen_pre_quality`：期望帧数改为`(nbr_samples-1)*5+1`，r2只复用现有临时raw与已完成scene，不重扫tar。
+与此同时scene-1045已直接完成IR-WM：`12 targets / 552,980,744 bytes / 46.2881 s / peak 4.1308 GiB`，native
+feature完整，calibration/confirmation quality均未读。r1失败leaf与首场景probe均保留；下一动作是push恢复后直接启动prep r2。
+
 ## WorldSim V6.4 独立 calibration/confirmation cohort 已冻结（2026-08-26）
 
 状态：`v64_calibration_confirmation_cohort_preregistered`；active task=
