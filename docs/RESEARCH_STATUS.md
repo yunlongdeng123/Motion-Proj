@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P10M target-free conditional state bake frozen（2026-08-26）
+
+状态：`v64_p10m_conditional_state_bake_preregistered`；active task/hypothesis=
+`WS-V64-P10M-CONDITIONAL-STATE-BAKE-01 / WS-V64-H-P10M-001`。P4C exact-once支持后直接进入physical-state materialization，
+跳过legacy28与额外confirmation/test矩阵。
+
+冻结runner只读fresh `METHOD_EVIDENCE`、native logits/BEV与既有MLP，不读取`TARGET_EVIDENCE`；对96 case把C0/M0选择编译成
+带metric-frame voxel centers、risk score及`OCCUPIED/UNKNOWN`状态的独立NPZ。随后semantic runtime consumer只从包中读取状态与
+坐标，不加载模型或evidence。仅保留mean coverage uplift `>=0.05`与`96 packages全部可消费且M0新增状态>0`两个门；不做GS
+render/collision/planning claim。freeze=`docs/autoresearch/worldsim_v64/P10M_CONDITIONAL_STATE_BAKE_FREEZE.md`。
+
 ## WorldSim V6.4 P4C exact-once conditional confirmation supported（2026-08-26）
 
 状态：`v64_p4c_exact_once_supported_cleanup_running`；canonical=

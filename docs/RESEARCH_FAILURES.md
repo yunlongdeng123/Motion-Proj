@@ -379,6 +379,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   model score仍未读，没有新增failure ID。evidence=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`。
   exact-once scorer随后只读冻结C0/M0一次，两臂均为`0/96` failure且M0 coverage uplift=`0.0750164`，三项gate全部通过；
   没有触发第二次恢复、mapping选择或新failure。本条保持`resolved_pre_quality`，并由fresh positive result确认恢复没有改变合同。
+  下游P10M state-bake在该结果后冻结为target-free materialization：只读METHOD/native/model并让package-only consumer读取结果；
+  未发现新blocker或新增failure ID，不回开本条。
 
 <a id="detail-v63"></a>
 

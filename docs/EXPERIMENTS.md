@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10M CONDITIONAL STATE BAKE FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10M-CONDITIONAL-STATE-BAKE-01 / WS-V64-H-P10M-001`；run ID=`20260826T180000Z__conditional-state-bake-s0-r1`；
+- input read=`METHOD_EVIDENCE + native logits/BEV + frozen MLP`；target evidence read=`false`；cases/packages=`96/96`；
+- package=`native indices + metric centers + risk score + C0/M0 OCCUPIED-or-UNKNOWN states`；
+- runtime consumer=`package only; no model/evidence access`；gates=`mean uplift >=0.05; 96 consumable packages and positive M0 delta`；
+- model/policy/coverage change=`none`；hash/checksum/fingerprint/smoke/regression=`none`；
+- claim boundary=`state materialization only; GS render/collision/planning/safety abstain`。
+
 ## WorldSim V6.4 P4C EXACT-ONCE CONDITIONAL CONFIRMATION SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-EXACT-ONCE-CONFIRMATION-01/20260826T173000Z__exact-once-confirmation-s0-r1`；
