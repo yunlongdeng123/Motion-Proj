@@ -62,6 +62,7 @@ def run(
     run_dir: Path,
     reuse_temporary_raw: bool = False,
     raw_only: bool = False,
+    resume_raw_scan: bool = False,
 ) -> dict[str, object]:
     if run_dir.exists():
         raise FileExistsError(run_dir)
@@ -79,9 +80,11 @@ def run(
     }
     if temporary_root.parent != allowed_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"temporary raw path is outside the frozen target: {temporary_root}")
-    if temporary_root.exists() and not reuse_temporary_raw:
+    if temporary_root.exists() and not (reuse_temporary_raw or resume_raw_scan):
         raise FileExistsError(temporary_root)
     if reuse_temporary_raw and not temporary_root.exists():
+        raise FileNotFoundError(temporary_root)
+    if resume_raw_scan and not temporary_root.exists():
         raise FileNotFoundError(temporary_root)
 
     run_dir.mkdir(parents=True)
@@ -123,6 +126,8 @@ def run(
         temporary_root.mkdir(parents=True)
         _link_static_dataset(metadata_root, temporary_root)
         helpers = load_asset_module(repo_root)
+        if preparation.get("archive_shards"):
+            helpers.SHARDS = [str(value) for value in preparation["archive_shards"]]
         index_path = Path(
             preparation.get(
                 "member_shard_index_path",
@@ -153,6 +158,8 @@ def run(
             "stage": "raw_only_complete",
             "scene_count": len(scenes),
             "temporary_raw_removed_after_success": False,
+            "resumed_raw_scan": resume_raw_scan,
+            "archive_shards": list(preparation.get("archive_shards", [])),
             "wall_seconds": wall,
             "quality_read": False,
         }
@@ -268,6 +275,7 @@ def main() -> None:
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--reuse-temporary-raw", action="store_true")
     parser.add_argument("--raw-only", action="store_true")
+    parser.add_argument("--resume-raw-scan", action="store_true")
     args = parser.parse_args()
     summary = run(
         args.config.resolve(),
@@ -275,6 +283,7 @@ def main() -> None:
         args.run_dir.resolve(),
         args.reuse_temporary_raw,
         args.raw_only,
+        args.resume_raw_scan,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

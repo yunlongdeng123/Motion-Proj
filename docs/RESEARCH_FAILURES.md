@@ -489,6 +489,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   terminal rejected并保持P11锁定，若通过也只关闭exact empirical cohort层面的relative问题。输入I/O改为单遍metadata与
   raw-only producer/单feeder，避免GPU因重复8次`sample_data.json`扫描或duplicate preprocess owner空等。
 
+- `V64-F26`（`io/execution`, `active_recovery`）：P10R4首个raw-only入口发现`14437` required members均不在持久catalog，
+  10个`.tgz`并发扫描约4分钟仅到`4--10%`，workers主要处于page wait且GPU尚无完整scene。CPython tarfile对gzip selected
+  members仍需顺序流；ratarmount/rapidgzip可建seek-point index，但为一次性cohort新建10份index仍先消耗全量扫描。
+  现有`71555`条semantic member→shard catalog显示七scene的capture prefix唯一落在05/06/08/10，`scene-0668`由相邻
+  temporal range与已经原子落盘的exact-prefix files冻结到07。恢复只扫描`05,06,07,08,10`，保留all-shard尝试已完成文件，
+  原workers停后只删除其`.partial.<pid>`；继续使用已运行的唯一feeder，不启动第二preprocess producer。若任一member找不到，
+  restricted scan必须失败并回到未猜测的全量扫描，不得换scene或读quality。科学合同与test unread状态不变。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）

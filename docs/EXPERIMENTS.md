@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 I/O SHARD RECOVERY FREEZE（2026-08-27）
+
+- failed entrance=`20260827T021000Z__test-raw-only-s4-r1`; observation=`14437 missing; ten tgz at 4--10% after ~4min; no GPU-ready scene`；
+- external basis=`CPython tarfile sequential compressed stream; ratarmount/rapidgzip indexed gzip`；
+- semantic catalog inference=`1084/1081->10, 0462->05, 0820->08, 0534/0598/0527->06, 0668->07`；
+- recovery=`20260827T021800Z__test-raw-shard-recovery-s4-r1; scan only 05/06/07/08/10; preserve complete atomic files; feeder single-owner continues`；
+- unchanged=`8 scenes/96 targets, frozen M0/M1/model/route/denominator/worst10/gates, test quality unread`；
+- new hash/checksum/fingerprint/test suite=`none`；V64-F26=`active_recovery`。
+
 ## WorldSim V6.4 P10R4 UNTOUCHED TEST FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P10R4-TEST-SIDECAR-01 / WS-V64-H-P10R4-001`；seed=`4`；test quality read=`false`；
