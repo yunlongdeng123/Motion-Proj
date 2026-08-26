@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 ROUTE-AWARE M1 CANDIDATE FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10R2-ROUTE-AWARE-COMPILER-01 / WS-V64-H-P10R2-001`；run ID=`20260826T191500Z__route-aware-compiler-s0-r1`；
+- calibration/development denominator=`consumed P6R confirmation 8 scenes / 96 cases`；new confirmation read=`false`；
+- M1=`same per-case total selected count as M0; route nominal coverage cap 0.40; released route budget reallocated to lowest-risk non-route voxels`；
+- frozen model/M0 coverages/route/tail=`unchanged selective MLP; rain 0.40 and other strata 0.50; 2s/1.5m; worst10/96`；
+- gates=`M1 route empirical CVaR <=0.05; absolute mean total coverage delta <=1e-6`；
+- model refit/coverage-route-tail sweep/current M0 negative rewrite/hash/checksum/fingerprint/extra tests=`none`；
+- claim boundary=`consumed-cohort calibration candidate only; fresh exact-once confirmation required before any route-tail authority`。
+
 ## WorldSim V6.4 P10T EMPIRICAL ROUTE-TAIL REJECTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P10T-ROUTE-TAIL-AUDIT-01/20260826T190000Z__route-tail-audit-s0-r1`；

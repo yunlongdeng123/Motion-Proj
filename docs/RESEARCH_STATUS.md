@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 route-aware M1 candidate frozen（2026-08-26）
+
+状态：`v64_p10r2_route_aware_candidate_preregistered`；active task/hypothesis=
+`WS-V64-P10R2-ROUTE-AWARE-COMPILER-01 / WS-V64-H-P10R2-001`；formal run=
+`20260826T191500Z__route-aware-compiler-s0-r1`。
+
+P10T 对 current M0 的 negative route-tail authority 保持不可改写；恢复作为新版本 M1。只复用已消费 P6R confirmation
+96 cases 作 calibration/development：总 selected count 与 M0 完全相同，route corridor 内名义覆盖固定上限为独立 C0=`0.40`，
+空出的 route budget 按原冻结风险分数重分配给 non-route voxels。模型不重训，M0 stratum coverage、2s/1.5m route、tail
+alpha=`0.10` 均不扫描。冻结门只有 M1 route empirical CVaR `<=0.05` 与 mean total coverage delta `<=1e-6`；未触碰
+新 confirmation，若 calibration candidate 通过，仍必须在 metadata-only 冻结的新 temporal-member cohort 上 exact-once 确认。
+P11 对 current M0 继续锁定。freeze=`docs/autoresearch/worldsim_v64/P10R2_ROUTE_AWARE_COMPILER_FREEZE.md`。
+
 ## WorldSim V6.4 P10T empirical route-tail rejected / P11 locked（2026-08-26）
 
 状态：`v64_p10t_route_tail_rejected_p11_locked`；canonical=

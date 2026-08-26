@@ -423,6 +423,11 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   verdict=`rejected_empirical_route_tail`。本次未重读target、未改policy或tail fraction。故current M0 route/collision tail authority
   正式关闭并锁定P11；不得用P4C pooled/fresh pass、P10G support或P10R exposure覆盖该负结论。合法恢复必须是新版本、独立
   calibration与新confirmation，不能回调本次frozen M0。
+  新版本恢复已冻结为P10R2/M1：把已消费P6R confirmation降格为development/calibration cohort，保持每case总selected count与
+  M0相同，仅把route corridor名义覆盖限制到独立C0=`0.40`，并按原冻结risk score把释放预算重分配到non-route；模型、M0
+  stratum coverage、2s/1.5m route与worst10 tail均不变。M1只可在该consumed cohort形成candidate，不能关闭本条；若两项冻结门
+  通过，仍需metadata-only冻结全新temporal-member confirmation并exact-once确认。不得扫route cap、改尾部比例、重训模型，或用
+  M1 calibration结果改写current M0 negative closeout。
 
 <a id="detail-v63"></a>
 
