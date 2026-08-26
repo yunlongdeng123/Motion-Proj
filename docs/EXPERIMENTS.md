@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P11 BOUNDED COLLISION CRITIC FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P11-BOUNDED-COLLISION-CRITIC-01 / WS-V64-H-P11-001`；formal run=`20260827T033000Z__bounded-collision-critic-s0-r1`；
+- training=`consumed P6R 8 scenes/96 cases`；evaluation=`P10R4 8 scenes/96 cases; downstream action labels unread at freeze`；
+- lattice=`4 progress x 3 lateral + stop = 13 actions/case`；collision proxy=`1.5m ego corridor x target actor swept envelope`；
+- arms=`real_only / real_plus_naive_generated / real_plus_unc_verified(lowest-risk half)`；same linear critic/10 features/threshold0.5；
+- gates=`verified policy false-safe no worse than both; mean progress>=0.50; stuck<=0.20`；other P11 metrics=`descriptive`；
+- large NWM/RL/CARLA/action-model-threshold-test sweep/hash/checksum/fingerprint/extra tests=`none`；failure ledger delta=`none`。
+
 ## WorldSim V6.4 P10R4 FIXED-DENOMINATOR EXACT-ONCE SUPPORTED（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R4-FIXED-DENOMINATOR-EXACT-ONCE-01/20260827T025000Z__exact-once-fixed-denominator-s4-r1`；

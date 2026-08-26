@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.4 P11 bounded collision critic frozen（2026-08-27）
+
+状态：`v64_p11_bounded_collision_critic_preregistered`；active task/hypothesis=
+`WS-V64-P11-BOUNDED-COLLISION-CRITIC-01 / WS-V64-H-P11-001`；evaluation action labels read=`false`。
+
+参考Waymax、nuPlan、InterFuser与PlanT后，冻结单卡最小迁移：不用大型NWM/CARLA，P6R consumed cohort训练同一linear
+critic；P10R4每case固定`3 lateral x 4 progress + stop=13` actions。三臂为Real-only、Real+all generated、Real+M1最低风险
+half generated。主指标是selected-policy collision false-safe；仅加progress>=0.50与stuck<=0.20防全刹车。其余recall、
+safe precision、Brier/ECE、comfort/reward只报告。模型在evaluation action label生成前冻结；无action/model/threshold/test sweep。
+freeze=`docs/autoresearch/worldsim_v64/P11_BOUNDED_COLLISION_CRITIC_FREEZE.md`。
+
 ## WorldSim V6.4 P10R4 exact-once fixed-denominator relative confirmation supported（2026-08-27）
 
 状态：`v64_p10r4_exact_empirical_relative_supported_p11_bounded_design_next`；canonical=

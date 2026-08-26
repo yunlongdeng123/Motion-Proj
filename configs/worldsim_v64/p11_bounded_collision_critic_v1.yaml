@@ -1,0 +1,89 @@
+schema_version: worldsim_v64.p11_bounded_collision_critic.v1
+task_id: WS-V64-P11-BOUNDED-COLLISION-CRITIC-01
+hypothesis_id: WS-V64-H-P11-001
+seed: 0
+claim_boundary: bounded actor-envelope collision-proxy critic on a fixed action lattice; no physical collision, population, closed-loop, or safety claim
+inputs:
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  training:
+    role: consumed_training
+    evidence_run: worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T152500Z__confirmation-evidence-s0-r2
+    native_run: worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-1023, processed_index: 781, stratum: night}
+      - {name: scene-1105, processed_index: 844, stratum: night}
+      - {name: scene-0903, processed_index: 689, stratum: rain}
+      - {name: scene-0451, processed_index: 365, stratum: rain}
+      - {name: scene-0981, processed_index: 743, stratum: construction}
+      - {name: scene-0537, processed_index: 427, stratum: construction}
+      - {name: scene-0789, processed_index: 610, stratum: vulnerable_transit}
+      - {name: scene-0157, processed_index: 117, stratum: vulnerable_transit}
+  evaluation:
+    role: downstream_exact_once_action_evaluation
+    evidence_run: worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1
+    native_run: worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T023000Z__native-aggregate-s4-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-1084, processed_index: 824, stratum: night}
+      - {name: scene-1081, processed_index: 821, stratum: night}
+      - {name: scene-0462, processed_index: 375, stratum: rain}
+      - {name: scene-0820, processed_index: 636, stratum: rain}
+      - {name: scene-0534, processed_index: 424, stratum: construction}
+      - {name: scene-0598, processed_index: 478, stratum: construction}
+      - {name: scene-0527, processed_index: 417, stratum: vulnerable_transit}
+      - {name: scene-0668, processed_index: 522, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512, shape: [200, 200, 16]}
+route: {future_seconds: 2.0, future_frame_count: 20, corridor_radius_m: 1.5}
+policy:
+  m0_conditional_nominal_coverages: {construction: 0.50, night: 0.50, rain: 0.40, vulnerable_transit: 0.50}
+  m1_route_nominal_coverage_cap: 0.40
+action_lattice:
+  horizon_seconds: 2.0
+  progress_ratios: [0.25, 0.50, 0.75, 1.00]
+  lateral_offsets_m: [-1.50, 0.00, 1.50]
+  include_stop: true
+collision_proxy: {source: target_actor_swept_envelope, ego_corridor_radius_m: 1.5}
+augmentation:
+  arms: [real_only, real_plus_naive_generated, real_plus_unc_verified]
+  real_actions: zero_lateral_nonstop_prefixes
+  naive_generated: all_nonzero_lateral_actions
+  verified_generated_keep_fraction: 0.50
+  verifier: lowest_m1_selected_route_mean_risk_per_case
+critic:
+  architecture: linear_logistic
+  feature_count: 10
+  learning_rate: 0.05
+  weight_decay: 0.001
+  steps: 300
+  decision_threshold: 0.50
+  seed: 0
+metrics:
+  primary: policy_collision_false_safe_count
+  report: [unsafe_action_recall, safe_action_precision, brier_score, expected_calibration_error, mean_progress_ratio, stuck_rate, comfort_pass_rate, mean_total_reward]
+  calibration_bins: 10
+  stuck_progress_ratio: 0.20
+  maximum_planar_acceleration_mps2: 4.89
+gates:
+  verified_collision_false_safe_not_worse_than_both: true
+  minimum_verified_mean_progress_ratio: 0.50
+  maximum_verified_stuck_rate: 0.20
+verdict_on_pass: supported_bounded_unc_verified_collision_critic
+verdict_on_no_increment: no_increment_over_real_only_bounded_collision_critic
+verdict_on_failure: rejected_bounded_unc_verified_collision_critic
+locks:
+  large_nwm_training_allowed: false
+  action_lattice_sweep_allowed: false
+  critic_architecture_sweep_allowed: false
+  decision_threshold_sweep_allowed: false
+  second_action_test_allowed: false
+  physical_collision_claim_allowed: false
+  content_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2023/hash/1838feeb71c4b4ea524d0df2f7074245-Abstract.html
+  - https://github.com/waymo-research/waymax
+  - https://github.com/motional/nuplan-devkit/blob/master/docs/metrics_description.md
+  - https://github.com/opendilab/InterFuser
+  - https://github.com/autonomousvision/plant
+failure_ledger_refs: [V63-F02, V63-F24, V64-F18, V64-F21, V64-F25]
