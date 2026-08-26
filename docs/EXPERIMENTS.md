@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P4C OPTIONAL CATALOG CLEANUP STOP / I-O REASSIGN（2026-08-27）
+
+- prerequisite recheck=`P4C native aggregate, evidence summary, exact-once summary all non-empty`；
+- stopped=`two post-result duplicate tar scanner/controller trees`；scientific evidence produced by scanners=`none`；
+- removed recoverable temp=`worldsim_v64_p4c_raw_batch 6.3GiB + worldsim_v64_p4c_replacement_raw_batch 453MiB`；
+- retained=`all processed/native/evidence/model/run artifacts + existing 57338-entry, 6880063-byte catalog`；
+- catalog union=`abandoned optional enrichment; not reported as complete`；disk free after removal=`~34GiB`；
+- reason=`reassign slow local I/O to the only new P10R2 confirmation scan and scene-ready GPU feed`；V64-F22=`resolved`。
+
 ## WorldSim V6.4 P10R2 FRESH ROUTE-AWARE CONFIRMATION FREEZE（2026-08-27）
 
 - task/hypothesis=`WS-V64-P10R2-CONFIRMATION-SIDECAR-01 / WS-V64-H-P10R2-002`；seed=`3`；quality read=`false`；

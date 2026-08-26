@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P4C optional catalog cleanup stopped / I/O reassigned（2026-08-27）
+
+状态：`v64_p4c_optional_catalog_enrichment_abandoned_temp_removed`；V64-F22=`resolved_by_io_reassignment`。
+
+P4C corrected native/evidence/exact-once正式产物已再次确认完整；两套结果后置catalog scanner仍重复读取同一10 tar且不再产生
+研究证据，阻塞P10R2新confirmation。故终止scanner/controller，不合并其未完成catalog增量；保留既有P6R catalog=
+`57338 entries / 6880063 bytes`，删除已预注册为可从official tar重建的P4C raw与replacement raw两个临时目录，共释放约
+6.8GiB，盘余约34GiB。科学产物、processed/native/evidence/model均未删除，P4C结论不变。I/O已转交唯一P10R2 prep并
+scene-ready feed GPU；catalog union pending=`false`，语义是`abandoned optional enrichment`而非假称完成。
+
 ## WorldSim V6.4 P10R2 fresh route-aware confirmation frozen（2026-08-27）
 
 状态：`v64_p10r2_fresh_confirmation_preregistered_prep_next`；active task/hypothesis=

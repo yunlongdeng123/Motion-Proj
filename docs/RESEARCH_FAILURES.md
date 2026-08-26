@@ -437,6 +437,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   M1、2s/1.5m route、worst10和两项gate均未变。该prereg不关闭V64-F21；只有新96-case exact-once结果才能决定M1是否获得
   bounded fresh empirical route-tail authority，且无论结果如何都不改写历史M0负结论。
 
+- `V64-F22`（`resource/operations`, `resolved_by_io_reassignment`）：P4C科学链已完成并推送后，两套cleanup controller仍为
+  不同required-member集合重复顺序扫描同一10个official tar，持续占用NVMe且不产生新科学证据；这会把P10R2 fresh
+  confirmation的scene-ready GPU feed推迟到可选catalog union之后。再次确认P4C native aggregate、evidence与exact-once summary
+  均完整后，终止两个scanner tree；不把未完成union写成成功，而是明确放弃optional catalog enrichment。仅删除预注册为official
+  tar可恢复的`worldsim_v64_p4c_raw_batch`与`worldsim_v64_p4c_replacement_raw_batch`（约6.8GiB），保留全部processed、native、
+  evidence、model、run artifacts及已有`57338-entry/6880063-byte`catalog。I/O随后只服务P10R2一套新扫描与scene-ready feeder；
+  不新增hash/checksum/fingerprint，也不改变任何科学policy/gate/result。
+
 <a id="detail-v63"></a>
 
 ## V6.3 SurfNCC 防重复结论（2026-08-24）
