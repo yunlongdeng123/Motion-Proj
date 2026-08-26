@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v64",
-  "status": "v64_p6r_calibration_supported_confirmation_unlocked",
+  "status": "v64_p6r_confirmation_execution_preregistered",
   "branch": "research/worldsim-v6.4-native-uq",
   "source_branch": "research/worldsim-v6.3-surface-tail",
   "source_commit": "c1929553caabd14b90276a60857bac3e3d83b335",
@@ -40,9 +40,10 @@
     "V64-F12",
     "V64-F13",
     "V64-F14",
-    "V64-F15"
+    "V64-F15",
+    "V64-F16"
   ],
-  "last_failure_id": "V64-F15",
+  "last_failure_id": "V64-F16",
   "p3_retrospective_preregistered": true,
   "p3_retrospective_quality_read": true,
   "p3_retrospective_run": "run://worldsim_v64/WS-V64-P3-NATIVE-UQ-01/20260826T080200Z__uq-retrospective-s0-r1",
@@ -136,5 +137,8 @@
   "p6r_selected_nominal_coverage": 0.4,
   "p6r_selected_failure_count": 0,
   "p6r_selected_simultaneous_upper_bound": 0.04864662760882607,
-  "next_action": "commit and push the selected 40-percent policy, then blind-materialize the frozen new eight-scene confirmation cohort and run exact-once confirmation"
+  "p6r_confirmation_quality_read": false,
+  "p6r_confirmation_member_shard_catalog_mode": "persistent_superset",
+  "p6r_confirmation_scene_ready_gpu_feed": true,
+  "next_action": "commit and push confirmation execution, then start one tar scan with scene-ready DriveStudio and IR-WM consumers for the frozen eight scenes"
 }

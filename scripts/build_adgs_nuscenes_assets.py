@@ -258,14 +258,15 @@ def scan_shards(
         if path.is_absolute() or ".." in path.parts:
             raise ValueError(f"不安全的 required member 路径: {member}")
 
-    old_mapping: dict[str, str] = {}
+    catalog_mapping: dict[str, str] = {}
     if index_path.exists():
-        old_mapping = json.loads(index_path.read_text())
-        old_mapping = {
+        catalog_mapping = json.loads(index_path.read_text())
+        catalog_mapping = {
             name: shard
-            for name, shard in old_mapping.items()
-            if name in members and (tar_dir / shard).is_file()
+            for name, shard in catalog_mapping.items()
+            if (tar_dir / shard).is_file()
         }
+    old_mapping = {name: catalog_mapping[name] for name in members if name in catalog_mapping}
 
     missing_index = members - set(old_mapping)
     tasks = []
@@ -319,7 +320,10 @@ def scan_shards(
 
     index_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_index = index_path.with_suffix(index_path.suffix + ".partial")
-    tmp_index.write_text(json.dumps({m: mapping[m] for m in sorted(members)}, indent=2) + "\n")
+    catalog_mapping.update(mapping)
+    tmp_index.write_text(
+        json.dumps({m: catalog_mapping[m] for m in sorted(catalog_mapping)}, indent=2) + "\n"
+    )
     os.replace(str(tmp_index), str(index_path))
     extracted = {name for name, row in found_rows.items() if row["extracted"]}
     return {m: mapping[m] for m in members}, extracted

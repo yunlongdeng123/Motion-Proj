@@ -108,7 +108,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3通过fresh AUROC门但独立case calibration在全部coverage失败；authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期 | `V64-F01`–`V64-F15`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6_CASE_CALIBRATION_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3独立校准失败，full-native MLP恢复以40%通过；exact-once confirmation待执行 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障、固定场景帧数、SSH stdin生命周期、batch-narrowed tar catalog | `V64-F01`–`V64-F16`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md`；`P6R_CASE_CALIBRATION_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -324,6 +324,14 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   P6R独立评分随后以0.05--0.40 coverage全部得到`0/96` failure和simultaneous UCB=`0.048647`，选择最大通过40%；
   50%为`3/96`、UCB=`0.103218`而正确拒绝。故失败以“新模型版本解决”关闭；原PCA16线性U3负结论不改写，且新
   confirmation仍未读。证据=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`。
+
+- `V64-F16`（`resource/operations`, `active`）：exact-once新8 scene在现有raw cache均无payload；需要约24.8k sensor member。
+  前一P6整批扫描虽已学习43033个member->shard映射，但`scan_shards`写回时只保留当前batch，故unseen batch仍会触发10个
+  `.tgz`全扫，预计重现>1h GPU空转屏障。WIDS明确把index用于稀疏random access，ratarmount为compressed tar持久化SQLite
+  index；结合当前代码不新增依赖，迁移为superset member->shard catalog，并以scene raw-ready为边界并发DriveStudio preprocess
+  和最多两个IR-WM consumer。本批不可避免的一次scan完成后目录可复用；禁止重新裁catalog、等待整批processed才启GPU或用
+  多卡掩盖I/O。证据=`https://github.com/webdataset/wids`、`https://github.com/mxmlnkn/ratarmount`和
+  `docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EXECUTION_FREEZE.md`。
 
 <a id="detail-v63"></a>
 

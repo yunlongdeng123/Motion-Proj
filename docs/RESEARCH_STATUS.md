@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.4 P6R confirmation execution frozen / indexed streaming recovery（2026-08-26）
+
+状态：`v64_p6r_confirmation_execution_preregistered`；active task=`WS-V64-P6R-CONFIRMATION-SIDECAR-01`；policy=
+`full-native MLP / nominal coverage 0.40`；confirmation quality read=`false`。
+
+新8 scene在本机raw cache均为0命中，旧`worldsim_v64_p6_member_shards.json`只有前批43033个member，脚本又会在每批写回时
+丢弃非本批映射，导致本批约24.8k unseen member再次全扫10个gzip tar。登记`V64-F16 active resource/operations`。检索
+WebDataset WIDS indexed random access与ratarmount compressed-tar SQLite index后，迁移为持久化superset member->shard catalog，
+不再裁掉历史映射；本批仍需一次顺序解压扫描，但scene raw一齐即由最多两个DriveStudio producer和两个IR-WM GPU consumer
+流水消费，不等待8 scene整批屏障。
+
+执行合同：只准备冻结`1023,1105,0903,0451,0981,0537,0789,0157`；每scene完成即blind提取12 targets；全部processed
+后删可重建临时raw；再一次生成96 evidence并只评固定40% policy。没有model refit/coverage sweep/hash/checksum/fingerprint、
+smoke或回归矩阵。单3090仍足够。配置=`configs/worldsim_v64/p6r_confirmation_sidecars_v1.yaml`；freeze=
+`docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EXECUTION_FREEZE.md`。
+
 ## WorldSim V6.4 P6R independent calibration supported / confirmation unlocked（2026-08-26）
 
 状态：`v64_p6r_calibration_supported_confirmation_unlocked`；canonical=

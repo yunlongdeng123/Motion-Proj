@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P6R CONFIRMATION SIDECAR / INDEXED STREAMING PREREG（2026-08-26）
+
+- task=`WS-V64-P6R-CONFIRMATION-SIDECAR-01`；cohort=`8 frozen scenes / 96 targets`；confirmation quality read=`false`。
+- observed I/O=`0 raw-cache hits for new scenes; retained catalog 43033 old members; ~24.8k new members require tar scan`；root cause=
+  `batch-narrowed member->shard catalog`；failure delta=`V64-F16 active resource/operations`。
+- migration=`persistent superset member->shard catalog + scene-ready bounded preprocess/GPU consumers`；sources=
+  `https://github.com/webdataset/wids` and `https://github.com/mxmlnkn/ratarmount`。
+- fixed downstream=`frozen MLP + nominal .40 only / 96 exact-once cases`；refit/sweep/hash/checksum/fingerprint/extra tests=`none`；
+  multi-GPU need=`false`。
+
 ## WorldSim V6.4 P6R INDEPENDENT CALIBRATION SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1`；verdict=
