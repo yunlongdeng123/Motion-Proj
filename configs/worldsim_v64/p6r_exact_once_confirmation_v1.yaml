@@ -1,0 +1,32 @@
+schema_version: worldsim_v64.p6r_exact_once_confirmation.v1
+task_id: WS-V64-P6R-EXACT-ONCE-CONFIRMATION-01
+hypothesis_id: WS-V64-H-P6R-001
+seed: 0
+claim_boundary: exact-once observed case-risk confirmation of the frozen selective policy; no real-world safety or downstream compiler claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6R-CONFIRMATION-EVIDENCE-01/20260826T151500Z__confirmation-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6R-CONFIRMATION-SIDECAR-01/20260826T150000Z__native-aggregate-s0-r1
+  native_partition: fresh_confirmation
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  calibration_run: worldsim_v64/WS-V64-P6R-CALIBRATION-01/20260826T141500Z__case-calibration-s0-r1
+confirmation_scenes:
+  - {name: scene-1023, stratum: night}
+  - {name: scene-1105, stratum: night}
+  - {name: scene-0903, stratum: rain}
+  - {name: scene-0451, stratum: rain}
+  - {name: scene-0981, stratum: construction}
+  - {name: scene-0537, stratum: construction}
+  - {name: scene-0789, stratum: vulnerable_transit}
+  - {name: scene-0157, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+policy:
+  score: full_native_selective_mlp_hidden_free
+  nominal_coverage: 0.40
+  hidden_free_conflict_threshold: 0.05
+  target_case_risk: 0.05
+gates:
+  maximum_overall_failures: 4
+  maximum_failures_per_stratum: 1
+locks: {model_refit_allowed: false, policy_selection_allowed: false, second_confirmation_allowed: false, content_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V63-F02, V63-F24, V64-F10, V64-F11, V64-F15, V64-F16]

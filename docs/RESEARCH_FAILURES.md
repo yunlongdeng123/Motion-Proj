@@ -332,6 +332,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   和最多两个IR-WM consumer。本批不可避免的一次scan完成后目录可复用；禁止重新裁catalog、等待整批processed才启GPU或用
   多卡掩盖I/O。证据=`https://github.com/webdataset/wids`、`https://github.com/mxmlnkn/ratarmount`和
   `docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EXECUTION_FREEZE.md`。
+  下游exact-once合同已在target read前固定为40% policy、overall最多4/96且每stratum最多1/24 loss；不以本I/O失败
+  改变科学gate。
 
 <a id="detail-v63"></a>
 

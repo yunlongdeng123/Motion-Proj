@@ -9,6 +9,8 @@
   `https://github.com/webdataset/wids` and `https://github.com/mxmlnkn/ratarmount`。
 - fixed downstream=`frozen MLP + nominal .40 only / 96 exact-once cases`；refit/sweep/hash/checksum/fingerprint/extra tests=`none`；
   multi-GPU need=`false`。
+- exact-once gates=`overall failures <=4/96 and every stratum <=1/24`；another confidence-bound selection=`none`；runner=
+  `scripts/run_worldsim_v64_p6r_confirmation.py`。
 
 ## WorldSim V6.4 P6R INDEPENDENT CALIBRATION SUPPORTED（2026-08-26）
 

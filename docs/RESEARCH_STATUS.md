@@ -16,6 +16,9 @@ WebDataset WIDS indexed random access与ratarmount compressed-tar SQLite index�
 smoke或回归矩阵。单3090仍足够。配置=`configs/worldsim_v64/p6r_confirmation_sidecars_v1.yaml`；freeze=
 `docs/autoresearch/worldsim_v64/P6R_CONFIRMATION_EXECUTION_FREEZE.md`。
 
+Exact-once gate也已在target read前固定：40% coverage下overall最多`4/96` case loss、每stratum最多`1/24`，对应观测
+risk<=0.05；不再做第二次置信界选择。runner/config已实现并等待blind sidecar完成。
+
 ## WorldSim V6.4 P6R independent calibration supported / confirmation unlocked（2026-08-26）
 
 状态：`v64_p6r_calibration_supported_confirmation_unlocked`；canonical=
