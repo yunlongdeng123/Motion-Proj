@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.4 P6 PREPARATION RUNNING / INCREMENTAL GPU FEED（2026-08-26）
+
+- run=`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`；
+  observed after `>1 h`=`9/10 tar shards complete / ~14 GiB temporary raw / ~45 GiB free / GPU 0%`；quality read=`false`。
+- decision=`preserve completed shard work; no unrelated GPU filler; remove the all-scenes barrier at the DriveStudio→IR-WM boundary`。
+- migration=`bounded producer-consumer, ready scene -> IR-WM, <=2 scene workers`；calibration先行，confirmation在校准冻结后一次读取；
+  wrapper新增`--partitions/--only-scene`，不改变cohort、targets、backend或seed。
+- external basis=`NVIDIA DALI async pipelined execution + bounded prefetch queues; WebDataset shard-local streaming`；
+  `https://docs.nvidia.com/deeplearning/dali/archives/dali_190/user-guide/docs/advanced_topics_performance_tuning.html`；
+  `https://github.com/webdataset/webdataset`。
+- hash/checksum/fingerprint=`none`；extra smoke/regression=`none`；failure delta=`V64-F12 active resource/operations`；
+  multi-GPU need=`false`。
+
 ## WorldSim V6.4 P6 CALIBRATION/CONFIRMATION COHORT PREREG（2026-08-26）
 
 - task/hypothesis=`WS-V64-P6-CALIBRATION-SIDECAR-01 / WS-V64-H-P6C-001`；quality read=`false`。

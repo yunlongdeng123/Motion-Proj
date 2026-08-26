@@ -27,6 +27,8 @@
   fit-only PCA-16 logistic risk head执行一次；不得把监督标签用于evaluation拟合、扫描超参或扩展split。
 - U3已通过两fresh scene绝对AUROC门，但高FPR95保持`V64-F11 active`。独立calibration/confirmation已按metadata-only冻结为
   `16+8 scenes`；当前与旧evaluation score均不得回流修改cohort、risk rule或head。
+- P6整批准备在共享盘扫描`>1 h`后仍为`9/10 shards`且GPU空闲，登记`V64-F12 active`；恢复采用scene-ready有界
+  producer-consumer，不重复已完成shard、不做无关GPU filler，confirmation仍保持锁定。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -100,7 +102,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95 | `V64-F01`–`V64-F11`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
+| V6.4 | U2过相对门但场景内弱；fit-only U3在两fresh scene通过绝对AUROC门；低FPR/校准/authority仍未解决 | `python -m pytest`、LocalTUN、conda、disk path、train temporal metadata、summary名、PowerShell`$()`、surface成本、region内稀疏预测类、pooled/within-scene偏移、高FPR95、整批I/O屏障 | `V64-F01`–`V64-F12`；`P4N_FRESH_UQ_CLOSEOUT.md`；`P5_SUPERVISED_RISK_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -262,6 +264,18 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `docs/autoresearch/worldsim_v64/P5_SUPERVISED_RISK_CLOSEOUT.md`、
   `https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html`、
   `https://github.com/aangelopoulos/conformal-risk`。
+
+- `V64-F12`（`resource/operations`, `active_mitigation`）：P6正式准备入口扫描共享盘官方tar超过一小时后，已完成
+  `9/10`个shard、临时raw约`14 GiB`、盘余量约`45 GiB`，但旧入口必须等全部raw和24个processed scene完成才启动
+  IR-WM，观测GPU=`0% / 1 MiB`。24-scene native按既有6-scene输出外推约`13.3 GiB`，再叠加processed和临时raw，
+  证明此前`~21.6 GiB`整批持久化估算缺少足够余量。该事实是I/O/调度阻塞，不是模型或数据质量结论。检索NVIDIA
+  DALI异步pipelined execution、bounded prefetch queue及WebDataset shard streaming后，恢复保留已完成shard工作，并在
+  DriveStudio scene达到冻结的`1176 images + 196 lidar`后立即按scene送入IR-WM，最多两个GPU worker；先处理16-scene
+  calibration，模型冻结后再处理锁定confirmation。禁止重复扫描已完成shard、启动无关GPU filler、降低quality边界、把
+  confirmation提前读入校准或用多卡掩盖共享盘瓶颈。证据=
+  `run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`、
+  `https://docs.nvidia.com/deeplearning/dali/archives/dali_190/user-guide/docs/advanced_topics_performance_tuning.html`、
+  `https://github.com/webdataset/webdataset`。
 
 <a id="detail-v63"></a>
 

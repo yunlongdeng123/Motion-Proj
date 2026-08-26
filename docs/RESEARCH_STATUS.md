@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.4 P6 I/O→GPU 流水线恢复进行中（2026-08-26）
+
+状态：`v64_p6_preparation_running_incremental_gpu_feed_armed`；active task=
+`WS-V64-P6-CALIBRATION-SIDECAR-01`；prep run=
+`run://worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T100000Z__calibration-prep-s0-r1`；
+calibration/confirmation quality read=`false/false`。
+
+正式准备入口已启动。共享盘扫描超过一小时后完成`9/10`个官方tar shard，临时raw约`14 GiB`、剩余盘约`45 GiB`，
+GPU仍为`0% / 1 MiB`；这暴露了“全量tar完成→全量processed完成→GPU提取”的整批屏障与此前`~21.6 GiB`
+持久化估算偏低，登记`V64-F12 active resource/operations`。未中止或重复前九个shard，也未启动无关GPU filler。
+
+参考NVIDIA DALI的异步pipelined/prefetch queue和WebDataset按shard流式消费，迁移为有界生产者—消费者：sidecar wrapper
+新增按partition/scene入口；每个DriveStudio scene达到冻结的`1176 images + 196 lidar`即送入IR-WM，单卡最多两个scene
+worker。先流水化16-scene calibration；校准模型冻结后才读取8-scene confirmation。这样不等待24场景整批完成，也不增加
+hash/checksum/fingerprint、quality gate、smoke或回归矩阵。单3090足够，不触发shutdown。
+
 ## WorldSim V6.4 独立 calibration/confirmation cohort 已冻结（2026-08-26）
 
 状态：`v64_calibration_confirmation_cohort_preregistered`；active task=

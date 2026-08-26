@@ -18,6 +18,8 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--maximum-workers", type=int, default=2)
+    parser.add_argument("--partitions", nargs="+")
+    parser.add_argument("--only-scene")
     args = parser.parse_args()
 
     repo_root = args.repo_root.resolve()
@@ -52,9 +54,9 @@ def main() -> int:
             temporary_path,
             repo_root,
             run_dir,
-            list(overlay["cohorts"]),
+            list(args.partitions or overlay["cohorts"]),
             int(args.maximum_workers),
-            None,
+            args.only_scene,
             None,
         )
         (run_dir / "resolved.yaml").write_text(
