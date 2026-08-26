@@ -77,7 +77,9 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
             with preprocess_slots:
                 if not canonical.exists():
                     stage_target = Path(f"{stage_prefix}_{index:03d}")
-                    stage_root = Path(f"{stage_target}_10Hz/trainval")
+                    stage_root = Path(
+                        str(stage_target).replace("_processed_", "_processed_10Hz_", 1)
+                    ) / "trainval"
                     staged = stage_root / f"{index:03d}"
                     if staged.exists():
                         shutil.rmtree(staged)

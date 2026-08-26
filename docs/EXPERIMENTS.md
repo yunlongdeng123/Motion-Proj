@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 DUAL-STAGE PATH RECOVERY FREEZE（2026-08-27）
+
+- failure=`V64-F27`; observation=`DriveStudio target ..._processed_824 -> ..._processed_10Hz_824, feeder expected ..._824_10Hz`；
+- complete staged=`824:1206 images/201 lidar; 821:1176/196; no native partial`；in-flight unique staging=`424/522`；
+- recovery=`mirror _processed_->_processed_10Hz_ path; install after process exit; direct frozen native for 1084/1081; restart same-prefix feeder with reuse`；
+- test quality/target/model-score read=`false/false/false`；science/run prefix/hash/checksum/fingerprint/extra tests change=`none`。
+
 ## WorldSim V6.4 P10R4 RAW RECOVERY COMPLETE / NATIVE STREAMING（2026-08-27）
 
 - canonical raw=`run://worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T022000Z__test-raw-shard-recovery-s4-r2`；wall=`1807.8114s`；

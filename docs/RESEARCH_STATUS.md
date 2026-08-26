@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 dual-stage path recovery frozen（2026-08-27）
+
+状态：`v64_p10r4_dual_stage_path_recovery_frozen`；V64-F27=`active_recovery`；test quality read=`false`。
+
+双preprocess已完整生成scene-1084/1081，但DriveStudio把`..._processed_824`改写为
+`..._processed_10Hz_824/trainval/824`，feeder却查找`..._824_10Hz`并在native前退出。824/821 stage counts=
+`1206/201`与`1176/196` images/lidar，无native partial。修复仅镜像既有路径重写；parent停止，唯一in-flight 424/522
+完成后连同824/821原子安装。night两scene用同一冻结native命令/计划run dir直接填GPU，之后同prefix feeder复用全部complete
+leaf。科学合同不变。freeze=`docs/autoresearch/worldsim_v64/P10R4_DUAL_STAGE_PATH_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.4 P10R4 raw recovery complete / native streaming（2026-08-27）
 
 状态：`v64_p10r4_raw_complete_native_streaming`；canonical raw=
