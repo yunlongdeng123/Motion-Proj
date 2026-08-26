@@ -396,6 +396,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   formal P10G一次完成`96/96` package，生成`534581`个M0 semantic Gaussians并在GPU BEV splat获得相对C0
   `+41016` support cells；target/model/StreetGS access均false，两项gate通过。因此“无法在no-hash/same-scene约束下进入任何
   Gaussian consumer”的integration blocker关闭；photorealistic StreetGS/sensor binding仍不在该恢复声明内。
+  后续P10R直接冻结为logged future-lidar route corridor semantic consumer；只读P10G package与pose，不产生新failure ID，也不
+  用route overlay冒充photorealistic或collision recovery。
 
 <a id="detail-v63"></a>
 

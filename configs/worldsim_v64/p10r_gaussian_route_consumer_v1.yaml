@@ -1,0 +1,38 @@
+schema_version: worldsim_v64.p10r_gaussian_route_consumer.v1
+task_id: WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01
+hypothesis_id: WS-V64-H-P10R-001
+seed: 2
+claim_boundary: logged-route semantic exposure of frozen C0/M0 Gaussian BEV state; no collision truth, counterfactual planning, closed-loop, or safety claim
+inputs:
+  gaussian_run: worldsim_v64/WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01/20260826T181500Z__gaussian-state-adapter-s0-r1
+scenes:
+  - {name: scene-0992, processed_index: 751, stratum: night}
+  - {name: scene-1101, processed_index: 841, stratum: night}
+  - {name: scene-0454, processed_index: 368, stratum: rain}
+  - {name: scene-1102, processed_index: 842, stratum: rain}
+  - {name: scene-0876, processed_index: 664, stratum: construction}
+  - {name: scene-0895, processed_index: 681, stratum: construction}
+  - {name: scene-0321, processed_index: 253, stratum: vulnerable_transit}
+  - {name: scene-0813, processed_index: 631, stratum: vulnerable_transit}
+route:
+  source: future_lidar_origins_transformed_into_target_lidar
+  sample_rate_hz: 10
+  future_seconds: 2.0
+  future_frame_count: 20
+  corridor_radius_m: 1.5
+  grid_origin_xy_m: [-51.2, -51.2]
+  grid_shape_xy: [200, 200]
+  voxel_size_m: 0.512
+  bev_support_threshold: 0.05
+gates:
+  expected_case_count: 96
+  require_positive_conditional_route_support_gain: true
+verdict_on_pass: supported_bounded_gaussian_route_exposure
+verdict_on_failure: rejected_bounded_gaussian_route_exposure
+locks:
+  target_evidence_read_allowed: false
+  risk_model_access_allowed: false
+  collision_ground_truth_read_allowed: false
+  route_parameter_sweep_allowed: false
+  content_hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F15, V64-F18, V64-F19]

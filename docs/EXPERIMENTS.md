@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V6.4 P10R BOUNDED GAUSSIAN ROUTE CONSUMER FREEZE（2026-08-26）
+
+- task/hypothesis=`WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01 / WS-V64-H-P10R-001`；run ID=`20260826T183000Z__gaussian-route-consumer-s0-r1`；
+- denominator=`96 cases`；route=`future 2.0s / 20 lidar poses / target-lidar frame / 1.5m corridor`；
+- input=`P10G C0/M0 BEV density + processed lidar_pose`；target/model/collision GT read=`false/false/false`；
+- gates=`96 consumed; positive aggregate M0 route support gain`；route/threshold/seed sweep=`none`；
+- hash/checksum/fingerprint/smoke/regression=`none`；
+- claim boundary=`logged-route semantic exposure only; no collision truth/counterfactual planning/closed-loop/safety claim`。
+
 ## WorldSim V6.4 P10G SPARSE GAUSSIAN STATE ADAPTER SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P10G-GAUSSIAN-STATE-ADAPTER-01/20260826T181500Z__gaussian-state-adapter-s0-r1`；

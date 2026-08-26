@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P10R bounded Gaussian route consumer frozen（2026-08-26）
+
+状态：`v64_p10r_gaussian_route_consumer_preregistered`；active task/hypothesis=
+`WS-V64-P10R-GAUSSIAN-ROUTE-CONSUMER-01 / WS-V64-H-P10R-001`。
+
+96 case均从processed `lidar_pose`取target后2秒/20帧logged ego trajectory，变换到target-lidar，冻结1.5m corridor并读取P10G
+C0/M0 BEV density。consumer只报告route support/exposure与intercept case，不读target/model/collision GT，不把logged path overlay解释为
+counterfactual collision或planning。仅要求96 case全部消费且M0 route support gain>0；参数不扫。freeze=
+`docs/autoresearch/worldsim_v64/P10R_GAUSSIAN_ROUTE_CONSUMER_FREEZE.md`。
+
 ## WorldSim V6.4 P10G sparse Gaussian state adapter supported（2026-08-26）
 
 状态：`v64_p10g_sparse_gaussian_adapter_supported`；canonical=
