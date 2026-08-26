@@ -377,6 +377,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1`。
   corrected evidence随后一次完成`96/96 units`、query/source-role overlap=`0/0`且未触发同类membership或actor-frame错误；
   model score仍未读，没有新增failure ID。evidence=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`。
+  exact-once scorer随后只读冻结C0/M0一次，两臂均为`0/96` failure且M0 coverage uplift=`0.0750164`，三项gate全部通过；
+  没有触发第二次恢复、mapping选择或新failure。本条保持`resolved_pre_quality`，并由fresh positive result确认恢复没有改变合同。
 
 <a id="detail-v63"></a>
 

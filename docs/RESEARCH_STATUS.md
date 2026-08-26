@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.4 P4C exact-once conditional confirmation supported（2026-08-26）
+
+状态：`v64_p4c_exact_once_supported_cleanup_running`；canonical=
+`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-EXACT-ONCE-CONFIRMATION-01/20260826T173000Z__exact-once-confirmation-s0-r1`；
+confirmation target/model-score read=`true/true`，model refit/policy selection=`false/false`。
+
+冻结C0 global 40%与M0 conditional map在fresh 96-case confirmation上各读取一次：C0 coverage/failure=
+`0.3999444/0`，M0=`0.4749608/0`，absolute uplift=`0.0750164`。M0四strata均`0/24` failure；coverage uplift、overall
+`<=4/96`、each-stratum `<=1/24`三项gate全部PASS，verdict=`supported_exact_once_conditional_confirmation`。GPU score=
+`12.1745 s`，peak RSS=`0.7958 GiB`。结论只支持fresh observed case-risk下的冻结conditional coverage map，不外推现实安全或
+downstream simulation。当前只剩双controller EOF、temporary raw删除与catalog semantic union；closeout=
+`docs/autoresearch/worldsim_v64/P4C_EXACT_ONCE_CONFIRMATION_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P4C confirmation evidence complete / exact-once next（2026-08-26）
 
 状态：`v64_p4c_confirmation_evidence_complete_scoring_next`；canonical=

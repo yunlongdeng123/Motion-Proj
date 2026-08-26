@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P4C EXACT-ONCE CONDITIONAL CONFIRMATION SUPPORTED（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-EXACT-ONCE-CONFIRMATION-01/20260826T173000Z__exact-once-confirmation-s0-r1`；
+- fresh cases/scenes=`96/8`；C0 coverage/failures=`0.3999444/0`；M0=`0.4749608/0`；uplift=`+0.0750164`；
+- M0 construction/night/rain/vulnerable failures=`0/24,0/24,0/24,0/24`；all frozen gates=`PASS`；
+- verdict=`supported_exact_once_conditional_confirmation`；GPU wall/peak RSS=`12.1745 s/0.7958 GiB`；
+- model refit/policy selection/second confirmation=`false/false/false`；failure delta=`none`；
+- claim boundary=`fresh observed case-risk comparison only; no real-world safety or downstream simulation claim`；
+- hash/checksum/fingerprint/coverage sweep/extra regression=`none`。
+
 ## WorldSim V6.4 P4C CONFIRMATION EVIDENCE COMPLETE（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1`；
