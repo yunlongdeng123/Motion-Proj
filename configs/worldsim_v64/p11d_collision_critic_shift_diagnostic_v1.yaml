@@ -1,0 +1,18 @@
+schema_version: worldsim_v64.p11d_collision_critic_shift_diagnostic.v1
+task_id: WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01
+hypothesis_id: WS-V64-H-P11D-001
+claim_boundary: post-hoc rows-only failure characterization; no recovery, model selection, collision authority, planning, closed-loop, or safety claim
+inputs:
+  source_run: worldsim_v64/WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01/20260827T034500Z__calibrated-collision-critic-s0-r1
+  calibration_rows: CALIBRATION_ACTION_ROWS.jsonl
+  evaluation_rows: EVALUATION_ACTION_ROWS.jsonl
+  thresholds: CALIBRATED_THRESHOLDS.json
+arms: [real_only, real_plus_naive_generated, real_plus_unc_verified]
+measures: [unsafe_prior, average_precision, auroc, unsafe_score_quantiles, safe_score_quantiles, cross_cohort_deltas]
+locks:
+  confirmatory_gate: null
+  native_or_evidence_reread: false
+  model_or_threshold_change: false
+  p11_reopen: false
+  content_hash_checksum_fingerprint: false
+failure_ledger_refs: [V64-F28]

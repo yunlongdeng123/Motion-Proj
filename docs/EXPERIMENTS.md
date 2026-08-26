@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V6.4 P11D ROWS-ONLY SHIFT DIAGNOSTIC FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01 / WS-V64-H-P11D-001`；run=`20260827T040000Z__collision-critic-shift-s0-r1`；
+- input=`P11R written calibration/evaluation action rows + thresholds only`；
+- measures=`unsafe prior/AP/AUROC/safe+unsafe score quantiles/cross-cohort deltas`；
+- confirmatory gate/native-evidence reread/GPU/model-threshold-policy change/P11 reopen/hash-checksum-fingerprint/extra tests=`none`。
+
 ## WorldSim V6.4 P11R CALIBRATED COLLISION CRITIC REJECTED（2026-08-27）
 
 - canonical=`run://worldsim_v64/WS-V64-P11R-CALIBRATED-COLLISION-CRITIC-01/20260827T034500Z__calibrated-collision-critic-s0-r1`；

@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V6.4 P11D rows-only calibration-shift diagnostic frozen（2026-08-27）
+
+状态：`v64_p11d_rows_only_shift_diagnostic_preregistered`；active task/hypothesis=
+`WS-V64-P11D-COLLISION-CRITIC-SHIFT-DIAGNOSTIC-01 / WS-V64-H-P11D-001`。
+
+只读P11R已落盘calibration/evaluation action rows与threshold，报告unsafe prior、AP、AUROC、safe/unsafe score quantile及
+cross-cohort delta；无gate、native/evidence reread、GPU、refit、threshold/policy change或P11复开。该结果只服务V64-F28
+failure characterization与技术报告。freeze=`docs/autoresearch/worldsim_v64/P11D_COLLISION_CRITIC_SHIFT_DIAGNOSTIC_FREEZE.md`。
+
 ## WorldSim V6.4 P11R independently calibrated critic rejected / P11 closed（2026-08-27）
 
 状态：`v64_p11r_rejected_p11_closed`；canonical=
