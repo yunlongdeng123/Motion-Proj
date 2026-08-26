@@ -1,0 +1,29 @@
+schema_version: worldsim_v64.p10r2_confirmation_sidecars.v1
+base_config: configs/worldsim_v63/p2_native_sidecars_v1.yaml
+task_id: WS-V64-P10R2-CONFIRMATION-SIDECAR-01
+hypothesis_id: WS-V64-H-P10R2-002
+seed: 3
+preparation:
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  public_tar_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  raw_reuse_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  temporary_raw_root: /root/autodl-tmp/tmp/worldsim_v64_p10r2_confirmation_raw_batch
+  member_shard_index_path: /root/autodl-tmp/tmp/worldsim_v64_p6_member_shards.json
+  processor_target_dir: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  archive_workers: 10
+  preprocess_timeout_seconds: 3600
+cohorts:
+  fresh_confirmation:
+    scenes:
+      - {name: scene-1020, processed_index: 778, stratum: night, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-1016, processed_index: 774, stratum: night, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0596, processed_index: 476, stratum: rain, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0590, processed_index: 470, stratum: rain, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0006, processed_index: 5, stratum: construction, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0472, processed_index: 383, stratum: construction, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0070, processed_index: 67, stratum: vulnerable_transit, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0371, processed_index: 288, stratum: vulnerable_transit, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+resources: {gpu: 0, maximum_scene_workers: 2, worker_cpu_threads: 4, worker_timeout_seconds: 2400, maximum_gpu_memory_gib: 22, minimum_disk_free_gib: 20}
+locks: {target_evidence_allowed: false, confirmation_quality_allowed: false, exact_once_test_allowed: false, add_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V63-F01, V63-F02, V63-F24, V64-F10, V64-F11, V64-F15, V64-F18, V64-F21]

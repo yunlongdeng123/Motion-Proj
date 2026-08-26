@@ -432,6 +432,10 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   empirical CVaR `0.0220499->0.0114783`，M1最大case rate=`0.0454545`，两项candidate gate通过。该结果来自已消费cohort，
   因此只支持进入fresh confirmation；V64-F21仍保持`closed_negative_tail_authority`且P11仍锁定。下一步不得复用该cohort作确认，
   也不得因margin较大再扩route cap；只允许按metadata冻结未读质量的新temporal-member cohort并exact-once检验固定M1。
+  fresh confirmation现已在任何target/model-score read前按seed3冻结为`1020,1016,0596,0590,0006,0472,0070,0371`，
+  8/8均为IR-WM train temporal member且>=40 samples。选择只用description/name/count/index与当前124-scene排除集合；固定
+  M1、2s/1.5m route、worst10和两项gate均未变。该prereg不关闭V64-F21；只有新96-case exact-once结果才能决定M1是否获得
+  bounded fresh empirical route-tail authority，且无论结果如何都不改写历史M0负结论。
 
 <a id="detail-v63"></a>
 

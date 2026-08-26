@@ -202,7 +202,7 @@ def run(config_path: Path, runs_root: Path, processed_root: Path, run_id: str) -
         "route_nominal_coverage_cap": route_cap_coverage,
         "model_refit": False,
         "policy_selection_during_run": False,
-        "new_confirmation_read": False,
+        "new_confirmation_read": bool(config.get("new_confirmation_read", False)),
         "gate_results": gates,
         "resources": {
             "gpu_used": True,

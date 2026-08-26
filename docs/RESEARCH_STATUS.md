@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.4 P10R2 fresh route-aware confirmation frozen（2026-08-27）
+
+状态：`v64_p10r2_fresh_confirmation_preregistered_prep_next`；active task/hypothesis=
+`WS-V64-P10R2-CONFIRMATION-SIDECAR-01 / WS-V64-H-P10R2-002`；confirmation target/quality/model-score read=
+`false/false/false`。
+
+从700-scene IR-WM temporal train仅按metadata、seed3与当前124个已用scene排除集合冻结8 scene/96 case：night=
+`1020(778),1016(774)`，rain=`0596(476),0590(470)`，construction=`0006(5),0472(383)`，vulnerable/transit=
+`0070(67),0371(288)`；全部为temporal member且>=40 samples。M1保持原MLP、M0 conditional coverage、route cap=0.40、
+总selected count不变、2s/1.5m route与worst10尾部；exact-once仅保留CVaR<=0.05和coverage delta<=1e-6两门。
+prep/native/aggregate/evidence/exact IDs及单卡scene-ready feed已固定；无refit、参数扫描、第二confirmation或额外测试。
+freeze=`docs/autoresearch/worldsim_v64/P10R2_CONFIRMATION_COHORT_FREEZE.md`与
+`docs/autoresearch/worldsim_v64/P10R2_CONFIRMATION_EXECUTION_FREEZE.md`。
+
 ## WorldSim V6.4 P10R2 route-aware M1 calibration candidate supported（2026-08-26）
 
 状态：`v64_p10r2_route_aware_candidate_supported_confirmation_freeze_next`；canonical=

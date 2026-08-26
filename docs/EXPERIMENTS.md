@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10R2 FRESH ROUTE-AWARE CONFIRMATION FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P10R2-CONFIRMATION-SIDECAR-01 / WS-V64-H-P10R2-002`；seed=`3`；quality read=`false`；
+- metadata-only scenes=`night 1020/1016; rain 0596/0590; construction 0006/0472; vulnerable-transit 0070/0371`；
+- membership/count=`8/8 direct IR-WM train-temporal keys; each 40 or 41 samples; 12 targets each; 96 cases`；
+- selection input=`name/description/sample count/temporal membership/processed index/current 124-scene exclusion only`；
+- fixed M1=`same M0 total count; route cap 0.40; non-route reallocation; frozen MLP; 2s/1.5m; worst10`；
+- gates=`M1 route empirical CVaR <=0.05; absolute mean total coverage delta <=1e-6`；
+- refit/sweep/second confirmation/hash/checksum/fingerprint/smoke/regression=`none`；single RTX3090=`sufficient`。
+
 ## WorldSim V6.4 P10R2 ROUTE-AWARE M1 CALIBRATION CANDIDATE SUPPORTED（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P10R2-ROUTE-AWARE-COMPILER-01/20260826T191500Z__route-aware-compiler-s0-r1`；verdict=`supported_route_aware_candidate_on_consumed_calibration`；

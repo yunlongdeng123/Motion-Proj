@@ -1,0 +1,35 @@
+schema_version: worldsim_v64.p10r2_exact_once_confirmation.v1
+task_id: WS-V64-P10R2-EXACT-ONCE-CONFIRMATION-01
+hypothesis_id: WS-V64-H-P10R2-002
+seed: 3
+new_confirmation_read: true
+claim_boundary: exact-once fresh observed route-tail comparison of frozen M0 and M1; no population bound, physical collision, planning, closed-loop, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P10R2-CONFIRMATION-EVIDENCE-01/20260826T201500Z__confirmation-evidence-s3-r1
+  native_run: worldsim_v64/WS-V64-P10R2-CONFIRMATION-SIDECAR-01/20260826T201000Z__native-aggregate-s3-r1
+  native_partition: fresh_confirmation
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+scenes:
+  - {name: scene-1020, processed_index: 778, stratum: night}
+  - {name: scene-1016, processed_index: 774, stratum: night}
+  - {name: scene-0596, processed_index: 476, stratum: rain}
+  - {name: scene-0590, processed_index: 470, stratum: rain}
+  - {name: scene-0006, processed_index: 5, stratum: construction}
+  - {name: scene-0472, processed_index: 383, stratum: construction}
+  - {name: scene-0070, processed_index: 67, stratum: vulnerable_transit}
+  - {name: scene-0371, processed_index: 288, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512, shape: [200, 200, 16]}
+route: {future_seconds: 2.0, future_frame_count: 20, corridor_radius_m: 1.5}
+policy:
+  score: full_native_selective_mlp_hidden_free
+  m0_conditional_nominal_coverages: {construction: 0.50, night: 0.50, rain: 0.40, vulnerable_transit: 0.50}
+  m1_route_nominal_coverage_cap: 0.40
+  reallocate_unused_route_budget_to_nonroute: true
+risk: {hidden_free_conflict_threshold: 0.05}
+tail: {fraction: 0.10, expected_tail_count: 10}
+gates: {maximum_m1_route_empirical_cvar: 0.05, maximum_absolute_mean_coverage_delta: 0.000001}
+verdict_on_pass: supported_exact_once_route_aware_confirmation
+verdict_on_failure: rejected_exact_once_route_aware_confirmation
+locks: {model_refit_allowed: false, route_or_coverage_sweep_allowed: false, current_p10t_negative_rewrite_allowed: false, second_confirmation_allowed: false, content_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V63-F02, V63-F24, V64-F15, V64-F18, V64-F20, V64-F21]

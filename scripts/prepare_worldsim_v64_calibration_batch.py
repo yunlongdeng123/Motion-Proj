@@ -73,6 +73,7 @@ def run(
         "worldsim_v64_p6_raw_batch",
         "worldsim_v64_p4c_raw_batch",
         "worldsim_v64_p4c_replacement_raw_batch",
+        "worldsim_v64_p10r2_confirmation_raw_batch",
     }
     if temporary_root.parent != allowed_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"temporary raw path is outside the frozen target: {temporary_root}")
