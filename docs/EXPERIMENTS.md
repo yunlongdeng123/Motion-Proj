@@ -1,5 +1,18 @@
 # Experiments
 
+## WorldSim V6.4 NATIVE UQ RETROSPECTIVE PREREG（2026-08-26）
+
+- task=`WS-V64-P3-NATIVE-UQ-01`；hypothesis=`WS-V64-H-P3-001`；status=`preregistered / not run`；seed=`0`。
+- purpose=直接判断 native feature-density uncertainty 是否优于 max-probability/entropy/margin；不先实现完整 compiler。
+- data role=V6.3 旧 4-scene fit + 2-scene evaluation，只作 mechanism diagnostic；evaluation target 不参与拟合，且禁止
+  作为 V6.4 fresh claim。
+- U2=`native logits+BEV / PCA-16 / geometry-conditioned diagonal GMM-4`；fit sampling=`50,000 points/scene`；
+  evaluation=两个 scene 全部 eligible surface points。
+- scientific run=`pending`；quality read=`none after freeze`；GPU=`none`；failure ledger refs=
+  `V63-F02,V63-F19,V63-F24,V64-F01`；failure ledger delta=`none`。
+- evidence=`docs/autoresearch/worldsim_v64/P1_CORE_UQ_FREEZE.md`、
+  `configs/worldsim_v64/p3_retrospective_uq_v1.yaml`。
+
 ## WorldSim V6.4 P0 SCOPE / GIT COMPLETE（2026-08-26）
 
 - task=`WS-V64-P0-SCOPE-GIT-01`；scientific run=`none`；quality read=`none`；GPU use=`none`；seed=`none`。

@@ -1,0 +1,25 @@
+schema_version: worldsim_v64.p3_retrospective_uq.v1
+task_id: WS-V64-P3-NATIVE-UQ-01
+hypothesis_id: WS-V64-H-P3-001
+seed: 0
+inputs:
+  native_run: worldsim_v63/WS-V63-P2-NATIVE-SIDECAR-01/20260824T145110Z__native-dl-s1-r1
+  surface_run: worldsim_v63/WS-V63-P3-SURFACE-CORPUS-01/20260824T154059Z__surface-dl-s20260824-r1
+partitions:
+  fit_scenes: [scene-0071, scene-0317, scene-0862, scene-1012]
+  evaluation_scenes: [scene-0450, scene-1089]
+sampling:
+  fit_points_per_scene: 50000
+  evaluation_chunk_size: 32768
+model:
+  feature: native_logits_plus_bev
+  pca_dimension: 16
+  gmm_components: 4
+  covariance: diagonal
+locks:
+  mechanism_only: true
+  fresh_v64_claim_allowed: false
+  selection_target_used_for_fit: false
+  surface_model_allowed: false
+  lora_allowed: false
+failure_ledger_refs: [V63-F02, V63-F19, V63-F24, V64-F01]

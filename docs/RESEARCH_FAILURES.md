@@ -14,7 +14,9 @@
 
 - V6.4 从`research/worldsim-v6.3-surface-tail@c192955`直接建立；`V63-F24`仍关闭 Surface family，新的合法路线只能研究
   native aleatoric/epistemic uncertainty、scene/stratum conditional risk 与独立 case-level calibration。
-- P0 只完成 Git/文档前置，没有 V6.4 quality read 或 GPU run。当前唯一 V6.4 失败条目是已在质量读取前恢复的
+- 首个核心假设已冻结为原生 U0 对比 geometry-conditioned feature-density U2；旧 4+2 scene 只作机制诊断，禁止作为
+  fresh V6.4 claim，也不允许由该结果读取 calibration/confirmation/test。
+- 当前没有 V6.4 quality read 或 GPU run。唯一 V6.4 失败条目是已在质量读取前恢复的
   `V64-F01`，不得写成算法负结论。
 
 ### V6.3 报告使用边界（2026-08-26）
@@ -89,7 +91,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | P0 scope/Git完成，P1 novelty/protocol已解锁；尚无方法质量结论 | 控制台`pytest`不自动加入仓库根目录，正式入口统一用`python -m pytest`；3090磁盘余量约60 GiB，P1必须冻结sidecar预算 | `V64-F01`；`docs/autoresearch/worldsim_v64/P0_SCOPE.md` |
+| V6.4 | P0完成；最小 native UQ retrospective 已预注册、尚未执行，无方法质量结论 | 控制台`pytest`不自动加入仓库根目录；旧scene只能作机制诊断，若有信号仍需fresh cohort | `V64-F01`；`P0_SCOPE.md`；`P1_CORE_UQ_FREEZE.md` |
 
 ### 1.1 V1 汇总条目
 

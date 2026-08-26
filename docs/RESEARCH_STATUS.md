@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.4 最小 UQ 机制实验已冻结 / 待正式执行（2026-08-26）
+
+状态：`v64_core_uq_retrospective_preregistered`；active task=`WS-V64-P3-NATIVE-UQ-01`；hypothesis=
+`WS-V64-H-P3-001`。按用户最新指令不机械展开完整 V6.4 plan，直接比较原生 IR-WM softmax U0 与 feature-density U2。
+冻结协议=`docs/autoresearch/worldsim_v64/P1_CORE_UQ_FREEZE.md`，配置=
+`configs/worldsim_v64/p3_retrospective_uq_v1.yaml`。
+
+本轮只把 V6.3 的 4 train scene / 2 selection scene 降级为 retrospective mechanism set：PCA/GMM 只拟合四个 train
+scene，两个 evaluation scene 的 target 不进入拟合；结果无论正负都不构成 V6.4 fresh claim。U2 固定为
+`17D logits + 256D BEV -> standardize -> PCA-16 -> FREE/OCC-conditioned 4-component diagonal GMM`；U0 为
+max-probability、entropy 与 margin。当前不训练 aleatoric head，不引入 Surface、LoRA、scene ID 或阈值 sweep。
+
+代码与配置已 staged，正式结果尚未读取；资源为 CPU + mmap 旧 sidecar，GPU 不占用，因此没有多卡需求。failure ledger
+refs=`V63-F02,V63-F19,V63-F24,V64-F01`，delta=`none`。下一步仅做源码编译检查、提交并 push prereg，然后启动一次
+正式机制运行。
+
 ## WorldSim V6.4 P0 完成 / P1 已解锁（2026-08-26）
 
 状态：`v64_p0_complete_p1_unlocked`；分支=`research/worldsim-v6.4-native-uq`。分支从冻结的
