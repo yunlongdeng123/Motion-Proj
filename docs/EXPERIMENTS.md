@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V6.4 P4C CONDITIONAL CANDIDATE SUPPORTED / P6R CATALOG FINALIZED（2026-08-26）
+
+- P4C canonical=`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-COMPILER-01/20260826T160000Z__conditional-compiler-s0-r1`；
+- C0=`coverage 0.3999668, failures 0/96`；M0=`coverage 0.4749773, failures 0/96`；uplift=`+0.0750105`；
+- M0 construction/night/rain/vulnerable failures=`0/24,0/24,0/24,0/24`；all frozen gates=`PASS`；
+- model refit/policy selection=`false/false`；GPU wall/peak RSS=`13.3357 s/0.7901 GiB`；verdict=`supported_conditional_candidate`；
+- old prep canonical=`20260826T143000Z__confirmation-prep-s0-r1`；catalog=`57338 entries/6880063 bytes`；
+  temporary raw removed=`true`；V64-F16=`resolved`；
+- disk recovery=`remove exact recoverable /root/autodl-tmp/pip_cache (13 GiB)`；free disk=`29 -> 41 GiB`；formal artifacts removed=`none`；
+- new confirmation quality/model-score read=`false/false`；next=`blind sidecar preparation with scene-ready GPU feed`。
+
 ## WorldSim V6.4 P4C CONDITIONAL COMPILER FREEZE（2026-08-26）
 
 - task/hypothesis=`WS-V64-P4C-CONDITIONAL-COMPILER-01 / WS-V64-H-P4C-001`；quality read at freeze=`none new`；

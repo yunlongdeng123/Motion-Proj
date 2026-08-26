@@ -113,6 +113,8 @@
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
 algorithm failure并关闭该candidate，不改mapping或扫描第二版本。
+新confirmation入口前free disk仅29 GiB；只回收精确的13 GiB pip下载缓存后为41 GiB，未删除formal run、模型、环境或processed
+资产。这是预防性可恢复空间管理，不新增failure ID。
 
 ### 1.1 V1 汇总条目
 
@@ -331,7 +333,7 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   exact-once confirmation只在冻结40%上读分一次，得到`1/96` failure；四strata分别`0/24,1/24,0/24,0/24`，
   总体和分层gate均通过。V64-F15因此以独立校准加新确认的完整新版本证据收口，但不产生现实安全声明。
 
-- `V64-F16`（`resource/operations`, `active`）：exact-once新8 scene在现有raw cache均无payload；需要约24.8k sensor member。
+- `V64-F16`（`resource/operations`, `resolved_by_scene_ready_streaming_and_catalog_finalize`）：exact-once新8 scene在现有raw cache均无payload；需要约24.8k sensor member。
   前一P6整批扫描虽已学习43033个member->shard映射，但`scan_shards`写回时只保留当前batch，故unseen batch仍会触发10个
   `.tgz`全扫，预计重现>1h GPU空转屏障。WIDS明确把index用于稀疏random access，ratarmount为compressed tar持久化SQLite
   index；结合当前代码不新增依赖，迁移为superset member->shard catalog，并以scene raw-ready为边界并发DriveStudio preprocess
@@ -343,6 +345,9 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   scene-ready priority scheduling已完成全部`8 scenes/96 blind targets`：先完成单shard/相关shard组，DriveStudio与IR-WM按
   scene流水，最大worker显存`4.1314 GiB`；没有等待整批processed或启用多卡。故GPU-idle/全批屏障部分已恢复；superset
   catalog的剩余EOF写回和可重建临时raw删除仍由原prep controller收口，完成后再把V64-F16标为resolved。
+  exact-once评分后剩余scanner恢复并正常EOF：prep=`20260826T143000Z__confirmation-prep-s0-r1`完成8 scene，superset
+  catalog=`57338 entries / 6880063 bytes`，temporary raw由controller删除。至此资源failure正式关闭；总wall `5872.4206 s`
+  保留为首次稀疏scan成本证据，不把它误写成GPU wall。
 
 - `V64-F17`（`data/interface`, `resolved_pre_score`）：exact-once evidence r1完成33/96 units后，scene-1105 frame62
   在`load_frame_boxes`用直接dict索引触发`KeyError`。processed审计显示该scene缺0--9、56--64的frame_instances键；这些

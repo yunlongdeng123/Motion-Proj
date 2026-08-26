@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.4 P4C conditional candidate supported / new confirmation input next（2026-08-26）
+
+状态：`v64_p4c_conditional_candidate_supported`；canonical=
+`run://worldsim_v64/WS-V64-P4C-CONDITIONAL-COMPILER-01/20260826T160000Z__conditional-compiler-s0-r1`；active task=
+`WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01`。已读calibration上C0 coverage/failure=`0.3999668/0`，冻结M0=
+`0.4749773/0`，absolute uplift=`0.0750105`；四strata均`0/24`，四项candidate gate全PASS。model refit/run-time
+selection=`false/false`，GPU wall=`13.3357 s`。该结果只冻结candidate，新confirmation仍未读。
+
+旧P6R prep controller亦已完成：superset catalog=`57338 entries / 6880063 bytes`，可重建temporary raw已由controller
+删除，V64-F16=`resolved_by_scene_ready_streaming_and_catalog_finalize`。下一步为新8-scene raw/processed/native blind sidecar，继续
+scene-ready feed，避免等待全批。为给预计约12 GiB新资产留空间，只删除可重建`/root/autodl-tmp/pip_cache` 13 GiB，free disk
+从29 GiB增至41 GiB；模型、环境、processed与formal runs均保留。P4C closeout=
+`docs/autoresearch/worldsim_v64/P4C_CONDITIONAL_COMPILER_CALIBRATION_CLOSEOUT.md`。
+
 ## WorldSim V6.4 P4C conditional compiler frozen / calibration replay next（2026-08-26）
 
 状态：`v64_p4c_conditional_compiler_frozen`；active task=`WS-V64-P4C-CONDITIONAL-COMPILER-01`。C0固定global
