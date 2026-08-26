@@ -319,6 +319,8 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   第一阶段正式训练已完成：`786054` points，loss=`0.0337864->0.0251443`，development AUROC=`0.8811503`
   （仅描述），GPU fit=`10.1545 s`。模型现已冻结且原8-scene calibration仍未读；这既不关闭V64-F15，也不产生新
   failure。下一判定只来自预注册的96-case独立校准。
+  独立证据现已在模型冻结后一次完成`8 scenes/96 units`，source-role overlap与query均为0；尚未读取模型分数或选择
+  coverage，故V64-F15状态不变且没有新增failure ID。
 
 <a id="detail-v63"></a>
 

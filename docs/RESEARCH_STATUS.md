@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.4 P6R independent evidence complete / calibration scoring next（2026-08-26）
+
+状态：`v64_p6r_independent_evidence_complete_calibration_scoring_next`；canonical=
+`run://worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1`；active task=
+`WS-V64-P6R-CALIBRATION-01`；independent-calibration target/model-score read=`true/false`；new-confirmation read=`false`。
+
+冻结模型之后一次生成原8-scene的`96/96` evidence units，queries=`0`、source-role overlap=`0`、disk=`118985634 bytes`、
+maximum unit/wall=`15.4137/111.5142 s`。没有模型评分、coverage选择或额外gate；下一动作只运行已push的P6R case
+calibration一次。Failure delta=`none`，V64-F15仍待独立结果；不加hash/checksum/fingerprint或测试矩阵。
+
 ## WorldSim V6.4 P6R MLP trained / independent calibration frozen（2026-08-26）
 
 状态：`v64_p6r_selective_mlp_trained_independent_calibration_preregistered`；canonical=

@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V6.4 P6R INDEPENDENT EVIDENCE COMPLETE（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1`；
+  result=`8 scenes / 96 units / passed`。
+- query/source-role overlap=`0/0`；disk=`118985634 bytes`；maximum-unit/wall=`15.4137/111.5142 s`。
+- independent calibration target/model-score read=`true/false`；new confirmation read=`false`；model was frozen and pushed first。
+- next=`one frozen MLP case-calibration run`；failure delta=`none`；hash/checksum/fingerprint=`none`；extra smoke/regression=`none`。
+
 ## WorldSim V6.4 P6R MLP TRAINED / CALIBRATION PREREG（2026-08-26）
 
 - canonical=`run://worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1`；verdict=
