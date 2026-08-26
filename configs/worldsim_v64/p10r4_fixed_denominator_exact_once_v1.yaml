@@ -1,0 +1,39 @@
+schema_version: worldsim_v64.p10r4_fixed_denominator_exact_once.v1
+task_id: WS-V64-P10R4-FIXED-DENOMINATOR-EXACT-ONCE-01
+hypothesis_id: WS-V64-H-P10R4-001
+seed: 4
+new_confirmation_read: true
+claim_boundary: exact-once untouched-test fixed-opportunity comparison of frozen M0 and M1; no population bound, physical collision, planning, closed-loop, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P10R4-TEST-EVIDENCE-01/20260827T023500Z__test-evidence-s4-r1
+  native_run: worldsim_v64/WS-V64-P10R4-TEST-SIDECAR-01/20260827T023000Z__native-aggregate-s4-r1
+  native_partition: fresh_confirmation
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+scenes:
+  - {name: scene-1084, processed_index: 824, stratum: night}
+  - {name: scene-1081, processed_index: 821, stratum: night}
+  - {name: scene-0462, processed_index: 375, stratum: rain}
+  - {name: scene-0820, processed_index: 636, stratum: rain}
+  - {name: scene-0534, processed_index: 424, stratum: construction}
+  - {name: scene-0598, processed_index: 478, stratum: construction}
+  - {name: scene-0527, processed_index: 417, stratum: vulnerable_transit}
+  - {name: scene-0668, processed_index: 522, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512, shape: [200, 200, 16]}
+route: {future_seconds: 2.0, future_frame_count: 20, corridor_radius_m: 1.5}
+policy:
+  score: full_native_selective_mlp_hidden_free
+  m0_conditional_nominal_coverages: {construction: 0.50, night: 0.50, rain: 0.40, vulnerable_transit: 0.50}
+  m1_route_nominal_coverage_cap: 0.40
+  reallocate_unused_route_budget_to_nonroute: true
+risk: {hidden_free_conflict_threshold: 0.05}
+tail: {fraction: 0.10, expected_tail_count: 10}
+evaluation: {primary: fixed_route_denominator, descriptive_paired_probability: half_ties}
+gates:
+  maximum_absolute_mean_coverage_delta: 0.000001
+  maximum_m1_minus_m0_fixed_denominator_cvar: 0.0
+  maximum_m1_minus_m0_pooled_fixed_denominator_density: 0.0
+verdict_on_pass: supported_exact_once_fixed_denominator_relative_confirmation
+verdict_on_failure: rejected_exact_once_fixed_denominator_relative_confirmation
+locks: {model_refit_allowed: false, route_coverage_tail_denominator_sweep_allowed: false, second_test_allowed: false, bootstrap_or_significance_gate_allowed: false, current_p10r2_formal_rewrite_allowed: false, content_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V63-F02, V63-F24, V64-F18, V64-F20, V64-F21, V64-F25]

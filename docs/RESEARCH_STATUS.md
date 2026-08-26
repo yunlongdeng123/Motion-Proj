@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.4 P10R4 untouched-test fixed-denominator confirmation frozen（2026-08-27）
+
+状态：`v64_p10r4_untouched_test_preregistered`；active task/hypothesis=
+`WS-V64-P10R4-TEST-SIDECAR-01 / WS-V64-H-P10R4-001`；test quality read=`false`。
+
+seed4从未引用且temporal-valid metadata按night/rain/construction/vulnerable各冻结2 scene：
+`1084,1081 / 0462,0820 / 0534,0598 / 0527,0668`，共96 cases。M0/M1、route `2s/1.5m`、M1 cap `0.40`、
+fixed route-eligible denominator和worst10全部不变。唯一三门为coverage delta `<=1e-6`、M1-M0 fixed-CVaR `<=0`、
+M1-M0 pooled fixed density `<=0`；无bootstrap/significance/refit/sweep/second test。元数据成员改为单遍解析；raw-only producer
+与单一feeder重叠tar I/O、预处理和最多2个单scene GPU worker，避免duplicate producer。free disk=`27GiB`、预计峰值新增
+`~14GiB`、单worker显存`~4.2GiB`，不需要多卡。freeze=`docs/autoresearch/worldsim_v64/P10R4_UNTOUCHED_TEST_FREEZE.md`。
+
 ## WorldSim V6.4 P10R3 fixed route-denominator diagnostic complete（2026-08-27）
 
 状态：`v64_p10r3_fixed_denominator_diagnostic_complete`；canonical=

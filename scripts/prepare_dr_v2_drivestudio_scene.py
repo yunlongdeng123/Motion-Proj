@@ -75,28 +75,63 @@ def scene_sample_tokens(metadata: Path, scene_name: str) -> tuple[dict, set[str]
 
 
 def collect_required(metadata: Path, scene_name: str) -> dict[str, Any]:
-    scene, sample_tokens = scene_sample_tokens(metadata, scene_name)
+    return collect_required_many(metadata, [scene_name])[scene_name]
+
+
+def collect_required_many(
+    metadata: Path, scene_names: list[str]
+) -> dict[str, dict[str, Any]]:
+    requested = list(dict.fromkeys(scene_names))
+    scene_by_name = {row["name"]: row for row in load_json(metadata / "scene.json")}
+    missing = [name for name in requested if name not in scene_by_name]
+    if missing:
+        raise RuntimeError(f"scenes do not resolve: {missing}")
+    sample_by_token = {row["token"]: row for row in load_json(metadata / "sample.json")}
+    samples_by_scene: dict[str, set[str]] = {}
+    sample_owner: dict[str, str] = {}
+    for scene_name in requested:
+        scene = scene_by_name[scene_name]
+        tokens: set[str] = set()
+        token = scene["first_sample_token"]
+        while token:
+            if token in tokens:
+                raise RuntimeError(f"sample chain cycle at {token}")
+            row = sample_by_token[token]
+            if row["scene_token"] != scene["token"]:
+                raise RuntimeError(f"sample {token} escaped scene {scene_name}")
+            tokens.add(token)
+            sample_owner[token] = scene_name
+            if token == scene["last_sample_token"]:
+                break
+            token = row["next"]
+        if token != scene["last_sample_token"]:
+            raise RuntimeError(f"sample chain did not reach last sample for {scene_name}")
+        samples_by_scene[scene_name] = tokens
+
     sensor_by_token = {row["token"]: row for row in load_json(metadata / "sensor.json")}
     channel_by_calibration = {
         row["token"]: sensor_by_token[row["sensor_token"]]["channel"]
         for row in load_json(metadata / "calibrated_sensor.json")
     }
-    rows: list[dict[str, Any]] = []
-    seen_tokens: set[str] = set()
-    seen_filenames: set[str] = set()
+    rows_by_scene: dict[str, list[dict[str, Any]]] = {name: [] for name in requested}
+    seen_tokens: dict[str, set[str]] = {name: set() for name in requested}
+    seen_filenames: dict[str, set[str]] = {name: set() for name in requested}
     for row in iter_json_array(metadata / "sample_data.json"):
+        scene_name = sample_owner.get(row["sample_token"])
+        if scene_name is None:
+            continue
         channel = channel_by_calibration.get(row["calibrated_sensor_token"])
-        if row["sample_token"] not in sample_tokens or channel not in SENSORS:
+        if channel not in SENSORS:
             continue
         token, filename = row["token"], row["filename"]
-        if token in seen_tokens or filename in seen_filenames:
+        if token in seen_tokens[scene_name] or filename in seen_filenames[scene_name]:
             raise RuntimeError(f"duplicate sample_data identity: {token} {filename}")
         path = Path(filename)
         if path.is_absolute() or ".." in path.parts:
             raise RuntimeError(f"unsafe sensor filename: {filename}")
-        seen_tokens.add(token)
-        seen_filenames.add(filename)
-        rows.append(
+        seen_tokens[scene_name].add(token)
+        seen_filenames[scene_name].add(filename)
+        rows_by_scene[scene_name].append(
             {
                 "token": token,
                 "sample_token": row["sample_token"],
@@ -106,19 +141,24 @@ def collect_required(metadata: Path, scene_name: str) -> dict[str, Any]:
                 "is_key_frame": bool(row["is_key_frame"]),
             }
         )
-    rows.sort(key=lambda item: (item["channel"], item["timestamp"], item["token"]))
-    counts = {channel: sum(row["channel"] == channel for row in rows) for channel in SENSORS}
-    if any(count == 0 for count in counts.values()):
-        raise RuntimeError(f"empty sensor chain for {scene_name}: {counts}")
-    return {
-        "scene_name": scene_name,
-        "scene_token": scene["token"],
-        "first_sample_token": scene["first_sample_token"],
-        "last_sample_token": scene["last_sample_token"],
-        "sample_count": len(sample_tokens),
-        "sensor_counts": counts,
-        "sample_data": rows,
-    }
+    payloads = {}
+    for scene_name in requested:
+        scene = scene_by_name[scene_name]
+        rows = rows_by_scene[scene_name]
+        rows.sort(key=lambda item: (item["channel"], item["timestamp"], item["token"]))
+        counts = {channel: sum(row["channel"] == channel for row in rows) for channel in SENSORS}
+        if any(count == 0 for count in counts.values()):
+            raise RuntimeError(f"empty sensor chain for {scene_name}: {counts}")
+        payloads[scene_name] = {
+            "scene_name": scene_name,
+            "scene_token": scene["token"],
+            "first_sample_token": scene["first_sample_token"],
+            "last_sample_token": scene["last_sample_token"],
+            "sample_count": len(samples_by_scene[scene_name]),
+            "sensor_counts": counts,
+            "sample_data": rows,
+        }
+    return payloads
 
 
 def load_asset_module(project_root: Path):

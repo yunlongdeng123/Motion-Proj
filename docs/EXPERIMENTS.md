@@ -1,5 +1,15 @@
 # Experiments
 
+## WorldSim V6.4 P10R4 UNTOUCHED TEST FREEZE（2026-08-27）
+
+- task/hypothesis=`WS-V64-P10R4-TEST-SIDECAR-01 / WS-V64-H-P10R4-001`；seed=`4`；test quality read=`false`；
+- scenes=`night 1084/1081; rain 0462/0820; construction 0534/0598; vulnerable 0527/0668`；targets=`8x12=96`；
+- primary=`route conflict count / route-eligible count; worst10/96 + pooled density`；
+- gates=`coverage delta<=1e-6; M1-M0 fixed CVaR<=0; M1-M0 pooled density<=0`；paired case probability=`descriptive only`；
+- locks=`frozen M0/M1/model/route/tail/denominator; no bootstrap/significance/refit/sweep/second test/hash/checksum/fingerprint`；
+- execution=`single-pass metadata members; raw-only tar producer + single-owner ready-first feeder + max two RTX3090 scene workers`；
+- canonical IDs=`021000 raw-only / 021500 native prefix / 023000 aggregate / 023500 evidence / 025000 exact-once`。
+
 ## WorldSim V6.4 P10R3 FIXED ROUTE-DENOMINATOR DIAGNOSTIC COMPLETE（2026-08-27）
 
 - canonical/verdict=`run://worldsim_v64/WS-V64-P10R3-FIXED-DENOMINATOR-AUDIT-01/20260827T013000Z__fixed-denominator-audit-s0-r1 / diagnosed_fixed_denominator_direction_consistent`；

@@ -483,6 +483,11 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   这使“selected-only可变分母导致方向反转”成为一致的描述性诊断，但P10R3是在读过fresh confirmation后冻结，不能作为独立
   confirmation；本条继续active，禁止据此回写P10R2 formal verdict或解锁P11。下一合法动作是先检索paired sparse-event
   confirmatory设计，再决定是否在从未读quality的test cohort冻结一次固定分母exact-once，不能复用已读cohort做显著性包装。
+  检索NeurIPS 2021 `rliable`与ICLR 2024 Conformal Risk Control后，P10R4冻结一次untouched 96-case test：保留个体成对
+  方向作描述，不做bootstrap/significance；CRC因目标是单调expected loss而不迁移为tail gate。三项confirmatory gate只包含
+  coverage保持、fixed-denominator worst10不劣、pooled fixed density不劣。test未读前不设最小effect、不改M1；若失败则本条
+  terminal rejected并保持P11锁定，若通过也只关闭exact empirical cohort层面的relative问题。输入I/O改为单遍metadata与
+  raw-only producer/单feeder，避免GPU因重复8次`sample_data.json`扫描或duplicate preprocess owner空等。
 
 <a id="detail-v63"></a>
 

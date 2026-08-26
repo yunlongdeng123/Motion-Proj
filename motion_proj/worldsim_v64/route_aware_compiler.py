@@ -169,26 +169,91 @@ def run(config_path: Path, runs_root: Path, processed_root: Path, run_id: str) -
         cvar, tail_count = _empirical_cvar(
             [float(row["route_hidden_free_conflict"]) for row in arm_rows], fraction
         )
+        route_conflicts = [
+            int(round(float(row["route_hidden_free_conflict"]) * int(row["route_selected_count"])))
+            for row in arm_rows
+        ]
+        fixed_densities = [
+            float(conflicts / int(row["route_eligible_count"]))
+            if int(row["route_eligible_count"]) else 0.0
+            for conflicts, row in zip(route_conflicts, arm_rows)
+        ]
+        fixed_cvar, fixed_tail_count = _empirical_cvar(fixed_densities, fraction)
+        route_eligible_count = sum(int(row["route_eligible_count"]) for row in arm_rows)
+        route_conflict_count = sum(route_conflicts)
         summaries[arm] = {
             "mean_realized_coverage": float(np.mean([row["realized_coverage"] for row in arm_rows])),
             "mean_route_realized_coverage": float(
                 np.mean([row["route_realized_coverage"] for row in arm_rows])
             ),
+            "route_eligible_count": route_eligible_count,
+            "route_selected_count": sum(int(row["route_selected_count"]) for row in arm_rows),
+            "route_hidden_free_conflict_count": route_conflict_count,
             "overall_case_failure_count": sum(bool(row["overall_case_loss"]) for row in arm_rows),
             "route_case_failure_count": sum(bool(row["route_case_loss"]) for row in arm_rows),
             "route_empirical_cvar": cvar,
             "tail_count": tail_count,
+            "pooled_fixed_denominator_conflict_density": float(
+                route_conflict_count / route_eligible_count
+            ),
+            "fixed_denominator_empirical_cvar": fixed_cvar,
+            "fixed_denominator_tail_count": fixed_tail_count,
         }
     coverage_delta = float(
         summaries["m1_route_aware"]["mean_realized_coverage"]
         - summaries["m0_conditional"]["mean_realized_coverage"]
     )
-    gates = {
-        "maximum_m1_route_empirical_cvar": summaries["m1_route_aware"]["route_empirical_cvar"]
-        <= float(config["gates"]["maximum_m1_route_empirical_cvar"]),
-        "total_coverage_preserved": abs(coverage_delta)
-        <= float(config["gates"]["maximum_absolute_mean_coverage_delta"]),
+    fixed_cvar_delta = float(
+        summaries["m1_route_aware"]["fixed_denominator_empirical_cvar"]
+        - summaries["m0_conditional"]["fixed_denominator_empirical_cvar"]
+    )
+    pooled_fixed_density_delta = float(
+        summaries["m1_route_aware"]["pooled_fixed_denominator_conflict_density"]
+        - summaries["m0_conditional"]["pooled_fixed_denominator_conflict_density"]
+    )
+    case_fixed_deltas = []
+    for row in rows:
+        fixed = {}
+        for arm in ("m0_conditional", "m1_route_aware"):
+            arm_row = row["arms"][arm]
+            conflict = int(
+                round(
+                    float(arm_row["route_hidden_free_conflict"])
+                    * int(arm_row["route_selected_count"])
+                )
+            )
+            eligible = int(arm_row["route_eligible_count"])
+            fixed[arm] = float(conflict / eligible) if eligible else 0.0
+        case_fixed_deltas.append(fixed["m1_route_aware"] - fixed["m0_conditional"])
+    lower = sum(value < 0.0 for value in case_fixed_deltas)
+    equal = sum(value == 0.0 for value in case_fixed_deltas)
+    higher = sum(value > 0.0 for value in case_fixed_deltas)
+    fixed_comparison = {
+        "m1_minus_m0_cvar": fixed_cvar_delta,
+        "m1_minus_m0_pooled_density": pooled_fixed_density_delta,
+        "paired_case_m1_lower_count": lower,
+        "paired_case_equal_count": equal,
+        "paired_case_m1_higher_count": higher,
+        "paired_probability_m1_improves_with_half_ties": float(
+            (lower + 0.5 * equal) / len(case_fixed_deltas)
+        ),
     }
+    if str(config.get("evaluation", {}).get("primary", "selected_route_cvar")) == "fixed_route_denominator":
+        gates = {
+            "total_coverage_preserved": abs(coverage_delta)
+            <= float(config["gates"]["maximum_absolute_mean_coverage_delta"]),
+            "fixed_denominator_cvar_not_worse": fixed_cvar_delta
+            <= float(config["gates"]["maximum_m1_minus_m0_fixed_denominator_cvar"]),
+            "pooled_fixed_denominator_density_not_worse": pooled_fixed_density_delta
+            <= float(config["gates"]["maximum_m1_minus_m0_pooled_fixed_denominator_density"]),
+        }
+    else:
+        gates = {
+            "maximum_m1_route_empirical_cvar": summaries["m1_route_aware"]["route_empirical_cvar"]
+            <= float(config["gates"]["maximum_m1_route_empirical_cvar"]),
+            "total_coverage_preserved": abs(coverage_delta)
+            <= float(config["gates"]["maximum_absolute_mean_coverage_delta"]),
+        }
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
     summary = {
         "task_id": config["task_id"],
@@ -199,6 +264,7 @@ def run(config_path: Path, runs_root: Path, processed_root: Path, run_id: str) -
         "case_count": len(rows),
         "arms": summaries,
         "m1_minus_m0_mean_coverage": coverage_delta,
+        "fixed_denominator_comparison": fixed_comparison,
         "route_nominal_coverage_cap": route_cap_coverage,
         "model_refit": False,
         "policy_selection_during_run": False,
@@ -221,6 +287,7 @@ def run(config_path: Path, runs_root: Path, processed_root: Path, run_id: str) -
         "run_dir": str(run_dir),
         "verdict": verdict,
         "m1_route_empirical_cvar": summaries["m1_route_aware"]["route_empirical_cvar"],
+        "m1_minus_m0_fixed_denominator_cvar": fixed_cvar_delta,
         "m1_minus_m0_mean_coverage": coverage_delta,
         "gate_results": gates,
     }

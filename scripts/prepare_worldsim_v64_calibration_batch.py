@@ -14,7 +14,7 @@ from pathlib import Path
 import yaml
 
 from scripts.prepare_dr_v2_drivestudio_scene import (
-    collect_required,
+    collect_required_many,
     load_asset_module,
 )
 
@@ -61,6 +61,7 @@ def run(
     repo_root: Path,
     run_dir: Path,
     reuse_temporary_raw: bool = False,
+    raw_only: bool = False,
 ) -> dict[str, object]:
     if run_dir.exists():
         raise FileExistsError(run_dir)
@@ -74,6 +75,7 @@ def run(
         "worldsim_v64_p4c_raw_batch",
         "worldsim_v64_p4c_replacement_raw_batch",
         "worldsim_v64_p10r2_confirmation_raw_batch",
+        "worldsim_v64_p10r4_test_raw_batch",
     }
     if temporary_root.parent != allowed_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"temporary raw path is outside the frozen target: {temporary_root}")
@@ -110,10 +112,9 @@ def run(
             raise FileExistsError(destination)
 
     if not reuse_temporary_raw:
-        payloads = {
-            str(scene["name"]): collect_required(metadata, str(scene["name"]))
-            for scene in scenes
-        }
+        payloads = collect_required_many(
+            metadata, [str(scene["name"]) for scene in scenes]
+        )
         required = {
             row["filename"]
             for payload in payloads.values()
@@ -143,6 +144,24 @@ def run(
             dst=temporary_root,
             workers=int(preparation["archive_workers"]),
         )
+
+    if raw_only:
+        wall = time.monotonic() - started
+        summary = {
+            "task_id": config["task_id"],
+            "status": "done",
+            "stage": "raw_only_complete",
+            "scene_count": len(scenes),
+            "temporary_raw_removed_after_success": False,
+            "wall_seconds": wall,
+            "quality_read": False,
+        }
+        _write_json(run_dir / "summary.json", summary)
+        _write_json(
+            run_dir / "status.json",
+            {"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()},
+        )
+        return summary
 
     scene_rows = []
     environment = os.environ.copy()
@@ -248,12 +267,14 @@ def main() -> None:
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--reuse-temporary-raw", action="store_true")
+    parser.add_argument("--raw-only", action="store_true")
     args = parser.parse_args()
     summary = run(
         args.config.resolve(),
         args.repo_root.resolve(),
         args.run_dir.resolve(),
         args.reuse_temporary_raw,
+        args.raw_only,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

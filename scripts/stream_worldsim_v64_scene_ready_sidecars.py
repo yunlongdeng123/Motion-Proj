@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-from scripts.prepare_dr_v2_drivestudio_scene import collect_required
+from scripts.prepare_dr_v2_drivestudio_scene import collect_required_many
 
 
 def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str) -> dict[str, object]:
@@ -33,9 +33,10 @@ def run(config_path: Path, repo_root: Path, task_root: Path, run_id_prefix: str)
     logs = task_root / "stream_logs"
     logs.mkdir(exist_ok=True)
 
+    payloads = collect_required_many(metadata, [str(scene["name"]) for scene in scenes])
     requirements = {
-        str(scene["name"]): [row["filename"] for row in collect_required(metadata, str(scene["name"]))["sample_data"]]
-        for scene in scenes
+        name: [row["filename"] for row in payload["sample_data"]]
+        for name, payload in payloads.items()
     }
 
     def completed_native(run_dir: Path) -> dict[str, object] | None:

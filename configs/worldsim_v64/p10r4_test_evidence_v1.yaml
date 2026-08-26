@@ -1,0 +1,21 @@
+schema_version: worldsim_v64.p10r4_test_evidence.v1
+task_id: WS-V64-P10R4-TEST-EVIDENCE-01
+hypothesis_id: WS-V64-H-P10R4-001
+seed: 4
+targets: {frame_indices: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182], target_count_per_scene: 12, target_unit_count: 96}
+sweep_roles: {method_candidate_offsets: [-6, -4, -2, 0], dropout_rule: 'method_candidate_offsets[target_ordinal_mod_4]', visible_method_count: 3, target_evidence_offsets: [-5, -3, -1, 1], cross_target_window_overlap: false}
+grid: {frame: target_lidar, axis_convention: x_forward_y_left_z_up, origin_m: [-20.0, -30.0, -3.0], extent_m: [40.0, 30.0, 5.0], voxel_size_m: 0.2}
+raw_lidar: {point_record_float32_width: 4, dynamic_box_margin_m: 0.05}
+ray_carving: {maximum_rays_per_sweep: 4096, maximum_range_m: 80.0, behind_hit_steps: 3}
+queries: {enabled: false, seed: 20260827, count_per_target: 100000}
+scenes:
+  - {name: scene-1084, processed_index: 824, stratum: night}
+  - {name: scene-1081, processed_index: 821, stratum: night}
+  - {name: scene-0462, processed_index: 375, stratum: rain}
+  - {name: scene-0820, processed_index: 636, stratum: rain}
+  - {name: scene-0534, processed_index: 424, stratum: construction}
+  - {name: scene-0598, processed_index: 478, stratum: construction}
+  - {name: scene-0527, processed_index: 417, stratum: vulnerable_transit}
+  - {name: scene-0668, processed_index: 522, stratum: vulnerable_transit}
+locks: {model_frozen: true, policy_frozen: true, test_read_allowed: true, content_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V63-F02, V63-F24, V64-F18, V64-F21, V64-F25]
