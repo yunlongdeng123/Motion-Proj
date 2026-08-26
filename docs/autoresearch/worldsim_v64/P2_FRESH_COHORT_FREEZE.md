@@ -2,7 +2,7 @@
 
 - Task: `WS-V64-P2-FRESH-NATIVE-SIDECAR-01`
 - Hypothesis: `WS-V64-H-P2-001`
-- Status: `recovery preregistered / r3 not run`
+- Status: `complete / r3 passed`
 - Seed: `0`
 
 ## Fresh boundary
@@ -49,4 +49,5 @@ Evaluation：
 磁盘余量足够，不需要多卡。
 
 本阶段不增加 smoke；先用官方 DriveStudio 流程预处理 evaluation 两场景，再用全新 r3 leaf 直接运行 72-unit formal。
-r2 保留为失败证据，不删除、不覆盖、不复用。
+r2 保留为失败证据，不删除、不覆盖、不复用。r3 已通过，完整结果见
+`docs/autoresearch/worldsim_v64/P2_FRESH_SIDECAR_CLOSEOUT.md`。

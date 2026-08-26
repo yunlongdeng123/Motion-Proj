@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.4 FRESH NATIVE SIDECAR FORMAL PASS（2026-08-26）
+
+- canonical=`run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3`；
+  task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=`WS-V64-H-P2-001 supported_capability`。
+- denominator=`6 scenes / 72 targets / 72 complete`；fit=`0139,0230,0255,0994`；evaluation=`0359,0998`；
+  native features complete=`true`；prototype=`false`。
+- output=`3,317,884,573 bytes`；wall=`172.2085 s`；max worker peak GPU=`4.1314 GiB`；two-worker peak
+  sum upper bound=`8.2628 GiB`；single RTX 3090=`sufficient`。
+- target evidence/calibration/confirmation/test read=`false/false/false/false`；quality claim=`none`；r2 partial reuse=`false`。
+- data preparation=本机raw nuScenes通过官方DriveStudio物化scene index`276/756`，各`196 LiDAR + 1,176 images`；
+  additional download=`none`。
+- formal failure ledger delta=`none`；post-run reader delta=`V64-F06 resolved_post_run_read`；closeout=
+  `docs/autoresearch/worldsim_v64/P2_FRESH_SIDECAR_CLOSEOUT.md`。
+
 ## WorldSim V6.4 FRESH SIDECAR TEMPORAL-METADATA RECOVERY PREREG（2026-08-26）
 
 - task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；attempt=

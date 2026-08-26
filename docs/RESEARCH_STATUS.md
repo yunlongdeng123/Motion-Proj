@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V6.4 fresh native sidecar 完成 / fresh evidence 下一步（2026-08-26）
+
+状态：`v64_fresh_native_sidecars_complete_evidence_freeze_next`；completed task=
+`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；hypothesis=`WS-V64-H-P2-001 supported_capability`；canonical=
+`run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3`。
+
+r3 在新leaf完成`6 scenes / 72 targets`，`all_native_features_complete=true`、output=`3,317,884,573 bytes`、
+wall=`172.2085 s`、maximum worker peak=`4.1314 GiB`、双worker peak sum upper bound=`8.2628 GiB`。
+prototype、target evidence、calibration、confirmation、exact-once test读取均为false。新增evaluation scene index
+`276/756`已从本机raw数据物化，各为`196 LiDAR + 1,176 images`；无额外下载。单3090资源充足，无多卡需求。
+
+完整收口=`docs/autoresearch/worldsim_v64/P2_FRESH_SIDECAR_CLOSEOUT.md`。r2 blocked partial原样保留且未复用。
+正式run failure delta=`none`；收口reader首次错误假定文件名`P2_NATIVE_SUMMARY.json`，在读取前`FileNotFoundError`；
+按实际run目录枚举改读继承extractor的`P2_SUMMARY.json`，登记=`V64-F06 resolved_post_run_read`，canonical未改变。
+
+该里程碑只支持sidecar capability，不支持fresh UQ或authority。下一步直接复用既有evidence materializer建立fresh target
+supervision，并在任何evaluation quality read前冻结保持不变的PCA-16/GMM-4/seed0 evaluator；不做冗长测试或参数sweep。
+
 ## WorldSim V6.4 fresh temporal metadata 恢复已冻结（2026-08-26）
 
 状态：`v64_fresh_temporal_metadata_recovery_preregistered`；active task=`WS-V64-P2-FRESH-NATIVE-SIDECAR-01`；

@@ -21,6 +21,7 @@
 - compact fresh cohort 已从 V6.1–V6.3 未读 quality 的 scene 中按 metadata-only 冻结。r2 证明候选还必须存在于冻结的
   train temporal metadata；恢复队列在任何 fresh quality read 前改冻并登记`V64-F05`。不得把更早版本曾出现过但未进入
   V6.1–V6.3 UQ路线的scene错判为legacy，也不得用本轮后续质量回改cohort或复用r2部分产物。
+- r3 已完整生成6-scene/72-target native sidecar，单卡资源通过；这只是capability，不得提前写成fresh UQ成立。
 
 ### V6.3 报告使用边界（2026-08-26）
 
@@ -94,7 +95,7 @@
 | V6.1 | 最小实验负结论收口：oracle `10/28, 0 false-safe`，GaussianWorld/IR-WM 均恢复 `10/28` 表面支持但各自 `10/10 false-safe`；ME-4 未解锁 | predicted argmax Occupancy 不能升级为安全 authority；第三 backend、threshold/grid/history/verifier sweep 均冻结 | `V61-F01`–`V61-F13`；`V61_MINIMUM_EXPERIMENT_CLOSEOUT.md` |
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
-| V6.4 | retrospective U2 在旧两scene均优于U0，支持进入fresh验证；尚无fresh/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在、fresh scene需属于冻结train temporal metadata | `V64-F01`–`V64-F05`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_COHORT_FREEZE.md` |
+| V6.4 | retrospective U2 在旧两scene均优于U0；fresh 6-scene/72-target native sidecar完整通过；尚无fresh UQ/authority/calibration结论 | `python -m pytest`入口、Git push需绑定当前LocalTUN proxy、非登录读run需激活conda、disk probe path必须存在、fresh scene需属于冻结train temporal metadata、run summary文件名需先枚举 | `V64-F01`–`V64-F06`；`P3_RETROSPECTIVE_CLOSEOUT.md`；`P2_FRESH_SIDECAR_CLOSEOUT.md` |
 
 ### 1.1 V1 汇总条目
 
@@ -199,6 +200,15 @@ V1 canonical 状态、实验和专项报告保存在 `docs/archive/2026-07/dynam
   `docs/autoresearch/worldsim_v64/P2_FRESH_COHORT_FREEZE.md`、
   `https://github.com/ziyc/drivestudio/blob/main/docs/NuScenes.md`、
   `https://github.com/fundamentalvision/bevformer`、`https://github.com/APRIL-ZJU/IR-WM/blob/ir-wm/README.md`。
+
+- `V64-F06`（`engineering/operations`, `resolved_post_run_read`）：r3 已成功输出正式summary后，首次只读收口程序
+  假定文件名为`P2_NATIVE_SUMMARY.json`，对不存在路径调用`Path.read_text()`触发`FileNotFoundError`；run、GPU、
+  artifacts与quality均未修改。实际继承的V6.3 extractor写出`P2_SUMMARY.json`。按Python pathlib官方合同先枚举run根目录，
+  再读取实际文件；canonical r3与全部指标不变。防重复：继承runner的consumer不得根据task或版本猜文件名，先用明确目录
+  枚举或读取runner源码中的输出合同；不为只读路径错误重跑formal。证据=
+  `run://worldsim_v64/WS-V64-P2-FRESH-NATIVE-SIDECAR-01/20260826T082600Z__fresh-native-s0-r3`、
+  `docs/autoresearch/worldsim_v64/P2_FRESH_SIDECAR_CLOSEOUT.md`、
+  `https://docs.python.org/3/library/pathlib.html`。
 
 <a id="detail-v63"></a>
 
