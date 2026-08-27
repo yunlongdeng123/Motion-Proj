@@ -5105,3 +5105,14 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：r1无科学结论；formal calibration read仍为false，r2允许继续。
 
 下一可用编号：`V65-F18`。
+
+### P3C outcome note — V65-F17后窄修复r2成功
+
+- recovery run：`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T155000Z__calibration-transfer-s0-r2`；
+- same-contract audit：仅q0 run-relative artifact locator改变；冻结slope/bias、scene、input、sampling、target、seed和
+  gates与r1完全一致；
+- outcome：60 eligible units，MSE -92.80%，5-bin calibration error -88.31%，5/5 evaluable scenes改善，
+  ranking/AUROC/selected set精确不变；6/6 gates；
+- interpretation：V65-F17确认为纯artifact entry failure，不会遮蔽也不夸大r2的independent calibration result。
+
+下一可用编号仍为：`V65-F18`。

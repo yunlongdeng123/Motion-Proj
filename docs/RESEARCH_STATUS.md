@@ -2327,3 +2327,19 @@ Formal r1=`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/202608
 已将locator更正为成功P2V实际使用的同一冻结artifact：`WS-V64-P6R-SELECTIVE-MLP-01/.../RISK_MODEL/
 full_native_selective_mlp.joblib`。仅run-relative artifact locator改变；model、scene、target、sampling、calibrator、seed和
 gates均不变。r1现场保留并标记failed，r2将继续同一冻结read。
+
+### P3C终态：冻结单调calibrator独立迁移成立
+
+Canonical=`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T155000Z__calibration-transfer-s0-r2`。
+72 source units中12个按冻结minimum 16 visited samples排除；60 eligible units含6,675 visited points、708 hidden-FREE
+outcomes和48 unsafe trajectories。`scene-1046`的12 units全部低于minimum footprint，因此scene MSE只在5个可评估
+scenes上计算，五个全部改善（lower/equal/higher=`5/0/0`），达到预注册minimum support=`5`。
+
+原始Qmean MSE=`0.0287445`，冻结map后=`0.00207044`，降低`92.80%`；5-bin absolute calibration error
+`0.162039→0.0189368`，降低`88.31%`。严格单调性使Spearman=`0.715491`、unsafe AUROC/AUPRC=
+`0.982639/0.995763`精确不变；selected-40%的24 units与actual cost=`0.0298324`也完全不变。
+
+6/6 gates全过，verdict=`supported_independent_monotone_visited_state_calibration_transfer`。这将R7从train-only
+form提升为independent cohort支持，但不产生conformal coverage、admission、planning或safety claim。r2 wall=`7.923s`、
+peak GPU=`0.02359GiB`、RSS=`1.195GiB`；单RTX 3090足够。下一个研究对象是固定candidate trajectory set的
+action-level visited-state ranking，不在P3C cohort上做事后sweep。

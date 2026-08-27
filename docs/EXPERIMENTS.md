@@ -5350,3 +5350,26 @@ full-ten-shard fallback未触发；native/evidence完成前没有读Qmean-target
   不拷贝、不改model内容，不改任何科学参数；
 - open-source response：MLflow artifact API同样将artifact path定义为run-root-relative locator；项目保持run + relative-path
   双元组同步，不引入额外指纹/校验。
+
+### WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01 formal result
+
+Canonical：`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T155000Z__calibration-transfer-s0-r2`。
+
+| metric | raw Qmean | frozen monotone | result |
+| --- | ---: | ---: | --- |
+| source / eligible / excluded | 72 / 60 / 12 | same | descriptive |
+| visited points / hidden-FREE | 6,675 / 708 | same | descriptive |
+| unsafe units | 48/60 | same | two-class supported |
+| MSE | 0.0287445 | 0.00207044 | -92.80%, pass (`>=50%`) |
+| 5-bin absolute calibration error | 0.162039 | 0.0189368 | -88.31%, pass (`>=30%`) |
+| Spearman | 0.715491 | 0.715491 | exact non-regression |
+| unsafe AUROC / AUPRC | 0.982639 / 0.995763 | same | exact non-regression |
+| scene lower/equal/higher | — | 5/0/0 | pass (`lower>=5`) |
+| selected-40% | 24 units / 0.0298324 cost | exact same | pass |
+
+`scene-1046`没有unit达到冻结16-point footprint，故scene table是5个可评估scene，而非事后删scene。
+6/6 gates，verdict=`supported_independent_monotone_visited_state_calibration_transfer`。calibrator refit=false；
+formal V6.5 calibration read=true。wall=`7.923s`、peak GPU=`0.02359GiB`、peak RSS=`1.195GiB`。
+
+Claim限于冻结两参数单调map对expected visited-error的独立迁移；不宣称conformal guarantee、admission、
+planning或safety。不扫参、不refit、不复用已消耗P2V quality。
