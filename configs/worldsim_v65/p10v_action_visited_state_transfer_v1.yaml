@@ -1,0 +1,37 @@
+schema_version: worldsim_v65.p10v_action_visited_state_transfer.v1
+task_id: WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01
+hypothesis_id: WS-V65-H-P10V-001
+seed: 0
+claim_boundary: one fresh fixed-lattice action-ranking read of trajectory-visited world-state reliability; no collision, planner, policy, closed-loop, or safety claim
+inputs:
+  evidence_run: worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p10v_action_visited_state_compact.npz
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+sampling: {evaluation_points_per_unit: 8192, seed: 0}
+action_lattice:
+  progress_ratios: [0.25, 0.50, 0.75, 1.00]
+  lateral_offsets_m: [-1.50, 0.00, 1.50]
+  include_stop_for_reporting_only: true
+evaluation: {within_case_selected_fraction: 0.25, pairwise_minimum_target_gap: 0.02}
+gates:
+  minimum_pooled_spearman: 0.55
+  minimum_unsafe_auroc: 0.80
+  minimum_pairwise_concordance: 0.65
+  minimum_within_case_selected_cost_reduction: 0.25
+  minimum_scene_support: 5
+  minimum_evaluable_case_count: 48
+locks: {new_critic: false, action_lattice_sweep: false, threshold_sweep: false, calibration_refit: false, single_action_quality_read: true, add_hash_checksum_fingerprint: false}
+scenes:
+  - {name: scene-0159, processed_index: 119}
+  - {name: scene-0184, processed_index: 143}
+  - {name: scene-0577, processed_index: 459}
+  - {name: scene-0599, processed_index: 479}
+  - {name: scene-0955, processed_index: 722}
+  - {name: scene-0983, processed_index: 745}
+failure_ledger_refs: [V64-F28, V65-F10, V65-F12, V65-F17]

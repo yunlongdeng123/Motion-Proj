@@ -5,7 +5,7 @@
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
   "active_task": "WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01",
-  "active_hypothesis": null,
+  "active_hypothesis": "WS-V65-H-P10V-001",
   "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED", "P1R4_VISITED_STATE_QAGG_SUPPORTED_TRAIN_ONLY", "P1R5_ACTOR_FALSE_SAFE_REJECTED", "P1R6_SMOOTH_TAIL_REJECTED", "P1R7_MONOTONE_CALIBRATION_SUPPORTED_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_SUPPORTED", "P3C_INPUT_PIPELINE", "P3C_INDEPENDENT_MONOTONE_CALIBRATION_SUPPORTED"],
   "unlocked_stages": ["P1R5_ACTOR_FALSE_SAFE_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_TRANSFER", "P3C_INDEPENDENT_MONOTONE_CALIBRATION_TRANSFER"],
   "resource_contract": "single_rtx3090_24gb",
@@ -227,5 +227,10 @@
   "p3c_unsafe_auroc_auprc": [0.982638888888889, 0.9957631786921385],
   "p3c_scene_mse_lower_equal_higher": [5, 0, 0],
   "p3c_exact_ranking_and_selected_set_preservation": true,
-  "next_action": "freeze_fixed_candidate_trajectory_set_and_new_independent_P10V_action_ranking_cohort_without_reusing_P3C_quality"
+  "p10v_preregistered": true,
+  "p10v_scenes": ["scene-0159", "scene-0184", "scene-0577", "scene-0599", "scene-0955", "scene-0983"],
+  "p10v_archive_shards": [2, 6, 9],
+  "p10v_action_lattice": {"progress_ratios": [0.25, 0.5, 0.75, 1.0], "lateral_offsets_m": [-1.5, 0.0, 1.5], "stop_quality_unit": false},
+  "p10v_formal_action_quality_read": false,
+  "next_action": "run_P10V_targeted_archive_preparation_while_implementing_the_frozen_action_visited_state_evaluator"
 }

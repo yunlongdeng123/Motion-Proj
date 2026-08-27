@@ -5116,3 +5116,12 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - interpretation：V65-F17确认为纯artifact entry failure，不会遮蔽也不夸大r2的independent calibration result。
 
 下一可用编号仍为：`V65-F18`。
+
+### P10V prevention note — 不重复V64-F28 collision-critic路径
+
+- V6.4的10-feature linear critic在独立cohort发生unsafe ranking退化，已终止为`V64-F28`；
+- P10V只复用质量读取前已冻结的13-action generator，不复用critic、threshold、collision label或policy gate；
+- 新对象是trajectory-visited hidden-FREE rate排序，不将world-state reliability冒充collision/safety authority；
+- 若直接Qmean无action ranking，立即关闭action family，不训练critic补救。
+
+下一可用编号仍为：`V65-F18`。

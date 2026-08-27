@@ -5373,3 +5373,13 @@ formal V6.5 calibration read=true。wall=`7.923s`、peak GPU=`0.02359GiB`、peak
 
 Claim限于冻结两参数单调map对expected visited-error的独立迁移；不宣称conformal guarantee、admission、
 planning或safety。不扫参、不refit、不复用已消耗P2V quality。
+
+### WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01 freeze
+
+- prediction object：给定Ego candidate `tau`，其future 2s / 1.5m corridor中实际访问world-state的hidden-FREE rate；
+- action lattice：复用V6.4 P11已冻结`progress=[.25,.5,.75,1.0]`×`lateral=[-1.5,0,1.5]m`；stop不进quality metric；
+- cohort：`scene-0159/0184/0577/0599/0955/0983`，archive shards 2/6/9，6×12 source cases；
+- scorer/target：frozen q0 mean / visited hidden-FREE fraction，minimum 16 points/action，max 8192 points/case，seed0；
+- gates：Spearman `.55`、unsafe AUROC `.80`、pairwise concordance `.65`、within-case selected cost reduction `.25`、
+  scene support `5`、evaluable cases `48`；
+- locks：one quality read，no new critic/lattice sweep/threshold sweep/calibrator refit/hash/checksum/fingerprint。

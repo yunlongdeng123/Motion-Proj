@@ -34,7 +34,11 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     prep = config["preparation"]
     temporary_root = Path(prep["temporary_raw_root"]).resolve()
     expected_parent = Path("/root/autodl-tmp/tmp").resolve()
-    allowed_temporary_names = {"worldsim_v65_p2_raw_batch", "worldsim_v65_p3c_raw_batch"}
+    allowed_temporary_names = {
+        "worldsim_v65_p2_raw_batch",
+        "worldsim_v65_p3c_raw_batch",
+        "worldsim_v65_p10v_raw_batch",
+    }
     if temporary_root.parent != expected_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"unexpected temporary root: {temporary_root}")
     reuse_partial_raw = bool(prep.get("reuse_partial_raw", False))

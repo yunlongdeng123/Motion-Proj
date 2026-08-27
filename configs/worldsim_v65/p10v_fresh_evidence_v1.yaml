@@ -1,0 +1,19 @@
+schema_version: worldsim_v65.p10v_fresh_evidence.v1
+task_id: WS-V65-P10V-ACTION-EVIDENCE-01
+hypothesis_id: WS-V65-H-P10V-001
+seed: 0
+targets: {frame_indices: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182], target_count_per_scene: 12, target_unit_count: 72}
+sweep_roles: {method_candidate_offsets: [-6, -4, -2, 0], dropout_rule: 'method_candidate_offsets[target_ordinal_mod_4]', visible_method_count: 3, target_evidence_offsets: [-5, -3, -1, 1], cross_target_window_overlap: false}
+grid: {frame: target_lidar, axis_convention: x_forward_y_left_z_up, origin_m: [-20.0, -30.0, -3.0], extent_m: [40.0, 30.0, 5.0], voxel_size_m: 0.2}
+raw_lidar: {point_record_float32_width: 4, dynamic_box_margin_m: 0.05}
+ray_carving: {maximum_rays_per_sweep: 4096, maximum_range_m: 80.0, behind_hit_steps: 3}
+queries: {enabled: false, seed: 20260828, count_per_target: 0}
+scenes:
+  - {name: scene-0159, processed_index: 119}
+  - {name: scene-0184, processed_index: 143}
+  - {name: scene-0577, processed_index: 459}
+  - {name: scene-0599, processed_index: 479}
+  - {name: scene-0955, processed_index: 722}
+  - {name: scene-0983, processed_index: 745}
+locks: {model_score_read: false, action_quality_read: false, add_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V65-F15, V65-F16, V65-F17]

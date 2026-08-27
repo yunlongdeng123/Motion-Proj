@@ -2343,3 +2343,14 @@ scenes上计算，五个全部改善（lower/equal/higher=`5/0/0`），达到预
 form提升为independent cohort支持，但不产生conformal coverage、admission、planning或safety claim。r2 wall=`7.923s`、
 peak GPU=`0.02359GiB`、RSS=`1.195GiB`；单RTX 3090足够。下一个研究对象是固定candidate trajectory set的
 action-level visited-state ranking，不在P3C cohort上做事后sweep。
+
+### P10V fixed-action visited-state transfer freeze
+
+Active=`WS-V65-H-P10V-001`。不重开V6.4已失败的linear collision critic；直接复用其冻结action generator：
+4个progress ratios×3个lateral offsets得到12条非停车轨迹。对每条轨迹询问未来2秒/1.5m footprint中实际访问的
+world states是否可靠；stop因不访问未来footprint只报告、不作为reliability unit。
+
+新独立cohort从574个unprocessed/unmentioned direct-key scenes中冻结：archive bands 2/6/9的1/3和2/3 quantiles，
+即`0159/0184/0577/0599/0955/0983`。先只扫shards 2/6/9；缺member时只允许same-cohort full-scan，不换scene。
+Primary gates为pooled Spearman `>=0.55`、unsafe AUROC `>=0.80`、within-case pairwise concordance `>=0.65`、
+lowest-Qmean 25% actual-cost reduction `>=25%`、scene support `>=5`、evaluable cases `>=48`。不训练新critic、不扫参。
