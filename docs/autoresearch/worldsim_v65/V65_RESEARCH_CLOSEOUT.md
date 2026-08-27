@@ -4,6 +4,11 @@ Date: 2026-08-28
 Branch: `research/worldsim-v6.5-task-conditioned-authority`  
 Terminal status: visited-state reliability supported; direct action authority rejected
 
+Formal report entry points:
+
+- [`V65_ARXIV_TECHNICAL_REPORT.md`](V65_ARXIV_TECHNICAL_REPORT.md)
+- [`ARXIV_EVIDENCE_INDEX.md`](ARXIV_EVIDENCE_INDEX.md)
+
 ## Research question and final answer
 
 The initial question asked whether the current voxel is correct. Train-only and fresh experiments showed that voxel-, map-,
@@ -91,3 +96,6 @@ metric and changed only execution/locator defects.
 V6.5 is closed on the P10X one-shot verdict. Any local/multicalibration, decision-focused regret learner, Actor-state method,
 or new action head must start as a new version with a new method, protocol, branch, and untouched evaluation cohort. It cannot
 be presented as a recovery of the V6.5 combined candidate.
+
+The final report handoff performed only read-only artifact availability/JSON checks and added no new scientific experiment. Remote
+shutdown is requested only after the report commit has been pushed successfully.

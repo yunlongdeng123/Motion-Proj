@@ -5207,3 +5207,12 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - V6.5用于arXiv的准确贡献边界是task-conditioned visited-state reliability evaluator，而非action authority compiler。
 
 下一可用编号仍为：`V65-F20`。
+
+### ArXiv report handoff audit note — 无新failure
+
+- documentation-only阶段只检查P2V/P3C/P10V/P10X canonical summary/status存在且JSON可读，并确认P10V action rows=813；
+- 首次审计在非登录shell调用裸`python`时命中既有PATH约束；使用项目环境绝对路径后同一read-only检查通过；
+- 未创建run、未重新计算metric、未读取新quality、未改变任何verdict，也未增加hash/checksum/fingerprint；
+- 技术报告、证据索引、主计划终态与`FAILURE_ANALYSIS.md`更新不构成新科学trial。
+
+下一可用编号仍为：`V65-F20`。

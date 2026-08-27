@@ -2451,3 +2451,16 @@ peak GPU=`0.03917GiB`、RSS=`1.052GiB`，单RTX 3090足够。
 
 V6.5终局证据链、canonical runs、arXiv可写/禁写claims与建议图表已汇总到
 [`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)。
+
+### V6.5 arXiv report handoff终态
+
+已补齐正式技术报告
+[`V65_ARXIV_TECHNICAL_REPORT.md`](autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md)与
+[`ARXIV_EVIDENCE_INDEX.md`](autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md)，并将原计划状态从`active`更新为
+`closed / arxiv_report_ready`。`FAILURE_ANALYSIS.md`现已覆盖`V65-F12`、`V65-F13--F18`工程恢复边界与`V65-F19`
+终局decision-benefit失败，不再只停留在早期F01--F11。
+
+报告交接前只做read-only证据可用性审计：P2V/P3C/P10V/P10X canonical summary/status均存在且JSON可读，P10V
+`ACTION_ROWS.jsonl`保留813行；无active V6.5进程，run tree约16GiB，磁盘剩余约95GiB。审计不重算指标、不执行
+smoke/regression、不添加hash/checksum/fingerprint。V6.5状态=`v65_research_complete_arxiv_report_ready`，无active
+task/hypothesis；push成功后按用户要求关闭AutoDL远端。

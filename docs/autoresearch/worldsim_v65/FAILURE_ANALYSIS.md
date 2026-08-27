@@ -1,5 +1,11 @@
 # WorldSim V6.5 Failure Analysis
 
+Terminal synthesis (2026-08-28): V6.5 recorded `V65-F01` through `V65-F19`. The scientific chain rejects local voxel/map,
+Actor, learned-admission, smooth-tail, and direct-action-authority formulations, while retaining the changed prediction object of
+given-trajectory visited-state reliability ranking and expected-error calibration. `V65-F13--F18` are engineering/entry failures
+with explicit exposure audits, not method-negative trials. `V65-F19` is the terminal one-shot scientific rejection. The authoritative
+chronology remains `docs/RESEARCH_FAILURES.md`; this file explains mechanisms and paper treatment.
+
 ## V65-F01 — static-label target semantics mismatch
 
 P1 T0 的 trajectory condition 对 unit 内 shuffle 有可测响应，却无法改善冻结 q0，说明问题不是条件通路完全失效，
@@ -81,6 +87,51 @@ capacity 不变。
 - Occupancy Flow：https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/
 - DTPP：https://github.com/MCZhi/DTPP
 - DiffStack：https://proceedings.mlr.press/v205/karkus23a.html
+
+## V65-F12 — any-error tail separation is not expected visited-cost authority
+
+The fixed smooth-tail statistic raised unsafe AUROC from `0.978261` to `1.000000`, but reduced continuous-target Spearman from
+`0.751487` to `0.708230` and worsened selected-40% realized cost by `27.27%`. An upper tail emphasizes whether any high-risk sample is
+present, while the frozen target is the expected hidden-FREE fraction over all visited samples. No temperature or coverage sweep was
+performed after this read. The deterministic mean remained the supported prediction statistic.
+
+## V65-F13--F18 — engineering entries and exposure boundaries
+
+These failures are required for reproducibility but are not method negatives:
+
+| IDs | failure class | scientific exposure | recovery |
+| --- | --- | --- | --- |
+| `F13` | scene-ready launcher omitted task parent creation | none | create the exact parent before launch |
+| `F14` | launcher bypassed base+overlay config composition | none | call the existing validated wrapper |
+| `F15` | evaluator assumed `[B,1]` rather than frozen `[B]` logits | one unit loaded; no metric/cache/verdict | replace dimension-specific squeeze with scalar reshape |
+| `F16` | evidence CLI omitted required processed root | none | pass the frozen standard processed root |
+| `F17` | formal config used a nonexistent run-relative q0 locator | no input unit or metric | point to the same frozen artifact already used by P2V |
+| `F18` | direct feeder entry omitted repository root from module path | none | process-local `PYTHONPATH=.` |
+
+P2V r2 and P3C r2 did not change the model, scene, target, sampler, calibrator, seed, or gates. The exact exposure audits remain in
+`RESEARCH_FAILURES.md` and must be disclosed in a reproducibility appendix without counting them as scientific ablations.
+
+## V65-F19 — calibration and ranking do not guarantee direct action benefit
+
+The sole combined confirmation passed route ranking, frozen-map MSE reduction, action ranking, unsafe AUROC, and pairwise concordance.
+It failed the sixth AND gate: lowest-Qmean-quarter action selection reduced realized cost from `0.120215` to `0.100520`, a `16.38%`
+reduction below the frozen `25%` requirement. Five scenes improved and `scene-0817` worsened. `scene-0718` had no eligible nominal
+route but did improve under action selection, so the terminal failure cannot be removed by blaming or deleting one sparse scene.
+
+This is consistent with decision-risk decompositions in which global recalibration removes miscalibration regret but leaves grouping
+loss from unresolved conditional structure. It does not license a post-read local calibrator or decision-focused head. V6.5 closes
+direct action authority and retains only given-trajectory visited-state ranking and expected-error calibration.
+
+## Terminal failure taxonomy
+
+| category | IDs | paper treatment |
+| --- | --- | --- |
+| scientific prediction-object/method negatives | `F03/F04/F06/F07/F09/F10/F11/F12/F19` | main text and limitations |
+| target/capability/config corrections | `F01/F02/F05/F08` | reproducibility appendix |
+| streamed-pipeline/runtime entries | `F13/F14/F16/F18` | systems appendix |
+| narrow formal-entry recoveries | `F15/F17` | disclose exposure and unchanged contract |
+
+The next available failure identifier remains `V65-F20`; the documentation/report handoff introduces no new scientific failure.
 
 ## V65-F09 — map semantics cannot rescue the per-voxel prediction object
 

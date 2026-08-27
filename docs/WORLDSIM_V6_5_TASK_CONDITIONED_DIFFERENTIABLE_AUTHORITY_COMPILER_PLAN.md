@@ -1,12 +1,39 @@
 # WorldSim V6.5 — 任务条件可微物理权限编译器计划
 
-> 英文工作名：**TAC-Compiler — Task-Conditioned Differentiable Authority Compiler**  
-> 推荐技术报告题目：**TAC-Compiler: Learning Task-Conditioned Physical Authority for Verifiable Driving World Compilation**  
-> 中文题目：**TAC-Compiler：面向可验证驾驶世界编译的任务条件物理权限学习**  
-> 状态：`active`（2026-08-27 从 `add2f3f` 启动；按用户指令压缩 P0、直接进入 research）  
+> 原计划工作名：**TAC-Compiler — Task-Conditioned Differentiable Authority Compiler**（终局未获得direct authority支持）
+> 终局技术报告题目：**From Voxel Confidence to Visited-State Reliability: Task-Conditioned Uncertainty Evaluation for Driving World Models**
+> 中文题目：**从体素置信度到访问状态可靠性：驾驶世界模型的任务条件不确定性评估**
+> 状态：`closed / arxiv_report_ready`（2026-08-28；visited-state reliability supported，direct action authority rejected）
 > 上游冻结分支：`research/worldsim-v6.4-native-uq`  
 > 上游终态提交：以远端 `add2f3f` 为准  
 > 默认资源：现有 AutoDL，单张 RTX 3090 优先；多卡不是前置条件
+
+---
+
+# 终局执行快照（2026-08-28）
+
+本计划按用户要求跳过冗长P0/回归矩阵，并在每次冻结读取后依据证据改变下一阶段。实际研究没有完成原设想的端到端
+TAC-Compiler；它收敛到更窄、可复现且经过多个独立cohort支持的prediction object：
+
+> **若Ego执行轨迹`tau`，未来2秒/1.5m footprint内被访问的world states有多可靠？**
+
+终局证据如下：
+
+- P1R3：map semantics可读但不能挽救per-voxel authority，拒绝原voxel对象；
+- P2V：fresh given-trajectory Qmean Spearman=`0.633963`、unsafe AUROC=`0.994152`、selected cost -49.25%；
+- P3C：冻结两参数单调map在独立cohort上MSE -92.80%、5-bin calibration error -88.31%；
+- P10V：固定12-action ranking Spearman=`0.740235`、pairwise=`0.732534`、selected cost -33.26%；
+- P10X：唯一combined confirmation中5/6 gates通过，但selected cost只降低16.38%，未达25%，因此按AND rule拒绝
+  direct action authority。
+
+所以V6.5支持task-conditioned visited-state reliability evaluator与expected-error calibrator，不支持planner、policy、
+collision critic、closed-loop或safety authority。不得以第二confirmation、换scene、降gate、扫lattice或新critic修复P10X。
+
+正式报告入口：
+
+- [`autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md`](autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md)
+- [`autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md`](autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md)
+- [`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)
 
 ---
 

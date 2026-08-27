@@ -5486,3 +5486,22 @@ no model/calibrator refit、no critic、no second confirmation。wall=`8.218s`�
 
 V6.5跨阶段证据索引与arXiv写作边界：
 [`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)。
+
+### WS-V65-ARXIV-REPORT-HANDOFF-01
+
+状态：`done / documentation-only`。本阶段不新增科学实验、模型、阈值、cohort、metric或quality read。
+
+| validation/document | result |
+| --- | --- |
+| branch before edit | v65 branch clean and synchronized with origin |
+| active research processes | none |
+| P2V/P3C/P10V/P10X summary + status | present and JSON-readable |
+| P10V retained action rows | 813 rows |
+| V6.5 run tree / free disk | ~16GiB / ~95GiB |
+| technical report | `V65_ARXIV_TECHNICAL_REPORT.md` created |
+| evidence index | `ARXIV_EVIDENCE_INDEX.md` created |
+| plan/failure analysis | terminal state and F12--F19 synthesis updated |
+| prohibited additions | no hash/checksum/fingerprint; no smoke/regression matrix |
+
+首个read-only JSON审计命令在非登录shell中使用未限定`python`，命中既有PATH约束；随后使用
+`/root/autodl-tmp/envs/motionproj/bin/python`原样重跑并通过。该命令不创建run、不读quality、不构成新实验失败。
