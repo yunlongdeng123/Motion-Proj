@@ -5,9 +5,9 @@
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
   "active_task": "WS-V65-P4-ADMISSION-FEASIBILITY-AUDIT-01",
-  "active_hypothesis": null,
+  "active_hypothesis": "WS-V65-H-P4T-001",
   "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED"],
-  "unlocked_stages": ["P4_ADMISSION_FEASIBILITY_AUDIT_ONLY"],
+  "unlocked_stages": ["P4T_LEARNED_ADMISSION_TRAIN_ONLY"],
   "resource_contract": "single_rtx3090_24gb",
   "disk_free_gib_at_start": 120,
   "quality_read": {
@@ -93,5 +93,9 @@
   "p2c_scene_lower_equal_higher": [0, 0, 2],
   "p2c_formal_v65_selection_read": false,
   "closed_families": ["trajectory_conditioned_ranking", "trajectory_attention", "actor_time_interaction"],
-  "next_action": "audit whether frozen_v64_risk supports leakage_free learned_admission without reopening closed representation families"
+  "p4t_preregistered": true,
+  "p4t_formal_v65_admission_selection_read": false,
+  "p4t_train_eval_case_counts": [96, 96],
+  "p4t_inference_stratum_feature": false,
+  "next_action": "materialize_p4t_case_cache_with_io_gpu_overlap_then_run_single_train_only_g0_comparison"
 }

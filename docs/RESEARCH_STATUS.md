@@ -2067,3 +2067,11 @@ Actor/time family 已关闭，不改 cost scale、seed、容量或 split，不�
 task-conditioned end-to-end representation 同样保持锁定。当前只进行 P4 feasibility audit：检查在完全冻结 V6.4
 risk representation、且不读取已消费 representation selection 的条件下，是否存在可用于 learned admission 的
 独立 train/selection 分区；若不存在则直接关闭 admission，不制造重复实验。
+
+### P4T learned admission train-only freeze
+
+可行性审计确认V6.4两组互斥的96-case Tier-L evidence/native artifacts可直接形成train/nested-eval，不需要新scene
+IO，也不触碰V6.5 admission selection。`WS-V65-H-P4T-001` 已冻结：V6.4 risk与M1 route cap=0.40不变，G0只从
+连续可观测risk/context统计预测`[0.30,0.55]`内的per-case coverage，inference不读scene/stratum/hidden truth。
+训练目标仅由train cases的最大安全前缀产生；单个`32→16` MLP、seed=0、无sweep。只有held-out Tier-L上相对
+M1达到预注册增量且不增加failure，才准备fresh D-Selection-Admission；否则按Stop 4关闭admission。

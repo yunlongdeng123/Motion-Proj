@@ -5056,3 +5056,15 @@ selected cost 都更高，故 pooled 10.37% 改善不能作为稳健增量。wal
 第一次入口 `20260827T101500Z__actor-time-cost-s0-r1` 在证据物化前因共享 materializer 强制读取二值专属
 `route_corridor_radius_m` 而失败；修复只把该字段变为连续任务可选，科学配置/gates/seed 不变。失败目录保留为
 `V65-F05`，r2 是唯一产生科学指标的 canonical run。
+
+### WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01 preregistration
+
+- train/eval：V6.4 Tier-L 8×12 / 8×12互斥scene，formal V6.5 admission read=false；
+- frozen base：`full_native_selective_mlp.joblib`与M1 route cap=0.40；
+- context：risk分布分位数/均值/方差、eligible count、route fraction/route-risk分位数、target time；无stratum ID；
+- output：连续per-case coverage，固定范围`[0.30,0.55]`；
+- train-only oracle：train中最大`hidden-FREE<=0.05` prefix；eval truth只用于一次评分；
+- model：`context→32→16→coverage`，seed=0，400 full-batch epochs；
+- primary：coverage uplift `>=0.05`或fixed-route worst-tail reduction `>=10%`，同时case failures不增加、route
+  pooled risk回退`<=5%`、scene support `>=5/8`；
+- no sweep/no fresh selection/no calibration/confirmation/test。

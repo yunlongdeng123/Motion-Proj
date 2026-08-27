@@ -1,0 +1,52 @@
+schema_version: worldsim_v65.p4t_learned_admission.v1
+task_id: WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01
+hypothesis_id: WS-V65-H-P4T-001
+seed: 0
+claim_boundary: legacy Tier-L train-only learned-admission mechanism; no V6.5 admission selection, calibration, confirmation, test, planning, or safety claim
+inputs:
+  risk_run: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p4t_learned_admission_cases.npz
+  train:
+    evidence_root: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P6R-CALIBRATION-EVIDENCE-01/20260826T140000Z__calibration-evidence-s0-r1
+    native_root: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-1079, processed_index: 819, stratum: night}
+      - {name: scene-1097, processed_index: 837, stratum: night}
+      - {name: scene-1106, processed_index: 845, stratum: rain}
+      - {name: scene-0576, processed_index: 458, stratum: rain}
+      - {name: scene-0067, processed_index: 64, stratum: construction}
+      - {name: scene-0258, processed_index: 207, stratum: construction}
+      - {name: scene-1083, processed_index: 823, stratum: vulnerable_transit}
+      - {name: scene-0738, processed_index: 575, stratum: vulnerable_transit}
+  evaluation:
+    evidence_root: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1
+    native_root: /root/autodl-tmp/runs/worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1
+    native_partition: fresh_confirmation
+    scenes:
+      - {name: scene-0992, processed_index: 751, stratum: night}
+      - {name: scene-1101, processed_index: 841, stratum: night}
+      - {name: scene-0454, processed_index: 368, stratum: rain}
+      - {name: scene-1102, processed_index: 842, stratum: rain}
+      - {name: scene-0876, processed_index: 664, stratum: construction}
+      - {name: scene-0895, processed_index: 681, stratum: construction}
+      - {name: scene-0321, processed_index: 253, stratum: vulnerable_transit}
+      - {name: scene-0813, processed_index: 631, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512, shape: [200, 200, 16]}
+route: {future_frame_count: 20, corridor_radius_m: 1.5, nominal_coverage_cap: 0.40}
+admission:
+  minimum_coverage: 0.30
+  maximum_coverage: 0.55
+  hidden_free_conflict_threshold: 0.05
+  m1_conditional_coverages: {construction: 0.50, night: 0.50, rain: 0.40, vulnerable_transit: 0.50}
+model: {hidden_dimensions: [32, 16], epochs: 400, learning_rate: 0.001, weight_decay: 0.0001}
+evaluation: {tail_fraction: 0.10}
+gates:
+  minimum_coverage_uplift_or_tail_reduction: {coverage_uplift: 0.05, fixed_route_tail_reduction: 0.10}
+  maximum_relative_pooled_route_density_regression: 0.05
+  minimum_scene_support: 5
+  require_no_more_case_failures: true
+locks: {formal_v65_admission_selection_read: false, stratum_inference_feature: false, parameter_sweep: false, add_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V65-F03, V65-F04, V65-F06]
