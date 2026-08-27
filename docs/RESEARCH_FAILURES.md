@@ -4856,3 +4856,6 @@ P1 stage preregistration 与实现落盘前审计：没有新增 failure；尚�
 - claim impact：当前没有 V6.5 trajectory-conditioned method claim；P1R 仍是 legacy train-only mechanism。
 
 下一可用编号：`V65-F02`。
+
+P1R canonical run 完成且四个预注册 gate 全过，没有新增 failure。该结果只减少 1 个 sampled route conflict，
+已按弱 train-only signal 记录，不以小 denominator 夸大结论。下一可用编号仍为 `V65-F02`。

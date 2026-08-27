@@ -1958,3 +1958,16 @@ run://worldsim_v65/WS-V65-P1-CONDITION-SIGNAL-ATLAS-01/20260827T074500Z__signal-
 hidden-FREE，存在 target semantics 错配。P1R 保留 q0=`r_phys`，新增连续 relevance 缩放、只允许非负增险的
 `r_task`；以 task-aligned loss 训练，primary 只看 fixed-route opportunity，并锁定 non-route 不恶化。它不是
 seed/容量救援，也不改变 P1 负结论。
+
+P1R canonical：
+
+```text
+run://worldsim_v65/WS-V65-P1R-TASK-ALIGNED-RISK-01/20260827T075500Z__task-risk-s0-r1
+```
+
+同一 523,910/497,892 train/evaluation denominator 上，fixed-route density `0.00299581→0.00284602`
+（20→19 conflicts，relative reduction=`5%`），worst-tail `0.01643968→0.01559935`，scene
+lower/equal/higher=`1/15/0`，non-route emission risk relative change=`-0.00665%`；shuffle density 回到 q0 的
+`0.00299581`。四个 gate 全过，verdict=`positive_train_only_task_risk_signal`。这是弱但无风险搬家的机制信号，
+只解锁 fresh P2 T0；当前 active task=`WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01` 的 metadata-only cohort
+freeze，尚未读取 formal selection。

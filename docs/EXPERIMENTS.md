@@ -4919,3 +4919,19 @@ emission risk 相对回退 `<=5%`、真实 trajectory 优于 within-unit shuffle
 - WoTE（ICCV 2025）：https://openaccess.thecvf.com/content/ICCV2025/papers/Li_End-to-End_Driving_with_Online_Trajectory_Evaluation_via_BEV_World_Model_ICCV_2025_paper.pdf
 - UniAD（CVPR 2023 Best Paper，官方代码）：https://github.com/OpenDriveLab/UniAD
 - VAD（ICCV 2023，官方代码）：https://github.com/hustvl/VAD
+
+### WS-V65-P1R-TASK-ALIGNED-RISK-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P1R-TASK-ALIGNED-RISK-01/20260827T075500Z__task-risk-s0-r1`。
+
+| metric | frozen q0 | monotone r_task | delta |
+| --- | ---: | ---: | ---: |
+| pooled fixed-route density | 0.00299581 (20/6676) | 0.00284602 (19/6676) | -5.0% |
+| worst-10% unit CVaR | 0.01643968 | 0.01559935 | -5.11% |
+| scene lower/equal/higher | - | 1/15/0 | no regression |
+| non-route emitted risk | 0.00595363 | 0.00595323 | -0.00665% relative |
+| global AUROC（descriptive） | 0.871759 | 0.871697 | -0.000062 |
+
+Within-unit shuffled query 的 fixed-route density=`0.00299581`，等于 q0；真实 query 改善不是简单的额外
+capacity。四 gate 全过，wall=`12.47s`、peak GPU=`0.137GiB`。结论只为
+`positive_train_only_task_risk_signal`，P2 必须在 fresh scenes 重新检验，不解锁 attention。
