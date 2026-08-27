@@ -15,6 +15,7 @@ native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
 trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
 sampling: {evaluation_points_per_unit: 8192, seed: 0}
 action_lattice:
+  horizon_seconds: 2.0
   progress_ratios: [0.25, 0.50, 0.75, 1.00]
   lateral_offsets_m: [-1.50, 0.00, 1.50]
   include_stop_for_reporting_only: true
