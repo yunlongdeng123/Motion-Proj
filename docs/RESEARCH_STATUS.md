@@ -2244,3 +2244,17 @@ parent；scientific config、scene、seed、run prefix均不变，失败无科�
 `base_config`，访问`inputs`时报`KeyError`。已成功P2流程的`run_worldsim_v64_fresh_sidecars.py`负责合并base+
 overlay并写resolved config；launcher改为复用该wrapper，不在P2V配置中复制整套backend schema。两个失败目录只含
 空`plans/reports/logs`，保留改名为`.failed-entry-v65-f14`后，用原冻结r1 run path继续。
+
+### P2V inputs终态：72 units已就绪，quality仍未读
+
+Canonical preparation=`.../20260827T123000Z__fresh-visited-prep-s0-r1`：10个tar workers提取10,705个新members，
+wall=`4108.35s`；三批scene-ready preprocess提前完成6 scenes，父进程最终全部reuse并安全删除temporary raw，
+quality read=false。
+
+6个native scene runs全部passed，每scene 12 targets，wall=`56.84/56.68/44.39/53.70/55.04/48.16s`，peak
+GPU最大`4.1314GiB`。aggregate=`.../20260827T133000Z__fresh-visited-native-aggregate-s0-r1`含72 targets、
+`3,317,884,446` bytes，inference repeated=false，所有target evidence/calibration/confirmation/test read=false。
+
+Canonical evidence=`.../20260827T133000Z__fresh-visited-evidence-s0-r1`含72 units、`76,067,478` bytes、role overlap=0，
+wall=`58.72s`；其中前24 units在native/后续preprocess期间先算，final run以hardlink复用。输入阶段通过，下一步是
+冻结Qmean的唯一formal P2V prediction-object read。

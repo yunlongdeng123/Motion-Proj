@@ -5262,3 +5262,17 @@ calibration`。wall=`2.319s`、peak GPU=`0.00195GiB`、peak RSS=`0.954GiB`。不
 - recovery：改调用`run_worldsim_v64_fresh_sidecars.py`，由它按成功P2路径合并base schema；空失败dirs改名保留，原r1
   canonical paths继续；
 - config/scene/frames/seed/gates不变，无额外scientific run。
+
+### WS-V65-P2V input pipeline result
+
+| artifact | result |
+| --- | --- |
+| preparation | 6 scenes；10,705 extracted members；4108.35s；temporary raw removed；quality=false |
+| native scene runs | 6/6 passed；12 targets/scene；44.39–56.84s/scene；peak GPU 4.1314GiB |
+| native aggregate | 72 targets；3,317,884,446 bytes；inference repeated=false |
+| evidence partial | 24 units；34.12s；在later preprocess/native期间运行 |
+| evidence canonical | 72 units；24 reused；58.72s；76,067,478 bytes；source-role overlap=0 |
+
+Canonical aggregate与evidence paths与`p2v_visited_state_transfer_v1.yaml`冻结值一致。native/evidence完成前没有Qmean
+target quality read；calibration/confirmation/exact-once test均未读。F13/F14仅为pre-model入口恢复，不改变single
+formal P2V read计数。
