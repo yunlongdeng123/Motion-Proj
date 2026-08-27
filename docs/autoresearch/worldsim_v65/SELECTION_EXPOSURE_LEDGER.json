@@ -60,14 +60,17 @@
     "gate_results": {"mse": true, "calibration_error": true, "scene_support": true, "spearman": true, "unsafe_auroc": true, "selected_set": true}
   },
   "action_visited_state": {
-    "read": false,
+    "read": true,
     "scenes": ["scene-0159", "scene-0184", "scene-0577", "scene-0599", "scene-0955", "scene-0983"],
     "arms": ["frozen_Qmean_over_each_fixed_candidate_trajectory"],
     "new_critic": false,
     "action_lattice_frozen": true,
     "inputs_ready": true,
     "native_aggregate_run": "run://worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1",
-    "evidence_run": "run://worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1"
+    "evidence_run": "run://worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1",
+    "formal_run": "run://worldsim_v65/WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01/20260828T003000Z__action-transfer-s0-r1",
+    "verdict": "supported_fresh_fixed_action_visited_state_ranking",
+    "gate_results": {"spearman": true, "unsafe_auroc": true, "pairwise": true, "selected_cost": true, "scene_support": true, "evaluable_cases": true}
   },
   "confirmation": {"read": false, "scenes": []},
   "test": {"read": false, "scenes": []}

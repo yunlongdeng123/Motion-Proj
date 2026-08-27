@@ -2373,3 +2373,19 @@ GPU=`4.1314GiB`。Aggregate=`run://worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECA
 Evidence partial在later preprocess/native期间先生成48 units；canonical=`run://worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/
 20260828T001500Z__action-evidence-s0-r1`含72 units、48 reused、`75,306,035` bytes、wall=`32.17s`、role overlap=0。
 输入里程碑没有新failure；formal action quality read=false。
+
+### P10V终态：fixed candidate trajectories的visited-state ranking成立
+
+Canonical=`run://worldsim_v65/WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01/20260828T003000Z__action-transfer-s0-r1`。
+72 cases的864条非stop actions中，51条按冻结minimum 16 visited points排除；813 eligible actions含55,411
+visited points、6,826 hidden-FREE outcomes与659 unsafe actions。72个stop actions仅按合同报告并排除。
+
+Pooled Qmean-target Spearman=`0.740235`，unsafe AUROC/AUPRC=`0.858779/0.945415`。在within-case target-cost gap
+`>=0.02`的2,834个pairs上，方向一致率=`0.732534`。72/72 cases至少有2条evaluable actions；每case选lowest-
+Qmean 25%后，actual cost `0.109772→0.0732644`（降低`33.26%`），scene lower/equal/higher=`6/0/0`。
+
+6/6 gates全过，verdict=`supported_fresh_fixed_action_visited_state_ranking`。这直接支持“给定Ego `tau`，
+未来2秒实际访问的world states的可靠度”在固定candidate set中可排序；没有训练critic、不读collision
+label，不产生planner/policy/closed-loop/safety claim。wall=`8.459s`、peak GPU=`0.03917GiB`、RSS=`1.001GiB`。
+当前cohort不做lattice/threshold/head扫描；下一步只允许将冻结的unit-level ranking、monotone calibration与fixed-action
+ranking放到一个全新cohort做一次combined empirical confirmation。

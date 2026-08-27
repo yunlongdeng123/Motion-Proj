@@ -5401,3 +5401,27 @@ P11的fixed action generator。每case一次q0 forward，12条轨迹的point-to-
 
 Canonical native/evidence paths与formal config完全一致。Scene-ready feeder只依赖archive extractor已有的`.partial`→atomic
 `os.replace` 交付语义，不添加哈希、校验和或内容门控。输入完成前无P10V action target/score读取。
+
+### WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01 formal result
+
+Canonical：`run://worldsim_v65/WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01/20260828T003000Z__action-transfer-s0-r1`。
+
+| metric | value | gate |
+| --- | ---: | --- |
+| source / eligible / excluded actions | 864 / 813 / 51 | frozen footprint |
+| cases / evaluable cases | 72 / 72 | pass (`>=48`) |
+| visited points / hidden-FREE | 55,411 / 6,826 | descriptive |
+| unsafe actions | 659/813 | two-class supported |
+| pooled Qmean-target Spearman | 0.740235 | pass (`>=0.55`) |
+| unsafe AUROC / AUPRC | 0.858779 / 0.945415 | pass (`AUROC>=0.80`) |
+| pairwise pairs / concordance | 2,834 / 0.732534 | pass (`>=0.65`) |
+| all / lowest-Qmean-25% actual cost | 0.109772 / 0.0732644 | -33.26%, pass |
+| selected action count | 196 | descriptive |
+| scene lower/equal/higher | 6/0/0 | pass (`nonincreasing>=5`) |
+
+6/6 gates，verdict=`supported_fresh_fixed_action_visited_state_ranking`。Formal action quality read=true；new critic
+trained=false；compact cache reused=false。`ACTION_ROWS.jsonl`保留813条eligible action的逐条数据用于arXiv分析。
+
+Stop因不访问未来world-state footprint而排除，不是事后删除；51条短轨迹排除也完全由冻结16-point
+规则产生。结论仅是fixed-lattice representation ranking，无collision/planning/policy/closed-loop/safety claim。
+wall=`8.459s`、peak GPU=`0.03917GiB`、peak RSS=`1.001GiB`。

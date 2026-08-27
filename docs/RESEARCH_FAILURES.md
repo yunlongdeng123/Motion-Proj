@@ -5117,6 +5117,17 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 
 下一可用编号仍为：`V65-F18`。
 
+### P10V outcome note — direct action ranking成功，未触发critic recovery
+
+- run：`run://worldsim_v65/WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01/20260828T003000Z__action-transfer-s0-r1`；
+- outcome：Spearman `0.7402`、unsafe AUROC `0.8588`、pairwise concordance `0.7325`、selected cost -33.26%、
+  scene `6/0/0`，6/6 gates；
+- prevention result：V64-F28的learned collision critic没有被重开；无head、threshold、lattice或label recovery；
+- exclusions：51/864 actions由事前16-point footprint rule排除，72 stop rows由事前合同排除，非失败或事后门控；
+- claim impact：支持fixed-action visited-state ranking，但不恢复collision/planning/safety authority。
+
+下一可用编号仍为：`V65-F18`。
+
 ### P10V input-pipeline outcome note — 无新failure
 
 - targeted shards 2/6/9找到冻结cohort全部10,709 members，未触发same-cohort full-scan fallback；
