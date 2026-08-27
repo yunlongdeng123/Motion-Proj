@@ -5117,3 +5117,17 @@ Canonical：`run://worldsim_v65/WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01/20260827T1
 训练/eval 点数=`523910/497892`，5 gates=`2/5`，verdict=`no_clear_train_only_map_context_signal`。
 wall=`85.42s`、peak GPU=`0.1397GiB`、peak RSS=`1.9598GiB`。唯一 seed=0 run；不做 feature/radius/seed/
 capacity rescue，formal V6.5 selection read=false。后继实验改变预测对象到 trajectory-level visited-state outcome。
+
+### WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01 preregistration
+
+- prediction object：每个`(scene, unit, τ)`未来2秒、1.5m Ego corridor内的`visited_hidden_free_fraction`；
+- split：复用已消费P1/R3 legacy first-8 train / last-4 nested eval，不产生fresh read；
+- eligibility：observable visited sample count `>=16`；
+- Qagg：visited states上的frozen q0 mean risk；
+- V1 features：q0 route分布7维、footprint 2维、global q0 2维、route内R3 map/context均值14维；
+- model：`25→32→16→1`，160 epochs，seed=0，无sweep；
+- viability gates：Qagg Spearman `>=0.30`、unsafe-unit AUROC `>=0.65`、lowest-risk 40%相对全体实际cost
+  降低`>=25%`；
+- incremental gates：V1 Spearman gain `>=0.03`、MSE reduction `>=10%`、selected cost相对Qagg降低
+  `>=10%`、scene lower>higher、real>within-scene shuffled trajectory；
+- formal V6.5 selection/calibration/confirmation/test read=false。

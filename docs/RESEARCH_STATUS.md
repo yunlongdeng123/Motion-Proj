@@ -2121,3 +2121,14 @@ R3 AUROC/AUPRC=`0.871264/0.404801`，相对 q0 为 `-0.000496/-0.002280`；poole
 `τ`，未来 `H` 秒访问走廊的 world state 是否可靠”。先在未增加 quality exposure 的原 P1 train/nested-eval
 缓存上形成 unit/trajectory-level 连续 outcome；若该对象有明确 held-out signal，才考虑 Actor-state companion 和
 fresh action-level selection。该迁移不是 R3 rescue，也不重开已关闭的 voxel representation family。
+
+### R4 trajectory-visited-state freeze
+
+Active hypothesis=`WS-V65-H-P1R4-001`。监督单元从 voxel 改为 `(scene, unit, τ)`：冻结20帧/2秒 Ego future
+trajectory，以1.5m corridor定义实际会访问的 sampled world states，target 是 corridor 内 hidden-FREE outcome 的
+连续比例；至少16个visited points才纳入。输入只含冻结q0在visited footprint的分布、footprint/global observable
+context和R3已冻结的14D map/context均值，不读取truth、scene ID或stratum。
+
+先评估直接 `Qagg=mean(q0 risk | visited by τ)` 的预测对象可行性，再评估单个`25→32→16→1` GPU head的增量。
+若Qagg可行而head无增量，保留trajectory-level聚合对象并关闭head；只有两者均失败才关闭world-state target。
+缓存读取会在GPU计算q0 sigmoid时并行读取map-context，不再读取173MiB native hidden或原始sidecar。

@@ -1,13 +1,13 @@
 {
   "version": "worldsim_v65",
-  "status": "pivoting_to_trajectory_visited_state_reliability",
+  "status": "active_p1r4_trajectory_visited_state_train_only",
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
-  "active_task": null,
-  "active_hypothesis": null,
+  "active_task": "WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01",
+  "active_hypothesis": "WS-V65-H-P1R4-001",
   "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED"],
-  "unlocked_stages": ["R4_TRAJECTORY_VISITED_STATE_RELIABILITY_PREREGISTRATION"],
+  "unlocked_stages": ["P1R4_TRAJECTORY_VISITED_STATE_TRAIN_ONLY"],
   "resource_contract": "single_rtx3090_24gb",
   "disk_free_gib_at_start": 120,
   "quality_read": {
@@ -115,5 +115,8 @@
   "p1r3_scene_lower_equal_higher": [1, 14, 1],
   "p1r3_map_shuffle_auroc_delta": 0.0006250226933008918,
   "p1r3_nonroute_relative_risk_change": -0.007564447097324114,
-  "next_action": "preregister_trajectory_level_visited_state_reliability_using_existing_compact_cache"
+  "p1r4_preregistered": true,
+  "p1r4_prediction_object": "trajectory_level_mean_hidden_free_over_future_2s_ego_corridor",
+  "p1r4_formal_v65_selection_read": false,
+  "next_action": "run_single_p1r4_q0_aggregate_and_low_capacity_visited_state_probe"
 }

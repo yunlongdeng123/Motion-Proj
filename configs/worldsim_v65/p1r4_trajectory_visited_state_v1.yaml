@@ -1,0 +1,51 @@
+schema_version: worldsim_v65.p1r4_trajectory_visited_state.v1
+task_id: WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01
+hypothesis_id: WS-V65-H-P1R4-001
+seed: 0
+claim_boundary: legacy train-only trajectory-level visited-world-state reliability diagnostic; no V6.5 selection, admission, calibration, planning, or safety claim
+inputs:
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p1r3_map_context_compact.npz
+  source_task: WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01
+trajectory_contract:
+  future_frame_count: 20
+  horizon_seconds: 2.0
+  visited_corridor_radius_m: 1.5
+  minimum_visited_points_per_unit: 16
+target:
+  name: visited_hidden_free_fraction
+  definition: mean hidden-FREE outcome over sampled world states inside the frozen future Ego corridor
+features:
+  q0_route_statistics: [mean, std, max, q50, q90, q95, entropy_mean]
+  footprint_statistics: [log_visited_point_count, visited_point_fraction]
+  q0_global_context: [mean, q90]
+  route_map_context: mean_of_all_14_frozen_r3_map_context_features_inside_visited_corridor
+model:
+  hidden_dimensions: [32, 16]
+  epochs: 160
+  batch_size: 128
+  learning_rate: 0.001
+  weight_decay: 0.0001
+evaluation:
+  matched_safe_coverage: 0.40
+  unsafe_unit_definition: visited_hidden_free_count_greater_than_zero
+viability_gates:
+  minimum_q0_aggregate_spearman: 0.30
+  minimum_q0_aggregate_unsafe_auroc: 0.65
+  minimum_q0_selected_cost_reduction: 0.25
+incremental_gates:
+  minimum_spearman_gain: 0.03
+  minimum_mse_reduction: 0.10
+  minimum_selected_cost_reduction_vs_q0: 0.10
+  require_scene_direction_support: true
+  require_within_scene_trajectory_shuffle_response: true
+locks:
+  legacy_train_only: true
+  formal_v65_selection_read: false
+  per_voxel_prediction_target: false
+  target_feature_leakage: false
+  hard_route_mask_as_predictor: false
+  scene_id_feature: false
+  parameter_sweep: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V65-F03, V65-F09]
+
