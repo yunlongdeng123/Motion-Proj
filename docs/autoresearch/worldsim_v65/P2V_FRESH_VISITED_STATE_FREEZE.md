@@ -17,6 +17,7 @@ total trajectory units.
 - Candidate: deterministic `Qagg = mean(frozen q0 risk | state lies within 1.5 m of future 20-frame Ego trajectory)`.
 - Target: realized hidden-FREE fraction in that visited footprint.
 - Eligibility: at least 16 sampled visited states.
+- Sampling: at most 8,192 valid boundary states per unit with frozen seed 0, matching the R4 evaluation arm.
 - No map residual or learned R4 head is transferred.
 
 ## Single formal read
@@ -28,4 +29,3 @@ frames, q0 model, corridor, and run paths are frozen before preparation.
 Preparation remains quality-blind. As scenes become ready, two single-GPU native workers may overlap later scene I/O;
 CPU evidence materialization may overlap native GPU work. The already-frozen R5 Actor diagnostic runs on GPU while the
 first archive/preprocess I/O is active.
-

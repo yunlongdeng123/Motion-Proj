@@ -5165,6 +5165,7 @@ q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum foo
   等距quantile冻结，12 units/scene；
 - candidate：`Qagg=mean(q0 risk | visited by future 2s Ego trajectory)`；无learned head；
 - target/eligibility：1.5m corridor内hidden-FREE fraction，至少16 sampled states；
+- sampling：每unit最多8192个valid boundary states，seed=0，与R4 eval一致；
 - gates：Spearman `>=0.60`、unsafe AUROC `>=0.85`、selected-40% actual cost reduction `>=40%`、scene
   support `>=5/6`；
 - run paths、frames、q0、corridor、cohort均在preparation前冻结；single formal prediction-object read。

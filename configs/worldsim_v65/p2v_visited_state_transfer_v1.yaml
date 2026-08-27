@@ -9,6 +9,7 @@ inputs:
   native_partition: fresh_selection
   risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
   risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
   compact_cache: /root/autodl-tmp/cache/worldsim_v65/p2v_fresh_visited_state_compact.npz
 scenes:
   - {name: scene-0001, processed_index: 0, context: construction_trucks}
@@ -19,6 +20,7 @@ scenes:
   - {name: scene-1110, processed_index: 849, context: night_rain_bus_pedestrians}
 native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
 trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_unit: 16}
+sampling: {evaluation_points_per_unit: 8192}
 gates:
   minimum_q0_aggregate_spearman: 0.60
   minimum_q0_aggregate_unsafe_auroc: 0.85
@@ -27,4 +29,3 @@ gates:
 evaluation: {matched_safe_coverage: 0.40}
 locks: {model_refit: false, learned_head: false, threshold_sweep: false, single_selection_read: true, add_hash_checksum_fingerprint: false}
 failure_ledger_refs: [V65-F10]
-
