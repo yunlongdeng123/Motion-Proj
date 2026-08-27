@@ -2296,3 +2296,7 @@ legacy quality。580个unprocessed direct-key candidates的persistent raw reuse�
 Candidate是R7已冻结map `sigmoid(1.703977·logit(Qmean)-0.479222)`，不refit。gates：MSE `>=50%` reduction、
 5-bin calibration error `>=30%` reduction、scene MSE support `>=5/6`、Spearman/AUROC不退化、selected-40%
 indices完全一致。该read不产生conformal/admission/planning/safety claim。
+
+P3C evaluator已实现为独立入口：复用P2V已修复的streamed materializer，只物化Qmean与trajectory-level target；
+随后应用冻结两参数map并同时报告continuous error、5-bin calibration、scene MSE、unsafe ranking和selected-set
+identity。无optimizer/refit代码，formal read前仅执行syntax/config解析。

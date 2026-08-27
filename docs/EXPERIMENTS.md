@@ -5313,3 +5313,7 @@ shape recovery均保留；未运行R4 head、R6 tail或R7 calibrator。
 - gates：MSE reduction `>=50%`、5-bin calibration-error reduction `>=30%`、scene support `>=5/6`、ranking/
   AUROC non-regression、selected-40% exact same；
 - independent formal calibration-transfer read；无P2V quality reuse、sweep、conformal/planning/safety claim。
+
+Implementation：`run_worldsim_v65_p3c_monotone_calibration_transfer.py`只加载冻结参数并复用P2V materializer；
+输出raw/calibrated continuous metrics、unsafe ranking、5-bin calibration、scene MSE与exact selected-set。没有训练器、
+optimizer或可调temperature。
