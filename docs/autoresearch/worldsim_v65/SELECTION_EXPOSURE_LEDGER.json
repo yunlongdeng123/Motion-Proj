@@ -40,7 +40,12 @@
     ],
     "verdict": "world_state_qmean_and_train_only_monotone_calibration_form_retained; map_voxel_actor_monitor_learned_admission_and_smooth_tail_closed"
   },
-  "calibration": {"read": false, "scenes": []},
+  "calibration": {
+    "read": false,
+    "scenes": ["scene-0030", "scene-0055", "scene-0453", "scene-0501", "scene-1046", "scene-1085"],
+    "arms": ["raw_Qmean", "frozen_R7_monotone_Qmean"],
+    "calibrator_refit": false
+  },
   "confirmation": {"read": false, "scenes": []},
   "test": {"read": false, "scenes": []}
 }

@@ -2283,3 +2283,16 @@ Qmean-target Spearman=`0.633963`（gate `>=0.60`），unsafe AUROC/AUPRC=`0.9941
 可靠性，而非任意voxel是否正确。claim不扩张到Actor、learned risk、admission、calibration、planning或safety。
 r2 wall=`9.175s`、peak GPU=`0.0236GiB`、RSS=`1.143GiB`。下一条件分支是为R7单调calibrator选择独立unused
 calibration cohort；不得在本P2V cohort上追加事后calibration read。
+
+### P3C independent calibration-transfer freeze
+
+Active hypothesis=`WS-V65-H-P3C-001`。101个processed dirs里没有独立未用direct-key scene；因此不复用P2V或
+legacy quality。580个unprocessed direct-key candidates的persistent raw reuse均为0，必须重新archive scan。
+
+为减少I/O且保留index跨度，利用21,345个已知member对12 scenes的archive band审计：每scene全部member只落在其
+85-index band。固定band 1/5/10，并各取eligible scene的1/3、2/3 quantile，得到`0030/0055/0453/0501/1046/
+1085`。先扫shards 1/5/10；缺member只触发相同scene的10-shard capability fallback，不换scene、不读quality。
+
+Candidate是R7已冻结map `sigmoid(1.703977·logit(Qmean)-0.479222)`，不refit。gates：MSE `>=50%` reduction、
+5-bin calibration error `>=30%` reduction、scene MSE support `>=5/6`、Spearman/AUROC不退化、selected-40%
+indices完全一致。该read不产生conformal/admission/planning/safety claim。

@@ -5302,3 +5302,14 @@ Canonical：`run://worldsim_v65/WS-V65-P2V-VISITED-STATE-TRANSFER-01/20260827T14
 4/4 gates，verdict=`supported_fresh_trajectory_visited_state_qagg`。wall=`9.175s`、peak GPU=`0.0236GiB`、
 peak RSS=`1.143GiB`、cache reused=false。formal V6.5 selection read=true。r1 V65-F15 partial input exposure与r2 narrow
 shape recovery均保留；未运行R4 head、R6 tail或R7 calibrator。
+
+### WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01 freeze
+
+- cohort：`scene-0030/0055/0453/0501/1046/1085`，按unused direct-key archive bands 1/5/10内1/3、2/3
+  quantiles冻结；6×12 source units；
+- I/O：先只扫shards 1/5/10；若member缺失只允许same-cohort full-scan fallback；
+- calibrator：R7 frozen slope=`1.7039771080`、bias=`-0.4792216420`，no refit；
+- target/footprint：future 2s、1.5m corridor、minimum 16 samples、max 8192 points/unit、seed0；
+- gates：MSE reduction `>=50%`、5-bin calibration-error reduction `>=30%`、scene support `>=5/6`、ranking/
+  AUROC non-regression、selected-40% exact same；
+- independent formal calibration-transfer read；无P2V quality reuse、sweep、conformal/planning/safety claim。

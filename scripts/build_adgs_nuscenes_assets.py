@@ -251,6 +251,7 @@ def scan_shards(
     index_path: Path,
     dst: Path | None,
     workers: int,
+    shard_numbers: list[str] | None = None,
 ) -> tuple[dict[str, str], set[str]]:
     """并行单遍扫描 tar；已有完整 index 时只扫描各 shard 的命中集合。"""
     for member in members:
@@ -258,6 +259,9 @@ def scan_shards(
         if path.is_absolute() or ".." in path.parts:
             raise ValueError(f"不安全的 required member 路径: {member}")
 
+    selected_shards = SHARDS if shard_numbers is None else [str(value).zfill(2) for value in shard_numbers]
+    if not selected_shards or len(selected_shards) != len(set(selected_shards)) or not set(selected_shards) <= set(SHARDS):
+        raise ValueError(f"invalid shard subset: {selected_shards}")
     catalog_mapping: dict[str, str] = {}
     if index_path.exists():
         catalog_mapping = json.loads(index_path.read_text())
@@ -275,7 +279,7 @@ def scan_shards(
         known_by_shard: dict[str, set[str]] = defaultdict(set)
         for name, shard in old_mapping.items():
             known_by_shard[shard].add(name)
-        for shard in SHARDS:
+        for shard in selected_shards:
             archive = tar_dir / f"v1.0-trainval{shard}_blobs.tgz"
             shard_name = archive.name
             candidates = set(missing_index) | known_by_shard.get(shard_name, set())

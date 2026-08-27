@@ -34,7 +34,8 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     prep = config["preparation"]
     temporary_root = Path(prep["temporary_raw_root"]).resolve()
     expected_parent = Path("/root/autodl-tmp/tmp").resolve()
-    if temporary_root.parent != expected_parent or temporary_root.name != "worldsim_v65_p2_raw_batch":
+    allowed_temporary_names = {"worldsim_v65_p2_raw_batch", "worldsim_v65_p3c_raw_batch"}
+    if temporary_root.parent != expected_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"unexpected temporary root: {temporary_root}")
     reuse_partial_raw = bool(prep.get("reuse_partial_raw", False))
     partial_raw_reused = temporary_root.exists()
@@ -57,6 +58,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
         index_path=Path(prep["member_shard_index_path"]),
         dst=temporary_root,
         workers=int(prep["archive_workers"]),
+        shard_numbers=[str(value).zfill(2) for value in prep["archive_shards"]] if prep.get("archive_shards") else None,
     )
     del mapping
     environment = os.environ.copy()
@@ -95,7 +97,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=int(prep["preprocess_workers"])) as executor:
         rows = list(executor.map(preprocess, scenes))
-    if temporary_root.parent == expected_parent and temporary_root.name == "worldsim_v65_p2_raw_batch":
+    if temporary_root.parent == expected_parent and temporary_root.name in allowed_temporary_names:
         shutil.rmtree(temporary_root, ignore_errors=True)
     summary = {
         "task_id": config["task_id"],
