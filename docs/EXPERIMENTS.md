@@ -4963,3 +4963,36 @@ partial raw，避免重复 I/O。
 迁移依据：BEVFormer 官方 dataset preparation 文档
 https://github.com/fundamentalvision/BEVFormer/blob/master/docs/prepare_dataset.md 。完整 `create_data.py` 重建被保留为
 未来数据管线任务；本次不改变冻结 IR-WM 数据 schema。
+
+### WS-V65-P2 input materialization result
+
+Preparation canonical：
+
+```text
+run://worldsim_v65/WS-V65-P2-FRESH-PREPARATION-01/20260827T082500Z__fresh-prep-s0-r2
+```
+
+- 6/6 new processed scenes；`partial_raw_reused=true`；10,396 newly extracted members；
+- scene preprocess wall=`146.55..166.00s`，batch wall=`4011.44s`（主要成本为首次 10-shard index scan）；
+- quality read=false；成功后临时 raw 已清理，member→shard index 保留。
+
+Native 采用 scene-ready 即上 GPU 的 two-worker pipeline：
+
+| scenes | run suffix | targets | passed | peak GPU/worker |
+| --- | --- | ---: | --- | ---: |
+| 0996 / 0443 | `20260827T091500Z__pipeline-native-scene-*` | 24 | true | 4.1314 GiB |
+| 0002 / 0043 | `20260827T091700Z__pipeline-native-scene-*` | 24 | true | 4.1314 GiB |
+| 0023 / 0072 | `20260827T092000Z__pipeline-native-scene-*` | 24 | true | 4.1314 GiB |
+
+总计 72 targets、3,317,884,487 bytes；所有 native feature complete，target evidence/calibration/confirmation/
+test reads 全为 false。汇总入口 `scripts/assemble_worldsim_v65_p2_native_sidecars.py` 只建立 units/plans/reports/logs
+目录链接并汇总已有报告，`inference_repeated=false`。
+
+Evidence canonical：
+
+```text
+run://worldsim_v65/WS-V65-P2-FRESH-EVIDENCE-01/20260827T091800Z__fresh-evidence-s0-r1
+```
+
+6 scenes、72 units、70,124,875 bytes，wall=`121.51s`、passed=true、query_count=0。该 CPU/I/O run 与最后
+四个 native GPU workers 的执行窗口重叠。

@@ -1988,3 +1988,21 @@ native workers 在任何 sidecar/model-score/quality 输出前以 `KeyError` 退
 `scene-0996/0443/0002/0043/0023/0072`，全部是冻结 pickle 的直接 key，且未出现在 V6.1–V6.4 method configs。
 72-case denominator、targets、arms、gate 与 seed 均不变。现有 2.5GiB partial raw 中 411 个非空成员将直接复用；
 下一步是 recovery preparation r2，随后运行 2-worker native sidecar、evidence 与唯一一次 P2 formal read。
+
+### P2 inputs complete：I/O/GPU 流水线
+
+Recovery preparation canonical：
+
+```text
+run://worldsim_v65/WS-V65-P2-FRESH-PREPARATION-01/20260827T082500Z__fresh-prep-s0-r2
+```
+
+6/6 scenes 全部新生成，`partial_raw_reused=true`，新抽取 10,396 个成员，总 wall=`4011.44s`，quality
+read=false。scene preprocess 完成即启动对应 GPU inference：CPU 继续处理后续 scene 时，GPU 保持最多两个
+IR-WM workers；不再等待整批 I/O 完成后集中上卡。
+
+六个 per-scene native runs 全部 `passed=true`，合计 72 targets、3,317,884,487 bytes；单 worker peak GPU
+`4.1314GiB`，双 worker 上界 `8.2628GiB`，所有 target-evidence/calibration/confirmation/test read 均为 false。
+Evidence canonical `20260827T091800Z__fresh-evidence-s0-r1` 同时在 CPU/I/O 运行，完成 6 scenes、72 units、
+70,124,875 bytes，wall=`121.51s`、`passed=true`、query_count=0。下一步只把 per-scene units 无复制汇总为
+canonical native root，然后执行唯一一次 P2 quality read。

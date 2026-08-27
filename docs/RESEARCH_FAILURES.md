@@ -4879,3 +4879,7 @@ P2 metadata-only cohort freeze、preparation/native/evidence/evaluator 入口落
 - claim impact：没有 P2 模型或质量结论，`WS-V65-H-P2-001` 保持 active；不消耗唯一正式 P2 read。
 
 下一可用编号：`V65-F03`。
+
+V65-F02 recovery 已完成：preparation r2 成功生成 6/6 processed scenes；6 个 pipelined native scene runs
+均 `passed=true`，72/72 targets 完整；evidence run 72/72 units `passed=true`。全程未读取 P2 quality，未出现
+新的失败，因此下一可用编号仍为 `V65-F03`。
