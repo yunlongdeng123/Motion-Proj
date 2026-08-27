@@ -4903,3 +4903,16 @@ V65-F02 recovery 已完成：preparation r2 成功生成 6/6 processed scenes；
 
 P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结；当前无新增 failure，下一可用编号仍为
 `V65-F04`。
+
+### V65-F04 — 正常驾驶 legacy Actor tokens 的 1.5m binary collision support 为空
+
+- run：`run://worldsim_v65/WS-V65-P2R-ACTOR-TIME-TRAIN-ONLY-01/20260827T100000Z__actor-time-s0-r1`；
+- symptom：train=`0/476 positives`、eval=`0/302 positives`，A0/A1/shuffle AUPRC 均为 0、AUROC undefined；
+- root cause：冻结的 1.5m Actor swept-envelope/ego-route 硬碰撞事件在这些正常驾驶 scenes 中不存在；
+- resolution：run 与 96KiB cache 保留；不扩大半径、不换 scenes、不重跑 binary label。新建 P2C continuous
+  proximity cost，固定 `exp(-distance/6m)` 与 absent=60m；
+- literature response：joint dynamics+cost map（CVPR 2021）、Occupancy Flow、DTPP 与 DiffStack 都支持连续
+  时空 cost/flow，而不是依赖稀有硬碰撞标签；
+- claim impact：P2R 没有 actor-time 机制结论；P2C 仍为 legacy train-only。
+
+下一可用编号：`V65-F05`。

@@ -45,3 +45,16 @@ actor-time/action-outcome 的新 train-only hypothesis；已消费 P2 scenes 不
 - GameFormer：https://openaccess.thecvf.com/content/ICCV2023/html/Huang_GameFormer_Game-theoretic_Modeling_and_Learning_of_Transformer-based_Interactive_Prediction_and_ICCV_2023_paper.html
 - VAD：https://openaccess.thecvf.com/content/ICCV2023/html/Jiang_VAD_Vectorized_Scene_Representation_for_Efficient_Autonomous_Driving_ICCV_2023_paper.html
 - Implicit Occupancy Flow：https://openaccess.thecvf.com/content/CVPR2023/html/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.html
+
+## V65-F04 — zero support for hard collision outcome
+
+P2R 在 476 train 与 302 eval Actor tokens 上都没有任何 1.5m collision positive；模型排序指标因此不可定义。
+这不是扩大 corridor、换 scene 或反复采样的理由。连续 cost 迁移依据：CVPR 2021 joint road-dynamics/cost-map
+直接学习可供 planner 积分的时空 cost；Waymo Occupancy Flow 同时表达 occupancy 与 motion；DTPP/DiffStack 将
+prediction 与 differentiable cost/planning objective 联合。P2C 固定 `exp(-distance/6m)`，其余 split/features/
+capacity 不变。
+
+- Joint dynamics and cost map：https://openaccess.thecvf.com/content/CVPR2021/html/Amirloo_Self-Supervised_Simultaneous_Multi-Step_Prediction_of_Road_Dynamics_and_Cost_Map_CVPR_2021_paper.html
+- Occupancy Flow：https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/
+- DTPP：https://github.com/MCZhi/DTPP
+- DiffStack：https://proceedings.mlr.press/v205/karkus23a.html

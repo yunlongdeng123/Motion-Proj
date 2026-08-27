@@ -5023,3 +5023,15 @@ trajectory-only ranking family；不执行 attention、seed/capacity 或 thresho
 - gates：AUPRC gain `>=0.03`、matched-40% selected outcome risk reduction `>=10%`、scene support=2/2、
   temporal shuffle response>0；
 - claim：legacy train-only mechanism；P2 formal negative 与已消费 cohort 均不改变。
+
+### WS-V65-P2R-ACTOR-TIME-TRAIN-ONLY-01 result / V65-F04
+
+Canonical：`run://worldsim_v65/WS-V65-P2R-ACTOR-TIME-TRAIN-ONLY-01/20260827T100000Z__actor-time-s0-r1`。
+476 train tokens 与 302 eval tokens 的 binary positive count 都是 0；A0/A1/shuffle AUPRC=0、AUROC undefined，
+selected outcome rate 全为 0。wall=`7.70s`、peak GPU=`0.593GiB`。任务无 support，不能比较模型。
+
+### WS-V65-P2C-ACTOR-TIME-COST-01 preregistration
+
+保持 P2R split/features/model，target 改为 `exp(-target_min_distance/6m)` continuous cost，actor absent=60m。
+冻结 gates：Spearman gain `>=0.05`、MSE reduction `>=10%`、matched-40% mean cost reduction `>=10%`、
+scene support=2/2、temporal shuffle response>0。新 cache 不覆盖 P2R artifact；仍无 formal selection read。

@@ -2036,3 +2036,13 @@ target sweeps 中 Actor swept envelope 与 ego future route 的交互。4 scenes
 constraint 与 Implicit Occupancy Flow 的 continuous spatiotemporal query。配置与 gate 已在任何 outcome 统计前冻结；
 下一动作是边加载 72 个小 evidence units 边在 GPU 计算 trajectory geometry，物化 compact Actor-token cache 后立即
 训练 A0/A1。
+
+### P2R zero-support 终态与 P2C continuous-cost 迁移
+
+P2R canonical `20260827T100000Z__actor-time-s0-r1` 完成 476 train / 302 eval Actor tokens，但 binary
+positives 为 `0/476` 与 `0/302`；所有 gates 失败，verdict=`no_clear_train_only_actor_time_signal`。这登记为
+`V65-F04` 的 task-support failure，不解释为 A1 模型负结果。
+
+文献复核后 active hypothesis 改为 `WS-V65-H-P2C-001`：数据/split/features/model 不变，只把不可辨识的硬标签
+换成预注册连续 target proximity cost `exp(-distance/6m)`；不读取 P2 cohort、不扩大二值半径、不做 sweep。
+下一动作是用新 cache path 物化 target distance/cost，并在 GPU 比较 A0/A1 的 Spearman、MSE 与 selected mean cost。
