@@ -2354,3 +2354,7 @@ world states是否可靠；stop因不访问未来footprint只报告、不作为r
 即`0159/0184/0577/0599/0955/0983`。先只扫shards 2/6/9；缺member时只允许same-cohort full-scan，不换scene。
 Primary gates为pooled Spearman `>=0.55`、unsafe AUROC `>=0.80`、within-case pairwise concordance `>=0.65`、
 lowest-Qmean 25% actual-cost reduction `>=25%`、scene support `>=5`、evaluable cases `>=48`。不训练新critic、不扫参。
+
+P10V evaluator已实现：每case只对最多8,192 boundary points做一次冻结q0 forward，然后在GPU上将同一批
+points与12条action paths并行做footprint membership，不重复model inference。物化后才计算pooled、within-case pairwise、
+scene support和lowest-quarter cost，并写出`ACTION_ROWS.jsonl`。当前shards 2/6/9正并行扫描，quality read=false。

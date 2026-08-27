@@ -5383,3 +5383,7 @@ planning或safety。不扫参、不refit、不复用已消耗P2V quality。
 - gates：Spearman `.55`、unsafe AUROC `.80`、pairwise concordance `.65`、within-case selected cost reduction `.25`、
   scene support `5`、evaluable cases `48`；
 - locks：one quality read，no new critic/lattice sweep/threshold sweep/calibrator refit/hash/checksum/fingerprint。
+
+Implementation：`run_worldsim_v65_p10v_action_visited_state_transfer.py`复用P2V的streamed unit loader/q0 scorer与V6.4
+P11的fixed action generator。每case一次q0 forward，12条轨迹的point-to-path minimum distance一次GPU广播完成；然后按
+冻结16-point rule写compact cache、action rows和6个preregistered gates。实现仅做Python syntax/config parse，未读新cohort quality。
