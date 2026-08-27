@@ -5001,3 +5001,18 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：支持legacy train-only trajectory-level mechanism，不构成formal V6.5 selection/planning/safety claim。
 
 下一可用编号：`V65-F11`。
+
+### V65-F11 — per-actor 强相关不能经max聚合成trajectory-level Actor reliability
+
+- run：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z__actor-false-safe-s0-r1`；
+- symptom：A0 trajectory max-cost forecast Spearman=`0.626087`，低于冻结`0.70`；A1更低为`0.488696`。
+  `relu(A1-A0)` monitor 对`relu(target-A0)` gap 的Spearman=`-0.054402`、AUROC=`0.522222`，lowest-monitor
+  40% gap反而恶化`73.40%`；
+- support audit：eval 24 trajectories/302 Actor tokens，9个positive gaps、6个zero monitors，不是零标签问题；
+- root cause：per-actor P2C Spearman `0.872`被trajectory-level maximum的极值误差放大；A1时间通路本身较弱，
+  其正向disagreement不代表A0 false-safe；
+- resolution：`WS-V65-H-P1R5-001` rejected；不调gap threshold、不训练monitor、不改max/smooth-max聚合，Actor
+  companion关闭。保留R4 world-state Qagg positive，资源转向其fresh transfer；
+- claim impact：无trajectory-level Actor reliability、planning或safety claim。
+
+下一可用编号：`V65-F12`。

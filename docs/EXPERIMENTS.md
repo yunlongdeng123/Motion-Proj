@@ -5168,3 +5168,19 @@ q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum foo
 - gates：Spearman `>=0.60`、unsafe AUROC `>=0.85`、selected-40% actual cost reduction `>=40%`、scene
   support `>=5/6`；
 - run paths、frames、q0、corridor、cohort均在preparation前冻结；single formal prediction-object read。
+
+### WS-V65-P1R5-ACTOR-FALSE-SAFE-01 result / V65-F11
+
+Canonical：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z__actor-false-safe-s0-r1`。
+
+| metric | value | gate |
+| --- | ---: | --- |
+| A0 trajectory max forecast Spearman | 0.626087 | fail (`>=0.70`) |
+| A0 selected target cost reduction | 26.07% | pass (`>=25%`) |
+| A1 descriptive target Spearman | 0.488696 | no gate / worse |
+| Dplus vs false-safe gap Spearman | -0.054402 | fail |
+| positive-gap AUROC / AUPRC | 0.522222 / 0.528317 | fail |
+| selected gap reduction | -73.40% | fail |
+
+Eval=`24 trajectories/302 Actor tokens`，positive gaps=`9`。forecast `1/2`、monitor `0/3` gates；verdict=
+`no_clear_train_only_actor_trajectory_forecast`。wall=`0.394s`、peak GPU=`0.00915GiB`；运行与P2V I/O重叠。

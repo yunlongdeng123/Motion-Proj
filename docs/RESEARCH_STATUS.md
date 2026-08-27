@@ -2172,3 +2172,14 @@ quantile选择后记录，不参与换scene。
 fraction；不迁移R4 learned head。fresh gates：Spearman `>=0.60`、unsafe AUROC `>=0.85`、lowest-risk 40%
 cost reduction `>=40%`、scene support `>=5/6`。输入物化将scene-ready I/O与native GPU/evidence CPU流水化，
 首轮archive/preprocess期间执行已冻结R5 Actor GPU read。
+
+### R5 Actor false-safe 终态
+
+Canonical：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z__actor-false-safe-s0-r1`。
+47/24 train/eval trajectories，eval 302 Actor tokens。A0 trajectory-level max forecast Spearman=`0.626087`，虽将
+lowest-risk 40% target cost从`0.332236→0.245620`（`-26.07%`），但forecast只过1/2 gates；A1 descriptive
+Spearman=`0.488696`。
+
+False-safe gap有9/24 positives；Dplus monitor Spearman=`-0.054402`、AUROC=`0.522222`，selected gap
+`0.033120→0.057430`（`+73.40%`），0/3 gates。登记`V65-F11`，关闭Actor trajectory monitor，不做阈值、
+learned head或聚合 rescue。该GPU read与P2V archive/preprocess I/O实际重叠；当前active task转为P2V input pipeline。

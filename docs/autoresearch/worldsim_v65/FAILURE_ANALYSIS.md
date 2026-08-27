@@ -53,6 +53,17 @@ The direct Qagg arm is the important positive control: Spearman 0.75149, unsafe 
 reduction at 40% coverage. Following the task-relevant-failure principle, the project retains this trajectory-level
 reduction and removes the unnecessary learned head. Any later learning must operate on a genuinely new Actor false-safe
 target or fresh action-level transfer, not tune R4 after its read.
+
+## V65-F11 — Actor extrema break per-token forecast transfer
+
+P2C's strong per-actor snapshot correlation did not survive maximum-cost reduction to the trajectory level. The A0
+Spearman dropped to 0.6261, and the weaker A1 forecast could not serve as a disagreement monitor: positive disagreement
+was essentially random for false-safe gaps and selected a worse subset. This is consistent with extreme-value
+aggregation amplifying the worst per-token forecast error.
+
+Changing max to a smooth maximum after seeing the result would change the prediction object and aggregation contract.
+The project therefore closes this Actor companion and continues only the already-supported world-state Qagg fresh
+transfer. The 9/24 positive gaps show that the negative result is scientifically identifiable rather than label-empty.
 - M2I：https://openaccess.thecvf.com/content/CVPR2022/html/Sun_M2I_From_Factored_Marginal_Trajectory_Prediction_to_Interactive_Prediction_CVPR_2022_paper.html
 - GameFormer：https://openaccess.thecvf.com/content/ICCV2023/html/Huang_GameFormer_Game-theoretic_Modeling_and_Learning_of_Transformer-based_Interactive_Prediction_and_ICCV_2023_paper.html
 - VAD：https://openaccess.thecvf.com/content/ICCV2023/html/Jiang_VAD_Vectorized_Scene_Representation_for_Efficient_Autonomous_Driving_ICCV_2023_paper.html
