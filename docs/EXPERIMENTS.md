@@ -4855,3 +4855,15 @@ run://worldsim_v6/WS-V6-R140-CROSS-FRONTEND-END-TO-END-UTILITY-01/20260822T06393
 Scientific certificate SHA256=`913833af47e4171e27707f71418b6625ed358b538d1c8a5a18bca5ac7f585363`；gate SHA256=`ac3c79c0e93f2932a076da8323b89a210ff2cbaac27ffa13079ce89ae9d07b51`。Failure ledger delta 是 V6-F97/V6-F98 的 recovery closeout 注记；没有新增 failure ID。完整证据入口为 `docs/autoresearch/worldsim_v6/SELECTOR_RESEARCH_FAMILY_CLOSEOUT.md`。
 V3.1 计划和本文件的 R0 收口快照见
 [`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；归档内容不构成新的执行入口。
+## WS-V65-P0-INHERITANCE-PROTOCOL-01 — 精简继承与 direct-research 冻结（2026-08-27）
+
+- branch：`research/worldsim-v6.5-task-conditioned-authority`，base=`research/worldsim-v6.4-native-uq@add2f3f`；
+- V6.4 terminal：canonical runs、模型和 sidecar 只读复用，不覆盖；
+- quality exposure：V6.5 selection/calibration/confirmation/test 均为 `false`；
+- scene rule：任何出现在 `configs/worldsim_v64/` 的 scene 都是 Tier L；P1 先用 V6.4 development cohort 做
+  train-only mechanism atlas，正式 P2 结论必须换 fresh cohort；
+- resource read：RTX 3090 24 GiB；`/root/autodl-tmp` 约 120 GiB free；当前无多卡需求；
+- execution deviation：依用户指令不执行冗长 P0、全量 smoke/回归；只进行 JSON/YAML 可解析与窄入口验证；
+- next：构建一次性 compact trajectory feature cache，GPU 并列训练 frozen-q0 与 trajectory-residual probe。
+
+本阶段不读取方法 quality，不产生 supported/rejected 科学结论。

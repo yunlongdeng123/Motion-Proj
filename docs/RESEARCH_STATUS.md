@@ -1913,3 +1913,20 @@ Artifacts：
 - 仓库收敛目标为唯一远端分支 `main`，指向本次 closeout。
 
 详见 [selector 研究族收口](autoresearch/worldsim_v6/SELECTOR_RESEARCH_FAMILY_CLOSEOUT.md)、[failure ledger](RESEARCH_FAILURES.md) 与 [V6 plan](WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md)。
+## WorldSim V6.5 启动：TAC-Compiler 直接研究入口（2026-08-27）
+
+状态：`active_p1_signal_atlas`。
+
+已从冻结的 `research/worldsim-v6.4-native-uq` 终态 `add2f3f` 创建并推送
+`research/worldsim-v6.5-task-conditioned-authority`。V6.4 canonical runs 保持只读，不改写、不重跑；任何曾被
+V6.4 读取质量的场景在 V6.5 一律为 Tier L，只允许机制诊断、warm-start 和基线复用，不能形成 V6.5 正式
+selection/calibration/confirmation/test 结论。
+
+按用户指令采用 direct-research profile：跳过冗长 P0、全量 smoke 和回归，只落盘最小继承/场景/selection
+协议后直接执行 P1 连续 trajectory signal atlas 与 T0 低容量条件残差。当前资源为单张 RTX 3090（启动时
+1 MiB、0%）和 `/root/autodl-tmp` 约 120 GiB 可用空间；P1–P6 的 faithful minimum 不需要多卡。I/O 采用
+V6.4 canonical sidecar 只读复用与 compact feature cache，训练和评分优先放到 GPU。
+
+当前 active hypothesis：`WS-V65-H-P1-001`。尚未读取 V6.5 正式 selection quality，尚无 V6.5 方法结论。
+本里程碑 failure ledger delta：无；首次建分支推送未走 LocalTUN upstream，改用当前远端代理后成功，属于已解决的
+基础设施路由事件，不登记科学失败。

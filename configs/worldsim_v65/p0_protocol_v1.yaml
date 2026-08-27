@@ -1,0 +1,15 @@
+schema_version: worldsim_v65.p0_protocol.v1
+task_id: WS-V65-P0-INHERITANCE-PROTOCOL-01
+branch: research/worldsim-v6.5-task-conditioned-authority
+source: {branch: research/worldsim-v6.4-native-uq, commit: add2f3f}
+immutable_baselines: [v64_full_native_q0, v64_c0_global, v64_m0_conditional, v64_m1_route_aware]
+execution_profile: direct_research
+resource: {gpu: rtx3090_24gb, disk_free_gib_at_start: 120, multi_gpu_required: false}
+locks:
+  v64_runs_read_only: true
+  v64_scenes_legacy_only: true
+  formal_v65_quality_read: false
+  add_hash_checksum_fingerprint: false
+  broad_smoke_regression: false
+  parameter_sweep: false
+next_task: WS-V65-P1-CONDITION-SIGNAL-ATLAS-01

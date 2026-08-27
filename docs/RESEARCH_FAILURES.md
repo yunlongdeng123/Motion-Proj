@@ -4834,3 +4834,8 @@ GaussianWorld 与 IR-WM 使用不同官方时序机制、类别合同和网格�
 capability，也不产生现实安全声明。不得再换 backend、选 confidence threshold、改 checkpoint/grid/history window、
 放宽 verifier、用 O_eval 选阈值，或执行确定性零 yield 的 observed-FREE veto 冒充恢复。唯一 ME-3 recovery 已消费，
 ME-4 不授权；V6.1 minimum experiment 以负结论收口。
+## WorldSim V6.5 failure ledger 启动审计（2026-08-27）
+
+`WS-V65-P0-INHERITANCE-PROTOCOL-01` 没有新增科学、数据或资源失败。首次新分支 `git push -u` 未建立
+upstream，根因是远端 GitHub 出站未使用当前 LocalTUN；设置会话端口后同一分支成功推送，没有代码/run/quality
+影响，因此不分配 `V65-Fxx`。下一可用编号仍为 `V65-F01`。
