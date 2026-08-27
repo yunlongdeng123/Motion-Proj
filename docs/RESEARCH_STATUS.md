@@ -2427,3 +2427,27 @@ wall=`74.11/80.51/49.38/47.15/57.61/57.41s`，peak GPU=`4.1314GiB`。Aggregate=
 WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1`：72 units、48 reused、
 `81,763,088` bytes、wall=`35.14s`、role overlap=0。输入全部ready，正式combined quality read仍为false；下一步只执行
 冻结的单次P10X evaluator。
+
+### P10X终态：reliability evaluation成立，direct action authority拒绝
+
+Canonical=`run://worldsim_v65/WS-V65-P10X-COMBINED-CONFIRMATION-01/20260828T013000Z__combined-confirmation-s0-r1`。
+72 cases/864 actions中125 actions按冻结16-point footprint排除；739 eligible actions含80,282 visited points、
+10,818 hidden-FREE outcomes和577 unsafe actions。Nominal route有60 eligible cases；`scene-0718`的12条nominal routes
+全部低于minimum footprint。
+
+Route raw Spearman=`0.609813`、unsafe AUROC/AUPRC=`0.988868/0.997419`。冻结R7 map将MSE
+`0.0318414→0.00592580`（降低`81.39%`），5-bin calibration error `0.159217→0.0203975`（降低`87.19%`）；
+route scene MSE=`4/0/1`。Action pooled Spearman=`0.772946`、unsafe AUROC/AUPRC=`0.972730/0.991627`、
+2,216-pair concordance=`0.655686`，前五个核心门均通过。
+
+唯一失败门是direct selection benefit：65 evaluable cases中选lowest-Qmean 25%，actual cost仅
+`0.120215→0.100520`（降低`16.38%`），低于冻结`25%`；scene lower/equal/higher=`5/0/1`，其中`scene-0817`
+小幅退化。Verdict=`rejected_one_shot_combined_visited_state_confirmation`，记录为`V65-F19`。
+
+准确终态是：支持“给定Ego `tau`，未来2秒访问world states的reliability ranking与expected-error calibration”，但
+不支持把该分数直接编译为达到冻结benefit的action authority。按one-shot stop rule，不换scene、不放宽gate、不建第二
+confirmation、不训练critic补救；无collision/planning/policy/closed-loop/population/safety claim。wall=`8.218s`、
+peak GPU=`0.03917GiB`、RSS=`1.052GiB`，单RTX 3090足够。
+
+V6.5终局证据链、canonical runs、arXiv可写/禁写claims与建议图表已汇总到
+[`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)。

@@ -73,11 +73,14 @@
     "gate_results": {"spearman": true, "unsafe_auroc": true, "pairwise": true, "selected_cost": true, "scene_support": true, "evaluable_cases": true}
   },
   "confirmation": {
-    "read": false,
+    "read": true,
     "scenes": ["scene-0245", "scene-0287", "scene-0686", "scene-0718", "scene-0817", "scene-0868"],
     "candidate": ["nominal_route_Qmean", "frozen_R7_monotone_map", "fixed_12_action_Qmean"],
     "maximum_reads": 1,
-    "second_confirmation_allowed": false
+    "second_confirmation_allowed": false,
+    "formal_run": "run://worldsim_v65/WS-V65-P10X-COMBINED-CONFIRMATION-01/20260828T013000Z__combined-confirmation-s0-r1",
+    "verdict": "rejected_one_shot_combined_visited_state_confirmation",
+    "gate_results": {"route_spearman": true, "route_mse_reduction": true, "action_spearman": true, "action_unsafe_auroc": true, "action_pairwise_concordance": true, "action_selected_cost_reduction": false}
   },
   "test": {"read": false, "scenes": []}
 }

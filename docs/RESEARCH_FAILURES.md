@@ -5180,3 +5180,30 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - 过程未读combined quality，下一可用failure id保持`V65-F19`。
 
 下一可用编号仍为：`V65-F19`。
+
+### V65-F19 — P10X one-shot combined confirmation未达到direct action-selection benefit
+
+- run：`run://worldsim_v65/WS-V65-P10X-COMBINED-CONFIRMATION-01/20260828T013000Z__combined-confirmation-s0-r1`；
+- symptom：route ranking、frozen-map MSE、action ranking、unsafe AUROC和pairwise共5门通过，但lowest-Qmean 25%
+  action selection将actual cost从`0.120215`降至`0.100520`，只降低`16.38%`，未达冻结`25%`；
+- support retained：route Spearman=`0.6098`、frozen calibration MSE -81.39%、action Spearman=`0.7729`、unsafe
+  AUROC=`0.9727`、pairwise=`0.6557`；这些支持reliability evaluation，不足以越权为direct action authority；
+- heterogeneity：action selection在5 scenes改善、1 scene (`0817`)退化；`0718`虽无eligible nominal route，但其action
+  selection改善，故失败不能归因于单一footprint exclusion，也不允许删scene；
+- literature/open-source response：AISTATS 2025的excess-risk分解指出recalibration可消除miscalibration regret，仍可能
+  留下需要更强post-training的grouping loss；UAI 2023也报告recalibration通常不直接改善downstream regret。本结果与该
+  边界一致，因此不事后改metric或把5/6门包装为authority成功；
+- resolution：按冻结stop rule关闭combined/direct-action candidate；不换scene、不降gate、不做第二confirmation、不训练
+  critic或重开V64-F28；保留given-`tau` visited-state ranking/calibration这一窄结论；
+- claim impact：V6.5不获得planner/policy/closed-loop/collision/safety authority；P10X终态为negative combined result。
+
+下一可用编号：`V65-F20`。
+
+### P10X terminal note — 不以新cohort修复V65-F19
+
+- 这次是冻结candidate的唯一formal confirmation read，cache reused=false，未发生入口/资源错误；
+- one-shot verdict必须由6门AND rule决定，selected-cost failure不可由其余5门覆盖；
+- 任何local/multicalibration或decision-focused head都将是未来版本的新方法、新protocol和新分支，不能作为V6.5恢复；
+- V6.5用于arXiv的准确贡献边界是task-conditioned visited-state reliability evaluator，而非action authority compiler。
+
+下一可用编号仍为：`V65-F20`。

@@ -5461,3 +5461,28 @@ Aggregate implementation：`aggregate_worldsim_v65_pipelined_native.py`按冻结
 
 Canonical native/evidence paths与P10X formal config完全一致。Preparation父进程只在archive children扫描时暂停，避免
 与scene-ready feeder重复预处理；恢复后复用6/6 processed scenes并清理raw。输入完成前combined quality read=false。
+
+### WS-V65-P10X-COMBINED-CONFIRMATION-01 formal result
+
+Canonical：`run://worldsim_v65/WS-V65-P10X-COMBINED-CONFIRMATION-01/20260828T013000Z__combined-confirmation-s0-r1`。
+
+| metric | value | gate/result |
+| --- | ---: | --- |
+| source / eligible / excluded actions | 864 / 739 / 125 | frozen footprint |
+| nominal-route eligible cases | 60/72 | descriptive；scene-0718 none |
+| route raw Spearman | 0.609813 | pass (`>=0.60`) |
+| route raw / frozen-map MSE | 0.0318414 / 0.00592580 | -81.39%, pass (`>=50%`) |
+| route raw / frozen-map 5-bin calibration error | 0.159217 / 0.0203975 | -87.19%, descriptive |
+| route unsafe AUROC / AUPRC | 0.988868 / 0.997419 | descriptive |
+| action pooled Spearman | 0.772946 | pass (`>=0.55`) |
+| action unsafe AUROC / AUPRC | 0.972730 / 0.991627 | pass (`AUROC>=0.80`) |
+| pairwise pairs / concordance | 2,216 / 0.655686 | pass (`>=0.65`) |
+| all / selected-25% actual cost | 0.120215 / 0.100520 | -16.38%, **fail** (`>=25%`) |
+| action scene lower/equal/higher | 5/0/1 | descriptive |
+
+5/6核心gates通过，但one-shot candidate按预注册AND rule拒绝：`rejected_one_shot_combined_visited_state_confirmation`。
+结果保留reliability evaluator/calibrator结论，关闭direct action-authority结论。Formal read=true；cache reused=false；
+no model/calibrator refit、no critic、no second confirmation。wall=`8.218s`、peak GPU=`0.03917GiB`、RSS=`1.052GiB`。
+
+V6.5跨阶段证据索引与arXiv写作边界：
+[`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)。
