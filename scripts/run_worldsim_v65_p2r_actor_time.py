@@ -75,7 +75,7 @@ def _materialize(config: dict, cache_path: Path) -> None:
     for scene_index, (role, scene) in enumerate(scenes):
         for unit_index, frame in enumerate(config["targets"]["frame_indices"]):
             descriptors.append((scene_index, role, scene, unit_index, int(frame)))
-    parts: dict[str, list[np.ndarray]] = {name: [] for name in ("static", "time", "label", "scene_index", "unit_index", "actor_id", "is_train")}
+    parts: dict[str, list[np.ndarray]] = {name: [] for name in ("static", "time", "label", "target_distance", "target_cost", "scene_index", "unit_index", "actor_id", "is_train")}
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 
     def submit(row: tuple):
@@ -116,7 +116,9 @@ def _materialize(config: dict, cache_path: Path) -> None:
             int(actor): float(target_trajectory[target_ids == actor, 0].min())
             for actor in np.unique(target_ids[target_ids >= 0])
         }
-        static_rows, time_rows, labels, actor_rows = [], [], [], []
+        static_rows, time_rows, labels, distances, costs, actor_rows = [], [], [], [], [], []
+        absent_distance = float(config["evidence_contract"].get("absent_actor_distance_m", 60.0))
+        cost_scale = float(config["evidence_contract"].get("proximity_cost_scale_m", 6.0))
         for actor in actors:
             current_mask = current_ids == actor
             swept_mask = swept_ids == actor
@@ -146,13 +148,18 @@ def _materialize(config: dict, cache_path: Path) -> None:
                 math.log((swept_xyz.shape[0] + 1) / (current_xyz.shape[0] + 1)),
                 swept_task[swept_nearest, 1], swept_task[swept_nearest, 2],
             ], dtype=np.float32))
-            labels.append(target_minimum.get(int(actor), math.inf) <= radius)
+            target_distance = min(target_minimum.get(int(actor), absent_distance), absent_distance)
+            labels.append(target_distance <= radius)
+            distances.append(target_distance)
+            costs.append(math.exp(-target_distance / cost_scale))
             actor_rows.append(int(actor))
         count = len(labels)
         if count:
             parts["static"].append(np.stack(static_rows))
             parts["time"].append(np.stack(time_rows))
             parts["label"].append(np.asarray(labels, dtype=bool))
+            parts["target_distance"].append(np.asarray(distances, dtype=np.float32))
+            parts["target_cost"].append(np.asarray(costs, dtype=np.float32))
             parts["scene_index"].append(np.full(count, scene_index, dtype=np.uint8))
             parts["unit_index"].append(np.full(count, unit_index, dtype=np.uint8))
             parts["actor_id"].append(np.asarray(actor_rows, dtype=np.int32))
