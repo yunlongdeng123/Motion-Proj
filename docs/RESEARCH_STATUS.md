@@ -1938,3 +1938,23 @@ development scenes 各取前 8 units 训练、后 4 units 评估；每训练 uni
 8192 points。连续特征不含硬 1.5m corridor bit；硬 corridor 只用于 fixed-opportunity 指标。唯一 seed=0、容量
 `10→32→16` trajectory encoder、冻结 64D q0 hidden、40 epochs，不做 sweep。当前下一动作是生成 compact
 q0-hidden cache 并运行 GPU 主实验。
+
+### P1 T0 终态与 P1R 迁移
+
+P1 canonical run：
+
+```text
+run://worldsim_v65/WS-V65-P1-CONDITION-SIGNAL-ATLAS-01/20260827T074500Z__signal-atlas-s0-r1
+```
+
+523,910 train points、497,892 nested evaluation points；wall=`34.71s`、peak GPU=`0.132GiB`、compact cache=
+`173MiB`。R0 q0 AUROC/AUPRC=`0.871759/0.407081`，R1 T0=`0.871576/0.405639`，增量分别为
+`-0.000183/-0.001443`。matched 40% 下 pooled fixed-route density `0.00299581→0.00314560`，相对恶化
+`5%`；scene lower/equal/higher=`1/13/2`。真实 trajectory 相对 unit 内 shuffle AUROC `+0.009591`，说明
+条件被网络使用，但没有转化成对 q0 的有效增量。`WS-V65-H-P1-001` rejected，T1 attention 不解锁。
+
+文献复核后冻结 `WS-V65-H-P1R-001`：WoTE 将 trajectory 用于未来结果/trajectory evaluation；UniAD/VAD
+通过 planning query 与未来 occupancy/actor 交互。当前 T0 却让 trajectory 解释 task-agnostic static
+hidden-FREE，存在 target semantics 错配。P1R 保留 q0=`r_phys`，新增连续 relevance 缩放、只允许非负增险的
+`r_task`；以 task-aligned loss 训练，primary 只看 fixed-route opportunity，并锁定 non-route 不恶化。它不是
+seed/容量救援，也不改变 P1 负结论。

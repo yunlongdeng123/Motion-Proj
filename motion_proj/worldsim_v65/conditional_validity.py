@@ -42,9 +42,53 @@ class TrajectoryResidualValidity(nn.Module):
         return base_logit + delta
 
 
+class MonotoneTaskRiskResidual(nn.Module):
+    """Add task risk near a trajectory without reducing frozen physical risk."""
+
+    def __init__(self, native_dimension: int, trajectory_dimension: int) -> None:
+        super().__init__()
+        self.trajectory_encoder = nn.Sequential(
+            nn.Linear(trajectory_dimension, 32),
+            nn.GELU(),
+            nn.Linear(32, 16),
+            nn.GELU(),
+        )
+        self.film = nn.Linear(16, native_dimension * 2)
+        self.task_head = nn.Sequential(
+            nn.Linear(native_dimension + 16, 32),
+            nn.GELU(),
+            nn.Linear(32, 1),
+        )
+        nn.init.zeros_(self.task_head[-1].weight)
+        nn.init.constant_(self.task_head[-1].bias, -4.0)
+
+    def forward(
+        self,
+        native_hidden: torch.Tensor,
+        base_logit: torch.Tensor,
+        trajectory: torch.Tensor,
+        relevance: torch.Tensor,
+    ) -> torch.Tensor:
+        encoded = self.trajectory_encoder(trajectory)
+        gamma, beta = self.film(encoded).chunk(2, dim=1)
+        interaction = native_hidden * torch.tanh(gamma) + beta
+        task_risk = F.softplus(
+            self.task_head(torch.cat((interaction, encoded), dim=1)).squeeze(1)
+        )
+        return base_logit + relevance.clamp(0.0, 1.0) * task_risk
+
+
 @dataclass
 class FitResult:
     model: TrajectoryResidualValidity
+    trajectory_mean: np.ndarray
+    trajectory_scale: np.ndarray
+    epoch_losses: list[float]
+
+
+@dataclass
+class MonotoneFitResult:
+    model: MonotoneTaskRiskResidual
     trajectory_mean: np.ndarray
     trajectory_scale: np.ndarray
     epoch_losses: list[float]
@@ -130,6 +174,100 @@ def score_trajectory_residual(
             task = torch.as_tensor(standardized[offset:stop], dtype=torch.float32, device=device)
             with torch.cuda.amp.autocast():
                 outputs.append(torch.sigmoid(fit.model(hidden, base, task)).float().cpu().numpy())
+    return np.concatenate(outputs).astype(np.float32)
+
+
+def fit_monotone_task_risk(
+    native_hidden: np.ndarray,
+    base_logit: np.ndarray,
+    trajectory: np.ndarray,
+    hidden_free: np.ndarray,
+    *,
+    epochs: int,
+    batch_size: int,
+    learning_rate: float,
+    weight_decay: float,
+    focal_gamma: float,
+    focal_alpha: float,
+    minimum_task_weight: float,
+    seed: int,
+) -> MonotoneFitResult:
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cuda.matmul.allow_tf32 = True
+    device = torch.device("cuda")
+    mean = trajectory.mean(axis=0, dtype=np.float64).astype(np.float32)
+    scale = trajectory.std(axis=0, dtype=np.float64).astype(np.float32)
+    scale[scale < 1e-6] = 1.0
+    standardized = ((trajectory - mean) / scale).astype(np.float32)
+    hidden = torch.as_tensor(native_hidden, dtype=torch.float16, device=device)
+    base = torch.as_tensor(base_logit, dtype=torch.float32, device=device)
+    task = torch.as_tensor(standardized, dtype=torch.float32, device=device)
+    relevance = torch.as_tensor(trajectory[:, -1], dtype=torch.float32, device=device)
+    target = torch.as_tensor(hidden_free, dtype=torch.float32, device=device)
+    weights = float(minimum_task_weight) + (1.0 - float(minimum_task_weight)) * relevance
+    model = MonotoneTaskRiskResidual(hidden.shape[1], task.shape[1]).to(device)
+    optimizer = torch.optim.AdamW(
+        model.parameters(), lr=float(learning_rate), weight_decay=float(weight_decay)
+    )
+    scaler = torch.cuda.amp.GradScaler()
+    losses: list[float] = []
+    for _ in range(int(epochs)):
+        model.train()
+        permutation = torch.randperm(target.shape[0], device=device)
+        total = 0.0
+        steps = 0
+        for offset in range(0, target.shape[0], int(batch_size)):
+            chosen = permutation[offset : offset + int(batch_size)]
+            optimizer.zero_grad(set_to_none=True)
+            with torch.cuda.amp.autocast():
+                logits = model(
+                    hidden[chosen], base[chosen], task[chosen], relevance[chosen]
+                )
+                labels = target[chosen]
+                probability = torch.sigmoid(logits)
+                p_t = probability * labels + (1.0 - probability) * (1.0 - labels)
+                alpha_t = focal_alpha * labels + (1.0 - focal_alpha) * (1.0 - labels)
+                point_loss = (
+                    alpha_t
+                    * (1.0 - p_t).pow(focal_gamma)
+                    * F.binary_cross_entropy_with_logits(logits, labels, reduction="none")
+                )
+                loss = (point_loss * weights[chosen]).sum() / weights[chosen].sum()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+            total += float(loss.detach())
+            steps += 1
+        losses.append(total / max(1, steps))
+    return MonotoneFitResult(model=model, trajectory_mean=mean, trajectory_scale=scale, epoch_losses=losses)
+
+
+def score_monotone_task_risk(
+    fit: MonotoneFitResult,
+    native_hidden: np.ndarray,
+    base_logit: np.ndarray,
+    trajectory: np.ndarray,
+    *,
+    batch_size: int = 131072,
+) -> np.ndarray:
+    device = torch.device("cuda")
+    standardized = ((trajectory - fit.trajectory_mean) / fit.trajectory_scale).astype(np.float32)
+    fit.model.eval()
+    outputs = []
+    with torch.inference_mode():
+        for offset in range(0, base_logit.shape[0], batch_size):
+            stop = offset + batch_size
+            hidden = torch.as_tensor(native_hidden[offset:stop], dtype=torch.float16, device=device)
+            base = torch.as_tensor(base_logit[offset:stop], dtype=torch.float32, device=device)
+            task = torch.as_tensor(standardized[offset:stop], dtype=torch.float32, device=device)
+            relevance = torch.as_tensor(
+                trajectory[offset:stop, -1], dtype=torch.float32, device=device
+            )
+            with torch.cuda.amp.autocast():
+                outputs.append(
+                    torch.sigmoid(fit.model(hidden, base, task, relevance)).float().cpu().numpy()
+                )
     return np.concatenate(outputs).astype(np.float32)
 
 

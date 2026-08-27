@@ -4842,3 +4842,17 @@ upstream，根因是远端 GitHub 出站未使用当前 LocalTUN；设置会话�
 
 P1 stage preregistration 与实现落盘前审计：没有新增 failure；尚未创建 P1 run、尚未读取指标，下一可用编号仍为
 `V65-F01`。
+
+### V65-F01 — trajectory condition 被错误要求改善 task-agnostic 物理标签
+
+- task/run：`WS-V65-P1-CONDITION-SIGNAL-ATLAS-01` / `20260827T074500Z__signal-atlas-s0-r1`；
+- symptom：T0 AUROC/AUPRC 相对 q0 为 `-0.000183/-0.001443`，fixed-route density 相对恶化 `5%`，
+  scene lower/equal/higher=`1/13/2`；只有真实 trajectory 相对 shuffle 的 AUROC 响应 `+0.009591`；
+- root cause：T0 把 trajectory residual 训练成 task-agnostic hidden-FREE 分类器；trajectory 明明是任务查询，
+  却没有 task outcome / utility / actor-time supervision，目标语义与 WoTE/UniAD/VAD 的 planning-oriented 用法不一致；
+- preserved evidence：canonical run、173MiB compact cache、预注册配置和模型均保留；
+- resolution：`WS-V65-H-P1-001` rejected，禁止 T1/seed/capacity rescue。新建 `WS-V65-H-P1R-001`，明确分离
+  frozen `r_phys` 与 nonnegative relevance-scaled `r_task`，只以 fixed-opportunity task risk 判定；
+- claim impact：当前没有 V6.5 trajectory-conditioned method claim；P1R 仍是 legacy train-only mechanism。
+
+下一可用编号：`V65-F02`。

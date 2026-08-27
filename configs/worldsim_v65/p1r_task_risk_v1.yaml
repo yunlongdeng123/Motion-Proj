@@ -1,0 +1,29 @@
+schema_version: worldsim_v65.p1r_task_risk.v1
+task_id: WS-V65-P1R-TASK-ALIGNED-RISK-01
+hypothesis_id: WS-V65-H-P1R-001
+seed: 0
+claim_boundary: train-only legacy mechanism recovery that separates frozen physical q0 from a nonnegative task-risk residual; no formal V6.5 selection, admission, calibration, confirmation, test, or safety claim
+inputs:
+  compact_cache_path: /root/autodl-tmp/cache/worldsim_v65/p1_legacy_trajectory_compact.npz
+model:
+  epochs: 40
+  batch_size: 16384
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  focal_gamma: 2.0
+  focal_alpha: 0.75
+  minimum_task_weight: 0.05
+evaluation: {matched_total_coverage: 0.40, tail_fraction: 0.10}
+gates:
+  minimum_fixed_route_risk_reduction: 0.05
+  maximum_nonroute_relative_risk_increase: 0.05
+locks:
+  frozen_physical_q0: true
+  task_residual_nonnegative: true
+  relevance_continuous: true
+  hard_route_mask_as_model_feature: false
+  scene_id_feature: false
+  seed_or_capacity_sweep: false
+  formal_v65_selection_read: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V65-F01]

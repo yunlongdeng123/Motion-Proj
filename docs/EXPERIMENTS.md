@@ -4884,3 +4884,38 @@ V3.1 计划和本文件的 R0 收口快照见
 - claim boundary：legacy train-only mechanism，不解锁任何 V6.5 formal claim。
 
 代码入口：`scripts/run_worldsim_v65_p1_signal_atlas.py`；配置：`configs/worldsim_v65/p1_signal_atlas_v1.yaml`。
+
+### WS-V65-P1-CONDITION-SIGNAL-ATLAS-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P1-CONDITION-SIGNAL-ATLAS-01/20260827T074500Z__signal-atlas-s0-r1`。
+
+| metric | R0 q0 | R1 trajectory residual | delta |
+| --- | ---: | ---: | ---: |
+| AUROC | 0.871759 | 0.871576 | -0.000183 |
+| AUPRC | 0.407081 | 0.405639 | -0.001443 |
+| pooled fixed-route density | 0.00299581 | 0.00314560 | +0.00014979 / +5% risk |
+| scene lower/equal/higher | - | 1/13/2 | reject |
+
+Trajectory shuffle AUROC=`0.861985`，真实 R1 比 shuffle 高 `0.009591`；表示条件通路生效，但不能补充 q0。
+四个预注册 gate 仅 perturbation 通过，verdict=`no_clear_train_only_trajectory_signal`。不执行 T1、seed/hidden
+size/epoch sweep。
+
+### WS-V65-P1R-TASK-ALIGNED-RISK-01 preregistration
+
+新问题不是“更大的 T0”，而是独立输出语义：
+
+```text
+r_phys = frozen q0 logit
+r_task >= 0
+score = r_phys + continuous_route_relevance * r_task
+```
+
+复用同一 173MiB compact cache、split、seed 和 40 epochs；train loss 由 continuous relevance 聚焦但保留
+0.05 global anchor。Primary：matched 40% pooled fixed-route density；同时要求 scene lower>=higher、non-route
+emission risk 相对回退 `<=5%`、真实 trajectory 优于 within-unit shuffle。无 formal V6.5 selection read。
+
+迁移依据：
+
+- WoTE（ICCV 2025）：https://openaccess.thecvf.com/content/ICCV2025/papers/Li_End-to-End_Driving_with_Online_Trajectory_Evaluation_via_BEV_World_Model_ICCV_2025_paper.pdf
+- UniAD（CVPR 2023 Best Paper，官方代码）：https://github.com/OpenDriveLab/UniAD
+- VAD（ICCV 2023，官方代码）：https://github.com/hustvl/VAD

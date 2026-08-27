@@ -1,24 +1,24 @@
 {
   "version": "worldsim_v65",
-  "status": "active_p1_signal_atlas",
+  "status": "active_p1r_task_aligned_risk",
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
-  "active_task": "WS-V65-P1-CONDITION-SIGNAL-ATLAS-01",
-  "active_hypothesis": "WS-V65-H-P1-001",
-  "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL"],
-  "unlocked_stages": ["P1", "P2_T0_AFTER_P1"],
+  "active_task": "WS-V65-P1R-TASK-ALIGNED-RISK-01",
+  "active_hypothesis": "WS-V65-H-P1R-001",
+  "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED"],
+  "unlocked_stages": ["P1R_TASK_RISK"],
   "resource_contract": "single_rtx3090_24gb",
   "disk_free_gib_at_start": 120,
   "quality_read": {
-    "legacy_mechanism": false,
+    "legacy_mechanism": true,
     "v65_selection_representation": false,
     "v65_selection_admission": false,
     "calibration": false,
     "confirmation": false,
     "test": false
   },
-  "last_failure_id": null,
+  "last_failure_id": "V65-F01",
   "constraints": {
     "hash_checksum_fingerprint": false,
     "excessive_validation_gating": false,
@@ -29,5 +29,13 @@
   "p1_preregistered": true,
   "p1_arms": ["R0_frozen_q0", "R1_continuous_trajectory_film_residual"],
   "p1_formal_v65_selection_read": false,
-  "next_action": "run_gpu_p1_continuous_trajectory_signal_atlas"
+  "p1_run": "run://worldsim_v65/WS-V65-P1-CONDITION-SIGNAL-ATLAS-01/20260827T074500Z__signal-atlas-s0-r1",
+  "p1_verdict": "no_clear_train_only_trajectory_signal",
+  "p1_q0_auroc": 0.8717594831114693,
+  "p1_t0_auroc": 0.8715763041829024,
+  "p1_fixed_route_relative_risk_reduction": -0.05,
+  "p1_scene_lower_equal_higher": [1, 13, 2],
+  "p1r_preregistered": true,
+  "p1r_semantics": "frozen_r_phys_plus_nonnegative_continuous_relevance_scaled_r_task",
+  "next_action": "run_gpu_p1r_task_aligned_monotone_risk"
 }
