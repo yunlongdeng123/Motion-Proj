@@ -5117,6 +5117,15 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 
 下一可用编号仍为：`V65-F18`。
 
+### P10X stop-rule note — combined confirmation不设恢复cohort
+
+- candidate已由P2V/P3C/P10V冻结；P10X不产生新模型、参数、threshold或action generator；
+- confirmation只有6个与已支持分量直接对应的核心gates，scene/case/subgroup其余数值仅报告；
+- 若任一核心gate失败，关闭combined candidate，不换scene、不创建第二confirmation cohort、不以critic补救；
+- 下一可用failure id保持`V65-F18`。
+
+下一可用编号仍为：`V65-F18`。
+
 ### P10V outcome note — direct action ranking成功，未触发critic recovery
 
 - run：`run://worldsim_v65/WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01/20260828T003000Z__action-transfer-s0-r1`；

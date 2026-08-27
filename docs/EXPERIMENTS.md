@@ -5425,3 +5425,13 @@ trained=false；compact cache reused=false。`ACTION_ROWS.jsonl`保留813条elig
 Stop因不访问未来world-state footprint而排除，不是事后删除；51条短轨迹排除也完全由冻结16-point
 规则产生。结论仅是fixed-lattice representation ranking，无collision/planning/policy/closed-loop/safety claim。
 wall=`8.459s`、peak GPU=`0.03917GiB`、peak RSS=`1.001GiB`。
+
+### WS-V65-P10X-COMBINED-CONFIRMATION-01 freeze
+
+- cohort：`scene-0245/0287/0686/0718/0817/0868`，archive shards 3/7/8，6×12 cases；
+- route candidate：action index7（progress1.0/lateral0）的raw Qmean与frozen R7 monotone map；
+- action candidate：与P10V完全相同的12 non-stop trajectories、16-point footprint、Qmean与target-cost definition；
+- six gates：route Spearman `.60`、route MSE reduction `.50`、action Spearman `.55`、unsafe AUROC `.80`、
+  pairwise `.65`、selected-cost reduction `.25`；
+- descriptive only：5-bin calibration error、route/action AUPRC、scene lower/equal/higher、evaluable cases；
+- locks：one read, no fit/refit/head/critic/lattice/threshold sweep/second confirmation/hash/checksum/fingerprint。

@@ -1,0 +1,39 @@
+schema_version: worldsim_v65.p10x_combined_confirmation.v1
+task_id: WS-V65-P10X-COMBINED-CONFIRMATION-01
+hypothesis_id: WS-V65-H-P10X-001
+seed: 0
+claim_boundary: one fresh combined empirical confirmation of route-level ranking, frozen monotone expected-cost calibration, and fixed-lattice action ranking; no population, collision, planning, policy, closed-loop, or safety claim
+inputs:
+  evidence_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-NATIVE-SIDECAR-01/20260828T010500Z__confirmation-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p10x_combined_confirmation_compact.npz
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+sampling: {evaluation_points_per_unit: 8192, seed: 0}
+action_lattice:
+  horizon_seconds: 2.0
+  progress_ratios: [0.25, 0.50, 0.75, 1.00]
+  lateral_offsets_m: [-1.50, 0.00, 1.50]
+  include_stop_for_reporting_only: true
+calibrator: {slope: 1.703977108001709, bias: -0.4792216420173645, probability_clip: 0.000001, refit: false}
+evaluation: {within_case_selected_fraction: 0.25, pairwise_minimum_target_gap: 0.02, calibration_bins: 5, nominal_action_index: 7}
+gates:
+  minimum_route_spearman: 0.60
+  minimum_route_mse_reduction: 0.50
+  minimum_action_spearman: 0.55
+  minimum_action_unsafe_auroc: 0.80
+  minimum_action_pairwise_concordance: 0.65
+  minimum_action_selected_cost_reduction: 0.25
+locks: {model_refit: false, calibrator_refit: false, new_critic: false, action_lattice_sweep: false, threshold_sweep: false, second_confirmation: false, add_hash_checksum_fingerprint: false}
+scenes:
+  - {name: scene-0245, processed_index: 194}
+  - {name: scene-0287, processed_index: 229}
+  - {name: scene-0686, processed_index: 538}
+  - {name: scene-0718, processed_index: 563}
+  - {name: scene-0817, processed_index: 634}
+  - {name: scene-0868, processed_index: 657}
+failure_ledger_refs: [V64-F28, V65-F10, V65-F12, V65-F15, V65-F17]

@@ -38,6 +38,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
         "worldsim_v65_p2_raw_batch",
         "worldsim_v65_p3c_raw_batch",
         "worldsim_v65_p10v_raw_batch",
+        "worldsim_v65_p10x_raw_batch",
     }
     if temporary_root.parent != expected_parent or temporary_root.name not in allowed_temporary_names:
         raise RuntimeError(f"unexpected temporary root: {temporary_root}")

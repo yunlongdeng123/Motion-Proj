@@ -2389,3 +2389,13 @@ Qmean 25%后，actual cost `0.109772→0.0732644`（降低`33.26%`），scene lo
 label，不产生planner/policy/closed-loop/safety claim。wall=`8.459s`、peak GPU=`0.03917GiB`、RSS=`1.001GiB`。
 当前cohort不做lattice/threshold/head扫描；下一步只允许将冻结的unit-level ranking、monotone calibration与fixed-action
 ranking放到一个全新cohort做一次combined empirical confirmation。
+
+### P10X one-shot combined confirmation freeze
+
+Active=`WS-V65-H-P10X-001`。在任何confirmation quality读取前，冻结候选为：nominal-route raw Qmean、
+R7两参数单调map（no refit）、以及P10V固定12-action lattice。剩余568个unprocessed direct-key scenes中，
+固定未扫过的archive bands 3/7/8的1/3和2/3 quantiles：`0245/0287/0686/0718/0817/0868`。
+
+为避免过度gating，只保留6个核心门：nominal route Spearman `.60`、冻结map MSE reduction `.50`、action
+Spearman `.55`、unsafe AUROC `.80`、pairwise concordance `.65`、selected action cost reduction `.25`。只允许
+一次combined quality read；失败即关闭候选，不建第二个confirmation cohort。

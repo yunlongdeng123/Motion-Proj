@@ -4,8 +4,8 @@
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
-  "active_task": "WS-V65-P10V-ACTION-VISITED-STATE-TRANSFER-01",
-  "active_hypothesis": null,
+  "active_task": "WS-V65-P10X-COMBINED-CONFIRMATION-01",
+  "active_hypothesis": "WS-V65-H-P10X-001",
   "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED", "P1R4_VISITED_STATE_QAGG_SUPPORTED_TRAIN_ONLY", "P1R5_ACTOR_FALSE_SAFE_REJECTED", "P1R6_SMOOTH_TAIL_REJECTED", "P1R7_MONOTONE_CALIBRATION_SUPPORTED_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_SUPPORTED", "P3C_INPUT_PIPELINE", "P3C_INDEPENDENT_MONOTONE_CALIBRATION_SUPPORTED", "P10V_FIXED_ACTION_VISITED_STATE_SUPPORTED"],
   "unlocked_stages": ["P1R5_ACTOR_FALSE_SAFE_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_TRANSFER", "P3C_INDEPENDENT_MONOTONE_CALIBRATION_TRANSFER"],
   "resource_contract": "single_rtx3090_24gb",
@@ -257,5 +257,10 @@
   "p10v_all_selected_cost": [0.10977176576852798, 0.07326441258192062],
   "p10v_selected_cost_reduction": 0.3325750745741777,
   "p10v_scene_lower_equal_higher": [6, 0, 0],
-  "next_action": "freeze_one_new_cohort_for_combined_unit_calibration_and_fixed_action_empirical_confirmation"
+  "p10x_preregistered": true,
+  "p10x_scenes": ["scene-0245", "scene-0287", "scene-0686", "scene-0718", "scene-0817", "scene-0868"],
+  "p10x_archive_shards": [3, 7, 8],
+  "p10x_formal_confirmation_read": false,
+  "p10x_second_confirmation_allowed": false,
+  "next_action": "run_P10X_targeted_archive_pipeline_while_implementing_the_combined_confirmation_evaluator"
 }
