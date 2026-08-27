@@ -5060,3 +5060,17 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无科学read，不改变P2V hypothesis或fresh exposure计数。
 
 下一可用编号：`V65-F15`。
+
+### V65-F15 — formal P2V evaluator错误假设q0 logits为二维
+
+- run：`run://worldsim_v65/WS-V65-P2V-VISITED-STATE-TRANSFER-01/20260827T141500Z__fresh-visited-transfer-s0-r1`；
+- symptom：第1个unit的frozen q0 forward返回1-D logits，`.squeeze(1)`抛出`IndexError: Dimension out of range`；
+- exposure audit：1个formal input/target unit加载到内存；没有Qagg、target value、aggregate metric、gate或verdict输出，
+  compact cache未落盘；因此不是零input exposure，但没有可用于方法选择的科学反馈；
+- root cause：保存的q0 wrapper已在forward中移除singleton output dim，evaluator重复按`[B,1]`做维度特定squeeze；
+- literature/open-source response：PyTorch Linear保留除最后feature维外的batch形状，`squeeze(dim)`只适用于存在的指定维；
+  对已冻结scalar scorer的batch contract使用`.reshape(-1)`兼容`[B]`与`[B,1]`；
+- resolution：只改tensor view，不改数值、model、target、sampling、candidate或gates；r1标记failed，r2继续同一冻结read；
+- claim impact：r1不产生科学结论；fresh input已部分暴露，必须在论文/ledger披露该engineering recovery。
+
+下一可用编号：`V65-F16`。

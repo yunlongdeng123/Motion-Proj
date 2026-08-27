@@ -5276,3 +5276,11 @@ calibration`。wall=`2.319s`、peak GPU=`0.00195GiB`、peak RSS=`0.954GiB`。不
 Canonical aggregate与evidence paths与`p2v_visited_state_transfer_v1.yaml`冻结值一致。native/evidence完成前没有Qmean
 target quality read；calibration/confirmation/exact-once test均未读。F13/F14仅为pre-model入口恢复，不改变single
 formal P2V read计数。
+
+### WS-V65-P2V-VISITED-STATE-TRANSFER-01 failed formal entry / V65-F15
+
+- run：`run://worldsim_v65/WS-V65-P2V-VISITED-STATE-TRANSFER-01/20260827T141500Z__fresh-visited-transfer-s0-r1`；
+- exposure：第1个unit native/target加载；0 Qagg、0 metric/gate disclosed；0 compact cache persisted；
+- error：frozen q0 network output=`[B]`，固定`.squeeze(1)`越界；
+- repair：仅改为`.reshape(-1)`，对`[B]`/`[B,1]`统一展平；无数值/科学合同变化；
+- recovery：r2使用同一config/inputs/seed/sampling/candidate/gates；r1 status标记failed，不覆盖现场。

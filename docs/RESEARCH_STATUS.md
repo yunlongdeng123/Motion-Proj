@@ -2258,3 +2258,13 @@ GPU最大`4.1314GiB`。aggregate=`.../20260827T133000Z__fresh-visited-native-agg
 Canonical evidence=`.../20260827T133000Z__fresh-visited-evidence-s0-r1`含72 units、`76,067,478` bytes、role overlap=0，
 wall=`58.72s`；其中前24 units在native/后续preprocess期间先算，final run以hardlink复用。输入阶段通过，下一步是
 冻结Qmean的唯一formal P2V prediction-object read。
+
+### P2V formal r1 tensor-shape entry failure
+
+Formal r1=`.../20260827T141500Z__fresh-visited-transfer-s0-r1`在第一个unit加载native/target后、任何Qagg/metric/
+gate输出和compact cache落盘前触发`V65-F15`。冻结q0 network本身返回`[B]` logits，evaluator错误假设`[B,1]`
+并调用`.squeeze(1)`，产生dimension out of range。
+
+按PyTorch output shape合同，修复仅为`network(batch).reshape(-1)`，同时兼容`[B]`和`[B,1]`且不改变数值、模型、
+candidate、sampling、target或gate。r1如实计为formal input/target partial exposure（1 unit），但无科学metric disclosed；
+compact cache不存在。用新run-id r2完成同一冻结read，不借故重选或调参。

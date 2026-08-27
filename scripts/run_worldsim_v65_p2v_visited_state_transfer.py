@@ -69,7 +69,7 @@ def _frozen_q0_scores(model: object, features: np.ndarray) -> np.ndarray:
         for offset in range(0, values.shape[0], 131072):
             batch = torch.from_numpy(values[offset : offset + 131072]).cuda()
             with torch.cuda.amp.autocast():
-                logits = network(batch).squeeze(1)
+                logits = network(batch).reshape(-1)
             outputs.append(torch.sigmoid(logits).float().cpu().numpy())
     return np.concatenate(outputs).astype(np.float32)
 
@@ -269,4 +269,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
