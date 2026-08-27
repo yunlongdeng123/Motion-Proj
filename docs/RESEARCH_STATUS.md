@@ -2046,3 +2046,24 @@ positives 为 `0/476` 与 `0/302`；所有 gates 失败，verdict=`no_clear_trai
 文献复核后 active hypothesis 改为 `WS-V65-H-P2C-001`：数据/split/features/model 不变，只把不可辨识的硬标签
 换成预注册连续 target proximity cost `exp(-distance/6m)`；不读取 P2 cohort、不扩大二值半径、不做 sweep。
 下一动作是用新 cache path 物化 target distance/cost，并在 GPU 比较 A0/A1 的 Spearman、MSE 与 selected mean cost。
+
+### P2C continuous Actor-time cost 终态与表示族关闭
+
+Canonical：
+
+```text
+run://worldsim_v65/WS-V65-P2C-ACTOR-TIME-COST-01/20260827T102000Z__actor-time-cost-s0-r2
+```
+
+连续 target 在 train/eval 的 mean 为 `0.147396/0.095976`，不再存在 P2R 的零支持问题。A0 snapshot 的
+Spearman/MSE=`0.872281/0.006247`；A1 Actor×time=`0.857392/0.008407`，即 Spearman 增量 `-0.014889`、
+MSE relative reduction=`-34.59%`。A1 相对 scene-wise shuffled time 仍有 `+0.098817` Spearman，证明时间通路
+确实被使用；但 matched 40% 的两个 eval scenes 均恶化，lower/equal/higher=`0/0/2`。全局 selected mean cost
+虽从 `0.023950→0.021468`（`-10.37%`），却没有 scene support，只有两个预注册 gates 通过。verdict=
+`no_clear_train_only_continuous_actor_time_cost`；wall=`7.52s`、peak GPU=`0.593GiB`。
+
+`V65-F05` 保留第一次入口的共享配置工程失败（训练/证据读取前 `KeyError`）；`V65-F06` 冻结上述科学负结论。
+Actor/time family 已关闭，不改 cost scale、seed、容量或 split，不解锁 P3。结合 fresh P2，trajectory attention 与
+task-conditioned end-to-end representation 同样保持锁定。当前只进行 P4 feasibility audit：检查在完全冻结 V6.4
+risk representation、且不读取已消费 representation selection 的条件下，是否存在可用于 learned admission 的
+独立 train/selection 分区；若不存在则直接关闭 admission，不制造重复实验。

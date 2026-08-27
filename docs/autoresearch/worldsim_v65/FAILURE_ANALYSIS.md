@@ -58,3 +58,26 @@ capacity 不变。
 - Occupancy Flow：https://waymo.com/research/occupancy-flow-fields-for-motion-forecasting-in-autonomous-driving/
 - DTPP：https://github.com/MCZhi/DTPP
 - DiffStack：https://proceedings.mlr.press/v205/karkus23a.html
+
+## V65-F05 — shared materializer leaked a binary-only config dependency
+
+P2C first entry failed before evidence I/O or training because the shared P2R materializer indexed
+`route_corridor_radius_m` even though the continuous target never consumes the binary label. Hydra config composition
+documents the relevant software boundary: common configuration and task-specific groups are composed, rather than making
+every variant provide unrelated fields. The project migration was one optional read with a neutral unused fallback; the
+failed run is preserved and the scientific contract was not altered.
+
+- Hydra composition：https://hydra.cc/docs/tutorials/basic/your_first_app/composition/
+
+## V65-F06 — temporal sensitivity is not incremental Actor-time authority
+
+P2C removed zero-support ambiguity but A1 still lost to A0: Spearman gain `-0.014889`, MSE reduction `-34.59%`, and
+both evaluation scenes had higher matched-coverage selected cost. The `+0.098817` real-minus-shuffled Spearman confirms
+that history/time entered the computation, so enlarging the same model is not a justified fix. DTPP and DiffStack instead
+couple prediction/cost with candidate policy or downstream planning objectives; UniAD makes agent-goal interaction
+planning-oriented. In this project those ideas would require a new action/candidate supervision contract, not a rescue of
+the closed Actor-token family. P3 therefore remains locked.
+
+- UniAD：https://openaccess.thecvf.com/content/CVPR2023/papers/Hu_Planning-Oriented_Autonomous_Driving_CVPR_2023_paper
+- DTPP：https://github.com/MCZhi/DTPP
+- DiffStack：https://proceedings.mlr.press/v205/karkus23a.html

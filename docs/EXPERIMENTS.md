@@ -5035,3 +5035,24 @@ selected outcome rate 全为 0。wall=`7.70s`、peak GPU=`0.593GiB`。任务无 
 保持 P2R split/features/model，target 改为 `exp(-target_min_distance/6m)` continuous cost，actor absent=60m。
 冻结 gates：Spearman gain `>=0.05`、MSE reduction `>=10%`、matched-40% mean cost reduction `>=10%`、
 scene support=2/2、temporal shuffle response>0。新 cache 不覆盖 P2R artifact；仍无 formal selection read。
+
+### WS-V65-P2C-ACTOR-TIME-COST-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P2C-ACTOR-TIME-COST-01/20260827T102000Z__actor-time-cost-s0-r2`。
+
+| metric | A0 snapshot | A1 Actor×time | gate interpretation |
+| --- | ---: | ---: | --- |
+| Spearman | 0.872281 | 0.857392 | gain -0.014889，fail |
+| MSE | 0.006247 | 0.008407 | relative reduction -34.59%，fail |
+| MAE | 0.059017 | 0.065177 | descriptive worse |
+| matched-40% mean cost | 0.023950 | 0.021468 | reduction 10.37%，pass |
+| scene lower/equal/higher | - | 0/0/2 | support fail |
+| real-minus-shuffled Spearman | - | +0.098817 | pass |
+
+`2/5` gates 通过，verdict=`no_clear_train_only_continuous_actor_time_cost`。302 eval tokens 的两个 scene
+selected cost 都更高，故 pooled 10.37% 改善不能作为稳健增量。wall=`7.52s`、peak GPU=`0.593GiB`、peak RSS=
+`1.163GiB`；formal V6.5 selection read=false。A0/A1 训练使用唯一 seed=0，没有 sweep/rerun。
+
+第一次入口 `20260827T101500Z__actor-time-cost-s0-r1` 在证据物化前因共享 materializer 强制读取二值专属
+`route_corridor_radius_m` 而失败；修复只把该字段变为连续任务可选，科学配置/gates/seed 不变。失败目录保留为
+`V65-F05`，r2 是唯一产生科学指标的 canonical run。

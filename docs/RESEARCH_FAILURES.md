@@ -4916,3 +4916,29 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：P2R 没有 actor-time 机制结论；P2C 仍为 legacy train-only。
 
 下一可用编号：`V65-F05`。
+
+### V65-F05 — 连续 cost 共用物化器仍硬依赖二值半径字段
+
+- run：`run://worldsim_v65/WS-V65-P2C-ACTOR-TIME-COST-01/20260827T101500Z__actor-time-cost-s0-r1`；
+- symptom：run directory/status 创建后，`_materialize` 在任何 evidence unit 读取、GPU geometry、训练或评分前，
+  对不存在的 `evidence_contract.route_corridor_radius_m` 抛出 `KeyError`；
+- root cause：P2R/P2C 共用 Actor-token materializer，但二值 label 的 task-specific config field 被写成公共必需字段；
+- open-source response：Hydra 的 config composition 将共享基础字段与任务组差异组合；项目内采用同一窄边界，
+  让未被 continuous target 消费的 binary radius 成为可选字段，而不是向 P2C 科学合同补入伪依赖；
+- resolution：失败目录保留，科学输入/gates/seed/model 未改变；修复后使用新 run-id r2，未覆盖失败现场；
+- claim impact：没有科学 read 或指标，不构成 P2C 负结果。
+
+### V65-F06 — Actor×time 连续代价对时间敏感但不优于 snapshot
+
+- run：`run://worldsim_v65/WS-V65-P2C-ACTOR-TIME-COST-01/20260827T102000Z__actor-time-cost-s0-r2`；
+- symptom：A1 相对 A0 Spearman `-0.014889`、MSE relative reduction `-34.59%`；matched 40% pooled cost 虽降低
+  `10.37%`，两个 eval scenes 却都恶化（lower/equal/higher=`0/0/2`）；
+- mechanism audit：真实 A1 比 scene-wise shuffled-time Spearman 高 `0.098817`，故网络使用了时间特征；失败不是
+  条件完全未进入网络，而是该增量在冻结 split 上没有形成优于强 snapshot geometry 的可泛化排序；
+- literature response：UniAD、DTPP、DiffStack 的有效增量来自 planning-oriented joint objective 或候选策略
+  cost evaluation，不支持继续放大当前独立 Actor-token MLP；
+- resolution：`WS-V65-H-P2C-001` rejected；关闭 Actor/time family，不做 scale/seed/capacity/split rescue，P3
+  不解锁。后续只允许审计固定 V6.4 risk 上的独立 admission，不能重开已关闭的 representation family；
+- claim impact：无 Actor-time method/planning/safety claim；formal V6.5 selection read 仍为 false。
+
+下一可用编号：`V65-F07`。
