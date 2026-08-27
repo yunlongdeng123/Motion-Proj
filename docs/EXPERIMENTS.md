@@ -5339,3 +5339,14 @@ full-ten-shard fallback未触发；native/evidence完成前没有读Qmean-target
 - recovery：仅补`/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval`，run-id、scene、unit、
   reuse、seed及科学合同不变；
 - validation：按Python官方`argparse required=True`行为，parser拒绝发生在业务代码之前；成功canonical run是唯一实际读取。
+
+### WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01 artifact entry / V65-F17
+
+- failed run：`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T154500Z__calibration-transfer-s0-r1`；
+- error：`joblib.load` received missing run-relative path `WS-V64-P1-BASELINE-TRANSFER-01/.../models/full_native_selective_mlp.joblib`；
+- exposure：0 units、0 native/target reads、0 q0 outputs、0 metrics/gates；compact cache absent；
+- diagnosis：P3C config未继承P2V成功路径，而是写入了不产出该artifact的baseline-transfer run；
+- recovery：对齐P2V冻结locator `WS-V64-P6R-SELECTIVE-MLP-01/.../RISK_MODEL/full_native_selective_mlp.joblib`；
+  不拷贝、不改model内容，不改任何科学参数；
+- open-source response：MLflow artifact API同样将artifact path定义为run-root-relative locator；项目保持run + relative-path
+  双元组同步，不引入额外指纹/校验。

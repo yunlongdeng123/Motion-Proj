@@ -2317,3 +2317,13 @@ Canonical evidence=`run://worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/202608
 CLI在argparse阶段因遗漏必填`--processed-root`被拒绝（`V65-F16`），未创建run dir、未读input/quality；补入
 配置已冻结的standard processed root后成功，科学合同未变。下一步是唯一一次frozen R7 map的independent
 calibration-transfer read。
+
+### P3C formal r1 artifact-locator entry failure
+
+Formal r1=`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T154500Z__calibration-transfer-s0-r1`
+在加载冻结q0 artifact时触发`V65-F17`：P3C config错指向不存在的V6.4 baseline-transfer `models/` path。失败发生在
+任何unit/native/target读取、q0 forward、metric/gate和cache落盘之前，因此formal calibration quality仍未读。
+
+已将locator更正为成功P2V实际使用的同一冻结artifact：`WS-V64-P6R-SELECTIVE-MLP-01/.../RISK_MODEL/
+full_native_selective_mlp.joblib`。仅run-relative artifact locator改变；model、scene、target、sampling、calibrator、seed和
+gates均不变。r1现场保留并标记failed，r2将继续同一冻结read。

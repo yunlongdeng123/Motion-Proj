@@ -8,8 +8,8 @@ inputs:
   native_run: worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1
   native_partition: fresh_selection
   processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
-  risk_run: worldsim_v64/WS-V64-P1-BASELINE-TRANSFER-01/20260826T113000Z__baseline-transfer-s0-r1
-  risk_model_relative_path: models/full_native_selective_mlp.joblib
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
   compact_cache: /root/autodl-tmp/cache/worldsim_v65/p3c_calibration_transfer_compact.npz
 native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
 trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_unit: 16}
@@ -35,4 +35,4 @@ scenes:
   - {name: scene-1046, processed_index: 786}
   - {name: scene-1085, processed_index: 825}
 locks: {formal_calibration_read: true, calibrator_refit: false, parameter_sweep: false, p2v_quality_reuse: false, add_hash_checksum_fingerprint: false}
-failure_ledger_refs: [V65-F10, V65-F12, V65-F15]
+failure_ledger_refs: [V65-F10, V65-F12, V65-F15, V65-F17]

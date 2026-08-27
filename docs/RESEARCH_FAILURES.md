@@ -5088,3 +5088,20 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无科学暴露、无方法选择信息；P3C仍保持formal calibration read=false。
 
 下一可用编号：`V65-F17`。
+
+### V65-F17 — P3C formal config指向不存在的冻结q0 artifact
+
+- run：`run://worldsim_v65/WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01/20260827T154500Z__calibration-transfer-s0-r1`；
+- symptom：`joblib.load` 在不存在的`WS-V64-P1-BASELINE-TRANSFER-01/.../models/full_native_selective_mlp.joblib`
+  抛`FileNotFoundError`；
+- exposure audit：run dir仅含resolved config和running status；0 unit/native/target read，0 q0 output，0 metric/gate，
+  compact cache未产生；
+- root cause：P3C config手工填入的run-relative locator没有沿用已成功P2V的artifact二元组；baseline-transfer
+  run不拥有该model；
+- literature/open-source response：`joblib.load` 以给定filename/path还原artifact；MLflow等实验跟踪系统同样将
+  artifact path定义为run root的相对路径，run与relative path必须同步；
+- resolution：更正为P2V实际使用的`WS-V64-P6R-SELECTIVE-MLP-01/.../RISK_MODEL/
+  full_native_selective_mlp.joblib`；仅locator改变，同一冻结model与所有科学合同不变；
+- claim impact：r1无科学结论；formal calibration read仍为false，r2允许继续。
+
+下一可用编号：`V65-F18`。
