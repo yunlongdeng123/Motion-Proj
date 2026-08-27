@@ -5131,3 +5131,21 @@ capacity rescue，formal V6.5 selection read=false。后继实验改变预测对
 - incremental gates：V1 Spearman gain `>=0.03`、MSE reduction `>=10%`、selected cost相对Qagg降低
   `>=10%`、scene lower>higher、real>within-scene shuffled trajectory；
 - formal V6.5 selection/calibration/confirmation/test read=false。
+
+### WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01 result / V65-F10
+
+Canonical：`run://worldsim_v65/WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01/20260827T121500Z__visited-state-s0-r1`。
+
+| metric | Qagg | V1 context head | result |
+| --- | ---: | ---: | --- |
+| Spearman | 0.751487 | 0.635127 | viability pass / increment fail |
+| unsafe AUROC | 0.978261 | 0.909420 | viability pass |
+| MSE | 0.0273778 | 0.00346444 | V1 -87.35%，pass |
+| all-unit actual cost | 0.103005 | 0.103005 | common target |
+| selected-40% actual cost | 0.0381365 | 0.0577178 | Qagg -62.98% vs all；V1 +51.35% vs Qagg |
+| scene lower/equal/higher | - | 2/7/6 | increment fail |
+| real-minus-shuffled Spearman | - | +0.069117 | pass |
+
+Qagg `3/3` viability gates全过；V1 `2/5` incremental gates通过。verdict=`positive_train_only_visited_state_object_
+q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum footprint排除；wall=`2.22s`、peak GPU=
+`0.0169GiB`、peak RSS=`1.039GiB`。不重训V1，保留Qagg进入fresh transfer候选。

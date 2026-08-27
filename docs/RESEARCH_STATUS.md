@@ -2132,3 +2132,21 @@ context和R3已冻结的14D map/context均值，不读取truth、scene ID或stra
 先评估直接 `Qagg=mean(q0 risk | visited by τ)` 的预测对象可行性，再评估单个`25→32→16→1` GPU head的增量。
 若Qagg可行而head无增量，保留trajectory-level聚合对象并关闭head；只有两者均失败才关闭world-state target。
 缓存读取会在GPU计算q0 sigmoid时并行读取map-context，不再读取173MiB native hidden或原始sidecar。
+
+### R4 trajectory-visited-state 终态：预测对象成立，learned head关闭
+
+Canonical：
+
+```text
+run://worldsim_v65/WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01/20260827T121500Z__visited-state-s0-r1
+```
+
+108 train / 58 nested-eval units符合至少16个visited samples；eval含6651个visited states、754个hidden-FREE
+outcomes、46/58 unsafe units。直接Qagg Spearman=`0.751487`、unsafe AUROC=`0.978261`，lowest-risk 40%
+actual cost=`0.038137`，相对全体`0.103005`下降`62.98%`，3/3 viability gates全过。这是本轮首次证明：将
+state risk按将执行的`τ`聚合后，trajectory-level future visited-state reliability是强而可解释的预测对象。
+
+V1 head虽然MSE降低`87.35%`且有shuffle response，却把Spearman降到`0.635127`、selected cost恶化`51.35%`，
+scene=`2/7/6`；登记`V65-F10`并关闭 learned head。最终 verdict=`positive_train_only_visited_state_object_q0_
+aggregation_only`。下一步并行准备 Actor false-safe companion 与独立fresh trajectory-level transfer；fresh准备期间
+继续运行现有compact Actor GPU实验，避免GPU等待重IO。

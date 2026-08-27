@@ -4986,3 +4986,18 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无 V6.5 map-conditioned method、selection、planning 或 safety claim。
 
 下一可用编号：`V65-F10`。
+
+### V65-F10 — trajectory-level neural head 改善MSE却破坏决策排序
+
+- run：`run://worldsim_v65/WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01/20260827T121500Z__visited-state-s0-r1`；
+- symptom：V1 MSE相对Qagg降低`87.35%`，但Spearman `0.751487→0.635127`，unsafe AUROC
+  `0.978261→0.909420`，lowest-risk 40%实际cost `0.038137→0.057718`（恶化`51.35%`），scene
+  lower/equal/higher=`2/7/6`；
+- root cause：小样本连续回归把大量低幅cost压缩得更准，但这种校准目标没有保持安全选择所需的尾部排序；
+- preserved positive：改变预测对象本身成功。直接Qagg的3/3 viability gates全过：Spearman=`0.751487`、unsafe
+  AUROC=`0.978261`、selected实际cost相对全体降低`62.98%`；
+- resolution：拒绝learned V1 head，不改loss/seed/capacity；保留确定性、可解释的trajectory-level Qagg，后续只做
+  Actor companion与fresh prediction-object transfer，不重新训练voxel residual；
+- claim impact：支持legacy train-only trajectory-level mechanism，不构成formal V6.5 selection/planning/safety claim。
+
+下一可用编号：`V65-F11`。

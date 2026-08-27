@@ -41,6 +41,18 @@ constraint；Implicit Occupancy Flow（CVPR 2023）让 planner 查询连续时�
 actor-time/action-outcome 的新 train-only hypothesis；已消费 P2 scenes 不得用于新模型选择。
 
 - PRECOG：https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+
+## V65-F10 — calibration improvement is not trajectory selection improvement
+
+The R4 neural head cut MSE by 87.35% but reduced Spearman by 0.11636 and increased selected realized cost by 51.35%.
+This is a concrete instance of optimizing average calibration while damaging the order used by a downstream selector.
+The within-scene shuffle response was positive, so the failure is not a disconnected input; the learned remapping simply
+did not preserve task-relevant tails.
+
+The direct Qagg arm is the important positive control: Spearman 0.75149, unsafe AUROC 0.97826, and 62.98% realized-cost
+reduction at 40% coverage. Following the task-relevant-failure principle, the project retains this trajectory-level
+reduction and removes the unnecessary learned head. Any later learning must operate on a genuinely new Actor false-safe
+target or fresh action-level transfer, not tune R4 after its read.
 - M2I：https://openaccess.thecvf.com/content/CVPR2022/html/Sun_M2I_From_Factored_Marginal_Trajectory_Prediction_to_Interactive_Prediction_CVPR_2022_paper.html
 - GameFormer：https://openaccess.thecvf.com/content/ICCV2023/html/Huang_GameFormer_Game-theoretic_Modeling_and_Learning_of_Transformer-based_Interactive_Prediction_and_ICCV_2023_paper.html
 - VAD：https://openaccess.thecvf.com/content/ICCV2023/html/Jiang_VAD_Vectorized_Scene_Representation_for_Efficient_Autonomous_Driving_ICCV_2023_paper.html
