@@ -2103,3 +2103,21 @@ Active hypothesis=`WS-V65-H-P1R3-001`。R3复用P1相同16-scene Tier-L split与
 map/context：8层逐voxel语义、drivable signed distance、route curvature/length、route-on-drivable和local map
 density；不读stratum/scene ID/hard route bit。单seed/单容量/单run，真实map必须同时改善AUROC与fixed-route risk、
 有scene direction support、non-route不搬家并优于within-unit shuffle，才允许新的fresh selection cohort。
+
+### R3 map/context 终态与预测对象迁移
+
+Canonical：
+
+```text
+run://worldsim_v65/WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01/20260827T114500Z__map-context-s0-r1
+```
+
+R3 AUROC/AUPRC=`0.871264/0.404801`，相对 q0 为 `-0.000496/-0.002280`；pooled fixed-route density
+`0.00299581→0.00299581`，scene lower/equal/higher=`1/14/1`。真实地图比 within-unit shuffle 的 AUROC 高
+`0.000625`，non-route risk 下降 `0.756%`，说明输入被使用但没有形成有效增量。5 gates 只通过2项，登记
+`V65-F09`，关闭 per-voxel map/context residual。wall=`85.42s`、peak GPU=`0.1397GiB`；单卡资源充足。
+
+当前方向按 task-relevant failure detection 改写：不再预测“这个 voxel 是否正确”，而预测“给定 Ego 轨迹
+`τ`，未来 `H` 秒访问走廊的 world state 是否可靠”。先在未增加 quality exposure 的原 P1 train/nested-eval
+缓存上形成 unit/trajectory-level 连续 outcome；若该对象有明确 held-out signal，才考虑 Actor-state companion 和
+fresh action-level selection。该迁移不是 R3 rescue，也不重开已关闭的 voxel representation family。

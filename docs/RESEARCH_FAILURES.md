@@ -4969,3 +4969,20 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无科学结论；R3 hypothesis在恢复完成后才预注册。
 
 下一可用编号：`V65-F09`。
+
+### V65-F09 — 官方地图上下文被模型使用，但没有改善 voxel 风险或路线决策
+
+- run：`run://worldsim_v65/WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01/20260827T114500Z__map-context-s0-r1`；
+- symptom：R3 相对 q0 的 AUROC/AUPRC 为 `-0.000496/-0.002280`，fixed-route density 完全相同
+  `0.00299581→0.00299581`，scene lower/equal/higher=`1/14/1`；
+- mechanism audit：真实地图相对 within-unit shuffled map 的 AUROC 为 `+0.000625`，non-route risk `-0.756%`，
+  因而地图通路并非完全失效，但增量太弱且没有形成路线决策变化；
+- root cause：冻结 q0 已编码大部分可由局部 road semantics 解释的物理边界；给逐 voxel 判别器追加静态地图，仍未把
+  监督对象对齐到 Ego 真正执行轨迹后访问的未来 world/Actor outcome；
+- literature response：CoRL 2022 Task-Relevant Failure Detection 把预测误差传播到 planning cost；PRECOG 对受控
+  Ego goal 条件化其他 Actor future。二者支持改变预测对象，不支持继续扩大 map residual；
+- resolution：`WS-V65-H-P1R3-001` rejected；关闭 per-voxel map/context residual，不做 seed/capacity/feature/radius
+  rescue。下一步建立 trajectory-level visited-state reliability，直接预测 `(scene, unit, τ)` 的未来访问走廊 outcome；
+- claim impact：无 V6.5 map-conditioned method、selection、planning 或 safety claim。
+
+下一可用编号：`V65-F10`。

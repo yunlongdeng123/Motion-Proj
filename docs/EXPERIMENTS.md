@@ -5099,3 +5099,21 @@ loss、seed或capacity rescue；formal V6.5 admission selection read=false。
 - formal V6.5 selection read=false。
 
 Pre-run capability `V65-F08`：v1.2被当前devkit拒绝，随后官方v1.3独立目录mask调用通过；没有科学read。
+
+### WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01 result / V65-F09
+
+Canonical：`run://worldsim_v65/WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01/20260827T114500Z__map-context-s0-r1`。
+
+| metric | q0 | R3 | delta / interpretation |
+| --- | ---: | ---: | --- |
+| AUROC | 0.871759 | 0.871264 | -0.000496，fail |
+| AUPRC | 0.407081 | 0.404801 | -0.002280 |
+| pooled fixed-route density | 0.00299581 | 0.00299581 | 0%，fail |
+| worst-tail route CVaR | 0.0164397 | 0.0162584 | -1.10% descriptive |
+| scene lower/equal/higher | - | 1/14/1 | fail |
+| real-minus-shuffled AUROC | - | +0.000625 | pass |
+| non-route relative risk | - | -0.756% | pass |
+
+训练/eval 点数=`523910/497892`，5 gates=`2/5`，verdict=`no_clear_train_only_map_context_signal`。
+wall=`85.42s`、peak GPU=`0.1397GiB`、peak RSS=`1.9598GiB`。唯一 seed=0 run；不做 feature/radius/seed/
+capacity rescue，formal V6.5 selection read=false。后继实验改变预测对象到 trajectory-level visited-state outcome。

@@ -59,6 +59,23 @@ capacity 不变。
 - DTPP：https://github.com/MCZhi/DTPP
 - DiffStack：https://proceedings.mlr.press/v205/karkus23a.html
 
+## V65-F09 — map semantics cannot rescue the per-voxel prediction object
+
+R3 consumed official v1.3 map semantics and produced a positive within-unit shuffle response, yet AUROC fell by
+`0.000496`, AUPRC fell by `0.002280`, pooled fixed-route risk was unchanged, and scene support was `1/14/1`.
+This separates “the network can read the map” from “the map changes reliable authority decisions.” The frozen q0 already
+contains strong local physical-boundary information, while the voxel-level target still weights errors independently of
+whether the Ego trajectory will visit them.
+
+Task-Relevant Failure Detection (CoRL 2022) propagates prediction errors to planning cost and detects harmful rather than
+generic failures. PRECOG (ICCV 2019) conditions other-agent futures on the controlled agent's goal. The project migration
+therefore changes the supervised object to a `(scene, unit, trajectory)` future visited-state outcome, using q0 and context
+as inputs and the realized route-corridor conflict as target. It does not enlarge or rerun R3.
+
+- paper：https://proceedings.mlr.press/v205/farid23a.html
+- official code：https://github.com/NVlabs/pred-fail-detector
+- PRECOG：https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+
 ## V65-F07 — learned coverage is not risk-controlled admission
 
 G0 learned useful average capacity but over-predicted one case by about 0.011 coverage and crossed the frozen 0.05
