@@ -2208,3 +2208,13 @@ selected-40% actual cost从`0.038137→0.048535`（恶化`27.27%`），scene low
 ICML MIDAM的smoothed-max/attention是以bag-level AUC训练的新模型，RAP需要planner-coupled robust prediction，
 TAT聚合多条候选轨迹及历史；均不支持对当前单轨迹q0做事后temperature rescue。关闭smooth-tail，P2V的唯一
 candidate继续保持冻结Qmean。run wall=`0.562s`、peak GPU=`0.00195GiB`，与fresh archive scan重叠；单卡资源充足。
+
+### R7 monotone visited-state calibration freeze
+
+Active hypothesis=`WS-V65-H-P1R7-001`。R4 Qmean排序强但raw MSE高；R4 unconstrained head虽然校准更好却破坏
+排序。R7只在108个legacy train units拟合`sigmoid(a·logit(Qmean)+b), a>0`，用58个nested-eval units一次评分。
+单调约束保证表示目标仍是“给定τ，未来2秒访问状态的expected hidden-FREE rate”，而不是返回逐voxel判断。
+
+模型仅2参数、seed=0、800 full-batch GPU epochs，无context/isotonic knots/bin/seed/capacity sweep。gates要求MSE降低
+`>=50%`、5-bin calibration error降低`>=30%`、至少8/15 scenes MSE改善，同时Spearman/AUROC不退化且selected-
+40% indices完全不变。该legacy diagnostic不消费formal calibration split，也不改变P2V Qmean候选。

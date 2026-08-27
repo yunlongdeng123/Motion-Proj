@@ -5215,3 +5215,12 @@ Canonical：`run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/2026082
 108/58 train/eval units、6,651 eval visited states、754 hidden-FREE outcomes；1/4 gates，verdict=
 `no_clear_train_only_smooth_tail_visited_state_increment`。wall=`0.562s`、peak GPU=`0.00195GiB`、peak RSS=
 `0.719GiB`。唯一temperature=0.10，无sweep/rerun，formal V6.5 selection read=false；不改变P2V Qmean freeze。
+
+### WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01 preregistration
+
+- input：R4 Qmean及108 train / 58 nested-eval trajectory units；future 2s、1.5m footprint、minimum 16不变；
+- map：`sigmoid(a·logit(Qmean)+b)`且`a=softplus(raw)>0`；2参数、800 epochs、lr=0.02、seed=0；
+- target：trajectory-level visited hidden-FREE fraction；
+- gates：MSE reduction `>=50%`、5 equal-count-bin calibration error reduction `>=30%`、scene MSE support
+  `>=8/15`、Spearman/AUROC non-regression、selected-40% exact same indices；
+- legacy train-only calibration diagnostic；无context/knots/ensemble/sweep，不读取formal calibration或改变P2V。

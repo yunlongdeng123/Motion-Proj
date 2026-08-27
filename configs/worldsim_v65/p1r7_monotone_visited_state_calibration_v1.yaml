@@ -1,0 +1,37 @@
+schema_version: worldsim_v65.p1r7_monotone_visited_state_calibration.v1
+task_id: WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01
+hypothesis_id: WS-V65-H-P1R7-001
+seed: 0
+claim_boundary: legacy train-only monotone trajectory-level expected visited-error calibration diagnostic; no formal V6.5 calibration, selection, planning, or safety claim
+inputs:
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p1r3_map_context_compact.npz
+  source_task: WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01
+trajectory_contract:
+  future_frame_count: 20
+  horizon_seconds: 2.0
+  visited_corridor_radius_m: 1.5
+  minimum_visited_points_per_unit: 16
+calibrator:
+  form: sigmoid_positive_slope_times_logit_qmean_plus_bias
+  epochs: 800
+  learning_rate: 0.02
+  probability_clip: 0.000001
+evaluation:
+  target: visited_hidden_free_fraction
+  calibration_bins: 5
+  matched_safe_coverage: 0.40
+incremental_gates:
+  minimum_mse_reduction: 0.50
+  minimum_calibration_error_reduction: 0.30
+  minimum_scene_mse_direction_support: 8
+  ranking_tolerance: 0.000001
+  require_exact_selected_set: true
+locks:
+  legacy_train_only: true
+  formal_v65_calibration_read: false
+  formal_v65_selection_read: false
+  monotone_map: true
+  parameter_sweep: false
+  learned_context: false
+  change_frozen_p2v_candidate: false
+  add_hash_checksum_fingerprint: false
