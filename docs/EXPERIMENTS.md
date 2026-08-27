@@ -4867,3 +4867,20 @@ V3.1 计划和本文件的 R0 收口快照见
 - next：构建一次性 compact trajectory feature cache，GPU 并列训练 frozen-q0 与 trajectory-residual probe。
 
 本阶段不读取方法 quality，不产生 supported/rejected 科学结论。
+
+### WS-V65-P1-CONDITION-SIGNAL-ATLAS-01 preregistration
+
+正式运行前冻结：
+
+- R0：原封不动的 V6.4 full-native q0；
+- R1：冻结 q0 的 64D hidden/logit，只训练 10D continuous trajectory encoder、FiLM interaction 和 delta head；
+- split：每个 Tier-L scene 的前 8/后 4 units 作 nested train/evaluation；
+- primary diagnostic：matched 40% coverage 的 sampled fixed-route opportunity density；
+- supporting：AUROC/AUPRC、worst-10% unit tail、scene direction support、within-unit trajectory shuffle response；
+- positive signal gate：AUROC gain `>=0.005`、fixed-route density relative reduction `>=5%`、lower scenes 多于
+  higher scenes且真实 trajectory 优于 unit 内 shuffle；
+- I/O/GPU：native 273D 只扫描一次，GPU 立即压缩为 frozen q0 64D hidden + logit + 10D task feature，后续训练
+  只读 compact cache；
+- claim boundary：legacy train-only mechanism，不解锁任何 V6.5 formal claim。
+
+代码入口：`scripts/run_worldsim_v65_p1_signal_atlas.py`；配置：`configs/worldsim_v65/p1_signal_atlas_v1.yaml`。

@@ -1930,3 +1930,11 @@ V6.4 canonical sidecar 只读复用与 compact feature cache，训练和评分�
 当前 active hypothesis：`WS-V65-H-P1-001`。尚未读取 V6.5 正式 selection quality，尚无 V6.5 方法结论。
 本里程碑 failure ledger delta：无；首次建分支推送未走 LocalTUN upstream，改用当前远端代理后成功，属于已解决的
 基础设施路由事件，不登记科学失败。
+
+### P1 train-only stage freeze
+
+P1 已冻结两臂：`R0=frozen V6.4 q0` 与 `R1=q0 + 10D continuous trajectory FiLM residual`。16 个 Tier-L
+development scenes 各取前 8 units 训练、后 4 units 评估；每训练 unit 最多 4096 points、每评估 unit 最多
+8192 points。连续特征不含硬 1.5m corridor bit；硬 corridor 只用于 fixed-opportunity 指标。唯一 seed=0、容量
+`10→32→16` trajectory encoder、冻结 64D q0 hidden、40 epochs，不做 sweep。当前下一动作是生成 compact
+q0-hidden cache 并运行 GPU 主实验。

@@ -4839,3 +4839,6 @@ ME-4 不授权；V6.1 minimum experiment 以负结论收口。
 `WS-V65-P0-INHERITANCE-PROTOCOL-01` 没有新增科学、数据或资源失败。首次新分支 `git push -u` 未建立
 upstream，根因是远端 GitHub 出站未使用当前 LocalTUN；设置会话端口后同一分支成功推送，没有代码/run/quality
 影响，因此不分配 `V65-Fxx`。下一可用编号仍为 `V65-F01`。
+
+P1 stage preregistration 与实现落盘前审计：没有新增 failure；尚未创建 P1 run、尚未读取指标，下一可用编号仍为
+`V65-F01`。

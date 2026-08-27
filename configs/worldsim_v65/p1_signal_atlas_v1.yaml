@@ -1,0 +1,58 @@
+schema_version: worldsim_v65.p1_signal_atlas.v1
+task_id: WS-V65-P1-CONDITION-SIGNAL-ATLAS-01
+hypothesis_id: WS-V65-H-P1-001
+seed: 0
+claim_boundary: train-only legacy mechanism atlas of continuous trajectory increment over frozen V6.4 q0; no V6.5 selection, admission, calibration, confirmation, test, or safety claim
+inputs:
+  evidence_run: worldsim_v64/WS-V64-P6E-CALIBRATION-EVIDENCE-01/20260826T130000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+  native_partition: fresh_calibration
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  compact_cache_path: /root/autodl-tmp/cache/worldsim_v65/p1_legacy_trajectory_compact.npz
+scenes:
+  - {name: scene-1045, processed_index: 785, stratum: night}
+  - {name: scene-1055, processed_index: 795, stratum: night}
+  - {name: scene-1051, processed_index: 791, stratum: night}
+  - {name: scene-1006, processed_index: 764, stratum: night}
+  - {name: scene-0901, processed_index: 687, stratum: rain}
+  - {name: scene-0810, processed_index: 628, stratum: rain}
+  - {name: scene-0458, processed_index: 372, stratum: rain}
+  - {name: scene-0885, processed_index: 671, stratum: rain}
+  - {name: scene-0047, processed_index: 44, stratum: construction}
+  - {name: scene-0203, processed_index: 157, stratum: construction}
+  - {name: scene-0768, processed_index: 596, stratum: construction}
+  - {name: scene-0259, processed_index: 208, stratum: construction}
+  - {name: scene-0405, processed_index: 320, stratum: vulnerable_transit}
+  - {name: scene-0439, processed_index: 353, stratum: vulnerable_transit}
+  - {name: scene-0060, processed_index: 57, stratum: vulnerable_transit}
+  - {name: scene-0656, processed_index: 510, stratum: vulnerable_transit}
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+trajectory: {future_frame_count: 20, frame_rate_hz: 10}
+sampling:
+  train_unit_count_per_scene: 8
+  train_points_per_unit: 4096
+  evaluation_points_per_unit: 8192
+model:
+  epochs: 40
+  batch_size: 16384
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  focal_gamma: 2.0
+  focal_alpha: 0.75
+evaluation:
+  matched_total_coverage: 0.40
+  route_corridor_radius_m: 1.5
+  tail_fraction: 0.10
+gates:
+  minimum_auroc_gain: 0.005
+  minimum_fixed_route_risk_reduction: 0.05
+locks:
+  legacy_train_only: true
+  formal_v65_selection_read: false
+  frozen_q0: true
+  hard_route_mask_as_model_feature: false
+  scene_id_feature: false
+  parameter_sweep: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V63-F02, V63-F24, V64-F10, V64-F15]
