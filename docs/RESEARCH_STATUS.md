@@ -2160,3 +2160,15 @@ viability；再以`relu(A1-A0)`作为纯可观测temporal disagreement monitor�
 Forecast gates固定为Spearman `>=0.70`、lowest-risk 40% target cost相对全体降低`>=25%`；monitor gates固定为
 gap Spearman `>=0.30`、positive-gap AUROC `>=0.65`、lowest-monitor 40% gap降低`>=25%`。无learned monitor、
 threshold、seed或capacity sweep；formal V6.5 selection read=false。
+
+### P2V fresh visited-state transfer freeze
+
+`WS-V65-H-P2V-001` 已在任何新target/q0读取前冻结。fresh cohort由满足“冻结700-key temporal metadata直接
+可用、仓库未出现、尚未processed”的候选按scene-index排序取6个等距quantile：`0001/0219/0402/0594/0822/
+1110`，12 frames/scene。描述覆盖construction、junction、residential、rain、pedestrian与night，但描述只在
+quantile选择后记录，不参与换scene。
+
+唯一candidate是R4保留的确定性Qagg，target仍为future 2s/1.5m trajectory footprint的realized hidden-FREE
+fraction；不迁移R4 learned head。fresh gates：Spearman `>=0.60`、unsafe AUROC `>=0.85`、lowest-risk 40%
+cost reduction `>=40%`、scene support `>=5/6`。输入物化将scene-ready I/O与native GPU/evidence CPU流水化，
+首轮archive/preprocess期间执行已冻结R5 Actor GPU read。

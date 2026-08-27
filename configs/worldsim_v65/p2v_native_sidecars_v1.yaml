@@ -1,0 +1,19 @@
+schema_version: worldsim_v65.p2v_native_sidecars.v1
+base_config: configs/worldsim_v63/p2_native_sidecars_v1.yaml
+task_id: WS-V65-P2V-FRESH-NATIVE-SIDECAR-01
+hypothesis_id: WS-V65-H-P2V-001
+seed: 0
+cohorts:
+  fresh_selection:
+    semantic_role: d_selection_trajectory_visited_state
+    scenes:
+      - {name: scene-0001, processed_index: 0, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0219, processed_index: 169, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0402, processed_index: 318, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0594, processed_index: 474, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-0822, processed_index: 638, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+      - {name: scene-1110, processed_index: 849, target_frames: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+resources: {gpu: 0, maximum_scene_workers: 2, worker_cpu_threads: 4, worker_timeout_seconds: 2400, maximum_gpu_memory_gib: 22, minimum_disk_free_gib: 10}
+locks: {target_evidence_allowed: false, selection_quality_allowed: false, add_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V65-F02, V65-F10]
+

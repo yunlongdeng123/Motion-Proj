@@ -5158,3 +5158,13 @@ q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum foo
 - false-safe target：`relu(target-A0)`；monitor=`relu(A1-A0)`；
 - monitor gates：gap Spearman `>=0.30`、positive-gap AUROC `>=0.65`、lowest-monitor 40% gap降低`>=25%`；
 - claim：legacy train-only companion；无新模型、threshold/sweep或formal V6.5 read。
+
+### WS-V65-P2V-VISITED-STATE-TRANSFER-01 preregistration
+
+- fresh scenes：`scene-0001/0219/0402/0594/0822/1110`，按unused direct-key capability候选的scene-index
+  等距quantile冻结，12 units/scene；
+- candidate：`Qagg=mean(q0 risk | visited by future 2s Ego trajectory)`；无learned head；
+- target/eligibility：1.5m corridor内hidden-FREE fraction，至少16 sampled states；
+- gates：Spearman `>=0.60`、unsafe AUROC `>=0.85`、selected-40% actual cost reduction `>=40%`、scene
+  support `>=5/6`；
+- run paths、frames、q0、corridor、cohort均在preparation前冻结；single formal prediction-object read。
