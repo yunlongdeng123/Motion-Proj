@@ -66,7 +66,9 @@ def _materialize(config: dict, cache_path: Path) -> None:
     evidence_root = Path(config["inputs"]["evidence_root"])
     processed_root = Path(config["inputs"]["processed_root"])
     future_frames = int(config["evidence_contract"]["future_frame_count"])
-    radius = float(config["evidence_contract"]["route_corridor_radius_m"])
+    # The continuous-cost task shares this materializer but does not consume the
+    # legacy binary label; keep that task-specific field optional.
+    radius = float(config["evidence_contract"].get("route_corridor_radius_m", 0.0))
     scenes = []
     for role in ("train", "evaluation"):
         for scene in config["scenes"][role]:
