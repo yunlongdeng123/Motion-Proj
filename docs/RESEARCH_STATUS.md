@@ -2173,6 +2173,9 @@ fraction；不迁移R4 learned head。fresh gates：Spearman `>=0.60`、unsafe A
 cost reduction `>=40%`、scene support `>=5/6`。输入物化将scene-ready I/O与native GPU/evidence CPU流水化，
 首轮archive/preprocess期间执行已冻结R5 Actor GPU read。
 
+Scene-ready native launcher以preprocess日志最后的`Processed dynamic masks`作为完成事件，最多同时运行2个
+单scene native workers；因此首两个scene完成后GPU即启动，而不等待其余四个preprocess结束。它不读取quality。
+
 ### R5 Actor false-safe 终态
 
 Canonical：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z__actor-false-safe-s0-r1`。

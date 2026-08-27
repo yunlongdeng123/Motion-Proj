@@ -5170,6 +5170,9 @@ q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum foo
   support `>=5/6`；
 - run paths、frames、q0、corridor、cohort均在preparation前冻结；single formal prediction-object read。
 
+Input execution：`launch_worldsim_v65_p2v_scene_ready_native.py`在每个scene preprocess最终dynamic-mask日志事件后
+立即提交单scene native，max workers=2；evidence CPU将在processed scenes齐备后与剩余native GPU重叠。
+
 ### WS-V65-P1R5-ACTOR-FALSE-SAFE-01 result / V65-F11
 
 Canonical：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z__actor-false-safe-s0-r1`。
