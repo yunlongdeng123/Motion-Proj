@@ -5012,3 +5012,14 @@ Canonical：`run://worldsim_v65/WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01/2026082
 Coverage matched=true、maximum scene regression=true、monotone semantics=true；primary reduction 与 scene
 support=false。Verdict=`rejected_fresh_trajectory_condition`，formal selection read=true。按 Stop 1 的科学含义关闭
 trajectory-only ranking family；不执行 attention、seed/capacity 或 threshold rescue。
+
+### WS-V65-P2R-ACTOR-TIME-TRAIN-ONLY-01 preregistration
+
+- data：V6.3 legacy evidence，method offsets `[-6,-4,-2,0]`，target offsets `[-5,-3,-1,+1]`；
+- split：train=`0071/0317/0862/1012`，nested eval=`0450/1089`；
+- A0：snapshot Actor pooling；A1：A0 + swept/history/time interaction；
+- outcome：target Actor swept envelope 是否进入 1.5m ego future-route corridor；
+- model：同一 `32→16` MLP，seed=0，120 epochs，无 sweep；
+- gates：AUPRC gain `>=0.03`、matched-40% selected outcome risk reduction `>=10%`、scene support=2/2、
+  temporal shuffle response>0；
+- claim：legacy train-only mechanism；P2 formal negative 与已消费 cohort 均不改变。

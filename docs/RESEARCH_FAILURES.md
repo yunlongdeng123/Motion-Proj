@@ -4900,3 +4900,6 @@ V65-F02 recovery 已完成：preparation r2 成功生成 6/6 processed scenes；
   且不得使用已消费 P2 cohort 做选择。
 
 下一可用编号：`V65-F04`。
+
+P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结；当前无新增 failure，下一可用编号仍为
+`V65-F04`。

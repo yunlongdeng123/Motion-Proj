@@ -1,0 +1,37 @@
+schema_version: worldsim_v65.p2r_actor_time_train_only.v1
+task_id: WS-V65-P2R-ACTOR-TIME-TRAIN-ONLY-01
+hypothesis_id: WS-V65-H-P2R-001
+seed: 0
+claim_boundary: legacy train-only actor-token mechanism diagnostic; no V6.5 selection, method, planning, or safety claim
+inputs:
+  evidence_root: /root/autodl-tmp/runs/worldsim_v62/WS-V62-P2-EVIDENCE-QUERY-DATASET-01/20260824T083654Z__query-dataset-s20260824-r2
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p2r_actor_time_tokens.npz
+scenes:
+  train:
+    - {name: scene-0071, processed_index: 68}
+    - {name: scene-0317, processed_index: 251}
+    - {name: scene-0862, processed_index: 652}
+    - {name: scene-1012, processed_index: 770}
+  evaluation:
+    - {name: scene-0450, processed_index: 364}
+    - {name: scene-1089, processed_index: 829}
+targets: {frame_indices: [17, 32, 47, 62, 77, 92, 107, 122, 137, 152, 167, 182]}
+evidence_contract:
+  method_visible_offsets: [-6, -4, -2, 0]
+  target_outcome_offsets: [-5, -3, -1, 1]
+  label: target_swept_actor_envelope_intersects_future_ego_route
+  route_corridor_radius_m: 1.5
+  future_frame_count: 20
+features:
+  snapshot: [current_extent_xyz, current_centroid_xyz, current_route_distance_min_mean, current_lateral_along, actor_count]
+  actor_time_increment: [swept_extent_xyz, history_centroid_delta_xy, swept_route_distance_min_mean, motion_route_alignment, observed_hit_fraction, swept_to_current_volume_ratio]
+model: {hidden_dimensions: [32, 16], epochs: 120, batch_size: 512, learning_rate: 0.001, weight_decay: 0.0001}
+evaluation: {matched_safe_coverage: 0.40}
+gates:
+  minimum_actor_auprc_gain: 0.03
+  minimum_selected_outcome_risk_reduction: 0.10
+  minimum_eval_scene_support: 2
+  require_temporal_shuffle_response: true
+locks: {formal_v65_selection_read: false, p2_cohort_reuse_for_selection: false, attention: false, parameter_sweep: false, add_hash_checksum_fingerprint: false}
+failure_ledger_refs: [V65-F01, V65-F03]

@@ -2024,3 +2024,15 @@ regression gates 通过，但 primary reduction 和 scene-support gates 失败�
 `V65-F03` 冻结该负结论：不重跑、不 sweep、不解锁 trajectory attention。文献迁移指向 ego action/goal 与
 multi-agent future response、continuous spatiotemporal query；下一步只允许建立一个语义独立的
 actor-time/action-outcome train-only hypothesis，并要求新 selection cohort，不能把它写成 P2 rescue。
+
+### P2R actor-time/action-outcome 启动
+
+Active hypothesis=`WS-V65-H-P2R-001`。复用 V6.3 legacy evidence 的严格 disjoint method/target sweeps，构建
+Actor token：A0 只看 current Actor snapshot，A1 增加 method-visible swept history/time features；监督是独立
+target sweeps 中 Actor swept envelope 与 ego future route 的交互。4 scenes train、2 scenes nested legacy eval，
+不产生 V6.5 formal selection read。
+
+该迁移对应 PRECOG/M2I/GameFormer 的 multi-agent conditional response、VAD 的 instance-level planning
+constraint 与 Implicit Occupancy Flow 的 continuous spatiotemporal query。配置与 gate 已在任何 outcome 统计前冻结；
+下一动作是边加载 72 个小 evidence units 边在 GPU 计算 trajectory geometry，物化 compact Actor-token cache 后立即
+训练 A0/A1。
