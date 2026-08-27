@@ -5198,3 +5198,20 @@ Eval=`24 trajectories/302 Actor tokens`，positive gaps=`9`。forecast `1/2`、m
 - gates：selected-40% cost相对Qmean降低`>=10%`、unsafe AUROC gain `>=0`、Spearman delta `>=-0.02`、
   scene lower>higher；
 - no learned head、temperature/seed/horizon/corridor/threshold sweep；不改变已冻结P2V candidate。
+
+### WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01 result / V65-F12
+
+Canonical：`run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/20260827T124500Z__smooth-tail-s0-r1`。
+
+| metric | Qmean | Qsoft-tail | result |
+| --- | ---: | ---: | --- |
+| Spearman | 0.751487 | 0.708230 | delta -0.043256，fail |
+| unsafe AUROC | 0.978261 | 1.000000 | delta +0.021739，pass |
+| MSE | 0.0273778 | 0.183788 | descriptive regression |
+| selected-40% actual cost | 0.0381365 | 0.0485354 | +27.27%，fail |
+| reduction vs all-unit cost | 62.98% | 52.88% | Qmean retained |
+| scene lower/equal/higher | - | 4/6/5 | fail |
+
+108/58 train/eval units、6,651 eval visited states、754 hidden-FREE outcomes；1/4 gates，verdict=
+`no_clear_train_only_smooth_tail_visited_state_increment`。wall=`0.562s`、peak GPU=`0.00195GiB`、peak RSS=
+`0.719GiB`。唯一temperature=0.10，无sweep/rerun，formal V6.5 selection read=false；不改变P2V Qmean freeze。

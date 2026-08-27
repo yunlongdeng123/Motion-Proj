@@ -92,7 +92,7 @@
   "p2c_relative_selected_cost_reduction": 0.10365315472294045,
   "p2c_scene_lower_equal_higher": [0, 0, 2],
   "p2c_formal_v65_selection_read": false,
-  "closed_families": ["trajectory_conditioned_voxel_ranking", "trajectory_attention", "actor_time_interaction_increment", "learned_admission", "soft_allocator", "admission_crc", "map_context_voxel_residual", "visited_state_learned_context_head", "actor_trajectory_false_safe_monitor"],
+  "closed_families": ["trajectory_conditioned_voxel_ranking", "trajectory_attention", "actor_time_interaction_increment", "learned_admission", "soft_allocator", "admission_crc", "map_context_voxel_residual", "visited_state_learned_context_head", "actor_trajectory_false_safe_monitor", "visited_state_smooth_tail_pooling"],
   "p4t_preregistered": true,
   "p4t_formal_v65_admission_selection_read": false,
   "p4t_train_eval_case_counts": [96, 96],
@@ -140,9 +140,15 @@
   "p1r6_preregistered": true,
   "p1r6_formal_v65_selection_read": false,
   "p1r6_candidate": "softmax_weighted_q0_temperature_0.10_over_visited_states",
+  "p1r6_run": "run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/20260827T124500Z__smooth-tail-s0-r1",
+  "p1r6_verdict": "no_clear_train_only_smooth_tail_visited_state_increment",
+  "p1r6_spearman_delta": -0.043256361273501076,
+  "p1r6_unsafe_auroc_delta": 0.021739130434782594,
+  "p1r6_selected_cost_reduction_vs_mean": -0.2726756428225073,
+  "p1r6_scene_lower_equal_higher": [4, 6, 5],
   "p2v_preregistered": true,
   "p2v_scenes": ["scene-0001", "scene-0219", "scene-0402", "scene-0594", "scene-0822", "scene-1110"],
   "p2v_case_count": 72,
   "p2v_formal_selection_read": false,
-  "next_action": "run_p1r6_during_p2v_archive_io_then_continue_scene_ready_p2v_pipeline"
+  "next_action": "continue_scene_ready_p2v_pipeline_and_run_single_frozen_qmean_fresh_transfer"
 }

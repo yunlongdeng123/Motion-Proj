@@ -2197,3 +2197,14 @@ minimum 16 points与nested eval均不变。
 单candidate temperature、无learned head/threshold/seed/sweep；必须同时实现selected-40% cost相对Qmean降低
 `>=10%`、unsafe AUROC不降、Spearman回退不超过`0.02`且scene lower>higher。该legacy train-only read不会
 修改已冻结的P2V Qagg candidate；失败即关闭smooth-tail，不做温度救援。
+
+### R6 smooth-tail终态：保留Qmean，关闭tail pooling
+
+Canonical：`run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/20260827T124500Z__smooth-tail-s0-r1`。
+Qsoft-tail把unsafe AUROC从`0.978261→1.000000`，但Spearman从`0.751487→0.708230`（`-0.043256`），
+selected-40% actual cost从`0.038137→0.048535`（恶化`27.27%`），scene lower/equal/higher=`4/6/5`。
+4 gates只过AUROC，登记`V65-F12`。
+
+ICML MIDAM的smoothed-max/attention是以bag-level AUC训练的新模型，RAP需要planner-coupled robust prediction，
+TAT聚合多条候选轨迹及历史；均不支持对当前单轨迹q0做事后temperature rescue。关闭smooth-tail，P2V的唯一
+candidate继续保持冻结Qmean。run wall=`0.562s`、peak GPU=`0.00195GiB`，与fresh archive scan重叠；单卡资源充足。

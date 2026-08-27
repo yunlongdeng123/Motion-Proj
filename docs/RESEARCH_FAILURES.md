@@ -5016,3 +5016,19 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无trajectory-level Actor reliability、planning或safety claim。
 
 下一可用编号：`V65-F12`。
+
+### V65-F12 — smooth-tail改善any-error分离，却恶化visited-error rate与实际选择代价
+
+- run：`run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/20260827T124500Z__smooth-tail-s0-r1`；
+- symptom：固定temperature=0.10的Qsoft-tail令unsafe AUROC `0.978261→1.000000`，但Spearman
+  `0.751487→0.708230`，selected-40% actual cost `0.038137→0.048535`（恶化`27.27%`），scene
+  lower/equal/higher=`4/6/5`；
+- root cause：upper-tail强调了单个高q0 state，适合检测trajectory内“是否存在任何风险”，却与当前监督的visited
+  hidden-FREE连续比例及matched-coverage期望代价不对齐；
+- literature response：MIDAM的smoothed-max/attention需要bag-level AUC训练；RAP把风险预测耦合进robust planning；
+  TAT依赖多条采样轨迹和历史。三者都不是当前单轨迹固定q0的无训练温度修复；
+- resolution：`WS-V65-H-P1R6-001` rejected；关闭smooth-tail，不扫temperature/target/coverage。保留R4 Qmean并
+  按冻结合同完成P2V fresh transfer；未来只有在真实candidate trajectory set存在时才可新开set-level aggregation；
+- claim impact：无smooth-tail、CVaR、planner或safety claim；R4 prediction-object positive不受影响。
+
+下一可用编号：`V65-F13`。
