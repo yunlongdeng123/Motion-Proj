@@ -1,0 +1,35 @@
+schema_version: worldsim_v65.p1r6_smooth_tail_visited_state.v1
+task_id: WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01
+hypothesis_id: WS-V65-H-P1R6-001
+seed: 0
+claim_boundary: legacy train-only differentiable trajectory-level risk-aggregation diagnostic; no V6.5 selection, calibration, planning, or safety claim
+inputs:
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p1r3_map_context_compact.npz
+  source_task: WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01
+trajectory_contract:
+  future_frame_count: 20
+  horizon_seconds: 2.0
+  visited_corridor_radius_m: 1.5
+  minimum_visited_points_per_unit: 16
+aggregators:
+  baseline: mean_q0_over_visited_states
+  candidate: softmax_weighted_q0_over_visited_states
+  softmax_temperature_probability_units: 0.10
+evaluation:
+  matched_safe_coverage: 0.40
+  target: visited_hidden_free_fraction
+  unsafe_unit_definition: visited_hidden_free_count_greater_than_zero
+incremental_gates:
+  minimum_selected_cost_reduction_vs_mean: 0.10
+  minimum_unsafe_auroc_gain: 0.0
+  maximum_spearman_regression: 0.02
+  require_scene_direction_support: true
+locks:
+  legacy_train_only: true
+  formal_v65_selection_read: false
+  single_candidate_temperature: true
+  parameter_sweep: false
+  learned_head: false
+  actor_rescue: false
+  change_frozen_p2v_candidate: false
+  add_hash_checksum_fingerprint: false

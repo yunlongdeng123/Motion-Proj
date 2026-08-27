@@ -2186,3 +2186,14 @@ Spearman=`0.488696`。
 False-safe gap有9/24 positives；Dplus monitor Spearman=`-0.054402`、AUROC=`0.522222`，selected gap
 `0.033120→0.057430`（`+73.40%`），0/3 gates。登记`V65-F11`，关闭Actor trajectory monitor，不做阈值、
 learned head或聚合 rescue。该GPU read与P2V archive/preprocess I/O实际重叠；当前active task转为P2V input pipeline。
+
+### R6 smooth-tail visited-state aggregation freeze
+
+P2V公开tar顺序扫描继续占用I/O时，使用既有compact cache启动独立GPU diagnostic，避免3090完全等待。Active
+hypothesis=`WS-V65-H-P1R6-001`：在R4已成立的trajectory-level visited-state预测对象上，对比保留的
+`Qmean`与唯一固定的可微`Qsoft-tail=sum softmax(q0/0.10)·q0`。目标、2秒/1.5m trajectory footprint、
+minimum 16 points与nested eval均不变。
+
+单candidate temperature、无learned head/threshold/seed/sweep；必须同时实现selected-40% cost相对Qmean降低
+`>=10%`、unsafe AUROC不降、Spearman回退不超过`0.02`且scene lower>higher。该legacy train-only read不会
+修改已冻结的P2V Qagg candidate；失败即关闭smooth-tail，不做温度救援。

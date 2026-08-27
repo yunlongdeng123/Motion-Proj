@@ -5188,3 +5188,13 @@ Canonical：`run://worldsim_v65/WS-V65-P1R5-ACTOR-FALSE-SAFE-01/20260827T123100Z
 
 Eval=`24 trajectories/302 Actor tokens`，positive gaps=`9`。forecast `1/2`、monitor `0/3` gates；verdict=
 `no_clear_train_only_actor_trajectory_forecast`。wall=`0.394s`、peak GPU=`0.00915GiB`；运行与P2V I/O重叠。
+
+### WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01 preregistration
+
+- input/split：复用R4 compact cache和legacy nested eval；formal V6.5 selection read=false；
+- prediction object：未来2秒、1.5m Ego footprint的visited hidden-FREE fraction；至少16个samples；
+- baseline：`Qmean=mean(q0 | visited by τ)`；
+- candidate：唯一`Qsoft-tail=sum softmax(q0/0.10)·q0`，temperature固定为概率单位0.10；
+- gates：selected-40% cost相对Qmean降低`>=10%`、unsafe AUROC gain `>=0`、Spearman delta `>=-0.02`、
+  scene lower>higher；
+- no learned head、temperature/seed/horizon/corridor/threshold sweep；不改变已冻结P2V candidate。
