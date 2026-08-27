@@ -2268,3 +2268,18 @@ gate输出和compact cache落盘前触发`V65-F15`。冻结q0 network本身返�
 按PyTorch output shape合同，修复仅为`network(batch).reshape(-1)`，同时兼容`[B]`和`[B,1]`且不改变数值、模型、
 candidate、sampling、target或gate。r1如实计为formal input/target partial exposure（1 unit），但无科学metric disclosed；
 compact cache不存在。用新run-id r2完成同一冻结read，不借故重选或调参。
+
+### P2V fresh终态：trajectory visited-world-state prediction object成立
+
+Canonical：`run://worldsim_v65/WS-V65-P2V-VISITED-STATE-TRANSFER-01/20260827T142000Z__fresh-visited-transfer-s0-r2`。
+72 source units中9个按冻结minimum 16 visited samples排除，63 eligible units含8,862 visited points、1,055 hidden-
+FREE outcomes与57 unsafe trajectories。
+
+Qmean-target Spearman=`0.633963`（gate `>=0.60`），unsafe AUROC/AUPRC=`0.994152/0.999390`，lowest-risk
+40% actual cost `0.102965→0.0522594`（降低`49.25%`，gate `>=40%`），scene lower/equal/higher=`5/1/0`。
+4/4 gates全过，verdict=`supported_fresh_trajectory_visited_state_qagg`。
+
+这把R4 legacy signal提升为fresh representation-selection支持：预测对象是给定Ego τ后未来2秒实际访问world states的
+可靠性，而非任意voxel是否正确。claim不扩张到Actor、learned risk、admission、calibration、planning或safety。
+r2 wall=`9.175s`、peak GPU=`0.0236GiB`、RSS=`1.143GiB`。下一条件分支是为R7单调calibrator选择独立unused
+calibration cohort；不得在本P2V cohort上追加事后calibration read。

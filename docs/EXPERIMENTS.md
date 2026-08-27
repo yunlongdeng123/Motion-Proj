@@ -5284,3 +5284,21 @@ formal P2V read计数。
 - error：frozen q0 network output=`[B]`，固定`.squeeze(1)`越界；
 - repair：仅改为`.reshape(-1)`，对`[B]`/`[B,1]`统一展平；无数值/科学合同变化；
 - recovery：r2使用同一config/inputs/seed/sampling/candidate/gates；r1 status标记failed，不覆盖现场。
+
+### WS-V65-P2V-VISITED-STATE-TRANSFER-01 formal result
+
+Canonical：`run://worldsim_v65/WS-V65-P2V-VISITED-STATE-TRANSFER-01/20260827T142000Z__fresh-visited-transfer-s0-r2`。
+
+| metric | value | gate |
+| --- | ---: | --- |
+| source / eligible / excluded units | 72 / 63 / 9 | minimum footprint frozen |
+| visited points / hidden-FREE | 8,862 / 1,055 | descriptive |
+| unsafe trajectories | 57/63 | two-class supported |
+| Qmean-target Spearman | 0.633963 | pass (`>=0.60`) |
+| unsafe AUROC / AUPRC | 0.994152 / 0.999390 | pass (`AUROC>=0.85`) |
+| all / selected-40% actual cost | 0.102965 / 0.0522594 | -49.25%，pass |
+| scene lower/equal/higher | 5/1/0 | pass (`lower>=5`) |
+
+4/4 gates，verdict=`supported_fresh_trajectory_visited_state_qagg`。wall=`9.175s`、peak GPU=`0.0236GiB`、
+peak RSS=`1.143GiB`、cache reused=false。formal V6.5 selection read=true。r1 V65-F15 partial input exposure与r2 narrow
+shape recovery均保留；未运行R4 head、R6 tail或R7 calibrator。
