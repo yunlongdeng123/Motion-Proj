@@ -5074,3 +5074,17 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：r1不产生科学结论；fresh input已部分暴露，必须在论文/ledger披露该engineering recovery。
 
 下一可用编号：`V65-F16`。
+
+### V65-F16 — P3C canonical evidence命令遗漏required processed-root
+
+- attempted entry：`WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1`命令；
+- symptom：Python `argparse` 报`--processed-root` required并在解析阶段退出；
+- exposure audit：未创建run directory，未读processed input、evidence或quality，未产生metric/gate/verdict；
+- root cause：旧query-dataset runner将processed root作为required CLI option，手动启动只传入config与run-dir；
+- literature/open-source response：Python官方`argparse`文档说明`required=True`选项缺失时`parse_args()`必须先报错，
+  因此该入口不构成科学读取；
+- resolution：仅补充冻结的standard processed root，同一canonical run-id成功产生72 units；不改scene、reuse、
+  seed、target或gate；
+- claim impact：无科学暴露、无方法选择信息；P3C仍保持formal calibration read=false。
+
+下一可用编号：`V65-F17`。

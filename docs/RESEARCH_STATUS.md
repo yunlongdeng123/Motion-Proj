@@ -2300,3 +2300,20 @@ indices完全一致。该read不产生conformal/admission/planning/safety claim�
 P3C evaluator已实现为独立入口：复用P2V已修复的streamed materializer，只物化Qmean与trajectory-level target；
 随后应用冻结两参数map并同时报告continuous error、5-bin calibration、scene MSE、unsafe ranking和selected-set
 identity。无optimizer/refit代码，formal read前仅执行syntax/config解析。
+
+### P3C inputs终态：三shard流水线完成，formal calibration尚未读
+
+Canonical preparation=`run://worldsim_v65/WS-V65-P3C-CALIBRATION-PREPARATION-01/20260827T145000Z__calibration-prep-s0-r1`。
+只扫描shards `1/5/10`就找到冻结6 scenes所需的10,689个public-tar members，wall=`1901.12s`；不需要全十shard
+fallback。已完成shard上的scene立即预处理，父进程最终复用6/6 processed scenes并安全清除temporary raw，
+quality read=false。
+
+6个native scene runs全部passed，每scene 12 targets，wall=`77.05/71.65/51.94/50.90/47.34/50.17s`；peak
+GPU最大=`4.1314GiB`。Aggregate=`run://worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1`，
+含72 targets、`3,317,884,541` bytes，inference repeated=false，且target evidence/calibration/confirmation/test read全为false。
+
+Canonical evidence=`run://worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1`：
+72 units、`66,004,741` bytes、role overlap=0、wall=`33.85s`，其中前48 units由partial run hardlink复用。首次canonical
+CLI在argparse阶段因遗漏必填`--processed-root`被拒绝（`V65-F16`），未创建run dir、未读input/quality；补入
+配置已冻结的standard processed root后成功，科学合同未变。下一步是唯一一次frozen R7 map的independent
+calibration-transfer read。

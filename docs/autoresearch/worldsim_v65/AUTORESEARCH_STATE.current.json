@@ -1,12 +1,12 @@
 {
   "version": "worldsim_v65",
-  "status": "p1r5_rejected_p2v_fresh_input_pipeline_active",
+  "status": "p3c_inputs_ready_formal_calibration_pending",
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
-  "active_task": "WS-V65-P3C-CALIBRATION-PREPARATION-01",
+  "active_task": "WS-V65-P3C-MONOTONE-CALIBRATION-TRANSFER-01",
   "active_hypothesis": "WS-V65-H-P3C-001",
-  "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED", "P1R4_VISITED_STATE_QAGG_SUPPORTED_TRAIN_ONLY"],
+  "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED", "P1R4_VISITED_STATE_QAGG_SUPPORTED_TRAIN_ONLY", "P1R5_ACTOR_FALSE_SAFE_REJECTED", "P1R6_SMOOTH_TAIL_REJECTED", "P1R7_MONOTONE_CALIBRATION_SUPPORTED_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_SUPPORTED", "P3C_INPUT_PIPELINE"],
   "unlocked_stages": ["P1R5_ACTOR_FALSE_SAFE_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_TRANSFER", "P3C_INDEPENDENT_MONOTONE_CALIBRATION_TRANSFER"],
   "resource_contract": "single_rtx3090_24gb",
   "disk_free_gib_at_start": 120,
@@ -18,7 +18,7 @@
     "confirmation": false,
     "test": false
   },
-  "last_failure_id": "V65-F11",
+  "last_failure_id": "V65-F16",
   "constraints": {
     "hash_checksum_fingerprint": false,
     "excessive_validation_gating": false,
@@ -197,5 +197,18 @@
   "p3c_calibrator_slope_bias": [1.703977108001709, -0.4792216420173645],
   "p3c_formal_calibration_read": false,
   "p3c_evaluator_implemented": true,
-  "next_action": "continue_p3c_three_shard_preparation_and_scene_ready_native_then_run_frozen_calibrator_once"
+  "p3c_inputs_ready": true,
+  "p3c_preparation_run": "run://worldsim_v65/WS-V65-P3C-CALIBRATION-PREPARATION-01/20260827T145000Z__calibration-prep-s0-r1",
+  "p3c_preparation_wall_seconds": 1901.1226083841175,
+  "p3c_extracted_member_count": 10689,
+  "p3c_full_shard_fallback_used": false,
+  "p3c_native_aggregate_run": "run://worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1",
+  "p3c_native_target_count": 72,
+  "p3c_native_output_bytes": 3317884541,
+  "p3c_native_maximum_worker_peak_gpu_memory_gib": 4.13140344619751,
+  "p3c_evidence_run": "run://worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1",
+  "p3c_evidence_unit_count": 72,
+  "p3c_evidence_reused_unit_count": 48,
+  "p3c_evidence_cli_failure": "V65-F16_missing_required_processed_root_before_run_creation_or_input_read",
+  "next_action": "run_the_single_frozen_p3c_monotone_calibration_transfer_read"
 }

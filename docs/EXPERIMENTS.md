@@ -5317,3 +5317,25 @@ shape recovery均保留；未运行R4 head、R6 tail或R7 calibrator。
 Implementation：`run_worldsim_v65_p3c_monotone_calibration_transfer.py`只加载冻结参数并复用P2V materializer；
 输出raw/calibrated continuous metrics、unsafe ranking、5-bin calibration、scene MSE与exact selected-set。没有训练器、
 optimizer或可调temperature。
+
+### WS-V65-P3C input pipeline result
+
+| artifact | result |
+| --- | --- |
+| preparation | 6 scenes；shards 1/5/10；10,689 extracted members；1901.12s；full-scan fallback=false；temporary raw removed；quality=false |
+| native scene runs | 6/6 passed；12 targets/scene；47.34–77.05s/scene；peak GPU 4.1314GiB |
+| native aggregate | 72 targets；3,317,884,541 bytes；inference repeated=false |
+| evidence partial | 48 units；58.01s；与later preprocess/native重叠 |
+| evidence canonical | 72 units；48 reused；33.85s；66,004,741 bytes；source-role overlap=0 |
+
+Canonical aggregate与evidence paths与`p3c_monotone_calibration_transfer_v1.yaml`冻结值一致。原始规划的same-cohort
+full-ten-shard fallback未触发；native/evidence完成前没有读Qmean-target quality。
+
+### WS-V65-P3C-CALIBRATION-EVIDENCE-01 CLI entry / V65-F16
+
+- attempted command在Python `argparse` 阶段因缺少必填`--processed-root`退出；
+- exposure：0 run directory、0 input/evidence/quality read、0 metric/gate；
+- root cause：手动canonical启动时未将配置中已冻结的standard processed root显式传入旧query-dataset CLI；
+- recovery：仅补`/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval`，run-id、scene、unit、
+  reuse、seed及科学合同不变；
+- validation：按Python官方`argparse required=True`行为，parser拒绝发生在业务代码之前；成功canonical run是唯一实际读取。
