@@ -5154,3 +5154,19 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - 若直接Qmean无action ranking，立即关闭action family，不训练critic补救。
 
 下一可用编号仍为：`V65-F18`。
+
+### V65-F18 — P10X scene-ready feeder首次入口缺少仓库级Python import path
+
+- attempted entry：从仓库根目录直接执行`python scripts/launch_worldsim_v65_scene_ready_preprocess.py --help`；
+- symptom：入口在导入`from scripts.prepare_dr_v2_drivestudio_scene import ...`时抛
+  `ModuleNotFoundError: No module named 'scripts'`；
+- exposure audit：发生在参数解析、run创建、scene/member/processed/native/evidence/quality读取之前；正在运行的三个archive
+  scan children未停止，formal confirmation read仍为false；
+- root cause：Python直接执行文件时将脚本目录而非仓库根目录置于`sys.path[0]`；仓库内绝对`from scripts...`
+  import需要显式仓库搜索路径；
+- literature/open-source response：Python官方`sys.path`与命令行文档说明`python script.py`首先加入脚本所在目录，
+  `PYTHONPATH`用于扩展module search path；
+- resolution：不改代码和科学合同，只对该进程设置`PYTHONPATH=.`；scene-ready preprocess与native watcher均已正常运行；
+- claim impact：纯入口环境失败，0科学暴露，不触发第二cohort或任何gate/threshold修改。
+
+下一可用编号：`V65-F19`。

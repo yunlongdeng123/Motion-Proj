@@ -2399,3 +2399,12 @@ R7两参数单调map（no refit）、以及P10V固定12-action lattice。剩余5
 为避免过度gating，只保留6个核心门：nominal route Spearman `.60`、冻结map MSE reduction `.50`、action
 Spearman `.55`、unsafe AUROC `.80`、pairwise concordance `.65`、selected action cost reduction `.25`。只允许
 一次combined quality read；失败即关闭候选，不建第二个confirmation cohort。
+
+P10X combined evaluator已实现并通过远端Python语法检查。实现只调用一次P10V compact materialization：固定
+action index 7作为nominal route，在同一批冻结q0/visited-state arrays上同时计算raw route ranking、R7 frozen
+monotone MSE/calibration与12-action ranking/selection；不增加head、refit、critic或额外门。正式quality仍未读。
+
+Preparation=`run://worldsim_v65/WS-V65-P10X-CONFIRMATION-PREPARATION-01/20260828T010000Z__confirmation-prep-s0-r1`
+已启动shards 3/7/8三路并行扫描；父协调器被暂停而三个archive workers继续I/O，scene-ready preprocess与native
+GPU watcher已经并行等待原子member交付。首次feeder直接脚本调用因仓库根目录未进入`sys.path`而在import阶段退出，
+记录为`V65-F18`；改用进程级`PYTHONPATH=.`后两个watcher正常运行，未创建科学run、未读取quality。

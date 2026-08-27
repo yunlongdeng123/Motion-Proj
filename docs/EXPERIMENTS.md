@@ -5435,3 +5435,12 @@ wall=`8.459s`、peak GPU=`0.03917GiB`、peak RSS=`1.001GiB`。
   pairwise `.65`、selected-cost reduction `.25`；
 - descriptive only：5-bin calibration error、route/action AUPRC、scene lower/equal/higher、evaluable cases；
 - locks：one read, no fit/refit/head/critic/lattice/threshold sweep/second confirmation/hash/checksum/fingerprint。
+
+Implementation：`run_worldsim_v65_p10x_combined_confirmation.py`复用P10V一次compact materialization；action index 7
+给出nominal route，冻结R7 slope/bias只做确定性logit-map，action侧复用既定pairwise与within-case selection。
+仅保留上列6个核心gates，其余scene/case/calibration数值只描述。远端`py_compile`通过，formal confirmation read=false。
+
+Input pipeline live：preparation run=`run://worldsim_v65/WS-V65-P10X-CONFIRMATION-PREPARATION-01/
+20260828T010000Z__confirmation-prep-s0-r1`，shards 3/7/8并行扫描；父协调器暂停、archive children继续，scene-ready
+preprocess和native watcher已用`PYTHONPATH=.`同时挂起等待原子member。首次无`PYTHONPATH`的feeder入口在import前失败，
+记为`V65-F18`；0 scene/native/evidence/quality read，不改变冻结合同。
