@@ -4935,3 +4935,10 @@ Canonical：`run://worldsim_v65/WS-V65-P1R-TASK-ALIGNED-RISK-01/20260827T075500Z
 Within-unit shuffled query 的 fixed-route density=`0.00299581`，等于 q0；真实 query 改善不是简单的额外
 capacity。四 gate 全过，wall=`12.47s`、peak GPU=`0.137GiB`。结论只为
 `positive_train_only_task_risk_signal`，P2 必须在 fresh scenes 重新检验，不解锁 attention。
+
+### WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01 preregistration
+
+Frozen fresh cohort=`scene-0520/0781/0800/0996/0443/0106`，12 targets/scene，72 cases。唯一 arms：
+`B0=frozen q0`、`T0=frozen P1R monotone task risk`。不 refit、不引入 actor/attention/admission；primary 与
+stop rule 详见 `docs/autoresearch/worldsim_v65/P2_FRESH_COHORT_FREEZE.md`。准备阶段禁止 model score 和 target
+quality read；native/evidence 完成后只执行一次 P2 formal selection。

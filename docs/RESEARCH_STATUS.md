@@ -1971,3 +1971,8 @@ lower/equal/higher=`1/15/0`，non-route emission risk relative change=`-0.00665%
 `0.00299581`。四个 gate 全过，verdict=`positive_train_only_task_risk_signal`。这是弱但无风险搬家的机制信号，
 只解锁 fresh P2 T0；当前 active task=`WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01` 的 metadata-only cohort
 freeze，尚未读取 formal selection。
+
+P2 fresh representation-selection cohort 已在 quality read 前冻结：`scene-0520/0781/0800/0996/0443/0106`
+（72 cases）。前三个只读复用现有 processed scene，后三个从公共 tar restricted extraction；它们均未出现在
+V6.1–V6.4 method configs。P2 只允许 frozen q0 与 frozen P1R task risk 一次正式读取，严格使用计划中的
+`>=10%` fixed-route reduction、`>=5/6` strict scene support 与 `<=5%` scene/non-route regression gate。

@@ -4859,3 +4859,6 @@ P1 stage preregistration 与实现落盘前审计：没有新增 failure；尚�
 
 P1R canonical run 完成且四个预注册 gate 全过，没有新增 failure。该结果只减少 1 个 sampled route conflict，
 已按弱 train-only signal 记录，不以小 denominator 夸大结论。下一可用编号仍为 `V65-F02`。
+
+P2 metadata-only cohort freeze、preparation/native/evidence/evaluator 入口落盘前没有新增 failure；formal P2 quality
+尚未读取。下一可用编号仍为 `V65-F02`。

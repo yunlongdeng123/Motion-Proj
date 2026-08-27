@@ -1,0 +1,18 @@
+schema_version: worldsim_v65.p2_fresh_preparation.v1
+task_id: WS-V65-P2-FRESH-PREPARATION-01
+scenes:
+  - {name: scene-0996, processed_index: 754}
+  - {name: scene-0443, processed_index: 357}
+  - {name: scene-0106, processed_index: 88}
+preparation:
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  public_tar_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  raw_reuse_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  temporary_raw_root: /root/autodl-tmp/tmp/worldsim_v65_p2_raw_batch
+  member_shard_index_path: /root/autodl-tmp/tmp/worldsim_v65_p2_member_shards.json
+  processor_target_dir: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  archive_workers: 10
+  preprocess_workers: 2
+  preprocess_timeout_seconds: 3600
+locks: {quality_read: false, add_hash_checksum_fingerprint: false}
