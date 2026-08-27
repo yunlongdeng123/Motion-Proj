@@ -2075,3 +2075,20 @@ IO，也不触碰V6.5 admission selection。`WS-V65-H-P4T-001` 已冻结：V6.4 
 连续可观测risk/context统计预测`[0.30,0.55]`内的per-case coverage，inference不读scene/stratum/hidden truth。
 训练目标仅由train cases的最大安全前缀产生；单个`32→16` MLP、seed=0、无sweep。只有held-out Tier-L上相对
 M1达到预注册增量且不增加failure，才准备fresh D-Selection-Admission；否则按Stop 4关闭admission。
+
+### P4T learned admission 终态
+
+Canonical：
+
+```text
+run://worldsim_v65/WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01/20260827T110000Z__learned-admission-s0-r1
+```
+
+G0 mean coverage=`0.541329`，相对M1 `0.474961`提升`+0.066368`，7/8 scenes有非负utility；但新增1个case
+failure，pooled fixed-route density `0.00181015→0.00196987`（`+8.82%`），worst-10% fixed-route CVaR
+`0.0158854→0.0170938`（恶化`7.61%`）。新增failure的预测coverage=`0.521873`，超过该case oracle-safe
+`0.510822`，hidden-FREE conflict `0.047814→0.050764`。不能因只越界`0.000764`而事后收紧coverage。
+
+四gate只过coverage/scene-support，verdict=`no_clear_train_only_learned_admission`，登记`V65-F07`。按Stop 4关闭
+learned admission；不准备fresh admission cohort，不解锁P5 allocator/OT或CRC calibration。当前回到P1尚未执行的
+R3 map/context family做只读可行性审计；它必须有不同监督语义与未消费的fresh selection方案，否则不创建run。

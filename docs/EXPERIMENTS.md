@@ -5068,3 +5068,20 @@ selected cost 都更高，故 pooled 10.37% 改善不能作为稳健增量。wal
 - primary：coverage uplift `>=0.05`或fixed-route worst-tail reduction `>=10%`，同时case failures不增加、route
   pooled risk回退`<=5%`、scene support `>=5/8`；
 - no sweep/no fresh selection/no calibration/confirmation/test。
+
+### WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01/20260827T110000Z__learned-admission-s0-r1`。
+
+| metric | M1 fixed lookup | G0 continuous context | delta |
+| --- | ---: | ---: | ---: |
+| mean coverage | 0.474961 | 0.541329 | +0.066368 |
+| case failures | 0/96 | 1/96 | +1，fail |
+| pooled fixed-route density | 0.00181015 | 0.00196987 | +8.82%，fail |
+| worst-10% fixed-route CVaR | 0.0158854 | 0.0170938 | +7.61% |
+| scene support | - | 7/8 | pass |
+
+Prediction-vs-oracle coverage MSE=`0.0001690`，shuffle=`0.0001909`，说明context有弱信号但不足以保持risk约束。
+新增failure由predicted coverage `0.521873`越过oracle-safe `0.510822`产生。四gate `2/4`，negative。wall=
+`22.66s`、peak GPU=`0.0542GiB`、peak RSS=`0.9975GiB`、compact cache=`16MiB`。不做coverage upper bound、
+loss、seed或capacity rescue；formal V6.5 admission selection read=false。

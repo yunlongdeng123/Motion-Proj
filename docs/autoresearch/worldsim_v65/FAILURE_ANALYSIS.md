@@ -59,6 +59,19 @@ capacity 不变。
 - DTPP：https://github.com/MCZhi/DTPP
 - DiffStack：https://proceedings.mlr.press/v205/karkus23a.html
 
+## V65-F07 — learned coverage is not risk-controlled admission
+
+G0 learned useful average capacity but over-predicted one case by about 0.011 coverage and crossed the frozen 0.05
+hidden-FREE boundary. It also moved fixed-route risk in the wrong direction. Conformal Risk Control chooses a monotone risk
+parameter on a separate calibration set; applying it after seeing this held-out miss would be a new calibration experiment,
+not a correction of the same result. SOFT top-k only makes allocation differentiable and does not create missing risk signal;
+the plan therefore correctly keeps it conditional on P4 success. GroupDRO is likewise not justified because pooled G0 itself
+failed before any isolated worst-group failure.
+
+- Conformal Risk Control：https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html
+- SOFT top-k：https://papers.neurips.cc/paper_files/paper/2020/hash/ec24a54d62ce57ba93a531b460fa8d18-Abstract.html
+- GroupDRO official code：https://github.com/kohpangwei/group_DRO
+
 ## V65-F05 — shared materializer leaked a binary-only config dependency
 
 P2C first entry failed before evidence I/O or training because the shared P2R materializer indexed

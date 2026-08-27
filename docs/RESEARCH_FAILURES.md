@@ -4942,3 +4942,18 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无 Actor-time method/planning/safety claim；formal V6.5 selection read 仍为 false。
 
 下一可用编号：`V65-F07`。
+
+### V65-F07 — continuous learned admission 用coverage换来了新的case/route风险
+
+- run：`run://worldsim_v65/WS-V65-P4T-LEARNED-ADMISSION-TRAIN-ONLY-01/20260827T110000Z__learned-admission-s0-r1`；
+- symptom：coverage绝对提升`6.64pp`且scene support=`7/8`，但case failures `0→1`、pooled fixed-route density
+  `+8.82%`、worst-tail `+7.61%`；
+- root cause：连续context预测在一个night case给出`0.521873` coverage，高于其oracle-safe `0.510822`，把
+  hidden-FREE conflict从`0.047814`推到`0.050764`；弱coverage回归精度不能替代显式held-out risk control；
+- literature response：CRC需要独立calibration选择风险参数；SOFT top-k是P5 allocator且只在P4有效后解锁；
+  GroupDRO不能修复pooled selector自身新增failure。三者都不能在观察本结果后作为无代价后处理；
+- resolution：`WS-V65-H-P4T-001` rejected，关闭learned admission，不调coverage上限/loss/seed/capacity，不准备
+  fresh admission cohort，不解锁P5/CRC；
+- claim impact：保留V6.4 M1；没有V6.5 differentiable-admission、calibration、planning或safety claim。
+
+下一可用编号：`V65-F08`。
