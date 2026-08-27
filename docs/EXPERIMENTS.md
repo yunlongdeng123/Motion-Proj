@@ -4942,3 +4942,24 @@ Frozen fresh cohort=`scene-0520/0781/0800/0996/0443/0106`，12 targets/scene，7
 `B0=frozen q0`、`T0=frozen P1R monotone task risk`。不 refit、不引入 actor/attention/admission；primary 与
 stop rule 详见 `docs/autoresearch/worldsim_v65/P2_FRESH_COHORT_FREEZE.md`。准备阶段禁止 model score 和 target
 quality read；native/evidence 完成后只执行一次 P2 formal selection。
+
+### WS-V65-P2 pre-read capability recovery（V65-F02）
+
+首版 frozen cohort 的 native attempts：
+
+```text
+run://worldsim_v65/WS-V65-P2-FRESH-PREPARATION-01/20260827T081500Z__fresh-prep-s0-r1
+run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0520-s0-r1
+run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0781-s0-r1
+run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0800-s0-r1
+```
+
+三个 native run 在 `_load_scene_infos` 以 scene-key `KeyError` 失败，没有生成 sidecar 或读取 quality；`0106`
+经同一 capability audit 判定不可用。最终 pre-read cohort 改为 `0996/0443/0002/0043/0023/0072`。这六个 scene
+同时满足：冻结 temporal-info key 可用、V6.1–V6.4 config 未使用、只按 description/context metadata 选取。
+正式 denominator 仍是 6×12=72，P2 hypothesis/gates 不变。preparation recovery 将复用 r1 遗留的 2.5GiB
+partial raw，避免重复 I/O。
+
+迁移依据：BEVFormer 官方 dataset preparation 文档
+https://github.com/fundamentalvision/BEVFormer/blob/master/docs/prepare_dataset.md 。完整 `create_data.py` 重建被保留为
+未来数据管线任务；本次不改变冻结 IR-WM 数据 schema。

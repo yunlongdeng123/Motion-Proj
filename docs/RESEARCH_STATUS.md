@@ -1976,3 +1976,15 @@ P2 fresh representation-selection cohort 已在 quality read 前冻结：`scene-
 （72 cases）。前三个只读复用现有 processed scene，后三个从公共 tar restricted extraction；它们均未出现在
 V6.1–V6.4 method configs。P2 只允许 frozen q0 与 frozen P1R task risk 一次正式读取，严格使用计划中的
 `>=10%` fixed-route reduction、`>=5/6` strict scene support 与 `<=5%` scene/non-route regression gate。
+
+### P2 pre-read capability recovery
+
+首版 cohort 的 `scene-0520/0781/0800/0106` 不在冻结 IR-WM temporal-info pickle 的 700 keys 中；三个并发
+native workers 在任何 sidecar/model-score/quality 输出前以 `KeyError` 退出，preparation r1 也在 quality read 前
+中止。该事件登记为 `V65-F02`，不构成 P2 负结果，也不消耗唯一正式 read。
+
+卡点发生后已核对官方 BEVFormer 数据准备流程。全量重建 temporal infos 需要完整 nuScenes/CAN bus 管线且可能改变
+冻结后端 schema，因此采用不读取质量的 capability-only 恢复：最终 fresh cohort 为
+`scene-0996/0443/0002/0043/0023/0072`，全部是冻结 pickle 的直接 key，且未出现在 V6.1–V6.4 method configs。
+72-case denominator、targets、arms、gate 与 seed 均不变。现有 2.5GiB partial raw 中 411 个非空成员将直接复用；
+下一步是 recovery preparation r2，随后运行 2-worker native sidecar、evidence 与唯一一次 P2 formal read。

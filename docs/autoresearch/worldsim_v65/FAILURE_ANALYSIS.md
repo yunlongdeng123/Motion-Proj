@@ -15,3 +15,15 @@ risk，不把两者混成一个需要同时提升 global voxel AUROC 的分数�
 
 若 P1R 仍无 fixed-opportunity 增量，则关闭纯 trajectory task-risk family，转向 Actor×time/query outcome，而不再
 修改同一 residual。
+
+## V65-F02 — frozen temporal-info capability mismatch before quality read
+
+首版 fresh cohort 依据 scene description、既有 processed availability 与旧 config exposure 冻结，但冻结 IR-WM
+worker 会直接索引 `nuscenes_temporal_infos_train.pkl["infos"][scene]`。该 pickle 只有 700 个 scene keys；
+`0520/0781/0800/0106` 缺失，因此失败发生于官方模型输入构造前，而非模型表现阶段。
+
+官方 BEVFormer 的标准方案是执行 nuScenes `tools/create_data.py` 生成 temporal train/val infos：
+https://github.com/fundamentalvision/BEVFormer/blob/master/docs/prepare_dataset.md 。本项目当前采用更小的迁移边界：
+不重建 infos，不改变 CAN bus/schema/checkpoint contract，只把 cohort 换成冻结 pickle 已支持且旧 configs 未使用的
+`0996/0443/0002/0043/0023/0072`。该替换只读 capability metadata，发生在任何 P2 quality read 前；因此不形成
+selection bias，也不改变 P2 gate。后续 cohort freeze 必须在 metadata selection 时同时审计 backend key availability。

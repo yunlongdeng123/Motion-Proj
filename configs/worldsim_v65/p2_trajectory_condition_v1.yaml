@@ -12,12 +12,12 @@ inputs:
   task_model_run: worldsim_v65/WS-V65-P1R-TASK-ALIGNED-RISK-01/20260827T075500Z__task-risk-s0-r1
   task_model_relative_path: monotone_task_risk.pt
 scenes:
-  - {name: scene-0520, processed_index: 410, context: static_pedestrian}
-  - {name: scene-0781, processed_index: 604, context: bus_pedestrian}
-  - {name: scene-0800, processed_index: 620, context: cone_bus_intersection}
   - {name: scene-0996, processed_index: 754, context: night_bus_cyclist_pedestrian}
   - {name: scene-0443, processed_index: 357, context: rain_overtake_pedestrian}
-  - {name: scene-0106, processed_index: 88, context: construction_intersection}
+  - {name: scene-0002, processed_index: 1, context: intersection_pedestrian_waiting_vehicle_motorcycle}
+  - {name: scene-0043, processed_index: 40, context: busy_intersection_oncoming_construction}
+  - {name: scene-0023, processed_index: 22, context: parked_car_bus_turn_motorcycle}
+  - {name: scene-0072, processed_index: 69, context: intersection_running_pedestrian}
 native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
 trajectory: {future_frame_count: 20}
 evaluation: {matched_total_coverage: 0.40, route_corridor_radius_m: 1.5, tail_fraction: 0.10}
@@ -27,4 +27,4 @@ gates:
   maximum_scene_relative_risk_increase: 0.05
   maximum_nonroute_relative_risk_increase: 0.05
 locks: {model_refit: false, attention: false, actor: false, threshold_sweep: false, second_selection_read: false, add_hash_checksum_fingerprint: false}
-failure_ledger_refs: [V65-F01]
+failure_ledger_refs: [V65-F01, V65-F02]

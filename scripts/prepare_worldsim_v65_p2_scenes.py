@@ -1,4 +1,4 @@
-"""Prepare only the three unprocessed scenes in the frozen V6.5 P2 cohort."""
+"""Prepare the capability-eligible scenes in the frozen V6.5 P2 cohort."""
 
 from __future__ import annotations
 
@@ -36,7 +36,9 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     expected_parent = Path("/root/autodl-tmp/tmp").resolve()
     if temporary_root.parent != expected_parent or temporary_root.name != "worldsim_v65_p2_raw_batch":
         raise RuntimeError(f"unexpected temporary root: {temporary_root}")
-    if temporary_root.exists():
+    reuse_partial_raw = bool(prep.get("reuse_partial_raw", False))
+    partial_raw_reused = temporary_root.exists()
+    if partial_raw_reused and not reuse_partial_raw:
         raise FileExistsError(temporary_root)
     metadata_root = Path(prep["metadata_root"])
     metadata = metadata_root / "v1.0-trainval"
@@ -45,7 +47,7 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
     pending = [scene for scene in scenes if not (processed_root / f"{int(scene['processed_index']):03d}").is_dir()]
     payloads = collect_required_many(metadata, [str(scene["name"]) for scene in pending])
     required = {row["filename"] for payload in payloads.values() for row in payload["sample_data"]}
-    temporary_root.mkdir(parents=True)
+    temporary_root.mkdir(parents=True, exist_ok=reuse_partial_raw)
     _link_static_dataset(metadata_root, temporary_root)
     helpers = load_asset_module(repo_root)
     helpers.link_existing_files(Path(prep["raw_reuse_root"]), temporary_root, required)
@@ -91,17 +93,16 @@ def run(config_path: Path, repo_root: Path, run_dir: Path) -> dict[str, object]:
             "wall_seconds": time.monotonic() - scene_started,
         }
 
-    try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=int(prep["preprocess_workers"])) as executor:
-            rows = list(executor.map(preprocess, scenes))
-    finally:
-        if temporary_root.parent == expected_parent and temporary_root.name == "worldsim_v65_p2_raw_batch":
-            shutil.rmtree(temporary_root, ignore_errors=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=int(prep["preprocess_workers"])) as executor:
+        rows = list(executor.map(preprocess, scenes))
+    if temporary_root.parent == expected_parent and temporary_root.name == "worldsim_v65_p2_raw_batch":
+        shutil.rmtree(temporary_root, ignore_errors=True)
     summary = {
         "task_id": config["task_id"],
         "status": "done",
         "scene_count": len(rows),
         "new_scene_count": sum(not row["reused"] for row in rows),
+        "partial_raw_reused": partial_raw_reused,
         "extracted_member_count": len(extracted),
         "temporary_raw_removed_after_success": True,
         "quality_read": False,

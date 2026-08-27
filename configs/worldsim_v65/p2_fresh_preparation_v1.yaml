@@ -3,12 +3,16 @@ task_id: WS-V65-P2-FRESH-PREPARATION-01
 scenes:
   - {name: scene-0996, processed_index: 754}
   - {name: scene-0443, processed_index: 357}
-  - {name: scene-0106, processed_index: 88}
+  - {name: scene-0002, processed_index: 1}
+  - {name: scene-0043, processed_index: 40}
+  - {name: scene-0023, processed_index: 22}
+  - {name: scene-0072, processed_index: 69}
 preparation:
   metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
   public_tar_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
   raw_reuse_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
   temporary_raw_root: /root/autodl-tmp/tmp/worldsim_v65_p2_raw_batch
+  reuse_partial_raw: true
   member_shard_index_path: /root/autodl-tmp/tmp/worldsim_v65_p2_member_shards.json
   processor_target_dir: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed
   processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval

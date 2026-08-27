@@ -4862,3 +4862,20 @@ P1R canonical run 完成且四个预注册 gate 全过，没有新增 failure。
 
 P2 metadata-only cohort freeze、preparation/native/evidence/evaluator 入口落盘前没有新增 failure；formal P2 quality
 尚未读取。下一可用编号仍为 `V65-F02`。
+
+### V65-F02 — fresh scene metadata 选择未覆盖冻结 IR-WM temporal-info capability
+
+- task/runs：preparation r1 与 `scene-0520/0781/0800` 三个 native scene r1；
+- symptom：preparation 全 shard 扫描尚未完成；并发 native workers 在 sidecar、model score 与 quality 生成前均于
+  `payload["infos"][scene]` 触发 `KeyError`；`scene-0106` 经 key audit 同样不可用；
+- root cause：首版 cohort 只审计 V6.1–V6.4 config exposure 与 processed availability，没有检查冻结
+  `nuscenes_temporal_infos_train.pkl` 的 700-key capability boundary；
+- literature/open-source response：官方 BEVFormer 要求通过 `tools/create_data.py nuscenes ...` 生成
+  `nuscenes_infos_temporal_{train,val}.pkl`。当前 research 为避免重新生成全量 infos、CAN bus 依赖与 schema 漂移，
+  采用更窄的项目迁移：只从冻结 pickle 已支持、且未被 v61–v64 使用的 scene 中重选；
+- resolution：formal quality read 仍为 false；首版 cohort 标记为
+  `superseded_pre_read_capability_ineligible`。最终 cohort 冻结为
+  `0996/0443/0002/0043/0023/0072`，保留失败目录和 2.5GiB partial raw，并让 recovery 复用已抽取文件；
+- claim impact：没有 P2 模型或质量结论，`WS-V65-H-P2-001` 保持 active；不消耗唯一正式 P2 read。
+
+下一可用编号：`V65-F03`。

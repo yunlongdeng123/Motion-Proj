@@ -1,6 +1,6 @@
 {
   "version": "worldsim_v65",
-  "status": "active_p2_fresh_cohort_freeze",
+  "status": "active_p2_capability_recovery",
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
@@ -18,7 +18,7 @@
     "confirmation": false,
     "test": false
   },
-  "last_failure_id": "V65-F01",
+  "last_failure_id": "V65-F02",
   "constraints": {
     "hash_checksum_fingerprint": false,
     "excessive_validation_gating": false,
@@ -45,7 +45,14 @@
   "p2_preregistered": true,
   "p2_scene_count": 6,
   "p2_case_count": 72,
-  "p2_scenes": ["scene-0520", "scene-0781", "scene-0800", "scene-0996", "scene-0443", "scene-0106"],
+  "p2_scenes": ["scene-0996", "scene-0443", "scene-0002", "scene-0043", "scene-0023", "scene-0072"],
+  "p2_pre_read_capability_recovery": true,
+  "p2_failed_preparation_run": "run://worldsim_v65/WS-V65-P2-FRESH-PREPARATION-01/20260827T081500Z__fresh-prep-s0-r1",
+  "p2_failed_native_runs": [
+    "run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0520-s0-r1",
+    "run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0781-s0-r1",
+    "run://worldsim_v65/WS-V65-P2-FRESH-NATIVE-SIDECAR-01/20260827T082000Z__native-scene-0800-s0-r1"
+  ],
   "p2_formal_selection_read": false,
-  "next_action": "prepare_three_new_scenes_then_run_native_evidence_and_single_p2_read"
+  "next_action": "reuse_partial_raw_to_prepare_six_capability_eligible_scenes_then_run_native_evidence_and_single_p2_read"
 }

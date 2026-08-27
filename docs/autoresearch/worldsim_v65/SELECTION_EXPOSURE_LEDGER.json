@@ -2,9 +2,13 @@
   "version": "worldsim_v65.selection_exposure.v1",
   "representation_selection": {
     "read": false,
-    "scenes": ["scene-0520", "scene-0781", "scene-0800", "scene-0996", "scene-0443", "scene-0106"],
+    "scenes": ["scene-0996", "scene-0443", "scene-0002", "scene-0043", "scene-0023", "scene-0072"],
     "arms": ["B0_frozen_q0", "T0_frozen_monotone_task_risk"],
-    "maximum_formal_reads": 1
+    "maximum_formal_reads": 1,
+    "superseded_pre_read": {
+      "scenes": ["scene-0520", "scene-0781", "scene-0800", "scene-0996", "scene-0443", "scene-0106"],
+      "reason": "four scenes absent from frozen IR-WM temporal-info keys; no sidecar or quality read"
+    }
   },
   "admission_selection": {"read": false, "scenes": [], "arms": []},
   "calibration": {"read": false, "scenes": []},
