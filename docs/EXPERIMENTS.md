@@ -4996,3 +4996,19 @@ run://worldsim_v65/WS-V65-P2-FRESH-EVIDENCE-01/20260827T091800Z__fresh-evidence-
 
 6 scenes、72 units、70,124,875 bytes，wall=`121.51s`、passed=true、query_count=0。该 CPU/I/O run 与最后
 四个 native GPU workers 的执行窗口重叠。
+
+### WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01/20260827T093900Z__trajectory-selection-s0-r1`。
+
+| metric | q0 | task | gate |
+| --- | ---: | ---: | --- |
+| fixed-route conflicts / eligible | 18 / 6975 | 18 / 6975 | reduction false |
+| pooled density | 0.00258065 | 0.00258065 | 0% |
+| worst-tail CVaR | 0.02935237 | 0.02935237 | no gain |
+| scene lower/equal/higher | - | 0/6/0 | support false |
+| non-route conflicts / selected | 4538 / 350093 | 4542 / 350093 | bound true |
+
+Coverage matched=true、maximum scene regression=true、monotone semantics=true；primary reduction 与 scene
+support=false。Verdict=`rejected_fresh_trajectory_condition`，formal selection read=true。按 Stop 1 的科学含义关闭
+trajectory-only ranking family；不执行 attention、seed/capacity 或 threshold rescue。

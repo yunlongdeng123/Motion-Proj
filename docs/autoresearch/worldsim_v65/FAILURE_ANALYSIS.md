@@ -27,3 +27,21 @@ https://github.com/fundamentalvision/BEVFormer/blob/master/docs/prepare_dataset.
 不重建 infos，不改变 CAN bus/schema/checkpoint contract，只把 cohort 换成冻结 pickle 已支持且旧 configs 未使用的
 `0996/0443/0002/0043/0023/0072`。该替换只读 capability metadata，发生在任何 P2 quality read 前；因此不形成
 selection bias，也不改变 P2 gate。后续 cohort freeze 必须在 metadata selection 时同时审计 backend key availability。
+
+## V65-F03 — fresh task-risk ranking invariance
+
+Fresh P2 在全部 6 scenes 上 lower/equal/higher=`0/6/0`；q0 与 task arm 都选择到 18 个 route conflicts，说明
+P1R 的小幅 legacy gain 没有迁移到固定 40% ranking boundary。monotone semantics 正常、scene regression 为零，
+所以这不是数值异常；task arm 还在 non-route 多发射 4 个 conflicts。trajectory-only residual family 由此关闭。
+
+相关顶会工作给出的结构性替代不是扩大同一 residual：PRECOG（ICCV 2019）做 goal-conditioned multi-agent
+forecasting；M2I（CVPR 2022）显式建 influencer/reactor conditional prediction；GameFormer（ICCV 2023）联合
+ego plan 与多 actor response；VAD（ICCV 2023）使用 vectorized agent motion 作为 instance-level planning
+constraint；Implicit Occupancy Flow（CVPR 2023）让 planner 查询连续时空 occupancy/flow。项目迁移边界因此是
+actor-time/action-outcome 的新 train-only hypothesis；已消费 P2 scenes 不得用于新模型选择。
+
+- PRECOG：https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+- M2I：https://openaccess.thecvf.com/content/CVPR2022/html/Sun_M2I_From_Factored_Marginal_Trajectory_Prediction_to_Interactive_Prediction_CVPR_2022_paper.html
+- GameFormer：https://openaccess.thecvf.com/content/ICCV2023/html/Huang_GameFormer_Game-theoretic_Modeling_and_Learning_of_Transformer-based_Interactive_Prediction_and_ICCV_2023_paper.html
+- VAD：https://openaccess.thecvf.com/content/ICCV2023/html/Jiang_VAD_Vectorized_Scene_Representation_for_Efficient_Autonomous_Driving_ICCV_2023_paper.html
+- Implicit Occupancy Flow：https://openaccess.thecvf.com/content/CVPR2023/html/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.html

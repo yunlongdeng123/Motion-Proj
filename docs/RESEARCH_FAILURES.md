@@ -4883,3 +4883,20 @@ P2 metadata-only cohort freeze、preparation/native/evidence/evaluator 入口落
 V65-F02 recovery 已完成：preparation r2 成功生成 6/6 processed scenes；6 个 pipelined native scene runs
 均 `passed=true`，72/72 targets 完整；evidence run 72/72 units `passed=true`。全程未读取 P2 quality，未出现
 新的失败，因此下一可用编号仍为 `V65-F03`。
+
+### V65-F03 — train-only monotone trajectory risk 在 fresh ranking boundary 完全等序
+
+- task/run：`WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01` /
+  `20260827T093900Z__trajectory-selection-s0-r1`；
+- symptom：q0 与 task arm 均为 fixed-route `18/6975`，relative reduction=`0%`，worst-tail 完全相同，
+  scene lower/equal/higher=`0/6/0`；task arm 多 4 个 non-route conflicts（relative `+0.0881%`）；
+- root cause：P1R 的 legacy train-only 信号只有 1/20 sampled conflict，未迁移到 fresh 40% selection boundary；
+  nonnegative trajectory residual 改变 probability，但没有产生可泛化的 route ranking 变化；
+- preserved evidence：唯一正式 72-case run、case metrics、canonical native/evidence inputs 全部保留；
+- resolution：`WS-V65-H-P2-001` rejected；关闭 trajectory-only score-ranking family，不执行 T1/seed/capacity/
+  threshold rescue，不做第二次 P2 read；
+- literature response：PRECOG/M2I/GameFormer/VAD/Implicit Occupancy Flow 均将条件建模放在 ego goal/action 与
+  multi-agent future response 或连续时空查询上。后续仅允许以新 train-only hypothesis 审计 actor-time/action-outcome，
+  且不得使用已消费 P2 cohort 做选择。
+
+下一可用编号：`V65-F04`。

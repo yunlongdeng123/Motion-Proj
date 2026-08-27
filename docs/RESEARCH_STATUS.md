@@ -2006,3 +2006,21 @@ IR-WM workers；不再等待整批 I/O 完成后集中上卡。
 Evidence canonical `20260827T091800Z__fresh-evidence-s0-r1` 同时在 CPU/I/O 运行，完成 6 scenes、72 units、
 70,124,875 bytes，wall=`121.51s`、`passed=true`、query_count=0。下一步只把 per-scene units 无复制汇总为
 canonical native root，然后执行唯一一次 P2 quality read。
+
+### P2 trajectory-conditioned family 终态
+
+Canonical：
+
+```text
+run://worldsim_v65/WS-V65-P2-TRAJECTORY-CONDITIONED-RISK-01/20260827T093900Z__trajectory-selection-s0-r1
+```
+
+唯一正式 fresh read 已消费。q0 与 task arm 的 fixed-route 结果同为 `18/6975`，density=`0.00258065`，
+relative reduction=`0%`，worst-tail=`0.02935237`，scene lower/equal/higher=`0/6/0`。task arm non-route
+conflicts `4538→4542`，relative change=`+0.0881%`，仍在 5% bound 内。coverage matched、monotone semantics 与
+regression gates 通过，但 primary reduction 和 scene-support gates 失败；verdict=
+`rejected_fresh_trajectory_condition`。wall=`10.01s`、peak GPU=`0.0409GiB`。
+
+`V65-F03` 冻结该负结论：不重跑、不 sweep、不解锁 trajectory attention。文献迁移指向 ego action/goal 与
+multi-agent future response、continuous spatiotemporal query；下一步只允许建立一个语义独立的
+actor-time/action-outcome train-only hypothesis，并要求新 selection cohort，不能把它写成 P2 rescue。
