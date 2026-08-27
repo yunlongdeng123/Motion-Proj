@@ -5224,3 +5224,21 @@ Canonical：`run://worldsim_v65/WS-V65-P1R6-SMOOTH-TAIL-VISITED-STATE-01/2026082
 - gates：MSE reduction `>=50%`、5 equal-count-bin calibration error reduction `>=30%`、scene MSE support
   `>=8/15`、Spearman/AUROC non-regression、selected-40% exact same indices；
 - legacy train-only calibration diagnostic；无context/knots/ensemble/sweep，不读取formal calibration或改变P2V。
+
+### WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01 result
+
+Canonical：`run://worldsim_v65/WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01/20260827T125000Z__monotone-calibration-s0-r1`。
+
+| metric | Qmean | calibrated | delta / gate |
+| --- | ---: | ---: | --- |
+| MSE | 0.0273778 | 0.00210441 | -92.31%，pass |
+| MAE | 0.156639 | 0.0355369 | -77.31% |
+| 5-bin calibration error | 0.156639 | 0.0177814 | -88.65%，pass |
+| Spearman | 0.751487 | 0.751487 | exact preserve |
+| unsafe AUROC / AUPRC | 0.978261 / 0.994327 | same | exact preserve |
+| scene MSE lower/equal/higher | - | 15/0/0 | pass |
+| selected-40% count/cost | 23 / 0.0381365 | same | exact set preserve |
+
+参数：slope=`1.703977`、bias=`-0.479222`。6/6 gates，verdict=`positive_train_only_monotone_visited_state_
+calibration`。wall=`2.319s`、peak GPU=`0.00195GiB`、peak RSS=`0.954GiB`。不追加到冻结P2V read；仅允许
+在Qmean fresh ranking transfer成功后，为新的未用cohort冻结相同calibrator form。

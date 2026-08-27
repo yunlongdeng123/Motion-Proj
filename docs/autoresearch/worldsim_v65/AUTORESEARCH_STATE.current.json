@@ -149,9 +149,16 @@
   "p1r7_preregistered": true,
   "p1r7_formal_v65_calibration_read": false,
   "p1r7_calibrator": "positive_slope_two_parameter_logit_map_of_qmean",
+  "p1r7_run": "run://worldsim_v65/WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01/20260827T125000Z__monotone-calibration-s0-r1",
+  "p1r7_verdict": "positive_train_only_monotone_visited_state_calibration",
+  "p1r7_slope_bias": [1.703977108001709, -0.4792216420173645],
+  "p1r7_relative_mse_reduction": 0.9231343798413195,
+  "p1r7_relative_calibration_error_reduction": 0.8864819397567325,
+  "p1r7_scene_mse_lower_equal_higher": [15, 0, 0],
+  "p1r7_exact_ranking_and_selected_set_preservation": true,
   "p2v_preregistered": true,
   "p2v_scenes": ["scene-0001", "scene-0219", "scene-0402", "scene-0594", "scene-0822", "scene-1110"],
   "p2v_case_count": 72,
   "p2v_formal_selection_read": false,
-  "next_action": "run_p1r7_during_p2v_archive_io_then_continue_single_frozen_qmean_fresh_transfer"
+  "next_action": "continue_single_frozen_qmean_p2v_fresh_transfer; independent calibration remains conditional"
 }

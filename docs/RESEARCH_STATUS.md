@@ -2218,3 +2218,14 @@ Active hypothesis=`WS-V65-H-P1R7-001`。R4 Qmean排序强但raw MSE高；R4 unco
 模型仅2参数、seed=0、800 full-batch GPU epochs，无context/isotonic knots/bin/seed/capacity sweep。gates要求MSE降低
 `>=50%`、5-bin calibration error降低`>=30%`、至少8/15 scenes MSE改善，同时Spearman/AUROC不退化且selected-
 40% indices完全不变。该legacy diagnostic不消费formal calibration split，也不改变P2V Qmean候选。
+
+### R7终态：单调校准保留排序并显著改善expected error
+
+Canonical：`run://worldsim_v65/WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-01/20260827T125000Z__monotone-calibration-s0-r1`。
+拟合map为`sigmoid(1.703977·logit(Qmean)-0.479222)`。MSE `0.0273778→0.00210441`（`-92.31%`），
+5-bin calibration error `0.156639→0.0177814`（`-88.65%`），scene lower/equal/higher=`15/0/0`。
+
+由于map严格单调，Spearman=`0.751487`、unsafe AUROC=`0.978261`、AUPRC=`0.994327`均精确不变；selected-
+40%的23个units及actual cost=`0.0381365`完全相同。6/6 gates全过，verdict=`positive_train_only_monotone_
+visited_state_calibration`。该结果只保留calibrator form供未来独立cohort，当前P2V仍只读冻结raw Qmean。wall=
+`2.319s`、peak GPU=`0.00195GiB`、RSS=`0.954GiB`，与fresh archive scan重叠。
