@@ -5387,3 +5387,17 @@ planning或safety。不扫参、不refit、不复用已消耗P2V quality。
 Implementation：`run_worldsim_v65_p10v_action_visited_state_transfer.py`复用P2V的streamed unit loader/q0 scorer与V6.4
 P11的fixed action generator。每case一次q0 forward，12条轨迹的point-to-path minimum distance一次GPU广播完成；然后按
 冻结16-point rule写compact cache、action rows和6个preregistered gates。实现仅做Python syntax/config parse，未读新cohort quality。
+
+### WS-V65-P10V input pipeline result
+
+| artifact | result |
+| --- | --- |
+| preparation | 6 scenes；shards 2/6/9；10,709 members；1462.02s；full fallback=false；raw removed；quality=false |
+| scene-ready preprocess | 6/6；135.51–197.18s/scene；3 waves；overlapped with archive/native/evidence |
+| native scene runs | 6/6 passed；12 targets/scene；45.43–52.69s/scene；peak GPU 4.1314GiB |
+| native aggregate | 72 targets；3,317,884,673 bytes；inference repeated=false |
+| evidence partial | 48 units；58.64s；while later preprocess/native ran |
+| evidence canonical | 72 units；48 reused；32.17s；75,306,035 bytes；source-role overlap=0 |
+
+Canonical native/evidence paths与formal config完全一致。Scene-ready feeder只依赖archive extractor已有的`.partial`→atomic
+`os.replace` 交付语义，不添加哈希、校验和或内容门控。输入完成前无P10V action target/score读取。

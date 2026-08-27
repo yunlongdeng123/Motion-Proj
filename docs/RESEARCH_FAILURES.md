@@ -5117,6 +5117,15 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 
 下一可用编号仍为：`V65-F18`。
 
+### P10V input-pipeline outcome note — 无新failure
+
+- targeted shards 2/6/9找到冻结cohort全部10,709 members，未触发same-cohort full-scan fallback；
+- archive extractor使用已有partial-file atomic rename，scene-ready feeder不需哈希/校验和/指纹或内容验证；
+- 6/6 preprocess、native及72-unit evidence全部完成，role overlap=0，过程未读action quality；
+- P10V formal read前的下一可用failure id保持`V65-F18`。
+
+下一可用编号仍为：`V65-F18`。
+
 ### P10V prevention note — 不重复V64-F28 collision-critic路径
 
 - V6.4的10-feature linear critic在独立cohort发生unsafe ranking退化，已终止为`V64-F28`；

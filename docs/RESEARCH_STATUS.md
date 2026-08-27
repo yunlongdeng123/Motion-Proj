@@ -2358,3 +2358,18 @@ lowest-Qmean 25% actual-cost reduction `>=25%`、scene support `>=5`、evaluable
 P10V evaluator已实现：每case只对最多8,192 boundary points做一次冻结q0 forward，然后在GPU上将同一批
 points与12条action paths并行做footprint membership，不重复model inference。物化后才计算pooled、within-case pairwise、
 scene support和lowest-quarter cost，并写出`ACTION_ROWS.jsonl`。当前shards 2/6/9正并行扫描，quality read=false。
+
+### P10V inputs终态：scene-ready四级流水线完成
+
+Preparation=`run://worldsim_v65/WS-V65-P10V-ACTION-PREPARATION-01/20260828T001000Z__action-prep-s0-r1`。
+Shards 6/2/9分别约`936.3/1011.8/1069.6s`，总共找到10,709 members，无full-scan fallback；parent wall=
+`1462.02s`。原子member-ready feeder把6 scenes分三批预处理，wall为`161.16/135.51/141.27/154.00/
+190.33/197.18s`，并与shard scan、native GPU、evidence CPU重叠；父进程最终reuse 6/6并清理raw。
+
+6个native runs均passed，每scene 12 targets，wall=`48.71/45.81/51.14/52.43/45.43/52.69s`，peak
+GPU=`4.1314GiB`。Aggregate=`run://worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1`：
+72 targets、`3,317,884,673` bytes、inference repeated=false，所有target/calibration/confirmation/test read=false。
+
+Evidence partial在later preprocess/native期间先生成48 units；canonical=`run://worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/
+20260828T001500Z__action-evidence-s0-r1`含72 units、48 reused、`75,306,035` bytes、wall=`32.17s`、role overlap=0。
+输入里程碑没有新failure；formal action quality read=false。
