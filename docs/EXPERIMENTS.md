@@ -5444,3 +5444,6 @@ Input pipeline live：preparation run=`run://worldsim_v65/WS-V65-P10X-CONFIRMATI
 20260828T010000Z__confirmation-prep-s0-r1`，shards 3/7/8并行扫描；父协调器暂停、archive children继续，scene-ready
 preprocess和native watcher已用`PYTHONPATH=.`同时挂起等待原子member。首次无`PYTHONPATH`的feeder入口在import前失败，
 记为`V65-F18`；0 scene/native/evidence/quality read，不改变冻结合同。
+
+Aggregate implementation：`aggregate_worldsim_v65_pipelined_native.py`按冻结config逐场景汇入source run，验证既定
+12 targets/scene后只建unit目录symlink，输出aggregate summary与source ledger；arrays不复制、native inference不重复。

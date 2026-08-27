@@ -2408,3 +2408,6 @@ Preparation=`run://worldsim_v65/WS-V65-P10X-CONFIRMATION-PREPARATION-01/20260828
 已启动shards 3/7/8三路并行扫描；父协调器被暂停而三个archive workers继续I/O，scene-ready preprocess与native
 GPU watcher已经并行等待原子member交付。首次feeder直接脚本调用因仓库根目录未进入`sys.path`而在import阶段退出，
 记录为`V65-F18`；改用进程级`PYTHONPATH=.`后两个watcher正常运行，未创建科学run、未读取quality。
+
+Pipelined native aggregate收口器也已实现：逐场景run完成后仅建立`units/fresh_selection/<scene>`只读symlink，
+汇总72个既定targets、bytes与worker peak，不复制大数组、不重复inference、不增加哈希或quality gate。
