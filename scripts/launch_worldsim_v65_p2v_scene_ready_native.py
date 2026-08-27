@@ -22,6 +22,7 @@ def run(
 ) -> dict[str, object]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     task_id = str(config["task_id"])
+    (runs_root / "worldsim_v65" / task_id).mkdir(parents=True, exist_ok=True)
     scenes = [str(row["name"]) for row in config["cohorts"]["fresh_selection"]["scenes"]]
     pending = set(scenes)
     running: dict[concurrent.futures.Future, tuple[str, str]] = {}
@@ -100,4 +101,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

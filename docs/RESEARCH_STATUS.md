@@ -2229,3 +2229,13 @@ Canonical：`run://worldsim_v65/WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-0
 40%的23个units及actual cost=`0.0381365`完全相同。6/6 gates全过，verdict=`positive_train_only_monotone_
 visited_state_calibration`。该结果只保留calibrator form供未来独立cohort，当前P2V仍只读冻结raw Qmean。wall=
 `2.319s`、peak GPU=`0.00195GiB`、RSS=`0.954GiB`，与fresh archive scan重叠。
+
+### P2V scene-ready pipeline engineering recovery
+
+公共tar顺序扫描期间，已完成shard的member count与`scene-0001/0219/0594/0822`各自所需文件精确对应。为真正
+流水化，准备器父进程被可恢复地`SIGSTOP`，剩余shard workers继续I/O；先并行转换`scene-0001/0219`，避免父进程
+把预处理过程中已创建的目录误判为完成。两个scene约2.5分钟完成，最终dynamic-mask日志成为唯一native事件。
+
+首次scene-ready native入口随后在任何run directory/model/quality read前触发`V65-F13`：runner先对不存在的task
+parent执行`disk_usage`。按Python `Path.mkdir(parents=True, exist_ok=True)`合同，在launcher启动worker前创建task
+parent；scientific config、scene、seed、run prefix均不变，失败无科学read。修复后从已完成日志继续`0001/0219`。

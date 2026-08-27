@@ -5242,3 +5242,14 @@ Canonical：`run://worldsim_v65/WS-V65-P1R7-MONOTONE-VISITED-STATE-CALIBRATION-0
 参数：slope=`1.703977`、bias=`-0.479222`。6/6 gates，verdict=`positive_train_only_monotone_visited_state_
 calibration`。wall=`2.319s`、peak GPU=`0.00195GiB`、peak RSS=`0.954GiB`。不追加到冻结P2V read；仅允许
 在Qmean fresh ranking transfer成功后，为新的未用cohort冻结相同calibrator form。
+
+### WS-V65-P2V-FRESH-NATIVE-SIDECAR-01 scene-ready entry / V65-F13
+
+- pipeline：完成shard即提前释放完整scene；暂停prep parent但保留archive children，先并行preprocess
+  `scene-0001/0219`，最终dynamic-mask marker触发native；
+- failed entry：`20260827T133000Z__fresh-visited-native-scene-0001-s0-r1`在run dir创建前，因task parent不存在而
+  `shutil.disk_usage(run_dir.parent)`抛出`FileNotFoundError`；
+- scientific exposure：0；未加载模型、native input或quality；失败run directory不存在；
+- recovery：launcher在提交worker前执行task parent `mkdir(parents=True, exist_ok=True)`；config/seed/run contract
+  不变，同一冻结输入继续；
+- validation：仅Python syntax和单次真实入口，不增加额外smoke/regression。

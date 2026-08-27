@@ -5032,3 +5032,17 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无smooth-tail、CVaR、planner或safety claim；R4 prediction-object positive不受影响。
 
 下一可用编号：`V65-F13`。
+
+### V65-F13 — scene-ready native launcher未先创建task parent
+
+- attempted run：`run://worldsim_v65/WS-V65-P2V-FRESH-NATIVE-SIDECAR-01/20260827T133000Z__fresh-visited-native-scene-0001-s0-r1`；
+- symptom：launcher正确捕获`scene-0001`最终preprocess marker，但native runner在创建run directory前调用
+  `shutil.disk_usage(run_dir.parent)`，因task parent尚不存在抛出`FileNotFoundError`；
+- exposure audit：失败发生在model/native artifact/quality读取前，未创建failed run directory，不是科学负结果；
+- root cause：旧批处理流程总由外层脚本预建task目录，新scene-ready launcher遗漏了该入口前置条件；
+- literature/open-source response：Python官方`Path.mkdir(parents=True, exist_ok=True)`明确用于递归创建缺失父目录；
+- resolution：launcher在创建executor前预建精确task parent；不改scientific config、scene、seed、run prefix或gates，
+  从已经完成的scene marker继续；
+- claim impact：无科学read，不改变`WS-V65-H-P2V-001`状态。
+
+下一可用编号：`V65-F14`。
