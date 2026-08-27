@@ -5149,3 +5149,12 @@ Canonical：`run://worldsim_v65/WS-V65-P1R4-TRAJECTORY-VISITED-STATE-01/20260827
 Qagg `3/3` viability gates全过；V1 `2/5` incremental gates通过。verdict=`positive_train_only_visited_state_object_
 q0_aggregation_only`。108/58 train/eval units，26 units按预注册minimum footprint排除；wall=`2.22s`、peak GPU=
 `0.0169GiB`、peak RSS=`1.039GiB`。不重训V1，保留Qagg进入fresh transfer候选。
+
+### WS-V65-P1R5-ACTOR-FALSE-SAFE-01 preregistration
+
+- frozen inputs：P2C 778 Actor tokens与A0/A1 artifacts，不重新fit；
+- aggregation：每个scene-unit trajectory取Actor proximity cost最大值；
+- forecast：A0 snapshot forecast vs realized target，Spearman `>=0.70`且lowest-risk 40% actual cost降低`>=25%`；
+- false-safe target：`relu(target-A0)`；monitor=`relu(A1-A0)`；
+- monitor gates：gap Spearman `>=0.30`、positive-gap AUROC `>=0.65`、lowest-monitor 40% gap降低`>=25%`；
+- claim：legacy train-only companion；无新模型、threshold/sweep或formal V6.5 read。

@@ -2150,3 +2150,13 @@ V1 head虽然MSE降低`87.35%`且有shuffle response，却把Spearman降到`0.63
 scene=`2/7/6`；登记`V65-F10`并关闭 learned head。最终 verdict=`positive_train_only_visited_state_object_q0_
 aggregation_only`。下一步并行准备 Actor false-safe companion 与独立fresh trajectory-level transfer；fresh准备期间
 继续运行现有compact Actor GPU实验，避免GPU等待重IO。
+
+### R5 Actor false-safe companion freeze
+
+Active hypothesis=`WS-V65-H-P1R5-001`。不重训P2C：冻结A0 snapshot与A1 Actor-time两个已读模型，在GPU评分后
+按`(scene, unit, τ)`取最大Actor-route proximity cost。先验证A0对realized target cost的trajectory-level forecast
+viability；再以`relu(A1-A0)`作为纯可观测temporal disagreement monitor，预测`relu(target-A0)` false-safe gap。
+
+Forecast gates固定为Spearman `>=0.70`、lowest-risk 40% target cost相对全体降低`>=25%`；monitor gates固定为
+gap Spearman `>=0.30`、positive-gap AUROC `>=0.65`、lowest-monitor 40% gap降低`>=25%`。无learned monitor、
+threshold、seed或capacity sweep；formal V6.5 selection read=false。

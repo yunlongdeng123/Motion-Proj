@@ -1,11 +1,11 @@
 {
   "version": "worldsim_v65",
-  "status": "p1r4_supported_preparing_actor_companion_and_fresh_transfer",
+  "status": "active_p1r5_actor_false_safe_companion",
   "branch": "research/worldsim-v6.5-task-conditioned-authority",
   "source_branch": "research/worldsim-v6.4-native-uq",
   "source_commit": "add2f3f",
-  "active_task": null,
-  "active_hypothesis": null,
+  "active_task": "WS-V65-P1R5-ACTOR-FALSE-SAFE-01",
+  "active_hypothesis": "WS-V65-H-P1R5-001",
   "completed_stages": ["P0_DIRECT_RESEARCH_PROTOCOL", "P1_T0_REJECTED", "P1R_TASK_RISK_SUPPORTED_TRAIN_ONLY", "P2_FRESH_PREPARATION", "P2_NATIVE_PIPELINE", "P2_FRESH_EVIDENCE", "P2_T0_REJECTED", "P2R_BINARY_OUTCOME_ZERO_SUPPORT", "P2C_CONTINUOUS_ACTOR_TIME_REJECTED", "P4T_LEARNED_ADMISSION_REJECTED", "P1R3_MAP_CONTEXT_REJECTED", "P1R4_VISITED_STATE_QAGG_SUPPORTED_TRAIN_ONLY"],
   "unlocked_stages": ["P1R5_ACTOR_FALSE_SAFE_TRAIN_ONLY", "P2V_FRESH_VISITED_STATE_TRANSFER_PREPARATION"],
   "resource_contract": "single_rtx3090_24gb",
@@ -127,5 +127,8 @@
   "p1r4_head_spearman_gain": -0.116359611825718,
   "p1r4_head_relative_mse_reduction": 0.873458176544118,
   "p1r4_head_selected_cost_reduction_vs_q0": -0.513452218752088,
-  "next_action": "freeze_actor_false_safe_companion_then_prepare_fresh_visited_state_transfer_with_gpu_io_overlap"
+  "p1r5_preregistered": true,
+  "p1r5_formal_v65_selection_read": false,
+  "p1r5_monitor": "positive_actor_time_minus_snapshot_forecast_disagreement",
+  "next_action": "start_fresh_transfer_capability_io_then_score_frozen_actor_models_on_gpu"
 }

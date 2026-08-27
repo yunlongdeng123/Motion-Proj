@@ -1,0 +1,33 @@
+schema_version: worldsim_v65.p1r5_actor_false_safe.v1
+task_id: WS-V65-P1R5-ACTOR-FALSE-SAFE-01
+hypothesis_id: WS-V65-H-P1R5-001
+seed: 0
+claim_boundary: legacy train-only trajectory-level Actor-route forecast and false-safe reliability diagnostic; no V6.5 selection, planning, or safety claim
+inputs:
+  compact_cache: /root/autodl-tmp/cache/worldsim_v65/p2c_actor_time_cost_tokens.npz
+  frozen_models: /root/autodl-tmp/runs/worldsim_v65/WS-V65-P2C-ACTOR-TIME-COST-01/20260827T102000Z__actor-time-cost-s0-r2/actor_time_cost_models.pt
+aggregation:
+  actor_to_trajectory: maximum proximity cost per scene-unit trajectory
+  false_safe_gap: max(target_trajectory_cost_minus_snapshot_forecast, 0)
+  monitor: max(actor_time_forecast_minus_snapshot_forecast, 0)
+evaluation:
+  matched_safe_coverage: 0.40
+  false_safe_positive_definition: false_safe_gap_greater_than_zero
+forecast_viability_gates:
+  minimum_snapshot_target_spearman: 0.70
+  minimum_snapshot_selected_target_cost_reduction: 0.25
+monitor_gates:
+  minimum_monitor_gap_spearman: 0.30
+  minimum_monitor_false_safe_auroc: 0.65
+  minimum_monitor_selected_gap_reduction: 0.25
+locks:
+  legacy_train_only: true
+  formal_v65_selection_read: false
+  frozen_snapshot_model: true
+  frozen_actor_time_model: true
+  learned_monitor: false
+  threshold_tuning: false
+  parameter_sweep: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V65-F06, V65-F10]
+
