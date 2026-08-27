@@ -5085,3 +5085,17 @@ Prediction-vs-oracle coverage MSE=`0.0001690`，shuffle=`0.0001909`，说明cont
 新增failure由predicted coverage `0.521873`越过oracle-safe `0.510822`产生。四gate `2/4`，negative。wall=
 `22.66s`、peak GPU=`0.0542GiB`、peak RSS=`0.9975GiB`、compact cache=`16MiB`。不做coverage upper bound、
 loss、seed或capacity rescue；formal V6.5 admission selection read=false。
+
+### WS-V65-P1R3-MAP-CONTEXT-TRAIN-ONLY-01 preregistration
+
+- data：与P1相同16个Tier-L scenes，每scene前8 units train、后4 units nested eval；
+- map：官方nuScenes map expansion v1.3，native 0.512m ego-aligned raster；
+- features：8层map mask + drivable signed distance + route curvature mean/max、route length、route drivable fraction、
+  local drivable fraction；无scene/stratum/hard corridor feature；
+- arms：frozen q0 vs q0+14D map/context FiLM residual；
+- model：与P1相同低容量、40 epochs、seed=0，无sweep；
+- gates：AUROC `>=+0.005`、fixed-route risk `>=5%` reduction、scene lower>higher、non-route risk increase `<=5%`、
+  real map AUROC > within-unit shuffled map；
+- formal V6.5 selection read=false。
+
+Pre-run capability `V65-F08`：v1.2被当前devkit拒绝，随后官方v1.3独立目录mask调用通过；没有科学read。

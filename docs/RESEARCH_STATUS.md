@@ -2092,3 +2092,14 @@ failure，pooled fixed-route density `0.00181015→0.00196987`（`+8.82%`），w
 四gate只过coverage/scene-support，verdict=`no_clear_train_only_learned_admission`，登记`V65-F07`。按Stop 4关闭
 learned admission；不准备fresh admission cohort，不解锁P5 allocator/OT或CRC calibration。当前回到P1尚未执行的
 R3 map/context family做只读可行性审计；它必须有不同监督语义与未消费的fresh selection方案，否则不创建run。
+
+### R3 map/context capability recovery 与stage freeze
+
+本地初始meta缺`maps/expansion`；公共盘v1.2虽完整但被当前devkit按版本合同拒绝，登记`V65-F08`，未读quality。
+官方v1.3也已在公共盘，解压到独立research data root后，单pose能力调用成功生成`8×200×200`的
+drivable/road/lane/crossing/walkway/carpark/road-divider/lane-divider mask，各主要层非空。
+
+Active hypothesis=`WS-V65-H-P1R3-001`。R3复用P1相同16-scene Tier-L split与采样，冻结q0，新增14D连续
+map/context：8层逐voxel语义、drivable signed distance、route curvature/length、route-on-drivable和local map
+density；不读stratum/scene ID/hard route bit。单seed/单容量/单run，真实map必须同时改善AUROC与fixed-route risk、
+有scene direction support、non-route不搬家并优于within-unit shuffle，才允许新的fresh selection cohort。

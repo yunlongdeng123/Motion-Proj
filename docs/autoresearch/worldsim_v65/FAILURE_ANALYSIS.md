@@ -72,6 +72,16 @@ failed before any isolated worst-group failure.
 - SOFT top-k：https://papers.neurips.cc/paper_files/paper/2020/hash/ec24a54d62ce57ba93a531b460fa8d18-Abstract.html
 - GroupDRO official code：https://github.com/kohpangwei/group_DRO
 
+## V65-F08 — map data presence did not imply devkit schema compatibility
+
+The project meta root had only legacy raster PNGs. The public volume's v1.2 expansion JSON was structurally complete but the
+installed devkit intentionally rejects versions below 1.3. Official nuScenes documentation states that v1.3 adds lidar
+basemap support and removes a broken lane. Downgrading code or bypassing that check would create an untracked map contract.
+The recovery uses the official co-located v1.3 archive in a separate root; the eight requested semantic layers rasterized
+successfully before R3 was preregistered.
+
+- nuScenes devkit/map versions：https://github.com/nutonomy/nuscenes-devkit
+
 ## V65-F05 — shared materializer leaked a binary-only config dependency
 
 P2C first entry failed before evidence I/O or training because the shared P2R materializer indexed

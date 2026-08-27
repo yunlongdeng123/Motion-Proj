@@ -4957,3 +4957,15 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：保留V6.4 M1；没有V6.5 differentiable-admission、calibration、planning或safety claim。
 
 下一可用编号：`V65-F08`。
+
+### V65-F08 — nuScenes map expansion v1.2 与当前devkit schema不兼容
+
+- scope：R3 pre-run capability audit；没有run directory、quality read、model fit或指标；
+- symptom：公共盘v1.2 expansion JSON可解压，但当前`NuScenesMap`明确拒绝`version < 1.3`；
+- root cause：v1.2是prediction/arcline版本，当前devkit合同要求v1.3；官方v1.3增加lidar basemap支持并移除一条坏lane；
+- literature/open-source response：nuScenes官方安装文档要求把map expansion解压到`maps/expansion`并使用匹配devkit；
+- resolution：不降级devkit、不绕过版本检查、不使用PNG伪造11层语义。改用公共盘官方v1.3，独立目录能力调用得到
+  `8×200×200`非空语义mask；
+- claim impact：无科学结论；R3 hypothesis在恢复完成后才预注册。
+
+下一可用编号：`V65-F09`。
