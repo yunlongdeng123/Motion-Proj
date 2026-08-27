@@ -2411,3 +2411,19 @@ GPU watcher已经并行等待原子member交付。首次feeder直接脚本调用
 
 Pipelined native aggregate收口器也已实现：逐场景run完成后仅建立`units/fresh_selection/<scene>`只读symlink，
 汇总72个既定targets、bytes与worker peak，不复制大数组、不重复inference、不增加哈希或quality gate。
+
+### P10X inputs终态：archive/preprocess/native/evidence重叠完成
+
+Preparation=`run://worldsim_v65/WS-V65-P10X-CONFIRMATION-PREPARATION-01/20260828T010000Z__confirmation-prep-s0-r1`。
+Shards 3/7/8分别找到`3,533/3,589/3,596` members，约`1010.9/982.5/1014.7s`；合计10,718 members，
+无full-scan fallback。父协调器wall=`1564.11s`，复用feeder已完成的6/6 processed scenes并清理temporary raw。
+
+六场景预处理wall=`160.52/151.46/175.19/159.90/199.32/196.81s`。6个native runs均passed，各12 targets，
+wall=`74.11/80.51/49.38/47.15/57.61/57.41s`，peak GPU=`4.1314GiB`。Aggregate=
+`run://worldsim_v65/WS-V65-P10X-CONFIRMATION-NATIVE-SIDECAR-01/20260828T010500Z__confirmation-native-aggregate-s0-r1`：
+72 targets、`3,317,884,470` bytes、inference repeated=false。
+
+前四场景的48-unit partial evidence与后两场预处理/native重叠。Canonical=`run://worldsim_v65/
+WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1`：72 units、48 reused、
+`81,763,088` bytes、wall=`35.14s`、role overlap=0。输入全部ready，正式combined quality read仍为false；下一步只执行
+冻结的单次P10X evaluator。

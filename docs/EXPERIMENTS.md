@@ -5447,3 +5447,17 @@ preprocess和native watcher已用`PYTHONPATH=.`同时挂起等待原子member。
 
 Aggregate implementation：`aggregate_worldsim_v65_pipelined_native.py`按冻结config逐场景汇入source run，验证既定
 12 targets/scene后只建unit目录symlink，输出aggregate summary与source ledger；arrays不复制、native inference不重复。
+
+### WS-V65-P10X input pipeline result
+
+| artifact | result |
+| --- | --- |
+| preparation | shards 3/7/8；10,718 members；1564.11s；full fallback=false；raw removed；quality=false |
+| scene-ready preprocess | 6/6；151.46–199.32s/scene；3 waves；overlapped with archive/native/evidence |
+| native scene runs | 6/6 passed；12 targets/scene；47.15–80.51s/scene；peak GPU 4.1314GiB |
+| native aggregate | 72 targets；3,317,884,470 bytes；inference repeated=false |
+| evidence partial | 48 units；69.51s；while later preprocess/native ran |
+| evidence canonical | 72 units；48 reused；35.14s；81,763,088 bytes；source-role overlap=0 |
+
+Canonical native/evidence paths与P10X formal config完全一致。Preparation父进程只在archive children扫描时暂停，避免
+与scene-ready feeder重复预处理；恢复后复用6/6 processed scenes并清理raw。输入完成前combined quality read=false。

@@ -5170,3 +5170,13 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：纯入口环境失败，0科学暴露，不触发第二cohort或任何gate/threshold修改。
 
 下一可用编号：`V65-F19`。
+
+### P10X input-pipeline outcome note — V65-F18后无新failure
+
+- targeted shards 3/7/8找到冻结cohort全部10,718 members，未触发same-cohort full-scan fallback；
+- `PYTHONPATH=.`恢复后6/6 preprocess、native及72-unit evidence全部完成，role overlap=0；
+- partial evidence的48 units与后两场preprocess/native重叠，canonical只补24 units；
+- aggregate仅建立unit symlink，未复制数组、未重复native inference、未增加哈希/校验和/指纹；
+- 过程未读combined quality，下一可用failure id保持`V65-F19`。
+
+下一可用编号仍为：`V65-F19`。
