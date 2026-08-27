@@ -37,7 +37,7 @@ def run(
             return json.loads(summary_path.read_text(encoding="utf-8"))
         command = [
             "/root/autodl-tmp/envs/motionproj/bin/python",
-            str(repo_root / "scripts" / "run_worldsim_v63_p2_native_sidecars.py"),
+            str(repo_root / "scripts" / "run_worldsim_v64_fresh_sidecars.py"),
             "--config",
             str(config_path),
             "--repo-root",

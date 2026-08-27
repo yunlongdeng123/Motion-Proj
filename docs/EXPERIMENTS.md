@@ -5253,3 +5253,12 @@ calibration`。wall=`2.319s`、peak GPU=`0.00195GiB`、peak RSS=`0.954GiB`。不
 - recovery：launcher在提交worker前执行task parent `mkdir(parents=True, exist_ok=True)`；config/seed/run contract
   不变，同一冻结输入继续；
 - validation：仅Python syntax和单次真实入口，不增加额外smoke/regression。
+
+### WS-V65-P2V-FRESH-NATIVE-SIDECAR-01 overlay resolution / V65-F14
+
+- failed entries：`scene-0001/0219-s0-r1` task dirs建立后，generic V6.3 runner访问缺失`inputs`并退出；
+- root cause：P2V YAML是`base_config + overlay`，launcher绕过了已验证的V6.4 fresh wrapper，generic runner不负责组合；
+- exposure：0 model/native/quality read；失败dirs仅有空`plans/reports/logs`；
+- recovery：改调用`run_worldsim_v64_fresh_sidecars.py`，由它按成功P2路径合并base schema；空失败dirs改名保留，原r1
+  canonical paths继续；
+- config/scene/frames/seed/gates不变，无额外scientific run。

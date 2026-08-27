@@ -5046,3 +5046,17 @@ P2R actor-time train-only hypothesis 已在读取 token outcome 统计前冻结�
 - claim impact：无科学read，不改变`WS-V65-H-P2V-001`状态。
 
 下一可用编号：`V65-F14`。
+
+### V65-F14 — scene-ready launcher绕过base+overlay解析器
+
+- attempted runs：`...fresh-visited-native-scene-0001-s0-r1`与`...scene-0219-s0-r1`；
+- symptom：task/run dirs创建后，V6.3 generic runner访问`config["inputs"]`抛出`KeyError`；
+- exposure audit：两个目录只含空`plans/reports/logs`，未构造worker plan、未加载IR-WM、未读native或quality；
+- root cause：`p2v_native_sidecars_v1.yaml`与此前成功P2配置一样是`base_config + overlay`，但新launcher直接调用
+  generic runner，绕过了负责合并的`run_worldsim_v64_fresh_sidecars.py`；
+- literature/open-source response：Hydra Defaults List和OmegaConf structured config均把完整schema composition置于
+  runtime access之前；项目迁移采用已有wrapper作为同一composition boundary，而非复制backend字段；
+- resolution：launcher切换到已验证wrapper；空失败dirs改名保留，原r1 canonical path继续，scientific合同不变；
+- claim impact：无科学read，不改变P2V hypothesis或fresh exposure计数。
+
+下一可用编号：`V65-F15`。

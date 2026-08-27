@@ -2239,3 +2239,8 @@ visited_state_calibration`。该结果只保留calibrator form供未来独立coh
 首次scene-ready native入口随后在任何run directory/model/quality read前触发`V65-F13`：runner先对不存在的task
 parent执行`disk_usage`。按Python `Path.mkdir(parents=True, exist_ok=True)`合同，在launcher启动worker前创建task
 parent；scientific config、scene、seed、run prefix均不变，失败无科学read。修复后从已完成日志继续`0001/0219`。
+
+重启入口又在model/quality read前暴露`V65-F14`：launcher直接调用V6.3 generic runner，因而没有解析overlay中的
+`base_config`，访问`inputs`时报`KeyError`。已成功P2流程的`run_worldsim_v64_fresh_sidecars.py`负责合并base+
+overlay并写resolved config；launcher改为复用该wrapper，不在P2V配置中复制整套backend schema。两个失败目录只含
+空`plans/reports/logs`，保留改名为`.failed-entry-v65-f14`后，用原冻结r1 run path继续。
