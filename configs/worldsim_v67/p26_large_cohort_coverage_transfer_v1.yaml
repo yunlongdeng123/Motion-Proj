@@ -1,0 +1,95 @@
+schema_version: worldsim_v67.p26_large_cohort_coverage_transfer.v1
+output_schema_version: worldsim_v67.p26_large_cohort_coverage_transfer_summary.v1
+task_id: WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01
+hypothesis_id: WS-V67-H-P26-001
+seed: 0
+role: ten_domain_retraining_then_large_stratum_balanced_visited_state_confirmation
+artifact_name: LARGE_COHORT_COVERAGE_COMPILER.pt
+verdict_on_pass: supported_large_cohort_coverage_transfer
+verdict_on_failure: rejected_large_cohort_coverage_transfer
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  adaptive_budget_run: worldsim_v67/WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01/20260828T150500Z__adaptive-budget-s0-r2
+  adaptive_budget_artifact: ADAPTIVE_BUDGET_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p19_p2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p24_v64_p6r_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p25_v64_p4c_quantile_actions.npz
+compiler:
+  fixed_selected_fraction: 0.25
+  minimum_case_coverage: 0.50
+  maximum_actions_per_case: 6
+  p24_maximum_actions_per_case: 5
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+gates:
+  minimum_case_coverage: 0.50
+  minimum_cost_reduction: 0.50
+  minimum_reduction_delta_over_fixed_p20: 0.10
+  minimum_nonincreasing_scene_support: 12
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+  data:
+    inputs:
+      evidence_run: worldsim_v64/WS-V64-P6E-CALIBRATION-EVIDENCE-01/20260826T130000Z__calibration-evidence-s0-r1
+      native_run: worldsim_v64/WS-V64-P6-CALIBRATION-SIDECAR-01/20260826T124500Z__native-aggregate-s0-r1
+      native_partition: fresh_calibration
+      processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+      risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+      risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+    native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+    trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+    sampling: {evaluation_points_per_unit: 8192, seed: 0}
+    quantile_levels: [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+    action_lattice:
+      horizon_seconds: 2.0
+      progress_ratios: [0.25, 0.50, 0.75, 1.00]
+      lateral_offsets_m: [-1.50, 0.00, 1.50]
+      include_stop_for_reporting_only: true
+    scenes:
+      - {name: scene-1045, processed_index: 785}
+      - {name: scene-1055, processed_index: 795}
+      - {name: scene-1051, processed_index: 791}
+      - {name: scene-1006, processed_index: 764}
+      - {name: scene-0901, processed_index: 687}
+      - {name: scene-0810, processed_index: 628}
+      - {name: scene-0458, processed_index: 372}
+      - {name: scene-0885, processed_index: 671}
+      - {name: scene-0047, processed_index: 44}
+      - {name: scene-0203, processed_index: 157}
+      - {name: scene-0768, processed_index: 596}
+      - {name: scene-0259, processed_index: 208}
+      - {name: scene-0405, processed_index: 320}
+      - {name: scene-0439, processed_index: 353}
+      - {name: scene-0060, processed_index: 57}
+      - {name: scene-0656, processed_index: 510}
+locks:
+  p20_within_case_ranking_frozen: true
+  exact_total_budget_equal_to_fixed_quarter_baseline: true
+  minimum_case_coverage: 0.50
+  p26_offset_frozen_before_confirmation_materialization: true
+  development_domains: 10
+  coverage_max_actions_offset_architecture_fraction_or_gate_sweep: false
+  p6e_large_cohort_not_used_by_v67_allocation_before_p26: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F13, V67-F12, V67-F11]
+claim_boundary:
+  - large_stratum_balanced_transfer_of_learned_case_authority_and_fixed_total_allocation
+  - future_two_second_ego_action_visited_world_state_reliability
+  - no_population_collision_planning_policy_closed_loop_or_safety_claim
