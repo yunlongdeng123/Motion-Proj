@@ -4,12 +4,14 @@
 
 ### WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
 
-- 状态：`active/member seed1 trained, seed2 GPU training`；member runs=
+- 状态：`members trained/ensemble evaluator waiting prospective P85 rows`；member runs=
   `20260829T234500Z__direct-probability-ensemble-seed1-r1`与
   `20260829T235500Z__direct-probability-ensemble-seed2-r1`；三成员协议在P81 target rows出现前冻结。
 - 固定成员为P93 seed0及同一Deep Sets/BCE协议的seed1/2；最终query/Actor score分别只能取三成员sigmoid probability
   算术均值，不选择单seed、subset或加权。依据NeurIPS 2017 deep ensembles。
 - seed1/2各8,000 epochs、四horizon等量；fresh固定50%且1m endpoint不变，不扫ensemble size或aggregation。
+- ensemble canonical candidate=`20260830T000500Z__direct-probability-ensemble-s0-r1`；在evaluation rows出现前只等待，
+  三个checkpoint齐全后才依次推理并取算术均值。
 
 ### P90--P92 checkpoint parking note
 
@@ -90,6 +92,8 @@
   10承载`1059/1071`；r2=`20260829T221000Z__fresh-test-actor-prep-s0-r2`只扫描04/06/10并复用780现有files。
 - r2完成三包后仍缺1,175 files：既有test member-shard manifest定位`0784→08`、`0923/0963→09`。r3=
   `20260829T231000Z__fresh-test-actor-prep-s0-r3`只扫描08/09并复用2,725现有files；尚未scene preprocess/target read。
+- r3扫描结果：08/09命中398/777，合计1,175新提取，required/mapped=`3,900/3,900`；首批4/10 scenes已完成
+  preprocess，正式target quality仍未读。
 - 这是纯IO routing recovery；10 scenes、P81/P82--P92 protocols、H3.5 target与gates均未改变。
 
 ### WS-V67-P86-DIRECT-TRAJECTORY-RELIABILITY-01

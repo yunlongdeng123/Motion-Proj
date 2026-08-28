@@ -83,8 +83,12 @@ error>1m”作为唯一source binary target，使用horizon-balanced BCE训练�
 P93完成8,000 epochs后，按NeurIPS 2017 deep ensembles冻结P94三成员协议：P93 seed0 checkpoint加完全同协议的
 seed1/2，最终score只能取三者failure probability算术均值，不允许挑seed或subset。为给fresh并发评估留显存，已落盘的
 P90--P92等待进程安全退出（各1.1MiB checkpoint保留，后续evaluation-only恢复），显存由20.5降至15.96GiB；这不是
-scientific failure或重训。Checkpoint-only evaluator已实现并只复用冻结model/normalization。P94 seed1完成8,000 epochs，
-seed2现接替GPU并与archive IO并行，单3090仍足够。
+scientific failure或重训。Checkpoint-only evaluator已实现并只复用冻结model/normalization。P94 seed1/2均完成
+8,000 epochs；冻结三成员arithmetic-mean聚合器已启动等待P85 rows，单3090仍足够。
+
+P81 prep r3最终对08/09分别命中398/777个目标member，3,900/3,900完整且没有换scene；两包wall约
+700.5/728.8s。随后四路scene preprocess启动，首批`0016/0627/0523/0344`分别约61.3--65.5s完成，第二批继续；
+P81/P82--P94正式target quality仍未读取。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
