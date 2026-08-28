@@ -62,7 +62,12 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     selection=_load(cache);scores=score_listwise_compiler(p20,selection,p20_mean,p20_scale)
     if "nested_evaluation_fractions" in config["compiler"]:
         low_fraction,high_fraction=[float(value) for value in config["compiler"]["nested_evaluation_fractions"]]
-        low_cases=budget_conditioned_case_offset_dataset(selection,scores,[low_fraction]);high_cases=budget_conditioned_case_offset_dataset(selection,scores,[high_fraction])
+        if training_horizons:
+            confirmation_horizon=[float(config["model"]["confirmation_horizon_seconds"])]
+            low_cases=budget_horizon_conditioned_case_offset_dataset(selection,scores,[low_fraction],confirmation_horizon)
+            high_cases=budget_horizon_conditioned_case_offset_dataset(selection,scores,[high_fraction],confirmation_horizon)
+        else:
+            low_cases=budget_conditioned_case_offset_dataset(selection,scores,[low_fraction]);high_cases=budget_conditioned_case_offset_dataset(selection,scores,[high_fraction])
         low_offsets=score_case_offset(model,low_cases,mean,scale);high_offsets=score_case_offset(model,high_cases,mean,scale)
         scene_to_group={int(key):int(value) for key,value in config["compiler"]["scene_to_group"].items()}
         nested=nested_group_budget_selection(selection,scores,low_offsets,high_offsets,low_fraction,high_fraction,int(config["compiler"]["maximum_actions_per_case"]),float(config["compiler"]["minimum_case_coverage"]),scene_to_group,float(config["compiler"]["minimum_group_case_coverage"]))
