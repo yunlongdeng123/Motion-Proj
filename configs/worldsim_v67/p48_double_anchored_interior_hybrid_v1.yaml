@@ -1,0 +1,76 @@
+schema_version: worldsim_v67.p48_double_anchored_interior_hybrid.v1
+output_schema_version: worldsim_v67.p48_double_anchored_interior_hybrid_summary.v1
+task_id: WS-V67-P48-DOUBLE-ANCHORED-INTERIOR-HYBRID-01
+hypothesis_id: WS-V67-H-P48-001
+seed: 0
+role: endpoint_preserving_interior_budget_hybrid_adapter
+verdict_on_pass: supported_double_anchored_interior_hybrid
+verdict_on_failure: rejected_double_anchored_interior_hybrid
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p33_p4c_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p44_p6r_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p46_p10r4_h1p5_quantile_actions.npz
+model:
+  base_score_key: base_score
+  hidden_dimensions: [32, 16]
+  maximum_residual_cost: 0.05
+  residual_budget_anchor_fraction: 0.25
+  residual_budget_peak_fraction: 0.3333333333333333
+  residual_budget_upper_anchor_fraction: 0.50
+  training_selected_fractions: [0.25, 0.3333333333333333, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0, 1.5, 1.5, 2.0, 2.0, 2.0, 1.5, 1.5]
+  epochs: 6000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 0.05
+  ranking_weight: 0.10
+  listwise_weight: 1.0
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  soft_rank_temperature: 0.05
+  soft_selection_temperature: 0.25
+  domain_aggregation: mean_variance
+  domain_loss_variance_weight: 0.1
+  residual_regularization_weight: 0.01
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p48_p10r2_h1p5_quantile_actions.npz
+  selected_fraction: 0.3333333333333333
+  horizon_seconds: 1.5
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_nonincreasing_scene_support: 6
+locks:
+  endpoint_scores_exactly_equal_p20_at_quarter_and_half: true
+  interior_peak_fixed_at_one_third: true
+  only_amplitude_shape_and_new_development_domain_change_from_p46: true
+  p10r2_h1p5_target_not_previously_materialized: true
+  single_trial_no_anchor_peak_model_loss_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+references:
+  - https://arxiv.org/abs/1705.08045
+  - https://arxiv.org/abs/1511.05641
+claim_boundary:
+  - endpoint_preserving_interior_budget_residual_adapter
+  - cross_cohort_new_horizon_task_condition
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

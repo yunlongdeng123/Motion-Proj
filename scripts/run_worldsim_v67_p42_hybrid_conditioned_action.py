@@ -39,6 +39,8 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "base_score": "frozen_p20",
         "residual_budget_anchor_fraction": config["model"].get("residual_budget_anchor_fraction"),
         "residual_budget_full_fraction": config["model"].get("residual_budget_full_fraction"),
+        "residual_budget_peak_fraction": config["model"].get("residual_budget_peak_fraction"),
+        "residual_budget_upper_anchor_fraction": config["model"].get("residual_budget_upper_anchor_fraction"),
     }, run_dir / "HYBRID_CONDITIONED_ACTION_COMPILER.pt")
 
     selection = dict(_load(Path(config["confirmation"]["cache_path"])))
@@ -49,6 +51,8 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         model, selection, fraction, [horizon], mean, scale, base_score_key="base_score",
         residual_budget_anchor_fraction=config["model"].get("residual_budget_anchor_fraction"),
         residual_budget_full_fraction=config["model"].get("residual_budget_full_fraction"),
+        residual_budget_peak_fraction=config["model"].get("residual_budget_peak_fraction"),
+        residual_budget_upper_anchor_fraction=config["model"].get("residual_budget_upper_anchor_fraction"),
     )
     allocator, allocator_mean, allocator_scale = _load_mean(config, runs_root)
     cases = budget_horizon_conditioned_case_offset_dataset(selection, p20_scores, [fraction], [horizon])
