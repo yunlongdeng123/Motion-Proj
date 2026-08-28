@@ -10,6 +10,13 @@
 `docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`与`docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`只导航本账与canonical evidence，也不是第二本失败账。新路线、新版本和新实验不得再创建并行的
 `*_FAILURES.md` 事实源。
 
+### V6.7 当前边界（2026-08-28）
+
+- 新分支从V6.6 terminal `c05ca27`建立；V6.6 `V66-F02`不复开。
+- V6.7唯一冻结方法把same-Actor one-voxel support与source `behind_hit`方向性ray evidence相交；exact hit永远保留。
+- P1 transfer尚未formal读取；当前无V6.7 failure，下一可用编号=`V67-F01`。
+- 禁止radius/gate/budget sweep、target-dependent retention、Actor deletion与未通过physical repair前的RL claim。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -1,0 +1,40 @@
+schema_version: worldsim_v67.p1_geometry_transfer.v1
+task_id: WS-V67-P1-GEOMETRY-TRANSFER-01
+hypothesis_id: WS-V67-H-P1-001
+seed: 0
+role: task_untouched_legacy_geometry_selection
+model:
+  run: worldsim_v66/WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01/20260828T091036Z__local-geometry-head-s0-r1
+  artifact: LOCAL_GEOMETRY_HEAD.pt
+inputs:
+  evidence_run: worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+scenes: [scene-0030, scene-0055, scene-0453, scene-0501, scene-1046, scene-1085]
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+sampling:
+  maximum_boundary_points_per_unit: 8192
+  minimum_actor_boundary_points: 4
+  io_prefetch_workers: 2
+certificate:
+  maximum_supported_kinematic_jump_m: 3.0
+  maximum_shape_ratio_jump: 1.5
+evaluation:
+  minimum_auroc_improvement_over_deterministic: 0.03
+  minimum_auprc_improvement_over_deterministic: 0.05
+  minimum_above_chance_scene_count: 4
+locks:
+  model_refit: false
+  normalization_refit: false
+  selection_threshold: null
+  actor_existence_authority: false
+  second_read: false
+  repair_rule_frozen_before_quality_read: true
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V66-F02, V66-F01, V65-F19]
+claim_boundary:
+  - task_untouched_but_v65_consumed_legacy_geometry_selection
+  - frozen_v66_head_only_ranks_local_repair_or_abstain
+  - no_actor_existence_fresh_population_physical_repair_rl_or_safety_claim

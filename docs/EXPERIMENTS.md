@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V6.7 Ray-Terminated Actor Surface
+
+### WS-V67-P0-SCOPE-01 / WS-V67-P1-GEOMETRY-TRANSFER-01
+
+- 状态：P0 `done`；P1 `implementation_ready`；branch=`research/worldsim-v6.7-anisotropic-surface`；base=`c05ca27`。
+- repair rule在P1 quality read前冻结：`exact same-Actor hit OR (same-Actor <=0.512m AND source behind_hit)`；target只评估。
+- cohort=`scene-0030/0055/0453/0501/1046/1085`；V65 calibration已消费，但V6.6/V6.7 surface task未读，角色仅为
+  `task_untouched_legacy_geometry_selection`。
+- P1加载冻结V6.6 8-feature/2x32 head，无model/normalization refit、threshold或second read；两线程I/O prefetch与GPU
+  q0/head forward重叠。
+- 实现：`scripts/run_worldsim_v67_p1_geometry_transfer.py`；配置：
+  `configs/worldsim_v67/p1_geometry_transfer_v1.yaml`；formal run尚未创建。
+- failure ledger delta=`none`；下一可用ID=`V67-F01`；无hash/checksum/fingerprint与回归矩阵。
+
 ## WorldSim V6.6 HARP-Compiler
 
 ### WS-V66-CLOSEOUT-01

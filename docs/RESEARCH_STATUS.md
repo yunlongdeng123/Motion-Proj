@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.7 ray-terminated surface protocol active（2026-08-28）
+
+状态：`v67_p0_protocol_frozen_p1_transfer_implementation_ready`；分支=
+`research/worldsim-v6.7-anisotropic-surface`，base=`c05ca27`。V6.7不复开V6.6 radius family；新增方向性source evidence：
+exact same-Actor hit保留，one-voxel邻域只有同时命中已有`behind_hit` ray-termination state才保留。
+
+外部迁移来自ALSO sensor-location occupancy、CVPR 2024 evidence-theory occupancy与SelfOcc SDF/rendering constraints；
+不引入大模型。P1实现已就绪：冻结V6.6 P3L head在V6.7 task-untouched的V65 P3C六场景一次transfer，GPU forward与
+两线程unit prefetch重叠。下一步直接formal run；无sweep、无Actor existence authority。
+
 ## WorldSim V6.6 research complete / arXiv report ready（2026-08-28）
 
 状态：`v66_research_complete_arxiv_report_ready`；active task/hypothesis=`null/null`。正证据为two-level Actor
