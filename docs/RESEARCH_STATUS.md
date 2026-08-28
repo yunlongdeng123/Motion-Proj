@@ -61,8 +61,17 @@ reduction=`72.62%`、query-vs-Actor=`55.17%`，AUROC=`.73113/.70384`；4/4 gates
 
 P102据此把flat profile MLP升级为唯一hierarchical recovery：每个Actor的9个`(signed clearance, boundary distance,
 normalized time)`tokens先由共享temporal encoder聚合，再与24维Actor-query state融合，最后对最多16 Actors做masked
-mean+max；Actor-only仍用原Deep Sets。target/rows/6,000 epochs/fixed50均不变，GPU训练约97% utilization并与P96
-archive IO重叠。不扫temporal width/pooling/profile length。P96仍只确认冻结P95，不允许P100--P102替换。
+mean+max；Actor-only仍用原Deep Sets。6,000 epochs后fixed50 query/Actor/P75=`4/27/13`，absolute reduction=
+`91.57%`、query-vs-Actor=`85.19%`，AUROC=`.87161/.68922`，刷新P95的7为当前development best。
+
+P102 checkpoint与normalization已在P96 target rows出现前冻结。P103作为prospective secondary等待同一P96 rows，模型、
+H3.5、fixed50与4 gates不变；P96 frozen P95仍是唯一primary，P103只能报告同一independent cohort上的secondary transfer，
+不能覆盖或替换P96 verdict。
+
+P96 archive scan在任何processed scene/target materialization前发现`scene-0556`的推断shard03命中0；其余cohort、模型、
+target与gates未变。按约束先检索nuScenes官方/开源下载结构；公开资料确认10个blob parts需合并但没有session-part索引，
+故启动只读exact-session locator扫描尚未占用的02/04/05/07，命中后只修member→shard map并复用其余提取结果，不换scene。
+该工程卡点登记`V67-F69`，科学read仍未发生。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

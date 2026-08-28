@@ -22,12 +22,14 @@
 
 ### WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
 
-- 状态：`active/archive IO; evaluator waiting`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
+- 状态：`active/pre-target exact-shard recovery; evaluator waiting`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
   scene indices=`599/37/489/81/83/806/485/696/440/808`。
 - exact shards=`08/01/06/01/01/10/06/09/03/10`；01/03两个此前未进入V4 test manifest的sessions由archive首个
   real session相邻范围确定，formal extraction仍要求exact 3,901 required members全命中，否则read前失败且不换scene。
 - frozen P95 checkpoint、H3.5、9 time samples、Actor half-width+1m、nearest16、fixed50与4 gates完全不变；
   primary endpoint是trajectory occupancy flip，false-safe/false-alarm仅描述。one-shot independent read。
+- shard08精确命中397；推断的`0556→03`扫描完成但命中0，发生在processed/target read前。公开资料未提供session-part
+  index，当前对02/04/05/07作exact session locator；只允许修正0556 shard并复用其他结果，不换cohort（`V67-F69`）。
 
 ### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
 
@@ -85,12 +87,22 @@
 
 ### WS-V67-P102-HIERARCHICAL-TEMPORAL-INTERACTION-01
 
-- 状态：`active/GPU training`；canonical=`20260830T022000Z__hierarchical-temporal-interaction-s0-r1`。
+- 状态：`done/supported development`；canonical=`20260830T022000Z__hierarchical-temporal-interaction-s0-r1`。
 - 每个Actor的9个ordered `(signed clearance, boundary distance, normalized time)` tokens先经共享temporal MLP并作
   temporal mean+max，再与24维Actor-query state融合；随后对最多16 Actors作masked mean+max并预测total flip。
 - Actor-only保持原19维Deep Sets；复用P101 frozen rows，0 new read；6,000 epochs、fixed50、P95 endpoint/gates不变。
 - 这是P101 flat profile未超过P95后的单一hierarchical representation recovery；不扫width/pooling/profile length，
   不替换P96。与archive IO并行时GPU约97%、1.96GiB。
+- result：fixed50 query/Actor/P75=`4/27/13`，absolute reduction=`91.57%`、query-vs-Actor=`85.19%`，AUROC=
+  `.87161/.68922`，4/4 gates；相较P95的7进一步减至4，是当前development best。
+
+### WS-V67-P103-HIERARCHICAL-CONFIRMATION-01
+
+- 状态：`active/waiting prospective P96 rows`；canonical=`20260830T024000Z__hierarchical-confirmation-s0-r1`。
+- P102 checkpoint、42维normalization、temporal/Actor pooling、H3.5、fixed50、P75 comparator与4 gates均在P96 target
+  rows存在前冻结；不训练、不refit，只等待同一行artifact做一次evaluation。
+- P103是P96 independent cohort上的prospective secondary；P96 frozen P95保持唯一primary。无论两者结果如何，P103
+  不能替换P96 verdict，也不创建第二target read或第二cohort。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
