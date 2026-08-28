@@ -53,6 +53,58 @@ class DeepSetRisk(torch.nn.Module):
         )
 
 
+class SetAttentionRisk(torch.nn.Module):
+    def __init__(
+        self, feature_count: int, model_dimension: int, attention_heads: int,
+        attention_layers: int, decoder_dimensions: Sequence[int],
+    ) -> None:
+        super().__init__()
+        self.input_projection = torch.nn.Sequential(
+            torch.nn.Linear(feature_count, model_dimension), torch.nn.SiLU(),
+        )
+        layer = torch.nn.TransformerEncoderLayer(
+            d_model=model_dimension, nhead=attention_heads,
+            dim_feedforward=model_dimension * 2, dropout=0.0,
+            activation="gelu", batch_first=True, norm_first=True,
+        )
+        self.encoder = torch.nn.TransformerEncoder(layer, num_layers=attention_layers)
+        self.pool_seed = torch.nn.Parameter(torch.zeros(1, 1, model_dimension))
+        self.pool = torch.nn.MultiheadAttention(
+            model_dimension, attention_heads, dropout=0.0, batch_first=True,
+        )
+        decoder_layers: list[torch.nn.Module] = []
+        width = model_dimension
+        for hidden in decoder_dimensions:
+            decoder_layers.extend((torch.nn.Linear(width, int(hidden)), torch.nn.SiLU()))
+            width = int(hidden)
+        self.decoder = torch.nn.Sequential(*decoder_layers)
+        self.event_head = torch.nn.Linear(width, 1)
+        self.error_head = torch.nn.Linear(width, 1)
+
+    def forward(self, features: torch.Tensor, mask: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        encoded = self.encoder(
+            self.input_projection(features), src_key_padding_mask=~mask,
+        )
+        seed = self.pool_seed.expand(len(features), -1, -1)
+        pooled, _ = self.pool(seed, encoded, encoded, key_padding_mask=~mask, need_weights=False)
+        decoded = self.decoder(pooled[:, 0])
+        return self.event_head(decoded).squeeze(-1), torch.nn.functional.softplus(
+            self.error_head(decoded).squeeze(-1)
+        )
+
+
+def _make_model(feature_count: int, model_config: dict[str, object]) -> torch.nn.Module:
+    if str(model_config.get("architecture", "deepset")) == "set_attention":
+        return SetAttentionRisk(
+            feature_count, int(model_config["model_dimension"]),
+            int(model_config["attention_heads"]), int(model_config["attention_layers"]),
+            model_config["decoder_dimensions"],
+        )
+    return DeepSetRisk(
+        feature_count, model_config["element_dimensions"], model_config["decoder_dimensions"]
+    )
+
+
 def _build_sets(
     arrays: dict[str, np.ndarray], radius: float, threshold: float, maximum_actors: int,
 ) -> dict[str, np.ndarray]:
@@ -102,7 +154,7 @@ def _build_sets(
 
 @torch.no_grad()
 def _predict_in_batches(
-    model: DeepSetRisk, features: torch.Tensor, mask: torch.Tensor, batch_size: int = 4096,
+    model: torch.nn.Module, features: torch.Tensor, mask: torch.Tensor, batch_size: int = 4096,
 ) -> np.ndarray:
     outputs = []
     for start in range(0, len(features), batch_size):
@@ -147,8 +199,8 @@ def main() -> None:
         pos, neg = np.flatnonzero(members & labels), np.flatnonzero(members & ~labels)
         if len(pos) and len(neg):
             groups.append((torch.from_numpy(pos).long().cuda(), torch.from_numpy(neg).long().cuda()))
-    query_model = DeepSetRisk(len(FEATURE_NAMES), model_config["element_dimensions"], model_config["decoder_dimensions"]).cuda()
-    actor_model = DeepSetRisk(len(ACTOR_FEATURE_NAMES), model_config["element_dimensions"], model_config["decoder_dimensions"]).cuda()
+    query_model = _make_model(len(FEATURE_NAMES), model_config).cuda()
+    actor_model = _make_model(len(ACTOR_FEATURE_NAMES), model_config).cuda()
     optimizer = torch.optim.AdamW(list(query_model.parameters()) + list(actor_model.parameters()),
         lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
     pair_per_group = max(1, int(model_config["pair_batch_size"]) // len(groups))
@@ -177,7 +229,12 @@ def main() -> None:
     torch.save({"query_feature_mean": query_mean, "query_feature_scale": query_scale,
         "actor_feature_mean": actor_mean, "actor_feature_scale": actor_scale,
         "maximum_visited_actors": model_config["maximum_visited_actors"],
-        "element_dimensions": model_config["element_dimensions"], "decoder_dimensions": model_config["decoder_dimensions"],
+        "architecture": model_config.get("architecture", "deepset"),
+        "element_dimensions": model_config.get("element_dimensions"),
+        "model_dimension": model_config.get("model_dimension"),
+        "attention_heads": model_config.get("attention_heads"),
+        "attention_layers": model_config.get("attention_layers"),
+        "decoder_dimensions": model_config["decoder_dimensions"],
         "query_model_state_dict": query_model.state_dict(), "actor_model_state_dict": actor_model.state_dict()},
         run_dir / "DEEPSET_TRAJECTORY_RELIABILITY.pt")
     evaluation_path = args.runs_root / config["evaluation_rows"]["run"] / config["evaluation_rows"]["artifact"]
