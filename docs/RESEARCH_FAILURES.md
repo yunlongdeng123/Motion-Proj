@@ -12,12 +12,14 @@
 
 ### V6.6 当前边界（2026-08-28）
 
-- V6.6 已从合入 V6.5 终态 `288fa9f` 的 `main` 建立；当前只解锁 Tier-L P1-D development atlas。
+- V6.6 已从合入 V6.5 终态 `288fa9f` 的 `main` 建立；当前解锁P3L低容量local geometry head，仍只在
+  consumed legacy train/selection角色内执行。
 - 直接继承 `V65-F19`：visited-state reliability 不得重命名为 direct action authority；V6.6 validity 轴必须与
   hazard 轴分离。继承 `V64-F28`：手工低维 collision critic 不是正式 RL。继承 `V1-F06`：稀疏 cut-in pool
   不得成为主数据入口或论文成立条件。
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
-  不得替代 fresh selection/confirmation。当前无 V6.6 failure，下一可用编号=`V66-F01`。
+  不得替代 fresh selection/confirmation。`V66-F01 active`记录deterministic injected certificate对natural local
+  geometry conflict的0 recall；下一可用编号=`V66-F02`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
   `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
@@ -37,6 +39,31 @@
   natural/fresh边界未解除；下一编号仍为`V66-F01`。
 - P2N natural-conflict诊断已实现但尚未读target；无新failure。observed-FREE actor boundary只定义local geometry
   conflict，禁止升级成Actor existence artifact；若deterministic证书transfer失败，必须登记`V66-F01`并先检索外部方案。
+
+<a id="detail-v66"></a>
+
+## V6.6 HARP-Compiler 详细账本（2026-08-28）
+
+### V66-F01 — deterministic injected certificate不覆盖natural Actor-owned local geometry conflict
+
+- 分类：`algorithm/evaluation`；状态：`active`。
+- 观察：P2N独立legacy cohort含891 actor-unit，498个存在至少一个target observed-FREE boundary point；P2 injected
+  certificate对这些local conflicts的recall=`0`、AUROC=`0.5`、AUPRC=`0.558923`。q0有弱signal但不足以单独作为
+  authority：AUROC/AUPRC=`0.543745/0.612874`，rate Spearman=`0.267650`。
+- 根因：P2 factor只覆盖support缺失、duplicate、lifecycle、kinematic/identity与shape injection。natural conflict常发生在
+  已有Actor hit/current/swept support的局部owned geometry，Actor existence证据不能替代primitive geometry validity。
+- 推翻项：推翻“deterministic injected certificate可直接迁移到natural local geometry”的假设；不推翻Actor existence
+  protection，也不把local conflict升级为whole-Actor artifact。
+- 防重复/复开：禁止降低hidden-FREE label、扫count/rate threshold、把conflict Actor直接DROP或在P10X反复调模型。
+  合法恢复必须使用instance-evidence local geometry head，train/selection scene-disjoint；P10X只允许一次selection，之后需
+  另一独立cohort确认。
+- 外部检索迁移：CVPR 2024 Symphonies的instance query/context、GaussianFormer object-centric sparse representation、
+  Cam4DOcc 4D instance occupancy以及CVPR evidential occupancy的unknown/contradiction建模，落地为两级certificate而非
+  替换backbone。详见`P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
+- 证据：`WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01` /
+  `20260828T090228Z__natural-actor-conflict-s0-r1`，实现commit=`a92093b`。
+
+下一可用编号：`V66-F02`。
 
 ### V6.5 终态边界（2026-08-28）
 
@@ -125,6 +152,7 @@
 
 ### 0.4 目录
 
+- [V6.6 详细账本](#detail-v66)
 - [V1–V6 版本总览与 V1/V2 汇总](#1-v1v6-版本总览与-v1v2-汇总)
 - [V6.4 详细账本](#detail-v64)
 - [V6.3 详细账本](#detail-v63)

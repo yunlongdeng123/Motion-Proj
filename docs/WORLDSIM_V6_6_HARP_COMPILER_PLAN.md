@@ -4,7 +4,7 @@
 >
 > 中文工作名：**HARP-Compiler：面向 RL 就绪驾驶仿真的幻觉感知、风险保真世界编译器**
 >
-> 状态：`active_p2n_natural_conflict_diagnostic`
+> 状态：`active_p3l_instance_evidence_head`
 >
 > 上游冻结分支：`research/worldsim-v6.5-task-conditioned-authority`
 >
@@ -35,6 +35,11 @@
 > 50% hazard events，R1 ABSTAIN保留100%但violation reduction=0，R2同时实现100% violation reduction、
 > 100% hazard retention和Actor ID/track exact。6/6 R2 gates通过。该结果只证明factor-level paired repair；
 > 下一步用独立P10X六场景做natural actor-owned observed-FREE boundary conflict诊断，不把注入满分当泛化。
+
+> P2N 终态（2026-08-28）：独立P10X六场景产生891 actor-unit，其中498个存在local observed-FREE conflict。
+> q0 AUROC/AUPRC=`0.5437/0.6129`、rate Spearman=`0.2677`；deterministic injected certificate recall=0、
+> AUROC=0.5，登记`V66-F01`。外部检索后冻结两级迁移：Actor existence继续由track/provenance保护，Actor-owned
+> local geometry改用低容量instance-evidence summary head；不删除Actor、不上大型backbone、不扫参。
 
 ---
 

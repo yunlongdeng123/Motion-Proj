@@ -81,13 +81,29 @@
 
 ### WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P2N-001`；formal run尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P2N-001`；verdict=`diagnosed_natural_actor_local_geometry_conflict`。
 - 角色：与P1-D不重叠的P10X consumed cohort cross-cohort diagnostic；不是fresh selection/confirmation。
 - 目标：将Actor-owned native boundary上的target observed-FREE标记为local geometry conflict，比较q0 ranking与
   deterministic certificate recall；不把local primitive conflict升级为Actor existence artifact。
 - 只冻结一次threshold-free `hidden_free_count > 0` hard-evidence label，不扫rate/count threshold。
 - 实现：`motion_proj/worldsim_v66/natural_actor_conflict.py`、
   `scripts/run_worldsim_v66_p2n_natural_conflict.py`；CPU预取与q0 GPU forward重叠。
+- Canonical：`run://worldsim_v66/WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01/
+  20260828T090228Z__natural-actor-conflict-s0-r1`。
+- 分母：72 units / 891 actor-unit；conflict/clean=`498/393`，prevalence=0.558923。
+- q0：AUROC/AUPRC=`0.543745/0.612874`，hidden-FREE rate Spearman=`0.267650`。
+- deterministic certificate：recall=0、AUROC/AUPRC=`0.5/0.558923`，clean false conflict=0；`V66-F01 active`。
+- 资源：wall=10.991s，peak GPU=0.02359GiB，RSS=0.9180GiB。
+
+### WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01
+
+- 状态：`pending`（migration frozen）；hypothesis=`WS-V66-H-P3L-001`。
+- Train=P10V consumed 6 scenes；selection=P10X consumed 6 scenes（P2N已读）；两者scene-disjoint。selection不再用于
+  改architecture、seed、feature或threshold；通过后另选独立cohort确认。
+- 固定特征：q0 mean/p90、log boundary/hit/current/swept counts、hit/current density、current/swept ratio。
+- 固定模型：2x32 MLP、seed0、full-batch weighted BCE、单次训练；输出只控制local geometry REPAIR/ABSTAIN，
+  不控制Actor existence。
+- 外部迁移证据与边界：`docs/autoresearch/worldsim_v66/P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

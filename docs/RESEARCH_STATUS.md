@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V6.6 P2N natural conflict diagnosed / P3L migration frozen（2026-08-28）
+
+状态：`v66_p2n_deterministic_natural_ceiling_p3l_frozen`；canonical=
+`run://worldsim_v66/WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01/20260828T090228Z__natural-actor-conflict-s0-r1`；
+verdict=`diagnosed_natural_actor_local_geometry_conflict`；新增`V66-F01 active`。
+
+72 units得到891 eligible actor-unit，其中observed-FREE local geometry conflict/clean=`498/393`，prevalence=
+`0.5589`。q0 conflict AUROC/AUPRC=`0.543745/0.612874`，q0与hidden-FREE rate Spearman=`0.267650`；
+deterministic certificate conflict recall=`0`、AUROC=`0.5`、AUPRC=`0.558923`，clean false conflict=0。诊断分母/
+双类checks通过，wall=`10.99s`、GPU=`0.0236GiB`、RSS=`0.918GiB`。这推翻“Actor级support certificate足以
+覆盖natural actor-owned local geometry conflict”，但不推翻Actor existence protection；local conflict不得用于删Actor。
+
+按卡点协议完成外部检索并冻结最小迁移：Symphonies支持instance-query contextual geometry，GaussianFormer支持
+object-centric sparse summary，Cam4DOcc强调instance temporal occupancy，CVPR evidential occupancy说明二值LiDAR
+occupancy label质量与unknown/contradiction需要显式处理。项目迁移为两级certificate：existence继续用track/provenance，
+local geometry只训练一个低容量instance-evidence MLP，特征固定为q0 mean/p90与boundary/hit/current/swept count及两个
+density ratio。P10V作train、已读P10X只作selection；不扫architecture/seed/threshold。若selection ranking相对constant
+certificate有预注册增量，再在另一独立V65 cohort exact-once确认。
+
+Active=`WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01 / WS-V66-H-P3L-001`。冻结：
+`docs/autoresearch/worldsim_v66/P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`；P2N结果：
+`docs/autoresearch/worldsim_v66/P2N_NATURAL_ACTOR_CONFLICT_RESULT.md`；实现提交=`a92093b`。
+
 ## WorldSim V6.6 P2N natural-conflict diagnostic implementation ready（2026-08-28）
 
 状态：`v66_p2n_natural_conflict_implementation_ready`。实现复用P1的CPU预取/GPU q0流水线，但在与P1场景不重叠的
