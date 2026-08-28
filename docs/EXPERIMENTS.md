@@ -2,6 +2,32 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P47-CROSS-COHORT-ANCHORED-NESTED-01
+
+- 状态：`ready/running`；冻结P46，P10R4-H1.5 low/high=`.25/.50` strict nested replication。
+- Gates：两端exact、nesting、minimum group `.50`、相对P31非退化、6 scenes；无训练/refit/sweep。
+
+### WS-V67-P46-ANCHORED-HYBRID-CROSS-COHORT-HORIZON-01 result
+
+- 状态：`done/supported`；canonical=`20260828T233000Z__cross-cohort-horizon-s0-r1`；P10R4-H1.5=
+  `1077/1152` eligible、96 cases；训练2,664 conditioned cases/29,730 rows。
+- Exact=`353/353`；coverage/minimum group=`0.666667/0.583333`。
+- Hybrid/P31/fixed reduction=`0.683908/0.672419/0.252624`；deltas=`+0.011489/+0.431285`；8/8 scenes，
+  4/4 gates；wall/peak GPU/RSS=`185.506s/0.04251GiB/1.29317GiB`。
+
+### WS-V67-P46-ANCHORED-HYBRID-CROSS-COHORT-HORIZON-01
+
+- 状态：`training + P10R4 H1.5 materialization overlapped`；10 domains×3 budgets，P44 anchor/hybrid设置不变。
+- 新增P6R-H1.5 development；P10R4-H1.5 target首次物化，confirmation=budget1/3。
+- Gates：exact、minimum group `.50`、相对P31 `+.005`、6/8 scenes；不扫anchor/model/loss/gate。
+
+### WS-V67-P45-ANCHORED-HYBRID-NESTED-BUDGET-01 result
+
+- 状态：`done/supported`；canonical=`20260828T231000Z__anchored-hybrid-nested-s0-r1`；low/high exact=
+  `220/220,436/436`，nested=`220/220`。
+- Anchored low/high reduction=`0.802420/0.700183`；P31=`0.802420/0.694720`；deltas=`0/+0.005463`。
+- Minimum group=`.50/.625`，scene=`5/7,7/7`；5/5 gates；wall=`0.443s`。
+
 ### WS-V67-P45-ANCHORED-HYBRID-NESTED-BUDGET-01
 
 - 状态：`ready/running`；冻结P44，P6R H1.5 low/high=`.25/.50`，strict nesting；quarter score精确回退P20。

@@ -446,10 +446,28 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F33 — P45 frozen anchored-hybrid nested-budget候选
 
-- 分类：`algorithm/anchored-hybrid-nested-structure`；状态：`active_frozen_read`。
+- 分类：`algorithm/anchored-hybrid-nested-structure`；状态：`resolved_by_anchored_nested_nonregression`。
 - 方法：P44/P31/P20全冻结；新H1.5 cache quarter/half strict nesting。Quarter action score由anchor严格等于P20。
 - 判定：两端exact、strict nesting、minimum group `.50`、相对各自P31 nested baseline非退化、至少5 scenes。
+- 结果：low/high exact=`220/436`且strict nested；deltas over P31=`0/+0.005463`，minimum group=
+  `.50/.625`，scene=`5/7,7/7`，5/5 gates。
 - 边界：同一新H task condition的结构read；无训练/refit/budget/weight sweep。下一编号=`V67-F34`。
+
+### V67-F34 — P46 anchored hybrid cross-cohort new-H replication候选
+
+- 分类：`algorithm/cross-cohort-task-condition-replication`；状态：`resolved_by_cross_cohort_horizon_replication`。
+- 方法：P44结构/anchor/loss不变；新增P6R-H1.5 development domain；P10R4-H1.5 target首次物化并作budget1/3 read。
+- 判定：相对P31 `>=+0.005`、exact、minimum group `.50`、至少6/8 scenes。
+- 结果：H1.5 eligible=`1077/1152`；exact=`353/353`、coverage/min group=`.666667/.583333`；
+  reduction=`.683908`，相对P31=`+.011489`、相对fixed=`+.431285`，8/8 scenes，4/4 gates。
+- 边界：source cohort曾在H2训练，但H1.5 task target未见；不作fresh population claim，不扫参。下一编号=`V67-F35`。
+
+### V67-F35 — P47 frozen cross-cohort anchored nested replication候选
+
+- 分类：`algorithm/cross-cohort-nested-replication`；状态：`active_frozen_read`。
+- 方法：P46/P31/P20全冻结；P10R4-H1.5 quarter/half strict nesting，quarter anchor回退P20。
+- 判定：两端exact、strict nesting、minimum group `.50`、相对各自P31非退化、至少6 scenes。
+- 边界：第二cohort新H结构复制，无训练/refit/sweep。下一编号=`V67-F36`。
 
 ### V6.6 当前边界（2026-08-28）
 

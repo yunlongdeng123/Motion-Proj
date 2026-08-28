@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.7 P46 cross-cohort H1.5 supported / P47 nested replication（2026-08-28）
+
+P46 P10R4-H1.5 materialization=`1077/1152` eligible、96 cases，与GPU训练重叠。Canonical=
+`run://worldsim_v67/WS-V67-P46-ANCHORED-HYBRID-CROSS-COHORT-HORIZON-01/
+20260828T233000Z__cross-cohort-horizon-s0-r1`。Budget=1/3 exact=`353/353`，coverage/minimum group=
+`0.666667/0.583333`。Hybrid/P31/fixed reduction=`0.683908/0.672419/0.252624`，deltas=
+`+0.011489/+0.431285`，8/8 scenes，4/4 gates。Verdict=`supported_cross_cohort_horizon_anchored_hybrid`。
+
+P47冻结P46，在P10R4-H1.5做quarter/half strict nested replication，判定两端相对P31非退化。无训练/refit/sweep。
+
+## WorldSim V6.7 P45 anchored nesting supported / P46 cross-cohort H1.5 training（2026-08-28）
+
+P45 canonical=`run://worldsim_v67/WS-V67-P45-ANCHORED-HYBRID-NESTED-BUDGET-01/
+20260828T231000Z__anchored-hybrid-nested-s0-r1`。Low/high exact=`220/220,436/436`，220个low actions全部嵌套；
+quarter anchored/P31 reduction均=`0.802420`（delta=`0`），half=`0.700183/0.694720`（`+0.005463`）。
+Minimum group=`0.50/0.625`，scene=`5/7,7/7`，5/5 gates；verdict=`supported_anchored_hybrid_nested_budget`。
+
+P46保持anchor/hybrid结构不变，只把已消费P6R-H1.5加入development；同时异步物化P10R4-H1.5。P10R4虽在H2
+进入训练，但H1.5 target从未物化/读取，用于跨cohort新任务条件复制。GPU训练与cache物化重叠，无参数扫描。
+
 ## WorldSim V6.7 P44 anchored hybrid supported / P45 anchored nesting（2026-08-28）
 
 P44 H1.5 materialization=`881/1152` eligible actions、76 cases；与GPU训练异步重叠。Canonical=
