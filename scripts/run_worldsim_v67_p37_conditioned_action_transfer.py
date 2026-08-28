@@ -12,8 +12,8 @@ import torch, yaml
 from motion_proj.worldsim_v67.adaptive_budget import (
     budget_horizon_conditioned_case_offset_dataset, group_coverage_constrained_selection, score_case_offset,
 )
-from motion_proj.worldsim_v67.conditioned_action_compiler import score_conditioned_action_compiler
-from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
+from motion_proj.worldsim_v67.conditioned_action_compiler import build_conditioned_action_model, score_conditioned_action_compiler
+from motion_proj.worldsim_v67.listwise_action_compiler import score_listwise_compiler
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
 from scripts.run_worldsim_v67_p17_quantile_trajectory import _load
 from scripts.run_worldsim_v67_p34_heteroscedastic_authority import _load_mean, _load_p20, _write
@@ -30,8 +30,9 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         runs_root / config["inputs"]["conditioned_compiler_run"] / config["inputs"]["conditioned_compiler_artifact"],
         map_location="cuda", weights_only=False,
     )
-    model = BoundedListwiseCompiler(
-        len(artifact["feature_names"]), list(artifact["hidden_dimensions"]), float(artifact["maximum_residual_cost"])
+    model = build_conditioned_action_model(
+        len(artifact["feature_names"]), list(artifact["hidden_dimensions"]), float(artifact["maximum_residual_cost"]),
+        artifact.get("case_gate_hidden_dimension"),
     ).cuda()
     model.load_state_dict(artifact["state_dict"]); model.eval()
     mean = np.asarray(artifact["mean"], dtype=np.float32); scale = np.asarray(artifact["scale"], dtype=np.float32)

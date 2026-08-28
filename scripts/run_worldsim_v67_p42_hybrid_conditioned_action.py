@@ -13,9 +13,10 @@ from motion_proj.worldsim_v67.adaptive_budget import (
     budget_horizon_conditioned_case_offset_dataset, group_coverage_constrained_selection, score_case_offset,
 )
 from motion_proj.worldsim_v67.conditioned_action_compiler import (
-    CONDITIONED_FEATURE_NAMES, score_conditioned_action_compiler, train_conditioned_action_compiler,
+    CONDITIONED_FEATURE_NAMES, build_conditioned_action_model, score_conditioned_action_compiler,
+    train_conditioned_action_compiler,
 )
-from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
+from motion_proj.worldsim_v67.listwise_action_compiler import score_listwise_compiler
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
 from scripts.run_worldsim_v67_p17_quantile_trajectory import _combine, _load
 from scripts.run_worldsim_v67_p34_heteroscedastic_authority import _load_mean, _load_p20, _write
@@ -41,6 +42,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "residual_budget_full_fraction": config["model"].get("residual_budget_full_fraction"),
         "residual_budget_peak_fraction": config["model"].get("residual_budget_peak_fraction"),
         "residual_budget_upper_anchor_fraction": config["model"].get("residual_budget_upper_anchor_fraction"),
+        "case_gate_hidden_dimension": config["model"].get("case_gate_hidden_dimension"),
     }, run_dir / "HYBRID_CONDITIONED_ACTION_COMPILER.pt")
 
     selection = dict(_load(Path(config["confirmation"]["cache_path"])))
@@ -70,9 +72,9 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
             runs_root / config["inputs"]["method_baseline_compiler_run"] / config["inputs"]["method_baseline_compiler_artifact"],
             map_location="cuda", weights_only=False,
         )
-        baseline_model = BoundedListwiseCompiler(
+        baseline_model = build_conditioned_action_model(
             len(baseline_artifact["feature_names"]), list(baseline_artifact["hidden_dimensions"]),
-            float(baseline_artifact["maximum_residual_cost"]),
+            float(baseline_artifact["maximum_residual_cost"]), baseline_artifact.get("case_gate_hidden_dimension"),
         ).cuda()
         baseline_model.load_state_dict(baseline_artifact["state_dict"]); baseline_model.eval()
         baseline_scores = score_conditioned_action_compiler(
@@ -119,6 +121,11 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     }
     if method_baseline is not None:
         summary["frozen_method_baseline"] = method_baseline
+    if getattr(model, "latest_case_gate", None) is not None:
+        gate = model.latest_case_gate.float().cpu().numpy()
+        summary["case_gate_stats"] = {
+            "minimum": float(gate.min()), "mean": float(gate.mean()), "maximum": float(gate.max()),
+        }
     _write(run_dir / "summary.json", summary); _write(run_dir / "status.json", {"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()})
     return {"run_dir": str(run_dir), "verdict": verdict, "gate_results": gates}
 

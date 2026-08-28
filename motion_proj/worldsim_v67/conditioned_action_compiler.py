@@ -7,10 +7,23 @@ from typing import Any, Mapping
 import numpy as np
 import torch
 
-from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, FEATURE_NAMES, action_features
+from motion_proj.worldsim_v67.listwise_action_compiler import (
+    BoundedListwiseCompiler, FEATURE_NAMES, GatedBoundedListwiseCompiler, action_features,
+)
 
 
 CONDITIONED_FEATURE_NAMES = FEATURE_NAMES + ("selected_fraction", "horizon_seconds")
+
+
+def build_conditioned_action_model(
+    feature_count: int, hidden_dimensions: list[int], maximum_residual_cost: float,
+    case_gate_hidden_dimension: int | None = None,
+) -> BoundedListwiseCompiler:
+    if case_gate_hidden_dimension is not None:
+        return GatedBoundedListwiseCompiler(
+            feature_count, hidden_dimensions, maximum_residual_cost, case_gate_hidden_dimension,
+        )
+    return BoundedListwiseCompiler(feature_count, hidden_dimensions, maximum_residual_cost)
 
 
 def conditioned_padded_cases(
@@ -81,8 +94,9 @@ def train_conditioned_action_compiler(
     )
     pair_sign = torch.sign(target[:, :, None] - target[:, None, :])
     torch.manual_seed(int(seed))
-    model = BoundedListwiseCompiler(
-        features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"])
+    model = build_conditioned_action_model(
+        features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"]),
+        int(config["case_gate_hidden_dimension"]) if "case_gate_hidden_dimension" in config else None,
     ).cuda()
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]), weight_decay=float(config["weight_decay"]))
     averaging_start_fraction = config.get("weight_averaging_start_fraction")
@@ -209,8 +223,9 @@ def train_sharpness_aware_conditioned_action_compiler(
     )
     pair_sign = torch.sign(target[:, :, None] - target[:, None, :])
     torch.manual_seed(int(seed))
-    model = BoundedListwiseCompiler(
-        features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"])
+    model = build_conditioned_action_model(
+        features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"]),
+        int(config["case_gate_hidden_dimension"]) if "case_gate_hidden_dimension" in config else None,
     ).cuda()
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]), weight_decay=float(config["weight_decay"]))
 

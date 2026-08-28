@@ -46,6 +46,31 @@ class BoundedListwiseCompiler(torch.nn.Module):
         return (qmean + residual).clamp(0.0, 1.0), residual
 
 
+class GatedBoundedListwiseCompiler(BoundedListwiseCompiler):
+    def __init__(
+        self, feature_count: int, hidden_dimensions: list[int], maximum_residual: float,
+        case_gate_hidden_dimension: int,
+    ) -> None:
+        super().__init__(feature_count, hidden_dimensions, maximum_residual)
+        self.case_gate_hidden_dimension = int(case_gate_hidden_dimension)
+        self.gate_network = torch.nn.Sequential(
+            torch.nn.Linear(int(feature_count), self.case_gate_hidden_dimension), torch.nn.SiLU(),
+            torch.nn.Linear(self.case_gate_hidden_dimension, 1),
+        )
+        self.latest_case_gate: torch.Tensor | None = None
+
+    def forward(
+        self, features: torch.Tensor, qmean: torch.Tensor, mask: torch.Tensor
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        raw = torch.tanh(self.network(features).squeeze(-1)) * self.maximum_residual
+        center = (raw * mask).sum(dim=1, keepdim=True) / mask.sum(dim=1, keepdim=True)
+        pooled = (features * mask[:, :, None]).sum(dim=1) / mask.sum(dim=1, keepdim=True)
+        gate = torch.sigmoid(self.gate_network(pooled))
+        self.latest_case_gate = gate.squeeze(-1).detach()
+        residual = (raw - center) * mask * gate
+        return (qmean + residual).clamp(0.0, 1.0), residual
+
+
 def action_features(arrays: Mapping[str, np.ndarray]) -> np.ndarray:
     return np.concatenate(
         (
