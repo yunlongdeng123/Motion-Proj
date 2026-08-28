@@ -220,8 +220,9 @@
   single longitudinal command jerk limiter。
 - 只移除零速边界第二次acceleration increment；原`6m/s^3`rate limiter及Actor/scenario/horizon/IDM/AV参数、
   trajectory、gates全部不变；不扫参数，失败关闭P8 family。
-- 实现复用P8 module/runner/config；冻结：`docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`；
-  formal recovery尚未创建。
+- 实现复用P8 module/runner；配置：`configs/worldsim_v66/p8r_stop_state_jerk_recovery_v1.yaml`，除task/hypothesis/
+  recovery metadata外与P8 simulation/selection/gates exact；冻结：
+  `docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`；formal recovery尚未创建。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
