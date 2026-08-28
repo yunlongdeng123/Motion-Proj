@@ -1,0 +1,25 @@
+schema_version: worldsim_v67.p112_nonlinear_gaussian_crossing.v1
+output_schema_version: worldsim_v67.p112_nonlinear_gaussian_crossing_summary.v1
+task_id: WS-V67-P112-NONLINEAR-GAUSSIAN-CROSSING-01
+role: consumed_development_nonlinear_gaussian_crossing_mechanism
+seed: 0
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+development_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  cohorts:
+    - {name: consumed_p81, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+    - {name: consumed_p96, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+sampling:
+  sample_count: 256
+  row_batch_size: 512
+locks:
+  frozen_P109_diagonal_Gaussian_and_seed0: true
+  exactly_256_samples_and_nonlinear_Euclidean_occupancy_recomputation: true
+  consumed_development_only_and_no_P108_rows: true
+  no_sample_count_distribution_projection_aggregation_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - mechanism_comparison_to_linearized_P109_only
+  - no_independent_confirmation_calibrated_probability_collision_or_safety_claim
