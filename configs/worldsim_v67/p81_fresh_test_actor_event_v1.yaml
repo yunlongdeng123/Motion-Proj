@@ -1,0 +1,68 @@
+schema_version: worldsim_v67.p81_fresh_test_actor_event.v1
+output_schema_version: worldsim_v67.p81_fresh_test_actor_event_summary.v1
+task_id: WS-V67-P81-FRESH-TEST-ACTOR-EVENT-01
+hypothesis_id: WS-V67-H-P81-001
+role: independent_test_role_fixed_coverage_actor_event_confirmation
+verdict_on_pass: supported_fresh_test_actor_event_selector
+verdict_on_failure: rejected_fresh_test_actor_event_selector
+source:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+p73_baseline:
+  run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
+evaluation_data:
+  scene_names: [scene-0016, scene-0627, scene-0523, scene-0344, scene-1059, scene-0330, scene-0923, scene-1071, scene-0784, scene-0963]
+  scene_shards:
+    scene-0016: "01"
+    scene-0627: "05"
+    scene-0523: "05"
+    scene-0344: "03"
+    scene-1059: "08"
+    scene-0330: "03"
+    scene-0923: "08"
+    scene-1071: "09"
+    scene-0784: "07"
+    scene-0963: "08"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p81_test_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizon_seconds: 3.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  require_fewer_events_than_p73: true
+  minimum_scene_nonincreasing_fraction: 0.80
+locks:
+  ten_test_role_scenes_frozen_before_any_sensor_or_target_read: true
+  p75_and_p73_models_frozen_before_test_read: true
+  exact_per_scene_fifty_percent_coverage: true
+  primary_endpoint_unreliable_event_prevalence_not_mean_cost: true
+  remaining_ten_test_role_scenes_unread: true
+  no_threshold_coverage_model_loss_horizon_or_scene_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v267/zhou25y.html
+  - https://proceedings.neurips.cc/paper_files/paper/2016/hash/c52f1bd66cc19d05628bd8bf27af3ad6-Abstract.html
+claim_boundary:
+  - ten_independent_never_read_test_role_scenes_at_H3p5
+  - fixed_coverage_trajectory_conditioned_unreliable_actor_event_triage
+  - mean_cost_and_pointwise_metrics_descriptive_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
