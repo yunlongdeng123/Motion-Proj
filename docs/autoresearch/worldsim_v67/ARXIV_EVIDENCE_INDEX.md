@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P113 complete; evidence current through P118`
+- 状态：`P113 complete; evidence current through P119`
 - 当前主结论：P108 scene-level independent factorization支持；P113 AUROC增量成立但fixed50 uncertainty-over-clearance整体拒绝
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -30,6 +30,7 @@
 | P117 | `run://worldsim_v67/WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01/20260830T072500Z__full-covariance-actor-uncertainty-s0-r1` | P81/P96 AUROC gain=`+.00490/+.00932`；development support |
 | P118 | `run://worldsim_v67/WS-V67-P118-CORRELATION-ABLATION-01/20260830T073000Z__correlation-ablation-s0-r1` | conditional-vs-zero rho gain=`+.00030/-.00012`；reject mechanism |
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | directional/clearance events=`6/5`；AUROC gain=`+.04486`；composite reject |
+| P119 | `run://worldsim_v67/WS-V67-P119-RANKED-RANGE-TAIL-01/20260830T074500Z__ranked-range-tail-s0-r1` | P81/P96/P113 events=`0/0/6`；reject |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
@@ -51,6 +52,7 @@
 | full bivariate residual covariance | P117 consumed ×2 | P81/P96均0 events，mean AUROC gain=`+.00711` | development mechanism support |
 | conditional rho direct contribution | P118 same-checkpoint ablation | mean gain=`+.000094`且P96反向 | reject direct-rho attribution |
 | learned uncertainty超过clearance | P113 independent | AUROC `.92016>.87529`但events `6>5` | reject fixed50 composite claim |
+| ranked-range tail recovery | P119 consumed ×3 | P113仍6 events、AUROC全退化 | reject binary tail recovery |
 
 ## 3. Failure map
 
@@ -69,6 +71,7 @@
 | `V67-F82` | resolved pre-target | P113 scene-0003 exact archive locator corrected `04→01` |
 | `V67-F83` | closed negative | P118 conditional-rho direct mechanism not supported |
 | `V67-F84` | closed negative | P113 AUROC gain did not yield fixed50 event noninferiority |
+| `V67-F85` | closed negative | P119 ranked-range objective did not change P113 tail ordering |
 
 ## 4. Artifact inventory
 

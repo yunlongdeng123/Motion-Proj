@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P113 complete; arXiv evidence current through P118`
+- 报告状态：`P113 complete; arXiv evidence current through P119`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -150,6 +150,10 @@ noninferiority `6<=5`失败。整体verdict=`rejected_independent_directional_un
 无session→part index。exact locator在shard01命中全部members，config只改`04→01`；prep r2映射3,894/3,894，复用已并行
 预处理的9 scenes并完成scene-0003，target前关闭`V67-F82`，cohort/scientific protocol不变。
 
+P119随后按ranked-range objective在source fixed50邻域训练bounded tail residual。由于79,478 source trajectories中只有65个
+positive落入冻结range，它在P81/P96/P113得到events=`0/0/6`，与P109完全相同，且AUROC三处都小幅下降。该负结果说明
+改变binary ranking loss仍未解决tail transfer；下一研究应把对象改为连续τ-conditioned boundary-state cost，而不是扫range。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -171,6 +175,7 @@ noninferiority `6<=5`失败。整体verdict=`rejected_independent_directional_un
 | P117 | consumed full-covariance Gaussian | P81/P96=`0 / 0` | `.97254 / .91366` | development support；mean gain `+.00711` |
 | P118 | same-checkpoint rho ablation | P81/P96均`0 / 0` | rho gain=`+.00030 / -.00012` | reject direct-rho mechanism |
 | P113 | independent directional vs clearance | directional/clearance=`6 / 5` | `.92016 / .87529` | reject composite；AUROC gate pass |
+| P119 | consumed ranked-range tail | P81/P96/P113=`0 / 0 / 6` | gain=`-.00384/-.00459/-.00122` | reject tail recovery |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -187,6 +192,7 @@ noninferiority `6<=5`失败。整体verdict=`rejected_independent_directional_un
 | `V67-F82` | inferred session shard可直接定位scene-0003 | pre-target exact locator失败；扫描公开parts恢复 |
 | `V67-F83` | P117收益由conditional rho推理项直接产生 | zero-rho消融几乎不变且P96反向 |
 | `V67-F84` | 全局AUROC增量可保证fixed50 rare-event优势 | AUROC gain `+.04486`但events `6>5` |
+| `V67-F85` | source ranked-range loss可修复fixed50 transfer | P113仍6 events且三cohort AUROC都退化 |
 
 ## 5. 系统与资源
 
@@ -199,6 +205,7 @@ noninferiority `6<=5`失败。整体verdict=`rejected_independent_directional_un
 - P116训练916,722 Actor-time tokens×随机8-direction q90 queries，6,000 steps，wall约30.07s。
 - P117训练916,722 Actor-time tokens的correlated bivariate Gaussian，6,000 steps，wall约45.49s。
 - P118冻结checkpoint的conditional-vs-zero-rho消融wall约1.03s，不重训、不读取P113。
+- P119 source-only ranked-range GPU训练6,000 steps，wall约43.50s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界

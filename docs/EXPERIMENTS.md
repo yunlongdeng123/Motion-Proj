@@ -346,6 +346,22 @@
 - interpretation：P117 full-covariance training package仍有development增益，但直接rho投影项没有跨两cohort机制优势；论文只能
   归因于joint likelihood training package，不能写成conditional correlation term本身已验证。关闭rho ablation/retraining sweep。
 
+### WS-V67-P119-RANKED-RANGE-TAIL-01
+
+- 状态：`done/rejected consumed development`；canonical=`20260830T074500Z__ranked-range-tail-s0-r1`。
+- motivation：P113显示AUROC gain `+.04486`却在fixed50多1 event。NeurIPS 2022 partial-AUC/ranked-range优化说明全局AUC不等于
+  relevant operating range，因此P119直接优化source selection boundary，而不改Actor distribution或P113 gate。
+- fixed method：冻结P109 Actor model与top16 crossing probabilities，增加log-clearance；source每scene base percentile中取
+  positive `<=.65`和negative `.35--.65`，hidden32 head输出bounded `±1` residual叠加base logit。6,000 pairwise steps、
+  residual regularization `.05`、seed0、fixed50；不扫band/bound/model/loss/coverage。optimizer只读source。
+- training：79,478 source trajectories/2,209 events；ranked-range positives/negatives=`65/23,739`，final loss=`.053094`。
+- result：P81 learned/P109/clearance events=`0/0/1`，AUROC=`.963803/.967639/.914039`；P96=`0/0/13`，
+  AUROC=`.899759/.904345/.798793`；P113=`6/6/5`，AUROC=`.918938/.920155/.875291`。P81/P96 event limits通过，
+  P113 limit失败，verdict=`rejected_development_ranked_range_selective_tail`（`V67-F85`）。
+- interpretation：ranked-range source supervision太稀且没有跨cohort改变fixed50 ordering；三个cohort AUROC也均小幅下降。关闭
+  binary band/bound/head sweep，下一步改为连续task-conditioned boundary-state cost。wall=`43.50s`、peak GPU=`.05292GiB`、
+  RSS=`1.123GiB`。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

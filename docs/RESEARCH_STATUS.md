@@ -243,6 +243,14 @@ P109 directional/clearance/Actor/P75 selected events=`6/5/38/20`。Directional A
 包装成成功，也不降coverage/floor、不换model/cohort或在本read上试P117。P108相对Actor/P75的factorization primary仍成立，
 但“learned uncertainty严格超过clearance”的claim关闭。
 
+针对`V67-F84`的全局AUROC/fixed50错配，P119按NeurIPS 2022 partial-AUC/ranked-range思路只训练一次有界tail residual：
+冻结P109 crossing probabilities，在source每scene base percentile的positive `<=.65`与negative `.35--.65`间做pairwise loss；
+top16+clearance、hidden32、residual bound1、6,000 steps和fixed50均冻结。79,478 source trajectories中仅65个positive进入
+ranked range，final loss=`.053094`。P81/P96/P113 learned selected events=`0/0/6`，与P109完全相同，未把P113降到
+clearance的5；AUROC还分别下降`.003836/.004586/.001217`。verdict=
+`rejected_development_ranked_range_selective_tail`（`V67-F85`）。因此不扫percentile band/bound/model/loss；binary rare-event
+fixed50 recovery关闭，下一预测对象改为连续τ-conditioned boundary-state cost的selective regression。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

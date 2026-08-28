@@ -1332,6 +1332,22 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F85`。
 
+### V67-F85 — source ranked-range supervision未改变跨cohort fixed50 tail ordering
+
+- 分类：`scientific/selective-tail-objective`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P119-RANKED-RANGE-TAIL-01/20260830T074500Z__ranked-range-tail-s0-r1`；
+- method：冻结P109 distribution/crossing score，只在source per-scene `.35--.65` operating range训练bounded hidden32 residual；
+  79,478 trajectories中ranked-range positives仅65，optimizer不读P81/P96/P113；
+- symptom：P81/P96保持0 events，但P113仍为6，未达到clearance limit5；三个consumed cohorts AUROC相对P109均下降
+  `.003836/.004586/.001217`；
+- interpretation：binary occupancy flip在source fixed50邻域极稀疏，局部pairwise loss没有足够稳定的跨scene order signal；
+  partial-AUC动机不能替代实际迁移结果；
+- resolution：不扫percentile band、residual bound、head、loss、seed或coverage；关闭binary fixed50 recovery。下一对象改为
+  连续的τ-conditioned boundary-normal state cost/selective regression，保留P113 negative；
+- claim impact：无ranked-range/partial-AUC/selective-risk improvement claim，无P113 recovery或safety claim。
+
+下一可用编号：`V67-F86`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

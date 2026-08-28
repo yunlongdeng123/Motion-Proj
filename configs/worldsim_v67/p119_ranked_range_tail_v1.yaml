@@ -1,0 +1,55 @@
+schema_version: worldsim_v67.p119_ranked_range_tail.v1
+output_schema_version: worldsim_v67.p119_ranked_range_tail_summary.v1
+task_id: WS-V67-P119-RANKED-RANGE-TAIL-01
+hypothesis_id: WS-V67-H-P119-001
+seed: 0
+role: consumed_development_fixed_coverage_ranked_range_tail
+model_artifact: RANKED_RANGE_TAIL.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  source_artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+model:
+  top_k_crossing_probabilities: 16
+  hidden_dimension: 32
+  residual_bound: 1.0
+  steps: 6000
+  pair_batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  residual_regularization: 0.05
+ranked_range:
+  positive_max_percentile: 0.65
+  negative_min_percentile: 0.35
+  negative_max_percentile: 0.65
+selection: {coverage_fraction: 0.50}
+decision:
+  maximum_selected_events:
+    consumed_p81: 0
+    consumed_p96: 0
+    consumed_p113: 5
+verdict_on_pass: supported_development_ranked_range_selective_tail
+verdict_on_failure: rejected_development_ranked_range_selective_tail
+locks:
+  P109_actor_distribution_and_crossing_probabilities_frozen: true
+  source_only_optimizer_never_reads_development_labels: true
+  per_scene_35_to_65_percent_ranked_range_and_fixed50_frozen: true
+  top16_features_hidden32_residual_bound1_and_6000_steps_frozen: true
+  P81_P96_P113_are_consumed_development_only: true
+  no_band_bound_architecture_loss_seed_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2022/hash/ca7998666c2e53cc1e882b7268414d8a-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_recovery_after_P113_failure
+  - fixed_coverage_ranked_range_not_global_AUROC_or_probability_calibration
+  - requires_new_target_unread_confirmation_if_supported
+  - no_collision_planner_policy_closed_loop_or_safety_claim
