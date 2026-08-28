@@ -2,11 +2,20 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P63-RANK-CONTRASTIVE-ACTOR-RELIABILITY-01
+
+- 状态：`materialization then GPU training running`；参考Rank-N-Contrast（NeurIPS 2023），不直接扭曲scalar score。
+- 固定500 epochs连续target rank-contrastive encoder pretrain，随后冻结encoder、1000 epochs Huber scalar head；
+  Actor-only baseline总计1500 Huber epochs。scene `%5==3`、H2为第四development split。
+- 四门保持P61/P62 exact；不扫contrastive temperature/gap/shifts/epochs/architecture。
+
 ### WS-V67-P62-CALIBRATED-RANKED-ACTOR-RELIABILITY-01
 
-- 状态：`materialization then GPU training running`；P61 exact模型/排序损失，仅增加train-only positive-slope affine map。
+- 状态：`done/rejected`；canonical=`20260829T113000Z__calibrated-ranked-actor-s0-r1`；97 train scenes、
+  270,377 rows；28 confirmation scenes、43,706 H2 rows。P61 exact模型/排序损失，仅增加train-only affine map。
 - 第三development split：scene `%5==2`、H2；calibrator不读confirmation label，正斜率保持rank ordering。
-- 四门保持P61 exact；不扫calibrator形式、slope floor或pairwise配置。
+- slope/bias=`1.016524/-.002156`；query/Actor-only Spearman=`.742362/.751193`，MAE=`.084206/.081360`，
+  AUROC=`.951511/.950829`；2/4 gates，校准近恒等且未恢复跨split ranking/MAE。wall=`81.472s`。
 
 ### WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
 

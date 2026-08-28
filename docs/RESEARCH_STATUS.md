@@ -11,8 +11,11 @@ exposed-unreliable AUROC=`.960804/.956103`。3/3冻结门通过，支持`tau`-co
 P61 canonical=`run://worldsim_v67/WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01/
 20260829T110000Z__ranked-actor-reliability-s0-r1`。Pairwise term将Spearman从Actor-only `.740135`提高到`.755004`
 （`+.014869`），AUROC `.945763`也通过；但MAE `.156003`比baseline `.117128`高`33.19%`，3/4 gates拒绝。
-不扫ranking weight/temperature。参考ICML 2018 calibrated regression与UAI 2025 monotonic calibration，P62保持P61
-模型exact，只从training rows拟合正斜率affine map；第三split scene `%5==2`、H2正在物化，随后GPU训练。
+不扫ranking weight/temperature。P62正斜率affine几乎是恒等（`1.016524*x-.002156`）；第三split query/Actor-only
+Spearman=`.742362/.751193`、MAE=`.084206/.081360`，2/4 gates拒绝。问题不是简单尺度偏移，pairwise+calibration关闭。
+
+参考Rank-N-Contrast（NeurIPS 2023），P63把连续target order约束移到representation：500 epochs contrastive encoder
+pretrain后冻结，scalar head只做1000 epochs Huber；Actor-only仍总计1500 Huber epochs。第四split `%5==3`、H2输入正在物化。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，

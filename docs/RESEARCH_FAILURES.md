@@ -600,14 +600,25 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   `.156003/.117128`，query退化`33.19%`；3/4 gates。
 - 结论：排序恢复但尺度失配；不扫pair配置。调研后只允许一次train-only monotone calibration恢复。下一编号=`V67-F48`。
 
-### V67-F48 — P62 train-only monotone calibration恢复候选
+### V67-F48 — P62 train-only monotone calibration恢复失败
 
-- 分类：`algorithm/order-preserving-regression-calibration`；状态：`active_materialization_then_gpu_training`。
+- 分类：`algorithm/order-preserving-regression-calibration`；状态：`closed_negative_after_single_recovery`。
 - 调研迁移：ICML 2018 calibrated regression支持model-agnostic recalibration；UAI 2025强调instance-wise monotonic map
   保持ranking。P62使用最小正斜率affine map，不使用非参数binning/isotonic complexity。
 - 方法：P61模型/排序配置exact；训练完成后仅用training prediction/target最小二乘拟合`slope>0,bias`，confirmation
   只apply。第三development split为scene `%5==2`、H2，四门保持exact。
 - 锁：不扫map/slope/pair配置；失败即关闭pairwise+calibration recovery。下一编号=`V67-F49`。
+- 结果：map=`1.016524*x-.002156`；query/Actor-only Spearman=`.742362/.751193`、MAE
+  ` .084206/.081360`、AUROC=`.951511/.950829`；rank和MAE两门失败，2/4 gates。
+- 结论：校准近恒等，跨split conflict不是scale-only；pairwise+calibration family关闭。
+
+### V67-F49 — P63 Rank-N-Contrast-inspired representation候选
+
+- 分类：`algorithm/continuous-rank-contrastive-representation`；状态：`active_materialization_then_gpu_training`。
+- 调研迁移：Rank-N-Contrast（NeurIPS 2023）把continuous target order编码进representation，报告更好的regression与shift
+  generalization。P63用固定三shift triplet surrogate预训练query encoder，不向scalar output直接加ranking loss。
+- 方法：500 contrastive epochs；冻结encoder后1000 Huber head epochs；Actor-only baseline总计1500 Huber epochs。
+  第四split scene `%5==3`、H2；四门exact，不扫contrastive配置。下一编号=`V67-F50`。
 
 ### V6.6 当前边界（2026-08-28）
 
