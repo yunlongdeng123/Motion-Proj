@@ -1,0 +1,55 @@
+schema_version: worldsim_v67.p63_rank_contrastive_actor_reliability.v1
+output_schema_version: worldsim_v67.p63_rank_contrastive_actor_reliability_summary.v1
+task_id: WS-V67-P63-RANK-CONTRASTIVE-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P63-001
+seed: 0
+role: rank_contrastive_representation_then_calibrated_actor_state_reliability
+verdict_on_pass: supported_rank_contrastive_actor_state_reliability
+verdict_on_failure: rejected_rank_contrastive_actor_state_reliability
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  confirmation_scene_modulus: 5
+  confirmation_scene_remainder: 3
+  training_horizons_seconds: [0.8, 1.5]
+  confirmation_horizon_seconds: 2.0
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [128, 64, 32]
+  epochs: 1500
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.05
+  rank_contrastive_pretrain_epochs: 500
+  regression_head_epochs: 1000
+  rank_contrastive_temperature: 0.10
+  rank_contrastive_minimum_target_gap: 0.02
+  rank_contrastive_pair_shifts: [1, 17, 257]
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_query_conditioned_spearman: 0.55
+  minimum_spearman_delta_over_actor_only: 0.01
+  minimum_mae_reduction_over_actor_only: 0.10
+  minimum_unreliable_auroc: 0.75
+locks:
+  rank_contrastive_encoder_pretrain_then_frozen_regression_head: true
+  actor_only_baseline_trains_huber_for_same_total_epochs: true
+  development_replication_split_remainder_three: true
+  no_contrastive_temperature_margin_shift_epoch_or_architecture_sweep: true
+  no_fresh_population_or_counterfactual_actor_response_claim: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2023/hash/39e9c5913c970e3e49c2df629daff636-Abstract-Conference.html
+claim_boundary:
+  - rank_n_contrast_inspired_continuous_actor_reliability_representation
+  - frozen_encoder_then_scalar_expected_error_head
+  - fourth_development_scene_split_and_unseen_two_second_horizon
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

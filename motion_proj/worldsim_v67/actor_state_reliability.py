@@ -203,11 +203,14 @@ class ReliabilityMLP(torch.nn.Module):
         for hidden in hidden_dimensions:
             layers.extend((torch.nn.Linear(width, int(hidden)), torch.nn.SiLU()))
             width = int(hidden)
-        layers.append(torch.nn.Linear(width, 1))
-        self.network = torch.nn.Sequential(*layers)
+        self.encoder = torch.nn.Sequential(*layers)
+        self.head = torch.nn.Linear(width, 1)
+
+    def encode(self, features: torch.Tensor) -> torch.Tensor:
+        return self.encoder(features)
 
     def forward(self, features: torch.Tensor) -> torch.Tensor:
-        return torch.nn.functional.softplus(self.network(features).squeeze(-1))
+        return torch.nn.functional.softplus(self.head(self.encode(features)).squeeze(-1))
 
 
 def train_reliability_models(
@@ -223,6 +226,93 @@ def train_reliability_models(
     torch.manual_seed(int(seed))
     query_model = ReliabilityMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
     actor_model = ReliabilityMLP(actor_features.shape[1], model_config["hidden_dimensions"]).cuda()
+    if "rank_contrastive_pretrain_epochs" in model_config:
+        actor_optimizer = torch.optim.AdamW(
+            actor_model.parameters(), lr=float(model_config["learning_rate"]),
+            weight_decay=float(model_config["weight_decay"]),
+        )
+        encoder_optimizer = torch.optim.AdamW(
+            query_model.encoder.parameters(), lr=float(model_config["learning_rate"]),
+            weight_decay=float(model_config["weight_decay"]),
+        )
+        final_contrastive_loss = final_actor_loss = 0.0
+        shifts = [int(value) for value in model_config["rank_contrastive_pair_shifts"]]
+        for epoch in range(int(model_config["rank_contrastive_pretrain_epochs"])):
+            encoder_optimizer.zero_grad(set_to_none=True)
+            actor_optimizer.zero_grad(set_to_none=True)
+            embedding = torch.nn.functional.normalize(query_model.encode(features), dim=1)
+            candidate_distances = torch.stack([
+                (embedding - torch.roll(embedding, shift, dims=0)).square().sum(dim=1)
+                for shift in shifts
+            ])
+            target_distances = torch.stack([
+                (target - torch.roll(target, shift, dims=0)).abs() for shift in shifts
+            ])
+            positive_index = target_distances.argmin(dim=0, keepdim=True)
+            negative_index = target_distances.argmax(dim=0, keepdim=True)
+            positive_distance = candidate_distances.gather(0, positive_index).squeeze(0)
+            negative_distance = candidate_distances.gather(0, negative_index).squeeze(0)
+            valid = (
+                target_distances.gather(0, negative_index).squeeze(0)
+                - target_distances.gather(0, positive_index).squeeze(0)
+            ) >= float(model_config["rank_contrastive_minimum_target_gap"])
+            contrastive_loss = torch.nn.functional.softplus(
+                (positive_distance - negative_distance)
+                / float(model_config["rank_contrastive_temperature"])
+            )[valid].mean()
+            actor_prediction = actor_model(actor_features)
+            actor_loss = torch.nn.functional.smooth_l1_loss(
+                actor_prediction, target, beta=float(model_config["huber_beta"])
+            )
+            (contrastive_loss + actor_loss).backward()
+            encoder_optimizer.step()
+            actor_optimizer.step()
+            final_contrastive_loss = float(contrastive_loss.detach().cpu())
+            final_actor_loss = float(actor_loss.detach().cpu())
+            if epoch % 100 == 0 or epoch + 1 == int(model_config["rank_contrastive_pretrain_epochs"]):
+                print(
+                    f"actor reliability contrastive epoch={epoch + 1} "
+                    f"contrastive_loss={final_contrastive_loss:.6f} actor_only_loss={final_actor_loss:.6f}",
+                    flush=True,
+                )
+        for parameter in query_model.encoder.parameters():
+            parameter.requires_grad_(False)
+        head_optimizer = torch.optim.AdamW(
+            query_model.head.parameters(), lr=float(model_config["learning_rate"]),
+            weight_decay=float(model_config["weight_decay"]),
+        )
+        final_query_regression = 0.0
+        for epoch in range(int(model_config["regression_head_epochs"])):
+            head_optimizer.zero_grad(set_to_none=True)
+            actor_optimizer.zero_grad(set_to_none=True)
+            query_prediction = query_model(features)
+            actor_prediction = actor_model(actor_features)
+            query_regression = torch.nn.functional.smooth_l1_loss(
+                query_prediction, target, beta=float(model_config["huber_beta"])
+            )
+            actor_loss = torch.nn.functional.smooth_l1_loss(
+                actor_prediction, target, beta=float(model_config["huber_beta"])
+            )
+            (query_regression + actor_loss).backward()
+            head_optimizer.step()
+            actor_optimizer.step()
+            final_query_regression = float(query_regression.detach().cpu())
+            final_actor_loss = float(actor_loss.detach().cpu())
+            if epoch % 250 == 0 or epoch + 1 == int(model_config["regression_head_epochs"]):
+                print(
+                    f"actor reliability frozen-encoder epoch={epoch + 1} "
+                    f"query_loss={final_query_regression:.6f} actor_only_loss={final_actor_loss:.6f}",
+                    flush=True,
+                )
+        return query_model.eval(), actor_model.eval(), mean, scale, {
+            "query_conditioned_final_loss": final_query_regression,
+            "query_conditioned_regression_loss": final_query_regression,
+            "query_conditioned_rank_contrastive_loss": final_contrastive_loss,
+            "actor_only_final_loss": final_actor_loss,
+            "rank_contrastive_pretrain_epochs": int(model_config["rank_contrastive_pretrain_epochs"]),
+            "regression_head_epochs": int(model_config["regression_head_epochs"]),
+            "training_row_count": int(len(raw_features)),
+        }
     optimizer = torch.optim.AdamW(
         list(query_model.parameters()) + list(actor_model.parameters()),
         lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]),
