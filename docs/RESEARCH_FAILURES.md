@@ -32,6 +32,9 @@
 - P4-D matched repair入口已实现但未formal执行；无新failure。DROP消除violation时必须同时报告hazard event loss，
   ABSTAIN不得把不可发出的geometry记作已修复，REPAIR不得改变Actor ID/track/trajectory/hazard attribute；下一编号仍为
   `V66-F01`。
+- P4-D一次完成且R2 6/6 gates通过，无新failure。R0 DROP的hazard retention=0.5说明“删掉artifact actor”会在配对构造中
+  明确制造easier-world；但这是positive comparator observation，不单列failure。R2满分仍只限deterministic paired factor，
+  natural/fresh边界未解除；下一编号仍为`V66-F01`。
 
 ### V6.5 终态边界（2026-08-28）
 

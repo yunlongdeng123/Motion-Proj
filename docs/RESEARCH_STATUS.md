@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V6.6 P4-D repair-first supported / natural-conflict diagnostic next（2026-08-28）
+
+状态：`v66_p4_development_repair_supported_p2n_natural_conflict_next`；canonical=
+`run://worldsim_v66/WS-V66-P4-ARTIFACT-REPAIR-DEV-01/20260828T085755Z__repair-first-dev-s0-r1`；
+verdict=`supported_development_repair_first_compiler`。
+
+matched三臂各8,180 rows（compiled 24,540）。artifact rows的4,908个reason violations：R0 DROP降至0，但
+all-hazard event retention=`0.50`、shift=`0.50`；R1 ABSTAIN保留hazard=`1.0`，但violation reduction=`0`；
+R2 REPAIR降至0且hazard retention=`1.0`、shift=0、clean-hazard retention=1、Actor ID/track/trajectory exact=1、
+nonartifact regression=0、hard evidence violation=0。R2 6/6 gates通过。CPU wall=`0.546s`、RSS=`0.574GiB`，
+failure delta=`none`。
+
+结论只到paired observable-factor repair：不支持RGB/full-scene geometry、natural artifact或fresh generalization。
+下一 active=`WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01 / WS-V66-H-P2N-001`。使用与P1-D场景不重叠的
+V65 P10X六场景，直接把Actor-grounded boundary中的target observed-FREE定义为local geometry conflict，测试q0与
+deterministic factor certificate的cross-cohort ceiling；仍是已消费legacy diagnostic，不是fresh V6.6 claim。
+
+结果：`docs/autoresearch/worldsim_v66/P4_DEVELOPMENT_REPAIR_RESULT.md`；实现提交=`e371489`。
+
 ## WorldSim V6.6 P4-D repair implementation ready（2026-08-28）
 
 状态：`v66_p4_development_repair_implementation_ready`。matched三臂共享同一8,180行输入：DROP移除被证书判定的

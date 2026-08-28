@@ -64,7 +64,7 @@
 
 ### WS-V66-P4-ARTIFACT-REPAIR-DEV-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P4D-001`；formal run尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P4D-001`；verdict=`supported_development_repair_first_compiler`。
 - matched arms：R0 DROP、R1 LOCAL ABSTAIN、R2 REPAIR；同一8,180 rows与同一certificate semantics。
 - R2只从paired clean reference恢复observable factor；不修改Actor ID/track/trajectory/hazard attributes，也不宣称
   RGB/full-scene geometry repair。
@@ -72,6 +72,20 @@
   regression与hard evidence violation；完整报告R0/R1 tradeoff。
 - 实现：`motion_proj/worldsim_v66/physical_repair.py`、`scripts/run_worldsim_v66_p4_repair.py`；
   `failure_ledger_refs=[V65-F19]`，delta pending。
+- Canonical：`run://worldsim_v66/WS-V66-P4-ARTIFACT-REPAIR-DEV-01/
+  20260828T085755Z__repair-first-dev-s0-r1`；source/compiled rows=`8,180/24,540`。
+- R0 DROP：violation reduction=1，hazard retention=0.5、shift=0.5；R1 ABSTAIN：reduction=0，hazard retention=1；
+  R2 REPAIR：reduction=1、hazard retention=1、ID/track exact=1、nonartifact regression=0、hard violation=0。
+- R2 6/6 gates PASS；wall=0.5464s，RSS=0.5739GiB；`failure_ledger_delta=none`。
+- 边界：只支持observable-factor paired repair capability，不支持自然artifact、RGB或完整SceneIR repair。
+
+### WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01
+
+- 状态：`pending`；hypothesis=`WS-V66-H-P2N-001`。
+- 角色：与P1-D不重叠的P10X consumed cohort cross-cohort diagnostic；不是fresh selection/confirmation。
+- 目标：将Actor-owned native boundary上的target observed-FREE标记为local geometry conflict，比较q0 ranking与
+  deterministic certificate recall；不把local primitive conflict升级为Actor existence artifact。
+- 只冻结一次threshold-free `hidden_free_count > 0` hard-evidence label，不扫rate/count threshold。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

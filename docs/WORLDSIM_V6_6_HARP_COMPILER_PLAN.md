@@ -4,7 +4,7 @@
 >
 > 中文工作名：**HARP-Compiler：面向 RL 就绪驾驶仿真的幻觉感知、风险保真世界编译器**
 >
-> 状态：`active_p4_development_repair`
+> 状态：`active_p2n_natural_conflict_diagnostic`
 >
 > 上游冻结分支：`research/worldsim-v6.5-task-conditioned-authority`
 >
@@ -30,6 +30,11 @@
 > clean-hazard false artifact=0，Actor existence/ID/lifecycle retention=1，hazard-pair delta=0。由于deterministic
 > injected development上已无learned ranking headroom，P3保持locked/not executed；直接进入P4-D matched
 > DROP/ABSTAIN/REPAIR capability。
+
+> P4-D 终态（2026-08-28）：R0 DROP与R2 REPAIR均把4,908个注入factor violation降到0；R0只保留
+> 50% hazard events，R1 ABSTAIN保留100%但violation reduction=0，R2同时实现100% violation reduction、
+> 100% hazard retention和Actor ID/track exact。6/6 R2 gates通过。该结果只证明factor-level paired repair；
+> 下一步用独立P10X六场景做natural actor-owned observed-FREE boundary conflict诊断，不把注入满分当泛化。
 
 ---
 
