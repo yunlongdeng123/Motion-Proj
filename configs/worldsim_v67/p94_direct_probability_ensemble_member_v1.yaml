@@ -7,6 +7,21 @@ role: prospective_direct_probability_deep_ensemble_member
 verdict_on_pass: supported_direct_probability_ensemble_member
 verdict_on_failure: rejected_direct_probability_ensemble_member
 model_artifact: DIRECT_PROBABILITY_ENSEMBLE_MEMBER.pt
+ensemble:
+  members:
+    - task_id: WS-V67-P93-DIRECT-TRAJECTORY-FAILURE-PROBABILITY-01
+      run_id: 20260829T233000Z__direct-trajectory-failure-probability-s0-r1
+      artifact: DIRECT_TRAJECTORY_FAILURE_PROBABILITY.pt
+      seed: 0
+    - task_id: WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
+      run_id: 20260829T234500Z__direct-probability-ensemble-seed1-r1
+      artifact: DIRECT_PROBABILITY_ENSEMBLE_MEMBER.pt
+      seed: 1
+    - task_id: WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
+      run_id: 20260829T235500Z__direct-probability-ensemble-seed2-r1
+      artifact: DIRECT_PROBABILITY_ENSEMBLE_MEMBER.pt
+      seed: 2
+  aggregation: arithmetic_mean_probability
 source_rows:
   run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
   artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
