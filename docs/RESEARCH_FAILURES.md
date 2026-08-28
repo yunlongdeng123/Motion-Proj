@@ -782,6 +782,10 @@ joint epoch1001终止且0 fresh read。F60关闭，下一编号仍为`V67-F61`�
 - 防重复：不扫rank temperature、pairing、V-REx weight、FiLM order、epochs或coverage；该source-ranking恢复族关闭。
   下一编号=`V67-F63`。
 
+P81--P83已在新test-role sensor/target read前冻结：P81把primary endpoint改为P75留下的fixed-coverage unreliable-event
+prevalence，P82/P83分别训练全source pairwise AUC与horizon-balanced pairwise AUC；当前tar IO与GPU training并行，尚无
+新增scientific/engineering failure。P75 mean-cost负结论保持不变，下一编号仍为`V67-F63`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

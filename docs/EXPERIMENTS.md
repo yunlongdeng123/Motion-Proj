@@ -2,6 +2,30 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P83-HORIZON-BALANCED-ACTOR-EVENT-01
+
+- 状态：`active/source training`；canonical=`20260829T211800Z__horizon-balanced-actor-event-s0-r1`。
+- 在P81 test rows出现前冻结；四个source horizons等量抽取event-positive/negative pairs，`512→256→128`双头网络，
+  32,768 pair batch、6,000 epochs；连续cost Huber仅固定`.25`辅助权重。不扫margin/weight/coverage/architecture。
+- 目标是检验source horizon balance能否改善H3.5固定50% unreliable-event prevalence；P81仍是primary independent result。
+
+### WS-V67-P82-PAIRWISE-ACTOR-EVENT-01
+
+- 状态：`trained/waiting prospective P81 rows`；canonical=`20260829T211500Z__pairwise-actor-event-s0-r1`。
+- 576,032 source rows、4,000 epochs；pairwise event logistic处理稀有事件排序，固定`.25`连续cost回归辅助。
+  模型与hyperparameters在P81 rows产生前冻结；区别于P67 pointwise BCE和P78 mean-cost pairs。
+- 与P81 cohort只做prospective secondary comparison：固定50% query vs Actor-only vs frozen P75 event count，并限制mean-cost
+  不超过P75的1.5倍；不把同一read包装为第二独立confirmation。
+
+### WS-V67-P81-FRESH-TEST-ACTOR-EVENT-01
+
+- 状态：`active/preparing 10-scene independent cohort`；canonical=`20260829T211500Z__fresh-test-actor-event-s0-r1`；
+  prep=`20260829T211500Z__fresh-test-actor-prep-s0-r1`。
+- 事前冻结V5 test-role前10个从未读取场景与shards `01/03/05/07/08/09`；只抽LIDAR并生成最小Actor inputs，
+  不做图像、quality audit、hash/checksum/fingerprint。其余10个test-role scenes保留未读。
+- P75/P73 models frozen；H3.5 per-scene exact 50% primary endpoint为unreliable-event count/prevalence。
+  门为相对Actor event至少降低10%、严格少于P73、至少80% scenes不增加；mean cost仅描述。
+
 ### WS-V67-P80-HORIZON-FILM-ACTOR-SELECTOR-01
 
 - 状态：`done/rejected`；canonical=`20260829T193000Z__horizon-film-actor-s0-r1`。为query 24维与Actor 19维base features各追加一次

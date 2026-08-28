@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V6.7 P81--P83 independent event-reliability confirmation active（2026-08-29）
+
+P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
+Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
+是否可靠；primary endpoint是fixed-coverage unreliable-event prevalence，不再用mean cost事后替换结论。
+
+P81在任何新sensor/target read前从V5冻结test role按原顺序锁定10个从未使用场景：`0016/0627/0523/0344/
+1059/0330/0923/1071/0784/0963`，覆盖Boston/三个Singapore location、rain/night/dusk。只并行扫描实际shards
+`01/03/05/07/08/09`并生成最小`lidar/calib/objects`；剩余10个test-role scenes继续未读。P75/P73模型完全冻结，
+H3.5按scene固定50%只比较unreliable event count/prevalence；mean cost与pointwise AUROC只作描述。
+
+GPU与tar IO实际重叠。P82在新test rows存在前，只用576,032条source H `.8/1.5/2.5/3.0`训练pairwise event ranker，
+以固定`.25`连续cost回归作辅助；区别于P67 pointwise BCE，也不复用P78的mean-cost boundary pairs。P83同样在test
+read前冻结，将四个source horizon等量抽取positive/negative pairs，扩大网络至`512/256/128`与pair batch 32,768，
+直接处理H3.5外推时短horizon样本占优。P81是独立primary confirmation；P82/P83是同一首次read上的prospective
+secondary models，不冒充额外独立cohort。单3090已达约95%利用率，无多卡需求。
+
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
 Canonical P75=`run://worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/
