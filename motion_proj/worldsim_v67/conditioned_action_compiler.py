@@ -83,8 +83,12 @@ def train_conditioned_action_compiler(
         features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"])
     ).cuda()
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]), weight_decay=float(config["weight_decay"]))
+    averaging_start_fraction = config.get("weight_averaging_start_fraction")
+    averaging_start_epoch = int(float(averaging_start_fraction) * int(config["epochs"])) if averaging_start_fraction is not None else None
+    averaged_parameters = [torch.zeros_like(parameter) for parameter in model.parameters()]
+    averaging_checkpoint_count = 0
     final = {}
-    for _ in range(int(config["epochs"])):
+    for epoch in range(int(config["epochs"])):
         optimizer.zero_grad(set_to_none=True)
         score, residual = model(features, qmean, mask)
         if "residual_budget_anchor_fraction" in config:
@@ -151,6 +155,14 @@ def train_conditioned_action_compiler(
         )
         loss.backward()
         optimizer.step()
+        if averaging_start_epoch is not None and epoch >= averaging_start_epoch:
+            with torch.no_grad():
+                for averaged, parameter in zip(averaged_parameters, model.parameters()):
+                    if averaging_checkpoint_count == 0:
+                        averaged.copy_(parameter)
+                    else:
+                        averaged.lerp_(parameter, 1.0 / float(averaging_checkpoint_count + 1))
+            averaging_checkpoint_count += 1
         final = {
             "total_loss": float(loss.detach().cpu()),
             "soft_selected_cost": float(selected_cost.mean().detach().cpu()),
@@ -161,9 +173,14 @@ def train_conditioned_action_compiler(
             "maximum_domain_loss": float(domain_losses_t.max().detach().cpu()),
             "final_layer_gradient_direction_variance": float(gradient_direction_variance.detach().cpu()),
         }
+    if averaging_checkpoint_count > 0:
+        with torch.no_grad():
+            for parameter, averaged in zip(model.parameters(), averaged_parameters):
+                parameter.copy_(averaged)
     final.update(
         train_conditioned_case_count=int(len(padded["domain"])),
         train_action_rows=int(mask.sum().cpu()), development_domain_count=int(len(np.unique(padded["domain"]))),
+        weight_averaging_checkpoint_count=int(averaging_checkpoint_count),
     )
     return model.eval(), mean, scale, final
 

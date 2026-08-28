@@ -15,7 +15,7 @@ from motion_proj.worldsim_v67.adaptive_budget import (
 from motion_proj.worldsim_v67.conditioned_action_compiler import (
     CONDITIONED_FEATURE_NAMES, score_conditioned_action_compiler, train_conditioned_action_compiler,
 )
-from motion_proj.worldsim_v67.listwise_action_compiler import score_listwise_compiler
+from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
 from scripts.run_worldsim_v67_p17_quantile_trajectory import _combine, _load
 from scripts.run_worldsim_v67_p34_heteroscedastic_authority import _load_mean, _load_p20, _write
@@ -64,6 +64,27 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     )
     hybrid = group_coverage_constrained_selection(selection, hybrid_scores, case_offsets, *shared)
     frozen = group_coverage_constrained_selection(selection, p20_scores, case_offsets, *shared)
+    method_baseline = None
+    if "method_baseline_compiler_run" in config["inputs"]:
+        baseline_artifact = torch.load(
+            runs_root / config["inputs"]["method_baseline_compiler_run"] / config["inputs"]["method_baseline_compiler_artifact"],
+            map_location="cuda", weights_only=False,
+        )
+        baseline_model = BoundedListwiseCompiler(
+            len(baseline_artifact["feature_names"]), list(baseline_artifact["hidden_dimensions"]),
+            float(baseline_artifact["maximum_residual_cost"]),
+        ).cuda()
+        baseline_model.load_state_dict(baseline_artifact["state_dict"]); baseline_model.eval()
+        baseline_scores = score_conditioned_action_compiler(
+            baseline_model, selection, fraction, [horizon],
+            np.asarray(baseline_artifact["mean"], dtype=np.float32),
+            np.asarray(baseline_artifact["scale"], dtype=np.float32), base_score_key="base_score",
+            residual_budget_anchor_fraction=baseline_artifact.get("residual_budget_anchor_fraction"),
+            residual_budget_full_fraction=baseline_artifact.get("residual_budget_full_fraction"),
+            residual_budget_peak_fraction=baseline_artifact.get("residual_budget_peak_fraction"),
+            residual_budget_upper_anchor_fraction=baseline_artifact.get("residual_budget_upper_anchor_fraction"),
+        )
+        method_baseline = group_coverage_constrained_selection(selection, baseline_scores, case_offsets, *shared)
     fixed = _within_case_selection(
         np.asarray(selection["target_cost"], dtype=np.float32), p20_scores,
         np.asarray(selection["case_index"]), np.asarray(selection["scene_index"]), fraction,
@@ -72,6 +93,10 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "delta_over_frozen_joint_compiler": float(hybrid["relative_cost_reduction"] - frozen["relative_cost_reduction"]),
         "delta_over_fixed_p20": float(hybrid["relative_cost_reduction"] - fixed["relative_cost_reduction"]),
     }
+    if method_baseline is not None:
+        improvement["delta_over_method_baseline"] = float(
+            hybrid["relative_cost_reduction"] - method_baseline["relative_cost_reduction"]
+        )
     gate_cfg = config["gates"]
     gates = {
         "exact_total_budget": hybrid["selected_action_count"] == hybrid["fixed_total_action_budget"],
@@ -79,6 +104,10 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "improves_frozen_joint_compiler": improvement["delta_over_frozen_joint_compiler"] >= float(gate_cfg["minimum_delta_over_joint_compiler"]),
         "minimum_scene_support": hybrid["scene_nonincreasing_count"] >= int(gate_cfg["minimum_nonincreasing_scene_support"]),
     }
+    if method_baseline is not None:
+        gates["improves_frozen_method_baseline"] = improvement["delta_over_method_baseline"] >= float(
+            gate_cfg["minimum_delta_over_method_baseline"]
+        )
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
     summary = {
         "schema_version": config["output_schema_version"], "task_id": config["task_id"], "hypothesis_id": config["hypothesis_id"],
@@ -88,6 +117,8 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "resources": {"gpu": torch.cuda.get_device_name(0), "peak_gpu_memory_gib": torch.cuda.max_memory_allocated()/(1024**3),
                       "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2), "wall_seconds": time.monotonic()-started},
     }
+    if method_baseline is not None:
+        summary["frozen_method_baseline"] = method_baseline
     _write(run_dir / "summary.json", summary); _write(run_dir / "status.json", {"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()})
     return {"run_dir": str(run_dir), "verdict": verdict, "gate_results": gates}
 
