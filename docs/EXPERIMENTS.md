@@ -194,7 +194,8 @@
 
 ### WS-V66-P8-REACTIVE-ACTOR-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P8D-001`；角色是独立deterministic reactive-Actor capability，
+- 状态：`rejected`；hypothesis=`WS-V66-H-P8D-001`；verdict=
+  `rejected_synthetic_lead_brake_reactive_actor_capability`；角色是独立deterministic reactive-Actor capability，
   不能恢复P7或解锁P9/RL。
 - 外部迁移：UniSim dynamic Actor/closed-loop sensor simulation、SMARTS multi-agent behaviors、Waymax固定agent接口；
   只迁移保留identity/logged path的固定纵向响应，不引入learned simulator/planner/policy optimizer。
@@ -206,7 +207,21 @@
   latency在[0.3,1.0]s；至少5/6 scenes。冻结：
   `docs/autoresearch/worldsim_v66/P8_REACTIVE_ACTOR_MIGRATION_FREEZE.md`。
 - 实现：`motion_proj/worldsim_v66/reactive_actor.py`、`scripts/run_worldsim_v66_p8_reactive_actor.py`；配置：
-  `configs/worldsim_v66/p8_reactive_actor_v1.yaml`。formal run尚未创建。
+  `configs/worldsim_v66/p8_reactive_actor_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P8-REACTIVE-ACTOR-01/
+  20260828T095440Z__reactive-actor-s0-r1`；selected/supported scenes=`6/4`；pooled X0/X1 collision steps=`306/0`；
+  X1 min gap=`1.948192m`。
+- scene-0001/0219 command jerk=`9.637574/7.400627 > 6`，所以minimum supported scenes gate失败；其余四场景
+  全门通过。wall=`0.87045s`、RSS=`0.50756GiB`、GPU=false；`V66-F03 active_recovery_frozen`。
+
+### WS-V66-P8R-STOP-STATE-JERK-RECOVERY-01
+
+- 状态：`implementation_ready`；唯一implementation recovery；Autoware迁移为显式stopped-state desired accel=0和
+  single longitudinal command jerk limiter。
+- 只移除零速边界第二次acceleration increment；原`6m/s^3`rate limiter及Actor/scenario/horizon/IDM/AV参数、
+  trajectory、gates全部不变；不扫参数，失败关闭P8 family。
+- 实现复用P8 module/runner/config；冻结：`docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`；
+  formal recovery尚未创建。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

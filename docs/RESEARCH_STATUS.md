@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.6 P8 rejected / P8R stop-state recovery implementation ready（2026-08-28）
+
+状态：`v66_p8_rejected_p8r_stop_state_recovery_implementation_ready`；canonical=
+`run://worldsim_v66/WS-V66-P8-REACTIVE-ACTOR-01/20260828T095440Z__reactive-actor-s0-r1`；verdict=
+`rejected_synthetic_lead_brake_reactive_actor_capability`；`V66-F03 active_recovery_frozen`。
+
+P8六场景全部选中，X0/X1 pooled collision steps=`306/0`，X1 minimum gap=`1.948192m`，identity/lifecycle与
+logged path保持；但只4/6 scenes全门通过。scene-0001/0219的command jerk=`9.637574/7.400627 > 6m/s^3`。
+根因是speed=0边界在正常rate limiter后又执行一次acceleration increment。
+
+按卡点检索Autoware longitudinal DRIVE/STOPPING/STOPPED与vehicle command jerk limiter后，冻结唯一P8R：零速时
+desired acceleration=0，并且只应用一次原`6m/s^3`rate limiter。Actor、场景、horizon、所有IDM/AV参数与gates均不改；
+失败即关闭P8。实现已就绪，下一步一次formal recovery。详见`P8_REACTIVE_ACTOR_RESULT.md`与
+`P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.6 P8 deterministic reactive-Actor implementation ready（2026-08-28）
 
 状态：`v66_p8_reactive_actor_implementation_ready`。已实现P6 `ACTORS.jsonl`六场景metadata-only固定选择、X0

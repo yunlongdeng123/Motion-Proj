@@ -202,6 +202,8 @@ def simulate_scene(actor: Mapping[str, Any], config: Mapping[str, Any]) -> dict[
             )
         else:
             desired_acceleration = 0.0
+        if x1_speed <= 1e-12 and lead_speed <= 1e-12:
+            desired_acceleration = 0.0
         jerk_step = float(config["maximum_jerk_mps3"]) * dt
         x1_acceleration = float(
             np.clip(
@@ -210,8 +212,6 @@ def simulate_scene(actor: Mapping[str, Any], config: Mapping[str, Any]) -> dict[
                 x1_acceleration + jerk_step,
             )
         )
-        if x1_speed <= 1e-12 and x1_acceleration < 0.0:
-            x1_acceleration = min(0.0, x1_acceleration + jerk_step)
         next_x1_speed = max(0.0, x1_speed + x1_acceleration * dt)
         x1_progress += 0.5 * (x1_speed + next_x1_speed) * dt
         x1_speed = next_x1_speed
