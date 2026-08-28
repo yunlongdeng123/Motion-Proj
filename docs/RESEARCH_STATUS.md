@@ -1,5 +1,40 @@
 # Research Status
 
+## WorldSim V6.7 P29 nested budgets supported / P30 horizon-conditioned training（2026-08-28）
+
+P29 canonical=`run://worldsim_v67/WS-V67-P29-NESTED-BUDGET-AUTHORITY-01/
+20260828T164000Z__nested-budget-s0-r1`。十域×两预算1,722 rows训练；P4C未进入P29训练。Low/high exact budgets=
+`243/243`、`494/494`，low 243 actions全部嵌套进high。Low/high reduction=`0.758868/0.387925`，对应fixed P20=
+`0.312205/0.205116`，delta=`+0.446663/+0.182809`；minimum group coverage=`0.50/0.708333`，两预算均
+8/8 scenes不退化，7/7 gates。`V67-F17 resolved_by_nested_budget_confirmation`。
+
+P30转向horizon condition。P10V H=1.0s materialization完成：72 cases、733/864 eligible actions；与既有P10V H=2.0s
+以及两个H=2.0s domains联合训练horizon-conditioned offset。P10X完全不进训练；模型冻结后materialize H=1.5s targets并
+确认固定25% exact-total/context coverage。当前GPU training/confirmation运行中；不扫H、模型或gate。
+
+## WorldSim V6.7 P28 unseen-budget transfer supported / P29 nested-budget training（2026-08-28）
+
+P28 canonical=`run://worldsim_v67/WS-V67-P28-BUDGET-CONDITIONED-AUTHORITY-01/
+20260828T162000Z__budget-conditioned-s0-r1`。十域×两budgets训练1,708 case-budget rows；P10R4未进入P28训练。
+在heldout 1/3 budget上96 cases、fixed/actual=`363/363`，覆盖68/96=`0.708333`；四strata coverage=
+`0.833/0.583/0.833/0.583`。P28/fixed-P20 reduction=`0.674930/0.281451`，delta=`+0.393479`，8/8 scenes
+不退化，6/6 gates。`V67-F16 resolved_by_unseen_budget_transfer`。
+
+P29继续使用0.25/0.50联合训练，但P4C从训练中移除；确认时先生成exact 25% authority set，再只做集合扩展到exact
+50%，强制low set为high set子集，并在两预算同时保持四context groups coverage。GPU训练运行中；不扫fraction/gate。
+
+## WorldSim V6.7 P27 stratum-balanced supported / P28 budget-conditioned training（2026-08-28）
+
+P27 canonical=`run://worldsim_v67/WS-V67-P27-STRATUM-BALANCED-AUTHORITY-01/
+20260828T160000Z__stratum-balanced-s0-r1`。十一域950 cases训练，P6R 78 cases，fixed/actual budget=`222/222`；
+全局覆盖49/78=`0.628205`，四strata coverage=`0.625/0.500/0.750/0.556`。P27/P24/fixed-P20 reduction=
+`0.800447/0.758380/0.596770`，相对P20/P24=`+0.203678/+0.042068`，6/6 scenes不退化，6/6 gates。
+`V67-F15 resolved_by_stratum_balanced_confirmation`。
+
+P28首次把budget fraction作为模型输入：在0.25/0.50两预算联合训练，P10R4从P28训练集中移除，模型冻结后在未训练过的
+1/3预算确认。Exact total budget、global/per-stratum 50% coverage与P20 within-case order继续冻结；P10R4是已消费legacy
+cohort，故只称budget-task-heldout，不称fresh。GPU训练运行中。
+
 ## WorldSim V6.7 P26 large-cohort transfer supported / P27 stratum-balanced training（2026-08-28）
 
 P26 canonical=`run://worldsim_v67/WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01/

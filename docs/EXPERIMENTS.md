@@ -2,14 +2,71 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01
+
+- 状态：`running`；P10V H=1/H=2及两个额外H=2 development domains训练8-feature horizon-conditioned offset；
+  P10X完全excluded from P30 train。
+- H=1.5 confirmation在model freeze后materialize；fixed fraction=0.25、exact total budget、三context groups coverage
+  `>=0.50`、0--6 actions/case、P20 within-case order冻结。
+- Gates：exact budget、global/group coverage、reduction `>=0.40`、delta over fixed `>=0.10`、至少5 scenes
+  non-increasing；heldout-horizon consumed legacy claim only。
+
+### WS-V67-P30-P10V-H1-QUANTILE-MATERIALIZATION-01
+
+- 状态：`done`；canonical=`20260828T170000Z__p10v-h1-s0-r1`；H=1.0s、10 future frames、same 12-action
+  lattice geometry ratios；72 cases / 864 source actions / 733 eligible / 131 excluded。
+- Cache=`/root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz`；consumed development only；无新failure。
+
+### WS-V67-P29-NESTED-BUDGET-AUTHORITY-01 result
+
+- 状态：`done/supported`；canonical=`20260828T164000Z__nested-budget-s0-r1`；十域×0.25/0.50训练1,722 rows；
+  P4C excluded from P29 train。
+- Low/high exact budgets=`243/243,494/494`；low subset high=true，nested actions=`243`；minimum group coverage=
+  `0.50/0.708333`；case coverage=`0.617978/0.898876`。
+- Low/high reduction=`0.758868/0.387925`；fixed P20=`0.312205/0.205116`；delta=
+  `+0.446663/+0.182809`；两预算8/8 scenes non-increasing，7/7 gates；wall/peak GPU/RSS=
+  `51.817s/0.01711GiB/1.1806GiB`。
+
+### WS-V67-P29-NESTED-BUDGET-AUTHORITY-01
+
+- 状态：`done/supported`；十域×0.25/0.50 budget训练；P4C不进入P29 train，existing cache作consumed confirmation。
+- Low/high exact fractions=`0.25/0.50`；high authority必须包含low全部actions，再按high conditioned priority扩展；两预算
+  per-group coverage `>=0.50`，P20 within-case order冻结。
+- Gates 7/7通过；精确结果见上方result。
+
+### WS-V67-P28-BUDGET-CONDITIONED-AUTHORITY-01 result
+
+- 状态：`done/supported`；canonical=`20260828T162000Z__budget-conditioned-s0-r1`；0.25/0.50联合训练1,708
+  case-budget rows，P10R4 excluded from train；heldout confirmation fraction=`1/3`。
+- P10R4 96 cases，fixed/actual budget=`363/363`；covered=`68/96`（`0.708333`）；minimum group coverage=
+  `0.583333`；actions/case=`0..8`。
+- P28/fixed-P20 reduction=`0.674930/0.281451`，delta=`+0.393479`；8/8 scenes non-increasing，6/6 gates；
+  wall/peak GPU/RSS=`53.868s/0.01713GiB/1.1817GiB`。
+
+### WS-V67-P28-BUDGET-CONDITIONED-AUTHORITY-01
+
+- 状态：`done/supported`；十域×两fractions（0.25/0.50）训练同一8-feature bounded offset；P10R4不进入P28训练。
+- Confirmation fraction=`1/3`，P10R4 existing cache；exact same total action count、global/per-stratum coverage `>=0.50`、
+  0--8 actions/case、P20 order冻结。
+- Gates 6/6通过；精确结果见上方result；consumed legacy / heldout-budget claim only。
+
+### WS-V67-P27-STRATUM-BALANCED-AUTHORITY-01 result
+
+- 状态：`done/supported`；canonical=`20260828T160000Z__stratum-balanced-s0-r1`；十一域950 cases、5,000 GPU
+  epochs；P6R cache reused，78 evaluable cases。
+- Fixed/actual budget=`222/222`；covered=`49/78`（`0.628205`）；four-stratum coverage=
+  `0.625/0.500/0.750/0.555556`；actions/case=`0..6`。
+- P27/P24/fixed-P20 reduction=`0.800447/0.758380/0.596770`；delta over P20/P24=
+  `+0.203678/+0.042068`；6/6 scenes non-increasing，6/6 gates；wall/peak GPU/RSS=
+  `58.242s/0.01709GiB/1.1900GiB`。
+
 ### WS-V67-P27-STRATUM-BALANCED-AUTHORITY-01
 
-- 状态：`running`；十一域重新训练P25/P26同一case-offset architecture；P6E作为新增development domain，P6R
+- 状态：`done/supported`；十一域重新训练P25/P26同一case-offset architecture；P6E作为新增development domain，P6R
   existing cache作consumed confirmation。
 - 四strata由P6R事前scene order固定，每个stratum coverage `>=0.50`；全局fixed/actual action budget exact，P20
   within-case order不可变。
-- Gates：exact budget、global/group coverage、reduction `>=0.55`、delta over fixed P20 `>=0.10`、至少6 scenes
-  non-increasing；无fresh claim与超参扫描。
+- Gates 6/6通过；精确结果见上方result；无fresh claim与超参扫描。
 
 ### WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01 result
 

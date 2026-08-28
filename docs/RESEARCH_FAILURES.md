@@ -244,11 +244,50 @@ case，故场景支持分母为15，不是事后排除。
 
 ### V67-F15 — P27 stratum-balanced authority候选
 
-- 分类：`algorithm/context-balanced-authority`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/context-balanced-authority`；状态：`resolved_by_stratum_balanced_confirmation`。
 - 动机：P25/P26证明全局coverage有效；P27防止authority集中到容易context，在四个既定strata内各自保证至少50% cases。
 - 方法：十一域重新训练同一bounded offset；P20 order、exact total budget、global 50% coverage与0--6 actions不变；
   P6R只作已消费legacy confirmation。
 - 防重复：不扫group、coverage、model或gate；若失败关闭group-floor候选。下一编号=`V67-F16`。
+
+P27 6/6 gates通过：budget=`222/222`，global coverage=`0.628205`，minimum stratum coverage=`0.50`；reduction=
+`0.800447`，相对fixed P20/P24=`+0.203678/+0.042068`，6/6 evaluable scenes不退化。该positive只在已消费P6R上
+支持context-balanced mechanism，不恢复fresh confirmation。
+
+### V67-F16 — P28 budget-conditioned unseen-fraction候选
+
+- 分类：`algorithm/budget-conditioned-authority`；状态：`resolved_by_unseen_budget_transfer`。
+- 动机：P20--P27均固定25% budget；P28把requested budget作为显式条件，检验一个模型能否插值到未训练fraction。
+- 方法：P10R4从P28训练域移除；其余十域在0.25/0.50联合训练，confirmation fraction固定1/3；exact total与四strata
+  coverage约束保持。
+- 防重复：不扫fraction、architecture、offset、coverage、group或gate；P10R4是consumed legacy，不作fresh claim。下一编号=
+  `V67-F17`。
+
+P28 6/6 gates通过：1/3 exact budget=`363/363`，global/minimum stratum coverage=`0.708333/0.583333`；reduction=
+`0.674930`，相对fixed P20=`+0.393479`，8/8 scenes不退化。支持heldout-budget interpolation mechanism；因cohort
+全局已消费，不称fresh generalization。
+
+### V67-F17 — P29 nested low/high authority候选
+
+- 分类：`algorithm/budget-path-consistency`；状态：`resolved_by_nested_budget_confirmation`。
+- 动机：budget-conditioned priorities可能随requested fraction变化；runtime预算变化需要low-budget authority严格嵌套于high。
+- 方法：P4C从P29训练移除；十域0.25/0.50训练；confirmation同时输出exact 25%/50%，high集合以low为mandatory
+  prefix再按high-budget priority扩展；两预算各自保持四group coverage。
+- 防重复：不扫fractions、nesting rule、group、model或gate；失败即关闭nested candidate。下一编号=`V67-F18`。
+
+P29 7/7 gates通过：low/high exact=`243/243,494/494`、nested count=`243`；low/high reduction=
+`0.758868/0.387925`，相对各自fixed P20=`+0.446663/+0.182809`；两预算8/8 scenes不退化。支持budget-path
+consistency mechanism，但P4C全局已消费，不称fresh。
+
+### V67-F18 — P30 horizon-conditioned H插值候选
+
+- 分类：`algorithm/horizon-conditioned-authority`；状态：`active_first_trial_frozen`。
+- 动机：此前visited-state对象均固定H=2s；P30显式条件化H，响应“给定tau，未来H秒被访问states是否可靠”。
+- 方法：P10V H=1s新cache与H=2s development联合训练；P10X从训练移除，confirmation H=1.5s；25% exact budget、
+  三context groups各50% coverage、P20 order冻结。
+- 输入结果：H=1s materialization 72 cases、733/864 eligible actions，无失败。
+- 防重复：不扫H、footprint、model、offset、coverage、group或gate；P10X globally consumed，不作fresh claim。下一编号=
+  `V67-F19`。
 
 ### V6.6 当前边界（2026-08-28）
 

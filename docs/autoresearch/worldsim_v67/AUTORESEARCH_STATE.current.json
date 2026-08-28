@@ -3,14 +3,14 @@
   "updated_at": "2026-08-28",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p26_supported_p27_stratum_balanced_training_running",
-  "active_task_id": "WS-V67-P27-STRATUM-BALANCED-AUTHORITY-01",
-  "active_hypothesis_id": "WS-V67-H-P27-001",
+  "status": "v67_p29_supported_p30_horizon_conditioned_training_running",
+  "active_task_id": "WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01",
+  "active_hypothesis_id": "WS-V67-H-P30-001",
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
-  "failure_ledger_refs": ["V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F14 resolved_by_large_cohort_transfer; V67-F15 active_first_trial_frozen",
-  "next_failure_id": "V67-F16",
-  "last_run": "run://worldsim_v67/WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01/20260828T154000Z__large-cohort-coverage-s0-r1",
-  "last_verdict": "supported_large_cohort_coverage_transfer",
-  "next_action": "finish eleven-domain GPU retraining and consumed P6R stratum-balanced fixed-total authority read"
+  "failure_ledger_refs": ["V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
+  "failure_ledger_delta": "V67-F17 resolved_by_nested_budget_confirmation; V67-F18 active_first_trial_frozen",
+  "next_failure_id": "V67-F19",
+  "last_run": "run://worldsim_v67/WS-V67-P29-NESTED-BUDGET-AUTHORITY-01/20260828T164000Z__nested-budget-s0-r1",
+  "last_verdict": "supported_nested_budget_authority",
+  "next_action": "finish H-conditioned GPU training and one heldout H=1.5s P10X confirmation"
 }
