@@ -1,0 +1,24 @@
+schema_version: worldsim_v67.p111_clearance_confirmation_baseline.v1
+output_schema_version: worldsim_v67.p111_clearance_confirmation_baseline_summary.v1
+task_id: WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
+role: descriptive_no_learning_clearance_baseline_on_P108_rows
+confirmation_rows:
+  run: worldsim_v67/WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01/20260830T063500Z__uncertainty-tube-confirmation-s0-r1
+  artifact: P108_CONFIRMATION_ACTOR_UNCERTAINTY_ROWS.npz
+  readiness_timeout_seconds: 7200
+clearance_floor_m: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+locks:
+  no_training_or_learned_parameters: true
+  absolute_signed_clearance_floor_time_actor_max_and_fixed50_frozen_before_P108_rows: true
+  descriptive_only_does_not_change_P108_or_P110_decisions: true
+  no_floor_aggregation_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - mechanism_baseline_on_same_P108_scene_level_read
+  - no_independent_model_or_safety_claim

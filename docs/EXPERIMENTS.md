@@ -224,6 +224,8 @@
   session-level independent或safety。
 - P108 target当前未读；archive IO期间允许训练完全不访问P108 rows的P109 directional uncertainty prospective secondary，
   但P107保持唯一primary。
+- P111 no-learning clearance baseline也已在rows出现前冻结并等待同一artifact：`.05m` floor、absolute signed clearance、
+  time/Actor max、fixed50；只作mechanism描述，不改变P108/P110 decision，也不扫floor或aggregation。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
