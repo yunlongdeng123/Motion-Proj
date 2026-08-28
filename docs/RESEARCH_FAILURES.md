@@ -323,12 +323,48 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F22 — P34 bounded heteroscedastic authority候选
 
-- 分类：`algorithm/aleatoric-case-uncertainty`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/aleatoric-case-uncertainty`；状态：`closed_negative_after_first_trial`。
 - 调研：NeurIPS 2023支持异方差Gaussian regression稳定化；NeurIPS 2024指出单网络evidential epistemic可能不可靠。
 - 方法：P31同一joint-condition features上训练bounded mean与`0.005..0.10` scale；P10X consumed selection固定
   conservative offset=`mean+1.0*scale`，与冻结P31 mean compiler比较。
+- 结果：scale-error Spearman=`0.190272`通过`>=0.15`，但conservative/mean reduction=
+  `0.610037/0.690636`，delta=`-0.080599`，未达`+0.01`；其余exact total、minimum group与scene support通过。
+- 结论：scale与误差相关不等于其保守加法能改善有限预算决策；不以弱UQ诊断替代selection utility。
 - 边界：仅aleatoric error scale；不声称epistemic/calibrated interval/OOD；P22/P23 action-tail family保持关闭。
-- 防重复：不扫scale bound、sigma weight、loss、model或gate。下一编号=`V67-F23`。
+- 防重复：不扫scale bound、sigma weight、loss、model或gate；aleatoric priority family关闭。下一编号=`V67-F23`。
+
+### V67-F23 — P35 fixed deep-ensemble authority候选
+
+- 分类：`algorithm/model-disagreement-authority`；状态：`closed_negative_after_first_trial`。
+- 调研迁移：Deep Ensembles（NeurIPS 2017）以独立初始化成员分歧作为实用uncertainty基线；结合NeurIPS 2024对
+  evidential epistemic可靠性的批评，P35显式使用三个独立模型，而不从单头scale外推epistemic结论。
+- 方法：seed `0/1/2`顺序训练同一P31 joint-condition head；P4C consumed selection固定priority=
+  `ensemble_mean+1.0*ensemble_std`，与冻结P33 mean compiler在相同exact budget/group constraints下比较。
+- 结果：disagreement-error Spearman=`0.144178`通过`.10`，但mean disagreement仅`3.53e-6`，三个成员的
+  residual RMS均饱和到`0.05`；conservative与P33选择完全相同，reduction=`0.698243`，delta=`0.0`。
+- 结论：相同小模型/完整批次在强边界解上发生成员塌缩；有弱误差相关仍没有可消费的排序变化。
+- 边界：disagreement仅为epistemic proxy；不声称posterior calibration、OOD、collision/planning/closed-loop/safety。
+- 防重复：不扫成员数、seed、uncertainty weight、model、loss或gate；uncertainty-for-decision路线关闭。
+  下一编号=`V67-F24`。
+
+### V67-F24 — P36 conditioned differentiable top-k action compiler候选
+
+- 分类：`algorithm/conditioned-decision-focused-action-ranking`；状态：`resolved_by_direct_conditioned_topk`。
+- 调研：ICLR 2019 NeuralSort与ICML 2020 SoftSort将离散排序替换为可微连续松弛，使最终top-k目标能反向训练。
+- 方法迁移：在P20 action features上增加budget与H两个条件；用`.25/.50` budgets、`H=1/2s`四domains训练，
+  主损失为soft top-k权重下的真实visited-state cost，并保留小权重pairwise/regression稳定项。
+- 判定：P4C consumed `(1/3,1.5s)`直接输出action scores，经同一exact-total/group constraints选择；相对冻结P33
+  reduction至少`+0.005`且6 scenes不退化。
+- 结果：reduction=`0.719901`，相对P33=`+0.021658`、相对fixed=`+0.461246`；exact `315/315`、minimum
+  group=`0.50`、8/8 scenes、4/4 gates。
+- 防重复：固定temperature/residual bound/model/loss/gates；不扫参。下一编号=`V67-F25`。
+
+### V67-F25 — P37 frozen conditioned-action second-cohort transfer候选
+
+- 分类：`algorithm/cross-cohort-conditioned-action-transfer`；状态：`active_frozen_read`。
+- 方法：P36 model/normalizer完全冻结，P10X consumed `(1/3,1.5s)`单次读取；与冻结P31在相同exact/group约束比较。
+- 判定：reduction delta `>=+0.005`、minimum group `.50`、至少5 scenes不退化；无训练/refit/sweep。
+- 边界：第二consumed cohort的method transfer，不是fresh population confirmation。下一编号=`V67-F26`。
 
 ### V6.6 当前边界（2026-08-28）
 

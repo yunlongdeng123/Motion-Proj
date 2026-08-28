@@ -1,5 +1,42 @@
 # Research Status
 
+## WorldSim V6.7 P36 conditioned top-k supported / P37 frozen transfer（2026-08-28）
+
+P36 canonical=`run://worldsim_v67/WS-V67-P36-CONDITIONED-ACTION-COMPILER-01/
+20260828T192000Z__conditioned-topk-s0-r1`。788 conditioned cases/8,820 action rows训练；soft selected cost=
+`0.056551`，residual RMS=`0.038763`。在P4C unseen `(budget=1/3,H=1.5s)`上exact budget=`315/315`，coverage=
+`0.707865`、minimum group=`0.50`；P36/P33/fixed reduction=`0.719901/0.698243/0.258655`，相对P33=
+`+0.021658`，8/8 scenes不退化，4/4 gates。Verdict=`supported_conditioned_action_compiler`。
+
+这证明直接对条件化soft top-k target cost训练比case offset与uncertainty priority更有效。P37不再训练或调参，直接把冻结
+P36 artifact迁移到P10X相同unseen条件，与冻结P31比较；只验证跨cohort decision gain，不扩大claim。
+
+## WorldSim V6.7 P35 ensemble authority rejected / P36 conditioned top-k training（2026-08-28）
+
+P35 canonical=`run://worldsim_v67/WS-V67-P35-ENSEMBLE-AUTHORITY-01/
+20260828T190000Z__ensemble-authority-s0-r1`。三成员disagreement-error Spearman=`0.144178`通过冻结`.10`门，但
+mean/max disagreement仅`3.53e-6/4.90e-5`；三个成员的residual RMS均饱和在`0.05`边界，保守priority与P33
+产生完全相同的315-action选择，reduction同为`0.698243`，delta=`0.0`，未达`+0.005`。4/5 gates通过但
+decision-improvement失败，verdict=`rejected_ensemble_disagreement_authority`。
+
+`V67-F23 closed_negative_after_first_trial`；uncertainty-for-decision路线关闭，不扫成员数、seed或权重。参考ICLR 2019
+NeuralSort与ICML 2020 SoftSort，P36改为budget/H条件化action residual网络，训练目标直接包含soft top-k后的真实
+visited-state cost。训练条件为budget `.25/.50`与H `1/2s`，P4C consumed条件为`1/3,1.5s`；只跑一个固定配置，
+与冻结P33 joint compiler同预算比较。
+
+## WorldSim V6.7 P34 aleatoric authority rejected / P35 ensemble training（2026-08-28）
+
+P34 canonical=`run://worldsim_v67/WS-V67-P34-HETEROSCEDASTIC-AUTHORITY-01/
+20260828T184000Z__heteroscedastic-s0-r1`。788 training rows的bounded Gaussian head收敛，scale-error Spearman=
+`0.190272`，说明aleatoric scale具有弱排序信号；但固定`mean+1sigma` priority在P10X的reduction=`0.610037`，
+低于冻结P31 mean compiler的`0.690636`，delta=`-0.080599`。Exact budget、group coverage、uncertainty与scene gates
+通过，唯一且关键的decision-improvement gate失败；verdict=`rejected_heteroscedastic_conservative_authority`。
+
+`V67-F22 closed_negative_after_first_trial`：不扫scale bound、sigma weight、loss或gate，aleatoric-priority路线关闭。
+P35已启动固定三成员deep ensemble（seed 0/1/2，逐个在单RTX 3090训练）；在P4C consumed cohort使用
+`ensemble_mean+1*ensemble_std`，与冻结P33 mean compiler同预算比较。该分歧只作model-disagreement/epistemic proxy，
+不作calibrated posterior或safety claim；不扫成员数、seed、权重、模型或gate。
+
 ## WorldSim V6.7 P33 second-cohort joint transfer supported / P34 aleatoric training（2026-08-28）
 
 P33 canonical=`run://worldsim_v67/WS-V67-P33-INDEPENDENT-JOINT-CONDITION-TRANSFER-01/

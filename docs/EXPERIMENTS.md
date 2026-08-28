@@ -2,6 +2,53 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P37-CONDITIONED-ACTION-TRANSFER-01
+
+- 状态：`ready/running`；冻结P36 model/normalizer，在P10X consumed `(1/3,1.5s)`一次transfer read。
+- 对照frozen P31 joint compiler；gates为exact total、minimum group `.50`、reduction delta `+.005`、scene support `5`。
+- 不训练、不refit、不扫temperature/model/loss/gate；只验证P36 direct-decision增益能否跨第二cohort。
+
+### WS-V67-P36-CONDITIONED-ACTION-COMPILER-01 result
+
+- 状态：`done/supported`；canonical=`20260828T192000Z__conditioned-topk-s0-r1`；788 conditioned cases、
+  8,820 action rows；soft selected cost=`0.056551`、residual RMS=`0.038763`。
+- P4C exact budget=`315/315`；coverage/minimum group=`0.707865/0.50`。
+- P36/P33/fixed reduction=`0.719901/0.698243/0.258655`；deltas=`+0.021658/+0.461246`；8/8 scenes，
+  4/4 gates；wall/peak GPU/RSS=`111.696s/0.02330GiB/1.27464GiB`。
+
+### WS-V67-P36-CONDITIONED-ACTION-COMPILER-01
+
+- 状态：`running`；15-D features=`P20 action features + budget + H`，32/16 hidden，bounded residual `+-0.05`；
+  训练budget=`.25/.50`、H=`1/2s`，6,000 GPU epochs。
+- 主目标为soft-rank/soft-top-k selected target cost，另含`.10` pairwise与`.05` regression稳定项；固定temperature，
+  不扫architecture/loss/residual/gate。
+- P4C consumed `(1/3,1.5s)`与frozen P33比较；核心scientific gate为reduction delta `>=.005`，并保持exact total、
+  minimum group `.50`、scene support `6`。
+
+### WS-V67-P35-ENSEMBLE-AUTHORITY-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T190000Z__ensemble-authority-s0-r1`；三成员各788 rows/5,000 epochs，
+  residual RMS均约`0.05`。
+- Disagreement-error Spearman=`0.144178`（pass）；mean/max disagreement=`3.53e-6/4.90e-5`。
+- Ensemble/P33/fixed reduction=`0.698243/0.698243/0.258655`；相对P33 delta=`0.0`（fail）；exact budget
+  `315/315`、minimum group `.50`、8/8 scenes，4/5 gates。wall=`91.975s`。
+
+### WS-V67-P35-ENSEMBLE-AUTHORITY-01
+
+- 状态：`running`；三成员`BoundedCaseOffset`，seed=`0/1/2`，每成员5,000 GPU epochs；训练数据、9-D joint
+  budget/H features与P31/P33相同，成员在单RTX 3090顺序训练。
+- P4C H=1.5/budget=1/3 consumed selection；priority=`ensemble_mean+1*ensemble_std`，对照frozen P33 mean与fixed P20。
+- Gates：exact budget、minimum group coverage `.50`、disagreement-error Spearman `.10`、相对P33 reduction
+  `+0.005`、scene support `6`；不扫成员数/seed/权重/model/loss/gate。
+
+### WS-V67-P34-HETEROSCEDASTIC-AUTHORITY-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T184000Z__heteroscedastic-s0-r1`；788 training rows；Gaussian NLL=
+  `-1.60779`，mean-anchor=`0.09817`，train mean scale=`0.08802`。
+- P10X scale-error Spearman=`0.190272`（pass），mean scale=`0.067324`；conservative/mean/fixed reduction=
+  `0.610037/0.690636/0.190718`，相对mean delta=`-0.080599`（fail）。
+- Exact total、minimum group、uncertainty与scene support通过；4/5 gates。Aleatoric priority family按first-trial stop rule关闭。
+
 ### WS-V67-P34-HETEROSCEDASTIC-AUTHORITY-01
 
 - 状态：`running`；P31 joint-condition 9-D features，16-hidden two-output head；mean bounded `+-0.05`、scale bounded

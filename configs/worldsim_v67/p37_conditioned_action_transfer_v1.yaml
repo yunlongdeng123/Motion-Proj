@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p37_conditioned_action_transfer.v1
+output_schema_version: worldsim_v67.p37_conditioned_action_transfer_summary.v1
+task_id: WS-V67-P37-CONDITIONED-ACTION-TRANSFER-01
+hypothesis_id: WS-V67-H-P37-001
+role: frozen_conditioned_action_compiler_second_consumed_cohort_transfer
+verdict_on_pass: supported_second_cohort_conditioned_action_transfer
+verdict_on_failure: rejected_second_cohort_conditioned_action_transfer
+inputs:
+  conditioned_compiler_run: worldsim_v67/WS-V67-P36-CONDITIONED-ACTION-COMPILER-01/20260828T192000Z__conditioned-topk-s0-r1
+  conditioned_compiler_artifact: CONDITIONED_ACTION_COMPILER.pt
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+  selected_fraction: 0.3333333333333333
+  horizon_seconds: 1.5
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_nonincreasing_scene_support: 5
+locks:
+  p36_model_and_normalizer_frozen: true
+  p10x_consumed_transfer_only: true
+  no_training_refit_temperature_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - frozen_conditioned_action_compiler_second_consumed_cohort_transfer
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim
