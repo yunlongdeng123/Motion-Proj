@@ -1,0 +1,69 @@
+schema_version: worldsim_v67.p86_direct_trajectory_reliability.v1
+output_schema_version: worldsim_v67.p86_direct_trajectory_reliability_summary.v1
+task_id: WS-V67-P86-DIRECT-TRAJECTORY-RELIABILITY-01
+hypothesis_id: WS-V67-H-P86-001
+seed: 0
+role: prospective_direct_trajectory_level_visited_actor_reliability
+verdict_on_pass: supported_direct_trajectory_reliability
+verdict_on_failure: rejected_direct_trajectory_reliability
+source_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+source_rows:
+  run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
+  artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01/20260829T213000Z__trajectory-visited-reliability-s0-r1
+  artifact: FRESH_TEST_H3P5_TRAJECTORY_ACTOR_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  hidden_dimensions: [1024, 512, 256]
+  epochs: 8000
+  pair_batch_size: 32768
+  regression_batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  pair_margin: 1.0
+  regression_weight: 0.25
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.50
+locks:
+  source_and_model_protocol_frozen_before_test_target_rows_exist: true
+  group_identity_scene_horizon_anchor_frame_candidate_trajectory: true
+  only_groups_with_at_least_one_visited_actor_state: true
+  fixed_feature_aggregation_actor_count_plus_min_mean_max: true
+  query_and_actor_only_same_capacity_pairwise_and_regression_objectives: true
+  source_horizons_equal_pair_weight: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_radius_coverage_aggregation_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Cui_LookOut_Diverse_Multi-Future_Prediction_and_Planning_for_Self-Driving_ICCV_2021_paper.pdf
+  - https://proceedings.neurips.cc/paper/2020/hash/1b0251ccb8bd5f9ccf444e4bda7713e3-Abstract.html
+claim_boundary:
+  - direct_trajectory_level_any_visited_actor_failure_ranking
+  - prospective_secondary_model_on_same_P81_test_cohort
+  - open_loop_constant_velocity_actor_failure_target_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
