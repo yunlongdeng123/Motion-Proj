@@ -24,9 +24,11 @@ canonical=`run://worldsim_v67/WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01/
 `=.092651/.107035`（降低`13.44%`），AUROC=`.957408/.850937`；3/3 gates复现。P60+P64共同支持plain-Huber
 given-`tau` Actor-state reliability；P61/P62/P63界定ranking/calibration/contrastive辅助项的不稳定边界。
 
-P65把同一对象扩为ordered q10/q50/q90，固定pinball loss；训练scene/H合同与P60相同，正式read复用remainder0 scenes
-但H从2.0外推到未见2.5s。P60三门加central 80% interval empirical coverage `[.75,.85]`，不做conformal或校准器。
-当前training rows物化中；GPU训练与H2.5 confirmation I/O继续重叠。
+P65 canonical=`run://worldsim_v67/WS-V67-P65-QUANTILE-ACTOR-RELIABILITY-01/
+20260829T130000Z__quantile-actor-s0-r1`。H2.5 q50/Actor-only Spearman=`.717354/.800656`，MAE
+`=.151378/.153607`（仅降低`1.45%`），AUROC=`.962478/.932027`；q10-q90 coverage=`.672228`，低于`.75`。
+2/4 gates拒绝；检索CQR/shift conformal后仍按锁不做calibration。P66在同split/H2.5恢复P60 plain-Huber exact，
+用于区分quantile-loss failure和long-horizon failure；训练输入正在物化。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，

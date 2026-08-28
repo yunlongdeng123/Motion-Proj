@@ -633,14 +633,24 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   AUROC=`.957408/.850937`；3/3 gates，27/32 scenes rank noninferior。
 - 结论：P60 plain-Huber在第二split复现；不加辅助loss/calibrator。该population不是fresh confirmation。下一编号=`V67-F51`。
 
-### V67-F51 — P65 uncertainty-native quantile Actor reliability候选
+### V67-F51 — P65 uncertainty-native quantile Actor reliability失败
 
-- 分类：`prediction/ordered-quantile-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 分类：`prediction/ordered-quantile-actor-reliability`；状态：`closed_negative_after_single_trial`。
 - 方法：同一query representation输出q10/q50/q90，用pinball loss并结构保证顺序；q50承担P60 reliability read，
   q10-q90提供empirical central interval。
 - Protocol：train scene `%5!=0`、H `.8/1.5s`；remainder0 scene复用但confirmation H改为未见2.5s。
 - 判定：P60三门+80% interval coverage `[.75,.85]`；不扫quantile/coverage/loss/horizon，不声称conformal coverage。
-  下一编号=`V67-F52`。
+  结果：q50/Actor-only Spearman=`.717354/.800656`、MAE=`.151378/.153607`、AUROC
+  `=.962478/.932027`；coverage=`.672228`，2/4 gates。
+- 结论：CQR文献明确neural quantile可undercover且finite coverage需独立calibration；当前没有冻结calibration split，
+  不做conformal或quantile sweep。下一编号=`V67-F52`。
+
+### V67-F52 — P66 plain-Huber H2.5 isolation候选
+
+- 分类：`ablation/long-horizon-vs-quantile-loss`；状态：`active_materialization_then_gpu_training`。
+- 方法：P60 plain-Huber exact；P65 scene split/H2.5 exact；唯一变化是去掉quantile head/pinball。
+- 判定：P60三门exact。若通过，P65主要归因于uncertainty head/loss；若失败，plain方法边界为H2附近。
+- 锁：不扫horizon/architecture/loss/gate。下一编号=`V67-F53`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -2,11 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01
+
+- 状态：`materialization then GPU training running`；P60 plain-Huber exact，P65同scene split和H2.5 exact。
+- 唯一差异是移除quantile head/pinball，恢复scalar Huber；三门为P60 exact，用于区分loss failure与horizon shift。
+
 ### WS-V67-P65-QUANTILE-ACTOR-RELIABILITY-01
 
-- 状态：`materialization then GPU quantile training running`；ordered q10/q50/q90 head，固定pinball loss。
+- 状态：`done/rejected`；canonical=`20260829T130000Z__quantile-actor-s0-r1`；102 train scenes、
+  299,103 rows；23 confirmation scenes、28,111 H2.5 rows、1,200 exposed-unreliable rows。
 - Train为scene `%5!=0`、H `.8/1.5s`；confirmation复用remainder0 scenes但用新H=`2.5s`。
-- P60三门保持，加80% central interval empirical coverage `[.75,.85]`；不做conformal/calibrator/quantile sweep。
+- q50/Actor-only Spearman=`.717354/.800656`；MAE=`.151378/.153607`（降低`1.45%`）；AUROC
+  `=.962478/.932027`；coverage=`.672228`、width=`.385639`。2/4 gates；不做conformal/quantile sweep。
 
 ### WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01
 
