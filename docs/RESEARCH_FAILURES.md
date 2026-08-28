@@ -65,6 +65,9 @@
 
 下一可用编号：`V66-F02`。
 
+P3L固定8维/2x32/seed0实现已就绪，尚未创建formal run或读取P10V natural actor labels；`V66-F01`保持active，
+下一编号仍为`V66-F02`。禁止以实现完成宣称恢复。
+
 ### V6.5 终态边界（2026-08-28）
 
 - `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction

@@ -97,13 +97,15 @@
 
 ### WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01
 
-- 状态：`pending`（migration frozen）；hypothesis=`WS-V66-H-P3L-001`。
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P3L-001`；formal run尚未创建。
 - Train=P10V consumed 6 scenes；selection=P10X consumed 6 scenes（P2N已读）；两者scene-disjoint。selection不再用于
   改architecture、seed、feature或threshold；通过后另选独立cohort确认。
 - 固定特征：q0 mean/p90、log boundary/hit/current/swept counts、hit/current density、current/swept ratio。
 - 固定模型：2x32 MLP、seed0、full-batch weighted BCE、单次训练；输出只控制local geometry REPAIR/ABSTAIN，
   不控制Actor existence。
 - 外部迁移证据与边界：`docs/autoresearch/worldsim_v66/P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
+- 实现：`motion_proj/worldsim_v66/local_geometry_head.py`、
+  `scripts/run_worldsim_v66_p3l_local_geometry_head.py`；模型artifact不含hash/checksum/fingerprint。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

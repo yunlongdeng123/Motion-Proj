@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.6 P3L local geometry head implementation ready（2026-08-28）
+
+状态：`v66_p3l_local_geometry_head_implementation_ready`。已实现冻结8维instance-evidence summary、2x32 MLP、
+seed0/full-batch weighted BCE，以及P10V train→P10X single selection。selection只看AUROC/AUPRC与per-scene
+above-chance support，不解析threshold；模型输出不能删除Actor。窄验证仅`py_compile`与diff检查；下一步唯一一次训练/
+selection，失败则关闭该feature family或先检索新机制，不在P10X扫参。
+
 ## WorldSim V6.6 P2N natural conflict diagnosed / P3L migration frozen（2026-08-28）
 
 状态：`v66_p2n_deterministic_natural_ceiling_p3l_frozen`；canonical=
