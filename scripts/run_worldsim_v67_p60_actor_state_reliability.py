@@ -62,6 +62,24 @@ def main() -> None:
     actor_prediction = predict_reliability(
         actor_model, confirmation_arrays["features"], mean, scale, actor_only=True
     )
+    raw_evaluation = evaluate_reliability(
+        confirmation_arrays, query_prediction, actor_prediction, config["evaluation"]
+    )
+    calibrator = None
+    if bool(config["model"].get("train_only_monotone_affine_calibration", False)):
+        train_prediction = predict_reliability(
+            query_model, train_arrays["features"], mean, scale, actor_only=False
+        ).astype(np.float64)
+        train_target = np.asarray(train_arrays["target_cost"], dtype=np.float64)
+        centered_prediction = train_prediction - train_prediction.mean()
+        slope = max(
+            float(np.dot(centered_prediction, train_target - train_target.mean())
+                  / max(np.dot(centered_prediction, centered_prediction), 1e-12)),
+            float(config["model"]["minimum_calibration_slope"]),
+        )
+        bias = float(train_target.mean() - slope * train_prediction.mean())
+        query_prediction = np.maximum(slope * query_prediction + bias, 0.0)
+        calibrator = {"slope": slope, "bias": bias, "fit_row_count": int(len(train_target))}
     evaluation = evaluate_reliability(
         confirmation_arrays, query_prediction, actor_prediction, config["evaluation"]
     )
@@ -84,6 +102,7 @@ def main() -> None:
         "hidden_dimensions": list(config["model"]["hidden_dimensions"]),
         "query_model_state_dict": query_model.state_dict(),
         "actor_only_model_state_dict": actor_model.state_dict(),
+        "train_only_monotone_affine_calibrator": calibrator,
     }
     torch.save(artifact, run_dir / "TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt")
     summary = {
@@ -96,7 +115,8 @@ def main() -> None:
             "training_horizons_seconds": config["data"]["training_horizons_seconds"],
             "confirmation_horizon_seconds": config["data"]["confirmation_horizon_seconds"],
         },
-        "confirmation": evaluation, "gate_results": gates,
+        "confirmation": evaluation, "raw_confirmation": raw_evaluation,
+        "train_only_monotone_affine_calibrator": calibrator, "gate_results": gates,
         "resources": {
             "gpu": torch.cuda.get_device_name(0),
             "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2**30,
