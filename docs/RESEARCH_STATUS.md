@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P22 binary tail rejected / P23 continuous entropic training（2026-08-28）
+
+P22 canonical=`run://worldsim_v67/WS-V67-P22-TAIL-RISK-ACTION-COMPILER-01/
+20260828T140000Z__tail-risk-action-s0-r1`。六域415 cases/4,729 actions训练；V64 P10R4 test 1,105 eligible actions。
+P22/P20/qmean mean reduction=`0.329362/0.332863/0.286027`，unsafe reduction=`0.112825/0.108106/0.060916`；
+tail loss相对P20仅`+0.004719` unsafe增益且mean `-0.003501`，1/4 gates，拒绝。8/8 scenes mean不退化但不足以改verdict。
+
+NeurIPS 2022指出离散tail回报会出现gradient tail barrier；P22 any-event binary proxy与此一致。P23作为新连续风险对象，
+在七开发域用`log E exp(10*cost)/10` soft selected entropic risk，权重固定0.25；冻结后在V64 P10R2另一八场景
+action-task-untouched cohort一次确认。明确不声明OCE/CVaR/safety guarantee。
+
 ## WorldSim V6.7 P21 selective listwise authority supported / P22 tail-risk training（2026-08-28）
 
 P21 canonical=`run://worldsim_v67/WS-V67-P21-SELECTIVE-LISTWISE-AUTHORITY-01/

@@ -2,6 +2,14 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P22-TAIL-RISK-ACTION-COMPILER-01
+
+- 状态：`done/rejected`；canonical=`20260828T140000Z__tail-risk-action-s0-r1`；六域415 cases/4,729 actions，
+  soft selected unsafe weight=0.25，5,000 GPU epochs；P10R4 1,105/1,152 eligible actions。
+- P22/P20/qmean mean reduction=`0.329362/0.332863/0.286027`；unsafe reduction=
+  `0.112825/0.108106/0.060916`；unsafe delta over P20=`+0.004719`，mean delta=`-0.003501`；1/4 gates，
+  8/8 scenes mean不退化；wall/peak GPU/RSS=`148.854s/0.04712GiB/1.5713GiB`。
+
 ### WS-V67-P21-SELECTIVE-LISTWISE-AUTHORITY-01
 
 - 状态：`done/supported`；canonical=`20260828T134500Z__selective-listwise-s0-r1`；冻结P20 ranking，五域训练

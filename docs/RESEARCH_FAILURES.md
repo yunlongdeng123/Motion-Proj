@@ -174,13 +174,24 @@ P21在P2V action-task confirmation同样4/4 gates：固定49.30% coverage下，P
 
 ### V67-F09 — P22 tail-risk-aware listwise compiler候选
 
-- 分类：`algorithm/risk-sensitive-ranking`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/risk-sensitive-ranking`；状态：`closed_negative_after_first_trial`。
 - 动机：P20/P21已支持mean visited-state cost selection，但`any hidden-FREE` unsafe event仍只作AUROC描述，尚未进入
   differentiable selected-set objective。
 - 检索/迁移：ICML 2024 risk-sensitive reward-free RL和NeurIPS 2021 distributional CVaR强调tail outcome；P22新增soft
   selected unsafe-rate损失，但明确不把binary proxy包装成CVaR或safety guarantee。
 - 防重复：unsafe weight=`0.25`、六开发域、architecture/residual/temperature/fraction/gates预先固定；V64 P10R4 action
   target在模型freeze后一次读取，不扫weight或tail definition。下一编号=`V67-F10`。
+
+P22 exact-once仅1/4 gates：unsafe reduction比P20增加`+0.004719`，不足冻结`+0.02`，且mean reduction
+`0.329362 <0.35`并比P20低`0.003501`；8/8 scene support通过。禁止扫unsafe weight/threshold；binary any-event family关闭。
+
+### V67-F10 — P23 continuous entropic selected-cost候选
+
+- 分类：`algorithm/continuous-risk-sensitive-ranking`；状态：`active_first_trial_frozen`。
+- 动机/检索：NeurIPS 2022 Efficient Risk-Averse RL指出离散tail会形成tail barrier；NeurIPS 2020 OCE risk learning覆盖
+  entropic/CVaR等连续风险。P23用连续target cost的entropic soft selected risk绕开binary plateau。
+- 合同：risk aversion=`10`、weight=`0.25`、七开发域；确认用V64 P10R2八场景；与冻结P20/P22/qmean同分母比较。
+- 防重复：不扫risk aversion/weight/tail fraction/model/temperature/gate；不把objective称为OCE/CVaR保证。下一编号=`V67-F11`。
 
 ### V6.6 当前边界（2026-08-28）
 

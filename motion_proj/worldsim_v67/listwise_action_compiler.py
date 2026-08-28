@@ -140,6 +140,11 @@ def train_listwise_compiler(
         ) * mask
         listwise_case = (selected_weight * target).sum(dim=1) / selected_weight.sum(dim=1).clamp(min=1e-5)
         unsafe_listwise_case = (selected_weight * unsafe).sum(dim=1) / selected_weight.sum(dim=1).clamp(min=1e-5)
+        risk_aversion = float(config.get("entropic_risk_aversion", 1.0))
+        entropic_case = torch.log(
+            (selected_weight * torch.exp(risk_aversion * target)).sum(dim=1)
+            / selected_weight.sum(dim=1).clamp(min=1e-5)
+        ) / risk_aversion
         domain_losses = []
         for domain in torch.unique(domains):
             inside = domains == domain
@@ -148,6 +153,7 @@ def train_listwise_compiler(
                 + float(config["ranking_weight"]) * pairwise_case[inside].mean()
                 + float(config["listwise_weight"]) * listwise_case[inside].mean()
                 + float(config.get("unsafe_listwise_weight", 0.0)) * unsafe_listwise_case[inside].mean()
+                + float(config.get("entropic_listwise_weight", 0.0)) * entropic_case[inside].mean()
             )
         domain_losses_t = torch.stack(domain_losses)
         domain_mean = domain_losses_t.mean()
@@ -169,6 +175,7 @@ def train_listwise_compiler(
             "pairwise_loss": float(pairwise_case.mean().detach().cpu()),
             "soft_selected_cost": float(listwise_case.mean().detach().cpu()),
             "soft_selected_unsafe_rate": float(unsafe_listwise_case.mean().detach().cpu()),
+            "soft_selected_entropic_risk": float(entropic_case.mean().detach().cpu()),
             "residual_rms": float(torch.sqrt(residual_penalty).detach().cpu()),
         }
     final.update(
