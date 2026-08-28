@@ -163,6 +163,20 @@
   `.76717/.69915`；劣于P75且prevalence ratio=`1.2308`，2/4 gates，rejected（`V67-F73`）。不按development筛
   source、不做domain weighting recovery，P102保持best。
 
+### WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01
+
+- 状态：`running/development`；prep canonical=`20260830T060000Z__actor-uncertainty-tube-prep-s0-r1`，model
+  canonical=`20260830T060500Z__actor-uncertainty-tube-s0-r1`。
+- prediction object：Actor-only MLP以history/dynamics和normalized future time预测constant-velocity Actor位置误差的
+  q90 tube；candidate Ego `τ`只通过固定`q90 / max(abs(predicted separation - interaction radius), .05m)`解析投影，
+  不再训练end-to-end query classifier。
+- source仍为P104的102个4-horizon processed scenes，但新增真实9-step Actor position-error profile；同一Actor-anchor跨6条
+  query去重后训练。P81与P96两个已消费cohort分别作development，任何结果均不冒充新独立confirmation。
+- 固定q=.90、time/Actor max、`.05m`数值floor、`256/128` MLP、6,000 GPU steps与per-scene fixed50；不扫quantile、
+  floor、aggregation、width、loss、source或coverage。参考MultiPath的Actor uncertainty→closed-form collision query分解。
+- 执行调度：prep保存source后继续生成两个development artifacts；model进程等待source，随后在3090训练并与CPU/IO重叠。
+  当前未读新sensor/target，P81/P96的既有结论与P96/P103 terminal verdict均不改变。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |

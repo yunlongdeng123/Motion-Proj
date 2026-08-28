@@ -111,6 +111,12 @@ local auxiliary与data scaling均不能建立independent task-conditioned claim�
 query classifier。下一研究对象P107将预测Actor time-local uncertainty tube，再用candidate τ的signed clearance解析计算
 boundary-crossing risk；P81/P96均只可作consumed development，新的confirmation必须另冻target-unread cohort。
 
+P107已冻结并进入执行：Actor模型只读19维history/dynamics与normalized future time，以固定q90 pinball学习9-step
+position-error tube；candidate τ不进入网络，只在推理时以固定`q90 tube / max(abs(signed clearance), .05m)`作解析
+boundary-crossing risk，再按time→Actor max形成trajectory score。一次性在已消费P81与P96 cohorts分别比较Actor-only
+tube max和frozen P75；不扫quantile、clearance floor、聚合、结构、loss或coverage。materializer先交付source artifact，
+训练进程随即占用3090，并与两个development artifact的CPU/IO生成重叠；当前无需多卡、无新target read。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

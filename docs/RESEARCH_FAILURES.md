@@ -1047,6 +1047,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F76`。
 
+### P107 launch note — 不再训练end-to-end query classifier
+
+- P95/P102在development强、P96/P103独立relative失败，Actor-only在fresh cohort更稳；因此不把卡点解释为继续扩模型的理由；
+- literature response：MultiPath将Actor intent/control uncertainty与candidate trajectory的space-time collision query分开，
+  P107迁移为Actor q90 time-local error tube加固定clearance解析投影；网络完全不读candidate τ；
+- prevention：P81/P96只作已消费development，不换gate包装独立成功；q90、`.05m` floor、max聚合与fixed50一次冻结，
+  禁止quantile/floor/aggregation/seed/width sweep；若失败登记`V67-F76`并换研究对象；
+- execution：source materialization一交付即启动GPU训练，同时继续两个development cohort的CPU/IO；未增加hash、
+  checksum、fingerprint或smoke/regression matrix，单3090资源足够。
+
+下一可用编号仍为：`V67-F76`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

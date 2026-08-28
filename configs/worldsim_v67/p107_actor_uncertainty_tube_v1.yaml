@@ -1,0 +1,85 @@
+schema_version: worldsim_v67.p107_actor_uncertainty_tube.v1
+output_schema_version: worldsim_v67.p107_actor_uncertainty_tube_summary.v1
+task_id: WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01
+hypothesis_id: WS-V67-H-P107-001
+seed: 0
+role: development_actor_uncertainty_boundary_factorization
+model_artifact: ACTOR_UNCERTAINTY_TUBE.pt
+readiness_timeout_seconds: 7200
+source_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+development_cohorts:
+  - name: consumed_p81
+    artifact: DEVELOPMENT_P81_ACTOR_UNCERTAINTY_ROWS.npz
+    processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+    scene_indices: [15, 483, 413, 261, 799, 258, 708, 811, 607, 730]
+    horizons_seconds: [3.5]
+    history_frame_offsets: [10, 5]
+    anchor_stride_frames: 5
+    path_point_count: 9
+    ego_progress_ratios: [0.5, 1.0]
+    ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+    maximum_predicted_query_distance_m: 20.0
+    exposure_distance_scale_m: 6.0
+    maximum_actor_state_error_m: 20.0
+    ego_half_width_m: 1.0
+  - name: consumed_p96
+    artifact: DEVELOPMENT_P96_ACTOR_UNCERTAINTY_ROWS.npz
+    processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+    scene_indices: [599, 37, 489, 81, 83, 806, 485, 696, 440, 808]
+    horizons_seconds: [3.5]
+    history_frame_offsets: [10, 5]
+    anchor_stride_frames: 5
+    path_point_count: 9
+    ego_progress_ratios: [0.5, 1.0]
+    ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+    maximum_predicted_query_distance_m: 20.0
+    exposure_distance_scale_m: 6.0
+    maximum_actor_state_error_m: 20.0
+    ego_half_width_m: 1.0
+source_rows:
+  run: worldsim_v67/WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-PREP-01/20260830T060000Z__actor-uncertainty-tube-prep-s0-r1
+  artifact: SOURCE_ACTOR_UNCERTAINTY_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  hidden_dimensions: [256, 128]
+  quantile: 0.90
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  clearance_floor_m: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+locks:
+  actor_model_never_reads_candidate_ego_trajectory: true
+  candidate_trajectory_enters_only_through_fixed_error_tube_to_boundary_clearance_ratio: true
+  q90_max_over_time_and_actor_and_clearance_floor_are_fixed_before_training: true
+  both_development_cohorts_are_already_consumed: true
+  no_quantile_width_pooling_threshold_coverage_loss_or_source_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v100/chai20a.html
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+claim_boundary:
+  - development_only_on_consumed_P81_and_P96_cohorts
+  - no_independent_confirmation_or_safety_claim
+  - no_counterfactual_actor_reaction_or_closed_loop_planner_policy_claim

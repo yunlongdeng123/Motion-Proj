@@ -97,6 +97,7 @@ def materialize_actor_query_rows(
     occupancy_false_alarm: list[bool] = []
     predicted_separation_profile: list[np.ndarray] = []
     actual_separation_profile: list[np.ndarray] = []
+    actor_position_error_profile: list[np.ndarray] = []
     occupancy_flip_profile: list[np.ndarray] = []
     scene_index: list[int] = []
     horizon_values: list[float] = []
@@ -161,6 +162,9 @@ def materialize_actor_query_rows(
                     actual_actor_path = np.stack([
                         actor_table[frame + int(offset)][0] for offset in sampled_offsets
                     ])
+                    actor_error_profile = np.linalg.norm(
+                        actual_actor_path - predicted_actor_path, axis=1,
+                    ).astype(np.float32)
                     heading_delta = _wrapped_angle(yaw - math.atan2(ego_heading[1], ego_heading[0]))
                     base = [
                         actor_speed, acceleration_longitudinal, acceleration_lateral, yaw_rate,
@@ -204,6 +208,7 @@ def materialize_actor_query_rows(
                         occupancy_false_alarm.append(predicted_occupied and (not actual_occupied))
                         predicted_separation_profile.append(distances.astype(np.float32))
                         actual_separation_profile.append(actual_distances.astype(np.float32))
+                        actor_position_error_profile.append(actor_error_profile)
                         occupancy_flip_profile.append(
                             ((distances <= interaction_radius) != (actual_distances <= interaction_radius))
                         )
@@ -225,6 +230,7 @@ def materialize_actor_query_rows(
         "occupancy_false_alarm": np.asarray(occupancy_false_alarm, dtype=bool),
         "predicted_separation_profile_m": np.asarray(predicted_separation_profile, dtype=np.float32),
         "actual_separation_profile_m": np.asarray(actual_separation_profile, dtype=np.float32),
+        "actor_position_error_profile_m": np.asarray(actor_position_error_profile, dtype=np.float32),
         "occupancy_decision_flip_profile": np.asarray(occupancy_flip_profile, dtype=bool),
         "scene_index": np.asarray(scene_index, dtype=np.int32),
         "horizon_seconds": np.asarray(horizon_values, dtype=np.float32),
