@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P83 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P84 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -16,6 +16,12 @@ GPU与tar IO实际重叠。P82在新test rows存在前，只用576,032条source 
 read前冻结，将四个source horizon等量抽取positive/negative pairs，扩大网络至`512/256/128`与pair batch 32,768，
 直接处理H3.5外推时短horizon样本占优。P81是独立primary confirmation；P82/P83是同一首次read上的prospective
 secondary models，不冒充额外独立cohort。单3090已达约95%利用率，无多卡需求。
+
+卡点调研后增加P84，但仍在P81 targets出现前冻结。全部actor-query rows的event降低可能来自简单选择`separation>6m`
+的未访问状态；参考ICCV 2021 safety-aware prediction对planner critical region的定义，P84只在`separation<=6m`的
+visited region内计算per-scene 50% coverage。source训练先按19维Actor features去除同一Actor state因六条候选τ产生的
+重复row，直接预测`raw actor error>1m`与连续error；Ego τ只负责确定访问集合，形成Actor failure×known visit的因子化。
+`1024/512/256`模型、四horizon等权pair sampling、65,536 batch与8,000 epochs在tar IO期间运行，GPU约99%、3.6GiB。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 

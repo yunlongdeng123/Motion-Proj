@@ -786,6 +786,10 @@ P81--P83已在新test-role sensor/target read前冻结：P81把primary endpoint�
 prevalence，P82/P83分别训练全source pairwise AUC与horizon-balanced pairwise AUC；当前tar IO与GPU training并行，尚无
 新增scientific/engineering failure。P75 mean-cost负结论保持不变，下一编号仍为`V67-F63`。
 
+P84在同一target-read前处理一个潜在对象错配：全row event metric可能被`separation>6m`的未访问状态主导，因此新增
+visited-region-only denominator与去τ重复的Actor failure因子化模型。它不修改P81 protocol/verdict，当前仍无新增失败；
+下一编号仍为`V67-F63`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

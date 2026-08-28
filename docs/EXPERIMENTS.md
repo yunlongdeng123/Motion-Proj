@@ -2,6 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P84-VISITED-ACTOR-FAILURE-01
+
+- 状态：`active/source training`；canonical=`20260829T212300Z__visited-actor-failure-s0-r1`；在P81 rows出现前冻结。
+- 预测对象进一步收紧：evaluation denominator只含`predicted separation<=6m`的visited Actor rows，并在其中按scene固定
+  50% coverage，避免靠选择未访问Actor获得平凡低event rate。
+- source按19维Actor state精确去除候选τ重复row；训练`raw actor error>1m`的四horizon-balanced pairwise rank，
+  连续raw error Huber固定`.25`辅助。`1024/512/256`、65,536 pair/regression batch、8,000 epochs；不扫radius或loss。
+- prospective secondary gates比较visited-region event reduction、frozen P75、mean Actor error与scene consistency；
+  不称为独立于P81的第二cohort，也不作planner/safety claim。
+
 ### WS-V67-P83-HORIZON-BALANCED-ACTOR-EVENT-01
 
 - 状态：`active/source training`；canonical=`20260829T211800Z__horizon-balanced-actor-event-s0-r1`。
