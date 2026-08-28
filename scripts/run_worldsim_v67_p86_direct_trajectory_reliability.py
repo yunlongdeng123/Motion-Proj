@@ -43,6 +43,10 @@ def _aggregate(arrays: dict[str, np.ndarray], radius: float, threshold: float) -
     keys = np.stack((arrays["scene_index"], np.rint(arrays["horizon_seconds"] * 10).astype(np.int32),
         arrays["anchor_frame"], arrays["query_id"]), axis=1)
     _, inverse = np.unique(keys, axis=0, return_inverse=True)
+    order = np.argsort(inverse, kind="stable")
+    sorted_inverse = inverse[order]
+    starts = np.r_[0, np.flatnonzero(np.diff(sorted_inverse)) + 1]
+    ends = np.r_[starts[1:], len(order)]
     separation = np.asarray(arrays["predicted_minimum_separation_m"])
     error = np.asarray(arrays["raw_actor_state_error_m"], dtype=np.float32)
     query_features = []
@@ -52,8 +56,8 @@ def _aggregate(arrays: dict[str, np.ndarray], radius: float, threshold: float) -
     scenes = []
     horizons = []
     identities = []
-    for group in range(int(inverse.max()) + 1):
-        members = np.flatnonzero(inverse == group)
+    for start, end in zip(starts, ends):
+        members = order[start:end]
         visited = members[separation[members] <= radius]
         if not len(visited):
             continue
@@ -72,6 +76,23 @@ def _aggregate(arrays: dict[str, np.ndarray], radius: float, threshold: float) -
         "events": np.asarray(events, dtype=bool), "max_error": np.asarray(max_errors, dtype=np.float32),
         "scene_index": np.asarray(scenes, dtype=np.int32), "horizon_seconds": np.asarray(horizons, dtype=np.float32),
         "identity": np.asarray(identities, dtype=np.int32)}
+
+
+def _group_max_visited_score(
+    keys: np.ndarray, score: np.ndarray, visited: np.ndarray,
+) -> np.ndarray:
+    _, inverse = np.unique(keys, axis=0, return_inverse=True)
+    order = np.argsort(inverse, kind="stable")
+    sorted_inverse = inverse[order]
+    starts = np.r_[0, np.flatnonzero(np.diff(sorted_inverse)) + 1]
+    ends = np.r_[starts[1:], len(order)]
+    result = []
+    for start, end in zip(starts, ends):
+        members = order[start:end]
+        chosen = members[visited[members]]
+        if len(chosen):
+            result.append(float(np.max(score[chosen])))
+    return np.asarray(result, dtype=np.float64)
 
 
 def _select_by_scene(score: np.ndarray, scenes: np.ndarray, fraction: float) -> np.ndarray:
@@ -166,14 +187,13 @@ def main() -> None:
     frozen_model = ReliabilityMLP(len(FEATURE_NAMES), frozen["hidden_dimensions"]).cuda(); frozen_model.load_state_dict(frozen["query_model_state_dict"])
     frozen_row_score = predict_reliability(frozen_model.eval(), evaluation_raw["features"],
         np.asarray(frozen["feature_mean"], dtype=np.float32), np.asarray(frozen["feature_scale"], dtype=np.float32))
-    frozen_group_score = []
     row_keys = np.stack((evaluation_raw["scene_index"], np.rint(evaluation_raw["horizon_seconds"] * 10).astype(np.int32),
         evaluation_raw["anchor_frame"], evaluation_raw["query_id"]), axis=1)
-    for identity in evaluation["identity"]:
-        members = np.flatnonzero(np.all(row_keys == identity, axis=1) &
-            (evaluation_raw["predicted_minimum_separation_m"] <= float(config["evaluation"]["visited_region_radius_m"])))
-        frozen_group_score.append(float(np.max(frozen_row_score[members])))
-    frozen_group_score = np.asarray(frozen_group_score)
+    frozen_group_score = _group_max_visited_score(
+        row_keys, frozen_row_score,
+        np.asarray(evaluation_raw["predicted_minimum_separation_m"])
+        <= float(config["evaluation"]["visited_region_radius_m"]),
+    )
     scenes, events, max_error = evaluation["scene_index"], evaluation["events"], evaluation["max_error"]
     fraction = float(config["selection"]["coverage_fraction"])
     selected = _select_by_scene(query_score, scenes, fraction); actor_selected = _select_by_scene(actor_score, scenes, fraction)
