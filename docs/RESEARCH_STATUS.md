@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.6 P3C independent confirmation frozen / implementation ready（2026-08-28）
+
+状态：`v66_p3c_independent_confirmation_implementation_ready`。确认集固定为V65 P2V consumed六场景/72 units，
+与P10V train、P10X selection均scene-disjoint；复用既有evidence/native，不重跑3.3GB sidecar。runner只加载P3L
+checkpoint/normalization并threshold-free评分，禁止refit/sweep/second confirmation。gates=`AUROC +0.03`、
+`AUPRC +0.05`相对constant，以及至少4个scene above chance；Actor existence authority继续关闭。窄验证只做
+`py_compile`与diff检查，下一步exact-once formal read。
+
 ## WorldSim V6.6 P3L legacy selection supported / independent confirmation next（2026-08-28）
 
 状态：`v66_p3l_legacy_selection_supported_independent_confirmation_next`；canonical=

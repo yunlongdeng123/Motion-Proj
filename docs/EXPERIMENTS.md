@@ -114,9 +114,13 @@
 
 ### WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01
 
-- 状态：`pending_freeze`；hypothesis=`WS-V66-H-P3C-001`。
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P3C-001`；formal read尚未创建。
 - 目标：另一独立V65 cohort加载P3L同一checkpoint/normalization，exact-once验证threshold-free ranking与scene support。
 - 禁止refit、seed/feature/architecture/threshold sweep；输出仍无Actor existence authority。
+- cohort=`scene-0001/0219/0402/0594/0822/1110`，复用V65 P2V 72-unit evidence/native；与P10V/P10X scene-disjoint。
+- gates：相对deterministic AUROC/AUPRC至少`+0.03/+0.05`、至少4 scenes above chance、Actor existence关闭。
+- 实现：`scripts/run_worldsim_v66_p3c_local_geometry_confirm.py`；配置：
+  `configs/worldsim_v66/p3c_independent_local_geometry_confirm_v1.yaml`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

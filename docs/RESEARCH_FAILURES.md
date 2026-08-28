@@ -70,6 +70,9 @@ P3L固定8维/2x32/seed0 single selection已完成：P10X AUROC/AUPRC=`0.652365/
 增加`+0.152365/+0.133461`，6/6 scenes above chance。`V66-F01`状态转为`recovering`，尚需独立cohort no-refit
 确认才可关闭；下一编号仍为`V66-F02`。禁止在P10X继续扫参或解析threshold。
 
+P3C已在读取local-conflict label前固定V65 P2V六场景独立cohort、P3L checkpoint及三项ranking/support gates；
+实现尚未创建formal run，无新failure，`V66-F01`保持recovering、下一编号仍为`V66-F02`。
+
 ### V6.5 终态边界（2026-08-28）
 
 - `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction
