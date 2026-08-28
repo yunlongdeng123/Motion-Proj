@@ -39,7 +39,9 @@ P96 prep已并行扫描01/03/06/08/09/10，formal evaluator等待10 scenes ready
 P96，P97在已冻结P95 rows上派生one-sided false-safe target（predicted free / observed occupied）：source/development
 row events=`925/32`，无新sensor/target read。P97结果query/Actor/P75 selected false-safe=`11/16/10`，AUROC=
 `.44692/.45555`，只过2/4 gates并拒绝（`V67-F68`）；不以focal/class weight补救。P98只补齐互补false-alarm分解：
-source/development row events=`1,348/64`，6,000-epoch development训练与P96 IO并行；其结果仍不能替换P96。
+source/development row events=`1,348/64`。P98 fixed50 query/Actor/P75=`0/25/3`，AUROC=`.92312/.67813`，4/4
+gates通过。这表明P95 total-flip development优势主要由减少保守false alarms驱动，而非已失败的false-safe；P98仍不能
+替换P96，且无safety improvement claim。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

@@ -914,7 +914,9 @@ endpoint或model。
 
 下一可用编号：`V67-F69`。
 
-P98 false-alarm attribution从冻结rows派生且不修改P96；当前无新增失败，下一编号仍为`V67-F69`。
+P98 false-alarm attribution从冻结rows派生且不修改P96；development fixed50 query/Actor/P75=`0/25/3`、AUROC=
+`.92312/.67813`，4/4 gates通过。该结果只解释P95 total-flip增益主要来自false-alarm removal，不能覆盖V67-F68或产生
+safety claim；当前无新增失败，下一编号仍为`V67-F69`。
 
 ### V6.6 当前边界（2026-08-28）
 

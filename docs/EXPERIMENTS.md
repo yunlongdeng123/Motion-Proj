@@ -40,11 +40,13 @@
 
 ### WS-V67-P98-TRAJECTORY-FALSE-ALARM-01
 
-- 状态：`active/GPU training`；prep=`20260830T005500Z__trajectory-false-alarm-prep-s0-r1`，model=
+- 状态：`done/supported development`；prep=`20260830T005500Z__trajectory-false-alarm-prep-s0-r1`，model=
   `20260830T010000Z__trajectory-false-alarm-s0-r1`。
 - 从同一冻结rows派生`predicted occupied && observed free`target：source/development row events=`1,348/64`；
   只补完P95 flip的互补分解，不对P97稀疏失败做class weight/focal/negative-sampling恢复。
 - P96独立confirmation仍使用原P95 total-flip checkpoint和gates；P98仅development分析。
+- result：1,791 trajectories/64 false alarms；fixed50 query/Actor/P75=`0/25/3`，query reduction=`100%`，AUROC=
+  `.92312/.67813`，4/4 gates。与P97一起说明P95增益偏向efficiency/false-alarm removal，不支持false-safe safety claim。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
