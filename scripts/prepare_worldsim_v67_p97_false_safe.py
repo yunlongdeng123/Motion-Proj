@@ -11,9 +11,9 @@ import numpy as np
 import yaml
 
 
-def _derive(path: Path) -> dict[str, np.ndarray]:
+def _derive(path: Path, target_field: str) -> dict[str, np.ndarray]:
     arrays = dict(np.load(path, allow_pickle=False))
-    target = np.asarray(arrays["occupancy_false_safe"], dtype=np.float32)
+    target = np.asarray(arrays[target_field], dtype=np.float32)
     arrays["raw_actor_state_error_m"] = target
     arrays["target_cost"] = target.copy()
     return arrays
@@ -29,16 +29,18 @@ def main() -> None:
     args.run_dir.mkdir(parents=True, exist_ok=False)
     (args.run_dir / "resolved.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
     source_root = args.runs_root / config["row_run"]["source_run"]
-    source = _derive(source_root / config["row_run"]["source_input"])
-    development = _derive(source_root / config["row_run"]["development_input"])
+    target_field = str(config.get("target_field", "occupancy_false_safe"))
+    source = _derive(source_root / config["row_run"]["source_input"], target_field)
+    development = _derive(source_root / config["row_run"]["development_input"], target_field)
     np.savez_compressed(args.run_dir / config["source_rows"]["artifact"], **source)
     np.savez_compressed(args.run_dir / config["evaluation_rows"]["artifact"], **development)
     summary = {
         "schema_version": "worldsim_v67.p97_false_safe_prep_summary.v1", "status": "done",
         "source_row_count": len(source["features"]),
-        "source_false_safe_count": int(np.count_nonzero(source["raw_actor_state_error_m"])),
+        "target_field": target_field,
+        "source_target_count": int(np.count_nonzero(source["raw_actor_state_error_m"])),
         "development_row_count": len(development["features"]),
-        "development_false_safe_count": int(np.count_nonzero(development["raw_actor_state_error_m"])),
+        "development_target_count": int(np.count_nonzero(development["raw_actor_state_error_m"])),
         "new_sensor_or_target_read": False, "hash_checksum_fingerprint_added": False,
     }
     (args.run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
