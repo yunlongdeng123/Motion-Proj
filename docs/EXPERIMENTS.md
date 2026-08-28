@@ -130,7 +130,8 @@
 
 ### WS-V66-P6-HARP-BAKE-01
 
-- 状态：`implementation_ready`；目标是Actor/static/physical/appearance分层的deterministic runtime package。
+- 状态：`done`；verdict=`supported_consumed_legacy_harp_bake_capability`；目标是Actor/static/physical/appearance
+  分层的deterministic runtime package。
 - offline bake可读取冻结P3L分数，但runtime不得加载learned model、hidden target或以hazard label决定Actor existence。
 - 首轮只做consumed legacy package/capability，不冒充fresh quality、真实appearance修复或RL-ready distribution。
 - 输出八文件：`STATIC_STATE.npz/ACTORS.jsonl/ACTOR_PRIMITIVES.npz/ARTIFACT_FACTORS.jsonl/REPAIR_LOG.jsonl/
@@ -138,6 +139,17 @@
 - 因P3L/P3C无threshold，P6 action固定为continuous `RANK_REPAIR_OR_ABSTAIN`，Actor removal与geometry mutation均false。
 - 实现：`motion_proj/worldsim_v66/harp_bake.py`、`scripts/run_worldsim_v66_p6_harp_bake.py`；配置：
   `configs/worldsim_v66/p6_harp_bake_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P6-HARP-BAKE-01/20260828T092421Z__harp-bake-s0-r1`。
+- 结果：72 units、127 unique Actors、581 states、1,623,503 primitives；retention/metadata=`1/1`，
+  actor removed/hidden-target fields=`0/0`；8 files / 16,321,358 bytes；6/6 gates PASS。
+- 资源：wall=15.5685s，RSS=0.82530GiB，GPU=false；`failure_ledger_delta=none`。
+
+### WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01
+
+- 状态：`pending_freeze`；consumed legacy matched action-distribution audit，不是physical repair或fresh confirmation。
+- 固定50% actor-local action budget；N0/Q0/D0/L0/O0均保留全部Actor，只有local geometry repair/abstain排序不同。
+- primary目标是unhandled conflict exposure相对N0下降，同时Actor/hazard proxy distribution exact、world yield=1、
+  no all-UNKNOWN/easier-world collapse。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

@@ -81,6 +81,10 @@ local geometry ranking”恢复关闭；不赋予Actor drop authority。下一�
 P6 bake实现已就绪但未创建formal run。continuous score没有被事后阈值化，所有Actor保留；runtime不加载模型/
 hidden target，hazard不控制existence。没有新增failure，下一可用编号仍为`V66-F02`。
 
+P6 formal 6/6 gates通过：581 actor states全部保留，metadata complete=1，actor removed=0，hidden-target fields=0。
+这只证明runtime package capability，不把未执行的physical repair记成artifact下降；无新failure，下一可用编号仍为
+`V66-F02`。
+
 ### V6.5 终态边界（2026-08-28）
 
 - `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction

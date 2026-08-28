@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.6 P6 HARP bake supported / P7 distribution audit next（2026-08-28）
+
+状态：`v66_p6_harp_bake_supported_p7_distribution_audit_next`；canonical=
+`run://worldsim_v66/WS-V66-P6-HARP-BAKE-01/20260828T092421Z__harp-bake-s0-r1`；verdict=
+`supported_consumed_legacy_harp_bake_capability`。
+
+72 units烘焙127 unique Actors、581 Actor states和1,623,503 Actor primitives；8文件共16,321,358 bytes。
+Actor state retention/metadata completeness=`1/1`，removed/hidden-target fields=`0/0`，6/6 gates通过。
+runtime model/hidden-target loading=false，hazard-existence coupling=false；wall=`15.57s`、RSS=`0.82530GiB`。
+
+该capability没有实际改geometry。下一 active=`WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01`：固定50% local-action
+budget，在Actor/hazard attributes完全保留的 matched arms 比较未处理local-conflict exposure；不得把ABSTAIN记为真实
+repair，也不得用confirmation label调budget或阈值。
+
 ## WorldSim V6.6 P6 HARP bake implementation ready（2026-08-28）
 
 状态：`v66_p6_harp_bake_implementation_ready`。已实现八文件Actor-preserving runtime package：static tri-state使用
