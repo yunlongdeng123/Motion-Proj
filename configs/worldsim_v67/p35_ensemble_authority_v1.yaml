@@ -1,0 +1,59 @@
+schema_version: worldsim_v67.p35_ensemble_authority.v1
+output_schema_version: worldsim_v67.p35_ensemble_authority_summary.v1
+task_id: WS-V67-P35-ENSEMBLE-AUTHORITY-01
+hypothesis_id: WS-V67-H-P35-001
+role: fixed_deep_ensemble_disagreement_then_conservative_consumed_selection
+verdict_on_pass: supported_ensemble_disagreement_authority
+verdict_on_failure: rejected_ensemble_disagreement_authority
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P33-INDEPENDENT-JOINT-CONDITION-TRANSFER-01/20260828T182000Z__second-joint-cohort-s0-r1
+  mean_compiler_artifact: INDEPENDENT_JOINT_CONDITION_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  member_seeds: [0, 1, 2]
+  training_selected_fractions: [0.25, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0]
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+compiler:
+  uncertainty_weight: 1.0
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p33_p4c_h1p5_quantile_actions.npz
+  selected_fraction: 0.3333333333333333
+  horizon_seconds: 1.5
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_disagreement_error_spearman: 0.10
+  minimum_delta_over_mean_compiler: 0.005
+  minimum_nonincreasing_scene_support: 6
+locks:
+  fixed_member_count_and_seeds: true
+  uncertainty_weight_fixed: 1.0
+  p4c_consumed_method_selection: true
+  no_member_weight_model_loss_or_gate_sweep: true
+  aleatoric_priority_family_closed_after_p34: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+  - https://proceedings.neurips.cc/paper_files/paper/2024/hash/c3177be226ee12e34d6ba3b5e6fe6a5b-Abstract-Conference.html
+claim_boundary:
+  - fixed_ensemble_model_disagreement_as_epistemic_proxy_for_authority_priority
+  - consumed_joint_condition_method_selection_only
+  - no_calibrated_posterior_population_collision_planning_policy_closed_loop_or_safety_claim
