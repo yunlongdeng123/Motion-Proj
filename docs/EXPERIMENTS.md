@@ -2,10 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P67-BINARY-ACTOR-RELIABILITY-01
+
+- 状态：`materialization then GPU training running`；direct label=`raw actor error>1m AND predicted tau separation<=6m`。
+- 同read共同训练binary query、continuous query、binary Actor-only三个同容量heads；class weight只取train neg/pos exact ratio。
+- 三门：binary query AUROC `.75`、相对continuous `+.005`、相对Actor-only binary `+.01`；不扫threshold/loss。
+
 ### WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01
 
-- 状态：`materialization then GPU training running`；P60 plain-Huber exact，P65同scene split和H2.5 exact。
-- 唯一差异是移除quantile head/pinball，恢复scalar Huber；三门为P60 exact，用于区分loss failure与horizon shift。
+- 状态：`done/supported`；canonical=`20260829T133000Z__plain-actor-h2p5-s0-r1`；299,103 train rows、
+  28,111 H2.5 rows、1,200 unreliable rows。P60 plain-Huber exact，P65同scene split和H2.5 exact。
+- Query/Actor-only Spearman=`.759251/.773758`；MAE=`.149455/.209832`（降低`28.77%`）；AUROC
+  `=.945655/.939205`；3/3 gates。P65失败归因quantile objective/interval，不是H2.5。wall=`77.672s`。
 
 ### WS-V67-P65-QUANTILE-ACTOR-RELIABILITY-01
 

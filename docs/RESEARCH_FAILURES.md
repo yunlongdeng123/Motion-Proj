@@ -645,12 +645,21 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 结论：CQR文献明确neural quantile可undercover且finite coverage需独立calibration；当前没有冻结calibration split，
   不做conformal或quantile sweep。下一编号=`V67-F52`。
 
-### V67-F52 — P66 plain-Huber H2.5 isolation候选
+### V67-F52 — P66 plain-Huber H2.5 isolation支持
 
-- 分类：`ablation/long-horizon-vs-quantile-loss`；状态：`active_materialization_then_gpu_training`。
+- 分类：`ablation/long-horizon-vs-quantile-loss`；状态：`supported_isolation`。
 - 方法：P60 plain-Huber exact；P65 scene split/H2.5 exact；唯一变化是去掉quantile head/pinball。
 - 判定：P60三门exact。若通过，P65主要归因于uncertainty head/loss；若失败，plain方法边界为H2附近。
-- 锁：不扫horizon/architecture/loss/gate。下一编号=`V67-F53`。
+- 结果：query/Actor-only Spearman=`.759251/.773758`、MAE=`.149455/.209832`（降低`28.77%`）、
+  AUROC=`.945655/.939205`；3/3 gates。
+- 结论：H2.5 plain method成立；P65负结果定位于quantile head/loss与未校准interval。下一编号=`V67-F53`。
+
+### V67-F53 — P67 direct binary Actor reliability候选
+
+- 分类：`prediction/direct-binary-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 对象：冻结定义`raw actor state error>1m AND predicted tau separation<=6m`，直接输出unreliable probability。
+- 同read：binary query、continuous query、binary Actor-only；正类权重=train negative/positive exact ratio。
+- 判定：AUROC `.75`，相对continuous `+.005`，相对Actor-only `+.01`；不扫threshold/loss/class weight。下一编号=`V67-F54`。
 
 ### V6.6 当前边界（2026-08-28）
 

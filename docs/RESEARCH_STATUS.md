@@ -28,7 +28,13 @@ P65 canonical=`run://worldsim_v67/WS-V67-P65-QUANTILE-ACTOR-RELIABILITY-01/
 20260829T130000Z__quantile-actor-s0-r1`。H2.5 q50/Actor-only Spearman=`.717354/.800656`，MAE
 `=.151378/.153607`（仅降低`1.45%`），AUROC=`.962478/.932027`；q10-q90 coverage=`.672228`，低于`.75`。
 2/4 gates拒绝；检索CQR/shift conformal后仍按锁不做calibration。P66在同split/H2.5恢复P60 plain-Huber exact，
-用于区分quantile-loss failure和long-horizon failure；训练输入正在物化。
+canonical=`run://worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/
+20260829T133000Z__plain-actor-h2p5-s0-r1`。Query MAE `.149455`比Actor-only `.209832`低`28.77%`，AUROC
+`=.945655`，3/3 gates；所以P65失败来自quantile objective/interval，不是H2.5 shift。
+
+P67将对象收紧为直接二元问题：`actor error>1m AND predicted tau separation<=6m`。Binary query、continuous query与
+binary Actor-only在同一training read共同训练，固定class weight为train neg/pos ratio；第五split H2.5，要求binary head
+分别超过continuous `.005`与Actor-only `.01`。当前物化中，随后GPU训练。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
