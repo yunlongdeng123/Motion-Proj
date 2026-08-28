@@ -4,41 +4,44 @@
 
 ### WS-V67-P80-HORIZON-FILM-ACTOR-SELECTOR-01
 
-- 状态：`frozen / queued after P79 if IO still active`；为query 24维与Actor 19维base features各追加一次
+- 状态：`done/rejected`；canonical=`20260829T193000Z__horizon-film-actor-s0-r1`。为query 24维与Actor 19维base features各追加一次
   `feature×normalized(H)`，形成48/38维受限linear horizon modulation；source rank Huber、1,500 epochs。
-- 模型必须在P75 fresh rows前冻结；同cohort follow-up相对Actor/P75各降5%、相对P76--P79更优者降2%。不扫高阶H项。
+- H3.5 query/Actor Spearman=`.643110/.618712`、AUROC=`.943078/.934985`；selected cost
+  `=.045743/.053086`，query相对Actor低13.83%，但比P75 `.038723`高18.13%、比此前blind best P76高5.56%。2/4 gates，拒绝。
 
 ### WS-V67-P79-HORIZON-VREX-ACTOR-SELECTOR-01
 
-- 状态：`frozen / queued after P78 if IO still active`；四个source horizons等权percentile-rank Huber risk，加固定`.10`
+- 状态：`done/rejected`；canonical=`20260829T191500Z__horizon-vrex-actor-s0-r1`。四个source horizons等权percentile-rank Huber risk，加固定`.10`
   horizon-risk variance penalty；query/Actor-only同容量、1,500 epochs。方法边界是V-REx-inspired，不称完整Fishr。
-- P75 fresh rows前冻结；same-cohort follow-up需相对Actor/P75各降低5%，并相对P76--P78更优者降低2%；不扫penalty。
+- selected cost query/Actor/P75/P76=`.049604/.048565/.038723/.043334`；query相对Actor退化2.14%、比P75高28.10%，
+  仅absolute reduction `79.55%`通过，1/4拒绝。不扫penalty。
 
 ### WS-V67-P78-BOUNDARY-PAIR-ACTOR-SELECTOR-01
 
-- 状态：`frozen / queued after P77 if IO still active`；每个source scene×horizon内将最低/最高半集按rank一一配对，
+- 状态：`done/rejected`；canonical=`20260829T190000Z__boundary-pair-actor-s0-r1`。每个source scene×horizon内将最低/最高半集按rank一一配对，
   组内cost-gap归一加权pairwise logistic，各group等权；query/Actor-only同容量、1,500 epochs、temperature `.10`。
-- 该模型在P75 fresh rows出现前冻结；同cohort follow-up须相对P75和Actor-only各降低5%，并相对P76/P77中更优者降低2%。
-  不扫pair构造、temperature或coverage。
+- selected cost query/Actor/P75/P76=`.052137/.046796/.038723/.043334`；query相对Actor退化11.41%，比P75高34.64%，
+  只过absolute reduction门，1/4拒绝。不扫pair构造、temperature或coverage。
 
 ### WS-V67-P77-LISTNET-ACTOR-SELECTOR-01
 
-- 状态：`frozen / queued after P76`；相同576,032 source rows与query/Actor-only容量，固定temperature `.25`的
+- 状态：`done/rejected`；canonical=`20260829T184500Z__listnet-actor-s0-r1`。相同576,032 source rows与query/Actor-only容量，固定temperature `.25`的
   group-balanced ListNet。每个scene×horizon list等权，target distribution来自连续percentile rank。
-- 模型在P75 rows/metrics可用前冻结；P75首次fresh read后，同cohort development follow-up比较P77、Actor-only、P75、
-  P76与P73的50% selected cost。P77需相对P76再降低2%，不扫temperature或coverage。
+- Spearman query/Actor=`.714670/.730330`，但selected cost=`.053605/.050391`；比P75高38.43%、比P76高23.70%。
+  只有absolute reduction门通过，1/4拒绝；不扫temperature或coverage。
 
 ### WS-V67-P76-GROUP-RANK-ACTOR-SELECTOR-01
 
-- 状态：`training`；P75验证LIDAR精确分片IO进行时，用source H `.8/1.5/2.5/3.0`的576,032 rows训练
+- 状态：`done/rejected`；canonical=`20260829T183000Z__group-rank-actor-s0-r1`。P75验证LIDAR精确分片IO进行时，用source H `.8/1.5/2.5/3.0`的576,032 rows训练
   scene×horizon连续percentile-rank query/Actor-only heads；固定1,500 epochs、无temperature/pair/coverage sweep。
 - P74 binary admission只保留“最低半集”边界而丢弃半集内部相对次序；P76用dense rank target恢复整个list的监督幅度。
   模型在P75 validation rows产生前冻结；P75先完成fresh read，P76随后复用相同H3.5 rows只能标为development follow-up。
-- gates：query fixed-50% cost相对rank Actor-only/P75各至少降低5%，相对all至少降低50%；pointwise MAE不设门。
+- H3.5 Spearman query/Actor=`.638573/.635970`、AUROC=`.951204/.926892`；selected cost=`.043334/.047260`，
+  query相对Actor低8.31%，但比P75高11.91%。2/3 gates，拒绝。
 
 ### WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01
 
-- 状态：`running / exact-shard IO recovery`；四horizon模型已训练完成并等待数据。从V5冻结validation role取8个从未进入P60–P74的scene，只抽取Actor reliability所需LIDAR，
+- 状态：`done/rejected`；canonical=`20260829T180000Z__fresh-validation-actor-s0-r1`。从V5冻结validation role取8个从未进入P60–P74的scene，只抽取Actor reliability所需LIDAR，
   用DriveStudio 10Hz `lidar/calib/objects`最小process keys建立新processed cohort；不做图像/mask/quality/hash阶段。
 - GPU并行训练source H `.8/1.5/2.5/3.0` continuous expected-cost模型（query/Actor-only同容量）；新cohort H3.5
   固定50%一次read，primary gates只比较selected cost，不再用pointwise MAE否定selective对象。
@@ -46,6 +49,11 @@
   并行扫描`02/04/06/09/10`，每包只接收所属scene members，P75主run不重训。
 - P75 model r1的2,400s wait将先到期；scientific recovery r2只复用r1 source-H3 cache，训练合同不变，模型在fresh wait前
   落盘，timeout按实际IO延到7,200s。r1超时前fresh rows/metric仍为0。
+- 实际r1在上限前完成：8,000 H3.5 rows。Query/Actor Spearman=`.658376/.661740`、MAE=`.137410/.158166`
+  （query改善13.12%）、AUROC=`.956368/.952874`。50% cost query/Actor/P73=`.038723/.037013/.039619`；
+  query相对Actor退化4.62%，相对P73只改善2.26%，1/3 gates拒绝；absolute cost相对all降低84.04%。
+- Query selected unreliable prevalence `.00175`低于Actor/P73 `.0025`，只作下一独立hypothesis，不事后改P75 verdict。
+  r2在joint epoch1001暂停后终止，fresh read=0。
 
 ### WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
 

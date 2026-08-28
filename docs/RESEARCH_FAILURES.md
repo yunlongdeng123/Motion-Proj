@@ -733,7 +733,7 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F60 — P75 validation LIDAR generic shard routing造成无效全包扫描
 
-- 分类：`engineering/data-routing`；状态：`recovering_with_exact_scene_shards`。
+- 分类：`engineering/data-routing`；状态：`resolved_by_exact_scene_shards_and_scene_ready_preprocess`。
 - attempted run：`WS-V67-P75-FRESH-ACTOR-COHORT-PREP-01/20260829T180000Z__validation-actor-prep-s0-r1`；
   generic extractor在member index尚未建立时把全部3,128 candidates交给10个约30GB gzip shards，2 workers长时间只扫描
   01/02；0/8 processed scenes ready，未读H3.5 target/metric。
@@ -758,6 +758,29 @@ P80预注册为一次linear horizon feature modulation，不做高阶interaction
 
 P75 model r1的2,400s readiness上限将早于已观测tar/preprocess wall；r2在fresh read前仅复用r1 source-H3 cache并提前
 持久化模型，scientific合同不变。r1若按预期timeout则登记`V67-F61`，不得把它计作算法失败。
+
+恢复结果：五包在`1409.8--1683.5s`完成，3,128 members全找到；scene-ready手工feeder先完成8个最小processed scenes，
+父协调器恢复后8/8 `reused_ready`，prep wall=`1982.66s`。P75 r1在旧timeout前完成，故没有timeout failure；预备r2在
+joint epoch1001终止且0 fresh read。F60关闭，下一编号仍为`V67-F61`。
+
+### V67-F61 — P75 fresh H3.5未建立相对Actor-only的fixed-coverage mean-cost优势
+
+- canonical：`run://worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1`；
+  8 scenes、8,000 rows、280 unreliable events，首次fresh read。
+- 结果：query pointwise MAE比Actor低13.12%，AUROC高`.003494`；但50% selected mean cost `.038723`高于Actor
+  `.037013`（退化4.62%），且只比P73 `.039619`低2.26%而非5%。1/3 selector gates，严格拒绝。
+- 保留：相对all cost降低84.04%，8/8 scenes nonincreasing；query selected unreliable prevalence `.00175`低于
+  Actor/P73 `.0025`。后者只生成新的独立可靠性hypothesis，不覆盖mean-cost失败。
+- 防重复：不降5%门、不在该cohort调coverage/score fusion/threshold；全面selector claim关闭。下一编号=`V67-F62`。
+
+### V67-F62 — P76--P80 blind source-ranking恢复均未超过P75
+
+- 所有模型在P75 fresh rows/metrics出现前冻结，随后同cohort development read；不是五次独立confirmation。
+- selected cost：P75/P76/P77/P78/P79/P80=`.038723/.043334/.053605/.052137/.049604/.045743`；五个恢复均更差。
+- P76/P80相对各自Actor-only仍改善8.31%/13.83%，说明τ特征并非完全无效；但dense percentile rank、ListNet、
+  boundary pairs、horizon risk variance与linear horizon-FiLM均未建立相对当前best selector的增益。
+- 防重复：不扫rank temperature、pairing、V-REx weight、FiLM order、epochs或coverage；该source-ranking恢复族关闭。
+  下一编号=`V67-F63`。
 
 ### V6.6 当前边界（2026-08-28）
 

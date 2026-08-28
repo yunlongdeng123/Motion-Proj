@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
+
+Canonical P75=`run://worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/
+20260829T180000Z__fresh-validation-actor-s0-r1`。五个精确shards提取3,128 LIDAR members（3,013新写），scene-ready
+四路最小`lidar/calib/objects`预处理后，8个从未进入P60--P74的V5 validation scenes在H3.5产生8,000 rows、280个
+unreliable events。Prep r2 wall=`1982.66s`；P75 wall=`2518.16s`、peak GPU=`4.081GiB`。
+
+P75 query/Actor-only Spearman=`.658376/.661740`，MAE=`.137410/.158166`（query改善`13.12%`），unreliable AUROC
+`=.956368/.952874`。固定50% query/Actor/P73 selected cost=`.038723/.037013/.039619`：query相对Actor退化`4.62%`，
+只比P73降低`2.26% <5%`；相对all `.242577`仍降低`84.04%`。因此1/3 gates，严格拒绝全面fresh selector claim。
+同时query selected unreliable prevalence=`.00175`，低于Actor/P73的`.0025`，是post-read描述性窄信号，不在本run
+事后改主门或包装成功；下一独立对象应直接确认“给定τ时访问Actor state是否可靠”，而非mean-cost dominance。
+
+P76--P80均在任何P75 rows/metrics可用前冻结，随后共享同一cohort作development follow-up，全部拒绝：selected cost
+依次为P76 `.043334`、P77 `.053605`、P78 `.052137`、P79 `.049604`、P80 `.045743`，均高于P75 `.038723`。
+其中P76/P80虽分别比自己的Actor-only低`8.31%/13.83%`，仍未超过P75；dense-rank、ListNet、boundary-pair、
+horizon V-REx与linear horizon-FiLM家族关闭，不扫temperature/penalty/interaction/coverage。
+
+P75 model r2在r1逼近旧2,400s timeout时启动，只复用source H3 cache；r1及时完成首次fresh read后，r2于joint epoch1001
+暂停并终止，0 fresh rows/metrics read、无模型artifact。它不是第二scientific trial。单RTX 3090足够，无多卡需求。
+
 ## WorldSim V6.7 P75 exact-shard IO / P76 dense group-rank GPU training（2026-08-29）
 
 P75四horizon query/Actor-only模型已完成`1,500+1,500` epochs训练；source H3物化135,634 rows，四horizon总训练
