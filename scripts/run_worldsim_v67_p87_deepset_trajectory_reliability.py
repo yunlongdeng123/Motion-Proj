@@ -133,7 +133,7 @@ def _build_sets(
         if not len(visited):
             continue
         chosen = visited[np.argsort(separation[visited], kind="stable")[:maximum_actors]]
-        query = np.zeros((maximum_actors, len(FEATURE_NAMES)), dtype=np.float32)
+        query = np.zeros((maximum_actors, raw.shape[1]), dtype=np.float32)
         actor = np.zeros((maximum_actors, len(ACTOR_FEATURE_NAMES)), dtype=np.float32)
         mask = np.zeros(maximum_actors, dtype=bool)
         query[:len(chosen)] = raw[chosen]

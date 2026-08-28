@@ -1,0 +1,61 @@
+schema_version: worldsim_v67.p100_temporal_clearance_occupancy_flip.v1
+output_schema_version: worldsim_v67.p100_temporal_clearance_occupancy_flip_summary.v1
+task_id: WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-01
+hypothesis_id: WS-V67-H-P100-001
+seed: 0
+role: development_temporal_clearance_trajectory_occupancy_reliability
+verdict_on_pass: supported_development_temporal_clearance_occupancy_flip
+verdict_on_failure: rejected_development_temporal_clearance_occupancy_flip
+model_artifact: TEMPORAL_CLEARANCE_OCCUPANCY_FLIP.pt
+row_run:
+  source_run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-PREP-01/20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1
+  source_input: SOURCE_OCCUPANCY_FLIP_ROWS.npz
+  development_input: DEVELOPMENT_OCCUPANCY_FLIP_ROWS.npz
+  derived_run: worldsim_v67/WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-PREP-01/20260830T013000Z__temporal-clearance-prep-s0-r1
+source_rows:
+  run: worldsim_v67/WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-PREP-01/20260830T013000Z__temporal-clearance-prep-s0-r1
+  artifact: SOURCE_TEMPORAL_CLEARANCE_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-PREP-01/20260830T013000Z__temporal-clearance-prep-s0-r1
+  artifact: DEVELOPMENT_TEMPORAL_CLEARANCE_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 6000
+  horizon_batch_size: 1024
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: binary_bce
+  failure_threshold_m: 0.5
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  query_appends_normalized_time_to_closest_signed_clearance_and_boundary_distance: true
+  analytic_time_to_closest_uses_constant_relative_velocity_and_frozen_candidate_tau: true
+  actor_only_features_unchanged: true
+  derived_from_frozen_p95_rows_without_new_sensor_or_target_read: true
+  P96_protocol_and_model_unchanged: true
+  four_source_horizons_equal_batch_weight: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_feature_subset_threshold_radius_width_coverage_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+claim_boundary:
+  - development_only_temporal_clearance_occupancy_reliability
+  - P96_independent_confirmation_remains_frozen_P95_not_P100
+  - no_independent_temporal_clearance_confirmation_yet
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

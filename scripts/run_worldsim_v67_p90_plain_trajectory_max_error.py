@@ -107,7 +107,7 @@ def main() -> None:
     target = torch.from_numpy(np.log1p(source["max_error"])).cuda()
     horizon_groups = [torch.from_numpy(np.flatnonzero(source["horizon_seconds"] == horizon)).long().cuda()
         for horizon in sorted(np.unique(source["horizon_seconds"]).tolist())]
-    query_model = DeepSetRisk(len(FEATURE_NAMES), model_config["element_dimensions"], model_config["decoder_dimensions"]).cuda()
+    query_model = DeepSetRisk(query_rows.shape[1], model_config["element_dimensions"], model_config["decoder_dimensions"]).cuda()
     actor_model = DeepSetRisk(len(ACTOR_FEATURE_NAMES), model_config["element_dimensions"], model_config["decoder_dimensions"]).cuda()
     optimizer = torch.optim.AdamW(list(query_model.parameters()) + list(actor_model.parameters()),
         lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
@@ -148,7 +148,7 @@ def main() -> None:
     actor_score = _predict_error(actor_model.eval(), evaluation_actor, evaluation_mask, model_config, failure_threshold_log)
     frozen = torch.load(args.runs_root / config["frozen_p75"]["run"] / config["frozen_p75"]["artifact"], map_location="cuda")
     frozen_model = ReliabilityMLP(len(FEATURE_NAMES), frozen["hidden_dimensions"]).cuda(); frozen_model.load_state_dict(frozen["query_model_state_dict"])
-    frozen_row_score = predict_reliability(frozen_model.eval(), evaluation_raw["features"],
+    frozen_row_score = predict_reliability(frozen_model.eval(), evaluation_raw["features"][:, :len(FEATURE_NAMES)],
         np.asarray(frozen["feature_mean"], dtype=np.float32), np.asarray(frozen["feature_scale"], dtype=np.float32))
     row_keys = np.stack((evaluation_raw["scene_index"], np.rint(evaluation_raw["horizon_seconds"] * 10).astype(np.int32),
         evaluation_raw["anchor_frame"], evaluation_raw["query_id"]), axis=1)
