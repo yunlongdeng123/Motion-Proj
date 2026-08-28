@@ -1,0 +1,38 @@
+schema_version: worldsim_v67.p54_frozen_joint_condition_replication.v1
+output_schema_version: worldsim_v67.p54_frozen_joint_condition_replication_summary.v1
+task_id: WS-V67-P54-FROZEN-JOINT-CONDITION-REPLICATION-01
+hypothesis_id: WS-V67-H-P54-001
+role: frozen_multi_budget_gradient_hybrid_second_joint_condition_cohort
+verdict_on_pass: supported_frozen_joint_condition_replication
+verdict_on_failure: rejected_frozen_joint_condition_replication
+inputs:
+  conditioned_compiler_run: worldsim_v67/WS-V67-P53-JOINT-BUDGET-HORIZON-GRADIENT-HYBRID-01/20260829T040000Z__joint-budget-horizon-gradient-s0-r1
+  conditioned_compiler_artifact: HYBRID_CONDITIONED_ACTION_COMPILER.pt
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p54_p4c_h0p8_quantile_actions.npz
+  selected_fraction: 0.375
+  horizon_seconds: 0.8
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_nonincreasing_scene_support: 6
+locks:
+  p53_model_normalizer_gradient_objective_budget_set_and_anchor_frozen: true
+  p20_action_score_and_p31_allocator_frozen: true
+  p4c_h0p8_target_not_used_in_p53_training: true
+  no_training_refit_weight_budget_anchor_peak_model_loss_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - frozen_joint_budget_short_horizon_gradient_hybrid_replication
+  - second_consumed_cohort_at_jointly_unseen_task_condition
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim
