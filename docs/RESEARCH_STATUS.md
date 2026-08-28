@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P101 progressive occupancy-reliability research（2026-08-30）
+## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
 coverage后，frozen P75 query选择26 events（prevalence `.005442`），Actor-only 57（`.011930`），P73 45
@@ -32,7 +32,7 @@ query相对Actor减少`75%`、相对all减少`85.25%`，AUROC=`.83952/.69366`。
 
 P96已在任何remaining sensor/target read前冻结最后10个V5 test-role scenes：`0771/0039/0635/0099/0101/1066/
 0630/0910/0556/1068`（metadata indices `599/37/489/81/83/806/485/696/440/808`）。完整member-session map与archive
-headers冻结shards `08/01/06/01/01/10/06/09/03/10`；P95 checkpoint、interaction radius、9 samples、H3.5、50%
+headers冻结shards `08/01/06/01/01/10/06/09/06/10`（0556由exact locator在read前修正）；P95 checkpoint、interaction radius、9 samples、H3.5、50%
 coverage和4 gates全部不变。只允许这一次independent confirmation，不在read后换scene/shard/model/gate。
 
 P96 prep已并行扫描01/03/06/08/09/10，formal evaluator等待10 scenes ready且尚未读取target。为覆盖archive IO而不改变
@@ -64,16 +64,15 @@ normalized time)`tokens先由共享temporal encoder聚合，再与24维Actor-que
 mean+max；Actor-only仍用原Deep Sets。6,000 epochs后fixed50 query/Actor/P75=`4/27/13`，absolute reduction=
 `91.57%`、query-vs-Actor=`85.19%`，AUROC=`.87161/.68922`，刷新P95的7为当前development best。
 
-P102 checkpoint与normalization已在P96 target rows出现前冻结。P103作为prospective secondary等待同一P96 rows，模型、
-H3.5、fixed50与4 gates不变；P96 frozen P95仍是唯一primary，P103只能报告同一independent cohort上的secondary transfer，
-不能覆盖或替换P96 verdict。
+P102 checkpoint与normalization在P96 target rows出现前冻结。P103作为同一read的prospective secondary，模型、H3.5、
+fixed50与4 gates不变；P96 frozen P95仍是唯一primary，P103不能覆盖或替换primary verdict。
 
 P96 archive scan在任何processed scene/target materialization前发现`scene-0556`的推断shard03命中0；其余cohort、模型、
 target与gates未变。按约束先检索nuScenes官方/开源下载结构；公开资料确认10个blob parts需合并但没有session-part索引，
 故先只读扫描02/04/05/07；四包完整排除后，说明session甚至可能落在r1已为其他scene扫描但未包含0556 filter的
 01/06/08/09/10。第二轮locator在06精确命中`n008-2018-08-31-11-37-23-0400`，其余locator立即终止；冻结map仅改
-`0556:03→06`。P96 prep r2现用GNU tar exact-session wildcard补390个文件，再由原prep复用其余3,511 files并做10-scene
-preprocess；不换scene。该工程卡点仍为`V67-F69`恢复中，科学read未发生。
+`0556:03→06`。P96 prep r2最终3,901/3,901 mapped、newly extracted=350（另40由exact-session快速抽取），10/10
+preprocess完成，wall=`448.10s`；`V67-F69`关闭为pre-target recovered，不换scene/model/gate。
 
 为避免exact-shard IO期间GPU研究线停滞，P104把监督从trajectory-level union细化为与occupancy定义完全相同的9个
 future samples逐时flip标签。prep在111.61s生成575,596 source rows/5,336 temporal flips与9,559 development rows/
@@ -98,6 +97,19 @@ r2只恢复`raw_actor_state_error_m=occupancy_decision_flip`后以新prep/model 
 reduction=`66.30%/36%`，但劣于P75且prevalence ratio=`1.2308`，2/4 gates，登记`V67-F73`并关闭data-scale route。
 CVPR 2019 negative-transfer分析说明不相关source可伤害target；本项目没有未读target可合法学习source weighting，故不挑
 remainder、不按development过滤或做domain-adversarial recovery。P102仍是development best与P103唯一checkpoint。
+
+独立结果否定了occupancy-flip task-conditioned增益。P96在9,520 rows/1,720 trajectories/36 flips上fixed50选择859条，
+query/Actor/P75=`8/5/12`；absolute reduction=`55.50%`且优于P75，但query比Actor多60%，AUROC=`.65542/.71181`，
+只过3/4 gates，verdict=`rejected_independent_trajectory_occupancy_flip`（`V67-F74`）。subtype为query `7 false-safe+
+1 false-alarm`、Actor false-safe=0、P75 false-safe=10；不能声称false-safe或safety improvement。
+
+P103 hierarchical secondary同样拒绝：query/Actor/P75=`9/7/12`，absolute reduction=`49.94%`、query-vs-Actor=
+`-28.57%`，AUROC=`.74385/.67973`，3/4 gates（`V67-F75`）。因此P95--P106的end-to-end query classifier、
+local auxiliary与data scaling均不能建立independent task-conditioned claim；不换gate、scene或在本read上选新模型。
+
+卡点调研指向MultiPath的“Actor intent/control uncertainty → closed-form space-time collision query”分解，而非继续训练
+query classifier。下一研究对象P107将预测Actor time-local uncertainty tube，再用candidate τ的signed clearance解析计算
+boundary-crossing risk；P81/P96均只可作consumed development，新的confirmation必须另冻target-unread cohort。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

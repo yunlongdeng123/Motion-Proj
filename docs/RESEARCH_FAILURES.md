@@ -935,7 +935,7 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 
 ### V67-F69 — P96 scene-0556 session的相邻日期shard推断错误
 
-- 分类：`engineering/archive-routing`；状态：`exact_shard_resolved_recovery_extraction_active`；
+- 分类：`engineering/archive-routing`；状态：`resolved_pre_target_exact_shard_recovery`；
 - symptom：冻结cohort所需`scene-0556` session=`n008-2018-08-31-11-37-23-0400`事前按archive03相邻session推断，
   03完整扫描对390 candidates命中0；发生时仅08已精确命中397，10个processed scenes未ready，P96/P103 target rows不存在；
 - root cause：10个nuScenes trainval blob parts不是按scene index或简单session日期连续分桶；相邻archive header不足以外推；
@@ -945,6 +945,9 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 - frozen recovery：只修`0556:03→06`、以exact-session tar补390 files并复用其他3,511 files，prep r2 active；不换scene/cohort/model/
   target/radius/width/coverage/gates，P95 primary与target read仍exact-once；不增加hash/checksum/fingerprint；
 - claim impact：纯pre-target I/O failure，不改变P95/P102 development结果，也不产生confirmation evidence。
+
+P96 prep r2最终3,901/3,901 mapped、newly extracted=350、10/10 preprocess，wall=`448.10s`；0556 exact shard=06。
+恢复过程中未读取target、未换cohort/model/gate，故`V67-F69`关闭。
 
 下一可用编号：`V67-F70`。
 
@@ -1011,6 +1014,38 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - claim impact：不支持“更多source data单调改善reliability”，不影响P102 development或P96/P103 confirmation。
 
 下一可用编号：`V67-F74`。
+
+### V67-F74 — P95 occupancy-flip primary无法独立超过Actor-only
+
+- 分类：`scientific/independent-generalization`；状态：`closed_negative_one_shot_primary`；
+- canonical：`run://worldsim_v67/WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01/20260830T004000Z__occupancy-flip-confirmation-s0-r1`；
+- symptom：fresh 1,720 trajectories/36 flips上fixed50 query/Actor/P75=`8/5/12`；query absolute reduction=55.50%且
+  优于P75，但比Actor多60%，query/Actor AUROC=`.65542/.71181`，relative gate失败，3/4 gates；
+- subtype：query=`7 false-safe+1 false-alarm`，Actor false-safe=0，P75 false-safe=10；不能把相对P75改善写成
+  task-conditioned或safety gain，因为Actor-only更优；
+- root cause：P95 development的τ features增益未跨cohort稳定；Actor dynamics本身携带主要可迁移risk，end-to-end query
+  classifier把clearance/context相关性学成cohort-specific shortcut；
+- resolution：按one-shot rule关闭P95 primary，不换scene、不降query-over-Actor gate、不用P103覆盖primary、不在同read
+  选择P104--P106；
+- claim impact：不支持independent trajectory-conditioned occupancy-decision reliability、collision或safety claim。
+
+下一可用编号：`V67-F75`。
+
+### V67-F75 — P102 hierarchical temporal secondary仍无法独立超过Actor-only
+
+- 分类：`scientific/representation-generalization`；状态：`closed_negative_prospective_secondary`；
+- canonical：`run://worldsim_v67/WS-V67-P103-HIERARCHICAL-CONFIRMATION-01/20260830T024000Z__hierarchical-confirmation-s0-r1`；
+- symptom：同一fresh cohort fixed50 query/Actor/P75=`9/7/12`，absolute reduction=49.94%、query-vs-Actor=-28.57%，
+  AUROC=`.74385/.67973`，3/4 gates；query false-safe/false-alarm=`7/2`；
+- interpretation：hierarchical temporal tokens把development从P95的7改善到4，但independent仍落后Actor-only；这排除
+  “只需更强query temporal encoder”作为P95失败的充分解释；
+- literature response：CoRL MultiPath把intent/control uncertainty分层并支持closed-form space-time collision queries；
+  下一对象应先估Actor uncertainty distribution，再解析投影到τ clearance，而非继续端到端query分类器；
+- resolution：关闭P102/P103 representation family，不扫seed/width/pooling/auxiliary/data scale；若继续P107，P81/P96
+  只作consumed development，新confirmation必须另冻target-unread cohort；
+- claim impact：无independent hierarchical task-conditioned claim，不影响P81 all-row triage窄结论。
+
+下一可用编号：`V67-F76`。
 
 ### V6.6 当前边界（2026-08-28）
 

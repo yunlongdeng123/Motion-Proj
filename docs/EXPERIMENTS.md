@@ -22,7 +22,7 @@
 
 ### WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
 
-- 状态：`active/pre-target exact-shard recovery; evaluator waiting`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
+- 状态：`done/rejected independent primary`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
   scene indices=`599/37/489/81/83/806/485/696/440/808`。
 - exact shards=`08/01/06/01/01/10/06/09/03/10`；01/03两个此前未进入V4 test manifest的sessions由archive首个
   real session相邻范围确定，formal extraction仍要求exact 3,901 required members全命中，否则read前失败且不换scene。
@@ -31,7 +31,11 @@
 - shard08精确命中397；推断的`0556→03`扫描完成但命中0，发生在processed/target read前。公开资料未提供session-part
   index。02/04/05/07 exact locators均完整排除；当前对r1曾为其他scene扫描、但0556当时不在filter内的01/06/08/09/10
   作第二轮exact locator，06精确命中后终止其余扫描。map仅修`0556→06`；prep r2=
-  `20260830T050000Z__occupancy-flip-confirmation-prep-s0-r2` exact-session抽取390 files并复用3,511，不换cohort（`V67-F69`）。
+  `20260830T050000Z__occupancy-flip-confirmation-prep-s0-r2`最终3,901/3,901 mapped、newly extracted=350、10/10
+  preprocess，wall=`448.10s`，不换cohort；`V67-F69`关闭。
+- result：9,520 rows、1,720 trajectories、36 flips；fixed50选859，query/Actor/P75=`8/5/12`，absolute reduction=
+  `55.50%`、query-vs-Actor=`-60%`，AUROC=`.65542/.71181`。query false-safe/false-alarm=`7/1`，Actor false-safe=0，
+  P75 false-safe=10。3/4 gates，verdict=`rejected_independent_trajectory_occupancy_flip`（`V67-F74`）。
 
 ### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
 
@@ -100,11 +104,14 @@
 
 ### WS-V67-P103-HIERARCHICAL-CONFIRMATION-01
 
-- 状态：`active/waiting prospective P96 rows`；canonical=`20260830T024000Z__hierarchical-confirmation-s0-r1`。
+- 状态：`done/rejected prospective secondary`；canonical=`20260830T024000Z__hierarchical-confirmation-s0-r1`。
 - P102 checkpoint、42维normalization、temporal/Actor pooling、H3.5、fixed50、P75 comparator与4 gates均在P96 target
   rows存在前冻结；不训练、不refit，只等待同一行artifact做一次evaluation。
 - P103是P96 independent cohort上的prospective secondary；P96 frozen P95保持唯一primary。无论两者结果如何，P103
   不能替换P96 verdict，也不创建第二target read或第二cohort。
+- result：同一1,720 trajectories/36 flips上query/Actor/P75=`9/7/12`，absolute reduction=`49.94%`、
+  query-vs-Actor=`-28.57%`，AUROC=`.74385/.67973`；query false-safe/false-alarm=`7/2`。3/4 gates，
+  verdict=`rejected_prospective_secondary_hierarchical_temporal_confirmation`（`V67-F75`）。
 
 ### WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01
 
