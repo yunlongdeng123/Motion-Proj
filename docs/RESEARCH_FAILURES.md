@@ -923,8 +923,13 @@ P99 equal-weight two-head multi-task在development选择8 flips（6 false-safe+2
 P95的7；它是V67-F68后的唯一shared-representation recovery，不替换已冻结P96 model，也不新增failure。下一编号仍为
 `V67-F69`。
 
-P100 temporal-clearance query augmentation从冻结P95 rows解析派生3维、0 new read，并明确不替换P96；当前无新增failure，
-下一编号仍为`V67-F69`。
+P100 temporal-clearance query augmentation从冻结P95 rows解析派生3维、0 new read；development fixed50
+query/Actor/P75=`9/41/13`，4/4 gates但未超过P95的7。它是positive mechanism result，不登记failure、不替换P96，
+也不扫feature/loss；下一编号仍为`V67-F69`。
+
+P101针对P100压缩时间交互的表示瓶颈，一次性迁移为与occupancy target同构的9-step signed-clearance/boundary-distance
+profile；从同一冻结rows派生42维query、0 new sensor/target read，Actor-only/P95 target/fixed50均不变，且明确不替换
+P96。当前GPU训练中，无新增failure，下一编号仍为`V67-F69`。
 
 ### V6.6 当前边界（2026-08-28）
 

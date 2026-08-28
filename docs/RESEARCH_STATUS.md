@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P94 fresh read complete / P95 occupancy-flip migration active（2026-08-30）
+## WorldSim V6.7 P81--P101 progressive occupancy-reliability research（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
 coverage后，frozen P75 query选择26 events（prevalence `.005442`），Actor-only 57（`.011930`），P73 45
@@ -50,7 +50,15 @@ P99用共享encoder和等权false-safe/false-alarm heads做唯一multi-task reco
 
 P100在不改P96的前提下给P95 query追加3个冻结解析特征：constant-relative-velocity的normalized time-to-closest、
 predicted signed occupancy clearance与到decision boundary的绝对距离；Actor-only仍为19维。575,596/9,559既有rows
-无新read派生为27维query，P100现以原total-flip target训练6,000 epochs；不扫feature subset或loss。
+无新read派生为27维query，6,000 epochs后fixed50 query/Actor/P75=`9/41/13`，相对Actor减少`78.05%`、absolute
+reduction=`81.04%`，AUROC=`.79904/.59990`，4/4 gates通过。它支持时间/边界信息有用，但事件数未刷新P95的7，
+因此不替换P96，也不做feature/loss sweep。
+
+P101继续作一次结构性迁移而非调参：参考continuous spatiotemporal query与set aggregation，不再把τ/Actor交互压缩为
+三个summary，而是在原24维query后保留与occupancy target完全同构的9个normalized future samples之signed-clearance
+及absolute boundary-distance profiles，共42维；Actor-only、P95 total-flip target、6,000 epochs与fixed50不变。
+P101 prep从同一冻结rows派生575,596/9,559 rows，0 new sensor/target read，GPU训练已与P96 archive IO并行启动。
+P96仍只确认冻结P95，不允许P100/P101读取其结果后替换。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

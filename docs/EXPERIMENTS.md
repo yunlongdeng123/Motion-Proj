@@ -61,12 +61,25 @@
 
 ### WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-01
 
-- 状态：`active/GPU training`；prep=`20260830T013000Z__temporal-clearance-prep-s0-r1`，model=
+- 状态：`done/supported development`；prep=`20260830T013000Z__temporal-clearance-prep-s0-r1`，model=
   `20260830T013500Z__temporal-clearance-occupancy-flip-s0-r1`。
 - 在原24维query后一次性追加normalized analytic time-to-closest、signed occupancy clearance、absolute boundary distance；
   relative motion由既有Actor/Ego/candidate τ features解析得到，Actor-only保持19维。
 - source/development rows=`575,596/9,559`，query维度27，0 new read；P95 total-flip BCE、6,000 epochs、fixed50不变。
   这是CVPR 2023 continuous spatiotemporal query启发的development表示研究，不替换P96。
+- result：1,791 development trajectories/95 flips；fixed50 query/Actor/P75=`9/41/13`，absolute reduction=
+  `81.04%`、query-vs-Actor=`78.05%`，AUROC=`.79904/.59990`，4/4 gates。虽优于Actor/P75，仍不及P95的7，
+  所以保留为positive mechanism result而不替换独立confirmation模型。
+
+### WS-V67-P101-TEMPORAL-INTERACTION-PROFILE-01
+
+- 状态：`active/GPU training`；prep=`20260830T020000Z__temporal-interaction-profile-prep-s0-r1`，model=
+  `20260830T020500Z__temporal-interaction-profile-s0-r1`。
+- 卡点与迁移：P100将时间交互压成3个summary仍未超过P95；参考CVPR 2023 implicit occupancy-flow的trajectory-near
+  spatiotemporal queries与ICML 2019 set aggregation，P101保留与target相同的9个未来采样时刻。
+- 每个Actor query追加9-step signed-clearance与9-step absolute boundary-distance profile，24→42维；Actor-only仍19维。
+  source/development=`575,596/9,559 rows`，0 new read；P95 total-flip BCE、nearest16 Actor、6,000 epochs、fixed50不变。
+- 不扫profile length/threshold/radius/width/coverage/loss/architecture；P96继续只确认冻结P95，P101只作development。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
