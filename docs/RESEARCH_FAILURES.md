@@ -684,6 +684,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   shift支持以独立calibration domains学习迁移。P71只用重叠scene 276/756训练冻结backbone residual adapter，六个fresh
   scenes继续隔离；不扫adapter/epoch/lr。下一编号=`V67-F56`。
 
+### V67-F56 — P71 target-only hidden-feature residual calibration负迁移
+
+- canonical：`run://worldsim_v67/WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01/20260829T160000Z__residual-actor-calibration-s0-r1`；
+  276/756共1,875 H2.5 rows训练等容量query/Actor-only linear residual adapters。
+- 症状：fresh query MAE `.186774→.266719`（+42.80%）、Spearman `.808522→.554614`；adapted Actor-only
+  MAE `.177064`，query相对恶化50.63%。只有selective cost gate通过，1/4拒绝。
+- 原因定位：calibration-domain supervised loss下降不代表跨scene transfer；hidden embedding上的instance-dependent residual拥有
+  足够自由度重排分数，276/756不能代表其余六scene。
+- 保留边界：adapted score的50% triage仍cost -70.99%、unreliable prevalence -84.89%、6/6 scenes不增，但显著弱于frozen P70。
+- 文献迁移：CVPR 2021区分accuracy/ranking-preserving calibrator，UAI 2025强调monotonic calibration保序；P72只训练
+  positive-slope affine，base score完全冻结。不扫P71 lr/epoch/width。下一编号=`V67-F57`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

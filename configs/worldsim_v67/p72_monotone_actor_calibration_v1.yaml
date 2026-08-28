@@ -1,0 +1,44 @@
+schema_version: worldsim_v67.p72_monotone_actor_calibration.v1
+output_schema_version: worldsim_v67.p72_monotone_actor_calibration_summary.v1
+task_id: WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01
+hypothesis_id: WS-V67-H-P72-001
+role: rank_preserving_target_domain_actor_reliability_calibration
+verdict_on_pass: supported_monotone_actor_calibration
+verdict_on_failure: rejected_monotone_actor_calibration
+source:
+  run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  artifact: TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt
+calibration_data:
+  run: worldsim_v67/WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01/20260829T160000Z__residual-actor-calibration-s0-r1
+  rows: CALIBRATION_ACTOR_QUERY_ROWS.npz
+evaluation_data:
+  run: worldsim_v67/WS-V67-P70-FRESH-ACTOR-RELIABILITY-01/20260829T153500Z__fresh-actor-reliability-s0-r2
+  rows: FRESH_ACTOR_QUERY_ROWS.npz
+calibrator:
+  epochs: 1500
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_mae_reduction_over_calibrated_actor_only: 0.10
+  minimum_query_mae_improvement_over_frozen: 0.05
+  minimum_selective_cost_reduction: 0.50
+locks:
+  p66_query_and_actor_only_scores_frozen: true
+  one_positive_slope_affine_map_per_score: true
+  calibration_only_on_p71_rows_from_scenes_276_and_756: true
+  p70_six_scene_read_is_consumed_development_not_fresh_confirmation: true
+  no_calibrator_epoch_learning_rate_loss_scene_horizon_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2021/html/Tomani_Post-Hoc_Uncertainty_Calibration_for_Domain_Drift_Scenarios_CVPR_2021_paper.html
+  - https://proceedings.mlr.press/v286/zhang25c.html
+claim_boundary:
+  - rank_preserving_development_recovery_on_consumed_six_scene_read
+  - supervised_calibration_from_two_separate_processed_scenes
+  - no_independent_confirmation_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

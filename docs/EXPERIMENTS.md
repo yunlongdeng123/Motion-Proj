@@ -2,11 +2,19 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01
+
+- 状态：`running`；P71失败后冻结P66 base score，只在同一276/756 calibration rows上为query/Actor-only各训练
+  两参数positive-slope affine map；排序/50% selection由构造保持。
+- 固定1,500 epochs、lr `.003`、Huber；P70六个scene此时仅作为已消费development read，不称独立confirmation。
+
 ### WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01
 
-- 状态：`running`；冻结P66 query/Actor-only backbones，在worldsim-v5的276/756上以相同Huber目标各训练一个
-  zero-init 32→1 residual adapter；只在P70六个fresh scenes上评估。
-- 固定1,500 epochs、lr `.003`、H2.5和50% coverage；不扫adapter/epoch/lr/loss/horizon/scene/threshold。
+- 状态：`done/rejected`；canonical=`20260829T160000Z__residual-actor-calibration-s0-r1`；276/756提供
+  1,875 calibration rows，query/Actor adapter loss降到`.049707/.063226`。
+- 到六个fresh scenes，query MAE `.186774→.266719`（恶化`42.80%`），相对adapted Actor-only `.177064`
+  恶化`50.63%`；Spearman `.808522→.554614`。1/4 gates，hidden-feature residual adapter关闭。
+- 50% triage仍降低cost `70.99%`、unreliable prevalence `84.89%`、6/6 scenes不增，但明显弱于frozen P70。
 
 ### WS-V67-P70-FRESH-ACTOR-RELIABILITY-01
 

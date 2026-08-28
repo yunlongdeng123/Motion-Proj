@@ -1,12 +1,15 @@
 # Research Status
 
-## WorldSim V6.7 P71 residual calibration training（2026-08-29）
+## WorldSim V6.7 P71 residual calibration rejected / P72 monotone calibration training（2026-08-29）
 
-P71按ICLR 2025 regression TTA关于naive alignment的负面边界，不做无标签全特征matching；改用ICCV 2021式独立
-calibration-domain思路。P66 query和Actor-only backbone均冻结，只在worldsim-v5中与source ID重叠但目录独立的276/756
-H2.5 rows上，各训练一个等容量zero-init linear residual adapter。评估继续只读P70六个fresh scenes；同一次formal run
-要求query相对同样adapted Actor-only恢复10% MAE优势、相对frozen query至少改善5%、Spearman最多下降.02，并保持50%
-selective cost至少降低50%。这是一次固定机制GPU训练，不扫超参。
+P71在276/756的1,875 calibration rows上把query/Actor residual loss降到`.049707/.063226`，但六个fresh scenes上
+query MAE从frozen `.186774`恶化到`.266719`（+`42.80%`），比同样adapted Actor-only `.177064`差`50.63%`；
+Spearman从`.808522`降到`.554614`，1/4 gates拒绝。50% triage仍降低cost `70.99%`、6/6 scenes不增，但弱于P70，
+因此高维hidden-feature target-only residual family关闭，不扫lr/epoch。
+
+重新检索CVPR 2021 accuracy-preserving calibration与UAI 2025 monotonic constrained calibration后，P72限制自由度：P66 base
+score完全冻结，query/Actor-only各只训练positive-slope affine map。它只允许修正跨root绝对尺度，不能重排P70已经可靠的
+ordering/selection。P70六scene已被P71读取，故P72准确标为development recovery，不包装为独立confirmation。
 
 ## WorldSim V6.7 P70 fresh-population scale transfer rejected / triage retained（2026-08-29）
 
