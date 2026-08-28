@@ -92,7 +92,10 @@ P106只检验一次best-model data scaling：复用P104已物化的102个source 
 6,000 epochs和fixed50完全不变。r1 prep漏做P95 occupancy-flip target adapter，实际误训/评原Actor endpoint error并产生
 1,636/1,791 events，明确作废为engineering failure `V67-F72`，不是data-scale negative。参考occupancy query BCE定义，
 r2只恢复`raw_actor_state_error_m=occupancy_decision_flip`后以新prep/model run-id重跑；不扫source subset/epochs/结构，
-也不将P106加入已冻结P103。
+也不将P106加入已冻结P103。r2正确95-event evaluation得到query/Actor/P75=`16/25/13`，absolute/query-vs-Actor
+reduction=`66.30%/36%`，但劣于P75且prevalence ratio=`1.2308`，2/4 gates，登记`V67-F73`并关闭data-scale route。
+CVPR 2019 negative-transfer分析说明不相关source可伤害target；本项目没有未读target可合法学习source weighting，故不挑
+remainder、不按development过滤或做domain-adversarial recovery。P102仍是development best与P103唯一checkpoint。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

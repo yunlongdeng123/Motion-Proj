@@ -138,7 +138,7 @@
 
 ### WS-V67-P106-ALL-SOURCE-HIERARCHICAL-01
 
-- 状态：`active/r2 prep then GPU`；r1 prep/model=`20260830T040000Z...r1 / 20260830T040500Z...r1`作废；
+- 状态：`done/rejected development r2`；r1 prep/model=`20260830T040000Z...r1 / 20260830T040500Z...r1`作废；
   corrected prep=`20260830T041500Z__all-source-hierarchical-prep-s0-r2`，model=
   `20260830T042000Z__all-source-hierarchical-s0-r2`自动等待rows ready。
 - 只改变source data volume：P104/P102原102-scene（4/5）source加上现有processed中`scene_index % 5 == 0`
@@ -148,6 +148,11 @@
 - P106是development-only data scaling，P102 checkpoint仍是P103唯一prospectively frozen secondary；P96/P103不变。
 - r1 implementation error：合并P104 raw rows后漏把原Actor endpoint field重绑定为occupancy flip，故错误训练/评估产生
   1,636/1,791 events而非冻结95；该run不作科学比较（`V67-F72`）。r2只恢复P95 target adapter，所有科学参数不变。
+- corrected prep result：102-scene base 575,596 rows + 23-scene supplement 114,575 = 690,171 rows，
+  97,441 source trajectories；development仍9,559 rows/1,791 trajectories/95 events。
+- r2 result：fixed50 query/Actor/P75=`16/25/13`，absolute reduction=`66.30%`、query-vs-Actor=`36%`，AUROC=
+  `.76717/.69915`；劣于P75且prevalence ratio=`1.2308`，2/4 gates，rejected（`V67-F73`）。不按development筛
+  source、不做domain weighting recovery，P102保持best。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

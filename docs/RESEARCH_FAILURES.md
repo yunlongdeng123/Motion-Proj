@@ -995,6 +995,22 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F73`。
 
+### V67-F73 — all-source scale-up产生negative transfer并劣于P75
+
+- 分类：`scientific/source-domain-transfer`；状态：`closed_negative_no_target_weighting`；
+- canonical：`run://worldsim_v67/WS-V67-P106-ALL-SOURCE-HIERARCHICAL-01/20260830T042000Z__all-source-hierarchical-s0-r2`；
+- symptom：正确95-event development上fixed50 query/Actor/P75=`16/25/13`；query虽相对Actor减少36%、absolute减少
+  66.30%，但比P75多3，prevalence ratio=`1.2308`，2/4 gates；AUROC=`.76717/.69915`；
+- interpretation：原4/5 source训练的P102为`4/27/13`；一次性加入23 scenes/114,575 rows后，source trajectories
+  79,478→97,441却外推退化，属于可观测negative transfer，不是容量或训练不足证据；
+- literature response：CVPR 2019 Characterizing and Avoiding Negative Transfer指出弱相关source会伤害target，并以
+  source filtering/weighting缓解；但这里唯一development已消费、P96未读，事后按development筛scene或学weights会污染结论；
+- resolution：关闭all-source scaling，不挑remainder、不扫source subset/epoch/normalization、不引入target-dependent
+  domain weights；保留P102原4/5 source模型为best与P103唯一frozen checkpoint；
+- claim impact：不支持“更多source data单调改善reliability”，不影响P102 development或P96/P103 confirmation。
+
+下一可用编号：`V67-F74`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
