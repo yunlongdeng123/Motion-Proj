@@ -73,6 +73,12 @@ target与gates未变。按约束先检索nuScenes官方/开源下载结构；公
 故启动只读exact-session locator扫描尚未占用的02/04/05/07，命中后只修member→shard map并复用其余提取结果，不换scene。
 该工程卡点登记`V67-F69`，科学read仍未发生。
 
+为避免exact-shard IO期间GPU研究线停滞，P104把监督从trajectory-level union细化为与occupancy定义完全相同的9个
+future samples逐时flip标签：query token=`Actor/history + τ + normalized time + signed/boundary clearance`，Actor-only
+token不含τ，source按horizon×temporal-index等量positive/negative sampling；trajectory score事前固定为time max再
+Actor max。source与consumed development正从既有processed scenes物化，不读取P96 confirmation；prep ready即自动接续
+6,000-epoch GPU训练。不扫time aggregation/sampling/loss/radius/coverage，P96/P103协议不变。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

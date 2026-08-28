@@ -95,6 +95,9 @@ def materialize_actor_query_rows(
     occupancy_flip: list[bool] = []
     occupancy_false_safe: list[bool] = []
     occupancy_false_alarm: list[bool] = []
+    predicted_separation_profile: list[np.ndarray] = []
+    actual_separation_profile: list[np.ndarray] = []
+    occupancy_flip_profile: list[np.ndarray] = []
     scene_index: list[int] = []
     horizon_values: list[float] = []
     actor_ids: list[int] = []
@@ -199,6 +202,11 @@ def materialize_actor_query_rows(
                         occupancy_flip.append(predicted_occupied != actual_occupied)
                         occupancy_false_safe.append((not predicted_occupied) and actual_occupied)
                         occupancy_false_alarm.append(predicted_occupied and (not actual_occupied))
+                        predicted_separation_profile.append(distances.astype(np.float32))
+                        actual_separation_profile.append(actual_distances.astype(np.float32))
+                        occupancy_flip_profile.append(
+                            ((distances <= interaction_radius) != (actual_distances <= interaction_radius))
+                        )
                         scene_index.append(numeric_scene)
                         horizon_values.append(float(horizon_seconds))
                         actor_ids.append(int(actor_id_text))
@@ -215,6 +223,9 @@ def materialize_actor_query_rows(
         "occupancy_decision_flip": np.asarray(occupancy_flip, dtype=bool),
         "occupancy_false_safe": np.asarray(occupancy_false_safe, dtype=bool),
         "occupancy_false_alarm": np.asarray(occupancy_false_alarm, dtype=bool),
+        "predicted_separation_profile_m": np.asarray(predicted_separation_profile, dtype=np.float32),
+        "actual_separation_profile_m": np.asarray(actual_separation_profile, dtype=np.float32),
+        "occupancy_decision_flip_profile": np.asarray(occupancy_flip_profile, dtype=bool),
         "scene_index": np.asarray(scene_index, dtype=np.int32),
         "horizon_seconds": np.asarray(horizon_values, dtype=np.float32),
         "actor_id": np.asarray(actor_ids, dtype=np.int32),

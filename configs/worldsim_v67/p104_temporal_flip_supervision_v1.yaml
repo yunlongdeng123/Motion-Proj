@@ -1,0 +1,77 @@
+schema_version: worldsim_v67.p104_temporal_flip_supervision.v1
+output_schema_version: worldsim_v67.p104_temporal_flip_supervision_summary.v1
+task_id: WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01
+hypothesis_id: WS-V67-H-P104-001
+seed: 0
+role: development_time_local_trajectory_occupancy_reliability
+verdict_on_pass: supported_development_temporal_flip_supervision
+verdict_on_failure: rejected_development_temporal_flip_supervision
+model_artifact: TEMPORAL_FLIP_SUPERVISION.pt
+source_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+development_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  scene_indices: [15, 483, 413, 261, 799, 258, 708, 811, 607, 730]
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+source_rows:
+  run: worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-PREP-01/20260830T030000Z__temporal-flip-prep-s0-r1
+  artifact: SOURCE_TEMPORAL_FLIP_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-PREP-01/20260830T030000Z__temporal-flip-prep-s0-r1
+  artifact: DEVELOPMENT_TEMPORAL_FLIP_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  hidden_dimensions: [256, 128]
+  epochs: 6000
+  pair_batch_size: 16384
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  supervision_is_nine_time_local_predicted_vs_observed_occupancy_flips: true
+  trajectory_score_is_fixed_max_over_time_then_actors: true
+  source_sampling_is_equal_by_horizon_and_temporal_index: true
+  derived_from_consumed_source_and_development_only: true
+  P96_primary_and_P103_secondary_unchanged: true
+  no_time_aggregation_weight_sampling_threshold_radius_width_coverage_or_loss_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+claim_boundary:
+  - development_only_time_local_occupancy_flip_supervision
+  - no_independent_temporal_supervision_confirmation
+  - P96_and_P103_confirmation_contracts_unchanged
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

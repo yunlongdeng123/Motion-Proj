@@ -104,6 +104,18 @@
 - P103是P96 independent cohort上的prospective secondary；P96 frozen P95保持唯一primary。无论两者结果如何，P103
   不能替换P96 verdict，也不创建第二target read或第二cohort。
 
+### WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01
+
+- 状态：`active/prep then GPU`；prep=`20260830T030000Z__temporal-flip-prep-s0-r1`，model=
+  `20260830T030500Z__temporal-flip-supervision-s0-r1`自动等待rows ready。
+- prediction object仍是candidate τ上的predicted-vs-observed occupancy flip，但监督由trajectory union拆为同一9个
+  future samples的time-local flips；query token使用Actor/history、τ、normalized time、signed/boundary clearance，
+  Actor-only不含τ。推理唯一聚合是time max→Actor max。
+- source按4 horizons×temporal index等量positive/negative sampling，`256/128` MLP、6,000 epochs、fixed50与4 gates；
+  source/development只来自已消费processed scenes，0 P96/P103 target read。
+- 不扫time aggregation、sampling weight、token width、loss、radius、width、threshold或coverage；该development线不修改
+  已冻结confirmation协议。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |

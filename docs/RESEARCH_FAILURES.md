@@ -947,6 +947,10 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 
 下一可用编号：`V67-F70`。
 
+P104在V67-F69 exact-shard locator期间从既有source/consumed-development processed scenes物化9-step time-local flip
+supervision，未读取P96/P103 target；time max→Actor max、horizon×time balanced sampling及4 gates事前固定，不修改
+confirmation，不扫聚合/权重/loss。当前prep→GPU流水线active，无新增failure；下一编号仍为`V67-F70`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
