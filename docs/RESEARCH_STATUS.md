@@ -178,6 +178,12 @@ P113现针对这一归因边界冻结第二个、任务不同的scene-level conf
 projection、`.05m` clearance baseline、H3.5、time/Actor max与fixed50全冻结；primary只要求directional events不多于
 clearance且AUROC增量≥`.02`。不再用Actor/P75作为decision，不扫模型/floor/aggregation；证据仍仅scene-level。
 
+P113归档扫描期间继续推进P114 GPU研究，但严格隔离P113 target。参考CoRL task-relevant failure detection把预测分布传播到
+downstream cost，P114冻结P109 Actor Gaussian，只从解析crossing probability构造每trajectory top-16与independent-union
+proxy，再训练只有正权重的monotone tail pool；网络不读raw Actor/query features。P81/P96均为已消费development，primary
+要求两cohort fixed50事件均不退化、AUROC均不退化且平均增益≥`.01`。不扫top-k、pool、loss、seed或coverage；无论结果
+如何都不得在P113 cohort上选择P114，也不修改P113 frozen decision。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

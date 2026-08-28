@@ -1187,6 +1187,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F79`。
 
+### P114 freeze note — downstream tail aggregation不占用P113确认
+
+- motivation：P109的Actor/time max没有显式传播多个crossing probabilities；task-relevant failure detection提示应在downstream
+  cost空间聚合预测分布，而不是继续扩raw query classifier；
+- fixed method：冻结P109 Gaussian，只训练top-16 crossing probabilities加independent-union proxy的正权重monotone pool；
+  P81/P96均已消费，只作development，P113 rows不会被读取或用于model selection；
+- prevention：不扫top-k/pool/loss/seed/coverage，不以P114覆盖P113 primary；若development失败登记`V67-F79`并关闭该tail-pool
+  形式，若成功下一failure ID仍为`V67-F79`且只能另取未来target-unread cohort；
+- execution：P113 archive IO期间运行6,000-step GPU训练，避免把I/O等待变成研究停顿；不增加hash/checksum/fingerprint或测试矩阵。
+
+下一可用编号仍为：`V67-F79`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

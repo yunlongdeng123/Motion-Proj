@@ -244,6 +244,18 @@
 - Actor/P75只可描述，不参与decision；不换scene/shard/model/projection/floor/aggregation/coverage/decision，不做第二recovery。
   参考CoRL task-relevant failure detection对downstream cost distribution的传播与2025 open-source stochastic boundary crossing。
 
+### WS-V67-P114-MONOTONE-TAIL-RISK-01
+
+- 状态：`frozen/launch pending`；只使用P109 source与已消费P81/P96 artifacts，不读P113或任何新confirmation target。
+- motivation：P109以time/Actor max近似trajectory any-flip risk；参考CoRL task-relevant failure detection，进一步把冻结Actor
+  distribution传播为trajectory-level downstream tail，而不是扩展raw query classifier或重训Actor model。
+- fixed method：由P109 diagonal Gaussian和boundary-normal projection得到每Actor/time crossing probability；每trajectory只保留
+  降序top-16 probabilities与固定independent-union proxy，训练正权重monotone linear pool。6,000 balanced-BCE GPU steps、seed0、
+  per-scene fixed50；不扫top-k、union、model、loss、seed或coverage。
+- development decision：P81/P96 learned selected events都不多于P109 directional max、两cohort AUROC gain均非负且平均≥`.01`。
+  P109在两cohort已是0 selected events，因此本阶段主要检验全排序tail aggregation，不包装成新独立确认或collision probability。
+- execution：P113 archive IO继续运行时占用3090；P113 cohort/model/decision完全不变，P114即使成功也只能另冻未来cohort确认。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

@@ -1,0 +1,46 @@
+schema_version: worldsim_v67.p114_monotone_tail_risk.v1
+output_schema_version: worldsim_v67.p114_monotone_tail_risk_summary.v1
+task_id: WS-V67-P114-MONOTONE-TAIL-RISK-01
+hypothesis_id: WS-V67-H-P114-001
+seed: 0
+role: consumed_development_downstream_tail_risk_aggregation
+model_artifact: MONOTONE_TAIL_RISK.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  source_artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+  development_cohorts:
+    - name: consumed_p81
+      artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+    - name: consumed_p96
+      artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+model:
+  top_k_crossing_probabilities: 16
+  steps: 6000
+  balanced_batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection:
+  coverage_fraction: 0.50
+decision:
+  minimum_mean_auroc_gain: 0.01
+verdict_on_pass: supported_development_monotone_downstream_tail_risk
+verdict_on_failure: rejected_development_monotone_downstream_tail_risk
+locks:
+  p109_actor_distribution_checkpoint_frozen: true
+  candidate_trajectory_enters_only_through_crossing_probabilities: true
+  positive_weight_monotone_top16_plus_union_pool_only: true
+  consumed_p81_and_p96_development_only: true
+  p113_cohort_not_read_or_used_for_selection: true
+  no_topk_loss_weight_model_seed_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v205/farid23a/farid23a.pdf
+claim_boundary:
+  - development_only_on_consumed_P81_and_P96
+  - downstream_occupancy_flip_ranking_not_calibrated_collision_probability
+  - no_P113_or_new_confirmation_target_read
+  - no_planner_policy_closed_loop_or_safety_claim
+
