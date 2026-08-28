@@ -1,0 +1,34 @@
+schema_version: worldsim_v67.p110_directional_confirmation.v1
+output_schema_version: worldsim_v67.p110_directional_confirmation_summary.v1
+task_id: WS-V67-P110-DIRECTIONAL-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P110-001
+role: prospective_secondary_directional_uncertainty_confirmation
+verdict_on_pass: supported_prospective_secondary_directional_uncertainty
+verdict_on_failure: rejected_prospective_secondary_directional_uncertainty
+confirmation_rows:
+  run: worldsim_v67/WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01/20260830T063500Z__uncertainty-tube-confirmation-s0-r1
+  artifact: P108_CONFIRMATION_ACTOR_UNCERTAINTY_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+locks:
+  execute_only_if_P109_is_supported_on_both_consumed_development_cohorts: true
+  model_checkpoint_normalization_projection_H3p5_and_fixed50_frozen_before_P108_target_rows: true
+  same_P108_scene_level_confirmation_rows_as_primary: true
+  prospective_secondary_cannot_replace_P108_primary_verdict: true
+  no_model_projection_aggregation_coverage_or_decision_recovery_after_read: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - prospective_secondary_on_same_P108_scene_level_read
+  - linearized_directional_boundary_crossing_margin
+  - no_extra_independent_cohort_or_safety_claim

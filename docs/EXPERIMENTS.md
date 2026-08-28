@@ -199,6 +199,8 @@
   scenes及consumed P81/P96沿用P107数据范围。6,000 steps、`256/128`、fixed50一次冻结。
 - 不扫full/diagonal covariance、scale floor、NLL、normal定义、projection、pooling、width、seed或coverage。P109只有在两个
   consumed cohorts均少于Actor-only且不多于P75时，才可冻结成P108同read的prospective secondary；不影响P108 primary。
+- P110 evaluation入口与config已在P108 target read前锁定；只有P109 development一致成立才执行。它复用P108同一rows，
+  因此只能是prospective secondary，不能替换P108 primary或冒充第二个independent cohort。
 
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 
