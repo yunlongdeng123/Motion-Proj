@@ -17,7 +17,9 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 
 from motion_proj.worldsim_v67.trajectory_reliability import (
     FEATURE_NAMES,
+    score_lattice_adapter,
     score_head,
+    train_lattice_adapter,
     train_head,
 )
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import (
@@ -82,9 +84,19 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     torch.cuda.reset_peak_memory_stats()
     train = _load(Path(config["inputs"]["train_compact_cache"]))
     selection = _load(Path(config["inputs"]["selection_compact_cache"]))
-    model, mean, scale, training = train_head(train, config["model"], int(config["seed"]))
-    train_scores = score_head(model, train, mean, scale)
-    selection_scores = score_head(model, selection, mean, scale)
+    if str(config["model"].get("type", "residual_mlp")) == "lattice_residual_adapter":
+        model, training = train_lattice_adapter(
+            train, config["model"], int(config["seed"])
+        )
+        mean = scale = None
+        train_scores = score_lattice_adapter(model, train)
+        selection_scores = score_lattice_adapter(model, selection)
+    else:
+        model, mean, scale, training = train_head(
+            train, config["model"], int(config["seed"])
+        )
+        train_scores = score_head(model, train, mean, scale)
+        selection_scores = score_head(model, selection, mean, scale)
     train_metrics = _metrics(train, train_scores, config)
     selection_metrics = _metrics(selection, selection_scores, config)
     qmean_metrics = _metrics(
@@ -132,8 +144,11 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     torch.save(
         {
             "state_dict": model.state_dict(),
-            "feature_names": list(FEATURE_NAMES),
-            "hidden_dimensions": list(config["model"]["hidden_dimensions"]),
+            "model_type": str(config["model"].get("type", "residual_mlp")),
+            "feature_names": list(FEATURE_NAMES)
+            if str(config["model"].get("type", "residual_mlp")) == "residual_mlp"
+            else ["qmean", "action_index", "case_index"],
+            "hidden_dimensions": list(config["model"].get("hidden_dimensions", [])),
             "mean": mean,
             "scale": scale,
         },

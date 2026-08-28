@@ -104,6 +104,18 @@ P14R exact-once结果：LOSO threshold=`0.999919`且denominator修正后，analy
 `closed_negative_after_single_recovery`；禁止继续point threshold/ensemble/loss/model sweep。按预定后备路线更换prediction
 object为Ego trajectory visited-state reliability；下一编号仍为`V67-F05`。
 
+### V67-F05 — free trajectory residual学习source-scene action shortcut
+
+- 分类：`algorithm/domain-generalization`；状态：`active_single_recovery_frozen`。
+- 观察：P15 train Spearman/pairwise/selected reduction=`0.8633/1/0.5015`，selection仅=`0.2102/0.5866/0.1099`；
+  unsafe AUROC=`0.6464`，显著低于qmean `0.9727`；0/6 gates。
+- 根因：8-D free MLP residual可覆盖qmean base并编码source cohort的action/context shortcut；不是trajectory prediction
+  object本身失败。
+- 检索/恢复：CVPR 2026 ResAD用deterministic reference上的normalized residual抑制spurious correlation；UAI 2025
+  constrained monotonic calibration强调保留base ranking。唯一P15R只训练12 action biases，case-centered，score residual
+  bounded `±0.02`；qmean dominant，data/lattice/gates不变。
+- 防重复：不扫residual bound/action lattice/loss/gates，不做第二P15R；下一编号=`V67-F06`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

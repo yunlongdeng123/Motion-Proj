@@ -38,6 +38,28 @@ class TrajectoryReliabilityHead(torch.nn.Module):
         return base + self.residual(values).reshape(-1)
 
 
+class LatticeResidualAdapter(torch.nn.Module):
+    """Bounded action-lattice bias that keeps qmean as the dominant ranking signal."""
+
+    def __init__(self, action_count: int, maximum_residual_cost: float) -> None:
+        super().__init__()
+        self.action_bias = torch.nn.Parameter(torch.zeros(int(action_count)))
+        self.maximum_residual_cost = float(maximum_residual_cost)
+
+    def forward(
+        self, qmean: torch.Tensor, actions: torch.Tensor, cases: torch.Tensor
+    ) -> torch.Tensor:
+        raw = self.maximum_residual_cost * torch.tanh(self.action_bias[actions])
+        centered = torch.empty_like(raw)
+        for case in torch.unique(cases):
+            members = cases == case
+            centered[members] = raw[members] - raw[members].mean()
+        residual = centered.clamp(
+            -self.maximum_residual_cost, self.maximum_residual_cost
+        )
+        return (qmean + residual).clamp(0.0, 1.0)
+
+
 def feature_matrix(arrays: Mapping[str, np.ndarray]) -> np.ndarray:
     qmean = np.asarray(arrays["qmean"], dtype=np.float32)
     cases = np.asarray(arrays["case_index"])
@@ -165,3 +187,80 @@ def score_head(
             torch.from_numpy(qmean).cuda(),
         )
         return torch.sigmoid(logits).float().cpu().numpy()
+
+
+def train_lattice_adapter(
+    arrays: Mapping[str, np.ndarray], model_config: Mapping[str, Any], seed: int
+) -> tuple[LatticeResidualAdapter, dict[str, Any]]:
+    target_np = np.asarray(arrays["target_cost"], dtype=np.float32)
+    target = torch.from_numpy(target_np).cuda()
+    qmean = torch.from_numpy(np.asarray(arrays["qmean"], dtype=np.float32)).cuda()
+    actions = torch.from_numpy(np.asarray(arrays["action_index"], dtype=np.int64)).cuda()
+    cases_np = np.asarray(arrays["case_index"], dtype=np.int64)
+    cases = torch.from_numpy(cases_np).cuda()
+    left_np, right_np, signs_np = _ranking_pairs(
+        target_np, cases_np, float(model_config["pairwise_minimum_target_gap"])
+    )
+    left = torch.from_numpy(left_np).cuda()
+    right = torch.from_numpy(right_np).cuda()
+    signs = torch.from_numpy(signs_np).cuda()
+    torch.manual_seed(int(seed))
+    model = LatticeResidualAdapter(
+        int(model_config["action_count"]),
+        float(model_config["maximum_residual_cost"]),
+    ).cuda()
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=float(model_config["learning_rate"]),
+        weight_decay=float(model_config["weight_decay"]),
+    )
+    final = {}
+    model.train()
+    for _ in range(int(model_config["epochs"])):
+        prediction = model(qmean, actions, cases)
+        regression = torch.nn.functional.smooth_l1_loss(
+            prediction, target, beta=float(model_config["huber_beta"])
+        )
+        pair_delta = (prediction[left] - prediction[right]) * signs
+        ranking = torch.nn.functional.softplus(
+            -pair_delta / float(model_config["ranking_temperature"])
+        ).mean()
+        residual_regularization = model.action_bias.square().mean()
+        loss = (
+            float(model_config["regression_weight"]) * regression
+            + float(model_config["ranking_weight"]) * ranking
+            + float(model_config["residual_regularization_weight"])
+            * residual_regularization
+        )
+        optimizer.zero_grad(set_to_none=True)
+        loss.backward()
+        optimizer.step()
+        final = {
+            "total_loss": float(loss.detach().cpu()),
+            "regression_loss": float(regression.detach().cpu()),
+            "ranking_loss": float(ranking.detach().cpu()),
+            "residual_regularization": float(residual_regularization.detach().cpu()),
+        }
+    model.eval()
+    with torch.inference_mode():
+        learned_bias = (
+            model.maximum_residual_cost * torch.tanh(model.action_bias)
+        ).cpu().numpy()
+    final.update(
+        train_row_count=int(len(target_np)),
+        pair_count=int(len(left_np)),
+        learned_action_bias=[float(v) for v in learned_bias],
+        maximum_residual_cost=float(model.maximum_residual_cost),
+    )
+    return model, final
+
+
+def score_lattice_adapter(
+    model: LatticeResidualAdapter, arrays: Mapping[str, np.ndarray]
+) -> np.ndarray:
+    with torch.inference_mode():
+        return model(
+            torch.from_numpy(np.asarray(arrays["qmean"], dtype=np.float32)).cuda(),
+            torch.from_numpy(np.asarray(arrays["action_index"], dtype=np.int64)).cuda(),
+            torch.from_numpy(np.asarray(arrays["case_index"], dtype=np.int64)).cuda(),
+        ).float().cpu().numpy()

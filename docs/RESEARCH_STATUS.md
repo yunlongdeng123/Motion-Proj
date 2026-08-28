@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P15 free trajectory head rejected / P15R bounded adapter ready（2026-08-28）
+
+状态：`v67_p15_rejected_p15r_bounded_lattice_adapter_ready`；P15 canonical=
+`run://worldsim_v67/WS-V67-P15-TRAJECTORY-RELIABILITY-TRAIN-01/20260828T122000Z__trajectory-reliability-s0-r1`。
+train Spearman/pairwise/selection reduction=`0.8633/1/0.5015`，selection=`0.2102/0.5866/0.1099`，unsafe AUROC=
+`0.6464`；qmean selection=`0.7729/0.6557/0.1638/0.9727`，6/6 gates失败，`V67-F05 active`。
+
+检索ResAD normalized residual与monotonic constrained calibration后，唯一P15R把free MLP换成12个trainable action-lattice
+bias：case内零均值、score residual固定`±0.02`（等于pairwise meaningful gap），qmean保持dominant reference。数据/lattice/
+六门不变；直接GPU训练一次，不扫bound/loss/gate。
+
 ## WorldSim V6.7 P14R point rescue terminal negative / P15 trajectory reliability training ready（2026-08-28）
 
 状态：`v67_p14r_point_family_closed_p15_trajectory_reliability_ready`；P14R canonical=
