@@ -94,6 +94,7 @@ def materialize_actor_query_rows(
     horizon_values: list[float] = []
     actor_ids: list[int] = []
     query_ids: list[int] = []
+    anchor_frames: list[int] = []
     for scene_dir in scene_dirs:
         poses = _pose_table(scene_dir)
         if not poses:
@@ -182,6 +183,7 @@ def materialize_actor_query_rows(
                         horizon_values.append(float(horizon_seconds))
                         actor_ids.append(int(actor_id_text))
                         query_ids.append(query_id)
+                        anchor_frames.append(frame)
         print(f"actor-query materialization scene={scene_dir.name} rows={len(features)}", flush=True)
     return {
         "features": np.asarray(features, dtype=np.float32),
@@ -192,6 +194,7 @@ def materialize_actor_query_rows(
         "horizon_seconds": np.asarray(horizon_values, dtype=np.float32),
         "actor_id": np.asarray(actor_ids, dtype=np.int32),
         "query_id": np.asarray(query_ids, dtype=np.int16),
+        "anchor_frame": np.asarray(anchor_frames, dtype=np.int16),
     }
 
 
