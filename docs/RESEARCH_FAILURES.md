@@ -671,6 +671,19 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - P69：cost -68.80%、unreliable prevalence -87.83%、23/23 scenes nonincreasing，continuous cost低于Actor-only continuous。
 - 结论：只支持reliability triage/abstention；不删除Actor、不改geometry、不称authority/planning/safety。下一编号=`V67-F55`。
 
+### V67-F55 — P70 fresh-population绝对尺度迁移失败，selective ordering保留
+
+- canonical：`run://worldsim_v67/WS-V67-P70-FRESH-ACTOR-RELIABILITY-01/20260829T153500Z__fresh-actor-reliability-s0-r2`；
+  worldsim-v5六个fresh scene、H2.5共5,471 rows，source-overlap 276/756明确排除。
+- 症状：query/Actor-only Spearman=`.808522/.777160`，但MAE=`.186774/.186914`，改善仅`.0753%`而非冻结10%；
+  4门中3门通过，全面fresh transfer拒绝。AUROC=`.952704/.967216`也不支持全面优于Actor-only。
+- 保留信号：50% selective cost -89.78%、unreliable prevalence -99.40%、6/6 scenes nonincreasing，query selection
+  cost仍比Actor-only低`.001823`；因此不是ordering/triage失败，而是absolute scale未跨root获得相对优势。
+- 启动故障：r1在数据读取前因非交互SSH shell缺项目`PYTHONPATH`退出；r2只补环境变量，未改科学合同。
+- 文献迁移：ICLR 2025 regression TTA指出naive全特征alignment可能恶化回归；ICCV 2021 calibration under covariate
+  shift支持以独立calibration domains学习迁移。P71只用重叠scene 276/756训练冻结backbone residual adapter，六个fresh
+  scenes继续隔离；不扫adapter/epoch/lr。下一编号=`V67-F56`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

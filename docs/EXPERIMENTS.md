@@ -4,9 +4,13 @@
 
 ### WS-V67-P70-FRESH-ACTOR-RELIABILITY-01
 
-- 状态：`running`；冻结P66 query/Actor-only模型，在worldsim-v5中排除与source重叠的276/756，只读取此前未进入
-  P60–P69 cohort的296/350/382/425/663/827六个processed scenes，固定H2.5和per-scene 50% coverage。
-- 目标：同时检验fresh-population连续误差预测与selective triage；不重训、不扫threshold/model/loss/horizon/scene。
+- 状态：`done/rejected`；canonical=`20260829T153500Z__fresh-actor-reliability-s0-r2`；冻结P66，在worldsim-v5
+  排除source重叠276/756，只读取296/350/382/425/663/827六个fresh scenes，H2.5共5,471 rows、331 unreliable。
+- Query/Actor-only Spearman=`.808522/.777160`（`+.031362`）；MAE=`.186774/.186914`（仅降低`.0753%`）；
+  AUROC=`.952704/.967216`。绝对MAE改善未达10%，因此按4门AND以3/4拒绝，不用强ranking包装全面迁移成功。
+- 固定50% triage仍把cost `.271512→.027748`（-`89.78%`）、unreliable prevalence
+  `.060501→.000366`（-`99.40%`），6/6 scenes不增，且cost低于Actor-only selection `.001823`。
+- r1在任何数据读取前因SSH shell缺`PYTHONPATH`退出；r2仅补显式项目路径，科学合同不变。
 
 ### WS-V67-P69-SELECTIVE-ACTOR-RELIABILITY-REPLICATION-01
 

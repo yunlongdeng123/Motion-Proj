@@ -1,11 +1,14 @@
 # Research Status
 
-## WorldSim V6.7 P70 fresh-population transfer running（2026-08-29）
+## WorldSim V6.7 P70 fresh-population scale transfer rejected / triage retained（2026-08-29）
 
-P70冻结P66 plain-Huber query/Actor-only模型，转到`worldsim_v5`的独立processed root；276/756与source scene ID
-重叠并明确排除，296/350/382/425/663/827六个scene此前未进入P60–P69 cohort。固定H2.5、相同Actor/query
-定义和per-scene 50% coverage，一次读取同时回答连续误差预测与selective triage能否跨fresh population成立；
-不重训、不扫threshold/model/loss/horizon/scene。
+P70冻结P66 plain-Huber query/Actor-only模型，转到`worldsim_v5`独立processed root；排除source重叠276/756，
+296/350/382/425/663/827六个fresh scenes在H2.5产生5,471 rows。Query Spearman=`.808522`，比Actor-only
+高`.031362`；但MAE=`.186774/.186914`，仅降低`.0753%`，4门中该冻结10%门失败，故3/4严格拒绝全面transfer。
+同时，固定50% triage将cost降低`89.78%`、unreliable prevalence降低`99.40%`，6/6 scenes不增，说明卡点是
+跨processed-root尺度适配而非ranking/selection崩溃。检索ICLR 2025 regression TTA（警告naive full-feature alignment会恶化
+regression）及ICCV 2021 cross-domain calibration后，下一步只用276/756作为target calibration domains训练冻结backbone
+上的等容量query/Actor-only residual adapters，再在六个fresh scenes上读一次；不扫adapter或学习率。
 
 ## WorldSim V6.7 P58 case-selective expert rejected / Actor-state pivot（2026-08-29）
 
