@@ -4,7 +4,8 @@
 
 ### WS-V67-P16-MULTIDOMAIN-TRAJECTORY-RELIABILITY-01
 
-- 状态：`implementation_ready`；P10V+P10X two-domain train，model freeze后P9 fresh action-task materialization/confirmation；
+- 状态：`r1_entry_failed_r2_ready`；r1在model/selection materialization前NameError，无scientific metric；P10V+P10X
+  two-domain train，model freeze后P9 fresh action-task materialization/confirmation；
   same bounded adapter，domain-balanced loss；配置=`configs/worldsim_v67/p16_multidomain_trajectory_reliability_v1.yaml`。
 
 ### WS-V67-P15R-LATTICE-RESIDUAL-RELIABILITY-01

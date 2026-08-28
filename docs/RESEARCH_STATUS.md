@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V6.7 P16 r1 pre-confirmation entry recovery / r2 ready（2026-08-28）
+
+P16 r1在fresh action target materialization前因domain variance局部变量未绑定而停止；未生成model、selection cache或
+scientific metric。`V67-F06 active_pre_confirmation_entry`；已把equal-domain Huber/variance计算放回bounded adapter训练作用域，
+r2保持同一数据、模型、loss与fresh gates，直接继续GPU训练。
+
 ## WorldSim V6.7 P15R bounded transfer insufficient / P16 fresh action-task training ready（2026-08-28）
 
 状态：`v67_p15r_rejected_p16_multidomain_fresh_action_ready`；P15R canonical=

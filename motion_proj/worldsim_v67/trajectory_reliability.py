@@ -211,6 +211,11 @@ def train_lattice_adapter(
 ) -> tuple[LatticeResidualAdapter, dict[str, Any]]:
     target_np = np.asarray(arrays["target_cost"], dtype=np.float32)
     target = torch.from_numpy(target_np).cuda()
+    domains_np = np.asarray(
+        arrays.get("domain_index", np.zeros(len(target_np), dtype=np.int64)),
+        dtype=np.int64,
+    )
+    domains = torch.from_numpy(domains_np).cuda()
     qmean = torch.from_numpy(np.asarray(arrays["qmean"], dtype=np.float32)).cuda()
     actions = torch.from_numpy(np.asarray(arrays["action_index"], dtype=np.int64)).cuda()
     cases_np = np.asarray(arrays["case_index"], dtype=np.int64)
@@ -235,9 +240,17 @@ def train_lattice_adapter(
     model.train()
     for _ in range(int(model_config["epochs"])):
         prediction = model(qmean, actions, cases)
-        regression = torch.nn.functional.smooth_l1_loss(
-            prediction, target, beta=float(model_config["huber_beta"])
+        regression_elements = torch.nn.functional.smooth_l1_loss(
+            prediction,
+            target,
+            beta=float(model_config["huber_beta"]),
+            reduction="none",
         )
+        domain_regression = torch.stack(
+            [regression_elements[domains == domain].mean() for domain in torch.unique(domains)]
+        )
+        regression = domain_regression.mean()
+        domain_variance = domain_regression.var(unbiased=False)
         pair_delta = (prediction[left] - prediction[right]) * signs
         ranking = torch.nn.functional.softplus(
             -pair_delta / float(model_config["ranking_temperature"])

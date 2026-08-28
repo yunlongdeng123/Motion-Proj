@@ -121,6 +121,14 @@ P15R exact-once：bounded adapter使selection Spearman/AUROC/pairwise均略高�
 `closed_negative_after_single_recovery`。禁止继续在P10X调adapter。P16把P10V/P10X降格为two-domain development，
 模型冻结后才做P9 fresh action-task confirmation；下一编号仍为`V67-F06`。
 
+### V67-F06 — P16 domain variance变量未在adapter作用域绑定
+
+- 分类：`implementation/training-entry`；状态：`active_pre_confirmation_entry`。
+- 观察/根因：r1在首个loss构造时报`NameError: domain_variance`；domain-balanced patch只在free head中构造变量，却在
+  bounded adapter loss引用。model freeze与P9 action target materialization均未发生，无scientific metric。
+- 恢复：在adapter内按`domain_index`计算equal-domain Huber mean/variance；r2不改数据、模型、loss权重或gates。
+- 防重复：保留r1失败目录，以r2继续；下一编号=`V67-F07`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
