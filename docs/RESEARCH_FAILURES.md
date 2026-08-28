@@ -797,6 +797,15 @@ P85进一步把visited Actor rows按`scene/anchor/τ`聚合为“任一访问状
 P86进一步冻结direct trajectory set-summary model；source anchor rows物化与P84 GPU训练并行。它不读取P81 target来选
 aggregation/loss/radius，当前无新增失败，下一编号仍为`V67-F63`。
 
+### V67-F63 — P86 r1 trajectory aggregation逐group全表扫描
+
+- 分类：`engineering/cpu-group-aggregation-complexity`；状态：`resolved_before_training_or_test_read`。
+- 症状：576,032 source rows使用`for group -> flatnonzero(inverse==group)`，复杂度`O(N×G)`；r1只写resolved，GPU训练、
+  model artifact与test target read均为0。
+- 调研/修复：按NumPy官方`unique(return_inverse)`与stable `argsort`语义，一次排序后遍历连续group slices；baseline
+  group-max也用相同线性遍历。未改source、features、aggregation定义、model、loss、epochs、gates或fresh cohort。
+- r2已进入GPU训练；r1不计scientific trial。下一编号=`V67-F64`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

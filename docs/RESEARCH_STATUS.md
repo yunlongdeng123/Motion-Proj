@@ -33,6 +33,10 @@ P86训练direct trajectory set-summary而不是冻结group-max：source四horizo
 Query/Actor-only同容量`1024/512/256`，等horizon pairwise any-failure ranking加固定`.25` max-error回归；待P84结束
 立即接替GPU。fresh H3.5固定50% trajectory coverage，比较Actor-only与frozen P75，不扫set aggregation或radius。
 
+P86 r1在任何训练/test read前暴露CPU aggregation为逐group全表扫描的`O(N×G)`实现瓶颈并终止。参考NumPy
+`unique(return_inverse)`与stable `argsort`，r2改为一次排序后按连续group slices聚合，科学协议完全不变；r2已进入GPU
+训练，约98% utilization、3.46GiB。该事件登记为工程失败V67-F63，不计scientific trial。
+
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
 Canonical P75=`run://worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/
