@@ -18,8 +18,8 @@
   hazard 轴分离。继承 `V64-F28`：手工低维 collision critic 不是正式 RL。继承 `V1-F06`：稀疏 cut-in pool
   不得成为主数据入口或论文成立条件。
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
-  不得替代 fresh selection/confirmation。`V66-F01 recovering`记录deterministic injected certificate对natural local
-  geometry conflict的0 recall，以及P3L single selection恢复信号；下一可用编号=`V66-F02`。
+  不得替代 fresh selection/confirmation。`V66-F01 resolved`记录deterministic injected certificate对natural local
+  geometry conflict的0 recall，以及P3L/P3C两级certificate恢复；下一可用编号=`V66-F02`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
   `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
@@ -46,7 +46,7 @@
 
 ### V66-F01 — deterministic injected certificate不覆盖natural Actor-owned local geometry conflict
 
-- 分类：`algorithm/evaluation`；状态：`recovering`（legacy single selection通过，独立confirmation待执行）。
+- 分类：`algorithm/evaluation`；状态：`resolved_by_two_level_certificate`。
 - 观察：P2N独立legacy cohort含891 actor-unit，498个存在至少一个target observed-FREE boundary point；P2 injected
   certificate对这些local conflicts的recall=`0`、AUROC=`0.5`、AUPRC=`0.558923`。q0有弱signal但不足以单独作为
   authority：AUROC/AUPRC=`0.543745/0.612874`，rate Spearman=`0.267650`。
@@ -62,7 +62,8 @@
   替换backbone。详见`P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
 - 证据：`WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01` /
   `20260828T090228Z__natural-actor-conflict-s0-r1`；恢复证据=`WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01` /
-  `20260828T091036Z__local-geometry-head-s0-r1`。P3L selection不能单独关闭本failure。
+  `20260828T091036Z__local-geometry-head-s0-r1`与`WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01` /
+  `20260828T091611Z__independent-local-geometry-confirm-s0-r1`。恢复不改变deterministic certificate的原始0 recall。
 
 下一可用编号：`V66-F02`。
 
@@ -72,6 +73,10 @@ P3L固定8维/2x32/seed0 single selection已完成：P10X AUROC/AUPRC=`0.652365/
 
 P3C已在读取local-conflict label前固定V65 P2V六场景独立cohort、P3L checkpoint及三项ranking/support gates；
 实现尚未创建formal run，无新failure，`V66-F01`保持recovering、下一编号仍为`V66-F02`。
+
+P3C exact-once 4/4 gates通过：581 actor-unit上AUROC/AUPRC=`0.761644/0.767165`，相对deterministic
+增加`+0.261644/+0.238766`，6/6 scenes above chance。`V66-F01`由“deterministic existence protection + learned
+local geometry ranking”恢复关闭；不赋予Actor drop authority。下一可用编号仍为`V66-F02`。
 
 ### V6.5 终态边界（2026-08-28）
 

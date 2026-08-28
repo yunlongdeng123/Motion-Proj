@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.6 P3C independent confirmation supported / P6 bake next（2026-08-28）
+
+状态：`v66_p3c_independent_confirmation_supported_p6_bake_next`；canonical=
+`run://worldsim_v66/WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01/20260828T091611Z__independent-local-geometry-confirm-s0-r1`；
+verdict=`supported_independent_legacy_local_geometry_confirmation`。
+
+冻结P3L在scene-disjoint V65 P2V 72 units上得到581 actor-unit（conflict/clean=`307/274`）。AUROC/AUPRC=
+`0.761644/0.767165`，相对deterministic=`+0.261644/+0.238766`，相对q0=`+0.062127/+0.028200`；
+6/6 evaluable scenes above chance，4/4 gates通过。wall=`10.77s`、GPU=`0.02359GiB`、RSS=`0.93375GiB`。
+无model/normalization refit、threshold或第二confirmation。
+
+`V66-F01`按两级certificate恢复关闭：deterministic层保护Actor existence，learned层只排序local geometry
+REPAIR/ABSTAIN。结论仍限consumed legacy ranking，不是fresh V6.6或真实修复。下一 active=`WS-V66-P6-HARP-BAKE-01`：
+将冻结offline compiler输出为不携带模型/hidden target/hazard existence gate的Actor-preserving runtime package。
+
 ## WorldSim V6.6 P3C independent confirmation frozen / implementation ready（2026-08-28）
 
 状态：`v66_p3c_independent_confirmation_implementation_ready`。确认集固定为V65 P2V consumed六场景/72 units，

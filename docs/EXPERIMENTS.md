@@ -114,13 +114,25 @@
 
 ### WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P3C-001`；formal read尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P3C-001`；verdict=
+  `supported_independent_legacy_local_geometry_confirmation`。
 - 目标：另一独立V65 cohort加载P3L同一checkpoint/normalization，exact-once验证threshold-free ranking与scene support。
 - 禁止refit、seed/feature/architecture/threshold sweep；输出仍无Actor existence authority。
 - cohort=`scene-0001/0219/0402/0594/0822/1110`，复用V65 P2V 72-unit evidence/native；与P10V/P10X scene-disjoint。
 - gates：相对deterministic AUROC/AUPRC至少`+0.03/+0.05`、至少4 scenes above chance、Actor existence关闭。
 - 实现：`scripts/run_worldsim_v66_p3c_local_geometry_confirm.py`；配置：
   `configs/worldsim_v66/p3c_independent_local_geometry_confirm_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01/
+  20260828T091611Z__independent-local-geometry-confirm-s0-r1`；rows=`581`，conflict/clean=`307/274`。
+- AUROC/AUPRC=`0.761644/0.767165`；相对deterministic=`+0.261644/+0.238766`，相对q0=
+  `+0.062127/+0.028200`；6/6 scenes above chance，4/4 gates PASS。
+- 资源：wall=10.7734s，peak GPU=0.02359GiB，RSS=0.93375GiB；`V66-F01 resolved_by_two_level_certificate`。
+
+### WS-V66-P6-HARP-BAKE-01
+
+- 状态：`pending_direct_implementation`；目标是Actor/static/physical/appearance分层的deterministic runtime package。
+- offline bake可读取冻结P3L分数，但runtime不得加载learned model、hidden target或以hazard label决定Actor existence。
+- 首轮只做consumed legacy package/capability，不冒充fresh quality、真实appearance修复或RL-ready distribution。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
