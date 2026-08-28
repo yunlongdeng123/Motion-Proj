@@ -52,6 +52,8 @@ def _predict_error(
             standard_deviation = torch.exp(0.5 * log_variance)
             z = (failure_threshold_log - first) / standard_deviation
             prediction = 0.5 * torch.erfc(z / np.sqrt(2.0))
+        elif str(model_config.get("objective", "huber")) == "binary_bce":
+            prediction = torch.sigmoid(first)
         else:
             prediction = second
         outputs.append(prediction.cpu().numpy())
@@ -68,6 +70,9 @@ def _model_loss(
             float(model_config["minimum_log_variance"]), float(model_config["maximum_log_variance"]),
         )
         return (0.5 * (torch.exp(-log_variance) * (target - first).square() + log_variance)).mean()
+    if str(model_config.get("objective", "huber")) == "binary_bce":
+        threshold = float(np.log1p(model_config["failure_threshold_m"]))
+        return torch.nn.functional.binary_cross_entropy_with_logits(first, (target > threshold).float())
     return _continuous_loss(second, target, model_config)
 
 

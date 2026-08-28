@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p93_direct_trajectory_failure_probability.v1
+output_schema_version: worldsim_v67.p93_direct_trajectory_failure_probability_summary.v1
+task_id: WS-V67-P93-DIRECT-TRAJECTORY-FAILURE-PROBABILITY-01
+hypothesis_id: WS-V67-H-P93-001
+seed: 0
+role: prospective_direct_trajectory_failure_probability
+verdict_on_pass: supported_direct_trajectory_failure_probability
+verdict_on_failure: rejected_direct_trajectory_failure_probability
+model_artifact: DIRECT_TRAJECTORY_FAILURE_PROBABILITY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
+  artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01/20260829T213000Z__trajectory-visited-reliability-s0-r1
+  artifact: FRESH_TEST_H3P5_TRAJECTORY_ACTOR_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 8000
+  horizon_batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: binary_bce
+  failure_threshold_m: 1.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.50
+locks:
+  source_and_model_protocol_frozen_before_test_target_rows_exist: true
+  direct_binary_cross_entropy_for_any_visited_actor_error_over_one_meter: true
+  sigmoid_failure_probability_is_only_selection_score: true
+  four_source_horizons_equal_batch_weight: true
+  query_and_actor_only_same_deepset_optimizer_and_epochs: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_threshold_class_weight_actor_cap_pooling_radius_coverage_loss_epoch_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v70/guo17a.html
+claim_boundary:
+  - direct_source_probability_for_any_unreliable_visited_actor_state
+  - prospective_secondary_model_on_same_P81_test_cohort
+  - no_fresh_probability_calibration_or_conformal_guarantee
+  - open_loop_constant_velocity_actor_failure_target_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
