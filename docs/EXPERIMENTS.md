@@ -2,9 +2,17 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P93-DIRECT-TRAJECTORY-FAILURE-PROBABILITY-01
+
+- 状态：`active/GPU training`；canonical candidate=`20260829T233000Z__direct-trajectory-failure-probability-s0-r1`；
+  target/model/score在P81 target rows出现前冻结。
+- source target唯一为trajectory内任一6m visited Actor `error>1m`；相同Deep Sets以horizon-balanced BCE训练，
+  query/Actor-only同容量、8,000 epochs，唯一selection score为sigmoid failure probability。
+- 不含pairwise/ordinal/error regression，不扫threshold/class weight/coverage/radius；source probability不称fresh calibrated。
+
 ### WS-V67-P92-HETEROSCEDASTIC-TRAJECTORY-FAILURE-01
 
-- 状态：`active/GPU training`；canonical candidate=`20260829T231500Z__heteroscedastic-trajectory-failure-s0-r1`；
+- 状态：`trained/waiting prospective P85 rows`；canonical=`20260829T231500Z__heteroscedastic-trajectory-failure-s0-r1`；
   distribution/model/1m score在P81 target rows出现前冻结。
 - 最近16个visited Actor Deep Sets同时输出`log1p(max error)`的Gaussian mean/log-variance，以heteroscedastic NLL
   训练；正式selection score唯一为解析计算的`P(error>1m)`。Query/Actor-only同结构、四horizon等量、8,000 epochs。

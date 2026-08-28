@@ -858,6 +858,9 @@ P91固定q=.90 conditional max-error quantile在P81 target read前冻结，作�
 P92 heteroscedastic Gaussian trajectory failure probability在P81 target read前冻结；不修改P81合同、不扫分布或variance
 bound。当前无新增失败，下一编号仍为`V67-F67`。
 
+P93 direct trajectory any-failure BCE同样在P81 target read前冻结；阈值固定为正式1m endpoint，不扫class weight或loss
+组合。当前无新增失败，下一编号仍为`V67-F67`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

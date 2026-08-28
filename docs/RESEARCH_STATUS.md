@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P92 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P93 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -74,6 +74,11 @@ P91完成8,000 epochs后，P92在r3 archive IO期间接替GPU，进一步将可�
 `log1p(max visited Actor error)`输出异方差Gaussian mean/log-variance，以NLL训练，并将唯一selection score冻结为
 `P(error>1m)`。方法依据NeurIPS 2017 aleatoric uncertainty与deep ensembles中的Gaussian regression likelihood；这里只
 检验单模型aleatoric ranking，不声称epistemic uncertainty或calibrated coverage，不扫分布族/variance bound。
+
+P92完成8,000 epochs并冻结后，P93补齐最直接的trajectory reliability baseline：将“任一6m visited Actor
+error>1m”作为唯一source binary target，使用horizon-balanced BCE训练相同Deep Sets，唯一score是sigmoid probability。
+它不含pairwise、ordinal或连续误差辅助项，阈值与fresh endpoint事前一致；不做class weight/threshold/loss sweep，
+也不把source probability表述为fresh calibrated probability。P93现与08/09 archive IO并行训练。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
