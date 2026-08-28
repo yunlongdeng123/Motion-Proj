@@ -187,11 +187,23 @@ P22 exact-once仅1/4 gates：unsafe reduction比P20增加`+0.004719`，不足冻
 
 ### V67-F10 — P23 continuous entropic selected-cost候选
 
-- 分类：`algorithm/continuous-risk-sensitive-ranking`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/continuous-risk-sensitive-ranking`；状态：`closed_negative_after_first_trial`。
 - 动机/检索：NeurIPS 2022 Efficient Risk-Averse RL指出离散tail会形成tail barrier；NeurIPS 2020 OCE risk learning覆盖
   entropic/CVaR等连续风险。P23用连续target cost的entropic soft selected risk绕开binary plateau。
 - 合同：risk aversion=`10`、weight=`0.25`、七开发域；确认用V64 P10R2八场景；与冻结P20/P22/qmean同分母比较。
 - 防重复：不扫risk aversion/weight/tail fraction/model/temperature/gate；不把objective称为OCE/CVaR保证。下一编号=`V67-F11`。
+
+P23在mean reduction/pairwise/scene support三门通过，但top-10% tail mean与P20几乎相同（ratio=`0.999450 >0.95`）；
+3/4 gates正式拒绝。连续entropic objective提升mean `+0.013006`，但未产生tail独立增益；不扫risk aversion/weight，
+tail auxiliary研究关闭。
+
+### V67-F11 — P24 adaptive fixed-total action budget候选
+
+- 分类：`algorithm/task-conditioned-budget-allocation`；状态：`active_first_trial_frozen`。
+- 动机：P20/P21已经证明ranking与selective authority；P24研究在总action数完全一致时，能否按case难度分配1--5个actions。
+- 方法：P20 within-case order冻结；八域16-hidden bounded `±0.05` case calibration只改变跨case slot priority。
+- 防重复：不扫max actions、offset bound、architecture、fraction或gate；P6R action target在模型freeze后一次读取。下一编号=
+  `V67-F12`。
 
 ### V6.6 当前边界（2026-08-28）
 

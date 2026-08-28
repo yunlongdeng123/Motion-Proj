@@ -2,6 +2,14 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P23-ENTROPIC-ACTION-COMPILER-01
+
+- 状态：`done/rejected`；canonical=`20260828T142500Z__entropic-action-s0-r1`；七域511 cases/5,834 actions，
+  entropic risk aversion/weight=`10/0.25`，5,000 GPU epochs；P10R2 1,109/1,152 eligible actions。
+- P23/P20/P22/qmean reduction=`0.464664/0.451659/0.454891/0.429644`；pairwise=`0.840411`，8/8 scenes改善；
+  top-10% tail mean P23/P20=`0.178051/0.178149`，ratio=`0.999450`，tail gate失败，3/4；wall/peak GPU/RSS=
+  `172.581s/0.04712GiB/1.5980GiB`。
+
 ### WS-V67-P22-TAIL-RISK-ACTION-COMPILER-01
 
 - 状态：`done/rejected`；canonical=`20260828T140000Z__tail-risk-action-s0-r1`；六域415 cases/4,729 actions，

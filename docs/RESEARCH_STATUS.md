@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P23 entropic tail rejected / P24 adaptive budget training（2026-08-28）
+
+P23 canonical=`run://worldsim_v67/WS-V67-P23-ENTROPIC-ACTION-COMPILER-01/
+20260828T142500Z__entropic-action-s0-r1`。七域511 cases/5,834 actions训练，P10R2 test 1,109 eligible actions。
+P23/P20/P22/qmean mean reduction=`0.464664/0.451659/0.454891/0.429644`，P23 pairwise=`0.840411`、8/8 scenes
+改善；但selected top-10% tail mean=`0.178051`，相对P20 ratio=`0.999450`，未达0.95，3/4 gates，拒绝。
+
+binary与continuous tail auxiliary均关闭，不扫权重。P24回到已支持P20 ranking，保持每case内部顺序不变；八开发域训练
+bounded case offset，仅用于跨case分配完全相同的总action budget（每case至少1、最多5、全局总数等于固定25% baseline）。
+冻结后在V64 P6R八场景action-task-untouched cohort一次确认。
+
 ## WorldSim V6.7 P22 binary tail rejected / P23 continuous entropic training（2026-08-28）
 
 P22 canonical=`run://worldsim_v67/WS-V67-P22-TAIL-RISK-ACTION-COMPILER-01/
