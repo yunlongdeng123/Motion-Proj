@@ -83,7 +83,9 @@ future samples逐时flip标签。prep在111.61s生成575,596 source rows/5,336 t
 trajectory-level flip BCE和hierarchical temporal→Actor结构，同时将P104 time-local flip作为等权auxiliary，而不是
 单独决定trajectory score；不扫loss weight/aggregation。P105 r1在首个optimizer step前因当前PyTorch无
 `torch.flatnonzero`退出，官方API确认用`torch.nonzero`；r2只作等价index恢复后已进入6,000-epoch GPU训练（`V67-F71`）。
-P96/P103协议与checkpoint保持不变。
+P105 r2最终fixed50 query/Actor/P75=`6/27/13`，absolute reduction=`87.36%`、query-vs-Actor=`77.78%`，AUROC=
+`.89704/.64036`，4/4 gates通过，故`V67-F70`由single multitask recovery解决；但它仍不及P102的4，不替换P103。
+local-supervision family至此关闭，不扫auxiliary weight。P96/P103协议与checkpoint保持不变。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

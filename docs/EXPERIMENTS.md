@@ -123,7 +123,7 @@
 
 ### WS-V67-P105-JOINT-TRAJECTORY-TEMPORAL-01
 
-- 状态：`active/GPU training r2`；r1=`20260830T032000Z__joint-trajectory-temporal-s0-r1`在首个optimizer step前
+- 状态：`done/supported development r2`；r1=`20260830T032000Z__joint-trajectory-temporal-s0-r1`在首个optimizer step前
   engineering exit，canonical candidate r2=`20260830T033000Z__joint-trajectory-temporal-s0-r2`。
 - query primary是P102-style trajectory total-flip BCE；同一hierarchical temporal→Actor representation增加P104
   time-local flip的equal-weight BCE auxiliary。正式selection只用trajectory head，不用local max；Actor-only仍为
@@ -132,6 +132,9 @@
   不改变P96/P103。
 - r1错误：当前PyTorch没有`torch.flatnonzero`；根据官方`torch.nonzero` API只改为对flattened mask取nonzero indices，
   0 optimizer step/0 target read，登记`V67-F71`；r2正常训练，GPU约48%、1.54GiB。
+- result：fixed50 query/Actor/P75=`6/27/13`，absolute reduction=`87.36%`、query-vs-Actor=`77.78%`，AUROC=
+  `.89704/.64036`，4/4 gates。它解决P104 relative failure但未超过P102的4；因此不替换P103，并关闭auxiliary weight/
+  sampling/pooling sweep。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

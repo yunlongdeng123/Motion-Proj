@@ -949,7 +949,7 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 
 ### V67-F70 — time-local-only监督使Actor-only固定覆盖排序优于query
 
-- 分类：`scientific/objective-factorization`；状态：`active_single_multitask_recovery_frozen`；
+- 分类：`scientific/objective-factorization`；状态：`resolved_by_single_multitask_recovery`；
 - run：`run://worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01/20260830T030500Z__temporal-flip-supervision-s0-r1`；
 - symptom：development 1,791 trajectories/95 flips上fixed50 query/Actor/P75=`1/0/13`；query absolute reduction
   `97.89%`且AUROC `.90726`，但Actor-only选0，因此query-vs-Actor=`-100%`，只过3/4 gates；
@@ -960,6 +960,10 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 - resolution：不删relative gate、不把1 event包装成功、不扫sampling/aggregation/weight。唯一P105保留P102正式
   trajectory BCE与hierarchical model，将P104逐时flip只作equal-weight auxiliary；失败即关闭local-supervision family；
 - claim impact：P104没有独立或task-conditioned success claim，不影响P102 development或P96/P103冻结confirmation。
+
+P105 canonical r2以trajectory BCE为primary、equal-weight time-local BCE为auxiliary，fixed50 query/Actor/P75=
+`6/27/13`，absolute/query-vs-Actor reduction=`87.36%/77.78%`，AUROC=`.89704/.64036`，4/4 gates。它解决
+P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不替换P103，不继续扫auxiliary weight或sampling。
 
 下一可用编号：`V67-F71`。
 
