@@ -39,6 +39,16 @@
   certificate满分是deterministic injection development capability，不是natural/fresh generalization。
 - 资源：wall=8.0297s，peak GPU=0.02359GiB，RSS=0.9098GiB；`failure_ledger_delta=none`。
 
+### WS-V66-P2-FACTOR-CERTIFICATE-DEV-01
+
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P2D-001`；formal run尚未创建。
+- 输入：P1-D 8,180 rows；certificate只读取sensor/provenance、duplicate、lifecycle、kinematic/identity、shape factor。
+- 输出：独立reason codes、Actor state和compiler action；Actor existence/ID/lifecycle不在P2被修改。
+- gates继承plan的recall/retention/false-artifact/invariance/evidence-violation合同，但角色仍为deterministic injected
+  development capability。
+- 实现：`motion_proj/worldsim_v66/physics_certificates.py`、`scripts/run_worldsim_v66_p2_certificate.py`；
+  `failure_ledger_refs=[V65-F19,V1-F06]`，delta pending。
+
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
 - task=`WS-V64-REPORT-HANDOFF-01`；status=`done_documentation_only`；scientific run/GPU=`none/none`；

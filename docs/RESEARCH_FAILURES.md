@@ -24,6 +24,8 @@
   对重新渲染artifact的实测不敏感。
 - P1-D formal一次完成且4/4 development gates通过，无新failure。构造性certificate满分只解除“factor接口是否存在
   signal”的开发前置，不解除natural artifact truth、fresh generalization或真实hazard edit风险；下一编号仍为`V66-F01`。
+- P2-D独立certificate入口已实现但尚未formal执行；无新failure。它必须从observable factors重算reason codes，禁止复用
+  P1预写decision冒充独立证书；下一编号仍为`V66-F01`。
 
 ### V6.5 终态边界（2026-08-28）
 

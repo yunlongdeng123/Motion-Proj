@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.6 P2-D certificate implementation ready（2026-08-28）
+
+状态：`v66_p2_development_certificate_implementation_ready`。独立P2入口只读取P1 rows中的可观测factor，重新计算
+PASS/FAIL reason codes与KEEP/REPAIR/ABSTAIN/DROP_PRIMITIVE action；不信任P1已写certificate字段，也不把artifact/hazard
+metadata送入certificate。Actor existence/ID/lifecycle在certificate阶段一律保留。下一步运行一次P2-D gate；无模型训练、
+threshold sweep、fresh read、hash/checksum/fingerprint或测试矩阵。
+
 ## WorldSim V6.6 P1-D factorial atlas supported / P2 certificate next（2026-08-28）
 
 状态：`v66_p1_development_supported_p2_certificate_next`；canonical=
