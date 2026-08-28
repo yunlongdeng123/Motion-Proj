@@ -36,6 +36,25 @@ class BoundedCaseOffset(torch.nn.Module):
         return torch.tanh(self.network(features).squeeze(-1)) * self.maximum_offset
 
 
+class BoundedHeteroscedasticCaseOffset(torch.nn.Module):
+    def __init__(self, feature_count: int, hidden_dimension: int, maximum_offset: float,
+                 minimum_scale: float, maximum_scale: float) -> None:
+        super().__init__()
+        self.network = torch.nn.Sequential(
+            torch.nn.Linear(int(feature_count), int(hidden_dimension)), torch.nn.SiLU(),
+            torch.nn.Linear(int(hidden_dimension), 2),
+        )
+        self.maximum_offset = float(maximum_offset)
+        self.minimum_scale = float(minimum_scale)
+        self.maximum_scale = float(maximum_scale)
+
+    def forward(self, features: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        raw = self.network(features)
+        mean = torch.tanh(raw[:, 0]) * self.maximum_offset
+        scale = self.minimum_scale + torch.sigmoid(raw[:, 1]) * (self.maximum_scale - self.minimum_scale)
+        return mean, scale
+
+
 def case_offset_dataset(
     arrays: Mapping[str, np.ndarray], compiled_scores: np.ndarray, selected_fraction: float
 ) -> dict[str, np.ndarray]:
@@ -160,10 +179,58 @@ def train_case_offset(
     return model.eval(), mean.astype(np.float32), scale.astype(np.float32), final
 
 
+def train_heteroscedastic_case_offset(
+    dataset: Mapping[str, np.ndarray], config: Mapping[str, Any], seed: int
+) -> tuple[BoundedHeteroscedasticCaseOffset, np.ndarray, np.ndarray, dict[str, Any]]:
+    features_np = np.asarray(dataset["features"], dtype=np.float32)
+    target_np = np.asarray(dataset["target_offset"], dtype=np.float32)
+    domains_np = np.asarray(dataset["domain_index"], dtype=np.int64)
+    normalizer_mean = features_np.mean(axis=0)
+    normalizer_scale = features_np.std(axis=0).clip(min=1e-4)
+    features = torch.from_numpy(((features_np - normalizer_mean) / normalizer_scale).astype(np.float32)).cuda()
+    target = torch.from_numpy(target_np).cuda()
+    domains = torch.from_numpy(domains_np).cuda()
+    torch.manual_seed(int(seed))
+    model = BoundedHeteroscedasticCaseOffset(
+        features.shape[1], int(config["hidden_dimension"]), float(config["maximum_case_offset"]),
+        float(config["minimum_scale"]), float(config["maximum_scale"]),
+    ).cuda()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]),
+                                  weight_decay=float(config["weight_decay"]))
+    final = {}
+    for _ in range(int(config["epochs"])):
+        prediction, predictive_scale = model(features)
+        residual = target - prediction
+        nll_elements = 0.5 * (residual / predictive_scale).square() + torch.log(predictive_scale)
+        domain_losses = torch.stack([nll_elements[domains == domain].mean() for domain in torch.unique(domains)])
+        nll = domain_losses.mean()
+        variance = domain_losses.var(unbiased=False)
+        mean_anchor = torch.nn.functional.smooth_l1_loss(
+            prediction, target, beta=float(config["huber_beta"])
+        )
+        loss = nll + float(config["mean_anchor_weight"]) * mean_anchor + float(config["domain_loss_variance_weight"]) * variance
+        optimizer.zero_grad(set_to_none=True); loss.backward(); optimizer.step()
+        final = {"total_loss": float(loss.detach().cpu()), "gaussian_nll": float(nll.detach().cpu()),
+                 "mean_anchor_loss": float(mean_anchor.detach().cpu()), "domain_loss_variance": float(variance.detach().cpu()),
+                 "mean_scale": float(predictive_scale.mean().detach().cpu())}
+    final.update(train_case_count=int(len(target_np)), development_domain_count=int(len(np.unique(domains_np))))
+    return model.eval(), normalizer_mean.astype(np.float32), normalizer_scale.astype(np.float32), final
+
+
 def score_case_offset(model: BoundedCaseOffset, dataset: Mapping[str, np.ndarray], mean: np.ndarray, scale: np.ndarray) -> np.ndarray:
     features = (np.asarray(dataset["features"], dtype=np.float32) - mean) / scale
     with torch.inference_mode():
         return model(torch.from_numpy(features.astype(np.float32)).cuda()).cpu().numpy()
+
+
+def score_heteroscedastic_case_offset(
+    model: BoundedHeteroscedasticCaseOffset, dataset: Mapping[str, np.ndarray],
+    mean: np.ndarray, scale: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    features = (np.asarray(dataset["features"], dtype=np.float32) - mean) / scale
+    with torch.inference_mode():
+        prediction, predictive_scale = model(torch.from_numpy(features.astype(np.float32)).cuda())
+    return prediction.cpu().numpy(), predictive_scale.cpu().numpy()
 
 
 def adaptive_fixed_total_selection(
