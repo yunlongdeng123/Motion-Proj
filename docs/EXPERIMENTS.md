@@ -41,13 +41,26 @@
 
 ### WS-V66-P2-FACTOR-CERTIFICATE-DEV-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P2D-001`；formal run尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P2D-001`；verdict=`supported_development_factor_certificate`。
 - 输入：P1-D 8,180 rows；certificate只读取sensor/provenance、duplicate、lifecycle、kinematic/identity、shape factor。
 - 输出：独立reason codes、Actor state和compiler action；Actor existence/ID/lifecycle不在P2被修改。
 - gates继承plan的recall/retention/false-artifact/invariance/evidence-violation合同，但角色仍为deterministic injected
   development capability。
 - 实现：`motion_proj/worldsim_v66/physics_certificates.py`、`scripts/run_worldsim_v66_p2_certificate.py`；
   `failure_ledger_refs=[V65-F19,V1-F06]`，delta pending。
+- Canonical：`run://worldsim_v66/WS-V66-P2-FACTOR-CERTIFICATE-DEV-01/
+  20260828T085346Z__factor-certificate-dev-s0-r1`。
+- 结果：8,180 rows；pooled/五family recall=1；clean-hazard/benign false artifact=0；hazard/benign retention=1；
+  Actor existence/ID/lifecycle=1；hazard-pair delta=0；hard violation=0；8/8 gates PASS。
+- decisions：KEEP 4,090，ABSTAIN 818，DROP artifact primitive 818，REPAIR 2,454；wall=0.2487s，RSS=0.5316GiB；
+  `failure_ledger_delta=none`。
+
+### WS-V66-P3-LEARNED-ACTOR-ARTIFACT-01
+
+- 状态：`pending`（locked / not executed）。P2-D在deterministic injected development上AUROC/AUPRC已为1，
+  不存在满足“相对P2 AUPRC +0.05 / AUROC +0.03”的数值headroom。
+- 不训练MLP，不做seed/width/depth sweep；只有fresh/natural benchmark暴露deterministic ceiling后才可解锁。
+- 该precondition lock不是algorithm failure，`failure_ledger_delta=none`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

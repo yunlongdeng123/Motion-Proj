@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V6.6 P2-D certificate supported / P4 repair next（2026-08-28）
+
+状态：`v66_p2_development_certificate_supported_p4_repair_next`；canonical=
+`run://worldsim_v66/WS-V66-P2-FACTOR-CERTIFICATE-DEV-01/20260828T085346Z__factor-certificate-dev-s0-r1`；
+verdict=`supported_development_factor_certificate`。
+
+独立入口从P1的observable factor重算8,180行certificate，不复用P1 decision。pooled artifact recall/AUROC/AUPRC=
+`1/1/1`，五family recall均1；clean-hazard/clean-benign false artifact均0，legitimate hazard/benign retention均1，
+Actor existence/ID/lifecycle retention均1，hazard-pair score delta=0，hard observed evidence violation=0。8/8 gates
+全过。decision counts=`KEEP 4090 / ABSTAIN_LOCAL_GEOMETRY 818 / DROP_ARTIFACT_PRIMITIVE 818 / REPAIR 2454`。
+CPU wall=`0.249s`、RSS=`0.532GiB`，failure delta=`none`。
+
+该deterministic injected development benchmark已无learned ranking headroom，因此P3 learned family保持
+`pending_locked_not_executed`，不浪费GPU做必然无法满足“相对P2 AUPRC +0.05”的训练。它不是算法failure；自然/fresh
+benchmark若暴露deterministic ceiling才可解锁。active next=`WS-V66-P4-ARTIFACT-REPAIR-DEV-01 /
+WS-V66-H-P4D-001`：matched比较DROP、ABSTAIN、REPAIR对artifact violation和hazard event的影响。
+
+结果：`docs/autoresearch/worldsim_v66/P2_DEVELOPMENT_CERTIFICATE_RESULT.md`；实现提交=`38c67dc`。
+
 ## WorldSim V6.6 P2-D certificate implementation ready（2026-08-28）
 
 状态：`v66_p2_development_certificate_implementation_ready`。独立P2入口只读取P1 rows中的可观测factor，重新计算

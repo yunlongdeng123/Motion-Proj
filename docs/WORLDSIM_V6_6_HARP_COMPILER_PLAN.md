@@ -4,7 +4,7 @@
 >
 > 中文工作名：**HARP-Compiler：面向 RL 就绪驾驶仿真的幻觉感知、风险保真世界编译器**
 >
-> 状态：`active_p2_development_certificate`
+> 状态：`active_p4_development_repair`
 >
 > 上游冻结分支：`research/worldsim-v6.5-task-conditioned-authority`
 >
@@ -25,6 +25,11 @@
 > artifact/hazard AUROC均为0.50，五类可观测 factor certificate recall均为1.0，clean-hazard false artifact=0，
 > hazard-pair delta=0。该满分来自确定性注入的development construction，只授权P2接口固化与repair capability，
 > 不授权自然artifact/fresh泛化claim。
+
+> P2-D 终态（2026-08-28）：独立重算8,180行certificate，8/8 gates通过；artifact/各family recall=1，
+> clean-hazard false artifact=0，Actor existence/ID/lifecycle retention=1，hazard-pair delta=0。由于deterministic
+> injected development上已无learned ranking headroom，P3保持locked/not executed；直接进入P4-D matched
+> DROP/ABSTAIN/REPAIR capability。
 
 ---
 

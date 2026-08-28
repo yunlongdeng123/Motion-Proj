@@ -26,6 +26,9 @@
   signal”的开发前置，不解除natural artifact truth、fresh generalization或真实hazard edit风险；下一编号仍为`V66-F01`。
 - P2-D独立certificate入口已实现但尚未formal执行；无新failure。它必须从observable factors重算reason codes，禁止复用
   P1预写decision冒充独立证书；下一编号仍为`V66-F01`。
+- P2-D一次完成且8/8 gates通过，无新failure。P3在deterministic injected development上因P2 AUROC/AUPRC已经1而无
+  预注册相对增量headroom，保持locked/not executed；这不是learned model失败，也不得用同数据训练后声称超过P2。
+  下一编号仍为`V66-F01`。
 
 ### V6.5 终态边界（2026-08-28）
 
