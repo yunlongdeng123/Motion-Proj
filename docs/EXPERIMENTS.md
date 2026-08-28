@@ -179,11 +179,31 @@
 
 ### WS-V66-P7R2-RADIUS-SUPPORTED-ACTOR-REPAIR-01
 
-- 状态：`implementation_ready`；唯一恢复，support radius固定`0.512m`=one native voxel side。
+- 状态：`rejected_terminal`；verdict=`rejected_conflict_reduction_after_single_recovery`；唯一恢复的support
+  radius固定`0.512m`=one native voxel side。
 - 同一L0 action set、target evaluation与九个gates；只把exact same-Actor hit改为到hit中心<=0.512m。
-- 禁止radius/budget/threshold sweep；失败则关闭sensor-surface repair family。
+- 禁止radius/budget/threshold sweep；失败后sensor-surface repair family关闭。
 - 实现复用`motion_proj/worldsim_v66/sensor_surface_repair.py`与P7R runner；配置：
-  `configs/worldsim_v66/p7r2_radius_supported_actor_repair_v1.yaml`；formal run尚未创建。
+  `configs/worldsim_v66/p7r2_radius_supported_actor_repair_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P7R2-RADIUS-SUPPORTED-ACTOR-REPAIR-01/
+  20260828T094232Z__radius-surface-repair-s0-r1`；points/conflicts/action states=`23580/1175/290`。
+- overall/clean retention=`0.617684/0.619549`均PASS；conflict reduction=`0.417872 < 0.50` FAIL；其余
+  Actor/shell/track/trajectory retention=1、removed=0、hazard shift=0、scene yield=1，8/9 gates通过仍拒绝。
+- repaired points/conflicts=`14565/684`；`V66-F02 closed_negative_after_single_recovery`；P7 physical repair、P9/RL
+  继续锁定。结果：`docs/autoresearch/worldsim_v66/P7R2_RADIUS_SUPPORT_RESULT.md`。
+
+### WS-V66-P8-REACTIVE-ACTOR-01
+
+- 状态：`migration_frozen`；hypothesis=`WS-V66-H-P8D-001`；角色是独立deterministic reactive-Actor capability，
+  不能恢复P7或解锁P9/RL。
+- 外部迁移：UniSim dynamic Actor/closed-loop sensor simulation、SMARTS multi-agent behaviors、Waymax固定agent接口；
+  只迁移保留identity/logged path的固定纵向响应，不引入learned simulator/planner/policy optimizer。
+- 六场景各按metadata固定选择highest median-speed且>=6 samples Actor；synthetic AV从12m bumper headway出发并在3s
+  制动。X0 constant-speed；X1沿同一logged polyline执行固定IDM-style bounded response。
+- 固定参数：dt=0.1s、latency=0.5s、decel=3、max accel=2、max jerk=6、headway=12m；不扫参数。
+- gate：X1 collision steps少于X0、min gap>=0、accel/jerk bounded、path deviation=0、identity/lifecycle exact、
+  latency在[0.3,1.0]s；至少5/6 scenes。冻结：
+  `docs/autoresearch/worldsim_v66/P8_REACTIVE_ACTOR_MIGRATION_FREEZE.md`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

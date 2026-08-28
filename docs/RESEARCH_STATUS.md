@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V6.6 P7 surface family terminal negative / P8 independent capability frozen（2026-08-28）
+
+状态：`v66_p7_surface_family_terminal_negative_p8_capability_frozen`；P7R2 canonical=
+`run://worldsim_v66/WS-V66-P7R2-RADIUS-SUPPORTED-ACTOR-REPAIR-01/20260828T094232Z__radius-surface-repair-s0-r1`；
+verdict=`rejected_conflict_reduction_after_single_recovery`；`V66-F02 closed_negative_after_single_recovery`。
+
+固定`0.512m` one-native-voxel支持把overall/clean boundary retention从P7R的`0.383588/0.395715`提高到
+`0.617684/0.619549`，但conflict reduction从`0.847660`降到`0.417872 < 0.50`。其余Actor/shell/track/
+trajectory retention=1、removed=0、hazard shift=0、scene yield=1；8/9 gates通过仍拒绝。按预先冻结规则不再扫
+中间radius、不降gate、不改budget，也不临时训练completion model。P7只保留triage正结果；physical repair、
+RL-ready distribution与P9保持锁定。
+
+卡点检索UniSim、SMARTS与Waymax后，P8只作为独立响应式Actor capability推进：P6六场景各固定选一条真实Actor
+轨迹，在同一logged polyline比较X0 constant-speed与X1固定IDM-style bounded response的lead-brake干预；参数与
+`>=5/6`场景gate已冻结，无sweep。即便通过，也只支持窄synthetic lead-brake response，不恢复P7或解锁RL/P9。
+详见`docs/autoresearch/worldsim_v66/P7R2_RADIUS_SUPPORT_RESULT.md`与
+`docs/autoresearch/worldsim_v66/P8_REACTIVE_ACTOR_MIGRATION_FREEZE.md`。
+
 ## WorldSim V6.6 P7R2 one-voxel recovery implementation ready（2026-08-28）
 
 状态：`v66_p7r2_one_voxel_recovery_implementation_ready`。P7R loader新增可选same-Actor nearest-hit radius，P7R2唯一
