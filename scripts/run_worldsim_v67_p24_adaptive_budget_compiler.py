@@ -13,7 +13,7 @@ import numpy as np
 import torch
 import yaml
 
-from motion_proj.worldsim_v67.adaptive_budget import FEATURE_NAMES, adaptive_fixed_total_selection, case_offset_dataset, score_case_offset, train_case_offset
+from motion_proj.worldsim_v67.adaptive_budget import BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, case_offset_dataset, score_case_offset, train_case_offset
 from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from motion_proj.worldsim_v67.trajectory_quantile import materialize_quantiles
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
@@ -39,16 +39,27 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     _write_json(run_dir / "status.json", {"status": "running", "started_at_utc": datetime.now(timezone.utc).isoformat()})
     started = time.monotonic(); torch.cuda.reset_peak_memory_stats()
     p20, p20_mean, p20_scale = _load_p20(config, runs_root)
-    train_actions = _combine([Path(path) for path in config["inputs"]["train_action_caches"]])
-    train_scores = score_listwise_compiler(p20, train_actions, p20_mean, p20_scale)
     fraction = float(config["compiler"]["fixed_selected_fraction"])
-    train_cases = case_offset_dataset(train_actions, train_scores, fraction)
-    model, mean, scale, training = train_case_offset(train_cases, config["model"], int(config["seed"]))
-    torch.save({"state_dict": model.state_dict(), "feature_names": list(FEATURE_NAMES), "hidden_dimension": int(config["model"]["hidden_dimension"]),
-                "maximum_case_offset": float(config["model"]["maximum_case_offset"]), "mean": mean, "scale": scale,
-                "frozen_action_compiler_run": config["inputs"]["action_compiler_run"]}, run_dir / "ADAPTIVE_BUDGET_COMPILER.pt")
+    reuse_run = config["inputs"].get("frozen_case_offset_run")
+    if reuse_run:
+        artifact = torch.load(runs_root / reuse_run / config["inputs"]["frozen_case_offset_artifact"], map_location="cuda", weights_only=False)
+        model = BoundedCaseOffset(len(artifact["feature_names"]), int(artifact["hidden_dimension"]), float(artifact["maximum_case_offset"])).cuda()
+        model.load_state_dict(artifact["state_dict"]); model.eval()
+        mean = np.asarray(artifact["mean"], dtype=np.float32); scale = np.asarray(artifact["scale"], dtype=np.float32)
+        training = {"reused_frozen_model": True, "source_run": str(reuse_run)}
+        train_case_count = None
+        torch.save(artifact, run_dir / "ADAPTIVE_BUDGET_COMPILER.pt")
+    else:
+        train_actions = _combine([Path(path) for path in config["inputs"]["train_action_caches"]])
+        train_scores = score_listwise_compiler(p20, train_actions, p20_mean, p20_scale)
+        train_cases = case_offset_dataset(train_actions, train_scores, fraction)
+        model, mean, scale, training = train_case_offset(train_cases, config["model"], int(config["seed"]))
+        train_case_count = int(len(train_cases["case_index"]))
+        torch.save({"state_dict": model.state_dict(), "feature_names": list(FEATURE_NAMES), "hidden_dimension": int(config["model"]["hidden_dimension"]),
+                    "maximum_case_offset": float(config["model"]["maximum_case_offset"]), "mean": mean, "scale": scale,
+                    "frozen_action_compiler_run": config["inputs"]["action_compiler_run"]}, run_dir / "ADAPTIVE_BUDGET_COMPILER.pt")
     _write_json(run_dir / "model_frozen.json", {"p20_ranking_frozen": True, "case_offset_frozen_before_confirmation_materialization": True,
-                "development_domain_count": 8, "train_case_count": int(len(train_cases["case_index"]))})
+                "development_domain_count": 8, "train_case_count": train_case_count, "reused_frozen_model": bool(reuse_run)})
     cache_path = Path(config["confirmation_materialization"]["cache_path"])
     materialization = {"cache_path": str(cache_path), "cache_reused": cache_path.is_file()}
     if not cache_path.is_file(): materialization.update(materialize_quantiles(config["confirmation_materialization"]["data"], runs_root, cache_path))

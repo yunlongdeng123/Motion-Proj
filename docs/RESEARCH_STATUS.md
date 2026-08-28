@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.7 P24 r1 evaluator alignment recovery / r2 ready（2026-08-28）
+
+P24 r1已完成八域训练、写入冻结case-offset artifact并materialize P6R 96-unit cache，但在科学metric前因`<2` eligible
+actions case被training dataset跳过而evaluator仍递增row，触发offset `IndexError`。修复仅让budget evaluator使用与固定P20
+完全相同的`>=2 actions` evaluable denominator；r2复用r1 frozen model/cache，不重复训练、不改budget/model/gates。
+`V67-F12 active_pre_metric_evaluator_alignment`。
+
 ## WorldSim V6.7 P23 entropic tail rejected / P24 adaptive budget training（2026-08-28）
 
 P23 canonical=`run://worldsim_v67/WS-V67-P23-ENTROPIC-ACTION-COMPILER-01/

@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01 r1 recovery note
+
+- r1八域训练与P6R 96-unit materialization完成，frozen artifact/cache保留；metric前在single-action case offset行对齐处
+  `IndexError`；无scientific result。
+- r2只修正`>=2 actions` denominator并复用r1 artifact/cache；不重复GPU训练、不改action budget、offset、model或gates。
+
 ### WS-V67-P23-ENTROPIC-ACTION-COMPILER-01
 
 - 状态：`done/rejected`；canonical=`20260828T142500Z__entropic-action-s0-r1`；七域511 cases/5,834 actions，

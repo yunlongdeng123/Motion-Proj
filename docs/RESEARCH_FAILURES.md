@@ -205,6 +205,15 @@ tail auxiliary研究关闭。
 - 防重复：不扫max actions、offset bound、architecture、fraction或gate；P6R action target在模型freeze后一次读取。下一编号=
   `V67-F12`。
 
+### V67-F12 — P24 evaluator未与offset dataset的single-action exclusion对齐
+
+- 分类：`implementation/evaluator-indexing`；状态：`active_pre_metric_evaluator_alignment`。
+- 观察/根因：r1训练和cache完成后，offset dataset按既有selection合同跳过`<2` eligible actions cases，但adaptive evaluator
+  仍遍历全部unique cases，row 78访问size 78 offset数组外索引；Python/NumPy官方文档定义该情况为`IndexError`。
+- 科学暴露：model已在confirmation target materialization前冻结；失败发生在任何metric/gate计算前，无scientific result。
+- 恢复：evaluator改用与`_within_case_selection`一致的`>=2 actions` cases/all-action denominator；r2复用r1 frozen artifact
+  和cache，不重训、不改合同。下一编号=`V67-F13`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

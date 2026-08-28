@@ -134,7 +134,10 @@ def adaptive_fixed_total_selection(
     cases = np.asarray(arrays["case_index"], dtype=np.int64)
     scenes = np.asarray(arrays["scene_index"], dtype=np.int64)
     target = np.asarray(arrays["target_cost"], dtype=np.float32)
-    unique_cases = np.unique(cases)
+    unique_cases = np.asarray(
+        [case for case in np.unique(cases) if np.count_nonzero(cases == case) >= 2],
+        dtype=np.int64,
+    )
     orders = []
     fixed_total = 0
     selected = []
@@ -151,14 +154,15 @@ def adaptive_fixed_total_selection(
     chosen_candidates = sorted(candidates, key=lambda item: item[0])[:remaining]
     selected.extend(item[3] for item in chosen_candidates)
     selected_array = np.asarray(selected, dtype=np.int64)
-    all_cost = float(target.mean())
+    evaluable_indices = np.concatenate(orders).astype(np.int64)
+    all_cost = float(target[evaluable_indices].mean())
     selected_cost = float(target[selected_array].mean())
     counts = np.asarray([1] * len(unique_cases), dtype=np.int64)
     for _, row, _, _ in chosen_candidates:
         counts[row] += 1
     scene_rows = []
-    for scene in np.unique(scenes):
-        scene_all = np.flatnonzero(scenes == scene)
+    for scene in np.unique(scenes[evaluable_indices]):
+        scene_all = evaluable_indices[scenes[evaluable_indices] == scene]
         scene_selected = selected_array[scenes[selected_array] == scene]
         if not len(scene_selected):
             continue
