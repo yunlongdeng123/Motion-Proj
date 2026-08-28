@@ -17,6 +17,7 @@ FEATURE_NAMES = (
     "selected_quantile_span",
     "log_selected_visited_count",
 )
+BUDGET_CONDITIONED_FEATURE_NAMES = FEATURE_NAMES + ("selected_fraction",)
 
 
 class BoundedCaseOffset(torch.nn.Module):
@@ -79,6 +80,20 @@ def case_offset_dataset(
         "domain_index": np.asarray(domain_ids, dtype=np.int64),
         "action_indices": np.asarray(action_members, dtype=object),
     }
+
+
+def budget_conditioned_case_offset_dataset(
+    arrays: Mapping[str, np.ndarray], compiled_scores: np.ndarray, selected_fractions: list[float]
+) -> dict[str, np.ndarray]:
+    """Build one case-offset row per case and requested budget condition."""
+    datasets = []
+    for fraction in selected_fractions:
+        dataset = case_offset_dataset(arrays, compiled_scores, float(fraction))
+        dataset["features"] = np.concatenate(
+            [dataset["features"], np.full((len(dataset["features"]), 1), float(fraction), dtype=np.float32)], axis=1
+        )
+        datasets.append(dataset)
+    return {key: np.concatenate([dataset[key] for dataset in datasets], axis=0) for key in datasets[0]}
 
 
 def train_case_offset(
