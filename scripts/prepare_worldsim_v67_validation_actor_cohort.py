@@ -7,13 +7,13 @@ import json
 import os
 import subprocess
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
 
-from scripts.build_adgs_nuscenes_assets import scan_shards
+from scripts.build_adgs_nuscenes_assets import _scan_one_shard
 from scripts.prepare_dr_v2_drivestudio_scene import collect_required_many
 
 
@@ -95,21 +95,47 @@ def main() -> None:
     index_by_name = {str(row["name"]): index for index, row in enumerate(scenes)}
     identities = [(name, int(index_by_name[name])) for name in scene_names]
     payloads = collect_required_many(metadata, scene_names)
-    required = {
-        row["filename"]
+    required_by_scene = {
+        name: {
+            row["filename"]
+            for row in payloads[name]["sample_data"]
+            if row["channel"] == "LIDAR_TOP"
+        }
         for name in scene_names
-        for row in payloads[name]["sample_data"]
-        if row["channel"] == "LIDAR_TOP"
     }
+    required = set().union(*required_by_scene.values())
     raw_root = Path(data["raw_root"])
     raw_root.mkdir(parents=True, exist_ok=True)
-    mapping, extracted = scan_shards(
-        tar_dir=Path(data["sensor_archive_root"]),
-        members=required,
-        index_path=Path(data["member_shard_index"]),
-        dst=raw_root,
-        workers=int(data["extraction_workers"]),
-    )
+    archive_root = Path(data["sensor_archive_root"])
+    scene_shards = {str(name): str(shard).zfill(2) for name, shard in data["scene_shards"].items()}
+    required_by_shard: dict[str, set[str]] = {}
+    for name, members in required_by_scene.items():
+        required_by_shard.setdefault(scene_shards[name], set()).update(members)
+    tasks = [
+        (
+            str(archive_root / f"v1.0-trainval{shard}_blobs.tgz"),
+            members,
+            str(raw_root),
+        )
+        for shard, members in sorted(required_by_shard.items())
+    ]
+    found_rows: dict[str, dict[str, object]] = {}
+    with ProcessPoolExecutor(max_workers=len(tasks)) as pool:
+        for rows in pool.map(_scan_one_shard, tasks):
+            found_rows.update(rows)
+    missing = required - set(found_rows)
+    if missing:
+        raise RuntimeError(
+            f"exact shard extraction missed {len(missing)} LIDAR files; "
+            f"example={sorted(missing)[:5]}"
+        )
+    mapping = {name: str(found_rows[name]["shard"]) for name in sorted(required)}
+    extracted = {name for name, row in found_rows.items() if bool(row["extracted"])}
+    index_path = Path(data["member_shard_index"])
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_index = index_path.with_suffix(index_path.suffix + ".partial")
+    tmp_index.write_text(json.dumps(mapping, indent=2) + "\n", encoding="utf-8")
+    os.replace(tmp_index, index_path)
     print(
         json.dumps({
             "stage": "lidar_extracted", "required": len(required),

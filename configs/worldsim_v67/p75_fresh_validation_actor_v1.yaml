@@ -29,11 +29,19 @@ p73_baseline:
   artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
 evaluation_data:
   scene_names: [scene-0170, scene-0364, scene-0997, scene-0384, scene-0129, scene-0640, scene-0977, scene-1053]
+  scene_shards:
+    scene-0129: "02"
+    scene-0170: "02"
+    scene-0364: "04"
+    scene-0384: "04"
+    scene-0640: "06"
+    scene-0977: "09"
+    scene-0997: "09"
+    scene-1053: "10"
   metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
   raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
   sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
   member_shard_index: /root/autodl-tmp/data/worldsim_v67/p75_validation_lidar_member_shards.json
-  extraction_workers: 2
   preprocess_workers: 2
   processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
   processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
