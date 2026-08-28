@@ -1,0 +1,71 @@
+schema_version: worldsim_v67.p108_uncertainty_tube_confirmation.v1
+output_schema_version: worldsim_v67.p108_uncertainty_tube_confirmation_summary.v1
+task_id: WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P108-001
+role: independent_scene_level_actor_uncertainty_tube_confirmation
+verdict_on_pass: supported_independent_actor_uncertainty_boundary_factorization
+verdict_on_failure: rejected_independent_actor_uncertainty_boundary_factorization
+evaluation_data:
+  scene_names: [scene-0092, scene-0329, scene-0555, scene-0012, scene-0035, scene-0268, scene-0795, scene-0917, scene-0925, scene-1060]
+  scene_shards:
+    scene-0092: "01"
+    scene-0329: "04"
+    scene-0555: "06"
+    scene-0012: "01"
+    scene-0035: "01"
+    scene-0268: "03"
+    scene-0795: "08"
+    scene-0917: "09"
+    scene-0925: "09"
+    scene-1060: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p108_confirmation_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-PREP-01
+  run_id: 20260830T063000Z__uncertainty-tube-confirmation-prep-s0-r1
+frozen_p107:
+  run: worldsim_v67/WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01/20260830T061000Z__actor-uncertainty-tube-s0-r2
+  artifact: ACTOR_UNCERTAINTY_TUBE.pt
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  clearance_floor_m: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+locks:
+  ten_scenes_selected_by_official_val_order_location_balance_and_distinct_sessions_before_read: true
+  all_ten_scene_targets_unread_and_absent_from_prior_processed_roots_before_freeze: true
+  p107_checkpoint_normalization_q90_clearance_floor_max_aggregation_horizon_and_coverage_frozen: true
+  primary_decision_requires_fewer_events_than_actor_only_and_no_more_than_frozen_p75: true
+  one_scene_level_independent_confirmation_read: true
+  no_scene_shard_model_quantile_floor_aggregation_coverage_or_decision_recovery_after_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v100/chai20a.html
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+claim_boundary:
+  - independent_at_scene_level_but_not_session_level
+  - fixed_H3p5_candidate_trajectory_occupancy_decision_reliability
+  - constant_velocity_actor_prediction_with_q90_position_error_tube
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

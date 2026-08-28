@@ -131,6 +131,13 @@ reduction=`95.79%/94.44%`，AUROC=`.92901/.56826`；在consumed P96的1,720/36�
 end-to-end跨cohort反转；但仍只是development。下一步冻结新的target-unread cohort作P108 primary confirmation，并在
 archive IO期间训练不读取该target的directional Actor-uncertainty prospective secondary。
 
+P108 primary confirmation已在任何新sensor/target read前冻结：从仍未使用且不在既有processed roots的official val scenes
+按official order、四location平衡和cohort内10个distinct sessions选择`0092/0329/0555/0012/0035/0268/0795/0917/
+0925/1060`（metadata indices `74/257/439/11/34/214/615/703/710/800`）。P107 checkpoint、q90、`.05m`
+clearance floor、time/Actor max、H3.5、fixed50全冻结；primary只要求解析τ-risk事件严格少于Actor-only且不多于P75。
+该cohort是scene-level独立但部分session与历史场景相邻，明确不写session-level独立。route locator可在target materialization前
+修正shard，但不得换scene/model/decision。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

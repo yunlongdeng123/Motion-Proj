@@ -188,6 +188,21 @@
 - 结果证明固定Actor-uncertainty→trajectory-clearance因子化在两个已消费cohort均未重现end-to-end query相对Actor反转，
   但不形成independent/safety claim；下一步只能在模型/score冻结后读取新的target-unread cohort一次确认。
 
+### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
+
+- 状态：`frozen/not read`；primary run=`20260830T063500Z__uncertainty-tube-confirmation-s0-r1`，prep=
+  `20260830T063000Z__uncertainty-tube-confirmation-prep-s0-r1`。
+- cohort：仍未使用且不在V4/V67 processed roots的official val scenes，按official order并平衡四location，cohort内取10个
+  distinct sessions：`0092/0329/0555/0012/0035/0268/0795/0917/0925/1060`，indices=
+  `74/257/439/11/34/214/615/703/710/800`。
+- primary：冻结P107 q90 Actor tube checkpoint与normalization；τ只经`.05m` floor的boundary-clearance ratio进入，
+  time/Actor max、H3.5、per-scene fixed50不变。只作两项直接比较：query事件严格少于Actor-only且不多于frozen P75。
+- archive locators初始为`01/04/06/01/01/03/08/09/09/10`；未知session只允许在target materialization前修正exact shard，
+  不允许换scene/model/score/decision。该证据只声称scene-level independent，因部分drive logs已有相邻历史scene而不声称
+  session-level independent或safety。
+- P108 target当前未读；archive IO期间允许训练完全不访问P108 rows的P109 directional uncertainty prospective secondary，
+  但P107保持唯一primary。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |

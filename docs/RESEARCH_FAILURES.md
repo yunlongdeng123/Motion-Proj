@@ -1097,6 +1097,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F78`。
 
+### P108 freeze note — 新confirmation只在scene level独立
+
+- target-unread cohort固定为`0092/0329/0555/0012/0035/0268/0795/0917/0925/1060`，四location覆盖且cohort内
+  10个distinct sessions；选择只用official split/order、location/session metadata与既有processed-path absence，不读target；
+- frozen primary是P107 r2 checkpoint；q90、normalization、`.05m` clearance floor、time/Actor max、H3.5、fixed50
+  全不变，只比较是否严格少于Actor-only且不多于P75，不复制P96的冗长gate matrix；
+- limitation：部分session在历史cohort有相邻scene，因此只声称scene-level independent；不会写session-level、collision、
+  planning或safety generalization；
+- route miss只可在target materialization前定位exact shard并修locator，不换scene；target一旦读取，任何失败直接登记
+  `V67-F78`并关闭primary recovery。
+
+下一可用编号仍为：`V67-F78`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
