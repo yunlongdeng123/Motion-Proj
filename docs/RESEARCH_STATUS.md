@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.6 P7 fixed-budget distribution audit implementation ready（2026-08-28）
+
+状态：`v66_p7_fixed_budget_distribution_audit_implementation_ready`。已冻结50% local-action budget与N0/Q0/D0/L0/O0
+matched arms；不扫budget/threshold。所有臂保留相同Actor/state/hazard attributes，action只是repair/abstain候选，
+不改physical geometry。primary estimand是unhandled local-conflict exposure；L0 gates固定为reduction>=50%、Actor
+retention=1、removed=0、hazard proxy shift=0、emitted local geometry>=50%、world scene yield=1。下一步一次CPU formal
+audit；通过也不称physical repair或RL-ready。
+
 ## WorldSim V6.6 P6 HARP bake supported / P7 distribution audit next（2026-08-28）
 
 状态：`v66_p6_harp_bake_supported_p7_distribution_audit_next`；canonical=

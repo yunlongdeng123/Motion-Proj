@@ -85,6 +85,9 @@ P6 formal 6/6 gates通过：581 actor states全部保留，metadata complete=1�
 这只证明runtime package capability，不把未执行的physical repair记成artifact下降；无新failure，下一可用编号仍为
 `V66-F02`。
 
+P7 fixed-budget audit已在读取本阶段指标前冻结，formal run尚未创建。动作只作triage estimand，禁止把预测处理数冒充
+物理修复数；无新failure，下一可用编号仍为`V66-F02`。
+
 ### V6.5 终态边界（2026-08-28）
 
 - `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction

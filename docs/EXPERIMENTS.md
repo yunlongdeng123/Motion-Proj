@@ -146,10 +146,14 @@
 
 ### WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01
 
-- 状态：`pending_freeze`；consumed legacy matched action-distribution audit，不是physical repair或fresh confirmation。
+- 状态：`implementation_ready`；consumed legacy matched action-distribution audit，不是physical repair或fresh confirmation。
 - 固定50% actor-local action budget；N0/Q0/D0/L0/O0均保留全部Actor，只有local geometry repair/abstain排序不同。
 - primary目标是unhandled conflict exposure相对N0下降，同时Actor/hazard proxy distribution exact、world yield=1、
   no all-UNKNOWN/easier-world collapse。
+- gates：L0 exposure reduction>=0.50、Actor retention=1、removed=0、hazard proxy shift=0、emitted local fraction>=0.50、
+  scene yield=1；禁止budget/threshold sweep。
+- 实现：`motion_proj/worldsim_v66/hazard_distribution.py`、`scripts/run_worldsim_v66_p7_hazard_distribution.py`；
+  配置：`configs/worldsim_v66/p7_hazard_preserving_distribution_v1.yaml`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

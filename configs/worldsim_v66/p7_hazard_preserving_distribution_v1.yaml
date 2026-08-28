@@ -1,0 +1,31 @@
+schema_version: worldsim_v66.p7_hazard_preserving_distribution.v1
+task_id: WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01
+hypothesis_id: WS-V66-H-P7-001
+seed: 0
+role: consumed_legacy_matched_distribution_capability
+sources:
+  local_geometry_run: worldsim_v66/WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01/20260828T091611Z__independent-local-geometry-confirm-s0-r1
+  local_geometry_scores: CONFIRMATION_SCORES.jsonl
+  harp_bake_run: worldsim_v66/WS-V66-P6-HARP-BAKE-01/20260828T092421Z__harp-bake-s0-r1
+action_budget_fraction: 0.5
+gates:
+  minimum_learned_conflict_exposure_reduction: 0.5
+  minimum_actor_retention: 1.0
+  maximum_actor_removed_count: 0
+  maximum_hazard_proxy_distribution_shift: 0.0
+  minimum_emitted_local_geometry_fraction: 0.5
+  minimum_world_scene_yield: 1.0
+locks:
+  budget_sweep: false
+  score_threshold: null
+  actor_removal: false
+  hazard_used_for_ranking: false
+  physical_geometry_mutation: false
+  fresh_quality_read: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_legacy_fixed_budget_local_conflict_exposure_audit
+  - all_actors_and_hazard_proxies_retained_across_arms
+  - no_physical_repair_fresh_distribution_or_rl_ready_claim
+  - no_planning_policy_closed_loop_rl_or_safety_claim
+failure_ledger_refs: [V66-F01, V65-F19]
