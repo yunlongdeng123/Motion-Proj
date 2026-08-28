@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p78_boundary_pair_actor_selector.v1
+output_schema_version: worldsim_v67.p78_boundary_pair_actor_selector_summary.v1
+task_id: WS-V67-P78-BOUNDARY-PAIR-ACTOR-SELECTOR-01
+hypothesis_id: WS-V67-H-P78-001
+seed: 0
+role: source_blind_fixed_coverage_boundary_pair_then_post_p75_development_read
+verdict_on_pass: supported_fixed_coverage_boundary_pair_actor_selector
+verdict_on_failure: rejected_fixed_coverage_boundary_pair_actor_selector
+source_rows:
+  - {run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1, artifact: TRAIN_ACTOR_QUERY_ROWS.npz}
+  - {run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1, artifact: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz}
+  - {run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1, artifact: SOURCE_H3_ACTOR_QUERY_ROWS.npz}
+evaluation_source:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  rows: FRESH_VALIDATION_H3P5_ACTOR_QUERY_ROWS.npz
+  readiness_timeout_seconds: 2400
+baselines:
+  p75: {run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1, artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt}
+  p76: {run: worldsim_v67/WS-V67-P76-GROUP-RANK-ACTOR-SELECTOR-01/20260829T183000Z__group-rank-actor-s0-r1, artifact: GROUP_RANK_ACTOR_SELECTOR.pt}
+  p77: {run: worldsim_v67/WS-V67-P77-LISTNET-ACTOR-SELECTOR-01/20260829T184500Z__listnet-actor-s0-r1, artifact: LISTNET_ACTOR_SELECTOR.pt}
+  p73: {run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1, artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt}
+model:
+  hidden_dimensions: [256, 128, 64]
+  epochs: 1500
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  pair_temperature: 0.10
+selection: {coverage_fraction: 0.50}
+evaluation: {unreliable_actor_state_error_m: 1.0, unreliable_exposure_radius_m: 6.0}
+gates:
+  minimum_cost_reduction_over_actor_only: 0.05
+  minimum_cost_reduction_over_p75: 0.05
+  minimum_cost_reduction_over_best_blind_rank: 0.02
+  minimum_absolute_cost_reduction: 0.50
+locks:
+  exactly_one_cost_matched_low_high_pair_per_half_rank: true
+  cost_gap_weight_normalized_within_each_source_group: true
+  equal_weight_per_scene_horizon_group: true
+  fixed_pair_temperature_point10: true
+  query_actor_only_capacity_optimizer_and_epochs_exact: true
+  model_frozen_before_P75_validation_rows_exist: true
+  P75_consumes_fresh_validation_first_P78_is_followup_development: true
+  no_temperature_pair_sampling_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper_files/paper/2006/hash/af44c4c56f385c43f2529f9b1b018f6a-Abstract.html
+  - https://proceedings.mlr.press/v162/mandi22a.html
+claim_boundary:
+  - same_eight_scene_H3p5_cohort_as_P75_and_not_an_independent_second_confirmation
+  - boundary_pair_model_frozen_before_any_P75_validation_rows_or_metrics_were_available
+  - primary_endpoint_fixed_coverage_actual_selected_cost
+  - no_absolute_cost_calibration_actor_deletion_counterfactual_reaction_planning_policy_or_safety_claim

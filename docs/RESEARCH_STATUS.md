@@ -18,6 +18,10 @@ group-balanced ListNet cross entropy直接匹配每个scene×horizon的rank prob
 每个list等权；同样在P75验证数据ready前冻结。它与P76的区别是优化整张list的相对概率而非逐row rank回归，正式比较仍只
 使用固定50% actual cost且不做temperature/coverage sweep。
 
+若P77先于tar完成，下一GPU任务P78已冻结为fixed-coverage boundary pairs：每个source group把低成本半集与高成本半集按
+对应rank一一配对，以组内normalized cost gap加权pairwise logistic，所有group等权。该目标只约束最终50%选择边界，区别于
+P74 BCE、P76 pointwise rank和P77全list概率；temperature固定`.10`，模型仍在fresh rows出现前冻结。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC

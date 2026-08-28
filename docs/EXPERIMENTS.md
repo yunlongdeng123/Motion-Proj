@@ -2,6 +2,13 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P78-BOUNDARY-PAIR-ACTOR-SELECTOR-01
+
+- 状态：`frozen / queued after P77 if IO still active`；每个source scene×horizon内将最低/最高半集按rank一一配对，
+  组内cost-gap归一加权pairwise logistic，各group等权；query/Actor-only同容量、1,500 epochs、temperature `.10`。
+- 该模型在P75 fresh rows出现前冻结；同cohort follow-up须相对P75和Actor-only各降低5%，并相对P76/P77中更优者降低2%。
+  不扫pair构造、temperature或coverage。
+
 ### WS-V67-P77-LISTNET-ACTOR-SELECTOR-01
 
 - 状态：`frozen / queued after P76`；相同576,032 source rows与query/Actor-only容量，固定temperature `.25`的
