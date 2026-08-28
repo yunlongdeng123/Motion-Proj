@@ -2,9 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01
+
+- 状态：`GPU training + 16-scene materialization overlapped`；13 domains×3 budgets、6,000 epochs。
+- P49方法参数全部不变，只加入已消费P2V-H1.5 development；P6E-H1.5 target首次物化。
+- Confirmation=budget1/3；exact/group `.50`/delta over P31 `+.005`/12 scenes；不扫任何参数或gate。
+
+### WS-V67-P50-FROZEN-GRADIENT-CONSISTENT-TRANSFER-01 result
+
+- 状态：`done/supported`；canonical=`20260829T020000Z__frozen-gradient-transfer-s0-r1`；P2V-H1.5
+  `774/864` eligible、70 evaluable cases。
+- Exact=`252/252`；coverage/minimum group=`.714286/.541667`；6/6 scenes。
+- P49/P31/fixed reduction=`.789696/.739907/.301221`；deltas=`+.049789/+.488476`；4/4 gates。
+- wall/peak GPU/RSS=`.457s/.00913GiB/.71492GiB`；无训练/refit。
+
 ### WS-V67-P50-FROZEN-GRADIENT-CONSISTENT-TRANSFER-01
 
-- 状态：`ready/running`；P49/P31/P20全部冻结；P2V-H1.5 cache=`774/864` eligible、72 cases。
+- 状态：`completed/supported`；P49/P31/P20全部冻结；P2V-H1.5 cache=`774/864` eligible、72 cases。
 - Confirmation=budget1/3；exact/group `.50`/delta over P31 `+.005`/5 scenes；无训练/refit/sweep。
 
 ### WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01 result

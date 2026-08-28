@@ -495,11 +495,21 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F38 — P50 frozen second task-condition replication候选
 
-- 分类：`confirmation/frozen-cross-condition-transfer`；状态：`ready_running`。
+- 分类：`confirmation/frozen-cross-condition-transfer`；状态：`resolved_by_second_new_horizon_condition`。
 - 方法：P49/P31/P20冻结；P2V-H1.5首次物化=`774/864` eligible、72 cases，budget1/3一次读取。
 - 判定：exact、minimum group `.50`、相对P31 `+.005`、至少5 scenes；无训练/refit/weight/anchor/gate sweep。
+- 结果：exact=`252/252`、group=`.541667`；P49/P31 reduction=`.789696/.739907`，delta=`+.049789`；
+  6/6 scenes、4/4 gates。冻结方法跨第二新H条件复制。
 - 边界：source cohort已消费且H2进入development，但H1.5 target未用于P49训练；不作fresh population claim。
   下一编号=`V67-F39`。
+
+### V67-F39 — P51 large-cohort new-horizon gradient replication候选
+
+- 分类：`algorithm/large-cohort-gradient-consistency`；状态：`active_gpu_training_and_materialization`。
+- 方法：P49 gradient penalty/anchor/model/loss/gates不变，只将已消费P2V-H1.5滚入第13个development domain。
+- 数据：P6E 16-scene H1.5 target首次物化，与GPU训练并行；budget1/3一次read。
+- 判定：exact、四scene-group minimum coverage `.50`、相对P31 `+.005`、至少12 scenes。
+- 防重复：不扫gradient weight/anchor/peak/model/loss/group/gate。下一编号=`V67-F40`。
 
 ### V6.6 当前边界（2026-08-28）
 

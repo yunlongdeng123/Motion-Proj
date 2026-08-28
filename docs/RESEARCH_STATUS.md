@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P50 frozen transfer supported / P51 large-cohort training（2026-08-29）
+
+P50 canonical=`run://worldsim_v67/WS-V67-P50-FROZEN-GRADIENT-CONSISTENT-TRANSFER-01/
+20260829T020000Z__frozen-gradient-transfer-s0-r1`。P2V-H1.5有70 evaluable cases，exact=`252/252`，
+coverage/minimum group=`.714286/.541667`。P49/P31/fixed reduction=`.789696/.739907/.301221`，delta=
+`+.049789`，6/6 scenes，4/4 gates；verdict=`supported_frozen_gradient_consistent_cross_condition_transfer`。
+无训练/refit；P49方法在第二个新H条件上复制。
+
+P51将P2V-H1.5滚入第13个development domain，保持P49全部method hyperparameters；与16-scene P6E-H1.5首次物化
+并行运行。确认仍为budget1/3，按4个预先固定scene groups要求minimum coverage `.50`，scene support `12/16`。
+
 ## WorldSim V6.7 P49 gradient consistency supported / P50 frozen transfer（2026-08-29）
 
 P49 canonical=`run://worldsim_v67/WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01/
