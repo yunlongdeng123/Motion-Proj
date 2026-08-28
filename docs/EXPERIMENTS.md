@@ -2,11 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01
+
+- 状态：`running`；先在P66缓存H `.8/1.5` rows上GPU warmup 750 epochs，同时CPU/IO物化102 source scenes的H2.5；
+  再以三horizon联合训练750 epochs，同时物化worldsim-v5六scene的H3.0 evaluation rows。
+- 新query/Actor-only同容量、同Huber；冻结P66作为H3 reference。一次固定run，不扫horizon/epoch/lr/loss/scene。
+
 ### WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01
 
-- 状态：`running`；P71失败后冻结P66 base score，只在同一276/756 calibration rows上为query/Actor-only各训练
-  两参数positive-slope affine map；排序/50% selection由构造保持。
-- 固定1,500 epochs、lr `.003`、Huber；P70六个scene此时仅作为已消费development read，不称独立confirmation。
+- 状态：`done/rejected`；canonical=`20260829T163000Z__monotone-actor-calibration-s0-r1`；query map
+  `log_cost'=.906696*log_cost+.004084`，Actor-only map=`1.649869*x+.023415`。
+- Query MAE `.186774→.185193`（仅改善`.846%`），calibrated Actor-only=`.159585`，query相对恶化`16.05%`；
+  1/3 gates。排序和50% triage由构造保持（cost -`89.78%`），但absolute-scale calibration family关闭。
 
 ### WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01
 

@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P72 monotone calibration rejected / P73 multi-horizon training（2026-08-29）
+
+P72的positive-slope affine保持query Spearman `.808522`与50% triage cost -`89.78%`；但query MAE只从`.186774`
+到`.185193`（改善`.846%`），而同样calibrated Actor-only达到`.159585`，query相对差`16.05%`。1/3 gates拒绝，
+target calibration family关闭。准确结论是P70 frozen τ-conditioned score跨root提供强ordering/selection，不提供稳定absolute MAE优势。
+
+检索AISTATS 2022 multi-horizon direct forecasting、CVPR 2022 long/short-term trajectory prediction与PRECOG后，P73改变训练
+支持域而非继续校准：P66缓存H `.8/1.5`先GPU训练750 epochs，同时物化102 source scenes的H2.5；然后三horizon联合
+训练750 epochs，同时物化worldsim-v5六scene未读H3.0 rows。新query/Actor-only同容量同Huber，冻结P66作为reference。
+该流水线让重IO与合法GPU训练重叠，并只进行一个固定multi-horizon formal run。
+
 ## WorldSim V6.7 P71 residual calibration rejected / P72 monotone calibration training（2026-08-29）
 
 P71在276/756的1,875 calibration rows上把query/Actor residual loss降到`.049707/.063226`，但六个fresh scenes上

@@ -3,14 +3,14 @@
   "updated_at": "2026-08-29",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p72_monotone_actor_calibration_training",
-  "active_task_id": "WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01",
-  "active_hypothesis_id": "WS-V67-H-P72-001",
+  "status": "v67_p73_multi_horizon_actor_reliability_training",
+  "active_task_id": "WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01",
+  "active_hypothesis_id": "WS-V67-H-P73-001",
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
   "failure_ledger_refs": ["V67-F45", "V67-F44", "V67-F43", "V67-F42", "V67-F41", "V67-F40", "V67-F39", "V67-F38", "V67-F37", "V67-F36", "V67-F35", "V67-F34", "V67-F33", "V67-F32", "V67-F31", "V67-F30", "V67-F29", "V67-F28", "V67-F27", "V67-F26", "V67-F25", "V67-F24", "V67-F23", "V67-F22", "V67-F21", "V67-F20", "V67-F19", "V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F56 target_only_hidden_residual_negative_transfer",
-  "next_failure_id": "V67-F57",
-  "last_run": "run://worldsim_v67/WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01/20260829T160000Z__residual-actor-calibration-s0-r1",
-  "last_verdict": "rejected_residual_actor_calibration_transfer",
-  "next_action": "train one positive-slope affine map per frozen score and evaluate development recovery without claiming fresh confirmation"
+  "failure_ledger_delta": "V67-F57 monotone_calibration_rejected_ordering_retained",
+  "next_failure_id": "V67-F58",
+  "last_run": "run://worldsim_v67/WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01/20260829T163000Z__monotone-actor-calibration-s0-r1",
+  "last_verdict": "rejected_monotone_actor_calibration",
+  "next_action": "finish overlapped H2.5 materialization and multi-horizon GPU training, then evaluate once at H3.0"
 }

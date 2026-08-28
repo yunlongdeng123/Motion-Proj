@@ -696,6 +696,17 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 文献迁移：CVPR 2021区分accuracy/ranking-preserving calibrator，UAI 2025强调monotonic calibration保序；P72只训练
   positive-slope affine，base score完全冻结。不扫P71 lr/epoch/width。下一编号=`V67-F57`。
 
+### V67-F57 — P72 monotone target calibration未恢复query相对MAE优势
+
+- canonical：`run://worldsim_v67/WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01/20260829T163000Z__monotone-actor-calibration-s0-r1`；
+  query/Actor-only各只训练positive-slope affine，base score冻结。
+- 结果：query scale/bias=`.906696/.004084`，MAE `.186774→.185193`（仅+.846%）；Actor-only scale/bias
+  `=1.649869/.023415`，MAE `.159585`，所以query相对差16.05%。1/3 gates拒绝。
+- 保留：query Spearman `.808522`、AUROC `.952704`和50% selection完全保持，cost -89.78%、unreliable prevalence -99.40%。
+- 结论：关闭target calibration family，不扫非线性map/权重/epoch；P70跨root贡献限于ordering/triage。
+- 文献迁移：multi-horizon direct forecasting与long/short-term trajectory modeling支持扩大训练horizon support；P73在source
+  H `.8/1.5/2.5`联合训练并评估H3，而非继续处理同一H2.5尺度。下一编号=`V67-F58`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -1,0 +1,70 @@
+schema_version: worldsim_v67.p73_multi_horizon_actor_reliability.v1
+output_schema_version: worldsim_v67.p73_multi_horizon_actor_reliability_summary.v1
+task_id: WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P73-001
+seed: 0
+role: direct_multi_horizon_trajectory_conditioned_actor_reliability
+verdict_on_pass: supported_multi_horizon_actor_reliability
+verdict_on_failure: rejected_multi_horizon_actor_reliability
+source:
+  run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  training_rows: TRAIN_ACTOR_QUERY_ROWS.npz
+  artifact: TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt
+extension_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizon_seconds: 2.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+evaluation_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  scene_indices: [296, 350, 382, 425, 663, 827]
+  horizon_seconds: 3.0
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [128, 64, 32]
+  warmup_epochs: 750
+  joint_epochs: 750
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_mae_reduction_over_actor_only: 0.10
+  minimum_query_mae_improvement_over_frozen_p66: 0.05
+  minimum_selective_cost_reduction: 0.50
+locks:
+  source_horizons_point8_1p5_2p5_direct_joint_training: true
+  evaluation_horizon_three_seconds: true
+  same_query_actor_only_capacity_huber_optimizer_and_epochs: true
+  h2p5_materialization_overlapped_with_gpu_warmup: true
+  h3_materialization_overlapped_with_gpu_joint_training: true
+  no_horizon_epoch_learning_rate_loss_scene_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v151/kan22a.html
+  - https://openaccess.thecvf.com/content/CVPR2022/html/Lee_MUSE-VAE_Multi-Scale_VAE_for_Environment-Aware_Long_Term_Trajectory_Prediction_CVPR_2022_paper.html
+  - https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+claim_boundary:
+  - direct_point8_1p5_2p5_horizon_training_and_H3_development_evaluation
+  - six_scene_ids_previously_consumed_at_H2p5_but_H3_labels_unread
+  - trajectory_conditioned_exposure_weighted_constant_velocity_actor_state_error
+  - no_independent_fresh_scene_confirmation_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim
