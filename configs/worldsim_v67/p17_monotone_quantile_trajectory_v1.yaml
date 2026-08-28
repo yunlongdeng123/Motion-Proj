@@ -1,0 +1,113 @@
+schema_version: worldsim_v67.p17_monotone_quantile_trajectory.v1
+task_id: WS-V67-P17-MONOTONE-QUANTILE-TRAJECTORY-01
+hypothesis_id: WS-V67-H-P17-001
+seed: 0
+role: distributional_trajectory_reliability_development_then_p9_selection
+quantile_levels: &quantile_levels [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+model:
+  maximum_distribution_mix: 0.50
+  epochs: 3000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 1.0
+  unsafe_weight: 0.05
+  ranking_weight: 0.5
+  ranking_temperature: 0.05
+  domain_loss_variance_weight: 0.1
+  mix_regularization_weight: 0.01
+  pairwise_minimum_target_gap: 0.02
+evaluation:
+  within_case_selected_fraction: 0.25
+  pairwise_minimum_target_gap: 0.02
+gates:
+  minimum_selection_spearman: 0.65
+  minimum_selection_unsafe_auroc: 0.82
+  minimum_selection_pairwise_concordance: 0.75
+  minimum_selected_cost_reduction: 0.40
+  minimum_selected_cost_reduction_delta_over_qmean: 0.0
+  minimum_scene_support: 5
+train_materializations:
+  - cache_path: /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    data:
+      inputs:
+        evidence_run: worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1
+        native_run: worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1
+        native_partition: fresh_selection
+        processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+        risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+        risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+      native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+      trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+      sampling: {evaluation_points_per_unit: 8192, seed: 0}
+      quantile_levels: *quantile_levels
+      action_lattice: &action_lattice
+        horizon_seconds: 2.0
+        progress_ratios: [0.25, 0.50, 0.75, 1.00]
+        lateral_offsets_m: [-1.50, 0.00, 1.50]
+        include_stop_for_reporting_only: true
+      scenes:
+        - {name: scene-0159, processed_index: 119}
+        - {name: scene-0184, processed_index: 143}
+        - {name: scene-0577, processed_index: 459}
+        - {name: scene-0599, processed_index: 479}
+        - {name: scene-0955, processed_index: 722}
+        - {name: scene-0983, processed_index: 745}
+  - cache_path: /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+    data:
+      inputs:
+        evidence_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1
+        native_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-NATIVE-SIDECAR-01/20260828T010500Z__confirmation-native-aggregate-s0-r1
+        native_partition: fresh_selection
+        processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+        risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+        risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+      native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+      trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+      sampling: {evaluation_points_per_unit: 8192, seed: 0}
+      quantile_levels: *quantile_levels
+      action_lattice: *action_lattice
+      scenes:
+        - {name: scene-0245, processed_index: 194}
+        - {name: scene-0287, processed_index: 229}
+        - {name: scene-0686, processed_index: 538}
+        - {name: scene-0718, processed_index: 563}
+        - {name: scene-0817, processed_index: 634}
+        - {name: scene-0868, processed_index: 657}
+selection_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+  data:
+    inputs:
+      evidence_run: worldsim_v67/WS-V67-P9-FRESH-EVIDENCE-01/20260828T114300Z__fresh-evidence-s0-r1
+      native_run: worldsim_v67/WS-V67-P9-FRESH-NATIVE-SIDECAR-01/20260828T114200Z__fresh-native-aggregate-s0-r1
+      native_partition: fresh_selection
+      processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+      risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+      risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+    native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+    trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+    sampling: {evaluation_points_per_unit: 8192, seed: 0}
+    quantile_levels: *quantile_levels
+    action_lattice: *action_lattice
+    scenes:
+      - {name: scene-0348, processed_index: 265}
+      - {name: scene-0360, processed_index: 277}
+      - {name: scene-0373, processed_index: 290}
+      - {name: scene-0388, processed_index: 304}
+      - {name: scene-0399, processed_index: 315}
+      - {name: scene-0414, processed_index: 328}
+locks:
+  prediction_object: trajectory_visited_state_reliability_distribution
+  model_frozen_before_p9_target_materialization: true
+  development_domains: 2
+  quantile_or_mix_sweep: false
+  action_lattice_sweep: false
+  target_used_at_runtime: false
+  planner_policy_collision_safety_authority: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F07, V67-F06, V67-F05, V67-F04, V65-F19]
+claim_boundary:
+  - monotone_distributional_pool_over_fixed_q0_scores_along_trajectory_corridors
+  - p10v_and_p10x_development_then_p9_selection
+  - p9_action_target_previously_used_by_p16_so_not_fresh_confirmation
+  - no_population_collision_planning_policy_closed_loop_or_safety_claim
