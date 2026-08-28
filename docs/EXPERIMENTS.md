@@ -2,15 +2,27 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01
+
+- 状态：`implementation_ready`；`V67-F01 active`；同一P3 L0 258-action set与`0.512m` support scale。
+- 唯一结构恢复：对nearest motion-compensated same-Actor hit，以target-frame LiDAR origin构造ray；只保留exact hit或
+  `dot(query-hit, ray)>=0`的one-voxel inward half-ball。target不参与rule。
+- 九门、Actor/shell/identity/trajectory/hazard保护全部沿用P4；无rule/radius/budget/gate sweep。
+- 配置=`configs/worldsim_v67/p4r_motion_compensated_inward_ray_v1.yaml`；实现复用默认关闭的兼容core与V6.7 runner；
+  formal run尚未创建。
+
 ### WS-V67-P4-RAY-TERMINATED-SURFACE-01
 
-- 状态：`implementation_ready`；同一P3 L0 action set；support=`exact OR (same-Actor <=0.512m AND source behind_hit)`。
+- 状态：`done/rejected`；canonical=`run://worldsim_v67/WS-V67-P4-RAY-TERMINATED-SURFACE-01/
+  20260828T105253Z__ray-surface-s0-r1`；support=`exact OR (same-Actor <=0.512m AND source behind_hit)`。
 - target只作conflict/clean/overall retention评估；Actor canonical shell/ID/track/trajectory/hazard不变。
 - 九门沿用V6.6：conflict reduction>=0.50、overall/clean>=0.40、Actor/shell/identity retention=1、removed=0、
   hazard shift=0、scene yield=1；无rule/radius/budget/gate sweep。
 - 实现=`motion_proj/worldsim_v66/sensor_surface_repair.py`的默认关闭扩展与
   `scripts/run_worldsim_v67_p4_ray_surface_repair.py`；配置=`configs/worldsim_v67/p4_ray_terminated_surface_v1.yaml`；
-  formal run尚未创建。
+  baseline/repaired=`18,238/7,156`，conflict reduction=`0.678963`通过，overall/clean retention=
+  `0.392368/0.396519`失败；其余七门通过。verdict=`rejected_task_untouched_ray_terminated_surface_repair`；
+  wall/RSS/GPU=`10.6065s/0.6087GiB/false`；failure delta=`V67-F01 active`。
 
 ### WS-V67-P2-ACTOR-PACKAGE-01 / WS-V67-P3-FIXED-ACTIONS-01
 

@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.7 P4 rejected / P4R motion-compensated recovery ready（2026-08-28）
+
+状态：`v67_p4_rejected_p4r_motion_compensated_inward_ray_implementation_ready`；P4 canonical=
+`run://worldsim_v67/WS-V67-P4-RAY-TERMINATED-SURFACE-01/20260828T105253Z__ray-surface-s0-r1`；verdict=
+`rejected_task_untouched_ray_terminated_surface_repair`；`V67-F01 active`。
+
+P4把1,003 conflict points降到322，reduction=`0.678963`，Actor/shell/ID-track-trajectory retention=`1/1/1`，
+removed/hazard shift/scene yield=`0/0/1`；但overall/clean retention=`0.392368/0.396519 < 0.40`，7/9 gates通过仍拒绝，
+不降低门槛。wall/RSS/GPU=`10.6065s/0.6087GiB/false`。
+
+卡点检索ALSO、evidence-theory occupancy、continuous occlusion与GPOcc后，定位为原始source `behind_hit`与
+motion-compensated Actor hit之间丢失ray/Actor关联。唯一P4R已冻结并实现：nearest compensated same-Actor hit的
+`0.512m`邻域只保留`dot(query-hit, normalize(hit-origin)) >= 0`的inward half-ball；P3固定258 actions、九门及target-only
+评估不变。下一步只做窄编译检查、提交push后一次formal recovery；不扫rule/radius/budget/gate。
+
 ## WorldSim V6.7 P3 supported / ray repair implementation ready（2026-08-28）
 
 状态：`v67_p3_actions_supported_p4_ray_repair_implementation_ready`；P3 canonical=

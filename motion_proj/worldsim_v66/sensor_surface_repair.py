@@ -33,6 +33,7 @@ def _load_repair_unit(
     seed: int,
     support_radius_m: float,
     support_expansion_requires_behind_hit: bool,
+    support_expansion_motion_compensated_inward_ray: bool,
 ) -> dict[str, Any]:
     scene_index, scene, evidence_unit, native_unit = descriptor
     indices, centers, features = _target_free_boundary(
@@ -93,8 +94,10 @@ def _load_repair_unit(
         dtype=bool,
     )
     radius_same_actor_hit = exact_same_actor_hit.copy()
+    inward_ray_same_actor_hit = exact_same_actor_hit.copy()
     if support_radius_m > 0.0:
         radius_same_actor_hit = np.zeros(len(centers), dtype=bool)
+        inward_ray_same_actor_hit = np.zeros(len(centers), dtype=bool)
         for actor_id in np.unique(actor_ids[actor_ids >= 0]):
             queries = (actor_ids == int(actor_id)) & query_valid
             actor_hits = hit_ids == int(actor_id)
@@ -103,12 +106,23 @@ def _load_repair_unit(
             hit_centers = evidence_origin[None, :] + (
                 hit_indices[actor_hits].astype(np.float64) + 0.5
             ) * evidence_voxel
-            distances, _ = cKDTree(hit_centers).query(
-                np.asarray(centers)[queries],
+            query_centers = np.asarray(centers)[queries]
+            distances, nearest = cKDTree(hit_centers).query(
+                query_centers,
                 k=1,
                 distance_upper_bound=float(support_radius_m),
             )
-            radius_same_actor_hit[np.flatnonzero(queries)] = np.isfinite(distances)
+            finite = np.isfinite(distances)
+            query_positions = np.flatnonzero(queries)
+            radius_same_actor_hit[query_positions] = finite
+            if np.any(finite):
+                nearest_hits = hit_centers[nearest[finite]]
+                ray_directions = nearest_hits / np.maximum(
+                    np.linalg.norm(nearest_hits, axis=1, keepdims=True), 1e-8
+                )
+                continuation = query_centers[finite] - nearest_hits
+                inward = np.einsum("ij,ij->i", continuation, ray_directions) >= 0.0
+                inward_ray_same_actor_hit[query_positions[finite]] = inward
     behind_hit = np.zeros(len(centers), dtype=bool)
     behind_grid = np.asarray(method["behind_hit"], dtype=bool)
     behind_hit[query_valid] = behind_grid[
@@ -116,11 +130,12 @@ def _load_repair_unit(
         query_indices[query_valid, 1],
         query_indices[query_valid, 2],
     ]
-    same_actor_hit = (
-        exact_same_actor_hit | (radius_same_actor_hit & behind_hit)
-        if support_expansion_requires_behind_hit
-        else radius_same_actor_hit
-    )
+    if support_expansion_motion_compensated_inward_ray:
+        same_actor_hit = exact_same_actor_hit | inward_ray_same_actor_hit
+    elif support_expansion_requires_behind_hit:
+        same_actor_hit = exact_same_actor_hit | (radius_same_actor_hit & behind_hit)
+    else:
+        same_actor_hit = radius_same_actor_hit
     return {
         "scene": scene,
         "unit": evidence_unit.name,
@@ -130,6 +145,7 @@ def _load_repair_unit(
         "same_actor_hit": same_actor_hit,
         "exact_same_actor_hit": exact_same_actor_hit,
         "radius_same_actor_hit": radius_same_actor_hit,
+        "inward_ray_same_actor_hit": inward_ray_same_actor_hit,
         "behind_hit": behind_hit,
     }
 
@@ -182,6 +198,9 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
             support_radius_m=float(config.get("support_radius_m", 0.0)),
             support_expansion_requires_behind_hit=bool(
                 config.get("support_expansion_requires_behind_hit", False)
+            ),
+            support_expansion_motion_compensated_inward_ray=bool(
+                config.get("support_expansion_motion_compensated_inward_ray", False)
             ),
         )
 
@@ -237,6 +256,11 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
                         "behind_hit_point_count": int(
                             np.count_nonzero(np.asarray(loaded["behind_hit"])[members])
                         ),
+                        "inward_ray_support_point_count": int(
+                            np.count_nonzero(
+                                np.asarray(loaded["inward_ray_same_actor_hit"])[members]
+                            )
+                        ),
                     }
                 )
             print(
@@ -280,6 +304,9 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
         "support_expansion_requires_behind_hit": bool(
             config.get("support_expansion_requires_behind_hit", False)
         ),
+        "support_expansion_motion_compensated_inward_ray": bool(
+            config.get("support_expansion_motion_compensated_inward_ray", False)
+        ),
         "exact_support_point_count": sum(
             row["exact_support_point_count"] for row in state_rows
         ),
@@ -288,6 +315,9 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
         ),
         "behind_hit_point_count": sum(
             row["behind_hit_point_count"] for row in state_rows
+        ),
+        "inward_ray_support_point_count": sum(
+            row["inward_ray_support_point_count"] for row in state_rows
         ),
         "canonical_actor_count": int(manifest["counts"]["actor_count"]),
     }

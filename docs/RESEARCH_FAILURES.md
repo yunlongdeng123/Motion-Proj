@@ -2,7 +2,7 @@
 
 > **最后更新**：2026-08-28
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6.6、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
@@ -13,9 +13,30 @@
 ### V6.7 当前边界（2026-08-28）
 
 - 新分支从V6.6 terminal `c05ca27`建立；V6.6 `V66-F02`不复开。
-- V6.7唯一冻结方法把same-Actor one-voxel support与source `behind_hit`方向性ray evidence相交；exact hit永远保留。
-- P1 transfer尚未formal读取；当前无V6.7 failure，下一可用编号=`V67-F01`。
+- P1/P2/P3已支持task-untouched legacy ranking、Actor package与固定action set；不等于fresh或physical repair。
+- P4的source `behind_hit`交集让conflict reduction=`0.678963`通过，但overall/clean retention=
+  `0.392368/0.396519`失败；登记`V67-F01 active`。
+- P4R只允许一次motion-compensated inward-ray结构恢复；下一可用编号=`V67-F02`。
 - 禁止radius/gate/budget sweep、target-dependent retention、Actor deletion与未通过physical repair前的RL claim。
+
+<a id="detail-v67"></a>
+
+## V6.7 Ray-Terminated Actor Surface 详细账本（2026-08-28）
+
+### V67-F01 — aggregated source behind-hit与motion-compensated Actor hit失去ray/Actor对应
+
+- 分类：`algorithm/representation`；状态：`active_single_recovery_frozen`。
+- 观察：P4在72 units / 517 Actor states / 258 acted states上把conflict points从`1,003`降至`322`
+  （reduction=`0.678963`），但overall/clean retention仅`0.392368/0.396519 < 0.40`；7/9 gates通过仍拒绝。
+- 根因：`behind_hit`由原始source-frame endpoint ray生成并跨帧聚合；Actor hit随后被motion-compensate到target Actor frame。
+  在query端将二者相交无法恢复“哪个Actor hit、哪条ray”的对应，导致方向支持过稀。
+- 推翻项：推翻“聚合behind-hit栅格可直接约束补偿后same-Actor邻域”的假设；不推翻P1 ranking、P2 package、P3 actions，
+  也不改变Actor存在性与hazard保护。
+- 防重复/复开：不降0.40 retention gate，不扫radius/threshold/action budget，不把全radius结果重报，不读target调rule。
+- 外部检索迁移：ALSO与evidence-theory occupancy支持sensor termination前free/后unknown的分离；continuous occlusion与
+  GPOcc支持ray-wise inward geometry。唯一P4R在target frame对nearest compensated same-Actor hit构造解析inward ray。
+- 证据：`WS-V67-P4-RAY-TERMINATED-SURFACE-01/20260828T105253Z__ray-surface-s0-r1`；恢复冻结=
+  `docs/autoresearch/worldsim_v67/P4R_MOTION_COMPENSATED_INWARD_RAY_FREEZE.md`。
 
 ### V6.6 当前边界（2026-08-28）
 

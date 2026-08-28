@@ -28,6 +28,13 @@ surface method或P3L训练/selection/confirmation，因此记为task-untouched l
 顺序：P1 frozen head transfer → P2 Actor package → P3 fixed-budget actions → P4 single ray-terminated physical repair。
 P4沿用V6.6九门，不扫threshold/budget/rule。失败则登记`V67-F01`并先检索新方案。
 
+## P4 result and single recovery
+
+P4 canonical=`20260828T105253Z__ray-surface-s0-r1`。conflict reduction=`0.678963`通过，但overall/clean retention=
+`0.392368/0.396519 < 0.40`，因此按原门拒绝并登记`V67-F01`。检索后唯一P4R改为在target frame从nearest
+motion-compensated same-Actor hit构造inward ray half-ball；半径、actions、gates与claim boundary不变。P4R失败则关闭
+当前physical repair family，不再调参。
+
 ## Claim boundary
 
 成功也只支持task-untouched legacy ray-terminated physical surface capability；在独立新cohort confirmation之前，不称

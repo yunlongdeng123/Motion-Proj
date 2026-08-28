@@ -66,9 +66,9 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         >= float(gate_config["minimum_world_scene_yield"]),
     }
     verdict = (
-        "supported_task_untouched_ray_terminated_surface_repair"
+        str(config.get("verdict_on_pass", "supported_task_untouched_ray_terminated_surface_repair"))
         if all(gates.values())
-        else "rejected_task_untouched_ray_terminated_surface_repair"
+        else str(config.get("verdict_on_failure", "rejected_task_untouched_ray_terminated_surface_repair"))
     )
     summary = {
         "schema_version": "worldsim_v67.p4_ray_surface_repair_summary.v1",
