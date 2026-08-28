@@ -14,6 +14,7 @@ delta=`+.081161`，6/6 scenes、4/4 gates。冻结P51支持低于所有训练H�
 
 P53将interior training budgets固定扩为`{1/3,.40}`，其余P51方法不变；14 domains×4 budgets GPU训练与P10X-H0.8
 物化重叠，cache=`662/864` eligible、72 cases。正式read使用训练未见budget `.375`和训练范围外H `.8s`。
+独立P4C-H0.8复制cache也在训练期间提前物化：`861/1152` eligible、96 cases，decision metrics未读。
 
 ## WorldSim V6.7 P50 frozen transfer supported / P51 large-cohort training（2026-08-29）
 

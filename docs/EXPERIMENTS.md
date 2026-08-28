@@ -8,6 +8,7 @@
 - 14 domains×budgets `{.25,1/3,.40,.50}`、6,000 epochs；P51参数不变，只增加`.40` active budget和已消费
   P6E-H1.5 development。
 - Confirmation=unseen budget `.375` + below-range H `.8s`；exact/group `.50`/delta over P31 `+.005`/5 scenes。
+- P54 replication input已预取：P4C-H0.8=`861/1152` eligible、96 cases；selection read=false。
 
 ### WS-V67-P52-FROZEN-HORIZON-EXTRAPOLATION-01 result
 
