@@ -575,9 +575,9 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 结论：不扫gate结构/温度/top-k，不读取P59 replication quality；case-selective expert关闭。检索PRECOG、MotionLM与
   uncertainty-aware actor prediction后，下一步改变预测对象为given-`tau` Actor-state reliability。下一编号=`V67-F46`。
 
-### V67-F46 — P60 trajectory-conditioned Actor-state reliability候选
+### V67-F46 — P60 trajectory-conditioned Actor-state reliability结果
 
-- 分类：`prediction-object/trajectory-conditioned-actor-state-reliability`；状态：`active_materialization_then_gpu_training`。
+- 分类：`prediction-object/trajectory-conditioned-actor-state-reliability`；状态：`supported_with_ranking_limitation`。
 - 调研迁移：PRECOG（ICCV 2019）按受控Ego goal条件化多Actor forecast；MotionLM（ICCV 2023）支持条件rollout；
   CVPR 2018证明trajectory uncertainty可指示实际预测误差。P60迁移为当前单卡可训练的小型reliability estimator。
 - 对象：Actor常速度H-step endpoint error乘`exp(-predicted tau separation/6m)`；只使用logged dense tracks监督，
@@ -585,7 +585,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - Protocol：scene `%5!=0`、H `.8/1.5s`训练；scene `%5==0`、H `2.0s`confirmation；query MLP与同容量
   Actor-only baseline同read。三门=`Spearman .55 / MAE gain 10% / AUROC .75`。
 - 锁：不扫width、history、exposure radius、error threshold、split或horizon；失败即改变Actor target/forecast family，
-  不回到world-state authority补救。下一编号=`V67-F47`。
+  不回到world-state authority补救。
+- 结果：unseen-scene/H2 query Spearman=`.756794`、MAE=`.093437`、AUROC=`.960804`；相对Actor-only MAE
+  降低`25.45%`，但Spearman低`.014367`。3/3原门通过；准确结论限于校准/事件识别，排序增益未成立。
+- 下一步：P61只加固定pairwise term恢复排序；不改预测对象或P60门。下一编号=`V67-F47`。
+
+### V67-F47 — P61 fixed pairwise Actor-reliability recovery候选
+
+- 分类：`algorithm/pairwise-ranked-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 方法：P60 query head增加weight `.10`、temperature `.05`、gap `.02`、shifts `[1,17,257]`的pairwise loss；
+  Actor-only head仍只做Huber，其余特征/架构/epoch exact。
+- Protocol：development split改为scene `%5==1`、H2；P60三门加Spearman delta over Actor-only `+.01`。
+- 边界：该scene population曾用于P60 training，故只作development replication；不扫pair配置。下一编号=`V67-F48`。
 
 ### V6.6 当前边界（2026-08-28）
 

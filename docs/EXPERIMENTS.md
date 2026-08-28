@@ -2,14 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
+
+- 状态：`training-data materialization running；GPU pairwise training follows`；P60的唯一变化是query head增加
+  固定weight `.10`、temperature `.05`、target gap `.02`的三组deterministic shifted pairs。
+- 第二development split用scene index `%5==1`、H=`2.0s`；要求除P60三门外，Spearman至少比Actor-only高`.01`。
+- 不扫pair shifts/weight/temperature/gap；该population此前作为P60 training使用，因此不称fresh confirmation。
+
 ### WS-V67-P60-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
 
-- 状态：`training-data materialization running；GPU training follows immediately`。
+- 状态：`done/supported`；canonical=`20260829T103000Z__actor-reliability-s0-r1`；102 train scenes、
+  299,103 rows；23 confirmation scenes、29,187 unseen-H2 rows、981 exposed-unreliable rows。
 - 对象：给定candidate Ego `tau`和H，预测与其接近的Actor常速度外推endpoint error乘冻结distance exposure；
   Actor-only同容量MLP为同read baseline，不使用counterfactual reaction label。
 - Split：processed scene index `%5!=0`的H=`.8/1.5s`训练；`%5==0`且H=`2.0s`一次confirmation，scene和H均未见。
-- 三门：Spearman `>=.55`、相对Actor-only MAE reduction `>=10%`、exposed unreliable AUROC `>=.75`；
-  width/threshold/history/radius/split不扫参。confirmation I/O与GPU训练重叠。
+- Query/Actor-only Spearman=`.756794/.771161`；MAE=`.093437/.125328`（query降低`25.45%`）；
+  unreliable AUROC=`.960804/.956103`。P60的3/3绝对/calibration gates通过，但query rank仍低`.014367`。
+- wall/peak GPU/RSS=`77.087s/1.09707GiB/.87172GiB`；confirmation I/O与GPU训练重叠。
 
 ### WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01
 
