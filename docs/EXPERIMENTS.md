@@ -2,9 +2,22 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P50-FROZEN-GRADIENT-CONSISTENT-TRANSFER-01
+
+- 状态：`ready/running`；P49/P31/P20全部冻结；P2V-H1.5 cache=`774/864` eligible、72 cases。
+- Confirmation=budget1/3；exact/group `.50`/delta over P31 `+.005`/5 scenes；无训练/refit/sweep。
+
+### WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01 result
+
+- 状态：`done/supported`；canonical=`20260829T010000Z__gradient-consistent-interior-s0-r1`；训练
+  3,240 cases/36,237 rows，12 domains；gradient direction variance=`.003184`，residual RMS=`.017360`。
+- P3C-H1.5 exact=`236/236`；coverage/minimum group=`.70/.666667`；5/5 scenes。
+- P49/P31/fixed reduction=`.710322/.695815/.392525`；deltas=`+.014506/+.317797`；4/4 gates。
+- wall/peak GPU/RSS=`450.118s/.11199GiB/1.35390GiB`。
+
 ### WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01
 
-- 状态：`training`；P3C-H1.5 materialization已与GPU训练重叠完成：`710/864` eligible、72 cases。
+- 状态：`completed/supported`；P3C-H1.5 materialization与GPU训练重叠完成：`710/864` eligible、72 cases。
 - 12 domains×3 budgets、6,000 epochs；双端anchor不变，只新增fixed `.01`末层domain-gradient方向离散度惩罚。
 - Confirmation=P3C-H1.5 budget1/3；对照冻结P31；gates=`exact/group .50/delta +.005/4 scenes`。
 - Fishr启发但非完整Fishr；不扫惩罚权重、anchor、peak、模型、loss或gate。

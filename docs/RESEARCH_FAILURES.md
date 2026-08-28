@@ -484,12 +484,22 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F37 — P49 Fishr-inspired domain-gradient consistency候选
 
-- 分类：`algorithm/domain-gradient-consistency`；状态：`active_gpu_training`。
+- 分类：`algorithm/domain-gradient-consistency`；状态：`resolved_by_new_horizon_task_condition`。
 - 调研迁移：Fishr（ICML 2022）以跨域梯度统计一致性提升domain generalization；P49只迁移到小adapter末层的
   normalized domain update direction dispersion，不声称实现完整per-sample gradient-variance Fishr。
 - 方法：P48双端anchor/model/P31 allocator不变；加入固定`.01`末层方向离散惩罚，12 domains×3 budgets训练。
 - 数据：新增已消费P10R2-H1.5 development；P3C-H1.5首次物化=`710/864` eligible并作一次budget1/3 read。
+- 结果：exact=`236/236`、group=`.666667`；P49/P31 reduction=`.710322/.695815`，delta=`+.014506`；5/5
+  scenes，4/4 gates。固定轻量gradient一致性训练得到正式支持。
 - 防重复：不扫gradient weight、layer、anchor、peak、model、loss或gate。下一编号=`V67-F38`。
+
+### V67-F38 — P50 frozen second task-condition replication候选
+
+- 分类：`confirmation/frozen-cross-condition-transfer`；状态：`ready_running`。
+- 方法：P49/P31/P20冻结；P2V-H1.5首次物化=`774/864` eligible、72 cases，budget1/3一次读取。
+- 判定：exact、minimum group `.50`、相对P31 `+.005`、至少5 scenes；无训练/refit/weight/anchor/gate sweep。
+- 边界：source cohort已消费且H2进入development，但H1.5 target未用于P49训练；不作fresh population claim。
+  下一编号=`V67-F39`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P49 gradient consistency supported / P50 frozen transfer（2026-08-29）
+
+P49 canonical=`run://worldsim_v67/WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01/
+20260829T010000Z__gradient-consistent-interior-s0-r1`。12 domains×3 budgets训练3,240 cases/36,237 rows；末层
+gradient-direction variance=`0.003184`。P3C-H1.5 exact=`236/236`，coverage/minimum group=`.70/.666667`；
+P49/P31/fixed reduction=`.710322/.695815/.392525`，delta=`+.014506`，5/5 scenes，4/4 gates。
+Verdict=`supported_gradient_consistent_interior_hybrid`。这支持跨域更新方向一致性作为双端adapter的训练信号。
+
+P50不训练/refit：冻结P49/P31/P20，在预先异步物化的P2V-H1.5（`774/864` eligible、72 cases）做第二任务条件复制。
+Formal read固定budget=`1/3`、group `.50`、delta `+.005`、5 scenes；该target未进入P49训练。
+
 ## WorldSim V6.7 P48 strict rejection / P49 domain-gradient training（2026-08-29）
 
 P48 canonical=`run://worldsim_v67/WS-V67-P48-DOUBLE-ANCHORED-INTERIOR-HYBRID-01/
