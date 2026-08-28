@@ -1,0 +1,58 @@
+schema_version: worldsim_v67.p84_visited_actor_failure.v1
+output_schema_version: worldsim_v67.p84_visited_actor_failure_summary.v1
+task_id: WS-V67-P84-VISITED-ACTOR-FAILURE-01
+hypothesis_id: WS-V67-H-P84-001
+seed: 0
+role: prospective_visited_region_factorized_actor_failure_selector
+verdict_on_pass: supported_visited_actor_failure_selector
+verdict_on_failure: rejected_visited_actor_failure_selector
+source:
+  base_run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  base_rows: TRAIN_ACTOR_QUERY_ROWS.npz
+  h2p5_run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  h2p5_rows: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz
+  h3_run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  h3_rows: SOURCE_H3_ACTOR_QUERY_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P81-FRESH-TEST-ACTOR-EVENT-01/20260829T211500Z__fresh-test-actor-event-s0-r1
+  artifact: FRESH_TEST_H3P5_ACTOR_QUERY_ROWS.npz
+  readiness_timeout_seconds: 7200
+model:
+  hidden_dimensions: [1024, 512, 256]
+  epochs: 8000
+  pair_batch_size: 65536
+  regression_batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  pair_margin: 1.0
+  regression_weight: 0.25
+  huber_beta: 0.05
+selection:
+  coverage_fraction_within_visited_region: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_within_visited_region: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_error_ratio_to_frozen_p75: 1.50
+  minimum_scene_nonincreasing_fraction: 0.80
+locks:
+  source_only_training_and_hyperparameters_frozen_before_test_rows_exist: true
+  actor_state_rows_deduplicated_across_candidate_ego_trajectories: true
+  actor_failure_probability_factorized_from_known_trajectory_visit_region: true
+  exact_per_scene_fifty_percent_coverage_only_within_separation_le_6m: true
+  source_horizons_equal_pair_weight: true
+  no_radius_coverage_weight_margin_epoch_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+  - https://proceedings.neurips.cc/paper/2020/hash/1b0251ccb8bd5f9ccf444e4bda7713e3-Abstract.html
+claim_boundary:
+  - prospective_secondary_model_on_same_independent_P81_read
+  - reliability_only_for_actor_query_rows_inside_frozen_visited_region
+  - actor_forecast_failure_factorized_from_ego_trajectory_visit
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
