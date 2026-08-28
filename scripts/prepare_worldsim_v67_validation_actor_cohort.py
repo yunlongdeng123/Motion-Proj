@@ -106,30 +106,36 @@ def main() -> None:
     required = set().union(*required_by_scene.values())
     raw_root = Path(data["raw_root"])
     raw_root.mkdir(parents=True, exist_ok=True)
+    existing = {name for name in required if (raw_root / name).is_file()}
     archive_root = Path(data["sensor_archive_root"])
     scene_shards = {str(name): str(shard).zfill(2) for name, shard in data["scene_shards"].items()}
     required_by_shard: dict[str, set[str]] = {}
     for name, members in required_by_scene.items():
-        required_by_shard.setdefault(scene_shards[name], set()).update(members)
+        required_by_shard.setdefault(scene_shards[name], set()).update(members - existing)
     tasks = [
         (
             str(archive_root / f"v1.0-trainval{shard}_blobs.tgz"),
             members,
             str(raw_root),
         )
-        for shard, members in sorted(required_by_shard.items())
+        for shard, members in sorted(required_by_shard.items()) if members
     ]
     found_rows: dict[str, dict[str, object]] = {}
-    with ProcessPoolExecutor(max_workers=len(tasks)) as pool:
-        for rows in pool.map(_scan_one_shard, tasks):
-            found_rows.update(rows)
-    missing = required - set(found_rows)
+    if tasks:
+        with ProcessPoolExecutor(max_workers=len(tasks)) as pool:
+            for rows in pool.map(_scan_one_shard, tasks):
+                found_rows.update(rows)
+    missing = required - existing - set(found_rows)
     if missing:
         raise RuntimeError(
             f"exact shard extraction missed {len(missing)} LIDAR files; "
             f"example={sorted(missing)[:5]}"
         )
-    mapping = {name: str(found_rows[name]["shard"]) for name in sorted(required)}
+    mapping = {
+        member: scene_shards[scene]
+        for scene, members in required_by_scene.items() for member in members if member in existing
+    }
+    mapping.update({name: str(found_rows[name]["shard"]) for name in sorted(found_rows)})
     extracted = {name for name, row in found_rows.items() if bool(row["extracted"])}
     index_path = Path(data["member_shard_index"])
     index_path.parent.mkdir(parents=True, exist_ok=True)
