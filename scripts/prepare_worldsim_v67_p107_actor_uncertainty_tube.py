@@ -14,6 +14,12 @@ import yaml
 from motion_proj.worldsim_v67.actor_state_reliability import materialize_actor_query_rows
 
 
+def _save_npz_atomic(path: Path, arrays: dict[str, np.ndarray]) -> None:
+    partial = path.with_suffix(".partial.npz")
+    np.savez_compressed(partial, **arrays)
+    partial.replace(path)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
@@ -39,7 +45,7 @@ def main() -> None:
     source = materialize_actor_query_rows(
         source_scenes, source_config["horizons_seconds"], source_config,
     )
-    np.savez_compressed(args.run_dir / config["source_rows"]["artifact"], **source)
+    _save_npz_atomic(args.run_dir / config["source_rows"]["artifact"], source)
     print(
         f"P107 source ready rows={len(source['features'])} "
         f"actor_tokens={len(source['features']) * source['actor_position_error_profile_m'].shape[1]}",
@@ -51,7 +57,7 @@ def main() -> None:
         cohort_root = Path(cohort["processed_root"])
         scenes = [cohort_root / f"{int(index):03d}" for index in cohort["scene_indices"]]
         arrays = materialize_actor_query_rows(scenes, cohort["horizons_seconds"], cohort)
-        np.savez_compressed(args.run_dir / cohort["artifact"], **arrays)
+        _save_npz_atomic(args.run_dir / cohort["artifact"], arrays)
         cohort_summaries[cohort["name"]] = {
             "scene_count": len(scenes),
             "row_count": len(arrays["features"]),

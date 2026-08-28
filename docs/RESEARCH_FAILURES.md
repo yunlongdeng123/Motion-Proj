@@ -1072,6 +1072,31 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F77`。
 
+### V67-F77 — P107 r1在source压缩写完前读取final NPZ
+
+- 分类：`engineering/artifact-delivery-race`；状态：`resolved_before_first_optimizer_step`；
+- symptom：producer创建`SOURCE_ACTOR_UNCERTAINTY_ROWS.npz`后仍在`np.savez_compressed`写zip，等待方只判断文件存在，
+  r1遂在`np.load`报`BadZipFile`；
+- exposure：run目录/resolved config已创建，但0 optimizer step、0 development evaluation、0新target read；producer随后
+  正常完成575,596 source rows以及P81/P96两个development artifacts；
+- resolution：r2只复用完整artifact立即训练；producer今后写`.partial.npz`，完成后由同目录`Path.replace`原子交付final；
+  不增加hash、checksum、fingerprint或内容门控；
+- claim impact：纯producer-consumer race，不计科学trial；q90/model/steps/clearance/aggregation/coverage与cohorts不变。
+
+下一可用编号：`V67-F78`。
+
+### P107 outcome note — V67-F77后因子化development在两个consumed cohorts一致成立
+
+- canonical：`run://worldsim_v67/WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01/20260830T061000Z__actor-uncertainty-tube-s0-r2`；
+- P81 fixed50解析τ-risk/Actor/P75=`2/36/13`，P96=`2/9/12`；两者query-over-Actor分别减少94.44%/77.78%，
+  query AUROC `.92901/.87305`；
+- interpretation：Actor-only q90 tube保留可迁移dynamics uncertainty，τ只通过物理boundary clearance解析进入排序，避免
+  P95/P102的cohort-specific query shortcut；这是跨两个已消费cohort的机制证据，不是独立确认；
+- next：冻结P107 checkpoint、normalization、q90、`.05m` floor、time/Actor max、H3.5和fixed50，另取target-unread
+  cohort作一次primary confirmation；不在新target read后改score/model/gate。
+
+下一可用编号仍为：`V67-F78`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

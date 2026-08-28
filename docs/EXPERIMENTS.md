@@ -165,8 +165,8 @@
 
 ### WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01
 
-- 状态：`running/development`；prep canonical=`20260830T060000Z__actor-uncertainty-tube-prep-s0-r1`，model
-  canonical=`20260830T060500Z__actor-uncertainty-tube-s0-r1`。
+- 状态：`done/supported development r2`；prep canonical=`20260830T060000Z__actor-uncertainty-tube-prep-s0-r1`，model
+  canonical=`20260830T061000Z__actor-uncertainty-tube-s0-r2`。
 - prediction object：Actor-only MLP以history/dynamics和normalized future time预测constant-velocity Actor位置误差的
   q90 tube；candidate Ego `τ`只通过固定`q90 / max(abs(predicted separation - interaction radius), .05m)`解析投影，
   不再训练end-to-end query classifier。
@@ -178,6 +178,15 @@
   当前未读新sensor/target，P81/P96的既有结论与P96/P103 terminal verdict均不改变。
 - 首次model launcher受shell `&`分组影响从`/root`解析相对脚本，在run创建、source/target读取和optimizer step前退出
   （`V67-F76`）；prep持续运行。仅改用绝对script/config/PYTHONPATH重新启动同一canonical r1，科学参数不变。
+- prep在`116.35s`完成575,596 source rows、P81 9,559 rows与P96 9,520 rows。r1发现final `.npz`文件名时producer
+  仍在压缩，训练前以`BadZipFile`退出（`V67-F77`）；r2直接复用完成artifact训练。producer改为`.partial.npz`写完后
+  原子replace，不做内容校验、不改科学协议。
+- r2 result：916,722 deduplicated Actor-time tokens，6,000 steps，final q90 pinball=`.015045`。consumed P81
+  fixed50 query/Actor/P75=`2/36/13`，absolute/query-over-Actor reduction=`95.79%/94.44%`，AUROC=`.92901/.56826`；
+  consumed P96为`2/9/12`、`88.88%/77.78%`、AUROC=`.87305/.61786`。verdict=
+  `supported_development_actor_uncertainty_boundary_factorization`；wall=`30.01s`、peak GPU=`.3734GiB`。
+- 结果证明固定Actor-uncertainty→trajectory-clearance因子化在两个已消费cohort均未重现end-to-end query相对Actor反转，
+  但不形成independent/safety claim；下一步只能在模型/score冻结后读取新的target-unread cohort一次确认。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

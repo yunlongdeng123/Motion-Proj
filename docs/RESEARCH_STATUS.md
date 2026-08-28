@@ -121,6 +121,16 @@ tube max和frozen P75；不扫quantile、clearance floor、聚合、结构、los
 未受影响。已立即用绝对script/config/PYTHONPATH重启同一canonical model run，等待source交付后自动训练；该纯入口事件
 登记`V67-F76`，科学协议和GPU训练内容不变。
 
+source压缩写入时r1 evaluator仅按final文件存在即读取，撞上未完成zip并在训练前报`BadZipFile`；这暴露的是artifact
+交付原子性而非数据/模型问题。producer改为`.partial.npz→replace`原子交付，不增加内容校验；事件登记`V67-F77`。
+
+P107 r2完成916,722个去重Actor-time tokens的6,000-step q90训练，final pinball=`.015045`，wall=`30.01s`。
+在consumed P81的1,791 trajectories/95 flips上，fixed50解析τ-risk/Actor-only/P75=`2/36/13`，absolute/query-over-Actor
+reduction=`95.79%/94.44%`，AUROC=`.92901/.56826`；在consumed P96的1,720/36上为`2/9/12`，reduction=
+`88.88%/77.78%`，AUROC=`.87305/.61786`。同一冻结因子化在两个异质已消费cohort方向一致，明显优于P95/P102的
+end-to-end跨cohort反转；但仍只是development。下一步冻结新的target-unread cohort作P108 primary confirmation，并在
+archive IO期间训练不读取该target的directional Actor-uncertainty prospective secondary。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
