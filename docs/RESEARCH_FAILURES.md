@@ -199,7 +199,7 @@ tail auxiliary研究关闭。
 
 ### V67-F11 — P24 adaptive fixed-total action budget候选
 
-- 分类：`algorithm/task-conditioned-budget-allocation`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/task-conditioned-budget-allocation`；状态：`resolved_by_fixed_total_budget_confirmation`。
 - 动机：P20/P21已经证明ranking与selective authority；P24研究在总action数完全一致时，能否按case难度分配1--5个actions。
 - 方法：P20 within-case order冻结；八域16-hidden bounded `±0.05` case calibration只改变跨case slot priority。
 - 防重复：不扫max actions、offset bound、architecture、fraction或gate；P6R action target在模型freeze后一次读取。下一编号=
@@ -207,12 +207,23 @@ tail auxiliary研究关闭。
 
 ### V67-F12 — P24 evaluator未与offset dataset的single-action exclusion对齐
 
-- 分类：`implementation/evaluator-indexing`；状态：`active_pre_metric_evaluator_alignment`。
+- 分类：`implementation/evaluator-indexing`；状态：`resolved_pre_metric_evaluator_alignment`。
 - 观察/根因：r1训练和cache完成后，offset dataset按既有selection合同跳过`<2` eligible actions cases，但adaptive evaluator
   仍遍历全部unique cases，row 78访问size 78 offset数组外索引；Python/NumPy官方文档定义该情况为`IndexError`。
 - 科学暴露：model已在confirmation target materialization前冻结；失败发生在任何metric/gate计算前，无scientific result。
 - 恢复：evaluator改用与`_within_case_selection`一致的`>=2 actions` cases/all-action denominator；r2复用r1 frozen artifact
   和cache，不重训、不改合同。下一编号=`V67-F13`。
+
+P24 r2 4/4 gates通过：exact budget=`222/222`，adaptive reduction=`0.758380`，相对fixed P20=`+0.161610`，7/7
+evaluable scenes不退化。F12工程入口关闭，F11科学候选关闭为positive。r2只读r1 artifact/cache，未重复训练。
+
+### V67-F13 — P25 coverage-constrained fixed-total budget候选
+
+- 分类：`algorithm/selective-budget-authority`；状态：`active_first_trial_frozen`。
+- 动机：P24要求每case至少1 action；P25在总budget相同下允许部分case abstain，同时冻结至少50% case coverage。
+- 方法：九域bounded offset；P20 within-case order不变；每case0--6 actions；总action数等于fixed quarter baseline。
+- 防重复：不扫coverage/max actions/offset/model/fraction/gate；P4C action target在model freeze后一次读取。下一编号=
+  `V67-F14`。
 
 ### V6.6 当前边界（2026-08-28）
 

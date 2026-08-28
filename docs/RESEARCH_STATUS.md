@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P24 adaptive budget supported / P25 coverage-constrained training（2026-08-28）
+
+P24 r2 canonical=`run://worldsim_v67/WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01/
+20260828T150500Z__adaptive-budget-s0-r2`。复用r1冻结模型/cache；78 evaluable cases、固定总预算/实际选择=`222/222`，
+每case actions=`1..5`、mean=`2.84615`。Adaptive/fixed-P20/qmean reduction=`0.758380/0.596770/0.569662`，
+相对P20=`+0.161610`；7/7 evaluable scenes不退化，4/4 gates。`V67-F12 resolved_pre_metric_evaluator_alignment`，
+`V67-F11 resolved_by_fixed_total_budget_confirmation`。
+
+P25在九开发域重新训练case calibration，将P21 abstention与P24 allocation合并：总budget仍与fixed 25%完全相等，允许
+0--6 actions/case但至少50% cases获得authority。冻结P20 within-case ranking与P25 offset后，在V64 P4C八场景一次确认。
+
 ## WorldSim V6.7 P24 r1 evaluator alignment recovery / r2 ready（2026-08-28）
 
 P24 r1已完成八域训练、写入冻结case-offset artifact并materialize P6R 96-unit cache，但在科学metric前因`<2` eligible

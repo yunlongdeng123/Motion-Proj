@@ -1,0 +1,82 @@
+schema_version: worldsim_v67.p25_coverage_budget_compiler.v1
+task_id: WS-V67-P25-COVERAGE-BUDGET-COMPILER-01
+hypothesis_id: WS-V67-H-P25-001
+seed: 0
+role: nine_domain_coverage_constrained_allocation_then_action_task_untouched_confirmation
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  adaptive_budget_run: worldsim_v67/WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01/20260828T150500Z__adaptive-budget-s0-r2
+  adaptive_budget_artifact: ADAPTIVE_BUDGET_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p19_p2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p24_v64_p6r_quantile_actions.npz
+compiler:
+  fixed_selected_fraction: 0.25
+  minimum_case_coverage: 0.50
+  maximum_actions_per_case: 6
+  p24_maximum_actions_per_case: 5
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+gates:
+  minimum_case_coverage: 0.50
+  minimum_cost_reduction: 0.60
+  minimum_reduction_delta_over_fixed_p20: 0.10
+  minimum_nonincreasing_scene_support: 6
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p25_v64_p4c_quantile_actions.npz
+  data:
+    inputs:
+      evidence_run: worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-EVIDENCE-01/20260826T171500Z__confirmation-evidence-s0-r1
+      native_run: worldsim_v64/WS-V64-P4C-CONDITIONAL-CONFIRMATION-SIDECAR-01/20260826T170000Z__native-aggregate-s0-r1
+      native_partition: fresh_confirmation
+      processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+      risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+      risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+    native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+    trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+    sampling: {evaluation_points_per_unit: 8192, seed: 0}
+    quantile_levels: [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+    action_lattice:
+      horizon_seconds: 2.0
+      progress_ratios: [0.25, 0.50, 0.75, 1.00]
+      lateral_offsets_m: [-1.50, 0.00, 1.50]
+      include_stop_for_reporting_only: true
+    scenes:
+      - {name: scene-0992, processed_index: 751}
+      - {name: scene-1101, processed_index: 841}
+      - {name: scene-0454, processed_index: 368}
+      - {name: scene-1102, processed_index: 842}
+      - {name: scene-0876, processed_index: 664}
+      - {name: scene-0895, processed_index: 681}
+      - {name: scene-0321, processed_index: 253}
+      - {name: scene-0813, processed_index: 631}
+locks:
+  p20_within_case_ranking_frozen: true
+  exact_total_budget_equal_to_fixed_quarter_baseline: true
+  minimum_case_coverage: 0.50
+  p25_offset_frozen_before_confirmation_materialization: true
+  development_domains: 9
+  coverage_max_actions_offset_architecture_fraction_or_gate_sweep: false
+  confirmation_action_task_untouched_by_v67: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F12, V67-F11, V67-F08, V65-F19]
+claim_boundary:
+  - selective_case_authority_and_adaptive_allocation_at_exact_fixed_total_budget
+  - minimum_half_case_coverage_and_frozen_p20_within_case_order
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

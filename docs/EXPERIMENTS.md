@@ -2,6 +2,13 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01 r2
+
+- 状态：`done/supported`；canonical=`20260828T150500Z__adaptive-budget-s0-r2`；复用r1 frozen artifact/cache，修复
+  metric前single-action case alignment；78 cases，固定/实际budget=`222/222`，actions per case=`1..5`。
+- Adaptive/P20/qmean reduction=`0.758380/0.596770/0.569662`；delta over P20=`+0.161610`，7/7 scenes不退化，
+  4/4 gates；r2 wall=`0.45685s`。r1训练未重复。
+
 ### WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01 r1 recovery note
 
 - r1八域训练与P6R 96-unit materialization完成，frozen artifact/cache保留；metric前在single-action case offset行对齐处
