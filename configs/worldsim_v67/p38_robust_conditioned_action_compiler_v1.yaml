@@ -1,0 +1,65 @@
+schema_version: worldsim_v67.p38_robust_conditioned_action_compiler.v1
+output_schema_version: worldsim_v67.p38_robust_conditioned_action_compiler_summary.v1
+task_id: WS-V67-P38-ROBUST-CONDITIONED-ACTION-COMPILER-01
+hypothesis_id: WS-V67-H-P38-001
+seed: 0
+role: worst_domain_budget_horizon_conditioned_differentiable_topk_training
+verdict_on_pass: supported_robust_conditioned_action_compiler
+verdict_on_failure: rejected_robust_conditioned_action_compiler
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+model:
+  hidden_dimensions: [32, 16]
+  maximum_residual_cost: 0.05
+  training_selected_fractions: [0.25, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0]
+  epochs: 6000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 0.05
+  ranking_weight: 0.10
+  listwise_weight: 1.0
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  soft_rank_temperature: 0.05
+  soft_selection_temperature: 0.25
+  domain_aggregation: smooth_max
+  domain_smooth_max_temperature: 0.02
+  domain_loss_variance_weight: 0.0
+  residual_regularization_weight: 0.01
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+  selected_fraction: 0.3333333333333333
+  horizon_seconds: 1.5
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_nonincreasing_scene_support: 5
+locks:
+  only_domain_aggregation_changes_from_p36: true
+  smooth_max_temperature_fixed: 0.02
+  p10x_consumed_method_selection: true
+  no_temperature_architecture_loss_residual_bound_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openreview.net/forum?id=ryxGuJrFvS
+  - https://proceedings.mlr.press/v139/krueger21a.html
+claim_boundary:
+  - worst_domain_robust_conditioned_trajectory_action_selection
+  - consumed_method_selection_only
+  - no_population_collision_planning_policy_closed_loop_or_safety_claim

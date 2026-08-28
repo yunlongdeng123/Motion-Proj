@@ -109,11 +109,12 @@ def train_conditioned_action_compiler(
             )
         domain_losses_t = torch.stack(domain_losses)
         residual_penalty = (residual.square() * mask).sum() / mask.sum()
-        loss = (
-            domain_losses_t.mean()
-            + float(config["domain_loss_variance_weight"]) * domain_losses_t.var(unbiased=False)
-            + float(config["residual_regularization_weight"]) * residual_penalty
-        )
+        if config.get("domain_aggregation", "mean_variance") == "smooth_max":
+            domain_temperature = float(config["domain_smooth_max_temperature"])
+            domain_objective = domain_temperature * torch.logsumexp(domain_losses_t / domain_temperature, dim=0)
+        else:
+            domain_objective = domain_losses_t.mean() + float(config["domain_loss_variance_weight"]) * domain_losses_t.var(unbiased=False)
+        loss = domain_objective + float(config["residual_regularization_weight"]) * residual_penalty
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
@@ -123,6 +124,8 @@ def train_conditioned_action_compiler(
             "pairwise_loss": float(pairwise_case.mean().detach().cpu()),
             "regression_loss": float(regression_case.mean().detach().cpu()),
             "residual_rms": float(torch.sqrt(residual_penalty).detach().cpu()),
+            "minimum_domain_loss": float(domain_losses_t.min().detach().cpu()),
+            "maximum_domain_loss": float(domain_losses_t.max().detach().cpu()),
         }
     final.update(
         train_conditioned_case_count=int(len(padded["domain"])),
