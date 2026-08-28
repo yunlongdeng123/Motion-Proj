@@ -2,10 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P16-MULTIDOMAIN-TRAJECTORY-RELIABILITY-01
+
+- 状态：`implementation_ready`；P10V+P10X two-domain train，model freeze后P9 fresh action-task materialization/confirmation；
+  same bounded adapter，domain-balanced loss；配置=`configs/worldsim_v67/p16_multidomain_trajectory_reliability_v1.yaml`。
+
 ### WS-V67-P15R-LATTICE-RESIDUAL-RELIABILITY-01
 
-- 状态：`implementation_ready`；P15唯一恢复：12 trainable action biases，case-centered，qmean anchored，residual
-  bounded `±0.02`；data/lattice/gates不变；配置=`configs/worldsim_v67/p15r_lattice_residual_reliability_v1.yaml`。
+- 状态：`done/rejected`；12 trainable action biases，case-centered，qmean anchored，residual `±0.02`。
+- Selection learned/qmean Spearman=`0.780370/0.772946`，AUROC=`0.973522/0.972730`，pairwise=
+  `0.672834/0.655686`，selected reduction=`0.170481/0.163836`；4/6 gates。
 
 ### WS-V67-P15-TRAJECTORY-RELIABILITY-TRAIN-01
 

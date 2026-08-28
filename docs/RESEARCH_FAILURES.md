@@ -116,6 +116,11 @@ object为Ego trajectory visited-state reliability；下一编号仍为`V67-F05`�
   bounded `±0.02`；qmean dominant，data/lattice/gates不变。
 - 防重复：不扫residual bound/action lattice/loss/gates，不做第二P15R；下一编号=`V67-F06`。
 
+P15R exact-once：bounded adapter使selection Spearman/AUROC/pairwise均略高于qmean，但selected reduction仅
+`0.170481`（qmean=`0.163836`，delta=`+0.006645`），未达`0.25/+0.05`两门；4/6 gates，`V67-F05`更新为
+`closed_negative_after_single_recovery`。禁止继续在P10X调adapter。P16把P10V/P10X降格为two-domain development，
+模型冻结后才做P9 fresh action-task confirmation；下一编号仍为`V67-F06`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -50,10 +50,14 @@ class LatticeResidualAdapter(torch.nn.Module):
         self, qmean: torch.Tensor, actions: torch.Tensor, cases: torch.Tensor
     ) -> torch.Tensor:
         raw = self.maximum_residual_cost * torch.tanh(self.action_bias[actions])
-        centered = torch.empty_like(raw)
-        for case in torch.unique(cases):
-            members = cases == case
-            centered[members] = raw[members] - raw[members].mean()
+        _, inverse = torch.unique(cases, sorted=True, return_inverse=True)
+        sums = torch.zeros(int(inverse.max()) + 1, device=raw.device).scatter_add_(
+            0, inverse, raw
+        )
+        counts = torch.zeros_like(sums).scatter_add_(
+            0, inverse, torch.ones_like(raw)
+        )
+        centered = raw - (sums / counts)[inverse]
         residual = centered.clamp(
             -self.maximum_residual_cost, self.maximum_residual_cost
         )
@@ -118,6 +122,11 @@ def train_head(
     scale = np.maximum(values.std(axis=0), 1e-5)
     x = torch.from_numpy((values - mean) / scale).cuda()
     target = torch.from_numpy(target_np).cuda()
+    domains_np = np.asarray(
+        arrays.get("domain_index", np.zeros(len(target_np), dtype=np.int64)),
+        dtype=np.int64,
+    )
+    domains = torch.from_numpy(domains_np).cuda()
     unsafe = torch.from_numpy(unsafe_np).cuda()
     qmean = torch.from_numpy(qmean_np).cuda()
     left_np, right_np, signs_np = _ranking_pairs(
@@ -140,9 +149,17 @@ def train_head(
     for _ in range(int(model_config["epochs"])):
         logits = model(x, qmean)
         prediction = torch.sigmoid(logits)
-        regression = torch.nn.functional.smooth_l1_loss(
-            prediction, target, beta=float(model_config["huber_beta"])
+        regression_elements = torch.nn.functional.smooth_l1_loss(
+            prediction,
+            target,
+            beta=float(model_config["huber_beta"]),
+            reduction="none",
         )
+        domain_regression = torch.stack(
+            [regression_elements[domains == domain].mean() for domain in torch.unique(domains)]
+        )
+        regression = domain_regression.mean()
+        domain_variance = domain_regression.var(unbiased=False)
         unsafe_loss = torch.nn.functional.binary_cross_entropy_with_logits(logits, unsafe)
         pair_delta = (prediction[left] - prediction[right]) * signs
         ranking = torch.nn.functional.softplus(
@@ -231,6 +248,8 @@ def train_lattice_adapter(
             + float(model_config["ranking_weight"]) * ranking
             + float(model_config["residual_regularization_weight"])
             * residual_regularization
+            + float(model_config.get("domain_loss_variance_weight", 0.0))
+            * domain_variance
         )
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
@@ -240,6 +259,7 @@ def train_lattice_adapter(
             "regression_loss": float(regression.detach().cpu()),
             "ranking_loss": float(ranking.detach().cpu()),
             "residual_regularization": float(residual_regularization.detach().cpu()),
+            "domain_regression_variance": float(domain_variance.detach().cpu()),
         }
     model.eval()
     with torch.inference_mode():

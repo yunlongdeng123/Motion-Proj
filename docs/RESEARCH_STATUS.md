@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P15R bounded transfer insufficient / P16 fresh action-task training ready（2026-08-28）
+
+状态：`v67_p15r_rejected_p16_multidomain_fresh_action_ready`；P15R canonical=
+`run://worldsim_v67/WS-V67-P15R-LATTICE-RESIDUAL-RELIABILITY-01/20260828T123000Z__bounded-lattice-s0-r1`。
+selection learned/qmean Spearman=`0.780370/0.772946`、unsafe AUROC=`0.973522/0.972730`、pairwise=
+`0.672834/0.655686`、selected reduction=`0.170481/0.163836`。前三项与scene support通过，但`0.25/+0.05`
+direct selection门失败，4/6 gates；`V67-F05 closed_negative_after_single_recovery`。
+
+P16不再复用P10X作selection：P10V+P10X作为两个development domains训练同一bounded adapter，写入model freeze后才
+读取P9 fresh六场景的固定trajectory visited-state targets。新fresh action-task gates在任何P9 action target read前冻结；
+GPU训练与已有sidecar materialization连续执行，无新archive I/O。
+
 ## WorldSim V6.7 P15 free trajectory head rejected / P15R bounded adapter ready（2026-08-28）
 
 状态：`v67_p15_rejected_p15r_bounded_lattice_adapter_ready`；P15 canonical=

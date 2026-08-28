@@ -23,6 +23,7 @@ from motion_proj.worldsim_v67.trajectory_reliability import (
     train_head,
 )
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import (
+    _materialize,
     _pairwise_concordance,
     _within_case_selection,
 )
@@ -38,6 +39,30 @@ def _write_json(path: Path, payload: object) -> None:
 def _load(path: Path) -> dict[str, np.ndarray]:
     with np.load(path, allow_pickle=False) as source:
         return {name: np.asarray(source[name]) for name in source.files}
+
+
+def _combine(paths: list[Path]) -> dict[str, np.ndarray]:
+    cohorts = [_load(path) for path in paths]
+    names = sorted(set.intersection(*(set(cohort) for cohort in cohorts)))
+    combined: dict[str, list[np.ndarray]] = {name: [] for name in names}
+    domain_parts = []
+    case_offset = 0
+    scene_offset = 0
+    for domain_index, cohort in enumerate(cohorts):
+        row_count = len(cohort["qmean"])
+        for name in names:
+            values = np.asarray(cohort[name]).copy()
+            if name == "case_index":
+                values = values.astype(np.int64) + case_offset
+            elif name == "scene_index":
+                values = values.astype(np.int64) + scene_offset
+            combined[name].append(values)
+        domain_parts.append(np.full(row_count, domain_index, dtype=np.int64))
+        case_offset += int(np.max(cohort["case_index"])) + 1
+        scene_offset += int(np.max(cohort["scene_index"])) + 1
+    result = {name: np.concatenate(parts) for name, parts in combined.items()}
+    result["domain_index"] = np.concatenate(domain_parts)
+    return result
 
 
 def _metrics(
@@ -82,20 +107,39 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     )
     started = time.monotonic()
     torch.cuda.reset_peak_memory_stats()
-    train = _load(Path(config["inputs"]["train_compact_cache"]))
-    selection = _load(Path(config["inputs"]["selection_compact_cache"]))
+    if "train_compact_caches" in config["inputs"]:
+        train = _combine([Path(path) for path in config["inputs"]["train_compact_caches"]])
+    else:
+        train = _load(Path(config["inputs"]["train_compact_cache"]))
     if str(config["model"].get("type", "residual_mlp")) == "lattice_residual_adapter":
         model, training = train_lattice_adapter(
             train, config["model"], int(config["seed"])
         )
         mean = scale = None
         train_scores = score_lattice_adapter(model, train)
-        selection_scores = score_lattice_adapter(model, selection)
     else:
         model, mean, scale, training = train_head(
             train, config["model"], int(config["seed"])
         )
         train_scores = score_head(model, train, mean, scale)
+    _write_json(
+        run_dir / "model_frozen.json",
+        {
+            "model_frozen_before_selection_materialization": True,
+            "model_type": str(config["model"].get("type", "residual_mlp")),
+            "train_row_count": int(len(train["qmean"])),
+        },
+    )
+    selection_path = Path(config["inputs"]["selection_compact_cache"])
+    selection_materialization = {"cache_reused": selection_path.is_file()}
+    if not selection_path.is_file() and "selection_materialization" in config:
+        selection_materialization.update(
+            _materialize(config["selection_materialization"], runs_root, selection_path)
+        )
+    selection = _load(selection_path)
+    if str(config["model"].get("type", "residual_mlp")) == "lattice_residual_adapter":
+        selection_scores = score_lattice_adapter(model, selection)
+    else:
         selection_scores = score_head(model, selection, mean, scale)
     train_metrics = _metrics(train, train_scores, config)
     selection_metrics = _metrics(selection, selection_scores, config)
@@ -184,6 +228,7 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         "role": config["role"],
         "claim_boundary": config["claim_boundary"],
         "training": training,
+        "selection_materialization": selection_materialization,
         "train_metrics": train_metrics,
         "selection_metrics": selection_metrics,
         "selection_qmean_baseline": qmean_metrics,
