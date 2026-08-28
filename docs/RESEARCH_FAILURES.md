@@ -72,6 +72,9 @@ P8独立legacy physical confirmation以conflict reduction=`0.501469`、overall/c
 P10 fresh transfer 4/4 gates通过且无新failure；head与q0 AUROC近似相同、AUPRC低`0.046332`，作为negative
 comparator保留，不改变冻结fresh chain。下一编号仍为`V67-F03`。
 
+P11 fresh Actor package 6/6 gates通过；938 states与metadata完整保留、Actor removed/hidden target=`0/0`，无新failure；
+下一编号仍为`V67-F03`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

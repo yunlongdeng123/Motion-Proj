@@ -1,0 +1,28 @@
+schema_version: worldsim_v67.p12_fresh_fixed_actions.v1
+task_id: WS-V67-P12-FRESH-FIXED-ACTIONS-01
+hypothesis_id: WS-V67-H-P12-001
+seed: 0
+role: fresh_empirical_surface_confirmation_matched_action_set
+sources:
+  local_geometry_run: worldsim_v67/WS-V67-P10-FRESH-GEOMETRY-TRANSFER-01/20260828T114226Z__fresh-transfer-s0-r1
+  local_geometry_scores: TRANSFER_SCORES.jsonl
+  harp_bake_run: worldsim_v67/WS-V67-P11-FRESH-ACTOR-PACKAGE-01/20260828T114417Z__fresh-package-s0-r1
+action_budget_fraction: 0.5
+gates:
+  minimum_learned_conflict_exposure_reduction: 0.5
+  minimum_actor_retention: 1.0
+  maximum_actor_removed_count: 0
+  maximum_hazard_proxy_distribution_shift: 0.0
+  minimum_emitted_local_geometry_fraction: 0.5
+  minimum_world_scene_yield: 1.0
+locks:
+  budget_sweep: false
+  score_threshold: null
+  actor_removal: false
+  hazard_used_for_ranking: false
+  physical_geometry_mutation: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_empirical_surface_confirmation_fixed_budget_action_set
+  - no_population_guarantee_physical_repair_rl_planning_policy_or_safety_claim
+failure_ledger_refs: [V67-F02, V67-F01, V66-F02, V66-F01]

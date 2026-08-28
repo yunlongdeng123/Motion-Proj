@@ -2,10 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P12-FRESH-FIXED-ACTIONS-01
+
+- 状态：`implementation_ready`；P10/P11 canonical，固定50% budget与六门不变；配置=
+  `configs/worldsim_v67/p12_fresh_fixed_actions_v1.yaml`。
+
 ### WS-V67-P11-FRESH-ACTOR-PACKAGE-01
 
-- 状态：`implementation_ready`；P10 canonical，Actor/hidden-target/runtime六门不变；配置=
-  `configs/worldsim_v67/p11_fresh_actor_package_v1.yaml`。
+- 状态：`done/supported`；canonical=`20260828T114417Z__fresh-package-s0-r1`；units/Actors/states/primitives=
+  `72/186/938/1868749`；state/metadata=`1/1`、removed/hidden target=`0/0`，6/6 gates；8 files/17,405,615 bytes；
+  wall/RSS=`23.1121s/0.8441GiB`。
 
 ### WS-V67-P10-FRESH-GEOMETRY-TRANSFER-01
 

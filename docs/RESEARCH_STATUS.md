@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.7 P11 fresh Actor package supported / P12 actions ready（2026-08-28）
+
+状态：`v67_p11_fresh_actor_package_supported_p12_actions_ready`；canonical=
+`run://worldsim_v67/WS-V67-P11-FRESH-ACTOR-PACKAGE-01/20260828T114417Z__fresh-package-s0-r1`。72 units内
+186 Actors、938 states、1,868,749 primitives；state/metadata retention=`1/1`，removed/hidden target=`0/0`，runtime
+model/hidden-target/hazard-existence coupling均关闭，6/6 gates通过。package=`8 files/17,405,615 bytes`；wall/RSS=
+`23.1121s/0.8441GiB`。P12只机械绑定P10/P11 canonical并保持50% budget；无新failure，不增加审计矩阵。
+
 ## WorldSim V6.7 P10 fresh transfer supported / P11 package ready（2026-08-28）
 
 状态：`v67_p10_fresh_transfer_supported_p11_package_implementation_ready`；canonical=
