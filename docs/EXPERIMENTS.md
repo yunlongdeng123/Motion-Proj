@@ -29,12 +29,22 @@
 
 ### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
 
-- 状态：`active/GPU training`；prep=`20260830T004500Z__trajectory-false-safe-prep-s0-r1`，model=
+- 状态：`done/rejected development`；prep=`20260830T004500Z__trajectory-false-safe-prep-s0-r1`，model=
   `20260830T005000Z__trajectory-false-safe-s0-r1`。
 - 从冻结P95 rows无新read派生`predicted free && observed occupied`target：source/development row events=`925/32`；
   其余Deep Sets、four-horizon batches、6,000 epochs、fixed50与P95一致。
 - 这是与P96 IO重叠的development follow-up；不改变P96的occupancy-flip model/endpoint/gates，也没有independent
   false-safe claim。不扫asymmetric weight、threshold或radius。
+- result：1,791 trajectories/31 false-safe；fixed50 query/Actor/P75=`11/16/10`，absolute reduction=`28.99%`、
+  query-vs-Actor=`31.25%`，但AUROC=`.44692/.45555`且劣于P75；2/4 gates，verdict=`rejected`。
+
+### WS-V67-P98-TRAJECTORY-FALSE-ALARM-01
+
+- 状态：`active/GPU training`；prep=`20260830T005500Z__trajectory-false-alarm-prep-s0-r1`，model=
+  `20260830T010000Z__trajectory-false-alarm-s0-r1`。
+- 从同一冻结rows派生`predicted occupied && observed free`target：source/development row events=`1,348/64`；
+  只补完P95 flip的互补分解，不对P97稀疏失败做class weight/focal/negative-sampling恢复。
+- P96独立confirmation仍使用原P95 total-flip checkpoint和gates；P98仅development分析。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

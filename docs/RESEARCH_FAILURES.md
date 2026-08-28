@@ -896,7 +896,25 @@ P95 development以query/Actor/P75 selected flips=`7/28/13`通过4/4 gates；由�
 失败，下一编号仍为`V67-F68`。
 
 P97只从冻结P95 artifacts派生false-safe target并与P96 archive IO重叠；0 new sensor/target read，且明确禁止替换P96
-endpoint或model。当前无新增失败，下一编号仍为`V67-F68`。
+endpoint或model。
+
+### V67-F68 — one-sided false-safe reliability不优于冻结P75且排序接近反向
+
+- run：`run://worldsim_v67/WS-V67-P97-TRAJECTORY-FALSE-SAFE-01/20260830T005000Z__trajectory-false-safe-s0-r1`；
+- symptom：development 1,791 trajectories/31 false-safe中，fixed50 query/Actor/P75 selected=`11/16/10`；query虽相对
+  Actor减少31.25%、相对all减少28.99%，但仍比P75多1，query/Actor AUROC仅`.44692/.45555`；2/4 gates；
+- root cause：row-level source/development positives只有925/32，trajectory endpoint更少；单独拆出false-safe破坏P95 total
+  flip中由较多false-alarm提供的可学习排序，source BCE接近0也未迁移；
+- literature response：NeurIPS 2021 rare-event工作指出信息量受positive数量约束且negative subsampling需log-odds校正；
+  ICCV 2021 safety-aware occupancy使用专门hard/soft/unseen losses。当前项目没有独立校准cohort，不能事后引入这些
+  weight/sampling corrections并把同一development调成成功；
+- resolution：关闭standalone false-safe candidate，不加focal/class weight、不改threshold/radius；P98仅补齐互补
+  false-alarm attribution，P96保持冻结total-flip endpoint/model；
+- claim impact：无false-safe独立可靠度claim，不影响P95 development或尚未读取的P96。
+
+下一可用编号：`V67-F69`。
+
+P98 false-alarm attribution从冻结rows派生且不修改P96；当前无新增失败，下一编号仍为`V67-F69`。
 
 ### V6.6 当前边界（2026-08-28）
 
