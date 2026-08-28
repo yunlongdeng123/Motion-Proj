@@ -2,10 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P11-FRESH-ACTOR-PACKAGE-01
+
+- 状态：`implementation_ready`；P10 canonical，Actor/hidden-target/runtime六门不变；配置=
+  `configs/worldsim_v67/p11_fresh_actor_package_v1.yaml`。
+
 ### WS-V67-P10-FRESH-GEOMETRY-TRANSFER-01
 
-- 状态：`implementation_ready`；P9 fresh evidence/native、冻结V6.6 head、同P1/P5 gates；GPU+I/O overlap。
-- 配置=`configs/worldsim_v67/p10_fresh_geometry_transfer_v1.yaml`；无refit/threshold/second read；formal run尚未创建。
+- 状态：`done/supported`；canonical=`20260828T114226Z__fresh-transfer-s0-r1`；rows/conflict/clean=`938/563/375`；
+  head=`0.682993/0.732723`，q0=`0.682837/0.779055`；6/6 scenes、4/4 gates；无refit/threshold。
 
 ### WS-V67-P9-FRESH-PREPARATION/EVIDENCE/NATIVE-SIDECAR-01
 

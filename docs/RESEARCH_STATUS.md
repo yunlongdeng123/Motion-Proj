@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.7 P10 fresh transfer supported / P11 package ready（2026-08-28）
+
+状态：`v67_p10_fresh_transfer_supported_p11_package_implementation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P10-FRESH-GEOMETRY-TRANSFER-01/20260828T114226Z__fresh-transfer-s0-r1`。938 rows
+（conflict/clean=`563/375`），head AUROC/AUPRC=`0.682993/0.732723`，相对deterministic=`+0.182993/+0.132510`，
+6/6 scenes、4/4 gates通过。q0=`0.682837/0.779055`，不宣称head AUPRC dominance。P11只绑定canonical烘焙Actor
+package；无新failure。
+
 ## WorldSim V6.7 P9 fresh inputs complete / P10 GPU transfer ready（2026-08-28）
 
 状态：`v67_p9_fresh_inputs_complete_p10_gpu_transfer_implementation_ready`；prep/native/evidence canonical分别为
