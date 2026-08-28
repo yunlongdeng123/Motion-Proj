@@ -361,10 +361,42 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F25 — P37 frozen conditioned-action second-cohort transfer候选
 
-- 分类：`algorithm/cross-cohort-conditioned-action-transfer`；状态：`active_frozen_read`。
+- 分类：`algorithm/cross-cohort-conditioned-action-transfer`；状态：`closed_negative_after_frozen_read`。
 - 方法：P36 model/normalizer完全冻结，P10X consumed `(1/3,1.5s)`单次读取；与冻结P31在相同exact/group约束比较。
 - 判定：reduction delta `>=+0.005`、minimum group `.50`、至少5 scenes不退化；无训练/refit/sweep。
+- 结果：coverage/minimum group提升到`0.787879/0.666667`，但reduction=`0.656886`低于P31 `0.690636`，
+  delta=`-0.033750`；exact与scene gates通过，decision gain失败。
+- 结论：P36的P4C增益不是跨cohort稳定增益；增加coverage不能替代selected-cost质量。
 - 边界：第二consumed cohort的method transfer，不是fresh population confirmation。下一编号=`V67-F26`。
+
+### V67-F26 — P38 smooth worst-domain conditioned top-k候选
+
+- 分类：`algorithm/worst-domain-decision-focused-training`；状态：`closed_negative_after_first_trial`。
+- 调研：ICLR 2020 GroupDRO关注最坏group风险；ICML 2021 REx通过训练域风险关系改善OOD generalization。
+- 方法迁移：P36仅将domain mean+variance聚合换为temperature `.02` log-sum-exp smooth maximum；其余数据、
+  architecture、soft top-k、pairwise/regression、residual bound与epochs完全不变。
+- 判定：P10X consumed `(1/3,1.5s)`相对冻结P31 reduction `>=+0.005`、minimum group `.50`、scene support `5`。
+- 结果：coverage/minimum group=`0.803030/0.708333`，但reduction=`0.629974`，比P31低`-0.060662`；
+  worst-domain objective比P36 transfer再退`-0.026913`。
+- 结论：平滑最坏域目标鼓励更广coverage，但没有提高跨cohort action ordering；objective-reweighting路线关闭。
+- 防重复：不扫temperature/aggregation/model/loss/gate。下一编号=`V67-F27`。
+
+### V67-F27 — P39 expanded-domain conditioned top-k候选
+
+- 分类：`algorithm/training-domain-diversity`；状态：`resolved_by_expanded_domain_training`。
+- 方法：恢复P36 mean+variance objective；加入已消费P4C/P10X H=1.5作为两个development domains，训练budgets=
+  `.25/1/3/.50`，共6 domains；P3C action targets从训练排除。
+- 判定：P3C H=2/budget=1/3相对冻结P31 reduction `>=+0.005`、minimum group `.50`、至少4/5 scenes不退化。
+- 结果：exact=`238/238`、coverage/min group=`0.766667/0.708333`；reduction=`0.724052`，相对P31=
+  `+0.013217`、相对fixed=`+0.355925`，5/5 scenes，4/4 gates。
+- 防重复：只改训练domain/budget denominator，不改模型、loss、temperature或gate；不扫cohort组合。下一编号=`V67-F28`。
+
+### V67-F28 — P40 frozen expanded-domain fourth-cohort transfer候选
+
+- 分类：`algorithm/fourth-cohort-transfer`；状态：`active_frozen_read`。
+- 方法：冻结P39 artifact；P10R4 action targets未进入P20/P31/P39训练，H=2/budget=1/3一次读取；四scene-pair groups。
+- 判定：相对冻结P31 reduction `>=+0.005`、minimum group `.50`、至少6/8 scenes不退化。
+- 边界：cohort全局已消费，故不是fresh confirmation；无训练/refit/sweep。下一编号=`V67-F29`。
 
 ### V6.6 当前边界（2026-08-28）
 

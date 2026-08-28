@@ -1,5 +1,38 @@
 # Research Status
 
+## WorldSim V6.7 P39 expanded-domain top-k supported / P40 frozen fourth cohort（2026-08-28）
+
+P39 canonical=`run://worldsim_v67/WS-V67-P39-EXPANDED-DOMAIN-CONDITIONED-ACTION-01/
+20260828T202000Z__expanded-domain-topk-s0-r1`。6 domains×3 budgets训练1,656 conditioned cases/18,300 action rows；
+在P3C action-target-untouched H=2/budget=1/3上exact=`238/238`，coverage/minimum group=
+`0.766667/0.708333`。P39/P31/fixed reduction=`0.724052/0.710835/0.368126`，deltas=
+`+0.013217/+0.355925`，5/5 scenes，4/4 gates。Verdict=`supported_expanded_domain_conditioned_action`。
+
+P40加载冻结P39，在未进入P20/P31/P39训练的P10R4 action targets上做第四cohort H=2/budget=1/3 transfer；
+该cohort全局已消费，故只作method-transfer证据。一次读取，无训练/refit/sweep。
+
+## WorldSim V6.7 P38 robust objective rejected / P39 expanded-domain training（2026-08-28）
+
+P38 canonical=`run://worldsim_v67/WS-V67-P38-ROBUST-CONDITIONED-ACTION-COMPILER-01/
+20260828T200000Z__robust-conditioned-topk-s0-r1`。Worst-domain train loss范围=`0.085743..0.100548`；P10X
+exact=`236/236`、coverage/minimum group=`0.803030/0.708333`，但reduction=`0.629974`，低于P31 `0.690636`
+达`-0.060662`。3/4 gates；verdict=`rejected_robust_conditioned_action_compiler`。Objective reweighting路线关闭。
+
+P39回到P36 mean+variance训练，只扩大数据轴：把已消费P4C/P10X H=1.5加入development，形成6 domains，并把
+训练budgets扩为`.25/1/3/.50`；P3C action targets完全不进训练，在H=2/budget=1/3做第三cohort判定。
+Architecture、soft top-k、temperature、loss weights、residual bound、seed与epochs均不变。
+
+## WorldSim V6.7 P37 cross-cohort transfer rejected / P38 robust top-k training（2026-08-28）
+
+P37 canonical=`run://worldsim_v67/WS-V67-P37-CONDITIONED-ACTION-TRANSFER-01/
+20260828T194500Z__conditioned-transfer-s0-r1`。冻结P36在P10X保持exact `236/236`，coverage/minimum group=
+`0.787879/0.666667`，高于P31的`0.727273/0.583333`；但P36/P31 reduction=`0.656886/0.690636`，
+delta=`-0.033750`，仅5/6 scenes不退化。Decision gate失败，verdict=`rejected_second_cohort_conditioned_action_transfer`。
+
+调研GroupDRO（ICLR 2020）与Risk Extrapolation（ICML 2021）后，P38只改变训练域聚合：将P36的mean+variance
+换成固定temperature `.02`的smooth worst-domain objective，其他features、soft top-k、architecture、loss weights、
+训练数据和P10X判定全部不变。一次GPU训练，不扫temperature或任何参数。
+
 ## WorldSim V6.7 P36 conditioned top-k supported / P37 frozen transfer（2026-08-28）
 
 P36 canonical=`run://worldsim_v67/WS-V67-P36-CONDITIONED-ACTION-COMPILER-01/

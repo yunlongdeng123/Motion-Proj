@@ -2,6 +2,48 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P40-EXPANDED-DOMAIN-TRANSFER-01
+
+- 状态：`ready/running`；冻结P39 model/normalizer，P10R4 H=2/budget=1/3第四cohort一次transfer read。
+- P10R4 action targets不进P20/P31/P39训练；全局已消费，故仅method transfer。
+- Gates：exact、minimum group `.50`、相对P31 `+.005`、6/8 scenes；无训练/refit/sweep。
+
+### WS-V67-P39-EXPANDED-DOMAIN-CONDITIONED-ACTION-01 result
+
+- 状态：`done/supported`；canonical=`20260828T202000Z__expanded-domain-topk-s0-r1`；1,656 conditioned cases、
+  18,300 action rows；soft selected cost=`0.061912`、residual RMS=`0.038086`。
+- P3C exact=`238/238`；coverage/minimum group=`0.766667/0.708333`。
+- P39/P31/fixed reduction=`0.724052/0.710835/0.368126`；deltas=`+0.013217/+0.355925`；5/5 scenes，
+  4/4 gates；wall/peak GPU/RSS=`142.177s/0.03146GiB/1.29428GiB`。
+
+### WS-V67-P39-EXPANDED-DOMAIN-CONDITIONED-ACTION-01
+
+- 状态：`running`；6 development domains（原4 + consumed P4C/P10X H=1.5），train budgets=`.25/1/3/.50`；
+  P36 architecture/objective/temperature不变，6,000 GPU epochs。
+- P3C action targets不进训练；confirmation=`H2,budget1/3`，对照frozen P31。
+- Gates：exact、minimum group `.50`、reduction delta `+.005`、4/5 scenes；不扫cohort组合/model/loss/gate。
+
+### WS-V67-P38-ROBUST-CONDITIONED-ACTION-COMPILER-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T200000Z__robust-conditioned-topk-s0-r1`；train domain loss
+  min/max=`0.085743/0.100548`，residual RMS=`0.038812`。
+- P10X exact=`236/236`；coverage/minimum group=`0.803030/0.708333`。
+- P38/P31/fixed reduction=`0.629974/0.690636/0.190718`；deltas=`-0.060662/+0.439256`；5/6 scenes，
+  3/4 gates；wall=`112.098s`。
+
+### WS-V67-P38-ROBUST-CONDITIONED-ACTION-COMPILER-01
+
+- 状态：`running`；P36配置仅改变domain aggregation为temperature `.02` smooth maximum；6,000 GPU epochs。
+- 目标：保护四development domains中最坏的conditioned soft-top-k risk；P10X consumed `(1/3,1.5s)`与P31比较。
+- Gates：exact、minimum group `.50`、reduction delta `+.005`、scene support `5`；不扫temperature/model/loss/gate。
+
+### WS-V67-P37-CONDITIONED-ACTION-TRANSFER-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T194500Z__conditioned-transfer-s0-r1`；冻结P36，无训练/refit。
+- Exact=`236/236`；coverage/minimum group=`0.787879/0.666667`；P31为`0.727273/0.583333`。
+- P36/P31/fixed reduction=`0.656886/0.690636/0.190718`；deltas=`-0.033750/+0.466168`；5/6 scenes，
+  3/4 gates。wall=`0.461s`。
+
 ### WS-V67-P37-CONDITIONED-ACTION-TRANSFER-01
 
 - 状态：`ready/running`；冻结P36 model/normalizer，在P10X consumed `(1/3,1.5s)`一次transfer read。
