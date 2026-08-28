@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p102_hierarchical_temporal_interaction.v1
+output_schema_version: worldsim_v67.p102_hierarchical_temporal_interaction_summary.v1
+task_id: WS-V67-P102-HIERARCHICAL-TEMPORAL-INTERACTION-01
+hypothesis_id: WS-V67-H-P102-001
+seed: 0
+role: development_hierarchical_temporal_actor_interaction_reliability
+verdict_on_pass: supported_development_hierarchical_temporal_interaction
+verdict_on_failure: rejected_development_hierarchical_temporal_interaction
+model_artifact: HIERARCHICAL_TEMPORAL_INTERACTION.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P101-TEMPORAL-INTERACTION-PROFILE-PREP-01/20260830T020000Z__temporal-interaction-profile-prep-s0-r1
+  artifact: SOURCE_TEMPORAL_INTERACTION_PROFILE_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P101-TEMPORAL-INTERACTION-PROFILE-PREP-01/20260830T020000Z__temporal-interaction-profile-prep-s0-r1
+  artifact: DEVELOPMENT_TEMPORAL_INTERACTION_PROFILE_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 6000
+  horizon_batch_size: 1024
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: binary_bce
+  failure_threshold_m: 0.5
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  temporal_encoder_uses_nine_ordered_signed_clearance_boundary_tokens: true
+  temporal_mean_max_precedes_actor_set_mean_max: true
+  actor_only_uses_the_unchanged_deepset: true
+  derived_from_frozen_p101_rows_without_new_sensor_or_target_read: true
+  P96_protocol_and_model_unchanged: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_temporal_width_pooling_profile_length_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+  - https://proceedings.mlr.press/v97/lee19d.html
+claim_boundary:
+  - development_only_hierarchical_temporal_actor_interaction_reliability
+  - P96_independent_confirmation_remains_frozen_P95_not_P102
+  - no_independent_hierarchical_temporal_confirmation_yet
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

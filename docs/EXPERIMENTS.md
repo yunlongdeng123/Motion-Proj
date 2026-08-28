@@ -73,13 +73,24 @@
 
 ### WS-V67-P101-TEMPORAL-INTERACTION-PROFILE-01
 
-- 状态：`active/GPU training`；prep=`20260830T020000Z__temporal-interaction-profile-prep-s0-r1`，model=
+- 状态：`done/supported development`；prep=`20260830T020000Z__temporal-interaction-profile-prep-s0-r1`，model=
   `20260830T020500Z__temporal-interaction-profile-s0-r1`。
 - 卡点与迁移：P100将时间交互压成3个summary仍未超过P95；参考CVPR 2023 implicit occupancy-flow的trajectory-near
   spatiotemporal queries与ICML 2019 set aggregation，P101保留与target相同的9个未来采样时刻。
 - 每个Actor query追加9-step signed-clearance与9-step absolute boundary-distance profile，24→42维；Actor-only仍19维。
   source/development=`575,596/9,559 rows`，0 new read；P95 total-flip BCE、nearest16 Actor、6,000 epochs、fixed50不变。
 - 不扫profile length/threshold/radius/width/coverage/loss/architecture；P96继续只确认冻结P95，P101只作development。
+- result：fixed50 query/Actor/P75=`13/29/13`，absolute reduction=`72.62%`、query-vs-Actor=`55.17%`，AUROC=
+  `.73113/.70384`，4/4 gates但只追平P75且不及P95的7；轮廓展开不是更优表示，不替换P96。
+
+### WS-V67-P102-HIERARCHICAL-TEMPORAL-INTERACTION-01
+
+- 状态：`active/GPU training`；canonical=`20260830T022000Z__hierarchical-temporal-interaction-s0-r1`。
+- 每个Actor的9个ordered `(signed clearance, boundary distance, normalized time)` tokens先经共享temporal MLP并作
+  temporal mean+max，再与24维Actor-query state融合；随后对最多16 Actors作masked mean+max并预测total flip。
+- Actor-only保持原19维Deep Sets；复用P101 frozen rows，0 new read；6,000 epochs、fixed50、P95 endpoint/gates不变。
+- 这是P101 flat profile未超过P95后的单一hierarchical representation recovery；不扫width/pooling/profile length，
+  不替换P96。与archive IO并行时GPU约97%、1.96GiB。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

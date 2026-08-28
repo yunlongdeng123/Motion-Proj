@@ -56,9 +56,13 @@ reduction=`81.04%`，AUROC=`.79904/.59990`，4/4 gates通过。它支持时间/�
 
 P101继续作一次结构性迁移而非调参：参考continuous spatiotemporal query与set aggregation，不再把τ/Actor交互压缩为
 三个summary，而是在原24维query后保留与occupancy target完全同构的9个normalized future samples之signed-clearance
-及absolute boundary-distance profiles，共42维；Actor-only、P95 total-flip target、6,000 epochs与fixed50不变。
-P101 prep从同一冻结rows派生575,596/9,559 rows，0 new sensor/target read，GPU训练已与P96 archive IO并行启动。
-P96仍只确认冻结P95，不允许P100/P101读取其结果后替换。
+及absolute boundary-distance profiles，共42维。6,000 epochs后fixed50 query/Actor/P75=`13/29/13`，absolute
+reduction=`72.62%`、query-vs-Actor=`55.17%`，AUROC=`.73113/.70384`；4/4 gates但只追平P75，仍不及P95。
+
+P102据此把flat profile MLP升级为唯一hierarchical recovery：每个Actor的9个`(signed clearance, boundary distance,
+normalized time)`tokens先由共享temporal encoder聚合，再与24维Actor-query state融合，最后对最多16 Actors做masked
+mean+max；Actor-only仍用原Deep Sets。target/rows/6,000 epochs/fixed50均不变，GPU训练约97% utilization并与P96
+archive IO重叠。不扫temporal width/pooling/profile length。P96仍只确认冻结P95，不允许P100--P102替换。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

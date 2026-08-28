@@ -928,8 +928,9 @@ query/Actor/P75=`9/41/13`，4/4 gates但未超过P95的7。它是positive mechan
 也不扫feature/loss；下一编号仍为`V67-F69`。
 
 P101针对P100压缩时间交互的表示瓶颈，一次性迁移为与occupancy target同构的9-step signed-clearance/boundary-distance
-profile；从同一冻结rows派生42维query、0 new sensor/target read，Actor-only/P95 target/fixed50均不变，且明确不替换
-P96。当前GPU训练中，无新增failure，下一编号仍为`V67-F69`。
+profile；development fixed50 query/Actor/P75=`13/29/13`，4/4 gates但只追平P75且不及P95。它不是正式失败，且不以
+profile length/threshold sweep补救。P102只做一次hierarchical temporal-token→Actor-set结构恢复，P96仍只确认冻结P95；
+当前无新增failure，下一编号仍为`V67-F69`。
 
 ### V6.6 当前边界（2026-08-28）
 
