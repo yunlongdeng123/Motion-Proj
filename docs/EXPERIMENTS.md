@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P88-SET-ATTENTION-TRAJECTORY-RELIABILITY-01
+
+- 状态：`active/GPU training`；canonical candidate=`20260829T221500Z__set-attention-trajectory-reliability-s0-r1`；
+  protocol/model在P81 target rows出现前冻结。
+- 与P87共享最近16个visited Actor rows和targets；改为`d_model=128`、4-head、2-layer self-attention encoder及
+  learned pooling seed，显式建模Actor set interactions。Query/Actor-only同结构，4,000 epochs、2,048 pair batch。
+- 不扫attention depth/head/cap/pooling；当前约99% GPU、P88自身3.644GiB。正式端点仍是fresh fixed-50%
+  trajectory any-failure prevalence，与Actor-only/P75比较。
+
 ### WS-V67-P87-DEEPSET-TRAJECTORY-RELIABILITY-01
 
 - 状态：`active/GPU training`；canonical candidate=`20260829T220000Z__deepset-trajectory-reliability-s0-r1`；

@@ -816,6 +816,9 @@ aggregation/loss/radius，当前无新增失败，下一编号仍为`V67-F63`。
   `10:{1059,1071}`，保留已证实`01:{0016}`、`05:{0523}`。
 - r2复用780已提取members，只扫描04/06/10；不改cohort、target、models、gates或claim。下一编号=`V67-F65`。
 
+P87/P88分别以Deep Sets与set attention填充纯IO等待，均在target read前冻结；当前无新增失败，下一编号仍为
+`V67-F65`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

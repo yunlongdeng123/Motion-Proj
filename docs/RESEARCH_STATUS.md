@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P87 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P88 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -45,6 +45,11 @@ P81 prep r1证明nuScenes blob archives不按scene-table index百位切分：只
 该恢复延长IO后，P87利用GPU训练learned set encoder。参考Deep Sets（NeurIPS 2017）与Set Transformer（ICML 2019），
 每条τ取6m内最近16个visited Actor rows，逐元素`256/128`编码后masked mean+max pooling，再`256/128`解码any-failure
 risk；Actor-only同结构。它区别于P86对raw features固定min/mean/max，不做cap/pooling sweep；约98% GPU、3.0GiB。
+
+P87 source训练完成并在test rows前冻结后，P88继续利用r2 tar时间训练Set Transformer-inspired交互模型：相同最近16个
+visited Actor set，`d_model=128`、4 heads、2 self-attention layers与1个learned pooling seed；Query/Actor-only
+同结构，固定4,000 epochs与2,048 pair batch。它检验Actor之间的交互，而非P87独立element编码；当前GPU约99%、
+总显存11.4GiB（含所有冻结待评模型），仍无多卡需求。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
