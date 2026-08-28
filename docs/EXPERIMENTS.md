@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P89-ORDINAL-TRAJECTORY-RELIABILITY-01
+
+- 状态：`frozen/queued after P88`；canonical candidate=`20260829T223000Z__ordinal-trajectory-reliability-s0-r1`；
+  protocol/model在P81 target rows出现前冻结。
+- 固定thresholds=`.5/1/2/4m`，共享Deep Sets encoder产生单调递减累计logits；四threshold×四source horizons
+  pairwise等权，另加`.25` max-error Huber。正式fixed-50% selection只用预注册1m head。
+- 目标是检验multi-threshold ordinal supervision能否缓解P67单binary label不稳定；不扫threshold/selection head，
+  不声称conformal coverage或fresh threshold calibration。
+
 ### WS-V67-P88-SET-ATTENTION-TRAJECTORY-RELIABILITY-01
 
 - 状态：`active/GPU training`；canonical candidate=`20260829T221500Z__set-attention-trajectory-reliability-s0-r1`；

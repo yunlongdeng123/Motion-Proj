@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P88 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P89 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -50,6 +50,11 @@ P87 source训练完成并在test rows前冻结后，P88继续利用r2 tar时间�
 visited Actor set，`d_model=128`、4 heads、2 self-attention layers与1个learned pooling seed；Query/Actor-only
 同结构，固定4,000 epochs与2,048 pair batch。它检验Actor之间的交互，而非P87独立element编码；当前GPU约99%、
 总显存11.4GiB（含所有冻结待评模型），仍无多卡需求。
+
+P89也在target read前冻结，但改变监督结构而非架构扫参：对每个visited trajectory的max Actor error同时构造
+`>0.5/1/2/4m`四个ordinal events，共享Deep Sets encoder并用递减累计logits保证阈值有序；四threshold×四horizon
+pair groups等权，1m head是唯一正式selection score。该设计参考CVPR 2018 deep ordinal regression与UAI 2023
+conformal ordinal risk，但不声称conformal guarantee，也不在fresh read后选择threshold。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
