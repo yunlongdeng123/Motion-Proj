@@ -24,6 +24,19 @@ from scripts.run_worldsim_v67_p87_deepset_trajectory_reliability import (
 )
 
 
+def _continuous_loss(prediction: torch.Tensor, target: torch.Tensor, model_config: dict) -> torch.Tensor:
+    objective = str(model_config.get("objective", "huber"))
+    if objective == "huber":
+        return torch.nn.functional.smooth_l1_loss(
+            prediction, target, beta=float(model_config["huber_beta"]),
+        )
+    if objective == "quantile":
+        quantile = float(model_config["quantile"])
+        residual = target - prediction
+        return torch.maximum(quantile * residual, (quantile - 1.0) * residual).mean()
+    raise ValueError(f"unsupported continuous objective: {objective}")
+
+
 @torch.no_grad()
 def _predict_error(
     model: DeepSetRisk, features: torch.Tensor, mask: torch.Tensor, batch_size: int = 4096,
@@ -75,8 +88,8 @@ def main() -> None:
             for group in horizon_groups])
         _, query_prediction = query_model(query_sets[batch], mask[batch])
         _, actor_prediction = actor_model(actor_sets[batch], mask[batch])
-        query_loss = torch.nn.functional.smooth_l1_loss(query_prediction, target[batch], beta=float(model_config["huber_beta"]))
-        actor_loss = torch.nn.functional.smooth_l1_loss(actor_prediction, target[batch], beta=float(model_config["huber_beta"]))
+        query_loss = _continuous_loss(query_prediction, target[batch], model_config)
+        actor_loss = _continuous_loss(actor_prediction, target[batch], model_config)
         (query_loss + actor_loss).backward(); optimizer.step()
         final_query, final_actor = float(query_loss.detach().cpu()), float(actor_loss.detach().cpu())
         if epoch % 250 == 0 or epoch + 1 == int(model_config["epochs"]):
@@ -86,7 +99,7 @@ def main() -> None:
         "maximum_visited_actors": model_config["maximum_visited_actors"],
         "element_dimensions": model_config["element_dimensions"], "decoder_dimensions": model_config["decoder_dimensions"],
         "query_model_state_dict": query_model.state_dict(), "actor_model_state_dict": actor_model.state_dict()},
-        run_dir / "PLAIN_TRAJECTORY_MAX_ERROR.pt")
+        run_dir / str(config.get("model_artifact", "PLAIN_TRAJECTORY_MAX_ERROR.pt")))
     evaluation_path = args.runs_root / config["evaluation_rows"]["run"] / config["evaluation_rows"]["artifact"]
     deadline = time.monotonic() + float(config["evaluation_rows"]["readiness_timeout_seconds"])
     while not evaluation_path.is_file():

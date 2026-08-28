@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p91_quantile_trajectory_max_error.v1
+output_schema_version: worldsim_v67.p91_quantile_trajectory_max_error_summary.v1
+task_id: WS-V67-P91-QUANTILE-TRAJECTORY-MAX-ERROR-01
+hypothesis_id: WS-V67-H-P91-001
+seed: 0
+role: prospective_q90_trajectory_max_actor_error
+verdict_on_pass: supported_q90_trajectory_max_error
+verdict_on_failure: rejected_q90_trajectory_max_error
+model_artifact: QUANTILE_TRAJECTORY_MAX_ERROR.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
+  artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01/20260829T213000Z__trajectory-visited-reliability-s0-r1
+  artifact: FRESH_TEST_H3P5_TRAJECTORY_ACTOR_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 8000
+  horizon_batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: quantile
+  quantile: 0.90
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.50
+locks:
+  source_and_model_protocol_frozen_before_test_target_rows_exist: true
+  q90_log1p_max_actor_error_pinball_without_event_or_rank_loss: true
+  four_source_horizons_equal_batch_weight: true
+  query_and_actor_only_same_deepset_optimizer_and_epochs: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_quantile_actor_cap_pooling_radius_coverage_loss_epoch_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2019/hash/73c03186765e199c116224b68adc5fa0-Abstract.html
+  - https://proceedings.neurips.cc/paper/2021/hash/5b168fdba5ee5ea262cc2d4c0b457697-Abstract.html
+claim_boundary:
+  - q90_conditional_tail_score_for_max_error_over_visited_actor_set
+  - prospective_secondary_model_on_same_P81_test_cohort
+  - no_conformal_or_marginal_coverage_guarantee
+  - open_loop_constant_velocity_actor_failure_target_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
