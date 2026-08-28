@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P80-HORIZON-FILM-ACTOR-SELECTOR-01
+
+- 状态：`frozen / queued after P79 if IO still active`；为query 24维与Actor 19维base features各追加一次
+  `feature×normalized(H)`，形成48/38维受限linear horizon modulation；source rank Huber、1,500 epochs。
+- 模型必须在P75 fresh rows前冻结；同cohort follow-up相对Actor/P75各降5%、相对P76--P79更优者降2%。不扫高阶H项。
+
 ### WS-V67-P79-HORIZON-VREX-ACTOR-SELECTOR-01
 
 - 状态：`frozen / queued after P78 if IO still active`；四个source horizons等权percentile-rank Huber risk，加固定`.10`

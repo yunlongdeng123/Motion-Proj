@@ -753,6 +753,9 @@ P78 fixed-coverage boundary-pair目标也在同一blind时段预注册；只有P
 P79将horizon作为domain做固定risk-variance regularization，只在P78结束且fresh rows仍未ready时运行；明确不包装为完整
 Fishr。当前无新增失败，下一编号仍为`V67-F61`。
 
+P80预注册为一次linear horizon feature modulation，不做高阶interaction/scale sweep；仍只填充fresh IO等待期。
+当前无新增失败，下一编号仍为`V67-F61`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

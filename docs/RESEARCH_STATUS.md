@@ -26,6 +26,10 @@ P74 BCE、P76 pointwise rank和P77全list概率；temperature固定`.10`，模�
 Fishr，训练目标为四horizon等权rank risk加固定`.10` risk-variance penalty；这是轻量V-REx-inspired horizon
 extrapolation，不冒充完整Fishr，也不扫penalty。P79同样必须在P75 H3.5 rows出现前冻结。
 
+P80继续利用IO空档但改变结构而非loss：参考ECCV 2018 FiLM与ICML 2023 DeepTime对普通网络跨forecast horizon外推的
+边界，为每个base feature增加`feature × normalized(H)`交互。训练H端点`.8/3.0`映射到`-1/+1`，H3.5只作受限线性
+系数外推；query/Actor-only容量、rank target与1,500 epochs保持。不做高阶interaction或scale sweep。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC
