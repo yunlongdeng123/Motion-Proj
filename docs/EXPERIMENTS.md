@@ -2,6 +2,13 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P77-LISTNET-ACTOR-SELECTOR-01
+
+- 状态：`frozen / queued after P76`；相同576,032 source rows与query/Actor-only容量，固定temperature `.25`的
+  group-balanced ListNet。每个scene×horizon list等权，target distribution来自连续percentile rank。
+- 模型在P75 rows/metrics可用前冻结；P75首次fresh read后，同cohort development follow-up比较P77、Actor-only、P75、
+  P76与P73的50% selected cost。P77需相对P76再降低2%，不扫temperature或coverage。
+
 ### WS-V67-P76-GROUP-RANK-ACTOR-SELECTOR-01
 
 - 状态：`training`；P75验证LIDAR精确分片IO进行时，用source H `.8/1.5/2.5/3.0`的576,032 rows训练

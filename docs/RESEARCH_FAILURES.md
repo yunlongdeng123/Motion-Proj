@@ -744,6 +744,9 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 边界：r1保留为工程失败；r2不换scene/horizon/model/gate，不加入图像、mask、quality、hash/checksum/fingerprint。
   下一编号=`V67-F61`。
 
+P76 dense percentile-rank与P77 group-balanced ListNet均只读source rows，并在P75 fresh validation rows产生前冻结；它们用于
+填充P75输入IO期间的GPU空档，不改变P75首次fresh read。当前无新增失败，下一编号仍为`V67-F61`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

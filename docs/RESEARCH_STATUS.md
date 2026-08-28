@@ -13,6 +13,11 @@ P76把P74丢失幅度信息的binary half-label改为scene×horizon内连续perc
 P75 validation rows产生前冻结。P75仍拥有首次fresh H3.5 read，P76随后只在同一cohort作透明标注的development follow-up，
 比较fixed-50% actual selected cost，不声称第二次独立确认或absolute calibration。
 
+P76冻结后GPU继续执行P77，不等待tar：参考ICML 2022 decision-focused learning-to-rank与NeurIPS 2021 PiRank，P77用
+group-balanced ListNet cross entropy直接匹配每个scene×horizon的rank probability distribution。temperature固定`.25`，
+每个list等权；同样在P75验证数据ready前冻结。它与P76的区别是优化整张list的相对概率而非逐row rank回归，正式比较仍只
+使用固定50% actual cost且不做temperature/coverage sweep。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC
