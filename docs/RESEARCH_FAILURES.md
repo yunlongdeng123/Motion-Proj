@@ -1183,9 +1183,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - target-unread cohort：`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，四location、10 distinct sessions；
 - frozen decision：directional selected events不多于clearance，并且AUROC gain≥`.02`；P109 checkpoint/projection、baseline floor、
   H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
-- stop rule：一次read；失败登记`V67-F79`并关闭uncertainty-over-geometry claim，不换cohort/metric/floor/model或做recovery。
+- stop rule：一次read；失败登记下一可用编号（P114完成后为`V67-F80`）并关闭uncertainty-over-geometry claim，不换cohort/
+  metric/floor/model或做recovery。
+- failure-ID note：P114先完成并占用`V67-F79`后，P113若失败顺延登记`V67-F80`；编号变化不改变任何scientific decision。
 
-下一可用编号仍为：`V67-F79`。
+下一可用编号：`V67-F80`。
 
 ### P114 freeze note — downstream tail aggregation不占用P113确认
 
@@ -1197,7 +1199,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   形式，若成功下一failure ID仍为`V67-F79`且只能另取未来target-unread cohort；
 - execution：P113 archive IO期间运行6,000-step GPU训练，避免把I/O等待变成研究停顿；不增加hash/checksum/fingerprint或测试矩阵。
 
-下一可用编号仍为：`V67-F79`。
+### V67-F79 — learned monotone tail pooling稀释directional boundary maximum
+
+- 分类：`scientific/downstream-tail-aggregation`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P114-MONOTONE-TAIL-RISK-01/20260830T071000Z__monotone-tail-risk-s0-r1`；
+- symptom：79,478 source trajectories上的balanced BCE降至`.304205`，但consumed P81 AUROC从P109 max的`.967639`
+  降至`.951378`；P96从`.904345`降至`.902976`且fixed50 selected events由0增至1。三项冻结decision全失败；
+- interpretation：occupancy flip由最接近boundary的Actor/time局部tail主导；将top-16 crossing probabilities与independent-union
+  proxy作正权重混合，会把弱、强相关的time/Actor probabilities累积进去。source discrimination改善不能替代跨cohort排序；
+- literature response：task-relevant failure detection支持把预测分布传播到downstream cost，但不保证independence-style pooling适合
+  强时序/多Actor相关的occupancy boundary。当前结果保留直接对齐decision boundary的P109 maximum；
+- resolution：不扫top-k、union公式、model、loss、seed或coverage；P114不进入P113或未来confirmation。P113冻结候选不变；
+- claim impact：无trajectory tail calibrator、collision probability或safety claim；不影响P108 factorization primary与P109/P110
+  directional evidence。
+
+下一可用编号：`V67-F80`。
 
 ### V6.6 当前边界（2026-08-28）
 

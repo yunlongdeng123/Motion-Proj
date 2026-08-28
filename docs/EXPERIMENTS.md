@@ -246,7 +246,8 @@
 
 ### WS-V67-P114-MONOTONE-TAIL-RISK-01
 
-- 状态：`frozen/launch pending`；只使用P109 source与已消费P81/P96 artifacts，不读P113或任何新confirmation target。
+- 状态：`done/rejected development`；canonical=`20260830T071000Z__monotone-tail-risk-s0-r1`；只使用P109 source与
+  已消费P81/P96 artifacts，不读P113或任何新confirmation target。
 - motivation：P109以time/Actor max近似trajectory any-flip risk；参考CoRL task-relevant failure detection，进一步把冻结Actor
   distribution传播为trajectory-level downstream tail，而不是扩展raw query classifier或重训Actor model。
 - fixed method：由P109 diagonal Gaussian和boundary-normal projection得到每Actor/time crossing probability；每trajectory只保留
@@ -254,7 +255,13 @@
   per-scene fixed50；不扫top-k、union、model、loss、seed或coverage。
 - development decision：P81/P96 learned selected events都不多于P109 directional max、两cohort AUROC gain均非负且平均≥`.01`。
   P109在两cohort已是0 selected events，因此本阶段主要检验全排序tail aggregation，不包装成新独立确认或collision probability。
-- execution：P113 archive IO继续运行时占用3090；P113 cohort/model/decision完全不变，P114即使成功也只能另冻未来cohort确认。
+- result：79,478 source trajectories/2,209 events，final balanced BCE=`.304205`。P81 learned/max/clearance selected
+  events=`0/0/1`，AUROC=`.951378/.967639/.914039`；P96=`1/0/13`，AUROC=`.902976/.904345/.798793`。
+  两cohort AUROC gain=`-.016261/-.001369`，三项decision全失败，verdict=
+  `rejected_development_monotone_downstream_tail_risk`（`V67-F79`）。
+- interpretation：top-k/union pooling把局部最危险boundary crossing与更多弱概率混合，source BCE下降未迁移为排序收益；保留
+  P109 directional max，关闭top-k/union/model/seed/coverage recovery。wall=`13.66s`、peak GPU=`.05352GiB`、RSS=`1.063GiB`。
+- execution：GPU训练与P113 archive IO实际重叠；P113 cohort/model/decision完全不变且未被P114读取。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

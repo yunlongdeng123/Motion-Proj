@@ -24,6 +24,7 @@
 | P110 | `run://worldsim_v67/WS-V67-P110-DIRECTIONAL-CONFIRMATION-01/20260830T064000Z__directional-confirmation-s0-r1` | same-read directional=`1`，AUROC=.96027 |
 | P111 | `run://worldsim_v67/WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01/20260830T064500Z__clearance-confirmation-baseline-s0-r1` | same-read clearance=`1`，AUROC=.91644 |
 | P112 | `run://worldsim_v67/WS-V67-P112-NONLINEAR-GAUSSIAN-CROSSING-01/20260830T065000Z__nonlinear-gaussian-crossing-s0-r1` | P96 nonlinear 3/.85852 vs linear 0/.90434；reject |
+| P114 | `run://worldsim_v67/WS-V67-P114-MONOTONE-TAIL-RISK-01/20260830T071000Z__monotone-tail-risk-s0-r1` | P81/P96 AUROC gain=`-.01626/-.00137`；reject |
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | `PENDING_FINAL_FILL` |
 
 P81/P95/P96/P102/P103 exact run locators应以对应canonical summary与`docs/EXPERIMENTS.md`为最终准绳；若本索引的早期
@@ -41,6 +42,7 @@ timestamp与run tree不一致，只修locator，不重算metric。
 | directional uncertainty | P109 consumed ×2 → P110 secondary | P110 directional=`1`, AUROC=.96027 | strong secondary ranking |
 | geometry-only解释 | P111 same read | clearance=`1`, AUROC=.91644 | event tie, ranking gap |
 | nonlinear sampled crossing | P112 consumed ×2 | cross-cohort worse than linear | reject Monte Carlo recovery |
+| downstream monotone tail pool | P114 consumed ×2 | P81/P96都低于P109 max | reject aggregation recovery |
 | learned uncertainty超过clearance | P113 independent | `PENDING_FINAL_FILL` | `PENDING_FINAL_FILL` |
 
 ## 3. Failure map
@@ -54,7 +56,8 @@ timestamp与run tree不一致，只修locator，不重算metric。
 | `V67-F76` | resolved pre-run | launcher工作目录丢失；0 scientific exposure |
 | `V67-F77` | resolved pre-optimizer | NPZ原子交付race；0 optimizer step |
 | `V67-F78` | closed negative | nonlinear Gaussian sampling跨cohort退化 |
-| `V67-F79` | reserved for P113 | only if frozen one-shot decision fails |
+| `V67-F79` | closed negative | P114 top-k/union tail pool稀释P109 max |
+| `V67-F80` | reserved for P113 | only if frozen one-shot decision fails |
 
 ## 4. Artifact inventory
 
@@ -87,4 +90,3 @@ timestamp与run tree不一致，只修locator，不重算metric。
 3. `docs/RESEARCH_FAILURES.md`；
 4. `docs/RESEARCH_STATUS.md`与`AUTORESEARCH_STATE.current.json`；
 5. 本index与`V67_ARXIV_TECHNICAL_REPORT.md`。
-

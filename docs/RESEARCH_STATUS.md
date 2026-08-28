@@ -184,6 +184,12 @@ proxy，再训练只有正权重的monotone tail pool；网络不读raw Actor/qu
 要求两cohort fixed50事件均不退化、AUROC均不退化且平均增益≥`.01`。不扫top-k、pool、loss、seed或coverage；无论结果
 如何都不得在P113 cohort上选择P114，也不修改P113 frozen decision。
 
+P114的6,000-step GPU训练已完成并终局拒绝。79,478 source trajectories含2,209 events，balanced BCE降至`.30420`；
+consumed P81 learned/max/clearance selected events=`0/0/1`，但AUROC `.95138`低于P109 max的`.96764`；P96为
+`1/0/13`且AUROC `.90298`低于`.90434`。三项decision全失败，登记`V67-F79`。这表明多个crossing probability的
+learned positive pooling稀释了最接近decision boundary的局部tail signal；保留P109 max，不扫top-k/union/model/seed。
+P113仍按原冻结protocol独立运行；若P113失败，使用下一编号`V67-F80`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

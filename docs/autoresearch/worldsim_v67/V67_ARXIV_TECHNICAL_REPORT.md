@@ -106,6 +106,11 @@ P112尝试用冻结P109 Gaussian做256-sample nonlinear Euclidean crossing。它
 AUROC从linearized的`0.90434`降至`0.85852`，因此拒绝并关闭sample-count/full-covariance/distribution sweep。当前证据支持
 与decision boundary对齐的linear projection，不支持将finite-sample nonlinear Monte Carlo包装为更可靠的collision probability。
 
+P114进一步检验task-relevant downstream aggregation：冻结P109，把每trajectory top-16 crossing probabilities和
+independent-union proxy送入只有正权重的monotone pool。虽然79,478 source trajectories上的balanced BCE降至`.304205`，
+P81 AUROC却从`.967639`降至`.951378`；P96从`.904345`降至`.902976`，fixed50 events还从0增到1。该结果说明
+occupancy flip更接近局部boundary-tail事件，累积多个强相关time/Actor probability会稀释signal；保留P109 max并关闭聚合扫参。
+
 ### 2.5 P113独立uncertainty-vs-clearance确认
 
 P113在任何target read前冻结新的10-scene、四location cohort：`0094/0331/0521/0003/0013/0038/0797/0920/
@@ -135,6 +140,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P108 | independent scalar uncertainty | `5 / 35 / 20` | `.95107 / .77605` | primary支持 |
 | P110 | same-read directional secondary | `1 / 53 / 20` | `.96027 / .69142` | secondary支持 |
 | P111 | same-read clearance-only | `1 / n/a / n/a` | `.91644 / n/a` | 强geometry baseline |
+| P114 | consumed downstream tail pool | P81/P96=`0 / 1` | `.95138 / .90298` | reject；均低于P109 max |
 | P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
 
 ## 4. 失败如何推动研究对象变化
@@ -146,7 +152,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | `V67-F74--F75` | end-to-end occupancy query classifier可独立迁移 | Actor distribution与candidate query解耦 |
 | `V67-F76--F77` | launcher与NPZ交付工程事件 | 绝对入口与partial→atomic replace；不加校验门控 |
 | `V67-F78` | nonlinear finite-sample crossing必优于linear boundary projection | 保留directional linearized score |
-| `V67-F79` | P113预留 | 由one-shot uncertainty-vs-clearance结果决定 |
+| `V67-F79` | monotone top-k/union tail pooling可提升P109 max | 终局拒绝；P113失败ID顺延F80 |
 
 ## 5. 系统与资源
 
@@ -154,6 +160,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - P107/P109各训练916,722个Actor-time tokens、6,000 steps；P107 wall约30.01s，P109训练与P108归档I/O重叠。
 - P108并行流式扫描7个shards、精确提取3,877/3,877 files并预处理10/10 scenes，wall约2,439.39s。
 - P112 nonlinear试验只做固定256 samples、seed0的一次read，不做sample/seed/distribution sweep。
+- P114在P113归档I/O期间完成6,000-step GPU训练，wall约13.66s，未读取P113 target。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
@@ -186,4 +193,3 @@ geometry进入解析计算，才获得稳定的scene-level independent evidence�
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.
 - Casas et al., [Implicit Latent Variable Model for Scene-Consistent Motion Forecasting](https://openaccess.thecvf.com/content/ICCV2023/html/Casas_Implicit_Latent_Variable_Model_for_Scene-Consistent_Motion_Forecasting_ICCV_2023_paper.html), ICCV 2023.
 - [Open-source collision-probability estimation with stochastic boundary crossing](https://github.com/TUM-AVS/Collision-Probability-Estimation), 2025.
-
