@@ -161,6 +161,17 @@ consumed P81仍为0 events且AUROC `.97228`（线性`.96764`），但P96退化�
 `0/.90434`），故verdict rejected并登记`V67-F78`。这说明当前有限样本的nonlinear Monte Carlo没有改善跨cohort
 排序，保留P109解析linearized projection，关闭sample-count/distribution sweep；P108/P110协议不变。
 
+P108 scene-level independent primary已支持。7个shards并行流式读取3,877/3,877 files，10/10 scenes preprocess完成，
+prep wall=`2439.39s`；全程无locator修正。fresh 8,766 rows形成1,531 trajectories/116 flips；fixed50选择764条时，
+P107 scalar uncertainty τ-risk/Actor-only/P75=`5/35/20`，absolute/query-over-Actor reduction=`91.36%/85.71%`，
+AUROC=`.95107/.77605`，两项冻结decision均通过，verdict=
+`supported_independent_actor_uncertainty_boundary_factorization`。独立范围仅scene-level，不是session-level或safety。
+
+同一read上，target出现前冻结的P110 directional secondary为`1/53/20`，absolute/query-over-Actor reduction=
+`98.27%/98.11%`，AUROC=`.96027/.69142`，亦支持。P111 no-learning clearance-only同为1 event但AUROC仅`.91644`。
+因此P109 direction-aware uncertainty在全排序上相对纯geometry有明显增量，但fixed50 event count与clearance持平；不能把
+唯一剩余事件的优势或safety authority归因于learned uncertainty。P108是唯一independent primary，P110/P111不冒充额外cohort。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

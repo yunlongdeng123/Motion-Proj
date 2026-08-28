@@ -222,9 +222,28 @@
 - 不扫sample count、full covariance、distribution、seed或aggregation；保留更稳的P109 linearized boundary projection。
   该negative mechanism不影响P108 primary/P110 frozen secondary。
 
+### WS-V67-P110-DIRECTIONAL-CONFIRMATION-01
+
+- 状态：`done/supported prospective secondary`；canonical=`20260830T064000Z__directional-confirmation-s0-r1`。
+- P109 checkpoint、normalization、diagonal Gaussian、boundary-normal linear projection、time/Actor max、H3.5、fixed50和
+  两项decision在P108 rows出现前冻结；只复用P108同一read，不是第二个independent cohort，不能替换primary。
+- result：fresh 1,531 trajectories/116 flips；fixed50 directional/Actor/P75=`1/53/20`，absolute/query-over-Actor
+  reduction=`98.27%/98.11%`，AUROC=`.96027/.69142`；两项decision通过，verdict=
+  `supported_prospective_secondary_directional_uncertainty`。wall=`2412.89s`主要等待IO，peak GPU=`.03637GiB`。
+- P111 clearance-only也选1 event，但AUROC `.91644`；因此directional uncertainty改善全排序，但fixed50事件数未超过
+  no-learning geometry。只保留task-conditioned reliability ranking，不写calibrated collision probability或safety。
+
+### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
+
+- 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
+- 完全不训练：`.05m` floor的inverse absolute signed clearance，经time/Actor max后per-scene fixed50；所有参数在P108
+  rows前冻结，不改变P108/P110 decision。
+- result：1,531 trajectories/116 flips中选择764条/1 event，AUROC=`.91644`；wall=`2162.16s`主要等待rows。
+  它表明边界几何本身很强，也是对P108/P110贡献归因的必要限制。
+
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 
-- 状态：`frozen/not read`；primary run=`20260830T063500Z__uncertainty-tube-confirmation-s0-r1`，prep=
+- 状态：`done/supported independent scene-level primary`；primary run=`20260830T063500Z__uncertainty-tube-confirmation-s0-r1`，prep=
   `20260830T063000Z__uncertainty-tube-confirmation-prep-s0-r1`。
 - cohort：仍未使用且不在V4/V67 processed roots的official val scenes，按official order并平衡四location，cohort内取10个
   distinct sessions：`0092/0329/0555/0012/0035/0268/0795/0917/0925/1060`，indices=
@@ -238,6 +257,13 @@
   但P107保持唯一primary。
 - P111 no-learning clearance baseline也已在rows出现前冻结并等待同一artifact：`.05m` floor、absolute signed clearance、
   time/Actor max、fixed50；只作mechanism描述，不改变P108/P110 decision，也不扫floor或aggregation。
+- prep result：7/7 shards exact，3,877/3,877 LIDAR files newly extracted，10/10 preprocess done，单scene
+  `59.96--66.55s`，wall=`2439.39s`；没有换shard/scene/model/decision。
+- primary result：8,766 rows、1,531 trajectories、116 flips；fixed50 P107 query/Actor/P75=`5/35/20`，absolute/
+  query-over-Actor reduction=`91.36%/85.71%`，AUROC=`.95107/.77605`；两项decision通过，verdict=
+  `supported_independent_actor_uncertainty_boundary_factorization`。wall=`2435.26s`主要等待prep，peak GPU=`.03637GiB`。
+- descriptive P111 clearance-only选1 event，少于P107的5，故P108 primary支持的是相对Actor-only/P75的冻结因子化候选，
+  不能单独证明learned scalar uncertainty优于纯boundary geometry；该限制不事后修改primary verdict。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

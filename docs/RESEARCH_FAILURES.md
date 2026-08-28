@@ -1162,6 +1162,20 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F79`。
 
+### P108/P110/P111 outcome note — independent factorization成立但clearance baseline限制贡献归因
+
+- P108 canonical：`run://worldsim_v67/WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01/20260830T063500Z__uncertainty-tube-confirmation-s0-r1`；
+  fresh fixed50 P107/Actor/P75=`5/35/20`，AUROC `.95107/.77605`，2/2 decisions，scene-level independent primary支持；
+- P110 same-read prospective secondary：directional/Actor/P75=`1/53/20`，AUROC `.96027/.69142`，2/2 decisions；
+- P111 frozen no-learning comparator：clearance-only=`1` event，AUROC `.91644`；它优于P107 fixed50 event count并与P110持平，
+  但全排序低于P110；
+- interpretation：证据支持“Actor uncertainty distribution与candidate τ boundary解析分离”相对Actor-only/P75稳定迁移，
+  也支持direction-aware score的ranking增量；但强geometry baseline阻止把全部事件收益写成learned uncertainty贡献；
+- claim boundary：P108只scene-level independent；P110/P111同一read；无session-level、calibrated probability、collision、
+  planner、policy、closed-loop或safety claim。无新failure，下一编号保持`V67-F79`。
+
+下一可用编号仍为：`V67-F79`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
