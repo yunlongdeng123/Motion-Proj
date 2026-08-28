@@ -2,6 +2,11 @@
 
 ## WorldSim V6.7 P58 case-selective expert rejected / Actor-state pivot（2026-08-29）
 
+P60已冻结并启动：从125个已有processed scenes的dense Actor tracks直接构造query rows，非留出scene只用
+H=`.8/1.5s`训练；scene index `%5==0`只在H=`2.0s`正式读取。query-conditioned和Actor-only同容量MLP在GPU
+同时训练，confirmation数据由CPU线程重叠物化。对象是`tau`附近Actor-state constant-velocity extrapolation error的
+exposure-weighted reliability，不是反事实Actor响应。只用Spearman、相对baseline MAE和AUROC三门，不扫参。
+
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
 coverage/minimum group=`.64/.50`；P58/P53/P31/fixed reduction=`.777488/.774840/.797323/.317934`。

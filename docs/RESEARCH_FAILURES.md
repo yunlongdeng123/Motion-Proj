@@ -575,6 +575,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 结论：不扫gate结构/温度/top-k，不读取P59 replication quality；case-selective expert关闭。检索PRECOG、MotionLM与
   uncertainty-aware actor prediction后，下一步改变预测对象为given-`tau` Actor-state reliability。下一编号=`V67-F46`。
 
+### V67-F46 — P60 trajectory-conditioned Actor-state reliability候选
+
+- 分类：`prediction-object/trajectory-conditioned-actor-state-reliability`；状态：`active_materialization_then_gpu_training`。
+- 调研迁移：PRECOG（ICCV 2019）按受控Ego goal条件化多Actor forecast；MotionLM（ICCV 2023）支持条件rollout；
+  CVPR 2018证明trajectory uncertainty可指示实际预测误差。P60迁移为当前单卡可训练的小型reliability estimator。
+- 对象：Actor常速度H-step endpoint error乘`exp(-predicted tau separation/6m)`；只使用logged dense tracks监督，
+  不声称counterfactual response。
+- Protocol：scene `%5!=0`、H `.8/1.5s`训练；scene `%5==0`、H `2.0s`confirmation；query MLP与同容量
+  Actor-only baseline同read。三门=`Spearman .55 / MAE gain 10% / AUROC .75`。
+- 锁：不扫width、history、exposure radius、error threshold、split或horizon；失败即改变Actor target/forecast family，
+  不回到world-state authority补救。下一编号=`V67-F47`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

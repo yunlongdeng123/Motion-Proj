@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P60-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
+
+- 状态：`training-data materialization running；GPU training follows immediately`。
+- 对象：给定candidate Ego `tau`和H，预测与其接近的Actor常速度外推endpoint error乘冻结distance exposure；
+  Actor-only同容量MLP为同read baseline，不使用counterfactual reaction label。
+- Split：processed scene index `%5!=0`的H=`.8/1.5s`训练；`%5==0`且H=`2.0s`一次confirmation，scene和H均未见。
+- 三门：Spearman `>=.55`、相对Actor-only MAE reduction `>=10%`、exposed unreliable AUROC `>=.75`；
+  width/threshold/history/radius/split不扫参。confirmation I/O与GPU训练重叠。
+
 ### WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01
 
 - 状态：`done/rejected`；canonical=`20260829T090000Z__case-gated-gradient-s0-r1`；P6R-H0.8
