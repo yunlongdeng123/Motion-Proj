@@ -1,0 +1,80 @@
+schema_version: worldsim_v67.p96_occupancy_flip_confirmation.v1
+output_schema_version: worldsim_v67.p96_occupancy_flip_confirmation_summary.v1
+task_id: WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P96-001
+role: independent_remaining_test_role_trajectory_occupancy_flip_confirmation
+verdict_on_pass: supported_independent_trajectory_occupancy_flip
+verdict_on_failure: rejected_independent_trajectory_occupancy_flip
+evaluation_data:
+  scene_names: [scene-0771, scene-0039, scene-0635, scene-0099, scene-0101, scene-1066, scene-0630, scene-0910, scene-0556, scene-1068]
+  scene_shards:
+    scene-0771: "08"
+    scene-0039: "01"
+    scene-0635: "06"
+    scene-0099: "01"
+    scene-0101: "01"
+    scene-1066: "10"
+    scene-0630: "06"
+    scene-0910: "09"
+    scene-0556: "03"
+    scene-1068: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p96_confirmation_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizon_seconds: 3.5
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-PREP-01
+  run_id: 20260830T003500Z__occupancy-flip-confirmation-prep-s0-r1
+frozen_p95:
+  run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01/20260830T002500Z__trajectory-occupancy-flip-s0-r1
+  artifact: TRAJECTORY_OCCUPANCY_FLIP.pt
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  objective: binary_bce
+  failure_threshold_m: 0.5
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  remaining_ten_test_role_scenes_frozen_before_sensor_or_target_read: true
+  p95_model_normalization_target_radius_width_threshold_and_coverage_frozen: true
+  target_is_predicted_vs_observed_path_occupancy_decision_flip: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  one_independent_confirmation_read_only: true
+  no_scene_shard_model_radius_threshold_width_coverage_or_gate_recovery_after_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+claim_boundary:
+  - independent_remaining_ten_test_role_scenes_at_H3p5
+  - fixed_coverage_trajectory_conditioned_occupancy_decision_reliability
+  - constant_velocity_predicted_path_vs_observed_actor_path
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim
