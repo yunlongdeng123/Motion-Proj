@@ -117,6 +117,10 @@ boundary-crossing risk，再按time→Actor max形成trajectory score。一次�
 tube max和frozen P75；不扫quantile、clearance floor、聚合、结构、loss或coverage。materializer先交付source artifact，
 训练进程随即占用3090，并与两个development artifact的CPU/IO生成重叠；当前无需多卡、无新target read。
 
+首次model launcher因shell后台运算符使工作目录回到`/root`，以相对路径寻找脚本并在run创建/source读取前退出；prep
+未受影响。已立即用绝对script/config/PYTHONPATH重启同一canonical model run，等待source交付后自动训练；该纯入口事件
+登记`V67-F76`，科学协议和GPU训练内容不变。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

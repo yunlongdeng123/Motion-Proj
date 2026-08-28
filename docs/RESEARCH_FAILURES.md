@@ -1059,6 +1059,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F76`。
 
+### V67-F76 — P107首次model launcher在后台分组后丢失仓库工作目录
+
+- 分类：`engineering/process-launch`；状态：`resolved_before_run_creation`；
+- symptom：同一SSH命令中prep后使用`&`，shell把带`cd`的前段置入后台子shell，model随后从`/root`解析相对
+  `scripts/run_worldsim_v67_p107_actor_uncertainty_tube.py`并立即报文件不存在；
+- exposure：0 model run directory、0 source/development load、0 optimizer step、0新target read；prep进程正常继续；
+- resolution：不改代码/数据/quantile/floor/aggregation/steps/coverage，只以绝对script、config与PYTHONPATH启动原定
+  canonical r1；model等待source artifact后自动接管GPU；
+- prevention：后续独立后台作业均显式使用绝对入口，避免依赖同一复合shell中的`cd`作用域；不增加校验或测试矩阵；
+- claim impact：纯launcher failure，不计科学trial，不改变P107 verdict边界。
+
+下一可用编号：`V67-F77`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

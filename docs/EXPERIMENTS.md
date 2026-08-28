@@ -176,6 +176,8 @@
   floor、aggregation、width、loss、source或coverage。参考MultiPath的Actor uncertainty→closed-form collision query分解。
 - 执行调度：prep保存source后继续生成两个development artifacts；model进程等待source，随后在3090训练并与CPU/IO重叠。
   当前未读新sensor/target，P81/P96的既有结论与P96/P103 terminal verdict均不改变。
+- 首次model launcher受shell `&`分组影响从`/root`解析相对脚本，在run创建、source/target读取和optimizer step前退出
+  （`V67-F76`）；prep持续运行。仅改用绝对script/config/PYTHONPATH重新启动同一canonical r1，科学参数不变。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
