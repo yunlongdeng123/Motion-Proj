@@ -235,7 +235,8 @@
 
 ### WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01
 
-- 状态：`frozen/pre-target exact locator recovery`；prep r1=`20260830T070000Z__directional-vs-clearance-prep-s0-r1`，primary=
+- 状态：`done/rejected independent scene-level`；prep r1=`20260830T070000Z__directional-vs-clearance-prep-s0-r1`，prep r2=
+  `20260830T073500Z__directional-vs-clearance-prep-s0-r2`，primary=
   `20260830T070500Z__directional-vs-clearance-s0-r1`。
 - cohort：target-unread official val的next per-location order，`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，
   indices=`76/259/411/2/12/36/617/705/711/801`；四location、cohort内10 distinct sessions，仍只scene-level independent。
@@ -245,8 +246,15 @@
   参考CoRL task-relevant failure detection对downstream cost distribution的传播与2025 open-source stochastic boundary crossing。
 - prep r1：冻结map把scene-0003指向shard04；六个初始shards完成后，其余9 scenes已有3,517 files，scene-0003仍缺384/384，
   因而在preprocess和target row materialization前失败（`V67-F82`）。scene-0003与历史scene-0344共享session但落在不同public part；
-  nuScenes官方没有session-part index。exact locator已完整排除02/03，正在并行扫描剩余7 parts并在命中时直接提取；primary
-  evaluator仍等待processed roots，target read=false。只允许修正scene-0003 shard并以新prep run-id恢复。
+  nuScenes官方没有session-part index。exact locator完整排除02/03/05/06/08/09，并在01命中384/384后停止07/10无效workers。
+- recovery：locator I/O期间先预处理其余9 scenes；config只改`scene-0003:04→01`。prep r2映射3,894/3,894、new extraction=0，
+  9 scenes reused，scene-0003 preprocess=`60.63s`，r2 wall=`71.41s`；`V67-F82`在target read前关闭。
+- result：fresh 7,206 rows、1,525 trajectories、79 occupancy flips；fixed50选择761条，directional/clearance/Actor/P75=
+  `6/5/38/20`。Directional/clearance AUROC=`.920155/.875291`，gain=`+.044864`通过`.02`门，但events `6<=5`失败；
+  1/2 decisions，verdict=`rejected_independent_directional_uncertainty_gain_over_clearance`（`V67-F84`）。
+- interpretation：learned directional uncertainty在全排序上独立超过clearance，却未在冻结fixed50 tail稳定超过geometry；整体
+  uncertainty-over-clearance claim拒绝，不降门、不扫coverage/floor/model，不在该read上试P117。primary wall=`5268.06s`
+  主要等待input，peak GPU=`.03241GiB`、RSS=`.571GiB`。
 
 ### WS-V67-P114-MONOTONE-TAIL-RISK-01
 

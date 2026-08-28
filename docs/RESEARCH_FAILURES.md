@@ -1270,15 +1270,16 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 ### V67-F82 — scene-0003 session跨public archive part导致冻结locator不完整
 
-- 分类：`engineering/data-locator`；状态：`active_pre_target_exact_locator_recovery`；
+- 分类：`engineering/data-locator`；状态：`resolved_pre_target_exact_locator_recovery`；
 - failed run：`run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-PREP-01/
   20260830T070000Z__directional-vs-clearance-prep-s0-r1`；
 - symptom：初始六shard extraction得到其余9 scenes的3,517 files，但scene-0003的384个LIDAR members全部缺失；runner在
   preprocess、target row materialization和任何metric前按exact extraction合同退出，P113 evaluator保持等待；
 - root cause：scene-0003与P81 scene-0344共享session，但先前scene-0344命中的shard04不能推出同session早期scene所在part；
   nuScenes公开10-part archive可跨session切分，官方devkit只要求合并全部parts且不提供session→part index；
-- recovery：不换scene/model/decision。完整排除02/03后，并行扫描01/05/06/07/08/09/10的384个exact names，命中即直接
-  提取；随后仅修正scene-0003 locator并用新prep run-id恢复。无hash/checksum/fingerprint或额外quality gate；
+- recovery：不换scene/model/decision。完整排除02/03/05/06/08/09，在01命中384/384并直接提取，停止尚未完成的07/10；
+  locator期间先预处理9个ready scenes。仅修正`scene-0003:04→01`，prep r2映射3,894/3,894、复用9 scenes并在60.63s
+  完成scene-0003，总wall71.41s。无hash/checksum/fingerprint或额外quality gate；
 - claim impact：纯pre-target engineering failure，不影响P113冻结scientific protocol，也不产生任何confirmation result。
 
 下一可用编号：`V67-F83`。
@@ -1310,6 +1311,26 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   但论文明确报告P118 negative mechanism；不影响P113冻结P109 primary。
 
 下一可用编号：`V67-F84`。
+
+### V67-F84 — independent AUROC增量未转化为fixed50事件优势
+
+- 分类：`scientific/selective-tail-transfer`；状态：`closed_negative_after_one_shot_confirmation`；
+- canonical：`run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/
+  20260830T070500Z__directional-vs-clearance-s0-r1`；
+- frozen read：P109 checkpoint/normalization/linear projection、`.05m` clearance、H3.5、time/Actor max、per-scene fixed50与
+  10-scene cohort全在target前冻结；只比较directional和clearance两门；
+- symptom：7,206 rows/1,525 trajectories/79 flips上，directional AUROC `.920155`较clearance `.875291`提高`.044864`
+  并通过`.02`门，但selected events=`6 vs 5`，严格noninferiority门失败；1/2 decisions；
+- interpretation：learned Actor uncertainty改善全局排序，却没有稳定控制固定coverage处的rare-event tail；强clearance geometry
+  在单一operating point仍可更好。AUROC与fixed-budget selective risk不可互相替代；
+- literature response：NeurIPS 2022 partial-AUC optimization与fixed-coverage selective prediction工作说明全局AUC可掩盖相关
+  FPR/coverage区间。本结果支持下一路线直接研究ranked range/selective tail objective，而不是继续堆Gaussian/quantile结构；
+- resolution：关闭当前P109 uncertainty-over-clearance claim；不降coverage/floor/gate，不换P113 cohort，不在本read上试P117，
+  不做第二P113 recovery。P108相对Actor/P75的scene-level factorization primary保留；
+- claim impact：可写independent AUROC ranking gain，但必须同时写composite verdict rejected；无calibrated probability、collision、
+  planner、policy、closed-loop或safety claim。
+
+下一可用编号：`V67-F85`。
 
 ### V6.6 当前边界（2026-08-28）
 

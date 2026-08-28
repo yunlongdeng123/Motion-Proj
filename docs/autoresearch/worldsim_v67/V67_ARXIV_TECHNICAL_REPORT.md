@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P113 outcome pending final fill`
+- 报告状态：`P113 complete; arXiv evidence current through P118`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -141,10 +141,14 @@ AND
 directional AUROC - clearance-only AUROC >= 0.02
 ```
 
-P113 outcome：`PENDING_FINAL_FILL`。
+P113 outcome：fresh 7,206 rows、1,525 trajectories、79 flips，fixed50 directional/clearance/Actor/P75=
+`6/5/38/20`。Directional AUROC=`.920155`，clearance=`.875291`，增量`+.044864`通过`.02`门；但events
+noninferiority `6<=5`失败。整体verdict=`rejected_independent_directional_uncertainty_gain_over_clearance`。这支持独立
+全排序增量，却拒绝固定coverage tail上的learned-uncertainty-over-geometry claim；两者必须同时报告。
 
-输入工程注：prep r1的scene-0003冻结shard locator缺失384/384 members，在任何preprocess/target read前退出；其余9 scenes
-的3,517 files已提取。官方archive无session→part index，当前只作exact member locator恢复，不换cohort或scientific protocol。
+输入工程注：prep r1的scene-0003冻结shard locator缺失384/384 members，在任何preprocess/target read前退出；官方archive
+无session→part index。exact locator在shard01命中全部members，config只改`04→01`；prep r2映射3,894/3,894，复用已并行
+预处理的9 scenes并完成scene-0003，target前关闭`V67-F82`，cohort/scientific protocol不变。
 
 ## 3. 核心结果表
 
@@ -166,7 +170,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P116 | consumed directional q90 field | P81/P96=`0 / 6` | `.96384 / .88932` | reject；均低于P109 |
 | P117 | consumed full-covariance Gaussian | P81/P96=`0 / 0` | `.97254 / .91366` | development support；mean gain `+.00711` |
 | P118 | same-checkpoint rho ablation | P81/P96均`0 / 0` | rho gain=`+.00030 / -.00012` | reject direct-rho mechanism |
-| P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
+| P113 | independent directional vs clearance | directional/clearance=`6 / 5` | `.92016 / .87529` | reject composite；AUROC gate pass |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -182,6 +186,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | `V67-F81` | distribution-free directional q90可超过Gaussian | 两cohort均无增益；保留P109 standardized margin |
 | `V67-F82` | inferred session shard可直接定位scene-0003 | pre-target exact locator失败；扫描公开parts恢复 |
 | `V67-F83` | P117收益由conditional rho推理项直接产生 | zero-rho消融几乎不变且P96反向 |
+| `V67-F84` | 全局AUROC增量可保证fixed50 rare-event优势 | AUROC gain `+.04486`但events `6>5` |
 
 ## 5. 系统与资源
 
@@ -205,6 +210,8 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - directional boundary projection在development和一个prospective secondary read上提供强排序；
 - full bivariate covariance在两个consumed cohorts上进一步提升directional AUROC，但尚无独立确认；
 - clearance-only是必须正视的强baseline，learned uncertainty的独立增量必须由P113单独裁决。
+- P113确认了learned score的独立AUROC增量，但拒绝其fixed50 event noninferiority；后续应研究ranked-range/selective-tail
+  objective，而不是把全局AUROC当作固定预算tail保证。
 
 本报告不支持：
 

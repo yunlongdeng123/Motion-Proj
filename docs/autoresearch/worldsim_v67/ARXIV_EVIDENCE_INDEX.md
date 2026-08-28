@@ -2,8 +2,8 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P113 outcome pending final fill`
-- 当前主结论：P108 scene-level independent factorization支持；P113独立uncertainty-over-clearance归因待回填
+- 状态：`P113 complete; evidence current through P118`
+- 当前主结论：P108 scene-level independent factorization支持；P113 AUROC增量成立但fixed50 uncertainty-over-clearance整体拒绝
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
 `docs/RESEARCH_FAILURES.md`为准，实时状态以`docs/RESEARCH_STATUS.md`为准，论文叙事见
@@ -29,7 +29,7 @@
 | P116 | `run://worldsim_v67/WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01/20260830T072000Z__directional-quantile-field-s0-r1` | P81/P96 AUROC gain=`-.00380/-.01503`；reject |
 | P117 | `run://worldsim_v67/WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01/20260830T072500Z__full-covariance-actor-uncertainty-s0-r1` | P81/P96 AUROC gain=`+.00490/+.00932`；development support |
 | P118 | `run://worldsim_v67/WS-V67-P118-CORRELATION-ABLATION-01/20260830T073000Z__correlation-ablation-s0-r1` | conditional-vs-zero rho gain=`+.00030/-.00012`；reject mechanism |
-| P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | `PENDING_FINAL_FILL` |
+| P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | directional/clearance events=`6/5`；AUROC gain=`+.04486`；composite reject |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
@@ -50,7 +50,7 @@
 | directional distribution-free q90 | P116 consumed ×2 | P81/P96都低于P109 Gaussian | reject quantile recovery |
 | full bivariate residual covariance | P117 consumed ×2 | P81/P96均0 events，mean AUROC gain=`+.00711` | development mechanism support |
 | conditional rho direct contribution | P118 same-checkpoint ablation | mean gain=`+.000094`且P96反向 | reject direct-rho attribution |
-| learned uncertainty超过clearance | P113 independent | `PENDING_FINAL_FILL` | `PENDING_FINAL_FILL` |
+| learned uncertainty超过clearance | P113 independent | AUROC `.92016>.87529`但events `6>5` | reject fixed50 composite claim |
 
 ## 3. Failure map
 
@@ -66,9 +66,9 @@
 | `V67-F79` | closed negative | P114 top-k/union tail pool稀释P109 max |
 | `V67-F80` | closed negative | P115 low-frequency Actor sequence在P96过度平滑 |
 | `V67-F81` | closed negative | P116 directional q90低于P109 standardized margin |
-| `V67-F82` | active pre-target recovery | P113 scene-0003 exact archive locator incomplete |
+| `V67-F82` | resolved pre-target | P113 scene-0003 exact archive locator corrected `04→01` |
 | `V67-F83` | closed negative | P118 conditional-rho direct mechanism not supported |
-| `V67-F84` | reserved for P113 | only if frozen one-shot scientific decision fails |
+| `V67-F84` | closed negative | P113 AUROC gain did not yield fixed50 event noninferiority |
 
 ## 4. Artifact inventory
 
@@ -94,6 +94,7 @@
 - fixed-coverage排序不授权planner、policy、closed-loop、control或deployment。
 - P110/P111共享P108 target read，只是prospective secondary/comparator，不是第二个独立cohort。
 - P113只裁决learned directional uncertainty相对clearance-only的ranking/event增量，不重裁P108相对Actor-only/P75的主结论。
+- P113 composite verdict为reject；可以报告AUROC gate通过，但不得省略events `6>5`或改称整体支持。
 - P117在P113冻结后完成且只读consumed cohorts；它不能替换P113的P109 checkpoint或充当独立确认。
 - 未新增hash/checksum/fingerprint；没有smoke/regression matrix或参数扫描。
 

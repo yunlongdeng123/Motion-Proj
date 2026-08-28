@@ -217,8 +217,9 @@ sequence和directional q90三种替代均未跨P81/P96超过Gaussian standardize
 P113 prep r1在任何preprocess/target materialization前发现冻结`scene-0003→shard04` locator不完整：其余9 scenes的
 3,517个LIDAR members已精确提取，但scene-0003的384个全部缺失，run按原合同失败。该scene与P81 scene-0344共享session，
 但public trainval parts可在同一session内切分；官方devkit只要求合并10 parts，不提供session→part索引。现已完整排除02/03，
-并行扫描01/05/06/07/08/09/10且命中时直接提取，不换scene/model/decision；P113 evaluator仍等待，target read=false。
-该pre-target locator failure登记`V67-F82 active_pre_target_exact_locator_recovery`。
+并行扫描01/05/06/07/08/09/10后在01精确命中384/384并直接提取；其间9个ready scenes已用4 workers预处理完成。
+只把`scene-0003:04→01`并以prep r2恢复：3,894/3,894 mapped、9 scenes reused、scene-0003 wall=`60.63s`，r2总wall=
+`71.41s`。不换scene/model/decision，target read前完成恢复；`V67-F82 resolved_pre_target_exact_locator_recovery`。
 
 P113 exact-shard定位继续占用I/O时，参考CVPR 2023 IPCC-TP对joint Gaussian mean/covariance的显式建模，P117只把P109
 逐时刻二维对角Gaussian升级为单一可学习相关系数；source、20维Actor-time输入、`256/128`网络、6,000 steps、seed0、
@@ -233,6 +234,14 @@ P118随后用同一P117 checkpoint做唯一机制消融，只在推理时把cond
 `.003`且P96方向为负，verdict=`rejected_conditional_correlation_mechanism`（`V67-F83`）。因此P117相对P109的开发收益
 不能归因于推理公式中的rho项本身，更可能来自full bivariate NLL对mean/scale的联合训练；不扫rho bound或重复训练。
 P117仍是完整训练package的development候选，但论文不得写成“conditional correlation项已被机制验证”。
+
+P113一次性独立scientific read终局拒绝。Fresh cohort形成7,206 rows、1,525 trajectories、79 flips；fixed50选择761条时，
+P109 directional/clearance/Actor/P75 selected events=`6/5/38/20`。Directional AUROC=`.920155`，clearance=`.875291`，
+增量`+.044864`超过冻结`.02`；但directional events比clearance多1，`events<=clearance`门失败。两项只过1/2，verdict=
+`rejected_independent_directional_uncertainty_gain_over_clearance`（`V67-F84`）。准确结论是learned directional uncertainty在
+第二个scene-level cohort提供全排序增量，但没有在冻结fixed50 tail上稳定超过强geometry baseline；不得用AUROC单门把整体
+包装成成功，也不降coverage/floor、不换model/cohort或在本read上试P117。P108相对Actor/P75的factorization primary仍成立，
+但“learned uncertainty严格超过clearance”的claim关闭。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
