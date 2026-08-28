@@ -213,6 +213,25 @@ class ReliabilityMLP(torch.nn.Module):
         return torch.nn.functional.softplus(self.head(self.encode(features)).squeeze(-1))
 
 
+class QuantileReliabilityMLP(torch.nn.Module):
+    def __init__(self, feature_count: int, hidden_dimensions: Sequence[int]) -> None:
+        super().__init__()
+        layers: list[torch.nn.Module] = []
+        width = feature_count
+        for hidden in hidden_dimensions:
+            layers.extend((torch.nn.Linear(width, int(hidden)), torch.nn.SiLU()))
+            width = int(hidden)
+        self.encoder = torch.nn.Sequential(*layers)
+        self.head = torch.nn.Linear(width, 3)
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        raw = self.head(self.encoder(features))
+        lower = torch.nn.functional.softplus(raw[:, 0])
+        median = lower + torch.nn.functional.softplus(raw[:, 1])
+        upper = median + torch.nn.functional.softplus(raw[:, 2])
+        return torch.stack((lower, median, upper), dim=1)
+
+
 def train_reliability_models(
     arrays: Mapping[str, np.ndarray], model_config: Mapping[str, Any], seed: int,
 ) -> tuple[ReliabilityMLP, ReliabilityMLP, np.ndarray, np.ndarray, dict[str, float]]:
@@ -224,8 +243,45 @@ def train_reliability_models(
     actor_features = features[:, :len(ACTOR_FEATURE_NAMES)]
     target = torch.from_numpy(np.log1p(np.asarray(arrays["target_cost"], dtype=np.float32))).cuda()
     torch.manual_seed(int(seed))
-    query_model = ReliabilityMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
+    if "quantile_levels" in model_config:
+        query_model = QuantileReliabilityMLP(
+            features.shape[1], model_config["hidden_dimensions"]
+        ).cuda()
+    else:
+        query_model = ReliabilityMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
     actor_model = ReliabilityMLP(actor_features.shape[1], model_config["hidden_dimensions"]).cuda()
+    if "quantile_levels" in model_config:
+        optimizer = torch.optim.AdamW(
+            list(query_model.parameters()) + list(actor_model.parameters()),
+            lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]),
+        )
+        levels = torch.tensor(model_config["quantile_levels"], dtype=target.dtype, device=target.device)
+        final_quantile_loss = final_actor_loss = 0.0
+        for epoch in range(int(model_config["epochs"])):
+            optimizer.zero_grad(set_to_none=True)
+            quantiles = query_model(features)
+            errors = target[:, None] - quantiles
+            quantile_loss = torch.maximum((levels - 1.0) * errors, levels * errors).mean()
+            actor_prediction = actor_model(actor_features)
+            actor_loss = torch.nn.functional.smooth_l1_loss(
+                actor_prediction, target, beta=float(model_config["huber_beta"])
+            )
+            (quantile_loss + actor_loss).backward()
+            optimizer.step()
+            final_quantile_loss = float(quantile_loss.detach().cpu())
+            final_actor_loss = float(actor_loss.detach().cpu())
+            if epoch % 250 == 0 or epoch + 1 == int(model_config["epochs"]):
+                print(
+                    f"actor reliability quantile epoch={epoch + 1} "
+                    f"quantile_loss={final_quantile_loss:.6f} actor_only_loss={final_actor_loss:.6f}",
+                    flush=True,
+                )
+        return query_model.eval(), actor_model.eval(), mean, scale, {
+            "query_conditioned_quantile_loss": final_quantile_loss,
+            "actor_only_final_loss": final_actor_loss,
+            "quantile_levels": [float(value) for value in model_config["quantile_levels"]],
+            "training_row_count": int(len(raw_features)),
+        }
     if "rank_contrastive_pretrain_epochs" in model_config:
         actor_optimizer = torch.optim.AdamW(
             actor_model.parameters(), lr=float(model_config["learning_rate"]),
@@ -366,7 +422,7 @@ def train_reliability_models(
 
 
 def predict_reliability(
-    model: ReliabilityMLP, raw_features: np.ndarray, mean: np.ndarray, scale: np.ndarray,
+    model: torch.nn.Module, raw_features: np.ndarray, mean: np.ndarray, scale: np.ndarray,
     actor_only: bool = False,
 ) -> np.ndarray:
     normalized = (np.asarray(raw_features, dtype=np.float32) - mean) / scale

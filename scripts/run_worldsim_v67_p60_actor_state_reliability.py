@@ -56,9 +56,25 @@ def main() -> None:
         )
         confirmation_arrays = confirmation_future.result()
     np.savez_compressed(run_dir / "CONFIRMATION_ACTOR_QUERY_ROWS.npz", **confirmation_arrays)
-    query_prediction = predict_reliability(
+    query_output = predict_reliability(
         query_model, confirmation_arrays["features"], mean, scale, actor_only=False
     )
+    uncertainty = None
+    if query_output.ndim == 2:
+        query_prediction = query_output[:, 1]
+        target_cost = np.asarray(confirmation_arrays["target_cost"], dtype=np.float64)
+        interval_coverage = float(np.mean(
+            (target_cost >= query_output[:, 0]) & (target_cost <= query_output[:, 2])
+        ))
+        uncertainty = {
+            "quantile_levels": [float(value) for value in config["model"]["quantile_levels"]],
+            "central_interval_coverage": interval_coverage,
+            "mean_interval_width": float(np.mean(query_output[:, 2] - query_output[:, 0])),
+            "lower_miss_fraction": float(np.mean(target_cost < query_output[:, 0])),
+            "upper_miss_fraction": float(np.mean(target_cost > query_output[:, 2])),
+        }
+    else:
+        query_prediction = query_output
     actor_prediction = predict_reliability(
         actor_model, confirmation_arrays["features"], mean, scale, actor_only=True
     )
@@ -96,12 +112,20 @@ def main() -> None:
             evaluation["spearman_delta_over_actor_only"]
             >= float(config["gates"]["minimum_spearman_delta_over_actor_only"])
         )
+    if "minimum_interval_coverage" in config["gates"]:
+        gates["central_interval_coverage"] = (
+            uncertainty is not None
+            and float(config["gates"]["minimum_interval_coverage"])
+            <= uncertainty["central_interval_coverage"]
+            <= float(config["gates"]["maximum_interval_coverage"])
+        )
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
     artifact = {
         "feature_names": FEATURE_NAMES, "feature_mean": mean, "feature_scale": scale,
         "hidden_dimensions": list(config["model"]["hidden_dimensions"]),
         "query_model_state_dict": query_model.state_dict(),
         "actor_only_model_state_dict": actor_model.state_dict(),
+        "quantile_levels": config["model"].get("quantile_levels"),
         "train_only_monotone_affine_calibrator": calibrator,
     }
     torch.save(artifact, run_dir / "TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt")
@@ -116,6 +140,7 @@ def main() -> None:
             "confirmation_horizon_seconds": config["data"]["confirmation_horizon_seconds"],
         },
         "confirmation": evaluation, "raw_confirmation": raw_evaluation,
+        "uncertainty": uncertainty,
         "train_only_monotone_affine_calibrator": calibrator, "gate_results": gates,
         "resources": {
             "gpu": torch.cuda.get_device_name(0),
