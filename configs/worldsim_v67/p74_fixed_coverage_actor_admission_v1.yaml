@@ -1,0 +1,59 @@
+schema_version: worldsim_v67.p74_fixed_coverage_actor_admission.v1
+output_schema_version: worldsim_v67.p74_fixed_coverage_actor_admission_summary.v1
+task_id: WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
+hypothesis_id: WS-V67-H-P74-001
+seed: 0
+role: direct_fixed_coverage_trajectory_conditioned_actor_state_admission
+verdict_on_pass: supported_fixed_coverage_actor_admission
+verdict_on_failure: rejected_fixed_coverage_actor_admission
+source:
+  base_run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  base_rows: TRAIN_ACTOR_QUERY_ROWS.npz
+  extension_run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  extension_rows: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz
+continuous_baseline:
+  run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
+evaluation_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  scene_indices: [296, 350, 382, 425, 663, 827]
+  horizon_seconds: 3.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [128, 64, 32]
+  warmup_epochs: 750
+  joint_epochs: 750
+  learning_rate: 0.003
+  weight_decay: 0.0001
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_cost_reduction_over_actor_admission: 0.05
+  minimum_cost_reduction_over_continuous_p73: 0.02
+  minimum_absolute_cost_reduction: 0.50
+locks:
+  training_label_is_lowest_cost_half_within_each_source_scene_horizon: true
+  exact_per_scene_fifty_percent_evaluation_coverage: true
+  same_query_actor_only_capacity_bce_optimizer_and_epochs: true
+  extension_load_and_h3p5_materialization_overlapped_with_gpu_training: true
+  no_coverage_loss_epoch_learning_rate_horizon_scene_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v97/geifman19a.html
+  - https://proceedings.mlr.press/v162/shah22a.html
+  - https://proceedings.mlr.press/v235/mao24d.html
+claim_boundary:
+  - direct_fixed_coverage_admission_for_trajectory_visited_actor_states
+  - H3p5_development_read_on_six_scene_ids_previously_consumed_at_shorter_horizons
+  - comparison_to_same_capacity_actor_only_admission_and_frozen_continuous_selector
+  - no_actor_deletion_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

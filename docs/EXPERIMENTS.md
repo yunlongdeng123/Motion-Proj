@@ -2,11 +2,21 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
+
+- 状态：`running`；训练对象从pointwise cost改为每个source scene/horizon内“是否属于最低cost 50%”的admission label；
+  query/Actor-only同容量BCE heads，固定50% per-scene选择。
+- P66 H `.8/1.5`缓存GPU warmup 750 epochs时并行加载P73 H2.5并物化H3.5；三horizon联合750 epochs。
+  H3.5一次read比较query admission、Actor-only admission与frozen P73 continuous selection，不扫coverage/loss/horizon。
+
 ### WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01
 
-- 状态：`running`；先在P66缓存H `.8/1.5` rows上GPU warmup 750 epochs，同时CPU/IO物化102 source scenes的H2.5；
-  再以三horizon联合训练750 epochs，同时物化worldsim-v5六scene的H3.0 evaluation rows。
-- 新query/Actor-only同容量、同Huber；冻结P66作为H3 reference。一次固定run，不扫horizon/epoch/lr/loss/scene。
+- 状态：`done/rejected`；canonical=`20260829T170000Z__multi-horizon-actor-s0-r1`；299,103 cached rows与
+  141,295 H2.5 rows联合为440,398 rows；wall=`50.55s`、peak GPU=`1.600GiB`，两阶段IO/GPU均实际重叠。
+- H3六scene 5,275 rows：query/Actor Spearman=`.778665/.746849`，MAE=`.228784/.229099`（仅`.137%`），
+  AUROC=`.974031/.966363`；相对frozen P66 query MAE改善`21.03%`，但query-vs-Actor 10%门失败，2/3拒绝。
+- 固定50% selected cost：all/query/Actor/frozen=`.386160/.034406/.038821/.041978`，query降低`91.09%`；
+  unreliable prevalence `.067678→.001517`。强selective signal保留，pointwise相对MAE claim不成立。
 
 ### WS-V67-P72-MONOTONE-ACTOR-CALIBRATION-01
 

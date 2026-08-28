@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.7 P73 multi-horizon pointwise rejected / P74 admission training（2026-08-29）
+
+P73在GPU训练期间并行物化141,295条source H2.5 rows和5,275条H3 evaluation rows，总训练440,398 rows、wall
+`50.55s`、peak GPU `1.600GiB`。H3 query MAE `.228784`比frozen P66 `.289723`改善`21.03%`，Spearman/AUROC
+`=.778665/.974031`；但同容量Actor-only MAE `.229099`，query只改善`.137%`，2/3 gates严格拒绝pointwise优势。
+同时50% query selected cost `.034406`，低于Actor `.038821`和frozen `.041978`，相对all `.386160`降低`91.09%`；
+unreliable prevalence `.067678→.001517`。因此直接multi-horizon训练改善绝对误差与选择，但τ特征的增量主要体现在选择。
+
+参考SelectiveNet、ICML 2022 selective regression与ICML 2024 regression deferral，P74把监督对象改为每个source
+scene/horizon内最低cost半集的admission label。Query/Actor-only等容量BCE heads在H `.8/1.5/2.5`训练，H3.5
+固定50% read同时比较Actor-only admission和P73 continuous score。该转向直接回答“执行τ时哪些未来Actor state值得访问”，
+不再强迫selector同时赢得不匹配的pointwise MAE。
+
 ## WorldSim V6.7 P72 monotone calibration rejected / P73 multi-horizon training（2026-08-29）
 
 P72的positive-slope affine保持query Spearman `.808522`与50% triage cost -`89.78%`；但query MAE只从`.186774`

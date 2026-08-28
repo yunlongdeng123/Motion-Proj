@@ -707,6 +707,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 文献迁移：multi-horizon direct forecasting与long/short-term trajectory modeling支持扩大训练horizon support；P73在source
   H `.8/1.5/2.5`联合训练并评估H3，而非继续处理同一H2.5尺度。下一编号=`V67-F58`。
 
+### V67-F58 — P73 multi-horizon训练改善frozen误差但未建立query pointwise优势
+
+- canonical：`run://worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1`；
+  299,103 base + 141,295 H2.5 rows，GPU warmup/joint训练与两段materialization重叠。
+- 结果：H3 query MAE `.228784`，比frozen P66 `.289723`改善21.03%；但Actor-only `.229099`，query只低`.137%`
+  而非10%。Spearman query/Actor=`.778665/.746849`，AUROC=`.974031/.966363`，2/3 gates拒绝。
+- 保留：50% query selection cost `.034406`，优于Actor `.038821`和frozen `.041978`，相对all降低91.09%；
+  unreliable prevalence降低97.76%。
+- 结论：不降pointwise gate、不扫horizon mix/epochs；multi-horizon pointwise claim拒绝，但selective ordering进一步增强。
+- 文献迁移：SelectiveNet/Selective Regression/Regression Deferral支持直接训练accept/reject函数。P74用scene-horizon内
+  最低cost半集作为固定coverage admission监督，在H3.5比较query、Actor-only与P73 continuous。下一编号=`V67-F59`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
