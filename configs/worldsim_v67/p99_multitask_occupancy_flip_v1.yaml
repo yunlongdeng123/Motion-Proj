@@ -1,0 +1,50 @@
+schema_version: worldsim_v67.p99_multitask_occupancy_flip.v1
+output_schema_version: worldsim_v67.p99_multitask_occupancy_flip_summary.v1
+task_id: WS-V67-P99-MULTITASK-OCCUPANCY-FLIP-01
+hypothesis_id: WS-V67-H-P99-001
+seed: 0
+role: development_shared_false_safe_false_alarm_occupancy_reliability
+verdict_on_pass: supported_development_multitask_occupancy_flip
+verdict_on_failure: rejected_development_multitask_occupancy_flip
+row_run:
+  run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-PREP-01/20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1
+  source_artifact: SOURCE_OCCUPANCY_FLIP_ROWS.npz
+  development_artifact: DEVELOPMENT_OCCUPANCY_FLIP_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 8000
+  horizon_batch_size: 1024
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  false_safe_loss_weight: 1.0
+  false_alarm_loss_weight: 1.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+locks:
+  shared_encoder_two_equal_weight_binary_heads: true
+  total_flip_risk_is_probability_union: true
+  derived_from_frozen_p95_rows_without_new_sensor_or_target_read: true
+  P96_protocol_and_model_unchanged: true
+  four_source_horizons_equal_batch_weight: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_loss_weight_threshold_radius_width_coverage_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+claim_boundary:
+  - development_only_shared_false_safe_false_alarm_occupancy_reliability
+  - P96_independent_confirmation_remains_frozen_P95_not_P99
+  - no_independent_multitask_confirmation_yet
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim
