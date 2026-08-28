@@ -1,0 +1,37 @@
+schema_version: worldsim_v66.p1_factorial_atlas_dev.v1
+task_id: WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01
+hypothesis_id: WS-V66-H-P1D-001
+seed: 0
+role: tier_l_development_mechanism
+inputs:
+  evidence_run: worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+sampling:
+  maximum_boundary_points_per_unit: 8192
+  minimum_actor_boundary_points: 4
+  io_prefetch_workers: 2
+artifact_families: [unsupported_ghost, duplicate_shell, lifecycle_flicker, teleport, shape_jump]
+hazard_variants: [benign, task_conflict]
+certificate:
+  maximum_supported_kinematic_jump_m: 3.0
+  maximum_shape_ratio_jump: 1.5
+evaluation:
+  minimum_actor_unit_base_rows: 72
+  minimum_artifact_signal_family_count: 1
+locks:
+  fresh_v66_quality_read: false
+  corruption_metadata_in_inference: false
+  physical_hazard_edit_claim: false
+  add_hash_checksum_fingerprint: false
+  threshold_or_model_sweep: false
+scenes: [scene-0159, scene-0184, scene-0577, scene-0599, scene-0955, scene-0983]
+failure_ledger_refs: [V64-F28, V65-F19, V1-F06]
+claim_boundary:
+  - development_actor_grounding_and_factorial_separation
+  - frozen_q0_is_diagnostic_not_actor_authority
+  - no_natural_artifact_or_fresh_generalization_claim
+  - no_planner_policy_closed_loop_rl_or_safety_claim

@@ -1,0 +1,41 @@
+schema_version: worldsim_v66.validity_hazard_taxonomy.v1
+task_id: WS-V66-P0-HARP-SCOPE-01
+validity_axis:
+  clean:
+    artifact_label: false
+    allowed_decisions: [KEEP]
+  unsupported_ghost:
+    artifact_label: true
+    observable_factors: [sensor_support_missing, provenance_missing]
+    allowed_decisions: [REPAIR, ABSTAIN_LOCAL_GEOMETRY, DROP_ARTIFACT_PRIMITIVE]
+  duplicate_shell:
+    artifact_label: true
+    observable_factors: [duplicate_overlap, sensor_support_missing]
+    allowed_decisions: [REPAIR, DROP_ARTIFACT_PRIMITIVE]
+  lifecycle_flicker:
+    artifact_label: true
+    observable_factors: [lifecycle_gap]
+    allowed_decisions: [REPAIR, ABSTAIN_LOCAL_GEOMETRY]
+  teleport:
+    artifact_label: true
+    observable_factors: [kinematic_jump, identity_discontinuity]
+    allowed_decisions: [REPAIR, ABSTAIN_LOCAL_GEOMETRY]
+  shape_jump:
+    artifact_label: true
+    observable_factors: [shape_ratio_jump]
+    allowed_decisions: [REPAIR, ABSTAIN_LOCAL_GEOMETRY]
+hazard_axis:
+  benign:
+    hazard_label: false
+  task_conflict:
+    hazard_label: true
+    note: P1-D only changes task attributes; physical trajectory-edit authority remains locked.
+inference_contract:
+  excluded_features: [artifact_label, artifact_family, hazard_label, hazard_score, variant_id]
+  actor_existence_protection: sensor_support_or_stable_track
+  hazard_never_authorizes_drop: true
+claim_boundary:
+  - development_factorial_mechanism_only
+  - no_natural_artifact_claim
+  - no_physical_hazard_edit_claim
+  - no_planning_policy_closed_loop_or_safety_claim

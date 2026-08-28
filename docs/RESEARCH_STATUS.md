@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V6.6 启动 / P1-D Actor factorial atlas 直接执行（2026-08-28）
+
+状态：`v66_p1_development_atlas_running`；分支=`research/worldsim-v6.6-harp-compiler`。`main` 已按用户要求从
+`origin/main` 快进合入 V6.5 终态 `288fa9f` 并推送，V6.6 随后从该 `main` 建立并推送。V6.5 terminal claim
+保持：给定 Ego `tau` 的 visited-state reliability evaluator/calibrator 成立，direct action authority 因
+`V65-F19` 终止；V6.6 不复开该 authority family，而改研究 Actor-preserving artifact validity。
+
+当前 active task/hypothesis=`WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01 /
+WS-V66-H-P1D-001`。为直接进入 research，首轮使用 P10V 已消费的 6 scenes / 72 units 作为 Tier-L development
+mechanism source，将 native boundary q0、Actor envelope/hit support 与确定性 artifact factor 组成
+`validity x hazard` 配对 atlas。hazard intervention 首轮只改变任务属性，不冒充真实 cut-in 几何编辑；formal fresh
+selection、自然 artifact 与 closed-loop claim 均未解锁。
+
+P0 最小冻结已完成：Actor/SceneIR/evidence/r13/cut-in 资产审计、validity-hazard taxonomy、输入角色和禁止事项已落盘。
+单 RTX 3090 足够；P1 q0 forward 与 CPU evidence materialization 采用预取重叠，不等待全量 I/O 后才用 GPU。
+不新增 hash/checksum/fingerprint，不执行 P0 测试矩阵、宽 smoke 或回归测试。下一步：运行 P1-D atlas，若 deterministic
+factor 对至少一种 q0 未响应 artifact 有信号，则直接实现 P2 certificate；若遇实现/算法卡点，先检索论文与优秀开源再迁移。
+
+证据入口：`docs/autoresearch/worldsim_v66/V66_ACTOR_ASSET_AUDIT.md`、
+`docs/autoresearch/worldsim_v66/V66_VALIDITY_HAZARD_TAXONOMY.yaml`、
+`configs/worldsim_v66/p1_factorial_atlas_dev_v1.yaml`。基线提交=`288fa9f`；本里程碑提交由同次 Git 提交记录。
+
 ## WorldSim V6.4 arXiv handoff validated / remote shutdown authorized（2026-08-27）
 
 状态保持`v64_research_complete_report_ready`；新增报告交接入口=

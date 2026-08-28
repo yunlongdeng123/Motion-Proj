@@ -1,5 +1,32 @@
 # Experiments
 
+## WorldSim V6.6 HARP-Compiler
+
+### WS-V66-P0-HARP-SCOPE-01
+
+- 状态：`done`（2026-08-28）；类型=`minimal inheritance / direct-research freeze`。
+- 分支继承：V6.5 `288fa9f` 先快进合入并推送 `main`，再从 `main` 建立并推送
+  `research/worldsim-v6.6-harp-compiler`。
+- 输出：V6.6 plan 入库；Actor/SceneIR/provenance/evidence/r13/cut-in 复用资产审计；validity-hazard taxonomy；
+  P1-D 配置与 autoresearch state/hypothesis/reflection。
+- 裁剪：未执行 P0 smoke/regression matrix；未新增 hash/checksum/fingerprint；未读 fresh V6.6 quality；未训练模型。
+- `failure_ledger_refs=[V64-F28,V65-F19,V1-F06]`；`failure_ledger_delta=none`。
+- 证据：`docs/autoresearch/worldsim_v66/V66_ACTOR_ASSET_AUDIT.md`、
+  `docs/autoresearch/worldsim_v66/V66_VALIDITY_HAZARD_TAXONOMY.yaml`。
+
+### WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01
+
+- 状态：`running`；hypothesis=`WS-V66-H-P1D-001`；seed=`0`。
+- 角色：Tier-L development mechanism，不是 fresh selection/confirmation/test。
+- 输入：V6.5 P10V 已消费的 6 scenes / 72 evidence/native units、冻结 V6.4 q0；预计最多 816 actor-unit
+  base rows，再构造同 base 的 `V0-H0/V0-H1/V1-H0/V1-H1` 配对变体。
+- 方法：GPU 只做冻结 q0 forward；CPU 预取下一 unit、映射 Actor envelope/hit support并聚合 factor。corruption
+  metadata 不作为 certificate/model 输入；首轮 hazard intervention 只改变 task attribute，不宣称真实轨迹编辑。
+- 主要输出：q0 artifact AUROC/AUPRC、hazard-pair score delta、factor certificate signal、按 artifact family 的 recall，
+  以及 clean-hazard false artifact/retention。
+- `failure_ledger_refs=[V64-F28,V65-F19,V1-F06]`；收口前 `failure_ledger_delta=pending`。
+- 配置：`configs/worldsim_v66/p1_factorial_atlas_dev_v1.yaml`。
+
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
 - task=`WS-V64-REPORT-HANDOFF-01`；status=`done_documentation_only`；scientific run/GPU=`none/none`；

@@ -1,0 +1,24 @@
+{
+  "schema_version": "worldsim_v66.autoresearch_state.v1",
+  "updated_at": "2026-08-28",
+  "branch": "research/worldsim-v6.6-harp-compiler",
+  "base_commit": "288fa9f653dc5f2ab55c0612445f3c480b1e2176",
+  "status": "v66_p1_development_atlas_running",
+  "active_task_id": "WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01",
+  "active_hypothesis_id": "WS-V66-H-P1D-001",
+  "resource": {
+    "gpu": "1x RTX 3090",
+    "multi_gpu_required": false,
+    "io_gpu_overlap": "two-thread next-unit prefetch with current-unit q0 GPU forward"
+  },
+  "authority": {
+    "fresh_v66_quality_read": false,
+    "tier_l_development_only": true,
+    "physical_hazard_edit_claim": false,
+    "planning_policy_closed_loop_rl_safety": false
+  },
+  "failure_ledger_refs": ["V64-F28", "V65-F19", "V1-F06"],
+  "failure_ledger_delta": "none_at_p0",
+  "next_failure_id": "V66-F01",
+  "next_action": "run P1-D actor-grounded factorial atlas, then implement deterministic certificate if signal exists"
+}

@@ -1,14 +1,32 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-27
+> **最后更新**：2026-08-28
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
-> **覆盖范围**：V1–V6.4、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
+> **覆盖范围**：V1–V6.6、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
 
 本文件是仓库中唯一持续维护的 failure ledger。`docs/archive/**/RESEARCH_FAILURES*.md` 只是对应 commit 的不可变
 历史快照；`WS_*_FAILURE_FORENSICS.md` 是专项诊断报告，不是第二本账。V6.3/V6.4报告索引
 `docs/autoresearch/worldsim_v63/ARXIV_EVIDENCE_INDEX.md`与`docs/autoresearch/worldsim_v64/ARXIV_EVIDENCE_INDEX.md`只导航本账与canonical evidence，也不是第二本失败账。新路线、新版本和新实验不得再创建并行的
 `*_FAILURES.md` 事实源。
+
+### V6.6 当前边界（2026-08-28）
+
+- V6.6 已从合入 V6.5 终态 `288fa9f` 的 `main` 建立；当前只解锁 Tier-L P1-D development atlas。
+- 直接继承 `V65-F19`：visited-state reliability 不得重命名为 direct action authority；V6.6 validity 轴必须与
+  hazard 轴分离。继承 `V64-F28`：手工低维 collision critic 不是正式 RL。继承 `V1-F06`：稀疏 cut-in pool
+  不得成为主数据入口或论文成立条件。
+- P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
+  不得替代 fresh selection/confirmation。当前无 V6.6 failure，下一可用编号=`V66-F01`。
+- 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
+
+### V6.5 终态边界（2026-08-28）
+
+- `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction
+  `16.38% < 25%`。支持给定 `tau` 的 visited-state reliability ranking/calibration，不支持 direct action
+  authority、planner、policy、closed-loop、RL或safety。
+- V6.6 只可把 q0/visited-state score当 diagnostic；不得以新阈值、第二 confirmation cohort或新 critic
+  复开 V6.5 family。
 
 ### V6.4 当前边界（2026-08-27）
 
@@ -120,6 +138,8 @@
 | V6.2 | CPSC-Lite family负结论收口：P6与唯一P6R均为`4/28,4/4 false-safe`，P7/P8未解锁 | evidence dropout把source-valid UNKNOWN从82.7%降到63.9%但未改变四个unsafe accepts；query-wise projection不能提供hidden surface authority；第二recovery、O_eval调参、backbone/backend/sweep冻结；未来复开需native logits/features、独立calibration与hidden-surface risk supervision；不新增哈希/校验和/指纹 | `V62-F01`–`V62-F07`；`P6R_EVIDENCE_DROPOUT_CLOSEOUT.md` |
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
+| V6.5 | visited-state reliability ranking与单调校准可迁移；one-shot direct action selection benefit失败并终止 | q0只可作给定轨迹访问状态的reliability diagnostic；禁止第二confirmation、阈值/lattice/critic救援 | `V65-F01`–`V65-F19`；`V65_ARXIV_TECHNICAL_REPORT.md`；`ARXIV_EVIDENCE_INDEX.md` |
+| V6.6 | active：validity-hazard factorization与Actor-preserving artifact compiler；当前仅P1-D mechanism atlas | 已消费P10V只作Tier-L；synthetic hazard attribute不冒充真实危险轨迹；下一failure id=`V66-F01` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
