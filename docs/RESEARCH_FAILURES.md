@@ -20,7 +20,8 @@
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
   不得替代 fresh selection/confirmation。`V66-F01 resolved`记录deterministic injected certificate对natural local
   geometry conflict的0 recall，以及P3L/P3C两级certificate恢复。`V66-F02 closed_negative_after_single_recovery`
-  记录P7 triage无法迁移为physical repair。`V66-F03 active_recovery_frozen`记录P8低速stop-state重复jerk update；
+  记录P7 triage无法迁移为physical repair。`V66-F03 resolved_by_single_implementation_recovery`记录P8低速
+  stop-state重复jerk update及single-rate-limiter修复；
   下一可用编号=`V66-F04`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
@@ -123,7 +124,7 @@ RL-ready distribution与P9继续锁定。完整证据：`P7R2_RADIUS_SUPPORT_RES
 
 ### V66-F03 — P8低速stop-state重复应用jerk update
 
-- 分类：`implementation/numerical`；状态：`active_recovery_frozen`。
+- 分类：`implementation/numerical`；状态：`resolved_by_single_implementation_recovery`。
 - 观察：P8六场景X1 collision steps均为0，但scene-0001/0219 command jerk分别为`9.637574/7.400627m/s^3`，
   超过固定`6m/s^3`；仅4/6 scenes全门通过，formal verdict拒绝。
 - 根因：零速边界先通过正常rate limiter更新acceleration，随后stop分支再次增加一个jerk step；同一离散步对command
@@ -134,6 +135,12 @@ RL-ready distribution与P9继续锁定。完整证据：`P7R2_RADIUS_SUPPORT_RES
 - 唯一恢复：P8R只移除第二次increment，其余输入、参数、轨迹、指标与gates exact不变；失败关闭P8 family。
 - 证据：`WS-V66-P8-REACTIVE-ACTOR-01/20260828T095440Z__reactive-actor-s0-r1`；冻结：
   `docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`。
+
+P8R保持全部实验参数与gates exact，只把stopped desired acceleration置0并让command每步通过原rate limiter一次。
+六场景全部支持，pooled X0/X1 collision steps=`306/0`，minimum X1 gap=`1.948192m`，maximum command jerk=
+`6.000000m/s^3`；`V66-F03`恢复关闭。该恢复只修复numerical update，不把synthetic response扩展到natural interaction，
+也不改变P7 terminal negative或解锁P9/RL。证据：`WS-V66-P8R-STOP-STATE-JERK-RECOVERY-01/
+20260828T095839Z__stop-state-jerk-recovery-s0-r1`。
 
 下一可用编号：`V66-F04`。
 
@@ -257,7 +264,7 @@ RL-ready distribution与P9继续锁定。完整证据：`P7R2_RADIUS_SUPPORT_RES
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
 | V6.5 | visited-state reliability ranking与单调校准可迁移；one-shot direct action selection benefit失败并终止 | q0只可作给定轨迹访问状态的reliability diagnostic；禁止第二confirmation、阈值/lattice/critic救援 | `V65-F01`–`V65-F19`；`V65_ARXIV_TECHNICAL_REPORT.md`；`ARXIV_EVIDENCE_INDEX.md` |
-| V6.6 | active：两级certificate与HARP bake已支持；P7 surface repair终局负结果；P8 4/6后冻结stop-state recovery | `V66-F02 closed_negative_after_single_recovery`；`V66-F03 active_recovery_frozen`；P9锁定；下一failure id=`V66-F04` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
+| V6.6 | closeout next：两级certificate/HARP bake/P8R synthetic response支持；P7 surface repair终局负结果 | `V66-F02 closed_negative_after_single_recovery`；`V66-F03 resolved_by_single_implementation_recovery`；P9锁定；下一failure id=`V66-F04` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记

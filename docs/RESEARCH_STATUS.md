@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.6 P8R supported / P9 locked / closeout next（2026-08-28）
+
+状态：`v66_p8r_supported_p9_locked_closeout_next`；canonical=
+`run://worldsim_v66/WS-V66-P8R-STOP-STATE-JERK-RECOVERY-01/20260828T095839Z__stop-state-jerk-recovery-s0-r1`；
+verdict=`supported_synthetic_lead_brake_reactive_actor_capability`；`V66-F03 resolved_by_single_implementation_recovery`。
+
+同一六场景/Actor/参数/gates下，P8R只修复重复stop-state update：selected/supported=`6/6`，pooled X0/X1
+collision steps=`306/0`，X1 min gap=`1.948192m`，max command jerk=`6.000000m/s^3`，identity/lifecycle与logged
+path exact；all pooled/per-scene gates通过。wall=`0.83402s`、RSS=`0.50465GiB`、GPU=false。
+
+正结论只限fixed synthetic lead-brake bounded response。P7 surface repair仍为terminal negative，因此P9/RL不满足
+plan联合前置，保持locked。下一步不复开P7/P8、不跑额外回归，而是审计plan locks并整理V6.6 arXiv evidence closeout。
+详见`docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RESULT.md`。
+
 ## WorldSim V6.6 P8 rejected / P8R stop-state recovery implementation ready（2026-08-28）
 
 状态：`v66_p8_rejected_p8r_stop_state_recovery_implementation_ready`；canonical=

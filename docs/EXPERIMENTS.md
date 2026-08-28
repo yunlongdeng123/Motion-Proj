@@ -216,13 +216,21 @@
 
 ### WS-V66-P8R-STOP-STATE-JERK-RECOVERY-01
 
-- 状态：`implementation_ready`；唯一implementation recovery；Autoware迁移为显式stopped-state desired accel=0和
+- 状态：`done`；verdict=`supported_synthetic_lead_brake_reactive_actor_capability`；唯一implementation recovery；
+  Autoware迁移为显式stopped-state desired accel=0和
   single longitudinal command jerk limiter。
 - 只移除零速边界第二次acceleration increment；原`6m/s^3`rate limiter及Actor/scenario/horizon/IDM/AV参数、
   trajectory、gates全部不变；不扫参数，失败关闭P8 family。
 - 实现复用P8 module/runner；配置：`configs/worldsim_v66/p8r_stop_state_jerk_recovery_v1.yaml`，除task/hypothesis/
   recovery metadata外与P8 simulation/selection/gates exact；冻结：
-  `docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`；formal recovery尚未创建。
+  `docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RECOVERY_FREEZE.md`。
+- Canonical：`run://worldsim_v66/WS-V66-P8R-STOP-STATE-JERK-RECOVERY-01/
+  20260828T095839Z__stop-state-jerk-recovery-s0-r1`；selected/supported=`6/6`；X0/X1 collision steps=`306/0`；
+  X1 min gap=`1.948192m`；max command jerk=`6.000000m/s^3`。
+- pooled 4/4与每场景7/7 gates通过；identity/lifecycle/logged path exact；wall=`0.83402s`、RSS=`0.50465GiB`、
+  GPU=false。`V66-F03 resolved_by_single_implementation_recovery`。
+- 边界：只支持fixed synthetic lead-brake response；P7 terminal negative不变，P9/RL仍locked。结果：
+  `docs/autoresearch/worldsim_v66/P8R_STOP_STATE_JERK_RESULT.md`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
