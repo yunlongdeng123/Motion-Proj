@@ -1,0 +1,51 @@
+schema_version: worldsim_v67.p117_full_covariance_actor_uncertainty.v1
+output_schema_version: worldsim_v67.p117_full_covariance_actor_uncertainty_summary.v1
+task_id: WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01
+hypothesis_id: WS-V67-H-P117-001
+seed: 0
+role: consumed_development_full_covariance_actor_uncertainty
+clearance_baseline_floor_m: 0.05
+model_artifact: FULL_COVARIANCE_ACTOR_UNCERTAINTY.pt
+readiness_timeout_seconds: 7200
+development_cohorts:
+  - name: consumed_p81
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+frozen_p109_comparisons:
+  consumed_p81: {events: 0, auroc: 0.967639}
+  consumed_p96: {events: 0, auroc: 0.904345}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+decision:
+  minimum_mean_auroc_gain_over_p109: 0.005
+locks:
+  same_P109_source_features_architecture_width_optimizer_steps_seed_and_projection: true
+  only_change_is_learned_longitudinal_lateral_residual_correlation: true
+  both_evaluation_cohorts_are_already_consumed: true
+  P113_checkpoint_cohort_and_decision_remain_untouched: true
+  no_correlation_parameterization_loss_projection_aggregation_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/html/Zhu_IPCC-TP_Utilizing_Incremental_Pearson_Correlation_Coefficient_for_Joint_Multi-Agent_Trajectory_CVPR_2023_paper.html
+claim_boundary:
+  - development_only_on_consumed_P81_and_P96_cohorts
+  - correlation_aware_linearized_boundary_crossing_not_collision_probability
+  - cannot_replace_or_modify_P113_primary_after_its_freeze
+  - no_independent_confirmation_planning_or_safety_claim

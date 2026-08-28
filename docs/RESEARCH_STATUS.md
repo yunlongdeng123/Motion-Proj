@@ -211,8 +211,16 @@ model、loss或coverage，不读取P113。若失败占用`V67-F81`，P113失败�
 P116完成916,722 Actor-time tokens的6,000-step训练，final pinball=`.035174`，但仍终局拒绝。P81 quantile/P109/
 clearance selected events=`0/0/1`、AUROC `.96384/.96764/.91404`；P96=`6/0/13`、AUROC
 `.88932/.90434/.79879`。三项decision全失败，登记`V67-F81`。因此P109之后的learned tail pool、低频spectral
-sequence和directional q90三种替代均未跨P81/P96超过Gaussian standardized margin；关闭这些model family，不再用P113 IO
-窗口继续堆模型。P113若失败使用`V67-F82`。
+sequence和directional q90三种替代均未跨P81/P96超过Gaussian standardized margin；关闭这些model family。P113若失败
+使用`V67-F82`。
+
+P113 exact-shard定位继续占用I/O时，参考CVPR 2023 IPCC-TP对joint Gaussian mean/covariance的显式建模，P117只把P109
+逐时刻二维对角Gaussian升级为单一可学习相关系数；source、20维Actor-time输入、`256/128`网络、6,000 steps、seed0、
+boundary-normal投影、time/Actor max和fixed50均不变，且只读已消费P81/P96。P117保持两cohort selected events=`0/0`，
+AUROC=`.972542/.913665`，相对P109增益=`+.004903/+.009320`，平均`+.007111`达到冻结`.005`门；预测平均绝对相关系数=
+`.39595/.43201`。verdict=`supported_development_correlated_actor_uncertainty`，wall=`45.49s`、peak GPU=`.37922GiB`。
+该正结果说明纵/横残差相关性可改善法向投影排序，但仍是consumed development，不能事后替换P113已冻结的P109 primary；
+下一次若研究该候选必须另冻未来target-unread cohort，本轮先完成P113。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

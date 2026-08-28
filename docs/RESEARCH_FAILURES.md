@@ -1268,6 +1268,20 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F82`。
 
+### P117 positive mechanism note — full bivariate covariance improves consumed directional ranking
+
+- card point：P114--P116三种替代均未超过P109，但P109的diagonal Gaussian仍强制纵/横Actor residual条件独立；
+- literature response：CVPR 2023 IPCC-TP显式学习joint Gaussian means/covariances，支持把相关结构作为独立变量，而不是继续扩大
+  raw query classifier或扫downstream aggregation；
+- frozen migration：P117仅新增一个bounded correlation输出和完整bivariate Gaussian NLL，source/features/network width/
+  optimizer/steps/seed/boundary projection/coverage均沿用P109，只读consumed P81/P96且不读P113；
+- result：P81/P96都保持0 selected events，AUROC相对P109分别`+.004903/+.009320`，平均`+.007111`通过`.005`门；
+  verdict=`supported_development_correlated_actor_uncertainty`；
+- claim/prevention：该结果不是failure，也不占用failure ID；不扫rho bound/loss/width/seed/projection。它只能作为未来全新
+  target-unread cohort的候选，不能在P113 target已冻结后替换primary或改变decision。
+
+下一可用编号仍为：`V67-F82`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -103,7 +103,7 @@ no-learning clearance-only也选择1 event，AUROC=`0.91644`。因此：
 - P108仍然支持factorization相对Actor-only/P75，但不能把全部收益归因于学习到的uncertainty。
 
 P112尝试用冻结P109 Gaussian做256-sample nonlinear Euclidean crossing。它在P81保持0 events，却在P96退化到3 events且
-AUROC从linearized的`0.90434`降至`0.85852`，因此拒绝并关闭sample-count/full-covariance/distribution sweep。当前证据支持
+AUROC从linearized的`0.90434`降至`0.85852`，因此拒绝并关闭sample-count/nonlinear-sampling sweep。当前证据支持
 与decision boundary对齐的linear projection，不支持将finite-sample nonlinear Monte Carlo包装为更可靠的collision probability。
 
 P114进一步检验task-relevant downstream aggregation：冻结P109，把每trajectory top-16 crossing probabilities和
@@ -117,7 +117,13 @@ coherence在一个cohort有益，却会跨域抹掉boundary-relevant末端或高
 
 P116最后移除Gaussian假设，训练8-direction q90 residual projection field，并用adverse-direction q90/clearance排序。P81
 q90/P109 AUROC=`.963841/.967639`且均0 events；P96=`.889318/.904345`且events=`6/0`。因此非参数
-directional quantile也未超过P109 mean/scale standardized margin。P114--P116三条替代线全部关闭，不再以P113 I/O窗口堆模型。
+directional quantile也未超过P109 mean/scale standardized margin。P114--P116三条替代线全部关闭。
+
+P117进一步检验P109唯一未表达的二维相关结构：保持P109全部输入、宽度、优化器、步数、seed、boundary projection与
+fixed50不变，只新增bounded correlation并以完整bivariate Gaussian NLL训练。P81/P96都维持0 selected events，AUROC=
+`.972542/.913665`，相对P109增益=`+.004903/+.009320`，平均`+.007111`达到冻结`.005`门；预测平均绝对相关系数=
+`.39595/.43201`。该结果支持correlation-aware法向方差作为下一代候选，但只来自consumed development，不能事后替换
+P113已冻结的diagonal P109，也不构成独立泛化或概率校准证据。
 
 ### 2.5 P113独立uncertainty-vs-clearance确认
 
@@ -151,6 +157,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P114 | consumed downstream tail pool | P81/P96=`0 / 1` | `.95138 / .90298` | reject；均低于P109 max |
 | P115 | consumed spectral Actor sequence | P81/P96=`0 / 7` | `.97709 / .84712` | reject；P96强退化 |
 | P116 | consumed directional q90 field | P81/P96=`0 / 6` | `.96384 / .88932` | reject；均低于P109 |
+| P117 | consumed full-covariance Gaussian | P81/P96=`0 / 0` | `.97254 / .91366` | development support；mean gain `+.00711` |
 | P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
 
 ## 4. 失败如何推动研究对象变化
@@ -175,6 +182,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - P114在P113归档I/O期间完成6,000-step GPU训练，wall约13.66s，未读取P113 target。
 - P115同样在P113 I/O期间完成101,858 Actor sequences的6,000-step GPU训练，wall约36.41s。
 - P116训练916,722 Actor-time tokens×随机8-direction q90 queries，6,000 steps，wall约30.07s。
+- P117训练916,722 Actor-time tokens的correlated bivariate Gaussian，6,000 steps，wall约45.49s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
@@ -184,6 +192,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - task-conditioned occupancy-decision reliability应将Actor uncertainty与candidate trajectory geometry因子化；
 - scalar q90 tube相对Actor-only/P75在一个scene-level independent cohort成立；
 - directional boundary projection在development和一个prospective secondary read上提供强排序；
+- full bivariate covariance在两个consumed cohorts上进一步提升directional AUROC，但尚无独立确认；
 - clearance-only是必须正视的强baseline，learned uncertainty的独立增量必须由P113单独裁决。
 
 本报告不支持：

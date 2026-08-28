@@ -301,6 +301,25 @@
   margin，在两个cohort均无增益且P96事件退化；不扫direction/quantile/model/loss/seed，保留P109。
 - resources/execution：wall=`30.07s`、peak GPU=`.37849GiB`、RSS=`1.256GiB`，与P113 archive IO实际重叠；P113未读取。
 
+### WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01
+
+- 状态：`done/supported consumed development`；canonical=
+  `20260830T072500Z__full-covariance-actor-uncertainty-s0-r1`；复用P109 source与P81/P96 consumed artifacts，不读P113。
+- motivation：P114--P116分别否定tail pooling、低频sequence与directional q90，但它们没有检验P109对角Gaussian忽略的
+  longitudinal/lateral residual correlation。CVPR 2023 IPCC-TP显示联合Gaussian covariance是轨迹分布的重要结构。
+- fixed method：在P109同一20维Actor-time输入、`256/128` MLP、6,000 steps、batch65,536、AdamW、seed0上，仅把输出从
+  `mean(2)+scale(2)`扩为`mean(2)+scale(2)+rho(1)`；`rho=.95*tanh(raw)`，用完整bivariate Gaussian NLL训练。推理的
+  boundary-normal variance加入`2*rho*nx*sx*ny*sy`，其余projection、clearance、time/Actor max和fixed50完全不变。
+- decision：两cohort selected events不多于P109，且平均AUROC gain≥`.005`；不扫rho bound、loss、width、seed、projection或
+  coverage。P113协议和checkpoint保持冻结，成功也只能作为未来独立cohort的候选。
+- result：916,722 Actor-time tokens，final correlated Gaussian NLL=`-3.763436`。P81 full-cov/P109/clearance events=
+  `0/0/1`、AUROC=`.972542/.967639/.914039`，gain=`+.004903`；P96=`0/0/13`、AUROC=
+  `.913665/.904345/.798793`，gain=`+.009320`。event noninferiority与mean AUROC gain=`+.007111`均通过，verdict=
+  `supported_development_correlated_actor_uncertainty`。
+- interpretation：平均绝对预测相关系数在P81/P96为`.39595/.43201`，说明纵/横残差相关性对candidate boundary normal上的
+  投影方差有可辨贡献。证据只来自两个已消费cohort，不能替换P113或声称独立迁移、概率校准、collision或safety。
+- resources/execution：wall=`45.49s`、peak GPU=`.37922GiB`、RSS=`1.149GiB`，与P113 exact-shard I/O并行。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

@@ -27,6 +27,7 @@
 | P114 | `run://worldsim_v67/WS-V67-P114-MONOTONE-TAIL-RISK-01/20260830T071000Z__monotone-tail-risk-s0-r1` | P81/P96 AUROC gain=`-.01626/-.00137`；reject |
 | P115 | `run://worldsim_v67/WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01/20260830T071500Z__spectral-actor-uncertainty-s0-r1` | P81/P96 AUROC gain=`+.00945/-.05722`；reject |
 | P116 | `run://worldsim_v67/WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01/20260830T072000Z__directional-quantile-field-s0-r1` | P81/P96 AUROC gain=`-.00380/-.01503`；reject |
+| P117 | `run://worldsim_v67/WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01/20260830T072500Z__full-covariance-actor-uncertainty-s0-r1` | P81/P96 AUROC gain=`+.00490/+.00932`；development support |
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | `PENDING_FINAL_FILL` |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -46,6 +47,7 @@
 | downstream monotone tail pool | P114 consumed ×2 | P81/P96都低于P109 max | reject aggregation recovery |
 | joint low-frequency Actor sequence | P115 consumed ×2 | P81小增益、P96强退化 | reject spectral recovery |
 | directional distribution-free q90 | P116 consumed ×2 | P81/P96都低于P109 Gaussian | reject quantile recovery |
+| full bivariate residual covariance | P117 consumed ×2 | P81/P96均0 events，mean AUROC gain=`+.00711` | development mechanism support |
 | learned uncertainty超过clearance | P113 independent | `PENDING_FINAL_FILL` | `PENDING_FINAL_FILL` |
 
 ## 3. Failure map
@@ -71,6 +73,7 @@
 | canonical run summaries/configs/status | `/root/autodl-tmp/runs/worldsim_v67/<task>/<run>/` |
 | P107 scalar checkpoint | P107 canonical run |
 | P109 directional checkpoint | P109 canonical run |
+| P117 full-covariance checkpoint | P117 canonical run |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |
@@ -86,6 +89,7 @@
 - fixed-coverage排序不授权planner、policy、closed-loop、control或deployment。
 - P110/P111共享P108 target read，只是prospective secondary/comparator，不是第二个独立cohort。
 - P113只裁决learned directional uncertainty相对clearance-only的ranking/event增量，不重裁P108相对Actor-only/P75的主结论。
+- P117在P113冻结后完成且只读consumed cohorts；它不能替换P113的P109 checkpoint或充当独立确认。
 - 未新增hash/checksum/fingerprint；没有smoke/regression matrix或参数扫描。
 
 ## 6. Source-of-truth order
