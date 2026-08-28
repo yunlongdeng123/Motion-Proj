@@ -163,7 +163,7 @@
 
 ### WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01
 
-- 状态：`implementation_ready`；继续使用P7 L0固定290 action states，不改budget/model/score。
+- 状态：`rejected`；verdict=`rejected_consumed_legacy_sensor_surface_repair`；继续使用P7 L0固定290 action states。
 - acted Actor boundary只保留same-Actor motion-compensated sensor-hit primitive，其余转UNKNOWN；canonical collision
   shell、ID/class/track/trajectory/hazard保持，target只评估。
 - gates：point conflict reduction>=0.50、Actor/shell/ID/trajectory retention=1、removed=0、hazard shift=0、overall/clean
@@ -172,6 +172,16 @@
 - 实现：`motion_proj/worldsim_v66/sensor_surface_repair.py`、
   `scripts/run_worldsim_v66_p7r_sensor_surface_repair.py`；配置：
   `configs/worldsim_v66/p7r_sensor_supported_actor_repair_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01/
+  20260828T093710Z__sensor-surface-repair-s0-r1`；points/conflicts/action states=`23580/1175/290`。
+- conflict reduction=`0.847660` PASS；overall/clean retention=`0.383588/0.395715`均低于0.40 FAIL；其余7 gates
+  PASS；wall=10.2279s，RSS=0.58334GiB。`V66-F02`保持active。
+
+### WS-V66-P7R2-RADIUS-SUPPORTED-ACTOR-REPAIR-01
+
+- 状态：`recovery_frozen`；唯一恢复，support radius固定`0.512m`=one native voxel side。
+- 同一L0 action set、target evaluation与九个gates；只把exact same-Actor hit改为到hit中心<=0.512m。
+- 禁止radius/budget/threshold sweep；失败则关闭sensor-surface repair family。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

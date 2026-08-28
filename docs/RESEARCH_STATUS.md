@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.6 P7R rejected / P7R2 one-voxel recovery frozen（2026-08-28）
+
+状态：`v66_p7r_exact_hit_rejected_p7r2_radius_recovery_frozen`；canonical=
+`run://worldsim_v66/WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01/20260828T093710Z__sensor-surface-repair-s0-r1`；
+verdict=`rejected_consumed_legacy_sensor_surface_repair`；`V66-F02 active`。
+
+P7R把1,175 conflict points降到179，reduction=`0.847660`；Actor/shell/ID-track-trajectory retention=1、removed=0、
+hazard shift=0、scene yield=1。但overall/clean boundary retention=`0.383588/0.395715 < 0.40`，7/9 gates通过仍拒绝，
+不降低gate。
+
+按卡点检索PoinTr、SnowflakeNet、RFNet和PoinTr official code后，冻结唯一P7R2：same-Actor hit support从exact
+evidence voxel扩到一个native voxel side=`0.512m`邻域；同一L0 action set、同一九门，无radius/budget/threshold sweep。
+若失败关闭family。冻结：`docs/autoresearch/worldsim_v66/P7R2_RADIUS_SUPPORT_RECOVERY_FREEZE.md`。
+
 ## WorldSim V6.6 P7R sensor-supported surface repair implementation ready（2026-08-28）
 
 状态：`v66_p7r_sensor_supported_surface_repair_implementation_ready`。已实现冻结L0 action set上的point-level repair：

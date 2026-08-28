@@ -104,10 +104,17 @@ P7 fixed-budget audit已在读取本阶段指标前冻结，formal run尚未创�
 - 合法恢复：沿用P7 L0 action set；acted boundary只保留same-Actor motion-compensated hit，target仅评估；同时过conflict
   reduction、clean/overall geometry yield、Actor/shell/track/hazard preservation gates。
 - 证据：`WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01` /
-  `20260828T092919Z__fixed-budget-distribution-s0-r1`。
+  `20260828T092919Z__fixed-budget-distribution-s0-r1`；首次physical recovery reject=
+  `WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01/20260828T093710Z__sensor-surface-repair-s0-r1`。
+- recovery：exact hit保留过稀；P7R2依据PoinTr/SnowflakeNet/RFNet冻结Actor-local 0.512m support expansion，
+  详见`P7R2_RADIUS_SUPPORT_RECOVERY_FREEZE.md`。禁止第二个radius或大模型临时训练。
 
 P7R point-level repair实现已就绪但尚未创建formal run；target只参与post-repair metric，未进入L0 action或same-Actor
 hit retention rule。`V66-F02`保持`active_recovery_frozen`，下一可用编号仍为`V66-F03`。
+
+P7R formal被拒绝：conflict reduction=`0.847660`，但overall/clean boundary retention=`0.383588/0.395715 < 0.40`；
+7/9 gates通过不改变verdict。根因是0.2m exact evidence-voxel hit过稀。`V66-F02`保持active；唯一P7R2固定
+one-native-voxel `0.512m` same-Actor support neighborhood，原九门不变，失败即关闭family。
 
 下一可用编号：`V66-F03`。
 
@@ -231,7 +238,7 @@ hit retention rule。`V66-F02`保持`active_recovery_frozen`，下一可用编�
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
 | V6.5 | visited-state reliability ranking与单调校准可迁移；one-shot direct action selection benefit失败并终止 | q0只可作给定轨迹访问状态的reliability diagnostic；禁止第二confirmation、阈值/lattice/critic救援 | `V65-F01`–`V65-F19`；`V65_ARXIV_TECHNICAL_REPORT.md`；`ARXIV_EVIDENCE_INDEX.md` |
-| V6.6 | active：Actor-preserving两级certificate；P3L legacy selection支持local geometry ranking | deterministic Actor existence与learned local geometry authority分离；独立confirmation待执行；下一failure id=`V66-F02` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
+| V6.6 | active：两级certificate与HARP bake已支持；P7 triage支持、exact-hit surface repair被拒 | `V66-F02 active`；唯一0.512m Actor-local support recovery已冻结；下一failure id=`V66-F03` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
