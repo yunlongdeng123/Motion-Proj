@@ -33,8 +33,12 @@ canonical=`run://worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/
 `=.945655`，3/3 gates；所以P65失败来自quantile objective/interval，不是H2.5 shift。
 
 P67将对象收紧为直接二元问题：`actor error>1m AND predicted tau separation<=6m`。Binary query、continuous query与
-binary Actor-only在同一training read共同训练，固定class weight为train neg/pos ratio；第五split H2.5，要求binary head
-分别超过continuous `.005`与Actor-only `.01`。当前物化中，随后GPU训练。
+binary Actor-only在同一read共同训练。Binary/continuous/Actor-only AUROC=`.939174/.940707/.911397`；binary相对
+continuous `-.001533`，2/3 gates拒绝。连续expected-error score保留为“不可靠”排序信号。
+
+参考SelectiveNet（ICML 2019）与selective regression（ICML 2022），P68/P69均冻结continuous score并固定per-scene
+50% coverage。P68 cost降低`78.93%`、unreliable prevalence降低`88.58%`、32/32 scenes不增；P69在第二split分别
+降低`68.80%/87.83%`、23/23 scenes不增。两次3/3支持的是Actor-state abstention/triage，不是Actor删除或world authority。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，

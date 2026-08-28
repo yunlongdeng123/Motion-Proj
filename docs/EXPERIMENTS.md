@@ -2,11 +2,27 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P69-SELECTIVE-ACTOR-RELIABILITY-REPLICATION-01
+
+- 状态：`done/supported`；canonical=`20260829T150000Z__selective-actor-replication-s0-r1`；冻结P66 score。
+- 28,111 rows固定per-scene 50% coverage选14,052；cost `.218208→.068073`（降低`68.80%`），
+  unreliable prevalence `.042688→.005195`（降低`87.83%`），23/23 scenes不增。
+- Actor-only continuous同coverage cost=`.070767`；query低`.002694`。3/3 gates，P68 selective结论第二split复现。
+
+### WS-V67-P68-SELECTIVE-ACTOR-RELIABILITY-01
+
+- 状态：`done/supported`；canonical=`20260829T143000Z__selective-actor-s0-r1`；冻结P67 continuous score。
+- 43,567 rows固定per-scene 50% coverage选21,776；cost `.195228→.041132`（降低`78.93%`），
+  unreliable prevalence `.046251→.005281`（降低`88.58%`），32/32 scenes不增。
+- Binary-head selection cost=`.114798`，continuous低`.073666`；3/3 gates。
+
 ### WS-V67-P67-BINARY-ACTOR-RELIABILITY-01
 
-- 状态：`materialization then GPU training running`；direct label=`raw actor error>1m AND predicted tau separation<=6m`。
+- 状态：`done/rejected`；canonical=`20260829T140000Z__binary-actor-s0-r1`；264,418 train rows、
+  43,567 H2.5 rows、2,015 unreliable rows。direct label=`raw actor error>1m AND tau separation<=6m`。
 - 同read共同训练binary query、continuous query、binary Actor-only三个同容量heads；class weight只取train neg/pos exact ratio。
-- 三门：binary query AUROC `.75`、相对continuous `+.005`、相对Actor-only binary `+.01`；不扫threshold/loss。
+- Binary query/continuous query/Actor-only binary AUROC=`.939174/.940707/.911397`；相对continuous
+  `-.001533`、相对Actor-only `+.027777`；2/3 gates，direct binary不优于continuous score。
 
 ### WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01
 

@@ -654,12 +654,22 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   AUROC=`.945655/.939205`；3/3 gates。
 - 结论：H2.5 plain method成立；P65负结果定位于quantile head/loss与未校准interval。下一编号=`V67-F53`。
 
-### V67-F53 — P67 direct binary Actor reliability候选
+### V67-F53 — P67 direct binary Actor reliability失败
 
-- 分类：`prediction/direct-binary-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 分类：`prediction/direct-binary-actor-reliability`；状态：`closed_negative_after_single_trial`。
 - 对象：冻结定义`raw actor state error>1m AND predicted tau separation<=6m`，直接输出unreliable probability。
 - 同read：binary query、continuous query、binary Actor-only；正类权重=train negative/positive exact ratio。
-- 判定：AUROC `.75`，相对continuous `+.005`，相对Actor-only `+.01`；不扫threshold/loss/class weight。下一编号=`V67-F54`。
+- 结果：AUROC=`.939174/.940707/.911397`；binary相对continuous=`-.001533`、相对Actor-only=`+.027777`；2/3 gates。
+- 结论：不扫threshold/loss/class weight；direct binary关闭，continuous expected-error score保留。下一编号=`V67-F54`。
+
+### V67-F54 — P68/P69 fixed-coverage selective Actor reliability支持
+
+- 分类：`consumer/selective-regression-triage`；状态：`supported_two_splits`。
+- 调研迁移：SelectiveNet（ICML 2019）与selective regression（ICML 2022）将abstention表述为risk-coverage tradeoff，
+  并警告group风险可能随coverage下降而恶化；因此固定per-scene 50%，不做global threshold sweep。
+- P68：cost -78.93%、unreliable prevalence -88.58%、32/32 scenes nonincreasing，continuous cost低于binary。
+- P69：cost -68.80%、unreliable prevalence -87.83%、23/23 scenes nonincreasing，continuous cost低于Actor-only continuous。
+- 结论：只支持reliability triage/abstention；不删除Actor、不改geometry、不称authority/planning/safety。下一编号=`V67-F55`。
 
 ### V6.6 当前边界（2026-08-28）
 
