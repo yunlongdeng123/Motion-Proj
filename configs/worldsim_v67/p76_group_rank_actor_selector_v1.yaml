@@ -1,0 +1,55 @@
+schema_version: worldsim_v67.p76_group_rank_actor_selector.v1
+output_schema_version: worldsim_v67.p76_group_rank_actor_selector_summary.v1
+task_id: WS-V67-P76-GROUP-RANK-ACTOR-SELECTOR-01
+hypothesis_id: WS-V67-H-P76-001
+seed: 0
+role: source_blind_group_rank_training_then_post_p75_development_read
+verdict_on_pass: supported_dense_group_rank_actor_selector
+verdict_on_failure: rejected_dense_group_rank_actor_selector
+source_rows:
+  - run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+    artifact: TRAIN_ACTOR_QUERY_ROWS.npz
+  - run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+    artifact: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz
+  - run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+    artifact: SOURCE_H3_ACTOR_QUERY_ROWS.npz
+evaluation_source:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  rows: FRESH_VALIDATION_H3P5_ACTOR_QUERY_ROWS.npz
+  model: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+  readiness_timeout_seconds: 2400
+p73_baseline:
+  run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  hidden_dimensions: [256, 128, 64]
+  epochs: 1500
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_cost_reduction_over_actor_only: 0.05
+  minimum_cost_reduction_over_p75: 0.05
+  minimum_absolute_cost_reduction: 0.50
+locks:
+  percentile_target_grouped_only_by_source_scene_and_horizon: true
+  dense_rank_supervision_instead_of_binary_admission: true
+  query_actor_only_capacity_optimizer_and_epochs_exact: true
+  model_frozen_before_P75_validation_rows_exist: true
+  P75_consumes_fresh_validation_first_P76_is_followup_development: true
+  no_rank_temperature_pair_sampling_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v119/prillo20a.html
+  - https://proceedings.mlr.press/v202/sander23a.html
+  - https://proceedings.mlr.press/v293/vazquez25a.html
+claim_boundary:
+  - same_eight_scene_H3p5_cohort_as_P75_and_not_an_independent_second_confirmation
+  - rank_model_frozen_before_any_P75_validation_rows_or_metrics_were_available
+  - primary_endpoint_fixed_coverage_actual_selected_cost
+  - no_absolute_cost_calibration_actor_deletion_counterfactual_reaction_planning_policy_or_safety_claim

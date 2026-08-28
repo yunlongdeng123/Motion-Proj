@@ -1,6 +1,6 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-> **最后更新**：2026-08-28
+> **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
 > **事实边界**：失败事实以 canonical run、`docs/EXPERIMENTS.md`、`docs/RESEARCH_STATUS.md` 和冻结证据为准
@@ -730,6 +730,19 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 结论：关闭binary admission family，不扫label quantile/BCE/coverage；保留multi-horizon continuous expected-cost selector。
 - 数据对策：按DriveStudio官方modular process keys，只抽取V5 validation role的LIDAR并生成`lidar/calib/objects` 10Hz数据；
   P75在新8-scene cohort H3.5做一次fixed-coverage read，准备IO与GPU训练重叠。下一编号=`V67-F60`。
+
+### V67-F60 — P75 validation LIDAR generic shard routing造成无效全包扫描
+
+- 分类：`engineering/data-routing`；状态：`recovering_with_exact_scene_shards`。
+- attempted run：`WS-V67-P75-FRESH-ACTOR-COHORT-PREP-01/20260829T180000Z__validation-actor-prep-s0-r1`；
+  generic extractor在member index尚未建立时把全部3,128 candidates交给10个约30GB gzip shards，2 workers长时间只扫描
+  01/02；0/8 processed scenes ready，未读H3.5 target/metric。
+- 根因：该通用逻辑适合未知member位置，但本cohort的scene顺序与官方trainval shard分段已经由metadata确定；继续全包扫描只浪费IO，
+  不增加科学信息。P75 GPU四horizon训练已完成且主进程保持，不重训。
+- 外部迁移：DriveStudio官方NuScenes流程支持按`process_keys`只生成`lidar/calib/objects`；恢复进一步按scene metadata冻结
+  `0129/0170→02,0364/0384→04,0640→06,0977/0997→09,1053→10`，五包并发且每包只接所属members。
+- 边界：r1保留为工程失败；r2不换scene/horizon/model/gate，不加入图像、mask、quality、hash/checksum/fingerprint。
+  下一编号=`V67-F61`。
 
 ### V6.6 当前边界（2026-08-28）
 

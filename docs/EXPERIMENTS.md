@@ -2,12 +2,22 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P76-GROUP-RANK-ACTOR-SELECTOR-01
+
+- 状态：`training`；P75验证LIDAR精确分片IO进行时，用source H `.8/1.5/2.5/3.0`的576,032 rows训练
+  scene×horizon连续percentile-rank query/Actor-only heads；固定1,500 epochs、无temperature/pair/coverage sweep。
+- P74 binary admission只保留“最低半集”边界而丢弃半集内部相对次序；P76用dense rank target恢复整个list的监督幅度。
+  模型在P75 validation rows产生前冻结；P75先完成fresh read，P76随后复用相同H3.5 rows只能标为development follow-up。
+- gates：query fixed-50% cost相对rank Actor-only/P75各至少降低5%，相对all至少降低50%；pointwise MAE不设门。
+
 ### WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01
 
-- 状态：`running`；从V5冻结validation role取8个从未进入P60–P74的scene，只抽取Actor reliability所需LIDAR，
+- 状态：`running / exact-shard IO recovery`；四horizon模型已训练完成并等待数据。从V5冻结validation role取8个从未进入P60–P74的scene，只抽取Actor reliability所需LIDAR，
   用DriveStudio 10Hz `lidar/calib/objects`最小process keys建立新processed cohort；不做图像/mask/quality/hash阶段。
 - GPU并行训练source H `.8/1.5/2.5/3.0` continuous expected-cost模型（query/Actor-only同容量）；新cohort H3.5
   固定50%一次read，primary gates只比较selected cost，不再用pointwise MAE否定selective对象。
+- Prep r1把全部3,128 candidates交给10个shards而IO停滞，未生成scene；保留失败现场。r2按冻结scene→shard映射
+  并行扫描`02/04/06/09/10`，每包只接收所属scene members，P75主run不重训。
 
 ### WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
 

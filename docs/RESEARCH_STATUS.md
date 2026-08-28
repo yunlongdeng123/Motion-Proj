@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.7 P75 exact-shard IO / P76 dense group-rank GPU training（2026-08-29）
+
+P75四horizon query/Actor-only模型已完成`1,500+1,500` epochs训练；source H3物化135,634 rows，四horizon总训练
+576,032 rows。首轮验证数据准备错误地把3,128个LIDAR candidates交给全部10个约30GB gzip shards，长时间扫描仅
+推进前两包；该IO策略终止但P75 GPU模型与run保持。r2按metadata冻结映射只并行扫描实际shards `02/04/06/09/10`，
+每包389--786 candidates；不增加图像、质量、hash/checksum/fingerprint阶段。
+
+为了不让3090等待IO，参考ICML 2020 SoftSort、ICML 2023 differentiable sparse top-k及AutoML 2025 rank-target方法，
+P76把P74丢失幅度信息的binary half-label改为scene×horizon内连续percentile rank。query/Actor-only同为
+`24/Actor features→256→128→64→1`、同optimizer和1,500 epochs，在`.8/1.5/2.5/3.0s` source上训练；模型在
+P75 validation rows产生前冻结。P75仍拥有首次fresh H3.5 read，P76随后只在同一cohort作透明标注的development follow-up，
+比较fixed-50% actual selected cost，不声称第二次独立确认或absolute calibration。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC
