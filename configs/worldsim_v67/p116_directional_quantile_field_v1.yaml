@@ -1,0 +1,55 @@
+schema_version: worldsim_v67.p116_directional_quantile_field.v1
+output_schema_version: worldsim_v67.p116_directional_quantile_field_summary.v1
+task_id: WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01
+hypothesis_id: WS-V67-H-P116-001
+seed: 0
+role: consumed_development_distribution_free_directional_actor_uncertainty
+model_artifact: DIRECTIONAL_QUANTILE_FIELD.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  source_artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+  development_cohorts:
+    - name: consumed_p81
+      artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+    - name: consumed_p96
+      artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+model:
+  hidden_dimensions: [256, 128]
+  quantile: 0.90
+  training_direction_count: 8
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_query:
+  clearance_floor_m: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+decision:
+  minimum_mean_auroc_gain: 0.01
+verdict_on_pass: supported_development_directional_quantile_field
+verdict_on_failure: rejected_development_directional_quantile_field
+locks:
+  actor_model_trains_only_residual_projection_quantiles: true
+  eight_uniform_training_directions_and_q90_fixed: true
+  candidate_trajectory_supplies_only_adverse_boundary_normal_and_clearance: true
+  consumed_p81_and_p96_development_only: true
+  p113_cohort_not_read_or_used_for_selection: true
+  no_direction_count_quantile_model_loss_seed_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v151/kan22a.html
+  - https://proceedings.neurips.cc/paper/2021/hash/5b168fdba5ee5ea262cc2d4c0b457697-Abstract.html
+claim_boundary:
+  - development_only_on_consumed_P81_and_P96
+  - directional_quantile_field_not_conformal_or_calibrated_collision_probability
+  - no_P113_or_new_confirmation_target_read
+  - no_planner_policy_closed_loop_or_safety_claim
+

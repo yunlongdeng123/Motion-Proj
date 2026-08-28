@@ -1183,12 +1183,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - target-unread cohort：`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，四location、10 distinct sessions；
 - frozen decision：directional selected events不多于clearance，并且AUROC gain≥`.02`；P109 checkpoint/projection、baseline floor、
   H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
-- stop rule：一次read；失败登记下一可用编号（P115完成后为`V67-F81`）并关闭uncertainty-over-geometry claim，不换cohort/
+- stop rule：一次read；失败登记下一可用编号（若P116先失败则为`V67-F82`）并关闭uncertainty-over-geometry claim，不换cohort/
   metric/floor/model或做recovery。
-- failure-ID note：P114/P115先完成并占用`V67-F79/F80`后，P113若失败顺延登记`V67-F81`；编号变化不改变任何
+- failure-ID note：P114/P115已占用`V67-F79/F80`；P116若失败占用F81，届时P113若失败顺延登记`V67-F82`。编号变化不改变任何
   scientific decision。
 
-下一可用编号：`V67-F81`。
+下一可用编号：`V67-F81`（P116先完成）。
 
 ### P114 freeze note — downstream tail aggregation不占用P113确认
 
@@ -1240,6 +1240,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - claim impact：无spectral/joint uncertainty或collision claim；P108/P109/P110证据不变。
 
 下一可用编号：`V67-F81`。
+
+### P116 freeze note — 用directional q90 field替代Gaussian分布假设
+
+- card point：P115表明低频joint Gaussian在P81/P96方向反转，禁止扫DCT coefficient/structure；
+- literature response：AISTATS 2022 Multivariate Quantile Function Forecaster直接参数化多元quantile，NeurIPS 2021强调full
+  quantile function可表达distribution-free uncertainty；当前迁移只取固定q90与8 directions，不声称完整quantile function；
+- method：Actor-time residual沿固定unit direction作pinball监督，推理时boundary normal只作为directional query，clearance只在
+  解析ratio中出现；因此不回到raw end-to-end query classifier；
+- prevention：P81/P96 consumed development，不读P113；不扫direction count/quantile/model/loss/seed/coverage。失败登记
+  `V67-F81`并关闭该形式，P113若随后失败使用F82。
+
+下一可用编号仍为：`V67-F81`。
 
 ### V6.6 当前边界（2026-08-28）
 

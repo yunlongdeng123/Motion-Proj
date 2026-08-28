@@ -282,6 +282,18 @@
   boundary-relevant高频/末端误差；关闭coefficient/architecture/loss/seed sweep，保留P109 pointwise directional model。
 - resources/execution：wall=`36.41s`、peak GPU=`.31402GiB`、RSS=`1.070GiB`，与P113 archive IO实际重叠；P113未读取。
 
+### WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01
+
+- 状态：`frozen/launch pending`；只读P109 source与consumed P81/P96，不读P113。
+- motivation：P115的低频joint Gaussian在P96过度平滑；AISTATS 2022 Multivariate Quantile Function Forecaster与NeurIPS
+  2021 quantile UQ支持直接学习非参数conditional quantile，避免把directional Actor residual强制为Gaussian。
+- fixed method：20维Actor-time features加8个均匀unit directions，以q=.90 pinball预测signed residual projection；`256/128`
+  MLP、6,000 steps、batch65,536、seed0。推理direction固定为朝boundary穿越的`-sign(clearance) * normal`，score=
+  `q90 / max(abs(clearance),.05m)`，time/Actor max和fixed50不变。
+- decision：P81/P96 selected events均不多于P109 Gaussian、AUROC gain均非负且平均≥`.01`；不扫direction count、quantile、
+  architecture、loss、seed或coverage。只属consumed development，无conformal/calibrated collision/safety claim。
+- execution：P113 archive IO期间占用3090，P113 protocol与target完全隔离；失败登记`V67-F81`并关闭该quantile-field形式。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

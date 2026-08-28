@@ -202,6 +202,12 @@ spectral/P109/clearance selected events=`0/0/1`、AUROC `.97709/.96764/.91404`�
 抹掉影响boundary crossing的高频/末端残差；不扫coefficient count/architecture/loss。P109继续是冻结best，P113若失败使用
 下一编号`V67-F81`。
 
+P115卡点后检索AISTATS 2022 Multivariate Quantile Function Forecaster与NeurIPS 2021 quantile UQ，P116转为
+distribution-free directional quantile field：Actor-time 20维状态加8个均匀训练方向，只以q=.90 pinball学习signed residual
+projection。推理时candidate τ只提供朝occupancy boundary穿越方向的unit normal与`.05m` clearance，score固定为
+`q90_adverse / clearance`并按time/Actor max。P81/P96 consumed development、6,000 steps、seed0；不扫方向数、quantile、
+model、loss或coverage，不读取P113。若失败占用`V67-F81`，P113失败编号顺延F82。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
