@@ -2,13 +2,22 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P10-FRESH-GEOMETRY-TRANSFER-01
+
+- 状态：`implementation_ready`；P9 fresh evidence/native、冻结V6.6 head、同P1/P5 gates；GPU+I/O overlap。
+- 配置=`configs/worldsim_v67/p10_fresh_geometry_transfer_v1.yaml`；无refit/threshold/second read；formal run尚未创建。
+
 ### WS-V67-P9-FRESH-PREPARATION/EVIDENCE/NATIVE-SIDECAR-01
 
-- 状态：`implementation_ready`；fresh scenes=`0348/0360/0373/0388/0399/0414`，processed indices=
+- 状态：`done`；fresh scenes=`0348/0360/0373/0388/0399/0414`，processed indices=
   `265/277/290/304/315/328`；选择前均unprocessed且repo-unmentioned。
 - Archive band 4中79 eligible scenes按固定1/7..6/7位置选择；先扫shard 4；只允许same-scene missing-member fallback。
 - 72 targets；prep/evidence/native均禁止model score/quality read。scene-ready native GPU与I/O重叠；配置=
   `configs/worldsim_v67/p9_fresh_{preparation,evidence,native_sidecars}_v1.yaml`。
+- Prep=`20260828T111500Z__fresh-prep-s0-r1`，6 new scenes/10,727 members/wall `1145.914s`；native aggregate=
+  `20260828T114200Z__fresh-native-aggregate-s0-r1`，72 targets/3,317,884,577 bytes/peak `4.13145GiB`；evidence=
+  `20260828T114300Z__fresh-evidence-s0-r1`，72 units/86,874,060 bytes/wall `132.283s`。
+- `V67-F02 resolved_pre_quality_entry_contract`；失败入口未产生scientific metric，successful 0348 native=r3。
 
 ### WS-V67-P8-INDEPENDENT-INWARD-RAY-SURFACE-01
 

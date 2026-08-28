@@ -58,6 +58,17 @@ P8独立legacy physical confirmation以conflict reduction=`0.501469`、overall/c
 无新failure。P4R/P8仍是globally consumed legacy，不能代替fresh population；P9已冻结新六场景输入链，下一编号仍为
 `V67-F02`。
 
+### V67-F02 — fresh native launcher入口合同未显式展开
+
+- 分类：`engineering/entrypoint`；状态：`resolved_pre_quality_entry_contract`。
+- 观察：scene-0348正式worker前依次遇到task parent不存在、V65-style `base_config`未由PyYAML自动展开、单卡配置误写
+  device index `1`；随后旧失败run目录按exact-once拒绝覆盖。另一次evidence `--help`漏`PYTHONPATH=.`，未创建run。
+- 根因：旧runner直接对单文件`yaml.safe_load`，并在创建run前查询parent disk；`resources.gpu`语义是device index。
+- 恢复：创建task parent、显式展开冻结V6.3 native runtime字段、恢复GPU index 0、保留r1/r2失败目录并以r3完成0348。
+- 数据边界：所有失败均在成功worker/quality read/scientific metric前；scene/cohort/model/targets未变，native inference未重复。
+- 证据：prep/native/evidence canonical见`docs/autoresearch/worldsim_v67/P9_FRESH_INPUT_PIPELINE_RESULT.md`。
+- 下一可用编号：`V67-F03`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

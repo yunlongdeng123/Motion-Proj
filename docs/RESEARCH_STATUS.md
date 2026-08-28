@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.7 P9 fresh inputs complete / P10 GPU transfer ready（2026-08-28）
+
+状态：`v67_p9_fresh_inputs_complete_p10_gpu_transfer_implementation_ready`；prep/native/evidence canonical分别为
+`20260828T111500Z__fresh-prep-s0-r1`、`20260828T114200Z__fresh-native-aggregate-s0-r1`、
+`20260828T114300Z__fresh-evidence-s0-r1`。
+
+P9产生6/6 new scenes、72/72 native targets（3,317,884,577 bytes，peak GPU=`4.13145GiB`）与72/72 evidence units
+（86,874,060 bytes）；prep/evidence wall=`1145.914/132.283s`。native GPU与后续scene preprocess真实重叠，未重复inference；
+所有quality/model score仍未读。
+
+`V67-F02 resolved_pre_quality_entry_contract`合并记录native launcher父目录、base config展开与单卡index三项入口错误；均在
+quality/data worker成功前，不产生科学metric。P10已冻结并实现：同一V6.6 head在fresh六场景一次GPU transfer；无refit/
+threshold。完成P10-P13 frozen fresh chain后直接进入新的可学习directional surface训练，不再扩展legacy audit。
+
 ## WorldSim V6.7 P8 independent surface supported / P9 fresh inputs ready（2026-08-28）
 
 状态：`v67_p8_independent_surface_supported_p9_fresh_input_implementation_ready`；canonical=
