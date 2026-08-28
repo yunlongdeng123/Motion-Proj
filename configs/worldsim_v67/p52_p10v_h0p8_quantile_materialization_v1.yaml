@@ -1,0 +1,33 @@
+schema_version: worldsim_v67.p52_horizon_quantile_materialization.v1
+task_id: WS-V67-P52-P10V-H0P8-QUANTILE-MATERIALIZATION-01
+role: p10v_out_of_training_range_zero_point_eight_second_cache
+cache_path: /root/autodl-tmp/cache/worldsim_v67/p52_p10v_h0p8_quantile_actions.npz
+data:
+  inputs:
+    evidence_run: worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1
+    native_run: worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1
+    native_partition: fresh_selection
+    processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+    risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+    risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+  native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+  trajectory: {future_frame_count: 8, horizon_seconds: 0.8, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+  sampling: {evaluation_points_per_unit: 8192, seed: 0}
+  quantile_levels: [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+  action_lattice:
+    horizon_seconds: 0.8
+    progress_ratios: [0.25, 0.50, 0.75, 1.00]
+    lateral_offsets_m: [-1.50, 0.00, 1.50]
+    include_stop_for_reporting_only: true
+  scenes:
+    - {name: scene-0159, processed_index: 119}
+    - {name: scene-0184, processed_index: 143}
+    - {name: scene-0577, processed_index: 459}
+    - {name: scene-0599, processed_index: 479}
+    - {name: scene-0955, processed_index: 722}
+    - {name: scene-0983, processed_index: 745}
+locks:
+  task_condition_horizon_seconds: 0.8
+  below_training_horizon_range: true
+  source_cohort_seen_at_h1_and_h2_but_h0p8_target_not_previously_materialized: true
+  add_hash_checksum_fingerprint: false
