@@ -2,10 +2,21 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P9-FRESH-PREPARATION/EVIDENCE/NATIVE-SIDECAR-01
+
+- 状态：`implementation_ready`；fresh scenes=`0348/0360/0373/0388/0399/0414`，processed indices=
+  `265/277/290/304/315/328`；选择前均unprocessed且repo-unmentioned。
+- Archive band 4中79 eligible scenes按固定1/7..6/7位置选择；先扫shard 4；只允许same-scene missing-member fallback。
+- 72 targets；prep/evidence/native均禁止model score/quality read。scene-ready native GPU与I/O重叠；配置=
+  `configs/worldsim_v67/p9_fresh_{preparation,evidence,native_sidecars}_v1.yaml`。
+
 ### WS-V67-P8-INDEPENDENT-INWARD-RAY-SURFACE-01
 
-- 状态：`implementation_ready`；P6/P7 canonical、L0 arm、exact P4R inward-ray rule、`0.512m`与九门冻结。
-- 配置=`configs/worldsim_v67/p8_independent_inward_ray_surface_v1.yaml`；formal run尚未创建；target只作最终metric。
+- 状态：`done/supported`；P6/P7 canonical、L0 arm、exact P4R inward-ray rule、`0.512m`与九门冻结。
+- Canonical=`run://worldsim_v67/WS-V67-P8-INDEPENDENT-INWARD-RAY-SURFACE-01/
+  20260828T110941Z__independent-inward-s0-r1`；baseline/repaired=`19654/10882`；overall/clean=
+  `0.553679/0.556700`；conflict reduction=`0.501469`；Actor contracts exact；9/9 gates。
+- wall/RSS/GPU=`10.7403s/0.5892GiB/false`；failure delta=`none`；只支持independent legacy confirmation。
 
 ### WS-V67-P7-INDEPENDENT-FIXED-ACTIONS-01
 

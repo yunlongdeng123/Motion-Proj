@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.7 P8 independent surface supported / P9 fresh inputs ready（2026-08-28）
+
+状态：`v67_p8_independent_surface_supported_p9_fresh_input_implementation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P8-INDEPENDENT-INWARD-RAY-SURFACE-01/20260828T110941Z__independent-inward-s0-r1`；verdict=
+`supported_independent_legacy_motion_compensated_inward_ray_surface_confirmation`。
+
+P8 baseline/repaired=`19,654/10,882`，overall retention=`0.553679`；conflict `1,021→509`，reduction=`0.501469`；
+clean `18,633→10,373`，retention=`0.556700`。Actor/shell/ID-track-trajectory=`1/1/1`，removed/hazard shift/scene
+yield=`0/0/1`，9/9 gates通过。P4R+P8构成两个surface-task-independent legacy cohorts正证据，但仍非fresh population。
+
+P9在任何处理/quality read前从archive band 4的79个unprocessed且repo-unmentioned scenes按固定1/7..6/7位置选出
+`0348/0360/0373/0388/0399/0414`（indices `265/277/290/304/315/328`）。已冻结72-unit prep/evidence/native配置；
+scene-ready后立刻运行单卡native GPU，使archive/preprocess I/O与GPU重叠。当前95GiB可用，单3090足够，无需关机。
+
 ## WorldSim V6.7 P7 independent actions supported / P8 surface ready（2026-08-28）
 
 状态：`v67_p7_independent_actions_supported_p8_surface_implementation_ready`；canonical=

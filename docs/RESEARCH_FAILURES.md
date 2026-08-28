@@ -54,6 +54,10 @@ P7固定L0 actions 6/6 gates通过，pooled conflict reduction=`0.612179`；q0 p
 L0六场景均高于0.5。保持为negative comparator/robustness observation，不改P8 arm或gate；无新failure，下一编号仍为
 `V67-F02`。
 
+P8独立legacy physical confirmation以conflict reduction=`0.501469`、overall/clean=`0.553679/0.556700`通过9/9 gates；
+无新failure。P4R/P8仍是globally consumed legacy，不能代替fresh population；P9已冻结新六场景输入链，下一编号仍为
+`V67-F02`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

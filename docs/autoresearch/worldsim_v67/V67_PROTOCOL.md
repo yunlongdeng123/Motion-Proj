@@ -43,6 +43,10 @@ P5 canonical=`20260828T110336Z__independent-transfer-s0-r1`在570 Actor-units上
 `0.665176/0.676612`、6/6 scenes通过冻结门；q0=`0.695177/0.706467`更强，故明确不宣称head-over-q0 dominance。
 P6-P8仍按预注册learned arm完成physical chain，并原样报告q0/oracle comparators。
 
+P8 canonical=`20260828T110941Z__independent-inward-s0-r1`以conflict reduction=`0.501469`、overall/clean=
+`0.553679/0.556700`通过9/9 gates。P9改用此前unprocessed且repo-unmentioned的band-4六场景做fresh empirical chain；
+scene、72 targets、模型/rule/actions/gates均在prep前冻结。
+
 ## Claim boundary
 
 成功也只支持task-untouched legacy ray-terminated physical surface capability；在独立新cohort confirmation之前，不称
