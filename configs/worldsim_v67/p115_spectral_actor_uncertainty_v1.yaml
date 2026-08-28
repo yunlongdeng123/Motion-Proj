@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p115_spectral_actor_uncertainty.v1
+output_schema_version: worldsim_v67.p115_spectral_actor_uncertainty_summary.v1
+task_id: WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01
+hypothesis_id: WS-V67-H-P115-001
+seed: 0
+role: consumed_development_joint_spectral_actor_uncertainty
+model_artifact: SPECTRAL_ACTOR_UNCERTAINTY.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  source_artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+  development_cohorts:
+    - name: consumed_p81
+      artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+    - name: consumed_p96
+      artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+model:
+  hidden_dimensions: [512, 256]
+  dct_coefficient_count: 4
+  steps: 6000
+  batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+decision:
+  minimum_mean_auroc_gain: 0.01
+verdict_on_pass: supported_development_spectral_actor_uncertainty
+verdict_on_failure: rejected_development_spectral_actor_uncertainty
+locks:
+  actor_network_reads_only_history_dynamics_and_horizon: true
+  one_forward_predicts_complete_nine_step_residual_sequence: true
+  first_four_orthonormal_dct_coefficients_fixed: true
+  candidate_trajectory_enters_only_through_frozen_boundary_projection: true
+  consumed_p81_and_p96_development_only: true
+  p113_cohort_not_read_or_used_for_selection: true
+  no_coefficient_count_architecture_loss_seed_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2023/html/Weng_Joint_Metrics_Matter_A_Better_Standard_for_Trajectory_Forecasting_ICCV_2023_paper.html
+  - https://openaccess.thecvf.com/content/ICCV2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+  - https://openaccess.thecvf.com/content/CVPR2026/html/Huang_FoSS_Modeling_Long-Range_Dependencies_and_Multimodal_Uncertainty_in_Trajectory_Prediction_CVPR_2026_paper.html
+claim_boundary:
+  - development_only_on_consumed_P81_and_P96
+  - spectral_residual_sequence_regularization_not_joint_collision_probability
+  - no_P113_or_new_confirmation_target_read
+  - no_planner_policy_closed_loop_or_safety_claim
+

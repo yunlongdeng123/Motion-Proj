@@ -190,6 +190,12 @@ consumed P81 learned/max/clearance selected events=`0/0/1`，但AUROC `.95138`�
 learned positive pooling稀释了最接近decision boundary的局部tail signal；保留P109 max，不扫top-k/union/model/seed。
 P113仍按原冻结protocol独立运行；若P113失败，使用下一编号`V67-F80`。
 
+P114卡点后的外部调研显示，ICCV 2023 Joint Metrics Matter与PRECOG都强调marginal future组合不能代表联合一致性，CVPR
+2026 FoSS进一步用frequency-domain结构保持长时trajectory coherence。因此P115改变Actor uncertainty representation而不是
+回救tail pool：Actor-only网络一次输出完整9-step Ego-frame residual sequence的前4个正交DCT coefficients及Gaussian scale，
+再解析重建time-local mean/variance并复用P109 frozen boundary-normal max。只在consumed P81/P96比较P109；6,000 GPU
+steps与P113 archive IO重叠。系数数、结构、loss、seed、projection和coverage一次冻结，不读取P113 target。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

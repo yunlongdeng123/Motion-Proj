@@ -263,6 +263,18 @@
   P109 directional max，关闭top-k/union/model/seed/coverage recovery。wall=`13.66s`、peak GPU=`.05352GiB`、RSS=`1.063GiB`。
 - execution：GPU训练与P113 archive IO实际重叠；P113 cohort/model/decision完全不变且未被P114读取。
 
+### WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01
+
+- 状态：`frozen/launch pending`；source与development只复用P109 artifacts，不读P113 target。
+- motivation：P114说明独立式marginal probability pooling会稀释局部tail。ICCV 2023 Joint Metrics Matter、ICCV 2019 PRECOG
+  和CVPR 2026 FoSS共同指向coherent/joint future representation，因此下一步改Actor residual sequence，不改downstream max。
+- fixed method：19维Actor history/dynamics+horizon一次输出完整9-step residual的前4个orthonormal DCT coefficients及diagonal
+  Gaussian scale；`512/256` MLP、6,000 steps、batch32,768、seed0。DCT解析重建time-local mean/variance后，candidate τ仍
+  只经P109 boundary-normal linear projection和time/Actor max进入，H3.5/fixed50不变。
+- decision：P81/P96 selected events均不多于P109、AUROC gain均非负且平均≥`.01`；不扫DCT coefficient count、architecture、
+  loss、seed、projection或coverage。成功也只属consumed development，必须另冻未来cohort；失败即登记`V67-F80`关闭该形式。
+- execution：P113 archive IO继续时使用3090，P113 checkpoint/cohort/decision完全隔离。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

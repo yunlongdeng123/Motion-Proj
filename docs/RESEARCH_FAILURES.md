@@ -1215,6 +1215,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F80`。
 
+### P115 freeze note — 从marginal pooling转向coherent Actor residual sequence
+
+- card point：`V67-F79`证明top-k/independent-union downstream pool在两个consumed cohorts都劣于P109 max，不允许回扫pool；
+- literature response：ICCV 2023 Joint Metrics Matter指出marginal metrics/forecasts会遗漏多Agent联合一致性；PRECOG显式建模
+  multi-agent conditional futures；CVPR 2026 FoSS使用frequency-domain trajectory结构建模长时依赖；
+- migration：P115只改Actor-only uncertainty representation，一次输出9-step residual的固定前4 DCT coefficients和scale，候选τ
+  仍只通过P109解析boundary projection进入；P81/P96 consumed development，不读取P113；
+- prevention：不扫coefficient count/architecture/loss/seed/projection/coverage；若失败登记`V67-F80`，P113若随后失败顺延F81。
+
+下一可用编号仍为：`V67-F80`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
