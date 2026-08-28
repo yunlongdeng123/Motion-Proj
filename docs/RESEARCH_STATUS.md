@@ -48,6 +48,10 @@ P99用共享encoder和等权false-safe/false-alarm heads做唯一multi-task reco
 `6+2=8` flips，Actor-only=`18+21=39`，P75 total=13；AUROC=`.86341/.58818`，3/3 gates通过，但仍略逊P95的
 `3+4=7`。因此冻结P95保持P96唯一model，P99只作为“辅助任务能恢复P97表示但未超过joint flip target”的机制结果。
 
+P100在不改P96的前提下给P95 query追加3个冻结解析特征：constant-relative-velocity的normalized time-to-closest、
+predicted signed occupancy clearance与到decision boundary的绝对距离；Actor-only仍为19维。575,596/9,559既有rows
+无新read派生为27维query，P100现以原total-flip target训练6,000 epochs；不扫feature subset或loss。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

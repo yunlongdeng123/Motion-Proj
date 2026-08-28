@@ -923,6 +923,9 @@ P99 equal-weight two-head multi-task在development选择8 flips（6 false-safe+2
 P95的7；它是V67-F68后的唯一shared-representation recovery，不替换已冻结P96 model，也不新增failure。下一编号仍为
 `V67-F69`。
 
+P100 temporal-clearance query augmentation从冻结P95 rows解析派生3维、0 new read，并明确不替换P96；当前无新增failure，
+下一编号仍为`V67-F69`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

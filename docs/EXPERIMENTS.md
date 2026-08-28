@@ -59,6 +59,15 @@
 - result：fixed50 query/Actor/P75 total=`8/39/13`；query subtype=`6 false-safe+2 false-alarm`，Actor=`18+21`；
   AUROC=`.86341/.58818`，3/3 gates。它恢复P97稀疏表示但未超过P95 total=`7`，故不替换confirmation model。
 
+### WS-V67-P100-TEMPORAL-CLEARANCE-OCCUPANCY-FLIP-01
+
+- 状态：`active/GPU training`；prep=`20260830T013000Z__temporal-clearance-prep-s0-r1`，model=
+  `20260830T013500Z__temporal-clearance-occupancy-flip-s0-r1`。
+- 在原24维query后一次性追加normalized analytic time-to-closest、signed occupancy clearance、absolute boundary distance；
+  relative motion由既有Actor/Ego/candidate τ features解析得到，Actor-only保持19维。
+- source/development rows=`575,596/9,559`，query维度27，0 new read；P95 total-flip BCE、6,000 epochs、fixed50不变。
+  这是CVPR 2023 continuous spatiotemporal query启发的development表示研究，不替换P96。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |
