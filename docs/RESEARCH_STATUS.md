@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P14 learned rescue rejected / P14R scene-crossfit GPU recovery ready（2026-08-28）
+
+状态：`v67_p14_rejected_p14r_scene_crossfit_recovery_ready`；P14 canonical=
+`run://worldsim_v67/WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01/20260828T120000Z__directional-surface-s0-r1`。600 GPU
+epochs后train residual 14,250 points达到in-sample AUROC/AUPRC=`1/1`，但0.5 threshold在selection rescue
+7,612 clean + 420 conflict；clean retention `0.5478→0.9745`同时conflict reduction `0.4924→0.0939`，5/6 gates，拒绝。
+
+`V67-F04 active`。检索NeurIPS selective classification、ICLR Conformal Risk Control与ICCV SENTRY后，唯一P14R改为
+leave-one-training-scene-out conflict score校准1% rescue quantile，并修正为exact action-eligible denominator；architecture/
+loss/analytic core/selection gates不变，selection不参与threshold拟合。下一步直接GPU crossfit recovery，不扫参。
+
 ## WorldSim V6.7 P13 fresh physical capability supported / P14 GPU training ready（2026-08-28）
 
 状态：`v67_p13_fresh_surface_supported_p14_directional_training_ready`；canonical=

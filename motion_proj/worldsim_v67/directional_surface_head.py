@@ -259,6 +259,89 @@ def score_residual_head(
     return np.concatenate(scores)
 
 
+def train_residual_head_crossfit(
+    values: np.ndarray,
+    conflicts: np.ndarray,
+    analytic_support: np.ndarray,
+    scenes: np.ndarray,
+    model_config: Mapping[str, Any],
+    seed: int,
+) -> tuple[DirectionalSurfaceHead, np.ndarray, np.ndarray, float, dict[str, Any]]:
+    """Calibrate rescue risk on held-out scenes, then fit the final model on all scenes."""
+    residual = ~np.asarray(analytic_support, dtype=bool)
+    scene_values = np.asarray(scenes)
+    fold_scores, fold_conflicts = [], []
+    fold_rows = []
+    fold_config = dict(model_config)
+    fold_config["epochs"] = int(model_config["crossfit_epochs"])
+    for fold_index, held_scene in enumerate(sorted(set(scene_values.tolist()))):
+        train_members = scene_values != held_scene
+        held_members = (scene_values == held_scene) & residual
+        model, mean, scale, _, metrics = train_residual_head(
+            values[train_members],
+            conflicts[train_members],
+            analytic_support[train_members],
+            fold_config,
+            int(seed) + fold_index + 1,
+        )
+        scores = score_residual_head(model, values[held_members], mean, scale)
+        held_conflicts = np.asarray(conflicts[held_members], dtype=bool)
+        fold_scores.append(scores)
+        fold_conflicts.append(held_conflicts)
+        fold_rows.append(
+            {
+                "held_scene": str(held_scene),
+                "point_count": int(len(scores)),
+                "conflict_count": int(np.count_nonzero(held_conflicts)),
+                "clean_count": int(np.count_nonzero(~held_conflicts)),
+                "clean_auroc": float(roc_auc_score(~held_conflicts, scores))
+                if np.unique(held_conflicts).size == 2
+                else None,
+                "fit_final_loss": metrics["final_loss"],
+            }
+        )
+        del model
+    crossfit_scores = np.concatenate(fold_scores)
+    crossfit_conflicts = np.concatenate(fold_conflicts)
+    conflict_scores = crossfit_scores[crossfit_conflicts]
+    threshold = max(
+        float(model_config["minimum_probability_threshold"]),
+        float(
+            np.quantile(
+                conflict_scores,
+                1.0 - float(model_config["maximum_training_conflict_rescue_fraction"]),
+            )
+        ),
+    )
+    final_model, mean, scale, _, training = train_residual_head(
+        values, conflicts, analytic_support, model_config, int(seed)
+    )
+    crossfit_prediction = crossfit_scores >= threshold
+    training.update(
+        {
+            "threshold": threshold,
+            "threshold_source": "leave_one_scene_out_conflict_scores",
+            "crossfit_point_count": int(len(crossfit_scores)),
+            "crossfit_conflict_count": int(np.count_nonzero(crossfit_conflicts)),
+            "crossfit_clean_count": int(np.count_nonzero(~crossfit_conflicts)),
+            "crossfit_conflict_rescue_fraction": float(
+                np.mean(crossfit_prediction[crossfit_conflicts])
+            ),
+            "crossfit_clean_rescue_fraction": float(
+                np.mean(crossfit_prediction[~crossfit_conflicts])
+            ),
+            "crossfit_clean_auroc": float(
+                roc_auc_score(~crossfit_conflicts, crossfit_scores)
+            ),
+            "crossfit_clean_auprc": float(
+                average_precision_score(~crossfit_conflicts, crossfit_scores)
+            ),
+            "crossfit_folds": fold_rows,
+        }
+    )
+    return final_model, mean, scale, threshold, training
+
+
 def evaluate_support(
     points: Mapping[str, Any],
     scores: np.ndarray,
@@ -272,14 +355,20 @@ def evaluate_support(
         for row in action_rows
         if str(row["arm"]) == str(action_arm)
     }
+    eligible = np.asarray(
+        [str(base_id) in actions for base_id in points["base_ids"]], dtype=bool
+    )
+    excluded_point_count = int(np.count_nonzero(~eligible))
+    base_ids = np.asarray(points["base_ids"])[eligible]
     acted = np.asarray(
-        [actions.get(str(base_id)) == "RANK_REPAIR_OR_ABSTAIN" for base_id in points["base_ids"]],
+        [actions[str(base_id)] == "RANK_REPAIR_OR_ABSTAIN" for base_id in base_ids],
         dtype=bool,
     )
-    conflict = np.asarray(points["conflicts"], dtype=bool)
-    analytic_local = np.asarray(points["analytic_support"], dtype=bool)
+    conflict = np.asarray(points["conflicts"], dtype=bool)[eligible]
+    analytic_local = np.asarray(points["analytic_support"], dtype=bool)[eligible]
+    scores = np.asarray(scores)[eligible]
     analytic_keep = (~acted) | analytic_local
-    rescue = acted & (~analytic_local) & (np.asarray(scores) >= float(threshold))
+    rescue = acted & (~analytic_local) & (scores >= float(threshold))
     learned_keep = analytic_keep | rescue
 
     def metrics(keep: np.ndarray) -> dict[str, float | int]:
@@ -299,6 +388,7 @@ def evaluate_support(
     rescued_conflict = int(np.count_nonzero(rescue & conflict))
     return {
         "source_unit_count": int(points["source_unit_count"]),
+        "excluded_ineligible_point_count": excluded_point_count,
         "actor_boundary_point_count": int(len(conflict)),
         "conflict_point_count": int(np.count_nonzero(conflict)),
         "clean_point_count": int(np.count_nonzero(~conflict)),

@@ -19,6 +19,7 @@ from motion_proj.worldsim_v67.directional_surface_head import (
     materialize_points,
     score_residual_head,
     train_residual_head,
+    train_residual_head_crossfit,
 )
 
 
@@ -58,13 +59,23 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         support_radius_m=float(config["support_radius_m"]),
         runs_root=runs_root,
     )
-    model, mean, scale, threshold, training = train_residual_head(
-        train["values"],
-        train["conflicts"],
-        train["analytic_support"],
-        config["model"],
-        int(config["seed"]),
-    )
+    if str(config["model"].get("threshold_calibration", "in_sample")) == "leave_one_scene_out":
+        model, mean, scale, threshold, training = train_residual_head_crossfit(
+            train["values"],
+            train["conflicts"],
+            train["analytic_support"],
+            train["scenes"],
+            config["model"],
+            int(config["seed"]),
+        )
+    else:
+        model, mean, scale, threshold, training = train_residual_head(
+            train["values"],
+            train["conflicts"],
+            train["analytic_support"],
+            config["model"],
+            int(config["seed"]),
+        )
     selection_scores = score_residual_head(
         model, selection["values"], mean, scale
     )

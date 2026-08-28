@@ -1,0 +1,57 @@
+schema_version: worldsim_v67.p14r_crossfit_directional_surface.v1
+task_id: WS-V67-P14R-CROSSFIT-DIRECTIONAL-SURFACE-01
+hypothesis_id: WS-V67-H-P14R-001
+seed: 0
+role: consumed_legacy_single_recovery_scene_crossfit_selective_surface_authority
+train:
+  evidence_run: worldsim_v65/WS-V65-P10V-ACTION-EVIDENCE-01/20260828T001500Z__action-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P10V-ACTION-NATIVE-SIDECAR-01/20260828T001500Z__action-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  scenes: [scene-0159, scene-0184, scene-0577, scene-0599, scene-0955, scene-0983]
+selection:
+  evidence_run: worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  scenes: [scene-0030, scene-0055, scene-0453, scene-0501, scene-1046, scene-1085]
+  action_run: worldsim_v67/WS-V67-P3-FIXED-ACTIONS-01/20260828T104902Z__fixed-actions-s0-r1
+  action_rows: MATCHED_ACTION_ROWS.jsonl
+  action_arm: L0_LEARNED_HARP
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+support_radius_m: 0.512
+sampling:
+  maximum_boundary_points_per_unit: 8192
+  io_prefetch_workers: 2
+model:
+  hidden_dimensions: [512, 256, 128]
+  epochs: 600
+  crossfit_epochs: 300
+  batch_size: 8192
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  conflict_example_weight: 8.0
+  conflict_rescue_penalty_weight: 8.0
+  maximum_soft_conflict_rescue: 0.03
+  maximum_training_conflict_rescue_fraction: 0.01
+  minimum_probability_threshold: 0.5
+  threshold_calibration: leave_one_scene_out
+evaluation:
+  minimum_conflict_point_reduction: 0.5
+  minimum_overall_boundary_retention: 0.4
+  minimum_clean_boundary_retention: 0.4
+  minimum_clean_retention_improvement_over_analytic: 0.01
+  minimum_rescued_clean_point_count: 100
+locks:
+  analytic_inward_ray_core_frozen: true
+  residual_rescue_only: true
+  selection_denominator_exact_action_rows_only: true
+  target_used_at_runtime: false
+  actor_existence_authority: false
+  architecture_loss_crossfit_quantile_sweep: false
+  second_recovery_on_selection: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F04, V67-F03, V67-F02, V67-F01, V66-F02]
+claim_boundary:
+  - consumed_legacy_single_recovery_scene_crossfit_selective_surface_authority
+  - training_scene_heldout_risk_calibration_without_selection_threshold_fit
+  - exact_action_eligible_denominator_and_frozen_analytic_core
+  - no_fresh_generalization_population_rl_planning_policy_closed_loop_or_safety_claim

@@ -87,6 +87,18 @@ P13 fresh inward-ray physical confirmation 9/9 gates通过：conflict reduction=
 `0.554522/0.559808`，Actor contracts exact；无新failure，下一编号仍为`V67-F04`。后续直接进入P14 GPU训练，
 不增加legacy确认或审计矩阵。
 
+### V67-F04 — in-sample rescue threshold跨场景过度自信
+
+- 分类：`algorithm/selective-risk`；状态：`active_single_recovery_frozen`。
+- 观察：P14 train residual AUROC/AUPRC=`1/1`且train conflict rescue=0，但selection 0.5 threshold rescue
+  `7,612 clean + 420 conflict`，使clean retention大升而conflict reduction从analytic `0.4924`降到`0.0939`；5/6 gates。
+- 附带评估问题：selection包含654个不在action rows内的points，使analytic comparator低于P4R canonical；不是learned collapse根因。
+- 检索/迁移：NeurIPS 2017 selective classification以abstention控制risk，ICLR 2024 Conformal Risk Control以heldout
+  monotone loss校准，ICCV 2021 SENTRY用跨域consistency筛选。唯一P14R采用leave-one-training-scene-out conflict score
+  的冻结1% quantile，并只评估exact action-eligible denominator。
+- 防重复：不改architecture/loss/quantile/gates，不用selection拟合threshold，不做第二P14R；证据=
+  `WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01/20260828T120000Z__directional-surface-s0-r1`；下一编号=`V67-F05`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

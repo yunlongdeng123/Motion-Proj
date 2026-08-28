@@ -2,11 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P14R-CROSSFIT-DIRECTIONAL-SURFACE-01
+
+- 状态：`implementation_ready`；P14唯一结构恢复：6-fold leave-one-training-scene-out risk calibration + exact action-row
+  denominator；architecture/loss/1% quantile/gates不变；配置=`configs/worldsim_v67/p14r_crossfit_directional_surface_v1.yaml`。
+
 ### WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01
 
-- 状态：`implementation_ready`；train=P10V consumed six scenes，selection=P3C consumed six scenes，P13 excluded。
+- 状态：`done/rejected`；train=P10V consumed six scenes，selection=P3C consumed six scenes，P13 excluded。
 - 273-D native + 11-D directional features；`512/256/128` residual rescue head，600 GPU epochs；analytic core不可删除；
   配置=`configs/worldsim_v67/p14_directional_surface_train_v1.yaml`。
+- Canonical=`20260828T120000Z__directional-surface-s0-r1`；selection analytic/learned conflict reduction=
+  `0.492410/0.093928`，clean retention=`0.547763/0.974493`；rescued clean/conflict=`7612/420`；5/6 gates。
 
 ### WS-V67-P13-FRESH-INWARD-RAY-SURFACE-01
 
