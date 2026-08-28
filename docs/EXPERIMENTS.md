@@ -2,9 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01
+
+- 状态：`GPU training；P6R-H0.8 materialization overlapped/done`；cache=`868/1152` eligible、96 cases。
+- P53 residual expert/data/objective不变；新增固定width8 sigmoid case gate，连续选择P20 base/residual expert。
+- Confirmation=`(.375,.8s)`；相对P31 `+.005`且相对同read P53 `+.002`；记录gate min/mean/max；5 gates。
+
+### WS-V67-P57-SAM-GRADIENT-HYBRID-01 result
+
+- 状态：`done/rejected`；canonical=`20260829T070000Z__sam-gradient-s0-r1`；`rho=.05`；训练
+  5,320 cases/59,608 rows、14 domains；wall=`989.278s`。
+- P10R2 exact=`344/344`；93 cases；coverage/minimum group=`.645161/.50`；8/8 scenes。
+- P57/P53/P31/fixed reduction=`.731922/.723709/.727373/.182775`；deltas=`+.008213/+.004549`；
+  后者低于`+.005`，4/5 gates；peak GPU/RSS=`.17979GiB/1.35990GiB`。
+
 ### WS-V67-P57-SAM-GRADIENT-HYBRID-01
 
-- 状态：`GPU training`；P10R2-H0.8 cache=`1034/1152` eligible、96 cases。
+- 状态：`completed/rejected`；P10R2-H0.8 cache=`1034/1152` eligible、96 cases。
 - P53 data/model/gradient/budget/anchor/loss/seed/epochs不变；标准SAM `rho=.05`，无radius/ASAM sweep。
 - Confirmation=`(.375,.8s)`；相对P31 `+.005`且相对同read P53 `+.002`；5 gates。
 

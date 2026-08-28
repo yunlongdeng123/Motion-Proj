@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P57 SAM rejected / P58 case-selective expert training（2026-08-29）
+
+P57 canonical=`run://worldsim_v67/WS-V67-P57-SAM-GRADIENT-HYBRID-01/
+20260829T070000Z__sam-gradient-s0-r1`。P10R2-H0.8 exact=`344/344`，coverage/minimum group=`.645161/.50`，8/8 scenes。
+P57/P53/P31/fixed reduction=`.731922/.723709/.727373/.182775`；相对P53=`+.008213`通过，但相对P31仅
+`+.004549`，低于冻结`+.005`；4/5 gates，verdict=`rejected_sam_gradient_hybrid`。不降门、不扫rho/ASAM；
+flat/sharpness optimization family关闭。
+
+参考DSelect-k（NeurIPS 2021）与稀疏MoE（ICLR 2017），P58改变结构而非优化器：冻结P20为base expert，learned residual
+为第二expert；固定8-wide sigmoid case gate按输入连续控制residual强度。P53数据/gradient/budgets/anchor/loss不变。
+P6R-H0.8 cache=`868/1152` eligible、96 cases，与GPU训练重叠；同read要求相对P53 `+.002`、相对P31 `+.005`。
+
 ## WorldSim V6.7 P55 averaging rejected / P57 SAM training（2026-08-29）
 
 P55 canonical=`run://worldsim_v67/WS-V67-P55-FLAT-MINIMUM-GRADIENT-HYBRID-01/

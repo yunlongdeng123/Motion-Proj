@@ -552,13 +552,24 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F44 — P57 fixed-radius SAM gradient hybrid候选
 
-- 分类：`algorithm/sharpness-aware-optimization`；状态：`active_gpu_training`。
+- 分类：`algorithm/sharpness-aware-optimization`；状态：`closed_negative_after_single_recovery`。
 - 调研迁移：SAM（ICLR 2021）优化邻域worst loss；ASAM（ICML 2021）提供scale-aware扩展。P57只用标准SAM，
   固定`rho=.05`，不尝试ASAM或radius sweep。
 - 方法：P53 data/model/gradient/budgets/anchor/loss/seed/epochs不变；每epoch标准两步SAM。
 - 数据：P10R2-H0.8=`1034/1152` eligible、96 cases；同read比较冻结P53。
 - 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`。失败则关闭sharpness优化family。
-  下一编号=`V67-F45`。
+- 结果：P57/P53/P31 reduction=`.731922/.723709/.727373`；相对P53=`+.008213`，相对P31=`+.004549`，
+  后者差`.000451`未过冻结门；4/5 gates。
+- 结论：严格拒绝，不降门/扫rho/试ASAM；flat/sharpness optimization family关闭。下一编号=`V67-F45`。
+
+### V67-F45 — P58 differentiable case-selective residual expert候选
+
+- 分类：`algorithm/case-selective-mixture-of-experts`；状态：`active_gpu_training`。
+- 调研迁移：DSelect-k（NeurIPS 2021）提供连续可微expert selection；sparse MoE（ICLR 2017）按输入路由专家。
+- 方法：P20 frozen base expert + P53形式residual expert；新增固定width8 sigmoid case gate；其余P53合同不变。
+- 数据：P6R-H0.8=`868/1152` eligible、96 cases；同read比较P53/P31。
+- 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`；不扫gate width/expert count/temperature。
+  下一编号=`V67-F46`。
 
 ### V6.6 当前边界（2026-08-28）
 
