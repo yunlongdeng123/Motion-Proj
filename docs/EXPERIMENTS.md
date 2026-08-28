@@ -163,11 +163,15 @@
 
 ### WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01
 
-- 状态：`migration_frozen`；继续使用P7 L0固定290 action states，不改budget/model/score。
+- 状态：`implementation_ready`；继续使用P7 L0固定290 action states，不改budget/model/score。
 - acted Actor boundary只保留same-Actor motion-compensated sensor-hit primitive，其余转UNKNOWN；canonical collision
   shell、ID/class/track/trajectory/hazard保持，target只评估。
 - gates：point conflict reduction>=0.50、Actor/shell/ID/trajectory retention=1、removed=0、hazard shift=0、overall/clean
   boundary retention>=0.40、scene yield=1。
+- 输出：`REPAIRED_ACTOR_BOUNDARY.npz`与`ACTOR_REPAIR_METRICS.jsonl`；target只参与post-repair metric。
+- 实现：`motion_proj/worldsim_v66/sensor_surface_repair.py`、
+  `scripts/run_worldsim_v66_p7r_sensor_surface_repair.py`；配置：
+  `configs/worldsim_v66/p7r_sensor_supported_actor_repair_v1.yaml`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

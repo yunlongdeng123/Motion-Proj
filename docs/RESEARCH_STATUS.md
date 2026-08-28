@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.6 P7R sensor-supported surface repair implementation ready（2026-08-28）
+
+状态：`v66_p7r_sensor_supported_surface_repair_implementation_ready`。已实现冻结L0 action set上的point-level repair：
+acted Actor-owned native boundary只保留映射到same-Actor motion-compensated hit的primitive，其他写UNKNOWN；未action
+保持原geometry。输出实际`REPAIRED_ACTOR_BOUNDARY.npz`与per-state metrics。target FREE只在retention rule结束后评估；
+Actor canonical shell/ID/track/trajectory/hazard attributes不改。formal run前只做`py_compile`/config/diff检查，下一步一次
+CPU+I/O run，不扫budget/threshold。
+
 ## WorldSim V6.6 P7 triage supported / P7R physical-surface recovery frozen（2026-08-28）
 
 状态：`v66_p7_triage_supported_p7r_sensor_surface_recovery_frozen`；canonical=

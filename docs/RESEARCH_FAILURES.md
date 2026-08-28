@@ -106,6 +106,9 @@ P7 fixed-budget audit已在读取本阶段指标前冻结，formal run尚未创�
 - 证据：`WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01` /
   `20260828T092919Z__fixed-budget-distribution-s0-r1`。
 
+P7R point-level repair实现已就绪但尚未创建formal run；target只参与post-repair metric，未进入L0 action或same-Actor
+hit retention rule。`V66-F02`保持`active_recovery_frozen`，下一可用编号仍为`V66-F03`。
+
 下一可用编号：`V66-F03`。
 
 ### V6.5 终态边界（2026-08-28）
