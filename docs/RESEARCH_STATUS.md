@@ -8,8 +8,9 @@ coverage/minimum group=`.714286/.541667`。P49/P31/fixed reduction=`.789696/.739
 `+.049789`，6/6 scenes，4/4 gates；verdict=`supported_frozen_gradient_consistent_cross_condition_transfer`。
 无训练/refit；P49方法在第二个新H条件上复制。
 
-P51将P2V-H1.5滚入第13个development domain，保持P49全部method hyperparameters；与16-scene P6E-H1.5首次物化
-并行运行。确认仍为budget1/3，按4个预先固定scene groups要求minimum coverage `.50`，scene support `12/16`。
+P51将P2V-H1.5滚入第13个development domain，保持P49全部method hyperparameters；16-scene P6E-H1.5首次物化已在
+GPU训练期间完成：`2049/2304` eligible、192 cases。确认仍为budget1/3，按4个预先固定scene groups要求minimum
+coverage `.50`，scene support `12/16`。
 
 ## WorldSim V6.7 P49 gradient consistency supported / P50 frozen transfer（2026-08-29）
 

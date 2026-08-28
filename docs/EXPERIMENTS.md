@@ -4,7 +4,8 @@
 
 ### WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01
 
-- 状态：`GPU training + 16-scene materialization overlapped`；13 domains×3 budgets、6,000 epochs。
+- 状态：`GPU training；16-scene materialization overlapped/done`；cache=`2049/2304` eligible、192 cases；
+  13 domains×3 budgets、6,000 epochs。
 - P49方法参数全部不变，只加入已消费P2V-H1.5 development；P6E-H1.5 target首次物化。
 - Confirmation=budget1/3；exact/group `.50`/delta over P31 `+.005`/12 scenes；不扫任何参数或gate。
 

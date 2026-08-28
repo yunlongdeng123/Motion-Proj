@@ -507,7 +507,7 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 - 分类：`algorithm/large-cohort-gradient-consistency`；状态：`active_gpu_training_and_materialization`。
 - 方法：P49 gradient penalty/anchor/model/loss/gates不变，只将已消费P2V-H1.5滚入第13个development domain。
-- 数据：P6E 16-scene H1.5 target首次物化，与GPU训练并行；budget1/3一次read。
+- 数据：P6E 16-scene H1.5 target首次物化=`2049/2304` eligible、192 cases，与GPU训练并行；budget1/3一次read。
 - 判定：exact、四scene-group minimum coverage `.50`、相对P31 `+.005`、至少12 scenes。
 - 防重复：不扫gradient weight/anchor/peak/model/loss/group/gate。下一编号=`V67-F40`。
 
