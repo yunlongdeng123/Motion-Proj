@@ -1,0 +1,61 @@
+schema_version: worldsim_v67.p31_joint_budget_horizon_authority.v1
+output_schema_version: worldsim_v67.p31_joint_budget_horizon_authority_summary.v1
+task_id: WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01
+hypothesis_id: WS-V67-H-P31-001
+seed: 0
+role: joint_budget_horizon_training_then_unseen_condition_pair_confirmation
+artifact_name: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+verdict_on_pass: supported_joint_budget_horizon_authority
+verdict_on_failure: rejected_joint_budget_horizon_authority
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+compiler:
+  fixed_selected_fraction: 0.3333333333333333
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  training_selected_fractions: [0.25, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0]
+  confirmation_horizon_seconds: 1.5
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+gates:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  minimum_cost_reduction: 0.40
+  minimum_reduction_delta_over_fixed_p20: 0.10
+  minimum_nonincreasing_scene_support: 5
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+  data: {}
+locks:
+  p10x_excluded_from_p31_training: true
+  training_budgets: [0.25, 0.50]
+  training_horizons_seconds: [1.0, 2.0]
+  unseen_confirmation_condition: {selected_fraction: 0.3333333333333333, horizon_seconds: 1.5}
+  exact_total_budget_equal_to_fixed_one_third_baseline: true
+  minimum_case_and_context_coverage: 0.50
+  budget_horizon_model_offset_coverage_group_or_gate_sweep: false
+  consumed_legacy_confirmation_no_fresh_claim: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F18, V67-F17, V67-F16]
+claim_boundary:
+  - interpolation_to_unseen_joint_budget_and_horizon_condition
+  - ego_trajectory_future_H_visited_state_reliability_authority
+  - consumed_legacy_confirmation_only
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import torch, yaml
 
-from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, HORIZON_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, horizon_conditioned_case_offset_dataset, nested_group_budget_selection, score_case_offset, train_case_offset
+from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, BUDGET_HORIZON_CONDITIONED_FEATURE_NAMES, HORIZON_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, budget_horizon_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, horizon_conditioned_case_offset_dataset, nested_group_budget_selection, score_case_offset, train_case_offset
 from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from motion_proj.worldsim_v67.trajectory_quantile import materialize_quantiles
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
@@ -38,7 +38,10 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     fraction=float(config["compiler"]["fixed_selected_fraction"])
     training_fractions=config["model"].get("training_selected_fractions")
     training_horizons=config["model"].get("training_horizon_seconds_by_domain")
-    if training_horizons:
+    if training_horizons and training_fractions:
+        train_cases=budget_horizon_conditioned_case_offset_dataset(train,train_scores,[float(value) for value in training_fractions],[float(value) for value in training_horizons])
+        feature_names=BUDGET_HORIZON_CONDITIONED_FEATURE_NAMES
+    elif training_horizons:
         train_cases=horizon_conditioned_case_offset_dataset(train,train_scores,fraction,[float(value) for value in training_horizons])
         feature_names=HORIZON_CONDITIONED_FEATURE_NAMES
     elif training_fractions:
@@ -71,7 +74,9 @@ def run(config_path: Path, runs_root: Path, run_id: str):
         verdict=config.get("verdict_on_pass","supported_nested_budget_authority") if all(gates.values()) else config.get("verdict_on_failure","rejected_nested_budget_authority")
         summary={"schema_version":config["output_schema_version"],"task_id":config["task_id"],"hypothesis_id":config["hypothesis_id"],"status":"done","verdict":verdict,"role":config["role"],"claim_boundary":config["claim_boundary"],"training":training,"confirmation_materialization":mat,"nested_budget":nested,"fixed_p20":{"low_budget":fixed_low,"high_budget":fixed_high},"selection_improvement":improvement,"gate_results":gates,"failure_ledger_delta":"pending_result","resources":{"gpu":torch.cuda.get_device_name(0),"peak_gpu_memory_gib":torch.cuda.max_memory_allocated()/(1024**3),"peak_rss_gib":resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2),"wall_seconds":time.monotonic()-started}}
         _write_json(run_dir/"summary.json",summary);_write_json(run_dir/"status.json",{"status":"done","completed_at_utc":datetime.now(timezone.utc).isoformat()});return {"run_dir":str(run_dir),"verdict":verdict,"gate_results":gates}
-    if training_horizons:
+    if training_horizons and training_fractions:
+        cases=budget_horizon_conditioned_case_offset_dataset(selection,scores,[fraction],[float(config["model"]["confirmation_horizon_seconds"])])
+    elif training_horizons:
         cases=horizon_conditioned_case_offset_dataset(selection,scores,fraction,[float(config["model"]["confirmation_horizon_seconds"])])
     else:
         cases=budget_conditioned_case_offset_dataset(selection,scores,[fraction]) if training_fractions else case_offset_dataset(selection,scores,fraction)
