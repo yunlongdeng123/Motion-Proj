@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P90-PLAIN-TRAJECTORY-MAX-ERROR-01
+
+- 状态：`frozen/queued after P89`；canonical candidate=`20260829T224500Z__plain-trajectory-max-error-s0-r1`；
+  protocol/model在P81 target rows出现前冻结。
+- 最近16个6m visited Actor rows采用与P87相同的Deep Sets encoder；唯一target为
+  `log1p(max visited Actor error)`，仅用Huber regression，不含event BCE、pairwise rank或ordinal loss。
+- 四个source horizons等量batch，query/Actor-only同容量、8,000 epochs；fresh H3.5按scene固定50%轨迹覆盖，
+  比较Actor-only与frozen P75。连续误差预测是唯一预注册selection score，不扫loss weight/coverage/radius。
+
 ### WS-V67-P89-ORDINAL-TRAJECTORY-RELIABILITY-01
 
 - 状态：`frozen/queued after P88`；canonical candidate=`20260829T223000Z__ordinal-trajectory-reliability-s0-r1`；

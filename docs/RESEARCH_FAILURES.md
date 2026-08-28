@@ -821,6 +821,10 @@ P87/P88分别以Deep Sets与set attention填充纯IO等待，均在target read�
 
 P89多阈值ordinal trajectory reliability同样在target read前冻结；当前无新增失败，下一编号仍为`V67-F65`。
 
+P90 plain continuous trajectory max-error Huber同样在target read前冻结，用于检验既有source结果中plain regression
+相对复合rank supervision的迁移优势；不修改P81 cohort、target或coverage，不进行loss/threshold sweep。当前无新增失败，
+下一编号仍为`V67-F65`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
