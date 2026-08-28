@@ -190,7 +190,7 @@
 
 ### WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01
 
-- 状态：`frozen/running development`；prep=`20260830T062000Z__directional-actor-uncertainty-prep-s0-r1`，model=
+- 状态：`done/supported development`；prep=`20260830T062000Z__directional-actor-uncertainty-prep-s0-r1`，model=
   `20260830T062500Z__directional-actor-uncertainty-s0-r1`。
 - Actor-only token MLP输出Ego-frame signed longitudinal/lateral residual的mean与diagonal scale，以Gaussian NLL训练；
   candidate τ不进入网络。τ风险是predicted Actor→Ego unit normal上的projected mean/variance与signed clearance形成的固定
@@ -201,6 +201,12 @@
   consumed cohorts均少于Actor-only且不多于P75时，才可冻结成P108同read的prospective secondary；不影响P108 primary。
 - P110 evaluation入口与config已在P108 target read前锁定；只有P109 development一致成立才执行。它复用P108同一rows，
   因此只能是prospective secondary，不能替换P108 primary或冒充第二个independent cohort。
+- prep原子交付575,596 source rows及P81/P96=`9,559/9,520` rows；916,722去重Actor-time tokens训练6,000 steps，
+  final NLL=`-3.64128`。P81 fixed50 query/Actor/P75=`0/44/13`，AUROC=`.96764/.59381`；P96=`0/5/12`，
+  AUROC=`.90434/.72458`。verdict=`supported_development_directional_actor_uncertainty`，wall=`165.59s`含等待source，
+  peak GPU=`.3782GiB`。P110执行条件成立且checkpoint在P108 rows前冻结。
+- concurrent literature check：2025开源工作比较spatial overlap与stochastic boundary-crossing两类semi-analytic collision
+  estimator并以Monte Carlo验证效率；它支持继续检验方向投影，但P109只是linearized margin ranking，不声称其概率已校准。
 
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 

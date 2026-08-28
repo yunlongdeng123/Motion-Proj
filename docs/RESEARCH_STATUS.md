@@ -144,6 +144,13 @@ longitudinal/lateral residual的diagonal Gaussian；candidate τ只通过predict
 Gaussian NLL训练；不扫covariance、loss、projection、聚合、width或coverage。若两个consumed cohorts均优于Actor-only/P75，
 再在P108 rows出现前冻结为prospective secondary；P107仍是唯一primary。
 
+P109已完成916,722 Actor-time tokens训练，final Gaussian NLL=`-3.64128`。consumed P81 fixed50 directional
+query/Actor/P75=`0/44/13`，AUROC=`.96764/.59381`；consumed P96=`0/5/12`，AUROC=`.90434/.72458`，两者
+absolute和query-over-Actor event reduction均100%。因此P110 checkpoint/evaluator已在P108 rows出现前冻结并等待同一
+confirmation artifact；P108 P107-scalar primary不变。同步检索到2025开源semi-analytic collision work也把stochastic
+boundary crossing作为高效近似，但本项目只评价occupancy-decision flip ranking，不升级为collision probability/safety claim。
+当前P108 shards `01/03/04/06/08/09/10`并行扫描，P109训练已与archive IO实际重叠。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

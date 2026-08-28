@@ -1122,6 +1122,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F78`。
 
+### P109 outcome note — directional projection在两个consumed cohorts均为0 selected events
+
+- canonical：`run://worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1`；
+- outcome：P81 query/Actor/P75=`0/44/13`、P96=`0/5/12`，query AUROC `.96764/.90434`；6,000-step final
+  Gaussian NLL=`-3.64128`，无工程/资源失败；
+- literature response：最新开源semi-analytic collision研究同样将stochastic boundary crossing作为独立于spatial overlap的
+  高效估计路线；这里保留更窄的linearized occupancy-flip ranking解释，不宣称Monte Carlo等价或calibrated probability；
+- resolution：P109 development执行条件满足，P110 checkpoint/config在P108 target rows出现前冻结并只作同read prospective
+  secondary；P108 P107-scalar primary的cohort、score和decision不改变。
+
+下一可用编号仍为：`V67-F78`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
