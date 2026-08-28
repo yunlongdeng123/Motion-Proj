@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P90 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P91 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -62,6 +62,11 @@ P90进一步检验更直接的连续监督：复用P87的最近16个visited Acto
 冻结；fresh selection唯一score为连续max-error预测，不在同一cohort挑loss、threshold或coverage。r1直接脚本入口
 因仓库根目录未进入`sys.path`而在import阶段退出，未建run/训练/read target；依据Python官方command-line文档以
 进程级`PYTHONPATH=.`恢复r2，登记工程失败`V67-F65`。r2现正约94% GPU训练；同时04/06 archive已完成扫描，10仍在IO。
+
+为在最后一个archive扫描期间继续利用GPU，P91在任何P81 target read前冻结单一tail-risk对象：相同Deep Sets和
+`log1p(max visited Actor error)`target，但以固定q=.90 pinball loss直接学习条件高分位数，query/Actor-only均8,000
+epochs且四source horizons等量。该迁移参考NeurIPS 2019 single-model quantile uncertainty与NeurIPS 2021 quantile UQ；
+这里只把q90当作fixed-coverage ranking score，不声称conformal或marginal coverage，也不做quantile sweep。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 

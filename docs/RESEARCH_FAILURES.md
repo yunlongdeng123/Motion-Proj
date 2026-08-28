@@ -836,6 +836,9 @@ P90 plain continuous trajectory max-error Huber同样在target read前冻结，�
 
 下一可用编号：`V67-F66`。
 
+P91固定q=.90 conditional max-error quantile在P81 target read前冻结，作为P90 mean-oriented Huber的单一tail-risk
+对照；不扫quantile或coverage，不改变cohort/gates。当前无新增失败，下一编号仍为`V67-F66`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P91-QUANTILE-TRAJECTORY-MAX-ERROR-01
+
+- 状态：`frozen/queued after P90`；canonical candidate=`20260829T230000Z__quantile-trajectory-max-error-s0-r1`；
+  q90/objective/model在P81 target rows出现前冻结。
+- 与P90共享最近16个visited Actor Deep Sets和`log1p(max error)`target，将plain Huber替换为固定q=.90 pinball loss；
+  query/Actor-only同容量、四source horizons等量batch、8,000 epochs。
+- fresh H3.5唯一selection score为预测q90；不扫quantile/loss/actor cap/pooling/radius/coverage，不宣称conformal
+  calibration或coverage guarantee。动机来自NeurIPS 2019/2021 quantile uncertainty原始工作。
+
 ### WS-V67-P90-PLAIN-TRAJECTORY-MAX-ERROR-01
 
 - 状态：`active/GPU training r2`；canonical candidate=`20260829T225000Z__plain-trajectory-max-error-s0-r2`；
