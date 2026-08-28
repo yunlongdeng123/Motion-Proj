@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.6 P1-D evaluator implemented / formal run next（2026-08-28）
+
+状态：`v66_p1_development_atlas_implementation_ready`。已实现 Actor envelope grounding、hit/current/swept support
+统计、冻结 q0 GPU forward、entropy/margin聚合、五类可观测 artifact factor、四象限 paired rows 与 hazard-pair
+invariance评估。每个unit由CPU预取，当前unit在GPU forward，避免全量I/O barrier。推理不读取 artifact family/label、
+hazard label/score或variant ID；q0在representation-level corruption对中保持原score，用于检验Actor-blind结构边界，
+不冒充重新渲染后的q0。
+
+窄验证仅为三文件 `py_compile` 与 `git diff --check`，均通过；没有smoke/regression matrix、质量read、模型训练或
+hash/checksum/fingerprint。下一步只运行 `WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01` 一次并按结果更新
+三账本；若存在q0未响应而factor可辨识的family，直接进入P2确定性证书。
+
 ## WorldSim V6.6 启动 / P1-D Actor factorial atlas 直接执行（2026-08-28）
 
 状态：`v66_p1_development_atlas_running`；分支=`research/worldsim-v6.6-harp-compiler`。`main` 已按用户要求从

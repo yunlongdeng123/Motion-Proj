@@ -19,6 +19,9 @@
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
   不得替代 fresh selection/confirmation。当前无 V6.6 failure，下一可用编号=`V66-F01`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
+- P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
+  `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
+  对重新渲染artifact的实测不敏感。
 
 ### V6.5 终态边界（2026-08-28）
 

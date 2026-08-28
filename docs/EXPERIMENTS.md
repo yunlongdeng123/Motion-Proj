@@ -16,7 +16,7 @@
 
 ### WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01
 
-- 状态：`running`；hypothesis=`WS-V66-H-P1D-001`；seed=`0`。
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P1D-001`；seed=`0`；formal run尚未创建。
 - 角色：Tier-L development mechanism，不是 fresh selection/confirmation/test。
 - 输入：V6.5 P10V 已消费的 6 scenes / 72 evidence/native units、冻结 V6.4 q0；预计最多 816 actor-unit
   base rows，再构造同 base 的 `V0-H0/V0-H1/V1-H0/V1-H1` 配对变体。
@@ -26,6 +26,8 @@
   以及 clean-hazard false artifact/retention。
 - `failure_ledger_refs=[V64-F28,V65-F19,V1-F06]`；收口前 `failure_ledger_delta=pending`。
 - 配置：`configs/worldsim_v66/p1_factorial_atlas_dev_v1.yaml`。
+- 实现：`motion_proj/worldsim_v66/actor_factorial.py`、
+  `scripts/run_worldsim_v66_p1_factorial_atlas.py`；窄验证=`py_compile`与`git diff --check`通过，无科学输出。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
