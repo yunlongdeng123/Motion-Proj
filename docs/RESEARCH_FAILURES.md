@@ -891,6 +891,10 @@ P95 occupancy-flip迁移已冻结radius/time samples/width/coverage/model，不�
 prep得到source/development row-level flips=`2,273/96`及false-safe=`925/32`，非空且未触发target恢复；当前无新增失败，
 下一编号仍为`V67-F68`。
 
+P95 development以query/Actor/P75 selected flips=`7/28/13`通过4/4 gates；由于P81 cohort已消费，只触发P96 remaining
+10-scene one-shot confirmation，不记作独立成功。P96 cohort/shards/model/target/gates均已在sensor read前冻结；当前无新增
+失败，下一编号仍为`V67-F68`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

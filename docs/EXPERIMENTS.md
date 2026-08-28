@@ -4,7 +4,7 @@
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
 
-- 状态：`active/GPU training`；prep canonical=`20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1`，model
+- 状态：`done/supported development`；prep canonical=`20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1`，model
   canonical=`20260830T002500Z__trajectory-occupancy-flip-s0-r1`；P81 cohort明确降为consumed development。
 - prediction object：对给定Ego candidate `τ`，常速Actor predicted path与observed Actor path在同一9个time samples上
   是否产生不同occupied/free结论；radius=`Actor half-width + fixed 1.0m Ego half-width`。
@@ -14,6 +14,18 @@
   implicit occupancy-flow trajectory queries。
 - prep result：102 source scenes=`575,596 rows / 2,273 flips / 925 false-safe`；10-scene development=
   `9,559 / 96 / 32`，wall=`102.11s`。6,000-epoch training已启动，source计数读取后未改冻结参数。
+- result：79,478 source trajectories；development=`1,791 trajectories / 95 flips`。fixed50 query/Actor/P75=
+  `7/28/13 events`，query reduction over Actor=`75%`、absolute=`85.25%`，AUROC=`.83952/.69366`；4/4 gates。
+  Verdict=`supported_development_trajectory_occupancy_flip`，仍禁止写independent/safety claim。
+
+### WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
+
+- 状态：`frozen/preparation ready to launch`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
+  scene indices=`599/37/489/81/83/806/485/696/440/808`。
+- exact shards=`08/01/06/01/01/10/06/09/03/10`；01/03两个此前未进入V4 test manifest的sessions由archive首个
+  real session相邻范围确定，formal extraction仍要求exact 3,901 required members全命中，否则read前失败且不换scene。
+- frozen P95 checkpoint、H3.5、9 time samples、Actor half-width+1m、nearest16、fixed50与4 gates完全不变；
+  primary endpoint是trajectory occupancy flip，false-safe/false-alarm仅描述。one-shot independent read。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

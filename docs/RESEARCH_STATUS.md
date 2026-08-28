@@ -26,6 +26,15 @@ source/development rows已从既有processed scenes物化完成：102 source sce
 false-safe；consumed development产生9,559 rows/96 flips，其中32 false-safe，wall=`102.11s`。P95现正进行6,000-epoch
 GPU训练；早期query BCE低于Actor-only，但不据此改协议。不扫radius/width/threshold/coverage/architecture。
 
+P95 development最终4/4 gates通过：79,478 source trajectories训练6,000 epochs，final query/Actor BCE=
+`.002834/.044780`。H3.5 development有1,791 trajectories/95 flips；固定50%选择query/Actor/P75 events=`7/28/13`，
+query相对Actor减少`75%`、相对all减少`85.25%`，AUROC=`.83952/.69366`。该结果只用于选择新target，不冒充独立证据。
+
+P96已在任何remaining sensor/target read前冻结最后10个V5 test-role scenes：`0771/0039/0635/0099/0101/1066/
+0630/0910/0556/1068`（metadata indices `599/37/489/81/83/806/485/696/440/808`）。完整member-session map与archive
+headers冻结shards `08/01/06/01/01/10/06/09/03/10`；P95 checkpoint、interaction radius、9 samples、H3.5、50%
+coverage和4 gates全部不变。只允许这一次independent confirmation，不在read后换scene/shard/model/gate。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
