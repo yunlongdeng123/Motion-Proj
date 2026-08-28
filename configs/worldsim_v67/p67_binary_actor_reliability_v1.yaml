@@ -1,0 +1,49 @@
+schema_version: worldsim_v67.p67_binary_actor_reliability.v1
+output_schema_version: worldsim_v67.p67_binary_actor_reliability_summary.v1
+task_id: WS-V67-P67-BINARY-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P67-001
+seed: 0
+role: direct_given_trajectory_actor_state_unreliability_classifier
+verdict_on_pass: supported_binary_actor_state_reliability
+verdict_on_failure: rejected_binary_actor_state_reliability
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  confirmation_scene_modulus: 5
+  confirmation_scene_remainder: 4
+  training_horizons_seconds: [0.8, 1.5]
+  confirmation_horizon_seconds: 2.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [128, 64, 32]
+  epochs: 1500
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.05
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_binary_query_auroc: 0.75
+  minimum_delta_over_continuous_query: 0.005
+  minimum_delta_over_binary_actor_only: 0.01
+locks:
+  unreliability_definition_inherited_from_p60: true
+  binary_query_continuous_query_and_binary_actor_only_train_same_read: true
+  positive_class_weight_is_exact_training_negative_to_positive_ratio: true
+  no_threshold_loss_weight_architecture_split_horizon_or_gate_sweep: true
+  no_probability_calibration_population_or_counterfactual_response_claim: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content_WACV_2020/html/Djuric_Uncertainty-aware_Short-term_Motion_Prediction_of_Traffic_Actors_for_Autonomous_Driving_WACV_2020_paper.html
+claim_boundary:
+  - direct_binary_given_tau_actor_state_unreliability
+  - comparison_to_continuous_query_and_actor_only_binary_heads
+  - reused_development_population_at_unseen_two_point_five_second_horizon
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

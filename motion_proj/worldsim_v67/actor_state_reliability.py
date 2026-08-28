@@ -232,6 +232,93 @@ class QuantileReliabilityMLP(torch.nn.Module):
         return torch.stack((lower, median, upper), dim=1)
 
 
+class BinaryReliabilityMLP(torch.nn.Module):
+    def __init__(self, feature_count: int, hidden_dimensions: Sequence[int]) -> None:
+        super().__init__()
+        layers: list[torch.nn.Module] = []
+        width = feature_count
+        for hidden in hidden_dimensions:
+            layers.extend((torch.nn.Linear(width, int(hidden)), torch.nn.SiLU()))
+            width = int(hidden)
+        layers.append(torch.nn.Linear(width, 1))
+        self.network = torch.nn.Sequential(*layers)
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        return self.network(features).squeeze(-1)
+
+
+def train_binary_reliability_models(
+    arrays: Mapping[str, np.ndarray], model_config: Mapping[str, Any], evaluation_config: Mapping[str, Any], seed: int,
+) -> tuple[ReliabilityMLP, BinaryReliabilityMLP, BinaryReliabilityMLP, np.ndarray, np.ndarray, dict[str, float]]:
+    raw_features = np.asarray(arrays["features"], dtype=np.float32)
+    mean = raw_features.mean(axis=0)
+    scale = raw_features.std(axis=0).clip(min=1e-4)
+    features = torch.from_numpy((raw_features - mean) / scale).cuda()
+    actor_features = features[:, :len(ACTOR_FEATURE_NAMES)]
+    continuous_target = torch.from_numpy(
+        np.log1p(np.asarray(arrays["target_cost"], dtype=np.float32))
+    ).cuda()
+    binary_labels_np = (
+        (np.asarray(arrays["raw_actor_state_error_m"]) > float(evaluation_config["unreliable_actor_state_error_m"]))
+        & (np.asarray(arrays["predicted_minimum_separation_m"]) <= float(evaluation_config["unreliable_exposure_radius_m"]))
+    ).astype(np.float32)
+    binary_labels = torch.from_numpy(binary_labels_np).cuda()
+    positive_count = max(int(np.count_nonzero(binary_labels_np)), 1)
+    negative_count = max(int(len(binary_labels_np) - positive_count), 1)
+    positive_weight = torch.tensor(negative_count / positive_count, dtype=torch.float32, device="cuda")
+    torch.manual_seed(int(seed))
+    continuous_model = ReliabilityMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
+    binary_query_model = BinaryReliabilityMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
+    binary_actor_model = BinaryReliabilityMLP(actor_features.shape[1], model_config["hidden_dimensions"]).cuda()
+    optimizer = torch.optim.AdamW(
+        list(continuous_model.parameters()) + list(binary_query_model.parameters())
+        + list(binary_actor_model.parameters()),
+        lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]),
+    )
+    final_continuous = final_query = final_actor = 0.0
+    for epoch in range(int(model_config["epochs"])):
+        optimizer.zero_grad(set_to_none=True)
+        continuous_prediction = continuous_model(features)
+        query_logits = binary_query_model(features)
+        actor_logits = binary_actor_model(actor_features)
+        continuous_loss = torch.nn.functional.smooth_l1_loss(
+            continuous_prediction, continuous_target, beta=float(model_config["huber_beta"])
+        )
+        query_loss = torch.nn.functional.binary_cross_entropy_with_logits(
+            query_logits, binary_labels, pos_weight=positive_weight
+        )
+        actor_loss = torch.nn.functional.binary_cross_entropy_with_logits(
+            actor_logits, binary_labels, pos_weight=positive_weight
+        )
+        (continuous_loss + query_loss + actor_loss).backward()
+        optimizer.step()
+        final_continuous = float(continuous_loss.detach().cpu())
+        final_query = float(query_loss.detach().cpu())
+        final_actor = float(actor_loss.detach().cpu())
+        if epoch % 250 == 0 or epoch + 1 == int(model_config["epochs"]):
+            print(
+                f"binary actor reliability epoch={epoch + 1} continuous={final_continuous:.6f} "
+                f"query_bce={final_query:.6f} actor_bce={final_actor:.6f}", flush=True,
+            )
+    return continuous_model.eval(), binary_query_model.eval(), binary_actor_model.eval(), mean, scale, {
+        "continuous_final_loss": final_continuous, "binary_query_final_loss": final_query,
+        "binary_actor_only_final_loss": final_actor, "training_row_count": int(len(raw_features)),
+        "training_unreliable_row_count": positive_count,
+        "positive_class_weight": float(negative_count / positive_count),
+    }
+
+
+def predict_binary_reliability(
+    model: BinaryReliabilityMLP, raw_features: np.ndarray, mean: np.ndarray, scale: np.ndarray,
+    actor_only: bool = False,
+) -> np.ndarray:
+    normalized = (np.asarray(raw_features, dtype=np.float32) - mean) / scale
+    if actor_only:
+        normalized = normalized[:, :len(ACTOR_FEATURE_NAMES)]
+    with torch.no_grad():
+        return torch.sigmoid(model(torch.from_numpy(normalized).cuda())).cpu().numpy()
+
+
 def train_reliability_models(
     arrays: Mapping[str, np.ndarray], model_config: Mapping[str, Any], seed: int,
 ) -> tuple[ReliabilityMLP, ReliabilityMLP, np.ndarray, np.ndarray, dict[str, float]]:
