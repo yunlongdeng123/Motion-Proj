@@ -81,8 +81,11 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--runs-root", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--seed-override", type=int)
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
+    if args.seed_override is not None:
+        config["seed"] = int(args.seed_override)
     run_dir = args.runs_root / "worldsim_v67" / config["task_id"] / args.run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     (run_dir / "resolved.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")

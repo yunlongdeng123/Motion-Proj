@@ -1,0 +1,58 @@
+schema_version: worldsim_v67.p94_direct_probability_ensemble_member.v1
+output_schema_version: worldsim_v67.p94_direct_probability_ensemble_member_summary.v1
+task_id: WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P94-001
+seed: 0
+role: prospective_direct_probability_deep_ensemble_member
+verdict_on_pass: supported_direct_probability_ensemble_member
+verdict_on_failure: rejected_direct_probability_ensemble_member
+model_artifact: DIRECT_PROBABILITY_ENSEMBLE_MEMBER.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
+  artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01/20260829T213000Z__trajectory-visited-reliability-s0-r1
+  artifact: FRESH_TEST_H3P5_TRAJECTORY_ACTOR_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 8000
+  horizon_batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: binary_bce
+  failure_threshold_m: 1.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.50
+locks:
+  source_and_model_protocol_frozen_before_test_target_rows_exist: true
+  three_member_seeds: [0, 1, 2]
+  seed_zero_is_frozen_p93_checkpoint: true
+  seeds_one_and_two_are_never_selected_individually: true
+  ensemble_score_is_arithmetic_mean_probability: true
+  direct_binary_cross_entropy_for_any_visited_actor_error_over_one_meter: true
+  four_source_horizons_equal_batch_weight: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_seed_model_threshold_weight_or_ensemble_subset_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+claim_boundary:
+  - three_seed_mean_probability_for_any_unreliable_visited_actor_state
+  - prospective_secondary_model_on_same_P81_test_cohort
+  - no_fresh_probability_calibration_or_conformal_guarantee
+  - open_loop_constant_velocity_actor_failure_target_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
