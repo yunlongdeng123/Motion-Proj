@@ -7,6 +7,7 @@
 - 状态：`GPU training；P10R4-H0.8 materialization overlapped/done`；cache=`984/1152` eligible、96 cases。
 - P53 data/model/objective/budgets全部不变；只平均epochs 4,800..5,999的1,200 checkpoints，无validation window。
 - Confirmation=`(.375,.8s)`；除P31 `+.005`外，必须相对同read冻结P53 `+.002`；共5 gates。
+- P56 replication input已预取：P10R2-H0.8=`1034/1152` eligible、96 cases；selection read=false。
 
 ### WS-V67-P54-FROZEN-JOINT-CONDITION-REPLICATION-01 result
 

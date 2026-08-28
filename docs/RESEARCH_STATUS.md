@@ -14,7 +14,8 @@ P54 canonical=`run://worldsim_v67/WS-V67-P54-FROZEN-JOINT-CONDITION-REPLICATION-
 
 P55保持P53全部数据/模型/gradient/budget/anchor/loss，只对最后20%（1,200 checkpoints）固定等权参数平均；无validation
 窗口选择。P10R4-H0.8物化=`984/1152` eligible、96 cases，与GPU训练重叠。同一次formal read比较P55、P53、P31，
-P55必须相对P53至少`+.002`，避免把cohort差异当成flat-minimum收益。
+P55必须相对P53至少`+.002`，避免把cohort差异当成flat-minimum收益。P10R2-H0.8复制cache已预取：
+`1034/1152` eligible、96 cases，decision metrics未读。
 
 ## WorldSim V6.7 P51 large cohort + P52 horizon extrapolation supported / P53 joint training（2026-08-29）
 
