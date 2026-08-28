@@ -2,6 +2,34 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P45-ANCHORED-HYBRID-NESTED-BUDGET-01
+
+- 状态：`ready/running`；冻结P44，P6R H1.5 low/high=`.25/.50`，strict nesting；quarter score精确回退P20。
+- Gates：两端exact、nesting、minimum group `.50`、相对P31两端非退化、5 scenes；无训练/refit/sweep。
+
+### WS-V67-P44-LOW-BUDGET-ANCHORED-HYBRID-01 result
+
+- 状态：`done/supported`；canonical=`20260828T223000Z__anchored-hybrid-s0-r1`；H1.5 cache=
+  `881/1152` eligible、76 cases；训练2,412 conditioned cases/27,087 rows。
+- Exact=`292/292`；coverage/minimum group=`0.671053/0.50`。
+- Anchored/P31/fixed reduction=`0.809547/0.789186/0.502915`；deltas=`+0.020361/+0.306632`；6/6 scenes，
+  4/4 gates；wall/peak GPU/RSS=`177.103s/0.03960GiB/1.29505GiB`。
+
+### WS-V67-P44-LOW-BUDGET-ANCHORED-HYBRID-01
+
+- 状态：`training + H1.5 materialization overlapped`；P42 residual budget amplitude在`.25→.50`从`0→1`线性增长；
+  9 domains×3 budgets，6,000 GPU epochs。
+- 新P6R H1.5 cache与训练并发物化；confirmation=budget1/3，对照P31；quarter回退由结构保证。
+- Gates：exact、minimum group `.50`、相对P31 `+.005`、5 scenes；不扫anchor/amplitude/model/loss/gate。
+
+### WS-V67-P43-HYBRID-NESTED-BUDGET-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T221000Z__hybrid-nested-s0-r1`；low/high exact=
+  `222/222,438/438`，nested=`222/222`。
+- Hybrid low/high reduction=`0.808732/0.641285`；P31=`0.833218/0.638464`；deltas=
+  `-0.024486/+0.002821`。
+- Minimum group=`0.50/0.916667`，scene=`6/7,7/7`；4/5 gates；wall=`0.473s`。
+
 ### WS-V67-P43-HYBRID-NESTED-BUDGET-01
 
 - 状态：`ready/running`；冻结P42 hybrid，P6R low/high budgets=`.25/.50`，strict low-subset-high扩展。

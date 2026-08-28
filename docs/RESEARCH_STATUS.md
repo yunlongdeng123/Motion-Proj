@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V6.7 P44 anchored hybrid supported / P45 anchored nesting（2026-08-28）
+
+P44 H1.5 materialization=`881/1152` eligible actions、76 cases；与GPU训练异步重叠。Canonical=
+`run://worldsim_v67/WS-V67-P44-LOW-BUDGET-ANCHORED-HYBRID-01/
+20260828T223000Z__anchored-hybrid-s0-r1`。Budget=1/3 exact=`292/292`，coverage/minimum group=
+`0.671053/0.50`。Anchored/P31/fixed reduction=`0.809547/0.789186/0.502915`，deltas=
+`+0.020361/+0.306632`，6/6 evaluable scenes，4/4 gates。Verdict=`supported_low_budget_anchored_hybrid`。
+
+P45冻结P44/P31/P20，在新H1.5 cache做quarter/half strict nested read；quarter score由anchor精确等于P20，重点判定
+high-budget extension是否相对P31非退化。无训练/refit/sweep。
+
+## WorldSim V6.7 P43 low-budget nested failure / P44 anchored hybrid training（2026-08-28）
+
+P43 canonical=`run://worldsim_v67/WS-V67-P43-HYBRID-NESTED-BUDGET-01/
+20260828T221000Z__hybrid-nested-s0-r1`。Low/high exact=`222/222,438/438`，222个low actions全部嵌套；两端minimum
+group=`0.50/0.916667`、scene support=`6/7,7/7`。但hybrid/P31 low reduction=`0.808732/0.833218`
+（`-0.024486`），high=`0.641285/0.638464`（`+0.002821`）；4/5 gates，verdict=
+`rejected_hybrid_nested_budget`。Hybrid只在mid/high budget成立，不能声称全预算非退化。
+
+P44只改变一个结构：residual amplitude在budget `.25`严格为0，在`.50`为1，中间线性插值；因此quarter action
+ranking精确回退P20/P31。9-domain GPU训练与新P6R H=1.5 target物化并行，正式判定budget=1/3；不扫anchor、幅度或gate。
+
 ## WorldSim V6.7 P42 hybrid supported / P43 nested budgets（2026-08-28）
 
 P42 canonical=`run://worldsim_v67/WS-V67-P42-HYBRID-CONDITIONED-ACTION-01/

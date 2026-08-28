@@ -65,8 +65,10 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     p20_scores = score_listwise_compiler(p20, selection, p20_mean, p20_scale); selection["base_score"] = p20_scores
     low_fraction, high_fraction = [float(x) for x in config["confirmation"]["nested_fractions"]]
     horizon = float(config["confirmation"]["horizon_seconds"])
-    low_scores = score_conditioned_action_compiler(model, selection, low_fraction, [horizon], mean, scale, "base_score")
-    high_scores = score_conditioned_action_compiler(model, selection, high_fraction, [horizon], mean, scale, "base_score")
+    anchor = artifact.get("residual_budget_anchor_fraction")
+    full = artifact.get("residual_budget_full_fraction")
+    low_scores = score_conditioned_action_compiler(model, selection, low_fraction, [horizon], mean, scale, "base_score", anchor, full)
+    high_scores = score_conditioned_action_compiler(model, selection, high_fraction, [horizon], mean, scale, "base_score", anchor, full)
     low_cases = budget_horizon_conditioned_case_offset_dataset(selection, p20_scores, [low_fraction], [horizon])
     high_cases = budget_horizon_conditioned_case_offset_dataset(selection, p20_scores, [high_fraction], [horizon])
     low_offsets = score_case_offset(allocator, low_cases, allocator_mean, allocator_scale)

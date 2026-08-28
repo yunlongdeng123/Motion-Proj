@@ -424,10 +424,32 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F31 — P43 frozen hybrid nested-budget结构候选
 
-- 分类：`algorithm/hybrid-nested-budget-structure`；状态：`active_frozen_read`。
+- 分类：`algorithm/hybrid-nested-budget-structure`；状态：`closed_negative_low_budget_regression`。
 - 方法：P42/P31/P20全冻结；P6R quarter/half两预算分别条件化score，low集合强制作为high前缀扩展。
 - 判定：两端exact、low subset high、minimum group `.50`、相对对应P31 nested baseline不退化、两端至少5 scenes。
-- 边界：同一consumed P6R结构读取，不新增训练或泛化claim；不扫budget/weight/gate。下一编号=`V67-F32`。
+- 结果：exact与222-action strict nesting通过；hybrid low/high reduction=`0.808732/0.641285`，P31=
+  `0.833218/0.638464`，deltas=`-0.024486/+0.002821`；低预算非退化失败。
+- 结论：P42 gain是budget-dependent；不以high gain覆盖low regression。
+- 边界：同一consumed P6R结构读取，不新增泛化claim；不扫budget/weight/gate。下一编号=`V67-F32`。
+
+### V67-F32 — P44 low-budget anchored hybrid候选
+
+- 分类：`algorithm/budget-anchored-hybrid`；状态：`resolved_by_low_budget_anchor`。
+- 调研迁移：Nested Dropout学习有序子结构；Once-for-All用progressive shrinking服务多resource constraints。P44不迁移
+  其网络规模机制，而迁移“低资源子系统应是高资源系统前缀/锚点”的结构原则。
+- 方法：P42 residual乘固定amplitude=`clip((budget-.25)/(.50-.25),0,1)`；quarter严格回退P20，half完整hybrid。
+- 数据：9 consumed domains训练；P6R H1.5 task target新物化，与训练并行；budget1/3一次判定。
+- 启动记录：首次materializer CLI缺`--run-id`在argparse退出，0 cache写入/target read；补同一run-id后继续，非科学失败。
+- 结果：H1.5 eligible=`881/1152`、76 cases；exact=`292/292`、coverage/min group=`0.671053/0.50`；
+  reduction=`0.809547`，相对P31=`+0.020361`、相对fixed=`+0.306632`，6/6 scenes，4/4 gates。
+- 防重复：不扫anchor/full fraction/amplitude/model/loss/gate。下一编号=`V67-F33`。
+
+### V67-F33 — P45 frozen anchored-hybrid nested-budget候选
+
+- 分类：`algorithm/anchored-hybrid-nested-structure`；状态：`active_frozen_read`。
+- 方法：P44/P31/P20全冻结；新H1.5 cache quarter/half strict nesting。Quarter action score由anchor严格等于P20。
+- 判定：两端exact、strict nesting、minimum group `.50`、相对各自P31 nested baseline非退化、至少5 scenes。
+- 边界：同一新H task condition的结构read；无训练/refit/budget/weight sweep。下一编号=`V67-F34`。
 
 ### V6.6 当前边界（2026-08-28）
 
