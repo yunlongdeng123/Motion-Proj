@@ -78,6 +78,9 @@ P3C exact-once 4/4 gates通过：581 actor-unit上AUROC/AUPRC=`0.761644/0.767165
 增加`+0.261644/+0.238766`，6/6 scenes above chance。`V66-F01`由“deterministic existence protection + learned
 local geometry ranking”恢复关闭；不赋予Actor drop authority。下一可用编号仍为`V66-F02`。
 
+P6 bake实现已就绪但未创建formal run。continuous score没有被事后阈值化，所有Actor保留；runtime不加载模型/
+hidden target，hazard不控制existence。没有新增failure，下一可用编号仍为`V66-F02`。
+
 ### V6.5 终态边界（2026-08-28）
 
 - `V65-F19` 为 terminal algorithm negative：P10X 5/6 gates通过，但 direct selected-action cost reduction

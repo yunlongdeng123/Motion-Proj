@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.6 P6 HARP bake implementation ready（2026-08-28）
+
+状态：`v66_p6_harp_bake_implementation_ready`。已实现八文件Actor-preserving runtime package：static tri-state使用
+RLE，Actor current-envelope primitives独立存储；ACTORS包含class、track/lifecycle与采样trajectory，factor/repair/
+hazard/provenance均显式JSONL。bake从P3C score只读取observable模型输出字段，不读/输出target label。runtime manifest
+固定model/hidden-target loading=false、hazard-existence coupling=false。无binary threshold，所有Actor保留，action仅
+`RANK_REPAIR_OR_ABSTAIN`且geometry mutation=false。下一步一次formal CPU bake；不做重复replay或测试矩阵。
+
 ## WorldSim V6.6 P3C independent confirmation supported / P6 bake next（2026-08-28）
 
 状态：`v66_p3c_independent_confirmation_supported_p6_bake_next`；canonical=

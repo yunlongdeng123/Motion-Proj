@@ -130,9 +130,14 @@
 
 ### WS-V66-P6-HARP-BAKE-01
 
-- 状态：`pending_direct_implementation`；目标是Actor/static/physical/appearance分层的deterministic runtime package。
+- 状态：`implementation_ready`；目标是Actor/static/physical/appearance分层的deterministic runtime package。
 - offline bake可读取冻结P3L分数，但runtime不得加载learned model、hidden target或以hazard label决定Actor existence。
 - 首轮只做consumed legacy package/capability，不冒充fresh quality、真实appearance修复或RL-ready distribution。
+- 输出八文件：`STATIC_STATE.npz/ACTORS.jsonl/ACTOR_PRIMITIVES.npz/ARTIFACT_FACTORS.jsonl/REPAIR_LOG.jsonl/
+  HAZARD_ATTRIBUTES.jsonl/PROVENANCE.jsonl/RUNTIME_MANIFEST.json`；无hash/checksum/fingerprint。
+- 因P3L/P3C无threshold，P6 action固定为continuous `RANK_REPAIR_OR_ABSTAIN`，Actor removal与geometry mutation均false。
+- 实现：`motion_proj/worldsim_v66/harp_bake.py`、`scripts/run_worldsim_v66_p6_harp_bake.py`；配置：
+  `configs/worldsim_v66/p6_harp_bake_v1.yaml`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

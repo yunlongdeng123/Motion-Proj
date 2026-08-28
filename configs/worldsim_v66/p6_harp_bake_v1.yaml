@@ -1,0 +1,37 @@
+schema_version: worldsim_v66.p6_harp_bake.v1
+task_id: WS-V66-P6-HARP-BAKE-01
+hypothesis_id: WS-V66-H-P6-001
+seed: 0
+role: consumed_legacy_bake_capability
+sources:
+  evidence_run: worldsim_v65/WS-V65-P2V-FRESH-EVIDENCE-01/20260827T133000Z__fresh-visited-evidence-s0-r1
+  local_geometry_run: worldsim_v66/WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01/20260828T091611Z__independent-local-geometry-confirm-s0-r1
+  local_geometry_scores: CONFIRMATION_SCORES.jsonl
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+scenes:
+  - {name: scene-0001, processed_index: 0}
+  - {name: scene-0219, processed_index: 169}
+  - {name: scene-0402, processed_index: 318}
+  - {name: scene-0594, processed_index: 474}
+  - {name: scene-0822, processed_index: 638}
+  - {name: scene-1110, processed_index: 849}
+gates:
+  minimum_actor_state_retention: 1.0
+  minimum_actor_metadata_completeness: 1.0
+  maximum_actor_removed_count: 0
+  maximum_hidden_target_field_count: 0
+  runtime_model_loading: false
+  runtime_hazard_existence_coupling: false
+locks:
+  local_geometry_threshold: null
+  actor_existence_authority: deterministic_support_only
+  physical_geometry_mutation: false
+  model_refit: false
+  hidden_target_read_by_bake: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_legacy_actor_preserving_runtime_package_capability
+  - continuous_local_geometry_ranking_without_binary_drop_gate
+  - no_fresh_quality_real_geometry_or_appearance_repair
+  - no_planning_policy_closed_loop_rl_or_safety_claim
+failure_ledger_refs: [V66-F01, V65-F19]
