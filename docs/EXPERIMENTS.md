@@ -222,6 +222,9 @@
   `docs/autoresearch/worldsim_v66/P8_REACTIVE_ACTOR_MIGRATION_FREEZE.md`。
 - 实现：`motion_proj/worldsim_v66/reactive_actor.py`、`scripts/run_worldsim_v66_p8_reactive_actor.py`；配置：
   `configs/worldsim_v66/p8_reactive_actor_v1.yaml`。
+- Operational exposure：首次shell invocation未设置repo `PYTHONPATH`，在import阶段以`ModuleNotFoundError`退出；
+  未进入runner、未创建run directory、未读取或输出scientific metric。随后仅以`PYTHONPATH=.`执行同一代码/config，
+  形成下述唯一P8 formal run；不单列scientific failure ID。
 - Canonical：`run://worldsim_v66/WS-V66-P8-REACTIVE-ACTOR-01/
   20260828T095440Z__reactive-actor-s0-r1`；selected/supported scenes=`6/4`；pooled X0/X1 collision steps=`306/0`；
   X1 min gap=`1.948192m`。

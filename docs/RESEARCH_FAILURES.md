@@ -127,6 +127,9 @@ RL-ready distribution与P9继续锁定。完整证据：`P7R2_RADIUS_SUPPORT_RES
 
 ### V66-F03 — P8低速stop-state重复应用jerk update
 
+- Pre-run operational note：P8首次shell invocation因未设置repo `PYTHONPATH`在module import前退出；没有进入runner、
+  创建run directory或读取scientific metric。只修正launcher环境后执行同一代码/config，因此不分配failure ID，也不构成
+  第二次scientific read。
 - 分类：`implementation/numerical`；状态：`resolved_by_single_implementation_recovery`。
 - 观察：P8六场景X1 collision steps均为0，但scene-0001/0219 command jerk分别为`9.637574/7.400627m/s^3`，
   超过固定`6m/s^3`；仅4/6 scenes全门通过，formal verdict拒绝。

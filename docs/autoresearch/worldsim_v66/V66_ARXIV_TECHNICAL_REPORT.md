@@ -221,6 +221,7 @@ matched RL3/RL5 arms，更不能将未修复world中的策略结果归因于HARP
 
 Source-of-truth顺序是canonical run、`EXPERIMENTS.md`、`RESEARCH_FAILURES.md`、`RESEARCH_STATUS.md`/terminal state、
 最后才是本报告。Report handoff只读解析24个V6.6 `summary.json/status.json`，不重算metric。
+P8在canonical run前有一次缺少repo `PYTHONPATH`的import failure；它未进入runner或创建run，不构成scientific exposure。
 
 ## 12. Limitations
 

@@ -70,6 +70,7 @@
 - `/root/autodl-tmp`在closeout约剩`95GB`。
 - 未新增hash/checksum/fingerprint；未执行smoke/regression matrix；closeout不重算scientific metric。
 - 最小handoff audit解析V6.6 run tree内24个`summary.json/status.json`，全部JSON-readable。
+- P8有一次pre-run launcher import failure：未创建run或读取metric；canonical P8仍是唯一scientific read。
 - P9/P10/P11未执行，因为P7 physical repair未通过。
 
 ## 6. Source-of-truth order
