@@ -106,8 +106,8 @@
 
 ### WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01
 
-- 状态：`active/prep then GPU`；prep=`20260830T030000Z__temporal-flip-prep-s0-r1`，model=
-  `20260830T030500Z__temporal-flip-supervision-s0-r1`自动等待rows ready。
+- 状态：`done/rejected development`；prep=`20260830T030000Z__temporal-flip-prep-s0-r1`，model=
+  `20260830T030500Z__temporal-flip-supervision-s0-r1`。
 - prediction object仍是candidate τ上的predicted-vs-observed occupancy flip，但监督由trajectory union拆为同一9个
   future samples的time-local flips；query token使用Actor/history、τ、normalized time、signed/boundary clearance，
   Actor-only不含τ。推理唯一聚合是time max→Actor max。
@@ -115,6 +115,11 @@
   source/development只来自已消费processed scenes，0 P96/P103 target read。
 - 不扫time aggregation、sampling weight、token width、loss、radius、width、threshold或coverage；该development线不修改
   已冻结confirmation协议。
+- prep result：102 source scenes=`575,596 rows / 5,336 temporal flips`，development=`9,559 / 165`，9 samples，
+  wall=`111.61s`。model result：5,180,364 source tokens；fixed50 query/Actor/P75=`1/0/13`，AUROC=
+  `.90726/.82864`，absolute reduction=`97.89%`，但query-vs-Actor=`-100%`；3/4 gates，rejected（`V67-F70`）。
+- 保留“time-local query绝对排序强”的诊断，但不覆盖relative failure；不删Actor gate。只允许把逐时loss作为P102
+  trajectory objective的等权auxiliary做一次P105，不再使用time-local-only score。
 
 ### WS-V67-P81--P94 fresh result synthesis
 

@@ -74,10 +74,14 @@ target与gates未变。按约束先检索nuScenes官方/开源下载结构；公
 该工程卡点登记`V67-F69`，科学read仍未发生。
 
 为避免exact-shard IO期间GPU研究线停滞，P104把监督从trajectory-level union细化为与occupancy定义完全相同的9个
-future samples逐时flip标签：query token=`Actor/history + τ + normalized time + signed/boundary clearance`，Actor-only
-token不含τ，source按horizon×temporal-index等量positive/negative sampling；trajectory score事前固定为time max再
-Actor max。source与consumed development正从既有processed scenes物化，不读取P96 confirmation；prep ready即自动接续
-6,000-epoch GPU训练。不扫time aggregation/sampling/loss/radius/coverage，P96/P103协议不变。
+future samples逐时flip标签。prep在111.61s生成575,596 source rows/5,336 temporal flips与9,559 development rows/
+165 temporal flips；6,000 epochs后fixed50 query/Actor/P75=`1/0/13`，query AUROC=`.90726`、absolute reduction
+`97.89%`，但query比Actor-only多1事件，冻结relative gate失败，verdict rejected（`V67-F70`）。不删gate，不把3/4
+包装成功；time-local only强化了Actor shortcut，不能替换P102。
+
+检索CVPR 2023 IMPLICITO与CVPR 2024 Cam4DOcc后，下一项只允许一次P105 joint-objective迁移：保留P102的正式
+trajectory-level flip BCE和hierarchical temporal→Actor结构，同时将P104 time-local flip作为等权auxiliary，而不是
+单独决定trajectory score；不扫loss weight/aggregation。P96/P103协议与checkpoint保持不变。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

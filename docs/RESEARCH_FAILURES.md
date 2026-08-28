@@ -947,9 +947,21 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 
 下一可用编号：`V67-F70`。
 
-P104在V67-F69 exact-shard locator期间从既有source/consumed-development processed scenes物化9-step time-local flip
-supervision，未读取P96/P103 target；time max→Actor max、horizon×time balanced sampling及4 gates事前固定，不修改
-confirmation，不扫聚合/权重/loss。当前prep→GPU流水线active，无新增failure；下一编号仍为`V67-F70`。
+### V67-F70 — time-local-only监督使Actor-only固定覆盖排序优于query
+
+- 分类：`scientific/objective-factorization`；状态：`active_single_multitask_recovery_frozen`；
+- run：`run://worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-01/20260830T030500Z__temporal-flip-supervision-s0-r1`；
+- symptom：development 1,791 trajectories/95 flips上fixed50 query/Actor/P75=`1/0/13`；query absolute reduction
+  `97.89%`且AUROC `.90726`，但Actor-only选0，因此query-vs-Actor=`-100%`，只过3/4 gates；
+- root cause：5,336 positives/5,180,364 time tokens极稀疏，balanced time-local classification学到Actor motion shortcut；
+  固定time max→Actor max又放大单token risk，丢失P102 trajectory-level set objective中的candidate-relative排序约束；
+- literature response：CVPR 2023 IMPLICITO在连续spatiotemporal points联合表示occupancy/flow，CVPR 2024 Cam4DOcc对
+  多future steps的occupancy与flow使用联合损失，而非用逐时辅助头替换最终forecast objective；
+- resolution：不删relative gate、不把1 event包装成功、不扫sampling/aggregation/weight。唯一P105保留P102正式
+  trajectory BCE与hierarchical model，将P104逐时flip只作equal-weight auxiliary；失败即关闭local-supervision family；
+- claim impact：P104没有独立或task-conditioned success claim，不影响P102 development或P96/P103冻结confirmation。
+
+下一可用编号：`V67-F71`。
 
 ### V6.6 当前边界（2026-08-28）
 
