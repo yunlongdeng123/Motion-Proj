@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P20 independent listwise compiler supported / P21 integrated authority（2026-08-28）
+
+P20 canonical=`run://worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/
+20260828T133000Z__listwise-action-s0-r1`。四开发域284 cases/3,227 actions训练；模型冻结后P1 confirmation为715 eligible
+actions。Learned/qmean Spearman=`0.734143/0.718365`、pairwise=`0.826230/0.792037`、selected reduction=
+`0.460084/0.429361`（delta=`+0.030723`）；5个有eligible actions的scenes全不退化，4/4 gates。`V67-F08
+resolved_by_independent_listwise_confirmation`。
+
+P21冻结P20 ranking，在五开发域只训练case benefit/abstention head，合并P18的selective authority与P20的listwise action
+order；模型冻结后才读取P2V六场景action targets。固定0.25 action selection和0.50 case authority，不扫feature/loss/fraction/gate。
+
 ## WorldSim V6.7 P19 independent authority rejected / P20 listwise GPU training（2026-08-28）
 
 P19 canonical=`run://worldsim_v67/WS-V67-P19-INDEPENDENT-AUTHORITY-CONFIRM-01/

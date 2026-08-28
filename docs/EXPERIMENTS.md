@@ -2,6 +2,14 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P20-LISTWISE-ACTION-COMPILER-01
+
+- 状态：`done/supported`；canonical=`20260828T133000Z__listwise-action-s0-r1`；四域284 cases/3,227 actions，
+  `32/16` residual `±0.02`，5,000 GPU epochs；P1 action-task confirmation 715/864 eligible actions。
+- Learned/qmean Spearman=`0.734143/0.718365`，pairwise=`0.826230/0.792037`，selected reduction=
+  `0.460084/0.429361`，delta=`+0.030723`；5/5 eligible scenes不退化，4/4 gates；wall/peak GPU/RSS=
+  `100.091s/0.04711GiB/1.5613GiB`。
+
 ### WS-V67-P19-INDEPENDENT-AUTHORITY-CONFIRM-01
 
 - 状态：`done/rejected`；canonical=`20260828T131500Z__independent-authority-s0-r1`；冻结P18 artifact先加载，随后

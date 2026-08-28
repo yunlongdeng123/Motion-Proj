@@ -157,12 +157,16 @@ P19 independent结果保留relative gain：qmean `0.295088→0.350899`（`+0.055
 
 ### V67-F08 — P20 listwise action compiler候选
 
-- 分类：`algorithm/decision-focused-ranking`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/decision-focused-ranking`；状态：`resolved_by_independent_listwise_confirmation`。
 - 动机：F07显示case authority可稳定提高relative benefit，但冻结qmean ordering的cohort ceiling使P19绝对门失败。
 - 检索/迁移：ICML 2022将decision-focused learning表述为learning-to-rank；NeurIPS 2019/2021提供可微排序/top-k代理。
   P20以四开发域、case-centered `±0.02` residual和soft top-k target cost直接训练action set。
 - 防重复：不扫residual bound、architecture、temperature、loss weight、selected fraction或gate；V67 P1 action target在模型
   freeze后一次读取。下一编号=`V67-F09`。
+
+P20 exact-once在P1 action-task confirmation通过4/4 gates：selected reduction `0.460084`，相对qmean `+0.030723`；
+pairwise `0.826230`，5/5 eligible scenes不退化。scene-1046的12 units均低于16-point footprint，保留为coverage边界，
+不删scene或降minimum footprint。F08关闭；P21只在冻结P20排序上训练selective authority。
 
 ### V6.6 当前边界（2026-08-28）
 
