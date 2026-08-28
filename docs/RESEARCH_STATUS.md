@@ -15,7 +15,11 @@ P61 canonical=`run://worldsim_v67/WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR
 Spearman=`.742362/.751193`、MAE=`.084206/.081360`，2/4 gates拒绝。问题不是简单尺度偏移，pairwise+calibration关闭。
 
 参考Rank-N-Contrast（NeurIPS 2023），P63把连续target order约束移到representation：500 epochs contrastive encoder
-pretrain后冻结，scalar head只做1000 epochs Huber；Actor-only仍总计1500 Huber epochs。第四split `%5==3`、H2输入正在物化。
+pretrain后冻结，scalar head只做1000 epochs Huber。第四split query/Actor-only Spearman=`.242097/.799512`、
+MAE=`.136035/.098264`、AUROC=`.820529/.961380`；1/4 gates拒绝，contrastive family关闭。
+
+检索WACV 2020 actor uncertainty工作后不再堆辅助项：P64把P60 plain-Huber合同exact复制到第五split scene `%5==4`、H2，
+用于判断P60的MAE/AUROC支持是否可复现。输入正在物化，随后直接GPU，confirmation I/O继续重叠。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，

@@ -2,12 +2,19 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01
+
+- 状态：`materialization then GPU training running`；P60 plain-Huber特征/模型/epochs/gates exact，scene `%5==4`、H2。
+- 不加ranking/contrastive/calibration/uncertainty loss；第五split只验证当前唯一支持方法能否复现。
+
 ### WS-V67-P63-RANK-CONTRASTIVE-ACTOR-RELIABILITY-01
 
-- 状态：`materialization then GPU training running`；参考Rank-N-Contrast（NeurIPS 2023），不直接扭曲scalar score。
+- 状态：`done/rejected`；canonical=`20260829T120000Z__rank-contrastive-actor-s0-r1`；103 train scenes、
+  293,479 rows；22 confirmation scenes、31,851 H2 rows。参考Rank-N-Contrast（NeurIPS 2023）。
 - 固定500 epochs连续target rank-contrastive encoder pretrain，随后冻结encoder、1000 epochs Huber scalar head；
   Actor-only baseline总计1500 Huber epochs。scene `%5==3`、H2为第四development split。
-- 四门保持P61/P62 exact；不扫contrastive temperature/gap/shifts/epochs/architecture。
+- Query/Actor-only Spearman=`.242097/.799512`，MAE=`.136035/.098264`，AUROC=`.820529/.961380`；
+  1/4 gates，冻结representation不可线性读出，关闭contrastive family。wall=`76.797s`。
 
 ### WS-V67-P62-CALIBRATED-RANKED-ACTOR-RELIABILITY-01
 
