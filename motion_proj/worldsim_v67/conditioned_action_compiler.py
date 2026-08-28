@@ -85,6 +85,7 @@ def train_conditioned_action_compiler(
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]), weight_decay=float(config["weight_decay"]))
     final = {}
     for _ in range(int(config["epochs"])):
+        optimizer.zero_grad(set_to_none=True)
         score, residual = model(features, qmean, mask)
         if "residual_budget_anchor_fraction" in config:
             anchor = float(config["residual_budget_anchor_fraction"])
@@ -128,8 +129,26 @@ def train_conditioned_action_compiler(
             domain_objective = domain_temperature * torch.logsumexp(domain_losses_t / domain_temperature, dim=0)
         else:
             domain_objective = domain_losses_t.mean() + float(config["domain_loss_variance_weight"]) * domain_losses_t.var(unbiased=False)
-        loss = domain_objective + float(config["residual_regularization_weight"]) * residual_penalty
-        optimizer.zero_grad(set_to_none=True)
+        gradient_direction_variance = domain_losses_t.new_zeros(())
+        gradient_direction_weight = float(config.get("final_layer_gradient_direction_weight", 0.0))
+        if gradient_direction_weight > 0.0:
+            final_layer_parameters = tuple(model.network[-1].parameters())
+            domain_gradient_directions = []
+            for domain_loss in domain_losses:
+                gradient_parts = torch.autograd.grad(
+                    domain_loss, final_layer_parameters, create_graph=True, retain_graph=True,
+                )
+                gradient_vector = torch.cat([part.reshape(-1) for part in gradient_parts])
+                domain_gradient_directions.append(gradient_vector / gradient_vector.norm().clamp(min=1e-6))
+            directions = torch.stack(domain_gradient_directions)
+            gradient_direction_variance = (
+                directions - directions.mean(dim=0, keepdim=True)
+            ).square().sum(dim=1).mean()
+        loss = (
+            domain_objective
+            + float(config["residual_regularization_weight"]) * residual_penalty
+            + gradient_direction_weight * gradient_direction_variance
+        )
         loss.backward()
         optimizer.step()
         final = {
@@ -140,6 +159,7 @@ def train_conditioned_action_compiler(
             "residual_rms": float(torch.sqrt(residual_penalty).detach().cpu()),
             "minimum_domain_loss": float(domain_losses_t.min().detach().cpu()),
             "maximum_domain_loss": float(domain_losses_t.max().detach().cpu()),
+            "final_layer_gradient_direction_variance": float(gradient_direction_variance.detach().cpu()),
         }
     final.update(
         train_conditioned_case_count=int(len(padded["domain"])),
