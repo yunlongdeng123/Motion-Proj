@@ -43,6 +43,10 @@ P4R canonical=`WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01/20260828T105920Z__inw
 conflict reduction=`0.517448`、overall/clean retention=`0.529225/0.531941`，Actor/shell/identity-trajectory完全保持，
 9/9 gates通过。该关闭只支持task-untouched legacy capability；P5-P8另用V65 P2六场景做独立surface confirmation。
 
+P5独立legacy transfer 4/4 gates通过且无新failure；但head AUROC/AUPRC=`0.665176/0.676612`低于q0的
+`0.695177/0.706467`。这不是P5预注册gate失败，作为negative comparator observation保留，并禁止声称learned head跨cohort
+dominance。下一可用编号仍为`V67-F02`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

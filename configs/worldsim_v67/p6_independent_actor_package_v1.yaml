@@ -1,0 +1,35 @@
+schema_version: worldsim_v67.p6_independent_actor_package.v1
+task_id: WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01
+hypothesis_id: WS-V67-H-P6-001
+seed: 0
+role: independent_legacy_surface_confirmation_actor_package
+sources:
+  evidence_run: worldsim_v65/WS-V65-P2-FRESH-EVIDENCE-01/20260827T091800Z__fresh-evidence-s0-r1
+  local_geometry_run: worldsim_v67/WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01/20260828T110336Z__independent-transfer-s0-r1
+  local_geometry_scores: TRANSFER_SCORES.jsonl
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+scenes:
+  - {name: scene-0996, processed_index: 754}
+  - {name: scene-0443, processed_index: 357}
+  - {name: scene-0002, processed_index: 1}
+  - {name: scene-0043, processed_index: 40}
+  - {name: scene-0023, processed_index: 22}
+  - {name: scene-0072, processed_index: 69}
+gates:
+  minimum_actor_state_retention: 1.0
+  minimum_actor_metadata_completeness: 1.0
+  maximum_actor_removed_count: 0
+  maximum_hidden_target_field_count: 0
+  runtime_model_loading: false
+  runtime_hazard_existence_coupling: false
+locks:
+  local_geometry_threshold: null
+  actor_existence_authority: deterministic_support_only
+  physical_geometry_mutation: false
+  model_refit: false
+  hidden_target_read_by_bake: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - independent_but_globally_consumed_legacy_surface_confirmation_actor_package
+  - no_physical_repair_fresh_population_rl_or_safety_claim
+failure_ledger_refs: [V67-F01, V66-F02, V66-F01]

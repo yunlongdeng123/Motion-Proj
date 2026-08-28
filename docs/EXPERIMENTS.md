@@ -2,14 +2,25 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01
+
+- 状态：`implementation_ready`；P5 canonical scores与同一六场景；hidden target/model loading/hazard-existence gate关闭。
+- 配置=`configs/worldsim_v67/p6_independent_actor_package_v1.yaml`；所有Actor state/metadata、removed、hidden-target与runtime
+  gates沿用P2；formal run尚未创建。
+
 ### WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01
 
-- 状态：`implementation_ready`；cohort=`0996/0443/0002/0043/0023/0072`，72 units；独立于P1-P4R surface，
+- 状态：`done/supported`；cohort=`0996/0443/0002/0043/0023/0072`，72 units；独立于P1-P4R surface，
   但V65已消费，因此角色仅为independent legacy confirmation。
 - 冻结V6.6 8-feature/2x32 head，无model/normalization refit或threshold；同P1 ranking gates；GPU forward与两线程
   I/O prefetch重叠。
 - 配置=`configs/worldsim_v67/p5_independent_geometry_transfer_v1.yaml`；下一链路P6 package→P7 fixed actions→P8 exact
   P4R surface rule，后续配置只机械绑定canonical locator。
+- Canonical=`run://worldsim_v67/WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01/
+  20260828T110336Z__independent-transfer-s0-r1`；rows/conflict/clean=`570/312/258`；head AUROC/AUPRC=
+  `0.665176/0.676612`，相对deterministic=`+0.165176/+0.129244`；6/6 scenes、4/4 gates。
+- q0=`0.695177/0.706467`，head相对q0为负，不宣称head dominance；wall/GPU/RSS=
+  `10.1148s/0.02359GiB/0.9341GiB`。
 
 ### WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01
 

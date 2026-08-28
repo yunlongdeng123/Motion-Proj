@@ -39,6 +39,10 @@ P4R canonical=`20260828T105920Z__inward-ray-s0-r1`以conflict reduction=`0.51744
 `0.529225/0.531941`通过9/9 gates，`V67-F01`按单次结构恢复关闭。P5-P8在独立V65 P2六场景机械复现完整
 head→package→actions→surface链路；该cohort仍是globally consumed legacy，不升级为fresh population。
 
+P5 canonical=`20260828T110336Z__independent-transfer-s0-r1`在570 Actor-units上以AUROC/AUPRC=
+`0.665176/0.676612`、6/6 scenes通过冻结门；q0=`0.695177/0.706467`更强，故明确不宣称head-over-q0 dominance。
+P6-P8仍按预注册learned arm完成physical chain，并原样报告q0/oracle comparators。
+
 ## Claim boundary
 
 成功也只支持task-untouched legacy ray-terminated physical surface capability；在独立新cohort confirmation之前，不称

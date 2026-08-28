@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.7 P5 independent transfer supported / P6 package ready（2026-08-28）
+
+状态：`v67_p5_independent_transfer_supported_p6_package_implementation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01/20260828T110336Z__independent-transfer-s0-r1`；verdict=
+`supported_task_untouched_legacy_geometry_transfer`。
+
+72 units产生570 Actor-units（conflict/clean=`312/258`）；head AUROC/AUPRC=`0.665176/0.676612`，相对deterministic=
+`+0.165176/+0.129244`，6/6 scenes above chance、4/4 gates通过。GPU/RSS/wall=
+`0.02359GiB/0.9341GiB/10.1148s`，无refit/threshold。
+
+必须同时报告：该cohort q0=`0.695177/0.706467`，head相对q0=`-0.030001/-0.029854`，因此不支持“head跨cohort
+优于q0”。P6配置只机械绑定P5 canonical并烘焙Actor-preserving package；下一步一次CPU+I/O formal run，不改变score、
+Actor existence或hazard合同。
+
 ## WorldSim V6.7 P4R supported / independent confirmation ready（2026-08-28）
 
 状态：`v67_p4r_supported_p5_independent_confirmation_ready`；canonical=
