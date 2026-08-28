@@ -234,3 +234,77 @@ def coverage_constrained_selection(
         "scene_support_count": int(len(scene_rows)),
         "scene_nonincreasing_count": int(sum(row["delta"] <= 0 for row in scene_rows)), "scene_rows": scene_rows,
     }
+
+
+def group_coverage_constrained_selection(
+    arrays: Mapping[str, np.ndarray], compiled_scores: np.ndarray, case_offsets: np.ndarray,
+    selected_fraction: float, maximum_actions_per_case: int, minimum_case_coverage: float,
+    scene_to_group: Mapping[int, int], minimum_group_case_coverage: float,
+) -> dict[str, Any]:
+    """Allocate an exact global budget while enforcing coverage inside every context group."""
+    cases = np.asarray(arrays["case_index"], dtype=np.int64)
+    scenes = np.asarray(arrays["scene_index"], dtype=np.int64)
+    target = np.asarray(arrays["target_cost"], dtype=np.float32)
+    unique_cases = np.asarray([case for case in np.unique(cases) if np.count_nonzero(cases == case) >= 2], dtype=np.int64)
+    orders, first_slots, all_slots, case_groups = [], [], [], []
+    fixed_total = 0
+    for row, case in enumerate(unique_cases):
+        members = np.flatnonzero(cases == case)
+        order = members[np.argsort(compiled_scores[members], kind="stable")]
+        orders.append(order)
+        fixed_total += max(1, int(np.floor(float(selected_fraction) * len(members))))
+        group = int(scene_to_group[int(scenes[members[0]])])
+        case_groups.append(group)
+        for rank, action in enumerate(order[: int(maximum_actions_per_case)], start=1):
+            slot = (float(compiled_scores[action] + case_offsets[row]), row, rank, int(action), group)
+            all_slots.append(slot)
+            if rank == 1:
+                first_slots.append(slot)
+    case_groups_array = np.asarray(case_groups, dtype=np.int64)
+    mandatory = []
+    for group in np.unique(case_groups_array):
+        group_first = [slot for slot in first_slots if slot[4] == int(group)]
+        minimum = max(1, int(np.ceil(float(minimum_group_case_coverage) * len(group_first))))
+        mandatory.extend(sorted(group_first, key=lambda item: item[0])[:minimum])
+    mandatory_actions = {item[3] for item in mandatory}
+    remaining_slots = [item for item in all_slots if item[3] not in mandatory_actions]
+    chosen = mandatory + sorted(remaining_slots, key=lambda item: item[0])[: fixed_total - len(mandatory)]
+    selected_array = np.asarray([item[3] for item in chosen], dtype=np.int64)
+    counts = np.zeros(len(unique_cases), dtype=np.int64)
+    for _, row, _, _, _ in chosen:
+        counts[row] += 1
+    evaluable_indices = np.concatenate(orders).astype(np.int64)
+    all_cost = float(target[evaluable_indices].mean())
+    selected_cost = float(target[selected_array].mean())
+    scene_rows = []
+    for scene in np.unique(scenes[evaluable_indices]):
+        scene_all = evaluable_indices[scenes[evaluable_indices] == scene]
+        scene_selected = selected_array[scenes[selected_array] == scene]
+        if not len(scene_selected):
+            continue
+        scene_all_cost = float(target[scene_all].mean())
+        scene_selected_cost = float(target[scene_selected].mean())
+        scene_rows.append({"scene_index": int(scene), "all_mean_cost": scene_all_cost,
+                           "selected_mean_cost": scene_selected_cost, "delta": scene_selected_cost - scene_all_cost})
+    group_rows = []
+    for group in np.unique(case_groups_array):
+        rows = np.flatnonzero(case_groups_array == group)
+        group_actions = np.concatenate([orders[row] for row in rows]).astype(np.int64)
+        chosen_actions = selected_array[np.isin(selected_array, group_actions)]
+        covered = int(np.count_nonzero(counts[rows]))
+        group_rows.append({"group_index": int(group), "case_count": int(len(rows)), "covered_case_count": covered,
+                           "case_coverage": float(covered / len(rows)), "selected_action_count": int(len(chosen_actions)),
+                           "all_mean_cost": float(target[group_actions].mean()),
+                           "selected_mean_cost": float(target[chosen_actions].mean())})
+    return {
+        "evaluable_case_count": int(len(unique_cases)), "fixed_total_action_budget": int(fixed_total),
+        "selected_action_count": int(len(selected_array)), "covered_case_count": int(np.count_nonzero(counts)),
+        "case_coverage": float(np.count_nonzero(counts) / len(counts)),
+        "minimum_group_case_coverage": float(min(row["case_coverage"] for row in group_rows)),
+        "minimum_actions_per_case": int(counts.min()), "maximum_actions_per_case": int(counts.max()),
+        "mean_actions_per_case": float(counts.mean()), "all_mean_cost": all_cost, "selected_mean_cost": selected_cost,
+        "relative_cost_reduction": float((all_cost - selected_cost) / all_cost if all_cost else 0.0),
+        "scene_support_count": int(len(scene_rows)),
+        "scene_nonincreasing_count": int(sum(row["delta"] <= 0 for row in scene_rows)),
+        "scene_rows": scene_rows, "group_rows": group_rows,
+    }

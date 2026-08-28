@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import torch, yaml
 
-from motion_proj.worldsim_v67.adaptive_budget import BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, case_offset_dataset, coverage_constrained_selection, score_case_offset, train_case_offset
+from motion_proj.worldsim_v67.adaptive_budget import BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, score_case_offset, train_case_offset
 from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from motion_proj.worldsim_v67.trajectory_quantile import materialize_quantiles
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
@@ -44,11 +44,18 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     cache=Path(config["confirmation_materialization"]["cache_path"]);mat={"cache_path":str(cache),"cache_reused":cache.is_file()}
     if not cache.is_file():mat.update(materialize_quantiles(config["confirmation_materialization"]["data"],runs_root,cache))
     selection=_load(cache);scores=score_listwise_compiler(p20,selection,p20_mean,p20_scale);cases=case_offset_dataset(selection,scores,fraction)
-    offsets=score_case_offset(model,cases,mean,scale);selective=coverage_constrained_selection(selection,scores,offsets,fraction,int(config["compiler"]["maximum_actions_per_case"]),float(config["compiler"]["minimum_case_coverage"]))
+    offsets=score_case_offset(model,cases,mean,scale)
+    if "scene_to_group" in config["compiler"]:
+        scene_to_group={int(key):int(value) for key,value in config["compiler"]["scene_to_group"].items()}
+        selective=group_coverage_constrained_selection(selection,scores,offsets,fraction,int(config["compiler"]["maximum_actions_per_case"]),float(config["compiler"]["minimum_case_coverage"]),scene_to_group,float(config["compiler"]["minimum_group_case_coverage"]))
+    else:
+        selective=coverage_constrained_selection(selection,scores,offsets,fraction,int(config["compiler"]["maximum_actions_per_case"]),float(config["compiler"]["minimum_case_coverage"]))
     p24_offsets=score_case_offset(p24,cases,p24_mean,p24_scale);p24_result=adaptive_fixed_total_selection(selection,scores,p24_offsets,fraction,int(config["compiler"]["p24_maximum_actions_per_case"]))
     fixed=_within_case_selection(np.asarray(selection["target_cost"],dtype=np.float32),scores,np.asarray(selection["case_index"]),np.asarray(selection["scene_index"]),fraction)
     improvement={"coverage_budget_delta_over_fixed_p20":float(selective["relative_cost_reduction"]-fixed["relative_cost_reduction"]),"coverage_budget_delta_over_p24":float(selective["relative_cost_reduction"]-p24_result["relative_cost_reduction"])}
     g=config["gates"];gates={"exact_fixed_total_action_budget":selective["selected_action_count"]==selective["fixed_total_action_budget"],"minimum_case_coverage":selective["case_coverage"]>=float(g["minimum_case_coverage"]),"minimum_cost_reduction":selective["relative_cost_reduction"]>=float(g["minimum_cost_reduction"]),"minimum_reduction_delta_over_fixed_p20":improvement["coverage_budget_delta_over_fixed_p20"]>=float(g["minimum_reduction_delta_over_fixed_p20"]),"minimum_nonincreasing_scene_support":selective["scene_nonincreasing_count"]>=int(g["minimum_nonincreasing_scene_support"])}
+    if "minimum_group_case_coverage" in g:
+        gates["minimum_group_case_coverage"]=selective["minimum_group_case_coverage"]>=float(g["minimum_group_case_coverage"])
     verdict=config.get("verdict_on_pass","supported_coverage_constrained_fixed_total_budget") if all(gates.values()) else config.get("verdict_on_failure","rejected_coverage_constrained_fixed_total_budget")
     summary={"schema_version":config.get("output_schema_version","worldsim_v67.p25_coverage_budget_summary.v1"),"task_id":config["task_id"],"hypothesis_id":config["hypothesis_id"],"status":"done","verdict":verdict,"role":config["role"],"claim_boundary":config["claim_boundary"],"training":training,"confirmation_materialization":mat,"coverage_budget":selective,"p24_adaptive_baseline":p24_result,"fixed_p20":fixed,"selection_improvement":improvement,"gate_results":gates,"failure_ledger_delta":"pending_result","resources":{"gpu":torch.cuda.get_device_name(0),"peak_gpu_memory_gib":torch.cuda.max_memory_allocated()/(1024**3),"peak_rss_gib":resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2),"wall_seconds":time.monotonic()-started}}
     _write_json(run_dir/"summary.json",summary);_write_json(run_dir/"status.json",{"status":"done","completed_at_utc":datetime.now(timezone.utc).isoformat()});return {"run_dir":str(run_dir),"verdict":verdict,"gate_results":gates}
