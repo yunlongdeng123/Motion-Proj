@@ -2,10 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P15-TRAJECTORY-RELIABILITY-TRAIN-01
+
+- 状态：`implementation_ready`；prediction object改为2s Ego trajectory visited-state expected cost；train/selection=
+  P10V 813 / P10X 739 consumed action rows；`64/64` residual MLP，3,000 GPU epochs；配置=
+  `configs/worldsim_v67/p15_trajectory_reliability_train_v1.yaml`。
+
 ### WS-V67-P14R-CROSSFIT-DIRECTIONAL-SURFACE-01
 
-- 状态：`implementation_ready`；P14唯一结构恢复：6-fold leave-one-training-scene-out risk calibration + exact action-row
-  denominator；architecture/loss/1% quantile/gates不变；配置=`configs/worldsim_v67/p14r_crossfit_directional_surface_v1.yaml`。
+- 状态：`done/rejected`；threshold=`0.999919`；analytic/learned conflict reduction=`0.517448/0.234297`，clean=
+  `0.531941/0.902234`；rescued clean/conflict=`6382/284`；5/6 gates。point-rescue family terminal negative。
 
 ### WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01
 

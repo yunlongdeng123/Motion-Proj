@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P14R point rescue terminal negative / P15 trajectory reliability training ready（2026-08-28）
+
+状态：`v67_p14r_point_family_closed_p15_trajectory_reliability_ready`；P14R canonical=
+`run://worldsim_v67/WS-V67-P14R-CROSSFIT-DIRECTIONAL-SURFACE-01/20260828T121000Z__crossfit-directional-s0-r1`。
+LOSO threshold=`0.999919`且action denominator已修正；analytic conflict/clean=`0.517448/0.531941`，但final model仍
+rescue `6,382 clean + 284 conflict`，learned conflict/clean=`0.234297/0.902234`，5/6 gates，拒绝并以
+`V67-F04 closed_negative_after_single_recovery`关闭point-rescue family。
+
+按预定后备方向更换prediction object：P15预测“给定Ego轨迹τ，未来2s、1.5m corridor内被访问world/Actor state的
+expected hidden-FREE cost”，而非单voxel correctness。813 P10V action rows训练、739 P10X rows一次selection；固定12-action
+lattice，8-D trajectory/context输入、`64/64` residual MLP、Huber+unsafe+pairwise joint loss，3,000 GPU epochs。
+
 ## WorldSim V6.7 P14 learned rescue rejected / P14R scene-crossfit GPU recovery ready（2026-08-28）
 
 状态：`v67_p14_rejected_p14r_scene_crossfit_recovery_ready`；P14 canonical=

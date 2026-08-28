@@ -99,6 +99,11 @@ P13 fresh inward-ray physical confirmation 9/9 gates通过：conflict reduction=
 - 防重复：不改architecture/loss/quantile/gates，不用selection拟合threshold，不做第二P14R；证据=
   `WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01/20260828T120000Z__directional-surface-s0-r1`；下一编号=`V67-F05`。
 
+P14R exact-once结果：LOSO threshold=`0.999919`且denominator修正后，analytic comparator恢复到P4R canonical；但learned
+仍rescue`6,382 clean + 284 conflict`，conflict reduction=`0.234297`，5/6 gates。`V67-F04`状态更新为
+`closed_negative_after_single_recovery`；禁止继续point threshold/ensemble/loss/model sweep。按预定后备路线更换prediction
+object为Ego trajectory visited-state reliability；下一编号仍为`V67-F05`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

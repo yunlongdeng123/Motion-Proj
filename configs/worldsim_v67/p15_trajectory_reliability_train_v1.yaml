@@ -1,0 +1,45 @@
+schema_version: worldsim_v67.p15_trajectory_reliability_train.v1
+task_id: WS-V67-P15-TRAJECTORY-RELIABILITY-TRAIN-01
+hypothesis_id: WS-V67-H-P15-001
+seed: 0
+role: consumed_action_level_train_selection_trajectory_visited_state_reliability
+inputs:
+  train_compact_cache: /root/autodl-tmp/cache/worldsim_v65/p10v_action_visited_state_compact.npz
+  selection_compact_cache: /root/autodl-tmp/cache/worldsim_v65/p10x_combined_confirmation_compact.npz
+model:
+  feature_names: [qmean, log_visited_count, progress_ratio, lateral_offset_scaled, absolute_lateral_offset_scaled, qmean_case_delta, qmean_case_zscore, progress_lateral_interaction]
+  hidden_dimensions: [64, 64]
+  epochs: 3000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 1.0
+  unsafe_weight: 0.1
+  ranking_weight: 0.5
+  ranking_temperature: 0.05
+  residual_regularization_weight: 0.005
+  pairwise_minimum_target_gap: 0.02
+evaluation:
+  within_case_selected_fraction: 0.25
+  pairwise_minimum_target_gap: 0.02
+gates:
+  minimum_selection_spearman: 0.70
+  minimum_selection_unsafe_auroc: 0.90
+  minimum_selection_pairwise_concordance: 0.65
+  minimum_selected_cost_reduction: 0.25
+  minimum_selected_cost_reduction_delta_over_qmean: 0.05
+  minimum_scene_support: 5
+locks:
+  prediction_object: trajectory_visited_state_reliability
+  voxel_correctness_prediction_closed: true
+  action_lattice_sweep: false
+  architecture_loss_gate_sweep: false
+  second_selection_run: false
+  target_used_at_runtime: false
+  planner_policy_collision_safety_authority: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F04, V67-F03, V67-F02, V67-F01, V65-F19]
+claim_boundary:
+  - consumed_action_level_train_selection_trajectory_visited_state_reliability
+  - predicts_expected_hidden_free_cost_along_fixed_ego_trajectory_over_two_seconds
+  - no_fresh_generalization_population_collision_planning_policy_closed_loop_or_safety_claim
