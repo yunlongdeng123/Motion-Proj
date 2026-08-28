@@ -71,8 +71,9 @@ H3.5、fixed50与4 gates不变；P96 frozen P95仍是唯一primary，P103只能�
 P96 archive scan在任何processed scene/target materialization前发现`scene-0556`的推断shard03命中0；其余cohort、模型、
 target与gates未变。按约束先检索nuScenes官方/开源下载结构；公开资料确认10个blob parts需合并但没有session-part索引，
 故先只读扫描02/04/05/07；四包完整排除后，说明session甚至可能落在r1已为其他scene扫描但未包含0556 filter的
-01/06/08/09/10。第二轮exact-session locator现并行扫描这五包，命中后只修member→shard map并复用其余提取结果，
-不换scene。该工程卡点仍为`V67-F69`，科学read未发生。
+01/06/08/09/10。第二轮locator在06精确命中`n008-2018-08-31-11-37-23-0400`，其余locator立即终止；冻结map仅改
+`0556:03→06`。P96 prep r2现用GNU tar exact-session wildcard补390个文件，再由原prep复用其余3,511 files并做10-scene
+preprocess；不换scene。该工程卡点仍为`V67-F69`恢复中，科学read未发生。
 
 为避免exact-shard IO期间GPU研究线停滞，P104把监督从trajectory-level union细化为与occupancy定义完全相同的9个
 future samples逐时flip标签。prep在111.61s生成575,596 source rows/5,336 temporal flips与9,559 development rows/

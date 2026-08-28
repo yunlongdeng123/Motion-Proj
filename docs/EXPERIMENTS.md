@@ -30,7 +30,8 @@
   primary endpoint是trajectory occupancy flip，false-safe/false-alarm仅描述。one-shot independent read。
 - shard08精确命中397；推断的`0556→03`扫描完成但命中0，发生在processed/target read前。公开资料未提供session-part
   index。02/04/05/07 exact locators均完整排除；当前对r1曾为其他scene扫描、但0556当时不在filter内的01/06/08/09/10
-  作第二轮exact locator。只允许修正0556 shard并复用其他结果，不换cohort（`V67-F69`）。
+  作第二轮exact locator，06精确命中后终止其余扫描。map仅修`0556→06`；prep r2=
+  `20260830T050000Z__occupancy-flip-confirmation-prep-s0-r2` exact-session抽取390 files并复用3,511，不换cohort（`V67-F69`）。
 
 ### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
 
