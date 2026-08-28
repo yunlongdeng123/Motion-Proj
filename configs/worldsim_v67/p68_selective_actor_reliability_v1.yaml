@@ -1,0 +1,33 @@
+schema_version: worldsim_v67.p68_selective_actor_reliability.v1
+output_schema_version: worldsim_v67.p68_selective_actor_reliability_summary.v1
+task_id: WS-V67-P68-SELECTIVE-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P68-001
+role: frozen_continuous_actor_reliability_fixed_coverage_triage
+verdict_on_pass: supported_selective_actor_state_reliability
+verdict_on_failure: rejected_selective_actor_state_reliability
+source:
+  run: worldsim_v67/WS-V67-P67-BINARY-ACTOR-RELIABILITY-01/20260829T140000Z__binary-actor-s0-r1
+  artifact: BINARY_ACTOR_STATE_RELIABILITY.pt
+  confirmation_rows: CONFIRMATION_BINARY_ACTOR_QUERY_ROWS.npz
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_cost_reduction: 0.50
+  minimum_unreliable_prevalence_reduction: 0.50
+locks:
+  frozen_p67_continuous_and_binary_scores: true
+  one_fixed_per_scene_coverage_point: true
+  no_coverage_threshold_model_or_metric_sweep: true
+  no_actor_deletion_or_world_action_authority: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/shah22a.html
+  - https://proceedings.mlr.press/v97/geifman19a.html
+claim_boundary:
+  - selective_regression_inspired_actor_state_reliability_triage
+  - fixed_fifty_percent_per_scene_coverage_on_consumed_development_read
+  - abstention_only_without_actor_deletion_or_geometry_mutation
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim
