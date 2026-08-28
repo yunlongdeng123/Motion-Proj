@@ -39,13 +39,36 @@ def _continuous_loss(prediction: torch.Tensor, target: torch.Tensor, model_confi
 
 @torch.no_grad()
 def _predict_error(
-    model: DeepSetRisk, features: torch.Tensor, mask: torch.Tensor, batch_size: int = 4096,
+    model: DeepSetRisk, features: torch.Tensor, mask: torch.Tensor, model_config: dict,
+    failure_threshold_log: float, batch_size: int = 4096,
 ) -> np.ndarray:
     outputs = []
     for start in range(0, len(features), batch_size):
-        _, prediction = model(features[start:start + batch_size], mask[start:start + batch_size])
+        first, second = model(features[start:start + batch_size], mask[start:start + batch_size])
+        if str(model_config.get("objective", "huber")) == "gaussian_nll":
+            log_variance = second.clamp(
+                float(model_config["minimum_log_variance"]), float(model_config["maximum_log_variance"]),
+            )
+            standard_deviation = torch.exp(0.5 * log_variance)
+            z = (failure_threshold_log - first) / standard_deviation
+            prediction = 0.5 * torch.erfc(z / np.sqrt(2.0))
+        else:
+            prediction = second
         outputs.append(prediction.cpu().numpy())
     return np.concatenate(outputs)
+
+
+def _model_loss(
+    model: DeepSetRisk, features: torch.Tensor, mask: torch.Tensor,
+    target: torch.Tensor, model_config: dict,
+) -> torch.Tensor:
+    first, second = model(features, mask)
+    if str(model_config.get("objective", "huber")) == "gaussian_nll":
+        log_variance = second.clamp(
+            float(model_config["minimum_log_variance"]), float(model_config["maximum_log_variance"]),
+        )
+        return (0.5 * (torch.exp(-log_variance) * (target - first).square() + log_variance)).mean()
+    return _continuous_loss(second, target, model_config)
 
 
 def main() -> None:
@@ -86,10 +109,8 @@ def main() -> None:
         optimizer.zero_grad(set_to_none=True)
         batch = torch.cat([group[torch.randint(len(group), (int(model_config["horizon_batch_size"]),), device="cuda")]
             for group in horizon_groups])
-        _, query_prediction = query_model(query_sets[batch], mask[batch])
-        _, actor_prediction = actor_model(actor_sets[batch], mask[batch])
-        query_loss = _continuous_loss(query_prediction, target[batch], model_config)
-        actor_loss = _continuous_loss(actor_prediction, target[batch], model_config)
+        query_loss = _model_loss(query_model, query_sets[batch], mask[batch], target[batch], model_config)
+        actor_loss = _model_loss(actor_model, actor_sets[batch], mask[batch], target[batch], model_config)
         (query_loss + actor_loss).backward(); optimizer.step()
         final_query, final_actor = float(query_loss.detach().cpu()), float(actor_loss.detach().cpu())
         if epoch % 250 == 0 or epoch + 1 == int(model_config["epochs"]):
@@ -114,8 +135,9 @@ def main() -> None:
     evaluation_query_np[~evaluation["mask"]] = 0.0; evaluation_actor_np[~evaluation["mask"]] = 0.0
     evaluation_query = torch.from_numpy(evaluation_query_np).cuda(); evaluation_actor = torch.from_numpy(evaluation_actor_np).cuda()
     evaluation_mask = torch.from_numpy(evaluation["mask"]).cuda()
-    query_score = _predict_error(query_model.eval(), evaluation_query, evaluation_mask)
-    actor_score = _predict_error(actor_model.eval(), evaluation_actor, evaluation_mask)
+    failure_threshold_log = float(np.log1p(config["evaluation"]["unreliable_actor_state_error_m"]))
+    query_score = _predict_error(query_model.eval(), evaluation_query, evaluation_mask, model_config, failure_threshold_log)
+    actor_score = _predict_error(actor_model.eval(), evaluation_actor, evaluation_mask, model_config, failure_threshold_log)
     frozen = torch.load(args.runs_root / config["frozen_p75"]["run"] / config["frozen_p75"]["artifact"], map_location="cuda")
     frozen_model = ReliabilityMLP(len(FEATURE_NAMES), frozen["hidden_dimensions"]).cuda(); frozen_model.load_state_dict(frozen["query_model_state_dict"])
     frozen_row_score = predict_reliability(frozen_model.eval(), evaluation_raw["features"],
