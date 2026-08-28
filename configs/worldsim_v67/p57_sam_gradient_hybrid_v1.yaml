@@ -1,0 +1,85 @@
+schema_version: worldsim_v67.p57_sam_gradient_hybrid.v1
+output_schema_version: worldsim_v67.p57_sam_gradient_hybrid_summary.v1
+task_id: WS-V67-P57-SAM-GRADIENT-HYBRID-01
+hypothesis_id: WS-V67-H-P57-001
+seed: 0
+role: sharpness_aware_gradient_hybrid
+verdict_on_pass: supported_sam_gradient_hybrid
+verdict_on_failure: rejected_sam_gradient_hybrid
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+  method_baseline_compiler_run: worldsim_v67/WS-V67-P53-JOINT-BUDGET-HORIZON-GRADIENT-HYBRID-01/20260829T040000Z__joint-budget-horizon-gradient-s0-r1
+  method_baseline_compiler_artifact: HYBRID_CONDITIONED_ACTION_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p33_p4c_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p44_p6r_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p46_p10r4_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p48_p10r2_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p50_p2v_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p51_p6e_h1p5_quantile_actions.npz
+model:
+  base_score_key: base_score
+  hidden_dimensions: [32, 16]
+  maximum_residual_cost: 0.05
+  residual_budget_anchor_fraction: 0.25
+  residual_budget_peak_fraction: 0.3333333333333333
+  residual_budget_upper_anchor_fraction: 0.50
+  training_selected_fractions: [0.25, 0.3333333333333333, 0.40, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0, 1.5, 1.5, 2.0, 2.0, 2.0, 1.5, 1.5, 1.5, 1.5, 1.5]
+  epochs: 6000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 0.05
+  ranking_weight: 0.10
+  listwise_weight: 1.0
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  soft_rank_temperature: 0.05
+  soft_selection_temperature: 0.25
+  domain_aggregation: mean_variance
+  domain_loss_variance_weight: 0.1
+  residual_regularization_weight: 0.01
+  final_layer_gradient_direction_weight: 0.01
+  sharpness_aware_radius: 0.05
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p56_p10r2_h0p8_quantile_actions.npz
+  selected_fraction: 0.375
+  horizon_seconds: 0.8
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_delta_over_method_baseline: 0.002
+  minimum_nonincreasing_scene_support: 6
+locks:
+  p53_data_model_gradient_budget_anchor_loss_seed_and_epochs_unchanged: true
+  sam_radius_fixed_at_point_zero_five_without_sweep: true
+  frozen_p53_scored_in_same_formal_read: true
+  no_radius_optimizer_model_loss_or_gate_sweep: true
+  full_asam_or_safety_equivalence_claim: false
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+references:
+  - https://mlanthology.org/iclr/2021/foret2021iclr-sharpnessaware/
+  - https://proceedings.mlr.press/v139/kwon21b.html
+claim_boundary:
+  - sam_inspired_sharpness_aware_gradient_hybrid
+  - same_read_comparison_against_frozen_p53
+  - jointly_unseen_budget_and_short_horizon_on_consumed_source_cohort
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

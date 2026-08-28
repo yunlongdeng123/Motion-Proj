@@ -60,6 +60,8 @@ def conditioned_padded_cases(
 def train_conditioned_action_compiler(
     arrays: Mapping[str, np.ndarray], config: Mapping[str, Any], seed: int,
 ) -> tuple[BoundedListwiseCompiler, np.ndarray, np.ndarray, dict[str, Any]]:
+    if "sharpness_aware_radius" in config:
+        return train_sharpness_aware_conditioned_action_compiler(arrays, config, seed)
     padded, mean, scale = conditioned_padded_cases(
         arrays, [float(x) for x in config["training_selected_fractions"]],
         [float(x) for x in config["training_horizon_seconds_by_domain"]],
@@ -181,6 +183,125 @@ def train_conditioned_action_compiler(
         train_conditioned_case_count=int(len(padded["domain"])),
         train_action_rows=int(mask.sum().cpu()), development_domain_count=int(len(np.unique(padded["domain"]))),
         weight_averaging_checkpoint_count=int(averaging_checkpoint_count),
+    )
+    return model.eval(), mean, scale, final
+
+
+def train_sharpness_aware_conditioned_action_compiler(
+    arrays: Mapping[str, np.ndarray], config: Mapping[str, Any], seed: int,
+) -> tuple[BoundedListwiseCompiler, np.ndarray, np.ndarray, dict[str, Any]]:
+    padded, mean, scale = conditioned_padded_cases(
+        arrays, [float(x) for x in config["training_selected_fractions"]],
+        [float(x) for x in config["training_horizon_seconds_by_domain"]],
+        base_score_key=str(config.get("base_score_key", "qmean")),
+    )
+    features = torch.from_numpy(padded["features"]).cuda()
+    qmean = torch.from_numpy(padded["qmean"]).cuda()
+    target = torch.from_numpy(padded["target"]).cuda()
+    mask = torch.from_numpy(padded["mask"]).cuda()
+    domains = torch.from_numpy(padded["domain"]).cuda()
+    fractions = torch.from_numpy(padded["selected_fraction"]).cuda()
+    action_count = mask.sum(dim=1)
+    selected_count = torch.floor(action_count * fractions).clamp(min=1)
+    pair_valid = (
+        (mask[:, :, None] * mask[:, None, :]).bool()
+        & (target[:, :, None] - target[:, None, :]).abs().ge(float(config["pairwise_minimum_target_gap"]))
+    )
+    pair_sign = torch.sign(target[:, :, None] - target[:, None, :])
+    torch.manual_seed(int(seed))
+    model = BoundedListwiseCompiler(
+        features.shape[-1], list(config["hidden_dimensions"]), float(config["maximum_residual_cost"])
+    ).cuda()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=float(config["learning_rate"]), weight_decay=float(config["weight_decay"]))
+
+    def objective() -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
+        score, residual = model(features, qmean, mask)
+        anchor = float(config["residual_budget_anchor_fraction"])
+        peak = float(config["residual_budget_peak_fraction"])
+        upper = float(config["residual_budget_upper_anchor_fraction"])
+        rising = (fractions - anchor) / (peak - anchor)
+        falling = (upper - fractions) / (upper - peak)
+        amplitude = torch.minimum(rising, falling).clamp(0.0, 1.0)[:, None]
+        residual = residual * amplitude
+        score = (qmean + residual).clamp(0.0, 1.0)
+        regression_elements = torch.nn.functional.smooth_l1_loss(
+            score, target, beta=float(config["huber_beta"]), reduction="none"
+        )
+        regression_case = (regression_elements * mask).sum(dim=1) / action_count
+        score_delta = score[:, :, None] - score[:, None, :]
+        pair_loss = torch.nn.functional.softplus(-(score_delta * pair_sign) / float(config["ranking_temperature"]))
+        pairwise_case = (pair_loss * pair_valid).sum(dim=(1, 2)) / pair_valid.sum(dim=(1, 2)).clamp(min=1)
+        soft_rank = 1.0 + (
+            torch.sigmoid(score_delta / float(config["soft_rank_temperature"])) * mask[:, None, :]
+        ).sum(dim=2) - 0.5
+        selected_weight = torch.sigmoid(
+            (selected_count[:, None] + 0.5 - soft_rank) / float(config["soft_selection_temperature"])
+        ) * mask
+        selected_cost = (selected_weight * target).sum(dim=1) / selected_weight.sum(dim=1).clamp(min=1e-5)
+        domain_losses = []
+        for domain in torch.unique(domains):
+            inside = domains == domain
+            domain_losses.append(
+                float(config["listwise_weight"]) * selected_cost[inside].mean()
+                + float(config["ranking_weight"]) * pairwise_case[inside].mean()
+                + float(config["regression_weight"]) * regression_case[inside].mean()
+            )
+        domain_losses_t = torch.stack(domain_losses)
+        residual_penalty = (residual.square() * mask).sum() / mask.sum()
+        domain_objective = domain_losses_t.mean() + float(config["domain_loss_variance_weight"]) * domain_losses_t.var(unbiased=False)
+        final_layer_parameters = tuple(model.network[-1].parameters())
+        directions = []
+        for domain_loss in domain_losses:
+            gradient_parts = torch.autograd.grad(
+                domain_loss, final_layer_parameters, create_graph=True, retain_graph=True,
+            )
+            gradient_vector = torch.cat([part.reshape(-1) for part in gradient_parts])
+            directions.append(gradient_vector / gradient_vector.norm().clamp(min=1e-6))
+        directions_t = torch.stack(directions)
+        gradient_direction_variance = (
+            directions_t - directions_t.mean(dim=0, keepdim=True)
+        ).square().sum(dim=1).mean()
+        loss = (
+            domain_objective
+            + float(config["residual_regularization_weight"]) * residual_penalty
+            + float(config["final_layer_gradient_direction_weight"]) * gradient_direction_variance
+        )
+        metrics = {
+            "total_loss": loss, "soft_selected_cost": selected_cost.mean(),
+            "pairwise_loss": pairwise_case.mean(), "regression_loss": regression_case.mean(),
+            "residual_rms": torch.sqrt(residual_penalty), "minimum_domain_loss": domain_losses_t.min(),
+            "maximum_domain_loss": domain_losses_t.max(),
+            "final_layer_gradient_direction_variance": gradient_direction_variance,
+        }
+        return loss, metrics
+
+    rho = float(config["sharpness_aware_radius"])
+    final: dict[str, Any] = {}
+    for _ in range(int(config["epochs"])):
+        optimizer.zero_grad(set_to_none=True)
+        first_loss, _ = objective()
+        first_loss.backward()
+        grad_norm = torch.sqrt(torch.stack([
+            parameter.grad.square().sum() for parameter in model.parameters() if parameter.grad is not None
+        ]).sum()).clamp(min=1e-12)
+        perturbations = []
+        with torch.no_grad():
+            for parameter in model.parameters():
+                perturbation = torch.zeros_like(parameter) if parameter.grad is None else parameter.grad * (rho / grad_norm)
+                parameter.add_(perturbation); perturbations.append(perturbation)
+        optimizer.zero_grad(set_to_none=True)
+        sharp_loss, metrics = objective()
+        sharp_loss.backward()
+        with torch.no_grad():
+            for parameter, perturbation in zip(model.parameters(), perturbations):
+                parameter.sub_(perturbation)
+        optimizer.step()
+        final = {name: float(value.detach().cpu()) for name, value in metrics.items()}
+        final["sharpness_perturbation_gradient_norm"] = float(grad_norm.detach().cpu())
+    final.update(
+        train_conditioned_case_count=int(len(padded["domain"])), train_action_rows=int(mask.sum().cpu()),
+        development_domain_count=int(len(np.unique(padded["domain"]))), sharpness_aware_radius=rho,
+        weight_averaging_checkpoint_count=0,
     )
     return model.eval(), mean, scale, final
 
