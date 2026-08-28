@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.7 P71 residual calibration training（2026-08-29）
+
+P71按ICLR 2025 regression TTA关于naive alignment的负面边界，不做无标签全特征matching；改用ICCV 2021式独立
+calibration-domain思路。P66 query和Actor-only backbone均冻结，只在worldsim-v5中与source ID重叠但目录独立的276/756
+H2.5 rows上，各训练一个等容量zero-init linear residual adapter。评估继续只读P70六个fresh scenes；同一次formal run
+要求query相对同样adapted Actor-only恢复10% MAE优势、相对frozen query至少改善5%、Spearman最多下降.02，并保持50%
+selective cost至少降低50%。这是一次固定机制GPU训练，不扫超参。
+
 ## WorldSim V6.7 P70 fresh-population scale transfer rejected / triage retained（2026-08-29）
 
 P70冻结P66 plain-Huber query/Actor-only模型，转到`worldsim_v5`独立processed root；排除source重叠276/756，

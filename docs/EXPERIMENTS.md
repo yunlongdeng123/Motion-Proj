@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P71-RESIDUAL-ACTOR-CALIBRATION-01
+
+- 状态：`running`；冻结P66 query/Actor-only backbones，在worldsim-v5的276/756上以相同Huber目标各训练一个
+  zero-init 32→1 residual adapter；只在P70六个fresh scenes上评估。
+- 固定1,500 epochs、lr `.003`、H2.5和50% coverage；不扫adapter/epoch/lr/loss/horizon/scene/threshold。
+
 ### WS-V67-P70-FRESH-ACTOR-RELIABILITY-01
 
 - 状态：`done/rejected`；canonical=`20260829T153500Z__fresh-actor-reliability-s0-r2`；冻结P66，在worldsim-v5
