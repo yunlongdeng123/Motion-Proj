@@ -75,6 +75,7 @@ def padded_cases(
         "features": np.zeros((len(unique_cases), maximum_actions, features.shape[1]), dtype=np.float32),
         "qmean": np.zeros((len(unique_cases), maximum_actions), dtype=np.float32),
         "target": np.zeros((len(unique_cases), maximum_actions), dtype=np.float32),
+        "unsafe": np.zeros((len(unique_cases), maximum_actions), dtype=np.float32),
         "mask": np.zeros((len(unique_cases), maximum_actions), dtype=np.float32),
         "domain": np.zeros(len(unique_cases), dtype=np.int64),
         "action_indices": np.empty(len(unique_cases), dtype=object),
@@ -86,6 +87,7 @@ def padded_cases(
         payload["features"][row, :count] = normalized[members]
         payload["qmean"][row, :count] = np.asarray(arrays["qmean"])[members]
         payload["target"][row, :count] = np.asarray(arrays["target_cost"])[members]
+        payload["unsafe"][row, :count] = np.asarray(arrays["unsafe"], dtype=np.float32)[members]
         payload["mask"][row, :count] = 1.0
         payload["domain"][row] = domains[members[0]]
         payload["action_indices"][row] = members
@@ -99,6 +101,7 @@ def train_listwise_compiler(
     features = torch.from_numpy(padded["features"]).cuda()
     qmean = torch.from_numpy(padded["qmean"]).cuda()
     target = torch.from_numpy(padded["target"]).cuda()
+    unsafe = torch.from_numpy(padded["unsafe"]).cuda()
     mask = torch.from_numpy(padded["mask"]).cuda()
     domains = torch.from_numpy(padded["domain"]).cuda()
     action_count = mask.sum(dim=1)
@@ -136,6 +139,7 @@ def train_listwise_compiler(
             / float(config["soft_selection_temperature"])
         ) * mask
         listwise_case = (selected_weight * target).sum(dim=1) / selected_weight.sum(dim=1).clamp(min=1e-5)
+        unsafe_listwise_case = (selected_weight * unsafe).sum(dim=1) / selected_weight.sum(dim=1).clamp(min=1e-5)
         domain_losses = []
         for domain in torch.unique(domains):
             inside = domains == domain
@@ -143,6 +147,7 @@ def train_listwise_compiler(
                 float(config["regression_weight"]) * regression_case[inside].mean()
                 + float(config["ranking_weight"]) * pairwise_case[inside].mean()
                 + float(config["listwise_weight"]) * listwise_case[inside].mean()
+                + float(config.get("unsafe_listwise_weight", 0.0)) * unsafe_listwise_case[inside].mean()
             )
         domain_losses_t = torch.stack(domain_losses)
         domain_mean = domain_losses_t.mean()
@@ -163,6 +168,7 @@ def train_listwise_compiler(
             "regression_loss": float(regression_case.mean().detach().cpu()),
             "pairwise_loss": float(pairwise_case.mean().detach().cpu()),
             "soft_selected_cost": float(listwise_case.mean().detach().cpu()),
+            "soft_selected_unsafe_rate": float(unsafe_listwise_case.mean().detach().cpu()),
             "residual_rms": float(torch.sqrt(residual_penalty).detach().cpu()),
         }
     final.update(

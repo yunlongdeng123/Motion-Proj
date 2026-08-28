@@ -2,6 +2,14 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P21-SELECTIVE-LISTWISE-AUTHORITY-01
+
+- 状态：`done/supported`；canonical=`20260828T134500Z__selective-listwise-s0-r1`；冻结P20 ranking，五域训练
+  monotone benefit head；P2V 787/864 eligible actions，71 cases / 35 authorized / coverage=`0.492958`。
+- Authority/P20/qmean reduction=`0.450102/0.404135/0.345130`；authority delta over qmean=`+0.104972`，benefit
+  Spearman=`0.769664`，positive-benefit rate=`1.0`，5/5 covered scenes不退化，4/4 gates；wall/peak GPU/RSS=
+  `48.8792s/0.04711GiB/1.4770GiB`。
+
 ### WS-V67-P20-LISTWISE-ACTION-COMPILER-01
 
 - 状态：`done/supported`；canonical=`20260828T133000Z__listwise-action-s0-r1`；四域284 cases/3,227 actions，

@@ -168,6 +168,20 @@ P20 exact-once在P1 action-task confirmation通过4/4 gates：selected reduction
 pairwise `0.826230`，5/5 eligible scenes不退化。scene-1046的12 units均低于16-point footprint，保留为coverage边界，
 不删scene或降minimum footprint。F08关闭；P21只在冻结P20排序上训练selective authority。
 
+P21在P2V action-task confirmation同样4/4 gates：固定49.30% coverage下，P20/qmean reduction=
+`0.404135/0.345130`，selective authority=`0.450102`；35/35 authorized cases nonnegative，5/5 covered scenes不退化。
+无新failure。下一候选P22从mean benefit推进到unsafe tail proxy；下一编号仍为`V67-F09`。
+
+### V67-F09 — P22 tail-risk-aware listwise compiler候选
+
+- 分类：`algorithm/risk-sensitive-ranking`；状态：`active_first_trial_frozen`。
+- 动机：P20/P21已支持mean visited-state cost selection，但`any hidden-FREE` unsafe event仍只作AUROC描述，尚未进入
+  differentiable selected-set objective。
+- 检索/迁移：ICML 2024 risk-sensitive reward-free RL和NeurIPS 2021 distributional CVaR强调tail outcome；P22新增soft
+  selected unsafe-rate损失，但明确不把binary proxy包装成CVaR或safety guarantee。
+- 防重复：unsafe weight=`0.25`、六开发域、architecture/residual/temperature/fraction/gates预先固定；V64 P10R4 action
+  target在模型freeze后一次读取，不扫weight或tail definition。下一编号=`V67-F10`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

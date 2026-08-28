@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P21 selective listwise authority supported / P22 tail-risk training（2026-08-28）
+
+P21 canonical=`run://worldsim_v67/WS-V67-P21-SELECTIVE-LISTWISE-AUTHORITY-01/
+20260828T134500Z__selective-listwise-s0-r1`。P2V confirmation 787 eligible actions / 71 cases；固定35 cases授权，coverage=
+`0.492958`。qmean→P20 ungated→P21 authority reduction=`0.345130→0.404135→0.450102`；P21相对qmean=
+`+0.104972`，authorized positive-benefit=`1.0`，5个covered scenes全不退化，4/4 gates。只支持trajectory visited-state
+action-set authority，不升级为collision/planning/safety。
+
+P22参考ICML 2024 risk-sensitive CVaR与NeurIPS 2021 distributional risk，但只把`any hidden-FREE visited state`作为
+tail-risk proxy，不声称CVaR保证。六开发域训练同一bounded listwise compiler，新增soft selected unsafe-rate loss；冻结后在
+V64 P10R4八场景action-task-untouched test一次确认，并与冻结P20/qmean比较。
+
 ## WorldSim V6.7 P20 independent listwise compiler supported / P21 integrated authority（2026-08-28）
 
 P20 canonical=`run://worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/
