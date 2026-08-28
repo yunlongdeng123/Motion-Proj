@@ -210,6 +210,18 @@
 - target read前clearance-only mechanism baseline在P81/P96为`1/13` events、AUROC=`.91404/.79879`；P107为`2/2`，
   P109为`0/0`。几何distance可解释P81大部分效果，却不能解释P96稳定性；P108/P110将同一baseline只作描述，不改decision。
 
+### WS-V67-P112-NONLINEAR-GAUSSIAN-CROSSING-01
+
+- 状态：`done/rejected development`；canonical=`20260830T065000Z__nonlinear-gaussian-crossing-s0-r1`。
+- 冻结P109 Actor diagonal Gaussian，对每个Actor/time固定seed0采256个二维residual，直接对
+  `norm(predicted relative position + residual) <= interaction radius`重算sample occupancy-flip probability；time/Actor max、
+  fixed50不变。只读consumed P81/P96，不读P108。
+- result：P81 nonlinear/linear均选0 events，AUROC `.97228/.96764`；P96 nonlinear为3 events/AUROC `.85852`，劣于
+  linear P109的0/`.90434`。verdict=`rejected_development_nonlinear_gaussian_crossing`，wall=`.701s`、peak GPU=
+  `.0379GiB`。
+- 不扫sample count、full covariance、distribution、seed或aggregation；保留更稳的P109 linearized boundary projection。
+  该negative mechanism不影响P108 primary/P110 frozen secondary。
+
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 
 - 状态：`frozen/not read`；primary run=`20260830T063500Z__uncertainty-tube-confirmation-s0-r1`，prep=

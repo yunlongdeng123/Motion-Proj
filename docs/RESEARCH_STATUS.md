@@ -156,6 +156,11 @@ target read前的必要机制对照显示纯`1/max(abs(signed clearance),.05m)`�
 因此收益不是单纯“离boundary远”，Actor uncertainty在跨cohort稳定性上有可辨增量。该baseline只追加为P108/P110
 descriptive metric，不事后改已冻结primary decision。
 
+P112进一步用冻结P109 diagonal Gaussian、seed0与每row/time 256 samples在GPU非线性重算Euclidean occupancy crossing。
+consumed P81仍为0 events且AUROC `.97228`（线性`.96764`），但P96退化为3 events/AUROC `.85852`（线性
+`0/.90434`），故verdict rejected并登记`V67-F78`。这说明当前有限样本的nonlinear Monte Carlo没有改善跨cohort
+排序，保留P109解析linearized projection，关闭sample-count/distribution sweep；P108/P110协议不变。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

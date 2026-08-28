@@ -1147,6 +1147,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F78`。
 
+### V67-F78 — nonlinear Gaussian occupancy sampling跨cohort劣于linearized boundary projection
+
+- 分类：`scientific/uncertainty-query-approximation`；状态：`closed_negative_no_sampling_sweep`；
+- canonical：`run://worldsim_v67/WS-V67-P112-NONLINEAR-GAUSSIAN-CROSSING-01/20260830T065000Z__nonlinear-gaussian-crossing-s0-r1`；
+- symptom：固定256-sample nonlinear recomputation在P81保持0 selected events且AUROC `.97228`，但P96变为3 events/
+  AUROC `.85852`，劣于P109 linearized projection的0/`.90434`；
+- interpretation：unimodal diagonal Gaussian在完整2D distance非线性下的finite-sample tail会放大scale/mean误差；boundary-normal
+  projection更直接对齐occupancy decision boundary，跨cohort反而稳定；
+- literature response：2025 open-source semi-analytic work分别研究spatial overlap与stochastic boundary crossing；本结果支持在
+  当前数据/模型保留boundary-crossing approximation，而不是假设更“精确”的spatial sampling必然更好；
+- resolution：关闭sample-count/full-covariance/distribution/seed sweep，保留P109 frozen linear score；P108/P110不变；
+- claim impact：不支持nonlinear sampled collision probability或calibration claim，不影响P109 development机制结果。
+
+下一可用编号：`V67-F79`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
