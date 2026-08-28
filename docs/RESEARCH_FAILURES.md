@@ -633,6 +633,15 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   AUROC=`.957408/.850937`；3/3 gates，27/32 scenes rank noninferior。
 - 结论：P60 plain-Huber在第二split复现；不加辅助loss/calibrator。该population不是fresh confirmation。下一编号=`V67-F51`。
 
+### V67-F51 — P65 uncertainty-native quantile Actor reliability候选
+
+- 分类：`prediction/ordered-quantile-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 方法：同一query representation输出q10/q50/q90，用pinball loss并结构保证顺序；q50承担P60 reliability read，
+  q10-q90提供empirical central interval。
+- Protocol：train scene `%5!=0`、H `.8/1.5s`；remainder0 scene复用但confirmation H改为未见2.5s。
+- 判定：P60三门+80% interval coverage `[.75,.85]`；不扫quantile/coverage/loss/horizon，不声称conformal coverage。
+  下一编号=`V67-F52`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

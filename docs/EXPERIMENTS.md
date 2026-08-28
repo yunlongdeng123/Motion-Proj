@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P65-QUANTILE-ACTOR-RELIABILITY-01
+
+- 状态：`materialization then GPU quantile training running`；ordered q10/q50/q90 head，固定pinball loss。
+- Train为scene `%5!=0`、H `.8/1.5s`；confirmation复用remainder0 scenes但用新H=`2.5s`。
+- P60三门保持，加80% central interval empirical coverage `[.75,.85]`；不做conformal/calibrator/quantile sweep。
+
 ### WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01
 
 - 状态：`done/supported`；canonical=`20260829T123000Z__plain-actor-replication-s0-r1`；93 train scenes、

@@ -24,6 +24,10 @@ canonical=`run://worldsim_v67/WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01/
 `=.092651/.107035`（降低`13.44%`），AUROC=`.957408/.850937`；3/3 gates复现。P60+P64共同支持plain-Huber
 given-`tau` Actor-state reliability；P61/P62/P63界定ranking/calibration/contrastive辅助项的不稳定边界。
 
+P65把同一对象扩为ordered q10/q50/q90，固定pinball loss；训练scene/H合同与P60相同，正式read复用remainder0 scenes
+但H从2.0外推到未见2.5s。P60三门加central 80% interval empirical coverage `[.75,.85]`，不做conformal或校准器。
+当前training rows物化中；GPU训练与H2.5 confirmation I/O继续重叠。
+
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
 coverage/minimum group=`.64/.50`；P58/P53/P31/fixed reduction=`.777488/.774840/.797323/.317934`。
