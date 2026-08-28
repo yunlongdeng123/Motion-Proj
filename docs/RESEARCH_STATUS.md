@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P86 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P87 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -36,6 +36,15 @@ Query/Actor-only同容量`1024/512/256`，等horizon pairwise any-failure rankin
 P86 r1在任何训练/test read前暴露CPU aggregation为逐group全表扫描的`O(N×G)`实现瓶颈并终止。参考NumPy
 `unique(return_inverse)`与stable `argsort`，r2改为一次排序后按连续group slices聚合，科学协议完全不变；r2已进入GPU
 训练，约98% utilization、3.46GiB。该事件登记为工程失败V67-F63，不计scientific trial。
+
+P81 prep r1证明nuScenes blob archives不按scene-table index百位切分：只命中`0016→01`与`0523→05`，错误绑定的
+03/07/08/09均0 hit。查询官方archive结构并读取未扫描包开头的真实session members后，按采集会话冻结精确路由：
+`0344/0330/0923/0963→04`、`0627/0784→06`、`1059/1071→10`。r2复用已提取780 files，只并行扫描
+04/06/10；cohort/model/target/gates不变。r1为V67-F64 engineering failure，0 scene preprocess/target read。
+
+该恢复延长IO后，P87利用GPU训练learned set encoder。参考Deep Sets（NeurIPS 2017）与Set Transformer（ICML 2019），
+每条τ取6m内最近16个visited Actor rows，逐元素`256/128`编码后masked mean+max pooling，再`256/128`解码any-failure
+risk；Actor-only同结构。它区别于P86对raw features固定min/mean/max，不做cap/pooling sweep；约98% GPU、3.0GiB。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 

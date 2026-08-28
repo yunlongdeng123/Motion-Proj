@@ -2,6 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P87-DEEPSET-TRAJECTORY-RELIABILITY-01
+
+- 状态：`active/GPU training`；canonical candidate=`20260829T220000Z__deepset-trajectory-reliability-s0-r1`；
+  protocol/model在P81 target rows出现前冻结。
+- source trajectory取6m内最近16个Actor rows并mask-pad；query/Actor-only分别用24/19维逐元素`256/128` encoder，
+  masked mean+max permutation-invariant pooling，`256/128` decoder；pairwise event + `.25` max-error Huber。
+- 相对P86固定raw min/mean/max summary，P87学习element representation；不扫actor cap/pooling/coverage/radius。
+  P81路由恢复IO期间约98% GPU利用率、2.996GiB。
+
+### WS-V67-P81-FRESH-TEST-ACTOR-COHORT-PREP-01
+
+- r1=`20260829T211500Z__fresh-test-actor-prep-s0-r1`状态：`failed before scene preprocess/target read`。scene index百位
+  不是官方blob分包规则；01命中389、05命中391，而错误绑定03/07/08/09均0，缺3,120 files。
+- 用archive开头真实session members冻结恢复路由：04承载`0344/0330/0923/0963`，06承载`0627/0784`，
+  10承载`1059/1071`；r2=`20260829T221000Z__fresh-test-actor-prep-s0-r2`只扫描04/06/10并复用780现有files。
+- 这是纯IO routing recovery；10 scenes、P81/P82--P87 protocols、H3.5 target与gates均未改变。
+
 ### WS-V67-P86-DIRECT-TRAJECTORY-RELIABILITY-01
 
 - 状态：`active/GPU training r2`；canonical candidate=
@@ -52,7 +69,7 @@
 
 - 状态：`active/preparing 10-scene independent cohort`；canonical=`20260829T211500Z__fresh-test-actor-event-s0-r1`；
   prep=`20260829T211500Z__fresh-test-actor-prep-s0-r1`。
-- 事前冻结V5 test-role前10个从未读取场景与shards `01/03/05/07/08/09`；只抽LIDAR并生成最小Actor inputs，
+- 事前冻结V5 test-role前10个从未读取场景；修正后的真实session shards为`01/04/05/06/10`；只抽LIDAR并生成最小Actor inputs，
   不做图像、quality audit、hash/checksum/fingerprint。其余10个test-role scenes保留未读。
 - P75/P73 models frozen；H3.5 per-scene exact 50% primary endpoint为unreliable-event count/prevalence。
   门为相对Actor event至少降低10%、严格少于P73、至少80% scenes不增加；mean cost仅描述。

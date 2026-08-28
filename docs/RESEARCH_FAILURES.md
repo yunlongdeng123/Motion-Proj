@@ -806,6 +806,16 @@ aggregation/loss/radius，当前无新增失败，下一编号仍为`V67-F63`。
   group-max也用相同线性遍历。未改source、features、aggregation定义、model、loss、epochs、gates或fresh cohort。
 - r2已进入GPU训练；r1不计scientific trial。下一编号=`V67-F64`。
 
+### V67-F64 — P81 prep r1错误假设blob shard按scene index百位切分
+
+- 分类：`engineering/dataset-archive-routing`；状态：`resolved_r2_active_before_target_read`。
+- 症状：r1只在`scene-0016→01`命中389与`scene-0523→05`命中391；错误绑定03/07/08/09均0，最终缺
+  3,120/3,900 LIDAR files。0 scene preprocess、0 Actor rows、0 target/model evaluation。
+- 卡点调研：nuScenes官方/devkit只要求十个blob archives合并解压，不承诺metadata index分包；读取archives开头真实
+  session members后，按采集session冻结`04:{0344,0330,0923,0963}`、`06:{0627,0784}`、
+  `10:{1059,1071}`，保留已证实`01:{0016}`、`05:{0523}`。
+- r2复用780已提取members，只扫描04/06/10；不改cohort、target、models、gates或claim。下一编号=`V67-F65`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
