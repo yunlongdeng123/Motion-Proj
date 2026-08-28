@@ -62,6 +62,17 @@
 - 不训练MLP，不做seed/width/depth sweep；只有fresh/natural benchmark暴露deterministic ceiling后才可解锁。
 - 该precondition lock不是algorithm failure，`failure_ledger_delta=none`。
 
+### WS-V66-P4-ARTIFACT-REPAIR-DEV-01
+
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P4D-001`；formal run尚未创建。
+- matched arms：R0 DROP、R1 LOCAL ABSTAIN、R2 REPAIR；同一8,180 rows与同一certificate semantics。
+- R2只从paired clean reference恢复observable factor；不修改Actor ID/track/trajectory/hazard attributes，也不宣称
+  RGB/full-scene geometry repair。
+- primary gate：artifact violation reduction、clean-hazard retention、ID/track exactness、hazard shift、nonartifact
+  regression与hard evidence violation；完整报告R0/R1 tradeoff。
+- 实现：`motion_proj/worldsim_v66/physical_repair.py`、`scripts/run_worldsim_v66_p4_repair.py`；
+  `failure_ledger_refs=[V65-F19]`，delta pending。
+
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
 - task=`WS-V64-REPORT-HANDOFF-01`；status=`done_documentation_only`；scientific run/GPU=`none/none`；

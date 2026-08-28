@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.6 P4-D repair implementation ready（2026-08-28）
+
+状态：`v66_p4_development_repair_implementation_ready`。matched三臂共享同一8,180行输入：DROP移除被证书判定的
+artifact actor；ABSTAIN保留Actor但不发出局部geometry；REPAIR从同cluster clean reference恢复可观测factor，Actor
+ID/track/trajectory/hazard属性不变。formal run只以R2 gate裁决，并完整报告R0/R1 tradeoff；无natural smoothing、learned
+training、fresh read、sweep或hash/checksum/fingerprint。
+
 ## WorldSim V6.6 P2-D certificate supported / P4 repair next（2026-08-28）
 
 状态：`v66_p2_development_certificate_supported_p4_repair_next`；canonical=

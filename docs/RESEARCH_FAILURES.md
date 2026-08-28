@@ -29,6 +29,9 @@
 - P2-D一次完成且8/8 gates通过，无新failure。P3在deterministic injected development上因P2 AUROC/AUPRC已经1而无
   预注册相对增量headroom，保持locked/not executed；这不是learned model失败，也不得用同数据训练后声称超过P2。
   下一编号仍为`V66-F01`。
+- P4-D matched repair入口已实现但未formal执行；无新failure。DROP消除violation时必须同时报告hazard event loss，
+  ABSTAIN不得把不可发出的geometry记作已修复，REPAIR不得改变Actor ID/track/trajectory/hazard attribute；下一编号仍为
+  `V66-F01`。
 
 ### V6.5 终态边界（2026-08-28）
 

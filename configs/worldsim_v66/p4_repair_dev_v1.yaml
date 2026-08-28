@@ -1,0 +1,31 @@
+schema_version: worldsim_v66.p4_repair_dev.v1
+task_id: WS-V66-P4-ARTIFACT-REPAIR-DEV-01
+hypothesis_id: WS-V66-H-P4D-001
+role: tier_l_development_capability
+inputs:
+  p1_run: worldsim_v66/WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01/20260828T084915Z__factorial-atlas-dev-s0-r1
+  rows_relative_path: ACTOR_FACTORIAL_ROWS.jsonl
+certificate:
+  maximum_supported_kinematic_jump_m: 3.0
+  maximum_shape_ratio_jump: 1.5
+arms: [R0_DROP, R1_ABSTAIN, R2_REPAIR]
+gates:
+  minimum_artifact_violation_reduction: 0.50
+  minimum_clean_hazard_actor_retention: 0.98
+  minimum_actor_id_track_trajectory_exactness: 1.0
+  maximum_hazard_event_count_shift: 0.02
+  maximum_nonartifact_regression: 0.02
+  maximum_hard_observed_evidence_violations: 0
+locks:
+  corruption_or_hazard_metadata_in_decision: false
+  natural_trajectory_smoothing: false
+  learned_model_training: false
+  threshold_sweep: false
+  fresh_v66_quality_read: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V65-F19]
+claim_boundary:
+  - deterministic_injected_development_repair_capability
+  - repair_restores_observable_factors_not_rgb_or_full_scene_geometry
+  - no_natural_artifact_or_fresh_generalization_claim
+  - no_planner_policy_closed_loop_rl_or_safety_claim
