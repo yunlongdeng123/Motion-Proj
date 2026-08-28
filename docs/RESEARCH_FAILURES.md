@@ -1134,6 +1134,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F78`。
 
+### P107/P109 mechanism note — clearance-only不能解释跨cohort增益
+
+- frozen baseline：每个Actor/time取`1/max(abs(predicted separation - interaction radius), .05m)`，再time/Actor max与
+  per-scene fixed50；不训练、不调floor/aggregation/coverage；
+- result：consumed P81选择1/95 events、AUROC `.91404`，consumed P96选择13/36、AUROC `.79879`；对照P107=`2/2`、
+  P109=`0/0`；
+- interpretation：P81上的强结果有显著boundary-distance成分，但clearance-only跨到P96明显退化；Actor uncertainty与方向
+  投影提供了不能由纯几何解释的稳定性证据；
+- protocol impact：P108/P110在target read前仅增加同一descriptive comparator，不改变P108 frozen primary或P110 decision，
+  不创建gate matrix、threshold sweep或新claim。
+
+下一可用编号仍为：`V67-F78`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

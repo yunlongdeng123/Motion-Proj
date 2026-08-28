@@ -92,6 +92,10 @@ def _evaluate(
     ), axis=1)
     query_score = _aligned_group_max(row_keys, query_row_score, evaluation["identity"])
     actor_score = _aligned_group_max(row_keys, actor_row_score, evaluation["identity"])
+    clearance_row_score = np.max(
+        1.0 / np.maximum(boundary_distance, float(config["model"]["clearance_floor_m"])), axis=1,
+    )
+    clearance_score = _aligned_group_max(row_keys, clearance_row_score, evaluation["identity"])
 
     frozen = torch.load(
         Path(config["runs_root"]) / config["frozen_p75"]["run"] / config["frozen_p75"]["artifact"],
@@ -114,6 +118,7 @@ def _evaluate(
     fraction = float(config["selection"]["coverage_fraction"])
     query_selected = _select_by_scene(query_score, scenes, fraction)
     actor_selected = _select_by_scene(actor_score, scenes, fraction)
+    clearance_selected = _select_by_scene(clearance_score, scenes, fraction)
     frozen_selected = _select_by_scene(frozen_score, scenes, fraction)
     query_events = int(np.count_nonzero(events[query_selected]))
     actor_events = int(np.count_nonzero(events[actor_selected]))
@@ -127,11 +132,15 @@ def _evaluate(
         "selected_trajectory_count": int(len(query_selected)),
         "query_selected_occupancy_flip_events": query_events,
         "actor_selected_occupancy_flip_events": actor_events,
+        "clearance_only_selected_occupancy_flip_events": int(
+            np.count_nonzero(events[clearance_selected])
+        ),
         "frozen_p75_selected_occupancy_flip_events": frozen_events,
         "query_event_reduction": float((prevalence - selected_prevalence) / max(prevalence, 1e-12)),
         "query_event_reduction_over_actor_only": float((actor_events - query_events) / max(actor_events, 1)),
         "query_event_auroc": binary_auroc(events, query_score),
         "actor_event_auroc": binary_auroc(events, actor_score),
+        "clearance_only_event_auroc": binary_auroc(events, clearance_score),
     }
 
 

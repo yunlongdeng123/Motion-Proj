@@ -207,6 +207,8 @@
   peak GPU=`.3782GiB`。P110执行条件成立且checkpoint在P108 rows前冻结。
 - concurrent literature check：2025开源工作比较spatial overlap与stochastic boundary-crossing两类semi-analytic collision
   estimator并以Monte Carlo验证效率；它支持继续检验方向投影，但P109只是linearized margin ranking，不声称其概率已校准。
+- target read前clearance-only mechanism baseline在P81/P96为`1/13` events、AUROC=`.91404/.79879`；P107为`2/2`，
+  P109为`0/0`。几何distance可解释P81大部分效果，却不能解释P96稳定性；P108/P110将同一baseline只作描述，不改decision。
 
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 

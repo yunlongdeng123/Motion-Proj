@@ -151,6 +151,11 @@ confirmation artifact；P108 P107-scalar primary不变。同步检索到2025开�
 boundary crossing作为高效近似，但本项目只评价occupancy-decision flip ranking，不升级为collision probability/safety claim。
 当前P108 shards `01/03/04/06/08/09/10`并行扫描，P109训练已与archive IO实际重叠。
 
+target read前的必要机制对照显示纯`1/max(abs(signed clearance),.05m)`在consumed P81/P96 fixed50分别选择
+`1/13` events、AUROC=`.91404/.79879`：它在P81略优于P107的2，却在P96远差于P107的2，更远差于P109的0/0。
+因此收益不是单纯“离boundary远”，Actor uncertainty在跨cohort稳定性上有可辨增量。该baseline只追加为P108/P110
+descriptive metric，不事后改已冻结primary decision。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
