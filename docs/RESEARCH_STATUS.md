@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.7 P2 package supported / P3 actions ready（2026-08-28）
+
+状态：`v67_p2_package_supported_p3_actions_ready`；canonical=
+`run://worldsim_v67/WS-V67-P2-ACTOR-PACKAGE-01/20260828T104733Z__actor-package-s0-r1`；verdict=
+`supported_v67_actor_preserving_package`。70 eligible units烘焙107 unique Actors、517 states、1,093,082 primitives；
+state/metadata retention=`1/1`，removed/hidden-target=`0/0`，6/6 gates通过。P3 locator已机械绑定canonical P2，
+50% budget与所有gates不变；下一步一次fixed-action formal run。
+
 ## WorldSim V6.7 package/action implementation ready（2026-08-28）
 
 状态：`v67_p2_package_p3_action_implementation_ready`。已复用V6.6 bake/action核心，但V6.7 runner独立写入
