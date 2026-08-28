@@ -86,6 +86,12 @@ def train_conditioned_action_compiler(
     final = {}
     for _ in range(int(config["epochs"])):
         score, residual = model(features, qmean, mask)
+        if "residual_budget_anchor_fraction" in config:
+            anchor = float(config["residual_budget_anchor_fraction"])
+            full = float(config["residual_budget_full_fraction"])
+            amplitude = ((fractions - anchor) / (full - anchor)).clamp(0.0, 1.0)[:, None]
+            residual = residual * amplitude
+            score = (qmean + residual).clamp(0.0, 1.0)
         regression_elements = torch.nn.functional.smooth_l1_loss(
             score, target, beta=float(config["huber_beta"]), reduction="none"
         )
@@ -138,15 +144,22 @@ def train_conditioned_action_compiler(
 def score_conditioned_action_compiler(
     model: BoundedListwiseCompiler, arrays: Mapping[str, np.ndarray], selected_fraction: float,
     horizon_seconds_by_domain: list[float], mean: np.ndarray, scale: np.ndarray, base_score_key: str = "qmean",
+    residual_budget_anchor_fraction: float | None = None, residual_budget_full_fraction: float | None = None,
 ) -> np.ndarray:
     padded, _, _ = conditioned_padded_cases(
         arrays, [float(selected_fraction)], horizon_seconds_by_domain, mean, scale, base_score_key=base_score_key
     )
     with torch.inference_mode():
-        scores, _ = model(
+        scores, residual = model(
             torch.from_numpy(padded["features"]).cuda(), torch.from_numpy(padded["qmean"]).cuda(),
             torch.from_numpy(padded["mask"]).cuda(),
         )
+        if residual_budget_anchor_fraction is not None:
+            amplitude = np.clip(
+                (float(selected_fraction) - float(residual_budget_anchor_fraction))
+                / (float(residual_budget_full_fraction) - float(residual_budget_anchor_fraction)), 0.0, 1.0,
+            )
+            scores = (torch.from_numpy(padded["qmean"]).cuda() + float(amplitude) * residual).clamp(0.0, 1.0)
     flat = np.zeros(len(arrays["qmean"]), dtype=np.float32)
     score_np = scores.cpu().numpy()
     for row, members in enumerate(padded["action_indices"]):
