@@ -281,13 +281,54 @@ consistency mechanism，但P4C全局已消费，不称fresh。
 
 ### V67-F18 — P30 horizon-conditioned H插值候选
 
-- 分类：`algorithm/horizon-conditioned-authority`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/horizon-conditioned-authority`；状态：`resolved_by_heldout_horizon_transfer`。
 - 动机：此前visited-state对象均固定H=2s；P30显式条件化H，响应“给定tau，未来H秒被访问states是否可靠”。
 - 方法：P10V H=1s新cache与H=2s development联合训练；P10X从训练移除，confirmation H=1.5s；25% exact budget、
   三context groups各50% coverage、P20 order冻结。
 - 输入结果：H=1s materialization 72 cases、733/864 eligible actions，无失败。
 - 防重复：不扫H、footprint、model、offset、coverage、group或gate；P10X globally consumed，不作fresh claim。下一编号=
   `V67-F19`。
+
+P30 6/6 gates通过：H=1.5s source/eligible=`864/717`，66 cases，budget=`176/176`，global/minimum group coverage=
+`0.636364/0.50`；reduction=`0.740743`，相对fixed P20=`+0.505189`。Scene support 5/6，唯一正delta=
+`1.86e-9`是浮点均值差，仍按预注册`<=0`规则计higher；minimum 5门通过，不做epsilon改写。
+
+### V67-F19 — P31 joint budget-H unseen-condition候选
+
+- 分类：`algorithm/joint-task-conditioned-authority`；状态：`resolved_by_joint_condition_transfer`。
+- 动机：P28和P30分别证明budget/H插值；P31检验同一模型对未见联合条件`(1/3,1.5s)`的组合泛化。
+- 方法：四domains，H=`1/2s`、budget=`.25/.50`联合case rows；P10X训练排除；确认cache复用P30 H=1.5s，
+  budget改为1/3，三context groups coverage保底。
+- 防重复：不扫条件点、model、offset、coverage、group或gate；失败不回退到单轴结果。下一编号=`V67-F20`。
+
+P31 6/6 gates通过：unseen pair `(1/3,1.5s)` budget=`236/236`，global/minimum group coverage=
+`0.727273/0.583333`，reduction=`0.690636`，相对fixed=`+0.499918`，5/6 scenes不退化。
+
+### V67-F20 — P32 joint-condition nested budget候选
+
+- 分类：`algorithm/joint-condition-budget-path-consistency`；状态：`resolved_by_joint_nested_confirmation`。
+- 方法/结果：H=1.5s上low/high exact=`176/176,352/352`，176 low actions全部保留；low/high reduction=
+  `0.811047/0.404128`，相对fixed=`+0.575493/+0.263991`；minimum group=`0.50/0.791667`，7/7 gates。
+- 边界：P10X globally consumed，只支持联合条件下nested mechanism；无safety claim。下一编号=`V67-F21`。
+
+### V67-F21 — P33 second-cohort joint condition transfer候选
+
+- 分类：`algorithm/second-cohort-joint-condition-transfer`；状态：`resolved_by_second_cohort_joint_transfer`。
+- 方法：同一四development domains、budget/H conditions、architecture/loss/gates；P4C不进训练，首次物化H=1.5s并在1/3
+  budget读取一次；四context groups各coverage>=0.50。
+- 防重复：不扫条件/model/gate，不以P10X结果调整P4C门；globally consumed但joint-H task未读。下一编号=`V67-F22`。
+
+P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/315`，global/minimum group=
+`0.696629/0.50`；reduction=`0.698243`、相对fixed=`+0.439588`，8/8 scenes不退化。
+
+### V67-F22 — P34 bounded heteroscedastic authority候选
+
+- 分类：`algorithm/aleatoric-case-uncertainty`；状态：`active_first_trial_frozen`。
+- 调研：NeurIPS 2023支持异方差Gaussian regression稳定化；NeurIPS 2024指出单网络evidential epistemic可能不可靠。
+- 方法：P31同一joint-condition features上训练bounded mean与`0.005..0.10` scale；P10X consumed selection固定
+  conservative offset=`mean+1.0*scale`，与冻结P31 mean compiler比较。
+- 边界：仅aleatoric error scale；不声称epistemic/calibrated interval/OOD；P22/P23 action-tail family保持关闭。
+- 防重复：不扫scale bound、sigma weight、loss、model或gate。下一编号=`V67-F23`。
 
 ### V6.6 当前边界（2026-08-28）
 

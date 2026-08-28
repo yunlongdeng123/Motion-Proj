@@ -1,5 +1,42 @@
 # Research Status
 
+## WorldSim V6.7 P33 second-cohort joint transfer supported / P34 aleatoric training（2026-08-28）
+
+P33 canonical=`run://worldsim_v67/WS-V67-P33-INDEPENDENT-JOINT-CONDITION-TRANSFER-01/
+20260828T182000Z__second-joint-cohort-s0-r1`。P4C H=1.5s materialization=`973/1152` eligible actions、89 cases；
+`(budget=1/3,H=1.5s)` exact budget=`315/315`，coverage=`0.696629`、minimum group=`0.50`。P33/fixed reduction=
+`0.698243/0.258655`，delta=`+0.439588`，8/8 scenes不退化，6/6 gates。`V67-F21
+resolved_by_second_cohort_joint_transfer`。Joint condition mechanism现已在P10X/P4C两cohort成立。
+
+P34进入uncertainty-native但不使用evidential epistemic claim：按NeurIPS 2023异方差回归训练bounded mean/scale head；参考
+NeurIPS 2024对evidential epistemic的批评，只称aleatoric scale。P10X consumed selection固定`mean+1sigma`保守priority，
+与冻结P31 mean compiler同预算比较；一次GPU训练，不扫sigma权重。
+
+## WorldSim V6.7 P31/P32 joint conditioned authority supported / P33 second cohort（2026-08-28）
+
+P31 canonical=`run://worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/
+20260828T174000Z__joint-budget-horizon-s0-r1`。四domains×两budgets训练788 rows；在未见联合条件`(1/3,1.5s)`上，
+P10X 66 cases，budget=`236/236`、coverage=`0.727273`、minimum group=`0.583333`；P31/fixed reduction=
+`0.690636/0.190718`，delta=`+0.499918`，5/6 scenes，6/6 gates。`V67-F19 resolved_by_joint_condition_transfer`。
+
+P32 canonical=`run://worldsim_v67/WS-V67-P32-JOINT-NESTED-BUDGET-HORIZON-AUTHORITY-01/
+20260828T180000Z__joint-nested-horizon-s0-r1`。同一heldout H=1.5s，low/high budget=`176/176,352/352`，176 low
+actions全部嵌套。Low/high reduction=`0.811047/0.404128`，相对fixed=`+0.575493/+0.263991`，minimum group=
+`0.50/0.791667`，scene support=`5/6,6/6`，7/7 gates。`V67-F20 resolved_by_joint_nested_confirmation`。
+
+P33不改模型/条件合同，重新训练同一family并对P4C首次物化H=1.5s，在`(1/3,1.5s)`做第二cohort确认；当前GPU运行中。
+
+## WorldSim V6.7 P30 horizon interpolation supported / P31 joint conditioning（2026-08-28）
+
+P30 canonical=`run://worldsim_v67/WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01/
+20260828T172000Z__horizon-conditioned-s0-r1`。四development domains 394 cases训练；P10X H=1.5s materialization=
+717/864 eligible actions、66 cases。Fixed/actual budget=`176/176`，coverage=`42/66=0.636364`，minimum context
+coverage=`0.50`。P30/fixed-P20 reduction=`0.740743/0.235554`，delta=`+0.505189`，5/6 scenes严格不增（第六场
+仅`1.86e-9`浮点差），6/6 gates。`V67-F18 resolved_by_heldout_horizon_transfer`。
+
+P31把budget与H同时作为条件：同一四domains在budget 0.25/0.50、H 1.0/2.0组合训练，确认使用训练未见条件对
+`(1/3,1.5s)`；P10X仍不进训练。Exact total/context coverage合同不变，GPU训练运行中。
+
 ## WorldSim V6.7 P29 nested budgets supported / P30 horizon-conditioned training（2026-08-28）
 
 P29 canonical=`run://worldsim_v67/WS-V67-P29-NESTED-BUDGET-AUTHORITY-01/

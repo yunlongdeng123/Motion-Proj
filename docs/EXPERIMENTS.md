@@ -2,14 +2,67 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P34-HETEROSCEDASTIC-AUTHORITY-01
+
+- 状态：`running`；P31 joint-condition 9-D features，16-hidden two-output head；mean bounded `+-0.05`、scale bounded
+  `[0.005,0.10]`，Gaussian NLL + mean Huber anchor，5,000 GPU epochs。
+- P10X H=1.5/budget=1/3 consumed selection；priority=`mean+1sigma`，与frozen P31 mean compiler及fixed P20比较。
+- Gates：exact budget、group coverage、scale-vs-absolute-error Spearman `>=0.15`、reduction比mean compiler至少
+  `+0.01`、scene support `>=5`；不扫参，不称epistemic。
+
+### WS-V67-P33-INDEPENDENT-JOINT-CONDITION-TRANSFER-01 result
+
+- 状态：`done/supported`；canonical=`20260828T182000Z__second-joint-cohort-s0-r1`；788 training rows；P4C
+  H=1.5 source/eligible=`1152/973`，89 cases。
+- Budget=`315/315`；coverage=`0.696629`，minimum group=`0.50`，actions=`0..8`。
+- P33/fixed reduction=`0.698243/0.258655`，delta=`+0.439588`；8/8 scenes non-increasing，6/6 gates；
+  wall/peak GPU/RSS=`44.414s/0.03954GiB/1.4932GiB`。
+
+### WS-V67-P33-INDEPENDENT-JOINT-CONDITION-TRANSFER-01
+
+- 状态：`done/supported`；与P31相同四domains×budgets/H条件训练；P4C excluded from train，model freeze后首次materialize
+  P4C H=1.5s；confirmation budget=1/3。
+- Gates 6/6通过；精确结果见上方result；无condition/model/gate sweep。
+
+### WS-V67-P32-JOINT-NESTED-BUDGET-HORIZON-AUTHORITY-01
+
+- 状态：`done/supported`；canonical=`20260828T180000Z__joint-nested-horizon-s0-r1`；788 training rows；P10X
+  H=1.5 cache reused。
+- Low/high exact=`176/176,352/352`，nested count=`176`；coverage=`0.636364/0.878788`，minimum group=
+  `0.50/0.791667`。
+- Low/high reduction=`0.811047/0.404128`；fixed=`0.235554/0.140137`；delta=
+  `+0.575493/+0.263991`；scene support=`5/6,6/6`；7/7 gates；wall/peak GPU/RSS=
+  `32.126s/0.01705GiB/1.1827GiB`。
+
+### WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01 result
+
+- 状态：`done/supported`；canonical=`20260828T174000Z__joint-budget-horizon-s0-r1`；788 rows；P10X cache reused。
+- Unseen condition=`(budget=1/3,H=1.5s)`；66 cases，budget=`236/236`，coverage=`0.727273`，minimum group=`0.583333`。
+- P31/fixed reduction=`0.690636/0.190718`，delta=`+0.499918`；5/6 scenes，6/6 gates；wall/peak GPU/RSS=
+  `32.587s/0.01705GiB/1.1803GiB`。
+
+### WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01
+
+- 状态：`done/supported`；四domains×budgets 0.25/0.50，H per domain=`1/2/2/2s`；9-feature joint conditioned offset。
+- Confirmation=P10X H=1.5 existing cache、budget=1/3；P10X excluded from train；exact total/global/context coverage
+  `>=0.50`、P20 order冻结。
+- Gates 6/6通过；精确结果见上方result；unseen joint-condition consumed claim only。
+
+### WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01 result
+
+- 状态：`done/supported`；canonical=`20260828T172000Z__horizon-conditioned-s0-r1`；四domains 394 cases、5,000
+  GPU epochs；P10X H=1.5 source/eligible=`864/717`，66 evaluable cases。
+- Fixed/actual budget=`176/176`；covered=`42/66`（`0.636364`）；minimum group coverage=`0.50`；actions=`0..6`。
+- P30/fixed-P20 reduction=`0.740743/0.235554`，delta=`+0.505189`；scene non-increasing=`5/6`，6/6 gates；
+  wall/peak GPU/RSS=`39.661s/0.03954GiB/1.5052GiB`。
+
 ### WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01
 
-- 状态：`running`；P10V H=1/H=2及两个额外H=2 development domains训练8-feature horizon-conditioned offset；
+- 状态：`done/supported`；P10V H=1/H=2及两个额外H=2 development domains训练8-feature horizon-conditioned offset；
   P10X完全excluded from P30 train。
 - H=1.5 confirmation在model freeze后materialize；fixed fraction=0.25、exact total budget、三context groups coverage
   `>=0.50`、0--6 actions/case、P20 within-case order冻结。
-- Gates：exact budget、global/group coverage、reduction `>=0.40`、delta over fixed `>=0.10`、至少5 scenes
-  non-increasing；heldout-horizon consumed legacy claim only。
+- Gates 6/6通过；精确结果见上方result；heldout-horizon consumed legacy claim only。
 
 ### WS-V67-P30-P10V-H1-QUANTILE-MATERIALIZATION-01
 
