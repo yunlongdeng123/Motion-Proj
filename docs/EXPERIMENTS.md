@@ -2,12 +2,20 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P62-CALIBRATED-RANKED-ACTOR-RELIABILITY-01
+
+- 状态：`materialization then GPU training running`；P61 exact模型/排序损失，仅增加train-only positive-slope affine map。
+- 第三development split：scene `%5==2`、H2；calibrator不读confirmation label，正斜率保持rank ordering。
+- 四门保持P61 exact；不扫calibrator形式、slope floor或pairwise配置。
+
 ### WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
 
-- 状态：`training-data materialization running；GPU pairwise training follows`；P60的唯一变化是query head增加
+- 状态：`done/rejected`；canonical=`20260829T110000Z__ranked-actor-reliability-s0-r1`；105 train scenes、
+  307,419 rows；20 confirmation scenes、25,209 H2 rows、875 exposed-unreliable rows。P60的唯一变化是query head增加
   固定weight `.10`、temperature `.05`、target gap `.02`的三组deterministic shifted pairs。
-- 第二development split用scene index `%5==1`、H=`2.0s`；要求除P60三门外，Spearman至少比Actor-only高`.01`。
-- 不扫pair shifts/weight/temperature/gap；该population此前作为P60 training使用，因此不称fresh confirmation。
+- Query/Actor-only Spearman=`.755004/.740135`（`+.014869`）、AUROC=`.945763/.934319`；排序恢复。
+  但MAE=`.156003/.117128`（query退化`33.19%`），3/4 gates，严格拒绝；wall=`86.077s`。
+- 不扫pair shifts/weight/temperature/gap；转向train-only order-preserving calibration。
 
 ### WS-V67-P60-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
 

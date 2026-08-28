@@ -590,13 +590,24 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   降低`25.45%`，但Spearman低`.014367`。3/3原门通过；准确结论限于校准/事件识别，排序增益未成立。
 - 下一步：P61只加固定pairwise term恢复排序；不改预测对象或P60门。下一编号=`V67-F47`。
 
-### V67-F47 — P61 fixed pairwise Actor-reliability recovery候选
+### V67-F47 — P61 fixed pairwise Actor-reliability recovery失败
 
-- 分类：`algorithm/pairwise-ranked-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 分类：`algorithm/pairwise-ranked-actor-reliability`；状态：`closed_negative_after_single_trial`。
 - 方法：P60 query head增加weight `.10`、temperature `.05`、gap `.02`、shifts `[1,17,257]`的pairwise loss；
   Actor-only head仍只做Huber，其余特征/架构/epoch exact。
 - Protocol：development split改为scene `%5==1`、H2；P60三门加Spearman delta over Actor-only `+.01`。
-- 边界：该scene population曾用于P60 training，故只作development replication；不扫pair配置。下一编号=`V67-F48`。
+- 结果：Spearman `.755004/.740135`、delta=`+.014869`，AUROC `.945763`；但MAE
+  `.156003/.117128`，query退化`33.19%`；3/4 gates。
+- 结论：排序恢复但尺度失配；不扫pair配置。调研后只允许一次train-only monotone calibration恢复。下一编号=`V67-F48`。
+
+### V67-F48 — P62 train-only monotone calibration恢复候选
+
+- 分类：`algorithm/order-preserving-regression-calibration`；状态：`active_materialization_then_gpu_training`。
+- 调研迁移：ICML 2018 calibrated regression支持model-agnostic recalibration；UAI 2025强调instance-wise monotonic map
+  保持ranking。P62使用最小正斜率affine map，不使用非参数binning/isotonic complexity。
+- 方法：P61模型/排序配置exact；训练完成后仅用training prediction/target最小二乘拟合`slope>0,bias`，confirmation
+  只apply。第三development split为scene `%5==2`、H2，四门保持exact。
+- 锁：不扫map/slope/pair配置；失败即关闭pairwise+calibration recovery。下一编号=`V67-F49`。
 
 ### V6.6 当前边界（2026-08-28）
 

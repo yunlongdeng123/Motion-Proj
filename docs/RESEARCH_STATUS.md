@@ -8,8 +8,11 @@ P60 canonical=`run://worldsim_v67/WS-V67-P60-TRAJECTORY-CONDITIONED-ACTOR-RELIAB
 exposed-unreliable AUROC=`.960804/.956103`。3/3冻结门通过，支持`tau`-conditioned Actor-state reliability的
 校准/事件识别；但rank低于Actor-only `.014367`，不把结果包装为全面排序增益。
 
-P61只增加固定pairwise ranking term，其他对象/特征/架构/训练长度不变；第二development split为scene `%5==1`、H2，
-额外要求Spearman相对Actor-only `+.01`。训练输入正在物化，随后直接GPU；confirmation I/O仍与GPU重叠。
+P61 canonical=`run://worldsim_v67/WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01/
+20260829T110000Z__ranked-actor-reliability-s0-r1`。Pairwise term将Spearman从Actor-only `.740135`提高到`.755004`
+（`+.014869`），AUROC `.945763`也通过；但MAE `.156003`比baseline `.117128`高`33.19%`，3/4 gates拒绝。
+不扫ranking weight/temperature。参考ICML 2018 calibrated regression与UAI 2025 monotonic calibration，P62保持P61
+模型exact，只从training rows拟合正斜率affine map；第三split scene `%5==2`、H2正在物化，随后GPU训练。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
