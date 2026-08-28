@@ -212,7 +212,13 @@ P116完成916,722 Actor-time tokens的6,000-step训练，final pinball=`.035174`
 clearance selected events=`0/0/1`、AUROC `.96384/.96764/.91404`；P96=`6/0/13`、AUROC
 `.88932/.90434/.79879`。三项decision全失败，登记`V67-F81`。因此P109之后的learned tail pool、低频spectral
 sequence和directional q90三种替代均未跨P81/P96超过Gaussian standardized margin；关闭这些model family。P113若失败
-使用`V67-F82`。
+使用当前工程定位与P118之后的下一编号`V67-F84`。
+
+P113 prep r1在任何preprocess/target materialization前发现冻结`scene-0003→shard04` locator不完整：其余9 scenes的
+3,517个LIDAR members已精确提取，但scene-0003的384个全部缺失，run按原合同失败。该scene与P81 scene-0344共享session，
+但public trainval parts可在同一session内切分；官方devkit只要求合并10 parts，不提供session→part索引。现已完整排除02/03，
+并行扫描01/05/06/07/08/09/10且命中时直接提取，不换scene/model/decision；P113 evaluator仍等待，target read=false。
+该pre-target locator failure登记`V67-F82 active_pre_target_exact_locator_recovery`。
 
 P113 exact-shard定位继续占用I/O时，参考CVPR 2023 IPCC-TP对joint Gaussian mean/covariance的显式建模，P117只把P109
 逐时刻二维对角Gaussian升级为单一可学习相关系数；source、20维Actor-time输入、`256/128`网络、6,000 steps、seed0、
@@ -221,6 +227,12 @@ AUROC=`.972542/.913665`，相对P109增益=`+.004903/+.009320`，平均`+.007111
 `.39595/.43201`。verdict=`supported_development_correlated_actor_uncertainty`，wall=`45.49s`、peak GPU=`.37922GiB`。
 该正结果说明纵/横残差相关性可改善法向投影排序，但仍是consumed development，不能事后替换P113已冻结的P109 primary；
 下一次若研究该候选必须另冻未来target-unread cohort，本轮先完成P113。
+
+P118随后用同一P117 checkpoint做唯一机制消融，只在推理时把conditional `rho`置零，mean/scale/rows/selection完全相同。
+两臂在P81/P96都保持0 events；conditional-vs-zero-rho AUROC gain=`+.000304/-.000115`，平均仅`+.000094`，低于冻结
+`.003`且P96方向为负，verdict=`rejected_conditional_correlation_mechanism`（`V67-F83`）。因此P117相对P109的开发收益
+不能归因于推理公式中的rho项本身，更可能来自full bivariate NLL对mean/scale的联合训练；不扫rho bound或重复训练。
+P117仍是完整训练package的development候选，但论文不得写成“conditional correlation项已被机制验证”。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

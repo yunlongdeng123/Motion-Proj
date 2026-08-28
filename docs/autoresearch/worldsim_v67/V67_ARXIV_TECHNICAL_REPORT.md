@@ -125,6 +125,10 @@ fixed50不变，只新增bounded correlation并以完整bivariate Gaussian NLL�
 `.39595/.43201`。该结果支持correlation-aware法向方差作为下一代候选，但只来自consumed development，不能事后替换
 P113已冻结的diagonal P109，也不构成独立泛化或概率校准证据。
 
+P118用同一checkpoint将推理时rho置零，保持mean/scale/rows与全部selection合同相同。Conditional rho相对zero rho的
+P81/P96 AUROC gain仅`+.000304/-.000115`，平均`+.000094`，未达`.003`。因此P117正结果只能归因于完整bivariate
+likelihood training package；不能进一步声称conditional correlation term自身已被跨cohort机制消融支持。
+
 ### 2.5 P113独立uncertainty-vs-clearance确认
 
 P113在任何target read前冻结新的10-scene、四location cohort：`0094/0331/0521/0003/0013/0038/0797/0920/
@@ -138,6 +142,9 @@ directional AUROC - clearance-only AUROC >= 0.02
 ```
 
 P113 outcome：`PENDING_FINAL_FILL`。
+
+输入工程注：prep r1的scene-0003冻结shard locator缺失384/384 members，在任何preprocess/target read前退出；其余9 scenes
+的3,517 files已提取。官方archive无session→part index，当前只作exact member locator恢复，不换cohort或scientific protocol。
 
 ## 3. 核心结果表
 
@@ -158,6 +165,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P115 | consumed spectral Actor sequence | P81/P96=`0 / 7` | `.97709 / .84712` | reject；P96强退化 |
 | P116 | consumed directional q90 field | P81/P96=`0 / 6` | `.96384 / .88932` | reject；均低于P109 |
 | P117 | consumed full-covariance Gaussian | P81/P96=`0 / 0` | `.97254 / .91366` | development support；mean gain `+.00711` |
+| P118 | same-checkpoint rho ablation | P81/P96均`0 / 0` | rho gain=`+.00030 / -.00012` | reject direct-rho mechanism |
 | P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
 
 ## 4. 失败如何推动研究对象变化
@@ -172,6 +180,8 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | `V67-F79` | monotone top-k/union tail pooling可提升P109 max | 终局拒绝；后继P115占用F80 |
 | `V67-F80` | 低频joint Actor residual sequence可稳定提升P109 | P96反转；保留pointwise directional model |
 | `V67-F81` | distribution-free directional q90可超过Gaussian | 两cohort均无增益；保留P109 standardized margin |
+| `V67-F82` | inferred session shard可直接定位scene-0003 | pre-target exact locator失败；扫描公开parts恢复 |
+| `V67-F83` | P117收益由conditional rho推理项直接产生 | zero-rho消融几乎不变且P96反向 |
 
 ## 5. 系统与资源
 
@@ -183,6 +193,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - P115同样在P113 I/O期间完成101,858 Actor sequences的6,000-step GPU训练，wall约36.41s。
 - P116训练916,722 Actor-time tokens×随机8-direction q90 queries，6,000 steps，wall约30.07s。
 - P117训练916,722 Actor-time tokens的correlated bivariate Gaussian，6,000 steps，wall约45.49s。
+- P118冻结checkpoint的conditional-vs-zero-rho消融wall约1.03s，不重训、不读取P113。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界

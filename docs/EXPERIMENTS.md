@@ -235,7 +235,7 @@
 
 ### WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01
 
-- 状态：`frozen/not read`；prep=`20260830T070000Z__directional-vs-clearance-prep-s0-r1`，primary=
+- 状态：`frozen/pre-target exact locator recovery`；prep r1=`20260830T070000Z__directional-vs-clearance-prep-s0-r1`，primary=
   `20260830T070500Z__directional-vs-clearance-s0-r1`。
 - cohort：target-unread official val的next per-location order，`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，
   indices=`76/259/411/2/12/36/617/705/711/801`；四location、cohort内10 distinct sessions，仍只scene-level independent。
@@ -243,6 +243,10 @@
   time/Actor max和per-scene fixed50。decision仅`directional events<=clearance events`且AUROC gain≥`.02`。
 - Actor/P75只可描述，不参与decision；不换scene/shard/model/projection/floor/aggregation/coverage/decision，不做第二recovery。
   参考CoRL task-relevant failure detection对downstream cost distribution的传播与2025 open-source stochastic boundary crossing。
+- prep r1：冻结map把scene-0003指向shard04；六个初始shards完成后，其余9 scenes已有3,517 files，scene-0003仍缺384/384，
+  因而在preprocess和target row materialization前失败（`V67-F82`）。scene-0003与历史scene-0344共享session但落在不同public part；
+  nuScenes官方没有session-part index。exact locator已完整排除02/03，正在并行扫描剩余7 parts并在命中时直接提取；primary
+  evaluator仍等待processed roots，target read=false。只允许修正scene-0003 shard并以新prep run-id恢复。
 
 ### WS-V67-P114-MONOTONE-TAIL-RISK-01
 
@@ -319,6 +323,20 @@
 - interpretation：平均绝对预测相关系数在P81/P96为`.39595/.43201`，说明纵/横残差相关性对candidate boundary normal上的
   投影方差有可辨贡献。证据只来自两个已消费cohort，不能替换P113或声称独立迁移、概率校准、collision或safety。
 - resources/execution：wall=`45.49s`、peak GPU=`.37922GiB`、RSS=`1.149GiB`，与P113 exact-shard I/O并行。
+
+### WS-V67-P118-CORRELATION-ABLATION-01
+
+- 状态：`done/rejected consumed mechanism ablation`；canonical=`20260830T073000Z__correlation-ablation-s0-r1`；只读冻结P117
+  checkpoint和consumed P81/P96，不训练、不refit、不读P113。
+- question：P117超过P109究竟来自推理时`2*rho*nx*sx*ny*sy`相关项，还是full bivariate NLL对mean/scale的联合重塑？
+- fixed comparison：conditional-rho与zero-rho两臂共享完全相同的P117 checkpoint、predicted mean/scale、rows、boundary normal、
+  clearance、time/Actor max和fixed50；唯一差异是推理时把rho置零。decision为两cohort events不退化、两cohortAUROC gain均正且
+  平均gain≥`.003`；不扫rho、threshold、projection或coverage。
+- result：两臂在P81/P96均选0 events。P81 conditional/zero AUROC=`.972542/.972238`，gain=`+.000304`；P96=
+  `.913665/.913780`，gain=`-.000115`；平均=`+.000094`。只过event noninferiority，verdict=
+  `rejected_conditional_correlation_mechanism`（`V67-F83`）。wall=`1.03s`、peak GPU=`.03792GiB`、RSS=`.575GiB`。
+- interpretation：P117 full-covariance training package仍有development增益，但直接rho投影项没有跨两cohort机制优势；论文只能
+  归因于joint likelihood training package，不能写成conditional correlation term本身已验证。关闭rho ablation/retraining sweep。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

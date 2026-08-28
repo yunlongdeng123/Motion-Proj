@@ -1185,10 +1185,10 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
 - stop rule：一次read；失败登记下一可用编号（P116完成后为`V67-F82`）并关闭uncertainty-over-geometry claim，不换cohort/
   metric/floor/model或做recovery。
-- failure-ID note：P114/P115/P116已占用`V67-F79/F80/F81`；P113若失败顺延登记`V67-F82`。编号变化不改变任何
-  scientific decision。
+- failure-ID note：P114/P115/P116占用`V67-F79/F80/F81`；P113 prep locator已占F82，P118机制负结果占F83，因此P113若
+  scientific decision失败使用`V67-F84`。编号变化不改变任何scientific decision。
 
-下一可用编号：`V67-F82`。
+下一可用编号：`V67-F84`。
 
 ### P114 freeze note — downstream tail aggregation不占用P113确认
 
@@ -1268,6 +1268,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F82`。
 
+### V67-F82 — scene-0003 session跨public archive part导致冻结locator不完整
+
+- 分类：`engineering/data-locator`；状态：`active_pre_target_exact_locator_recovery`；
+- failed run：`run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-PREP-01/
+  20260830T070000Z__directional-vs-clearance-prep-s0-r1`；
+- symptom：初始六shard extraction得到其余9 scenes的3,517 files，但scene-0003的384个LIDAR members全部缺失；runner在
+  preprocess、target row materialization和任何metric前按exact extraction合同退出，P113 evaluator保持等待；
+- root cause：scene-0003与P81 scene-0344共享session，但先前scene-0344命中的shard04不能推出同session早期scene所在part；
+  nuScenes公开10-part archive可跨session切分，官方devkit只要求合并全部parts且不提供session→part index；
+- recovery：不换scene/model/decision。完整排除02/03后，并行扫描01/05/06/07/08/09/10的384个exact names，命中即直接
+  提取；随后仅修正scene-0003 locator并用新prep run-id恢复。无hash/checksum/fingerprint或额外quality gate；
+- claim impact：纯pre-target engineering failure，不影响P113冻结scientific protocol，也不产生任何confirmation result。
+
+下一可用编号：`V67-F83`。
+
 ### P117 positive mechanism note — full bivariate covariance improves consumed directional ranking
 
 - card point：P114--P116三种替代均未超过P109，但P109的diagonal Gaussian仍强制纵/横Actor residual条件独立；
@@ -1280,7 +1295,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - claim/prevention：该结果不是failure，也不占用failure ID；不扫rho bound/loss/width/seed/projection。它只能作为未来全新
   target-unread cohort的候选，不能在P113 target已冻结后替换primary或改变decision。
 
-下一可用编号仍为：`V67-F82`。
+下一可用编号仍为：`V67-F83`。
+
+### V67-F83 — conditional rho推理项未解释P117 full-covariance训练收益
+
+- 分类：`scientific/mechanism-ablation`；状态：`closed_negative_after_single_ablation`；
+- canonical：`run://worldsim_v67/WS-V67-P118-CORRELATION-ABLATION-01/20260830T073000Z__correlation-ablation-s0-r1`；
+- frozen comparison：同一P117 checkpoint、mean/scale/rows/projection/fixed50，只比较conditional rho与rho=0；不训练、不refit；
+- symptom：P81 AUROC gain仅`+.000304`，P96为`-.000115`，平均`+.000094 < .003`；两cohort event count虽均为0，
+  但两cohort AUROC正增益门和mean-gain门失败；
+- interpretation：P117相对P109的开发增益来自完整bivariate likelihood训练package，不能定位为inference-time conditional
+  correlation项的直接贡献；mean/scale在joint NLL下的重塑是未分离因素；
+- resolution：不扫rho bound、loss、seed或重复训练，不用事后门解释P117。保留P117为完整package的consumed-development候选，
+  但论文明确报告P118 negative mechanism；不影响P113冻结P109 primary。
+
+下一可用编号：`V67-F84`。
 
 ### V6.6 当前边界（2026-08-28）
 
