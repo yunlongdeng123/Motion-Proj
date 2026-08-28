@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p105_joint_trajectory_temporal.v1
+output_schema_version: worldsim_v67.p105_joint_trajectory_temporal_summary.v1
+task_id: WS-V67-P105-JOINT-TRAJECTORY-TEMPORAL-01
+hypothesis_id: WS-V67-H-P105-001
+seed: 0
+role: development_joint_trajectory_and_time_local_occupancy_reliability
+verdict_on_pass: supported_development_joint_trajectory_temporal
+verdict_on_failure: rejected_development_joint_trajectory_temporal
+model_artifact: JOINT_TRAJECTORY_TEMPORAL.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-PREP-01/20260830T030000Z__temporal-flip-prep-s0-r1
+  artifact: SOURCE_TEMPORAL_FLIP_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P104-TEMPORAL-FLIP-SUPERVISION-PREP-01/20260830T030000Z__temporal-flip-prep-s0-r1
+  artifact: DEVELOPMENT_TEMPORAL_FLIP_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 6000
+  horizon_batch_size: 256
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  temporal_auxiliary_weight: 1.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  primary_loss_is_trajectory_level_total_occupancy_flip_BCE: true
+  equal_weight_time_local_flip_BCE_is_auxiliary_only: true
+  query_score_is_trajectory_head_not_time_local_max: true
+  actor_only_uses_unchanged_trajectory_deepset: true
+  P96_primary_and_P103_secondary_unchanged: true
+  no_auxiliary_weight_sampling_pooling_width_loss_radius_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/html/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.html
+  - https://openaccess.thecvf.com/content/CVPR2024/html/Ma_Cam4DOcc_Benchmark_for_Camera-Only_4D_Occupancy_Forecasting_in_Autonomous_Driving_CVPR_2024_paper.html
+claim_boundary:
+  - development_only_joint_trajectory_and_time_local_supervision
+  - single_recovery_for_V67_F70
+  - P96_and_P103_confirmation_contracts_unchanged
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

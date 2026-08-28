@@ -121,6 +121,18 @@
 - 保留“time-local query绝对排序强”的诊断，但不覆盖relative failure；不删Actor gate。只允许把逐时loss作为P102
   trajectory objective的等权auxiliary做一次P105，不再使用time-local-only score。
 
+### WS-V67-P105-JOINT-TRAJECTORY-TEMPORAL-01
+
+- 状态：`active/GPU training r2`；r1=`20260830T032000Z__joint-trajectory-temporal-s0-r1`在首个optimizer step前
+  engineering exit，canonical candidate r2=`20260830T033000Z__joint-trajectory-temporal-s0-r2`。
+- query primary是P102-style trajectory total-flip BCE；同一hierarchical temporal→Actor representation增加P104
+  time-local flip的equal-weight BCE auxiliary。正式selection只用trajectory head，不用local max；Actor-only仍为
+  trajectory Deep Sets。
+- 6,000 epochs、four-horizon equal batch、fixed50与4 gates；不扫auxiliary weight/sampling/pooling/width/loss，
+  不改变P96/P103。
+- r1错误：当前PyTorch没有`torch.flatnonzero`；根据官方`torch.nonzero` API只改为对flattened mask取nonzero indices，
+  0 optimizer step/0 target read，登记`V67-F71`；r2正常训练，GPU约48%、1.54GiB。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |

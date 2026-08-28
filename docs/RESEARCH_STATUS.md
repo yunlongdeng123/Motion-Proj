@@ -81,7 +81,9 @@ future samples逐时flip标签。prep在111.61s生成575,596 source rows/5,336 t
 
 检索CVPR 2023 IMPLICITO与CVPR 2024 Cam4DOcc后，下一项只允许一次P105 joint-objective迁移：保留P102的正式
 trajectory-level flip BCE和hierarchical temporal→Actor结构，同时将P104 time-local flip作为等权auxiliary，而不是
-单独决定trajectory score；不扫loss weight/aggregation。P96/P103协议与checkpoint保持不变。
+单独决定trajectory score；不扫loss weight/aggregation。P105 r1在首个optimizer step前因当前PyTorch无
+`torch.flatnonzero`退出，官方API确认用`torch.nonzero`；r2只作等价index恢复后已进入6,000-epoch GPU训练（`V67-F71`）。
+P96/P103协议与checkpoint保持不变。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

@@ -963,6 +963,19 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
 
 下一可用编号：`V67-F71`。
 
+### V67-F71 — P105 r1使用不存在的torch.flatnonzero入口
+
+- 分类：`engineering/framework-compatibility`；状态：`resolved_before_first_optimizer_step`；
+- symptom：P105 r1在首次构造temporal auxiliary indices时抛`AttributeError: torch has no attribute flatnonzero`；
+  run目录已创建并完成source tensor装载，但0 optimizer step、0 development/confirmation evaluation；
+- literature response：PyTorch官方文档规定`torch.nonzero(input, as_tuple=False)`返回nonzero坐标，`torch.flatten`
+  保持元素顺序；恢复先flatten boolean mask，再取nonzero并flatten index tensor，与原意等价；
+- resolution：只替换index API并以新run-id r2重启；cohort/data/architecture/loss weight/batch/epochs/selection/gates不变，
+  r1保留不覆盖；
+- claim impact：纯入口失败，无scientific evidence，不计P105 trial，也不影响P96/P103。
+
+下一可用编号：`V67-F72`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
