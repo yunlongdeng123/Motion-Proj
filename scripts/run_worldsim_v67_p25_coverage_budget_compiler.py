@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import torch, yaml
 
-from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, nested_group_budget_selection, score_case_offset, train_case_offset
+from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, HORIZON_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, horizon_conditioned_case_offset_dataset, nested_group_budget_selection, score_case_offset, train_case_offset
 from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from motion_proj.worldsim_v67.trajectory_quantile import materialize_quantiles
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
@@ -37,7 +37,11 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     train=_combine([Path(p) for p in config["inputs"]["train_action_caches"]]);train_scores=score_listwise_compiler(p20,train,p20_mean,p20_scale)
     fraction=float(config["compiler"]["fixed_selected_fraction"])
     training_fractions=config["model"].get("training_selected_fractions")
-    if training_fractions:
+    training_horizons=config["model"].get("training_horizon_seconds_by_domain")
+    if training_horizons:
+        train_cases=horizon_conditioned_case_offset_dataset(train,train_scores,fraction,[float(value) for value in training_horizons])
+        feature_names=HORIZON_CONDITIONED_FEATURE_NAMES
+    elif training_fractions:
         train_cases=budget_conditioned_case_offset_dataset(train,train_scores,[float(value) for value in training_fractions])
         feature_names=BUDGET_CONDITIONED_FEATURE_NAMES
     else:
@@ -49,7 +53,7 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     has_p24="adaptive_budget_run" in config["inputs"]
     if has_p24:
         p24,p24_mean,p24_scale=_load_offset(runs_root,config["inputs"]["adaptive_budget_run"],config["inputs"]["adaptive_budget_artifact"])
-    _write_json(run_dir/"model_frozen.json",{"p20_ranking_frozen":True,"allocation_offset_frozen_before_confirmation_materialization":True,"p24_baseline_frozen":has_p24,"training_selected_fractions":training_fractions,"development_domain_count":int(len(np.unique(train_cases["domain_index"]))),"train_case_count":int(len(train_cases["case_index"]))})
+    _write_json(run_dir/"model_frozen.json",{"p20_ranking_frozen":True,"allocation_offset_frozen_before_confirmation_materialization":True,"p24_baseline_frozen":has_p24,"training_selected_fractions":training_fractions,"training_horizon_seconds_by_domain":training_horizons,"development_domain_count":int(len(np.unique(train_cases["domain_index"]))),"train_case_count":int(len(train_cases["case_index"]))})
     cache=Path(config["confirmation_materialization"]["cache_path"]);mat={"cache_path":str(cache),"cache_reused":cache.is_file()}
     if not cache.is_file():mat.update(materialize_quantiles(config["confirmation_materialization"]["data"],runs_root,cache))
     selection=_load(cache);scores=score_listwise_compiler(p20,selection,p20_mean,p20_scale)
@@ -67,7 +71,10 @@ def run(config_path: Path, runs_root: Path, run_id: str):
         verdict=config.get("verdict_on_pass","supported_nested_budget_authority") if all(gates.values()) else config.get("verdict_on_failure","rejected_nested_budget_authority")
         summary={"schema_version":config["output_schema_version"],"task_id":config["task_id"],"hypothesis_id":config["hypothesis_id"],"status":"done","verdict":verdict,"role":config["role"],"claim_boundary":config["claim_boundary"],"training":training,"confirmation_materialization":mat,"nested_budget":nested,"fixed_p20":{"low_budget":fixed_low,"high_budget":fixed_high},"selection_improvement":improvement,"gate_results":gates,"failure_ledger_delta":"pending_result","resources":{"gpu":torch.cuda.get_device_name(0),"peak_gpu_memory_gib":torch.cuda.max_memory_allocated()/(1024**3),"peak_rss_gib":resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2),"wall_seconds":time.monotonic()-started}}
         _write_json(run_dir/"summary.json",summary);_write_json(run_dir/"status.json",{"status":"done","completed_at_utc":datetime.now(timezone.utc).isoformat()});return {"run_dir":str(run_dir),"verdict":verdict,"gate_results":gates}
-    cases=budget_conditioned_case_offset_dataset(selection,scores,[fraction]) if training_fractions else case_offset_dataset(selection,scores,fraction)
+    if training_horizons:
+        cases=horizon_conditioned_case_offset_dataset(selection,scores,fraction,[float(config["model"]["confirmation_horizon_seconds"])])
+    else:
+        cases=budget_conditioned_case_offset_dataset(selection,scores,[fraction]) if training_fractions else case_offset_dataset(selection,scores,fraction)
     offsets=score_case_offset(model,cases,mean,scale)
     if "scene_to_group" in config["compiler"]:
         scene_to_group={int(key):int(value) for key,value in config["compiler"]["scene_to_group"].items()}

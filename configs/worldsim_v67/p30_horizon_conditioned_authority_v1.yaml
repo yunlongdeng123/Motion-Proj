@@ -1,0 +1,82 @@
+schema_version: worldsim_v67.p30_horizon_conditioned_authority.v1
+output_schema_version: worldsim_v67.p30_horizon_conditioned_authority_summary.v1
+task_id: WS-V67-P30-HORIZON-CONDITIONED-AUTHORITY-01
+hypothesis_id: WS-V67-H-P30-001
+seed: 0
+role: one_two_second_training_then_heldout_one_point_five_second_confirmation
+artifact_name: HORIZON_CONDITIONED_AUTHORITY_COMPILER.pt
+verdict_on_pass: supported_horizon_conditioned_authority
+verdict_on_failure: rejected_horizon_conditioned_authority
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+compiler:
+  fixed_selected_fraction: 0.25
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 6
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0]
+  confirmation_horizon_seconds: 1.5
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+gates:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  minimum_cost_reduction: 0.40
+  minimum_reduction_delta_over_fixed_p20: 0.10
+  minimum_nonincreasing_scene_support: 5
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+  data:
+    inputs:
+      evidence_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1
+      native_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-NATIVE-SIDECAR-01/20260828T010500Z__confirmation-native-aggregate-s0-r1
+      native_partition: fresh_selection
+      processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+      risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+      risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+    native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+    trajectory: {future_frame_count: 15, horizon_seconds: 1.5, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+    sampling: {evaluation_points_per_unit: 8192, seed: 0}
+    quantile_levels: [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+    action_lattice:
+      horizon_seconds: 1.5
+      progress_ratios: [0.25, 0.50, 0.75, 1.00]
+      lateral_offsets_m: [-1.50, 0.00, 1.50]
+      include_stop_for_reporting_only: true
+    scenes:
+      - {name: scene-0245, processed_index: 194}
+      - {name: scene-0287, processed_index: 229}
+      - {name: scene-0686, processed_index: 538}
+      - {name: scene-0718, processed_index: 563}
+      - {name: scene-0817, processed_index: 634}
+      - {name: scene-0868, processed_index: 657}
+locks:
+  p10x_excluded_from_p30_training: true
+  training_horizons_seconds: [1.0, 2.0]
+  heldout_confirmation_horizon_seconds: 1.5
+  exact_total_budget_equal_to_fixed_quarter_baseline: true
+  minimum_case_and_context_coverage: 0.50
+  horizon_model_offset_coverage_group_or_gate_sweep: false
+  consumed_legacy_confirmation_no_fresh_claim: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F17, V67-F16, V65-F19]
+claim_boundary:
+  - interpolation_to_unseen_one_point_five_second_horizon
+  - ego_trajectory_visited_state_reliability_authority
+  - consumed_legacy_confirmation_only
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

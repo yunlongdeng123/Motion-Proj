@@ -18,6 +18,7 @@ FEATURE_NAMES = (
     "log_selected_visited_count",
 )
 BUDGET_CONDITIONED_FEATURE_NAMES = FEATURE_NAMES + ("selected_fraction",)
+HORIZON_CONDITIONED_FEATURE_NAMES = FEATURE_NAMES + ("horizon_seconds",)
 
 
 class BoundedCaseOffset(torch.nn.Module):
@@ -94,6 +95,17 @@ def budget_conditioned_case_offset_dataset(
         )
         datasets.append(dataset)
     return {key: np.concatenate([dataset[key] for dataset in datasets], axis=0) for key in datasets[0]}
+
+
+def horizon_conditioned_case_offset_dataset(
+    arrays: Mapping[str, np.ndarray], compiled_scores: np.ndarray, selected_fraction: float,
+    horizon_seconds_by_domain: list[float],
+) -> dict[str, np.ndarray]:
+    dataset = case_offset_dataset(arrays, compiled_scores, selected_fraction)
+    horizons = np.asarray(horizon_seconds_by_domain, dtype=np.float32)
+    horizon_feature = horizons[np.asarray(dataset["domain_index"], dtype=np.int64)].reshape(-1, 1)
+    dataset["features"] = np.concatenate([dataset["features"], horizon_feature], axis=1)
+    return dataset
 
 
 def train_case_offset(
