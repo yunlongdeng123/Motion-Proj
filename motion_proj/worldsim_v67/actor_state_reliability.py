@@ -98,6 +98,8 @@ def materialize_actor_query_rows(
     predicted_separation_profile: list[np.ndarray] = []
     actual_separation_profile: list[np.ndarray] = []
     actor_position_error_profile: list[np.ndarray] = []
+    actor_position_error_vector_ego_profile: list[np.ndarray] = []
+    query_boundary_normal_ego_profile: list[np.ndarray] = []
     occupancy_flip_profile: list[np.ndarray] = []
     scene_index: list[int] = []
     horizon_values: list[float] = []
@@ -165,6 +167,10 @@ def materialize_actor_query_rows(
                     actor_error_profile = np.linalg.norm(
                         actual_actor_path - predicted_actor_path, axis=1,
                     ).astype(np.float32)
+                    actor_error_world = actual_actor_path - predicted_actor_path
+                    actor_error_vector_ego = np.stack((
+                        actor_error_world @ ego_heading, actor_error_world @ ego_left,
+                    ), axis=1).astype(np.float32)
                     heading_delta = _wrapped_angle(yaw - math.atan2(ego_heading[1], ego_heading[0]))
                     base = [
                         actor_speed, acceleration_longitudinal, acceleration_lateral, yaw_rate,
@@ -186,6 +192,11 @@ def materialize_actor_query_rows(
                         if minimum_distance > radius:
                             continue
                         actual_distances = np.linalg.norm(actual_actor_path - ego_path, axis=1)
+                        predicted_relative = predicted_actor_path - ego_path
+                        boundary_normal_world = predicted_relative / np.maximum(distances[:, None], 1e-6)
+                        boundary_normal_ego = np.stack((
+                            boundary_normal_world @ ego_heading, boundary_normal_world @ ego_left,
+                        ), axis=1).astype(np.float32)
                         actual_minimum_distance = float(np.min(actual_distances))
                         interaction_radius = float(data_config.get("ego_half_width_m", 1.0)) + 0.5 * float(box[1])
                         predicted_occupied = minimum_distance <= interaction_radius
@@ -209,6 +220,8 @@ def materialize_actor_query_rows(
                         predicted_separation_profile.append(distances.astype(np.float32))
                         actual_separation_profile.append(actual_distances.astype(np.float32))
                         actor_position_error_profile.append(actor_error_profile)
+                        actor_position_error_vector_ego_profile.append(actor_error_vector_ego)
+                        query_boundary_normal_ego_profile.append(boundary_normal_ego)
                         occupancy_flip_profile.append(
                             ((distances <= interaction_radius) != (actual_distances <= interaction_radius))
                         )
@@ -231,6 +244,12 @@ def materialize_actor_query_rows(
         "predicted_separation_profile_m": np.asarray(predicted_separation_profile, dtype=np.float32),
         "actual_separation_profile_m": np.asarray(actual_separation_profile, dtype=np.float32),
         "actor_position_error_profile_m": np.asarray(actor_position_error_profile, dtype=np.float32),
+        "actor_position_error_vector_ego_profile_m": np.asarray(
+            actor_position_error_vector_ego_profile, dtype=np.float32,
+        ),
+        "query_boundary_normal_ego_profile": np.asarray(
+            query_boundary_normal_ego_profile, dtype=np.float32,
+        ),
         "occupancy_decision_flip_profile": np.asarray(occupancy_flip_profile, dtype=bool),
         "scene_index": np.asarray(scene_index, dtype=np.int32),
         "horizon_seconds": np.asarray(horizon_values, dtype=np.float32),

@@ -66,7 +66,9 @@ def main() -> None:
         print(f"P107 cohort ready name={cohort['name']} rows={len(arrays['features'])}", flush=True)
 
     summary = {
-        "schema_version": "worldsim_v67.p107_actor_uncertainty_tube_prep_summary.v1",
+        "schema_version": config.get(
+            "prep_output_schema_version", "worldsim_v67.p107_actor_uncertainty_tube_prep_summary.v1",
+        ),
         "status": "done",
         "source_scene_count": len(source_scenes),
         "source_row_count": len(source["features"]),

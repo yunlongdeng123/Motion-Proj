@@ -138,6 +138,12 @@ clearance floor、time/Actor max、H3.5、fixed50全冻结；primary只要求解
 该cohort是scene-level独立但部分session与历史场景相邻，明确不写session-level独立。route locator可在target materialization前
 修正shard，但不得换scene/model/decision。
 
+为覆盖P108 archive IO并推进方法，P109已冻结单一directional secondary：Actor-only网络预测9-step Ego-frame signed
+longitudinal/lateral residual的diagonal Gaussian；candidate τ只通过predicted Actor→Ego boundary normal把mean/variance解析
+投影为linearized boundary-crossing margin。source与P81/P96 consumed development重新物化vector residual/normal后做6,000-step
+Gaussian NLL训练；不扫covariance、loss、projection、聚合、width或coverage。若两个consumed cohorts均优于Actor-only/P75，
+再在P108 rows出现前冻结为prospective secondary；P107仍是唯一primary。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

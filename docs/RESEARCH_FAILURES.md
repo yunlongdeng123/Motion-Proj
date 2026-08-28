@@ -1110,6 +1110,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F78`。
 
+### P109 launch note — 用方向投影检验P107 isotropic tube近似
+
+- motivation：P107 scalar q90除以absolute clearance忽略Actor误差方向；MultiPath的分层uncertainty与closed-form query启发
+  将Actor signed residual distribution沿candidate boundary normal解析投影；
+- fixed method：diagonal Gaussian mean/scale、Gaussian NLL、9 time samples、linearized signed-clearance margin、time/Actor max；
+  网络不读τ，且不扫full covariance、scale floor、loss、projection、aggregation、seed或coverage；
+- evidence boundary：只先读已消费P81/P96；通过后才允许在P108 target rows出现前冻结prospective secondary。P108 frozen
+  P107 primary、cohort和decision均不改变；
+- execution：P109 source producer先原子交付source，GPU随后训练，同时producer继续development IO并与P108 archive IO重叠。
+
+下一可用编号仍为：`V67-F78`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

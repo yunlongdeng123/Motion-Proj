@@ -188,6 +188,18 @@
 - 结果证明固定Actor-uncertainty→trajectory-clearance因子化在两个已消费cohort均未重现end-to-end query相对Actor反转，
   但不形成independent/safety claim；下一步只能在模型/score冻结后读取新的target-unread cohort一次确认。
 
+### WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01
+
+- 状态：`frozen/running development`；prep=`20260830T062000Z__directional-actor-uncertainty-prep-s0-r1`，model=
+  `20260830T062500Z__directional-actor-uncertainty-s0-r1`。
+- Actor-only token MLP输出Ego-frame signed longitudinal/lateral residual的mean与diagonal scale，以Gaussian NLL训练；
+  candidate τ不进入网络。τ风险是predicted Actor→Ego unit normal上的projected mean/variance与signed clearance形成的固定
+  linearized crossing margin，随后time/Actor max。
+- 新物化字段仅是9-step Actor residual vector与query boundary normal普通数组，不含hash/checksum/fingerprint；102 source
+  scenes及consumed P81/P96沿用P107数据范围。6,000 steps、`256/128`、fixed50一次冻结。
+- 不扫full/diagonal covariance、scale floor、NLL、normal定义、projection、pooling、width、seed或coverage。P109只有在两个
+  consumed cohorts均少于Actor-only且不多于P75时，才可冻结成P108同read的prospective secondary；不影响P108 primary。
+
 ### WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01
 
 - 状态：`frozen/not read`；primary run=`20260830T063500Z__uncertainty-tube-confirmation-s0-r1`，prep=
