@@ -2,6 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P86-DIRECT-TRAJECTORY-RELIABILITY-01
+
+- 状态：`active/source materialization overlapped with P84 GPU`；planned canonical=
+  `20260829T214000Z__direct-trajectory-reliability-s0-r1`；source prep=
+  `20260829T213500Z__trajectory-source-prep-s0-r1`。
+- source `.8/1.5/2.5/3.0s`按`scene/horizon/anchor/τ`聚合至少一个6m visited Actor的set；固定features为
+  `log count + min/mean/max`，target为any Actor error>1m与max raw error。协议在test target rows出现前冻结。
+- Query/Actor-only同容量pairwise rank + `.25` error Huber，四horizon等权；fresh固定50% trajectory coverage比较
+  Actor-only/P75。与P85固定group-max不同，P86直接学习trajectory set risk；不扫aggregation/radius/coverage。
+
 ### WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01
 
 - 状态：`active/waiting P84 model and P81 scenes`；canonical=`20260829T213000Z__trajectory-visited-reliability-s0-r1`；

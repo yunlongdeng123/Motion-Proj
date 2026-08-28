@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P85 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P86 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -27,6 +27,11 @@ P85将相同问题提升到trajectory level：Actor row materialization新增显
 按`scene × anchor_frame × query_id`聚合；只保留至少一个Actor进入6m visited region的候选τ，target是“任一visited
 Actor error>1m”，score是P84 actor-failure risk的group max。per-scene固定50% trajectory coverage，与frozen P75
 group-max比较；不扫max/mean/union聚合。P85 protocol与代码也在test target rows出现前冻结。
+
+P86训练direct trajectory set-summary而不是冻结group-max：source四horizon rows先在P84 GPU训练期间并行重物化
+`anchor_frame`，对每个有visited Actor的`scene/horizon/anchor/τ`固定聚合`log actor count + per-feature min/mean/max`。
+Query/Actor-only同容量`1024/512/256`，等horizon pairwise any-failure ranking加固定`.25` max-error回归；待P84结束
+立即接替GPU。fresh H3.5固定50% trajectory coverage，比较Actor-only与frozen P75，不扫set aggregation或radius。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 

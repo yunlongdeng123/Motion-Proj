@@ -794,6 +794,9 @@ P85进一步把visited Actor rows按`scene/anchor/τ`聚合为“任一访问状
 `anchor_frame`只是group字段，不是hash/checksum/fingerprint。协议在target read前冻结，当前无新增失败，下一编号仍为
 `V67-F63`。
 
+P86进一步冻结direct trajectory set-summary model；source anchor rows物化与P84 GPU训练并行。它不读取P81 target来选
+aggregation/loss/radius，当前无新增失败，下一编号仍为`V67-F63`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
