@@ -1,0 +1,32 @@
+schema_version: worldsim_v67.p69_selective_actor_reliability_replication.v1
+output_schema_version: worldsim_v67.p69_selective_actor_reliability_replication_summary.v1
+task_id: WS-V67-P69-SELECTIVE-ACTOR-RELIABILITY-REPLICATION-01
+hypothesis_id: WS-V67-H-P69-001
+role: frozen_continuous_actor_reliability_triage_replication
+verdict_on_pass: supported_selective_actor_state_reliability_replication
+verdict_on_failure: rejected_selective_actor_state_reliability_replication
+source:
+  run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  artifact: TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt
+  confirmation_rows: CONFIRMATION_ACTOR_QUERY_ROWS.npz
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_cost_reduction: 0.50
+  minimum_unreliable_prevalence_reduction: 0.50
+locks:
+  frozen_p66_query_and_actor_only_continuous_scores: true
+  p68_fixed_per_scene_coverage_and_gates_exact: true
+  no_coverage_threshold_model_or_metric_sweep: true
+  no_actor_deletion_or_world_action_authority: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/shah22a.html
+claim_boundary:
+  - second_split_fixed_coverage_actor_state_reliability_triage
+  - comparison_to_actor_only_continuous_selection
+  - abstention_only_without_actor_deletion_or_geometry_mutation
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

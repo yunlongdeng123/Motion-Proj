@@ -41,17 +41,31 @@ def main() -> None:
     arrays = dict(np.load(source / config["source"]["confirmation_rows"], allow_pickle=False))
     hidden = artifact["hidden_dimensions"]
     continuous = ReliabilityMLP(len(artifact["feature_names"]), hidden).cuda()
-    continuous.load_state_dict(artifact["continuous_model_state_dict"])
-    binary_query = BinaryReliabilityMLP(len(artifact["feature_names"]), hidden).cuda()
-    binary_query.load_state_dict(artifact["binary_query_model_state_dict"])
+    if "continuous_model_state_dict" in artifact:
+        continuous.load_state_dict(artifact["continuous_model_state_dict"])
+        baseline_model = BinaryReliabilityMLP(len(artifact["feature_names"]), hidden).cuda()
+        baseline_model.load_state_dict(artifact["binary_query_model_state_dict"])
+        baseline_kind = "binary_query"
+    else:
+        continuous.load_state_dict(artifact["query_model_state_dict"])
+        baseline_model = ReliabilityMLP(len(ACTOR_FEATURE_NAMES), hidden).cuda()
+        baseline_model.load_state_dict(artifact["actor_only_model_state_dict"])
+        baseline_kind = "continuous_actor_only"
     mean = np.asarray(artifact["feature_mean"], dtype=np.float32)
     scale = np.asarray(artifact["feature_scale"], dtype=np.float32)
     continuous_score = predict_reliability(continuous.eval(), arrays["features"], mean, scale)
-    binary_score = predict_binary_reliability(binary_query.eval(), arrays["features"], mean, scale)
+    if baseline_kind == "binary_query":
+        baseline_score = predict_binary_reliability(
+            baseline_model.eval(), arrays["features"], mean, scale
+        )
+    else:
+        baseline_score = predict_reliability(
+            baseline_model.eval(), arrays["features"], mean, scale, actor_only=True
+        )
     scenes = np.asarray(arrays["scene_index"])
     fraction = float(config["selection"]["coverage_fraction"])
     continuous_selected = _select_by_scene(continuous_score, scenes, fraction)
-    binary_selected = _select_by_scene(binary_score, scenes, fraction)
+    baseline_selected = _select_by_scene(baseline_score, scenes, fraction)
     target = np.asarray(arrays["target_cost"], dtype=np.float64)
     unreliable = (
         (np.asarray(arrays["raw_actor_state_error_m"]) > float(config["evaluation"]["unreliable_actor_state_error_m"]))
@@ -60,9 +74,9 @@ def main() -> None:
     all_cost = float(target.mean())
     all_prevalence = float(unreliable.mean())
     continuous_cost = float(target[continuous_selected].mean())
-    binary_cost = float(target[binary_selected].mean())
+    baseline_cost = float(target[baseline_selected].mean())
     continuous_prevalence = float(unreliable[continuous_selected].mean())
-    binary_prevalence = float(unreliable[binary_selected].mean())
+    baseline_prevalence = float(unreliable[baseline_selected].mean())
     scene_rows = []
     for scene in np.unique(scenes):
         members = np.flatnonzero(scenes == scene)
@@ -74,20 +88,20 @@ def main() -> None:
         "row_count": int(len(target)), "selected_row_count": int(len(continuous_selected)),
         "achieved_coverage": float(len(continuous_selected) / len(target)),
         "all_mean_cost": all_cost, "continuous_selected_mean_cost": continuous_cost,
-        "binary_selected_mean_cost": binary_cost,
+        "baseline_kind": baseline_kind, "baseline_selected_mean_cost": baseline_cost,
         "continuous_cost_reduction": (all_cost - continuous_cost) / max(all_cost, 1e-12),
         "all_unreliable_prevalence": all_prevalence,
         "continuous_selected_unreliable_prevalence": continuous_prevalence,
-        "binary_selected_unreliable_prevalence": binary_prevalence,
+        "baseline_selected_unreliable_prevalence": baseline_prevalence,
         "continuous_unreliable_prevalence_reduction": (all_prevalence - continuous_prevalence) / max(all_prevalence, 1e-12),
-        "continuous_cost_delta_below_binary": binary_cost - continuous_cost,
+        "continuous_cost_delta_below_baseline": baseline_cost - continuous_cost,
         "scene_nonincreasing_count": int(sum(row["selected_mean_cost"] <= row["all_mean_cost"] for row in scene_rows)),
         "scene_count": int(len(scene_rows)), "scene_rows": scene_rows,
     }
     gates = {
         "minimum_cost_reduction": metrics["continuous_cost_reduction"] >= float(config["gates"]["minimum_cost_reduction"]),
         "minimum_unreliable_prevalence_reduction": metrics["continuous_unreliable_prevalence_reduction"] >= float(config["gates"]["minimum_unreliable_prevalence_reduction"]),
-        "not_worse_than_binary_selection_cost": continuous_cost <= binary_cost,
+        "not_worse_than_baseline_selection_cost": continuous_cost <= baseline_cost,
     }
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
     summary = {"schema_version": config["output_schema_version"], "task_id": config["task_id"],
