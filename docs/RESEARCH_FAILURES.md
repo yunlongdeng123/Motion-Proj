@@ -980,9 +980,20 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F72`。
 
-P106在archive locator期间只补原source-scene modulus保留的现有processed remainder，将P102从4/5 source扩为all-source；
-目标/architecture/loss/epochs/development/gates不变，不进入P103，也不扫source subset。prep→GPU流水线active，无新增
-failure；下一编号仍为`V67-F72`。
+### V67-F72 — P106 r1漏做occupancy-flip target adapter而误训Actor endpoint error
+
+- 分类：`engineering/target-adapter`；状态：`resolved_by_exact_adapter_restore`；
+- symptom：r1 development出现1,636/1,791 events、query/Actor/P75=`828/829/753`，与冻结occupancy-flip cohort的
+  95 events明显不一致；检查表明P104 raw rows保留原`raw_actor_state_error_m`，P106 prep未执行P95的field rebinding；
+- exposure：r1完成了错误target的训练/评估，但没有读取P96/P103，也未改变任何冻结checkpoint；该run整体作废，不作为
+  scientific data-scale trial或negative result；
+- literature response：CVPR 2023 IMPLICITO对query-point occupancy ground truth直接使用BCE；P106必须监督明确的
+  predicted-vs-observed occupancy decision flip，而非Actor位移误差；
+- resolution：r2 prep显式保留`actor_position_error_m`后，将`raw_actor_state_error_m`和`target_cost`设置为
+  `occupancy_decision_flip.float`，新prep/model run-id重跑；source volume/model/loss/epochs/development/gates不变；
+- claim impact：纯adapter failure，不计P106科学试验，不影响P102/P103/P96。
+
+下一可用编号：`V67-F73`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -21,6 +21,9 @@ def _augment(arrays: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
     radius = np.asarray(result["occupancy_interaction_radius_m"], dtype=np.float32)[:, None]
     signed = predicted - radius
     result["features"] = np.concatenate((features, signed, np.abs(signed)), axis=1).astype(np.float32)
+    result["actor_position_error_m"] = np.asarray(result["raw_actor_state_error_m"], dtype=np.float32).copy()
+    result["raw_actor_state_error_m"] = np.asarray(result["occupancy_decision_flip"], dtype=np.float32)
+    result["target_cost"] = result["raw_actor_state_error_m"].copy()
     return result
 
 
