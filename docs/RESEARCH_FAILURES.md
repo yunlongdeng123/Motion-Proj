@@ -393,10 +393,41 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F28 — P40 frozen expanded-domain fourth-cohort transfer候选
 
-- 分类：`algorithm/fourth-cohort-transfer`；状态：`active_frozen_read`。
+- 分类：`algorithm/fourth-cohort-transfer`；状态：`closed_negative_after_frozen_read`。
 - 方法：冻结P39 artifact；P10R4 action targets未进入P20/P31/P39训练，H=2/budget=1/3一次读取；四scene-pair groups。
 - 判定：相对冻结P31 reduction `>=+0.005`、minimum group `.50`、至少6/8 scenes不退化。
+- 结果：coverage/minimum group=`0.760417/0.583333`、8/8 scenes，但reduction=`0.654575`，比P31低
+  `-0.020355`；更广coverage再次未转为更低cost。
 - 边界：cohort全局已消费，故不是fresh confirmation；无训练/refit/sweep。下一编号=`V67-F29`。
+
+### V67-F29 — P41 terminal eight-domain conditioned top-k候选
+
+- 分类：`algorithm/terminal-domain-expansion`；状态：`closed_negative_terminal`。
+- 调研：DomainBed报告在严格统一条件下，carefully implemented ERM可达到强domain-generalization表现；因此不再追加
+  新DG正则，而测试有限数据域扩展的终点。
+- 方法：P39加入已消费P3C/P10R4为development，形成8 domains×3 budgets；P10R2 action targets完全排除。
+- 判定：P10R2 H=2/budget=1/3相对P31 `>=+0.005`、minimum group `.50`、至少6/8 scenes。
+- 结果：P41/P31 reduction=`0.747149/0.743093`，delta=`+0.004055`，仅比冻结门低`0.000945`；exact、
+  group、8/8 scenes通过，但AND verdict仍拒绝。
+- stop：不降门、不扫cohort组合/model/loss/temperature；action-scorer跨cohort family关闭。下一编号=`V67-F30`。
+
+### V67-F30 — P42 frozen allocator + trained action refinement hybrid候选
+
+- 分类：`algorithm/compositional-case-action-authority`；状态：`resolved_by_hybrid_composition`。
+- 调研迁移：ICLR 2020 blackbox combinatorial differentiation强调学习模型与既有组合优化结构的端到端组合；项目内不引入
+  外部solver，而保留已支持的P31 allocator并学习P20之上的case-centered action residual。
+- 训练：9 consumed domains×3 budgets；base score=P20，head结构/soft top-k同P41；P31 case offset全程冻结。
+- 判定：P6R action-target-untouched H2/budget1/3相对P31 `>=+0.005`、minimum group `.50`、至少5/7 scenes。
+- 结果：exact=`294/294`、coverage/min group=`0.705128/0.50`；reduction=`0.800132`，相对P31=
+  `+0.007912`、相对fixed=`+0.250012`，7/7 scenes，4/4 gates。
+- 防重复：融合权重固定1:1加法，不扫模型/loss/temperature/gate。下一编号=`V67-F31`。
+
+### V67-F31 — P43 frozen hybrid nested-budget结构候选
+
+- 分类：`algorithm/hybrid-nested-budget-structure`；状态：`active_frozen_read`。
+- 方法：P42/P31/P20全冻结；P6R quarter/half两预算分别条件化score，low集合强制作为high前缀扩展。
+- 判定：两端exact、low subset high、minimum group `.50`、相对对应P31 nested baseline不退化、两端至少5 scenes。
+- 边界：同一consumed P6R结构读取，不新增训练或泛化claim；不扫budget/weight/gate。下一编号=`V67-F32`。
 
 ### V6.6 当前边界（2026-08-28）
 

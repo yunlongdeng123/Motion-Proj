@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p43_hybrid_nested_budget.v1
+output_schema_version: worldsim_v67.p43_hybrid_nested_budget_summary.v1
+task_id: WS-V67-P43-HYBRID-NESTED-BUDGET-01
+hypothesis_id: WS-V67-H-P43-001
+role: frozen_hybrid_strictly_nested_dual_budget_selection
+verdict_on_pass: supported_hybrid_nested_budget
+verdict_on_failure: rejected_hybrid_nested_budget
+inputs:
+  hybrid_compiler_run: worldsim_v67/WS-V67-P42-HYBRID-CONDITIONED-ACTION-01/20260828T214000Z__hybrid-conditioned-action-s0-r1
+  hybrid_compiler_artifact: HYBRID_CONDITIONED_ACTION_COMPILER.pt
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 3: 1, 4: 1, 5: 2, 6: 2, 7: 2}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p24_v64_p6r_quantile_actions.npz
+  nested_fractions: [0.25, 0.50]
+  horizon_seconds: 2.0
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.0
+  minimum_nonincreasing_scene_support: 5
+locks:
+  p42_model_p20_and_p31_frozen: true
+  strict_low_subset_high_by_construction: true
+  no_weight_budget_model_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - frozen_hybrid_nested_dual_budget_structure_on_consumed_p6r
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

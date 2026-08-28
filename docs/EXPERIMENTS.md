@@ -2,6 +2,47 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P43-HYBRID-NESTED-BUDGET-01
+
+- 状态：`ready/running`；冻结P42 hybrid，P6R low/high budgets=`.25/.50`，strict low-subset-high扩展。
+- 对照frozen P31 nested selection；gates为两端exact、nesting、minimum group `.50`、两端非退化、5 scenes。
+- 无训练/refit/budget/weight/model/gate sweep。
+
+### WS-V67-P42-HYBRID-CONDITIONED-ACTION-01 result
+
+- 状态：`done/supported`；canonical=`20260828T214000Z__hybrid-conditioned-action-s0-r1`；2,412 conditioned cases、
+  27,087 action rows；soft selected cost=`0.057805`、residual RMS=`0.037035`。
+- P6R exact=`294/294`；coverage/minimum group=`0.705128/0.50`。
+- Hybrid/P31/fixed reduction=`0.800132/0.792220/0.550120`；deltas=`+0.007912/+0.250012`；7/7 scenes，
+  4/4 gates；wall/peak GPU/RSS=`170.272s/0.03959GiB/1.29834GiB`。
+
+### WS-V67-P42-HYBRID-CONDITIONED-ACTION-01
+
+- 状态：`running`；frozen P20 base + trained case-centered action residual + frozen P31 case allocator；9 domains×3 budgets。
+- P6R action targets不进P20/P31/P41/P42训练；confirmation=H2/budget1/3。
+- Gates：exact、minimum group `.50`、相对P31 `+.005`、5/7 scenes；固定加法，不扫融合权重/model/loss/gate。
+
+### WS-V67-P41-CONTINUAL-DOMAIN-CONDITIONED-ACTION-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T211000Z__continual-domain-topk-s0-r1`；2,124 conditioned cases、
+  23,760 action rows；soft selected cost=`0.061272`、residual RMS=`0.037539`。
+- P10R2 exact=`365/365`；coverage/minimum group=`0.708333/0.50`。
+- P41/P31/fixed reduction=`0.747149/0.743093/0.402325`；deltas=`+0.004055/+0.344824`；8/8 scenes，
+  3/4 gates；wall=`158.290s`。冻结`+.005`门不放宽。
+
+### WS-V67-P41-CONTINUAL-DOMAIN-CONDITIONED-ACTION-01
+
+- 状态：`running`；8 domains×3 budgets，P36 ERM-style objective/model/temperature固定，6,000 GPU epochs。
+- 新增development=P3C/P10R4；P10R2 action targets不进P20/P31/P39/P41训练。
+- Terminal gates：exact、minimum group `.50`、相对P31 `+.005`、6/8 scenes；不扫cohort组合或参数。
+
+### WS-V67-P40-EXPANDED-DOMAIN-TRANSFER-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T204500Z__expanded-domain-transfer-s0-r1`；冻结P39，无训练/refit。
+- P10R4 exact=`363/363`；coverage/minimum group=`0.760417/0.583333`。
+- P39/P31/fixed reduction=`0.654575/0.674930/0.281451`；deltas=`-0.020355/+0.373124`；8/8 scenes，
+  3/4 gates。wall=`0.463s`。
+
 ### WS-V67-P40-EXPANDED-DOMAIN-TRANSFER-01
 
 - 状态：`ready/running`；冻结P39 model/normalizer，P10R4 H=2/budget=1/3第四cohort一次transfer read。

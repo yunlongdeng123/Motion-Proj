@@ -1,5 +1,39 @@
 # Research Status
 
+## WorldSim V6.7 P42 hybrid supported / P43 nested budgets（2026-08-28）
+
+P42 canonical=`run://worldsim_v67/WS-V67-P42-HYBRID-CONDITIONED-ACTION-01/
+20260828T214000Z__hybrid-conditioned-action-s0-r1`。9 domains×3 budgets训练2,412 conditioned cases/27,087 action rows；
+P6R exact=`294/294`、coverage/minimum group=`0.705128/0.50`。Hybrid/P31/fixed reduction=
+`0.800132/0.792220/0.550120`，deltas=`+0.007912/+0.250012`，7/7 scenes，4/4 gates。
+Verdict=`supported_hybrid_conditioned_action`。P31 allocator与conditioned within-case refinement的组合成立。
+
+P43冻结P42/P31/P20，在同一consumed P6R上一次性检查quarter/half budgets的exact total、strict nesting、两端group
+coverage与相对P31非退化；不训练、不扫budget或融合权重。该步骤只验证结构性质。
+
+## WorldSim V6.7 P41 terminal action-scorer rejected / P42 hybrid training（2026-08-28）
+
+P41 canonical=`run://worldsim_v67/WS-V67-P41-CONTINUAL-DOMAIN-CONDITIONED-ACTION-01/
+20260828T211000Z__continual-domain-topk-s0-r1`。8 domains×3 budgets训练2,124 conditioned cases/23,760 action rows；
+P10R2 exact=`365/365`、coverage/minimum group=`0.708333/0.50`、8/8 scenes。P41/P31 reduction=
+`0.747149/0.743093`，实际`+0.004055`但低于冻结`+0.005`，严格拒绝：
+`rejected_continual_domain_conditioned_action`。不事后降门；纯action-scorer跨cohort family关闭。
+
+参考ICLR 2020 blackbox combinatorial solver differentiation的组合思路，P42训练结构性hybrid：冻结P31 case offset保留
+跨case预算allocation，冻结P20作为base action score；新条件化head只输出每case中心化residual，学习within-case refinement。
+9个已消费development domains训练，P6R action targets排除并作一次判定；不扫融合权重，因为组合固定为可解释加法。
+
+## WorldSim V6.7 P40 fourth-cohort transfer rejected / P41 terminal domain expansion training（2026-08-28）
+
+P40 canonical=`run://worldsim_v67/WS-V67-P40-EXPANDED-DOMAIN-TRANSFER-01/
+20260828T204500Z__expanded-domain-transfer-s0-r1`。冻结P39在P10R4 exact=`363/363`、coverage/minimum group=
+`0.760417/0.583333`、8/8 scenes；但P39/P31 reduction=`0.654575/0.674930`，delta=`-0.020355`。
+Decision gate失败，verdict=`rejected_fourth_cohort_expanded_domain_transfer`。
+
+参考DomainBed对carefully implemented ERM的结论，P41执行action-scorer family最后一次domain expansion：在P39六域基础
+加入已消费P3C与P10R4，共8 domains，其他P36训练配置完全不变；P10R2 action targets不进入P20/P31/P39/P41
+训练，作为terminal heldout cohort。若失败即关闭action-scorer跨cohort扩展，不继续追加cohort。
+
 ## WorldSim V6.7 P39 expanded-domain top-k supported / P40 frozen fourth cohort（2026-08-28）
 
 P39 canonical=`run://worldsim_v67/WS-V67-P39-EXPANDED-DOMAIN-CONDITIONED-ACTION-01/
