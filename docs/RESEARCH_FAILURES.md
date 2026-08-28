@@ -790,6 +790,10 @@ P84在同一target-read前处理一个潜在对象错配：全row event metric�
 visited-region-only denominator与去τ重复的Actor failure因子化模型。它不修改P81 protocol/verdict，当前仍无新增失败；
 下一编号仍为`V67-F63`。
 
+P85进一步把visited Actor rows按`scene/anchor/τ`聚合为“任一访问状态不可靠”的trajectory-level对象；显式
+`anchor_frame`只是group字段，不是hash/checksum/fingerprint。协议在target read前冻结，当前无新增失败，下一编号仍为
+`V67-F63`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

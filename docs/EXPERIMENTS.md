@@ -2,6 +2,15 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01
+
+- 状态：`active/waiting P84 model and P81 scenes`；canonical=`20260829T213000Z__trajectory-visited-reliability-s0-r1`；
+  protocol在test targets出现前冻结。
+- 新增普通`anchor_frame`输出，将rows按`scene×anchor×candidate τ`聚合；仅评估至少一个Actor进入6m critical region
+  的trajectory。事件定义为任一visited Actor `raw error>1m`，score固定为P84 Actor failure risk的group max。
+- 固定per-scene 50% trajectory coverage，比较all与frozen P75 group-max；不扫radius、coverage或aggregation。
+  这是同一P81 cohort上的prospective trajectory-level secondary endpoint，不称closed-loop/planning/safety结果。
+
 ### WS-V67-P84-VISITED-ACTOR-FAILURE-01
 
 - 状态：`active/source training`；canonical=`20260829T212300Z__visited-actor-failure-s0-r1`；在P81 rows出现前冻结。
