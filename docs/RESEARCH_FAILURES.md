@@ -16,7 +16,8 @@
 - P1/P2/P3已支持task-untouched legacy ranking、Actor package与固定action set；不等于fresh或physical repair。
 - P4的source `behind_hit`交集让conflict reduction=`0.678963`通过，但overall/clean retention=
   `0.392368/0.396519`失败；登记`V67-F01 active`。
-- P4R只允许一次motion-compensated inward-ray结构恢复；下一可用编号=`V67-F02`。
+- P4R单次motion-compensated inward-ray结构恢复9/9 gates通过，`V67-F01 resolved_by_single_structural_recovery`；
+  下一可用编号=`V67-F02`。
 - 禁止radius/gate/budget sweep、target-dependent retention、Actor deletion与未通过physical repair前的RL claim。
 
 <a id="detail-v67"></a>
@@ -25,7 +26,7 @@
 
 ### V67-F01 — aggregated source behind-hit与motion-compensated Actor hit失去ray/Actor对应
 
-- 分类：`algorithm/representation`；状态：`active_single_recovery_frozen`。
+- 分类：`algorithm/representation`；状态：`resolved_by_single_structural_recovery`。
 - 观察：P4在72 units / 517 Actor states / 258 acted states上把conflict points从`1,003`降至`322`
   （reduction=`0.678963`），但overall/clean retention仅`0.392368/0.396519 < 0.40`；7/9 gates通过仍拒绝。
 - 根因：`behind_hit`由原始source-frame endpoint ray生成并跨帧聚合；Actor hit随后被motion-compensate到target Actor frame。
@@ -37,6 +38,10 @@
   GPOcc支持ray-wise inward geometry。唯一P4R在target frame对nearest compensated same-Actor hit构造解析inward ray。
 - 证据：`WS-V67-P4-RAY-TERMINATED-SURFACE-01/20260828T105253Z__ray-surface-s0-r1`；恢复冻结=
   `docs/autoresearch/worldsim_v67/P4R_MOTION_COMPENSATED_INWARD_RAY_FREEZE.md`。
+
+P4R canonical=`WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01/20260828T105920Z__inward-ray-s0-r1`：
+conflict reduction=`0.517448`、overall/clean retention=`0.529225/0.531941`，Actor/shell/identity-trajectory完全保持，
+9/9 gates通过。该关闭只支持task-untouched legacy capability；P5-P8另用V65 P2六场景做独立surface confirmation。
 
 ### V6.6 当前边界（2026-08-28）
 

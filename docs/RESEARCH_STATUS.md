@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.7 P4R supported / independent confirmation ready（2026-08-28）
+
+状态：`v67_p4r_supported_p5_independent_confirmation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01/20260828T105920Z__inward-ray-s0-r1`；verdict=
+`supported_task_untouched_motion_compensated_inward_ray_surface_repair`；`V67-F01 resolved_by_single_structural_recovery`。
+
+同一18,238 boundary中保留9,652，overall retention=`0.529225`；conflict `1,003→484`，reduction=`0.517448`；
+clean `17,235→9,168`，retention=`0.531941`。Actor/shell/ID-track-trajectory=`1/1/1`，removed/hazard shift/scene
+yield=`0/0/1`，9/9 gates通过；wall/RSS/GPU=`10.2274s/0.6089GiB/false`。
+
+下一步P5已在quality read前冻结：转到独立V65 P2六场景`0996/0443/0002/0043/0023/0072`，先做冻结head GPU
+transfer，再机械串联package→50% actions→exact P4R rule。该cohort从未用于V6.6/V6.7 surface，但在V65已消费，故只称
+independent legacy surface confirmation。无refit/threshold/radius/budget/gate sweep。
+
 ## WorldSim V6.7 P4 rejected / P4R motion-compensated recovery ready（2026-08-28）
 
 状态：`v67_p4_rejected_p4r_motion_compensated_inward_ray_implementation_ready`；P4 canonical=

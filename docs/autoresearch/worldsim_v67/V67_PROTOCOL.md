@@ -35,6 +35,10 @@ P4 canonical=`20260828T105253Z__ray-surface-s0-r1`。conflict reduction=`0.67896
 motion-compensated same-Actor hit构造inward ray half-ball；半径、actions、gates与claim boundary不变。P4R失败则关闭
 当前physical repair family，不再调参。
 
+P4R canonical=`20260828T105920Z__inward-ray-s0-r1`以conflict reduction=`0.517448`、overall/clean retention=
+`0.529225/0.531941`通过9/9 gates，`V67-F01`按单次结构恢复关闭。P5-P8在独立V65 P2六场景机械复现完整
+head→package→actions→surface链路；该cohort仍是globally consumed legacy，不升级为fresh population。
+
 ## Claim boundary
 
 成功也只支持task-untouched legacy ray-terminated physical surface capability；在独立新cohort confirmation之前，不称

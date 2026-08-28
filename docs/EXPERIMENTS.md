@@ -2,14 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01
+
+- 状态：`implementation_ready`；cohort=`0996/0443/0002/0043/0023/0072`，72 units；独立于P1-P4R surface，
+  但V65已消费，因此角色仅为independent legacy confirmation。
+- 冻结V6.6 8-feature/2x32 head，无model/normalization refit或threshold；同P1 ranking gates；GPU forward与两线程
+  I/O prefetch重叠。
+- 配置=`configs/worldsim_v67/p5_independent_geometry_transfer_v1.yaml`；下一链路P6 package→P7 fixed actions→P8 exact
+  P4R surface rule，后续配置只机械绑定canonical locator。
+
 ### WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01
 
-- 状态：`implementation_ready`；`V67-F01 active`；同一P3 L0 258-action set与`0.512m` support scale。
-- 唯一结构恢复：对nearest motion-compensated same-Actor hit，以target-frame LiDAR origin构造ray；只保留exact hit或
-  `dot(query-hit, ray)>=0`的one-voxel inward half-ball。target不参与rule。
-- 九门、Actor/shell/identity/trajectory/hazard保护全部沿用P4；无rule/radius/budget/gate sweep。
-- 配置=`configs/worldsim_v67/p4r_motion_compensated_inward_ray_v1.yaml`；实现复用默认关闭的兼容core与V6.7 runner；
-  formal run尚未创建。
+- 状态：`done/supported`；canonical=`run://worldsim_v67/WS-V67-P4R-MOTION-COMPENSATED-INWARD-RAY-01/
+  20260828T105920Z__inward-ray-s0-r1`；verdict=`supported_task_untouched_motion_compensated_inward_ray_surface_repair`。
+- baseline/repaired=`18,238/9,652`；overall/clean retention=`0.529225/0.531941`；conflict points=`1,003→484`，
+  reduction=`0.517448`；inward support=`4,778`。
+- Actor/shell/identity-trajectory retention=`1/1/1`，removed/hazard shift/scene yield=`0/0/1`；9/9 gates通过。
+- wall/RSS/GPU=`10.2274s/0.6089GiB/false`；`V67-F01 resolved_by_single_structural_recovery`。
 
 ### WS-V67-P4-RAY-TERMINATED-SURFACE-01
 
