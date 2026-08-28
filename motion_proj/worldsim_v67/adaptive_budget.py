@@ -322,4 +322,95 @@ def group_coverage_constrained_selection(
         "scene_support_count": int(len(scene_rows)),
         "scene_nonincreasing_count": int(sum(row["delta"] <= 0 for row in scene_rows)),
         "scene_rows": scene_rows, "group_rows": group_rows,
+        "selected_action_indices": selected_array.tolist(),
+    }
+
+
+def _summarize_selected_indices(
+    arrays: Mapping[str, np.ndarray], selected_indices: np.ndarray, selected_fraction: float,
+    scene_to_group: Mapping[int, int],
+) -> dict[str, Any]:
+    cases = np.asarray(arrays["case_index"], dtype=np.int64)
+    scenes = np.asarray(arrays["scene_index"], dtype=np.int64)
+    target = np.asarray(arrays["target_cost"], dtype=np.float32)
+    unique_cases = np.asarray([case for case in np.unique(cases) if np.count_nonzero(cases == case) >= 2], dtype=np.int64)
+    orders, case_groups = [], []
+    fixed_total = 0
+    counts = np.zeros(len(unique_cases), dtype=np.int64)
+    selected_set = set(int(value) for value in selected_indices)
+    for row, case in enumerate(unique_cases):
+        members = np.flatnonzero(cases == case)
+        orders.append(members)
+        fixed_total += max(1, int(np.floor(float(selected_fraction) * len(members))))
+        counts[row] = sum(int(action) in selected_set for action in members)
+        case_groups.append(int(scene_to_group[int(scenes[members[0]])]))
+    evaluable_indices = np.concatenate(orders).astype(np.int64)
+    selected_array = np.asarray(selected_indices, dtype=np.int64)
+    all_cost, selected_cost = float(target[evaluable_indices].mean()), float(target[selected_array].mean())
+    scene_rows = []
+    for scene in np.unique(scenes[evaluable_indices]):
+        scene_all = evaluable_indices[scenes[evaluable_indices] == scene]
+        scene_selected = selected_array[scenes[selected_array] == scene]
+        if not len(scene_selected):
+            continue
+        scene_all_cost, scene_selected_cost = float(target[scene_all].mean()), float(target[scene_selected].mean())
+        scene_rows.append({"scene_index": int(scene), "all_mean_cost": scene_all_cost,
+                           "selected_mean_cost": scene_selected_cost, "delta": scene_selected_cost - scene_all_cost})
+    case_groups_array = np.asarray(case_groups, dtype=np.int64)
+    group_rows = []
+    for group in np.unique(case_groups_array):
+        rows = np.flatnonzero(case_groups_array == group)
+        group_actions = np.concatenate([orders[row] for row in rows]).astype(np.int64)
+        chosen_actions = selected_array[np.isin(selected_array, group_actions)]
+        covered = int(np.count_nonzero(counts[rows]))
+        group_rows.append({"group_index": int(group), "case_count": int(len(rows)), "covered_case_count": covered,
+                           "case_coverage": float(covered / len(rows)), "selected_action_count": int(len(chosen_actions)),
+                           "all_mean_cost": float(target[group_actions].mean()),
+                           "selected_mean_cost": float(target[chosen_actions].mean())})
+    return {
+        "evaluable_case_count": int(len(unique_cases)), "fixed_total_action_budget": int(fixed_total),
+        "selected_action_count": int(len(selected_array)), "covered_case_count": int(np.count_nonzero(counts)),
+        "case_coverage": float(np.count_nonzero(counts) / len(counts)),
+        "minimum_group_case_coverage": float(min(row["case_coverage"] for row in group_rows)),
+        "minimum_actions_per_case": int(counts.min()), "maximum_actions_per_case": int(counts.max()),
+        "mean_actions_per_case": float(counts.mean()), "all_mean_cost": all_cost, "selected_mean_cost": selected_cost,
+        "relative_cost_reduction": float((all_cost - selected_cost) / all_cost if all_cost else 0.0),
+        "scene_support_count": int(len(scene_rows)),
+        "scene_nonincreasing_count": int(sum(row["delta"] <= 0 for row in scene_rows)),
+        "scene_rows": scene_rows, "group_rows": group_rows, "selected_action_indices": selected_array.tolist(),
+    }
+
+
+def nested_group_budget_selection(
+    arrays: Mapping[str, np.ndarray], compiled_scores: np.ndarray, low_offsets: np.ndarray, high_offsets: np.ndarray,
+    low_fraction: float, high_fraction: float, maximum_actions_per_case: int, minimum_case_coverage: float,
+    scene_to_group: Mapping[int, int], minimum_group_case_coverage: float,
+) -> dict[str, Any]:
+    """Select a low-budget set, then extend it monotonically to the high budget."""
+    low = group_coverage_constrained_selection(
+        arrays, compiled_scores, low_offsets, low_fraction, maximum_actions_per_case,
+        minimum_case_coverage, scene_to_group, minimum_group_case_coverage,
+    )
+    cases = np.asarray(arrays["case_index"], dtype=np.int64)
+    unique_cases = np.asarray([case for case in np.unique(cases) if np.count_nonzero(cases == case) >= 2], dtype=np.int64)
+    high_total = 0
+    high_slots = []
+    for row, case in enumerate(unique_cases):
+        members = np.flatnonzero(cases == case)
+        order = members[np.argsort(compiled_scores[members], kind="stable")]
+        high_total += max(1, int(np.floor(float(high_fraction) * len(members))))
+        for action in order[: int(maximum_actions_per_case)]:
+            high_slots.append((float(compiled_scores[action] + high_offsets[row]), int(action)))
+    low_selected = np.asarray(low["selected_action_indices"], dtype=np.int64)
+    low_set = set(int(action) for action in low_selected)
+    extension = [action for _, action in sorted(high_slots, key=lambda item: item[0]) if action not in low_set]
+    high_selected = np.concatenate(
+        [low_selected, np.asarray(extension[: high_total - len(low_selected)], dtype=np.int64)]
+    )
+    high = _summarize_selected_indices(arrays, high_selected, high_fraction, scene_to_group)
+    return {
+        "low_budget": low,
+        "high_budget": high,
+        "low_subset_of_high": bool(set(low["selected_action_indices"]).issubset(high["selected_action_indices"])),
+        "nested_action_count": int(len(set(low["selected_action_indices"]).intersection(high["selected_action_indices"]))),
     }

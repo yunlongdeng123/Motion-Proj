@@ -1,0 +1,66 @@
+schema_version: worldsim_v67.p29_nested_budget_authority.v1
+output_schema_version: worldsim_v67.p29_nested_budget_authority_summary.v1
+task_id: WS-V67-P29-NESTED-BUDGET-AUTHORITY-01
+hypothesis_id: WS-V67-H-P29-001
+seed: 0
+role: dual_budget_training_then_nested_low_high_authority_confirmation
+artifact_name: NESTED_BUDGET_AUTHORITY_COMPILER.pt
+verdict_on_pass: supported_nested_budget_authority
+verdict_on_failure: rejected_nested_budget_authority
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p19_p2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p24_v64_p6r_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+compiler:
+  fixed_selected_fraction: 0.25
+  nested_evaluation_fractions: [0.25, 0.50]
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
+model:
+  hidden_dimension: 16
+  maximum_case_offset: 0.05
+  training_selected_fractions: [0.25, 0.50]
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  domain_loss_variance_weight: 0.1
+  offset_regularization_weight: 0.005
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_low_cost_reduction: 0.55
+  minimum_high_cost_reduction: 0.30
+  minimum_low_delta_over_fixed_p20: 0.10
+  minimum_high_delta_over_fixed_p20: 0.05
+  minimum_nonincreasing_scene_support: 6
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p25_v64_p4c_quantile_actions.npz
+  data: {}
+locks:
+  p4c_excluded_from_p29_training: true
+  p20_within_case_ranking_frozen: true
+  low_budget_actions_must_be_subset_of_high_budget_actions: true
+  exact_low_and_high_total_budgets: true
+  minimum_stratum_coverage: 0.50
+  fraction_model_offset_coverage_group_or_gate_sweep: false
+  consumed_legacy_confirmation_no_fresh_claim: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F16, V67-F15, V67-F14]
+claim_boundary:
+  - nested_authority_sets_across_quarter_and_half_action_budgets
+  - exact_total_and_stratum_balanced_visited_state_authority
+  - consumed_legacy_confirmation_only
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

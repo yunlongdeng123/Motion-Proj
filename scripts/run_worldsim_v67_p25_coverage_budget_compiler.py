@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import torch, yaml
 
-from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, score_case_offset, train_case_offset
+from motion_proj.worldsim_v67.adaptive_budget import BUDGET_CONDITIONED_FEATURE_NAMES, BoundedCaseOffset, FEATURE_NAMES, adaptive_fixed_total_selection, budget_conditioned_case_offset_dataset, case_offset_dataset, coverage_constrained_selection, group_coverage_constrained_selection, nested_group_budget_selection, score_case_offset, train_case_offset
 from motion_proj.worldsim_v67.listwise_action_compiler import BoundedListwiseCompiler, score_listwise_compiler
 from motion_proj.worldsim_v67.trajectory_quantile import materialize_quantiles
 from scripts.run_worldsim_v65_p10v_action_visited_state_transfer import _within_case_selection
@@ -53,6 +53,20 @@ def run(config_path: Path, runs_root: Path, run_id: str):
     cache=Path(config["confirmation_materialization"]["cache_path"]);mat={"cache_path":str(cache),"cache_reused":cache.is_file()}
     if not cache.is_file():mat.update(materialize_quantiles(config["confirmation_materialization"]["data"],runs_root,cache))
     selection=_load(cache);scores=score_listwise_compiler(p20,selection,p20_mean,p20_scale)
+    if "nested_evaluation_fractions" in config["compiler"]:
+        low_fraction,high_fraction=[float(value) for value in config["compiler"]["nested_evaluation_fractions"]]
+        low_cases=budget_conditioned_case_offset_dataset(selection,scores,[low_fraction]);high_cases=budget_conditioned_case_offset_dataset(selection,scores,[high_fraction])
+        low_offsets=score_case_offset(model,low_cases,mean,scale);high_offsets=score_case_offset(model,high_cases,mean,scale)
+        scene_to_group={int(key):int(value) for key,value in config["compiler"]["scene_to_group"].items()}
+        nested=nested_group_budget_selection(selection,scores,low_offsets,high_offsets,low_fraction,high_fraction,int(config["compiler"]["maximum_actions_per_case"]),float(config["compiler"]["minimum_case_coverage"]),scene_to_group,float(config["compiler"]["minimum_group_case_coverage"]))
+        low,high=nested["low_budget"],nested["high_budget"]
+        fixed_low=_within_case_selection(np.asarray(selection["target_cost"],dtype=np.float32),scores,np.asarray(selection["case_index"]),np.asarray(selection["scene_index"]),low_fraction)
+        fixed_high=_within_case_selection(np.asarray(selection["target_cost"],dtype=np.float32),scores,np.asarray(selection["case_index"]),np.asarray(selection["scene_index"]),high_fraction)
+        improvement={"low_delta_over_fixed_p20":float(low["relative_cost_reduction"]-fixed_low["relative_cost_reduction"]),"high_delta_over_fixed_p20":float(high["relative_cost_reduction"]-fixed_high["relative_cost_reduction"])}
+        g=config["gates"];gates={"exact_both_total_budgets":low["selected_action_count"]==low["fixed_total_action_budget"] and high["selected_action_count"]==high["fixed_total_action_budget"],"low_subset_of_high":nested["low_subset_of_high"],"minimum_group_case_coverage_both":low["minimum_group_case_coverage"]>=float(g["minimum_group_case_coverage"]) and high["minimum_group_case_coverage"]>=float(g["minimum_group_case_coverage"]),"minimum_low_cost_reduction":low["relative_cost_reduction"]>=float(g["minimum_low_cost_reduction"]),"minimum_high_cost_reduction":high["relative_cost_reduction"]>=float(g["minimum_high_cost_reduction"]),"minimum_reduction_delta_over_fixed_p20_both":improvement["low_delta_over_fixed_p20"]>=float(g["minimum_low_delta_over_fixed_p20"]) and improvement["high_delta_over_fixed_p20"]>=float(g["minimum_high_delta_over_fixed_p20"]),"minimum_nonincreasing_scene_support_both":low["scene_nonincreasing_count"]>=int(g["minimum_nonincreasing_scene_support"]) and high["scene_nonincreasing_count"]>=int(g["minimum_nonincreasing_scene_support"])}
+        verdict=config.get("verdict_on_pass","supported_nested_budget_authority") if all(gates.values()) else config.get("verdict_on_failure","rejected_nested_budget_authority")
+        summary={"schema_version":config["output_schema_version"],"task_id":config["task_id"],"hypothesis_id":config["hypothesis_id"],"status":"done","verdict":verdict,"role":config["role"],"claim_boundary":config["claim_boundary"],"training":training,"confirmation_materialization":mat,"nested_budget":nested,"fixed_p20":{"low_budget":fixed_low,"high_budget":fixed_high},"selection_improvement":improvement,"gate_results":gates,"failure_ledger_delta":"pending_result","resources":{"gpu":torch.cuda.get_device_name(0),"peak_gpu_memory_gib":torch.cuda.max_memory_allocated()/(1024**3),"peak_rss_gib":resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2),"wall_seconds":time.monotonic()-started}}
+        _write_json(run_dir/"summary.json",summary);_write_json(run_dir/"status.json",{"status":"done","completed_at_utc":datetime.now(timezone.utc).isoformat()});return {"run_dir":str(run_dir),"verdict":verdict,"gate_results":gates}
     cases=budget_conditioned_case_offset_dataset(selection,scores,[fraction]) if training_fractions else case_offset_dataset(selection,scores,fraction)
     offsets=score_case_offset(model,cases,mean,scale)
     if "scene_to_group" in config["compiler"]:
