@@ -888,6 +888,7 @@ P94三成员direct-probability deep ensemble在P81 target read前冻结：seed0�
 下一可用编号：`V67-F68`。
 
 P95 occupancy-flip迁移已冻结radius/time samples/width/coverage/model，不增加hash/checksum/fingerprint；当前无新增失败，
+prep得到source/development row-level flips=`2,273/96`及false-safe=`925/32`，非空且未触发target恢复；当前无新增失败，
 下一编号仍为`V67-F68`。
 
 ### V6.6 当前边界（2026-08-28）

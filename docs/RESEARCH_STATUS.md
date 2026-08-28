@@ -22,7 +22,9 @@ query features无法稳定超过Actor-only。记录为`V67-F67`，不再对该ta
 task-conditioned的occupancy decision flip：在同一9个future time samples上比较常速Actor path与observed Actor path
 相对候选τ的occupied/free结论；interaction radius固定为`Actor half-width + 1.0m Ego half-width`。P81 cohort已消费，
 只作development；remaining 10 test-role scenes保持未读，只有P95 development支持后才做一次独立confirmation。P95
-source/development rows当前正从既有processed scenes物化；不扫radius/width/threshold/coverage/architecture。
+source/development rows已从既有processed scenes物化完成：102 source scenes产生575,596 rows/2,273 flips，其中925
+false-safe；consumed development产生9,559 rows/96 flips，其中32 false-safe，wall=`102.11s`。P95现正进行6,000-epoch
+GPU训练；早期query BCE低于Actor-only，但不据此改协议。不扫radius/width/threshold/coverage/architecture。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

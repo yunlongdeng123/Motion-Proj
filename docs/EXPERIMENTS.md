@@ -4,14 +4,16 @@
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
 
-- 状态：`active/row materialization`；prep canonical=
-  `20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1`；P81 cohort明确降为consumed development。
+- 状态：`active/GPU training`；prep canonical=`20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1`，model
+  canonical=`20260830T002500Z__trajectory-occupancy-flip-s0-r1`；P81 cohort明确降为consumed development。
 - prediction object：对给定Ego candidate `τ`，常速Actor predicted path与observed Actor path在同一9个time samples上
   是否产生不同occupied/free结论；radius=`Actor half-width + fixed 1.0m Ego half-width`。
 - source horizons `.8/1.5/2.5/3.0`；development H3.5。每τ取predicted distance最近16个Actor，Deep Sets direct BCE；
   query/Actor-only同容量，固定50% selection。若development成立，才使用remaining 10 unread test-role scenes确认。
 - 不扫radius/width/time samples/threshold/coverage/loss/architecture；依据ICCV 2021 earliest occupancy与CVPR 2023
   implicit occupancy-flow trajectory queries。
+- prep result：102 source scenes=`575,596 rows / 2,273 flips / 925 false-safe`；10-scene development=
+  `9,559 / 96 / 32`，wall=`102.11s`。6,000-epoch training已启动，source计数读取后未改冻结参数。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
