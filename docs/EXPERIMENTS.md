@@ -29,7 +29,8 @@
 - frozen P95 checkpoint、H3.5、9 time samples、Actor half-width+1m、nearest16、fixed50与4 gates完全不变；
   primary endpoint是trajectory occupancy flip，false-safe/false-alarm仅描述。one-shot independent read。
 - shard08精确命中397；推断的`0556→03`扫描完成但命中0，发生在processed/target read前。公开资料未提供session-part
-  index，当前对02/04/05/07作exact session locator；只允许修正0556 shard并复用其他结果，不换cohort（`V67-F69`）。
+  index。02/04/05/07 exact locators均完整排除；当前对r1曾为其他scene扫描、但0556当时不在filter内的01/06/08/09/10
+  作第二轮exact locator。只允许修正0556 shard并复用其他结果，不换cohort（`V67-F69`）。
 
 ### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
 

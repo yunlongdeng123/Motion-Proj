@@ -940,7 +940,8 @@ P102得到`4/27/13`并刷新development best。P103 checkpoint/protocol在P96 ta
   03完整扫描对390 candidates命中0；发生时仅08已精确命中397，10个processed scenes未ready，P96/P103 target rows不存在；
 - root cause：10个nuScenes trainval blob parts不是按scene index或简单session日期连续分桶；相邻archive header不足以外推；
 - literature/open-source response：nuScenes官方论坛与开源dataset setup确认10 parts提取后合并为一个dataroot，但公开文档
-  不提供session→part索引。恢复因此不继续猜日期，而对尚未占用的02/04/05/07作exact session member locator；
+  不提供session→part索引。恢复因此不继续猜日期：02/04/05/07 exact locators先全部排除；随后对r1虽完整扫描、但其
+  candidate filter未包含0556的01/06/08/09/10作第二轮exact-session locator；
 - frozen recovery：命中后只修`0556` member→shard map、复用其他已提取members并重启prep；不换scene/cohort/model/
   target/radius/width/coverage/gates，P95 primary与target read仍exact-once；不增加hash/checksum/fingerprint；
 - claim impact：纯pre-target I/O failure，不改变P95/P102 development结果，也不产生confirmation evidence。
