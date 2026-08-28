@@ -94,6 +94,18 @@ def main() -> None:
     )
     positive = torch.from_numpy(np.flatnonzero(labels_np)).long().cuda()
     negative = torch.from_numpy(np.flatnonzero(~labels_np)).long().cuda()
+    horizon_groups: list[tuple[torch.Tensor, torch.Tensor]] = []
+    if bool(config["model"].get("balance_pairs_by_horizon", False)):
+        horizon_values = np.asarray(arrays["horizon_seconds"])
+        for horizon in sorted(np.unique(horizon_values).tolist()):
+            members = horizon_values == horizon
+            horizon_positive = np.flatnonzero(members & labels_np)
+            horizon_negative = np.flatnonzero(members & ~labels_np)
+            if len(horizon_positive) and len(horizon_negative):
+                horizon_groups.append((
+                    torch.from_numpy(horizon_positive).long().cuda(),
+                    torch.from_numpy(horizon_negative).long().cuda(),
+                ))
     model_config = config["model"]
     query = EventCostMLP(features.shape[1], model_config["hidden_dimensions"]).cuda()
     actor = EventCostMLP(actor_features.shape[1], model_config["hidden_dimensions"]).cuda()
@@ -109,8 +121,19 @@ def main() -> None:
     torch.cuda.reset_peak_memory_stats()
     for epoch in range(int(model_config["epochs"])):
         optimizer.zero_grad(set_to_none=True)
-        pos = positive[torch.randint(len(positive), (pair_count,), device="cuda")]
-        neg = negative[torch.randint(len(negative), (pair_count,), device="cuda")]
+        if horizon_groups:
+            group_count = max(1, pair_count // len(horizon_groups))
+            pos = torch.cat([
+                group_positive[torch.randint(len(group_positive), (group_count,), device="cuda")]
+                for group_positive, _ in horizon_groups
+            ])
+            neg = torch.cat([
+                group_negative[torch.randint(len(group_negative), (group_count,), device="cuda")]
+                for _, group_negative in horizon_groups
+            ])
+        else:
+            pos = positive[torch.randint(len(positive), (pair_count,), device="cuda")]
+            neg = negative[torch.randint(len(negative), (pair_count,), device="cuda")]
         regression = torch.randint(len(features), (regression_count,), device="cuda")
         query_pos_event, _ = query(features[pos])
         query_neg_event, _ = query(features[neg])
@@ -206,7 +229,8 @@ def main() -> None:
         "schema_version": config["output_schema_version"], "task_id": config["task_id"],
         "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict,
         "role": config["role"],
-        "training": {"row_count": int(len(raw)), "unreliable_row_count": int(np.count_nonzero(labels_np)), "final_losses": final},
+        "training": {"row_count": int(len(raw)), "unreliable_row_count": int(np.count_nonzero(labels_np)),
+            "horizon_balanced_pair_groups": int(len(horizon_groups)), "final_losses": final},
         "fresh_test_evaluation": metrics, "gate_results": gates,
         "resources": {"gpu": torch.cuda.get_device_name(0),
             "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2**30,

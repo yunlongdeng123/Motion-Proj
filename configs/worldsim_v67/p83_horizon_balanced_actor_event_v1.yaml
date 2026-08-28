@@ -1,0 +1,58 @@
+schema_version: worldsim_v67.p83_horizon_balanced_actor_event.v1
+output_schema_version: worldsim_v67.p83_horizon_balanced_actor_event_summary.v1
+task_id: WS-V67-P83-HORIZON-BALANCED-ACTOR-EVENT-01
+hypothesis_id: WS-V67-H-P83-001
+seed: 0
+role: prospective_horizon_balanced_pairwise_actor_event_selector
+verdict_on_pass: supported_horizon_balanced_actor_event_selector
+verdict_on_failure: rejected_horizon_balanced_actor_event_selector
+source:
+  base_run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  base_rows: TRAIN_ACTOR_QUERY_ROWS.npz
+  h2p5_run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  h2p5_rows: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz
+  h3_run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  h3_rows: SOURCE_H3_ACTOR_QUERY_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P81-FRESH-TEST-ACTOR-EVENT-01/20260829T211500Z__fresh-test-actor-event-s0-r1
+  artifact: FRESH_TEST_H3P5_ACTOR_QUERY_ROWS.npz
+  readiness_timeout_seconds: 7200
+model:
+  hidden_dimensions: [512, 256, 128]
+  epochs: 6000
+  pair_batch_size: 32768
+  regression_batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  pair_margin: 1.0
+  regression_weight: 0.25
+  huber_beta: 0.05
+  balance_pairs_by_horizon: true
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  require_no_more_events_than_frozen_p75: true
+  maximum_cost_ratio_to_frozen_p75: 1.50
+locks:
+  source_only_training_and_hyperparameters_frozen_before_test_rows_exist: true
+  equal_pair_sampling_across_source_horizons_point8_1p5_2p5_3p0: true
+  pairwise_event_ranking_distinct_from_p67_pointwise_bce: true
+  fixed_regression_auxiliary_weight_without_sweep: true
+  exact_per_scene_fifty_percent_coverage: true
+  no_threshold_coverage_weight_margin_epoch_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2016/hash/c52f1bd66cc19d05628bd8bf27af3ad6-Abstract.html
+  - https://openreview.net/forum?id=ryxGuJrFvS
+claim_boundary:
+  - prospective_secondary_model_on_same_independent_P81_read
+  - horizon_balanced_pairwise_imbalanced_event_ranking
+  - fixed_coverage_actor_state_reliability_triage_only
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
