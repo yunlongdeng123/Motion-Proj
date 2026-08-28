@@ -75,6 +75,14 @@ comparator保留，不改变冻结fresh chain。下一编号仍为`V67-F03`。
 P11 fresh Actor package 6/6 gates通过；938 states与metadata完整保留、Actor removed/hidden target=`0/0`，无新failure；
 下一编号仍为`V67-F03`。
 
+### V67-F03 — 本地PowerShell提前解释远端动态run-id
+
+- 分类：`execution/run-locator`；状态：`resolved_by_atomic_run_directory_rename`。
+- 观察/根因：P12命令中的`$(date ...)`被PowerShell提前解释，成功evaluation写入literal backslash目录。
+- 恢复：确认唯一completed目录和目标不存在后原子rename为`20260828T114900Z__fresh-actions-s0-r1`；未重跑evaluation、未改artifact。
+- P12科学结果：L0在469/938固定budget处理341/563 conflicts，reduction=`0.605684`，6/6 gates通过。
+- 防重复：后续使用显式run-id，不在PowerShell字符串内嵌远端命令替换；下一编号=`V67-F04`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

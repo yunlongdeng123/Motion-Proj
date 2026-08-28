@@ -2,10 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P13-FRESH-INWARD-RAY-SURFACE-01
+
+- 状态：`implementation_ready`；fresh P9/P11/P12 canonical、L0 arm、exact P4R inward-ray rule、`0.512m`与九门冻结；
+  配置=`configs/worldsim_v67/p13_fresh_inward_ray_surface_v1.yaml`。
+
 ### WS-V67-P12-FRESH-FIXED-ACTIONS-01
 
-- 状态：`implementation_ready`；P10/P11 canonical，固定50% budget与六门不变；配置=
-  `configs/worldsim_v67/p12_fresh_fixed_actions_v1.yaml`。
+- 状态：`done/supported`；canonical=`20260828T114900Z__fresh-actions-s0-r1`；rows/conflicts/budget=
+  `938/563/469`；L0/q0/oracle reduction=`0.605684/0.595027/0.833037`；Actor retention/removed/hazard shift/
+  emitted/scene yield=`1/0/0/0.5/1`，6/6 gates。`V67-F03 resolved_by_atomic_run_directory_rename`；未重复evaluation。
 
 ### WS-V67-P11-FRESH-ACTOR-PACKAGE-01
 

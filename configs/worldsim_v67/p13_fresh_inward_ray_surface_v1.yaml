@@ -1,0 +1,48 @@
+schema_version: worldsim_v67.p13_fresh_inward_ray_surface.v1
+task_id: WS-V67-P13-FRESH-INWARD-RAY-SURFACE-01
+hypothesis_id: WS-V67-H-P13-001
+seed: 0
+role: fresh_empirical_motion_compensated_inward_ray_surface_confirmation
+sources:
+  evidence_run: worldsim_v67/WS-V67-P9-FRESH-EVIDENCE-01/20260828T114300Z__fresh-evidence-s0-r1
+  native_run: worldsim_v67/WS-V67-P9-FRESH-NATIVE-SIDECAR-01/20260828T114200Z__fresh-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  p7_run: worldsim_v67/WS-V67-P12-FRESH-FIXED-ACTIONS-01/20260828T114900Z__fresh-actions-s0-r1
+  p7_action_rows: MATCHED_ACTION_ROWS.jsonl
+  harp_bake_run: worldsim_v67/WS-V67-P11-FRESH-ACTOR-PACKAGE-01/20260828T114417Z__fresh-package-s0-r1
+action_arm: L0_LEARNED_HARP
+support_radius_m: 0.512
+support_expansion_requires_behind_hit: false
+support_expansion_motion_compensated_inward_ray: true
+scenes: [scene-0348, scene-0360, scene-0373, scene-0388, scene-0399, scene-0414]
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+sampling:
+  maximum_boundary_points_per_unit: 8192
+  io_prefetch_workers: 2
+gates:
+  minimum_conflict_point_reduction: 0.5
+  minimum_actor_retention: 1.0
+  minimum_collision_shell_retention: 1.0
+  minimum_actor_id_track_trajectory_retention: 1.0
+  maximum_actor_removed_count: 0
+  maximum_hazard_proxy_distribution_shift: 0.0
+  minimum_overall_boundary_retention: 0.4
+  minimum_clean_boundary_retention: 0.4
+  minimum_world_scene_yield: 1.0
+locks:
+  support_radius_sweep: false
+  ray_evidence_rule_sweep: false
+  action_set_refit: false
+  budget_or_threshold_sweep: false
+  actor_removal: false
+  target_used_for_action_or_retention: false
+  collision_shell_mutation: false
+  add_hash_checksum_fingerprint: false
+verdict_on_pass: supported_fresh_empirical_motion_compensated_inward_ray_surface_confirmation
+verdict_on_failure: rejected_fresh_empirical_motion_compensated_inward_ray_surface_confirmation
+claim_boundary:
+  - fresh_empirical_motion_compensated_inward_ray_surface_confirmation
+  - exact_hit_or_one_voxel_inward_half_ball_behind_motion_compensated_same_actor_hit
+  - canonical_actor_collision_shell_identity_trajectory_and_hazard_preserved
+  - no_population_guarantee_rl_ready_planning_policy_closed_loop_rl_or_safety_claim
+failure_ledger_refs: [V67-F03, V67-F02, V67-F01, V66-F02, V66-F01]

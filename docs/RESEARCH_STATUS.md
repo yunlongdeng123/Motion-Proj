@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V6.7 P12 fresh actions supported / P13 physical confirmation ready（2026-08-28）
+
+状态：`v67_p12_fresh_actions_supported_p13_surface_ready`；canonical=
+`run://worldsim_v67/WS-V67-P12-FRESH-FIXED-ACTIONS-01/20260828T114900Z__fresh-actions-s0-r1`。固定469/938 actions；
+L0/q0/oracle handled=`341/335/469` of 563 conflicts，reduction=`0.605684/0.595027/0.833037`。Actor retention/
+removed/hazard shift/emitted/scene yield=`1/0/0/0.5/1`，6/6 gates通过。`V67-F03`只记录PowerShell把远端动态run-id
+写成literal backslash；目录原子重命名后未重复evaluation。P13已绑定fresh canonical并保持P4R/P8 rule与九门不变。
+
 ## WorldSim V6.7 P11 fresh Actor package supported / P12 actions ready（2026-08-28）
 
 状态：`v67_p11_fresh_actor_package_supported_p12_actions_ready`；canonical=
