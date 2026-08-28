@@ -865,6 +865,31 @@ P94三成员direct-probability deep ensemble在P81 target read前冻结：seed0�
 算术均值且不选member/subset。P90--P92 checkpoint已确认落盘后安全退出等待进程以释放4.5GiB，后续evaluation-only
 恢复；无artifact/quality损失，不登记failure。下一编号仍为`V67-F67`。
 
+### V67-F67 — visited Actor最大位移误差不产生稳定的task-conditioned trajectory增益
+
+- 分类：`scientific/target-definition`；状态：`closed_negative_migrated_to_occupancy_flip`；
+- independent signal retained：P81全row primary在9,559 rows上query/Actor/P73 selected events=`26/57/45`，相对
+  Actor减少54.39%，10/10 scenes nonincreasing，3/3 gates通过；P82/P83 secondary均为0 events；
+- faithful visited failure：P84在2,113 visited rows上candidate/P75=`235/208`；P85在1,089 trajectories上
+  candidate/P75=`203/199`，均拒绝；
+- direct family：P86--P94全部拒绝。最佳P86为query/Actor/P75=`187/193/199`，但query增益仅3.11%<10%，absolute
+  reduction 37.48%<50%；P90=`191/201/199`，P94 ensemble=`204/189/199`；
+- root cause：原label是Actor endpoint constant-velocity error，只依赖Actor history/future；τ只决定membership。于是
+  Actor-only已获得目标的主要可预测部分，query features既不改变label也不能稳定提供预注册增益；all-row成功还可由
+  separation>6m的未访问rows贡献，不能外推为visited-state reliability；
+- literature/open-source response：ICCV 2021 safety-aware motion prediction将planner critical region表示为earliest
+  occupancy，CVPR 2023 IMPLICITO只在candidate trajectory附近的spatiotemporal query points预测occupancy/flow；两者都
+  指向“路径上的occupancy结论”而不是路径外的Actor位移误差；
+- resolution：关闭max-error visited trajectory family，不降gate、不挑P86/P90、不继续architecture/loss/seed sweep；
+  P95将target改为predicted-vs-observed Actor path对同一τ的occupancy decision flip。P81 cohort仅development，剩余10
+  test-role scenes继续未读，只有development支持才做one-shot confirmation；
+- claim impact：V6.7当前只支持全row event triage，不支持visited Actor reliability、planner/policy/closed-loop/safety。
+
+下一可用编号：`V67-F68`。
+
+P95 occupancy-flip迁移已冻结radius/time samples/width/coverage/model，不增加hash/checksum/fingerprint；当前无新增失败，
+下一编号仍为`V67-F68`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

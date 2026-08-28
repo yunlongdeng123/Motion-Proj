@@ -1,6 +1,30 @@
 # Research Status
 
-## WorldSim V6.7 P81--P94 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P94 fresh read complete / P95 occupancy-flip migration active（2026-08-30）
+
+P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
+coverage后，frozen P75 query选择26 events（prevalence `.005442`），Actor-only 57（`.011930`），P73 45
+（`.009418`），相对Actor-only减少`54.39%`且10/10 scenes不增。Query/Actor/P73 AUROC=`.94147/.92947/.93666`；
+mean cost `.06207/.08235/.06405`只作描述。P82/P83同一cohort上的prospective secondary all-row模型均选择0 events，
+但这些结果不能消除“优先选择未访问Actor rows”的混杂。
+
+更忠实的visited-state/trajectory对象未成立。P84只在predicted separation<=6m的2,113 rows上选择235 events，劣于
+frozen P75的208；P85对1,089条visited trajectories选择203，亦劣于199。Direct trajectory P86--P94全部未通过：
+P86是其中最佳的事件数187，但只比其Actor-only 193少`3.11%`，低于冻结10% query增益，且absolute reduction
+`37.48%<50%`。P90为191 vs Actor-only 201，P94三成员ensemble为204 vs Actor-only 189。准确结论是：支持
+全row event triage，但不支持“给定τ后visited Actor最大位移误差”的task-conditioned reliability claim。
+
+失败原因不是容量不足：fixed summary、Deep Sets、set attention、ordinal、Huber、q90、heteroscedastic NLL、direct BCE
+与deep ensemble在同一首次read上方向一致。核心错配是原target `raw Actor endpoint error`与τ无关，τ仅用于membership；
+query features无法稳定超过Actor-only。记录为`V67-F67`，不再对该target扫结构/loss/threshold。
+
+依据ICCV 2021 safety-aware earliest occupancy与CVPR 2023 IMPLICITO的spatiotemporal trajectory queries，P95改为真正
+task-conditioned的occupancy decision flip：在同一9个future time samples上比较常速Actor path与observed Actor path
+相对候选τ的occupied/free结论；interaction radius固定为`Actor half-width + 1.0m Ego half-width`。P81 cohort已消费，
+只作development；remaining 10 test-role scenes保持未读，只有P95 development支持后才做一次独立confirmation。P95
+source/development rows当前正从既有processed scenes物化；不扫radius/width/threshold/coverage/architecture。
+
+## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state

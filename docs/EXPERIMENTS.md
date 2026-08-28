@@ -2,6 +2,41 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
+
+- 状态：`active/row materialization`；prep canonical=
+  `20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1`；P81 cohort明确降为consumed development。
+- prediction object：对给定Ego candidate `τ`，常速Actor predicted path与observed Actor path在同一9个time samples上
+  是否产生不同occupied/free结论；radius=`Actor half-width + fixed 1.0m Ego half-width`。
+- source horizons `.8/1.5/2.5/3.0`；development H3.5。每τ取predicted distance最近16个Actor，Deep Sets direct BCE；
+  query/Actor-only同容量，固定50% selection。若development成立，才使用remaining 10 unread test-role scenes确认。
+- 不扫radius/width/time samples/threshold/coverage/loss/architecture；依据ICCV 2021 earliest occupancy与CVPR 2023
+  implicit occupancy-flow trajectory queries。
+
+### WS-V67-P81--P94 fresh result synthesis
+
+| run | query selected events | Actor-only / baseline | verdict |
+| --- | ---: | ---: | --- |
+| P81 all-row primary | 26 | Actor 57 / P73 45 | supported, 3/3 gates |
+| P82 all-row pairwise | 0 | Actor 3 / P75 26 | supported secondary |
+| P83 all-row horizon-balanced | 0 | Actor 34 / P75 26 | supported secondary |
+| P84 visited-row factorized | 235 | P75 208 | rejected |
+| P85 frozen group-max trajectory | 203 | P75 199 | rejected |
+| P86 direct fixed-summary trajectory | 187 | Actor 193 / P75 199 | rejected; best trajectory event count |
+| P87 Deep Sets | 196 | Actor 188 / P75 199 | rejected |
+| P88 set attention | 199 | Actor 195 / P75 199 | rejected |
+| P89 ordinal | 204 | Actor 210 / P75 199 | rejected |
+| P90 plain Huber | 191 | Actor 201 / P75 199 | rejected |
+| P91 q90 | 195 | Actor 205 / P75 199 | rejected |
+| P92 heteroscedastic | 212 | Actor 182 / P75 199 | rejected |
+| P93 direct BCE seed0 | 212 | Actor 191 / P75 199 | rejected |
+| P94 BCE ensemble | 204 | Actor 189 / P75 199 | rejected |
+
+P81共有9,559 rows/735 events，query vs Actor event reduction=`54.39%`且scene nonincreasing=`10/10`。Trajectory
+集合共有1,089 units/601 events；P86 query AUROC=`.89624`、selected prevalence=`.34502`，但query相对Actor-only
+只减少`3.11%`且absolute reduction=`37.48%`，未达`.10/.50` gates。P90 query AUROC最高=`.92103`但也只有
+191 vs 201。多架构/监督一致否定原visited max-error target的task-conditioned增益，不以更多同类sweep补救。
+
 ### WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
 
 - 状态：`members trained/ensemble evaluator waiting prospective P85 rows`；member runs=
