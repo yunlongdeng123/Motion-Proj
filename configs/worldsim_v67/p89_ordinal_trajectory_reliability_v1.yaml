@@ -1,0 +1,60 @@
+schema_version: worldsim_v67.p89_ordinal_trajectory_reliability.v1
+output_schema_version: worldsim_v67.p89_ordinal_trajectory_reliability_summary.v1
+task_id: WS-V67-P89-ORDINAL-TRAJECTORY-RELIABILITY-01
+hypothesis_id: WS-V67-H-P89-001
+seed: 0
+role: prospective_ordinal_trajectory_level_visited_actor_reliability
+verdict_on_pass: supported_ordinal_trajectory_reliability
+verdict_on_failure: rejected_ordinal_trajectory_reliability
+source_rows:
+  run: worldsim_v67/WS-V67-P86-TRAJECTORY-SOURCE-PREP-01/20260829T213500Z__trajectory-source-prep-s0-r1
+  artifact: SOURCE_TRAJECTORY_ACTOR_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P85-TRAJECTORY-VISITED-RELIABILITY-01/20260829T213000Z__trajectory-visited-reliability-s0-r1
+  artifact: FRESH_TEST_H3P5_TRAJECTORY_ACTOR_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  ordinal_error_thresholds_m: [0.5, 1.0, 2.0, 4.0]
+  selection_threshold_index: 1
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 5000
+  pair_batch_size: 8192
+  regression_batch_size: 8192
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  pair_margin: 1.0
+  regression_weight: 0.25
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  visited_region_radius_m: 6.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.50
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.50
+locks:
+  source_and_model_protocol_frozen_before_test_target_rows_exist: true
+  fixed_error_thresholds_point5_1_2_4m_without_sweep: true
+  monotone_decreasing_cumulative_logits: true
+  one_meter_head_only_for_frozen_selection_endpoint: true
+  query_and_actor_only_same_deepset_ordinal_pairwise_and_regression_objectives: true
+  source_horizons_and_thresholds_equal_pair_weight: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  no_threshold_actor_cap_pooling_radius_coverage_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content_cvpr_2018/html/Fu_Deep_Ordinal_Regression_CVPR_2018_paper.html
+  - https://proceedings.mlr.press/v216/xu23a.html
+claim_boundary:
+  - ordinal_multi_threshold_visited_actor_set_reliability
+  - prospective_secondary_model_on_same_P81_test_cohort
+  - one_meter_fixed_coverage_endpoint_without_post_read_threshold_choice
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_or_safety_claim
