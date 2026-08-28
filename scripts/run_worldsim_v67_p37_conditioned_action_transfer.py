@@ -35,11 +35,21 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
     ).cuda()
     model.load_state_dict(artifact["state_dict"]); model.eval()
     mean = np.asarray(artifact["mean"], dtype=np.float32); scale = np.asarray(artifact["scale"], dtype=np.float32)
-    selection = _load(Path(config["confirmation"]["cache_path"]))
+    selection = dict(_load(Path(config["confirmation"]["cache_path"])))
     fraction = float(config["confirmation"]["selected_fraction"]); horizon = float(config["confirmation"]["horizon_seconds"])
-    scores = score_conditioned_action_compiler(model, selection, fraction, [horizon], mean, scale)
     p20, p20_mean, p20_scale = _load_p20(config, runs_root)
     p20_scores = score_listwise_compiler(p20, selection, p20_mean, p20_scale)
+    uses_frozen_p20_base = artifact.get("base_score") == "frozen_p20"
+    if uses_frozen_p20_base:
+        selection["base_score"] = p20_scores
+    scores = score_conditioned_action_compiler(
+        model, selection, fraction, [horizon], mean, scale,
+        base_score_key="base_score" if uses_frozen_p20_base else "qmean",
+        residual_budget_anchor_fraction=artifact.get("residual_budget_anchor_fraction"),
+        residual_budget_full_fraction=artifact.get("residual_budget_full_fraction"),
+        residual_budget_peak_fraction=artifact.get("residual_budget_peak_fraction"),
+        residual_budget_upper_anchor_fraction=artifact.get("residual_budget_upper_anchor_fraction"),
+    )
     frozen_model, frozen_mean, frozen_scale = _load_mean(config, runs_root)
     cases = budget_horizon_conditioned_case_offset_dataset(selection, p20_scores, [fraction], [horizon])
     frozen_offsets = score_case_offset(frozen_model, cases, frozen_mean, frozen_scale)
@@ -48,7 +58,8 @@ def run(config_path: Path, runs_root: Path, run_id: str) -> dict[str, object]:
         fraction, int(config["compiler"]["maximum_actions_per_case"]), float(config["compiler"]["minimum_case_coverage"]),
         scene_to_group, float(config["compiler"]["minimum_group_case_coverage"]),
     )
-    conditioned = group_coverage_constrained_selection(selection, scores, np.zeros(len(cases["target_offset"]), dtype=np.float32), *shared)
+    conditioned_offsets = frozen_offsets if uses_frozen_p20_base else np.zeros(len(cases["target_offset"]), dtype=np.float32)
+    conditioned = group_coverage_constrained_selection(selection, scores, conditioned_offsets, *shared)
     frozen = group_coverage_constrained_selection(selection, p20_scores, frozen_offsets, *shared)
     fixed = _within_case_selection(
         np.asarray(selection["target_cost"], dtype=np.float32), p20_scores,
