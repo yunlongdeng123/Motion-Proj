@@ -4,8 +4,11 @@
 
 ### WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01
 
-- 状态：`materialization then GPU training running`；P60 plain-Huber特征/模型/epochs/gates exact，scene `%5==4`、H2。
-- 不加ranking/contrastive/calibration/uncertainty loss；第五split只验证当前唯一支持方法能否复现。
+- 状态：`done/supported`；canonical=`20260829T123000Z__plain-actor-replication-s0-r1`；93 train scenes、
+  264,418 rows；32 confirmation scenes、45,459 H2 rows、1,507 exposed-unreliable rows。
+- Query/Actor-only Spearman=`.769725/.424100`（`+.345625`）；MAE=`.092651/.107035`（降低`13.44%`）；
+  AUROC=`.957408/.850937`；3/3 gates，27/32 scenes rank noninferior。wall=`71.720s`。
+- P60 plain-Huber特征/模型/epochs/gates exact；不加ranking/contrastive/calibration/uncertainty loss。
 
 ### WS-V67-P63-RANK-CONTRASTIVE-ACTOR-RELIABILITY-01
 

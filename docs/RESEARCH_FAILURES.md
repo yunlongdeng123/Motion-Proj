@@ -623,13 +623,15 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   1/4 gates，冻结representation不能被linear scalar head可靠读出。
 - 结论：不解冻encoder/延长head/扫contrastive配置；family关闭。下一编号=`V67-F50`。
 
-### V67-F50 — P64 plain-Huber Actor-reliability replication候选
+### V67-F50 — P64 plain-Huber Actor-reliability replication支持
 
-- 分类：`replication/plain-actor-reliability`；状态：`active_materialization_then_gpu_training`。
+- 分类：`replication/plain-actor-reliability`；状态：`supported_second_split`。
 - 调研迁移：WACV 2020 actor motion uncertainty采用可部署的feed-forward预测并强调state、velocity、acceleration、heading；
   当前资产没有raster/map supervision，因此P64不虚构大backbone，直接复现P60的低容量state-query MLP。
 - 方法：P60特征、plain Huber、架构、1500 epochs、三门exact；第五split scene `%5==4`、H2。
-- 锁：不加辅助loss/calibrator，不扫参；该population不是fresh confirmation。下一编号=`V67-F51`。
+- 结果：query/Actor-only Spearman=`.769725/.424100`、MAE=`.092651/.107035`（降低`13.44%`）、
+  AUROC=`.957408/.850937`；3/3 gates，27/32 scenes rank noninferior。
+- 结论：P60 plain-Huber在第二split复现；不加辅助loss/calibrator。该population不是fresh confirmation。下一编号=`V67-F51`。
 
 ### V6.6 当前边界（2026-08-28）
 

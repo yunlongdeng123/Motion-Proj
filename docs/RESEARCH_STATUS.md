@@ -19,7 +19,10 @@ pretrain后冻结，scalar head只做1000 epochs Huber。第四split query/Actor
 MAE=`.136035/.098264`、AUROC=`.820529/.961380`；1/4 gates拒绝，contrastive family关闭。
 
 检索WACV 2020 actor uncertainty工作后不再堆辅助项：P64把P60 plain-Huber合同exact复制到第五split scene `%5==4`、H2，
-用于判断P60的MAE/AUROC支持是否可复现。输入正在物化，随后直接GPU，confirmation I/O继续重叠。
+canonical=`run://worldsim_v67/WS-V67-P64-PLAIN-ACTOR-RELIABILITY-REPLICATION-01/
+20260829T123000Z__plain-actor-replication-s0-r1`。Query/Actor-only Spearman=`.769725/.424100`，MAE
+`=.092651/.107035`（降低`13.44%`），AUROC=`.957408/.850937`；3/3 gates复现。P60+P64共同支持plain-Huber
+given-`tau` Actor-state reliability；P61/P62/P63界定ranking/calibration/contrastive辅助项的不稳定边界。
 
 P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
 20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
