@@ -2,9 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P57-SAM-GRADIENT-HYBRID-01
+
+- 状态：`GPU training`；P10R2-H0.8 cache=`1034/1152` eligible、96 cases。
+- P53 data/model/gradient/budget/anchor/loss/seed/epochs不变；标准SAM `rho=.05`，无radius/ASAM sweep。
+- Confirmation=`(.375,.8s)`；相对P31 `+.005`且相对同read P53 `+.002`；5 gates。
+
+### WS-V67-P55-FLAT-MINIMUM-GRADIENT-HYBRID-01 result
+
+- 状态：`done/rejected`；canonical=`20260829T053000Z__flat-minimum-gradient-s0-r1`；训练
+  5,320 cases/59,608 rows，14 domains，averaged checkpoints=`1200`。
+- P10R4 exact=`328/328`；95 cases；coverage/minimum group=`.610526/.50`；8/8 scenes。
+- P55/P53/P31/fixed reduction=`.688694/.698266/.694007/.203041`；deltas over P53/P31=
+  `-.009572/-.005313`；3/5 gates；wall/peak GPU/RSS=`496.882s/.18637GiB/1.36549GiB`。
+
 ### WS-V67-P55-FLAT-MINIMUM-GRADIENT-HYBRID-01
 
-- 状态：`GPU training；P10R4-H0.8 materialization overlapped/done`；cache=`984/1152` eligible、96 cases。
+- 状态：`completed/rejected；P10R4-H0.8 materialization overlapped/done`；cache=`984/1152` eligible、96 cases。
 - P53 data/model/objective/budgets全部不变；只平均epochs 4,800..5,999的1,200 checkpoints，无validation window。
 - Confirmation=`(.375,.8s)`；除P31 `+.005`外，必须相对同read冻结P53 `+.002`；共5 gates。
 - P56 replication input已预取：P10R2-H0.8=`1034/1152` eligible、96 cases；selection read=false。

@@ -541,12 +541,24 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F43 — P55 fixed-tail weight-averaged gradient hybrid候选
 
-- 分类：`algorithm/flat-minimum-weight-averaging`；状态：`active_gpu_training`。
+- 分类：`algorithm/flat-minimum-weight-averaging`；状态：`closed_negative_after_single_trial`。
 - 调研迁移：SWAD（NeurIPS 2021）以flat minima缩小domain generalization gap；SWA（UAI 2018）沿训练轨迹平均权重。
 - 方法：P53完全不变，只固定平均最后20%=1,200 checkpoints；不用validation选窗口，不改学习率或训练长度。
 - 数据：P10R4-H0.8=`984/1152` eligible、96 cases；同一formal read加载冻结P53作method baseline。
 - 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`；不扫averaging start/schedule/gate。
-  下一编号=`V67-F44`。
+- 结果：P55/P53/P31 reduction=`.688694/.698266/.694007`；相对P53/P31=`-.009572/-.005313`；
+  exact/group/8 scenes通过但两decision gates失败，3/5 gates。
+- 结论：固定末20% averaging退化；不改window/schedule，不继续weight-averaging family。下一编号=`V67-F44`。
+
+### V67-F44 — P57 fixed-radius SAM gradient hybrid候选
+
+- 分类：`algorithm/sharpness-aware-optimization`；状态：`active_gpu_training`。
+- 调研迁移：SAM（ICLR 2021）优化邻域worst loss；ASAM（ICML 2021）提供scale-aware扩展。P57只用标准SAM，
+  固定`rho=.05`，不尝试ASAM或radius sweep。
+- 方法：P53 data/model/gradient/budgets/anchor/loss/seed/epochs不变；每epoch标准两步SAM。
+- 数据：P10R2-H0.8=`1034/1152` eligible、96 cases；同read比较冻结P53。
+- 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`。失败则关闭sharpness优化family。
+  下一编号=`V67-F45`。
 
 ### V6.6 当前边界（2026-08-28）
 

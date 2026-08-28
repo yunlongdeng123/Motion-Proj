@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P55 averaging rejected / P57 SAM training（2026-08-29）
+
+P55 canonical=`run://worldsim_v67/WS-V67-P55-FLAT-MINIMUM-GRADIENT-HYBRID-01/
+20260829T053000Z__flat-minimum-gradient-s0-r1`。固定平均1,200 checkpoints；P10R4-H0.8 exact=`328/328`，
+coverage/minimum group=`.610526/.50`，8/8 scenes。P55/P53/P31/fixed reduction=`.688694/.698266/.694007/.203041`；
+相对P53/P31=`-.009572/-.005313`，3/5 gates，verdict=`rejected_flat_minimum_gradient_hybrid`。不改窗口、不降门；
+fixed-tail averaging family关闭。
+
+调研SAM（ICLR 2021）/ASAM（ICML 2021）后，P57作一次不同优化机制恢复：P53合同不变，固定SAM radius `.05`，
+每epoch两次目标计算；不做ASAM/radius sweep。P10R2-H0.8 cache=`1034/1152` eligible、96 cases；同read比较
+P57/P53/P31，仍要求相对P53 `+.002`。当前单RTX 3090 GPU训练中。
+
 ## WorldSim V6.7 P53/P54 joint condition supported / P55 weight averaging training（2026-08-29）
 
 P53 canonical=`run://worldsim_v67/WS-V67-P53-JOINT-BUDGET-HORIZON-GRADIENT-HYBRID-01/
