@@ -11,6 +11,8 @@ flat/sharpness optimization family关闭。
 参考DSelect-k（NeurIPS 2021）与稀疏MoE（ICLR 2017），P58改变结构而非优化器：冻结P20为base expert，learned residual
 为第二expert；固定8-wide sigmoid case gate按输入连续控制residual强度。P53数据/gradient/budgets/anchor/loss不变。
 P6R-H0.8 cache=`868/1152` eligible、96 cases，与GPU训练重叠；同read要求相对P53 `+.002`、相对P31 `+.005`。
+GPU训练期间并行完成P59独立P3C-H0.8输入物化：`695/864` eligible、72 cases；selection read=false。
+它只在P58通过时用于冻结迁移复现，避免训练完成后GPU等待I/O；P58失败则不消费该quality。
 
 ## WorldSim V6.7 P55 averaging rejected / P57 SAM training（2026-08-29）
 

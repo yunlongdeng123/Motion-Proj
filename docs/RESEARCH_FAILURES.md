@@ -568,6 +568,7 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 调研迁移：DSelect-k（NeurIPS 2021）提供连续可微expert selection；sparse MoE（ICLR 2017）按输入路由专家。
 - 方法：P20 frozen base expert + P53形式residual expert；新增固定width8 sigmoid case gate；其余P53合同不变。
 - 数据：P6R-H0.8=`868/1152` eligible、96 cases；同read比较P53/P31。
+- 异步复现输入：P3C-H0.8=`695/864` eligible、72 cases；仅物化，P58通过前selection read=false。
 - 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`；不扫gate width/expert count/temperature。
   下一编号=`V67-F46`。
 

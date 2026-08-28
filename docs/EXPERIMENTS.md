@@ -7,6 +7,8 @@
 - 状态：`GPU training；P6R-H0.8 materialization overlapped/done`；cache=`868/1152` eligible、96 cases。
 - P53 residual expert/data/objective不变；新增固定width8 sigmoid case gate，连续选择P20 base/residual expert。
 - Confirmation=`(.375,.8s)`；相对P31 `+.005`且相对同read P53 `+.002`；记录gate min/mean/max；5 gates。
+- 为避免GPU训练后等待I/O，P59独立P3C-H0.8 replication cache已并行物化：`695/864` eligible、72 cases；
+  P58结果通过前不读取其selection metric，也不启动第二次训练。
 
 ### WS-V67-P57-SAM-GRADIENT-HYBRID-01 result
 
