@@ -59,7 +59,9 @@ conformal ordinal risk，但不声称conformal guarantee，也不在fresh read�
 P90进一步检验更直接的连续监督：复用P87的最近16个visited Actor Deep Sets结构，但完全移除event/pairwise loss，
 只以`log1p(max visited Actor error)`的Huber回归训练query与Actor-only模型；四个source horizons等量batch，固定
 8,000 epochs。该候选由P60/P64/P66中plain Huber迁移优于复合rank loss的既有证据驱动，并在P81 target rows出现前
-冻结；fresh selection唯一score为连续max-error预测，不在同一cohort挑loss、threshold或coverage。
+冻结；fresh selection唯一score为连续max-error预测，不在同一cohort挑loss、threshold或coverage。r1直接脚本入口
+因仓库根目录未进入`sys.path`而在import阶段退出，未建run/训练/read target；依据Python官方command-line文档以
+进程级`PYTHONPATH=.`恢复r2，登记工程失败`V67-F65`。r2现正约94% GPU训练；同时04/06 archive已完成扫描，10仍在IO。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 

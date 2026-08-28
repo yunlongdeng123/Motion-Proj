@@ -822,8 +822,19 @@ P87/P88分别以Deep Sets与set attention填充纯IO等待，均在target read�
 P89多阈值ordinal trajectory reliability同样在target read前冻结；当前无新增失败，下一编号仍为`V67-F65`。
 
 P90 plain continuous trajectory max-error Huber同样在target read前冻结，用于检验既有source结果中plain regression
-相对复合rank supervision的迁移优势；不修改P81 cohort、target或coverage，不进行loss/threshold sweep。当前无新增失败，
-下一编号仍为`V67-F65`。
+相对复合rank supervision的迁移优势；不修改P81 cohort、target或coverage，不进行loss/threshold sweep。
+
+### V67-F65 — P90 r1直接脚本入口缺少仓库级Python import path
+
+- attempted entry：从repo root直接执行`python scripts/run_worldsim_v67_p90_plain_trajectory_max_error.py ...`；
+- symptom：入口导入`motion_proj.worldsim_v67`时抛`ModuleNotFoundError: No module named 'motion_proj'`；
+- exposure：发生在argument parse、run创建、source load、epoch与P81/P85 target read之前，故r1不计scientific trial；
+- root cause/literature response：Python官方command-line文档规定直接执行文件时把脚本目录而非当前repo root放在
+  `sys.path`首位，并说明`PYTHONPATH`用于扩展module search path；与既有V65-F18同类；
+- resolution：仅为r2进程设置`PYTHONPATH=.`，不改代码、model、loss、cohort、target、coverage或gate；r2已恢复GPU训练；
+- prevention：后续repo-root脚本统一显式进程级`PYTHONPATH=.`，不修改全局shell环境。
+
+下一可用编号：`V67-F66`。
 
 ### V6.6 当前边界（2026-08-28）
 
