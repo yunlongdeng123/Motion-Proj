@@ -1,0 +1,75 @@
+schema_version: worldsim_v67.p20_listwise_action_compiler.v1
+task_id: WS-V67-P20-LISTWISE-ACTION-COMPILER-01
+hypothesis_id: WS-V67-H-P20-001
+seed: 0
+role: four_domain_decision_focused_train_then_action_task_untouched_legacy_confirmation
+inputs:
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p19_p2_quantile_actions.npz
+model:
+  hidden_dimensions: [32, 16]
+  maximum_residual_cost: 0.02
+  epochs: 5000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  selected_fraction: 0.25
+  huber_beta: 0.02
+  regression_weight: 0.10
+  ranking_weight: 0.25
+  listwise_weight: 1.0
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  soft_rank_temperature: 0.05
+  soft_selection_temperature: 0.25
+  domain_loss_variance_weight: 0.1
+  residual_regularization_weight: 0.01
+evaluation:
+  within_case_selected_fraction: 0.25
+  pairwise_minimum_target_gap: 0.02
+gates:
+  minimum_selected_cost_reduction: 0.35
+  minimum_selected_cost_reduction_delta_over_qmean: 0.02
+  minimum_pairwise_concordance: 0.70
+  minimum_nonincreasing_scene_support: 5
+confirmation_materialization:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+  data:
+    inputs:
+      evidence_run: worldsim_v65/WS-V65-P3C-CALIBRATION-EVIDENCE-01/20260827T150000Z__calibration-evidence-s0-r1
+      native_run: worldsim_v65/WS-V65-P3C-CALIBRATION-NATIVE-SIDECAR-01/20260827T150000Z__calibration-native-aggregate-s0-r1
+      native_partition: fresh_selection
+      processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+      risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+      risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+    native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+    trajectory: {future_frame_count: 20, horizon_seconds: 2.0, visited_corridor_radius_m: 1.5, minimum_visited_points_per_action: 16}
+    sampling: {evaluation_points_per_unit: 8192, seed: 0}
+    quantile_levels: [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 1.0]
+    action_lattice:
+      horizon_seconds: 2.0
+      progress_ratios: [0.25, 0.50, 0.75, 1.00]
+      lateral_offsets_m: [-1.50, 0.00, 1.50]
+      include_stop_for_reporting_only: true
+    scenes:
+      - {name: scene-0030, processed_index: 29}
+      - {name: scene-0055, processed_index: 52}
+      - {name: scene-0453, processed_index: 367}
+      - {name: scene-0501, processed_index: 393}
+      - {name: scene-1046, processed_index: 786}
+      - {name: scene-1085, processed_index: 825}
+locks:
+  prediction_object: fixed_trajectory_action_set_cost
+  compiler_frozen_before_confirmation_action_target_materialization: true
+  development_domains: 4
+  residual_bound_architecture_loss_or_gate_sweep: false
+  confirmation_action_task_untouched_by_v67_p15_p20: true
+  planner_policy_collision_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F08, V67-F07, V65-F19]
+claim_boundary:
+  - bounded_four_domain_listwise_decision_focused_trajectory_action_compiler
+  - action_task_untouched_but_globally_consumed_legacy_confirmation
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim

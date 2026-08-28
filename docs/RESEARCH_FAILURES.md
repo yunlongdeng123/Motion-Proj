@@ -134,7 +134,7 @@ Spearman/pairwise/selected reduction delta=`-0.007213/-0.044718/-0.001150`，是
 
 ### V67-F07 — 学习替代trajectory qmean持续破坏跨域决策排序
 
-- 分类：`algorithm/representation-and-authority`；状态：`recovering_independent_confirmation`。
+- 分类：`algorithm/representation-and-authority`；状态：`closed_negative_after_independent_confirmation`。
 - 观察：P16 two-domain bounded action-ID adapter在P9为3/6 gates；P17 monotone quantile pool为1/6 gates。P17 learned/qmean
   Spearman=`0.645502/0.658731`、pairwise=`0.749190/0.779650`、selected reduction=`0.387839/0.418184`。
 - 根因：trajectory corridor内qmean已是强、低容量且可迁移的充分排序统计；action identity和自由分布混合分别引入
@@ -150,6 +150,19 @@ Spearman/pairwise/selected reduction delta=`-0.007213/-0.044718/-0.001150`，是
 P18 fixed-qmean selective compiler在P9以固定49.30% coverage把selected-cost reduction从`0.418184`提高到`0.487876`
 （delta=`+0.069693`），6/6 scenes不退化、4/4 gates通过。该结果使F07进入independent confirmation，尚不因consumed
 selection单独关闭；P19保持compiler/coverage/gates冻结，不在P9继续试验。
+
+P19 independent结果保留relative gain：qmean `0.295088→0.350899`（`+0.055811`）、authorized positive rate=
+`0.805556`且6/6 scenes不退化；但冻结absolute reduction `0.45`门失败，故3/4正式拒绝并关闭F07，不降门、不改coverage、
+不做第二P19。下一方法P20改为四域listwise decision-focused action ordering，不是selective-gate recovery。
+
+### V67-F08 — P20 listwise action compiler候选
+
+- 分类：`algorithm/decision-focused-ranking`；状态：`active_first_trial_frozen`。
+- 动机：F07显示case authority可稳定提高relative benefit，但冻结qmean ordering的cohort ceiling使P19绝对门失败。
+- 检索/迁移：ICML 2022将decision-focused learning表述为learning-to-rank；NeurIPS 2019/2021提供可微排序/top-k代理。
+  P20以四开发域、case-centered `±0.02` residual和soft top-k target cost直接训练action set。
+- 防重复：不扫residual bound、architecture、temperature、loss weight、selected fraction或gate；V67 P1 action target在模型
+  freeze后一次读取。下一编号=`V67-F09`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -2,6 +2,13 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P19-INDEPENDENT-AUTHORITY-CONFIRM-01
+
+- 状态：`done/rejected`；canonical=`20260828T131500Z__independent-authority-s0-r1`；冻结P18 artifact先加载，随后
+  materialize V65 P2 independent legacy 829/864 actions；72 cases / 36 authorized / coverage 0.5。
+- Authority/ungated qmean reduction=`0.350899/0.295088`，delta=`+0.055811`；benefit Spearman=`0.395975`，positive
+  rate=`0.805556`，6/6 scenes不退化。绝对0.45门失败，3/4 gates；wall/peak GPU=`9.9023s/0.03917GiB`。
+
 ### WS-V67-P18-SELECTIVE-AUTHORITY-COMPILER-01
 
 - 状态：`done/supported_method_selection`；canonical=`20260828T130500Z__selective-authority-s0-r1`；冻结qmean action

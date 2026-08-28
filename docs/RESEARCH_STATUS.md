@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P19 independent authority rejected / P20 listwise GPU training（2026-08-28）
+
+P19 canonical=`run://worldsim_v67/WS-V67-P19-INDEPENDENT-AUTHORITY-CONFIRM-01/
+20260828T131500Z__independent-authority-s0-r1`。冻结P18 compiler后materialize 829/864 eligible actions；72 cases中固定36
+授权。Frozen authority仍把qmean reduction从`0.295088`提高到`0.350899`（delta=`+0.055811`），positive-benefit=
+`0.805556`、6/6 scenes不退化，但绝对reduction未达冻结`0.45`；3/4 gates，正式拒绝且不降门。`V67-F07
+closed_negative_after_independent_confirmation`；保留跨两cohort稳定relative gain，不声明independent authority通过。
+
+检索ICML 2022 decision-focused learning-to-rank、NeurIPS 2019 differentiable sorting与NeurIPS 2021 PiRank后，P20不再只
+预测“是否授权”，而在P10V/P10X/P9/P2四开发域训练`32/16`有界`±0.02` action residual；pairwise + soft top-k listwise
+loss直接优化固定bottom-quartile action set cost。模型冻结后才读取V67 P1六场景action targets；一次GPU训练，不扫参。
+
 ## WorldSim V6.7 P18 selective authority supported / P19 independent confirmation（2026-08-28）
 
 P18 canonical=`run://worldsim_v67/WS-V67-P18-SELECTIVE-AUTHORITY-COMPILER-01/
