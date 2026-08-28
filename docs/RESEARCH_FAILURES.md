@@ -980,6 +980,10 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F72`。
 
+P106在archive locator期间只补原source-scene modulus保留的现有processed remainder，将P102从4/5 source扩为all-source；
+目标/architecture/loss/epochs/development/gates不变，不进入P103，也不扫source subset。prep→GPU流水线active，无新增
+failure；下一编号仍为`V67-F72`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

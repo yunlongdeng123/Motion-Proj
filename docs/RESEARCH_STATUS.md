@@ -87,6 +87,11 @@ P105 r2最终fixed50 query/Actor/P75=`6/27/13`，absolute reduction=`87.36%`、q
 `.89704/.64036`，4/4 gates通过，故`V67-F70`由single multitask recovery解决；但它仍不及P102的4，不替换P103。
 local-supervision family至此关闭，不扫auxiliary weight。P96/P103协议与checkpoint保持不变。
 
+P106只检验一次best-model data scaling：复用P104已物化的102个source scenes，并仅补原`scene_index % 5 == 0`
+的现有processed source remainder，使P102 hierarchical模型从4/5扩为all-source；consumed development、目标、模型、
+6,000 epochs和fixed50完全不变。prep与P96 locator并行，rows ready即自动接续GPU；不扫source subset/epochs/结构，
+也不将P106加入已冻结P103。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

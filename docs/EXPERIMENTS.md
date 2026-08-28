@@ -136,6 +136,16 @@
   `.89704/.64036`，4/4 gates。它解决P104 relative failure但未超过P102的4；因此不替换P103，并关闭auxiliary weight/
   sampling/pooling sweep。
 
+### WS-V67-P106-ALL-SOURCE-HIERARCHICAL-01
+
+- 状态：`active/prep then GPU`；prep=`20260830T040000Z__all-source-hierarchical-prep-s0-r1`，model=
+  `20260830T040500Z__all-source-hierarchical-s0-r1`自动等待rows ready。
+- 只改变source data volume：P104/P102原102-scene（4/5）source加上现有processed中`scene_index % 5 == 0`
+  remainder；consumed development保持9,559 rows。
+- 模型、42维hierarchical temporal→Actor表示、P95 total-flip BCE、6,000 epochs、four-horizon batches、fixed50与4 gates
+  完全复用P102；不扫subset/epoch/architecture/loss。
+- P106是development-only data scaling，P102 checkpoint仍是P103唯一prospectively frozen secondary；P96/P103不变。
+
 ### WS-V67-P81--P94 fresh result synthesis
 
 | run | query selected events | Actor-only / baseline | verdict |
