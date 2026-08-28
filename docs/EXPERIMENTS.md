@@ -97,7 +97,7 @@
 
 ### WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P3L-001`；formal run尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P3L-001`；verdict=`supported_legacy_selection_local_geometry_head`。
 - Train=P10V consumed 6 scenes；selection=P10X consumed 6 scenes（P2N已读）；两者scene-disjoint。selection不再用于
   改architecture、seed、feature或threshold；通过后另选独立cohort确认。
 - 固定特征：q0 mean/p90、log boundary/hit/current/swept counts、hit/current density、current/swept ratio。
@@ -106,6 +106,17 @@
 - 外部迁移证据与边界：`docs/autoresearch/worldsim_v66/P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
 - 实现：`motion_proj/worldsim_v66/local_geometry_head.py`、
   `scripts/run_worldsim_v66_p3l_local_geometry_head.py`；模型artifact不含hash/checksum/fingerprint。
+- Canonical：`run://worldsim_v66/WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01/
+  20260828T091036Z__local-geometry-head-s0-r1`；train/selection rows=`409/891`，train conflict/clean=`243/166`。
+- selection AUROC/AUPRC=`0.652365/0.692384`；相对deterministic=`+0.152365/+0.133461`，相对q0=
+  `+0.108620/+0.079510`；6/6 scenes above chance；4/4 gates PASS。
+- 资源：wall=13.0688s，peak GPU=0.02359GiB，RSS=1.08285GiB；`V66-F01 recovering`，需独立no-refit确认。
+
+### WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01
+
+- 状态：`pending_freeze`；hypothesis=`WS-V66-H-P3C-001`。
+- 目标：另一独立V65 cohort加载P3L同一checkpoint/normalization，exact-once验证threshold-free ranking与scene support。
+- 禁止refit、seed/feature/architecture/threshold sweep；输出仍无Actor existence authority。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

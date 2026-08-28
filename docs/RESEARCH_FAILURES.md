@@ -18,8 +18,8 @@
   hazard 轴分离。继承 `V64-F28`：手工低维 collision critic 不是正式 RL。继承 `V1-F06`：稀疏 cut-in pool
   不得成为主数据入口或论文成立条件。
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
-  不得替代 fresh selection/confirmation。`V66-F01 active`记录deterministic injected certificate对natural local
-  geometry conflict的0 recall；下一可用编号=`V66-F02`。
+  不得替代 fresh selection/confirmation。`V66-F01 recovering`记录deterministic injected certificate对natural local
+  geometry conflict的0 recall，以及P3L single selection恢复信号；下一可用编号=`V66-F02`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
   `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
@@ -46,7 +46,7 @@
 
 ### V66-F01 — deterministic injected certificate不覆盖natural Actor-owned local geometry conflict
 
-- 分类：`algorithm/evaluation`；状态：`active`。
+- 分类：`algorithm/evaluation`；状态：`recovering`（legacy single selection通过，独立confirmation待执行）。
 - 观察：P2N独立legacy cohort含891 actor-unit，498个存在至少一个target observed-FREE boundary point；P2 injected
   certificate对这些local conflicts的recall=`0`、AUROC=`0.5`、AUPRC=`0.558923`。q0有弱signal但不足以单独作为
   authority：AUROC/AUPRC=`0.543745/0.612874`，rate Spearman=`0.267650`。
@@ -61,12 +61,14 @@
   Cam4DOcc 4D instance occupancy以及CVPR evidential occupancy的unknown/contradiction建模，落地为两级certificate而非
   替换backbone。详见`P3L_INSTANCE_EVIDENCE_MIGRATION_FREEZE.md`。
 - 证据：`WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01` /
-  `20260828T090228Z__natural-actor-conflict-s0-r1`，实现commit=`a92093b`。
+  `20260828T090228Z__natural-actor-conflict-s0-r1`；恢复证据=`WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01` /
+  `20260828T091036Z__local-geometry-head-s0-r1`。P3L selection不能单独关闭本failure。
 
 下一可用编号：`V66-F02`。
 
-P3L固定8维/2x32/seed0实现已就绪，尚未创建formal run或读取P10V natural actor labels；`V66-F01`保持active，
-下一编号仍为`V66-F02`。禁止以实现完成宣称恢复。
+P3L固定8维/2x32/seed0 single selection已完成：P10X AUROC/AUPRC=`0.652365/0.692384`，相对deterministic
+增加`+0.152365/+0.133461`，6/6 scenes above chance。`V66-F01`状态转为`recovering`，尚需独立cohort no-refit
+确认才可关闭；下一编号仍为`V66-F02`。禁止在P10X继续扫参或解析threshold。
 
 ### V6.5 终态边界（2026-08-28）
 
@@ -188,7 +190,7 @@ P3L固定8维/2x32/seed0实现已就绪，尚未创建formal run或读取P10V na
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
 | V6.5 | visited-state reliability ranking与单调校准可迁移；one-shot direct action selection benefit失败并终止 | q0只可作给定轨迹访问状态的reliability diagnostic；禁止第二confirmation、阈值/lattice/critic救援 | `V65-F01`–`V65-F19`；`V65_ARXIV_TECHNICAL_REPORT.md`；`ARXIV_EVIDENCE_INDEX.md` |
-| V6.6 | active：validity-hazard factorization与Actor-preserving artifact compiler；当前仅P1-D mechanism atlas | 已消费P10V只作Tier-L；synthetic hazard attribute不冒充真实危险轨迹；下一failure id=`V66-F01` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
+| V6.6 | active：Actor-preserving两级certificate；P3L legacy selection支持local geometry ranking | deterministic Actor existence与learned local geometry authority分离；独立confirmation待执行；下一failure id=`V66-F02` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记

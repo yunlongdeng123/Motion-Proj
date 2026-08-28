@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.6 P3L legacy selection supported / independent confirmation next（2026-08-28）
+
+状态：`v66_p3l_legacy_selection_supported_independent_confirmation_next`；canonical=
+`run://worldsim_v66/WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01/20260828T091036Z__local-geometry-head-s0-r1`；
+verdict=`supported_legacy_selection_local_geometry_head`。
+
+P10V train含409 actor-unit（conflict/clean=`243/166`），P10X single selection含891（`498/393`）。固定head在
+selection上AUROC/AUPRC=`0.652365/0.692384`，相对deterministic constant增加`+0.152365/+0.133461`，
+相对q0增加`+0.108620/+0.079510`；6/6 evaluable scenes均above chance，4/4 gates通过。wall=`13.07s`、
+GPU=`0.02359GiB`、RSS=`1.08285GiB`。无feature/architecture/seed/threshold sweep。
+
+这只支持consumed legacy local-geometry ranking；模型只能为local REPAIR/ABSTAIN排序，Actor existence authority保持
+关闭。`V66-F01`进入recovering但尚未关闭，下一步冻结另一独立V65 cohort，加载同一checkpoint/normalization exact-once
+确认，不refit、不解析threshold。结果：`docs/autoresearch/worldsim_v66/P3L_LOCAL_GEOMETRY_HEAD_RESULT.md`。
+
 ## WorldSim V6.6 P3L local geometry head implementation ready（2026-08-28）
 
 状态：`v66_p3l_local_geometry_head_implementation_ready`。已实现冻结8维instance-evidence summary、2x32 MLP、

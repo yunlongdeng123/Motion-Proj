@@ -3,9 +3,9 @@
   "updated_at": "2026-08-28",
   "branch": "research/worldsim-v6.6-harp-compiler",
   "base_commit": "288fa9f653dc5f2ab55c0612445f3c480b1e2176",
-  "status": "v66_p2n_deterministic_natural_ceiling_p3l_frozen",
-  "active_task_id": "WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01",
-  "active_hypothesis_id": "WS-V66-H-P3L-001",
+  "status": "v66_p3l_legacy_selection_supported_independent_confirmation_next",
+  "active_task_id": "WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01",
+  "active_hypothesis_id": "WS-V66-H-P3C-001",
   "resource": {
     "gpu": "1x RTX 3090",
     "multi_gpu_required": false,
@@ -18,10 +18,10 @@
     "planning_policy_closed_loop_rl_safety": false
   },
   "failure_ledger_refs": ["V64-F28", "V65-F19", "V1-F06"],
-  "failure_ledger_delta": "V66-F01_active",
+  "failure_ledger_delta": "V66-F01_recovering_independent_confirmation_pending",
   "next_failure_id": "V66-F02",
-  "last_run": "run://worldsim_v66/WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01/20260828T090228Z__natural-actor-conflict-s0-r1",
-  "last_verdict": "diagnosed_natural_actor_local_geometry_conflict",
+  "last_run": "run://worldsim_v66/WS-V66-P3L-ACTOR-LOCAL-GEOMETRY-HEAD-01/20260828T091036Z__local-geometry-head-s0-r1",
+  "last_verdict": "supported_legacy_selection_local_geometry_head",
   "learned_p3": "locked_not_executed_no_relative_headroom_on_deterministic_development",
-  "next_action": "implement one low-capacity instance-evidence local geometry head and run single P10X selection"
+  "next_action": "freeze one independent V65 cohort and run exact-once no-refit local geometry confirmation"
 }
