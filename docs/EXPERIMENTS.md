@@ -146,7 +146,8 @@
 
 ### WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01
 
-- 状态：`implementation_ready`；consumed legacy matched action-distribution audit，不是physical repair或fresh confirmation。
+- 状态：`done`；verdict=`supported_consumed_legacy_fixed_budget_exposure_audit`；consumed legacy matched
+  action-distribution audit，不是physical repair或fresh confirmation。
 - 固定50% actor-local action budget；N0/Q0/D0/L0/O0均保留全部Actor，只有local geometry repair/abstain排序不同。
 - primary目标是unhandled conflict exposure相对N0下降，同时Actor/hazard proxy distribution exact、world yield=1、
   no all-UNKNOWN/easier-world collapse。
@@ -154,6 +155,19 @@
   scene yield=1；禁止budget/threshold sweep。
 - 实现：`motion_proj/worldsim_v66/hazard_distribution.py`、`scripts/run_worldsim_v66_p7_hazard_distribution.py`；
   配置：`configs/worldsim_v66/p7_hazard_preserving_distribution_v1.yaml`。
+- Canonical：`run://worldsim_v66/WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01/
+  20260828T092919Z__fixed-budget-distribution-s0-r1`；rows/conflicts/budget=`581/307/290`。
+- exposure reduction：N0/D0=`0/0`，Q0=`0.628664`，L0=`0.684039`，O0=`0.944625`；L0 6/6 gates PASS。
+- L0 Actor retention/removed/hazard shift/scene yield=`1/0/0/1`；Q0 scene yield=`0.8333`；wall=0.0233s，
+  RSS=0.48520GiB。`V66-F02 active`：triage不等于physical repair。
+
+### WS-V66-P7R-SENSOR-SUPPORTED-ACTOR-REPAIR-01
+
+- 状态：`migration_frozen`；继续使用P7 L0固定290 action states，不改budget/model/score。
+- acted Actor boundary只保留same-Actor motion-compensated sensor-hit primitive，其余转UNKNOWN；canonical collision
+  shell、ID/class/track/trajectory/hazard保持，target只评估。
+- gates：point conflict reduction>=0.50、Actor/shell/ID/trajectory retention=1、removed=0、hazard shift=0、overall/clean
+  boundary retention>=0.40、scene yield=1。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

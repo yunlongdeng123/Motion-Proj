@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.6 P7 triage supported / P7R physical-surface recovery frozen（2026-08-28）
+
+状态：`v66_p7_triage_supported_p7r_sensor_surface_recovery_frozen`；canonical=
+`run://worldsim_v66/WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01/20260828T092919Z__fixed-budget-distribution-s0-r1`；
+verdict=`supported_consumed_legacy_fixed_budget_exposure_audit`；新增`V66-F02 active`。
+
+固定290/581 action budget下，L0处理210/307 conflicts，exposure reduction=`0.684039`，优于Q0的`0.628664`；
+emitted local fraction=`0.500861`、Actor retention=1、removed=0、hazard proxy shift=0、scene yield=1，6/6 gates通过。
+Q0 scene yield仅`0.8333`，显示actor-blind q0可把某一scene local geometry全部送入action；L0未发生。
+
+但P7没有改physical geometry，handled只能称triage，不能称repair或RL-ready。按卡点检索NeuRAD、Neural Scene Graphs、
+Cam4DOcc及其official code后，P7R冻结为sensor-supported actor-local surface repair：沿用L0固定action set，将acted Actor
+boundary中无same-Actor motion-compensated hit的primitive转UNKNOWN；canonical Actor collision shell/track/hazard保持。
+target只作评估。迁移：`docs/autoresearch/worldsim_v66/P7R_SENSOR_SUPPORTED_REPAIR_MIGRATION_FREEZE.md`。
+
 ## WorldSim V6.6 P7 fixed-budget distribution audit implementation ready（2026-08-28）
 
 状态：`v66_p7_fixed_budget_distribution_audit_implementation_ready`。已冻结50% local-action budget与N0/Q0/D0/L0/O0

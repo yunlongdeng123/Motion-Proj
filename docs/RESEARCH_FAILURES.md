@@ -19,7 +19,8 @@
   不得成为主数据入口或论文成立条件。
 - P1-D 的 synthetic hazard attribute 不是物理 cut-in/collision edit；P10V 六场景已消费，只能作 mechanism，
   不得替代 fresh selection/confirmation。`V66-F01 resolved`记录deterministic injected certificate对natural local
-  geometry conflict的0 recall，以及P3L/P3C两级certificate恢复；下一可用编号=`V66-F02`。
+  geometry conflict的0 recall，以及P3L/P3C两级certificate恢复。`V66-F02 active`记录P7 triage尚未证明physical
+  repair；下一可用编号=`V66-F03`。
 - 本次 P0 只做最小研究冻结，无 smoke/regression matrix、无新 hash/checksum/fingerprint；failure ledger delta=`none`。
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
   `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
@@ -65,7 +66,7 @@
   `20260828T091036Z__local-geometry-head-s0-r1`与`WS-V66-P3C-INDEPENDENT-LOCAL-GEOMETRY-CONFIRM-01` /
   `20260828T091611Z__independent-local-geometry-confirm-s0-r1`。恢复不改变deterministic certificate的原始0 recall。
 
-下一可用编号：`V66-F02`。
+下一可用编号：`V66-F03`。
 
 P3L固定8维/2x32/seed0 single selection已完成：P10X AUROC/AUPRC=`0.652365/0.692384`，相对deterministic
 增加`+0.152365/+0.133461`，6/6 scenes above chance。`V66-F01`状态转为`recovering`，尚需独立cohort no-refit
@@ -87,6 +88,25 @@ P6 formal 6/6 gates通过：581 actor states全部保留，metadata complete=1�
 
 P7 fixed-budget audit已在读取本阶段指标前冻结，formal run尚未创建。动作只作triage estimand，禁止把预测处理数冒充
 物理修复数；无新failure，下一可用编号仍为`V66-F02`。
+
+### V66-F02 — fixed-budget conflict triage不等于natural physical repair
+
+- 分类：`algorithm/evaluation`；状态：`active_recovery_frozen`。
+- 观察：P7 L0在固定290 action budget下处理210/307 conflict states，exposure reduction=`68.40%`且Actor/hazard proxy
+  保留；但`physical_geometry_mutated=false`，所以handled只是候选，不是实际修复。Q0还出现scene yield=`5/6`，说明简单
+  actor-blind ranking可能把一个scene local geometry全部送入action并造成easier-world风险。
+- 推翻项：推翻“ranking/triage通过即可称P7 physical distribution成功”；不推翻P3L/P3C ranking或P6 package capability。
+- 防重复/复开：禁止把action count写成repaired artifact count，禁止调50% budget/score threshold，禁止删Actor或用target
+  label决定primitive retention。
+- 外部检索迁移：NeuRAD sensor-aware dynamic Actor、Neural Scene Graphs track-based static/dynamic decomposition、
+  Cam4DOcc instance 4D occupancy，迁移为“canonical Actor collision shell保持 + motion-compensated sensor-supported local
+  surface repair”。详见`P7R_SENSOR_SUPPORTED_REPAIR_MIGRATION_FREEZE.md`。
+- 合法恢复：沿用P7 L0 action set；acted boundary只保留same-Actor motion-compensated hit，target仅评估；同时过conflict
+  reduction、clean/overall geometry yield、Actor/shell/track/hazard preservation gates。
+- 证据：`WS-V66-P7-HAZARD-PRESERVING-DISTRIBUTION-01` /
+  `20260828T092919Z__fixed-budget-distribution-s0-r1`。
+
+下一可用编号：`V66-F03`。
 
 ### V6.5 终态边界（2026-08-28）
 
