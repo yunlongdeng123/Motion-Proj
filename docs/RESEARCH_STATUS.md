@@ -22,6 +22,10 @@ group-balanced ListNet cross entropy直接匹配每个scene×horizon的rank prob
 对应rank一一配对，以组内normalized cost gap加权pairwise logistic，所有group等权。该目标只约束最终50%选择边界，区别于
 P74 BCE、P76 pointwise rank和P77全list概率；temperature固定`.10`，模型仍在fresh rows出现前冻结。
 
+若五shard仍未完成，P79进一步把`.8/1.5/2.5/3.0s`视作四个source domains。参考ICML 2021 V-REx与ICML 2022
+Fishr，训练目标为四horizon等权rank risk加固定`.10` risk-variance penalty；这是轻量V-REx-inspired horizon
+extrapolation，不冒充完整Fishr，也不扫penalty。P79同样必须在P75 H3.5 rows出现前冻结。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC

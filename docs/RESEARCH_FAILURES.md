@@ -750,6 +750,9 @@ P76 dense percentile-rank与P77 group-balanced ListNet均只读source rows，并
 P78 fixed-coverage boundary-pair目标也在同一blind时段预注册；只有P77结束且P75数据仍未ready才执行。它不复开P74 BCE，
 也不更改P75 cohort/gates。当前无新增失败，下一编号仍为`V67-F61`。
 
+P79将horizon作为domain做固定risk-variance regularization，只在P78结束且fresh rows仍未ready时运行；明确不包装为完整
+Fishr。当前无新增失败，下一编号仍为`V67-F61`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P79-HORIZON-VREX-ACTOR-SELECTOR-01
+
+- 状态：`frozen / queued after P78 if IO still active`；四个source horizons等权percentile-rank Huber risk，加固定`.10`
+  horizon-risk variance penalty；query/Actor-only同容量、1,500 epochs。方法边界是V-REx-inspired，不称完整Fishr。
+- P75 fresh rows前冻结；same-cohort follow-up需相对Actor/P75各降低5%，并相对P76--P78更优者降低2%；不扫penalty。
+
 ### WS-V67-P78-BOUNDARY-PAIR-ACTOR-SELECTOR-01
 
 - 状态：`frozen / queued after P77 if IO still active`；每个source scene×horizon内将最低/最高半集按rank一一配对，
