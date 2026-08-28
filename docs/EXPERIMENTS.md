@@ -194,16 +194,19 @@
 
 ### WS-V66-P8-REACTIVE-ACTOR-01
 
-- 状态：`migration_frozen`；hypothesis=`WS-V66-H-P8D-001`；角色是独立deterministic reactive-Actor capability，
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P8D-001`；角色是独立deterministic reactive-Actor capability，
   不能恢复P7或解锁P9/RL。
 - 外部迁移：UniSim dynamic Actor/closed-loop sensor simulation、SMARTS multi-agent behaviors、Waymax固定agent接口；
   只迁移保留identity/logged path的固定纵向响应，不引入learned simulator/planner/policy optimizer。
 - 六场景各按metadata固定选择highest median-speed且>=6 samples Actor；synthetic AV从12m bumper headway出发并在3s
   制动。X0 constant-speed；X1沿同一logged polyline执行固定IDM-style bounded response。
-- 固定参数：dt=0.1s、latency=0.5s、decel=3、max accel=2、max jerk=6、headway=12m；不扫参数。
+- 固定参数：dt=0.1s、latency=0.5s、decel=3、max accel=2、max jerk=6、headway/min gap=`12/2m`、IDM
+  time headway/exponent=`1s/4`、AV decel=2；horizon解析延长到X0 collision后5s；不扫参数。
 - gate：X1 collision steps少于X0、min gap>=0、accel/jerk bounded、path deviation=0、identity/lifecycle exact、
   latency在[0.3,1.0]s；至少5/6 scenes。冻结：
   `docs/autoresearch/worldsim_v66/P8_REACTIVE_ACTOR_MIGRATION_FREEZE.md`。
+- 实现：`motion_proj/worldsim_v66/reactive_actor.py`、`scripts/run_worldsim_v66_p8_reactive_actor.py`；配置：
+  `configs/worldsim_v66/p8_reactive_actor_v1.yaml`。formal run尚未创建。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

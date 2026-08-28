@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.6 P8 deterministic reactive-Actor implementation ready（2026-08-28）
+
+状态：`v66_p8_reactive_actor_implementation_ready`。已实现P6 `ACTORS.jsonl`六场景metadata-only固定选择、X0
+constant-speed、X1 jerk/acceleration-bounded IDM-style响应和AV lead-brake干预；输出selected Actors、双臂trajectory、
+per-scene metrics与summary。低速场景的horizon只由固定12m headway、初速和AV deceleration解析确定，确保X0有完整
+collision observation，不读取X1 outcome；空间位置沿logged polyline及其terminal tangent extension生成。
+
+全部固定参数已补全到freeze/config；不扫Actor、headway、controller或horizon。P8是短CPU capability audit，当前没有
+合法的GPU训练任务：P7已终止，P9/RL锁定。下一步只做`py_compile`/config解析后一次formal run。
+
 ## WorldSim V6.6 P7 surface family terminal negative / P8 independent capability frozen（2026-08-28）
 
 状态：`v66_p7_surface_family_terminal_negative_p8_capability_frozen`；P7R2 canonical=

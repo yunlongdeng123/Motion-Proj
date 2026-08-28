@@ -29,7 +29,10 @@ planner or policy optimizer.
 - X0: selected Actor continues at its frozen initial constant speed.
 - X1: selected Actor follows the same logged polyline using one deterministic IDM-style bounded longitudinal response.
 - Fixed constants: `dt=0.1s`, reaction latency `0.5s`, comfortable deceleration `3m/s^2`, maximum acceleration
-  `2m/s^2`, maximum jerk `6m/s^3`, initial headway `12m`, AV brake start `3s`. No parameter sweep.
+  `2m/s^2`, maximum jerk `6m/s^3`, initial headway `12m`, minimum gap `2m`, IDM time headway `1s` and exponent
+  `4`, AV brake start `3s`, AV deceleration `2m/s^2`, and `5s` post-X0-collision observation. No parameter sweep.
+- Spatial rollout stays on the observed polyline and uses its terminal tangent only after logged arc length is exhausted;
+  this extension is reported explicitly and is not treated as new map or trajectory evidence.
 - Outputs: both trajectories, per-scene gap/collision/kinematic metrics and pooled summary.
 
 ## Gates

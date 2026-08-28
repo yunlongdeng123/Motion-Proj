@@ -1,0 +1,43 @@
+schema_version: worldsim_v66.p8_reactive_actor.v1
+task_id: WS-V66-P8-REACTIVE-ACTOR-01
+hypothesis_id: WS-V66-H-P8D-001
+seed: 0
+role: independent_synthetic_reactive_actor_capability
+source:
+  package_run: worldsim_v66/WS-V66-P6-HARP-BAKE-01/20260828T092421Z__harp-bake-s0-r1
+scenes: [scene-0001, scene-0219, scene-0402, scene-0594, scene-0822, scene-1110]
+selection:
+  minimum_samples: 6
+  minimum_motion_mps: 0.001
+  ranking: highest_median_logged_speed_then_sample_count_then_actor_key
+simulation:
+  dt_s: 0.1
+  reaction_latency_s: 0.5
+  comfortable_deceleration_mps2: 3.0
+  maximum_acceleration_mps2: 2.0
+  maximum_jerk_mps3: 6.0
+  initial_headway_m: 12.0
+  minimum_gap_m: 2.0
+  idm_time_headway_s: 1.0
+  idm_exponent: 4.0
+  av_brake_start_s: 3.0
+  av_deceleration_mps2: 2.0
+  av_length_m: 4.5
+  post_collision_seconds: 5.0
+  minimum_response_latency_s: 0.3
+  maximum_response_latency_s: 1.0
+gates:
+  minimum_supported_scenes: 5
+locks:
+  parameter_sweep: false
+  actor_selection_uses_outcome: false
+  logged_path_terminal_tangent_extension: true
+  physical_geometry_mutation: false
+  p7_recovery_or_p9_unlock: false
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - synthetic_lead_brake_reactive_actor_capability_only
+  - retained_identity_and_logged_path_with_terminal_tangent_extension
+  - does_not_recover_p7_physical_repair_or_unlock_p9
+  - no_natural_interaction_planning_policy_learning_rl_or_safety_claim
+failure_ledger_refs: [V66-F02, V65-F19]
