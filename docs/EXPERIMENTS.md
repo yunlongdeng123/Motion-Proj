@@ -2,10 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P8-INDEPENDENT-INWARD-RAY-SURFACE-01
+
+- 状态：`implementation_ready`；P6/P7 canonical、L0 arm、exact P4R inward-ray rule、`0.512m`与九门冻结。
+- 配置=`configs/worldsim_v67/p8_independent_inward_ray_surface_v1.yaml`；formal run尚未创建；target只作最终metric。
+
 ### WS-V67-P7-INDEPENDENT-FIXED-ACTIONS-01
 
-- 状态：`implementation_ready`；P5/P6 canonical locator；50% budget、六门与P3完全相同。
-- 配置=`configs/worldsim_v67/p7_independent_fixed_actions_v1.yaml`；formal run尚未创建；无threshold/budget sweep。
+- 状态：`done/supported`；P5/P6 canonical locator；50% budget、六门与P3完全相同。
+- 配置=`configs/worldsim_v67/p7_independent_fixed_actions_v1.yaml`；无threshold/budget sweep。
+- Canonical=`run://worldsim_v67/WS-V67-P7-INDEPENDENT-FIXED-ACTIONS-01/
+  20260828T110742Z__independent-actions-s0-r1`；rows/conflicts/budget=`570/312/285`；L0/q0/oracle reduction=
+  `0.612179/0.650641/0.913462`；Actor retention/removed/hazard shift/emitted/scene yield=`1/0/0/0.5/1`；6/6 gates。
 
 ### WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01
 

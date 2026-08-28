@@ -50,6 +50,10 @@ dominance。下一可用编号仍为`V67-F02`。
 P6独立Actor package 6/6 gates通过，无Actor removal、hidden target或hazard-existence coupling；无新failure，下一编号仍为
 `V67-F02`。
 
+P7固定L0 actions 6/6 gates通过，pooled conflict reduction=`0.612179`；q0 pooled=`0.650641`更高但两场景低于0.5，
+L0六场景均高于0.5。保持为negative comparator/robustness observation，不改P8 arm或gate；无新failure，下一编号仍为
+`V67-F02`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

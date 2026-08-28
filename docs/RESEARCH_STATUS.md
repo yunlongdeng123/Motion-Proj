@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.7 P7 independent actions supported / P8 surface ready（2026-08-28）
+
+状态：`v67_p7_independent_actions_supported_p8_surface_implementation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P7-INDEPENDENT-FIXED-ACTIONS-01/20260828T110742Z__independent-actions-s0-r1`；verdict=
+`supported_v67_fixed_budget_action_set`。
+
+570 rows / 312 conflicts / 285 fixed actions；L0/q0/oracle handled=`191/203/285`，reduction=
+`0.612179/0.650641/0.913462`。L0 Actor retention/removed/hazard shift/emitted fraction/scene yield=`1/0/0/0.5/1`，
+6/6 gates通过。q0 pooled仍更高，但L0六场景reduction均>0.5，q0在0072/0443低于0.5；只作描述，不新增post-hoc gate。
+
+P8配置已机械绑定P6/P7 canonical并保持P4R exact inward-ray rule、`0.512m`与九门完全不变。下一步一次independent
+physical formal run；无同cohort recovery或扫参。
+
 ## WorldSim V6.7 P6 independent package supported / P7 actions ready（2026-08-28）
 
 状态：`v67_p6_independent_package_supported_p7_actions_implementation_ready`；canonical=
