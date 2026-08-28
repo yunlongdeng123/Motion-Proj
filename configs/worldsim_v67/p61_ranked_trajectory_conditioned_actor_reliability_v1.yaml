@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p61_ranked_trajectory_conditioned_actor_reliability.v1
+output_schema_version: worldsim_v67.p61_ranked_trajectory_conditioned_actor_reliability_summary.v1
+task_id: WS-V67-P61-RANKED-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P61-001
+seed: 0
+role: pairwise_ranked_heldout_scene_and_horizon_actor_state_reliability
+verdict_on_pass: supported_ranked_trajectory_conditioned_actor_state_reliability
+verdict_on_failure: rejected_ranked_trajectory_conditioned_actor_state_reliability
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  confirmation_scene_modulus: 5
+  confirmation_scene_remainder: 1
+  training_horizons_seconds: [0.8, 1.5]
+  confirmation_horizon_seconds: 2.0
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [128, 64, 32]
+  epochs: 1500
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.05
+  ranking_weight: 0.10
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  ranking_pair_shifts: [1, 17, 257]
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_query_conditioned_spearman: 0.55
+  minimum_spearman_delta_over_actor_only: 0.01
+  minimum_mae_reduction_over_actor_only: 0.10
+  minimum_unreliable_auroc: 0.75
+locks:
+  only_delta_from_p60_is_fixed_pairwise_ranking_term: true
+  development_replication_split_remainder_one: true
+  training_horizons_point_eight_and_one_point_five_only: true
+  confirmation_horizon_two_seconds: true
+  no_ranking_weight_temperature_gap_pair_split_or_architecture_sweep: true
+  no_fresh_population_or_counterfactual_actor_response_claim: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2023/html/Seff_MotionLM_Multi-Agent_Motion_Forecasting_as_Language_Modeling_ICCV_2023_paper.html
+  - https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html
+claim_boundary:
+  - pairwise_ranked_exposure_weighted_actor_state_reliability
+  - second_development_scene_split_and_unseen_two_second_horizon
+  - previously_consumed_processed_population_not_fresh_confirmation
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim

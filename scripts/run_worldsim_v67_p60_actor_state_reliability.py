@@ -73,6 +73,11 @@ def main() -> None:
         "minimum_unreliable_auroc": evaluation["query_conditioned_unreliable_auroc"]
         >= float(config["gates"]["minimum_unreliable_auroc"]),
     }
+    if "minimum_spearman_delta_over_actor_only" in config["gates"]:
+        gates["minimum_spearman_delta_over_actor_only"] = (
+            evaluation["spearman_delta_over_actor_only"]
+            >= float(config["gates"]["minimum_spearman_delta_over_actor_only"])
+        )
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
     artifact = {
         "feature_names": FEATURE_NAMES, "feature_mean": mean, "feature_scale": scale,

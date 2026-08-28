@@ -227,21 +227,39 @@ def train_reliability_models(
         list(query_model.parameters()) + list(actor_model.parameters()),
         lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]),
     )
-    final_query_loss = final_actor_loss = 0.0
+    final_query_loss = final_query_regression = final_query_ranking = final_actor_loss = 0.0
     for epoch in range(int(model_config["epochs"])):
         optimizer.zero_grad(set_to_none=True)
         query_prediction = query_model(features)
         actor_prediction = actor_model(actor_features)
-        query_loss = torch.nn.functional.smooth_l1_loss(
+        query_regression = torch.nn.functional.smooth_l1_loss(
             query_prediction, target, beta=float(model_config["huber_beta"])
         )
         actor_loss = torch.nn.functional.smooth_l1_loss(
             actor_prediction, target, beta=float(model_config["huber_beta"])
         )
+        query_ranking = query_regression.new_zeros(())
+        ranking_weight = float(model_config.get("ranking_weight", 0.0))
+        if ranking_weight > 0.0:
+            ranking_terms = []
+            for shift in model_config["ranking_pair_shifts"]:
+                shifted_target = torch.roll(target, int(shift))
+                target_delta = target - shifted_target
+                valid = target_delta.abs() >= float(model_config["pairwise_minimum_target_gap"])
+                prediction_delta = query_prediction - torch.roll(query_prediction, int(shift))
+                terms = torch.nn.functional.softplus(
+                    -(prediction_delta * torch.sign(target_delta))
+                    / float(model_config["ranking_temperature"])
+                )
+                ranking_terms.append(terms[valid].mean())
+            query_ranking = torch.stack(ranking_terms).mean()
+        query_loss = query_regression + ranking_weight * query_ranking
         loss = query_loss + actor_loss
         loss.backward()
         optimizer.step()
         final_query_loss = float(query_loss.detach().cpu())
+        final_query_regression = float(query_regression.detach().cpu())
+        final_query_ranking = float(query_ranking.detach().cpu())
         final_actor_loss = float(actor_loss.detach().cpu())
         if epoch % 250 == 0 or epoch + 1 == int(model_config["epochs"]):
             print(
@@ -250,6 +268,8 @@ def train_reliability_models(
             )
     return query_model.eval(), actor_model.eval(), mean, scale, {
         "query_conditioned_final_loss": final_query_loss,
+        "query_conditioned_regression_loss": final_query_regression,
+        "query_conditioned_pairwise_ranking_loss": final_query_ranking,
         "actor_only_final_loss": final_actor_loss,
         "training_row_count": int(len(raw_features)),
     }
