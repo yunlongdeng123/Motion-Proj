@@ -2,9 +2,23 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P94-DIRECT-PROBABILITY-ENSEMBLE-01
+
+- 状态：`active/member seed1 GPU training`；seed1 canonical candidate=
+  `20260829T234500Z__direct-probability-ensemble-seed1-r1`；三成员协议在P81 target rows出现前冻结。
+- 固定成员为P93 seed0及同一Deep Sets/BCE协议的seed1/2；最终query/Actor score分别只能取三成员sigmoid probability
+  算术均值，不选择单seed、subset或加权。依据NeurIPS 2017 deep ensembles。
+- seed1/2各8,000 epochs、四horizon等量；fresh固定50%且1m endpoint不变，不扫ensemble size或aggregation。
+
+### P90--P92 checkpoint parking note
+
+- P90/P91/P92训练已完成且各1.1MiB model checkpoint落盘；为给P81/P85及ensemble留显存，三个只等待P85 rows的
+  进程已安全退出，GPU memory从20.5降至15.96GiB。
+- 后续只从冻结checkpoint做evaluation-only恢复，不改model/score/cohort/gate，不重训也不计新scientific trial。
+
 ### WS-V67-P93-DIRECT-TRAJECTORY-FAILURE-PROBABILITY-01
 
-- 状态：`active/GPU training`；canonical candidate=`20260829T233000Z__direct-trajectory-failure-probability-s0-r1`；
+- 状态：`trained/waiting prospective P85 rows`；canonical=`20260829T233000Z__direct-trajectory-failure-probability-s0-r1`；
   target/model/score在P81 target rows出现前冻结。
 - source target唯一为trajectory内任一6m visited Actor `error>1m`；相同Deep Sets以horizon-balanced BCE训练，
   query/Actor-only同容量、8,000 epochs，唯一selection score为sigmoid failure probability。

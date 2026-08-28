@@ -861,6 +861,10 @@ bound。当前无新增失败，下一编号仍为`V67-F67`。
 P93 direct trajectory any-failure BCE同样在P81 target read前冻结；阈值固定为正式1m endpoint，不扫class weight或loss
 组合。当前无新增失败，下一编号仍为`V67-F67`。
 
+P94三成员direct-probability deep ensemble在P81 target read前冻结：seed0复用P93，seed1/2同协议独立初始化，最终只取
+算术均值且不选member/subset。P90--P92 checkpoint已确认落盘后安全退出等待进程以释放4.5GiB，后续evaluation-only
+恢复；无artifact/quality损失，不登记failure。下一编号仍为`V67-F67`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P93 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P94 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -79,6 +79,11 @@ P92完成8,000 epochs并冻结后，P93补齐最直接的trajectory reliability 
 error>1m”作为唯一source binary target，使用horizon-balanced BCE训练相同Deep Sets，唯一score是sigmoid probability。
 它不含pairwise、ordinal或连续误差辅助项，阈值与fresh endpoint事前一致；不做class weight/threshold/loss sweep，
 也不把source probability表述为fresh calibrated probability。P93现与08/09 archive IO并行训练。
+
+P93完成8,000 epochs后，按NeurIPS 2017 deep ensembles冻结P94三成员协议：P93 seed0 checkpoint加完全同协议的
+seed1/2，最终score只能取三者failure probability算术均值，不允许挑seed或subset。为给fresh并发评估留显存，已落盘的
+P90--P92等待进程安全退出（各1.1MiB checkpoint保留，后续evaluation-only恢复），显存由20.5降至15.96GiB；这不是
+scientific failure或重训。P94 seed1现与archive IO并行训练，单3090仍足够。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
