@@ -2,6 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P2-ACTOR-PACKAGE-01 / WS-V67-P3-FIXED-ACTIONS-01
+
+- 状态：P2/P3 `implementation_ready/pending_locator`；同一P1 scores与六场景，无quality-dependent mutation。
+- P2输出八文件Actor package，要求state/metadata retention=1、removed/hidden-target=0、runtime model/hazard-existence
+  disabled；配置=`configs/worldsim_v67/p2_actor_package_v1.yaml`。
+- P3固定50% local-action budget；Actor/hazard完全匹配，action只作repair/abstain候选；配置=
+  `configs/worldsim_v67/p3_fixed_actions_v1.yaml`，仅P2 canonical locator待机械替换。
+- 实现=`scripts/run_worldsim_v67_p2_actor_package.py`、`scripts/run_worldsim_v67_p3_fixed_actions.py`；只做
+  `py_compile`/diff检查，formal runs尚未创建。
+
 ### WS-V67-P0-SCOPE-01 / WS-V67-P1-GEOMETRY-TRANSFER-01
 
 - 状态：P0/P1 `done/done`；P1 verdict=`supported_task_untouched_legacy_geometry_transfer`；

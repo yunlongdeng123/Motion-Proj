@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.7 package/action implementation ready（2026-08-28）
+
+状态：`v67_p2_package_p3_action_implementation_ready`。已复用V6.6 bake/action核心，但V6.7 runner独立写入
+`worldsim_v67` run tree。P2从P1 score只输出observable ranking，不携带target/model；P3固定50% budget并保持Actor/hazard
+attributes exact。P3 config只允许在P2 canonical产生后替换run locator，不改变任何scientific参数。下一步P2/P3各一次CPU
+formal run；不做测试矩阵。
+
 ## WorldSim V6.7 P1 transfer supported / package next（2026-08-28）
 
 状态：`v67_p1_geometry_transfer_supported_package_next`；canonical=
