@@ -123,11 +123,29 @@ P15R exact-once：bounded adapter使selection Spearman/AUROC/pairwise均略高�
 
 ### V67-F06 — P16 domain variance变量未在adapter作用域绑定
 
-- 分类：`implementation/training-entry`；状态：`active_pre_confirmation_entry`。
+- 分类：`implementation/training-entry`；状态：`resolved_pre_confirmation_entry`。
 - 观察/根因：r1在首个loss构造时报`NameError: domain_variance`；domain-balanced patch只在free head中构造变量，却在
   bounded adapter loss引用。model freeze与P9 action target materialization均未发生，无scientific metric。
 - 恢复：在adapter内按`domain_index`计算equal-domain Huber mean/variance；r2不改数据、模型、loss权重或gates。
 - 防重复：保留r1失败目录，以r2继续；下一编号=`V67-F07`。
+
+P16 r2按原合同完成并在模型冻结后首次materialize P9 action targets；入口问题已关闭。r2 learned adapter相对qmean的
+Spearman/pairwise/selected reduction delta=`-0.007213/-0.044718/-0.001150`，是独立科学负结果而非F06延续。
+
+### V67-F07 — 学习替代trajectory qmean持续破坏跨域决策排序
+
+- 分类：`algorithm/representation-and-authority`；状态：`active_downstream_compiler_recovery`。
+- 观察：P16 two-domain bounded action-ID adapter在P9为3/6 gates；P17 monotone quantile pool为1/6 gates。P17 learned/qmean
+  Spearman=`0.645502/0.658731`、pairwise=`0.749190/0.779650`、selected reduction=`0.387839/0.418184`。
+- 根因：trajectory corridor内qmean已是强、低容量且可迁移的充分排序统计；action identity和自由分布混合分别引入
+  cohort shortcut与低分位偏置。P17学到distribution mix=`0.497368`，没有产生独立可迁移增益。
+- 推翻项：推翻“在现有三cohort上学习替代qmean scorer可提升authority”的假设；不推翻given-trajectory visited-state
+  reliability，也不推翻P9 qmean本身的0.4182 selected-cost reduction。
+- 外部检索/迁移：NeurIPS 2023 PlanCP与NeurIPS 2025 conformal risk training把uncertainty用于规划risk control而非任意
+  改写base score；CVPR 2024 online-map uncertainty也把UQ送入downstream task。P18因此冻结qmean ranking，只训练
+  case-level benefit/abstention compiler。
+- 防重复：不扫quantile levels、distribution mix、action ID、score residual、gate或selection fraction；P9已消费，只作
+  P18 method selection。若P18成立，再到独立cohort一次确认；下一编号=`V67-F08`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -1,0 +1,42 @@
+schema_version: worldsim_v67.p18_selective_authority.v1
+task_id: WS-V67-P18-SELECTIVE-AUTHORITY-COMPILER-01
+hypothesis_id: WS-V67-H-P18-001
+seed: 0
+role: consumed_multidomain_development_and_p9_method_selection
+inputs:
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10x_quantile_actions.npz
+  selection_action_cache: /root/autodl-tmp/cache/worldsim_v67/p17_p9_quantile_actions.npz
+compiler:
+  within_case_selected_fraction: 0.25
+  authority_case_fraction: 0.50
+model:
+  epochs: 5000
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  ranking_weight: 0.5
+  ranking_temperature: 0.02
+  pairwise_minimum_benefit_gap: 0.01
+  domain_loss_variance_weight: 0.1
+  weight_regularization_weight: 0.001
+gates:
+  minimum_authority_fraction: 0.49
+  minimum_authority_cost_reduction: 0.45
+  minimum_reduction_delta_over_ungated_qmean: 0.02
+  minimum_nonincreasing_scene_support: 5
+locks:
+  qmean_action_order_frozen: true
+  authority_case_fraction_sweep: false
+  within_case_fraction_sweep: false
+  feature_or_gate_sweep: false
+  p9_is_consumed_method_selection: true
+  conformal_exchangeability_claim: false
+  planner_policy_collision_safety_claim: false
+  add_hash_checksum_fingerprint: false
+failure_ledger_refs: [V67-F07, V67-F06, V67-F05, V65-F19]
+claim_boundary:
+  - fixed_qmean_action_ranking_with_learned_case_level_authority_or_abstention
+  - p10v_p10x_development_and_consumed_p9_method_selection
+  - no_conformal_finite_sample_population_closed_loop_collision_or_safety_claim

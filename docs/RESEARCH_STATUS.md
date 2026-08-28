@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V6.7 P17 distributional score rejected / P18 selective authority training（2026-08-28）
+
+状态：`v67_p17_rejected_p18_selective_authority_training`。P17 canonical=
+`run://worldsim_v67/WS-V67-P17-MONOTONE-QUANTILE-TRAJECTORY-01/20260828T125500Z__quantile-trajectory-s0-r1`。
+P10V/P10X 1,552 actions训练后，P9 learned/qmean Spearman=`0.645502/0.658731`、unsafe AUROC=
+`0.814677/0.826644`、pairwise=`0.749190/0.779650`、bottom-quartile cost reduction=`0.387839/0.418184`；
+仅scene support通过，1/6 gates。分位数池把`0.497368`权重从qmean移到分布统计并系统性破坏强基线，因此不扫quantile/
+mix/loss，`V67-F07 active_downstream_compiler_recovery`。
+
+外部检索NeurIPS PlanCP/Conformal Risk Control与CVPR online-map uncertainty后，P18固定qmean排序，不再学习替代风险分数；
+改为训练小型单调benefit head，只决定何时允许bottom-quartile action authority、何时abstain。开发域仍为P10V/P10X，
+P9只作已消费selection；固定50% case authority coverage，不扫coverage/gate。
+
+## WorldSim V6.7 P16 fresh action-task confirmation rejected / P17 distributional training（2026-08-28）
+
+P16 r2 canonical=`run://worldsim_v67/WS-V67-P16-MULTIDOMAIN-TRAJECTORY-RELIABILITY-01/
+20260828T124500Z__multidomain-fresh-action-s0-r2`。模型在P9 action target materialization前冻结；72 cases / 864 source
+actions中846 eligible。Learned/qmean Spearman=`0.651518/0.658731`、AUROC=`0.823949/0.826644`、pairwise=
+`0.734932/0.779650`、selected reduction=`0.417033/0.418184`；3/6 gates，拒绝。P9同时显示qmean trajectory aggregate
+本身有稳定决策信号，但action-ID residual无增益。P16 r1入口错误`V67-F06 resolved_pre_confirmation_entry`；科学负结果
+进入`V67-F07`并触发P17分布表示，而不是继续调adapter。
+
 ## WorldSim V6.7 P16 r1 pre-confirmation entry recovery / r2 ready（2026-08-28）
 
 P16 r1在fresh action target materialization前因domain variance局部变量未绑定而停止；未生成model、selection cache或

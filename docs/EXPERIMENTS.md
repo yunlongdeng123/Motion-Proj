@@ -2,6 +2,22 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P17-MONOTONE-QUANTILE-TRAJECTORY-01
+
+- 状态：`done/rejected`；P10V/P10X 1,552 eligible actions开发，P9 846 actions已消费selection；8个固定分位点，
+  monotone convex pool与qmean保守混合，3,000 GPU epochs；canonical=`20260828T125500Z__quantile-trajectory-s0-r1`。
+- Learned/qmean selection Spearman=`0.645502/0.658731`，AUROC=`0.814677/0.826644`，pairwise=
+  `0.749190/0.779650`，selected reduction=`0.387839/0.418184`；1/6 gates，distribution mix=`0.497368`；wall=
+  `47.1462s`，peak GPU=`0.04710GiB`。不扫quantile/mix/loss；转向固定qmean下游selective authority compiler。
+
+### WS-V67-P16-MULTIDOMAIN-TRAJECTORY-RELIABILITY-01 r2
+
+- 状态：`done/rejected`；canonical=`20260828T124500Z__multidomain-fresh-action-s0-r2`；P10V/P10X two-domain
+  bounded action adapter，模型冻结后才materialize P9 target；P9 source/eligible/excluded=`864/846/18`。
+- Learned/qmean Spearman=`0.651518/0.658731`，AUROC=`0.823949/0.826644`，pairwise=
+  `0.734932/0.779650`，selected reduction=`0.417033/0.418184`，delta=`-0.001150`；3/6 gates，wall=`36.66s`。
+- r1 `NameError`发生在model freeze/target read之前；`V67-F06 resolved_pre_confirmation_entry`，r2保持合同不变。
+
 ### WS-V67-P16-MULTIDOMAIN-TRAJECTORY-RELIABILITY-01
 
 - 状态：`r1_entry_failed_r2_ready`；r1在model/selection materialization前NameError，无scientific metric；P10V+P10X
