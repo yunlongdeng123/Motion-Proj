@@ -47,6 +47,9 @@ P5独立legacy transfer 4/4 gates通过且无新failure；但head AUROC/AUPRC=`0
 `0.695177/0.706467`。这不是P5预注册gate失败，作为negative comparator observation保留，并禁止声称learned head跨cohort
 dominance。下一可用编号仍为`V67-F02`。
 
+P6独立Actor package 6/6 gates通过，无Actor removal、hidden target或hazard-existence coupling；无新failure，下一编号仍为
+`V67-F02`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

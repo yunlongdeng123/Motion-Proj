@@ -2,11 +2,20 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P7-INDEPENDENT-FIXED-ACTIONS-01
+
+- 状态：`implementation_ready`；P5/P6 canonical locator；50% budget、六门与P3完全相同。
+- 配置=`configs/worldsim_v67/p7_independent_fixed_actions_v1.yaml`；formal run尚未创建；无threshold/budget sweep。
+
 ### WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01
 
-- 状态：`implementation_ready`；P5 canonical scores与同一六场景；hidden target/model loading/hazard-existence gate关闭。
+- 状态：`done/supported`；P5 canonical scores与同一六场景；hidden target/model loading/hazard-existence gate关闭。
 - 配置=`configs/worldsim_v67/p6_independent_actor_package_v1.yaml`；所有Actor state/metadata、removed、hidden-target与runtime
-  gates沿用P2；formal run尚未创建。
+  gates沿用P2。
+- Canonical=`run://worldsim_v67/WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01/
+  20260828T110547Z__independent-package-s0-r1`；units/Actors/states/primitives=`72/119/570/1353734`；
+  state/metadata=`1/1`、removed/hidden target=`0/0`，6/6 gates；8 files/15,671,545 bytes；wall/RSS=
+  `13.9384s/0.8299GiB`。
 
 ### WS-V67-P5-INDEPENDENT-GEOMETRY-TRANSFER-01
 

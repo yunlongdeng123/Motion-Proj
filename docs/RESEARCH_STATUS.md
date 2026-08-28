@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V6.7 P6 independent package supported / P7 actions ready（2026-08-28）
+
+状态：`v67_p6_independent_package_supported_p7_actions_implementation_ready`；canonical=
+`run://worldsim_v67/WS-V67-P6-INDEPENDENT-ACTOR-PACKAGE-01/20260828T110547Z__independent-package-s0-r1`；verdict=
+`supported_v67_actor_preserving_package`。
+
+72 units内119 unique Actors、570 states、1,353,734 primitives；Actor state/metadata retention=`1/1`，removed/hidden
+target=`0/0`，runtime model/hazard-existence coupling=false，6/6 gates通过。package=`8 files/15,671,545 bytes`；
+wall/RSS=`13.9384s/0.8299GiB`。
+
+P7配置只机械绑定P5 scores与P6 package，固定50% budget及六门不变。下一步一次matched-action formal run；不把action
+audit称为physical repair。
+
 ## WorldSim V6.7 P5 independent transfer supported / P6 package ready（2026-08-28）
 
 状态：`v67_p5_independent_transfer_supported_p6_package_implementation_ready`；canonical=
