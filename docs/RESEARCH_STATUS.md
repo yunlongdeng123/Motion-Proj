@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.7 P1 transfer supported / package next（2026-08-28）
+
+状态：`v67_p1_geometry_transfer_supported_package_next`；canonical=
+`run://worldsim_v67/WS-V67-P1-GEOMETRY-TRANSFER-01/20260828T104342Z__geometry-transfer-s0-r1`；verdict=
+`supported_task_untouched_legacy_geometry_transfer`。
+
+72 units产生517 Actor-unit（conflict/clean=`295/222`）；冻结head AUROC/AUPRC=`0.710521/0.730703`，相对
+deterministic=`+0.210521/+0.160103`，6/6 scenes above chance；无model/normalization refit或threshold。wall=
+`10.84445s`、GPU=`0.02359GiB`、RSS=`0.93161GiB`。下一步在同一scores/evidence上烘焙Actor-preserving package与
+固定50% action set，不再读取P1或改变ray-terminated rule。
+
 ## WorldSim V6.7 ray-terminated surface protocol active（2026-08-28）
 
 状态：`v67_p0_protocol_frozen_p1_transfer_implementation_ready`；分支=

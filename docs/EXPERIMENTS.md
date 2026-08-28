@@ -4,14 +4,20 @@
 
 ### WS-V67-P0-SCOPE-01 / WS-V67-P1-GEOMETRY-TRANSFER-01
 
-- 状态：P0 `done`；P1 `implementation_ready`；branch=`research/worldsim-v6.7-anisotropic-surface`；base=`c05ca27`。
+- 状态：P0/P1 `done/done`；P1 verdict=`supported_task_untouched_legacy_geometry_transfer`；
+  branch=`research/worldsim-v6.7-anisotropic-surface`；base=`c05ca27`。
 - repair rule在P1 quality read前冻结：`exact same-Actor hit OR (same-Actor <=0.512m AND source behind_hit)`；target只评估。
 - cohort=`scene-0030/0055/0453/0501/1046/1085`；V65 calibration已消费，但V6.6/V6.7 surface task未读，角色仅为
   `task_untouched_legacy_geometry_selection`。
 - P1加载冻结V6.6 8-feature/2x32 head，无model/normalization refit、threshold或second read；两线程I/O prefetch与GPU
   q0/head forward重叠。
 - 实现：`scripts/run_worldsim_v67_p1_geometry_transfer.py`；配置：
-  `configs/worldsim_v67/p1_geometry_transfer_v1.yaml`；formal run尚未创建。
+  `configs/worldsim_v67/p1_geometry_transfer_v1.yaml`。
+- Canonical：`run://worldsim_v67/WS-V67-P1-GEOMETRY-TRANSFER-01/
+  20260828T104342Z__geometry-transfer-s0-r1`；units/rows=`72/517`，conflict/clean=`295/222`。
+- head AUROC/AUPRC=`0.710521/0.730703`；相对deterministic=`+0.210521/+0.160103`；q0=
+  `0.688762/0.725925`；6/6 scenes above chance；4/4 gates通过。
+- wall/GPU/RSS=`10.84445s/0.02359GiB/0.93161GiB`；failure ledger delta=`none`。
 - failure ledger delta=`none`；下一可用ID=`V67-F01`；无hash/checksum/fingerprint与回归矩阵。
 
 ## WorldSim V6.6 HARP-Compiler
