@@ -30,6 +30,10 @@ P80继续利用IO空档但改变结构而非loss：参考ECCV 2018 FiLM与ICML 2
 边界，为每个base feature增加`feature × normalized(H)`交互。训练H端点`.8/3.0`映射到`-1/+1`，H3.5只作受限线性
 系数外推；query/Actor-only容量、rank target与1,500 epochs保持。不做高阶interaction或scale sweep。
 
+P75 r1的固定2,400s readiness window将早于五大tar与八场景预处理完成；不对运行中Python做内存注入。r2复用r1已完成的
+135,634条source H3 cache，全部模型/optimizer/epochs/seed/gates不变，并在validation wait之前持久化冻结模型；readiness只按
+已观测公共IO吞吐延长到7,200s。r1若超时只计工程失败，0 fresh rows/metrics read。
+
 ## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
 
 P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC

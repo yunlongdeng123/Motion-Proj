@@ -128,10 +128,17 @@ def main() -> None:
     remainder = int(config["source_h3_data"]["excluded_scene_remainder"])
     source_scenes = [path for path in all_source if int(path.name) % divisor != remainder]
     with ThreadPoolExecutor(max_workers=1) as pool:
-        h3_future = pool.submit(
-            materialize_actor_query_rows, source_scenes,
-            [float(config["source_h3_data"]["horizon_seconds"])], config["source_h3_data"],
-        )
+        if "source_h3_cache" in config:
+            h3_future = pool.submit(
+                _load_npz,
+                args.runs_root / config["source_h3_cache"]["run"]
+                / config["source_h3_cache"]["artifact"],
+            )
+        else:
+            h3_future = pool.submit(
+                materialize_actor_query_rows, source_scenes,
+                [float(config["source_h3_data"]["horizon_seconds"])], config["source_h3_data"],
+            )
         warm_query, warm_actor = _train_epochs(
             query_model, actor_model, optimizer, warmup, mean, scale,
             int(config["model"]["warmup_epochs"]), float(config["model"]["huber_beta"]),
@@ -149,6 +156,14 @@ def main() -> None:
             "joint",
         )
         h3_save.result()
+
+    model_artifact = {
+        "feature_names": FEATURE_NAMES, "feature_mean": mean, "feature_scale": scale,
+        "hidden_dimensions": config["model"]["hidden_dimensions"],
+        "query_model_state_dict": query_model.state_dict(),
+        "actor_only_model_state_dict": actor_model.state_dict(),
+    }
+    torch.save(model_artifact, run_dir / "FOUR_HORIZON_ACTOR_RELIABILITY.pt")
 
     evaluation_data = config["evaluation_data"]
     metadata = Path(evaluation_data["metadata_root"]) / "v1.0-trainval"
@@ -243,12 +258,6 @@ def main() -> None:
         ),
     }
     verdict = config["verdict_on_pass"] if all(gates.values()) else config["verdict_on_failure"]
-    torch.save({
-        "feature_names": FEATURE_NAMES, "feature_mean": mean, "feature_scale": scale,
-        "hidden_dimensions": config["model"]["hidden_dimensions"],
-        "query_model_state_dict": query_model.state_dict(),
-        "actor_only_model_state_dict": actor_model.state_dict(),
-    }, run_dir / "FOUR_HORIZON_ACTOR_RELIABILITY.pt")
     summary = {
         "schema_version": config["output_schema_version"], "task_id": config["task_id"],
         "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict,

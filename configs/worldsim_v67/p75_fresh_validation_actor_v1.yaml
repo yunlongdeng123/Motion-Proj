@@ -24,6 +24,9 @@ source_h3_data:
   maximum_predicted_query_distance_m: 20.0
   exposure_distance_scale_m: 6.0
   maximum_actor_state_error_m: 20.0
+source_h3_cache:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: SOURCE_H3_ACTOR_QUERY_ROWS.npz
 p73_baseline:
   run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
   artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
@@ -45,7 +48,7 @@ evaluation_data:
   preprocess_workers: 2
   processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
   processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
-  readiness_timeout_seconds: 2400
+  readiness_timeout_seconds: 7200
   horizon_seconds: 3.5
   history_frame_offsets: [10, 5]
   anchor_stride_frames: 5

@@ -756,6 +756,9 @@ Fishr。当前无新增失败，下一编号仍为`V67-F61`。
 P80预注册为一次linear horizon feature modulation，不做高阶interaction/scale sweep；仍只填充fresh IO等待期。
 当前无新增失败，下一编号仍为`V67-F61`。
 
+P75 model r1的2,400s readiness上限将早于已观测tar/preprocess wall；r2在fresh read前仅复用r1 source-H3 cache并提前
+持久化模型，scientific合同不变。r1若按预期timeout则登记`V67-F61`，不得把它计作算法失败。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

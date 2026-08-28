@@ -44,6 +44,8 @@
   固定50%一次read，primary gates只比较selected cost，不再用pointwise MAE否定selective对象。
 - Prep r1把全部3,128 candidates交给10个shards而IO停滞，未生成scene；保留失败现场。r2按冻结scene→shard映射
   并行扫描`02/04/06/09/10`，每包只接收所属scene members，P75主run不重训。
+- P75 model r1的2,400s wait将先到期；scientific recovery r2只复用r1 source-H3 cache，训练合同不变，模型在fresh wait前
+  落盘，timeout按实际IO延到7,200s。r1超时前fresh rows/metric仍为0。
 
 ### WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
 
