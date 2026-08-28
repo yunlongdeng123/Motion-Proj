@@ -1,5 +1,29 @@
 # Research Status
 
+## WorldSim V6.7 P26 large-cohort transfer supported / P27 stratum-balanced training（2026-08-28）
+
+P26 canonical=`run://worldsim_v67/WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01/
+20260828T154000Z__large-cohort-coverage-s0-r1`。十域770 cases训练；P6E 2,077/2,304 actions、180 evaluable cases，
+fixed/actual budget=`511/511`，覆盖116 cases（`0.644444`）。P26/P24/fixed-P20 reduction=
+`0.792541/0.683927/0.400589`，相对P20/P24=`+0.391952/+0.108614`；15/15 evaluable scenes不退化，5/5 gates。
+`V67-F14 resolved_by_large_cohort_transfer`。
+
+P27把P6E滚入第十一个development domain并重新训练同一offset model；确认使用已消费P6R cache，不作fresh claim。
+新约束是在night/rain/construction/vulnerable-transit四个strata内分别保证至少50% case coverage，同时保持总action数与
+fixed quarter完全相等。P27 GPU training运行中；不扫coverage、group definition或模型。
+
+## WorldSim V6.7 P25 coverage budget supported / P26 large-cohort retraining（2026-08-28）
+
+P25 canonical=`run://worldsim_v67/WS-V67-P25-COVERAGE-BUDGET-COMPILER-01/
+20260828T152000Z__coverage-budget-s0-r1`。九域681 cases、5,000 GPU epochs训练后，P4C 96 source cases中89个
+evaluable，fixed/actual budget=`243/243`。P25覆盖54/89 cases（`0.606742`），每case `0..6` actions；coverage-budget /
+P24 / fixed-P20 reduction=`0.694998/0.594446/0.312205`，相对P20=`+0.382792`、相对P24=`+0.100552`，8/8
+scenes不退化，5/5 gates。`V67-F13 resolved_by_coverage_constrained_confirmation`。
+
+P26把P25 P4C滚入第十个development domain，架构、offset bound、coverage、budget和loss全部保持；新模型冻结后才读取
+V64 P6E的16-scene / 192-case stratum-balanced cohort。它检验相同方法能否在更大cohort迁移，而不是在P25上扫
+coverage/max-actions/gate。P26 GPU training/materialization运行中；单RTX 3090足够。
+
 ## WorldSim V6.7 P24 adaptive budget supported / P25 coverage-constrained training（2026-08-28）
 
 P24 r2 canonical=`run://worldsim_v67/WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01/

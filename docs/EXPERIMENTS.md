@@ -2,6 +2,41 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P27-STRATUM-BALANCED-AUTHORITY-01
+
+- 状态：`running`；十一域重新训练P25/P26同一case-offset architecture；P6E作为新增development domain，P6R
+  existing cache作consumed confirmation。
+- 四strata由P6R事前scene order固定，每个stratum coverage `>=0.50`；全局fixed/actual action budget exact，P20
+  within-case order不可变。
+- Gates：exact budget、global/group coverage、reduction `>=0.55`、delta over fixed P20 `>=0.10`、至少6 scenes
+  non-increasing；无fresh claim与超参扫描。
+
+### WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01 result
+
+- 状态：`done/supported`；canonical=`20260828T154000Z__large-cohort-coverage-s0-r1`；十域770 cases、5,000
+  GPU epochs；P6E source/eligible actions=`2304/2077`，180 evaluable cases。
+- Fixed/actual budget=`511/511`；covered=`116/180`（`0.644444`）；actions/case=`0..6`、mean=`2.83889`。
+- P26/P24/fixed-P20 reduction=`0.792541/0.683927/0.400589`；delta over P20/P24=
+  `+0.391952/+0.108614`；15/15 evaluable scenes non-increasing，5/5 gates。
+- Wall/peak GPU/RSS=`76.996s/0.04711GiB/1.4924GiB`；scene 0无footprint-evaluable case。
+
+### WS-V67-P26-LARGE-COHORT-COVERAGE-TRANSFER-01
+
+- 状态：`done/supported`；十域重新训练同一16-hidden bounded `±0.05` case offset，P20 within-case ranking冻结；
+  P25 P4C cache只作为新增development domain。
+- Confirmation=P6E fresh-calibration 16 scenes / 192 source cases；模型freeze后一次materialize trajectory visited-state
+  targets。Exact fixed-quarter总预算、minimum 50% case coverage、0--6 actions/case均不变。
+- 预注册门5/5通过；精确结果见上方result；不扫超参或gate。
+
+### WS-V67-P25-COVERAGE-BUDGET-COMPILER-01
+
+- 状态：`done/supported`；canonical=`20260828T152000Z__coverage-budget-s0-r1`；九域681 cases、5,000 GPU
+  epochs；P4C source/eligible actions=`1152/1000`，89 evaluable cases。
+- Fixed/actual total budget=`243/243`；covered cases=`54/89`（`0.606742`）；actions/case=`0..6`、mean=`2.73034`。
+- P25/P24/fixed-P20 reduction=`0.694998/0.594446/0.312205`；P25 delta over P20/P24=
+  `+0.382792/+0.100552`；8/8 scenes non-increasing；5/5 gates。
+- Wall/peak GPU/RSS=`56.289s/0.04711GiB/1.4823GiB`；结论限于2s Ego-action visited-state reliability authority。
+
 ### WS-V67-P24-ADAPTIVE-BUDGET-COMPILER-01 r2
 
 - 状态：`done/supported`；canonical=`20260828T150500Z__adaptive-budget-s0-r2`；复用r1 frozen artifact/cache，修复

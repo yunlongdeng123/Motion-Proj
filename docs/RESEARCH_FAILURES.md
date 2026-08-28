@@ -219,11 +219,36 @@ evaluable scenes不退化。F12工程入口关闭，F11科学候选关闭为posi
 
 ### V67-F13 — P25 coverage-constrained fixed-total budget候选
 
-- 分类：`algorithm/selective-budget-authority`；状态：`active_first_trial_frozen`。
+- 分类：`algorithm/selective-budget-authority`；状态：`resolved_by_coverage_constrained_confirmation`。
 - 动机：P24要求每case至少1 action；P25在总budget相同下允许部分case abstain，同时冻结至少50% case coverage。
 - 方法：九域bounded offset；P20 within-case order不变；每case0--6 actions；总action数等于fixed quarter baseline。
 - 防重复：不扫coverage/max actions/offset/model/fraction/gate；P4C action target在model freeze后一次读取。下一编号=
   `V67-F14`。
+
+P25 5/5 gates通过：exact budget=`243/243`、case coverage=`0.606742`、reduction=`0.694998`，相对fixed P20 /
+P24=`+0.382792/+0.100552`，8/8 scenes不退化。该结果说明增益来自在固定总预算下联合abstention与跨case分配，
+不是减少动作总数；不升级为collision/planning/safety claim。
+
+### V67-F14 — P26 large-cohort coverage transfer候选
+
+- 分类：`algorithm/large-cohort-transfer`；状态：`resolved_by_large_cohort_transfer`。
+- 动机：P25在八场景成立后，将其cohort滚入development并重新训练；在从未用于V6.7 allocation的P6E 16场景/
+  192-case分层cohort检验迁移规模与场景支持。
+- 方法：十域bounded offset；冻结P20 within-case order；exact fixed-quarter total budget、minimum 50% case coverage、
+  0--6 actions/case；架构和训练超参原样继承P25。
+- 防重复：不扫coverage/max actions/offset/model/fraction/gate；P6E target只读一次。下一编号=`V67-F15`。
+
+P26 5/5 gates通过：exact budget=`511/511`、case coverage=`0.644444`、reduction=`0.792541`，相对fixed P20 /
+P24=`+0.391952/+0.108614`，15/15 evaluable scenes不退化。16个输入scenes中scene 0按冻结footprint无evaluable
+case，故场景支持分母为15，不是事后排除。
+
+### V67-F15 — P27 stratum-balanced authority候选
+
+- 分类：`algorithm/context-balanced-authority`；状态：`active_first_trial_frozen`。
+- 动机：P25/P26证明全局coverage有效；P27防止authority集中到容易context，在四个既定strata内各自保证至少50% cases。
+- 方法：十一域重新训练同一bounded offset；P20 order、exact total budget、global 50% coverage与0--6 actions不变；
+  P6R只作已消费legacy confirmation。
+- 防重复：不扫group、coverage、model或gate；若失败关闭group-floor候选。下一编号=`V67-F16`。
 
 ### V6.6 当前边界（2026-08-28）
 
