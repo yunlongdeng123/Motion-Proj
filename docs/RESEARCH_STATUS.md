@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V6.7 P48 strict rejection / P49 domain-gradient training（2026-08-29）
+
+P48 canonical=`run://worldsim_v67/WS-V67-P48-DOUBLE-ANCHORED-INTERIOR-HYBRID-01/
+20260829T003000Z__double-anchored-interior-s0-r1`。P10R2-H1.5首次物化=`1092/1152` eligible、96 cases；
+exact=`360/360`，coverage/minimum group=`0.697917/0.50`。P48/P31/fixed reduction=
+`0.742759/0.740902/0.406695`，实际delta=`+0.001857`，但低于冻结`+0.005`；8/8 scenes，3/4 gates，
+verdict=`rejected_double_anchored_interior_hybrid`。双端结构保持成立，但内部adapter跨cohort增益不足，不降门、不扫peak。
+
+P49保留双端anchor，加入固定`.01`的末层domain-gradient方向离散度惩罚；这是Fishr启发的轻量迁移，不声称完整Fishr。
+12个已消费development domains训练；P3C-H1.5首次物化=`710/864` eligible、72 cases，与GPU训练重叠完成。
+正式read仍是budget=`1/3`，P31基线、anchor、模型和gate不变；当前单RTX 3090 GPU训练中。
+
+## WorldSim V6.7 P47 upper-budget replication rejected / P48 double-anchor training（2026-08-29）
+
+P47 canonical=`run://worldsim_v67/WS-V67-P47-CROSS-COHORT-ANCHORED-NESTED-01/
+20260828T235500Z__cross-cohort-anchored-nested-s0-r1`。Low/high exact=`259/259,530/530`且strict nested；quarter
+anchored/P31均=`0.764139`，但half=`0.400118/0.432690`，delta=`-0.032572`。Minimum group=`.50/.916667`、
+8/8 scenes，4/5 gates；verdict=`rejected_cross_cohort_anchored_nested`。单侧anchor的high-budget family关闭。
+
+P48使用双端anchor：budget `.25/.50` residual都严格为0，`1/3`为固定峰值；只在内部budget使用小residual adapter。
+11-domain GPU训练与P10R2-H1.5首次物化重叠；正式read为peak budget=1/3。端点非退化由结构保证，不扫peak/anchor。
+
 ## WorldSim V6.7 P46 cross-cohort H1.5 supported / P47 nested replication（2026-08-28）
 
 P46 P10R4-H1.5 materialization=`1077/1152` eligible、96 cases，与GPU训练重叠。Canonical=

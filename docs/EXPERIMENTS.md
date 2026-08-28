@@ -2,6 +2,35 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P49-GRADIENT-CONSISTENT-INTERIOR-HYBRID-01
+
+- 状态：`training`；P3C-H1.5 materialization已与GPU训练重叠完成：`710/864` eligible、72 cases。
+- 12 domains×3 budgets、6,000 epochs；双端anchor不变，只新增fixed `.01`末层domain-gradient方向离散度惩罚。
+- Confirmation=P3C-H1.5 budget1/3；对照冻结P31；gates=`exact/group .50/delta +.005/4 scenes`。
+- Fishr启发但非完整Fishr；不扫惩罚权重、anchor、peak、模型、loss或gate。
+
+### WS-V67-P48-DOUBLE-ANCHORED-INTERIOR-HYBRID-01 result
+
+- 状态：`done/rejected`；canonical=`20260829T003000Z__double-anchored-interior-s0-r1`；P10R2-H1.5=
+  `1092/1152` eligible、96 cases；训练2,952 conditioned cases/32,961 rows。
+- Exact=`360/360`；coverage/minimum group=`0.697917/0.50`；8/8 scenes。
+- P48/P31/fixed reduction=`0.742759/0.740902/0.406695`；delta=`+0.001857`，未达冻结`+0.005`；3/4 gates。
+- wall/peak GPU/RSS=`192.827s/0.04502GiB/1.33183GiB`；不降门、不扫内部peak。
+
+### WS-V67-P48-DOUBLE-ANCHORED-INTERIOR-HYBRID-01
+
+- 状态：`completed/rejected`；residual amplitude=`0@.25,1@1/3,0@.50`；
+  11 domains×3 budgets、6,000 GPU epochs。
+- P10R2-H1.5 target首次物化；confirmation=budget1/3，对照P31；两端函数保持由结构保证。
+- Gates：exact、minimum group `.50`、相对P31 `+.005`、6/8 scenes；不扫anchor/peak/model/loss/gate。
+
+### WS-V67-P47-CROSS-COHORT-ANCHORED-NESTED-01 result
+
+- 状态：`done/rejected`；canonical=`20260828T235500Z__cross-cohort-anchored-nested-s0-r1`；low/high exact=
+  `259/259,530/530`，nested=`259/259`。
+- Anchored low/high reduction=`0.764139/0.400118`；P31=`0.764139/0.432690`；deltas=`0/-0.032572`。
+- Minimum group=`.50/.916667`，scene=`8/8,8/8`；4/5 gates；wall=`0.440s`。
+
 ### WS-V67-P47-CROSS-COHORT-ANCHORED-NESTED-01
 
 - 状态：`ready/running`；冻结P46，P10R4-H1.5 low/high=`.25/.50` strict nested replication。

@@ -464,10 +464,32 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F35 — P47 frozen cross-cohort anchored nested replication候选
 
-- 分类：`algorithm/cross-cohort-nested-replication`；状态：`active_frozen_read`。
+- 分类：`algorithm/cross-cohort-nested-replication`；状态：`closed_negative_high_budget_regression`。
 - 方法：P46/P31/P20全冻结；P10R4-H1.5 quarter/half strict nesting，quarter anchor回退P20。
 - 判定：两端exact、strict nesting、minimum group `.50`、相对各自P31非退化、至少6 scenes。
+- 结果：low delta=`0`，high delta=`-0.032572`；exact/nesting/group/8 scenes通过，高预算非退化失败。
+- 结论：low anchor可迁移，但full-residual high endpoint不能跨cohort稳定；单侧anchor high family关闭。
 - 边界：第二cohort新H结构复制，无训练/refit/sweep。下一编号=`V67-F36`。
+
+### V67-F36 — P48 double-anchored interior-budget adapter候选
+
+- 分类：`algorithm/endpoint-preserving-residual-adapter`；状态：`closed_negative_below_frozen_gain_gate`。
+- 调研迁移：Residual Adapters以共享主干+小域适配器服务多domain；Net2Net强调function-preserving变换。P48保持两端
+  冻结函数不变，只在budget内部激活adapter。
+- 方法：amplitude在`.25/.50`为0，在`1/3`为1，分段线性；11 domains×3 budgets训练；P31 allocator冻结。
+- 数据：新增P10R4-H1.5 development；P10R2-H1.5 target首次物化并作peak read。
+- 结果：P48/P31 reduction=`.742759/.740902`，delta=`+.001857`，exact/group/8 scenes通过但未达冻结`+.005`。
+- 结论：双端function-preserving合同成立，内部adapter增益不足；不降门、不扫两端/peak/amplitude/model/loss/gate。
+  下一编号=`V67-F37`。
+
+### V67-F37 — P49 Fishr-inspired domain-gradient consistency候选
+
+- 分类：`algorithm/domain-gradient-consistency`；状态：`active_gpu_training`。
+- 调研迁移：Fishr（ICML 2022）以跨域梯度统计一致性提升domain generalization；P49只迁移到小adapter末层的
+  normalized domain update direction dispersion，不声称实现完整per-sample gradient-variance Fishr。
+- 方法：P48双端anchor/model/P31 allocator不变；加入固定`.01`末层方向离散惩罚，12 domains×3 budgets训练。
+- 数据：新增已消费P10R2-H1.5 development；P3C-H1.5首次物化=`710/864` eligible并作一次budget1/3 read。
+- 防重复：不扫gradient weight、layer、anchor、peak、model、loss或gate。下一编号=`V67-F38`。
 
 ### V6.6 当前边界（2026-08-28）
 
