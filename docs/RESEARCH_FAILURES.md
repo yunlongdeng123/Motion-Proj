@@ -562,15 +562,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
   后者差`.000451`未过冻结门；4/5 gates。
 - 结论：严格拒绝，不降门/扫rho/试ASAM；flat/sharpness optimization family关闭。下一编号=`V67-F45`。
 
-### V67-F45 — P58 differentiable case-selective residual expert候选
+### V67-F45 — P58 differentiable case-selective residual expert失败
 
-- 分类：`algorithm/case-selective-mixture-of-experts`；状态：`active_gpu_training`。
+- 分类：`algorithm/case-selective-mixture-of-experts`；状态：`closed_negative_after_single_trial`。
 - 调研迁移：DSelect-k（NeurIPS 2021）提供连续可微expert selection；sparse MoE（ICLR 2017）按输入路由专家。
 - 方法：P20 frozen base expert + P53形式residual expert；新增固定width8 sigmoid case gate；其余P53合同不变。
 - 数据：P6R-H0.8=`868/1152` eligible、96 cases；同read比较P53/P31。
 - 异步复现输入：P3C-H0.8=`695/864` eligible、72 cases；仅物化，P58通过前selection read=false。
 - 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`；不扫gate width/expert count/temperature。
-  下一编号=`V67-F46`。
+- 结果：P58/P53/P31 reduction=`.777488/.774840/.797323`；相对P53=`+.002649`通过，但相对P31
+  `-.019835`，scene non-increasing=`5/6`；3/5 gates。gate mean=`.904328`，多数case近全开。
+- 结论：不扫gate结构/温度/top-k，不读取P59 replication quality；case-selective expert关闭。检索PRECOG、MotionLM与
+  uncertainty-aware actor prediction后，下一步改变预测对象为given-`tau` Actor-state reliability。下一编号=`V67-F46`。
 
 ### V6.6 当前边界（2026-08-28）
 

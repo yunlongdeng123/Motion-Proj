@@ -3,14 +3,14 @@
   "updated_at": "2026-08-29",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p57_rejected_p58_case_gated_training_running",
-  "active_task_id": "WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01",
-  "active_hypothesis_id": "WS-V67-H-P58-001",
+  "status": "v67_p58_rejected_actor_state_reliability_pivot",
+  "active_task_id": null,
+  "active_hypothesis_id": null,
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
   "failure_ledger_refs": ["V67-F45", "V67-F44", "V67-F43", "V67-F42", "V67-F41", "V67-F40", "V67-F39", "V67-F38", "V67-F37", "V67-F36", "V67-F35", "V67-F34", "V67-F33", "V67-F32", "V67-F31", "V67-F30", "V67-F29", "V67-F28", "V67-F27", "V67-F26", "V67-F25", "V67-F24", "V67-F23", "V67-F22", "V67-F21", "V67-F20", "V67-F19", "V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F44 closed_negative_after_single_recovery; V67-F45 active_gpu_training",
+  "failure_ledger_delta": "V67-F45 closed_negative_after_single_trial",
   "next_failure_id": "V67-F46",
-  "last_run": "run://worldsim_v67/WS-V67-P57-SAM-GRADIENT-HYBRID-01/20260829T070000Z__sam-gradient-s0-r1",
-  "last_verdict": "rejected_sam_gradient_hybrid",
-  "next_action": "finish P58 case-selective expert training and same-read P53 comparison on P6R H0.8"
+  "last_run": "run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/20260829T090000Z__case-gated-gradient-s0-r1",
+  "last_verdict": "rejected_case_gated_gradient_hybrid",
+  "next_action": "freeze and train a single-GPU trajectory-conditioned Actor-state reliability estimator on existing dense actor tracks"
 }

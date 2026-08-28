@@ -4,11 +4,14 @@
 
 ### WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01
 
-- 状态：`GPU training；P6R-H0.8 materialization overlapped/done`；cache=`868/1152` eligible、96 cases。
+- 状态：`done/rejected`；canonical=`20260829T090000Z__case-gated-gradient-s0-r1`；P6R-H0.8
+  cache=`868/1152` eligible、96 cases；训练5,320 cases/59,608 rows、14 domains，wall=`518.424s`。
 - P53 residual expert/data/objective不变；新增固定width8 sigmoid case gate，连续选择P20 base/residual expert。
-- Confirmation=`(.375,.8s)`；相对P31 `+.005`且相对同read P53 `+.002`；记录gate min/mean/max；5 gates。
+- Confirmation 75 cases、exact budget=`290/290`、coverage/minimum group=`.64/.50`；scene non-increasing=`5/6`。
+- P58/P53/P31/fixed reduction=`.777488/.774840/.797323/.317934`；相对P53=`+.002649`通过，
+  相对P31=`-.019835`失败；3/5 gates。gate min/mean/max=`4.47e-12/.904328/1.0`，表明多数case仍近全开。
 - 为避免GPU训练后等待I/O，P59独立P3C-H0.8 replication cache已并行物化：`695/864` eligible、72 cases；
-  P58结果通过前不读取其selection metric，也不启动第二次训练。
+  因P58失败不读取其selection metric，也不启动无意义的冻结复现。
 
 ### WS-V67-P57-SAM-GRADIENT-HYBRID-01 result
 

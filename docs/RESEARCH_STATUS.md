@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V6.7 P58 case-selective expert rejected / Actor-state pivot（2026-08-29）
+
+P58 canonical=`run://worldsim_v67/WS-V67-P58-CASE-GATED-GRADIENT-HYBRID-01/
+20260829T090000Z__case-gated-gradient-s0-r1`。P6R-H0.8的75 evaluable cases上，exact budget=`290/290`，
+coverage/minimum group=`.64/.50`；P58/P53/P31/fixed reduction=`.777488/.774840/.797323/.317934`。
+P58相对P53 `+.002649`，但相对P31 `-.019835`，且scene non-increasing仅`5/6`；3/5 gates，严格拒绝。
+gate min/mean/max=`4.47e-12/.904328/1.0`，说明固定width8 gate只对少数case关闭，无法恢复跨scene排序。
+不扫width/temperature/top-k，不消费已预取P59 selection quality，case-selective expert family关闭。
+
+卡点后检索PRECOG（ICCV 2019）、MotionLM（ICCV 2023）和on-board uncertainty（CVPR 2018）。下一对象从
+world-state action authority转为更窄的trajectory-conditioned Actor-state reliability：给定Ego `tau`和H，预测与
+该query相关的Actor未来状态外推误差；先在现有dense Actor tracks上训练单卡小模型，明确不声称counterfactual actor response、
+planner、policy、closed-loop或safety。
+
 ## WorldSim V6.7 P57 SAM rejected / P58 case-selective expert training（2026-08-29）
 
 P57 canonical=`run://worldsim_v67/WS-V67-P57-SAM-GRADIENT-HYBRID-01/
@@ -12,7 +26,7 @@ flat/sharpness optimization family关闭。
 为第二expert；固定8-wide sigmoid case gate按输入连续控制residual强度。P53数据/gradient/budgets/anchor/loss不变。
 P6R-H0.8 cache=`868/1152` eligible、96 cases，与GPU训练重叠；同read要求相对P53 `+.002`、相对P31 `+.005`。
 GPU训练期间并行完成P59独立P3C-H0.8输入物化：`695/864` eligible、72 cases；selection read=false。
-它只在P58通过时用于冻结迁移复现，避免训练完成后GPU等待I/O；P58失败则不消费该quality。
+它只在P58通过时用于冻结迁移复现，避免训练完成后GPU等待I/O；P58失败，因此不消费该quality。
 
 ## WorldSim V6.7 P55 averaging rejected / P57 SAM training（2026-08-29）
 
