@@ -2,6 +2,14 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P18-SELECTIVE-AUTHORITY-COMPILER-01
+
+- 状态：`done/supported_method_selection`；canonical=`20260828T130500Z__selective-authority-s0-r1`；冻结qmean action
+  ranking，7-feature monotone benefit head，P10V/P10X two-domain train，5,000 GPU epochs，P9 consumed selection。
+- P9 cases/authorized/coverage=`71/35/0.492958`；authority reduction=`0.487876`，ungated qmean=`0.418184`，delta=
+  `+0.069693`；positive-benefit rate=`0.914286`，scenes nonincreasing=`6/6`，4/4 gates；benefit Spearman=`0.619743`；
+  wall/peak GPU/RSS=`27.736s/0.01613GiB/1.1234GiB`。
+
 ### WS-V67-P17-MONOTONE-QUANTILE-TRAJECTORY-01
 
 - 状态：`done/rejected`；P10V/P10X 1,552 eligible actions开发，P9 846 actions已消费selection；8个固定分位点，

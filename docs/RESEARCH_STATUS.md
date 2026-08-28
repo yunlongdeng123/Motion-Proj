@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.7 P18 selective authority supported / P19 independent confirmation（2026-08-28）
+
+P18 canonical=`run://worldsim_v67/WS-V67-P18-SELECTIVE-AUTHORITY-COMPILER-01/
+20260828T130500Z__selective-authority-s0-r1`。固定qmean action order，只训练7-feature monotone case benefit head；P9
+71 evaluable cases中固定35 cases授权，coverage=`0.492958`。Authorized all/selected cost=`0.072745/0.037254`，reduction=
+`0.487876`，相对ungated qmean `0.418184`增加`+0.069693`；positive-benefit cases=`0.914286`，6/6 scenes不退化，4/4 gates。
+
+P18只支持consumed P9 method selection，`V67-F07 recovering_independent_confirmation`。P19加载冻结artifact后才materialize
+独立V65 P2六场景action targets，保持0.25 within-case selection、0.50 case authority与四门完全不变；不在P9调参。
+
 ## WorldSim V6.7 P17 distributional score rejected / P18 selective authority training（2026-08-28）
 
 状态：`v67_p17_rejected_p18_selective_authority_training`。P17 canonical=

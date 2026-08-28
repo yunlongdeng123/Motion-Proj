@@ -134,7 +134,7 @@ Spearman/pairwise/selected reduction delta=`-0.007213/-0.044718/-0.001150`，是
 
 ### V67-F07 — 学习替代trajectory qmean持续破坏跨域决策排序
 
-- 分类：`algorithm/representation-and-authority`；状态：`active_downstream_compiler_recovery`。
+- 分类：`algorithm/representation-and-authority`；状态：`recovering_independent_confirmation`。
 - 观察：P16 two-domain bounded action-ID adapter在P9为3/6 gates；P17 monotone quantile pool为1/6 gates。P17 learned/qmean
   Spearman=`0.645502/0.658731`、pairwise=`0.749190/0.779650`、selected reduction=`0.387839/0.418184`。
 - 根因：trajectory corridor内qmean已是强、低容量且可迁移的充分排序统计；action identity和自由分布混合分别引入
@@ -146,6 +146,10 @@ Spearman/pairwise/selected reduction delta=`-0.007213/-0.044718/-0.001150`，是
   case-level benefit/abstention compiler。
 - 防重复：不扫quantile levels、distribution mix、action ID、score residual、gate或selection fraction；P9已消费，只作
   P18 method selection。若P18成立，再到独立cohort一次确认；下一编号=`V67-F08`。
+
+P18 fixed-qmean selective compiler在P9以固定49.30% coverage把selected-cost reduction从`0.418184`提高到`0.487876`
+（delta=`+0.069693`），6/6 scenes不退化、4/4 gates通过。该结果使F07进入independent confirmation，尚不因consumed
+selection单独关闭；P19保持compiler/coverage/gates冻结，不在P9继续试验。
 
 ### V6.6 当前边界（2026-08-28）
 
