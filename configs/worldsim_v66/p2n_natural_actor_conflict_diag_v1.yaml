@@ -1,0 +1,36 @@
+schema_version: worldsim_v66.p2n_natural_actor_conflict_diag.v1
+task_id: WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01
+hypothesis_id: WS-V66-H-P2N-001
+seed: 0
+role: cross_cohort_consumed_legacy_diagnostic
+inputs:
+  evidence_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-EVIDENCE-01/20260828T010500Z__confirmation-evidence-s0-r1
+  native_run: worldsim_v65/WS-V65-P10X-CONFIRMATION-NATIVE-SIDECAR-01/20260828T010500Z__confirmation-native-aggregate-s0-r1
+  native_partition: fresh_selection
+  risk_run: worldsim_v64/WS-V64-P6R-SELECTIVE-MLP-01/20260826T134500Z__selective-mlp-s0-r1
+  risk_model_relative_path: RISK_MODEL/full_native_selective_mlp.joblib
+native_grid: {origin_m: [-51.2, -51.2, -5.0], voxel_size_m: 0.512}
+sampling:
+  maximum_boundary_points_per_unit: 8192
+  minimum_actor_boundary_points: 4
+  io_prefetch_workers: 2
+certificate:
+  maximum_supported_kinematic_jump_m: 3.0
+  maximum_shape_ratio_jump: 1.5
+label:
+  local_geometry_conflict: hidden_free_count_greater_than_zero
+evaluation:
+  minimum_actor_unit_rows: 72
+locks:
+  label_threshold_sweep: false
+  actor_existence_artifact_claim: false
+  model_or_certificate_refit: false
+  fresh_v66_quality_read: false
+  add_hash_checksum_fingerprint: false
+scenes: [scene-0245, scene-0287, scene-0686, scene-0718, scene-0817, scene-0868]
+failure_ledger_refs: [V65-F19]
+claim_boundary:
+  - cross_cohort_legacy_natural_local_geometry_conflict_diagnostic
+  - observed_free_actor_boundary_conflict_not_actor_existence_artifact
+  - no_fresh_generalization_or_repair_claim
+  - no_planner_policy_closed_loop_rl_or_safety_claim

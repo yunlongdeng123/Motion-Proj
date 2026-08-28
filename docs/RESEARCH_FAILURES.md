@@ -35,6 +35,8 @@
 - P4-D一次完成且R2 6/6 gates通过，无新failure。R0 DROP的hazard retention=0.5说明“删掉artifact actor”会在配对构造中
   明确制造easier-world；但这是positive comparator observation，不单列failure。R2满分仍只限deterministic paired factor，
   natural/fresh边界未解除；下一编号仍为`V66-F01`。
+- P2N natural-conflict诊断已实现但尚未读target；无新failure。observed-FREE actor boundary只定义local geometry
+  conflict，禁止升级成Actor existence artifact；若deterministic证书transfer失败，必须登记`V66-F01`并先检索外部方案。
 
 ### V6.5 终态边界（2026-08-28）
 

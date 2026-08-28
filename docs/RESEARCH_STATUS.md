@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.6 P2N natural-conflict diagnostic implementation ready（2026-08-28）
+
+状态：`v66_p2n_natural_conflict_implementation_ready`。实现复用P1的CPU预取/GPU q0流水线，但在与P1场景不重叠的
+P10X六场景读取target evidence，将Actor-grounded native boundary中`hidden_free_count>0`冻结为local geometry conflict。
+该label只判局部owned geometry，不判Actor existence；不扫count/rate threshold，不refit q0/certificate。下一步唯一一次
+diagnostic read；若deterministic证书出现natural ceiling，先检索相关顶会/优秀开源再设计迁移。
+
 ## WorldSim V6.6 P4-D repair-first supported / natural-conflict diagnostic next（2026-08-28）
 
 状态：`v66_p4_development_repair_supported_p2n_natural_conflict_next`；canonical=

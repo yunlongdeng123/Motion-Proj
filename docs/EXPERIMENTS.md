@@ -81,11 +81,13 @@
 
 ### WS-V66-P2N-NATURAL-ACTOR-CONFLICT-DIAGNOSTIC-01
 
-- 状态：`pending`；hypothesis=`WS-V66-H-P2N-001`。
+- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P2N-001`；formal run尚未创建。
 - 角色：与P1-D不重叠的P10X consumed cohort cross-cohort diagnostic；不是fresh selection/confirmation。
 - 目标：将Actor-owned native boundary上的target observed-FREE标记为local geometry conflict，比较q0 ranking与
   deterministic certificate recall；不把local primitive conflict升级为Actor existence artifact。
 - 只冻结一次threshold-free `hidden_free_count > 0` hard-evidence label，不扫rate/count threshold。
+- 实现：`motion_proj/worldsim_v66/natural_actor_conflict.py`、
+  `scripts/run_worldsim_v66_p2n_natural_conflict.py`；CPU预取与q0 GPU forward重叠。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 
