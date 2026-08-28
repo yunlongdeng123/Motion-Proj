@@ -2,6 +2,20 @@
 
 ## WorldSim V6.6 HARP-Compiler
 
+### WS-V66-CLOSEOUT-01
+
+- 状态：`done_documentation_only`（2026-08-28）；terminal state=`v66_research_complete_arxiv_report_ready`；
+  active task/hypothesis=`null/null`。
+- strongest positive：P3C independent AUROC/AUPRC=`0.761644/0.767165`；P6 Actor/state retention=`1/1`；
+  P8R 6/6 scenes、collision steps=`306→0`、minimum gap=`1.948192m`、jerk<=6。
+- terminal negative：P7R2 clean retention=`0.619549`通过但conflict reduction=`0.417872 <0.50`；
+  `V66-F02 closed_negative_after_single_recovery`。
+- plan lock：P7 FAIL，因此P9/P10/P11与matched RL未执行；P8R不能恢复P7。
+- handoff：`docs/autoresearch/worldsim_v66/V66_ARXIV_TECHNICAL_REPORT.md`、`ARXIV_EVIDENCE_INDEX.md`、
+  `V66_RESEARCH_CLOSEOUT.md`。
+- 最小只读验证：V6.6 run tree内`summary.json/status.json`共24个，使用项目Python全部JSON-readable；未重算metric。
+- 新scientific run/GPU/test matrix/hash/checksum/fingerprint=`none/none/none/none`；multi-GPU requirement=false。
+
 ### WS-V66-P0-HARP-SCOPE-01
 
 - 状态：`done`（2026-08-28）；类型=`minimal inheritance / direct-research freeze`。

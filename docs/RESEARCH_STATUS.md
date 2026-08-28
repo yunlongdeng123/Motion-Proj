@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V6.6 research complete / arXiv report ready（2026-08-28）
+
+状态：`v66_research_complete_arxiv_report_ready`；active task/hypothesis=`null/null`。正证据为two-level Actor
+certificate、independent legacy local geometry ranking、Actor-preserving HARP package、fixed-budget triage与6/6 synthetic
+lead-brake response；主要负证据为P7 sensor-supported physical repair在single recovery后终止。
+
+Plan审计确认`P7 FAIL → 不进入 RL`，因此P9/P10/P11未执行；这不是多卡或算力不足。V6.6不能称RL-ready simulator、
+physical repair success、fresh generalization或safety。ArXiv写作入口：
+`docs/autoresearch/worldsim_v66/V66_ARXIV_TECHNICAL_REPORT.md`、`ARXIV_EVIDENCE_INDEX.md`与
+`V66_RESEARCH_CLOSEOUT.md`。Closeout未新增scientific run、回归矩阵或hash/checksum/fingerprint。
+
 ## WorldSim V6.6 P8R supported / P9 locked / closeout next（2026-08-28）
 
 状态：`v66_p8r_supported_p9_locked_closeout_next`；canonical=

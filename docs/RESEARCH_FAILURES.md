@@ -12,6 +12,9 @@
 
 ### V6.6 当前边界（2026-08-28）
 
+- V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、
+  Actor-preserving package与synthetic bounded response；`V66-F02`记录natural physical repair terminal negative。
+  Plan规定P7 FAIL不得进入RL，所以P9/P10/P11未执行；任何physical repair或matched RL必须在新版本开始。
 - V6.6 已从合入 V6.5 终态 `288fa9f` 的 `main` 建立；当前解锁P3L低容量local geometry head，仍只在
   consumed legacy train/selection角色内执行。
 - 直接继承 `V65-F19`：visited-state reliability 不得重命名为 direct action authority；V6.6 validity 轴必须与
@@ -264,7 +267,7 @@ P8R保持全部实验参数与gates exact，只把stopped desired acceleration�
 | V6.3 | P2D native pointwise rejected；P3/P4 passed；P5/P5D objective collapse；P5R恢复训练candidate；P6 B3在两scene均输Native B2，surface family closed negative，P7锁定 | 训练内feasible不得冒充stage candidate；B3 tail与area同时失败后禁止继续B4/B5/M0、换seed/模型/门或读取legacy/H/T；未来复开必须是fresh uncertainty representation与conditional-coverage新版本 | `V63-F01`–`V63-F24`；`ARXIV_EVIDENCE_INDEX.md`；`P6_SURFACE_FAMILY_CLOSEOUT.md`；各P2D/P3/P4/P5/P5D/P5R/P6 prereg |
 | V6.4 | full-native MLP与conditional M0通过独立exact-once；M1在untouched fixed-opportunity denominator相对支持；P11 collision critic经一次独立threshold recovery仍rejected，版本终态report-ready | U2绝对弱、U3高FPR、PCA calibration失败；selected与fixed denominator必须分开；共享盘I/O以restricted-shard、per-scene staging、ready-first GPU queue恢复；critic unsafe prior与ranking跨cohort漂移 | `V64-F01`–`V64-F28`；`V64_RESEARCH_FAMILY_CLOSEOUT.md`；`ARXIV_EVIDENCE_INDEX.md`；各P6R/P4C/P10/P11 closeout |
 | V6.5 | visited-state reliability ranking与单调校准可迁移；one-shot direct action selection benefit失败并终止 | q0只可作给定轨迹访问状态的reliability diagnostic；禁止第二confirmation、阈值/lattice/critic救援 | `V65-F01`–`V65-F19`；`V65_ARXIV_TECHNICAL_REPORT.md`；`ARXIV_EVIDENCE_INDEX.md` |
-| V6.6 | closeout next：两级certificate/HARP bake/P8R synthetic response支持；P7 surface repair终局负结果 | `V66-F02 closed_negative_after_single_recovery`；`V66-F03 resolved_by_single_implementation_recovery`；P9锁定；下一failure id=`V66-F04` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/` |
+| V6.6 | terminal/report-ready：两级certificate/HARP bake/P8R synthetic response支持；P7 surface repair终局负结果；P9未执行 | `V66-F02 closed_negative_after_single_recovery`；`V66-F03 resolved_by_single_implementation_recovery`；下一failure id=`V66-F04` | `WORLDSIM_V6_6_HARP_COMPILER_PLAN.md`；`docs/autoresearch/worldsim_v66/V66_ARXIV_TECHNICAL_REPORT.md` |
 
 P4C conditional compiler freeze没有新增failure：它只把已读calibration中“50%的3个failure全部在rain”迁移为单一固定
 coverage map，并在任何新quality read前冻结新8-scene confirmation。若formal replay不满足预注册coverage/risk gate，直接登记
