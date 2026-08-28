@@ -839,6 +839,25 @@ P90 plain continuous trajectory max-error Huber同样在target read前冻结，�
 P91固定q=.90 conditional max-error quantile在P81 target read前冻结，作为P90 mean-oriented Huber的单一tail-risk
 对照；不扫quantile或coverage，不改变cohort/gates。当前无新增失败，下一编号仍为`V67-F66`。
 
+### V67-F66 — P81 prep r2把部分scene session过早绑定到单个archive
+
+- 分类：`engineering/dataset-archive-routing`；状态：`resolved_r3_active_before_target_read`；
+- 症状：r2扫描04/06/10并复用01/05的780 files后仍缺1,175/3,900 LIDAR files；逐scene缺失为
+  `0923:388`、`0784:398`、`0963:389`，其余7 scenes完整；0 scene preprocess、0 Actor rows、0 target read；
+- root cause：用少量archive header把scene假设为同一候选包，没有查询已有完整member-shard manifest；scene table、
+  capture session与十个download blob的分组不存在可推导的一一映射；
+- literature/open-source response：nuScenes官方/devkit只要求合并十个blob archives；工程恢复转用项目已有、由完整
+  archive扫描生成的V4 test member-shard manifest，而不继续猜scene index或单包session范围；
+- exact recovery：manifest给出`n008-2018-08-30-15-31-50-0400→08`以及两条`n015` sessions
+  `2018-10-08-15-44-23/2018-09-25-13-17-43→09`；故r3冻结`0784→08`、`0923/0963→09`，只扫描08/09并复用
+  已提取2,725 files；
+- claim impact：只修复输入路由，不换scene、不改H3.5、model、target、coverage、gate或claim；r2不计scientific trial。
+
+下一可用编号：`V67-F67`。
+
+P92 heteroscedastic Gaussian trajectory failure probability在P81 target read前冻结；不修改P81合同、不扫分布或variance
+bound。当前无新增失败，下一编号仍为`V67-F67`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

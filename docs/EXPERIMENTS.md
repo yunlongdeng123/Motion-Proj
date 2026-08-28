@@ -2,9 +2,18 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P92-HETEROSCEDASTIC-TRAJECTORY-FAILURE-01
+
+- 状态：`active/GPU training`；canonical candidate=`20260829T231500Z__heteroscedastic-trajectory-failure-s0-r1`；
+  distribution/model/1m score在P81 target rows出现前冻结。
+- 最近16个visited Actor Deep Sets同时输出`log1p(max error)`的Gaussian mean/log-variance，以heteroscedastic NLL
+  训练；正式selection score唯一为解析计算的`P(error>1m)`。Query/Actor-only同结构、四horizon等量、8,000 epochs。
+- 不扫distribution/variance bound/coverage/radius；不声称epistemic uncertainty、calibrated probability或safety。
+  依据NeurIPS 2017 aleatoric regression与deep ensembles Gaussian likelihood。
+
 ### WS-V67-P91-QUANTILE-TRAJECTORY-MAX-ERROR-01
 
-- 状态：`frozen/queued after P90`；canonical candidate=`20260829T230000Z__quantile-trajectory-max-error-s0-r1`；
+- 状态：`trained/waiting prospective P85 rows`；canonical=`20260829T230000Z__quantile-trajectory-max-error-s0-r1`；
   q90/objective/model在P81 target rows出现前冻结。
 - 与P90共享最近16个visited Actor Deep Sets和`log1p(max error)`target，将plain Huber替换为固定q=.90 pinball loss；
   query/Actor-only同容量、四source horizons等量batch、8,000 epochs。
@@ -13,7 +22,7 @@
 
 ### WS-V67-P90-PLAIN-TRAJECTORY-MAX-ERROR-01
 
-- 状态：`active/GPU training r2`；canonical candidate=`20260829T225000Z__plain-trajectory-max-error-s0-r2`；
+- 状态：`trained/waiting prospective P85 rows r2`；canonical=`20260829T225000Z__plain-trajectory-max-error-s0-r2`；
   protocol/model在P81 target rows出现前冻结。
 - 最近16个6m visited Actor rows采用与P87相同的Deep Sets encoder；唯一target为
   `log1p(max visited Actor error)`，仅用Huber regression，不含event BCE、pairwise rank或ordinal loss。
@@ -55,7 +64,9 @@
   不是官方blob分包规则；01命中389、05命中391，而错误绑定03/07/08/09均0，缺3,120 files。
 - 用archive开头真实session members冻结恢复路由：04承载`0344/0330/0923/0963`，06承载`0627/0784`，
   10承载`1059/1071`；r2=`20260829T221000Z__fresh-test-actor-prep-s0-r2`只扫描04/06/10并复用780现有files。
-- 这是纯IO routing recovery；10 scenes、P81/P82--P87 protocols、H3.5 target与gates均未改变。
+- r2完成三包后仍缺1,175 files：既有test member-shard manifest定位`0784→08`、`0923/0963→09`。r3=
+  `20260829T231000Z__fresh-test-actor-prep-s0-r3`只扫描08/09并复用2,725现有files；尚未scene preprocess/target read。
+- 这是纯IO routing recovery；10 scenes、P81/P82--P92 protocols、H3.5 target与gates均未改变。
 
 ### WS-V67-P86-DIRECT-TRAJECTORY-RELIABILITY-01
 

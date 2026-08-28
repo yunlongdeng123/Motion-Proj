@@ -1,6 +1,6 @@
 # Research Status
 
-## WorldSim V6.7 P81--P91 independent event-reliability confirmation active（2026-08-29）
+## WorldSim V6.7 P81--P92 independent event-reliability confirmation active（2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
 Actor/P73的`.0025`。该信号现被转换为新的、事前冻结的预测对象：给定Ego轨迹`τ`，未来H秒内被访问的Actor state
@@ -39,8 +39,10 @@ P86 r1在任何训练/test read前暴露CPU aggregation为逐group全表扫描�
 
 P81 prep r1证明nuScenes blob archives不按scene-table index百位切分：只命中`0016→01`与`0523→05`，错误绑定的
 03/07/08/09均0 hit。查询官方archive结构并读取未扫描包开头的真实session members后，按采集会话冻结精确路由：
-`0344/0330/0923/0963→04`、`0627/0784→06`、`1059/1071→10`。r2复用已提取780 files，只并行扫描
-04/06/10；cohort/model/target/gates不变。r1为V67-F64 engineering failure，0 scene preprocess/target read。
+`0344/0330/0923/0963→04`、`0627/0784→06`、`1059/1071→10`。r2复用已提取780 files并扫描04/06/10，但完整
+session核对表明三场实际跨到其他包：`0923/0963→09`、`0784→08`；r2因此仍缺1,175/3,900 files并在任何scene
+preprocess/target read前退出，记`V67-F66`。既有V4 test member-shard manifest给出了上述exact映射；r3只扫描08/09，
+复用已提取2,725 files，cohort/model/target/gates不变。r1为V67-F64 engineering failure。
 
 该恢复延长IO后，P87利用GPU训练learned set encoder。参考Deep Sets（NeurIPS 2017）与Set Transformer（ICML 2019），
 每条τ取6m内最近16个visited Actor rows，逐元素`256/128`编码后masked mean+max pooling，再`256/128`解码any-failure
@@ -61,12 +63,17 @@ P90进一步检验更直接的连续监督：复用P87的最近16个visited Acto
 8,000 epochs。该候选由P60/P64/P66中plain Huber迁移优于复合rank loss的既有证据驱动，并在P81 target rows出现前
 冻结；fresh selection唯一score为连续max-error预测，不在同一cohort挑loss、threshold或coverage。r1直接脚本入口
 因仓库根目录未进入`sys.path`而在import阶段退出，未建run/训练/read target；依据Python官方command-line文档以
-进程级`PYTHONPATH=.`恢复r2，登记工程失败`V67-F65`。r2现正约94% GPU训练；同时04/06 archive已完成扫描，10仍在IO。
+进程级`PYTHONPATH=.`恢复r2，登记工程失败`V67-F65`。r2已完成8,000 epochs并冻结等待P85 rows。
 
 为在最后一个archive扫描期间继续利用GPU，P91在任何P81 target read前冻结单一tail-risk对象：相同Deep Sets和
 `log1p(max visited Actor error)`target，但以固定q=.90 pinball loss直接学习条件高分位数，query/Actor-only均8,000
 epochs且四source horizons等量。该迁移参考NeurIPS 2019 single-model quantile uncertainty与NeurIPS 2021 quantile UQ；
 这里只把q90当作fixed-coverage ranking score，不声称conformal或marginal coverage，也不做quantile sweep。
+
+P91完成8,000 epochs后，P92在r3 archive IO期间接替GPU，进一步将可靠度写成显式概率：相同Deep Sets对
+`log1p(max visited Actor error)`输出异方差Gaussian mean/log-variance，以NLL训练，并将唯一selection score冻结为
+`P(error>1m)`。方法依据NeurIPS 2017 aleatoric uncertainty与deep ensembles中的Gaussian regression likelihood；这里只
+检验单模型aleatoric ranking，不声称epistemic uncertainty或calibrated coverage，不扫分布族/variance bound。
 
 ## WorldSim V6.7 P75 fresh selective claim rejected / narrow reliability signal retained（2026-08-29）
 
