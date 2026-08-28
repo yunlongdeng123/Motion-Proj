@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V6.7 P3 supported / ray repair implementation ready（2026-08-28）
+
+状态：`v67_p3_actions_supported_p4_ray_repair_implementation_ready`；P3 canonical=
+`run://worldsim_v67/WS-V67-P3-FIXED-ACTIONS-01/20260828T104902Z__fixed-actions-s0-r1`。固定258/517 actions处理
+185/295 conflicts，reduction=`0.627119`；Actor retention/removed/hazard shift/scene yield=`1/0/0/1`，6/6 gates通过。
+
+P4实现已就绪：repair核心新增默认false的`support_expansion_requires_behind_hit`，因此V6.6旧配置语义不变；V6.7
+显式使用`exact OR (radius<=0.512m AND source behind_hit)`。target只参与post-repair metric。下一步一次formal run，
+不扫ray rule/radius/budget/gate。
+
 ## WorldSim V6.7 P2 package supported / P3 actions ready（2026-08-28）
 
 状态：`v67_p2_package_supported_p3_actions_ready`；canonical=

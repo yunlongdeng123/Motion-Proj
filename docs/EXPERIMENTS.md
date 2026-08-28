@@ -2,6 +2,16 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P4-RAY-TERMINATED-SURFACE-01
+
+- 状态：`implementation_ready`；同一P3 L0 action set；support=`exact OR (same-Actor <=0.512m AND source behind_hit)`。
+- target只作conflict/clean/overall retention评估；Actor canonical shell/ID/track/trajectory/hazard不变。
+- 九门沿用V6.6：conflict reduction>=0.50、overall/clean>=0.40、Actor/shell/identity retention=1、removed=0、
+  hazard shift=0、scene yield=1；无rule/radius/budget/gate sweep。
+- 实现=`motion_proj/worldsim_v66/sensor_surface_repair.py`的默认关闭扩展与
+  `scripts/run_worldsim_v67_p4_ray_surface_repair.py`；配置=`configs/worldsim_v67/p4_ray_terminated_surface_v1.yaml`；
+  formal run尚未创建。
+
 ### WS-V67-P2-ACTOR-PACKAGE-01 / WS-V67-P3-FIXED-ACTIONS-01
 
 - 状态：P2/P3 `done/implementation_ready`；P2 verdict=`supported_v67_actor_preserving_package`；同一P1 scores与
@@ -16,6 +26,9 @@
   20260828T104733Z__actor-package-s0-r1`；units/Actors/states/primitives=`70/107/517/1093082`；package=
   `8 files/14808617 bytes`；state/metadata=`1/1`，removed/hidden target=`0/0`，6/6 gates。
 - P3 config已只替换P2 canonical locator；budget/gates exact，formal run尚未创建。
+- P3 canonical：`run://worldsim_v67/WS-V67-P3-FIXED-ACTIONS-01/
+  20260828T104902Z__fixed-actions-s0-r1`；rows/conflicts/budget=`517/295/258`；L0/q0/oracle reduction=
+  `0.627119/0.620339/0.874576`；Actor retention/removed/hazard shift/scene yield=`1/0/0/1`，6/6 gates通过。
 
 ### WS-V67-P0-SCOPE-01 / WS-V67-P1-GEOMETRY-TRANSFER-01
 

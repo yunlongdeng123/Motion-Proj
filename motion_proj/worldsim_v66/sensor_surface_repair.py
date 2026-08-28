@@ -32,6 +32,7 @@ def _load_repair_unit(
     point_limit: int,
     seed: int,
     support_radius_m: float,
+    support_expansion_requires_behind_hit: bool,
 ) -> dict[str, Any]:
     scene_index, scene, evidence_unit, native_unit = descriptor
     indices, centers, features = _target_free_boundary(
@@ -83,17 +84,17 @@ def _load_repair_unit(
         if hit_indices.size
         else np.empty(0, dtype=np.int64)
     )
-    if support_radius_m <= 0.0:
-        hit_pairs = {(int(linear), int(actor_id)) for linear, actor_id in zip(hit_linear, hit_ids)}
-        same_actor_hit = np.asarray(
-            [
-                valid_query and (int(linear), int(actor_id)) in hit_pairs
-                for valid_query, linear, actor_id in zip(query_valid, query_linear, actor_ids)
-            ],
-            dtype=bool,
-        )
-    else:
-        same_actor_hit = np.zeros(len(centers), dtype=bool)
+    hit_pairs = {(int(linear), int(actor_id)) for linear, actor_id in zip(hit_linear, hit_ids)}
+    exact_same_actor_hit = np.asarray(
+        [
+            valid_query and (int(linear), int(actor_id)) in hit_pairs
+            for valid_query, linear, actor_id in zip(query_valid, query_linear, actor_ids)
+        ],
+        dtype=bool,
+    )
+    radius_same_actor_hit = exact_same_actor_hit.copy()
+    if support_radius_m > 0.0:
+        radius_same_actor_hit = np.zeros(len(centers), dtype=bool)
         for actor_id in np.unique(actor_ids[actor_ids >= 0]):
             queries = (actor_ids == int(actor_id)) & query_valid
             actor_hits = hit_ids == int(actor_id)
@@ -107,7 +108,19 @@ def _load_repair_unit(
                 k=1,
                 distance_upper_bound=float(support_radius_m),
             )
-            same_actor_hit[np.flatnonzero(queries)] = np.isfinite(distances)
+            radius_same_actor_hit[np.flatnonzero(queries)] = np.isfinite(distances)
+    behind_hit = np.zeros(len(centers), dtype=bool)
+    behind_grid = np.asarray(method["behind_hit"], dtype=bool)
+    behind_hit[query_valid] = behind_grid[
+        query_indices[query_valid, 0],
+        query_indices[query_valid, 1],
+        query_indices[query_valid, 2],
+    ]
+    same_actor_hit = (
+        exact_same_actor_hit | (radius_same_actor_hit & behind_hit)
+        if support_expansion_requires_behind_hit
+        else radius_same_actor_hit
+    )
     return {
         "scene": scene,
         "unit": evidence_unit.name,
@@ -115,6 +128,9 @@ def _load_repair_unit(
         "labels": labels,
         "actor_ids": actor_ids,
         "same_actor_hit": same_actor_hit,
+        "exact_same_actor_hit": exact_same_actor_hit,
+        "radius_same_actor_hit": radius_same_actor_hit,
+        "behind_hit": behind_hit,
     }
 
 
@@ -164,6 +180,9 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
             point_limit=int(config["sampling"]["maximum_boundary_points_per_unit"]),
             seed=int(config["seed"]),
             support_radius_m=float(config.get("support_radius_m", 0.0)),
+            support_expansion_requires_behind_hit=bool(
+                config.get("support_expansion_requires_behind_hit", False)
+            ),
         )
 
     state_rows = []
@@ -209,6 +228,15 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
                         "repaired_conflict_point_count": int(np.count_nonzero(labels & keep)),
                         "baseline_clean_point_count": int(np.count_nonzero(~labels)),
                         "repaired_clean_point_count": int(np.count_nonzero((~labels) & keep)),
+                        "exact_support_point_count": int(
+                            np.count_nonzero(np.asarray(loaded["exact_same_actor_hit"])[members])
+                        ),
+                        "radius_support_point_count": int(
+                            np.count_nonzero(np.asarray(loaded["radius_same_actor_hit"])[members])
+                        ),
+                        "behind_hit_point_count": int(
+                            np.count_nonzero(np.asarray(loaded["behind_hit"])[members])
+                        ),
                     }
                 )
             print(
@@ -249,6 +277,18 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
         "target_used_for_action_or_retention": False,
         "physical_local_surface_mutated": True,
         "support_radius_m": float(config.get("support_radius_m", 0.0)),
+        "support_expansion_requires_behind_hit": bool(
+            config.get("support_expansion_requires_behind_hit", False)
+        ),
+        "exact_support_point_count": sum(
+            row["exact_support_point_count"] for row in state_rows
+        ),
+        "radius_support_point_count": sum(
+            row["radius_support_point_count"] for row in state_rows
+        ),
+        "behind_hit_point_count": sum(
+            row["behind_hit_point_count"] for row in state_rows
+        ),
         "canonical_actor_count": int(manifest["counts"]["actor_count"]),
     }
     repaired = {
