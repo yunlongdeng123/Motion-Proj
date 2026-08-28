@@ -719,6 +719,18 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 - 文献迁移：SelectiveNet/Selective Regression/Regression Deferral支持直接训练accept/reject函数。P74用scene-horizon内
   最低cost半集作为固定coverage admission监督，在H3.5比较query、Actor-only与P73 continuous。下一编号=`V67-F59`。
 
+### V67-F59 — P74 direct low-risk-half admission弱于continuous expected-cost selector
+
+- canonical：`run://worldsim_v67/WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01/20260829T173000Z__fixed-coverage-admission-s0-r1`；
+  440,398 source rows训练，H3.5六scene 5,049 rows。
+- 结果：query/Actor admission AUROC=`.835296/.817442`；50% selected cost query/Actor=`.067374/.067681`，
+  query只低`.45%`，未达5%；P73 continuous=`.047491`，direct admission高41.87%。1/3 gates拒绝。
+- 保留：query相对all `.524624`仍降低cost 87.16%，unreliable prevalence `.074668→.007927`，6/6 scenes不增；
+  但这些不能覆盖对更强continuous baseline的失败。
+- 结论：关闭binary admission family，不扫label quantile/BCE/coverage；保留multi-horizon continuous expected-cost selector。
+- 数据对策：按DriveStudio官方modular process keys，只抽取V5 validation role的LIDAR并生成`lidar/calib/objects` 10Hz数据；
+  P75在新8-scene cohort H3.5做一次fixed-coverage read，准备IO与GPU训练重叠。下一编号=`V67-F60`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

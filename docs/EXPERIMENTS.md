@@ -2,12 +2,19 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01
+
+- 状态：`running`；从V5冻结validation role取8个从未进入P60–P74的scene，只抽取Actor reliability所需LIDAR，
+  用DriveStudio 10Hz `lidar/calib/objects`最小process keys建立新processed cohort；不做图像/mask/quality/hash阶段。
+- GPU并行训练source H `.8/1.5/2.5/3.0` continuous expected-cost模型（query/Actor-only同容量）；新cohort H3.5
+  固定50%一次read，primary gates只比较selected cost，不再用pointwise MAE否定selective对象。
+
 ### WS-V67-P74-FIXED-COVERAGE-ACTOR-ADMISSION-01
 
-- 状态：`running`；训练对象从pointwise cost改为每个source scene/horizon内“是否属于最低cost 50%”的admission label；
-  query/Actor-only同容量BCE heads，固定50% per-scene选择。
-- P66 H `.8/1.5`缓存GPU warmup 750 epochs时并行加载P73 H2.5并物化H3.5；三horizon联合750 epochs。
-  H3.5一次read比较query admission、Actor-only admission与frozen P73 continuous selection，不扫coverage/loss/horizon。
+- 状态：`done/rejected`；canonical=`20260829T173000Z__fixed-coverage-admission-s0-r1`；440,398 rows训练，
+  H3.5六scene 5,049 rows。Query/Actor admission AUROC=`.835296/.817442`。
+- 50% selected cost all/query/Actor/P73 continuous=`.524624/.067374/.067681/.047491`；query比Actor只低`.45%`，
+  比continuous高`41.87%`，1/3 gates拒绝。绝对cost -`87.16%`、6/6 scenes不增不改变该负结论。
 
 ### WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01
 

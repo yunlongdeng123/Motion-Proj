@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P74 admission rejected / P75 fresh validation training+preparation（2026-08-29）
+
+P74在440,398 rows上直接学习scene-horizon最低cost半集，H3.5 query/Actor admission AUROC
+`=.835296/.817442`；但50% selected cost `.067374/.067681`几乎相同，且query比P73 continuous `.047491`
+高`41.87%`。1/3 gates拒绝，二元admission family关闭；连续expected-cost仍是当前最佳selector。
+
+检索DriveStudio官方NuScenes modular preprocessing后，P75启用V5冻结但从未消费的8-scene validation role。数据线程只从
+public shards抽取LIDAR_TOP，并用10Hz `lidar/calib/objects` keys生成Actor tracks；明确不运行图像、dynamic mask、
+quality audit、hash/checksum/fingerprint。与此同时GPU从头训练更宽continuous模型，source H `.8/1.5/2.5` warmup期间
+物化H3.0，再四horizon联合训练。数据ready后只在新scene H3.5固定50%读一次，primary gates比较query selection相对
+Actor-only及P73 continuous的actual cost；pointwise指标只记录，不作为对象错配的否决门。
+
 ## WorldSim V6.7 P73 multi-horizon pointwise rejected / P74 admission training（2026-08-29）
 
 P73在GPU训练期间并行物化141,295条source H2.5 rows和5,275条H3 evaluation rows，总训练440,398 rows、wall

@@ -1,0 +1,85 @@
+schema_version: worldsim_v67.p75_fresh_validation_actor.v1
+output_schema_version: worldsim_v67.p75_fresh_validation_actor_summary.v1
+task_id: WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01
+hypothesis_id: WS-V67-H-P75-001
+seed: 0
+role: fresh_validation_four_horizon_continuous_actor_reliability_selector
+verdict_on_pass: supported_fresh_validation_actor_reliability_selector
+verdict_on_failure: rejected_fresh_validation_actor_reliability_selector
+source:
+  base_run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  base_rows: TRAIN_ACTOR_QUERY_ROWS.npz
+  h2p5_run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  h2p5_rows: SOURCE_H2P5_ACTOR_QUERY_ROWS.npz
+source_h3_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizon_seconds: 3.0
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+p73_baseline:
+  run: worldsim_v67/WS-V67-P73-MULTI-HORIZON-ACTOR-RELIABILITY-01/20260829T170000Z__multi-horizon-actor-s0-r1
+  artifact: MULTI_HORIZON_ACTOR_RELIABILITY.pt
+evaluation_data:
+  scene_names: [scene-0170, scene-0364, scene-0997, scene-0384, scene-0129, scene-0640, scene-0977, scene-1053]
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p75_validation_lidar_member_shards.json
+  extraction_workers: 2
+  preprocess_workers: 2
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 2400
+  horizon_seconds: 3.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+model:
+  hidden_dimensions: [256, 128, 64]
+  warmup_epochs: 1500
+  joint_epochs: 1500
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  huber_beta: 0.05
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_cost_reduction_over_actor_only: 0.05
+  minimum_cost_reduction_over_p73: 0.05
+  minimum_absolute_cost_reduction: 0.50
+locks:
+  validation_scene_role_frozen_before_v67_and_never_consumed_by_p60_p74: true
+  only_lidar_calib_objects_processed_for_actor_reliability: true
+  source_horizons_point8_1p5_2p5_3p0_direct_training: true
+  H3p5_fresh_validation_read_once: true
+  exact_per_scene_fifty_percent_coverage: true
+  same_query_actor_only_capacity_huber_optimizer_and_epochs: true
+  cohort_io_overlapped_with_gpu_training: true
+  no_image_dynamic_mask_quality_hash_checksum_or_fingerprint_stage: true
+  no_coverage_model_loss_epoch_learning_rate_horizon_or_scene_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://github.com/ziyc/drivestudio/blob/main/docs/NuScenes.md
+  - https://proceedings.mlr.press/v151/kan22a.html
+  - https://proceedings.mlr.press/v162/shah22a.html
+claim_boundary:
+  - eight_never_consumed_validation_scenes_at_H3p5
+  - primary_endpoint_fixed_coverage_actual_selected_cost
+  - trajectory_conditioned_exposure_weighted_constant_velocity_actor_state_error
+  - no_actor_deletion_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim
