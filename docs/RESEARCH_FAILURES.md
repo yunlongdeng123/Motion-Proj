@@ -1176,6 +1176,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F79`。
 
+### P113 freeze note — 独立检验learned directional uncertainty是否超过纯clearance
+
+- motivation：P108 scalar primary虽超过Actor/P75，但P111 clearance fixed50更少；P110 directional与clearance同为1 event、
+  AUROC多`.04383`。需要新cohort检验全排序增量，不能在P108同read上升级claim；
+- target-unread cohort：`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，四location、10 distinct sessions；
+- frozen decision：directional selected events不多于clearance，并且AUROC gain≥`.02`；P109 checkpoint/projection、baseline floor、
+  H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
+- stop rule：一次read；失败登记`V67-F79`并关闭uncertainty-over-geometry claim，不换cohort/metric/floor/model或做recovery。
+
+下一可用编号仍为：`V67-F79`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

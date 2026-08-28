@@ -172,6 +172,12 @@ AUROC=`.95107/.77605`，两项冻结decision均通过，verdict=
 因此P109 direction-aware uncertainty在全排序上相对纯geometry有明显增量，但fixed50 event count与clearance持平；不能把
 唯一剩余事件的优势或safety authority归因于learned uncertainty。P108是唯一independent primary，P110/P111不冒充额外cohort。
 
+P113现针对这一归因边界冻结第二个、任务不同的scene-level confirmation：从仍未使用的official val scenes按四location
+的next order选`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`（indices=
+`76/259/411/2/12/36/617/705/711/801`），cohort内10个distinct sessions。P109 checkpoint/normalization、linear
+projection、`.05m` clearance baseline、H3.5、time/Actor max与fixed50全冻结；primary只要求directional events不多于
+clearance且AUROC增量≥`.02`。不再用Actor/P75作为decision，不扫模型/floor/aggregation；证据仍仅scene-level。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

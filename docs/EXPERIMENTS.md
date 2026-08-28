@@ -233,6 +233,17 @@
 - P111 clearance-only也选1 event，但AUROC `.91644`；因此directional uncertainty改善全排序，但fixed50事件数未超过
   no-learning geometry。只保留task-conditioned reliability ranking，不写calibrated collision probability或safety。
 
+### WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01
+
+- 状态：`frozen/not read`；prep=`20260830T070000Z__directional-vs-clearance-prep-s0-r1`，primary=
+  `20260830T070500Z__directional-vs-clearance-s0-r1`。
+- cohort：target-unread official val的next per-location order，`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，
+  indices=`76/259/411/2/12/36/617/705/711/801`；四location、cohort内10 distinct sessions，仍只scene-level independent。
+- frozen comparison：P109 directional Gaussian boundary projection vs `.05m` inverse absolute signed-clearance；同一H3.5、
+  time/Actor max和per-scene fixed50。decision仅`directional events<=clearance events`且AUROC gain≥`.02`。
+- Actor/P75只可描述，不参与decision；不换scene/shard/model/projection/floor/aggregation/coverage/decision，不做第二recovery。
+  参考CoRL task-relevant failure detection对downstream cost distribution的传播与2025 open-source stochastic boundary crossing。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

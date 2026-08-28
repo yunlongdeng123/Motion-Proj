@@ -1,0 +1,70 @@
+schema_version: worldsim_v67.p113_directional_vs_clearance_confirmation.v1
+output_schema_version: worldsim_v67.p113_directional_vs_clearance_confirmation_summary.v1
+task_id: WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P113-001
+role: independent_scene_level_directional_uncertainty_gain_over_clearance
+verdict_on_pass: supported_independent_directional_uncertainty_gain_over_clearance
+verdict_on_failure: rejected_independent_directional_uncertainty_gain_over_clearance
+clearance_baseline_floor_m: 0.05
+evaluation_data:
+  scene_names: [scene-0094, scene-0331, scene-0521, scene-0003, scene-0013, scene-0038, scene-0797, scene-0920, scene-0926, scene-1061]
+  scene_shards:
+    scene-0094: "01"
+    scene-0331: "04"
+    scene-0521: "05"
+    scene-0003: "04"
+    scene-0013: "01"
+    scene-0038: "01"
+    scene-0797: "08"
+    scene-0920: "09"
+    scene-0926: "09"
+    scene-1061: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p113_directional_confirmation_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-PREP-01
+  run_id: 20260830T070000Z__directional-vs-clearance-prep-s0-r1
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+decision:
+  minimum_auroc_gain_over_clearance_only: 0.02
+locks:
+  ten_target_unread_scenes_selected_by_next_official_val_order_per_location_before_read: true
+  cohort_contains_ten_distinct_sessions_but_is_only_scene_level_independent: true
+  P109_checkpoint_normalization_projection_clearance_baseline_H3p5_and_fixed50_frozen: true
+  primary_compares_only_directional_uncertainty_to_no_learning_clearance: true
+  no_scene_shard_model_projection_floor_aggregation_coverage_or_decision_recovery_after_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v205/farid23a/farid23a.pdf
+  - https://arxiv.org/abs/2510.05729
+claim_boundary:
+  - independent_at_scene_level_but_not_session_level
+  - directional_uncertainty_ranking_gain_over_fixed_clearance_geometry
+  - no_calibrated_probability_collision_planner_policy_closed_loop_or_safety_claim
