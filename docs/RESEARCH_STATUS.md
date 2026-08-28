@@ -35,6 +35,10 @@ P96已在任何remaining sensor/target read前冻结最后10个V5 test-role scen
 headers冻结shards `08/01/06/01/01/10/06/09/03/10`；P95 checkpoint、interaction radius、9 samples、H3.5、50%
 coverage和4 gates全部不变。只允许这一次independent confirmation，不在read后换scene/shard/model/gate。
 
+P96 prep已并行扫描01/03/06/08/09/10，formal evaluator等待10 scenes ready且尚未读取target。为覆盖archive IO而不改变
+P96，P97在已冻结P95 rows上派生one-sided false-safe target（predicted free / observed occupied）：source/development
+row events=`925/32`，无新sensor/target read。P97 6,000-epoch development训练与P96 IO并行；其结果不能替换P96。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

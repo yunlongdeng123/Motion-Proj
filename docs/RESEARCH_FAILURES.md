@@ -895,6 +895,9 @@ P95 development以query/Actor/P75 selected flips=`7/28/13`通过4/4 gates；由�
 10-scene one-shot confirmation，不记作独立成功。P96 cohort/shards/model/target/gates均已在sensor read前冻结；当前无新增
 失败，下一编号仍为`V67-F68`。
 
+P97只从冻结P95 artifacts派生false-safe target并与P96 archive IO重叠；0 new sensor/target read，且明确禁止替换P96
+endpoint或model。当前无新增失败，下一编号仍为`V67-F68`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

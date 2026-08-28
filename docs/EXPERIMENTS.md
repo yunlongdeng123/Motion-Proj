@@ -20,12 +20,21 @@
 
 ### WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
 
-- 状态：`frozen/preparation ready to launch`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
+- 状态：`active/archive IO; evaluator waiting`；cohort=`0771/0039/0635/0099/0101/1066/0630/0910/0556/1068`，
   scene indices=`599/37/489/81/83/806/485/696/440/808`。
 - exact shards=`08/01/06/01/01/10/06/09/03/10`；01/03两个此前未进入V4 test manifest的sessions由archive首个
   real session相邻范围确定，formal extraction仍要求exact 3,901 required members全命中，否则read前失败且不换scene。
 - frozen P95 checkpoint、H3.5、9 time samples、Actor half-width+1m、nearest16、fixed50与4 gates完全不变；
   primary endpoint是trajectory occupancy flip，false-safe/false-alarm仅描述。one-shot independent read。
+
+### WS-V67-P97-TRAJECTORY-FALSE-SAFE-01
+
+- 状态：`active/GPU training`；prep=`20260830T004500Z__trajectory-false-safe-prep-s0-r1`，model=
+  `20260830T005000Z__trajectory-false-safe-s0-r1`。
+- 从冻结P95 rows无新read派生`predicted free && observed occupied`target：source/development row events=`925/32`；
+  其余Deep Sets、four-horizon batches、6,000 epochs、fixed50与P95一致。
+- 这是与P96 IO重叠的development follow-up；不改变P96的occupancy-flip model/endpoint/gates，也没有independent
+  false-safe claim。不扫asymmetric weight、threshold或radius。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
