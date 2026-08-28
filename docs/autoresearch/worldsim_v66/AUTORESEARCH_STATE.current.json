@@ -3,9 +3,9 @@
   "updated_at": "2026-08-28",
   "branch": "research/worldsim-v6.6-harp-compiler",
   "base_commit": "288fa9f653dc5f2ab55c0612445f3c480b1e2176",
-  "status": "v66_p1_development_atlas_running",
-  "active_task_id": "WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01",
-  "active_hypothesis_id": "WS-V66-H-P1D-001",
+  "status": "v66_p1_development_supported_p2_certificate_next",
+  "active_task_id": "WS-V66-P2-FACTOR-CERTIFICATE-DEV-01",
+  "active_hypothesis_id": "WS-V66-H-P2D-001",
   "resource": {
     "gpu": "1x RTX 3090",
     "multi_gpu_required": false,
@@ -18,7 +18,9 @@
     "planning_policy_closed_loop_rl_safety": false
   },
   "failure_ledger_refs": ["V64-F28", "V65-F19", "V1-F06"],
-  "failure_ledger_delta": "none_at_p0",
+  "failure_ledger_delta": "none_at_p1d",
   "next_failure_id": "V66-F01",
-  "next_action": "run P1-D actor-grounded factorial atlas, then implement deterministic certificate if signal exists"
+  "last_run": "run://worldsim_v66/WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01/20260828T084915Z__factorial-atlas-dev-s0-r1",
+  "last_verdict": "supported_development_factorial_separation_proceed_to_p2",
+  "next_action": "compile independent reason-coded P2 certificate, then compare DROP/ABSTAIN/REPAIR"
 }

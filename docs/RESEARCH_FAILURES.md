@@ -22,6 +22,8 @@
 - P1-D evaluator实现与`py_compile`通过，未创建formal run、未读quality，未出现工程或算法失败；下一编号仍为
   `V66-F01`。q0在representation-level paired corruption中保持原score是预注册的actor-blind baseline语义，不能解释为
   对重新渲染artifact的实测不敏感。
+- P1-D formal一次完成且4/4 development gates通过，无新failure。构造性certificate满分只解除“factor接口是否存在
+  signal”的开发前置，不解除natural artifact truth、fresh generalization或真实hazard edit风险；下一编号仍为`V66-F01`。
 
 ### V6.5 终态边界（2026-08-28）
 

@@ -1,5 +1,25 @@
 # Research Status
 
+## WorldSim V6.6 P1-D factorial atlas supported / P2 certificate next（2026-08-28）
+
+状态：`v66_p1_development_supported_p2_certificate_next`；canonical=
+`run://worldsim_v66/WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01/20260828T084915Z__factorial-atlas-dev-s0-r1`；
+verdict=`supported_development_factorial_separation_proceed_to_p2`。
+
+72个已消费P10V units中得到409个eligible actor-unit base，五个artifact family各形成 paired cluster，共2,045 clusters /
+8,180 rows，四象限各2,045。冻结q0在同base的representation-level corruption/hazard pair中按合同保持原分数，故
+artifact与hazard AUROC/AUPRC均=`0.50/0.50`；这证明actor-blind baseline在该构造中无响应，不代表重渲染artifact后的
+empirical q0 failure。reason-coded factor certificate的artifact AUROC/AUPRC=`1.0/1.0`，五family recall均1.0，
+clean-hazard false artifact=`0`、legitimate hazardous retention=`1.0`、hazard-pair q0/certificate delta均=`0`。
+
+4/4 development gates通过，failure ledger delta=`none`。资源=`8.03s / 0.0236GiB GPU / 0.910GiB RSS`；I/O预取与
+GPU forward按计划重叠，单卡足够。该构造性满分只授权P2确定性证书与P4 repair capability，不授权learned superiority、
+自然artifact、fresh selection、真实hazard edit、planning/RL/safety。active next=`WS-V66-P2-FACTOR-CERTIFICATE-DEV-01 /
+WS-V66-H-P2D-001`；先把 reason codes/Actor existence protection 编译为独立certificate输出，再比较DROP/ABSTAIN/REPAIR。
+
+结果：`docs/autoresearch/worldsim_v66/P1_DEVELOPMENT_FACTORIAL_ATLAS_RESULT.md`。执行源码提交=`0374315`；
+结果文档由本次里程碑提交记录。
+
 ## WorldSim V6.6 P1-D evaluator implemented / formal run next（2026-08-28）
 
 状态：`v66_p1_development_atlas_implementation_ready`。已实现 Actor envelope grounding、hit/current/swept support

@@ -16,7 +16,8 @@
 
 ### WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01
 
-- 状态：`implementation_ready`；hypothesis=`WS-V66-H-P1D-001`；seed=`0`；formal run尚未创建。
+- 状态：`done`；hypothesis=`WS-V66-H-P1D-001`；seed=`0`；verdict=
+  `supported_development_factorial_separation_proceed_to_p2`。
 - 角色：Tier-L development mechanism，不是 fresh selection/confirmation/test。
 - 输入：V6.5 P10V 已消费的 6 scenes / 72 evidence/native units、冻结 V6.4 q0；预计最多 816 actor-unit
   base rows，再构造同 base 的 `V0-H0/V0-H1/V1-H0/V1-H1` 配对变体。
@@ -28,6 +29,15 @@
 - 配置：`configs/worldsim_v66/p1_factorial_atlas_dev_v1.yaml`。
 - 实现：`motion_proj/worldsim_v66/actor_factorial.py`、
   `scripts/run_worldsim_v66_p1_factorial_atlas.py`；窄验证=`py_compile`与`git diff --check`通过，无科学输出。
+- Canonical：`run://worldsim_v66/WS-V66-P1-VALIDITY-HAZARD-SEPARATION-ATLAS-DEV-01/
+  20260828T084915Z__factorial-atlas-dev-s0-r1`。
+- 分母：72 units、409 eligible actor-unit、2,045 paired clusters、8,180 rows；V0-H0/V0-H1/V1-H0/V1-H1
+  各2,045。
+- 结果：q0 artifact/hazard AUROC均0.50；certificate artifact AUROC/AUPRC=1.0/1.0，五family recall均1.0；
+  clean-hazard false artifact=0，hazardous retention=1.0，q0/certificate hazard-pair delta=0/0；4/4 gates PASS。
+- 解释：q0值在representation-level pair中按设计冻结，因此0.50是结构性baseline，不是重渲染artifact实测；
+  certificate满分是deterministic injection development capability，不是natural/fresh generalization。
+- 资源：wall=8.0297s，peak GPU=0.02359GiB，RSS=0.9098GiB；`failure_ledger_delta=none`。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

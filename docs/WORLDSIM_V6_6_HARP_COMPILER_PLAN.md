@@ -4,7 +4,7 @@
 >
 > 中文工作名：**HARP-Compiler：面向 RL 就绪驾驶仿真的幻觉感知、风险保真世界编译器**
 >
-> 状态：`active_p1_development_atlas`
+> 状态：`active_p2_development_certificate`
 >
 > 上游冻结分支：`research/worldsim-v6.5-task-conditioned-authority`
 >
@@ -20,6 +20,11 @@
 > 执行裁剪：按用户授权跳过冗长 P0 校验和回归矩阵。第一轮直接执行 P1-D development mechanism atlas，
 > 复用 V6.5 P10V 已消费的六场景 Actor evidence/native sidecar，只用于方法开发；fresh selection/confirmation
 > 权限不会由该结果替代。V6.6 不新增 hash/checksum/fingerprint。
+
+> P1-D 终态（2026-08-28）：409 actor-unit / 2,045 paired clusters / 8,180 rows；冻结 q0 的 paired
+> artifact/hazard AUROC均为0.50，五类可观测 factor certificate recall均为1.0，clean-hazard false artifact=0，
+> hazard-pair delta=0。该满分来自确定性注入的development construction，只授权P2接口固化与repair capability，
+> 不授权自然artifact/fresh泛化claim。
 
 ---
 
