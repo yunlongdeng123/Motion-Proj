@@ -116,6 +116,9 @@ P7R formal被拒绝：conflict reduction=`0.847660`，但overall/clean boundary 
 7/9 gates通过不改变verdict。根因是0.2m exact evidence-voxel hit过稀。`V66-F02`保持active；唯一P7R2固定
 one-native-voxel `0.512m` same-Actor support neighborhood，原九门不变，失败即关闭family。
 
+P7R2实现已就绪但formal run尚未创建；只增加固定0.512m nearest-hit支持，不生成新点或训练completion model。
+`V66-F02`保持active，下一可用编号仍为`V66-F03`。
+
 下一可用编号：`V66-F03`。
 
 ### V6.5 终态边界（2026-08-28）

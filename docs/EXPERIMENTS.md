@@ -179,9 +179,11 @@
 
 ### WS-V66-P7R2-RADIUS-SUPPORTED-ACTOR-REPAIR-01
 
-- 状态：`recovery_frozen`；唯一恢复，support radius固定`0.512m`=one native voxel side。
+- 状态：`implementation_ready`；唯一恢复，support radius固定`0.512m`=one native voxel side。
 - 同一L0 action set、target evaluation与九个gates；只把exact same-Actor hit改为到hit中心<=0.512m。
 - 禁止radius/budget/threshold sweep；失败则关闭sensor-surface repair family。
+- 实现复用`motion_proj/worldsim_v66/sensor_surface_repair.py`与P7R runner；配置：
+  `configs/worldsim_v66/p7r2_radius_supported_actor_repair_v1.yaml`；formal run尚未创建。
 
 ## WorldSim V6.4 FINAL REPORT-HANDOFF VALIDATION（2026-08-27）
 

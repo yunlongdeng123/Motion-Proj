@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 import numpy as np
+from scipy.spatial import cKDTree
 
 from motion_proj.worldsim_v61.occupancy import FREE
 from motion_proj.worldsim_v64.conditional_state_bake import _target_free_boundary
@@ -30,6 +31,7 @@ def _load_repair_unit(
     voxel_size: float,
     point_limit: int,
     seed: int,
+    support_radius_m: float,
 ) -> dict[str, Any]:
     scene_index, scene, evidence_unit, native_unit = descriptor
     indices, centers, features = _target_free_boundary(
@@ -81,14 +83,31 @@ def _load_repair_unit(
         if hit_indices.size
         else np.empty(0, dtype=np.int64)
     )
-    hit_pairs = {(int(linear), int(actor_id)) for linear, actor_id in zip(hit_linear, hit_ids)}
-    same_actor_hit = np.asarray(
-        [
-            valid_query and (int(linear), int(actor_id)) in hit_pairs
-            for valid_query, linear, actor_id in zip(query_valid, query_linear, actor_ids)
-        ],
-        dtype=bool,
-    )
+    if support_radius_m <= 0.0:
+        hit_pairs = {(int(linear), int(actor_id)) for linear, actor_id in zip(hit_linear, hit_ids)}
+        same_actor_hit = np.asarray(
+            [
+                valid_query and (int(linear), int(actor_id)) in hit_pairs
+                for valid_query, linear, actor_id in zip(query_valid, query_linear, actor_ids)
+            ],
+            dtype=bool,
+        )
+    else:
+        same_actor_hit = np.zeros(len(centers), dtype=bool)
+        for actor_id in np.unique(actor_ids[actor_ids >= 0]):
+            queries = (actor_ids == int(actor_id)) & query_valid
+            actor_hits = hit_ids == int(actor_id)
+            if not np.any(queries) or not np.any(actor_hits):
+                continue
+            hit_centers = evidence_origin[None, :] + (
+                hit_indices[actor_hits].astype(np.float64) + 0.5
+            ) * evidence_voxel
+            distances, _ = cKDTree(hit_centers).query(
+                np.asarray(centers)[queries],
+                k=1,
+                distance_upper_bound=float(support_radius_m),
+            )
+            same_actor_hit[np.flatnonzero(queries)] = np.isfinite(distances)
     return {
         "scene": scene,
         "unit": evidence_unit.name,
@@ -144,6 +163,7 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
             voxel_size=voxel_size,
             point_limit=int(config["sampling"]["maximum_boundary_points_per_unit"]),
             seed=int(config["seed"]),
+            support_radius_m=float(config.get("support_radius_m", 0.0)),
         )
 
     state_rows = []
@@ -228,6 +248,7 @@ def repair_surface(config: Mapping[str, Any], runs_root: Path) -> tuple[dict[str
         "world_scene_yield": scene_yield,
         "target_used_for_action_or_retention": False,
         "physical_local_surface_mutated": True,
+        "support_radius_m": float(config.get("support_radius_m", 0.0)),
         "canonical_actor_count": int(manifest["counts"]["actor_count"]),
     }
     repaired = {

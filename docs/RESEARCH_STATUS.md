@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.6 P7R2 one-voxel recovery implementation ready（2026-08-28）
+
+状态：`v66_p7r2_one_voxel_recovery_implementation_ready`。P7R loader新增可选same-Actor nearest-hit radius，P7R2唯一
+配置固定`0.512m`，等于native voxel side；P7R原exact语义仍为radius=0。其余L0 action set、target-only evaluation、
+九个gates与Actor/shell/track/hazard保护全部不变。实现只使用cKDTree查最近motion-compensated hit，不生成新点、不训练
+completion model。下一步一次formal recovery；失败关闭family。
+
 ## WorldSim V6.6 P7R rejected / P7R2 one-voxel recovery frozen（2026-08-28）
 
 状态：`v66_p7r_exact_hit_rejected_p7r2_radius_recovery_frozen`；canonical=
