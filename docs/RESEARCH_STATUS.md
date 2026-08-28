@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V6.7 P13 fresh physical capability supported / P14 GPU training ready（2026-08-28）
+
+状态：`v67_p13_fresh_surface_supported_p14_directional_training_ready`；canonical=
+`run://worldsim_v67/WS-V67-P13-FRESH-INWARD-RAY-SURFACE-01/20260828T115200Z__fresh-inward-s0-r1`。72 units/
+938 Actor states/469 actions；boundary `30,529→16,929`，overall/clean retention=`0.554522/0.559808`；conflict
+`1,812→853`，reduction=`0.529249`。Actor/shell/ID-track-trajectory=`1/1/1`，removed/hazard shift/scene yield=`0/0/1`，
+9/9 gates通过，无新failure。
+
+研究已转入GPU训练而非继续确认：P14在consumed legacy train/selection上训练273-D native representation + 11-D
+motion-compensated ray geometry的`512/256/128` differentiable residual head；analytic inward-ray core冻结，模型只能高精度
+rescue被core拒绝的clean point，不能删除core support或Actor。P13不参与训练/selection；无架构/loss/threshold sweep。
+
 ## WorldSim V6.7 P12 fresh actions supported / P13 physical confirmation ready（2026-08-28）
 
 状态：`v67_p12_fresh_actions_supported_p13_surface_ready`；canonical=

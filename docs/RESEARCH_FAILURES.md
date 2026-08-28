@@ -83,6 +83,10 @@ P11 fresh Actor package 6/6 gates通过；938 states与metadata完整保留、Ac
 - P12科学结果：L0在469/938固定budget处理341/563 conflicts，reduction=`0.605684`，6/6 gates通过。
 - 防重复：后续使用显式run-id，不在PowerShell字符串内嵌远端命令替换；下一编号=`V67-F04`。
 
+P13 fresh inward-ray physical confirmation 9/9 gates通过：conflict reduction=`0.529249`、overall/clean=
+`0.554522/0.559808`，Actor contracts exact；无新failure，下一编号仍为`V67-F04`。后续直接进入P14 GPU训练，
+不增加legacy确认或审计矩阵。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

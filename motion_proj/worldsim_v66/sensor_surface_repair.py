@@ -63,7 +63,12 @@ def _load_repair_unit(
         unit_seed = int(seed) + scene_index * 1009 + int(evidence_unit.name.removeprefix("f"))
         rng = np.random.default_rng(unit_seed)
         chosen = np.sort(rng.choice(features.shape[0], size=point_limit, replace=False))
-        indices, centers, labels = indices[chosen], centers[chosen], labels[chosen]
+        indices, centers, features, labels = (
+            indices[chosen],
+            centers[chosen],
+            features[chosen],
+            labels[chosen],
+        )
     actor_ids, _ = _ground_actor_ids(centers, method)
 
     evidence_origin = np.asarray(method["grid_origin_m"], dtype=np.float64)
@@ -140,6 +145,8 @@ def _load_repair_unit(
         "scene": scene,
         "unit": evidence_unit.name,
         "indices": np.asarray(indices, dtype=np.int32),
+        "centers": np.asarray(centers, dtype=np.float32),
+        "native_features": np.asarray(features, dtype=np.float32),
         "labels": labels,
         "actor_ids": actor_ids,
         "same_actor_hit": same_actor_hit,
@@ -147,6 +154,10 @@ def _load_repair_unit(
         "radius_same_actor_hit": radius_same_actor_hit,
         "inward_ray_same_actor_hit": inward_ray_same_actor_hit,
         "behind_hit": behind_hit,
+        "actor_hit_indices": hit_indices,
+        "actor_hit_ids": hit_ids,
+        "evidence_origin_m": evidence_origin,
+        "evidence_voxel_size_m": evidence_voxel,
     }
 
 

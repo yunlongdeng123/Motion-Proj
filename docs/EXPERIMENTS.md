@@ -2,10 +2,17 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P14-DIRECTIONAL-SURFACE-TRAIN-01
+
+- 状态：`implementation_ready`；train=P10V consumed six scenes，selection=P3C consumed six scenes，P13 excluded。
+- 273-D native + 11-D directional features；`512/256/128` residual rescue head，600 GPU epochs；analytic core不可删除；
+  配置=`configs/worldsim_v67/p14_directional_surface_train_v1.yaml`。
+
 ### WS-V67-P13-FRESH-INWARD-RAY-SURFACE-01
 
-- 状态：`implementation_ready`；fresh P9/P11/P12 canonical、L0 arm、exact P4R inward-ray rule、`0.512m`与九门冻结；
-  配置=`configs/worldsim_v67/p13_fresh_inward_ray_surface_v1.yaml`。
+- 状态：`done/supported`；canonical=`20260828T115200Z__fresh-inward-s0-r1`；baseline/repaired=
+  `30529/16929`；overall/clean=`0.554522/0.559808`；conflict `1812→853`，reduction=`0.529249`；Actor contracts
+  exact，9/9 gates；wall/RSS=`11.4564s/0.6130GiB`。
 
 ### WS-V67-P12-FRESH-FIXED-ACTIONS-01
 
