@@ -915,8 +915,13 @@ endpoint或model。
 下一可用编号：`V67-F69`。
 
 P98 false-alarm attribution从冻结rows派生且不修改P96；development fixed50 query/Actor/P75=`0/25/3`、AUROC=
-`.92312/.67813`，4/4 gates通过。该结果只解释P95 total-flip增益主要来自false-alarm removal，不能覆盖V67-F68或产生
-safety claim；当前无新增失败，下一编号仍为`V67-F69`。
+`.92312/.67813`，4/4 gates通过。冻结P95的真实selected subtype另为query/Actor/P75=`3+4 / 17+11 / 10+3`
+（false-safe+false-alarm），所以P98不能被用来声称P95主要移除false alarms，也不能覆盖V67-F68或产生safety claim；
+当前无新增失败，下一编号仍为`V67-F69`。
+
+P99 equal-weight two-head multi-task在development选择8 flips（6 false-safe+2 false-alarm），优于Actor 39/P75 13但未超过
+P95的7；它是V67-F68后的唯一shared-representation recovery，不替换已冻结P96 model，也不新增failure。下一编号仍为
+`V67-F69`。
 
 ### V6.6 当前边界（2026-08-28）
 

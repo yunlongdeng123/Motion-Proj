@@ -40,8 +40,13 @@ P96，P97在已冻结P95 rows上派生one-sided false-safe target（predicted fr
 row events=`925/32`，无新sensor/target read。P97结果query/Actor/P75 selected false-safe=`11/16/10`，AUROC=
 `.44692/.45555`，只过2/4 gates并拒绝（`V67-F68`）；不以focal/class weight补救。P98只补齐互补false-alarm分解：
 source/development row events=`1,348/64`。P98 fixed50 query/Actor/P75=`0/25/3`，AUROC=`.92312/.67813`，4/4
-gates通过。这表明P95 total-flip development优势主要由减少保守false alarms驱动，而非已失败的false-safe；P98仍不能
-替换P96，且无safety improvement claim。
+gates通过。但冻结P95本身的selected subtype复算为query=`3 false-safe+4 false-alarm`、Actor=`17+11`、P75=`10+3`：
+P95相对P75的净收益实际来自false-safe `10→3`，同时false-alarm `3→4`轻微增加。P98只说明单独false-alarm容易学，
+不能用于解释P95内部排序或替换P96；仍无safety improvement claim。
+
+P99用共享encoder和等权false-safe/false-alarm heads做唯一multi-task recovery，union score在development选择
+`6+2=8` flips，Actor-only=`18+21=39`，P75 total=13；AUROC=`.86341/.58818`，3/3 gates通过，但仍略逊P95的
+`3+4=7`。因此冻结P95保持P96唯一model，P99只作为“辅助任务能恢复P97表示但未超过joint flip target”的机制结果。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

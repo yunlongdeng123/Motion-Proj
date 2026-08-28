@@ -17,6 +17,8 @@
 - result：79,478 source trajectories；development=`1,791 trajectories / 95 flips`。fixed50 query/Actor/P75=
   `7/28/13 events`，query reduction over Actor=`75%`、absolute=`85.25%`，AUROC=`.83952/.69366`；4/4 gates。
   Verdict=`supported_development_trajectory_occupancy_flip`，仍禁止写independent/safety claim。
+- frozen selection subtype：query=`3 false-safe+4 false-alarm`，Actor=`17+11`，P75=`10+3`。相对P75的total gain
+  来自false-safe大幅减少，同时false-alarm多1；该分解为post-result diagnosis，不改变P96 endpoint/gates。
 
 ### WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01
 
@@ -46,7 +48,16 @@
   只补完P95 flip的互补分解，不对P97稀疏失败做class weight/focal/negative-sampling恢复。
 - P96独立confirmation仍使用原P95 total-flip checkpoint和gates；P98仅development分析。
 - result：1,791 trajectories/64 false alarms；fixed50 query/Actor/P75=`0/25/3`，query reduction=`100%`，AUROC=
-  `.92312/.67813`，4/4 gates。与P97一起说明P95增益偏向efficiency/false-alarm removal，不支持false-safe safety claim。
+  `.92312/.67813`，4/4 gates。它说明false-alarm单任务可学，但不能代表P95 joint model内部选择；P95实际subtype为
+  `3 false-safe+4 false-alarm`，相对P75的`10+3`主要改善false-safe。
+
+### WS-V67-P99-MULTITASK-OCCUPANCY-FLIP-01
+
+- 状态：`done/supported development`；canonical=`20260830T011500Z__multitask-occupancy-flip-s0-r1`。
+- shared Deep Sets encoder、equal-weight false-safe/false-alarm BCE heads；total risk固定为probability union，8,000 epochs；
+  无loss-weight/head/union sweep，0 new sensor/target read，P96仍用P95。
+- result：fixed50 query/Actor/P75 total=`8/39/13`；query subtype=`6 false-safe+2 false-alarm`，Actor=`18+21`；
+  AUROC=`.86341/.58818`，3/3 gates。它恢复P97稀疏表示但未超过P95 total=`7`，故不替换confirmation model。
 
 ### WS-V67-P81--P94 fresh result synthesis
 
