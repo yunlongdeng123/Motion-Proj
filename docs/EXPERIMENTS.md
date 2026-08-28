@@ -2,6 +2,12 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P70-FRESH-ACTOR-RELIABILITY-01
+
+- 状态：`running`；冻结P66 query/Actor-only模型，在worldsim-v5中排除与source重叠的276/756，只读取此前未进入
+  P60–P69 cohort的296/350/382/425/663/827六个processed scenes，固定H2.5和per-scene 50% coverage。
+- 目标：同时检验fresh-population连续误差预测与selective triage；不重训、不扫threshold/model/loss/horizon/scene。
+
 ### WS-V67-P69-SELECTIVE-ACTOR-RELIABILITY-REPLICATION-01
 
 - 状态：`done/supported`；canonical=`20260829T150000Z__selective-actor-replication-s0-r1`；冻结P66 score。

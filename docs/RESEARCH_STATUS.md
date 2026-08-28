@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V6.7 P70 fresh-population transfer running（2026-08-29）
+
+P70冻结P66 plain-Huber query/Actor-only模型，转到`worldsim_v5`的独立processed root；276/756与source scene ID
+重叠并明确排除，296/350/382/425/663/827六个scene此前未进入P60–P69 cohort。固定H2.5、相同Actor/query
+定义和per-scene 50% coverage，一次读取同时回答连续误差预测与selective triage能否跨fresh population成立；
+不重训、不扫threshold/model/loss/horizon/scene。
+
 ## WorldSim V6.7 P58 case-selective expert rejected / Actor-state pivot（2026-08-29）
 
 P60 canonical=`run://worldsim_v67/WS-V67-P60-TRAJECTORY-CONDITIONED-ACTOR-RELIABILITY-01/

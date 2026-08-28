@@ -1,0 +1,48 @@
+schema_version: worldsim_v67.p70_fresh_actor_reliability.v1
+output_schema_version: worldsim_v67.p70_fresh_actor_reliability_summary.v1
+task_id: WS-V67-P70-FRESH-ACTOR-RELIABILITY-01
+hypothesis_id: WS-V67-H-P70-001
+role: frozen_trajectory_conditioned_actor_reliability_fresh_population_transfer
+verdict_on_pass: supported_fresh_population_actor_reliability
+verdict_on_failure: rejected_fresh_population_actor_reliability
+source:
+  run: worldsim_v67/WS-V67-P66-PLAIN-ACTOR-LONG-HORIZON-01/20260829T133000Z__plain-actor-h2p5-s0-r1
+  artifact: TRAJECTORY_CONDITIONED_ACTOR_RELIABILITY.pt
+data:
+  processed_root: /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  scene_indices: [296, 350, 382, 425, 663, 827]
+  source_overlap_scene_indices_excluded: [276, 756]
+  horizon_seconds: 2.5
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 1.0
+  unreliable_exposure_radius_m: 6.0
+gates:
+  minimum_query_conditioned_spearman: 0.55
+  minimum_mae_reduction_over_actor_only: 0.10
+  minimum_selective_cost_reduction: 0.50
+  minimum_selective_unreliable_prevalence_reduction: 0.50
+locks:
+  frozen_p66_query_and_actor_only_models: true
+  six_scene_ids_absent_from_p60_p66_processed_cohort: true
+  exclude_two_scene_ids_overlapping_source_cohort: true
+  unseen_horizon_two_point_five_seconds: true
+  fixed_per_scene_fifty_percent_coverage: true
+  no_threshold_model_loss_horizon_or_scene_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/shah22a.html
+claim_boundary:
+  - six_fresh_processed_scenes_with_source_model_frozen
+  - trajectory_conditioned_exposure_weighted_constant_velocity_actor_state_error
+  - fixed_coverage_abstention_without_actor_deletion_or_geometry_mutation
+  - no_counterfactual_reaction_world_authority_planning_policy_closed_loop_rl_or_safety_claim
