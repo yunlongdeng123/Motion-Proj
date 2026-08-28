@@ -505,11 +505,29 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F39 — P51 large-cohort new-horizon gradient replication候选
 
-- 分类：`algorithm/large-cohort-gradient-consistency`；状态：`active_gpu_training_and_materialization`。
+- 分类：`algorithm/large-cohort-gradient-consistency`；状态：`resolved_by_large_cohort_new_horizon`。
 - 方法：P49 gradient penalty/anchor/model/loss/gates不变，只将已消费P2V-H1.5滚入第13个development domain。
 - 数据：P6E 16-scene H1.5 target首次物化=`2049/2304` eligible、192 cases，与GPU训练并行；budget1/3一次read。
 - 判定：exact、四scene-group minimum coverage `.50`、相对P31 `+.005`、至少12 scenes。
+- 结果：exact=`673/673`、group=`.50`；P51/P31 reduction=`.806000/.796088`，delta=`+.009912`；
+  15/15 evaluable scenes，4/4 gates。
 - 防重复：不扫gradient weight/anchor/peak/model/loss/group/gate。下一编号=`V67-F40`。
+
+### V67-F40 — P52 frozen below-range horizon extrapolation候选
+
+- 分类：`confirmation/frozen-horizon-extrapolation`；状态：`resolved_by_short_horizon_extrapolation`。
+- 方法：P51/P31/P20冻结；P10V-H0.8首次物化=`694/864` eligible，低于所有训练H。
+- 结果：exact=`229/229`、group=`.521739`；P51/P31 reduction=`.761914/.680754`，delta=`+.081161`；
+  6/6 scenes，4/4 gates。无训练/refit/sweep。
+- 边界：source cohort已消费；只称task-condition extrapolation。下一编号=`V67-F41`。
+
+### V67-F41 — P53 jointly unseen budget + horizon gradient hybrid候选
+
+- 分类：`algorithm/joint-budget-horizon-generalization`；状态：`active_gpu_training`。
+- 方法：P51 gradient/anchor/model/loss不变；training budgets加入固定`.40`，形成14 domains×4 budgets。
+- 数据：P10X-H0.8首次物化=`662/864` eligible、72 cases，与GPU训练重叠；formal budget=`.375`未见。
+- 判定：exact、minimum group `.50`、相对P31 `+.005`、至少5 scenes。
+- 防重复：不扫budget集合、gradient weight、anchor、model、loss或gate。下一编号=`V67-F42`。
 
 ### V6.6 当前边界（2026-08-28）
 

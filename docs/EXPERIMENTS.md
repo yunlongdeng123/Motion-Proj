@@ -2,9 +2,32 @@
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
+### WS-V67-P53-JOINT-BUDGET-HORIZON-GRADIENT-HYBRID-01
+
+- 状态：`GPU training；P10X-H0.8 materialization overlapped/done`；cache=`662/864` eligible、72 cases。
+- 14 domains×budgets `{.25,1/3,.40,.50}`、6,000 epochs；P51参数不变，只增加`.40` active budget和已消费
+  P6E-H1.5 development。
+- Confirmation=unseen budget `.375` + below-range H `.8s`；exact/group `.50`/delta over P31 `+.005`/5 scenes。
+
+### WS-V67-P52-FROZEN-HORIZON-EXTRAPOLATION-01 result
+
+- 状态：`done/supported`；canonical=`20260829T034000Z__short-horizon-extrapolation-s0-r1`；P10V-H0.8
+  `694/864` eligible、67 evaluable cases。
+- Exact=`229/229`；coverage/minimum group=`.671642/.521739`；6/6 scenes。
+- P51/P31/fixed reduction=`.761914/.680754/.222998`；deltas=`+.081161/+.538916`；4/4 gates。
+- wall/peak GPU/RSS=`.500s/.00913GiB/.71574GiB`；冻结外推，无训练/refit。
+
+### WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01 result
+
+- 状态：`done/supported`；canonical=`20260829T023000Z__large-cohort-gradient-s0-r1`；训练
+  3,450 cases/38,559 rows、13 domains；gradient variance=`.002812`，residual RMS=`.018015`。
+- P6E-H1.5 exact=`673/673`；180 evaluable cases；coverage/minimum group=`.705556/.50`；15/15 scenes。
+- P51/P31/fixed reduction=`.806000/.796088/.338304`；deltas=`+.009912/+.467696`；4/4 gates。
+- wall/peak GPU/RSS=`456.689s/.12249GiB/1.35305GiB`。
+
 ### WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01
 
-- 状态：`GPU training；16-scene materialization overlapped/done`；cache=`2049/2304` eligible、192 cases；
+- 状态：`completed/supported；16-scene materialization overlapped/done`；cache=`2049/2304` eligible、192 cases；
   13 domains×3 budgets、6,000 epochs。
 - P49方法参数全部不变，只加入已消费P2V-H1.5 development；P6E-H1.5 target首次物化。
 - Confirmation=budget1/3；exact/group `.50`/delta over P31 `+.005`/12 scenes；不扫任何参数或gate。

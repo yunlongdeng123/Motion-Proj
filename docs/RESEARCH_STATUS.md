@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V6.7 P51 large cohort + P52 horizon extrapolation supported / P53 joint training（2026-08-29）
+
+P51 canonical=`run://worldsim_v67/WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01/
+20260829T023000Z__large-cohort-gradient-s0-r1`。13 domains训练3,450 cases/38,559 rows；P6E-H1.5 exact=`673/673`，
+coverage/minimum group=`.705556/.50`。P51/P31/fixed reduction=`.806000/.796088/.338304`，delta=`+.009912`，
+15/15 evaluable scenes，4/4 gates；verdict=`supported_large_cohort_gradient_consistent_hybrid`。
+
+P52 canonical=`run://worldsim_v67/WS-V67-P52-FROZEN-HORIZON-EXTRAPOLATION-01/
+20260829T034000Z__short-horizon-extrapolation-s0-r1`。P10V-H0.8首次物化=`694/864` eligible，67 evaluable cases；
+exact=`229/229`，coverage/minimum group=`.671642/.521739`。P51/P31/fixed reduction=`.761914/.680754/.222998`，
+delta=`+.081161`，6/6 scenes、4/4 gates。冻结P51支持低于所有训练H的短时域外推。
+
+P53将interior training budgets固定扩为`{1/3,.40}`，其余P51方法不变；14 domains×4 budgets GPU训练与P10X-H0.8
+物化重叠，cache=`662/864` eligible、72 cases。正式read使用训练未见budget `.375`和训练范围外H `.8s`。
+
 ## WorldSim V6.7 P50 frozen transfer supported / P51 large-cohort training（2026-08-29）
 
 P50 canonical=`run://worldsim_v67/WS-V67-P50-FROZEN-GRADIENT-CONSISTENT-TRANSFER-01/
