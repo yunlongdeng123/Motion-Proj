@@ -1,0 +1,89 @@
+schema_version: worldsim_v67.p95_trajectory_occupancy_flip.v1
+output_schema_version: worldsim_v67.p95_trajectory_occupancy_flip_summary.v1
+task_id: WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
+hypothesis_id: WS-V67-H-P95-001
+seed: 0
+role: development_trajectory_conditioned_occupancy_decision_reliability
+verdict_on_pass: supported_development_trajectory_occupancy_flip
+verdict_on_failure: rejected_development_trajectory_occupancy_flip
+model_artifact: TRAJECTORY_OCCUPANCY_FLIP.pt
+source_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+  source_scene_modulus: 5
+  excluded_scene_remainder: 0
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+development_data:
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  scene_indices: [15, 483, 413, 261, 799, 258, 708, 811, 607, 730]
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+row_run:
+  run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-PREP-01/20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1
+  source_artifact: SOURCE_OCCUPANCY_FLIP_ROWS.npz
+  development_artifact: DEVELOPMENT_OCCUPANCY_FLIP_ROWS.npz
+source_rows:
+  run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-PREP-01/20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1
+  artifact: SOURCE_OCCUPANCY_FLIP_ROWS.npz
+evaluation_rows:
+  run: worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-PREP-01/20260830T002000Z__trajectory-occupancy-flip-prep-s0-r1
+  artifact: DEVELOPMENT_OCCUPANCY_FLIP_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+model:
+  maximum_visited_actors: 16
+  element_dimensions: [256, 128]
+  decoder_dimensions: [256, 128]
+  epochs: 6000
+  horizon_batch_size: 1024
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  objective: binary_bce
+  failure_threshold_m: 0.5
+selection:
+  coverage_fraction: 0.50
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+gates:
+  minimum_event_reduction_over_actor_only: 0.10
+  minimum_absolute_trajectory_event_reduction: 0.25
+  require_no_more_events_than_frozen_p75: true
+  maximum_max_error_ratio_to_frozen_p75: 1.00
+locks:
+  target_is_predicted_vs_observed_path_occupancy_decision_flip: true
+  interaction_radius_is_actor_half_width_plus_fixed_one_meter_ego_half_width: true
+  actual_actor_path_uses_same_nine_time_samples_as_candidate_trajectory: true
+  three_point_five_second_P81_cohort_is_consumed_development_not_independent_confirmation: true
+  four_source_horizons_equal_batch_weight: true
+  query_and_actor_only_same_deepset_optimizer_and_epochs: true
+  exact_per_scene_fifty_percent_trajectory_coverage: true
+  remaining_ten_test_role_scenes_unread: true
+  no_radius_threshold_width_coverage_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/papers/Ren_Safety-Aware_Motion_Prediction_With_Unseen_Vehicles_for_Autonomous_Driving_ICCV_2021_paper.pdf
+  - https://openaccess.thecvf.com/content/CVPR2023/papers/Agro_Implicit_Occupancy_Flow_Fields_for_Perception_and_Prediction_in_Self-Driving_CVPR_2023_paper.pdf
+claim_boundary:
+  - development_only_trajectory_conditioned_occupancy_decision_reliability
+  - constant_velocity_predicted_path_vs_observed_actor_path
+  - no_independent_confirmation_yet
+  - no_counterfactual_actor_reaction_planner_policy_closed_loop_collision_or_safety_claim

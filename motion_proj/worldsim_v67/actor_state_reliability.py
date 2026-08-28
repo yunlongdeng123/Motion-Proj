@@ -90,6 +90,11 @@ def materialize_actor_query_rows(
     target_cost: list[float] = []
     raw_error: list[float] = []
     separation: list[float] = []
+    actual_separation: list[float] = []
+    occupancy_radius: list[float] = []
+    occupancy_flip: list[bool] = []
+    occupancy_false_safe: list[bool] = []
+    occupancy_false_alarm: list[bool] = []
     scene_index: list[int] = []
     horizon_values: list[float] = []
     actor_ids: list[int] = []
@@ -108,11 +113,13 @@ def materialize_actor_query_rows(
             first_frame = min(actor_table)
             for horizon_seconds in horizons_seconds:
                 horizon_frames = int(round(float(horizon_seconds) * 10.0))
+                sampled_offsets = np.rint(np.linspace(0, horizon_frames, point_count)).astype(np.int32)
                 anchors = sorted(
                     frame for frame in actor_table
                     if frame % stride == 0 and frame - history_far in actor_table
                     and frame - history_near in actor_table and frame + horizon_frames in actor_table
                     and frame in poses and frame - history_near in poses
+                    and all(frame + int(offset) in actor_table for offset in sampled_offsets)
                 )
                 for frame in anchors:
                     past_far, yaw_far, _ = actor_table[frame - history_far]
@@ -148,6 +155,9 @@ def materialize_actor_query_rows(
                     )
                     times = np.linspace(0.0, float(horizon_seconds), point_count)
                     predicted_actor_path = current[None, :] + times[:, None] * velocity[None, :]
+                    actual_actor_path = np.stack([
+                        actor_table[frame + int(offset)][0] for offset in sampled_offsets
+                    ])
                     heading_delta = _wrapped_angle(yaw - math.atan2(ego_heading[1], ego_heading[0]))
                     base = [
                         actor_speed, acceleration_longitudinal, acceleration_lateral, yaw_rate,
@@ -168,6 +178,11 @@ def materialize_actor_query_rows(
                         minimum_distance = float(np.min(distances))
                         if minimum_distance > radius:
                             continue
+                        actual_distances = np.linalg.norm(actual_actor_path - ego_path, axis=1)
+                        actual_minimum_distance = float(np.min(actual_distances))
+                        interaction_radius = float(data_config.get("ego_half_width_m", 1.0)) + 0.5 * float(box[1])
+                        predicted_occupied = minimum_distance <= interaction_radius
+                        actual_occupied = actual_minimum_distance <= interaction_radius
                         terminal_distance = float(distances[-1])
                         relative_terminal = predicted_actor_path[-1] - ego_path[-1]
                         initial_distance = max(float(np.linalg.norm(relative_position)), 1e-6)
@@ -179,6 +194,11 @@ def materialize_actor_query_rows(
                         target_cost.append(endpoint_error * exposure)
                         raw_error.append(endpoint_error)
                         separation.append(minimum_distance)
+                        actual_separation.append(actual_minimum_distance)
+                        occupancy_radius.append(interaction_radius)
+                        occupancy_flip.append(predicted_occupied != actual_occupied)
+                        occupancy_false_safe.append((not predicted_occupied) and actual_occupied)
+                        occupancy_false_alarm.append(predicted_occupied and (not actual_occupied))
                         scene_index.append(numeric_scene)
                         horizon_values.append(float(horizon_seconds))
                         actor_ids.append(int(actor_id_text))
@@ -190,6 +210,11 @@ def materialize_actor_query_rows(
         "target_cost": np.asarray(target_cost, dtype=np.float32),
         "raw_actor_state_error_m": np.asarray(raw_error, dtype=np.float32),
         "predicted_minimum_separation_m": np.asarray(separation, dtype=np.float32),
+        "actual_minimum_separation_m": np.asarray(actual_separation, dtype=np.float32),
+        "occupancy_interaction_radius_m": np.asarray(occupancy_radius, dtype=np.float32),
+        "occupancy_decision_flip": np.asarray(occupancy_flip, dtype=bool),
+        "occupancy_false_safe": np.asarray(occupancy_false_safe, dtype=bool),
+        "occupancy_false_alarm": np.asarray(occupancy_false_alarm, dtype=bool),
         "scene_index": np.asarray(scene_index, dtype=np.int32),
         "horizon_seconds": np.asarray(horizon_values, dtype=np.float32),
         "actor_id": np.asarray(actor_ids, dtype=np.int32),
