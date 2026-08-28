@@ -523,11 +523,30 @@ P33 6/6 gates通过：P4C H=1.5s `973/1152` eligible、89 cases，budget=`315/31
 
 ### V67-F41 — P53 jointly unseen budget + horizon gradient hybrid候选
 
-- 分类：`algorithm/joint-budget-horizon-generalization`；状态：`active_gpu_training`。
+- 分类：`algorithm/joint-budget-horizon-generalization`；状态：`resolved_by_joint_unseen_condition`。
 - 方法：P51 gradient/anchor/model/loss不变；training budgets加入固定`.40`，形成14 domains×4 budgets。
 - 数据：P10X-H0.8首次物化=`662/864` eligible、72 cases，与GPU训练重叠；formal budget=`.375`未见。
 - 判定：exact、minimum group `.50`、相对P31 `+.005`、至少5 scenes。
+- 结果：exact=`218/218`、group=`.541667`；P53/P31 reduction=`.733916/.724912`，delta=`+.009004`；
+  6/6 scenes，4/4 gates。
 - 防重复：不扫budget集合、gradient weight、anchor、model、loss或gate。下一编号=`V67-F42`。
+
+### V67-F42 — P54 frozen second-cohort joint-condition replication候选
+
+- 分类：`confirmation/frozen-joint-condition-transfer`；状态：`resolved_by_second_joint_cohort`。
+- 方法：P53/P31/P20冻结；P4C-H0.8=`861/1152` eligible；formal budget `.375`，无训练/refit。
+- 结果：exact=`282/282`、group=`.50`；P53/P31 reduction=`.830087/.775806`，delta=`+.054281`；
+  8/8 scenes，4/4 gates。联合条件跨第二cohort复制。
+- 边界：globally consumed source cohort；不作fresh population claim。下一编号=`V67-F43`。
+
+### V67-F43 — P55 fixed-tail weight-averaged gradient hybrid候选
+
+- 分类：`algorithm/flat-minimum-weight-averaging`；状态：`active_gpu_training`。
+- 调研迁移：SWAD（NeurIPS 2021）以flat minima缩小domain generalization gap；SWA（UAI 2018）沿训练轨迹平均权重。
+- 方法：P53完全不变，只固定平均最后20%=1,200 checkpoints；不用validation选窗口，不改学习率或训练长度。
+- 数据：P10R4-H0.8=`984/1152` eligible、96 cases；同一formal read加载冻结P53作method baseline。
+- 判定：exact/group/scenes、相对P31 `+.005`、相对P53 `+.002`；不扫averaging start/schedule/gate。
+  下一编号=`V67-F44`。
 
 ### V6.6 当前边界（2026-08-28）
 

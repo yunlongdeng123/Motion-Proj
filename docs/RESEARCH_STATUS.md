@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V6.7 P53/P54 joint condition supported / P55 weight averaging training（2026-08-29）
+
+P53 canonical=`run://worldsim_v67/WS-V67-P53-JOINT-BUDGET-HORIZON-GRADIENT-HYBRID-01/
+20260829T040000Z__joint-budget-horizon-gradient-s0-r1`。14 domains×4 budgets训练5,320 cases/59,608 rows；
+P10X `(.375,.8s)` exact=`218/218`，coverage/minimum group=`.655738/.541667`。P53/P31/fixed reduction=
+`.733916/.724912/.214324`，delta=`+.009004`，6/6 scenes，4/4 gates；verdict=`supported_joint_budget_horizon_gradient_hybrid`。
+
+P54 canonical=`run://worldsim_v67/WS-V67-P54-FROZEN-JOINT-CONDITION-REPLICATION-01/
+20260829T050000Z__frozen-joint-replication-s0-r1`。P4C同一`(.375,.8s)` exact=`282/282`，coverage/minimum group=
+`.674419/.50`；P53/P31/fixed reduction=`.830087/.775806/.303649`，delta=`+.054281`，8/8 scenes，4/4 gates。
+联合未见budget+H机制跨第二cohort复制。
+
+P55保持P53全部数据/模型/gradient/budget/anchor/loss，只对最后20%（1,200 checkpoints）固定等权参数平均；无validation
+窗口选择。P10R4-H0.8物化=`984/1152` eligible、96 cases，与GPU训练重叠。同一次formal read比较P55、P53、P31，
+P55必须相对P53至少`+.002`，避免把cohort差异当成flat-minimum收益。
+
 ## WorldSim V6.7 P51 large cohort + P52 horizon extrapolation supported / P53 joint training（2026-08-29）
 
 P51 canonical=`run://worldsim_v67/WS-V67-P51-LARGE-COHORT-GRADIENT-CONSISTENT-HYBRID-01/
