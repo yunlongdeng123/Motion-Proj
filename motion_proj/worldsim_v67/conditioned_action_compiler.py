@@ -15,7 +15,7 @@ CONDITIONED_FEATURE_NAMES = FEATURE_NAMES + ("selected_fraction", "horizon_secon
 
 def conditioned_padded_cases(
     arrays: Mapping[str, np.ndarray], selected_fractions: list[float], horizon_seconds_by_domain: list[float],
-    mean: np.ndarray | None = None, scale: np.ndarray | None = None,
+    mean: np.ndarray | None = None, scale: np.ndarray | None = None, base_score_key: str = "qmean",
 ) -> tuple[dict[str, np.ndarray], np.ndarray, np.ndarray]:
     base = action_features(arrays)
     cases = np.asarray(arrays["case_index"], dtype=np.int64)
@@ -42,7 +42,7 @@ def conditioned_padded_cases(
             raw[row, :count, :-2] = base[members]
             raw[row, :count, -2] = float(fraction)
             raw[row, :count, -1] = float(horizons[domain])
-            payload["qmean"][row, :count] = np.asarray(arrays["qmean"])[members]
+            payload["qmean"][row, :count] = np.asarray(arrays[base_score_key])[members]
             payload["target"][row, :count] = np.asarray(arrays["target_cost"])[members]
             payload["mask"][row, :count] = 1.0
             payload["domain"][row] = domain
@@ -63,6 +63,7 @@ def train_conditioned_action_compiler(
     padded, mean, scale = conditioned_padded_cases(
         arrays, [float(x) for x in config["training_selected_fractions"]],
         [float(x) for x in config["training_horizon_seconds_by_domain"]],
+        base_score_key=str(config.get("base_score_key", "qmean")),
     )
     features = torch.from_numpy(padded["features"]).cuda()
     qmean = torch.from_numpy(padded["qmean"]).cuda()
@@ -136,10 +137,10 @@ def train_conditioned_action_compiler(
 
 def score_conditioned_action_compiler(
     model: BoundedListwiseCompiler, arrays: Mapping[str, np.ndarray], selected_fraction: float,
-    horizon_seconds_by_domain: list[float], mean: np.ndarray, scale: np.ndarray,
+    horizon_seconds_by_domain: list[float], mean: np.ndarray, scale: np.ndarray, base_score_key: str = "qmean",
 ) -> np.ndarray:
     padded, _, _ = conditioned_padded_cases(
-        arrays, [float(selected_fraction)], horizon_seconds_by_domain, mean, scale
+        arrays, [float(selected_fraction)], horizon_seconds_by_domain, mean, scale, base_score_key=base_score_key
     )
     with torch.inference_mode():
         scores, _ = model(

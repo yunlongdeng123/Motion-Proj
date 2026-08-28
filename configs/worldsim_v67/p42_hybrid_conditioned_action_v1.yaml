@@ -1,0 +1,68 @@
+schema_version: worldsim_v67.p42_hybrid_conditioned_action.v1
+output_schema_version: worldsim_v67.p42_hybrid_conditioned_action_summary.v1
+task_id: WS-V67-P42-HYBRID-CONDITIONED-ACTION-01
+hypothesis_id: WS-V67-H-P42-001
+seed: 0
+role: frozen_case_allocator_plus_trained_case_centered_action_refinement
+verdict_on_pass: supported_hybrid_conditioned_action
+verdict_on_failure: rejected_hybrid_conditioned_action
+inputs:
+  action_compiler_run: worldsim_v67/WS-V67-P20-LISTWISE-ACTION-COMPILER-01/20260828T133000Z__listwise-action-s0-r1
+  action_compiler_artifact: LISTWISE_ACTION_COMPILER.pt
+  mean_compiler_run: worldsim_v67/WS-V67-P31-JOINT-BUDGET-HORIZON-AUTHORITY-01/20260828T174000Z__joint-budget-horizon-s0-r1
+  mean_compiler_artifact: JOINT_BUDGET_HORIZON_AUTHORITY_COMPILER.pt
+  train_action_caches:
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10v_h1_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p17_p10v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p21_p2v_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p26_v64_p6e_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p33_p4c_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p30_p10x_h1p5_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p20_p3c_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p22_v64_p10r4_quantile_actions.npz
+    - /root/autodl-tmp/cache/worldsim_v67/p23_v64_p10r2_quantile_actions.npz
+model:
+  base_score_key: base_score
+  hidden_dimensions: [32, 16]
+  maximum_residual_cost: 0.05
+  training_selected_fractions: [0.25, 0.3333333333333333, 0.50]
+  training_horizon_seconds_by_domain: [1.0, 2.0, 2.0, 2.0, 1.5, 1.5, 2.0, 2.0, 2.0]
+  epochs: 6000
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  huber_beta: 0.02
+  regression_weight: 0.05
+  ranking_weight: 0.10
+  listwise_weight: 1.0
+  ranking_temperature: 0.05
+  pairwise_minimum_target_gap: 0.02
+  soft_rank_temperature: 0.05
+  soft_selection_temperature: 0.25
+  domain_aggregation: mean_variance
+  domain_loss_variance_weight: 0.1
+  residual_regularization_weight: 0.01
+compiler:
+  minimum_case_coverage: 0.50
+  minimum_group_case_coverage: 0.50
+  maximum_actions_per_case: 8
+  scene_to_group: {0: 0, 1: 0, 3: 1, 4: 1, 5: 2, 6: 2, 7: 2}
+confirmation:
+  cache_path: /root/autodl-tmp/cache/worldsim_v67/p24_v64_p6r_quantile_actions.npz
+  selected_fraction: 0.3333333333333333
+  horizon_seconds: 2.0
+gates:
+  minimum_group_case_coverage: 0.50
+  minimum_delta_over_joint_compiler: 0.005
+  minimum_nonincreasing_scene_support: 5
+locks:
+  frozen_p31_case_allocation_composed_with_case_centered_refinement: true
+  p6r_action_targets_excluded_from_p20_p31_p41_p42_training: true
+  single_hybrid_trial_no_model_loss_temperature_or_gate_sweep: true
+  planner_policy_collision_closed_loop_safety_claim: false
+  add_hash_checksum_fingerprint: false
+references:
+  - https://arxiv.org/abs/1912.02175
+claim_boundary:
+  - frozen_case_allocation_plus_conditioned_within_case_action_refinement
+  - action_target_untouched_but_globally_consumed_cohort
+  - no_fresh_population_collision_planning_policy_closed_loop_or_safety_claim
