@@ -115,6 +115,10 @@ P115再把Actor uncertainty改成一次输出完整9-step residual sequence的�
 `.967639`提高到`.977092`并保持0 events，却在P96退化为7 events/`.847123`，而P109为0/`.904345`。低频
 coherence在一个cohort有益，却会跨域抹掉boundary-relevant末端或高频残差；因此同样终局拒绝，不扫coefficient count或结构。
 
+P116最后移除Gaussian假设，训练8-direction q90 residual projection field，并用adverse-direction q90/clearance排序。P81
+q90/P109 AUROC=`.963841/.967639`且均0 events；P96=`.889318/.904345`且events=`6/0`。因此非参数
+directional quantile也未超过P109 mean/scale standardized margin。P114--P116三条替代线全部关闭，不再以P113 I/O窗口堆模型。
+
 ### 2.5 P113独立uncertainty-vs-clearance确认
 
 P113在任何target read前冻结新的10-scene、四location cohort：`0094/0331/0521/0003/0013/0038/0797/0920/
@@ -146,6 +150,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P111 | same-read clearance-only | `1 / n/a / n/a` | `.91644 / n/a` | 强geometry baseline |
 | P114 | consumed downstream tail pool | P81/P96=`0 / 1` | `.95138 / .90298` | reject；均低于P109 max |
 | P115 | consumed spectral Actor sequence | P81/P96=`0 / 7` | `.97709 / .84712` | reject；P96强退化 |
+| P116 | consumed directional q90 field | P81/P96=`0 / 6` | `.96384 / .88932` | reject；均低于P109 |
 | P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
 
 ## 4. 失败如何推动研究对象变化
@@ -159,6 +164,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | `V67-F78` | nonlinear finite-sample crossing必优于linear boundary projection | 保留directional linearized score |
 | `V67-F79` | monotone top-k/union tail pooling可提升P109 max | 终局拒绝；后继P115占用F80 |
 | `V67-F80` | 低频joint Actor residual sequence可稳定提升P109 | P96反转；保留pointwise directional model |
+| `V67-F81` | distribution-free directional q90可超过Gaussian | 两cohort均无增益；保留P109 standardized margin |
 
 ## 5. 系统与资源
 
@@ -168,6 +174,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - P112 nonlinear试验只做固定256 samples、seed0的一次read，不做sample/seed/distribution sweep。
 - P114在P113归档I/O期间完成6,000-step GPU训练，wall约13.66s，未读取P113 target。
 - P115同样在P113 I/O期间完成101,858 Actor sequences的6,000-step GPU训练，wall约36.41s。
+- P116训练916,722 Actor-time tokens×随机8-direction q90 queries，6,000 steps，wall约30.07s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
@@ -198,5 +205,10 @@ geometry进入解析计算，才获得稳定的scene-level independent evidence�
 
 - Chai et al., [MultiPath: Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction](https://proceedings.mlr.press/v100/chai20a.html), CoRL 2019.
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.
+- Weng et al., [Joint Metrics Matter: A Better Standard for Trajectory Forecasting](https://openaccess.thecvf.com/content/ICCV2023/html/Weng_Joint_Metrics_Matter_A_Better_Standard_for_Trajectory_Forecasting_ICCV_2023_paper.html), ICCV 2023.
+- Rhinehart et al., [PRECOG: PREdiction Conditioned on Goals in Visual Multi-Agent Settings](https://openaccess.thecvf.com/content_ICCV_2019/html/Rhinehart_PRECOG_PREdiction_Conditioned_on_Goals_in_Visual_Multi-Agent_Settings_ICCV_2019_paper.html), ICCV 2019.
+- Huang et al., [FoSS: Modeling Long-Range Dependencies and Multimodal Uncertainty in Trajectory Prediction](https://openaccess.thecvf.com/content/CVPR2026/html/Huang_FoSS_Modeling_Long-Range_Dependencies_and_Multimodal_Uncertainty_in_Trajectory_Prediction_CVPR_2026_paper.html), CVPR 2026.
+- Kan et al., [Multivariate Quantile Function Forecaster](https://proceedings.mlr.press/v151/kan22a.html), AISTATS 2022.
+- Chung et al., [Beyond Pinball Loss: Quantile Methods for Calibrated Uncertainty Quantification](https://proceedings.neurips.cc/paper/2021/hash/5b168fdba5ee5ea262cc2d4c0b457697-Abstract.html), NeurIPS 2021.
 - Casas et al., [Implicit Latent Variable Model for Scene-Consistent Motion Forecasting](https://openaccess.thecvf.com/content/ICCV2023/html/Casas_Implicit_Latent_Variable_Model_for_Scene-Consistent_Motion_Forecasting_ICCV_2023_paper.html), ICCV 2023.
 - [Open-source collision-probability estimation with stochastic boundary crossing](https://github.com/TUM-AVS/Collision-Probability-Estimation), 2025.

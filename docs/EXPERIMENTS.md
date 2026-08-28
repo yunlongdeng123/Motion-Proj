@@ -284,7 +284,8 @@
 
 ### WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01
 
-- 状态：`frozen/launch pending`；只读P109 source与consumed P81/P96，不读P113。
+- 状态：`done/rejected development`；canonical=`20260830T072000Z__directional-quantile-field-s0-r1`；只读P109 source与
+  consumed P81/P96，不读P113。
 - motivation：P115的低频joint Gaussian在P96过度平滑；AISTATS 2022 Multivariate Quantile Function Forecaster与NeurIPS
   2021 quantile UQ支持直接学习非参数conditional quantile，避免把directional Actor residual强制为Gaussian。
 - fixed method：20维Actor-time features加8个均匀unit directions，以q=.90 pinball预测signed residual projection；`256/128`
@@ -292,7 +293,13 @@
   `q90 / max(abs(clearance),.05m)`，time/Actor max和fixed50不变。
 - decision：P81/P96 selected events均不多于P109 Gaussian、AUROC gain均非负且平均≥`.01`；不扫direction count、quantile、
   architecture、loss、seed或coverage。只属consumed development，无conformal/calibrated collision/safety claim。
-- execution：P113 archive IO期间占用3090，P113 protocol与target完全隔离；失败登记`V67-F81`并关闭该quantile-field形式。
+- result：916,722 Actor-time tokens、final pinball=`.035174`。P81 quantile/P109/clearance selected events=`0/0/1`，
+  AUROC=`.963841/.967639/.914039`，gain=`-.003798`；P96=`6/0/13`，AUROC=
+  `.889318/.904345/.798793`，gain=`-.015027`。三项decision全失败，verdict=
+  `rejected_development_directional_quantile_field`（`V67-F81`）。
+- interpretation：direct q90 projection虽不依赖Gaussian，但ratio score缺少P109 mean/scale共同提供的standardized crossing
+  margin，在两个cohort均无增益且P96事件退化；不扫direction/quantile/model/loss/seed，保留P109。
+- resources/execution：wall=`30.07s`、peak GPU=`.37849GiB`、RSS=`1.256GiB`，与P113 archive IO实际重叠；P113未读取。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

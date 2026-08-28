@@ -1183,12 +1183,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - target-unread cohort：`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，四location、10 distinct sessions；
 - frozen decision：directional selected events不多于clearance，并且AUROC gain≥`.02`；P109 checkpoint/projection、baseline floor、
   H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
-- stop rule：一次read；失败登记下一可用编号（若P116先失败则为`V67-F82`）并关闭uncertainty-over-geometry claim，不换cohort/
+- stop rule：一次read；失败登记下一可用编号（P116完成后为`V67-F82`）并关闭uncertainty-over-geometry claim，不换cohort/
   metric/floor/model或做recovery。
-- failure-ID note：P114/P115已占用`V67-F79/F80`；P116若失败占用F81，届时P113若失败顺延登记`V67-F82`。编号变化不改变任何
+- failure-ID note：P114/P115/P116已占用`V67-F79/F80/F81`；P113若失败顺延登记`V67-F82`。编号变化不改变任何
   scientific decision。
 
-下一可用编号：`V67-F81`（P116先完成）。
+下一可用编号：`V67-F82`。
 
 ### P114 freeze note — downstream tail aggregation不占用P113确认
 
@@ -1252,6 +1252,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   `V67-F81`并关闭该形式，P113若随后失败使用F82。
 
 下一可用编号仍为：`V67-F81`。
+
+### V67-F81 — distribution-free directional q90仍不及Gaussian standardized crossing margin
+
+- 分类：`scientific/actor-uncertainty-distribution`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01/20260830T072000Z__directional-quantile-field-s0-r1`；
+- symptom：P81 q90/P109 AUROC=`.963841/.967639`且均0 selected events；P96 q90/P109=`.889318/.904345`，
+  selected events=`6/0`。两cohort AUROC gain均负，三项冻结decision全失败；
+- interpretation：直接预测adverse residual q90移除了Gaussian shape假设，却也丢失P109 mean与scale组成的standardized margin；
+  `q90/clearance`在当前source跨域不足，不能因distribution-free动机包装为更可靠；
+- literature response：multivariate quantile function与quantile-UQ工作支持灵活分布建模，但本项目固定8-direction/q90的窄迁移
+  没有超过Gaussian；这是否定当前实现对象，不是否定一般quantile方法；
+- resolution：不扫direction count、quantile、network、loss、seed或coverage；与P114/P115一起关闭P109替代model family；
+- claim impact：无directional quantile/conformal/collision probability claim；P109/P113保持唯一冻结主线。
+
+下一可用编号：`V67-F82`。
 
 ### V6.6 当前边界（2026-08-28）
 

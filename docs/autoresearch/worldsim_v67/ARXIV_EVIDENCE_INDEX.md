@@ -13,11 +13,11 @@
 
 | 阶段 | canonical run | 核心证据 |
 |---|---|---|
-| P81 | `run://worldsim_v67/WS-V67-P81-FRESH-TRAJECTORY-RELIABILITY-01/20260829T224500Z__fresh-trajectory-reliability-s0-r1` | all-row query/Actor/P73=`26/57/45`；10/10 scenes |
-| P95 | `run://worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01/20260830T013000Z__trajectory-occupancy-flip-s0-r1` | consumed development `7/28/13` |
-| P96 | `run://worldsim_v67/WS-V67-P96-INDEPENDENT-TRAJECTORY-OCCUPANCY-01/20260830T031500Z__independent-trajectory-occupancy-s0-r1` | independent `8/5/12`；relative reject |
-| P102 | `run://worldsim_v67/WS-V67-P102-HIERARCHICAL-OCCUPANCY-FLIP-01/20260830T041500Z__hierarchical-occupancy-flip-s0-r1` | development best `4/27/13` |
-| P103 | `run://worldsim_v67/WS-V67-P103-HIERARCHICAL-OCCUPANCY-CONFIRMATION-01/20260830T043000Z__hierarchical-occupancy-confirmation-s0-r1` | same independent read `9/7/12`；relative reject |
+| P81 | `run://worldsim_v67/WS-V67-P81-FRESH-TEST-ACTOR-EVENT-01/20260829T211500Z__fresh-test-actor-event-s0-r1` | all-row query/Actor/P73=`26/57/45`；10/10 scenes |
+| P95 | `run://worldsim_v67/WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01/20260830T002500Z__trajectory-occupancy-flip-s0-r1` | consumed development `7/28/13` |
+| P96 | `run://worldsim_v67/WS-V67-P96-OCCUPANCY-FLIP-CONFIRMATION-01/20260830T004000Z__occupancy-flip-confirmation-s0-r1` | independent `8/5/12`；relative reject |
+| P102 | `run://worldsim_v67/WS-V67-P102-HIERARCHICAL-TEMPORAL-INTERACTION-01/20260830T022000Z__hierarchical-temporal-interaction-s0-r1` | development best `4/27/13` |
+| P103 | `run://worldsim_v67/WS-V67-P103-HIERARCHICAL-CONFIRMATION-01/20260830T024000Z__hierarchical-confirmation-s0-r1` | same independent read `9/7/12`；relative reject |
 | P107 | `run://worldsim_v67/WS-V67-P107-ACTOR-UNCERTAINTY-TUBE-01/20260830T061000Z__actor-uncertainty-tube-s0-r2` | P81/P96=`2/36/13`与`2/9/12` |
 | P108 | `run://worldsim_v67/WS-V67-P108-UNCERTAINTY-TUBE-CONFIRMATION-01/20260830T063500Z__uncertainty-tube-confirmation-s0-r1` | independent P107/Actor/P75=`5/35/20` |
 | P109 | `run://worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1` | directional development P81/P96均0 events |
@@ -26,10 +26,10 @@
 | P112 | `run://worldsim_v67/WS-V67-P112-NONLINEAR-GAUSSIAN-CROSSING-01/20260830T065000Z__nonlinear-gaussian-crossing-s0-r1` | P96 nonlinear 3/.85852 vs linear 0/.90434；reject |
 | P114 | `run://worldsim_v67/WS-V67-P114-MONOTONE-TAIL-RISK-01/20260830T071000Z__monotone-tail-risk-s0-r1` | P81/P96 AUROC gain=`-.01626/-.00137`；reject |
 | P115 | `run://worldsim_v67/WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01/20260830T071500Z__spectral-actor-uncertainty-s0-r1` | P81/P96 AUROC gain=`+.00945/-.05722`；reject |
+| P116 | `run://worldsim_v67/WS-V67-P116-DIRECTIONAL-QUANTILE-FIELD-01/20260830T072000Z__directional-quantile-field-s0-r1` | P81/P96 AUROC gain=`-.00380/-.01503`；reject |
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | `PENDING_FINAL_FILL` |
 
-P81/P95/P96/P102/P103 exact run locators应以对应canonical summary与`docs/EXPERIMENTS.md`为最终准绳；若本索引的早期
-timestamp与run tree不一致，只修locator，不重算metric。
+上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
 ## 2. 论文主表证据
 
@@ -45,6 +45,7 @@ timestamp与run tree不一致，只修locator，不重算metric。
 | nonlinear sampled crossing | P112 consumed ×2 | cross-cohort worse than linear | reject Monte Carlo recovery |
 | downstream monotone tail pool | P114 consumed ×2 | P81/P96都低于P109 max | reject aggregation recovery |
 | joint low-frequency Actor sequence | P115 consumed ×2 | P81小增益、P96强退化 | reject spectral recovery |
+| directional distribution-free q90 | P116 consumed ×2 | P81/P96都低于P109 Gaussian | reject quantile recovery |
 | learned uncertainty超过clearance | P113 independent | `PENDING_FINAL_FILL` | `PENDING_FINAL_FILL` |
 
 ## 3. Failure map
@@ -60,7 +61,8 @@ timestamp与run tree不一致，只修locator，不重算metric。
 | `V67-F78` | closed negative | nonlinear Gaussian sampling跨cohort退化 |
 | `V67-F79` | closed negative | P114 top-k/union tail pool稀释P109 max |
 | `V67-F80` | closed negative | P115 low-frequency Actor sequence在P96过度平滑 |
-| `V67-F81` | reserved for P113 | only if frozen one-shot decision fails |
+| `V67-F81` | closed negative | P116 directional q90低于P109 standardized margin |
+| `V67-F82` | reserved for P113 | only if frozen one-shot decision fails |
 
 ## 4. Artifact inventory
 

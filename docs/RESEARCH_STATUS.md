@@ -208,6 +208,12 @@ projection。推理时candidate τ只提供朝occupancy boundary穿越方向的u
 `q90_adverse / clearance`并按time/Actor max。P81/P96 consumed development、6,000 steps、seed0；不扫方向数、quantile、
 model、loss或coverage，不读取P113。若失败占用`V67-F81`，P113失败编号顺延F82。
 
+P116完成916,722 Actor-time tokens的6,000-step训练，final pinball=`.035174`，但仍终局拒绝。P81 quantile/P109/
+clearance selected events=`0/0/1`、AUROC `.96384/.96764/.91404`；P96=`6/0/13`、AUROC
+`.88932/.90434/.79879`。三项decision全失败，登记`V67-F81`。因此P109之后的learned tail pool、低频spectral
+sequence和directional q90三种替代均未跨P81/P96超过Gaussian standardized margin；关闭这些model family，不再用P113 IO
+窗口继续堆模型。P113若失败使用`V67-F82`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
