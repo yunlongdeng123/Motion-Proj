@@ -3,14 +3,14 @@
   "updated_at": "2026-08-30",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p113_independent_confirmation_running_p115_spectral_training_frozen",
+  "status": "v67_p113_independent_confirmation_running_p115_spectral_rejected",
   "active_task_id": "WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01",
   "active_hypothesis_id": "WS-V67-H-P113-001",
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
   "failure_ledger_refs": ["V67-F45", "V67-F44", "V67-F43", "V67-F42", "V67-F41", "V67-F40", "V67-F39", "V67-F38", "V67-F37", "V67-F36", "V67-F35", "V67-F34", "V67-F33", "V67-F32", "V67-F31", "V67-F30", "V67-F29", "V67-F28", "V67-F27", "V67-F26", "V67-F25", "V67-F24", "V67-F23", "V67-F22", "V67-F21", "V67-F20", "V67-F19", "V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F79 downstream_monotone_tail_pool_rejected_directional_max_retained",
-  "next_failure_id": "V67-F80",
-  "last_run": "run://worldsim_v67/WS-V67-P114-MONOTONE-TAIL-RISK-01/20260830T071000Z__monotone-tail-risk-s0-r1",
-  "last_verdict": "rejected_development_monotone_downstream_tail_risk",
-  "next_action": "overlap frozen P115 spectral Actor-sequence GPU training with P113 IO, then complete the unchanged P113 one-shot confirmation"
+  "failure_ledger_delta": "V67-F80 spectral_actor_sequence_rejected_directional_pointwise_model_retained",
+  "next_failure_id": "V67-F81",
+  "last_run": "run://worldsim_v67/WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01/20260830T071500Z__spectral-actor-uncertainty-s0-r1",
+  "last_verdict": "rejected_development_spectral_actor_uncertainty",
+  "next_action": "complete the unchanged P113 one-shot directional-vs-clearance confirmation and retain P109 without P114/P115 recovery"
 }

@@ -1183,11 +1183,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - target-unread cohort：`0094/0331/0521/0003/0013/0038/0797/0920/0926/1061`，四location、10 distinct sessions；
 - frozen decision：directional selected events不多于clearance，并且AUROC gain≥`.02`；P109 checkpoint/projection、baseline floor、
   H3.5、time/Actor max、fixed50全部冻结，不引入Actor/P75 gate matrix；
-- stop rule：一次read；失败登记下一可用编号（P114完成后为`V67-F80`）并关闭uncertainty-over-geometry claim，不换cohort/
+- stop rule：一次read；失败登记下一可用编号（P115完成后为`V67-F81`）并关闭uncertainty-over-geometry claim，不换cohort/
   metric/floor/model或做recovery。
-- failure-ID note：P114先完成并占用`V67-F79`后，P113若失败顺延登记`V67-F80`；编号变化不改变任何scientific decision。
+- failure-ID note：P114/P115先完成并占用`V67-F79/F80`后，P113若失败顺延登记`V67-F81`；编号变化不改变任何
+  scientific decision。
 
-下一可用编号：`V67-F80`。
+下一可用编号：`V67-F81`。
 
 ### P114 freeze note — downstream tail aggregation不占用P113确认
 
@@ -1224,7 +1225,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   仍只通过P109解析boundary projection进入；P81/P96 consumed development，不读取P113；
 - prevention：不扫coefficient count/architecture/loss/seed/projection/coverage；若失败登记`V67-F80`，P113若随后失败顺延F81。
 
-下一可用编号仍为：`V67-F80`。
+### V67-F80 — 低频spectral Actor sequence在P96过度平滑boundary-relevant residual
+
+- 分类：`scientific/actor-uncertainty-representation`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01/20260830T071500Z__spectral-actor-uncertainty-s0-r1`；
+- symptom：P81 spectral AUROC `.977092`较P109 `.967639`提高`.009453`且均0 selected events；P96却从P109的
+  0 events/`.904345`退化到7 events/`.847123`，三项冻结decision全失败；
+- interpretation：前4个DCT modes提供低频trajectory coherence，但source/P81收益不能迁移到P96；截断会抹掉影响局部
+  occupancy boundary crossing的末端或高频残差。joint/spectral representation并不自动等于更可靠的task ranking；
+- literature response：Joint Metrics Matter与PRECOG说明联合future重要，FoSS说明频域结构可建模长时依赖；本结果限定了其在
+  当前constant-velocity residual UQ上的直接低频迁移，不能借论文动机忽略独立development反转；
+- resolution：不扫DCT coefficient count、hidden width、loss、seed或projection；P115不进入P113或未来confirmation，保留
+  P109 pointwise directional Gaussian；
+- claim impact：无spectral/joint uncertainty或collision claim；P108/P109/P110证据不变。
+
+下一可用编号：`V67-F81`。
 
 ### V6.6 当前边界（2026-08-28）
 

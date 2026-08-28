@@ -265,7 +265,8 @@
 
 ### WS-V67-P115-SPECTRAL-ACTOR-UNCERTAINTY-01
 
-- 状态：`frozen/launch pending`；source与development只复用P109 artifacts，不读P113 target。
+- 状态：`done/rejected development`；canonical=`20260830T071500Z__spectral-actor-uncertainty-s0-r1`；source与
+  development只复用P109 artifacts，不读P113 target。
 - motivation：P114说明独立式marginal probability pooling会稀释局部tail。ICCV 2023 Joint Metrics Matter、ICCV 2019 PRECOG
   和CVPR 2026 FoSS共同指向coherent/joint future representation，因此下一步改Actor residual sequence，不改downstream max。
 - fixed method：19维Actor history/dynamics+horizon一次输出完整9-step residual的前4个orthonormal DCT coefficients及diagonal
@@ -273,7 +274,13 @@
   只经P109 boundary-normal linear projection和time/Actor max进入，H3.5/fixed50不变。
 - decision：P81/P96 selected events均不多于P109、AUROC gain均非负且平均≥`.01`；不扫DCT coefficient count、architecture、
   loss、seed、projection或coverage。成功也只属consumed development，必须另冻未来cohort；失败即登记`V67-F80`关闭该形式。
-- execution：P113 archive IO继续时使用3090，P113 checkpoint/cohort/decision完全隔离。
+- result：101,858 Actor sequences，final spectral Gaussian NLL=`-11.670611`。P81 spectral/P109/clearance selected
+  events=`0/0/1`、AUROC=`.977092/.967639/.914039`，gain=`+.009453`；P96=`7/0/13`、AUROC=
+  `.847123/.904345/.798793`，gain=`-.057222`。三项decision全失败，verdict=
+  `rejected_development_spectral_actor_uncertainty`（`V67-F80`）。
+- interpretation：低频Actor residual sequence在P81有小幅全排序收益，但对P96造成明显domain-specific oversmoothing，丢失
+  boundary-relevant高频/末端误差；关闭coefficient/architecture/loss/seed sweep，保留P109 pointwise directional model。
+- resources/execution：wall=`36.41s`、peak GPU=`.31402GiB`、RSS=`1.070GiB`，与P113 archive IO实际重叠；P113未读取。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

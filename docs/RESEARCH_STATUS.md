@@ -196,6 +196,12 @@ P114卡点后的外部调研显示，ICCV 2023 Joint Metrics Matter与PRECOG都�
 再解析重建time-local mean/variance并复用P109 frozen boundary-normal max。只在consumed P81/P96比较P109；6,000 GPU
 steps与P113 archive IO重叠。系数数、结构、loss、seed、projection和coverage一次冻结，不读取P113 target。
 
+P115完成101,858个Actor sequences的6,000-step训练，final spectral NLL=`-11.67061`，但跨cohort方向反转：P81
+spectral/P109/clearance selected events=`0/0/1`、AUROC `.97709/.96764/.91404`；P96为`7/0/13`、AUROC
+`.84712/.90434/.79879`。三项decision全失败并登记`V67-F80`。前4 DCT modes在P81有轻微平滑收益，却在P96
+抹掉影响boundary crossing的高频/末端残差；不扫coefficient count/architecture/loss。P109继续是冻结best，P113若失败使用
+下一编号`V67-F81`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

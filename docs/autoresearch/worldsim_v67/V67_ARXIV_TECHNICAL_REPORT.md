@@ -111,6 +111,10 @@ independent-union proxy送入只有正权重的monotone pool。虽然79,478 sour
 P81 AUROC却从`.967639`降至`.951378`；P96从`.904345`降至`.902976`，fixed50 events还从0增到1。该结果说明
 occupancy flip更接近局部boundary-tail事件，累积多个强相关time/Actor probability会稀释signal；保留P109 max并关闭聚合扫参。
 
+P115再把Actor uncertainty改成一次输出完整9-step residual sequence的前4个DCT modes。它在P81把AUROC从P109的
+`.967639`提高到`.977092`并保持0 events，却在P96退化为7 events/`.847123`，而P109为0/`.904345`。低频
+coherence在一个cohort有益，却会跨域抹掉boundary-relevant末端或高频残差；因此同样终局拒绝，不扫coefficient count或结构。
+
 ### 2.5 P113独立uncertainty-vs-clearance确认
 
 P113在任何target read前冻结新的10-scene、四location cohort：`0094/0331/0521/0003/0013/0038/0797/0920/
@@ -141,6 +145,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | P110 | same-read directional secondary | `1 / 53 / 20` | `.96027 / .69142` | secondary支持 |
 | P111 | same-read clearance-only | `1 / n/a / n/a` | `.91644 / n/a` | 强geometry baseline |
 | P114 | consumed downstream tail pool | P81/P96=`0 / 1` | `.95138 / .90298` | reject；均低于P109 max |
+| P115 | consumed spectral Actor sequence | P81/P96=`0 / 7` | `.97709 / .84712` | reject；P96强退化 |
 | P113 | independent directional vs clearance | `PENDING` | `PENDING` | `PENDING` |
 
 ## 4. 失败如何推动研究对象变化
@@ -152,7 +157,8 @@ P113 outcome：`PENDING_FINAL_FILL`。
 | `V67-F74--F75` | end-to-end occupancy query classifier可独立迁移 | Actor distribution与candidate query解耦 |
 | `V67-F76--F77` | launcher与NPZ交付工程事件 | 绝对入口与partial→atomic replace；不加校验门控 |
 | `V67-F78` | nonlinear finite-sample crossing必优于linear boundary projection | 保留directional linearized score |
-| `V67-F79` | monotone top-k/union tail pooling可提升P109 max | 终局拒绝；P113失败ID顺延F80 |
+| `V67-F79` | monotone top-k/union tail pooling可提升P109 max | 终局拒绝；后继P115占用F80 |
+| `V67-F80` | 低频joint Actor residual sequence可稳定提升P109 | P96反转；保留pointwise directional model |
 
 ## 5. 系统与资源
 
@@ -161,6 +167,7 @@ P113 outcome：`PENDING_FINAL_FILL`。
 - P108并行流式扫描7个shards、精确提取3,877/3,877 files并预处理10/10 scenes，wall约2,439.39s。
 - P112 nonlinear试验只做固定256 samples、seed0的一次read，不做sample/seed/distribution sweep。
 - P114在P113归档I/O期间完成6,000-step GPU训练，wall约13.66s，未读取P113 target。
+- P115同样在P113 I/O期间完成101,858 Actor sequences的6,000-step GPU训练，wall约36.41s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
