@@ -212,6 +212,12 @@
   P291R coverage、tail mass、eta/grid或 gates；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### P294 outcome / P295 variable-cardinality start note — 无新增 failure
+
+- P294 P201 budget MAE=`.0220461`、composite regret=`.00023215`，2/2，price/floor violations=0；
+- P295 仅 warm-start同一架构到 sizes32/64/128并在48/96评估，不改变 P291R coverage或 P294 tail-risk定义；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

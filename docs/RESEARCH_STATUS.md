@@ -186,8 +186,14 @@ WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
 
 P294 不重复普通 dual，改进研究对象为冻结 P291R empirical LCB + Actor final-shortfall tail-CVaR 的 fixed64
 joint allocator；复用 P287 Rockafellar--Uryasev eta grid、训练/heldout axes、12k steps 与 `.075/.005` 两门。
-Active=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
-20260831T224500Z__context-adaptive-lcb-tail-cvar-s0-r1`，GPU 正在 teacher target生成/训练。
+Canonical=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T224500Z__context-adaptive-lcb-tail-cvar-s0-r1`：P201 budget MAE=`.0220461`、composite regret=
+`.00023215`、candidate/teacher tail shortfall=`.0124187/.0124179`、violations=`0/0`，2/2；wall=`167.08s`。
+
+P295 从冻结 P294 warm-start，同一架构在 sizes32/64/128交替训练，并仅在 heldout48/96 汇总 P201；复用
+P288 cardinality protocol、10k steps与 `.075/.005` 两门。Active=`run://worldsim_v67/
+WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

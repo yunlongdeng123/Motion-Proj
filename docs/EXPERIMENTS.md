@@ -344,8 +344,20 @@
   allocator联合 alpha/tolerance/floor/tail-mass/price 条件。
 - 复用 P287 eta17、budget65、12k steps与 gates：P201 budget MAE `<=.075`、frozen composite regret `<=.005`；
   不扫 tail mass/eta/grid/architecture/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+- canonical=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
   20260831T224500Z__context-adaptive-lcb-tail-cvar-s0-r1`。
+- result：P201 budget MAE=`.0220461`、composite regret=`.00023215`、candidate/teacher tail shortfall=
+  `.0124187/.0124179`、price/floor violations=`0/0`；2/2，verdict=
+  `supported_joint_context_adaptive_LCB_actor_tail_CVaR_allocator`。wall=`167.08s`、peak GPU/RSS=`.4548/1.6293GiB`。
+
+### WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01
+
+- frozen P294 warm-start、同一 Deep Sets allocator；train sizes32/64/128、heldout48/96，复用 P288 全部
+  alpha/tolerance/floor/tail/price protocol和10k steps。
+- P201 aggregate gates继承 P294/P288：budget MAE `<=.075`、composite regret `<=.005`；不扫 cardinality/
+  architecture/eta/grid/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+  20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
