@@ -223,9 +223,17 @@ attention branch关闭，不扫 heads/depth。
 
 卡点检索 Pylon/structured constrained learning 后，P299 转向 failure-aligned training objective：架构回到冻结 P297，
 唯一变化是在 per-Actor budget L1 外等权加入 group-mean budget L1，使训练直接看见 attained-budget constraint；
-同一 teacher/conditions/sizes/12k steps/lr和三门，不扫 loss weight。Active=`run://worldsim_v67/
+同一 teacher/conditions/sizes/12k steps/lr和三门，不扫 loss weight。Canonical=`run://worldsim_v67/
 WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
-20260901T001500Z__constraint-aware-direct-authority-s0-r1`，GPU 已启动。
+20260901T001500Z__constraint-aware-direct-authority-s0-r1`：P201 attained MAE=`.0317413`、regret=`5.64e-5`、
+violations=`0`；通用两门通过、改善门失败，2/3，verdict=rejected，登记 `V67-F200`。source/P201均未改善，
+group-loss branch关闭，不扫 weight。
+
+重新检索 OptNet/NeurIPS 2025 hard linear constraints 后，P300 采用结构投影：冻结 P297 base对同一 group/conditions
+额外预测 fraction=0/1 端点，将目标 fraction raw budgets做统一可微 shift到预测端点均值的线性插值并 box clip；
+不调用 dual/bisection。单次6k fine-tune，复用三门，不扫 projection/steps。Active=`run://worldsim_v67/
+WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01/
+20260901T003000Z__projected-direct-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

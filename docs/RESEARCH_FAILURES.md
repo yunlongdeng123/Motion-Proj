@@ -257,6 +257,18 @@
 - structural pivot：P299 回到 P297 架构，等权加入 group-mean budget distillation loss，直接对齐 attained constraint；
 - 下一可用 failure id 为 `V67-F200`。
 
+### V67-F200 — P299 group-mean soft loss未跨 cohort改善 direct constraint
+
+- canonical=`run://worldsim_v67/WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T001500Z__constraint-aware-direct-authority-s0-r1`；
+- symptom：source attained MAE=`.0225111 > P297 .0204608`，P201=
+  `.0317413 > P297 .0297261`；regret与通用 fidelity仍过门，但 comparative门失败；
+- root cause：soft mean matching仍只是 teacher imitation，并未在推理结构中强制 fraction与 group mean的关系；
+  source/P201差异表明固定 loss weight不能保证跨 cohort constraint；
+- closed candidate：不扫 group-loss weight、Actor/group loss比例、steps/lr；保留 P297 direct baseline；
+- structural pivot：P300 采用同模型0/1端点的自一致可微 mean projection；
+- 下一可用 failure id 为 `V67-F201`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

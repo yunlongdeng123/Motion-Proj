@@ -413,8 +413,22 @@
   budget L1。依据 constrained structured learning/Pylon 将可微约束直接编译进 loss；不引入 projection或额外网络。
 - protocol/gates：完全复用 P297 teacher/conditions/sizes/12k/lr与 `.075/.005`，另要求 attained MAE严格优于
   P297 `.0297261076`；不扫 loss weight/steps/architecture。
-- active=`run://worldsim_v67/WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
   20260901T001500Z__constraint-aware-direct-authority-s0-r1`。
+- result：P201 budget MAE=`.0078008`、attained MAE=`.0317413`、regret=`5.6381e-5`、violations=`0`；通用门
+  通过但未优于 P297 `.0297261`，2/3，verdict=`rejected_constraint_aware_direct_variable_set_authority_compiler`，
+  failure=`V67-F200`。source attained `.0225111` 也未优于 P297 `.0204608`；wall=`402.21s`。
+
+### WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01
+
+- root cause response：soft group loss可在 source拟合但不保证 P201 constraint；改为 model-agnostic differentiable
+  output projection，依据 OptNet ICML 2017 与 constrained policy projection文献。
+- projection：同一 P297 base分别预测请求 fraction与0/1端点；将 raw normalized budgets统一 shift，使 group mean
+  对齐两预测端点均值的 fraction线性插值，再 box clip。推理为三次共享网络 forward，不调用 dual/bisection。
+- fixed run：P297 warm-start、6k steps、lr `.0003`；复用 `.075/.005` 与严格优于 P297 `.0297261` 三门；
+  不扫 projection形式、iterations、steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T003000Z__projected-direct-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
