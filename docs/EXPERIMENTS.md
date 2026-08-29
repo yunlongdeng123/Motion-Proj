@@ -383,8 +383,23 @@
   fraction增加时 budget不减；bisection + P295 只生成训练 teacher budgets。
 - protocol：train sizes32/64/128、heldout48/96、12k steps，复用 P296 conditions/bisection/gates `.075/.005`；
   不扫 direct architecture/fraction transform/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01/
   20260831T233000Z__direct-variable-set-authority-s0-r1`。
+- result：P201 budget MAE vs bisection teacher=`.00719394`、attained-fraction MAE=`.0297261`、composite regret=
+  `6.6197e-5`、fraction-budget violations=`0`；size48/96 attained MAE=`.0276633/.0317889`；2/2，verdict=
+  `supported_direct_variable_set_adaptive_tail_authority_compiler`。wall=`391.56s`、peak GPU/RSS=`.3209/3.9808GiB`。
+- comparison：direct fidelity仍满足冻结门，但 attained MAE 比 P296 two-stage `.0240720` 高，不能写“质量更优”；
+  当前支持的是单调用可行性。
+
+### WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01
+
+- rationale：P297在 heldout96 的 attained MAE=`.0317889`，显式 Actor–Actor interaction可能改善随规模增长的
+  group constraint；采用 ICML 2019 Set Transformer 的 permutation-equivariant self-attention原则。
+- structure：P297 warm-start + 单个 zero-gated 4-head self-attention block；fraction monotone decoder不变。
+- fixed protocol：同 P297 teacher/conditions/sizes/12k steps/lr；三门为原 `.075/.005` 加严格优于 P297 attained
+  MAE `.0297261076`；不扫 head/depth/width/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T000000Z__attentive-direct-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

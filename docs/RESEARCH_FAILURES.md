@@ -237,6 +237,14 @@
 - P297 按冻结协议启动，训练 teacher仍为 P295+bisection；P296仅作两阶段 baseline，不作为 P297训练组件；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### P297 outcome / P298 interaction-aware start note — 无新增 failure
+
+- P297 P201 attained-fraction MAE=`.0297261`、regret=`6.62e-5`、violations=0，2/2；direct compiler成立，
+  但 constraint fidelity弱于 P296 two-stage `.0240720`，准确记录为可行性而非质量提升；
+- P298 只加入 zero-gated one-block 4-head set attention并预注册必须严格优于 P297 attained MAE；不进行
+  head/depth/width/step/gate sweep；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

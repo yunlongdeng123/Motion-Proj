@@ -207,9 +207,17 @@ WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
 P297 direct authority compiler 已在 P296 quality read 前冻结：不再先预测 shadow price 再调用 P295，而将
 attainable fraction（取负后复用单调 price axis）直接编译为每个 Actor budget；从冻结 P295 warm-start，以同一
 bisection teacher、sizes32/64/128→48/96、conditions、12k steps 与 P296 `.075/.005` 两门训练。推理禁止调用
-dual，研究目标是减少两阶段 amortization 路径，不改变 empirical LCB/tail-CVaR对象。Active=`run://worldsim_v67/
+dual，研究目标是减少两阶段 amortization 路径，不改变 empirical LCB/tail-CVaR对象。Canonical=`run://worldsim_v67/
 WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01/
-20260831T233000Z__direct-variable-set-authority-s0-r1`，GPU 正在 teacher bisection/训练。
+20260831T233000Z__direct-variable-set-authority-s0-r1`：P201 budget MAE=`.00719394`、attained-fraction MAE=
+`.0297261`、composite regret=`6.62e-5`、fraction-budget violations=`0`，2/2；wall=`391.56s`。它支持单网络
+direct compiler，但 constraint fidelity 略逊 P296 两阶段的 `.0240720`。
+
+依据 ICML 2019 Set Transformer 对 set elements 显式交互建模的结论，P298 冻结为一次 structural extension：
+从 P297 warm-start，加入一个 zero-gated 4-head self-attention block，其余 bisection teacher、conditions、
+sizes、12k steps/lr与 `.075/.005` 两门完全复用；另要求 P201 attained-fraction MAE严格优于 P297 `.0297261`。
+不扫 heads/depth/width。Active=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
+20260901T000000Z__attentive-direct-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
