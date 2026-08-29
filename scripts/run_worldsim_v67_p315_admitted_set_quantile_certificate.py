@@ -607,6 +607,7 @@ def main() -> None:
     horizon_risk_size_authority_training = bool(config.get("horizon_risk_size_authority_training", False))
     horizon_lattice_risk_size_authority_training = bool(config.get("horizon_lattice_risk_size_authority_training", False))
     horizon_locally_adaptive_lattice_calibration_training = bool(config.get("horizon_locally_adaptive_lattice_calibration_training", False))
+    horizon_risk_locally_adaptive_lattice_calibration_training = bool(config.get("horizon_risk_locally_adaptive_lattice_calibration_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -640,7 +641,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -696,8 +697,8 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training:
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training:
             source_prefix, source_prefix_target = [], []
             p201_prefix, p201_prefix_target = [], []
             for set_size in config["authority_set_sizes"]:
@@ -826,7 +827,8 @@ def main() -> None:
             (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
             print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
             return
-        if horizon_locally_adaptive_lattice_calibration_training:
+        if horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training:
+            risk_conditioned_scale = horizon_risk_locally_adaptive_lattice_calibration_training
             frozen_lattice = torch.load(
                 args.runs_root / config["frozen_lattice_authority"]["run"] / config["frozen_lattice_authority"]["artifact"],
                 map_location="cuda",
@@ -865,9 +867,19 @@ def main() -> None:
             scale_fit_rows = source_example_scenes % modulus == int(split["scale_fit_scene_remainder"])
             normalized_calibration_rows = source_example_scenes % modulus == int(split["normalized_calibration_scene_remainder"])
             scale_config = config["scale_model"]
-            scale_model = SizeConditionedHorizonQuantileHead(
-                source_feature.shape[1], scale_config["hidden_dimensions"], len(set_sizes)
-            ).cuda()
+            if risk_conditioned_scale:
+                scale_model = RiskSizeConditionedHorizonQuantileSurface(
+                    source_feature.shape[1], scale_config["hidden_dimensions"], len(set_sizes),
+                    float(scale_config["quantile_floor"]),
+                ).cuda()
+                training_quantile_range = np.asarray(scale_config["training_quantile_range"], np.float32)
+                minimum_scale = float(scale_config["minimum_scale"])
+            else:
+                scale_model = SizeConditionedHorizonQuantileHead(
+                    source_feature.shape[1], scale_config["hidden_dimensions"], len(set_sizes)
+                ).cuda()
+                training_quantile_range = None
+                minimum_scale = 0.0
             optimizer = torch.optim.AdamW(
                 scale_model.parameters(), lr=float(scale_config["learning_rate"]), weight_decay=float(scale_config["weight_decay"])
             )
@@ -883,28 +895,46 @@ def main() -> None:
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
                 local_size_index = torch.randint(len(set_sizes), (len(row),), device="cuda")
-                prediction = scale_model(source_x[row], horizon_tensor[local_horizon_index])[
-                    torch.arange(len(row), device="cuda"), local_size_index
-                ]
-                target_gap = torch.clamp(
-                    y[row, local_size_index, local_horizon_index] - raw[row, local_size_index, local_horizon_index], min=0.0
-                )
+                if risk_conditioned_scale:
+                    local_q = torch.empty(len(row), device="cuda").uniform_(
+                        float(training_quantile_range[0]), float(training_quantile_range[1])
+                    )
+                    raw_prediction = lattice_model(source_x[row], horizon_tensor[local_horizon_index], local_q).detach()[
+                        torch.arange(len(row), device="cuda"), local_size_index
+                    ]
+                    prediction = minimum_scale + scale_model(
+                        source_x[row], horizon_tensor[local_horizon_index], local_q
+                    )[torch.arange(len(row), device="cuda"), local_size_index]
+                    local_loss_quantile = local_q
+                else:
+                    raw_prediction = raw[row, local_size_index, local_horizon_index]
+                    prediction = scale_model(source_x[row], horizon_tensor[local_horizon_index])[
+                        torch.arange(len(row), device="cuda"), local_size_index
+                    ]
+                    local_loss_quantile = q
+                target_gap = torch.clamp(y[row, local_size_index, local_horizon_index] - raw_prediction, min=0.0)
                 error = target_gap - prediction
-                loss = torch.maximum(q * error, (q - 1.0) * error).mean()
+                loss = torch.maximum(local_loss_quantile * error, (local_loss_quantile - 1.0) * error).mean()
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
                 optimizer.step()
                 last = float(loss.detach())
                 if step % 500 == 0:
-                    print(f"P333 locally-adaptive lattice scale step={step + 1} loss={last:.7f}", flush=True)
+                    print(f"{config['task_id']} scale step={step + 1} loss={last:.7f}", flush=True)
             scale_model.eval()
             with torch.no_grad():
                 source_scale_by_horizon, p201_scale_by_horizon = [], []
                 for horizon_value in normalized_horizons:
                     source_h = torch.full((len(source_x),), float(horizon_value), device="cuda")
                     p201_h = torch.full((len(p201_x),), float(horizon_value), device="cuda")
-                    source_scale_by_horizon.append(scale_model(source_x, source_h).cpu().numpy())
-                    p201_scale_by_horizon.append(scale_model(p201_x, p201_h).cpu().numpy())
+                    if risk_conditioned_scale:
+                        source_q = torch.full((len(source_x),), q, device="cuda")
+                        p201_q = torch.full((len(p201_x),), q, device="cuda")
+                        source_scale_by_horizon.append((minimum_scale + scale_model(source_x, source_h, source_q)).cpu().numpy())
+                        p201_scale_by_horizon.append((minimum_scale + scale_model(p201_x, p201_h, p201_q)).cpu().numpy())
+                    else:
+                        source_scale_by_horizon.append(scale_model(source_x, source_h).cpu().numpy())
+                        p201_scale_by_horizon.append(scale_model(p201_x, p201_h).cpu().numpy())
             source_scale = np.stack(source_scale_by_horizon, 2)
             p201_scale = np.stack(p201_scale_by_horizon, 2)
             normalized_residual = []
@@ -943,6 +973,9 @@ def main() -> None:
                 "hidden_dimensions": scale_config["hidden_dimensions"],
                 "normalized_calibration_threshold": normalized_threshold,
                 "risk_quantile_level": q,
+                "scale_type": "risk_size_horizon_positive_surface" if risk_conditioned_scale else "size_horizon_positive_head",
+                "training_quantile_range": None if training_quantile_range is None else training_quantile_range,
+                "minimum_scale": minimum_scale,
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -954,10 +987,12 @@ def main() -> None:
                 "training": {
                     "size_horizon_example_count": int(scale_fit_rows.sum() * len(set_sizes) * len(training_horizon_indices)),
                     "steps": int(scale_config["steps"]), "final_pinball_loss": last,
+                    "training_quantile_range": None if training_quantile_range is None else [float(value) for value in training_quantile_range],
                 },
                 "calibration": {
                     "size_horizon_example_count": int(normalized_calibration_rows.sum() * len(set_sizes) * len(training_horizon_indices)),
                     "risk_quantile_level": q, "normalized_nonconformity_threshold": normalized_threshold,
+                    "minimum_scale": minimum_scale,
                     "source_scale_mean": float(np.mean(source_scale[normalized_calibration_rows])),
                     "source_scale_range": [float(np.min(source_scale[normalized_calibration_rows])), float(np.max(source_scale[normalized_calibration_rows]))],
                 },
