@@ -899,7 +899,7 @@
 
 ### WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T112500Z__integrated-increment-actor-ensemble-s0-r1`。
 - representation：source Actor residual profile第0点严格`[0,0]`；8 intervals用真实`Δt=H/8`转为2D residual velocity。
   input=Actor features+absolute interval midpoint+H；position mean按increment积分，aleatoric variance按独立increments累加，
@@ -907,6 +907,18 @@
 - training：`.8/1.5/2.5/3.0s` source、3 members、hidden `[256,128]`、6,000 steps/member、batch65,536。
 - evaluation/decisions：consumed P81/P96/P113/P129相对P126 selected cost全不退且mean Spearman gain≥`.005`。
 - locks：不扫architecture/loss/member/seed/integration/variance weight/score/coverage；不改变P147 primary。
+- result：814,864 increment tokens；member final velocity NLL=`-2.37175/-2.38356/-2.29739`。P81/P96/P113/P129
+  selected cost=`.177470/.170331/.245321/.350441`，Spearman gain=
+  `-.027740/-.032362/-.027354/-.028236`（mean=`-.028923`）；cost全退，epistemic fraction=`.052/.087/.068/.051`，
+  0/2 decisions，verdict=`rejected_development_integrated_increment_actor_ensemble`，wall=`85.31s`、peak GPU=`.375 GiB`；F119。
+
+### WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-PREP-01 r2
+
+- 状态：`running exact locator recovery`；canonical=
+  `20260830T113000Z__multi-horizon-independent-prep-s0-r2`。
+- r1 terminal evidence：03/06/08/09/10 exact scans全命中；01 found386后最终missing388，和scene0110分母精确相等，0 target rows。
+- r2 scope：修正scene0110→02；复用r1已提取3,481 files，只扫描missing388并处理原10 scenes；P147 evaluator PID保持waiting。
+- locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

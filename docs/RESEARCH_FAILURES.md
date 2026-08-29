@@ -1931,7 +1931,7 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 ### V67-F118 — P147 scene0110 shard locator错误（pre-target engineering）
 
-- 分类：`engineering/dataset-archive-routing`；状态：`resolved_config_before_target_read_recovery_pending`。
+- 分类：`engineering/dataset-archive-routing`；状态：`resolved_r2_active_before_target_read`。
 - evidence：r1 shard01冻结需求774，scan found386；386精确覆盖scene0018，scene0110未命中。scene0110 official index92属于shard02。
 - recovery：唯一改`scene-0110 01→02`；让03/08/10现有scan自然完成，复用所有existing LIDAR，r2只补02后preprocess。
 - scientific impact：0 target rows/metrics；不换scene/cohort/H/model/score/decision，不重启P147 evaluator。
@@ -1943,7 +1943,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：P81/P96/P113/P129相对P126 cost全不退、mean rank gain≥`.005`。
 - prevention：不扫architecture/loss/member/seed/integration/variance/score/coverage；不重复P148 direct position decoder。
 
-下一可用编号为：`V67-F119`。
+### V67-F119 — independent increment integration造成全cohort排序退化
+
+- 分类：`algorithm/continuous-time-increment-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01/
+  20260830T112500Z__integrated-increment-actor-ensemble-s0-r1`。
+- 观察：四cohort cost全退；rank gain集中为`-.027-- -.032`，mean=`-.028923`；epistemic fraction`.051--.087`。
+- 解释：velocity representation具kinematic coherence，但把8个increment variance独立累加导致长期不确定性结构过宽/错序；P148失败
+  不是简单改成increment即可恢复。
+- 防重复：不扫correlation/integration/variance weight；关闭temporal sequence family，等待P147 frozen P126/P109 primary。
+
+下一可用编号为：`V67-F120`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

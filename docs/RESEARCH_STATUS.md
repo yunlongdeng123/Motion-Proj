@@ -516,10 +516,14 @@ scene index区间，确认`scene-0110:01`是pre-target archive locator错误，�
 shard扫描与已提取文件；结束后r2只补scene0110 shard02并启动10-scene preprocess，P147 evaluator持续等待，不改cohort/target/
 horizons/models/decisions。
 
-为直接服务P147多时域问题，P156已占用3090训练continuous-time integrated increment ensemble。source residual第0点严格为0；
+为直接服务P147多时域问题，P156训练continuous-time integrated increment ensemble。source residual第0点严格为0；
 将后续9点位置改写成8个`Δresidual/(H/8)` velocity targets，输入Actor features+absolute interval midpoint+H，三成员预测
-increment Gaussian；position mean和aleatoric variance分别累加积分，member mean variance提供epistemic。该机制不同于P148
-直接位置decoder和P115 spectral压缩；四consumed decisions冻结，P147 IO继续并行。
+increment Gaussian并积分。P81/P96/P113/P129 rank gain=`-.027740/-.032362/-.027354/-.028236`
+（mean=`-.028923`），cost全退，F119；独立increment variance累加造成过度扩散，关闭temporal sequence family。
+
+P147 r1六个原配置shard现已全部自然结束；01只found386并最终精确missing388，验证F118。其余03/06/08/09/10共
+3,095 files已提取并保留。r2=`20260830T113000Z__multi-horizon-independent-prep-s0-r2`已用修正`:02`启动，existing
+文件全部复用，只扫描388个scene0110 LIDAR；完成后4-worker preprocess 10 scenes，原P147 evaluator持续等待。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

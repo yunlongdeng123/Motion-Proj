@@ -283,7 +283,8 @@ P155将机制移到训练期：同time-fraction RegMixup在source Actor/residual
 四cohort mean rank仍为`-.007045`（F117），故augmentation family关闭。P147 prep的scene0110 shard locator在任何target read前由
 scan分母纠正为02（F118），不改变科学protocol或fresh cohort。
 P156进一步把多时域建模改写为continuous-time residual increments：以真实`H/8`预测velocity error并积分mean/variance，检验
-kinematic temporal coherence能否解除P148 direct position decoder的跨cohort退化。
+kinematic temporal coherence能否解除P148 direct position decoder的跨cohort退化；四cohort rank一致下降约`.029`（F119），
+表明independent increment accumulation同样不迁移。P147 r1在0 target read下确认scene0110缺388 files，r2只补修正后的shard02。
 
 ## 3. 核心结果表
 
