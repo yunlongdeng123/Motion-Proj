@@ -2676,6 +2676,18 @@ P207 r1 engineering note（不占算法编号）：rank-2 covariance参数化为
 
 下一可用编号：`V67-F169`。
 
+### V67-F169 — prefix survival density改善refinement但概率尺度失准
+
+- canonical：`run://worldsim_v67/WS-V67-P214-PREFIX-SURVIVAL-MAX-COST-DENSITY-01/20260830T213000Z__prefix-survival-max-cost-density-s0-r1`；
+- 观察：四prefix宏平均Brier相对P199改善`1.16%`，最终四H Brier改善`5.21%`，但宏平均calibration error退化
+  `30.33%`，只过Brier门；
+- 解释：前缀最大cost对象及共享set representation具有refinement增量，但训练density的source mixture不能直接给出稳定概率尺度；
+- 文献响应：proper calibration/refinement分解与beta calibration允许保序地修正概率尺度。P215只作一次disjoint-scene
+  monotone beta recovery，使density fit、calibrator fit和development read不共享scene；
+- 防重复：不扫prefix数、survival loss、mixture components、network width、budget、split或calibrator family；若P215失败即关闭。
+
+下一可用编号：`V67-F170`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

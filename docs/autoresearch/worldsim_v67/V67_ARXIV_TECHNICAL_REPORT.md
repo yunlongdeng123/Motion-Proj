@@ -52,6 +52,9 @@ scalar pool在source几乎全选P210，却在heldout仍使Brier退化`.96%`，�
 共享horizon token encoder与mean/max pooling重建相同maximum density，不改变P201 primary。
 P212在source dev同时改善Brier`3.84%`与calibration`17.80%`，但P213在P183 secondary的Brier退化`2.74%`，所以该
 maximum-density分支不进入主方法；它作为结构与transfer负结果解释为何最终采用P199 dependence factorization加P203校准层。
+P214随后将maximum对象扩展为四个prefix survival curves：宏平均Brier改善`1.16%`、最终四H Brier改善`5.21%`，但宏平均
+calibration error退化`30.33%`，因此拒绝。这一结果把失败定位为概率尺度而非排序/refinement完全丢失；P215正在用互斥的
+density-fit、calibration和development scene sets检验一次低自由度monotone beta recovery，尚不构成论文正结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

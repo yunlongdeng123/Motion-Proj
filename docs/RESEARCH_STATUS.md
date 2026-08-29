@@ -920,6 +920,13 @@ same-read prospective secondary，不是第二独立cohort，但与P203 source�
 P212 source dev把P199 Brier `.075011→.072127`改善`3.84%`、calibration error改善`17.80%`，2/2，说明DeepSet
 maximum density修复P210 flat representation。但P213冻结后在已消费P183 rows上Brier `.072116→.074093`退化`2.74%`，
 虽calibration改善`19.31%`仍为1/2、F168；因此不为P212创建新cohort或迁移claim，P212只保留development机制。
+
+P214把可靠性对象进一步改为四个时间前缀的`max_{t<=H} cost`生存曲线，共享masked DeepSet density对59,092个
+prefix targets作proper log-likelihood训练。相对P199 prefix-copula，source dev宏平均integrated Brier
+`.0647283→.0639766`改善`1.16%`，最终四H Brier改善`5.21%`；但宏平均calibration error
+`.0172493→.0224819`退化`30.33%`，故1/2、`V67-F169`。该结果说明prefix survival对象保留refinement，但概率尺度失配。
+不扫宽度、component或loss；P215正用互斥scene remainder将density-fit/calibration/development拆为三组，只训练一个共享
+monotone beta slope pair加四个prefix intercept，并在未触碰development scenes复验。当前单卡训练运行中。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

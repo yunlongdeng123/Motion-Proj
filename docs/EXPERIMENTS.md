@@ -1676,6 +1676,23 @@
   （改善`19.31%`）；1/2 gates，F168，wall=`1.25s`。
 - verdict=`rejected_consumed_deepset_max_density_secondary`；不创建P212 fresh cohort，不扫pool/attention/capacity。
 
+### WS-V67-P214-PREFIX-SURVIVAL-MAX-COST-DENSITY-01
+
+- canonical：`run://worldsim_v67/WS-V67-P214-PREFIX-SURVIVAL-MAX-COST-DENSITY-01/20260830T213000Z__prefix-survival-max-cost-density-s0-r1`；
+- protocol：prediction object改为四个prefix maximum costs及其七预算生存曲线；共享masked DeepSet density，14,773条
+  source-train trajectories产生59,092 prefix targets，12,000 steps、batch65,536；P199用同一1024-draw copula生成prefix control；
+- result：3,742条dev trajectories上candidate/P199 macro prefix Brier=`.063977/.064728`（改善`1.16%`），
+  calibration error=`.022482/.017249`（退化`30.33%`）；final-four-H Brier改善`5.21%`；1/2 gates，F169；
+- resources：final prefix log-cost NLL=`-1.092314`，RTX 3090 peak allocated=`.474 GiB`，wall=`98.91s`；
+- verdict=`rejected_prefix_survival_max_cost_density`；保留object-level refinement信号，只授权一次disjoint calibration recovery。
+
+### WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1`；
+- protocol：scene `%5` remainders把density-fit、beta-calibration、development严格分开；共享两条正beta slopes，仅四个prefix
+  intercept可变；density/calibrator均用proper log likelihood，budgets/P199/MC/gates不变；
+- status：RTX 3090训练运行中；不扫split、capacity、component、calibrator或阈值。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

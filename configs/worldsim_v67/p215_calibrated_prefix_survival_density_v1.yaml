@@ -1,0 +1,33 @@
+schema_version: worldsim_v67.p215_calibrated_prefix_survival_density.v1
+output_schema_version: worldsim_v67.p215_calibrated_prefix_survival_density_summary.v1
+task_id: WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01
+hypothesis_id: WS-V67-H-P215-001
+role: source_development_disjoint_calibrated_prefix_reliability_survival_density
+seed: 0
+model_artifact: CALIBRATED_PREFIX_SURVIVAL_DENSITY.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {scene_modulus: 5, development_remainder: 1, calibration_remainder: 2}
+density_model: {component_count: 5, token_dimension: 64, head_dimensions: [128, 64], steps: 12000, batch_size: 65536, learning_rate: 0.001, weight_decay: 0.0001}
+calibrator: {steps: 1800, learning_rate: 0.03}
+evaluation: {monte_carlo_samples: 1024}
+decision: {minimum_macro_calibration_error_reduction_vs_P199: 0.0}
+verdict_on_pass: supported_disjoint_calibrated_prefix_survival_density
+verdict_on_failure: rejected_disjoint_calibrated_prefix_survival_density
+locks:
+  density_fit_calibration_and_development_scene_sets_are_disjoint: true
+  monotone_beta_slopes_are_shared_and_only_four_prefix_intercepts_vary: true
+  proper_log_likelihood_trains_density_and_calibrator: true
+  split_budgets_and_P199_prefix_MC_control_are_frozen: true
+  P201_is_excluded_and_already_primary_only: true
+  no_width_component_loss_split_step_lr_budget_or_MC_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - source_development_disjoint_calibration_trial_only
+  - no_censoring_or_formal_survival_guarantee
+  - no_collision_conformal_planner_policy_closed_loop_or_safety_claim
