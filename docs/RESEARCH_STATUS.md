@@ -423,8 +423,11 @@ P322回到核心预测对象的未来时域H：保留P313 requested-task top-2�
 prefix-max visited-state cost，训练连续H-conditioned q50/q80/q95 surface。结构为positive base+slope increments，
 同时保证H↑quantile cost不降、q↑quantile不降；仅用`0.8/1.5/3.0s`训练和source calibration，`2.5s`完全heldout。
 P201同时heldout task (`.25/.75 × -.5/.5`) 与heldout H=`2.5s`，三门coverage/fidelity/monotonicity。
+R1=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`因P199 run ID少`reliability`在artifact load时
+FileNotFound，0 training/0 quality，登记`V67-F210`。R2只修该路径，模型、rows、H、quantiles、split和gates不变。
 Active=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
-20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`。
+20260901T071000Z__horizon-conditioned-admitted-set-quantiles-s0-r2`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -764,8 +764,12 @@
   P201还同时使用heldout progress/lateral。positive base+slope cumulative increments保证H/quantile双单调。
 - gates：P201 max undercoverage `<=.10`、median log-cost MAE `<=.35`、H/quantile violations=0；不扫H、
   quantile、architecture、gate或seed。
-- active=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
-  20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`。
+- failed pre-quality r1=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+  20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`：P199 run ID少`reliability`，artifact
+  load FileNotFound；0 training/0 quality，登记`V67-F210`。
+- minimal recovery：r2只修P199 run path；模型、rows、H、quantiles、split、seed和gates全部不变。Active=
+  `run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+  20260901T071000Z__horizon-conditioned-admitted-set-quantiles-s0-r2`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -379,9 +379,9 @@
   risk/monotonicity通过但coverage失败，登记F208；不调margin/quantile/gate；
 - P321 result：groupwise selector + selected-outcome q90训练收敛，但P201 mean coverage gain=`-.00109 < .10`，
   risk/monotonicity通过，登记F209；关闭task/pair repair family，不调selected q90/weight/architecture/gate；
-- P322 active：训练continuous-H monotone admitted-set q50/q80/q95，2.5s heldout；失败才登记F210，不改
-  horizon/quantile/architecture/gate/seed或在P201 refit/calibrate；
-- 下一可用 failure id 为 `V67-F210`。
+- P322 r1：P199 run ID少`reliability`，artifact load FileNotFound，0 training/0 quality，登记F210；r2只修
+  路径，continuous-H模型、2.5s heldout与全部gates不变；
+- 下一可用 failure id 为 `V67-F211`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -421,6 +421,16 @@
   task/pair，直接学习requested set在continuous H下的visited-state cost quantile surface；
 - forbidden rescue：不调q90/utility weight/selector architecture/gate，不扩同一pair family，不在P201训练；
 - resolution status：`closed repair family; migrated to P322 horizon-conditioned authority`。
+
+### V67-F210 — P322冻结P199 artifact run ID少reliability
+
+- failed run=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+  20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`；
+- symptom：P199 task目录正确，但run ID误写`20260830T181000Z__joint-horizon-copula-s0-r2`，实际为
+  `20260830T181000Z__joint-horizon-reliability-copula-s0-r2`；`torch.load`前FileNotFound；
+- scientific status：0 training、0 calibration、0 P201 quality，不产生horizon-method verdict；
+- minimal recovery：r2只修run path；模型、source/P201 rows、H split、quantiles、seed、steps和gates不变；
+- resolution status：`active via P322 r2`；下一可用failure id=`V67-F211`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
