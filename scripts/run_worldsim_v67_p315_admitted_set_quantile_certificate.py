@@ -832,6 +832,17 @@ def main() -> None:
                 config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
                 int(config["selected_action_count"]),
             )
+            if bool(config.get("decision_interpolated_task_training", False)):
+                interpolated_source = _horizon_task_examples(
+                    source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+                    progress_model, maneuver_model, config["heldout_progress_preferences"],
+                    config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
+                    int(config["selected_action_count"]),
+                )
+                source_feature = np.concatenate((source_feature, interpolated_source[0]), 0)
+                source_target = np.concatenate((source_target, interpolated_source[1]), 0)
+                source_example_scenes = np.concatenate((source_example_scenes, interpolated_source[2]), 0)
+                source_conditions = np.concatenate((source_conditions, interpolated_source[3]), 0)
         if horizon_quantile_confirmation:
             frozen_horizon = torch.load(
                 args.runs_root / config["frozen_horizon_certificate"]["run"] / config["frozen_horizon_certificate"]["artifact"],
