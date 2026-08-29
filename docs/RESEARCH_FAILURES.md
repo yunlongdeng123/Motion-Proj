@@ -2370,6 +2370,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F146`。
 
+### V67-F146 — scene-bootstrap CDF ensemble缺少function diversity且概率刻度不变
+
+- 分类：`algorithm/bootstrap-ensemble-low-diversity`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/
+  20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1`。
+- 观察：四cohort Brier相对P173变化仅`-.58%/+ .14%/+ .08%/-.29%`，mean calibration-error reduction=`-.25%`；
+  member probability deviation只有`.0128--.0166`。
+- 解释：P173低维score/H/budget单调结构在64--69 unique-scene bootstrap环境收敛到几乎相同函数；权重边际化没有产生可利用的
+  epistemic diversity，因此平均概率基本等于single P173。
+- 防重复：不增加member count、随机seed、bootstrap size或temperature；转向对continuous cost本身建条件密度。
+
+下一可用编号为：`V67-F147`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

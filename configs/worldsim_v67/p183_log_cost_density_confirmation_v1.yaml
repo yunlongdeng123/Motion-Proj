@@ -1,0 +1,76 @@
+schema_version: worldsim_v67.p183_log_cost_density_confirmation.v1
+output_schema_version: worldsim_v67.p183_log_cost_density_confirmation_summary.v1
+task_id: WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P183-001
+role: fresh_scene_level_multi_horizon_confirmation_of_continuous_cost_density_reliability_CDF
+verdict_on_pass: supported_fresh_log_cost_density_reliability_CDF
+verdict_on_failure: rejected_fresh_log_cost_density_reliability_CDF
+evaluation_data:
+  scene_names: [scene-0271, scene-0349, scene-0971, scene-0526, scene-0559, scene-0585, scene-0787, scene-0847, scene-0999, scene-1047]
+  scene_shards:
+    scene-0271: "03"
+    scene-0349: "04"
+    scene-0971: "09"
+    scene-0526: "05"
+    scene-0559: "06"
+    scene-0585: "06"
+    scene-0787: "08"
+    scene-0847: "08"
+    scene-0999: "09"
+    scene-1047: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p183_log_cost_density_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-PREP-01
+  run_id: 20260830T152000Z__log-cost-density-confirmation-prep-s0-r1
+  output_schema_version: worldsim_v67.p183_log_cost_density_confirmation_preparation_summary.v1
+confirmation:
+  run_id: 20260830T152500Z__log-cost-density-confirmation-s0-r1
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p173:
+  run: worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2
+  artifact: MONOTONE_VISIT_RELIABILITY_CDF.pt
+frozen_p182:
+  run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1
+  artifact: LOG_COST_MIXTURE_DENSITY.pt
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_integrated_brier_reduction_over_p173: 0.10
+  minimum_mean_calibration_error_reduction_over_p173: 0.10
+locks:
+  ten_repo_target_unread_unprocessed_official_val_scenes_frozen_before_sensor_or_target_read: true
+  four_locations_three_three_three_one_and_ten_distinct_logs: true
+  evidence_is_scene_level_only_due_possible_historical_log_overlap: true
+  P182_density_P126_score_P173_control_horizons_budgets_and_cost_are_frozen: true
+  only_two_macro_decisions_mean_Brier_and_mean_calibration_improvement_over_P173: true
+  P175_scenes_and_results_are_excluded: true
+  shard_completion_releases_scene_preprocess_and_scene_readiness_releases_GPU_scoring: true
+  no_scene_horizon_budget_model_score_cost_metric_or_decision_recovery: true
+  exact_pre_target_archive_locator_correction_only: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper/7506-gaussian-process-conditional-density-estimation
+  - https://papers.nips.cc/paper_files/paper/2024/hash/d4e1983985392a9a46bd8f19bb51ba48-Abstract-Conference.html
+claim_boundary:
+  - fresh_confirmation_at_scene_level_not_log_session_or_population_level
+  - proper_score_and_marginal_reliability_error_not_formal_calibrated_probability
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim

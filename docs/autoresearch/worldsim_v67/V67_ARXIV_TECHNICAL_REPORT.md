@@ -409,7 +409,15 @@ P179改用top-16 Actor-query DeepSet context residual，Brier在3/4 cohort回退
 `projected error / clearance <= budget`重写为`projected error <= budget × minimum clearance`，训练effective-threshold单调CDF；
 但旧四Brier全部回退`1.78%--27.11%`、mean calibration change=`-4.38%`（F145）。根因是trajectory minimum clearance
 丢失逐Actor/time的error-clearance配对，因此关闭该压缩。P181进一步采用5个scene-bootstrap低容量单调CDF进行概率平均，
-以模型边际化模拟source covariate shifts；它仍是consumed development，不能替代P175独立确认。
+以模型边际化模拟source covariate shifts；但member probability deviation仅约`1.5%`，四cohort Brier变化接近零、mean
+calibration change=`-0.25%`（F146），说明同构低维单调模型缺少function diversity。P182据此改为直接拟合continuous
+`log1p(boundary cost)`的5-component conditional density，并从解析CDF查询七budget。旧四相对P173 Brier改善
+`24.48%/18.46%/16.46%/31.17%`，calibration-error改善`53.06%/60.11%/50.45%/81.07%`，mean=`61.17%`，
+2/2 development support。这是迄今同时改善refinement与marginal probability scale的最强结果，但仍不是独立证据。
+
+P183因此在任何新quality read前另冻10-scene/10-log、四location=`3/3/3/1`确认，与P175完全分离；只保留相对P173 mean Brier
+和mean calibration各改善10%的两项macro gate。其IO在P175 archive scan结束后自动启动，避免重复磁盘竞争。P184仅用已消费旧四
+训练scene-bootstrap density ensemble以利用等待期GPU，不读取P183，也不能改变冻结P182/P183 candidate。
 
 ## 3. 核心结果表
 

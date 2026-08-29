@@ -91,7 +91,10 @@
 | P178 | `run://worldsim_v67/WS-V67-P178-CLEARANCE-CONDITIONED-RELIABILITY-CDF-01/20260830T143000Z__clearance-conditioned-reliability-cdf-s0-r1` | Brier/calibration 4/4同向改善；mean calibration improvement仅5.08%，rejected/F143 |
 | P179 | `run://worldsim_v67/WS-V67-P179-SET-CONTEXT-RELIABILITY-CDF-01/20260830T143500Z__set-context-reliability-cdf-s0-r1` | Brier 3/4回退、mean calibration change -8.45%；rejected/F144 |
 | P180 | `run://worldsim_v67/WS-V67-P180-EFFECTIVE-ERROR-THRESHOLD-RELIABILITY-CDF-01/20260830T144500Z__effective-error-threshold-reliability-cdf-s0-r1` | Brier 4/4回退、mean calibration change -4.38%；rejected/F145 |
-| P181 | `run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1` | 5-member scene-bootstrap probability ensemble，GPU training active |
+| P181 | `run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1` | mean calibration change -0.25%、member deviation约1.5%；rejected/F146 |
+| P182 | `run://worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1` | Brier vs P173 -16.46%至-31.17%；mean calibration improvement 61.17%，2/2 dev |
+| P183 | `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | frozen different 10-scene/10-log confirmation，queued IO/evaluator resident |
+| P184 | `run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1` | 3-member bootstrap continuous-density ensemble，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -224,6 +227,7 @@
 | `V67-F143` | closed negative | P178 absolute clearance带来4/4一致小改善但mean calibration gain仅5.08% |
 | `V67-F144` | closed negative | P179 set-context residual使Brier 3/4回退且mean calibration change -8.45% |
 | `V67-F145` | closed negative | P180 minimum-clearance effective threshold使Brier 4/4回退、mean calibration change -4.38% |
+| `V67-F146` | closed negative | P181 scene-bootstrap member probability deviation约1.5%，mean calibration change -0.25% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

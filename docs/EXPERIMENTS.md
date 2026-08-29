@@ -1231,6 +1231,8 @@
 - decisions：mean integrated-Brier reduction over control≥20%；mean marginal reliability error≤control。仅两项macro gate。
 - pipeline：7 shards扫描完成即释放scene preprocess；processed marker出现即由驻留3090模型评分，不等10/10。
 - locks：只允许pre-target exact shard locator correction；不换scene/model/H/budget/cost/metric/decision，不扫参或加测试矩阵。
+- progress：shard06/08完成，`0558/0584/0786`已GPU评分；14/15 scene×H Brier reductions为正，`0558@H.8=-.2245`。
+  该partial结果不触发裁决或恢复，其余5 shards继续扫描。
 
 ### WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01
 
@@ -1281,11 +1283,42 @@
 
 ### WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01
 
-- 状态：`GPU training active`；canonical id=`20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1`。
+- 状态：`done/rejected`；canonical=`20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1`；wall=`187.53s`。
 - object：5个P173同构monotone CDF分别在102-scene bootstrap环境训练，推理时均匀平均概率，以模型边际化吸收source scene shift。
 - execution：五成员单卡并行、每成员batch16,384、8,000 steps；P126/P173 control、七budgets与旧四cohort固定。
 - decisions：逐cohort Brier不劣于P173且mean marginal calibration-error至少改善10%；不扫member count/bootstrap size/loss/architecture。
 - locks：P175 rows严格排除，不替换其冻结candidate，不加post-hoc calibrator、hash/checksum/fingerprint或测试矩阵。
+- result：P81/P96/P113/P129 Brier change vs P173=`-.58%/+.14%/+.08%/-.29%`；calibration-error reduction=
+  `+.59%/-.60%/-.99%/-.002%`，mean=`-.25%`；member probability deviation=`.0166/.0165/.0128/.0156`。
+- verdict=`rejected_scene_bootstrap_reliability_CDF_ensemble`，F146；模型边际化几乎复现P173，不增加成员数或扫bootstrap。
+
+### WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01
+
+- 状态：`done/supported development`；canonical=`20260830T150500Z__log-cost-mixture-density-s0-r1`；wall=`70.41s`。
+- object：以P126 score、H、absolute inverse-clearance为低维条件，5-component Gaussian mixture拟合trajectory `log1p(cost)`完整密度；
+  七budget reliability由解析CDF一次得到，不再分别采样binary budget target。
+- execution：`128/128/64` density head、12,000 NLL steps、batch65,536；final NLL=`-1.09254`，与P175 archive/preprocess重叠。
+- decisions/locks：旧四逐cohort Brier不劣于P173且mean calibration-error改善≥10%；不扫components/network/noise/loss，P175排除。
+- result：P81/P96/P113/P129 Brier change vs P173=`-24.48%/-18.46%/-16.46%/-31.17%`；calibration-error
+  reduction=`53.06%/60.11%/50.45%/81.07%`，mean=`61.17%`，2/2。
+- verdict=`supported_freeze_log_cost_mixture_density_for_different_future_cohort`；P175已partial read，不能承担确认。
+
+### WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01
+
+- 状态：`frozen/queued IO + evaluator resident`；prep=`20260830T152000Z__log-cost-density-confirmation-prep-s0-r1`，
+  evaluator=`20260830T152500Z__log-cost-density-confirmation-s0-r1`。
+- cohort：target-unread/unprocessed `0271/0349/0971/0526/0559/0585/0787/0847/0999/1047`；四location
+  `3/3/3/1`、10 distinct logs，与P175十scene完全分离。
+- candidate/control：冻结P182 density vs冻结P173 CDF；五H、七budgets、P120 cost与P126 score不变。
+- decisions：mean integrated-Brier reduction over P173≥10%；mean marginal calibration-error reduction over P173≥10%；仅两项macro gate。
+- pipeline：为避免重复archive contention，P183 prep在P175 prep进程退出后自动启动；scene-ready即由驻留GPU evaluator评分。
+
+### WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01
+
+- 状态：`GPU training active`；canonical id=`20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1`。
+- object：3个P182同构5-component density分别在102-scene bootstrap环境训练，推理均匀平均解析budget CDF。
+- execution：每成员batch32,768、8,000 steps并行；P175/P183 rows严格排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration-error相对P182改善≥5%；不扫成员数/bootstrap/components/loss。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

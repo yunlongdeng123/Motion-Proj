@@ -736,6 +736,9 @@ P175已在任何新sensor/target quality read前冻结P173的独立确认cohort�
 冻结P173五H×七budget evaluator并发等待。Primary只保留mean integrated-Brier reduction≥20%与mean marginal calibration
 error不高于horizon-only两门；证据最多scene-level，不写calibrated probability。
 
+P175当前shard06/08已完成并释放`0558/0584/0786`，驻留评估器已即时评分3/10 scenes；15个scene×H slices中14个Brier
+reduction为正，唯一负值为`0558@H.8=-.2245`。这只是流水线中间态，不新增逐scene/H门，也不据此改candidate；其余5 shards继续IO。
+
 P176在P175 IO期间只把P173训练loss从BCE改为与evaluation一致的integrated Brier，其余表示、budget、steps和control不变。
 旧四Brier reduction=`38.07%/45.33%/48.26%/32.15%`，mean=`40.95%`、逐组均优于control；但marginal calibration error
 四组仍全高于horizon-only，2/3 checks，F141。结果说明proper-score优势来自refinement/discrimination而非概率刻度；P176不替换
@@ -761,9 +764,24 @@ P180把P120事件的分母结构显式移入条件：学习
 结果旧四Brier相对P173全部回退`8.10%/27.11%/1.78%/11.17%`，calibration-error reduction均为负，mean=`-4.38%`，F145。
 整条轨迹最小净空是过度保守的压缩，破坏Actor/time级误差—净空配对；不扫聚合或threshold knots。
 
-P181随后按NeurIPS distribution-shift/model-marginalization证据启动5-member scene-bootstrap monotone CDF ensemble：每个成员从102个
-source scenes有放回抽取一个环境，五成员在3090并行训练，推理均匀平均概率。它保持P173低容量表示与单调性，P175严格排除；
-只检验逐cohort Brier noninferiority与mean calibration-error改善10%，不扫member count/bootstrap/loss。
+P181随后按NeurIPS distribution-shift/model-marginalization证据训练5-member scene-bootstrap monotone CDF ensemble：每个成员从102个
+source scenes有放回抽取一个环境，五成员在3090并行训练，推理均匀平均概率。P81/P96/P113/P129 Brier change vs P173=
+`-.58%/+.14%/+.08%/-.29%`，calibration-error reduction=`+.59%/-.60%/-.99%/-.002%`，mean=`-.25%`；两门失败，F146。
+成员概率mean deviation只有`.0128--.0166`，bootstrap没有形成足够function diversity；不增加成员数或扫bootstrap。
+
+P182完成连续conditional-density路线：以P126 score、H和absolute clearance为条件，用5-component Gaussian mixture直接拟合
+`log1p(continuous boundary-state cost)`的likelihood，再解析查询七个budget CDF。旧P81/P96/P113/P129相对P173的Brier change=
+`-24.48%/-18.46%/-16.46%/-31.17%`，calibration-error reduction=`53.06%/60.11%/50.45%/81.07%`，mean=`61.17%`，
+2/2 development gates支持；wall=`70.41s`。这是当前最强distribution result，但仍须不同future cohort，不能借用已partial-read P175。
+
+P183在任何新sensor/target read前冻结P182独立确认：One-North `0271/0349/0971`、Boston `0526/0559/0585`、Queenstown
+`0787/0847/0999`、Holland Village `1047`，四location=`3/3/3/1`、10 distinct logs，与P175完全分离。两项macro gate固定为
+mean Brier reduction over P173≥10%与mean calibration-error reduction over P173≥10%。为不争抢慢IO，prep在P175 archive scan退出后
+自动启动；P183 evaluator已驻留等待scene-ready。
+
+P184利用等待空档训练3-member scene-bootstrap log-cost density ensemble，每成员保留P182的5-component density并在102-scene
+bootstrap环境训练，推理平均CDF。它只用旧四检查相对P182逐组Brier noninferiority与mean calibration improvement≥5%，
+严格排除P175/P183，不改变冻结的P183 candidate。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

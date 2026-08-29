@@ -1,0 +1,50 @@
+schema_version: worldsim_v67.p182_log_cost_mixture_density.v1
+output_schema_version: worldsim_v67.p182_log_cost_mixture_density_summary.v1
+task_id: WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01
+hypothesis_id: WS-V67-H-P182-001
+role: continuous_boundary_cost_conditional_density_for_visited_state_reliability_CDF
+seed: 0
+model_artifact: LOG_COST_MIXTURE_DENSITY.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p173:
+  run: worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2
+  artifact: MONOTONE_VISIT_RELIABILITY_CDF.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model:
+  component_count: 5
+  hidden_dimensions: [128, 128, 64]
+  training_steps: 12000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_calibration_error_reduction_vs_p173: 0.10
+verdict_on_pass: supported_freeze_log_cost_mixture_density_for_different_future_cohort
+verdict_on_failure: rejected_log_cost_mixture_density
+locks:
+  prediction_object_is_continuous_trajectory_visited_actor_state_cost_distribution: true
+  seven_budget_reliabilities_are_analytic_CDF_queries_not_separate_heads: true
+  condition_is_frozen_P126_score_horizon_and_absolute_clearance_only: true
+  frozen_P173_is_the_primary_control: true
+  P175_is_in_flight_and_excluded_from_P182: true
+  no_component_count_architecture_noise_regularization_or_loss_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper/7506-gaussian-process-conditional-density-estimation
+  - https://papers.nips.cc/paper_files/paper/2024/hash/d4e1983985392a9a46bd8f19bb51ba48-Abstract-Conference.html
+  - https://proceedings.mlr.press/v80/imani18a.html
+claim_boundary:
+  - consumed_development_only_and_requires_a_different_future_cohort_if_supported
+  - parametric_log_cost_density_is_not_target_calibration_or_formal_coverage
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim
