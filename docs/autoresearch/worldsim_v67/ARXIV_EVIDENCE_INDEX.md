@@ -65,7 +65,7 @@
 | P152 | `run://worldsim_v67/WS-V67-P152-RANDOMIZED-PRIOR-ACTOR-ENSEMBLE-01/20260830T110500Z__randomized-prior-actor-ensemble-s0-r1` | cost全退、mean rank `-.006852`；rejected/F114 |
 | P153 | `run://worldsim_v67/WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01/20260830T111000Z__bayesian-last-layer-actor-s0-r1` | epistemic约`1e-4`、mean rank `+.000844`；rejected/F115 |
 | P154 | `run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/20260830T111500Z__density-aware-actor-ensemble-s0-r1` | shift detected但P81 cost退；rejected/F116 |
-| P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | same-fraction RegMixup；running |
+| P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | mean rank `-.007045`；rejected/F117 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -123,7 +123,7 @@
 | randomized-prior Actor ensemble | P152 consumed H3.5 ×4 | mean gain=`-.006852` | reject forced function diversity |
 | Bayesian last layer | P153 consumed H3.5 ×4 | mean gain=`+.000844` | reject overconcentrated token posterior |
 | density-aware P126 | P154 consumed H3.5 ×4 | mean gain=`-.001727` | rarity not reliability |
-| RegMixup Actor ensemble | P155 consumed H3.5 ×4 | running | test train-time domain interpolation |
+| RegMixup Actor ensemble | P155 consumed H3.5 ×4 | mean gain=`-.007045` | reject train-time interpolation |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -167,6 +167,8 @@
 | `V67-F114` | closed negative | randomized function priors四cohort rank全退 |
 | `V67-F115` | closed negative | exact last-layer posterior epistemic约`10^-4`而过度集中 |
 | `V67-F116` | closed negative | hidden density识别shift但blind inflation使P81 cost显著回退 |
+| `V67-F117` | closed negative | same-fraction RegMixup只改善P129 cost且rank mean为负 |
+| `V67-F118` | resolved pre-target | P147 scene0110 shard locator `01→02`，0 metric exposure |
 
 ## 4. Artifact inventory
 

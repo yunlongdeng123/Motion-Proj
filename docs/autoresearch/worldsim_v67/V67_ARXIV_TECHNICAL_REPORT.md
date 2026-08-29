@@ -279,7 +279,9 @@ P152四cohort rank全退（F114），说明forced diversity没有可靠方向。
 covariance；它在部分cohort有正信号，但epistemic fraction约`10^-4`且mean gain仅`.000844`（F115）。P154因此不再用
 token-count posterior concentration，而在frozen hidden space显式学习source density，只在低密度输入膨胀P126 variance。
 P154确认所有target cohort都出现hidden-density shift，却使P81 operating cost明显回退（F116），表明rarity不是reliability。
-P155将机制移到训练期：同time-fraction RegMixup在source Actor/residual空间平滑scene variation，同时保留原始ERM loss。
+P155将机制移到训练期：同time-fraction RegMixup在source Actor/residual空间平滑scene variation，同时保留原始ERM loss；
+四cohort mean rank仍为`-.007045`（F117），故augmentation family关闭。P147 prep的scene0110 shard locator在任何target read前由
+scan分母纠正为02（F118），不改变科学protocol或fresh cohort。
 
 ## 3. 核心结果表
 

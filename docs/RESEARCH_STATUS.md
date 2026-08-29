@@ -507,9 +507,14 @@ P126全部冻结，只以`1+ReLU(source-standardized NLL)`膨胀variance。P81/P
 `1.84/2.24/2.04/1.81`，证明density识别shift；但rank gain=`-.006720/-.001265/+.000418/+.000659`
 （mean=`-.001727`），P96 cost改善但P81显著回退，F116。低密度不等于不可靠，关闭推理期blind OOD inflation。
 
-检索ICLR Mixup、NeurIPS RegMixup与DG-FIXED后，P155正在3090训练time-fraction matched RegMixup ensemble：每步保留一半
-原始Gaussian NLL、一半同fraction Actor feature+2D residual convex mixup NLL，3 members/6,000 steps；从训练分布内部平滑
-scene variation，同时避免跨time-role无意义插值。P147 IO/evaluator继续并行，不扫alpha或loss weight。
+检索ICLR Mixup、NeurIPS RegMixup与DG-FIXED后，P155训练time-fraction matched RegMixup ensemble：每步一半原始NLL、一半
+同fraction Mixup NLL。P81/P96/P113/P129 rank gain=`-.010876/-.014890/-.002785/+.000369`
+（mean=`-.007045`），仅P129 cost改善，F117；不扫alpha/loss weight，训练增强family关闭。
+
+P147 IO仍为主路径。并行scan中shard01对`0018+0110`冻结需求只命中`386/774`，精确等于单scene 0018分母；结合官方
+scene index区间，确认`scene-0110:01`是pre-target archive locator错误，现唯一修正为`:02`（F118）。旧prep保留其余active
+shard扫描与已提取文件；结束后r2只补scene0110 shard02并启动10-scene preprocess，P147 evaluator持续等待，不改cohort/target/
+horizons/models/decisions。当前没有另一条有充分机制依据的GPU训练，避免为占卡而重复已关闭family。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

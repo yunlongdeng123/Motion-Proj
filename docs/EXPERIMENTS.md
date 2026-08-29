@@ -876,13 +876,26 @@
 
 ### WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T112000Z__regmixup-actor-ensemble-s0-r1`。
 - method：P126-shaped 3-member Actor Gaussian；每step原始32,768 tokens和Mixup 32,768 tokens各占`.5` loss。Mixup pair
   必须拥有相同normalized time fraction，feature与2D residual target按`Beta(.2,.2)`同一lambda插值。
 - training/evaluation：P109 normalization/source、6,000 steps/member、AdamW协议；P81/P96/P113/P129相对P126 cost全不退
   且mean rank gain≥`.005`。
 - locks：不扫alpha/original-mix weight/pairing/architecture/member/seed/score/coverage。
+- result：9 fraction buckets；member final RegMixup NLL=`-3.32871/-3.44239/-3.47008`。P81/P96/P113/P129
+  selected cost=`.179769/.170694/.223049/.306494`，Spearman gain=
+  `-.010876/-.014890/-.002785/+.000369`（mean=`-.007045`）；仅P129 cost改善，0/2 decisions，verdict=
+  `rejected_development_RegMixup_actor_ensemble`，wall=`177.01s`、peak GPU=`.342 GiB`；F117。
+
+### WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-PREP-01 r1 locator note
+
+- 状态：`running existing scans / exact locator recovery frozen before target read`。
+- evidence：shard01扫描冻结`0018+0110`共774 LIDAR candidates，只found386，精确等于scene0018；scene0110 index92应位于
+  `v1.0-trainval02_blobs.tgz`，不是01。
+- recovery：配置唯一改`scene-0110: "01"→"02"`；不终止其余03/08/10 active scans，不删除01/06/09已提取文件；r1
+  结束后r2复用existing并只补02。P147 evaluator不重启，仍等待相同10 scenes。
+- scientific exposure：0 target rows/metrics；cohort/horizons/P126/P109/cost/fixed50/two macro decisions完全不变；F118。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
