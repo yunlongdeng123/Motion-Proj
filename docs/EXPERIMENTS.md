@@ -770,6 +770,19 @@
 - minimal recovery：r2只修P199 run path；模型、rows、H、quantiles、split、seed和gates全部不变。Active=
   `run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
   20260901T071000Z__horizon-conditioned-admitted-set-quantiles-s0-r2`。
+- r2 result：43,578 train-horizon examples、6k steps、final pinball=`.02903`；offsets=
+  `[-.00050,.01844,.18584]`。P201 heldout task+2.5s coverage=`.54754/.82131/.95492`、max
+  undercoverage=`-.00492`、median MAE=`.15154`、pinball=`.05612`、width=`.40262`，H/quantile violations=
+  `0/0`，3/3 supported。四个task conditions q95 coverage=`.95410/.96393/.94098/.96066`。wall=
+  `47.19s`、peak GPU=`.14039GiB`、RSS=`1.8889GiB`。
+
+### WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01
+
+- frozen candidate/cohort：P322/P313全链和P277六场景/180组；horizon-quantile family untouched reuse，非globally fresh。
+- inherited：2.5s heldout H、四个heldout task conditions、q50/q80/q95、normalization、offsets及三门；0-step、
+  0 recalibration、one read。
+- active=`run://worldsim_v67/WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
+  20260901T072500Z__horizon-conditioned-quantile-confirmation-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

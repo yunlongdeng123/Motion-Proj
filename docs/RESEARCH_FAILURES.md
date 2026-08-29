@@ -380,7 +380,10 @@
 - P321 result：groupwise selector + selected-outcome q90训练收敛，但P201 mean coverage gain=`-.00109 < .10`，
   risk/monotonicity通过，登记F209；关闭task/pair repair family，不调selected q90/weight/architecture/gate；
 - P322 r1：P199 run ID少`reliability`，artifact load FileNotFound，0 training/0 quality，登记F210；r2只修
-  路径，continuous-H模型、2.5s heldout与全部gates不变；
+  路径后P201 heldout task+2.5s coverage=`.54754/.82131/.95492`、median MAE=`.15154`、H/quantile
+  violations=0，3/3 supported，F210关闭；
+- P323 active：P322冻结certificate在P277上0-step horizon-family untouched确认；失败才登记F211，不refit、
+  recalibrate、改H/quantile/gate或换cohort；
 - 下一可用 failure id 为 `V67-F211`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
@@ -430,7 +433,7 @@
   `20260830T181000Z__joint-horizon-reliability-copula-s0-r2`；`torch.load`前FileNotFound；
 - scientific status：0 training、0 calibration、0 P201 quality，不产生horizon-method verdict；
 - minimal recovery：r2只修run path；模型、source/P201 rows、H split、quantiles、seed、steps和gates不变；
-- resolution status：`active via P322 r2`；下一可用failure id=`V67-F211`。
+- resolution status：`closed by P322 r2 supported result`；下一可用failure id=`V67-F211`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

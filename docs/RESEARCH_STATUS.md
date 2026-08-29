@@ -426,8 +426,16 @@ P201同时heldout task (`.25/.75 × -.5/.5`) 与heldout H=`2.5s`，三门coverag
 R1=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
 20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`因P199 run ID少`reliability`在artifact load时
 FileNotFound，0 training/0 quality，登记`V67-F210`。R2只修该路径，模型、rows、H、quantiles、split和gates不变。
-Active=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
-20260901T071000Z__horizon-conditioned-admitted-set-quantiles-s0-r2`。
+Canonical=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+20260901T071000Z__horizon-conditioned-admitted-set-quantiles-s0-r2`：43,578 horizon examples、6k steps；P201
+heldout task+H=`2.5s` coverage=`.54754/.82131/.95492`、max undercoverage=`-.00492`、median MAE=`.15154`、
+H/quantile violations=`0/0`，3/3 supported。source heldout-H coverage=`.43194/.77617/.95981`、max
+undercoverage=`.06806`；wall=`47.19s`。F210由r2关闭。
+
+P323冻结P322全部weights、normalization、quantile offsets与H surface，在P277六场景/180个六动作组上只读
+heldout task+H=`2.5s`；0 training/0 recalibration，三门继承。Active=`run://worldsim_v67/
+WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
+20260901T072500Z__horizon-conditioned-quantile-confirmation-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

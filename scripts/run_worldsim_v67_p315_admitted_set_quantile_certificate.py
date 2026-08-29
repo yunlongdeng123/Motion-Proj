@@ -352,6 +352,7 @@ def main() -> None:
     action_pair_editor_training = bool(config.get("action_pair_editor_training", False))
     groupwise_pair_editor_training = bool(config.get("groupwise_pair_editor_training", False))
     horizon_quantile_training = bool(config.get("horizon_quantile_training", False))
+    horizon_quantile_confirmation = bool(config.get("horizon_quantile_confirmation", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -385,7 +386,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training:
+        if horizon_quantile_training or horizon_quantile_confirmation:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -441,7 +442,7 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training:
+    if horizon_quantile_training or horizon_quantile_confirmation:
         source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
             source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
             progress_model, maneuver_model, config["training_progress_preferences"],
@@ -454,6 +455,98 @@ def main() -> None:
             config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
             int(config["selected_action_count"]),
         )
+        if horizon_quantile_confirmation:
+            frozen_horizon = torch.load(
+                args.runs_root / config["frozen_horizon_certificate"]["run"] / config["frozen_horizon_certificate"]["artifact"],
+                map_location="cuda",
+            )
+            feature_mean = np.asarray(frozen_horizon["input_mean"], np.float32)
+            feature_scale = np.asarray(frozen_horizon["input_scale"], np.float32)
+            p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+            quantiles = np.asarray(frozen_horizon["quantile_levels"], np.float32)
+            horizon_values = np.asarray(frozen_horizon["horizons_seconds"], np.float32)
+            normalized_horizons = horizon_values / float(horizon_values.max())
+            offsets = np.asarray(frozen_horizon["calibration_offsets"], np.float32)
+            model = HorizonMonotoneQuantileHead(
+                int(frozen_horizon["input_width"]), frozen_horizon["hidden_dimensions"]
+            ).cuda()
+            model.load_state_dict(frozen_horizon["model_state_dict"])
+            model.eval()
+            heldout_horizon_index = int(config["heldout_horizon_index"])
+            with torch.no_grad():
+                p201_x = torch.from_numpy(p201_feature).cuda()
+                h = torch.full((len(p201_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
+                prediction = model(p201_x, h).cpu().numpy()
+            prediction = np.maximum.accumulate(prediction + offsets[None], axis=1)
+            local_target = p201_target[:, heldout_horizon_index]
+            coverage = np.mean(local_target[:, None] <= prediction, axis=0)
+            error = local_target[:, None] - prediction
+            pinball = np.maximum(quantiles[None] * error, (quantiles[None] - 1) * error)
+            by_condition = {}
+            for progress, command in np.unique(p201_conditions, axis=0):
+                local = np.isclose(p201_conditions[:, 0], progress) & np.isclose(p201_conditions[:, 1], command)
+                by_condition[f"progress={float(progress)},command={float(command)}"] = {
+                    "example_count": int(local.sum()),
+                    "empirical_coverages": [float(value) for value in np.mean(local_target[local, None] <= prediction[local], axis=0)],
+                    "median_absolute_log_cost_error": float(np.mean(np.abs(prediction[local, 0] - local_target[local]))),
+                }
+            p201_metrics = {
+                "example_count": int(len(local_target)),
+                "horizon_seconds": float(horizon_values[heldout_horizon_index]),
+                "quantile_levels": [float(value) for value in quantiles],
+                "empirical_coverages": [float(value) for value in coverage],
+                "maximum_quantile_undercoverage": float(np.max(quantiles - coverage)),
+                "median_absolute_log_cost_error": float(np.mean(np.abs(prediction[:, 0] - local_target))),
+                "mean_pinball_loss": float(np.mean(pinball)),
+                "mean_q95_minus_q50_width": float(np.mean(prediction[:, 2] - prediction[:, 0])),
+                "by_task_condition": by_condition,
+            }
+            with torch.no_grad():
+                all_predictions = []
+                for horizon_value in normalized_horizons:
+                    h = torch.full((len(p201_x),), float(horizon_value), device="cuda")
+                    local_prediction = model(p201_x, h).cpu().numpy() + offsets[None]
+                    all_predictions.append(np.maximum.accumulate(local_prediction, axis=1))
+            all_predictions = np.stack(all_predictions, axis=1)
+            horizon_violations = int(np.sum(np.diff(all_predictions, axis=1) < -1e-8))
+            quantile_violations = int(np.sum(np.diff(all_predictions, axis=2) < -1e-8))
+            p201_metrics["horizon_monotonicity_violations"] = horizon_violations
+            p201_metrics["quantile_order_violations"] = quantile_violations
+            decision = config["decision"]
+            checks = {
+                "P201_heldout_horizon_quantile_coverage": p201_metrics["maximum_quantile_undercoverage"] <= float(decision["maximum_P201_quantile_undercoverage"]),
+                "P201_heldout_horizon_median_fidelity": p201_metrics["median_absolute_log_cost_error"] <= float(decision["maximum_P201_median_absolute_log_cost_error"]),
+                "P201_horizon_quantile_monotonicity": horizon_violations <= int(decision["maximum_P201_horizon_monotonicity_violations"]) and quantile_violations == 0,
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                **frozen_horizon,
+                "frozen_horizon_certificate": config["frozen_horizon_certificate"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {"row_count": 0, "horizon_example_count": 0, "steps": 0},
+                "calibration": {"horizon_example_count": 0, "additive_offsets": [float(value) for value in offsets], "reused_from": config["frozen_horizon_certificate"]},
+                "source_heldout_horizon_development": None,
+                "P201_heldout_task_and_horizon_development": p201_metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
         split = config["split"]
         modulus = int(split["scene_modulus"])
         calibration = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
