@@ -373,9 +373,24 @@
   3/3 supported；未触发F207；最严格ceiling选择0，记录为预期abstention边界而非failure；
 - P318 result：P317全链在P243上0-step确认，mean/highest coverage=`.31257/.67719`、max unsafe=`.02332`、
   monotonicity violations=0，3/3 supported；未触发F207，不再增加同family confirmation；
-- P319 active：冻结13-task candidate set做minimum-deviation authority projection；失败才登记F207，不训练、
-  调candidate/ceiling/distance weight/gate或在P201 refit；
-- 下一可用 failure id 为 `V67-F207`。
+- P319 result：13-task minimum-deviation projection的risk/monotonicity通过，但mean coverage gain=
+  `.05847 < .10`，1/3失败，登记F207；严格ceiling仍无feasible task，不降门/删ceiling/扩task grid；
+- P320 active：保持requested task，训练全部15个top-2 action pairs的bounded residual safety editor；失败才登记
+  F208，不改pair/ceiling/gate/capacity/seed或在P201 refit/calibrate；
+- 下一可用 failure id 为 `V67-F208`。
+
+### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
+
+- canonical=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
+  20260901T061500Z__minimal-task-projection-authority-s0-r1`；
+- symptom：13个task-conditioned sets中按P317 score做最小task偏移，P201 mean projected/exact coverage=
+  `.31913/.26066`，gain=`.05847 < .10`；strict ceiling两者均0，coverage-gain gate失败；
+- retained evidence：max unsafe projected rate=`.04444`、monotonicity violations=0；中/高ceiling gain=
+  `.06557/.10984`，说明projection机制有效，但可行集对象太窄；
+- literature check/migration：OptNet action projection与NeurIPS 2022 Safety Editor均把编辑施加于action而非只改上层task；
+  P320据此保持task不变，枚举六动作的15个top-2 pairs并训练pair-level editor；
+- forbidden rescue：不降`.10` gate、不删除strict ceiling、不增加task grid、不在P201训练或校准；
+- resolution status：`open via P320 action-pair editor`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

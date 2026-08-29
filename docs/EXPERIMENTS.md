@@ -713,8 +713,25 @@
   当前不是连续action、learned editor、hard safety layer或closed-loop policy。
 - gates：P201 max unsafe projected authority `<=.15`、mean coverage gain vs exact request `>=.10`、ceiling
   monotonicity violations=0；不扫candidate/ceiling/distance weight/gate。
-- active=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
+- canonical=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
   20260901T061500Z__minimal-task-projection-authority-s0-r1`。
+- result：mean projected/exact coverage=`.31913/.26066`，mean gain=`.05847 < .10`；max unsafe=`.04444`、
+  monotonicity violations=0，2/3，verdict=`rejected_minimal_task_projection_selective_authority`。严格ceiling
+  coverage/gain=`0/0`；中ceiling projected/exact=`.14754/.08197`、unsafe=`.04444`、mean task deviation=
+  `.28286`；高ceiling=`.80984/.70000`、unsafe=`.01923`、deviation=`.07200`。wall=`18.05s`。
+- disposition：登记`V67-F207`；不降`.10` gate、不删除严格ceiling、不扩task grid。改为task-preserving的15-pair
+  action-set editor，并实际训练pair risk head。
+
+### WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01
+
+- object：requested progress/lateral不变；在六条frozen actions的全部15个top-2 pairs中，授权风险可控且P313
+  utility最优的pair。原P313 pair只是baseline，editor可做最小set edit。
+- training：source endpoint tasks×15 pairs，P317 selective score为base，`[128,64]` bounded `.75` residual，6k
+  steps；一个source q90 nonnegative margin。P201只看heldout tasks/ceilings，不refit。
+- gates：max unsafe edited-pair rate `<=.15`、mean coverage gain vs nominal P317 pair `>=.10`、ceiling
+  monotonicity violations=0；不扫pair/ceiling/gate/capacity/seed。
+- active=`run://worldsim_v67/WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/
+  20260901T063000Z__action-pair-safety-editor-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

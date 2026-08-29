@@ -399,12 +399,19 @@ coverage=`.31257/.67719`（q95 baseline `.11754/.35263`），max/mean unsafe=`.0
 monotonicity violations=0，3/3 supported；中ceiling coverage=`.26053`、unsafe=`.01684`，high ceiling unsafe=
 `.02332`；wall=`2.19s`。不再增加同family确认cohort。
 
-P319针对严格请求只能abstain的能力边界，迁移OptNet/NeurIPS 2022 Safety Editor的“最小偏移可行替代”思想，但先做
-冻结离散projection读数：每个请求在9个endpoint tasks+4个heldout tasks共13个task-conditioned top-2 sets中，
-只看P317 authority score，选择满足ceiling且离请求progress/lateral最近的set；无可行candidate才abstain。
-P201三门为projected unsafe `<=.15`、mean authority coverage gain `>=.10`、ceiling monotonicity=0；不训练/
-调candidate或权重。Active=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
-20260901T061500Z__minimal-task-projection-authority-s0-r1`。
+P319将请求投影到13个冻结task-conditioned sets。Canonical=`run://worldsim_v67/
+WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
+20260901T061500Z__minimal-task-projection-authority-s0-r1`：risk/monotonicity通过，但mean coverage gain=
+`.05847 < .10`，1/3失败，登记`V67-F207`。严格ceiling仍0 feasible；中/高ceiling gain=`.06557/.10984`、
+unsafe=`.04444/.01923`，说明projection可用但“只换task、不换action pair”不能关闭严格authority空集。不得降门/
+删除严格ceiling或增加task grid做rescue。
+
+P320把编辑对象改为保持requested task不变、在同组六条actions的全部15个top-2 pairs中重选授权pair；迁移OptNet
+constraint layer与NeurIPS 2022 Safety Editor的最小编辑对象，但只作经验离散editor。以P317 score为base，source
+endpoint tasks×15 pairs训练单个bounded residual risk head，source calibration加一个nonnegative q90 margin；正式
+P201仍看原四个heldout tasks与P317三条ceilings，选择feasible pairs中P313 utility最优者。三门保持unsafe
+`<=.15`、mean coverage gain `>=.10`、monotonicity=0。Active=`run://worldsim_v67/
+WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/20260901T063000Z__action-pair-safety-editor-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
