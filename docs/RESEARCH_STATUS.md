@@ -562,6 +562,11 @@ P159按F121唯一合法proper-score递进启动joint multivariate Energy Score�
 P126 shared architecture/normalization/member count/total-variance query不变；6,000 joint steps正在3090执行。旧四cohort仍承担
 development decisions，P147仍仅post-confirmation描述；不扫Energy/Variogram混合、采样数、权重或score。
 
+P159 6,000 joint steps完成，final Energy Score=`.21205`。P81/P96/P113/P129 rank gain=
+`-.05038/-.06877/-.02356/-.02733`（mean=`-.04251`），selected cost全部回退，F122。P147 post-confirmation只在
+`.8/1.5s` cost微降，2.5s以上仍回退；三H rank也非全正。由此joint multivariate score未恢复P158，proper-score训练family
+关闭，不做Energy/Variogram/CRPS混合。下一研究变量转到frozen P126 predictive distributions的聚合，而非继续改loss。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

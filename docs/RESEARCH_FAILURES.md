@@ -1995,7 +1995,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：P81/P96/P113/P129相对P126 cost全不退、mean rank gain≥`.005`；P147仍post-confirmation descriptive。
 - prevention：不扫Energy/Variogram混合、sample count、weight、architecture/member/seed/score/coverage；失败才使用F122。
 
-下一可用编号为：`V67-F122`。
+### V67-F122 — joint Energy Score进一步放大旧cohort排序退化
+
+- 分类：`algorithm/joint-ensemble-proper-score-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P159-JOINT-ENERGY-SCORE-ACTOR-ENSEMBLE-01/
+  20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1`。
+- 观察：旧四cohort cost全退，rank mean=`-.042511`；P147只有`.8/1.5s` cost微降，中长H继续回退。
+- 解释：joint multivariate sample distance没有转化为boundary-tail fixed50 authority，且比marginal CRPS在旧cohort退化更大；
+  问题不再归因于“CRPS缺少ensemble dependence”。
+- 防重复：关闭proper-score training family；不做Energy/Variogram混合、更多samples或NLL+CRPS权重扫。下一步只改frozen P126
+  distribution aggregation，不重训同一architecture/loss family。
+
+下一可用编号为：`V67-F123`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

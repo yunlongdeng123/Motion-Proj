@@ -967,12 +967,17 @@
 
 ### WS-V67-P159-JOINT-ENERGY-SCORE-ACTOR-ENSEMBLE-01
 
-- 状态：`running joint GPU training`；canonical=`20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1`。
+- 状态：`done/rejected consumed development`；canonical=`20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1`。
 - hypothesis：P158 marginal CRPS不表达维间/ensemble-level dependence；P159联合训练三个shared Actor Gaussian members，
   以两组独立reparameterized samples估计multivariate Energy Score。
 - training：916,722 source tokens、3 members simultaneous、6,000 joint steps、batch65,536；当前约1.2GiB GPU memory。
 - decisions：P81/P96/P113/P129相对P126 selected cost全不退且mean Spearman gain≥`.005`；P147五H仅post-confirmation描述。
 - locks：P126 architecture/normalization/member/total-variance score/fixed50/cost不变；不扫sample count、Energy/Variogram mix或权重。
+- result：final joint Energy Score=`.21205`；P81/P96/P113/P129 selected cost=
+  `.18990/.18015/.25386/.39845`，相对P126全退；rank gain=`-.05038/-.06877/-.02356/-.02733`，mean=`-.04251`，
+  0/2 decisions，verdict=`rejected_development_joint_energy_score_actor_ensemble`，wall=`84.03s`、peak GPU=`.769 GiB`；F122。
+- P147 diagnostic：cost delta=`-.00029/-.00221/+.00805/+.00703/+.04861`；rank gain=
+  `+.03573/+.01404/-.00169/-.00109/+.00961`。仍只有短H operating point微改善；proper-score training family关闭。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
