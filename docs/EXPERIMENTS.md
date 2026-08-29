@@ -2042,7 +2042,22 @@
   直接迁移该目标，以冻结P246 probability L1作为唯一训练loss；
 - protocol：P248/P249的data、levels、positive-rate inverse structure、12k/batch8192、seed0与P201两门全部不变；
   不扫budget/cycle weight、architecture或训练长度；
-- active canonical：`run://worldsim_v67/WS-V67-P251-DIRECT-TANDEM-INVERSE-BUDGET-01/20260831T083000Z__direct-tandem-inverse-budget-s0-r1`。
+- canonical：`run://worldsim_v67/WS-V67-P251-DIRECT-TANDEM-INVERSE-BUDGET-01/20260831T083000Z__direct-tandem-inverse-budget-s0-r1`；
+- result：P201 inverse/final inverse MAE=`.020305/.013980`，budget门通过；重构probability MAE=`.018065>.015`；
+  source/P183重构=`.016283/.016624`；violations=`0/0`；
+- resources/verdict：wall=`257.22s`、peak GPU=`.140GiB`；`rejected_direct_tandem_inverse_reliability_budget_compiler`，
+  F189，inverse student family关闭。
+
+### WS-V67-P252-MARGINAL-RELIABILITY-ELASTICITY-01
+
+- object：不再预测minimum budget；给定trajectory context、budget与四个horizon，输出冻结P246的非负
+  log-budget marginal reliability `dP/dz`，作为后续预算分配的value signal；
+- literature response：NeurIPS 2020 marginal-utility planning直接用额外候选带来的边际价值；ICML 2023 constrained
+  monotone networks说明可对单调价值函数施加结构。P252利用P246已有单调总价值并蒸馏其解析导数，不重学inverse；
+- protocol：41个source train budgets、八个geometric heldout midpoints；37→128→128→4 softplus head、L1、12k、
+  batch8192、seed0；P201单次两门：elasticity MAE≤`.020`、32个budget×horizon query内trajectory Spearman均值≥`.80`；
+- active canonical：`run://worldsim_v67/WS-V67-P252-MARGINAL-RELIABILITY-ELASTICITY-01/20260831T090000Z__marginal-reliability-elasticity-s0-r1`；
+  仅是冻结P246 teacher distillation，不是measured compute/allocation/planning claim。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 

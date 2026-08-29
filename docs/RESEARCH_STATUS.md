@@ -1057,7 +1057,10 @@ inverse networks后，P249保留inverse-budget L1为primary，并通过冻结P24
 cycle gradient并按primary gradient norm匹配，不新增人工loss-weight。P249的P201 probability MAE仅改善至`.018257`，
 budget门通过但response门仍失败，F188；12k步仅155次冲突，表明PCGrad不是关键。经典tandem实现直接只优化冻结forward
 response，因此P251移除budget loss与PCGrad，以冻结P246 probability L1作唯一训练目标；其他合同不变，RTX 3090训练中，
-P243 archive IO继续并发。
+P243 archive IO继续并发。P251仍只把P201 probability MAE降至`.018065`，第二门失败、F189；inverse student在三种
+loss语义下都停在约`.018`，该family关闭。P252改变对象为P246解析的log-budget marginal reliability elasticity，
+训练非负37→128→128→4 head直接蒸馏`dP/dz`；P201只判elasticity MAE与逐budget/horizon的trajectory ranking，
+不声称真实算力、allocation或planning value。RTX 3090已接续训练。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

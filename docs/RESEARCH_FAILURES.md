@@ -2973,6 +2973,20 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F189`。
 
+### V67-F189 — direct tandem response-only训练仍停在相同误差带
+
+- canonical：`run://worldsim_v67/WS-V67-P251-DIRECT-TANDEM-INVERSE-BUDGET-01/20260831T083000Z__direct-tandem-inverse-budget-s0-r1`；
+- 观察：P201 inverse-budget MAE=`.020305`通过，但冻结P246重构probability MAE=`.018065>.015`；source/P183为
+  `.016283/.016624`；结构违规仍为`0/0`；
+- 解释：相对P249只改善`.000192`，且P248 budget-only、P249 mixed、P251 response-only三种语义都收敛在约`.018`；
+  这不再支持继续扫描loss或优化器，瓶颈更像当前单一amortized inverse representation；
+- literature response：marginal-utility planning把资源决策表达为增加一单位资源的value，不要求显式神经inverse；
+  单调网络则允许从已冻结的monotone forward value取得结构一致的非负导数；
+- response：关闭inverse student family；P252改为蒸馏冻结P246解析`dP/dlog-budget`的非负elasticity head；
+- 防重复：不再试inverse width/knot/level/step/loss/weight/optimizer或warm-start；P250仅完成此前冻结的same-read报告。
+
+下一可用编号：`V67-F190`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；
