@@ -2195,8 +2195,19 @@
   attainable budget fraction；冻结P262负责per-trajectory budget allocation，P246计算scalarized utility；
 - protocol：P260的64-row groups、九/八fractions、20-step bisection、128/16 monotone dual、12k/batch8192/seed0；
   P262的五/四alpha与五/四horizon preferences原样交叉；P201 fraction MAE≤`.030`、regret≤`.002`；
-- active canonical：`run://worldsim_v67/WS-V67-P263-TASK-HORIZON-GROUP-DUAL-01/20260831T124500Z__task-horizon-group-dual-s0-r1`；
-  不扫preference scale、group、grid、architecture或gate。
+- canonical：`run://worldsim_v67/WS-V67-P263-TASK-HORIZON-GROUP-DUAL-01/20260831T124500Z__task-horizon-group-dual-s0-r1`；
+- result：P201 price/fraction MAE=`.033777/.016964`、frozen task-alpha Lagrangian regret=
+  `-.00000144`、violations=0，2/2；source fraction/regret=`.016394/.00001083`，P183=`.019753/.00001576`；
+- resources/verdict：wall=`107.17s`、peak GPU=`.140GiB`；`supported_task_horizon_group_dual_compiler`。
+
+### WS-V67-P264-VARIABLE-SET-TASK-HORIZON-DUAL-01
+
+- object：把P261 variable-set cardinality interpolation与P263 task-horizon/alpha preference dual合并；一个
+  permutation-invariant compiler同时接收unordered group、cardinality、alpha、horizon preference与fraction；
+- protocol：train sizes=`32/64/128`、heldout=`48/96`；其余alpha/preference/fraction teacher与两门完全沿用P263；
+  Deep Sets mean/std/max pooling、64/128 widths、12k/batch512/seed0一次锁定；
+- active canonical：`run://worldsim_v67/WS-V67-P264-VARIABLE-SET-TASK-HORIZON-DUAL-01/20260831T130000Z__variable-set-task-horizon-dual-s0-r1`；
+  不引入attention、size/preference/grid或gate sweep。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 
