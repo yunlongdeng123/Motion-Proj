@@ -1,0 +1,43 @@
+schema_version: worldsim_v67.p275_epistemic_lcb_surface.v1
+output_schema_version: worldsim_v67.p275_epistemic_lcb_surface_summary.v1
+task_id: WS-V67-P275-EPISTEMIC-LCB-SURFACE-01
+hypothesis_id: WS-V67-H-P275-001
+role: epistemic_aversion_conditioned_monotone_lower_confidence_surface_development
+seed: 0
+model_artifact: EPISTEMIC_LCB_SURFACE.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+fresh_rows: {run: worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2, artifact: P243_CONTINUOUS_BUDGET_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p274: {run: worldsim_v67/WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/20260831T164500Z__bootstrap-surface-ensemble-s0-r1, artifact: BOOTSTRAP_SURFACE_ENSEMBLE.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+training_budget_domain: [0.025, 6.40]
+training_budget_count: 41
+training_budget_offset: 0.37
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+heldout_anchor_budgets: [0.025, 0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20, 6.40]
+epistemic_beta_domain: [0.0, 2.0]
+training_epistemic_betas: [0.0, 0.5, 1.0, 1.5, 2.0]
+heldout_epistemic_betas: [0.25, 0.75, 1.25, 1.75]
+inference_chunk_size: 8192
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {context_width: 128, budget_rate_knot_count: 16, beta_rate_knot_count: 8, steps: 12000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_surface_LCB_teacher_probability_MAE: 0.018, maximum_P201_final_curve_LCB_teacher_probability_MAE: 0.012}
+verdict_on_pass: supported_epistemic_aversion_conditioned_monotone_LCB_surface
+verdict_on_failure: rejected_epistemic_aversion_conditioned_monotone_LCB_surface
+locks:
+  frozen_P274_mean_minus_beta_times_std_defines_the_only_LCB_teacher: true
+  beta_train_0_to_2_and_four_heldout_midpoints_are_fixed: true
+  analytic_budget_horizon_and_beta_monotonicity_are_structural: true
+  no_beta_member_count_width_depth_knot_budget_metric_gate_or_step_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_LCB_surrogate_development_after_P201_observation_not_fresh_confirmation
+  - gaussian_style_mean_minus_beta_std_score_not_a_calibrated_credible_interval_or_coverage_guarantee
+  - P243_was_consumed_before_P275_and_is_descriptive_only
+  - no_collision_planner_policy_closed_loop_or_safety_claim
