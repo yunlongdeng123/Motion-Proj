@@ -446,6 +446,10 @@
 - P361：pairwise one-sided reliability active；
 - 下一可用 failure id 为 `V67-F236`。
 
+P361 r1 operational note（不占用新failure id）：当前PyTorch无`torch.flatnonzero`，故在step1 loss反传前退出，
+无checkpoint、PAV或P201 scientific read。官方API确认以`torch.nonzero(..., as_tuple=False).flatten()`返回等价1-D
+索引；r2只做该兼容修复，全部冻结参数不变。下一可用failure id仍为`V67-F236`。
+
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
 - canonical=`run://worldsim_v67/WS-V67-P340-DECISION-FOCUSED-DIFFERENTIABLE-AUTHORITY-01/

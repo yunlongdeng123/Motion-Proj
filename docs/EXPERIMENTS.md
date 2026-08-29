@@ -1388,6 +1388,8 @@
 - method：每step固定一个horizon/ceiling并采512 source rows；三个set-size各采256个unsafe--safe pairs，加入
   `softplus(-(unsafe_logit-safe_logit))`，权重固定1；P360 weighted BCE、horizon-group calibration/PAV保持。
 - locks：不扫pair count/loss weight/margin/batch/head/threshold/seed，P201不训练/校准；状态=`active`。
+- operational recovery：r1在首个loss计算前因当前PyTorch不提供`torch.flatnonzero`退出；未完成step、未做PAV或
+  P201 read。按官方`torch.nonzero(as_tuple=False)`接口作等价一行修复，r2参数与科学合同不变。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

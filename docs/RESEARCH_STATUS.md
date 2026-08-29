@@ -719,7 +719,8 @@ Canonical=`run://worldsim_v67/WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/
 
 P361按COLT 2013 AUC pairwise reduction与NeurIPS 2025 selective gap的ranking-error分解，在P360 loss上加入固定权重1的
 RankNet logistic pairwise loss：同一horizon/ceiling batch内显式要求unsafe score高于safe score，每个set-size采256对，
-同时保留one-sided proper-loss anchor与无权重校准。当前进入GPU训练。
+同时保留one-sided proper-loss anchor与无权重校准。r1在step1前因当前PyTorch无`torch.flatnonzero`退出，0科学结果；
+按官方API等价改为`torch.nonzero(...).flatten()`，同一冻结合同以r2进入GPU训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

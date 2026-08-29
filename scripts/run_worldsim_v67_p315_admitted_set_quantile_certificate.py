@@ -1286,8 +1286,8 @@ def main() -> None:
                 if pairwise_ranking_weight > 0.0:
                     ranking_terms = []
                     for set_size_index in range(len(set_sizes)):
-                        positive = torch.flatnonzero(target[:, set_size_index] > 0.5)
-                        negative = torch.flatnonzero(target[:, set_size_index] <= 0.5)
+                        positive = torch.nonzero(target[:, set_size_index] > 0.5, as_tuple=False).flatten()
+                        negative = torch.nonzero(target[:, set_size_index] <= 0.5, as_tuple=False).flatten()
                         if len(positive) and len(negative):
                             positive_row = positive[
                                 torch.randint(len(positive), (pairwise_pairs_per_set,), device="cuda")
