@@ -179,14 +179,18 @@
 - P290 仅是 additive-family untouched reuse；P277 cohort 已被旧 beta-LCB P277 消费，不记为全项目 fresh；
 - 下一可用 failure id 保持 `V67-F198`。
 
-### P291 context-adaptive residual quantile start note — 无新增 failure
+### V67-F198 — P291 symmetric L1 student破坏 adaptive teacher coverage
 
-- P291 不是对 P284 threshold/offset 扫参；唯一结构变化是以 non-calibration scenes 训练条件 quantile，再由固定
-  calibration scenes 对 residual 做一次 global correction；
-- P284 两门原样继承，另预注册 mean conservatism 必须严格低于 P284 `.0172214098`，避免只用 coverage掩盖无效增益；
-- scene correlation 与 trajectory-budget flattening 不满足标准 exchangeability，因此即使通过也只写 empirical
-  adaptive LCB，不写 finite-sample/exact conditional guarantee；
-- 下一可用 failure id 保持 `V67-F198`。
+- canonical=`run://worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/
+  20260831T214500Z__context-adaptive-additive-lcb-s0-r1`；
+- symptom：teacher P201 coverage=`.92829/.84311/.73917/.65513` 接近 desired `.925/.85/.75/.65`，但 symmetric L1
+  student coverage=`.79963/.73361/.67050/.59656`，max undercoverage=`.125366>.12`；fidelity 与 efficiency 两门通过，
+  coverage门失败；
+- root cause：MAE=`.0042137` 很小但未限制误差方向，LCB student 小幅系统上偏会被 simultaneous-horizon coverage
+  放大；这与 NeurIPS 2023 报告的 distillation confidence exaggeration 一致；
+- closed candidate：不再继续 symmetric L1、step/width/lr/threshold 扫描；P292 不得引用 rejected P291；
+- structural recovery：P291R 冻结全部 adaptive teacher与三门，仅用 fixed lower-quartile pinball 做单侧蒸馏；
+- 下一可用 failure id 为 `V67-F199`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

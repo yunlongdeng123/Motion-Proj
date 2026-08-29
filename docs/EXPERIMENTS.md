@@ -294,8 +294,22 @@
   P201/P243 cohorts、12k quantile + 12k surface steps；不扫 split/network/loss/steps/gates。
 - gates：P201 adaptive-teacher MAE `<=.018`、max simultaneous-horizon undercoverage `<=.12`、mean conservatism
   `< P284 .0172214098`；前两门继承 P284，第三门直接检验新研究增益。
-- active=`run://worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/
+- canonical=`run://worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/
   20260831T214500Z__context-adaptive-additive-lcb-s0-r1`。
+- result：adaptive teacher P201 coverage=`.92829/.84311/.73917/.65513`，说明条件 quantile + global correction
+  本身接近目标；L1 student MAE=`.0042137`、mean conservatism=`.0117235 < P284 .0172214`，但 student coverage=
+  `.79963/.73361/.67050/.59656`、max undercoverage=`.125366>.12`；2/3，verdict=
+  `rejected_context_adaptive_additive_residual_LCB_surface`，failure=`V67-F198`，wall=`216.12s`、peak GPU/RSS=
+  `.1404/1.9340GiB`。
+
+### WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01
+
+- root cause：P291 teacher coverage 已接近目标，coverage 损失发生在 L1 student；与 NeurIPS 2023 关于 distillation
+  student 系统性夸大 teacher confidence 的观察一致。
+- structural recovery：冻结 P291 quantile model、adaptive offsets、global corrections、scene split 与 student warm start；
+  唯一改变为 lower-quartile pinball student loss，对 `student > conservative teacher` 施加 3:1 权重。
+- fixed run：`output_quantile=.25`、6k steps、lr `.0005`；P291 三门原样继承，不扫 quantile/lr/steps/gates。
+- 仅当 P291R 通过，才把原 staged P292 teacher 引用更新到 P291R 并启动 allocator。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

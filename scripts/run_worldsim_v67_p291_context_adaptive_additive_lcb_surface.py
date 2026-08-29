@@ -201,41 +201,49 @@ def main():
     tolerance_z = torch.from_numpy((2 * (tolerances - tolerance_domain[0]) / (tolerance_domain[1] - tolerance_domain[0]) - 1).astype(np.float32)).cuda()
     quantile_config = config["quantile_model"]
     quantile_model = ContextAdaptiveResidualQuantile(int(quantile_config["width"])).cuda()
-    quantile_optimizer = torch.optim.AdamW(
-        quantile_model.parameters(), lr=float(quantile_config["learning_rate"]), weight_decay=float(quantile_config["weight_decay"])
-    )
+    frozen_adaptive = None
+    if "frozen_adaptive_artifact" in config:
+        reference = config["frozen_adaptive_artifact"]
+        frozen_adaptive = torch.load(args.runs_root / reference["run"] / reference["artifact"], map_location="cuda")
+        quantile_model.load_state_dict(frozen_adaptive["quantile_model_state_dict"])
     quantile_loss = 0.0
-    for step in range(int(quantile_config["steps"])):
-        row = torch.randint(len(fit_x), (int(quantile_config["batch_size"]),), device="cuda")
-        budget_index = torch.randint(len(training_budgets), (len(row),), device="cuda")
-        tolerance_index = torch.randint(len(tolerances), (len(row),), device="cuda")
-        prediction = quantile_model(fit_x[row], budget_tensor[budget_index], tolerance_z[tolerance_index])
-        error = fit_y[row, budget_index] - prediction
-        level = 1 - torch.from_numpy(tolerances).cuda()[tolerance_index]
-        loss = torch.maximum(level * error, (level - 1) * error).mean()
-        quantile_optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        quantile_optimizer.step()
-        quantile_loss = float(loss.detach())
-        if step % 500 == 0:
-            print(f"P291 adaptive residual quantile step={step + 1} pinball={quantile_loss:.7f}", flush=True)
-
-    calibration_prediction_train = _quantile_grid(
-        quantile_model, source_feature[calibration], training_budgets, tolerances,
-        budget_mean, budget_scale, tolerance_domain, chunk,
-    )
-    training_corrections = np.asarray([
-        _finite_quantile(calibration_scores - calibration_prediction_train[:, di], delta)
-        for di, delta in enumerate(tolerances)
-    ], np.float32)
-    calibration_prediction_heldout = _quantile_grid(
-        quantile_model, source_feature[calibration], training_budgets, heldout_tolerances,
-        budget_mean, budget_scale, tolerance_domain, chunk,
-    )
-    heldout_corrections = np.asarray([
-        _finite_quantile(calibration_scores - calibration_prediction_heldout[:, di], delta)
-        for di, delta in enumerate(heldout_tolerances)
-    ], np.float32)
+    if frozen_adaptive is None:
+        quantile_optimizer = torch.optim.AdamW(
+            quantile_model.parameters(), lr=float(quantile_config["learning_rate"]), weight_decay=float(quantile_config["weight_decay"])
+        )
+        for step in range(int(quantile_config["steps"])):
+            row = torch.randint(len(fit_x), (int(quantile_config["batch_size"]),), device="cuda")
+            budget_index = torch.randint(len(training_budgets), (len(row),), device="cuda")
+            tolerance_index = torch.randint(len(tolerances), (len(row),), device="cuda")
+            prediction = quantile_model(fit_x[row], budget_tensor[budget_index], tolerance_z[tolerance_index])
+            error = fit_y[row, budget_index] - prediction
+            level = 1 - torch.from_numpy(tolerances).cuda()[tolerance_index]
+            loss = torch.maximum(level * error, (level - 1) * error).mean()
+            quantile_optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            quantile_optimizer.step()
+            quantile_loss = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P291 adaptive residual quantile step={step + 1} pinball={quantile_loss:.7f}", flush=True)
+        calibration_prediction_train = _quantile_grid(
+            quantile_model, source_feature[calibration], training_budgets, tolerances,
+            budget_mean, budget_scale, tolerance_domain, chunk,
+        )
+        training_corrections = np.asarray([
+            _finite_quantile(calibration_scores - calibration_prediction_train[:, di], delta)
+            for di, delta in enumerate(tolerances)
+        ], np.float32)
+        calibration_prediction_heldout = _quantile_grid(
+            quantile_model, source_feature[calibration], training_budgets, heldout_tolerances,
+            budget_mean, budget_scale, tolerance_domain, chunk,
+        )
+        heldout_corrections = np.asarray([
+            _finite_quantile(calibration_scores - calibration_prediction_heldout[:, di], delta)
+            for di, delta in enumerate(heldout_tolerances)
+        ], np.float32)
+    else:
+        training_corrections = np.asarray(frozen_adaptive["training_corrections"], np.float32)
+        heldout_corrections = np.asarray(frozen_adaptive["heldout_corrections"], np.float32)
     source_quantiles = _quantile_grid(
         quantile_model, source_feature, training_budgets, tolerances,
         budget_mean, budget_scale, tolerance_domain, chunk,
@@ -247,7 +255,9 @@ def main():
     student = ConformalizedLCBSurface(
         int(student_config["context_width"]), int(student_config["budget_rate_knot_count"]), int(student_config["tolerance_rate_knot_count"])
     ).cuda()
-    warm = torch.load(args.runs_root / config["frozen_p284"]["run"] / config["frozen_p284"]["artifact"], map_location="cuda")
+    warm = frozen_adaptive
+    if warm is None:
+        warm = torch.load(args.runs_root / config["frozen_p284"]["run"] / config["frozen_p284"]["artifact"], map_location="cuda")
     student.load_state_dict(warm["model_state_dict"])
     optimizer = torch.optim.AdamW(student.parameters(), lr=float(student_config["learning_rate"]), weight_decay=float(student_config["weight_decay"]))
     x = torch.from_numpy(source_feature).cuda()
@@ -258,7 +268,14 @@ def main():
         row = fit_index[torch.randint(len(fit_index), (int(student_config["batch_size"]),), device="cuda")]
         budget_index = torch.randint(len(training_budgets), (len(row),), device="cuda")
         tolerance_index = torch.randint(len(tolerances), (len(row),), device="cuda")
-        loss = F.l1_loss(student(x[row], budget_tensor[budget_index], tolerance_z[tolerance_index]), y[row, tolerance_index, :, budget_index])
+        prediction = student(x[row], budget_tensor[budget_index], tolerance_z[tolerance_index])
+        target_batch = y[row, tolerance_index, :, budget_index]
+        if "output_quantile" in student_config:
+            error = target_batch - prediction
+            level = float(student_config["output_quantile"])
+            loss = torch.maximum(level * error, (level - 1) * error).mean()
+        else:
+            loss = F.l1_loss(prediction, target_batch)
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
@@ -302,7 +319,7 @@ def main():
         "status": "done",
         "verdict": verdict,
         "role": config["role"],
-        "method": "context_quantile_regression_plus_scene_split_global_residual_correction",
+        "method": config.get("method", "context_quantile_regression_plus_scene_split_global_residual_correction"),
         "calibration": {
             "trajectory_count": int(calibration.sum()),
             "score_count": int(calibration_scores.size),
