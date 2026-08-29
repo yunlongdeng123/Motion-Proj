@@ -387,8 +387,11 @@
   不再增加同family confirmation；
 - P324 result：P322 q95 base上训练task×H×ceiling selective authority；P201 risk/monotonicity通过，但mean
   coverage=`.19836 < .20`，以`.00164`未过，登记F211；不舍入通过、不降门、不在P201 recalibrate；
-- P325 active：冻结P324 raw score，改用source-only task/H-conditioned nonconformity scale加单个normalized q90；
-  失败才登记F212，不扫architecture/quantile/gate/seed；
+- P325 result：normalized q90 time-varying scale使P201 coverage=`.21831`、max unsafe=`.08333`、
+  monotonicity=0，3/3 supported，F211关闭；source strict仅20 admissions且unsafe=`.55`作为限制保留，
+  不事后新增gate；
+- P326 active：risk tolerance `.15`直接定义continuous-H q85 decision boundary；失败才登记F212，不扫
+  quantile/architecture/gate/seed；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
@@ -454,7 +457,8 @@
   quantile adjustment均显式让不确定性校准随时间变化；P325据此学习source-only task/H-conditioned positive
   scale，再用source calibration冻结一个normalized q90阈值；仅作经验风险校准，不宣称formal guarantee；
 - forbidden rescue：不降低`.20`、不改q90、不删strict ceiling、不扫scale/gate/seed、不用P201训练或校准；
-- resolution status：`open via P325 time-varying horizon calibration`；下一可用failure id=`V67-F212`。
+- resolution status：`closed by P325 heldout task+H supported result`；P325 source strict低样本不稳定仍作为
+  claim boundary保留；下一可用failure id=`V67-F212`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

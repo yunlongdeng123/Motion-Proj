@@ -811,7 +811,24 @@
   nonconformity normalization/temporal quantile adjustment的结构思想，仍仅报告empirical calibration。
 - inherited：同一source/P201 rows、train H `.8/1.5/3.0s`、heldout H=`2.5s`、task endpoints/midpoints、
   ceilings及P201 gates `.15/.20/0`；不扫scale architecture/quantile/gate/seed，不在P201 fit。
-- active：训练实现与冻结run配置进入执行队列；P201只在source training/calibration完成后读取一次。
+- canonical=`run://worldsim_v67/WS-V67-P325-TIME-VARYING-HORIZON-CALIBRATED-AUTHORITY-01/
+  20260901T075500Z__time-varying-horizon-calibrated-authority-s0-r1`。
+- result：43,578 train examples、5k steps、final pinball=`.01040`；normalized q90=`1.50709`，source
+  calibration scale mean/range=`.15034/[.02124,.49961]`。P201 mean/highest coverage=`.21831/.62541`
+  （P324 global-margin baseline `.19836/.48115`）、max/mean unsafe=`.08333/.03433`、monotonicity=0，
+  3/3 supported；strict/mid/high coverage=`0/.02951/.62541`，unsafe=`0/.08333/.01966`。
+- retained limitation：source development mean/highest coverage=`.27948/.72228`，但strict ceiling仅20
+  admissions且unsafe=`.55`；不以事后gate改写P325 verdict。wall=`36.66s`、peak GPU=`.14039GiB`。
+
+### WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORITY-01
+
+- object：直接预测risk tolerance=`.15`对应的q85 visited-state log-cost boundary，score `<= ceiling`即授权；
+  continuous-H head以positive base+slope保证H单调。
+- training/calibration：source train tasks×H `.8/1.5/3.0s`做q85 pinball training；source calibration仅
+  冻结一个signed q85 residual offset；source/P201均以完全heldout H=`2.5s`读取。
+- inherited：P324固定三ceilings、P201 `.15/.20/0`三门与同一task split；q85由风险容忍度唯一决定，
+  不扫quantile/architecture/gate/seed，不依赖P201 fit。
+- active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

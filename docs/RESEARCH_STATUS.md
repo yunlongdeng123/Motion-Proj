@@ -447,10 +447,18 @@ source q90 margin=`.29441`。P201 mean/highest coverage=`.19836/.48115`（冻结
 `.20`少`.00164`，2/3，诚实判定rejected并登记`V67-F211`，不通过舍入、降门或P201再校准救援。
 
 P325迁移到time-varying horizon calibration：冻结P322/P324 raw score，用source train学习task/H-conditioned
-nonconformity scale、source calibration仅冻结一个normalized q90阈值，使margin随H变化；P201仍仅一次heldout
-task+H=`2.5s` read，继承`.15/.20/0`三门。该结构参考时变nonconformity normalization/temporal quantile
-adjustment，但只作经验风险校准，不宣称conformal guarantee。Active=`WS-V67-P325-TIME-VARYING-HORIZON-
-CALIBRATED-AUTHORITY-01`。
+positive scale，source calibration冻结normalized q90=`1.50709`。Canonical=`run://worldsim_v67/
+WS-V67-P325-TIME-VARYING-HORIZON-CALIBRATED-AUTHORITY-01/
+20260901T075500Z__time-varying-horizon-calibrated-authority-s0-r1`：43,578 examples、5k steps、final pinball=
+`.01040`；P201 mean/highest coverage=`.21831/.62541`（P324 `.19836/.48115`）、max/mean unsafe=
+`.08333/.03433`、monotonicity=0，3/3 supported。source development mean/highest coverage=`.27948/.72228`，
+但strict ceiling仅20 admissions且unsafe=`.55`；如实保留为低样本strict-region限制，不事后增加source gate。
+wall=`36.66s`。
+
+P326不再围绕q95 residual继续补丁：由risk tolerance=`.15`直接定义q85，训练continuous-H monotone risk-
+matched quantile boundary，source train H=`.8/1.5/3.0s`、source calibration单个q85 offset、source/P201
+heldout H=`2.5s`；继承P324 ceilings与`.15/.20/0`三门，不扫quantile/capacity/gate/seed。Active=
+`WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
