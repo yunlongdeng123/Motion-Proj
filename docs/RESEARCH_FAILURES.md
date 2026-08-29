@@ -358,6 +358,8 @@
 - P312 freeze：P311/P309/P307在P243 285个六动作组上0-step family-untouched确认；失败才登记F207，不refit、
   result reduction=`37.65%`、pairwise=`.87384`、full-progress `.8070→.9000→.9474`且violations=0，3/3
   supported；未触发F207；下一步进入二维task condition而非重复同轴确认；
+- P313 active：冻结P311/P309/P307，训练progress×continuous lateral command二维task condition；只读unseen midpoint
+  commands，两项quality与一项双轴responsiveness门；失败才登记F207，不扫command/weight/rate/width/loss；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

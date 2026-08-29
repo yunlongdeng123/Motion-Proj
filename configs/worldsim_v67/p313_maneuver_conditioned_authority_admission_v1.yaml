@@ -1,0 +1,62 @@
+schema_version: worldsim_v67.p313_maneuver_conditioned_authority_admission.v1
+output_schema_version: worldsim_v67.p313_maneuver_conditioned_authority_admission_summary.v1
+task_id: WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01
+hypothesis_id: WS-V67-H-P313-001
+role: two_axis_task_conditioned_decision_focused_action_admission_development
+seed: 0
+model_artifact: MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_authority: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+frozen_selector: {run: worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/20260901T034500Z__authority-residual-topk-admission-s0-r1, artifact: AUTHORITY_RESIDUAL_TOPK_ADMISSION.pt}
+frozen_progress_compiler: {run: worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T041500Z__progress-conditioned-authority-admission-s0-r1, artifact: PROGRESS_CONDITIONED_AUTHORITY_ADMISSION.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+action_group_size: 6
+selected_action_count: 2
+authority_condition: {alpha_fairness: 0.5, risk_tolerance: 0.15, final_reliability_floor: 0.6, tail_mass: 0.25, attainable_budget_fractions: [0.25, 0.5, 0.75]}
+training_progress_preferences: [0.0, 0.5, 1.0]
+heldout_progress_preferences: [0.25, 0.75]
+training_lateral_commands: [-1.0, 0.0, 1.0]
+heldout_lateral_commands: [-0.5, 0.5]
+lateral_preference_weight: 0.5
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+model:
+  hidden_width: 64
+  maximum_rate_adjustment: 0.5
+  steps: 6000
+  batch_size: 384
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  rank_temperature: 0.20
+  membership_temperature: 0.20
+  listwise_temperature: 0.25
+  pairwise_temperature: 0.25
+  pairwise_minimum_target_gap_z: 0.05
+  listwise_weight: 0.5
+  pairwise_weight: 0.25
+evaluation: {pairwise_minimum_composite_gap: 0.02}
+decision:
+  minimum_P201_mean_relative_composite_reduction_vs_all_actions: 0.10
+  minimum_P201_pooled_pairwise_composite_concordance: 0.65
+  minimum_P201_lateral_command_response_delta: 0.25
+  maximum_P201_progress_preference_monotonicity_violations: 0
+verdict_on_pass: supported_two_axis_maneuver_conditioned_authority_top2_admission
+verdict_on_failure: rejected_two_axis_maneuver_conditioned_authority_top2_admission
+locks:
+  P311_P309_P307_are_frozen_and_lateral_weight_zero_recovers_P311: true
+  positive_bounded_lateral_distance_rate_preserves_command_semantics: true
+  train_endpoint_commands_and_evaluate_only_unseen_midpoint_commands: true
+  one_6000_step_run_no_command_weight_rate_width_loss_or_gate_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_P201_two_axis_task_conditioned_development_not_fresh_confirmation
+  - progress_and_lateral_preferences_are_normalized_log_visited_state_cost_tradeoffs_not_planner_reward
+  - top2_fixed_query_admission_not_collision_closed_loop_hard_constraint_or_safety_claim

@@ -350,6 +350,13 @@ WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
 scenes降低，3/3 supported；wall=`3.63s`。progress-conditioned authority跨cohort成立，下一层扩为progress与
 lateral maneuver intent二维任务条件，不重复同轴确认。
 
+P313 冻结P311/P309/P307，新增连续lateral command轴：train command=`-1/0/1`，正式只读unseen midpoint=
+`-.5/.5`，同时progress heldout=`.25/.75`。lateral penalty rate保持正且bounded `.5`，lateral weight=0时解析恢复
+P311；6k steps。P201三门为mean composite reduction `>=10%`、pairwise `>=.65`、右命令相对左命令的selected
+lateral response `>=.25`且progress单调违例0。不扫command/weight/rate/width/loss。Active=`run://worldsim_v67/
+WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/
+20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%

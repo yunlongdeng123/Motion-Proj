@@ -610,6 +610,17 @@
   `.8070/.9000/.9474`、violations=0、highest-lambda scenes=`9/0/0`，3/3 supported；wall=`3.63s`、peak GPU=
   `.13893GiB`。下一步进入progress×lateral maneuver二维条件。
 
+### WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01
+
+- progression：冻结P311/P309/P307，在progress preference之外增加continuous lateral maneuver command；train
+  endpoints=`-1/0/1`，heldout midpoint=`-.5/.5`，检验插值而非记忆query ID。
+- structure/objective：P311 score + positive bounded lateral-distance rate；目标为normalized log actual visited-state
+  cost + progress penalty + `.5×lateral distance`。lateral weight=0严格恢复P311。
+- protocol：progress heldout=`.25/.75`，6k steps；P201门为composite reduction `.10`、pairwise `.65`、lateral
+  response delta `.25`且progress violations=0；不扫command/weight/rate/width/loss。
+- active=`run://worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/
+  20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
