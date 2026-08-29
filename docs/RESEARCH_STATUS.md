@@ -291,6 +291,13 @@ boundary projection。final NLL=`-4.09256`，但P81/P96/P113 fixed50 events=`0/7
 `V67-F89`。统一重尾吸收离群值在P96显著过宽，不扫df/scale/loss；下一机制只允许显式多模态residual，不再继续Student-t。
 wall=`53.55s`、peak GPU=`.37922GiB`。
 
+P125按CVPR/ICCV multimodal trajectory与ICML mixture-density工作训练固定`K=2` correlated Gaussian mixture；推理对每个
+component做boundary-normal Gaussian CDF后按learned weight混合，不把mixture压回单高斯。相同916,722 tokens、`256/128`、
+6,000 steps，final NLL=`-4.20145`；mean max component weight在三cohort为`.791/.821/.806`，并未完全collapse。然而
+P81/P96/P113 events=`0/4/7`、AUROC=`.96552/.88001/.91319`，相对P109全部下降
+`.00212/.02433/.00697`，登记`V67-F90`。显式mode存在但不具跨cohort boundary relevance；不扫K/entropy/scale，关闭
+single-model output-distribution扩展。wall=`63.01s`、peak GPU=`.38436GiB`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

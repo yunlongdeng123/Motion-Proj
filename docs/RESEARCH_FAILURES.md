@@ -1417,6 +1417,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F90`。
 
+### V67-F90 — 两组件mixture modes未形成可迁移的boundary-relevant分解
+
+- 分类：`scientific/multimodal-actor-uncertainty`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P125-TWO-MODE-ACTOR-UNCERTAINTY-01/
+  20260830T082500Z__two-mode-actor-uncertainty-s0-r1`；
+- literature response：CVPR/ICCV multimodal trajectory工作支持显式mode specialization；CVPR 2022同时指出GMM hard-to-optimize/
+  overfit风险。迁移只固定K=2，并用mixture-weighted boundary CDF，不扫组件数；
+- symptom：mean maximum component weights约`.79--.82`，非完全collapse，但P81/P96/P113 AUROC gain=
+  `-.002116/-.024330/-.006968`，fixed50 events=`0/4/7`也劣于P109=`0/0/6`；
+- interpretation：组件确实分工，但source中形成的modes不等于跨cohort candidate-τ boundary modes；更低mixture NLL不能保证
+  task-conditioned selection。该失败与F89共同关闭单模型tail/multimodal output扩展；
+- resolution：不扫K、entropy regularizer、scale floor、projection、seed或coverage；下一步若继续不确定性机制，只允许用独立
+  模型间disagreement分解epistemic/aleatoric，而不是再改同一输出分布；
+- claim impact：无GMM/multimodal Actor uncertainty improvement、P121 secondary或safety claim。
+
+下一可用编号：`V67-F91`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1424,11 +1441,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122/P123/P124已占用
-  F87/F88/F89，因此P121 scientific failure若发生则登记`V67-F90`并
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122--P125已占用
+  F87--F90，因此P121 scientific failure若发生则登记`V67-F91`并
   关闭continuous object independent claim，不做第二P121 recovery。
 
-下一可用编号仍为：`V67-F90`。
+下一可用编号仍为：`V67-F91`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p125_two_mode_actor_uncertainty.v1
+output_schema_version: worldsim_v67.p125_two_mode_actor_uncertainty_summary.v1
+task_id: WS-V67-P125-TWO-MODE-ACTOR-UNCERTAINTY-01
+hypothesis_id: WS-V67-H-P125-001
+seed: 0
+role: consumed_development_two_mode_correlated_gaussian_actor_uncertainty
+clearance_baseline_floor_m: 0.05
+model_artifact: TWO_MODE_ACTOR_UNCERTAINTY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p75:
+  run: worldsim_v67/WS-V67-P75-FRESH-VALIDATION-MULTI-HORIZON-01/20260829T180000Z__fresh-validation-actor-s0-r1
+  artifact: FOUR_HORIZON_ACTOR_RELIABILITY.pt
+frozen_p109_comparisons:
+  consumed_p81: {events: 0, auroc: 0.967639}
+  consumed_p96: {events: 0, auroc: 0.904345}
+  consumed_p113: {events: 6, auroc: 0.920155}
+model:
+  hidden_dimensions: [256, 128]
+  component_count: 2
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+evaluation:
+  unreliable_actor_state_error_m: 0.5
+  visited_region_radius_m: 20.0
+  maximum_visited_actors: 16
+decision:
+  minimum_mean_auroc_gain_over_p109: 0.005
+verdict_on_pass: supported_development_two_mode_actor_uncertainty
+verdict_on_failure: rejected_development_two_mode_actor_uncertainty
+locks:
+  same_source_features_hidden_width_optimizer_steps_seed_and_fixed50: true
+  exactly_two_correlated_gaussian_components_and_weighted_boundary_CDF: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P121_primary_checkpoint_cost_and_decisions_untouched: true
+  no_component_count_entropy_scale_projection_seed_or_coverage_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2022/html/Guo_End-to-End_Trajectory_Distribution_Prediction_Based_on_Occupancy_Grid_Maps_CVPR_2022_paper.html
+  - https://openaccess.thecvf.com/content/ICCV2021/html/Dendorfer_MG-GAN_A_Multi-Generator_Model_Preventing_Out-of-Distribution_Samples_in_Pedestrian_Trajectory_ICCV_2021_paper.html
+  - https://proceedings.mlr.press/v139/errica21a.html
+claim_boundary:
+  - consumed_development_multimodal_actor_residual_mechanism_only
+  - weighted_linearized_boundary_crossing_not_calibrated_collision_probability
+  - requires_continuous_selection_and_independent_confirmation_if_supported
+  - no_planner_policy_closed_loop_or_safety_claim

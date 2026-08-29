@@ -435,6 +435,21 @@
 - interpretation：统一重尾likelihood没有隔离稀有运动模式，反而使P96 boundary scale过宽；关闭Student-t family，不扫df。
   wall=`53.55s`、peak GPU=`.37922GiB`、RSS=`1.149GiB`。
 
+### WS-V67-P125-TWO-MODE-ACTOR-UNCERTAINTY-01
+
+- 状态：`done/rejected consumed development`；canonical=`20260830T082500Z__two-mode-actor-uncertainty-s0-r1`；与P121
+  archive IO重叠，P121 target未读。
+- literature/method：CVPR/ICCV multimodal trajectory工作以显式modes避免单分布覆盖互斥行为，同时CVPR 2022提示GMM易过拟合。
+  因此只固定`K=2` correlated Gaussian mixture；同一P109 source/features、`256/128`、6,000 steps、seed0/fixed50。
+  推理计算component boundary-normal Gaussian CDF并按mixture weight求和；不扫K/entropy/scale/coverage。
+- training：916,722 Actor-time tokens，final mixture NLL=`-4.201453`。P81/P96/P113 mean max weight=
+  `.79061/.82057/.80645`、entropy=`.41472/.36562/.38205`，组件没有完全collapse。
+- result：三cohort events=`0/4/7`、AUROC=`.965523/.880015/.913187`；相对P109 gain=
+  `-.002116/-.024330/-.006968`，两项decision均失败，verdict=`rejected_development_two_mode_actor_uncertainty`
+  （`V67-F90`）。
+- interpretation：mixture modes被使用，但未形成可迁移的boundary-relevant分解；关闭单模型distribution family，不扫组件数。
+  wall=`63.01s`、peak GPU=`.38436GiB`、RSS=`1.315GiB`。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

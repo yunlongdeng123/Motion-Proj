@@ -174,6 +174,10 @@ P124据此把P117 Gaussian likelihood唯一替换为固定`df=4` correlated Stud
 P96/P113 AUROC下降`.05407/.00543`且events=`7/7`，登记F89。重尾NLL虽更低，但统一放宽tail会损害boundary ranking；
 这支持下一步区分多种motion modes，而不是继续调Student-t自由度。
 
+P125固定K=2 correlated Gaussian mixture并以weighted boundary CDF评分。组件没有完全collapse，但三cohort AUROC仍分别比P109
+低`.00212/.02433/.00697`，events=`0/4/7`，登记F90。说明source likelihood modes不自动成为τ-boundary modes；因此
+single-model Gaussian/full-cov/Student-t/GMM output family至此关闭。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -200,6 +204,7 @@ P96/P113 AUROC下降`.05407/.00543`且events=`7/7`，登记F89。重尾NLL虽更
 | P122 | consumed full-cov continuous selection | selected cost=`.1854/.1849/.2255` | Spearman gain=`+.0115/+.0048/+.0120` | reject；P96/P113 cost回退 |
 | P123 | consumed continuous rank residual | selected cost=`.1783/.1831/.2241` | Spearman gain=`-.0198/-.0562/+.0082` | reject downstream head |
 | P124 | consumed correlated Student-t | P81/P96/P113 events=`0/7/7` | AUROC gain=`+.0002/-.0541/-.0054` | reject uniform heavy tail |
+| P125 | consumed K2 Gaussian mixture | P81/P96/P113 events=`0/4/7` | AUROC gain=`-.0021/-.0243/-.0070` | reject learned modes |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -221,6 +226,7 @@ P96/P113 AUROC下降`.05407/.00543`且events=`7/7`，登记F89。重尾NLL虽更
 | `V67-F87` | full covariance全局排序增量可保证fixed50 continuous cost不退化 | P96/P113 selected cost略升；不进入P121 secondary |
 | `V67-F88` | 稠密continuous operating-range pairs可消除跨cohort selection漂移 | P81/P96 rank退化且P96 cost回退 |
 | `V67-F89` | 统一重尾likelihood可稳定改善Actor boundary uncertainty | P96 scale过宽、AUROC与events均退化 |
+| `V67-F90` | 显式K2 residual modes可替代单Gaussian并跨cohort迁移 | components active但三cohort AUROC全退化 |
 
 ## 5. 系统与资源
 
@@ -238,6 +244,7 @@ P96/P113 AUROC下降`.05407/.00543`且events=`7/7`，登记F89。重尾NLL虽更
 - P122在P121 archive IO期间做冻结checkpoint GPU inference，wall约1.01s；没有训练或新target read。
 - P123与同一archive IO重叠训练13,123个continuous pairs、6,000 steps，wall约44.36s。
 - P124同样在IO窗口训练916,722 Actor-time tokens、6,000 steps，wall约53.55s。
+- P125训练K2 mixture 6,000 steps，wall约63.01s；没有component/entropy sweep。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
