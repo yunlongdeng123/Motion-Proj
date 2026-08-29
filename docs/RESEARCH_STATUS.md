@@ -650,6 +650,11 @@ joint-diffusion reliability后，冻结同一16个P165 joint samples的upper-tai
 continuous costs的均值，不训练/解冻模型、不扫quantile。先要求旧四cohort cost全不退且mean rank gain≥`.005`；只有2/2
 通过才等待P167 rows作事前冻结的五H prospective secondary，否则立即关闭。P168 GPU sampling现在可覆盖P167 archive IO空档。
 
+P168 canonical r1在单3090用`2.48s`完成。旧P81/P96/P113/P129 rank gain=`+.00134/-.00074/+.00703/+.01079`
+（mean=`+.00460<.005`），selected-cost delta=`+.01020/+.00153/+.00208/+.00924`，四组全部回退；0/2 decisions，F132。
+因此未等待或读取P167 rows。P165 q75与P168 tail mean共同表明global rank signal没有落到per-scene fixed50 cutoff；关闭
+手工sample-risk-functional支线，不扫alpha/quantile。下一步改为source-only、直接优化scene内固定覆盖选择成本的训练对象。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

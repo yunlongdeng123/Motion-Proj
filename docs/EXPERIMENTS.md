@@ -1125,6 +1125,11 @@
 - prospective rule：development 2/2通过才等待事前冻结P167 rows，并以同两项macro decisions比较P126；否则立即停止。
 - locks：不扫alpha/sample/DDIM/coverage/cost/metric，不训练/refit，不加hash/checksum/fingerprint或测试矩阵。
 - references：PMLR 2022 SENTINEL的coherent CVaR组合；CVPR 2025 U2Diff的joint sample reliability aggregation。
+- result：canonical r1 wall=`2.48s`、peak GPU=`.1769GiB`。旧四rank gain=`+.00134/-.00074/+.00703/+.01079`
+  （mean=`+.00460<.005`）；selected-cost delta=`+.01020/+.00153/+.00208/+.00924`，四组全退。
+- verdict=`rejected_joint_tail_mean_compiler`，F132；0/2 development decisions，故按冻结规则没有等待或读取P167 prospective rows。
+- interpretation：使用整个upper tail仍不能把P165 joint rank signal编译到scene fixed50 operating point；关闭sample-risk泛函选择，
+  不扫alpha/quantile/sample count。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

@@ -2154,7 +2154,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：旧四cost全不退+mean rank gain≥`.005`；通过后才读P167 prospective secondary，并复用同两门。
 - prevention：不训练/解冻P165、不扫alpha/sample/DDIM/coverage/cost或decision；development失败才使用`V67-F132`并立即关闭。
 
-下一可用编号仍为：`V67-F132`。
+### V67-F132 — coherent upper-tail mean仍使旧四fixed50 selected cost全部回退
+
+- 分类：`algorithm/joint-sample-risk-operating-point`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/
+  20260830T131000Z__joint-tail-mean-compiler-s0-r1`。
+- 观察：旧四rank gain mean=`+.00460<.005`，且selected-cost delta=`+.01020/+.00153/+.00208/+.00924`，0/2 decisions。
+- 解释：CVaR式tail aggregation减少单个order statistic噪声，但P165 joint sample的global ordering变化仍没有对齐scene内fixed50 cutoff；
+  问题不是只需把q75换成另一个手工risk functional。
+- 防重复：不扫alpha/quantile/sample/DDIM；按冻结规则未读取P167 prospective rows。若继续，只能直接训练scene/coverage-conditioned
+  selection objective，而不是继续手选sample statistic。
+
+下一可用编号为：`V67-F133`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

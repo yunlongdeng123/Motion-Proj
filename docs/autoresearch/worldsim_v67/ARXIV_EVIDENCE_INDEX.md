@@ -78,7 +78,7 @@
 | P165 | `run://worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/20260830T124000Z__joint-multi-actor-diffusion-s0-r1` | old mean rank `+.00811`、P147 5/5 rank+cost；old fixed50 cost reject/F130 |
 | P166 | `run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/20260830T125000Z__monotone-expected-cost-calibration-s0-r1` | mean MSE reduction `4.09%<20%`、bin error恶化；rejected/F131 |
 | P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | frozen/launching；第二个target-unread 10-scene × five-H，P147协议原样复验 |
-| P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | frozen/launching；P165 top-4/16 coherent upper-tail mean，先旧四再prospective P167 |
+| P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -197,6 +197,7 @@
 | `V67-F129` | closed negative | nearest-neighbor marginal adapter source NLL改善但旧四/P147全面退化 |
 | `V67-F130` | closed composite negative | joint diffusion 9/9 rank slices正向，但旧P81/P96/P129 q75 fixed50 cost回退 |
 | `V67-F131` | closed negative | monotone point-cost calibration raw MSE仅改善4.09%，expected-cost bin error恶化 |
+| `V67-F132` | closed negative | P165 top-4/16 upper-tail mean仍使旧四fixed50 cost全部回退；未读P167 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

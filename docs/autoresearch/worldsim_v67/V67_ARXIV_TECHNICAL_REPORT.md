@@ -344,7 +344,9 @@ scene-ready GPU scoring的在线流水线，使archive IO与3090评分重叠；�
 
 与P167 archive IO重叠的P168只改变P165 samples的风险泛函：用最高4/16 sampled costs的upper-tail mean替代单个q75，
 `.75`水平完全继承且不扫描。该迁移依据是coherent risk对整个尾部的利用，以及joint diffusion sample-level reliability aggregation；
-它不训练新模型。旧四cohort 2/2通过前不读取P167 prospective结果，因此当前同样不预写科学结论。
+它不训练新模型。旧四rank gain mean仅`+.00460<.005`，selected cost四组全部回退，故0/2并登记F132；按冻结规则未读取
+P167 prospective rows。这个负结果把问题从“q75估计噪声”进一步定位为“global rank与scene内fixed50 cutoff错配”，下一研究对象
+必须直接训练coverage-conditioned selection objective，而不是继续选择手工sample statistic。
 
 ## 3. 核心结果表
 
