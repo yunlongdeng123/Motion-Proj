@@ -551,8 +551,13 @@
 - cohort：P243九场景/1,710 trajectories；已被surface/allocator链消费，但task-conditioned action-compiler family
   untouched，因此只写family-untouched reuse confirmation，不写globally fresh。
 - gates：attained MAE `<=.05`、regret `<=.005`、violations=`0`；one read，不换cohort或扫action lattice/gates。
-- active=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
   20260901T033000Z__task-conditioned-action-authority-confirmation-s0-r1`。
+- result：285个六动作组，budget/attained MAE=`.00588455/.02415646`、regret=`3.04462e-5`、violations=`0`，
+  3/3；forward=`.57412s`、wall=`6.26s`、peak GPU=`.13893GiB`；verdict=
+  `supported_untouched_cohort_task_conditioned_action_set_authority_confirmation`。
+- next：不再优化budget fidelity；进入authority→action admission/selection层，以真实future visited-state cost作
+  decision metric，仍不外推planner/closed-loop/safety。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

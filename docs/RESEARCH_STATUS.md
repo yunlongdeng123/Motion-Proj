@@ -311,8 +311,11 @@ planner lattice或hard safety constraint。下一步只做一次跨cohort frozen
 P308 已在读取确认指标前冻结：直接复用 P307 weights与精确六动作 grouping，在P243九场景/1,710 trajectories上
 0-step确认。P243虽已被surface/allocator链消费，但从未用于task-conditioned action-compiler训练或指标选择；三门原样
 继承为attained MAE `<=.05`、regret `<=.005`、violations=0。只读一次，不refit、不换cohort、不扫action lattice。
-Active=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
-20260901T033000Z__task-conditioned-action-authority-confirmation-s0-r1`。
+Canonical=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
+20260901T033000Z__task-conditioned-action-authority-confirmation-s0-r1`：285个六动作组，budget/attained MAE=
+`.00588455/.02415646`、regret=`3.04462e-5`、violations=0，3/3 supported；forward=`.57412s`、wall=`6.26s`。
+P307→P308证明固定六候选的task-conditioned authority fidelity跨cohort保持；下一研究层转为把逐动作预算编译成
+显式授权/选择规则，并用真实future visited-state cost评价，不继续在同一fidelity门上调参。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

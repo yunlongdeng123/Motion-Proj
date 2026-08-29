@@ -345,8 +345,10 @@
 - next object/result：P307改为精确6-action task-conditioned sets；沿用P306R但不再训练任意scene chunks。P201
   attained MAE=`.02973484`、regret=`2.78998e-5`、violations=`0`，3/3 supported；F206恢复路径由执行图优化继续推进到
   task-conditioned authority且没有新增failure；下一步仅做冻结模型跨cohort确认；
-- P307后续：P308已冻结为P307 weights在P243九场景六动作组上的0-step family-untouched确认；若失败才使用
-  `V67-F207`，不以refit、换cohort或放宽门恢复；
+- P307后续：P308以P307 weights在P243九场景285个六动作组上0-step确认，attained MAE=`.02415646`、regret=
+  `3.04462e-5`、violations=0，3/3 supported；未触发failure，也未refit/换cohort/放宽门；
+- next object：authority fidelity已跨cohort成立，转向预算到显式action admission/selection的decision层；失败才使用
+  `V67-F207`，不再以P307/P308同指标微调补救；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29
