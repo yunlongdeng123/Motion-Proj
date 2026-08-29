@@ -532,6 +532,20 @@ Mixture-of-Linear-Experts、multi-resolution horizon routing与DriveMoE的specia
 development；P147 primary P126-vs-P109比较完全不变。P157 canonical=
 `20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1`，12个GPU训练单元正在执行，不扫专家数/router/结构/loss/seed。
 
+P147 r2随后完整命中`3,909/3,909` files并完成10/10 scenes，wall=`516.63s`；原等待evaluator自动执行唯一fresh read。
+五个H的P126-vs-P109 Spearman gain=`+.373741/+.240461/+.096388/+.086006/+.074345`，selected-cost差=
+`-.014964/-.017759/-.015318/-.015881/-.024911`，每个H方向均一致；预注册macro mean分别=`+.174188/-.017767`，
+2/2 decisions通过。P147 verdict=`supported_independent_multi_horizon_ensemble_continuous_selection_increment`，将P129的
+H3.5 scene-level independent支持推进到同一新10-scene cohort上的五时域支持；authority仍限scene-level，不能写成session-level、
+calibrated probability、planner/closed-loop或safety结论。P157继续作为独立的development机制问题，不改写P147 primary。
+
+P157 4 experts×3 members完成实际训练，per-expert tokens=`237,267/238,806/225,126/215,523`，final NLL均约
+`-3.01-- -3.44`；但把H3.5请求路由到H3.0专家导致严重外推失败。P81/P96/P113/P129 selected cost=
+`1.02112/.75418/1.20023/1.20555`，相对P126 Spearman gain=
+`-.63770/-.75449/-.37673/-.60844`（mean=`-.59434`），0/2 decisions，F120。结论严格是nearest-lower
+horizon specialist不能替代共享P126，尤其不能把source H3.0专家外推到H3.5；它反向强化P147/P126共享多时域学习的必要性，
+但不否定有target-horizon训练数据时的exact expert或partial-sharing方法。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

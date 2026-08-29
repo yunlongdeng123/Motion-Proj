@@ -1931,10 +1931,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 ### V67-F118 — P147 scene0110 shard locator错误（pre-target engineering）
 
-- 分类：`engineering/dataset-archive-routing`；状态：`resolved_r2_active_before_target_read`。
+- 分类：`engineering/dataset-archive-routing`；状态：`resolved_before_target_read`。
 - evidence：r1 shard01冻结需求774，scan found386；386精确覆盖scene0018，scene0110未命中。scene0110 official index92属于shard02。
-- recovery：唯一改`scene-0110 01→02`；让03/08/10现有scan自然完成，复用所有existing LIDAR，r2只补02后preprocess。
-- scientific impact：0 target rows/metrics；不换scene/cohort/H/model/score/decision，不重启P147 evaluator。
+- recovery：唯一改`scene-0110 01→02`；复用所有existing LIDAR，r2在02精确found388，总计`3,909/3,909` mapped并完成
+  10/10 preprocess，wall=`516.63s`。
+- scientific impact：修复前0 target rows/metrics；不换scene/cohort/H/model/score/decision，不重启P147 evaluator。修复后P147
+  自动完成并通过2/2 macro decisions，证明locator问题未改变科学协议。
 
 ### P156 freeze note — continuous-time integrated increment ensemble
 
@@ -1960,7 +1962,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`；失败才使用F120。
 - prevention：不扫expert count/routing/architecture/loss/member/seed/score/coverage；P147 primary保持原冻结P126/P109。
 
-下一可用编号为：`V67-F120`。
+### V67-F120 — nearest-lower horizon expert在H3.5严重外推失配
+
+- 分类：`algorithm/horizon-specialist-extrapolation`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01/
+  20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1`。
+- 观察：12个member训练NLL正常，但四个H3.5 consumed cohorts路由H3.0后cost约为P126的3.9--5.8倍；mean Spearman gain=
+  `-.594342`，0/2 decisions。
+- 解释：完全拆分去掉了shared horizon support，而H3.0 expert的time input/target normalization未覆盖H3.5，nearest-lower
+  routing形成真实外推；P147同时证明shared P126在五H独立cohort上全方向支持。
+- 防重复：不扫expert count/nearest router或用P147 fresh target训练专家；不把本失败外推为exact-horizon expert普遍无效。
+
+下一可用编号为：`V67-F121`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

@@ -767,14 +767,24 @@
 
 ### WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01
 
-- 状态：`frozen/running prep+waiting evaluator`；prep/confirmation canonical=
-  `20260830T103500Z__multi-horizon-independent-prep-s0-r1` / `20260830T104000Z__multi-horizon-independent-confirmation-s0-r1`。
+- 状态：`done/supported scene-level independent`；prep recovery canonical=
+  `20260830T113000Z__multi-horizon-independent-prep-s0-r2`，confirmation canonical=
+  `20260830T104000Z__multi-horizon-independent-confirmation-s0-r1`。
 - cohort：metadata-only冻结`0018/0275/0967/0110/0565/0780/0799/0922/0929/1067`，四location=`3/3/3/1`、
   10 internal logs；历史session exposure使authority仅scene-level independent。
 - method：同一批scene一次materialize `.8/1.5/2.5/3.0/3.5s` rows，各H描述性比较冻结P126 ensemble、P109与
   continuous boundary-state cost；fixed50、`.05m` floor不变。
 - decisions：mean per-horizon Spearman gain over P109≥`.005`；mean per-horizon selected-cost difference≤0。只保留
   两个macro decisions，不添加逐H gate矩阵；只允许pre-target exact archive locator修正。
+- prep result：r2 exact shard02补齐388 files，总计`3,909/3,909` mapped、10/10 scenes done，wall=`516.63s`；F118关闭，
+  无cohort/model/target/horizon/decision改变。
+- result by H `.8/1.5/2.5/3.0/3.5s`：rows=`15,881/15,662/14,488/13,819/13,142`，trajectories=
+  `1,984/1,946/1,847/1,798/1,742`；P126 Spearman=`.66381/.73018/.78138/.81204/.82560`，相对P109 gain=
+  `+.373741/+.240461/+.096388/+.086006/+.074345`；selected-cost差=
+  `-.014964/-.017759/-.015318/-.015881/-.024911`。
+- macro：mean rank gain=`+.174188`，mean selected-cost difference=`-.017767`，2/2 decisions；verdict=
+  `supported_independent_multi_horizon_ensemble_continuous_selection_increment`。scene-level independent，不外推session-level、
+  binary collision、calibrated probability、planner/policy、closed-loop或safety。
 
 ### WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01
 
@@ -914,14 +924,15 @@
 
 ### WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-PREP-01 r2
 
-- 状态：`running exact locator recovery`；canonical=
+- 状态：`done/recovered before target read`；canonical=
   `20260830T113000Z__multi-horizon-independent-prep-s0-r2`。
 - r1 terminal evidence：03/06/08/09/10 exact scans全命中；01 found386后最终missing388，和scene0110分母精确相等，0 target rows。
-- r2 scope：修正scene0110→02；复用r1已提取3,481 files，只扫描missing388并处理原10 scenes；P147 evaluator PID保持waiting。
+- r2 result：修正scene0110→02并复用r1 files；shard02精确found388，总计`3,909/3,909` mapped，10/10 preprocess完成，
+  wall=`516.63s`；P147 evaluator随后自动完成唯一fresh read。
 
 ### WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01
 
-- 状态：`running consumed development / GPU-overlapped-with-P147-IO`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1`。
 - hypothesis：P126共享单模型可能把不同预测时域的residual domain压入同一normalization/function；改为`.8/1.5/2.5/3.0s`
   四个独立专家，每个3 members、各自feature/target normalization，保留P109 diagonal Gaussian score。
@@ -931,6 +942,12 @@
 - decisions：相对冻结P126，P81/P96/P113/P129 selected continuous cost全部不退，且mean Spearman gain≥`.005`。
 - protocol boundary：只作consumed development；若支持，P147 secondary candidate已在target rows前冻结，但P147 primary
   P126-vs-P109、五个horizon macro decisions均不改变。不扫architecture/loss/member/seed/score/coverage。
+- result：四expert token counts=`237,267/238,806/225,126/215,523`，12个member final NLL=`-3.01-- -3.44`。
+  H3.5→H3.0后，P81/P96/P113/P129 selected cost=`1.02112/.75418/1.20023/1.20555`，Spearman gain over P126=
+  `-.63770/-.75449/-.37673/-.60844`（mean=`-.59434`）；0/2 decisions，verdict=
+  `rejected_development_horizon_specialist_actor_ensemble`，wall=`321.19s`、peak GPU=`.324 GiB`；F120。
+- interpretation：训练NLL正常但nearest-lower expert在H3.5属于time-domain extrapolation；拒绝该routing，不把结果外推为
+  exact-horizon expert普遍无效。P147 primary已经独立支持共享P126，故不执行P157 secondary read。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01

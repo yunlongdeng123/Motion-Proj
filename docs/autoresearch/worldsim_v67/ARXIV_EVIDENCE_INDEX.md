@@ -57,7 +57,7 @@
 | P144 | `run://worldsim_v67/WS-V67-P144-TRAJECTORY-SET-RANK-COMPILER-01/20260830T102000Z__trajectory-set-rank-compiler-s0-r1` | P96反转、mean rank `-.00096`；rejected/F107 |
 | P145 | `run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/20260830T102500Z__absolute-time-actor-ensemble-s0-r1` | 3/4 rank增但P96强退；rejected/F108 |
 | P146 | `run://worldsim_v67/WS-V67-P146-MONOTONE-TIME-SCALE-ADAPTER-01/20260830T103000Z__monotone-time-scale-adapter-s0-r1` | mean rank `-.001607`、仅P129 cost改善；rejected/F109 |
-| P147 | `run://worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1` | new 10-scene × five-horizon confirmation；running |
+| P147 | `run://worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1` | five-H mean gain=`+.17419`、cost delta=`-.01777`；2/2 independent support |
 | P148 | `run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/20260830T104500Z__full-sequence-actor-ensemble-s0-r1` | 四cohort rank全退、mean `-.012380`；rejected/F110 |
 | P149 | `run://worldsim_v67/WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01/20260830T105000Z__coherent-trajectory-mixture-s0-r1` | modes active但mean rank `-.098286`；rejected/F111 |
 | P150 | `run://worldsim_v67/WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01/20260830T105500Z__dense-boundary-cost-ensemble-s0-r1` | P81/P129 rank增但P96反转；rejected/F112 |
@@ -67,7 +67,7 @@
 | P154 | `run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/20260830T111500Z__density-aware-actor-ensemble-s0-r1` | shift detected但P81 cost退；rejected/F116 |
 | P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | mean rank `-.007045`；rejected/F117 |
 | P156 | `run://worldsim_v67/WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01/20260830T112500Z__integrated-increment-actor-ensemble-s0-r1` | rank mean `-.028923`；rejected/F119 |
-| P157 | `run://worldsim_v67/WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01/20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1` | 四horizon×三member实际训练；running consumed development |
+| P157 | `run://worldsim_v67/WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01/20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1` | H3.5→H3.0 mean rank `-.59434`；rejected/F120 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -127,7 +127,8 @@
 | density-aware P126 | P154 consumed H3.5 ×4 | mean gain=`-.001727` | rarity not reliability |
 | RegMixup Actor ensemble | P155 consumed H3.5 ×4 | mean gain=`-.007045` | reject train-time interpolation |
 | integrated increment ensemble | P156 consumed H3.5 ×4 | mean gain=`-.028923` | reject independent increment integration |
-| horizon-specialist Actor ensemble | P157 consumed H3.5 ×4 | running；H3.5→H3.0 expert | test shared-horizon negative transfer |
+| horizon-specialist Actor ensemble | P157 consumed H3.5 ×4 | mean gain=`-.59434`、cost 3.9--5.8× P126 | reject nearest-lower extrapolation |
+| multi-horizon ensemble increment | P147 new 10-scene × five H | per-H gain全正，macro=`+.17419`；cost delta全负 | scene-level independent multi-H support |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -172,8 +173,9 @@
 | `V67-F115` | closed negative | exact last-layer posterior epistemic约`10^-4`而过度集中 |
 | `V67-F116` | closed negative | hidden density识别shift但blind inflation使P81 cost显著回退 |
 | `V67-F117` | closed negative | same-fraction RegMixup只改善P129 cost且rank mean为负 |
-| `V67-F118` | resolved pre-target | P147 scene0110 shard locator `01→02`，0 metric exposure |
+| `V67-F118` | resolved pre-target | P147 scene0110 shard locator `01→02`；3,909/3,909 mapped，随后primary支持 |
 | `V67-F119` | closed negative | continuous-time increment integration四cohort rank一致下降 |
+| `V67-F120` | closed negative | nearest-lower H3.0 specialist外推H3.5导致严重rank/cost collapse |
 
 ## 4. Artifact inventory
 

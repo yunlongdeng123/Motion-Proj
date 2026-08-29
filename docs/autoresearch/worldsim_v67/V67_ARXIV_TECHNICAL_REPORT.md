@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P129 independent ensemble support; P147 multi-horizon confirmation and P157 specialist training active`
+- 报告状态：`P147 independent multi-horizon support; P157 nearest-lower specialization rejected`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -19,8 +19,10 @@ P95据此将endpoint改为task-conditioned occupancy-decision flip，但端到�
 网络只预测Actor未来位置误差分布，candidate `τ`只通过signed boundary clearance进入解析查询。P107的scalar q90 uncertainty
 tube在两个consumed cohorts一致成立，并在P108的新10-scene cohort将fixed-50% occupancy flips从Actor-only的35降至5；P109的
 directional diagonal-Gaussian进一步以boundary-normal projection获得更强排序。P111表明纯clearance geometry已经是强baseline，
-因此最终论文贡献必须区分“factorization超过Actor-only”与“learned uncertainty超过geometry”。P113专门冻结第二个未读cohort
-检验后者；最终数字将在该one-shot read后写入。
+因此最终论文贡献必须区分“factorization超过Actor-only”与“learned uncertainty超过geometry”。P113表明learned score有排序
+增量但fixed50 cost未稳定占优；转向continuous cost后，P121和P129先后给出独立支持。最终P147在新10-scene cohort的
+`.8/1.5/2.5/3.0/3.5s`五个horizon上均得到正Spearman增量和负selected-cost差，macro=`+.17419/-.01777`，
+把贡献推进为scene-level independent multi-horizon continuous selection。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -285,9 +287,14 @@ scan分母纠正为02（F118），不改变科学protocol或fresh cohort。
 P156进一步把多时域建模改写为continuous-time residual increments：以真实`H/8`预测velocity error并积分mean/variance，检验
 kinematic temporal coherence能否解除P148 direct position decoder的跨cohort退化；四cohort rank一致下降约`.029`（F119），
 表明independent increment accumulation同样不迁移。P147 r1在0 target read下确认scene0110缺388 files，r2只补修正后的shard02。
+P147 r2最终`3,909/3,909` mapped并完成10/10 scenes。唯一fresh read中，五个H的P126-vs-P109 Spearman gain=
+`+.373741/+.240461/+.096388/+.086006/+.074345`，selected-cost差=
+`-.014964/-.017759/-.015318/-.015881/-.024911`；macro=`+.174188/-.017767`，2/2决策通过。这是当前最强
+multi-horizon evidence，但独立性只到scene level，不能写成session-level泛化或安全保证。
 与此同时，P157不再增加共享模型容量，而把`.8/1.5/2.5/3.0s` source domains拆成四个独立三成员专家，并令H3.5固定
-路由到最近的H3.0专家，直接检验shared-horizon negative transfer。该训练与P147 IO并行；它只属于consumed development，
-不会改写P147冻结的P126-vs-P109 primary，结果完成后再写入正文与failure map。
+路由到最近的H3.0专家，直接检验shared-horizon negative transfer。12个member训练NLL均正常，但四个H3.5 consumed
+cohorts的mean Spearman gain=`-.59434`、cost为P126的约3.9--5.8倍（F120）。因此拒绝nearest-lower extrapolation；该负结果
+与P147正结果共同支持保留shared multi-horizon representation，但不能否定拥有exact target-horizon训练数据的专家。
 
 ## 3. 核心结果表
 
@@ -321,6 +328,7 @@ kinematic temporal coherence能否解除P148 direct position decoder的跨cohort
 | P121 | independent continuous primary | selected cost=`.27796`，reduction=`.7736` | Spearman=`.76147`，gain over clearance=`+.28823` | 2/2 support |
 | P128 | P121 same-read ensemble secondary | selected cost=`.27051<.27796` | Spearman gain over P109=`+.04721` | support with timing caveat |
 | P129 | independent ensemble increment | selected cost=`.30867<.32934` | Spearman gain=`+.04257` | 2/2 scene-level support |
+| P147 | independent five-horizon ensemble increment | mean selected-cost delta=`-.01777` | mean Spearman gain=`+.17419` | 2/2 scene-level multi-H support |
 
 ## 4. 失败如何推动研究对象变化
 
