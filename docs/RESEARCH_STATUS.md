@@ -800,6 +800,12 @@ P188已冻结并启动8-bin conditional rational-quadratic spline density：沿�
 用NeurIPS官方`nflows==0.14`精确likelihood/CDF，只新增可表达偏态与局部形状的单调spline，linear tail bound=`6`覆盖source
 log-cost range。相对P182逐cohort Brier不劣且mean calibration改善≥5%才支持；不扫bin/tail/architecture/loss。P183继续并行。
 
+因P188 spline kernel仅占约33% GPU，P189已并发启动以填充3090：保持P182 Gaussian-mixture architecture、conditions、七个预算与
+12,000-step budget，唯一变化是从continuous NLL改为七预算mean Brier（离散CRPS）直接训练。相对P182逐cohort Brier不劣且mean
+calibration改善≥5%才支持；不扫budget weight、threshold、architecture或混合loss，P183完全排除。
+P189 r1在首个optimizer step前因bool target subtraction退出，无quality read；仅显式cast target为float后以r2原协议恢复，
+不登记算法failure、不改变任何研究参数。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

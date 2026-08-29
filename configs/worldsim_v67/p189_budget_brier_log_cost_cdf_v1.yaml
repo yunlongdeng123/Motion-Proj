@@ -1,0 +1,50 @@
+schema_version: worldsim_v67.p189_budget_brier_log_cost_cdf.v1
+output_schema_version: worldsim_v67.p189_budget_brier_log_cost_cdf_summary.v1
+task_id: WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01
+hypothesis_id: WS-V67-H-P189-001
+role: direct_proper_score_training_of_budgeted_visited_state_reliability_CDF
+seed: 0
+model_artifact: BUDGET_BRIER_LOG_COST_CDF.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p182:
+  run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1
+  artifact: LOG_COST_MIXTURE_DENSITY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model:
+  component_count: 5
+  hidden_dimensions: [128, 128, 64]
+  training_steps: 12000
+  batch_size: 65536
+  condition_noise_standard_deviation: 0.0
+  log_cost_noise_standard_deviation: 0.0
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_calibration_error_reduction_vs_p182: 0.05
+verdict_on_pass: supported_budget_brier_log_cost_cdf_development
+verdict_on_failure: rejected_budget_brier_log_cost_cdf
+locks:
+  condition_architecture_training_budget_and_seven_budgets_match_P182: true
+  objective_is_mean_Brier_over_existing_seven_budgets_only: true
+  frozen_P182_is_the_primary_control: true
+  P175_and_P183_are_excluded: true
+  no_budget_weight_threshold_architecture_or_loss_mix_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v258/peng25a.html
+  - https://proceedings.mlr.press/v115/avati20a.html
+claim_boundary:
+  - consumed_development_only_and_cannot_replace_frozen_P182_P183_confirmation
+  - seven_budget_CDF_is_not_a_full_continuous_density_or_formal_shift_coverage
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim

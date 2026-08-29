@@ -431,6 +431,8 @@ smoothing关闭。P187据heavy-tail CDE文献冻结ν=`3` Student-t component，
 P182 single density，任何development rescue均不回流改变prospective protocol。P187最终只改善P81/P113，P96/P129 Brier与calibration
 均回退，mean calibration improvement仅`3.85%`（F151），所以“全局加重尾部”被关闭。P188进一步按NeurIPS Neural Spline Flows迁移
 固定8-bin conditional RQ spline，以区分重尾不足和随condition变化的偏态/局部形状；仍是consumed-development机制试验。
+同时，P189保留P182 Gaussian mixture representation，只把训练目标替换为七个既有预算上的mean Brier（离散CRPS）；它与P188并发，
+用于区分distribution-family misspecification和NLL/objective mismatch，且不改变P183冻结的P182 candidate。
 
 ## 3. 核心结果表
 

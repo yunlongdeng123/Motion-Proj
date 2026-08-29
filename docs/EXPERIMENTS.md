@@ -1364,6 +1364,15 @@
 - execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫bin/tail/loss/architecture。
 
+### WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01
+
+- 状态：`GPU training active/concurrent with P188`；canonical id=`20260830T161500Z__budget-brier-log-cost-cdf-s0-r2`。
+- object：P182同Gaussian-mixture architecture/3D condition/七预算，训练目标改为七个CDF query的mean Brier（离散CRPS）。
+- motivation：AISTATS distributional regression把全quantile目标联系到CRPS；本trial直接对齐可靠性CDF proper score，不再间接依赖NLL。
+- execution：12,000 steps、batch65,536；P188 kernel GPU利用不足时并发填充，P183 archive IO继续，P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫budget weight/threshold/loss mix/architecture。
+- recovery：r1在首个optimizer step前因bool event target未cast退出、无quality read；r2仅显式转float，协议与参数不变。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
