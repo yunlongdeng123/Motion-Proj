@@ -341,6 +341,36 @@ class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
         return torch.logit(pooled_probability)
 
 
+class EnsembleFeatureAwareReliabilityCalibrator(nn.Module):
+    def __init__(self, member_count, set_size_count, hidden_dimensions):
+        super().__init__()
+        input_width = int(member_count) + 4 + 2 + int(set_size_count)
+        layers = []
+        width = input_width
+        for hidden_width in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden_width)), nn.SiLU()))
+            width = int(hidden_width)
+        layers.append(nn.Linear(width, 1))
+        self.network = nn.Sequential(*layers)
+        self.set_size_count = int(set_size_count)
+
+    def forward(self, member_logits, normalized_horizon, ceiling):
+        member_probability = torch.sigmoid(member_logits).permute(1, 2, 0)
+        probability_mean = member_probability.mean(2, keepdim=True)
+        probability_maximum = member_probability.max(2, keepdim=True).values
+        probability_std = member_probability.std(2, unbiased=False, keepdim=True)
+        probability_range = probability_maximum - member_probability.min(2, keepdim=True).values
+        batch_size, set_size_count = member_probability.shape[:2]
+        horizon_feature = normalized_horizon[:, None, None].expand(batch_size, set_size_count, 1)
+        ceiling_feature = ceiling[:, None, None].expand(batch_size, set_size_count, 1)
+        set_feature = torch.eye(self.set_size_count, device=member_logits.device)[None].expand(batch_size, -1, -1)
+        features = torch.cat((
+            member_probability, probability_mean, probability_maximum, probability_std, probability_range,
+            horizon_feature, ceiling_feature, set_feature,
+        ), 2)
+        return self.network(features).squeeze(2)
+
+
 class _GradientReversal(torch.autograd.Function):
     @staticmethod
     def forward(ctx, values, coefficient):
@@ -1247,6 +1277,59 @@ def main() -> None:
                     member_note = f" member={active_member_index}" if active_member_index is not None else ""
                     print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}{member_note}{domain_note}", flush=True)
             model.eval()
+            feature_calibrator_config = config.get("reliability_feature_calibrator")
+            feature_calibrator = None
+            feature_calibrator_last = None
+            if feature_calibrator_config is not None:
+                if ensemble_fit_remainders is None:
+                    raise ValueError("reliability_feature_calibrator requires a crossfold ensemble")
+                feature_calibrator = EnsembleFeatureAwareReliabilityCalibrator(
+                    len(ensemble_fit_remainders), len(set_sizes), feature_calibrator_config["hidden_dimensions"]
+                ).cuda()
+                feature_calibrator_optimizer = torch.optim.AdamW(
+                    feature_calibrator.parameters(), lr=float(feature_calibrator_config["learning_rate"]),
+                    weight_decay=float(feature_calibrator_config["weight_decay"]),
+                )
+                feature_calibrator_index = torch.from_numpy(np.flatnonzero(calibration_rows)).cuda()
+                for step in range(int(feature_calibrator_config["steps"])):
+                    row = feature_calibrator_index[
+                        torch.randint(
+                            len(feature_calibrator_index), (int(feature_calibrator_config["batch_size"]),), device="cuda"
+                        )
+                    ]
+                    local_horizon_index = training_horizon_tensor[
+                        torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                    ]
+                    local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                    with torch.no_grad():
+                        member_logits = torch.stack([
+                            member(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
+                            for member in model.members
+                        ], 0)
+                    feature_logits = feature_calibrator(
+                        member_logits, horizon_tensor[local_horizon_index], local_ceiling
+                    )
+                    target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
+                    feature_calibrator_loss = F.binary_cross_entropy_with_logits(feature_logits, target)
+                    feature_calibrator_optimizer.zero_grad(set_to_none=True)
+                    feature_calibrator_loss.backward()
+                    feature_calibrator_optimizer.step()
+                    feature_calibrator_last = float(feature_calibrator_loss.detach())
+                    if step % 1000 == 0:
+                        print(
+                            f"{config['task_id']} feature-calibrator step={step + 1} bce={feature_calibrator_last:.7f}",
+                            flush=True,
+                        )
+                feature_calibrator.eval()
+
+            def pooled_reliability_logits(local_features, local_horizon, local_ceiling):
+                if feature_calibrator is None:
+                    return model(local_features, local_horizon, local_ceiling)
+                member_logits = torch.stack([
+                    member(local_features, local_horizon, local_ceiling) for member in model.members
+                ], 0)
+                return feature_calibrator(member_logits, local_horizon, local_ceiling)
+
             group_calibration = bool(config.get("reliability_group_calibration", False))
             memberwise_calibration = bool(config.get("reliability_memberwise_calibration", False))
             if memberwise_calibration and ensemble_fit_remainders is None:
@@ -1281,7 +1364,9 @@ def main() -> None:
                             for member in model.members
                         ], 0)
                     else:
-                        raw_logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
+                        raw_logits = pooled_reliability_logits(
+                            source_x[row], horizon_tensor[local_horizon_index], local_ceiling
+                        )
                 if memberwise_calibration and group_calibration:
                     calibrated_logits = (
                         raw_logits / log_temperature[:, local_ceiling_index, :].exp()
@@ -1372,7 +1457,11 @@ def main() -> None:
                                     (len(isotonic_index),), float(normalized_horizons[local_horizon_index]), device="cuda"
                                 )
                                 local_ceiling = torch.full((len(isotonic_index),), float(ceiling), device="cuda")
-                                logits = calibration_member(source_x[isotonic_index], local_h, local_ceiling)
+                                logits = (
+                                    calibration_member(source_x[isotonic_index], local_h, local_ceiling)
+                                    if memberwise_calibration
+                                    else pooled_reliability_logits(source_x[isotonic_index], local_h, local_ceiling)
+                                )
                                 if memberwise_calibration and group_calibration:
                                     logits = (
                                         logits / log_temperature[member_index, ceiling_index].exp()
@@ -1451,11 +1540,11 @@ def main() -> None:
                                 member_probabilities.append(member_probability)
                             local_probability = np.max(np.stack(member_probabilities, 0), axis=0)
                         elif group_calibration:
-                            logits = model(local_x, local_h, local_ceiling) / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
+                            logits = pooled_reliability_logits(local_x, local_h, local_ceiling) / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
                             logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
                             local_probability = torch.sigmoid(logits).cpu().numpy()
                         else:
-                            logits = model(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
+                            logits = pooled_reliability_logits(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
                             local_probability = torch.sigmoid(logits).cpu().numpy()
                         if isotonic_calibration and not memberwise_calibration:
                             local_logits = logits.cpu().numpy()
@@ -1541,6 +1630,8 @@ def main() -> None:
                 "frozen_reliability_model": frozen_reliability_model,
                 "reliability_ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                 "reliability_memberwise_calibration": memberwise_calibration,
+                "feature_calibrator_state_dict": feature_calibrator.state_dict() if feature_calibrator is not None else None,
+                "reliability_feature_calibrator": feature_calibrator_config,
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -1552,7 +1643,9 @@ def main() -> None:
                              "ensemble_member_count": len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else 1,
                              "ensemble_member_final_bce": ensemble_member_last,
                              "ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
-                             "frozen_reliability_model": frozen_reliability_model},
+                             "frozen_reliability_model": frozen_reliability_model,
+                             "feature_calibrator_steps": int(feature_calibrator_config["steps"]) if feature_calibrator_config else 0,
+                             "feature_calibrator_final_bce": feature_calibrator_last},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": (
