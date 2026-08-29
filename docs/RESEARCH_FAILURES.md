@@ -1953,6 +1953,13 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   不是简单改成increment即可恢复。
 - 防重复：不扫correlation/integration/variance weight；关闭temporal sequence family，等待P147 frozen P126/P109 primary。
 
+### P157 freeze note — horizon-specialist Actor ensemble
+
+- object：`.8/1.5/2.5/3.0s`分别训练P109-shaped三成员专家，各自normalization；H3.5固定路由H3.0。
+- rationale：只检验shared-horizon negative transfer是否压低P126；不引入learned router，也不改变directional boundary query。
+- decisions：P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`；失败才使用F120。
+- prevention：不扫expert count/routing/architecture/loss/member/seed/score/coverage；P147 primary保持原冻结P126/P109。
+
 下一可用编号为：`V67-F120`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认

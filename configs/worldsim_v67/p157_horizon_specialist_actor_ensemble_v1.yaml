@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p157_horizon_specialist_actor_ensemble.v1
+output_schema_version: worldsim_v67.p157_horizon_specialist_actor_ensemble_summary.v1
+task_id: WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P157-001
+role: consumed_development_horizon_specialist_actor_deep_ensemble
+model_artifact: HORIZON_SPECIALIST_ACTOR_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+model:
+  hidden_dimensions: [256, 128]
+  steps_per_member: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+expert_routing:
+  exact_source_horizon_or_nearest_lower_source_horizon: true
+  H3p5_routes_to_H3p0: true
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_horizon_specialist_actor_ensemble
+verdict_on_failure: rejected_development_horizon_specialist_actor_ensemble
+locks:
+  four_horizon_experts_each_have_three_independent_members: true
+  expert_owns_horizon_specific_feature_and_target_normalization: true
+  routing_is_exact_or_nearest_lower_and_has_no_learned_router: true
+  no_expert_count_routing_architecture_loss_member_seed_weight_score_or_coverage_sweep: true
+  P147_primary_P126_P109_comparison_is_untouched: true
+  if_development_supported_P147_secondary_was_frozen_before_target_rows: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v238/ni24a.html
+  - https://openaccess.thecvf.com/content/CVPR2026/html/Yang_DriveMoE_Mixture-of-Experts_for_Vision-Language-Action_Model_in_End-to-End_Autonomous_Driving_CVPR_2026_paper.html
+  - https://openreview.net/pdf?id=e1wDDFmlVu
+claim_boundary:
+  - consumed_development_horizon_specialization_only
+  - P147_secondary_candidate_frozen_before_any_target_row_read
+  - nearest_lower_H3p0_expert_is_extrapolation_for_H3p5
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim

@@ -525,6 +525,13 @@ P147 r1六个原配置shard现已全部自然结束；01只found386并最终精�
 3,095 files已提取并保留。r2=`20260830T113000Z__multi-horizon-independent-prep-s0-r2`已用修正`:02`启动，existing
 文件全部复用，只扫描388个scene0110 LIDAR；完成后4-worker preprocess 10 scenes，原P147 evaluator持续等待。
 
+为让GPU与P147 shard02 IO重叠，P157在任何P147 target row出现前冻结并启动horizon-specialist Actor ensemble：分别在
+`.8/1.5/2.5/3.0s` source tokens上训练4个P109-shaped专家，每个专家3个独立成员和自己的normalization；推理采用exact
+horizon，否则路由到不超过请求的最近专家（现有H3.5 cohorts固定路由H3.0）。该方案由AISTATS 2024
+Mixture-of-Linear-Experts、multi-resolution horizon routing与DriveMoE的specialization证据启发，但当前只作consumed
+development；P147 primary P126-vs-P109比较完全不变。P157 canonical=
+`20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1`，12个GPU训练单元正在执行，不扫专家数/router/结构/loss/seed。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P113 complete; P121 independent continuous-object confirmation frozen`
+- 报告状态：`P129 independent ensemble support; P147 multi-horizon confirmation and P157 specialist training active`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -285,6 +285,9 @@ scan分母纠正为02（F118），不改变科学protocol或fresh cohort。
 P156进一步把多时域建模改写为continuous-time residual increments：以真实`H/8`预测velocity error并积分mean/variance，检验
 kinematic temporal coherence能否解除P148 direct position decoder的跨cohort退化；四cohort rank一致下降约`.029`（F119），
 表明independent increment accumulation同样不迁移。P147 r1在0 target read下确认scene0110缺388 files，r2只补修正后的shard02。
+与此同时，P157不再增加共享模型容量，而把`.8/1.5/2.5/3.0s` source domains拆成四个独立三成员专家，并令H3.5固定
+路由到最近的H3.0专家，直接检验shared-horizon negative transfer。该训练与P147 IO并行；它只属于consumed development，
+不会改写P147冻结的P126-vs-P109 primary，结果完成后再写入正文与failure map。
 
 ## 3. 核心结果表
 

@@ -918,6 +918,19 @@
   `20260830T113000Z__multi-horizon-independent-prep-s0-r2`。
 - r1 terminal evidence：03/06/08/09/10 exact scans全命中；01 found386后最终missing388，和scene0110分母精确相等，0 target rows。
 - r2 scope：修正scene0110→02；复用r1已提取3,481 files，只扫描missing388并处理原10 scenes；P147 evaluator PID保持waiting。
+
+### WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01
+
+- 状态：`running consumed development / GPU-overlapped-with-P147-IO`；canonical=
+  `20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1`。
+- hypothesis：P126共享单模型可能把不同预测时域的residual domain压入同一normalization/function；改为`.8/1.5/2.5/3.0s`
+  四个独立专家，每个3 members、各自feature/target normalization，保留P109 diagonal Gaussian score。
+- routing：请求H命中source horizon时exact route，否则使用不超过H的最近专家；现有H3.5 consumed cohorts固定用H3.0，
+  不训练router，不扫专家数或routing规则。
+- training：每member 6,000 steps、batch65,536、hidden`[256,128]`；共12个实际GPU训练单元，与P147 shard02 scan并行。
+- decisions：相对冻结P126，P81/P96/P113/P129 selected continuous cost全部不退，且mean Spearman gain≥`.005`。
+- protocol boundary：只作consumed development；若支持，P147 secondary candidate已在target rows前冻结，但P147 primary
+  P126-vs-P109、五个horizon macro decisions均不改变。不扫architecture/loss/member/seed/score/coverage。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
