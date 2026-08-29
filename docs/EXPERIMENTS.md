@@ -8,7 +8,9 @@
   12,000-step GPU training 已完成，logged price MAE 从 `.636100` 降到 step 11,501 的 `.007005`，但 evaluator 在正式
   三 cohort summary 前因 final-horizon/member 轴切片错误退出；status=`implementation_failed_after_training/no_verdict`。
 - `V67-F194` 的最小修复仅把 shortfall tensor 从误取 member-last 改成明确的 horizon-last；模型、teacher、fixed64
-  group、alpha/floor/fraction 条件、12k steps、两个 P201 gates 均不改。修复 commit=`020726a`，r2 排在 P270 后执行。
+  group、alpha/floor/fraction 条件、12k steps、两个 P201 gates 均不改。修复 commit=`020726a`；r2=
+  `20260831T153500Z__reliability-floor-group-dual-s0-r2`，P201 price MAE=`.024466`、attained fraction MAE=`.012541`、
+  frozen floor-Lagrangian regret=`4.19e-6`、violations=0，2/2，verdict=`supported_reliability_floor_group_dual_compiler`。
 
 ### WS-V67-P270-TAIL-CVAR-EQUIVARIANT-ALLOCATOR-01
 
@@ -20,8 +22,19 @@
   P201 gates仅 normalized budget MAE `<=.075` 与 frozen tail-CVaR Lagrangian regret `<=.005`。
 - r1/r2 在科学计算前分别因缺 `PYTHONPATH=.` 与误用 repo-local runs-root 退出，合并为 `V67-F195`；active r3=
   `run://worldsim_v67/WS-V67-P270-TAIL-CVAR-EQUIVARIANT-ALLOCATOR-01/20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`。
-  当前 status=`running/teacher-target-materialization-and-training`；不声称 predictive-distribution CVaR、hard constraint、
-  online scheduler、planner、closed-loop 或 safety。
+  result：P201 budget MAE=`.011861`、regret=`9.2427e-5`、candidate/teacher CVaR shortfall=`.007834646/.007834645`、
+  price/floor violations=`0/0`；2/2，verdict=`supported_tail_cvar_equivariant_budget_allocator`。wall=`176.94s`、
+  peak GPU/RSS=`.3890/1.6305GiB`。不声称 predictive-distribution CVaR、hard constraint、online scheduler、planner、
+  closed-loop 或 safety。
+
+### WS-V67-P271-VARIABLE-SET-TAIL-CVAR-ALLOCATOR-01
+
+- frozen P270 warm-start；同一 alpha/floor/tail-mass/price protocol 下，训练 group sizes=`32/64/128`，held-out
+  sizes=`48/96`；Deep Sets allocator 原生接受变长集合，不改架构。
+- 两个 P201 aggregate gates继承 P270：budget MAE `<=.075`、frozen tail-CVaR Lagrangian regret `<=.005`；不扫 size、
+  eta/budget grid、steps、architecture 或 gate。
+- active=`run://worldsim_v67/WS-V67-P271-VARIABLE-SET-TAIL-CVAR-ALLOCATOR-01/
+  20260831T154000Z__variable-set-tail-cvar-allocator-s0-r1`；status=`running/multi-cardinality-teacher-and-training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

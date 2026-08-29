@@ -10,7 +10,8 @@
 - root cause：NumPy 从 trailing axes 对齐广播；原 `probability[:,ai,li,:,-1]` 的 `-1` 落在 member 轴而非 horizon 轴；
 - response：参考 NumPy 官方 broadcasting 规则与 ICLR 2022 einops 的显式轴思想，唯一修复为
   `probability[:,ai,li,:,:, -1]`。不引入依赖、不增加 gate/test，不改训练合同；commit=`020726a`；
-- impact：r1=`implementation_failed_after_training/no_verdict`，不解读训练 loss 为科学支持；修复后的 r2 仍须按原门读取。
+- impact：r1=`implementation_failed_after_training/no_verdict`，不解读训练 loss 为科学支持；同合同 r2 的 P201
+  budget-fraction MAE=`.012541`、regret=`4.19e-6`，2/2 通过，状态=`resolved_by_minimal_axis_fix`。
 
 ### V67-F195 — P270 两次 pre-science 启动环境错误
 
@@ -19,7 +20,8 @@
 - exposure：两次都未完成 frozen artifact load、teacher target、optimizer step 或 metric read，不构成科学 trial；
 - resolution：r3 只修启动命令为 `PYTHONPATH=.` 与 absolute runs-root `/root/autodl-tmp/runs`；实验配置、seed、模型、
   teacher、门和 claim 不变；
-- impact：canonical scientific run 迁移到 `20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`，当前运行中。
+- impact：canonical scientific run 迁移到 `20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`；该 run P201 budget
+  MAE=`.011861`、regret=`9.24e-5`，2/2 通过，状态=`resolved_before_scientific_trial`。
 
 下一可用编号：`V67-F196`。
 
