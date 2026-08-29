@@ -442,8 +442,9 @@
 - P357：monotone-horizon q90 source/P201 risk=`.26173/.16364`，登记F232；
 - P358：fixed-grid multi-horizon q90 source/P201 risk=`.34097/.11236`，登记F233；
 - P359：horizon-group q90 coverage/risk=`.29317/.10526`，登记F234；
-- P360：one-sided multi-horizon reliability active；
-- 下一可用 failure id 为 `V67-F235`。
+- P360：one-sided q90 coverage/risk=`.34290/.10753`，登记F235；
+- P361：pairwise one-sided reliability active；
+- 下一可用 failure id 为 `V67-F236`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -718,6 +719,18 @@
   显式压低false positive。P360据此在表示训练中固定unsafe positive weight=9，再用无权重校准恢复probability；
 - forbidden rescue：不扫temperature、PAV、threshold或class weight，不把P201的边界差用于调参；resolution=
   `close calibration-only family; open P360 one-sided representation training`。
+
+### V67-F235 — P360点式one-sided BCE恢复coverage但未消除严格ceiling排序尾差
+
+- canonical=`run://worldsim_v67/WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/
+  20260901T173000Z__one-sided-multihorizon-reliability-s0-r1`；
+- symptom：P201 q90 coverage/unsafe=`.342896/.107527`，覆盖充分但strict ceiling仍有10/93 unsafe，故3/4 rejected；
+- retained evidence：相对P359，coverage `.293169→.342896`，source risk `.296380→.258403`，说明fixed one-sided
+  weight改善了representation；P201 risk的小幅回升说明点式loss仍容许少数critical pair inversion；
+- literature/migration：COLT 2013把AUC regret归约为bipartite pairwise classification，NeurIPS 2025 selective-gap
+  分解也明确指出单调校准不改变ranking。P361在同horizon/ceiling内直接优化unsafe-vs-safe RankNet loss；
+- forbidden rescue：不扫positive weight、pairwise weight/count/margin或threshold；resolution=
+  `retain one-sided anchor; open P361 pairwise ranking refinement`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

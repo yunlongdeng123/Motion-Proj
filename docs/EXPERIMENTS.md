@@ -1374,7 +1374,20 @@
   SelectiveNet与one-sided prediction均直接联合优化选择质量并强调低错误率端的false-positive控制。
 - method：P359四头网络的BCE训练对unsafe positive固定赋权9（由冻结risk endpoint `.10`直接确定），
   horizon-group temperature/bias与per-horizon PAV保持无权重，避免把训练权重误作概率。
-- locks：weight固定不扫，不改grid/head/width/steps/threshold/seed，P201不训练/校准；状态=`active`。
+- locks：weight固定不扫，不改grid/head/width/steps/threshold/seed，P201不训练/校准；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/
+  20260901T173000Z__one-sided-multihorizon-reliability-s0-r1`。
+- result：weighted train/unweighted group-cal/PAV BCE=`.335859/.323726/.336053`；source q90=
+  `.305585/.258403`，P201=`.342896/.107527`；coverage及monotonicity三门过、risk失败，3/4 rejected；
+  wall=`59.31s`，F235。
+
+### WS-V67-P361-PAIRWISE-ONE-SIDED-RELIABILITY-01
+
+- migration：P360恢复coverage并降低source risk，但strict-ceiling 10/93离散尾仍卡在`.10`外；点式weighted BCE
+  没有直接惩罚unsafe排在safe以下的pairwise inversion。
+- method：每step固定一个horizon/ceiling并采512 source rows；三个set-size各采256个unsafe--safe pairs，加入
+  `softplus(-(unsafe_logit-safe_logit))`，权重固定1；P360 weighted BCE、horizon-group calibration/PAV保持。
+- locks：不扫pair count/loss weight/margin/batch/head/threshold/seed，P201不训练/校准；状态=`active`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

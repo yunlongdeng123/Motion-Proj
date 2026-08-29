@@ -1183,6 +1183,8 @@ def main() -> None:
             development_rows = row_fold == int(split["development_scene_remainder"])
             model_config = config["reliability_model"]
             one_sided_positive_weight = float(config.get("reliability_one_sided_positive_weight", 1.0))
+            pairwise_ranking_weight = float(config.get("reliability_pairwise_ranking_weight", 0.0))
+            pairwise_pairs_per_set = int(config.get("reliability_pairwise_pairs_per_set", 256))
             ensemble_fit_remainders = config.get("reliability_crossfold_ensemble_fit_remainders")
             if ensemble_fit_remainders is not None:
                 ensemble_fit_remainders = [int(value) for value in ensemble_fit_remainders]
@@ -1248,6 +1250,7 @@ def main() -> None:
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             last = 0.0
+            pairwise_ranking_last = None
             domain_adversarial_last = None
             teacher_consistency_last = None
             ensemble_member_last = [None] * len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else None
@@ -1262,16 +1265,42 @@ def main() -> None:
                 row = active_fit_index[
                     torch.randint(len(active_fit_index), (int(model_config["batch_size"]),), device="cuda")
                 ]
-                local_horizon_index = training_horizon_tensor[
-                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
-                ]
-                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                if pairwise_ranking_weight > 0.0:
+                    local_horizon_index = training_horizon_tensor[
+                        torch.randint(len(training_horizon_tensor), (1,), device="cuda")
+                    ].expand(len(row))
+                    local_ceiling = ceiling_tensor[
+                        torch.randint(len(ceiling_tensor), (1,), device="cuda")
+                    ].expand(len(row))
+                else:
+                    local_horizon_index = training_horizon_tensor[
+                        torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                    ]
+                    local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
                 logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
                 target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
                 reliability_loss = F.binary_cross_entropy_with_logits(
                     logits, target,
                     pos_weight=torch.as_tensor(one_sided_positive_weight, device="cuda"),
                 )
+                if pairwise_ranking_weight > 0.0:
+                    ranking_terms = []
+                    for set_size_index in range(len(set_sizes)):
+                        positive = torch.flatnonzero(target[:, set_size_index] > 0.5)
+                        negative = torch.flatnonzero(target[:, set_size_index] <= 0.5)
+                        if len(positive) and len(negative):
+                            positive_row = positive[
+                                torch.randint(len(positive), (pairwise_pairs_per_set,), device="cuda")
+                            ]
+                            negative_row = negative[
+                                torch.randint(len(negative), (pairwise_pairs_per_set,), device="cuda")
+                            ]
+                            ranking_terms.append(F.softplus(-(
+                                logits[positive_row, set_size_index] - logits[negative_row, set_size_index]
+                            )).mean())
+                    pairwise_ranking_loss = torch.stack(ranking_terms).mean() if ranking_terms else logits.sum() * 0.0
+                    reliability_loss = reliability_loss + pairwise_ranking_weight * pairwise_ranking_loss
+                    pairwise_ranking_last = float(pairwise_ranking_loss.detach())
                 if domain_adversarial_training:
                     target_domain_row = torch.randint(len(p201_x), (len(row),), device="cuda")
                     domain_features = torch.cat((source_x[row], p201_x[target_domain_row]), 0)
@@ -1849,6 +1878,8 @@ def main() -> None:
                              "ensemble_member_final_bce": ensemble_member_last,
                              "ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                              "one_sided_positive_weight": one_sided_positive_weight,
+                             "pairwise_ranking_weight": pairwise_ranking_weight,
+                             "pairwise_ranking_final_loss": pairwise_ranking_last,
                              "frozen_reliability_model": frozen_reliability_model,
                              "feature_calibrator_steps": int(feature_calibrator_config["steps"]) if feature_calibrator_config else 0,
                              "feature_calibrator_final_bce": feature_calibrator_last,

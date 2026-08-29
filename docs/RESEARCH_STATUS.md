@@ -712,7 +712,14 @@ Canonical=`run://worldsim_v67/WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-0
 
 P360按ICML 2019 SelectiveNet与AISTATS 2021 one-sided prediction，直接在四头表示训练时将unsafe false-admission
 作为高代价一侧，固定positive weight=`(1-.10)/.10=9`；后续仍用无权重horizon-group calibration恢复概率语义。
-该轮优化ranking而非阈值，不扫class weight，当前进入GPU训练。
+Canonical=`run://worldsim_v67/WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/
+20260901T173000Z__one-sided-multihorizon-reliability-s0-r1`：source/P201 q90 coverage/unsafe=
+`.305585/.258403`与`.342896/.107527`。Coverage明显恢复、source risk下降，但P201 strict-ceiling仍为10/93 unsafe，
+3/4 rejected，登记F235；one-sided方向保留，不扫weight。
+
+P361按COLT 2013 AUC pairwise reduction与NeurIPS 2025 selective gap的ranking-error分解，在P360 loss上加入固定权重1的
+RankNet logistic pairwise loss：同一horizon/ceiling batch内显式要求unsafe score高于safe score，每个set-size采256对，
+同时保留one-sided proper-loss anchor与无权重校准。当前进入GPU训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
