@@ -309,7 +309,19 @@
 - structural recovery：冻结 P291 quantile model、adaptive offsets、global corrections、scene split 与 student warm start；
   唯一改变为 lower-quartile pinball student loss，对 `student > conservative teacher` 施加 3:1 权重。
 - fixed run：`output_quantile=.25`、6k steps、lr `.0005`；P291 三门原样继承，不扫 quantile/lr/steps/gates。
-- 仅当 P291R 通过，才把原 staged P292 teacher 引用更新到 P291R 并启动 allocator。
+- canonical=`run://worldsim_v67/WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/
+  20260831T220000Z__one-sided-adaptive-lcb-s0-r1`。
+- result：P201 surface/final MAE=`.0041245/.0033175`、coverage=`.87337/.82306/.78372/.72921`、max
+  undercoverage=`.051625`、mean conservatism=`.0158992 < P284 .0172214`、violations=`0/0/0`；3/3，verdict=
+  `supported_one_sided_distilled_context_adaptive_LCB_surface`。wall=`102.09s`、peak GPU/RSS=`.1404/1.9288GiB`。
+
+### WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01
+
+- frozen P291R 是唯一 reliability teacher；复用 P285 fixed64 monotone soft-floor allocator与相同
+  alpha/tolerance/floor/price grid、12k steps，不对 P291R teacher 做 refit。
+- gates继承 P285：P201 normalized log-budget MAE `<=.075`、frozen LCB-floor regret `<=.005`；P243 descriptive。
+- active=`run://worldsim_v67/WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
+  20260831T221500Z__context-adaptive-lcb-policy-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

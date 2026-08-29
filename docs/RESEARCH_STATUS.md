@@ -167,7 +167,15 @@ exaggeration，而不是 adaptive quantile teacher 失效。
 
 检索 NeurIPS 2023 student-teacher deviation 后，P291R 已冻结为单次结构恢复：完全复用 P291 quantile model、
 scene split、offset/correction、student warm start、模型架构和三门，只把 L1 改为固定 lower-quartile pinball loss，
-以更重惩罚 student 高于保守 teacher；6k steps、lr `.0005`，不扫 quantile/lr/steps。实现已就绪，随后启动 GPU。
+以更重惩罚 student 高于保守 teacher；6k steps、lr `.0005`，不扫 quantile/lr/steps。Canonical=`run://worldsim_v67/
+WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adaptive-lcb-s0-r1`：P201
+surface MAE=`.0041245`、coverage=`.87337/.82306/.78372/.72921`、max undercoverage=`.051625`、mean conservatism=
+`.0158992 < P284 .0172214`、violations=`0/0/0`，3/3；wall=`102.09s`。`V67-F198` 已由一次结构恢复关闭。
+
+P292 已把冻结 P291R 作为唯一 reliability teacher，复用 P285 同一 soft-floor Lagrangian allocator、训练/heldout
+conditions、12k steps 与 `.075/.005` 两门，不改 grid/penalty/架构。Active=`run://worldsim_v67/
+WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
+20260831T221500Z__context-adaptive-lcb-policy-s0-r1`，GPU 正在生成 teacher targets并训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

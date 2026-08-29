@@ -192,6 +192,13 @@
 - structural recovery：P291R 冻结全部 adaptive teacher与三门，仅用 fixed lower-quartile pinball 做单侧蒸馏；
 - 下一可用 failure id 为 `V67-F199`。
 
+### V67-F198 resolution / P292 start note — 无新增 failure
+
+- P291R P201 max undercoverage=`.051625`、mean conservatism=`.0158992 < P284 .0172214`，3/3；说明单侧
+  distillation 在不放弃 adaptive efficiency 的情况下恢复 empirical coverage；
+- P292 只编译冻结 P291R 到 P285 同构 soft-floor allocator，不改变 coverage对象、student loss或 P285两门；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
