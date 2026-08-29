@@ -225,6 +225,23 @@ class ContextPositiveRiskSlope(nn.Module):
         return F.softplus(self.network(features)).squeeze(1)
 
 
+class ContextPositiveRiskCurvature(nn.Module):
+    """Positive slope and two-sided curvature around an exactly preserved quantile anchor."""
+
+    def __init__(self, input_width: int, hidden_dimensions) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 3))
+        self.network = nn.Sequential(*layers)
+
+    def forward(self, features):
+        return F.softplus(self.network(features))
+
+
 class LatticeRiskSizeHorizonAuthority(nn.Module):
     """Context-conditioned partial-monotone lattice over horizon, quantile, and set size."""
 
@@ -626,6 +643,7 @@ def main() -> None:
     horizon_locally_adaptive_lattice_calibration_training = bool(config.get("horizon_locally_adaptive_lattice_calibration_training", False))
     horizon_risk_locally_adaptive_lattice_calibration_training = bool(config.get("horizon_risk_locally_adaptive_lattice_calibration_training", False))
     horizon_anchor_preserving_continuous_risk_training = bool(config.get("horizon_anchor_preserving_continuous_risk_training", False))
+    horizon_anchor_preserving_risk_curvature_training = bool(config.get("horizon_anchor_preserving_risk_curvature_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -659,7 +677,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -715,8 +733,8 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training:
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training:
             source_prefix, source_prefix_target = [], []
             p201_prefix, p201_prefix_target = [], []
             for set_size in config["authority_set_sizes"]:
@@ -845,7 +863,8 @@ def main() -> None:
             (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
             print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
             return
-        if horizon_anchor_preserving_continuous_risk_training:
+        if horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training:
+            risk_curvature = horizon_anchor_preserving_risk_curvature_training
             frozen_lattice = torch.load(
                 args.runs_root / config["frozen_lattice_authority"]["run"] / config["frozen_lattice_authority"]["artifact"],
                 map_location="cuda",
@@ -893,7 +912,21 @@ def main() -> None:
             scale_fit_rows = source_example_scenes % modulus == int(split["scale_fit_scene_remainder"])
             normalized_calibration_rows = source_example_scenes % modulus == int(split["normalized_calibration_scene_remainder"])
             slope_config = config["risk_slope_model"]
-            risk_slope = ContextPositiveRiskSlope(source_feature.shape[1], slope_config["hidden_dimensions"]).cuda()
+            risk_slope = (
+                ContextPositiveRiskCurvature(source_feature.shape[1], slope_config["hidden_dimensions"])
+                if risk_curvature else ContextPositiveRiskSlope(source_feature.shape[1], slope_config["hidden_dimensions"])
+            ).cuda()
+            frozen_linear_slope = None
+            if risk_curvature:
+                frozen_linear = torch.load(
+                    args.runs_root / config["frozen_linear_risk"]["run"] / config["frozen_linear_risk"]["artifact"],
+                    map_location="cuda",
+                )
+                frozen_linear_slope = ContextPositiveRiskSlope(
+                    int(frozen_linear["input_width"]), frozen_linear["hidden_dimensions"]
+                ).cuda()
+                frozen_linear_slope.load_state_dict(frozen_linear["risk_slope_state_dict"])
+                frozen_linear_slope.eval()
             optimizer = torch.optim.AdamW(
                 risk_slope.parameters(), lr=float(slope_config["learning_rate"]), weight_decay=float(slope_config["weight_decay"])
             )
@@ -918,7 +951,15 @@ def main() -> None:
                     anchor_margin = anchor_threshold * source_anchor_scale[
                         row, local_size_index, local_horizon_index
                     ]
-                prediction = raw_prediction + anchor_margin + (local_q - anchor_q) * risk_slope(source_x[row])
+                delta = local_q - anchor_q
+                if risk_curvature:
+                    local_shape = risk_slope(source_x[row])
+                    deformation = delta * local_shape[:, 0] + torch.where(
+                        delta < 0, -(delta ** 2) * local_shape[:, 1], (delta ** 2) * local_shape[:, 2]
+                    )
+                else:
+                    deformation = delta * risk_slope(source_x[row])
+                prediction = raw_prediction + anchor_margin + deformation
                 error = y[row, local_size_index, local_horizon_index] - prediction
                 loss = torch.maximum(local_q * error, (local_q - 1.0) * error).mean()
                 optimizer.zero_grad(set_to_none=True)
@@ -932,15 +973,31 @@ def main() -> None:
             source_frontier, p201_frontier = {}, {}
             source_score_stack, p201_score_stack = [], []
             with torch.no_grad():
-                source_slope = risk_slope(source_x)[:, None]
-                p201_slope = risk_slope(p201_x)[:, None]
+                source_shape = risk_slope(source_x)
+                p201_shape = risk_slope(p201_x)
+                if risk_curvature:
+                    source_linear_shape = frozen_linear_slope(source_x)[:, None]
+                else:
+                    source_shape = source_shape[:, None]
+                    p201_shape = p201_shape[:, None]
                 heldout_h = torch.full((len(source_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
                 p201_heldout_h = torch.full((len(p201_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
                 for q_value in evaluation_quantiles:
                     source_q = torch.full((len(source_x),), float(q_value), device="cuda")
                     p201_q = torch.full((len(p201_x),), float(q_value), device="cuda")
-                    source_score = lattice_model(source_x, heldout_h, source_q) + anchor_threshold * source_anchor_scale[:, :, heldout_horizon_index] + (float(q_value) - anchor_q) * source_slope
-                    p201_score = lattice_model(p201_x, p201_heldout_h, p201_q) + anchor_threshold * p201_anchor_scale[:, :, heldout_horizon_index] + (float(q_value) - anchor_q) * p201_slope
+                    delta = float(q_value) - anchor_q
+                    if risk_curvature:
+                        source_deformation = delta * source_shape[:, :1] + (
+                            -(delta ** 2) * source_shape[:, 1:2] if delta < 0 else (delta ** 2) * source_shape[:, 2:3]
+                        )
+                        p201_deformation = delta * p201_shape[:, :1] + (
+                            -(delta ** 2) * p201_shape[:, 1:2] if delta < 0 else (delta ** 2) * p201_shape[:, 2:3]
+                        )
+                    else:
+                        source_deformation = delta * source_shape
+                        p201_deformation = delta * p201_shape
+                    source_score = lattice_model(source_x, heldout_h, source_q) + anchor_threshold * source_anchor_scale[:, :, heldout_horizon_index] + source_deformation
+                    p201_score = lattice_model(p201_x, p201_heldout_h, p201_q) + anchor_threshold * p201_anchor_scale[:, :, heldout_horizon_index] + p201_deformation
                     source_score_np = source_score.cpu().numpy()
                     p201_score_np = p201_score.cpu().numpy()
                     source_score_stack.append(source_score_np)
@@ -954,6 +1011,21 @@ def main() -> None:
                         np.asarray(frozen_lattice["heldout_log_cost_ceilings"], np.float32), set_sizes,
                     )
             quantile_order_violations = int(np.sum(np.diff(np.stack(p201_score_stack, 0), axis=0) < -1e-6))
+            source_pinball = []
+            linear_source_pinball = []
+            source_local_target = source_target[normalized_calibration_rows, :, heldout_horizon_index]
+            for quantile_index, q_value in enumerate(evaluation_quantiles):
+                error = source_local_target - source_score_stack[quantile_index][normalized_calibration_rows]
+                source_pinball.append(float(np.mean(np.maximum(float(q_value) * error, (float(q_value) - 1.0) * error))))
+                if risk_curvature:
+                    with torch.no_grad():
+                        local_q = torch.full((len(source_x),), float(q_value), device="cuda")
+                        raw_linear = lattice_model(source_x, heldout_h, local_q)
+                        score_linear = raw_linear + anchor_threshold * source_anchor_scale[:, :, heldout_horizon_index] + (float(q_value) - anchor_q) * source_linear_shape
+                    linear_error = source_local_target - score_linear.cpu().numpy()[normalized_calibration_rows]
+                    linear_source_pinball.append(float(np.mean(np.maximum(float(q_value) * linear_error, (float(q_value) - 1.0) * linear_error))))
+            mean_source_pinball = float(np.mean(source_pinball))
+            mean_linear_source_pinball = None if not risk_curvature else float(np.mean(linear_source_pinball))
             anchor_key = f"{anchor_q:.2f}"
             p201_metrics = p201_frontier[anchor_key]
             decision = config["decision"]
@@ -962,10 +1034,13 @@ def main() -> None:
                 "P201_anchor_coverage": p201_metrics["mean_any_authority_coverage"] >= float(decision["minimum_P201_mean_any_authority_coverage"]),
                 "P201_anchor_size_and_ceiling_monotonicity": p201_metrics["score_set_size_monotonicity_violations"] == 0 and p201_metrics["ceiling_selected_size_monotonicity_violations"] == 0,
             }
+            if risk_curvature:
+                checks["source_continuous_risk_pinball_not_worse_than_linear"] = mean_source_pinball <= mean_linear_source_pinball
             verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
             torch.save({
                 "risk_slope_state_dict": risk_slope.state_dict(), "input_width": source_feature.shape[1],
                 "hidden_dimensions": slope_config["hidden_dimensions"], "anchor_quantile_level": anchor_q,
+                "risk_deformation_type": "two_sided_positive_quadratic_curvature" if risk_curvature else "positive_linear_slope",
                 "training_quantile_range": training_quantile_range, "frozen_local_anchor": config["frozen_local_anchor"],
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
@@ -980,6 +1055,9 @@ def main() -> None:
                 "source_continuous_risk_frontier": source_frontier,
                 "P201_continuous_risk_frontier": p201_frontier,
                 "P201_quantile_order_violations": quantile_order_violations,
+                "source_heldout_quantile_pinball_by_level": {f"{float(q):.2f}": value for q, value in zip(evaluation_quantiles, source_pinball)},
+                "source_heldout_mean_quantile_pinball": mean_source_pinball,
+                "P335_linear_source_heldout_mean_quantile_pinball": mean_linear_source_pinball,
                 "decision_checks": checks,
                 "resources": {"gpu": torch.cuda.get_device_name(0), "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
                               "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
