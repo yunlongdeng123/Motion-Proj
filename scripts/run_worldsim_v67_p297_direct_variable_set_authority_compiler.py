@@ -58,6 +58,26 @@ class AttentiveDirectAuthorityCompiler(EpistemicTailCVaRAllocator):
         )
 
 
+class SelfConsistentProjectedAuthorityCompiler(nn.Module):
+    """Shift direct budgets to the mean interpolated between their own endpoint predictions."""
+
+    def __init__(self, base):
+        super().__init__()
+        self.base = base
+
+    def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
+        raw = self.base(groups, pseudo_price, alpha, beta, floor, tail_mass)
+        low = self.base(groups, torch.ones_like(pseudo_price), alpha, beta, floor, tail_mass)
+        high = self.base(groups, -torch.ones_like(pseudo_price), alpha, beta, floor, tail_mass)
+        fraction = (1 - pseudo_price) / 2
+        raw_cost = (raw + 1) / 2
+        low_mean = ((low + 1) / 2).mean(1)
+        high_mean = ((high + 1) / 2).mean(1)
+        desired_mean = low_mean + fraction * (high_mean - low_mean)
+        shift = desired_mean - raw_cost.mean(1)
+        return 2 * (raw_cost + shift[:, None]).clamp(0, 1) - 1
+
+
 def _predict_direct(model, groups, alphas, tolerance_z, floor_z, tails, fractions):
     x = torch.from_numpy(groups).cuda()
     by_alpha = []
@@ -219,7 +239,17 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    if "attention_heads" in model_config:
+    if model_config.get("self_consistent_projection", False):
+        base_student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        base_student.load_state_dict(direct_artifact["model_state_dict"])
+        student = SelfConsistentProjectedAuthorityCompiler(base_student).cuda()
+    elif "attention_heads" in model_config:
         student = AttentiveDirectAuthorityCompiler(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]),
             int(policy_artifact["rate_knot_count"]), int(model_config["attention_heads"]),
@@ -311,7 +341,7 @@ def main():
         "P201_direct_composite_regret": p201["mean_frozen_composite_Lagrangian_group_utility_regret"] <= float(decision["maximum_P201_mean_frozen_composite_Lagrangian_regret"]),
     }
     if "P297_P201_attained_budget_fraction_MAE" in decision:
-        checks["P201_attention_improves_attained_fraction_over_P297"] = (
+        checks["P201_direct_improves_attained_fraction_over_P297"] = (
             p201["attained_budget_fraction_MAE"] < float(decision["P297_P201_attained_budget_fraction_MAE"])
         )
     verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
@@ -324,6 +354,7 @@ def main():
         "floor_domain": floor_domain,
         "fraction_input_is_one_minus_two_fraction": True,
         "attention_heads": model_config.get("attention_heads"),
+        "self_consistent_projection": model_config.get("self_consistent_projection", False),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {
