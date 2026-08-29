@@ -92,6 +92,45 @@ class ConvexEndpointAuthorityCompiler(nn.Module):
         return low + fraction[:, None] * (high - low)
 
 
+class PiecewiseAnchorAuthorityCompiler(nn.Module):
+    """Interpolate between fixed monotone fraction anchors without a runtime dual."""
+
+    def __init__(self, base, anchor_fractions):
+        super().__init__()
+        anchors = torch.as_tensor(anchor_fractions, dtype=torch.float32)
+        if anchors.ndim != 1 or len(anchors) < 3 or not torch.all(anchors[1:] > anchors[:-1]):
+            raise ValueError("piecewise anchor fractions must be a strictly increasing 1D sequence")
+        self.base = base
+        self.anchor_values = tuple(float(value) for value in anchors.tolist())
+        self.register_buffer("anchor_fractions", anchors)
+
+    def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
+        predictions = torch.stack([
+            self.base(
+                groups, torch.full_like(pseudo_price, float(1 - 2 * anchor)),
+                alpha, beta, floor, tail_mass,
+            )
+            for anchor in self.anchor_values
+        ], 1)
+        fraction = ((1 - pseudo_price) / 2).clamp(
+            float(self.anchor_fractions[0]), float(self.anchor_fractions[-1])
+        )
+        segment = torch.bucketize(fraction.contiguous(), self.anchor_fractions[1:-1])
+        row = torch.arange(len(fraction), device=fraction.device)
+        low = predictions[row, segment]
+        high = predictions[row, segment + 1]
+        low_fraction = self.anchor_fractions[segment]
+        high_fraction = self.anchor_fractions[segment + 1]
+        weight = (fraction - low_fraction) / (high_fraction - low_fraction)
+        return low + weight[:, None] * (high - low)
+
+
+def _load_base_state(module, artifact):
+    state = artifact["model_state_dict"]
+    prefixed = {key.removeprefix("base."): value for key, value in state.items() if key.startswith("base.")}
+    module.load_state_dict(prefixed if prefixed else state)
+
+
 def _predict_direct(model, groups, alphas, tolerance_z, floor_z, tails, fractions):
     x = torch.from_numpy(groups).cuda()
     by_alpha = []
@@ -253,7 +292,7 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    if model_config.get("convex_endpoint_rule", False):
+    if "piecewise_anchor_fractions" in model_config:
         base_student = EpistemicTailCVaRAllocator(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
         ).cuda()
@@ -261,7 +300,17 @@ def main():
         direct_artifact = torch.load(
             args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
         )
-        base_student.load_state_dict(direct_artifact["model_state_dict"])
+        _load_base_state(base_student, direct_artifact)
+        student = PiecewiseAnchorAuthorityCompiler(base_student, model_config["piecewise_anchor_fractions"]).cuda()
+    elif model_config.get("convex_endpoint_rule", False):
+        base_student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        _load_base_state(base_student, direct_artifact)
         student = ConvexEndpointAuthorityCompiler(base_student).cuda()
     elif model_config.get("self_consistent_projection", False):
         base_student = EpistemicTailCVaRAllocator(
@@ -271,7 +320,7 @@ def main():
         direct_artifact = torch.load(
             args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
         )
-        base_student.load_state_dict(direct_artifact["model_state_dict"])
+        _load_base_state(base_student, direct_artifact)
         student = SelfConsistentProjectedAuthorityCompiler(base_student).cuda()
     elif "attention_heads" in model_config:
         student = AttentiveDirectAuthorityCompiler(
@@ -368,6 +417,10 @@ def main():
         checks["P201_direct_improves_attained_fraction_over_P297"] = (
             p201["attained_budget_fraction_MAE"] < float(decision["P297_P201_attained_budget_fraction_MAE"])
         )
+    if "baseline_P201_attained_budget_fraction_MAE" in decision:
+        checks["P201_direct_improves_attained_fraction_over_frozen_baseline"] = (
+            p201["attained_budget_fraction_MAE"] < float(decision["baseline_P201_attained_budget_fraction_MAE"])
+        )
     if "maximum_P201_fraction_budget_monotonicity_violations" in decision:
         checks["P201_fraction_budget_monotonicity"] = (
             p201["fraction_budget_monotonicity_violations"]
@@ -385,6 +438,7 @@ def main():
         "attention_heads": model_config.get("attention_heads"),
         "self_consistent_projection": model_config.get("self_consistent_projection", False),
         "convex_endpoint_rule": model_config.get("convex_endpoint_rule", False),
+        "piecewise_anchor_fractions": model_config.get("piecewise_anchor_fractions"),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {

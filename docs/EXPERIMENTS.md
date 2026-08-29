@@ -441,8 +441,22 @@
   `b1>=b0`，逐 Actor与 group mean对 fraction均结构单调；仅两次 shared forward。
 - fixed run：6k steps、lr `.0003`；三门为 P201 attained MAE `<.0297261076`、regret `<=.005`、fraction-budget
   violations=`0`；不扫 endpoint rule/steps/lr/gates。
-- active=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
   20260901T004500Z__convex-endpoint-authority-s0-r1`。
+- result：P201 budget/attained MAE=`.0096838/.0285229`、regret=`7.7359e-5`、violations=`0`；3/3，verdict=
+  `supported_monotone_convex_endpoint_direct_authority_compiler`。source attained MAE=`.0232693`；P201 size48/96=
+  `.0284211/.0286248`；forward=`.6271s`、wall=`364.22s`、peak GPU/RSS=`.32094/3.9826GiB`。
+
+### WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01
+
+- research progression：P301 两端点规则结构正确但只能表达 fraction线性曲线；依据 NeurIPS 2017 Deep Lattice
+  Networks 的 monotone piecewise-linear calibrator原则，增加唯一内部 anchor `.5`。
+- rule：同一 frozen P301 base在 fraction `0/.5/1` 产生有序逐 Actor budgets，请求 fraction只在相邻 anchors间
+  线性插值；三次 shared forward、无 dual/bisection，单调性仍为结构性质。
+- fixed run：6k steps、lr `.0003`；P201 attained MAE必须严格优于 P301 `.0285229301`、regret `<=.005`、
+  violations=`0`；不扫 anchor数/位置/steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
+  20260901T010000Z__piecewise-anchor-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

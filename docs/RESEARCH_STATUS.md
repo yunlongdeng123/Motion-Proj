@@ -240,8 +240,16 @@ regret=`.00014114`，三门通过；但 descriptive fraction-budget monotonicity
 依据 NeurIPS 2025 decision-rule convex combination，P301 用更强结构替代 uniform shift：同一 P297 base只预测
 fraction0/1逐 Actor endpoints，输出固定为 `b(f)=(1-f)b0+f b1`；两次共享网络 forward即可同时保证 group mean
 线性与逐 Actor fraction单调。单次6k fine-tune，门冻结为 attained MAE `<.0297261`、regret `<=.005`、violations=0。
-Active=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
-20260901T004500Z__convex-endpoint-authority-s0-r1`，GPU 已启动。
+Canonical=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
+20260901T004500Z__convex-endpoint-authority-s0-r1`：P201 budget/attained MAE=`.0096838/.0285229`、regret=
+`7.7359e-5`、fraction-budget violations=`0`，3/3；source attained MAE=`.0232693`。因此 F201 的结构缺陷被
+零违例恢复，但两端点线性规则只小幅优于 P297 `.0297261`；wall=`364.22s`、forward=`.6271s`。
+
+P302 依据 NeurIPS 2017 Deep Lattice 的单调分段插值，把 P301 两端点扩为固定 `0/.5/1` 三锚点；相邻锚点
+逐 Actor线性插值，仍由同一 monotone base保证相邻 anchor有序，三次 shared forward且无 dual/bisection。冻结
+P301 base、6k steps/lr `.0003`，要求 P201 attained MAE严格优于 `.02852293`、regret `<=.005`、violations=0，
+不扫 anchor数/位置。Active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
+20260901T010000Z__piecewise-anchor-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -277,7 +277,8 @@
 - latent structural defect：P201 fraction-budget monotonicity violations=`10,754`（size48/96=`4,744/6,010`），
   source=`20,746`。uniform mean shift + box clip可保 aggregate mean，却不能保每个 Actor budget顺序；
 - accurate disposition：记录 supported constraint fidelity，但 P300不进入最终 compiler，不写 monotone authority claim；
-- structural recovery：P301 用同一 model 0/1 endpoints逐元素 convex combination，预注册 violations必须为0；
+- structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
+  `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302继续用固定三锚点提高非线性 fidelity；
 - 下一可用 failure id 为 `V67-F202`。
 
 > **最后更新**：2026-08-29
