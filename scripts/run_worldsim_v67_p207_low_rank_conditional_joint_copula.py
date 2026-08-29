@@ -18,7 +18,9 @@ class LowRankConditionalCopula(nn.Module):
  def __init__(self,input_count,hidden,dimension,rank):
   super().__init__();layers=[];width=input_count
   for h in hidden:layers.extend((nn.Linear(width,int(h)),nn.SiLU()));width=int(h)
-  out=nn.Linear(width,dimension*rank+dimension);nn.init.zeros_(out.weight);nn.init.zeros_(out.bias);layers.append(out);self.net=nn.Sequential(*layers);self.dimension=dimension;self.rank=rank
+  out=nn.Linear(width,dimension*rank+dimension);nn.init.normal_(out.weight,std=.01);nn.init.zeros_(out.bias)
+  with torch.no_grad():out.bias[:dimension*rank].normal_(std=.05)
+  layers.append(out);self.net=nn.Sequential(*layers);self.dimension=dimension;self.rank=rank
  def correlation_cholesky(self,features):
   raw=self.net(features);factor=.75*torch.tanh(raw[:,:self.dimension*self.rank]).reshape(-1,self.dimension,self.rank);diagonal=functional.softplus(raw[:,self.dimension*self.rank:])+.2;cov=factor@factor.transpose(1,2)+torch.diag_embed(diagonal.square());scale=torch.sqrt(torch.diagonal(cov,dim1=1,dim2=2).clamp_min(1e-8));corr=cov/(scale[:,:,None]*scale[:,None,:]);return torch.linalg.cholesky(corr+1e-4*torch.eye(self.dimension,device=features.device)[None])
 

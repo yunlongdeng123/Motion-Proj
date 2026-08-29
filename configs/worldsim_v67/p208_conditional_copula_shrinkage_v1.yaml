@@ -1,0 +1,31 @@
+schema_version: worldsim_v67.p208_conditional_copula_shrinkage.v1
+output_schema_version: worldsim_v67.p208_conditional_copula_shrinkage_summary.v1
+task_id: WS-V67-P208-CONDITIONAL-COPULA-SHRINKAGE-01
+hypothesis_id: WS-V67-H-P208-001
+role: source_development_conditional_mixture_copula
+seed: 0
+model_artifact: CONDITIONAL_COPULA_SHRINKAGE.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+training: {steps: 6000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001, initial_P199_logit: 2.0}
+evaluation: {monte_carlo_samples: 1024, probability_clip: 0.0001}
+decision: {minimum_calibration_error_reduction_vs_P199: 0.0}
+verdict_on_pass: supported_conditional_copula_shrinkage
+verdict_on_failure: rejected_conditional_copula_shrinkage
+locks:
+  P199_and_independence_are_frozen_copula_components: true
+  single_linear_eight_feature_gate_only: true
+  data_split_P182_marginals_PIT_joint_event_budgets_and_MC_match_P199: true
+  P201_is_excluded_and_unchanged: true
+  no_gate_depth_component_loss_step_lr_or_MC_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - source_development_mixture_copula_trial_only
+  - no_fresh_generalization_claim_until_P201
+  - no_formal_calibration_collision_conformal_planner_policy_closed_loop_or_safety_claim

@@ -34,13 +34,24 @@ directional diagonal-Gaussian进一步以boundary-normal projection获得更强�
 
 在此边际结论上，P199首次把同一candidate trajectory的四个horizon对齐并学习Gaussian-copula dependence；source-heldout
 joint-all-H reliability相对P182 marginal independence product的Brier改善`16.97%`、calibration error改善`71.85%`。P200在已消费
-P183 rows上的secondary改善`17.40%/66.72%`，量级一致但尚非独立。P201 fresh joint confirmation正在进行，因此当前arXiv主结论
-仍以P183 marginals为硬证据，joint result标注为development/secondary。P202说明直接joint CDF虽将calibration error再降
+P183 rows上的secondary改善`17.40%/66.72%`。P201进一步在10个未读official-val scenes/10 logs、1,846 joint trajectories上
+确认：相对independent marginals的Brier改善`17.52%`、calibration error改善`53.37%`，两门均通过。因此joint-horizon
+dependence现获得fresh scene-level支持；不外推到session/population或formal calibration。P202说明直接joint CDF虽将calibration error再降
 `32.51%`，却使Brier恶化`10.32%`；相比之下，P203对冻结P199输出施加共享rank-preserving beta map，在source dev把Brier和
 calibration error分别改善`1.32%/54.32%`，P204 consumed-secondary也保持`2.57%/34.51%`改善。该校准层需等待P205同一次
-fresh read的前瞻次级结果。P206的全局常数copula相对P199使Brier与calibration error分别退化`1.02%/24.94%`，说明
+fresh read的前瞻次级结果；P205最终把P199 Brier再改善`3.70%`、calibration error改善`49.12%`，2/2，但仍严格标作
+same-read prospective secondary。P206的全局常数copula相对P199使Brier与calibration error分别退化`1.02%/24.94%`，说明
 P199提升来自输入条件化依赖，而非仅加入静态相关矩阵。P207据此测试一次冻结的rank-2-plus-diagonal条件结构，作为full
-conditional Cholesky的结构化消融；这些development trials均不改变P201 raw P199 primary合同。
+conditional Cholesky的结构化消融：Brier微增`.077%`但calibration退化`1.52%`，因此拒绝。P208进一步冻结P199与
+independence成分，只训练逐实例linear mixture gate；模型给P199平均`.9828`权重但Brier/校准仍退化，故关闭local shrinkage。
+P209转而固定`nu=4`训练conditional Student-t copula，检验Gaussian相关未表达的尾依赖。这些development trials均不改变
+P201 raw P199 primary合同。P209的Brier/校准分别退化`.56%/2.20%`，因此copula变体终止。P210进一步把prediction
+object改写为四H maximum continuous cost的条件密度；其解析CDF与all-H reliable event严格等价，用以检验P182式density
+inductive bias能否优于dependence factorization。P210把calibration改善`28.42%`但Brier退化`1.30%`；P211的proper-score
+scalar pool在source几乎全选P210，却在heldout仍使Brier退化`.96%`，表明flat representation发生refinement shift。P212据此用
+共享horizon token encoder与mean/max pooling重建相同maximum density，不改变P201 primary。
+P212在source dev同时改善Brier`3.84%`与calibration`17.80%`，但P213在P183 secondary的Brier退化`2.74%`，所以该
+maximum-density分支不进入主方法；它作为结构与transfer负结果解释为何最终采用P199 dependence factorization加P203校准层。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

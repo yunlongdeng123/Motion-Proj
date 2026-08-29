@@ -1,0 +1,33 @@
+schema_version: worldsim_v67.p211_joint_probability_linear_pool.v1
+output_schema_version: worldsim_v67.p211_joint_probability_linear_pool_summary.v1
+task_id: WS-V67-P211-JOINT-PROBABILITY-LINEAR-POOL-01
+hypothesis_id: WS-V67-H-P211-001
+role: source_development_proper_score_linear_pool
+seed: 0
+model_artifact: JOINT_PROBABILITY_LINEAR_POOL.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p210: {run: worldsim_v67/WS-V67-P210-JOINT-MAX-COST-DENSITY-01/20260830T203000Z__joint-max-cost-density-s0-r1, artifact: JOINT_MAX_COST_DENSITY.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+training: {steps: 4000, batch_size: 65536, learning_rate: 0.01, initial_P199_logit: 2.0}
+evaluation: {monte_carlo_samples: 1024}
+decision: {minimum_calibration_error_reduction_vs_P199: 0.0}
+verdict_on_pass: supported_joint_probability_linear_pool
+verdict_on_failure: rejected_joint_probability_linear_pool
+locks:
+  P199_and_P210_probabilities_are_frozen: true
+  single_global_convex_weight_only: true
+  training_loss_is_joint_event_Brier_on_source_training_scenes: true
+  data_split_joint_event_budgets_and_MC_match_P199: true
+  P201_is_excluded_and_unchanged: true
+  no_feature_gate_third_component_budget_weight_loss_step_lr_or_MC_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - source_development_linear_pool_trial_only
+  - no_fresh_generalization_claim_until_separately_frozen_confirmation
+  - no_formal_calibration_collision_conformal_planner_policy_closed_loop_or_safety_claim

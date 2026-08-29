@@ -889,6 +889,37 @@ P201仍以冻结raw P199作为唯一fresh primary，未被P203/P204事后改变�
 因此收益不是“任意相关矩阵”，而需要covariate-conditioned dependence。检索NeurIPS 2013 conditional copula与NeurIPS
 2019/2024 low-rank time-varying covariance后，P207以rank-2-plus-diagonal条件结构接替GPU，比较其结构归纳偏置能否
 超过P199 full conditional Cholesky；P201 rows仍完全隔离。
+P207 r1的factor head被全零初始化，而covariance使用`U U^T`，在`U=0`处一阶梯度严格为零；NLL未学习、输出等同
+independence，故不作算法verdict。参考低秩矩阵分解的random initialization/strict-saddle分析，r2只改为固定seed小随机
+factor initialization，rank/width/data/steps/lr/MC/decisions均不变。r2有效学习后，low-rank/P199 Brier=
+`.074955/.075012`（改善`.077%`），但calibration error `.022352/.022017`退化`1.52%`，1/2，F163；不扫rank。
+AISTATS mixture-of-copulas的边际/依赖模块化启发P208：冻结P199与independence两个合法copula，只训练一个8-feature linear
+sigmoid gate逐实例收缩dependence。训练最终平均P199 weight=`.98283`（range `.95130--1.0`），但shrinkage/P199
+Brier=`.075075/.075012`退化`.084%`，calibration error `.022987/.022017`退化`4.40%`，0/2，F164；说明P199在该
+mixture family内已近边界最优，关闭P206--P208 local dependence refinement。
+NeurIPS 2013 conditional Student-t copula与NeurIPS 2019 tail-dependence工作支持改变依赖族而非继续收缩。P209固定
+`nu=4`、保留full conditional correlation网络。Student-t/P199 Brier=`.075435/.075012`退化`.56%`，calibration
+error `.022503/.022017`退化`2.20%`，0/2，F165；因此关闭P206--P209 copula变体，不扫df/family。
+调研UAI 2022 multivariate extreme-value neural models及NeurIPS conditional density后，P210改变对象为
+`log1p(max_H cost_H)`的5-component conditional density；因为`max_H cost_H<=b`等价于四H全部可靠，七预算来自同一解析CDF。
+它把calibration error相对P199改善`28.42%`，但Brier `.0750107→.0759885`退化`1.30%`，1/2，F166。P211按
+proper-score linear pooling只拟合一个全局权重，source训练却给P210 `98.12%`权重；heldout Brier仍退化`.96%`、calibration
+改善`27.87%`，1/2，F167，说明flat max-density存在scene-shift refinement问题而非简单混合权重问题。
+检索NeurIPS 2017 Deep Sets与ICML 2019 maximum-set regression后，P212用共享horizon token encoder加mean/max pooling预测
+同一max-cost density；目标/split/预算/门不变，不上attention或架构sweep，GPU已接替。
+
+P201 preparation最终10/10 scenes完成：需要3,896个lidar files，其中3,856新提取；每scene preprocess约`58.96--63.38s`，
+pipeline wall=`2061.66s`，未添加hash/checksum/fingerprint。Fresh joint rows=`1,846 trajectories`。冻结P199 copula相对P182
+independence的Brier `.113928→.093970`改善`17.52%`，mean calibration error `.103860→.048430`改善`53.37%`，2/2；
+verdict=`supported_fresh_joint_horizon_reliability_copula`。证据只到scene-level，不宣称session/population或formal calibration。
+
+P205 locator从失败P201 r1精确修正为canonical r2后，在同一fresh rows上应用冻结P203 beta map；calibrated/raw P199 Brier=
+`.090494/.093970`（改善`3.70%`），calibration error=`.024642/.048430`（改善`49.12%`），2/2。它是target前冻结的
+same-read prospective secondary，不是第二独立cohort，但与P203 source和P204 consumed结果方向一致。P199 raw P201仍是primary。
+
+P212 source dev把P199 Brier `.075011→.072127`改善`3.84%`、calibration error改善`17.80%`，2/2，说明DeepSet
+maximum density修复P210 flat representation。但P213冻结后在已消费P183 rows上Brier `.072116→.074093`退化`2.74%`，
+虽calibration改善`19.31%`仍为1/2、F168；因此不为P212创建新cohort或迁移claim，P212只保留development机制。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

@@ -2603,6 +2603,83 @@ P199 r1 engineering note（不占算法编号）：冻结`scene_index % 5 == 0`�
 
 下一可用编号：`V67-F163`。
 
+P207 r1 engineering note（不占算法编号）：rank-2 covariance参数化为`U U^T + D`，但final factor head被全零初始化，
+使`U=0`处factor梯度严格为零；8,000 steps后NLL仍约identity baseline，结果不可用于否定低秩结构。参考ICML 2017 strict-saddle
+与NeurIPS low-rank factorization使用随机/扰动初始化，r2只改为seed0的小随机factor初始化；data/rank/width/steps/lr/MC/门
+完全不变。r2已呈现有效NLL下降，因此下一可用算法编号仍为`V67-F163`。
+
+### V67-F163 — rank-2条件copula的微小Brier增益伴随calibration回退
+
+- canonical：`run://worldsim_v67/WS-V67-P207-LOW-RANK-CONDITIONAL-JOINT-COPULA-01/20260830T195500Z__low-rank-conditional-joint-copula-s0-r2`；
+- 观察：low-rank/P199 Brier=`.074955/.075012`，严格改善仅`.077%`；calibration error=`.022352/.022017`，
+  退化`1.52%`，故1/2 gates；
+- 解释：rank-2-plus-diagonal结构保留大部分条件dependence并轻微正则化refinement，但不足以同时维持总体可靠度；
+- 文献响应：AISTATS mixture-of-copulas允许在不改变边际的情况下混合依赖成分。P208只训练P199-vs-independence的单线性
+  conditional shrinkage gate，保留P199 refinement，不再替换完整相关结构；
+- 防重复：不扫rank、factor scale、width、loss或初始化；r1 zero-gradient不计算法trial，r2是唯一有效P207 verdict。
+
+下一可用编号：`V67-F164`。
+
+### V67-F164 — P199向independence的条件收缩无development空间
+
+- canonical：`run://worldsim_v67/WS-V67-P208-CONDITIONAL-COPULA-SHRINKAGE-01/20260830T200500Z__conditional-copula-shrinkage-s0-r1`；
+- 观察：gate把平均`.98283`权重留给P199，最小`.95130`、最大`1.0`；混合后Brier退化`.084%`，calibration error
+  退化`4.40%`，0/2 gates；
+- 解释：合法P199/independence mixture的likelihood optimum靠近P199边界，简单逐实例减弱dependence既未改善refinement也未改善
+  marginal joint frequency；
+- 文献响应：conditional Student-t copula允许尾依赖结构区别于Gaussian相关。P209固定`nu=4`作一次full conditional t-copula
+  trial，不继续增加mixture components或gate深度；
+- 防重复：关闭P206 static、P207 low-rank replacement与P208 shrinkage；不扫initial weight/component/gate/loss。
+
+下一可用编号：`V67-F165`。
+
+### V67-F165 — fixed-nu Student-t尾依赖不优于Gaussian P199
+
+- canonical：`run://worldsim_v67/WS-V67-P209-CONDITIONAL-STUDENT-T-COPULA-01/20260830T201500Z__conditional-student-t-copula-s0-r1`；
+- 观察：Student-t/P199 Brier=`.075435/.075012`，退化`.56%`；calibration error=`.022503/.022017`，
+  退化`2.20%`，0/2 gates；
+- 解释：在相同P182 marginals/full conditional correlation下，`nu=4`共享重尾并未解释四H joint-event，Gaussian P199更适合；
+- 文献响应：UAI multivariate extreme-value与conditional-density工作允许直接建模maximum functional。P210转为
+  `log1p(max_H cost_H)`连续density，使目标CDF与joint event严格对齐，不继续换copula；
+- 防重复：关闭P206--P209 static/low-rank/shrinkage/t-copula；不扫df或试Gaussian/t mixtures。
+
+下一可用编号：`V67-F166`。
+
+### V67-F166 — direct maximum-cost density改善校准但损失refinement
+
+- canonical：`run://worldsim_v67/WS-V67-P210-JOINT-MAX-COST-DENSITY-01/20260830T203000Z__joint-max-cost-density-s0-r1`；
+- 观察：相对P199，mean calibration error改善`28.42%`，但integrated Brier退化`1.30%`，1/2 gates；
+- 解释：一维maximum density能拟合joint总体频率，却把四H输入flat拼接后没有保留P199的instance refinement；与P202的
+  calibration/refinement tradeoff方向一致，但幅度明显更小；
+- 响应：先用一次proper-score global linear pool检验互补性，不改P210模型或门。
+
+### V67-F167 — P199/P210 proper-score linear pool未跨scene迁移
+
+- canonical：`run://worldsim_v67/WS-V67-P211-JOINT-PROBABILITY-LINEAR-POOL-01/20260830T204000Z__joint-probability-linear-pool-s0-r1`；
+- 观察：source training给P210 `98.12%`权重，但dev pool Brier仍比P199退化`.96%`，calibration改善`27.87%`，1/2 gates；
+- 解释：training/development对max-density refinement的偏好发生反转，单scalar不能恢复；问题更像flat representation的scene shift；
+- 文献响应：Deep Sets/Set Transformer用共享element encoder与pooling编码集合结构，且maximum-value regression直接支持max-aware
+  aggregation。P212只试一次mean/max DeepSet density；
+- 防重复：不扫pool weight、conditional gate、第三成分或budget-wise权重；P210/P211关闭。
+
+下一可用编号：`V67-F168`。
+
+### V67-F168 — DeepSet maximum density未迁移到已消费P183 joint rows
+
+- canonical：`run://worldsim_v67/WS-V67-P213-DEEPSET-MAX-DENSITY-POST-CONFIRMATION-01/20260830T210000Z__deepset-max-density-post-confirmation-s0-r1`；
+- 观察：P212在source dev同时改善Brier`3.84%`和calibration`17.80%`，但冻结后在P183 rows的Brier相对P199退化
+  `2.74%`；calibration仍改善`19.31%`，故1/2 gates；
+- 解释：set encoder修复了source split内flat representation，但maximum-density的calibration/refinement transfer冲突仍存在；
+  P199 dependence factorization在P183与P201上更稳定；
+- 响应：不为P212开启fresh cohort，不以P201已读rows作事后promotion；保留P212为结构消融，P199/P203为可迁移链；
+- 防重复：关闭P210--P213 maximum density、scalar pool与DeepSet recovery；不试attention/pooling/capacity/mixture。
+
+下一可用编号：`V67-F169`。
+
+P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
+发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
+gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

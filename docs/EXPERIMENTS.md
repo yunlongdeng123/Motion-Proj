@@ -1522,14 +1522,18 @@
 
 ### WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01
 
-- 状态：`active fresh confirmation`；prep=`20260830T184000Z__joint-horizon-copula-confirmation-prep-s0-r1`，evaluator=
+- 状态：`done/supported fresh scene-level confirmation`；prep=`20260830T184000Z__joint-horizon-copula-confirmation-prep-s0-r1`，canonical=
   `20260830T184500Z__joint-horizon-copula-confirmation-s0-r2`。r1仅为cwd入口失败，0 row/quality read。
 - cohort：official val且项目未提及/未processed的10 scenes/10 logs：Boston `0096/0553/0560/0629/0770/0905`，
   One-North `0272/0972`，Queenstown `0796`，Holland `1064`；location=`6/2/1/1`。
 - shards=`01/06/06/06/08/09/03/09/08/10`；只允许target前exact locator correction，不换scene/log/model/metric/gate。
 - frozen：P126 score、P182 marginals、P199 copula、H`.8/1.5/2.5/3.0`、七预算joint-all-H event、MC1,024；
   decisions仅Brier严格优于independence且calibration error reduction≥10%。
-- pipeline：shards01/03/06/08/09/10并行scan；per-shard完成即scene preprocess；resident evaluator等待processed scenes。
+- pipeline result：shards01/03/06/08/09/10并行scan并逐shard释放；3,896 required lidar、3,856 newly extracted；10/10
+  preprocess done，`58.96--63.38s/scene`，wall=`2061.66s`。P202--P212 GPU trials与该IO重叠。
+- result：1,846 joint trajectories；P199/independence Brier=`.093970/.113928`（改善`17.52%`）；calibration error=
+  `.048430/.103860`（改善`53.37%`）；2/2 gates，verdict=`supported_fresh_joint_horizon_reliability_copula`。
+- boundary：fresh scene-level only；location/log diversity如冻结，不宣称session/population/formal calibration/safety。
 
 ### WS-V67-P202-DIRECT-MONOTONE-JOINT-CDF-01
 
@@ -1567,10 +1571,13 @@
 
 ### WS-V67-P205-BETA-JOINT-PROSPECTIVE-SECONDARY-01
 
-- 状态：`active prospective same-read secondary`；run id=`20260830T192000Z__beta-joint-prospective-secondary-s0-r1`。
+- 状态：`done/supported prospective same-read secondary`；canonical id=`20260830T211000Z__beta-joint-prospective-secondary-s0-r2`。
 - freeze：在P201 target rows出现前锁定P203的`a/b/c`、同七预算、同joint event和同两门；不refit。
 - role：等待P201 compact rows后比较frozen beta map与raw P199；它与P201共用一次fresh read，因此只能作为prospective
   secondary，不能替代P201 raw-copula primary或冒充第二个independent cohort。
+- execution：原waiter指向P201失败r1 locator；在target出现前只改为canonical r2并重启，map/model/rows/metric/gate不变。
+- result：1,846 trajectories；calibrated/P199 Brier=`.090494/.093970`（改善`3.70%`）；calibration error=
+  `.024642/.048430`（改善`49.12%`）；2/2 gates，wall=`1.17s`。
 
 ### WS-V67-P206-CONSTANT-JOINT-COPULA-ABLATION-01
 
@@ -1586,13 +1593,88 @@
 
 ### WS-V67-P207-LOW-RANK-CONDITIONAL-JOINT-COPULA-01
 
-- 状态：`running source development`；run id=`20260830T194500Z__low-rank-conditional-joint-copula-s0-r1`。
+- 状态：`done/rejected source development`；canonical id=`20260830T195500Z__low-rank-conditional-joint-copula-s0-r2`。
 - model：8维score/clearance输入，经`64/32` MLP输出4×2 conditional factors与4个positive diagonal scales；归一化为
   correlation后形成rank-2-plus-diagonal Gaussian copula。
 - protocol：P182 marginals、PIT、82/20 split、四H、七预算、MC1,024与P199完全一致；8,000 steps、batch8,192。
 - decisions：dev Brier严格优于P199且calibration error不退化；不扫rank/width/loss/steps/lr/MC。
 - literature：NeurIPS 2013支持covariate-conditioned copula；NeurIPS 2019及2024用低秩/对角时变协方差提高多变量概率预测。
   本项迁移结构归纳偏置，不引入P201 read或高维扩展claim。
+- execution：r1=`20260830T194500Z__low-rank-conditional-joint-copula-s0-r1`的factor head全零初始化，使`U U^T`在
+  `U=0`处梯度为零并退化为independence；该输出不作科学判定。r2=`20260830T195500Z__low-rank-conditional-joint-copula-s0-r2`
+  仅使用fixed-seed small random factor initialization，其他冻结项不变。
+- result：low-rank/P199 Brier=`.074955/.075012`（改善`.077%`）；calibration error=`.022352/.022017`
+  （退化`1.52%`）；1/2 gates，F163。final NLL=`-.579273`，wall=`90.88s`。
+- verdict=`rejected_low_rank_conditional_joint_copula`；不以微小Brier增量覆盖calibration gate，不扫rank/width。
+
+### WS-V67-P208-CONDITIONAL-COPULA-SHRINKAGE-01
+
+- 状态：`done/rejected source development`；canonical id=`20260830T200500Z__conditional-copula-shrinkage-s0-r1`。
+- model：冻结P199 Gaussian copula与independence copula；8个normalized score/clearance只进入一个linear sigmoid gate，
+  输出逐trajectory P199 mixture weight。copula convex mixture保持P182 marginals严格不变。
+- training：同82 source scenes continuous PIT，以`log(w*c_P199(z)+(1-w))`训练6,000 steps、batch8,192；初始
+  P199 weight=`sigmoid(2)=.8808`，不读P201。
+- evaluation：同20 dev scenes、七预算、MC1,024；Brier严格优于P199且calibration error不退化两门。
+- locks：不增加component/gate depth，不扫initial weight/loss/steps/lr/MC；不使用P202 direct joint labels训练CDF。
+- result：mean P199 weight=`.982833`、range=`.951298--1.0`；shrinkage/P199 Brier=`.075075/.075012`
+  （退化`.084%`），calibration error=`.022987/.022017`（退化`4.40%`）；0/2 gates，F164，wall=`28.53s`。
+- verdict=`rejected_conditional_copula_shrinkage`；关闭P206--P208 static/low-rank/shrinkage local refinement。
+
+### WS-V67-P209-CONDITIONAL-STUDENT-T-COPULA-01
+
+- 状态：`done/rejected source development`；canonical id=`20260830T201500Z__conditional-student-t-copula-s0-r1`。
+- model：冻结P182 marginals，保留P199同形`128/64` full conditional correlation网络；Gaussian copula改为fixed `nu=4`
+  Student-t copula，训练exact t-copula likelihood。
+- evaluation：对P182 budget CDF做t inverse-CDF，相关Gaussian除以独立`chi2_4/4`平方根生成t-copula MC samples；与
+  P199 Gaussian使用同20 dev scenes、七预算和1,024 samples比较。
+- decisions：Brier严格优于P199且calibration error不退化；不扫df、Gaussian/t mixture、width、loss、steps、lr或MC。
+- literature：NeurIPS 2013直接参数化conditional Student-t correlation/df并报告强于静态方案；NeurIPS 2019指出tail
+  dependence可与普通correlation分离。本项只检验一次重尾族，不作extreme-risk/safety claim。
+- result：Student-t/P199 Brier=`.075435/.075012`（reduction=`-.56%`）；calibration error=`.022503/.022017`
+  （reduction=`-2.20%`）；0/2 gates，F165。final t-copula NLL=`-2.14343`，wall=`109.44s`。
+- verdict=`rejected_conditional_student_t_copula`；关闭P206--P209 copula family refinement，不扫df。
+
+### WS-V67-P210-JOINT-MAX-COST-DENSITY-01
+
+- 状态：`done/rejected source development`；canonical id=`20260830T203000Z__joint-max-cost-density-s0-r1`。
+- object：同一trajectory的四H target压缩为`M=max(cost_.8,cost_1.5,cost_2.5,cost_3.0)`；事件
+  `M<=budget`与P199 joint-all-H event严格等价，但直接建模一维连续极值分布。
+- model：8个score/clearance输入，5-component Gaussian mixture over `log1p(M)`，hidden=`128/128/64`；12,000 steps、
+  batch65,536。七预算只作一次analytic CDF queries，不训练budget-specific heads。
+- comparison：同82/20 scenes，P199/P182/MC1,024冻结；Brier严格优于P199且calibration error不退化两门。
+- literature：UAI 2022强调max分布的结构建模；NeurIPS 2018/2024支持低容量conditional density/conditional probability。
+  不迁移复杂EVT shape gates，不扫components/width/loss/budget。
+- result：max-density/P199 Brier=`.075988/.075011`（退化`1.30%`）；calibration error=`.015732/.021977`
+  （改善`28.42%`）；1/2 gates，F166。final NLL=`-.888417`，wall=`80.23s`。
+- verdict=`rejected_joint_max_cost_density`；校准信号保留作mechanism，不升级candidate。
+
+### WS-V67-P211-JOINT-PROBABILITY-LINEAR-POOL-01
+
+- 状态：`done/rejected source development`；canonical id=`20260830T204000Z__joint-probability-linear-pool-s0-r1`。
+- protocol：P199/P210冻结，source-training joint-event Brier只拟合一个global convex weight；P199 identity endpoint包含在族中。
+- result：learned P199/P210 weights=`.01883/.98117`；pool/P199 dev Brier=`.075698/.074979`（退化`.96%`）；
+  calibration error=`.015867/.021998`（改善`27.87%`）；1/2 gates，F167，wall=`15.44s`。
+- verdict=`rejected_joint_probability_linear_pool`；不扫weight、feature gate、third component或budget-specific pool。
+
+### WS-V67-P212-DEEPSET-JOINT-MAX-COST-DENSITY-01
+
+- 状态：`done/supported source development`；canonical id=`20260830T205000Z__deepset-joint-max-cost-density-s0-r1`。
+- structure：四个`(score, clearance, H)` tokens共享`64/64` encoder；mean/max pool后经`128/64` head输出5-component
+  Gaussian mixture over `log1p(max_H cost_H)`。
+- protocol：P210 target、82/20 split、七预算analytic CDF、P199 comparator与两门完全不变；12,000 steps、batch32,768。
+- literature：NeurIPS 2017 Deep Sets提供set invariance分解，ICML 2019 Set Transformer的maximum-value regression显示
+  max-aware pooling对set extremum适配。本项只用轻量mean/max，不试attention/sum/pool sweep。
+- result：DeepSet/P199 Brier=`.072127/.075011`（改善`3.84%`）；calibration error=`.018064/.021977`
+  （改善`17.80%`）；2/2 gates。final NLL=`-.794662`，wall=`90.89s`。
+- verdict=`supported_deepset_joint_max_cost_density`，仅source dev；P213 consumed secondary决定是否授权新fresh cohort。
+
+### WS-V67-P213-DEEPSET-MAX-DENSITY-POST-CONFIRMATION-01
+
+- 状态：`done/rejected consumed secondary`；canonical id=`20260830T210000Z__deepset-max-density-post-confirmation-s0-r1`。
+- protocol：P212/P199完全冻结后读取已消费P183的1,912 joint trajectories；同四H、max target、七预算、MC和两门。
+- result：DeepSet/P199 Brier=`.074093/.072116`（退化`2.74%`）；calibration error=`.022591/.027998`
+  （改善`19.31%`）；1/2 gates，F168，wall=`1.25s`。
+- verdict=`rejected_consumed_deepset_max_density_secondary`；不创建P212 fresh cohort，不扫pool/attention/capacity。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
