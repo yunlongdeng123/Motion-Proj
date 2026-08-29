@@ -458,6 +458,17 @@
 - active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
   20260901T010000Z__piecewise-anchor-authority-s0-r1`。
 
+### WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01
+
+- orthogonal research object：P302提高 anchor表达力；P303改为 group-conditioned monotone input calibration，目标是
+  一次 base call同时提高 attained-fraction fidelity与推理效率。
+- rule：raw group mean/std/max + alpha/tolerance/floor/tail进入 hidden64/8-knot rates；softplus正 rates的积分除以
+  全区间总面积，得到固定 `warp(0)=0, warp(1)=1` 的单调映射；零初始化等于 identity。
+- fixed run：frozen P301 base、6k steps、lr `.0003`；P201 attained MAE严格优于 `.0285229301`、regret
+  `<=.005`、violations=`0`；不扫 knots/hidden/steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
+  20260901T011500Z__normalized-monotone-warp-authority-s0-r1`；与低占用 P302并发，单3090足够。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

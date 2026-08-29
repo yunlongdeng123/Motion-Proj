@@ -251,6 +251,13 @@ P301 base、6k steps/lr `.0003`，要求 P201 attained MAE严格优于 `.0285229
 不扫 anchor数/位置。Active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
 20260901T010000Z__piecewise-anchor-authority-s0-r1`，GPU 已启动。
 
+P303 与 P302 正交并发：依据 NeurIPS 2019 UMNN 的正导数积分思想，用 group raw mean/std/max与四个 risk
+conditions输出8-knot正 rates，将积分按总面积归一化为固定0/1端点的 monotone fraction warp，再只调用一次
+P301 base。末层零初始化使初始 warp为 identity；固定 hidden64、6k steps/lr `.0003`，同样要求严格优于 P301
+`.02852293`、regret `<=.005`、violations=0，不扫 knots/hidden。Active=`run://worldsim_v67/
+WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
+20260901T011500Z__normalized-monotone-warp-authority-s0-r1`。P302 单独仅约23% SM/`.8GiB`，两run并发仍适合单3090。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%

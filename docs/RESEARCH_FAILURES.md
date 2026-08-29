@@ -278,7 +278,8 @@
   source=`20,746`。uniform mean shift + box clip可保 aggregate mean，却不能保每个 Actor budget顺序；
 - accurate disposition：记录 supported constraint fidelity，但 P300不进入最终 compiler，不写 monotone authority claim；
 - structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
-  `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302继续用固定三锚点提高非线性 fidelity；
+  `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302固定三锚点与 P303归一化正积分 warp
+  分别研究非线性表达力/单调用校准，均不重新打开 F201；
 - 下一可用 failure id 为 `V67-F202`。
 
 > **最后更新**：2026-08-29

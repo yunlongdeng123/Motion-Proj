@@ -125,6 +125,32 @@ class PiecewiseAnchorAuthorityCompiler(nn.Module):
         return low + weight[:, None] * (high - low)
 
 
+class NormalizedMonotoneWarpAuthorityCompiler(nn.Module):
+    """Learn a group-conditioned monotone fraction warp, then call the base once."""
+
+    def __init__(self, base, hidden_width, knot_count):
+        super().__init__()
+        self.base = base
+        self.warp_rates = nn.Sequential(
+            nn.Linear(3 * 36 + 4, int(hidden_width)),
+            nn.SiLU(),
+            nn.Linear(int(hidden_width), int(knot_count)),
+        )
+        nn.init.zeros_(self.warp_rates[-1].weight)
+        nn.init.zeros_(self.warp_rates[-1].bias)
+
+    def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
+        mean = groups.mean(1)
+        std = torch.sqrt(groups.var(1, unbiased=False) + 1e-6)
+        maximum = groups.amax(1)
+        rates = self.warp_rates(torch.cat((mean, std, maximum, alpha[:, None], beta[:, None], floor[:, None], tail_mass[:, None]), 1))
+        fraction = ((1 - pseudo_price) / 2).clamp(0, 1)
+        warped_area = self.base._integral(rates[:, None], (2 * fraction - 1)[:, None]).squeeze(1)
+        total_area = self.base._integral(rates[:, None], torch.ones_like(fraction)[:, None]).squeeze(1)
+        warped_fraction = warped_area / total_area.clamp_min(1e-6)
+        return self.base(groups, 1 - 2 * warped_fraction, alpha, beta, floor, tail_mass)
+
+
 def _load_base_state(module, artifact):
     state = artifact["model_state_dict"]
     prefixed = {key.removeprefix("base."): value for key, value in state.items() if key.startswith("base.")}
@@ -292,7 +318,20 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    if "piecewise_anchor_fractions" in model_config:
+    if "normalized_monotone_warp_knots" in model_config:
+        base_student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        _load_base_state(base_student, direct_artifact)
+        student = NormalizedMonotoneWarpAuthorityCompiler(
+            base_student, model_config["normalized_monotone_warp_hidden_width"],
+            model_config["normalized_monotone_warp_knots"],
+        ).cuda()
+    elif "piecewise_anchor_fractions" in model_config:
         base_student = EpistemicTailCVaRAllocator(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
         ).cuda()
@@ -439,6 +478,7 @@ def main():
         "self_consistent_projection": model_config.get("self_consistent_projection", False),
         "convex_endpoint_rule": model_config.get("convex_endpoint_rule", False),
         "piecewise_anchor_fractions": model_config.get("piecewise_anchor_fractions"),
+        "normalized_monotone_warp_knots": model_config.get("normalized_monotone_warp_knots"),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {
