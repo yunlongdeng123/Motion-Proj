@@ -1,0 +1,34 @@
+schema_version: worldsim_v67.p255_shadow_price_same_read_confirmation.v1
+output_schema_version: worldsim_v67.p255_shadow_price_same_read_confirmation_summary.v1
+task_id: WS-V67-P255-SHADOW-PRICE-SAME-READ-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P255-001
+role: fresh_same_read_secondary_shadow_price_budget_policy_confirmation
+seed: 0
+inputs_wait_timeout_seconds: 7200
+p243_rows: {run: worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T060500Z__continuous-budget-fresh-confirmation-s0-r1, artifact: P243_CONTINUOUS_BUDGET_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p246: {run: worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1, artifact: EXTENDED_BUDGET_RATE_SPLINE.pt}
+frozen_p254: {run: worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1, artifact: SHADOW_PRICE_BUDGET_POLICY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+shadow_price_domain: [0.02, 0.40]
+training_price_count: 13
+teacher_budget_grid_count: 129
+teacher_chunk_size: 4096
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_normalized_log_budget_MAE: 0.075, maximum_mean_frozen_teacher_utility_regret: 0.005}
+verdict_on_pass: supported_fresh_same_read_shadow_price_budget_policy
+verdict_on_failure: rejected_fresh_same_read_shadow_price_budget_policy
+locks:
+  evaluator_P254_artifact_P246_teacher_prices_grid_MC_and_decisions_frozen_before_P243_target_quality_read: true
+  reuses_P243_first_fresh_rows_as_prospective_secondary_without_new_cohort_claim: true
+  no_model_price_grid_scene_metric_gate_or_MC_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_same_read_secondary_at_scene_level_not_a_second_independent_cohort
+  - optimizes_frozen_P246_equal_prefix_surrogate_utility_not_measured_compute_or_planning_reward
+  - no_allocation_collision_planner_policy_closed_loop_or_safety_claim
