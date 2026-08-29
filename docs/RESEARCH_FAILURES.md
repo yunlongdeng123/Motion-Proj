@@ -2996,6 +2996,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F190`。
 
+### P254/P255 shadow-price milestone note — 单轨迹预算policy通过，无新增failure
+
+- P254 canonical=`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；
+- P201 budget MAE=`.011423`、frozen utility regret=`.0001782`，2/2，price monotonicity violations=0；
+- P255在P243 rows前冻结同读secondary，P254/P246/prices/grid/MC/两门不变；
+- P256推进为固定64-row groups的dual-price compiler，仍只优化冻结surrogate；下一failure id保持F190。
+
+下一可用编号仍为：`V67-F190`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；

@@ -2076,8 +2076,28 @@
   positive price-rate spline加`tanh`结构上保证price升高时预算不增加；
 - training/decision：source-only L1、128/16 knots、12k/batch8192/seed0；P201只判normalized-log-budget MAE≤`.075`
   与冻结utility regret≤`.005`，不扫price/grid/structure/loss；
-- active canonical：`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；
-  不代表真实compute cost、allocation或planning authority。
+- canonical：`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；
+- result：P201 budget MAE=`.011423`、冻结utility regret=`.0001782`、price violations=0，2/2；source=
+  `.009750/.0001440`，P183=`.010011/.0002345`；
+- resources/verdict：wall=`87.30s`、peak GPU=`.140GiB`；`supported_shadow_price_budget_policy`；不代表真实
+  compute cost、allocation或planning authority。
+
+### WS-V67-P255-SHADOW-PRICE-SAME-READ-CONFIRMATION-01
+
+- role：P243首次fresh rows上的prospective same-read secondary，不是第二个独立cohort；
+- frozen before rows：P254/P246、12 heldout prices、129-point grid、1024 MC及`.075/.005`两门全部锁定；
+- canonical waiter：`run://worldsim_v67/WS-V67-P255-SHADOW-PRICE-SAME-READ-CONFIRMATION-01/20260831T093000Z__shadow-price-same-read-confirmation-s0-r1`；等待P243 rows，quality read=false。
+
+### WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01
+
+- object：对scene-local consecutive 64-trajectory fixed groups，给定各组P254 endpoint之间的attainable budget
+  fraction，预测共享dual price并由冻结P254分配individual budgets；
+- protocol：group feature mean/std共72维；九个train fractions、八个interleaved heldout fractions；20-step frozen
+  P254 bisection作teacher；positive fraction-rate spline保证fraction增加时price不增加；12k/batch8192/seed0；
+- P201 decisions：attained budget fraction MAE≤`.030`、冻结P246/P254 Lagrangian utility regret≤`.002`；不扫
+  group size、fraction、bisection、width/loss/steps；
+- active canonical：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T094500Z__group-budget-dual-compiler-s0-r1`；
+  仅固定组surrogate allocation，不是online scheduler或真实compute/planning authority。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 

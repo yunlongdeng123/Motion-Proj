@@ -1063,7 +1063,10 @@ loss语义下都停在约`.018`，该family关闭。P252改变对象为P246解�
 不声称真实算力、allocation或planning value。P252一次2/2：P201 elasticity MAE=`.019285`，32个query内
 trajectory Spearman均值=`.925247`，非负违规0；P183也为`.020152/.946509`。P253已在P243 rows前冻结为同读
 fresh secondary。P254进一步给定shadow price，蒸馏固定129-point grid上使“P246四prefix均值−normalized budget
-cost”最大的预算；positive price-rate spline结构上保证价格升高时预算不增，RTX 3090训练中。
+cost”最大的预算；positive price-rate spline结构上保证价格升高时预算不增。P254一次2/2：P201 budget MAE=
+`.011423`、冻结utility regret=`.000178`、price violations=0；P255已在P243 rows前冻结同读secondary。P256继续
+把64-trajectory fixed groups的requested attainable budget fraction编译为P254 dual price：组特征mean/std与fraction
+输入，结构保证budget fraction增加时price不增；只判预算约束误差与冻结Lagrangian regret，RTX 3090训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 
