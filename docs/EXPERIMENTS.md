@@ -949,7 +949,31 @@
   remainder1（P332 development）只固定normalized q90 threshold；其他source rows不再训练，P201不fit。
 - gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
   不扫scale architecture/q/gate/seed，不作formal conformal或multivalid claim。
-- active：实现、配置与GPU training进入执行队列。
+- canonical=`run://worldsim_v67/WS-V67-P333-LOCALLY-ADAPTIVE-LATTICE-CALIBRATION-01/
+  20260901T101000Z__locally-adaptive-lattice-calibration-s0-r1`。
+- training/calibration result：67,635个scale examples、6k steps、final pinball=`.011362`；50,382个
+  normalized calibration examples固定q90=`2.628081`；source scale mean/range=
+  `.059260/[1.15e-9,3.38496]`。
+- P201 result：mean/highest any-authority coverage=`.304645/.681967`、max/mean selected unsafe=
+  `.049020/.033005`、size/ceiling violations=`0/0`，3/3 supported；strict/mid/high coverage=
+  `.064754/.167213/.681967`、unsafe=`.037975/.049020/.012019`、mean selected size=
+  `2.519/2.784/2.897`。
+- source disjoint development：mean/high coverage=`.348041/.616292`、max/mean unsafe=
+  `.034788/.028592`；strict/mid/high coverage=`.124866/.302965/.616292`，unsafe=
+  `.024320/.034788/.026667`。P332 baseline mean/high=`.241530/.658197`、strict=0。
+- verdict=`supported_locally_adaptive_lattice_calibration`；wall=`49.31s`、peak GPU=`.14039GiB`、
+  RSS=`1.89286GiB`。F213关闭。scale near-zero minimum与宽range必须保留为限制，不追加post-hoc gate。
+
+### WS-V67-P334-RISK-CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01
+
+- research step：把P333仅在q90学习的k/H局部residual scale扩为continuous q×H×k positive scale，使同一
+  compiler保留P332的连续risk请求轴，而不是只产生单一风险点证书。
+- frozen base/split：冻结P332 lattice与normalization；原P332 calibration scenes训练scale，原development scenes
+  只固定q90 normalized threshold，P201不fit；训练q连续采样`.70-.97`。
+- architecture：复用P331的positive risk-size-horizon surface表达scale，并加固定`.02`下界；该下界继承P325，
+  不作floor sweep。最终score=`frozen lattice raw + normalized threshold * local scale`。
+- gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
+  不扫q/range/floor/capacity/gate/seed。状态=`active GPU training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

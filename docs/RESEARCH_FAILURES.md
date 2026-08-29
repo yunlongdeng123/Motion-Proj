@@ -404,8 +404,11 @@
   `.24672 < .30`，2/3 rejected，登记F212；不降门或扫q/range/capacity/seed；
 - P332 result：train pinball=`.01629`，但q90 offset=`.08820`；P201 coverage=`.24153 < .30`，risk/
   monotonicity通过、coverage失败，登记F213；不扫lattice knots/capacity；
-- P333 active：冻结P332，source disjoint splits训练locally adaptive k/H scale与normalized q90；失败才登记
-  F214，不扫scale/q/gate/seed；
+- P333 result：P201 mean/high coverage=`.30464/.68197`、max unsafe=`.04902`、size/ceiling violations=0，
+  3/3 supported；相对P332 mean coverage=`.24153`且strict=0，局部尺度恢复strict=`.06475`并关闭F213；
+  source scale range=`[1.15e-9,3.38496]`作为限制保留；
+- P334 active：把P333扩为continuous-risk-conditioned q×H×k scale，固定`.02`下界且不扫参；失败才登记
+  F214；
 - 下一可用 failure id 为 `V67-F214`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
@@ -503,7 +506,13 @@
   subgroups/thresholds上校准；PMLR 2023 locally adaptive CP通过object-conditioned monotone conformity
   transformation提高效率。P333据此训练source-only k/H residual scale与单一normalized q90；
 - forbidden rescue：不降`.30`、不改q90/range/k/gate、不在P201 fit、不扫scale architecture/seed；
-- resolution status：`open via P333 locally adaptive lattice calibration`；下一可用failure id=`V67-F214`。
+- resolution evidence：P333在冻结P332 base上，仅以source disjoint splits训练scale/固定normalized q90；P201
+  mean coverage=`.30464 >= .30`、max unsafe=`.04902 <= .10`、size/ceiling violations=0，3/3 supported，
+  strict coverage由0恢复到`.06475`；
+- retained limitation：source scale mean/range=`.05926/[1.15e-9,3.38496]`，近零尺度与宽动态范围可能降低
+  跨域数值稳定性；当前证据只支持empirical calibration，不宣称formal conformal/multivalid guarantee；
+- resolution status：`closed by P333 locally adaptive lattice calibration`；P334继续研究continuous-risk局部尺度，
+  下一可用failure id=`V67-F214`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

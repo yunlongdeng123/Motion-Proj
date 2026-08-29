@@ -506,10 +506,20 @@ P331，但source q90 offset=`.08820`更大。P201 risk/monotonicity通过，mean
 `.24153 < .30`，2/3 rejected并登记`V67-F213`；strict/mid/high=`0/.06639/.65820`，max unsafe=
 `.02989`。base容量改善未解决global calibration瓶颈。
 
-P333冻结P332 base，按ICML 2018 multicalibration、NeurIPS 2022 multivalid prediction与PMLR 2023 locally
-adaptive conformity思想训练k/H-conditioned positive residual scale：原P332 calibration scenes只训练scale，
-原development scenes只固定一个normalized q90，P201仍heldout。Active=`WS-V67-P333-LOCALLY-ADAPTIVE-
-LATTICE-CALIBRATION-01`；只作empirical calibration，不宣称formal conformal/multivalid guarantee。
+P333冻结P332 base并迁移locally adaptive conformity change-of-variables。Canonical=`run://worldsim_v67/
+WS-V67-P333-LOCALLY-ADAPTIVE-LATTICE-CALIBRATION-01/
+20260901T101000Z__locally-adaptive-lattice-calibration-s0-r1`：原P332 calibration scenes产生67,635个k×H
+scale examples，6k steps final pinball=`.01136`；原development scenes固定normalized q90=`2.62808`，source scale
+mean/range=`.05926/[1.15e-9,3.38496]`。P201 mean/high any-authority coverage=`.30464/.68197`、max/mean
+unsafe=`.04902/.03300`、size/ceiling violations=`0/0`，3/3 supported；strict/mid/high coverage=
+`.06475/.16721/.68197`、mean selected size=`2.52/2.78/2.90`。相同P332 base的mean coverage=`.24153`、
+strict=0，故F213由局部校准关闭。source disjoint development coverage=`.34804/.61629`、max unsafe=`.03479`。
+近零scale下界与宽range作为数值/迁移限制保留；这是empirical calibration，不是formal conformal或multivalid
+guarantee。
+
+P334把P333的q90-only局部尺度扩展为continuous-risk-conditioned q×H×k scale；冻结P332 lattice，source-only训练
+q-conditioned positive scale，继承P325已用的固定`.02`尺度下界，不在P201调参。Active=`WS-V67-P334-RISK-
+CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01`；仍以q90 heldout-H authority三门作为首个确认，同时保留完整连续risk轴。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
