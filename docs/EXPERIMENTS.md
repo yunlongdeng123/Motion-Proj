@@ -578,8 +578,22 @@
 - frozen candidate：P309 selector + P307 authority，0-step；P277六场景/1,080 trajectories形成180个六动作组。
 - freshness：P277已被其他allocator/direct-fidelity family消费，但action-admission family untouched；只写reuse confirmation。
 - protocol/gates：继承hard top-2、三点authority condition、cost reduction `>=.10`、pairwise `>=.65`；one read。
-- active=`run://worldsim_v67/WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01/
   20260901T040000Z__authority-topk-admission-confirmation-s0-r1`。
+- result：selected/all/nominal/authority-only/oracle cost=`.56231/1.54979/.78275/1.10792/.52732`；relative reduction
+  vs all/nominal/authority-only=`63.72%/28.16%/49.25%`，pairwise=`.83069`，scenes=`6/0/0`，2/2 supported；
+  wall=`1.84s`、peak GPU=`.08244GiB`。
+
+### WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01
+
+- confound response：P309可能偏好半进度action；新增显式progress-preference lambda，目标为normalized log actual
+  visited-state cost + lambda×progress deficit。
+- structure：冻结P309；半进度penalty rate=`deficit*(1+.5*tanh(rate_net))`保持为正，lambda=0严格恢复P309，
+  full-progress score不受lambda惩罚。
+- train/heldout lambda=`0/.25/.5/1 → .125/.375/.75`；6k steps。P201门为mean composite reduction `.10`、
+  pairwise `.65`、full-progress fraction随lambda violations=0；不扫preference/rate/width/loss。
+- active=`run://worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
+  20260901T041500Z__progress-conditioned-authority-admission-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

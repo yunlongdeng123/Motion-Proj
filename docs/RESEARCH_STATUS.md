@@ -329,7 +329,16 @@ relative reduction=`60.90%`，pairwise concordance=`.83580`，10/10 scenes降低
 P310 在上述quality后不改P309：冻结P309/P307，在P277六场景/1,080 trajectories的180个六动作组做0-step
 action-admission-family untouched确认。原两门、hard top-2、三点authority条件全部继承；不refit、不换cohort。
 Active=`run://worldsim_v67/WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01/
-20260901T040000Z__authority-topk-admission-confirmation-s0-r1`。
+20260901T040000Z__authority-topk-admission-confirmation-s0-r1`：180个六动作组，selected/all/nominal/authority-only/
+oracle cost=`.56231/1.54979/.78275/1.10792/.52732`；相对all reduction=`63.72%`、pairwise=`.83069`、6/6 scenes
+降低，2/2 supported；wall=`1.84s`。因此P309 decision gain跨family-untouched cohort成立。
+
+P311 处理“低cost是否只来自低progress”的关键任务混杂：P309 score冻结，新增progress-preference `lambda`，只学习
+正的半进度penalty rate，且 `lambda=0`解析精确恢复P309。train lambda=`0/.25/.5/1`、heldout=`.125/.375/.75`；
+真实目标为normalized log visited-state cost + progress deficit penalty。6k steps，三门为composite reduction `>=10%`、
+pairwise `>=.65`、full-progress fraction随lambda非降；不扫lambda/rate/width/loss。Active=`run://worldsim_v67/
+WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
+20260901T041500Z__progress-conditioned-authority-admission-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
