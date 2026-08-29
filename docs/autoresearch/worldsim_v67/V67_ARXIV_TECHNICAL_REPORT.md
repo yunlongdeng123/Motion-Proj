@@ -348,6 +348,11 @@ scene-ready GPU scoring的在线流水线，使archive IO与3090评分重叠；�
 P167 prospective rows。这个负结果把问题从“q75估计噪声”进一步定位为“global rank与scene内fixed50 cutoff错配”，下一研究对象
 必须直接训练coverage-conditioned selection objective，而不是继续选择手工sample statistic。
 
+P169对这一定位作controlled training：沿用P144的P126-anchored trajectory-set representation与容量，只把within-scene pairwise
+ranking surrogate替换为scene-list soft lower-50% selected-cost objective。16×128 source lists、`.20`温度及`.5` residual bound
+均在训练前冻结；旧四development通过前不读取P167。该设计对应differentiable sorting文献关于“训练surrogate与最终ranking metric
+存在gap”的直接修复，同时保持结论仅限固定覆盖可靠性编译。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

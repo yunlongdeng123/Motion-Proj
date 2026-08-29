@@ -655,6 +655,11 @@ P168 canonical r1在单3090用`2.48s`完成。旧P81/P96/P113/P129 rank gain=`+.
 因此未等待或读取P167 rows。P165 q75与P168 tail mean共同表明global rank signal没有落到per-scene fixed50 cutoff；关闭
 手工sample-risk-functional支线，不扫alpha/quantile。下一步改为source-only、直接优化scene内固定覆盖选择成本的训练对象。
 
+P169冻结P144的P126 anchor、top16 Actor-query token set、网络、residual bound与6,000 steps，只把pairwise global rank loss
+替换为scene-list soft fixed50 cost。每step固定采16个source scenes×128 trajectories，以detached median/MAD构造`.20`
+temperature soft cutoff，直接最小化低分半组的P120 cost并保留原residual regularization。依据PiRank/fast differentiable sorting，
+这一迁移只解决metric-surrogate mismatch，不扫temperature/list/model。旧四2/2通过才等待P167 prospective rows；GPU训练将与P167 IO重叠。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

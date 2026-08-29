@@ -79,6 +79,7 @@
 | P166 | `run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/20260830T125000Z__monotone-expected-cost-calibration-s0-r1` | mean MSE reduction `4.09%<20%`、bin error恶化；rejected/F131 |
 | P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | frozen/launching；第二个target-unread 10-scene × five-H，P147协议原样复验 |
 | P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
+| P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | frozen/launching；source scene-list soft fixed50 cost training，P144 controlled objective change |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

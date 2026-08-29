@@ -1,0 +1,59 @@
+schema_version: worldsim_v67.p169_soft_fixed_coverage_compiler.v1
+output_schema_version: worldsim_v67.p169_soft_fixed_coverage_compiler_summary.v1
+task_id: WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01
+hypothesis_id: WS-V67-H-P169-001
+role: source_trained_scene_listwise_fixed50_compiler_then_prospective_P167
+seed: 0
+model_artifact: SOFT_FIXED_COVERAGE_COMPILER.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.1766650378704071, spearman: 0.853443826524883}
+  consumed_p96: {selected_cost: 0.16757220029830933, spearman: 0.8533913237533008}
+  consumed_p113: {selected_cost: 0.21879056096076965, spearman: 0.8676030870849584}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+prospective_p167:
+  run: worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1
+  artifact: P167_ROBUSTNESS_MULTI_HORIZON_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+  readiness_timeout_seconds: 7200
+model:
+  maximum_actor_query_rows: 16
+  element_dimensions: [128, 64]
+  decoder_dimensions: [64, 32]
+  residual_bound: 0.5
+  steps: 6000
+  batch_scenes: 16
+  list_size: 128
+  soft_cutoff_temperature: 0.20
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  residual_regularization: 0.10
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain_over_p126: 0.005}
+verdict_on_pass: supported_prospective_soft_fixed_coverage_compiler
+verdict_on_failure: rejected_soft_fixed_coverage_compiler
+locks:
+  architecture_tokens_residual_bound_and_P126_anchor_equal_P144: true
+  only_training_object_changes_from_pairwise_rank_to_scene_list_soft_fixed50_cost: true
+  source_scene_lists_are_sampled_16_by_128_with_fixed_temperature_point_two: true
+  development_requires_old_four_cost_nonregression_and_mean_rank_gain_before_P167_read: true
+  no_temperature_list_size_architecture_bound_loss_coverage_cost_metric_or_decision_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2021/hash/b5200c6107fc3d41d19a2b66835c3974-Abstract.html
+  - https://proceedings.mlr.press/v119/blondel20a.html
+claim_boundary:
+  - source_trained_scene_listwise_fixed_coverage_cost_only
+  - P167_is_prospective_scene_level_only_if_old_four_development_passes
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim

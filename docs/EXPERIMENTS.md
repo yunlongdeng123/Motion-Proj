@@ -1131,6 +1131,16 @@
 - interpretation：使用整个upper tail仍不能把P165 joint rank signal编译到scene fixed50 operating point；关闭sample-risk泛函选择，
   不扫alpha/quantile/sample count。
 
+### WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01
+
+- 状态：`frozen/launching GPU training`；canonical id=`20260830T131500Z__soft-fixed-coverage-compiler-s0-r1`。
+- controlled change：P144相同P126 anchor、top16 token set、MLP/DeepSet residual、bound `.5`、steps 6,000；只换训练objective。
+- objective：16 scenes×128 trajectories/list，detached median/MAD、temperature `.20`的soft lower-50% weights，直接最小化
+  selected P120 continuous cost，加原`.10` residual penalty。
+- decisions：旧四selected cost全不退且mean rank gain≥`.005`；2/2通过才等P167 prospective，同两门。
+- locks：不扫temperature/list size/model/bound/loss/coverage/metric，不加hash/checksum/fingerprint或回归矩阵。
+- references：NeurIPS 2021 PiRank与ICML 2020 Fast Differentiable Sorting，用direct relaxed ranking metric缩小surrogate gap。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
