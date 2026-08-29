@@ -1520,10 +1520,28 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：冻结P126 row boundary score作为teacher，单query MLP读取既有query features、signed-clearance profile和boundary
   normals，以一次6,000-step Smooth-L1直接拟合teacher function；只用source和consumed P81/P96/P113。
-- decisions：相对P126三cohort selected cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：seed/architecture/loss/input/coverage一次冻结；失败登记F94并关闭direct functional student，不做蒸馏sweep。
+- decisions/outcome：相对P126三cohort selected cost nonregression与mean Spearman difference≥`-.005`；实际mean Spearman
+  difference=`-.362629`且三组cost全退化，两门全失败；P129 rows隔离。
+- prevention：seed/architecture/loss/input/coverage一次冻结；关闭direct pointwise functional student，不做蒸馏sweep。
 
-下一可用编号为：`V67-F94`。
+### V67-F94 — pointwise teacher-score回归未保持trajectory max排序
+
+- 分类：`algorithm/supervision-granularity`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01/
+  20260830T091500Z__task-conditioned-score-distillation-s0-r1`。
+- 观察：row Smooth-L1降至`.006349`，但trajectory-max三cohort Spearman=`.380515/.436117/.669918`，mean relative
+  ensemble=`-.362629`；selected cost三组全面退化，0/2 decisions。
+- 根因：source中大量普通row主导pointwise loss，小tail误差经max放大并改变每条trajectory的代表row；训练层级与部署聚合错配。
+- 防重复：不扫Huber/temperature/width/seed或加权tail；P132把trajectory max放入训练图并直接优化同scene pair ordering。
+
+### P132 freeze note — trajectory-max rank distillation
+
+- method：P131相同inputs/MLP，但先对trajectory rows取student max，再用同source scene内uniform pairs与P126 teacher order做
+  pairwise logistic；6,000 steps、pair batch4096、seed0一次，无temperature/top-k/pointwise auxiliary。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：失败登记F95并关闭single-query distillation family，不做ranking-loss sweep。
+
+下一可用编号为：`V67-F95`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

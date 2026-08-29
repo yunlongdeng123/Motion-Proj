@@ -349,6 +349,15 @@ P131据NeurIPS functional ensemble distillation改变蒸馏对象：不再拟合
 boundary normals；source 575,596 rows、Smooth-L1、6,000 steps、seed0一次冻结，P129 target仍不读。decisions沿用相对P126
 的三cohort cost nonregression与mean Spearman retention，当前GPU训练已与P129 archive IO并行启动。
 
+P131 row regression虽收敛到Smooth-L1=`.006349`，但trajectory max后的P81/P96/P113 Spearman仅
+`.38052/.43612/.66992`，相对ensemble mean差=`-.36263`；selected cost=`1.24069/.41792/.71836`，两门全失败。
+wall=`24.73s`。这证明逐row平均误差小不代表部署时max order statistic被保留，登记`V67-F94`并关闭pointwise student。
+
+卡点检索NeurIPS 2023 Ranking Distillation benchmark、NeurIPS 2021 PiRank与NeurIPS 2025 PLD后，P132把部署聚合直接放进
+训练图：先对每条trajectory的Actor-query rows取student max，再在同一source scene内均匀采样trajectory pairs，以teacher
+P126 trajectory ordering作pairwise logistic监督。source约79k trajectories、6,000 steps、seed0一次，不设temperature/top-k；
+evaluation与P130/P131相同，P129 rows继续隔离。3090已进入训练，archive IO继续并行。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

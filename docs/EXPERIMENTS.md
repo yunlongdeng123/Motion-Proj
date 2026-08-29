@@ -522,7 +522,7 @@
 
 ### WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T091500Z__task-conditioned-score-distillation-s0-r1`，继续与P129 archive IO并行。
 - change of object：不再蒸馏Actor mean/covariance；冻结P126生成每个Actor-query row的linearized boundary score，student
   直接回归该task-conditioned function。输入=`24 existing query features + 9 signed-clearance profile + 18 boundary normals`。
@@ -530,6 +530,22 @@
   相同consumed P81/P96/P113，两项decision也不变。P129 rows不读，不扫loss/width/coverage。
 - reference：NeurIPS 2022 functional ensemble distillation；claim只限consumed functional compression，直接query student
   可能学习source geometry shortcut，不写成independent或safety结果。
+- result：final row Smooth-L1=`.006349`，但trajectory-max P81/P96/P113 Spearman=`.380515/.436117/.669918`，
+  mean difference from ensemble=`-.362629`；selected cost=`1.240691/.417922/.718358`，三组均远高于ensemble。
+  0/2 decisions，verdict=`rejected_development_task_conditioned_score_distillation`，wall=`24.73s`、peak GPU=`.422 GiB`；
+  登记F94，pointwise functional student关闭。
+
+### WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T092000Z__trajectory-rank-distillation-s0-r1`，与P129 archive IO并行。
+- change of training object：student仍读P131冻结输入，但训练图先在每条trajectory的rows上取max；再从同一source scene均匀
+  采两条trajectory，以P126 teacher trajectory score顺序做pairwise logistic。部署max与监督层级一致。
+- source约79k trajectories；`pair_batch=4096`、6,000 steps、seed0一次；不设temperature/top-k，不加pointwise loss或权重。
+- evaluation/decisions仍为consumed P81/P96/P113相对P126的selected-cost nonregression和mean Spearman difference≥`-.005`；
+  P129 target隔离。
+- literature：NeurIPS 2023 RD-Suite、NeurIPS 2021 PiRank、NeurIPS 2025 PLD均强调pointwise distillation不足以保持listwise order；
+  本实现仅取无温度pairwise特例，不宣称完整PLD/PiRank复现。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

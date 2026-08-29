@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p132_trajectory_rank_distillation.v1
+output_schema_version: worldsim_v67.p132_trajectory_rank_distillation_summary.v1
+task_id: WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01
+hypothesis_id: WS-V67-H-P132-001
+role: consumed_development_trajectory_max_ranking_distillation
+seed: 0
+model_artifact: DISTILLED_TRAJECTORY_RANK.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  pair_batch_size: 4096
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_ensemble: -0.005}
+verdict_on_pass: supported_development_trajectory_rank_distillation
+verdict_on_failure: rejected_development_trajectory_rank_distillation
+locks:
+  deployed_trajectory_max_is_inside_training_graph: true
+  pairwise_comparisons_are_uniform_within_source_scene: true
+  exactly_6000_steps_one_seed_no_temperature_or_topk: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2025/hash/c6b2921f24f82dc05cda53bbe50bab90-Abstract-Conference.html
+  - https://proceedings.neurips.cc/paper_files/paper/2023/file/701eba0f98c6f28ffee0de5969d8d034-Paper-Datasets_and_Benchmarks.pdf
+  - https://proceedings.neurips.cc/paper_files/paper/2021/file/b5200c6107fc3d41d19a2b66835c3974-Paper.pdf
+claim_boundary:
+  - consumed_development_trajectory_ranking_distillation_only
+  - pairwise_surrogate_is_not_calibration_or_probability_matching
+  - direct_query_model_may_encode_source_geometry_shortcuts
+  - no_planner_policy_closed_loop_or_safety_claim

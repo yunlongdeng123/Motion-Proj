@@ -204,6 +204,10 @@ P130 final KL=`.07387`且mean Spearman difference=`-.00202`通过，但P113 sele
 distillation严格拒绝（F93）。P131不调KL，而改成functional distillation：单query MLP直接拟合P126 task-conditioned
 row boundary score，以显式signed-clearance profile和boundary normals保留decision geometry；仍只作consumed development。
 
+P131 row Smooth-L1虽低至`.00635`，trajectory-max后的mean Spearman difference却为`-.36263`且三组cost全面退化（F94）。
+这把失败定位为supervision granularity而非简单容量。P132据RD-Suite/PiRank/PLD把trajectory max置于训练图内，用同scene
+trajectory pair ordering直接蒸馏P126；不再优化pointwise平均误差，也不增加temperature或top-k sweep。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
