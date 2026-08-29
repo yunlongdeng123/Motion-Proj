@@ -1348,44 +1348,53 @@ def main() -> None:
                         soft_admission = selection_weights.sum(1)
                         soft_selected_unsafe = (selection_weights * target).sum(1)
                         selective_group = source_condition_group[row] * len(ceilings) + local_ceiling_index
-                        constraint_terms = []
-                        group_risks = []
-                        for group_index in torch.unique(selective_group):
-                            group_mask = selective_group == group_index
-                            group_admission = soft_admission[group_mask].sum()
-                            group_risk = soft_selected_unsafe[group_mask].sum() / group_admission.clamp_min(1e-6)
-                            violation = group_risk - float(selective_risk_config["maximum_conditional_unsafe_rate"])
-                            constraint_terms.append(selective_dual[group_index].detach().clone() * violation)
-                            group_risks.append(group_risk.detach())
-                            with torch.no_grad():
-                                selective_dual[group_index] = (
-                                    selective_dual[group_index]
-                                    + float(selective_risk_config["dual_learning_rate"]) * violation.detach()
-                                ).clamp(0.0, float(selective_risk_config["maximum_dual"]))
-                        selective_constraint = torch.stack(constraint_terms).mean()
+                        group_admission = torch.zeros_like(selective_dual).scatter_add(
+                            0, selective_group, soft_admission
+                        )
+                        group_unsafe = torch.zeros_like(selective_dual).scatter_add(
+                            0, selective_group, soft_selected_unsafe
+                        )
+                        group_count = torch.zeros_like(selective_dual).scatter_add(
+                            0, selective_group, torch.ones_like(soft_admission)
+                        )
+                        present_group = group_count > 0
+                        group_risk = group_unsafe[present_group] / group_admission[present_group].clamp_min(1e-6)
+                        violation = group_risk - float(selective_risk_config["maximum_conditional_unsafe_rate"])
+                        present_dual = selective_dual[present_group].detach().clone()
+                        selective_constraint = (present_dual * violation).mean()
+                        with torch.no_grad():
+                            selective_dual[present_group] = (
+                                selective_dual[present_group]
+                                + float(selective_risk_config["dual_learning_rate"]) * violation.detach()
+                            ).clamp(0.0, float(selective_risk_config["maximum_dual"]))
                         feature_calibrator_objective = (
                             float(selective_risk_config["bce_weight"]) * feature_calibrator_loss
                             - float(selective_risk_config["coverage_weight"]) * soft_admission.mean()
                             + selective_constraint
                         )
-                        selective_risk_last = float(torch.stack(group_risks).max())
-                        selective_coverage_last = float(soft_admission.mean().detach())
+                        selective_risk_last = group_risk.detach().max()
+                        selective_coverage_last = soft_admission.mean().detach()
                     else:
                         feature_calibrator_objective = feature_calibrator_loss
                     feature_calibrator_optimizer.zero_grad(set_to_none=True)
                     feature_calibrator_objective.backward()
                     feature_calibrator_optimizer.step()
-                    feature_calibrator_last = float(feature_calibrator_loss.detach())
+                    feature_calibrator_last = feature_calibrator_loss.detach()
                     if step % 1000 == 0:
+                        feature_calibrator_value = float(feature_calibrator_last)
                         selective_note = (
-                            f" selective_risk={selective_risk_last:.7f} coverage={selective_coverage_last:.7f}"
+                            f" selective_risk={float(selective_risk_last):.7f}"
+                            f" coverage={float(selective_coverage_last):.7f}"
                             if selective_risk_config is not None else ""
                         )
                         print(
-                            f"{config['task_id']} feature-calibrator step={step + 1} bce={feature_calibrator_last:.7f}"
+                            f"{config['task_id']} feature-calibrator step={step + 1} bce={feature_calibrator_value:.7f}"
                             f"{selective_note}",
                             flush=True,
                         )
+                feature_calibrator_last = float(feature_calibrator_last)
+                selective_risk_last = float(selective_risk_last) if selective_risk_last is not None else None
+                selective_coverage_last = float(selective_coverage_last) if selective_coverage_last is not None else None
                 feature_calibrator.eval()
 
             def pooled_reliability_logits(local_features, local_horizon, local_ceiling):
