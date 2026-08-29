@@ -429,6 +429,7 @@
 - P344：P201 q90 risk/coverage `.12088/.28005`，两门失败，登记F221；
 - P345：group calibration将P201 q90 risk降到`.10714`，但coverage降到`.27869`，2/4 rejected，登记F222；
 - P346：P201 q90 coverage/risk `.32842/.09091`，四门supported；source heldout-H仍漂移，仅保留development claim；
+- P347 active：P201-unlabeled domain odds加权PAV，检验shift-aware calibration是否保持P346 frontier；
 - 下一可用 failure id 为 `V67-F223`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位

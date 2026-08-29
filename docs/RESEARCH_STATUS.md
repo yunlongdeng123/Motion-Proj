@@ -614,6 +614,10 @@ wall=`49.14s`。四个heldout task-condition在strict ceiling的unsafe=`.08696--
 unsafe=`.267108`且probability range饱和到`[0,1]`，所以只保留development support，不声称跨域校准或安全保证。
 r1仅因入口缺`PYTHONPATH=.`在模型载入前退出，未消耗训练或quality read。
 
+P347针对P346跨horizon/covariate漂移，按AISTATS 2020 target-unlabeled calibration训练domain discriminator，
+以self-normalized target/source odds加权同一fold2的9个PAV maps；不裁剪weights、不用P201 reliability labels。
+Active=`WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%

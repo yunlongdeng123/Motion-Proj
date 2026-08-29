@@ -1194,6 +1194,15 @@
 - limitation：source fold3 heldout-H q90 coverage/unsafe=`.294239/.267108`，概率range=`[0,1]`；支持的是
   reused P201 development，不是IID/source-horizon calibration guarantee，更不是formal multicalibration。
 
+### WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01
+
+- migration：AISTATS 2020 calibrated prediction under covariate shift用unlabeled target covariates估计importance weights；
+  P347用source fold2与P201 features训练balanced domain discriminator，取self-normalized target/source odds。
+- method：P346 base/group calibration/PAV groups与四门不变；只把source fold2 PAV block mass换成domain odds weighted mass；
+  P201 event labels仍只在末端development evaluation读取。
+- locks：domain MLP `[64,32]`、4k steps；不扫或裁剪weight，不扫threshold/group/capacity/step/LR/seed；
+  状态=`active training`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
