@@ -96,6 +96,26 @@ class SelectedPairQuantileHead(nn.Module):
         return F.softplus(self.network(features).squeeze(1))
 
 
+class HorizonMonotoneQuantileHead(nn.Module):
+    """Continuous horizon surface monotone in both horizon and quantile level."""
+
+    def __init__(self, input_width: int, hidden_dimensions) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 6))
+        self.network = nn.Sequential(*layers)
+
+    def forward(self, features, normalized_horizon):
+        raw = self.network(features).reshape(-1, 2, 3)
+        base = torch.cumsum(F.softplus(raw[:, 0]), 1)
+        slope = torch.cumsum(F.softplus(raw[:, 1]), 1)
+        return base + normalized_horizon[:, None] * slope
+
+
 @torch.no_grad()
 def _task_examples(descriptors, selector_score, costs, queries, scenes, progress_model, maneuver_model,
                    progress_values, commands, lateral_weight, selected_count):
@@ -174,6 +194,66 @@ def _pair_examples(descriptors, selector_score, costs, queries, scenes, progress
         np.concatenate(features), np.concatenate(targets), np.concatenate(example_scenes),
         np.concatenate(conditions), np.concatenate(nominal_pairs), np.concatenate(pair_utilities), pair_indices,
     )
+
+
+def _action_groups_by_horizon(feature, costs, rows_path: Path, horizons, expected_size: int):
+    with np.load(rows_path, allow_pickle=False) as loaded:
+        identities = np.unique(np.stack((
+            loaded["scene_index"], np.rint(loaded["horizon_seconds"] * 10).astype(np.int32),
+            loaded["anchor_frame"], loaded["query_id"],
+        ), 1), axis=0)
+    key_sets = []
+    for horizon in horizons:
+        code = int(round(float(horizon) * 10))
+        key_sets.append({(int(row[0]), int(row[2]), int(row[3])) for row in identities if int(row[1]) == code})
+    keys = sorted(set.intersection(*key_sets))
+    if len(keys) != len(feature) or len(costs) != len(feature):
+        raise RuntimeError(f"horizon action alignment failed: {len(keys)}, {len(feature)}, {len(costs)}")
+    buckets = {}
+    for index, (scene, anchor, query) in enumerate(keys):
+        buckets.setdefault((scene, anchor), []).append((index, query))
+    valid = [(key, rows) for key, rows in buckets.items() if len(rows) == int(expected_size)]
+    return (
+        np.stack([feature[[row[0] for row in rows]] for _, rows in valid]).astype(np.float32),
+        np.stack([costs[[row[0] for row in rows]] for _, rows in valid]).astype(np.float32),
+        np.asarray([key[0] for key, _ in valid], np.int64),
+        np.stack([[row[1] for row in rows] for _, rows in valid]).astype(np.int64),
+    )
+
+
+@torch.no_grad()
+def _horizon_task_examples(descriptors, selector_score, costs_by_horizon, queries, scenes,
+                           progress_model, maneuver_model, progress_values, commands,
+                           lateral_weight, selected_count):
+    x = torch.from_numpy(descriptors).cuda()
+    base = torch.from_numpy(selector_score).cuda()
+    progress_deficit = torch.from_numpy(np.where(queries < 3, 0.5, 0.0).astype(np.float32)).cuda()
+    lateral = torch.from_numpy(np.take(np.asarray([-1.0, 0.0, 1.0], np.float32), queries % 3)).cuda()
+    prefix_cost = np.maximum.accumulate(costs_by_horizon, axis=2)
+    features, targets, example_scenes, conditions = [], [], [], []
+    for progress in progress_values:
+        progress_tensor = torch.full((len(x),), float(progress), device="cuda")
+        progress_score = progress_model(x, base, progress_deficit, progress_tensor)
+        for command in commands:
+            command_tensor = torch.full((len(x),), float(command), device="cuda")
+            distance = torch.abs(lateral - command_tensor[:, None])
+            score = maneuver_model(x, progress_score, distance, command_tensor, float(lateral_weight)).cpu().numpy()
+            selected = np.argsort(score, axis=1)[:, :selected_count]
+            row = np.arange(len(descriptors))[:, None]
+            chosen = descriptors[row, selected]
+            chosen_score = score[row, selected]
+            condition = np.broadcast_to(np.asarray([progress, command], np.float32)[None], (len(descriptors), 2))
+            feature = np.concatenate((
+                chosen.mean(1), chosen.std(1), chosen.max(1),
+                chosen_score.mean(1, keepdims=True), chosen_score.min(1, keepdims=True), chosen_score.max(1, keepdims=True),
+                condition,
+            ), 1).astype(np.float32)
+            target = np.log1p(prefix_cost[row, selected].max(1)).astype(np.float32)
+            features.append(feature)
+            targets.append(target)
+            example_scenes.append(scenes)
+            conditions.append(condition)
+    return np.concatenate(features), np.concatenate(targets), np.concatenate(example_scenes), np.concatenate(conditions)
 
 
 def _evaluate(model, features, target, conditions, quantiles, offsets):
@@ -271,6 +351,7 @@ def main() -> None:
     task_projection_evaluation = bool(config.get("task_projection_evaluation", False))
     action_pair_editor_training = bool(config.get("action_pair_editor_training", False))
     groupwise_pair_editor_training = bool(config.get("groupwise_pair_editor_training", False))
+    horizon_quantile_training = bool(config.get("horizon_quantile_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -304,6 +385,8 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
+        if horizon_quantile_training:
+            return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
     source_groups, source_costs, source_scenes, source_queries = materialize(config["source_rows"])
@@ -357,6 +440,171 @@ def main() -> None:
     ).cuda()
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
+
+    if horizon_quantile_training:
+        source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
+            source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+            progress_model, maneuver_model, config["training_progress_preferences"],
+            config["training_lateral_commands"], float(config["lateral_preference_weight"]),
+            int(config["selected_action_count"]),
+        )
+        p201_feature, p201_target, _, p201_conditions = _horizon_task_examples(
+            p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
+            progress_model, maneuver_model, config["heldout_progress_preferences"],
+            config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
+            int(config["selected_action_count"]),
+        )
+        split = config["split"]
+        modulus = int(split["scene_modulus"])
+        calibration = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
+        development = source_example_scenes % modulus == int(split["development_scene_remainder"])
+        train = ~(calibration | development)
+        feature_mean = source_feature[train].mean(0)
+        feature_scale = source_feature[train].std(0).clip(min=1e-5)
+        source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+        p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+        model_config = config["horizon_model"]
+        model = HorizonMonotoneQuantileHead(source_feature.shape[1], model_config["hidden_dimensions"]).cuda()
+        optimizer = torch.optim.AdamW(
+            model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+        )
+        x = torch.from_numpy(source_feature).cuda()
+        y = torch.from_numpy(source_target).cuda()
+        horizon_values = np.asarray(config["horizons_seconds"], np.float32)
+        normalized_horizons = horizon_values / float(horizon_values.max())
+        training_horizon_indices = np.asarray(config["training_horizon_indices"], np.int64)
+        heldout_horizon_index = int(config["heldout_horizon_index"])
+        horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
+        training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
+        quantiles = np.asarray(config["quantile_levels"], np.float32)
+        q = torch.from_numpy(quantiles).cuda()
+        train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
+        last = 0.0
+        for step in range(int(model_config["steps"])):
+            row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+            local_horizon_index = training_horizon_tensor[
+                torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+            ]
+            prediction = model(x[row], horizon_tensor[local_horizon_index])
+            error = y[row, local_horizon_index, None] - prediction
+            loss = torch.maximum(q[None] * error, (q[None] - 1) * error).mean()
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            last = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P322 horizon quantile step={step + 1} pinball={last:.7f}", flush=True)
+        model.eval()
+        calibration_predictions, calibration_targets = [], []
+        calibration_x = x[torch.from_numpy(np.flatnonzero(calibration)).cuda()]
+        with torch.no_grad():
+            for horizon_index in training_horizon_indices:
+                h = torch.full((len(calibration_x),), float(normalized_horizons[horizon_index]), device="cuda")
+                calibration_predictions.append(model(calibration_x, h).cpu().numpy())
+                calibration_targets.append(source_target[calibration, horizon_index])
+        calibration_prediction = np.concatenate(calibration_predictions)
+        calibration_target = np.concatenate(calibration_targets)
+        residual = calibration_target[:, None] - calibration_prediction
+        offsets = np.asarray([
+            np.quantile(residual[:, index], float(level)) for index, level in enumerate(quantiles)
+        ], np.float32)
+
+        def horizon_metrics(features, target, conditions, horizon_index):
+            with torch.no_grad():
+                h = torch.full((len(features),), float(normalized_horizons[horizon_index]), device="cuda")
+                prediction = model(torch.from_numpy(features).cuda(), h).cpu().numpy()
+            prediction = np.maximum.accumulate(prediction + offsets[None], axis=1)
+            local_target = target[:, horizon_index]
+            coverage = np.mean(local_target[:, None] <= prediction, axis=0)
+            error = local_target[:, None] - prediction
+            pinball = np.maximum(quantiles[None] * error, (quantiles[None] - 1) * error)
+            by_condition = {}
+            for progress, command in np.unique(conditions, axis=0):
+                local = np.isclose(conditions[:, 0], progress) & np.isclose(conditions[:, 1], command)
+                by_condition[f"progress={float(progress)},command={float(command)}"] = {
+                    "example_count": int(local.sum()),
+                    "empirical_coverages": [float(value) for value in np.mean(local_target[local, None] <= prediction[local], axis=0)],
+                    "median_absolute_log_cost_error": float(np.mean(np.abs(prediction[local, 0] - local_target[local]))),
+                }
+            return {
+                "example_count": int(len(local_target)),
+                "horizon_seconds": float(horizon_values[horizon_index]),
+                "quantile_levels": [float(value) for value in quantiles],
+                "empirical_coverages": [float(value) for value in coverage],
+                "maximum_quantile_undercoverage": float(np.max(quantiles - coverage)),
+                "median_absolute_log_cost_error": float(np.mean(np.abs(prediction[:, 0] - local_target))),
+                "mean_pinball_loss": float(np.mean(pinball)),
+                "mean_q95_minus_q50_width": float(np.mean(prediction[:, 2] - prediction[:, 0])),
+                "by_task_condition": by_condition,
+            }
+
+        source_metrics = horizon_metrics(
+            source_feature[development], source_target[development], source_conditions[development], heldout_horizon_index
+        )
+        p201_metrics = horizon_metrics(p201_feature, p201_target, p201_conditions, heldout_horizon_index)
+        with torch.no_grad():
+            all_horizon_predictions = []
+            p201_x = torch.from_numpy(p201_feature).cuda()
+            for horizon_value in normalized_horizons:
+                h = torch.full((len(p201_x),), float(horizon_value), device="cuda")
+                prediction = model(p201_x, h).cpu().numpy() + offsets[None]
+                all_horizon_predictions.append(np.maximum.accumulate(prediction, axis=1))
+        all_horizon_predictions = np.stack(all_horizon_predictions, axis=1)
+        horizon_violations = int(np.sum(np.diff(all_horizon_predictions, axis=1) < -1e-8))
+        quantile_violations = int(np.sum(np.diff(all_horizon_predictions, axis=2) < -1e-8))
+        p201_metrics["horizon_monotonicity_violations"] = horizon_violations
+        p201_metrics["quantile_order_violations"] = quantile_violations
+        decision = config["decision"]
+        checks = {
+            "P201_heldout_horizon_quantile_coverage": p201_metrics["maximum_quantile_undercoverage"] <= float(decision["maximum_P201_quantile_undercoverage"]),
+            "P201_heldout_horizon_median_fidelity": p201_metrics["median_absolute_log_cost_error"] <= float(decision["maximum_P201_median_absolute_log_cost_error"]),
+            "P201_horizon_quantile_monotonicity": horizon_violations <= int(decision["maximum_P201_horizon_monotonicity_violations"]) and quantile_violations == 0,
+        }
+        verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+        torch.save({
+            "model_state_dict": model.state_dict(),
+            "input_width": source_feature.shape[1],
+            "hidden_dimensions": model_config["hidden_dimensions"],
+            "input_mean": feature_mean,
+            "input_scale": feature_scale,
+            "quantile_levels": quantiles,
+            "horizons_seconds": horizon_values,
+            "calibration_offsets": offsets,
+            "frozen_maneuver_compiler": config["frozen_maneuver_compiler"],
+        }, run_dir / config["model_artifact"])
+        summary = {
+            "schema_version": config["output_schema_version"],
+            "task_id": config["task_id"],
+            "hypothesis_id": config["hypothesis_id"],
+            "status": "done",
+            "verdict": verdict,
+            "role": config["role"],
+            "training": {
+                "row_count": int(train.sum()),
+                "horizon_example_count": int(train.sum() * len(training_horizon_indices)),
+                "training_horizons_seconds": [float(horizon_values[index]) for index in training_horizon_indices],
+                "steps": int(model_config["steps"]),
+                "final_pinball_loss": last,
+            },
+            "calibration": {
+                "horizon_example_count": int(calibration.sum() * len(training_horizon_indices)),
+                "additive_offsets": [float(value) for value in offsets],
+            },
+            "source_heldout_horizon_development": source_metrics,
+            "P201_heldout_task_and_horizon_development": p201_metrics,
+            "decision_checks": checks,
+            "resources": {
+                "gpu": torch.cuda.get_device_name(0),
+                "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                "wall_seconds": time.monotonic() - started,
+            },
+            "claim_boundary": config["claim_boundary"],
+        }
+        (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+        (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+        print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+        return
 
     source_feature, source_target, source_example_scenes, source_conditions = _task_examples(
         source_descriptor, source_selector_score, source_costs, source_queries, source_scenes, progress_model, maneuver_model,

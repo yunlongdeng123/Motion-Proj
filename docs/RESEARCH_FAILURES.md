@@ -377,9 +377,11 @@
   `.05847 < .10`，1/3失败，登记F207；严格ceiling仍无feasible task，不降门/删ceiling/扩task grid；
 - P320 result：逐pair bounded residual editor的q90 margin=`.51617`，P201 mean coverage gain=`-.00328 < .10`，
   risk/monotonicity通过但coverage失败，登记F208；不调margin/quantile/gate；
-- P321 active：groupwise 15-pair decision-focused selector + selected-outcome q90 head；失败才登记F209，不改
-  architecture/weight/quantile/ceiling/gate/seed或在P201 refit/calibrate；
-- 下一可用 failure id 为 `V67-F209`。
+- P321 result：groupwise selector + selected-outcome q90训练收敛，但P201 mean coverage gain=`-.00109 < .10`，
+  risk/monotonicity通过，登记F209；关闭task/pair repair family，不调selected q90/weight/architecture/gate；
+- P322 active：训练continuous-H monotone admitted-set q50/q80/q95，2.5s heldout；失败才登记F210，不改
+  horizon/quantile/architecture/gate/seed或在P201 refit/calibrate；
+- 下一可用 failure id 为 `V67-F210`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -406,6 +408,19 @@
   permutation equivariance；P321联合选15 pairs，随后只对hard-selected outcome训练/校准q90；
 - forbidden rescue：不调margin/q90/gate、不删除high ceiling、不只报告strict gain、不在P201重训；
 - resolution status：`open via P321 groupwise selected-outcome authority`。
+
+### V67-F209 — P321 groupwise选择仍不能提升六动作lattice总体authority coverage
+
+- canonical=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
+  20260901T064500Z__groupwise-pair-authority-editor-s0-r1`；
+- symptom：selector/risk losses=`.21701/.01266`，selected-outcome margin降到`.29468`，但P201 mean
+  groupwise/nominal coverage=`.25956/.26066`，gain=`-.00109 < .10`；
+- retained evidence：max unsafe=`.01774`、monotonicity=0，高ceiling gain=`.03934`；strict仍0，mid gain=
+  `-.04262`。失败不是逐pair multiple-selection margin单一问题，而是当前六动作candidate family的capacity边界；
+- literature check/migration：多horizon uncertainty工作强调uncertainty随预测时域增长且应显式建模；P322不再编辑
+  task/pair，直接学习requested set在continuous H下的visited-state cost quantile surface；
+- forbidden rescue：不调q90/utility weight/selector architecture/gate，不扩同一pair family，不在P201训练；
+- resolution status：`closed repair family; migrated to P322 horizon-conditioned authority`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

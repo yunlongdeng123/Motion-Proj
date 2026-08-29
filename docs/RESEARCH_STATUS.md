@@ -412,11 +412,19 @@ P320训练逐pair bounded residual editor。Canonical=`run://worldsim_v67/WS-V67
 `V67-F208`。max unsafe=`.05263`、monotonicity=0；strict只新增`.00328` coverage，高ceiling反而损失`.02459`。
 不得调margin/quantile/gate或只保留低ceiling。
 
-P321按ICML 2022 decision-focused learning-to-rank与permutation-invariant set encoder迁移：单个groupwise selector
-一次接收全部15 pairs，以listwise oracle+soft decision regret联合训练；hard选出一个pair后，第二个q90 head只对最终
-selected outcome拟合/校准，从对象层消除P320的per-candidate multiple-selection margin。requested task、P317三条
-ceilings和三门不变。Active=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
-20260901T064500Z__groupwise-pair-authority-editor-s0-r1`。
+P321联合训练15-pair selector与selected-outcome q90。Canonical=`run://worldsim_v67/
+WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
+20260901T064500Z__groupwise-pair-authority-editor-s0-r1`：selector/risk训练loss=`.21701/.01266`，selected-only
+margin降至`.29468`，但P201 mean groupwise/nominal coverage=`.25956/.26066`，gain=`-.00109 < .10`，1/3
+失败，登记`V67-F209`；max unsafe=`.01774`、monotonicity=0，高ceiling gain=`.03934`仍不足以抵消strict 0和
+mid `-.04262`。P319/P320/P321连续表明当前六动作lattice上的task/pair repair不能增加总体authority，关闭该family。
+
+P322回到核心预测对象的未来时域H：保留P313 requested-task top-2，不再编辑task/pair；从原始四horizon cost取
+prefix-max visited-state cost，训练连续H-conditioned q50/q80/q95 surface。结构为positive base+slope increments，
+同时保证H↑quantile cost不降、q↑quantile不降；仅用`0.8/1.5/3.0s`训练和source calibration，`2.5s`完全heldout。
+P201同时heldout task (`.25/.75 × -.5/.5`) 与heldout H=`2.5s`，三门coverage/fidelity/monotonicity。
+Active=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

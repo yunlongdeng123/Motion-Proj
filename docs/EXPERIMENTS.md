@@ -747,8 +747,25 @@
   calibration只加一个selected-outcome margin。不是15个candidate各自校准。
 - gates：P201 max unsafe `<=.15`、mean coverage gain vs nominal P317 pair `>=.10`、ceiling monotonicity=0；
   requested task/ceilings不变，不扫architecture/weight/quantile/gate/seed。
-- active=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
+- canonical=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
   20260901T064500Z__groupwise-pair-authority-editor-s0-r1`。
+- training：14,526 group rows/217,890 pairs；selector 5k + selected-q90 4k steps，final losses=`.21701/.01266`；
+  selected-outcome margin=`.29468`。
+- P201 result：mean groupwise/nominal coverage=`.25956/.26066`，gain=`-.00109 < .10`；max unsafe=
+  `.01774`、monotonicity=0，2/3。strict coverage=0；mid gain=`-.04262`；high gain=`.03934`、unsafe=
+  `.01774`。wall=`59.32s`、peak GPU=`1.2253GiB`。
+- disposition：登记`V67-F209`，关闭task/pair repair family；不调selected q90/weight/architecture/gate。
+
+### WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01
+
+- object：给定requested task与未来H秒，预测P313 top-2中max prefix visited-state cost的q50/q80/q95；H是
+  显式连续条件，不再把四个horizons压成单一max。
+- protocol：source train/calibration/development scene disjoint；训练H=`.8/1.5/3.0s`，heldout H=`2.5s`；正式
+  P201还同时使用heldout progress/lateral。positive base+slope cumulative increments保证H/quantile双单调。
+- gates：P201 max undercoverage `<=.10`、median log-cost MAE `<=.35`、H/quantile violations=0；不扫H、
+  quantile、architecture、gate或seed。
+- active=`run://worldsim_v67/WS-V67-P322-HORIZON-CONDITIONED-ADMITTED-SET-QUANTILES-01/
+  20260901T070000Z__horizon-conditioned-admitted-set-quantiles-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
