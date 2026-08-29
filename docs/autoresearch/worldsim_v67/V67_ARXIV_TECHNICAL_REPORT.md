@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P163 direct footprint-support training active`
+- 报告状态：`P147 independent multi-horizon support; P163 footprint family closed negative`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -310,8 +310,11 @@ P162据此不再调variance，而扩展world-state object：从processed Actor a
 support的一阶不确定性与P126 position field组合；position-only control共享同一oriented clearance。该结果将回答粒子近似之外的
 Actor footprint state是否能为trajectory boundary reliability提供增量。结果yaw MAE随H增长，但旧四cohort rank mean=`-.000284`、
 仅2/4 cost改善，P147 H3.5 cost回退`.02613`（F126）；因此拒绝yaw Gaussian的一阶support传播，不否定oriented box object本身。
-P163保留oriented object但移除线性化：直接学习每个query normal上的exact support residual，并与冻结P126 position field组合；
-该结果用于区分“footprint object无用”与“yaw→support一阶传播错误”。
+P163保留oriented object但移除线性化：直接学习每个query normal上的exact support residual，并与冻结P126 position field组合。
+5.18M query-time tokens上的三成员均正常收敛，但旧P81/P96/P113/P129 rank gain mean=`-.001156`，P96 cost回退；
+P147五H post-confirmation诊断也没有稳定rank/cost方向（F127）。因此负结果不只来自yaw一阶传播：在当前轨迹边界成本中，
+厘米级support residual没有超过position residual与clearance的主导作用。oriented-footprint family关闭，P126/P147 position-state
+结论保持，论文不得将box/yaw state写成已支持增量。
 
 ## 3. 核心结果表
 

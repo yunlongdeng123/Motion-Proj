@@ -593,9 +593,12 @@ P147 post-confirmation rank在H3.0/H3.5微增，但H3.5 cost回退`+.02613`；me
 oriented footprint对象保留为negative mechanism result，不以局部H结果替换position authority。
 
 P163执行F126允许的唯一恢复：不再预测yaw再线性化，而对每个query normal直接监督exact `actual rectangle support -
-predicted support`。输入Actor history/time、query normal与predicted-heading sin/cos，形成约5.18M query-time tokens；三成员
-Gaussian与P126 position field组合，baseline仍是同一oriented clearance的position-only score。3×6,000-step训练正在3090执行，
-不扫class/box scale/model/loss/score；P147只作post-confirmation描述。
+predicted support`。输入Actor history/time、query normal与predicted-heading sin/cos，形成5,180,364个query-time tokens；三成员
+Gaussian均正常收敛（NLL=`-2.37759/-2.41525/-2.44770`），与冻结P126 position field组合，baseline仍是同一oriented
+clearance的position-only score。旧P81/P96/P113/P129的rank gain=`-.002889/-.001400/-.000370/+.000036`
+（mean=`-.001156`），且P96 selected cost回退`+.000126`；0/2 decisions，F127。P147五H post-confirmation诊断也只有
+H3.0/H3.5极小正rank，H2.5/H3.5 cost分别回退`+.001179/+.002477`。因此direct support target也未形成稳定增量，
+oriented-footprint/yaw支线关闭；P126/P147的position-state authority保持不变。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

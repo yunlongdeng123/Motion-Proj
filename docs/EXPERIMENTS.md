@@ -1023,7 +1023,7 @@
 
 ### WS-V67-P163-DIRECT-FOOTPRINT-SUPPORT-ENSEMBLE-01
 
-- 状态：`running GPU training`；canonical=`20260830T121500Z__direct-footprint-support-ensemble-s0-r1`。
+- 状态：`done/rejected development`；canonical=`20260830T121500Z__direct-footprint-support-ensemble-s0-r1`。
 - recovery object：target直接是oriented rectangle沿每个query normal的`actual support - predicted support`，不再经过yaw Gaussian
   和support derivative；输入Actor19+time+normal+predicted heading sin/cos。
 - training：约5.18M source query-time tokens、3 independent Gaussian members、每member6,000 steps、batch65,536。
@@ -1031,7 +1031,14 @@
   predicted clearance但support residual=0。actual cost与P162一致。
 - decisions：旧P81/P96/P113/P129 cost全不退且mean rank gain≥`.005`；P147仅post-confirmation descriptive。
 - locks：不扫class/box scale/model/loss/normal/score/coverage；这是P162线性化失败后的唯一direct-target recovery。
-- locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
+- training result：5,180,364 query-time tokens；member final NLL=`-2.37759/-2.41525/-2.44770`；wall=`88.80s`，
+  peak GPU=`.7863GiB`、RSS=`2.1229GiB`。
+- development result：P81/P96/P113/P129 direct-vs-position rank gain=`-.002889/-.001400/-.000370/+.000036`
+  （mean=`-.001156`）；selected-cost delta=`-.001165/+.000126/-.000181/-.003500`，cost non-regression和mean-rank两门均失败。
+- P147 diagnostic：H`.8/1.5/2.5/3.0/3.5` rank gain=`-.004498/-.000355/-.000855/+.000779/+.000535`；
+  cost delta=`+.000122/+.000081/+.001179/-.001554/+.002477`。这些是post-confirmation descriptive，不构成新证据。
+- verdict=`rejected_development_direct_footprint_support_ensemble`；F127。无cohort/H/model/score/cost/decision变化，
+  不重扫已有files，不新增测试矩阵；oriented-footprint/yaw family至此关闭。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

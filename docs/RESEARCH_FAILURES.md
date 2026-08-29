@@ -2056,9 +2056,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - object：exact actual-minus-predicted rectangle support，input=Actor/time/query normal/predicted heading sincos，三成员Gaussian。
 - control/decisions：冻结P126 position field；同一oriented clearance position-only control；旧四cohort cost全不退+mean rank≥`.005`。
-- prevention：不扫class/box scale/model/loss/score/coverage；P147 post-confirmation only，失败才使用F127。
+- prevention：不扫class/box scale/model/loss/score/coverage；P147 post-confirmation only。
 
-下一可用编号为：`V67-F127`。
+### V67-F127 — direct footprint support residual无稳定trajectory-selection增量
+
+- 分类：`algorithm/direct-oriented-support-residual`；状态：`closed_negative_after_single_recovery`。
+- canonical：`run://worldsim_v67/WS-V67-P163-DIRECT-FOOTPRINT-SUPPORT-ENSEMBLE-01/
+  20260830T121500Z__direct-footprint-support-ensemble-s0-r1`。
+- 观察：5.18M tokens、三成员NLL正常；旧四cohort rank gain mean=`-.001156`，P96 cost回退，0/2 decisions；P147五H
+  也没有稳定rank/cost方向。
+- 解释：直接support residual本身幅度很小（P147 mean absolute约`.0020--.0117m`），position residual及clearance主导
+  当前continuous cost；移除yaw一阶近似仍不能提供可迁移的排序信息。
+- 防重复：关闭yaw/box-scale/support-loss/normal-conditioned footprint变体，不以局部H微增恢复结论。下一步只允许改变
+  Actor position reliability的条件表示或迁移到新预测对象，不再修补footprint支线。
+
+下一可用编号为：`V67-F128`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
