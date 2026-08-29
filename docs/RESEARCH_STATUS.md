@@ -975,6 +975,11 @@ IO期间P229完成一次`64x64` compact monotone student，复用P227输入/teac
 （减少`68.37%`）。P201 teacher MAE=`.008252`，Brier相对退化仅`.159%`，calibration反而改善`.000945`，2/2通过；
 wall=`50.62s`、peak GPU=`.140GiB`。P230立即接替GPU：固定P229宽度与全部训练合同，只移除8个P199 conditional
 features，检验28个P182 marginal CDF values是否已足够编译teacher；只做这一次feature-interface ablation，不扫子集。
+P230完成且P201两门通过：teacher MAE=`.009653`，student/teacher Brier=`.089962/.090478`（student改善`.571%`），
+calibration=`.023396/.024630`（student改善`.001233`）。P183 Brier/calibration虽退化`.696%/.001767`但仍在原冻结
+容差内；marginal-only参数为6,536。该结果说明teacher dependence可被运行时marginal surface编译，不等价于独立性声明。
+P231已接替GPU，固定P229 64x64 full-input结构，以`.5 teacher MSE + .5 source outcome Brier`单次训练，检验proper-loss
+regularization能否在P201严格改善teacher Brier且保持MAE≤`.02`、calibration增加≤`.002`；不扫混合权重。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

@@ -1829,7 +1829,16 @@
   features，以28个P182 marginal CDF values编译P203(P199) teacher；
 - rationale：若成立，runtime interface不再需要额外传递copula conditioning vector；这只是teacher distillation，不宣称
   horizon independence；
-- status：RTX 3090训练中；不做feature-subset/width/depth/LR/MC sweep，不读取P228 quality。
+- result：6,536 parameters；P201 teacher MAE=`.009653`，student/teacher Brier=`.089962/.090478`（改善
+  `.571%`），calibration=`.023396/.024630`（改善`.001233`）；2/2。P183 Brier degradation=`.696%`、
+  calibration increase=`.001767`，仍在原容差；
+- verdict=`supported_marginal_only_monotone_curve_compiler`；wall=`51.51s`，peak GPU=`.140GiB`。仍需P228确认。
+
+### WS-V67-P231-TRUTH-REGULARIZED-MONOTONE-CURVE-01
+
+- hypothesis：固定P229 full-input 64x64结构，以`.5` frozen-teacher MSE + `.5` source hard-outcome Brier训练；
+- decisions：P201 teacher MAE≤`.02`、integrated Brier严格优于teacher、calibration absolute increase≤`.002`；
+- status：RTX 3090训练中；单个half/half权重，不扫loss mixing或truth auxiliary，不读取P228 quality。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

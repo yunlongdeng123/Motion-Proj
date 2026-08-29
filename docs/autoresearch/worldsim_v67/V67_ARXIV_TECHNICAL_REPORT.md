@@ -82,6 +82,9 @@ archive/preprocess与确认并行运行。等待IO期间P229只训练一次`64x6
 P229把参数从22,280降至7,048（`-68.37%`），P201 teacher MAE=`.008252`、Brier degradation仅`.159%`且
 calibration改善`.000945`，2/2通过。P230进一步固定该训练合同，只移除8个P199 condition features，测试28个marginal
 CDF是否足以编译teacher；它不把distillation等同为horizon independence，也不读取P228 fresh quality。
+P230在P201获得MAE=`.009653`，Brier/calibration相对teacher改善`.571%/.001233`，说明conditional teacher可被
+marginal-only runtime interface近似，但仍需fresh确认。P231随后固定64x64 full-input student，以half teacher/half source
+outcome proper loss训练一次，研究distillation是否能从纯emulation推进到quality refinement；不扫mixing weight。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

@@ -140,7 +140,8 @@
 | P227 | `run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1` | P201 teacher MAE `.007633`；Brier/calibration均不劣；2/2 post-hoc support |
 | P228 | `run://worldsim_v67/WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-01/20260831T010500Z__monotone-distillation-confirmation-s0-r1` | frozen fresh 10-scene/10-log confirmation；preparation active，quality unread |
 | P229 | `run://worldsim_v67/WS-V67-P229-COMPACT-MONOTONE-RELIABILITY-CURVE-01/20260831T011500Z__compact-monotone-reliability-curve-s0-r1` | 7,048 params（-68.37%）；P201 MAE `.008252`、2/2 development support |
-| P230 | `run://worldsim_v67/WS-V67-P230-MARGINAL-ONLY-MONOTONE-CURVE-01/20260831T013000Z__marginal-only-monotone-curve-s0-r1` | fixed 64x64 marginal-only compiler；training active during P228 IO |
+| P230 | `run://worldsim_v67/WS-V67-P230-MARGINAL-ONLY-MONOTONE-CURVE-01/20260831T013000Z__marginal-only-monotone-curve-s0-r1` | P201 MAE `.009653`；Brier/calibration both improve；2/2 development support |
+| P231 | `run://worldsim_v67/WS-V67-P231-TRUTH-REGULARIZED-MONOTONE-CURVE-01/20260831T014500Z__truth-regularized-monotone-curve-s0-r1` | fixed half-teacher/half-truth proper-loss student；training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

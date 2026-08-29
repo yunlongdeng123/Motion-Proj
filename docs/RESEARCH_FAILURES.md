@@ -2794,6 +2794,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F178`。
 
+### P230 milestone note — marginal-only compiler通过，无新增failure
+
+- P201 teacher MAE=`.009653`，Brier/calibration均优于teacher；P183轻微退化仍在冻结容差；
+- 结果只支持student运行时接口简化，不证明horizon independence，也不改变P199/P203 teacher的语义；
+- P231只作一次half-teacher/half-truth proper-loss训练；P228 quality仍未读取。
+
+下一可用编号仍为：`V67-F178`。
+
 ### P229 milestone note — 64x64 compact student通过，无新增failure
 
 - P201 teacher MAE=`.008252`，Brier relative degradation=`.159%`，calibration absolute increase=`-.000945`，2/2；
