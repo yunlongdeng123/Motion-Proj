@@ -2703,6 +2703,18 @@ trajectories；低自由度monotone beta层在未触碰dev上同时改善P199 Br
 
 下一可用编号：`V67-F171`。
 
+### V67-F171 — unlabeled-target importance weighting不能修复prefix refinement shift
+
+- canonical：`run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1`；
+- 观察：domain classifier accuracy仅`.52915`，加权后P183 macro Brier仍退化`1.93%`，calibration改善`19.60%`，1/2；
+- 解释：score/clearance/horizon covariates上source与P183近乎不可分，P216失败更符合conditional mechanism/refinement shift，
+  而非能由unlabeled density ratio纠正的covariate shift；
+- 响应：关闭prefix survival density、beta calibration与importance-weighting；P218更换prediction object为时间加权累计
+  visited-state exposure，降低maximum/first-passage对单个极值的敏感性；
+- 防重复：不扫domain classifier、weight bounds、scene split、calibrator、prefix hazard或density结构。
+
+下一可用编号：`V67-F172`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

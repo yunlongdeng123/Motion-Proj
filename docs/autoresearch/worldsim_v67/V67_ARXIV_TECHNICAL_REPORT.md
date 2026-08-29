@@ -56,7 +56,9 @@ P214随后将maximum对象扩展为四个prefix survival curves：宏平均Brier
 calibration error退化`30.33%`，因此拒绝。P215以互斥的density-fit、calibration和development scene sets训练低自由度
 monotone beta层，在source dev同时改善Brier `.895%`和calibration error `38.31%`；但P216冻结迁移到P183后Brier反而
 退化`1.89%`，虽校准仍改善`19.87%`。因此prefix-survival density尚无跨cohort正证据，不能替代P199/P203。P217仅作为
-受AISTATS covariate-shift calibration启发的post-hoc unlabeled-target importance-weighting development，尚不构成论文结论。
+受AISTATS covariate-shift calibration启发的post-hoc unlabeled-target importance-weighting development；domain accuracy仅
+`.52915`且P183 Brier仍退化`1.93%`，故该family关闭。P218进一步把对象从maximum/first-passage改为四H时间加权的累计
+visited-state exposure density；当前只处于source development，尚不构成论文结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

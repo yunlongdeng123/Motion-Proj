@@ -932,6 +932,12 @@ density-fit/calibration/development trajectories得到macro Brier `.0647283→.0
 的1,912条跨cohort trajectories上校准仍改善`19.87%`，但Brier `.0642338→.0654502`退化`1.89%`，1/2、F170；
 不能创建fresh confirmation。参考AISTATS 2020 covariate-shift calibration，P217正以P183只读input features训练domain density
 ratio，并对source density/log-loss与disjoint beta calibration作importance weighting；P183 cost labels只用于最终development read。
+P217最终domain accuracy仅`.52915`，source importance-weight ESS=`14,423/18,515`；P183 calibration仍改善`19.60%`，
+但Brier `.0642323→.0654716`退化`1.93%`，1/2、F171。说明已用的score/clearance/horizon输入几乎不能识别cohort，
+无标签covariate weighting也不能修复conditional refinement shift；prefix survival/density家族关闭。参考UAI 2020 neural
+CDF与NeurIPS probabilistic forecasting的sequence uncertainty aggregation，P218已更换对象为四H cost按时间间隔
+`[.8,.7,1.0,.5]s`加权的累计visited-state exposure；DeepSet直接density与P182 marginals + P199 copula连续采样control
+在source dev比较，RTX 3090训练运行中。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

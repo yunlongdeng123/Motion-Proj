@@ -1709,7 +1709,18 @@
 - canonical planned：`run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1`；
 - protocol：依据AISTATS 2020 covariate-shift calibration，以P183 input features但不以cost labels训练source/target domain ratio；
   importance-weight source density proper NLL与互斥source calibration BCE，最后才读取P183 truth；
-- status：RTX 3090运行中；P183已消费，结果只作post-hoc development，不作fresh confirmation。
+- result：domain accuracy=`.52915`，importance-weight range=`.1000--10.0013`、ESS=`14,423/18,515`；target-weighted/P199
+  P183 macro Brier=`.065472/.064232`（退化`1.93%`），calibration error=`.017484/.021747`（改善`19.60%`）；
+  1/2，F171，wall=`119.08s`；
+- verdict=`rejected_consumed_target_weighted_prefix_survival_development`；关闭prefix density/calibration/UDA family。
+
+### WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01/20260830T224000Z__cumulative-exposure-density-s0-r1`；
+- protocol：prediction object改为四个visited-state costs用`.8/.7/1.0/.5s` interval加权的累计exposure；候选为共享
+  DeepSet 5-component log-density，control为P182四marginals经P199 conditional copula采样后同样求和；
+- decisions：七个固定exposure budgets的integrated Brier严格改善、calibration noninferior；1024 MC、20步mixture-CDF inversion；
+- status：RTX 3090训练运行中；source development only，不扫budget、quadrature、density或MC。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

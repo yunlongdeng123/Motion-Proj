@@ -127,7 +127,8 @@
 | P214 | `run://worldsim_v67/WS-V67-P214-PREFIX-SURVIVAL-MAX-COST-DENSITY-01/20260830T213000Z__prefix-survival-max-cost-density-s0-r1` | prefix macro Brier -1.16%但calibration +30.33%；rejected/F169 |
 | P215 | `run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1` | Brier -.895%、calibration -38.31%；source dev supported |
 | P216 | `run://worldsim_v67/WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01/20260830T220000Z__calibrated-prefix-survival-post-confirmation-s0-r1` | P183 calibration -19.87%但Brier +1.89%；rejected/F170 |
-| P217 | `run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1` | unlabeled-target importance-weighting development；running |
+| P217 | `run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1` | P183 calibration -19.60%但Brier +1.93%；rejected/F171 |
+| P218 | `run://worldsim_v67/WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01/20260830T224000Z__cumulative-exposure-density-s0-r1` | cumulative visited-state exposure density；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -284,7 +285,8 @@
 | `V67-F167` | closed negative | P211 source-trained P199/P210 scalar pool在dev仍退化Brier |
 | `V67-F168` | closed negative | P212 DeepSet max density在P183 secondary中Brier退化2.74% |
 | `V67-F169` | recovered source-only | P215 disjoint beta calibration在source dev同时改善Brier/calibration |
-| `V67-F170` | recovery active | P216跨P183 Brier退化1.89%；P217 unlabeled-target importance weighting运行中 |
+| `V67-F170` | recovery failed | P216跨P183 Brier退化1.89%；P217 importance weighting亦未恢复 |
+| `V67-F171` | closed negative | P217 target covariates近乎不可分且Brier仍退化1.93%；prefix density family关闭 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory
