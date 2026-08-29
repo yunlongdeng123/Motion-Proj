@@ -1,0 +1,45 @@
+schema_version: worldsim_v67.p286_additive_conformal_lcb_group_dual.v1
+output_schema_version: worldsim_v67.p286_additive_conformal_lcb_group_dual_summary.v1
+task_id: WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01
+hypothesis_id: WS-V67-H-P286-001
+role: budget_conditioned_risk_tolerance_additive_LCB_group_dual_development
+seed: 0
+model_artifact: ADDITIVE_CONFORMAL_LCB_GROUP_DUAL.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p284: {run: worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/20260831T200000Z__additive-conformal-lcb-s0-r1, artifact: ADDITIVE_CONFORMAL_LCB_SURFACE.pt}
+frozen_p285: {run: worldsim_v67/WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/20260831T201500Z__additive-conformal-lcb-policy-s0-r1, artifact: ADDITIVE_CONFORMAL_LCB_LAGRANGIAN_POLICY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+group_size: 64
+training_alpha_fairness: [0.00, 0.50, 1.00]
+heldout_alpha_fairness: [0.25, 0.75]
+training_risk_tolerances: [0.05, 0.10, 0.20, 0.30, 0.40]
+heldout_risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+training_final_reliability_floors: [0.30, 0.50, 0.70]
+heldout_final_reliability_floors: [0.40, 0.60]
+training_attainable_budget_fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 4096
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {width: 128, rate_knot_count: 16, steps: 12000, batch_size: 512, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_attained_budget_fraction_MAE: 0.030, maximum_P201_mean_frozen_LCB_floor_Lagrangian_group_utility_regret: 0.002}
+verdict_on_pass: supported_additive_LCB_group_budget_dual
+verdict_on_failure: rejected_additive_LCB_group_budget_dual
+locks:
+  frozen_P285_price_conditioned_allocator_is_the_only_primal: true
+  fixed64_alpha_tolerance_floor_fraction_axes_are_frozen: true
+  monotone_fraction_to_shadow_price_spline_is_fixed: true
+  no_condition_grid_architecture_bisection_gate_or_step_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_budget_dual_development_after_P201_observation_not_fresh_confirmation
+  - attainable_fraction_and_empirical_LCB_not_hard_reliability_or_coverage_constraint
+  - surrogate_dual_not_online_scheduler_collision_planner_policy_closed_loop_or_safety_claim
