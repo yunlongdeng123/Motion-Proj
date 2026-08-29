@@ -319,13 +319,14 @@ class DirectVisitedReliabilityHead(nn.Module):
 class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
     """Train one active member at a time, then pool probabilities before calibration."""
 
-    def __init__(self, member_count, input_width, hidden_dimensions, set_size_count):
+    def __init__(self, member_count, input_width, hidden_dimensions, set_size_count, pooling="mean"):
         super().__init__()
         self.members = nn.ModuleList([
             DirectVisitedReliabilityHead(input_width, hidden_dimensions, set_size_count)
             for _ in range(int(member_count))
         ])
         self.active_member_index = None
+        self.pooling = str(pooling)
 
     def forward(self, features, normalized_horizon, log_cost_ceiling):
         if self.training and self.active_member_index is not None:
@@ -333,7 +334,10 @@ class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
         member_logits = torch.stack([
             member(features, normalized_horizon, log_cost_ceiling) for member in self.members
         ])
-        pooled_probability = torch.sigmoid(member_logits).mean(0).clamp(1e-6, 1.0 - 1e-6)
+        member_probability = torch.sigmoid(member_logits)
+        pooled_probability = (
+            member_probability.max(0).values if self.pooling == "maximum" else member_probability.mean(0)
+        ).clamp(1e-6, 1.0 - 1e-6)
         return torch.logit(pooled_probability)
 
 
@@ -1102,7 +1106,8 @@ def main() -> None:
             domain_adversarial_training = bool(config.get("reliability_domain_adversarial_training", False))
             if ensemble_fit_remainders is not None:
                 model = CrossFoldDirectVisitedReliabilityEnsemble(
-                    len(ensemble_fit_remainders), source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
+                    len(ensemble_fit_remainders), source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes),
+                    config.get("reliability_ensemble_pooling", "mean"),
                 ).cuda()
             elif domain_adversarial_training:
                 adversarial_config = config["domain_adversarial"]
@@ -1115,6 +1120,13 @@ def main() -> None:
                 model = DirectVisitedReliabilityHead(
                     source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
                 ).cuda()
+            frozen_reliability_model = config.get("frozen_reliability_model")
+            if frozen_reliability_model is not None:
+                frozen_reliability_artifact = torch.load(
+                    args.runs_root / frozen_reliability_model["run"] / frozen_reliability_model["artifact"],
+                    map_location="cuda",
+                )
+                model.load_state_dict(frozen_reliability_artifact["model_state_dict"])
             teacher_model = None
             teacher_consistency_config = config.get("reliability_teacher_consistency")
             if teacher_consistency_config is not None:
@@ -1461,6 +1473,8 @@ def main() -> None:
                 "isotonic_maps": isotonic_maps,
                 "domain_model_state_dict": domain_model.state_dict() if covariate_shift_weighting else None,
                 "reliability_teacher_consistency": teacher_consistency_config,
+                "frozen_reliability_model": frozen_reliability_model,
+                "reliability_ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -1470,7 +1484,9 @@ def main() -> None:
                              "domain_adversarial_final_bce": domain_adversarial_last,
                              "teacher_consistency_final_bce": teacher_consistency_last,
                              "ensemble_member_count": len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else 1,
-                             "ensemble_member_final_bce": ensemble_member_last},
+                             "ensemble_member_final_bce": ensemble_member_last,
+                             "ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
+                             "frozen_reliability_model": frozen_reliability_model},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": "ceiling_set_size_with_horizon_slope" if group_calibration else "global_temperature_bias",
