@@ -651,6 +651,13 @@ prediction consistency，作为risk-semantic anchor；不使用P201 event labels
 
 P352回到source-only直接可靠性：按NeurIPS/UAI calibrated ensembles采用3个预定义scene folds训练独立head，先平均
 概率再在独立source folds做group calibration+PAV；不用P201 covariates或labels训练，目标是降低单fold方差。
+Canonical=`run://worldsim_v67/WS-V67-P352-CROSSFOLD-ENSEMBLE-VISITED-RELIABILITY-01/
+20260901T151500Z__crossfold-ensemble-visited-reliability-s0-r1`：3 members各8k，final BCE=
+`.163446/.153856/.137858`；source fold5 q90 coverage/unsafe=`.332778/.090164`，但P201为
+`.395355/.175182`，risk失败，3/4 rejected，登记F227。均值池化增加authority而未迁移安全率。
+
+P353不重训24k ensemble，按NeurIPS 2024 credal ensemble将同一三个frozen成员改为upper/maximum unsafe probability
+pooling，再在相同source fold3/4重新calibrate；这是单一保守聚合迁移，不扫mean/max/quantile。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

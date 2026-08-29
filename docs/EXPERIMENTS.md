@@ -1267,7 +1267,20 @@
 - method：scene modulus6；members分别fit fold0/1/2，各8k；先平均unsafe probabilities再转logit，fold3做group
   calibration、fold4做PAV、fold5只作source dev，最后读取P201。
 - locks：P346 target/head width/gates不变；不使用P201训练或校准，不扫member/seed/aggregation/threshold/capacity；
-  状态=`implementation`。
+  状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P352-CROSSFOLD-ENSEMBLE-VISITED-RELIABILITY-01/
+  20260901T151500Z__crossfold-ensemble-visited-reliability-s0-r1`。
+- result：13,797 union fit rows、24k total；member final BCE=`.163446/.153856/.137858`；fold3 group
+  calibration BCE=`.335681`，fold4 PAV BCE=`.271313`。source fold5 q90=`.332778/.090164`；P201 q90=
+  `.395355/.175182`，coverage/monotonicity通过、risk失败，3/4 rejected，wall=`96.58s`，F227。
+
+### WS-V67-P353-UPPER-POOL-CROSSFOLD-RELIABILITY-01
+
+- migration：NeurIPS 2024 credal deep ensembles用预测概率区间表达shift epistemic uncertainty；P353以成员unsafe
+  probability上包络替代P352 mean，显式拒绝成员分歧下的过度authority。
+- method：完全复用frozen P352 3 members，不重复24k training；max-pool后在同一source fold3做2k group calibration、
+  fold4 PAV，fold5/P201 evaluation合同不变。
+- locks：只运行upper pool；不扫pool quantile/member/calibration/threshold/gate/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

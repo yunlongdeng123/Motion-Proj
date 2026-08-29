@@ -434,8 +434,9 @@
 - P349：q90 `.30055/.09375`四门supported，但step6k后adversarial collapse，保留unstable limitation；
 - P350：稳定训练但q90 `.29973/.18667`，risk semantics丢失，登记F225；
 - P351：teacher anchor改善coverage但q90 risk仍`.13514`，登记F226；target-unlabeled adaptation family关闭；
-- P352：3-member source scene-crossfold pool-then-calibrate ensemble implementation；
-- 下一可用 failure id 为 `V67-F227`。
+- P352：source q90通过但P201 mean-pool q90 risk=`.17518`，登记F227；
+- P353：frozen members upper-unsafe pool + source recalibration implementation；
+- 下一可用 failure id 为 `V67-F228`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -597,6 +598,18 @@
   model marginalization和pool-then-calibrate；P352停止target adaptation，改用3个source scene-fold heads；
 - forbidden rescue：不增加teacher weight、不硬拷贝P346 endpoint、不调CDAN；resolution=
   `closed target-unlabeled adaptation family; open P352 crossfold ensemble`。
+
+### V67-F227 — P352 mean probability ensemble放大authority但未迁移风险控制
+
+- canonical=`run://worldsim_v67/WS-V67-P352-CROSSFOLD-ENSEMBLE-VISITED-RELIABILITY-01/
+  20260901T151500Z__crossfold-ensemble-visited-reliability-s0-r1`；
+- symptom：source fold5 q90 coverage/unsafe=`.332778/.090164`，但P201=`.395355/.175182`；P201仅risk失败，3/4；
+- diagnosis：三个成员均收敛且PAV in-fold BCE=`.271313`，mean pooling明显提高coverage；成员均值消除了epistemic
+  disagreement，导致shifted strict-ceiling样本仍被准入；
+- literature/migration：NeurIPS 2024 Credal Deep Ensembles以概率上下界保留epistemic uncertainty；P353冻结成员，
+  用maximum unsafe probability作为upper pool再source-only校准；
+- forbidden rescue：不改member数/seed/folds、不选择weighted mean或事后pool quantile；resolution=
+  `open via P353 upper-unsafe probability pooling`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
