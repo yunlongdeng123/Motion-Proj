@@ -573,6 +573,13 @@ P147五H同样cost全退，rank gain=`-.31838/-.14374/-.05167/-.03933/-.03655`�
 依赖between-member mean variance通过moment matching形成连续margin尺度，而不是简单平均member crossing probability；
 distribution aggregation family关闭，不扫temperature/member weights/pooling。
 
+P161只将P126 between-member projected-mean variance置零，保留ensemble mean与mean aleatoric variance。旧四cohort full-vs-
+aleatoric-only rank mean=`-.000090`，fixed50 cost几乎完全相同；P147五H rank差仅`-.00007--+.00065`，三条中长H
+selected set/cost exact相同。projected epistemic fraction旧四=`1.56%--2.64%`、P147=`1.24%--1.79%`，0/2 decisions，F124。
+因此P126/P147增益不能归因为显式epistemic variance；可辩护机制是independent-member prediction averaging改善了共享
+mean/aleatoric field，epistemic addend在当前operating point近乎无贡献。论文措辞从“epistemic+aleatoric gain”收紧为
+“deep-ensemble moment predictor gain”。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

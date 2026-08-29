@@ -302,8 +302,10 @@ P159只递进一个机制：三members联合优化multivariate Energy Score，�
 其shared architecture和downstream score保持P126不变。旧四cohort rank mean=`-.04251`且cost全退（F122），P147也只有
 短H cost微降。因此proper-score retraining family关闭；下一步研究frozen P126 member distributions的聚合规则。
 P160将moment matching换成逐member exact crossing CDF的等权linear pool；旧四cohort rank mean=`-.04330`且cost全退，
-P147五H也全部退化，H0.8 rank下降`.31838`（F123）。这说明moment-matched between-member variance是当前方法的实质机制，
-而非可被“更exact”的CDF mixture自然替换。
+P147五H也全部退化，H0.8 rank下降`.31838`（F123）。这说明moment-margin aggregation整体不能被“更exact”的CDF mixture
+自然替换。不过P161的直接zero-epistemic ablation进一步修正了归因：移除between-member
+variance后P147五H几乎不变，explicit epistemic fraction仅约1.2%--1.8%（旧四约1.6%--2.6%），full-vs-control rank
+mean=`-.00009`（F124）。因此真正支持的是member-averaged mean/aleatoric moment predictor，不是已被单独证明的epistemic addend。
 
 ## 3. 核心结果表
 

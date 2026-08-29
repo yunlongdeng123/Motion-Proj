@@ -2016,7 +2016,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   standardized margin；“exact mixture”不等于当前selection objective更合适。
 - 防重复：保留P126 moment matching；不扫temperature/member weights/log/product/quantile pool，distribution aggregation关闭。
 
-下一可用编号为：`V67-F124`。
+### V67-F124 — P126显式epistemic variance不是独立增益主因
+
+- 分类：`mechanism/epistemic-variance-attribution`；状态：`closed_negative_ablation`。
+- canonical：`run://worldsim_v67/WS-V67-P161-EPISTEMIC-VARIANCE-ABLATION-01/
+  20260830T120000Z__epistemic-variance-ablation-s0-r1`。
+- 观察：置零between-member variance后旧四cohort rank mean只变`+.000090`（full-minus-control=`-.000090`），cost几乎相同；
+  P147中长H selected set/cost exact相同。epistemic fraction仅约1.2%--2.6%。
+- 解释：P126相对P109的增益来自independent members对mean/aleatoric predictions的averaging，而非explicit epistemic addend。
+- 防重复：不调epistemic multiplier/floor；论文禁写“P147证明epistemic uncertainty带来增益”，改写为deep-ensemble moment
+  predictor / member averaging，且保留P126/P147现有方法支持。
+
+下一可用编号为：`V67-F125`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

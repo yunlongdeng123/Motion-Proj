@@ -990,6 +990,18 @@
   `rejected_development_exact_ensemble_mixture_boundary`，wall=`1.93s`；F123。
 - P147 diagnostic：五H cost全退；rank gain=`-.31838/-.14374/-.05167/-.03933/-.03655`。拒绝linear pool，
   保留moment matching；不扫temperature/member weights/pooling。
+
+### WS-V67-P161-EPISTEMIC-VARIANCE-ABLATION-01
+
+- 状态：`done/rejected mechanism attribution`；canonical=`20260830T120000Z__epistemic-variance-ablation-s0-r1`。
+- ablation：冻结P126 members、ensemble mean、mean aleatoric variance与全部query/cost合同，只把between-member projected-mean
+  variance置零；full P126为candidate，aleatoric-only为control。
+- result：P81/P96/P113/P129 full-minus-control rank gain=`+.000024/-.000380/+.000020/-.000023`，mean=`-.000090`；
+  cost差=`+.000132/-.0000004/0/0`，0/2 decisions。projected epistemic fraction=`.0236/.0264/.0215/.0156`；F124。
+- P147 diagnostic：五H epistemic fraction=`.0169/.0130/.0124/.0136/.0179`；rank差绝对值≤`.000654`，中长H
+  selected cost exact相同。显式epistemic variance不是P147 multi-H gain的主要机制。
+- claim correction：保留P126/P147方法支持，但论文只写deep-ensemble moment predictor / member averaging，不写已证明
+  epistemic-UQ增益；不扫epistemic multiplier。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01

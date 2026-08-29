@@ -71,6 +71,7 @@
 | P158 | `run://worldsim_v67/WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01/20260830T114500Z__crps-actor-ensemble-s0-r1` | old mean rank `-.02371`、cost全退；rejected/F121 |
 | P159 | `run://worldsim_v67/WS-V67-P159-JOINT-ENERGY-SCORE-ACTOR-ENSEMBLE-01/20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1` | old mean rank `-.04251`、cost全退；rejected/F122 |
 | P160 | `run://worldsim_v67/WS-V67-P160-EXACT-ENSEMBLE-MIXTURE-BOUNDARY-01/20260830T115500Z__exact-ensemble-mixture-boundary-s0-r1` | exact linear pool mean rank `-.04330`；rejected/F123 |
+| P161 | `run://worldsim_v67/WS-V67-P161-EPISTEMIC-VARIANCE-ABLATION-01/20260830T120000Z__epistemic-variance-ablation-s0-r1` | full-vs-no-ep rank `-.00009`；epistemic attribution rejected/F124 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -182,6 +183,7 @@
 | `V67-F121` | closed negative | marginal CRPS跨旧cohort退化；P147 rank亮点未转成中长H fixed50 cost |
 | `V67-F122` | closed negative | joint Energy Score未恢复，旧cohort rank/cost退化更大 |
 | `V67-F123` | closed negative | exact member-CDF linear pool在旧四与P147五H均退化 |
+| `V67-F124` | closed negative mechanism | explicit between-member variance约1%--3%，不是P147增益主因 |
 
 ## 4. Artifact inventory
 

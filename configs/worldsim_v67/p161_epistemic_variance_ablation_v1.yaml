@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p161_epistemic_variance_ablation.v1
+output_schema_version: worldsim_v67.p161_epistemic_variance_ablation_summary.v1
+task_id: WS-V67-P161-EPISTEMIC-VARIANCE-ABLATION-01
+hypothesis_id: WS-V67-H-P161-001
+role: consumed_development_frozen_p126_epistemic_variance_mechanism_ablation
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+post_confirmation_diagnostic:
+  run: worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1
+  artifact: P147_MULTI_HORIZON_INDEPENDENT_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_full_minus_aleatoric_spearman_gain: 0.005}
+verdict_on_pass: supported_development_epistemic_variance_mechanism
+verdict_on_failure: rejected_development_epistemic_variance_mechanism
+locks:
+  P126_members_weights_normalization_ensemble_mean_and_aleatoric_variance_frozen: true
+  ablation_only_zeros_between_member_projected_mean_variance: true
+  full_P126_moment_score_is_candidate_and_aleatoric_only_is_control: true
+  P147_is_post_confirmation_consumed_diagnostic_and_not_a_decision_cohort: true
+  no_epistemic_weight_floor_temperature_score_coverage_or_metric_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+  - https://proceedings.mlr.press/v80/depeweg18a.html
+claim_boundary:
+  - consumed_development_epistemic_variance_ablation_only
+  - P147_rows_are_post_confirmation_descriptive_not_new_independent_evidence
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim
