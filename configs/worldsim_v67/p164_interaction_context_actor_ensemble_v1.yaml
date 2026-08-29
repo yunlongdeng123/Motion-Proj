@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p164_interaction_context_actor_ensemble.v1
+output_schema_version: worldsim_v67.p164_interaction_context_actor_ensemble_summary.v1
+task_id: WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P164-001
+role: consumed_development_neighbor_interaction_conditioned_actor_position_reliability
+model_artifact: INTERACTION_CONTEXT_ADAPTERS.pt
+member_seeds: [0, 1, 2]
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+post_confirmation_diagnostic:
+  run: worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1
+  artifact: P147_MULTI_HORIZON_INDEPENDENT_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+interaction:
+  neighbor_count: 8
+  embedding_dimension: 64
+model:
+  steps_per_member: 6000
+  batch_size: 32768
+  prediction_batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain_over_p126: 0.005}
+verdict_on_pass: supported_development_interaction_context_actor_ensemble
+verdict_on_failure: rejected_development_interaction_context_actor_ensemble
+locks:
+  frozen_P126_members_are_not_updated: true
+  only_neighbor_interaction_residual_mean_and_log_scale_adapters_are_trained: true
+  neighbors_are_nearest_8_actors_at_same_scene_horizon_anchor: true
+  candidate_and_P126_control_share_moment_boundary_compiler_and_continuous_cost: true
+  P147_is_post_confirmation_consumed_diagnostic_and_not_a_decision_cohort: true
+  no_neighbor_count_architecture_loss_score_coverage_or_metric_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/ICCV2021/html/Yuan_AgentFormer_Agent-Aware_Transformers_for_Socio-Temporal_Multi-Agent_Forecasting_ICCV_2021_paper.html
+  - https://openaccess.thecvf.com/content/ICCV2019/html/Ivanovic_The_Trajectron_Probabilistic_Multi-Agent_Trajectory_Modeling_With_Dynamic_Spatiotemporal_Graphs_ICCV_2019_paper.html
+  - https://openaccess.thecvf.com/content/CVPR2023/html/Zhu_IPCC-TP_Utilizing_Incremental_Pearson_Correlation_Coefficient_for_Joint_Multi-Agent_Trajectory_CVPR_2023_paper.html
+claim_boundary:
+  - consumed_development_nearest_neighbor_interaction_context_only
+  - residual_adapter_increment_over_frozen_P126_not_full_multi_agent_forecasting
+  - P147_rows_are_post_confirmation_descriptive_not_new_independent_evidence
+  - no_calibrated_collision_probability_planner_policy_closed_loop_or_safety_claim

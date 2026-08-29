@@ -600,6 +600,12 @@ clearance的position-only score。旧P81/P96/P113/P129的rank gain=`-.002889/-.0
 H3.0/H3.5极小正rank，H2.5/H3.5 cost分别回退`+.001179/+.002477`。因此direct support target也未形成稳定增量，
 oriented-footprint/yaw支线关闭；P126/P147的position-state authority保持不变。
 
+P164回到已被P147独立支持的position-state对象，针对P126只使用单Actor局部运动学的缺口引入邻居交互条件。参考AgentFormer、
+Trajectron与IPCC-TP的多Actor关系建模，但不迁移大型forecast backbone：冻结P126三成员，仅为每个member训练一个最近8 Actor的
+轻量set-attention残差adapter，修正二维mean与log-scale。Adapter末层从zero初始化，起点严格等于P126；source 916,722
+actor-time tokens直接复用，无新archive IO。旧P81/P96/P113/P129比较continuous rank/cost，P147五H只作post-confirmation
+描述；不扫neighbor count/architecture/loss/score/coverage。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -1040,6 +1040,18 @@
 - verdict=`rejected_development_direct_footprint_support_ensemble`；F127。无cohort/H/model/score/cost/decision变化，
   不重扫已有files，不新增测试矩阵；oriented-footprint/yaw family至此关闭。
 
+### WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01
+
+- 状态：`implementation frozen / GPU launch pending`；canonical id=`20260830T123000Z__interaction-context-actor-ensemble-s0-r1`。
+- hypothesis：P126的单Actor19+time边缘分布缺少同anchor交通参与者关系；最近邻交互能改善future position reliability。
+- method：冻结P126三member；每member增加zero-init residual adapter。最近8 Actors以relative position/velocity、distance、
+  radial closing、motion/shape/age/class编码，经64-d set attention生成context，只修正mean与log-scale。
+- training：复用P109 source 916,722 actor-time tokens，3×6,000 steps，batch32,768；无archive scan或新target materialization。
+- decisions：旧P81/P96/P113/P129相对P126 selected cost全不退且mean Spearman gain≥`.005`；P147五H仅描述。
+- locks：不扫neighbor count/embedding/adapter/loss/score/cost/coverage；不解冻P126，不添加hash/checksum/fingerprint。
+- migration basis：ICCV 2021 AgentFormer的agent-aware social interaction、ICCV 2019 Trajectron的dynamic interaction graph、
+  CVPR 2023 IPCC-TP的pairwise relevance；这里只迁移最小关系条件模块，不声称完整multi-agent forecasting。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

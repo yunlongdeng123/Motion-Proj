@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P163 footprint family closed negative`
+- 报告状态：`P147 independent multi-horizon support; P164 interaction-conditioned training active`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -315,6 +315,11 @@ P163保留oriented object但移除线性化：直接学习每个query normal上�
 P147五H post-confirmation诊断也没有稳定rank/cost方向（F127）。因此负结果不只来自yaw一阶传播：在当前轨迹边界成本中，
 厘米级support residual没有超过position residual与clearance的主导作用。oriented-footprint family关闭，P126/P147 position-state
 结论保持，论文不得将box/yaw state写成已支持增量。
+
+P164据此不再扩展footprint state，而改进已支持的position reliability条件表示。多Actor forecasting文献普遍显式建模social/
+pairwise interaction；本实验只迁移最小可归因模块：冻结P126三个member，以zero-init最近8 Actor set-attention adapter修正各member
+的mean/log-scale。它保留P126 compiler与continuous target，因此任何增量都对应邻居条件，而非重新训练整个预测器；当前角色仍是
+consumed development，P147只作post-confirmation描述。
 
 ## 3. 核心结果表
 

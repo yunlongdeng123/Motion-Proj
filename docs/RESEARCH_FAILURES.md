@@ -2070,6 +2070,13 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：关闭yaw/box-scale/support-loss/normal-conditioned footprint变体，不以局部H微增恢复结论。下一步只允许改变
   Actor position reliability的条件表示或迁移到新预测对象，不再修补footprint支线。
 
+### P164 freeze note — nearest-neighbor interaction residual over frozen P126
+
+- object：保持P126二维position residual与continuous boundary compiler，只增加same-anchor最近8 Actor关系条件。
+- isolation：P126 member完全冻结；adapter zero-init且只输出mean/log-scale residual，避免把全模型重训差异归因为interaction。
+- decisions：旧四cohort相对P126 cost全不退+mean rank gain≥`.005`；P147 post-confirmation only。
+- prevention：不扫neighbor count/graph radius/attention width/adapter/loss/score/coverage；失败才使用F128并关闭当前interaction adapter。
+
 下一可用编号为：`V67-F128`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
