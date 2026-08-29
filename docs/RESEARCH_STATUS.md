@@ -660,6 +660,12 @@ P169冻结P144的P126 anchor、top16 Actor-query token set、网络、residual b
 temperature soft cutoff，直接最小化低分半组的P120 cost并保留原residual regularization。依据PiRank/fast differentiable sorting，
 这一迁移只解决metric-surrogate mismatch，不扫temperature/list/model。旧四2/2通过才等待P167 prospective rows；GPU训练将与P167 IO重叠。
 
+P169 canonical r1完成6,000-step GPU训练。P81/P96/P113/P129 selected-cost delta=
+`-.000103/+.000306/-.000676/-.000612`，3/4微降但P96回退；rank gain=`+.00313/-.00012/+.00151/+.00394`
+（mean=`+.00212<.005`）。0/2 decisions，F133，未读取P167。与P144明显negative相比，direct cutoff objective把模型收敛到
+P126附近，却没有稳定新增量；关闭P126-anchored residual selection-head family，不扫temperature/bound/list。下一训练对象改为
+可检验覆盖率的trajectory cost upper bound，而不是继续挤压fixed50 ranking。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

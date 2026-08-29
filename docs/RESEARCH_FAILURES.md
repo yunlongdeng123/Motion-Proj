@@ -2174,7 +2174,16 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：旧四cost全不退+mean rank gain≥`.005`；通过才读P167 prospective secondary。
 - prevention：不扫temperature/list/model/bound/loss/coverage；algorithm failure才用`V67-F133`并关闭direct soft-cutoff trial。
 
-下一可用编号仍为：`V67-F133`。
+### V67-F133 — direct soft fixed50训练只回到P126邻域且P96仍微回退
+
+- 分类：`algorithm/fixed-coverage-residual-transfer`；状态：`closed_negative_after_controlled_objective_change`。
+- canonical：`run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/
+  20260830T131500Z__soft-fixed-coverage-compiler-s0-r1`。
+- 观察：3/4 cohort selected cost微降，但P96 delta=`+.000306`；mean rank gain=`+.00212<.005`，0/2 decisions。
+- 解释：direct scene-list objective修复了P144 pairwise surrogate的大幅错配，但最优残差接近0；P126强anchor之外的token pattern未稳定迁移。
+- 防重复：不扫temperature/list/residual bound/architecture或放宽门；未读取P167。关闭P126-anchored learned selection residual family。
+
+下一可用编号为：`V67-F134`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

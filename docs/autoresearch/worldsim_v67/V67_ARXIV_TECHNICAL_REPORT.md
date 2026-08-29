@@ -351,7 +351,8 @@ P167 prospective rows。这个负结果把问题从“q75估计噪声”进一�
 P169对这一定位作controlled training：沿用P144的P126-anchored trajectory-set representation与容量，只把within-scene pairwise
 ranking surrogate替换为scene-list soft lower-50% selected-cost objective。16×128 source lists、`.20`温度及`.5` residual bound
 均在训练前冻结；旧四development通过前不读取P167。该设计对应differentiable sorting文献关于“训练surrogate与最终ranking metric
-存在gap”的直接修复，同时保持结论仅限固定覆盖可靠性编译。
+存在gap”的直接修复。P169使旧四cost由P144的明显退化收缩为3组微降、P96仅`+.000306`微退，但mean rank gain仍只有
+`+.00212<.005`，F133。结果说明objective alignment有效但新增表示不迁移；P126-anchored residual head family关闭，且未读P167。
 
 ## 3. 核心结果表
 

@@ -1140,6 +1140,10 @@
 - decisions：旧四selected cost全不退且mean rank gain≥`.005`；2/2通过才等P167 prospective，同两门。
 - locks：不扫temperature/list size/model/bound/loss/coverage/metric，不加hash/checksum/fingerprint或回归矩阵。
 - references：NeurIPS 2021 PiRank与ICML 2020 Fast Differentiable Sorting，用direct relaxed ranking metric缩小surrogate gap。
+- result：6,000-step final soft loss=`.07876`；P81/P96/P113/P129 cost delta=
+  `-.000103/+.000306/-.000676/-.000612`，rank gain=`+.00313/-.00012/+.00151/+.00394`，mean=`+.00212<.005`。
+- verdict=`rejected_soft_fixed_coverage_compiler`，F133；cost non-regression与rank门均失败，故不读P167 prospective rows。
+- interpretation：direct objective显著收窄P144的跨域退化但只回到P126邻域；不继续扫temperature/list/bound或残差容量。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
