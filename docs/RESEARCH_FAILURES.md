@@ -1812,7 +1812,24 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   不做DCT/architecture/loss/seed/coverage sweep。
 - operations：P147 IO/preprocess/evaluator与P148 3090训练并行；不新增hash/checksum/fingerprint或回归矩阵。
 
-下一可用编号为：`V67-F110`。
+### V67-F110 — full-resolution sequence mean未恢复continuous ranking
+
+- 分类：`algorithm/temporal-sequence-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/
+  20260830T104500Z__full-sequence-actor-ensemble-s0-r1`。
+- 观察：四cohort Spearman均下降，gain=`-.013157/-.011868/-.012388/-.012105`，mean=`-.012380`；仅P96
+  selected cost微降。member projected epistemic fraction仅`.018--.045`。
+- 解释：完整9步共同decoder与absolute H并未优于P126逐时刻tokens；问题不只是P115 DCT压缩，单峰diagonal sequence仍不足。
+- 防重复：不扫P148 hidden/steps/member。检索trajectory-set、multi-scale VAE与uncertainty-aware diffusion后，P149只迁移
+  coherent sequence-level mixture和any-time boundary event score。
+
+### P149 freeze note — coherent trajectory mixture
+
+- method：4 sequence modes，各mode完整9步mean/scale；整序列mixture NLL，score为mode-weighted any-time boundary crossing。
+- decisions：consumed P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`。
+- prevention：固定4 modes/8,000 steps/seed0；不扫component/architecture/loss/weight/coverage，不重复P125 per-time K2。
+
+下一可用编号为：`V67-F111`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

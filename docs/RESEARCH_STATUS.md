@@ -473,8 +473,14 @@ P146因此冻结P126三成员全部network/mean，只为每member每轴训练`lo
 
 P147现已在新的10-scene、10内部log、四location `3/3/3/1` cohort上并行准备`.8/1.5/2.5/3.0/3.5s`五时域，
 一次materialize后分别比较冻结P126/P109；只用mean per-horizon Spearman gain和mean selected-cost difference两个macro decisions。
-同时P148已占用3090训练3-member full-resolution 9×2 residual-sequence Gaussian：输入Actor features和absolute H，直接输出
-完整时序mean/scale，消除P115 DCT压缩和P126逐时刻独立mean的限制。P147 IO/evaluator与P148 GPU合法重叠，无额外审计矩阵。
+同时P148训练3-member full-resolution `9×2` residual-sequence Gaussian：输入Actor features和absolute H，直接输出
+完整时序mean/scale，消除P115 DCT压缩。101,858 sequences上final NLL约`-29.25-- -29.46`，但P81/P96/P113/P129
+Spearman gain=`-.013157/-.011868/-.012388/-.012105`（mean=`-.012380`），仅P96 cost微降，0/2 decisions，F110。
+这排除了“压缩/独立mean token”解释；member epistemic fraction仅`.018--.045`，主要缺口转向coherent multimodality。
+
+检索CoverNet、MUSE-VAE与CVPR 2025 U2Diff后，P149已占用3090训练4-component coherent trajectory mixture：每个mode
+拥有完整9步mean/scale，mixture likelihood在整条residual sequence上计算，query score直接是mode-weighted未来任一时刻boundary
+crossing probability。它不是P125逐时刻mixture重复；P147 IO/evaluator继续与P149 GPU合法重叠。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

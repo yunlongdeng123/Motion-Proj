@@ -266,7 +266,9 @@ P145在P81/P113/P129 rank提升但P96=`-.01616`，mean仍为负且三组cost回�
 P126 network/means，只训练每member每轴的bias与positive absolute-time slope，使time conditioning只能改变aleatoric scale。
 P146的12 scalars在P129降低selected cost，但四cohort mean Spearman gain仍为`-.001607`且两组cost回退（F109），因此
 absolute-time scalar growth不是稳定解释。后续P147转向新的10-scene五时域独立确认，P148直接学习未压缩的9步残差序列集成，
-两者分别回答“跨H是否成立”和“跨时刻相关结构是否缺失”。
+两者分别回答“跨H是否成立”和“跨时刻相关结构是否缺失”。P148四cohort rank一致下降，mean gain=`-.012380`（F110），
+说明共同sequence decoder仍不等于联合分布收益。P149进一步把multimodality从P125的逐时刻components提升到整条trajectory modes，
+并用未来任一时刻boundary crossing作为直接score；这是对P148 negative的机制递进，而非capacity sweep。
 
 ## 3. 核心结果表
 

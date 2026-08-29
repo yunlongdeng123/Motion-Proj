@@ -58,7 +58,8 @@
 | P145 | `run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/20260830T102500Z__absolute-time-actor-ensemble-s0-r1` | 3/4 rank增但P96强退；rejected/F108 |
 | P146 | `run://worldsim_v67/WS-V67-P146-MONOTONE-TIME-SCALE-ADAPTER-01/20260830T103000Z__monotone-time-scale-adapter-s0-r1` | mean rank `-.001607`、仅P129 cost改善；rejected/F109 |
 | P147 | `run://worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1` | new 10-scene × five-horizon confirmation；running |
-| P148 | `run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/20260830T104500Z__full-sequence-actor-ensemble-s0-r1` | full 9-step residual ensemble；running |
+| P148 | `run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/20260830T104500Z__full-sequence-actor-ensemble-s0-r1` | 四cohort rank全退、mean `-.012380`；rejected/F110 |
+| P149 | `run://worldsim_v67/WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01/20260830T105000Z__coherent-trajectory-mixture-s0-r1` | four coherent full-trajectory modes；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -109,7 +110,8 @@
 | absolute-time Actor ensemble | P145 consumed H3.5 ×4 | mean gain=`-.00155` | time signal but reject retraining |
 | monotone time-scale adapter | P146 consumed H3.5 ×4 | mean gain=`-.001607` | reject scalar time growth |
 | multi-horizon independent transfer | P147 new scene cohort × five H | running | test horizon-wise generalization |
-| full-sequence residual ensemble | P148 consumed H3.5 ×4 | running | test uncompressed temporal structure |
+| full-sequence residual ensemble | P148 consumed H3.5 ×4 | mean gain=`-.012380` | reject single-mode joint decoder |
+| coherent trajectory mixture | P149 consumed H3.5 ×4 | running | test sequence-level multimodality |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -146,6 +148,7 @@
 | `V67-F107` | closed negative | trajectory-set compiler仍在P96 transfer反转 |
 | `V67-F108` | closed negative | absolute-time retraining三cohort rank增但P96强反转 |
 | `V67-F109` | closed negative | frozen mean的monotone time-scale仍未跨四cohort迁移 |
+| `V67-F110` | closed negative | full-resolution sequence ensemble四cohort rank一致下降 |
 
 ## 4. Artifact inventory
 

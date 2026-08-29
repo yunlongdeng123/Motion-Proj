@@ -778,13 +778,28 @@
 
 ### WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T104500Z__full-sequence-actor-ensemble-s0-r1`。
 - method：3 independent members直接从Actor features+absolute horizon输出完整`9×2` residual mean/diagonal scale；不做
   P115的DCT压缩，也不把9个时刻拆成独立训练tokens；总uncertainty仍为aleatoric+member epistemic。
 - training：source `.8/1.5/2.5/3.0s` Actor sequences，hidden `[512,256]`、6,000 steps/member、batch32,768。
 - evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort selected cost全不退且mean Spearman gain≥`.005`；
   不扫architecture/loss/member/horizon embedding/coverage。P147 IO与本GPU run并行。
+- result：101,858 sequences，member final NLL=`-29.4618/-29.2532/-29.3010`；P81/P96/P113/P129 selected cost=
+  `.187509/.167190/.229869/.316524`，Spearman gain=`-.013157/-.011868/-.012388/-.012105`
+  （mean=`-.012380`）。仅P96 cost微降；mean epistemic fraction=`.019/.045/.023/.018`，0/2 decisions，verdict=
+  `rejected_development_full_sequence_actor_ensemble`，wall=`98.70s`、peak GPU=`.326 GiB`；F110。
+
+### WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T105000Z__coherent-trajectory-mixture-s0-r1`。
+- method：Actor features+absolute H输入，4 modes各自输出完整`9×2` residual mean/scale及sequence-level weight；NLL在整条
+  18D residual sequence上log-sum-exp，不把mode assignment拆到逐时刻。
+- score：每mode计算未来9点中任一点boundary crossing概率，再按sequence mixture weight合成；trajectory仍按query group max。
+- training/evaluation：101,858 source sequences、hidden `[512,256]`、8,000 steps、batch32,768；consumed
+  P81/P96/P113/P129相对P126，cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫component count/architecture/loss/seed/weight/coverage；这是coherent sequence modes，不重复P125 per-time K2。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
