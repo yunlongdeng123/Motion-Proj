@@ -461,8 +461,20 @@ P129 cost改善到`.30047`，但P81/P96/P113回退，0/2 decisions，wall=`88.24
 
 随后识别到上游P126的明确horizon alias：source混合H=`.8/1.5/2.5/3.0s`，Actor network却只读normalized time fraction，
 相同fraction无法区分绝对未来时间。P145只新增`absolute future seconds = fraction×H`，保留fraction并按P126自然token/
-diagonal Gaussian/3 members/6,000 steps协议重训；四个H3.5 consumed cohorts相对P126检验cost全不退与mean rank gain≥`.005`。
-H3.5仍是source max H3.0外推；3090正在训练。
+diagonal Gaussian/3 members/6,000 steps协议重训。P81/P96/P113/P129 rank gain=
+`+.00149/-.01616/+.00371/+.00476`（mean=`-.00155`）；P81 cost改善，但其余三组回退，0/2 decisions，wall=`94.68s`，
+F108。Absolute time包含有效信号但从头重训改变mean representation，P96反转更强。
+
+P146因此冻结P126三成员全部network/mean，只为每member每轴训练`log scale = log scale_P126 + bias + positive_slope×t_abs`
+的4参数monotone adapter；source仍是916,722 tokens，2,000 steps/member。最终P81/P96/P113/P129 selected cost=
+`.179966/.169899/.220968/.296310`，Spearman gain=`-.004452/+.002360/-.001189/-.003149`（mean=`-.001607`）。
+仅P129 cost明显改善；0/2 decisions，wall=`19.69s`、peak GPU=`.221 GiB`，F109。冻结mean后仍不能得到稳定time-scale
+迁移，故关闭scalar time adapter，不扫slope/form。
+
+P147现已在新的10-scene、10内部log、四location `3/3/3/1` cohort上并行准备`.8/1.5/2.5/3.0/3.5s`五时域，
+一次materialize后分别比较冻结P126/P109；只用mean per-horizon Spearman gain和mean selected-cost difference两个macro decisions。
+同时P148已占用3090训练3-member full-resolution 9×2 residual-sequence Gaussian：输入Actor features和absolute H，直接输出
+完整时序mean/scale，消除P115 DCT压缩和P126逐时刻独立mean的限制。P147 IO/evaluator与P148 GPU合法重叠，无额外审计矩阵。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

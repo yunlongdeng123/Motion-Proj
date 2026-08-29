@@ -55,7 +55,10 @@
 | P142 | `run://worldsim_v67/WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01/20260830T101000Z__task-conditioned-projected-ensemble-s0-r1` | P129 `+.01319`但P96退；rejected/F105 |
 | P143 | `run://worldsim_v67/WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01/20260830T101500Z__conditional-residual-ensemble-s0-r1` | cost全退、mean rank `-.01344`；rejected/F106 |
 | P144 | `run://worldsim_v67/WS-V67-P144-TRAJECTORY-SET-RANK-COMPILER-01/20260830T102000Z__trajectory-set-rank-compiler-s0-r1` | P96反转、mean rank `-.00096`；rejected/F107 |
-| P145 | `run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/20260830T102500Z__absolute-time-actor-ensemble-s0-r1` | add absolute future seconds；running |
+| P145 | `run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/20260830T102500Z__absolute-time-actor-ensemble-s0-r1` | 3/4 rank增但P96强退；rejected/F108 |
+| P146 | `run://worldsim_v67/WS-V67-P146-MONOTONE-TIME-SCALE-ADAPTER-01/20260830T103000Z__monotone-time-scale-adapter-s0-r1` | mean rank `-.001607`、仅P129 cost改善；rejected/F109 |
+| P147 | `run://worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1` | new 10-scene × five-horizon confirmation；running |
+| P148 | `run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/20260830T104500Z__full-sequence-actor-ensemble-s0-r1` | full 9-step residual ensemble；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -103,7 +106,10 @@
 | task-conditioned projected ensemble | P142 consumed P81/P96/P113/P129 | mean gain≈0、cost 3/4退 | task signal但reject replacement |
 | conditional residual ensemble | P143 consumed P81/P96/P113/P129 | mean gain=`-.01344`、cost全退 | close per-time correction |
 | trajectory-set rank compiler | P144 consumed P81/P96/P113/P129 | mean gain=`-.00096` | reject downstream capacity route |
-| absolute-time Actor ensemble | P145 consumed H3.5 ×4 | running | horizon alias correction |
+| absolute-time Actor ensemble | P145 consumed H3.5 ×4 | mean gain=`-.00155` | time signal but reject retraining |
+| monotone time-scale adapter | P146 consumed H3.5 ×4 | mean gain=`-.001607` | reject scalar time growth |
+| multi-horizon independent transfer | P147 new scene cohort × five H | running | test horizon-wise generalization |
+| full-sequence residual ensemble | P148 consumed H3.5 ×4 | running | test uncompressed temporal structure |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -138,6 +144,8 @@
 | `V67-F105` | closed negative | direct conditional projection在P129增益但P96 transfer反转 |
 | `V67-F106` | closed negative | P126-standardized conditional correction四cohort cost全退 |
 | `V67-F107` | closed negative | trajectory-set compiler仍在P96 transfer反转 |
+| `V67-F108` | closed negative | absolute-time retraining三cohort rank增但P96强反转 |
+| `V67-F109` | closed negative | frozen mean的monotone time-scale仍未跨四cohort迁移 |
 
 ## 4. Artifact inventory
 

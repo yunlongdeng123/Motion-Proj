@@ -737,7 +737,7 @@
 
 ### WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical planned=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T102500Z__absolute-time-actor-ensemble-s0-r1`。
 - structural gap：P126 source horizons=`.8/1.5/2.5/3.0s`，但input仅Actor history features+normalized future fraction；
   P145唯一变化是追加absolute future time `fraction×H`，保留fraction。
@@ -746,6 +746,45 @@
 - evaluation/decisions：consumed H3.5 P81/P96/P113/P129相对P126，四cohort cost全不退且mean Spearman gain≥`.005`。
 - locks：不扫time embedding/architecture/loss/member/seed/weight/coverage；H3.5是source max H3.0外推。
 - references：WACV 2020 uncertainty-aware motion prediction、CoRL 2023 time-varying heteroscedastic motion primitives。
+- result：final NLL=`-3.621939/-3.624758/-3.626855`；P81/P96/P113/P129 selected cost=
+  `.174922/.171553/.226286/.312481`，仅P81改善；Spearman gain=`+.001488/-.016165/+.003709/+.004765`
+  （mean=`-.001551`）。0/2 decisions，verdict=`rejected_development_absolute_time_actor_ensemble`，wall=`94.68s`、
+  peak GPU=`.383 GiB`；F108。
+
+### WS-V67-P146-MONOTONE-TIME-SCALE-ADAPTER-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T103000Z__monotone-time-scale-adapter-s0-r1`。
+- method：精确冻结P126三member全部weights与predicted means；每member只训练2D bias与positive slope，令scale multiplier=
+  `exp(bias + softplus(raw_slope)×absolute_future_seconds)`。
+- training：916,722 source tokens、2,000 steps/member、batch65,536、LR `.01`；总计仅12个trainable scalars。
+- evaluation/decisions：consumed H3.5 P81/P96/P113/P129相对P126，四cohort cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫adapter form/slope/time embedding/loss/seed/weight/coverage；只校正scale growth，不改变mean representation。
+- result：final NLL=`-3.685426/-3.664756/-3.719209`；learned positive slopes约`.124--.178`。P81/P96/P113/P129
+  selected cost=`.179966/.169899/.220968/.296310`，Spearman gain=
+  `-.004452/+.002360/-.001189/-.003149`（mean=`-.001607`）。仅P129 cost改善；0/2 decisions，verdict=
+  `rejected_development_monotone_time_scale_adapter`，wall=`19.69s`、peak GPU=`.221 GiB`；F109。
+
+### WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01
+
+- 状态：`frozen/running prep+waiting evaluator`；prep/confirmation canonical=
+  `20260830T103500Z__multi-horizon-independent-prep-s0-r1` / `20260830T104000Z__multi-horizon-independent-confirmation-s0-r1`。
+- cohort：metadata-only冻结`0018/0275/0967/0110/0565/0780/0799/0922/0929/1067`，四location=`3/3/3/1`、
+  10 internal logs；历史session exposure使authority仅scene-level independent。
+- method：同一批scene一次materialize `.8/1.5/2.5/3.0/3.5s` rows，各H描述性比较冻结P126 ensemble、P109与
+  continuous boundary-state cost；fixed50、`.05m` floor不变。
+- decisions：mean per-horizon Spearman gain over P109≥`.005`；mean per-horizon selected-cost difference≤0。只保留
+  两个macro decisions，不添加逐H gate矩阵；只允许pre-target exact archive locator修正。
+
+### WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T104500Z__full-sequence-actor-ensemble-s0-r1`。
+- method：3 independent members直接从Actor features+absolute horizon输出完整`9×2` residual mean/diagonal scale；不做
+  P115的DCT压缩，也不把9个时刻拆成独立训练tokens；总uncertainty仍为aleatoric+member epistemic。
+- training：source `.8/1.5/2.5/3.0s` Actor sequences，hidden `[512,256]`、6,000 steps/member、batch32,768。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort selected cost全不退且mean Spearman gain≥`.005`；
+  不扫architecture/loss/member/horizon embedding/coverage。P147 IO与本GPU run并行。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

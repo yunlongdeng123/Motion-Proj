@@ -262,6 +262,12 @@ P144在P129降低cost但P96再次反转，mean rank=`-.00096`（F107），下游
 `.8/1.5/2.5/3.0s` source horizons只编码成normalized fraction，丢失absolute future time。P145追加`fraction×H`并重训
 三成员，以H3.5 consumed cohorts检验显式time-varying uncertainty能否改善外推。
 
+P145在P81/P113/P129 rank提升但P96=`-.01616`，mean仍为负且三组cost回退（F108）。P146隔离time-scale机制：完整冻结
+P126 network/means，只训练每member每轴的bias与positive absolute-time slope，使time conditioning只能改变aleatoric scale。
+P146的12 scalars在P129降低selected cost，但四cohort mean Spearman gain仍为`-.001607`且两组cost回退（F109），因此
+absolute-time scalar growth不是稳定解释。后续P147转向新的10-scene五时域独立确认，P148直接学习未压缩的9步残差序列集成，
+两者分别回答“跨H是否成立”和“跨时刻相关结构是否缺失”。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

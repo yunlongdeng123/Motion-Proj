@@ -1776,9 +1776,43 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：P126 actor inputs只追加`fraction×H` absolute seconds并保留fraction；其余3-member diagonal Gaussian协议完全匹配。
 - source/evaluation：source H=`.8/1.5/2.5/3.0`，四consumed evaluation均H3.5 extrapolation。
-- decisions：相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；不扫time embedding或其他超参。
+- decisions/outcome：相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；实际三cohort rank改善但P96
+  `-.016165`，mean=`-.001551`，仅P81 cost改善，两门失败。
 
-下一可用编号为：`V67-F108`。
+### V67-F108 — absolute-time signal未抵消从头重训的P96 representation drift
+
+- 分类：`algorithm/horizon-conditioning-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/
+  20260830T102500Z__absolute-time-actor-ensemble-s0-r1`。
+- 观察：P81/P113/P129 rank增益为正，但P96=`-.016165`；仅P81 cost改善，mean rank=`-.001551`。
+- 解释：absolute time有跨三cohort信息，但从头训练同时改变P126 mean representation，无法归因到time-varying scale。
+- 防重复：不扫time input。P146冻结P126 mean/network，只训练monotone absolute-time scale adapter。
+
+### P146 freeze note — frozen-P126 monotone time-scale adapter
+
+- method：每个P126 member/axis只训练bias与positive absolute-time slope，共12 scalars；mean/features全部冻结。
+- decisions：consumed H3.5 P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`。
+- prevention：固定adapter form/steps/LR；不扫slope、loss、seed、weight或coverage。
+
+### V67-F109 — monotone absolute-time scale未跨四cohort迁移
+
+- 分类：`algorithm/horizon-conditioned-scale-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P146-MONOTONE-TIME-SCALE-ADAPTER-01/
+  20260830T103000Z__monotone-time-scale-adapter-s0-r1`。
+- 观察：learned slopes全部为正且P129 selected cost从`.308669`降至`.296310`，但P81/P113 cost回退；四cohort
+  Spearman gain=`-.004452/+.002360/-.001189/-.003149`，mean=`-.001607`，0/2 decisions。
+- 解释：冻结P126 mean后排除了representation drift，但单调axis-wise scale growth仍不足以表达跨时序的相关残差结构。
+- 防重复：关闭scalar time adapter，不扫slope/form。P147改做新scene多时域确认；P148改预测完整9步残差序列分布。
+
+### P147/P148 freeze note — multi-horizon confirmation + full-sequence training
+
+- P147：新10-scene scene-level independent cohort、五个H、P126/P109、fixed50/`.05m`以及两个macro decisions已冻结；
+  只有pre-target exact shard locator可修正。
+- P148：三member、Actor+H输入、完整`9×2` diagonal sequence输出、6,000 steps/member和四consumed cohort decisions冻结；
+  不做DCT/architecture/loss/seed/coverage sweep。
+- operations：P147 IO/preprocess/evaluator与P148 3090训练并行；不新增hash/checksum/fingerprint或回归矩阵。
+
+下一可用编号为：`V67-F110`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
