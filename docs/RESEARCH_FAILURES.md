@@ -2006,7 +2006,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：关闭proper-score training family；不做Energy/Variogram混合、更多samples或NLL+CRPS权重扫。下一步只改frozen P126
   distribution aggregation，不重训同一architecture/loss family。
 
-下一可用编号为：`V67-F123`。
+### V67-F123 — exact member probability linear pool破坏P126 moment-margin排序
+
+- 分类：`algorithm/deep-ensemble-distribution-aggregation`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P160-EXACT-ENSEMBLE-MIXTURE-BOUNDARY-01/
+  20260830T115500Z__exact-ensemble-mixture-boundary-s0-r1`。
+- 观察：旧四cohort cost全退、rank mean=`-.043302`；P147五H cost全退，短H rank最大下降`-.31838`。
+- 解释：平均bounded CDF压缩了far-from-boundary差异，且没有像moment score一样把between-member mean variance显式写入
+  standardized margin；“exact mixture”不等于当前selection objective更合适。
+- 防重复：保留P126 moment matching；不扫temperature/member weights/log/product/quantile pool，distribution aggregation关闭。
+
+下一可用编号为：`V67-F124`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

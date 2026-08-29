@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; proper-score retraining family closed`
+- 报告状态：`P147 independent multi-horizon support; training/aggregation alternatives closed`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -301,6 +301,9 @@ CRPS替代NLL训练。旧四cohort rank mean=`-.02371`且cost全退（F121）；
 P159只递进一个机制：三members联合优化multivariate Energy Score，以ensemble-level sample distance同时约束accuracy与spread；
 其shared architecture和downstream score保持P126不变。旧四cohort rank mean=`-.04251`且cost全退（F122），P147也只有
 短H cost微降。因此proper-score retraining family关闭；下一步研究frozen P126 member distributions的聚合规则。
+P160将moment matching换成逐member exact crossing CDF的等权linear pool；旧四cohort rank mean=`-.04330`且cost全退，
+P147五H也全部退化，H0.8 rank下降`.31838`（F123）。这说明moment-matched between-member variance是当前方法的实质机制，
+而非可被“更exact”的CDF mixture自然替换。
 
 ## 3. 核心结果表
 

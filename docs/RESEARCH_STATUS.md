@@ -567,6 +567,12 @@ P159 6,000 joint steps完成，final Energy Score=`.21205`。P81/P96/P113/P129 r
 `.8/1.5s` cost微降，2.5s以上仍回退；三H rank也非全正。由此joint multivariate score未恢复P158，proper-score训练family
 关闭，不做Energy/Variogram/CRPS混合。下一研究变量转到frozen P126 predictive distributions的聚合，而非继续改loss。
 
+P160冻结P126三members，比较现有moment-matched Gaussian boundary score与逐member exact crossing CDF的等权linear pool。
+旧P81/P96/P113/P129 exact-vs-moment rank gain=`-.02038/-.08464/-.04846/-.01973`（mean=`-.04330`），cost全退；
+P147五H同样cost全退，rank gain=`-.31838/-.14374/-.05167/-.03933/-.03655`，F123。尤其短H collapse说明P126收益
+依赖between-member mean variance通过moment matching形成连续margin尺度，而不是简单平均member crossing probability；
+distribution aggregation family关闭，不扫temperature/member weights/pooling。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

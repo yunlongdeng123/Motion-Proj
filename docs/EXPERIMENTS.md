@@ -978,6 +978,18 @@
   0/2 decisions，verdict=`rejected_development_joint_energy_score_actor_ensemble`，wall=`84.03s`、peak GPU=`.769 GiB`；F122。
 - P147 diagnostic：cost delta=`-.00029/-.00221/+.00805/+.00703/+.04861`；rank gain=
   `+.03573/+.01404/-.00169/-.00109/+.00961`。仍只有短H operating point微改善；proper-score training family关闭。
+
+### WS-V67-P160-EXACT-ENSEMBLE-MIXTURE-BOUNDARY-01
+
+- 状态：`done/rejected consumed development`；canonical=`20260830T115500Z__exact-ensemble-mixture-boundary-s0-r1`。
+- method：冻结P126三members；candidate等权平均每个member的exact Gaussian boundary-crossing CDF，baseline为P126现有
+  mean+aleatoric+between-member variance的moment-matched standardized margin。
+- decisions：P81/P96/P113/P129相对moment P126 selected cost全不退且mean Spearman gain≥`.005`；P147仅post-confirmation描述。
+- result：旧四cohort cost delta=`+.00553/+.00951/+.00236/+.00732`，rank gain=
+  `-.02038/-.08464/-.04846/-.01973`（mean=`-.04330`），0/2 decisions，verdict=
+  `rejected_development_exact_ensemble_mixture_boundary`，wall=`1.93s`；F123。
+- P147 diagnostic：五H cost全退；rank gain=`-.31838/-.14374/-.05167/-.03933/-.03655`。拒绝linear pool，
+  保留moment matching；不扫temperature/member weights/pooling。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
