@@ -828,6 +828,24 @@
   冻结一个signed q85 residual offset；source/P201均以完全heldout H=`2.5s`读取。
 - inherited：P324固定三ceilings、P201 `.15/.20/0`三门与同一task split；q85由风险容忍度唯一决定，
   不扫quantile/architecture/gate/seed，不依赖P201 fit。
+- canonical=`run://worldsim_v67/WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORITY-01/
+  20260901T081000Z__risk-matched-horizon-quantile-authority-s0-r1`。
+- result：43,578 train examples、6k steps、final q85 pinball=`.02557`、source calibration signed offset=
+  `.02783`。P201 mean/highest coverage=`.32077/.73689`、max/mean unsafe=`.04072/.03667`、monotonicity=0；
+  strict/mid/high coverage=`.04426/.18115/.73689`、unsafe=`.03704/.04072/.03226`，3/3 supported。
+- source heldout-H：5,598 examples，mean/highest coverage=`.31559/.65005`、max unsafe=`.03902`；P325
+  source strict低样本问题未复现。wall=`44.16s`、peak GPU=`.14039GiB`、RSS=`1.8914GiB`。
+
+### WS-V67-P327-RISK-CONDITIONED-HORIZON-QUANTILE-SURFACE-01
+
+- object：把risk quantile q作为连续condition，与task、H共同编译visited-state cost boundary；一个surface
+  服务多个risk tolerances，不再为每个risk tolerance训练独立head。
+- architecture：feature-conditioned positive base、H slope、quantile slope与H×q interaction，结构保证
+  H↑或q↑时boundary不降；迁移ICML 2018 IQN的quantile conditioning与NeurIPS 2020 non-crossing约束思想。
+- split：gradient train q=`.75/.85/.95`×H=`.8/1.5/3.0s`；q90不进gradient，source calibration只冻结
+  一个q90 residual offset；source/P201读取heldout H=`2.5s`，P201仍为task midpoints。
+- gates：q90对应P201 max unsafe `<=.10`、mean coverage `>=.20`、ceiling monotonicity=0；不扫q/H/
+  architecture/gate/seed，不作formal conformal claim。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface

@@ -455,10 +455,18 @@ WS-V67-P325-TIME-VARYING-HORIZON-CALIBRATED-AUTHORITY-01/
 但strict ceiling仅20 admissions且unsafe=`.55`；如实保留为低样本strict-region限制，不事后增加source gate。
 wall=`36.66s`。
 
-P326不再围绕q95 residual继续补丁：由risk tolerance=`.15`直接定义q85，训练continuous-H monotone risk-
-matched quantile boundary，source train H=`.8/1.5/3.0s`、source calibration单个q85 offset、source/P201
-heldout H=`2.5s`；继承P324 ceilings与`.15/.20/0`三门，不扫quantile/capacity/gate/seed。Active=
-`WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORITY-01`。
+P326不再围绕q95 residual继续补丁：risk tolerance=`.15`直接定义q85 continuous-H monotone boundary。
+Canonical=`run://worldsim_v67/WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORITY-01/
+20260901T081000Z__risk-matched-horizon-quantile-authority-s0-r1`：43,578 examples、6k steps、final pinball=
+`.02557`、source q85 offset=`.02783`。P201 heldout task+H mean/highest coverage=`.32077/.73689`、
+max/mean unsafe=`.04072/.03667`、monotonicity=0；source heldout-H `.31559/.65005`、max unsafe=`.03902`，
+3/3 supported。strict ceiling coverage从P325的0恢复到`.04426`且unsafe=`.03704`。wall=`44.16s`。
+
+P327把固定q85升级为risk-conditioned continuous quantile axis：参考ICML 2018 implicit quantile network、
+NeurIPS 2020 non-crossing quantile regression与ICLR 2022 continuous monotone quantile representation，使用
+positive base/H slope/quantile slope/interaction确保H与q双单调。Gradient train q=`.75/.85/.95`，q90仅用于
+source calibration；source/P201同时heldout H=`2.5s`，decision risk上限由q90固定为`.10`。Active=
+`WS-V67-P327-RISK-CONDITIONED-HORIZON-QUANTILE-SURFACE-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

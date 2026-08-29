@@ -390,8 +390,10 @@
 - P325 result：normalized q90 time-varying scale使P201 coverage=`.21831`、max unsafe=`.08333`、
   monotonicity=0，3/3 supported，F211关闭；source strict仅20 admissions且unsafe=`.55`作为限制保留，
   不事后新增gate；
-- P326 active：risk tolerance `.15`直接定义continuous-H q85 decision boundary；失败才登记F212，不扫
-  quantile/architecture/gate/seed；
+- P326 result：q85 continuous-H decision boundary使P201 coverage=`.32077`、max unsafe=`.04072`、
+  monotonicity=0，source heldout-H max unsafe=`.03902`，3/3 supported；未触发F212；
+- P327 active：训练risk-conditioned H×q双单调surface，gradient q `.75/.85/.95`、calibration q90；失败才
+  登记F212，不扫q/H/architecture/gate/seed；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
