@@ -592,8 +592,20 @@
   full-progress score不受lambda惩罚。
 - train/heldout lambda=`0/.25/.5/1 → .125/.375/.75`；6k steps。P201门为mean composite reduction `.10`、
   pairwise `.65`、full-progress fraction随lambda violations=0；不扫preference/rate/width/loss。
-- active=`run://worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
+- canonical=`run://worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
   20260901T041500Z__progress-conditioned-authority-admission-s0-r1`。
+- result：P201 mean composite reduction=`39.26%`、pairwise=`.89740`、oracle regret=`.02294`；full-progress fraction
+  `.8459→.9164→.9459`、violations=0、highest-lambda scenes=`10/0/0`，3/3 supported。source=`38.21%/.88621`；
+  wall=`78.44s`、peak GPU=`.1404GiB`。
+
+### WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01
+
+- frozen candidate：P311/P309/P307，0-step；P243九场景/285个六动作组，progress-conditioned action-admission
+  family untouched reuse confirmation。
+- inherited：heldout lambda `.125/.375/.75`、hard top-2、mean composite reduction `.10`、pairwise `.65`、
+  full-progress monotonic violations=0；one read，无refit/换cohort。
+- active=`run://worldsim_v67/WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+  20260901T043000Z__progress-conditioned-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

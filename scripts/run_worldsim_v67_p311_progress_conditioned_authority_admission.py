@@ -219,43 +219,55 @@ def main() -> None:
     train_preferences = np.asarray(config["training_progress_preferences"], np.float32)
     heldout_preferences = np.asarray(config["heldout_progress_preferences"], np.float32)
     model_config = config["model"]
+    confirmation_only = bool(config.get("confirmation_only", False))
+    progress_artifact = None
+    if confirmation_only:
+        progress_artifact = torch.load(
+            args.runs_root / config["frozen_progress_compiler"]["run"] / config["frozen_progress_compiler"]["artifact"],
+            map_location="cuda",
+        )
+    hidden_width = int(progress_artifact["hidden_width"]) if progress_artifact else int(model_config["hidden_width"])
+    rate_adjustment = float(progress_artifact["maximum_rate_adjustment"]) if progress_artifact else float(model_config["maximum_rate_adjustment"])
     model = ProgressConditionedAdmission(
-        source_descriptor.shape[2], int(model_config["hidden_width"]), float(model_config["maximum_rate_adjustment"])
+        source_descriptor.shape[2], hidden_width, rate_adjustment,
     ).cuda()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
-    x = torch.from_numpy(source_descriptor).cuda()
-    base_score = torch.from_numpy(source_score).cuda()
-    target = torch.from_numpy(source_target).cuda()
-    deficit = torch.from_numpy(source_deficit).cuda()
-    train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
-    preference_tensor = torch.from_numpy(train_preferences).cuda()
-    left, right = np.triu_indices(int(config["action_group_size"]), 1)
-    left = torch.from_numpy(left).cuda()
-    right = torch.from_numpy(right).cuda()
     last = 0.0
-    for step in range(int(model_config["steps"])):
-        row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
-        preference = preference_tensor[torch.randint(len(preference_tensor), (len(row),), device="cuda")]
-        truth = target[row] + preference[:, None] * deficit[row]
-        score = model(x[row], base_score[row], deficit[row], preference)
-        weights = _soft_topk_weights(score, int(config["selected_action_count"]), float(model_config["rank_temperature"]), float(model_config["membership_temperature"]))
-        decision_loss = torch.mean(torch.sum(weights * truth, 1) / float(config["selected_action_count"]))
-        target_probability = F.softmax(-truth / float(model_config["listwise_temperature"]), 1)
-        listwise_loss = torch.mean(torch.sum(-target_probability * F.log_softmax(-score / float(model_config["listwise_temperature"]), 1), 1))
-        truth_delta = truth[:, left] - truth[:, right]
-        score_delta = score[:, left] - score[:, right]
-        pairwise_loss = F.softplus(-torch.sign(truth_delta) * score_delta / float(model_config["pairwise_temperature"]))
-        pairwise_loss = pairwise_loss[torch.abs(truth_delta) >= float(model_config["pairwise_minimum_target_gap_z"])].mean()
-        loss = decision_loss + float(model_config["listwise_weight"]) * listwise_loss + float(model_config["pairwise_weight"]) * pairwise_loss
-        optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        optimizer.step()
-        last = float(loss.detach())
-        if step % 500 == 0:
-            print(f"P311 progress-conditioned admission step={step + 1} objective={last:.7f}", flush=True)
+    if confirmation_only:
+        model.load_state_dict(progress_artifact["model_state_dict"])
+    else:
+        optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
+        x = torch.from_numpy(source_descriptor).cuda()
+        base_score = torch.from_numpy(source_score).cuda()
+        target = torch.from_numpy(source_target).cuda()
+        deficit = torch.from_numpy(source_deficit).cuda()
+        train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
+        preference_tensor = torch.from_numpy(train_preferences).cuda()
+        left, right = np.triu_indices(int(config["action_group_size"]), 1)
+        left = torch.from_numpy(left).cuda()
+        right = torch.from_numpy(right).cuda()
+        for step in range(int(model_config["steps"])):
+            row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+            preference = preference_tensor[torch.randint(len(preference_tensor), (len(row),), device="cuda")]
+            truth = target[row] + preference[:, None] * deficit[row]
+            score = model(x[row], base_score[row], deficit[row], preference)
+            weights = _soft_topk_weights(score, int(config["selected_action_count"]), float(model_config["rank_temperature"]), float(model_config["membership_temperature"]))
+            decision_loss = torch.mean(torch.sum(weights * truth, 1) / float(config["selected_action_count"]))
+            target_probability = F.softmax(-truth / float(model_config["listwise_temperature"]), 1)
+            listwise_loss = torch.mean(torch.sum(-target_probability * F.log_softmax(-score / float(model_config["listwise_temperature"]), 1), 1))
+            truth_delta = truth[:, left] - truth[:, right]
+            score_delta = score[:, left] - score[:, right]
+            pairwise_loss = F.softplus(-torch.sign(truth_delta) * score_delta / float(model_config["pairwise_temperature"]))
+            pairwise_loss = pairwise_loss[torch.abs(truth_delta) >= float(model_config["pairwise_minimum_target_gap_z"])].mean()
+            loss = decision_loss + float(model_config["listwise_weight"]) * listwise_loss + float(model_config["pairwise_weight"]) * pairwise_loss
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            last = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P311 progress-conditioned admission step={step + 1} objective={last:.7f}", flush=True)
 
     evaluation = config["evaluation"]
-    source_metrics = _evaluate(
+    source_metrics = None if confirmation_only else _evaluate(
         model, source_descriptor[development], source_score[development], source_costs[development], source_queries[development],
         source_scenes[development], heldout_preferences, int(config["selected_action_count"]), target_scale,
         float(evaluation["pairwise_minimum_composite_gap"]),
@@ -274,8 +286,8 @@ def main() -> None:
     torch.save({
         "model_state_dict": model.state_dict(),
         "input_width": source_descriptor.shape[2],
-        "hidden_width": int(model_config["hidden_width"]),
-        "maximum_rate_adjustment": float(model_config["maximum_rate_adjustment"]),
+        "hidden_width": hidden_width,
+        "maximum_rate_adjustment": rate_adjustment,
         "frozen_selector": config["frozen_selector"],
         "progress_preference_units": "P309_normalized_log1p_future_visited_state_cost",
     }, run_dir / config["model_artifact"])
@@ -286,7 +298,7 @@ def main() -> None:
         "status": "done",
         "verdict": verdict,
         "role": config["role"],
-        "training": {"group_count": int(train.sum()), "steps": int(model_config["steps"]), "final_objective": last},
+        "training": {"group_count": 0 if confirmation_only else int(train.sum()), "steps": 0 if confirmation_only else int(model_config["steps"]), "final_objective": last},
         "source_development": source_metrics,
         "P201_post_hoc_development": p201_metrics,
         "decision_checks": checks,

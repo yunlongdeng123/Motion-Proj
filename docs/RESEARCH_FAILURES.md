@@ -353,8 +353,10 @@
   P201 reduction=`60.90%`、pairwise=`.83580`，2/2 supported，未触发F207；
 - P310 freeze：P309/P307在P277 180个六动作组上0-step action-admission-family untouched确认；失败才登记F207，
   result reduction=`63.72%`、pairwise=`.83069`、6/6 scenes降低，2/2 supported；未触发F207；
-- P311 active：为排除低progress混杂，冻结P309并学习正progress-preference rate；lambda=0严格保持P309，heldout
-  composite reduction/ranking/单调性三门；失败才登记F207，不扫preference/rate/width/loss；
+- P311 result：为排除低progress混杂，冻结P309并学习正progress-preference rate；P201 reduction=`39.26%`、
+  pairwise=`.89740`、full-progress `.8459→.9164→.9459`且violations=0，3/3 supported；
+- P312 freeze：P311/P309/P307在P243 285个六动作组上0-step family-untouched确认；失败才登记F207，不refit、
+  换cohort或放宽门；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

@@ -336,9 +336,16 @@ oracle cost=`.56231/1.54979/.78275/1.10792/.52732`；相对all reduction=`63.72%
 P311 处理“低cost是否只来自低progress”的关键任务混杂：P309 score冻结，新增progress-preference `lambda`，只学习
 正的半进度penalty rate，且 `lambda=0`解析精确恢复P309。train lambda=`0/.25/.5/1`、heldout=`.125/.375/.75`；
 真实目标为normalized log visited-state cost + progress deficit penalty。6k steps，三门为composite reduction `>=10%`、
-pairwise `>=.65`、full-progress fraction随lambda非降；不扫lambda/rate/width/loss。Active=`run://worldsim_v67/
+pairwise `>=.65`、full-progress fraction随lambda非降；不扫lambda/rate/width/loss。Canonical=`run://worldsim_v67/
 WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
-20260901T041500Z__progress-conditioned-authority-admission-s0-r1`。
+20260901T041500Z__progress-conditioned-authority-admission-s0-r1`：P201 heldout lambda平均composite reduction=
+`39.26%`、pairwise=`.89740`、oracle regret=`.02294`；full-progress fraction=`.8459/.9164/.9459`，violations=0，
+最高lambda下10/10 scenes降低，3/3 supported。source reduction/pairwise=`38.21%/.88621`；wall=`78.44s`。
+
+P312冻结P311/P309/P307，在P243九场景的285个六动作组做progress-conditioned action-admission-family untouched
+0-step确认；heldout lambda、hard top-2、三门原样继承，不refit、不换cohort。Active=`run://worldsim_v67/
+WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+20260901T043000Z__progress-conditioned-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
