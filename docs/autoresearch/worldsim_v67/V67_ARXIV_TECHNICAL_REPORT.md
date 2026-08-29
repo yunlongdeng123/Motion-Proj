@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 continuous selection + P183 continuous-cost density reliability CDF independent multi-horizon support`
+- 报告状态：`P147 continuous selection + P183 density CDF independent support; P192 refinement boundary documented`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -28,7 +28,9 @@ directional diagonal-Gaussian进一步以boundary-normal projection获得更强�
 `log1p(continuous boundary-state cost)`的5-component conditional density，再以解析CDF查询七个预算。P183在完全不同的
 10 scenes/10 logs、五个horizon上确认：相对P173的integrated Brier macro降低`28.48%`，mean absolute reliability error macro降低
 `69.38%`，两项预注册gate均通过。P192进一步表明source scene等权采样可在四个已消费development cohort上继续改善P182，
-但该改进尚未获得新的独立确认。
+但P193在已消费P183 rows上的冻结次级诊断显示H`.8/1.5s` Brier回退`.93%/1.13%`、macro calibration无净改善，
+因此该改进不能升级；P182仍是唯一具有fresh支持的density。P194只作一次固定half pooled/half scene-balanced训练，检验
+是否能避免纯scene等权的时域权衡，不进入P183主结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -450,7 +452,9 @@ P191因此把P126 crossing ratio解压为aleatoric、ensemble epistemic和projec
 P191只改善P113，P129 Brier反而回退`16.70%`（F155），表明这些分量不是稳定shift proxy。P192不再增加feature或loss，转而检验
 source sampling measure：102 scenes等权的environment-balanced ERM对比P182按trajectory pooled ERM。P192四cohort Brier均改善
 `1.66%/2.87%/5.06%/.80%`且mean calibration改善`16.65%`，因此development支持；但它没有参与P183 frozen candidate选择，仍需
-另一个future cohort才能升级为独立结论。
+另一个future cohort才能升级为独立结论。P193先在冻结后读取已消费P183 rows作非独立secondary，发现H`.8/1.5s`回退而长H
+改善，macro calibration improvement=`-.03%`，故停止P192晋升，不浪费新的fresh cohort。该结果把问题定位为sampling measure
+的horizon trade-off；P194依据group-robust trade-off文献仅固定一次50/50 pooled/scene-balanced采样，不做权重sweep。
 
 ## 3. 核心结果表
 
@@ -546,7 +550,8 @@ source sampling measure：102 scenes等权的environment-balanced ERM对比P182�
   objective，而不是把全局AUROC当作固定预算tail保证。
 - P183在不同10-scene/10-log、五时域确认了continuous-cost conditional density相对P173的proper-score与marginal-reliability增益；
   这是scene-level支持，不是session/population generalization或formal calibration guarantee。
-- P192 scene-balanced ERM在四个consumed development cohorts上进一步改善P182，但当前只可写作future-confirmation candidate。
+- P192 scene-balanced ERM在四个旧development cohorts改善P182，但P193 consumed-secondary暴露短时域回退，不能写成
+  future-confirmation candidate；P182仍是唯一fresh-supported density。
 
 本报告不支持：
 

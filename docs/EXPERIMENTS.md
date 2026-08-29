@@ -1416,6 +1416,42 @@
   `+12.77%/-8.38%/+35.12%/+27.10%`，mean=`16.65%`；final NLL=`-1.12004`，wall=`72.91s`，2/2 gates。
 - verdict=`supported_scene_balanced_log_cost_density_development`；冻结为future confirmation candidate，不回流改变P183/P182 fresh claim。
 
+### WS-V67-P193-SCENE-BALANCED-POST-CONFIRMATION-01
+
+- 状态：`done/rejected consumed secondary`；canonical id=`20260830T170000Z__scene-balanced-post-confirmation-s0-r2`。
+- protocol：P192/P182均在读取P183 compact rows前冻结；五H、七预算、P126 score、cost与两门同时冻结。P183 rows已被正式
+  confirmation消费，因此本项只诊断transfer pattern，不冒充新独立cohort，也不改变P183支持结论。
+- decisions：P192相对P182每H Brier均不劣；五H mean calibration-error reduction≥5%。不调模型、采样、预算或门。
+- result：五H Brier reduction=`-0.93%/-1.13%/+.32%/+1.30%/+4.75%`；calibration reduction=
+  `-12.40%/-85.52%/+13.39%/+36.30%/+48.05%`；macro=`+.86%/-.03%`，0/2 gates，F156。
+- resources：9,973 trajectories；wall=`1.05s`；peak GPU/RSS=`.139/.649GiB`。r1只因缺`PYTHONPATH=.`在import阶段退出，
+  未读quality、未占GPU，保留失败目录但不计科学trial。
+
+### WS-V67-P194-MIXED-SCENE-EMPIRICAL-LOG-COST-DENSITY-01
+
+- 状态：`done/rejected development`；canonical id=`20260830T171000Z__mixed-scene-empirical-log-cost-density-s0-r1`。
+- hypothesis：P193的短H退化来自uniform-scene过度削弱高密度trajectory measure；固定half pooled/half scene-balanced sampler
+  应在不过度牺牲短H的前提下保留部分跨scene稳健性。
+- execution：与P182相同3D condition、5-component Gaussian density、NLL、12,000 steps、batch65,536；每batch恰半数
+  pooled empirical、半数uniform scene→trajectory。P175/P183排除；不扫mixture probability/loss/architecture/budget。
+- decisions：旧四cohort Brier逐项不劣P182且mean calibration error改善≥5%；随后才允许在已消费P183 rows作secondary诊断。
+- literature：AISTATS 2024 bi-level GDRO、NeurIPS 2023 stochastic GDRO与ICML 2024 across-group trade-off共同提示纯worst/
+  pure-uniform weighting可能牺牲平均组性能；本迁移是一次固定折中采样实验，不声称实现GDRO。
+- result：P81/P96/P113/P129 Brier change vs P182=`+1.19%/-.24%/+.46%/+.93%`；calibration reduction=
+  `+.78%/-11.51%/-10.29%/-30.91%`，mean=`-12.98%`；0/2 gates，F157。final NLL=`-1.10084`，wall=`73.84s`。
+- verdict=`rejected_mixed_scene_empirical_log_cost_density`；全局mixture probability路线关闭，不扫25/50/75%。
+
+### WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01
+
+- 状态：`running development`；run id=`20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1`。
+- hypothesis：P193显示sampling收益随H变号、P194显示全局mix无效；scene reweighting必须以已知horizon condition路由。
+- sampler：先uniform empirical trajectory以保持source H marginal；随后按source H `.8/1.5/2.5/3.0s`以固定
+  `0/.3182/.7727/1.0`概率替换为同H内uniform scene→trajectory，正好是source horizon端点间线性schedule。
+- execution：P182同构3D conditional density/NLL/12,000 steps/batch65,536；P175/P183排除。旧四cohort仍只用Brier逐项
+  noninferiority与mean calibration +5%两门；不扫schedule、概率、MoE容量、loss或训练预算。
+- literature：NeurIPS 2022 conditional MoE与domain-specialized MoE指出共享模型的跨任务干扰可由已知condition路由；NeurIPS 2020
+  conditional distribution matching指出marginal强制对齐在conditional/label measure不同时会伤害预测。本项只迁移路由思想。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

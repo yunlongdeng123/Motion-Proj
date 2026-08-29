@@ -2492,6 +2492,35 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F156`。
 
+### V67-F156 — 纯scene等权sampling产生短时域可靠性回退
+
+- 分类：`algorithm/sampling-measure-horizon-tradeoff`；状态：`closed_negative_after_post_confirmation_secondary`。
+- canonical：`run://worldsim_v67/WS-V67-P193-SCENE-BALANCED-POST-CONFIRMATION-01/
+  20260830T170000Z__scene-balanced-post-confirmation-s0-r2`。
+- 观察：冻结P192相对P182在已消费P183 rows上，H`.8/1.5s` Brier回退`.93%/1.13%`，H`2.5/3.0/3.5s`
+  改善`.32%/1.30%/4.75%`；macro Brier虽改善`.86%`，macro calibration improvement为`-.03%`，0/2 gates。
+- 解释：source scene等权不是无条件稳健改进；它改变trajectory measure，对长时域稀疏scene有利，却削弱短时域高密度状态的
+  概率刻度。P192 development四cohort正结果保留，但不能晋升或再占用fresh cohort。
+- 工程边界：r1缺仓库级`PYTHONPATH`，在import阶段退出且未读quality/未占GPU；r2仅修进程环境。此启动失败不另分算法号。
+- 防重复：不做scene-weight/horizon-weight网格，不在P183 rows调gate或后处理；P194只允许事前固定half pooled/half scene-balanced
+  的一次折中训练。若仍失败，关闭sampling-measure refinement并保留P182为唯一fresh-supported density。
+
+下一可用编号为：`V67-F157`。
+
+### V67-F157 — 全局50/50 sampler折中未继承两端优势
+
+- 分类：`algorithm/global-mixture-negative-transfer`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P194-MIXED-SCENE-EMPIRICAL-LOG-COST-DENSITY-01/
+  20260830T171000Z__mixed-scene-empirical-log-cost-density-s0-r1`。
+- 观察：相对P182仅P96 Brier改善`.24%`；P81/P113/P129回退`1.19%/.46%/.93%`，mean calibration improvement
+  `-12.98%`，0/2 gates。source NLL=`-1.10084`不能挽救transfer判定。
+- 解释：pooled与scene-balanced risk不是可用一个全局凸混合消除的偏差；P193已显示效应随horizon变号，P194把不同H继续共享同一
+  sampling weight，因而仍产生negative transfer。
+- 防重复：不扫25/50/75%或连续mixture weight，不在P183选择权重。P195只允许一次由source horizon端点事前确定的线性
+  conditional sampler；模型容量、NLL、训练预算保持不变。
+
+下一可用编号为：`V67-F158`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

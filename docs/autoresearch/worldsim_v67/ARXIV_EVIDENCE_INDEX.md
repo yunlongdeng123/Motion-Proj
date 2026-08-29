@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P183 fresh continuous-cost density confirmation supported; P192 development refinement supported`
+- 状态：`P183 fresh density supported; P192/P194 global sampling refinements rejected; P195 conditional sampling active`
 - 当前主结论：Actor uncertainty × trajectory boundary的continuous cost density在不同10-scene/10-log五时域确认中同时改善proper score与marginal reliability
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -103,6 +103,9 @@
 | P190 | `run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/20260830T162500Z__pcgrad-log-cost-cdf-s0-r1` | 3/4 Brier改善、mean calibration +7.19%，P96 +.62%；rejected/F154 |
 | P191 | `run://worldsim_v67/WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01/20260830T163000Z__decomposed-boundary-evidence-density-s0-r1` | 仅P113改善，P129 Brier +16.70%；rejected/F155 |
 | P192 | `run://worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1` | Brier 4/4改善、mean calibration +16.65%；development supported |
+| P193 | `run://worldsim_v67/WS-V67-P193-SCENE-BALANCED-POST-CONFIRMATION-01/20260830T170000Z__scene-balanced-post-confirmation-s0-r2` | consumed P183：短H退化、macro calibration -.03%；rejected/F156 |
+| P194 | `run://worldsim_v67/WS-V67-P194-MIXED-SCENE-EMPIRICAL-LOG-COST-DENSITY-01/20260830T171000Z__mixed-scene-empirical-log-cost-density-s0-r1` | mean calibration -12.98%；rejected/F157 |
+| P195 | `run://worldsim_v67/WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01/20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1` | fixed source-H conditional sampler；running development |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -245,6 +248,8 @@
 | `V67-F153` | closed negative | P189 pure Brier改善P96/P113但P81/P129回退，NLL refinement丢失 |
 | `V67-F154` | closed negative | P190 PCGrad仅余P96 Brier +.62%，严格noninferiority仍失败 |
 | `V67-F155` | closed negative | P191 decomposed evidence仅P113改善，P129 Brier回退16.70% |
+| `V67-F156` | closed negative | P192纯scene等权在consumed P183的H.8/1.5 Brier回退，macro calibration无改善 |
+| `V67-F157` | closed negative | P194全局50/50采样仅P96 Brier改善，mean calibration退化12.98% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

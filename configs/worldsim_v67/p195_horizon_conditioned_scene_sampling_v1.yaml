@@ -1,0 +1,43 @@
+schema_version: worldsim_v67.p195_horizon_conditioned_scene_sampling.v1
+output_schema_version: worldsim_v67.p195_horizon_conditioned_scene_sampling_summary.v1
+task_id: WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01
+hypothesis_id: WS-V67-H-P195-001
+role: horizon_conditioned_source_measure_continuous_cost_density
+seed: 0
+model_artifact: HORIZON_CONDITIONED_LOG_COST_DENSITY.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p173: {run: worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2, artifact: MONOTONE_VISIT_RELIABILITY_CDF.pt}
+frozen_p182_summary: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model: {component_count: 5, hidden_dimensions: [128, 128, 64], training_steps: 12000, batch_size: 65536, learning_rate: 0.001, weight_decay: 0.0001}
+sampling:
+  source_horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  scene_balanced_probability: [0.0, 0.3181818, 0.7727273, 1.0]
+  schedule: linear_from_empirical_at_min_source_horizon_to_scene_balanced_at_max_source_horizon
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_calibration_error_reduction_vs_p173: 0.10
+  minimum_mean_calibration_error_reduction_vs_p182: 0.05
+verdict_on_pass: supported_horizon_conditioned_scene_sampling_development
+verdict_on_failure: rejected_horizon_conditioned_scene_sampling
+locks:
+  architecture_condition_NLL_and_training_budget_match_P182_P192: true
+  empirical_horizon_marginal_is_preserved: true
+  within_horizon_scene_balance_probability_is_linear_and_frozen: true
+  no_schedule_probability_loss_architecture_or_budget_sweep: true
+  P175_and_P183_are_excluded_from_training_and_development_decisions: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper_files/paper/2022/hash/11fc8c98b46d4cbdfe8157267228f7d7-Abstract-Conference.html
+  - https://papers.nips.cc/paper_files/paper/2022/hash/8bd4f1dbc7a70c6b80ce81b8b4fdc0b2-Abstract-Conference.html
+  - https://papers.nips.cc/paper/2020/hash/dfbfa7ddcfffeb581f50edcf9a0204bb-Abstract.html
+claim_boundary:
+  - consumed_development_only_and_not_target_adaptation
+  - deterministic_horizon_conditioned_sampler_not_learned_MoE_routing
+  - no_voxel_collision_conformal_planner_policy_closed_loop_or_safety_claim

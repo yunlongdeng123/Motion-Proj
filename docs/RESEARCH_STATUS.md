@@ -822,6 +822,22 @@ F155；关闭evidence-component context。P192 environment-balanced ERM已完成
 `1.66%/2.87%/5.06%/.80%`，mean calibration improvement=`16.65%`，2/2 gates通过。它保持P182 architecture/condition/NLL/
 12,000 steps，只改为uniform scene→trajectory sampling；冻结为development candidate，正式升级仍需不同future cohort。
 
+P193在冻结P192后才读取已经被P183消费的compact rows，明确只作post-confirmation secondary而非独立证据。相对P182，
+P192在H `.8/1.5/2.5/3.0/3.5s`的Brier improvement=`-0.93%/-1.13%/+.32%/+1.30%/+4.75%`，呈现清晰的
+短时域退化、长时域改善；macro Brier improvement=`+.86%`，macro calibration improvement=`-.03%`。逐H Brier
+noninferiority与mean calibration +5%两门均失败，登记F156；P192不再进入future confirmation。r1仅因未设置仓库级
+`PYTHONPATH`在import阶段退出，无GPU/quality read；r2 wall=`1.05s`完成。
+
+依照AISTATS 2024 bi-level GDRO、NeurIPS 2023 stochastic GDRO与ICML 2024 group trade-off调研，P194不做权重网格，
+只冻结一次`50% pooled empirical + 50% uniform-scene`batch sampler，保持P182/P192模型、NLL与12,000-step预算完全一致。
+P194最终相对P182 P81/P96/P113/P129 Brier change=`+1.19%/-.24%/+.46%/+.93%`，mean calibration improvement=
+`-12.98%`，两门均失败并登记F157。全局折中无法修复时域耦合，不再扫25/50/75%。
+
+顶会调研进一步指向conditional MoE/conditional distribution matching：干扰应由已知condition路由，而非全局混权。P195保持单一
+density，不扩MoE容量；先按empirical trajectory保持source horizon marginal，再把within-horizon scene-balanced replacement
+probability从source H`.8→3.0s`固定线性设为`0→1`。这是一条无target fit、无权重sweep的确定性条件sampler，12,000-step GPU
+训练已启动；目标是短H保持P182 measure、长H逐步获得P192稳健性。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
