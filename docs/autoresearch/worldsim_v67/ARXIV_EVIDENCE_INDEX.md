@@ -39,7 +39,7 @@
 | P126 | `run://worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1` | AUROC三组同增，P113 events 6→4；P96 0→1故binary reject |
 | P127 | `run://worldsim_v67/WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01/20260830T083500Z__ensemble-continuous-selection-s0-r1` | selected cost全降；Spearman gain=`+.0470/+.1351/+.0755`；support |
 | P128 | `run://worldsim_v67/WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01/20260830T084000Z__ensemble-continuous-confirmation-s0-r1` | ensemble gain=`+.04721`、cost `.27051<.27796`；same-read support with timing caveat |
-| P129 | `run://worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1` | target-unread scene-level independent；pending |
+| P129 | `run://worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1` | gain=`+.04257`、cost `.30867<.32934`；scene-level independent support |
 | P130 | `run://worldsim_v67/WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01/20260830T091000Z__ensemble-distribution-distillation-s0-r1` | rank retained；P113 cost regression，rejected/F93 |
 | P131 | `run://worldsim_v67/WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01/20260830T091500Z__task-conditioned-score-distillation-s0-r1` | pointwise loss low但trajectory rank collapse；rejected/F94 |
 | P132 | `run://worldsim_v67/WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01/20260830T092000Z__trajectory-rank-distillation-s0-r1` | rank恢复但仍低P126、cost全退；rejected/F95 |
@@ -49,7 +49,9 @@
 | P136 | `run://worldsim_v67/WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01/20260830T094000Z__snapshot-actor-ensemble-s0-r1` | P96 mode diversity不足；rejected/F99 |
 | P137 | `run://worldsim_v67/WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01/20260830T094500Z__swag-actor-ensemble-s0-r1` | rank retained但P81/P96 cost微退；rejected/F100 |
 | P138 | `run://worldsim_v67/WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01/20260830T095000Z__full-covariance-deep-ensemble-s0-r1` | P81/P113 gain、P96反转；rejected/F101 |
-| P139 | `run://worldsim_v67/WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01/20260830T095500Z__scene-balanced-deep-ensemble-s0-r1` | uniform source-scene sampling；running |
+| P139 | `run://worldsim_v67/WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01/20260830T095500Z__scene-balanced-deep-ensemble-s0-r1` | cost全退、mean rank `-.01275`；rejected/F102 |
+| P140 | `run://worldsim_v67/WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01/20260830T100000Z__scene-bagged-deep-ensemble-s0-r1` | mean rank `-.00405`、P81/P96 cost退；rejected/F103 |
+| P141 | `run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/20260830T100500Z__five-member-deep-ensemble-s0-r1` | exact P126 + seeds3/4；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -81,7 +83,7 @@
 | epistemic+aleatoric deep ensemble | P126 consumed ×3 | AUROC全增；P96 fixed50多1 event | reject binary composite；transfer continuous object once |
 | ensemble continuous selection | P127 consumed ×3 | cost全降、mean Spearman gain=`+.08586` | freeze P128 same-read secondary |
 | ensemble continuous confirmation | P128 P121 same read | gain=`+.04721`、selected cost更低 | same-read secondary support；commit timing caveat |
-| ensemble increment independent transfer | P129 new scene cohort | pending | frozen one-shot scene-level confirmation |
+| ensemble increment independent transfer | P129 new scene cohort | gain=`+.04257`、cost `.30867<.32934` | scene-level independent support |
 | ensemble distribution distillation | P130 consumed P81/P96/P113 | mean rank delta=`-.00202` | P113 cost regression；reject |
 | task-conditioned functional distillation | P131 consumed P81/P96/P113 | mean rank delta=`-.36263` | pointwise→max collapse；reject |
 | trajectory-max rank distillation | P132 consumed P81/P96/P113 | mean rank delta=`-.02018` | improved vs P131 but reject |
@@ -91,7 +93,9 @@
 | snapshot Actor ensemble | P136 consumed P81/P96/P113 | mean rank delta=`-.00855` | P96/P113 cost regress；reject |
 | SWAG Actor ensemble | P137 consumed P81/P96/P113 | mean rank delta=`+.00231` | P81/P96 tiny cost regress；reject |
 | full-covariance deep ensemble | P138 consumed P81/P96/P113 | mean gain=`+.00359` | P96 reversal；reject |
-| scene-balanced deep ensemble | P139 consumed P81/P96/P113 | pending | parameter-free source scene balancing |
+| scene-balanced deep ensemble | P139 consumed P81/P96/P113 | mean gain=`-.01275`、cost全退 | reject simple balancing |
+| scene-bagged deep ensemble | P140 consumed P81/P96/P113/P129 | mean gain=`-.00405` | P113/P129 cost改善但整体reject |
+| five-member deep ensemble | P141 consumed P81/P96/P113/P129 | running | one fixed scale trial |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -118,6 +122,10 @@
 | `V67-F89` | closed negative | P124 fixed heavy-tail likelihood over-broadened P96 boundary uncertainty |
 | `V67-F90` | closed negative | P125 learned mixture modes were not cross-cohort boundary-relevant |
 | `V67-F91` | closed binary composite | P126 AUROC consistently improved but P96 fixed50 event noninferiority failed |
+| `V67-F92` | resolved pre-run | P129 asynchronous launcher相对入口工作目录错误；0 target read |
+| `V67-F93--F101` | closed negative | distillation、efficient/snapshot/SWAG与full-covariance路线未稳定保持P126 |
+| `V67-F102` | closed negative | uniform source-scene sampling三cohort一致退化 |
+| `V67-F103` | closed negative | scene bootstrap仅在P113/P129改善cost，四cohort rank不稳定 |
 
 ## 4. Artifact inventory
 
@@ -136,7 +144,7 @@
 | P127 ensemble continuous selection | P127 canonical run |
 | P121 independent continuous rows/summary | P121 prep与primary canonical runs |
 | P128 ensemble same-read summary | P128 canonical run；timing caveat见ledger/report |
-| P129 frozen cohort/config | `configs/worldsim_v67/p129_ensemble_independent_confirmation_v1.yaml` |
+| P129 independent rows/summary | P129 prep与primary canonical runs |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |

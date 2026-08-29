@@ -192,8 +192,10 @@ P128在同一P121 rows上得到ensemble Spearman `.80868`，相对P109 `+.04721`
 `572f7d5`晚于materialization；内容在读取outcome前未改。论文称其prospective-content same-read secondary，而非严格
 commit-before-read prereg或第二独立cohort。
 
-为确认ensemble increment本身，P129已从official val metadata冻结另一组target-unread 10 scenes，四location分布3/3/3/1且
-cohort内10 distinct logs。P126/P109、continuous cost与两项increment decisions完全不变；P129只作scene-level独立确认。
+为确认ensemble increment本身，P129从official val metadata冻结另一组target-unread 10 scenes，四location分布3/3/3/1且
+cohort内10 distinct logs。P126/P109、continuous cost与两项increment decisions完全不变。11,406 rows/1,681 trajectories上，
+ensemble/P109 Spearman=`.82688/.78431`（gain=`+.04257`），fixed50 cost=`.30867/.32934`；两项均通过。因此ensemble
+increment获得scene-level独立支持，但历史session overlap仍禁止session-level、collision、calibrated probability或safety外推。
 
 P129首次waiting evaluator因Bash async-list的工作目录作用域从`/root`解析相对入口，在run/target前退出；改用absolute
 entry和`setsid`后恢复，prep持续运行，故F92只属pre-run engineering。等待archive IO时，P130按UAI ensemble distribution
@@ -236,6 +238,14 @@ P138在P81/P113改善，却在P96 rank/cost反转，mean gain=`+.00359<.005`（F
 global token sampling改为uniform source-scene sampling，三member模型/steps/seeds保持P126；它检验scene size sampling
 shortcut，不等价于GroupDRO/Fishr，也不声称source scenes是semantic domains。
 
+P139在三cohort cost全回退，mean Spearman gain=`-.01275`（F102），说明parameter-free scene balancing丢失了自然token
+distribution的有效统计。P140保留自然token权重，但把scene改为member bootstrap unit：每个member固定有放回抽102个source
+scenes，以系统性scene omission/duplication增强成员差异；P129 primary完成后才作为第四个consumed cohort参与development。
+
+P140在P113/P129降低selection cost，却在P81/P96回退，mean rank gain=`-.00405`（F103）；structured scene diversity并未
+稳定超过P126。P141因此回到natural-token训练，在精确复用P126三成员基础上只新增seeds3/4，检验5-member规模是否在四个
+consumed cohorts产生一致increment；若支持才需要另一组fresh confirmation。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -267,7 +277,7 @@ shortcut，不等价于GroupDRO/Fishr，也不声称source scenes是semantic dom
 | P127 | consumed ensemble continuous | selected cost全降 | Spearman gain=`+.0470/+.1351/+.0755` | support；freeze P128 |
 | P121 | independent continuous primary | selected cost=`.27796`，reduction=`.7736` | Spearman=`.76147`，gain over clearance=`+.28823` | 2/2 support |
 | P128 | P121 same-read ensemble secondary | selected cost=`.27051<.27796` | Spearman gain over P109=`+.04721` | support with timing caveat |
-| P129 | independent ensemble increment | pending | pending | frozen target-unread cohort |
+| P129 | independent ensemble increment | selected cost=`.30867<.32934` | Spearman gain=`+.04257` | 2/2 scene-level support |
 
 ## 4. 失败如何推动研究对象变化
 

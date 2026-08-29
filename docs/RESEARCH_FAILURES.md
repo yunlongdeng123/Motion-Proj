@@ -1483,6 +1483,9 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   cost≤P109；
 - prevention：只允许target前exact locator correction；scientific failure使用当时下一可用编号并关闭ensemble independent increment，不换
   scene/member/weight/score/cost/coverage/gate或第二cohort。
+- outcome：11,406 rows/1,681 trajectories；ensemble relative P109 Spearman gain=`+.042572`、selected cost
+  `.308669<.329340`，2/2 decisions。无scientific failure；支持scene-level independent ensemble increment，claim不外推到
+  session-level/collision/calibrated probability/closed-loop/safety。
 
 ### V67-F92 — P129异步evaluator在错误工作目录解析相对入口
 
@@ -1667,10 +1670,46 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 ### P139 freeze note — uniform source-scene sampling
 
 - method：三diagonal members完全匹配P126，只把global token-uniform改为scene-uniform→token-uniform；scene不是semantic domain label。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman gain≥`.005`；P129 rows隔离。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman gain≥`.005`；P129 rows隔离。实际三cohort
+  cost全回退，Spearman gain=`-.009921/-.013609/-.014711`，mean=`-.012747`，两门全失败。
 - prevention：不加GroupDRO/Fishr penalty、不扫scene weights/subsets；失败登记F102并关闭simple balancing route。
 
-下一可用编号为：`V67-F102`。
+### V67-F102 — uniform source-scene sampling一致削弱continuous ordering
+
+- 分类：`algorithm/source-sampling`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01/
+  20260830T095500Z__scene-balanced-deep-ensemble-s0-r1`。
+- 观察：P81/P96/P113 selected cost=`.180687/.173277/.232300`均高于P126；mean Spearman gain=`-.012747`。
+  三member NLL均收敛，失败不是launcher或训练中断。
+- 解释：对小scene过采样改变了Actor residual训练分布，但没有提供semantic group信息，反而丢失自然token distribution的有效统计。
+- 防重复：关闭uniform scene weighting，不扫scene权重/penalty。P140只迁移bootstrap unit以增加member diversity，并恢复scene内
+  natural token weighting。
+
+### P140 freeze note — source-scene bootstrap member diversity
+
+- method：每member固定从102 source scenes有放回抽102次，重复scene完整保留其Actor-time tokens；三独立models/NLL/steps/batch/
+  projection匹配P139/P126。
+- evaluation/decisions：primary完成后才消费P129，并与P81/P96/P113共同相对P126检验四cohort cost nonregression及mean
+  Spearman gain≥`.005`。实际P113/P129 cost改善，但P81/P96 cost微退；mean Spearman gain=`-.004052`，两门失败。
+- prevention：不扫bootstrap fraction/member/seed/weight/coverage；只作一次scene-bagged development。
+
+### V67-F103 — scene bootstrap局部改善cost但未保持四cohort排序
+
+- 分类：`algorithm/ensemble-diversity-unit`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01/
+  20260830T100000Z__scene-bagged-deep-ensemble-s0-r1`。
+- 观察：P113/P129 cost改善到`.216172/.303464`，但P81/P96为`.179070/.167830`而回退；四cohort mean rank
+  gain=`-.004052`。所有members收敛，非执行失败。
+- 解释：scene omission增加了diversity，却降低部分常见source-mode的排序精度；单靠bootstrap unit不能稳定超过natural-token P126。
+- 防重复：不扫bootstrap fraction或seed。P141恢复natural-token训练，仅检验独立支持后增加member count。
+
+### P141 freeze note — five-member natural-token ensemble scaling
+
+- method：复用P126 seeds0/1/2，只按exact P126 protocol新增seeds3/4；形成5-member total variance。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort cost nonregression且mean Spearman gain≥`.003`。
+- prevention：固定5 members与seeds3/4，只跑一次；不扫member/seed/weight/projection/coverage。
+
+下一可用编号为：`V67-F104`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

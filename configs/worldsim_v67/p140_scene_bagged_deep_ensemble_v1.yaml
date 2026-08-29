@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p140_scene_bagged_deep_ensemble.v1
+output_schema_version: worldsim_v67.p140_scene_bagged_deep_ensemble_summary.v1
+task_id: WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P140-001
+role: consumed_development_source_scene_bootstrap_actor_ensemble
+model_artifact: SCENE_BAGGED_DEEP_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+  - name: consumed_p129
+    run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1
+    artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_scene_bagged_deep_ensemble
+verdict_on_failure: rejected_development_scene_bagged_deep_ensemble
+locks:
+  one_fixed_source_scene_bootstrap_per_member: true
+  natural_token_weighting_within_bootstrapped_scenes: true
+  model_loss_seeds_steps_batch_and_projection_match_P139: true
+  no_bootstrap_fraction_member_seed_weight_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract-Conference.html
+  - https://www.stat.berkeley.edu/~breiman/bagging.pdf
+claim_boundary:
+  - consumed_development_scene_bootstrap_only
+  - P129_is_consumed_only_after_its_frozen_primary_verdict
+  - source_scene_ids_are_not_semantic_domain_labels
+  - no_planner_policy_closed_loop_or_safety_claim

@@ -493,7 +493,7 @@
 
 ### WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01
 
-- 状态：`frozen/target unread`；prep planned=`20260830T084500Z__ensemble-independent-prep-s0-r1`，primary planned=
+- 状态：`done/supported scene-level independent`；prep canonical=`20260830T084500Z__ensemble-independent-prep-s0-r1`，primary canonical=
   `20260830T085000Z__ensemble-independent-confirmation-s0-r1`。
 - cohort：official val target-unread scenes=`0017/0345/0962/0095/0522/0625/0798/0921/0927/1063`，indices=
   `16/262/729/77/412/481/618/706/712/803`；location 3/3/3/1、cohort内10 distinct log sessions。历史session overlap
@@ -503,6 +503,11 @@
 - target前只允许exact archive locator修正；不换scene/model/member/weight/score/cost/floor/coverage/metric/gate，不做第二cohort。
 - execution delta：首次waiting evaluator在run创建/target read前因Bash异步list使相对script从`/root`解析而退出；prep未受影响。
   仅改为absolute script/config并以`setsid`重启，protocol不变；登记`V67-F92 engineering/pre-run`。
+- prep/result：7 archive shards完成，3,904/3,904 LiDAR newly extracted，10/10 scenes done，prep wall=`2514.15s`。
+  Primary=`11,406 rows / 1,681 trajectories / 840 selected`；all cost=`1.614118`，ensemble/P109/clearance selected cost=
+  `.308669/.329340/.476899`，ensemble reduction=`80.88%`。ensemble/P109/clearance Spearman=`.826883/.784311/.533103`，
+  ensemble gain over P109=`+.042572`；2/2 decisions，verdict=`supported_independent_ensemble_continuous_selection_increment`，
+  primary wall=`2455.80s`。只支持scene-level independent continuous selection increment。
 
 ### WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01
 
@@ -640,7 +645,7 @@
 
 ### WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T095500Z__scene-balanced-deep-ensemble-s0-r1`，与P129 archive IO并行。
 - method：3个diagonal Gaussian members、seeds0/1/2、`[256,128]`、6,000 steps、batch65536均匹配P126；唯一变化是
   每个sample先uniform source scene、再uniform scene内Actor-time token，而不是global token-uniform。
@@ -648,6 +653,35 @@
 - decisions：相对P126三cohort selected cost全不退化且mean Spearman gain≥`.005`；不扫scene weights/group loss/penalty/
   subset/seed，P129 rows不读。
 - references：ICML 2022 Fishr与GroupDRO文献只支持关注group shift；本实现不是Fishr/GroupDRO，仅是parameter-free均匀scene采样。
+- result：P81/P96/P113 member final NLL=`-3.459526/-3.453744/-3.495283`；selected cost=
+  `.180687/.173277/.232300`，三组均回退；Spearman gain=`-.009921/-.013609/-.014711`（mean=`-.012747`）。
+  0/2 decisions，verdict=`rejected_development_scene_balanced_deep_ensemble`，wall=`100.21s`、peak GPU=`.405 GiB`；F102。
+
+### WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T100000Z__scene-bagged-deep-ensemble-s0-r1`。
+- method：每个member以固定seed从102 source scenes有放回抽102次；训练token pool保留重复scene及scene内部自然token频率，
+  使约37% source scenes每member缺席并产生结构化member diversity。3个diagonal Gaussian members、`[256,128]`、6,000 steps、
+  batch65,536、NLL与τ-boundary total-variance projection均匹配P139/P126。
+- evaluation：P81/P96/P113及primary完成后降为consumed的P129；comparator=P126。decisions=四cohort selected cost全不退化、
+  mean Spearman gain≥`.005`。
+- locks：不扫bootstrap fraction/member/seed/weight/coverage；scene不是semantic domain；只称consumed bagging development。
+- references：NeurIPS 2017 deep ensembles、Breiman bagging；不声称Bayesian posterior、domain generalization或safety。
+- result：members覆盖`69/68/71` unique source scenes，final NLL=`-3.794529/-3.895617/-3.878719`。P81/P96/P113/P129
+  selected cost=`.179070/.167830/.216172/.303464` vs P126=`.176665/.167572/.218791/.308669`；Spearman gain=
+  `-.008253/-.007109/-.001230/+.000385`（mean=`-.004052`）。0/2 decisions，verdict=
+  `rejected_development_scene_bagged_deep_ensemble`，wall=`97.04s`、peak GPU=`.387 GiB`；F103。
+
+### WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical planned=
+  `20260830T100500Z__five-member-deep-ensemble-s0-r1`。
+- method：exact reuse P126 members seeds0/1/2；用同一source normalization、token-uniform NLL、`[256,128]`、batch65,536、
+  6,000 steps只训练seeds3/4，组成固定5-member law-of-total-variance boundary score。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126 3-member；四cohort selected cost全不退化且mean Spearman gain≥`.003`。
+- locks：这是一次5-member scale trial；不扫member count/seed/weight/projection/coverage。若支持才另冻fresh confirmation。
+- reference：NeurIPS 2017 deep ensembles；只称consumed ensemble-size scaling，不声称calibration或safety。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

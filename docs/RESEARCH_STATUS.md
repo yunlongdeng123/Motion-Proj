@@ -323,12 +323,16 @@ P128同读secondary也两门通过：ensemble Spearman=`.80868`，相对P109 gai
 已冻结且之后未改。论文将其写为`prospective-content same-read secondary with commit-timing caveat`，不写成严格
 commit-before-read prereg或第二independent cohort。当前下一研究是为ensemble continuous increment冻结全新scene-level cohort。
 
-P129已仅用official val metadata、docs mention集合和processed目录冻结，任何新sensor/target均未读。Cohort=
+P129已仅用official val metadata、docs mention集合和processed目录冻结后完成一次scene-level独立读取。Cohort=
 `0017/0345/0962/0095/0522/0625/0798/0921/0927/1063`（indices=`16/262/729/77/412/481/618/706/712/803`），
 location=`3 onenorth/3 Boston/3 Queenstown/1 Holland`、内部10 distinct log sessions；历史相邻session已被使用，故只称
 scene-level independent。P126/P109 checkpoints、law-of-total-variance score、continuous cost、`.05m`、H3.5、fixed50与两门
 全部冻结：ensemble Spearman gain over P109≥`.005`；selected cost≤P109。只允许target前exact locator修正；失败不换scene/
-member/weight/score/cost/coverage/gate。
+member/weight/score/cost/coverage/gate。Prep完成7个archive shards、3,904/3,904 LiDAR映射与10/10 scenes preprocess，
+wall=`2514.15s`；primary得到11,406 rows/1,681 trajectories。P126 ensemble Spearman=`.82688`，相对P109 `.78431`
+提升`+.04257`；fixed50 selected cost=`.30867<.32934`，相对all `.1.61412`降低`80.88%`，两门全通过。P129因此
+正式支持ensemble continuous increment的scene-level independent transfer；仍不是session-level、collision、calibrated probability、
+planner policy、closed-loop或safety证据。
 
 P129首次waiting evaluator启动器因Bash异步list的工作目录作用域而从`/root`解析相对script路径，在run leaf创建和任何
 target读取前退出；prep的7-shard并行IO未受影响。依据GNU Bash async-list/grouping语义，已只把evaluator入口改为
@@ -421,7 +425,18 @@ full-covariance不是跨cohort通用增量；不以P81/P113多数胜出覆盖P96
 P139针对反复出现的P96弱点不改输出分布，而改source risk weighting：3个diagonal members仍用P126 architecture/NLL/steps/
 seeds，但每个batch先均匀选source scene，再在scene内均匀选Actor-time token，避免大场景按token数主导。这里只把scene当采样组，
 不声称semantic domain或GroupDRO；不加gradient penalty/learned weights。相对P126要求三cohort cost全不退且mean rank gain≥`.005`，
-P129 rows隔离；GPU正训练3成员。
+P129 rows隔离。结果P81/P96/P113 selected cost=`.18069/.17328/.23230`，全部高于P126；Spearman gain=
+`-.00992/-.01361/-.01471`（mean=`-.01275`），0/2 decisions，wall=`100.21s`。登记`V67-F102`并关闭simple
+scene balancing；uniform scene sampling削弱而非修复跨cohort排序。
+
+P140不继续平衡权重，而将scene作为bootstrap unit以增加成员的系统性训练分布差异：每member固定从102 source scenes有放回抽
+102次，实际保留`69/68/71` unique scenes并维持scene内自然token权重。P81/P96 cost微退到`.17907/.16783`，P113/P129
+改善到`.21617/.30346`；Spearman gain=`-.00825/-.00711/-.00123/+.00038`（mean=`-.00405`），两门失败，F103。
+它说明scene omission可改善两个后期cohort的selection cost，但没有稳定提升排序；scene-bagging不再扫fraction/seed。
+
+P141回到已取得P129独立支持的自然token ensemble，只新增按P126同协议训练的seed3/4并与原3 members组成固定5-member
+total variance。P81/P96/P113/P129均已消费，只作ensemble-size scaling development；要求四cohort cost全不退且mean
+Spearman gain over P126≥`.003`。不扫member count/seed/weight/projection/coverage；3090正在训练新增两成员。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

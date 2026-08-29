@@ -3,14 +3,14 @@
   "updated_at": "2026-08-30",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p129_archive_io_and_p139_gpu_scene_balanced_ensemble_running",
-  "active_task_id": "WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01 + WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01",
-  "active_hypothesis_id": "WS-V67-H-P129-001 + WS-V67-H-P139-001",
+  "status": "v67_p129_supported_independent_ensemble_increment_p141_five_member_running",
+  "active_task_id": "WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01",
+  "active_hypothesis_id": "WS-V67-H-P141-001",
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
   "failure_ledger_refs": ["V67-F91", "V67-F90", "V67-F89", "V67-F88", "V67-F87", "V67-F86", "V67-F45", "V67-F44", "V67-F43", "V67-F42", "V67-F41", "V67-F40", "V67-F39", "V67-F38", "V67-F37", "V67-F36", "V67-F35", "V67-F34", "V67-F33", "V67-F32", "V67-F31", "V67-F30", "V67-F29", "V67-F28", "V67-F27", "V67-F26", "V67-F25", "V67-F24", "V67-F23", "V67-F22", "V67-F21", "V67-F20", "V67-F19", "V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F101 P138 full-covariance ensemble improved P81/P113 but reversed on P96 and missed mean gain; F92-F100 retained",
-  "next_failure_id": "V67-F102",
-  "last_run": "run://worldsim_v67/WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01/20260830T095000Z__full-covariance-deep-ensemble-s0-r1",
-  "last_verdict": "P138_rejected_full_covariance_deep_ensemble",
-  "next_action": "finish P139 uniform-source-scene deep ensemble GPU training while P129 archive/preprocess continues, then record result and continue"
+  "failure_ledger_delta": "V67-F103 P140 scene bagging improved P113/P129 cost but regressed P81/P96 and mean rank; F92-F102 retained",
+  "next_failure_id": "V67-F104",
+  "last_run": "run://worldsim_v67/WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01/20260830T100000Z__scene-bagged-deep-ensemble-s0-r1",
+  "last_verdict": "P140_rejected_scene_bagged_deep_ensemble_after_P129_independent_support",
+  "next_action": "finish the active P141 five-member natural-token ensemble GPU run, record it, then continue from the scaling result"
 }
