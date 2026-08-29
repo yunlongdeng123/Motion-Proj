@@ -332,8 +332,20 @@
   输入，positive fraction-rate spline 输出 shadow price；复用 P286 结构与12k steps。
 - gates继承 P286：P201 attained fraction MAE `<=.030`、frozen LCB-floor group regret `<=.002`；不扫 bisection/
   grid/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
+- canonical=`run://worldsim_v67/WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
   20260831T223000Z__context-adaptive-lcb-group-dual-s0-r1`。
+- result：P201 price/attained-fraction MAE=`.0514263/.0255409`、frozen group regret=`9.7896e-5`、fraction-price
+  violations=`0`；2/2，verdict=`supported_context_adaptive_LCB_group_budget_dual`。wall=`143.90s`、peak GPU/RSS=
+  `.1404/1.9453GiB`。
+
+### WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01
+
+- frozen P291R 是 empirical coverage layer；Actor group final-LCB shortfall tail-CVaR 是外层风险；fixed64 Deep Sets
+  allocator联合 alpha/tolerance/floor/tail-mass/price 条件。
+- 复用 P287 eta17、budget65、12k steps与 gates：P201 budget MAE `<=.075`、frozen composite regret `<=.005`；
+  不扫 tail mass/eta/grid/architecture/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+  20260831T224500Z__context-adaptive-lcb-tail-cvar-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

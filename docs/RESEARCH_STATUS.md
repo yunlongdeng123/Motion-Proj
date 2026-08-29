@@ -179,9 +179,15 @@ WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
 `.0003612`、candidate/teacher shortfall=`.0031117/.0030776`、price/floor violations=`0/0`，2/2；wall=`145.67s`。
 
 P293 以冻结 P292 为唯一 primal，复用 P286 fixed64 pooled group dual，将 attainable budget fraction 编译为
-shadow price；同一 alpha/tolerance/floor/fraction axes、12k steps 与 `.030/.002` 两门。Active=`run://worldsim_v67/
+shadow price；同一 alpha/tolerance/floor/fraction axes、12k steps 与 `.030/.002` 两门。Canonical=`run://worldsim_v67/
 WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
-20260831T223000Z__context-adaptive-lcb-group-dual-s0-r1`，GPU 正在 teacher bisection/训练。
+20260831T223000Z__context-adaptive-lcb-group-dual-s0-r1`：P201 price/attained-fraction MAE=
+`.0514263/.0255409`、frozen group regret=`9.79e-5`、violations=`0`，2/2；wall=`143.90s`。
+
+P294 不重复普通 dual，改进研究对象为冻结 P291R empirical LCB + Actor final-shortfall tail-CVaR 的 fixed64
+joint allocator；复用 P287 Rockafellar--Uryasev eta grid、训练/heldout axes、12k steps 与 `.075/.005` 两门。
+Active=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T224500Z__context-adaptive-lcb-tail-cvar-s0-r1`，GPU 正在 teacher target生成/训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

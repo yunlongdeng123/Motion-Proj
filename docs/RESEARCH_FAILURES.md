@@ -205,6 +205,13 @@
 - P293 只编译冻结 P292 的 attainable-budget fixed64 dual，不改变 P291R coverage或 P292 utility定义；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### P293 outcome / P294 adaptive tail-CVaR start note — 无新增 failure
+
+- P293 P201 attained-fraction MAE=`.0255409`、group regret=`9.79e-5`，2/2，violations=0；
+- P294 将冻结 P291R 作为 coverage layer，并以 P287 同一 empirical tail-CVaR定义训练 fixed64 primal；不修改
+  P291R coverage、tail mass、eta/grid或 gates；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
