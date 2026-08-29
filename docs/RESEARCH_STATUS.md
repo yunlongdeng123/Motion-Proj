@@ -1030,7 +1030,10 @@ calibration increase仅`.000371`，但final fidelity仍越过`.01`，2/3、F183�
 `8 conditions + 28 anchor marginals`输入，在31个事前冻结且避开六个evaluation midpoints的log-budget点蒸馏teacher；
 base与三条retention都由positive-rate quadrature积分，随后累乘，结构上同时保证budget递增与prefix递减。r1在optimizer
 step 0因旧dataset helper把31 target budgets误耦合为132维输入而退出（F185）；修复只把输入固定回七anchor的36维，
-31点仍只生成teacher target。r2已在单RTX 3090训练12,000 steps，P201三项heldout decisions与所有模型宽度/积分点均冻结。
+31点仍只生成teacher target。r2训练完成：P201 surface/final MAE=`.007950/.010320`，Brier改善`.224%`、calibration
+改善`.000419`、双轴violations=`0/0`，但final gate严格失败，2/3、F186。相比P238，连续surface误差已减半，说明
+positive-rate结构有效；剩余是MSE训练与MAE decision的目标错位。参考ICCV 2019回归蒸馏与CVPR 2024 KD-DETR的L1
+regression distillation，P242只把MSE替换为probability-space L1；结构/data/seed/12k steps/heldout gates全部不变，RTX 3090训练中。
 
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新

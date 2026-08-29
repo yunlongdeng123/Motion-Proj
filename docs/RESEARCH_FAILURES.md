@@ -2903,6 +2903,20 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F186`。
 
+### V67-F186 — 正导数积分surface显著收敛但final MAE窄幅失败
+
+- canonical：`run://worldsim_v67/WS-V67-P241-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T051000Z__integrated-monotone-budget-surface-s0-r2`；
+- 观察：P201 heldout surface MAE=`.007950`、Brier/calibration均优于teacher、双轴violations=`0/0`，但final MAE=
+  `.010320>.01`；2/3；P183/source final MAE=`.010869/.010666`；
+- 解释：相比P238的`.021162`，positive-rate conditional integral已把final误差降低51.2%，剩余边界与训练MSE和decision
+  MAE不一致相符，而非明显shape/monotonicity失败；
+- literature response：ICCV 2019 regression distillation给出absolute-error/Laplace imitation；CVPR 2024 KD-DETR也用
+  L1对齐回归teacher/student outputs；
+- response：P242从头单次训练，仅把MSE改为L1；不改结构、数据、budget、steps、seed或decision；
+- 防重复：不round pass、不放宽`.01`、不扫L1/Huber/log-cosh混合、prefix weights、quadrature或width。
+
+下一可用编号：`V67-F187`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；

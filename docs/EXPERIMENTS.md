@@ -1939,8 +1939,21 @@
   midpoints一次判surface MAE `.015`、final MAE `.01`与quality noninferiority；不扫积分点/宽度/预算/MC；
 - r1：`20260831T050000Z__integrated-monotone-budget-surface-s0-r1`在optimizer step 0发现feature维度被旧helper耦合为
   132而模型冻结为36，F185；未发生parameter update或metric read；
-- r2：`20260831T051000Z__integrated-monotone-budget-surface-s0-r2`正在单RTX 3090训练；只修复anchor-feature与dense-target
-  分离，科学合同不变。
+- r2 canonical：`run://worldsim_v67/WS-V67-P241-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T051000Z__integrated-monotone-budget-surface-s0-r2`；
+- result：P201 heldout surface/final MAE=`.007950/.010320`；Brier改善`.224%`、calibration改善`.000419`；
+  budget/horizon violations=`0/0`；2/3，F186。P183 final MAE=`.010869`；source final MAE=`.010666`；
+- training/resources：31-budget final teacher surface MSE=`.0002096`；wall=`98.91s`、peak GPU=`.298GiB`；
+  verdict=`rejected_integrated_monotone_continuous_budget_surface`。不放宽`.01`或扫quadrature/width。
+
+### WS-V67-P242-L1-INTEGRATED-MONOTONE-BUDGET-SURFACE-01
+
+- hypothesis：P241已使surface MAE减半且保持双轴结构，剩余final误差来自MSE训练与MAE decision不一致；直接L1
+  probability imitation可在不改capacity/representation的情况下优化冻结终点；
+- literature response：ICCV 2019 deep pose regressor distillation把Laplace imitation写为absolute-error项；CVPR 2024
+  KD-DETR对回归teacher/student output使用L1 distillation；
+- protocol：唯一变化为`MSE → L1`；同36输入、31 training budgets、六heldout midpoints、128/128、16 quadrature、
+  12,000 steps、batch 8,192、seed0与三项P201 gates；从头训练，不引入fine-tune LR/step自由度；
+- active canonical：`run://worldsim_v67/WS-V67-P242-L1-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T053000Z__l1-integrated-monotone-budget-surface-s0-r1`；RTX 3090训练中。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
