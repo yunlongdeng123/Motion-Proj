@@ -232,6 +232,10 @@ P137达到mean rank `+.00231`并改善P113 cost，但P81/P96 cost微回退（F10
 近似P126，而把P117 XY full covariance与deep-ensemble epistemic covariance联合：三个full-cov members的within/between
 covariance同时投影到τ-boundary normal，要求相对diagonal P126取得明确`.005` mean rank gain且cost全不退。
 
+P138在P81/P113改善，却在P96 rank/cost反转，mean gain=`+.00359<.005`（F101）。P139据此不再扩covariance，而把
+global token sampling改为uniform source-scene sampling，三member模型/steps/seeds保持P126；它检验scene size sampling
+shortcut，不等价于GroupDRO/Fishr，也不声称source scenes是semantic domains。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

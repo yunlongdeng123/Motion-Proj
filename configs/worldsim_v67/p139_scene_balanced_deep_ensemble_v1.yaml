@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p139_scene_balanced_deep_ensemble.v1
+output_schema_version: worldsim_v67.p139_scene_balanced_deep_ensemble_summary.v1
+task_id: WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P139-001
+role: consumed_development_uniform_source_scene_actor_ensemble
+model_artifact: SCENE_BALANCED_DEEP_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_scene_balanced_deep_ensemble
+verdict_on_failure: rejected_development_scene_balanced_deep_ensemble
+locks:
+  source_scene_is_the_only_group_and_is_sampled_uniformly: true
+  token_within_scene_is_sampled_uniformly: true
+  model_loss_seeds_steps_batch_and_projection_match_P126: true
+  no_group_DRO_weight_gradient_penalty_or_scene_subset_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/rame22a.html
+  - https://arxiv.org/abs/1911.08731
+  - https://proceedings.iclr.cc/paper_files/paper/2026/hash/c4f85da01632a2211c785f482cb3e043-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_uniform_scene_sampling_only
+  - source_scene_ids_are_not_semantic_domain_labels
+  - no_worst_group_or_domain_generalization_guarantee
+  - no_planner_policy_closed_loop_or_safety_claim

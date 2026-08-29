@@ -1650,10 +1650,27 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 ### P138 freeze note — full-covariance deep ensemble
 
 - method：P117 seed0 + 同协议seed1/2；total projected covariance=mean member full covariance + variance member means。
-- decisions：相对P126三cohort selected cost nonregression且mean Spearman gain≥`.005`；P129 rows隔离。
-- prevention：不扫correlation/member/weight/projection；失败登记F101并关闭full-cov ensemble first trial。
+- decisions/outcome：相对P126三cohort selected cost nonregression且mean Spearman gain≥`.005`；实际mean gain=`+.003590`，
+  P96 rank/cost回退，两门全失败；P129 rows隔离。
+- prevention：不扫correlation/member/weight/projection；full-cov ensemble first trial关闭。
 
-下一可用编号为：`V67-F101`。
+### V67-F101 — full-cov aleatoric+epistemic ensemble仍在P96反转
+
+- 分类：`algorithm/covariance-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01/
+  20260830T095000Z__full-covariance-deep-ensemble-s0-r1`。
+- 观察：P81/P113 rank/cost改善，P96 rank gain=`-.004597`、cost `.170009>.167572`；mean gain=`+.003590<.005`，
+  0/2 decisions。新member NLL显著收敛，不是训练入口失败。
+- 解释：local XY correlation对不同cohort方向不一致；within-member structured covariance不能自动解决source weighting/transfer。
+- 防重复：不扫correlation parameterization/weight/member/seed。P139保持diagonal P126结构，仅改uniform scene sampling。
+
+### P139 freeze note — uniform source-scene sampling
+
+- method：三diagonal members完全匹配P126，只把global token-uniform改为scene-uniform→token-uniform；scene不是semantic domain label。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman gain≥`.005`；P129 rows隔离。
+- prevention：不加GroupDRO/Fishr penalty、不扫scene weights/subsets；失败登记F102并关闭simple balancing route。
+
+下一可用编号为：`V67-F102`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

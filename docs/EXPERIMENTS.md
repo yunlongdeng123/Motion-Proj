@@ -626,7 +626,7 @@
 
 ### WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T095000Z__full-covariance-deep-ensemble-s0-r1`，与P129 archive IO并行。
 - method：复用P117 correlated Gaussian seed0，按同一916,722 tokens/`[256,128]`/6,000-step NLL协议训练seed1/2；
   每member内保留XY aleatoric covariance，members间保留mean epistemic covariance，投影后求total variance。
@@ -634,6 +634,20 @@
   mean Spearman gain≥`.005`；这次目标是algorithmic gain而非近似retention。
 - locks：不扫correlation parameterization/member/seed/weight/projection/coverage；P129 rows不读。
 - references：CVPR 2023 IPCC-TP、CVPR 2018 Structured Uncertainty Prediction、NeurIPS 2017 deep ensembles。
+- result：new member NLL=`-3.749575/-3.729847`；P81/P96/P113 Spearman gain over P126=
+  `+.012643/-.004597/+.002724`（mean=`+.003590<.005`）；selected cost=`.176137/.170009/.215536`，P96回退。
+  0/2 decisions，verdict=`rejected_development_full_covariance_deep_ensemble`；wall=`100.56s`、peak GPU=`.380 GiB`，F101。
+
+### WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T095500Z__scene-balanced-deep-ensemble-s0-r1`，与P129 archive IO并行。
+- method：3个diagonal Gaussian members、seeds0/1/2、`[256,128]`、6,000 steps、batch65536均匹配P126；唯一变化是
+  每个sample先uniform source scene、再uniform scene内Actor-time token，而不是global token-uniform。
+- motivation：P133--P138多种representation/posterior在P96重复弱化；本run检验source大场景token数量是否形成sampling shortcut。
+- decisions：相对P126三cohort selected cost全不退化且mean Spearman gain≥`.005`；不扫scene weights/group loss/penalty/
+  subset/seed，P129 rows不读。
+- references：ICML 2022 Fishr与GroupDRO文献只支持关注group shift；本实现不是Fishr/GroupDRO，仅是parameter-free均匀scene采样。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

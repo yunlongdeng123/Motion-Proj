@@ -414,6 +414,15 @@ aleatoric XY correlation与member means的epistemic covariance。依据CVPR 2023
 和deep ensembles，只在consumed P81/P96/P113相对P126 diagonal ensemble要求三组cost不退化且mean Spearman gain≥`.005`。
 不扫correlation/epistemic权重/member，P129 rows隔离；GPU已开始两成员训练。
 
+P138新members NLL=`-3.74958/-3.72985`；P81/P113 rank gain=`+.01264/+.00272`且cost改善，但P96 gain=`-.00460`、
+cost `.17001>.16757`。mean gain=`+.00359<.005`且cost gate失败，0/2 decisions、wall=`100.56s`，登记`V67-F101`。
+full-covariance不是跨cohort通用增量；不以P81/P113多数胜出覆盖P96，关闭该first trial。
+
+P139针对反复出现的P96弱点不改输出分布，而改source risk weighting：3个diagonal members仍用P126 architecture/NLL/steps/
+seeds，但每个batch先均匀选source scene，再在scene内均匀选Actor-time token，避免大场景按token数主导。这里只把scene当采样组，
+不声称semantic domain或GroupDRO；不加gradient penalty/learned weights。相对P126要求三cohort cost全不退且mean rank gain≥`.005`，
+P129 rows隔离；GPU正训练3成员。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
