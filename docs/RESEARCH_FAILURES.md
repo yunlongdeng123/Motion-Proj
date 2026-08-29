@@ -2951,6 +2951,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F188`。
 
+### P250 freeze note — inverse compiler prospective secondary，无新增failure
+
+- P250在P243 rows和P249 outcome出现前冻结，仅等待两个atomic artifacts；
+- 复用P243同一次fresh read，P249/P246/levels/MC/两门均不变，不把它表述为第二个独立cohort；
+- 不因P249 development结果改变evaluator或gate；当前下一可用failure id保持`V67-F188`。
+
+下一可用编号仍为：`V67-F188`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；

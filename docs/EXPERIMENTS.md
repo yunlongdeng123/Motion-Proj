@@ -2031,6 +2031,13 @@
   双轴non-crossing结构全部不变；不读取P243 rows，不扫cycle weight/steps/width；
 - active canonical：`run://worldsim_v67/WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01/20260831T080000Z__tandem-cycle-inverse-budget-s0-r1`。
 
+### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
+
+- role：P243首次fresh rows上的prospective same-read secondary，不是第二个独立cohort；
+- frozen before rows/outcome：P249 artifact locator、冻结P246 teacher、八个heldout reliability levels、1024 MC与
+  P249两项decision均锁定；P249自身development verdict不会被P250改变；
+- canonical waiter：`run://worldsim_v67/WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01/20260831T081000Z__inverse-budget-same-read-confirmation-s0-r1`；等待P243 rows和P249 artifact，quality read=false。
+
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
 - role：P228首次fresh rows上的prospective same-read secondary；不是新增独立cohort；
