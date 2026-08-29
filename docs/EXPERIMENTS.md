@@ -537,7 +537,7 @@
 
 ### WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T092000Z__trajectory-rank-distillation-s0-r1`，与P129 archive IO并行。
 - change of training object：student仍读P131冻结输入，但训练图先在每条trajectory的rows上取max；再从同一source scene均匀
   采两条trajectory，以P126 teacher trajectory score顺序做pairwise logistic。部署max与监督层级一致。
@@ -546,6 +546,22 @@
   P129 target隔离。
 - literature：NeurIPS 2023 RD-Suite、NeurIPS 2021 PiRank、NeurIPS 2025 PLD均强调pointwise distillation不足以保持listwise order；
   本实现仅取无温度pairwise特例，不宣称完整PLD/PiRank复现。
+- result：final pairwise logistic=`.117696`；P81/P96/P113 Spearman=`.834116/.828992/.850782`，相对P126=
+  `-.019328/-.024399/-.016821`（mean=`-.020183`）；selected cost=`.183785/.179293/.236159`，三组均回退。
+  0/2 decisions，verdict=`rejected_development_trajectory_rank_distillation`；wall=`113.88s`、peak GPU=`1.686 GiB`；
+  登记F95并关闭single-query distillation family。
+
+### WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T092500Z__batchensemble-actor-uncertainty-s0-r1`，与P129 archive IO并行。
+- method：ICLR 2020 BatchEnsemble rank-one parameterization；每层shared weight + 3组member-specific input/output factors，
+  三member在一个graph内并行，各取独立bootstrap indices；Actor Gaussian NLL与P109/P126一致。
+- source=`916,722 Actor-time tokens`；`[256,128]`、3 members、6,000 steps、每member batch21845、seed0一次；输出按
+  aleatoric mean + member-mean variance组成total variance并解析τ-boundary score。
+- evaluation/decisions：consumed P81/P96/P113相对P126 selected cost逐组nonregression、mean Spearman difference≥`-.005`；
+  不扫member数/factor init/architecture/coverage，P129 rows不读。
+- references：ICLR 2020 BatchEnsemble、ICLR 2023 Packed-Ensembles；只声称native efficient ensemble development结果。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

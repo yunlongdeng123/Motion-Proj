@@ -1538,10 +1538,31 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：P131相同inputs/MLP，但先对trajectory rows取student max，再用同source scene内uniform pairs与P126 teacher order做
   pairwise logistic；6,000 steps、pair batch4096、seed0一次，无temperature/top-k/pointwise auxiliary。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：失败登记F95并关闭single-query distillation family，不做ranking-loss sweep。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；实际mean Spearman
+  difference=`-.020183`且三组cost均回退，两门全失败；P129 rows隔离。
+- prevention：关闭single-query distillation family，不做ranking-loss sweep。
 
-下一可用编号为：`V67-F95`。
+### V67-F95 — aggregation-aligned rank student仍未保留deep-ensemble增量
+
+- 分类：`algorithm/teacher-compression-capacity`；状态：`closed_negative_after_aggregation_aligned_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01/
+  20260830T092000Z__trajectory-rank-distillation-s0-r1`。
+- 观察：pairwise logistic降至`.117696`，三cohort Spearman恢复到`.829--.851`，远好于P131；但相对P126 mean仍
+  `-.020183`，selected cost三组全回退，0/2 decisions。
+- 解释：监督层级修复了pointwise→max错配，却无法让单query function重建independent Actor member disagreement；真正增量
+  更可能需要原生多成员表示，而非teacher score近似。
+- 防重复：P130 moment、P131 pointwise function、P132 trajectory ranking三种compression object均关闭；不扫loss/temperature/
+  width/seed。P133转向一次native BatchEnsemble。
+
+### P133 freeze note — rank-one native efficient ensemble
+
+- method：3个BatchEnsemble members共享每层weight，保留member-specific rank-one input/output factors与独立bootstrap；
+  diagonal Gaussian NLL、total variance projection、source与continuous evaluation均继承P126/P127。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：固定3 members/seed0/factor init/6,000 steps，不扫rank/member/structure；失败登记F96并关闭efficient embedded
+  ensemble first trial。
+
+下一可用编号为：`V67-F96`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

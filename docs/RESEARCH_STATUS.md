@@ -358,6 +358,17 @@ wall=`24.73s`。这证明逐row平均误差小不代表部署时max order statis
 P126 trajectory ordering作pairwise logistic监督。source约79k trajectories、6,000 steps、seed0一次，不设temperature/top-k；
 evaluation与P130/P131相同，P129 rows继续隔离。3090已进入训练，archive IO继续并行。
 
+P132在79,478 source trajectories上6,000 steps后final pairwise logistic=`.11770`，确实把P131的rank collapse大幅恢复：
+P81/P96/P113 Spearman=`.83412/.82899/.85078`。但相对P126仍差`-.01933/-.02440/-.01682`（mean=`-.02018`），
+selected cost=`.18379/.17929/.23616`也三处回退，0/2 decisions；wall=`113.88s`，登记`V67-F95`。这说明仅凭query
+features的single student即便聚合/排序监督对齐仍不能复制Actor-member diversity；distillation family关闭。
+
+随后检索ICLR 2020 BatchEnsemble与ICLR 2023 Packed-Ensembles，P133改为原生efficient ensemble而非teacher compression：
+同一graph内训练3个rank-one members，每层共享weight并具有member-specific input/output factors，各member独立bootstrap
+indices；输出仍是diagonal Actor Gaussian，再以law of total variance解析τ-boundary score。916,722 Actor-time tokens、
+6,000 steps、一次seed，不扫member/factor初始化/结构；相对P126只检验continuous cost/rank retention。P129 rows仍隔离，GPU
+训练已启动并与archive IO重叠。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

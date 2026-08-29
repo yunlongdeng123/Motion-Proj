@@ -208,6 +208,10 @@ P131 row Smooth-L1虽低至`.00635`，trajectory-max后的mean Spearman differen
 这把失败定位为supervision granularity而非简单容量。P132据RD-Suite/PiRank/PLD把trajectory max置于训练图内，用同scene
 trajectory pair ordering直接蒸馏P126；不再优化pointwise平均误差，也不增加temperature或top-k sweep。
 
+P132把Spearman恢复到`.829--.851`，但相对P126 mean仍少`.02018`且三组selected cost均回退（F95）。因此compression
+family关闭。P133转向BatchEnsemble原生高效表示：shared weights加三组rank-one member factors/independent bootstraps，
+一次graph直接学习aleatoric+epistemic decomposition，再复用同一τ-boundary解析；这检验失败是否来自单student缺少member diversity。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p133_batchensemble_actor_uncertainty.v1
+output_schema_version: worldsim_v67.p133_batchensemble_actor_uncertainty_summary.v1
+task_id: WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01
+hypothesis_id: WS-V67-H-P133-001
+role: consumed_development_native_efficient_actor_ensemble
+seed: 0
+model_artifact: BATCHENSEMBLE_ACTOR_UNCERTAINTY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  members: 3
+  steps: 6000
+  member_batch_size: 21845
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_deep_ensemble: -0.005}
+verdict_on_pass: supported_development_batchensemble_actor_uncertainty
+verdict_on_failure: rejected_development_batchensemble_actor_uncertainty
+locks:
+  exactly_three_rank_one_members_matching_P126_count: true
+  each_member_uses_independent_bootstrap_indices_in_one_training_graph: true
+  shared_weights_and_member_rank_one_input_output_factors: true
+  exactly_6000_steps_one_seed_no_factor_or_member_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openreview.net/forum?id=Sklf1yrYDr
+  - https://openreview.net/pdf?id=XXTyv1zD9zD
+claim_boundary:
+  - consumed_development_native_efficient_ensemble_only
+  - shared_backbone_members_may_have_lower_diversity_than_deep_ensemble
+  - linearized_boundary_state_selection_not_collision_probability
+  - no_planner_policy_closed_loop_or_safety_claim
