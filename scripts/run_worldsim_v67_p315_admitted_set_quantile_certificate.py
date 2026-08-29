@@ -316,6 +316,34 @@ class DirectVisitedReliabilityHead(nn.Module):
         return torch.cummax(raw_logits, dim=1).values
 
 
+class MonotoneHorizonCumulativeRiskHead(nn.Module):
+    """Positive cumulative-hazard polynomial with monotone horizon and set-size risk."""
+
+    def __init__(self, input_width, hidden_dimensions, set_size_count):
+        super().__init__()
+        layers = []
+        width = int(input_width) + 1
+        for hidden_width in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden_width)), nn.SiLU()))
+            width = int(hidden_width)
+        layers.append(nn.Linear(width, 3 * int(set_size_count)))
+        self.network = nn.Sequential(*layers)
+        self.set_size_count = int(set_size_count)
+
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        raw_hazard = self.network(torch.cat((features, log_cost_ceiling[:, None]), 1))
+        raw_hazard = raw_hazard.view(len(features), 3, self.set_size_count)
+        horizon = normalized_horizon[:, None]
+        cumulative_hazard = (
+            F.softplus(raw_hazard[:, 0])
+            + horizon * F.softplus(raw_hazard[:, 1])
+            + horizon.square() * F.softplus(raw_hazard[:, 2])
+        )
+        cumulative_hazard = torch.cummax(cumulative_hazard, dim=1).values
+        unsafe_probability = (-torch.expm1(-cumulative_hazard)).clamp(1e-6, 1.0 - 1e-6)
+        return torch.logit(unsafe_probability)
+
+
 class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
     """Train one active member at a time, then pool probabilities before calibration."""
 
@@ -1134,6 +1162,7 @@ def main() -> None:
                 ensemble_fit_remainders = [int(value) for value in ensemble_fit_remainders]
                 fit_rows = np.isin(row_fold, ensemble_fit_remainders)
             domain_adversarial_training = bool(config.get("reliability_domain_adversarial_training", False))
+            monotone_horizon_cumulative_risk = bool(config.get("reliability_monotone_horizon_cumulative_risk", False))
             if ensemble_fit_remainders is not None:
                 model = CrossFoldDirectVisitedReliabilityEnsemble(
                     len(ensemble_fit_remainders), source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes),
@@ -1145,6 +1174,10 @@ def main() -> None:
                     source_feature.shape[1], model_config["hidden_dimensions"],
                     adversarial_config["reliability_hidden_width"], adversarial_config["domain_hidden_width"],
                     len(set_sizes), adversarial_config.get("conditional_on_reliability", False),
+                ).cuda()
+            elif monotone_horizon_cumulative_risk:
+                model = MonotoneHorizonCumulativeRiskHead(
+                    source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
                 ).cuda()
             else:
                 model = DirectVisitedReliabilityHead(
@@ -1705,6 +1738,7 @@ def main() -> None:
                 "frozen_reliability_model": frozen_reliability_model,
                 "reliability_ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                 "reliability_memberwise_calibration": memberwise_calibration,
+                "reliability_monotone_horizon_cumulative_risk": monotone_horizon_cumulative_risk,
                 "feature_calibrator_state_dict": feature_calibrator.state_dict() if feature_calibrator is not None else None,
                 "reliability_feature_calibrator": feature_calibrator_config,
                 "frozen_feature_calibrator": config.get("frozen_feature_calibrator"),
