@@ -1720,7 +1720,16 @@
 - protocol：prediction object改为四个visited-state costs用`.8/.7/1.0/.5s` interval加权的累计exposure；候选为共享
   DeepSet 5-component log-density，control为P182四marginals经P199 conditional copula采样后同样求和；
 - decisions：七个固定exposure budgets的integrated Brier严格改善、calibration noninferior；1024 MC、20步mixture-CDF inversion；
-- status：RTX 3090训练运行中；source development only，不扫budget、quadrature、density或MC。
+- result：14,773 train/3,742 dev trajectories；candidate/P199-factorized Brier=`.071352/.071629`（改善`.387%`），
+  calibration error=`.016729/.013251`（退化`26.25%`）；1/2，F172；final NLL=`-.564583`，wall=`95.39s`；
+- verdict=`rejected_cumulative_exposure_density`；只授权一次disjoint source calibration + consumed transfer read。
+
+### WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01/20260830T230500Z__calibrated-cumulative-exposure-transfer-s0-r2`；
+- protocol：source density-fit/calibration/dev scene sets互斥；一个shared monotone beta map；P183不参与fit，只由target Brier严格
+  改善与calibration noninferiority两门决定；P182+P199 continuous factorized control不变；
+- status：r1在任何data/model step前因`_metrics`缺右括号退出，无quality read；等价语法修复r2正在RTX 3090训练。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

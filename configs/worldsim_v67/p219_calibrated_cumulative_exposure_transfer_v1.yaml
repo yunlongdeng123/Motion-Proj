@@ -1,0 +1,33 @@
+schema_version: worldsim_v67.p219_calibrated_cumulative_exposure_transfer.v1
+output_schema_version: worldsim_v67.p219_calibrated_cumulative_exposure_transfer_summary.v1
+task_id: WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01
+hypothesis_id: WS-V67-H-P219-001
+role: disjoint_source_calibration_consumed_transfer_development
+seed: 0
+model_artifact: CALIBRATED_CUMULATIVE_EXPOSURE_DENSITY.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+target_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+exposure_interval_seconds: [0.8, 0.7, 1.0, 0.5]
+reliability_budgets: [0.10, 0.20, 0.40, 0.80, 1.60, 3.20, 6.40]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {scene_modulus: 5, development_remainder: 1, calibration_remainder: 2}
+density_model: {component_count: 5, token_dimension: 64, head_dimensions: [128, 64], steps: 12000, batch_size: 32768, learning_rate: 0.001, weight_decay: 0.0001}
+calibrator: {steps: 1800, learning_rate: 0.03}
+evaluation: {monte_carlo_samples: 1024, inverse_cdf_bisection_steps: 20, batch_size: 256}
+decision: {minimum_target_calibration_error_reduction_vs_P199: 0.0}
+verdict_on_pass: supported_consumed_calibrated_cumulative_exposure_transfer_development
+verdict_on_failure: rejected_consumed_calibrated_cumulative_exposure_transfer_development
+locks:
+  source_density_calibration_and_development_scene_sets_are_disjoint: true
+  one_shared_monotone_beta_map_and_two_target_decisions_are_frozen: true
+  target_rows_are_consumed_and_never_train_density_or_calibrator: true
+  no_second_recovery_or_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_cross_cohort_development_only
+  - four_sample_cumulative_exposure_not_collision_probability
+  - no_conformal_planner_policy_closed_loop_or_safety_claim

@@ -59,6 +59,9 @@ monotone beta层，在source dev同时改善Brier `.895%`和calibration error `3
 受AISTATS covariate-shift calibration启发的post-hoc unlabeled-target importance-weighting development；domain accuracy仅
 `.52915`且P183 Brier仍退化`1.93%`，故该family关闭。P218进一步把对象从maximum/first-passage改为四H时间加权的累计
 visited-state exposure density；当前只处于source development，尚不构成论文结论。
+P218相对P182+P199连续分解control的Brier仅改善`.387%`且calibration error退化`26.25%`。P219正在用互斥source
+density/calibration/dev scenes与一个shared monotone beta map作最后一次P183 consumed transfer；在该read完成前累计exposure
+也不构成论文正结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

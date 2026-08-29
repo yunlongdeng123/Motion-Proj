@@ -938,6 +938,10 @@ P217最终domain accuracy仅`.52915`，source importance-weight ESS=`14,423/18,5
 CDF与NeurIPS probabilistic forecasting的sequence uncertainty aggregation，P218已更换对象为四H cost按时间间隔
 `[.8,.7,1.0,.5]s`加权的累计visited-state exposure；DeepSet直接density与P182 marginals + P199 copula连续采样control
 在source dev比较，RTX 3090训练运行中。
+P218完成后direct/control Brier=`.0713518/.0716290`，改善仅`.387%`；calibration error
+`.0167293/.0132509`退化`26.25%`，1/2、F172。依据ICML 2019 distribution calibration与ICML 2022 calibrated-and-sharp
+density，P219将source scenes拆为density/calibration/dev互斥集，拟合一个共享monotone beta map，并以两门只判定已消费
+P183上的transfer；r1仅在任何data/model step前因括号语法退出，等价修复后的r2正在RTX 3090训练。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

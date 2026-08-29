@@ -2715,6 +2715,20 @@ trajectories；低自由度monotone beta层在未触碰dev上同时改善P199 Br
 
 下一可用编号：`V67-F172`。
 
+### V67-F172 — direct cumulative-exposure density仅有微弱refinement且校准退化
+
+- canonical：`run://worldsim_v67/WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01/20260830T224000Z__cumulative-exposure-density-s0-r1`；
+- 观察：相对P182 marginals + P199 copula连续采样control，Brier改善`.387%`，但calibration error退化`26.25%`，1/2；
+- 解释：从maximum改成time-weighted sum降低了tail sensitivity，但direct aggregate density仍存在概率尺度偏差；
+- 文献响应：ICML distribution calibration与calibrated-sharp density支持在独立校准集上对CDF作单调map。P219只拟合一个
+  shared beta map并直接以P183 consumed transfer决定，不进行第二source-only迭代；
+- 防重复：若P219未跨P183同时过Brier/calibration，则关闭cumulative-exposure density，不扫budget/dt/mixture/map。
+
+下一可用编号：`V67-F173`。
+
+P219 engineering recovery note（不占算法编号）：r1在任何rows load或optimizer step前因`_metrics`一处缺失右括号发生
+`SyntaxError`；只补齐括号，以r2运行，config、split、model、budgets、MC、control、metrics和gates完全不变。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

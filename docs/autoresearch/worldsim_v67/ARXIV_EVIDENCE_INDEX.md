@@ -128,7 +128,8 @@
 | P215 | `run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1` | Brier -.895%、calibration -38.31%；source dev supported |
 | P216 | `run://worldsim_v67/WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01/20260830T220000Z__calibrated-prefix-survival-post-confirmation-s0-r1` | P183 calibration -19.87%但Brier +1.89%；rejected/F170 |
 | P217 | `run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1` | P183 calibration -19.60%但Brier +1.93%；rejected/F171 |
-| P218 | `run://worldsim_v67/WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01/20260830T224000Z__cumulative-exposure-density-s0-r1` | cumulative visited-state exposure density；running |
+| P218 | `run://worldsim_v67/WS-V67-P218-CUMULATIVE-EXPOSURE-DENSITY-01/20260830T224000Z__cumulative-exposure-density-s0-r1` | Brier -.387%但calibration +26.25%；rejected/F172 |
+| P219 | `run://worldsim_v67/WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01/20260830T230500Z__calibrated-cumulative-exposure-transfer-s0-r2` | disjoint calibration + P183 transfer；running；r1 syntax no-read |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -287,6 +288,7 @@
 | `V67-F169` | recovered source-only | P215 disjoint beta calibration在source dev同时改善Brier/calibration |
 | `V67-F170` | recovery failed | P216跨P183 Brier退化1.89%；P217 importance weighting亦未恢复 |
 | `V67-F171` | closed negative | P217 target covariates近乎不可分且Brier仍退化1.93%；prefix density family关闭 |
+| `V67-F172` | recovery active | P218 cumulative exposure Brier微增但校准退化；P219 disjoint transfer运行中 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory
