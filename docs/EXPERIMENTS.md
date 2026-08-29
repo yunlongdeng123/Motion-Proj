@@ -226,8 +226,20 @@
 - fixed64 group summary + alpha/tolerance/floor/fraction，positive fraction-rate输出 shadow price；冻结 P285 为唯一 primal。
 - train alpha3×tolerance5×floor3×fraction9；heldout alpha2×tolerance4×floor2×fraction8；20-step bisection。
 - P201 gates：attained fraction MAE `<=.030`、frozen additive-LCB group regret `<=.002`；不扫条件、结构、steps或门。
-- active=`run://worldsim_v67/WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
+- canonical=`run://worldsim_v67/WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
   20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`。
+- result：P201 price MAE=`.0412857`、attained fraction MAE=`.0202496`、frozen additive-LCB group regret=
+  `9.5505e-6`、violations=0；2/2，verdict=`supported_additive_LCB_group_budget_dual`。wall=`147.47s`、
+  peak GPU/RSS=`.1404/1.9505GiB`。
+
+### WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01
+
+- composite object：P284 additive residual LCB是内层 empirical coverage score；外层 fixed64 Actor group final-LCB
+  shortfall empirical CVaR，联合 alpha/tolerance/floor/tail mass/price输出 equivariant per-row budgets。
+- teacher=65 budgets + 17 eta；student positive price/floor rates；P201 gates仅 budget MAE `<=.075` 与 composite-risk
+  regret `<=.005`；不扫 tolerance/tail/eta/grid/model/steps/gate。
+- active=`run://worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+  20260831T204500Z__additive-lcb-tail-cvar-s0-r1`；不声称 coherent risk、formal coverage、hard constraint或 safety。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

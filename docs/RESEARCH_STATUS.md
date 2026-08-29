@@ -123,10 +123,15 @@ P285 将冻结 P284 的 `delta`-conditioned additive LCB 接入 soft-floor Lagra
 `5.01e-5`、candidate/teacher shortfall=`.002280930/.002280927`、price/floor violations=`0/0`，2/2；tolerance
 low→high budget change=`-.007299`，符合 higher tolerance less conservative 的学习方向；wall=`146.91s`。
 
-P286 把 fixed64 group 的 attainable fraction、alpha、tolerance、floor 编译为 shadow price，再冻结 P285 产生逐 row
-budgets，闭合 empirical coverage surface→primal→dual 链。Active=`run://worldsim_v67/
-WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
-20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`，GPU 正在训练。
+P286 把 fixed64 group 的 attainable fraction、alpha、tolerance、floor 编译为 shadow price。Canonical=
+`run://worldsim_v67/WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
+20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`：P201 price/attained-fraction MAE=`.041286/.020250`、
+group regret=`9.55e-6`、violations=0，2/2；wall=`147.47s`。至此 empirical coverage surface→primal→dual 链闭合。
+
+P287 继续训练新的 calibrated composite-risk primal：P284 additive LCB 作为内层 empirical coverage score，对 fixed64
+Actor group 的 final-LCB shortfall做外层 empirical tail-CVaR，联合 alpha/tolerance/floor/tail mass/price。Active=
+`run://worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T204500Z__additive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
