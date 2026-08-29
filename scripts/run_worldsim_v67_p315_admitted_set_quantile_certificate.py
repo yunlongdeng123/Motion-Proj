@@ -1092,6 +1092,8 @@ def main() -> None:
                 "P201_frozen_hard_teacher_risk": p201_hard_metrics["maximum_unsafe_selected_set_rate"] <= float(decision["maximum_P201_unsafe_selected_set_rate"]),
                 "P201_frozen_hard_teacher_coverage": p201_hard_metrics["mean_any_authority_coverage"] >= float(decision["minimum_P201_mean_any_authority_coverage"]),
             }
+            if "minimum_P201_mean_temperature" in decision:
+                checks["P201_noncollapsed_relaxation_temperature"] = p201_relaxation["mean_temperature"] >= float(decision["minimum_P201_mean_temperature"])
             verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
             torch.save({
                 "temperature_model_state_dict": temperature_model.state_dict(), "input_width": source_feature.shape[1] + 3,
