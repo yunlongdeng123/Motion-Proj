@@ -1086,6 +1086,19 @@ def main() -> None:
                 model = DirectVisitedReliabilityHead(
                     source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
                 ).cuda()
+            teacher_model = None
+            teacher_consistency_config = config.get("reliability_teacher_consistency")
+            if teacher_consistency_config is not None:
+                teacher_artifact = torch.load(
+                    args.runs_root / teacher_consistency_config["run"] / teacher_consistency_config["artifact"],
+                    map_location="cuda",
+                )
+                teacher_model = DirectVisitedReliabilityHead(
+                    source_feature.shape[1], teacher_artifact["hidden_dimensions"], len(set_sizes)
+                ).cuda()
+                teacher_model.load_state_dict(teacher_artifact["model_state_dict"])
+                teacher_model.eval()
+                teacher_model.requires_grad_(False)
             optimizer = torch.optim.AdamW(
                 model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
             )
@@ -1095,6 +1108,7 @@ def main() -> None:
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             last = 0.0
             domain_adversarial_last = None
+            teacher_consistency_last = None
             for step in range(int(model_config["steps"])):
                 row = fit_index[torch.randint(len(fit_index), (int(model_config["batch_size"]),), device="cuda")]
                 local_horizon_index = training_horizon_tensor[
@@ -1147,7 +1161,21 @@ def main() -> None:
                         domain_loss = (domain_loss_values * domain_weight).mean()
                     else:
                         domain_loss = domain_loss_values.mean()
-                    loss = reliability_loss + domain_loss
+                    if teacher_model is not None:
+                        student_consistency_logits = model(domain_features, domain_horizon, domain_ceiling)
+                        with torch.no_grad():
+                            teacher_probability = torch.sigmoid(
+                                teacher_model(domain_features, domain_horizon, domain_ceiling)
+                            )
+                        teacher_consistency_loss = F.binary_cross_entropy_with_logits(
+                            student_consistency_logits, teacher_probability
+                        )
+                        teacher_consistency_last = float(teacher_consistency_loss.detach())
+                        loss = reliability_loss + domain_loss + float(
+                            teacher_consistency_config["weight"]
+                        ) * teacher_consistency_loss
+                    else:
+                        loss = reliability_loss + domain_loss
                     domain_adversarial_last = float(domain_loss.detach())
                 else:
                     loss = reliability_loss
@@ -1386,13 +1414,15 @@ def main() -> None:
                 "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if group_calibration else None,
                 "isotonic_maps": isotonic_maps,
                 "domain_model_state_dict": domain_model.state_dict() if covariate_shift_weighting else None,
+                "reliability_teacher_consistency": teacher_consistency_config,
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
                 "schema_version": config["output_schema_version"], "task_id": config["task_id"],
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last,
-                             "domain_adversarial_final_bce": domain_adversarial_last},
+                             "domain_adversarial_final_bce": domain_adversarial_last,
+                             "teacher_consistency_final_bce": teacher_consistency_last},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": "ceiling_set_size_with_horizon_slope" if group_calibration else "global_temperature_bias",
