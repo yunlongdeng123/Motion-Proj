@@ -420,8 +420,36 @@
   supported；但mean temperature=`.0050018`塌到下界，只支持fidelity，不声称宽梯度；
 - P339 result：P201 mean temperature=`.0200016`、expected-size MAE/accuracy=`.09824/.99092`，q90 teacher
   risk/coverage通过，4/4 supported；停止temperature sweep；
-- P340 active：冻结P337/P339，decision-focused训练non-anchor risk-warp multiplier；失败才登记F216；
-- 下一可用 failure id 为 `V67-F216`。
+- P340：non-anchor coverage改善但risk excess `.003892 > P337 .003571`，3/4 rejected，登记F216；
+- P341：条件风险primal-dual使coverage升至`.34954`、q95改善，但q85 risk excess扩大到`.00534`，
+  3/4 rejected，登记F217；
+- P342 active：27个horizon×task condition最坏组conditional-risk primal-dual；
+- 下一可用 failure id 为 `V67-F218`。
+
+### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
+
+- canonical=`run://worldsim_v67/WS-V67-P340-DECISION-FOCUSED-DIFFERENTIABLE-AUTHORITY-01/
+  20260901T120000Z__decision-focused-differentiable-authority-s0-r1`；
+- symptom：P201 non-anchor coverage `.343260 > P337 .339800`，但最大nominal-risk excess
+  `.003892 > .003571`；q90 exact与risk/coverage门均通过，总计3/4 rejected；
+- cause：`q/(1-q)`乘soft unsafe mass属于固定标量化，未除以soft admission coverage，故与最终准入集合内
+  unsafe rate不等价；
+- literature/migration：NeurIPS 2020 PAC constrained learning与NeurIPS 2023 resilient constrained
+  learning支持显式dual替代固定penalty；P341直接优化条件风险；
+- forbidden rescue：不扫odds coefficient、multiplier bound、temperature或seed；resolution=`closed by P341
+  objective alignment, transfer issue moved to F217`。
+
+### V67-F217 — P341平均source条件风险约束未迁移到heldout task/horizon
+
+- canonical=`run://worldsim_v67/WS-V67-P341-CONDITIONAL-RISK-PRIMAL-DUAL-AUTHORITY-01/
+  20260901T121500Z__conditional-risk-primal-dual-authority-s0-r1`；
+- symptom：P201 non-anchor coverage `.349545`显著高于P337，q95 unsafe `.050279 < .053571`，但q85
+  unsafe=`.155340`，最大risk excess=`.005340 > .003571`，3/4 rejected；
+- diagnosis：q85三个source平均dual均归零，说明训练均值约束未看见heldout 3.0s/插值task condition的最坏风险；
+- literature/migration：NeurIPS/ICLR group DRO把目标改为有限组最大风险；P342用27个training horizon×task
+  condition组的最坏conditional risk；
+- forbidden rescue：不调dual learning rate、augmented penalty、margin、capacity或seed；resolution=
+  `open via P342 worst-group conditional-risk training`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

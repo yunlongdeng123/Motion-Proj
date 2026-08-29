@@ -564,10 +564,21 @@ source/P201 expected-size MAE=`.08754/.09824`、hard accuracy=`.99005/.99092`，
 `.0200016/[.02,.020635]`；q90 hard teacher coverage/unsafe仍`.30464/.04902`，4/4 supported。相对P338
 牺牲少量fidelity换取4倍relaxation width；soft output仍不是hard safety controller。
 
-P340冻结P337 hard score与P339 temperature，用decision-focused真实visited-state cost训练q90锚定的两侧positive
-risk-warp multiplier；风险odds `q/(1-q)`作为unsafe代价，不调Lagrange weight。q90 exact，非anchor P201门要求
-mean authority coverage不低于P337且nominal-risk excess不恶化。Active=`WS-V67-P340-DECISION-FOCUSED-
-DIFFERENTIABLE-AUTHORITY-01`。
+P340冻结P337 hard score与P339 temperature，用真实visited-state cost做decision-focused训练。Canonical=
+`run://worldsim_v67/WS-V67-P340-DECISION-FOCUSED-DIFFERENTIABLE-AUTHORITY-01/
+20260901T120000Z__decision-focused-differentiable-authority-s0-r1`：5,463 rows、6k、final loss=`-.40992`。
+P201 non-anchor mean coverage由P337 `.33980`升至`.34326`，但最大nominal-risk excess由`.00357`升至
+`.00389`，3/4 rejected；q90仍精确保持coverage/unsafe=`.30464/.04902`。固定risk odds优化的是无条件
+unsafe mass，与验收的准入后条件unsafe rate错位，登记F216。
+
+P341依据NeurIPS constrained learning改为按`(q, ceiling)`显式primal-dual，直接约束soft conditional risk。
+Canonical=`run://worldsim_v67/WS-V67-P341-CONDITIONAL-RISK-PRIMAL-DUAL-AUTHORITY-01/
+20260901T121500Z__conditional-risk-primal-dual-authority-s0-r1`：6k、final loss=`-.73559`；P201 non-anchor
+coverage升至`.34954`，q95 unsafe改善到`.05028`，但q85 unsafe=`.15534`使最大risk excess=`.00534`，仍
+3/4 rejected。q85 source训练约束dual归零而heldout task/horizon泄漏，登记F217。
+
+P342不调dual rate或网络容量，迁移为training horizon × task-condition的27组worst-group conditional-risk
+primal-dual；q90仍为冻结精确锚点。Active=`WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

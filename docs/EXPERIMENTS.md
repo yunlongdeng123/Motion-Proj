@@ -1094,7 +1094,33 @@
 - objective：soft size probability的normalized authority utility减去unsafe expectation；unsafe系数固定为risk odds
   `q/(1-q)`，不扫Lagrange/temperature/residual bound。source fold0、6k steps，fold3 development。
 - gates：P201 q90 hard risk/coverage；q75/q85/q95 mean hard coverage不低于P337 baseline，最大
-  `unsafe-(1-q)`不高于P337 baseline。状态=`active implementation/training`。
+  `unsafe-(1-q)`不高于P337 baseline。状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P340-DECISION-FOCUSED-DIFFERENTIABLE-AUTHORITY-01/
+  20260901T120000Z__decision-focused-differentiable-authority-s0-r1`。
+- result：5,463 rows、6k steps、final loss=`-.409924`、wall=`102.27s`；P201 non-anchor mean coverage=
+  `.343260` vs P337 `.339800`，但nominal-risk excess=`.003892` vs `.003571`，3/4 gates。q90 exact
+  coverage/unsafe=`.304645/.049020`。Verdict=`rejected_decision_focused_differentiable_authority`。
+
+### WS-V67-P341-CONDITIONAL-RISK-PRIMAL-DUAL-AUTHORITY-01
+
+- migration：P340的固定odds约束无条件unsafe mass，而hard endpoint是准入后条件unsafe rate；依据PAC constrained
+  learning / resilient constrained learning，改成显式`(q, ceiling)`primal-dual，不扫固定penalty。
+- method：evaluation q75/q85/q95离散训练；soft unsafe除以soft coverage形成条件风险，对偶上升、primal下降；
+  P337/P339冻结，q90 delta=0保持exact；source scene-rank fold0训练、fold3 development。
+- canonical=`run://worldsim_v67/WS-V67-P341-CONDITIONAL-RISK-PRIMAL-DUAL-AUTHORITY-01/
+  20260901T121500Z__conditional-risk-primal-dual-authority-s0-r1`。
+- result：6k、final loss=`-.735594`、wall=`114.89s`；dual仅q95 strict ceiling非零(`.32299`)。P201
+  non-anchor coverage=`.349545` vs `.339800`，q95 unsafe=`.050279`优于P337 `.053571`，但q85 unsafe=
+  `.155340`使max nominal-risk excess=`.005340 > .003571`，3/4 rejected；q90保持`.304645/.049020`。
+- conclusion：平均source conditional constraint不能迁移到heldout 3.0s/task conditions，不调dual LR；迁移P342
+  worst-group约束。
+
+### WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01
+
+- research step：按3个source training horizons × 9个training task conditions形成27组，对每个`(q, ceiling)`
+  的最大组内soft conditional unsafe rate做primal-dual约束；效用仍对所有组平均。
+- lock：P337/P339、q90 exact anchor、scene folds与6k steps不变；不扫group definition、dual rate、margin、
+  temperature、multiplier range或seed。P201仅一次heldout read。状态=`active training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
