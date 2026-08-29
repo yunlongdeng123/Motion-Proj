@@ -1,0 +1,29 @@
+schema_version: worldsim_v67.p245_rate_spline_same_read_confirmation.v1
+output_schema_version: worldsim_v67.p245_rate_spline_same_read_confirmation_summary.v1
+task_id: WS-V67-P245-RATE-SPLINE-SAME-READ-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P245-001
+role: fresh_same_read_secondary_rate_spline_continuous_budget_confirmation
+seed: 0
+rows_wait_timeout_seconds: 7200
+p243_rows: {run: worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T060500Z__continuous-budget-fresh-confirmation-s0-r1, artifact: P243_CONTINUOUS_BUDGET_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p244: {run: worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1, artifact: MONOTONE_RATE_SPLINE_SURFACE.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_surface_teacher_probability_MAE: 0.015, maximum_final_curve_teacher_probability_MAE: 0.01, maximum_relative_surface_Brier_degradation: 0.01, maximum_absolute_surface_calibration_error_increase: 0.002}
+verdict_on_pass: supported_fresh_rate_spline_continuous_budget_surface
+verdict_on_failure: rejected_fresh_rate_spline_continuous_budget_surface
+locks:
+  evaluator_P244_artifact_teacher_heldout_budgets_MC_and_decisions_frozen_before_P243_target_quality_read: true
+  reuses_P243_first_fresh_rows_as_prospective_secondary_without_new_cohort_claim: true
+  no_model_surface_architecture_scene_budget_horizon_metric_gate_or_MC_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_same_read_secondary_at_scene_level_not_a_second_independent_cohort
+  - continuous_budget_inside_anchor_range_not_continuous_time_or_formal_calibration
+  - no_collision_planner_policy_closed_loop_or_safety_claim
