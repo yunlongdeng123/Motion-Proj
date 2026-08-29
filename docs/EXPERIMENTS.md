@@ -152,8 +152,21 @@
   protocol，Deep Sets allocator原生接受不同集合长度，不增加 padding model 或新 head。
 - P201 aggregate gates继承 P279：budget MAE `<=.075`、frozen composite-risk regret `<=.005`；不扫 cardinality、
   architecture、eta/budget grid、steps 或 gate。
-- active=`run://worldsim_v67/WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
-  20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`；与 P277 IO 并行。
+- canonical=`run://worldsim_v67/WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+  20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`。
+- result：P201 aggregate budget MAE=`.0108471`、composite-risk regret=`8.4900e-5`、candidate/teacher LCB tail-CVaR
+  shortfall均=`.00907458`、price/floor violations=`0/0`；size48/96 budget MAE=`.0109956/.0106985`；2/2，verdict=
+  `supported_variable_set_epistemic_tail_CVaR_budget_allocator`。wall=`164.57s`、peak GPU/RSS=`.5352/1.6303GiB`。
+
+### WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01
+
+- object：permutation-invariant mean/std/max/size context + alpha/beta/floor/tail-mass/fraction，输出 shadow price；冻结
+  P281 variable-set allocator 是唯一 primal；train sizes32/64/128、held-out48/96。
+- P201 gates仅 attained fraction MAE `<=.075`、frozen composite regret `<=.005`；fraction-price 方向由正 rate spline保证。
+- r1=`20260831T193000Z__variable-set-epistemic-tail-cvar-dual-s0-r1` 在 P199 artifact load 前因 run ID 少写
+  `reliability`退出，0 teacher target/optimizer/metric，登记 `V67-F196`。
+- 只恢复 canonical artifact ref；r2 active=`run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
+  20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2`，科学合同不变。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -83,6 +83,20 @@
 - P281 仅将冻结 P279 warm-start到 sizes32/64/128，并在未参与训练的48/96上一次评估，不改变风险对象或门；
 - P277 IO 与 P281 GPU 继续并行；下一可用 failure id 仍为 `V67-F196`。
 
+### V67-F196 — P282 frozen P199 run ID复制时漏词
+
+- run：`run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
+  20260831T193000Z__variable-set-epistemic-tail-cvar-dual-s0-r1`；
+- symptom：配置将 canonical `...__joint-horizon-reliability-copula-s0-r2` 误写成少一个 `reliability` 的路径，
+  在 `torch.load` 首个 P199 artifact 时 `FileNotFoundError`；
+- exposure：P126/P182虽加载，但 P199/copula、P203、P275/P281、teacher targets、optimizer step和任何 metric 均未发生；
+- research response：Hydra defaults composition 与 OmegaConf interpolation均建议复用共享配置值，避免变体配置重复；考虑当前
+  项目已冻结 PyYAML 合同且禁止扩大工程范围，本轮不迁移框架，只从已通过 P281/P279 配置恢复同一 canonical ref；
+- resolution：commit=`e806de4`；r2=`20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2` 已按原 seed、
+  data、model、steps、gates启动；状态=`resolved_before_scientific_trial`。
+
+下一可用编号：`V67-F197`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

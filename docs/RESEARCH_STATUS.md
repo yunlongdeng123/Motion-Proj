@@ -87,10 +87,18 @@ WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/20260831T190000Z__epistemic-tail-c
 price/attained-fraction MAE=`.032479/.016233`、frozen composite regret=`2.67e-6`、fraction-price violations=0，2/2；
 wall=`160.21s`、peak GPU=`.1713GiB`。
 
-P281 用冻结 P279 warm start 开始 variable-cardinality composite primal：训练 group sizes=`32/64/128`，held-out=
-`48/96`，其余 alpha/beta/floor/tail-mass/price protocol 与 P279 完全相同，不改架构。Active=
-`run://worldsim_v67/WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
-20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`，GPU 正在训练；P277 fresh IO 继续并行。
+P281 用冻结 P279 warm start 完成 variable-cardinality composite primal：训练 group sizes=`32/64/128`，held-out=
+`48/96`，其余 protocol 完全相同。Canonical=`run://worldsim_v67/
+WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`：P201 aggregate budget MAE=`.0108471`、composite regret=
+`8.49e-5`、candidate/teacher tail shortfall均=`.00907458`、price/floor violations=`0/0`，2/2；size48/96 budget
+MAE=`.010996/.010699`；wall=`164.57s`、peak GPU=`.5352GiB`。
+
+P282 进一步把冻结 P281 primal 接到 variable-set dual，train sizes32/64/128、held-out48/96。r1 因复制配置时 P199
+run ID 漏写 `reliability`，在 frozen artifact load 前退出，记为 `V67-F196`；依据 Hydra/OmegaConf compositional
+configuration 的复用思想，项目当前不引入新框架，只从已通过的 canonical 配置恢复唯一 artifact ref。r2 active=
+`run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
+20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2`；P277 fresh IO 继续并行。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
