@@ -249,7 +249,9 @@ P302 依据 NeurIPS 2017 Deep Lattice 的单调分段插值，把 P301 两端点
 逐 Actor线性插值，仍由同一 monotone base保证相邻 anchor有序，三次 shared forward且无 dual/bisection。冻结
 P301 base、6k steps/lr `.0003`，要求 P201 attained MAE严格优于 `.02852293`、regret `<=.005`、violations=0，
 不扫 anchor数/位置。Active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
-20260901T010000Z__piecewise-anchor-authority-s0-r1`，GPU 已启动。
+20260901T010000Z__piecewise-anchor-authority-s0-r1`：P201 budget/attained MAE=`.0070409/.0256586`、regret=
+`5.9698e-5`、violations=`0`，4/4；size48/96 attained=`.0236674/.0276498`。相对 P301 attained MAE降低
+`10.04%`，但三forward耗时=`1.4914s`；wall=`422.15s`。Verdict=supported monotone piecewise anchor compiler。
 
 P303 与 P302 正交并发：依据 NeurIPS 2019 UMNN 的正导数积分思想，用 group raw mean/std/max与四个 risk
 conditions输出8-knot正 rates，将积分按总面积归一化为固定0/1端点的 monotone fraction warp，再只调用一次

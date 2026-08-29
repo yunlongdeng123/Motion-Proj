@@ -455,8 +455,12 @@
   线性插值；三次 shared forward、无 dual/bisection，单调性仍为结构性质。
 - fixed run：6k steps、lr `.0003`；P201 attained MAE必须严格优于 P301 `.0285229301`、regret `<=.005`、
   violations=`0`；不扫 anchor数/位置/steps/lr/gates。
-- active=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/
   20260901T010000Z__piecewise-anchor-authority-s0-r1`。
+- result：P201 budget/attained MAE=`.0070409/.0256586`、regret=`5.9698e-5`、violations=`0`，4/4，verdict=
+  `supported_monotone_piecewise_anchor_direct_authority_compiler`。size48/96 attained=`.0236674/.0276498`；source
+  attained=`.0179300`。相对 P301 `.0285229` 改善 `10.04%`；forward=`1.4914s`、wall=`422.15s`、peak
+  GPU/RSS=`.37073/3.9768GiB`。
 
 ### WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01
 
