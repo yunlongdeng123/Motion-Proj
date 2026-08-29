@@ -792,9 +792,13 @@ P186 fixed-noise CDE已完成：相对P182的P81/P96/P113/P129 Brier分别回退
 mean calibration-error reduction=`19.60%`，四个Brier gate全部失败，F150。固定噪声拉近部分边际prevalence却破坏
 conditional refinement，关闭noise-scale sweep。
 
-P187已冻结并启动fixed ν=`3` Student-t log-cost mixture：conditions、5-component network、12,000-step training budget与P182
-完全一致，只改变component tail family。它检验Gaussian misspecification/heavy-tail机制，相对P182逐cohort Brier不劣且mean
-calibration改善≥5%才支持；不扫ν/component/architecture/loss。P183不同future cohort archive IO/evaluator继续并行。
+P187 fixed ν=`3` Student-t log-cost mixture已完成：相对P182 Brier change=`-4.15%/+3.14%/-3.88%/+.45%`，calibration-error
+reduction=`+43.36%/-20.31%/+30.51%/-38.16%`，mean仅`3.85%`。P96/P129 trade-off使2/2 gates均失败，F151；关闭单纯
+heavy-tail family rescue，不扫ν。
+
+P188已冻结并启动8-bin conditional rational-quadratic spline density：沿用P182 condition、hidden dimensions与12,000-step budget，
+用NeurIPS官方`nflows==0.14`精确likelihood/CDF，只新增可表达偏态与局部形状的单调spline，linear tail bound=`6`覆盖source
+log-cost range。相对P182逐cohort Brier不劣且mean calibration改善≥5%才支持；不扫bin/tail/architecture/loss。P183继续并行。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

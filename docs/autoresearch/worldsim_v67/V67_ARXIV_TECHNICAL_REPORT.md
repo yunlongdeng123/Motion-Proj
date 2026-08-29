@@ -428,7 +428,9 @@ ensemble不升级。P185改为五个连续source-scene environment的worst-NLL�
 `2.64%`（F149）；因此source bootstrap/DRO支线关闭。P186只用fixed condition/target noise平滑P182 likelihood，mean calibration虽改善
 `19.60%`，但四cohort Brier全部回退`1.63%--27.51%`（F150），说明边际刻度改善来自conditional refinement损失，source-noise
 smoothing关闭。P187据heavy-tail CDE文献冻结ν=`3` Student-t component，只检验Gaussian family misspecification；P183 candidate仍保持
-P182 single density，任何development rescue均不回流改变prospective protocol。
+P182 single density，任何development rescue均不回流改变prospective protocol。P187最终只改善P81/P113，P96/P129 Brier与calibration
+均回退，mean calibration improvement仅`3.85%`（F151），所以“全局加重尾部”被关闭。P188进一步按NeurIPS Neural Spline Flows迁移
+固定8-bin conditional RQ spline，以区分重尾不足和随condition变化的偏态/局部形状；仍是consumed-development机制试验。
 
 ## 3. 核心结果表
 

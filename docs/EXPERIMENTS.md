@@ -1346,11 +1346,23 @@
 
 ### WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01
 
-- 状态：`GPU training active`；canonical id=`20260830T160000Z__student-t-log-cost-mixture-density-s0-r1`。
+- 状态：`done/rejected`；canonical id=`20260830T160000Z__student-t-log-cost-mixture-density-s0-r1`。
 - object：P182同条件、同5-component network与训练预算，component由Gaussian换为fixed ν=`3` Student-t，解析CDF直接查询七个预算。
 - motivation：AISTATS heavy-tail CDE与NeurIPS flexible density结果指向distribution-family misspecification；本trial只检验重尾机制。
 - execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫ν/component/loss/architecture。
+- result：P81/P96/P113/P129 Brier change vs P182=`-4.15%/+3.14%/-3.88%/+.45%`；calibration-error reduction=
+  `+43.36%/-20.31%/+30.51%/-38.16%`，mean=`3.85%`；final NLL=`-1.03371`，wall=`72.53s`。
+- verdict=`rejected_student_t_log_cost_density`，F151；关闭fixed heavy-tail family rescue，不扫ν。
+
+### WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01
+
+- 状态：`GPU training active`；canonical id=`20260830T161000Z__conditional-spline-log-cost-density-s0-r1`。
+- object：P182同3D condition、hidden dimensions与训练预算；以8-bin rational-quadratic spline和standard-normal base替换mixture components，
+  log-cost linear tail bound=`6`，覆盖source observed range `0--5.054`，七预算CDF保持解析可微。
+- migration：使用NeurIPS 2019作者维护的`nflows==0.14`算子，避免重写数值敏感的spline inverse/Jacobian。
+- execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫bin/tail/loss/architecture。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

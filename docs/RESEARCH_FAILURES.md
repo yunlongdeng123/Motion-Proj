@@ -2431,6 +2431,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F151`。
 
+### V67-F151 — fixed heavy tails改善两cohort但不能统一概率刻度
+
+- 分类：`algorithm/heavy-tail-density-cohort-tradeoff`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01/
+  20260830T160000Z__student-t-log-cost-mixture-density-s0-r1`。
+- 观察：相对P182，P81/P113 Brier改善`4.15%/3.88%`且calibration改善`43.36%/30.51%`；P96/P129 Brier回退
+  `3.14%/.45%`且calibration回退`20.31%/38.16%`，mean calibration improvement仅`3.85%`。
+- 解释：ν=`3`重尾能修复部分cohort的Gaussian tail misspecification，却同时扩散另两个cohort的中心概率质量；固定全局tail family
+  不能表达随condition变化的偏态/局部形状。
+- 防重复：关闭Student-t/单纯heavy-tail family rescue，不扫ν或component count；下一步只试一次conditional monotone spline。
+
+下一可用编号为：`V67-F152`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
