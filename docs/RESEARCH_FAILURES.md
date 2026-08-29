@@ -2927,6 +2927,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F187`。
 
+### P246 milestone note — 有限两侧budget扩展通过，无新增failure
+
+- canonical：`run://worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1`；
+- 结果：P201八budget surface/final MAE=`.006580/.008776`，quality composite通过、双轴violations=`0/0`，3/3；
+- 边界：只支持`.025--6.4`有限区间，不推断无界tail或formal calibration；没有range/knot/point-count sweep；
+- next：P247在fresh rows前冻结；P248改变对象为reliability-level-conditioned inverse budget，不继续range优化。
+
+下一可用编号仍为：`V67-F187`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；

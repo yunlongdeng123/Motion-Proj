@@ -1995,7 +1995,26 @@
 - protocol：41个fixed-offset log-budget source targets；九anchors的八个geometric midpoints全部heldout，其中新增
   `.035355`与`4.52548`两侧tail点；P244 rate-spline/L1/128/16knots/12k/seed0/三门不变；
 - claim boundary：只支持有限扩展区间，不宣称无界tail、formal calibration或safety；不扫range/point count/knots；
-- active canonical：`run://worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1`；与P243 IO并行训练。
+- canonical：`run://worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1`；
+- result：P201八budget surface/final MAE=`.006580/.008776`，Brier degradation=`.102%`、calibration increase=
+  `.000463`；P183 final=`.009892`且quality改善；source final=`.009299`；violations=`0/0`；3/3；
+- resources/verdict：wall=`116.57s`、peak GPU=`.140GiB`；`supported_two_sided_extended_budget_rate_spline`。
+
+### WS-V67-P247-EXTENDED-BUDGET-SAME-READ-CONFIRMATION-01
+
+- role：P243首次fresh rows上的第二个prospective same-read secondary；与P245共享cohort但评价P246八budget范围；
+- frozen before rows：P246 artifact、P203/P199 teacher、八个midpoints、1024 MC与三项decision全部锁定；
+- canonical waiter：`run://worldsim_v67/WS-V67-P247-EXTENDED-BUDGET-SAME-READ-CONFIRMATION-01/20260831T071500Z__extended-budget-same-read-confirmation-s0-r1`；等待P243 atomic rows，quality read=false。
+
+### WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01
+
+- object：将forward query `P(reliable | budget,H)`变为inverse query：给定reliability level，预测四prefix达到该水平所需的
+  clipped minimum normalized log-budget；范围冻结为P246的`.025--6.4`；
+- literature response：ICML 2018 IQN将概率水平连续映射为quantile；AISTATS 2022通过正偏导构造non-crossing deep
+  quantiles；P248迁移为positive-rate alpha spline，并以positive horizon increments保证更长H不要求更小budget；
+- protocol：冻结P246用24-step bisection产生teacher；train levels `.1:.1:.9`，heldout `.15:.1:.85`；source-only L1，
+  128 context/16 knots/12k/batch8192；P201两门为inverse normalized-log-budget MAE≤`.075`与重构probability MAE≤`.015`；
+- active canonical：`run://worldsim_v67/WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01/20260831T073000Z__inverse-reliability-budget-compiler-s0-r1`；不读取P243 rows。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
