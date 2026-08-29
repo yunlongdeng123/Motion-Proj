@@ -320,8 +320,20 @@
 - frozen P291R 是唯一 reliability teacher；复用 P285 fixed64 monotone soft-floor allocator与相同
   alpha/tolerance/floor/price grid、12k steps，不对 P291R teacher 做 refit。
 - gates继承 P285：P201 normalized log-budget MAE `<=.075`、frozen LCB-floor regret `<=.005`；P243 descriptive。
-- active=`run://worldsim_v67/WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
+- canonical=`run://worldsim_v67/WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
   20260831T221500Z__context-adaptive-lcb-policy-s0-r1`。
+- result：P201 budget MAE=`.0215751`、frozen LCB-floor regret=`.0003612`、candidate/teacher final shortfall=
+  `.0031117/.0030776`、price/floor violations=`0/0`、tolerance low→high mean budget change=`-.0062874`；2/2，
+  verdict=`supported_context_adaptive_LCB_allocator`。wall=`145.67s`、peak GPU/RSS=`.1404/1.6306GiB`。
+
+### WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01
+
+- frozen P292 allocator 是唯一 primal；fixed64 pooled mean/std context，joint alpha/tolerance/floor/attainable-fraction
+  输入，positive fraction-rate spline 输出 shadow price；复用 P286 结构与12k steps。
+- gates继承 P286：P201 attained fraction MAE `<=.030`、frozen LCB-floor group regret `<=.002`；不扫 bisection/
+  grid/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
+  20260831T223000Z__context-adaptive-lcb-group-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -172,10 +172,16 @@ WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adapt
 surface MAE=`.0041245`、coverage=`.87337/.82306/.78372/.72921`、max undercoverage=`.051625`、mean conservatism=
 `.0158992 < P284 .0172214`、violations=`0/0/0`，3/3；wall=`102.09s`。`V67-F198` 已由一次结构恢复关闭。
 
-P292 已把冻结 P291R 作为唯一 reliability teacher，复用 P285 同一 soft-floor Lagrangian allocator、训练/heldout
-conditions、12k steps 与 `.075/.005` 两门，不改 grid/penalty/架构。Active=`run://worldsim_v67/
+P292 把冻结 P291R 作为唯一 reliability teacher，复用 P285 同一 soft-floor Lagrangian allocator、训练/heldout
+conditions、12k steps 与 `.075/.005` 两门，不改 grid/penalty/架构。Canonical=`run://worldsim_v67/
 WS-V67-P292-CONTEXT-ADAPTIVE-LCB-LAGRANGIAN-POLICY-01/
-20260831T221500Z__context-adaptive-lcb-policy-s0-r1`，GPU 正在生成 teacher targets并训练。
+20260831T221500Z__context-adaptive-lcb-policy-s0-r1`：P201 budget MAE=`.0215751`、frozen LCB-floor regret=
+`.0003612`、candidate/teacher shortfall=`.0031117/.0030776`、price/floor violations=`0/0`，2/2；wall=`145.67s`。
+
+P293 以冻结 P292 为唯一 primal，复用 P286 fixed64 pooled group dual，将 attainable budget fraction 编译为
+shadow price；同一 alpha/tolerance/floor/fraction axes、12k steps 与 `.030/.002` 两门。Active=`run://worldsim_v67/
+WS-V67-P293-CONTEXT-ADAPTIVE-LCB-GROUP-DUAL-01/
+20260831T223000Z__context-adaptive-lcb-group-dual-s0-r1`，GPU 正在 teacher bisection/训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

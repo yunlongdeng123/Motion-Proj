@@ -199,6 +199,12 @@
 - P292 只编译冻结 P291R 到 P285 同构 soft-floor allocator，不改变 coverage对象、student loss或 P285两门；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### P292 outcome / P293 group-dual start note — 无新增 failure
+
+- P292 P201 budget MAE=`.0215751`、LCB-floor regret=`.0003612`，2/2，price/floor violations=0；
+- P293 只编译冻结 P292 的 attainable-budget fixed64 dual，不改变 P291R coverage或 P292 utility定义；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
