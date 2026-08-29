@@ -360,9 +360,12 @@ pairwise=`.88795`、oracle regret=`.03453`；selected lateral随command `-.46475
 两个commands的full-progress fractions均随lambda提升且violations=0，3/3 supported。wall=`82.32s`。
 
 P314冻结P313全链，在P277六场景/180个六动作组做two-axis maneuver-admission-family untouched 0-step确认；
-heldout progress/command、hard top-2和三门全部继承，不refit。Active=`run://worldsim_v67/
+heldout progress/command、hard top-2和三门全部继承，不refit。Canonical=`run://worldsim_v67/
 WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01/
-20260901T050000Z__maneuver-conditioned-authority-confirmation-s0-r1`。
+20260901T050000Z__maneuver-conditioned-authority-confirmation-s0-r1`：mean reduction=`36.70%`、pairwise=`.91799`、
+oracle regret=`.01824`、lateral response=`-.48194→.50694` (`.98889`)、progress violations=0，3/3 supported；
+wall=`1.90s`。二维task-conditioned admission跨cohort成立；下一层改为预测已授权top-2的set-level future
+visited-state cost quantiles，建立可校准authority certificate，而非继续修改ranking。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

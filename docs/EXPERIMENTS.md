@@ -630,8 +630,11 @@
   family untouched reuse confirmation。
 - inherited：progress `.25/.75`×command `-.5/.5`、hard top-2、reduction `.10`、pairwise `.65`、command response
   `.25`且progress violations=0；one read，无refit/换cohort。
-- active=`run://worldsim_v67/WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01/
   20260901T050000Z__maneuver-conditioned-authority-confirmation-s0-r1`。
+- result：mean reduction=`36.70%`、pairwise=`.91799`、oracle regret=`.01824`、lateral response=
+  `-.48194→.50694` (`delta=.98889`)、progress violations=0，3/3 supported；wall=`1.90s`、peak GPU=
+  `.08244GiB`。下一步转向admitted-set quantile certificate。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -361,7 +361,8 @@
 - P313 result：冻结P311/P309/P307，训练progress×continuous lateral command二维task condition；P201 reduction=
   `35.66%`、pairwise=`.88795`、command response=`.89590`、progress violations=0，3/3 supported；未触发F207；
 - P314 freeze：P313全链在P277 180个六动作组上0-step two-axis family-untouched确认；失败才登记F207，不refit、
-  换cohort或放宽门；
+  result reduction=`36.70%`、pairwise=`.91799`、command response=`.98889`、progress violations=0，3/3
+  supported；未触发F207；下一步转向set-level quantile certificate而非继续ranking；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29
