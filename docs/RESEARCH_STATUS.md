@@ -489,9 +489,15 @@ log-cost分布，以固定1σ upper log-cost作trajectory score。P81/P96/P113/P
 `+.005119/-.028055/-.004568/+.005795`（mean=`-.005427`）；P81 cost改善、P129 rank改善，但P96再次显著反转且
 P129 operating cost回退，0/2 decisions，F112。这表明直接对象有效但ERM transfer不稳。
 
-检索ICML IRM Games、NeurIPS 2023 group DRO并结合IRM fragility反例后，P151不采用脆弱IRM penalty，而保持P150对象/网络/
-1σ score不变，只把source environments定义为scene×horizon，并优化每batch最差四分之一environment NLL。3090正在训练三成员，
-P147 IO/evaluator继续并行；不扫group fraction或environment定义。
+检索ICML IRM Games、NeurIPS 2023 group DRO并结合IRM fragility反例后，P151保持P150对象/网络/1σ score不变，把source
+定义为408个scene×horizon environments，优化每batch最差四分之一NLL。P81/P96/P113/P129 rank gain=
+`-.008943/-.115416/-.019160/-.043214`（mean=`-.046683`），仅P81 cost改善，F113；hard-environment
+objective放大noise而非稳定信号，故direct-cost/DRO family关闭。
+
+随后检索NeurIPS randomized prior functions、anchored ensembles与ensemble NTK后，P152回到P126 Actor residual对象：每个
+member是trainable P109-shaped Gaussian加一个不同且永久冻结的random mean prior，prior scale固定1；source/likelihood/score/
+3 members/6,000 steps均与P126一致，只检验function-space prior能否在unseen scene/H3.5保持epistemic差异。3090训练中，
+P147 IO/evaluator继续并行，不扫prior scale。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

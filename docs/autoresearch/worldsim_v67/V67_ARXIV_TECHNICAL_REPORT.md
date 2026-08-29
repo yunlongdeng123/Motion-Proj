@@ -272,7 +272,9 @@ absolute-time scalar growth不是稳定解释。后续P147转向新的10-scene�
 但四cohort rank mean下降`.098286`（F111），表明joint likelihood/any-crossing仍与continuous cost错位。P150因此不再间接预测
 residual distribution，而在5.18M query-time tokens上直接学习normalized boundary-state cost分布并汇聚upper cost。P150在
 P81/P129得到正rank增量，却在P96反转`-.028055`（F112），说明direct object优于generative proxy但ERM不稳定。P151保持对象/
-architecture/score不变，以scene×horizon worst-quartile group NLL隔离检验domain-robust optimization。
+architecture/score不变，以scene×horizon worst-quartile group NLL隔离检验domain-robust optimization；P96进一步恶化到
+`-.115416`（F113），关闭direct-cost/DRO family。P152转而保持已支持的P126 residual object，唯一机制变化是为每个member
+添加永久冻结的random function prior，以检验function-space epistemic extrapolation，而非继续增加downstream capacity。
 
 ## 3. 核心结果表
 

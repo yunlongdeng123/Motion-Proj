@@ -822,13 +822,28 @@
 
 ### WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T110000Z__group-dro-boundary-cost-s0-r1`。
 - method：完整保留P150 dense target/input/3-member network/fixed1σ score；唯一训练变化是把source按scene×horizon定义
   environments，每batch均匀采64组×1,024 tokens，并优化group NLL最差四分之一的均值。
 - motivation：P150在P81/P129 rank为正但P96反转，指向domain transfer；采用直接worst-group objective，不采用fragile IRM penalty。
 - decisions/locks：四consumed cohort相对P126 cost全不退且mean rank gain≥`.005`；不扫group fraction/environment/
   architecture/loss/member/seed/upper sigma/coverage。
+- result：408 environments；member final worst-quartile NLL=`-1.5933/-1.4387/-1.4153`。P81/P96/P113/P129
+  selected cost=`.174132/.185470/.230211/.339363`，Spearman gain=
+  `-.008943/-.115416/-.019160/-.043214`（mean=`-.046683`）；仅P81 cost改善，0/2 decisions，verdict=
+  `rejected_development_group_dro_boundary_cost`，wall=`118.39s`、peak GPU=`1.010 GiB`；F113。
+
+### WS-V67-P152-RANDOMIZED-PRIOR-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T110500Z__randomized-prior-actor-ensemble-s0-r1`。
+- method：3 independent P109-shaped trainable Gaussian members；每member mean加一个不同、永久冻结、相同architecture的random
+  prior function，prior scale固定`1.0`；aleatoric scale仍只来自trainable member。
+- training：复用P109 normalization/source 916,722 actor-time tokens、Gaussian NLL、6,000 steps/member、batch65,536；不复用
+  P109 seed0权重，以避免初始化prior和function prior角色混合。
+- evaluation/decisions：P81/P96/P113/P129 continuous fixed50相对P126，cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫prior scale/architecture/loss/member/seed/score/coverage。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

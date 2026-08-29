@@ -1862,7 +1862,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - objective：每batch 64 groups×1,024 tokens，优化最差25% group NLL均值；3 members、6,000 steps/member。
 - prevention：不扫group fraction/environment/IRM penalty/architecture/loss/member/seed/upper sigma/coverage。
 
-下一可用编号为：`V67-F113`。
+### V67-F113 — worst-group dense cost放大P96反转
+
+- 分类：`algorithm/group-DRO-domain-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01/
+  20260830T110000Z__group-dro-boundary-cost-s0-r1`。
+- 观察：408 scene×horizon environments；P96 rank gain从P150的`-.028055`恶化至`-.115416`，四cohort mean=
+  `-.046683`；仅P81 selected cost改善。
+- 解释：worst-quartile NLL重压hard/noisy groups，未提取稳定invariant；direct cost对象的domain-robust训练恢复失败。
+- 防重复：关闭direct-cost/scene-DRO family，不扫group fraction或IRM penalty。P152返回P126 Actor residual ensemble并改变prior机制。
+
+### P152 freeze note — randomized function-prior Actor ensemble
+
+- method：3 P109-shaped trainable Gaussian members，各加独立冻结random mean prior，scale固定1；aleatoric scale不来自prior。
+- constants：P109 normalization/source、Gaussian NLL、6,000 steps/member、P126 continuous score与四cohort decisions。
+- prevention：不扫prior scale/architecture/loss/member/seed/score/coverage；不以P151作teacher或head。
+
+下一可用编号为：`V67-F114`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
