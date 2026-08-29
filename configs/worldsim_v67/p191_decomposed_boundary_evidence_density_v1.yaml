@@ -1,0 +1,41 @@
+schema_version: worldsim_v67.p191_decomposed_boundary_evidence_density.v1
+output_schema_version: worldsim_v67.p191_decomposed_boundary_evidence_density_summary.v1
+task_id: WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01
+hypothesis_id: WS-V67-H-P191-001
+role: continuous_cost_density_with_decompressed_boundary_evidence
+seed: 0
+model_artifact: DECOMPOSED_BOUNDARY_EVIDENCE_DENSITY.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p182:
+  run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1
+  artifact: LOG_COST_MIXTURE_DENSITY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model: {component_count: 5, hidden_dimensions: [128, 128, 64], training_steps: 12000, batch_size: 65536, learning_rate: 0.001, weight_decay: 0.0001}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_calibration_error_reduction_vs_p182: 0.05}
+verdict_on_pass: supported_decomposed_boundary_evidence_density_development
+verdict_on_failure: rejected_decomposed_boundary_evidence_density
+locks:
+  P182_score_horizon_clearance_are_retained: true
+  added_context_is_frozen_aleatoric_epistemic_and_projected_mean_magnitude_only: true
+  P182_density_family_capacity_and_training_budget_are_retained: true
+  P175_and_P183_are_excluded: true
+  no_context_aggregation_architecture_or_loss_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openreview.net/forum?id=sFjxg8cyJS
+  - https://proceedings.mlr.press/v286/cai25c.html
+claim_boundary:
+  - consumed_development_only_and_cannot_replace_frozen_P182_P183_confirmation
+  - frozen_evidence_context_is_not_target_adaptation_or_formal_shift_coverage
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim

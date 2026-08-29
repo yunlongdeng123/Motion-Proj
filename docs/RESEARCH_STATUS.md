@@ -810,6 +810,14 @@ P189 r2已完成：相对P182的P81/P96/P113/P129 Brier change=`+2.06%/-6.94%/-9
 `11.09%`；纯Brier目标改善P96/P113但损害P81/P129，1/2 gate，F153。P190已从冻结P182 checkpoint启动固定4,000-step
 norm-balanced PCGrad微调，同时保留NLL refinement与七预算Brier；不手调loss weight或扫step/lr，P183排除。
 
+P190已完成：相对P182 Brier change=`-.15%/+.62%/-2.27%/-.44%`，mean calibration improvement=`7.19%`；仅P96小幅回退，
+仍严格拒绝，F154。PCGrad关闭且不扫weight/step。P191已启动6D decomposed-evidence density：保留P182 score/horizon/clearance，
+新增冻结aleatoric、ensemble epistemic与projected-mean magnitude三个context proxy，同5-component NLL与12,000 steps；不使用target/location。
+
+P191已完成：相对P182 Brier change=`+5.62%/+4.00%/-5.49%/+16.70%`，mean calibration improvement仅`1.79%`，两gate失败，
+F155；关闭evidence-component context。P192已启动environment-balanced ERM：P182 architecture/condition/NLL/12,000 steps全部不变，
+每batch先均匀采102个source scenes再在scene内采trajectory，消除大scene样本数支配；不扫scene weight/sampler。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

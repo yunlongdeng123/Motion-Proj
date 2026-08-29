@@ -100,7 +100,9 @@
 | P187 | `run://worldsim_v67/WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01/20260830T160000Z__student-t-log-cost-mixture-density-s0-r1` | P81/P113改善但P96/P129回退，mean calibration +3.85%；rejected/F151 |
 | P188 | `run://worldsim_v67/WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01/20260830T161000Z__conditional-spline-log-cost-density-s0-r1` | source NLL更低但mean calibration -23.89%；rejected/F152 |
 | P189 | `run://worldsim_v67/WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01/20260830T161500Z__budget-brier-log-cost-cdf-s0-r2` | mean calibration +11.09%但P81/P129 Brier回退；rejected/F153 |
-| P190 | `run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/20260830T162500Z__pcgrad-log-cost-cdf-s0-r1` | frozen-P182 norm-balanced NLL+Brier PCGrad，GPU training active |
+| P190 | `run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/20260830T162500Z__pcgrad-log-cost-cdf-s0-r1` | 3/4 Brier改善、mean calibration +7.19%，P96 +.62%；rejected/F154 |
+| P191 | `run://worldsim_v67/WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01/20260830T163000Z__decomposed-boundary-evidence-density-s0-r1` | 仅P113改善，P129 Brier +16.70%；rejected/F155 |
+| P192 | `run://worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1` | uniform-scene environment-balanced ERM，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -241,6 +243,8 @@
 | `V67-F151` | closed negative | P187 heavy tails仅改善P81/P113，P96/P129概率刻度回退 |
 | `V67-F152` | closed negative | P188 spline source NLL改善但仅P96 Brier受益，mean calibration恶化23.89% |
 | `V67-F153` | closed negative | P189 pure Brier改善P96/P113但P81/P129回退，NLL refinement丢失 |
+| `V67-F154` | closed negative | P190 PCGrad仅余P96 Brier +.62%，严格noninferiority仍失败 |
+| `V67-F155` | closed negative | P191 decomposed evidence仅P113改善，P129 Brier回退16.70% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

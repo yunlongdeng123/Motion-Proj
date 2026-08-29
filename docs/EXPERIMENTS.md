@@ -1381,11 +1381,33 @@
 
 ### WS-V67-P190-PCGRAD-LOG-COST-CDF-01
 
-- 状态：`GPU training active`；canonical id=`20260830T162500Z__pcgrad-log-cost-cdf-s0-r1`。
+- 状态：`done/rejected`；canonical id=`20260830T162500Z__pcgrad-log-cost-cdf-s0-r1`。
 - object：从冻结P182 checkpoint出发，共享同一Gaussian mixture，同时优化continuous NLL与七预算Brier。
 - mechanism：每batch把两个output-gradient范数自动拉到共同尺度；若内积为负，按NeurIPS PCGrad双向投影后更新，无手调loss weight。
 - execution：fixed 4,000-step fine-tune、batch65,536、lr=`2e-4`；P183 archive IO继续，P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫weight/projection threshold/steps/lr/architecture。
+- result：P81/P96/P113/P129 Brier change vs P182=`-.15%/+.62%/-2.27%/-.44%`；calibration-error reduction=
+  `+9.47%/-2.42%/+8.15%/+13.58%`，mean=`7.19%`；wall=`51.02s`。
+- verdict=`rejected_pcgrad_log_cost_cdf`，F154；不放宽P96 gate，不扫weight/step/lr。
+
+### WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01
+
+- 状态：`done/rejected`；canonical id=`20260830T163000Z__decomposed-boundary-evidence-density-s0-r1`。
+- object：P182 score/horizon/clearance外，显式加入冻结boundary aleatoric std、ensemble epistemic std与projected-mean magnitude。
+- motivation：P190残余表明单一standardized crossing ratio不足；ICLR 2026 hidden-confounding结果支持加入可观测context proxies。
+- execution：同P182 5-component Gaussian log-cost NLL、12,000 steps、batch65,536；P183 IO继续，P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫context/aggregation/architecture/loss。
+- result：P81/P96/P113/P129 Brier change vs P182=`+5.62%/+4.00%/-5.49%/+16.70%`；calibration-error reduction=
+  `-12.80%/+46.32%/+14.56%/-40.92%`，mean=`1.79%`；final NLL=`-1.22987`，wall=`73.11s`。
+- verdict=`rejected_decomposed_boundary_evidence_density`，F155；关闭context component/subset sweep。
+
+### WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01
+
+- 状态：`GPU training active`；canonical id=`20260830T164000Z__scene-balanced-log-cost-density-s0-r1`。
+- object：P182完全同构density；sampling改为uniform source scene→uniform trajectory，使102 scenes对ERM risk等权。
+- motivation：ICLR 2024 environment-balanced ERM与DG实证指出pooled sample-count权重会造成environment imbalance。
+- execution：12,000 steps、batch65,536，与P183 archive IO并行；P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫scene weights/sampler/loss/architecture。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

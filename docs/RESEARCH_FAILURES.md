@@ -2468,6 +2468,30 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F154`。
 
+### V67-F154 — PCGrad把冲突压缩到单一P96残差但仍未全通过
+
+- 分类：`algorithm/multi-objective-residual-cohort-conflict`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/
+  20260830T162500Z__pcgrad-log-cost-cdf-s0-r1`。
+- 观察：P81/P113/P129 Brier改善`.15%/2.27%/.44%`，mean calibration improvement=`7.19%`；P96 Brier仍回退`.62%`、
+  calibration回退`2.42%`，因此逐cohort noninferiority失败。
+- 解释：norm-balanced PCGrad有效缓和NLL/Brier冲突，但共享的3D condition仍不能区分P96概率刻度；这是condition sufficiency残差，
+  不是继续调loss weight的授权。
+- 防重复：不放宽P96 gate，不扫PCGrad weight/projection/step/lr；下一步显式解压冻结boundary evidence context。
+
+下一可用编号为：`V67-F155`。
+
+### V67-F155 — 解压boundary evidence component加剧跨cohort不稳定
+
+- 分类：`algorithm/context-proxy-nontransport`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01/
+  20260830T163000Z__decomposed-boundary-evidence-density-s0-r1`。
+- 观察：仅P113 Brier改善`5.49%`；P81/P96/P129回退`5.62%/4.00%/16.70%`，mean calibration improvement=`1.79%`。
+- 解释：aleatoric/epistemic/projected-mean magnitude在source提高NLL但不是稳定shift proxy；显式解压P126 ratio反而让density利用不可迁移刻度。
+- 防重复：关闭这三个context及其子集/aggregation sweep；不使用location/target标签救结果。下一步只改source scene sampling measure。
+
+下一可用编号为：`V67-F156`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

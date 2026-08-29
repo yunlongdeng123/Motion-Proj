@@ -437,6 +437,10 @@ P188最终把source NLL降到`-1.39293`，但相对P182只有P96 Brier改善；�
 因此论文可把它作为“density likelihood与decision reliability不等价”的直接负证据，而不是把更低NLL误写为不确定性质量提升。
 P189直接优化七预算Brier后，P96/P113 Brier改善`6.94%/9.02%`且mean calibration改善`11.09%`，但P81/P129回退（F153）。
 这把问题缩小为refinement与calibration的梯度冲突；P190从P182 checkpoint采用norm-balanced PCGrad联合NLL与Brier，不做loss-weight sweep。
+P190最终让P81/P113/P129 Brier改善且mean calibration改善`7.19%`，但P96仍回退`.62%`（F154）；严格拒绝说明仅优化目标不足。
+P191因此把P126 crossing ratio解压为aleatoric、ensemble epistemic和projected-mean magnitude三个冻结context proxy，检验condition sufficiency。
+P191只改善P113，P129 Brier反而回退`16.70%`（F155），表明这些分量不是稳定shift proxy。P192不再增加feature或loss，转而检验
+source sampling measure：102 scenes等权的environment-balanced ERM对比P182按trajectory pooled ERM。
 
 ## 3. 核心结果表
 
