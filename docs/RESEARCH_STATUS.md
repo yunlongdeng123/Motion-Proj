@@ -76,8 +76,16 @@ MAE=`.016307`、group regret=`8.11e-6`、violations=0，2/2；wall=`127.47s`。
 
 P279 进一步合并两条风险轴：P275 的 `mean-beta*std` 先表达经验 epistemic conservatism，再对 group64 的 final-LCB
 shortfall做 empirical Actor-tail CVaR；依据 NeurIPS 2021 Bayes-adaptive CVaR与 UAI 2022 SENTINEL composite risk 的
-分层思想，但不声称 coherence proof 或 posterior-predictive CVaR。Active=`run://worldsim_v67/
-WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`，GPU 正在训练。
+分层思想，但不声称 coherence proof 或 posterior-predictive CVaR。Canonical=`run://worldsim_v67/
+WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`：P201 normalized
+budget MAE=`.0117673`、composite-risk Lagrangian regret=`.000105044`、candidate/teacher LCB tail-CVaR shortfall=
+`.008447125/.008447123`、price/floor violations=`0/0`，2/2；wall=`191.22s`、peak GPU=`.4547GiB`。
+
+P280 直接把冻结 P279 primal 编译成 budget-conditioned dual：输入 fixed64 group summary、alpha、beta、floor、tail mass
+与 attainable fraction，输出 shadow price，随后由 P279 产生逐 row budget。只保留 P201 attained-fraction fidelity 与冻结
+composite Lagrangian regret两门；positive fraction-rate spline解析保证 fraction 上升时 price 不升。Active=
+`run://worldsim_v67/WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/
+20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`，GPU 正在训练；P277 fresh IO 继续并行。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

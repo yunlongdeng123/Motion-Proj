@@ -125,9 +125,23 @@
   shortfall做 empirical CVaR，联合 alpha、beta、floor、tail mass、shadow price输出 equivariant per-row budgets。
 - teacher：65 budgets、17 eta points；student positive price/floor rates；P201 gates仅 budget MAE `<=.075` 与 frozen
   composite-risk regret `<=.005`。
-- active=`run://worldsim_v67/WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
-  20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`；不声称 coherent composite-risk proof、credible interval、
-  posterior-predictive CVaR、hard constraint 或 safety。
+- canonical=`run://worldsim_v67/WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+  20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`。
+- result：P201 normalized budget MAE=`.01176734`、composite-risk Lagrangian regret=`.000105044`、candidate/teacher
+  LCB tail-CVaR shortfall=`.008447125/.008447123`、price/floor violations=`0/0`，2/2；verdict=
+  `supported_joint_epistemic_LCB_actor_tail_CVaR_allocator`。wall=`191.22s`、peak GPU/RSS=`.4547/1.6309GiB`。
+- boundary：不声称 coherent composite-risk proof、credible interval、posterior-predictive CVaR、hard constraint 或 safety。
+
+### WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01
+
+- object：fixed64 group summary + alpha/beta/floor/tail-mass/attainable-fraction，输出 normalized shadow price；冻结 P279
+  composite-risk allocator 是唯一 primal。
+- teacher：在 P279 的 price 单调结构上做20-step bisection；fraction train=`.1:.1:.9`、heldout=`.15:.1:.85`；student
+  positive fraction-rate spline解析保证 fraction-price 单调。
+- P201 gates仅 attained fraction MAE `<=.075` 与 frozen composite-risk Lagrangian regret `<=.005`；不扫条件网格、
+  bisection、architecture、steps 或 gate。
+- active=`run://worldsim_v67/WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/
+  20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`；与 P277 archive/preprocess IO 并行。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -69,6 +69,14 @@
   proof/credible interval/posterior-predictive risk”的 claim boundary；
 - P277 archive IO 仍与 P279 GPU 并行；下一可用 failure id 仍为 `V67-F196`。
 
+### P279 outcome / P280 composite-risk dual start note — 无新增 failure
+
+- P279 P201 budget MAE=`.0117673`、composite-risk regret=`.000105044`，两门通过，解析 price/floor violations=`0/0`；
+- P280 只把冻结 P279 primal 接到 attainable-fraction dual，不改变 composite-risk 定义、P279 verdict 或 claim boundary；
+- 一次本地 PowerShell 启动命令漏写 `ssh`，在本机 `Set-Location` 阶段退出，未接触远端、未创建 run、未加载模型，
+  属于控制端命令失误而非科学/实现 trial；随后正确 SSH 命令已启动 canonical r1；
+- P277 IO 继续并行；无资源不足或多卡需求，下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
