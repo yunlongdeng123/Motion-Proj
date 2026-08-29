@@ -1008,6 +1008,12 @@ P236确定性feature hallucination失败：P201 condition RMSE=`.3433`、surface
 概率采样/复杂分布与conformal越权，该支线关闭。P237转为信息不缺失的end-to-end amortization：仅输入8个固定horizon位置的
 normalized score/clearance conditions，直接蒸馏P233 surface，从运行时同时移除28个P182 CDF计算；P233 structure/
 teacher/steps/decisions不变，单次训练中。
+P237也未能移除marginal surface：P201 surface MAE=`.012062`与quality composite通过，但final MAE=
+`.016343>.01`，2/3、F181；P183同样final MAE=`.015716`。因此runtime input-reduction family关闭，fresh-supported
+P233仍使用`8 conditions + 28 fixed-budget marginals`。调研UAI 2020 MONDE与monotone conditional CDF后，P238改变
+能力而非继续删输入：以七个既有budget训练4-component logistic-mixture base CDF和三个positive-slope retention curves，
+在六个相邻几何中点budget上评价连续插值；结构上保持budget递增/horizon递减。P201三项heldout-budget decisions单次冻结，
+RTX 3090训练中。
 
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新

@@ -106,6 +106,9 @@ student Brier改善`.316%`，calibration absolute increase仅`.000020`，3/3。�
 对teacher MC joint stage `.111554s`，约`38.4x`；这只是当前实现的stage timing。事前冻结、共享首次read的P234进一步确认
 P233 surface：surface/final MAE=`.007101/.009483`，surface Brier/calibration分别改善`.283%/.001249`，双轴violations=0，
 3/3。P234是same-read secondary而非第二独立cohort；两项结果都不授权formal calibration、planner或safety claim。
+P237尝试只用8个raw conditions端到端amortize全部density/dependence，但P201 final MAE=`.016343>.01`（F181），
+故input-reduction family关闭。P238依据UAI 2020 monotone neural CDF，保留P233完整输入并将budget改为连续response：
+logistic-mixture base CDF与positive-slope retention curves在七预算训练、六个几何中点heldout评价，结构保持双轴单调。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -655,6 +658,7 @@ support”；它仍不等价于collision probability、formal coverage或deploym
 - Gauraha et al., [Split Knowledge Transfer in Learning Under Privileged Information](https://proceedings.mlr.press/v105/gauraha19a.html), COPA 2019.
 - Li et al., [Correlation-Decoupled Knowledge Distillation for Multimodal Sentiment Analysis with Incomplete Modalities](https://openaccess.thecvf.com/content/CVPR2024/html/Li_Correlation-Decoupled_Knowledge_Distillation_for_Multimodal_Sentiment_Analysis_with_Incomplete_Modalities_CVPR_2024_paper.html), CVPR 2024.
 - Chen et al., [Probabilistic Conformal Distillation for Enhancing Missing Modality Robustness](https://proceedings.neurips.cc/paper_files/paper/2024/hash/3fb97beb678a1c46bf25f40b3a8c6f98-Abstract-Conference.html), NeurIPS 2024.
+- Chilinski and Silva, [Neural Likelihoods via Cumulative Distribution Functions](https://proceedings.mlr.press/v124/chilinski20a.html), UAI 2020.
 
 - Chai et al., [MultiPath: Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction](https://proceedings.mlr.press/v100/chai20a.html), CoRL 2019.
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.

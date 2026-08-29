@@ -147,7 +147,8 @@
 | P234 | `run://worldsim_v67/WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01/20260831T025000Z__prefix-surface-fresh-confirmation-s0-r1` | fresh same-read surface/final MAE `.007101/.009483`；3/3 support |
 | P235 | `run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1` | final MAE `.010090>.01`；rejected/F179 |
 | P236 | `run://worldsim_v67/WS-V67-P236-PRIVILEGED-FEATURE-HALLUCINATION-SURFACE-01/20260831T031000Z__privileged-feature-hallucination-surface-s0-r1` | P201 final MAE `.014007>.01`；rejected/F180 |
-| P237 | `run://worldsim_v67/WS-V67-P237-RAW-CONDITION-PREFIX-SURFACE-01/20260831T033000Z__raw-condition-prefix-surface-s0-r1` | 8-condition end-to-end surface amortization；training active |
+| P237 | `run://worldsim_v67/WS-V67-P237-RAW-CONDITION-PREFIX-SURFACE-01/20260831T033000Z__raw-condition-prefix-surface-s0-r1` | P201 final MAE `.016343>.01`；rejected/F181 |
+| P238 | `run://worldsim_v67/WS-V67-P238-CONTINUOUS-BUDGET-PREFIX-SURFACE-01/20260831T040000Z__continuous-budget-prefix-surface-s0-r1` | seven-budget train/six-midpoint heldout continuous CDF；training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

@@ -2846,6 +2846,16 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F181`。
 
+### V67-F181 — raw-condition end-to-end surface无法恢复conditional-density刻度
+
+- canonical：`run://worldsim_v67/WS-V67-P237-RAW-CONDITION-PREFIX-SURFACE-01/20260831T033000Z__raw-condition-prefix-surface-s0-r1`；
+- 观察：P201 surface MAE和quality composite过门，但final MAE=`.016343>.01`；P183 final MAE=`.015716`；
+- 解释：固定source cohort中从8个conditions重新学习P182 density+C199 dependence的复合映射，丢失了显式marginal刻度；
+- response：关闭input reduction，保留fresh-supported P233输入；P238改研究连续budget CDF能力，不再删输入；
+- 防重复：不试raw-only width/depth/loss/seed或混合少量marginal subsets。
+
+下一可用编号：`V67-F182`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；

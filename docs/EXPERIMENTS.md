@@ -1893,7 +1893,18 @@
 - hypothesis：8个normalized score/clearance conditions本身是P182 marginals的上游充分输入；直接蒸馏P233 surface可在
   runtime移除28个density-CDF evaluations，而不做missing-feature reconstruction；
 - protocol：固定P233双轴结构、teacher surface、128x128、source split、10,000 steps与三项P201 decisions；
-- status：RTX 3090训练中；不扫input subset/width/surface structure/budget/horizon/MC，不读P228/P234 quality。
+- result：P201 surface MAE=`.012062`、Brier degradation=`.586%`、calibration increase=`.000253`均在容差，
+  但final MAE=`.016343>.01`；2/3，F181；P183 final MAE=`.015716`；
+- verdict=`rejected_raw_condition_prefix_reliability_surface`；wall=`99.83s`。关闭runtime input reduction。
+
+### WS-V67-P238-CONTINUOUS-BUDGET-PREFIX-SURFACE-01
+
+- literature response：UAI 2020 MONDE直接参数化conditional CDF并通过response方向单调结构获得可微密度/CDF；
+- model：context network输出4-component logistic-mixture base CDF，以及三个对normalized log-budget具有positive slope的
+  retention curves；乘积结构同时保证budget monotonicity和horizon-prefix monotonicity；
+- protocol：只用`.05/.1/.2/.4/.8/1.6/3.2`七点teacher训练；六个相邻几何中点完全heldout，P201只在heldout budgets
+  判surface MAE≤`.015`、final MAE≤`.01`、Brier/calibration noninferiority；
+- status：RTX 3090 source-only 10,000-step训练中；不扫component/knot/width/budget/metric/MC。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
