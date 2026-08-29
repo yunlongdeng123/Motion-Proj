@@ -1135,7 +1135,11 @@
 - method：同一source trajectories额外编译progress `.25/.75` × command `-.5/.5`的4个task conditions，
   与原9条件合并；3个training horizons形成39组worst-group primal-dual。P201标签不参与训练/模型选择。
 - lock：P337/P339、q90 exact anchor、6k steps、dual/temperature/multiplier参数与P342完全相同；不扫插值grid、
-  risk margin或seed。状态=`active training`。
+  risk margin或seed。
+- r1=`20260901T124500Z__interpolated-task-worst-group-authority-s0-r1`：插值rows误接未使用的single-set
+  materialization path，step1/501/1001与P342完全相同；在step1001主动中止，未做quality evaluation，F219。
+- r2修复multi-set拼接路径后，step1 worst-group risk=`.236447`（r1=`.229960`），确认新strata生效；
+  状态=`active training r2`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

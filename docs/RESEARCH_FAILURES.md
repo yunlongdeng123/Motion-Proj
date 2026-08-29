@@ -424,8 +424,8 @@
 - P341：条件风险primal-dual使coverage升至`.34954`、q95改善，但q85 risk excess扩大到`.00534`，
   3/4 rejected，登记F217；
 - P342：source最坏组风险改善，但P201 q95 risk excess `.003892 > .003571`，3/4 rejected，登记F218；
-- P343 active：source补齐目标插值task grid并做39组worst-group training；
-- 下一可用 failure id 为 `V67-F219`。
+- P343 r1：插值rows接错single-set路径，训练实际重复P342；step1001主动中止，登记F219；r2 active；
+- 下一可用 failure id 为 `V67-F220`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -464,6 +464,17 @@
   calibration distribution/strata匹配目标；P343在source trajectory上生成相同插值task strata，无需P201标签；
 - forbidden rescue：不扫group definition、dual LR、margin、temperature或seed；resolution=
   `open via P343 interpolated-task worst-group training`。
+
+### V67-F219 — P343 r1插值task rows未接入multi-set authority路径
+
+- run=`run://worldsim_v67/WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01/
+  20260901T124500Z__interpolated-task-worst-group-authority-s0-r1`；
+- symptom：step1/501/1001 loss与conditional risk和P342逐位相同，说明新task strata未改变batch；
+- cause：interpolated source concat实现位于single-set materialization else，而P343使用multi-set size prefix分支；
+- response：step1001主动SIGINT避免继续浪费GPU；在每个set-size local source生成后拼接相同interpolated rows，
+  r2 step1 risk `.236447 != r1 .229960`；
+- scope：r1没有完成summary或读取quality，不构成科学negative；不更改P343 hypothesis/gates/hyperparameters；
+  resolution=`closed by multi-set wiring fix 41e22b8 and P343 r2`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
