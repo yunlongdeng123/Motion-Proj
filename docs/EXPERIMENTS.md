@@ -1185,7 +1185,14 @@
   P201仅在末端读取。
 - gates/locks：沿用q90 risk/coverage与两个monotonicity gates；不扫bin/group/threshold/capacity/step/LR/seed。
 - runs：r1=`20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r1`在模型载入前因入口缺
-  `PYTHONPATH=.`退出，0 training/quality；设置仓库级搜索路径后r2同配置启动，状态=`active training`。
+  `PYTHONPATH=.`退出，0 training/quality；设置仓库级搜索路径后r2同配置完成。
+- canonical=`run://worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/
+  20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2`；状态=`done/supported development`。
+- result：isotonic fold2=`5,490` rows、9 maps、in-fold BCE=`.326170`；P201 q75/q85/q90/q95 coverage=
+  `.432240/.363934/.328415/.256011`、max unsafe=`.155172/.106383/.090909/.075000`。q90 strict/mid/high
+  coverage=`.072131/.257377/.655738`、unsafe=`.090909/.057325/.027500`；四门通过，wall=`49.14s`。
+- limitation：source fold3 heldout-H q90 coverage/unsafe=`.294239/.267108`，概率range=`[0,1]`；支持的是
+  reused P201 development，不是IID/source-horizon calibration guarantee，更不是formal multicalibration。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

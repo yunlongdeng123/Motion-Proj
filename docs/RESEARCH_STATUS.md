@@ -607,7 +607,11 @@ coverage/unsafe=`.278689/.107143`；相对P344风险下降`.013736`，但覆盖�
 
 P346依据AISTATS isotonic calibration、NeurIPS verified uncertainty calibration与NeurIPS multicalibration，保留P345
 8k base与2k group calibration，再在独立source scene fold2上对9个ceiling×set-size groups拟合PAV单调分段概率映射；
-不选bin数、不使用P201标签。Active=`WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01` r2；
+不选bin数、不使用P201标签。Canonical=`run://worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-
+VISITED-RELIABILITY-01/20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2`：P201 q90
+coverage/unsafe=`.328415/.090909`，四门全部通过，verdict=`supported_isotonic_multicalibrated_visited_reliability`，
+wall=`49.14s`。四个heldout task-condition在strict ceiling的unsafe=`.08696--.10`。但source heldout-H q90
+unsafe=`.267108`且probability range饱和到`[0,1]`，所以只保留development support，不声称跨域校准或安全保证。
 r1仅因入口缺`PYTHONPATH=.`在模型载入前退出，未消耗训练或quality read。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）

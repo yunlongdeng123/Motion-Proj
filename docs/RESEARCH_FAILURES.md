@@ -428,7 +428,7 @@
 - P343 r2：P201 coverage与risk excess两门均比P337差，2/4 rejected，登记F220；
 - P344：P201 q90 risk/coverage `.12088/.28005`，两门失败，登记F221；
 - P345：group calibration将P201 q90 risk降到`.10714`，但coverage降到`.27869`，2/4 rejected，登记F222；
-- P346 active：独立source fold2上的ceiling×set-size isotonic/PAV probability-bin calibration；
+- P346：P201 q90 coverage/risk `.32842/.09091`，四门supported；source heldout-H仍漂移，仅保留development claim；
 - 下一可用 failure id 为 `V67-F223`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
@@ -525,6 +525,15 @@
 - r1在导入`from scripts...`时抛`ModuleNotFoundError`，发生于模型和quality载入前，0 training；
 - 这是V65-F18已知入口环境约束，不改变方法或实验合同；仅设置`PYTHONPATH=.`后以r2重启；
 - 未分配新failure id，下一可用编号保持`V67-F223`。
+
+### P346 supported note — PAV关闭P345 decision failure，但不关闭跨分布校准问题
+
+- canonical r2的P201四门通过，故不登记negative-result failure；
+- source heldout-H q90 unsafe=`.267108`以及`[0,1]`饱和映射表明独立fold PAV仍对horizon/covariate shift敏感；
+- P201 task-condition strict unsafe均不超过`.10`，因此该现象不撤销预注册development verdict，但禁止写成general
+  calibration、formal multicalibration或safety guarantee；
+- 下一步按AISTATS 2020 covariate-shift calibration，只使用target unlabeled covariates估计importance weights，不读取
+  target reliability labels；下一可用failure id保持`V67-F223`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
