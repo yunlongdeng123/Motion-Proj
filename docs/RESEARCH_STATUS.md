@@ -686,6 +686,11 @@ P126 score+horizon，以source非calibration scenes的P170 log-cost residual做q
 组加一次offset。旧四要求每组coverage≥`.88`且mean upper bound比P170再锐化≥5%；通过才等待P167。依据ICML 2025
 rectified conformity scores，不扫hidden/quantile/split/threshold。
 
+P171 canonical r1完成6,000-step训练。P81/P96/P113/P129 coverage=`.95422/.92791/.95475/.91255`，coverage门通过；
+但相对P170 sharpness reduction=`-36.37%/+9.69%/-26.95%/-24.29%`，mean=`-19.48%`，效率门失败，F135。
+因此未读取P167。Conditional correction在不同scene产生不稳定scale，global P170 offset反而更稳；关闭rectifier支线，不扫hidden/split。
+P170保持唯一等待P167的upper-bound candidate。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

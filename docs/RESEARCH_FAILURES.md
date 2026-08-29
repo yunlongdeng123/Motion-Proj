@@ -2219,7 +2219,16 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：old4 coverage每组≥`.88`+mean sharpness over P170≥5%；通过才读P167。
 - prevention：不扫hidden/quantile/split/loss/threshold；algorithm failure才用`V67-F135`并关闭rectifier trial。
 
-下一可用编号仍为：`V67-F135`。
+### V67-F135 — conditional conformity rectifier保持coverage但显著恶化跨scene sharpness
+
+- 分类：`algorithm/conditional-conformity-transfer`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/
+  20260830T133000Z__rectified-conformal-cost-bound-s0-r1`。
+- 观察：旧四coverage均≥`.9125`，但mean sharpness reduction over P170=`-19.48%`；仅P96锐化，1/2 decisions。
+- 解释：source in-sample residual trend经final offset后仍跨scene漂移；conditional correction扩大三组upper bound，constant P170 offset更稳。
+- 防重复：不扫hidden/split/quantile或对scene选择rectifier；按规则未读P167。P170仍是唯一prospective upper-bound candidate。
+
+下一可用编号为：`V67-F136`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

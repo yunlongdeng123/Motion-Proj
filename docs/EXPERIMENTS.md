@@ -1171,6 +1171,9 @@
 - decisions：旧四coverage每组≥`.88`，mean upper-bound相对P170锐化≥5%；通过才等P167 prospective。
 - locks：不扫hidden/quantile/split/loss/threshold，不加hash/checksum/fingerprint或测试矩阵。
 - claim：只作empirical conditional rectification；无formal conditional coverage或safety guarantee。
+- result：P81/P96/P113/P129 coverage=`.95422/.92791/.95475/.91255`；sharpness over P170=
+  `-36.37%/+9.69%/-26.95%/-24.29%`，mean=`-19.48%`。1/2 decisions。
+- verdict=`rejected_rectified_conformal_cost_bound`，F135；未读P167。关闭conditional rectifier，不扫hidden/split/quantile。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

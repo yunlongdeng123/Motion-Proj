@@ -81,7 +81,7 @@
 | P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
 | P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | cost 3/4微降、P96微退，mean rank `+.00212<.005`；rejected/F133 |
 | P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | old4 coverage min `.9060`、mean sharpness `23.66%`；2/2 dev，frozen waiting P167 |
-| P171 | `run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/20260830T133000Z__rectified-conformal-cost-bound-s0-r1` | frozen/launching；conditional residual q90 rectifier over P170，source-only then P167 |
+| P171 | `run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/20260830T133000Z__rectified-conformal-cost-bound-s0-r1` | coverage pass、mean sharpness over P170 `-19.48%`；未读P167，rejected/F135 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -203,6 +203,7 @@
 | `V67-F132` | closed negative | P165 top-4/16 upper-tail mean仍使旧四fixed50 cost全部回退；未读P167 |
 | `V67-F133` | closed negative | direct soft fixed50训练收敛到P126邻域；P96微退且mean rank gain不足 |
 | `V67-F134` | resolved pre-evaluation | P109 source已排除absolute mod-5 scenes；改为artifact内ordered unique scene group split |
+| `V67-F135` | closed negative | conditional conformity rectifier保持coverage但mean upper-bound sharpness恶化19.48% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

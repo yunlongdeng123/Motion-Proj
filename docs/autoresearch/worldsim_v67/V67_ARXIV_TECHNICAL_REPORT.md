@@ -371,6 +371,10 @@ P171是P170的唯一效率增量：冻结base quantile model，以score+horizon�
 并保留最终held-out scene offset。它对应ICML 2025对conformity score conditional rectification的最小迁移；旧四保持coverage并比P170
 再锐化5%前不读取P167。该阶段仍只允许empirical coverage/sharpness解释。
 
+P171旧四coverage仍为`.9542/.9279/.9548/.9126`，但相对P170的mean sharpness恶化`19.48%`（F135）；只有P96
+更窄。说明source residual conditional pattern未跨scene稳定迁移，constant P170 offset更可靠。P171未读P167并关闭，P170保持
+唯一prospective cost-bound candidate。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
