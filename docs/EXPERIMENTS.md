@@ -662,8 +662,26 @@
   但不声明globally fresh。
 - inherited：input normalization、quantile head weights、q50/q80/q95 calibration offsets、heldout task conditions与
   max undercoverage `.10`/median log-cost MAE `.35`两门；0-step、0 recalibration、one read。
-- active=`run://worldsim_v67/WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
   20260901T053000Z__admitted-set-quantile-confirmation-s0-r1`。
+- result：720 examples，coverage=`.66944/.95000/.98750`、max undercoverage=`-.03750`、median log-cost
+  MAE=`.12101`、pinball=`.05249`、q95-q50 width=`.69359`、order violations=0，2/2 supported；四个task
+  conditions的q95 coverage=`.98889/.99444/.98333/.98333`。0 train/0 recalibration；wall=`1.34s`、peak
+  GPU=`.08244GiB`、RSS=`.8803GiB`。
+
+### WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01
+
+- research object：从“证书覆盖吗”递进到“给定maximum visited-state cost ceiling，是否授权整个task-conditioned
+  top-2 set”；输出可微admit score，部署时可hard threshold。
+- method：冻结P315 q95，训练`[128,64]` bounded `.50` residual risk score；source train ceiling anchors=
+  target quantile `.35/.55/.75/.95`，正式read只看`.45/.65/.85` midpoints。单个source-calibration q90
+  nonnegative margin；结构保证ceiling越宽松，admission不减少。
+- precedent/claim boundary：迁移selective classification risk-coverage与conformal risk-control loss对象，但因cohort
+  reuse和当前scene split只声明empirical selective authority，不写conformal/population/safety guarantee。
+- gates：P201 max unsafe admission rate `<=.15`、mean admission coverage `>=.20`、ceiling monotonicity
+  violations=0；不扫ceiling/gate/capacity/seed。
+- active=`run://worldsim_v67/WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
+  20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

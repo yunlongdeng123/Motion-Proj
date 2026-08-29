@@ -377,9 +377,19 @@ conditions均保持q95 coverage `>=.97049`；wall=`44.91s`、peak GPU=`.14039GiB
 admitted-set经验量化证书，不提升为formal coverage/safety claim；下一步只做一次冻结证书的跨cohort确认。
 
 P316冻结P315全部quantile weights、input normalization、q50/q80/q95 additive offsets和两门，在P277六场景/
-180个六动作组上做certificate-family untouched 0-step确认；只评估heldout `.25/.75 × -.5/.5`，不训练、
-不重新校准、不改gate。Active=`run://worldsim_v67/WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
-20260901T053000Z__admitted-set-quantile-confirmation-s0-r1`。
+180个六动作组上做certificate-family untouched 0-step确认。Canonical=`run://worldsim_v67/
+WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
+20260901T053000Z__admitted-set-quantile-confirmation-s0-r1`：720个heldout task examples coverage=
+`.66944/.95000/.98750`、max undercoverage=`-.03750`、median log-cost MAE=`.12101`、order violations=0，
+2/2 supported；四个task conditions的q95 coverage均`>=.98333`。0 train/0 recalibration，wall=`1.34s`。
+
+P317不再重复证书确认；参照NeurIPS 2017 selective classification的risk-coverage对象与UAI 2023 conformal risk
+control的可控损失形式，但保持经验claim：以冻结P315 q95为base，训练单个bounded residual set-risk score；给定连续
+maximum cost ceiling，以同一scalar score阈值产生结构上ceiling-monotone的admit/abstain。source train固定四个ceiling
+anchors、heldout三个midpoints，source calibration只加一个nonnegative q90 margin；P201三门为unsafe admission
+`<=.15`、mean coverage `>=.20`、monotonicity violations=0。Active=`run://worldsim_v67/
+WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
+20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

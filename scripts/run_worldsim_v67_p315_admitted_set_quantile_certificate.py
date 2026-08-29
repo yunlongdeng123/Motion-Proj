@@ -46,6 +46,25 @@ class AdmittedSetQuantileHead(nn.Module):
         return torch.cat((median, median + torch.cumsum(increments, 1)), 1)
 
 
+class CeilingConditionedSelectiveAuthority(nn.Module):
+    """Bounded scene/task correction around a frozen conservative set-cost score."""
+
+    def __init__(self, input_width: int, hidden_dimensions, maximum_residual: float) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 1))
+        self.network = nn.Sequential(*layers)
+        self.maximum_residual = float(maximum_residual)
+
+    def forward(self, features, frozen_score):
+        residual = self.maximum_residual * torch.tanh(self.network(features).squeeze(1))
+        return frozen_score + residual, residual
+
+
 @torch.no_grad()
 def _task_examples(descriptors, selector_score, costs, queries, scenes, progress_model, maneuver_model,
                    progress_values, commands, lateral_weight, selected_count):
@@ -112,6 +131,55 @@ def _evaluate(model, features, target, conditions, quantiles, offsets):
     }
 
 
+def _selective_metrics(score, target, conditions, ceiling_values):
+    actual_cost = np.expm1(target)
+    by_ceiling = {}
+    coverages, unsafe_rates = [], []
+    previous_admitted = None
+    monotonicity_violations = 0
+    for ceiling in ceiling_values:
+        admitted = score <= float(ceiling)
+        if previous_admitted is not None:
+            monotonicity_violations += int(np.sum(previous_admitted & ~admitted))
+        previous_admitted = admitted
+        count = int(admitted.sum())
+        unsafe_rate = float(np.mean(target[admitted] > ceiling)) if count else 0.0
+        all_unsafe_rate = float(np.mean(target > ceiling))
+        admitted_cost = float(np.mean(actual_cost[admitted])) if count else None
+        by_condition = {}
+        for progress, command in np.unique(conditions, axis=0):
+            local = np.isclose(conditions[:, 0], progress) & np.isclose(conditions[:, 1], command)
+            local_admitted = local & admitted
+            local_count = int(local_admitted.sum())
+            by_condition[f"progress={float(progress)},command={float(command)}"] = {
+                "admission_coverage": float(local_count / max(int(local.sum()), 1)),
+                "unsafe_admission_rate": float(np.mean(target[local_admitted] > ceiling)) if local_count else 0.0,
+            }
+        by_ceiling[str(float(ceiling))] = {
+            "log_cost_ceiling": float(ceiling),
+            "actual_cost_ceiling": float(np.expm1(ceiling)),
+            "admitted_count": count,
+            "admission_coverage": float(np.mean(admitted)),
+            "unsafe_admission_rate": unsafe_rate,
+            "unselective_unsafe_rate": all_unsafe_rate,
+            "unsafe_rate_relative_reduction": float((all_unsafe_rate - unsafe_rate) / max(all_unsafe_rate, 1e-8)),
+            "mean_admitted_actual_cost": admitted_cost,
+            "mean_all_actual_cost": float(np.mean(actual_cost)),
+            "by_task_condition": by_condition,
+        }
+        coverages.append(float(np.mean(admitted)))
+        unsafe_rates.append(unsafe_rate)
+    return {
+        "example_count": int(len(target)),
+        "mean_admission_coverage": float(np.mean(coverages)),
+        "highest_ceiling_admission_coverage": float(coverages[-1]),
+        "maximum_unsafe_admission_rate": float(np.max(unsafe_rates)),
+        "mean_unsafe_admission_rate": float(np.mean(unsafe_rates)),
+        "ceiling_admission_monotonicity_violations": monotonicity_violations,
+        "by_ceiling": by_ceiling,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
@@ -125,6 +193,7 @@ def main() -> None:
     started = time.monotonic()
     seed = int(config["seed"])
     confirmation_only = bool(config.get("confirmation_only", False))
+    selective_authority_training = bool(config.get("selective_authority_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -222,6 +291,146 @@ def main() -> None:
         config["heldout_progress_preferences"], config["heldout_lateral_commands"],
         float(config["lateral_preference_weight"]), int(config["selected_action_count"]),
     )
+    if selective_authority_training:
+        certificate = torch.load(
+            args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
+            map_location="cuda",
+        )
+        feature_mean = np.asarray(certificate["input_mean"], np.float32)
+        feature_scale = np.asarray(certificate["input_scale"], np.float32)
+        offsets = np.asarray(certificate["calibration_offsets"], np.float32)
+        source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+        p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+        quantile_model = AdmittedSetQuantileHead(
+            int(certificate["input_width"]), certificate["hidden_dimensions"]
+        ).cuda()
+        quantile_model.load_state_dict(certificate["model_state_dict"])
+        quantile_model.eval()
+        with torch.no_grad():
+            source_quantiles = quantile_model(torch.from_numpy(source_feature).cuda()).cpu().numpy()
+            p201_quantiles = quantile_model(torch.from_numpy(p201_feature).cuda()).cpu().numpy()
+        source_frozen_score = np.maximum.accumulate(source_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+        p201_frozen_score = np.maximum.accumulate(p201_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+
+        split = config["split"]
+        modulus = int(split["scene_modulus"])
+        calibration = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
+        development = source_example_scenes % modulus == int(split["development_scene_remainder"])
+        train = ~(calibration | development)
+        model_config = config["selective_model"]
+        anchor_levels = np.asarray(config["training_ceiling_quantile_levels"], np.float32)
+        evaluation_levels = np.asarray(config["heldout_ceiling_quantile_levels"], np.float32)
+        anchor_ceilings = np.quantile(source_target[train], anchor_levels).astype(np.float32)
+        evaluation_ceilings = np.quantile(source_target[train], evaluation_levels).astype(np.float32)
+        model = CeilingConditionedSelectiveAuthority(
+            source_feature.shape[1], model_config["hidden_dimensions"], float(model_config["maximum_residual"])
+        ).cuda()
+        optimizer = torch.optim.AdamW(
+            model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+        )
+        x = torch.from_numpy(source_feature).cuda()
+        y = torch.from_numpy(source_target).cuda()
+        frozen_score = torch.from_numpy(source_frozen_score).cuda()
+        ceiling_tensor = torch.from_numpy(anchor_ceilings).cuda()
+        train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
+        temperature = float(model_config["admission_temperature"])
+        last = 0.0
+        for step in range(int(model_config["steps"])):
+            row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+            ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+            risk_score, residual = model(x[row], frozen_score[row])
+            safe = (y[row] <= ceiling).float()
+            logits = (ceiling - risk_score) / temperature
+            loss = (
+                F.binary_cross_entropy_with_logits(logits, safe)
+                + float(model_config["cost_regression_weight"]) * F.smooth_l1_loss(risk_score, y[row])
+                + float(model_config["residual_l2_weight"]) * residual.square().mean()
+            )
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            last = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P317 selective authority step={step + 1} loss={last:.7f}", flush=True)
+
+        model.eval()
+        with torch.no_grad():
+            source_score = model(x, frozen_score)[0].cpu().numpy()
+            p201_score = model(
+                torch.from_numpy(p201_feature).cuda(), torch.from_numpy(p201_frozen_score).cuda()
+            )[0].cpu().numpy()
+        calibration_residual = source_target[calibration] - source_score[calibration]
+        calibration_margin = max(
+            0.0, float(np.quantile(calibration_residual, float(config["calibration_score_quantile"])))
+        )
+        source_score = source_score + calibration_margin
+        p201_score = p201_score + calibration_margin
+        source_metrics = _selective_metrics(
+            source_score[development], source_target[development], source_conditions[development], evaluation_ceilings
+        )
+        p201_metrics = _selective_metrics(p201_score, p201_target, p201_conditions, evaluation_ceilings)
+        frozen_source_metrics = _selective_metrics(
+            source_frozen_score[development], source_target[development], source_conditions[development], evaluation_ceilings
+        )
+        frozen_p201_metrics = _selective_metrics(
+            p201_frozen_score, p201_target, p201_conditions, evaluation_ceilings
+        )
+        decision = config["decision"]
+        checks = {
+            "P201_selective_authority_risk": p201_metrics["maximum_unsafe_admission_rate"] <= float(decision["maximum_P201_unsafe_admission_rate"]),
+            "P201_selective_authority_coverage": p201_metrics["mean_admission_coverage"] >= float(decision["minimum_P201_mean_admission_coverage"]),
+            "P201_ceiling_admission_monotonicity": p201_metrics["ceiling_admission_monotonicity_violations"] <= int(decision["maximum_P201_ceiling_admission_monotonicity_violations"]),
+        }
+        verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+        torch.save({
+            "model_state_dict": model.state_dict(),
+            "input_width": source_feature.shape[1],
+            "hidden_dimensions": model_config["hidden_dimensions"],
+            "maximum_residual": float(model_config["maximum_residual"]),
+            "calibration_margin": calibration_margin,
+            "training_ceiling_quantile_levels": anchor_levels,
+            "training_log_cost_ceilings": anchor_ceilings,
+            "heldout_ceiling_quantile_levels": evaluation_levels,
+            "heldout_log_cost_ceilings": evaluation_ceilings,
+            "frozen_certificate": config["frozen_certificate"],
+        }, run_dir / config["model_artifact"])
+        summary = {
+            "schema_version": config["output_schema_version"],
+            "task_id": config["task_id"],
+            "hypothesis_id": config["hypothesis_id"],
+            "status": "done",
+            "verdict": verdict,
+            "role": config["role"],
+            "training": {
+                "example_count": int(train.sum()),
+                "steps": int(model_config["steps"]),
+                "final_loss": last,
+                "training_ceiling_quantile_levels": [float(value) for value in anchor_levels],
+                "training_log_cost_ceilings": [float(value) for value in anchor_ceilings],
+            },
+            "calibration": {
+                "example_count": int(calibration.sum()),
+                "score_quantile": float(config["calibration_score_quantile"]),
+                "nonnegative_log_cost_margin": calibration_margin,
+            },
+            "heldout_log_cost_ceilings": [float(value) for value in evaluation_ceilings],
+            "source_development": source_metrics,
+            "source_frozen_q95_baseline": frozen_source_metrics,
+            "P201_post_hoc_development": p201_metrics,
+            "P201_frozen_q95_baseline": frozen_p201_metrics,
+            "decision_checks": checks,
+            "resources": {
+                "gpu": torch.cuda.get_device_name(0),
+                "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                "wall_seconds": time.monotonic() - started,
+            },
+            "claim_boundary": config["claim_boundary"],
+        }
+        (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+        (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+        print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+        return
     if confirmation_only:
         certificate = torch.load(
             args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
