@@ -1707,9 +1707,27 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：复用P126 seeds0/1/2，只按exact P126 protocol新增seeds3/4；形成5-member total variance。
 - evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort cost nonregression且mean Spearman gain≥`.003`。
+  实际mean gain=`+.000557`，P96/P113 cost回退，两门失败。
 - prevention：固定5 members与seeds3/4，只跑一次；不扫member/seed/weight/projection/coverage。
 
-下一可用编号为：`V67-F104`。
+### V67-F104 — 五成员规模增加未形成稳定continuous increment
+
+- 分类：`algorithm/ensemble-size-scaling`；状态：`closed_negative_after_one_fixed_scale_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/
+  20260830T100500Z__five-member-deep-ensemble-s0-r1`。
+- 观察：P81/P96/P113/P129 rank gain=`+.000445/+.002049/-.000543/+.000275`，mean=`+.000557<.003`；
+  P96/P113 cost回退。新增两members训练收敛。
+- 解释：更多自然分布members只降低Monte Carlo noise，未改变task alignment；三成员已经捕获主要increment。
+- 防重复：不再扫member count/seed。P142改变预测对象为query-conditioned projected residual distribution。
+
+### P142 freeze note — task-conditioned projected residual ensemble
+
+- method：直接训练`p(n(τ)^T e | τ, Actor, t)`三成员异方差Gaussian；输入24 query features+time fraction+normal，
+  target是真实projected residual，不是teacher/cost/event。
+- decisions：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`。
+- prevention：一次固定3-member trial，不扫input/loss/member/seed/weight/coverage；支持才做fresh confirmation。
+
+下一可用编号为：`V67-F105`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

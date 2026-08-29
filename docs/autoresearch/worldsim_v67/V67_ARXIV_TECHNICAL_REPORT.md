@@ -246,6 +246,10 @@ P140在P113/P129降低selection cost，却在P81/P96回退，mean rank gain=`-.0
 稳定超过P126。P141因此回到natural-token训练，在精确复用P126三成员基础上只新增seeds3/4，检验5-member规模是否在四个
 consumed cohorts产生一致increment；若支持才需要另一组fresh confirmation。
 
+P141 mean rank gain仅`+.00056`且P96/P113 cost回退（F104），故三成员保持complexity-benefit optimum，停止member sweep。
+P142转而采用conditional forecasting的对象定义：三成员直接拟合候选τ在每个future time的boundary-normal projected Actor
+residual distribution；其监督仍是连续world-state residual而非decision cost/event，从模型层面把UQ条件化到被访问state。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

@@ -435,8 +435,15 @@ P140不继续平衡权重，而将scene作为bootstrap unit以增加成员的系
 它说明scene omission可改善两个后期cohort的selection cost，但没有稳定提升排序；scene-bagging不再扫fraction/seed。
 
 P141回到已取得P129独立支持的自然token ensemble，只新增按P126同协议训练的seed3/4并与原3 members组成固定5-member
-total variance。P81/P96/P113/P129均已消费，只作ensemble-size scaling development；要求四cohort cost全不退且mean
-Spearman gain over P126≥`.003`。不扫member count/seed/weight/projection/coverage；3090正在训练新增两成员。
+total variance。P81/P96/P113/P129 Spearman gain=`+.00044/+.00205/-.00054/+.00027`（mean=`+.00056<.003`）；
+P81/P129 cost改善，但P96/P113回退到`.16906/.22486`。0/2 decisions，wall=`54.46s`，登记F104。三成员保持更好的
+complexity-benefit point，不继续扫member count。
+
+P142据ICCV 2019 conditional forecasting与conditional-UQ把预测对象进一步绑定到候选τ：不再先学通用2D Actor residual再
+事后投影，而对每个query/time直接训练三成员异方差分布`p(n(τ)^T e | τ, Actor, t)`。输入为24维existing query
+features、time fraction和boundary normal；监督只是真实projected residual，不读teacher score、direct cost或event label。
+5,180,364 conditional time tokens、6,000 steps、固定3 members；在四个consumed cohorts相对P126检验cost全不退与mean
+rank gain≥`.005`，3090正在训练。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

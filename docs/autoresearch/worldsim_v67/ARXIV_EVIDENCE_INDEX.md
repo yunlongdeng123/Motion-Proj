@@ -51,7 +51,8 @@
 | P138 | `run://worldsim_v67/WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01/20260830T095000Z__full-covariance-deep-ensemble-s0-r1` | P81/P113 gain、P96反转；rejected/F101 |
 | P139 | `run://worldsim_v67/WS-V67-P139-SCENE-BALANCED-DEEP-ENSEMBLE-01/20260830T095500Z__scene-balanced-deep-ensemble-s0-r1` | cost全退、mean rank `-.01275`；rejected/F102 |
 | P140 | `run://worldsim_v67/WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01/20260830T100000Z__scene-bagged-deep-ensemble-s0-r1` | mean rank `-.00405`、P81/P96 cost退；rejected/F103 |
-| P141 | `run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/20260830T100500Z__five-member-deep-ensemble-s0-r1` | exact P126 + seeds3/4；running |
+| P141 | `run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/20260830T100500Z__five-member-deep-ensemble-s0-r1` | mean gain=`+.00056`、P96/P113 cost退；rejected/F104 |
+| P142 | `run://worldsim_v67/WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01/20260830T101000Z__task-conditioned-projected-ensemble-s0-r1` | direct `p(n(τ)^T e | τ,Actor,t)`；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -95,7 +96,8 @@
 | full-covariance deep ensemble | P138 consumed P81/P96/P113 | mean gain=`+.00359` | P96 reversal；reject |
 | scene-balanced deep ensemble | P139 consumed P81/P96/P113 | mean gain=`-.01275`、cost全退 | reject simple balancing |
 | scene-bagged deep ensemble | P140 consumed P81/P96/P113/P129 | mean gain=`-.00405` | P113/P129 cost改善但整体reject |
-| five-member deep ensemble | P141 consumed P81/P96/P113/P129 | running | one fixed scale trial |
+| five-member deep ensemble | P141 consumed P81/P96/P113/P129 | mean gain=`+.00056` | reject member scaling |
+| task-conditioned projected ensemble | P142 consumed P81/P96/P113/P129 | running | prediction-object migration |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -126,6 +128,7 @@
 | `V67-F93--F101` | closed negative | distillation、efficient/snapshot/SWAG与full-covariance路线未稳定保持P126 |
 | `V67-F102` | closed negative | uniform source-scene sampling三cohort一致退化 |
 | `V67-F103` | closed negative | scene bootstrap仅在P113/P129改善cost，四cohort rank不稳定 |
+| `V67-F104` | closed negative | five-member scaling未超过three-member P126 boundary |
 
 ## 4. Artifact inventory
 

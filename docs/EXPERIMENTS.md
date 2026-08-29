@@ -675,13 +675,29 @@
 
 ### WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical planned=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T100500Z__five-member-deep-ensemble-s0-r1`。
 - method：exact reuse P126 members seeds0/1/2；用同一source normalization、token-uniform NLL、`[256,128]`、batch65,536、
   6,000 steps只训练seeds3/4，组成固定5-member law-of-total-variance boundary score。
 - evaluation/decisions：consumed P81/P96/P113/P129相对P126 3-member；四cohort selected cost全不退化且mean Spearman gain≥`.003`。
 - locks：这是一次5-member scale trial；不扫member count/seed/weight/projection/coverage。若支持才另冻fresh confirmation。
 - reference：NeurIPS 2017 deep ensembles；只称consumed ensemble-size scaling，不声称calibration或safety。
+- result：new seed3/4 NLL=`-3.588892/-3.562547`。P81/P96/P113/P129 selected cost=
+  `.176511/.169056/.224864/.305553`；P96/P113回退。Spearman gain=`+.000445/+.002049/-.000543/+.000275`
+  （mean=`+.000557<.003`），0/2 decisions；verdict=`rejected_development_five_member_deep_ensemble`，wall=`54.46s`、
+  peak GPU=`.379 GiB`；F104。
+
+### WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical planned=
+  `20260830T101000Z__task-conditioned-projected-ensemble-s0-r1`。
+- prediction object：直接建模每个query/time boundary normal上的真实Actor residual scalar `n(τ)^T e`，而非P126通用2D
+  residual后处理。输入=`24 query features + time fraction + 2D boundary normal`；三member scalar Gaussian输出以
+  mean aleatoric + between-member epistemic形成standardized boundary margin。
+- training：source `575,596×9=5,180,364` conditional tokens，3×`[256,128]`、6,000 steps、batch65,536、seeds0/1/2。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort cost全不退化、mean Spearman gain≥`.005`。
+- locks：不使用teacher score/direct cost/event label；不扫input/loss/member/seed/weight/coverage。支持才冻fresh confirmation。
+- references：ICCV 2019 PRECOG conditional forecasting、2025 PMLR conditional dynamic-regime UQ。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
