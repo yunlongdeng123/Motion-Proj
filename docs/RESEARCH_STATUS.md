@@ -1078,6 +1078,9 @@ P256 r2暴露同一helper返回reshape仍重复member轴，继续归入F191；�
 steps与`.075/.005`两门不变，检验低可靠度轨迹更敏感的单次shadow-price policy。P257一次2/2：P201 budget
 MAE=`.010997`、冻结log-utility regret=`.000272`、price violations=0。P258把冻结P257推进到与P256相同的
 64-trajectory fixed-group attainable-budget dual compiler；仍只判fraction MAE与冻结log-Lagrangian regret，RTX 3090训练中。
+P258一次2/2：P201 fraction MAE=`.015445`、冻结log-Lagrangian regret=`-0.00000421`（网格近似量级）、price
+violations=0。P259将risk preference连续化为alpha-fair utility：五个train alpha=`0/.25/.5/.75/1`从线性可靠度过渡
+到log reliability，四个interleaved alpha只在P201单次评价；alpha与price共同条件化128/16 monotone policy，GPU训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

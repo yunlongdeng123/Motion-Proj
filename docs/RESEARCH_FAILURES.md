@@ -3034,6 +3034,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F192`。
 
+### P258 milestone note — log-utility fixed-group dual compiler通过，无新增failure
+
+- canonical=`run://worldsim_v67/WS-V67-P258-LOG-UTILITY-GROUP-DUAL-01/20260831T110000Z__log-utility-group-dual-s0-r1`；
+- P201 fraction MAE=`.015445`、frozen log-Lagrangian regret=`-.00000421`、price violations=0，2/2；
+- P256与P258说明linear/log两种冻结surrogate utility均能被fixed-group共享dual price摊销；不外推真实scheduler；
+- next：P259连续条件化alpha，不再分别训练更多离散risk utilities；下一failure id保持F192。
+
+下一可用编号仍为：`V67-F192`。
+
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 
 - canonical=`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；

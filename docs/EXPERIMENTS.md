@@ -2128,8 +2128,21 @@
 - protocol：P256的72维mean/std、九train/八heldout fractions、20-step bisection、128/16 monotone dual student、
   12k/batch8192/seed0不变；唯一utility变化为P257固定`log(P246+.05)`；
 - P201 decisions：attained fraction MAE≤`.030`、冻结log-Lagrangian regret≤`.002`；不扫epsilon/group/architecture；
-- active canonical：`run://worldsim_v67/WS-V67-P258-LOG-UTILITY-GROUP-DUAL-01/20260831T110000Z__log-utility-group-dual-s0-r1`；
-  仍非真实fairness/compute/scheduler/planning claim。
+- canonical：`run://worldsim_v67/WS-V67-P258-LOG-UTILITY-GROUP-DUAL-01/20260831T110000Z__log-utility-group-dual-s0-r1`；
+- result：P201 price/fraction MAE=`.030235/.015445`、frozen log-Lagrangian regret=`-.00000421`、price
+  violations=0，2/2；source fraction/regret=`.015709/.00000637`，P183=`.016426/.00001364`；
+- resources/verdict：212 train groups、wall=`88.08s`、peak GPU=`.140GiB`；
+  `supported_log_utility_group_dual_price_compiler`；仍非真实fairness/compute/scheduler/planning claim。
+
+### WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01
+
+- object：用连续alpha-fair utility统一P254线性可靠度（alpha=0）与P257 log reliability（alpha=1），student在运行时
+  同时条件化`trajectory context × alpha × shadow price`；
+- utility：固定offset `.05`；alpha<1使用`((P+.05)^(1-alpha)-1)/(1-alpha)`，alpha=1取连续极限log；
+- protocol：train alpha=`0/.25/.5/.75/1`，heldout=`.125/.375/.625/.875`；每个alpha复用13 train/12 heldout
+  prices及129-point budget grid；37-input、128/16 price-monotone spline、L1、12k/batch8192/seed0；
+- P201 decisions：跨4×12 query的budget MAE≤`.075`、frozen alpha-fair utility regret≤`.005`；不扫alpha/epsilon；
+- active canonical：`run://worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1`。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
