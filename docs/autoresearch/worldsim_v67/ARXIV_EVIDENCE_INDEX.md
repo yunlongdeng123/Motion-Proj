@@ -80,7 +80,7 @@
 | P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | frozen/launching；第二个target-unread 10-scene × five-H，P147协议原样复验 |
 | P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
 | P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | cost 3/4微降、P96微退，mean rank `+.00212<.005`；rejected/F133 |
-| P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132000Z__conformal-cost-upper-bound-s0-r1` | frozen/launching；source split-conformal q90 cost upper bound vs horizon-only control |
+| P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | r1 empty group split/F134；r2 ordered-source-scene split，same q90 contract relaunching |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -201,6 +201,7 @@
 | `V67-F131` | closed negative | monotone point-cost calibration raw MSE仅改善4.09%，expected-cost bin error恶化 |
 | `V67-F132` | closed negative | P165 top-4/16 upper-tail mean仍使旧四fixed50 cost全部回退；未读P167 |
 | `V67-F133` | closed negative | direct soft fixed50训练收敛到P126邻域；P96微退且mean rank gain不足 |
+| `V67-F134` | resolved pre-evaluation | P109 source已排除absolute mod-5 scenes；改为artifact内ordered unique scene group split |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

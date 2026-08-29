@@ -1155,6 +1155,10 @@
 - decisions：旧四每组empirical coverage≥`.88`，mean upper-bound sharpness相对control提升≥10%；通过才等P167 prospective。
 - locks：不扫quantile/split/knots/loss/coverage/sharpness threshold，不加hash/checksum/fingerprint或回归矩阵。
 - claim：只报告跨scene empirical coverage/sharpness；无exchangeability证明、formal conformal guarantee或safety claim。
+- r1 entry result：8,000-step source training完成后、旧四/P167 read前，absolute scene-index modulo split得到0 calibration trajectories；
+  F134。r1无coverage/sharpness/verdict，权重未交付。
+- narrow recovery：只改为artifact内ordered unique scene position每5取1，保持scene-disjoint；r2 canonical=
+  `20260830T132500Z__conformal-cost-upper-bound-s0-r2`，从头按原q90合同训练。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

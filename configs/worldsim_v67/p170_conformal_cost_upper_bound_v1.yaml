@@ -21,7 +21,7 @@ prospective_p167:
   artifact: P167_ROBUSTNESS_MULTI_HORIZON_ROWS.npz
   horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
   readiness_timeout_seconds: 7200
-split: {scene_modulus: 5, calibration_remainder: 0}
+split: {ordered_unique_scene_position_modulus: 5, scene_modulus: 5, calibration_remainder: 0}
 model:
   score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
   training_steps: 8000
@@ -37,7 +37,7 @@ verdict_on_pass: supported_prospective_conformal_cost_upper_bound
 verdict_on_failure: rejected_conformal_cost_upper_bound
 locks:
   P126_score_and_rank_are_frozen: true
-  source_scene_mod5_zero_is_calibration_only_and_never_trained: true
+  every_fifth_ordered_unique_source_scene_is_calibration_only_and_never_trained: true
   one_sided_q90_log_cost_pinball_plus_single_split_conformal_offset: true
   score_conditioned_monotone_spline_is_compared_with_horizon_only_quantile_control: true
   development_requires_coverage_every_old_slice_and_mean_sharpness_before_P167_read: true

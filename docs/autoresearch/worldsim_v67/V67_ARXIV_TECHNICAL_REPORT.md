@@ -359,6 +359,10 @@ monotone spline并以held-out residual作一次split-conformal offset，同时�
 且mean upper-bound至少锐化10%才进入P167。由于跨scene exchangeability未证明，论文即使结果为正也只写empirical coverage，
 不将NeurIPS CQR的一般有限样本结论越权为当前数据协议的formal guarantee。
 
+P170 r1在完成source q90训练后、任何evaluation前暴露split entry错误：P109 source artifact已由旧protocol排除absolute
+mod-5 scenes，导致calibration为空（F134）。恢复只在artifact实际unique scene groups上按固定顺序每5取1，保持group-disjoint；
+r2从头训练，未使用r1 loss选择任何参数。因此F134是工程split恢复，不是coverage负结果。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

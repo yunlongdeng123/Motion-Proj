@@ -671,6 +671,11 @@ P170改变预测对象为P120 trajectory cost的one-sided upper bound。按sourc
 q90 offset。旧四只保留2门：每组经验coverage≥`.88`，相对horizon-only mean upper-bound sharpness reduction≥10%；通过才
 等待P167 prospective。依据NeurIPS 2019 CQR，但因跨scene exchangeability未证明，只允许经验覆盖结论，不写formal guarantee。
 
+P170 r1完成8,000-step source q90训练后，在任何旧四/P167 evaluation前发现calibration set为空：P109 source artifact本身已
+按旧protocol排除了absolute `scene_index%5==0` scenes，F134。这不是coverage结果。按group-held-out原则只修split locator：
+对artifact内实际存在的ordered unique source scenes每5个取第1个作calibration；q90/model/seed/steps/offset/decisions全不变。
+r2将从头训练，不复用r1权重或loss选择。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

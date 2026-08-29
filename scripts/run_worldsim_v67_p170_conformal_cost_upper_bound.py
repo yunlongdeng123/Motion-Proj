@@ -138,7 +138,11 @@ def main() -> None:
     source_horizon = _trajectory_horizon(source)
     modulus = int(config["split"]["scene_modulus"])
     calibration_remainder = int(config["split"]["calibration_remainder"])
-    calibration_mask = np.mod(source_scenes, modulus) == calibration_remainder
+    ordered_scenes = np.unique(source_scenes)
+    calibration_scenes = ordered_scenes[
+        np.mod(np.arange(len(ordered_scenes)), modulus) == calibration_remainder
+    ]
+    calibration_mask = np.isin(source_scenes, calibration_scenes)
     train_mask = ~calibration_mask
     score_mean = float(source_score[train_mask].mean())
     score_scale = float(max(source_score[train_mask].std(), 1e-4))
@@ -233,6 +237,8 @@ def main() -> None:
         "training": {
             "train_trajectory_count": int(train_mask.sum()),
             "calibration_trajectory_count": int(calibration_mask.sum()),
+            "train_scene_count": int(len(np.unique(source_scenes[train_mask]))),
+            "calibration_scene_count": int(len(calibration_scenes)),
             "final_quantile_loss": final_model_loss, "final_horizon_only_quantile_loss": final_baseline_loss,
             "model_conformal_offset_log_cost": offsets[0],
             "horizon_only_conformal_offset_log_cost": offsets[1],

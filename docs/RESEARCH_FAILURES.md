@@ -2192,7 +2192,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：旧四coverage每组≥`.88`且mean sharpness reduction≥10%；通过才读取P167。
 - prevention：不扫quantile/split/knots/loss/threshold；失败才用`V67-F134`。跨scene只写empirical coverage，不写formal guarantee。
 
-下一可用编号仍为：`V67-F134`。
+### V67-F134 — source artifact已排除absolute mod-5 scenes导致calibration split为空
+
+- 分类：`implementation/group-split-entry`；状态：`resolved_pre_evaluation`。
+- failed run：`run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/
+  20260830T132000Z__conformal-cost-upper-bound-s0-r1`。
+- exposure：8,000-step source-only q90 loss可见；0 old-cohort/P167 evaluation、0 conformal offset、0 coverage/sharpness/verdict。
+- root cause：P109 source artifact由更早protocol构造时已排除absolute `scene_index%5==0`，P170重复使用同一条件得到空calibration。
+- recovery：遵循group-disjoint split，改为artifact内ordered unique scene position每5取1；不随机、不读target、不改模型或门；r2从头训练。
+- prevention：今后对派生source artifact按实际group集合分割，不假设原metadata整数空间仍完整；不增加split sweep或验证矩阵。
+
+下一可用编号为：`V67-F135`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
