@@ -1094,7 +1094,9 @@ fraction MAE=`.014662`、alpha-fair regret=`-.000000447`、violations=0，2/2。
 `.0002099`、price violations=0。P263把冻结P262推进到固定64-trajectory group共享dual price，联合条件化
 `alpha × horizon preference × attainable fraction`。P263一次2/2：P201 fraction MAE=`.016964`、冻结task-alpha
 Lagrangian regret=`-.00000144`、violations=0。P264组合P261与P263：Deep Sets invariant pooling训练size
-`32/64/128`，仅在未见`48/96`上评价完整task preference group compiler，GPU已进入大规模teacher生成/训练。
+`32/64/128`，仅在未见`48/96`上评价完整task preference group compiler；P201 aggregate fraction MAE=
+`.015254`、regret=`.00000191`、violations=0，2/2。P265把P262的一维near/far preference提升为四horizon simplex：
+训练四顶点、uniform与三条相邻边，测试六个未见interior vectors；alpha/price-monotone合同不变，GPU训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

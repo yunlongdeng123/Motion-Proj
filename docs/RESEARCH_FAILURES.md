@@ -3096,7 +3096,8 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 - P263 canonical=`run://worldsim_v67/WS-V67-P263-TASK-HORIZON-GROUP-DUAL-01/20260831T124500Z__task-horizon-group-dual-s0-r1`；
 - P201 fraction MAE=`.016964`、task-alpha Lagrangian regret=`-.00000144`、violations=0，2/2；
 - P264只组合此前分别成立的P261 cardinality interpolation与P263 task preference，不增加attention/teacher/gate sweep；
-- next failure id保持F194。
+- P264 P201 sizes48/96 aggregate fraction MAE=`.015254`、regret=`.00000191`、violations=0，2/2；
+- P265改变task preference对象为四horizon simplex，不扫P264 set architecture；next failure id保持F194。
 
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 

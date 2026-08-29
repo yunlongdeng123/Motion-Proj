@@ -2206,8 +2206,20 @@
   permutation-invariant compiler同时接收unordered group、cardinality、alpha、horizon preference与fraction；
 - protocol：train sizes=`32/64/128`、heldout=`48/96`；其余alpha/preference/fraction teacher与两门完全沿用P263；
   Deep Sets mean/std/max pooling、64/128 widths、12k/batch512/seed0一次锁定；
-- active canonical：`run://worldsim_v67/WS-V67-P264-VARIABLE-SET-TASK-HORIZON-DUAL-01/20260831T130000Z__variable-set-task-horizon-dual-s0-r1`；
-  不引入attention、size/preference/grid或gate sweep。
+- canonical：`run://worldsim_v67/WS-V67-P264-VARIABLE-SET-TASK-HORIZON-DUAL-01/20260831T130000Z__variable-set-task-horizon-dual-s0-r1`；
+- result：P201 heldout sizes 48/96 aggregate price/fraction MAE=`.029960/.015254`、frozen task-alpha
+  Lagrangian regret=`.00000191`、violations=0，2/2；size48 fraction=`.015734`，size96=`.014204`；
+- resources/verdict：728 train groups、wall=`180.06s`、peak GPU=`.185GiB`；
+  `supported_variable_set_task_horizon_dual_compiler`。
+
+### WS-V67-P265-SIMPLEX-HORIZON-ALPHA-FAIR-POLICY-01
+
+- object：用显式四维nonnegative unit-sum preference vector取代P262的一维指数near/far曲线，使单一policy可在
+  四个冻结prefix reliability之间选择任意凸scalarization；
+- protocol：八train vectors=`4 vertices + uniform + 3 adjacent edges`，六heldout interior vectors；五/四alpha、
+  13/12 prices、129 grid、128/16 price-monotone spline、12k/batch8192与`.075/.005`两门不变；
+- active canonical：`run://worldsim_v67/WS-V67-P265-SIMPLEX-HORIZON-ALPHA-FAIR-POLICY-01/20260831T133000Z__simplex-horizon-alpha-fair-policy-s0-r1`；
+  仅声称冻结scalarized teacher的未见interior插值，不声称完整Pareto front或真实task reward。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 
