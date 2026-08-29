@@ -3,14 +3,14 @@
   "updated_at": "2026-08-30",
   "branch": "research/worldsim-v6.7-anisotropic-surface",
   "base_commit": "c05ca27",
-  "status": "v67_p129_supported_independent_ensemble_increment_p142_task_conditioned_projection_running",
-  "active_task_id": "WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01",
-  "active_hypothesis_id": "WS-V67-H-P142-001",
+  "status": "v67_p129_supported_independent_ensemble_increment_p143_conditional_residual_running",
+  "active_task_id": "WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01",
+  "active_hypothesis_id": "WS-V67-H-P143-001",
   "resource": {"gpu": "1x RTX 3090", "multi_gpu_required": false},
   "failure_ledger_refs": ["V67-F91", "V67-F90", "V67-F89", "V67-F88", "V67-F87", "V67-F86", "V67-F45", "V67-F44", "V67-F43", "V67-F42", "V67-F41", "V67-F40", "V67-F39", "V67-F38", "V67-F37", "V67-F36", "V67-F35", "V67-F34", "V67-F33", "V67-F32", "V67-F31", "V67-F30", "V67-F29", "V67-F28", "V67-F27", "V67-F26", "V67-F25", "V67-F24", "V67-F23", "V67-F22", "V67-F21", "V67-F20", "V67-F19", "V67-F18", "V67-F17", "V67-F16", "V67-F15", "V67-F14", "V67-F13", "V67-F12", "V67-F11", "V67-F10", "V67-F09", "V67-F08", "V67-F07", "V67-F06", "V67-F05", "V67-F04", "V67-F03", "V67-F02", "V67-F01", "V65-F19"],
-  "failure_ledger_delta": "V67-F104 P141 five-member scaling missed the rank gain and regressed P96/P113 cost; F92-F103 retained",
-  "next_failure_id": "V67-F105",
-  "last_run": "run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/20260830T100500Z__five-member-deep-ensemble-s0-r1",
-  "last_verdict": "P141_rejected_five_member_scaling_after_P129_independent_support",
-  "next_action": "finish P142 task-conditioned projected-residual ensemble training, record it, and freeze a new cohort only if it passes consumed development"
+  "failure_ledger_delta": "V67-F105 P142 direct task-conditioned projection improved P129 rank but regressed three cohort costs and P96 rank; F92-F104 retained",
+  "next_failure_id": "V67-F106",
+  "last_run": "run://worldsim_v67/WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01/20260830T101000Z__task-conditioned-projected-ensemble-s0-r1",
+  "last_verdict": "P142_rejected_direct_task_conditioned_projection_with_P129_local_rank_gain",
+  "next_action": "finish P143 frozen-P126 conditional residual ensemble training, record it, and continue from the transfer result"
 }

@@ -250,6 +250,10 @@ P141 mean rank gain仅`+.00056`且P96/P113 cost回退（F104），故三成员�
 P142转而采用conditional forecasting的对象定义：三成员直接拟合候选τ在每个future time的boundary-normal projected Actor
 residual distribution；其监督仍是连续world-state residual而非decision cost/event，从模型层面把UQ条件化到被访问state。
 
+P142在P129取得`+.01319` rank gain、P113降低cost，但P96显著回退且四cohort mean gain近0（F105）：task conditioning有
+信息，却不能从头替代通用Actor distribution。P143据此采用frozen-base residual correction：P126提供projected mean/scale，
+query-conditioned ensemble只拟合standardized residual distribution，从结构上保留P126跨cohort稳定性。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

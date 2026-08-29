@@ -442,8 +442,13 @@ complexity-benefit point，不继续扫member count。
 P142据ICCV 2019 conditional forecasting与conditional-UQ把预测对象进一步绑定到候选τ：不再先学通用2D Actor residual再
 事后投影，而对每个query/time直接训练三成员异方差分布`p(n(τ)^T e | τ, Actor, t)`。输入为24维existing query
 features、time fraction和boundary normal；监督只是真实projected residual，不读teacher score、direct cost或event label。
-5,180,364 conditional time tokens、6,000 steps、固定3 members；在四个consumed cohorts相对P126检验cost全不退与mean
-rank gain≥`.005`，3090正在训练。
+5,180,364 conditional tokens训练完成：P81/P96/P113/P129 rank gain=`-.00216/-.00909/-.00179/+.01319`，mean仅
+`+.00004`；P113 cost改善到`.21475`，其余三组回退，0/2 decisions，wall=`99.33s`，F105。Task conditioning在P129
+有明显ranking信息，但完全替换P126通用Actor distribution导致P96稳定性丢失。
+
+P143依据probabilistic residual learning与heteroscedastic regression调研保留P126为frozen base：先取其projected mean与total
+scale，再训练三成员`p((n^T e-μ_P126)/σ_P126 | τ, Actor, t, μ_P126, logσ_P126)`；最终distribution以base scale
+重构，恒等残差分布可恢复P126。监督仍不读cost/event/teacher score，四consumed cohort decisions不变；3090正在训练。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

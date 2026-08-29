@@ -689,7 +689,7 @@
 
 ### WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical planned=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T101000Z__task-conditioned-projected-ensemble-s0-r1`。
 - prediction object：直接建模每个query/time boundary normal上的真实Actor residual scalar `n(τ)^T e`，而非P126通用2D
   residual后处理。输入=`24 query features + time fraction + 2D boundary normal`；三member scalar Gaussian输出以
@@ -698,6 +698,22 @@
 - evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort cost全不退化、mean Spearman gain≥`.005`。
 - locks：不使用teacher score/direct cost/event label；不扫input/loss/member/seed/weight/coverage。支持才冻fresh confirmation。
 - references：ICCV 2019 PRECOG conditional forecasting、2025 PMLR conditional dynamic-regime UQ。
+- result：final NLL=`-1.769634/-1.843065/-1.815390`；P81/P96/P113/P129 selected cost=
+  `.178147/.172530/.214753/.316863`，仅P113优于P126；Spearman gain=`-.002156/-.009093/-.001793/+.013189`
+  （mean=`+.000037<.005`）。0/2 decisions，verdict=`rejected_development_task_conditioned_projected_ensemble`，
+  wall=`99.33s`、peak GPU=`.845 GiB`；F105。
+
+### WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical planned=
+  `20260830T101500Z__conditional-residual-ensemble-s0-r1`。
+- method：冻结P126 projected mean/total scale，将真实projected residual标准化为`z=(n^T e-μ0)/σ0`；三member Gaussian
+  correction读取P142 27维conditional inputs并追加`μ0/logσ0`。最终`μ=μ0+σ0 E[z]`、
+  `var=σ0²(E[var(z)]+var(E[z]))`，保留P126 base而只学习task-conditioned correction。
+- training/evaluation：同一5,180,364 tokens、3×`[256,128]`、6,000 steps；consumed P81/P96/P113/P129相对P126，
+  四cohort cost全不退且mean rank gain≥`.005`。
+- locks：不读direct cost/event/teacher score；不扫correction weight/input/loss/member/seed/coverage。
+- references：NeurIPS 2023 effective heteroscedastic regression、ICML 2024 multidimensional recalibration；只称residual development。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

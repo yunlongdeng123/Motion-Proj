@@ -1724,10 +1724,28 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：直接训练`p(n(τ)^T e | τ, Actor, t)`三成员异方差Gaussian；输入24 query features+time fraction+normal，
   target是真实projected residual，不是teacher/cost/event。
-- decisions：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`。
+- decisions/outcome：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；实际
+  mean rank gain=`+.000037`，仅P113 cost改善，P81/P96/P129回退，两门失败。
 - prevention：一次固定3-member trial，不扫input/loss/member/seed/weight/coverage；支持才做fresh confirmation。
 
-下一可用编号为：`V67-F105`。
+### V67-F105 — direct task-conditioned projection在P129增益但跨cohort不稳
+
+- 分类：`algorithm/prediction-object-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01/
+  20260830T101000Z__task-conditioned-projected-ensemble-s0-r1`。
+- 观察：P129 rank gain=`+.013189`、P113 cost改善，但P96 rank=`-.009093`且cost回退；四cohort mean rank接近0，
+  P81/P96/P129 cost不满足nonregression。三models均完成6,000 steps。
+- 解释：query-conditioned projected residual含有效新信息，但从头替换通用2D Actor distribution造成source query geometry shortcut。
+- 防重复：不扫P142 inputs/architecture。P143只学P126 standardized residual correction，保留通用base。
+
+### P143 freeze note — P126-based conditional residual correction
+
+- method：冻结P126 `μ0/σ0`，三member学习`z=(n^T e-μ0)/σ0` conditional distribution；input追加`μ0/logσ0`，
+  final mean/variance以base scale重构。
+- decisions：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean rank gain≥`.005`。
+- prevention：不扫correction mixing/weight/input/loss/member/seed/coverage；失败关闭conditional residual route。
+
+下一可用编号为：`V67-F106`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
