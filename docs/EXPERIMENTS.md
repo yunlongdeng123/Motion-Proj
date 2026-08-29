@@ -1811,7 +1811,12 @@
   10 scenes来自10 distinct logs，Boston/onenorth/queenstown/holland=`5/2/2/1`；
 - protocol：冻结P203(P199-1024MC) teacher与P227 student；只判teacher MAE≤`.01`、Brier相对退化≤1%、calibration
   absolute increase≤`.002`，不换scene/model/MC/budget/gate；
-- status：archive extraction与4-worker Actor preprocess已启动，evaluator等待scene-ready；尚未读取P228 target quality。
+- preparation：3,913 required LIDAR、1,560 newly extracted；10/10 preprocess done，`59.53--63.17s/scene`，wall=
+  `1554.93s`；archive/preprocess与P229--P237 GPU runs重叠；
+- result：1,720 trajectories；student/teacher MAE=`.007443`；Brier=`.089526/.089810`（student改善`.316%`）；
+  calibration=`.006583/.006563`（absolute increase `.000020`）；3/3；
+- timing/verdict：student/teacher-MC forward=`.002905/.111554s`（当前batch实现约`38.4x`，不作通用latency claim）；
+  verdict=`supported_fresh_monotone_reliability_curve_distillation`，scene-level fresh support。
 
 ### WS-V67-P229-COMPACT-MONOTONE-RELIABILITY-CURVE-01
 
@@ -1895,7 +1900,10 @@
 - role：P228首次fresh rows上的prospective same-read secondary；不是新增独立cohort；
 - frozen before quality：P233 artifact、P199 prefix teachers、P203 full-prefix map、1024 MC、4×7 surface与三项P233
   decisions全部锁定；不随P235结果改变；
-- status：evaluator等待P228 atomic rows；target quality unread，不占GPU等待。
+- result：1,720 trajectories；surface/final teacher MAE=`.007101/.009483`；student/teacher surface Brier=
+  `.073845/.074054`（改善`.283%`），calibration=`.016949/.018198`（改善`.001249`）；violations=`0/0`；3/3；
+- verdict=`supported_fresh_prefix_reliability_surface_compiler`；P228首次fresh read的prospective same-read secondary，
+  不是第二独立cohort；wall含等待=`351.37s`。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

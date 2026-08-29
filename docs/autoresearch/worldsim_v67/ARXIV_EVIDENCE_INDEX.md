@@ -138,13 +138,13 @@
 | P225 | `run://worldsim_v67/WS-V67-P225-CALIBRATED-CONFIDENCE-CURVE-AUTHORITY-01/20260831T002000Z__calibrated-confidence-curve-authority-s0-r1` | P201 2/2但P183 selective calibration +82.25%；post-hoc mixed |
 | P226 | `run://worldsim_v67/WS-V67-P226-CALIBRATED-CONFIDENCE-SELECTION-ONLY-01/20260831T003000Z__calibrated-confidence-selection-only-s0-r1` | P183/P201 Brier正向但P201 calibration +1.63%；rejected/F177 |
 | P227 | `run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1` | P201 teacher MAE `.007633`；Brier/calibration均不劣；2/2 post-hoc support |
-| P228 | `run://worldsim_v67/WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-01/20260831T010500Z__monotone-distillation-confirmation-s0-r1` | frozen fresh 10-scene/10-log confirmation；preparation active，quality unread |
+| P228 | `run://worldsim_v67/WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-01/20260831T010500Z__monotone-distillation-confirmation-s0-r1` | fresh 1,720 trajectories；MAE `.007443`；Brier -`.316%`；3/3 support |
 | P229 | `run://worldsim_v67/WS-V67-P229-COMPACT-MONOTONE-RELIABILITY-CURVE-01/20260831T011500Z__compact-monotone-reliability-curve-s0-r1` | 7,048 params（-68.37%）；P201 MAE `.008252`、2/2 development support |
 | P230 | `run://worldsim_v67/WS-V67-P230-MARGINAL-ONLY-MONOTONE-CURVE-01/20260831T013000Z__marginal-only-monotone-curve-s0-r1` | P201 MAE `.009653`；Brier/calibration both improve；2/2 development support |
 | P231 | `run://worldsim_v67/WS-V67-P231-TRUTH-REGULARIZED-MONOTONE-CURVE-01/20260831T014500Z__truth-regularized-monotone-curve-s0-r1` | Brier improves but P201 teacher MAE `.027831>.02`；rejected/F178 |
 | P232 | `run://worldsim_v67/WS-V67-P232-GRADIENT-BALANCED-MONOTONE-CURVE-01/20260831T020000Z__gradient-balanced-monotone-curve-s0-r1` | P201 MAE `.009108`；Brier/calibration improve；3/3 development support |
 | P233 | `run://worldsim_v67/WS-V67-P233-MONOTONE-PREFIX-RELIABILITY-SURFACE-01/20260831T022000Z__monotone-prefix-reliability-surface-s0-r1` | P201 surface/final MAE `.006982/.009186`；Brier/calibration improve；3/3 |
-| P234 | `run://worldsim_v67/WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01/20260831T025000Z__prefix-surface-fresh-confirmation-s0-r1` | frozen P228 same-read prospective secondary；waiting on rows |
+| P234 | `run://worldsim_v67/WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01/20260831T025000Z__prefix-surface-fresh-confirmation-s0-r1` | fresh same-read surface/final MAE `.007101/.009483`；3/3 support |
 | P235 | `run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1` | final MAE `.010090>.01`；rejected/F179 |
 | P236 | `run://worldsim_v67/WS-V67-P236-PRIVILEGED-FEATURE-HALLUCINATION-SURFACE-01/20260831T031000Z__privileged-feature-hallucination-surface-s0-r1` | P201 final MAE `.014007>.01`；rejected/F180 |
 | P237 | `run://worldsim_v67/WS-V67-P237-RAW-CONDITION-PREFIX-SURFACE-01/20260831T033000Z__raw-condition-prefix-surface-s0-r1` | 8-condition end-to-end surface amortization；training active |

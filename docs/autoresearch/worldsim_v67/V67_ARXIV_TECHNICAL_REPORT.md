@@ -101,6 +101,12 @@ P236的P201 feature RMSE=`.3433`且final MAE=`.014007>.01`，与NeurIPS 2024对d
 alignment的information-asymmetry警告一致（F180）。研究因此不引入概率hallucination或conformal machinery，而由P237
 直接从8个上游score/clearance conditions蒸馏surface，目标是在runtime同时amortize P182 CDF与P199/P203计算。
 
+P228已把P227从post-hoc提升为全新10-scene/10-log的scene-level支持：1,720 trajectories上teacher MAE=`.007443`，
+student Brier改善`.316%`，calibration absolute increase仅`.000020`，3/3。当前batched student forward `.002905s`
+对teacher MC joint stage `.111554s`，约`38.4x`；这只是当前实现的stage timing。事前冻结、共享首次read的P234进一步确认
+P233 surface：surface/final MAE=`.007101/.009483`，surface Brier/calibration分别改善`.283%/.001249`，双轴violations=0，
+3/3。P234是same-read secondary而非第二独立cohort；两项结果都不授权formal calibration、planner或safety claim。
+
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
 

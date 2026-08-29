@@ -1008,6 +1008,17 @@ P236确定性feature hallucination失败：P201 condition RMSE=`.3433`、surface
 概率采样/复杂分布与conformal越权，该支线关闭。P237转为信息不缺失的end-to-end amortization：仅输入8个固定horizon位置的
 normalized score/clearance conditions，直接蒸馏P233 surface，从运行时同时移除28个P182 CDF计算；P233 structure/
 teacher/steps/decisions不变，单次训练中。
+
+P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
+preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新
+trajectory上student/teacher MAE=`.007443`，Brier=`.089526/.089810`（student改善`.316%`），calibration=
+`.006583/.006563`（absolute increase仅`.000020`），3/3，verdict=`supported_fresh_monotone_reliability_curve_distillation`。
+当前batched student/teacher-MC forward=`.002905/.111554s`，仅按该实现报告约`38.4x` joint-stage差异。
+
+同一首次read上事前冻结的P234 secondary也3/3：surface/final MAE=`.007101/.009483`，student/teacher surface Brier=
+`.073845/.074054`（改善`.283%`），calibration=`.016949/.018198`（改善`.001249`），budget/horizon violations=
+`0/0`；verdict=`supported_fresh_prefix_reliability_surface_compiler`。这是P228 cohort的prospective same-read secondary，
+不是第二个独立cohort，也不产生continuous-time、formal calibration或safety claim。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

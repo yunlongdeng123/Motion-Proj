@@ -2835,6 +2835,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F181`。
 
+### P228/P234 fresh milestone note — 两个冻结compiler均通过，无新增算法failure
+
+- P228 full-curve primary：MAE `.007443`、Brier改善`.316%`、calibration increase仅`.000020`，3/3；
+- P234 prefix-surface same-read secondary：surface/final MAE `.007101/.009483`、Brier/calibration均改善、violations=`0/0`；
+- delayed wrong-root launcher note：最初PowerShell复合SSH中的相对`--runs-root runs`子命令在prep退出后延迟启动，
+  只在repo-local隔离目录重复物化rows并于artifact load前失败；canonical绝对runs-root P228/P234早已完成。失败副本移至
+  `/tmp/p228_delayed_wrong_runs_root_196944`，未改变scene/model/metric/verdict，不占算法failure编号；
+- preparation canonical已移至`/root/autodl-tmp/runs`，repo worktree保持clean；未添加hash/checksum/fingerprint。
+
+下一可用编号仍为：`V67-F181`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
