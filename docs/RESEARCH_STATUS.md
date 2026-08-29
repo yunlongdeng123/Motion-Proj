@@ -128,10 +128,15 @@ P286 把 fixed64 group 的 attainable fraction、alpha、tolerance、floor 编�
 20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`：P201 price/attained-fraction MAE=`.041286/.020250`、
 group regret=`9.55e-6`、violations=0，2/2；wall=`147.47s`。至此 empirical coverage surface→primal→dual 链闭合。
 
-P287 继续训练新的 calibrated composite-risk primal：P284 additive LCB 作为内层 empirical coverage score，对 fixed64
-Actor group 的 final-LCB shortfall做外层 empirical tail-CVaR，联合 alpha/tolerance/floor/tail mass/price。Active=
-`run://worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
-20260831T204500Z__additive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
+P287 训练 calibrated composite-risk primal：P284 additive LCB 是内层 empirical coverage score，外层对 fixed64
+Actor group 的 final-LCB shortfall做 empirical tail-CVaR。Canonical=`run://worldsim_v67/
+WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T204500Z__additive-lcb-tail-cvar-s0-r1`：P201 budget
+MAE=`.0130764`、composite regret=`8.71e-5`、candidate/teacher tail shortfall=`.009331368/.009331366`、price/floor
+violations=`0/0`，2/2；wall=`192.59s`、peak GPU=`.4547GiB`。
+
+P288 从冻结 P287 warm-start，在 sizes32/64/128 交替训练同一 calibrated tail-risk primal，只在 held-out48/96评估。
+Active=`run://worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

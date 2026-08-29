@@ -153,6 +153,12 @@
   coverage/hard-constraint claim boundary；
 - 下一可用 failure id 保持 `V67-F198`。
 
+### P287 outcome / P288 variable-cardinality start note — 无新增 failure
+
+- P287 P201 budget MAE=`.0130764`、composite regret=`8.71e-5`，2/2，price/floor violations=0；
+- P288 仅 warm-start同一架构到 train sizes32/64/128并在48/96评估，不改变 P284 coverage或 P287 risk定义；
+- 下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

@@ -238,8 +238,19 @@
   shortfall empirical CVaR，联合 alpha/tolerance/floor/tail mass/price输出 equivariant per-row budgets。
 - teacher=65 budgets + 17 eta；student positive price/floor rates；P201 gates仅 budget MAE `<=.075` 与 composite-risk
   regret `<=.005`；不扫 tolerance/tail/eta/grid/model/steps/gate。
-- active=`run://worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
-  20260831T204500Z__additive-lcb-tail-cvar-s0-r1`；不声称 coherent risk、formal coverage、hard constraint或 safety。
+- canonical=`run://worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+  20260831T204500Z__additive-lcb-tail-cvar-s0-r1`。
+- result：P201 budget MAE=`.0130764`、composite-risk regret=`8.7072e-5`、candidate/teacher LCB tail shortfall=
+  `.009331368/.009331366`、price/floor violations=`0/0`；2/2，verdict=
+  `supported_joint_additive_LCB_actor_tail_CVaR_allocator`。wall=`192.59s`、peak GPU/RSS=`.4547/1.6313GiB`。
+
+### WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01
+
+- frozen P287 warm start；训练 sizes32/64/128、held-out48/96；同一 alpha/tolerance/floor/tail-mass/price protocol，
+  Deep Sets allocator不改架构。
+- P201 aggregate gates继承 P287：budget MAE `<=.075`、composite regret `<=.005`；不扫 cardinality/结构/grid/steps/gate。
+- active=`run://worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+  20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
