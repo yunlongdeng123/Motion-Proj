@@ -2218,8 +2218,20 @@
   四个冻结prefix reliability之间选择任意凸scalarization；
 - protocol：八train vectors=`4 vertices + uniform + 3 adjacent edges`，六heldout interior vectors；五/四alpha、
   13/12 prices、129 grid、128/16 price-monotone spline、12k/batch8192与`.075/.005`两门不变；
-- active canonical：`run://worldsim_v67/WS-V67-P265-SIMPLEX-HORIZON-ALPHA-FAIR-POLICY-01/20260831T133000Z__simplex-horizon-alpha-fair-policy-s0-r1`；
-  仅声称冻结scalarized teacher的未见interior插值，不声称完整Pareto front或真实task reward。
+- canonical：`run://worldsim_v67/WS-V67-P265-SIMPLEX-HORIZON-ALPHA-FAIR-POLICY-01/20260831T133000Z__simplex-horizon-alpha-fair-policy-s0-r1`；
+- result：P201 budget MAE=`.034543`、frozen simplex alpha-fair utility regret=`.0011145`、price violations=0，2/2；
+  source=`.034166/.0012576`，P183=`.034669/.0014340`；
+- resources/verdict：wall=`105.11s`、peak GPU=`.140GiB`；
+  `supported_simplex_horizon_alpha_fair_shadow_price_policy`。
+
+### WS-V67-P266-SIMPLEX-HORIZON-GROUP-DUAL-01
+
+- object：64-trajectory group在四horizon simplex preference、alpha和attainable fraction条件下共享一个dual price；
+  冻结P265负责per-row budget、P246计算weighted alpha-fair utility；
+- protocol：八/六horizon vectors、五/四alpha、九/八fractions，20-step bisection、128/16 fraction-monotone
+  dual、12k/batch8192/seed0；P201 fraction MAE≤`.030`、regret≤`.002`；
+- active canonical：`run://worldsim_v67/WS-V67-P266-SIMPLEX-HORIZON-GROUP-DUAL-01/20260831T134500Z__simplex-horizon-group-dual-s0-r1`；
+  不调P265接近门值的regret，也不扫simplex vectors/group/architecture/gate。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 

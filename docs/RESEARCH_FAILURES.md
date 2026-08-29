@@ -3097,7 +3097,8 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 - P201 fraction MAE=`.016964`、task-alpha Lagrangian regret=`-.00000144`、violations=0，2/2；
 - P264只组合此前分别成立的P261 cardinality interpolation与P263 task preference，不增加attention/teacher/gate sweep；
 - P264 P201 sizes48/96 aggregate fraction MAE=`.015254`、regret=`.00000191`、violations=0，2/2；
-- P265改变task preference对象为四horizon simplex，不扫P264 set architecture；next failure id保持F194。
+- P265改变task preference对象为四horizon simplex，P201 budget MAE=`.034543`、utility regret=`.0011145`、
+  violations=0，2/2；P266只推进fixed-group dual，不扫P264 set architecture；next failure id保持F194。
 
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 
