@@ -1977,7 +1977,25 @@
   density flow，只迁移local monotone spline principle到reliability compiler；
 - protocol：P242的36输入、31 train budgets、六heldout、L1、128 context、12k steps、batch8192、seed0与三门不变；
   knot count固定16以匹配P242 quadrature count，不扫knots/width；
-- active canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；与P243 IO并行训练。
+- canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；
+- result：P201 surface/final MAE=`.006695/.008973`，Brier/calibration改善`.343%/.000808`；P183 final MAE=
+  `.009665`且Brier/calibration改善`.364%/.001043`；source final=`.009369`；violations=`0/0`；3/3；
+- resources：wall=`116.54s`、peak GPU=`.140GiB`；六budget forward在当前batch为`.00789s`，与P242 `.00767s`
+  接近且略慢，不支持latency claim；verdict=`supported_monotone_rate_spline_continuous_budget_surface`。
+
+### WS-V67-P245-RATE-SPLINE-SAME-READ-CONFIRMATION-01
+
+- role：P243首次fresh rows上的prospective same-read secondary，不是第二个独立cohort；
+- frozen before rows：P244 artifact、P203/P199 teacher、六个midpoints、1024 MC与三项decision全部锁定；
+- canonical waiter：`run://worldsim_v67/WS-V67-P245-RATE-SPLINE-SAME-READ-CONFIRMATION-01/20260831T064000Z__rate-spline-same-read-confirmation-s0-r1`；等待P243 atomic rows，quality read=false。
+
+### WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01
+
+- object：把P244连续预算域从`.05--3.2`两侧各扩一倍到`.025--6.4`，原七anchor marginal输入保持36维；
+- protocol：41个fixed-offset log-budget source targets；九anchors的八个geometric midpoints全部heldout，其中新增
+  `.035355`与`4.52548`两侧tail点；P244 rate-spline/L1/128/16knots/12k/seed0/三门不变；
+- claim boundary：只支持有限扩展区间，不宣称无界tail、formal calibration或safety；不扫range/point count/knots；
+- active canonical：`run://worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1`；与P243 IO并行训练。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 

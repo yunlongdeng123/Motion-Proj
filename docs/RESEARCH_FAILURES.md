@@ -2927,6 +2927,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F187`。
 
+### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
+
+- canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；
+- 结果：P201/P183 final MAE=`.008973/.009665`，两者quality均改善、双轴violations=`0/0`；3/3；
+- 边界：显存降低但当前小batch计时未显示加速，因此不把analytic integration包装成latency成功；
+- next：P245在P243首次rows前冻结为same-read secondary；P246只扩有限budget范围，不改P243/P245合同。
+
+下一可用编号仍为：`V67-F187`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
