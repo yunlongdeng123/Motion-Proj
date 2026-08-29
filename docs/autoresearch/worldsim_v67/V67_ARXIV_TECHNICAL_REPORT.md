@@ -216,6 +216,10 @@ P133 NLL虽为`-3.691`，epistemic fraction却仅`.13%--.34%`，mean rank差`-.0
 支持shared-rank-one diversity collapse解释。P134因此进入Packed independent regime：三套独立blocks以batched kernels置于
 单graph，保留三成员容量/FLOPs；它检验parallel packaging而非parameter compression，不写成single-model加速结论。
 
+P134把epistemic fraction恢复到`1.46%--2.23%`且mean rank delta=`+.00187`，但P96 cost `.17218>.16757`使严格
+composite失败（F97）。由于P134每member batch只有P126的1/3，P135仅提高到P126-equivalent 65,536做一次compute parity；
+不改模型或decision，也不将可能的成功写成compute reduction。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

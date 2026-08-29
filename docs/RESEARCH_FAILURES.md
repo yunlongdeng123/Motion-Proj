@@ -1577,10 +1577,28 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：3套独立weights/biases用member batched kernels在单graph执行，各自bootstrap；不共享P133 weights/factors，保留
   P126三成员容量与FLOPs。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：固定3 blocks/seed0/6,000 steps，不扫packing/group/width；失败登记F97并关闭embedded efficient route。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；实际rank mean=`+.001874`
+  通过，P81/P113 cost改善，但P96 `.172184>.167572`，cost gate失败；P129 rows隔离。
+- prevention：不扫packing/group/width；只允许P135一次P126 per-member compute-parity recovery。
 
-下一可用编号为：`V67-F97`。
+### V67-F97 — reduced per-member packed budget未保持P96 selection cost
+
+- 分类：`algorithm-compute/ensemble-training-budget`；状态：`active_single_compute_parity_recovery`。
+- canonical：`run://worldsim_v67/WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01/
+  20260830T093000Z__packed-independent-actor-ensemble-s0-r1`。
+- 观察：independent blocks恢复epistemic fraction到`1.46%--2.23%`，mean rank delta=`+.001874`且P81/P113 cost改善；
+  唯一失败为P96 cost `.172184>.167572`。final NLL=`-3.56197`弱于P126 members。
+- 预算根因候选：P134为了aggregate batch parity设每member 21,845，而P126每member 65,536；6,000 steps下每member sample
+  exposure只有1/3，不能把剩余差异直接归因于packed representation。
+- 唯一恢复：P135仅把member batch改到65,536做compute parity；结构/seed/steps/score/decisions不变。不论结果不再扫budget。
+
+### P135 freeze note — full-budget packed compute parity
+
+- method：exact P134 runner与三独立blocks；唯一变化member batch `21845→65536`，匹配P126 per-member 6,000-step exposure。
+- decisions：仍为三cohort cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：失败使用F98并关闭packed route；成功仅支持full-budget one-graph parity，不写成FLOP/parameter reduction。
+
+下一可用编号为：`V67-F98`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

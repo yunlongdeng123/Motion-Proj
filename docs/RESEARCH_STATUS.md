@@ -379,6 +379,12 @@ matrix kernels置于同一graph，仍各自bootstrap，不再共享weight或rank
 single-graph并行是否能恢复P126 continuous结果，不冒充single-model compute reduction。source、6,000 steps与decisions冻结，
 P129 target隔离；GPU已继续训练。
 
+P134 final NLL=`-3.56197`，独立blocks把epistemic fraction恢复到`1.46%/2.23%/1.95%`；P81/P96/P113 rank差=
+`+.00670/-.00645/+.00537`（mean=`+.00187`）通过，P81/P113 cost也略优于P126。但P96 cost=`.17218>.16757`，
+故1/2 decisions严格拒绝并登记`V67-F97`。其每member batch=21,845，只是P126 65,536的1/3，final NLL也较弱；
+因此允许最后一次P135 compute-parity recovery，只把per-member batch改为65,536，其他代码/结构/seed/steps/decision不变。
+P135已占用GPU；不论结果如何不再扫packed budget。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

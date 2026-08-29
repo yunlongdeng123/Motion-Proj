@@ -569,7 +569,7 @@
 
 ### WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T093000Z__packed-independent-actor-ensemble-s0-r1`，与P129 archive IO并行。
 - method：3套数学独立MLP weights/biases以member维batched matrix kernels置于一个graph；每member独立bootstrap，完全取消
   P133的shared weight/rank-one factors。结构/NLL/total variance/τ-boundary projection均匹配P126。
@@ -578,6 +578,20 @@
   width/member/group/seed。该实现保留3-member参数与FLOPs，只评价one-graph parallel execution，不声称压缩。
 - references：ICLR 2023 Packed-Ensembles、AISTATS 2022 Embedded Ensembles independent/collective regimes、2026
   BatchEnsemble diversity analysis；P129 target不读。
+- result：final NLL=`-3.561970`；P81/P96/P113 epistemic fraction=`.014611/.022343/.019530`；Spearman difference
+  from P126=`+.006705/-.006452/+.005368`（mean=`+.001874`，pass）。selected cost=`.175143/.172184/.218625`，
+  P96高于P126 `.167572`，cost gate失败；1/2 decisions，verdict=`rejected_development_packed_independent_actor_ensemble`；
+  wall=`63.10s`、peak GPU=`.319 GiB`，登记F97。
+
+### WS-V67-P135-FULL-BUDGET-PACKED-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU compute-parity recovery`；canonical=
+  `20260830T093500Z__full-budget-packed-actor-ensemble-s0-r1`，继续与P129 archive IO并行。
+- single change：复用P134 runner/3 independent blocks/seed0/6,000 steps/optimizer/evaluation/decisions，仅把per-member batch
+  `21,845→65,536`，使每member每step数据暴露与P126一致；不改总steps或任何model/score/gate。
+- rationale：P134 diversity/rank已恢复但final NLL较P126弱，且训练样本预算恰为其1/3；本run区分compute budget与packed
+  representation。它保留3-member参数/FLOPs，不声称训练compute reduction。
+- prevention：这是唯一compute-parity recovery；不论结果均不再扫batch/steps/member/seed/width/packing。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
