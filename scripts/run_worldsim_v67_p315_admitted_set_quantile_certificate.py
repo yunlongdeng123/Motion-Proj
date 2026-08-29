@@ -124,6 +124,7 @@ def main() -> None:
     (run_dir / "resolved.yaml").write_text(yaml.safe_dump(config, sort_keys=False))
     started = time.monotonic()
     seed = int(config["seed"])
+    confirmation_only = bool(config.get("confirmation_only", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -160,7 +161,10 @@ def main() -> None:
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
     source_groups, source_costs, source_scenes, source_queries = materialize(config["source_rows"])
-    p201_groups, p201_costs, p201_scenes, p201_queries = materialize(config["p201_rows"])
+    if config["p201_rows"] == config["source_rows"]:
+        p201_groups, p201_costs, p201_scenes, p201_queries = source_groups, source_costs, source_scenes, source_queries
+    else:
+        p201_groups, p201_costs, p201_scenes, p201_queries = materialize(config["p201_rows"])
     policy_artifact = torch.load(args.runs_root / config["frozen_policy"]["run"] / config["frozen_policy"]["artifact"], map_location="cuda")
     base = EpistemicTailCVaRAllocator(
         int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
@@ -218,42 +222,68 @@ def main() -> None:
         config["heldout_progress_preferences"], config["heldout_lateral_commands"],
         float(config["lateral_preference_weight"]), int(config["selected_action_count"]),
     )
-    split = config["split"]
-    modulus = int(split["scene_modulus"])
-    calibration = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
-    development = source_example_scenes % modulus == int(split["development_scene_remainder"])
-    train = ~(calibration | development)
-    feature_mean = source_feature[train].mean(0)
-    feature_scale = source_feature[train].std(0).clip(min=1e-5)
-    source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
-    p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
-    model_config = config["model"]
-    quantiles = np.asarray(config["quantile_levels"], np.float32)
-    model = AdmittedSetQuantileHead(source_feature.shape[1], model_config["hidden_dimensions"]).cuda()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
-    x = torch.from_numpy(source_feature).cuda()
-    y = torch.from_numpy(source_target).cuda()
-    q = torch.from_numpy(quantiles).cuda()
-    train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
-    last = 0.0
-    for step in range(int(model_config["steps"])):
-        row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
-        prediction = model(x[row])
-        error = y[row, None] - prediction
-        loss = torch.maximum(q[None] * error, (q[None] - 1) * error).mean()
-        optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        optimizer.step()
-        last = float(loss.detach())
-        if step % 500 == 0:
-            print(f"P315 admitted-set quantiles step={step + 1} pinball={last:.7f}", flush=True)
+    if confirmation_only:
+        certificate = torch.load(
+            args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
+            map_location="cuda",
+        )
+        feature_mean = np.asarray(certificate["input_mean"], np.float32)
+        feature_scale = np.asarray(certificate["input_scale"], np.float32)
+        quantiles = np.asarray(certificate["quantile_levels"], np.float32)
+        offsets = np.asarray(certificate["calibration_offsets"], np.float32)
+        hidden_dimensions = certificate["hidden_dimensions"]
+        model = AdmittedSetQuantileHead(int(certificate["input_width"]), hidden_dimensions).cuda()
+        model.load_state_dict(certificate["model_state_dict"])
+        model.eval()
+        p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+        source_metrics = None
+        p201_metrics = _evaluate(model, p201_feature, p201_target, p201_conditions, quantiles, offsets)
+        training_summary = {"example_count": 0, "steps": 0, "final_pinball_loss": None}
+        calibration_summary = {
+            "example_count": 0,
+            "additive_offsets": [float(value) for value in offsets],
+            "reused_from": config["frozen_certificate"],
+        }
+    else:
+        split = config["split"]
+        modulus = int(split["scene_modulus"])
+        calibration = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
+        development = source_example_scenes % modulus == int(split["development_scene_remainder"])
+        train = ~(calibration | development)
+        feature_mean = source_feature[train].mean(0)
+        feature_scale = source_feature[train].std(0).clip(min=1e-5)
+        source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+        p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+        model_config = config["model"]
+        quantiles = np.asarray(config["quantile_levels"], np.float32)
+        hidden_dimensions = model_config["hidden_dimensions"]
+        model = AdmittedSetQuantileHead(source_feature.shape[1], hidden_dimensions).cuda()
+        optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
+        x = torch.from_numpy(source_feature).cuda()
+        y = torch.from_numpy(source_target).cuda()
+        q = torch.from_numpy(quantiles).cuda()
+        train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
+        last = 0.0
+        for step in range(int(model_config["steps"])):
+            row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+            prediction = model(x[row])
+            error = y[row, None] - prediction
+            loss = torch.maximum(q[None] * error, (q[None] - 1) * error).mean()
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            last = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P315 admitted-set quantiles step={step + 1} pinball={last:.7f}", flush=True)
 
-    with torch.no_grad():
-        calibration_prediction = model(x[torch.from_numpy(np.flatnonzero(calibration)).cuda()]).cpu().numpy()
-    residual = source_target[calibration, None] - calibration_prediction
-    offsets = np.asarray([np.quantile(residual[:, index], float(level)) for index, level in enumerate(quantiles)], np.float32)
-    source_metrics = _evaluate(model, source_feature[development], source_target[development], source_conditions[development], quantiles, offsets)
-    p201_metrics = _evaluate(model, p201_feature, p201_target, p201_conditions, quantiles, offsets)
+        with torch.no_grad():
+            calibration_prediction = model(x[torch.from_numpy(np.flatnonzero(calibration)).cuda()]).cpu().numpy()
+        residual = source_target[calibration, None] - calibration_prediction
+        offsets = np.asarray([np.quantile(residual[:, index], float(level)) for index, level in enumerate(quantiles)], np.float32)
+        source_metrics = _evaluate(model, source_feature[development], source_target[development], source_conditions[development], quantiles, offsets)
+        p201_metrics = _evaluate(model, p201_feature, p201_target, p201_conditions, quantiles, offsets)
+        training_summary = {"example_count": int(train.sum()), "steps": int(model_config["steps"]), "final_pinball_loss": last}
+        calibration_summary = {"example_count": int(calibration.sum()), "additive_offsets": [float(value) for value in offsets]}
     decision = config["decision"]
     checks = {
         "P201_admitted_set_quantile_coverage": p201_metrics["maximum_quantile_undercoverage"] <= float(decision["maximum_P201_quantile_undercoverage"]),
@@ -263,7 +293,7 @@ def main() -> None:
     torch.save({
         "model_state_dict": model.state_dict(),
         "input_width": source_feature.shape[1],
-        "hidden_dimensions": model_config["hidden_dimensions"],
+        "hidden_dimensions": hidden_dimensions,
         "input_mean": feature_mean,
         "input_scale": feature_scale,
         "quantile_levels": quantiles,
@@ -277,8 +307,8 @@ def main() -> None:
         "status": "done",
         "verdict": verdict,
         "role": config["role"],
-        "training": {"example_count": int(train.sum()), "steps": int(model_config["steps"]), "final_pinball_loss": last},
-        "calibration": {"example_count": int(calibration.sum()), "additive_offsets": [float(value) for value in offsets]},
+        "training": training_summary,
+        "calibration": calibration_summary,
         "source_development": source_metrics,
         "P201_post_hoc_development": p201_metrics,
         "decision_checks": checks,

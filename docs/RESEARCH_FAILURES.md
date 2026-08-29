@@ -366,6 +366,8 @@
 - P315 result：冻结P313 top-2，训练q50/q80/q95 admitted-set max visited-state cost head；P201 coverage=
   `.64016/.85574/.97869`、max undercoverage=`-.02869`、median log-cost MAE=`.17716`、order violations=0，
   2/2 supported；未触发F207，不扫quantile/width/loss/gate；下一步仅做冻结证书跨cohort确认；
+- P316 active：P315完整证书在P277上做0-step certificate-family untouched确认；失败才登记F207，不refit、
+  recalibrate、换cohort或放宽两门；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

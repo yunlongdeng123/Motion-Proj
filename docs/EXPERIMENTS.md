@@ -656,6 +656,15 @@
   `supported_task_conditioned_admitted_set_quantile_certificate`。只声明经验证书，不声明formal coverage/safety；
   下一步冻结整个certificate在P277做一次certificate-family untouched确认。
 
+### WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01
+
+- frozen candidate/cohort：P315/P313/P311/P309/P307及P277六场景/180个六动作组；certificate family untouched，
+  但不声明globally fresh。
+- inherited：input normalization、quantile head weights、q50/q80/q95 calibration offsets、heldout task conditions与
+  max undercoverage `.10`/median log-cost MAE `.35`两门；0-step、0 recalibration、one read。
+- active=`run://worldsim_v67/WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
+  20260901T053000Z__admitted-set-quantile-confirmation-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

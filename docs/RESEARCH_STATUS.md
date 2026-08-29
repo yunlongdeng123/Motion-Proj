@@ -376,6 +376,11 @@ log-cost MAE=`.17716`、q95-q50 width=`.69442`、quantile-order violations=0，2
 conditions均保持q95 coverage `>=.97049`；wall=`44.91s`、peak GPU=`.14039GiB`。这是task-conditioned
 admitted-set经验量化证书，不提升为formal coverage/safety claim；下一步只做一次冻结证书的跨cohort确认。
 
+P316冻结P315全部quantile weights、input normalization、q50/q80/q95 additive offsets和两门，在P277六场景/
+180个六动作组上做certificate-family untouched 0-step确认；只评估heldout `.25/.75 × -.5/.5`，不训练、
+不重新校准、不改gate。Active=`run://worldsim_v67/WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
+20260901T053000Z__admitted-set-quantile-confirmation-s0-r1`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
