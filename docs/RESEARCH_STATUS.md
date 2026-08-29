@@ -623,6 +623,13 @@ ESS=`69.62/5490`，显示近support mismatch；P201 q90 coverage/unsafe=`.298361
 
 P348不裁剪或平滑P347 weights；按AISTATS 2020与DANN迁移为target-unlabeled adversarial representation alignment，
 在direct reliability BCE训练时用gradient reversal降低source/P201 latent可分性，再沿用P346 group calibration+PAV。
+Canonical=`run://worldsim_v67/WS-V67-P348-DOMAIN-ADVERSARIAL-VISITED-RELIABILITY-01/
+20260901T141500Z__domain-adversarial-visited-reliability-s0-r1`：domain BCE=`.676887`说明对齐生效，base BCE改善到
+`.155914`，但calibration BCE恶化到`.406183`；P201 q90 coverage/unsafe=`.373497/.173228`，risk失败，
+3/4 rejected，登记F224。unconditional alignment抹平了与risk相关的多模态结构。
+
+P349按NeurIPS 2018 CDAN改用latent×predicted-set-risk multilinear conditioning做domain discrimination，避免P348
+无条件混合不同reliability modes；其余P348训练预算与P346 calibration/PAV/decision保持不变。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

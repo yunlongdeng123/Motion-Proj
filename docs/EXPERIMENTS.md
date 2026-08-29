@@ -1215,7 +1215,20 @@
 - method：训练shared reliability encoder时同时做source event BCE和balanced source/P201-unlabeled domain BCE；
   gradient reversal只作用于encoder，之后沿用P346 source-only group calibration与fold2 PAV。
 - locks：单一domain loss coefficient与8k joint steps；不使用P201 event labels，不扫alignment/group/threshold/
-  capacity/step/LR/seed；状态=`implementation`。
+  capacity/step/LR/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P348-DOMAIN-ADVERSARIAL-VISITED-RELIABILITY-01/
+  20260901T141500Z__domain-adversarial-visited-reliability-s0-r1`。
+- result：base/domain final BCE=`.155914/.676887`，group calibration/PAV BCE=`.406183/.348670`；P201 q75/q85/
+  q90/q95 coverage=`.505738/.440710/.373497/.304645`，max unsafe=`.388889/.304933/.173228/.183673`。
+  q90 coverage与单调性通过但risk失败，3/4 rejected，wall=`81.92s`，F224。
+
+### WS-V67-P349-CONDITIONAL-DOMAIN-ADVERSARIAL-RELIABILITY-01
+
+- migration：NeurIPS 2018 CDAN指出unconditional DANN会混合分类原生的多模态分布；用feature×classifier-output
+  multilinear conditioning保留判别结构。P349以latent×3个predicted set-risk probabilities输入domain head。
+- method/locks：P348 encoder、8k steps、GRL coefficient、source/P201-unlabeled balance不变；domain batch共享随机
+  horizon/ceiling；P201 event labels隔离；不扫conditioning/entropy/alignment/threshold/capacity/step/LR/seed。
+- 状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

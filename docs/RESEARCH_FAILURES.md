@@ -430,8 +430,9 @@
 - P345：group calibration将P201 q90 risk降到`.10714`，但coverage降到`.27869`，2/4 rejected，登记F222；
 - P346：P201 q90 coverage/risk `.32842/.09091`，四门supported；source heldout-H仍漂移，仅保留development claim；
 - P347：domain近完美可分导致importance ESS=`69.62`，q90 coverage/risk `.29836/.10588`，登记F223；
-- P348：target-unlabeled adversarial representation alignment implementation；
-- 下一可用 failure id 为 `V67-F224`。
+- P348：unconditional alignment的q90 coverage/risk `.37350/.17323`，risk显著恶化，登记F224；
+- P349：CDAN multilinear risk-conditioned alignment implementation；
+- 下一可用 failure id 为 `V67-F225`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -549,6 +550,18 @@
   target-unlabeled alignment，再恢复unweighted P346 PAV；
 - forbidden rescue：不裁剪、温度化或平滑weights，不扫domain classifier/threshold/seed；resolution=
   `open via P348 domain-adversarial reliability representation`。
+
+### V67-F224 — P348无条件domain alignment破坏reliability判别与校准
+
+- canonical=`run://worldsim_v67/WS-V67-P348-DOMAIN-ADVERSARIAL-VISITED-RELIABILITY-01/
+  20260901T141500Z__domain-adversarial-visited-reliability-s0-r1`；
+- symptom：P201 q90 coverage升至`.373497`，但max unsafe升至`.173228`；只有risk gate失败，3/4 rejected；
+- diagnosis：domain BCE=`.676887`接近随机，说明alignment确实降低domain可分性；同时source calibration BCE从P346
+  `.283113`恶化到`.406183`，说明encoder也抹平了与unsafe event相关的多模态结构，而非alignment没发生；
+- literature/migration：NeurIPS 2018 CDAN指出unconditional adversarial alignment不适合分类的多模态分布，提出
+  feature与classifier prediction的multilinear conditioning；P349将latent×predicted set-risk输入domain head；
+- forbidden rescue：不减GRL coefficient或回调capacity/steps，不将高coverage包装成成功；resolution=
+  `open via P349 conditional domain adversarial reliability`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
