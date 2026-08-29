@@ -179,6 +179,15 @@
 - P290 仅是 additive-family untouched reuse；P277 cohort 已被旧 beta-LCB P277 消费，不记为全项目 fresh；
 - 下一可用 failure id 保持 `V67-F198`。
 
+### P291 context-adaptive residual quantile start note — 无新增 failure
+
+- P291 不是对 P284 threshold/offset 扫参；唯一结构变化是以 non-calibration scenes 训练条件 quantile，再由固定
+  calibration scenes 对 residual 做一次 global correction；
+- P284 两门原样继承，另预注册 mean conservatism 必须严格低于 P284 `.0172214098`，避免只用 coverage掩盖无效增益；
+- scene correlation 与 trajectory-budget flattening 不满足标准 exchangeability，因此即使通过也只写 empirical
+  adaptive LCB，不写 finite-sample/exact conditional guarantee；
+- 下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

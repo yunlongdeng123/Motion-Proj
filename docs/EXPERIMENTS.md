@@ -282,6 +282,21 @@
 - claim boundary：仅支持 frozen additive surrogate compiler 的跨场景复用；不是全项目 fresh，不支持 realized online utility、
   formal coverage、hard constraint、planner closed loop 或 safety claim。
 
+### WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01
+
+- research question：P284 global additive offset 的 conservatism 能否由 context-conditioned residual quantile 降低，
+  同时保留同一 P201 empirical coverage gate？
+- method：在 non-calibration scenes 上对 `max_h(P274 ensemble mean - teacher)` 训练 pinball quantile head；在冻结
+  calibration scenes 上按 tolerance 对 `score-q_hat(x,b,delta)` 做一次有限样本全局 correction；再 warm-start P284
+  monotone budget/tolerance surface蒸馏 adaptive LCB。参考 Romano et al., NeurIPS 2019 CQR 与 Plassier et al.,
+  ICML 2025 Rectifying Conformity Scores；当前 scene correlation 下只主张 empirical/approximate conditional behavior。
+- fixed protocol：训练 tolerances `.05/.10/.20/.30/.40`，heldout `.075/.15/.25/.35`；同 source/calibration split、
+  P201/P243 cohorts、12k quantile + 12k surface steps；不扫 split/network/loss/steps/gates。
+- gates：P201 adaptive-teacher MAE `<=.018`、max simultaneous-horizon undercoverage `<=.12`、mean conservatism
+  `< P284 .0172214098`；前两门继承 P284，第三门直接检验新研究增益。
+- active=`run://worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/
+  20260831T214500Z__context-adaptive-additive-lcb-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

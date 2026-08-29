@@ -153,6 +153,15 @@ trajectories；它们已被 P277 beta-LCB confirmation 消费，但从未被 P28
 `.0230856/.0122735`、composite regret=`1.85e-5`、violations=`0`，2/2；wall=`4.31s`。准确边界是 additive-family
 untouched reuse confirmation，不是全项目 fresh，也不是 realized online utility、formal coverage 或 safety claim。
 
+P291 已进入训练，将 P284 对所有 context 使用同一个 additive offset 推进为 context-adaptive residual quantile：
+quantile head 只在 non-calibration scenes 拟合 `max_h(mean-teacher)` 的条件分位数，固定 calibration scenes 仅做每个
+tolerance 一次全局 residual correction，随后 warm-start P284 的 monotone surface 做蒸馏。该结构依据 NeurIPS 2019
+Conformalized Quantile Regression 的“异方差 quantile + split correction”原则，以及 ICML 2025 Rectifying
+Conformity Scores 对 multi-output conditional calibration 的推进；不把其 exchangeable marginal guarantee 外推到当前
+scene-correlated 数据。门已冻结为 P201 surface MAE `<=.018`、max undercoverage `<=.12`，并要求 mean conservatism
+严格低于 P284 的 `.01722141`。Active=`run://worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/
+20260831T214500Z__context-adaptive-additive-lcb-s0-r1`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
