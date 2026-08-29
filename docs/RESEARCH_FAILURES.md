@@ -441,8 +441,9 @@
 - P356：primal-dual q90 coverage=`.40628`但risk=`.21019`，登记F231；feature calibrator family关闭；
 - P357：monotone-horizon q90 source/P201 risk=`.26173/.16364`，登记F232；
 - P358：fixed-grid multi-horizon q90 source/P201 risk=`.34097/.11236`，登记F233；
-- P359：horizon-group calibration active；
-- 下一可用 failure id 为 `V67-F234`。
+- P359：horizon-group q90 coverage/risk=`.29317/.10526`，登记F234；
+- P360：one-sided multi-horizon reliability active；
+- 下一可用 failure id 为 `V67-F235`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -704,6 +705,19 @@
   对原本不校准的模型最有帮助。P359把horizon作为显式group，为每个`H×ceiling×set`独立拟合校准参数与PAV；
 - forbidden rescue：不扫head sharing、grid、阈值、width、steps或seed，不读取P201 labels调map；resolution=
   `retain fixed-grid representation; open P359 horizon-group conditional calibration`。
+
+### V67-F234 — P359纯分组校准停在risk--coverage边界两侧
+
+- canonical=`run://worldsim_v67/WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-01/
+  20260901T171500Z__horizon-group-calibrated-reliability-s0-r1`；
+- symptom：P201 q90 coverage/unsafe=`.293169/.105263`，分别距离`.30/.10`仅`.006831/.005263`，但AND合同下
+  两门均失败；source fold3 risk仍为`.296380`；
+- retained evidence：相对P358，P201 risk `.112360→.105263`，说明horizon-group map方向正确；同时coverage
+  `.306284→.293169`，证明它只在既有risk--coverage排序上移动 operating point，没有改善排序本身；
+- literature/migration：ICML 2019 SelectiveNet联合优化预测与拒绝，AISTATS 2021 one-sided prediction在高准确率端
+  显式压低false positive。P360据此在表示训练中固定unsafe positive weight=9，再用无权重校准恢复probability；
+- forbidden rescue：不扫temperature、PAV、threshold或class weight，不把P201的边界差用于调参；resolution=
+  `close calibration-only family; open P360 one-sided representation training`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

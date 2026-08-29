@@ -705,7 +705,14 @@ heads在共享group calibration与跨horizon PAV中被重新混合，而非训�
 
 P359按ICML 2024 multicalibration与NeurIPS 2024实证边界，保留P358冻结的四头表示，只把temperature/bias与PAV map
 按`horizon×ceiling×set-size`分层；这是预定义horizon subgroup的直接校准，不改模型容量、阈值或P201使用边界。
-P201仍只作task-shift development read；当前进入该单次group-conditional calibration训练/评价。
+Canonical=`run://worldsim_v67/WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-01/
+20260901T171500Z__horizon-group-calibrated-reliability-s0-r1`：source/P201 q90 coverage/unsafe=
+`.265550/.296380`与`.293169/.105263`，两项P201门分别只差`.006831/.005263`，2/4 rejected，登记F234。
+分层校准继续改善风险但形成risk--coverage边界，关闭纯post-hoc calibration family。
+
+P360按ICML 2019 SelectiveNet与AISTATS 2021 one-sided prediction，直接在四头表示训练时将unsafe false-admission
+作为高代价一侧，固定positive weight=`(1-.10)/.10=9`；后续仍用无权重horizon-group calibration恢复概率语义。
+该轮优化ranking而非阈值，不扫class weight，当前进入GPU训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

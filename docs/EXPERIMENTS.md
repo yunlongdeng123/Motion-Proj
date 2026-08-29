@@ -1362,7 +1362,19 @@
 - method：冻结P358方法与8k训练合同；temperature/bias以及PAV分别拟合
   `horizon×ceiling×set-size`，评价固定读取3.0s对应map；P201 labels不进入任何fit。
 - locks：不改head/grid/width/steps/threshold/seed，不扫共享/分组混合权重；只执行一次预定义horizon分组校准；
-  状态=`active`。
+  状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-01/
+  20260901T171500Z__horizon-group-calibrated-reliability-s0-r1`。
+- result：train/horizon-group-cal/PAV BCE=`.117087/.326380/.337125`；source fold3 q90=`.265550/.296380`；
+  P201 q90=`.293169/.105263`，risk与coverage同时边界失败，2/4 rejected；wall=`48.10s`，F234。
+
+### WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01
+
+- migration：P359证明单纯post-hoc移动尺度会沿固定risk--coverage曲线交换两门，下一步必须改善unsafe/safe ranking；
+  SelectiveNet与one-sided prediction均直接联合优化选择质量并强调低错误率端的false-positive控制。
+- method：P359四头网络的BCE训练对unsafe positive固定赋权9（由冻结risk endpoint `.10`直接确定），
+  horizon-group temperature/bias与per-horizon PAV保持无权重，避免把训练权重误作概率。
+- locks：weight固定不扫，不改grid/head/width/steps/threshold/seed，P201不训练/校准；状态=`active`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

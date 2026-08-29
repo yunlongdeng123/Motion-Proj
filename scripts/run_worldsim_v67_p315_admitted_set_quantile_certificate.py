@@ -1182,6 +1182,7 @@ def main() -> None:
             isotonic_rows = row_fold == int(split.get("isotonic_scene_remainder", -1))
             development_rows = row_fold == int(split["development_scene_remainder"])
             model_config = config["reliability_model"]
+            one_sided_positive_weight = float(config.get("reliability_one_sided_positive_weight", 1.0))
             ensemble_fit_remainders = config.get("reliability_crossfold_ensemble_fit_remainders")
             if ensemble_fit_remainders is not None:
                 ensemble_fit_remainders = [int(value) for value in ensemble_fit_remainders]
@@ -1267,7 +1268,10 @@ def main() -> None:
                 local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
                 logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
                 target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
-                reliability_loss = F.binary_cross_entropy_with_logits(logits, target)
+                reliability_loss = F.binary_cross_entropy_with_logits(
+                    logits, target,
+                    pos_weight=torch.as_tensor(one_sided_positive_weight, device="cuda"),
+                )
                 if domain_adversarial_training:
                     target_domain_row = torch.randint(len(p201_x), (len(row),), device="cuda")
                     domain_features = torch.cat((source_x[row], p201_x[target_domain_row]), 0)
@@ -1844,6 +1848,7 @@ def main() -> None:
                              "ensemble_member_count": len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else 1,
                              "ensemble_member_final_bce": ensemble_member_last,
                              "ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
+                             "one_sided_positive_weight": one_sided_positive_weight,
                              "frozen_reliability_model": frozen_reliability_model,
                              "feature_calibrator_steps": int(feature_calibrator_config["steps"]) if feature_calibrator_config else 0,
                              "feature_calibrator_final_bce": feature_calibrator_last,
