@@ -3034,6 +3034,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F192`。
 
+### P257 milestone note — log-utility shadow-price policy通过，无新增failure
+
+- canonical=`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；
+- P201 budget MAE=`.010997`、frozen log-utility regret=`.0002719`、price violations=0，2/2；
+- epsilon固定`.05`且只运行一次，不做risk/price/grid/architecture sweep；
+- next：P258在P256原样fixed-group合同下编译P257 dual price；下一failure id保持F192。
+
+下一可用编号仍为：`V67-F192`。
+
 ### P254/P255 shadow-price milestone note — 单轨迹预算policy通过，无新增failure
 
 - P254 canonical=`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；

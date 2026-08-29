@@ -1075,7 +1075,9 @@ root。P256 r1训练12k已收敛到price MAE约`.007`，但首次quality前的gr
 P256 r2暴露同一helper返回reshape仍重复member轴，继续归入F191；最终r3完整2/2：P201 attainable fraction MAE=
 `.016420`、冻结Lagrangian regret=`.00001163`、price violations=0，26个64-row groups。P257用固定
 `log(P246+0.05)` proportional-fair utility替换P254的线性mean probability utility，其他price/grid/structure/
-steps与`.075/.005`两门不变，检验低可靠度轨迹更敏感的单次shadow-price policy；RTX 3090训练中。
+steps与`.075/.005`两门不变，检验低可靠度轨迹更敏感的单次shadow-price policy。P257一次2/2：P201 budget
+MAE=`.010997`、冻结log-utility regret=`.000272`、price violations=0。P258把冻结P257推进到与P256相同的
+64-trajectory fixed-group attainable-budget dual compiler；仍只判fraction MAE与冻结log-Lagrangian regret，RTX 3090训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

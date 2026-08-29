@@ -2116,7 +2116,20 @@
   geometry，不宣称社会公平、真实计算公平或安全公平；
 - protocol：P254的13 train/12 heldout prices、129-point global grid、128/16 price-monotone student、L1、12k、
   batch8192、seed0与P201 budget MAE≤`.075`/frozen log-utility regret≤`.005`不变；
-- active canonical：`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`。
+- canonical：`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；
+- result：P201 budget MAE=`.010997`、frozen log-utility regret=`.0002719`、price violations=0，2/2；source=
+  `.009457/.0001385`，P183=`.009616/.0002248`；
+- resources/verdict：wall=`89.81s`、peak GPU=`.140GiB`；`supported_log_utility_shadow_price_policy`。
+
+### WS-V67-P258-LOG-UTILITY-GROUP-DUAL-01
+
+- object：在与P256相同的scene-local consecutive 64-row groups和attainable fraction合同下，以冻结P257共享price
+  分配budget，检验proportional-fair surrogate能否被set-level dual compiler摊销；
+- protocol：P256的72维mean/std、九train/八heldout fractions、20-step bisection、128/16 monotone dual student、
+  12k/batch8192/seed0不变；唯一utility变化为P257固定`log(P246+.05)`；
+- P201 decisions：attained fraction MAE≤`.030`、冻结log-Lagrangian regret≤`.002`；不扫epsilon/group/architecture；
+- active canonical：`run://worldsim_v67/WS-V67-P258-LOG-UTILITY-GROUP-DUAL-01/20260831T110000Z__log-utility-group-dual-s0-r1`；
+  仍非真实fairness/compute/scheduler/planning claim。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
