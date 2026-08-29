@@ -98,8 +98,9 @@
 | P185 | `run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/20260830T154000Z__worst-environment-log-cost-density-s0-r1` | mean calibration +13.02%但P81 Brier回退2.64%；rejected/F149 |
 | P186 | `run://worldsim_v67/WS-V67-P186-NOISE-REGULARIZED-LOG-COST-DENSITY-01/20260830T155000Z__noise-regularized-log-cost-density-s0-r1` | mean calibration +19.60%但Brier 4/4回退；rejected/F150 |
 | P187 | `run://worldsim_v67/WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01/20260830T160000Z__student-t-log-cost-mixture-density-s0-r1` | P81/P113改善但P96/P129回退，mean calibration +3.85%；rejected/F151 |
-| P188 | `run://worldsim_v67/WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01/20260830T161000Z__conditional-spline-log-cost-density-s0-r1` | fixed 8-bin RQ-spline density，GPU training active |
-| P189 | `run://worldsim_v67/WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01/20260830T161500Z__budget-brier-log-cost-cdf-s0-r2` | direct seven-budget Brier/CRPS objective，GPU training active；r1 pre-step engineering exit |
+| P188 | `run://worldsim_v67/WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01/20260830T161000Z__conditional-spline-log-cost-density-s0-r1` | source NLL更低但mean calibration -23.89%；rejected/F152 |
+| P189 | `run://worldsim_v67/WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01/20260830T161500Z__budget-brier-log-cost-cdf-s0-r2` | mean calibration +11.09%但P81/P129 Brier回退；rejected/F153 |
+| P190 | `run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/20260830T162500Z__pcgrad-log-cost-cdf-s0-r1` | frozen-P182 norm-balanced NLL+Brier PCGrad，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -238,6 +239,8 @@
 | `V67-F149` | closed negative | P185 mean calibration改善13.02%但P81 Brier回退2.64% |
 | `V67-F150` | closed negative | P186 mean calibration改善19.60%但Brier四cohort全部回退1.63%--27.51% |
 | `V67-F151` | closed negative | P187 heavy tails仅改善P81/P113，P96/P129概率刻度回退 |
+| `V67-F152` | closed negative | P188 spline source NLL改善但仅P96 Brier受益，mean calibration恶化23.89% |
+| `V67-F153` | closed negative | P189 pure Brier改善P96/P113但P81/P129回退，NLL refinement丢失 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

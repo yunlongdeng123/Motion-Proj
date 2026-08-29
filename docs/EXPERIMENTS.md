@@ -1357,21 +1357,35 @@
 
 ### WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01
 
-- 状态：`GPU training active`；canonical id=`20260830T161000Z__conditional-spline-log-cost-density-s0-r1`。
+- 状态：`done/rejected`；canonical id=`20260830T161000Z__conditional-spline-log-cost-density-s0-r1`。
 - object：P182同3D condition、hidden dimensions与训练预算；以8-bin rational-quadratic spline和standard-normal base替换mixture components，
   log-cost linear tail bound=`6`，覆盖source observed range `0--5.054`，七预算CDF保持解析可微。
 - migration：使用NeurIPS 2019作者维护的`nflows==0.14`算子，避免重写数值敏感的spline inverse/Jacobian。
 - execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫bin/tail/loss/architecture。
+- result：P81/P96/P113/P129 Brier change vs P182=`+7.42%/-7.78%/+3.47%/+.20%`；calibration-error reduction=
+  `-70.16%/+36.43%/-37.19%/-24.61%`，mean=`-23.89%`；final NLL=`-1.39293`，wall=`253.59s`。
+- verdict=`rejected_conditional_spline_log_cost_density`，F152；关闭bin/tail/flow-depth sweep。
 
 ### WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01
 
-- 状态：`GPU training active/concurrent with P188`；canonical id=`20260830T161500Z__budget-brier-log-cost-cdf-s0-r2`。
+- 状态：`done/rejected`；canonical id=`20260830T161500Z__budget-brier-log-cost-cdf-s0-r2`。
 - object：P182同Gaussian-mixture architecture/3D condition/七预算，训练目标改为七个CDF query的mean Brier（离散CRPS）。
 - motivation：AISTATS distributional regression把全quantile目标联系到CRPS；本trial直接对齐可靠性CDF proper score，不再间接依赖NLL。
 - execution：12,000 steps、batch65,536；P188 kernel GPU利用不足时并发填充，P183 archive IO继续，P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫budget weight/threshold/loss mix/architecture。
 - recovery：r1在首个optimizer step前因bool event target未cast退出、无quality read；r2仅显式转float，协议与参数不变。
+- result：P81/P96/P113/P129 Brier change vs P182=`+2.06%/-6.94%/-9.02%/+.56%`；calibration-error reduction=
+  `-3.28%/+25.88%/+43.67%/-21.89%`，mean=`11.09%`；final seven-budget Brier=`.063825`，wall=`87.79s`。
+- verdict=`rejected_budget_brier_log_cost_cdf`，F153；pure objective replacement关闭，不扫budget weights。
+
+### WS-V67-P190-PCGRAD-LOG-COST-CDF-01
+
+- 状态：`GPU training active`；canonical id=`20260830T162500Z__pcgrad-log-cost-cdf-s0-r1`。
+- object：从冻结P182 checkpoint出发，共享同一Gaussian mixture，同时优化continuous NLL与七预算Brier。
+- mechanism：每batch把两个output-gradient范数自动拉到共同尺度；若内积为负，按NeurIPS PCGrad双向投影后更新，无手调loss weight。
+- execution：fixed 4,000-step fine-tune、batch65,536、lr=`2e-4`；P183 archive IO继续，P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫weight/projection threshold/steps/lr/architecture。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

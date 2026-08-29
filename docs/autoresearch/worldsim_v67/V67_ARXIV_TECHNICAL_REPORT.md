@@ -433,6 +433,10 @@ P182 single density，任何development rescue均不回流改变prospective prot
 固定8-bin conditional RQ spline，以区分重尾不足和随condition变化的偏态/局部形状；仍是consumed-development机制试验。
 同时，P189保留P182 Gaussian mixture representation，只把训练目标替换为七个既有预算上的mean Brier（离散CRPS）；它与P188并发，
 用于区分distribution-family misspecification和NLL/objective mismatch，且不改变P183冻结的P182 candidate。
+P188最终把source NLL降到`-1.39293`，但相对P182只有P96 Brier改善；其余三个回退且mean calibration恶化`23.89%`（F152）。
+因此论文可把它作为“density likelihood与decision reliability不等价”的直接负证据，而不是把更低NLL误写为不确定性质量提升。
+P189直接优化七预算Brier后，P96/P113 Brier改善`6.94%/9.02%`且mean calibration改善`11.09%`，但P81/P129回退（F153）。
+这把问题缩小为refinement与calibration的梯度冲突；P190从P182 checkpoint采用norm-balanced PCGrad联合NLL与Brier，不做loss-weight sweep。
 
 ## 3. 核心结果表
 

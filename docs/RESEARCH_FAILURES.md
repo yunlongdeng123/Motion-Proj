@@ -2444,6 +2444,30 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F152`。
 
+### V67-F152 — 更强source spline likelihood没有转化为跨cohort可靠性
+
+- 分类：`algorithm/flexible-density-source-overfit`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P188-CONDITIONAL-SPLINE-LOG-COST-DENSITY-01/
+  20260830T161000Z__conditional-spline-log-cost-density-s0-r1`。
+- 观察：8-bin RQ spline final source NLL=`-1.39293`，显著低于P182约`-1.09`；但仅P96 Brier改善`7.78%`，P81/P113/P129
+  分别回退`7.42%/3.47%/.20%`，mean calibration change=`-23.89%`。
+- 解释：模型容量成功拟合source log-cost的偏态/局部形状，却放大了source特有概率刻度；NLL提升不等同于proper-score跨cohort迁移。
+- 防重复：关闭RQ-spline bin/tail/flow-depth sweep；不因source NLL更低放宽可靠性gate。下一机制只检验objective mismatch。
+
+下一可用编号为：`V67-F153`。
+
+### V67-F153 — pure budget-Brier目标改善两cohort但损失NLL refinement
+
+- 分类：`algorithm/proper-score-objective-tradeoff`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01/
+  20260830T161500Z__budget-brier-log-cost-cdf-s0-r2`。
+- 观察：P96/P113 Brier改善`6.94%/9.02%`，mean calibration improvement=`11.09%`；但P81/P129 Brier回退`2.06%/.56%`，
+  calibration回退`3.28%/21.89%`。r1 pre-step bool-cast错误无quality，不是本算法failure。
+- 解释：直接proper-score训练证实NLL/objective mismatch，但完全替换NLL会丢掉P182在P81/P129保留的conditional refinement。
+- 防重复：不扫budget weights或阈值；不再做pure Brier from-scratch。下一步只做一次无手调权重的NLL+Brier PCGrad。
+
+下一可用编号为：`V67-F154`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

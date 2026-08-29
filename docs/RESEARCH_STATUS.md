@@ -796,15 +796,19 @@ P187 fixed ν=`3` Student-t log-cost mixture已完成：相对P182 Brier change=
 reduction=`+43.36%/-20.31%/+30.51%/-38.16%`，mean仅`3.85%`。P96/P129 trade-off使2/2 gates均失败，F151；关闭单纯
 heavy-tail family rescue，不扫ν。
 
-P188已冻结并启动8-bin conditional rational-quadratic spline density：沿用P182 condition、hidden dimensions与12,000-step budget，
-用NeurIPS官方`nflows==0.14`精确likelihood/CDF，只新增可表达偏态与局部形状的单调spline，linear tail bound=`6`覆盖source
-log-cost range。相对P182逐cohort Brier不劣且mean calibration改善≥5%才支持；不扫bin/tail/architecture/loss。P183继续并行。
+P188 8-bin conditional rational-quadratic spline已完成：source NLL=`-1.39293`虽优于P182约`-1.09`，但相对P182的P81/P96/P113/P129
+Brier change=`+7.42%/-7.78%/+3.47%/+.20%`，mean calibration change=`-23.89%`；两gate均失败，F152。更强source
+likelihood没有转化为跨cohort reliability，关闭bin/tail/flow-depth sweep。
 
 因P188 spline kernel仅占约33% GPU，P189已并发启动以填充3090：保持P182 Gaussian-mixture architecture、conditions、七个预算与
 12,000-step budget，唯一变化是从continuous NLL改为七预算mean Brier（离散CRPS）直接训练。相对P182逐cohort Brier不劣且mean
 calibration改善≥5%才支持；不扫budget weight、threshold、architecture或混合loss，P183完全排除。
 P189 r1在首个optimizer step前因bool target subtraction退出，无quality read；仅显式cast target为float后以r2原协议恢复，
 不登记算法failure、不改变任何研究参数。
+
+P189 r2已完成：相对P182的P81/P96/P113/P129 Brier change=`+2.06%/-6.94%/-9.02%/+.56%`，mean calibration improvement=
+`11.09%`；纯Brier目标改善P96/P113但损害P81/P129，1/2 gate，F153。P190已从冻结P182 checkpoint启动固定4,000-step
+norm-balanced PCGrad微调，同时保留NLL refinement与七预算Brier；不手调loss weight或扫step/lr，P183排除。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
