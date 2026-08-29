@@ -369,10 +369,12 @@ visited-state cost quantiles，建立可校准authority certificate，而非继�
 
 P315冻结P313的task-conditioned top-2，预测admitted set内最大实际future visited-state cost的q50/q80/q95。
 source scene角色按mod5分train/calibration/development；量化头只在train拟合，calibration只计算每quantile一个additive
-residual correction，P201不refit。train conditions为progress `0/.5/1`×command `-1/0/1`，正式P201只看heldout
-`.25/.75 × -.5/.5`。6k steps；两门为max undercoverage `<=.10`、median log-cost MAE `<=.35`，不扫quantile/
-width/loss/gate。Active=`run://worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/
-20260901T051500Z__admitted-set-quantile-certificate-s0-r1`。
+residual correction，P201不refit。Canonical=`run://worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/
+20260901T051500Z__admitted-set-quantile-certificate-s0-r1`：source development coverage=`.48124/.83423/.96999`，
+P201 heldout `.25/.75 × -.5/.5` coverage=`.64016/.85574/.97869`，max undercoverage=`-.02869`、median
+log-cost MAE=`.17716`、q95-q50 width=`.69442`、quantile-order violations=0，2/2 supported。四个P201 task
+conditions均保持q95 coverage `>=.97049`；wall=`44.91s`、peak GPU=`.14039GiB`。这是task-conditioned
+admitted-set经验量化证书，不提升为formal coverage/safety claim；下一步只做一次冻结证书的跨cohort确认。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

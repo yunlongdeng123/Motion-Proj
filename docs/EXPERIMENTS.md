@@ -643,8 +643,18 @@
 - protocol：source scene train/calibration/development disjoint；monotone quantile head 6k steps，calibration每quantile
   一次additive residual correction。P201只看heldout midpoint task conditions且不refit。
 - gates：P201 max undercoverage `<=.10`、median log-cost MAE `<=.35`；不扫quantile/width/loss/gate。
-- active=`run://worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/
+- canonical=`run://worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/
   20260901T051500Z__admitted-set-quantile-certificate-s0-r1`。
+- fit/calibration：train examples=`14,526`、calibration examples=`7,515`；final pinball=`.02343`，冻结additive
+  calibration offsets=`[-.00772,.05748,.53464]`。
+- source development：`5,598` examples，q50/q80/q95 coverage=`.48124/.83423/.96999`、max undercoverage=
+  `.01876`、median log-cost MAE=`.18891`、q95-q50 width=`.69591`、order violations=0。
+- P201 formal read：`1,220` examples，coverage=`.64016/.85574/.97869`、max undercoverage=`-.02869`、median
+  log-cost MAE=`.17716`、pinball=`.06985`、q95-q50 width=`.69442`、order violations=0，2/2 supported。
+  四个heldout task conditions的q95 coverage为`.98361/.98033/.98033/.97049`，没有单一condition崩塌。
+- resources/verdict：wall=`44.91s`、peak GPU=`.14039GiB`、RSS=`1.8887GiB`；verdict=
+  `supported_task_conditioned_admitted_set_quantile_certificate`。只声明经验证书，不声明formal coverage/safety；
+  下一步冻结整个certificate在P277做一次certificate-family untouched确认。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

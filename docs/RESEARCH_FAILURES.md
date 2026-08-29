@@ -363,8 +363,9 @@
 - P314 freeze：P313全链在P277 180个六动作组上0-step two-axis family-untouched确认；失败才登记F207，不refit、
   result reduction=`36.70%`、pairwise=`.91799`、command response=`.98889`、progress violations=0，3/3
   supported；未触发F207；下一步转向set-level quantile certificate而非继续ranking；
-- P315 active：冻结P313 top-2，训练q50/q80/q95 admitted-set max visited-state cost head；source scene独立
-  calibration只做additive residual correction，P201两门；失败才登记F207，不扫quantile/width/loss/gate；
+- P315 result：冻结P313 top-2，训练q50/q80/q95 admitted-set max visited-state cost head；P201 coverage=
+  `.64016/.85574/.97869`、max undercoverage=`-.02869`、median log-cost MAE=`.17716`、order violations=0，
+  2/2 supported；未触发F207，不扫quantile/width/loss/gate；下一步仅做冻结证书跨cohort确认；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29
