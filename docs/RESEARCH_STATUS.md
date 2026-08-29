@@ -514,7 +514,12 @@ P126全部冻结，只以`1+ReLU(source-standardized NLL)`膨胀variance。P81/P
 P147 IO仍为主路径。并行scan中shard01对`0018+0110`冻结需求只命中`386/774`，精确等于单scene 0018分母；结合官方
 scene index区间，确认`scene-0110:01`是pre-target archive locator错误，现唯一修正为`:02`（F118）。旧prep保留其余active
 shard扫描与已提取文件；结束后r2只补scene0110 shard02并启动10-scene preprocess，P147 evaluator持续等待，不改cohort/target/
-horizons/models/decisions。当前没有另一条有充分机制依据的GPU训练，避免为占卡而重复已关闭family。
+horizons/models/decisions。
+
+为直接服务P147多时域问题，P156已占用3090训练continuous-time integrated increment ensemble。source residual第0点严格为0；
+将后续9点位置改写成8个`Δresidual/(H/8)` velocity targets，输入Actor features+absolute interval midpoint+H，三成员预测
+increment Gaussian；position mean和aleatoric variance分别累加积分，member mean variance提供epistemic。该机制不同于P148
+直接位置decoder和P115 spectral压缩；四consumed decisions冻结，P147 IO继续并行。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

@@ -897,6 +897,17 @@
   结束后r2复用existing并只补02。P147 evaluator不重启，仍等待相同10 scenes。
 - scientific exposure：0 target rows/metrics；cohort/horizons/P126/P109/cost/fixed50/two macro decisions完全不变；F118。
 
+### WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T112500Z__integrated-increment-actor-ensemble-s0-r1`。
+- representation：source Actor residual profile第0点严格`[0,0]`；8 intervals用真实`Δt=H/8`转为2D residual velocity。
+  input=Actor features+absolute interval midpoint+H；position mean按increment积分，aleatoric variance按独立increments累加，
+  epistemic来自3 member integrated means。
+- training：`.8/1.5/2.5/3.0s` source、3 members、hidden `[256,128]`、6,000 steps/member、batch65,536。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126 selected cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫architecture/loss/member/seed/integration/variance weight/score/coverage；不改变P147 primary。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

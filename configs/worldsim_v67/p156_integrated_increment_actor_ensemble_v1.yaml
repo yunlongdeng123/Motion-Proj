@@ -1,0 +1,47 @@
+schema_version: worldsim_v67.p156_integrated_increment_actor_ensemble.v1
+output_schema_version: worldsim_v67.p156_integrated_increment_actor_ensemble_summary.v1
+task_id: WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P156-001
+role: consumed_development_continuous_time_integrated_increment_actor_ensemble
+model_artifact: INTEGRATED_INCREMENT_ACTOR_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_integrated_increment_actor_ensemble
+verdict_on_failure: rejected_development_integrated_increment_actor_ensemble
+locks:
+  zero_initial_residual_is_observed_exactly_in_source: true
+  target_is_eight_two_axis_residual_velocities_using_delta_t_equals_H_over_8: true
+  input_is_actor_features_absolute_interval_midpoint_and_horizon: true
+  position_mean_and_variance_are_cumulative_integrals_of_independent_increments: true
+  no_architecture_loss_member_seed_integration_variance_weight_score_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v229/caldarelli23a.html
+  - https://openaccess.thecvf.com/content/CVPR2026/html/Hu_Perceiving_the_Near_Reasoning_the_Distant_Coherent_Long-Horizon_Trajectory_Prediction_CVPR_2026_paper.html
+claim_boundary:
+  - consumed_development_kinematically_integrated_residual_distribution_only
+  - tests_temporal_increment_coherence_after_P148_position_decoder_failure
+  - requires_new_independent_confirmation_if_supported
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim

@@ -66,6 +66,7 @@
 | P153 | `run://worldsim_v67/WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01/20260830T111000Z__bayesian-last-layer-actor-s0-r1` | epistemic约`1e-4`、mean rank `+.000844`；rejected/F115 |
 | P154 | `run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/20260830T111500Z__density-aware-actor-ensemble-s0-r1` | shift detected但P81 cost退；rejected/F116 |
 | P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | mean rank `-.007045`；rejected/F117 |
+| P156 | `run://worldsim_v67/WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01/20260830T112500Z__integrated-increment-actor-ensemble-s0-r1` | continuous-time increment integration；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -124,6 +125,7 @@
 | Bayesian last layer | P153 consumed H3.5 ×4 | mean gain=`+.000844` | reject overconcentrated token posterior |
 | density-aware P126 | P154 consumed H3.5 ×4 | mean gain=`-.001727` | rarity not reliability |
 | RegMixup Actor ensemble | P155 consumed H3.5 ×4 | mean gain=`-.007045` | reject train-time interpolation |
+| integrated increment ensemble | P156 consumed H3.5 ×4 | running | test kinematic temporal coherence |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map

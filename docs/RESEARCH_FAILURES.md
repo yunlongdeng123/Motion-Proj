@@ -1936,6 +1936,13 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - recovery：唯一改`scene-0110 01→02`；让03/08/10现有scan自然完成，复用所有existing LIDAR，r2只补02后preprocess。
 - scientific impact：0 target rows/metrics；不换scene/cohort/H/model/score/decision，不重启P147 evaluator。
 
+### P156 freeze note — continuous-time integrated increment ensemble
+
+- object：source exact-zero初始residual；8个`Δresidual/(H/8)` velocity Gaussian，以absolute midpoint+H conditioning。
+- integration：position mean累加increment，aleatoric variance累加independent increment variance，epistemic取member integrated mean variance。
+- decisions：P81/P96/P113/P129相对P126 cost全不退、mean rank gain≥`.005`。
+- prevention：不扫architecture/loss/member/seed/integration/variance/score/coverage；不重复P148 direct position decoder。
+
 下一可用编号为：`V67-F119`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
