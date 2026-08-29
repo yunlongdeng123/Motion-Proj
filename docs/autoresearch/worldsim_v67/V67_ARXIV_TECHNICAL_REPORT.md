@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P166 expected-cost calibration active`
+- 报告状态：`P147 independent multi-horizon support; P166 point calibration closed negative`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -335,6 +335,8 @@ selection candidate成立，也不能用已读P147选择另一个quantile。
 P166转向不改变排序的校准问题：固定P126 score，以horizon-conditioned monotone neural spline预测同定义continuous cost的
 条件期望，并与horizon-only baseline比较。这响应回归不确定性文献中“rank/accuracy不等于calibration”的区分；当前只检验
 point expected cost，不产生credible interval、coverage或conformal guarantee。若consumed development成立，才会冻结模型到全新场景。
+P166旧四cohort raw MSE虽逐组小幅下降，但平均仅`4.09%<20%`，10-bin expected-cost error反而四组全差；P147 H0.8也
+退化（F131）。因此论文结论维持“可排序、可降低fixed-coverage cost”，不升级为绝对cost calibrated prediction。
 
 ## 3. 核心结果表
 

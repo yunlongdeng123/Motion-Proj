@@ -2121,7 +2121,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：旧四cohort MSE逐组不退+mean reduction≥20%；P147 post-confirmation only。
 - prevention：不扫knots/bin/loss/architecture/metric，不改变P126 rank/coverage；失败才使用F131并关闭point-calibration trial。
 
-下一可用编号为：`V67-F131`。
+### V67-F131 — monotone expected-cost calibration只有约4% MSE改善且bin error恶化
+
+- 分类：`algorithm/expected-cost-calibration`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/
+  20260830T125000Z__monotone-expected-cost-calibration-s0-r1`。
+- 观察：旧四raw MSE逐组小幅下降但mean reduction仅`4.09%<20%`；10-bin expected-cost error全高于horizon-only；
+  P147 H0.8 MSE退化`7.68%`。
+- 解释：单调score能保留rank并解释少量均值变化，但P120 cost强重尾、跨scene scale漂移；source log-cost fit不等于raw expected-cost
+  calibration。结果不否定P126 ranking，只禁止把它写成calibrated magnitude。
+- 防重复：不扫knots/hidden/loss/bin或改用更低MSE门；关闭point expected-cost calibration。若未来做interval/conformal，必须
+  作为新预测对象且用新独立校准数据，不能复用本结果降门槛。
+
+下一可用编号为：`V67-F132`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

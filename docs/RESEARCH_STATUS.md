@@ -630,6 +630,11 @@ calibrated regression、ICML 2019 distribution calibration与ICML 2023大规模�
 旧四cohort只检查MSE逐组不退和mean reduction≥20%；P147五H仅post-confirmation描述。该对象不改变fixed50 selection，也不声称
 credible interval/conformal guarantee。
 
+P166 canonical r1完成79,478 source trajectories，final score-calibration/horizon-only log-MSE=`.16934/.21787`。旧四cohort
+raw MSE均小幅改善，但reduction仅`4.65%/2.94%/4.23%/4.55%`（mean=`4.09%`），远低于冻结20%；且10-bin
+expected-cost error四组均高于horizon-only。1/2 decisions，F131。P147仅H1.5--H3.5 MSE微降，H0.8退化；因此关闭
+point-calibration family，不扫knots/loss/threshold。P126/P147继续只支持relative reliability ranking/selection，不升级为calibrated cost。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

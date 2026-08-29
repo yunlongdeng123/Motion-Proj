@@ -1086,13 +1086,19 @@
 
 ### WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01
 
-- 状态：`implementation frozen / GPU launch pending`；canonical id=`20260830T125000Z__monotone-expected-cost-calibration-s0-r1`。
+- 状态：`done/rejected development`；canonical id=`20260830T125000Z__monotone-expected-cost-calibration-s0-r1`。
 - object：冻结P126 trajectory score与排序，将其映射为`E[continuous boundary-state cost | score,H]`；不继续修P165 q75 selection。
 - model：对normalized score单调的5-knot positive-increment spline，horizon条件化base/slope/increments；8,000 steps、batch32,768。
 - control：只读horizon的线性expected-cost calibration；两者同训`log1p(P120 cost)`，raw-cost报告MSE/MAE/10-bin expected-cost error。
 - decisions：旧P81/P96/P113/P129 calibrated MSE逐组不高于horizon-only，mean MSE reduction≥20%；P147仅描述。
 - locks：不扫knots/width/loss/bin/threshold/metric，不改变P126 rank/selection，不加hash/checksum/fingerprint。
 - claim：只允许point expected-cost calibration；无credible interval、conformal coverage、collision probability或safety claim。
+- training result：79,478 trajectories；final score/horizon-only log-MSE=`.16934/.21787`；wall=`39.96s`，
+  peak GPU=`.0678GiB`、RSS=`1.6295GiB`。
+- development result：P81/P96/P113/P129 raw-MSE reduction=`4.65%/2.94%/4.23%/4.55%`，逐组不退门通过，
+  mean=`4.09%<20%`失败；expected-cost bin error四组均恶化。Verdict=`rejected_development_monotone_expected_cost_calibration`，F131。
+- P147 diagnostic：MSE reduction=`-7.68%/+5.36%/+7.19%/+3.04%/+4.11%`；H0.8明显退化，仍只作post-confirmation描述。
+- interpretation：P126 score含有限的point-cost信息，但source log-MSE改善没有转成raw heavy-tail calibration；不扫knots/bin/loss。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
