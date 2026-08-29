@@ -2688,6 +2688,21 @@ P207 r1 engineering note（不占算法编号）：rank-2 covariance参数化为
 
 下一可用编号：`V67-F170`。
 
+F169 recovery closure：P215把source scenes按remainder拆成9,730 density-fit、5,043 calibration与3,742 development
+trajectories；低自由度monotone beta层在未触碰dev上同时改善P199 Brier `.895%`和calibration error `38.31%`，2/2。
+这只解决source probability-scale失配；是否迁移由P216决定。
+
+### V67-F170 — disjoint-calibrated prefix survival仍发生跨cohort refinement回退
+
+- canonical：`run://worldsim_v67/WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01/20260830T220000Z__calibrated-prefix-survival-post-confirmation-s0-r1`；
+- 观察：冻结P215在P183 consumed-secondary中calibration error改善`19.87%`，但macro Brier退化`1.89%`，1/2；
+- 解释：disjoint beta校准可迁移概率尺度，却不能修复source-to-P183的conditional refinement/covariate shift；
+- 文献响应：AISTATS 2020 calibrated prediction under covariate shift使用unlabeled-target density ratio做importance weighting。
+  P217只试一次目标特征加权的proper density/calibration训练，P183标签不参与优化；
+- 防重复：P217若失败即关闭prefix survival/density/calibration/importance-weighting家族；不扫weight clip、domain net或loss。
+
+下一可用编号：`V67-F171`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

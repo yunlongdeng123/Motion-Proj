@@ -926,7 +926,12 @@ prefix targets作proper log-likelihood训练。相对P199 prefix-copula，source
 `.0647283→.0639766`改善`1.16%`，最终四H Brier改善`5.21%`；但宏平均calibration error
 `.0172493→.0224819`退化`30.33%`，故1/2、`V67-F169`。该结果说明prefix survival对象保留refinement，但概率尺度失配。
 不扫宽度、component或loss；P215正用互斥scene remainder将density-fit/calibration/development拆为三组，只训练一个共享
-monotone beta slope pair加四个prefix intercept，并在未触碰development scenes复验。当前单卡训练运行中。
+monotone beta slope pair加四个prefix intercept，并在未触碰development scenes复验。P215以9,730/5,043/3,742条
+density-fit/calibration/development trajectories得到macro Brier `.0647283→.0641492`改善`.895%`、calibration error
+`.0172493→.0106416`改善`38.31%`，2/2，故F169已机制性恢复但仍仅source development。冻结P215后，P216在已消费P183
+的1,912条跨cohort trajectories上校准仍改善`19.87%`，但Brier `.0642338→.0654502`退化`1.89%`，1/2、F170；
+不能创建fresh confirmation。参考AISTATS 2020 covariate-shift calibration，P217正以P183只读input features训练domain density
+ratio，并对source density/log-loss与disjoint beta calibration作importance weighting；P183 cost labels只用于最终development read。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

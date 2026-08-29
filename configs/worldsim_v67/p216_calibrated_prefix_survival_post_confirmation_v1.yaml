@@ -1,0 +1,26 @@
+schema_version: worldsim_v67.p216_calibrated_prefix_survival_post_confirmation.v1
+output_schema_version: worldsim_v67.p216_calibrated_prefix_survival_post_confirmation_summary.v1
+task_id: WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P216-001
+role: consumed_post_confirmation_calibrated_prefix_survival_secondary
+frozen_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p215: {run: worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1, artifact: CALIBRATED_PREFIX_SURVIVAL_DENSITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {monte_carlo_samples: 1024, seed: 0}
+decision: {minimum_macro_calibration_error_reduction_vs_P199: 0.0}
+verdict_on_pass: supported_consumed_calibrated_prefix_survival_secondary
+verdict_on_failure: rejected_consumed_calibrated_prefix_survival_secondary
+locks:
+  P215_P199_P182_and_rows_are_frozen: true
+  four_prefixes_budgets_MC_and_two_decisions_are_unchanged: true
+  no_refit_recalibration_gate_metric_or_cohort_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_secondary_only_not_fresh_confirmation
+  - prefix_maximum_visited_state_cost_reliability_not_collision_probability
+  - no_censoring_conformal_planner_policy_closed_loop_or_safety_claim

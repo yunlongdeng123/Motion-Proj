@@ -1691,7 +1691,25 @@
 - canonical planned：`run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1`；
 - protocol：scene `%5` remainders把density-fit、beta-calibration、development严格分开；共享两条正beta slopes，仅四个prefix
   intercept可变；density/calibrator均用proper log likelihood，budgets/P199/MC/gates不变；
-- status：RTX 3090训练运行中；不扫split、capacity、component、calibrator或阈值。
+- result：density-fit/calibration/dev trajectories=`9,730/5,043/3,742`；candidate/P199 macro Brier
+  `=.064149/.064728`（改善`.895%`），calibration error=`.010642/.017249`（改善`38.31%`），2/2；
+  beta slopes=`.85583/.93748`，prefix biases=`[.29787,.08219,.01514,-.00211]`，wall=`108.25s`；
+- verdict=`supported_disjoint_calibrated_prefix_survival_density`；仅source development，冻结后交P216 consumed-secondary。
+
+### WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01
+
+- canonical：`run://worldsim_v67/WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01/20260830T220000Z__calibrated-prefix-survival-post-confirmation-s0-r1`；
+- protocol：P215/P199/P182全冻结后读取已消费P183的1,912条aligned trajectories；同四prefix、七预算、1024 MC与两门；
+- result：P215/P199 macro Brier=`.065450/.064234`（退化`1.89%`），calibration error=`.017433/.021756`
+  （改善`19.87%`）；final-four-H Brier=`.073779/.072116`；1/2，F170，wall=`1.41s`；
+- verdict=`rejected_consumed_calibrated_prefix_survival_secondary`；不授权fresh cohort。
+
+### WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1`；
+- protocol：依据AISTATS 2020 covariate-shift calibration，以P183 input features但不以cost labels训练source/target domain ratio；
+  importance-weight source density proper NLL与互斥source calibration BCE，最后才读取P183 truth；
+- status：RTX 3090运行中；P183已消费，结果只作post-hoc development，不作fresh confirmation。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

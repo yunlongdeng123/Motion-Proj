@@ -53,8 +53,10 @@ scalar pool在source几乎全选P210，却在heldout仍使Brier退化`.96%`，�
 P212在source dev同时改善Brier`3.84%`与calibration`17.80%`，但P213在P183 secondary的Brier退化`2.74%`，所以该
 maximum-density分支不进入主方法；它作为结构与transfer负结果解释为何最终采用P199 dependence factorization加P203校准层。
 P214随后将maximum对象扩展为四个prefix survival curves：宏平均Brier改善`1.16%`、最终四H Brier改善`5.21%`，但宏平均
-calibration error退化`30.33%`，因此拒绝。这一结果把失败定位为概率尺度而非排序/refinement完全丢失；P215正在用互斥的
-density-fit、calibration和development scene sets检验一次低自由度monotone beta recovery，尚不构成论文正结论。
+calibration error退化`30.33%`，因此拒绝。P215以互斥的density-fit、calibration和development scene sets训练低自由度
+monotone beta层，在source dev同时改善Brier `.895%`和calibration error `38.31%`；但P216冻结迁移到P183后Brier反而
+退化`1.89%`，虽校准仍改善`19.87%`。因此prefix-survival density尚无跨cohort正证据，不能替代P199/P203。P217仅作为
+受AISTATS covariate-shift calibration启发的post-hoc unlabeled-target importance-weighting development，尚不构成论文结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

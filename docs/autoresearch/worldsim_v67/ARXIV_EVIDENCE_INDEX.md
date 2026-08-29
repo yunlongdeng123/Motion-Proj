@@ -125,7 +125,9 @@
 | P212 | `run://worldsim_v67/WS-V67-P212-DEEPSET-JOINT-MAX-COST-DENSITY-01/20260830T205000Z__deepset-joint-max-cost-density-s0-r1` | Brier -3.84%、calibration -17.80%；source dev supported |
 | P213 | `run://worldsim_v67/WS-V67-P213-DEEPSET-MAX-DENSITY-POST-CONFIRMATION-01/20260830T210000Z__deepset-max-density-post-confirmation-s0-r1` | P183 Brier +2.74%但calibration -19.31%；rejected/F168 |
 | P214 | `run://worldsim_v67/WS-V67-P214-PREFIX-SURVIVAL-MAX-COST-DENSITY-01/20260830T213000Z__prefix-survival-max-cost-density-s0-r1` | prefix macro Brier -1.16%但calibration +30.33%；rejected/F169 |
-| P215 | `run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1` | disjoint-scene monotone beta recovery；running |
+| P215 | `run://worldsim_v67/WS-V67-P215-CALIBRATED-PREFIX-SURVIVAL-DENSITY-01/20260830T214500Z__calibrated-prefix-survival-density-s0-r1` | Brier -.895%、calibration -38.31%；source dev supported |
+| P216 | `run://worldsim_v67/WS-V67-P216-CALIBRATED-PREFIX-SURVIVAL-POST-CONFIRMATION-01/20260830T220000Z__calibrated-prefix-survival-post-confirmation-s0-r1` | P183 calibration -19.87%但Brier +1.89%；rejected/F170 |
+| P217 | `run://worldsim_v67/WS-V67-P217-TARGET-WEIGHTED-PREFIX-SURVIVAL-01/20260830T221500Z__target-weighted-prefix-survival-s0-r1` | unlabeled-target importance-weighting development；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -281,7 +283,8 @@
 | `V67-F166` | closed negative | P210 direct max-cost density改善校准28.42%但Brier退化1.30% |
 | `V67-F167` | closed negative | P211 source-trained P199/P210 scalar pool在dev仍退化Brier |
 | `V67-F168` | closed negative | P212 DeepSet max density在P183 secondary中Brier退化2.74% |
-| `V67-F169` | recovery active | P214 prefix survival density改善Brier但宏校准误差退化30.33%；P215 disjoint calibration运行中 |
+| `V67-F169` | recovered source-only | P215 disjoint beta calibration在source dev同时改善Brier/calibration |
+| `V67-F170` | recovery active | P216跨P183 Brier退化1.89%；P217 unlabeled-target importance weighting运行中 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory
