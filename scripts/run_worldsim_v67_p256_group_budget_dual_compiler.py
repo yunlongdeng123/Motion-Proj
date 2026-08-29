@@ -50,7 +50,7 @@ def _reward(teacher,groups,budget_z,chunk_size):
  features=np.broadcast_to(groups[:,None,:,:],budget_z.shape+(36,)).reshape(-1,36);budgets=budget_z.reshape(-1);outputs=[]
  with torch.no_grad():
   for start in range(0,len(features),chunk_size):outputs.append(teacher(torch.from_numpy(features[start:start+chunk_size]).cuda(),torch.from_numpy(budgets[start:start+chunk_size]).cuda()).mean(1).cpu().numpy())
- return np.concatenate(outputs).reshape(budget_z.shape+(groups.shape[1],)).mean(2)
+ return np.concatenate(outputs).reshape(budget_z.shape).mean(2)
 
 
 def _evaluate(student,policy,teacher,groups,target_price,low_cost,high_cost,fractions,price_mean,price_scale,chunk_size):
