@@ -948,6 +948,16 @@
   `rejected_development_horizon_specialist_actor_ensemble`，wall=`321.19s`、peak GPU=`.324 GiB`；F120。
 - interpretation：训练NLL正常但nearest-lower expert在H3.5属于time-domain extrapolation；拒绝该routing，不把结果外推为
   exact-horizon expert普遍无效。P147 primary已经独立支持共享P126，故不执行P157 secondary read。
+
+### WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01
+
+- 状态：`running consumed development training`；canonical=`20260830T114500Z__crps-actor-ensemble-s0-r1`。
+- hypothesis：P126 shared architecture已获P147五H independent support；只把每轴Gaussian NLL换成closed-form marginal
+  Gaussian CRPS，检验proper distributional distance能否改善continuous boundary-cost rank。
+- training：source 916,722 Actor-time tokens；3 independent members、每个6,000 steps、batch65,536、hidden`[256,128]`。
+- decisions：P81/P96/P113/P129相对冻结P126 selected cost全不退且mean Spearman gain≥`.005`；不加逐cohort gates。
+- diagnostic：P147五H只在primary完成后作consumed descriptive evaluation，不进入decisions、不声称新independent evidence。
+- locks：architecture/normalization/member/seed/total-variance score/fixed50/cost不变；不扫NLL-CRPS mix或loss weight。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01

@@ -68,6 +68,7 @@
 | P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | mean rank `-.007045`；rejected/F117 |
 | P156 | `run://worldsim_v67/WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01/20260830T112500Z__integrated-increment-actor-ensemble-s0-r1` | rank mean `-.028923`；rejected/F119 |
 | P157 | `run://worldsim_v67/WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01/20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1` | H3.5→H3.0 mean rank `-.59434`；rejected/F120 |
+| P158 | `run://worldsim_v67/WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01/20260830T114500Z__crps-actor-ensemble-s0-r1` | shared P126 architecture、CRPS三成员训练；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

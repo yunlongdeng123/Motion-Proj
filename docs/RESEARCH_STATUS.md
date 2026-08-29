@@ -546,6 +546,11 @@ P157 4 experts×3 members完成实际训练，per-expert tokens=`237,267/238,806
 horizon specialist不能替代共享P126，尤其不能把source H3.0专家外推到H3.5；它反向强化P147/P126共享多时域学习的必要性，
 但不否定有target-horizon训练数据时的exact expert或partial-sharing方法。
 
+P158随即回到P147已独立支持的shared P126，不改architecture/member/normalization/total-variance boundary score，只把三成员
+训练目标从Gaussian NLL换为marginal Gaussian CRPS。动机是proper scoring rule直接优化分布距离，检验NLL density fitting是否
+压低fixed-coverage cost rank；916,722 source Actor-time tokens、3×6,000 steps正在3090执行。P81/P96/P113/P129仍是
+consumed development decisions；已完成primary的P147五H rows只作post-confirmation descriptive diagnosis，不产生新independent claim。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

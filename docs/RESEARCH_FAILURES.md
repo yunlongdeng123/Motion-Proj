@@ -1973,6 +1973,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   routing形成真实外推；P147同时证明shared P126在五H独立cohort上全方向支持。
 - 防重复：不扫expert count/nearest router或用P147 fresh target训练专家；不把本失败外推为exact-horizon expert普遍无效。
 
+### P158 freeze note — CRPS shared Actor ensemble
+
+- object：保留P126 shared three-member diagonal Gaussian与total variance boundary score，只以closed-form marginal Gaussian CRPS训练。
+- decisions：P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`；P147五H仅post-confirmation描述。
+- prevention：不扫NLL/CRPS mixture、loss weight、architecture/member/seed/score/coverage；失败才使用F121。
+
 下一可用编号为：`V67-F121`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
