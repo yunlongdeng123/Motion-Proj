@@ -1794,11 +1794,31 @@
 
 ### WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01
 
-- canonical planned：`run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1`；
+- canonical：`run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1`；
 - protocol：teacher=P203(P199 1024-MC)；student input不含teacher joint probability，仅8个copula features与28个P182
   marginal CDF values；8-bin softmax cumulative masses保证七预算单调；source-only soft-probability MSE；
 - decisions：P201 teacher MAE≤`.01`；P201 Brier相对退化≤1%且calibration绝对增加≤`.002`的quality composite；
-- status：RTX 3090训练10,000 steps；无truth auxiliary/KL/temperature/width/MC sweep。
+- result：14,773 train trajectories，final minibatch teacher-MSE=`.0001625`；source/P183/P201 teacher MAE=
+  `.007606/.007664/.007633`。P201 student/teacher Brier=`.090272/.090478`，calibration=`.023727/.024630`；
+  student分别改善`.229%`与`.000903` absolute；2/2；
+- timing/resources：student P201 forward=`.000940s`，同批teacher MC stage=`.007007s`；wall=`47.05s`，peak GPU
+  `0.217GiB`。timing只按当前batched implementation报告，不外推通用latency；
+- verdict=`supported_post_hoc_monotone_reliability_curve_distillation`；post-hoc after P201，必须由P228新场景确认。
+
+### WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-01
+
+- frozen cohort：此前未用且未处理的official-val `0015/0097/0273/0520/0552/0626/0775/0800/0919/1069`；
+  10 scenes来自10 distinct logs，Boston/onenorth/queenstown/holland=`5/2/2/1`；
+- protocol：冻结P203(P199-1024MC) teacher与P227 student；只判teacher MAE≤`.01`、Brier相对退化≤1%、calibration
+  absolute increase≤`.002`，不换scene/model/MC/budget/gate；
+- status：archive extraction与4-worker Actor preprocess已启动，evaluator等待scene-ready；尚未读取P228 target quality。
+
+### WS-V67-P229-COMPACT-MONOTONE-RELIABILITY-CURVE-01
+
+- hypothesis：保持P227输入、teacher、source-only objective、10,000 steps与单调8-mass head，只把hidden width从
+  `128x128`一次降为`64x64`，参数约从22.7k降为7.0k；
+- role：P228 IO期间运行的development compression，不读取P228；P201沿用P227两项quality decision；
+- status：RTX 3090训练中；不做width/depth/LR/MC sweep。若通过，P228 rows仅作同一fresh read的冻结secondary。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

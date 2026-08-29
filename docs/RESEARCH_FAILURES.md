@@ -2785,6 +2785,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F178`。
 
+### P227 milestone note — 单调curve distillation通过，无新增failure
+
+- canonical：`run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1`；
+- 结果：P201 teacher MAE=`.007633`，Brier相对退化=`-.229%`，calibration absolute increase=`-.000903`，2/2；
+- 边界：这是P201已观察后的post-hoc development，不消除P220--P226 authority failures，也不授予selective/planner authority；
+- next：P228已冻结全新10-scene/10-log cohort确认；P229只在其IO期间训练单个compact候选，不读P228 quality。
+
+下一可用编号仍为：`V67-F178`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

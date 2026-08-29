@@ -75,7 +75,10 @@ development，不能视为confirmation或formal risk control。
 P224在P201进一步退化`7.48%/22.25%`，learned authority因此关闭。P225/P226表明P203 calibration可让P201整曲线
 selected Brier改善，但该选择在P183/source的selection-conditional calibration不一致，不能形成selective claim。P227转而
 蒸馏已有fresh支持的P203(P199) teacher：以P182 marginal surface和P199 features输入，输出结构上单调的七预算CDF，目标是
-用single forward保留teacher质量而消除1024-sample copula MC；当前仍为post-hoc development。
+用single forward保留teacher质量而消除1024-sample copula MC。P227在P201的teacher MAE=`.007633`，student/teacher Brier=
+`.090272/.090478`、calibration=`.023727/.024630`，两项冻结门均通过；当前batched student forward=`.000940s`，teacher
+MC stage=`.007007s`。这仍是观察P201后的post-hoc development；P228已在target read前冻结全新10-scene/10-log cohort，
+archive/preprocess与确认并行运行。等待IO期间P229只训练一次`64x64` compact student，不做结构或超参扫描。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

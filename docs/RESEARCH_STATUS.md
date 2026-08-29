@@ -962,7 +962,17 @@ Brier/calibration `2.65%/31.17%`，但P183 calibration退化`82.25%`。P226固�
 Brier均改善`2.02%/1.31%`，但P201 calibration仍退化`1.63%`且source反向，1/2、F177；selective authority不申请fresh。
 参考ICML 2021 distillation统计分析、UAI 2020 probability distillation与monotone neural CDF，P227转向compiler efficiency：
 用`8 P199 features + 28 P182 marginal CDF values`蒸馏冻结P203(P199-1024MC)七预算curve；8-bin softmax masses的CDF
-天然单调，single-pass student在RTX 3090训练10,000 steps，source-only fit，P183/P201只评价。
+天然单调，single-pass student在RTX 3090训练10,000 steps，source-only fit，P183/P201只评价。P227已完成：P201
+teacher-probability MAE=`.007633`，student/teacher Brier=`.090272/.090478`（student改善`.229%`），calibration
+error=`.023727/.024630`（student改善`.000903`）；两项冻结decision均通过，verdict=
+`supported_post_hoc_monotone_reliability_curve_distillation`。Source/P183 MAE也分别为`.007606/.007664`，没有truth
+auxiliary或结构/宽度/MC sweep。该证据仍是P201观察后的post-hoc development，不冒充fresh confirmation。
+
+P228已在任何sensor/target read前冻结10个此前未用official-val scenes和10个distinct logs：`0015/0097/0273/0520/
+0552/0626/0775/0800/0919/1069`，location=`Boston/onenorth/queenstown/holland=5/2/2/1`。P203 teacher、P227
+student、1024 MC、七预算与MAE/Brier/calibration三门全部冻结；archive extraction/preprocess与confirmation waiter运行中。
+IO期间P229正训练一次`64x64` compact monotone student，复用P227输入/teacher/objective/steps，将参数从约22.7k降至约7.0k；
+不做width/depth sweep。若development成立，只在同一P228首次fresh rows上作冻结secondary，不另建测试矩阵。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 
