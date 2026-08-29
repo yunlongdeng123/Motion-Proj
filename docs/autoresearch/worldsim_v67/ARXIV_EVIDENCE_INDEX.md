@@ -68,7 +68,7 @@
 | P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | mean rank `-.007045`；rejected/F117 |
 | P156 | `run://worldsim_v67/WS-V67-P156-INTEGRATED-INCREMENT-ACTOR-ENSEMBLE-01/20260830T112500Z__integrated-increment-actor-ensemble-s0-r1` | rank mean `-.028923`；rejected/F119 |
 | P157 | `run://worldsim_v67/WS-V67-P157-HORIZON-SPECIALIST-ACTOR-ENSEMBLE-01/20260830T113500Z__horizon-specialist-actor-ensemble-s0-r1` | H3.5→H3.0 mean rank `-.59434`；rejected/F120 |
-| P158 | `run://worldsim_v67/WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01/20260830T114500Z__crps-actor-ensemble-s0-r1` | shared P126 architecture、CRPS三成员训练；running |
+| P158 | `run://worldsim_v67/WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01/20260830T114500Z__crps-actor-ensemble-s0-r1` | old mean rank `-.02371`、cost全退；rejected/F121 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -177,6 +177,7 @@
 | `V67-F118` | resolved pre-target | P147 scene0110 shard locator `01→02`；3,909/3,909 mapped，随后primary支持 |
 | `V67-F119` | closed negative | continuous-time increment integration四cohort rank一致下降 |
 | `V67-F120` | closed negative | nearest-lower H3.0 specialist外推H3.5导致严重rank/cost collapse |
+| `V67-F121` | closed negative | marginal CRPS跨旧cohort退化；P147 rank亮点未转成中长H fixed50 cost |
 
 ## 4. Artifact inventory
 

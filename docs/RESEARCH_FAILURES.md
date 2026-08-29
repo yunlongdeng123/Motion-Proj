@@ -1979,7 +1979,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`；P147五H仅post-confirmation描述。
 - prevention：不扫NLL/CRPS mixture、loss weight、architecture/member/seed/score/coverage；失败才使用F121。
 
-下一可用编号为：`V67-F121`。
+### V67-F121 — marginal CRPS改善P147 rank但破坏跨cohort fixed50 cost
+
+- 分类：`algorithm/proper-scoring-rule-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01/20260830T114500Z__crps-actor-ensemble-s0-r1`。
+- 观察：旧四cohort rank mean=`-.023715`且cost全退；P147 post-confirmation五H rank全正，但仅`.8/1.5s` cost改善，
+  中长H cost回退随H放大到`+.04723`。
+- 解释：marginal CRPS可改善新cohort全局ordering，但不保证固定覆盖率tail operating point；且逐轴CRPS不建模multivariate/
+  ensemble-level dependence。P147数字是post-read diagnosis，不是prospective selection证据。
+- 防重复：不扫CRPS weight或事后按H切换P126/P158；若继续proper-score路线，只允许joint multivariate ensemble objective。
+
+下一可用编号为：`V67-F122`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

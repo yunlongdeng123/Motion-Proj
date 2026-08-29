@@ -551,6 +551,12 @@ P158随即回到P147已独立支持的shared P126，不改architecture/member/no
 压低fixed-coverage cost rank；916,722 source Actor-time tokens、3×6,000 steps正在3090执行。P81/P96/P113/P129仍是
 consumed development decisions；已完成primary的P147五H rows只作post-confirmation descriptive diagnosis，不产生新independent claim。
 
+P158 3 members完成，final marginal CRPS=`.29922/.27920/.28553`。旧P81/P96/P113/P129相对P126 rank gain=
+`-.02406/-.03614/-.01904/-.01560`（mean=`-.02371`），selected cost全部回退，F121。P147 post-confirmation
+诊断呈现不同结构：五H rank gain全正=`+.05509/+.04058/+.02034/+.01500/+.01756`，但cost只在`.8/1.5s`改善，
+`2.5/3.0/3.5s`分别回退`.01161/.01900/.04723`。因此CRPS改善新cohort全排序却破坏中长时fixed50 operating point，
+不能替换P126；也不把post-read P147短时亮点包装成新支持。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -951,13 +951,19 @@
 
 ### WS-V67-P158-CRPS-ACTOR-ENSEMBLE-01
 
-- 状态：`running consumed development training`；canonical=`20260830T114500Z__crps-actor-ensemble-s0-r1`。
+- 状态：`done/rejected consumed development`；canonical=`20260830T114500Z__crps-actor-ensemble-s0-r1`。
 - hypothesis：P126 shared architecture已获P147五H independent support；只把每轴Gaussian NLL换成closed-form marginal
   Gaussian CRPS，检验proper distributional distance能否改善continuous boundary-cost rank。
 - training：source 916,722 Actor-time tokens；3 independent members、每个6,000 steps、batch65,536、hidden`[256,128]`。
 - decisions：P81/P96/P113/P129相对冻结P126 selected cost全不退且mean Spearman gain≥`.005`；不加逐cohort gates。
 - diagnostic：P147五H只在primary完成后作consumed descriptive evaluation，不进入decisions、不声称新independent evidence。
 - locks：architecture/normalization/member/seed/total-variance score/fixed50/cost不变；不扫NLL-CRPS mix或loss weight。
+- result：916,722 tokens，final CRPS=`.29922/.27920/.28553`。P81/P96/P113/P129 selected cost=
+  `.18540/.18182/.26442/.36708`，相对P126均回退；rank gain=`-.02406/-.03614/-.01904/-.01560`，mean=`-.02371`，
+  0/2 decisions，verdict=`rejected_development_crps_actor_ensemble`，wall=`112.41s`、peak GPU=`.379 GiB`；F121。
+- P147 post-confirmation diagnostic：H`.8/1.5/2.5/3.0/3.5` rank gain全正=
+  `+.05509/+.04058/+.02034/+.01500/+.01756`，但cost delta=`-.00118/-.00200/+.01161/+.01900/+.04723`；
+  只在短H改善operating point，不能覆盖development rejection或形成新独立claim。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
