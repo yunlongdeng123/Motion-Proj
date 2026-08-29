@@ -1471,10 +1471,15 @@ def main() -> None:
                 return feature_calibrator(member_logits, local_horizon, local_ceiling)
 
             group_calibration = bool(config.get("reliability_group_calibration", False))
+            horizon_group_calibration = bool(config.get("reliability_horizon_group_calibration", False))
             memberwise_calibration = bool(config.get("reliability_memberwise_calibration", False))
             if memberwise_calibration and ensemble_fit_remainders is None:
                 raise ValueError("reliability_memberwise_calibration requires a crossfold ensemble")
-            if memberwise_calibration:
+            if horizon_group_calibration:
+                if memberwise_calibration or not group_calibration:
+                    raise ValueError("horizon-group calibration requires non-memberwise group calibration")
+                calibration_shape = (len(horizon_values), len(ceilings), len(set_sizes))
+            elif memberwise_calibration:
                 calibration_shape = (
                     (len(ensemble_fit_remainders), len(ceilings), len(set_sizes))
                     if group_calibration else (len(ensemble_fit_remainders),)
@@ -1483,7 +1488,7 @@ def main() -> None:
                 calibration_shape = (len(ceilings), len(set_sizes)) if group_calibration else ()
             log_temperature = nn.Parameter(torch.zeros(calibration_shape, device="cuda"))
             calibration_bias = nn.Parameter(torch.zeros(calibration_shape, device="cuda"))
-            calibration_horizon_slope = nn.Parameter(torch.zeros(calibration_shape, device="cuda")) if group_calibration else None
+            calibration_horizon_slope = nn.Parameter(torch.zeros(calibration_shape, device="cuda")) if group_calibration and not horizon_group_calibration else None
             calibration_parameters = [log_temperature, calibration_bias]
             if calibration_horizon_slope is not None:
                 calibration_parameters.append(calibration_horizon_slope)
@@ -1507,7 +1512,12 @@ def main() -> None:
                         raw_logits = pooled_reliability_logits(
                             source_x[row], horizon_tensor[local_horizon_index], local_ceiling
                         )
-                if memberwise_calibration and group_calibration:
+                if horizon_group_calibration:
+                    calibrated_logits = (
+                        raw_logits / log_temperature[local_horizon_index, local_ceiling_index].exp()
+                        + calibration_bias[local_horizon_index, local_ceiling_index]
+                    )
+                elif memberwise_calibration and group_calibration:
                     calibrated_logits = (
                         raw_logits / log_temperature[:, local_ceiling_index, :].exp()
                         + calibration_bias[:, local_ceiling_index, :]
@@ -1579,6 +1589,9 @@ def main() -> None:
                     "effective_sample_size": float(importance_weights.sum() ** 2 / np.square(importance_weights).sum()),
                 }
             isotonic_calibration = bool(config.get("reliability_isotonic_calibration", False))
+            horizon_isotonic_calibration = bool(config.get("reliability_horizon_isotonic_calibration", False))
+            if horizon_isotonic_calibration and (memberwise_calibration or not horizon_group_calibration):
+                raise ValueError("horizon isotonic calibration requires non-memberwise horizon-group calibration")
             isotonic_maps = None
             isotonic_bce = None
             if isotonic_calibration:
@@ -1587,59 +1600,91 @@ def main() -> None:
                 isotonic_index = torch.from_numpy(np.flatnonzero(isotonic_rows)).cuda()
                 calibration_members = list(model.members) if memberwise_calibration else [model]
                 with torch.no_grad():
-                    for member_index, calibration_member in enumerate(calibration_members):
-                        member_maps = []
-                        for ceiling_index, ceiling in enumerate(ceilings):
-                            ceiling_maps = []
-                            ceiling_scores, ceiling_targets = [], []
-                            for local_horizon_index in training_horizon_indices:
-                                local_h = torch.full(
-                                    (len(isotonic_index),), float(normalized_horizons[local_horizon_index]), device="cuda"
-                                )
-                                local_ceiling = torch.full((len(isotonic_index),), float(ceiling), device="cuda")
-                                logits = (
-                                    calibration_member(source_x[isotonic_index], local_h, local_ceiling)
-                                    if memberwise_calibration
-                                    else pooled_reliability_logits(source_x[isotonic_index], local_h, local_ceiling)
-                                )
-                                if memberwise_calibration and group_calibration:
-                                    logits = (
-                                        logits / log_temperature[member_index, ceiling_index].exp()
-                                        + calibration_bias[member_index, ceiling_index]
-                                    )
-                                    logits = logits + calibration_horizon_slope[member_index, ceiling_index] * local_h[:, None]
-                                elif memberwise_calibration:
-                                    logits = logits / log_temperature[member_index].exp() + calibration_bias[member_index]
-                                elif group_calibration:
-                                    logits = logits / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
-                                    logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
-                                else:
-                                    logits = logits / log_temperature.exp() + calibration_bias
-                                ceiling_scores.append(logits.cpu().numpy())
-                                ceiling_targets.append(
-                                    (y[isotonic_index, :, int(local_horizon_index)] > float(ceiling)).float().cpu().numpy()
-                                )
-                            ceiling_scores = np.concatenate(ceiling_scores, 0)
-                            ceiling_targets = np.concatenate(ceiling_targets, 0)
-                            local_isotonic_weights = (
-                                np.tile(importance_weights, len(training_horizon_indices))
-                                if covariate_shift_weighting else None
+                    if horizon_isotonic_calibration:
+                        isotonic_maps = []
+                        for local_horizon_index in training_horizon_indices:
+                            horizon_maps = []
+                            local_h = torch.full(
+                                (len(isotonic_index),), float(normalized_horizons[local_horizon_index]), device="cuda"
                             )
-                            for set_size_index in range(len(set_sizes)):
-                                thresholds, values = fit_binary_isotonic_map(
-                                    ceiling_scores[:, set_size_index], ceiling_targets[:, set_size_index], local_isotonic_weights
+                            for ceiling_index, ceiling in enumerate(ceilings):
+                                local_ceiling = torch.full((len(isotonic_index),), float(ceiling), device="cuda")
+                                logits = pooled_reliability_logits(source_x[isotonic_index], local_h, local_ceiling)
+                                logits = (
+                                    logits / log_temperature[local_horizon_index, ceiling_index].exp()
+                                    + calibration_bias[local_horizon_index, ceiling_index]
                                 )
-                                calibrated = apply_binary_isotonic_map(
-                                    ceiling_scores[:, set_size_index], thresholds, values
+                                local_target = (
+                                    y[isotonic_index, :, int(local_horizon_index)] > float(ceiling)
+                                ).float().cpu().numpy()
+                                local_logits = logits.cpu().numpy()
+                                ceiling_maps = []
+                                for set_size_index in range(len(set_sizes)):
+                                    thresholds, values = fit_binary_isotonic_map(
+                                        local_logits[:, set_size_index], local_target[:, set_size_index], importance_weights
+                                    )
+                                    calibrated = apply_binary_isotonic_map(
+                                        local_logits[:, set_size_index], thresholds, values
+                                    )
+                                    ceiling_maps.append({"thresholds": thresholds, "values": values})
+                                    all_isotonic_probabilities.append(calibrated)
+                                    all_isotonic_targets.append(local_target[:, set_size_index])
+                                horizon_maps.append(ceiling_maps)
+                            isotonic_maps.append(horizon_maps)
+                    else:
+                        for member_index, calibration_member in enumerate(calibration_members):
+                            member_maps = []
+                            for ceiling_index, ceiling in enumerate(ceilings):
+                                ceiling_maps = []
+                                ceiling_scores, ceiling_targets = [], []
+                                for local_horizon_index in training_horizon_indices:
+                                    local_h = torch.full(
+                                        (len(isotonic_index),), float(normalized_horizons[local_horizon_index]), device="cuda"
+                                    )
+                                    local_ceiling = torch.full((len(isotonic_index),), float(ceiling), device="cuda")
+                                    logits = (
+                                        calibration_member(source_x[isotonic_index], local_h, local_ceiling)
+                                        if memberwise_calibration
+                                        else pooled_reliability_logits(source_x[isotonic_index], local_h, local_ceiling)
+                                    )
+                                    if memberwise_calibration and group_calibration:
+                                        logits = (
+                                            logits / log_temperature[member_index, ceiling_index].exp()
+                                            + calibration_bias[member_index, ceiling_index]
+                                        )
+                                        logits = logits + calibration_horizon_slope[member_index, ceiling_index] * local_h[:, None]
+                                    elif memberwise_calibration:
+                                        logits = logits / log_temperature[member_index].exp() + calibration_bias[member_index]
+                                    elif group_calibration:
+                                        logits = logits / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
+                                        logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
+                                    else:
+                                        logits = logits / log_temperature.exp() + calibration_bias
+                                    ceiling_scores.append(logits.cpu().numpy())
+                                    ceiling_targets.append(
+                                        (y[isotonic_index, :, int(local_horizon_index)] > float(ceiling)).float().cpu().numpy()
+                                    )
+                                ceiling_scores = np.concatenate(ceiling_scores, 0)
+                                ceiling_targets = np.concatenate(ceiling_targets, 0)
+                                local_isotonic_weights = (
+                                    np.tile(importance_weights, len(training_horizon_indices))
+                                    if covariate_shift_weighting else None
                                 )
-                                ceiling_maps.append({"thresholds": thresholds, "values": values})
-                                all_isotonic_probabilities.append(calibrated)
-                                all_isotonic_targets.append(ceiling_targets[:, set_size_index])
-                            member_maps.append(ceiling_maps)
-                        if memberwise_calibration:
-                            isotonic_maps.append(member_maps)
-                        else:
-                            isotonic_maps = member_maps
+                                for set_size_index in range(len(set_sizes)):
+                                    thresholds, values = fit_binary_isotonic_map(
+                                        ceiling_scores[:, set_size_index], ceiling_targets[:, set_size_index], local_isotonic_weights
+                                    )
+                                    calibrated = apply_binary_isotonic_map(
+                                        ceiling_scores[:, set_size_index], thresholds, values
+                                    )
+                                    ceiling_maps.append({"thresholds": thresholds, "values": values})
+                                    all_isotonic_probabilities.append(calibrated)
+                                    all_isotonic_targets.append(ceiling_targets[:, set_size_index])
+                                member_maps.append(ceiling_maps)
+                            if memberwise_calibration:
+                                isotonic_maps.append(member_maps)
+                            else:
+                                isotonic_maps = member_maps
                 isotonic_probability = np.clip(np.concatenate(all_isotonic_probabilities), 1e-6, 1.0 - 1e-6)
                 isotonic_target = np.concatenate(all_isotonic_targets)
                 isotonic_bce = float(-np.mean(
@@ -1679,6 +1724,13 @@ def main() -> None:
                                         )
                                 member_probabilities.append(member_probability)
                             local_probability = np.max(np.stack(member_probabilities, 0), axis=0)
+                        elif horizon_group_calibration:
+                            logits = (
+                                pooled_reliability_logits(local_x, local_h, local_ceiling)
+                                / log_temperature[heldout_horizon_index, ceiling_index].exp()
+                                + calibration_bias[heldout_horizon_index, ceiling_index]
+                            )
+                            local_probability = torch.sigmoid(logits).cpu().numpy()
                         elif group_calibration:
                             logits = pooled_reliability_logits(local_x, local_h, local_ceiling) / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
                             logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
@@ -1689,7 +1741,11 @@ def main() -> None:
                         if isotonic_calibration and not memberwise_calibration:
                             local_logits = logits.cpu().numpy()
                             for set_size_index in range(len(set_sizes)):
-                                local_map = isotonic_maps[ceiling_index][set_size_index]
+                                local_map = (
+                                    isotonic_maps[heldout_horizon_index][ceiling_index][set_size_index]
+                                    if horizon_isotonic_calibration
+                                    else isotonic_maps[ceiling_index][set_size_index]
+                                )
                                 local_probability[:, set_size_index] = apply_binary_isotonic_map(
                                     local_logits[:, set_size_index], local_map["thresholds"], local_map["values"]
                                 )
@@ -1763,7 +1819,7 @@ def main() -> None:
                 "hidden_dimensions": model_config["hidden_dimensions"],
                 "temperature": log_temperature.exp().detach().cpu(),
                 "calibration_bias": calibration_bias.detach().cpu(),
-                "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if group_calibration else None,
+                "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if calibration_horizon_slope is not None else None,
                 "isotonic_maps": isotonic_maps,
                 "domain_model_state_dict": domain_model.state_dict() if covariate_shift_weighting else None,
                 "reliability_teacher_consistency": teacher_consistency_config,
@@ -1772,6 +1828,8 @@ def main() -> None:
                 "reliability_memberwise_calibration": memberwise_calibration,
                 "reliability_monotone_horizon_cumulative_risk": monotone_horizon_cumulative_risk,
                 "reliability_fixed_grid_horizon_indices": fixed_grid_horizon_indices,
+                "reliability_horizon_group_calibration": horizon_group_calibration,
+                "reliability_horizon_isotonic_calibration": horizon_isotonic_calibration,
                 "feature_calibrator_state_dict": feature_calibrator.state_dict() if feature_calibrator is not None else None,
                 "reliability_feature_calibrator": feature_calibrator_config,
                 "frozen_feature_calibrator": config.get("frozen_feature_calibrator"),
@@ -1795,6 +1853,8 @@ def main() -> None:
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": (
+                                    "horizon_ceiling_set_size" if horizon_group_calibration
+                                    else
                                     "memberwise_ceiling_set_size_with_horizon_slope" if memberwise_calibration and group_calibration
                                     else "memberwise_global_temperature_bias" if memberwise_calibration
                                     else "ceiling_set_size_with_horizon_slope" if group_calibration
@@ -1802,12 +1862,12 @@ def main() -> None:
                                 ),
                                 "temperature": log_temperature.exp().detach().cpu().tolist(),
                                 "bias": calibration_bias.detach().cpu().tolist(),
-                                "horizon_slope": calibration_horizon_slope.detach().cpu().tolist() if group_calibration else None},
+                                "horizon_slope": calibration_horizon_slope.detach().cpu().tolist() if calibration_horizon_slope is not None else None},
                 "isotonic_calibration": {"enabled": isotonic_calibration,
                                          "example_count": int(isotonic_rows.sum()) if isotonic_calibration else 0,
                                          "binary_cross_entropy": isotonic_bce,
                                          "map_count": (
-                                             len(ceilings) * len(set_sizes)
+                                             len(ceilings) * len(set_sizes) * (len(training_horizon_indices) if horizon_isotonic_calibration else 1)
                                              * (len(ensemble_fit_remainders) if memberwise_calibration else 1)
                                              if isotonic_calibration else 0
                                          )},
