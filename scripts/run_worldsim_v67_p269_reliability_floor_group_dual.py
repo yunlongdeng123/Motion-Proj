@@ -49,7 +49,7 @@ def _utility(teacher,groups,budget_z,alphas,floors,epsilon,penalty,chunk):
  g,a,l,f,size=budget_z.shape;features=np.broadcast_to(groups[:,None,None,None,:,:],(g,a,l,f,size,36)).reshape(-1,36);budgets=budget_z.reshape(-1);outputs=[]
  with torch.no_grad():
   for start in range(0,len(features),chunk):outputs.append(teacher(torch.from_numpy(features[start:start+chunk]).cuda(),torch.from_numpy(budgets[start:start+chunk]).cuda()).cpu().numpy())
- probability=np.concatenate(outputs).reshape(g,a,l,f,size,4);return np.stack([np.stack([(_alpha_value(probability[:,ai,li],alpha,epsilon)-penalty*np.maximum(float(floor)-probability[:,ai,li,:,-1],0)).mean(-1) for li,floor in enumerate(floors)],1) for ai,alpha in enumerate(alphas)],1)
+ probability=np.concatenate(outputs).reshape(g,a,l,f,size,4);return np.stack([np.stack([(_alpha_value(probability[:,ai,li],alpha,epsilon)-penalty*np.maximum(float(floor)-probability[:,ai,li,:,:,-1],0)).mean(-1) for li,floor in enumerate(floors)],1) for ai,alpha in enumerate(alphas)],1)
 
 
 def _evaluate(student,policy,teacher,groups,target,low,high,alphas,floors,floor_z,fractions,mean,scale,epsilon,penalty,chunk):
