@@ -484,10 +484,17 @@ offset=`.08060`。P201 mean/highest coverage=`.23415/.65164`、max/mean unsafe=`
 `.22579/.59271`、max unsafe=`.02592`，3/3 gate supported；但offset高于P328 `.06317`、strict仍0且mean
 coverage更低，研究选择上被P326/P327支配，关闭spline tuning，不扫knots。wall=`79.43s`。
 
-P330选择P326 fixed-risk q85作为更强backbone，增加nested authority set size `k=1/2/3`：冻结P313 ranking，
-联合预测top-k prefix visited-state max-cost，positive size increments与H slopes保证k/H双单调；每个ceiling选
-最大feasible k。该对象不是重新选pair，而是在同一ranking上缩放authority cardinality。Active=
-`WS-V67-P330-SIZE-CONDITIONED-HORIZON-AUTHORITY-01`。
+P330选择P326 fixed-risk q85作为backbone，增加nested set size `k=1/2/3`。Canonical=`run://worldsim_v67/
+WS-V67-P330-SIZE-CONDITIONED-HORIZON-AUTHORITY-01/
+20260901T091500Z__size-conditioned-horizon-authority-s0-r1`：130,734 size×H examples、8k steps、final
+pinball=`.02012`、q85 offset=`.03466`。P201 mean/highest any-authority coverage=`.35082/.75574`、max/mean
+unsafe=`.07006/.05243`、size/ceiling monotonicity=`0/0`，3/3 supported；strict/mid/high coverage=
+`.03934/.25738/.75574`，mean selected size=`2.10/2.47/2.83`。source mean/highest=`.37412/.70811`、
+max unsafe=`.05676`。wall=`60.31s`。
+
+P331合并P328 continuous risk axis与P330 nested cardinality：每batch采样`q~Uniform(.70,.97)`，输出沿
+k累积的positive base/H/q/H×q increments，从结构上保证H、q、set size三轴单调；q90 source calibration，
+P201同时heldout task+H=`2.5s`。Active=`WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

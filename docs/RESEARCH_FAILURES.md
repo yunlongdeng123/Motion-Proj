@@ -398,8 +398,10 @@
   monotonicity=0，3/3 supported；未触发F212；但q90 offset=`.06317`且strict coverage=0作为capacity限制保留；
 - P329 result：P201 coverage=`.23415`、max unsafe=`.01761`、monotonicity=0，3/3 gate supported；未触发
   F212，但q90 offset=`.08060`、strict coverage=0且被P326/P327支配，关闭spline tuning；
-- P330 active：同一P313 ranking上训练nested k=`1/2/3` q85×H surface；失败才登记F212，不扫k/ranking/
-  q/capacity/gate/seed，不重开pair repair；
+- P330 result：nested k=`1/2/3`在P201得到mean any-authority coverage=`.35082`、max unsafe=`.07006`、
+  size/ceiling violations=0，3/3 supported；strict coverage=`.03934`，fixed-top2空集被cardinality缩放解决；
+- P331 active：合并continuous q `.70-.97`、H与nested k三轴；失败才登记F212，不扫q range/k/capacity/
+  gate/seed，不重开pair repair；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

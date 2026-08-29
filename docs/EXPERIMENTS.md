@@ -896,6 +896,25 @@
   signed offset；source/P201 heldout H=`2.5s`，每个ceiling选择最大feasible k。
 - gates：P201 max selected-set unsafe `<=.15`、mean any-authority coverage `>=.35`、size/ceiling
   monotonicity=0；不扫k/ranking/q/capacity/gate/seed，不重开pair selector。
+- canonical=`run://worldsim_v67/WS-V67-P330-SIZE-CONDITIONED-HORIZON-AUTHORITY-01/
+  20260901T091500Z__size-conditioned-horizon-authority-s0-r1`。
+- result：130,734 train examples、8k steps、final q85 pinball=`.02012`、source q85 offset=`.03466`。
+  P201 mean/highest any-authority coverage=`.35082/.75574`、max/mean selected-set unsafe=
+  `.07006/.05243`、size/ceiling monotonicity=`0/0`，3/3 supported。
+- by ceiling：coverage=`.03934/.25738/.75574`、unsafe=`.04167/.07006/.04555`、mean selected size=
+  `2.10/2.47/2.83`。source coverage=`.37412/.70811`、max unsafe=`.05676`；wall=`60.31s`、
+  peak GPU=`.14039GiB`、RSS=`1.8944GiB`。
+
+### WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01
+
+- object：一个compiler同时接受task、future horizon、requested risk quantile与maximum set-cost ceiling，输出
+  同一P313 ranking上的最大nested authority size。
+- architecture：每个set-size increment有positive base、H、q和H×q系数，沿k累积；因此k↑、H↑、q↑时
+  predicted cost boundary均不降，ceiling↑时chosen size不降。
+- training/calibration：source `k=1/2/3`×H `.8/1.5/3.0s`，每batch q `.70-.97`；source calibration
+  q90一个signed offset；source/P201 heldout H=`2.5s`。
+- gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/H/q/ceiling结构单调；不扫
+  q range/k/capacity/gate/seed，不重开pair selector。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
