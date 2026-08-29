@@ -1913,7 +1913,34 @@
 - hypothesis：连续budget compiler应保留已获fresh support的P233七个knots，而不是用低秩全局family重新逼近它们；
 - protocol：在log-budget中对相邻P233 knots作local linear interpolation；六个heldout geometric midpoints正好位于
   各区间中点；结构保持budget/horizon双轴单调且区间内可微；
-- status：冻结单次evaluation；不训练、不fit derivative、不扫spline degree/knot/budget/metric/MC。
+- canonical：`run://worldsim_v67/WS-V67-P239-KNOT-PRESERVING-BUDGET-INTERPOLATION-01/20260831T042000Z__knot-preserving-budget-interpolation-s0-r1`；
+- result：P201 heldout surface/final teacher MAE=`.013768/.017072`；Brier相对teacher改善`1.082%`，calibration
+  absolute increase=`.000371`；budget/horizon violations=`0/0`；2/3，F183；
+- verdict=`rejected_knot_preserving_continuous_budget_surface`；wall=`18.47s`。不训练、不fit derivative、不扫spline。
+
+### WS-V67-P240-CALIBRATION-AWARE-BUDGET-INTERPOLATION-01
+
+- literature response：AISTATS 2017 Beta Calibration提供严格单调的概率校准map；P240检验P239误差是否主要来自跨越该
+  非线性map做线性插值；
+- protocol：full-prefix P233 knots经冻结P203 map数值逆变换，raw probability作local log-budget interpolation后重施
+  P203；前三个prefix保持P239；六中点/teacher/decisions不变，无拟合或超参；
+- canonical：`run://worldsim_v67/WS-V67-P240-CALIBRATION-AWARE-BUDGET-INTERPOLATION-01/20260831T044000Z__calibration-aware-budget-interpolation-s0-r1`；
+- result：P201 heldout surface/final MAE=`.013514/.016057`；Brier改善`1.138%`、calibration改善`.000359`；final
+  fidelity失败且horizon violations=`2,041`（budget violations=0）；2/3，F184；
+- verdict=`rejected_calibration_aware_continuous_budget_surface`；wall=`18.54s`。关闭无训练连续预算后处理路线。
+
+### WS-V67-P241-INTEGRATED-MONOTONE-BUDGET-SURFACE-01
+
+- literature response：NeurIPS 2019 UMNN以正导数积分构造高表达力严格单调函数；ICML 2023说明简单正权重网络配常用
+  unsaturated activation只覆盖凸子类，并给出更一般单调逼近；P241迁移positive-rate integral而非继续增加logistic components；
+- protocol：输入固定为P233的36维`8 conditions + 7x4 anchor marginals`；31个固定offset log-budget点只生成source
+  teacher targets，六个相邻anchor几何中点不进入训练；base和三条retention各自对budget正导数积分并累乘；
+- training：`128` context、`128` rate、16-point Gauss-Legendre、12,000 steps、batch 8,192；P201仍只在六heldout
+  midpoints一次判surface MAE `.015`、final MAE `.01`与quality noninferiority；不扫积分点/宽度/预算/MC；
+- r1：`20260831T050000Z__integrated-monotone-budget-surface-s0-r1`在optimizer step 0发现feature维度被旧helper耦合为
+  132而模型冻结为36，F185；未发生parameter update或metric read；
+- r2：`20260831T051000Z__integrated-monotone-budget-surface-s0-r2`正在单RTX 3090训练；只修复anchor-feature与dense-target
+  分离，科学合同不变。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 

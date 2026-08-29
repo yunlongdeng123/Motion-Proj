@@ -1020,6 +1020,18 @@ P238 heldout-budget 0/3：P201 surface/final MAE=`.015630/.021162`，Brier degra
 精确knots，在log-budget内作局部piecewise-linear interpolation；六个几何中点与P238 decisions原样复用，无训练、无拟合、
 无spline-degree sweep，GPU只执行冻结teacher/P233一次评价。
 
+P239在P201 heldout budgets把surface/final MAE降至`.013768/.017072`，surface Brier反而改善`1.082%`且
+calibration increase仅`.000371`，但final fidelity仍越过`.01`，2/3、F183；因此局部线性只能修复surface平均量，
+不能恢复P203 full-prefix曲率。P240只作一次校准感知变换：对P233 full-prefix knots逆P203、在raw probability空间插值
+再重施P203，其他prefix保持局部线性。P201 surface/final MAE=`.013514/.016057`，quality改善，但final fidelity仍失败，
+且跨prefix层级出现2,041个violations，2/3、F184。无训练插值路线关闭，不做第三种spline/link-space sweep。
+
+检索NeurIPS 2019 UMNN与ICML 2023 Constrained Monotonic Neural Networks后，P241转回直接训练：固定P233的
+`8 conditions + 28 anchor marginals`输入，在31个事前冻结且避开六个evaluation midpoints的log-budget点蒸馏teacher；
+base与三条retention都由positive-rate quadrature积分，随后累乘，结构上同时保证budget递增与prefix递减。r1在optimizer
+step 0因旧dataset helper把31 target budgets误耦合为132维输入而退出（F185）；修复只把输入固定回七anchor的36维，
+31点仍只生成teacher target。r2已在单RTX 3090训练12,000 steps，P201三项heldout decisions与所有模型宽度/积分点均冻结。
+
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新
 trajectory上student/teacher MAE=`.007443`，Brier=`.089526/.089810`（student改善`.316%`），calibration=

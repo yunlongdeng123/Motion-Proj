@@ -2867,6 +2867,42 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F183`。
 
+### V67-F183 — knot-preserving局部插值仍无法满足最终曲线fidelity
+
+- canonical：`run://worldsim_v67/WS-V67-P239-KNOT-PRESERVING-BUDGET-INTERPOLATION-01/20260831T042000Z__knot-preserving-budget-interpolation-s0-r1`；
+- 观察：P201 heldout surface MAE=`.013768`过门，Brier改善`1.082%`且calibration increase仅`.000371`，但final
+  teacher MAE=`.017072>.01`；2/3；
+- 解释：保留P233七knots消除了P238的全局shape误差，却不能从端点恢复full-prefix在P203校准前后的区间曲率；
+- response：P240只检验一次“逆P203—raw插值—重施P203”，不引入spline degree/derivative/knot sweep；
+- 防重复：不降低final gate、不把更好Brier替代teacher fidelity、不扫linear/cubic/RQ spline family。
+
+下一可用编号：`V67-F184`。
+
+### V67-F184 — 校准感知插值仍失真并破坏prefix层级单调性
+
+- canonical：`run://worldsim_v67/WS-V67-P240-CALIBRATION-AWARE-BUDGET-INTERPOLATION-01/20260831T044000Z__calibration-aware-budget-interpolation-s0-r1`；
+- 观察：P201 surface/final MAE=`.013514/.016057`，quality composite通过但final gate失败；budget violations=0，
+  horizon violations=2,041；
+- 解释：只变换full-prefix可略减final误差，却与前三个prefix的线性轨迹失配；误差主要不是单一P203 link造成；
+- literature response：NeurIPS 2019 UMNN通过正导数积分提供比固定全局mixture或事后link插值更灵活的单调函数；ICML
+  2023进一步指出朴素正权重结构的凸性限制；
+- response：关闭无训练连续预算后处理，P241直接在稠密source budget targets训练双轴结构单调integral surface；
+- 防重复：不再试probit/logit/beta-link、分prefix map、projection或spline-form sweep。
+
+下一可用编号：`V67-F185`。
+
+### V67-F185 — P241 r1将dense target预算数误耦合为feature维度
+
+- run：`run://worldsim_v67/WS-V67-P241-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T050000Z__integrated-monotone-budget-surface-s0-r1`；
+- symptom：旧`_dataset`按传入budget数量拼接marginal feature；31个target budgets产生`8+4x31=132`输入，而冻结
+  P233-compatible encoder为36维，首次forward抛`8192x132`与`36x128`矩阵维度错误；
+- exposure：teacher arrays已物化，但optimizer step=0、parameter update=0、P183/P201 metric/gate read=0；算法假设未判；
+- resolution：输入独立调用七个anchor budgets固定为36维；31点调用只取teacher target，六heldout midpoints仍完全排除；
+  model/seed/steps/batch/width/quadrature/decision均不变，r2继续；
+- prevention：连续query模型必须区分context anchor grid与teacher query grid；不为此增加smoke/regression matrix。
+
+下一可用编号：`V67-F186`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
