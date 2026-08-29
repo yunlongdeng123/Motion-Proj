@@ -696,7 +696,16 @@ source/P201 q90 coverage/unsafe=`.288125/.261733`与`.327049/.163636`，coverage
 
 P358按CVPR 2019/2024多步occupancy forecasting的preset horizons与NeurIPS 2022 multi-head multi-task方式，明确收窄
 claim：四个支持horizons各有独立head、共享context trunk；source所有四个horizon labels均参与训练，P201只测试
-task-condition shift，不再同时把3.0s当作零样本horizon外推。P346 scene split、group calibration、PAV和gates不变。
+task-condition shift，不再同时把3.0s当作零样本horizon外推。Canonical=`run://worldsim_v67/
+WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01/
+20260901T170000Z__fixed-grid-multihorizon-reliability-s0-r1`：train/group-cal/PAV BCE=
+`.116441/.325290/.345041`；source fold3 q90 coverage/unsafe=`.264609/.340974`，P201=`.306284/.112360`。
+多头表示恢复了P201 coverage，但风险仅差`.01236`且source严重失配，3/4 rejected，登记F233。诊断为不同horizon
+heads在共享group calibration与跨horizon PAV中被重新混合，而非训练欠拟合。
+
+P359按ICML 2024 multicalibration与NeurIPS 2024实证边界，保留P358冻结的四头表示，只把temperature/bias与PAV map
+按`horizon×ceiling×set-size`分层；这是预定义horizon subgroup的直接校准，不改模型容量、阈值或P201使用边界。
+P201仍只作task-shift development read；当前进入该单次group-conditional calibration训练/评价。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

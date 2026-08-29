@@ -440,8 +440,9 @@
 - P355：feature-aware BCE q90 coverage=`.40929`但risk=`.20548`，登记F230；
 - P356：primal-dual q90 coverage=`.40628`但risk=`.21019`，登记F231；feature calibrator family关闭；
 - P357：monotone-horizon q90 source/P201 risk=`.26173/.16364`，登记F232；
-- P358：fixed-grid multi-horizon task-shift reliability implementation；
-- 下一可用 failure id 为 `V67-F233`。
+- P358：fixed-grid multi-horizon q90 source/P201 risk=`.34097/.11236`，登记F233；
+- P359：horizon-group calibration active；
+- 下一可用 failure id 为 `V67-F234`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -690,6 +691,19 @@
   NeurIPS 2022 multi-task工作支持shared trunk+task-specific heads。P358把horizon当离散支持任务，并只保留task shift；
 - forbidden rescue：不改hazard order/activation、放松单调性或继续套survival loss；resolution=
   `closed monotone-horizon family; open P358 fixed-grid multi-horizon reliability`。
+
+### V67-F233 — P358跨horizon共享校准破坏固定网格多头的任务尺度
+
+- canonical=`run://worldsim_v67/WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01/
+  20260901T170000Z__fixed-grid-multihorizon-reliability-s0-r1`；
+- symptom：P201 q90 coverage/unsafe=`.306284/.112360`，coverage已过`.30`但unsafe高于`.10`；source fold3
+  q90=`.264609/.340974`，故3/4 rejected；
+- retained evidence：训练BCE=`.116441`显著低于P357，证明四个task heads有拟合能力；问题出现在共享group-cal
+  BCE=`.325290`与把四个horizon拼接后拟合的PAV BCE=`.345041`，不是OOM、发散或GPU资源不足；
+- literature/migration：ICML 2024 multicalibration强调在预定义交叉group内校准，NeurIPS 2024也指出post-processing
+  对原本不校准的模型最有帮助。P359把horizon作为显式group，为每个`H×ceiling×set`独立拟合校准参数与PAV；
+- forbidden rescue：不扫head sharing、grid、阈值、width、steps或seed，不读取P201 labels调map；resolution=
+  `retain fixed-grid representation; open P359 horizon-group conditional calibration`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

@@ -1348,7 +1348,21 @@
 - method：source `.8/1.5/2.5/3.0s`全部参与8k BCE；forward按明确horizon id选择head，set-size logits仍cummax；
   fold1 group calibration、fold2 PAV、fold3 scene dev与P201 task-condition shift保持P346合同。
 - locks：不插值/外推、不扫head sharing/horizon grid/width/steps/threshold/seed；P201不训练/校准；
-  状态=`implementation`。
+  状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01/
+  20260901T170000Z__fixed-grid-multihorizon-reliability-s0-r1`。
+- result：train/group-cal/PAV BCE=`.116441/.325290/.345041`；source fold3 q90 coverage/unsafe=
+  `.264609/.340974`，P201=`.306284/.112360`；coverage和两项monotonicity通过、risk失败，3/4 rejected；
+  wall=`56.69s`，peak GPU=`.1404GiB`，F233。
+
+### WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-01
+
+- migration：P358多头训练BCE强，但共享跨horizon calibration使3.0s task的尺度重新混合；multicalibration要求在
+  预定义subgroups内保持概率语义，因此将horizon作为显式calibration group。
+- method：冻结P358方法与8k训练合同；temperature/bias以及PAV分别拟合
+  `horizon×ceiling×set-size`，评价固定读取3.0s对应map；P201 labels不进入任何fit。
+- locks：不改head/grid/width/steps/threshold/seed，不扫共享/分组混合权重；只执行一次预定义horizon分组校准；
+  状态=`active`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
