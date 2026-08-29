@@ -249,8 +249,19 @@
 - frozen P287 warm start；训练 sizes32/64/128、held-out48/96；同一 alpha/tolerance/floor/tail-mass/price protocol，
   Deep Sets allocator不改架构。
 - P201 aggregate gates继承 P287：budget MAE `<=.075`、composite regret `<=.005`；不扫 cardinality/结构/grid/steps/gate。
-- active=`run://worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+- canonical=`run://worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
   20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1`。
+- result：P201 aggregate budget MAE=`.0108336`、composite regret=`3.3879e-5`、candidate/teacher LCB tail shortfall均
+  `=.01002303`、violations=`0/0`；size48/96 budget MAE=`.0109076/.0107597`；2/2，verdict=
+  `supported_variable_set_additive_LCB_tail_CVaR_allocator`。wall=`166.02s`、peak GPU/RSS=`.5352/1.6478GiB`。
+
+### WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01
+
+- frozen P288 primal；pooled mean/std/max/log-size context + alpha/tolerance/floor/tail-mass/fraction，输出 shadow price；
+  train sizes32/64/128、heldout48/96。
+- P201 gates仅 attained fraction MAE `<=.075` 与 frozen composite regret `<=.005`；fraction单调由正 rate spline保证。
+- active=`run://worldsim_v67/WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
+  20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

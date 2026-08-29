@@ -134,9 +134,15 @@ WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T204500Z__additive-lcb-t
 MAE=`.0130764`、composite regret=`8.71e-5`、candidate/teacher tail shortfall=`.009331368/.009331366`、price/floor
 violations=`0/0`，2/2；wall=`192.59s`、peak GPU=`.4547GiB`。
 
-P288 从冻结 P287 warm-start，在 sizes32/64/128 交替训练同一 calibrated tail-risk primal，只在 held-out48/96评估。
-Active=`run://worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
-20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
+P288 从冻结 P287 warm-start，在 sizes32/64/128 交替训练 calibrated tail-risk primal。Canonical=`run://worldsim_v67/
+WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1`：P201 heldout48/96 aggregate budget MAE=`.0108336`、
+composite regret=`3.39e-5`、candidate/teacher tail shortfall均=`.01002303`、violations=`0/0`，2/2；wall=`166.02s`。
+
+P289 以冻结 P288 为唯一 variable-set primal，训练 sizes32/64/128 的 pooled-statistics dual，并在 heldout48/96上评估
+attainable fraction→shadow price→budgets。Active=`run://worldsim_v67/
+WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
+20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
