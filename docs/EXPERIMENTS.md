@@ -1201,7 +1201,21 @@
 - method：P346 base/group calibration/PAV groups与四门不变；只把source fold2 PAV block mass换成domain odds weighted mass；
   P201 event labels仍只在末端development evaluation读取。
 - locks：domain MLP `[64,32]`、4k steps；不扫或裁剪weight，不扫threshold/group/capacity/step/LR/seed；
-  状态=`active training`。
+  状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01/
+  20260901T140000Z__shift-weighted-isotonic-reliability-s0-r1`。
+- result：domain final BCE=`.0000615`，source weights min/max=`.01012/382.42`，ESS=`69.62`；P201 q75/q85/
+  q90/q95 coverage=`.357377/.319672/.298361/.278962`，max unsafe=`.120879/.105882/.105882/.105882`。
+  q90 risk与coverage失败、monotonicity两门通过，2/4 rejected，wall=`59.20s`，F223。
+
+### WS-V67-P348-DOMAIN-ADVERSARIAL-VISITED-RELIABILITY-01
+
+- migration：P347权重ESS只有69.62。AISTATS 2020明确指出importance weighting要求分布足够接近，并进一步学习
+  source/target不可分的feature map；DANN与DomainBed/TLlib提供gradient-reversal实现路线。
+- method：训练shared reliability encoder时同时做source event BCE和balanced source/P201-unlabeled domain BCE；
+  gradient reversal只作用于encoder，之后沿用P346 source-only group calibration与fold2 PAV。
+- locks：单一domain loss coefficient与8k joint steps；不使用P201 event labels，不扫alignment/group/threshold/
+  capacity/step/LR/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

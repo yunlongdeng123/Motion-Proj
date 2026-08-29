@@ -429,8 +429,9 @@
 - P344：P201 q90 risk/coverage `.12088/.28005`，两门失败，登记F221；
 - P345：group calibration将P201 q90 risk降到`.10714`，但coverage降到`.27869`，2/4 rejected，登记F222；
 - P346：P201 q90 coverage/risk `.32842/.09091`，四门supported；source heldout-H仍漂移，仅保留development claim；
-- P347 active：P201-unlabeled domain odds加权PAV，检验shift-aware calibration是否保持P346 frontier；
-- 下一可用 failure id 为 `V67-F223`。
+- P347：domain近完美可分导致importance ESS=`69.62`，q90 coverage/risk `.29836/.10588`，登记F223；
+- P348：target-unlabeled adversarial representation alignment implementation；
+- 下一可用 failure id 为 `V67-F224`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -535,6 +536,19 @@
   calibration、formal multicalibration或safety guarantee；
 - 下一步按AISTATS 2020 covariate-shift calibration，只使用target unlabeled covariates估计importance weights，不读取
   target reliability labels；下一可用failure id保持`V67-F223`。
+
+### V67-F223 — P347 importance weighting因source/target support mismatch退化
+
+- canonical=`run://worldsim_v67/WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01/
+  20260901T140000Z__shift-weighted-isotonic-reliability-s0-r1`；
+- symptom：P201 q90 coverage=`.298361 < .30`、max unsafe=`.105882 > .10`，两项monotonicity通过，2/4 rejected；
+- cause：domain discriminator final BCE=`6.15e-5`，self-normalized odds范围`.01012--382.42`，5,490 source
+  calibration rows的ESS仅`69.62`；importance-weighted PAV实际由极少数source rows支配；
+- literature/migration：AISTATS 2020同一工作明确限定importance weighting需要source/target足够接近，并用
+  adversarial feature map使分布更不可分；DANN/DomainBed/TLlib提供gradient reversal迁移；P348先对latent做
+  target-unlabeled alignment，再恢复unweighted P346 PAV；
+- forbidden rescue：不裁剪、温度化或平滑weights，不扫domain classifier/threshold/seed；resolution=
+  `open via P348 domain-adversarial reliability representation`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

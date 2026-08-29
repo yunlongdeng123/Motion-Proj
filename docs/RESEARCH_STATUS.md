@@ -616,7 +616,13 @@ r1仅因入口缺`PYTHONPATH=.`在模型载入前退出，未消耗训练或qual
 
 P347针对P346跨horizon/covariate漂移，按AISTATS 2020 target-unlabeled calibration训练domain discriminator，
 以self-normalized target/source odds加权同一fold2的9个PAV maps；不裁剪weights、不用P201 reliability labels。
-Active=`WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01`。
+Canonical=`run://worldsim_v67/WS-V67-P347-SHIFT-WEIGHTED-ISOTONIC-RELIABILITY-01/
+20260901T140000Z__shift-weighted-isotonic-reliability-s0-r1`：domain BCE=`6.15e-5`，weight max=`382.42`、
+ESS=`69.62/5490`，显示近support mismatch；P201 q90 coverage/unsafe=`.298361/.105882`，两门均略失败，
+2/4 rejected，登记F223。P346仍是当前best development result。
+
+P348不裁剪或平滑P347 weights；按AISTATS 2020与DANN迁移为target-unlabeled adversarial representation alignment，
+在direct reliability BCE训练时用gradient reversal降低source/P201 latent可分性，再沿用P346 group calibration+PAV。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
