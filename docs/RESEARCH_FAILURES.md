@@ -2041,7 +2041,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - control：同一oriented predicted clearance与P126 position field，但zero yaw residual；actual cost包含support error。
 - prevention：不扫class/box scale/yaw representation/support derivative/score/coverage；失败才使用F126。
 
-下一可用编号为：`V67-F126`。
+### V67-F126 — yaw uncertainty一阶footprint传播无稳定selection增量
+
+- 分类：`algorithm/oriented-footprint-yaw-linearization`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P162-ORIENTED-FOOTPRINT-ACTOR-ENSEMBLE-01/
+  20260830T121000Z__oriented-footprint-actor-ensemble-s0-r3`。
+- 观察：训练NLL正常且yaw MAE随H增长，但旧四cohort rank mean=`-.000284`、仅2/4 cost改善；P147 H3.5 cost回退`.02613`。
+- 解释：yaw residual是可预测状态，但rectangle support包含absolute trigonometric非线性；以predicted heading处的一阶导数传播
+  Gaussian不能稳定捕获turning/axis-switch边界，且position residual仍主导cost。
+- 防重复：不扫yaw scale/class/box inflation或导数权重。若恢复，只允许直接预测actual-minus-predicted support residual，
+  不重复yaw Gaussian linearization。
+
+下一可用编号为：`V67-F127`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

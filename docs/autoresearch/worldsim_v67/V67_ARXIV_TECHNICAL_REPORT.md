@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P162 oriented-footprint training active`
+- 报告状态：`P147 independent multi-horizon support; P162 oriented-footprint linearization rejected`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -308,7 +308,8 @@ variance后P147五H几乎不变，explicit epistemic fraction仅约1.2%--1.8%（
 mean=`-.00009`（F124）。因此真正支持的是member-averaged mean/aleatoric moment predictor，不是已被单独证明的epistemic addend。
 P162据此不再调variance，而扩展world-state object：从processed Actor annotations学习future yaw residual，并把oriented-rectangle
 support的一阶不确定性与P126 position field组合；position-only control共享同一oriented clearance。该结果将回答粒子近似之外的
-Actor footprint state是否能为trajectory boundary reliability提供增量。
+Actor footprint state是否能为trajectory boundary reliability提供增量。结果yaw MAE随H增长，但旧四cohort rank mean=`-.000284`、
+仅2/4 cost改善，P147 H3.5 cost回退`.02613`（F126）；因此拒绝yaw Gaussian的一阶support传播，不否定oriented box object本身。
 
 ## 3. 核心结果表
 

@@ -586,6 +586,12 @@ forecast并训练三成员yaw-residual Gaussian；推理把rectangle support对y
 baseline使用完全相同的oriented predicted clearance但yaw residual固定0，因此只检验姿态state增量。r1/r2在任何train step前因
 三位scene目录和V4/V67双root解析退出，合并为pre-training engineering F125；r3已修复并在3090执行3×6,000 steps。
 
+P162 r3用916,722 yaw tokens完成，member NLL=`-2.53860/-2.57916/-2.55332`。P81/P96/P113/P129 yaw-vs-position
+rank gain=`-.000998/+.000456/-.000811/+.000217`（mean=`-.000284`），cost仅P96/P129改善，0/2 decisions，F126。
+P147 post-confirmation rank在H3.0/H3.5微增，但H3.5 cost回退`+.02613`；mean absolute yaw residual从H0.8 `.0075rad`
+增至H3.5 `.0473rad`，证明姿态误差存在且随H增长，但yaw Gaussian的一阶support传播没有形成稳定selection增量。
+oriented footprint对象保留为negative mechanism result，不以局部H结果替换position authority。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -72,7 +72,7 @@
 | P159 | `run://worldsim_v67/WS-V67-P159-JOINT-ENERGY-SCORE-ACTOR-ENSEMBLE-01/20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1` | old mean rank `-.04251`、cost全退；rejected/F122 |
 | P160 | `run://worldsim_v67/WS-V67-P160-EXACT-ENSEMBLE-MIXTURE-BOUNDARY-01/20260830T115500Z__exact-ensemble-mixture-boundary-s0-r1` | exact linear pool mean rank `-.04330`；rejected/F123 |
 | P161 | `run://worldsim_v67/WS-V67-P161-EPISTEMIC-VARIANCE-ABLATION-01/20260830T120000Z__epistemic-variance-ablation-s0-r1` | full-vs-no-ep rank `-.00009`；epistemic attribution rejected/F124 |
-| P162 | `run://worldsim_v67/WS-V67-P162-ORIENTED-FOOTPRINT-ACTOR-ENSEMBLE-01/20260830T121000Z__oriented-footprint-actor-ensemble-s0-r3` | yaw-residual oriented-box boundary training；running |
+| P162 | `run://worldsim_v67/WS-V67-P162-ORIENTED-FOOTPRINT-ACTOR-ENSEMBLE-01/20260830T121000Z__oriented-footprint-actor-ensemble-s0-r3` | mean rank `-.000284`、2/4 cost；rejected/F126 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -186,6 +186,7 @@
 | `V67-F123` | closed negative | exact member-CDF linear pool在旧四与P147五H均退化 |
 | `V67-F124` | closed negative mechanism | explicit between-member variance约1%--3%，不是P147增益主因 |
 | `V67-F125` | resolved pre-training | P162 three-digit + V4/V67 dual-root routing；r3 training active |
+| `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory
 
