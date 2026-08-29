@@ -1903,7 +1903,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - integration：P126 predictions全冻结；variance multiplier=`1+ReLU(source-standardized NLL)`；两decision不变。
 - prevention：不扫flow depth/scale/inflation/weight/score/coverage。
 
-下一可用编号为：`V67-F116`。
+### V67-F116 — hidden density shift不能区分低密度可靠性
+
+- 分类：`algorithm/density-aware-OOD-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/
+  20260830T111500Z__density-aware-actor-ensemble-s0-r1`。
+- 观察：四cohort mean inflation=`1.84--2.24`，故flow识别到source-support shift；但mean rank=`-.001727`，P81 cost从
+  `.176665`恶化至`.196679`，仅P96 operating cost改善。
+- 解释：feature rarity不是reliability充分统计量；blind density inflation会把低密度但可靠Actor/query错误提升。
+- 防重复：不扫flow/inflation threshold/weight。P155把generalization机制移到same-fraction RegMixup训练，而非test-time OOD分数。
+
+### P155 freeze note — time-fraction matched RegMixup ensemble
+
+- training：原始/Mixup Gaussian NLL各`.5`；pair同time fraction，Beta alpha`.2`，feature+2D target同lambda。
+- constants：P126 shape/3 members/6,000 steps/source/score和四cohort decisions。
+- prevention：不扫alpha/loss weight/pairing/architecture/member/seed/score/coverage。
+
+下一可用编号为：`V67-F117`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

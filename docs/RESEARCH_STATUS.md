@@ -502,9 +502,14 @@ P153进一步冻结P109网络/mean/aleatoric scale，在916,722 hidden tokens上
 posterior precision。P81/P113 rank正增益、P96/P113 cost改善，但epistemic fraction仅`1.2e-4--2.0e-4`，mean rank gain
 `.000844`且P129 cost回退，F115；exact token posterior在大样本下过度集中。
 
-依据AISTATS 2024 Density-Regression、ICML 2024 Distance-Aware Bottleneck，P154正在GPU训练4-layer RealNVP source hidden-density。
-P126三成员mean/aleatoric/epistemic全部冻结，只以`1+ReLU(source-standardized NLL)`在低密度actor-time feature膨胀variance，
-检验distance-aware uncertainty；P147 IO/evaluator继续并行，不扫flow或inflation公式。
+依据AISTATS 2024 Density-Regression、ICML 2024 Distance-Aware Bottleneck，P154训练4-layer RealNVP source hidden-density。
+P126全部冻结，只以`1+ReLU(source-standardized NLL)`膨胀variance。P81/P96/P113/P129 mean inflation=
+`1.84/2.24/2.04/1.81`，证明density识别shift；但rank gain=`-.006720/-.001265/+.000418/+.000659`
+（mean=`-.001727`），P96 cost改善但P81显著回退，F116。低密度不等于不可靠，关闭推理期blind OOD inflation。
+
+检索ICLR Mixup、NeurIPS RegMixup与DG-FIXED后，P155正在3090训练time-fraction matched RegMixup ensemble：每步保留一半
+原始Gaussian NLL、一半同fraction Actor feature+2D residual convex mixup NLL，3 members/6,000 steps；从训练分布内部平滑
+scene variation，同时避免跨time-role无意义插值。P147 IO/evaluator继续并行，不扫alpha或loss weight。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

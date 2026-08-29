@@ -64,7 +64,8 @@
 | P151 | `run://worldsim_v67/WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01/20260830T110000Z__group-dro-boundary-cost-s0-r1` | P96 `-.1154`、mean `-.0467`；rejected/F113 |
 | P152 | `run://worldsim_v67/WS-V67-P152-RANDOMIZED-PRIOR-ACTOR-ENSEMBLE-01/20260830T110500Z__randomized-prior-actor-ensemble-s0-r1` | cost全退、mean rank `-.006852`；rejected/F114 |
 | P153 | `run://worldsim_v67/WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01/20260830T111000Z__bayesian-last-layer-actor-s0-r1` | epistemic约`1e-4`、mean rank `+.000844`；rejected/F115 |
-| P154 | `run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/20260830T111500Z__density-aware-actor-ensemble-s0-r1` | RealNVP hidden-density variance inflation；running |
+| P154 | `run://worldsim_v67/WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01/20260830T111500Z__density-aware-actor-ensemble-s0-r1` | shift detected但P81 cost退；rejected/F116 |
+| P155 | `run://worldsim_v67/WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01/20260830T112000Z__regmixup-actor-ensemble-s0-r1` | same-fraction RegMixup；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -121,7 +122,8 @@
 | group-DRO dense cost | P151 consumed H3.5 ×4 | mean gain=`-.046683` | reject worst-group direct cost |
 | randomized-prior Actor ensemble | P152 consumed H3.5 ×4 | mean gain=`-.006852` | reject forced function diversity |
 | Bayesian last layer | P153 consumed H3.5 ×4 | mean gain=`+.000844` | reject overconcentrated token posterior |
-| density-aware P126 | P154 consumed H3.5 ×4 | running | test explicit source-support distance |
+| density-aware P126 | P154 consumed H3.5 ×4 | mean gain=`-.001727` | rarity not reliability |
+| RegMixup Actor ensemble | P155 consumed H3.5 ×4 | running | test train-time domain interpolation |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -164,6 +166,7 @@
 | `V67-F113` | closed negative | scene×horizon worst-group NLL进一步放大P96反转 |
 | `V67-F114` | closed negative | randomized function priors四cohort rank全退 |
 | `V67-F115` | closed negative | exact last-layer posterior epistemic约`10^-4`而过度集中 |
+| `V67-F116` | closed negative | hidden density识别shift但blind inflation使P81 cost显著回退 |
 
 ## 4. Artifact inventory
 

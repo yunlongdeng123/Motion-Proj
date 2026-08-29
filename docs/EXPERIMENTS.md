@@ -862,13 +862,27 @@
 
 ### WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T111500Z__density-aware-actor-ensemble-s0-r1`。
 - method：冻结P109 penultimate 128D feature并以全部source actor-time tokens训练4-layer RealNVP density；hidden `[256,256]`、
   6,000 steps、batch8,192。冻结P126三member predictions，将total variance乘
   `1+ReLU((NLL-source_mean)/source_std)`。
 - decisions/locks：四consumed cohort相对P126 cost全不退且mean rank gain≥`.005`；不扫flow depth/scale/
   inflation formula/weight/score/coverage。
+- result：final/source flow NLL=`-62.4436/-62.9426±41.8738`；P81/P96/P113/P129 mean inflation=
+  `1.842/2.241/2.042/1.811`，selected cost=`.196679/.165497/.219048/.312030`，Spearman gain=
+  `-.006720/-.001265/+.000418/+.000659`（mean=`-.001727`）。P96 cost改善但P81明显回退；0/2 decisions，
+  verdict=`rejected_development_density_aware_actor_ensemble`，wall=`88.81s`、peak GPU=`.751 GiB`；F116。
+
+### WS-V67-P155-REGMIXUP-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T112000Z__regmixup-actor-ensemble-s0-r1`。
+- method：P126-shaped 3-member Actor Gaussian；每step原始32,768 tokens和Mixup 32,768 tokens各占`.5` loss。Mixup pair
+  必须拥有相同normalized time fraction，feature与2D residual target按`Beta(.2,.2)`同一lambda插值。
+- training/evaluation：P109 normalization/source、6,000 steps/member、AdamW协议；P81/P96/P113/P129相对P126 cost全不退
+  且mean rank gain≥`.005`。
+- locks：不扫alpha/original-mix weight/pairing/architecture/member/seed/score/coverage。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
