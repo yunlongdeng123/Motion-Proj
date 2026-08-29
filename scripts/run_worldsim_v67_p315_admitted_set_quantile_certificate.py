@@ -1110,6 +1110,10 @@ def main() -> None:
                     domain_target = torch.cat((
                         torch.zeros(len(row), device="cuda"), torch.ones(len(row), device="cuda")
                     ))
+                    reversal_coefficient = float(adversarial_config["reversal_coefficient"])
+                    if adversarial_config.get("warm_start_reversal", False):
+                        training_progress = float(step) / max(int(model_config["steps"]) - 1, 1)
+                        reversal_coefficient *= 2.0 / (1.0 + np.exp(-10.0 * training_progress)) - 1.0
                     if adversarial_config.get("conditional_on_reliability", False):
                         domain_horizon_index = training_horizon_tensor[
                             torch.randint(len(training_horizon_tensor), (len(domain_features),), device="cuda")
@@ -1119,14 +1123,30 @@ def main() -> None:
                             torch.randint(len(ceiling_tensor), (len(domain_features),), device="cuda")
                         ]
                         domain_logits = model.domain_logits(
-                            domain_features, float(adversarial_config["reversal_coefficient"]),
+                            domain_features, reversal_coefficient,
                             domain_horizon, domain_ceiling,
                         )
                     else:
                         domain_logits = model.domain_logits(
-                            domain_features, float(adversarial_config["reversal_coefficient"])
+                            domain_features, reversal_coefficient
                         )
-                    domain_loss = F.binary_cross_entropy_with_logits(domain_logits, domain_target)
+                    domain_loss_values = F.binary_cross_entropy_with_logits(
+                        domain_logits, domain_target, reduction="none"
+                    )
+                    if adversarial_config.get("entropy_conditioning", False):
+                        with torch.no_grad():
+                            domain_probability = torch.sigmoid(
+                                model(domain_features, domain_horizon, domain_ceiling)
+                            ).clamp(1e-6, 1.0 - 1e-6)
+                            domain_entropy = -(
+                                domain_probability * domain_probability.log()
+                                + (1.0 - domain_probability) * (1.0 - domain_probability).log()
+                            ).sum(1)
+                            domain_weight = 1.0 + torch.exp(-domain_entropy)
+                            domain_weight = domain_weight / domain_weight.mean()
+                        domain_loss = (domain_loss_values * domain_weight).mean()
+                    else:
+                        domain_loss = domain_loss_values.mean()
                     loss = reliability_loss + domain_loss
                     domain_adversarial_last = float(domain_loss.detach())
                 else:
