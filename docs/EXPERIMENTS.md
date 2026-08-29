@@ -846,6 +846,22 @@
   一个q90 residual offset；source/P201读取heldout H=`2.5s`，P201仍为task midpoints。
 - gates：q90对应P201 max unsafe `<=.10`、mean coverage `>=.20`、ceiling monotonicity=0；不扫q/H/
   architecture/gate/seed，不作formal conformal claim。
+- canonical=`run://worldsim_v67/WS-V67-P327-RISK-CONDITIONED-HORIZON-QUANTILE-SURFACE-01/
+  20260901T082500Z__risk-conditioned-horizon-quantile-surface-s0-r1`。
+- result：130,734 nominal H×q examples、7k steps、final pinball=`.02212`、source q90 signed offset=
+  `.03870`。P201 mean/highest coverage=`.25847/.64836`、max/mean unsafe=`.03175/.01522`、monotonicity=0；
+  strict/mid/high coverage=`.02377/.10328/.64836`、unsafe=`0/.03175/.01391`，3/3 supported。
+- source heldout H+q90：5,598 examples，mean/highest coverage=`.26736/.58181`、max unsafe=`.02763`；
+  wall=`54.79s`、peak GPU=`.14039GiB`、RSS=`1.8919GiB`。
+
+### WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01
+
+- object：同一task/H model在每个GPU batch连续采样risk quantile，而非只见三个离散q knots；直接学习
+  `.70-.97`完整authority risk axis。
+- architecture/split：复用P327双单调positive-coefficient surface；source gradient H `.8/1.5/3.0s`与
+  `q~Uniform(.70,.97)`，q90仅在source calibration形成一个signed offset；heldout H=`2.5s`。
+- gates：P201 q90 max unsafe `<=.10`、mean coverage `>=.20`、ceiling monotonicity=0；quantile range由预定
+  authority risk domain固定，不扫range/architecture/gate/seed。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface

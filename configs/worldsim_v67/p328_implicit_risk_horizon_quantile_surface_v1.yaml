@@ -1,0 +1,62 @@
+schema_version: worldsim_v67.p328_implicit_risk_horizon_quantile_surface.v1
+output_schema_version: worldsim_v67.p328_implicit_risk_horizon_quantile_surface_summary.v1
+task_id: WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01
+hypothesis_id: WS-V67-H-P328-001
+role: empirical_implicit_risk_continuous_horizon_non_crossing_quantile_authority_development
+horizon_implicit_quantile_surface_training: true
+seed: 0
+model_artifact: IMPLICIT_RISK_HORIZON_QUANTILE_SURFACE.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_authority: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+frozen_selector: {run: worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/20260901T034500Z__authority-residual-topk-admission-s0-r1, artifact: AUTHORITY_RESIDUAL_TOPK_ADMISSION.pt}
+frozen_progress_compiler: {run: worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T041500Z__progress-conditioned-authority-admission-s0-r1, artifact: PROGRESS_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_maneuver_compiler: {run: worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1, artifact: MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_horizon_selective_authority: {run: worldsim_v67/WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/20260901T074000Z__horizon-ceiling-selective-authority-s0-r1, artifact: HORIZON_CEILING_SELECTIVE_AUTHORITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+training_horizon_indices: [0, 1, 3]
+heldout_horizon_index: 2
+quantile_floor: 0.50
+training_quantile_range: [0.70, 0.97]
+heldout_quantile_level: 0.90
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+action_group_size: 6
+selected_action_count: 2
+authority_condition: {alpha_fairness: 0.5, risk_tolerance: 0.15, final_reliability_floor: 0.6, tail_mass: 0.25, attainable_budget_fractions: [0.25, 0.5, 0.75]}
+training_progress_preferences: [0.0, 0.5, 1.0]
+heldout_progress_preferences: [0.25, 0.75]
+training_lateral_commands: [-1.0, 0.0, 1.0]
+heldout_lateral_commands: [-0.5, 0.5]
+lateral_preference_weight: 0.5
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+split: {scene_modulus: 5, calibration_scene_remainder: 2, development_scene_remainder: 1}
+risk_surface_model:
+  hidden_dimensions: [128, 64]
+  steps: 8000
+  batch_size: 512
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+decision:
+  maximum_P201_unsafe_admission_rate: 0.10
+  minimum_P201_mean_admission_coverage: 0.20
+  maximum_P201_ceiling_admission_monotonicity_violations: 0
+verdict_on_pass: supported_implicit_risk_horizon_quantile_surface
+verdict_on_failure: rejected_implicit_risk_horizon_quantile_surface
+locks:
+  continuous_training_quantile_domain_0p70_0p97_is_fixed: true
+  source_train_horizons_0p8_1p5_3p0_and_2p5_heldout_are_fixed: true
+  source_calibration_fits_one_q90_signed_residual_offset: true
+  positive_horizon_quantile_slopes_and_interaction_are_non_crossing_by_construction: true
+  P324_heldout_ceiling_family_is_frozen: true
+  no_P201_fit_recalibration_quantile_range_horizon_architecture_gate_or_seed_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - empirical_implicit_quantile_calibration_not_conformal_population_or_conditional_guarantee
+  - fixed_P313_top2_authority_not_action_pair_editor_planner_policy_or_closed_loop_control
+  - no_hard_constraint_or_safety_claim

@@ -462,11 +462,18 @@ Canonical=`run://worldsim_v67/WS-V67-P326-RISK-MATCHED-HORIZON-QUANTILE-AUTHORIT
 max/mean unsafe=`.04072/.03667`、monotonicity=0；source heldout-H `.31559/.65005`、max unsafe=`.03902`，
 3/3 supported。strict ceiling coverage从P325的0恢复到`.04426`且unsafe=`.03704`。wall=`44.16s`。
 
-P327把固定q85升级为risk-conditioned continuous quantile axis：参考ICML 2018 implicit quantile network、
-NeurIPS 2020 non-crossing quantile regression与ICLR 2022 continuous monotone quantile representation，使用
-positive base/H slope/quantile slope/interaction确保H与q双单调。Gradient train q=`.75/.85/.95`，q90仅用于
-source calibration；source/P201同时heldout H=`2.5s`，decision risk上限由q90固定为`.10`。Active=
-`WS-V67-P327-RISK-CONDITIONED-HORIZON-QUANTILE-SURFACE-01`。
+P327把固定q85升级为risk-conditioned continuous quantile axis：positive base/H slope/quantile slope/
+interaction确保H与q双单调。Canonical=`run://worldsim_v67/
+WS-V67-P327-RISK-CONDITIONED-HORIZON-QUANTILE-SURFACE-01/
+20260901T082500Z__risk-conditioned-horizon-quantile-surface-s0-r1`：gradient q=`.75/.85/.95`共130,734
+H×q examples、7k steps、final pinball=`.02212`；source q90 offset=`.03870`。P201 heldout task+H+q90
+mean/highest coverage=`.25847/.64836`、max/mean unsafe=`.03175/.01522`、monotonicity=0；source heldout
+H+q90 `.26736/.58181`、max unsafe=`.02763`，3/3 supported。wall=`54.79s`。
+
+P328按ICML 2018 implicit quantile network思想，把三个离散gradient quantiles升级为每batch连续采样
+`q~Uniform(.70,.97)`，仍用结构双单调H×q surface；q90只在source calibration固定signed offset，P201继续
+heldout task+H=`2.5s`读取`.10/.20/0`三门。该卡训练完整risk axis，不是P327确认。Active=
+`WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

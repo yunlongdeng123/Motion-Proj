@@ -392,8 +392,10 @@
   不事后新增gate；
 - P326 result：q85 continuous-H decision boundary使P201 coverage=`.32077`、max unsafe=`.04072`、
   monotonicity=0，source heldout-H max unsafe=`.03902`，3/3 supported；未触发F212；
-- P327 active：训练risk-conditioned H×q双单调surface，gradient q `.75/.85/.95`、calibration q90；失败才
-  登记F212，不扫q/H/architecture/gate/seed；
+- P327 result：risk-conditioned H×q surface在P201 q90得到coverage=`.25847`、max unsafe=`.03175`、
+  monotonicity=0，source heldout H+q90 max unsafe=`.02763`，3/3 supported；未触发F212；
+- P328 active：每batch连续采样q `.70-.97`训练implicit risk axis；失败才登记F212，不扫q range/H/
+  architecture/gate/seed；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

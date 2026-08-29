@@ -418,6 +418,7 @@ def main() -> None:
     horizon_temporal_calibration_training = bool(config.get("horizon_temporal_calibration_training", False))
     horizon_risk_matched_quantile_training = bool(config.get("horizon_risk_matched_quantile_training", False))
     horizon_risk_conditioned_surface_training = bool(config.get("horizon_risk_conditioned_surface_training", False))
+    horizon_implicit_quantile_surface_training = bool(config.get("horizon_implicit_quantile_surface_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -451,7 +452,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -507,7 +508,7 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
         source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
             source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
             progress_model, maneuver_model, config["training_progress_preferences"],
@@ -612,7 +613,7 @@ def main() -> None:
             (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
             print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
             return
-        if horizon_risk_conditioned_surface_training:
+        if horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
             split = config["split"]
             modulus = int(split["scene_modulus"])
             calibration_rows = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
@@ -626,7 +627,13 @@ def main() -> None:
             normalized_horizons = horizon_values / float(horizon_values.max())
             training_horizon_indices = np.asarray(config["training_horizon_indices"], np.int64)
             heldout_horizon_index = int(config["heldout_horizon_index"])
-            training_quantiles = np.asarray(config["training_quantile_levels"], np.float32)
+            implicit_quantile_training = horizon_implicit_quantile_surface_training
+            if implicit_quantile_training:
+                training_quantile_range = np.asarray(config["training_quantile_range"], np.float32)
+                training_quantiles = None
+            else:
+                training_quantile_range = None
+                training_quantiles = np.asarray(config["training_quantile_levels"], np.float32)
             heldout_quantile = float(config["heldout_quantile_level"])
             model_config = config["risk_surface_model"]
             model = RiskConditionedHorizonQuantileSurface(
@@ -640,16 +647,23 @@ def main() -> None:
             train_index = torch.from_numpy(np.flatnonzero(train_rows)).cuda()
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
-            quantile_tensor = torch.from_numpy(training_quantiles).cuda()
+            quantile_tensor = None if training_quantiles is None else torch.from_numpy(training_quantiles).cuda()
             last = 0.0
             for step in range(int(model_config["steps"])):
                 row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
                 local_horizon_index = training_horizon_tensor[
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
-                local_quantile = quantile_tensor[
-                    torch.randint(len(quantile_tensor), (len(row),), device="cuda")
-                ]
+                if implicit_quantile_training:
+                    local_quantile = (
+                        float(training_quantile_range[0])
+                        + (float(training_quantile_range[1]) - float(training_quantile_range[0]))
+                        * torch.rand(len(row), device="cuda")
+                    )
+                else:
+                    local_quantile = quantile_tensor[
+                        torch.randint(len(quantile_tensor), (len(row),), device="cuda")
+                    ]
                 prediction = model(x[row], horizon_tensor[local_horizon_index], local_quantile)
                 error = y[row, local_horizon_index] - prediction
                 loss = torch.maximum(local_quantile * error, (local_quantile - 1.0) * error).mean()
@@ -658,7 +672,8 @@ def main() -> None:
                 optimizer.step()
                 last = float(loss.detach())
                 if step % 500 == 0:
-                    print(f"P327 risk-conditioned Hxq surface step={step + 1} loss={last:.7f}", flush=True)
+                    card = "P328 implicit-risk" if implicit_quantile_training else "P327 risk-conditioned"
+                    print(f"{card} Hxq surface step={step + 1} loss={last:.7f}", flush=True)
             model.eval()
             calibration_index = np.flatnonzero(calibration_rows)
             with torch.no_grad():
@@ -706,6 +721,7 @@ def main() -> None:
                 "input_scale": feature_scale,
                 "quantile_floor": float(config["quantile_floor"]),
                 "training_quantile_levels": training_quantiles,
+                "training_quantile_range": training_quantile_range,
                 "heldout_quantile_level": heldout_quantile,
                 "horizons_seconds": horizon_values,
                 "training_horizon_indices": training_horizon_indices,
@@ -721,8 +737,12 @@ def main() -> None:
                 "verdict": verdict,
                 "role": config["role"],
                 "training": {
-                    "horizon_quantile_example_count": int(train_rows.sum() * len(training_horizon_indices) * len(training_quantiles)),
-                    "training_quantile_levels": [float(value) for value in training_quantiles],
+                    "horizon_quantile_example_count": int(
+                        train_rows.sum() * len(training_horizon_indices)
+                        * (1 if training_quantiles is None else len(training_quantiles))
+                    ),
+                    "training_quantile_levels": None if training_quantiles is None else [float(value) for value in training_quantiles],
+                    "training_quantile_range": None if training_quantile_range is None else [float(value) for value in training_quantile_range],
                     "steps": int(model_config["steps"]), "final_pinball_loss": last,
                 },
                 "calibration": {
