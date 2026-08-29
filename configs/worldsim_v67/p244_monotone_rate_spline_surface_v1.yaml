@@ -1,0 +1,39 @@
+schema_version: worldsim_v67.p244_monotone_rate_spline_surface.v1
+output_schema_version: worldsim_v67.p244_monotone_rate_spline_surface_summary.v1
+task_id: WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01
+hypothesis_id: WS-V67-H-P244-001
+role: analytic_rate_spline_continuous_budget_surface_development
+seed: 0
+model_artifact: MONOTONE_RATE_SPLINE_SURFACE.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p183_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+training_budget_domain: [0.05, 3.20]
+training_budget_count: 31
+training_budget_offset: 0.37
+heldout_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+heldout_budget_rule: adjacent_anchor_geometric_midpoints_excluded_from_training
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {context_width: 128, rate_knot_count: 16, steps: 12000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_heldout_surface_teacher_probability_MAE: 0.015, maximum_P201_heldout_final_curve_teacher_probability_MAE: 0.01, maximum_relative_P201_heldout_surface_Brier_degradation: 0.01, maximum_absolute_P201_heldout_surface_calibration_error_increase: 0.002}
+verdict_on_pass: supported_monotone_rate_spline_continuous_budget_surface
+verdict_on_failure: rejected_monotone_rate_spline_continuous_budget_surface
+locks:
+  source_only_training_uses_thirty_one_fixed_log_budget_points_and_six_geometric_midpoints_are_held_out: true
+  sixteen_positive_rate_knots_with_analytic_piecewise_linear_integration_enforce_budget_monotonicity: true
+  cumulative_base_and_retention_units_enforce_prefix_monotonicity: true
+  P242_probability_space_L1_data_steps_and_decisions_are_unchanged: true
+  source_only_teacher_distillation_and_P201_heldout_budget_decisions_are_single_shot: true
+  no_knot_width_depth_budget_metric_gate_or_MC_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_rate_spline_development_after_P201_observation_not_fresh_confirmation
+  - interpolation_inside_point_zero_five_to_three_point_two_not_tail_extrapolation_or_formal_calibration
+  - no_collision_planner_policy_closed_loop_or_safety_claim
