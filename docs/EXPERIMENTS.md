@@ -1167,7 +1167,25 @@
   收紧strict与放宽mid/high；参考NeurIPS 2024 multicalibration按预定义子群后处理。
 - method：P344 direct BCE head、source splits、8k base training不变；calibration改为3 ceilings×3 set sizes
   的temperature/bias，并为每组学习连续normalized-H slope，仍只用source fold1、2k steps。
-- gates/locks：沿用P344四门；不扫groups、bin、step、LR、threshold、capacity或seed；状态=`active training`。
+- canonical=`run://worldsim_v67/WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01/
+  20260901T133000Z__multigroup-calibrated-visited-reliability-s0-r1`；状态=`done/rejected`。
+- result：5,463 fit rows、8k final BCE=`.174553`；5,715 calibration rows、2k final BCE=`.283113`。
+  P201 q75/q85/q90/q95 coverage=`.401093/.326230/.278689/.232240`、max unsafe=
+  `.158333/.120879/.107143/.055556`。q90 strict/mid/high unsafe=`.107143/.058511/.021390`；风险比P344
+  降低但仍高于`.10`，coverage也低于`.30`；2/4 rejected，F222。
+- gates/locks：沿用P344四门；不扫groups、bin、step、LR、threshold、capacity或seed。
+
+### WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01
+
+- migration：P345只按semantic group学习仿射参数，没有按预测概率区间校准。AISTATS probability calibration trees
+  和NeurIPS verified uncertainty calibration给出独立calibration fold上的isotonic/PAV或histogram路线；P346采用无需
+  bin-count选择的PAV。
+- method：P345 8k base BCE和source fold1的2k group calibration不变；新增未使用source scene fold2，按3 ceiling×
+  3 set-size汇聚三个training horizons，拟合9个non-decreasing piecewise-constant maps；source fold3仍为dev，
+  P201仅在末端读取。
+- gates/locks：沿用q90 risk/coverage与两个monotonicity gates；不扫bin/group/threshold/capacity/step/LR/seed。
+- runs：r1=`20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r1`在模型载入前因入口缺
+  `PYTHONPATH=.`退出，0 training/quality；设置仓库级搜索路径后r2同配置启动，状态=`active training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -427,8 +427,9 @@
 - P343 r1：插值rows接错single-set路径，训练实际重复P342；step1001主动中止，登记F219；r2 active；
 - P343 r2：P201 coverage与risk excess两门均比P337差，2/4 rejected，登记F220；
 - P344：P201 q90 risk/coverage `.12088/.28005`，两门失败，登记F221；
-- P345 active：ceiling×set-size×continuous-H multigroup calibration；
-- 下一可用 failure id 为 `V67-F222`。
+- P345：group calibration将P201 q90 risk降到`.10714`，但coverage降到`.27869`，2/4 rejected，登记F222；
+- P346 active：独立source fold2上的ceiling×set-size isotonic/PAV probability-bin calibration；
+- 下一可用 failure id 为 `V67-F223`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -503,7 +504,27 @@
 - literature/migration：NeurIPS 2024 multicalibration与官方empirical implementation支持按subpopulation做
   post-hoc calibration；P345使用预定义ceiling×set-size groups与continuous-H slope；
 - forbidden rescue：不扫global temperature/bias、risk threshold、capacity、steps或seed；resolution=
-  `open via P345 multigroup calibration`。
+  `closed by P345 group calibration attempt; residual probability-bin issue moved to F222`。
+
+### V67-F222 — P345分组仿射校准仍未校准预测概率区间
+
+- canonical=`run://worldsim_v67/WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01/
+  20260901T133000Z__multigroup-calibrated-visited-reliability-s0-r1`；
+- symptom：P201 q90 max unsafe从P344 `.120879`降至`.107143`，但仍高于`.10`；mean coverage从
+  `.280055`降至`.278689`，仍低于`.30`，故仅两个monotonicity gates通过，2/4 rejected；
+- retained evidence：strict/mid/high q90 unsafe改善为`.107143/.058511/.021390`，说明semantic grouping方向有效，
+  但source probability frontier仍显示同一group内部的score-dependent miscalibration；
+- literature/migration：AISTATS probability-calibration work将isotonic regression定义为独立校准集上的无参数单调
+  piecewise-constant map，NeurIPS verified calibration指出histogram方法的sample-efficiency代价；P346因此使用
+  无需预选bin数的PAV，并为其分配独立scene fold2；
+- forbidden rescue：不微调temperature/bias/horizon slope、`.10` probability threshold、steps或seed；resolution=
+  `open via P346 disjoint-fold isotonic multicalibration`。
+
+### P346 r1 operational note — 仓库搜索路径缺失，不计科学failure
+
+- r1在导入`from scripts...`时抛`ModuleNotFoundError`，发生于模型和quality载入前，0 training；
+- 这是V65-F18已知入口环境约束，不改变方法或实验合同；仅设置`PYTHONPATH=.`后以r2重启；
+- 未分配新failure id，下一可用编号保持`V67-F223`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

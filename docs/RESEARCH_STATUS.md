@@ -600,8 +600,15 @@ temperature/bias=`2.73775/-.35069`。P201 q90 coverage/unsafe=`.28005/.12088`，
 monotonicity通过，2/4 rejected，登记F221。
 
 P345保持direct reliability base完全不变，仅把全局校准换成ceiling×set-size temperature/bias与连续horizon
-slope，针对P344 strict/mid/high q90 risk `.12088/.06707/.02468`的强异质性。Active=
-`WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01`。
+slope。Canonical=`run://worldsim_v67/WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01/
+20260901T133000Z__multigroup-calibrated-visited-reliability-s0-r1`：calibration BCE=`.283113`。P201 q90
+coverage/unsafe=`.278689/.107143`；相对P344风险下降`.013736`，但覆盖也下降`.001366`，两项decision gate仍失败，
+2/4 rejected，登记F222。仿射group calibration没有按prediction bins校准，关闭该参数化后处理。
+
+P346依据AISTATS isotonic calibration、NeurIPS verified uncertainty calibration与NeurIPS multicalibration，保留P345
+8k base与2k group calibration，再在独立source scene fold2上对9个ceiling×set-size groups拟合PAV单调分段概率映射；
+不选bin数、不使用P201标签。Active=`WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01` r2；
+r1仅因入口缺`PYTHONPATH=.`在模型载入前退出，未消耗训练或quality read。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
