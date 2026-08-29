@@ -28,11 +28,19 @@ P271 从冻结 P270 warm-start，把同一等变 tail-CVaR allocator 推到 vari
 candidate/teacher CVaR shortfall均=`.00847151`、price/floor violations=`0/0`，2/2；size48/96 budget MAE分别
 `.011347/.011410`。wall=`153.39s`、peak GPU=`.4052GiB`。
 
-P272 现把冻结 P271 primal 与 variable-set invariant dual 串联：输入 attainable budget fraction、alpha、floor 与 tail
+P272 把冻结 P271 primal 与 variable-set invariant dual 串联：输入 attainable budget fraction、alpha、floor 与 tail
 mass，输出 shadow price，再由 P271 输出逐 row budget。训练 sizes=`32/64/128`、held-out=`48/96`；依据
 risk-constrained optimization 的 Lagrangian dual迁移，但这里只编译冻结 surrogate，不作 hard risk/safety claim。Active=
 `run://worldsim_v67/WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01/
-20260831T160000Z__variable-set-tail-cvar-dual-s0-r1`，GPU 正在 teacher bisection/训练。单卡资源充分。
+20260831T160000Z__variable-set-tail-cvar-dual-s0-r1`，P201 attained fraction MAE=`.019052`、tail-CVaR Lagrangian
+regret=`1.43e-5`、fraction-price violations=0，2/2；wall=`190.99s`、peak GPU=`.1849GiB`。
+
+P273 随即冻结 P271+P272，在 allocation family 从未使用、但先前由 P243 surface confirmation 消费的九场景/1,710
+trajectory cohort做一次 confirmation，不重训、不改门。Canonical=`run://worldsim_v67/
+WS-V67-P273-FRESH-TAIL-CVAR-CONFIRMATION-01/20260831T163000Z__fresh-tail-cvar-confirmation-s0-r1`：sizes48/96共52
+groups，aggregate price MAE=`.034114`、attained fraction MAE=`.016783`、regret=`8.44e-6`、violations=0，2/2，
+verdict=`supported_fresh_variable_set_budget_conditioned_tail_cvar_allocator`。准确 claim 是 frozen surrogate compiler
+跨 allocation-family untouched cohort 泛化，不是 realized online utility、predictive-distribution CVaR 或 safety guarantee。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

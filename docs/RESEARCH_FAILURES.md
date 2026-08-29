@@ -31,6 +31,13 @@
 - 三者均保持预冻结模型、条件轴、训练步数与 decision gates，没有以重复 smoke/regression 或阈值扫描补救；
 - P272 现只把冻结 P271 primal 连接到 attainable-budget dual，当前运行中；下一 failure id 仍为 `V67-F196`。
 
+### P272/P273 outcome note — 无新增 failure
+
+- P272 在 P201 held-out cardinality 上 2/2，随后冻结 primal/dual；P273 在 allocation-family untouched 的 P243 九场景
+  reuse 上按原两门一次 confirmation，attained fraction MAE=`.016783`、regret=`8.44e-6`，再次 2/2；
+- 没有更换 cohort、重训、refit、gate/threshold/cardinality sweep；P243 曾用于 surface confirmation 的消费边界已显式保留；
+- tail-CVaR compiler family 至此关闭为 supported；下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

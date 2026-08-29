@@ -45,8 +45,22 @@
 - teacher 对每个条件以20-step monotone bisection求预算比例对应 price；训练 sizes=`32/64/128`、held-out=`48/96`，
   fraction train=`.1:.1:.9`、heldout=`.15:.1:.85`。
 - P201 gates：attained fraction MAE `<=.030`、frozen tail-CVaR Lagrangian regret `<=.002`；不扫条件网格、dual
-  architecture、bisection、steps 或门。active=`run://worldsim_v67/WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01/
+  architecture、bisection、steps 或门。canonical=`run://worldsim_v67/WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01/
   20260831T160000Z__variable-set-tail-cvar-dual-s0-r1`。
+- result：P201 normalized price MAE=`.037267`、attained fraction MAE=`.019052`、regret=`1.4257e-5`、violations=0；
+  2/2，verdict=`supported_variable_set_budget_conditioned_tail_cvar_allocator`。wall=`190.99s`、peak GPU/RSS=
+  `.1849/1.6418GiB`。
+
+### WS-V67-P273-FRESH-TAIL-CVAR-CONFIRMATION-01
+
+- frozen P271 primal + P272 dual；cohort=P243九场景、1,710 trajectories，allocation family未训练/开发使用，但此前已用于
+  P243 surface confirmation，因此 role 精确写为 allocation-family untouched fresh reuse。
+- sizes48/96分别35/17 groups；相同 heldout alpha/floor/tail/fraction 与 P272 两门，一次 read、无 refit/retraining。
+- aggregate normalized price MAE=`.034114`、attained fraction MAE=`.016783`、regret=`8.4374e-6`、violations=0；
+  size48/96 attained MAE=`.017806/.014678`，2/2，verdict=
+  `supported_fresh_variable_set_budget_conditioned_tail_cvar_allocator`。wall=`2.20s`、peak GPU/RSS=`.1389/.9848GiB`。
+- boundary：只确认 frozen surrogate teacher 下的 compiler generalization；不确认 realized task utility、hard floor、planner、
+  closed-loop 或 safety。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
