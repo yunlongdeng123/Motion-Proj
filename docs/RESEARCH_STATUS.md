@@ -117,10 +117,16 @@ WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/20260831T200000Z__additive-conform
 surface/final teacher MAE=`.005598/.005218`，coverage=`.882/.788/.719/.633` vs desired=`.925/.85/.75/.65`，最大
 欠覆盖=`.06208`，2/2，三轴 violations=0；P243 descriptive max undercoverage=`.03962`。wall=`159.83s`。
 
-P285 将冻结 P284 的 `delta`-conditioned additive LCB 接入 soft-floor Lagrangian allocator，联合 alpha、tolerance、floor、
-shadow price，结构保证 price↑budget↓、floor↑budget↑。Active=`run://worldsim_v67/
-WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
-20260831T201500Z__additive-conformal-lcb-policy-s0-r1`，GPU 正在训练；只作 surrogate allocation claim。
+P285 将冻结 P284 的 `delta`-conditioned additive LCB 接入 soft-floor Lagrangian allocator。Canonical=
+`run://worldsim_v67/WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
+20260831T201500Z__additive-conformal-lcb-policy-s0-r1`：P201 budget MAE=`.0113088`、frozen LCB-floor regret=
+`5.01e-5`、candidate/teacher shortfall=`.002280930/.002280927`、price/floor violations=`0/0`，2/2；tolerance
+low→high budget change=`-.007299`，符合 higher tolerance less conservative 的学习方向；wall=`146.91s`。
+
+P286 把 fixed64 group 的 attainable fraction、alpha、tolerance、floor 编译为 shadow price，再冻结 P285 产生逐 row
+budgets，闭合 empirical coverage surface→primal→dual 链。Active=`run://worldsim_v67/
+WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
+20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

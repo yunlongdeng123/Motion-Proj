@@ -214,8 +214,20 @@
   positive price/floor rates解析保证两个已知预算方向，tolerance效应从 teacher学习。
 - train alpha3×tolerance5×floor3×price9；heldout alpha2×tolerance4×floor2×price8；P201 gates仅 budget MAE
   `<=.075`、frozen additive-LCB floor regret `<=.005`；P243 consumed descriptive-only。
-- active=`run://worldsim_v67/WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
-  20260831T201500Z__additive-conformal-lcb-policy-s0-r1`；不作 hard constraint、coverage 或 safety claim。
+- canonical=`run://worldsim_v67/WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
+  20260831T201500Z__additive-conformal-lcb-policy-s0-r1`。
+- result：P201 budget MAE=`.0113088`、frozen LCB-floor regret=`5.0079e-5`、candidate/teacher shortfall=
+  `.002280930/.002280927`、price/floor violations=`0/0`、tolerance low→high budget change=`-.0072986`；2/2，
+  verdict=`supported_risk_tolerance_conditioned_additive_LCB_allocator`。P243 descriptive budget MAE=`.0104089`；
+  wall=`146.91s`、peak GPU/RSS=`.1404/1.6442GiB`。
+
+### WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01
+
+- fixed64 group summary + alpha/tolerance/floor/fraction，positive fraction-rate输出 shadow price；冻结 P285 为唯一 primal。
+- train alpha3×tolerance5×floor3×fraction9；heldout alpha2×tolerance4×floor2×fraction8；20-step bisection。
+- P201 gates：attained fraction MAE `<=.030`、frozen additive-LCB group regret `<=.002`；不扫条件、结构、steps或门。
+- active=`run://worldsim_v67/WS-V67-P286-ADDITIVE-CONFORMAL-LCB-GROUP-DUAL-01/
+  20260831T203000Z__additive-conformal-lcb-group-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
