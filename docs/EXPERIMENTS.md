@@ -429,6 +429,20 @@
   不扫 projection形式、iterations、steps/lr/gates。
 - active=`run://worldsim_v67/WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01/
   20260901T003000Z__projected-direct-authority-s0-r1`。
+- registered result：P201 budget/attained MAE=`.0040228/.0120266`、regret=`.00014114`，三门通过，verdict=
+  `supported_projected_direct_variable_set_authority_compiler`；但 descriptive fraction-budget violations=`10,754`，
+  forward=`.9475s`。因此只保留 constraint-fidelity positive result，不选择为最终 compiler；failure=`V67-F201`。
+
+### WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01
+
+- root cause response：P300 uniform shift依赖 fraction变化的 raw curve，导致 individual budgets交叉；改用 NeurIPS
+  2025 hard-linear-constraint decision rule的 convex-combination原则。
+- rule：同一 P297 base预测 `b0/b1`，输出 `b(f)=(1-f)b0+f b1`；由于 frozen monotone price decoder确保
+  `b1>=b0`，逐 Actor与 group mean对 fraction均结构单调；仅两次 shared forward。
+- fixed run：6k steps、lr `.0003`；三门为 P201 attained MAE `<.0297261076`、regret `<=.005`、fraction-budget
+  violations=`0`；不扫 endpoint rule/steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
+  20260901T004500Z__convex-endpoint-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

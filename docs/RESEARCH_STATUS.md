@@ -231,9 +231,17 @@ group-loss branch关闭，不扫 weight。
 
 重新检索 OptNet/NeurIPS 2025 hard linear constraints 后，P300 采用结构投影：冻结 P297 base对同一 group/conditions
 额外预测 fraction=0/1 端点，将目标 fraction raw budgets做统一可微 shift到预测端点均值的线性插值并 box clip；
-不调用 dual/bisection。单次6k fine-tune，复用三门，不扫 projection/steps。Active=`run://worldsim_v67/
+不调用 dual/bisection。单次6k fine-tune，复用三门，不扫 projection/steps。Canonical=`run://worldsim_v67/
 WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01/
-20260901T003000Z__projected-direct-authority-s0-r1`，GPU 已启动。
+20260901T003000Z__projected-direct-authority-s0-r1`：P201 budget/attained MAE=`.0040228/.0120266`、
+regret=`.00014114`，三门通过；但 descriptive fraction-budget monotonicity violations=`10,754`。原预注册 verdict
+保持 supported constraint fidelity，但该结构缺陷登记 `V67-F201`，P300 不作为最终 compiler。
+
+依据 NeurIPS 2025 decision-rule convex combination，P301 用更强结构替代 uniform shift：同一 P297 base只预测
+fraction0/1逐 Actor endpoints，输出固定为 `b(f)=(1-f)b0+f b1`；两次共享网络 forward即可同时保证 group mean
+线性与逐 Actor fraction单调。单次6k fine-tune，门冻结为 attained MAE `<.0297261`、regret `<=.005`、violations=0。
+Active=`run://worldsim_v67/WS-V67-P301-CONVEX-ENDPOINT-AUTHORITY-COMPILER-01/
+20260901T004500Z__convex-endpoint-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

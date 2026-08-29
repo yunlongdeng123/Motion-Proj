@@ -269,6 +269,17 @@
 - structural pivot：P300 采用同模型0/1端点的自一致可微 mean projection；
 - 下一可用 failure id 为 `V67-F201`。
 
+### V67-F201 — P300 uniform-shift projection破坏逐 Actor fraction单调性
+
+- canonical=`run://worldsim_v67/WS-V67-P300-PROJECTED-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T003000Z__projected-direct-authority-s0-r1`；
+- registered gates：P201 attained MAE=`.0120266`、regret=`.00014114`、严格优于 P297，3/3；预注册 verdict不反改；
+- latent structural defect：P201 fraction-budget monotonicity violations=`10,754`（size48/96=`4,744/6,010`），
+  source=`20,746`。uniform mean shift + box clip可保 aggregate mean，却不能保每个 Actor budget顺序；
+- accurate disposition：记录 supported constraint fidelity，但 P300不进入最终 compiler，不写 monotone authority claim；
+- structural recovery：P301 用同一 model 0/1 endpoints逐元素 convex combination，预注册 violations必须为0；
+- 下一可用 failure id 为 `V67-F202`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
