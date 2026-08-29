@@ -1848,7 +1848,18 @@
   balancing表述为gradient-level multi-objective optimization；
 - protocol：仅在truth/teacher gradient dot-product为负时投影truth gradient，再无超参地匹配两者gradient norm；P231
   architecture/source/steps/budgets/decisions不变；
-- status：RTX 3090训练中；不扫loss weight/projection/norm rule，不读取P228 quality。
+- result：9,672/10,000 steps有gradient conflict；P201 teacher MAE=`.009108`，Brier相对teacher改善`.428%`，
+  calibration改善`.000491`，3/3；P183 Brier改善`.169%`且calibration increase仅`.000339`；
+- verdict=`supported_gradient_balanced_monotone_curve_compiler`；wall=`89.31s`、peak GPU=`.145GiB`。仍需fresh确认。
+
+### WS-V67-P233-MONOTONE-PREFIX-RELIABILITY-SURFACE-01
+
+- object：从最终H4七预算curve扩展为四个horizon prefix×七预算的joint reliability surface；P199 teacher通过把
+  未访问future marginal固定`.9999`获得prefix joint，full prefix再用P203 map；
+- structure：首个prefix是8-mass budget CDF；其后三个prefix乘以随budget单调增加的retention curve，因此surface
+  按budget递增且按prefix horizon递减，无penalty/gate修补；
+- decisions：P201 surface MAE≤`.015`、final-curve MAE≤`.01`、surface Brier/calibration noninferiority；
+- status：RTX 3090 source-only 10,000-step distillation启动；不扫surface architecture/penalty/horizon/budget/MC。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

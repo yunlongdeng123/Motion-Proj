@@ -984,6 +984,12 @@ P231在P183/P201把Brier改善`2.02%/1.29%`且calibration均改善，但P201 tea
 F178；50/50 hard target改变了compiler语义。调研NeurIPS 2020 PCGrad与ICLR 2026 DTO-KD后，P232采用无需loss-weight
 sweep的gradient-level迁移：仅当source-truth gradient与teacher gradient冲突时投影，再把task-gradient norm匹配teacher norm；
 P231 architecture/data/steps/decisions全部不变。RTX 3090训练中，P228 quality仍未读取。
+P232完成：10,000 steps中9,672步发生gradient conflict并只投影task gradient；P201 teacher MAE=`.009108`，
+student/teacher Brier=`.090091/.090478`（改善`.428%`），calibration=`.024138/.024630`（改善`.000491`），3/3；
+P183 Brier也改善`.169%`，calibration仅增加`.000339`。verdict=`supported_gradient_balanced_monotone_curve_compiler`，
+wall=`89.31s`。P233继续把最终七预算curve推进成`4 horizon-prefix × 7 budget` surface：base CDF与三个budget-monotone
+retention curves结构上保证budget递增、prefix horizon递减；source-only distill冻结P199 prefix teachers，full prefix仍用P203。
+P201只作post-hoc development，P228 fresh quality仍未读取。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

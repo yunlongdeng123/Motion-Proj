@@ -2805,6 +2805,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F179`。
 
+### P232 milestone note — gradient-level balance恢复teacher fidelity，无新增failure
+
+- 9,672/10,000 training steps检测到冲突；projection + norm matching没有静态loss-weight；
+- P201 teacher MAE=`.009108`，Brier/calibration均改善，3/3；P183仍在容差内；
+- P233改变输出对象为结构单调的budget×prefix surface，不继续扫truth/teacher balancing。
+
+下一可用编号仍为：`V67-F179`。
+
 ### P230 milestone note — marginal-only compiler通过，无新增failure
 
 - P201 teacher MAE=`.009653`，Brier/calibration均优于teacher；P183轻微退化仍在冻结容差；

@@ -88,6 +88,9 @@ outcome proper loss训练一次，研究distillation是否能从纯emulation推�
 P231虽在P183/P201改善Brier `2.02%/1.29%`，P201 teacher MAE却升到`.027831>.02`，说明静态half/half loss
 改变了compiler semantics（F178）。P232依据NeurIPS 2020 PCGrad与ICLR 2026 DTO-KD，改为冲突时投影truth gradient并
 匹配teacher-gradient norm；这是单次gradient-level恢复，不做loss-weight sweep。
+P232在9,672/10,000 steps触发conflict projection，最终P201 MAE=`.009108`，Brier/calibration相对teacher改善
+`.428%/.000491`，3/3通过。P233据此从final curve推进到4-prefix×7-budget surface：用base budget CDF和三个
+budget-monotone retention curves同时保证budget monotonicity与horizon-prefix monotonicity；不依赖post-hoc penalty。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
