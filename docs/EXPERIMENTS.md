@@ -1061,6 +1061,20 @@
 - verdict=`rejected_development_interaction_context_actor_ensemble`；F129。Source likelihood改善没有迁移为trajectory ranking，
   不继续扫neighbor count/radius/attention width。
 
+### WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01
+
+- 状态：`implementation frozen / GPU launch pending`；canonical id=`20260830T124000Z__joint-multi-actor-diffusion-s0-r1`。
+- object：冻结P126 marginal mean/scale，学习same scene/horizon/anchor中多Actor的9-step standardized residual innovations联合分布；
+  与P164对单Actor marginal加context不同。
+- model：最多64 Actors，Actor19 condition；128-d、2-layer、4-head permutation-equivariant Transformer denoiser，32-step
+  diffusion、8,000 training steps、batch128。
+- compiler：16 joint samples、8-step deterministic DDIM；每sample直接计算P120 continuous boundary cost，trajectory score固定q75。
+- data：复用source 13,303 groups / 101,858 Actors；无archive IO。旧P81/P96/P113/P129相对P126 cost全不退且mean rank≥`.005`；
+  P147五H仅post-confirmation descriptive。
+- locks：不扫diffusion steps/sample count/q75/width/layer/loss/score/coverage，不解冻P126，不加hash/checksum/fingerprint。
+- migration basis：CVPR 2025 U2Diff的state-wise uncertainty diffusion与CVPR 2023 IPCC-TP对joint而非marginal分布的论证；
+  这里只学习P126 residual dependency，不声称完整multi-agent forecasting。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P164 marginal interaction closed negative`
+- 报告状态：`P147 independent multi-horizon support; P165 joint residual diffusion active`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -323,6 +323,11 @@ consumed development，P147只作post-confirmation描述。三adapter source NLL
 `-.04474`且cost全部回退；P147五H同样全面退化（F129）。这说明关系上下文并非无信息，而是把scene-specific interaction
 composition注入单Actor marginal后破坏了跨场景稳定性。论文保留该negative mechanism，不把AgentFormer/IPCC式完整joint
 forecasting的有效性与本最小adapter混为一谈。
+
+P165将这次失败转为预测对象变化：不再用neighbors修正任一Actor marginal，而冻结P126 mean/scale，联合生成同一anchor下
+所有Actors的9-step standardized residual innovations。Permutation-equivariant diffusion的samples被直接编译成P120同定义
+continuous boundary cost q75，因而区别于P149的单Actor coherent modes与any-crossing proxy。该阶段仍为consumed development；
+只有旧四cohort相对P126同时不退化才可能进入新的独立确认。
 
 ## 3. 核心结果表
 

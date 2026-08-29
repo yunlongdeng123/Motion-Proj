@@ -2095,6 +2095,13 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：不扫neighbor count、distance radius、attention width或解冻P126；若继续相关结构，只能改变预测对象为joint event/
   joint residual dependency，或转入新独立证据，不再重训marginal context adapter。
 
+### P165 freeze note — joint multi-Actor diffusion around frozen P126 marginals
+
+- object：same scene/horizon/anchor Actor set的9-step standardized residual innovation联合分布；P126 mean/scale冻结。
+- compiler：16 joint samples、8 DDIM steps，直接计算同定义continuous boundary cost q75；不复用P149 any-crossing proxy。
+- decisions：旧四cohort相对P126 cost全不退+mean rank gain≥`.005`；P147 post-confirmation only。
+- prevention：不扫diffusion/sample/q75/max actors/architecture/loss/coverage；算法失败才使用F130并关闭joint diffusion trial。
+
 下一可用编号为：`V67-F130`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认

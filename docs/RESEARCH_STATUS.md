@@ -612,6 +612,12 @@ rank gain=`-.06259/-.08456/-.00472/-.02709`（mean=`-.04474`），selected cost�
 回退。邻居上下文显著改善source likelihood但产生跨scene interaction shortcut；当前marginal interaction-adapter支线关闭，不扫
 neighbor count/radius/width。P126/P147冻结position predictor继续是唯一多时域支持候选。
 
+P165按F129允许的对象迁移，不再修改单Actor marginal：P126三member的mean/scale完全冻结，将同一scene/horizon/anchor下
+最多64 Actors的完整9-step standardized residual innovation作为联合集合，训练2-layer permutation-equivariant diffusion。
+推理以16个joint samples、8-step DDIM直接计算与P120完全同定义的continuous boundary cost q75，不使用P149的any-crossing
+proxy。Source 13,303 actor groups / 101,858 states直接复用；旧四cohort决策、P147描述边界保持不变，不扫diffusion/sample/
+quantile/architecture。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
