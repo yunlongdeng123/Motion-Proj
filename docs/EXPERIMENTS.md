@@ -450,6 +450,27 @@
 - interpretation：mixture modes被使用，但未形成可迁移的boundary-relevant分解；关闭单模型distribution family，不扫组件数。
   wall=`63.01s`、peak GPU=`.38436GiB`、RSS=`1.315GiB`。
 
+### WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01
+
+- 状态：`done/rejected binary composite; consistent AUROC mechanism retained`；canonical=
+  `20260830T083000Z__actor-deep-ensemble-s0-r1`；与P121 archive IO重叠。
+- method：NeurIPS 2017 deep ensembles与ICML 2018 uncertainty decomposition。复用P109 seed0，只新训相同source/features/
+  diagonal Gaussian/`256/128`/6,000-step的seed1/2；total projected variance=`mean aleatoric variance + variance(member means)`，
+  不加learned/tuned epistemic weight，不作seed sweep。
+- training：916,722 tokens/member；seed1/2 final NLL=`-3.645261/-3.675627`。
+- result：P81/P96/P113 projected epistemic fraction=`.02362/.02639/.02155`；events=`0/1/4`、AUROC=
+  `.969607/.914357/.926414`，相对P109 gain=`+.001968/+.010012/+.006259`，mean=`+.006080`通过。P96 events `1>0`
+  使event noninferiority失败，verdict=`rejected_development_actor_deep_ensemble`（`V67-F91`）。
+- interpretation：epistemic分量虽小但产生三cohort同向全局增益，并把P113 events `6→4`；binary fixed50 claim仍拒绝。
+
+### WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01
+
+- 状态：`frozen/target unread`；canonical planned=`20260830T083500Z__ensemble-continuous-selection-s0-r1`。
+- 在P121 target materialization前冻结P126 checkpoint/total-variance score、P109 comparator、P120 continuous cost、`.05m` floor与
+  per-scene fixed50；只读consumed P81/P96/P113，不训练、不refit。
+- decisions仅两项：三cohort ensemble selected cost均不高于P109；mean Spearman gain≥`.005`。二者均通过才可为P121另建
+  prospective same-read secondary；P121 primary不变。失败关闭ensemble，不扫member/weight/score/cost/coverage。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

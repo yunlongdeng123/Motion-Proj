@@ -1434,6 +1434,30 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F91`。
 
+### V67-F91 — ensemble全局AUROC一致提升但P96 fixed50出现一个事件
+
+- 分类：`scientific/epistemic-aleatoric-ensemble`；状态：`closed_negative_binary_composite`；
+- canonical：`run://worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/
+  20260830T083000Z__actor-deep-ensemble-s0-r1`；
+- literature response：NeurIPS deep ensembles与ICML uncertainty decomposition支持用独立成员mean disagreement补充aleatoric variance；
+  P126固定三成员，复用seed0、只新训seed1/2，law-of-total-variance无可调权重；
+- symptom：P81/P96/P113 AUROC gain=`+.001968/+.010012/+.006259`且mean `.006080`通过，P113 events `6→4`；但P96
+  events `0→1`，因此event noninferiority失败；
+- interpretation：约2.2--2.6%的projected epistemic fraction提供一致global ordering信息，却仍会移动rare-event fixed50边界；
+  该结果不能写成binary selective success，但与此前单模型输出族全退化不同；
+- resolution：binary composite严格拒绝；不删P96、不调member/seed/epistemic weight。因P121已预注册continuous endpoint，只允许
+  P127在同一consumed rows上按事前continuous nonregression/rank decisions一次迁移；
+- claim impact：无binary ensemble/fixed50 independent claim；P121 primary不变。
+
+下一可用编号：`V67-F92`。
+
+### P127 freeze note — ensemble continuous-cost迁移
+
+- candidate：冻结P126三成员与total-variance score；P109、continuous cost、`.05m` floor、fixed50均不变；
+- role：P81/P96/P113 consumed development；P121 target未物化，P127 optimizer/read均不接触P121；
+- decisions：selected continuous cost三cohort全不回退；mean Spearman gain≥`.005`；
+- prevention：失败登记F92并关闭ensemble，不扫member/weight/score/cost/coverage；成功才可在P121 rows前另冻same-read secondary。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1441,11 +1465,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122--P125已占用
-  F87--F90，因此P121 scientific failure若发生则登记`V67-F91`并
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122--P126已占用
+  F87--F91；当前下一编号F92为P127保留，因此P121 scientific failure按P127结果顺延并
   关闭continuous object independent claim，不做第二P121 recovery。
 
-下一可用编号仍为：`V67-F91`。
+下一可用编号仍为：`V67-F92`。
 
 ### V6.6 当前边界（2026-08-28）
 

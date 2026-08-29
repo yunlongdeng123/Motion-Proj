@@ -178,6 +178,10 @@ P125固定K=2 correlated Gaussian mixture并以weighted boundary CDF评分。组
 低`.00212/.02433/.00697`，events=`0/4/7`，登记F90。说明source likelihood modes不自动成为τ-boundary modes；因此
 single-model Gaussian/full-cov/Student-t/GMM output family至此关闭。
 
+P126转向三成员deep ensemble，以mean aleatoric variance加member-mean epistemic variance。三cohort AUROC均提升，平均
+`+.00608`，P113 events `6→4`；但P96 `0→1`使binary composite仍拒绝并登记F91。epistemic fraction仅约2--3%，却是
+single-model扩展后首个跨三cohort同向排序信号。P127已在P121 target前冻结，只迁移到continuous cost一次。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -205,6 +209,7 @@ single-model Gaussian/full-cov/Student-t/GMM output family至此关闭。
 | P123 | consumed continuous rank residual | selected cost=`.1783/.1831/.2241` | Spearman gain=`-.0198/-.0562/+.0082` | reject downstream head |
 | P124 | consumed correlated Student-t | P81/P96/P113 events=`0/7/7` | AUROC gain=`+.0002/-.0541/-.0054` | reject uniform heavy tail |
 | P125 | consumed K2 Gaussian mixture | P81/P96/P113 events=`0/4/7` | AUROC gain=`-.0021/-.0243/-.0070` | reject learned modes |
+| P126 | consumed deep ensemble | P81/P96/P113 events=`0/1/4` | AUROC gain=`+.0020/+.0100/+.0063` | binary composite reject；rank signal retained |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -227,6 +232,7 @@ single-model Gaussian/full-cov/Student-t/GMM output family至此关闭。
 | `V67-F88` | 稠密continuous operating-range pairs可消除跨cohort selection漂移 | P81/P96 rank退化且P96 cost回退 |
 | `V67-F89` | 统一重尾likelihood可稳定改善Actor boundary uncertainty | P96 scale过宽、AUROC与events均退化 |
 | `V67-F90` | 显式K2 residual modes可替代单Gaussian并跨cohort迁移 | components active但三cohort AUROC全退化 |
+| `V67-F91` | ensemble全局增益可直接保证binary fixed50 noninferiority | P96多1 event；只允许continuous transfer |
 
 ## 5. 系统与资源
 
@@ -245,6 +251,7 @@ single-model Gaussian/full-cov/Student-t/GMM output family至此关闭。
 - P123与同一archive IO重叠训练13,123个continuous pairs、6,000 steps，wall约44.36s。
 - P124同样在IO窗口训练916,722 Actor-time tokens、6,000 steps，wall约53.55s。
 - P125训练K2 mixture 6,000 steps，wall约63.01s；没有component/entropy sweep。
+- P126新训seed1/2各6,000 steps并复用P109 seed0；单卡顺序执行，与P121 IO重叠。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界

@@ -298,6 +298,14 @@ P81/P96/P113 events=`0/4/7`、AUROC=`.96552/.88001/.91319`，相对P109全部下
 `.00212/.02433/.00697`，登记`V67-F90`。显式mode存在但不具跨cohort boundary relevance；不扫K/entropy/scale，关闭
 single-model output-distribution扩展。wall=`63.01s`、peak GPU=`.38436GiB`。
 
+P126按NeurIPS deep ensembles与ICML uncertainty decomposition，复用P109 seed0并新训完全同协议seed1/2；用law of total
+variance合并member内aleatoric variance与member means的epistemic variance，不设权重。两新member final NLL=
+`-3.64526/-3.67563`。P81/P96/P113 mean projected epistemic fraction=`.02362/.02639/.02155`；AUROC=
+`.96961/.91436/.92641`，相对P109三处均增`+.00197/+.01001/+.00626`且mean `+.00608`通过。但fixed50 events=
+`0/1/4`，P96未达到P109的0，binary composite拒绝并登记`V67-F91`。由于P121 endpoint是continuous cost，P127已在P121
+target前冻结：只比较同一ensemble与P109在P81/P96/P113的continuous fixed50 cost nonregression及mean Spearman gain≥`.005`；
+不训练、不refit、不改P121 primary，失败不做member/weight sweep。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

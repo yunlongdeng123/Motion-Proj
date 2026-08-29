@@ -1,0 +1,45 @@
+schema_version: worldsim_v67.p127_ensemble_continuous_selection.v1
+output_schema_version: worldsim_v67.p127_ensemble_continuous_selection_summary.v1
+task_id: WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01
+hypothesis_id: WS-V67-H-P127-001
+role: consumed_development_ensemble_continuous_boundary_cost_selection
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+boundary_state_cost:
+  clearance_floor_m: 0.05
+score:
+  top_k_crossing_probabilities: 16
+selection: {coverage_fraction: 0.50}
+decision:
+  minimum_mean_spearman_gain_over_p109: 0.005
+verdict_on_pass: supported_development_ensemble_continuous_selection
+verdict_on_failure: rejected_development_ensemble_continuous_selection
+locks:
+  P126_checkpoint_and_total_variance_score_frozen: true
+  P109_checkpoint_continuous_cost_floor_and_fixed50_frozen: true
+  no_training_refit_or_P121_target_read: true
+  only_if_both_decisions_pass_before_P121_rows_may_freeze_secondary: true
+  no_member_weight_cost_floor_score_coverage_or_metric_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+  - https://proceedings.mlr.press/v80/depeweg18a.html
+claim_boundary:
+  - consumed_development_continuous_selection_only
+  - P121_primary_remains_frozen_P109
+  - requires_prospective_same_read_and_future_independent_confirmation_if_supported
+  - no_collision_probability_planner_policy_closed_loop_or_safety_claim
