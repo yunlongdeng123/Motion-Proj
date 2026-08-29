@@ -1253,7 +1253,21 @@
 - method：P350 CDAN+E不变；每个balanced domain batch在随机H/ceiling上对source+P201-unlabeled features做
   teacher soft-risk BCE consistency；teacher固定，不使用target events。
 - locks：单一consistency weight、8k、P346 calibration/PAV/decision不变；不扫teacher/weight/alignment/threshold/
-  capacity/step/LR/seed；状态=`implementation`。
+  capacity/step/LR/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P351-TEACHER-ANCHORED-CDAN-RELIABILITY-01/
+  20260901T150000Z__teacher-anchored-cdan-reliability-s0-r1`。
+- result：base/domain/teacher-consistency BCE=`.144193/.654397/.186978`，group/PAV BCE=`.301715/.327980`；
+  P201 q90 coverage/unsafe=`.345628/.135135`，coverage与monotonicity通过、risk失败，3/4 rejected，
+  wall=`126.86s`，F226。
+
+### WS-V67-P352-CROSSFOLD-ENSEMBLE-VISITED-RELIABILITY-01
+
+- migration：NeurIPS 2019/2021及UAI 2022表明model marginalization与pool-then-calibrate更能抵抗dataset shift；
+  P352关闭P347--P351 adaptation，训练3个source scene-fold direct BCE heads。
+- method：scene modulus6；members分别fit fold0/1/2，各8k；先平均unsafe probabilities再转logit，fold3做group
+  calibration、fold4做PAV、fold5只作source dev，最后读取P201。
+- locks：P346 target/head width/gates不变；不使用P201训练或校准，不扫member/seed/aggregation/threshold/capacity；
+  状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

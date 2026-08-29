@@ -643,7 +643,14 @@ P350迁移为官方CDAN+E：按predicted Bernoulli risk entropy对domain BCE加�
 这说明稳定domain invariance仍不能保留unsafe semantics。
 
 P351保留P350稳定CDAN+E，同时以frozen P346 best direct-reliability head在source与P201-unlabeled covariates上做
-prediction consistency，作为risk-semantic anchor；不使用P201 event labels，不选择中间checkpoint。
+prediction consistency，作为risk-semantic anchor；不使用P201 event labels，不选择中间checkpoint。Canonical=
+`run://worldsim_v67/WS-V67-P351-TEACHER-ANCHORED-CDAN-RELIABILITY-01/
+20260901T150000Z__teacher-anchored-cdan-reliability-s0-r1`：final base/domain/consistency BCE=
+`.144193/.654397/.186978`；P201 q90 coverage升到`.345628`，但unsafe=`.135135`，3/4 rejected，登记F226。
+一致性改善P350 risk但未恢复P346，关闭target-unlabeled adversarial adaptation family。
+
+P352回到source-only直接可靠性：按NeurIPS/UAI calibrated ensembles采用3个预定义scene folds训练独立head，先平均
+概率再在独立source folds做group calibration+PAV；不用P201 covariates或labels训练，目标是降低单fold方差。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

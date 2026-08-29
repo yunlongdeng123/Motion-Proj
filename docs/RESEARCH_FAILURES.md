@@ -433,8 +433,9 @@
 - P348：unconditional alignment的q90 coverage/risk `.37350/.17323`，risk显著恶化，登记F224；
 - P349：q90 `.30055/.09375`四门supported，但step6k后adversarial collapse，保留unstable limitation；
 - P350：稳定训练但q90 `.29973/.18667`，risk semantics丢失，登记F225；
-- P351：P346 teacher-anchored stable CDAN+E implementation；
-- 下一可用 failure id 为 `V67-F226`。
+- P351：teacher anchor改善coverage但q90 risk仍`.13514`，登记F226；target-unlabeled adaptation family关闭；
+- P352：3-member source scene-crossfold pool-then-calibrate ensemble implementation；
+- 下一可用 failure id 为 `V67-F227`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -584,6 +585,18 @@
   约束domain-adversarial student的判别语义；P351冻结P346并在source+target-unlabeled上锚定soft risk predictions；
 - forbidden rescue：不选P349/P350中间checkpoint、不改entropy/GRL或gate；resolution=
   `open via P351 teacher-anchored CDAN+E`。
+
+### V67-F226 — P351 soft teacher anchor不足以恢复P346 risk frontier
+
+- canonical=`run://worldsim_v67/WS-V67-P351-TEACHER-ANCHORED-CDAN-RELIABILITY-01/
+  20260901T150000Z__teacher-anchored-cdan-reliability-s0-r1`；
+- symptom：P201 q90 coverage=`.345628`充足，但max unsafe=`.135135 > .10`，3/4 rejected；
+- retained evidence：相对P350 unsafe `.186667→.135135`且group calibration BCE `.325300→.301715`，teacher
+  anchor方向有效；但soft consistency BCE末端`.186978`仍允许CDAN student偏离P346 calibrated frontier；
+- literature/migration：NeurIPS 2019 uncertainty-under-shift与NeurIPS 2021/UAI 2022 calibrated ensembles支持
+  model marginalization和pool-then-calibrate；P352停止target adaptation，改用3个source scene-fold heads；
+- forbidden rescue：不增加teacher weight、不硬拷贝P346 endpoint、不调CDAN；resolution=
+  `closed target-unlabeled adaptation family; open P352 crossfold ensemble`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
