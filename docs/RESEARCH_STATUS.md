@@ -541,9 +541,18 @@ WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01/
 `.18261/.06529/.04902/.05405`，q-order=0，q90与source pinball四门4/4 supported。曲率可行但收益很小，q95
 unsafe未改善，不继续扫polynomial order。
 
-P337冻结P336 continuous-risk score并训练q90锚定的context risk warp：requested q映射到effective base q，q90
-严格不动、两侧正斜率且clamp在`.70-.97`；用source remainder0训练、remainder3比较P336 pinball，P201仍不fit。
-Active=`WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01`。
+P337冻结P336并训练q90锚定context risk warp。r1因稀疏numeric scene ID `%5`使fit fold为空，0 training/
+0 quality；检索NeurIPS 2023 clustered conformal的proper group split后，r2只改为sorted unique-scene rank
+folds。Canonical=`run://worldsim_v67/WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01/
+20260901T111500Z__anchor-preserving-context-risk-warp-s0-r2`：fold rows=`5463/5715/5490/5670/5301`，
+6k steps final pinball=`.04732`。source development mean pinball=`.053692` vs P336 `.054330`，改善`1.17%`；
+P201 q75/q85/q90/q95 mean coverage=`.39809/.34344/.30464/.29262`、max unsafe=
+`.25581/.10526/.04902/.04819`，q-order=0，4/4 supported。q95相对P336同时提升coverage并把unsafe降到名义
+`.05`以内；F215由group-rank r2关闭。
+
+P338冻结P337 risk-warp frontier，训练context/q/H/ceiling-conditioned positive temperature，把三条nested feasibility
+sigmoid编译为0/1/2/3 authority的可微概率分布；hard teacher不变，source训练soft-hard distillation，P201只读
+soft size fidelity与q90 teacher risk/coverage。Active=`WS-V67-P338-DIFFERENTIABLE-RISK-CEILING-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

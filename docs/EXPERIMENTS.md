@@ -1033,7 +1033,30 @@
 - split/training：scene modulus5 remainder0训练、remainder3 source development，q `.70-.97`、6k steps；冻结
   P332/P333/P336，不扫slope bound/anchor/range/capacity。
 - evaluation：source development aggregate pinball对冻结P336；P201 q75/q85/q90/q95 frontier、q-order与q90三门。
-  状态=`active implementation/training`。
+  状态=`done/supported`。
+- r1 split failure：numeric scene ID `%5`的remainder0为0行，在首个optimizer sample前退出，0 training/
+  0 quality；不改模型/门。依据group-aware proper calibration split迁移为sorted unique-scene rank folds。
+- canonical=`run://worldsim_v67/WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01/
+  20260901T111500Z__anchor-preserving-context-risk-warp-s0-r2`；fold row counts=
+  `5463/5715/5490/5670/5301`。
+- training/result：5,463 rows、6k steps、final pinball=`.047319`；source fold3 q75/q85/q90/q95 pinball=
+  `.082064/.057973/.046813/.027919`，mean=`.053692` vs冻结P336=`.054330`，改善`1.17%`。
+- P201 frontier mean coverage=`.398087/.343443/.304645/.292623`、highest=
+  `.763934/.716393/.681967/.678689`、max unsafe=`.255814/.105263/.049020/.048193`，q-order=0；
+  q90三门与source pinball门4/4 supported。wall=`78.93s`、GPU=`.14039GiB`、RSS=`1.89552GiB`。
+- verdict=`supported_anchor_preserving_context_risk_warp`；q75 max unsafe比名义`.25`高`.00581`作为
+  descriptive limitation保留，非q90不提升为formal calibration。F215关闭。
+
+### WS-V67-P338-DIFFERENTIABLE-RISK-CEILING-AUTHORITY-01
+
+- research step：把P337 hard `max{k: score_k(q,H)<=ceiling}`编译为可微nested size distribution，而不是继续
+  改score/calibration。
+- relaxation：冻结P337 score；context/q/H/ceiling head输出positive temperature，三条feasibility=
+  `sigmoid((ceiling-score_k)/temperature)`；利用nested score order构造合法size0/1/2/3概率差分。
+- training：source scene-rank fold0上随机q/H/ceiling蒸馏hard P337 authority，6k steps；fold3 development，
+  不改变hard teacher或P201 score，不扫temperature/capacity/loss。
+- evaluation：P201 soft expected-size对hard teacher MAE/class accuracy，另保留q90 hard teacher risk/coverage；
+  不把soft relaxation称hard safety control。状态=`active implementation/training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

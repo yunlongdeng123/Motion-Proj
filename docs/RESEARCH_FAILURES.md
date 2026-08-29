@@ -413,8 +413,11 @@
   supported；q75/q85/q90/q95 quantile-order violations=0，F214关闭；
 - P336 result：source heldout mean pinball=`.057986 <= P335 .058153`，P201 q90三门与q-order通过，
   4/4 supported；增益仅`.29%`且q95 unsafe=`.05405`未改善，关闭高阶curvature sweep；
-- P337 active：冻结P336并训练q90锚定context risk warp；失败才登记F215；
-- 下一可用 failure id 为 `V67-F215`。
+- P337 r1：numeric scene ID `%5`使fit remainder0为空，首个sample前退出，0 training/quality，登记F215；
+- P337 r2：改为sorted unique-scene rank folds后，source pinball改善`1.17%`，P201 q90三门与q-order通过，
+  4/4 supported；q95 coverage/unsafe=`.29262/.04819`，F215关闭；
+- P338 active：冻结P337并训练nested differentiable authority relaxation；失败才登记F216；
+- 下一可用 failure id 为 `V67-F216`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -541,6 +544,24 @@
   empirical continuous-risk authority frontier；
 - resolution status：`closed by P335 anchor-preserving continuous-risk authority`；P336继续双侧risk curvature，
   下一可用failure id=`V67-F215`。
+
+### V67-F215 — P337 numeric scene-id modulus产生空warp fit fold
+
+- failed run=`run://worldsim_v67/WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01/
+  20260901T111500Z__anchor-preserving-context-risk-warp-s0-r1`；
+- symptom：`source_example_scenes % 5 == 0`为0行，首个`torch.randint`因upper bound 0退出；0 optimizer
+  update、0 P201 quality，不产生risk-warp method verdict；
+- diagnosis：scene ID是稀疏外部标识，不保证各numeric remainder有支持；按数值取模不能作为通用group split；
+- literature check/migration：NeurIPS 2023 clustered conformal明确先按group构造独立clustering/proper-calibration
+  splits，CV+/cross-conformal同样以非空fold为前提。r2对sorted unique scene分配rank，再按rank `%5`，同scene
+  仍完整留在单fold，模型、loss、q range、steps和门不变；
+- recovery canonical=`run://worldsim_v67/WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01/
+  20260901T111500Z__anchor-preserving-context-risk-warp-s0-r2`；fold rows=`5463/5715/5490/5670/5301`；
+  source pinball=`.053692 < P336 .054330`，P201 q90 coverage/max unsafe=`.30464/.04902`、q-order=0，
+  4/4 supported；
+- forbidden rescue：不把row-level随机split混入scene、不复用development fold训练、不改slope bound/anchor/range/
+  capacity/seed/gates；
+- resolution status：`closed by P337 sorted unique-scene rank folds`；下一可用failure id=`V67-F216`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
