@@ -64,10 +64,14 @@ WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
 price/floor violations=`0/0`、beta low→high budget change=`+.002728`，2/2；P243 descriptive budget MAE=`.010603`。
 wall=`147.24s`。仍非 hard constraint/safety。
 
-P277 已在任何新 sensor/target read 前冻结六个未处理、不同 log 的场景 `0004/0177/0243/0400/0440/0633`，
-location Boston/One-North/Queenstown/Holland=`3/1/1/1`；按 scene bands 并行扫描 shards01--06，错误 locator 才对
-同一 cohort做01--10 recovery。Prep=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
-20260831T181000Z__fresh-epistemic-prep-s0-r1` 正与 GPU 并行；formal confirmation尚未读取。
+P277 在任何新 sensor/target read 前冻结六个未处理、不同 log 的场景 `0004/0177/0243/0400/0440/0633`，
+location Boston/One-North/Queenstown/Holland=`3/1/1/1`。Prep=`run://worldsim_v67/
+WS-V67-P277-FRESH-EPISTEMIC-PREP-01/20260831T181000Z__fresh-epistemic-prep-s0-r1`：六个 shards 找到并提取
+2,341 required lidar members，6/6 processed，wall=`1974.18s`，全程与 P278--P284 GPU 研究重叠。唯一 formal=
+`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01/
+20260831T183000Z__fresh-epistemic-confirmation-s0-r1`：1,080 trajectories，budget MAE=`.0153153`、frozen
+LCB-floor regret=`.0008650`、candidate/teacher shortfall=`.001404893/.001404881`、price/floor violations=`0/0`，2/2；
+wall=`7.24s`。结论仅为 frozen surrogate allocator 的 scene-level fresh transfer，不是 realized online utility/coverage/safety。
 
 GPU 同时执行的 P278 fixed64 group dual 已完成：把 attainable budget fraction、alpha、beta、floor 与 group summary
 编译为 shadow price，再冻结 P276 产生逐 row budgets。Canonical=`run://worldsim_v67/

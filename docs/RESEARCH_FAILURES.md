@@ -126,6 +126,13 @@
 - 即使 P284 通过，也只支持 observed-cohort empirical coverage，不支持 iid/exchangeable、conditional或 safety guarantee；
 - P277 IO 继续并行；下一可用 failure id 保持 `V67-F198`。
 
+### P277 fresh confirmation terminal note — 无新增 failure
+
+- targeted shard扫描、2,341-member extraction和6/6 preprocess全部完成，无 recovery cohort、scene替换或质量预读；
+- formal one-shot 在1,080 trajectories上 budget MAE=`.0153153`、regret=`.0008650`，2/2通过；
+- 该 positive result只确认 frozen P275/P276 surrogate transfer，不能修复或覆盖 P283 的 standardized coverage failure；
+- 下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

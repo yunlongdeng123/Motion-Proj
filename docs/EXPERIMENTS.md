@@ -107,8 +107,15 @@
   这些 processed dirs 在 freeze 时不存在，scene names 不在既有 docs/configs。
 - primary shard guesses=`01/02/03/04/05/06`；只在 exact miss 时对冻结 required members 做01--10 recovery，不换 scene。
 - frozen P275/P276、alpha/beta/floor、8个 price midpoints与 P276 两门；一次 formal read、无 refit/retraining。
-- prep active=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
-  20260831T181000Z__fresh-epistemic-prep-s0-r1`，与 P278 GPU training 重叠；formal read=false。
+- prep canonical=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
+  20260831T181000Z__fresh-epistemic-prep-s0-r1`：shards01--06均找到冻结 members，required/newly extracted=`2341/2341`；
+  6/6 scenes processed，per-scene wall=`55.70--61.14s`，parent wall=`1974.18s`；与 P278--P284 GPU runs重叠。
+- formal canonical=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01/
+  20260831T183000Z__fresh-epistemic-confirmation-s0-r1`；只读一次 frozen P275/P276 quality。
+- result：1,080 trajectories；budget MAE=`.0153153`、frozen LCB-floor regret=`.000864999`、candidate/teacher
+  final shortfall=`.001404893/.001404881`、price/floor violations=`0/0`、beta low→high budget change=`+.00271061`；
+  2/2，verdict=`supported_fresh_epistemic_aversion_conditioned_LCB_allocator`。wall=`7.24s`、peak GPU/RSS=
+  `.08244/.8840GiB`。无 refit/retraining/scene replacement/second read。
 
 ### WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01
 
