@@ -316,6 +316,49 @@ class DirectVisitedReliabilityHead(nn.Module):
         return torch.cummax(raw_logits, dim=1).values
 
 
+class _GradientReversal(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, values, coefficient):
+        ctx.coefficient = float(coefficient)
+        return values.view_as(values)
+
+    @staticmethod
+    def backward(ctx, gradients):
+        return -ctx.coefficient * gradients, None
+
+
+class DomainAdversarialVisitedReliabilityHead(nn.Module):
+    def __init__(self, input_width, encoder_dimensions, reliability_hidden_width, domain_hidden_width, set_size_count):
+        super().__init__()
+        encoder_layers = []
+        width = int(input_width)
+        for hidden_width in encoder_dimensions:
+            encoder_layers.extend((nn.Linear(width, int(hidden_width)), nn.SiLU()))
+            width = int(hidden_width)
+        self.encoder = nn.Sequential(*encoder_layers)
+        self.reliability_head = nn.Sequential(
+            nn.Linear(width + 2, int(reliability_hidden_width)), nn.SiLU(),
+            nn.Linear(int(reliability_hidden_width), int(set_size_count)),
+        )
+        self.domain_head = nn.Sequential(
+            nn.Linear(width, int(domain_hidden_width)), nn.SiLU(), nn.Linear(int(domain_hidden_width), 1)
+        )
+
+    def encode(self, features):
+        return self.encoder(features)
+
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        latent = self.encode(features)
+        raw_logits = self.reliability_head(
+            torch.cat((latent, normalized_horizon[:, None], log_cost_ceiling[:, None]), 1)
+        )
+        return torch.cummax(raw_logits, dim=1).values
+
+    def domain_logits(self, features, reversal_coefficient):
+        latent = _GradientReversal.apply(self.encode(features), reversal_coefficient)
+        return self.domain_head(latent).squeeze(1)
+
+
 def fit_binary_isotonic_map(scores, targets, sample_weights=None):
     """Fit a non-decreasing binary calibration map with pool-adjacent violators."""
     order = np.argsort(scores, kind="stable")
@@ -1018,9 +1061,18 @@ def main() -> None:
             isotonic_rows = row_fold == int(split.get("isotonic_scene_remainder", -1))
             development_rows = row_fold == int(split["development_scene_remainder"])
             model_config = config["reliability_model"]
-            model = DirectVisitedReliabilityHead(
-                source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
-            ).cuda()
+            domain_adversarial_training = bool(config.get("reliability_domain_adversarial_training", False))
+            if domain_adversarial_training:
+                adversarial_config = config["domain_adversarial"]
+                model = DomainAdversarialVisitedReliabilityHead(
+                    source_feature.shape[1], model_config["hidden_dimensions"],
+                    adversarial_config["reliability_hidden_width"], adversarial_config["domain_hidden_width"],
+                    len(set_sizes),
+                ).cuda()
+            else:
+                model = DirectVisitedReliabilityHead(
+                    source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
+                ).cuda()
             optimizer = torch.optim.AdamW(
                 model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
             )
@@ -1029,6 +1081,7 @@ def main() -> None:
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             last = 0.0
+            domain_adversarial_last = None
             for step in range(int(model_config["steps"])):
                 row = fit_index[torch.randint(len(fit_index), (int(model_config["batch_size"]),), device="cuda")]
                 local_horizon_index = training_horizon_tensor[
@@ -1037,13 +1090,30 @@ def main() -> None:
                 local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
                 logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
                 target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
-                loss = F.binary_cross_entropy_with_logits(logits, target)
+                reliability_loss = F.binary_cross_entropy_with_logits(logits, target)
+                if domain_adversarial_training:
+                    target_domain_row = torch.randint(len(p201_x), (len(row),), device="cuda")
+                    domain_features = torch.cat((source_x[row], p201_x[target_domain_row]), 0)
+                    domain_target = torch.cat((
+                        torch.zeros(len(row), device="cuda"), torch.ones(len(row), device="cuda")
+                    ))
+                    domain_logits = model.domain_logits(
+                        domain_features, float(adversarial_config["reversal_coefficient"])
+                    )
+                    domain_loss = F.binary_cross_entropy_with_logits(domain_logits, domain_target)
+                    loss = reliability_loss + domain_loss
+                    domain_adversarial_last = float(domain_loss.detach())
+                else:
+                    loss = reliability_loss
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
                 optimizer.step()
-                last = float(loss.detach())
+                last = float(reliability_loss.detach())
                 if step % 500 == 0:
-                    print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}", flush=True)
+                    domain_note = (
+                        f" domain_bce={domain_adversarial_last:.7f}" if domain_adversarial_training else ""
+                    )
+                    print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}{domain_note}", flush=True)
             model.eval()
             group_calibration = bool(config.get("reliability_group_calibration", False))
             calibration_shape = (len(ceilings), len(set_sizes)) if group_calibration else ()
@@ -1275,7 +1345,8 @@ def main() -> None:
             summary = {
                 "schema_version": config["output_schema_version"], "task_id": config["task_id"],
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
-                "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last},
+                "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last,
+                             "domain_adversarial_final_bce": domain_adversarial_last},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": "ceiling_set_size_with_horizon_slope" if group_calibration else "global_temperature_bias",
