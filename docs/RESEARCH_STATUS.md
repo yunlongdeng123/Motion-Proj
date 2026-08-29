@@ -499,10 +499,17 @@ WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01/
 coverage=`.24672 < .30`，2/3 rejected并登记`V67-F212`；strict/mid/high coverage=`0/.08689/.65328`。
 source coverage=`.27403/.63416`、max unsafe=`.03042`。不降门、不调q/range/capacity/seed。
 
-P332根据NeurIPS 2017 Deep Lattice Networks与ICML 2023 Constrained Monotonic Networks迁移到partial-
-monotone lattice：context MLP输出H×q×k lattice vertices，逐轴monotone envelope后双线性H/q插值；允许
-非supermodular的任意单调交互，去掉P331“所有高阶交互系数必须为正”的额外限制。Active=
-`WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01`。
+P332迁移到partial-monotone lattice。Canonical=`run://worldsim_v67/
+WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01/
+20260901T095000Z__lattice-risk-size-horizon-authority-s0-r1`：10k steps、final pinball=`.01629`显著低于
+P331，但source q90 offset=`.08820`更大。P201 risk/monotonicity通过，mean any-authority coverage=
+`.24153 < .30`，2/3 rejected并登记`V67-F213`；strict/mid/high=`0/.06639/.65820`，max unsafe=
+`.02989`。base容量改善未解决global calibration瓶颈。
+
+P333冻结P332 base，按ICML 2018 multicalibration、NeurIPS 2022 multivalid prediction与PMLR 2023 locally
+adaptive conformity思想训练k/H-conditioned positive residual scale：原P332 calibration scenes只训练scale，
+原development scenes只固定一个normalized q90，P201仍heldout。Active=`WS-V67-P333-LOCALLY-ADAPTIVE-
+LATTICE-CALIBRATION-01`；只作empirical calibration，不宣称formal conformal/multivalid guarantee。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

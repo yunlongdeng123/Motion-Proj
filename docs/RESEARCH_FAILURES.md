@@ -402,9 +402,11 @@
   size/ceiling violations=0，3/3 supported；strict coverage=`.03934`，fixed-top2空集被cardinality缩放解决；
 - P331 result：max unsafe=`.03764`与monotonicity=0通过，但mean any-authority coverage=
   `.24672 < .30`，2/3 rejected，登记F212；不降门或扫q/range/capacity/seed；
-- P332 active：迁移partial-monotone H×q×k lattice，去掉P331隐含supermodularity；失败才登记F213，
-  不扫knots/range/capacity/gate/seed；
-- 下一可用 failure id 为 `V67-F213`。
+- P332 result：train pinball=`.01629`，但q90 offset=`.08820`；P201 coverage=`.24153 < .30`，risk/
+  monotonicity通过、coverage失败，登记F213；不扫lattice knots/capacity；
+- P333 active：冻结P332，source disjoint splits训练locally adaptive k/H scale与normalized q90；失败才登记
+  F214，不扫scale/q/gate/seed；
+- 下一可用 failure id 为 `V67-F214`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -487,6 +489,21 @@
   P332采用context-conditioned H×q×k lattice vertices与逐轴monotone envelope；
 - forbidden rescue：不降`.30`、不改q90/range/k/gate、不在P201 fit、不扫capacity/seed；
 - resolution status：`open via P332 partial-monotone lattice`；下一可用failure id=`V67-F213`。
+
+### V67-F213 — P332 lattice降低train loss但global q90 offset继续主导coverage
+
+- canonical=`run://worldsim_v67/WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01/
+  20260901T095000Z__lattice-risk-size-horizon-authority-s0-r1`；
+- symptom：10k steps后final pinball=`.01629`（优于P331 `.02573`），但source q90 offset升到`.08820`；
+  P201 mean any-authority coverage=`.24153 < .30`、strict=0，coverage gate失败；
+- retained evidence：max unsafe=`.02989`、size/ceiling violations=0，高ceiling coverage=`.65820`；partial-
+  monotone lattice确实提升fit，却未提升calibrated authority efficiency；
+- diagnosis：跨scene/task/k/H共用单一raw residual offset压过base model差异；继续扩lattice不针对当前瓶颈；
+- literature check/migration：ICML 2018 multicalibration与NeurIPS 2022 multivalid prediction主张在可识别
+  subgroups/thresholds上校准；PMLR 2023 locally adaptive CP通过object-conditioned monotone conformity
+  transformation提高效率。P333据此训练source-only k/H residual scale与单一normalized q90；
+- forbidden rescue：不降`.30`、不改q90/range/k/gate、不在P201 fit、不扫scale architecture/seed；
+- resolution status：`open via P333 locally adaptive lattice calibration`；下一可用failure id=`V67-F214`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

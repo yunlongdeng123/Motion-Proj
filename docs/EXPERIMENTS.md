@@ -933,6 +933,22 @@
   source/P201 heldout H=`2.5s`。不引入TensorFlow依赖，迁移其lattice representation本身。
 - gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
   不扫knots/range/capacity/gate/seed。
+- canonical=`run://worldsim_v67/WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01/
+  20260901T095000Z__lattice-risk-size-horizon-authority-s0-r1`。
+- result：10k steps、final pinball=`.01629`、source q90 offset=`.08820`。P201 mean/highest coverage=
+  `.24153/.65820`、max/mean unsafe=`.02989/.01408`、monotonicity=0；coverage `.24153 < .30`，2/3 rejected。
+- by ceiling：coverage=`0/.06639/.65820`、unsafe=`0/.01235/.02989`、mean size=`0/2.56/2.82`；source
+  coverage=`.25265/.62665`、max unsafe=`.02537`；wall=`97.73s`。登记`V67-F213`。
+
+### WS-V67-P333-LOCALLY-ADAPTIVE-LATTICE-CALIBRATION-01
+
+- migration：P332 train pinball改善但global q90 offset恶化，瓶颈转为heteroscedastic residual calibration；
+  迁移locally adaptive conformity change-of-variables，而非继续扩base model。
+- frozen base：P332 lattice weights/input normalization/H-q-k knots全部冻结，重建raw q90 scores。
+- training/calibration split：scene remainder2（P332 calibration）训练positive k/H-monotone residual scale；
+  remainder1（P332 development）只固定normalized q90 threshold；其他source rows不再训练，P201不fit。
+- gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
+  不扫scale architecture/q/gate/seed，不作formal conformal或multivalid claim。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
