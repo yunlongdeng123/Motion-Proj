@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p128_ensemble_continuous_confirmation.v1
+output_schema_version: worldsim_v67.p128_ensemble_continuous_confirmation_summary.v1
+task_id: WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P128-001
+role: prospective_same_read_secondary_ensemble_continuous_boundary_cost
+verdict_on_pass: supported_prospective_same_read_ensemble_continuous_selection
+verdict_on_failure: rejected_prospective_same_read_ensemble_continuous_selection
+p121_same_read:
+  run: worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1
+  artifact: P121_CONTINUOUS_BOUNDARY_CONFIRMATION_ROWS.npz
+  readiness_timeout_seconds: 7200
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+boundary_state_cost: {clearance_floor_m: 0.05}
+score: {top_k_crossing_probabilities: 16}
+selection: {coverage_fraction: 0.50}
+decision:
+  minimum_spearman_gain_over_p109: 0.005
+locks:
+  runner_config_checkpoint_score_cost_floor_coverage_and_decisions_frozen_before_P121_rows: true
+  P121_primary_remains_frozen_P109_and_sole_primary: true
+  same_rows_are_one_prospective_secondary_not_second_independent_cohort: true
+  no_training_refit_member_weight_score_cost_coverage_or_metric_recovery: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+  - https://proceedings.mlr.press/v80/depeweg18a.html
+claim_boundary:
+  - prospective_same_read_secondary_only
+  - cannot_replace_or_modify_P121_primary
+  - scene_level_not_session_level_and_requires_future_independent_confirmation
+  - no_collision_probability_planner_policy_closed_loop_or_safety_claim

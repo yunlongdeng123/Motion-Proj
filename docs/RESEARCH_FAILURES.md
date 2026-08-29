@@ -1458,6 +1458,14 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：selected continuous cost三cohort全不回退；mean Spearman gain≥`.005`；
 - prevention：失败登记F92并关闭ensemble，不扫member/weight/score/cost/coverage；成功才可在P121 rows前另冻same-read secondary。
 
+### P127 outcome / P128 freeze note — continuous迁移成立并冻结same-read secondary
+
+- P127 consumed result：三cohort selected cost全低于P109；Spearman gain=`+.046981/+.135078/+.075514`，两门均通过；
+- P128在P121 rows物化前冻结，直接复用P121 primary同一NPZ；P121仍是唯一primary；
+- P128 decisions：Spearman gain over P109≥`.005`且selected cost≤P109；失败使用F92并关闭ensemble，不做第二secondary/
+  member/weight/score recovery；
+- failure delta：P127无新增failure；下一可用编号仍为F92。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1466,7 +1474,7 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
 - prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122--P126已占用
-  F87--F91；当前下一编号F92为P127保留，因此P121 scientific failure按P127结果顺延并
+  F87--F91；当前下一编号F92为P128保留，因此P121 scientific failure按P128结果顺延并
   关闭continuous object independent claim，不做第二P121 recovery。
 
 下一可用编号仍为：`V67-F92`。

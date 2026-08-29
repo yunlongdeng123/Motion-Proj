@@ -306,6 +306,12 @@ variance合并member内aleatoric variance与member means的epistemic variance，
 target前冻结：只比较同一ensemble与P109在P81/P96/P113的continuous fixed50 cost nonregression及mean Spearman gain≥`.005`；
 不训练、不refit、不改P121 primary，失败不做member/weight sweep。
 
+P127两项continuous decisions全通过。P81/P96/P113 ensemble selected cost=`.176665/.167572/.218791`，均低于P109的
+`.186297/.178783/.224742`；ensemble Spearman=`.85344/.85339/.86760`，gain=`+.04698/+.13508/+.07551`
+（mean=`+.08586`）。因此在P121 rows物化前冻结P128 same-read secondary：只等待P121 primary生成的同一rows，比较ensemble
+相对P109的Spearman gain≥`.005`与selected cost noninferiority；不二次materialize、不训练、不改P121 primary。该secondary
+即使成功也只是prospective same-read，不是第二个independent cohort。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

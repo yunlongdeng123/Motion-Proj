@@ -465,11 +465,21 @@
 
 ### WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01
 
-- 状态：`frozen/target unread`；canonical planned=`20260830T083500Z__ensemble-continuous-selection-s0-r1`。
+- 状态：`done/supported consumed development`；canonical=`20260830T083500Z__ensemble-continuous-selection-s0-r1`。
 - 在P121 target materialization前冻结P126 checkpoint/total-variance score、P109 comparator、P120 continuous cost、`.05m` floor与
   per-scene fixed50；只读consumed P81/P96/P113，不训练、不refit。
-- decisions仅两项：三cohort ensemble selected cost均不高于P109；mean Spearman gain≥`.005`。二者均通过才可为P121另建
-  prospective same-read secondary；P121 primary不变。失败关闭ensemble，不扫member/weight/score/cost/coverage。
+- result：P81/P96/P113 ensemble/P109 selected cost=`.176665/.186297`、`.167572/.178783`、`.218791/.224742`；
+  ensemble Spearman=`.853444/.853391/.867603`，gain=`+.046981/+.135078/+.075514`。cost nonregression与mean gain
+  两门全通过，verdict=`supported_development_ensemble_continuous_selection`；无failure delta。
+- interpretation：小epistemic fraction对连续cost排序稳定有益，binary P96单event不用于否定已预注册的continuous object。
+
+### WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01
+
+- 状态：`frozen/P121 rows unread`；planned canonical=`20260830T084000Z__ensemble-continuous-confirmation-s0-r1`。
+- runner/config/P126 checkpoint/total-variance score/P109 comparator/P120 cost/`.05m` floor/fixed50均在P121 rows物化前冻结；只等待
+  P121 primary的同一NPZ，不独立materialize target。
+- decisions仅两项：ensemble Spearman gain over P109≥`.005`；ensemble selected cost≤P109。P121保持唯一primary；P128是
+  prospective same-read secondary，成功也不能冒充第二个independent cohort；失败不恢复。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

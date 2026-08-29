@@ -182,6 +182,9 @@ P126转向三成员deep ensemble，以mean aleatoric variance加member-mean epis
 `+.00608`，P113 events `6→4`；但P96 `0→1`使binary composite仍拒绝并登记F91。epistemic fraction仅约2--3%，却是
 single-model扩展后首个跨三cohort同向排序信号。P127已在P121 target前冻结，只迁移到continuous cost一次。
 
+P127的continuous transfer三组全成立：selected cost均下降，Spearman gain=`+.04698/+.13508/+.07551`。因此P128在P121
+rows出现前冻结为prospective same-read secondary，只检验相对P109的rank gain与cost noninferiority；它不替换P121 primary。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -210,6 +213,7 @@ single-model扩展后首个跨三cohort同向排序信号。P127已在P121 targe
 | P124 | consumed correlated Student-t | P81/P96/P113 events=`0/7/7` | AUROC gain=`+.0002/-.0541/-.0054` | reject uniform heavy tail |
 | P125 | consumed K2 Gaussian mixture | P81/P96/P113 events=`0/4/7` | AUROC gain=`-.0021/-.0243/-.0070` | reject learned modes |
 | P126 | consumed deep ensemble | P81/P96/P113 events=`0/1/4` | AUROC gain=`+.0020/+.0100/+.0063` | binary composite reject；rank signal retained |
+| P127 | consumed ensemble continuous | selected cost全降 | Spearman gain=`+.0470/+.1351/+.0755` | support；freeze P128 |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -252,6 +256,7 @@ single-model扩展后首个跨三cohort同向排序信号。P127已在P121 targe
 - P124同样在IO窗口训练916,722 Actor-time tokens、6,000 steps，wall约53.55s。
 - P125训练K2 mixture 6,000 steps，wall约63.01s；没有component/entropy sweep。
 - P126新训seed1/2各6,000 steps并复用P109 seed0；单卡顺序执行，与P121 IO重叠。
+- P127冻结checkpoint推理wall数秒；P128 runner/config在P121 rows物化前提交。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
