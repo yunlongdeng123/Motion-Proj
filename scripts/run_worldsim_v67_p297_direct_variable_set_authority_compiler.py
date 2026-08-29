@@ -233,7 +233,14 @@ def main():
         student = EpistemicTailCVaRAllocator(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
         ).cuda()
-        student.load_state_dict(policy_artifact["model_state_dict"])
+        if "frozen_direct" in config:
+            direct_reference = config["frozen_direct"]
+            direct_artifact = torch.load(
+                args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+            )
+            student.load_state_dict(direct_artifact["model_state_dict"])
+        else:
+            student.load_state_dict(policy_artifact["model_state_dict"])
     optimizer = torch.optim.AdamW(student.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
     sizes = list(train)
     last = 0.0
@@ -255,7 +262,12 @@ def main():
             groups[row], fraction_input[fraction_index], alpha_tensor[alpha_index], tolerance_tensor[tolerance_index],
             floor_tensor[floor_index], tail_tensor[tail_index],
         )
-        loss = F.l1_loss(prediction, target_budget)
+        element_loss = F.l1_loss(prediction, target_budget)
+        if "group_mean_loss_weight" in model_config:
+            group_mean_loss = F.l1_loss(prediction.mean(1), target_budget.mean(1))
+            loss = element_loss + float(model_config["group_mean_loss_weight"]) * group_mean_loss
+        else:
+            loss = element_loss
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
@@ -322,7 +334,11 @@ def main():
         "verdict": verdict,
         "role": config["role"],
         "architecture": config.get("architecture", "monotone_deep_sets_direct_allocator"),
-        "training": {"group_sizes": sizes, "final_normalized_budget_mae": last},
+        "training": {
+            "group_sizes": sizes,
+            "final_training_objective": last,
+            "group_mean_loss_weight": model_config.get("group_mean_loss_weight", 0.0),
+        },
         "heldout_group_sizes": list(map(int, config["heldout_group_sizes"])),
         "source_development": source,
         "P201_post_hoc_development": p201,
