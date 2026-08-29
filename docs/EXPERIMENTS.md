@@ -371,6 +371,15 @@
 - active=`run://worldsim_v67/WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
   20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`。
 
+### WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01 freeze
+
+- prediction object：给定 variable Actor set + alpha/tolerance/floor/tail-mass/attainable fraction，直接输出
+  per-Actor budgets；不在推理时预测 shadow price或调用第二个 primal network。
+- structure：warm-start frozen P295 allocator，将 `1-2*fraction` 输入原 positive price-rate axis，从结构上保证
+  fraction增加时 budget不减；bisection + P295 只生成训练 teacher budgets。
+- protocol：train sizes32/64/128、heldout48/96、12k steps，复用 P296 conditions/bisection/gates `.075/.005`；
+  不扫 direct architecture/fraction transform/steps/gates；P296 通过后才启动。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

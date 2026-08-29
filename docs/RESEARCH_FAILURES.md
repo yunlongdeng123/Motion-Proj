@@ -224,6 +224,13 @@
 - P296 只编译冻结 P295 attainable-budget dual，不改变 P291R coverage、P294 tail-risk或 cardinality protocol；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### P297 direct compiler freeze note — 无新增 failure
+
+- P297 不是绕过 empirical constraint：teacher budgets仍由冻结 P295 + 同一 bisection target定义；变化只在推理
+  路径从 dual→primal 两调用改为 fraction→budgets 单调用；
+- fraction取负后进入 P295 positive price-rate axis，固定结构保证更多 attainable budget不产生更低 budgets；
+- 仅在 P296 通过后训练，不以 P296/P297 结果调整 gate；下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
