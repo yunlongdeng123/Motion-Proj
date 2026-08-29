@@ -1,0 +1,38 @@
+schema_version: worldsim_v67.p290_additive_tail_compiler_confirmation.v1
+output_schema_version: worldsim_v67.p290_additive_tail_compiler_confirmation_summary.v1
+task_id: WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P290-001
+role: additive_family_untouched_P277_reuse_variable_set_compiler_confirmation
+seed: 0
+fresh_rows: {run: worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01/20260831T183000Z__fresh-epistemic-confirmation-s0-r1, artifact: P277_FRESH_EPISTEMIC_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p284: {run: worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/20260831T200000Z__additive-conformal-lcb-s0-r1, artifact: ADDITIVE_CONFORMAL_LCB_SURFACE.pt}
+frozen_p288: {run: worldsim_v67/WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T210000Z__variable-set-additive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADDITIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_p289: {run: worldsim_v67/WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1, artifact: VARIABLE_SET_ADDITIVE_LCB_TAIL_CVAR_DUAL.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+group_sizes: [48, 96]
+alpha_fairness: [0.25, 0.75]
+risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+final_reliability_floors: [0.40, 0.60]
+tail_masses: [0.1875, 0.375]
+attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 1024
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_attained_budget_fraction_MAE: 0.075, maximum_mean_frozen_composite_Lagrangian_regret: 0.005}
+verdict_on_pass: supported_P277_reuse_additive_tail_variable_set_compiler
+verdict_on_failure: rejected_P277_reuse_additive_tail_variable_set_compiler
+locks:
+  P277_rows_were_never_used_by_P284_P289_metric_or_training: true
+  P288_primal_P289_dual_sizes_conditions_and_two_gates_are_frozen: true
+  one_additive_family_confirmation_read_no_refit_retraining_or_cohort_change: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_for_additive_calibrated_family_but_previously_consumed_by_P277_beta_LCB_confirmation
+  - confirms_frozen_surrogate_compiler_generalization_not_realized_online_utility_or_formal_coverage
+  - empirical_tail_risk_not_hard_constraint_planner_closed_loop_or_safety_claim
