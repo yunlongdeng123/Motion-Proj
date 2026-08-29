@@ -330,6 +330,25 @@ scene-level independent。P126/P109 checkpoints、law-of-total-variance score、
 全部冻结：ensemble Spearman gain over P109≥`.005`；selected cost≤P109。只允许target前exact locator修正；失败不换scene/
 member/weight/score/cost/coverage/gate。
 
+P129首次waiting evaluator启动器因Bash异步list的工作目录作用域而从`/root`解析相对script路径，在run leaf创建和任何
+target读取前退出；prep的7-shard并行IO未受影响。依据GNU Bash async-list/grouping语义，已只把evaluator入口改为
+absolute script/config并以`setsid`重启，科学协议完全不变；工程事件登记`V67-F92`，下一科学失败编号为F93。
+
+为与P129 archive IO重叠且避免3090空转，P130已直接进入6,000-step GPU训练。依据ensemble distribution distillation，
+它把冻结P126三个member的moment-matched mean/full covariance蒸馏到单个P117 correlated-Gaussian student，训练目标为
+teacher Gaussian到student Gaussian的闭式KL；只用P109 source和已消费P81/P96/P113。只做一个seed/一次训练，不扫loss、
+architecture或权重；决策是三cohort selected cost均不劣于P126，且mean Spearman差≥`-.005`。P129 rows保持隔离。
+
+P130单次训练已结束：916,722 Actor-time tokens、6,000 steps，final teacher→student Gaussian KL=`.07387`，wall=
+`75.44s`。P81/P96/P113 student Spearman差相对ensemble=`+.00299/-.00725/-.00182`，mean=`-.00202`通过；selected
+cost=`.17611/.16577/.22532`，前两者优于ensemble，但P113高于`.21879`，故1/2 decisions、正式拒绝并登记`V67-F93`。
+不调KL/容量/权重；global moment fit在decision boundary附近仍损失局部排序。
+
+P131据NeurIPS functional ensemble distillation改变蒸馏对象：不再拟合Actor residual distribution，而让单个query MLP直接
+回归冻结P126的task-conditioned row boundary score。输入只用既有24维query特征、9-step signed-clearance profile与18维
+boundary normals；source 575,596 rows、Smooth-L1、6,000 steps、seed0一次冻结，P129 target仍不读。decisions沿用相对P126
+的三cohort cost nonregression与mean Spearman retention，当前GPU训练已与P129 archive IO并行启动。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

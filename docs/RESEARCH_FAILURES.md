@@ -1481,10 +1481,49 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   内部10 distinct log sessions；只称scene-level independent；
 - candidate/decisions：冻结P126 total variance、P109、continuous cost/floor/H3.5/fixed50；Spearman gain≥`.005`且selected
   cost≤P109；
-- prevention：只允许target前exact locator correction；scientific failure登记F92并关闭ensemble independent increment，不换
+- prevention：只允许target前exact locator correction；scientific failure使用当时下一可用编号并关闭ensemble independent increment，不换
   scene/member/weight/score/cost/coverage/gate或第二cohort。
 
-下一可用编号仍为：`V67-F92`。
+### V67-F92 — P129异步evaluator在错误工作目录解析相对入口
+
+- 分类：`engineering/launcher-entry`；状态：`resolved_pre_run_pre_target`。
+- 观察：首次waiting evaluator由含后台async list的shell命令启动，实际从`/root`寻找`./scripts/...p129...py`并立即退出；
+  没有创建primary run leaf、没有读取P129 rows、没有计算metric。独立prep及其7个shard workers持续正常运行。
+- 根因/外部检索：GNU Bash官方manual说明`&`形成asynchronous list，工作目录/grouping边界需显式控制；组合命令没有把
+  预期`cd`可靠约束到该后台evaluator入口。
+- 恢复：只用absolute script/config/PYTHONPATH与`setsid`重启相同canonical evaluator；cohort、checkpoints、score、cost、
+  coverage与decisions全部不变。
+- 防重复：长IO waiting evaluator使用absolute entry；不为此增加smoke/regression matrix。下一可用编号=`V67-F93`。
+
+### P130 freeze note — ensemble moment distribution distillation
+
+- motivation：P126/P127/P128表明ensemble total covariance带来连续排序增量，但三模型推理成本可压缩；P129 archive IO期间
+  允许只访问source/consumed development的GPU研究。
+- method：冻结P126三成员，按law of total covariance形成单个full-cov Gaussian teacher；P117结构student以闭式Gaussian KL
+  训练6,000 steps。只做seed0单trial，不扫蒸馏loss、权重、结构或coverage。
+- decisions/outcome：P81/P96/P113 selected cost逐cohort不劣于P126，mean Spearman difference≥`-.005`；实际mean
+  Spearman difference=`-.002024`通过，但P113 cost `.225324>.218791`，故single-student moment方案拒绝，不改P129。
+- references：UAI 2022/2023 ensemble distribution distillation、NeurIPS 2022 functional ensemble distillation。
+
+### V67-F93 — moment-matched Gaussian蒸馏未保持P113 selection boundary
+
+- 分类：`algorithm/distillation-object`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01/
+  20260830T091000Z__ensemble-distribution-distillation-s0-r1`。
+- 观察：final Gaussian KL=`.073871`；三cohort mean Spearman difference=`-.002024`满足retention，P81/P96 selected cost改善，
+  但P113 `.225324`高于P126 `.218791`，因此cost nonregression失败。
+- 解释：全局moment KL可保留整体排序，却没有优先保存fixed50 decision boundary附近的teacher function；不是GPU/容量故障。
+- 防重复：不扫KL权重、student width/depth或seed；后续P131改变预测对象为task-conditioned boundary score functional
+  distillation，而不是P130调参恢复。
+
+### P131 freeze note — task-conditioned functional score distillation
+
+- method：冻结P126 row boundary score作为teacher，单query MLP读取既有query features、signed-clearance profile和boundary
+  normals，以一次6,000-step Smooth-L1直接拟合teacher function；只用source和consumed P81/P96/P113。
+- decisions：相对P126三cohort selected cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：seed/architecture/loss/input/coverage一次冻结；失败登记F94并关闭direct functional student，不做蒸馏sweep。
+
+下一可用编号为：`V67-F94`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

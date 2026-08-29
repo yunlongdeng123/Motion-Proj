@@ -1,0 +1,58 @@
+schema_version: worldsim_v67.p130_ensemble_distribution_distillation.v1
+output_schema_version: worldsim_v67.p130_ensemble_distribution_distillation_summary.v1
+task_id: WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01
+hypothesis_id: WS-V67-H-P130-001
+role: consumed_development_single_model_ensemble_moment_distillation
+seed: 0
+model_artifact: DISTILLED_ENSEMBLE_GAUSSIAN.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+score: {top_k_crossing_probabilities: 8}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_ensemble: -0.005}
+verdict_on_pass: supported_development_ensemble_distribution_distillation
+verdict_on_failure: rejected_development_ensemble_distribution_distillation
+locks:
+  teacher_is_frozen_P126_moment_matched_full_covariance: true
+  student_is_single_P117_architecture_trained_by_gaussian_KL: true
+  exactly_6000_steps_one_seed_no_weight_or_hyperparameter_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v180/fathullah22a.html
+  - https://proceedings.mlr.press/v216/fathullah23a.html
+  - https://proceedings.neurips.cc/paper_files/paper/2022/hash/0b7f639ef28a9035a71f7e0c04c1d681-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_efficiency_retention_only
+  - moment_matched_gaussian_does_not_preserve_multimodality
+  - linearized_boundary_state_selection_not_collision_probability
+  - no_planner_policy_closed_loop_or_safety_claim

@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p131_task_conditioned_score_distillation.v1
+output_schema_version: worldsim_v67.p131_task_conditioned_score_distillation_summary.v1
+task_id: WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01
+hypothesis_id: WS-V67-H-P131-001
+role: consumed_development_functional_ensemble_boundary_score_distillation
+seed: 0
+model_artifact: DISTILLED_BOUNDARY_SCORE.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_ensemble: -0.005}
+verdict_on_pass: supported_development_task_conditioned_score_distillation
+verdict_on_failure: rejected_development_task_conditioned_score_distillation
+locks:
+  target_is_frozen_P126_row_boundary_score: true
+  inputs_are_existing_query_features_signed_clearance_profile_and_boundary_normals: true
+  exactly_6000_steps_one_seed_smooth_l1_no_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2022/hash/0b7f639ef28a9035a71f7e0c04c1d681-Abstract-Conference.html
+  - https://proceedings.mlr.press/v216/fathullah23a.html
+claim_boundary:
+  - consumed_development_functional_distillation_only
+  - direct_query_model_may_encode_source_geometry_shortcuts
+  - not_a_calibrated_probability_or_safety_authority
+  - no_planner_policy_or_closed_loop_claim

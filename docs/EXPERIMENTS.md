@@ -501,6 +501,35 @@
 - candidate：冻结P126 three-member total-variance ensemble vs P109，continuous boundary-state cost、`.05m` floor、H3.5、
   per-scene fixed50。decisions仅Spearman gain≥`.005`与selected cost noninferiority。
 - target前只允许exact archive locator修正；不换scene/model/member/weight/score/cost/floor/coverage/metric/gate，不做第二cohort。
+- execution delta：首次waiting evaluator在run创建/target read前因Bash异步list使相对script从`/root`解析而退出；prep未受影响。
+  仅改为absolute script/config并以`setsid`重启，protocol不变；登记`V67-F92 engineering/pre-run`。
+
+### WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T091000Z__ensemble-distribution-distillation-s0-r1`，与P129 7-shard archive IO并行。
+- teacher：冻结P126三成员，在normalized Actor residual空间计算law-of-total-covariance的mean、两轴variance与cross-covariance；
+  student：单个P117 correlated Gaussian `[256,128]`，以闭式`KL(teacher Gaussian || student Gaussian)`训练6,000 steps。
+- source=`916,722 Actor-time tokens`；evaluation只用consumed P81/P96/P113 continuous boundary-state cost，P129 target rows不读。
+- decisions：三cohort student selected cost均≤P126；mean Spearman difference from P126≥`-.005`。固定seed0、batch65536、
+  只跑一次，不扫loss/member/architecture/weight/coverage。
+- literature：UAI 2022 self-distribution distillation、UAI 2023 ensemble distribution distillation与NeurIPS 2022 functional
+  ensemble distillation；当前只声称single-model efficiency retention，不保留multimodality或safety authority。
+- result：final KL=`.073871`；P81/P96/P113 student selected cost=`.176106/.165767/.225324` vs ensemble=
+  `.176665/.167572/.218791`；Spearman difference=`+.002994/-.007251/-.001815`，mean=`-.002024`。rank retention通过，
+  P113 cost nonregression失败，1/2 decisions；verdict=`rejected_development_ensemble_distribution_distillation`，
+  wall=`75.44s`、peak GPU=`.392 GiB`；登记`V67-F93`，不调KL权重/结构。
+
+### WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T091500Z__task-conditioned-score-distillation-s0-r1`，继续与P129 archive IO并行。
+- change of object：不再蒸馏Actor mean/covariance；冻结P126生成每个Actor-query row的linearized boundary score，student
+  直接回归该task-conditioned function。输入=`24 existing query features + 9 signed-clearance profile + 18 boundary normals`。
+- source=`575,596 rows`；student `[256,128]`、normalized teacher Smooth-L1、6,000 steps、seed0一次；evaluation和P130
+  相同consumed P81/P96/P113，两项decision也不变。P129 rows不读，不扫loss/width/coverage。
+- reference：NeurIPS 2022 functional ensemble distillation；claim只限consumed functional compression，直接query student
+  可能学习source geometry shortcut，不写成independent或safety结果。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

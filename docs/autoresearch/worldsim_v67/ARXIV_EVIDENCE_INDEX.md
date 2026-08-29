@@ -40,6 +40,8 @@
 | P127 | `run://worldsim_v67/WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01/20260830T083500Z__ensemble-continuous-selection-s0-r1` | selected cost全降；Spearman gain=`+.0470/+.1351/+.0755`；support |
 | P128 | `run://worldsim_v67/WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01/20260830T084000Z__ensemble-continuous-confirmation-s0-r1` | ensemble gain=`+.04721`、cost `.27051<.27796`；same-read support with timing caveat |
 | P129 | `run://worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1` | target-unread scene-level independent；pending |
+| P130 | `run://worldsim_v67/WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01/20260830T091000Z__ensemble-distribution-distillation-s0-r1` | rank retained；P113 cost regression，rejected/F93 |
+| P131 | `run://worldsim_v67/WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01/20260830T091500Z__task-conditioned-score-distillation-s0-r1` | functional boundary-score distillation；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -72,6 +74,8 @@
 | ensemble continuous selection | P127 consumed ×3 | cost全降、mean Spearman gain=`+.08586` | freeze P128 same-read secondary |
 | ensemble continuous confirmation | P128 P121 same read | gain=`+.04721`、selected cost更低 | same-read secondary support；commit timing caveat |
 | ensemble increment independent transfer | P129 new scene cohort | pending | frozen one-shot scene-level confirmation |
+| ensemble distribution distillation | P130 consumed P81/P96/P113 | mean rank delta=`-.00202` | P113 cost regression；reject |
+| task-conditioned functional distillation | P131 consumed P81/P96/P113 | pending | one-shot direct boundary-score student |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map

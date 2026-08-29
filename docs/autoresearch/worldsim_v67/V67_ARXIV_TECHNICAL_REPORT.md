@@ -195,6 +195,15 @@ commit-before-read prereg或第二独立cohort。
 为确认ensemble increment本身，P129已从official val metadata冻结另一组target-unread 10 scenes，四location分布3/3/3/1且
 cohort内10 distinct logs。P126/P109、continuous cost与两项increment decisions完全不变；P129只作scene-level独立确认。
 
+P129首次waiting evaluator因Bash async-list的工作目录作用域从`/root`解析相对入口，在run/target前退出；改用absolute
+entry和`setsid`后恢复，prep持续运行，故F92只属pre-run engineering。等待archive IO时，P130按UAI ensemble distribution
+distillation思路，将P126 moment-matched full covariance以闭式Gaussian KL蒸馏到一个P117结构student；一次6,000-step
+GPU训练，只在consumed P81/P96/P113判断相对P126的continuous selection/rank retention，不读取P129 target。
+
+P130 final KL=`.07387`且mean Spearman difference=`-.00202`通过，但P113 selected cost `.22532>.21879`，所以moment
+distillation严格拒绝（F93）。P131不调KL，而改成functional distillation：单query MLP直接拟合P126 task-conditioned
+row boundary score，以显式signed-clearance profile和boundary normals保留decision geometry；仍只作consumed development。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
