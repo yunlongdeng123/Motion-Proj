@@ -778,7 +778,10 @@ P182完成连续conditional-density路线：以P126 score、H和absolute clearan
 P183在任何新sensor/target read前冻结P182独立确认：One-North `0271/0349/0971`、Boston `0526/0559/0585`、Queenstown
 `0787/0847/0999`、Holland Village `1047`，四location=`3/3/3/1`、10 distinct logs，与P175完全分离。两项macro gate固定为
 mean Brier reduction over P173≥10%与mean calibration-error reduction over P173≥10%。为不争抢慢IO，prep在P175 archive scan退出后
-自动启动；P183 evaluator已驻留等待scene-ready。
+自动启动。prep提取`3,879`个新LiDAR文件、10/10 scene done，wall=`2356.16s`；evaluator wall=`2507.50s`。五H=
+`.8/1.5/2.5/3.0/3.5s` Brier reduction vs P173=`17.14%/32.26%/30.54%/31.27%/31.18%`，macro=`28.48%`；
+calibration-error reduction=`38.62%/91.68%/79.86%/73.29%/63.46%`，macro=`69.38%`，2/2 gates通过。
+verdict=`supported_fresh_log_cost_density_reliability_CDF`，P182获得不同10-scene/10-log scene-level fresh support。
 
 P184利用等待空档训练3-member scene-bootstrap log-cost density ensemble，每成员保留P182的5-component density并在102-scene
 bootstrap环境训练，推理平均CDF。旧四相对P182 Brier change=`+2.18%/-2.89%/-4.60%/-1.60%`，mean calibration-error reduction=
@@ -815,8 +818,9 @@ P190已完成：相对P182 Brier change=`-.15%/+.62%/-2.27%/-.44%`，mean calibr
 新增冻结aleatoric、ensemble epistemic与projected-mean magnitude三个context proxy，同5-component NLL与12,000 steps；不使用target/location。
 
 P191已完成：相对P182 Brier change=`+5.62%/+4.00%/-5.49%/+16.70%`，mean calibration improvement仅`1.79%`，两gate失败，
-F155；关闭evidence-component context。P192已启动environment-balanced ERM：P182 architecture/condition/NLL/12,000 steps全部不变，
-每batch先均匀采102个source scenes再在scene内采trajectory，消除大scene样本数支配；不扫scene weight/sampler。
+F155；关闭evidence-component context。P192 environment-balanced ERM已完成：相对P182 P81/P96/P113/P129 Brier改善=
+`1.66%/2.87%/5.06%/.80%`，mean calibration improvement=`16.65%`，2/2 gates通过。它保持P182 architecture/condition/NLL/
+12,000 steps，只改为uniform scene→trajectory sampling；冻结为development candidate，正式升级仍需不同future cohort。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

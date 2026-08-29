@@ -1306,13 +1306,17 @@
 
 ### WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01
 
-- 状态：`frozen/queued IO + evaluator resident`；prep=`20260830T152000Z__log-cost-density-confirmation-prep-s0-r1`，
+- 状态：`done/supported fresh`；prep=`20260830T152000Z__log-cost-density-confirmation-prep-s0-r1`，
   evaluator=`20260830T152500Z__log-cost-density-confirmation-s0-r1`。
 - cohort：target-unread/unprocessed `0271/0349/0971/0526/0559/0585/0787/0847/0999/1047`；四location
   `3/3/3/1`、10 distinct logs，与P175十scene完全分离。
 - candidate/control：冻结P182 density vs冻结P173 CDF；五H、七budgets、P120 cost与P126 score不变。
 - decisions：mean integrated-Brier reduction over P173≥10%；mean marginal calibration-error reduction over P173≥10%；仅两项macro gate。
 - pipeline：为避免重复archive contention，P183 prep在P175 prep进程退出后自动启动；scene-ready即由驻留GPU evaluator评分。
+- prep：10/10 scenes、3,920 required LiDAR、3,879 newly extracted；prep wall=`2356.16s`，无hash/checksum/fingerprint。
+- result：五H Brier reduction vs P173=`17.14%/32.26%/30.54%/31.27%/31.18%`；calibration-error reduction=
+  `38.62%/91.68%/79.86%/73.29%/63.46%`。macro=`28.48%/69.38%`，2/2 gates。
+- verdict=`supported_fresh_log_cost_density_reliability_CDF`；scene-level fresh support，不升级为formal calibrated probability/coverage。
 
 ### WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01
 
@@ -1403,11 +1407,14 @@
 
 ### WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01
 
-- 状态：`GPU training active`；canonical id=`20260830T164000Z__scene-balanced-log-cost-density-s0-r1`。
+- 状态：`done/supported development`；canonical id=`20260830T164000Z__scene-balanced-log-cost-density-s0-r1`。
 - object：P182完全同构density；sampling改为uniform source scene→uniform trajectory，使102 scenes对ERM risk等权。
 - motivation：ICLR 2024 environment-balanced ERM与DG实证指出pooled sample-count权重会造成environment imbalance。
 - execution：12,000 steps、batch65,536，与P183 archive IO并行；P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫scene weights/sampler/loss/architecture。
+- result：P81/P96/P113/P129 Brier improvement vs P182=`1.66%/2.87%/5.06%/.80%`；calibration-error reduction=
+  `+12.77%/-8.38%/+35.12%/+27.10%`，mean=`16.65%`；final NLL=`-1.12004`，wall=`72.91s`，2/2 gates。
+- verdict=`supported_scene_balanced_log_cost_density_development`；冻结为future confirmation candidate，不回流改变P183/P182 fresh claim。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

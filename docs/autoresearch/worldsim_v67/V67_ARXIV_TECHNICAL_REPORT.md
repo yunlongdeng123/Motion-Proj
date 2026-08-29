@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 + P167 independent multi-horizon support; P170 prospective bound rejected; P173 reliability CDF development support`
+- 报告状态：`P147 continuous selection + P183 continuous-cost density reliability CDF independent multi-horizon support`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -23,6 +23,12 @@ directional diagonal-Gaussian进一步以boundary-normal projection获得更强�
 增量但fixed50 cost未稳定占优；转向continuous cost后，P121和P129先后给出独立支持。最终P147在新10-scene cohort的
 `.8/1.5/2.5/3.0/3.5s`五个horizon上均得到正Spearman增量和负selected-cost差，macro=`+.17419/-.01777`，
 把贡献推进为scene-level independent multi-horizon continuous selection。
+
+在概率接口上，P173单调CDF虽有fresh Brier discrimination，却未超过horizon-only的marginal calibration。P182因此改为直接拟合
+`log1p(continuous boundary-state cost)`的5-component conditional density，再以解析CDF查询七个预算。P183在完全不同的
+10 scenes/10 logs、五个horizon上确认：相对P173的integrated Brier macro降低`28.48%`，mean absolute reliability error macro降低
+`69.38%`，两项预注册gate均通过。P192进一步表明source scene等权采样可在四个已消费development cohort上继续改善P182，
+但该改进尚未获得新的独立确认。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -416,8 +422,10 @@ calibration change=`-0.25%`（F146），说明同构低维单调模型缺少func
 2/2 development support。这是迄今同时改善refinement与marginal probability scale的最强结果，但仍不是独立证据。
 
 P183因此在任何新quality read前另冻10-scene/10-log、四location=`3/3/3/1`确认，与P175完全分离；只保留相对P173 mean Brier
-和mean calibration各改善10%的两项macro gate。其IO在P175 archive scan结束后自动启动，避免重复磁盘竞争。P184仅用已消费旧四
-训练scene-bootstrap density ensemble以利用等待期GPU，不读取P183，也不能改变冻结P182/P183 candidate。
+和mean calibration各改善10%的两项macro gate。P183最终五H Brier reduction=`17.14%/32.26%/30.54%/31.27%/31.18%`，
+macro=`28.48%`；calibration-error reduction=`38.62%/91.68%/79.86%/73.29%/63.46%`，macro=`69.38%`，2/2通过。
+这是不同10-scene/10-log的scene-level fresh support。P184仅用已消费旧四训练scene-bootstrap density ensemble以利用等待期GPU，
+不读取P183，也没有改变冻结P182/P183 candidate。
 
 P175最终独立结果为五H Brier reduction=`24.60%/33.42%/38.16%/38.41%/36.11%`、mean=`34.14%`，但model/control
 macro calibration error=`.07102/.06101`，F147。这将P173论文结论明确限定为“跨scene proper-score discrimination支持，
@@ -440,7 +448,9 @@ P189直接优化七预算Brier后，P96/P113 Brier改善`6.94%/9.02%`且mean cal
 P190最终让P81/P113/P129 Brier改善且mean calibration改善`7.19%`，但P96仍回退`.62%`（F154）；严格拒绝说明仅优化目标不足。
 P191因此把P126 crossing ratio解压为aleatoric、ensemble epistemic和projected-mean magnitude三个冻结context proxy，检验condition sufficiency。
 P191只改善P113，P129 Brier反而回退`16.70%`（F155），表明这些分量不是稳定shift proxy。P192不再增加feature或loss，转而检验
-source sampling measure：102 scenes等权的environment-balanced ERM对比P182按trajectory pooled ERM。
+source sampling measure：102 scenes等权的environment-balanced ERM对比P182按trajectory pooled ERM。P192四cohort Brier均改善
+`1.66%/2.87%/5.06%/.80%`且mean calibration改善`16.65%`，因此development支持；但它没有参与P183 frozen candidate选择，仍需
+另一个future cohort才能升级为独立结论。
 
 ## 3. 核心结果表
 
@@ -534,6 +544,9 @@ source sampling measure：102 scenes等权的environment-balanced ERM对比P182�
 - clearance-only是必须正视的强baseline，learned uncertainty的独立增量必须由P113单独裁决。
 - P113确认了learned score的独立AUROC增量，但拒绝其fixed50 event noninferiority；后续应研究ranked-range/selective-tail
   objective，而不是把全局AUROC当作固定预算tail保证。
+- P183在不同10-scene/10-log、五时域确认了continuous-cost conditional density相对P173的proper-score与marginal-reliability增益；
+  这是scene-level支持，不是session/population generalization或formal calibration guarantee。
+- P192 scene-balanced ERM在四个consumed development cohorts上进一步改善P182，但当前只可写作future-confirmation candidate。
 
 本报告不支持：
 
@@ -548,7 +561,9 @@ source sampling measure：102 scenes等权的environment-balanced ERM对比P182�
 V6.7最重要的递进结论不是某个更大的query network，而是预测对象和条件化位置的改变。让`τ`直接进入端到端classifier，会在
 development中产生很强、但跨cohort不稳定的interaction shortcut；让网络只预测Actor uncertainty，再让`τ`通过明确的boundary
 geometry进入解析计算，才获得稳定的scene-level independent evidence。与此同时，clearance-only baseline提醒我们不能把几何贡献
-误写成learned uncertainty。P113的唯一职责就是关闭这一归因缺口；无论结果正负，都不再通过floor、cohort、模型或gate sweep补救。
+误写成learned uncertainty。进一步把连续boundary-state cost建模为条件分布、而不是分别校准若干二值事件，使P183在不同10-scene/
+10-log五时域上同时改善Brier与marginal reliability。当前最稳妥结论是“可查询的visited-state cost distribution获得scene-level fresh
+support”；它仍不等价于collision probability、formal coverage或deployment safety authority。
 
 ## References
 

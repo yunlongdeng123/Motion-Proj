@@ -2,8 +2,8 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P113 complete; P121 continuous-object confirmation frozen`
-- 当前主结论：P108 scene-level independent factorization支持；P113 AUROC增量成立但fixed50 uncertainty-over-clearance整体拒绝
+- 状态：`P183 fresh continuous-cost density confirmation supported; P192 development refinement supported`
+- 当前主结论：Actor uncertainty × trajectory boundary的continuous cost density在不同10-scene/10-log五时域确认中同时改善proper score与marginal reliability
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
 `docs/RESEARCH_FAILURES.md`为准，实时状态以`docs/RESEARCH_STATUS.md`为准，论文叙事见
@@ -93,7 +93,7 @@
 | P180 | `run://worldsim_v67/WS-V67-P180-EFFECTIVE-ERROR-THRESHOLD-RELIABILITY-CDF-01/20260830T144500Z__effective-error-threshold-reliability-cdf-s0-r1` | Brier 4/4回退、mean calibration change -4.38%；rejected/F145 |
 | P181 | `run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1` | mean calibration change -0.25%、member deviation约1.5%；rejected/F146 |
 | P182 | `run://worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1` | Brier vs P173 -16.46%至-31.17%；mean calibration improvement 61.17%，2/2 dev |
-| P183 | `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | frozen different 10-scene/10-log confirmation，queued IO/evaluator resident |
+| P183 | `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | 五H Brier -17.14%至-32.26%，macro calibration +69.38%；fresh supported |
 | P184 | `run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1` | mean calibration +20.57%但P81 Brier回退2.18%；rejected/F148 |
 | P185 | `run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/20260830T154000Z__worst-environment-log-cost-density-s0-r1` | mean calibration +13.02%但P81 Brier回退2.64%；rejected/F149 |
 | P186 | `run://worldsim_v67/WS-V67-P186-NOISE-REGULARIZED-LOG-COST-DENSITY-01/20260830T155000Z__noise-regularized-log-cost-density-s0-r1` | mean calibration +19.60%但Brier 4/4回退；rejected/F150 |
@@ -102,7 +102,7 @@
 | P189 | `run://worldsim_v67/WS-V67-P189-BUDGET-BRIER-LOG-COST-CDF-01/20260830T161500Z__budget-brier-log-cost-cdf-s0-r2` | mean calibration +11.09%但P81/P129 Brier回退；rejected/F153 |
 | P190 | `run://worldsim_v67/WS-V67-P190-PCGRAD-LOG-COST-CDF-01/20260830T162500Z__pcgrad-log-cost-cdf-s0-r1` | 3/4 Brier改善、mean calibration +7.19%，P96 +.62%；rejected/F154 |
 | P191 | `run://worldsim_v67/WS-V67-P191-DECOMPOSED-BOUNDARY-EVIDENCE-DENSITY-01/20260830T163000Z__decomposed-boundary-evidence-density-s0-r1` | 仅P113改善，P129 Brier +16.70%；rejected/F155 |
-| P192 | `run://worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1` | uniform-scene environment-balanced ERM，GPU training active |
+| P192 | `run://worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1` | Brier 4/4改善、mean calibration +16.65%；development supported |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
