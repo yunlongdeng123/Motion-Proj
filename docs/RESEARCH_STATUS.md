@@ -636,7 +636,14 @@ P349按NeurIPS 2018 CDAN改用latent×predicted-set-risk multilinear conditionin
 BCE=`.255622/3.311811`；因此仅记unstable supported development，不取中间checkpoint。
 
 P350迁移为官方CDAN+E：按predicted Bernoulli risk entropy对domain BCE加权，并用warm-start GRL从0连续升到`.10`，
-降低P349早期不确定样本的负迁移和late minimax collapse；不改8k预算、calibration或decision。
+降低P349早期不确定样本的负迁移和late minimax collapse；不改8k预算、calibration或decision。Canonical=
+`run://worldsim_v67/WS-V67-P350-ENTROPY-WARMSTART-CDAN-RELIABILITY-01/
+20260901T144500Z__entropy-warmstart-cdan-reliability-s0-r1`：final base/domain BCE=`.151812/.679949`，
+训练稳定性修复；但P201 q90 coverage/unsafe=`.299727/.186667`，两门失败，2/4 rejected，登记F225。
+这说明稳定domain invariance仍不能保留unsafe semantics。
+
+P351保留P350稳定CDAN+E，同时以frozen P346 best direct-reliability head在source与P201-unlabeled covariates上做
+prediction consistency，作为risk-semantic anchor；不使用P201 event labels，不选择中间checkpoint。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

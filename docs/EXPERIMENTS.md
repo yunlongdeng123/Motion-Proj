@@ -1239,7 +1239,21 @@
 - migration：NeurIPS 2018 CDAN+E与官方TLlib对低熵、易迁移样本赋`1+exp(-H)`权重，并使用warm-start GRL；
   P350对3个Bernoulli set-risk求entropy，batch归一化权重，GRL从0平滑升到`.10`。
 - locks：P349 architecture/multilinear map、8k、source/P201 balance、P346 calibration/PAV/decision不变；不扫
-  entropy、schedule、GRL、threshold、capacity、step/LR/seed；状态=`implementation`。
+  entropy、schedule、GRL、threshold、capacity、step/LR/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P350-ENTROPY-WARMSTART-CDAN-RELIABILITY-01/
+  20260901T144500Z__entropy-warmstart-cdan-reliability-s0-r1`。
+- result：final base/domain BCE=`.151812/.679949`，8k无collapse；P201 q75/q85/q90/q95 coverage=
+  `.403279/.343989/.299727/.219945`、max unsafe=`.252336/.225000/.186667/.087805`。q90 risk与
+  coverage失败，monotonicity两门通过，2/4 rejected，wall=`91.07s`，F225。
+
+### WS-V67-P351-TEACHER-ANCHORED-CDAN-RELIABILITY-01
+
+- migration：CVPR 2022/2023 cross-domain teacher工作将teacher/student consistency与adversarial alignment结合，
+  防止domain-invariant student丢失判别语义；P351用frozen P346作为可靠性teacher。
+- method：P350 CDAN+E不变；每个balanced domain batch在随机H/ceiling上对source+P201-unlabeled features做
+  teacher soft-risk BCE consistency；teacher固定，不使用target events。
+- locks：单一consistency weight、8k、P346 calibration/PAV/decision不变；不扫teacher/weight/alignment/threshold/
+  capacity/step/LR/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

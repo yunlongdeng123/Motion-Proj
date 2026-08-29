@@ -432,8 +432,9 @@
 - P347：domain近完美可分导致importance ESS=`69.62`，q90 coverage/risk `.29836/.10588`，登记F223；
 - P348：unconditional alignment的q90 coverage/risk `.37350/.17323`，risk显著恶化，登记F224；
 - P349：q90 `.30055/.09375`四门supported，但step6k后adversarial collapse，保留unstable limitation；
-- P350：official-style entropy conditioning + warm-start GRL implementation；
-- 下一可用 failure id 为 `V67-F225`。
+- P350：稳定训练但q90 `.29973/.18667`，risk semantics丢失，登记F225；
+- P351：P346 teacher-anchored stable CDAN+E implementation；
+- 下一可用 failure id 为 `V67-F226`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -571,6 +572,18 @@
 - 不选择5.5k checkpoint、不缩短steps、不调GRL；参照CDAN+E官方实现，P350统一引入entropy conditioning与
   warm-start reversal，检验能否保留endpoint frontier并消除late collapse；
 - 该限制不登记negative failure，下一可用编号保持`V67-F225`。
+
+### V67-F225 — P350稳定CDAN+E仍未保留unsafe-event语义
+
+- canonical=`run://worldsim_v67/WS-V67-P350-ENTROPY-WARMSTART-CDAN-RELIABILITY-01/
+  20260901T144500Z__entropy-warmstart-cdan-reliability-s0-r1`；
+- symptom：P201 q90 coverage=`.299727 < .30`、max unsafe=`.186667 > .10`，两项monotonicity通过，2/4；
+- retained evidence：final domain BCE=`.679949`且无P349 late explosion，base BCE=`.151812`，说明CDAN+E解决
+  optimization collapse；失败来自稳定但错误的target frontier，不是训练发散；
+- literature/migration：CVPR 2022 Adaptive Teacher与CVPR 2023 consistency teacher方法用teacher/student consistency
+  约束domain-adversarial student的判别语义；P351冻结P346并在source+target-unlabeled上锚定soft risk predictions；
+- forbidden rescue：不选P349/P350中间checkpoint、不改entropy/GRL或gate；resolution=
+  `open via P351 teacher-anchored CDAN+E`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
