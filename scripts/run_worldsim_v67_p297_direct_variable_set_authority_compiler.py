@@ -125,6 +125,50 @@ class PiecewiseAnchorAuthorityCompiler(nn.Module):
         return low + weight[:, None] * (high - low)
 
 
+class SharedContextPiecewiseAnchorAuthorityCompiler(PiecewiseAnchorAuthorityCompiler):
+    """Encode the Actor set once and evaluate several monotone spline anchors."""
+
+    def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
+        encoded = self.base.element(groups)
+        mean = encoded.mean(1)
+        std = torch.sqrt(encoded.var(1, unbiased=False) + 1e-6)
+        maximum = encoded.amax(1)
+        size = groups.shape[1]
+        context = self.base.context(torch.cat((
+            encoded,
+            mean[:, None].expand(-1, size, -1),
+            std[:, None].expand(-1, size, -1),
+            maximum[:, None].expand(-1, size, -1),
+            alpha[:, None, None].expand(-1, size, 1),
+            beta[:, None, None].expand(-1, size, 1),
+            tail_mass[:, None, None].expand(-1, size, 1),
+        ), 2))
+        intercept = self.base.intercept(context).squeeze(2)
+        price_rates = self.base.price_rates(context)
+        floor_term = self.base._integral(
+            self.base.floor_rates(context), floor[:, None].expand(-1, size)
+        )
+        predictions = torch.stack([
+            torch.tanh(
+                intercept
+                - self.base._integral(price_rates, torch.full_like(intercept, float(1 - 2 * anchor)))
+                + floor_term
+            )
+            for anchor in self.anchor_values
+        ], 1)
+        fraction = ((1 - pseudo_price) / 2).clamp(
+            float(self.anchor_fractions[0]), float(self.anchor_fractions[-1])
+        )
+        segment = torch.bucketize(fraction.contiguous(), self.anchor_fractions[1:-1])
+        row = torch.arange(len(fraction), device=fraction.device)
+        low = predictions[row, segment]
+        high = predictions[row, segment + 1]
+        low_fraction = self.anchor_fractions[segment]
+        high_fraction = self.anchor_fractions[segment + 1]
+        weight = (fraction - low_fraction) / (high_fraction - low_fraction)
+        return low + weight[:, None] * (high - low)
+
+
 class NormalizedMonotoneWarpAuthorityCompiler(nn.Module):
     """Learn a group-conditioned monotone fraction warp, then call the base once."""
 
@@ -339,7 +383,19 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    if "normalized_monotone_warp_knots" in model_config:
+    if "shared_context_anchor_fractions" in model_config:
+        base_student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        _load_base_state(base_student, direct_artifact)
+        student = SharedContextPiecewiseAnchorAuthorityCompiler(
+            base_student, model_config["shared_context_anchor_fractions"]
+        ).cuda()
+    elif "normalized_monotone_warp_knots" in model_config:
         base_student = EpistemicTailCVaRAllocator(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
         ).cuda()
@@ -506,6 +562,7 @@ def main():
         "convex_endpoint_rule": model_config.get("convex_endpoint_rule", False),
         "piecewise_anchor_fractions": model_config.get("piecewise_anchor_fractions"),
         "normalized_monotone_warp_knots": model_config.get("normalized_monotone_warp_knots"),
+        "shared_context_anchor_fractions": model_config.get("shared_context_anchor_fractions"),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {

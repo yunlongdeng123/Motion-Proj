@@ -329,6 +329,7 @@
   FileNotFound，0 training、0 quality read、无科学 verdict；
 - minimal recovery：r2只替换 source/p201 artifact run path；模型、rows文件、conditions、sizes、teacher、gates不变；
 - resolution：r2 3/3 supported，attained MAE=`.0167472`、regret=`-.0001084`、violations=0；
+- next research：P306保持 P302三锚点规则，只共享重复 context computation；不依赖 P303/P304失败权重；
 - 下一可用 failure id 为 `V67-F206`。
 
 > **最后更新**：2026-08-29

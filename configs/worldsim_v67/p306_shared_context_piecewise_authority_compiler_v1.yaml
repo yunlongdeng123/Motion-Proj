@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p306_shared_context_piecewise_authority_compiler.v1
+output_schema_version: worldsim_v67.p306_shared_context_piecewise_authority_compiler_summary.v1
+task_id: WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01
+hypothesis_id: WS-V67-H-P306-001
+role: shared_context_monotone_piecewise_authority_compiler_development
+architecture: P302_three_anchor_lattice_with_single_shared_actor_context_encoding
+seed: 0
+model_artifact: SHARED_CONTEXT_PIECEWISE_AUTHORITY_COMPILER.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_surface: {run: worldsim_v67/WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adaptive-lcb-s0-r1, artifact: ONE_SIDED_CONTEXT_ADAPTIVE_ADDITIVE_LCB_SURFACE.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_direct: {run: worldsim_v67/WS-V67-P302-PIECEWISE-ANCHOR-AUTHORITY-COMPILER-01/20260901T010000Z__piecewise-anchor-authority-s0-r1, artifact: PIECEWISE_ANCHOR_AUTHORITY_COMPILER.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_group_sizes: [32, 64, 128]
+heldout_group_sizes: [48, 96]
+training_alpha_fairness: [0.00, 0.50, 1.00]
+heldout_alpha_fairness: [0.25, 0.75]
+training_risk_tolerances: [0.05, 0.10, 0.20, 0.30, 0.40]
+heldout_risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+training_final_reliability_floors: [0.30, 0.50, 0.70]
+heldout_final_reliability_floors: [0.40, 0.60]
+training_tail_masses: [0.125, 0.25, 0.50]
+heldout_tail_masses: [0.1875, 0.375]
+training_attainable_budget_fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 1024
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {shared_context_anchor_fractions: [0.0, 0.5, 1.0], steps: 6000, batch_size: 192, learning_rate: 0.0003, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision:
+  maximum_P201_attained_budget_fraction_MAE: 0.02852293010801077
+  maximum_P201_mean_frozen_composite_Lagrangian_regret: 0.005
+  maximum_P201_fraction_budget_monotonicity_violations: 0
+  maximum_P201_direct_student_forward_seconds: 0.6271123187616467
+verdict_on_pass: supported_shared_context_monotone_piecewise_authority_compiler
+verdict_on_failure: rejected_shared_context_monotone_piecewise_authority_compiler
+locks:
+  P302_base_state_P295_teacher_and_bisection_targets_are_frozen: true
+  zero_half_one_anchor_rule_is_unchanged: true
+  actor_and_condition_context_is_encoded_once_per_request: true
+  fixed_6000_step_single_run_no_anchor_or_training_sweep: true
+  fidelity_must_match_P301_latency_must_improve_over_P301_and_monotonicity_is_exact: true
+  no_anchor_step_learning_rate_or_gate_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_shared_context_compiler_development_after_P201_observation_not_fresh_confirmation
+  - shared_context_reuse_not_hard_budget_reliability_or_coverage_constraint
+  - one_context_encoding_with_three_spline_reads_not_scheduler_planner_closed_loop_or_safety_claim

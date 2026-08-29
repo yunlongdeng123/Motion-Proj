@@ -504,6 +504,16 @@
   verdict=`supported_direct_compiler_untouched_scene_reuse_piecewise_authority_confirmation`。size48/96 attained=
   `.0176148/.0158795`；forward=`.9714s`、wall=`6.22s`、peak GPU/RSS=`.23810/.99653GiB`。
 
+### WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01
+
+- research object：保持 P302 `0/.5/1` anchor lattice完全不变，只消除三次 base forward重复的 Actor encoding、
+  mean/std/max pooling与condition context；三个anchors共享 context后各自执行 positive price spline积分。
+- warm start/protocol：P302 base、同一 bisection teacher、sizes32/64/128→48/96、6k steps/lr `.0003`。
+- gates：P201 attained MAE `<=P301 .0285229301`、regret `<=.005`、violations=`0`、forward
+  `<=P301 .6271123s`；不扫 anchors/steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
+  20260901T023000Z__shared-context-piecewise-authority-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

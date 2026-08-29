@@ -282,6 +282,13 @@ WS-V67-P305-FRESH-REUSE-PIECEWISE-AUTHORITY-CONFIRMATION-01/
 `.0086515/.0167472`、regret=`-.0001084`、violations=0，3/3；size48/96 attained=`.0176148/.0158795`，wall=
 `6.22s`。结论是 direct-family untouched scene reuse confirmation，不是全项目 globally fresh或 realized safety。
 
+P306 在 P305确认后不再改 prediction object或加单调用 warp，而对 P302做等价 shared-computation compiler：Actor
+element encoder、pooled context与 condition context每个请求只算一次，固定 `0/.5/1` 三锚点只重复廉价 positive-spline
+积分与插值。P302 base warm-start，6k steps/lr `.0003`；门要求 P201 attained MAE `<=P301 .02852293`、regret
+`<=.005`、violations=0、forward `<=P301 .627112s`，不扫 anchors/steps。Active=`run://worldsim_v67/
+WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
+20260901T023000Z__shared-context-piecewise-authority-s0-r1`，GPU 已启动。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
