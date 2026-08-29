@@ -78,6 +78,20 @@ class SelfConsistentProjectedAuthorityCompiler(nn.Module):
         return 2 * (raw_cost + shift[:, None]).clamp(0, 1) - 1
 
 
+class ConvexEndpointAuthorityCompiler(nn.Module):
+    """Interpolate elementwise between monotone fraction-zero and fraction-one budgets."""
+
+    def __init__(self, base):
+        super().__init__()
+        self.base = base
+
+    def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
+        low = self.base(groups, torch.ones_like(pseudo_price), alpha, beta, floor, tail_mass)
+        high = self.base(groups, -torch.ones_like(pseudo_price), alpha, beta, floor, tail_mass)
+        fraction = (1 - pseudo_price) / 2
+        return low + fraction[:, None] * (high - low)
+
+
 def _predict_direct(model, groups, alphas, tolerance_z, floor_z, tails, fractions):
     x = torch.from_numpy(groups).cuda()
     by_alpha = []
@@ -239,7 +253,17 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    if model_config.get("self_consistent_projection", False):
+    if model_config.get("convex_endpoint_rule", False):
+        base_student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        base_student.load_state_dict(direct_artifact["model_state_dict"])
+        student = ConvexEndpointAuthorityCompiler(base_student).cuda()
+    elif model_config.get("self_consistent_projection", False):
         base_student = EpistemicTailCVaRAllocator(
             int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
         ).cuda()
@@ -344,6 +368,11 @@ def main():
         checks["P201_direct_improves_attained_fraction_over_P297"] = (
             p201["attained_budget_fraction_MAE"] < float(decision["P297_P201_attained_budget_fraction_MAE"])
         )
+    if "maximum_P201_fraction_budget_monotonicity_violations" in decision:
+        checks["P201_fraction_budget_monotonicity"] = (
+            p201["fraction_budget_monotonicity_violations"]
+            <= int(decision["maximum_P201_fraction_budget_monotonicity_violations"])
+        )
     verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
     torch.save({
         "model_state_dict": student.state_dict(),
@@ -355,6 +384,7 @@ def main():
         "fraction_input_is_one_minus_two_fraction": True,
         "attention_heads": model_config.get("attention_heads"),
         "self_consistent_projection": model_config.get("self_consistent_projection", False),
+        "convex_endpoint_rule": model_config.get("convex_endpoint_rule", False),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {
