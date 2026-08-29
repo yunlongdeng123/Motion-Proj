@@ -263,6 +263,14 @@
 - active=`run://worldsim_v67/WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
   20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`。
 
+### WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01 freeze
+
+- cohort=P277六场景/1,080 rows；该 cohort 已用于 beta-LCB P277 confirmation，但 additive calibrated family P284--P289
+  从未读取其指标，因此 role 固定为 additive-family untouched reuse，而非全项目 fresh。
+- frozen P284 teacher + P288 variable primal + P289 variable dual；sizes48/96、alpha/tolerance/floor/tail/fraction 与 P289
+  heldout协议完全一致；同两门 `.075/.005`。
+- one read only；P289 通过才执行；无 refit/retraining/threshold/cohort/metric/gate change；实现与配置已推送。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

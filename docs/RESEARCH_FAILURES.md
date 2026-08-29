@@ -165,6 +165,12 @@
 - P289 仅编译冻结 P288 的 attainable-budget dual，不改变 additive coverage、tail-risk对象或 cardinality protocol；
 - 下一可用 failure id 保持 `V67-F198`。
 
+### P290 additive-family confirmation freeze note — 无新增 failure
+
+- P277 rows虽然已被旧 beta-LCB family消费，但 additive P284--P289 从未训练/选模/读取其 quality，复用边界已显式写入；
+- P290 只在 P289 通过后做一次 frozen chain read，不以 confirmation 反向调 P284/P288/P289；
+- 下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

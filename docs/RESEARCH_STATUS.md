@@ -144,6 +144,10 @@ attainable fraction→shadow price→budgets。Active=`run://worldsim_v67/
 WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
 20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`，GPU 正在训练。
 
+P290 one-shot chain confirmation 已在任何 additive-family quality read 前冻结：复用 P277 六场景/1,080 trajectories，
+它们已被 P277 beta-LCB confirmation 消费，但从未被 P284--P289 的训练或 metric 使用；固定 P288/P289、sizes48/96、
+heldout conditions 与 P289 两门。实现已推送，只在 P289 通过后执行一次，不 refit/retrain/换 cohort。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
