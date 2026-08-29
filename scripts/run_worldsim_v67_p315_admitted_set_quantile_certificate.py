@@ -316,6 +316,27 @@ class DirectVisitedReliabilityHead(nn.Module):
         return torch.cummax(raw_logits, dim=1).values
 
 
+class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
+    """Train one active member at a time, then pool probabilities before calibration."""
+
+    def __init__(self, member_count, input_width, hidden_dimensions, set_size_count):
+        super().__init__()
+        self.members = nn.ModuleList([
+            DirectVisitedReliabilityHead(input_width, hidden_dimensions, set_size_count)
+            for _ in range(int(member_count))
+        ])
+        self.active_member_index = None
+
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        if self.training and self.active_member_index is not None:
+            return self.members[int(self.active_member_index)](features, normalized_horizon, log_cost_ceiling)
+        member_logits = torch.stack([
+            member(features, normalized_horizon, log_cost_ceiling) for member in self.members
+        ])
+        pooled_probability = torch.sigmoid(member_logits).mean(0).clamp(1e-6, 1.0 - 1e-6)
+        return torch.logit(pooled_probability)
+
+
 class _GradientReversal(torch.autograd.Function):
     @staticmethod
     def forward(ctx, values, coefficient):
@@ -1074,8 +1095,16 @@ def main() -> None:
             isotonic_rows = row_fold == int(split.get("isotonic_scene_remainder", -1))
             development_rows = row_fold == int(split["development_scene_remainder"])
             model_config = config["reliability_model"]
+            ensemble_fit_remainders = config.get("reliability_crossfold_ensemble_fit_remainders")
+            if ensemble_fit_remainders is not None:
+                ensemble_fit_remainders = [int(value) for value in ensemble_fit_remainders]
+                fit_rows = np.isin(row_fold, ensemble_fit_remainders)
             domain_adversarial_training = bool(config.get("reliability_domain_adversarial_training", False))
-            if domain_adversarial_training:
+            if ensemble_fit_remainders is not None:
+                model = CrossFoldDirectVisitedReliabilityEnsemble(
+                    len(ensemble_fit_remainders), source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
+                ).cuda()
+            elif domain_adversarial_training:
                 adversarial_config = config["domain_adversarial"]
                 model = DomainAdversarialVisitedReliabilityHead(
                     source_feature.shape[1], model_config["hidden_dimensions"],
@@ -1103,14 +1132,28 @@ def main() -> None:
                 model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
             )
             fit_index = torch.from_numpy(np.flatnonzero(fit_rows)).cuda()
+            ensemble_fit_indices = (
+                [torch.from_numpy(np.flatnonzero(row_fold == remainder)).cuda() for remainder in ensemble_fit_remainders]
+                if ensemble_fit_remainders is not None else None
+            )
             horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             last = 0.0
             domain_adversarial_last = None
             teacher_consistency_last = None
+            ensemble_member_last = [None] * len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else None
             for step in range(int(model_config["steps"])):
-                row = fit_index[torch.randint(len(fit_index), (int(model_config["batch_size"]),), device="cuda")]
+                if ensemble_fit_remainders is not None:
+                    active_member_index = step % len(ensemble_fit_remainders)
+                    model.active_member_index = active_member_index
+                    active_fit_index = ensemble_fit_indices[active_member_index]
+                else:
+                    active_member_index = None
+                    active_fit_index = fit_index
+                row = active_fit_index[
+                    torch.randint(len(active_fit_index), (int(model_config["batch_size"]),), device="cuda")
+                ]
                 local_horizon_index = training_horizon_tensor[
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
@@ -1183,11 +1226,14 @@ def main() -> None:
                 loss.backward()
                 optimizer.step()
                 last = float(reliability_loss.detach())
+                if ensemble_member_last is not None:
+                    ensemble_member_last[active_member_index] = last
                 if step % 500 == 0:
                     domain_note = (
                         f" domain_bce={domain_adversarial_last:.7f}" if domain_adversarial_training else ""
                     )
-                    print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}{domain_note}", flush=True)
+                    member_note = f" member={active_member_index}" if active_member_index is not None else ""
+                    print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}{member_note}{domain_note}", flush=True)
             model.eval()
             group_calibration = bool(config.get("reliability_group_calibration", False))
             calibration_shape = (len(ceilings), len(set_sizes)) if group_calibration else ()
@@ -1422,7 +1468,9 @@ def main() -> None:
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last,
                              "domain_adversarial_final_bce": domain_adversarial_last,
-                             "teacher_consistency_final_bce": teacher_consistency_last},
+                             "teacher_consistency_final_bce": teacher_consistency_last,
+                             "ensemble_member_count": len(ensemble_fit_remainders) if ensemble_fit_remainders is not None else 1,
+                             "ensemble_member_final_bce": ensemble_member_last},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": "ceiling_set_size_with_horizon_slope" if group_calibration else "global_temperature_bias",
