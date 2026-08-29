@@ -368,17 +368,23 @@
   shadow price；train sizes32/64/128、heldout48/96，复用 P289 12k steps。
 - gates继承 P289：P201 attained fraction MAE `<=.075`、frozen composite regret `<=.005`；fraction单调由
   positive rate spline保证，不扫 size/grid/bisection/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
+- canonical=`run://worldsim_v67/WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
   20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`。
+- result：P201 price/attained-fraction MAE=`.0502017/.0240720`、composite regret=`1.5843e-5`、violations=`0`；
+  size48/96 attained MAE=`.0246500/.0234940`；2/2，verdict=
+  `supported_variable_set_budget_conditioned_adaptive_LCB_tail_CVaR_allocator`。wall=`312.04s`、peak GPU/RSS=
+  `.3209/3.9796GiB`。
 
-### WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01 freeze
+### WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01
 
 - prediction object：给定 variable Actor set + alpha/tolerance/floor/tail-mass/attainable fraction，直接输出
   per-Actor budgets；不在推理时预测 shadow price或调用第二个 primal network。
 - structure：warm-start frozen P295 allocator，将 `1-2*fraction` 输入原 positive price-rate axis，从结构上保证
   fraction增加时 budget不减；bisection + P295 只生成训练 teacher budgets。
 - protocol：train sizes32/64/128、heldout48/96、12k steps，复用 P296 conditions/bisection/gates `.075/.005`；
-  不扫 direct architecture/fraction transform/steps/gates；P296 通过后才启动。
+  不扫 direct architecture/fraction transform/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01/
+  20260831T233000Z__direct-variable-set-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

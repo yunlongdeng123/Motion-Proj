@@ -231,6 +231,12 @@
 - fraction取负后进入 P295 positive price-rate axis，固定结构保证更多 attainable budget不产生更低 budgets；
 - 仅在 P296 通过后训练，不以 P296/P297 结果调整 gate；下一可用 failure id 保持 `V67-F199`。
 
+### P296 outcome / P297 direct training start note — 无新增 failure
+
+- P296 P201 attained-fraction MAE=`.0240720`、composite regret=`1.58e-5`，heldout sizes48/96 2/2，violations=0；
+- P297 按冻结协议启动，训练 teacher仍为 P295+bisection；P296仅作两阶段 baseline，不作为 P297训练组件；
+- 下一可用 failure id 保持 `V67-F199`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

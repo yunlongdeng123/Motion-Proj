@@ -198,14 +198,18 @@ composite regret=`.00021336`、candidate/teacher tail shortfall=`.01340747/.0134
 budget MAE=`.0204125/.0205202`，2/2；wall=`172.32s`。
 
 P296 以冻结 P295 为唯一 variable-set primal，复用 P289 pooled-statistics dual，在 sizes32/64/128训练并在
-heldout48/96评估 attainable fraction→shadow price。Active=`run://worldsim_v67/
+heldout48/96评估 attainable fraction→shadow price。Canonical=`run://worldsim_v67/
 WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
-20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`，GPU 正在 teacher bisection/训练。
+20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`：P201 price/attained-fraction MAE=
+`.0502017/.0240720`、composite regret=`1.58e-5`、violations=`0`；size48/96 attained MAE=
+`.0246500/.0234940`，2/2；wall=`312.04s`。
 
 P297 direct authority compiler 已在 P296 quality read 前冻结：不再先预测 shadow price 再调用 P295，而将
 attainable fraction（取负后复用单调 price axis）直接编译为每个 Actor budget；从冻结 P295 warm-start，以同一
 bisection teacher、sizes32/64/128→48/96、conditions、12k steps 与 P296 `.075/.005` 两门训练。推理禁止调用
-dual，研究目标是减少两阶段 amortization 路径，不改变 empirical LCB/tail-CVaR对象；只在 P296 通过后启动。
+dual，研究目标是减少两阶段 amortization 路径，不改变 empirical LCB/tail-CVaR对象。Active=`run://worldsim_v67/
+WS-V67-P297-DIRECT-VARIABLE-SET-AUTHORITY-COMPILER-01/
+20260831T233000Z__direct-variable-set-authority-s0-r1`，GPU 正在 teacher bisection/训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
