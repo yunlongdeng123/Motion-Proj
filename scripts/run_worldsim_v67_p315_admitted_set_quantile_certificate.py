@@ -316,6 +316,31 @@ class DirectVisitedReliabilityHead(nn.Module):
         return torch.cummax(raw_logits, dim=1).values
 
 
+def fit_binary_isotonic_map(scores, targets):
+    """Fit a non-decreasing binary calibration map with pool-adjacent violators."""
+    order = np.argsort(scores, kind="stable")
+    sorted_scores = np.asarray(scores, np.float64)[order]
+    sorted_targets = np.asarray(targets, np.float64)[order]
+    block_means, block_weights, block_ends = [], [], []
+    for index, target in enumerate(sorted_targets):
+        block_means.append(float(target))
+        block_weights.append(1.0)
+        block_ends.append(index)
+        while len(block_means) >= 2 and block_means[-2] > block_means[-1]:
+            weight = block_weights[-2] + block_weights[-1]
+            mean = (block_means[-2] * block_weights[-2] + block_means[-1] * block_weights[-1]) / weight
+            end = block_ends[-1]
+            block_means[-2:] = [mean]
+            block_weights[-2:] = [weight]
+            block_ends[-2:] = [end]
+    return sorted_scores[np.asarray(block_ends, np.int64)], np.asarray(block_means, np.float32)
+
+
+def apply_binary_isotonic_map(scores, thresholds, values):
+    positions = np.searchsorted(thresholds, np.asarray(scores), side="left")
+    return values[np.minimum(positions, len(values) - 1)]
+
+
 class LatticeRiskSizeHorizonAuthority(nn.Module):
     """Context-conditioned partial-monotone lattice over horizon, quantile, and set size."""
 
@@ -986,6 +1011,7 @@ def main() -> None:
             row_fold = (np.arange(len(unique_split_scenes), dtype=np.int64) % int(split["scene_modulus"]))[scene_rank]
             fit_rows = row_fold == int(split["fit_scene_remainder"])
             calibration_rows = row_fold == int(split["calibration_scene_remainder"])
+            isotonic_rows = row_fold == int(split.get("isotonic_scene_remainder", -1))
             development_rows = row_fold == int(split["development_scene_remainder"])
             model_config = config["reliability_model"]
             model = DirectVisitedReliabilityHead(
@@ -1046,6 +1072,51 @@ def main() -> None:
                 calibration_loss.backward()
                 calibration_optimizer.step()
                 calibration_last = float(calibration_loss.detach())
+            isotonic_calibration = bool(config.get("reliability_isotonic_calibration", False))
+            isotonic_maps = None
+            isotonic_bce = None
+            if isotonic_calibration:
+                isotonic_maps = []
+                all_isotonic_probabilities, all_isotonic_targets = [], []
+                isotonic_index = torch.from_numpy(np.flatnonzero(isotonic_rows)).cuda()
+                with torch.no_grad():
+                    for ceiling_index, ceiling in enumerate(ceilings):
+                        ceiling_maps = []
+                        ceiling_scores, ceiling_targets = [], []
+                        for local_horizon_index in training_horizon_indices:
+                            local_h = torch.full(
+                                (len(isotonic_index),), float(normalized_horizons[local_horizon_index]), device="cuda"
+                            )
+                            local_ceiling = torch.full((len(isotonic_index),), float(ceiling), device="cuda")
+                            logits = model(source_x[isotonic_index], local_h, local_ceiling)
+                            if group_calibration:
+                                logits = logits / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
+                                logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
+                            else:
+                                logits = logits / log_temperature.exp() + calibration_bias
+                            ceiling_scores.append(logits.cpu().numpy())
+                            ceiling_targets.append(
+                                (y[isotonic_index, :, int(local_horizon_index)] > float(ceiling)).float().cpu().numpy()
+                            )
+                        ceiling_scores = np.concatenate(ceiling_scores, 0)
+                        ceiling_targets = np.concatenate(ceiling_targets, 0)
+                        for set_size_index in range(len(set_sizes)):
+                            thresholds, values = fit_binary_isotonic_map(
+                                ceiling_scores[:, set_size_index], ceiling_targets[:, set_size_index]
+                            )
+                            calibrated = apply_binary_isotonic_map(
+                                ceiling_scores[:, set_size_index], thresholds, values
+                            )
+                            ceiling_maps.append({"thresholds": thresholds, "values": values})
+                            all_isotonic_probabilities.append(calibrated)
+                            all_isotonic_targets.append(ceiling_targets[:, set_size_index])
+                        isotonic_maps.append(ceiling_maps)
+                isotonic_probability = np.clip(np.concatenate(all_isotonic_probabilities), 1e-6, 1.0 - 1e-6)
+                isotonic_target = np.concatenate(all_isotonic_targets)
+                isotonic_bce = float(-np.mean(
+                    isotonic_target * np.log(isotonic_probability)
+                    + (1.0 - isotonic_target) * np.log(1.0 - isotonic_probability)
+                ))
             evaluation_quantiles = np.asarray(config["evaluation_quantiles"], np.float32)
 
             def reliability_frontier(features, targets, conditions, row_mask=None):
@@ -1062,7 +1133,15 @@ def main() -> None:
                             logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
                         else:
                             logits = model(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
-                        probabilities.append(torch.sigmoid(logits).cpu().numpy())
+                        local_probability = torch.sigmoid(logits).cpu().numpy()
+                        if isotonic_calibration:
+                            local_logits = logits.cpu().numpy()
+                            for set_size_index in range(len(set_sizes)):
+                                local_map = isotonic_maps[ceiling_index][set_size_index]
+                                local_probability[:, set_size_index] = apply_binary_isotonic_map(
+                                    local_logits[:, set_size_index], local_map["thresholds"], local_map["values"]
+                                )
+                        probabilities.append(local_probability)
                 probabilities = np.stack(probabilities, 1)
                 probabilities = np.minimum.accumulate(probabilities, axis=1)
                 local_target = targets[indices, :, heldout_horizon_index]
@@ -1133,6 +1212,7 @@ def main() -> None:
                 "temperature": log_temperature.exp().detach().cpu(),
                 "calibration_bias": calibration_bias.detach().cpu(),
                 "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if group_calibration else None,
+                "isotonic_maps": isotonic_maps,
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -1145,6 +1225,10 @@ def main() -> None:
                                 "temperature": log_temperature.exp().detach().cpu().tolist(),
                                 "bias": calibration_bias.detach().cpu().tolist(),
                                 "horizon_slope": calibration_horizon_slope.detach().cpu().tolist() if group_calibration else None},
+                "isotonic_calibration": {"enabled": isotonic_calibration,
+                                         "example_count": int(isotonic_rows.sum()) if isotonic_calibration else 0,
+                                         "binary_cross_entropy": isotonic_bce,
+                                         "map_count": len(ceilings) * len(set_sizes) if isotonic_calibration else 0},
                 "source_direct_reliability_frontier": source_frontier,
                 "P201_direct_reliability_frontier": p201_frontier,
                 "source_probability_range": [float(source_probability.min()), float(source_probability.max())],
