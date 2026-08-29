@@ -1102,8 +1102,8 @@
 
 ### WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01
 
-- 状态：`frozen/launching`；prep id=`20260830T130000Z__pipelined-multi-horizon-prep-s0-r1`，confirmation id=
-  `20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1`。
+- 状态：`done/supported`；prep id=`20260830T130000Z__pipelined-multi-horizon-prep-s0-r1`，canonical confirmation=
+  `20260830T135000Z__pipelined-multi-horizon-confirmation-s0-r2`。
 - object：不训练新模型；在第二个target-unread scene cohort复验冻结P126相对P109的五时域continuous boundary-cost增量。
 - cohort：`0269/0346/0968/0524/0557/0904/0802/0928/0930/1065`，四location分配=`3/3/3/1`，shards=
   `03/04/09/05/06/09/08/09/09/10`，9 distinct logs；sensor/target read前由official metadata冻结。
@@ -1115,8 +1115,14 @@
   hash/checksum/fingerprint或smoke/regression matrix。
 - claim：至多第二次scene-level independent multi-horizon support；因log overlap不写log/session independence，也无calibrated probability、
   planner、closed-loop或safety claim。
-- partial execution：shards03/08完成即释放`0269/0802`，其他shards仍扫描；两scene GPU materialization rows=
-  `8,187/2,798`，10个scene-H local rank gains全正（`.04639--.53723`）。状态=`2/10 scored`，不提前计算verdict。
+- prep result：10/10 scenes；3,914 required lidar files、3,874 newly extracted；wall=`2355.10s`。逐scene preprocess
+  `53.91--58.15s`，scene-ready GPU scoring与未完成archive IO重叠。
+- r1 engineering outcome：全部aggregate rows/metrics已生成，但scene-1065 H3.5局部P109常量输入使局部Spearman undefined；
+  strict JSON拒绝NaN，F137。只将该描述值序列化为`null`后r2原样重算，无科学合同变化。
+- result：五H trajectory count=`1931/1900/1790/1737/1657`；rank gain=
+  `+.41905/+.27738/+.15097/+.12853/+.09467`；selected-cost delta=
+  `-.01767/-.02199/-.01309/-.01515/-.01630`。Macro rank=`+.21412`、cost delta=`-.0168403`，2/2。
+- verdict=`supported_second_independent_multi_horizon_ensemble_increment`；scene-level only，local undefined值不进入macro。
 
 ### WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01
 
@@ -1163,7 +1169,9 @@
   `20260830T132500Z__conformal-cost-upper-bound-s0-r2`，从头按原q90合同训练。
 - r2 development：P81/P96/P113/P129 coverage=`.92574/.95407/.91016/.90601`；sharpness reduction=
   `15.94%/41.07%/23.02%/14.60%`，mean=`23.66%`。2/2 decisions通过。
-- 状态更新：`development supported / frozen waiting prospective P167`；尚无final verdict，不把旧四结果写成independent coverage。
+- prospective P167：coverage=`.89073/.86316/.83184/.82614/.82257`；sharpness reduction=
+  `9.71%/18.56%/26.05%/32.30%/38.86%`，mean=`25.09%`。Coverage 4/5 horizons低于`.88`，F138。
+- verdict=`rejected_conformal_cost_upper_bound`；更窄但under-cover，不重校准P167、不写formal coverage。
 
 ### WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01
 
@@ -1186,6 +1194,22 @@
 - locks：不扫quantile/split/knots/loss/threshold，不加hash/checksum/fingerprint或测试矩阵。
 - result：coverage=`.73199/.83953/.84590/.81499`；width reduction=`10.56%/37.01%/17.71%/8.92%`，mean=`18.55%`。
 - verdict=`rejected_development_conformal_cost_interval`，F136；P81 coverage fail、width pass，1/2。关闭two-sided interval。
+
+### WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01
+
+- object：不再问单个voxel正确与否；预测给定Ego trajectory score、H与cost budget时，未来访问Actor/world state满足
+  P120 continuous boundary-state cost budget的概率。
+- model/control：horizon-conditioned score/budget monotone CDF vs matched horizon-only monotone CDF；7个固定budgets=
+  `.05/.1/.2/.4/.8/1.6/3.2`，source 79,478 trajectories、12,000 GPU steps，integrated Brier为唯一primary quality。
+- locks：P167已partial read，禁止作为prospective；不扫budget/knots/architecture/loss/steps，不加hash/checksum/fingerprint或测试矩阵。
+- references：NeurIPS 2019 SQR、NeurIPS 2021 calibrated quantile methods、ICLR 2024 conformal risk control；当前不声称formal guarantee。
+- r1 entry：`20260830T134000Z__monotone-visit-reliability-cdf-s0-r1`在0 step前因repo root未进入`sys.path`退出，F139；
+  仅launcher增加`PYTHONPATH=.`，r2从头训练。
+- canonical r2：`20260830T134500Z__monotone-visit-reliability-cdf-s0-r2`；P81/P96/P113/P129 Brier reduction=
+  `34.49%/45.27%/46.20%/31.15%`，四组不退，mean=`39.28%`，2/2；wall=`102.71s`。
+- calibration boundary：mean absolute reliability error仅P96优于control，P81/P113/P129更差；因此verdict只冻结CDF判别表示供
+  新scene校准/确认，不称calibrated probability。
+- verdict=`supported_freeze_visit_reliability_cdf_for_new_scene_confirmation`。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

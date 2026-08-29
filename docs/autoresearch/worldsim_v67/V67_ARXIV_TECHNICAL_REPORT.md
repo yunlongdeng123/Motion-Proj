@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P166 point calibration closed negative; P167 second confirmation launching`
+- 报告状态：`P147 + P167 independent multi-horizon support; P170 prospective bound rejected; P173 reliability CDF development support`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -375,12 +375,23 @@ P171旧四coverage仍为`.9542/.9279/.9548/.9126`，但相对P170的mean sharpne
 更窄。说明source residual conditional pattern未跨scene稳定迁移，constant P170 offset更可靠。P171未读P167并关闭，P170保持
 唯一prospective cost-bound candidate。
 
-P167当前2/10 scene-ready：`0269/0802`在其余archive shards仍扫描时已完成五H GPU scoring，10个local rank gain全正。
-这只记录流水线和partial方向；论文主表、macro decision与P170 prospective结论必须等待10/10 aggregate。
+P167 10/10 scene-ready流水线完成，五H rank gain=`+.4191/+.2774/+.1510/+.1285/+.0947`，selected-cost delta=
+`-.01767/-.02199/-.01309/-.01515/-.01630`；macro rank/cost=`+.21412/-.0168403`，2/2，形成第二次scene-level
+independent multi-horizon support。scene-1065 H3.5的P109局部score为常量，local Spearman按定义为undefined并以`null`报告；
+不进入pooled/macro。r1 strict JSON failure与r2无科学合同差异（F137）。
+
+P170在P167 rows前已冻结，五H prospective empirical coverage=`.8907/.8632/.8318/.8261/.8226`；虽然mean sharpness
+reduction=`25.09%`，但4/5 horizon低于`.88`，F138。故只能写“score-conditioned bound更窄但跨scene under-cover”，不能
+写formal或empirical 90% coverage support；不在P167上二次校准。
 
 P172在P167 partial read后另行训练q10/q90 two-sided cost interval，仅用旧四作consumed development；P167明确禁止承担
 该candidate的prospective confirmation。旧四mean width缩短`18.55%`，但P81 coverage只有`.732<.78`，F136；因此不建立
 新confirmation，不改lower quantile。该负结果强化P170 one-sided upper bound比two-sided cost interval更稳的当前边界。
+
+P173进一步直接学习`P(cost(visited state)<=budget | τ-score,H,budget)`的单调CDF，而非voxel correctness。七个固定budget
+联合训练后，旧P81/P96/P113/P129相对horizon-only的integrated-Brier降低`34.49%/45.27%/46.20%/31.15%`，四组
+全部不退，mean=`39.28%`，2/2 development support。其mean absolute reliability error只在P96改善，另外三组更差；因此
+该结果只证明budget-conditioned distribution含新增判别信息，尚不是calibrated probability。P167已读，不能承担P173独立确认。
 
 ## 3. 核心结果表
 

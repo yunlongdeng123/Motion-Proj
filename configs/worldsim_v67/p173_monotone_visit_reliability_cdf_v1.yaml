@@ -1,0 +1,47 @@
+schema_version: worldsim_v67.p173_monotone_visit_reliability_cdf.v1
+output_schema_version: worldsim_v67.p173_monotone_visit_reliability_cdf_summary.v1
+task_id: WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01
+hypothesis_id: WS-V67-H-P173-001
+role: trajectory_conditioned_probability_that_visited_actor_state_stays_within_cost_budget
+seed: 0
+model_artifact: MONOTONE_VISIT_RELIABILITY_CDF.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model:
+  score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
+  budget_knots: [-1.25, -0.5, 0.0, 0.5, 1.25]
+  training_steps: 12000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_integrated_brier_reduction: 0.05
+verdict_on_pass: supported_freeze_visit_reliability_cdf_for_new_scene_confirmation
+verdict_on_failure: rejected_visit_reliability_cdf
+locks:
+  prediction_object_is_trajectory_visited_actor_state_reliability_not_voxel_correctness: true
+  reliability_means_continuous_boundary_state_cost_within_explicit_budget: true
+  CDF_is_monotone_in_budget_and_anti_monotone_in_frozen_P126_uncertainty_score: true
+  matched_horizon_only_CDF_is_the_control: true
+  P167_was_already_partially_read_and_is_not_a_prospective_decision_cohort: true
+  no_architecture_budget_loss_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2019/hash/73c03186765e199c116224b68adc5fa0-Abstract.html
+  - https://proceedings.neurips.cc/paper/2021/hash/5b168fdba5ee5ea262cc2d4c0b457697-Abstract.html
+  - https://openreview.net/forum?id=33XGfHLtZg
+claim_boundary:
+  - development_only_on_consumed_scene_cohorts_then_freeze_for_a_new_scene_cohort
+  - empirical_reliability_probability_not_formal_conformal_or_safety_coverage
+  - no_voxel_correctness_collision_probability_planner_policy_or_closed_loop_claim

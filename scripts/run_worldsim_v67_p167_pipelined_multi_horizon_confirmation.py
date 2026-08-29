@@ -144,12 +144,13 @@ def main() -> None:
                     models, ensemble, p109_model, p109, config,
                 )
                 horizon_payloads[key].append(payload)
+                rank_gain = float(
+                    spearman_correlation(payload["actual_cost"], payload["ensemble_score"])
+                    - spearman_correlation(payload["actual_cost"], payload["p109_score"])
+                )
                 scene_metrics[key] = {
                     "trajectory_count": int(len(payload["actual_cost"])),
-                    "rank_gain": float(
-                        spearman_correlation(payload["actual_cost"], payload["ensemble_score"])
-                        - spearman_correlation(payload["actual_cost"], payload["p109_score"])
-                    ),
+                    "rank_gain": rank_gain if np.isfinite(rank_gain) else None,
                 }
             ready_row = {
                 "scene": name, "remaining_scenes": len(pending),

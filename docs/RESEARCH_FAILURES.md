@@ -2255,6 +2255,42 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F137`。
 
+### V67-F137 — P167局部常量输入产生undefined Spearman并阻止strict JSON收口
+
+- 分类：`implementation/undefined-local-diagnostic-serialization`；状态：`resolved_without_metric_change`。
+- failed run：`run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/
+  20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1`。
+- exposure：10/10 rows、五H aggregate metrics和P170 prospective read已完成；只有scene-1065 H3.5局部描述性rank gain为NaN。
+- root cause：53 trajectories上的P109 score为常量；按SciPy定义Spearman未定义并返回NaN，而RFC JSON不允许NaN且runner使用
+  `allow_nan=false`。该local value不参与pooled per-H或macro decision。
+- recovery：只把非有限local diagnostic写为JSON `null`；P126/P109、rows、scene、H、cost、coverage和decisions均不变。
+  r2 macro rank/cost=`+.21412/-.0168403`，2/2 supported。
+
+下一可用编号为：`V67-F138`。
+
+### V67-F138 — P170新场景upper bound虽更窄但四个中长horizon under-cover
+
+- 分类：`algorithm/one-sided-cost-bound-scene-shift`；状态：`closed_negative_after_prospective_read`。
+- canonical：`run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/
+  20260830T132500Z__conformal-cost-upper-bound-s0-r2`。
+- 观察：P167五H coverage=`.89073/.86316/.83184/.82614/.82257`，4/5低于`.88`；mean sharpness reduction仍为
+  `25.09%`，1/2 prospective decisions。
+- 解释：source-scene single offset在新location/horizon mixture下不够保守；模型锐化随H增强，但coverage同步下降。
+- 防重复：不在P167上追加offset、不降低`.88`门、不扫quantile/split；关闭P170，保留P167 relative ranking/selection主结论。
+
+下一可用编号为：`V67-F139`。
+
+### V67-F139 — P173 direct-script launcher未把repo root加入module path
+
+- 分类：`implementation/non-login-python-entry`；状态：`resolved_pre_training`。
+- failed run：`run://worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/
+  20260830T134000Z__monotone-visit-reliability-cdf-s0-r1`；0 optimizer step、0 cohort evaluation。
+- root cause：Python按官方语义将direct script目录而非current repo root置于`sys.path[0]`，`scripts.*` package import失败。
+- recovery：只在launcher进程增加`PYTHONPATH=.`；不改代码模型/预算/数据/seed/steps/decision，r2从头训练并2/2支持。
+- prevention：后续remote direct-script launcher沿用进程级repo-root path，不修改全局shell profile，也不增加入口测试矩阵。
+
+下一可用编号为：`V67-F140`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

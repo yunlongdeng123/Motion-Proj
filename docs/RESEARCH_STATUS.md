@@ -678,8 +678,8 @@ r2将从头训练，不复用r1权重或loss选择。
 
 P170 r2已完成同合同8,000-step训练并通过旧四development 2/2。P81/P96/P113/P129 empirical upper coverage=
 `.92574/.95407/.91016/.90601`，均高于`.88`；相对horizon-only upper-bound sharpness reduction=
-`15.94%/41.07%/23.02%/14.60%`，mean=`23.66%>10%`。模型与single offsets已冻结，当前只等待P167五H rows作
-事前prospective secondary；未改coverage/quantile/门。该结果支持进入确认，不作为formal conformal或新独立结论。
+`15.94%/41.07%/23.02%/14.60%`，mean=`23.66%>10%`。模型与single offsets在P167 rows前冻结；未改
+coverage/quantile/门。该development结果只支持进入确认，不作为formal conformal或新独立结论。
 
 P171在不触碰P167的同时训练conditional conformity rectifier。P170 q90 model与global offset均冻结；rectifier只看normalized
 P126 score+horizon，以source非calibration scenes的P170 log-cost residual做q90 pinball，最终仍在同一held-out ordered-scene
@@ -691,9 +691,18 @@ P171 canonical r1完成6,000-step训练。P81/P96/P113/P129 coverage=`.95422/.92
 因此未读取P167。Conditional correction在不同scene产生不稳定scale，global P170 offset反而更稳；关闭rectifier支线，不扫hidden/split。
 P170保持唯一等待P167的upper-bound candidate。
 
-P167流水线已交付首批2/10 scenes：shard03/08分别约`1464.9/1490.1s`完成后立即释放`scene-0269/0802`，
-evaluator在其余shards仍扫描时物化`8,187+2,798` rows并完成五H GPU评分。两scene共10个local horizon rank gains全正，
-范围=`+.04639`到`+.53723`；remaining scenes=`8`。该数值只证明pipeline与早期方向，不是macro decision或partial stop依据。
+P167 prep现已10/10完成：7 shards并行扫描、`3,914`个required lidar files（`3,874` newly extracted），prep wall=
+`2355.10s`；scene-ready preprocess均约`53.91--58.15s`，与剩余archive IO和逐scene GPU scoring重叠。Canonical r2在
+`10,255/10,692/10,394/9,982/9,439` rows上得到H=`.8/1.5/2.5/3/3.5` rank gain=
+`+.41905/+.27738/+.15097/+.12853/+.09467`，selected-cost delta=
+`-.01767/-.02199/-.01309/-.01515/-.01630`；macro=`+.21412/-0.0168403`，2/2 decisions，支持第二次scene-level
+independent multi-H increment。r1仅因scene-1065 H3.5局部P109 score为常量而产生undefined Spearman，严格JSON在
+aggregate rows和主指标已经完成后拒绝NaN（F137）；按SciPy定义只把该局部描述值写为`null`，r2未改变模型、cohort或聚合。
+
+P170随后按事前冻结模型读取P167 r1 rows。五H empirical coverage=`.89073/.86316/.83184/.82614/.82257`，只有H.8
+达到`.88`；虽然upper-bound sharpness reduction=`9.71%/18.56%/26.05%/32.30%/38.86%`（mean=`25.09%`），coverage
+门失败，F138。准确结论是P170跨新scene更窄但系统性under-cover；不降低coverage、不重校准P167，关闭该one-sided upper-bound
+候选。P167的relative ranking/selection主结论不受影响。
 
 P172继续覆盖P167 IO空档，但因P167已partial read，不借用该cohort。冻结P126 score、source ordered-scene split、q10/q90
 两条score-monotone cost models与horizon-only controls，构造80% two-sided CQR interval。旧四只检查每组empirical coverage≥`.78`
@@ -703,6 +712,17 @@ P172 canonical r1完成8,000-step训练。P81/P96/P113/P129 interval coverage=
 `.73199/.83953/.84590/.81499`；P81低于`.78`，coverage门失败。Width reduction=
 `10.56%/37.01%/17.71%/8.92%`，mean=`18.55%`，效率门通过；1/2 decisions，F136。关闭two-sided interval trial，
 不改q10/coverage；其结果进一步支持保留P170 one-sided upper reliability object。
+
+P173落实visited-state prediction-object迁移：给定冻结P126 trajectory score、H和cost budget，直接预测未来被轨迹访问的
+Actor/world state是否满足P120 continuous boundary-state cost budget。一个horizon-conditioned monotone CDF保证概率随budget
+增加、随uncertainty score下降；matched horizon-only CDF作control。固定7个budgets=`.05/.1/.2/.4/.8/1.6/3.2`，source
+79,478 trajectories、12,000 steps，不扫结构/阈值。r1在0 optimizer step前因script-directory `sys.path`不含repo root退出
+（F139）；只给launcher增加进程级`PYTHONPATH=.`后r2从头执行。
+
+P173 r2旧P81/P96/P113/P129 integrated-Brier reduction=`34.49%/45.27%/46.20%/31.15%`，四组全部不退，mean=
+`39.28%>5%`，2/2 development decisions；wall=`102.71s`。但mean absolute reliability error相对horizon-only只在P96更好，
+其余3组更差。因此仅支持冻结“budget-conditioned reliability distribution具有新增判别信息”供后继校准/全新scene确认；不写
+calibrated probability、conformal coverage、planner或safety claim，P167因已partial read不承担其prospective confirmation。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

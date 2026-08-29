@@ -77,12 +77,13 @@
 | P164 | `run://worldsim_v67/WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01/20260830T123000Z__interaction-context-actor-ensemble-s0-r1` | mean rank `-.04474`、cost 4/4退；rejected/F129 |
 | P165 | `run://worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/20260830T124000Z__joint-multi-actor-diffusion-s0-r1` | old mean rank `+.00811`、P147 5/5 rank+cost；old fixed50 cost reject/F130 |
 | P166 | `run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/20260830T125000Z__monotone-expected-cost-calibration-s0-r1` | mean MSE reduction `4.09%<20%`、bin error恶化；rejected/F131 |
-| P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | 2/10 scored while IO；10 local scene-H rank gains全正，macro未读完/无verdict |
+| P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T135000Z__pipelined-multi-horizon-confirmation-s0-r2` | 五H mean rank gain `+.21412`、mean cost delta `-.01684`；2/2 second scene-level support |
 | P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
 | P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | cost 3/4微降、P96微退，mean rank `+.00212<.005`；rejected/F133 |
-| P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | old4 coverage min `.9060`、mean sharpness `23.66%`；2/2 dev，frozen waiting P167 |
+| P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | old4 2/2；P167 coverage 4/5 fail despite mean sharpness `25.09%`；rejected/F138 |
 | P171 | `run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/20260830T133000Z__rectified-conformal-cost-bound-s0-r1` | coverage pass、mean sharpness over P170 `-19.48%`；未读P167，rejected/F135 |
 | P172 | `run://worldsim_v67/WS-V67-P172-CONFORMAL-COST-INTERVAL-01/20260830T133500Z__conformal-cost-interval-s0-r1` | mean width -18.55%但P81 coverage `.732<.78`；rejected/F136 |
+| P173 | `run://worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2` | old4 integrated-Brier -34.49%/-45.27%/-46.20%/-31.15%；2/2 dev，calibration boundary retained |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -206,6 +207,9 @@
 | `V67-F134` | resolved pre-evaluation | P109 source已排除absolute mod-5 scenes；改为artifact内ordered unique scene group split |
 | `V67-F135` | closed negative | conditional conformity rectifier保持coverage但mean upper-bound sharpness恶化19.48% |
 | `V67-F136` | closed negative | q10/q90 interval width缩短18.55%但P81 coverage仅.732 |
+| `V67-F137` | resolved post-aggregate | P167 constant-input local Spearman用`null`表示；macro未改，r2支持 |
+| `V67-F138` | closed negative | P170 P167 coverage 4/5 horizon低于.88，尽管bound更窄 |
+| `V67-F139` | resolved pre-training | P173 direct-script module path；0 step后process-local recovery |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory
