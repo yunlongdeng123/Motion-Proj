@@ -664,7 +664,15 @@ source fold5 q90 coverage/unsafe=`.306423/.077568`；P201=`.357650/.131148`。�
 
 P354按NeurIPS 2021关于pooling/calibration order的对照，保持P352成员冻结，改为每个成员各自在source fold3做
 group calibration、fold4做PAV，最后对三个已校准unsafe probabilities取maximum；不重训head、不使用P201训练，
-也不扫aggregation/calibration顺序。
+也不扫aggregation/calibration顺序。Canonical=`run://worldsim_v67/
+WS-V67-P354-MEMBERWISE-CALIBRATED-UPPER-POOL-RELIABILITY-01/
+20260901T154500Z__memberwise-calibrated-upper-pool-reliability-s0-r1`：P201 q90 coverage/unsafe=
+`.244536/.047945`，risk和monotonicity通过但coverage失败，3/4 rejected，登记F229。它与P353共同给出一个有用
+risk--coverage bracket：pool后校准过激进，memberwise upper过保守。
+
+P355不在两端事后手选权重。按NeurIPS 2023 ensemble selective prediction与NeurIPS 2025 selective-classification
+gap分解，冻结三个members，在source fold3用member probabilities、mean/max/std/range与task coordinates训练小型
+feature-aware calibrator以重排高分歧样本，fold4仍只做PAV；P201只作最终development read。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

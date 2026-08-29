@@ -436,8 +436,9 @@
 - P351：teacher anchor改善coverage但q90 risk仍`.13514`，登记F226；target-unlabeled adaptation family关闭；
 - P352：source q90通过但P201 mean-pool q90 risk=`.17518`，登记F227；
 - P353：frozen upper-pool将P201 q90 risk降至`.13115`但仍失败，登记F228；
-- P354：memberwise source calibration后再upper-pool implementation；
-- 下一可用 failure id 为 `V67-F229`。
+- P354：memberwise upper-pool q90 risk=`.04795`但coverage=`.24454`，登记F229；
+- P355：feature-aware ensemble selective calibrator implementation；
+- 下一可用 failure id 为 `V67-F230`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -625,6 +626,21 @@
   then-pool与pool-then-calibrate，并表明顺序改变最终校准；P354为每个冻结成员单独source-calibrate，再取maximum；
 - forbidden rescue：不调risk gate、pool quantile、member/fold/seed或PAV bins；resolution=
   `open via P354 memberwise-calibrated upper pooling`。
+
+### V67-F229 — P354 memberwise upper calibration控制风险但过度拒绝
+
+- canonical=`run://worldsim_v67/WS-V67-P354-MEMBERWISE-CALIBRATED-UPPER-POOL-RELIABILITY-01/
+  20260901T154500Z__memberwise-calibrated-upper-pool-reliability-s0-r1`；
+- symptom：P201 q90 max unsafe=`.047945`显著低于`.10`，但mean coverage=`.244536 < .30`；3/4 rejected；
+- retained evidence：相对P353，风险`.131148→.047945`且四个q的unsafe均低于`.088`，说明memberwise calibration
+  成功保留了成员高风险证据；失败来自authority过少，不是risk transfer失败；
+- diagnosis：对每个样本/ceiling要求三个independently calibrated members全部低于`.10`，把member disagreement
+  全部当成同等强度的epistemic danger；source fold5 q90 risk仅`.007586`也显示大量未用风险预算；
+- literature/migration：NeurIPS 2023分析deep ensemble selective classification收益集中在top-ambiguity samples；
+  NeurIPS 2025进一步指出单调rescaling不能修复ranking，需feature-aware/non-monotone calibrator；P355用source-only
+  learned disagreement calibrator重排，而非在P353/P354之间手选常数权重；
+- forbidden rescue：不降低coverage gate、不改q90 threshold、不扫mean/max convex coefficient；resolution=
+  `open via P355 feature-aware ensemble selective reliability`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

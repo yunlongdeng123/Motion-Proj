@@ -1293,7 +1293,20 @@
   但pool后的单一source map会压平成员差异，P354因此保留每个成员的独立校准语义后再取unsafe上包络。
 - method：冻结P352三个heads；每个成员在相同fold3分别做group calibration、fold4分别做9个PAV maps；evaluation
   才对三个calibrated unsafe probabilities取maximum。GPU只承担6k calibration gradients与batched inference。
-- locks：不重训heads、不用P201 covariates/labels训练、不扫顺序/pool/threshold/member/seed；状态=`implementation`。
+- locks：不重训heads、不用P201 covariates/labels训练、不扫顺序/pool/threshold/member/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P354-MEMBERWISE-CALIBRATED-UPPER-POOL-RELIABILITY-01/
+  20260901T154500Z__memberwise-calibrated-upper-pool-reliability-s0-r1`。
+- result：fold3 memberwise group calibration BCE=`.323624`，fold4 27-map PAV BCE=`.314141`；source fold5
+  q90 coverage/unsafe=`.205022/.007586`，P201=`.244536/.047945`。风险大幅低于门但coverage不足，3/4 rejected，
+  wall=`45.48s`，F229。
+
+### WS-V67-P355-FEATURE-AWARE-ENSEMBLE-SELECTIVE-RELIABILITY-01
+
+- migration：NeurIPS 2023指出ensemble选择性收益集中在成员分歧样本；NeurIPS 2025指出单调post-hoc map不能改变
+  ranking，只有feature-aware calibrator才能缩小selective gap。P355因此替代固定mean/max混合，不调整risk threshold。
+- method：冻结P352 heads；source fold3训练`[member probabilities, mean, max, std, range, horizon, ceiling,
+  set-size one-hot]→unsafe logit`的32/16 MLP，fold4按ceiling×set-size PAV，fold5/P201合同不变。
+- locks：不使用P201训练/校准，不扫mixing weight/feature/width/steps/threshold/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
