@@ -385,6 +385,16 @@ P134 final NLL=`-3.56197`，独立blocks把epistemic fraction恢复到`1.46%/2.2
 因此允许最后一次P135 compute-parity recovery，只把per-member batch改为65,536，其他代码/结构/seed/steps/decision不变。
 P135已占用GPU；不论结果如何不再扫packed budget。
 
+P135 compute parity把final NLL改善到`-3.62334`，epistemic fraction=`1.51%/2.63%/2.20%`，P81/P96/P113
+Spearman差=`+.00160/-.00224/-.00319`（mean=`-.00127`）通过；但selected cost `.18037/.16874/.22376`仍全部
+略高于P126 `.17667/.16757/.21879`，1/2 decisions、登记`V67-F98`。P134/P135共同表明independent packing保留rank，
+却没有稳定复现P126 fixed50边界；packed route关闭，不再扫batch/seed。
+
+卡点调研ICLR 2017 Snapshot Ensembles、NeurIPS 2018 FGE与SWAG后，P136改用单训练路径posterior samples：一个P109结构
+在6,000 steps内走3个等长cosine cycles，固定LR `.001→.00001`，只在steps 2000/4000/6000保存3 snapshots；总训练步数
+等于单模型，不另训member。snapshot predictions仍按total variance解析τ-boundary score，并在consumed三cohort相对P126
+检验cost/rank retention。P129 rows不读，GPU已与archive IO并行运行。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -585,13 +585,28 @@
 
 ### WS-V67-P135-FULL-BUDGET-PACKED-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU compute-parity recovery`；canonical=
+- 状态：`done/rejected compute-parity recovery`；canonical=
   `20260830T093500Z__full-budget-packed-actor-ensemble-s0-r1`，继续与P129 archive IO并行。
 - single change：复用P134 runner/3 independent blocks/seed0/6,000 steps/optimizer/evaluation/decisions，仅把per-member batch
   `21,845→65,536`，使每member每step数据暴露与P126一致；不改总steps或任何model/score/gate。
 - rationale：P134 diversity/rank已恢复但final NLL较P126弱，且训练样本预算恰为其1/3；本run区分compute budget与packed
   representation。它保留3-member参数/FLOPs，不声称训练compute reduction。
 - prevention：这是唯一compute-parity recovery；不论结果均不再扫batch/steps/member/seed/width/packing。
+- result：final NLL=`-3.623335`；epistemic fraction=`.015091/.026329/.022012`；P81/P96/P113 Spearman difference
+  from P126=`+.001602/-.002235/-.003186`（mean=`-.001273`，pass）。selected cost=`.180370/.168742/.223761`，
+  三组均略高于P126；1/2 decisions，verdict=`rejected_development_full_budget_packed_actor_ensemble`；wall=`152.49s`、
+  peak GPU=`.775 GiB`。登记F98并关闭packed budget route。
+
+### WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=`20260830T094000Z__snapshot-actor-ensemble-s0-r1`，
+  与P129 archive IO并行。
+- method：一个P109结构/一个optimizer path，6,000 total steps分3个2,000-step cosine cycles；LR固定`.001→.00001`，
+  snapshots只取steps `2000/4000/6000`。三snapshot predictions用law of total variance组成τ-boundary score。
+- source=`916,722 Actor-time tokens`；batch65536、seed0、AdamW与P109相同；不扫cycle/LR/snapshot数/seed。
+- decisions：consumed P81/P96/P113相对P126 selected cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
+- references：ICLR 2017 Snapshot Ensembles、NeurIPS 2018 Fast Geometric Ensembling、SWAG；只称single-path snapshot
+  development，不声称posterior calibration或Bayesian guarantee。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

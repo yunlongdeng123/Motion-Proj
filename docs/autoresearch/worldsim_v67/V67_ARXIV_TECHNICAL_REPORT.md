@@ -220,6 +220,10 @@ P134把epistemic fraction恢复到`1.46%--2.23%`且mean rank delta=`+.00187`，�
 composite失败（F97）。由于P134每member batch只有P126的1/3，P135仅提高到P126-equivalent 65,536做一次compute parity；
 不改模型或decision，也不将可能的成功写成compute reduction。
 
+P135在P126-equivalent batch下mean rank差=`-.00127`，但三组selected cost仍小幅回退（F98），故packing route关闭。
+P136转向单训练路径快照：3个固定cosine cycles在总计6,000 steps内产生2000/4000/6000三个solutions，以FGE/Snapshot
+Ensemble方式估计member disagreement；这检验独立全训练是否必要，不主张校准posterior。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

@@ -1595,10 +1595,29 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 ### P135 freeze note — full-budget packed compute parity
 
 - method：exact P134 runner与三独立blocks；唯一变化member batch `21845→65536`，匹配P126 per-member 6,000-step exposure。
-- decisions：仍为三cohort cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：失败使用F98并关闭packed route；成功仅支持full-budget one-graph parity，不写成FLOP/parameter reduction。
+- decisions/outcome：仍为三cohort cost nonregression与mean Spearman difference≥`-.005`；实际mean rank=`-.001273`通过，
+  但三组cost均略回退；P129 rows隔离。
+- prevention：packed route关闭；不再扫batch/steps/member/seed/packing。
 
-下一可用编号为：`V67-F98`。
+### V67-F98 — full per-member compute仍未保持P126 fixed50 cost boundary
+
+- 分类：`algorithm/ensemble-solution-variance`；状态：`closed_negative_after_compute_parity`。
+- canonical：`run://worldsim_v67/WS-V67-P135-FULL-BUDGET-PACKED-ACTOR-ENSEMBLE-01/
+  20260830T093500Z__full-budget-packed-actor-ensemble-s0-r1`。
+- 观察：compute parity后NLL=`-3.62334`、epistemic fraction=`1.51%--2.63%`、mean rank difference=`-.001273`均接近
+  P126；但P81/P96/P113 selected cost分别高`.003705/.001170/.004970`，cost gate全回退。
+- 解释：P134的主要rank差异确受budget影响，但fixed50 selection对independent solution/seed边界敏感；不能把near-parity
+  重写成noninferiority成功。
+- 防重复：不继续packed seed/budget/member sweep。P136换成single-path cyclic snapshots，检验低成本posterior path samples。
+
+### P136 freeze note — cyclic snapshot Actor ensemble
+
+- method：一个P109结构训练6,000 steps，3个固定2,000-step cosine cycles，LR `.001→.00001`，只存2000/4000/6000；
+  三snapshot按total variance评分。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：固定cycles/LR/snapshot/seed；失败登记F99并关闭snapshot first trial，不扫schedule。
+
+下一可用编号为：`V67-F99`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

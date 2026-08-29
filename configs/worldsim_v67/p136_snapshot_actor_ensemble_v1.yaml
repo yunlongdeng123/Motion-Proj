@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p136_snapshot_actor_ensemble.v1
+output_schema_version: worldsim_v67.p136_snapshot_actor_ensemble_summary.v1
+task_id: WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P136-001
+role: consumed_development_single_training_path_snapshot_ensemble
+seed: 0
+model_artifact: SNAPSHOT_ACTOR_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  cycles: 3
+  batch_size: 65536
+  maximum_learning_rate: 0.001
+  minimum_learning_rate: 0.00001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_deep_ensemble: -0.005}
+verdict_on_pass: supported_development_snapshot_actor_ensemble
+verdict_on_failure: rejected_development_snapshot_actor_ensemble
+locks:
+  one_model_one_6000_step_path_three_equal_cosine_cycles: true
+  snapshots_exactly_at_steps_2000_4000_6000: true
+  fixed_lr_range_0p001_to_0p00001_no_schedule_or_snapshot_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openreview.net/forum?id=BJYwwY9ll
+  - https://proceedings.neurips.cc/paper/2018/hash/be3087e74e9100d4bc4c6268cdbe8456-Abstract.html
+  - https://arxiv.org/abs/1902.02476
+claim_boundary:
+  - consumed_development_single_path_snapshot_ensemble_only
+  - cyclic_snapshots_may_remain_within_one_functional_mode
+  - no_calibrated_posterior_or_Bayesian_guarantee
+  - no_planner_policy_closed_loop_or_safety_claim
