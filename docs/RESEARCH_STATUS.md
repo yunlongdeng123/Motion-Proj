@@ -256,18 +256,21 @@ P301 base、6k steps/lr `.0003`，要求 P201 attained MAE严格优于 `.0285229
 P303 与 P302 正交并发：依据 NeurIPS 2019 UMNN 的正导数积分思想，用 group raw mean/std/max与四个 risk
 conditions输出8-knot正 rates，将积分按总面积归一化为固定0/1端点的 monotone fraction warp，再只调用一次
 P301 base。末层零初始化使初始 warp为 identity；固定 hidden64、6k steps/lr `.0003`，同样要求严格优于 P301
-`.02852293`、regret `<=.005`、violations=0，不扫 knots/hidden。Active=`run://worldsim_v67/
+`.02852293`、regret `<=.005`、violations=0，不扫 knots/hidden。Canonical=`run://worldsim_v67/
 WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
 20260901T013000Z__normalized-monotone-warp-authority-s0-r2`。r1误把 base knot count用于独立8-knot warp，首个
 forward 的 gather越界、未完成任何训练step/quality read，登记 `V67-F202`；依据 PyTorch gather index合同，r2只把
-积分索引改为 rates自己的末维长度，不改模型/合同。P302 单独仅约23% SM/`.8GiB`，两run并发仍适合单3090。
+积分索引改为 rates自己的末维长度，不改模型/合同。r2 P201 budget/attained MAE=`.0066260/.0288235`、regret=
+`6.0888e-5`、violations=0、forward=`.7006s`；只因 attained略差于 P301 `.0285229`而拒绝，2/4，登记
+`V67-F203`。source attained=`.0200754`、P201 size96=`.0307334`，显示 context warp在分布/规模转移下失配；
+按单次合同关闭 warp knots/hidden分支。
 
 P304 将 P302 作为 compression initialization：移除三锚点 wrapper，仅加载其训练后的 shared base，再对同一
 bisection teacher做单次6k fine-tune；推理恢复为一次网络调用且 base原 positive price-rate spline继续结构保证
 fraction单调。门冻结为 P201 attained MAE `<=P301 .02852293`、regret `<=.005`、violations=0、forward严格快于
 P302 `1.49135s`；不扫蒸馏权重/步数。Active=`run://worldsim_v67/
 WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
-20260901T014500Z__anchor-initialized-single-call-s0-r1`，与 P303训练并发。
+20260901T014500Z__anchor-initialized-single-call-s0-r1`，GPU继续执行。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -470,9 +470,12 @@
   全区间总面积，得到固定 `warp(0)=0, warp(1)=1` 的单调映射；零初始化等于 identity。
 - fixed run：frozen P301 base、6k steps、lr `.0003`；P201 attained MAE严格优于 `.0285229301`、regret
   `<=.005`、violations=`0`；不扫 knots/hidden/steps/lr/gates。
-- active=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
   20260901T013000Z__normalized-monotone-warp-authority-s0-r2`。r1在首个训练step前因 warp/base knot count混用
   触发 CUDA gather越界，0 training/quality read；`V67-F202`的唯一修复是按 warp rates末维计算积分索引，合同不变。
+- r2 result：P201 budget/attained MAE=`.0066260/.0288235`、regret=`6.0888e-5`、violations=`0`、forward=
+  `.7006s`；fidelity与改善门失败，2/4，verdict=`rejected_single_call_normalized_monotone_warp_authority_compiler`，
+  failure=`V67-F203`。source attained=`.0200754`，P201 size48/96=`.0269137/.0307334`；不扫 warp结构。
 
 ### WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01
 

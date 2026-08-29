@@ -280,7 +280,7 @@
 - structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
   `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302固定三锚点与 P303归一化正积分 warp
   分别研究非线性表达力/单调用校准；P302进一步达到 attained MAE=`.0256586`、violations=`0`，不重新打开 F201；
-- 下一可用 failure id 为 `V67-F203`。
+- 下一可用 failure id 为 `V67-F204`。
 
 ### V67-F202 — P303 warp积分错误复用 base knot count
 
@@ -293,7 +293,21 @@
 - minimal recovery：r2用 warp rates自己的 `shape[-1]`计算 width/index/cumulative，模型、knots、hidden、steps、
   seed、teacher、gates全部不变；
 - concurrent branch：P304只复用已支持 P302 的 base做单调用压缩训练，不依赖 F202失败路径；
-- 下一可用 failure id 为 `V67-F203`。
+- 下一可用 failure id 为 `V67-F204`。
+
+### V67-F203 — P303 context warp未跨规模保持 attained-fraction fidelity
+
+- canonical=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
+  20260901T013000Z__normalized-monotone-warp-authority-s0-r2`；F202修复后合同原样完成；
+- result：P201 budget/attained MAE=`.0066260/.0288235`、regret=`6.0888e-5`、violations=`0`、forward=`.7006s`；
+  attained门及严格优于 P301门失败，2/4；size48/96=`.0269137/.0307334`；
+- root cause：source attained=`.0200754`且训练 element loss很低，但 group-conditioned warp依赖 raw pooled moments，
+  在 P201/size96 shift下 group mean calibration失配；这是 OOD group calibration问题，不是单调结构或预算拟合失败；
+- literature response：NeurIPS 2024 multicalibration/OOD工作要求跨重叠groups显式校准；COLT 2022指出普通 DRO
+  不保证 shift下统一低regret。因此不靠增加 knots/hidden补救，也不把 source改善外推为 P201 claim；
+- disposition：关闭 normalized-warp结构扫描；保留其 `.7006s`单调用/零违例结果为 Pareto descriptive negative，
+  独立 P304从 P302 anchor-trained base做单调用压缩，不复用 context warp；
+- 下一可用 failure id 为 `V67-F204`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
