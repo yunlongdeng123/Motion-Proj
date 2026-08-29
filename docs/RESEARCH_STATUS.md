@@ -1092,6 +1092,14 @@ mean/std/max invariant pooling，把group size扩为train=`32/64/128`、heldout=
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 
+P243资源例外r4 prep已在`182.33s`内完成9/9 scenes，复用r1已提取的3,517个LIDAR且无新增archive scan；r2首次
+quality read产生1,710条trajectory并3/3：surface/final teacher MAE=`.006669/.008652`，relative Brier
+degradation=`.001741`，calibration increase=`-.000309`，verdict=`supported_fresh_continuous_budget_prefix_surface`。
+同读secondaries中P245与P247也3/3：P245 surface/final=`.006170/.008000`，P247扩展budget域=`.006276/.008429`；
+P253 elasticity=`.017703`且mean within-query Spearman=`.931331`，2/2；P255 budget MAE=`.008795`、冻结utility
+regret=`.00007386`，2/2。P250 inverse budget MAE=`.016419`通过，但重构probability=`.015582>.015`，1/2、F193；
+fresh same-read结果再次确认inverse family的response瓶颈，而forward surface、marginal value与shadow-price policy均迁移。
+
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新
 trajectory上student/teacher MAE=`.007443`，Brier=`.089526/.089810`（student改善`.316%`），calibration=

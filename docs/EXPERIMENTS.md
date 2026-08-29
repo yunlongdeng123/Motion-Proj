@@ -2180,6 +2180,23 @@
   9 distinct logs、location=`5/2/1/1`。r4 prep canonical=`20260831T114000Z__continuous-budget-fresh-prep-s0-r4`，
   r2 confirmation=`20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2`；所有model/budget/MC/decision保持冻结。
 
+### WS-V67-P243/P245/P247/P250/P253/P255 nine-scene fresh same-read terminal
+
+- prep r4：9/9 scenes、3,517 required LIDAR、0 newly extracted，single-scene preprocess=`55.05--63.53s`，
+  wall=`182.33s`；移除不可用scene后没有重新扫描archive；
+- P243 canonical=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2`；
+  1,710 trajectories，surface/final MAE=`.006669/.008652`，relative Brier degradation=`.001741`，
+  calibration increase=`-.000309`，violations=`0/0`，3/3，`supported_fresh_continuous_budget_prefix_surface`；
+- P245 r2：surface/final=`.006170/.008000`，Brier degradation=`.001925`，calibration increase=`.000813`，3/3；
+- P247 r2：八budget `.0354--4.5255`，surface/final=`.006276/.008429`，Brier degradation=`.002572`，
+  calibration increase=`.000636`，3/3；
+- P250 r2：inverse budget MAE=`.016419`通过，reconstructed probability MAE=`.015582>.015`失败，1/2，
+  `rejected_fresh_same_read_tandem_inverse_budget_compiler`；20.62% targets lower-censored；
+- P253 r2：elasticity MAE=`.017703`、mean/min query Spearman=`.931331/.472693`、negative count=0，2/2；
+- P255 r2：budget MAE=`.008795`、frozen utility regret=`.00007386`、price violations=0，2/2；
+- interpretation：同一首次read的prospective secondaries，不是五个独立fresh cohorts；forward/extended surface、
+  marginal elasticity、shadow-price policy迁移成立，inverse response重构仍失败。没有补场景、调gate或再训inverse。
+
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
 - role：P243首次fresh rows上的prospective same-read secondary，不是第二个独立cohort；

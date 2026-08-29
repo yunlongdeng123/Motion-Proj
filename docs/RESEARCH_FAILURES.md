@@ -3058,6 +3058,20 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F193`。
 
+### V67-F193 — P249 inverse compiler在P243 fresh same-read上仍未过response重构门
+
+- canonical：`run://worldsim_v67/WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01/20260831T121200Z__inverse-budget-same-read-confirmation-s0-r2`；
+- observation：9-scene/1,710-trajectory same-read secondary上inverse normalized log-budget MAE=`.016419≤.075`，
+  但冻结P246 reconstructed probability MAE=`.015582>.015`；level/horizon monotonic violations=`0/0`；
+- context：development P249为`.018257`，fresh误差更低但仍未跨过事前冻结response门；lower-censored target占
+  `20.62%`，与F187--F189的陡峭/截断响应解释一致；
+- response：维持inverse student family关闭；不因接近阈值而放宽gate、换scene、增加loss/width/knots或再次训练；
+  同一次read的P243/P245/P247/P253/P255均按原冻结合同报告；
+- claim impact：只拒绝clipped reliability level到minimum budget的amortized inverse response fidelity；不否定
+  P243/P245/P247 continuous forward surfaces、P253 marginal ranking或P255 shadow-price policy。
+
+下一可用编号：`V67-F194`。
+
 ### P259/P260 milestone note — alpha-fair连续risk条件化推进，无新增failure
 
 - P259 canonical=`run://worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1`；
