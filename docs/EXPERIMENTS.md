@@ -2254,8 +2254,20 @@
   price↑→budget↓、floor↑→budget↑；
 - protocol：floors train=`.20/.35/.50/.65/.80`、heldout=`.275/.425/.575/.725`；五/四alpha、13/12 prices、
   129 budget grid、12k/batch8192/seed0；P201 budget MAE≤`.075`、frozen soft-Lagrangian regret≤`.005`；
-- active canonical：`run://worldsim_v67/WS-V67-P268-RELIABILITY-FLOOR-LAGRANGIAN-POLICY-01/20260831T143000Z__reliability-floor-lagrangian-policy-s0-r1`；
-  shortfall仅报告，不声称hard feasibility、chance constraint、CVaR或safety。
+- canonical：`run://worldsim_v67/WS-V67-P268-RELIABILITY-FLOOR-LAGRANGIAN-POLICY-01/20260831T143000Z__reliability-floor-lagrangian-policy-s0-r1`；
+- result：P201 budget MAE=`.010533`、frozen floor-Lagrangian regret=`.0001539`、price/floor violations=`0/0`；
+  candidate/teacher final shortfall=`.00316725/.00316724`，2/2；source=`.008863/.00009384`，P183=`.009362/.0002502`；
+- resources/verdict：wall=`144.68s`、peak GPU=`.140GiB`；
+  `supported_reliability_floor_lagrangian_shadow_price_policy`；shortfall仅报告。
+
+### WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01
+
+- object：固定64-trajectory group在floor、alpha与attainable fraction条件下共享dual price；冻结P268负责每行
+  soft-floor regularized budget，P246计算group mean Lagrangian utility；
+- protocol：五/四floors与alpha、九/八fractions、20-step bisection、128/16 fraction-monotone dual、
+  12k/batch8192/seed0；P201 fraction MAE≤`.030`、regret≤`.002`；
+- active canonical：`run://worldsim_v67/WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01/20260831T145000Z__reliability-floor-group-dual-s0-r1`；
+  penalty固定1，不扫floor/group/architecture/gate，仍非hard risk constraint。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 

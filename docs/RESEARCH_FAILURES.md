@@ -3107,7 +3107,8 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 - P267只组合已分别成立的variable set与simplex preference，预先声明其后关闭同轴叠加，不继续attention/size/vector sweep；
 - P267 P201 sizes48/96 fraction MAE=`.013630`、regret=`-.00000606`、violations=0，2/2；同轴叠加关闭；
 - P268切换为soft final-reliability-floor Lagrangian对象，固定unit penalty与双单调结构，不声称hard risk constraint；
-- next failure id保持F194。
+- P268 P201 budget MAE=`.010533`、regret=`.0001539`、price/floor violations=0，2/2，candidate与teacher
+  shortfall同为`.003167`；P269只推进fixed-group dual；next failure id保持F194。
 
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 

@@ -1103,7 +1103,9 @@ P267是该轴最后一个组合实验：train sizes=`32/64/128`、heldout=`48/96
 alpha与fraction；P201 aggregate fraction MAE=`.013630`、regret=`-.00000606`、violations=0，2/2，cardinality/
 preference叠加轴关闭。调研CVaR/percentile risk与Lagrangian constrained optimization后，P268进入新对象：给定final
 reliability floor，以固定unit shortfall penalty构造soft Lagrangian；双positive-rate spline结构保证budget随price下降、
-随floor上升。五/四floors与alpha、13/12 prices冻结，GPU训练中；不作hard constraint或safety guarantee。
+随floor上升。P268一次2/2：P201 budget MAE=`.010533`、regret=`.0001539`、price/floor violations=`0/0`；
+candidate/teacher mean shortfall均=`.003167`。P269将冻结P268推进到固定64-row group dual，联合条件化floor、alpha与
+attainable fraction；不作hard constraint或safety guarantee，RTX 3090训练active。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 
