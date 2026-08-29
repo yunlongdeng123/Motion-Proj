@@ -1,5 +1,28 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V6.7 P269/P270 latest failures（2026-08-31）
+
+### V67-F194 — P269 训练完成后的 final-reliability shortfall 轴切片错误
+
+- run：`run://worldsim_v67/WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01/20260831T145000Z__reliability-floor-group-dual-s0-r1`；
+- symptom：12,000-step GPU training 完成后，`_utility` 将形状 `(group,price,member,horizon)` 的 final reliability 误切为
+  `(group,price,horizon)`，与 alpha utility 的 `(group,price,member)` 无法广播，正式 source/P183/P201 summary 未生成；
+- root cause：NumPy 从 trailing axes 对齐广播；原 `probability[:,ai,li,:,-1]` 的 `-1` 落在 member 轴而非 horizon 轴；
+- response：参考 NumPy 官方 broadcasting 规则与 ICLR 2022 einops 的显式轴思想，唯一修复为
+  `probability[:,ai,li,:,:, -1]`。不引入依赖、不增加 gate/test，不改训练合同；commit=`020726a`；
+- impact：r1=`implementation_failed_after_training/no_verdict`，不解读训练 loss 为科学支持；修复后的 r2 仍须按原门读取。
+
+### V67-F195 — P270 两次 pre-science 启动环境错误
+
+- r1 在 import 阶段因直接脚本入口未含 repo root，报 `ModuleNotFoundError: scripts`；r2 加 `PYTHONPATH=.` 后因误传
+  repo-local `runs`，在首个冻结 artifact load 前报 `FileNotFoundError`；
+- exposure：两次都未完成 frozen artifact load、teacher target、optimizer step 或 metric read，不构成科学 trial；
+- resolution：r3 只修启动命令为 `PYTHONPATH=.` 与 absolute runs-root `/root/autodl-tmp/runs`；实验配置、seed、模型、
+  teacher、门和 claim 不变；
+- impact：canonical scientific run 迁移到 `20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`，当前运行中。
+
+下一可用编号：`V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

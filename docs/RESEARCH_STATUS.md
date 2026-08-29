@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V6.7 P269/P270 progressive risk allocation（2026-08-31）
+
+P269 r1 已在单 RTX 3090 完成 12,000-step fixed-group dual 训练，训练中 normalized-log-price L1 从
+`.636100` 降至末段约 `.00635--.00701`；但正式 source/P183/P201 汇总前，final-reliability shortfall 少写一个
+member 轴切片，触发 `(group,price,member)` 与 `(group,price,horizon)` 广播错误，因此该 run 不产生科学 verdict，登记
+`V67-F194`。依据 NumPy trailing-axis broadcasting 规则，唯一恢复是将 final horizon 明确索引为
+`probability[:,alpha,floor,:,:, -1]`；不改模型、数据、训练步数、门或 claim，修复已提交，待当前 GPU trial 后以 r2 重跑。
+
+为不让 GPU 等待 P269 后处理，P270 已进入新的 tail-risk 对象：对固定 64-row group 的 final-reliability shortfall
+优化 empirical CVaR，teacher 用 Rockafellar--Uryasev eta auxiliary grid，student 是 permutation-equivariant Deep Sets
+allocator，并以正 rate splines 解析保证 price 上升时 budget 不增、floor 上升时 budget 不减。训练条件覆盖
+alpha/floor/tail-mass/price 四轴；P201 只保留 allocation MAE 与 frozen tail-CVaR Lagrangian regret 两门。
+Canonical active=`run://worldsim_v67/WS-V67-P270-TAIL-CVAR-EQUIVARIANT-ALLOCATOR-01/
+20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`，当前正在 GPU teacher-target 物化/训练。r1/r2 分别在 import 与
+artifact load 前暴露缺失 `PYTHONPATH=.`、错误相对 runs-root，均未形成科学 read，合并登记 `V67-F195`；r3 已用仓库
+搜索路径与 `/root/autodl-tmp/runs` 恢复。单卡资源充分，不需要多卡或关机。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%

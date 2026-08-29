@@ -1,5 +1,28 @@
 # Experiments
 
+## WS-V67-P269/P270 tail-risk allocation progression（2026-08-31）
+
+### WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01
+
+- r1=`run://worldsim_v67/WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01/20260831T145000Z__reliability-floor-group-dual-s0-r1`；
+  12,000-step GPU training 已完成，logged price MAE 从 `.636100` 降到 step 11,501 的 `.007005`，但 evaluator 在正式
+  三 cohort summary 前因 final-horizon/member 轴切片错误退出；status=`implementation_failed_after_training/no_verdict`。
+- `V67-F194` 的最小修复仅把 shortfall tensor 从误取 member-last 改成明确的 horizon-last；模型、teacher、fixed64
+  group、alpha/floor/fraction 条件、12k steps、两个 P201 gates 均不改。修复 commit=`020726a`，r2 排在 P270 后执行。
+
+### WS-V67-P270-TAIL-CVAR-EQUIVARIANT-ALLOCATOR-01
+
+- object：固定64-row group，在连续 shadow price、final-reliability floor、alpha-fair utility 与 empirical tail mass 条件下，
+  输出 permutation-equivariant per-row budgets；risk term 是冻结 P246 final-reliability shortfall 的 empirical CVaR。
+- teacher：65-point budget grid + 17-point Rockafellar--Uryasev eta grid；train alpha=`0/.5/1`、floor=`.3/.5/.7`、
+  tail mass=`.125/.25/.5`、9 prices；heldout alpha=`.25/.75`、floor=`.4/.6`、tail mass=`.1875/.375`、8 price midpoints。
+- student：Deep Sets element/pool context + per-member decoder；positive rate splines只编码 price/floor 两个已知单调方向。
+  P201 gates仅 normalized budget MAE `<=.075` 与 frozen tail-CVaR Lagrangian regret `<=.005`。
+- r1/r2 在科学计算前分别因缺 `PYTHONPATH=.` 与误用 repo-local runs-root 退出，合并为 `V67-F195`；active r3=
+  `run://worldsim_v67/WS-V67-P270-TAIL-CVAR-EQUIVARIANT-ALLOCATOR-01/20260831T151000Z__tail-cvar-equivariant-allocator-s0-r3`。
+  当前 status=`running/teacher-target-materialization-and-training`；不声称 predictive-distribution CVaR、hard constraint、
+  online scheduler、planner、closed-loop 或 safety。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
