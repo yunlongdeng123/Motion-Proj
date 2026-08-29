@@ -1020,6 +1020,17 @@
   0/2 decisions，wall=`79.96s`、peak GPU=`.374 GiB`，verdict=`rejected_development_oriented_footprint_actor_ensemble`；F126。
 - P147 diagnostic：rank gain=`-.01038/-.00322/+.00021/+.00108/+.00157`；cost delta=
   `+.00033/-.00144/+.00228/-.00198/+.02613`。yaw residual MAE随H从`.0075`增至`.0473rad`，但一阶传播不稳定。
+
+### WS-V67-P163-DIRECT-FOOTPRINT-SUPPORT-ENSEMBLE-01
+
+- 状态：`running GPU training`；canonical=`20260830T121500Z__direct-footprint-support-ensemble-s0-r1`。
+- recovery object：target直接是oriented rectangle沿每个query normal的`actual support - predicted support`，不再经过yaw Gaussian
+  和support derivative；输入Actor19+time+normal+predicted heading sin/cos。
+- training：约5.18M source query-time tokens、3 independent Gaussian members、每member6,000 steps、batch65,536。
+- compiler/control：candidate把direct support residual mean/variance与冻结P126 position field组合；control共享同一oriented
+  predicted clearance但support residual=0。actual cost与P162一致。
+- decisions：旧P81/P96/P113/P129 cost全不退且mean rank gain≥`.005`；P147仅post-confirmation descriptive。
+- locks：不扫class/box scale/model/loss/normal/score/coverage；这是P162线性化失败后的唯一direct-target recovery。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01

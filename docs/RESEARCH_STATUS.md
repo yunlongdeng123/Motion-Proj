@@ -592,6 +592,11 @@ P147 post-confirmation rank在H3.0/H3.5微增，但H3.5 cost回退`+.02613`；me
 增至H3.5 `.0473rad`，证明姿态误差存在且随H增长，但yaw Gaussian的一阶support传播没有形成稳定selection增量。
 oriented footprint对象保留为negative mechanism result，不以局部H结果替换position authority。
 
+P163执行F126允许的唯一恢复：不再预测yaw再线性化，而对每个query normal直接监督exact `actual rectangle support -
+predicted support`。输入Actor history/time、query normal与predicted-heading sin/cos，形成约5.18M query-time tokens；三成员
+Gaussian与P126 position field组合，baseline仍是同一oriented clearance的position-only score。3×6,000-step训练正在3090执行，
+不扫class/box scale/model/loss/score；P147只作post-confirmation描述。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -2052,6 +2052,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：不扫yaw scale/class/box inflation或导数权重。若恢复，只允许直接预测actual-minus-predicted support residual，
   不重复yaw Gaussian linearization。
 
+### P163 freeze note — direct query-normal footprint support residual
+
+- object：exact actual-minus-predicted rectangle support，input=Actor/time/query normal/predicted heading sincos，三成员Gaussian。
+- control/decisions：冻结P126 position field；同一oriented clearance position-only control；旧四cohort cost全不退+mean rank≥`.005`。
+- prevention：不扫class/box scale/model/loss/score/coverage；P147 post-confirmation only，失败才使用F127。
+
 下一可用编号为：`V67-F127`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
