@@ -1139,7 +1139,21 @@
 - r1=`20260901T124500Z__interpolated-task-worst-group-authority-s0-r1`：插值rows误接未使用的single-set
   materialization path，step1/501/1001与P342完全相同；在step1001主动中止，未做quality evaluation，F219。
 - r2修复multi-set拼接路径后，step1 worst-group risk=`.236447`（r1=`.229960`），确认新strata生效；
-  状态=`active training r2`。
+  canonical=`run://worldsim_v67/WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01/
+  20260901T125500Z__interpolated-task-worst-group-authority-s0-r2`，状态=`done/rejected`。
+- r2 result：7,891 fit rows、6k、final loss=`-.669261`、wall=`321.90s`；dual q75/q85 strict=
+  `2.1851/2.8082`，q95 strict/mid/high=`4.3954/2.9462/1.7473`。P201 q75/q85/q90/q95 coverage=
+  `.370219/.330601/.304645/.292896`、max unsafe=`.155340/.074803/.049020/.054217`；non-anchor
+  coverage `.331239 < P337 .339800`且risk excess `.004217 > .003571`，2/4 rejected，F220。
+
+### WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01
+
+- object：直接预测`P(max visited-state boundary cost > ceiling | task, tau, H, nested set size)`；输出是
+  “执行tau后未来H秒被访问world/Actor state是否可靠”，不是voxel correctness或cost quantile。
+- method：source scene-rank fold0训练direct exceedance BCE 8k；fold1只学习一个temperature+bias 2k；
+  head输出k=1/2/3 unsafe logits并用cummax保证set-size risk单调，ceiling轴部署时做单调投影。
+- decision：P201 q90 max unsafe `<=.10`、mean coverage `>=.30`、ceiling/requested-risk monotonicity=0；
+  不扫threshold/capacity/calibration/horizon/ceiling/gate/seed。状态=`active training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

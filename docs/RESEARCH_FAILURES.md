@@ -425,7 +425,9 @@
   3/4 rejected，登记F217；
 - P342：source最坏组风险改善，但P201 q95 risk excess `.003892 > .003571`，3/4 rejected，登记F218；
 - P343 r1：插值rows接错single-set路径，训练实际重复P342；step1001主动中止，登记F219；r2 active；
-- 下一可用 failure id 为 `V67-F220`。
+- P343 r2：P201 coverage与risk excess两门均比P337差，2/4 rejected，登记F220；
+- P344 active：改变对象，直接预测trajectory visited-state ceiling exceedance probability；
+- 下一可用 failure id 为 `V67-F221`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -475,6 +477,20 @@
   r2 step1 risk `.236447 != r1 .229960`；
 - scope：r1没有完成summary或读取quality，不构成科学negative；不更改P343 hypothesis/gates/hyperparameters；
   resolution=`closed by multi-set wiring fix 41e22b8 and P343 r2`。
+
+### V67-F220 — P343补齐插值task strata导致保守化且未改善P201 tail risk
+
+- canonical=`run://worldsim_v67/WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01/
+  20260901T125500Z__interpolated-task-worst-group-authority-s0-r2`；
+- symptom：P201 non-anchor coverage `.331239 < P337 .339800`，max nominal-risk excess
+  `.004217 > .003571`，仅q90 risk/coverage通过，2/4 rejected；
+- retained evidence：q85 unsafe `.074803`很低且q90 exact `.304645/.049020`，但q75 coverage下降、q95
+  unsafe `.054217`，39组约束把模型推向保守而没有稳定tail transfer；
+- literature/migration：trajectory-conditioned occupancy world models（Drive-OccWorld、UniOcc）直接把ego
+  trajectory作为future-state query；P344因此改成visited-state ceiling exceedance probability BCE，而非继续
+  调quantile risk warp；
+- forbidden rescue：不扫group、dual、margin、interpolation grid、capacity或seed；resolution=
+  `closed family, prediction object moved to P344 direct visited-state reliability`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

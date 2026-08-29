@@ -586,7 +586,15 @@ q75/q85/q95各有dual激活，source q95 unsafe由P337 `.05303`降至`.05089`；
 P343不使用P201标签，在source轨迹上额外生成与目标grid相同的4个插值task conditions，与原9条件合并后按
 3 horizons × 13 conditions=39组做worst-group训练，以消除P342的task support gap。r1日志与P342逐位相同，
 定位为插值rows误接单-set路径；step1001主动中止，0 quality read，登记F219。修复后r2首步risk `.23645`
-已区别于r1 `.22996`。Active=`WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01` r2。
+已区别于r1 `.22996`。Canonical r2=`run://worldsim_v67/WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-
+AUTHORITY-01/20260901T125500Z__interpolated-task-worst-group-authority-s0-r2`：7,891 fit rows、6k、
+final loss=`-.66926`。P201 non-anchor coverage降至`.33124 < P337 .33980`，q95 risk excess升至
+`.004217 > .003571`，仅q90两门通过，2/4 rejected，登记F220；停止group/dual/margin family。
+
+P344按trajectory-conditioned world-model方向改变预测对象：直接用BCE学习
+`P(max visited-state cost > ceiling | task, τ, H, set size)`，不再从cost quantile反演可靠性；source fit训练
+8k steps，独立source fold用单一temperature+bias校准，P201只作复用development。Active=
+`WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
