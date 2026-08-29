@@ -471,7 +471,8 @@
 - fixed run：frozen P301 base、6k steps、lr `.0003`；P201 attained MAE严格优于 `.0285229301`、regret
   `<=.005`、violations=`0`；不扫 knots/hidden/steps/lr/gates。
 - active=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
-  20260901T011500Z__normalized-monotone-warp-authority-s0-r1`；与低占用 P302并发，单3090足够。
+  20260901T013000Z__normalized-monotone-warp-authority-s0-r2`。r1在首个训练step前因 warp/base knot count混用
+  触发 CUDA gather越界，0 training/quality read；`V67-F202`的唯一修复是按 warp rates末维计算积分索引，合同不变。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

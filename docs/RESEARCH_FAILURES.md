@@ -280,7 +280,19 @@
 - structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
   `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302固定三锚点与 P303归一化正积分 warp
   分别研究非线性表达力/单调用校准；P302进一步达到 attained MAE=`.0256586`、violations=`0`，不重新打开 F201；
-- 下一可用 failure id 为 `V67-F202`。
+- 下一可用 failure id 为 `V67-F203`。
+
+### V67-F202 — P303 warp积分错误复用 base knot count
+
+- failed run=`run://worldsim_v67/WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
+  20260901T011500Z__normalized-monotone-warp-authority-s0-r1`；
+- symptom：独立 warp输出8 knots，但调用 base `_integral`时索引宽度使用 base rate knot count，首个 forward触发
+  CUDA gather index out-of-bounds；0 completed training steps、0 quality read、无科学 verdict；
+- research check：PyTorch gather官方合同要求所有 index落在 source dim范围内；UMNN开源实现也将积分器与自身
+  integrand参数绑定。问题是局部张量维度所有权，不是 positive-integral假设失败；
+- minimal recovery：r2用 warp rates自己的 `shape[-1]`计算 width/index/cumulative，模型、knots、hidden、steps、
+  seed、teacher、gates全部不变；
+- 下一可用 failure id 为 `V67-F203`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

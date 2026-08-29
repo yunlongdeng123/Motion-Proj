@@ -258,7 +258,9 @@ conditions输出8-knot正 rates，将积分按总面积归一化为固定0/1端�
 P301 base。末层零初始化使初始 warp为 identity；固定 hidden64、6k steps/lr `.0003`，同样要求严格优于 P301
 `.02852293`、regret `<=.005`、violations=0，不扫 knots/hidden。Active=`run://worldsim_v67/
 WS-V67-P303-NORMALIZED-MONOTONE-WARP-AUTHORITY-COMPILER-01/
-20260901T011500Z__normalized-monotone-warp-authority-s0-r1`。P302 单独仅约23% SM/`.8GiB`，两run并发仍适合单3090。
+20260901T013000Z__normalized-monotone-warp-authority-s0-r2`。r1误把 base knot count用于独立8-knot warp，首个
+forward 的 gather越界、未完成任何训练step/quality read，登记 `V67-F202`；依据 PyTorch gather index合同，r2只把
+积分索引改为 rates自己的末维长度，不改模型/合同。P302 单独仅约23% SM/`.8GiB`，两run并发仍适合单3090。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -139,14 +139,30 @@ class NormalizedMonotoneWarpAuthorityCompiler(nn.Module):
         nn.init.zeros_(self.warp_rates[-1].weight)
         nn.init.zeros_(self.warp_rates[-1].bias)
 
+    @staticmethod
+    def _integral(rates, value):
+        rates = F.softplus(rates)
+        knot_count = rates.shape[1]
+        width = 2.0 / (knot_count - 1)
+        areas = 0.5 * (rates[:, :-1] + rates[:, 1:]) * width
+        cumulative = torch.cat((torch.zeros_like(rates[:, :1]), torch.cumsum(areas, 1)), 1)
+        position = ((value + 1) / width).clamp(0, knot_count - 1)
+        index = torch.floor(position).long().clamp(max=knot_count - 2)
+        row = torch.arange(len(value), device=value.device)
+        fraction = position - index
+        r0 = rates[row, index]
+        r1 = rates[row, index + 1]
+        base = cumulative[row, index]
+        return base + width * (r0 * fraction + 0.5 * (r1 - r0) * fraction.square())
+
     def forward(self, groups, pseudo_price, alpha, beta, floor, tail_mass):
         mean = groups.mean(1)
         std = torch.sqrt(groups.var(1, unbiased=False) + 1e-6)
         maximum = groups.amax(1)
         rates = self.warp_rates(torch.cat((mean, std, maximum, alpha[:, None], beta[:, None], floor[:, None], tail_mass[:, None]), 1))
         fraction = ((1 - pseudo_price) / 2).clamp(0, 1)
-        warped_area = self.base._integral(rates[:, None], (2 * fraction - 1)[:, None]).squeeze(1)
-        total_area = self.base._integral(rates[:, None], torch.ones_like(fraction)[:, None]).squeeze(1)
+        warped_area = self._integral(rates, 2 * fraction - 1)
+        total_area = self._integral(rates, torch.ones_like(fraction))
         warped_fraction = warped_area / total_area.clamp_min(1e-6)
         return self.base(groups, 1 - 2 * warped_fraction, alpha, beta, floor, tail_mass)
 
