@@ -1280,17 +1280,35 @@ def main() -> None:
             feature_calibrator_config = config.get("reliability_feature_calibrator")
             feature_calibrator = None
             feature_calibrator_last = None
+            selective_risk_last = None
+            selective_coverage_last = None
+            selective_dual = None
             if feature_calibrator_config is not None:
                 if ensemble_fit_remainders is None:
                     raise ValueError("reliability_feature_calibrator requires a crossfold ensemble")
                 feature_calibrator = EnsembleFeatureAwareReliabilityCalibrator(
                     len(ensemble_fit_remainders), len(set_sizes), feature_calibrator_config["hidden_dimensions"]
                 ).cuda()
+                frozen_feature_calibrator = config.get("frozen_feature_calibrator")
+                if frozen_feature_calibrator is not None:
+                    frozen_feature_artifact = torch.load(
+                        args.runs_root / frozen_feature_calibrator["run"] / frozen_feature_calibrator["artifact"],
+                        map_location="cuda",
+                    )
+                    feature_calibrator.load_state_dict(frozen_feature_artifact["feature_calibrator_state_dict"])
                 feature_calibrator_optimizer = torch.optim.AdamW(
                     feature_calibrator.parameters(), lr=float(feature_calibrator_config["learning_rate"]),
                     weight_decay=float(feature_calibrator_config["weight_decay"]),
                 )
                 feature_calibrator_index = torch.from_numpy(np.flatnonzero(calibration_rows)).cuda()
+                selective_risk_config = feature_calibrator_config.get("selective_risk")
+                if selective_risk_config is not None:
+                    _, source_condition_group = np.unique(source_conditions, axis=0, return_inverse=True)
+                    source_condition_group = torch.from_numpy(source_condition_group.astype(np.int64)).cuda()
+                    selective_group_count = int(source_condition_group.max().item() + 1) * len(ceilings)
+                    selective_dual = torch.full(
+                        (selective_group_count,), float(selective_risk_config["initial_dual"]), device="cuda"
+                    )
                 for step in range(int(feature_calibrator_config["steps"])):
                     row = feature_calibrator_index[
                         torch.randint(
@@ -1300,7 +1318,8 @@ def main() -> None:
                     local_horizon_index = training_horizon_tensor[
                         torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                     ]
-                    local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                    local_ceiling_index = torch.randint(len(ceiling_tensor), (len(row),), device="cuda")
+                    local_ceiling = ceiling_tensor[local_ceiling_index]
                     with torch.no_grad():
                         member_logits = torch.stack([
                             member(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
@@ -1311,13 +1330,60 @@ def main() -> None:
                     )
                     target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
                     feature_calibrator_loss = F.binary_cross_entropy_with_logits(feature_logits, target)
+                    if selective_risk_config is not None:
+                        unsafe_probability = torch.sigmoid(feature_logits)
+                        soft_safe = torch.sigmoid(
+                            (float(selective_risk_config["admission_probability_threshold"]) - unsafe_probability)
+                            / float(selective_risk_config["soft_temperature"])
+                        )
+                        selection_weights = []
+                        for set_size_index in range(len(set_sizes)):
+                            higher_rejection = (
+                                (1.0 - soft_safe[:, set_size_index + 1:]).prod(1)
+                                if set_size_index + 1 < len(set_sizes)
+                                else torch.ones(len(row), device="cuda")
+                            )
+                            selection_weights.append(soft_safe[:, set_size_index] * higher_rejection)
+                        selection_weights = torch.stack(selection_weights, 1)
+                        soft_admission = selection_weights.sum(1)
+                        soft_selected_unsafe = (selection_weights * target).sum(1)
+                        selective_group = source_condition_group[row] * len(ceilings) + local_ceiling_index
+                        constraint_terms = []
+                        group_risks = []
+                        for group_index in torch.unique(selective_group):
+                            group_mask = selective_group == group_index
+                            group_admission = soft_admission[group_mask].sum()
+                            group_risk = soft_selected_unsafe[group_mask].sum() / group_admission.clamp_min(1e-6)
+                            violation = group_risk - float(selective_risk_config["maximum_conditional_unsafe_rate"])
+                            constraint_terms.append(selective_dual[group_index].detach().clone() * violation)
+                            group_risks.append(group_risk.detach())
+                            with torch.no_grad():
+                                selective_dual[group_index] = (
+                                    selective_dual[group_index]
+                                    + float(selective_risk_config["dual_learning_rate"]) * violation.detach()
+                                ).clamp(0.0, float(selective_risk_config["maximum_dual"]))
+                        selective_constraint = torch.stack(constraint_terms).mean()
+                        feature_calibrator_objective = (
+                            float(selective_risk_config["bce_weight"]) * feature_calibrator_loss
+                            - float(selective_risk_config["coverage_weight"]) * soft_admission.mean()
+                            + selective_constraint
+                        )
+                        selective_risk_last = float(torch.stack(group_risks).max())
+                        selective_coverage_last = float(soft_admission.mean().detach())
+                    else:
+                        feature_calibrator_objective = feature_calibrator_loss
                     feature_calibrator_optimizer.zero_grad(set_to_none=True)
-                    feature_calibrator_loss.backward()
+                    feature_calibrator_objective.backward()
                     feature_calibrator_optimizer.step()
                     feature_calibrator_last = float(feature_calibrator_loss.detach())
                     if step % 1000 == 0:
+                        selective_note = (
+                            f" selective_risk={selective_risk_last:.7f} coverage={selective_coverage_last:.7f}"
+                            if selective_risk_config is not None else ""
+                        )
                         print(
-                            f"{config['task_id']} feature-calibrator step={step + 1} bce={feature_calibrator_last:.7f}",
+                            f"{config['task_id']} feature-calibrator step={step + 1} bce={feature_calibrator_last:.7f}"
+                            f"{selective_note}",
                             flush=True,
                         )
                 feature_calibrator.eval()
@@ -1632,6 +1698,7 @@ def main() -> None:
                 "reliability_memberwise_calibration": memberwise_calibration,
                 "feature_calibrator_state_dict": feature_calibrator.state_dict() if feature_calibrator is not None else None,
                 "reliability_feature_calibrator": feature_calibrator_config,
+                "frozen_feature_calibrator": config.get("frozen_feature_calibrator"),
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -1645,7 +1712,10 @@ def main() -> None:
                              "ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                              "frozen_reliability_model": frozen_reliability_model,
                              "feature_calibrator_steps": int(feature_calibrator_config["steps"]) if feature_calibrator_config else 0,
-                             "feature_calibrator_final_bce": feature_calibrator_last},
+                             "feature_calibrator_final_bce": feature_calibrator_last,
+                             "selective_risk_final_maximum_group_risk": selective_risk_last,
+                             "selective_risk_final_soft_coverage": selective_coverage_last,
+                             "selective_risk_maximum_dual": float(selective_dual.max()) if selective_dual is not None else None},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
                                 "final_bce": calibration_last,
                                 "mode": (
