@@ -795,8 +795,23 @@
   H=`2.5s`和task midpoints只在P201 read。source calibration单个q90 nonnegative margin。
 - gates：P201 max unsafe `<=.15`、mean coverage `>=.20`、ceiling monotonicity=0；不扫H/ceiling/gate/
   capacity/seed，不重开pair repair。
-- active=`run://worldsim_v67/WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
+- canonical=`run://worldsim_v67/WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
   20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`。
+- result：43,578 horizon examples、6k steps、final loss=`.23806`、source q90 margin=`.29441`；P201
+  mean/highest coverage=`.19836/.48115`，冻结H-q95 baseline=`.13361/.40082`；max/mean unsafe=
+  `.04762/.02385`、ceiling monotonicity violations=0。strict/mid/high coverage=`.03443/.07951/.48115`，
+  unsafe=`.04762/.01031/.01363`。risk与monotonicity通过，mean coverage gate以`.00164`未过，2/3 rejected；
+  wall=`43.49s`、peak GPU=`.14039GiB`、RSS=`1.8909GiB`。登记`V67-F211`。
+
+### WS-V67-P325-TIME-VARYING-HORIZON-CALIBRATED-AUTHORITY-01
+
+- migration：冻结P322 H-q95与P324 raw residual authority；source train学习task/H-conditioned positive
+  nonconformity scale，source calibration只产生一个normalized q90阈值，部署margin=`q90 * scale(x,H)`。
+- rationale：P324 raw risk已安全但单一raw margin不能表达H-dependent residual spread；采用time-varying
+  nonconformity normalization/temporal quantile adjustment的结构思想，仍仅报告empirical calibration。
+- inherited：同一source/P201 rows、train H `.8/1.5/3.0s`、heldout H=`2.5s`、task endpoints/midpoints、
+  ceilings及P201 gates `.15/.20/0`；不扫scale architecture/quantile/gate/seed，不在P201 fit。
+- active：训练实现与冻结run配置进入执行队列；P201只在source training/calibration完成后读取一次。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

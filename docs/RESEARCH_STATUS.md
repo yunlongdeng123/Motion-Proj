@@ -439,10 +439,18 @@ heldout task+H=`2.5s`。Canonical=`run://worldsim_v67/WS-V67-P323-HORIZON-CONDIT
 supported；0 training/0 recalibration，wall=`1.30s`。不再增加horizon-certificate确认cohort。
 
 P324把P322 continuous-H q95接入selective authority：source endpoint tasks×train H=`.8/1.5/3.0s`训练
-H-aware bounded residual risk score，P201同时heldout task与H=`2.5s`，ceilings由source train horizon targets固定；
-single q90 nonnegative margin，risk/coverage/ceiling-monotonicity三门。Active=`run://worldsim_v67/
+H-aware bounded residual risk score，P201同时heldout task与H=`2.5s`。Canonical=`run://worldsim_v67/
 WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
-20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`。
+20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`：43,578 examples、6k steps、final loss=`.23806`；
+source q90 margin=`.29441`。P201 mean/highest coverage=`.19836/.48115`（冻结H-q95 baseline
+`.13361/.40082`）、max unsafe=`.04762`、monotonicity=0；risk与monotonicity通过，但mean coverage比预注册
+`.20`少`.00164`，2/3，诚实判定rejected并登记`V67-F211`，不通过舍入、降门或P201再校准救援。
+
+P325迁移到time-varying horizon calibration：冻结P322/P324 raw score，用source train学习task/H-conditioned
+nonconformity scale、source calibration仅冻结一个normalized q90阈值，使margin随H变化；P201仍仅一次heldout
+task+H=`2.5s` read，继承`.15/.20/0`三门。该结构参考时变nonconformity normalization/temporal quantile
+adjustment，但只作经验风险校准，不宣称conformal guarantee。Active=`WS-V67-P325-TIME-VARYING-HORIZON-
+CALIBRATED-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -382,12 +382,14 @@
 - P322 r1：P199 run ID少`reliability`，artifact load FileNotFound，0 training/0 quality，登记F210；r2只修
   路径后P201 heldout task+2.5s coverage=`.54754/.82131/.95492`、median MAE=`.15154`、H/quantile
   violations=0，3/3 supported，F210关闭；
-- P323 active：P322冻结certificate在P277上0-step horizon-family untouched确认；失败才登记F211，不refit、
-  result coverage=`.56806/.90694/.98472`、median MAE=`.09370`、H/quantile violations=0，3/3 supported；
-  未触发F211，不再增加同family confirmation；
-- P324 active：P322 q95 base上训练task×H×ceiling selective authority；失败才登记F211，不refit、recalibrate、
-  改H/ceiling/gate/capacity/seed或重开pair repair；
-- 下一可用 failure id 为 `V67-F211`。
+- P323 result：P322冻结certificate在P277上0-step horizon-family untouched确认，coverage=
+  `.56806/.90694/.98472`、median MAE=`.09370`、H/quantile violations=0，3/3 supported；未触发F211，
+  不再增加同family confirmation；
+- P324 result：P322 q95 base上训练task×H×ceiling selective authority；P201 risk/monotonicity通过，但mean
+  coverage=`.19836 < .20`，以`.00164`未过，登记F211；不舍入通过、不降门、不在P201 recalibrate；
+- P325 active：冻结P324 raw score，改用source-only task/H-conditioned nonconformity scale加单个normalized q90；
+  失败才登记F212，不扫architecture/quantile/gate/seed；
+- 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -436,7 +438,23 @@
   `20260830T181000Z__joint-horizon-reliability-copula-s0-r2`；`torch.load`前FileNotFound；
 - scientific status：0 training、0 calibration、0 P201 quality，不产生horizon-method verdict；
 - minimal recovery：r2只修run path；模型、source/P201 rows、H split、quantiles、seed、steps和gates不变；
-- resolution status：`closed by P322 r2 supported result`；下一可用failure id=`V67-F211`。
+- resolution status：`closed by P322 r2 supported result`。
+
+### V67-F211 — P324全局raw residual margin在heldout horizon欠缺极少量coverage
+
+- canonical=`run://worldsim_v67/WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
+  20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`；
+- symptom：43,578 examples、6k steps、final loss=`.23806`；source q90 raw margin=`.29441`。P201
+  mean coverage=`.19836 < .20`，仅差`.00164`，coverage gate失败；
+- retained evidence：max/mean unsafe=`.04762/.02385`远低于`.15`，ceiling monotonicity=0；highest-ceiling
+  coverage=`.48115`，冻结H-q95 baseline mean coverage=`.13361`，说明task×H score有选择价值；
+- diagnosis：跨`.8/1.5/3.0s`共用单个raw residual margin忽略residual spread随H变化；heldout H=`2.5s`
+  上安全但略过保守。差距虽小，仍不得舍入为通过或用P201调margin；
+- literature check/migration：NeurIPS 2025 time-varying nonconformity normalization与NeurIPS 2022 temporal
+  quantile adjustment均显式让不确定性校准随时间变化；P325据此学习source-only task/H-conditioned positive
+  scale，再用source calibration冻结一个normalized q90阈值；仅作经验风险校准，不宣称formal guarantee；
+- forbidden rescue：不降低`.20`、不改q90、不删strict ceiling、不扫scale/gate/seed、不用P201训练或校准；
+- resolution status：`open via P325 time-varying horizon calibration`；下一可用failure id=`V67-F212`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
