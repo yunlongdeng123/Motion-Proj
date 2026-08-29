@@ -97,6 +97,9 @@ runtime interface；P234将使用P228首次fresh rows作同读secondary确认，
 P235的P201 surface quality仍改善，但final MAE=`.010090>.01`而严格拒绝（F179）。P236据privileged-information/
 missing-modality distillation改为从28 marginals hallucinate 8个P199 condition features，再输入完全冻结P233；只训练
 source feature MSE，不finetune surface或扫output-loss权重。
+P236的P201 feature RMSE=`.3433`且final MAE=`.014007>.01`，与NeurIPS 2024对deterministic missing-feature
+alignment的information-asymmetry警告一致（F180）。研究因此不引入概率hallucination或conformal machinery，而由P237
+直接从8个上游score/clearance conditions蒸馏surface，目标是在runtime同时amortize P182 CDF与P199/P203计算。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -645,6 +648,7 @@ support”；它仍不等价于collision probability、formal coverage或deploym
 - Hayder et al., [DTO-KD: Dynamic Trade-off Optimization for Effective Knowledge Distillation](https://openreview.net/pdf?id=QMItTyQW92), ICLR 2026.
 - Gauraha et al., [Split Knowledge Transfer in Learning Under Privileged Information](https://proceedings.mlr.press/v105/gauraha19a.html), COPA 2019.
 - Li et al., [Correlation-Decoupled Knowledge Distillation for Multimodal Sentiment Analysis with Incomplete Modalities](https://openaccess.thecvf.com/content/CVPR2024/html/Li_Correlation-Decoupled_Knowledge_Distillation_for_Multimodal_Sentiment_Analysis_with_Incomplete_Modalities_CVPR_2024_paper.html), CVPR 2024.
+- Chen et al., [Probabilistic Conformal Distillation for Enhancing Missing Modality Robustness](https://proceedings.neurips.cc/paper_files/paper/2024/hash/3fb97beb678a1c46bf25f40b3a8c6f98-Abstract-Conference.html), NeurIPS 2024.
 
 - Chai et al., [MultiPath: Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction](https://proceedings.mlr.press/v100/chai20a.html), CoRL 2019.
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.

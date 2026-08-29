@@ -1003,6 +1003,11 @@ P235虽使P201 surface Brier/calibration改善`.509%/.000614`且surface MAE=`.00
 knowledge transfer与CVPR 2024 incomplete-modality KD，P236不再让marginal-only head直接重学surface，而只训练
 `28 marginal CDF → 8 privileged P199 normalized features` hallucinator，再送入完全冻结P233；source-only feature MSE，
 不finetune surface、不加output/adversarial loss、不扫权重。RTX 3090训练中。
+P236确定性feature hallucination失败：P201 condition RMSE=`.3433`、surface MAE=`.009982`，但final MAE=
+`.014007>.01`，2/3、F180；NeurIPS 2024 PCD明确指出information asymmetry下point alignment过严。为避免重新引入
+概率采样/复杂分布与conformal越权，该支线关闭。P237转为信息不缺失的end-to-end amortization：仅输入8个固定horizon位置的
+normalized score/clearance conditions，直接蒸馏P233 surface，从运行时同时移除28个P182 CDF计算；P233 structure/
+teacher/steps/decisions不变，单次训练中。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

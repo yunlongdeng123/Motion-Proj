@@ -1878,7 +1878,17 @@
   再复用冻结teacher head，而非让missing-input student完全重学decision surface；
 - protocol：64x64 hallucinator只以source feature MSE学习`28 marginals→8 P199 normalized condition features`；
   frozen P233接收hallucinated+observed features；不finetune surface、不加output/adversarial loss；
-- status：RTX 3090训练中；P228/P234 quality unread。
+- result：P201 feature RMSE=`.3433`、surface MAE=`.009982`、Brier/calibration改善`.354%/.000990`，但
+  final-curve MAE=`.014007>.01`；2/3，F180；
+- verdict=`rejected_privileged_feature_hallucination_surface`；wall=`37.58s`。关闭deterministic/probabilistic
+  hallucination，不增加adversary或sampling。
+
+### WS-V67-P237-RAW-CONDITION-PREFIX-SURFACE-01
+
+- hypothesis：8个normalized score/clearance conditions本身是P182 marginals的上游充分输入；直接蒸馏P233 surface可在
+  runtime移除28个density-CDF evaluations，而不做missing-feature reconstruction；
+- protocol：固定P233双轴结构、teacher surface、128x128、source split、10,000 steps与三项P201 decisions；
+- status：RTX 3090训练中；不扫input subset/width/surface structure/budget/horizon/MC，不读P228/P234 quality。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 

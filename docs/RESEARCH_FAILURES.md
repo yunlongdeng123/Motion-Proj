@@ -2824,6 +2824,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F180`。
 
+### V67-F180 — deterministic privileged-feature hallucination放大最终曲线偏差
+
+- canonical：`run://worldsim_v67/WS-V67-P236-PRIVILEGED-FEATURE-HALLUCINATION-SURFACE-01/20260831T031000Z__privileged-feature-hallucination-surface-s0-r1`；
+- 观察：P201 condition-feature RMSE=`.3433`，surface quality仍改善，但final MAE=`.014007>.01`；
+- 解释：marginal CDF对raw condition是many-to-one，确定性point alignment不能恢复copula conditioning细节；
+- 文献响应：NeurIPS 2024 PCD同样指出missing-modality information asymmetry使deterministic alignment过严；
+- response：关闭hallucination，不引入概率feature sampling/conformal machinery；P237从真实上游raw conditions端到端amortize；
+- 防重复：不试hallucinator width/depth/adversary/output loss/probabilistic family或sample-count sweep。
+
+下一可用编号：`V67-F181`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
