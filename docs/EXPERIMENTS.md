@@ -95,8 +95,27 @@
 - train alpha=`0/.5/1`、beta=`0/.5/1/1.5/2`、floor=`.3/.5/.7`、9 prices；heldout alpha=`.25/.75`、
   beta=`.25/.75/1.25/1.75`、floor=`.4/.6`、8 price midpoints。
 - student positive price/floor rates解析保证两轴预算单调；P201 gates仅 budget MAE `<=.075` 与 frozen LCB-floor
-  regret `<=.005`。active=`run://worldsim_v67/WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
+  regret `<=.005`。canonical=`run://worldsim_v67/WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
   20260831T174500Z__epistemic-lcb-lagrangian-policy-s0-r1`。
+- result：P201 budget MAE=`.0115453`、regret=`.000133456`、candidate/teacher shortfall=`.00205633/.00205547`、
+  price/floor violations=`0/0`、beta budget change=`+.00272805`，2/2，verdict=
+  `supported_epistemic_aversion_conditioned_LCB_lagrangian_allocator`。wall=`147.24s`、peak GPU/RSS=`.1404/1.6448GiB`。
+
+### WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01 freeze
+
+- scenes=`0004/0177/0243/0400/0440/0633`，indices=`3/136/192/316/354/487`，六个不同 logs，location=`3/1/1/1`；
+  这些 processed dirs 在 freeze 时不存在，scene names 不在既有 docs/configs。
+- primary shard guesses=`01/02/03/04/05/06`；只在 exact miss 时对冻结 required members 做01--10 recovery，不换 scene。
+- frozen P275/P276、alpha/beta/floor、8个 price midpoints与 P276 两门；一次 formal read、无 refit/retraining。
+- prep active=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
+  20260831T181000Z__fresh-epistemic-prep-s0-r1`，与 P278 GPU training 重叠；formal read=false。
+
+### WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01
+
+- fixed64 group summary + alpha/beta/floor/fraction，positive fraction-rate输出 shadow price；冻结 P276 作为唯一 primal。
+- train alpha3×beta5×floor3×fraction9；heldout alpha2×beta4×floor2×fraction8；20-step bisection teacher。
+- P201 gates：attained fraction MAE `<=.030`、LCB-floor group regret `<=.002`；active=
+  `run://worldsim_v67/WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01/20260831T181500Z__epistemic-lcb-group-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

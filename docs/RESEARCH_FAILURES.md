@@ -56,6 +56,12 @@
 - P276 以冻结 P275 为唯一 teacher，soft-floor allocator当前运行；不将 LCB score包装为 credible interval/hard constraint；
 - 下一可用 failure id 仍为 `V67-F196`。
 
+### P276 outcome / P277 IO / P278 GPU overlap note — 无新增 failure
+
+- P276 P201 budget MAE=`.011545`、regret=`.0001335`，2/2；
+- P277六个新场景在 sensor/target read 前冻结，archive/preprocess 与 P278 fixed-group dual GPU training 并行；
+- 当前没有资源不足或多卡需求；下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

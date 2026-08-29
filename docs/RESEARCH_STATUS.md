@@ -57,10 +57,21 @@ Canonical=`run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/
 violations=`0/0/0`，beta low→high mean probability drop=`.003809`，2/2；P243 descriptive MAE=`.002036/.002658`。
 wall=`167.46s`。该 LCB 是保守 score，不是覆盖保证。
 
-P276 正把冻结 P275 接入 soft-floor Lagrangian allocator，联合条件化 alpha、epistemic beta、floor 与 shadow price；
+P276 把冻结 P275 接入 soft-floor Lagrangian allocator，联合条件化 alpha、epistemic beta、floor 与 shadow price；
 student结构保证 price↑budget↓、floor↑budget↑，beta效应由 teacher 学习而不强制方向。Active=`run://worldsim_v67/
 WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
-20260831T174500Z__epistemic-lcb-lagrangian-policy-s0-r1`，GPU 正在 teacher-grid/训练。仍非 hard constraint/safety。
+20260831T174500Z__epistemic-lcb-lagrangian-policy-s0-r1`。P201 budget MAE=`.011545`、LCB-floor regret=`.00013346`、
+price/floor violations=`0/0`、beta low→high budget change=`+.002728`，2/2；P243 descriptive budget MAE=`.010603`。
+wall=`147.24s`。仍非 hard constraint/safety。
+
+P277 已在任何新 sensor/target read 前冻结六个未处理、不同 log 的场景 `0004/0177/0243/0400/0440/0633`，
+location Boston/One-North/Queenstown/Holland=`3/1/1/1`；按 scene bands 并行扫描 shards01--06，错误 locator 才对
+同一 cohort做01--10 recovery。Prep=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
+20260831T181000Z__fresh-epistemic-prep-s0-r1` 正与 GPU 并行；formal confirmation尚未读取。
+
+GPU 同时执行 P278 fixed64 group dual：把 attainable budget fraction、alpha、beta、floor 与 group summary 编译为
+shadow price，再冻结 P276 产生逐 row budgets。Active=`run://worldsim_v67/WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01/
+20260831T181500Z__epistemic-lcb-group-dual-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
