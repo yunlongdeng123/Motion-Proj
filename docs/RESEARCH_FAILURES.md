@@ -437,8 +437,9 @@
 - P352：source q90通过但P201 mean-pool q90 risk=`.17518`，登记F227；
 - P353：frozen upper-pool将P201 q90 risk降至`.13115`但仍失败，登记F228；
 - P354：memberwise upper-pool q90 risk=`.04795`但coverage=`.24454`，登记F229；
-- P355：feature-aware ensemble selective calibrator implementation；
-- 下一可用 failure id 为 `V67-F230`。
+- P355：feature-aware BCE q90 coverage=`.40929`但risk=`.20548`，登记F230；
+- P356：worst-group selective-risk primal-dual calibrator implementation；
+- 下一可用 failure id 为 `V67-F231`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -641,6 +642,21 @@
   learned disagreement calibrator重排，而非在P353/P354之间手选常数权重；
 - forbidden rescue：不降低coverage gate、不改q90 threshold、不扫mean/max convex coefficient；resolution=
   `open via P355 feature-aware ensemble selective reliability`。
+
+### V67-F230 — P355 feature-aware BCE恢复coverage但未学习选择性条件风险
+
+- canonical=`run://worldsim_v67/WS-V67-P355-FEATURE-AWARE-ENSEMBLE-SELECTIVE-RELIABILITY-01/
+  20260901T160000Z__feature-aware-ensemble-selective-reliability-s0-r1`；
+- symptom：P201 q90 coverage=`.409290`，但max unsafe=`.205479 > .10`；只有risk gate失败，3/4 rejected；
+- source evidence：feature BCE/PAV=`.271707/.273126`，但source fold5 q90 unsafe也为`.104854`，说明endpoint错配
+  已在source出现，不需要用target shift解释全部失败；
+- diagnosis：BCE优化所有样本的平均proper score，PAV只做单调重标定；两者都没有优化最终largest-feasible-set
+  选择后unsafe/coverage比率，feature-aware MLP把排序能力主要用于恢复authority；
+- literature/migration：NeurIPS 2020 PACC给出约束学习primal-dual形式；AISTATS 2021 one-sided prediction直接寻找
+  false-positive受控的最大decision set；ICLR 2021显示group DRO可改善worst-group selective behavior。P356显式训练
+  source task×ceiling worst-group conditional risk；
+- forbidden rescue：不缩P355 width/steps、不加class weight、不调PAV或q90 threshold；resolution=
+  `open via P356 worst-group selective-risk primal-dual calibration`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

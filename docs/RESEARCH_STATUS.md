@@ -672,7 +672,15 @@ risk--coverage bracket：pool后校准过激进，memberwise upper过保守。
 
 P355不在两端事后手选权重。按NeurIPS 2023 ensemble selective prediction与NeurIPS 2025 selective-classification
 gap分解，冻结三个members，在source fold3用member probabilities、mean/max/std/range与task coordinates训练小型
-feature-aware calibrator以重排高分歧样本，fold4仍只做PAV；P201只作最终development read。
+feature-aware calibrator以重排高分歧样本，fold4仍只做PAV。Canonical=`run://worldsim_v67/
+WS-V67-P355-FEATURE-AWARE-ENSEMBLE-SELECTIVE-RELIABILITY-01/
+20260901T160000Z__feature-aware-ensemble-selective-reliability-s0-r1`：12k BCE=`.271707`，PAV=`.273126`；
+source fold5 q90=`.340963/.104854`，P201=`.409290/.205479`，3/4 rejected，登记F230。Feature-aware BCE恢复
+coverage但把risk推回激进端，证明主要错配是training objective而非输入表达力。
+
+P356复用同一32/16 calibrator与冻结members，按NeurIPS 2020 PACC primal-dual、AISTATS 2021 one-sided prediction
+及ICLR 2021 group-DRO selective结果，显式优化soft admission coverage并约束source task×ceiling最坏条件unsafe risk；
+不扩容量、不调`.10` endpoint，fold4 PAV和P201 read合同保持。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

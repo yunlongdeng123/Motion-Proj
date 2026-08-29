@@ -1306,7 +1306,21 @@
   ranking，只有feature-aware calibrator才能缩小selective gap。P355因此替代固定mean/max混合，不调整risk threshold。
 - method：冻结P352 heads；source fold3训练`[member probabilities, mean, max, std, range, horizon, ceiling,
   set-size one-hot]→unsafe logit`的32/16 MLP，fold4按ceiling×set-size PAV，fold5/P201合同不变。
-- locks：不使用P201训练/校准，不扫mixing weight/feature/width/steps/threshold/seed；状态=`implementation`。
+- locks：不使用P201训练/校准，不扫mixing weight/feature/width/steps/threshold/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P355-FEATURE-AWARE-ENSEMBLE-SELECTIVE-RELIABILITY-01/
+  20260901T160000Z__feature-aware-ensemble-selective-reliability-s0-r1`。
+- result：12k feature BCE=`.271707`，fold4 PAV=`.273126`；source fold5 q90 coverage/unsafe=
+  `.340963/.104854`，P201=`.409290/.205479`。Coverage显著充足但source与P201风险均失败，3/4 rejected，
+  wall=`54.87s`，F230。
+
+### WS-V67-P356-WORST-GROUP-SELECTIVE-RISK-CALIBRATOR-01
+
+- migration：P355表明feature-aware表达足够提高coverage，但平均BCE没有优化最终“准入后unsafe rate”；P356按PACC
+  primal-dual与one-sided prediction直接最大化准入并约束task×ceiling最坏条件风险。
+- method：冻结P352 members，复用P355 features/32-16 MLP；对q90阈值构造largest-feasible-set soft admission，
+  27个source progress×command×ceiling groups各自dual update，另保留轻量BCE作为概率语义锚；fold4 PAV。
+- locks：固定risk target `.10`、soft temperature和dual schedule一次，不扫penalty/coverage/width/steps/seed；
+  P201不参与训练或校准；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
