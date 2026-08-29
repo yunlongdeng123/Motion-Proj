@@ -62,6 +62,13 @@
 - P277六个新场景在 sensor/target read 前冻结，archive/preprocess 与 P278 fixed-group dual GPU training 并行；
 - 当前没有资源不足或多卡需求；下一可用 failure id 仍为 `V67-F196`。
 
+### P278 outcome / P279 composite-risk start note — 无新增 failure
+
+- P278 P201 attained fraction MAE=`.016307`、regret=`8.11e-6`，2/2；
+- P279 只在 P274--P278 均支持后组合 epistemic LCB 与 Actor-tail CVaR；预先保留“经验 composite score、非 coherence
+  proof/credible interval/posterior-predictive risk”的 claim boundary；
+- P277 archive IO 仍与 P279 GPU 并行；下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

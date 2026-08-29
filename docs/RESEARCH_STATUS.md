@@ -69,9 +69,15 @@ location Boston/One-North/Queenstown/Holland=`3/1/1/1`；按 scene bands 并行�
 同一 cohort做01--10 recovery。Prep=`run://worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-PREP-01/
 20260831T181000Z__fresh-epistemic-prep-s0-r1` 正与 GPU 并行；formal confirmation尚未读取。
 
-GPU 同时执行 P278 fixed64 group dual：把 attainable budget fraction、alpha、beta、floor 与 group summary 编译为
-shadow price，再冻结 P276 产生逐 row budgets。Active=`run://worldsim_v67/WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01/
-20260831T181500Z__epistemic-lcb-group-dual-s0-r1`。
+GPU 同时执行的 P278 fixed64 group dual 已完成：把 attainable budget fraction、alpha、beta、floor 与 group summary
+编译为 shadow price，再冻结 P276 产生逐 row budgets。Canonical=`run://worldsim_v67/
+WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01/20260831T181500Z__epistemic-lcb-group-dual-s0-r1`，P201 attained fraction
+MAE=`.016307`、group regret=`8.11e-6`、violations=0，2/2；wall=`127.47s`。
+
+P279 进一步合并两条风险轴：P275 的 `mean-beta*std` 先表达经验 epistemic conservatism，再对 group64 的 final-LCB
+shortfall做 empirical Actor-tail CVaR；依据 NeurIPS 2021 Bayes-adaptive CVaR与 UAI 2022 SENTINEL composite risk 的
+分层思想，但不声称 coherence proof 或 posterior-predictive CVaR。Active=`run://worldsim_v67/
+WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`，GPU 正在训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

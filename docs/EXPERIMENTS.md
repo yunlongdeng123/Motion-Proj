@@ -114,8 +114,20 @@
 
 - fixed64 group summary + alpha/beta/floor/fraction，positive fraction-rate输出 shadow price；冻结 P276 作为唯一 primal。
 - train alpha3×beta5×floor3×fraction9；heldout alpha2×beta4×floor2×fraction8；20-step bisection teacher。
-- P201 gates：attained fraction MAE `<=.030`、LCB-floor group regret `<=.002`；active=
+- P201 gates：attained fraction MAE `<=.030`、LCB-floor group regret `<=.002`；canonical=
   `run://worldsim_v67/WS-V67-P278-EPISTEMIC-LCB-GROUP-DUAL-01/20260831T181500Z__epistemic-lcb-group-dual-s0-r1`。
+- result：P201 price MAE=`.0334841`、attained fraction MAE=`.0163070`、regret=`8.1103e-6`、violations=0；2/2，
+  verdict=`supported_epistemic_aversion_conditioned_group_budget_dual`。wall=`127.47s`、peak GPU/RSS=`.1404/1.9472GiB`。
+
+### WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01
+
+- composite object：冻结 P275 epistemic-LCB score作为内层 reliability；外层对 fixed64 Actor group 的 final-LCB
+  shortfall做 empirical CVaR，联合 alpha、beta、floor、tail mass、shadow price输出 equivariant per-row budgets。
+- teacher：65 budgets、17 eta points；student positive price/floor rates；P201 gates仅 budget MAE `<=.075` 与 frozen
+  composite-risk regret `<=.005`。
+- active=`run://worldsim_v67/WS-V67-P279-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+  20260831T184500Z__epistemic-tail-cvar-allocator-s0-r1`；不声称 coherent composite-risk proof、credible interval、
+  posterior-predictive CVaR、hard constraint 或 safety。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
