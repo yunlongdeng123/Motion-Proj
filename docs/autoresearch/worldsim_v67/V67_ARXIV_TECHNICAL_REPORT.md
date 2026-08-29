@@ -270,7 +270,9 @@ absolute-time scalar growth不是稳定解释。后续P147转向新的10-scene�
 说明共同sequence decoder仍不等于联合分布收益。P149进一步把multimodality从P125的逐时刻components提升到整条trajectory modes，
 并用未来任一时刻boundary crossing作为直接score；这是对P148 negative的机制递进，而非capacity sweep。P149四mode均active，
 但四cohort rank mean下降`.098286`（F111），表明joint likelihood/any-crossing仍与continuous cost错位。P150因此不再间接预测
-residual distribution，而在5.18M query-time tokens上直接学习normalized boundary-state cost分布并汇聚upper cost。
+residual distribution，而在5.18M query-time tokens上直接学习normalized boundary-state cost分布并汇聚upper cost。P150在
+P81/P129得到正rank增量，却在P96反转`-.028055`（F112），说明direct object优于generative proxy但ERM不稳定。P151保持对象/
+architecture/score不变，以scene×horizon worst-quartile group NLL隔离检验domain-robust optimization。
 
 ## 3. 核心结果表
 

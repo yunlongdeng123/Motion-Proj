@@ -1846,7 +1846,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - model/decision：3 Gaussian members、fixed 1σ upper score；四consumed cohort cost全不退且mean rank gain≥`.005`。
 - prevention：固定upper sigma/architecture/loss/member/seed/coverage；不重复P120 P109-summary post-hoc head。
 
-下一可用编号为：`V67-F112`。
+### V67-F112 — direct dense cost对象仍在P96发生ERM transfer反转
+
+- 分类：`algorithm/direct-cost-domain-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01/
+  20260830T105500Z__dense-boundary-cost-ensemble-s0-r1`。
+- 观察：P81/P129 Spearman gain=`+.005119/+.005795`，说明对象对齐有信号；但P96=`-.028055`、P113=`-.004568`，
+  P129 selected cost回退至`.343517`，mean gain=`-.005427`，0/2 decisions。
+- 解释：稠密直接监督解决了P149 any-crossing严重错位，却未解决跨scene/domain排序稳定性；P96是主要反转点。
+- 防重复：不扫1σ/architecture/loss。P151只改训练risk aggregation为scene×horizon worst-group NLL。
+
+### P151 freeze note — scene-horizon group-DRO dense cost
+
+- environments/object：source scene×horizon；P150 target/input/network/1σ score全部不变。
+- objective：每batch 64 groups×1,024 tokens，优化最差25% group NLL均值；3 members、6,000 steps/member。
+- prevention：不扫group fraction/environment/IRM penalty/architecture/loss/member/seed/upper sigma/coverage。
+
+下一可用编号为：`V67-F113`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

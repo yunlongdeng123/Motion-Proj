@@ -807,7 +807,7 @@
 
 ### WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T105500Z__dense-boundary-cost-ensemble-s0-r1`。
 - target：每个query/time token直接监督
   `log1p(|boundary_normal·Actor residual| / max(|predicted separation-radius|,.05m))`；这是continuous cost的稠密局部项。
@@ -815,6 +815,20 @@
   `[256,128]`、6,000 steps/member、batch65,536；score是固定`mean + 1σ total` log-cost的row/trajectory max。
 - decisions：consumed P81/P96/P113/P129相对P126，selected cost全不退且mean Spearman gain≥`.005`。
 - locks：不扫upper sigma/architecture/loss/member/seed/coverage；不同于P120 top16 P109 summary post-hoc regressor。
+- result：5,180,364 tokens，member final NLL=`-2.40685/-2.40510/-2.38449`；P81/P96/P113/P129 selected cost=
+  `.175686/.178287/.219549/.343517`，Spearman gain=`+.005119/-.028055/-.004568/+.005795`
+  （mean=`-.005427`）。P81/P129 rank正增益，但P96强反转；0/2 decisions，verdict=
+  `rejected_development_dense_boundary_cost_ensemble`，wall=`95.99s`、peak GPU=`.865 GiB`；F112。
+
+### WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T110000Z__group-dro-boundary-cost-s0-r1`。
+- method：完整保留P150 dense target/input/3-member network/fixed1σ score；唯一训练变化是把source按scene×horizon定义
+  environments，每batch均匀采64组×1,024 tokens，并优化group NLL最差四分之一的均值。
+- motivation：P150在P81/P129 rank为正但P96反转，指向domain transfer；采用直接worst-group objective，不采用fragile IRM penalty。
+- decisions/locks：四consumed cohort相对P126 cost全不退且mean rank gain≥`.005`；不扫group fraction/environment/
+  architecture/loss/member/seed/upper sigma/coverage。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

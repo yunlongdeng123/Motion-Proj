@@ -483,10 +483,15 @@ mean/scale，mixture likelihood在整条residual sequence上计算。components�
 any-time crossing score在P81/P96/P113/P129 Spearman gain=`-.099259/-.191974/-.053506/-.048404`
 （mean=`-.098286`），cost全退，F111。故关闭generative mode/any-crossing路线，不扫components。
 
-P150现已占用3090训练direct dense boundary-cost ensemble：5.18M query-time tokens的target直接是
+P150训练direct dense boundary-cost ensemble：5.18M query-time tokens的target直接是
 `log1p(|normal·residual| / max(|predicted clearance|,.05))`，输入query features/time/normal/log-clearance；三成员输出
-log-cost分布，以固定1σ upper log-cost作trajectory score。它区别于P120只在top16 P109 summary上拟合的post-hoc head，
-直接对齐论文continuous reliability object；P147 IO/evaluator继续并行。
+log-cost分布，以固定1σ upper log-cost作trajectory score。P81/P96/P113/P129 rank gain=
+`+.005119/-.028055/-.004568/+.005795`（mean=`-.005427`）；P81 cost改善、P129 rank改善，但P96再次显著反转且
+P129 operating cost回退，0/2 decisions，F112。这表明直接对象有效但ERM transfer不稳。
+
+检索ICML IRM Games、NeurIPS 2023 group DRO并结合IRM fragility反例后，P151不采用脆弱IRM penalty，而保持P150对象/网络/
+1σ score不变，只把source environments定义为scene×horizon，并优化每batch最差四分之一environment NLL。3090正在训练三成员，
+P147 IO/evaluator继续并行；不扫group fraction或environment定义。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

@@ -60,7 +60,8 @@
 | P147 | `run://worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1` | new 10-scene × five-horizon confirmation；running |
 | P148 | `run://worldsim_v67/WS-V67-P148-FULL-SEQUENCE-ACTOR-ENSEMBLE-01/20260830T104500Z__full-sequence-actor-ensemble-s0-r1` | 四cohort rank全退、mean `-.012380`；rejected/F110 |
 | P149 | `run://worldsim_v67/WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01/20260830T105000Z__coherent-trajectory-mixture-s0-r1` | modes active但mean rank `-.098286`；rejected/F111 |
-| P150 | `run://worldsim_v67/WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01/20260830T105500Z__dense-boundary-cost-ensemble-s0-r1` | direct dense normalized-cost ensemble；running |
+| P150 | `run://worldsim_v67/WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01/20260830T105500Z__dense-boundary-cost-ensemble-s0-r1` | P81/P129 rank增但P96反转；rejected/F112 |
+| P151 | `run://worldsim_v67/WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01/20260830T110000Z__group-dro-boundary-cost-s0-r1` | scene×horizon worst-quartile NLL；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -113,7 +114,8 @@
 | multi-horizon independent transfer | P147 new scene cohort × five H | running | test horizon-wise generalization |
 | full-sequence residual ensemble | P148 consumed H3.5 ×4 | mean gain=`-.012380` | reject single-mode joint decoder |
 | coherent trajectory mixture | P149 consumed H3.5 ×4 | mean gain=`-.098286` | reject any-time generative score |
-| dense boundary-cost ensemble | P150 consumed H3.5 ×4 | running | directly learn continuous reliability object |
+| dense boundary-cost ensemble | P150 consumed H3.5 ×4 | mean gain=`-.005427` | object signal but ERM transfer reversal |
+| group-DRO dense cost | P151 consumed H3.5 ×4 | running | test scene/horizon robust optimization |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -152,6 +154,7 @@
 | `V67-F109` | closed negative | frozen mean的monotone time-scale仍未跨四cohort迁移 |
 | `V67-F110` | closed negative | full-resolution sequence ensemble四cohort rank一致下降 |
 | `V67-F111` | closed negative | coherent modes未collapse但any-crossing score严重错位 |
+| `V67-F112` | closed negative | direct cost在P81/P129有信号但P96 ERM反转 |
 
 ## 4. Artifact inventory
 

@@ -1,0 +1,49 @@
+schema_version: worldsim_v67.p151_group_dro_boundary_cost.v1
+output_schema_version: worldsim_v67.p151_group_dro_boundary_cost_summary.v1
+task_id: WS-V67-P151-GROUP-DRO-BOUNDARY-COST-01
+hypothesis_id: WS-V67-H-P151-001
+role: consumed_development_scene_horizon_robust_dense_boundary_cost_distribution
+model_artifact: GROUP_DRO_BOUNDARY_COST_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  groups_per_batch: 64
+  tokens_per_group: 1024
+  worst_group_fraction: 0.25
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  upper_standard_deviations: 1.0
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_group_dro_boundary_cost
+verdict_on_failure: rejected_development_group_dro_boundary_cost
+locks:
+  environments_are_source_scene_cross_horizon_groups: true
+  objective_is_mean_NLL_of_worst_quartile_groups_per_batch: true
+  same_dense_target_model_and_fixed_one_sigma_score_as_P150: true
+  no_group_fraction_environment_architecture_loss_seed_upper_sigma_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v119/ahuja20a.html
+  - https://proceedings.neurips.cc/paper_files/paper/2023/hash/a4b6ad6b48850c0c331d1259fc66a69c-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_scene_horizon_robust_cost_distribution_only
+  - tests_domain_robust_training_after_P150_P96_reversal
+  - requires_new_independent_confirmation_if_supported
+  - no_planner_policy_closed_loop_or_safety_claim
