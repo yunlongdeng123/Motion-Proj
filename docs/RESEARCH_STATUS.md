@@ -956,6 +956,13 @@ P223在source/P183仍改善selected Brier `8.49%/14.99%`，但P201 Brier/calibra
 逐budget learned authority关闭。参考NeurIPS 2024 hierarchical selective classification与structured-output risk，P224改变授权粒度：
 一个decision覆盖整条trajectory的七预算reliability curve，训练target为七预算realized P199 Brier均值，confidence control为
 mean Bernoulli variance；source-only训练，P183/P201只评价，P201原两门不变。RTX 3090运行中。
+P224在source/P183改善integrated selected Brier `4.83%/2.71%`，但P201退化`7.48%`且calibration退化`22.25%`，
+0/2、F176；learned authority彻底关闭。P225复用P203 calibrated probabilities做trajectory-curve confidence，在P201改善
+Brier/calibration `2.65%/31.17%`，但P183 calibration退化`82.25%`。P226固定输出raw P199仅改变选择集合后，P183/P201
+Brier均改善`2.02%/1.31%`，但P201 calibration仍退化`1.63%`且source反向，1/2、F177；selective authority不申请fresh。
+参考ICML 2021 distillation统计分析、UAI 2020 probability distillation与monotone neural CDF，P227转向compiler efficiency：
+用`8 P199 features + 28 P182 marginal CDF values`蒸馏冻结P203(P199-1024MC)七预算curve；8-bin softmax masses的CDF
+天然单调，single-pass student在RTX 3090训练10,000 steps，source-only fit，P183/P201只评价。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

@@ -2764,6 +2764,27 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F176`。
 
+### V67-F176 — 整条trajectory curve的learned authority在P201更强反转
+
+- canonical：`run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1`；
+- 观察：source/P183均正向，但P201 selected Brier退化`7.48%`、calibration退化`22.25%`，0/2；
+- 解释：聚合七预算并未消除cohort difficulty shortcut，反而使一个错误排序同时影响完整curve；confidence control更稳；
+- 响应：关闭所有learned authority heads；只允许冻结P203 calibrated confidence的一次selection/output attribution；
+- 防重复：不再训练authority MSE/pairwise/listwise/curve/group/ensemble/router或扫coverage。
+
+下一可用编号：`V67-F177`。
+
+### V67-F177 — calibrated-confidence selection改善Brier但未跨cohort保持选择后校准
+
+- canonical：`run://worldsim_v67/WS-V67-P226-CALIBRATED-CONFIDENCE-SELECTION-ONLY-01/20260831T003000Z__calibrated-confidence-selection-only-s0-r1`；
+- 观察：仅改selection时P183/P201 raw-P199 selected Brier均改善`2.02%/1.31%`，但P201 calibration退化`1.63%`，
+  source Brier/calibration也退化`.82%/12.11%`，cross-cohort composite 1/2；
+- 解释：P203共享单调map只改变约3.6% trajectory membership；其小Brier收益不足以形成稳定selection-conditional calibration；
+- 响应：关闭selective authority并保留raw confidence作为描述性control；P227转向不改变teacher semantics的单调curve distillation；
+- 防重复：不扫coverage、map、confidence functional、mixing或selector；不申请selective fresh cohort。
+
+下一可用编号：`V67-F178`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

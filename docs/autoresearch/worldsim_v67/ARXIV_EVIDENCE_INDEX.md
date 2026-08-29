@@ -134,7 +134,10 @@
 | P221 | `run://worldsim_v67/WS-V67-P221-SELECTIVE-AUTHORITY-POST-CONFIRMATION-01/20260830T233000Z__selective-authority-post-confirmation-s0-r1` | P183 selected Brier -13.71%、calibration -27.69%；secondary supported |
 | P222 | `run://worldsim_v67/WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01/20260830T234000Z__selective-authority-p201-tertiary-s0-r1` | P201 selected Brier +1.31%、calibration +9.67%；rejected/F174 |
 | P223 | `run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1` | P201 Brier +.43%、calibration +2.14%；rejected/F175 |
-| P224 | `run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1` | structured trajectory-curve fixed50 authority；running |
+| P224 | `run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1` | P201 Brier +7.48%、calibration +22.25%；rejected/F176 |
+| P225 | `run://worldsim_v67/WS-V67-P225-CALIBRATED-CONFIDENCE-CURVE-AUTHORITY-01/20260831T002000Z__calibrated-confidence-curve-authority-s0-r1` | P201 2/2但P183 selective calibration +82.25%；post-hoc mixed |
+| P226 | `run://worldsim_v67/WS-V67-P226-CALIBRATED-CONFIDENCE-SELECTION-ONLY-01/20260831T003000Z__calibrated-confidence-selection-only-s0-r1` | P183/P201 Brier正向但P201 calibration +1.63%；rejected/F177 |
+| P227 | `run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1` | monotone P203(P199) curve student；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -297,6 +300,8 @@
 | `V67-F173` | closed negative | P219在P183 Brier/calibration均退化；direct aggregate density关闭 |
 | `V67-F174` | recovery failed | P223缩小P201 reversal但仍0/2 |
 | `V67-F175` | closed negative | pairwise逐budget authority仍未过P201；转trajectory-curve object |
+| `V67-F176` | closed negative | trajectory-curve learned authority在P201反转更强；learned heads关闭 |
+| `V67-F177` | closed negative | calibrated selection的Brier小增益未保持selection-conditional calibration |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

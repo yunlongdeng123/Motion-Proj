@@ -1,0 +1,34 @@
+schema_version: worldsim_v67.p227_monotone_reliability_curve_distillation.v1
+output_schema_version: worldsim_v67.p227_monotone_reliability_curve_distillation_summary.v1
+task_id: WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01
+hypothesis_id: WS-V67-H-P227-001
+role: post_hoc_monotone_probability_curve_distillation_development
+seed: 0
+model_artifact: MONOTONE_RELIABILITY_CURVE_STUDENT.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p183_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {hidden_dimensions: [128, 128], steps: 10000, batch_size: 65536, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024}
+decision: {maximum_P201_teacher_probability_MAE: 0.01, maximum_relative_P201_Brier_degradation: 0.01, maximum_absolute_P201_calibration_error_increase: 0.002}
+verdict_on_pass: supported_post_hoc_monotone_reliability_curve_distillation
+verdict_on_failure: rejected_post_hoc_monotone_reliability_curve_distillation
+locks:
+  teacher_is_frozen_P203_of_P199_1024_sample_probabilities: true
+  student_input_is_P199_features_plus_28_P182_marginal_CDF_values_without_teacher_joint_probability: true
+  eight_softmax_masses_make_the_seven_budget_student_CDF_monotone: true
+  source_only_soft_probability_MSE_distillation_and_two_P201_decisions_are_single_shot: true
+  no_truth_auxiliary_KL_temperature_width_depth_budget_or_MC_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_distillation_after_P201_observation_not_confirmation
+  - differentiable_curve_emulator_not_formal_calibration_or_safety_guarantee
+  - no_collision_planner_policy_closed_loop_or_safety_claim

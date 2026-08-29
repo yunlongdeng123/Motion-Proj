@@ -72,6 +72,10 @@ P223正以source-only same-budget pairwise proper-loss ranking作一次恢复；
 P223把P201 Brier/calibration退化缩小到`.43%/2.14%`但仍0/2，故逐budget learned authority关闭。P224将selective object
 改为整条trajectory的七预算reliability curve，以integrated realized Brier训练单一fixed50 authority；当前仍是post-hoc
 development，不能视为confirmation或formal risk control。
+P224在P201进一步退化`7.48%/22.25%`，learned authority因此关闭。P225/P226表明P203 calibration可让P201整曲线
+selected Brier改善，但该选择在P183/source的selection-conditional calibration不一致，不能形成selective claim。P227转而
+蒸馏已有fresh支持的P203(P199) teacher：以P182 marginal surface和P199 features输入，输出结构上单调的七预算CDF，目标是
+用single forward保留teacher质量而消除1024-sample copula MC；当前仍为post-hoc development。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

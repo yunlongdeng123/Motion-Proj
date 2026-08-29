@@ -1773,7 +1773,32 @@
 - canonical planned：`run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1`；
 - protocol：一个fixed50 decision接受/拒绝整条trajectory七预算curve；22维input=`P199 features + 7 probs + 7 variances`；
   target为七预算realized Brier均值，control为mean Bernoulli variance；source-only fit，P183/P201 evaluation-only；
-- status：RTX 3090训练8,000 steps；P201 selected integrated Brier/calibration两门，不扫粒度/coverage/loss/features。
+- result：source/P183 selected Brier改善`4.83%/2.71%`、calibration改善`26.91%/3.63%`；P201 learned/control
+  Brier=`.081300/.075641`（退化`7.48%`），calibration=`.028975/.023701`（退化`22.25%`）；0/2，F176；
+- verdict=`rejected_post_hoc_trajectory_curve_authority`；learned selective authority关闭。
+
+### WS-V67-P225-CALIBRATED-CONFIDENCE-CURVE-AUTHORITY-01
+
+- canonical：`run://worldsim_v67/WS-V67-P225-CALIBRATED-CONFIDENCE-CURVE-AUTHORITY-01/20260831T002000Z__calibrated-confidence-curve-authority-s0-r1`；
+- result：candidate同时以P203 probability选择并评分；P201 selected Brier/calibration改善`2.65%/31.17%`，2/2；
+  但P183虽Brier改善`1.01%`，calibration退化`82.25%`；selection overlap约`96.2--96.4%`；
+- verdict=`supported_post_hoc_calibrated_confidence_curve_authority`按P201门成立，但跨P183不稳，不授权fresh，P226分解。
+
+### WS-V67-P226-CALIBRATED-CONFIDENCE-SELECTION-ONLY-01
+
+- canonical：`run://worldsim_v67/WS-V67-P226-CALIBRATED-CONFIDENCE-SELECTION-ONLY-01/20260831T003000Z__calibrated-confidence-selection-only-s0-r1`；
+- protocol：candidate/control都输出raw P199，只比较P203-calibrated vs raw mean variance选出的fixed50 trajectories；
+- result：P183/P201 Brier改善`2.02%/1.31%`，但P201 calibration退化`1.63%`且source Brier/calibration退化
+  `.82%/12.11%`；cross-cohort composite 1/2，F177；
+- verdict=`rejected_calibrated_confidence_selection_only`；关闭selective authority，不做fresh IO。
+
+### WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1`；
+- protocol：teacher=P203(P199 1024-MC)；student input不含teacher joint probability，仅8个copula features与28个P182
+  marginal CDF values；8-bin softmax cumulative masses保证七预算单调；source-only soft-probability MSE；
+- decisions：P201 teacher MAE≤`.01`；P201 Brier相对退化≤1%且calibration绝对增加≤`.002`的quality composite；
+- status：RTX 3090训练10,000 steps；无truth auxiliary/KL/temperature/width/MC sweep。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
