@@ -322,7 +322,14 @@ P307在attainable fraction `.25/.5/.75`的三点authority curve，以其均值�
 bounded residual；可微rank近似训练top-2，硬top-2评价真实四horizon max visited-state cost。固定6k steps，P201只保留
 cost reduction `>=10%`与pairwise concordance `>=.65`两门，不扫k/temperature/width/loss/gate。Active=
 `run://worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/
-20260901T034500Z__authority-residual-topk-admission-s0-r1`。
+20260901T034500Z__authority-residual-topk-admission-s0-r1`：P201 top-2 actual cost `.48428` vs all `1.23844`、
+relative reduction=`60.90%`，pairwise concordance=`.83580`，10/10 scenes降低；相对authority-only `.51260`再降
+`5.52%`，2/2 supported。source reduction/concordance=`64.13%/.83773`。wall=`100.20s`、peak GPU=`.1404GiB`。
+
+P310 在上述quality后不改P309：冻结P309/P307，在P277六场景/1,080 trajectories的180个六动作组做0-step
+action-admission-family untouched确认。原两门、hard top-2、三点authority条件全部继承；不refit、不换cohort。
+Active=`run://worldsim_v67/WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01/
+20260901T040000Z__authority-topk-admission-confirmation-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -567,8 +567,19 @@
   correctness。hard top-2才用于最终metric。
 - protocol：source train/scene-mod5 dev、P201 consumed development；6k steps、batch384。两门为P201相对all-actions
   cost reduction `>=.10`与pairwise concordance `>=.65`；不扫k/temperature/width/loss/gate。
-- active=`run://worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/
+- canonical=`run://worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/
   20260901T034500Z__authority-residual-topk-admission-s0-r1`。
+- result：P201 selected/all/nominal/authority-only/oracle cost=`.48428/1.23844/.72326/.51260/.36764`；相对all
+  reduction=`60.90%`、pairwise=`.83580`、scene lower/equal/higher=`10/0/0`，2/2 supported。source reduction/
+  pairwise=`64.13%/.83773`；wall=`100.20s`、peak GPU=`.1404GiB`。
+
+### WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01
+
+- frozen candidate：P309 selector + P307 authority，0-step；P277六场景/1,080 trajectories形成180个六动作组。
+- freshness：P277已被其他allocator/direct-fidelity family消费，但action-admission family untouched；只写reuse confirmation。
+- protocol/gates：继承hard top-2、三点authority condition、cost reduction `>=.10`、pairwise `>=.65`；one read。
+- active=`run://worldsim_v67/WS-V67-P310-AUTHORITY-TOPK-ADMISSION-CONFIRMATION-01/
+  20260901T040000Z__authority-topk-admission-confirmation-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

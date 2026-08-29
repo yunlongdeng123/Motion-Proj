@@ -350,7 +350,9 @@
 - next object：authority fidelity已跨cohort成立，转向预算到显式action admission/selection的decision层；失败才使用
   `V67-F207`，不再以P307/P308同指标微调补救；
 - P309 freeze：P307三点authority base + `.25` bounded residual + differentiable top-2，真实visited-state cost两门；
-  若失败先检索decision-focused/top-k迁移并登记F207，不扫描k/temperature/width/loss/gate；
+  P201 reduction=`60.90%`、pairwise=`.83580`，2/2 supported，未触发F207；
+- P310 freeze：P309/P307在P277 180个六动作组上0-step action-admission-family untouched确认；失败才登记F207，
+  不refit/换cohort/放宽门；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

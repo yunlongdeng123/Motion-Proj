@@ -241,60 +241,77 @@ def main() -> None:
     source_base = source_authority.mean(2)
     p201_base = p201_authority.mean(2)
 
+    confirmation_only = bool(config.get("confirmation_only", False))
     development = source_scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
     train = ~development
-    mean = source_descriptors[train].reshape(-1, source_descriptors.shape[2]).mean(0)
-    scale = source_descriptors[train].reshape(-1, source_descriptors.shape[2]).std(0).clip(min=1e-5)
+    selector_artifact = None
+    if confirmation_only:
+        selector_artifact = torch.load(
+            args.runs_root / config["frozen_selector"]["run"] / config["frozen_selector"]["artifact"], map_location="cuda"
+        )
+        mean = np.asarray(selector_artifact["input_mean"], np.float32)
+        scale = np.asarray(selector_artifact["input_scale"], np.float32)
+        target_mean = float(selector_artifact["target_log1p_mean"])
+        target_scale = float(selector_artifact["target_log1p_scale"])
+    else:
+        mean = source_descriptors[train].reshape(-1, source_descriptors.shape[2]).mean(0)
+        scale = source_descriptors[train].reshape(-1, source_descriptors.shape[2]).std(0).clip(min=1e-5)
+        target = np.log1p(source_costs).astype(np.float32)
+        target_mean = float(target[train].mean())
+        target_scale = float(target[train].std().clip(min=1e-5))
     source_descriptors = ((source_descriptors - mean) / scale).astype(np.float32)
     p201_descriptors = ((p201_descriptors - mean) / scale).astype(np.float32)
     target = np.log1p(source_costs).astype(np.float32)
-    target_mean = float(target[train].mean())
-    target_scale = float(target[train].std().clip(min=1e-5))
     target_z = (target - target_mean) / target_scale
 
     model_config = config["model"]
+    element_width = int(selector_artifact["element_width"]) if selector_artifact else int(model_config["element_width"])
+    context_width = int(selector_artifact["context_width"]) if selector_artifact else int(model_config["context_width"])
+    residual_bound = float(selector_artifact["maximum_authority_residual"]) if selector_artifact else float(model_config["maximum_authority_residual"])
     model = AuthorityResidualTopK(
-        source_descriptors.shape[2], int(model_config["element_width"]), int(model_config["context_width"]),
-        float(model_config["maximum_authority_residual"]),
+        source_descriptors.shape[2], element_width, context_width, residual_bound,
     ).cuda()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
-    x = torch.from_numpy(source_descriptors).cuda()
-    base_tensor = torch.from_numpy(source_base).cuda()
-    y = torch.from_numpy(target_z).cuda()
-    train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
-    left, right = np.triu_indices(int(config["action_group_size"]), 1)
-    left = torch.from_numpy(left).cuda()
-    right = torch.from_numpy(right).cuda()
     last = 0.0
-    for step in range(int(model_config["steps"])):
-        row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
-        score = model(x[row], base_tensor[row])
-        truth = y[row]
-        weights = _soft_topk_weights(score, int(config["selected_action_count"]), float(model_config["rank_temperature"]), float(model_config["membership_temperature"]))
-        decision_loss = torch.mean(torch.sum(weights * truth, 1) / float(config["selected_action_count"]))
-        target_probability = F.softmax(-truth / float(model_config["listwise_temperature"]), 1)
-        listwise_loss = torch.mean(torch.sum(-target_probability * F.log_softmax(-score / float(model_config["listwise_temperature"]), 1), 1))
-        truth_delta = truth[:, left] - truth[:, right]
-        score_delta = score[:, left] - score[:, right]
-        pairwise_loss = F.softplus(-torch.sign(truth_delta) * score_delta / float(model_config["pairwise_temperature"]))
-        pairwise_loss = pairwise_loss[torch.abs(truth_delta) >= float(model_config["pairwise_minimum_target_gap_z"])].mean()
-        regression_loss = F.smooth_l1_loss(score, truth, beta=float(model_config["huber_beta_z"]))
-        loss = (
-            decision_loss
-            + float(model_config["listwise_weight"]) * listwise_loss
-            + float(model_config["pairwise_weight"]) * pairwise_loss
-            + float(model_config["regression_weight"]) * regression_loss
-        )
-        optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        optimizer.step()
-        last = float(loss.detach())
-        if step % 500 == 0:
-            print(f"P309 authority top-k step={step + 1} objective={last:.7f}", flush=True)
+    if confirmation_only:
+        model.load_state_dict(selector_artifact["model_state_dict"])
+    else:
+        optimizer = torch.optim.AdamW(model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
+        x = torch.from_numpy(source_descriptors).cuda()
+        base_tensor = torch.from_numpy(source_base).cuda()
+        y = torch.from_numpy(target_z).cuda()
+        train_index = torch.from_numpy(np.flatnonzero(train)).cuda()
+        left, right = np.triu_indices(int(config["action_group_size"]), 1)
+        left = torch.from_numpy(left).cuda()
+        right = torch.from_numpy(right).cuda()
+        for step in range(int(model_config["steps"])):
+            row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+            score = model(x[row], base_tensor[row])
+            truth = y[row]
+            weights = _soft_topk_weights(score, int(config["selected_action_count"]), float(model_config["rank_temperature"]), float(model_config["membership_temperature"]))
+            decision_loss = torch.mean(torch.sum(weights * truth, 1) / float(config["selected_action_count"]))
+            target_probability = F.softmax(-truth / float(model_config["listwise_temperature"]), 1)
+            listwise_loss = torch.mean(torch.sum(-target_probability * F.log_softmax(-score / float(model_config["listwise_temperature"]), 1), 1))
+            truth_delta = truth[:, left] - truth[:, right]
+            score_delta = score[:, left] - score[:, right]
+            pairwise_loss = F.softplus(-torch.sign(truth_delta) * score_delta / float(model_config["pairwise_temperature"]))
+            pairwise_loss = pairwise_loss[torch.abs(truth_delta) >= float(model_config["pairwise_minimum_target_gap_z"])].mean()
+            regression_loss = F.smooth_l1_loss(score, truth, beta=float(model_config["huber_beta_z"]))
+            loss = (
+                decision_loss
+                + float(model_config["listwise_weight"]) * listwise_loss
+                + float(model_config["pairwise_weight"]) * pairwise_loss
+                + float(model_config["regression_weight"]) * regression_loss
+            )
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            last = float(loss.detach())
+            if step % 500 == 0:
+                print(f"P309 authority top-k step={step + 1} objective={last:.7f}", flush=True)
 
-    source_metrics = _metrics(
-        model, source_descriptors[development], source_base[development], source_costs[development],
-        source_scenes[development], int(config["selected_action_count"]), float(config["evaluation"]["pairwise_minimum_actual_cost_gap"]),
+    source_metrics = None if confirmation_only else _metrics(
+        model, source_descriptors[development], source_base[development], source_costs[development], source_scenes[development],
+        int(config["selected_action_count"]), float(config["evaluation"]["pairwise_minimum_actual_cost_gap"]),
     )
     p201_metrics = _metrics(
         model, p201_descriptors, p201_base, p201_costs, p201_scenes,
@@ -313,9 +330,9 @@ def main() -> None:
         "target_log1p_mean": target_mean,
         "target_log1p_scale": target_scale,
         "input_width": source_descriptors.shape[2],
-        "element_width": int(model_config["element_width"]),
-        "context_width": int(model_config["context_width"]),
-        "maximum_authority_residual": float(model_config["maximum_authority_residual"]),
+        "element_width": element_width,
+        "context_width": context_width,
+        "maximum_authority_residual": residual_bound,
         "frozen_authority": config["frozen_authority"],
         "authority_condition": condition,
     }, run_dir / config["model_artifact"])
@@ -326,7 +343,7 @@ def main() -> None:
         "status": "done",
         "verdict": verdict,
         "role": config["role"],
-        "training": {"group_count": int(train.sum()), "steps": int(model_config["steps"]), "final_objective": last},
+        "training": {"group_count": 0 if confirmation_only else int(train.sum()), "steps": 0 if confirmation_only else int(model_config["steps"]), "final_objective": last},
         "source_development": source_metrics,
         "P201_post_hoc_development": p201_metrics,
         "decision_checks": checks,
