@@ -495,9 +495,16 @@ P129 operating cost回退，0/2 decisions，F112。这表明直接对象有效�
 objective放大noise而非稳定信号，故direct-cost/DRO family关闭。
 
 随后检索NeurIPS randomized prior functions、anchored ensembles与ensemble NTK后，P152回到P126 Actor residual对象：每个
-member是trainable P109-shaped Gaussian加一个不同且永久冻结的random mean prior，prior scale固定1；source/likelihood/score/
-3 members/6,000 steps均与P126一致，只检验function-space prior能否在unseen scene/H3.5保持epistemic差异。3090训练中，
-P147 IO/evaluator继续并行，不扫prior scale。
+member加独立冻结random mean prior。P81/P96/P113/P129 rank gain=`-.010211/-.009325/-.002451/-.005422`
+（mean=`-.006852`），cost全退，F114；无prior-scale sweep。
+
+P153进一步冻结P109网络/mean/aleatoric scale，在916,722 hidden tokens上拟合每轴完整`129×129` heteroscedastic last-layer
+posterior precision。P81/P113 rank正增益、P96/P113 cost改善，但epistemic fraction仅`1.2e-4--2.0e-4`，mean rank gain
+`.000844`且P129 cost回退，F115；exact token posterior在大样本下过度集中。
+
+依据AISTATS 2024 Density-Regression、ICML 2024 Distance-Aware Bottleneck，P154正在GPU训练4-layer RealNVP source hidden-density。
+P126三成员mean/aleatoric/epistemic全部冻结，只以`1+ReLU(source-standardized NLL)`在低密度actor-time feature膨胀variance，
+检验distance-aware uncertainty；P147 IO/evaluator继续并行，不扫flow或inflation公式。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

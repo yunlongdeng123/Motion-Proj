@@ -1,0 +1,57 @@
+schema_version: worldsim_v67.p154_density_aware_actor_ensemble.v1
+output_schema_version: worldsim_v67.p154_density_aware_actor_ensemble_summary.v1
+task_id: WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P154-001
+role: consumed_development_frozen_P126_density_aware_variance
+model_artifact: ACTOR_HIDDEN_DENSITY_FLOW.pt
+seed: 0
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+density_model:
+  coupling_layers: 4
+  hidden_dimension: 256
+  steps: 6000
+  batch_size: 8192
+  learning_rate: 0.0005
+  weight_decay: 0.00001
+  maximum_log_scale: 1.5
+density_inflation:
+  formula: one_plus_relu_standardized_negative_log_density
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_density_aware_actor_ensemble
+verdict_on_failure: rejected_development_density_aware_actor_ensemble
+locks:
+  P126_member_means_aleatoric_scales_and_epistemic_variance_are_frozen: true
+  density_is_four_layer_RealNVP_on_frozen_P109_penultimate_features: true
+  variance_multiplier_is_one_plus_positive_source_standardized_NLL: true
+  no_flow_depth_scale_inflation_formula_weight_score_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v238/manh-bui24a.html
+  - https://proceedings.mlr.press/v235/apostolopoulou24a.html
+  - https://proceedings.neurips.cc/paper/2021/hash/093b60fd0557804c8ba0cbf1453da22f-Abstract.html
+claim_boundary:
+  - consumed_development_density_aware_variance_inflation_only
+  - frozen_P126_predictions_and_source_feature_density
+  - requires_new_independent_confirmation_if_supported
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim

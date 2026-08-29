@@ -1,0 +1,44 @@
+schema_version: worldsim_v67.p153_bayesian_last_layer_actor.v1
+output_schema_version: worldsim_v67.p153_bayesian_last_layer_actor_summary.v1
+task_id: WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01
+hypothesis_id: WS-V67-H-P153-001
+role: consumed_development_frozen_mean_bayesian_last_layer_actor_uncertainty
+model_artifact: BAYESIAN_LAST_LAYER_ACTOR.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+posterior: {prior_precision: 1.0, batch_size: 65536}
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_bayesian_last_layer_actor
+verdict_on_failure: rejected_development_bayesian_last_layer_actor
+locks:
+  P109_network_mean_and_aleatoric_scale_are_frozen: true
+  full_129_by_129_heteroscedastic_precision_per_output_axis: true
+  unit_Gaussian_prior_precision_and_all_916722_source_tokens: true
+  no_prior_precision_feature_layer_variance_weight_score_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper/2021/file/a7c9585703d275249f30a088cebba0ad-Paper.pdf
+  - https://proceedings.mlr.press/v238/manh-bui24a.html
+  - https://proceedings.neurips.cc/paper/2021/hash/093b60fd0557804c8ba0cbf1453da22f-Abstract.html
+claim_boundary:
+  - consumed_development_exact_last_layer_feature_leverage_only
+  - frozen_P109_predictions_plus_posterior_epistemic_variance
+  - requires_new_independent_confirmation_if_supported
+  - no_calibrated_probability_planner_policy_closed_loop_or_safety_claim

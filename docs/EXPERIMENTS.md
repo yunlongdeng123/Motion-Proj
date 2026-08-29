@@ -836,7 +836,7 @@
 
 ### WS-V67-P152-RANDOMIZED-PRIOR-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T110500Z__randomized-prior-actor-ensemble-s0-r1`。
 - method：3 independent P109-shaped trainable Gaussian members；每member mean加一个不同、永久冻结、相同architecture的random
   prior function，prior scale固定`1.0`；aleatoric scale仍只来自trainable member。
@@ -844,6 +844,31 @@
   P109 seed0权重，以避免初始化prior和function prior角色混合。
 - evaluation/decisions：P81/P96/P113/P129 continuous fixed50相对P126，cost全不退且mean Spearman gain≥`.005`。
 - locks：不扫prior scale/architecture/loss/member/seed/score/coverage。
+- result：member final NLL=`-3.64865/-3.66046/-3.50347`；P81/P96/P113/P129 selected cost=
+  `.179351/.172072/.220186/.309322`，Spearman gain=`-.010211/-.009325/-.002451/-.005422`
+  （mean=`-.006852`）。cost全退，0/2 decisions，verdict=`rejected_development_randomized_prior_actor_ensemble`，
+  wall=`104.70s`、peak GPU=`.414 GiB`；F114。
+
+### WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T111000Z__bayesian-last-layer-actor-s0-r1`。
+- method：冻结P109 network/mean/aleatoric scale；在全部916,722 actor-time hidden tokens上为两个output axis分别累积
+  heteroscedastic Fisher precision，单位Gaussian prior，完整`129×129` inverse作为last-layer epistemic covariance。
+- result：P81/P96/P113/P129 rank gain=`+.002336/-.001784/+.005756/-.002931`（mean=`+.000844`）；
+  selected cost=`.180326/.165895/.218703/.315489`。P96/P113 cost改善但P81/P129回退；epistemic fraction仅
+  `.000122/.000196/.000151/.000123`，0/2 decisions，wall=`2.55s`、peak GPU=`.362 GiB`；F115。
+- locks：不扫prior precision/effective sample size/feature layer/variance weight/score/coverage。
+
+### WS-V67-P154-DENSITY-AWARE-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T111500Z__density-aware-actor-ensemble-s0-r1`。
+- method：冻结P109 penultimate 128D feature并以全部source actor-time tokens训练4-layer RealNVP density；hidden `[256,256]`、
+  6,000 steps、batch8,192。冻结P126三member predictions，将total variance乘
+  `1+ReLU((NLL-source_mean)/source_std)`。
+- decisions/locks：四consumed cohort相对P126 cost全不退且mean rank gain≥`.005`；不扫flow depth/scale/
+  inflation formula/weight/score/coverage。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

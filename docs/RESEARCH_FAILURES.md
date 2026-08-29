@@ -1878,7 +1878,32 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - constants：P109 normalization/source、Gaussian NLL、6,000 steps/member、P126 continuous score与四cohort decisions。
 - prevention：不扫prior scale/architecture/loss/member/seed/score/coverage；不以P151作teacher或head。
 
-下一可用编号为：`V67-F114`。
+### V67-F114 — randomized function prior制造的差异未改善排序
+
+- 分类：`algorithm/randomized-prior-epistemic-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P152-RANDOMIZED-PRIOR-ACTOR-ENSEMBLE-01/
+  20260830T110500Z__randomized-prior-actor-ensemble-s0-r1`。
+- 观察：四cohort cost全退，Spearman gain全负，mean=`-.006852`。
+- 解释：冻结random function prior能保持成员差异，但差异方向未对齐continuous boundary cost；diversity不等于useful epistemic。
+- 防重复：不扫prior scale/seed/architecture；转P153 exact last-layer feature leverage。
+
+### V67-F115 — exact token posterior在大样本下epistemic过度集中
+
+- 分类：`algorithm/Bayesian-last-layer-underdispersion`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P153-BAYESIAN-LAST-LAYER-ACTOR-01/
+  20260830T111000Z__bayesian-last-layer-actor-s0-r1`。
+- 观察：P81/P113 rank增、P96/P113 cost改善，但mean rank仅`+.000844`；P81/P129 cost回退。epistemic fraction仅
+  `1.2e-4--2.0e-4`，远低于P126 useful member spread。
+- 解释：916,722 token Fisher使last-layer posterior高度集中；不按结果事后降低effective N或prior precision。
+- 防重复：不扫posterior temperature/prior/effective samples。P154改用source hidden density的parameter-free standardized distance。
+
+### P154 freeze note — hidden-density-aware P126 variance
+
+- density：P109 frozen 128D hidden；4-layer RealNVP、6,000 steps、916,722 source tokens。
+- integration：P126 predictions全冻结；variance multiplier=`1+ReLU(source-standardized NLL)`；两decision不变。
+- prevention：不扫flow depth/scale/inflation/weight/score/coverage。
+
+下一可用编号为：`V67-F116`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

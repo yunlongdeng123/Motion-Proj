@@ -275,6 +275,9 @@ P81/P129得到正rank增量，却在P96反转`-.028055`（F112），说明direct
 architecture/score不变，以scene×horizon worst-quartile group NLL隔离检验domain-robust optimization；P96进一步恶化到
 `-.115416`（F113），关闭direct-cost/DRO family。P152转而保持已支持的P126 residual object，唯一机制变化是为每个member
 添加永久冻结的random function prior，以检验function-space epistemic extrapolation，而非继续增加downstream capacity。
+P152四cohort rank全退（F114），说明forced diversity没有可靠方向。P153冻结P109预测，仅拟合full Bayesian last-layer
+covariance；它在部分cohort有正信号，但epistemic fraction约`10^-4`且mean gain仅`.000844`（F115）。P154因此不再用
+token-count posterior concentration，而在frozen hidden space显式学习source density，只在低密度输入膨胀P126 variance。
 
 ## 3. 核心结果表
 
