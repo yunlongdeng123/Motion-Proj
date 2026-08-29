@@ -1015,9 +1015,15 @@ def main() -> None:
                 if step % 500 == 0:
                     print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}", flush=True)
             model.eval()
-            log_temperature = nn.Parameter(torch.zeros((), device="cuda"))
-            calibration_bias = nn.Parameter(torch.zeros((), device="cuda"))
-            calibration_optimizer = torch.optim.Adam((log_temperature, calibration_bias), lr=float(config["calibration"]["learning_rate"]))
+            group_calibration = bool(config.get("reliability_group_calibration", False))
+            calibration_shape = (len(ceilings), len(set_sizes)) if group_calibration else ()
+            log_temperature = nn.Parameter(torch.zeros(calibration_shape, device="cuda"))
+            calibration_bias = nn.Parameter(torch.zeros(calibration_shape, device="cuda"))
+            calibration_horizon_slope = nn.Parameter(torch.zeros(calibration_shape, device="cuda")) if group_calibration else None
+            calibration_parameters = [log_temperature, calibration_bias]
+            if calibration_horizon_slope is not None:
+                calibration_parameters.append(calibration_horizon_slope)
+            calibration_optimizer = torch.optim.Adam(calibration_parameters, lr=float(config["calibration"]["learning_rate"]))
             calibration_index = torch.from_numpy(np.flatnonzero(calibration_rows)).cuda()
             calibration_last = 0.0
             for step in range(int(config["calibration"]["steps"])):
@@ -1025,10 +1031,15 @@ def main() -> None:
                 local_horizon_index = training_horizon_tensor[
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
-                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                local_ceiling_index = torch.randint(len(ceiling_tensor), (len(row),), device="cuda")
+                local_ceiling = ceiling_tensor[local_ceiling_index]
                 with torch.no_grad():
                     raw_logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
-                calibrated_logits = raw_logits / log_temperature.exp() + calibration_bias
+                if group_calibration:
+                    calibrated_logits = raw_logits / log_temperature[local_ceiling_index].exp() + calibration_bias[local_ceiling_index]
+                    calibrated_logits = calibrated_logits + calibration_horizon_slope[local_ceiling_index] * horizon_tensor[local_horizon_index, None]
+                else:
+                    calibrated_logits = raw_logits / log_temperature.exp() + calibration_bias
                 target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
                 calibration_loss = F.binary_cross_entropy_with_logits(calibrated_logits, target)
                 calibration_optimizer.zero_grad(set_to_none=True)
@@ -1044,9 +1055,13 @@ def main() -> None:
                 local_h = torch.full((len(local_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
                 probabilities = []
                 with torch.no_grad():
-                    for ceiling in ceilings:
+                    for ceiling_index, ceiling in enumerate(ceilings):
                         local_ceiling = torch.full((len(local_x),), float(ceiling), device="cuda")
-                        logits = model(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
+                        if group_calibration:
+                            logits = model(local_x, local_h, local_ceiling) / log_temperature[ceiling_index].exp() + calibration_bias[ceiling_index]
+                            logits = logits + calibration_horizon_slope[ceiling_index] * local_h[:, None]
+                        else:
+                            logits = model(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
                         probabilities.append(torch.sigmoid(logits).cpu().numpy())
                 probabilities = np.stack(probabilities, 1)
                 probabilities = np.minimum.accumulate(probabilities, axis=1)
@@ -1114,16 +1129,22 @@ def main() -> None:
             verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
             torch.save({
                 "model_state_dict": model.state_dict(), "input_width": source_feature.shape[1],
-                "hidden_dimensions": model_config["hidden_dimensions"], "temperature": float(log_temperature.exp().detach()),
-                "calibration_bias": float(calibration_bias.detach()), "frozen_lattice_authority": config["frozen_lattice_authority"],
+                "hidden_dimensions": model_config["hidden_dimensions"],
+                "temperature": log_temperature.exp().detach().cpu(),
+                "calibration_bias": calibration_bias.detach().cpu(),
+                "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if group_calibration else None,
+                "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
                 "schema_version": config["output_schema_version"], "task_id": config["task_id"],
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last},
                 "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
-                                "final_bce": calibration_last, "temperature": float(log_temperature.exp().detach()),
-                                "bias": float(calibration_bias.detach())},
+                                "final_bce": calibration_last,
+                                "mode": "ceiling_set_size_with_horizon_slope" if group_calibration else "global_temperature_bias",
+                                "temperature": log_temperature.exp().detach().cpu().tolist(),
+                                "bias": calibration_bias.detach().cpu().tolist(),
+                                "horizon_slope": calibration_horizon_slope.detach().cpu().tolist() if group_calibration else None},
                 "source_direct_reliability_frontier": source_frontier,
                 "P201_direct_reliability_frontier": p201_frontier,
                 "source_probability_range": [float(source_probability.min()), float(source_probability.max())],
