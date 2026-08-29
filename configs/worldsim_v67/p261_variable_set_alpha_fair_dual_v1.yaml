@@ -1,0 +1,45 @@
+schema_version: worldsim_v67.p261_variable_set_alpha_fair_dual.v1
+output_schema_version: worldsim_v67.p261_variable_set_alpha_fair_dual_summary.v1
+task_id: WS-V67-P261-VARIABLE-SET-ALPHA-FAIR-DUAL-01
+hypothesis_id: WS-V67-H-P261-001
+role: variable_set_size_permutation_invariant_alpha_fair_dual_compiler_development
+seed: 0
+model_artifact: VARIABLE_SET_ALPHA_FAIR_DUAL_COMPILER.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p183_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p246: {run: worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1, artifact: EXTENDED_BUDGET_RATE_SPLINE.pt}
+frozen_p259: {run: worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1, artifact: ALPHA_FAIR_SHADOW_PRICE_POLICY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_group_sizes: [32, 64, 128]
+heldout_group_sizes: [48, 96]
+training_alpha_fairness: [0.00, 0.25, 0.50, 0.75, 1.00]
+heldout_alpha_fairness: [0.125, 0.375, 0.625, 0.875]
+training_attainable_budget_fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 8192
+student_inference_batch_size: 512
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {element_width: 64, context_width: 128, rate_knot_count: 16, steps: 12000, batch_size: 1024, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_attained_budget_fraction_MAE: 0.030, maximum_P201_mean_frozen_alpha_fair_Lagrangian_utility_regret: 0.002}
+verdict_on_pass: supported_variable_set_alpha_fair_dual_compiler
+verdict_on_failure: rejected_variable_set_alpha_fair_dual_compiler
+locks:
+  deep_sets_mean_std_max_pooling_is_permutation_invariant_by_construction: true
+  train_group_sizes_32_64_128_and_interleaved_heldout_sizes_48_96_are_fixed: true
+  alpha_fraction_teacher_student_steps_and_two_decisions_match_P260: true
+  no_group_size_pooling_width_depth_alpha_fraction_metric_gate_or_step_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_variable_group_size_development_after_P201_observation_not_fresh_confirmation
+  - group_size_interpolation_only_from_32_to_128_not_arbitrary_population_size_generalization
+  - allocates_frozen_P246_P259_surrogate_not_measured_fairness_compute_or_planning_reward
+  - not_online_scheduler_collision_planner_policy_closed_loop_or_safety_claim
