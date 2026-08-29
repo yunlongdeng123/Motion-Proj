@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P165 joint residual diffusion active`
+- 报告状态：`P147 independent multi-horizon support; P165 joint-rank positive / selection rejected`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -327,7 +327,10 @@ forecasting的有效性与本最小adapter混为一谈。
 P165将这次失败转为预测对象变化：不再用neighbors修正任一Actor marginal，而冻结P126 mean/scale，联合生成同一anchor下
 所有Actors的9-step standardized residual innovations。Permutation-equivariant diffusion的samples被直接编译成P120同定义
 continuous boundary cost q75，因而区别于P149的单Actor coherent modes与any-crossing proxy。该阶段仍为consumed development；
-只有旧四cohort相对P126同时不退化才可能进入新的独立确认。
+只有旧四cohort相对P126同时不退化才可能进入新的独立确认。P165 final noise MSE=`.31946`；旧四rank gain全正、mean=
+`+.00811`，P147五H也全正且cost五组全降。可是旧P81/P96/P129 fixed50 cost分别回退`.00594/.00112/.00900`，
+因此冻结composite仍拒绝（F130）。论文可以报告“joint residual samples提供跨9个切片一致的rank signal”，但不能写成q75
+selection candidate成立，也不能用已读P147选择另一个quantile。
 
 ## 3. 核心结果表
 
@@ -363,6 +366,7 @@ continuous boundary cost q75，因而区别于P149的单Actor coherent modes与a
 | P129 | independent ensemble increment | selected cost=`.30867<.32934` | Spearman gain=`+.04257` | 2/2 scene-level support |
 | P147 | independent five-horizon ensemble increment | mean selected-cost delta=`-.01777` | mean Spearman gain=`+.17419` | 2/2 scene-level multi-H support |
 | P164 | nearest-neighbor residual adapter over frozen P126 | cost 4/4 regress | mean Spearman gain=`-.04474` | reject marginal interaction context |
+| P165 | joint multi-Actor residual diffusion | old cost 1/4 improve；P147 5/5 improve | old mean rank=`+.00811`；P147 all positive | rank mechanism positive, q75 selection reject |
 
 ## 4. 失败如何推动研究对象变化
 

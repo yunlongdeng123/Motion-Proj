@@ -618,8 +618,11 @@ P165按F129允许的对象迁移，不再修改单Actor marginal：P126三member
 proxy。Source 13,303 actor groups / 101,858 states直接复用；旧四cohort决策、P147描述边界保持不变，不扫diffusion/sample/
 quantile/architecture。
 
-P165 canonical r1已在单3090启动；step1/1001/2001 noise MSE=`1.31523/.45516/.42772`，GPU约`.65GiB`。
-当前继续8,000-step joint diffusion训练，随后同进程执行冻结的16-sample cost compiler；无工程失败或协议变化。
+P165 canonical r1已在单3090完成，final noise MSE=`.31946`。旧P81/P96/P113/P129的Spearman gain=
+`+.00731/+.00351/+.01105/+.01057`（mean=`+.00811`），说明joint dependency ranking signal四组同向；但selected cost
+在P81/P96/P129分别回退`+.00594/+.00112/+.00900`，故1/2 decisions、verdict rejected、F130。P147五H的rank gain=
+`+.02739/+.03219/+.01245/+.00514/+.01188`且cost五组全降，这是强post-confirmation描述而非新独立支持。准确结论是
+joint residual diffusion改善了全局continuous rank，但冻结q75/fixed50 operating point未跨旧cohort成立；不扫quantile/sample。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

@@ -1063,7 +1063,7 @@
 
 ### WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01
 
-- 状态：`running GPU training`；canonical id=`20260830T124000Z__joint-multi-actor-diffusion-s0-r1`。
+- 状态：`done/rejected composite with positive rank mechanism`；canonical id=`20260830T124000Z__joint-multi-actor-diffusion-s0-r1`。
 - object：冻结P126 marginal mean/scale，学习same scene/horizon/anchor中多Actor的9-step standardized residual innovations联合分布；
   与P164对单Actor marginal加context不同。
 - model：最多64 Actors，Actor19 condition；128-d、2-layer、4-head permutation-equivariant Transformer denoiser，32-step
@@ -1074,7 +1074,15 @@
 - locks：不扫diffusion steps/sample count/q75/width/layer/loss/score/coverage，不解冻P126，不加hash/checksum/fingerprint。
 - migration basis：CVPR 2025 U2Diff的state-wise uncertainty diffusion与CVPR 2023 IPCC-TP对joint而非marginal分布的论证；
   这里只学习P126 residual dependency，不声称完整multi-agent forecasting。
-- live：step1/1001/2001 noise MSE=`1.31523/.45516/.42772`；单3090约`.65GiB`，无多卡需求。
+- training result：13,303 groups / 101,858 Actors；final noise MSE=`.31946`；wall=`143.20s`、peak GPU=`.3083GiB`、
+  RSS=`1.6464GiB`，单卡足够。
+- development rank：P81/P96/P113/P129 gain=`+.00731/+.00351/+.01105/+.01057`，mean=`+.00811`，rank门通过。
+- development selection：cost delta=`+.00594/+.00112/-.00047/+.00900`，non-regression门失败；verdict=
+  `rejected_development_joint_multi_actor_diffusion`，F130。
+- P147 post-confirmation：五H rank gain=`+.02739/+.03219/+.01245/+.00514/+.01188`，cost delta=
+  `-.00133/-.00265/-.00080/-.00005/-.00593`，全方向支持但仅描述，不能替代失败的冻结development AND rule。
+- interpretation：joint residual dependency是首个在旧四和P147五H共9个切片rank全正的新机制，但q75 sampled-cost在旧fixed50
+  边界不稳；不扫quantile/sample/coverage，也不以P147 post-read结果恢复candidate。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

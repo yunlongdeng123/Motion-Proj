@@ -2102,7 +2102,19 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：旧四cohort相对P126 cost全不退+mean rank gain≥`.005`；P147 post-confirmation only。
 - prevention：不扫diffusion/sample/q75/max actors/architecture/loss/coverage；算法失败才使用F130并关闭joint diffusion trial。
 
-下一可用编号为：`V67-F130`。
+### V67-F130 — joint diffusion rank一致改善但q75 fixed50 cost未跨旧cohort不退
+
+- 分类：`algorithm/joint-residual-operating-point`；状态：`closed_composite_negative_with_positive_rank_signal`。
+- canonical：`run://worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/
+  20260830T124000Z__joint-multi-actor-diffusion-s0-r1`。
+- 观察：旧四cohort rank gain全正、mean=`+.00811`，rank门通过；P81/P96/P129 selected cost小幅回退，non-regression门失败。
+  P147五H rank/cost全部改善，但它们已被primary读取，只能作post-confirmation diagnosis。
+- 解释：joint samples比marginal adapter更稳定地刻画相对风险，但sampled cost q75与per-scene fixed50 cutoff仍有operating-point
+  mismatch；这不是P164式整体interaction shortcut，也不足以恢复candidate。
+- 防重复：不扫q50/q90/sample count/DDIM steps/coverage或用P147选择quantile；保留“9/9 rank slices positive”为机制结果，
+  关闭当前q75 joint-diffusion selection candidate。后续不得以放宽cost gate进入独立确认。
+
+下一可用编号为：`V67-F131`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
