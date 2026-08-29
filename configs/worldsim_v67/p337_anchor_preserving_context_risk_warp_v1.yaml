@@ -33,7 +33,7 @@ heldout_lateral_commands: [-0.5, 0.5]
 lateral_preference_weight: 0.5
 boundary_state_cost: {clearance_floor_m: 0.05}
 teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
-warp_split: {scene_modulus: 5, warp_fit_scene_remainder: 0, development_scene_remainder: 3}
+warp_split: {strategy: sorted_unique_scene_rank_modulus, scene_modulus: 5, warp_fit_scene_remainder: 0, development_scene_remainder: 3}
 risk_warp_model:
   hidden_dimensions: [64, 32]
   maximum_slope: 2.0
@@ -52,6 +52,7 @@ locks:
   P332_lattice_P333_q90_anchor_and_P336_curvature_are_frozen: true
   q90_is_an_exact_fixed_point_and_warp_slopes_are_positive: true
   source_remainder0_fits_warp_and_remainder3_only_develops: true
+  scene_folds_use_sorted_unique_scene_rank_not_sparse_numeric_scene_id_modulus: true
   P201_is_not_used_for_training_or_calibration: true
   no_slope_bound_anchor_range_capacity_gate_or_seed_sweep: true
   add_hash_checksum_fingerprint: false

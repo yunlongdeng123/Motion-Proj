@@ -938,8 +938,12 @@ def main() -> None:
                 p201_shape = curvature_model(p201_x)
             split = config["warp_split"]
             modulus = int(split["scene_modulus"])
-            warp_fit_rows = source_example_scenes % modulus == int(split["warp_fit_scene_remainder"])
-            development_rows = source_example_scenes % modulus == int(split["development_scene_remainder"])
+            unique_split_scenes, scene_rank = np.unique(source_example_scenes, return_inverse=True)
+            scene_fold = np.arange(len(unique_split_scenes), dtype=np.int64) % modulus
+            row_fold = scene_fold[scene_rank]
+            warp_fit_rows = row_fold == int(split["warp_fit_scene_remainder"])
+            development_rows = row_fold == int(split["development_scene_remainder"])
+            split_fold_counts = {str(fold): int(np.sum(row_fold == fold)) for fold in range(modulus)}
             warp_config = config["risk_warp_model"]
             risk_warp = ContextAnchoredRiskWarp(
                 source_feature.shape[1], warp_config["hidden_dimensions"], float(warp_config["maximum_slope"])
@@ -1062,7 +1066,8 @@ def main() -> None:
                 "schema_version": config["output_schema_version"], "task_id": config["task_id"],
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(warp_fit_rows.sum()), "steps": int(warp_config["steps"]),
-                             "final_pinball_loss": last, "training_quantile_range": [float(value) for value in training_quantile_range]},
+                             "final_pinball_loss": last, "training_quantile_range": [float(value) for value in training_quantile_range],
+                             "scene_rank_fold_row_counts": split_fold_counts},
                 "anchor": {"quantile_level": anchor_q, "frozen_risk_curvature": config["frozen_risk_curvature"]},
                 "heldout_horizon_seconds": float(horizon_values[heldout_horizon_index]),
                 "source_context_warp_development": source_frontier, "P201_context_warp_frontier": p201_frontier,
