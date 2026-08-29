@@ -112,7 +112,7 @@ def main() -> None:
     required_by_shard: dict[str, set[str]] = {}
     for name, members in required_by_scene.items():
         required_by_shard.setdefault(scene_shards[name], set()).update(members - existing)
-    tasks = [
+    tasks = [] if data.get("recovery_only", False) else [
         (
             str(archive_root / f"v1.0-trainval{shard}_blobs.tgz"),
             members,

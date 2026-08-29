@@ -47,7 +47,7 @@ def _target_prices(policy,groups,fractions,steps,chunk_size):
 
 
 def _reward(teacher,groups,budget_z,chunk_size):
- features=np.broadcast_to(groups[:,None,:,:],budget_z.shape+(groups.shape[1],36)).reshape(-1,36);budgets=np.broadcast_to(budget_z[:,:,None],budget_z.shape+(groups.shape[1],)).reshape(-1);outputs=[]
+ features=np.broadcast_to(groups[:,None,:,:],budget_z.shape+(36,)).reshape(-1,36);budgets=budget_z.reshape(-1);outputs=[]
  with torch.no_grad():
   for start in range(0,len(features),chunk_size):outputs.append(teacher(torch.from_numpy(features[start:start+chunk_size]).cuda(),torch.from_numpy(budgets[start:start+chunk_size]).cuda()).mean(1).cpu().numpy())
  return np.concatenate(outputs).reshape(budget_z.shape+(groups.shape[1],)).mean(2)
