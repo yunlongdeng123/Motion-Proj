@@ -162,6 +162,10 @@ P120把target改为observed Actor residual沿τ boundary normal的absolute proje
 P121在新target read前冻结10-scene scene-level independent cohort与两项composite decision，确认P109 continuous-cost ranking
 及fixed50 selection，而不重新打开binary flip gate。Outcome：`PENDING_P121_FINAL_FILL`。
 
+P121 archive IO期间，P122在P121 rows出现前用已消费P81/P96/P113比较P117 full covariance与P109。Full covariance使
+continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost略退化，预先冻结的nonregression失败并登记F87。
+因此P117不进入P121同读secondary；独立primary仍只确认P109，且不做covariance/coverage sweep。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -185,6 +189,7 @@ P121在新target read前冻结10-scene scene-level independent cohort与两项co
 | P113 | independent directional vs clearance | directional/clearance=`6 / 5` | `.92016 / .87529` | reject composite；AUROC gate pass |
 | P119 | consumed ranked-range tail | P81/P96/P113=`0 / 0 / 6` | gain=`-.00384/-.00459/-.00122` | reject tail recovery |
 | P120 | consumed continuous boundary cost | P109 selected reduction=`.8975/.7705/.8337` | Spearman=`.8065/.7183/.7921` | base candidate；new head reject |
+| P122 | consumed full-cov continuous selection | selected cost=`.1854/.1849/.2255` | Spearman gain=`+.0115/+.0048/+.0120` | reject；P96/P113 cost回退 |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -203,6 +208,7 @@ P121在新target read前冻结10-scene scene-level independent cohort与两项co
 | `V67-F84` | 全局AUROC增量可保证fixed50 rare-event优势 | AUROC gain `+.04486`但events `6>5` |
 | `V67-F85` | source ranked-range loss可修复fixed50 transfer | P113仍6 events且三cohort AUROC都退化 |
 | `V67-F86` | continuous regressor可超过P109 base | P81/P96退化；保留P109 continuous object |
+| `V67-F87` | full covariance全局排序增量可保证fixed50 continuous cost不退化 | P96/P113 selected cost略升；不进入P121 secondary |
 
 ## 5. 系统与资源
 
@@ -217,6 +223,7 @@ P121在新target read前冻结10-scene scene-level independent cohort与两项co
 - P118冻结checkpoint的conditional-vs-zero-rho消融wall约1.03s，不重训、不读取P113。
 - P119 source-only ranked-range GPU训练6,000 steps，wall约43.50s。
 - P120 source-only continuous cost regression 6,000 steps，wall约27.30s。
+- P122在P121 archive IO期间做冻结checkpoint GPU inference，wall约1.01s；没有训练或新target read。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界

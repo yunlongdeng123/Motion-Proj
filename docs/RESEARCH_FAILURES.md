@@ -1367,6 +1367,22 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F87`。
 
+### V67-F87 — full-covariance排序增量未保证continuous fixed50 cost nonregression
+
+- 分类：`scientific/full-covariance-continuous-selection`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P122-FULL-COVARIANCE-CONTINUOUS-SELECTION-01/
+  20260830T081000Z__full-covariance-continuous-selection-s0-r1`；
+- protocol：P121 target仍未物化时，只读已消费P81/P96/P113；冻结P117/P109 checkpoints、continuous cost、`.05m` floor与
+  fixed50，不训练、不refit。只有三cohort selected cost均不回退且mean Spearman gain≥`.005`才可成为P121 secondary；
+- symptom：full covariance的Spearman gain=`+.011488/+.004767/+.011976`，均值`.009410`通过；但selected cost在P96
+  `.178783→.184867`、P113 `.224742→.225542`，故nonregression失败；
+- interpretation：P117 full-likelihood训练带来的整体排序改善仍会移动fixed50边界，global continuous rank gain不足以保证
+  operating-point cost不退化；与P118一起说明不能把收益简化为conditional rho推理项；
+- resolution：不把P117追加到P121同读、不扫rho/score/coverage、不训练combiner；P121 primary继续只用冻结P109；
+- claim impact：无full-covariance continuous-selection或独立迁移claim；P117 consumed AUROC mechanism support仍保留。
+
+下一可用编号：`V67-F88`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1374,10 +1390,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。失败登记`V67-F87`并
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122已占用F87，
+  因此P121 scientific failure若发生则登记`V67-F88`并
   关闭continuous object independent claim，不做第二P121 recovery。
 
-下一可用编号仍为：`V67-F87`。
+下一可用编号仍为：`V67-F88`。
 
 ### V6.6 当前边界（2026-08-28）
 

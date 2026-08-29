@@ -270,6 +270,13 @@ continuous cost definition、`.05m` floor、H3.5、fixed50及两项composite dec
 ≥`.10`；selected cost reduction≥`.70`且selected cost不高于clearance。Shard locator只可在target materialization前修正，
 不得换scene/model/cost/floor/coverage/metric或gate。
 
+P121 archive扫描期间以空闲GPU执行P122，不等待I/O完成。P122只在已消费P81/P96/P113上比较冻结P117 full-covariance
+crossing score与P109，不训练、不refit、不读取P121 rows；只有三cohort selected cost全不回退且mean Spearman gain≥`.005`
+才允许成为P121同读secondary。Full covariance的Spearman分别提高`.01149/.00477/.01198`（均值`.00941`），但selected
+cost在P96由`.178783→.184867`、P113由`.224742→.225542`，nonregression失败。verdict=
+`rejected_development_full_covariance_continuous_cost`（`V67-F87`）；不追加secondary、不扫covariance/score/coverage，P121
+primary仍为冻结P109 continuous object。P122 wall=`1.01s`、peak GPU=`.03821GiB`，与P121 IO实际重叠。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p122_full_covariance_continuous_selection.v1
+output_schema_version: worldsim_v67.p122_full_covariance_continuous_selection_summary.v1
+task_id: WS-V67-P122-FULL-COVARIANCE-CONTINUOUS-SELECTION-01
+hypothesis_id: WS-V67-H-P122-001
+role: consumed_development_full_covariance_continuous_cost_selection
+verdict_on_pass: supported_development_full_covariance_continuous_cost
+verdict_on_failure: rejected_development_full_covariance_continuous_cost
+frozen_p117:
+  run: worldsim_v67/WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01/20260830T072500Z__full-covariance-actor-uncertainty-s0-r1
+  artifact: FULL_COVARIANCE_ACTOR_UNCERTAINTY.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+development_cohorts:
+  - {name: consumed_p81, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {top_k_crossing_probabilities: 16}
+selection: {coverage_fraction: 0.50}
+decision: {minimum_mean_spearman_gain_over_p109: 0.005}
+locks:
+  frozen_P117_and_P109_checkpoints_only: true
+  same_continuous_cost_floor_H3p5_fixed50_as_P120_P121: true
+  P81_P96_P113_consumed_before_P121_target_read: true
+  no_model_cost_floor_coverage_metric_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_development_method_selection_only
+  - cannot_modify_P121_primary
+  - prospective_P121_secondary_only_if_both_decisions_pass_before_rows_exist
+  - no_collision_probability_planning_or_safety_claim

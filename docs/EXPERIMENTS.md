@@ -393,6 +393,19 @@
 - decisions仅两项：`P109 Spearman>=.70 AND gain over clearance>=.10`；`selected cost reduction>=.70 AND selected cost<=clearance`。
   不训练P120 head，不读binary flip作为gate；不换scene/shard（exact pre-target locator修正除外）/model/cost/floor/coverage/metric/gate。
 
+### WS-V67-P122-FULL-COVARIANCE-CONTINUOUS-SELECTION-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T081000Z__full-covariance-continuous-selection-s0-r1`；执行时P121 archive IO仍在扫描且P121 target未物化。
+- method：冻结P117 full bivariate Gaussian checkpoint，以learned mean/scale/rho解析boundary-normal crossing score；冻结P109
+  continuous score作直接比较。同一P120 continuous cost、`.05m` floor和per-scene fixed50；不训练、不refit、不扫rho/
+  projection/coverage。只有三cohort selected cost均不回退且mean Spearman gain≥`.005`，才允许预先冻结为P121同读secondary。
+- result：P81/P96/P113 full-covariance Spearman=`.817952/.723080/.804065`，相对P109 gain=
+  `+.011488/+.004767/+.011976`，mean gain=`+.009410`通过；selected cost=`.185374/.184867/.225542`，P109=
+  `.186297/.178783/.224742`，P96/P113略回退，nonregression失败。
+- verdict=`rejected_development_full_covariance_continuous_cost`（`V67-F87`）。不修改P121 primary，不创建同读secondary，
+  不做阈值或covariance rescue。wall=`1.01s`、peak GPU=`.03821GiB`、RSS=`.564GiB`。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
