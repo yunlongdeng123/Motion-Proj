@@ -1033,7 +1033,16 @@ step 0因旧dataset helper把31 target budgets误耦合为132维输入而退出�
 31点仍只生成teacher target。r2训练完成：P201 surface/final MAE=`.007950/.010320`，Brier改善`.224%`、calibration
 改善`.000419`、双轴violations=`0/0`，但final gate严格失败，2/3、F186。相比P238，连续surface误差已减半，说明
 positive-rate结构有效；剩余是MSE训练与MAE decision的目标错位。参考ICCV 2019回归蒸馏与CVPR 2024 KD-DETR的L1
-regression distillation，P242只把MSE替换为probability-space L1；结构/data/seed/12k steps/heldout gates全部不变，RTX 3090训练中。
+regression distillation，P242只把MSE替换为probability-space L1；结构/data/seed/12k steps/heldout gates全部不变。
+P242现已3/3：P201 surface/final MAE=`.007271/.009869`，Brier degradation=`.0629%`、calibration increase=
+`.000145`、双轴violations=`0/0`；source final也从P241 `.010666`降至`.009815`。verdict=
+`supported_l1_integrated_monotone_continuous_budget_surface`，但仍是post-hoc development。
+
+P243已在新sensor/target read前冻结第二个10-scene/10-log cohort：`0161/0283/0457/0695/0907/0350/0975/
+0790/1011/1048`，location=`5/2/2/1`，shards=`02/03/04/05/07/08/09/10`。P242 artifact、六个heldout
+midpoints、1024 MC与三门完全冻结；archive/preprocess和confirmation waiter并行运行。IO期间P244以NeurIPS 2019
+monotone spline思路把P242的query-time quadrature换为16个context-conditioned positive rate knots和解析分段线性积分；
+继续source-only L1训练，输入/预算/steps/decisions不变，P243 rows绝不进入训练，RTX 3090已开训。
 
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新

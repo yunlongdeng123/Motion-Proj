@@ -2917,6 +2917,16 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F187`。
 
+### P242 milestone note — L1目标对齐恢复连续预算compiler，无新增failure
+
+- canonical：`run://worldsim_v67/WS-V67-P242-L1-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T053000Z__l1-integrated-monotone-budget-surface-s0-r1`；
+- 结果：P201 surface/final MAE=`.007271/.009869`，quality composite通过，budget/horizon violations=`0/0`，3/3；
+- 因果边界：相对P241唯一科学变化是MSE改L1；没有width/quadrature/budget/step/seed sweep；
+- next：P243全新10-scene/10-log cohort已在read前冻结并启动；P244只在其IO期间训练解析rate-spline successor，
+  不读取P243 rows或quality。
+
+下一可用编号仍为：`V67-F187`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；

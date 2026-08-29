@@ -1953,7 +1953,31 @@
   KD-DETR对回归teacher/student output使用L1 distillation；
 - protocol：唯一变化为`MSE → L1`；同36输入、31 training budgets、六heldout midpoints、128/128、16 quadrature、
   12,000 steps、batch 8,192、seed0与三项P201 gates；从头训练，不引入fine-tune LR/step自由度；
-- active canonical：`run://worldsim_v67/WS-V67-P242-L1-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T053000Z__l1-integrated-monotone-budget-surface-s0-r1`；RTX 3090训练中。
+- canonical：`run://worldsim_v67/WS-V67-P242-L1-INTEGRATED-MONOTONE-BUDGET-SURFACE-01/20260831T053000Z__l1-integrated-monotone-budget-surface-s0-r1`；
+- result：P201 heldout surface/final MAE=`.007271/.009869`；Brier degradation=`.0629%`、calibration increase=
+  `.000145`；budget/horizon violations=`0/0`；3/3；source final MAE=`.009815`，P183=`.010383`；
+- training/resources：final source teacher surface MAE=`.007883`；wall=`101.81s`、peak GPU=`.298GiB`；verdict=
+  `supported_l1_integrated_monotone_continuous_budget_surface`。这是P201后的post-hoc development，P243负责fresh确认。
+
+### WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01
+
+- cohort frozen before read：`scene-0161/0283/0457/0695/0907/0350/0975/0790/1011/1048`；10 distinct logs；
+  Boston/onenorth/queenstown/holland=`5/2/2/1`；此前V67确认scene、文档提及scene和已有processed scene均排除；
+- protocol：冻结P242、P203/P199 teacher、anchor与六个geometric midpoints、1024 MC及P242三门；新rows只用于一次
+  fresh quality read，不用于P244或任何训练；
+- input pipeline：prep canonical=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T060000Z__continuous-budget-fresh-prep-s0-r1`；
+  confirmation waiter=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T060500Z__continuous-budget-fresh-confirmation-s0-r1`；
+  shards `02/03/04/05/07/08/09/10`正在并行IO，quality read=false。
+
+### WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01
+
+- hypothesis：P242正导数积分的能力可以由16个上下文条件positive rate knots与区间内解析线性积分保留，避免每个query
+  展开16点rate MLP quadrature；
+- literature response：NeurIPS 2019 Neural Spline Flows表明局部单调bins/knots比低秩全局shape灵活；这里不复制其
+  density flow，只迁移local monotone spline principle到reliability compiler；
+- protocol：P242的36输入、31 train budgets、六heldout、L1、128 context、12k steps、batch8192、seed0与三门不变；
+  knot count固定16以匹配P242 quadrature count，不扫knots/width；
+- active canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；与P243 IO并行训练。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
