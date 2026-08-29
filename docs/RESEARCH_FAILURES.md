@@ -2741,6 +2741,18 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F174`。
 
+### V67-F174 — absolute proper-loss authority未迁移到更难P201 cohort
+
+- canonical：`run://worldsim_v67/WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01/20260830T234000Z__selective-authority-p201-tertiary-s0-r1`；
+- 观察：P220在source/P183分别改善selected Brier `23.61%/13.71%`，但P201相对confidence Brier退化`1.31%`、
+  calibration退化`9.67%`，0/2；P201全量Brier`.09397`明显高于P183`.07212`；
+- 解释：MSE预测absolute realized loss在source difficulty regime有效，但固定覆盖率只需要稳定次序；难度基线变化会损害绝对回归排序；
+- 文献响应：selective uncertainty margin ranking及ranking-aligned decision losses直接优化相对次序。P223只试一次同budget
+  pairwise logistic，不使用P183/P201 labels训练；
+- 防重复：P223若未在P201过原两门即关闭learned authority head，保留confidence control；不扫coverage/margin/auxiliary/group。
+
+下一可用编号：`V67-F175`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

@@ -1,0 +1,26 @@
+schema_version: worldsim_v67.p222_selective_authority_p201_tertiary.v1
+output_schema_version: worldsim_v67.p222_selective_authority_p201_tertiary_summary.v1
+task_id: WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01
+hypothesis_id: WS-V67-H-P222-001
+role: consumed_formerly_fresh_P201_selective_authority_tertiary
+seed: 0
+frozen_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p220: {run: worldsim_v67/WS-V67-P220-SELECTIVE-JOINT-RELIABILITY-AUTHORITY-01/20260830T232000Z__selective-joint-reliability-authority-s0-r1, artifact: SELECTIVE_JOINT_RELIABILITY_AUTHORITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {monte_carlo_samples: 1024, authority_coverage: 0.50}
+verdict_on_pass: supported_consumed_P201_selective_authority_tertiary
+verdict_on_failure: rejected_consumed_P201_selective_authority_tertiary
+locks:
+  P220_P199_P182_P126_and_P201_rows_are_frozen: true
+  fixed_50_percent_per_budget_coverage_confidence_control_and_two_decisions_are_unchanged: true
+  no_refit_recalibration_feature_gate_metric_or_cohort_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - P201_was_read_before_P220_and_this_is_post_hoc_tertiary_not_confirmation
+  - selective_loss_ranking_not_formal_risk_control_or_calibration_guarantee
+  - no_collision_planner_policy_closed_loop_or_safety_claim

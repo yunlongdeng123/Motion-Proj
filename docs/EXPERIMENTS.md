@@ -1740,7 +1740,30 @@
 - protocol：冻结P182/P199；对每个trajectory×budget监督`(P199 probability - joint truth)^2`，64/64 MLP预测
   conditional Brier risk；每budget固定50% coverage授权最低预测risk；control为同coverage最低`p(1-p)`；
 - decisions：selected Brier严格优于confidence control、selected calibration error noninferior；不扫coverage/loss/features/width；
-- status：RTX 3090训练8,000 steps；source train/dev event rows=`103,411/26,194`。
+- result：source train/dev event rows=`103,411/26,194`；learned/confidence selected Brier=`.008933/.011693`
+  （改善`23.61%`），selected calibration error=`.003647/.005736`（改善`36.43%`）；2/2，wall=`31.53s`；
+- verdict=`supported_selective_joint_reliability_authority`；仅source dev，冻结交P221/P222。
+
+### WS-V67-P221-SELECTIVE-AUTHORITY-POST-CONFIRMATION-01
+
+- canonical：`run://worldsim_v67/WS-V67-P221-SELECTIVE-AUTHORITY-POST-CONFIRMATION-01/20260830T233000Z__selective-authority-post-confirmation-s0-r1`；
+- result：P183 1,912 trajectories/13,384 event rows；learned/confidence selected Brier=`.010313/.011952`
+  （改善`13.71%`），calibration error=`.002385/.003299`（改善`27.69%`）；2/2，wall=`1.36s`；
+- verdict=`supported_consumed_selective_authority_secondary`；consumed-secondary，不是fresh confirmation。
+
+### WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01
+
+- canonical：`run://worldsim_v67/WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01/20260830T234000Z__selective-authority-p201-tertiary-s0-r1`；
+- result：P201已在P220前消费；1,846 trajectories/12,922 rows上learned/confidence selected Brier
+  `=.037025/.036548`（退化`1.31%`），calibration=`.018628/.016985`（退化`9.67%`）；0/2，F174；
+- verdict=`rejected_consumed_P201_selective_authority_tertiary`；不启动fresh IO。
+
+### WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1`；
+- protocol：只用source train，随机同budget pairs，以realized P199 Brier loss次序训练pairwise logistic risk ranker；
+  source dev、P183、P201均只评价，fixed50/confidence/two P201 gates不变；
+- status：RTX 3090训练8,000 steps；不加MSE auxiliary、margin、group loss或coverage sweep。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

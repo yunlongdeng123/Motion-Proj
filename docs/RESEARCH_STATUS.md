@@ -947,6 +947,11 @@ P219在source dev将Brier/calibration改善`1.37%/22.11%`，但P183两者反而�
 参考ICML 2019 SelectiveNet、NeurIPS 2017 selective classification与UAI 2024 post-hoc confidence，P220已转入authority
 object：对每个trajectory-budget预测冻结P199的realized Brier loss，在每个budget固定50% coverage授权低风险估计，并与
 同coverage的低Bernoulli-variance confidence control比较。103,411 source event rows用于GPU训练，26,194 heldout rows只作dev。
+P220 source dev在fixed50下把selected Brier `.0116926→.0089325`改善`23.61%`、selected calibration error
+`.0057360→.0036465`改善`36.43%`，2/2。P221冻结迁移到P183 13,384 event rows仍改善`13.71%/27.69%`，2/2
+consumed-secondary。但P222在已读P201 12,922 rows上Brier/calibration相对confidence退化`1.31%/9.67%`，0/2、F174；
+不能申请fresh confirmation。根据selective segmentation的pairwise uncertainty loss与ICLR 2022 ranking-aligned predict-then-optimize，
+P223只作一次source-only pairwise logistic recovery：直接排序同budget realized P199 Brier loss，P183/P201均只评价，P201两门不变。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

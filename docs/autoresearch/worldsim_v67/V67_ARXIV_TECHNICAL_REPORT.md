@@ -65,6 +65,10 @@ density/calibration/dev scenes与一个shared monotone beta map作最后一次P1
 P219虽在source dev改善Brier/calibration `1.37%/22.11%`，在P183却退化`4.49%/25.27%`，因此累计exposure也关闭。
 P220开始把稳定的P199概率接口视作frozen predictor，另学其event-level proper loss并在固定50% coverage下选择性授权；
 这是authority compiler的development object，尚无跨cohort或risk-control保证。
+P220在source fixed50相对confidence把selected Brier/calibration改善`23.61%/36.43%`，P221在P183仍改善
+`13.71%/27.69%`；但P222在更难P201上分别退化`1.31%/9.67%`，所以absolute loss authority未获跨cohort稳定支持。
+P223正以source-only same-budget pairwise proper-loss ranking作一次恢复；P201已消费，任何正结果也只能授权新的fresh test，
+不能本身写作confirmation。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

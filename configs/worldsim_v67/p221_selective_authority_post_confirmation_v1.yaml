@@ -1,0 +1,26 @@
+schema_version: worldsim_v67.p221_selective_authority_post_confirmation.v1
+output_schema_version: worldsim_v67.p221_selective_authority_post_confirmation_summary.v1
+task_id: WS-V67-P221-SELECTIVE-AUTHORITY-POST-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P221-001
+role: consumed_post_confirmation_selective_authority_secondary
+seed: 0
+frozen_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p220: {run: worldsim_v67/WS-V67-P220-SELECTIVE-JOINT-RELIABILITY-AUTHORITY-01/20260830T232000Z__selective-joint-reliability-authority-s0-r1, artifact: SELECTIVE_JOINT_RELIABILITY_AUTHORITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {monte_carlo_samples: 1024, authority_coverage: 0.50}
+verdict_on_pass: supported_consumed_selective_authority_secondary
+verdict_on_failure: rejected_consumed_selective_authority_secondary
+locks:
+  P220_P199_P182_and_P126_are_frozen: true
+  fixed_50_percent_per_budget_coverage_confidence_control_and_two_decisions_are_unchanged: true
+  no_refit_recalibration_feature_gate_metric_or_cohort_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_secondary_only_not_fresh_confirmation
+  - selective_loss_ranking_not_formal_risk_control_or_calibration_guarantee
+  - no_collision_planner_policy_closed_loop_or_safety_claim
