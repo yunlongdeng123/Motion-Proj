@@ -804,6 +804,18 @@ def main() -> None:
                     progress_model, maneuver_model, config["training_progress_preferences"],
                     config["training_lateral_commands"], float(config["lateral_preference_weight"]), int(set_size),
                 )
+                if bool(config.get("decision_interpolated_task_training", False)):
+                    interpolated_local_source = _horizon_task_examples(
+                        source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+                        progress_model, maneuver_model, config["heldout_progress_preferences"],
+                        config["heldout_lateral_commands"], float(config["lateral_preference_weight"]), int(set_size),
+                    )
+                    local_source = (
+                        np.concatenate((local_source[0], interpolated_local_source[0]), 0),
+                        np.concatenate((local_source[1], interpolated_local_source[1]), 0),
+                        np.concatenate((local_source[2], interpolated_local_source[2]), 0),
+                        np.concatenate((local_source[3], interpolated_local_source[3]), 0),
+                    )
                 local_p201 = _horizon_task_examples(
                     p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
                     progress_model, maneuver_model, config["heldout_progress_preferences"],
