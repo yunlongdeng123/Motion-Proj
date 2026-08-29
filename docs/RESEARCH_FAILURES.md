@@ -38,6 +38,12 @@
 - 没有更换 cohort、重训、refit、gate/threshold/cardinality sweep；P243 曾用于 surface confirmation 的消费边界已显式保留；
 - tail-CVaR compiler family 至此关闭为 supported；下一可用 failure id 仍为 `V67-F196`。
 
+### P274 bootstrap epistemic surface note — active / 无新增 failure
+
+- 新对象不改 P270--P273 verdict；5-member scene-bootstrap monotone ensemble现正训练；
+- P201只用两个预冻结决策，P243明确 descriptive-only；无 hash/checksum/fingerprint 或 smoke/regression matrix；
+- 下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

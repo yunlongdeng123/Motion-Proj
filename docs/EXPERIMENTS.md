@@ -62,6 +62,17 @@
 - boundary：只确认 frozen surrogate teacher 下的 compiler generalization；不确认 realized task utility、hard floor、planner、
   closed-loop 或 safety。
 
+### WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01
+
+- object：5个独立随机初始化、source scene-bootstrap 的 P246 monotone rate-spline surfaces；每个 member 保持解析 budget
+  monotonicity 与 horizon prefix structure，ensemble std 作为经验 epistemic disagreement。
+- training：固定41个 log-budget points、8个 heldout midpoints；5×batch2048 同步 GPU 更新8,000 steps；不扫 member
+  count、bootstrap、width/depth、budget、metric、gate 或 steps。
+- decisions：P201 final curve teacher MAE `<=.010`；row-level mean epistemic std 与 teacher error Spearman `>=.10`。
+  P243九场景只作 consumed descriptive，不用于 gate/model selection。
+- active=`run://worldsim_v67/WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/
+  20260831T164500Z__bootstrap-surface-ensemble-s0-r1`；claim 不含 credible interval、coverage、planner、closed-loop 或 safety。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
