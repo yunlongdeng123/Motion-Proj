@@ -260,16 +260,27 @@
 - frozen P288 primal；pooled mean/std/max/log-size context + alpha/tolerance/floor/tail-mass/fraction，输出 shadow price；
   train sizes32/64/128、heldout48/96。
 - P201 gates仅 attained fraction MAE `<=.075` 与 frozen composite regret `<=.005`；fraction单调由正 rate spline保证。
-- active=`run://worldsim_v67/WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
+- canonical=`run://worldsim_v67/WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
   20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`。
+- result：P201 aggregate price/attained-fraction MAE=`.0267769/.0143254`、frozen composite regret=`5.2821e-6`、
+  price monotonicity violations=`0`；size48/96 attained-fraction MAE=`.0153891/.0132617`；2/2，verdict=
+  `supported_variable_set_budget_conditioned_additive_LCB_tail_CVaR_allocator`。wall=`312.62s`、peak GPU/RSS=
+  `.3209/3.9821GiB`。
 
-### WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01 freeze
+### WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01
 
 - cohort=P277六场景/1,080 rows；该 cohort 已用于 beta-LCB P277 confirmation，但 additive calibrated family P284--P289
   从未读取其指标，因此 role 固定为 additive-family untouched reuse，而非全项目 fresh。
 - frozen P284 teacher + P288 variable primal + P289 variable dual；sizes48/96、alpha/tolerance/floor/tail/fraction 与 P289
   heldout协议完全一致；同两门 `.075/.005`。
-- one read only；P289 通过才执行；无 refit/retraining/threshold/cohort/metric/gate change；实现与配置已推送。
+- one read only；P289 通过后执行；无 refit/retraining/threshold/cohort/metric/gate change。
+- canonical=`run://worldsim_v67/WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01/
+  20260831T213000Z__additive-tail-compiler-confirmation-s0-r1`。
+- result：6 scenes/1,080 trajectories；sizes48/96 aggregate price/attained-fraction MAE=`.0230856/.0122735`、
+  frozen composite regret=`1.8533e-5`、price monotonicity violations=`0`；2/2，verdict=
+  `supported_P277_reuse_additive_tail_variable_set_compiler`。wall=`4.31s`、peak GPU/RSS=`.2379/.9039GiB`。
+- claim boundary：仅支持 frozen additive surrogate compiler 的跨场景复用；不是全项目 fresh，不支持 realized online utility、
+  formal coverage、hard constraint、planner closed loop 或 safety claim。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

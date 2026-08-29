@@ -140,13 +140,18 @@ WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
 composite regret=`3.39e-5`、candidate/teacher tail shortfall均=`.01002303`、violations=`0/0`，2/2；wall=`166.02s`。
 
 P289 以冻结 P288 为唯一 variable-set primal，训练 sizes32/64/128 的 pooled-statistics dual，并在 heldout48/96上评估
-attainable fraction→shadow price→budgets。Active=`run://worldsim_v67/
+attainable fraction→shadow price→budgets。Canonical=`run://worldsim_v67/
 WS-V67-P289-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-DUAL-01/
-20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`，GPU 正在训练。
+20260831T211500Z__variable-set-additive-lcb-tail-dual-s0-r1`：P201 price/attained-fraction MAE=
+`.0267769/.0143254`、frozen composite regret=`5.28e-6`、price monotonicity violations=`0`；size48/96
+attained-fraction MAE=`.0153891/.0132617`，2/2；wall=`312.62s`。
 
-P290 one-shot chain confirmation 已在任何 additive-family quality read 前冻结：复用 P277 六场景/1,080 trajectories，
-它们已被 P277 beta-LCB confirmation 消费，但从未被 P284--P289 的训练或 metric 使用；固定 P288/P289、sizes48/96、
-heldout conditions 与 P289 两门。实现已推送，只在 P289 通过后执行一次，不 refit/retrain/换 cohort。
+P290 one-shot chain confirmation 在任何 additive-family quality read 前冻结并已执行：复用 P277 六场景/1,080
+trajectories；它们已被 P277 beta-LCB confirmation 消费，但从未被 P284--P289 的训练或 metric 使用。Canonical=
+`run://worldsim_v67/WS-V67-P290-ADDITIVE-TAIL-COMPILER-CONFIRMATION-01/
+20260831T213000Z__additive-tail-compiler-confirmation-s0-r1`：sizes48/96 aggregate price/attained-fraction MAE=
+`.0230856/.0122735`、composite regret=`1.85e-5`、violations=`0`，2/2；wall=`4.31s`。准确边界是 additive-family
+untouched reuse confirmation，不是全项目 fresh，也不是 realized online utility、formal coverage 或 safety claim。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

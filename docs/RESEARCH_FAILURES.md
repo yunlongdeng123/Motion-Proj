@@ -171,6 +171,14 @@
 - P290 只在 P289 通过后做一次 frozen chain read，不以 confirmation 反向调 P284/P288/P289；
 - 下一可用 failure id 保持 `V67-F198`。
 
+### P289/P290 outcome note — 无新增 failure
+
+- P289 P201 price/attained-fraction MAE=`.0267769/.0143254`、composite regret=`5.28e-6`、violations=0，2/2；
+- 冻结后一次读取的 P290 P277-reuse confirmation 为 attained-fraction MAE=`.0122735`、composite regret=
+  `1.85e-5`、violations=0，2/2；未据此反向调参或更换 cohort；
+- P290 仅是 additive-family untouched reuse；P277 cohort 已被旧 beta-LCB P277 消费，不记为全项目 fresh；
+- 下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
