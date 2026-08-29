@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p288_variable_set_additive_lcb_tail_cvar_allocator.v1
+output_schema_version: worldsim_v67.p288_variable_set_additive_lcb_tail_cvar_allocator_summary.v1
+task_id: WS-V67-P288-VARIABLE-SET-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01
+hypothesis_id: WS-V67-H-P288-001
+role: variable_cardinality_joint_additive_LCB_actor_tail_CVaR_allocator_development
+seed: 0
+model_artifact: VARIABLE_SET_ADDITIVE_LCB_TAIL_CVAR_ALLOCATOR.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p284: {run: worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/20260831T200000Z__additive-conformal-lcb-s0-r1, artifact: ADDITIVE_CONFORMAL_LCB_SURFACE.pt}
+frozen_p287: {run: worldsim_v67/WS-V67-P287-ADDITIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T204500Z__additive-lcb-tail-cvar-s0-r1, artifact: ADDITIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_group_sizes: [32, 64, 128]
+heldout_group_sizes: [48, 96]
+shadow_price_domain: [0.02, 0.40]
+training_price_count: 9
+training_alpha_fairness: [0.00, 0.50, 1.00]
+heldout_alpha_fairness: [0.25, 0.75]
+training_risk_tolerances: [0.05, 0.10, 0.20, 0.30, 0.40]
+heldout_risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+final_reliability_floor_domain: [0.20, 0.80]
+training_final_reliability_floors: [0.30, 0.50, 0.70]
+heldout_final_reliability_floors: [0.40, 0.60]
+training_tail_masses: [0.125, 0.25, 0.50]
+heldout_tail_masses: [0.1875, 0.375]
+tail_CVaR_shortfall_penalty: 1.0
+teacher_budget_grid_count: 65
+teacher_eta_grid_count: 17
+teacher_chunk_size: 8192
+alpha_utility_epsilon: 0.05
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {steps: 10000, batch_size: 192, learning_rate: 0.0005, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_normalized_log_budget_MAE: 0.075, maximum_P201_mean_frozen_additive_tail_CVaR_Lagrangian_regret: 0.005}
+verdict_on_pass: supported_variable_set_additive_LCB_tail_CVaR_allocator
+verdict_on_failure: rejected_variable_set_additive_LCB_tail_CVaR_allocator
+locks:
+  warm_start_from_frozen_P287_without_architecture_change: true
+  train_sizes_32_64_128_and_heldout_sizes_48_96_are_fixed: true
+  identical_alpha_tolerance_floor_tail_mass_price_protocol_to_P287: true
+  no_cardinality_architecture_eta_budget_grid_gate_or_step_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_cardinality_interpolation_development_after_P201_observation_not_fresh_confirmation
+  - empirical_additive_LCB_plus_group_CVaR_not_formal_coverage_or_coherent_risk_proof
+  - variable_sets_not_online_scheduler_collision_planner_policy_closed_loop_or_safety_claim
