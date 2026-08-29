@@ -342,7 +342,9 @@
   不是 context factoring数值错误；
 - recovery：P306R按 Network Morphism原则锁死 P302 weights、0 steps，仅改执行图；恢复 P302 attained=
   `.02565857`并把forward降到`.56142s`，4/4 supported，F206关闭；
-- next object：P307改为精确6-action task-conditioned sets；沿用P306R但不再训练任意scene chunks；
+- next object/result：P307改为精确6-action task-conditioned sets；沿用P306R但不再训练任意scene chunks。P201
+  attained MAE=`.02973484`、regret=`2.78998e-5`、violations=`0`，3/3 supported；F206恢复路径由执行图优化继续推进到
+  task-conditioned authority且没有新增failure；下一步仅做冻结模型跨cohort确认；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

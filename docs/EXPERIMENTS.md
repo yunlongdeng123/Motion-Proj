@@ -535,8 +535,14 @@
   3 lateral offsets，禁止顺序chunk伪装action set。
 - model/protocol：P306R shared-context `0/.5/1` lattice warm-start；P295+bisection teacher；source/P201、6k steps、
   batch384；P201 gates attained MAE `<=.05`、regret `<=.005`、violations=`0`。
-- active=`run://worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/
-  20260901T030000Z__task-conditioned-action-set-authority-s0-r1`；不扫action count/lattice/steps/gates。
+- canonical=`run://worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/
+  20260901T030000Z__task-conditioned-action-set-authority-s0-r1`；source/P201=`622/305`个六动作组。
+- result：P201 budget/attained MAE=`.00647745/.02973484`、regret=`2.78998e-5`、violations=`0`，3/3；source
+  attained=`.03221749`。forward=`.55480s`、wall=`301.38s`、peak GPU=`.1404GiB`；verdict=
+  `supported_task_conditioned_six_action_set_authority_compiler`。
+- boundary：只支持固定六Ego queries的post-hoc visited-state reliability budget compiler；P201已消费，不写fresh、
+  direct action choice、realized utility、arbitrary planner/closed-loop或safety claim。下一步冻结模型做跨cohort确认，
+  不扫action count/lattice/steps/gates。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

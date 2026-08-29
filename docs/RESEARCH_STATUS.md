@@ -300,9 +300,13 @@ WS-V67-P306R-WEIGHT-PRESERVING-SHARED-CONTEXT-AUTHORITY-COMPILER-01/
 P307 直接进入用户要求的 task-conditioned action authority：不再按scene顺序切48/96个任意trajectory，而用
 `(scene,anchor_frame)`精确组成6条 Ego query actions（2 progress×3 lateral），每个 action feature仍是“执行τ后四个
 horizon内被访问 world/Actor states”的36维分布表征。P306R warm-start、P295+bisection teacher、6k steps；门为
-P201 action-set attained MAE `<=.05`、regret `<=.005`、violations=0，不做action lattice/coverage sweep。Active=
+P201 action-set attained MAE `<=.05`、regret `<=.005`、violations=0，不做action lattice/coverage sweep。Canonical=
 `run://worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/
-20260901T030000Z__task-conditioned-action-set-authority-s0-r1`，GPU 已启动。
+20260901T030000Z__task-conditioned-action-set-authority-s0-r1`：source/P201分别形成622/305个六动作组；P201
+budget/attained MAE=`.00647745/.02973484`、frozen composite regret=`2.78998e-5`、fraction-budget violations=`0`，
+3/3 supported；forward=`.55480s`、wall=`301.38s`、peak GPU=`.1404GiB`。因此当前证据支持把未来访问状态的
+经验reliability分配编译为固定六候选action set的逐动作预算，但仍不是直接action choice、realized benefit、任意
+planner lattice或hard safety constraint。下一步只做一次跨cohort frozen confirmation，不在P201上调action数/anchor/门。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
