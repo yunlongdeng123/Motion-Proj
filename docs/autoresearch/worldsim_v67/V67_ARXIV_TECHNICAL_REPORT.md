@@ -379,7 +379,8 @@ P167当前2/10 scene-ready：`0269/0802`在其余archive shards仍扫描时已�
 这只记录流水线和partial方向；论文主表、macro decision与P170 prospective结论必须等待10/10 aggregate。
 
 P172在P167 partial read后另行训练q10/q90 two-sided cost interval，仅用旧四作consumed development；P167明确禁止承担
-该candidate的prospective confirmation。若coverage与width两门成立，下一步必须冻结另一批target-unread scenes。
+该candidate的prospective confirmation。旧四mean width缩短`18.55%`，但P81 coverage只有`.732<.78`，F136；因此不建立
+新confirmation，不改lower quantile。该负结果强化P170 one-sided upper bound比two-sided cost interval更稳的当前边界。
 
 ## 3. 核心结果表
 

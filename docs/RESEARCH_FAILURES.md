@@ -2244,7 +2244,16 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：old4 coverage≥`.78` each + mean width reduction≥10%；P167禁止作为prospective confirmation。
 - prevention：不扫quantile/split/knots/threshold；失败才用`V67-F136`，支持也必须新target-unread cohort。
 
-下一可用编号仍为：`V67-F136`。
+### V67-F136 — two-sided cost interval虽更窄但P81 coverage仅.732
+
+- 分类：`algorithm/two-sided-cost-interval-transfer`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P172-CONFORMAL-COST-INTERVAL-01/
+  20260830T133500Z__conformal-cost-interval-s0-r1`。
+- 观察：mean width reduction=`18.55%`通过，但P81 coverage=`.73199<.78`，1/2 decisions。
+- 解释：跨scene时score-conditioned q10 lower edge比one-sided q90 upper更脆弱；效率提升不足以覆盖undercoverage。
+- 防重复：不降低coverage门、不扫q10/q90或改split；关闭two-sided interval，保留P170 one-sided候选。
+
+下一可用编号为：`V67-F137`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

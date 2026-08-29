@@ -699,6 +699,11 @@ P172继续覆盖P167 IO空档，但因P167已partial read，不借用该cohort�
 两条score-monotone cost models与horizon-only controls，构造80% two-sided CQR interval。旧四只检查每组empirical coverage≥`.78`
 与mean interval-width reduction≥10%；若通过，必须另找全新target-unread cohort，不以P167 post-read结果确认。
 
+P172 canonical r1完成8,000-step训练。P81/P96/P113/P129 interval coverage=
+`.73199/.83953/.84590/.81499`；P81低于`.78`，coverage门失败。Width reduction=
+`10.56%/37.01%/17.71%/8.92%`，mean=`18.55%`，效率门通过；1/2 decisions，F136。关闭two-sided interval trial，
+不改q10/coverage；其结果进一步支持保留P170 one-sided upper reliability object。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

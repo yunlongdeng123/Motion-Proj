@@ -1184,6 +1184,8 @@
 - control：同split/quantiles的horizon-only pair；8,000 steps、q10/q90、coverage `.80`全部冻结。
 - decisions：旧四coverage每组≥`.78`且mean width reduction≥10%；不使用已partial-read P167，若通过需新cohort。
 - locks：不扫quantile/split/knots/loss/threshold，不加hash/checksum/fingerprint或测试矩阵。
+- result：coverage=`.73199/.83953/.84590/.81499`；width reduction=`10.56%/37.01%/17.71%/8.92%`，mean=`18.55%`。
+- verdict=`rejected_development_conformal_cost_interval`，F136；P81 coverage fail、width pass，1/2。关闭two-sided interval。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
