@@ -629,7 +629,14 @@ Canonical=`run://worldsim_v67/WS-V67-P348-DOMAIN-ADVERSARIAL-VISITED-RELIABILITY
 3/4 rejected，登记F224。unconditional alignment抹平了与risk相关的多模态结构。
 
 P349按NeurIPS 2018 CDAN改用latent×predicted-set-risk multilinear conditioning做domain discrimination，避免P348
-无条件混合不同reliability modes；其余P348训练预算与P346 calibration/PAV/decision保持不变。
+无条件混合不同reliability modes；其余P348训练预算与P346 calibration/PAV/decision保持不变。Canonical=
+`run://worldsim_v67/WS-V67-P349-CONDITIONAL-DOMAIN-ADVERSARIAL-RELIABILITY-01/
+20260901T143000Z__conditional-domain-adversarial-reliability-s0-r1`：P201 q90 coverage/unsafe=
+`.300546/.093750`，四门supported，恢复P348的risk failure。但step6k后domain BCE爆到`3--6`，末端base/domain
+BCE=`.255622/3.311811`；因此仅记unstable supported development，不取中间checkpoint。
+
+P350迁移为官方CDAN+E：按predicted Bernoulli risk entropy对domain BCE加权，并用warm-start GRL从0连续升到`.10`，
+降低P349早期不确定样本的负迁移和late minimax collapse；不改8k预算、calibration或decision。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

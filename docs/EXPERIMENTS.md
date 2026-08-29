@@ -1228,7 +1228,18 @@
   multilinear conditioning保留判别结构。P349以latent×3个predicted set-risk probabilities输入domain head。
 - method/locks：P348 encoder、8k steps、GRL coefficient、source/P201-unlabeled balance不变；domain batch共享随机
   horizon/ceiling；P201 event labels隔离；不扫conditioning/entropy/alignment/threshold/capacity/step/LR/seed。
-- 状态=`implementation`。
+- canonical=`run://worldsim_v67/WS-V67-P349-CONDITIONAL-DOMAIN-ADVERSARIAL-RELIABILITY-01/
+  20260901T143000Z__conditional-domain-adversarial-reliability-s0-r1`；状态=`done/supported but unstable`。
+- result：P201 q75/q85/q90/q95 coverage=`.469672/.348907/.300546/.236066`、max unsafe=
+  `.211538/.188235/.093750/.056075`；q90四门通过，wall=`88.05s`。训练在step6k后domain BCE从`.68`
+  跳到`4.76/6.10`，final base/domain BCE=`.255622/3.311811`，禁止挑中间checkpoint或写成stable convergence。
+
+### WS-V67-P350-ENTROPY-WARMSTART-CDAN-RELIABILITY-01
+
+- migration：NeurIPS 2018 CDAN+E与官方TLlib对低熵、易迁移样本赋`1+exp(-H)`权重，并使用warm-start GRL；
+  P350对3个Bernoulli set-risk求entropy，batch归一化权重，GRL从0平滑升到`.10`。
+- locks：P349 architecture/multilinear map、8k、source/P201 balance、P346 calibration/PAV/decision不变；不扫
+  entropy、schedule、GRL、threshold、capacity、step/LR/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

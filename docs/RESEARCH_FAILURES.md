@@ -431,7 +431,8 @@
 - P346：P201 q90 coverage/risk `.32842/.09091`，四门supported；source heldout-H仍漂移，仅保留development claim；
 - P347：domain近完美可分导致importance ESS=`69.62`，q90 coverage/risk `.29836/.10588`，登记F223；
 - P348：unconditional alignment的q90 coverage/risk `.37350/.17323`，risk显著恶化，登记F224；
-- P349：CDAN multilinear risk-conditioned alignment implementation；
+- P349：q90 `.30055/.09375`四门supported，但step6k后adversarial collapse，保留unstable limitation；
+- P350：official-style entropy conditioning + warm-start GRL implementation；
 - 下一可用 failure id 为 `V67-F225`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
@@ -562,6 +563,14 @@
   feature与classifier prediction的multilinear conditioning；P349将latent×predicted set-risk输入domain head；
 - forbidden rescue：不减GRL coefficient或回调capacity/steps，不将高coverage包装成成功；resolution=
   `open via P349 conditional domain adversarial reliability`。
+
+### P349 supported-but-unstable note — 不把endpoint pass包装为稳定训练
+
+- canonical P349的P201 q90 coverage/risk=`.300546/.093750`且两项monotonicity=0，按预注册门为supported；
+- 但step6k后domain BCE升到`4.76--6.10`，final=`3.311811`，base BCE也从约`.18`退化到`.255622`；
+- 不选择5.5k checkpoint、不缩短steps、不调GRL；参照CDAN+E官方实现，P350统一引入entropy conditioning与
+  warm-start reversal，检验能否保留endpoint frontier并消除late collapse；
+- 该限制不登记negative failure，下一可用编号保持`V67-F225`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
