@@ -25,6 +25,12 @@
 
 下一可用编号：`V67-F196`。
 
+### P269 r2 / P270 r3 / P271 r1 outcome note — 无新增 failure
+
+- P269 最小轴修复后 2/2；P270 fixed64 tail-CVaR allocator 2/2；P271 held-out sizes 48/96 亦 2/2；
+- 三者均保持预冻结模型、条件轴、训练步数与 decision gates，没有以重复 smoke/regression 或阈值扫描补救；
+- P272 现只把冻结 P271 primal 连接到 attainable-budget dual，当前运行中；下一 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

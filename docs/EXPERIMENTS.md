@@ -33,8 +33,20 @@
   sizes=`48/96`；Deep Sets allocator 原生接受变长集合，不改架构。
 - 两个 P201 aggregate gates继承 P270：budget MAE `<=.075`、frozen tail-CVaR Lagrangian regret `<=.005`；不扫 size、
   eta/budget grid、steps、architecture 或 gate。
-- active=`run://worldsim_v67/WS-V67-P271-VARIABLE-SET-TAIL-CVAR-ALLOCATOR-01/
-  20260831T154000Z__variable-set-tail-cvar-allocator-s0-r1`；status=`running/multi-cardinality-teacher-and-training`。
+- canonical=`run://worldsim_v67/WS-V67-P271-VARIABLE-SET-TAIL-CVAR-ALLOCATOR-01/
+  20260831T154000Z__variable-set-tail-cvar-allocator-s0-r1`；P201 aggregate budget MAE=`.0113784`、regret=
+  `.000104180`、candidate/teacher CVaR=`.008471508/.008471508`、violations=`0/0`，2/2，verdict=
+  `supported_variable_set_tail_cvar_budget_allocator`。wall=`153.39s`、peak GPU/RSS=`.4052/1.6444GiB`。
+
+### WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01
+
+- object：给定 variable group、alpha、reliability floor、tail mass 与 attainable budget fraction，invariant Deep Sets dual
+  输出 normalized shadow price，冻结 P271 equivariant primal 再输出逐 row budget。
+- teacher 对每个条件以20-step monotone bisection求预算比例对应 price；训练 sizes=`32/64/128`、held-out=`48/96`，
+  fraction train=`.1:.1:.9`、heldout=`.15:.1:.85`。
+- P201 gates：attained fraction MAE `<=.030`、frozen tail-CVaR Lagrangian regret `<=.002`；不扫条件网格、dual
+  architecture、bisection、steps 或门。active=`run://worldsim_v67/WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01/
+  20260831T160000Z__variable-set-tail-cvar-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

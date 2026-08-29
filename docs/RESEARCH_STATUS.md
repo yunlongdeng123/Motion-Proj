@@ -21,11 +21,18 @@ peak GPU=`.3890GiB`。r1/r2 分别在 import 与
 artifact load 前暴露缺失 `PYTHONPATH=.`、错误相对 runs-root，均未形成科学 read，合并登记 `V67-F195`；r3 已用仓库
 搜索路径与 `/root/autodl-tmp/runs` 恢复并关闭。
 
-P271 现从冻结 P270 warm-start，把同一等变 tail-CVaR allocator 推到 variable cardinality：训练 sizes=`32/64/128`，
-正式 held-out sizes=`48/96`，其余 alpha/floor/tail-mass/price 与两门完全继承，不扫结构或 cardinality。Active=
+P271 从冻结 P270 warm-start，把同一等变 tail-CVaR allocator 推到 variable cardinality：训练 sizes=`32/64/128`，
+正式 held-out sizes=`48/96`，其余 alpha/floor/tail-mass/price 与两门完全继承，不扫结构或 cardinality。Canonical=
 `run://worldsim_v67/WS-V67-P271-VARIABLE-SET-TAIL-CVAR-ALLOCATOR-01/
-20260831T154000Z__variable-set-tail-cvar-allocator-s0-r1`，GPU 正在进行多 cardinality teacher/训练。单卡资源充分，
-不需要多卡或关机。
+20260831T154000Z__variable-set-tail-cvar-allocator-s0-r1`，P201 aggregate budget MAE=`.011378`、regret=`.0001042`、
+candidate/teacher CVaR shortfall均=`.00847151`、price/floor violations=`0/0`，2/2；size48/96 budget MAE分别
+`.011347/.011410`。wall=`153.39s`、peak GPU=`.4052GiB`。
+
+P272 现把冻结 P271 primal 与 variable-set invariant dual 串联：输入 attainable budget fraction、alpha、floor 与 tail
+mass，输出 shadow price，再由 P271 输出逐 row budget。训练 sizes=`32/64/128`、held-out=`48/96`；依据
+risk-constrained optimization 的 Lagrangian dual迁移，但这里只编译冻结 surrogate，不作 hard risk/safety claim。Active=
+`run://worldsim_v67/WS-V67-P272-VARIABLE-SET-TAIL-CVAR-DUAL-01/
+20260831T160000Z__variable-set-tail-cvar-dual-s0-r1`，GPU 正在 teacher bisection/训练。单卡资源充分。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
