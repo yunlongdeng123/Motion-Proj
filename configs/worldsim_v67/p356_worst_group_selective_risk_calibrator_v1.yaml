@@ -10,11 +10,11 @@ reliability_crossfold_ensemble_fit_remainders: [0, 1, 2]
 reliability_ensemble_pooling: mean
 reliability_feature_calibrator:
   hidden_dimensions: [32, 16]
-  steps: 12000
-  batch_size: 512
-  learning_rate: 0.0005
+  steps: 1500
+  batch_size: 4096
+  learning_rate: 0.004
   weight_decay: 0.0001
-  selective_risk: {admission_probability_threshold: 0.10, soft_temperature: 0.02, maximum_conditional_unsafe_rate: 0.10, initial_dual: 1.0, dual_learning_rate: 0.05, maximum_dual: 50.0, bce_weight: 0.25, coverage_weight: 1.0}
+  selective_risk: {admission_probability_threshold: 0.10, soft_temperature: 0.02, maximum_conditional_unsafe_rate: 0.10, initial_dual: 1.0, dual_learning_rate: 0.40, maximum_dual: 50.0, bce_weight: 0.25, coverage_weight: 1.0}
 seed: 0
 model_artifact: WORST_GROUP_SELECTIVE_RISK_CALIBRATOR.pt
 source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
