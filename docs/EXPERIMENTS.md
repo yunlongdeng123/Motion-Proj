@@ -165,8 +165,23 @@
 - P201 gates仅 attained fraction MAE `<=.075`、frozen composite regret `<=.005`；fraction-price 方向由正 rate spline保证。
 - r1=`20260831T193000Z__variable-set-epistemic-tail-cvar-dual-s0-r1` 在 P199 artifact load 前因 run ID 少写
   `reliability`退出，0 teacher target/optimizer/metric，登记 `V67-F196`。
-- 只恢复 canonical artifact ref；r2 active=`run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
+- 只恢复 canonical artifact ref；r2 canonical=`run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
   20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2`，科学合同不变。
+- result：P201 aggregate price/attained fraction MAE=`.0275400/.0137322`、composite regret=`4.1660e-6`、violations=0；
+  size48/96 attained MAE=`.0135587/.0139057`；2/2，verdict=
+  `supported_variable_set_budget_conditioned_epistemic_tail_CVaR_allocator`。wall=`316.42s`、peak GPU/RSS=
+  `.3209/3.9789GiB`。
+
+### WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01
+
+- object：source calibration scenes 上计算 `(ensemble mean - frozen teacher)/(std+1e-4)`，先对四 horizon 取 max，
+  再按 risk tolerance `delta` 的 finite-sample one-sided quantile冻结 multiplier；非负截断保持 lower-than-mean 语义。
+- student：36-D context + positive budget-rate + positive tolerance-rate，horizon cumulative product；解析保证 budget/tolerance
+  上升时 LCB不降、horizon前缀不升。train delta=`.05/.10/.20/.30/.40`，heldout=`.075/.15/.25/.35`。
+- P201 gates仅 conformal-teacher MAE `<=.018` 与 empirical simultaneous-horizon maximum undercoverage `<=.12`；
+  P243 consumed descriptive-only；不扫 delta、epsilon、split、member、architecture、steps 或 gate。
+- active=`run://worldsim_v67/WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01/
+  20260831T194500Z__conformalized-epistemic-lcb-s0-r1`；与 P282 后段和 P277 IO 并行。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

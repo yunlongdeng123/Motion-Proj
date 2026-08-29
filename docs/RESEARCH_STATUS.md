@@ -95,10 +95,18 @@ WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
 MAE=`.010996/.010699`；wall=`164.57s`、peak GPU=`.5352GiB`。
 
 P282 进一步把冻结 P281 primal 接到 variable-set dual，train sizes32/64/128、held-out48/96。r1 因复制配置时 P199
-run ID 漏写 `reliability`，在 frozen artifact load 前退出，记为 `V67-F196`；依据 Hydra/OmegaConf compositional
-configuration 的复用思想，项目当前不引入新框架，只从已通过的 canonical 配置恢复唯一 artifact ref。r2 active=
+run ID 漏写 `reliability`，在 frozen artifact load 前退出，记为 `V67-F196`；最小恢复后的 canonical=
 `run://worldsim_v67/WS-V67-P282-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-DUAL-01/
-20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2`；P277 fresh IO 继续并行。
+20260831T193500Z__variable-set-epistemic-tail-cvar-dual-s0-r2`。P201 aggregate price/attained-fraction MAE=
+`.027540/.0137322`、composite regret=`4.17e-6`、violations=0，2/2；size48/96 attained MAE=`.013559/.013906`；
+wall=`316.42s`、peak GPU=`.3209GiB`。
+
+P283 将任意 `beta` 改为目标 risk tolerance `delta`：在 source calibration scenes 上冻结 one-sided nonconformity
+quantiles，再蒸馏解析 budget↑、tolerance↑、horizon↓ 的 LCB surface。迁移依据 conformal risk control 与 ICML 2025
+risk-averse calibration，但 trajectory-budget units 存在 scene correlation，故只判 P201 empirical simultaneous-horizon
+undercoverage 与 teacher fidelity，不作 distribution-free/conditional guarantee。Active=`run://worldsim_v67/
+WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01/20260831T194500Z__conformalized-epistemic-lcb-s0-r1`；
+它已与 P282 后段及 P277 archive IO 并行训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

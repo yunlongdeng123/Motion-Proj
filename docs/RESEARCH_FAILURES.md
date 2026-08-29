@@ -97,6 +97,13 @@
 
 下一可用编号：`V67-F197`。
 
+### P282 r2 outcome / P283 conformalized surface start note — 无新增 failure
+
+- P282 r2 P201 attained fraction MAE=`.0137322`、composite regret=`4.17e-6`，2/2；F196 已按相同合同关闭；
+- P283 参考 conformal risk control / risk-averse calibration，把 P274 ensemble disagreement校准为 tolerance-conditioned
+  multiplier；由于 unit scene-correlated，只预注册 empirical coverage，明确禁止 distribution-free/conditional guarantee；
+- P283 GPU 与 P277 archive IO 并行；下一可用 failure id 保持 `V67-F197`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
