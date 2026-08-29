@@ -317,6 +317,13 @@ Canonical=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONF
 P307→P308证明固定六候选的task-conditioned authority fidelity跨cohort保持；下一研究层转为把逐动作预算编译成
 显式授权/选择规则，并用真实future visited-state cost评价，不继续在同一fidelity门上调参。
 
+P309 依据 NeurIPS 2020 differentiable top-k与 ICML 2022 decision-focused learning-as-ranking进入显式授权层：冻结
+P307在attainable fraction `.25/.5/.75`的三点authority curve，以其均值为base score，只允许幅度`.25`的等变
+bounded residual；可微rank近似训练top-2，硬top-2评价真实四horizon max visited-state cost。固定6k steps，P201只保留
+cost reduction `>=10%`与pairwise concordance `>=.65`两门，不扫k/temperature/width/loss/gate。Active=
+`run://worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/
+20260901T034500Z__authority-residual-topk-admission-s0-r1`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%

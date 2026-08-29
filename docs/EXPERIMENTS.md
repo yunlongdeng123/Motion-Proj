@@ -559,6 +559,17 @@
 - next：不再优化budget fidelity；进入authority→action admission/selection层，以真实future visited-state cost作
   decision metric，仍不外推planner/closed-loop/safety。
 
+### WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01
+
+- progression：冻结P307三点authority curve作为逐动作base score；依据NeurIPS 2020 differentiable top-k与ICML
+  2022 decision-focused listwise ranking，只训练幅度`.25`的Deep Sets residual。
+- object：六候选中可微top-2 admission；label为四horizon实际future visited world/Actor-state max cost，不是voxel
+  correctness。hard top-2才用于最终metric。
+- protocol：source train/scene-mod5 dev、P201 consumed development；6k steps、batch384。两门为P201相对all-actions
+  cost reduction `>=.10`与pairwise concordance `>=.65`；不扫k/temperature/width/loss/gate。
+- active=`run://worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/
+  20260901T034500Z__authority-residual-topk-admission-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
