@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p137_swag_actor_ensemble.v1
+output_schema_version: worldsim_v67.p137_swag_actor_ensemble_summary.v1
+task_id: WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P137-001
+role: consumed_development_low_rank_weight_posterior_actor_ensemble
+seed: 0
+posterior_sampling_seed: 137
+posterior_samples: 3
+model_artifact: SWAG_ACTOR_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  collection_start_step: 4000
+  collection_interval_steps: 100
+  batch_size: 65536
+  base_learning_rate: 0.001
+  collection_learning_rate: 0.0001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_deep_ensemble: -0.005}
+verdict_on_pass: supported_development_swag_actor_ensemble
+verdict_on_failure: rejected_development_swag_actor_ensemble
+locks:
+  one_6000_step_model_path: true
+  collect_exactly_20_iterates_steps_4100_to_6000: true
+  low_rank_plus_diagonal_covariance_three_fixed_samples: true
+  no_lr_collection_rank_sample_count_or_seed_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://arxiv.org/abs/1902.02476
+  - https://proceedings.neurips.cc/paper/2018/hash/be3087e74e9100d4bc4c6268cdbe8456-Abstract.html
+claim_boundary:
+  - consumed_development_approximate_weight_posterior_only
+  - AdamW_iterate_covariance_is_not_a_calibrated_Bayesian_posterior
+  - three_samples_are_fixed_not_a_monte_carlo_convergence_claim
+  - no_planner_policy_closed_loop_or_safety_claim

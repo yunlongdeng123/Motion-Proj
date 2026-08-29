@@ -46,7 +46,8 @@
 | P133 | `run://worldsim_v67/WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01/20260830T092500Z__batchensemble-actor-uncertainty-s0-r1` | diversity collapse、mean rank delta `-.01454`；rejected/F96 |
 | P134 | `run://worldsim_v67/WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01/20260830T093000Z__packed-independent-actor-ensemble-s0-r1` | rank retained；P96 cost miss，rejected/F97 |
 | P135 | `run://worldsim_v67/WS-V67-P135-FULL-BUDGET-PACKED-ACTOR-ENSEMBLE-01/20260830T093500Z__full-budget-packed-actor-ensemble-s0-r1` | rank retained但cost三组略退；rejected/F98 |
-| P136 | `run://worldsim_v67/WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01/20260830T094000Z__snapshot-actor-ensemble-s0-r1` | single-path three-cycle snapshots；running |
+| P136 | `run://worldsim_v67/WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01/20260830T094000Z__snapshot-actor-ensemble-s0-r1` | P96 mode diversity不足；rejected/F99 |
+| P137 | `run://worldsim_v67/WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01/20260830T094500Z__swag-actor-ensemble-s0-r1` | diag+low-rank weight posterior；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -85,7 +86,8 @@
 | BatchEnsemble Actor UQ | P133 consumed P81/P96/P113 | epistemic fraction `.13%--.34%` | shared diversity collapse；reject |
 | packed independent Actor ensemble | P134 consumed P81/P96/P113 | mean rank delta=`+.00187` | P96 cost miss；reject |
 | full-budget packed ensemble | P135 consumed P81/P96/P113 | mean rank delta=`-.00127` | cost all slightly regress；reject |
-| snapshot Actor ensemble | P136 consumed P81/P96/P113 | pending | one 6k-step path, three cyclic minima |
+| snapshot Actor ensemble | P136 consumed P81/P96/P113 | mean rank delta=`-.00855` | P96/P113 cost regress；reject |
+| SWAG Actor ensemble | P137 consumed P81/P96/P113 | pending | 20 iterates, fixed 3 posterior samples |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map

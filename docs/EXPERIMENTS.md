@@ -599,7 +599,7 @@
 
 ### WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=`20260830T094000Z__snapshot-actor-ensemble-s0-r1`，
+- 状态：`done/rejected consumed development`；canonical=`20260830T094000Z__snapshot-actor-ensemble-s0-r1`，
   与P129 archive IO并行。
 - method：一个P109结构/一个optimizer path，6,000 total steps分3个2,000-step cosine cycles；LR固定`.001→.00001`，
   snapshots只取steps `2000/4000/6000`。三snapshot predictions用law of total variance组成τ-boundary score。
@@ -607,6 +607,19 @@
 - decisions：consumed P81/P96/P113相对P126 selected cost nonregression与mean Spearman difference≥`-.005`；P129 rows隔离。
 - references：ICLR 2017 Snapshot Ensembles、NeurIPS 2018 Fast Geometric Ensembling、SWAG；只称single-path snapshot
   development，不声称posterior calibration或Bayesian guarantee。
+- result：cycle-end NLL=`-3.050634/-3.183707/-3.342185`；P81/P96/P113 Spearman difference from P126=
+  `+.001856/-.026964/-.000539`（mean=`-.008549`），selected cost=`.173690/.179690/.231358`；P96/P113回退，
+  0/2 decisions，verdict=`rejected_development_snapshot_actor_ensemble`；wall=`32.07s`、peak GPU=`.379 GiB`，登记F99。
+
+### WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=`20260830T094500Z__swag-actor-ensemble-s0-r1`，
+  与P129 archive IO并行。
+- method：一个P109结构训练6,000 steps；前4,000 steps LR `.001`，随后LR `.0001`并在4100--6000每100 steps收集，
+  共20 weight iterates；拟合diag+low-rank covariance，以固定sampling seed137一次采3 models。
+- source/evaluation/decisions与P136相同；不扫collection start/LR/rank/sample count/seed，P129 rows不读。
+- reference：SWAG scalable approximate Bayesian inference；本实现沿用P109 AdamW，故只称approximate weight-posterior
+  development，不声称faithful calibrated Bayesian posterior或MC convergence。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

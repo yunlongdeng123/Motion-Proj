@@ -395,6 +395,15 @@ Spearman差=`+.00160/-.00224/-.00319`（mean=`-.00127`）通过；但selected co
 等于单模型，不另训member。snapshot predictions仍按total variance解析τ-boundary score，并在consumed三cohort相对P126
 检验cost/rank retention。P129 rows不读，GPU已与archive IO并行运行。
 
+P136三个cycle-end NLL=`-3.05063/-3.18371/-3.34218`；P81 cost `.17369`优于P126，但P96/P113=
+`.17969/.23136`回退，Spearman差=`+.00186/-.02696/-.00054`（mean=`-.00855`），0/2 decisions，wall=`32.07s`，
+登记`V67-F99`。单路径cyclic minima在P96未形成足够functional diversity，snapshot schedule不再调。
+
+P137改用SWAG式low-rank+diagonal weight posterior：同一6,000-step P109路径，前4,000 steps收敛，后2,000 steps固定
+LR `.0001`每100 steps收集一次，共20 iterates；拟合weight mean/covariance后用固定seed一次采3模型。source/evaluation/
+decisions不变，不扫collection LR/rank/sample数；不将AdamW iterates称为calibrated Bayesian posterior。P129 rows隔离，
+GPU训练已启动。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

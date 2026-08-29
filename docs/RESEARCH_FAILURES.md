@@ -1614,10 +1614,28 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：一个P109结构训练6,000 steps，3个固定2,000-step cosine cycles，LR `.001→.00001`，只存2000/4000/6000；
   三snapshot按total variance评分。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：固定cycles/LR/snapshot/seed；失败登记F99并关闭snapshot first trial，不扫schedule。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；实际mean rank=
+  `-.008549`，P96/P113 cost回退，两门全失败；P129 rows隔离。
+- prevention：固定cycles/LR/snapshot/seed；snapshot first trial关闭，不扫schedule。
 
-下一可用编号为：`V67-F99`。
+### V67-F99 — cyclic snapshots未形成可迁移的P96 functional diversity
+
+- 分类：`algorithm/single-path-mode-diversity`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P136-SNAPSHOT-ACTOR-ENSEMBLE-01/
+  20260830T094000Z__snapshot-actor-ensemble-s0-r1`。
+- 观察：三个cycle NLL逐步改善；P81 cost/rank优于P126，但P96 rank差`-.026964`且P96/P113 costs回退，mean rank=
+  `-.008549`，0/2 decisions。
+- 解释：同一路径cycle endpoints未覆盖独立seed的function modes；最后snapshot本身也尚弱于P126 members。
+- 防重复：不扫cycle length/LR range/snapshot count。P137改为SWAG covariance而非挑snapshot。
+
+### P137 freeze note — low-rank-plus-diagonal weight posterior
+
+- method：单P109路径6,000 steps；4000后固定LR `.0001`、每100 steps收集20 iterates；拟合SWAG diag+low-rank
+  covariance并以seed137采3 models。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：固定collection window/LR/rank/sample count/seed；失败登记F100并关闭single-path posterior route。
+
+下一可用编号为：`V67-F100`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

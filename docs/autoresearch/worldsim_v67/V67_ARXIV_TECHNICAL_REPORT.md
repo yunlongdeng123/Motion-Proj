@@ -224,6 +224,10 @@ P135在P126-equivalent batch下mean rank差=`-.00127`，但三组selected cost�
 P136转向单训练路径快照：3个固定cosine cycles在总计6,000 steps内产生2000/4000/6000三个solutions，以FGE/Snapshot
 Ensemble方式估计member disagreement；这检验独立全训练是否必要，不主张校准posterior。
 
+P136在P81有效，却在P96产生rank `-.02696`与cost回退，mean rank差=`-.00855`（F99）；cyclic endpoints不足以形成
+跨cohort模式。P137改用20个low-LR iterates拟合SWAG diag+low-rank weight covariance并固定采3模型，仍只检验continuous
+selection/rank retention；因optimizer沿用AdamW，论文不把它表述为严格Bayesian calibration。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
