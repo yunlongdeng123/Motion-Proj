@@ -657,7 +657,14 @@ Canonical=`run://worldsim_v67/WS-V67-P352-CROSSFOLD-ENSEMBLE-VISITED-RELIABILITY
 `.395355/.175182`，risk失败，3/4 rejected，登记F227。均值池化增加authority而未迁移安全率。
 
 P353不重训24k ensemble，按NeurIPS 2024 credal ensemble将同一三个frozen成员改为upper/maximum unsafe probability
-pooling，再在相同source fold3/4重新calibrate；这是单一保守聚合迁移，不扫mean/max/quantile。
+pooling，再在相同source fold3/4重新calibrate。Canonical=`run://worldsim_v67/
+WS-V67-P353-UPPER-POOL-CROSSFOLD-RELIABILITY-01/20260901T153000Z__upper-pool-crossfold-reliability-s0-r1`：
+source fold5 q90 coverage/unsafe=`.306423/.077568`；P201=`.357650/.131148`。相对P352风险`.175182→.131148`
+且coverage仍充分，证明上包络方向有效，但pool-then-calibrate仍使risk高于`.10`，3/4 rejected，登记F228。
+
+P354按NeurIPS 2021关于pooling/calibration order的对照，保持P352成员冻结，改为每个成员各自在source fold3做
+group calibration、fold4做PAV，最后对三个已校准unsafe probabilities取maximum；不重训head、不使用P201训练，
+也不扫aggregation/calibration顺序。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -1280,7 +1280,20 @@
   probability上包络替代P352 mean，显式拒绝成员分歧下的过度authority。
 - method：完全复用frozen P352 3 members，不重复24k training；max-pool后在同一source fold3做2k group calibration、
   fold4 PAV，fold5/P201 evaluation合同不变。
-- locks：只运行upper pool；不扫pool quantile/member/calibration/threshold/gate/seed；状态=`implementation`。
+- locks：只运行upper pool；不扫pool quantile/member/calibration/threshold/gate/seed；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P353-UPPER-POOL-CROSSFOLD-RELIABILITY-01/
+  20260901T153000Z__upper-pool-crossfold-reliability-s0-r1`。
+- result：0 member retraining；fold3 group calibration BCE=`.287834`，fold4 PAV BCE=`.289607`；source fold5
+  q90 coverage/unsafe=`.306423/.077568`，P201=`.357650/.131148`。相对P352风险下降25.1%，但风险门仍失败，
+  3/4 rejected，wall=`25.72s`，F228。
+
+### WS-V67-P354-MEMBERWISE-CALIBRATED-UPPER-POOL-RELIABILITY-01
+
+- migration：NeurIPS 2021系统比较individual-calibrate-then-pool与pool-then-calibrate；P353结果表明raw max-pool有效，
+  但pool后的单一source map会压平成员差异，P354因此保留每个成员的独立校准语义后再取unsafe上包络。
+- method：冻结P352三个heads；每个成员在相同fold3分别做group calibration、fold4分别做9个PAV maps；evaluation
+  才对三个calibrated unsafe probabilities取maximum。GPU只承担6k calibration gradients与batched inference。
+- locks：不重训heads、不用P201 covariates/labels训练、不扫顺序/pool/threshold/member/seed；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

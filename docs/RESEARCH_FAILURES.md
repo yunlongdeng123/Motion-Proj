@@ -435,8 +435,9 @@
 - P350：稳定训练但q90 `.29973/.18667`，risk semantics丢失，登记F225；
 - P351：teacher anchor改善coverage但q90 risk仍`.13514`，登记F226；target-unlabeled adaptation family关闭；
 - P352：source q90通过但P201 mean-pool q90 risk=`.17518`，登记F227；
-- P353：frozen members upper-unsafe pool + source recalibration implementation；
-- 下一可用 failure id 为 `V67-F228`。
+- P353：frozen upper-pool将P201 q90 risk降至`.13115`但仍失败，登记F228；
+- P354：memberwise source calibration后再upper-pool implementation；
+- 下一可用 failure id 为 `V67-F229`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -610,6 +611,20 @@
   用maximum unsafe probability作为upper pool再source-only校准；
 - forbidden rescue：不改member数/seed/folds、不选择weighted mean或事后pool quantile；resolution=
   `open via P353 upper-unsafe probability pooling`。
+
+### V67-F228 — P353 upper pool改善shift risk但pool后校准仍越过硬风险线
+
+- canonical=`run://worldsim_v67/WS-V67-P353-UPPER-POOL-CROSSFOLD-RELIABILITY-01/
+  20260901T153000Z__upper-pool-crossfold-reliability-s0-r1`；
+- symptom：P201 q90 coverage=`.357650`充分，但max unsafe=`.131148 > .10`；两项monotonicity通过，3/4 rejected；
+- retained evidence：相对P352 mean-pool，q90 unsafe从`.175182`降到`.131148`，同时coverage仅从`.395355`降到
+  `.357650`；source fold5 q90=`.306423/.077568`。成员上包络确实提供有效保守性，并非无效方向；
+- diagnosis：P353先对raw unsafe取maximum，再用单一fold3 affine map和fold4 PAV重新拟合pooled score；该共同映射
+  重新吸收source平均频率，无法保持各成员在shift样本上的独立高风险证据；
+- literature/migration：NeurIPS 2021 *Uncertainty Quantification and Deep Ensembles*明确比较individual-calibrate-
+  then-pool与pool-then-calibrate，并表明顺序改变最终校准；P354为每个冻结成员单独source-calibrate，再取maximum；
+- forbidden rescue：不调risk gate、pool quantile、member/fold/seed或PAV bins；resolution=
+  `open via P354 memberwise-calibrated upper pooling`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
