@@ -69,6 +69,9 @@ P220在source fixed50相对confidence把selected Brier/calibration改善`23.61%/
 `13.71%/27.69%`；但P222在更难P201上分别退化`1.31%/9.67%`，所以absolute loss authority未获跨cohort稳定支持。
 P223正以source-only same-budget pairwise proper-loss ranking作一次恢复；P201已消费，任何正结果也只能授权新的fresh test，
 不能本身写作confirmation。
+P223把P201 Brier/calibration退化缩小到`.43%/2.14%`但仍0/2，故逐budget learned authority关闭。P224将selective object
+改为整条trajectory的七预算reliability curve，以integrated realized Brier训练单一fixed50 authority；当前仍是post-hoc
+development，不能视为confirmation或formal risk control。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

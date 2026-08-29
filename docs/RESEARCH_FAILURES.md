@@ -2753,6 +2753,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F175`。
 
+### V67-F175 — pairwise loss ranking缩小但未消除P201 selective reversal
+
+- canonical：`run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1`；
+- 观察：相对P220，P201 Brier退化由`1.31%`缩至`.43%`、calibration退化由`9.67%`缩至`2.14%`，但仍0/2；
+  source/P183保持正向，说明ranking alignment有帮助但逐budget ordering仍跨cohort不稳；
+- 解释：compiler真正授权的是trajectory reliability interface，逐budget独立top-50会产生七个不同接受集，并放大budget-specific shift；
+- 响应：关闭逐budget authority；P224只试一次structured trajectory-curve selection，把七预算proper loss聚合后作单一授权；
+- 防重复：不再试逐budget MSE/pairwise/listwise/margin/group loss或coverage sweep。
+
+下一可用编号：`V67-F176`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

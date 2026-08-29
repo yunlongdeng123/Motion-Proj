@@ -133,7 +133,8 @@
 | P220 | `run://worldsim_v67/WS-V67-P220-SELECTIVE-JOINT-RELIABILITY-AUTHORITY-01/20260830T232000Z__selective-joint-reliability-authority-s0-r1` | selected Brier -23.61%、calibration -36.43%；source dev supported |
 | P221 | `run://worldsim_v67/WS-V67-P221-SELECTIVE-AUTHORITY-POST-CONFIRMATION-01/20260830T233000Z__selective-authority-post-confirmation-s0-r1` | P183 selected Brier -13.71%、calibration -27.69%；secondary supported |
 | P222 | `run://worldsim_v67/WS-V67-P222-SELECTIVE-AUTHORITY-P201-TERTIARY-01/20260830T234000Z__selective-authority-p201-tertiary-s0-r1` | P201 selected Brier +1.31%、calibration +9.67%；rejected/F174 |
-| P223 | `run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1` | same-budget pairwise loss ranking recovery；running |
+| P223 | `run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1` | P201 Brier +.43%、calibration +2.14%；rejected/F175 |
+| P224 | `run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1` | structured trajectory-curve fixed50 authority；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -294,7 +295,8 @@
 | `V67-F171` | closed negative | P217 target covariates近乎不可分且Brier仍退化1.93%；prefix density family关闭 |
 | `V67-F172` | recovery failed | P218 source calibration issue由P219 source修复但未跨P183迁移 |
 | `V67-F173` | closed negative | P219在P183 Brier/calibration均退化；direct aggregate density关闭 |
-| `V67-F174` | recovery active | P220 absolute loss head未过P201；P223 pairwise ranking运行中 |
+| `V67-F174` | recovery failed | P223缩小P201 reversal但仍0/2 |
+| `V67-F175` | closed negative | pairwise逐budget authority仍未过P201；转trajectory-curve object |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

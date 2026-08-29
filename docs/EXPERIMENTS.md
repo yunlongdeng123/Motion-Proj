@@ -1763,7 +1763,17 @@
 - canonical planned：`run://worldsim_v67/WS-V67-P223-PAIRWISE-SELECTIVE-AUTHORITY-RECOVERY-01/20260830T235500Z__pairwise-selective-authority-recovery-s0-r1`；
 - protocol：只用source train，随机同budget pairs，以realized P199 Brier loss次序训练pairwise logistic risk ranker；
   source dev、P183、P201均只评价，fixed50/confidence/two P201 gates不变；
-- status：RTX 3090训练8,000 steps；不加MSE auxiliary、margin、group loss或coverage sweep。
+- result：source/P183 selected Brier改善`8.49%/14.99%`、calibration改善`12.33%/10.80%`；但P201
+  learned/confidence Brier=`.036705/.036547`（退化`.43%`），calibration=`.017347/.016984`（退化`2.14%`）；
+  0/2，F175，wall=`53.12s`；
+- verdict=`rejected_post_hoc_pairwise_selective_authority_recovery`；关闭逐budget learned authority。
+
+### WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P224-TRAJECTORY-CURVE-AUTHORITY-01/20260831T001000Z__trajectory-curve-authority-s0-r1`；
+- protocol：一个fixed50 decision接受/拒绝整条trajectory七预算curve；22维input=`P199 features + 7 probs + 7 variances`；
+  target为七预算realized Brier均值，control为mean Bernoulli variance；source-only fit，P183/P201 evaluation-only；
+- status：RTX 3090训练8,000 steps；P201 selected integrated Brier/calibration两门，不扫粒度/coverage/loss/features。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

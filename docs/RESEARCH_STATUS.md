@@ -952,6 +952,10 @@ P220 source dev在fixed50下把selected Brier `.0116926→.0089325`改善`23.61%
 consumed-secondary。但P222在已读P201 12,922 rows上Brier/calibration相对confidence退化`1.31%/9.67%`，0/2、F174；
 不能申请fresh confirmation。根据selective segmentation的pairwise uncertainty loss与ICLR 2022 ranking-aligned predict-then-optimize，
 P223只作一次source-only pairwise logistic recovery：直接排序同budget realized P199 Brier loss，P183/P201均只评价，P201两门不变。
+P223在source/P183仍改善selected Brier `8.49%/14.99%`，但P201 Brier/calibration仍退化`.43%/2.14%`，0/2、F175；
+逐budget learned authority关闭。参考NeurIPS 2024 hierarchical selective classification与structured-output risk，P224改变授权粒度：
+一个decision覆盖整条trajectory的七预算reliability curve，训练target为七预算realized P199 Brier均值，confidence control为
+mean Bernoulli variance；source-only训练，P183/P201只评价，P201原两门不变。RTX 3090运行中。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 
