@@ -1,0 +1,64 @@
+schema_version: worldsim_v67.p228_monotone_distillation_confirmation.v1
+output_schema_version: worldsim_v67.p228_monotone_distillation_confirmation_summary.v1
+task_id: WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P228-001
+role: fresh_scene_level_monotone_reliability_curve_distillation_confirmation
+seed: 0
+model_artifact: P228_MONOTONE_DISTILLATION_ROWS.npz
+evaluation_data:
+  scene_names: [scene-0015, scene-0097, scene-0273, scene-0520, scene-0552, scene-0626, scene-0775, scene-0800, scene-0919, scene-1069]
+  scene_shards:
+    scene-0015: "01"
+    scene-0097: "01"
+    scene-0273: "03"
+    scene-0520: "05"
+    scene-0552: "06"
+    scene-0626: "06"
+    scene-0775: "08"
+    scene-0800: "08"
+    scene-0919: "09"
+    scene-1069: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p228_monotone_distillation_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P228-MONOTONE-DISTILLATION-CONFIRMATION-PREP-01
+  run_id: 20260831T010000Z__monotone-distillation-confirmation-prep-s0-r1
+confirmation: {run_id: 20260831T010500Z__monotone-distillation-confirmation-s0-r1}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p227: {run: worldsim_v67/WS-V67-P227-MONOTONE-RELIABILITY-CURVE-DISTILLATION-01/20260831T004500Z__monotone-reliability-curve-distillation-s0-r1, artifact: MONOTONE_RELIABILITY_CURVE_STUDENT.pt}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024}
+decision: {maximum_teacher_probability_MAE: 0.01, maximum_relative_brier_degradation: 0.01, maximum_absolute_calibration_error_increase: 0.002}
+verdict_on_pass: supported_fresh_monotone_reliability_curve_distillation
+verdict_on_failure: rejected_fresh_monotone_reliability_curve_distillation
+locks:
+  ten_unused_official_val_scenes_and_ten_distinct_logs_frozen_before_sensor_or_target_read: true
+  location_distribution_boston_onenorth_queenstown_holland_is_five_two_two_one: true
+  P203_teacher_P227_student_budgets_MC_and_three_decisions_are_frozen: true
+  all_prior_v67_confirmation_scenes_are_excluded: true
+  no_scene_log_shard_model_width_depth_budget_metric_gate_or_MC_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_confirmation_at_scene_level_not_session_or_population_level
+  - differentiable_curve_emulator_not_formal_calibration_or_safety_guarantee
+  - no_collision_planner_policy_closed_loop_or_safety_claim
