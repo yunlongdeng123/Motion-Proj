@@ -1060,7 +1060,10 @@ response，因此P251移除budget loss与PCGrad，以冻结P246 probability L1�
 P243 archive IO继续并发。P251仍只把P201 probability MAE降至`.018065`，第二门失败、F189；inverse student在三种
 loss语义下都停在约`.018`，该family关闭。P252改变对象为P246解析的log-budget marginal reliability elasticity，
 训练非负37→128→128→4 head直接蒸馏`dP/dz`；P201只判elasticity MAE与逐budget/horizon的trajectory ranking，
-不声称真实算力、allocation或planning value。RTX 3090已接续训练。
+不声称真实算力、allocation或planning value。P252一次2/2：P201 elasticity MAE=`.019285`，32个query内
+trajectory Spearman均值=`.925247`，非负违规0；P183也为`.020152/.946509`。P253已在P243 rows前冻结为同读
+fresh secondary。P254进一步给定shadow price，蒸馏固定129-point grid上使“P246四prefix均值−normalized budget
+cost”最大的预算；positive price-rate spline结构上保证价格升高时预算不增，RTX 3090训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

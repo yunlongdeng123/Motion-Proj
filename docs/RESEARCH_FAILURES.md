@@ -2987,6 +2987,15 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F190`。
 
+### P252/P253 marginal-value milestone note — 新对象通过且fresh secondary冻结，无新增failure
+
+- P252 canonical=`run://worldsim_v67/WS-V67-P252-MARGINAL-RELIABILITY-ELASTICITY-01/20260831T090000Z__marginal-reliability-elasticity-s0-r1`；
+- P201 elasticity MAE=`.019285`、mean within-query Spearman=`.925247`，2/2，非负违规0；
+- P253在P243 rows前冻结为same-read secondary，P252/P246/budgets/MC/两门不变；
+- P254只推进冻结surrogate下的shadow-price budget policy，不重开inverse student family；下一failure id保持F190。
+
+下一可用编号仍为：`V67-F190`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；

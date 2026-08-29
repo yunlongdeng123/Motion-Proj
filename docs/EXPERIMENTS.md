@@ -2056,8 +2056,28 @@
   monotone networks说明可对单调价值函数施加结构。P252利用P246已有单调总价值并蒸馏其解析导数，不重学inverse；
 - protocol：41个source train budgets、八个geometric heldout midpoints；37→128→128→4 softplus head、L1、12k、
   batch8192、seed0；P201单次两门：elasticity MAE≤`.020`、32个budget×horizon query内trajectory Spearman均值≥`.80`；
-- active canonical：`run://worldsim_v67/WS-V67-P252-MARGINAL-RELIABILITY-ELASTICITY-01/20260831T090000Z__marginal-reliability-elasticity-s0-r1`；
+- canonical：`run://worldsim_v67/WS-V67-P252-MARGINAL-RELIABILITY-ELASTICITY-01/20260831T090000Z__marginal-reliability-elasticity-s0-r1`；
+- result：P201 elasticity MAE=`.019285`、32 query内mean/min Spearman=`.925247/.523495`、非负违规0，2/2；
+  source=`.019203/.932186`，P183=`.020152/.946509`；
+- resources/verdict：wall=`44.70s`、peak GPU=`.140GiB`；`supported_marginal_reliability_elasticity_compiler`；
   仅是冻结P246 teacher distillation，不是measured compute/allocation/planning claim。
+
+### WS-V67-P253-ELASTICITY-SAME-READ-CONFIRMATION-01
+
+- role：P243首次fresh rows上的prospective same-read secondary，不是第二个独立cohort；
+- frozen before rows：P252 artifact、冻结P246解析derivative、八heldout budgets、1024 MC与`.020/.80`两门均锁定；
+- canonical waiter：`run://worldsim_v67/WS-V67-P253-ELASTICITY-SAME-READ-CONFIRMATION-01/20260831T092000Z__elasticity-same-read-confirmation-s0-r1`；等待P243 rows，quality read=false。
+
+### WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01
+
+- object：给定trajectory context与shadow price，输出最大化冻结surrogate utility
+  `mean_h P246(reliable|z,h) - price*(z+1)/2`的单一预算；
+- teacher/structure：13个log-spaced train prices、12 midpoints heldout；每例在固定129点`z∈[-1,1]`全局取优；
+  positive price-rate spline加`tanh`结构上保证price升高时预算不增加；
+- training/decision：source-only L1、128/16 knots、12k/batch8192/seed0；P201只判normalized-log-budget MAE≤`.075`
+  与冻结utility regret≤`.005`，不扫price/grid/structure/loss；
+- active canonical：`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；
+  不代表真实compute cost、allocation或planning authority。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
