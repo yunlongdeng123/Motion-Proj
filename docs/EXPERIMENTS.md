@@ -878,6 +878,24 @@
   q↑、H↑均结构不降，参考ICLR 2022 monotone neural spline continuous quantile representation。
 - split/gates：沿用q `.70-.97`、train H `.8/1.5/3.0s`、heldout H=`2.5s`、source q90 offset与P201
   `.10/.20/0`；fixed knots，不扫knots/range/capacity/gate/seed。
+- canonical=`run://worldsim_v67/WS-V67-P329-MONOTONE-SPLINE-RISK-HORIZON-SURFACE-01/
+  20260901T085500Z__monotone-spline-risk-horizon-surface-s0-r1`。
+- result：9k steps、final pinball=`.02084`、source q90 offset=`.08060`。P201 mean/highest coverage=
+  `.23415/.65164`、max/mean unsafe=`.01761/.00587`、monotonicity=0；strict/mid/high coverage=
+  `0/.05082/.65164`、unsafe=`0/0/.01761`，3/3 gate supported。
+- source heldout H+q90 mean/highest coverage=`.22579/.59271`、max unsafe=`.02592`；wall=`79.43s`。
+  比P328 offset更大、coverage更低且strict仍0，故保留负比较证据并关闭q-spline capacity tuning。
+
+### WS-V67-P330-SIZE-CONDITIONED-HORIZON-AUTHORITY-01
+
+- object：同一P313 task ranking的nested top-1/top-2/top-3 prefix；给定H与ceiling输出最大可靠authority
+  cardinality，避免fixed top-2在strict ceiling被迫全体abstain。
+- architecture：拼接三个prefix set summaries，输出q85 base与H-slope positive increments；沿k累积保证
+  predicted boundary随set size不降，positive H slope保证未来时域不降。
+- training/calibration：source train k=`1/2/3`×H `.8/1.5/3.0s` q85 pinball，source calibration一个q85
+  signed offset；source/P201 heldout H=`2.5s`，每个ceiling选择最大feasible k。
+- gates：P201 max selected-set unsafe `<=.15`、mean any-authority coverage `>=.35`、size/ceiling
+  monotonicity=0；不扫k/ranking/q/capacity/gate/seed，不重开pair selector。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface

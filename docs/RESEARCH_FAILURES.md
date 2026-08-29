@@ -396,8 +396,10 @@
   monotonicity=0，source heldout H+q90 max unsafe=`.02763`，3/3 supported；未触发F212；
 - P328 result：continuous-q implicit surface在P201 q90得到coverage=`.24945`、max unsafe=`.02217`、
   monotonicity=0，3/3 supported；未触发F212；但q90 offset=`.06317`且strict coverage=0作为capacity限制保留；
-- P329 active：positive-increment monotone q-spline替换linear-q axis；失败才登记F212，不扫knots/range/H/
-  capacity/gate/seed；
+- P329 result：P201 coverage=`.23415`、max unsafe=`.01761`、monotonicity=0，3/3 gate supported；未触发
+  F212，但q90 offset=`.08060`、strict coverage=0且被P326/P327支配，关闭spline tuning；
+- P330 active：同一P313 ranking上训练nested k=`1/2/3` q85×H surface；失败才登记F212，不扫k/ranking/
+  q/capacity/gate/seed，不重开pair repair；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

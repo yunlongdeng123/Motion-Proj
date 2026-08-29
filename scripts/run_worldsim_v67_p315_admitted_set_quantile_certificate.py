@@ -160,6 +160,27 @@ class MonotoneSplineRiskHorizonSurface(nn.Module):
         )
 
 
+class SizeConditionedHorizonQuantileHead(nn.Module):
+    """Nested-set quantile boundaries monotone in authority size and horizon."""
+
+    def __init__(self, input_width: int, hidden_dimensions, set_size_count: int) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 2 * int(set_size_count)))
+        self.network = nn.Sequential(*layers)
+        self.set_size_count = int(set_size_count)
+
+    def forward(self, features, normalized_horizon):
+        raw = self.network(features).reshape(-1, 2, self.set_size_count)
+        base = torch.cumsum(F.softplus(raw[:, 0]), 1)
+        slope = torch.cumsum(F.softplus(raw[:, 1]), 1)
+        return base + normalized_horizon[:, None] * slope
+
+
 class GroupwisePairSelector(nn.Module):
     """Permutation-equivariant selector over the complete 15-pair candidate set."""
 
@@ -428,6 +449,64 @@ def _selective_metrics(score, target, conditions, ceiling_values):
     }
 
 
+def _variable_set_metrics(scores, targets, conditions, ceiling_values, set_sizes):
+    set_sizes = np.asarray(set_sizes, np.int64)
+    score_size_violations = int(np.sum(np.diff(scores, axis=1) < -1e-8))
+    by_ceiling = {}
+    coverages, unsafe_rates, mean_sizes = [], [], []
+    previous_selected_size = None
+    ceiling_size_violations = 0
+    row_index = np.arange(len(scores))
+    for ceiling in ceiling_values:
+        feasible = scores <= float(ceiling)
+        selected_position = feasible.sum(1) - 1
+        admitted = selected_position >= 0
+        selected_size = np.where(admitted, set_sizes[np.maximum(selected_position, 0)], 0)
+        if previous_selected_size is not None:
+            ceiling_size_violations += int(np.sum(selected_size < previous_selected_size))
+        previous_selected_size = selected_size
+        selected_target = np.zeros(len(scores), np.float32)
+        selected_target[admitted] = targets[row_index[admitted], selected_position[admitted]]
+        count = int(admitted.sum())
+        unsafe_rate = float(np.mean(selected_target[admitted] > ceiling)) if count else 0.0
+        by_condition = {}
+        for progress, command in np.unique(conditions, axis=0):
+            local = np.isclose(conditions[:, 0], progress) & np.isclose(conditions[:, 1], command)
+            local_admitted = local & admitted
+            local_count = int(local_admitted.sum())
+            by_condition[f"progress={float(progress)},command={float(command)}"] = {
+                "any_authority_coverage": float(local_count / max(int(local.sum()), 1)),
+                "unsafe_selected_set_rate": float(np.mean(selected_target[local_admitted] > ceiling)) if local_count else 0.0,
+                "mean_selected_set_size": float(np.mean(selected_size[local_admitted])) if local_count else 0.0,
+            }
+        mean_size = float(np.mean(selected_size[admitted])) if count else 0.0
+        by_ceiling[str(float(ceiling))] = {
+            "log_cost_ceiling": float(ceiling),
+            "actual_cost_ceiling": float(np.expm1(ceiling)),
+            "admitted_count": count,
+            "any_authority_coverage": float(np.mean(admitted)),
+            "unsafe_selected_set_rate": unsafe_rate,
+            "mean_selected_set_size": mean_size,
+            "mean_normalized_authority_size": float(np.mean(selected_size) / float(set_sizes[-1])),
+            "by_task_condition": by_condition,
+        }
+        coverages.append(float(np.mean(admitted)))
+        unsafe_rates.append(unsafe_rate)
+        mean_sizes.append(mean_size)
+    return {
+        "example_count": int(len(scores)),
+        "set_sizes": [int(value) for value in set_sizes],
+        "mean_any_authority_coverage": float(np.mean(coverages)),
+        "highest_ceiling_any_authority_coverage": float(coverages[-1]),
+        "maximum_unsafe_selected_set_rate": float(np.max(unsafe_rates)),
+        "mean_unsafe_selected_set_rate": float(np.mean(unsafe_rates)),
+        "mean_selected_set_size_by_ceiling": mean_sizes,
+        "score_set_size_monotonicity_violations": score_size_violations,
+        "ceiling_selected_size_monotonicity_violations": ceiling_size_violations,
+        "by_ceiling": by_ceiling,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
@@ -454,6 +533,7 @@ def main() -> None:
     horizon_risk_conditioned_surface_training = bool(config.get("horizon_risk_conditioned_surface_training", False))
     horizon_implicit_quantile_surface_training = bool(config.get("horizon_implicit_quantile_surface_training", False))
     horizon_spline_quantile_surface_training = bool(config.get("horizon_spline_quantile_surface_training", False))
+    horizon_size_conditioned_authority_training = bool(config.get("horizon_size_conditioned_authority_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -487,7 +567,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -543,19 +623,44 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training:
-        source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
-            source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
-            progress_model, maneuver_model, config["training_progress_preferences"],
-            config["training_lateral_commands"], float(config["lateral_preference_weight"]),
-            int(config["selected_action_count"]),
-        )
-        p201_feature, p201_target, _, p201_conditions = _horizon_task_examples(
-            p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
-            progress_model, maneuver_model, config["heldout_progress_preferences"],
-            config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
-            int(config["selected_action_count"]),
-        )
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training:
+        if horizon_size_conditioned_authority_training:
+            source_prefix, source_prefix_target = [], []
+            p201_prefix, p201_prefix_target = [], []
+            for set_size in config["authority_set_sizes"]:
+                local_source = _horizon_task_examples(
+                    source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+                    progress_model, maneuver_model, config["training_progress_preferences"],
+                    config["training_lateral_commands"], float(config["lateral_preference_weight"]), int(set_size),
+                )
+                local_p201 = _horizon_task_examples(
+                    p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
+                    progress_model, maneuver_model, config["heldout_progress_preferences"],
+                    config["heldout_lateral_commands"], float(config["lateral_preference_weight"]), int(set_size),
+                )
+                source_prefix.append(local_source[0])
+                source_prefix_target.append(local_source[1])
+                p201_prefix.append(local_p201[0])
+                p201_prefix_target.append(local_p201[1])
+                source_example_scenes, source_conditions = local_source[2], local_source[3]
+                p201_conditions = local_p201[3]
+            source_feature = np.concatenate(source_prefix, 1)
+            source_target = np.stack(source_prefix_target, 1)
+            p201_feature = np.concatenate(p201_prefix, 1)
+            p201_target = np.stack(p201_prefix_target, 1)
+        else:
+            source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
+                source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+                progress_model, maneuver_model, config["training_progress_preferences"],
+                config["training_lateral_commands"], float(config["lateral_preference_weight"]),
+                int(config["selected_action_count"]),
+            )
+            p201_feature, p201_target, _, p201_conditions = _horizon_task_examples(
+                p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
+                progress_model, maneuver_model, config["heldout_progress_preferences"],
+                config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
+                int(config["selected_action_count"]),
+            )
         if horizon_quantile_confirmation:
             frozen_horizon = torch.load(
                 args.runs_root / config["frozen_horizon_certificate"]["run"] / config["frozen_horizon_certificate"]["artifact"],
@@ -634,6 +739,138 @@ def main() -> None:
                 "training": {"row_count": 0, "horizon_example_count": 0, "steps": 0},
                 "calibration": {"horizon_example_count": 0, "additive_offsets": [float(value) for value in offsets], "reused_from": config["frozen_horizon_certificate"]},
                 "source_heldout_horizon_development": None,
+                "P201_heldout_task_and_horizon_development": p201_metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
+        if horizon_size_conditioned_authority_training:
+            split = config["split"]
+            modulus = int(split["scene_modulus"])
+            calibration_rows = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
+            development_rows = source_example_scenes % modulus == int(split["development_scene_remainder"])
+            train_rows = ~(calibration_rows | development_rows)
+            feature_mean = source_feature[train_rows].mean(0)
+            feature_scale = source_feature[train_rows].std(0).clip(min=1e-5)
+            source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+            p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+            horizon_values = np.asarray(config["horizons_seconds"], np.float32)
+            normalized_horizons = horizon_values / float(horizon_values.max())
+            training_horizon_indices = np.asarray(config["training_horizon_indices"], np.int64)
+            heldout_horizon_index = int(config["heldout_horizon_index"])
+            set_sizes = np.asarray(config["authority_set_sizes"], np.int64)
+            model_config = config["size_model"]
+            model = SizeConditionedHorizonQuantileHead(
+                source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
+            ).cuda()
+            optimizer = torch.optim.AdamW(
+                model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+            )
+            x = torch.from_numpy(source_feature).cuda()
+            y = torch.from_numpy(source_target).cuda()
+            train_index = torch.from_numpy(np.flatnonzero(train_rows)).cuda()
+            training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
+            horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
+            q = float(config["risk_quantile_level"])
+            last = 0.0
+            for step in range(int(model_config["steps"])):
+                row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+                local_horizon_index = training_horizon_tensor[
+                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                ]
+                local_size_index = torch.randint(len(set_sizes), (len(row),), device="cuda")
+                prediction = model(x[row], horizon_tensor[local_horizon_index])[
+                    torch.arange(len(row), device="cuda"), local_size_index
+                ]
+                target = y[row, local_size_index, local_horizon_index]
+                error = target - prediction
+                loss = torch.maximum(q * error, (q - 1.0) * error).mean()
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+                last = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"P330 size-conditioned q85xH step={step + 1} loss={last:.7f}", flush=True)
+            model.eval()
+            calibration_index = np.flatnonzero(calibration_rows)
+            with torch.no_grad():
+                calibration_x = x[torch.from_numpy(calibration_index).cuda()]
+                calibration_residuals = []
+                for horizon_index in training_horizon_indices:
+                    local_h = torch.full((len(calibration_x),), float(normalized_horizons[horizon_index]), device="cuda")
+                    prediction = model(calibration_x, local_h).cpu().numpy()
+                    calibration_residuals.append(source_target[calibration_rows, :, horizon_index] - prediction)
+                calibration_offset = float(np.quantile(np.concatenate(calibration_residuals).reshape(-1), q))
+                source_h = torch.full((len(x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
+                source_score = model(x, source_h).cpu().numpy()
+                p201_x = torch.from_numpy(p201_feature).cuda()
+                p201_h = torch.full((len(p201_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
+                p201_score = model(p201_x, p201_h).cpu().numpy()
+            source_score = np.maximum(source_score + calibration_offset, 0.0)
+            p201_score = np.maximum(p201_score + calibration_offset, 0.0)
+            source_local_target = source_target[:, :, heldout_horizon_index]
+            p201_local_target = p201_target[:, :, heldout_horizon_index]
+            frozen_selective = torch.load(
+                args.runs_root / config["frozen_horizon_selective_authority"]["run"] / config["frozen_horizon_selective_authority"]["artifact"],
+                map_location="cpu",
+            )
+            evaluation_ceilings = np.asarray(frozen_selective["heldout_log_cost_ceilings"], np.float32)
+            source_metrics = _variable_set_metrics(
+                source_score[development_rows], source_local_target[development_rows],
+                source_conditions[development_rows], evaluation_ceilings, set_sizes,
+            )
+            p201_metrics = _variable_set_metrics(
+                p201_score, p201_local_target, p201_conditions, evaluation_ceilings, set_sizes
+            )
+            decision = config["decision"]
+            checks = {
+                "P201_size_conditioned_authority_risk": p201_metrics["maximum_unsafe_selected_set_rate"] <= float(decision["maximum_P201_unsafe_selected_set_rate"]),
+                "P201_size_conditioned_authority_coverage": p201_metrics["mean_any_authority_coverage"] >= float(decision["minimum_P201_mean_any_authority_coverage"]),
+                "P201_size_and_ceiling_monotonicity": p201_metrics["score_set_size_monotonicity_violations"] == 0 and p201_metrics["ceiling_selected_size_monotonicity_violations"] == 0,
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "model_state_dict": model.state_dict(),
+                "input_width": source_feature.shape[1],
+                "hidden_dimensions": model_config["hidden_dimensions"],
+                "input_mean": feature_mean,
+                "input_scale": feature_scale,
+                "authority_set_sizes": set_sizes,
+                "horizons_seconds": horizon_values,
+                "training_horizon_indices": training_horizon_indices,
+                "heldout_horizon_index": heldout_horizon_index,
+                "risk_quantile_level": q,
+                "calibration_offset": calibration_offset,
+                "heldout_log_cost_ceilings": evaluation_ceilings,
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {
+                    "size_horizon_example_count": int(train_rows.sum() * len(set_sizes) * len(training_horizon_indices)),
+                    "authority_set_sizes": [int(value) for value in set_sizes], "risk_quantile_level": q,
+                    "steps": int(model_config["steps"]), "final_pinball_loss": last,
+                },
+                "calibration": {
+                    "size_horizon_example_count": int(calibration_rows.sum() * len(set_sizes) * len(training_horizon_indices)),
+                    "risk_quantile_level": q, "signed_log_cost_offset": calibration_offset,
+                },
+                "heldout_horizon_seconds": float(horizon_values[heldout_horizon_index]),
+                "heldout_log_cost_ceilings": [float(value) for value in evaluation_ceilings],
+                "source_heldout_horizon_development": source_metrics,
                 "P201_heldout_task_and_horizon_development": p201_metrics,
                 "decision_checks": checks,
                 "resources": {

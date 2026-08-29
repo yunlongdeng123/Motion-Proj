@@ -477,9 +477,17 @@ q90 offset=`.06317`。P201 mean/highest coverage=`.24945/.66557`、max/mean unsa
 monotonicity=0；source heldout H+q90 `.25057/.60021`、max unsafe=`.03244`，3/3 supported。continuous-risk
 training成立，但linear-q surface的较大offset使P201 strict coverage回到0。wall=`59.83s`。
 
-P329保持相同continuous q domain与split，迁移ICLR 2022 monotone spline思想：用固定q knots上的positive
-base/slope increments加piecewise-linear interpolation，提升q方向曲率且结构保证H/q双单调；不调range/q90/
-gate/seed。Active=`WS-V67-P329-MONOTONE-SPLINE-RISK-HORIZON-SURFACE-01`。
+P329保持相同continuous q domain与split，迁移monotone spline。Canonical=`run://worldsim_v67/
+WS-V67-P329-MONOTONE-SPLINE-RISK-HORIZON-SURFACE-01/
+20260901T085500Z__monotone-spline-risk-horizon-surface-s0-r1`：9k steps、final pinball=`.02084`、q90
+offset=`.08060`。P201 mean/highest coverage=`.23415/.65164`、max/mean unsafe=`.01761/.00587`，source
+`.22579/.59271`、max unsafe=`.02592`，3/3 gate supported；但offset高于P328 `.06317`、strict仍0且mean
+coverage更低，研究选择上被P326/P327支配，关闭spline tuning，不扫knots。wall=`79.43s`。
+
+P330选择P326 fixed-risk q85作为更强backbone，增加nested authority set size `k=1/2/3`：冻结P313 ranking，
+联合预测top-k prefix visited-state max-cost，positive size increments与H slopes保证k/H双单调；每个ceiling选
+最大feasible k。该对象不是重新选pair，而是在同一ranking上缩放authority cardinality。Active=
+`WS-V67-P330-SIZE-CONDITIONED-HORIZON-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
