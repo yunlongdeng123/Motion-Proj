@@ -607,8 +607,10 @@ actor-time tokens直接复用，无新archive IO。旧P81/P96/P113/P129比较con
 描述；不扫neighbor count/architecture/loss/score/coverage。
 
 P164首个非登录launcher因仓库根目录未进入`sys.path`在import前退出，0 data/0 step，记为已恢复工程事件F128；
-使用进程级`PYTHONPATH=.`后canonical r1正常启动。Seed0 6,000 steps NLL=`-5.01791`，seed1已接替GPU训练；
-科学协议、run id与数据均未变化。
+使用进程级`PYTHONPATH=.`后canonical r1正常完成。三member NLL=`-5.01791/-5.02511/-4.99378`，但旧P81/P96/P113/P129
+rank gain=`-.06259/-.08456/-.00472/-.02709`（mean=`-.04474`），selected cost四组全退，F129。P147五H也全部rank/cost
+回退。邻居上下文显著改善source likelihood但产生跨scene interaction shortcut；当前marginal interaction-adapter支线关闭，不扫
+neighbor count/radius/width。P126/P147冻结position predictor继续是唯一多时域支持候选。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

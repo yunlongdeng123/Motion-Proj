@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P164 interaction-conditioned training active`
+- 报告状态：`P147 independent multi-horizon support; P164 marginal interaction closed negative`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -319,7 +319,10 @@ P147五H post-confirmation诊断也没有稳定rank/cost方向（F127）。因�
 P164据此不再扩展footprint state，而改进已支持的position reliability条件表示。多Actor forecasting文献普遍显式建模social/
 pairwise interaction；本实验只迁移最小可归因模块：冻结P126三个member，以zero-init最近8 Actor set-attention adapter修正各member
 的mean/log-scale。它保留P126 compiler与continuous target，因此任何增量都对应邻居条件，而非重新训练整个预测器；当前角色仍是
-consumed development，P147只作post-confirmation描述。
+consumed development，P147只作post-confirmation描述。三adapter source NLL均降至约`-5.0`，但旧四cohort rank gain mean=
+`-.04474`且cost全部回退；P147五H同样全面退化（F129）。这说明关系上下文并非无信息，而是把scene-specific interaction
+composition注入单Actor marginal后破坏了跨场景稳定性。论文保留该negative mechanism，不把AgentFormer/IPCC式完整joint
+forecasting的有效性与本最小adapter混为一谈。
 
 ## 3. 核心结果表
 
@@ -354,6 +357,7 @@ consumed development，P147只作post-confirmation描述。
 | P128 | P121 same-read ensemble secondary | selected cost=`.27051<.27796` | Spearman gain over P109=`+.04721` | support with timing caveat |
 | P129 | independent ensemble increment | selected cost=`.30867<.32934` | Spearman gain=`+.04257` | 2/2 scene-level support |
 | P147 | independent five-horizon ensemble increment | mean selected-cost delta=`-.01777` | mean Spearman gain=`+.17419` | 2/2 scene-level multi-H support |
+| P164 | nearest-neighbor residual adapter over frozen P126 | cost 4/4 regress | mean Spearman gain=`-.04474` | reject marginal interaction context |
 
 ## 4. 失败如何推动研究对象变化
 

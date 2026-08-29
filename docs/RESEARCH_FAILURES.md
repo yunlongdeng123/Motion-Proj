@@ -2084,7 +2084,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - recovery：只增加进程级`PYTHONPATH=.`并以相同config/run id启动；科学对象、cohort、model与decisions不变。
 - 防重复：后续远端research launcher显式带repo-level `PYTHONPATH=.`；不把入口错误计为算法trial。
 
-下一可用编号为：`V67-F129`。
+### V67-F129 — nearest-neighbor marginal interaction adapter跨cohort全面退化
+
+- 分类：`algorithm/interaction-conditioned-marginal-position`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01/
+  20260830T123000Z__interaction-context-actor-ensemble-s0-r1`。
+- 观察：三adapter NLL约`-5.0`且source收敛；旧四cohort rank gain mean=`-.04474`、cost 4/4回退，P147五H也rank/cost全退。
+- 解释：same-anchor neighbors对source residual likelihood有强解释力，但其交通构成/关系模式跨scene漂移；把context注入每个Actor
+  marginal mean/scale破坏了P126已经稳定的局部运动学表示。结果不否定joint multi-Actor forecasting，只否定当前marginal adapter。
+- 防重复：不扫neighbor count、distance radius、attention width或解冻P126；若继续相关结构，只能改变预测对象为joint event/
+  joint residual dependency，或转入新独立证据，不再重训marginal context adapter。
+
+下一可用编号为：`V67-F130`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
