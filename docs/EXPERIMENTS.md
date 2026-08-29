@@ -1042,7 +1042,7 @@
 
 ### WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01
 
-- 状态：`implementation frozen / GPU launch pending`；canonical id=`20260830T123000Z__interaction-context-actor-ensemble-s0-r1`。
+- 状态：`running GPU training`；canonical id=`20260830T123000Z__interaction-context-actor-ensemble-s0-r1`。
 - hypothesis：P126的单Actor19+time边缘分布缺少同anchor交通参与者关系；最近邻交互能改善future position reliability。
 - method：冻结P126三member；每member增加zero-init residual adapter。最近8 Actors以relative position/velocity、distance、
   radial closing、motion/shape/age/class编码，经64-d set attention生成context，只修正mean与log-scale。
@@ -1051,6 +1051,8 @@
 - locks：不扫neighbor count/embedding/adapter/loss/score/cost/coverage；不解冻P126，不添加hash/checksum/fingerprint。
 - migration basis：ICCV 2021 AgentFormer的agent-aware social interaction、ICCV 2019 Trajectron的dynamic interaction graph、
   CVPR 2023 IPCC-TP的pairwise relevance；这里只迁移最小关系条件模块，不声称完整multi-agent forecasting。
+- launch：首次非登录入口在import前因缺少`PYTHONPATH=.`退出（F128，0 step）；原样重启后seed0 final NLL=`-5.01791`，
+  seed1正在训练。该工程恢复不创建第二科学trial。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

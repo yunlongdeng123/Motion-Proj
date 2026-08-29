@@ -606,6 +606,10 @@ Trajectron与IPCC-TP的多Actor关系建模，但不迁移大型forecast backbon
 actor-time tokens直接复用，无新archive IO。旧P81/P96/P113/P129比较continuous rank/cost，P147五H只作post-confirmation
 描述；不扫neighbor count/architecture/loss/score/coverage。
 
+P164首个非登录launcher因仓库根目录未进入`sys.path`在import前退出，0 data/0 step，记为已恢复工程事件F128；
+使用进程级`PYTHONPATH=.`后canonical r1正常启动。Seed0 6,000 steps NLL=`-5.01791`，seed1已接替GPU训练；
+科学协议、run id与数据均未变化。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

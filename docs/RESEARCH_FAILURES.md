@@ -2075,9 +2075,16 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - object：保持P126二维position residual与continuous boundary compiler，只增加same-anchor最近8 Actor关系条件。
 - isolation：P126 member完全冻结；adapter zero-init且只输出mean/log-scale residual，避免把全模型重训差异归因为interaction。
 - decisions：旧四cohort相对P126 cost全不退+mean rank gain≥`.005`；P147 post-confirmation only。
-- prevention：不扫neighbor count/graph radius/attention width/adapter/loss/score/coverage；失败才使用F128并关闭当前interaction adapter。
+- prevention：不扫neighbor count/graph radius/attention width/adapter/loss/score/coverage；算法失败才使用F129并关闭当前interaction adapter。
 
-下一可用编号为：`V67-F128`。
+### V67-F128 — P164非登录launcher缺仓库根目录（pre-training engineering）
+
+- 分类：`engineering/python-entrypoint`；状态：`resolved_before_data_and_training`。
+- evidence：首次远端命令在import `motion_proj`时退出，0 run directory、0 data read、0 optimizer step、0 metric。
+- recovery：只增加进程级`PYTHONPATH=.`并以相同config/run id启动；科学对象、cohort、model与decisions不变。
+- 防重复：后续远端research launcher显式带repo-level `PYTHONPATH=.`；不把入口错误计为算法trial。
+
+下一可用编号为：`V67-F129`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
