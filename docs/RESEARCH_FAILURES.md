@@ -3100,6 +3100,13 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 - P265改变task preference对象为四horizon simplex，P201 budget MAE=`.034543`、utility regret=`.0011145`、
   violations=0，2/2；P266只推进fixed-group dual，不扫P264 set architecture；next failure id保持F194。
 
+### P266/P267 milestone note — simplex group dual通过，冻结最后一次variable-set组合，无新增failure
+
+- P266 canonical=`run://worldsim_v67/WS-V67-P266-SIMPLEX-HORIZON-GROUP-DUAL-01/20260831T134500Z__simplex-horizon-group-dual-s0-r1`；
+- P201 fraction MAE=`.015670`、simplex Lagrangian regret=`-.00001355`、violations=0，2/2；
+- P267只组合已分别成立的variable set与simplex preference，预先声明其后关闭同轴叠加，不继续attention/size/vector sweep；
+- next failure id保持F194。
+
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 
 - canonical=`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；

@@ -2230,8 +2230,18 @@
   冻结P265负责per-row budget、P246计算weighted alpha-fair utility；
 - protocol：八/六horizon vectors、五/四alpha、九/八fractions，20-step bisection、128/16 fraction-monotone
   dual、12k/batch8192/seed0；P201 fraction MAE≤`.030`、regret≤`.002`；
-- active canonical：`run://worldsim_v67/WS-V67-P266-SIMPLEX-HORIZON-GROUP-DUAL-01/20260831T134500Z__simplex-horizon-group-dual-s0-r1`；
-  不调P265接近门值的regret，也不扫simplex vectors/group/architecture/gate。
+- canonical：`run://worldsim_v67/WS-V67-P266-SIMPLEX-HORIZON-GROUP-DUAL-01/20260831T134500Z__simplex-horizon-group-dual-s0-r1`；
+- result：P201 price/fraction MAE=`.029658/.015670`、frozen simplex Lagrangian regret=`-.00001355`、
+  violations=0，2/2；source fraction/regret=`.013456/-.00000464`，P183=`.017662/.00001196`；
+- resources/verdict：wall=`119.71s`、peak GPU=`.140GiB`；`supported_simplex_horizon_group_dual_compiler`。
+
+### WS-V67-P267-VARIABLE-SET-SIMPLEX-HORIZON-DUAL-01
+
+- object：最终组合P261/P264的variable-set cardinality interpolation与P265/P266的四horizon simplex preference；
+- protocol：train sizes=`32/64/128`、heldout=`48/96`，八/六simplex vectors、五/四alpha、九/八fractions；
+  Deep Sets pooling、20-step teacher、12k/batch512与`.030/.002`两门一次冻结；
+- active canonical：`run://worldsim_v67/WS-V67-P267-VARIABLE-SET-SIMPLEX-HORIZON-DUAL-01/20260831T140500Z__variable-set-simplex-horizon-dual-s0-r1`；
+  无attention/size/simplex/alpha/fraction/architecture/gate sweep；本实验后停止同轴组合。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 
