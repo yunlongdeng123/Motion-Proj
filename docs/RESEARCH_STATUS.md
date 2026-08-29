@@ -517,9 +517,18 @@ strict=0，故F213由局部校准关闭。source disjoint development coverage=`
 近零scale下界与宽range作为数值/迁移限制保留；这是empirical calibration，不是formal conformal或multivalid
 guarantee。
 
-P334把P333的q90-only局部尺度扩展为continuous-risk-conditioned q×H×k scale；冻结P332 lattice，source-only训练
-q-conditioned positive scale，继承P325已用的固定`.02`尺度下界，不在P201调参。Active=`WS-V67-P334-RISK-
-CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01`；仍以q90 heldout-H authority三门作为首个确认，同时保留完整连续risk轴。
+P334把P333的q90-only局部尺度扩展为continuous-risk-conditioned q×H×k scale。Canonical=
+`run://worldsim_v67/WS-V67-P334-RISK-CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01/
+20260901T102500Z__risk-conditioned-locally-adaptive-lattice-s0-r2`：67,635 examples、7k steps、final pinball=
+`.01478`，normalized q90=`.96777`，scale mean/range=`.08047/[.02,2.77631]`，消除了P333近零scale。
+P201 max unsafe=`.07051`、两类monotonicity=0通过，但mean coverage=`.28989 < .30`，2/3 rejected并登记
+`V67-F214`；strict/mid/high=`.04672/.12787/.69508`。continuous-q联合fit相对P333 q90-only coverage=`.30464`
+产生干扰，不扫floor/steps/range。
+
+P335依据NeurIPS 2020/AISTATS 2022 non-crossing quantiles与ICLR 2022 continuous monotone quantile
+representation，冻结P333已通过的q90 local scale作为exact anchor，只训练随q单调、在q90严格为0的continuous-risk
+deformation。Active=`WS-V67-P335-ANCHOR-PRESERVING-CONTINUOUS-RISK-AUTHORITY-01`；除q90原三门外，报告
+q75/q85/q95 authority frontier与quantile-order，不用P201拟合。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -407,9 +407,10 @@
 - P333 result：P201 mean/high coverage=`.30464/.68197`、max unsafe=`.04902`、size/ceiling violations=0，
   3/3 supported；相对P332 mean coverage=`.24153`且strict=0，局部尺度恢复strict=`.06475`并关闭F213；
   source scale range=`[1.15e-9,3.38496]`作为限制保留；
-- P334 active：把P333扩为continuous-risk-conditioned q×H×k scale，固定`.02`下界且不扫参；失败才登记
-  F214；
-- 下一可用 failure id 为 `V67-F214`。
+- P334 result：固定`.02`下界解决near-zero scale，P201 risk/monotonicity通过但coverage=
+  `.28989 < .30`，2/3 rejected，登记F214；不扫floor/steps/range；
+- P335 active：冻结P333 q90 anchor，只训练anchor-zero continuous-risk monotone deformation；失败才登记F215；
+- 下一可用 failure id 为 `V67-F215`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -513,6 +514,23 @@
   跨域数值稳定性；当前证据只支持empirical calibration，不宣称formal conformal/multivalid guarantee；
 - resolution status：`closed by P333 locally adaptive lattice calibration`；P334继续研究continuous-risk局部尺度，
   下一可用failure id=`V67-F214`。
+
+### V67-F214 — P334连续风险局部scale联合fit轻微损伤q90 authority coverage
+
+- canonical=`run://worldsim_v67/WS-V67-P334-RISK-CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01/
+  20260901T102500Z__risk-conditioned-locally-adaptive-lattice-s0-r2`；r1因未设置repo module path在import前退出，
+  0 training/0 quality，r2只恢复`PYTHONPATH=.`；
+- symptom：67,635 examples、7k steps、final pinball=`.01478`；P201 mean any-authority coverage=
+  `.28989 < .30`，相对P333 q90-only `.30464`下降`.01475`；
+- retained evidence：固定minimum scale `.02`把P333 `[1.15e-9,3.38496]`稳定为`[.02,2.77631]`；P201 max
+  unsafe=`.07051`、size/ceiling violations=0、高ceiling coverage=`.69508`，risk axis与nested authority仍有信号；
+- diagnosis：单一positive q×H×k scale用`.70-.97`联合pinball优化时允许q90 anchor随其他quantile共同移动；全轴
+  representation改善数值稳定性，却以已验证q90局部最优为代价；
+- literature check/migration：NeurIPS 2020 non-crossing quantile regression、AISTATS 2022 partial-derivative
+  non-crossing quantiles与ICLR 2022 continuous monotone quantile representation均以结构单调连接quantiles。
+  P335据此冻结P333 q90 score，只学习在q90为0、沿q正导数的continuous-risk deformation；
+- forbidden rescue：不把`.28989`舍入为`.30`、不降coverage门、不调`.02` floor/steps/range/seed、不在P201 fit；
+- resolution status：`open via P335 anchor-preserving continuous-risk authority`；下一可用failure id=`V67-F215`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

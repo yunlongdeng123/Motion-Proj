@@ -974,6 +974,27 @@
   不作floor sweep。最终score=`frozen lattice raw + normalized threshold * local scale`。
 - gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
   不扫q/range/floor/capacity/gate/seed。状态=`active GPU training`。
+- first launch：r1从repo直接执行未设置`PYTHONPATH=.`，import前退出，0 training/0 quality；r2只恢复既有
+  module path，不改任何research setting。
+- canonical=`run://worldsim_v67/WS-V67-P334-RISK-CONDITIONED-LOCALLY-ADAPTIVE-LATTICE-01/
+  20260901T102500Z__risk-conditioned-locally-adaptive-lattice-s0-r2`。
+- result：67,635 examples、7k steps、final pinball=`.014780`；normalized q90=`.967771`，source scale
+  mean/range=`.080469/[.02,2.77631]`。P201 mean/high coverage=`.289891/.695082`、max/mean unsafe=
+  `.070513/.042276`、size/ceiling violations=`0/0`，coverage门失败，2/3 rejected。
+- by ceiling：coverage=`.046721/.127869/.695082`、unsafe=`.035088/.070513/.021226`、mean size=
+  `2.404/2.808/2.868`；source mean/high=`.340121/.655413`、max unsafe=`.037067`。wall=`70.43s`、
+  peak GPU=`.14039GiB`、RSS=`1.89550GiB`。登记`V67-F214`，不调floor/steps/range。
+
+### WS-V67-P335-ANCHOR-PRESERVING-CONTINUOUS-RISK-AUTHORITY-01
+
+- migration：P334证明同时重学q×H×k scale会损伤已通过的q90 anchor；non-crossing quantile work支持用
+  单调导数/单调连续表示，而无需让所有quantile共同移动anchor。
+- frozen anchor：冻结P332 raw lattice与P333 k/H local scale、normalized q90 threshold；q90 score逐元素保持不变。
+- trainable deformation：source scale-fit scenes只训练context-conditioned positive risk slope，最终
+  `score(q)=raw_lattice(q)+P333_margin(H,k)+(q-.90)*positive_slope(context)`；该项在q90严格为0，且保持q轴、
+  set-size与horizon序。q连续采样`.70-.97`、6k steps，不扫anchor/range/slope capacity。
+- evaluation：P201 q90原三门；q75/q85/q95 authority frontier与quantile-order只作一次描述性读数，不fit。
+  状态=`active implementation/training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
