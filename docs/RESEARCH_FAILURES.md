@@ -356,7 +356,8 @@
 - P311 result：为排除低progress混杂，冻结P309并学习正progress-preference rate；P201 reduction=`39.26%`、
   pairwise=`.89740`、full-progress `.8459→.9164→.9459`且violations=0，3/3 supported；
 - P312 freeze：P311/P309/P307在P243 285个六动作组上0-step family-untouched确认；失败才登记F207，不refit、
-  换cohort或放宽门；
+  result reduction=`37.65%`、pairwise=`.87384`、full-progress `.8070→.9000→.9474`且violations=0，3/3
+  supported；未触发F207；下一步进入二维task condition而非重复同轴确认；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

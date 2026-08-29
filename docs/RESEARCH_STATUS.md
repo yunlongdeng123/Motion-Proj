@@ -343,9 +343,12 @@ WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/
 最高lambda下10/10 scenes降低，3/3 supported。source reduction/pairwise=`38.21%/.88621`；wall=`78.44s`。
 
 P312冻结P311/P309/P307，在P243九场景的285个六动作组做progress-conditioned action-admission-family untouched
-0-step确认；heldout lambda、hard top-2、三门原样继承，不refit、不换cohort。Active=`run://worldsim_v67/
+0-step确认；heldout lambda、hard top-2、三门原样继承，不refit、不换cohort。Canonical=`run://worldsim_v67/
 WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
-20260901T043000Z__progress-conditioned-authority-confirmation-s0-r1`。
+20260901T043000Z__progress-conditioned-authority-confirmation-s0-r1`：mean composite reduction=`37.65%`、pairwise=
+`.87384`、oracle regret=`.03959`；full-progress fraction=`.8070/.9000/.9474`、violations=0，最高lambda下9/9
+scenes降低，3/3 supported；wall=`3.63s`。progress-conditioned authority跨cohort成立，下一层扩为progress与
+lateral maneuver intent二维任务条件，不重复同轴确认。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

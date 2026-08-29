@@ -604,8 +604,11 @@
   family untouched reuse confirmation。
 - inherited：heldout lambda `.125/.375/.75`、hard top-2、mean composite reduction `.10`、pairwise `.65`、
   full-progress monotonic violations=0；one read，无refit/换cohort。
-- active=`run://worldsim_v67/WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P312-PROGRESS-CONDITIONED-AUTHORITY-CONFIRMATION-01/
   20260901T043000Z__progress-conditioned-authority-confirmation-s0-r1`。
+- result：mean composite reduction=`37.65%`、pairwise=`.87384`、oracle regret=`.03959`；full-progress fractions=
+  `.8070/.9000/.9474`、violations=0、highest-lambda scenes=`9/0/0`，3/3 supported；wall=`3.63s`、peak GPU=
+  `.13893GiB`。下一步进入progress×lateral maneuver二维条件。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
