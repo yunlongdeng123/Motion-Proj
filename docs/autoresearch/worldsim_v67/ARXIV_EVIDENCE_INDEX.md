@@ -334,6 +334,11 @@
 | P121 independent continuous rows/summary | P121 prep与primary canonical runs |
 | P128 ensemble same-read summary | P128 canonical run；timing caveat见ledger/report |
 | P129 independent rows/summary | P129 prep与primary canonical runs |
+| P346 direct visited-state reliability stable development | `WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/...s0-r2` |
+| P358 fixed-grid multi-horizon negative | `WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01/...s0-r1` |
+| P359 horizon-group calibration negative | `WS-V67-P359-HORIZON-GROUP-CALIBRATED-RELIABILITY-01/...s0-r1` |
+| P360 one-sided fixed-grid negative | `WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/...s0-r1` |
+| P361 pairwise one-sided negative | `WS-V67-P361-PAIRWISE-ONE-SIDED-RELIABILITY-01/...s0-r2` |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |
@@ -352,6 +357,10 @@
 - P113 composite verdict为reject；可以报告AUROC gate通过，但不得省略events `6>5`或改称整体支持。
 - P117在P113冻结后完成且只读consumed cohorts；它不能替换P113的P109 checkpoint或充当独立确认。
 - 未新增hash/checksum/fingerprint；没有smoke/regression matrix或参数扫描。
+- P346只支持P201 reused development的q90 `.328415/.090909`；source heldout-H `.294239/.267108`必须并列披露。
+- P358--P361均为fixed-grid development negative chain，不得挑选coverage或risk单项包装为支持；P361 r1为step1前API退出，
+  r2才是canonical scientific result。
+- quota closeout时无多卡需求；停止原因是用户额度要求，不是OOM或资源不足。
 
 ## 6. Source-of-truth order
 

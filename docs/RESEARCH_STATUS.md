@@ -720,7 +720,16 @@ Canonical=`run://worldsim_v67/WS-V67-P360-ONE-SIDED-MULTIHORIZON-RELIABILITY-01/
 P361按COLT 2013 AUC pairwise reduction与NeurIPS 2025 selective gap的ranking-error分解，在P360 loss上加入固定权重1的
 RankNet logistic pairwise loss：同一horizon/ceiling batch内显式要求unsafe score高于safe score，每个set-size采256对，
 同时保留one-sided proper-loss anchor与无权重校准。r1在step1前因当前PyTorch无`torch.flatnonzero`退出，0科学结果；
-按官方API等价改为`torch.nonzero(...).flatten()`，同一冻结合同以r2进入GPU训练。
+按官方API等价改为`torch.nonzero(...).flatten()`，同一冻结合同r2完成。Canonical=`run://worldsim_v67/
+WS-V67-P361-PAIRWISE-ONE-SIDED-RELIABILITY-01/
+20260901T174500Z__pairwise-one-sided-reliability-s0-r2`：pairwise loss=`.088043`；source/P201 q90=
+`.292887/.218504`与`.343169/.127660`，3/4 rejected，登记F236。全局pairwise排序改善不等价于低风险尾排序，
+关闭该恢复方向。
+
+本轮按用户额度要求收口，不再启动新实验。V6.7当前stable best仍为P346：P201 q90 coverage/unsafe=
+`.328415/.090909`且4/4 gates通过；其source heldout-H q90=`.294239/.267108`必须保留为限制。P358--P361表明
+将所有horizon改为固定网格训练可消除“零样本H外推”表述，但尚不能同时获得source scene transfer与P201低风险端稳定性。
+状态=`research_paused_user_quota_closeout`；单RTX 3090资源充分，无多卡阻塞。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

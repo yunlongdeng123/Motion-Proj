@@ -1387,9 +1387,22 @@
   没有直接惩罚unsafe排在safe以下的pairwise inversion。
 - method：每step固定一个horizon/ceiling并采512 source rows；三个set-size各采256个unsafe--safe pairs，加入
   `softplus(-(unsafe_logit-safe_logit))`，权重固定1；P360 weighted BCE、horizon-group calibration/PAV保持。
-- locks：不扫pair count/loss weight/margin/batch/head/threshold/seed，P201不训练/校准；状态=`active`。
+- locks：不扫pair count/loss weight/margin/batch/head/threshold/seed，P201不训练/校准；状态=`done/rejected`。
 - operational recovery：r1在首个loss计算前因当前PyTorch不提供`torch.flatnonzero`退出；未完成step、未做PAV或
   P201 read。按官方`torch.nonzero(as_tuple=False)`接口作等价一行修复，r2参数与科学合同不变。
+- canonical=`run://worldsim_v67/WS-V67-P361-PAIRWISE-ONE-SIDED-RELIABILITY-01/
+  20260901T174500Z__pairwise-one-sided-reliability-s0-r2`。
+- result：total train/pairwise/group-cal/PAV loss=`.742463/.088043/.315332/.321800`；source q90=
+  `.292887/.218504`，P201=`.343169/.127660`；coverage与monotonicity通过、risk失败，3/4 rejected；
+  wall=`112.34s`，peak GPU=`.1404GiB`，F236。
+
+### V6.7 quota closeout snapshot
+
+- stable supported development：P346，P201 q90 coverage/unsafe=`.328415/.090909`，4/4 gates；
+- mandatory limitation：P346 source heldout-H q90=`.294239/.267108`，不能写成跨horizon稳定或formal risk guarantee；
+- terminal fixed-grid chain：P358 `.306284/.112360`，P359 `.293169/.105263`，P360 `.342896/.107527`，
+  P361 `.343169/.127660`；均为P201 q90 coverage/risk，均未替代P346；
+- stop reason：用户额度收口；不是GPU/OOM/多卡阻塞。无新参数扫描、回归矩阵、hash/checksum/fingerprint。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

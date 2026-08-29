@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 continuous selection + P183 density CDF independent support; P192 refinement boundary documented`
+- 报告状态：`quota closeout; P346 supported development retained; P358--P361 fixed-grid negative chain documented`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -598,6 +598,24 @@ P182仍是唯一fresh-supported marginal density。后续研究转向冻结margi
 | `V67-F89` | 统一重尾likelihood可稳定改善Actor boundary uncertainty | P96 scale过宽、AUROC与events均退化 |
 | `V67-F90` | 显式K2 residual modes可替代单Gaussian并跨cohort迁移 | components active但三cohort AUROC全退化 |
 | `V67-F91` | ensemble全局增益可直接保证binary fixed50 noninferiority | P96多1 event；只允许continuous transfer |
+
+## 4.1 终局增补：visited-state reliability authority（P346--P361）
+
+后续研究把P199/P203概率接口与任务条件编译结果组合为“给定Ego轨迹与预算，未来访问的world/Actor states是否可靠”这一
+直接对象。当前最稳的development结果是P346：在未参与训练或校准的P201 task-condition rows上，q90 mean authority
+coverage=`.328415`、maximum unsafe selected-set rate=`.090909`，coverage、risk与两项单调性共4/4 gates通过。
+但同一模型在source heldout 3.0s horizon上的q90为`.294239/.267108`，因此只能写成P201 reused development支持，
+不能写成跨horizon风险保证、独立确认或formal calibration。
+
+为消除零样本horizon外推，P358--P361把`.8/1.5/2.5/3.0s`全部作为固定网格训练任务，并依次测试共享校准、按horizon
+分组校准、one-sided weighted BCE和one-sided+pairwise ranking。四轮P201 q90 coverage/risk分别为
+`.306284/.112360`、`.293169/.105263`、`.342896/.107527`和`.343169/.127660`；均未同时越过`.30/.10`合同。
+P360显示one-sided objective能恢复coverage，P361则显示全局pairwise loss虽降至`.088043`，并不等价于低风险尾部排序。
+因此终局不以固定网格负结果覆盖P346，也不把P346的task-shift成功外推到source horizon transfer。
+
+可写结论是：task-conditioned visited-state reliability在一个复用development task shift上存在可用选择信号；校准后处理、
+固定网格多头和全局ranking仍不能保证该信号在不同scene/horizon低风险端同时稳定。不可写planner、policy、closed-loop、
+collision probability、safety improvement或deployment authority。所有训练使用单RTX 3090；收口由用户额度触发，不是资源阻塞。
 
 ## 5. 系统与资源
 

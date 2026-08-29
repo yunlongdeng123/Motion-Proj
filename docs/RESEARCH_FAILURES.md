@@ -443,8 +443,8 @@
 - P358：fixed-grid multi-horizon q90 source/P201 risk=`.34097/.11236`，登记F233；
 - P359：horizon-group q90 coverage/risk=`.29317/.10526`，登记F234；
 - P360：one-sided q90 coverage/risk=`.34290/.10753`，登记F235；
-- P361：pairwise one-sided reliability active；
-- 下一可用 failure id 为 `V67-F236`。
+- P361：pairwise q90 coverage/risk=`.34317/.12766`，登记F236；
+- 下一可用 failure id 为 `V67-F237`；当前按用户额度收口，无active experiment。
 
 P361 r1 operational note（不占用新failure id）：当前PyTorch无`torch.flatnonzero`，故在step1 loss反传前退出，
 无checkpoint、PAV或P201 scientific read。官方API确认以`torch.nonzero(..., as_tuple=False).flatten()`返回等价1-D
@@ -735,6 +735,25 @@ P361 r1 operational note（不占用新failure id）：当前PyTorch无`torch.fl
   分解也明确指出单调校准不改变ranking。P361在同horizon/ceiling内直接优化unsafe-vs-safe RankNet loss；
 - forbidden rescue：不扫positive weight、pairwise weight/count/margin或threshold；resolution=
   `retain one-sided anchor; open P361 pairwise ranking refinement`。
+
+### V67-F236 — P361全局pairwise排序与低风险selective尾部目标不对齐
+
+- canonical=`run://worldsim_v67/WS-V67-P361-PAIRWISE-ONE-SIDED-RELIABILITY-01/
+  20260901T174500Z__pairwise-one-sided-reliability-s0-r2`；
+- symptom：P201 q90 coverage/unsafe=`.343169/.127660`，覆盖与两项单调门通过但risk比P360的`.107527`更差；
+  source q90=`.292887/.218504`，仍不支持source scene transfer；
+- retained evidence：pairwise loss收敛到`.088043`、无权重calibration/PAV=`.315332/.321800`，证明训练执行有效；
+  失败来自优化全分布unsafe--safe inversions未强调最终`.10`低风险工作点，而非入口、OOM或未收敛；
+- literature interpretation：COLT AUC reduction针对全局bipartite ranking；NeurIPS 2024 AUGRC与NeurIPS 2025 selective-gap
+  工作均提示全曲线/全局ranking与特定低风险operating point存在错位。本结果实证复制该边界；
+- forbidden rescue：不扫pair loss weight/count/margin、positive weight或threshold，不挑checkpoint；resolution=
+  `close pairwise fixed-grid recovery; retain P346 as stable best under explicit heldout-H limitation`。
+
+### V6.7 quota closeout failure boundary
+
+- F233--F236依次关闭shared calibration、horizon-group post-hoc、pointwise one-sided与global pairwise恢复；
+- P361 r1是step1前API兼容退出，0科学read，不另占failure id；r2是唯一P361科学结果；
+- 当前无active experiment，下一可用编号`V67-F237`；停止原因是用户额度要求，不是资源不足或多卡需求。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
