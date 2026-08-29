@@ -11,6 +11,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from torch import nn
 import torch.nn.functional as F
 import yaml
 
@@ -22,6 +23,39 @@ from scripts.run_worldsim_v67_p256_group_budget_dual_compiler import _groups
 from scripts.run_worldsim_v67_p279_epistemic_tail_cvar_allocator import EpistemicTailCVaRAllocator
 from scripts.run_worldsim_v67_p280_epistemic_tail_cvar_group_dual import _allocate, _risk, _target_prices
 from scripts.run_worldsim_v67_p283_conformalized_epistemic_lcb_surface import ConformalizedLCBSurface
+
+
+class AttentiveDirectAuthorityCompiler(EpistemicTailCVaRAllocator):
+    """P295 allocator plus a zero-gated equivariant self-attention interaction block."""
+
+    def __init__(self, element_width, context_width, knot_count, attention_heads):
+        super().__init__(element_width, context_width, knot_count)
+        self.attention_heads = int(attention_heads)
+        self.attention = nn.MultiheadAttention(element_width, self.attention_heads, batch_first=True)
+        self.attention_gain = nn.Parameter(torch.zeros(()))
+
+    def forward(self, groups, price, alpha, beta, floor, tail_mass):
+        encoded = self.element(groups)
+        attended, _ = self.attention(encoded, encoded, encoded, need_weights=False)
+        encoded = encoded + torch.tanh(self.attention_gain) * attended
+        mean = encoded.mean(1)
+        std = torch.sqrt(encoded.var(1, unbiased=False) + 1e-6)
+        maximum = encoded.amax(1)
+        size = groups.shape[1]
+        context = self.context(torch.cat((
+            encoded,
+            mean[:, None].expand(-1, size, -1),
+            std[:, None].expand(-1, size, -1),
+            maximum[:, None].expand(-1, size, -1),
+            alpha[:, None, None].expand(-1, size, 1),
+            beta[:, None, None].expand(-1, size, 1),
+            tail_mass[:, None, None].expand(-1, size, 1),
+        ), 2))
+        return torch.tanh(
+            self.intercept(context).squeeze(2)
+            - self._integral(self.price_rates(context), price[:, None].expand(-1, size))
+            + self._integral(self.floor_rates(context), floor[:, None].expand(-1, size))
+        )
 
 
 def _predict_direct(model, groups, alphas, tolerance_z, floor_z, tails, fractions):
@@ -185,10 +219,21 @@ def main():
     floor_tensor = torch.from_numpy(floor_z).cuda()
     tail_tensor = torch.from_numpy(tails).cuda()
     model_config = config["student"]
-    student = EpistemicTailCVaRAllocator(
-        int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
-    ).cuda()
-    student.load_state_dict(policy_artifact["model_state_dict"])
+    if "attention_heads" in model_config:
+        student = AttentiveDirectAuthorityCompiler(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]),
+            int(policy_artifact["rate_knot_count"]), int(model_config["attention_heads"]),
+        ).cuda()
+        direct_reference = config["frozen_direct"]
+        direct_artifact = torch.load(
+            args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
+        )
+        student.load_state_dict(direct_artifact["model_state_dict"], strict=False)
+    else:
+        student = EpistemicTailCVaRAllocator(
+            int(policy_artifact["element_width"]), int(policy_artifact["context_width"]), int(policy_artifact["rate_knot_count"])
+        ).cuda()
+        student.load_state_dict(policy_artifact["model_state_dict"])
     optimizer = torch.optim.AdamW(student.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
     sizes = list(train)
     last = 0.0
@@ -253,6 +298,10 @@ def main():
         "P201_direct_attained_budget_fraction_fidelity": p201["attained_budget_fraction_MAE"] <= float(decision["maximum_P201_attained_budget_fraction_MAE"]),
         "P201_direct_composite_regret": p201["mean_frozen_composite_Lagrangian_group_utility_regret"] <= float(decision["maximum_P201_mean_frozen_composite_Lagrangian_regret"]),
     }
+    if "P297_P201_attained_budget_fraction_MAE" in decision:
+        checks["P201_attention_improves_attained_fraction_over_P297"] = (
+            p201["attained_budget_fraction_MAE"] < float(decision["P297_P201_attained_budget_fraction_MAE"])
+        )
     verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
     torch.save({
         "model_state_dict": student.state_dict(),
@@ -262,6 +311,7 @@ def main():
         "risk_tolerance_domain": tolerance_domain,
         "floor_domain": floor_domain,
         "fraction_input_is_one_minus_two_fraction": True,
+        "attention_heads": model_config.get("attention_heads"),
         "base_model": config["frozen_policy"],
     }, run_dir / config["model_artifact"])
     summary = {
@@ -271,6 +321,7 @@ def main():
         "status": "done",
         "verdict": verdict,
         "role": config["role"],
+        "architecture": config.get("architecture", "monotone_deep_sets_direct_allocator"),
         "training": {"group_sizes": sizes, "final_normalized_budget_mae": last},
         "heldout_group_sizes": list(map(int, config["heldout_group_sizes"])),
         "source_development": source,
