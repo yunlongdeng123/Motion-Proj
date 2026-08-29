@@ -133,6 +133,13 @@
 - 该 positive result只确认 frozen P275/P276 surrogate transfer，不能修复或覆盖 P283 的 standardized coverage failure；
 - 下一可用 failure id 保持 `V67-F198`。
 
+### P284 outcome / P285 allocator start note — 无新增 failure
+
+- P284 P201 fidelity MAE=`.005598`、max undercoverage=`.06208`，2/2；P243描述性结果同向；
+- additive residual structural recovery支持 empirical tolerance-conditioned LCB surface，但不反向改写 P283 standardized
+  multiplier failure，也不升级为 distribution-free/conditional guarantee；
+- P285 只在 P284 成立后冻结 teacher 并训练 soft-floor allocator；下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

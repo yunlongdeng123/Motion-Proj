@@ -201,8 +201,21 @@
   直接形成 one-sided probability offset，避免低 disagreement 对系统偏差给出近零校正。
 - 保持 P283 的 source calibration split、delta train/heldout、student、12k steps、P201 fidelity/undercoverage gates；
   不改 P283 verdict，不扫 epsilon/delta/split/model/gate。
-- active=`run://worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/
-  20260831T200000Z__additive-conformal-lcb-s0-r1`；仍只允许 empirical coverage claim。
+- canonical=`run://worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/
+  20260831T200000Z__additive-conformal-lcb-s0-r1`。
+- heldout additive offsets delta `.075/.15/.25/.35`=`.031949/.021967/.014083/.008117`；P201 surface/final MAE=
+  `.0055983/.0052181`，coverage=`.88204/.78792/.71939/.63333`，maximum undercoverage=`.06208`，三轴 violations=0；
+  2/2，verdict=`supported_additive_residual_conformal_LCB_surface`。P243 descriptive max undercoverage=`.03962`；
+  wall=`159.83s`、peak GPU/RSS=`.1404/1.9322GiB`。
+
+### WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01
+
+- frozen P284 teacher；联合 alpha、risk tolerance、soft final-LCB floor、shadow price，65-point budget teacher；
+  positive price/floor rates解析保证两个已知预算方向，tolerance效应从 teacher学习。
+- train alpha3×tolerance5×floor3×price9；heldout alpha2×tolerance4×floor2×price8；P201 gates仅 budget MAE
+  `<=.075`、frozen additive-LCB floor regret `<=.005`；P243 consumed descriptive-only。
+- active=`run://worldsim_v67/WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
+  20260831T201500Z__additive-conformal-lcb-policy-s0-r1`；不作 hard constraint、coverage 或 safety claim。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

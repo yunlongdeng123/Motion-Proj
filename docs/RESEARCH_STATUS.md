@@ -112,9 +112,15 @@ simultaneous-horizon coverage=`.666/.647/.592/.471` 对 desired=`.925/.85/.75/.6
 verdict=rejected，记为 `V67-F197`。这表明低 ensemble std 无法缩放跨 cohort 系统偏差，不能写 coverage claim。
 
 参考 dependent/group conformal 与 residual-score方法，P284 不调 gate、不扫 multiplier，直接把 nonconformity 改成
-未除 std 的 `max_horizon(ensemble mean-teacher)` additive residual，保留同一 calibration split、delta、student、steps
-和两门。Active=`run://worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/
-20260831T200000Z__additive-conformal-lcb-s0-r1`，GPU 正在训练；P277 IO 继续并行。
+未除 std 的 `max_horizon(ensemble mean-teacher)` additive residual，保留同一合同。Canonical=`run://worldsim_v67/
+WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/20260831T200000Z__additive-conformal-lcb-s0-r1`：P201
+surface/final teacher MAE=`.005598/.005218`，coverage=`.882/.788/.719/.633` vs desired=`.925/.85/.75/.65`，最大
+欠覆盖=`.06208`，2/2，三轴 violations=0；P243 descriptive max undercoverage=`.03962`。wall=`159.83s`。
+
+P285 将冻结 P284 的 `delta`-conditioned additive LCB 接入 soft-floor Lagrangian allocator，联合 alpha、tolerance、floor、
+shadow price，结构保证 price↑budget↓、floor↑budget↑。Active=`run://worldsim_v67/
+WS-V67-P285-ADDITIVE-CONFORMAL-LCB-LAGRANGIAN-POLICY-01/
+20260831T201500Z__additive-conformal-lcb-policy-s0-r1`，GPU 正在训练；只作 surrogate allocation claim。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
