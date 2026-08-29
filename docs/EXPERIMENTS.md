@@ -698,8 +698,23 @@
   family untouched reuse confirmation，不声明globally fresh。
 - inherited：三条heldout log ceilings、bounded residual weights、q90 margin和risk/coverage/monotonicity三门；
   0-step、0 recalibration、one read。
-- active=`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
   20260901T060000Z__ceiling-conditioned-selective-authority-confirmation-s0-r1`。
+- result：1,140 examples，mean/highest coverage=`.31257/.67719`（frozen q95=`.11754/.35263`），max/mean
+  unsafe=`.02332/.01338`、monotonicity violations=0，3/3 supported。中ceiling coverage=`.26053`、unsafe=
+  `.01684`；高ceiling coverage=`.67719`、unsafe=`.02332`，相对unselective unsafe降低`85.23%`。
+  0 train/0 recalibration；wall=`2.19s`、peak GPU=`.13893GiB`、RSS=`.9021GiB`。
+
+### WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01
+
+- object：请求task本身未授权时，不直接结束；在冻结13-task candidate set中选择P317判为ceiling-feasible且
+  progress/lateral加权距离最小的替代task，无candidate才abstain。
+- method boundary：仅离散projection read，借鉴differentiable optimization/safety-editor的action repair对象，但
+  当前不是连续action、learned editor、hard safety layer或closed-loop policy。
+- gates：P201 max unsafe projected authority `<=.15`、mean coverage gain vs exact request `>=.10`、ceiling
+  monotonicity violations=0；不扫candidate/ceiling/distance weight/gate。
+- active=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
+  20260901T061500Z__minimal-task-projection-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

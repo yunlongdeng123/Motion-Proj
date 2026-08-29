@@ -195,6 +195,7 @@ def main() -> None:
     confirmation_only = bool(config.get("confirmation_only", False))
     selective_authority_training = bool(config.get("selective_authority_training", False))
     selective_authority_confirmation = bool(config.get("selective_authority_confirmation", False))
+    task_projection_evaluation = bool(config.get("task_projection_evaluation", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -292,7 +293,7 @@ def main() -> None:
         config["heldout_progress_preferences"], config["heldout_lateral_commands"],
         float(config["lateral_preference_weight"]), int(config["selected_action_count"]),
     )
-    if selective_authority_training or selective_authority_confirmation:
+    if selective_authority_training or selective_authority_confirmation or task_projection_evaluation:
         certificate = torch.load(
             args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
             map_location="cuda",
@@ -301,6 +302,7 @@ def main() -> None:
         feature_scale = np.asarray(certificate["input_scale"], np.float32)
         offsets = np.asarray(certificate["calibration_offsets"], np.float32)
         source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+        p201_feature_raw = p201_feature
         p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
         quantile_model = AdmittedSetQuantileHead(
             int(certificate["input_width"]), certificate["hidden_dimensions"]
@@ -312,6 +314,142 @@ def main() -> None:
             p201_quantiles = quantile_model(torch.from_numpy(p201_feature).cuda()).cpu().numpy()
         source_frozen_score = np.maximum.accumulate(source_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
         p201_frozen_score = np.maximum.accumulate(p201_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+
+        if task_projection_evaluation:
+            frozen_selective = torch.load(
+                args.runs_root / config["frozen_selective_authority"]["run"] / config["frozen_selective_authority"]["artifact"],
+                map_location="cuda",
+            )
+            selective_model = CeilingConditionedSelectiveAuthority(
+                int(frozen_selective["input_width"]),
+                frozen_selective["hidden_dimensions"],
+                float(frozen_selective["maximum_residual"]),
+            ).cuda()
+            selective_model.load_state_dict(frozen_selective["model_state_dict"])
+            selective_model.eval()
+            calibration_margin = float(frozen_selective["calibration_margin"])
+            ceilings = np.asarray(frozen_selective["heldout_log_cost_ceilings"], np.float32)
+            endpoint_feature, endpoint_target, _, endpoint_conditions = _task_examples(
+                p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
+                progress_model, maneuver_model, config["training_progress_preferences"],
+                config["training_lateral_commands"], float(config["lateral_preference_weight"]),
+                int(config["selected_action_count"]),
+            )
+            group_count = len(p201_groups)
+            endpoint_count = len(config["training_progress_preferences"]) * len(config["training_lateral_commands"])
+            request_count = len(config["heldout_progress_preferences"]) * len(config["heldout_lateral_commands"])
+            candidate_feature = np.concatenate((
+                endpoint_feature.reshape(endpoint_count, group_count, -1),
+                p201_feature_raw.reshape(request_count, group_count, -1),
+            ), axis=0).transpose(1, 0, 2)
+            candidate_target = np.concatenate((
+                endpoint_target.reshape(endpoint_count, group_count),
+                p201_target.reshape(request_count, group_count),
+            ), axis=0).T
+            candidate_conditions = np.concatenate((
+                endpoint_conditions.reshape(endpoint_count, group_count, 2),
+                p201_conditions.reshape(request_count, group_count, 2),
+            ), axis=0).transpose(1, 0, 2)
+            candidate_feature_flat = ((candidate_feature.reshape(-1, candidate_feature.shape[-1]) - feature_mean) / feature_scale).astype(np.float32)
+            with torch.no_grad():
+                candidate_quantiles = quantile_model(torch.from_numpy(candidate_feature_flat).cuda()).cpu().numpy()
+            candidate_frozen = np.maximum.accumulate(candidate_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+            with torch.no_grad():
+                candidate_score = selective_model(
+                    torch.from_numpy(candidate_feature_flat).cuda(), torch.from_numpy(candidate_frozen).cuda()
+                )[0].cpu().numpy() + calibration_margin
+            candidate_score = candidate_score.reshape(group_count, endpoint_count + request_count)
+            candidate_target_cost = np.expm1(candidate_target)
+            lateral_weight = float(config["task_projection_lateral_weight"])
+            by_ceiling = {}
+            projection_coverages, exact_coverages, unsafe_rates = [], [], []
+            previous_authorized = None
+            monotonicity_violations = 0
+            for ceiling in ceilings:
+                feasible = candidate_score <= float(ceiling)
+                authorized_rows, exact_rows, unsafe_rows, deviations, selected_costs = [], [], [], [], []
+                for request_index in range(request_count):
+                    request_condition = candidate_conditions[:, endpoint_count + request_index]
+                    distance = (
+                        np.square(candidate_conditions[:, :, 0] - request_condition[:, None, 0])
+                        + lateral_weight * np.square(candidate_conditions[:, :, 1] - request_condition[:, None, 1])
+                    )
+                    projected_distance = np.where(feasible, distance, np.inf)
+                    authorized = feasible.any(1)
+                    chosen = np.argmin(projected_distance, axis=1)
+                    row = np.arange(group_count)
+                    exact = feasible[:, endpoint_count + request_index]
+                    chosen_target = candidate_target[row, chosen]
+                    authorized_rows.append(authorized)
+                    exact_rows.append(exact)
+                    unsafe_rows.append(authorized & (chosen_target > ceiling))
+                    deviations.append(np.where(authorized, np.sqrt(distance[row, chosen]), 0.0))
+                    selected_costs.append(np.where(authorized, candidate_target_cost[row, chosen], 0.0))
+                authorized = np.concatenate(authorized_rows)
+                exact = np.concatenate(exact_rows)
+                unsafe = np.concatenate(unsafe_rows)
+                deviation = np.concatenate(deviations)
+                selected_cost = np.concatenate(selected_costs)
+                if previous_authorized is not None:
+                    monotonicity_violations += int(np.sum(previous_authorized & ~authorized))
+                previous_authorized = authorized
+                authorized_count = int(authorized.sum())
+                coverage = float(np.mean(authorized))
+                exact_coverage = float(np.mean(exact))
+                unsafe_rate = float(unsafe.sum() / max(authorized_count, 1))
+                by_ceiling[str(float(ceiling))] = {
+                    "log_cost_ceiling": float(ceiling),
+                    "actual_cost_ceiling": float(np.expm1(ceiling)),
+                    "projected_authority_coverage": coverage,
+                    "exact_request_authority_coverage": exact_coverage,
+                    "authority_coverage_gain": coverage - exact_coverage,
+                    "unsafe_projected_authority_rate": unsafe_rate,
+                    "exact_request_retention_rate_among_authorized": float(np.sum(authorized & exact) / max(authorized_count, 1)),
+                    "mean_task_deviation_among_authorized": float(np.mean(deviation[authorized])) if authorized_count else 0.0,
+                    "mean_selected_actual_cost": float(np.mean(selected_cost[authorized])) if authorized_count else None,
+                }
+                projection_coverages.append(coverage)
+                exact_coverages.append(exact_coverage)
+                unsafe_rates.append(unsafe_rate)
+            metrics = {
+                "request_example_count": int(group_count * request_count),
+                "candidate_task_count": int(endpoint_count + request_count),
+                "mean_projected_authority_coverage": float(np.mean(projection_coverages)),
+                "mean_exact_request_authority_coverage": float(np.mean(exact_coverages)),
+                "mean_authority_coverage_gain": float(np.mean(np.asarray(projection_coverages) - np.asarray(exact_coverages))),
+                "maximum_unsafe_projected_authority_rate": float(np.max(unsafe_rates)),
+                "ceiling_authority_monotonicity_violations": monotonicity_violations,
+                "by_ceiling": by_ceiling,
+            }
+            decision = config["decision"]
+            checks = {
+                "P201_projected_authority_risk": metrics["maximum_unsafe_projected_authority_rate"] <= float(decision["maximum_P201_unsafe_projected_authority_rate"]),
+                "P201_projected_authority_coverage_gain": metrics["mean_authority_coverage_gain"] >= float(decision["minimum_P201_mean_authority_coverage_gain"]),
+                "P201_projected_authority_monotonicity": metrics["ceiling_authority_monotonicity_violations"] <= int(decision["maximum_P201_ceiling_authority_monotonicity_violations"]),
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {"example_count": 0, "steps": 0},
+                "P201_post_hoc_development": metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
 
         if selective_authority_confirmation:
             frozen_selective = torch.load(

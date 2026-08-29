@@ -393,9 +393,18 @@ P317参照NeurIPS 2017 selective classification的risk-coverage对象与UAI 2023
 wall=`44.08s`、peak GPU=`.14039GiB`。
 
 P318冻结P317/P315及全task-conditioned链，在P243九场景/285个六动作组上做selective-authority-family untouched
-0-step确认；三条heldout ceilings、q90 margin和三门全部继承，不训练/校准/改margin。Active=
-`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
-20260901T060000Z__ceiling-conditioned-selective-authority-confirmation-s0-r1`。
+0-step确认。Canonical=`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
+20260901T060000Z__ceiling-conditioned-selective-authority-confirmation-s0-r1`：1,140 examples，mean/highest
+coverage=`.31257/.67719`（q95 baseline `.11754/.35263`），max/mean unsafe=`.02332/.01338`，
+monotonicity violations=0，3/3 supported；中ceiling coverage=`.26053`、unsafe=`.01684`，high ceiling unsafe=
+`.02332`；wall=`2.19s`。不再增加同family确认cohort。
+
+P319针对严格请求只能abstain的能力边界，迁移OptNet/NeurIPS 2022 Safety Editor的“最小偏移可行替代”思想，但先做
+冻结离散projection读数：每个请求在9个endpoint tasks+4个heldout tasks共13个task-conditioned top-2 sets中，
+只看P317 authority score，选择满足ceiling且离请求progress/lateral最近的set；无可行candidate才abstain。
+P201三门为projected unsafe `<=.15`、mean authority coverage gain `>=.10`、ceiling monotonicity=0；不训练/
+调candidate或权重。Active=`run://worldsim_v67/WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
+20260901T061500Z__minimal-task-projection-authority-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

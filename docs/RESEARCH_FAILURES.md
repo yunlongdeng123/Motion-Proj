@@ -371,8 +371,10 @@
 - P317 result：冻结P315 q95 base训练bounded residual ceiling-conditioned selective authority；P201 mean/highest
   coverage=`.26066/.70000`（baseline `.04672/.14016`）、max unsafe=`.00937`、monotonicity violations=0，
   3/3 supported；未触发F207；最严格ceiling选择0，记录为预期abstention边界而非failure；
-- P318 active：P317全链在P243上0-step selective-authority-family untouched确认；失败才登记F207，不refit、
-  recalibrate、改margin/ceiling/gate或换cohort；
+- P318 result：P317全链在P243上0-step确认，mean/highest coverage=`.31257/.67719`、max unsafe=`.02332`、
+  monotonicity violations=0，3/3 supported；未触发F207，不再增加同family confirmation；
+- P319 active：冻结13-task candidate set做minimum-deviation authority projection；失败才登记F207，不训练、
+  调candidate/ceiling/distance weight/gate或在P201 refit；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

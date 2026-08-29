@@ -1,0 +1,49 @@
+schema_version: worldsim_v67.p319_minimal_task_projection_authority.v1
+output_schema_version: worldsim_v67.p319_minimal_task_projection_authority_summary.v1
+task_id: WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01
+hypothesis_id: WS-V67-H-P319-001
+role: minimal_task_deviation_selective_authority_projection_development
+task_projection_evaluation: true
+seed: 0
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_authority: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+frozen_selector: {run: worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/20260901T034500Z__authority-residual-topk-admission-s0-r1, artifact: AUTHORITY_RESIDUAL_TOPK_ADMISSION.pt}
+frozen_progress_compiler: {run: worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T041500Z__progress-conditioned-authority-admission-s0-r1, artifact: PROGRESS_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_maneuver_compiler: {run: worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1, artifact: MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_certificate: {run: worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/20260901T051500Z__admitted-set-quantile-certificate-s0-r1, artifact: ADMITTED_SET_QUANTILE_CERTIFICATE.pt}
+frozen_selective_authority: {run: worldsim_v67/WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1, artifact: CEILING_CONDITIONED_SELECTIVE_AUTHORITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+action_group_size: 6
+selected_action_count: 2
+authority_condition: {alpha_fairness: 0.5, risk_tolerance: 0.15, final_reliability_floor: 0.6, tail_mass: 0.25, attainable_budget_fractions: [0.25, 0.5, 0.75]}
+training_progress_preferences: [0.0, 0.5, 1.0]
+heldout_progress_preferences: [0.25, 0.75]
+training_lateral_commands: [-1.0, 0.0, 1.0]
+heldout_lateral_commands: [-0.5, 0.5]
+lateral_preference_weight: 0.5
+task_projection_lateral_weight: 0.5
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision:
+  maximum_P201_unsafe_projected_authority_rate: 0.15
+  minimum_P201_mean_authority_coverage_gain: 0.10
+  maximum_P201_ceiling_authority_monotonicity_violations: 0
+verdict_on_pass: supported_minimal_task_projection_selective_authority
+verdict_on_failure: rejected_minimal_task_projection_selective_authority
+locks:
+  P317_P315_and_13_candidate_task_sets_are_frozen_before_projection_read: true
+  exact_requested_task_is_retained_when_it_is_nearest_authorized_candidate: true
+  task_projection_uses_only_frozen_selective_score_and_requested_task_distance: true
+  no_P201_training_refit_recalibration_candidate_ceiling_weight_or_gate_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - empirical_discrete_task_projection_not_continuous_action_policy_or_learned_safety_editor
+  - authorized_task_substitution_for_frozen_top2_sets_not_planner_reward_or_closed_loop_control
+  - no_hard_constraint_population_or_safety_claim
