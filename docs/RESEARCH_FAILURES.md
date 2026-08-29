@@ -426,8 +426,9 @@
 - P342：source最坏组风险改善，但P201 q95 risk excess `.003892 > .003571`，3/4 rejected，登记F218；
 - P343 r1：插值rows接错single-set路径，训练实际重复P342；step1001主动中止，登记F219；r2 active；
 - P343 r2：P201 coverage与risk excess两门均比P337差，2/4 rejected，登记F220；
-- P344 active：改变对象，直接预测trajectory visited-state ceiling exceedance probability；
-- 下一可用 failure id 为 `V67-F221`。
+- P344：P201 q90 risk/coverage `.12088/.28005`，两门失败，登记F221；
+- P345 active：ceiling×set-size×continuous-H multigroup calibration；
+- 下一可用 failure id 为 `V67-F222`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -491,6 +492,18 @@
   调quantile risk warp；
 - forbidden rescue：不扫group、dual、margin、interpolation grid、capacity或seed；resolution=
   `closed family, prediction object moved to P344 direct visited-state reliability`。
+
+### V67-F221 — P344全局概率校准无法控制各ceiling的direct reliability风险
+
+- canonical=`run://worldsim_v67/WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01/
+  20260901T131500Z__direct-visited-reliability-authority-s0-r1`；
+- symptom：P201 q90 coverage `.280055 < .30`且max unsafe `.120879 > .10`，monotonicity两门通过，2/4；
+- heterogeneity：q90 strict/mid/high unsafe=`.120879/.067073/.024675`，全局bias若压strict会进一步压低已经不足的
+  mean coverage，而放宽mid/high又不能单独进行；
+- literature/migration：NeurIPS 2024 multicalibration与官方empirical implementation支持按subpopulation做
+  post-hoc calibration；P345使用预定义ceiling×set-size groups与continuous-H slope；
+- forbidden rescue：不扫global temperature/bias、risk threshold、capacity、steps或seed；resolution=
+  `open via P345 multigroup calibration`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

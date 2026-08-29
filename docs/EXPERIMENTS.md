@@ -1153,7 +1153,21 @@
 - method：source scene-rank fold0训练direct exceedance BCE 8k；fold1只学习一个temperature+bias 2k；
   head输出k=1/2/3 unsafe logits并用cummax保证set-size risk单调，ceiling轴部署时做单调投影。
 - decision：P201 q90 max unsafe `<=.10`、mean coverage `>=.30`、ceiling/requested-risk monotonicity=0；
-  不扫threshold/capacity/calibration/horizon/ceiling/gate/seed。状态=`active training`。
+  不扫threshold/capacity/calibration/horizon/ceiling/gate/seed。状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01/
+  20260901T131500Z__direct-visited-reliability-authority-s0-r1`。
+- result：5,463 fit rows、8k final BCE=`.174553`；5,715 calibration rows、2k final BCE=`.284246`，
+  temperature/bias=`2.737754/-.350690`。P201 q75/q85/q90/q95 coverage=
+  `.393716/.321858/.280055/.240984`、max unsafe=`.221477/.126316/.120879/.076923`；q90 risk/
+  coverage失败，ceiling/q monotonicity通过，2/4 rejected，wall=`44.90s`，F221。
+
+### WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01
+
+- migration：P344 q90 strict/mid/high unsafe=`.120879/.067073/.024675`，全局temperature+bias不能同时
+  收紧strict与放宽mid/high；参考NeurIPS 2024 multicalibration按预定义子群后处理。
+- method：P344 direct BCE head、source splits、8k base training不变；calibration改为3 ceilings×3 set sizes
+  的temperature/bias，并为每组学习连续normalized-H slope，仍只用source fold1、2k steps。
+- gates/locks：沿用P344四门；不扫groups、bin、step、LR、threshold、capacity或seed；状态=`active training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

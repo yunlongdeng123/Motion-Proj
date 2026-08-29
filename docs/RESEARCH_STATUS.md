@@ -593,8 +593,15 @@ final loss=`-.66926`。P201 non-anchor coverage降至`.33124 < P337 .33980`，q9
 
 P344按trajectory-conditioned world-model方向改变预测对象：直接用BCE学习
 `P(max visited-state cost > ceiling | task, τ, H, set size)`，不再从cost quantile反演可靠性；source fit训练
-8k steps，独立source fold用单一temperature+bias校准，P201只作复用development。Active=
-`WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01`。
+8k steps，独立source fold用单一temperature+bias校准。Canonical=`run://worldsim_v67/
+WS-V67-P344-DIRECT-VISITED-RELIABILITY-AUTHORITY-01/
+20260901T131500Z__direct-visited-reliability-authority-s0-r1`：final train/calibration BCE=`.17455/.28425`，
+temperature/bias=`2.73775/-.35069`。P201 q90 coverage/unsafe=`.28005/.12088`，risk与coverage失败、两项
+monotonicity通过，2/4 rejected，登记F221。
+
+P345保持direct reliability base完全不变，仅把全局校准换成ceiling×set-size temperature/bias与连续horizon
+slope，针对P344 strict/mid/high q90 risk `.12088/.06707/.02468`的强异质性。Active=
+`WS-V67-P345-MULTIGROUP-CALIBRATED-VISITED-RELIABILITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
