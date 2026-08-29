@@ -525,10 +525,17 @@ P201 max unsafe=`.07051`、两类monotonicity=0通过，但mean coverage=`.28989
 `V67-F214`；strict/mid/high=`.04672/.12787/.69508`。continuous-q联合fit相对P333 q90-only coverage=`.30464`
 产生干扰，不扫floor/steps/range。
 
-P335依据NeurIPS 2020/AISTATS 2022 non-crossing quantiles与ICLR 2022 continuous monotone quantile
-representation，冻结P333已通过的q90 local scale作为exact anchor，只训练随q单调、在q90严格为0的continuous-risk
-deformation。Active=`WS-V67-P335-ANCHOR-PRESERVING-CONTINUOUS-RISK-AUTHORITY-01`；除q90原三门外，报告
-q75/q85/q95 authority frontier与quantile-order，不用P201拟合。
+P335冻结P333 q90 local scale并只训练anchor-zero positive risk derivative。Canonical=`run://worldsim_v67/
+WS-V67-P335-ANCHOR-PRESERVING-CONTINUOUS-RISK-AUTHORITY-01/
+20260901T104500Z__anchor-preserving-continuous-risk-authority-s0-r1`：7,515 scale-fit rows、6k steps、final
+pinball=`.03735`。P201 q75/q85/q90/q95 mean coverage=`.40710/.34180/.30464/.27486`，max unsafe=
+`.19167/.06873/.04902/.05369`，quantile-order violations=0；q90原三门3/3 supported，且逐值保持P333
+coverage/high/max unsafe=`.30464/.68197/.04902`。source对应mean coverage=`.45665/.39455/.34804/.31214`。
+F214由exact anchor关闭；q95 max unsafe略高于名义`.05`，且非q90风险点未单独校准/门控，只作empirical frontier。
+
+P336把P335单一直线risk derivative扩为q90锚定的双侧positive curvature：low/high tail分别学习非负二次曲率，
+在q90仍严格为0且全轴导数为正；source disjoint development比较continuous-q pinball，不改变P201 q90门。
+Active=`WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

@@ -409,7 +409,9 @@
   source scale range=`[1.15e-9,3.38496]`作为限制保留；
 - P334 result：固定`.02`下界解决near-zero scale，P201 risk/monotonicity通过但coverage=
   `.28989 < .30`，2/3 rejected，登记F214；不扫floor/steps/range；
-- P335 active：冻结P333 q90 anchor，只训练anchor-zero continuous-risk monotone deformation；失败才登记F215；
+- P335 result：q90逐值保持P333，P201 coverage/max unsafe=`.30464/.04902`、monotonicity=0，3/3
+  supported；q75/q85/q90/q95 quantile-order violations=0，F214关闭；
+- P336 active：在同一q90 anchor上训练双侧positive risk curvature；失败才登记F215；
 - 下一可用 failure id 为 `V67-F215`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
@@ -530,7 +532,13 @@
   non-crossing quantiles与ICLR 2022 continuous monotone quantile representation均以结构单调连接quantiles。
   P335据此冻结P333 q90 score，只学习在q90为0、沿q正导数的continuous-risk deformation；
 - forbidden rescue：不把`.28989`舍入为`.30`、不降coverage门、不调`.02` floor/steps/range/seed、不在P201 fit；
-- resolution status：`open via P335 anchor-preserving continuous-risk authority`；下一可用failure id=`V67-F215`。
+- resolution evidence：P335把continuous-risk项限制为q90处严格为0的positive derivative；P201 q90逐值恢复
+  P333 coverage/high/max unsafe=`.30464/.68197/.04902`，3/3 supported；q75/q85/q90/q95 score order
+  violations=0；
+- retained limitation：q95 P201 max unsafe=`.05369`略高于名义`.05`，非q90风险点未独立校准或门控；只支持
+  empirical continuous-risk authority frontier；
+- resolution status：`closed by P335 anchor-preserving continuous-risk authority`；P336继续双侧risk curvature，
+  下一可用failure id=`V67-F215`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

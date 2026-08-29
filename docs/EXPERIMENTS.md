@@ -994,7 +994,28 @@
   `score(q)=raw_lattice(q)+P333_margin(H,k)+(q-.90)*positive_slope(context)`；该项在q90严格为0，且保持q轴、
   set-size与horizon序。q连续采样`.70-.97`、6k steps，不扫anchor/range/slope capacity。
 - evaluation：P201 q90原三门；q75/q85/q95 authority frontier与quantile-order只作一次描述性读数，不fit。
-  状态=`active implementation/training`。
+  状态=`done/supported`。
+- canonical=`run://worldsim_v67/WS-V67-P335-ANCHOR-PRESERVING-CONTINUOUS-RISK-AUTHORITY-01/
+  20260901T104500Z__anchor-preserving-continuous-risk-authority-s0-r1`。
+- training：7,515 scale-fit rows、q连续`.70-.97`、6k steps、final pinball=`.037350`；anchor q90/
+  normalized threshold=`.90/2.628081`逐值冻结。
+- P201 frontier q75/q85/q90/q95 mean coverage=`.407104/.341803/.304645/.274863`、highest coverage=
+  `.780328/.714754/.681967/.639344`、max unsafe=`.191667/.068729/.049020/.053691`；quantile-order
+  violations=0。q90 risk/coverage/size-ceiling monotonicity 3/3 supported。
+- source frontier mean coverage=`.456651/.394546/.348041/.312135`、max unsafe=
+  `.126661/.061469/.034788/.019120`。wall=`44.73s`、peak GPU=`.14039GiB`、RSS=`1.89437GiB`。
+- verdict=`supported_anchor_preserving_continuous_risk_authority`。q95 P201 max unsafe比名义`.05`高
+  `.00369`，但该点未预注册独立门，不倒写为失败或formal calibration；F214关闭。
+
+### WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01
+
+- research step：P335的context-only正斜率保证不交叉但只能表达risk直线；迁移ICLR 2022 monotone continuous
+  quantile representation，在q90两侧增加独立positive quadratic curvature。
+- function：`d=q-.90`，deformation=`d*slope-sign_low*d^2*low_curvature+sign_high*d^2*high_curvature`；
+  low/high按d符号选择，q90值为0且导数始终为正。context-only项保持H/k order。
+- training：冻结P332 raw与P333 q90 local margin；同source scale-fit split、q `.70-.97`、6k steps；不扫
+  polynomial order/anchor/range/capacity。source disjoint development比较P335/P336 aggregate pinball。
+- evaluation：P201 q75/q85/q90/q95 frontier、quantile-order与q90三门；状态=`active GPU training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
