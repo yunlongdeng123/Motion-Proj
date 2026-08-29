@@ -1400,6 +1400,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F89`。
 
+### V67-F89 — 固定重尾Student-t Actor residual在P96显著过宽
+
+- 分类：`scientific/heavy-tailed-actor-uncertainty`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P124-CORRELATED-STUDENT-T-UNCERTAINTY-01/
+  20260830T082000Z__correlated-student-t-uncertainty-s0-r1`；
+- literature response：NeurIPS Student-t robust regression支持以重尾likelihood降低outlier影响；CVPR long-tail trajectory工作支持
+  直接建模tail distribution。迁移时只把P117 Gaussian NLL改为固定`df=4` multivariate Student-t；
+- symptom：P81/P96/P113 AUROC gain=`+.000248/-.054071/-.005427`，fixed50 events=`0/7/7`，相对P109的`0/0/6`
+  在P96/P113均退化；两项decision失败；
+- interpretation：统一重尾分布把outlier与结构性motion modes混合吸收，训练likelihood更低但boundary-relevant ranking在P96明显
+  过宽；NLL改善不能替代跨cohort selective evidence；
+- resolution：不扫degrees-of-freedom、scale floor、correlation、loss、seed或coverage；关闭Student-t family。若继续Actor
+  distribution，只允许固定低组件数的显式multimodal residual，而不是调重尾参数；
+- claim impact：无heavy-tailed Actor uncertainty improvement、P121 secondary或safety claim。
+
+下一可用编号：`V67-F90`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1407,11 +1424,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122/P123已占用
-  F87/F88，因此P121 scientific failure若发生则登记`V67-F89`并
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122/P123/P124已占用
+  F87/F88/F89，因此P121 scientific failure若发生则登记`V67-F90`并
   关闭continuous object independent claim，不做第二P121 recovery。
 
-下一可用编号仍为：`V67-F89`。
+下一可用编号仍为：`V67-F90`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -284,6 +284,13 @@ P109 percentile `.25--.75`内配对cost percentile `<=.35`与`>=.65`，hidden32 
 均失败，登记`V67-F88`。这关闭downstream continuous head/rank-residual恢复，不扫band/bound/loss；P121 primary不变。
 wall=`44.36s`、peak GPU=`.05318GiB`。
 
+P124根据NeurIPS Student-t robust regression与CVPR long-tail trajectory工作，把机制移回Actor residual distribution：相对P117
+唯一改变为固定`df=4` correlated bivariate Student-t likelihood，相同916,722 tokens、`256/128`、6,000 steps和linearized
+boundary projection。final NLL=`-4.09256`，但P81/P96/P113 fixed50 events=`0/7/7`、AUROC=
+`.96789/.85027/.91473`，相对P109 gain=`+.00025/-.05407/-.00543`；event noninferiority与mean gain均失败，登记
+`V67-F89`。统一重尾吸收离群值在P96显著过宽，不扫df/scale/loss；下一机制只允许显式多模态residual，不再继续Student-t。
+wall=`53.55s`、peak GPU=`.37922GiB`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

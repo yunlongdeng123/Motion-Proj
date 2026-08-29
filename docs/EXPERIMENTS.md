@@ -420,6 +420,21 @@
 - interpretation：continuous dense pairs解决了label scarcity，却仍使P81/P96 global ranking漂移，且P96 fixed50 cost回退；关闭
   downstream continuous head family，不创建P121 secondary。wall=`44.36s`、peak GPU=`.05318GiB`、RSS=`1.125GiB`。
 
+### WS-V67-P124-CORRELATED-STUDENT-T-UNCERTAINTY-01
+
+- 状态：`done/rejected consumed development`；canonical=`20260830T082000Z__correlated-student-t-uncertainty-s0-r1`；与P121
+  archive IO重叠，未读P121 target。
+- literature/method：NeurIPS Student-t regression指出重尾likelihood可降低outlier对Gaussian拟合的支配，CVPR 2023 FEND指出
+  trajectory tail patterns需要显式distribution treatment。P124相对P117只把full-cov Gaussian NLL换成固定`df=4`的
+  correlated bivariate Student-t NLL；相同source/features/`256/128`/6,000 steps/projection/fixed50，不扫df或scale。
+- training：916,722 Actor-time tokens，final Student-t NLL=`-4.092560`，mean abs rho P81/P96/P113=
+  `.45533/.46455/.48437`。
+- result：P81/P96/P113 selected events=`0/7/7`，AUROC=`.967887/.850274/.914728`；相对P109 gain=
+  `+.000248/-.054071/-.005427`，mean=`-.019750`。P109 events=`0/0/6`，两项decision均失败，verdict=
+  `rejected_development_correlated_student_t_actor_uncertainty`（`V67-F89`）。
+- interpretation：统一重尾likelihood没有隔离稀有运动模式，反而使P96 boundary scale过宽；关闭Student-t family，不扫df。
+  wall=`53.55s`、peak GPU=`.37922GiB`、RSS=`1.149GiB`。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
