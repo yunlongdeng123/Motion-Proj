@@ -1223,7 +1223,7 @@
 
 ### WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01
 
-- 状态：`frozen/IO+GPU pipeline active`；prep=`20260830T141000Z__visit-reliability-cdf-confirmation-prep-s0-r1`，
+- 状态：`done/rejected fresh confirmation`；prep=`20260830T141000Z__visit-reliability-cdf-confirmation-prep-s0-r1`，
   evaluator=`20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1`。
 - cohort：target-unread/unprocessed `0270/0347/0969/0525/0558/0584/0786/0931/0995/1044`；四location
   `3/3/3/1`、10 distinct logs；official metadata与repo mention exclusion在sensor/quality read前冻结。
@@ -1231,8 +1231,9 @@
 - decisions：mean integrated-Brier reduction over control≥20%；mean marginal reliability error≤control。仅两项macro gate。
 - pipeline：7 shards扫描完成即释放scene preprocess；processed marker出现即由驻留3090模型评分，不等10/10。
 - locks：只允许pre-target exact shard locator correction；不换scene/model/H/budget/cost/metric/decision，不扫参或加测试矩阵。
-- progress：shard06/08完成，`0558/0584/0786`已GPU评分；14/15 scene×H Brier reductions为正，`0558@H.8=-.2245`。
-  该partial结果不触发裁决或恢复，其余5 shards继续扫描。
+- result：五H Brier reduction over horizon-only=`24.60%/33.42%/38.16%/38.41%/36.11%`，mean=`34.14%`；
+  model/control macro calibration error=`.07102/.06101`，1/2 decisions。
+- verdict=`rejected_fresh_visit_reliability_CDF_discrimination`，F147；确认discrimination、拒绝calibrated-probability升级，不重校准。
 
 ### WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01
 
@@ -1315,10 +1316,20 @@
 
 ### WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01
 
-- 状态：`GPU training active`；canonical id=`20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1`。
+- 状态：`done/rejected`；canonical=`20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1`；wall=`125.19s`。
 - object：3个P182同构5-component density分别在102-scene bootstrap环境训练，推理均匀平均解析budget CDF。
 - execution：每成员batch32,768、8,000 steps并行；P175/P183 rows严格排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration-error相对P182改善≥5%；不扫成员数/bootstrap/components/loss。
+- result：P81/P96/P113/P129 Brier change vs P182=`+2.18%/-2.89%/-4.60%/-1.60%`；calibration-error reduction=
+  `-17.05%/+9.68%/+4.05%/+85.61%`，mean=`20.57%`，P81 Brier gate失败。
+- verdict=`rejected_scene_bootstrap_log_cost_density_ensemble`，F148；不调成员权重，不替换冻结P182/P183。
+
+### WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01
+
+- 状态：`GPU training active`；canonical id=`20260830T154000Z__worst-environment-log-cost-density-s0-r1`。
+- object：把102 ordered source scenes固定分成5个连续环境，以temperature `.10` log-sum-exp worst-environment NLL训练单个P182同构density。
+- execution：五环境各batch32,768、8,000 steps；P183 archive IO并行，P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫环境数/partition/temperature/loss/architecture。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

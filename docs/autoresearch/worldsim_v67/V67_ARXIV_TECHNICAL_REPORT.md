@@ -419,6 +419,13 @@ P183因此在任何新quality read前另冻10-scene/10-log、四location=`3/3/3/
 和mean calibration各改善10%的两项macro gate。其IO在P175 archive scan结束后自动启动，避免重复磁盘竞争。P184仅用已消费旧四
 训练scene-bootstrap density ensemble以利用等待期GPU，不读取P183，也不能改变冻结P182/P183 candidate。
 
+P175最终独立结果为五H Brier reduction=`24.60%/33.42%/38.16%/38.41%/36.11%`、mean=`34.14%`，但model/control
+macro calibration error=`.07102/.06101`，F147。这将P173论文结论明确限定为“跨scene proper-score discrimination支持，
+calibrated probability拒绝”。这也说明P182同时改善Brier与calibration的development结果具有必要性，而不是重复优化同一指标。
+
+P184相对P182 mean calibration进一步改善`20.57%`，且3/4 cohort Brier改善，但P81 Brier回退`2.18%`（F148）；故uniform density
+ensemble不升级。P185改为五个连续source-scene environment的worst-NLL训练，仍只作consumed development，P183 candidate保持P182 single density。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

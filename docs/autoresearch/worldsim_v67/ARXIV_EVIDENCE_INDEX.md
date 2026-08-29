@@ -85,7 +85,7 @@
 | P172 | `run://worldsim_v67/WS-V67-P172-CONFORMAL-COST-INTERVAL-01/20260830T133500Z__conformal-cost-interval-s0-r1` | mean width -18.55%但P81 coverage `.732<.78`；rejected/F136 |
 | P173 | `run://worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2` | old4 integrated-Brier -34.49%/-45.27%/-46.20%/-31.15%；2/2 dev，calibration boundary retained |
 | P174 | `run://worldsim_v67/WS-V67-P174-GROUP-SPLIT-BETA-RELIABILITY-CALIBRATION-01/20260830T140000Z__group-split-beta-reliability-calibration-s0-r1` | Brier 4/4优于control；mean calibration improvement仅5.68%，rejected/F140 |
-| P175 | `run://worldsim_v67/WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01/20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1` | frozen 10-scene/10-log five-H confirmation，IO pipeline active |
+| P175 | `run://worldsim_v67/WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01/20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1` | mean Brier -34.14% pass；calibration `.07102>.06101` fail，rejected/F147 |
 | P176 | `run://worldsim_v67/WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142000Z__integrated-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.95%但calibration 4/4劣于control；rejected/F141 |
 | P177 | `run://worldsim_v67/WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142500Z__scene-uniform-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.82%但calibration 4/4劣于control；rejected/F142 |
 | P178 | `run://worldsim_v67/WS-V67-P178-CLEARANCE-CONDITIONED-RELIABILITY-CDF-01/20260830T143000Z__clearance-conditioned-reliability-cdf-s0-r1` | Brier/calibration 4/4同向改善；mean calibration improvement仅5.08%，rejected/F143 |
@@ -94,7 +94,8 @@
 | P181 | `run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1` | mean calibration change -0.25%、member deviation约1.5%；rejected/F146 |
 | P182 | `run://worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1` | Brier vs P173 -16.46%至-31.17%；mean calibration improvement 61.17%，2/2 dev |
 | P183 | `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | frozen different 10-scene/10-log confirmation，queued IO/evaluator resident |
-| P184 | `run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1` | 3-member bootstrap continuous-density ensemble，GPU training active |
+| P184 | `run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1` | mean calibration +20.57%但P81 Brier回退2.18%；rejected/F148 |
+| P185 | `run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/20260830T154000Z__worst-environment-log-cost-density-s0-r1` | five-environment worst-NLL density，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -228,6 +229,8 @@
 | `V67-F144` | closed negative | P179 set-context residual使Brier 3/4回退且mean calibration change -8.45% |
 | `V67-F145` | closed negative | P180 minimum-clearance effective threshold使Brier 4/4回退、mean calibration change -4.38% |
 | `V67-F146` | closed negative | P181 scene-bootstrap member probability deviation约1.5%，mean calibration change -0.25% |
+| `V67-F147` | closed negative | P175 fresh Brier gain 34.14%但marginal calibration error高于horizon-only |
+| `V67-F148` | closed negative | P184 mean calibration改善20.57%但P81 Brier回退2.18% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

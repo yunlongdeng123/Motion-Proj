@@ -2383,6 +2383,29 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F147`。
 
+### V67-F147 — P173 fresh confirmation保留proper-score优势但概率刻度未通过
+
+- 分类：`algorithm/fresh-scene-reliability-calibration-shift`；状态：`closed_negative_primary_confirmation`。
+- canonical：`run://worldsim_v67/WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01/
+  20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1`。
+- 观察：五H Brier reduction=`24.60%/33.42%/38.16%/38.41%/36.11%`、mean=`34.14%`通过；但model/control
+  macro marginal calibration error=`.07102/.06101`，第二门失败。
+- 解释：P126 trajectory score在全新scene仍显著增加conditional refinement，但P173 source prevalence刻度不能稳定迁移；这与旧四诊断一致。
+- 防重复：不在P175 target上拟合Beta/temperature/isotonic、不降低门；P182已在P175结果完成前冻结不同density路线，P183另用全新cohort确认。
+
+下一可用编号为：`V67-F148`。
+
+### V67-F148 — bootstrap density ensemble牺牲P81 Brier以换取不均匀calibration增益
+
+- 分类：`algorithm/density-ensemble-environment-tradeoff`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/
+  20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1`。
+- 观察：mean calibration-error reduction vs P182=`20.57%`，且P96/P113/P129 Brier改善；但P81 Brier回退`2.18%`、calibration退`17.05%`。
+- 解释：density ensemble产生约`1.7%--2.0%`概率分歧并改善部分环境，但uniform averaging不是环境稳健目标，仍可牺牲一个cohort。
+- 防重复：不调ensemble weight/member count/bootstrap；下一步直接优化固定source environments的worst NLL。
+
+下一可用编号为：`V67-F149`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

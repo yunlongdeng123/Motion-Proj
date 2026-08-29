@@ -736,8 +736,9 @@ P175已在任何新sensor/target quality read前冻结P173的独立确认cohort�
 冻结P173五H×七budget evaluator并发等待。Primary只保留mean integrated-Brier reduction≥20%与mean marginal calibration
 error不高于horizon-only两门；证据最多scene-level，不写calibrated probability。
 
-P175当前shard06/08已完成并释放`0558/0584/0786`，驻留评估器已即时评分3/10 scenes；15个scene×H slices中14个Brier
-reduction为正，唯一负值为`0558@H.8=-.2245`。这只是流水线中间态，不新增逐scene/H门，也不据此改candidate；其余5 shards继续IO。
+P175全部10 scenes完成。五H integrated-Brier reduction=`24.60%/33.42%/38.16%/38.41%/36.11%`，macro=`34.14%>20%`；
+但model/control mean absolute reliability error macro=`.07102/.06101`，校准noninferiority失败，1/2，F147。独立证据确认
+P173显著改善proper-score discrimination但跨scene概率刻度未建立；不重校准P175、不降低门。prep/evaluator wall=`2356.34/2148.01s`。
 
 P176在P175 IO期间只把P173训练loss从BCE改为与evaluation一致的integrated Brier，其余表示、budget、steps和control不变。
 旧四Brier reduction=`38.07%/45.33%/48.26%/32.15%`，mean=`40.95%`、逐组均优于control；但marginal calibration error
@@ -780,8 +781,11 @@ mean Brier reduction over P173≥10%与mean calibration-error reduction over P17
 自动启动；P183 evaluator已驻留等待scene-ready。
 
 P184利用等待空档训练3-member scene-bootstrap log-cost density ensemble，每成员保留P182的5-component density并在102-scene
-bootstrap环境训练，推理平均CDF。它只用旧四检查相对P182逐组Brier noninferiority与mean calibration improvement≥5%，
-严格排除P175/P183，不改变冻结的P183 candidate。
+bootstrap环境训练，推理平均CDF。旧四相对P182 Brier change=`+2.18%/-2.89%/-4.60%/-1.60%`，mean calibration-error reduction=
+`20.57%`；P81 noninferiority失败，1/2，F148。保留ensemble在3/4 Brier与mean calibration上的正向诊断，但不调权重或替换P182/P183。
+
+P185已按Group-DRO文献启动：将102 ordered source scenes固定为5个连续环境，用temperature `.10` log-sum-exp优化worst-environment
+log-cost NLL，其余P182 density结构不变。它利用P183 IO等待期GPU，只在旧四比较P182，P175/P183严格排除。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
