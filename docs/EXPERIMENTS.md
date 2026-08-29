@@ -636,6 +636,16 @@
   `-.48194→.50694` (`delta=.98889`)、progress violations=0，3/3 supported；wall=`1.90s`、peak GPU=
   `.08244GiB`。下一步转向admitted-set quantile certificate。
 
+### WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01
+
+- prediction object：给定progress×lateral task condition与冻结P313 top-2，预测两条被授权actions中最大actual future
+  visited-state cost的q50/q80/q95；不是单voxel正确性。
+- protocol：source scene train/calibration/development disjoint；monotone quantile head 6k steps，calibration每quantile
+  一次additive residual correction。P201只看heldout midpoint task conditions且不refit。
+- gates：P201 max undercoverage `<=.10`、median log-cost MAE `<=.35`；不扫quantile/width/loss/gate。
+- active=`run://worldsim_v67/WS-V67-P315-ADMITTED-SET-QUANTILE-CERTIFICATE-01/
+  20260901T051500Z__admitted-set-quantile-certificate-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
