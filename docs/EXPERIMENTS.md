@@ -356,8 +356,20 @@
   alpha/tolerance/floor/tail/price protocol和10k steps。
 - P201 aggregate gates继承 P294/P288：budget MAE `<=.075`、composite regret `<=.005`；不扫 cardinality/
   architecture/eta/grid/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
+- canonical=`run://worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
   20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1`。
+- result：P201 aggregate budget MAE=`.0204663`、composite regret=`.00021336`、candidate/teacher tail shortfall=
+  `.01340747/.01340743`、violations=`0/0`；size48/96 budget MAE=`.0204125/.0205202`；2/2，verdict=
+  `supported_variable_set_adaptive_LCB_tail_CVaR_allocator`。wall=`172.32s`、peak GPU/RSS=`.5352/1.6425GiB`。
+
+### WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01
+
+- frozen P295 variable-set primal；pooled mean/std/max/log-size context + alpha/tolerance/floor/tail/fraction 输出
+  shadow price；train sizes32/64/128、heldout48/96，复用 P289 12k steps。
+- gates继承 P289：P201 attained fraction MAE `<=.075`、frozen composite regret `<=.005`；fraction单调由
+  positive rate spline保证，不扫 size/grid/bisection/steps/gates。
+- active=`run://worldsim_v67/WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
+  20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

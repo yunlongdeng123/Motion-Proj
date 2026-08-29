@@ -191,9 +191,16 @@ Canonical=`run://worldsim_v67/WS-V67-P294-CONTEXT-ADAPTIVE-LCB-TAIL-CVAR-ALLOCAT
 `.00023215`、candidate/teacher tail shortfall=`.0124187/.0124179`、violations=`0/0`，2/2；wall=`167.08s`。
 
 P295 从冻结 P294 warm-start，同一架构在 sizes32/64/128交替训练，并仅在 heldout48/96 汇总 P201；复用
-P288 cardinality protocol、10k steps与 `.075/.005` 两门。Active=`run://worldsim_v67/
+P288 cardinality protocol、10k steps与 `.075/.005` 两门。Canonical=`run://worldsim_v67/
 WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/
-20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1`，GPU 正在训练。
+20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1`：P201 aggregate budget MAE=`.0204663`、
+composite regret=`.00021336`、candidate/teacher tail shortfall=`.01340747/.01340743`、violations=`0/0`；size48/96
+budget MAE=`.0204125/.0205202`，2/2；wall=`172.32s`。
+
+P296 以冻结 P295 为唯一 variable-set primal，复用 P289 pooled-statistics dual，在 sizes32/64/128训练并在
+heldout48/96评估 attainable fraction→shadow price。Active=`run://worldsim_v67/
+WS-V67-P296-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-DUAL-01/
+20260831T231500Z__variable-set-adaptive-lcb-tail-dual-s0-r1`，GPU 正在 teacher bisection/训练。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
