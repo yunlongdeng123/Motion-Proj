@@ -3081,6 +3081,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
   alpha/fraction/steps/两门一次锁定，不扫attention或pooling family；
 - next failure id保持F193。
 
+### P261/P262 milestone note — variable-set通过并进入task-horizon preference，无新增failure
+
+- P261 canonical=`run://worldsim_v67/WS-V67-P261-VARIABLE-SET-ALPHA-FAIR-DUAL-01/20260831T120000Z__variable-set-alpha-fair-dual-s0-r1`；
+- P201 sizes 48/96 aggregate fraction MAE=`.014662`、regret=`-.000000447`、violations=0，2/2；
+- P262增加连续horizon preference这一新任务条件，不回头扫P261 pooling/attention/width；五train与四heldout
+  preference、alpha交叉一次冻结；
+- next failure id保持F194。
+
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 
 - canonical=`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；

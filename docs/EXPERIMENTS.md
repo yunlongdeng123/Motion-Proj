@@ -2170,6 +2170,20 @@
 - literature migration：NeurIPS 2017 Deep Sets给出置换不变pooling分解；ICML 2019 Set Transformer说明set interaction
   对amortized mapping的重要性。单卡阶段先用线性复杂度invariant pooling，不引入attention sweep；
 - active canonical：`run://worldsim_v67/WS-V67-P261-VARIABLE-SET-ALPHA-FAIR-DUAL-01/20260831T120000Z__variable-set-alpha-fair-dual-s0-r1`。
+- result：P201 heldout sizes 48/96聚合price/fraction MAE=`.028165/.014662`、frozen alpha-fair
+  Lagrangian regret=`-.000000447`、violations=0，2/2；size48 fraction=`.015178`，size96=`.013534`；
+- resources/verdict：728 train groups、wall=`148.81s`、peak GPU=`.334GiB`；
+  `supported_variable_set_alpha_fair_dual_compiler`。
+
+### WS-V67-P262-TASK-HORIZON-ALPHA-FAIR-POLICY-01
+
+- object：从仅控制跨trajectory风险偏好的alpha，扩为`alpha × horizon preference × shadow price`连续条件化；
+  preference通过固定softmax权重在四个P246 prefix reliabilities间从far emphasis迁移到near emphasis；
+- protocol：alpha与horizon preference均用五个train points及四个interleaved heldout points；13/12 prices、129
+  budget grid、128/16 price-monotone spline、12k/batch8192/seed0与`.075/.005`两门保持P259合同；
+- literature migration：NeurIPS 2018/2019多目标与Pareto MTL把task trade-off表达为preference vector；ICLR 2021
+  Pareto hypernetwork支持单模型在运行时接收未见偏好。这里蒸馏固定scalarized teacher，不声称完整Pareto front；
+- active canonical：`run://worldsim_v67/WS-V67-P262-TASK-HORIZON-ALPHA-FAIR-POLICY-01/20260831T123000Z__task-horizon-alpha-fair-policy-s0-r1`。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 
