@@ -113,7 +113,9 @@ def main() -> None:
     extracted = {name for name, row in found_rows.items() if bool(row["extracted"])}
     results.sort(key=lambda row: int(row["scene_index"]))
     summary = {
-        "schema_version": "worldsim_v67.p167_pipelined_robustness_preparation_summary.v1",
+        "schema_version": config.get("preparation", {}).get(
+            "output_schema_version", "worldsim_v67.p167_pipelined_robustness_preparation_summary.v1",
+        ),
         "status": "done", "started_at_utc": _utc_now(), "scene_count": len(results),
         "required_lidar_file_count": len(required), "newly_extracted_lidar_file_count": len(extracted),
         "processed_root": str(processed_root), "shard_to_scene_pipeline": True,

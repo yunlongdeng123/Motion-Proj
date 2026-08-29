@@ -1,0 +1,48 @@
+schema_version: worldsim_v67.p177_scene_uniform_brier_visit_reliability_cdf.v1
+output_schema_version: worldsim_v67.p177_scene_uniform_brier_visit_reliability_cdf_summary.v1
+task_id: WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01
+hypothesis_id: WS-V67-H-P177-001
+role: scene_uniform_proper_score_training_for_budget_conditioned_visited_state_reliability_CDF
+seed: 0
+model_artifact: SCENE_UNIFORM_BRIER_VISIT_RELIABILITY_CDF.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model:
+  score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
+  budget_knots: [-1.25, -0.5, 0.0, 0.5, 1.25]
+  training_objective: integrated_brier
+  scene_uniform_sampling: true
+  training_steps: 12000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_integrated_brier_reduction: 0.20
+  mean_calibration_error_noninferior_to_horizon_only: true
+verdict_on_pass: supported_scene_uniform_brier_reliability_CDF
+verdict_on_failure: rejected_scene_uniform_brier_reliability_CDF
+locks:
+  only_change_from_P176_is_uniform_source_scene_sampling: true
+  same_P126_score_horizon_budget_grid_monotone_CDF_Brier_and_horizon_only_control: true
+  P175_fresh_rows_are_excluded_and_P177_does_not_replace_its_frozen_P173_candidate: true
+  no_group_weight_DRO_temperature_loss_budget_architecture_step_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v139/zhou21g.html
+  - https://proceedings.mlr.press/v139/zhai21a.html
+  - https://proceedings.neurips.cc/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html
+claim_boundary:
+  - consumed_development_only_and_does_not_change_P175_prospective_candidate
+  - scene_balance_is_not_unknown_shift_or_calibration_guarantee
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim

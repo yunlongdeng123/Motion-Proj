@@ -724,6 +724,28 @@ P173 r2旧P81/P96/P113/P129 integrated-Brier reduction=`34.49%/45.27%/46.20%/31.
 其余3组更差。因此仅支持冻结“budget-conditioned reliability distribution具有新增判别信息”供后继校准/全新scene确认；不写
 calibrated probability、conformal coverage、planner或safety claim，P167因已partial read不承担其prospective confirmation。
 
+P174针对P173概率刻度偏移，按ordered source scenes每5取1（21 scenes/15,737 trajectories）只作calibration，其余81 scenes/
+63,741 trajectories从头训练同一CDF；随后用保持概率单调的单个Beta map联合校准全部budgets。旧P81/P96/P113/P129相对
+matched calibrated horizon-only的Brier reduction仍为`37.02%/49.45%/49.39%/30.40%`；Beta相对raw CDF的marginal
+calibration-error change=`-10.77%/+16.63%/+11.05%/+5.80%`，mean仅`+5.68%<10%`。1/2 decisions，F140；关闭
+post-hoc map，不降低门、不扫split/map。P173 frozen CDF保持不变。
+
+P175已在任何新sensor/target quality read前冻结P173的独立确认cohort：One-North `0270/0347/0969`、Boston
+`0525/0558/0584`、Queenstown `0786/0931/0995`、Holland Village `1044`，四location=`3/3/3/1`、10 distinct logs，
+均未在repo配置/文档出现且未processed。Shards=`03/04/09/05/06/06/08/09/09/10`的7路扫描已启动；scene-ready prep与
+冻结P173五H×七budget evaluator并发等待。Primary只保留mean integrated-Brier reduction≥20%与mean marginal calibration
+error不高于horizon-only两门；证据最多scene-level，不写calibrated probability。
+
+P176在P175 IO期间只把P173训练loss从BCE改为与evaluation一致的integrated Brier，其余表示、budget、steps和control不变。
+旧四Brier reduction=`38.07%/45.33%/48.26%/32.15%`，mean=`40.95%`、逐组均优于control；但marginal calibration error
+四组仍全高于horizon-only，2/3 checks，F141。结果说明proper-score优势来自refinement/discrimination而非概率刻度；P176不替换
+已冻结P175候选，也不扫loss weight。
+
+P177继续针对scene grouping shift，只在P176上把source trajectory-uniform sampler改成102-scene uniform sampler，仍用同一
+integrated Brier、12,000 steps与两项决策。旧四Brier reduction=`38.10%/44.70%/47.99%/32.51%`，mean=`40.82%`；
+model/control marginal error分别为`.0732/.0568`、`.0694/.0514`、`.0611/.0397`、`.0815/.0702`，仍4/4更差，F142。
+Scene balancing没有修复概率prevalence shift；关闭source-only calibration-training支线，不扫DRO/group weight，P175继续唯一确认主线。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -216,9 +216,19 @@ def main() -> None:
     target_cost = torch.from_numpy(source_cost.astype(np.float32)).cuda()
     normalized_budgets = torch.from_numpy(((log_budgets - norms[4]) / norms[5]).astype(np.float32)).cuda()
     raw_budgets = torch.from_numpy(budgets).cuda()
-
     torch.manual_seed(int(config["seed"]))
     model_config = config["model"]
+    scene_uniform = bool(model_config.get("scene_uniform_sampling", False))
+    scene_index_table = None
+    scene_counts = None
+    if scene_uniform:
+        scene_rows = [np.flatnonzero(source_scenes == scene) for scene in np.unique(source_scenes)]
+        maximum_scene_rows = max(len(rows) for rows in scene_rows)
+        padded = np.zeros((len(scene_rows), maximum_scene_rows), dtype=np.int64)
+        for scene_index, rows in enumerate(scene_rows):
+            padded[scene_index, :len(rows)] = rows
+        scene_index_table = torch.from_numpy(padded).cuda()
+        scene_counts = torch.tensor([len(rows) for rows in scene_rows], device="cuda")
     model = MonotoneReliabilityCDF(
         [float(value) for value in model_config["score_knots"]],
         [float(value) for value in model_config["budget_knots"]],
@@ -236,14 +246,28 @@ def main() -> None:
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.cuda.reset_peak_memory_stats()
     for step in range(int(model_config["training_steps"])):
-        index = torch.randint(len(score), (int(model_config["batch_size"]),), device="cuda")
+        if scene_uniform:
+            scene_draw = torch.randint(
+                len(scene_counts), (int(model_config["batch_size"]),), device="cuda",
+            )
+            position = torch.floor(
+                torch.rand(len(scene_draw), device="cuda") * scene_counts[scene_draw]
+            ).long()
+            index = scene_index_table[scene_draw, position]
+        else:
+            index = torch.randint(len(score), (int(model_config["batch_size"]),), device="cuda")
         budget_index = torch.randint(len(budgets), (len(index),), device="cuda")
         sampled_budget = normalized_budgets[budget_index]
         target = (target_cost[index] <= raw_budgets[budget_index]).float()
         prediction = model(score[index], horizon[index], sampled_budget)
         control = baseline(horizon[index], sampled_budget)
-        model_loss = functional.binary_cross_entropy_with_logits(prediction, target)
-        baseline_loss = functional.binary_cross_entropy_with_logits(control, target)
+        objective = str(model_config.get("training_objective", "binary_cross_entropy"))
+        if objective == "integrated_brier":
+            model_loss = functional.mse_loss(torch.sigmoid(prediction), target)
+            baseline_loss = functional.mse_loss(torch.sigmoid(control), target)
+        else:
+            model_loss = functional.binary_cross_entropy_with_logits(prediction, target)
+            baseline_loss = functional.binary_cross_entropy_with_logits(control, target)
         loss = model_loss + baseline_loss
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
@@ -280,6 +304,13 @@ def main() -> None:
         "minimum_mean_integrated_brier_reduction": float(np.mean(reductions))
         >= float(config["decision"]["minimum_mean_integrated_brier_reduction"]),
     }
+    if bool(config["decision"].get("mean_calibration_error_noninferior_to_horizon_only", False)):
+        checks["mean_calibration_error_noninferior_to_horizon_only"] = float(np.mean([
+            float(row["mean_absolute_reliability_error"]) for row in evaluations.values()
+        ])) <= float(np.mean([
+            float(row["horizon_only_mean_absolute_reliability_error"])
+            for row in evaluations.values()
+        ]))
     passed = all(checks.values())
     verdict = config["verdict_on_pass"] if passed else config["verdict_on_failure"]
     summary = {

@@ -84,6 +84,10 @@
 | P171 | `run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/20260830T133000Z__rectified-conformal-cost-bound-s0-r1` | coverage pass、mean sharpness over P170 `-19.48%`；未读P167，rejected/F135 |
 | P172 | `run://worldsim_v67/WS-V67-P172-CONFORMAL-COST-INTERVAL-01/20260830T133500Z__conformal-cost-interval-s0-r1` | mean width -18.55%但P81 coverage `.732<.78`；rejected/F136 |
 | P173 | `run://worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2` | old4 integrated-Brier -34.49%/-45.27%/-46.20%/-31.15%；2/2 dev，calibration boundary retained |
+| P174 | `run://worldsim_v67/WS-V67-P174-GROUP-SPLIT-BETA-RELIABILITY-CALIBRATION-01/20260830T140000Z__group-split-beta-reliability-calibration-s0-r1` | Brier 4/4优于control；mean calibration improvement仅5.68%，rejected/F140 |
+| P175 | `run://worldsim_v67/WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01/20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1` | frozen 10-scene/10-log five-H confirmation，IO pipeline active |
+| P176 | `run://worldsim_v67/WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142000Z__integrated-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.95%但calibration 4/4劣于control；rejected/F141 |
+| P177 | `run://worldsim_v67/WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142500Z__scene-uniform-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.82%但calibration 4/4劣于control；rejected/F142 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -210,6 +214,9 @@
 | `V67-F137` | resolved post-aggregate | P167 constant-input local Spearman用`null`表示；macro未改，r2支持 |
 | `V67-F138` | closed negative | P170 P167 coverage 4/5 horizon低于.88，尽管bound更窄 |
 | `V67-F139` | resolved pre-training | P173 direct-script module path；0 step后process-local recovery |
+| `V67-F140` | closed negative | P174 Beta calibration mean improvement 5.68%且P81反向 |
+| `V67-F141` | closed negative | P176 Brier objective保留refinement但4/4 calibration error高于control |
+| `V67-F142` | closed negative | P177 scene-uniform sampling仍4/4 calibration error高于control |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

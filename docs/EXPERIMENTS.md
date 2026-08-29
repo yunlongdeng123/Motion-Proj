@@ -1211,6 +1211,45 @@
   新scene校准/确认，不称calibrated probability。
 - verdict=`supported_freeze_visit_reliability_cdf_for_new_scene_confirmation`。
 
+### WS-V67-P174-GROUP-SPLIT-BETA-RELIABILITY-CALIBRATION-01
+
+- controlled change：ordered source scenes每5取1作calibration-only；其余scene从头训练P173同构CDF，再以一个positive
+  Beta calibration map联合映射全部budget probabilities，保持score/budget单调。
+- split：train/calibration=`81/21 scenes`、`63,741/15,737 trajectories`；matched horizon-only另拟合同构Beta map。
+- decisions：calibrated CDF逐cohort Brier优于calibrated horizon-only；mean marginal calibration error相对raw至少下降10%。
+- result：P81/P96/P113/P129 Brier reduction over control=`37.02%/49.45%/49.39%/30.40%`；calibration-error
+  reduction vs raw=`-10.77%/+16.63%/+11.05%/+5.80%`，mean=`5.68%<10%`，1/2。
+- verdict=`rejected_group_split_beta_reliability_calibration`，F140；不扫split/calibrator，保留P173。
+
+### WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01
+
+- 状态：`frozen/IO+GPU pipeline active`；prep=`20260830T141000Z__visit-reliability-cdf-confirmation-prep-s0-r1`，
+  evaluator=`20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1`。
+- cohort：target-unread/unprocessed `0270/0347/0969/0525/0558/0584/0786/0931/0995/1044`；四location
+  `3/3/3/1`、10 distinct logs；official metadata与repo mention exclusion在sensor/quality read前冻结。
+- candidate：P173 r2 CDF、P126 score、五H、七budgets、P120 cost与horizon-only control全部冻结。
+- decisions：mean integrated-Brier reduction over control≥20%；mean marginal reliability error≤control。仅两项macro gate。
+- pipeline：7 shards扫描完成即释放scene preprocess；processed marker出现即由驻留3090模型评分，不等10/10。
+- locks：只允许pre-target exact shard locator correction；不换scene/model/H/budget/cost/metric/decision，不扫参或加测试矩阵。
+
+### WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01
+
+- controlled change：P173相同数据/模型/预算/12,000 steps，只将BCE训练替换为直接integrated Brier proper score。
+- decision：mean Brier reduction≥20%、逐cohort不退、mean marginal calibration error不高于horizon-only。
+- result：P81/P96/P113/P129 Brier reduction=`38.07%/45.33%/48.26%/32.15%`，mean=`40.95%`；前两项通过。
+- calibration：model/control mean absolute error分别为`.0745/.0562`、`.0697/.0584`、`.0623/.0504`、
+  `.0830/.0684`，四组均劣于control。
+- verdict=`rejected_integrated_brier_reliability_CDF`，F141；不替换P175 frozen P173 candidate。
+
+### WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01
+
+- 状态：`done/rejected`；canonical=`20260830T142500Z__scene-uniform-brier-visit-reliability-cdf-s0-r1`。
+- controlled change：P176同一proper-score CDF，只把source sampler从trajectory-uniform改为scene-uniform，防止长scene支配概率先验。
+- decisions/locks：与P176相同；不加DRO weight、temperature、loss mix或budget/architecture sweep；P175 rows严格排除。
+- result：P81/P96/P113/P129 Brier reduction=`38.10%/44.70%/47.99%/32.51%`，mean=`40.82%`；model
+  marginal error=`.0732/.0694/.0611/.0815`，control=`.0568/.0514/.0397/.0702`，calibration 4/4 fail。
+- verdict=`rejected_scene_uniform_brier_reliability_CDF`，F142；关闭source-only calibration-training，不扫group/DRO weights。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

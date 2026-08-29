@@ -393,6 +393,15 @@ P173进一步直接学习`P(cost(visited state)<=budget | τ-score,H,budget)`的
 全部不退，mean=`39.28%`，2/2 development support。其mean absolute reliability error只在P96改善，另外三组更差；因此
 该结果只证明budget-conditioned distribution含新增判别信息，尚不是calibrated probability。P167已读，不能承担P173独立确认。
 
+P174用21个held-out source scenes拟合保持单调的Beta map；P81/P96/P113/P129相对raw marginal calibration-error change=
+`-10.77%/+16.63%/+11.05%/+5.80%`，mean只有`+5.68%`，F140。P176则直接用integrated Brier训练，proper-score
+reduction提升为`38.07%/45.33%/48.26%/32.15%`，但四组marginal error仍全高于horizon-only，F141。这组结果区分了
+refinement/discrimination与probability calibration：论文可以写P173/P176显著降低proper score，但必须同时写跨scene概率刻度未建立。
+
+P175为P173冻结了新的10-scene/10-log五H确认，archive→scene→GPU流水线正在运行。P177只在已消费source上检验scene-uniform
+Brier training，严格排除P175。P177 mean Brier reduction=`40.82%`，但四组marginal error仍全高于control，F142；因此关闭
+source-only probability-calibration路线。它不能替换P175的事前candidate，也不会改变新cohort门。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

@@ -2291,6 +2291,49 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F140`。
 
+### V67-F140 — scene-held-out Beta map未稳定改善P173跨cohort概率刻度
+
+- 分类：`algorithm/post-hoc-reliability-calibration-shift`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P174-GROUP-SPLIT-BETA-RELIABILITY-CALIBRATION-01/
+  20260830T140000Z__group-split-beta-reliability-calibration-s0-r1`。
+- 观察：calibrated CDF的Brier在旧四均优于calibrated horizon-only；但相对raw calibration-error change为
+  `-10.77%/+16.63%/+11.05%/+5.80%`，mean=`+5.68%<10%`，P81反向，1/2 decisions。
+- 解释：source-held-out global monotone map纠正总体skew，却不能适配P81 scene prevalence；post-hoc source calibration在shift下不稳定。
+- 防重复：不扫scene split、Beta/temperature/isotonic map或降低10%门；P173只保留discriminative proper-score claim。
+
+下一可用编号为：`V67-F141`。
+
+### V67-F141 — direct integrated-Brier训练提升proper score但未修复marginal calibration
+
+- 分类：`algorithm/proper-score-refinement-vs-calibration`；状态：`closed_negative_after_controlled_loss_change`。
+- canonical：`run://worldsim_v67/WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01/
+  20260830T142000Z__integrated-brier-visit-reliability-cdf-s0-r1`。
+- 观察：旧四Brier reduction mean=`40.95%`且逐组非退化；但model marginal error在四组均高于horizon-only，2/3 checks。
+- 解释：Brier proper score同时包含calibration与refinement；P126 score带来的conditional refinement足以显著降Brier，但scene-level
+  reliability prevalence偏移仍保留，所以低proper score不能单独升级为calibrated probability。
+- 防重复：不混合BCE/Brier或扫loss weight；只允许一次scene-uniform source sampling检验grouping根因，P175候选仍为P173。
+
+下一可用编号为：`V67-F142`。
+
+### P175/P177 freeze note — fresh P173 confirmation and scene-uniform development remain separated
+
+- P175 cohort在P174/P176结果之后、任何新sensor/target read之前冻结，10 scenes来自10 logs、四location；P173 artifact不变。
+- P175只有mean Brier gain与mean marginal-error noninferiority两门；P174/P176/P177不得读取或改变P175。
+- P177只改P176 source sampler为scene-uniform；若失败使用F142并关闭source-only calibration-training，不影响P175执行。
+
+### V67-F142 — scene-uniform Brier仍不能消除跨cohort marginal calibration偏移
+
+- 分类：`algorithm/scene-balanced-proper-score-calibration`；状态：`closed_negative_after_single_sampler_change`。
+- canonical：`run://worldsim_v67/WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01/
+  20260830T142500Z__scene-uniform-brier-visit-reliability-cdf-s0-r1`。
+- 观察：旧四mean Brier reduction=`40.82%`、逐组全优于control；但marginal calibration error仍4/4高于horizon-only，2/3 checks。
+- 解释：按scene均衡source prior没有消除新cohort reliability prevalence差异；P173 signal稳定改善conditional refinement，但绝对概率
+  刻度需要target-side information，不能由source sampler保证。
+- 防重复：关闭source-only post-hoc/Brier/scene-balance calibration支线；不扫DRO/group weights。P175仍只确认冻结P173的
+  proper-score discrimination，不升级probability claim。
+
+下一可用编号为：`V67-F143`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

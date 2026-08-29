@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p174_group_split_beta_reliability_calibration.v1
+output_schema_version: worldsim_v67.p174_group_split_beta_reliability_calibration_summary.v1
+task_id: WS-V67-P174-GROUP-SPLIT-BETA-RELIABILITY-CALIBRATION-01
+hypothesis_id: WS-V67-H-P174-001
+role: group_held_out_monotone_probability_calibration_for_visited_state_reliability_CDF
+seed: 0
+model_artifact: BETA_CALIBRATED_VISIT_RELIABILITY_CDF.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+split: {ordered_scene_modulus: 5, calibration_remainder: 0}
+model:
+  score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
+  budget_knots: [-1.25, -0.5, 0.0, 0.5, 1.25]
+  training_steps: 12000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+calibration:
+  training_steps: 4000
+  batch_size: 65536
+  learning_rate: 0.003
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_calibration_error_reduction: 0.10
+verdict_on_pass: supported_freeze_beta_calibrated_reliability_CDF_for_new_scene_confirmation
+verdict_on_failure: rejected_group_split_beta_reliability_calibration
+locks:
+  base_CDF_trains_without_every_fifth_ordered_source_scene: true
+  one_global_positive_beta_map_uses_calibration_scenes_only: true
+  beta_map_preserves_budget_and_score_monotonicity: true
+  matched_horizon_only_CDF_gets_its_own_same_split_beta_map: true
+  P167_and_all_future_confirmation_rows_are_excluded: true
+  no_split_calibrator_budget_architecture_loss_or_threshold_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v54/kull17a.html
+  - https://proceedings.mlr.press/v202/dheur23a.html
+  - https://proceedings.neurips.cc/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html
+claim_boundary:
+  - consumed_development_calibration_only_then_freeze_for_a_new_scene_cohort
+  - beta_calibration_is_empirical_and_not_distribution_shift_or_conformal_guarantee
+  - no_voxel_correctness_collision_probability_planner_policy_closed_loop_or_safety_claim
