@@ -1100,7 +1100,10 @@ Lagrangian regret=`-.00000144`、violations=0。P264组合P261与P263：Deep Set
 regret=`.001115`、violations=0，2/2。P266把冻结P265推进到固定64-trajectory shared dual，在六个interior
 weights和四个heldout alpha上P201 fraction MAE=`.015670`、Lagrangian regret=`-.00001355`、violations=0，2/2。
 P267是该轴最后一个组合实验：train sizes=`32/64/128`、heldout=`48/96`的Deep Sets compiler同时接收simplex、
-alpha与fraction；结束后关闭cardinality/preference叠加轴，GPU现正执行teacher生成与训练。
+alpha与fraction；P201 aggregate fraction MAE=`.013630`、regret=`-.00000606`、violations=0，2/2，cardinality/
+preference叠加轴关闭。调研CVaR/percentile risk与Lagrangian constrained optimization后，P268进入新对象：给定final
+reliability floor，以固定unit shortfall penalty构造soft Lagrangian；双positive-rate spline结构保证budget随price下降、
+随floor上升。五/四floors与alpha、13/12 prices冻结，GPU训练中；不作hard constraint或safety guarantee。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

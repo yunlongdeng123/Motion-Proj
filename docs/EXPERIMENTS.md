@@ -2240,8 +2240,22 @@
 - object：最终组合P261/P264的variable-set cardinality interpolation与P265/P266的四horizon simplex preference；
 - protocol：train sizes=`32/64/128`、heldout=`48/96`，八/六simplex vectors、五/四alpha、九/八fractions；
   Deep Sets pooling、20-step teacher、12k/batch512与`.030/.002`两门一次冻结；
-- active canonical：`run://worldsim_v67/WS-V67-P267-VARIABLE-SET-SIMPLEX-HORIZON-DUAL-01/20260831T140500Z__variable-set-simplex-horizon-dual-s0-r1`；
-  无attention/size/simplex/alpha/fraction/architecture/gate sweep；本实验后停止同轴组合。
+- canonical：`run://worldsim_v67/WS-V67-P267-VARIABLE-SET-SIMPLEX-HORIZON-DUAL-01/20260831T140500Z__variable-set-simplex-horizon-dual-s0-r1`；
+- result：P201 sizes48/96 aggregate price/fraction MAE=`.026044/.013630`、simplex Lagrangian regret=
+  `-.00000606`、violations=0，2/2；size48 fraction=`.013941`，size96=`.012949`；
+- resources/verdict：728 train groups、wall=`217.58s`、peak GPU=`.185GiB`；
+  `supported_variable_set_simplex_horizon_dual_compiler`；同轴组合终止。
+
+### WS-V67-P268-RELIABILITY-FLOOR-LAGRANGIAN-POLICY-01
+
+- object：从偏好scalarization转向risk constraint surrogate；给定final reliability floor，以固定unit penalty惩罚
+  `max(floor-P246_final,0)`，同时保留alpha-fair mean utility与shadow-price cost；
+- structure：context只含trajectory与alpha，两组16-knot positive rates分别沿price/floor解析积分，结构保证
+  price↑→budget↓、floor↑→budget↑；
+- protocol：floors train=`.20/.35/.50/.65/.80`、heldout=`.275/.425/.575/.725`；五/四alpha、13/12 prices、
+  129 budget grid、12k/batch8192/seed0；P201 budget MAE≤`.075`、frozen soft-Lagrangian regret≤`.005`；
+- active canonical：`run://worldsim_v67/WS-V67-P268-RELIABILITY-FLOOR-LAGRANGIAN-POLICY-01/20260831T143000Z__reliability-floor-lagrangian-policy-s0-r1`；
+  shortfall仅报告，不声称hard feasibility、chance constraint、CVaR或safety。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 
