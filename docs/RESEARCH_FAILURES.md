@@ -1558,11 +1558,29 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：3个BatchEnsemble members共享每层weight，保留member-specific rank-one input/output factors与独立bootstrap；
   diagonal Gaussian NLL、total variance projection、source与continuous evaluation均继承P126/P127。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：固定3 members/seed0/factor init/6,000 steps，不扫rank/member/structure；失败登记F96并关闭efficient embedded
-  ensemble first trial。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；实际mean Spearman
+  difference=`-.014545`，P81/P113 cost回退，两门全失败；P129 rows隔离。
+- prevention：固定3 members/seed0/factor init/6,000 steps，不扫rank/member/structure；rank-one shared-weight trial关闭。
 
-下一可用编号为：`V67-F96`。
+### V67-F96 — BatchEnsemble shared weights压缩了epistemic diversity
+
+- 分类：`algorithm/embedded-ensemble-diversity`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01/
+  20260830T092500Z__batchensemble-actor-uncertainty-s0-r1`。
+- 观察：NLL=`-3.69116`良好，但三cohort projected epistemic fraction仅`.13%--.34%`，明显低于P126的约`2.2%--2.6%`；
+  mean Spearman difference=`-.014545`，P81/P113 selected cost回退。
+- 外部证据/解释：2026 controlled BatchEnsemble study报告rank-one members在function/parameter space近似相同；本结果同向，
+  表明shared-weight collective regime而非训练不足。
+- 防重复：不扫factor init/rank/member/seed；P134只作一次独立block packed regime，若仍失败则不再追efficient ensemble结构。
+
+### P134 freeze note — packed independent member blocks
+
+- method：3套独立weights/biases用member batched kernels在单graph执行，各自bootstrap；不共享P133 weights/factors，保留
+  P126三成员容量与FLOPs。
+- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
+- prevention：固定3 blocks/seed0/6,000 steps，不扫packing/group/width；失败登记F97并关闭embedded efficient route。
+
+下一可用编号为：`V67-F97`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

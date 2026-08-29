@@ -369,6 +369,16 @@ indices；输出仍是diagonal Actor Gaussian，再以law of total variance解�
 6,000 steps、一次seed，不扫member/factor初始化/结构；相对P126只检验continuous cost/rank retention。P129 rows仍隔离，GPU
 训练已启动并与archive IO重叠。
 
+P133 final NLL=`-3.69116`，但P81/P96/P113 projected epistemic fraction仅`.00128/.00340/.00144`；相对P126
+Spearman差=`-.00475/-.02474/-.01414`（mean=`-.01454`）。P96 selected cost改善到`.16189`，P81/P113却为
+`.17826/.23546`高于P126，0/2 decisions；wall=`54.47s`，登记`V67-F96`。结果与2026 diversity分析一致：
+rank-one shared backbone更像单模型，低NLL不能恢复独立member disagreement。
+
+P134采用ICLR 2023 Packed-Ensembles/embedded-ensemble independent regime的结构迁移：每层3套完全独立weight/bias以batched
+matrix kernels置于同一graph，仍各自bootstrap，不再共享weight或rank-one factors。它保留3-member参数/FLOPs，只检验
+single-graph并行是否能恢复P126 continuous结果，不冒充single-model compute reduction。source、6,000 steps与decisions冻结，
+P129 target隔离；GPU已继续训练。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

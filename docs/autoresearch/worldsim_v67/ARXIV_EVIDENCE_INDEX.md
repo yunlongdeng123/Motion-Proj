@@ -43,7 +43,8 @@
 | P130 | `run://worldsim_v67/WS-V67-P130-ENSEMBLE-DISTRIBUTION-DISTILLATION-01/20260830T091000Z__ensemble-distribution-distillation-s0-r1` | rank retained；P113 cost regression，rejected/F93 |
 | P131 | `run://worldsim_v67/WS-V67-P131-TASK-CONDITIONED-SCORE-DISTILLATION-01/20260830T091500Z__task-conditioned-score-distillation-s0-r1` | pointwise loss low但trajectory rank collapse；rejected/F94 |
 | P132 | `run://worldsim_v67/WS-V67-P132-TRAJECTORY-RANK-DISTILLATION-01/20260830T092000Z__trajectory-rank-distillation-s0-r1` | rank恢复但仍低P126、cost全退；rejected/F95 |
-| P133 | `run://worldsim_v67/WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01/20260830T092500Z__batchensemble-actor-uncertainty-s0-r1` | native rank-one efficient ensemble；running |
+| P133 | `run://worldsim_v67/WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01/20260830T092500Z__batchensemble-actor-uncertainty-s0-r1` | diversity collapse、mean rank delta `-.01454`；rejected/F96 |
+| P134 | `run://worldsim_v67/WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01/20260830T093000Z__packed-independent-actor-ensemble-s0-r1` | independent packed member blocks；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -79,7 +80,8 @@
 | ensemble distribution distillation | P130 consumed P81/P96/P113 | mean rank delta=`-.00202` | P113 cost regression；reject |
 | task-conditioned functional distillation | P131 consumed P81/P96/P113 | mean rank delta=`-.36263` | pointwise→max collapse；reject |
 | trajectory-max rank distillation | P132 consumed P81/P96/P113 | mean rank delta=`-.02018` | improved vs P131 but reject |
-| BatchEnsemble Actor UQ | P133 consumed P81/P96/P113 | pending | native three-member efficient ensemble |
+| BatchEnsemble Actor UQ | P133 consumed P81/P96/P113 | epistemic fraction `.13%--.34%` | shared diversity collapse；reject |
+| packed independent Actor ensemble | P134 consumed P81/P96/P113 | pending | one-graph, full member capacity/FLOPs |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map

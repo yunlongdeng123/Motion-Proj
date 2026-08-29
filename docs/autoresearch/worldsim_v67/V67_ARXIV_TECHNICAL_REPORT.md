@@ -212,6 +212,10 @@ P132把Spearman恢复到`.829--.851`，但相对P126 mean仍少`.02018`且三组
 family关闭。P133转向BatchEnsemble原生高效表示：shared weights加三组rank-one member factors/independent bootstraps，
 一次graph直接学习aleatoric+epistemic decomposition，再复用同一τ-boundary解析；这检验失败是否来自单student缺少member diversity。
 
+P133 NLL虽为`-3.691`，epistemic fraction却仅`.13%--.34%`，mean rank差`-.01454`且P81/P113 cost回退（F96），
+支持shared-rank-one diversity collapse解释。P134因此进入Packed independent regime：三套独立blocks以batched kernels置于
+单graph，保留三成员容量/FLOPs；它检验parallel packaging而非parameter compression，不写成single-model加速结论。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

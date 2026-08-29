@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p134_packed_independent_actor_ensemble.v1
+output_schema_version: worldsim_v67.p134_packed_independent_actor_ensemble_summary.v1
+task_id: WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P134-001
+role: consumed_development_one_graph_independent_actor_ensemble
+seed: 0
+model_artifact: PACKED_INDEPENDENT_ACTOR_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  members: 3
+  steps: 6000
+  member_batch_size: 21845
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_difference_from_deep_ensemble: -0.005}
+verdict_on_pass: supported_development_packed_independent_actor_ensemble
+verdict_on_failure: rejected_development_packed_independent_actor_ensemble
+locks:
+  exactly_three_mathematically_independent_member_blocks_in_one_graph: true
+  each_member_uses_independent_bootstrap_indices: true
+  no_weight_sharing_between_members: true
+  exactly_6000_steps_one_seed_no_width_member_or_group_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openreview.net/pdf?id=XXTyv1zD9zD
+  - https://arxiv.org/abs/2601.16936
+  - https://proceedings.mlr.press/v151/velikanov22a.html
+claim_boundary:
+  - consumed_development_one_graph_parallel_ensemble_only
+  - independent_blocks_retain_three_member_parameter_and_flop_cost
+  - not_a_single_model_compute_reduction_claim
+  - no_planner_policy_closed_loop_or_safety_claim

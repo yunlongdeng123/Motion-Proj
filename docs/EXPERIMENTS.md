@@ -553,7 +553,7 @@
 
 ### WS-V67-P133-BATCHENSEMBLE-ACTOR-UNCERTAINTY-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T092500Z__batchensemble-actor-uncertainty-s0-r1`，与P129 archive IO并行。
 - method：ICLR 2020 BatchEnsemble rank-one parameterization；每层shared weight + 3组member-specific input/output factors，
   三member在一个graph内并行，各取独立bootstrap indices；Actor Gaussian NLL与P109/P126一致。
@@ -562,6 +562,22 @@
 - evaluation/decisions：consumed P81/P96/P113相对P126 selected cost逐组nonregression、mean Spearman difference≥`-.005`；
   不扫member数/factor init/architecture/coverage，P129 rows不读。
 - references：ICLR 2020 BatchEnsemble、ICLR 2023 Packed-Ensembles；只声称native efficient ensemble development结果。
+- result：final NLL=`-3.691163`；P81/P96/P113 epistemic fraction=`.001285/.003404/.001437`，Spearman difference
+  from P126=`-.004751/-.024739/-.014144`（mean=`-.014545`）。P96 selected cost `.161894`改善，但P81/P113
+  `.178261/.235458`回退；0/2 decisions，verdict=`rejected_development_batchensemble_actor_uncertainty`；wall=`54.47s`、
+  peak GPU=`.602 GiB`，登记F96。
+
+### WS-V67-P134-PACKED-INDEPENDENT-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T093000Z__packed-independent-actor-ensemble-s0-r1`，与P129 archive IO并行。
+- method：3套数学独立MLP weights/biases以member维batched matrix kernels置于一个graph；每member独立bootstrap，完全取消
+  P133的shared weight/rank-one factors。结构/NLL/total variance/τ-boundary projection均匹配P126。
+- source=`916,722 Actor-time tokens`；3×`[256,128]`、6,000 steps、每member batch21845、seed0一次。
+- decisions：consumed P81/P96/P113相对P126 selected cost逐组nonregression、mean Spearman difference≥`-.005`；不扫
+  width/member/group/seed。该实现保留3-member参数与FLOPs，只评价one-graph parallel execution，不声称压缩。
+- references：ICLR 2023 Packed-Ensembles、AISTATS 2022 Embedded Ensembles independent/collective regimes、2026
+  BatchEnsemble diversity analysis；P129 target不读。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
