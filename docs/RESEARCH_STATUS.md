@@ -746,6 +746,25 @@ integrated Brier、12,000 steps与两项决策。旧四Brier reduction=`38.10%/4
 model/control marginal error分别为`.0732/.0568`、`.0694/.0514`、`.0611/.0397`、`.0815/.0702`，仍4/4更差，F142。
 Scene balancing没有修复概率prevalence shift；关闭source-only calibration-training支线，不扫DRO/group weight，P175继续唯一确认主线。
 
+P178转向机制条件，不再调整loss/sampler：在P173 score、H、budget之外加入由预测Actor separation与interaction radius得到的
+trajectory absolute inverse-clearance，并对score/clearance都保持risk单调。旧P81/P96/P113/P129相对P173的Brier change=
+`-3.16%/-1.07%/-5.20%/-2.42%`，calibration-error reduction=`3.85%/6.03%/6.00%/4.43%`，四组方向一致但mean仅
+`5.08%<10%`，F143。它是正向机制证据但不足以升级候选；不降低门、不扫clearance变换。
+
+P179检验P178未覆盖的多Actor上下文：冻结P173与P126，以P144 top-16 Actor-query token作mean+max DeepSet pooling，只学习
+budget-independent有界logit residual并保持budget单调。57.03s GPU训练后，旧四Brier change=`+2.60%/+13.79%/+10.85%/-2.60%`，
+mean calibration-error reduction=`-8.45%`；两门全失败，F144。可学习set context在source上形成约`.92--1.03`平均绝对logit残差，
+跨scene成为interaction shortcut；关闭同类context residual，不扫pool/depth/cap。
+
+P180把P120事件的分母结构显式移入条件：学习
+`P(projected-error <= budget * trajectory-min-clearance | P126 score,H)`的单调effective-threshold CDF，而不是把clearance当普通附加特征。
+结果旧四Brier相对P173全部回退`8.10%/27.11%/1.78%/11.17%`，calibration-error reduction均为负，mean=`-4.38%`，F145。
+整条轨迹最小净空是过度保守的压缩，破坏Actor/time级误差—净空配对；不扫聚合或threshold knots。
+
+P181随后按NeurIPS distribution-shift/model-marginalization证据启动5-member scene-bootstrap monotone CDF ensemble：每个成员从102个
+source scenes有放回抽取一个环境，五成员在3090并行训练，推理均匀平均概率。它保持P173低容量表示与单调性，P175严格排除；
+只检验逐cohort Brier noninferiority与mean calibration-error改善10%，不扫member count/bootstrap/loss。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

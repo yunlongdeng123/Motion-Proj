@@ -1250,6 +1250,43 @@
   marginal error=`.0732/.0694/.0611/.0815`，control=`.0568/.0514/.0397/.0702`，calibration 4/4 fail。
 - verdict=`rejected_scene_uniform_brier_reliability_CDF`，F142；关闭source-only calibration-training，不扫group/DRO weights。
 
+### WS-V67-P178-CLEARANCE-CONDITIONED-RELIABILITY-CDF-01
+
+- 状态：`done/rejected`；canonical=`20260830T143000Z__clearance-conditioned-reliability-cdf-s0-r1`；wall=`83.36s`。
+- controlled change：在P173条件中只增加trajectory max inverse absolute clearance，并对score/clearance保持risk单调；七budget、
+  12,000 BCE steps、旧四cohort与P173 primary control不变，P175严格排除。
+- result：P81/P96/P113/P129 Brier change vs P173=`-3.16%/-1.07%/-5.20%/-2.42%`；calibration-error
+  reduction=`3.85%/6.03%/6.00%/4.43%`，逐组正向、mean=`5.08%<10%`。
+- verdict=`rejected_clearance_conditioned_reliability_CDF`，F143；保留“absolute geometry有一致小增量”的机制证据，不降门或扫变换。
+
+### WS-V67-P179-SET-CONTEXT-RELIABILITY-CDF-01
+
+- 状态：`done/rejected`；canonical=`20260830T143500Z__set-context-reliability-cdf-s0-r1`；wall=`57.03s`。
+- controlled change：冻结P173/P126，复用P144 top-16 Actor-query tokens，以mean+max DeepSet pooling学习一个budget-independent、
+  `|residual|<=2`的logit residual；保持P173 budget单调，不读P175。
+- result：旧四Brier change vs P173=`+2.60%/+13.79%/+10.85%/-2.60%`；calibration-error reduction=
+  `-15.64%/-.97%/-3.27%/-13.91%`，mean=`-8.45%`；两门全失败。
+- verdict=`rejected_set_context_reliability_CDF`，F144；关闭可学习set-context residual，不扫pooling/depth/cap。
+
+### WS-V67-P180-EFFECTIVE-ERROR-THRESHOLD-RELIABILITY-CDF-01
+
+- 状态：`done/rejected`；canonical=`20260830T144500Z__effective-error-threshold-reliability-cdf-s0-r1`；wall=`71.29s`。
+- object：利用P120 cost=`projected error / absolute clearance`的结构，把budget与trajectory minimum clearance相乘为有效误差阈值，
+  学习`P(error <= effective threshold | P126 score,H)`；对threshold单调、对score反单调。
+- decisions：旧四Brier逐组不劣于P173，mean marginal calibration-error相对P173至少下降10%；只作一次机制迁移，不扫结构/阈值。
+- locks：P175 in-flight cohort完全排除；不改P173/P126、七budgets、12,000 steps或cost floor，不加hash/checksum/fingerprint和测试矩阵。
+- result：P81/P96/P113/P129 Brier change vs P173=`+8.10%/+27.11%/+1.78%/+11.17%`；calibration-error
+  reduction=`-2.75%/-5.93%/-4.08%/-4.78%`，mean=`-4.38%`；两门全失败。
+- verdict=`rejected_effective_error_threshold_CDF`，F145；minimum-clearance approximation关闭，不扫聚合或threshold。
+
+### WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01
+
+- 状态：`GPU training active`；canonical id=`20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1`。
+- object：5个P173同构monotone CDF分别在102-scene bootstrap环境训练，推理时均匀平均概率，以模型边际化吸收source scene shift。
+- execution：五成员单卡并行、每成员batch16,384、8,000 steps；P126/P173 control、七budgets与旧四cohort固定。
+- decisions：逐cohort Brier不劣于P173且mean marginal calibration-error至少改善10%；不扫member count/bootstrap size/loss/architecture。
+- locks：P175 rows严格排除，不替换其冻结candidate，不加post-hoc calibrator、hash/checksum/fingerprint或测试矩阵。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

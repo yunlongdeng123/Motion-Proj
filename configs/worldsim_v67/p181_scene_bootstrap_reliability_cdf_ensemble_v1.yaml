@@ -1,0 +1,52 @@
+schema_version: worldsim_v67.p181_scene_bootstrap_reliability_cdf_ensemble.v1
+output_schema_version: worldsim_v67.p181_scene_bootstrap_reliability_cdf_ensemble_summary.v1
+task_id: WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P181-001
+role: scene_bootstrap_model_marginalized_visited_state_reliability_CDF
+seed: 0
+model_artifact: SCENE_BOOTSTRAP_RELIABILITY_CDF_ENSEMBLE.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p173:
+  run: worldsim_v67/WS-V67-P173-MONOTONE-VISIT-RELIABILITY-CDF-01/20260830T134500Z__monotone-visit-reliability-cdf-s0-r2
+  artifact: MONOTONE_VISIT_RELIABILITY_CDF.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+model:
+  member_count: 5
+  score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
+  budget_knots: [-1.25, -0.5, 0.0, 0.5, 1.25]
+  training_steps: 8000
+  batch_size_per_member: 16384
+  learning_rate: 0.001
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision:
+  minimum_mean_calibration_error_reduction_vs_p173: 0.10
+verdict_on_pass: supported_freeze_scene_bootstrap_reliability_CDF_ensemble_for_different_future_cohort
+verdict_on_failure: rejected_scene_bootstrap_reliability_CDF_ensemble
+locks:
+  prediction_object_is_trajectory_visited_actor_state_reliability_not_voxel_correctness: true
+  each_member_uses_one_102_scene_bootstrap_environment: true
+  inference_is_uniform_probability_average: true
+  each_member_preserves_score_and_budget_monotonicity: true
+  frozen_P173_is_the_primary_control: true
+  P175_is_in_flight_and_excluded_from_P181: true
+  no_member_count_bootstrap_size_loss_or_architecture_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper_files/paper/2025/hash/8b7d8779c020fa3671ad267152362d56-Abstract-Conference.html
+  - https://papers.nips.cc/paper_files/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html
+  - https://papers.nips.cc/paper/2021/hash/a70dc40477bc2adceef4d2c90f47eb82-Abstract.html
+claim_boundary:
+  - consumed_development_only_and_requires_a_different_future_cohort_if_supported
+  - bootstrap_model_marginalization_is_not_target_calibration_or_formal_shift_coverage
+  - no_voxel_correctness_collision_probability_conformal_planner_policy_closed_loop_or_safety_claim

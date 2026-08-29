@@ -88,6 +88,10 @@
 | P175 | `run://worldsim_v67/WS-V67-P175-VISIT-RELIABILITY-CDF-CONFIRMATION-01/20260830T141500Z__visit-reliability-cdf-confirmation-s0-r1` | frozen 10-scene/10-log five-H confirmation，IO pipeline active |
 | P176 | `run://worldsim_v67/WS-V67-P176-INTEGRATED-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142000Z__integrated-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.95%但calibration 4/4劣于control；rejected/F141 |
 | P177 | `run://worldsim_v67/WS-V67-P177-SCENE-UNIFORM-BRIER-VISIT-RELIABILITY-CDF-01/20260830T142500Z__scene-uniform-brier-visit-reliability-cdf-s0-r1` | mean Brier -40.82%但calibration 4/4劣于control；rejected/F142 |
+| P178 | `run://worldsim_v67/WS-V67-P178-CLEARANCE-CONDITIONED-RELIABILITY-CDF-01/20260830T143000Z__clearance-conditioned-reliability-cdf-s0-r1` | Brier/calibration 4/4同向改善；mean calibration improvement仅5.08%，rejected/F143 |
+| P179 | `run://worldsim_v67/WS-V67-P179-SET-CONTEXT-RELIABILITY-CDF-01/20260830T143500Z__set-context-reliability-cdf-s0-r1` | Brier 3/4回退、mean calibration change -8.45%；rejected/F144 |
+| P180 | `run://worldsim_v67/WS-V67-P180-EFFECTIVE-ERROR-THRESHOLD-RELIABILITY-CDF-01/20260830T144500Z__effective-error-threshold-reliability-cdf-s0-r1` | Brier 4/4回退、mean calibration change -4.38%；rejected/F145 |
+| P181 | `run://worldsim_v67/WS-V67-P181-SCENE-BOOTSTRAP-RELIABILITY-CDF-ENSEMBLE-01/20260830T145500Z__scene-bootstrap-reliability-cdf-ensemble-s0-r1` | 5-member scene-bootstrap probability ensemble，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -217,6 +221,9 @@
 | `V67-F140` | closed negative | P174 Beta calibration mean improvement 5.68%且P81反向 |
 | `V67-F141` | closed negative | P176 Brier objective保留refinement但4/4 calibration error高于control |
 | `V67-F142` | closed negative | P177 scene-uniform sampling仍4/4 calibration error高于control |
+| `V67-F143` | closed negative | P178 absolute clearance带来4/4一致小改善但mean calibration gain仅5.08% |
+| `V67-F144` | closed negative | P179 set-context residual使Brier 3/4回退且mean calibration change -8.45% |
+| `V67-F145` | closed negative | P180 minimum-clearance effective threshold使Brier 4/4回退、mean calibration change -4.38% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

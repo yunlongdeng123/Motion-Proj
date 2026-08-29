@@ -2334,6 +2334,42 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F143`。
 
+### V67-F143 — absolute clearance条件带来一致小增量但未达到冻结门
+
+- 分类：`algorithm/mechanism-conditioned-reliability-calibration`；状态：`closed_negative_after_single_feature_change`。
+- canonical：`run://worldsim_v67/WS-V67-P178-CLEARANCE-CONDITIONED-RELIABILITY-CDF-01/
+  20260830T143000Z__clearance-conditioned-reliability-cdf-s0-r1`。
+- 观察：旧四Brier相对P173全部改善`1.07%--5.20%`，calibration error也全部改善`3.85%--6.03%`；但mean=`5.08%<10%`。
+- 解释：absolute inverse-clearance提供跨cohort一致的几何信息，却以budget-independent additive risk进入logit，不能表达P120代价中
+  `budget × clearance`的乘法事件结构。
+- 防重复：不降低10%门、不扫clearance变换/knots；下一步只允许把物理乘法直接写入预测对象。
+
+下一可用编号为：`V67-F144`。
+
+### V67-F144 — Actor set-context residual形成跨scene shortcut并破坏P173可靠性刻度
+
+- 分类：`algorithm/set-context-residual-shift`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P179-SET-CONTEXT-RELIABILITY-CDF-01/
+  20260830T143500Z__set-context-reliability-cdf-s0-r1`。
+- 观察：P81/P96/P113 Brier分别回退`2.60%/13.79%/10.85%`，仅P129改善`2.60%`；mean calibration-error reduction=`-8.45%`。
+- 解释：top-16 Actor token能降低source BCE，但mean+max context产生约`.92--1.03`的持续logit偏移，在location/scene prevalence变化时
+  成为shortcut；预算单调性仍在，但绝对概率刻度恶化。
+- 防重复：不扫DeepSet/attention pooling、token cap、residual bound或depth；回到显式cost factorization，P175候选不变。
+
+下一可用编号为：`V67-F145`。
+
+### V67-F145 — minimum-clearance有效阈值压缩破坏Actor/time误差配对
+
+- 分类：`algorithm/mechanism-factorization-overcompression`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P180-EFFECTIVE-ERROR-THRESHOLD-RELIABILITY-CDF-01/
+  20260830T144500Z__effective-error-threshold-reliability-cdf-s0-r1`。
+- 观察：旧P81/P96/P113/P129 Brier相对P173回退`8.10%/27.11%/1.78%/11.17%`；mean calibration-error reduction=`-4.38%`。
+- 解释：真实P120事件逐Actor/time计算`error_i / clearance_i`再取max；以全轨迹minimum clearance乘budget构成单一threshold，
+  会把某一Actor的最小净空错误配给另一Actor的最大误差，导致系统性保守且损失判别信息。
+- 防重复：不扫min/quantile/harmonic clearance聚合或threshold knots；转向scene-bootstrap模型边际化，保留原P173事件表示。
+
+下一可用编号为：`V67-F146`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

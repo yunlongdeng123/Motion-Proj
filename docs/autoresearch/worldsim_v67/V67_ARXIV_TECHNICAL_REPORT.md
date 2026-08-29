@@ -402,6 +402,15 @@ P175为P173冻结了新的10-scene/10-log五H确认，archive→scene→GPU流�
 Brier training，严格排除P175。P177 mean Brier reduction=`40.82%`，但四组marginal error仍全高于control，F142；因此关闭
 source-only probability-calibration路线。它不能替换P175的事前candidate，也不会改变新cohort门。
 
+随后两项机制诊断同样严格排除P175。P178把absolute inverse-clearance作为第二个单调risk coordinate，旧四Brier与calibration
+error均4/4改善，但mean calibration gain只有`5.08%<10%`（F143）；这说明几何条件有效但普通additive conditioning不足。
+P179改用top-16 Actor-query DeepSet context residual，Brier在3/4 cohort回退、mean calibration change=`-8.45%`（F144），表明
+高容量场景上下文在source拟合后形成interaction shortcut。P180据此不再增加自由context，而把P120定义中的
+`projected error / clearance <= budget`重写为`projected error <= budget × minimum clearance`，训练effective-threshold单调CDF；
+但旧四Brier全部回退`1.78%--27.11%`、mean calibration change=`-4.38%`（F145）。根因是trajectory minimum clearance
+丢失逐Actor/time的error-clearance配对，因此关闭该压缩。P181进一步采用5个scene-bootstrap低容量单调CDF进行概率平均，
+以模型边际化模拟source covariate shifts；它仍是consumed development，不能替代P175独立确认。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
