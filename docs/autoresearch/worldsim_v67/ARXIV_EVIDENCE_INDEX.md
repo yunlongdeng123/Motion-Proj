@@ -144,6 +144,7 @@
 | P231 | `run://worldsim_v67/WS-V67-P231-TRUTH-REGULARIZED-MONOTONE-CURVE-01/20260831T014500Z__truth-regularized-monotone-curve-s0-r1` | Brier improves but P201 teacher MAE `.027831>.02`；rejected/F178 |
 | P232 | `run://worldsim_v67/WS-V67-P232-GRADIENT-BALANCED-MONOTONE-CURVE-01/20260831T020000Z__gradient-balanced-monotone-curve-s0-r1` | P201 MAE `.009108`；Brier/calibration improve；3/3 development support |
 | P233 | `run://worldsim_v67/WS-V67-P233-MONOTONE-PREFIX-RELIABILITY-SURFACE-01/20260831T022000Z__monotone-prefix-reliability-surface-s0-r1` | P201 surface/final MAE `.006982/.009186`；Brier/calibration improve；3/3 |
+| P234 | `run://worldsim_v67/WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01/20260831T025000Z__prefix-surface-fresh-confirmation-s0-r1` | frozen P228 same-read prospective secondary；waiting on rows |
 | P235 | `run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1` | fixed marginal-only surface interface ablation；training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 

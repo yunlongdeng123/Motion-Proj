@@ -1870,6 +1870,13 @@
   8个P199 condition features，runtime输入为28个P182 marginal CDF values；
 - status：RTX 3090训练中；不扫feature subset/surface architecture/width/horizon/budget/MC，不读P228 quality。
 
+### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
+
+- role：P228首次fresh rows上的prospective same-read secondary；不是新增独立cohort；
+- frozen before quality：P233 artifact、P199 prefix teachers、P203 full-prefix map、1024 MC、4×7 surface与三项P233
+  decisions全部锁定；不随P235结果改变；
+- status：evaluator等待P228 atomic rows；target quality unread，不占GPU等待。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

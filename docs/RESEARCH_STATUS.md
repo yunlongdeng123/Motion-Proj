@@ -995,6 +995,9 @@ P233完成且3/3通过：P201 surface/final teacher MAE=`.006982/.009186`，stud
 `0/0`。P183 surface Brier/calibration也改善`.320%/.000533`。wall=`103.98s`、peak GPU=`.224GiB`。
 P235已接替GPU，保持P233 surface teacher/structure/steps/decisions，只移除8个P199 condition features，检验28维
 marginal-only runtime interface；不扫feature subset。P234 fresh same-read surface evaluator将在P228 quality前冻结。
+P234已在P228 rows出现前冻结：复用同一10-scene/10-log首次fresh read作prospective secondary，P233 artifact、四个
+prefix teachers、1024 MC、budget与三项decision均不可变；它不是第二个独立cohort。Evaluator只等待P228 atomic rows，
+不会在ready前占GPU或读取quality。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 
