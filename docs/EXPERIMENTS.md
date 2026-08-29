@@ -618,8 +618,20 @@
   cost + progress penalty + `.5×lateral distance`。lateral weight=0严格恢复P311。
 - protocol：progress heldout=`.25/.75`，6k steps；P201门为composite reduction `.10`、pairwise `.65`、lateral
   response delta `.25`且progress violations=0；不扫command/weight/rate/width/loss。
-- active=`run://worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/
+- canonical=`run://worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/
   20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1`。
+- result：P201 mean reduction=`35.66%`、pairwise=`.88795`、oracle regret=`.03453`；lateral command response=
+  `-.46475→.43115` (`delta=.89590`)；progress violations=0，3/3 supported。source reduction/pairwise/response=
+  `34.83%/.89029/.87460`；wall=`82.32s`、peak GPU=`.1404GiB`。
+
+### WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01
+
+- frozen candidate/cohort：P313/P311/P309/P307，0-step；P277六场景/180个六动作组，two-axis maneuver admission
+  family untouched reuse confirmation。
+- inherited：progress `.25/.75`×command `-.5/.5`、hard top-2、reduction `.10`、pairwise `.65`、command response
+  `.25`且progress violations=0；one read，无refit/换cohort。
+- active=`run://worldsim_v67/WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+  20260901T050000Z__maneuver-conditioned-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

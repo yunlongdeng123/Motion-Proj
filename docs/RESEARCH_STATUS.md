@@ -353,9 +353,16 @@ lateral maneuver intent二维任务条件，不重复同轴确认。
 P313 冻结P311/P309/P307，新增连续lateral command轴：train command=`-1/0/1`，正式只读unseen midpoint=
 `-.5/.5`，同时progress heldout=`.25/.75`。lateral penalty rate保持正且bounded `.5`，lateral weight=0时解析恢复
 P311；6k steps。P201三门为mean composite reduction `>=10%`、pairwise `>=.65`、右命令相对左命令的selected
-lateral response `>=.25`且progress单调违例0。不扫command/weight/rate/width/loss。Active=`run://worldsim_v67/
+lateral response `>=.25`且progress单调违例0。不扫command/weight/rate/width/loss。Canonical=`run://worldsim_v67/
 WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/
-20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1`。
+20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1`：P201 mean composite reduction=`35.66%`、
+pairwise=`.88795`、oracle regret=`.03453`；selected lateral随command `-.46475→.43115`，response=`.89590`；
+两个commands的full-progress fractions均随lambda提升且violations=0，3/3 supported。wall=`82.32s`。
+
+P314冻结P313全链，在P277六场景/180个六动作组做two-axis maneuver-admission-family untouched 0-step确认；
+heldout progress/command、hard top-2和三门全部继承，不refit。Active=`run://worldsim_v67/
+WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01/
+20260901T050000Z__maneuver-conditioned-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

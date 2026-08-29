@@ -1,0 +1,65 @@
+schema_version: worldsim_v67.p314_maneuver_conditioned_authority_confirmation.v1
+output_schema_version: worldsim_v67.p314_maneuver_conditioned_authority_confirmation_summary.v1
+task_id: WS-V67-P314-MANEUVER-CONDITIONED-AUTHORITY-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P314-001
+role: two_axis_task_conditioned_action_admission_family_untouched_confirmation
+confirmation_only: true
+seed: 0
+model_artifact: CONFIRMED_MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt
+source_rows: {run: worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01/20260831T183000Z__fresh-epistemic-confirmation-s0-r1, artifact: P277_FRESH_EPISTEMIC_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P277-FRESH-EPISTEMIC-ALLOCATOR-CONFIRMATION-01/20260831T183000Z__fresh-epistemic-confirmation-s0-r1, artifact: P277_FRESH_EPISTEMIC_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_authority: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+frozen_selector: {run: worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/20260901T034500Z__authority-residual-topk-admission-s0-r1, artifact: AUTHORITY_RESIDUAL_TOPK_ADMISSION.pt}
+frozen_progress_compiler: {run: worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T041500Z__progress-conditioned-authority-admission-s0-r1, artifact: PROGRESS_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_maneuver_compiler: {run: worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1, artifact: MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+action_group_size: 6
+selected_action_count: 2
+authority_condition: {alpha_fairness: 0.5, risk_tolerance: 0.15, final_reliability_floor: 0.6, tail_mass: 0.25, attainable_budget_fractions: [0.25, 0.5, 0.75]}
+training_progress_preferences: [0.0, 0.5, 1.0]
+heldout_progress_preferences: [0.25, 0.75]
+training_lateral_commands: [-1.0, 0.0, 1.0]
+heldout_lateral_commands: [-0.5, 0.5]
+lateral_preference_weight: 0.5
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+model:
+  hidden_width: 64
+  maximum_rate_adjustment: 0.5
+  steps: 0
+  batch_size: 384
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  rank_temperature: 0.20
+  membership_temperature: 0.20
+  listwise_temperature: 0.25
+  pairwise_temperature: 0.25
+  pairwise_minimum_target_gap_z: 0.05
+  listwise_weight: 0.5
+  pairwise_weight: 0.25
+evaluation: {pairwise_minimum_composite_gap: 0.02}
+decision:
+  minimum_P201_mean_relative_composite_reduction_vs_all_actions: 0.10
+  minimum_P201_pooled_pairwise_composite_concordance: 0.65
+  minimum_P201_lateral_command_response_delta: 0.25
+  maximum_P201_progress_preference_monotonicity_violations: 0
+verdict_on_pass: supported_untouched_cohort_two_axis_maneuver_authority_confirmation
+verdict_on_failure: rejected_untouched_cohort_two_axis_maneuver_authority_confirmation
+locks:
+  P313_P311_P309_P307_and_P277_rows_are_frozen_before_quality_read: true
+  zero_training_refit_or_calibration_on_confirmation_rows: true
+  heldout_two_axis_conditions_hard_top2_and_three_gates_are_inherited: true
+  P277_was_consumed_by_other_families_but_untouched_by_two_axis_maneuver_admission: true
+  one_confirmation_read_no_second_cohort_or_model_selection: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - two_axis_maneuver_action_admission_family_untouched_confirmation_not_globally_fresh
+  - normalized_log_visited_state_cost_task_tradeoff_not_planner_reward_or_policy
+  - no_collision_closed_loop_hard_constraint_population_or_safety_claim
