@@ -53,7 +53,9 @@
 | P140 | `run://worldsim_v67/WS-V67-P140-SCENE-BAGGED-DEEP-ENSEMBLE-01/20260830T100000Z__scene-bagged-deep-ensemble-s0-r1` | mean rank `-.00405`、P81/P96 cost退；rejected/F103 |
 | P141 | `run://worldsim_v67/WS-V67-P141-FIVE-MEMBER-DEEP-ENSEMBLE-01/20260830T100500Z__five-member-deep-ensemble-s0-r1` | mean gain=`+.00056`、P96/P113 cost退；rejected/F104 |
 | P142 | `run://worldsim_v67/WS-V67-P142-TASK-CONDITIONED-PROJECTED-ENSEMBLE-01/20260830T101000Z__task-conditioned-projected-ensemble-s0-r1` | P129 `+.01319`但P96退；rejected/F105 |
-| P143 | `run://worldsim_v67/WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01/20260830T101500Z__conditional-residual-ensemble-s0-r1` | frozen-P126 standardized residual correction；running |
+| P143 | `run://worldsim_v67/WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01/20260830T101500Z__conditional-residual-ensemble-s0-r1` | cost全退、mean rank `-.01344`；rejected/F106 |
+| P144 | `run://worldsim_v67/WS-V67-P144-TRAJECTORY-SET-RANK-COMPILER-01/20260830T102000Z__trajectory-set-rank-compiler-s0-r1` | P96反转、mean rank `-.00096`；rejected/F107 |
+| P145 | `run://worldsim_v67/WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01/20260830T102500Z__absolute-time-actor-ensemble-s0-r1` | add absolute future seconds；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -99,7 +101,9 @@
 | scene-bagged deep ensemble | P140 consumed P81/P96/P113/P129 | mean gain=`-.00405` | P113/P129 cost改善但整体reject |
 | five-member deep ensemble | P141 consumed P81/P96/P113/P129 | mean gain=`+.00056` | reject member scaling |
 | task-conditioned projected ensemble | P142 consumed P81/P96/P113/P129 | mean gain≈0、cost 3/4退 | task signal但reject replacement |
-| conditional residual ensemble | P143 consumed P81/P96/P113/P129 | running | P126-preserving correction |
+| conditional residual ensemble | P143 consumed P81/P96/P113/P129 | mean gain=`-.01344`、cost全退 | close per-time correction |
+| trajectory-set rank compiler | P144 consumed P81/P96/P113/P129 | mean gain=`-.00096` | reject downstream capacity route |
+| absolute-time Actor ensemble | P145 consumed H3.5 ×4 | running | horizon alias correction |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -132,6 +136,8 @@
 | `V67-F103` | closed negative | scene bootstrap仅在P113/P129改善cost，四cohort rank不稳定 |
 | `V67-F104` | closed negative | five-member scaling未超过three-member P126 boundary |
 | `V67-F105` | closed negative | direct conditional projection在P129增益但P96 transfer反转 |
+| `V67-F106` | closed negative | P126-standardized conditional correction四cohort cost全退 |
+| `V67-F107` | closed negative | trajectory-set compiler仍在P96 transfer反转 |
 
 ## 4. Artifact inventory
 

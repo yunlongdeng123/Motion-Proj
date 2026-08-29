@@ -705,7 +705,7 @@
 
 ### WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical planned=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T101500Z__conditional-residual-ensemble-s0-r1`。
 - method：冻结P126 projected mean/total scale，将真实projected residual标准化为`z=(n^T e-μ0)/σ0`；三member Gaussian
   correction读取P142 27维conditional inputs并追加`μ0/logσ0`。最终`μ=μ0+σ0 E[z]`、
@@ -714,6 +714,38 @@
   四cohort cost全不退且mean rank gain≥`.005`。
 - locks：不读direct cost/event/teacher score；不扫correction weight/input/loss/member/seed/coverage。
 - references：NeurIPS 2023 effective heteroscedastic regression、ICML 2024 multidimensional recalibration；只称residual development。
+- result：standardized source target mean/scale=`.017861/.859214`，final NLL=`-.148040/-.173038/-.158386`。
+  P81/P96/P113/P129 selected cost=`.192407/.177239/.239211/.370891`，四组均回退；Spearman gain=
+  `-.022649/-.013583/+.001054/-.018600`（mean=`-.013445`）。0/2 decisions，verdict=
+  `rejected_development_conditional_residual_ensemble`，wall=`98.63s`、peak GPU=`.886 GiB`；F106。
+
+### WS-V67-P144-TRAJECTORY-SET-RANK-COMPILER-01
+
+- 状态：`done/rejected consumed development`；canonical=
+  `20260830T102000Z__trajectory-set-rank-compiler-s0-r1`。
+- method：冻结P126 row/trajectory score；每trajectory按row score取top16 Actor-query tokens，token=`24 query features +
+  9 signed-clearance profile + 18 normal components + P126 row score`。Deep Sets `[128,64]` element encoder与mean+max聚合后，
+  `[64,32]` decoder输出bound `.5` residual并加回P126 trajectory score。
+- training：source 79,478 trajectories/575,596 rows；同source scene随机trajectory pairs按真实continuous cost排序，6,000 steps、
+  pair batch4,096、seed0；residual L2 weight `.1`。
+- evaluation/decisions：consumed P81/P96/P113/P129相对P126，四cohort cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫top-k/architecture/pair policy/bound/loss/seed/coverage；这是P126-anchored set compiler唯一trial。
+- result：final pairwise residual loss=`2.901389`；P81/P96/P113/P129 selected cost=
+  `.181065/.175402/.220324/.300467`，仅P129改善；Spearman gain=`+.001499/-.007292/+.001589/+.000355`
+  （mean=`-.000962`）。0/2 decisions，verdict=`rejected_development_trajectory_set_rank_compiler`，wall=`88.24s`、
+  peak GPU=`.495 GiB`；F107。
+
+### WS-V67-P145-ABSOLUTE-TIME-ACTOR-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical planned=
+  `20260830T102500Z__absolute-time-actor-ensemble-s0-r1`。
+- structural gap：P126 source horizons=`.8/1.5/2.5/3.0s`，但input仅Actor history features+normalized future fraction；
+  P145唯一变化是追加absolute future time `fraction×H`，保留fraction。
+- training：916,722 Actor-time tokens，3×`[256,128]` diagonal Gaussian、seeds0/1/2、6,000 steps、batch65,536；
+  natural global-token sampling与P126一致。
+- evaluation/decisions：consumed H3.5 P81/P96/P113/P129相对P126，四cohort cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫time embedding/architecture/loss/member/seed/weight/coverage；H3.5是source max H3.0外推。
+- references：WACV 2020 uncertainty-aware motion prediction、CoRL 2023 time-varying heteroscedastic motion primitives。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

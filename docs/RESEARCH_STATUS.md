@@ -448,7 +448,21 @@ features、time fraction和boundary normal；监督只是真实projected residua
 
 P143依据probabilistic residual learning与heteroscedastic regression调研保留P126为frozen base：先取其projected mean与total
 scale，再训练三成员`p((n^T e-μ_P126)/σ_P126 | τ, Actor, t, μ_P126, logσ_P126)`；最终distribution以base scale
-重构，恒等残差分布可恢复P126。监督仍不读cost/event/teacher score，四consumed cohort decisions不变；3090正在训练。
+重构。P81/P96/P113/P129 rank gain=`-.02265/-.01358/+.00105/-.01860`（mean=`-.01344`），四组cost均回退，
+0/2 decisions，wall=`98.63s`，F106。保留base仍不能阻止source conditional correction改坏跨cohort ordering，per-time
+conditional distribution family关闭。
+
+历史核对表明P120/P123只在P109 hand-crafted tail features上做cost/rank residual，尚未训练读取完整Actor-query set且以P126
+为anchor的trajectory-level compiler。P144对每条τ按frozen P126 row risk取top16 tokens；token包含24 query features、9步
+signed clearance、18维boundary normals与P126 row score。Deep Sets mean+max输出bounded residual并用source scene内actual
+continuous cost pairs训练。P81/P96/P113/P129 rank gain=`+.00150/-.00729/+.00159/+.00035`（mean=`-.00096`）；
+P129 cost改善到`.30047`，但P81/P96/P113回退，0/2 decisions，wall=`88.24s`，F107。Downstream richer compiler同样不能
+修复P96 transfer，trajectory residual family关闭。
+
+随后识别到上游P126的明确horizon alias：source混合H=`.8/1.5/2.5/3.0s`，Actor network却只读normalized time fraction，
+相同fraction无法区分绝对未来时间。P145只新增`absolute future seconds = fraction×H`，保留fraction并按P126自然token/
+diagonal Gaussian/3 members/6,000 steps协议重训；四个H3.5 consumed cohorts相对P126检验cost全不退与mean rank gain≥`.005`。
+H3.5仍是source max H3.0外推；3090正在训练。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

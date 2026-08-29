@@ -254,6 +254,14 @@ P142在P129取得`+.01319` rank gain、P113降低cost，但P96显著回退且四
 信息，却不能从头替代通用Actor distribution。P143据此采用frozen-base residual correction：P126提供projected mean/scale，
 query-conditioned ensemble只拟合standardized residual distribution，从结构上保留P126跨cohort稳定性。
 
+P143仍使四cohort cost全退、mean rank gain=`-.01344`（F106），说明source query-conditioned recalibration不可迁移，per-time
+family关闭。P144只补最后一个未覆盖结构：以P126 trajectory score为anchor，完整Actor-query token set经Deep Sets聚合后学习
+bounded rank residual；监督直接位于部署层级的source within-scene continuous-cost order。
+
+P144在P129降低cost但P96再次反转，mean rank=`-.00096`（F107），下游compiler capacity路线关闭。检查上游后发现P126把
+`.8/1.5/2.5/3.0s` source horizons只编码成normalized fraction，丢失absolute future time。P145追加`fraction×H`并重训
+三成员，以H3.5 consumed cohorts检验显式time-varying uncertainty能否改善外推。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

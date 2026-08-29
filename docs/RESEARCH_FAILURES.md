@@ -1742,10 +1742,43 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：冻结P126 `μ0/σ0`，三member学习`z=(n^T e-μ0)/σ0` conditional distribution；input追加`μ0/logσ0`，
   final mean/variance以base scale重构。
-- decisions：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean rank gain≥`.005`。
+- decisions/outcome：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；实际
+  mean gain=`-.013445`且四组cost全回退，两门失败。
 - prevention：不扫correction mixing/weight/input/loss/member/seed/coverage；失败关闭conditional residual route。
 
-下一可用编号为：`V67-F106`。
+### V67-F106 — P126-based standardized residual correction仍破坏跨cohort排序
+
+- 分类：`algorithm/conditional-recalibration-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P143-CONDITIONAL-RESIDUAL-ENSEMBLE-01/
+  20260830T101500Z__conditional-residual-ensemble-s0-r1`。
+- 观察：四cohort selected cost全高于P126，rank gain=`-.022649/-.013583/+.001054/-.018600`；训练NLL正常收敛。
+- 解释：source conditional residual不是可迁移calibration map；即使以P126 scale标准化，query distribution shift仍改变排序。
+- 防重复：关闭per-time conditional distribution/correction family，不扫mixing weight。P144迁移到trajectory set和direct cost rank。
+
+### P144 freeze note — P126-anchored trajectory-set rank compiler
+
+- method：top16 P126-risk Actor-query tokens，经Deep Sets mean+max输出bound `.5` residual并加回P126 trajectory score；
+  source scene内trajectory pairs用真实continuous cost ordering监督。
+- decisions/outcome：consumed P81/P96/P113/P129相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；实际
+  mean rank=`-.000962`，仅P129 cost改善，P81/P96/P113回退，两门失败。
+- prevention：唯一set compiler trial；不扫top-k/architecture/pairs/bound/loss/seed/coverage。
+
+### V67-F107 — full trajectory set compiler仍未解决P96 transfer
+
+- 分类：`algorithm/downstream-set-authority-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P144-TRAJECTORY-SET-RANK-COMPILER-01/
+  20260830T102000Z__trajectory-set-rank-compiler-s0-r1`。
+- 观察：P81/P96/P113/P129 rank gain=`+.001499/-.007292/+.001589/+.000355`；仅P129 cost改善，其他三组回退。
+- 解释：完整set features/aggregation不能消除source→P96 shift；下游capacity不是主要瓶颈。
+- 防重复：关闭trajectory residual compiler，不扫top-k/bound/architecture。P145修复上游absolute-time alias。
+
+### P145 freeze note — absolute future-time conditioned Actor ensemble
+
+- method：P126 actor inputs只追加`fraction×H` absolute seconds并保留fraction；其余3-member diagonal Gaussian协议完全匹配。
+- source/evaluation：source H=`.8/1.5/2.5/3.0`，四consumed evaluation均H3.5 extrapolation。
+- decisions：相对P126四cohort cost nonregression、mean Spearman gain≥`.005`；不扫time embedding或其他超参。
+
+下一可用编号为：`V67-F108`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
