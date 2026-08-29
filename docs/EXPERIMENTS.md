@@ -792,7 +792,7 @@
 
 ### WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=
+- 状态：`done/rejected consumed development`；canonical=
   `20260830T105000Z__coherent-trajectory-mixture-s0-r1`。
 - method：Actor features+absolute H输入，4 modes各自输出完整`9×2` residual mean/scale及sequence-level weight；NLL在整条
   18D residual sequence上log-sum-exp，不把mode assignment拆到逐时刻。
@@ -800,6 +800,21 @@
 - training/evaluation：101,858 source sequences、hidden `[512,256]`、8,000 steps、batch32,768；consumed
   P81/P96/P113/P129相对P126，cost全不退且mean Spearman gain≥`.005`。
 - locks：不扫component count/architecture/loss/seed/weight/coverage；这是coherent sequence modes，不重复P125 per-time K2。
+- result：101,858 sequences、final mixture NLL=`-39.7556`；P81/P96/P113/P129 mean max component weight=
+  `.526/.562/.546/.534`，非mode collapse。但selected cost=`.200777/.171421/.239350/.339055`全退，Spearman gain=
+  `-.099259/-.191974/-.053506/-.048404`（mean=`-.098286`）；0/2 decisions，verdict=
+  `rejected_development_coherent_trajectory_mixture`，wall=`61.01s`、peak GPU=`.373 GiB`；F111。
+
+### WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T105500Z__dense-boundary-cost-ensemble-s0-r1`。
+- target：每个query/time token直接监督
+  `log1p(|boundary_normal·Actor residual| / max(|predicted separation-radius|,.05m))`；这是continuous cost的稠密局部项。
+- input/model：24 query features+time fraction+2D boundary normal+log clearance；3 independent Gaussian members，hidden
+  `[256,128]`、6,000 steps/member、batch65,536；score是固定`mean + 1σ total` log-cost的row/trajectory max。
+- decisions：consumed P81/P96/P113/P129相对P126，selected cost全不退且mean Spearman gain≥`.005`。
+- locks：不扫upper sigma/architecture/loss/member/seed/coverage；不同于P120 top16 P109 summary post-hoc regressor。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

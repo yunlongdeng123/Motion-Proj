@@ -268,7 +268,9 @@ P146的12 scalars在P129降低selected cost，但四cohort mean Spearman gain仍
 absolute-time scalar growth不是稳定解释。后续P147转向新的10-scene五时域独立确认，P148直接学习未压缩的9步残差序列集成，
 两者分别回答“跨H是否成立”和“跨时刻相关结构是否缺失”。P148四cohort rank一致下降，mean gain=`-.012380`（F110），
 说明共同sequence decoder仍不等于联合分布收益。P149进一步把multimodality从P125的逐时刻components提升到整条trajectory modes，
-并用未来任一时刻boundary crossing作为直接score；这是对P148 negative的机制递进，而非capacity sweep。
+并用未来任一时刻boundary crossing作为直接score；这是对P148 negative的机制递进，而非capacity sweep。P149四mode均active，
+但四cohort rank mean下降`.098286`（F111），表明joint likelihood/any-crossing仍与continuous cost错位。P150因此不再间接预测
+residual distribution，而在5.18M query-time tokens上直接学习normalized boundary-state cost分布并汇聚upper cost。
 
 ## 3. 核心结果表
 

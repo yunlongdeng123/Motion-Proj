@@ -1829,7 +1829,24 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - decisions：consumed P81/P96/P113/P129相对P126 cost全不退、mean Spearman gain≥`.005`。
 - prevention：固定4 modes/8,000 steps/seed0；不扫component/architecture/loss/weight/coverage，不重复P125 per-time K2。
 
-下一可用编号为：`V67-F111`。
+### V67-F111 — coherent trajectory modes未转化为continuous reliability ranking
+
+- 分类：`algorithm/coherent-multimodal-transfer`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P149-COHERENT-TRAJECTORY-MIXTURE-01/
+  20260830T105000Z__coherent-trajectory-mixture-s0-r1`。
+- 观察：mean max component weight约`.53--.56`，故四mode实际active；但四cohort cost全退，Spearman gain=
+  `-.099259/-.191974/-.053506/-.048404`，mean=`-.098286`。
+- 解释：整序列multimodality虽然提高source likelihood，但mode-weighted any-time crossing与continuous normalized error ranking严重错位；
+  失败不是单纯mode collapse。
+- 防重复：不扫component/diversity/any-crossing aggregation。P150直接训练continuous reliability cost的query-time稠密局部项。
+
+### P150 freeze note — dense task-conditioned boundary-cost distribution
+
+- target/input：`log1p(|n·residual|/clearance)`；24 query features+fraction+normal+log clearance；5.18M source tokens。
+- model/decision：3 Gaussian members、fixed 1σ upper score；四consumed cohort cost全不退且mean rank gain≥`.005`。
+- prevention：固定upper sigma/architecture/loss/member/seed/coverage；不重复P120 P109-summary post-hoc head。
+
+下一可用编号为：`V67-F112`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

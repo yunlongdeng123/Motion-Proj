@@ -478,9 +478,15 @@ P147现已在新的10-scene、10内部log、四location `3/3/3/1` cohort上并�
 Spearman gain=`-.013157/-.011868/-.012388/-.012105`（mean=`-.012380`），仅P96 cost微降，0/2 decisions，F110。
 这排除了“压缩/独立mean token”解释；member epistemic fraction仅`.018--.045`，主要缺口转向coherent multimodality。
 
-检索CoverNet、MUSE-VAE与CVPR 2025 U2Diff后，P149已占用3090训练4-component coherent trajectory mixture：每个mode
-拥有完整9步mean/scale，mixture likelihood在整条residual sequence上计算，query score直接是mode-weighted未来任一时刻boundary
-crossing probability。它不是P125逐时刻mixture重复；P147 IO/evaluator继续与P149 GPU合法重叠。
+检索CoverNet、MUSE-VAE与CVPR 2025 U2Diff后，P149训练4-component coherent trajectory mixture：每个mode拥有完整9步
+mean/scale，mixture likelihood在整条residual sequence上计算。components没有collapse（mean max weight约`.53--.56`），但
+any-time crossing score在P81/P96/P113/P129 Spearman gain=`-.099259/-.191974/-.053506/-.048404`
+（mean=`-.098286`），cost全退，F111。故关闭generative mode/any-crossing路线，不扫components。
+
+P150现已占用3090训练direct dense boundary-cost ensemble：5.18M query-time tokens的target直接是
+`log1p(|normal·residual| / max(|predicted clearance|,.05))`，输入query features/time/normal/log-clearance；三成员输出
+log-cost分布，以固定1σ upper log-cost作trajectory score。它区别于P120只在top16 P109 summary上拟合的post-hoc head，
+直接对齐论文continuous reliability object；P147 IO/evaluator继续并行。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

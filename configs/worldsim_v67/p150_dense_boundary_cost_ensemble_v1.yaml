@@ -1,0 +1,47 @@
+schema_version: worldsim_v67.p150_dense_boundary_cost_ensemble.v1
+output_schema_version: worldsim_v67.p150_dense_boundary_cost_ensemble_summary.v1
+task_id: WS-V67-P150-DENSE-BOUNDARY-COST-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P150-001
+role: consumed_development_dense_task_conditioned_boundary_cost_distribution
+model_artifact: DENSE_BOUNDARY_COST_ENSEMBLE.pt
+member_seeds: [0, 1, 2]
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+  consumed_p129: {selected_cost: 0.3086693286895752, spearman: 0.8268833825938803}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  upper_standard_deviations: 1.0
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain: 0.005}
+verdict_on_pass: supported_development_dense_boundary_cost_ensemble
+verdict_on_failure: rejected_development_dense_boundary_cost_ensemble
+locks:
+  target_is_log1p_absolute_projected_residual_over_clearance_per_query_time: true
+  input_is_24_query_features_plus_time_fraction_boundary_normal_and_log_clearance: true
+  three_independent_members_and_one_sigma_upper_log_cost: true
+  no_architecture_loss_member_seed_upper_sigma_weight_or_coverage_sweep: true
+  all_evaluation_cohorts_are_consumed_after_P129_primary_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2023/hash/4f8bb0c09d1cb8b332d7d81c5b5e0921-Abstract-Conference.html
+  - https://proceedings.mlr.press/v235/zhou24l.html
+claim_boundary:
+  - consumed_development_dense_boundary_cost_distribution_only
+  - direct_reliability_object_not_collision_probability
+  - requires_new_independent_confirmation_if_supported
+  - no_planner_policy_closed_loop_or_safety_claim
