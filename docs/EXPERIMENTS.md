@@ -1120,7 +1120,22 @@
 - research step：按3个source training horizons × 9个training task conditions形成27组，对每个`(q, ceiling)`
   的最大组内soft conditional unsafe rate做primal-dual约束；效用仍对所有组平均。
 - lock：P337/P339、q90 exact anchor、scene folds与6k steps不变；不扫group definition、dual rate、margin、
-  temperature、multiplier range或seed。P201仅一次heldout read。状态=`active training`。
+  temperature、multiplier range或seed。状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01/
+  20260901T123000Z__worst-group-conditional-risk-authority-s0-r1`。
+- result：6k、final loss=`-.696341`、wall=`296.94s`；dual matrix q75 strict=`.6080`、q85 strict=`1.4381`、
+  q95 strict/mid/high=`2.8930/2.1840/1.1756`。source q95 unsafe `.050891 < P337 .053030`；P201
+  non-anchor coverage `.345993 > .339800`，但q95 unsafe `.053892`导致risk excess `.003892 > .003571`，
+  3/4 rejected。q90 exact仍`.304645/.049020`。
+
+### WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01
+
+- migration：P342在source heldout horizon已降低q95 risk，却未迁移到P201插值task grid，说明主要剩余偏移是
+  task-condition support gap；采用conditional/stratified risk-control思路直接补齐source task strata。
+- method：同一source trajectories额外编译progress `.25/.75` × command `-.5/.5`的4个task conditions，
+  与原9条件合并；3个training horizons形成39组worst-group primal-dual。P201标签不参与训练/模型选择。
+- lock：P337/P339、q90 exact anchor、6k steps、dual/temperature/multiplier参数与P342完全相同；不扫插值grid、
+  risk margin或seed。状态=`active training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

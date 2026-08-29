@@ -423,8 +423,9 @@
 - P340：non-anchor coverage改善但risk excess `.003892 > P337 .003571`，3/4 rejected，登记F216；
 - P341：条件风险primal-dual使coverage升至`.34954`、q95改善，但q85 risk excess扩大到`.00534`，
   3/4 rejected，登记F217；
-- P342 active：27个horizon×task condition最坏组conditional-risk primal-dual；
-- 下一可用 failure id 为 `V67-F218`。
+- P342：source最坏组风险改善，但P201 q95 risk excess `.003892 > .003571`，3/4 rejected，登记F218；
+- P343 active：source补齐目标插值task grid并做39组worst-group training；
+- 下一可用 failure id 为 `V67-F219`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -450,6 +451,19 @@
   condition组的最坏conditional risk；
 - forbidden rescue：不调dual learning rate、augmented penalty、margin、capacity或seed；resolution=
   `open via P342 worst-group conditional-risk training`。
+
+### V67-F218 — P342 source最坏组约束未覆盖目标插值task support
+
+- canonical=`run://worldsim_v67/WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01/
+  20260901T123000Z__worst-group-conditional-risk-authority-s0-r1`；
+- symptom：source q95 unsafe `.050891 < P337 .053030`且P201 non-anchor coverage `.345993 > .339800`，
+  但P201 q95 unsafe `.053892`使risk excess `.003892 > P337 .003571`，3/4 rejected；
+- diagnosis：27组dual全部按原training task grid构造；target的progress `.25/.75`和command `-.5/.5`位于组间，
+  source worst-group成立不蕴含这些插值条件成立；
+- literature/migration：ICLR 2024 conformal risk control的shift extension与group-conditional calibration均要求
+  calibration distribution/strata匹配目标；P343在source trajectory上生成相同插值task strata，无需P201标签；
+- forbidden rescue：不扫group definition、dual LR、margin、temperature或seed；resolution=
+  `open via P343 interpolated-task worst-group training`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

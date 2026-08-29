@@ -578,7 +578,14 @@ coverage升至`.34954`，q95 unsafe改善到`.05028`，但q85 unsafe=`.15534`使
 3/4 rejected。q85 source训练约束dual归零而heldout task/horizon泄漏，登记F217。
 
 P342不调dual rate或网络容量，迁移为training horizon × task-condition的27组worst-group conditional-risk
-primal-dual；q90仍为冻结精确锚点。Active=`WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01`。
+primal-dual。Canonical=`run://worldsim_v67/WS-V67-P342-WORST-GROUP-CONDITIONAL-RISK-AUTHORITY-01/
+20260901T123000Z__worst-group-conditional-risk-authority-s0-r1`：6k、final loss=`-.69634`、wall=`296.94s`。
+q75/q85/q95各有dual激活，source q95 unsafe由P337 `.05303`降至`.05089`；P201 non-anchor coverage=
+`.34599 > .33980`，但q95 unsafe=`.05389`令risk excess `.003892 > .003571`，仍3/4 rejected，登记F218。
+
+P343不使用P201标签，在source轨迹上额外生成与目标grid相同的4个插值task conditions，与原9条件合并后按
+3 horizons × 13 conditions=39组做worst-group训练，以消除P342的task support gap。Active=
+`WS-V67-P343-INTERPOLATED-TASK-WORST-GROUP-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
