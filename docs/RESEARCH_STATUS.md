@@ -557,10 +557,17 @@ source/P201 expected-size MAE=`.02248/.02280`、hard class accuracy=`.99818/.997
 coverage/max unsafe=`.30464/.04902`，3/3 supported。但P201 mean/range temperature=
 `.0050018/[.005,.005794]`，几乎塌到下界，说明高fidelity来自近硬阶跃，effective gradient window过窄。
 
-P339依据ICML 2020 SoftSort、NeurIPS 2019 OT differentiable sorting与ICML 2022 differentiable top-k，把
-entropy/temperature当作显式连续松弛强度而非任其塌缩；固定`.02`下界（一次迁移、不扫floor），其余P338模型/
-split/steps不变，新增mean temperature `>=.019`与原fidelity/risk/coverage门。Active=`WS-V67-P339-ENTROPY-
-REGULARIZED-DIFFERENTIABLE-AUTHORITY-01`。
+P339固定SoftSort式`.02` relaxation floor。Canonical=`run://worldsim_v67/
+WS-V67-P339-ENTROPY-REGULARIZED-DIFFERENTIABLE-AUTHORITY-01/
+20260901T114500Z__entropy-regularized-differentiable-authority-s0-r1`：5,463 rows、6k、final NLL=`.08275`。
+source/P201 expected-size MAE=`.08754/.09824`、hard accuracy=`.99005/.99092`，P201 mean/range temperature=
+`.0200016/[.02,.020635]`；q90 hard teacher coverage/unsafe仍`.30464/.04902`，4/4 supported。相对P338
+牺牲少量fidelity换取4倍relaxation width；soft output仍不是hard safety controller。
+
+P340冻结P337 hard score与P339 temperature，用decision-focused真实visited-state cost训练q90锚定的两侧positive
+risk-warp multiplier；风险odds `q/(1-q)`作为unsafe代价，不调Lagrange weight。q90 exact，非anchor P201门要求
+mean authority coverage不低于P337且nominal-risk excess不恶化。Active=`WS-V67-P340-DECISION-FOCUSED-
+DIFFERENTIABLE-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

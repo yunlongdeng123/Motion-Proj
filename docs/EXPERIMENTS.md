@@ -1074,7 +1074,27 @@
 - method：P338 nested feasibility/probability差分、frozen P337 teacher、scene-rank folds、6k steps完全不变；
   temperature固定下界改为`.02`、上界仍`.25`，不做floor sweep。
 - gates：P201 expected-size MAE `<=.25`、mean temperature `>=.019`、q90 hard teacher risk `<=.10`、coverage
-  `>=.30`；accuracy描述性报告。状态=`active GPU training`。
+  `>=.30`；accuracy描述性报告。状态=`done/supported`。
+- canonical=`run://worldsim_v67/WS-V67-P339-ENTROPY-REGULARIZED-DIFFERENTIABLE-AUTHORITY-01/
+  20260901T114500Z__entropy-regularized-differentiable-authority-s0-r1`。
+- result：5,463 rows、6k steps、final NLL=`.082748`；source expected-size MAE/accuracy=
+  `.087539/.990050`，mean/range temperature=`.020046/[.02,.120354]`。
+- P201 expected-size MAE/accuracy=`.098241/.990915`，mean/range temperature=
+  `.0200016/[.02,.020635]`；q90 hard teacher coverage/max unsafe=`.304645/.049020`，4/4 supported。
+  wall=`73.56s`、GPU=`.14039GiB`、RSS=`1.89596GiB`。
+- verdict=`supported_entropy_regularized_differentiable_authority`；soft fidelity低于P338但仍远过`.25`门，
+  gradient width从`.005`提高到`.02`。不再扫temperature floor。
+
+### WS-V67-P340-DECISION-FOCUSED-DIFFERENTIABLE-AUTHORITY-01
+
+- research step：冻结P337 score与P339 `.02` relaxation，不再蒸馏hard size；直接用真实future visited-state
+  set cost训练non-anchor risk warp，使可微authority对下游utility负责。
+- trainable：P337两侧positive warp slope乘以context/H/ceiling multiplier `[.5,1.5]`；requested q90的delta=0，
+  因而q90 score/hard authority exact。same multiplier广播k，保持nested order。
+- objective：soft size probability的normalized authority utility减去unsafe expectation；unsafe系数固定为risk odds
+  `q/(1-q)`，不扫Lagrange/temperature/residual bound。source fold0、6k steps，fold3 development。
+- gates：P201 q90 hard risk/coverage；q75/q85/q95 mean hard coverage不低于P337 baseline，最大
+  `unsafe-(1-q)`不高于P337 baseline。状态=`active implementation/training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

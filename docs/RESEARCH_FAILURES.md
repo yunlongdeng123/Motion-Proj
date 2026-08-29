@@ -418,7 +418,9 @@
   4/4 supported；q95 coverage/unsafe=`.29262/.04819`，F215关闭；
 - P338 result：P201 expected-size MAE/accuracy=`.02280/.99788`且q90 teacher risk/coverage通过，3/3
   supported；但mean temperature=`.0050018`塌到下界，只支持fidelity，不声称宽梯度；
-- P339 active：固定SoftSort式`.02` entropy/temperature floor并训练一次；失败才登记F216；
+- P339 result：P201 mean temperature=`.0200016`、expected-size MAE/accuracy=`.09824/.99092`，q90 teacher
+  risk/coverage通过，4/4 supported；停止temperature sweep；
+- P340 active：冻结P337/P339，decision-focused训练non-anchor risk-warp multiplier；失败才登记F216；
 - 下一可用 failure id 为 `V67-F216`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
