@@ -470,10 +470,16 @@ H×q examples、7k steps、final pinball=`.02212`；source q90 offset=`.03870`�
 mean/highest coverage=`.25847/.64836`、max/mean unsafe=`.03175/.01522`、monotonicity=0；source heldout
 H+q90 `.26736/.58181`、max unsafe=`.02763`，3/3 supported。wall=`54.79s`。
 
-P328按ICML 2018 implicit quantile network思想，把三个离散gradient quantiles升级为每batch连续采样
-`q~Uniform(.70,.97)`，仍用结构双单调H×q surface；q90只在source calibration固定signed offset，P201继续
-heldout task+H=`2.5s`读取`.10/.20/0`三门。该卡训练完整risk axis，不是P327确认。Active=
-`WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01`。
+P328按ICML 2018 implicit quantile network思想，每batch连续采样`q~Uniform(.70,.97)`。Canonical=
+`run://worldsim_v67/WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01/
+20260901T084000Z__implicit-risk-horizon-quantile-surface-s0-r1`：8k steps、final pinball=`.02195`、source
+q90 offset=`.06317`。P201 mean/highest coverage=`.24945/.66557`、max/mean unsafe=`.02217/.01399`、
+monotonicity=0；source heldout H+q90 `.25057/.60021`、max unsafe=`.03244`，3/3 supported。continuous-risk
+training成立，但linear-q surface的较大offset使P201 strict coverage回到0。wall=`59.83s`。
+
+P329保持相同continuous q domain与split，迁移ICLR 2022 monotone spline思想：用固定q knots上的positive
+base/slope increments加piecewise-linear interpolation，提升q方向曲率且结构保证H/q双单调；不调range/q90/
+gate/seed。Active=`WS-V67-P329-MONOTONE-SPLINE-RISK-HORIZON-SURFACE-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

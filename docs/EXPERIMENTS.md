@@ -862,6 +862,22 @@
   `q~Uniform(.70,.97)`，q90仅在source calibration形成一个signed offset；heldout H=`2.5s`。
 - gates：P201 q90 max unsafe `<=.10`、mean coverage `>=.20`、ceiling monotonicity=0；quantile range由预定
   authority risk domain固定，不扫range/architecture/gate/seed。
+- canonical=`run://worldsim_v67/WS-V67-P328-IMPLICIT-RISK-HORIZON-QUANTILE-SURFACE-01/
+  20260901T084000Z__implicit-risk-horizon-quantile-surface-s0-r1`。
+- result：8k steps、final pinball=`.02195`、source q90 signed offset=`.06317`。P201 mean/highest coverage=
+  `.24945/.66557`、max/mean unsafe=`.02217/.01399`、monotonicity=0；strict/mid/high coverage=
+  `0/.08279/.66557`、unsafe=`0/.01980/.02217`，3/3 supported。
+- source heldout H+q90 mean/highest coverage=`.25057/.60021`、max unsafe=`.03244`；wall=`59.83s`、
+  peak GPU=`.14039GiB`、RSS=`1.8957GiB`。linear-q axis支持完整risk conditioning但strict authority空集。
+
+### WS-V67-P329-MONOTONE-SPLINE-RISK-HORIZON-SURFACE-01
+
+- object：保留continuous implicit quantile training，但将P328单一linear q slope替换为固定q knots上的
+  monotone piecewise-linear surface，以更好拟合tail curvature。
+- architecture：每个scene/task输出q-knot base与H-slope positive increments，分别累积后按requested q插值；
+  q↑、H↑均结构不降，参考ICLR 2022 monotone neural spline continuous quantile representation。
+- split/gates：沿用q `.70-.97`、train H `.8/1.5/3.0s`、heldout H=`2.5s`、source q90 offset与P201
+  `.10/.20/0`；fixed knots，不扫knots/range/capacity/gate/seed。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface

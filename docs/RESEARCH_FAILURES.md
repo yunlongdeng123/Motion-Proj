@@ -394,8 +394,10 @@
   monotonicity=0，source heldout-H max unsafe=`.03902`，3/3 supported；未触发F212；
 - P327 result：risk-conditioned H×q surface在P201 q90得到coverage=`.25847`、max unsafe=`.03175`、
   monotonicity=0，source heldout H+q90 max unsafe=`.02763`，3/3 supported；未触发F212；
-- P328 active：每batch连续采样q `.70-.97`训练implicit risk axis；失败才登记F212，不扫q range/H/
-  architecture/gate/seed；
+- P328 result：continuous-q implicit surface在P201 q90得到coverage=`.24945`、max unsafe=`.02217`、
+  monotonicity=0，3/3 supported；未触发F212；但q90 offset=`.06317`且strict coverage=0作为capacity限制保留；
+- P329 active：positive-increment monotone q-spline替换linear-q axis；失败才登记F212，不扫knots/range/H/
+  capacity/gate/seed；
 - 下一可用 failure id 为 `V67-F212`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

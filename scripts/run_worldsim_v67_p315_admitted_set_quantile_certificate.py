@@ -126,6 +126,40 @@ class RiskConditionedHorizonQuantileSurface(nn.Module):
         )
 
 
+class MonotoneSplineRiskHorizonSurface(nn.Module):
+    """Piecewise-linear quantile surface with positive base and horizon increments."""
+
+    def __init__(self, input_width: int, hidden_dimensions, quantile_knots) -> None:
+        super().__init__()
+        knots = torch.as_tensor(quantile_knots, dtype=torch.float32)
+        self.register_buffer("quantile_knots", knots)
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 2 * len(knots)))
+        self.network = nn.Sequential(*layers)
+
+    def _interpolate(self, knot_values, quantile_level):
+        segment = torch.bucketize(quantile_level.contiguous(), self.quantile_knots[1:-1])
+        left_q = self.quantile_knots[segment]
+        right_q = self.quantile_knots[segment + 1]
+        weight = (quantile_level - left_q) / (right_q - left_q)
+        left_value = knot_values.gather(1, segment[:, None]).squeeze(1)
+        right_value = knot_values.gather(1, (segment + 1)[:, None]).squeeze(1)
+        return left_value + weight * (right_value - left_value)
+
+    def forward(self, features, normalized_horizon, quantile_level):
+        knot_count = len(self.quantile_knots)
+        coefficient = F.softplus(self.network(features)).reshape(-1, 2, knot_count)
+        base_knots = torch.cumsum(coefficient[:, 0], 1)
+        slope_knots = torch.cumsum(coefficient[:, 1], 1)
+        return self._interpolate(base_knots, quantile_level) + normalized_horizon * self._interpolate(
+            slope_knots, quantile_level
+        )
+
+
 class GroupwisePairSelector(nn.Module):
     """Permutation-equivariant selector over the complete 15-pair candidate set."""
 
@@ -419,6 +453,7 @@ def main() -> None:
     horizon_risk_matched_quantile_training = bool(config.get("horizon_risk_matched_quantile_training", False))
     horizon_risk_conditioned_surface_training = bool(config.get("horizon_risk_conditioned_surface_training", False))
     horizon_implicit_quantile_surface_training = bool(config.get("horizon_implicit_quantile_surface_training", False))
+    horizon_spline_quantile_surface_training = bool(config.get("horizon_spline_quantile_surface_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -452,7 +487,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -508,7 +543,7 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training:
         source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
             source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
             progress_model, maneuver_model, config["training_progress_preferences"],
@@ -613,7 +648,7 @@ def main() -> None:
             (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
             print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
             return
-        if horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training:
+        if horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training:
             split = config["split"]
             modulus = int(split["scene_modulus"])
             calibration_rows = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
@@ -627,7 +662,7 @@ def main() -> None:
             normalized_horizons = horizon_values / float(horizon_values.max())
             training_horizon_indices = np.asarray(config["training_horizon_indices"], np.int64)
             heldout_horizon_index = int(config["heldout_horizon_index"])
-            implicit_quantile_training = horizon_implicit_quantile_surface_training
+            implicit_quantile_training = horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training
             if implicit_quantile_training:
                 training_quantile_range = np.asarray(config["training_quantile_range"], np.float32)
                 training_quantiles = None
@@ -636,9 +671,14 @@ def main() -> None:
                 training_quantiles = np.asarray(config["training_quantile_levels"], np.float32)
             heldout_quantile = float(config["heldout_quantile_level"])
             model_config = config["risk_surface_model"]
-            model = RiskConditionedHorizonQuantileSurface(
-                source_feature.shape[1], model_config["hidden_dimensions"], float(config["quantile_floor"])
-            ).cuda()
+            if horizon_spline_quantile_surface_training:
+                model = MonotoneSplineRiskHorizonSurface(
+                    source_feature.shape[1], model_config["hidden_dimensions"], config["quantile_knots"]
+                ).cuda()
+            else:
+                model = RiskConditionedHorizonQuantileSurface(
+                    source_feature.shape[1], model_config["hidden_dimensions"], float(config["quantile_floor"])
+                ).cuda()
             optimizer = torch.optim.AdamW(
                 model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
             )
@@ -672,7 +712,10 @@ def main() -> None:
                 optimizer.step()
                 last = float(loss.detach())
                 if step % 500 == 0:
-                    card = "P328 implicit-risk" if implicit_quantile_training else "P327 risk-conditioned"
+                    if horizon_spline_quantile_surface_training:
+                        card = "P329 spline-risk"
+                    else:
+                        card = "P328 implicit-risk" if implicit_quantile_training else "P327 risk-conditioned"
                     print(f"{card} Hxq surface step={step + 1} loss={last:.7f}", flush=True)
             model.eval()
             calibration_index = np.flatnonzero(calibration_rows)
@@ -720,6 +763,7 @@ def main() -> None:
                 "input_mean": feature_mean,
                 "input_scale": feature_scale,
                 "quantile_floor": float(config["quantile_floor"]),
+                "quantile_knots": None if not horizon_spline_quantile_surface_training else np.asarray(config["quantile_knots"], np.float32),
                 "training_quantile_levels": training_quantiles,
                 "training_quantile_range": training_quantile_range,
                 "heldout_quantile_level": heldout_quantile,
@@ -743,6 +787,7 @@ def main() -> None:
                     ),
                     "training_quantile_levels": None if training_quantiles is None else [float(value) for value in training_quantiles],
                     "training_quantile_range": None if training_quantile_range is None else [float(value) for value in training_quantile_range],
+                    "surface_type": "monotone_piecewise_linear_spline" if horizon_spline_quantile_surface_training else "positive_bilinear",
                     "steps": int(model_config["steps"]), "final_pinball_loss": last,
                 },
                 "calibration": {
