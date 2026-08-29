@@ -964,6 +964,15 @@
 - P147 post-confirmation diagnostic：H`.8/1.5/2.5/3.0/3.5` rank gain全正=
   `+.05509/+.04058/+.02034/+.01500/+.01756`，但cost delta=`-.00118/-.00200/+.01161/+.01900/+.04723`；
   只在短H改善operating point，不能覆盖development rejection或形成新独立claim。
+
+### WS-V67-P159-JOINT-ENERGY-SCORE-ACTOR-ENSEMBLE-01
+
+- 状态：`running joint GPU training`；canonical=`20260830T115000Z__joint-energy-score-actor-ensemble-s0-r1`。
+- hypothesis：P158 marginal CRPS不表达维间/ensemble-level dependence；P159联合训练三个shared Actor Gaussian members，
+  以两组独立reparameterized samples估计multivariate Energy Score。
+- training：916,722 source tokens、3 members simultaneous、6,000 joint steps、batch65,536；当前约1.2GiB GPU memory。
+- decisions：P81/P96/P113/P129相对P126 selected cost全不退且mean Spearman gain≥`.005`；P147五H仅post-confirmation描述。
+- locks：P126 architecture/normalization/member/total-variance score/fixed50/cost不变；不扫sample count、Energy/Variogram mix或权重。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01

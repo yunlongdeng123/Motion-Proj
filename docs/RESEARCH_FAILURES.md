@@ -1989,6 +1989,12 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   ensemble-level dependence。P147数字是post-read diagnosis，不是prospective selection证据。
 - 防重复：不扫CRPS weight或事后按H切换P126/P158；若继续proper-score路线，只允许joint multivariate ensemble objective。
 
+### P159 freeze note — joint multivariate Energy Score ensemble
+
+- object：三P126-shaped members联合优化`E||X-y||-.5E||X-X'||`，每步两组独立samples；推理score不变。
+- decisions：P81/P96/P113/P129相对P126 cost全不退、mean rank gain≥`.005`；P147仍post-confirmation descriptive。
+- prevention：不扫Energy/Variogram混合、sample count、weight、architecture/member/seed/score/coverage；失败才使用F122。
+
 下一可用编号为：`V67-F122`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认

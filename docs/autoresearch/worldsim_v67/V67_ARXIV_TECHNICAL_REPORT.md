@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P158 marginal CRPS rejected`
+- 报告状态：`P147 independent multi-horizon support; P159 joint Energy Score training active`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -298,6 +298,8 @@ cohorts的mean Spearman gain=`-.59434`、cost为P126的约3.9--5.8倍（F120）�
 P158因此不再拆horizon或增加网络容量，而保留P126 shared three-member architecture，只以closed-form marginal Gaussian
 CRPS替代NLL训练。旧四cohort rank mean=`-.02371`且cost全退（F121）；P147 post-confirmation五H虽rank全正，但只有
 `.8/1.5s` cost改善，中长H回退随H扩大。由此拒绝用marginal CRPS替换P126，也不按post-read horizon事后切换模型。
+P159只递进一个机制：三members联合优化multivariate Energy Score，以ensemble-level sample distance同时约束accuracy与spread；
+其shared architecture和downstream score保持P126不变，结果仍只按旧四cohort decisions解释。
 
 ## 3. 核心结果表
 
