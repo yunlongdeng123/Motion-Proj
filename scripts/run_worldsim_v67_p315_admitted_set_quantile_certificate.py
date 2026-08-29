@@ -280,6 +280,26 @@ class DifferentiableAuthorityTemperature(nn.Module):
         return self.minimum_temperature + (self.maximum_temperature - self.minimum_temperature) * unit
 
 
+class DecisionFocusedWarpMultiplier(nn.Module):
+    """Positive low/high risk-warp multipliers for decision-focused authority training."""
+
+    def __init__(self, input_width: int, hidden_dimensions, minimum_multiplier: float, maximum_multiplier: float) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 2))
+        self.network = nn.Sequential(*layers)
+        self.minimum_multiplier = float(minimum_multiplier)
+        self.maximum_multiplier = float(maximum_multiplier)
+
+    def forward(self, features):
+        unit = torch.sigmoid(self.network(features))
+        return self.minimum_multiplier + (self.maximum_multiplier - self.minimum_multiplier) * unit
+
+
 class LatticeRiskSizeHorizonAuthority(nn.Module):
     """Context-conditioned partial-monotone lattice over horizon, quantile, and set size."""
 
@@ -684,6 +704,7 @@ def main() -> None:
     horizon_anchor_preserving_risk_curvature_training = bool(config.get("horizon_anchor_preserving_risk_curvature_training", False))
     horizon_anchor_preserving_context_risk_warp_training = bool(config.get("horizon_anchor_preserving_context_risk_warp_training", False))
     horizon_differentiable_risk_ceiling_authority_training = bool(config.get("horizon_differentiable_risk_ceiling_authority_training", False))
+    horizon_decision_focused_differentiable_authority_training = bool(config.get("horizon_decision_focused_differentiable_authority_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -717,7 +738,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -773,8 +794,8 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training:
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
             source_prefix, source_prefix_target = [], []
             p201_prefix, p201_prefix_target = [], []
             for set_size in config["authority_set_sizes"]:
@@ -897,6 +918,260 @@ def main() -> None:
                     "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
                     "wall_seconds": time.monotonic() - started,
                 },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
+        if horizon_decision_focused_differentiable_authority_training:
+            frozen_lattice = torch.load(
+                args.runs_root / config["frozen_lattice_authority"]["run"] / config["frozen_lattice_authority"]["artifact"], map_location="cuda"
+            )
+            frozen_anchor = torch.load(
+                args.runs_root / config["frozen_local_anchor"]["run"] / config["frozen_local_anchor"]["artifact"], map_location="cuda"
+            )
+            frozen_curvature = torch.load(
+                args.runs_root / config["frozen_risk_curvature"]["run"] / config["frozen_risk_curvature"]["artifact"], map_location="cuda"
+            )
+            frozen_warp = torch.load(
+                args.runs_root / config["frozen_context_risk_warp"]["run"] / config["frozen_context_risk_warp"]["artifact"], map_location="cuda"
+            )
+            frozen_temperature = torch.load(
+                args.runs_root / config["frozen_differentiable_authority"]["run"] / config["frozen_differentiable_authority"]["artifact"], map_location="cuda"
+            )
+            feature_mean = np.asarray(frozen_lattice["input_mean"], np.float32)
+            feature_scale = np.asarray(frozen_lattice["input_scale"], np.float32)
+            source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+            p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+            horizon_values = np.asarray(frozen_lattice["horizons_seconds"], np.float32)
+            normalized_horizons = horizon_values / float(horizon_values.max())
+            training_horizon_indices = np.asarray(frozen_lattice["training_horizon_indices"], np.int64)
+            heldout_horizon_index = int(frozen_lattice["heldout_horizon_index"])
+            set_sizes = np.asarray(frozen_lattice["authority_set_sizes"], np.int64)
+            ceilings = np.asarray(frozen_lattice["heldout_log_cost_ceilings"], np.float32)
+            anchor_q = float(frozen_anchor["risk_quantile_level"])
+            anchor_threshold = float(frozen_anchor["normalized_calibration_threshold"])
+            lattice_model = LatticeRiskSizeHorizonAuthority(
+                int(frozen_lattice["input_width"]), frozen_lattice["hidden_dimensions"],
+                normalized_horizons[training_horizon_indices], frozen_lattice["quantile_knots"], len(set_sizes),
+            ).cuda()
+            lattice_model.load_state_dict(frozen_lattice["model_state_dict"])
+            lattice_model.eval()
+            for parameter in lattice_model.parameters():
+                parameter.requires_grad_(False)
+            anchor_model = SizeConditionedHorizonQuantileHead(
+                int(frozen_anchor["input_width"]), frozen_anchor["hidden_dimensions"], len(set_sizes)
+            ).cuda()
+            anchor_model.load_state_dict(frozen_anchor["scale_model_state_dict"])
+            anchor_model.eval()
+            curvature_model = ContextPositiveRiskCurvature(
+                int(frozen_curvature["input_width"]), frozen_curvature["hidden_dimensions"]
+            ).cuda()
+            curvature_model.load_state_dict(frozen_curvature["risk_slope_state_dict"])
+            curvature_model.eval()
+            warp_model = ContextAnchoredRiskWarp(
+                int(frozen_warp["input_width"]), frozen_warp["hidden_dimensions"], float(frozen_warp["maximum_slope"])
+            ).cuda()
+            warp_model.load_state_dict(frozen_warp["risk_warp_state_dict"])
+            warp_model.eval()
+            temperature_model = DifferentiableAuthorityTemperature(
+                int(frozen_temperature["input_width"]), frozen_temperature["hidden_dimensions"],
+                float(frozen_temperature["temperature_range"][0]), float(frozen_temperature["temperature_range"][1]),
+            ).cuda()
+            temperature_model.load_state_dict(frozen_temperature["temperature_model_state_dict"])
+            temperature_model.eval()
+            source_x = torch.from_numpy(source_feature).cuda()
+            p201_x = torch.from_numpy(p201_feature).cuda()
+            horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
+            with torch.no_grad():
+                source_anchor_scale = torch.stack(
+                    [anchor_model(source_x, torch.full((len(source_x),), float(value), device="cuda")) for value in normalized_horizons], 2
+                )
+                p201_anchor_scale = torch.stack(
+                    [anchor_model(p201_x, torch.full((len(p201_x),), float(value), device="cuda")) for value in normalized_horizons], 2
+                )
+                source_shape, p201_shape = curvature_model(source_x), curvature_model(p201_x)
+                source_base_warp, p201_base_warp = warp_model(source_x), warp_model(p201_x)
+            quantile_range = np.asarray(config["requested_quantile_range"], np.float32)
+
+            def decision_score(features, normalized_horizon, requested_q, anchor_scale, shape, base_warp, multiplier):
+                requested_delta = requested_q - anchor_q
+                adjusted_warp = base_warp * multiplier
+                effective_q = anchor_q + requested_delta * torch.where(
+                    requested_delta < 0, adjusted_warp[:, 0], adjusted_warp[:, 1]
+                )
+                effective_q = torch.clamp(effective_q, float(quantile_range[0]), float(quantile_range[1]))
+                effective_delta = effective_q - anchor_q
+                deformation = effective_delta[:, None] * shape[:, :1] + torch.where(
+                    effective_delta[:, None] < 0, -(effective_delta[:, None] ** 2) * shape[:, 1:2],
+                    (effective_delta[:, None] ** 2) * shape[:, 2:3],
+                )
+                return lattice_model(features, normalized_horizon, effective_q) + anchor_threshold * anchor_scale + deformation
+
+            split = config["decision_split"]
+            modulus = int(split["scene_modulus"])
+            unique_split_scenes, scene_rank = np.unique(source_example_scenes, return_inverse=True)
+            row_fold = (np.arange(len(unique_split_scenes), dtype=np.int64) % modulus)[scene_rank]
+            fit_rows = row_fold == int(split["fit_scene_remainder"])
+            development_rows = row_fold == int(split["development_scene_remainder"])
+            residual_config = config["warp_multiplier_model"]
+            residual_model = DecisionFocusedWarpMultiplier(
+                source_feature.shape[1] + 2, residual_config["hidden_dimensions"],
+                float(residual_config["minimum_multiplier"]), float(residual_config["maximum_multiplier"]),
+            ).cuda()
+            optimizer = torch.optim.AdamW(
+                residual_model.parameters(), lr=float(residual_config["learning_rate"]), weight_decay=float(residual_config["weight_decay"])
+            )
+            y = torch.from_numpy(source_target).cuda()
+            fit_index = torch.from_numpy(np.flatnonzero(fit_rows)).cuda()
+            training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
+            ceiling_tensor = torch.from_numpy(ceilings).cuda()
+            size_utility = torch.arange(len(set_sizes) + 1, device="cuda", dtype=torch.float32) / float(len(set_sizes))
+            last = 0.0
+            for step in range(int(residual_config["steps"])):
+                row = fit_index[torch.randint(len(fit_index), (int(residual_config["batch_size"]),), device="cuda")]
+                local_horizon_index = training_horizon_tensor[
+                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                ]
+                requested_q = torch.empty(len(row), device="cuda").uniform_(
+                    float(quantile_range[0]), float(quantile_range[1])
+                )
+                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                local_h = horizon_tensor[local_horizon_index]
+                multiplier_input = torch.cat((source_x[row], local_h[:, None], local_ceiling[:, None]), 1)
+                multiplier = residual_model(multiplier_input)
+                scores = decision_score(
+                    source_x[row], local_h, requested_q, source_anchor_scale[row, :, local_horizon_index],
+                    source_shape[row], source_base_warp[row], multiplier,
+                )
+                with torch.no_grad():
+                    temperature_input = torch.cat((source_x[row], local_h[:, None], requested_q[:, None], local_ceiling[:, None]), 1)
+                    temperature = temperature_model(temperature_input)
+                feasibility = torch.sigmoid((local_ceiling[:, None] - scores) / temperature[:, None])
+                probability = torch.stack((
+                    1.0 - feasibility[:, 0], feasibility[:, 0] - feasibility[:, 1],
+                    feasibility[:, 1] - feasibility[:, 2], feasibility[:, 2],
+                ), 1).clamp_min(0.0)
+                probability = probability / probability.sum(1, keepdim=True).clamp_min(1e-7)
+                actual_cost = y[row, :, local_horizon_index]
+                unsafe = torch.cat((torch.zeros((len(row), 1), device="cuda"), (actual_cost > local_ceiling[:, None]).float()), 1)
+                expected_utility = torch.sum(probability * size_utility[None], 1)
+                expected_unsafe = torch.sum(probability * unsafe, 1)
+                risk_odds = requested_q / (1.0 - requested_q)
+                loss = (-expected_utility + risk_odds * expected_unsafe).mean()
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+                last = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"{config['task_id']} decision step={step + 1} loss={last:.7f}", flush=True)
+            residual_model.eval()
+            evaluation_quantiles = np.asarray(config["evaluation_quantiles"], np.float32)
+
+            def frontier(features, anchor_scale, shape, base_warp, target, conditions, row_mask=None):
+                indices = np.arange(len(features)) if row_mask is None else np.flatnonzero(row_mask)
+                index_tensor = torch.from_numpy(indices).cuda()
+                local_x = features[index_tensor]
+                local_scale = anchor_scale[index_tensor, :, heldout_horizon_index]
+                local_shape, local_base_warp = shape[index_tensor], base_warp[index_tensor]
+                local_h = torch.full((len(local_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
+                local_target = target[indices, :, heldout_horizon_index]
+                local_conditions = conditions[indices]
+                adjusted, baseline, multipliers = {}, {}, []
+                with torch.no_grad():
+                    for q_value in evaluation_quantiles:
+                        q_tensor = torch.full((len(local_x),), float(q_value), device="cuda")
+                        all_ceiling_scores = []
+                        all_baseline_scores = []
+                        for ceiling in ceilings:
+                            ceiling_tensor_local = torch.full((len(local_x),), float(ceiling), device="cuda")
+                            multiplier_input = torch.cat((local_x, local_h[:, None], ceiling_tensor_local[:, None]), 1)
+                            multiplier = residual_model(multiplier_input)
+                            multipliers.append(multiplier.cpu().numpy())
+                            all_ceiling_scores.append(decision_score(local_x, local_h, q_tensor, local_scale, local_shape, local_base_warp, multiplier).cpu().numpy())
+                            all_baseline_scores.append(decision_score(local_x, local_h, q_tensor, local_scale, local_shape, local_base_warp, torch.ones_like(multiplier)).cpu().numpy())
+                        # The score is ceiling-conditioned in P340, so evaluate each ceiling with its matched score.
+                        adjusted_by_ceiling, baseline_by_ceiling = {}, {}
+                        adjusted_coverages, adjusted_unsafe, baseline_coverages, baseline_unsafe = [], [], [], []
+                        for ceiling_index, ceiling in enumerate(ceilings):
+                            adjusted_metric = _variable_set_metrics(
+                                all_ceiling_scores[ceiling_index], local_target, local_conditions,
+                                np.asarray([ceiling], np.float32), set_sizes,
+                            )
+                            baseline_metric = _variable_set_metrics(
+                                all_baseline_scores[ceiling_index], local_target, local_conditions,
+                                np.asarray([ceiling], np.float32), set_sizes,
+                            )
+                            adjusted_by_ceiling[f"{float(ceiling):.6f}"] = adjusted_metric["by_ceiling"][str(float(ceiling))]
+                            baseline_by_ceiling[f"{float(ceiling):.6f}"] = baseline_metric["by_ceiling"][str(float(ceiling))]
+                            adjusted_coverages.append(adjusted_metric["mean_any_authority_coverage"])
+                            adjusted_unsafe.append(adjusted_metric["maximum_unsafe_selected_set_rate"])
+                            baseline_coverages.append(baseline_metric["mean_any_authority_coverage"])
+                            baseline_unsafe.append(baseline_metric["maximum_unsafe_selected_set_rate"])
+                        adjusted[f"{float(q_value):.2f}"] = {
+                            "mean_any_authority_coverage": float(np.mean(adjusted_coverages)),
+                            "maximum_unsafe_selected_set_rate": float(np.max(adjusted_unsafe)),
+                            "by_ceiling": adjusted_by_ceiling,
+                        }
+                        baseline[f"{float(q_value):.2f}"] = {
+                            "mean_any_authority_coverage": float(np.mean(baseline_coverages)),
+                            "maximum_unsafe_selected_set_rate": float(np.max(baseline_unsafe)),
+                            "by_ceiling": baseline_by_ceiling,
+                        }
+                multiplier_values = np.concatenate(multipliers)
+                return adjusted, baseline, {
+                    "mean": float(np.mean(multiplier_values)),
+                    "range": [float(np.min(multiplier_values)), float(np.max(multiplier_values))],
+                }
+
+            source_adjusted, source_baseline, source_multiplier = frontier(
+                source_x, source_anchor_scale, source_shape, source_base_warp, source_target, source_conditions, development_rows
+            )
+            p201_adjusted, p201_baseline, p201_multiplier = frontier(
+                p201_x, p201_anchor_scale, p201_shape, p201_base_warp, p201_target, p201_conditions
+            )
+            nonanchor_keys = [f"{float(q):.2f}" for q in evaluation_quantiles if abs(float(q) - anchor_q) > 1e-6]
+            adjusted_mean_coverage = float(np.mean([p201_adjusted[key]["mean_any_authority_coverage"] for key in nonanchor_keys]))
+            baseline_mean_coverage = float(np.mean([p201_baseline[key]["mean_any_authority_coverage"] for key in nonanchor_keys]))
+            adjusted_risk_excess = float(np.max([
+                p201_adjusted[key]["maximum_unsafe_selected_set_rate"] - (1.0 - float(key)) for key in nonanchor_keys
+            ]))
+            baseline_risk_excess = float(np.max([
+                p201_baseline[key]["maximum_unsafe_selected_set_rate"] - (1.0 - float(key)) for key in nonanchor_keys
+            ]))
+            anchor_metrics = p201_adjusted[f"{anchor_q:.2f}"]
+            decision = config["decision"]
+            checks = {
+                "P201_q90_hard_risk": anchor_metrics["maximum_unsafe_selected_set_rate"] <= float(decision["maximum_P201_unsafe_selected_set_rate"]),
+                "P201_q90_hard_coverage": anchor_metrics["mean_any_authority_coverage"] >= float(decision["minimum_P201_mean_any_authority_coverage"]),
+                "P201_nonanchor_mean_coverage_not_worse_than_P337": adjusted_mean_coverage >= baseline_mean_coverage,
+                "P201_nonanchor_nominal_risk_excess_not_worse_than_P337": adjusted_risk_excess <= baseline_risk_excess,
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "warp_multiplier_state_dict": residual_model.state_dict(), "input_width": source_feature.shape[1] + 2,
+                "hidden_dimensions": residual_config["hidden_dimensions"],
+                "multiplier_range": [float(residual_config["minimum_multiplier"]), float(residual_config["maximum_multiplier"])],
+                "frozen_differentiable_authority": config["frozen_differentiable_authority"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"], "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
+                "training": {"example_count": int(fit_rows.sum()), "steps": int(residual_config["steps"]),
+                             "final_decision_loss": last, "risk_penalty": "requested_quantile_odds"},
+                "source_decision_focused_frontier": source_adjusted, "source_P337_baseline": source_baseline,
+                "source_warp_multiplier": source_multiplier,
+                "P201_decision_focused_frontier": p201_adjusted, "P201_P337_baseline": p201_baseline,
+                "P201_warp_multiplier": p201_multiplier,
+                "P201_nonanchor_mean_coverage": adjusted_mean_coverage,
+                "P201_P337_nonanchor_mean_coverage": baseline_mean_coverage,
+                "P201_nonanchor_nominal_risk_excess": adjusted_risk_excess,
+                "P201_P337_nonanchor_nominal_risk_excess": baseline_risk_excess,
+                "decision_checks": checks,
+                "resources": {"gpu": torch.cuda.get_device_name(0), "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                              "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                              "wall_seconds": time.monotonic() - started},
                 "claim_boundary": config["claim_boundary"],
             }
             (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
