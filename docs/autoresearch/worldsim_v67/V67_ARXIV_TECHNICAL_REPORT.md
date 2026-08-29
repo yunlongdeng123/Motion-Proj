@@ -62,6 +62,9 @@ visited-state exposure density；当前只处于source development，尚不构�
 P218相对P182+P199连续分解control的Brier仅改善`.387%`且calibration error退化`26.25%`。P219正在用互斥source
 density/calibration/dev scenes与一个shared monotone beta map作最后一次P183 consumed transfer；在该read完成前累计exposure
 也不构成论文正结论。
+P219虽在source dev改善Brier/calibration `1.37%/22.11%`，在P183却退化`4.49%/25.27%`，因此累计exposure也关闭。
+P220开始把稳定的P199概率接口视作frozen predictor，另学其event-level proper loss并在固定50% coverage下选择性授权；
+这是authority compiler的development object，尚无跨cohort或risk-control保证。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

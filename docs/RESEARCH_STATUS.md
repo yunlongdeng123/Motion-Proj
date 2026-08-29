@@ -942,6 +942,11 @@ P218完成后direct/control Brier=`.0713518/.0716290`，改善仅`.387%`；calib
 `.0167293/.0132509`退化`26.25%`，1/2、F172。依据ICML 2019 distribution calibration与ICML 2022 calibrated-and-sharp
 density，P219将source scenes拆为density/calibration/dev互斥集，拟合一个共享monotone beta map，并以两门只判定已消费
 P183上的transfer；r1仅在任何data/model step前因括号语法退出，等价修复后的r2正在RTX 3090训练。
+P219在source dev将Brier/calibration改善`1.37%/22.11%`，但P183两者反而退化`4.49%/25.27%`，0/2、F173；
+累计exposure density关闭。跨cohort最稳结构仍是P182 marginals + P199 conditional dependence，而不是直接aggregate density。
+参考ICML 2019 SelectiveNet、NeurIPS 2017 selective classification与UAI 2024 post-hoc confidence，P220已转入authority
+object：对每个trajectory-budget预测冻结P199的realized Brier loss，在每个budget固定50% coverage授权低风险估计，并与
+同coverage的低Bernoulli-variance confidence control比较。103,411 source event rows用于GPU训练，26,194 heldout rows只作dev。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

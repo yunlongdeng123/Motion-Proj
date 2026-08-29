@@ -2729,6 +2729,18 @@ trajectories；低自由度monotone beta层在未触碰dev上同时改善P199 Br
 P219 engineering recovery note（不占算法编号）：r1在任何rows load或optimizer step前因`_metrics`一处缺失右括号发生
 `SyntaxError`；只补齐括号，以r2运行，config、split、model、budgets、MC、control、metrics和gates完全不变。
 
+### V67-F173 — calibrated cumulative exposure在P183同时损失refinement与校准
+
+- canonical：`run://worldsim_v67/WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01/20260830T230500Z__calibrated-cumulative-exposure-transfer-s0-r2`；
+- 观察：source dev同时改善Brier`1.37%`与calibration`22.11%`，但P183 Brier退化`4.49%`、calibration退化
+  `25.27%`，0/2；
+- 解释：聚合target的direct density在source内可拟合且可校准，但conditional distribution跨cohort不稳定；maximum与sum对象
+  均复现，故不是单一极值functional的问题；
+- 响应：关闭direct aggregate density，保留P182+P199 factorization；P220改学其realized proper loss并作固定覆盖率selective authority；
+- 防重复：不扫exposure intervals/budgets/density/calibrator/importance weights或新aggregate functional。
+
+下一可用编号：`V67-F174`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

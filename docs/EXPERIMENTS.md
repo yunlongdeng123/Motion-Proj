@@ -1729,7 +1729,18 @@
 - canonical planned：`run://worldsim_v67/WS-V67-P219-CALIBRATED-CUMULATIVE-EXPOSURE-TRANSFER-01/20260830T230500Z__calibrated-cumulative-exposure-transfer-s0-r2`；
 - protocol：source density-fit/calibration/dev scene sets互斥；一个shared monotone beta map；P183不参与fit，只由target Brier严格
   改善与calibration noninferiority两门决定；P182+P199 continuous factorized control不变；
-- status：r1在任何data/model step前因`_metrics`缺右括号退出，无quality read；等价语法修复r2正在RTX 3090训练。
+- result：source density/calibration/dev=`9,730/5,043/3,742` trajectories；source Brier/calibration改善
+  `1.37%/22.11%`，但P183 1,912 trajectories上candidate/control Brier=`.073285/.070137`（退化`4.49%`），
+  calibration error=`.028208/.022517`（退化`25.27%`）；0/2，F173，wall=`97.26s`；
+- verdict=`rejected_consumed_calibrated_cumulative_exposure_transfer_development`；关闭累计exposure density family。
+
+### WS-V67-P220-SELECTIVE-JOINT-RELIABILITY-AUTHORITY-01
+
+- canonical planned：`run://worldsim_v67/WS-V67-P220-SELECTIVE-JOINT-RELIABILITY-AUTHORITY-01/20260830T232000Z__selective-joint-reliability-authority-s0-r1`；
+- protocol：冻结P182/P199；对每个trajectory×budget监督`(P199 probability - joint truth)^2`，64/64 MLP预测
+  conditional Brier risk；每budget固定50% coverage授权最低预测risk；control为同coverage最低`p(1-p)`；
+- decisions：selected Brier严格优于confidence control、selected calibration error noninferior；不扫coverage/loss/features/width；
+- status：RTX 3090训练8,000 steps；source train/dev event rows=`103,411/26,194`。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
