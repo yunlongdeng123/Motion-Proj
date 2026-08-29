@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p168_joint_tail_mean_compiler.v1
+output_schema_version: worldsim_v67.p168_joint_tail_mean_compiler_summary.v1
+task_id: WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01
+hypothesis_id: WS-V67-H-P168-001
+role: consumed_development_then_prospective_scene_level_joint_tail_risk_compiler
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p165:
+  run: worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/20260830T124000Z__joint-multi-actor-diffusion-s0-r1
+  artifact: JOINT_MULTI_ACTOR_DIFFUSION.pt
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+prospective_p167:
+  run: worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1
+  artifact: P167_ROBUSTNESS_MULTI_HORIZON_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+  readiness_timeout_seconds: 7200
+model:
+  maximum_actors_per_group: 64
+  state_dimension: 18
+  condition_dimension: 19
+  hidden_dimension: 128
+  layer_count: 2
+  head_count: 4
+sampling:
+  sample_count: 16
+  inference_steps: 8
+  group_batch_size: 32
+  seed: 0
+  tail_probability_level: 0.75
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain_over_p126: 0.005}
+verdict_on_pass: supported_prospective_joint_tail_mean_compiler
+verdict_on_failure: rejected_joint_tail_mean_compiler
+locks:
+  P126_marginals_and_P165_joint_diffusion_are_frozen: true
+  upper_tail_mean_uses_exactly_the_top_four_of_sixteen_P165_samples: true
+  alpha_point_seventy_five_is_inherited_from_P165_without_sweep: true
+  development_requires_cost_nonregression_and_mean_rank_gain_before_P167_read: true
+  P167_is_prospective_only_if_development_passes: true
+  no_model_training_refit_quantile_sample_coverage_cost_metric_or_decision_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v180/eriksson22a.html
+  - https://openaccess.thecvf.com/content/CVPR2025/html/Capellera_Unified_Uncertainty-Aware_Diffusion_for_Multi-Agent_Trajectory_Modeling_CVPR_2025_paper.html
+claim_boundary:
+  - coherent_upper_tail_mean_of_frozen_joint_samples_not_calibrated_probability
+  - prospective_evidence_is_scene_level_only_if_development_and_P167_both_pass
+  - no_planner_policy_closed_loop_collision_probability_or_safety_claim

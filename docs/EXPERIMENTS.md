@@ -1116,6 +1116,16 @@
 - claim：至多第二次scene-level independent multi-horizon support；因log overlap不写log/session independence，也无calibrated probability、
   planner、closed-loop或safety claim。
 
+### WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01
+
+- 状态：`frozen/launching during P167 archive IO`；canonical id=`20260830T131000Z__joint-tail-mean-compiler-s0-r1`。
+- migration：P165 q75单点风险在9/9 slices rank正向但旧fixed50 cost不稳；改为coherent upper-tail mean，不重训joint model。
+- compiler：冻结P165 16 samples与`.75`水平，score是最高4个同定义sampled continuous trajectory costs的均值。
+- development decisions：旧P81/P96/P113/P129 selected cost全不退；mean Spearman gain over P126 `>=.005`。
+- prospective rule：development 2/2通过才等待事前冻结P167 rows，并以同两项macro decisions比较P126；否则立即停止。
+- locks：不扫alpha/sample/DDIM/coverage/cost/metric，不训练/refit，不加hash/checksum/fingerprint或测试矩阵。
+- references：PMLR 2022 SENTINEL的coherent CVaR组合；CVPR 2025 U2Diff的joint sample reliability aggregation。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

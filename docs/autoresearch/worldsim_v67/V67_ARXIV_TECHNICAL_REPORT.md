@@ -342,6 +342,10 @@ P167不继续修改模型，而将冻结P126-vs-P109/P147五时域协议转移�
 location、9个distinct logs；由于仍有log overlap，只能增加scene-level独立重复的强度。执行采用shard-ready preprocess与
 scene-ready GPU scoring的在线流水线，使archive IO与3090评分重叠；结果未产生前，本报告不预写支持或拒绝结论。
 
+与P167 archive IO重叠的P168只改变P165 samples的风险泛函：用最高4/16 sampled costs的upper-tail mean替代单个q75，
+`.75`水平完全继承且不扫描。该迁移依据是coherent risk对整个尾部的利用，以及joint diffusion sample-level reliability aggregation；
+它不训练新模型。旧四cohort 2/2通过前不读取P167 prospective结果，因此当前同样不预写科学结论。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

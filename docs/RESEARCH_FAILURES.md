@@ -2147,6 +2147,15 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F132`。
 
+### P168 freeze note — coherent upper-tail mean over frozen P165 joint samples
+
+- reason：P165的单个q75 order statistic保留rank但selection operating point不稳；coherent risk文献支持用完整upper tail而非单点VaR。
+- compiler：16个冻结joint samples中最高4个P120同定义cost的均值；`.75`从P165继承，非事后quantile选择。
+- decisions：旧四cost全不退+mean rank gain≥`.005`；通过后才读P167 prospective secondary，并复用同两门。
+- prevention：不训练/解冻P165、不扫alpha/sample/DDIM/coverage/cost或decision；development失败才使用`V67-F132`并立即关闭。
+
+下一可用编号仍为：`V67-F132`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

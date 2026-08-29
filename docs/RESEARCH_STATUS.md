@@ -645,6 +645,11 @@ scene-level independent。模型、P109 comparator、H=`.8/1.5/2.5/3.0/3.5`、`.
 场景预处理；evaluator预先将冻结P126/P109驻留3090，并在单个scene marker出现时立即物化五个H并完成GPU评分，不等全部IO结束。
 prep与confirmation将并发启动；仅做Python语法/入口检查，不增加smoke、回归矩阵、hash、checksum或fingerprint。
 
+P168与P167 IO并行推进。针对P165 q75只取单个order statistic、rank一致为正但fixed50 cost不稳的卡点，调研coherent risk与
+joint-diffusion reliability后，冻结同一16个P165 joint samples的upper-tail mean：固定沿用`.75`水平，即最高4个sampled
+continuous costs的均值，不训练/解冻模型、不扫quantile。先要求旧四cohort cost全不退且mean rank gain≥`.005`；只有2/2
+通过才等待P167 rows作事前冻结的五H prospective secondary，否则立即关闭。P168 GPU sampling现在可覆盖P167 archive IO空档。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
