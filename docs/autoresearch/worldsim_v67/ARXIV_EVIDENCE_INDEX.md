@@ -33,6 +33,7 @@
 | P119 | `run://worldsim_v67/WS-V67-P119-RANKED-RANGE-TAIL-01/20260830T074500Z__ranked-range-tail-s0-r1` | P81/P96/P113 events=`0/0/6`；reject |
 | P120 | `run://worldsim_v67/WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01/20260830T075000Z__continuous-boundary-state-cost-s0-r1` | P109 continuous-cost Spearman=`.8065/.7183/.7921`；new head reject |
 | P122 | `run://worldsim_v67/WS-V67-P122-FULL-COVARIANCE-CONTINUOUS-SELECTION-01/20260830T081000Z__full-covariance-continuous-selection-s0-r1` | mean Spearman gain=`+.00941`，但P96/P113 selected cost回退；reject |
+| P123 | `run://worldsim_v67/WS-V67-P123-CONTINUOUS-RANK-RESIDUAL-01/20260830T081500Z__continuous-rank-residual-s0-r1` | dense continuous pairs；P81/P96 rank退化、P96 selected cost回退 |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | `PENDING_P121_FINAL_FILL` |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -58,6 +59,7 @@
 | ranked-range tail recovery | P119 consumed ×3 | P113仍6 events、AUROC全退化 | reject binary tail recovery |
 | continuous τ-conditioned boundary-state cost | P120 consumed ×3 | P109 strong across all；new regressor worse | freeze P109 object for P121 |
 | full covariance用于continuous selection | P122 consumed ×3 | rank gain成立但fixed50 cost nonregression失败 | reject P121 secondary |
+| continuous operating-range rank residual | P123 consumed ×3 | P96 cost回退，P81/P96 Spearman下降 | reject downstream head family |
 | continuous object independent transfer | P121 target-unread | `PENDING_P121_FINAL_FILL` | `PENDING_P121_FINAL_FILL` |
 
 ## 3. Failure map
@@ -80,6 +82,7 @@
 | `V67-F85` | closed negative | P119 ranked-range objective did not change P113 tail ordering |
 | `V67-F86` | closed negative | P120 continuous regressor did not exceed frozen P109 |
 | `V67-F87` | closed negative | P122 full-covariance rank gain did not preserve fixed50 cost on all cohorts |
+| `V67-F88` | closed negative | P123 dense continuous pairs still caused cross-cohort rank drift |
 
 ## 4. Artifact inventory
 
@@ -91,6 +94,7 @@
 | P117 full-covariance checkpoint | P117 canonical run |
 | P118 same-checkpoint rho ablation | P118 canonical run |
 | P122 full-covariance continuous selection | P122 canonical run |
+| P123 continuous rank-residual checkpoint/result | P123 canonical run |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |

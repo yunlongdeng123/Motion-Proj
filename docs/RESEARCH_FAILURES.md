@@ -1383,6 +1383,23 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F88`。
 
+### V67-F88 — continuous operating-range rank residual仍产生跨cohort排序漂移
+
+- 分类：`scientific/continuous-selective-ranking`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P123-CONTINUOUS-RANK-RESIDUAL-01/
+  20260830T081500Z__continuous-rank-residual-s0-r1`；
+- method：在source每scene的P109 score `.25--.75` operating band内，以continuous cost percentile `<=.35/>=.65`构造
+  13,123个within-scene pairs；hidden32 bounded residual、6,000 steps，0 development/P121 target optimizer read；
+- symptom：P81/P96/P113 Spearman gain=`-.019849/-.056155/+.008165`；P96 selected cost由`.178783`退化至`.183085`，
+  所以no-regression与mean-rank-gain两项均失败；
+- interpretation：稠密continuous target消除了P119的binary positive scarcity，但source operating-range residual仍改变已较强的
+  P109 sufficient ordering并跨cohort漂移；问题不是简单换成continuous pair label即可解决；
+- resolution：不扫band、bound、architecture、loss、seed或coverage；关闭P119/P120/P123 downstream head family，不创建P121
+  secondary。下一机制若继续，必须改变Actor residual distribution而不是再接selection head；
+- claim impact：无continuous pairwise/selective-ranking improvement claim；P121冻结P109 primary不变。
+
+下一可用编号：`V67-F89`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1390,11 +1407,11 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122已占用F87，
-  因此P121 scientific failure若发生则登记`V67-F88`并
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122/P123已占用
+  F87/F88，因此P121 scientific failure若发生则登记`V67-F89`并
   关闭continuous object independent claim，不做第二P121 recovery。
 
-下一可用编号仍为：`V67-F88`。
+下一可用编号仍为：`V67-F89`。
 
 ### V6.6 当前边界（2026-08-28）
 

@@ -277,6 +277,13 @@ cost在P96由`.178783→.184867`、P113由`.224742→.225542`，nonregression失
 `rejected_development_full_covariance_continuous_cost`（`V67-F87`）；不追加secondary、不扫covariance/score/coverage，P121
 primary仍为冻结P109 continuous object。P122 wall=`1.01s`、peak GPU=`.03821GiB`，与P121 IO实际重叠。
 
+P123继续在同一P121 IO窗口进行真实GPU训练：针对P119 binary pair稀疏，改用source continuous cost rank，在每scene冻结
+P109 percentile `.25--.75`内配对cost percentile `<=.35`与`>=.65`，hidden32 bounded residual、6,000 steps一次完成。
+79,478 trajectories形成13,123个within-scene pairs，final loss=`.552133`。P81/P96/P113 selected cost=
+`.178267/.183085/.224150`，相对P109只P81/P113改善、P96回退；Spearman gain=`-.01985/-.05615/+.00816`，两项decision
+均失败，登记`V67-F88`。这关闭downstream continuous head/rank-residual恢复，不扫band/bound/loss；P121 primary不变。
+wall=`44.36s`、peak GPU=`.05318GiB`。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

@@ -406,6 +406,20 @@
 - verdict=`rejected_development_full_covariance_continuous_cost`（`V67-F87`）。不修改P121 primary，不创建同读secondary，
   不做阈值或covariance rescue。wall=`1.01s`、peak GPU=`.03821GiB`、RSS=`.564GiB`。
 
+### WS-V67-P123-CONTINUOUS-RANK-RESIDUAL-01
+
+- 状态：`done/rejected consumed development`；canonical=`20260830T081500Z__continuous-rank-residual-s0-r1`；P121 archive
+  IO仍在运行且target未物化。
+- motivation/method：P119 binary operating range只有65 positives，P120 pointwise Huber又偏离selection；P123改用稠密
+  continuous cost within-scene pairs。在冻结P109 score percentile `.25--.75`内，cost percentile `<=.35`作safe、`>=.65`
+  作unsafe，训练hidden32、bound`.5` residual 6,000 steps；不扫band/bound/loss/coverage。
+- training：79,478 source trajectories、13,123 pairs，final rank loss=`.552133`；optimizer不读取development/P121。
+- result：P81/P96/P113 selected cost=`.178267/.183085/.224150`，P109=`.186297/.178783/.224742`；Spearman=
+  `.786614/.662159/.800254`，相对P109 gain=`-.019849/-.056155/+.008165`。cost nonregression和mean Spearman gain
+  两门均失败，verdict=`rejected_development_continuous_fixed50_rank_residual`（`V67-F88`）。
+- interpretation：continuous dense pairs解决了label scarcity，却仍使P81/P96 global ranking漂移，且P96 fixed50 cost回退；关闭
+  downstream continuous head family，不创建P121 secondary。wall=`44.36s`、peak GPU=`.05318GiB`、RSS=`1.125GiB`。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

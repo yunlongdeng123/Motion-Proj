@@ -166,6 +166,10 @@ P121 archive IO期间，P122在P121 rows出现前用已消费P81/P96/P113比较P
 continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost略退化，预先冻结的nonregression失败并登记F87。
 因此P117不进入P121同读secondary；独立primary仍只确认P109，且不做covariance/coverage sweep。
 
+P123进一步用13,123个source within-scene continuous-cost pairs训练fixed50附近的bounded rank residual。它消除了P119的
+binary稀疏性，但P81/P96 Spearman分别下降`.01985/.05615`，P96 selected cost也回退，登记F88。P119/P120/P123共同表明：
+在冻结P109后增加downstream selection head没有稳定收益，后续机制研究应回到Actor residual distribution本身。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -190,6 +194,7 @@ continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost
 | P119 | consumed ranked-range tail | P81/P96/P113=`0 / 0 / 6` | gain=`-.00384/-.00459/-.00122` | reject tail recovery |
 | P120 | consumed continuous boundary cost | P109 selected reduction=`.8975/.7705/.8337` | Spearman=`.8065/.7183/.7921` | base candidate；new head reject |
 | P122 | consumed full-cov continuous selection | selected cost=`.1854/.1849/.2255` | Spearman gain=`+.0115/+.0048/+.0120` | reject；P96/P113 cost回退 |
+| P123 | consumed continuous rank residual | selected cost=`.1783/.1831/.2241` | Spearman gain=`-.0198/-.0562/+.0082` | reject downstream head |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -209,6 +214,7 @@ continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost
 | `V67-F85` | source ranked-range loss可修复fixed50 transfer | P113仍6 events且三cohort AUROC都退化 |
 | `V67-F86` | continuous regressor可超过P109 base | P81/P96退化；保留P109 continuous object |
 | `V67-F87` | full covariance全局排序增量可保证fixed50 continuous cost不退化 | P96/P113 selected cost略升；不进入P121 secondary |
+| `V67-F88` | 稠密continuous operating-range pairs可消除跨cohort selection漂移 | P81/P96 rank退化且P96 cost回退 |
 
 ## 5. 系统与资源
 
@@ -224,6 +230,7 @@ continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost
 - P119 source-only ranked-range GPU训练6,000 steps，wall约43.50s。
 - P120 source-only continuous cost regression 6,000 steps，wall约27.30s。
 - P122在P121 archive IO期间做冻结checkpoint GPU inference，wall约1.01s；没有训练或新target read。
+- P123与同一archive IO重叠训练13,123个continuous pairs、6,000 steps，wall约44.36s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
