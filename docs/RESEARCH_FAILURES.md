@@ -3019,9 +3019,20 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
   保留，不能再次添加；
 - resolution：feature target改为`budget_z.shape+(36,)`，budget直接flatten；r2从头训练，data/group/fraction/
   bisection/model/seed/steps/decisions全部不变；
+- residual/recovery：r2的return reshape仍把`S`附加一次，在同一quality前位置退出；继续归入F191。r3把结果直接
+  reshape回既有`G×F×S`再沿S求均值；P201 fraction MAE=`.016420`、regret=`.00001163`，2/2，F191关闭；
 - prevention：不为单一shape错误增加smoke/regression matrix，仅在正式入口修复调用合同。
 
 下一可用编号：`V67-F192`。
+
+### P256 milestone note — fixed-group dual compiler恢复并通过，无新增failure
+
+- canonical r3=`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T103000Z__group-budget-dual-compiler-s0-r3`；
+- P201 26 groups的attained fraction MAE=`.016420`、frozen Lagrangian regret=`.00001163`、price violations=0，2/2；
+- F191两次入口均在任何P201 metric前退出，r3科学合同与r1完全相同；
+- next：P257改变utility为单次冻结的log reliability，不扫P256 group/architecture；下一failure id保持F192。
+
+下一可用编号仍为：`V67-F192`。
 
 ### P254/P255 shadow-price milestone note — 单轨迹预算policy通过，无新增failure
 

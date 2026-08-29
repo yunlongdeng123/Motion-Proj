@@ -1072,6 +1072,10 @@ quality前退出，F190。nuScenes官方说明trainval需要合并全部archives
 cohort和已提取文件，取消会重复扫描09的中间恢复入口，r3只并行扫描尚未触碰的01/06精确补缺，waiters继续等待原processed
 root。P256 r1训练12k已收敛到price MAE约`.007`，但首次quality前的group reward展开把已有member轴重复附加而退出，F191；
 按NumPy广播规则作单行shape修复，data/model/seed/steps/decisions不变，r2已接替GPU。
+P256 r2暴露同一helper返回reshape仍重复member轴，继续归入F191；最终r3完整2/2：P201 attainable fraction MAE=
+`.016420`、冻结Lagrangian regret=`.00001163`、price violations=0，26个64-row groups。P257用固定
+`log(P246+0.05)` proportional-fair utility替换P254的线性mean probability utility，其他price/grid/structure/
+steps与`.075/.005`两门不变，检验低可靠度轨迹更敏感的单次shadow-price policy；RTX 3090训练中。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

@@ -2101,9 +2101,22 @@
   group size、fraction、bisection、width/loss/steps；
 - r1：`20260831T094500Z__group-budget-dual-compiler-s0-r1`完成12k训练（末段price MAE约`.007`），但evaluation把
   已是`G×F×S`的budget tensor再次附加`S`轴，NumPy `broadcast_to`在quality read前退出，F191；
-- active canonical r2：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T101500Z__group-budget-dual-compiler-s0-r2`；
-  只把feature broadcast target改成`budget_shape+(36,)`并直接flatten已有budget；其他合同不变；
+- r2：feature broadcast已修复，但return reshape仍重复`S`，同一F191、quality仍未读；
+- canonical r3：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T103000Z__group-budget-dual-compiler-s0-r3`；
+- result：P201 26 groups的price/fraction MAE=`.032114/.016420`、冻结Lagrangian regret=`.00001163`、price
+  violations=0，2/2；source fraction/regret=`.017010/.00001210`，P183=`.016063/.00001896`；
+- resources/verdict：212 train groups、wall=`88.19s`、peak GPU=`.140GiB`；`supported_group_budget_dual_price_compiler`；
   仅固定组surrogate allocation，不是online scheduler或真实compute/planning authority。
+
+### WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01
+
+- object：把P254的risk-neutral `mean(P246)`变为固定`mean(log(P246+.05))` concave reliability utility，使低可靠
+  prefix具有更高边际价值；`.05`只冻结一次，不扫risk/epsilon；
+- literature response：proportional-fair resource allocation以log utility避免只最大化总量；P257只迁移该utility
+  geometry，不宣称社会公平、真实计算公平或安全公平；
+- protocol：P254的13 train/12 heldout prices、129-point global grid、128/16 price-monotone student、L1、12k、
+  batch8192、seed0与P201 budget MAE≤`.075`/frozen log-utility regret≤`.005`不变；
+- active canonical：`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
