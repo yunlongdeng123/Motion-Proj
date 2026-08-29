@@ -44,6 +44,12 @@
 - P201只用两个预冻结决策，P243明确 descriptive-only；无 hash/checksum/fingerprint 或 smoke/regression matrix；
 - 下一可用 failure id 仍为 `V67-F196`。
 
+### P274 outcome / P275 start note — 无新增 failure
+
+- P274 P201 final MAE=`.009363`、epistemic-error Spearman=`.693292`，2/2；P243仅描述且方向一致；
+- P275 只在 P274 成立后启动，固定蒸馏 `mean-beta*std` 并用解析正 rates 编码 beta/budget 单调，不更改 P274 门；
+- 下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训

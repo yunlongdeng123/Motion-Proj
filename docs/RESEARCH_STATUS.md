@@ -45,9 +45,15 @@ verdict=`supported_fresh_variable_set_budget_conditioned_tail_cvar_allocator`。
 P274 转入 uncertainty-native surface：5个独立初始化的 monotone rate-spline members，各自在 source train scenes 的
 scene bootstrap上共同 GPU 训练；ensemble mean保持 P246 的预算/时域解析单调结构，member disagreement作为经验 epistemic
 score。依据 NeurIPS 2017 deep ensembles 与 UAI 2022 calibrated ensembles 的迁移边界，P201 只判 final-curve teacher
-MAE 与 disagreement--teacher-error Spearman 两门；P243 已消费，仅描述且不能选模。Active=`run://worldsim_v67/
-WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/20260831T164500Z__bootstrap-surface-ensemble-s0-r1`，当前 GPU 正在训练。
-该分歧不是 Bayesian credible interval 或 coverage guarantee。
+MAE 与 disagreement--teacher-error Spearman 两门；P243 已消费，仅描述且不能选模。Canonical=`run://worldsim_v67/
+WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/20260831T164500Z__bootstrap-surface-ensemble-s0-r1`。P201 final MAE=
+`.009363`、Spearman=`.693292`、top uncertainty quartile error lift=`1.5911x`、mean/final std=`.002632/.003445`，2/2；
+P243 descriptive Spearman/lift=`.685411/1.5007x`。wall=`302.13s`。该分歧不是 Bayesian credible interval。
+
+P275 现蒸馏冻结 P274 的 `ensemble mean - beta*std`，beta train=`0/.5/1/1.5/2`、heldout midpoints；新 surface
+以正 rate integrals 解析保证 budget 上升时 reliability 不降、beta 上升时 reliability 不升，并保留 horizon prefix。
+Active=`run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/
+20260831T171500Z__epistemic-lcb-surface-s0-r1`，当前 GPU 训练。该 LCB 是可条件化的保守 score，不是覆盖保证。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

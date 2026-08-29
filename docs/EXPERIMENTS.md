@@ -70,8 +70,21 @@
   count、bootstrap、width/depth、budget、metric、gate 或 steps。
 - decisions：P201 final curve teacher MAE `<=.010`；row-level mean epistemic std 与 teacher error Spearman `>=.10`。
   P243九场景只作 consumed descriptive，不用于 gate/model selection。
-- active=`run://worldsim_v67/WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/
-  20260831T164500Z__bootstrap-surface-ensemble-s0-r1`；claim 不含 credible interval、coverage、planner、closed-loop 或 safety。
+- canonical=`run://worldsim_v67/WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/
+  20260831T164500Z__bootstrap-surface-ensemble-s0-r1`。
+- result：P201 surface/final teacher MAE=`.007087/.009363`、mean/final epistemic std=`.002632/.003445`、
+  uncertainty--teacher-error Spearman=`.693292`、top-quartile error lift=`1.5911x`，2/2；P243 descriptive=
+  MAE `.006724/.008844`、Spearman `.685411`、lift `1.5007x`。verdict=`supported_bootstrap_surface_epistemic_ensemble`；
+  wall=`302.13s`、peak GPU/RSS=`.1404/1.9715GiB`。
+
+### WS-V67-P275-EPISTEMIC-LCB-SURFACE-01
+
+- teacher：冻结 P274 在每个 budget 的 `mean - beta*std`，clamp到概率域；beta train=`0/.5/1/1.5/2`，heldout=
+  `.25/.75/1.25/1.75`。
+- student：36-D context + positive budget-rate integral - positive beta-rate integral，再做 horizon cumulative product；因此
+  budget、beta、horizon三轴单调由结构给出。
+- decisions仅 P201 surface/final LCB teacher MAE `<=.018/.012`；P243 consumed descriptive-only。active=
+  `run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/20260831T171500Z__epistemic-lcb-surface-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
