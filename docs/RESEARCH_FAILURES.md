@@ -438,8 +438,9 @@
 - P353：frozen upper-pool将P201 q90 risk降至`.13115`但仍失败，登记F228；
 - P354：memberwise upper-pool q90 risk=`.04795`但coverage=`.24454`，登记F229；
 - P355：feature-aware BCE q90 coverage=`.40929`但risk=`.20548`，登记F230；
-- P356：worst-group selective-risk primal-dual calibrator implementation；
-- 下一可用 failure id 为 `V67-F231`。
+- P356：primal-dual q90 coverage=`.40628`但risk=`.21019`，登记F231；feature calibrator family关闭；
+- P357：monotone-horizon cumulative-risk head implementation；
+- 下一可用 failure id 为 `V67-F232`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -657,6 +658,22 @@
   source task×ceiling worst-group conditional risk；
 - forbidden rescue：不缩P355 width/steps、不加class weight、不调PAV或q90 threshold；resolution=
   `open via P356 worst-group selective-risk primal-dual calibration`。
+
+### V67-F231 — P356 soft worst-group primal-dual未进入可行域且未迁移
+
+- canonical=`run://worldsim_v67/WS-V67-P356-WORST-GROUP-SELECTIVE-RISK-CALIBRATOR-01/
+  20260901T163000Z__worst-group-selective-risk-calibrator-s0-r3`；
+- symptom：训练末端soft max-group risk=`.147173 > .10`，source fold5/P201 q90 unsafe=
+  `.106481/.210191`；P201 coverage=`.406284`充分但risk失败，3/4 rejected；
+- optimization evidence：dual max仅增至`8.19968`且soft coverage=`.673433`，coverage reward持续推动激进准入；独立
+  fold PAV也不会改变错误排序。继续增dual/降temperature属于超参救援而非新研究；
+- throughput note：r1/r2只在训练中因逐组CPU调度/小batch GPU低利用率中止，0 PAV/P201 quality read；r3通过
+  scatter reduction和等总样本大batch完成，故只有r3是科学结果，不新增failure id；
+- literature/migration：cumulative event risk应随预测horizon单调；NeurIPS 2019 cumulative-hazard network、AISTATS
+  2022 SuMo与CHIL 2023 Neural Fine-Gray用positive monotone network建模时间风险。P357回到P346 direct head，
+  结构化修复heldout-H外推；
+- forbidden rescue：不扫dual/coverage/BCE weight/temperature或选r1/r2 checkpoint；resolution=
+  `closed feature-calibrator family; open P357 monotone cumulative-risk head`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 

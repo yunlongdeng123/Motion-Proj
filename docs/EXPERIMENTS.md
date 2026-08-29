@@ -1320,7 +1320,22 @@
 - method：冻结P352 members，复用P355 features/32-16 MLP；对q90阈值构造largest-feasible-set soft admission，
   27个source progress×command×ceiling groups各自dual update，另保留轻量BCE作为概率语义锚；fold4 PAV。
 - locks：固定risk target `.10`、soft temperature和dual schedule一次，不扫penalty/coverage/width/steps/seed；
-  P201不参与训练或校准；状态=`implementation`。
+  P201不参与训练或校准；状态=`done/rejected`。
+- throughput recovery：r1/r2分别在约1k/3k step中止，均未进入PAV/P201；向量化group reduction后，r3用
+  `1500×4096`保持原`12000×512=6.144M`样本暴露并线性缩放optimizer/dual learning rate。
+- canonical=`run://worldsim_v67/WS-V67-P356-WORST-GROUP-SELECTIVE-RISK-CALIBRATOR-01/
+  20260901T163000Z__worst-group-selective-risk-calibrator-s0-r3`。
+- result：final BCE/soft max-group-risk/coverage=`.332181/.147173/.673433`，dual max=`8.19968`，PAV=`.274357`；
+  source fold5 q90=`.328894/.106481`，P201=`.406284/.210191`；3/4 rejected，wall=`35.77s`，F231。
+
+### WS-V67-P357-MONOTONE-HORIZON-CUMULATIVE-RISK-01
+
+- migration：P346在P201通过但source heldout 3.0s horizon漂移；cumulative-hazard/survival研究用positive monotone
+  networks保证event probability随时间不减，避免自由horizon MLP外推。
+- method：context+ceiling encoder输出每个set size的positive base/rate/curvature hazard，`H(t)=softplus(b)+
+  t·softplus(r)+t²·softplus(c)`，`p=1-exp(-H)`；set-size方向仍cummax。其余直接复用P346 8k BCE、fold1 group
+  calibration、fold2 PAV、fold3 source dev与P201 gates。
+- locks：不扫hazard阶数/width/steps/horizon/grid/threshold/seed；P201不参与训练/校准；状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

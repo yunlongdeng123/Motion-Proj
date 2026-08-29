@@ -680,7 +680,16 @@ coverage但把risk推回激进端，证明主要错配是training objective而�
 
 P356复用同一32/16 calibrator与冻结members，按NeurIPS 2020 PACC primal-dual、AISTATS 2021 one-sided prediction
 及ICLR 2021 group-DRO selective结果，显式优化soft admission coverage并约束source task×ceiling最坏条件unsafe risk；
-不扩容量、不调`.10` endpoint，fold4 PAV和P201 read合同保持。
+不扩容量、不调`.10` endpoint。r1/r2在PAV/P201前因小batch kernel调度导致GPU利用率低而主动中止；r3保持
+总样本暴露量，将`12k×512`等价批处理为`1.5k×4096`。Canonical=`run://worldsim_v67/
+WS-V67-P356-WORST-GROUP-SELECTIVE-RISK-CALIBRATOR-01/
+20260901T163000Z__worst-group-selective-risk-calibrator-s0-r3`：末端soft worst-group risk/coverage=
+`.147173/.673433`，dual max=`8.19968`；source/P201 q90=`.328894/.106481`与`.406284/.210191`，3/4 rejected，
+登记F231。关闭feature-calibrator/soft-selective family，不继续扫dual。
+
+P357回到P346 stable best并针对其source heldout-H漂移做结构修复。按NeurIPS 2019 cumulative-hazard network、
+AISTATS 2022 SuMo与CHIL 2023 Neural Fine-Gray，head输出context-conditioned positive base/rate/curvature cumulative
+hazard，使unsafe probability对horizon严格单调；P346 split/calibration/PAV/gates不变。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
