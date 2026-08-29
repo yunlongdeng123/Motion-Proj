@@ -280,7 +280,7 @@
 - structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
   `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302固定三锚点与 P303归一化正积分 warp
   分别研究非线性表达力/单调用校准；P302进一步达到 attained MAE=`.0256586`、violations=`0`，不重新打开 F201；
-- 下一可用 failure id 为 `V67-F204`。
+- 下一可用 failure id 为 `V67-F206`。
 
 ### V67-F202 — P303 warp积分错误复用 base knot count
 
@@ -293,7 +293,7 @@
 - minimal recovery：r2用 warp rates自己的 `shape[-1]`计算 width/index/cumulative，模型、knots、hidden、steps、
   seed、teacher、gates全部不变；
 - concurrent branch：P304只复用已支持 P302 的 base做单调用压缩训练，不依赖 F202失败路径；
-- 下一可用 failure id 为 `V67-F204`。
+- 下一可用 failure id 为 `V67-F206`。
 
 ### V67-F203 — P303 context warp未跨规模保持 attained-fraction fidelity
 
@@ -307,7 +307,29 @@
   不保证 shift下统一低regret。因此不靠增加 knots/hidden补救，也不把 source改善外推为 P201 claim；
 - disposition：关闭 normalized-warp结构扫描；保留其 `.7006s`单调用/零违例结果为 Pareto descriptive negative，
   独立 P304从 P302 anchor-trained base做单调用压缩，不复用 context warp；
-- 下一可用 failure id 为 `V67-F204`。
+- 下一可用 failure id 为 `V67-F206`。
+
+### V67-F204 — P304 anchor-trained base单调用压缩未保持P201 fidelity
+
+- canonical=`run://worldsim_v67/WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
+  20260901T014500Z__anchor-initialized-single-call-s0-r1`；
+- result：P201 attained MAE=`.0290092 > P301 .0285229`，但 regret=`6.5460e-5`、violations=0、forward=`.3070s`；
+  3/4拒绝；source attained=`.0192548`，size96=`.0310086`；
+- interpretation：NeurIPS 2021指出 student即使容量足够也常无法高保真匹配 teacher；本项目中移除 P302 piecewise
+  decision rule后，anchor initialization保留了速度但没有保留跨场景 group calibration；
+- disposition：不做 distillation weight/EMA/step sweep；与 F203共同关闭 single-call compression，选择 P302为
+  fidelity/monotonicity端的 Pareto compiler；
+- 下一可用 failure id 为 `V67-F206`。
+
+### V67-F205 — P305 confirmation rows指向prep run
+
+- failed run=`run://worldsim_v67/WS-V67-P305-FRESH-REUSE-PIECEWISE-AUTHORITY-CONFIRMATION-01/
+  20260901T020000Z__fresh-reuse-piecewise-authority-confirmation-s0-r1`；
+- symptom：`P277_FRESH_EPISTEMIC_ROWS.npz`实际位于 P277 confirmation run，配置误指 prep run；`np.load`前
+  FileNotFound，0 training、0 quality read、无科学 verdict；
+- minimal recovery：r2只替换 source/p201 artifact run path；模型、rows文件、conditions、sizes、teacher、gates不变；
+- resolution：r2 3/3 supported，attained MAE=`.0167472`、regret=`-.0001084`、violations=0；
+- 下一可用 failure id 为 `V67-F206`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

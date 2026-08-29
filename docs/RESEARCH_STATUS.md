@@ -268,9 +268,19 @@ forward 的 gather越界、未完成任何训练step/quality read，登记 `V67-
 P304 将 P302 作为 compression initialization：移除三锚点 wrapper，仅加载其训练后的 shared base，再对同一
 bisection teacher做单次6k fine-tune；推理恢复为一次网络调用且 base原 positive price-rate spline继续结构保证
 fraction单调。门冻结为 P201 attained MAE `<=P301 .02852293`、regret `<=.005`、violations=0、forward严格快于
-P302 `1.49135s`；不扫蒸馏权重/步数。Active=`run://worldsim_v67/
+P302 `1.49135s`；不扫蒸馏权重/步数。Canonical=`run://worldsim_v67/
 WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
-20260901T014500Z__anchor-initialized-single-call-s0-r1`，GPU继续执行。
+20260901T014500Z__anchor-initialized-single-call-s0-r1`：P201 budget/attained MAE=`.0067805/.0290092`、regret=
+`6.5460e-5`、violations=0、forward=`.3070s`；延迟门通过但 fidelity略差 P301，3/4拒绝，登记 `V67-F204`。
+source attained=`.0192548`、P201 size96=`.0310086`，与 P303形成一致的 single-call shift failure；压缩分支关闭。
+
+P305 冻结当前最佳 P302，在 direct-compiler family完全未读、但曾被 additive chain使用的 P277六场景/1,080
+trajectories做一次 reuse confirmation；0-step、无 refit。r1把 rows误指向 prep run，在 np.load前 FileNotFound，
+0 quality read，登记 `V67-F205`；r2只改为实际 confirmation artifact path。Canonical=`run://worldsim_v67/
+WS-V67-P305-FRESH-REUSE-PIECEWISE-AUTHORITY-CONFIRMATION-01/
+20260901T021500Z__fresh-reuse-piecewise-authority-confirmation-s0-r2`：sizes48/96共33 groups，budget/attained MAE=
+`.0086515/.0167472`、regret=`-.0001084`、violations=0，3/3；size48/96 attained=`.0176148/.0158795`，wall=
+`6.22s`。结论是 direct-family untouched scene reuse confirmation，不是全项目 globally fresh或 realized safety。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

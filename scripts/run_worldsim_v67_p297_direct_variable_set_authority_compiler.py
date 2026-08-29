@@ -249,6 +249,7 @@ def main():
     parser.add_argument("--run-id", required=True)
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text())
+    confirmation_only = bool(config.get("confirmation_only", False))
     run_dir = args.runs_root / "worldsim_v67" / config["task_id"] / args.run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     (run_dir / "resolved.yaml").write_text(yaml.safe_dump(config, sort_keys=False))
@@ -280,12 +281,15 @@ def main():
         int(config["seed"]),
         float(config["teacher"]["ignored_future_marginal_probability"]),
     )
-    source_feature, _, _, source_scenes, _ = _dataset(
-        args.runs_root / config["source_rows"]["run"] / config["source_rows"]["artifact"], *common, anchors, *tail
-    )
     p201_feature, _, _, p201_scenes, _ = _dataset(
         args.runs_root / config["p201_rows"]["run"] / config["p201_rows"]["artifact"], *common, anchors, *tail
     )
+    if confirmation_only:
+        source_feature, source_scenes = p201_feature, p201_scenes
+    else:
+        source_feature, _, _, source_scenes, _ = _dataset(
+            args.runs_root / config["source_rows"]["run"] / config["source_rows"]["artifact"], *common, anchors, *tail
+        )
     surface_artifact = torch.load(args.runs_root / config["frozen_surface"]["run"] / config["frozen_surface"]["artifact"], map_location="cuda")
     teacher = ConformalizedLCBSurface(
         int(surface_artifact["context_width"]), int(surface_artifact["budget_rate_knot_count"]), int(surface_artifact["tolerance_rate_knot_count"])
@@ -318,15 +322,16 @@ def main():
     chunk = int(config["inference_chunk_size"])
     bisection_steps = int(config["teacher_bisection_steps"])
     train = {}
-    for size in map(int, config["training_group_sizes"]):
-        groups, scenes = _groups(source_feature, source_scenes, size)
-        target_price, _, _ = _target_prices(policy, groups, alphas, tolerance_z, floor_z, tails, fractions, bisection_steps, chunk)
-        development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
-        train[size] = (
-            torch.from_numpy(groups).cuda(),
-            torch.from_numpy(target_price).cuda(),
-            torch.from_numpy(np.flatnonzero(~development)).cuda(),
-        )
+    if not confirmation_only:
+        for size in map(int, config["training_group_sizes"]):
+            groups, scenes = _groups(source_feature, source_scenes, size)
+            target_price, _, _ = _target_prices(policy, groups, alphas, tolerance_z, floor_z, tails, fractions, bisection_steps, chunk)
+            development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
+            train[size] = (
+                torch.from_numpy(groups).cuda(),
+                torch.from_numpy(target_price).cuda(),
+                torch.from_numpy(np.flatnonzero(~development)).cuda(),
+            )
 
     fraction_input = torch.from_numpy(1 - 2 * fractions).cuda()
     alpha_tensor = torch.from_numpy(alphas).cuda()
@@ -440,17 +445,18 @@ def main():
     source = {}
     p201 = {}
     for size in map(int, config["heldout_group_sizes"]):
-        groups, scenes = _groups(source_feature, source_scenes, size)
-        development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
-        target_price, low, high = _target_prices(
-            policy, groups[development], heldout_alphas, heldout_tolerance_z, heldout_floor_z,
-            heldout_tails, heldout_fractions, bisection_steps, chunk,
-        )
-        source[str(size)] = _evaluate(
-            student, policy, teacher, groups[development], target_price, low, high, heldout_alphas,
-            heldout_tolerance_z, heldout_floors, heldout_floor_z, heldout_tails, heldout_fractions,
-            price_mean, price_scale, epsilon, penalty, chunk,
-        )
+        if not confirmation_only:
+            groups, scenes = _groups(source_feature, source_scenes, size)
+            development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
+            target_price, low, high = _target_prices(
+                policy, groups[development], heldout_alphas, heldout_tolerance_z, heldout_floor_z,
+                heldout_tails, heldout_fractions, bisection_steps, chunk,
+            )
+            source[str(size)] = _evaluate(
+                student, policy, teacher, groups[development], target_price, low, high, heldout_alphas,
+                heldout_tolerance_z, heldout_floors, heldout_floor_z, heldout_tails, heldout_fractions,
+                price_mean, price_scale, epsilon, penalty, chunk,
+            )
         groups, _ = _groups(p201_feature, p201_scenes, size)
         target_price, low, high = _target_prices(
             policy, groups, heldout_alphas, heldout_tolerance_z, heldout_floor_z,
@@ -461,7 +467,7 @@ def main():
             heldout_tolerance_z, heldout_floors, heldout_floor_z, heldout_tails, heldout_fractions,
             price_mean, price_scale, epsilon, penalty, chunk,
         )
-    source = _aggregate(source)
+    source = _aggregate(source) if source else None
     p201 = _aggregate(p201)
     decision = config["decision"]
     checks = {

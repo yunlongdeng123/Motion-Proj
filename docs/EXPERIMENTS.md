@@ -484,8 +484,25 @@
 - structure：标准 P297/P295 positive price-rate spline，fraction仍映射为 `1-2f`，因此一次 forward且结构单调。
 - gates：P201 attained MAE `<=P301 .0285229301`、regret `<=.005`、violations=`0`、forward
   `<=P302 1.4913522s`；不扫 compression loss/weight/steps/lr/gates。
-- active=`run://worldsim_v67/WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
-  20260901T014500Z__anchor-initialized-single-call-s0-r1`；与 P303并发。
+- canonical=`run://worldsim_v67/WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
+  20260901T014500Z__anchor-initialized-single-call-s0-r1`。
+- result：P201 budget/attained MAE=`.0067805/.0290092`、regret=`6.5460e-5`、violations=`0`、forward=`.3070s`；
+  latency/regret/monotonicity通过，fidelity失败，3/4，verdict=`rejected_anchor_initialized_single_call_authority_compiler`，
+  failure=`V67-F204`。source attained=`.0192548`，P201 size48/96=`.0270098/.0310086`；关闭单调用压缩。
+
+### WS-V67-P305-FRESH-REUSE-PIECEWISE-AUTHORITY-CONFIRMATION-01
+
+- cohort：P277六场景/1,080 trajectories；对 additive chain已消费，但对 P297--P304 direct compiler训练/metric
+  全部 untouched，因此只称 family-specific fresh reuse。
+- frozen candidate：P302 `0/.5/1` piecewise compiler；heldout conditions、sizes48/96、bisection teacher、`.075/.005`
+  与 zero-violation gates继承；`steps=0`、无训练/refit/calibration、单次 read。
+- r1=`20260901T020000Z...`误指 prep run中不存在的 NPZ，在 dataset load前退出，0 quality read，`V67-F205`；
+  r2只修正为 P277 confirmation run artifact。
+- canonical=`run://worldsim_v67/WS-V67-P305-FRESH-REUSE-PIECEWISE-AUTHORITY-CONFIRMATION-01/
+  20260901T021500Z__fresh-reuse-piecewise-authority-confirmation-s0-r2`。
+- result：33 groups；budget/attained MAE=`.0086515/.0167472`、regret=`-.0001084`、violations=`0`；3/3，
+  verdict=`supported_direct_compiler_untouched_scene_reuse_piecewise_authority_confirmation`。size48/96 attained=
+  `.0176148/.0158795`；forward=`.9714s`、wall=`6.22s`、peak GPU/RSS=`.23810/.99653GiB`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
