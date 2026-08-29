@@ -689,7 +689,14 @@ WS-V67-P356-WORST-GROUP-SELECTIVE-RISK-CALIBRATOR-01/
 
 P357回到P346 stable best并针对其source heldout-H漂移做结构修复。按NeurIPS 2019 cumulative-hazard network、
 AISTATS 2022 SuMo与CHIL 2023 Neural Fine-Gray，head输出context-conditioned positive base/rate/curvature cumulative
-hazard，使unsafe probability对horizon严格单调；P346 split/calibration/PAV/gates不变。
+hazard，使unsafe probability对horizon严格单调。Canonical=`run://worldsim_v67/
+WS-V67-P357-MONOTONE-HORIZON-CUMULATIVE-RISK-01/20260901T164500Z__monotone-horizon-cumulative-risk-s0-r1`：
+source/P201 q90 coverage/unsafe=`.288125/.261733`与`.327049/.163636`，coverage/risk两门失败，2/4 rejected，
+登记F232。当前label不是cumulative survival event，关闭horizon-monotone family。
+
+P358按CVPR 2019/2024多步occupancy forecasting的preset horizons与NeurIPS 2022 multi-head multi-task方式，明确收窄
+claim：四个支持horizons各有独立head、共享context trunk；source所有四个horizon labels均参与训练，P201只测试
+task-condition shift，不再同时把3.0s当作零样本horizon外推。P346 scene split、group calibration、PAV和gates不变。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

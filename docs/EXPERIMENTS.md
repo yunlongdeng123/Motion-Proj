@@ -1335,7 +1335,20 @@
 - method：context+ceiling encoder输出每个set size的positive base/rate/curvature hazard，`H(t)=softplus(b)+
   t·softplus(r)+t²·softplus(c)`，`p=1-exp(-H)`；set-size方向仍cummax。其余直接复用P346 8k BCE、fold1 group
   calibration、fold2 PAV、fold3 source dev与P201 gates。
-- locks：不扫hazard阶数/width/steps/horizon/grid/threshold/seed；P201不参与训练/校准；状态=`implementation`。
+- locks：不扫hazard阶数/width/steps/horizon/grid/threshold/seed；P201不参与训练/校准；状态=`done/rejected`。
+- canonical=`run://worldsim_v67/WS-V67-P357-MONOTONE-HORIZON-CUMULATIVE-RISK-01/
+  20260901T164500Z__monotone-horizon-cumulative-risk-s0-r1`。
+- result：final train/group-cal/PAV BCE=`.198605/.307091/.338803`；source fold3 q90 coverage/unsafe=
+  `.288125/.261733`，P201=`.327049/.163636`；risk和source coverage明显恶化，2/4 rejected，wall=`70.49s`，F232。
+
+### WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01
+
+- migration：P357证明label不满足cumulative-event单调性；主流occupancy forecasting在preset time grid报告多个future
+  states。P358不再做unsupported horizon extrapolation，改用shared trunk + four horizon-specific heads。
+- method：source `.8/1.5/2.5/3.0s`全部参与8k BCE；forward按明确horizon id选择head，set-size logits仍cummax；
+  fold1 group calibration、fold2 PAV、fold3 scene dev与P201 task-condition shift保持P346合同。
+- locks：不插值/外推、不扫head sharing/horizon grid/width/steps/threshold/seed；P201不训练/校准；
+  状态=`implementation`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

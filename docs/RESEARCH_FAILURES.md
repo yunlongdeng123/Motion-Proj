@@ -439,8 +439,9 @@
 - P354：memberwise upper-pool q90 risk=`.04795`但coverage=`.24454`，登记F229；
 - P355：feature-aware BCE q90 coverage=`.40929`但risk=`.20548`，登记F230；
 - P356：primal-dual q90 coverage=`.40628`但risk=`.21019`，登记F231；feature calibrator family关闭；
-- P357：monotone-horizon cumulative-risk head implementation；
-- 下一可用 failure id 为 `V67-F232`。
+- P357：monotone-horizon q90 source/P201 risk=`.26173/.16364`，登记F232；
+- P358：fixed-grid multi-horizon task-shift reliability implementation；
+- 下一可用 failure id 为 `V67-F233`。
 
 ### V67-F216 — P340固定risk odds优化目标与hard conditional unsafe endpoint错位
 
@@ -674,6 +675,21 @@
   结构化修复heldout-H外推；
 - forbidden rescue：不扫dual/coverage/BCE weight/temperature或选r1/r2 checkpoint；resolution=
   `closed feature-calibrator family; open P357 monotone cumulative-risk head`。
+
+### V67-F232 — P357 cumulative-hazard单调先验与visited-state cost label不匹配
+
+- canonical=`run://worldsim_v67/WS-V67-P357-MONOTONE-HORIZON-CUMULATIVE-RISK-01/
+  20260901T164500Z__monotone-horizon-cumulative-risk-s0-r1`；
+- symptom：source fold3 q90 coverage/unsafe=`.288125/.261733`，P201=`.327049/.163636`；只有P201 coverage与两项
+  monotonicity通过，2/4 rejected；
+- diagnosis：positive base/rate/curvature保证随H累计，但当前target是各固定H下visited-state selected cost exceedance，
+  不是“首次event在H前发生”的cumulative incidence；强制所有context风险随H增加会错误合并不同future-state切片；
+- retained evidence：训练BCE仍收敛到`.198605`，但PAV BCE=`.338803`且source heldout risk极差，说明失败不是OOM、
+  发散或capacity，而是结构先验错误；
+- literature/migration：CVPR 2019 multi-step occupancy、CVPR 2024 Cam4DOcc都在预设future time grid评价状态；
+  NeurIPS 2022 multi-task工作支持shared trunk+task-specific heads。P358把horizon当离散支持任务，并只保留task shift；
+- forbidden rescue：不改hazard order/activation、放松单调性或继续套survival loss；resolution=
+  `closed monotone-horizon family; open P358 fixed-grid multi-horizon reliability`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
