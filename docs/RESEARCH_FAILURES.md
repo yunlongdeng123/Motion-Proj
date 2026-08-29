@@ -1632,10 +1632,28 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 - method：单P109路径6,000 steps；4000后固定LR `.0001`、每100 steps收集20 iterates；拟合SWAG diag+low-rank
   covariance并以seed137采3 models。
-- decisions：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；P129 rows隔离。
-- prevention：固定collection window/LR/rank/sample count/seed；失败登记F100并关闭single-path posterior route。
+- decisions/outcome：相对P126三cohort selected cost nonregression、mean Spearman difference≥`-.005`；实际mean rank=
+  `+.002315`通过，P113 cost改善，但P81/P96微回退；P129 rows隔离。
+- prevention：固定collection window/LR/rank/sample count/seed；single-path posterior route关闭。
 
-下一可用编号为：`V67-F100`。
+### V67-F100 — SWAG近似rank保留但未满足逐cohort cost nonregression
+
+- 分类：`algorithm/approximate-posterior-boundary`；状态：`closed_negative_after_first_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01/
+  20260830T094500Z__swag-actor-ensemble-s0-r1`。
+- 观察：20 iterates/3 samples使mean rank delta=`+.002315`，P113 cost改善；但P81/P96 costs分别高`.002115/.000274`，
+  strict nonregression失败。
+- 解释：low-rank weight posterior比cycle snapshots更接近P126，但fixed sampling仍不能复制每cohort selection boundary；
+  不是用更多samples/调collection LR的授权理由。
+- 防重复：不扫posterior scale/rank/sample/seed。P138改变uncertainty family为full-cov aleatoric+epistemic deep ensemble。
+
+### P138 freeze note — full-covariance deep ensemble
+
+- method：P117 seed0 + 同协议seed1/2；total projected covariance=mean member full covariance + variance member means。
+- decisions：相对P126三cohort selected cost nonregression且mean Spearman gain≥`.005`；P129 rows隔离。
+- prevention：不扫correlation/member/weight/projection；失败登记F101并关闭full-cov ensemble first trial。
+
+下一可用编号为：`V67-F101`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

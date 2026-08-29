@@ -404,6 +404,16 @@ LR `.0001`每100 steps收集一次，共20 iterates；拟合weight mean/covarian
 decisions不变，不扫collection LR/rank/sample数；不将AdamW iterates称为calibrated Bayesian posterior。P129 rows隔离，
 GPU训练已启动。
 
+P137收集20 iterates、采3 models，final path NLL=`-3.54100`；P81/P96/P113 Spearman差=
+`+.00637/-.00526/+.00584`（mean=`+.00231`）通过，P113 cost `.21830`改善。但P81/P96 cost `.17878/.16785`
+分别微高P126 `.17667/.16757`，1/2 decisions、wall=`32.74s`，登记`V67-F100`。posterior近似虽接近，仍未满足逐cohort
+fixed50 nonregression；single-path posterior route关闭，不扫采样。
+
+P138回到算法本体：复用P117 full-XY-covariance seed0并按完全相同协议训练seed1/2，total covariance同时包含每member的
+aleatoric XY correlation与member means的epistemic covariance。依据CVPR 2023 IPCC-TP、CVPR 2018 structured covariance
+和deep ensembles，只在consumed P81/P96/P113相对P126 diagonal ensemble要求三组cost不退化且mean Spearman gain≥`.005`。
+不扫correlation/epistemic权重/member，P129 rows隔离；GPU已开始两成员训练。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

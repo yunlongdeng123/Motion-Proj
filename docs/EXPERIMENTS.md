@@ -613,13 +613,27 @@
 
 ### WS-V67-P137-SWAG-ACTOR-ENSEMBLE-01
 
-- 状态：`frozen/running GPU consumed development`；canonical=`20260830T094500Z__swag-actor-ensemble-s0-r1`，
+- 状态：`done/rejected consumed development`；canonical=`20260830T094500Z__swag-actor-ensemble-s0-r1`，
   与P129 archive IO并行。
 - method：一个P109结构训练6,000 steps；前4,000 steps LR `.001`，随后LR `.0001`并在4100--6000每100 steps收集，
   共20 weight iterates；拟合diag+low-rank covariance，以固定sampling seed137一次采3 models。
 - source/evaluation/decisions与P136相同；不扫collection start/LR/rank/sample count/seed，P129 rows不读。
 - reference：SWAG scalable approximate Bayesian inference；本实现沿用P109 AdamW，故只称approximate weight-posterior
   development，不声称faithful calibrated Bayesian posterior或MC convergence。
+- result：20 iterates/3 samples/final NLL=`-3.540998`；P81/P96/P113 Spearman difference from P126=
+  `+.006368/-.005259/+.005835`（mean=`+.002315`，pass），selected cost=`.178780/.167846/.218301`；P81/P96
+  微回退，1/2 decisions，verdict=`rejected_development_swag_actor_ensemble`；wall=`32.74s`、peak GPU=`.381 GiB`，F100。
+
+### WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01
+
+- 状态：`frozen/running GPU consumed development`；canonical=
+  `20260830T095000Z__full-covariance-deep-ensemble-s0-r1`，与P129 archive IO并行。
+- method：复用P117 correlated Gaussian seed0，按同一916,722 tokens/`[256,128]`/6,000-step NLL协议训练seed1/2；
+  每member内保留XY aleatoric covariance，members间保留mean epistemic covariance，投影后求total variance。
+- evaluation：consumed P81/P96/P113；comparator=P126 diagonal deep ensemble。decisions=三cohort selected cost全不退化，
+  mean Spearman gain≥`.005`；这次目标是algorithmic gain而非近似retention。
+- locks：不扫correlation parameterization/member/seed/weight/projection/coverage；P129 rows不读。
+- references：CVPR 2023 IPCC-TP、CVPR 2018 Structured Uncertainty Prediction、NeurIPS 2017 deep ensembles。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

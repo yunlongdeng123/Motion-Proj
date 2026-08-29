@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p138_full_covariance_deep_ensemble.v1
+output_schema_version: worldsim_v67.p138_full_covariance_deep_ensemble_summary.v1
+task_id: WS-V67-P138-FULL-COVARIANCE-DEEP-ENSEMBLE-01
+hypothesis_id: WS-V67-H-P138-001
+role: consumed_development_aleatoric_correlation_plus_epistemic_ensemble
+model_artifact: FULL_COVARIANCE_DEEP_ENSEMBLE.pt
+new_member_seeds: [1, 2]
+frozen_p117:
+  run: worldsim_v67/WS-V67-P117-FULL-COVARIANCE-ACTOR-UNCERTAINTY-01/20260830T072500Z__full-covariance-actor-uncertainty-s0-r1
+  artifact: FULL_COVARIANCE_ACTOR_UNCERTAINTY.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - name: consumed_p81
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p96
+    run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+    artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+frozen_p126_comparisons:
+  consumed_p81: {selected_cost: 0.176665, spearman: 0.853444}
+  consumed_p96: {selected_cost: 0.167572, spearman: 0.853391}
+  consumed_p113: {selected_cost: 0.218791, spearman: 0.867603}
+model:
+  hidden_dimensions: [256, 128]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_spearman_gain_over_diagonal_ensemble: 0.005}
+verdict_on_pass: supported_development_full_covariance_deep_ensemble
+verdict_on_failure: rejected_development_full_covariance_deep_ensemble
+locks:
+  reuse_P117_seed0_train_exact_seed1_seed2_same_protocol: true
+  total_covariance_includes_member_full_covariance_and_between_mean_covariance: true
+  exactly_three_members_no_correlation_epistemic_weight_or_seed_sweep: true
+  all_evaluation_cohorts_are_consumed_development: true
+  P129_independent_target_rows_untouched: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://openaccess.thecvf.com/content/CVPR2023/html/Zhu_IPCC-TP_Utilizing_Incremental_Pearson_Correlation_Coefficient_for_Joint_Multi-Agent_Trajectory_CVPR_2023_paper.html
+  - https://openaccess.thecvf.com/content_cvpr_2018/papers/Dorta_Structured_Uncertainty_Prediction_CVPR_2018_paper.pdf
+  - https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+claim_boundary:
+  - consumed_development_joint_aleatoric_epistemic_uncertainty_only
+  - local_xy_full_covariance_not_joint_multi_agent_or_long_horizon_covariance
+  - linearized_boundary_state_selection_not_collision_probability
+  - no_planner_policy_closed_loop_or_safety_claim

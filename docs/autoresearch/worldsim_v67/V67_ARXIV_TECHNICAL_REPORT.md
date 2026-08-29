@@ -228,6 +228,10 @@ P136在P81有效，却在P96产生rank `-.02696`与cost回退，mean rank差=`-.
 跨cohort模式。P137改用20个low-LR iterates拟合SWAG diag+low-rank weight covariance并固定采3模型，仍只检验continuous
 selection/rank retention；因optimizer沿用AdamW，论文不把它表述为严格Bayesian calibration。
 
+P137达到mean rank `+.00231`并改善P113 cost，但P81/P96 cost微回退（F100），single-path posterior route关闭。P138不再
+近似P126，而把P117 XY full covariance与deep-ensemble epistemic covariance联合：三个full-cov members的within/between
+covariance同时投影到τ-boundary normal，要求相对diagonal P126取得明确`.005` mean rank gain且cost全不退。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
