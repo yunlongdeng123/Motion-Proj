@@ -216,8 +216,16 @@ direct compiler，但 constraint fidelity 略逊 P296 两阶段的 `.0240720`。
 依据 ICML 2019 Set Transformer 对 set elements 显式交互建模的结论，P298 冻结为一次 structural extension：
 从 P297 warm-start，加入一个 zero-gated 4-head self-attention block，其余 bisection teacher、conditions、
 sizes、12k steps/lr与 `.075/.005` 两门完全复用；另要求 P201 attained-fraction MAE严格优于 P297 `.0297261`。
-不扫 heads/depth/width。Active=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
-20260901T000000Z__attentive-direct-authority-s0-r1`，GPU 已启动。
+不扫 heads/depth/width。Canonical=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
+20260901T000000Z__attentive-direct-authority-s0-r1`：P201 attained MAE=`.0334487`、regret=`6.45e-5`、
+violations=`0`，通用两门通过，但严格改善门失败（P297=`.0297261`），2/3，verdict=rejected，登记 `V67-F199`。
+attention branch关闭，不扫 heads/depth。
+
+卡点检索 Pylon/structured constrained learning 后，P299 转向 failure-aligned training objective：架构回到冻结 P297，
+唯一变化是在 per-Actor budget L1 外等权加入 group-mean budget L1，使训练直接看见 attained-budget constraint；
+同一 teacher/conditions/sizes/12k steps/lr和三门，不扫 loss weight。Active=`run://worldsim_v67/
+WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
+20260901T001500Z__constraint-aware-direct-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

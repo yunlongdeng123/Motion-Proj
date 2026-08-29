@@ -398,8 +398,23 @@
 - structure：P297 warm-start + 单个 zero-gated 4-head self-attention block；fraction monotone decoder不变。
 - fixed protocol：同 P297 teacher/conditions/sizes/12k steps/lr；三门为原 `.075/.005` 加严格优于 P297 attained
   MAE `.0297261076`；不扫 head/depth/width/steps/gates。
-- active=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
   20260901T000000Z__attentive-direct-authority-s0-r1`。
+- result：P201 budget MAE=`.0081622`、attained MAE=`.0334487`、regret=`6.4540e-5`、violations=`0`；通用
+  `.075/.005` 两门通过，但未严格优于 P297 `.0297261`；2/3，verdict=
+  `rejected_attentive_direct_variable_set_authority_compiler`，failure=`V67-F199`。wall=`445.93s`、peak GPU/RSS=
+  `.3209/3.9792GiB`；attention branch关闭。
+
+### WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01
+
+- root cause response：P297/P298只逐 Actor 模仿 teacher budget，而决策门测 group mean attainable fraction；训练目标
+  与约束聚合层级错位。
+- method：frozen P297 warm-start，同一 Deep Sets monotone decoder；loss固定为 actor-budget L1 + 等权 group-mean
+  budget L1。依据 constrained structured learning/Pylon 将可微约束直接编译进 loss；不引入 projection或额外网络。
+- protocol/gates：完全复用 P297 teacher/conditions/sizes/12k/lr与 `.075/.005`，另要求 attained MAE严格优于
+  P297 `.0297261076`；不扫 loss weight/steps/architecture。
+- active=`run://worldsim_v67/WS-V67-P299-CONSTRAINT-AWARE-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T001500Z__constraint-aware-direct-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

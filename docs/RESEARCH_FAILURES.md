@@ -245,6 +245,18 @@
   head/depth/width/step/gate sweep；
 - 下一可用 failure id 保持 `V67-F199`。
 
+### V67-F199 — P298 self-attention未改善 direct constraint fidelity
+
+- canonical=`run://worldsim_v67/WS-V67-P298-ATTENTIVE-DIRECT-AUTHORITY-COMPILER-01/
+  20260901T000000Z__attentive-direct-authority-s0-r1`；
+- symptom：P201 attained MAE=`.0334487`，高于冻结 P297 baseline `.0297261`；通用 fidelity/regret门仍通过，
+  comparative improvement门失败；size48/96=`.0310884/.0358091`；
+- root cause：新增 pairwise capacity未直接约束 group mean budget，且 forward `.3904s` 高于 P297 `.3188s`；
+  当前证据不支持 attention 是 direct authority fidelity 的必要结构；
+- closed candidate：不扫 attention heads/depth/width/normalization/steps；保留 P297 direct baseline；
+- structural pivot：P299 回到 P297 架构，等权加入 group-mean budget distillation loss，直接对齐 attained constraint；
+- 下一可用 failure id 为 `V67-F200`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
