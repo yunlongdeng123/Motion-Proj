@@ -400,9 +400,11 @@
   F212，但q90 offset=`.08060`、strict coverage=0且被P326/P327支配，关闭spline tuning；
 - P330 result：nested k=`1/2/3`在P201得到mean any-authority coverage=`.35082`、max unsafe=`.07006`、
   size/ceiling violations=0，3/3 supported；strict coverage=`.03934`，fixed-top2空集被cardinality缩放解决；
-- P331 active：合并continuous q `.70-.97`、H与nested k三轴；失败才登记F212，不扫q range/k/capacity/
-  gate/seed，不重开pair repair；
-- 下一可用 failure id 为 `V67-F212`。
+- P331 result：max unsafe=`.03764`与monotonicity=0通过，但mean any-authority coverage=
+  `.24672 < .30`，2/3 rejected，登记F212；不降门或扫q/range/capacity/seed；
+- P332 active：迁移partial-monotone H×q×k lattice，去掉P331隐含supermodularity；失败才登记F213，
+  不扫knots/range/capacity/gate/seed；
+- 下一可用 failure id 为 `V67-F213`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -469,6 +471,22 @@
 - forbidden rescue：不降低`.20`、不改q90、不删strict ceiling、不扫scale/gate/seed、不用P201训练或校准；
 - resolution status：`closed by P325 heldout task+H supported result`；P325 source strict低样本不稳定仍作为
   claim boundary保留；下一可用failure id=`V67-F212`。
+
+### V67-F212 — P331全正多轴交互使continuous-risk nested authority过度保守
+
+- canonical=`run://worldsim_v67/WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01/
+  20260901T093000Z__risk-size-horizon-authority-surface-s0-r1`；
+- symptom：130,734 examples、9k steps、final pinball=`.02573`，但source q90 offset=`.07846`；P201
+  mean any-authority coverage=`.24672 < .30`，coverage gate失败，strict coverage=0；
+- retained evidence：max/mean unsafe=`.03764/.02198`、size/ceiling violations=0；high-ceiling coverage=
+  `.65328`、mean selected size=`2.80`，说明nested-size object有效但q/H/k joint parameterization保守；
+- diagnosis：沿k累积positive base/H/q/H×q coefficients不仅保证partial monotonicity，还额外强制所有高阶
+  interactions为正（supermodular）；这比问题需要的局部序约束更强，造成q90 offset与strict abstention；
+- literature check/migration：NeurIPS 2017 Deep Lattice Networks以interpolated lookup-table局部序约束表达
+  flexible partial-monotone functions；ICML 2023 Constrained Monotonic Networks证明更一般单调函数逼近可行。
+  P332采用context-conditioned H×q×k lattice vertices与逐轴monotone envelope；
+- forbidden rescue：不降`.30`、不改q90/range/k/gate、不在P201 fit、不扫capacity/seed；
+- resolution status：`open via P332 partial-monotone lattice`；下一可用failure id=`V67-F213`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

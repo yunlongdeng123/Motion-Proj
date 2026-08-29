@@ -915,6 +915,24 @@
   q90一个signed offset；source/P201 heldout H=`2.5s`。
 - gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/H/q/ceiling结构单调；不扫
   q range/k/capacity/gate/seed，不重开pair selector。
+- canonical=`run://worldsim_v67/WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01/
+  20260901T093000Z__risk-size-horizon-authority-surface-s0-r1`。
+- result：130,734 examples、9k steps、final pinball=`.02573`、source q90 offset=`.07846`。P201 mean/
+  highest any-authority coverage=`.24672/.65328`、max/mean unsafe=`.03764/.02198`、monotonicity=0；
+  risk/monotonicity通过、coverage `.24672 < .30`，2/3 rejected。
+- by ceiling：coverage=`0/.08689/.65328`、unsafe=`0/.02830/.03764`、mean size=`0/2.57/2.80`；
+  source coverage=`.27403/.63416`、max unsafe=`.03042`；wall=`73.26s`。登记`V67-F212`。
+
+### WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01
+
+- migration：P331 positive base/H/q/H×q系数隐含supermodularity，q90 offset大且strict空集；NeurIPS 2017
+  Deep Lattice Networks说明局部lattice序约束可表达更灵活的partial-monotone interactions。
+- architecture：context MLP输出固定H knots `.8/1.5/3.0s`×q knots `.70/.85/.97`×k `1/2/3`顶点；
+  逐H/q/k做monotone envelope，requested H/q双线性插值，k离散读取。
+- training/calibration：source每batch q `.70-.97`、train H knots与k；source q90一个signed offset；
+  source/P201 heldout H=`2.5s`。不引入TensorFlow依赖，迁移其lattice representation本身。
+- gates：P201 q90 max unsafe `<=.10`、mean any-authority coverage `>=.30`、k/ceiling monotonicity=0；
+  不扫knots/range/capacity/gate/seed。
 - active：实现、配置与GPU training进入执行队列。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface

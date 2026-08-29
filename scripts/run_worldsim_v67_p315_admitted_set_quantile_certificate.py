@@ -208,6 +208,49 @@ class RiskSizeConditionedHorizonQuantileSurface(nn.Module):
         )
 
 
+class LatticeRiskSizeHorizonAuthority(nn.Module):
+    """Context-conditioned partial-monotone lattice over horizon, quantile, and set size."""
+
+    def __init__(self, input_width: int, hidden_dimensions, horizon_knots, quantile_knots, set_size_count: int) -> None:
+        super().__init__()
+        self.register_buffer("horizon_knots", torch.as_tensor(horizon_knots, dtype=torch.float32))
+        self.register_buffer("quantile_knots", torch.as_tensor(quantile_knots, dtype=torch.float32))
+        self.set_size_count = int(set_size_count)
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, len(horizon_knots) * len(quantile_knots) * self.set_size_count))
+        self.network = nn.Sequential(*layers)
+
+    @staticmethod
+    def _segment(value, knots):
+        segment = torch.bucketize(value.contiguous(), knots[1:-1])
+        left = knots[segment]
+        right = knots[segment + 1]
+        return segment, (value - left) / (right - left)
+
+    def forward(self, features, normalized_horizon, quantile_level):
+        batch = len(features)
+        vertex = F.softplus(self.network(features)).reshape(
+            batch, len(self.horizon_knots), len(self.quantile_knots), self.set_size_count
+        )
+        vertex = torch.cummax(vertex, dim=1)[0]
+        vertex = torch.cummax(vertex, dim=2)[0]
+        vertex = torch.cummax(vertex, dim=3)[0]
+        horizon_segment, horizon_weight = self._segment(normalized_horizon, self.horizon_knots)
+        quantile_segment, quantile_weight = self._segment(quantile_level, self.quantile_knots)
+        row = torch.arange(batch, device=features.device)
+        lower_left = vertex[row, horizon_segment, quantile_segment]
+        lower_right = vertex[row, horizon_segment, quantile_segment + 1]
+        upper_left = vertex[row, horizon_segment + 1, quantile_segment]
+        upper_right = vertex[row, horizon_segment + 1, quantile_segment + 1]
+        lower = lower_left + quantile_weight[:, None] * (lower_right - lower_left)
+        upper = upper_left + quantile_weight[:, None] * (upper_right - upper_left)
+        return lower + horizon_weight[:, None] * (upper - lower)
+
+
 class GroupwisePairSelector(nn.Module):
     """Permutation-equivariant selector over the complete 15-pair candidate set."""
 
@@ -562,6 +605,7 @@ def main() -> None:
     horizon_spline_quantile_surface_training = bool(config.get("horizon_spline_quantile_surface_training", False))
     horizon_size_conditioned_authority_training = bool(config.get("horizon_size_conditioned_authority_training", False))
     horizon_risk_size_authority_training = bool(config.get("horizon_risk_size_authority_training", False))
+    horizon_lattice_risk_size_authority_training = bool(config.get("horizon_lattice_risk_size_authority_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -595,7 +639,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -651,8 +695,8 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training:
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training:
             source_prefix, source_prefix_target = [], []
             p201_prefix, p201_prefix_target = [], []
             for set_size in config["authority_set_sizes"]:
@@ -781,7 +825,7 @@ def main() -> None:
             (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
             print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
             return
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training:
             split = config["split"]
             modulus = int(split["scene_modulus"])
             calibration_rows = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
@@ -797,7 +841,15 @@ def main() -> None:
             heldout_horizon_index = int(config["heldout_horizon_index"])
             set_sizes = np.asarray(config["authority_set_sizes"], np.int64)
             model_config = config["size_model"]
-            if horizon_risk_size_authority_training:
+            risk_size_axis = horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training
+            if horizon_lattice_risk_size_authority_training:
+                model = LatticeRiskSizeHorizonAuthority(
+                    source_feature.shape[1], model_config["hidden_dimensions"],
+                    normalized_horizons[training_horizon_indices], config["quantile_knots"], len(set_sizes),
+                ).cuda()
+                training_quantile_range = np.asarray(config["training_quantile_range"], np.float32)
+                q = float(config["heldout_quantile_level"])
+            elif horizon_risk_size_authority_training:
                 model = RiskSizeConditionedHorizonQuantileSurface(
                     source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes),
                     float(config["quantile_floor"]),
@@ -825,7 +877,7 @@ def main() -> None:
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
                 local_size_index = torch.randint(len(set_sizes), (len(row),), device="cuda")
-                if horizon_risk_size_authority_training:
+                if risk_size_axis:
                     local_quantile = (
                         float(training_quantile_range[0])
                         + (float(training_quantile_range[1]) - float(training_quantile_range[0]))
@@ -847,7 +899,10 @@ def main() -> None:
                 optimizer.step()
                 last = float(loss.detach())
                 if step % 500 == 0:
-                    card = "P331 risk-size" if horizon_risk_size_authority_training else "P330 size-conditioned"
+                    if horizon_lattice_risk_size_authority_training:
+                        card = "P332 lattice-risk-size"
+                    else:
+                        card = "P331 risk-size" if horizon_risk_size_authority_training else "P330 size-conditioned"
                     print(f"{card} qxH step={step + 1} loss={last:.7f}", flush=True)
             model.eval()
             calibration_index = np.flatnonzero(calibration_rows)
@@ -856,7 +911,7 @@ def main() -> None:
                 calibration_residuals = []
                 for horizon_index in training_horizon_indices:
                     local_h = torch.full((len(calibration_x),), float(normalized_horizons[horizon_index]), device="cuda")
-                    if horizon_risk_size_authority_training:
+                    if risk_size_axis:
                         local_q = torch.full((len(calibration_x),), q, device="cuda")
                         prediction = model(calibration_x, local_h, local_q).cpu().numpy()
                     else:
@@ -866,7 +921,7 @@ def main() -> None:
                 source_h = torch.full((len(x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
                 p201_x = torch.from_numpy(p201_feature).cuda()
                 p201_h = torch.full((len(p201_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
-                if horizon_risk_size_authority_training:
+                if risk_size_axis:
                     source_q = torch.full((len(x),), q, device="cuda")
                     p201_q = torch.full((len(p201_x),), q, device="cuda")
                     source_score = model(x, source_h, source_q).cpu().numpy()
@@ -910,6 +965,8 @@ def main() -> None:
                 "risk_quantile_level": q,
                 "training_quantile_range": training_quantile_range,
                 "quantile_floor": None if not horizon_risk_size_authority_training else float(config["quantile_floor"]),
+                "quantile_knots": None if not horizon_lattice_risk_size_authority_training else np.asarray(config["quantile_knots"], np.float32),
+                "surface_type": "partial_monotone_lattice" if horizon_lattice_risk_size_authority_training else ("positive_interaction" if horizon_risk_size_authority_training else "fixed_quantile"),
                 "calibration_offset": calibration_offset,
                 "heldout_log_cost_ceilings": evaluation_ceilings,
             }, run_dir / config["model_artifact"])

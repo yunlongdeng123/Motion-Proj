@@ -492,9 +492,17 @@ unsafe=`.07006/.05243`、size/ceiling monotonicity=`0/0`，3/3 supported；stric
 `.03934/.25738/.75574`，mean selected size=`2.10/2.47/2.83`。source mean/highest=`.37412/.70811`、
 max unsafe=`.05676`。wall=`60.31s`。
 
-P331合并P328 continuous risk axis与P330 nested cardinality：每batch采样`q~Uniform(.70,.97)`，输出沿
-k累积的positive base/H/q/H×q increments，从结构上保证H、q、set size三轴单调；q90 source calibration，
-P201同时heldout task+H=`2.5s`。Active=`WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01`。
+P331合并continuous risk与nested cardinality。Canonical=`run://worldsim_v67/
+WS-V67-P331-RISK-SIZE-HORIZON-AUTHORITY-SURFACE-01/
+20260901T093000Z__risk-size-horizon-authority-surface-s0-r1`：130,734 examples、9k steps、final pinball=
+`.02573`、q90 offset=`.07846`。P201 max unsafe=`.03764`、monotonicity=0通过，但mean any-authority
+coverage=`.24672 < .30`，2/3 rejected并登记`V67-F212`；strict/mid/high coverage=`0/.08689/.65328`。
+source coverage=`.27403/.63416`、max unsafe=`.03042`。不降门、不调q/range/capacity/seed。
+
+P332根据NeurIPS 2017 Deep Lattice Networks与ICML 2023 Constrained Monotonic Networks迁移到partial-
+monotone lattice：context MLP输出H×q×k lattice vertices，逐轴monotone envelope后双线性H/q插值；允许
+非supermodular的任意单调交互，去掉P331“所有高阶交互系数必须为正”的额外限制。Active=
+`WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
