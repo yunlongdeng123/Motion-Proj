@@ -316,15 +316,19 @@ class DirectVisitedReliabilityHead(nn.Module):
         return torch.cummax(raw_logits, dim=1).values
 
 
-def fit_binary_isotonic_map(scores, targets):
+def fit_binary_isotonic_map(scores, targets, sample_weights=None):
     """Fit a non-decreasing binary calibration map with pool-adjacent violators."""
     order = np.argsort(scores, kind="stable")
     sorted_scores = np.asarray(scores, np.float64)[order]
     sorted_targets = np.asarray(targets, np.float64)[order]
+    sorted_weights = (
+        np.ones(len(sorted_scores), np.float64)
+        if sample_weights is None else np.asarray(sample_weights, np.float64)[order]
+    )
     block_means, block_weights, block_ends = [], [], []
-    for index, target in enumerate(sorted_targets):
+    for index, (target, sample_weight) in enumerate(zip(sorted_targets, sorted_weights)):
         block_means.append(float(target))
-        block_weights.append(1.0)
+        block_weights.append(float(sample_weight))
         block_ends.append(index)
         while len(block_means) >= 2 and block_means[-2] > block_means[-1]:
             weight = block_weights[-2] + block_weights[-1]
@@ -1072,6 +1076,54 @@ def main() -> None:
                 calibration_loss.backward()
                 calibration_optimizer.step()
                 calibration_last = float(calibration_loss.detach())
+            covariate_shift_weighting = bool(config.get("reliability_covariate_shift_weighting", False))
+            importance_weights = None
+            domain_model = None
+            domain_last = None
+            domain_weight_summary = None
+            if covariate_shift_weighting:
+                domain_config = config["domain_discriminator"]
+                domain_layers = []
+                domain_width = source_feature.shape[1]
+                for hidden_width in domain_config["hidden_dimensions"]:
+                    domain_layers.extend((nn.Linear(domain_width, int(hidden_width)), nn.SiLU()))
+                    domain_width = int(hidden_width)
+                domain_layers.append(nn.Linear(domain_width, 1))
+                domain_model = nn.Sequential(*domain_layers).cuda()
+                domain_optimizer = torch.optim.AdamW(
+                    domain_model.parameters(), lr=float(domain_config["learning_rate"]),
+                    weight_decay=float(domain_config["weight_decay"])
+                )
+                source_domain_index = torch.from_numpy(np.flatnonzero(isotonic_rows)).cuda()
+                for step in range(int(domain_config["steps"])):
+                    half_batch = int(domain_config["batch_size"]) // 2
+                    source_row = source_domain_index[
+                        torch.randint(len(source_domain_index), (half_batch,), device="cuda")
+                    ]
+                    target_row = torch.randint(len(p201_x), (half_batch,), device="cuda")
+                    domain_features = torch.cat((source_x[source_row], p201_x[target_row]), 0)
+                    domain_target = torch.cat((
+                        torch.zeros(half_batch, device="cuda"), torch.ones(half_batch, device="cuda")
+                    ))
+                    domain_logits = domain_model(domain_features).squeeze(1)
+                    domain_loss = F.binary_cross_entropy_with_logits(domain_logits, domain_target)
+                    domain_optimizer.zero_grad(set_to_none=True)
+                    domain_loss.backward()
+                    domain_optimizer.step()
+                    domain_last = float(domain_loss.detach())
+                    if step % 500 == 0:
+                        print(f"{config['task_id']} domain step={step + 1} bce={domain_last:.7f}", flush=True)
+                domain_model.eval()
+                with torch.no_grad():
+                    domain_probability = torch.sigmoid(domain_model(source_x[source_domain_index]).squeeze(1))
+                    domain_probability = domain_probability.clamp(1e-6, 1.0 - 1e-6)
+                    importance_weights = (domain_probability / (1.0 - domain_probability)).cpu().numpy()
+                importance_weights = importance_weights / max(float(importance_weights.mean()), 1e-12)
+                domain_weight_summary = {
+                    "minimum": float(importance_weights.min()), "maximum": float(importance_weights.max()),
+                    "mean": float(importance_weights.mean()),
+                    "effective_sample_size": float(importance_weights.sum() ** 2 / np.square(importance_weights).sum()),
+                }
             isotonic_calibration = bool(config.get("reliability_isotonic_calibration", False))
             isotonic_maps = None
             isotonic_bce = None
@@ -1100,9 +1152,13 @@ def main() -> None:
                             )
                         ceiling_scores = np.concatenate(ceiling_scores, 0)
                         ceiling_targets = np.concatenate(ceiling_targets, 0)
+                        local_isotonic_weights = (
+                            np.tile(importance_weights, len(training_horizon_indices))
+                            if covariate_shift_weighting else None
+                        )
                         for set_size_index in range(len(set_sizes)):
                             thresholds, values = fit_binary_isotonic_map(
-                                ceiling_scores[:, set_size_index], ceiling_targets[:, set_size_index]
+                                ceiling_scores[:, set_size_index], ceiling_targets[:, set_size_index], local_isotonic_weights
                             )
                             calibrated = apply_binary_isotonic_map(
                                 ceiling_scores[:, set_size_index], thresholds, values
@@ -1213,6 +1269,7 @@ def main() -> None:
                 "calibration_bias": calibration_bias.detach().cpu(),
                 "calibration_horizon_slope": calibration_horizon_slope.detach().cpu() if group_calibration else None,
                 "isotonic_maps": isotonic_maps,
+                "domain_model_state_dict": domain_model.state_dict() if covariate_shift_weighting else None,
                 "frozen_lattice_authority": config["frozen_lattice_authority"],
             }, run_dir / config["model_artifact"])
             summary = {
@@ -1229,6 +1286,10 @@ def main() -> None:
                                          "example_count": int(isotonic_rows.sum()) if isotonic_calibration else 0,
                                          "binary_cross_entropy": isotonic_bce,
                                          "map_count": len(ceilings) * len(set_sizes) if isotonic_calibration else 0},
+                "covariate_shift_weighting": {"enabled": covariate_shift_weighting,
+                                               "domain_steps": int(config["domain_discriminator"]["steps"]) if covariate_shift_weighting else 0,
+                                               "domain_final_bce": domain_last,
+                                               "source_weight_summary": domain_weight_summary},
                 "source_direct_reliability_frontier": source_frontier,
                 "P201_direct_reliability_frontier": p201_frontier,
                 "source_probability_range": [float(source_probability.min()), float(source_probability.max())],
