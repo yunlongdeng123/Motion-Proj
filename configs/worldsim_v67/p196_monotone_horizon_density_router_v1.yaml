@@ -1,0 +1,38 @@
+schema_version: worldsim_v67.p196_monotone_horizon_density_router.v1
+output_schema_version: worldsim_v67.p196_monotone_horizon_density_router_summary.v1
+task_id: WS-V67-P196-MONOTONE-HORIZON-DENSITY-ROUTER-01
+hypothesis_id: WS-V67-H-P196-001
+role: source_trained_monotone_horizon_router_over_frozen_density_experts
+seed: 0
+model_artifact: MONOTONE_HORIZON_DENSITY_ROUTER.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p192: {run: worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1, artifact: SCENE_BALANCED_LOG_COST_DENSITY.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+router: {training_steps: 6000, batch_size: 65536, learning_rate: 0.02, minimum_horizon_seconds: 0.8, maximum_horizon_seconds: 3.0}
+decision:
+  minimum_mean_calibration_error_reduction_vs_p182: 0.05
+verdict_on_pass: supported_monotone_horizon_density_router_development
+verdict_on_failure: rejected_monotone_horizon_density_router
+locks:
+  P182_and_P192_experts_are_frozen: true
+  router_reads_only_normalized_horizon_and_has_two_trainable_scalars: true
+  P192_weight_is_monotone_nondecreasing_in_horizon: true
+  router_is_fit_only_by_source_log_likelihood: true
+  P175_and_P183_are_excluded: true
+  no_router_architecture_regularization_loss_step_or_learning_rate_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://papers.nips.cc/paper_files/paper/2022/hash/11fc8c98b46d4cbdfe8157267228f7d7-Abstract-Conference.html
+  - https://papers.nips.cc/paper_files/paper/2022/hash/8bd4f1dbc7a70c6b80ce81b8b4fdc0b2-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_only_until_a_future_unread_cohort
+  - source_trained_router_not_target_adaptation
+  - no_voxel_collision_conformal_planner_policy_closed_loop_or_safety_claim

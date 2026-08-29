@@ -2521,6 +2521,48 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F158`。
 
+### V67-F158 — horizon条件sampler仍受共享density参数干扰
+
+- 分类：`algorithm/conditional-sampling-shared-parameter-interference`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01/
+  20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1`。
+- 观察：相对P182，P96/P129 Brier改善`2.45%/.94%`，P81/P113回退`3.85%/.52%`；mean calibration改善`9.35%`，
+  但逐cohort noninferiority失败。结果优于P194 calibration，却仍不是可晋升candidate。
+- 解释：已知H条件的采样只改变共享参数收到的梯度比例，不能防止不同measure对同一density weights的覆盖；这解释了calibration
+  可改善但P81 proper score显著退化。
+- 防重复：关闭sampling schedule family，不扫非线性schedule或端点概率。P196冻结两个完整专家，只训练source-only两标量单调
+  horizon router；若仍失败，关闭P182/P192 refinement并回到fresh-supported P182。
+
+下一可用编号为：`V67-F159`。
+
+### V67-F159 — source-NLL固定density pool仍复制短时域回退
+
+- 分类：`algorithm/source-router-target-horizon-nontransport`；状态：`closed_negative_after_consumed_secondary`。
+- canonical：`run://worldsim_v67/WS-V67-P197-ROUTED-DENSITY-POST-CONFIRMATION-01/
+  20260830T174000Z__routed-density-post-confirmation-s0-r1`。
+- 观察：P196在旧四cohort 2/2 development通过，但冻结后在已消费P183五H上，H`.8/1.5` Brier回退`.49%/.55%`，
+  macro calibration只改善`1.13%`，0/2 gates。router slope近零导致所有H约55.7%使用P192。
+- 解释：source likelihood没有识别target-domain的horizon-dependent expert suitability；完整专家pool解决共享训练干扰，却仍把scene-balanced
+  expert过多混入短H。该结果只是否定P196升级，不推翻P183/P182 fresh density。
+- 防重复：不在P183 rows拟合router/threshold，不扫constant weight或增加router feature。P198只允许一次source horizon参数隔离：
+  short/long experts分别训练，边界锁定相邻source horizons；失败即关闭P182/P192 sampling/expert refinement family。
+
+下一可用编号为：`V67-F160`。
+
+### V67-F160 — short/long参数隔离放大长时域跨cohort偏差
+
+- 分类：`algorithm/horizon-specialist-nontransport`；状态：`closed_negative_family_terminal`。
+- canonical：`run://worldsim_v67/WS-V67-P198-SHORT-LONG-DENSITY-EXPERTS-01/
+  20260830T175000Z__short-long-density-experts-s0-r1`。
+- 观察：short/long分别8,000-step专训，P96/P129 Brier改善`.79%/.38%`，但P81/P113回退`4.20%/5.56%`；mean
+  calibration improvement=`-.87%`，0/2 gates。更低的horizon-subset NLL没有形成迁移优势。
+- 解释：scene-measure shift不等于可由source horizon partition识别的task差异；参数隔离减少gradient interference，却牺牲跨H共享
+  statistical strength并使long expert对P81/P113失配。
+- 防重复：P192--P198 sampling、global mix、conditional sampler、frozen router与horizon expert路线全部关闭。不扫boundary、expert
+  count、init、schedule或loss；P182保持唯一fresh-supported marginal density。下一步改变预测对象为joint-horizon dependence。
+
+下一可用编号为：`V67-F161`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

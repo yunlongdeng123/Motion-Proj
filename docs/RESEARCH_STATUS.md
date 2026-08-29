@@ -835,8 +835,25 @@ P194最终相对P182 P81/P96/P113/P129 Brier change=`+1.19%/-.24%/+.46%/+.93%`�
 
 顶会调研进一步指向conditional MoE/conditional distribution matching：干扰应由已知condition路由，而非全局混权。P195保持单一
 density，不扩MoE容量；先按empirical trajectory保持source horizon marginal，再把within-horizon scene-balanced replacement
-probability从source H`.8→3.0s`固定线性设为`0→1`。这是一条无target fit、无权重sweep的确定性条件sampler，12,000-step GPU
-训练已启动；目标是短H保持P182 measure、长H逐步获得P192稳健性。
+probability从source H`.8→3.0s`固定线性设为`0→1`。结果相对P182 Brier change=`+3.85%/-2.45%/+.52%/-.94%`，mean
+calibration improvement=`9.35%`；严格逐cohort gate仍失败，F158。条件sampler缓解概率刻度但共享参数仍产生P81/P113负迁移。
+
+P196据此停止重训density，冻结P182 pooled与P192 scene-balanced两个完整density experts，只在source continuous-cost NLL上训练
+`w(H)=sigmoid(softplus(a)*H_norm+b)`两个标量；P192权重对H强制非降。旧四cohort Brier全改善`1.71%/2.10%/3.53%/1.23%`，
+mean calibration improvement=`18.73%`，2/2 development gates通过。学到的P192权重`.55724→.55731`、slope仅`.000282`，
+说明机制是冻结density的linear pool而不是horizon routing。
+
+P197在模型完全冻结后读取已消费P183 rows作secondary：H`.8/1.5` Brier回退`.49%/.55%`，长H改善`.32%/.90%/3.25%`；
+macro Brier/calibration improvement=`.69%/1.13%`，0/2 gates，F159。因此不启动fresh cohort，P196只保留development机制。
+新调研的multi-horizon probabilistic forecasting与isolated-expert MoE共同指向参数隔离。P198训练short/long各8,000 steps后仍拒绝：
+相对P182 P81/P96/P113/P129 Brier change=`+4.20%/-.79%/+5.56%/-.38%`，mean calibration improvement=`-.87%`，
+0/2 gates，F160。长时域expert专训反而放大P81/P113 shift；按stop rule关闭P192--P198 sampling/router/expert refinement family，
+不扫边界、专家数或初始化。P182保持唯一fresh-supported marginal density。
+
+下一递进对象不再重做marginal calibration，而是多时域联合可靠性：现有source rows按`scene/anchor/query`在H`.8/1.5/2.5/3.0`
+有18,515条完整交集，可在无新archive IO下训练joint dependence head。AISTATS 2022 MQF2等工作表明multi-horizon marginals不能表达
+跨时域依赖；下一项将冻结P182 marginals，只学习Gaussian-copula dependence，并直接比较“整段四时域均可靠”的joint-event Brier，
+而非继续优化七个边际CDF。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 

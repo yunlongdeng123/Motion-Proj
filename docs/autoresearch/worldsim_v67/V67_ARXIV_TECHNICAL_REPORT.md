@@ -29,8 +29,8 @@ directional diagonal-Gaussian进一步以boundary-normal projection获得更强�
 10 scenes/10 logs、五个horizon上确认：相对P173的integrated Brier macro降低`28.48%`，mean absolute reliability error macro降低
 `69.38%`，两项预注册gate均通过。P192进一步表明source scene等权采样可在四个已消费development cohort上继续改善P182，
 但P193在已消费P183 rows上的冻结次级诊断显示H`.8/1.5s` Brier回退`.93%/1.13%`、macro calibration无净改善，
-因此该改进不能升级；P182仍是唯一具有fresh支持的density。P194只作一次固定half pooled/half scene-balanced训练，检验
-是否能避免纯scene等权的时域权衡，不进入P183主结论。
+因此该改进不能升级；P182仍是唯一具有fresh支持的density。P194/P195的全局与horizon-conditional sampler均未消除跨cohort
+回退。P196冻结两个专家后在旧development通过，但P197 consumed-secondary仍复制短H退化；因此这些结果都不进入P183主结论。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -454,7 +454,10 @@ source sampling measure：102 scenes等权的environment-balanced ERM对比P182�
 `1.66%/2.87%/5.06%/.80%`且mean calibration改善`16.65%`，因此development支持；但它没有参与P183 frozen candidate选择，仍需
 另一个future cohort才能升级为独立结论。P193先在冻结后读取已消费P183 rows作非独立secondary，发现H`.8/1.5s`回退而长H
 改善，macro calibration improvement=`-.03%`，故停止P192晋升，不浪费新的fresh cohort。该结果把问题定位为sampling measure
-的horizon trade-off；P194依据group-robust trade-off文献仅固定一次50/50 pooled/scene-balanced采样，不做权重sweep。
+的horizon trade-off。P194全局50/50与P195线性horizon sampler均被拒绝；P196冻结density后以source NLL学习两标量router，
+旧四cohort Brier全改善且mean calibration +18.73%，但router退化为55.7%常数pool，并在P197 consumed P183上再次使短H回退。
+P198进一步把short/long parameters完全隔离仍在P81/P113回退`4.20%/5.56%`，据此sampling/pooling/expert family终止；
+P182仍是唯一fresh-supported marginal density。后续研究转向冻结marginals后的joint-horizon dependence，不再改写P183结论。
 
 ## 3. 核心结果表
 
@@ -550,8 +553,8 @@ source sampling measure：102 scenes等权的environment-balanced ERM对比P182�
   objective，而不是把全局AUROC当作固定预算tail保证。
 - P183在不同10-scene/10-log、五时域确认了continuous-cost conditional density相对P173的proper-score与marginal-reliability增益；
   这是scene-level支持，不是session/population generalization或formal calibration guarantee。
-- P192 scene-balanced ERM在四个旧development cohorts改善P182，但P193 consumed-secondary暴露短时域回退，不能写成
-  future-confirmation candidate；P182仍是唯一fresh-supported density。
+- P192--P197的scene weighting、conditional sampler与frozen-expert pool均在旧development或长H有局部收益，但consumed P183
+  短H持续回退；它们构成sampling-measure negative chain，P182仍是唯一fresh-supported density。
 
 本报告不支持：
 

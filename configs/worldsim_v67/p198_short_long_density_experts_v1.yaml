@@ -1,0 +1,41 @@
+schema_version: worldsim_v67.p198_short_long_density_experts.v1
+output_schema_version: worldsim_v67.p198_short_long_density_experts_summary.v1
+task_id: WS-V67-P198-SHORT-LONG-DENSITY-EXPERTS-01
+hypothesis_id: WS-V67-H-P198-001
+role: parameter_isolated_short_long_horizon_continuous_cost_density_experts
+seed: 0
+model_artifact: SHORT_LONG_DENSITY_EXPERTS.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p192: {run: worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1, artifact: SCENE_BALANCED_LOG_COST_DENSITY.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+experts:
+  short: {maximum_horizon_seconds: 1.5, initialization: P182, sampling: empirical}
+  long: {minimum_horizon_seconds: 2.5, initialization: P192, sampling: uniform_scene_then_trajectory_within_long_horizons}
+  transition: {short_end_seconds: 1.5, long_start_seconds: 2.5, interpolation: linear_density_pool}
+training: {steps_per_expert: 8000, batch_size: 32768, learning_rate: 0.0005, weight_decay: 0.0001}
+decision: {minimum_mean_calibration_error_reduction_vs_p182: 0.05}
+verdict_on_pass: supported_short_long_density_experts_development
+verdict_on_failure: rejected_short_long_density_experts
+locks:
+  short_and_long_parameters_are_isolated: true
+  short_uses_only_source_H_le_1p5_and_long_only_source_H_ge_2p5: true
+  transition_boundaries_match_adjacent_source_horizons_and_are_not_swept: true
+  P175_and_P183_are_excluded: true
+  no_expert_count_boundary_initialization_sampling_loss_or_budget_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v151/kan22a.html
+  - https://openreview.net/pdf?id=e1wDDFmlVu
+  - https://papers.nips.cc/paper_files/paper/2022/hash/11fc8c98b46d4cbdfe8157267228f7d7-Abstract-Conference.html
+claim_boundary:
+  - consumed_development_only_until_future_unread_confirmation
+  - horizon_specialists_not_target_adaptation
+  - no_formal_calibration_collision_conformal_planner_policy_closed_loop_or_safety_claim

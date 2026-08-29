@@ -1,0 +1,26 @@
+schema_version: worldsim_v67.p197_routed_density_post_confirmation.v1
+output_schema_version: worldsim_v67.p197_routed_density_post_confirmation_summary.v1
+task_id: WS-V67-P197-ROUTED-DENSITY-POST-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P197-001
+role: consumed_post_confirmation_secondary_of_source_trained_frozen_expert_pool
+frozen_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p192: {run: worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1, artifact: SCENE_BALANCED_LOG_COST_DENSITY.pt}
+frozen_p196: {run: worldsim_v67/WS-V67-P196-MONOTONE-HORIZON-DENSITY-ROUTER-01/20260830T173000Z__monotone-horizon-density-router-s0-r1, artifact: MONOTONE_HORIZON_DENSITY_ROUTER.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_mean_calibration_error_reduction_vs_p182: 0.05}
+verdict_on_pass: supported_consumed_routed_density_secondary_transfer
+verdict_on_failure: rejected_consumed_routed_density_secondary_transfer
+locks:
+  P182_P192_and_P196_router_are_frozen_before_P183_rows_read: true
+  P183_rows_are_consumed_and_not_independent: true
+  every_horizon_Brier_noninferiority_and_mean_calibration_improvement_are_only_decisions: true
+  no_weight_router_budget_horizon_metric_or_gate_recovery: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - consumed_secondary_only_not_fresh_confirmation
+  - formal_upgrade_requires_P198_future_unread_cohort
+  - no_formal_calibration_collision_conformal_planner_policy_closed_loop_or_safety_claim

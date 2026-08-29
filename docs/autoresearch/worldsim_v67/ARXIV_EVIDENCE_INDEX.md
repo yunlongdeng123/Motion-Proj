@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P183 fresh density supported; P192/P194 global sampling refinements rejected; P195 conditional sampling active`
+- 状态：`P183 fresh marginals supported; P192--P198 refinement family closed; P199 joint-horizon dependence active`
 - 当前主结论：Actor uncertainty × trajectory boundary的continuous cost density在不同10-scene/10-log五时域确认中同时改善proper score与marginal reliability
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -105,7 +105,11 @@
 | P192 | `run://worldsim_v67/WS-V67-P192-SCENE-BALANCED-LOG-COST-DENSITY-01/20260830T164000Z__scene-balanced-log-cost-density-s0-r1` | Brier 4/4改善、mean calibration +16.65%；development supported |
 | P193 | `run://worldsim_v67/WS-V67-P193-SCENE-BALANCED-POST-CONFIRMATION-01/20260830T170000Z__scene-balanced-post-confirmation-s0-r2` | consumed P183：短H退化、macro calibration -.03%；rejected/F156 |
 | P194 | `run://worldsim_v67/WS-V67-P194-MIXED-SCENE-EMPIRICAL-LOG-COST-DENSITY-01/20260830T171000Z__mixed-scene-empirical-log-cost-density-s0-r1` | mean calibration -12.98%；rejected/F157 |
-| P195 | `run://worldsim_v67/WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01/20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1` | fixed source-H conditional sampler；running development |
+| P195 | `run://worldsim_v67/WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01/20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1` | calibration +9.35%但P81/P113 Brier回退；rejected/F158 |
+| P196 | `run://worldsim_v67/WS-V67-P196-MONOTONE-HORIZON-DENSITY-ROUTER-01/20260830T173000Z__monotone-horizon-density-router-s0-r1` | old dev Brier 4/4改善、calibration +18.73%；dev supported |
+| P197 | `run://worldsim_v67/WS-V67-P197-ROUTED-DENSITY-POST-CONFIRMATION-01/20260830T174000Z__routed-density-post-confirmation-s0-r1` | consumed P183短H回退；rejected/F159 |
+| P198 | `run://worldsim_v67/WS-V67-P198-SHORT-LONG-DENSITY-EXPERTS-01/20260830T175000Z__short-long-density-experts-s0-r1` | P81/P113 Brier回退4.20%/5.56%；rejected/F160 |
+| P199 | pending | frozen P182 marginals + learned joint-horizon copula；implementation active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -250,6 +254,9 @@
 | `V67-F155` | closed negative | P191 decomposed evidence仅P113改善，P129 Brier回退16.70% |
 | `V67-F156` | closed negative | P192纯scene等权在consumed P183的H.8/1.5 Brier回退，macro calibration无改善 |
 | `V67-F157` | closed negative | P194全局50/50采样仅P96 Brier改善，mean calibration退化12.98% |
+| `V67-F158` | closed negative | P195条件sampler改善P96/P129但P81/P113 Brier回退，共享参数干扰未解 |
+| `V67-F159` | closed negative | P196 source-NLL pool在consumed P183短H仍回退，router suitability不迁移 |
+| `V67-F160` | closed negative | P198 horizon specialists放大P81/P113回退；P192--P198 refinement family terminal |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

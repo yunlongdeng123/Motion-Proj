@@ -1443,7 +1443,7 @@
 
 ### WS-V67-P195-HORIZON-CONDITIONED-SCENE-SAMPLING-01
 
-- 状态：`running development`；run id=`20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1`。
+- 状态：`done/rejected development`；canonical id=`20260830T172000Z__horizon-conditioned-scene-sampling-s0-r1`。
 - hypothesis：P193显示sampling收益随H变号、P194显示全局mix无效；scene reweighting必须以已知horizon condition路由。
 - sampler：先uniform empirical trajectory以保持source H marginal；随后按source H `.8/1.5/2.5/3.0s`以固定
   `0/.3182/.7727/1.0`概率替换为同H内uniform scene→trajectory，正好是source horizon端点间线性schedule。
@@ -1451,6 +1451,59 @@
   noninferiority与mean calibration +5%两门；不扫schedule、概率、MoE容量、loss或训练预算。
 - literature：NeurIPS 2022 conditional MoE与domain-specialized MoE指出共享模型的跨任务干扰可由已知condition路由；NeurIPS 2020
   conditional distribution matching指出marginal强制对齐在conditional/label measure不同时会伤害预测。本项只迁移路由思想。
+- result：P81/P96/P113/P129 Brier change vs P182=`+3.85%/-2.45%/+.52%/-.94%`；calibration reduction=
+  `-34.89%/+13.20%/-2.06%/+61.14%`，mean=`+9.35%`。calibration gate通过、逐cohort Brier gate失败，F158。
+- final NLL=`-1.10612`，wall=`78.05s`；条件sampling改善P96/P129但未避免共享density参数的P81/P113 interference。
+
+### WS-V67-P196-MONOTONE-HORIZON-DENSITY-ROUTER-01
+
+- 状态：`done/supported development`；canonical id=`20260830T173000Z__monotone-horizon-density-router-s0-r1`。
+- object：冻结P182 pooled expert与P192 scene-balanced expert，不再通过sampler重训共享参数；对完整log-cost density作mixture。
+- router：仅两个trainable scalars，`w192(H)=sigmoid(softplus(slope)*normalized_H+intercept)`，保证P192权重随H非降；
+  仅source 79,478 trajectories的log-likelihood训练6,000 steps，batch65,536。
+- decisions：旧四cohort Brier逐项不劣P182、mean calibration error改善≥5%；P175/P183排除。不扫router network、regularizer、
+  objective、steps或lr。支持也只先算development，之后才允许fresh protocol。
+- motivation：P194/P195表明共享density参数会互相覆盖；NeurIPS 2022 conditional/domain MoE支持保留完整专家并用condition路由，
+  本项以最小可辨识router检验该机制，不声称test-time adaptation。
+- result：P81/P96/P113/P129 Brier improvements vs P182=`1.71%/2.10%/3.53%/1.23%`；calibration reductions=
+  `7.51%/-.67%/20.43%/47.66%`，mean=`18.73%`；2/2 gates。router P192 weight `.55724→.55731`、positive slope
+  `.000282`，实质为source-likelihood选择的固定density pool。wall=`21.11s`。
+
+### WS-V67-P197-ROUTED-DENSITY-POST-CONFIRMATION-01
+
+- 状态：`done/rejected consumed secondary`；canonical id=`20260830T174000Z__routed-density-post-confirmation-s0-r1`。
+- protocol：P182/P192/P196全部冻结后才读取已消费P183 rows；与P193相同五H、七预算及两门，只比较P196 pool与P182。
+- result：五H Brier reductions=`-.49%/-.55%/+.32%/+.90%/+3.25%`；calibration reductions=
+  `-6.91%/-46.21%/+11.75%/+20.23%/+26.78%`；macro=`+.69%/+1.13%`，0/2 gates，F159。
+- role boundary：非独立post-confirmation diagnosis；阻止P196占用fresh cohort，但不改变P183/P182正式支持。
+
+### WS-V67-P198-SHORT-LONG-DENSITY-EXPERTS-01
+
+- 状态：`done/rejected development`；canonical id=`20260830T175000Z__short-long-density-experts-s0-r1`。
+- architecture：两个参数完全隔离、同为P182的5-component conditional density。short从P182初始化、只训练source H≤1.5
+  empirical；long从P192初始化、只训练H≥2.5并在该子集内uniform scene→trajectory。
+- routing：H≤1.5 short、H≥2.5 long，1.5--2.5对完整densities作固定线性pool；边界来自相邻source horizons，不读P183拟合。
+- training：每expert 8,000 steps、batch32,768、lr=`5e-4`，顺序占用单3090；P175/P183排除。
+- decisions：旧四cohort Brier逐项不劣P182、mean calibration改善≥5%；不扫expert count/boundary/init/sampler/loss/budget。
+- literature：AISTATS 2022 multi-horizon probabilistic forecasting强调各forecast component的结构差异；ICLR 2025 isolated experts与
+  NeurIPS 2022 conditional MoE用于减少共享参数interference。本项只迁移参数隔离，不声称联合时序分布。
+- result：source short/long trajectories=`41,538/37,940`，final NLL=`-1.40885/-.79734`。P81/P96/P113/P129 Brier
+  change vs P182=`+4.20%/-.79%/+5.56%/-.38%`；calibration reduction=`-31.30%/+11.49%/-16.10%/+32.43%`，
+  mean=`-.87%`；0/2 gates，F160。wall=`92.60s`。
+- verdict=`rejected_short_long_density_experts`；关闭P192--P198 sampling/router/expert refinement，不扫边界/专家数/init。
+
+### WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01
+
+- 状态：`hypothesis frozen / implementation active`。
+- new object：不再问每个H单独的`P(cost_H≤b)`，而问同一candidate trajectory在source H`.8/1.5/2.5/3.0`上
+  `P(all_H cost_H≤b)`；这是“未来整段被访问world/Actor states是否可靠”的联合版本。
+- data：source按`scene_index/anchor_frame/query_id`四H完整交集=`18,515 trajectories`；不读P175/P183/new target。
+- model：冻结P182四个marginal densities，把realized cost经marginal PIT→Gaussian z；小型head只预测4×4相关结构，
+  以Gaussian-copula NLL训练。scene index modulo5只留作source development，不产生fresh claim。
+- decision：heldout-source joint-event integrated Brier严格优于P182 marginal independence product，且mean absolute joint
+  reliability error改善≥10%；只两门，不扫copula family/MC samples/head/scene split/budget。
+- literature：AISTATS 2022 MQF2明确指出逐horizon marginals不表示time dependency，并用联合概率分布处理multi-horizon；
+  P199冻结已获fresh支持的marginals，仅研究dependence增量。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
