@@ -618,6 +618,9 @@ P165按F129允许的对象迁移，不再修改单Actor marginal：P126三member
 proxy。Source 13,303 actor groups / 101,858 states直接复用；旧四cohort决策、P147描述边界保持不变，不扫diffusion/sample/
 quantile/architecture。
 
+P165 canonical r1已在单3090启动；step1/1001/2001 noise MSE=`1.31523/.45516/.42772`，GPU约`.65GiB`。
+当前继续8,000-step joint diffusion训练，随后同进程执行冻结的16-sample cost compiler；无工程失败或协议变化。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
