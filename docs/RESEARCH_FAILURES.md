@@ -292,6 +292,7 @@
   integrand参数绑定。问题是局部张量维度所有权，不是 positive-integral假设失败；
 - minimal recovery：r2用 warp rates自己的 `shape[-1]`计算 width/index/cumulative，模型、knots、hidden、steps、
   seed、teacher、gates全部不变；
+- concurrent branch：P304只复用已支持 P302 的 base做单调用压缩训练，不依赖 F202失败路径；
 - 下一可用 failure id 为 `V67-F203`。
 
 > **最后更新**：2026-08-29

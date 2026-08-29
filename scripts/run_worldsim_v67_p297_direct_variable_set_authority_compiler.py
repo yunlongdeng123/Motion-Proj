@@ -396,7 +396,7 @@ def main():
             direct_artifact = torch.load(
                 args.runs_root / direct_reference["run"] / direct_reference["artifact"], map_location="cuda"
             )
-            student.load_state_dict(direct_artifact["model_state_dict"])
+            _load_base_state(student, direct_artifact)
         else:
             student.load_state_dict(policy_artifact["model_state_dict"])
     optimizer = torch.optim.AdamW(student.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"]))
@@ -480,6 +480,11 @@ def main():
         checks["P201_fraction_budget_monotonicity"] = (
             p201["fraction_budget_monotonicity_violations"]
             <= int(decision["maximum_P201_fraction_budget_monotonicity_violations"])
+        )
+    if "maximum_P201_direct_student_forward_seconds" in decision:
+        checks["P201_direct_forward_latency"] = (
+            p201["direct_student_forward_seconds"]
+            <= float(decision["maximum_P201_direct_student_forward_seconds"])
         )
     verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
     torch.save({

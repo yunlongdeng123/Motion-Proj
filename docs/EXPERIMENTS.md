@@ -474,6 +474,16 @@
   20260901T013000Z__normalized-monotone-warp-authority-s0-r2`。r1在首个训练step前因 warp/base knot count混用
   触发 CUDA gather越界，0 training/quality read；`V67-F202`的唯一修复是按 warp rates末维计算积分索引，合同不变。
 
+### WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01
+
+- compression object：保留 P302 三锚点训练后的 base权重，移除 piecewise wrapper；同一 bisection teacher只用于
+  6k single-call fine-tune，不额外训练 teacher/head。
+- structure：标准 P297/P295 positive price-rate spline，fraction仍映射为 `1-2f`，因此一次 forward且结构单调。
+- gates：P201 attained MAE `<=P301 .0285229301`、regret `<=.005`、violations=`0`、forward
+  `<=P302 1.4913522s`；不扫 compression loss/weight/steps/lr/gates。
+- active=`run://worldsim_v67/WS-V67-P304-ANCHOR-INITIALIZED-SINGLE-CALL-AUTHORITY-COMPILER-01/
+  20260901T014500Z__anchor-initialized-single-call-s0-r1`；与 P303并发。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01
