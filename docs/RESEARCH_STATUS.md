@@ -580,6 +580,12 @@ selected set/cost exact相同。projected epistemic fraction旧四=`1.56%--2.64%
 mean/aleatoric field，epistemic addend在当前operating point近乎无贡献。论文措辞从“epistemic+aleatoric gain”收紧为
 “deep-ensemble moment predictor gain”。
 
+参考ICCV 2019 kinematic trajectory用oriented bounding box而非粒子表示，以及CVPR 2026 planning-oriented soft collision，
+P162把预测对象扩到Actor oriented footprint。它从既有processed annotations重建future yaw，使用当前yaw+observed yaw-rate作
+forecast并训练三成员yaw-residual Gaussian；推理把rectangle support对yaw的一阶导数传播进P126 position boundary mean/variance。
+baseline使用完全相同的oriented predicted clearance但yaw residual固定0，因此只检验姿态state增量。r1/r2在任何train step前因
+三位scene目录和V4/V67双root解析退出，合并为pre-training engineering F125；r3已修复并在3090执行3×6,000 steps。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

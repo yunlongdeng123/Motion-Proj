@@ -2027,7 +2027,21 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：不调epistemic multiplier/floor；论文禁写“P147证明epistemic uncertainty带来增益”，改写为deep-ensemble moment
   predictor / member averaging，且保留P126/P147现有方法支持。
 
-下一可用编号为：`V67-F125`。
+### V67-F125 — P162 yaw source/eval processed-root解析错误（pre-training engineering）
+
+- 分类：`engineering/processed-scene-routing`；状态：`resolved_r3_before_training`。
+- evidence：r1按四位scene id寻找`0001`，实际processed dirs为三位；r2改`001`后发现source rows来自V4 processed root，
+  fresh evaluation rows来自V67 root。两次均在构造source yaw entries时退出，0 optimizer step/metric。
+- recovery：r3固定按三位scene id依次解析V4、V67两个既有roots；不改yaw target、P126、oriented support、cohort或decisions。
+- scientific impact：无方法结果污染；r3已进入3×6,000-step GPU训练。
+
+### P162 freeze note — oriented-footprint Actor reliability
+
+- object：current yaw+yaw-rate forecast的wrapped residual Gaussian；length/width rectangle support沿predicted boundary normal线性传播。
+- control：同一oriented predicted clearance与P126 position field，但zero yaw residual；actual cost包含support error。
+- prevention：不扫class/box scale/yaw representation/support derivative/score/coverage；失败才使用F126。
+
+下一可用编号为：`V67-F126`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 

@@ -1002,6 +1002,19 @@
   selected cost exact相同。显式epistemic variance不是P147 multi-H gain的主要机制。
 - claim correction：保留P126/P147方法支持，但论文只写deep-ensemble moment predictor / member averaging，不写已证明
   epistemic-UQ增益；不扫epistemic multiplier。
+
+### WS-V67-P162-ORIENTED-FOOTPRINT-ACTOR-ENSEMBLE-01
+
+- 状态：`running r3 GPU training`；canonical=`20260830T121000Z__oriented-footprint-actor-ensemble-s0-r3`。
+- new object：从existing `instances_info.json`重建9-step future yaw；forecast=`current yaw + observed yaw-rate × t`，监督wrapped
+  yaw residual。Actor footprint用length/width oriented rectangle沿query boundary normal的support function表示。
+- model：Actor-only 19 features+normalized time，3 independent scalar Gaussian members、每member 6,000 steps、batch65,536。
+- compiler：冻结P126 position mean/variance；以rectangle-support yaw derivative线性传播yaw mean/variance。baseline共享同一
+  oriented predicted clearance但忽略yaw residual；actual cost包含position projection与actual-vs-predicted support error。
+- decisions：P81/P96/P113/P129相对position-only oriented baseline cost全不退且mean Spearman gain≥`.005`；P147仅post-confirmation。
+- engineering：r1误用四位scene dir；r2只修三位但遗漏source V4/eval V67双root，均0 train steps。r3按两个既有root解析，
+  model/target/decisions不变；F125。
+- locks：不扫class filter/box scale/yaw model/support linearization/score/coverage；不声称exact collision或safety。
 - locks：无cohort/H/model/score/cost/decision变化；不重扫已有files，不新增测试矩阵。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
