@@ -424,7 +424,11 @@ macro calibration error=`.07102/.06101`，F147。这将P173论文结论明确限
 calibrated probability拒绝”。这也说明P182同时改善Brier与calibration的development结果具有必要性，而不是重复优化同一指标。
 
 P184相对P182 mean calibration进一步改善`20.57%`，且3/4 cohort Brier改善，但P81 Brier回退`2.18%`（F148）；故uniform density
-ensemble不升级。P185改为五个连续source-scene environment的worst-NLL训练，仍只作consumed development，P183 candidate保持P182 single density。
+ensemble不升级。P185改为五个连续source-scene environment的worst-NLL训练，mean calibration改善`13.02%`，但P81 Brier仍回退
+`2.64%`（F149）；因此source bootstrap/DRO支线关闭。P186只用fixed condition/target noise平滑P182 likelihood，mean calibration虽改善
+`19.60%`，但四cohort Brier全部回退`1.63%--27.51%`（F150），说明边际刻度改善来自conditional refinement损失，source-noise
+smoothing关闭。P187据heavy-tail CDE文献冻结ν=`3` Student-t component，只检验Gaussian family misspecification；P183 candidate仍保持
+P182 single density，任何development rescue均不回流改变prospective protocol。
 
 ## 3. 核心结果表
 

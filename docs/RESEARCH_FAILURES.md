@@ -2406,6 +2406,31 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F149`。
 
+### V67-F149 — source worst-environment NLL仍复现P81 trade-off
+
+- 分类：`algorithm/source-environment-DRO-tradeoff`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/
+  20260830T154000Z__worst-environment-log-cost-density-s0-r1`。
+- 观察：P96/P113/P129 Brier改善`5.37%/2.14%/.79%`，mean calibration improvement=`13.02%`；但P81 Brier回退`2.64%`、
+  calibration退`17.51%`。
+- 解释：ordered-source环境最坏NLL不等价于未知P81 shift；它重新分配source likelihood，却与P184一样牺牲P81概率刻度。
+- 防重复：关闭source bootstrap/group-DRO rescue；不扫环境划分、数量、temperature或loss，P182/P183保持冻结。
+
+下一可用编号为：`V67-F150`。
+
+### V67-F150 — source noise smoothing以conditional refinement换取边际校准
+
+- 分类：`algorithm/noise-regularized-density-refinement-loss`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P186-NOISE-REGULARIZED-LOG-COST-DENSITY-01/
+  20260830T155000Z__noise-regularized-log-cost-density-s0-r1`。
+- 观察：mean calibration-error reduction vs P182=`19.60%`，P81/P96/P113三者边际误差改善；但四个cohort Brier均回退
+  `20.82%/14.13%/1.63%/27.51%`，P129 calibration也回退`17.13%`。
+- 解释：fixed input/target smoothing改变了source prevalence刻度，但同时抹平P182在score/horizon/clearance上的条件分辨率；
+  marginal calibration改善不足以补偿proper-score refinement损失。
+- 防重复：关闭source-noise smoothing；不扫condition/target noise scale。下一步只试正交的fixed heavy-tail density family。
+
+下一可用编号为：`V67-F151`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

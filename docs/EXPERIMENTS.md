@@ -1326,10 +1326,31 @@
 
 ### WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01
 
-- 状态：`GPU training active`；canonical id=`20260830T154000Z__worst-environment-log-cost-density-s0-r1`。
+- 状态：`done/rejected`；canonical=`20260830T154000Z__worst-environment-log-cost-density-s0-r1`；wall=`188.06s`。
 - object：把102 ordered source scenes固定分成5个连续环境，以temperature `.10` log-sum-exp worst-environment NLL训练单个P182同构density。
 - execution：五环境各batch32,768、8,000 steps；P183 archive IO并行，P175/P183 rows排除。
 - decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫环境数/partition/temperature/loss/architecture。
+- result：P81/P96/P113/P129 Brier change vs P182=`+2.64%/-5.37%/-2.14%/-.79%`；calibration-error reduction=
+  `-17.51%/+21.78%/-4.15%/+51.96%`，mean=`13.02%`，P81 Brier gate失败。
+- verdict=`rejected_worst_environment_log_cost_density`，F149；关闭source bootstrap/DRO rescue，不扫partition/temperature。
+
+### WS-V67-P186-NOISE-REGULARIZED-LOG-COST-DENSITY-01
+
+- 状态：`done/rejected`；canonical id=`20260830T155000Z__noise-regularized-log-cost-density-s0-r1`。
+- object：P182同构density/NLL，仅在source training加入fixed Gaussian smoothing：standardized condition std=`.05`、log-cost std=`.02`。
+- execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫noise/component/loss/architecture。
+- result：P81/P96/P113/P129 Brier change vs P182=`+20.82%/+14.13%/+1.63%/+27.51%`；calibration-error reduction=
+  `+24.43%/+18.66%/+52.44%/-17.13%`，mean=`19.60%`，四个Brier gate全部失败；final noisy NLL=`-.88888`，wall=`74.13s`。
+- verdict=`rejected_noise_regularized_log_cost_density`，F150；关闭source-noise smoothing支线，不扫noise scale。
+
+### WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01
+
+- 状态：`GPU training active`；canonical id=`20260830T160000Z__student-t-log-cost-mixture-density-s0-r1`。
+- object：P182同条件、同5-component network与训练预算，component由Gaussian换为fixed ν=`3` Student-t，解析CDF直接查询七个预算。
+- motivation：AISTATS heavy-tail CDE与NeurIPS flexible density结果指向distribution-family misspecification；本trial只检验重尾机制。
+- execution：12,000 steps、batch65,536，与P183 archive IO重叠；P175/P183 rows排除。
+- decisions：旧四逐cohort Brier不劣于P182且mean calibration error改善≥5%；不扫ν/component/loss/architecture。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

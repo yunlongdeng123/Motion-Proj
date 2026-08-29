@@ -95,7 +95,9 @@
 | P182 | `run://worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1` | Brier vs P173 -16.46%至-31.17%；mean calibration improvement 61.17%，2/2 dev |
 | P183 | `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | frozen different 10-scene/10-log confirmation，queued IO/evaluator resident |
 | P184 | `run://worldsim_v67/WS-V67-P184-SCENE-BOOTSTRAP-LOG-COST-DENSITY-ENSEMBLE-01/20260830T153000Z__scene-bootstrap-log-cost-density-ensemble-s0-r1` | mean calibration +20.57%但P81 Brier回退2.18%；rejected/F148 |
-| P185 | `run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/20260830T154000Z__worst-environment-log-cost-density-s0-r1` | five-environment worst-NLL density，GPU training active |
+| P185 | `run://worldsim_v67/WS-V67-P185-WORST-ENVIRONMENT-LOG-COST-DENSITY-01/20260830T154000Z__worst-environment-log-cost-density-s0-r1` | mean calibration +13.02%但P81 Brier回退2.64%；rejected/F149 |
+| P186 | `run://worldsim_v67/WS-V67-P186-NOISE-REGULARIZED-LOG-COST-DENSITY-01/20260830T155000Z__noise-regularized-log-cost-density-s0-r1` | mean calibration +19.60%但Brier 4/4回退；rejected/F150 |
+| P187 | `run://worldsim_v67/WS-V67-P187-STUDENT-T-LOG-COST-MIXTURE-DENSITY-01/20260830T160000Z__student-t-log-cost-mixture-density-s0-r1` | fixed ν=3 heavy-tail density，GPU training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -231,6 +233,8 @@
 | `V67-F146` | closed negative | P181 scene-bootstrap member probability deviation约1.5%，mean calibration change -0.25% |
 | `V67-F147` | closed negative | P175 fresh Brier gain 34.14%但marginal calibration error高于horizon-only |
 | `V67-F148` | closed negative | P184 mean calibration改善20.57%但P81 Brier回退2.18% |
+| `V67-F149` | closed negative | P185 mean calibration改善13.02%但P81 Brier回退2.64% |
+| `V67-F150` | closed negative | P186 mean calibration改善19.60%但Brier四cohort全部回退1.63%--27.51% |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

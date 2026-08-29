@@ -784,8 +784,17 @@ P184利用等待空档训练3-member scene-bootstrap log-cost density ensemble�
 bootstrap环境训练，推理平均CDF。旧四相对P182 Brier change=`+2.18%/-2.89%/-4.60%/-1.60%`，mean calibration-error reduction=
 `20.57%`；P81 noninferiority失败，1/2，F148。保留ensemble在3/4 Brier与mean calibration上的正向诊断，但不调权重或替换P182/P183。
 
-P185已按Group-DRO文献启动：将102 ordered source scenes固定为5个连续环境，用temperature `.10` log-sum-exp优化worst-environment
-log-cost NLL，其余P182 density结构不变。它利用P183 IO等待期GPU，只在旧四比较P182，P175/P183严格排除。
+P185按Group-DRO文献将102 ordered source scenes固定为5个连续环境，用temperature `.10` log-sum-exp优化worst-environment
+log-cost NLL，其余P182 density结构不变。旧四相对P182 Brier change=`+2.64%/-5.37%/-2.14%/-.79%`，mean calibration-error
+reduction=`13.02%`；P81 noninferiority再次失败，1/2，F149。Source bootstrap/DRO rescue支线关闭，不扫partition/temperature。
+
+P186 fixed-noise CDE已完成：相对P182的P81/P96/P113/P129 Brier分别回退`20.82%/14.13%/1.63%/27.51%`；虽然
+mean calibration-error reduction=`19.60%`，四个Brier gate全部失败，F150。固定噪声拉近部分边际prevalence却破坏
+conditional refinement，关闭noise-scale sweep。
+
+P187已冻结并启动fixed ν=`3` Student-t log-cost mixture：conditions、5-component network、12,000-step training budget与P182
+完全一致，只改变component tail family。它检验Gaussian misspecification/heavy-tail机制，相对P182逐cohort Brier不劣且mean
+calibration改善≥5%才支持；不扫ν/component/architecture/loss。P183不同future cohort archive IO/evaluator继续并行。
 
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
