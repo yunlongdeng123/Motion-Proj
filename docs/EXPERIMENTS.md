@@ -781,8 +781,22 @@
 - frozen candidate/cohort：P322/P313全链和P277六场景/180组；horizon-quantile family untouched reuse，非globally fresh。
 - inherited：2.5s heldout H、四个heldout task conditions、q50/q80/q95、normalization、offsets及三门；0-step、
   0 recalibration、one read。
-- active=`run://worldsim_v67/WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
+- canonical=`run://worldsim_v67/WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
   20260901T072500Z__horizon-conditioned-quantile-confirmation-s0-r1`。
+- result：720 examples，coverage=`.56806/.90694/.98472`、max undercoverage=`-.03472`、median MAE=
+  `.09370`、pinball=`.03864`、width=`.37451`、H/quantile violations=`0/0`，3/3 supported；四个task q95=
+  `.98333/.99444/.97778/.98333`。0 train/0 recalibration；wall=`1.30s`、peak GPU=`.08244GiB`。
+
+### WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01
+
+- object：给定task、H与maximum prefix visited-state cost ceiling，决定P313 top-2 set是否授权；H不再隐含为
+  fixed max，risk score以P322 H-conditioned q95为base。
+- training：source train tasks×H `.8/1.5/3.0s`，`[128,64]` bounded `.50` residual、6k steps；heldout
+  H=`2.5s`和task midpoints只在P201 read。source calibration单个q90 nonnegative margin。
+- gates：P201 max unsafe `<=.15`、mean coverage `>=.20`、ceiling monotonicity=0；不扫H/ceiling/gate/
+  capacity/seed，不重开pair repair。
+- active=`run://worldsim_v67/WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
+  20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

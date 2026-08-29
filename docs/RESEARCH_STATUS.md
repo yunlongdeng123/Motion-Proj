@@ -433,9 +433,16 @@ H/quantile violations=`0/0`，3/3 supported。source heldout-H coverage=`.43194/
 undercoverage=`.06806`；wall=`47.19s`。F210由r2关闭。
 
 P323冻结P322全部weights、normalization、quantile offsets与H surface，在P277六场景/180个六动作组上只读
-heldout task+H=`2.5s`；0 training/0 recalibration，三门继承。Active=`run://worldsim_v67/
-WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
-20260901T072500Z__horizon-conditioned-quantile-confirmation-s0-r1`。
+heldout task+H=`2.5s`。Canonical=`run://worldsim_v67/WS-V67-P323-HORIZON-CONDITIONED-QUANTILE-CONFIRMATION-01/
+20260901T072500Z__horizon-conditioned-quantile-confirmation-s0-r1`：720 examples，coverage=
+`.56806/.90694/.98472`、max undercoverage=`-.03472`、median MAE=`.09370`、H/quantile violations=0，3/3
+supported；0 training/0 recalibration，wall=`1.30s`。不再增加horizon-certificate确认cohort。
+
+P324把P322 continuous-H q95接入selective authority：source endpoint tasks×train H=`.8/1.5/3.0s`训练
+H-aware bounded residual risk score，P201同时heldout task与H=`2.5s`，ceilings由source train horizon targets固定；
+single q90 nonnegative margin，risk/coverage/ceiling-monotonicity三门。Active=`run://worldsim_v67/
+WS-V67-P324-HORIZON-CEILING-SELECTIVE-AUTHORITY-01/
+20260901T074000Z__horizon-ceiling-selective-authority-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

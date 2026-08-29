@@ -383,7 +383,10 @@
   路径后P201 heldout task+2.5s coverage=`.54754/.82131/.95492`、median MAE=`.15154`、H/quantile
   violations=0，3/3 supported，F210关闭；
 - P323 active：P322冻结certificate在P277上0-step horizon-family untouched确认；失败才登记F211，不refit、
-  recalibrate、改H/quantile/gate或换cohort；
+  result coverage=`.56806/.90694/.98472`、median MAE=`.09370`、H/quantile violations=0，3/3 supported；
+  未触发F211，不再增加同family confirmation；
+- P324 active：P322 q95 base上训练task×H×ceiling selective authority；失败才登记F211，不refit、recalibrate、
+  改H/ceiling/gate/capacity/seed或重开pair repair；
 - 下一可用 failure id 为 `V67-F211`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
