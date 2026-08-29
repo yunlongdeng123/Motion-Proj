@@ -1,0 +1,38 @@
+schema_version: worldsim_v67.p248_inverse_reliability_budget_compiler.v1
+output_schema_version: worldsim_v67.p248_inverse_reliability_budget_compiler_summary.v1
+task_id: WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01
+hypothesis_id: WS-V67-H-P248-001
+role: reliability_level_conditioned_minimum_budget_compiler_development
+seed: 0
+model_artifact: INVERSE_RELIABILITY_BUDGET_COMPILER.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p183_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p246: {run: worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1, artifact: EXTENDED_BUDGET_RATE_SPLINE.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_reliability_levels: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_reliability_levels: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_inverse_chunk_size: 1024
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {context_width: 128, rate_knot_count: 16, steps: 12000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_inverse_normalized_log_budget_MAE: 0.075, maximum_P201_reconstructed_teacher_probability_MAE: 0.015}
+verdict_on_pass: supported_inverse_reliability_budget_compiler
+verdict_on_failure: rejected_inverse_reliability_budget_compiler
+locks:
+  frozen_P246_is_inverted_only_inside_point_zero_two_five_to_six_point_four_with_boundary_clipping: true
+  positive_rate_spline_and_positive_horizon_increments_enforce_non_crossing_inverse_budgets: true
+  nine_training_levels_and_eight_interleaved_heldout_levels_are_fixed: true
+  source_only_teacher_distillation_and_P201_two_decisions_are_single_shot: true
+  no_level_knot_width_depth_metric_gate_or_inverse_iteration_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_inverse_compiler_after_P201_observation_not_fresh_confirmation
+  - clipped_minimum_budget_for_frozen_P246_reliability_not_ground_truth_risk_guarantee
+  - no_collision_planner_policy_closed_loop_or_safety_claim
