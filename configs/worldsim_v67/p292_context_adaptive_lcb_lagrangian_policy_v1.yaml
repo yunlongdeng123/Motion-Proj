@@ -12,7 +12,7 @@ frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T0830
 frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
 frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
 frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
-frozen_p284: {run: worldsim_v67/WS-V67-P291-CONTEXT-ADAPTIVE-ADDITIVE-LCB-SURFACE-01/20260831T214500Z__context-adaptive-additive-lcb-s0-r1, artifact: CONTEXT_ADAPTIVE_ADDITIVE_LCB_SURFACE.pt}
+frozen_p284: {run: worldsim_v67/WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adaptive-lcb-s0-r1, artifact: ONE_SIDED_CONTEXT_ADAPTIVE_ADDITIVE_LCB_SURFACE.pt}
 horizons_seconds: [0.8, 1.5, 2.5, 3.0]
 feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
 shadow_price_domain: [0.02, 0.40]
@@ -36,7 +36,7 @@ decision: {maximum_P201_normalized_log_budget_MAE: 0.075, maximum_P201_mean_froz
 verdict_on_pass: supported_context_adaptive_LCB_allocator
 verdict_on_failure: rejected_context_adaptive_LCB_allocator
 locks:
-  frozen_P291_context_adaptive_LCB_surface_is_the_only_reliability_teacher: true
+  frozen_P291R_one_sided_context_adaptive_LCB_surface_is_the_only_reliability_teacher: true
   alpha_tolerance_floor_price_conditions_are_jointly_compiled_once: true
   P285_allocator_architecture_grid_steps_and_gates_are_reused_without_sweep: true
   P243_is_consumed_descriptive_only_no_gate_or_model_selection: true
