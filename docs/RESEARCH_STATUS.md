@@ -855,6 +855,43 @@ macro Brier/calibration improvement=`.69%/1.13%`，0/2 gates，F159。因此不�
 跨时域依赖；下一项将冻结P182 marginals，只学习Gaussian-copula dependence，并直接比较“整段四时域均可靠”的joint-event Brier，
 而非继续优化七个边际CDF。
 
+P199 r1完成6,000-step copula训练后、在任何development metric前发现`scene_index % 5 == 0`与P109既有4/5 source构造
+恰好互补，development count=0；因此r1只有训练、没有quality read或科学verdict。现有102 source scenes的mod5计数为
+`[0,20,28,22,32]`，只把冻结remainder从0精确恢复为1，得到约20-scene development；model/data/horizon/budget/MC/两门全不变，
+r2 GPU已重启。该工程恢复不分配算法failure，也不引入split sweep。
+
+P199 r2完成并强支持joint prediction object：四H完整交集18,515 trajectories，82 scenes/14,773 train与20 scenes/3,742
+development。相对冻结P182四marginal独立乘积，conditional copula joint Brier=`.090346→.075012`（改善`16.97%`），
+mean absolute joint reliability error=`.078207→.022017`（改善`71.85%`），2/2 gates。P200在冻结后读取已消费P183的
+1,912条四H交集，Brier=`.087310→.072116`（`17.40%`），calibration error=`.084137→.027998`（`66.72%`），
+同样2/2；只作secondary，不冒充独立。
+
+P201已在任何新sensor/target read前冻结当前剩余的10 official-val target-unread/unprocessed distinct logs：Boston六个
+`0096/0553/0560/0629/0770/0905`、One-North两个`0272/0972`、Queenstown `0796`、Holland Village `1064`。
+位置`6/2/1/1`来自剩余distinct-log支持而非事后平衡；shards=`01/06/06/06/08/09/03/09/08/10`。P126/P182/P199、四H、
+七预算、joint event、MC1,024与两门全冻结。六shard archive scan、scene preprocess与驻留confirmation evaluator已并行启动。
+
+P201 IO期间P202直接训练monotone joint CDF作development comparator，不触碰P201：输入为四H score/clearance及冻结P182
+independence logits，七预算输出用positive logit increments保证单调，直接以joint-event mean Brier训练。P202 calibration error
+`.022017→.014859`改善`32.51%`，但Brier `.075012→.082756`恶化`10.32%`，1/2 gates，F161。直接joint classifier更接近
+总体频率但丢失instance refinement，严格拒绝且不扫BCE/mixed loss/head。
+
+调研AISTATS 2017 beta calibration与UAI 2025 constrained monotone calibration后，P203只在P199 frozen probabilities上训练共享三参数
+`sigmoid(a log p - b log(1-p)+c)`，`a,b>0`保证每budget实例排序和跨budget顺序保持，identity包含在函数族中。只用P199 source
+training scenes拟合Brier，在同一20-scene development比较。P203学得`a=.977033,b=1.151503,c=.186712`；development
+Brier `.074979→.073988`改善`1.32%`，calibration error `.021998→.010049`改善`54.32%`，2/2 gates，支持共享
+rank-preserving beta map。P204在冻结后读取已消费P183 joint rows，Brier `.072116→.070266`改善`2.57%`、calibration
+error `.027998→.018337`改善`34.51%`，同样2/2；只作secondary。
+
+P201仍以冻结raw P199作为唯一fresh primary，未被P203/P204事后改变。P205已在P201 rows出现前冻结P203三参数map并驻留等待，
+只作为同一次fresh read的prospective secondary。P206的全局常数4D Gaussian copula相对P199 conditional的Brier
+`.075778/.075012`（退化`1.02%`），calibration error `.027508/.022017`（退化`24.94%`），0/2 gates，F162；
+因此收益不是“任意相关矩阵”，而需要covariate-conditioned dependence。检索NeurIPS 2013 conditional copula与NeurIPS
+2019/2024 low-rank time-varying covariance后，P207以rank-2-plus-diagonal条件结构接替GPU，比较其结构归纳偏置能否
+超过P199 full conditional Cholesky；P201 rows仍完全隔离。
+P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
+P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

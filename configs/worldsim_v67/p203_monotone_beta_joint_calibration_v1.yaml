@@ -1,0 +1,35 @@
+schema_version: worldsim_v67.p203_monotone_beta_joint_calibration.v1
+output_schema_version: worldsim_v67.p203_monotone_beta_joint_calibration_summary.v1
+task_id: WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01
+hypothesis_id: WS-V67-H-P203-001
+role: source_trained_rank_preserving_joint_CDF_calibration
+seed: 0
+model_artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+calibrator: {training_steps: 6000, batch_size: 65536, learning_rate: 0.01, monte_carlo_samples: 1024}
+decision:
+  require_integrated_Brier_strictly_better_than_P199: true
+  minimum_calibration_error_reduction_vs_P199: 0.10
+verdict_on_pass: supported_monotone_beta_joint_calibration_development
+verdict_on_failure: rejected_monotone_beta_joint_calibration
+locks:
+  P199_instance_predictions_are_frozen_and_beta_map_is_shared_across_budgets: true
+  positive_a_b_make_the_map_probability_rank_preserving_and_include_identity: true
+  calibrator_is_fit_only_on_source_training_scenes: true
+  P201_confirmation_is_excluded_and_unchanged: true
+  no_budget_specific_map_isotonic_bins_loss_MC_step_or_lr_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v54/kull17a.html
+  - https://proceedings.mlr.press/v286/zhang25c.html
+claim_boundary:
+  - source_development_posthoc_map_only_and_cannot_change_frozen_P201
+  - joint_visited_state_cost_CDF_not_collision_probability_or_formal_calibration
+  - no_conformal_planner_policy_closed_loop_or_safety_claim

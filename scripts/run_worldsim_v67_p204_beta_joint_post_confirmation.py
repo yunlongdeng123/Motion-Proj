@@ -1,0 +1,30 @@
+"""Evaluate frozen P203 beta map on consumed P183 joint trajectories."""
+
+from __future__ import annotations
+import argparse,json,resource,time
+from datetime import datetime,timezone
+from pathlib import Path
+import numpy as np
+import torch
+import yaml
+from scripts.run_worldsim_v67_p109_directional_actor_uncertainty import DirectionalActorGaussian
+from scripts.run_worldsim_v67_p182_log_cost_mixture_density import _predict_cdf
+from scripts.run_worldsim_v67_p199_joint_horizon_reliability_copula import JointHorizonCopula,_align,_joint_probabilities,_load_density,_trajectory_payload
+
+
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--config',type=Path,required=True);p.add_argument('--runs-root',type=Path,required=True);p.add_argument('--run-id',required=True);a=p.parse_args();c=yaml.safe_load(a.config.read_text());d=a.runs_root/'worldsim_v67'/c['task_id']/a.run_id;d.mkdir(parents=True,exist_ok=False);(d/'resolved.yaml').write_text(yaml.safe_dump(c,sort_keys=False));started=time.monotonic();torch.cuda.reset_peak_memory_stats()
+ ens=torch.load(a.runs_root/c['frozen_p126']['run']/c['frozen_p126']['artifact'],map_location='cuda');members=[]
+ for state in ens['member_state_dicts']:
+  member=DirectionalActorGaussian(20,ens['hidden_dimensions']).cuda();member.load_state_dict(state);members.append(member.eval())
+ density,fd=_load_density(a.runs_root/c['frozen_p182']['run']/c['frozen_p182']['artifact']);p199=torch.load(a.runs_root/c['frozen_p199']['run']/c['frozen_p199']['artifact'],map_location='cuda');copula=JointHorizonCopula(8,p199['hidden_dimensions'],4).cuda();copula.load_state_dict(p199['model_state_dict']);copula.eval();beta=torch.load(a.runs_root/c['frozen_p203']['run']/c['frozen_p203']['artifact'],map_location='cpu')
+ rows_path=a.runs_root/c['frozen_rows']['run']/c['frozen_rows']['artifact'];deadline=time.monotonic()+float(c.get('input_readiness_timeout_seconds',0))
+ while not rows_path.is_file():
+  if time.monotonic()>=deadline:raise FileNotFoundError(rows_path)
+  time.sleep(5)
+ with np.load(rows_path,allow_pickle=False) as z:arrays={n:z[n] for n in z.files}
+ h=np.asarray(c['horizons_seconds'],np.float32);scores,clearances,costs,scenes=_align(_trajectory_payload(arrays,members,ens,float(c['boundary_state_cost']['clearance_floor_m'])),h);budgets=np.asarray(c['reliability_budgets'],np.float32);norms=tuple(fd['norms']);marginal=np.stack([_predict_cdf(density,scores[:,i],np.full(len(scores),h[i],np.float32),clearances[:,i],budgets,norms) for i in range(4)],1);features=torch.from_numpy(((np.concatenate((scores,clearances),1)-np.asarray(p199['feature_mean']))/np.asarray(p199['feature_scale'])).astype(np.float32)).cuda();base=_joint_probabilities(copula,features,torch.from_numpy(marginal.astype(np.float32)).cuda(),int(c['evaluation']['monte_carlo_samples']),int(c['evaluation']['seed']));clipped=np.clip(base,1e-5,1-1e-5);candidate=1/(1+np.exp(-(float(beta['a'])*np.log(clipped)-float(beta['b'])*np.log1p(-clipped)+float(beta['intercept']))));target=np.all(costs[:,:,None]<=budgets[None,None,:],1)
+ cb=float(np.mean((candidate-target)**2));bb=float(np.mean((base-target)**2));ce=float(np.mean(np.abs(candidate.mean(0)-target.mean(0))));be=float(np.mean(np.abs(base.mean(0)-target.mean(0))));br=(bb-cb)/bb;cr=(be-ce)/max(be,1e-12);checks={'integrated_Brier_strictly_better_than_P199':cb<bb,'minimum_calibration_error_reduction_vs_P199':cr>=float(c['decision']['minimum_calibration_error_reduction_vs_P199'])};verdict=c['verdict_on_pass'] if all(checks.values()) else c['verdict_on_failure'];summary={'schema_version':c['output_schema_version'],'task_id':c['task_id'],'hypothesis_id':c['hypothesis_id'],'status':'done','verdict':verdict,'role':c['role'],'joint_trajectory_count':int(len(scores)),'calibrated_integrated_brier':cb,'P199_integrated_brier':bb,'Brier_reduction_vs_P199':br,'calibrated_mean_absolute_reliability_error':ce,'P199_mean_absolute_reliability_error':be,'calibration_error_reduction_vs_P199':cr,'decision_checks':checks,'resources':{'gpu':torch.cuda.get_device_name(0),'peak_gpu_memory_gib':torch.cuda.max_memory_allocated()/2**30,'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,'wall_seconds':time.monotonic()-started},'claim_boundary':c['claim_boundary']};(d/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');(d/'status.json').write_text(json.dumps({'status':'done','completed_at_utc':datetime.now(timezone.utc).isoformat()},indent=2)+'\n');print(json.dumps({'run_dir':str(d),**summary},indent=2))
+
+
+if __name__=='__main__':main()

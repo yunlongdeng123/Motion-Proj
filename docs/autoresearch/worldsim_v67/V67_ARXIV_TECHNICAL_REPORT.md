@@ -32,6 +32,16 @@ directional diagonal-Gaussian进一步以boundary-normal projection获得更强�
 因此该改进不能升级；P182仍是唯一具有fresh支持的density。P194/P195的全局与horizon-conditional sampler均未消除跨cohort
 回退。P196冻结两个专家后在旧development通过，但P197 consumed-secondary仍复制短H退化；因此这些结果都不进入P183主结论。
 
+在此边际结论上，P199首次把同一candidate trajectory的四个horizon对齐并学习Gaussian-copula dependence；source-heldout
+joint-all-H reliability相对P182 marginal independence product的Brier改善`16.97%`、calibration error改善`71.85%`。P200在已消费
+P183 rows上的secondary改善`17.40%/66.72%`，量级一致但尚非独立。P201 fresh joint confirmation正在进行，因此当前arXiv主结论
+仍以P183 marginals为硬证据，joint result标注为development/secondary。P202说明直接joint CDF虽将calibration error再降
+`32.51%`，却使Brier恶化`10.32%`；相比之下，P203对冻结P199输出施加共享rank-preserving beta map，在source dev把Brier和
+calibration error分别改善`1.32%/54.32%`，P204 consumed-secondary也保持`2.57%/34.51%`改善。该校准层需等待P205同一次
+fresh read的前瞻次级结果。P206的全局常数copula相对P199使Brier与calibration error分别退化`1.02%/24.94%`，说明
+P199提升来自输入条件化依赖，而非仅加入静态相关矩阵。P207据此测试一次冻结的rank-2-plus-diagonal条件结构，作为full
+conditional Cholesky的结构化消融；这些development trials均不改变P201 raw P199 primary合同。
+
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
 

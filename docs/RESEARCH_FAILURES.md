@@ -2563,6 +2563,46 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F161`。
 
+P199 r1 engineering note（不占算法编号）：冻结`scene_index % 5 == 0`与P109既有“排除mod5=0”的4/5 source构造
+完全互补，导致6,000-step训练后、任何development metric前发现0-row split并退出。只读scene-index计数确认mod5=
+`[0,20,28,22,32]`；r2只把remainder恢复为1，模型/数据/seed/horizons/budgets/MC/decisions全不变。不把0-row当科学失败，
+不试多个split；下一可用编号仍为`V67-F161`。
+
+### V67-F161 — 直接joint CDF以calibration换取refinement退化
+
+- 分类：`algorithm/joint-proper-score-refinement-loss`；状态：`closed_negative_after_single_trial`。
+- canonical：`run://worldsim_v67/WS-V67-P202-DIRECT-MONOTONE-JOINT-CDF-01/
+  20260830T185000Z__direct-monotone-joint-cdf-s0-r1`。
+- 观察：七预算direct monotone CDF把mean calibration error从P199 `.022017`降至`.014859`（`32.51%`），但integrated Brier
+  从`.075012`升至`.082756`（恶化`10.32%`），1/2 gates。
+- 解释：直接Brier head更贴近budget-wise总体发生率，却比“冻结marginals + dependence”丢失instance-level refinement；与proper-score
+  calibration/refinement分解一致，不能把更低平均误差包装成更好概率预测。
+- 防重复：不扫BCE/Brier mix、head、budget或容量。P203只允许一次共享三参数rank-preserving beta map作用于P199输出；P201仍
+  确认raw P199。若P203失败，关闭joint post-hoc calibration family。
+
+### P201/P206 background-entry recovery note — 不占算法failure编号
+
+- P201 evaluator首次后台入口因shell后台命令的工作目录未保留，Python尝试打开`/root/scripts/...`后退出；P201 preparation
+  六个archive workers未受影响，0 processed-row/quality read；改用绝对script/config路径后按原合同重启r2。
+- P206 r1/r2分别在import/argparse阶段因缺项目`PYTHONPATH`及遗漏`--runs-root`退出；0 source-row load、0 optimizer step、
+  0 metric/gate。r3只修正进程入口参数后进入训练，模型、数据、split、seed和decisions全不变。
+- 这些事件不改变P201/P206科学trial计数，也不触发额外smoke、cohort、gate、hash/checksum/fingerprint。
+
+下一可用编号仍为：`V67-F162`。
+
+### V67-F162 — 全局常数copula不足以替代输入条件化dependence
+
+- canonical：`run://worldsim_v67/WS-V67-P206-CONSTANT-JOINT-COPULA-ABLATION-01/20260830T193000Z__constant-joint-copula-ablation-s0-r3`；
+- 观察：constant/P199 integrated Brier=`.075778/.075012`，相对退化`1.02%`；mean calibration error=
+  `.027508/.022017`，相对退化`24.94%`，0/2 gates；
+- 解释：冻结相同P182 marginals、PIT、split、joint event、budgets和MC后，只有相关结构是否依赖score/clearance不同；因此
+  P199增益不能仅解释为一个静态跨horizon correlation matrix；
+- 文献响应：NeurIPS 2013 conditional copula指出covariates显著影响dependence时静态copula会失真；NeurIPS 2019/2024
+  支持时变低秩协方差。P207只迁移一次rank-2-plus-diagonal conditional structure，不扫rank/width/loss；
+- 防重复：不再训练第二个constant copula，不改P201 primary，不以source ablation宣称fresh generalization。
+
+下一可用编号：`V67-F163`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

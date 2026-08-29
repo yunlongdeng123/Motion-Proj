@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P183 fresh marginals supported; P192--P198 refinement family closed; P199 joint-horizon dependence active`
+- 状态：`P183 fresh marginals + P199/P200 joint support + P203/P204 beta calibration support; P201/P205 fresh read active`
 - 当前主结论：Actor uncertainty × trajectory boundary的continuous cost density在不同10-scene/10-log五时域确认中同时改善proper score与marginal reliability
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -109,7 +109,15 @@
 | P196 | `run://worldsim_v67/WS-V67-P196-MONOTONE-HORIZON-DENSITY-ROUTER-01/20260830T173000Z__monotone-horizon-density-router-s0-r1` | old dev Brier 4/4改善、calibration +18.73%；dev supported |
 | P197 | `run://worldsim_v67/WS-V67-P197-ROUTED-DENSITY-POST-CONFIRMATION-01/20260830T174000Z__routed-density-post-confirmation-s0-r1` | consumed P183短H回退；rejected/F159 |
 | P198 | `run://worldsim_v67/WS-V67-P198-SHORT-LONG-DENSITY-EXPERTS-01/20260830T175000Z__short-long-density-experts-s0-r1` | P81/P113 Brier回退4.20%/5.56%；rejected/F160 |
-| P199 | pending | frozen P182 marginals + learned joint-horizon copula；implementation active |
+| P199 | `run://worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2` | joint Brier -16.97%、calibration error -71.85%；source dev supported |
+| P200 | `run://worldsim_v67/WS-V67-P200-JOINT-HORIZON-COPULA-POST-CONFIRMATION-01/20260830T183000Z__joint-horizon-copula-post-confirmation-s0-r1` | consumed P183 joint Brier -17.40%、calibration -66.72%；secondary supported |
+| P201 | `run://worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2` | fresh 10-scene/10-log；active IO/evaluator |
+| P202 | `run://worldsim_v67/WS-V67-P202-DIRECT-MONOTONE-JOINT-CDF-01/20260830T185000Z__direct-monotone-joint-cdf-s0-r1` | calibration -32.51%但Brier +10.32%；rejected/F161 |
+| P203 | `run://worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1` | Brier -1.32%、calibration -54.32%；source dev supported |
+| P204 | `run://worldsim_v67/WS-V67-P204-BETA-JOINT-POST-CONFIRMATION-01/20260830T191000Z__beta-joint-post-confirmation-s0-r1` | consumed P183：Brier -2.57%、calibration -34.51%；secondary supported |
+| P205 | `run://worldsim_v67/WS-V67-P205-BETA-JOINT-PROSPECTIVE-SECONDARY-01/20260830T192000Z__beta-joint-prospective-secondary-s0-r1` | frozen beta map on P201 rows；active prospective secondary |
+| P206 | `run://worldsim_v67/WS-V67-P206-CONSTANT-JOINT-COPULA-ABLATION-01/20260830T193000Z__constant-joint-copula-ablation-s0-r3` | constant Brier +1.02%、calibration +24.94%；rejected/F162 |
+| P207 | `run://worldsim_v67/WS-V67-P207-LOW-RANK-CONDITIONAL-JOINT-COPULA-01/20260830T194500Z__low-rank-conditional-joint-copula-s0-r1` | rank-2-plus-diagonal conditional dependence；running |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -257,6 +265,8 @@
 | `V67-F158` | closed negative | P195条件sampler改善P96/P129但P81/P113 Brier回退，共享参数干扰未解 |
 | `V67-F159` | closed negative | P196 source-NLL pool在consumed P183短H仍回退，router suitability不迁移 |
 | `V67-F160` | closed negative | P198 horizon specialists放大P81/P113回退；P192--P198 refinement family terminal |
+| `V67-F161` | closed negative | P202 direct joint CDF改善平均校准但Brier恶化10.32%，instance refinement丢失 |
+| `V67-F162` | closed negative | P206 global constant copula的Brier/校准均低于P199，条件dependence不可省略 |
 | `V67-F126` | closed negative | yaw→rectangle-support一阶传播未形成稳定cost/rank增量 |
 
 ## 4. Artifact inventory

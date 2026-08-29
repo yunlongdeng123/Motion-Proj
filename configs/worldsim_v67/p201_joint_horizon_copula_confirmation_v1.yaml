@@ -1,0 +1,62 @@
+schema_version: worldsim_v67.p201_joint_horizon_copula_confirmation.v1
+output_schema_version: worldsim_v67.p201_joint_horizon_copula_confirmation_summary.v1
+task_id: WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P201-001
+role: fresh_scene_level_joint_horizon_reliability_dependence_confirmation
+verdict_on_pass: supported_fresh_joint_horizon_reliability_copula
+verdict_on_failure: rejected_fresh_joint_horizon_reliability_copula
+evaluation_data:
+  scene_names: [scene-0096, scene-0553, scene-0560, scene-0629, scene-0770, scene-0905, scene-0272, scene-0972, scene-0796, scene-1064]
+  scene_shards:
+    scene-0096: "01"
+    scene-0553: "06"
+    scene-0560: "06"
+    scene-0629: "06"
+    scene-0770: "08"
+    scene-0905: "09"
+    scene-0272: "03"
+    scene-0972: "09"
+    scene-0796: "08"
+    scene-1064: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p201_joint_horizon_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-PREP-01
+  run_id: 20260830T184000Z__joint-horizon-copula-confirmation-prep-s0-r1
+  output_schema_version: worldsim_v67.p201_joint_horizon_copula_confirmation_preparation_summary.v1
+confirmation: {run_id: 20260830T184500Z__joint-horizon-copula-confirmation-s0-r1}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {monte_carlo_samples: 1024, seed: 0}
+decision: {minimum_joint_calibration_error_reduction: 0.10}
+locks:
+  ten_official_val_target_unread_unprocessed_scenes_and_ten_distinct_logs_frozen_before_sensor_read: true
+  location_distribution_boston_onenorth_queenstown_holland_is_six_two_one_one_due_remaining_distinct_logs: true
+  P126_P182_P199_four_horizons_budgets_joint_event_MC_and_two_decisions_are_frozen: true
+  P175_P183_and_all_prior_confirmation_scenes_are_excluded: true
+  no_scene_log_shard_model_copula_budget_metric_gate_or_MC_recovery: true
+  exact_pre_target_archive_locator_correction_only: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - fresh_confirmation_at_scene_level_not_session_or_population_level
+  - joint_visited_state_cost_reliability_not_collision_probability_or_formal_calibration
+  - no_conformal_planner_policy_closed_loop_or_safety_claim

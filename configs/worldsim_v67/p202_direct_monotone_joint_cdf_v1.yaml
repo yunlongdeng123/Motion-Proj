@@ -1,0 +1,38 @@
+schema_version: worldsim_v67.p202_direct_monotone_joint_cdf.v1
+output_schema_version: worldsim_v67.p202_direct_monotone_joint_cdf_summary.v1
+task_id: WS-V67-P202-DIRECT-MONOTONE-JOINT-CDF-01
+hypothesis_id: WS-V67-H-P202-001
+role: source_development_direct_proper_score_joint_horizon_CDF
+seed: 0
+model_artifact: DIRECT_MONOTONE_JOINT_CDF.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+model: {hidden_dimensions: [128, 128, 64], training_steps: 12000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+evaluation: {p199_monte_carlo_samples: 1024}
+decision:
+  require_integrated_Brier_strictly_better_than_P199: true
+  minimum_calibration_error_reduction_vs_P199: 0.0
+verdict_on_pass: supported_direct_monotone_joint_CDF_development
+verdict_on_failure: rejected_direct_monotone_joint_CDF
+locks:
+  source_split_horizons_budgets_features_and_joint_event_match_P199: true
+  frozen_P182_independence_probabilities_are_inputs_not_refit: true
+  output_is_monotone_across_the_seven_ordered_budgets: true
+  direct_mean_Brier_is_the_only_training_objective: true
+  P201_confirmation_is_excluded_and_unchanged: true
+  no_loss_head_budget_width_depth_step_or_split_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v238/popordanoska24a.html
+  - https://papers.nips.cc/paper_files/paper/2022/hash/3915a87ddac8e8c2f23dbabbcee6eec9-Abstract-Conference.html
+  - https://proceedings.mlr.press/v151/rindt22a/rindt22a.pdf
+claim_boundary:
+  - source_development_comparator_only_and_cannot_change_frozen_P201
+  - joint_visited_state_cost_CDF_not_collision_probability_or_formal_calibration
+  - no_conformal_planner_policy_closed_loop_or_safety_claim

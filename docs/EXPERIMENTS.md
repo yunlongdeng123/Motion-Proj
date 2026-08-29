@@ -1494,7 +1494,7 @@
 
 ### WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01
 
-- 状态：`hypothesis frozen / implementation active`。
+- 状态：`done/supported source development`；canonical id=`20260830T181000Z__joint-horizon-reliability-copula-s0-r2`。
 - new object：不再问每个H单独的`P(cost_H≤b)`，而问同一candidate trajectory在source H`.8/1.5/2.5/3.0`上
   `P(all_H cost_H≤b)`；这是“未来整段被访问world/Actor states是否可靠”的联合版本。
 - data：source按`scene_index/anchor_frame/query_id`四H完整交集=`18,515 trajectories`；不读P175/P183/new target。
@@ -1504,6 +1504,95 @@
   reliability error改善≥10%；只两门，不扫copula family/MC samples/head/scene split/budget。
 - literature：AISTATS 2022 MQF2明确指出逐horizon marginals不表示time dependency，并用联合概率分布处理multi-horizon；
   P199冻结已获fresh支持的marginals，仅研究dependence增量。
+- execution：r1=`20260830T181000Z__joint-horizon-reliability-copula-s0-r1`完成6,000 steps后，正式dev read前发现mod5 remainder0
+  在P109 4/5 source中为0 scenes/0 rows；未生成summary/verdict。只将split恢复为有20 scenes的remainder1，r2保持相同seed、
+  model、6,000 steps、MC1,024、budgets和两门重新训练；r1保留为engineering no-quality run。
+- result：四H complete joint trajectories=`18,515`；train/dev=`14,773/3,742`、scenes=`82/20`。copula vs frozen
+  independent marginals joint Brier=`.075012/.090346`（reduction=`16.97%`）；mean joint calibration error=
+  `.022017/.078207`（reduction=`71.85%`）；2/2 gates。final copula NLL=`-.76298`，wall=`91.89s`。
+- verdict=`supported_joint_horizon_reliability_copula_development`；只支持source-heldout joint dependence机制。
+
+### WS-V67-P200-JOINT-HORIZON-COPULA-POST-CONFIRMATION-01
+
+- 状态：`done/supported consumed secondary`；canonical id=`20260830T183000Z__joint-horizon-copula-post-confirmation-s0-r1`。
+- protocol：P199/P182冻结后才从已消费P183 rows取H`.8/1.5/2.5/3.0`完整intersection；同joint event、budgets、MC和两门。
+- result：1,912 joint trajectories；copula/independent Brier=`.072116/.087310`（`17.40%`）；calibration error=
+  `.027998/.084137`（`66.72%`）；2/2 gates，wall=`1.25s`。
+- boundary：与P199方向/量级一致但不是独立证据；只授权冻结P201 future cohort，不替代fresh read。
+
+### WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01
+
+- 状态：`active fresh confirmation`；prep=`20260830T184000Z__joint-horizon-copula-confirmation-prep-s0-r1`，evaluator=
+  `20260830T184500Z__joint-horizon-copula-confirmation-s0-r2`。r1仅为cwd入口失败，0 row/quality read。
+- cohort：official val且项目未提及/未processed的10 scenes/10 logs：Boston `0096/0553/0560/0629/0770/0905`，
+  One-North `0272/0972`，Queenstown `0796`，Holland `1064`；location=`6/2/1/1`。
+- shards=`01/06/06/06/08/09/03/09/08/10`；只允许target前exact locator correction，不换scene/log/model/metric/gate。
+- frozen：P126 score、P182 marginals、P199 copula、H`.8/1.5/2.5/3.0`、七预算joint-all-H event、MC1,024；
+  decisions仅Brier严格优于independence且calibration error reduction≥10%。
+- pipeline：shards01/03/06/08/09/10并行scan；per-shard完成即scene preprocess；resident evaluator等待processed scenes。
+
+### WS-V67-P202-DIRECT-MONOTONE-JOINT-CDF-01
+
+- 状态：`done/rejected source development`；canonical id=`20260830T185000Z__direct-monotone-joint-cdf-s0-r1`。
+- object：与P199同四H joint event，输入8个score/clearance与七个冻结P182 independence logits；输出七预算joint CDF。
+- monotonicity：第一个budget给base logit，后六个只加positive softplus increments；因此probability随budget非降。
+- training：与P199同82/20 source scene split，12,000 steps、batch8,192、direct mean Brier；P201 rows完全排除。
+- decisions：同dev上Brier严格优于P199且mean calibration error不高于P199；不扫BCE/Brier mix、head、budget、width或steps。
+- motivation：AISTATS 2024 proper-score分解与NeurIPS 2022 proper calibration error支持同时报告Brier和calibration；
+  该试验区分“joint dependence factorization”与“直接joint-event proper-score”的收益。
+- result：train/dev=`14,773/3,742`；final train-batch Brier=`.04477`。Direct/P199 dev Brier=`.082756/.075012`
+  （change=`+10.32%`）；calibration error=`.014859/.022017`（reduction=`32.51%`）。仅calibration gate通过，F161。
+- verdict=`rejected_direct_monotone_joint_CDF`；不以更低marginal error覆盖proper-score失败，不扫loss/head。
+
+### WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01
+
+- 状态：`done/supported source development`；canonical id=`20260830T190000Z__monotone-beta-joint-calibration-s0-r1`。
+- map：冻结P199 joint probability，所有budgets共享`sigmoid(a log p - b log(1-p)+c)`，约束`a,b>0`；identity=`a=b=1,c=0`
+  包含在族内，因此保持instance ranking与budget monotonicity。
+- fit/eval：只用82 source training scenes的七预算joint labels训练6,000 steps；同20-scene dev比较P199，MC均固定1,024。
+- decisions：Brier严格优于P199且calibration error降低≥10%；不扫budget-specific map/isotonic/bin/loss/MC/steps/lr。
+- motivation：AISTATS 2017指出beta map包含identity并比不含identity的logistic calibration更稳；UAI 2025强调校准变换需
+  instance-wise monotonic以保留排序。P201仍确认冻结原始P199。
+- result：学得`a=.977033,b=1.151503,c=.186712`。calibrated/P199 dev Brier=`.073988/.074979`（改善`1.32%`）；
+  calibration error=`.010049/.021998`（改善`54.32%`）；2/2 gates，wall=`20.71s`。
+- verdict=`supported_rank_preserving_beta_joint_calibration_development`；不将source dev包装为fresh evidence。
+
+### WS-V67-P204-BETA-JOINT-POST-CONFIRMATION-01
+
+- 状态：`done/supported consumed secondary`；canonical id=`20260830T191000Z__beta-joint-post-confirmation-s0-r1`。
+- protocol：P203 map完全冻结后读取已消费P183的1,912条joint trajectories；raw comparator为冻结P199。
+- result：calibrated/P199 Brier=`.070266/.072116`（改善`2.57%`）；calibration error=`.018337/.027998`
+  （改善`34.51%`）；2/2 gates。
+- boundary：支持map跨已消费cohort的方向一致性，但不是独立确认，不影响P201 raw primary。
+
+### WS-V67-P205-BETA-JOINT-PROSPECTIVE-SECONDARY-01
+
+- 状态：`active prospective same-read secondary`；run id=`20260830T192000Z__beta-joint-prospective-secondary-s0-r1`。
+- freeze：在P201 target rows出现前锁定P203的`a/b/c`、同七预算、同joint event和同两门；不refit。
+- role：等待P201 compact rows后比较frozen beta map与raw P199；它与P201共用一次fresh read，因此只能作为prospective
+  secondary，不能替代P201 raw-copula primary或冒充第二个independent cohort。
+
+### WS-V67-P206-CONSTANT-JOINT-COPULA-ABLATION-01
+
+- 状态：`done/rejected source mechanism ablation`；canonical id=`20260830T193000Z__constant-joint-copula-ablation-s0-r3`。
+- hypothesis：用单个全局4D correlation matrix替代P199按score/clearance预测的相关结构，其他P182 marginals、四H、七预算、
+  PIT、MC1,024和82/20 source split不变。
+- decisions：constant copula dev Brier严格优于P199 conditional且calibration error不退化；若失败，说明输入条件化dependence是
+  P199 refinement的重要组成，而非只要一个全局相关矩阵即可。
+- training：10个Cholesky参数、6,000 steps、batch8,192；在P201 archive IO期间占用单RTX 3090，不触碰P201 rows。
+- result：constant/P199 Brier=`.075778/.075012`（reduction=`-1.02%`）；calibration error=`.027508/.022017`
+  （reduction=`-24.94%`）；0/2 gates，F162。final NLL=`.076067`，wall=`75.43s`。
+- verdict=`rejected_constant_joint_copula_ablation`；负消融支持输入条件化dependence的必要性，但不构成fresh generalization。
+
+### WS-V67-P207-LOW-RANK-CONDITIONAL-JOINT-COPULA-01
+
+- 状态：`running source development`；run id=`20260830T194500Z__low-rank-conditional-joint-copula-s0-r1`。
+- model：8维score/clearance输入，经`64/32` MLP输出4×2 conditional factors与4个positive diagonal scales；归一化为
+  correlation后形成rank-2-plus-diagonal Gaussian copula。
+- protocol：P182 marginals、PIT、82/20 split、四H、七预算、MC1,024与P199完全一致；8,000 steps、batch8,192。
+- decisions：dev Brier严格优于P199且calibration error不退化；不扫rank/width/loss/steps/lr/MC。
+- literature：NeurIPS 2013支持covariate-conditioned copula；NeurIPS 2019及2024用低秩/对角时变协方差提高多变量概率预测。
+  本项迁移结构归纳偏置，不引入P201 read或高维扩展claim。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
