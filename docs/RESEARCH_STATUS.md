@@ -998,6 +998,11 @@ marginal-only runtime interface；不扫feature subset。P234 fresh same-read su
 P234已在P228 rows出现前冻结：复用同一10-scene/10-log首次fresh read作prospective secondary，P233 artifact、四个
 prefix teachers、1024 MC、budget与三项decision均不可变；它不是第二个独立cohort。Evaluator只等待P228 atomic rows，
 不会在ready前占GPU或读取quality。
+P235虽使P201 surface Brier/calibration改善`.509%/.000614`且surface MAE=`.007559`，但final-curve MAE=
+`.010090>.01`，2/3、F179；不以`.000090`差距放宽gate。参考ICCV 2019 modality distillation、PMLR 2019 split
+knowledge transfer与CVPR 2024 incomplete-modality KD，P236不再让marginal-only head直接重学surface，而只训练
+`28 marginal CDF → 8 privileged P199 normalized features` hallucinator，再送入完全冻结P233；source-only feature MSE，
+不finetune surface、不加output/adversarial loss、不扫权重。RTX 3090训练中。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

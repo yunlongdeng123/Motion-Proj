@@ -145,7 +145,8 @@
 | P232 | `run://worldsim_v67/WS-V67-P232-GRADIENT-BALANCED-MONOTONE-CURVE-01/20260831T020000Z__gradient-balanced-monotone-curve-s0-r1` | P201 MAE `.009108`；Brier/calibration improve；3/3 development support |
 | P233 | `run://worldsim_v67/WS-V67-P233-MONOTONE-PREFIX-RELIABILITY-SURFACE-01/20260831T022000Z__monotone-prefix-reliability-surface-s0-r1` | P201 surface/final MAE `.006982/.009186`；Brier/calibration improve；3/3 |
 | P234 | `run://worldsim_v67/WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01/20260831T025000Z__prefix-surface-fresh-confirmation-s0-r1` | frozen P228 same-read prospective secondary；waiting on rows |
-| P235 | `run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1` | fixed marginal-only surface interface ablation；training active |
+| P235 | `run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1` | final MAE `.010090>.01`；rejected/F179 |
+| P236 | `run://worldsim_v67/WS-V67-P236-PRIVILEGED-FEATURE-HALLUCINATION-SURFACE-01/20260831T031000Z__privileged-feature-hallucination-surface-s0-r1` | marginal→condition feature hallucination into frozen P233；training active |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

@@ -1868,7 +1868,17 @@
 
 - protocol：固定P233 teacher surface、双轴单调结构、128x128、source split、10,000 steps与P201 decisions；只移除
   8个P199 condition features，runtime输入为28个P182 marginal CDF values；
-- status：RTX 3090训练中；不扫feature subset/surface architecture/width/horizon/budget/MC，不读P228 quality。
+- result：P201 surface MAE=`.007559`、Brier/calibration改善`.509%/.000614`，但final-curve MAE=
+  `.010090>.01`；2/3，F179；P183 final MAE=`.011246`；
+- verdict=`rejected_marginal_only_prefix_reliability_surface`；wall=`99.68s`。不放宽gate或扫feature subset。
+
+### WS-V67-P236-PRIVILEGED-FEATURE-HALLUCINATION-SURFACE-01
+
+- literature response：missing-modality/privileged-information distillation先从available inputs恢复privileged representation，
+  再复用冻结teacher head，而非让missing-input student完全重学decision surface；
+- protocol：64x64 hallucinator只以source feature MSE学习`28 marginals→8 P199 normalized condition features`；
+  frozen P233接收hallucinated+observed features；不finetune surface、不加output/adversarial loss；
+- status：RTX 3090训练中；P228/P234 quality unread。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 

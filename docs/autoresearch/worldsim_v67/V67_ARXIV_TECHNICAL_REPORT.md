@@ -94,6 +94,9 @@ budget-monotone retention curves同时保证budget monotonicity与horizon-prefix
 P233在P201获得surface/final MAE=`.006982/.009186`，surface Brier/calibration相对teacher改善`.433%/.000927`，
 结构violations=`0/0`，3/3通过。P235固定该surface合同，只移除8个P199 condition features，检验marginal-only
 runtime interface；P234将使用P228首次fresh rows作同读secondary确认，不另开cohort。
+P235的P201 surface quality仍改善，但final MAE=`.010090>.01`而严格拒绝（F179）。P236据privileged-information/
+missing-modality distillation改为从28 marginals hallucinate 8个P199 condition features，再输入完全冻结P233；只训练
+source feature MSE，不finetune surface或扫output-loss权重。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -640,6 +643,8 @@ support”；它仍不等价于collision probability、formal coverage或deploym
 
 - Yu et al., [Gradient Surgery for Multi-Task Learning](https://proceedings.neurips.cc/paper/2020/hash/3fe78a8acf5fda99de95303940a2420c-Abstract.html), NeurIPS 2020.
 - Hayder et al., [DTO-KD: Dynamic Trade-off Optimization for Effective Knowledge Distillation](https://openreview.net/pdf?id=QMItTyQW92), ICLR 2026.
+- Gauraha et al., [Split Knowledge Transfer in Learning Under Privileged Information](https://proceedings.mlr.press/v105/gauraha19a.html), COPA 2019.
+- Li et al., [Correlation-Decoupled Knowledge Distillation for Multimodal Sentiment Analysis with Incomplete Modalities](https://openaccess.thecvf.com/content/CVPR2024/html/Li_Correlation-Decoupled_Knowledge_Distillation_for_Multimodal_Sentiment_Analysis_with_Incomplete_Modalities_CVPR_2024_paper.html), CVPR 2024.
 
 - Chai et al., [MultiPath: Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction](https://proceedings.mlr.press/v100/chai20a.html), CoRL 2019.
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.

@@ -2813,6 +2813,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F179`。
 
+### V67-F179 — marginal-only surface在最终曲线fidelity上极小但严格失败
+
+- canonical：`run://worldsim_v67/WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01/20260831T023500Z__marginal-only-prefix-surface-s0-r1`；
+- 观察：P201 surface MAE与quality两门通过，Brier/calibration改善`.509%/.000614`，但final MAE=`.010090>.01`；
+- 解释：28 marginal values足以拟合surface平均行为，但直接删除8个condition features仍损失最终joint-curve细节；
+- 文献响应：privileged/missing-modality distillation建议恢复缺失representation后复用teacher head；P236训练feature hallucinator；
+- response：不放宽`.01`、不round pass、不扫feature subset；P235不进入fresh P234；
+- 防重复：不再直接训练marginal-only surface width/depth/penalty/seed或budget/horizon变体。
+
+下一可用编号：`V67-F180`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
