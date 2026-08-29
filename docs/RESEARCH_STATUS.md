@@ -383,13 +383,19 @@ WS-V67-P316-ADMITTED-SET-QUANTILE-CONFIRMATION-01/
 `.66944/.95000/.98750`、max undercoverage=`-.03750`、median log-cost MAE=`.12101`、order violations=0，
 2/2 supported；四个task conditions的q95 coverage均`>=.98333`。0 train/0 recalibration，wall=`1.34s`。
 
-P317不再重复证书确认；参照NeurIPS 2017 selective classification的risk-coverage对象与UAI 2023 conformal risk
-control的可控损失形式，但保持经验claim：以冻结P315 q95为base，训练单个bounded residual set-risk score；给定连续
-maximum cost ceiling，以同一scalar score阈值产生结构上ceiling-monotone的admit/abstain。source train固定四个ceiling
-anchors、heldout三个midpoints，source calibration只加一个nonnegative q90 margin；P201三门为unsafe admission
-`<=.15`、mean coverage `>=.20`、monotonicity violations=0。Active=`run://worldsim_v67/
-WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
-20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1`。
+P317参照NeurIPS 2017 selective classification的risk-coverage对象与UAI 2023 conformal risk control的可控损失
+形式，但保持经验claim：以冻结P315 q95为base，训练单个bounded residual set-risk score。Canonical=
+`run://worldsim_v67/WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
+20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1`：P201 mean/highest ceiling admission coverage=
+`.26066/.70000`，相同ceilings下冻结q95 baseline=`.04672/.14016`；max/mean unsafe admission=
+`.00937/.00312`，baseline max=`.01170`，monotonicity violations=0，3/3 supported。中/高ceiling coverage=
+`.08197/.70000`，unsafe=`0/.00937`；最严格ceiling选择0，作为明确abstention边界，不隐藏为普遍coverage。
+wall=`44.08s`、peak GPU=`.14039GiB`。
+
+P318冻结P317/P315及全task-conditioned链，在P243九场景/285个六动作组上做selective-authority-family untouched
+0-step确认；三条heldout ceilings、q90 margin和三门全部继承，不训练/校准/改margin。Active=
+`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
+20260901T060000Z__ceiling-conditioned-selective-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

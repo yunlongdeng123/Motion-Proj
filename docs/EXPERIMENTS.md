@@ -680,8 +680,26 @@
   reuse和当前scene split只声明empirical selective authority，不写conformal/population/safety guarantee。
 - gates：P201 max unsafe admission rate `<=.15`、mean admission coverage `>=.20`、ceiling monotonicity
   violations=0；不扫ceiling/gate/capacity/seed。
-- active=`run://worldsim_v67/WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
+- canonical=`run://worldsim_v67/WS-V67-P317-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-01/
   20260901T054500Z__ceiling-conditioned-selective-authority-s0-r1`。
+- training/calibration：`14,526` examples、6k steps、final loss=`.47376`；训练log ceilings=
+  `.12287/.25310/.48733/1.57109`，单个q90 nonnegative margin=`.16183`。正式heldout log ceilings=
+  `.17703/.33899/.73256`（actual cost ceilings=`.19367/.40353/1.08040`）。
+- P201 result：mean/highest admission coverage=`.26066/.70000`，冻结q95 baseline=`.04672/.14016`；max/mean
+  unsafe admission=`.00937/.00312`，baseline max=`.01170`；monotonicity violations=0，3/3 supported。
+  中/高ceiling coverage=`.08197/.70000`、unsafe=`0/.00937`；最高ceiling相对unselective unsafe rate降低
+  `92.12%`，mean admitted/all actual cost=`.16873/.67290`。最严格ceiling选择0，明确记录为abstention边界。
+- source development：mean/highest coverage=`.26170/.62487`、max unsafe=`.02573`；wall=`44.08s`、peak
+  GPU=`.14039GiB`、RSS=`1.8884GiB`。verdict=`supported_differentiable_ceiling_conditioned_selective_authority`。
+
+### WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01
+
+- frozen candidate/cohort：P317/P315/P313/P311/P309/P307及P243九场景/285个六动作组；selective-authority
+  family untouched reuse confirmation，不声明globally fresh。
+- inherited：三条heldout log ceilings、bounded residual weights、q90 margin和risk/coverage/monotonicity三门；
+  0-step、0 recalibration、one read。
+- active=`run://worldsim_v67/WS-V67-P318-CEILING-CONDITIONED-SELECTIVE-AUTHORITY-CONFIRMATION-01/
+  20260901T060000Z__ceiling-conditioned-selective-authority-confirmation-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

@@ -368,8 +368,11 @@
   2/2 supported；未触发F207，不扫quantile/width/loss/gate；下一步仅做冻结证书跨cohort确认；
 - P316 result：P315完整证书在P277上0-step确认，coverage=`.66944/.95000/.98750`、max undercoverage=
   `-.03750`、median log-cost MAE=`.12101`，2/2 supported；未触发F207；
-- P317 active：冻结P315 q95 base，训练一个bounded residual ceiling-conditioned selective authority；P201仅三门，
-  失败才登记F207，不换ceiling/gate/capacity/seed或做P201 calibration；
+- P317 result：冻结P315 q95 base训练bounded residual ceiling-conditioned selective authority；P201 mean/highest
+  coverage=`.26066/.70000`（baseline `.04672/.14016`）、max unsafe=`.00937`、monotonicity violations=0，
+  3/3 supported；未触发F207；最严格ceiling选择0，记录为预期abstention边界而非failure；
+- P318 active：P317全链在P243上0-step selective-authority-family untouched确认；失败才登记F207，不refit、
+  recalibrate、改margin/ceiling/gate或换cohort；
 - 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29

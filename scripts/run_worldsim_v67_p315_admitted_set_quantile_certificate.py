@@ -194,6 +194,7 @@ def main() -> None:
     seed = int(config["seed"])
     confirmation_only = bool(config.get("confirmation_only", False))
     selective_authority_training = bool(config.get("selective_authority_training", False))
+    selective_authority_confirmation = bool(config.get("selective_authority_confirmation", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -291,7 +292,7 @@ def main() -> None:
         config["heldout_progress_preferences"], config["heldout_lateral_commands"],
         float(config["lateral_preference_weight"]), int(config["selected_action_count"]),
     )
-    if selective_authority_training:
+    if selective_authority_training or selective_authority_confirmation:
         certificate = torch.load(
             args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
             map_location="cuda",
@@ -311,6 +312,79 @@ def main() -> None:
             p201_quantiles = quantile_model(torch.from_numpy(p201_feature).cuda()).cpu().numpy()
         source_frozen_score = np.maximum.accumulate(source_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
         p201_frozen_score = np.maximum.accumulate(p201_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+
+        if selective_authority_confirmation:
+            frozen_selective = torch.load(
+                args.runs_root / config["frozen_selective_authority"]["run"] / config["frozen_selective_authority"]["artifact"],
+                map_location="cuda",
+            )
+            model = CeilingConditionedSelectiveAuthority(
+                int(frozen_selective["input_width"]),
+                frozen_selective["hidden_dimensions"],
+                float(frozen_selective["maximum_residual"]),
+            ).cuda()
+            model.load_state_dict(frozen_selective["model_state_dict"])
+            model.eval()
+            evaluation_ceilings = np.asarray(frozen_selective["heldout_log_cost_ceilings"], np.float32)
+            calibration_margin = float(frozen_selective["calibration_margin"])
+            with torch.no_grad():
+                p201_score = model(
+                    torch.from_numpy(p201_feature).cuda(), torch.from_numpy(p201_frozen_score).cuda()
+                )[0].cpu().numpy() + calibration_margin
+            p201_metrics = _selective_metrics(p201_score, p201_target, p201_conditions, evaluation_ceilings)
+            frozen_p201_metrics = _selective_metrics(
+                p201_frozen_score, p201_target, p201_conditions, evaluation_ceilings
+            )
+            decision = config["decision"]
+            checks = {
+                "P201_selective_authority_risk": p201_metrics["maximum_unsafe_admission_rate"] <= float(decision["maximum_P201_unsafe_admission_rate"]),
+                "P201_selective_authority_coverage": p201_metrics["mean_admission_coverage"] >= float(decision["minimum_P201_mean_admission_coverage"]),
+                "P201_ceiling_admission_monotonicity": p201_metrics["ceiling_admission_monotonicity_violations"] <= int(decision["maximum_P201_ceiling_admission_monotonicity_violations"]),
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "model_state_dict": model.state_dict(),
+                "input_width": int(frozen_selective["input_width"]),
+                "hidden_dimensions": frozen_selective["hidden_dimensions"],
+                "maximum_residual": float(frozen_selective["maximum_residual"]),
+                "calibration_margin": calibration_margin,
+                "training_ceiling_quantile_levels": frozen_selective["training_ceiling_quantile_levels"],
+                "training_log_cost_ceilings": frozen_selective["training_log_cost_ceilings"],
+                "heldout_ceiling_quantile_levels": frozen_selective["heldout_ceiling_quantile_levels"],
+                "heldout_log_cost_ceilings": evaluation_ceilings,
+                "frozen_certificate": config["frozen_certificate"],
+                "frozen_selective_authority": config["frozen_selective_authority"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {"example_count": 0, "steps": 0, "final_loss": None},
+                "calibration": {
+                    "example_count": 0,
+                    "nonnegative_log_cost_margin": calibration_margin,
+                    "reused_from": config["frozen_selective_authority"],
+                },
+                "heldout_log_cost_ceilings": [float(value) for value in evaluation_ceilings],
+                "source_development": None,
+                "P201_post_hoc_development": p201_metrics,
+                "P201_frozen_q95_baseline": frozen_p201_metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
 
         split = config["split"]
         modulus = int(split["scene_modulus"])
