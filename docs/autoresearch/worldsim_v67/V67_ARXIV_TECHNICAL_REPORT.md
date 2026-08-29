@@ -378,6 +378,9 @@ P171旧四coverage仍为`.9542/.9279/.9548/.9126`，但相对P170的mean sharpne
 P167当前2/10 scene-ready：`0269/0802`在其余archive shards仍扫描时已完成五H GPU scoring，10个local rank gain全正。
 这只记录流水线和partial方向；论文主表、macro decision与P170 prospective结论必须等待10/10 aggregate。
 
+P172在P167 partial read后另行训练q10/q90 two-sided cost interval，仅用旧四作consumed development；P167明确禁止承担
+该candidate的prospective confirmation。若coverage与width两门成立，下一步必须冻结另一批target-unread scenes。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

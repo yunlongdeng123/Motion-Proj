@@ -1,0 +1,44 @@
+schema_version: worldsim_v67.p172_conformal_cost_interval.v1
+output_schema_version: worldsim_v67.p172_conformal_cost_interval_summary.v1
+task_id: WS-V67-P172-CONFORMAL-COST-INTERVAL-01
+hypothesis_id: WS-V67-H-P172-001
+role: source_split_two_sided_conformal_trajectory_cost_interval_development
+seed: 0
+model_artifact: CONFORMAL_COST_INTERVAL.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+split: {ordered_unique_scene_position_modulus: 5, calibration_remainder: 0}
+model:
+  score_knots: [-1.5, -0.5, 0.0, 0.5, 1.5]
+  training_steps: 8000
+  batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+interval: {lower_quantile: 0.10, upper_quantile: 0.90, coverage: 0.80}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_empirical_coverage: 0.78, minimum_mean_interval_width_reduction: 0.10}
+verdict_on_pass: supported_development_conformal_cost_interval
+verdict_on_failure: rejected_development_conformal_cost_interval
+locks:
+  P126_score_and_rank_are_frozen: true
+  lower_q10_upper_q90_and_eighty_percent_interval_are_fixed: true
+  every_fifth_ordered_unique_source_scene_is_calibration_only: true
+  score_conditioned_monotone_models_are_compared_with_horizon_only_controls: true
+  P167_is_already_partially_read_and_is_not_used_for_this_candidate: true
+  no_quantile_split_knots_loss_coverage_width_threshold_or_model_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.neurips.cc/paper_files/paper/2019/hash/5103c3584b063c431bd1268e9b5e76fb-Abstract.html
+claim_boundary:
+  - consumed_development_two_sided_empirical_cost_interval_only
+  - requires_a_new_target_unread_cohort_if_supported
+  - no_formal_exchangeable_coverage_collision_probability_planner_policy_closed_loop_or_safety_guarantee

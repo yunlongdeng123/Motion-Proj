@@ -695,6 +695,10 @@ P167流水线已交付首批2/10 scenes：shard03/08分别约`1464.9/1490.1s`完
 evaluator在其余shards仍扫描时物化`8,187+2,798` rows并完成五H GPU评分。两scene共10个local horizon rank gains全正，
 范围=`+.04639`到`+.53723`；remaining scenes=`8`。该数值只证明pipeline与早期方向，不是macro decision或partial stop依据。
 
+P172继续覆盖P167 IO空档，但因P167已partial read，不借用该cohort。冻结P126 score、source ordered-scene split、q10/q90
+两条score-monotone cost models与horizon-only controls，构造80% two-sided CQR interval。旧四只检查每组empirical coverage≥`.78`
+与mean interval-width reduction≥10%；若通过，必须另找全新target-unread cohort，不以P167 post-read结果确认。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

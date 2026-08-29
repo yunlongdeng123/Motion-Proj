@@ -1177,6 +1177,14 @@
   `-36.37%/+9.69%/-26.95%/-24.29%`，mean=`-19.48%`。1/2 decisions。
 - verdict=`rejected_rectified_conformal_cost_bound`，F135；未读P167。关闭conditional rectifier，不扫hidden/split/quantile。
 
+### WS-V67-P172-CONFORMAL-COST-INTERVAL-01
+
+- 状态：`frozen/launching GPU training`；canonical id=`20260830T133500Z__conformal-cost-interval-s0-r1`。
+- object：P126 score+horizon conditioned q10/q90 log-cost monotone models，经held-out source scene symmetric conformal offset形成80% interval。
+- control：同split/quantiles的horizon-only pair；8,000 steps、q10/q90、coverage `.80`全部冻结。
+- decisions：旧四coverage每组≥`.78`且mean width reduction≥10%；不使用已partial-read P167，若通过需新cohort。
+- locks：不扫quantile/split/knots/loss/threshold，不加hash/checksum/fingerprint或测试矩阵。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

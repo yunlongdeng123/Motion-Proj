@@ -2238,6 +2238,14 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F136`。
 
+### P172 freeze note — two-sided conformal cost interval after P167 partial read
+
+- candidate：q10/q90 score-conditioned monotone models vs horizon-only，80% interval，P170同ordered-scene split。
+- decisions：old4 coverage≥`.78` each + mean width reduction≥10%；P167禁止作为prospective confirmation。
+- prevention：不扫quantile/split/knots/threshold；失败才用`V67-F136`，支持也必须新target-unread cohort。
+
+下一可用编号仍为：`V67-F136`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

@@ -82,6 +82,7 @@
 | P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | cost 3/4微降、P96微退，mean rank `+.00212<.005`；rejected/F133 |
 | P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | old4 coverage min `.9060`、mean sharpness `23.66%`；2/2 dev，frozen waiting P167 |
 | P171 | `run://worldsim_v67/WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01/20260830T133000Z__rectified-conformal-cost-bound-s0-r1` | coverage pass、mean sharpness over P170 `-19.48%`；未读P167，rejected/F135 |
+| P172 | `run://worldsim_v67/WS-V67-P172-CONFORMAL-COST-INTERVAL-01/20260830T133500Z__conformal-cost-interval-s0-r1` | frozen/launching；q10/q90 80% cost interval，P167 excluded from confirmation |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
