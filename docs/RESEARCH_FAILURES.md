@@ -2959,6 +2959,20 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F188`。
 
+### V67-F188 — PCGrad tandem混合目标只带来微小response改善
+
+- canonical：`run://worldsim_v67/WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01/20260831T080000Z__tandem-cycle-inverse-budget-s0-r1`；
+- 观察：P201 inverse-budget MAE=`.019667`通过，但重构probability MAE=`.018257>.015`；相对P248仅改善
+  `.000367`；source/P183重构=`.016490/.016759`；level/horizon violations=`0/0`；
+- diagnosis：12,000 steps只有155次budget/cycle gradient conflict；PCGrad很少触发，norm-matched budget primary仍让模型
+  主要拟合坐标误差，不能充分强调冻结forward的陡峭response区；
+- literature/open-source response：经典tandem inverse design及其PyTorch实现把冻结forward surrogate直接作为唯一可微
+  response loss，以避免非唯一或坐标loss牵制；
+- response：P251从头训练，唯一loss为冻结P246重构probability L1；P248/P249结构、data、levels、steps、seed与两门不变；
+- 防重复：不继续扫PCGrad、手工权重或budget/cycle组合；P251失败则关闭这一inverse student family。
+
+下一可用编号：`V67-F189`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；

@@ -1054,7 +1054,10 @@ positive-rate alpha spline与positive horizon increments保证level/horizon都�
 budget MAE=`.019881`远低于`.075`门，但冻结P246重构probability MAE=`.018624>.015`，1/2、F187；约15.06%的
 lower-censored targets与CDF陡峭区共同使小budget误差被放大，不能用budget fidelity替代response fidelity。调研tandem
 inverse networks后，P249保留inverse-budget L1为primary，并通过冻结P246加入cycle probability L1；用PCGrad仅投影冲突
-cycle gradient并按primary gradient norm匹配，不新增人工loss-weight。RTX 3090训练中，P243 archive IO继续并发。
+cycle gradient并按primary gradient norm匹配，不新增人工loss-weight。P249的P201 probability MAE仅改善至`.018257`，
+budget门通过但response门仍失败，F188；12k步仅155次冲突，表明PCGrad不是关键。经典tandem实现直接只优化冻结forward
+response，因此P251移除budget loss与PCGrad，以冻结P246 probability L1作唯一训练目标；其他合同不变，RTX 3090训练中，
+P243 archive IO继续并发。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

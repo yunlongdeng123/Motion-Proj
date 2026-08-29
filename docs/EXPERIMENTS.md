@@ -2029,7 +2029,20 @@
   cycle gradient仅在与budget gradient冲突时投影，随后norm-match到primary gradient；
 - protocol：P248的source rows、九train/eight heldout levels、128/16 knots、12k/batch8192、seed0、P201两门与
   双轴non-crossing结构全部不变；不读取P243 rows，不扫cycle weight/steps/width；
-- active canonical：`run://worldsim_v67/WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01/20260831T080000Z__tandem-cycle-inverse-budget-s0-r1`。
+- canonical：`run://worldsim_v67/WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01/20260831T080000Z__tandem-cycle-inverse-budget-s0-r1`；
+- result：仅155/12,000 steps发生梯度冲突；P201 inverse/final inverse MAE=`.019667/.015173`，budget门通过；重构
+  probability MAE=`.018257>.015`，较P248只改善`.000367`，第二门仍失败；source/P183重构=`.016490/.016759`；
+  violations=`0/0`；
+- resources/verdict：wall=`360.31s`、peak GPU=`.140GiB`；`rejected_tandem_cycle_inverse_reliability_budget_compiler`，F188。
+
+### WS-V67-P251-DIRECT-TANDEM-INVERSE-BUDGET-01
+
+- cardpoint：P249冲突极少，说明问题不是多目标gradient conflict，而是budget primary持续牵制forward response；
+- literature/open-source response：经典tandem inverse design冻结forward surrogate并只以重构response训练inverse；P251
+  直接迁移该目标，以冻结P246 probability L1作为唯一训练loss；
+- protocol：P248/P249的data、levels、positive-rate inverse structure、12k/batch8192、seed0与P201两门全部不变；
+  不扫budget/cycle weight、architecture或训练长度；
+- active canonical：`run://worldsim_v67/WS-V67-P251-DIRECT-TANDEM-INVERSE-BUDGET-01/20260831T083000Z__direct-tandem-inverse-budget-s0-r1`。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 
