@@ -354,6 +354,11 @@ ranking surrogate替换为scene-list soft lower-50% selected-cost objective。16
 存在gap”的直接修复。P169使旧四cost由P144的明显退化收缩为3组微降、P96仅`+.000306`微退，但mean rank gain仍只有
 `+.00212<.005`，F133。结果说明objective alignment有效但新增表示不迁移；P126-anchored residual head family关闭，且未读P167。
 
+P170据此从selection head转向可评估的one-sided cost upper bound：source scenes按mod-5拆分训练/校准，训练q90 log-cost
+monotone spline并以held-out residual作一次split-conformal offset，同时保留horizon-only control。旧四需要每组经验覆盖≥`.88`
+且mean upper-bound至少锐化10%才进入P167。由于跨scene exchangeability未证明，论文即使结果为正也只写empirical coverage，
+不将NeurIPS CQR的一般有限样本结论越权为当前数据协议的formal guarantee。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

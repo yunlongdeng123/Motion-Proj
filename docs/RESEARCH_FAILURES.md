@@ -2185,6 +2185,15 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F134`。
 
+### P170 freeze note — split-conformal one-sided continuous-cost upper bound
+
+- object：q90 upper bound of P120 cost conditioned on frozen P126 score+horizon；horizon-only同目标control。
+- split/training：source scene `%5==0` calibration-only；其余8,000-step pinball；每个model只有一次q90 residual offset。
+- decisions：旧四coverage每组≥`.88`且mean sharpness reduction≥10%；通过才读取P167。
+- prevention：不扫quantile/split/knots/loss/threshold；失败才用`V67-F134`。跨scene只写empirical coverage，不写formal guarantee。
+
+下一可用编号仍为：`V67-F134`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

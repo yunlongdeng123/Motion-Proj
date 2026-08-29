@@ -1145,6 +1145,17 @@
 - verdict=`rejected_soft_fixed_coverage_compiler`，F133；cost non-regression与rank门均失败，故不读P167 prospective rows。
 - interpretation：direct objective显著收窄P144的跨域退化但只回到P126邻域；不继续扫temperature/list/bound或残差容量。
 
+### WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01
+
+- 状态：`frozen/launching GPU training`；canonical id=`20260830T132000Z__conformal-cost-upper-bound-s0-r1`。
+- object：冻结P126 score，预测P120 continuous cost的one-sided q90 upper bound，不再优化fixed50 rank。
+- split：source trajectory按scene index `%5==0`只作calibration，其余训练；无development/test feedback参与offset。
+- model/control：P166同一5-knot score-monotone horizon-conditioned spline vs horizon-only；q90 log-cost pinball 8,000 steps；
+  各自在held-out source scene residual上加一次finite-sample q90 offset。
+- decisions：旧四每组empirical coverage≥`.88`，mean upper-bound sharpness相对control提升≥10%；通过才等P167 prospective。
+- locks：不扫quantile/split/knots/loss/coverage/sharpness threshold，不加hash/checksum/fingerprint或回归矩阵。
+- claim：只报告跨scene empirical coverage/sharpness；无exchangeability证明、formal conformal guarantee或safety claim。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

@@ -666,6 +666,11 @@ P169 canonical r1完成6,000-step GPU训练。P81/P96/P113/P129 selected-cost de
 P126附近，却没有稳定新增量；关闭P126-anchored residual selection-head family，不扫temperature/bound/list。下一训练对象改为
 可检验覆盖率的trajectory cost upper bound，而不是继续挤压fixed50 ranking。
 
+P170改变预测对象为P120 trajectory cost的one-sided upper bound。按source scene index `%5==0`留作calibration、其余只训练；
+冻结q90 `log1p(cost)` pinball、P166同一5-knot score-monotone spline和horizon-only control，随后各用一次held-out residual
+q90 offset。旧四只保留2门：每组经验coverage≥`.88`，相对horizon-only mean upper-bound sharpness reduction≥10%；通过才
+等待P167 prospective。依据NeurIPS 2019 CQR，但因跨scene exchangeability未证明，只允许经验覆盖结论，不写formal guarantee。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
