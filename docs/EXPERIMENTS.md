@@ -83,8 +83,20 @@
   `.25/.75/1.25/1.75`。
 - student：36-D context + positive budget-rate integral - positive beta-rate integral，再做 horizon cumulative product；因此
   budget、beta、horizon三轴单调由结构给出。
-- decisions仅 P201 surface/final LCB teacher MAE `<=.018/.012`；P243 consumed descriptive-only。active=
+- decisions仅 P201 surface/final LCB teacher MAE `<=.018/.012`；P243 consumed descriptive-only。canonical=
   `run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/20260831T171500Z__epistemic-lcb-surface-s0-r1`。
+- result：P201 surface/final MAE=`.00223455/.00286094`、beta低→高probability drop=`.00380949`、budget/horizon/beta
+  violations=`0/0/0`，2/2，verdict=`supported_epistemic_aversion_conditioned_monotone_LCB_surface`；P243 descriptive
+  MAE=`.00203632/.00265769`。wall=`167.46s`、peak GPU/RSS=`.1404/1.9396GiB`。
+
+### WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01
+
+- frozen P275 teacher；soft final-LCB floor penalty=1，联合 alpha、beta、floor、shadow price，65-point budget-grid teacher。
+- train alpha=`0/.5/1`、beta=`0/.5/1/1.5/2`、floor=`.3/.5/.7`、9 prices；heldout alpha=`.25/.75`、
+  beta=`.25/.75/1.25/1.75`、floor=`.4/.6`、8 price midpoints。
+- student positive price/floor rates解析保证两轴预算单调；P201 gates仅 budget MAE `<=.075` 与 frozen LCB-floor
+  regret `<=.005`。active=`run://worldsim_v67/WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
+  20260831T174500Z__epistemic-lcb-lagrangian-policy-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

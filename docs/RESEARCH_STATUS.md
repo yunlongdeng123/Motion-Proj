@@ -50,10 +50,17 @@ WS-V67-P274-BOOTSTRAP-SURFACE-ENSEMBLE-01/20260831T164500Z__bootstrap-surface-en
 `.009363`、Spearman=`.693292`、top uncertainty quartile error lift=`1.5911x`、mean/final std=`.002632/.003445`，2/2；
 P243 descriptive Spearman/lift=`.685411/1.5007x`。wall=`302.13s`。该分歧不是 Bayesian credible interval。
 
-P275 现蒸馏冻结 P274 的 `ensemble mean - beta*std`，beta train=`0/.5/1/1.5/2`、heldout midpoints；新 surface
+P275 蒸馏冻结 P274 的 `ensemble mean - beta*std`，beta train=`0/.5/1/1.5/2`、heldout midpoints；新 surface
 以正 rate integrals 解析保证 budget 上升时 reliability 不降、beta 上升时 reliability 不升，并保留 horizon prefix。
-Active=`run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/
-20260831T171500Z__epistemic-lcb-surface-s0-r1`，当前 GPU 训练。该 LCB 是可条件化的保守 score，不是覆盖保证。
+Canonical=`run://worldsim_v67/WS-V67-P275-EPISTEMIC-LCB-SURFACE-01/
+20260831T171500Z__epistemic-lcb-surface-s0-r1`。P201 surface/final LCB MAE=`.002235/.002861`，budget/horizon/beta
+violations=`0/0/0`，beta low→high mean probability drop=`.003809`，2/2；P243 descriptive MAE=`.002036/.002658`。
+wall=`167.46s`。该 LCB 是保守 score，不是覆盖保证。
+
+P276 正把冻结 P275 接入 soft-floor Lagrangian allocator，联合条件化 alpha、epistemic beta、floor 与 shadow price；
+student结构保证 price↑budget↓、floor↑budget↑，beta效应由 teacher 学习而不强制方向。Active=`run://worldsim_v67/
+WS-V67-P276-EPISTEMIC-LCB-LAGRANGIAN-POLICY-01/
+20260831T174500Z__epistemic-lcb-lagrangian-policy-s0-r1`，GPU 正在 teacher-grid/训练。仍非 hard constraint/safety。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

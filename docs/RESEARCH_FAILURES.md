@@ -50,6 +50,12 @@
 - P275 只在 P274 成立后启动，固定蒸馏 `mean-beta*std` 并用解析正 rates 编码 beta/budget 单调，不更改 P274 门；
 - 下一可用 failure id 仍为 `V67-F196`。
 
+### P275 outcome / P276 start note — 无新增 failure
+
+- P275 P201 surface/final MAE=`.002235/.002861`、三轴 violations=0，2/2；P243继续只描述；
+- P276 以冻结 P275 为唯一 teacher，soft-floor allocator当前运行；不将 LCB score包装为 credible interval/hard constraint；
+- 下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
