@@ -3087,6 +3087,8 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 - P201 sizes 48/96 aggregate fraction MAE=`.014662`、regret=`-.000000447`、violations=0，2/2；
 - P262增加连续horizon preference这一新任务条件，不回头扫P261 pooling/attention/width；五train与四heldout
   preference、alpha交叉一次冻结；
+- P262 P201 budget MAE=`.012221`、task-alpha utility regret=`.0002099`、violations=0，2/2；P263仅推进其
+  fixed-group shared dual，不修改preference scalarization；
 - next failure id保持F194。
 
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure

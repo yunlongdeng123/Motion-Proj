@@ -2183,7 +2183,20 @@
   budget grid、128/16 price-monotone spline、12k/batch8192/seed0与`.075/.005`两门保持P259合同；
 - literature migration：NeurIPS 2018/2019多目标与Pareto MTL把task trade-off表达为preference vector；ICLR 2021
   Pareto hypernetwork支持单模型在运行时接收未见偏好。这里蒸馏固定scalarized teacher，不声称完整Pareto front；
-- active canonical：`run://worldsim_v67/WS-V67-P262-TASK-HORIZON-ALPHA-FAIR-POLICY-01/20260831T123000Z__task-horizon-alpha-fair-policy-s0-r1`。
+- canonical：`run://worldsim_v67/WS-V67-P262-TASK-HORIZON-ALPHA-FAIR-POLICY-01/20260831T123000Z__task-horizon-alpha-fair-policy-s0-r1`；
+- result：P201 budget MAE=`.012221`、frozen task-alpha utility regret=`.0002099`、price violations=0，2/2；
+  source=`.010516/.0002067`，P183=`.010566/.0002612`；
+- resources/verdict：wall=`96.15s`、peak GPU=`.140GiB`；
+  `supported_task_horizon_alpha_fair_shadow_price_policy`。
+
+### WS-V67-P263-TASK-HORIZON-GROUP-DUAL-01
+
+- object：固定64-trajectory group共享一个dual price，同时接受alpha、near/far horizon preference与requested
+  attainable budget fraction；冻结P262负责per-trajectory budget allocation，P246计算scalarized utility；
+- protocol：P260的64-row groups、九/八fractions、20-step bisection、128/16 monotone dual、12k/batch8192/seed0；
+  P262的五/四alpha与五/四horizon preferences原样交叉；P201 fraction MAE≤`.030`、regret≤`.002`；
+- active canonical：`run://worldsim_v67/WS-V67-P263-TASK-HORIZON-GROUP-DUAL-01/20260831T124500Z__task-horizon-group-dual-s0-r1`；
+  不扫preference scale、group、grid、architecture或gate。
 
 ### WS-V67-P243 fresh-cohort local archive resource exception
 

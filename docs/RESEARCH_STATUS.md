@@ -1090,7 +1090,9 @@ regret=`.00001031`、violations=0。P261按Deep Sets/Set Transformer的set-input
 mean/std/max invariant pooling，把group size扩为train=`32/64/128`、heldout=`48/96`；P201在两种未见size聚合
 fraction MAE=`.014662`、alpha-fair regret=`-.000000447`、violations=0，2/2。P262进一步把任务条件显式化：除alpha外
 连续输入near/far horizon preference，单模型编译四个prefix reliability权重变化下的shadow-price budget；五train/
-四heldout preference与alpha交叉，RTX 3090训练中。
+四heldout preference与alpha交叉。P262一次2/2：P201 budget MAE=`.012221`、冻结task-alpha utility regret=
+`.0002099`、price violations=0。P263把冻结P262推进到固定64-trajectory group共享dual price，联合条件化
+`alpha × horizon preference × attainable fraction`，GPU正在生成bisection teacher并接续训练。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 
