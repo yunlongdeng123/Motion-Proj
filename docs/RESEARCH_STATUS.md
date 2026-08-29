@@ -1068,9 +1068,11 @@ cost”最大的预算；positive price-rate spline结构上保证价格升高�
 把64-trajectory fixed groups的requested attainable budget fraction编译为P254 dual price：组特征mean/std与fraction
 输入，结构保证budget fraction增加时price不增；只判预算约束误差与冻结Lagrangian regret，RTX 3090训练中。
 P243 r1的八个推定scene shards合计提取3,518/3,914 required LIDAR，最终缺396个同一`n015` log members而在
-quality前退出，F190。nuScenes官方说明trainval需要合并全部archives，archive part并非scene-exclusive；已保留同一冻结
-cohort和已提取文件，取消会重复扫描09的中间恢复入口，r3只并行扫描尚未触碰的01/06精确补缺，waiters继续等待原processed
-root。P256 r1训练12k已收敛到price MAE约`.007`，但首次quality前的group reward展开把已有member轴重复附加而退出，F191；
+quality前退出，F190。nuScenes官方说明trainval需要合并全部archives，archive part并非scene-exclusive；r3又精确扫描此前
+未触碰的01/06，至此本机10/10官方trainval blobs均未包含这396帧，确认只影响`scene-1011`且仍未读任何target/quality，
+记F192。为保住scene-level freshness而不拿旧验证scene顶替，P243按资源例外移除该scene、不替换，冻结为9-scene/9-log
+cohort，location=`5/2/1/1`；r4 prep与r2 confirmation已并行接替，结论边界同步缩小。P256 r1训练12k已收敛到price MAE
+约`.007`，但首次quality前的group reward展开把已有member轴重复附加而退出，F191；
 按NumPy广播规则作单行shape修复，data/model/seed/steps/decisions不变，r2已接替GPU。
 P256 r2暴露同一helper返回reshape仍重复member轴，继续归入F191；最终r3完整2/2：P201 attainable fraction MAE=
 `.016420`、冻结Lagrangian regret=`.00001163`、price violations=0，26个64-row groups。P257用固定
@@ -1080,7 +1082,13 @@ MAE=`.010997`、冻结log-utility regret=`.000272`、price violations=0。P258�
 64-trajectory fixed-group attainable-budget dual compiler；仍只判fraction MAE与冻结log-Lagrangian regret，RTX 3090训练中。
 P258一次2/2：P201 fraction MAE=`.015445`、冻结log-Lagrangian regret=`-0.00000421`（网格近似量级）、price
 violations=0。P259将risk preference连续化为alpha-fair utility：五个train alpha=`0/.25/.5/.75/1`从线性可靠度过渡
-到log reliability，四个interleaved alpha只在P201单次评价；alpha与price共同条件化128/16 monotone policy，GPU训练中。
+到log reliability，四个interleaved alpha只在P201单次评价；alpha与price共同条件化128/16 monotone policy。P259一次
+2/2：P201 budget MAE=`.011076`、冻结alpha-fair utility regret=`.0001333`、price violations=0。P260进一步在
+固定64-trajectory groups上编译`alpha × attainable budget fraction`到共享dual price；五train alpha、四heldout alpha、
+九train/八heldout fractions合同冻结。P260一次2/2：P201 fraction MAE=`.017168`、冻结alpha-fair Lagrangian
+regret=`.00001031`、violations=0。P261按Deep Sets/Set Transformer的set-input路线，训练共享element encoder与
+mean/std/max invariant pooling，把group size扩为train=`32/64/128`、heldout=`48/96`；不扫attention/width，RTX 3090
+训练与P243 prep IO重叠。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 

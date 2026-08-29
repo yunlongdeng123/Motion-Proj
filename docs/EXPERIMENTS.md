@@ -2142,7 +2142,43 @@
 - protocol：train alpha=`0/.25/.5/.75/1`，heldout=`.125/.375/.625/.875`；每个alpha复用13 train/12 heldout
   prices及129-point budget grid；37-input、128/16 price-monotone spline、L1、12k/batch8192/seed0；
 - P201 decisions：跨4×12 query的budget MAE≤`.075`、frozen alpha-fair utility regret≤`.005`；不扫alpha/epsilon；
-- active canonical：`run://worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1`。
+- canonical：`run://worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1`；
+- result：P201 budget MAE=`.011076`、frozen alpha-fair utility regret=`.0001333`、price violations=0，2/2；
+  source=`.009535/.0001425`，P183=`.009662/.0001436`；
+- resources/verdict：wall=`92.84s`、peak GPU=`.140GiB`；`supported_alpha_fair_shadow_price_policy`。
+
+### WS-V67-P260-ALPHA-FAIR-GROUP-DUAL-01
+
+- object：把P259的连续risk preference推进到固定64-trajectory group，在运行时联合条件化`group summary × alpha ×
+  attainable budget fraction`并直接输出共享dual price；
+- protocol：train alpha=`0/.25/.5/.75/1`、heldout=`.125/.375/.625/.875`；九train/八heldout fractions，
+  20-step frozen teacher bisection，73-input 128/16 positive-rate spline，12k/batch8192/seed0；
+- P201 decisions：attained fraction MAE≤`.030`、冻结alpha-fair Lagrangian regret≤`.002`；不扫alpha、group、
+  epsilon、architecture、steps或gate；
+- canonical：`run://worldsim_v67/WS-V67-P260-ALPHA-FAIR-GROUP-DUAL-01/20260831T113000Z__alpha-fair-group-dual-s0-r1`；
+- result：P201 price/fraction MAE=`.033713/.017168`、frozen alpha-fair Lagrangian regret=`.00001031`、
+  violations=0，2/2；source fraction/regret=`.016690/.00001547`，P183=`.017391/.00001709`；
+- resources/verdict：212 train groups、wall=`71.60s`、peak GPU=`.140GiB`；
+  `supported_alpha_fair_group_dual_price_compiler`。
+
+### WS-V67-P261-VARIABLE-SET-ALPHA-FAIR-DUAL-01
+
+- object：解除P260固定64-row与手工mean/std summary边界；采用Deep Sets式共享element encoder与
+  mean/std/max invariant pooling，联合条件化set cardinality、alpha与attainable fraction；
+- protocol：train group sizes=`32/64/128`，只在interleaved heldout sizes=`48/96`评价；P260的五train alpha、
+  四heldout alpha、九/八fractions、20-step teacher、12k/seed0与两门保持不变；
+- literature migration：NeurIPS 2017 Deep Sets给出置换不变pooling分解；ICML 2019 Set Transformer说明set interaction
+  对amortized mapping的重要性。单卡阶段先用线性复杂度invariant pooling，不引入attention sweep；
+- active canonical：`run://worldsim_v67/WS-V67-P261-VARIABLE-SET-ALPHA-FAIR-DUAL-01/20260831T120000Z__variable-set-alpha-fair-dual-s0-r1`。
+
+### WS-V67-P243 fresh-cohort local archive resource exception
+
+- r3 recovery：`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T101500Z__continuous-budget-fresh-prep-s0-r3`；
+  精确扫描最后未触碰的01/06仍命中0/396，约`950.7/900.2s`；因此本机10/10 trainval blobs均不含
+  `scene-1011`对应的`n015-2018-11-14-19-09-14` LIDAR，target/quality read仍为0；
+- response：不以任何旧confirmation scene补位；移除唯一不可用scene且不替换，剩余9个事前冻结unused val scenes、
+  9 distinct logs、location=`5/2/1/1`。r4 prep canonical=`20260831T114000Z__continuous-budget-fresh-prep-s0-r4`，
+  r2 confirmation=`20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2`；所有model/budget/MC/decision保持冻结。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01
 

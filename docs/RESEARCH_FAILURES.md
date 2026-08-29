@@ -3043,6 +3043,30 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F192`。
 
+### V67-F192 — P243冻结scene-1011的396帧不在本机全部十个官方trainval blobs中
+
+- runs：r1已扫推定02/03/04/05/07/08/09/10；r3=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T101500Z__continuous-budget-fresh-prep-s0-r3`补扫01/06；
+- symptom：最后01/06分别约`950.7/900.2s`且均0命中；缺失集合仍是396个
+  `n015-2018-11-14-19-09-14` LIDAR，元数据映射表明全部只属于`scene-1011`；
+- external evidence：nuScenes官方devkit要求下载全部archives并合并到同一root；本机已覆盖10/10 trainval blob parts，
+  因而不能再靠猜测shard或重复扫描恢复；不增加checksum/hash/fingerprint；
+- scientific impact：prep在preprocess/row/quality前退出，P243及所有same-read secondary仍未读新target；
+- response：保留其余九个冻结unused val scenes，不用任何历史验证scene补位；仅移除不可用`scene-1011`且不替换，
+  cohort边界改为9 scenes/9 logs、location=`5/2/1/1`。P242/P244/P246/P249/P252/P254 artifacts、budgets、MC、
+  metrics与gates均不变；r4 prep与r2 confirmation接替；
+- prevention：本地archive不可用作为明确resource exception记录，不做分卷重扫、完整数据审计或冗长回归。
+
+下一可用编号：`V67-F193`。
+
+### P259/P260 milestone note — alpha-fair连续risk条件化推进，无新增failure
+
+- P259 canonical=`run://worldsim_v67/WS-V67-P259-ALPHA-FAIR-SHADOW-PRICE-POLICY-01/20260831T111500Z__alpha-fair-shadow-price-policy-s0-r1`；
+- P201 budget MAE=`.011076`、frozen alpha-fair regret=`.0001333`、price violations=0，2/2；
+- P260 P201 fraction MAE=`.017168`、frozen alpha-fair Lagrangian regret=`.00001031`、violations=0，2/2；
+- P261只把冻结P259推进到train sizes 32/64/128、heldout 48/96的permutation-invariant set compiler，
+  alpha/fraction/steps/两门一次锁定，不扫attention或pooling family；
+- next failure id保持F193。
+
 ### P257 milestone note — log-utility shadow-price policy通过，无新增failure
 
 - canonical=`run://worldsim_v67/WS-V67-P257-LOG-UTILITY-SHADOW-PRICE-POLICY-01/20260831T104500Z__log-utility-shadow-price-policy-s0-r1`；
