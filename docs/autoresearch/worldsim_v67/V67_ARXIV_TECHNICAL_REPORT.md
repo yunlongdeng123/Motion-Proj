@@ -79,6 +79,9 @@ selected Brier改善，但该选择在P183/source的selection-conditional calibr
 `.090272/.090478`、calibration=`.023727/.024630`，两项冻结门均通过；当前batched student forward=`.000940s`，teacher
 MC stage=`.007007s`。这仍是观察P201后的post-hoc development；P228已在target read前冻结全新10-scene/10-log cohort，
 archive/preprocess与确认并行运行。等待IO期间P229只训练一次`64x64` compact student，不做结构或超参扫描。
+P229把参数从22,280降至7,048（`-68.37%`），P201 teacher MAE=`.008252`、Brier degradation仅`.159%`且
+calibration改善`.000945`，2/2通过。P230进一步固定该训练合同，只移除8个P199 condition features，测试28个marginal
+CDF是否足以编译teacher；它不把distillation等同为horizon independence，也不读取P228 fresh quality。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

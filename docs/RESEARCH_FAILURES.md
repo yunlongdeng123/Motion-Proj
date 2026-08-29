@@ -2794,6 +2794,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F178`。
 
+### P229 milestone note — 64x64 compact student通过，无新增failure
+
+- P201 teacher MAE=`.008252`，Brier relative degradation=`.159%`，calibration absolute increase=`-.000945`，2/2；
+- 参数由P227的22,280降至7,048（`-68.37%`），没有width/depth sweep；
+- P230只做一次marginal-only interface ablation；P228 fresh quality仍未读取。
+
+下一可用编号仍为：`V67-F178`。
+
 P205 locator recovery note（不占算法编号）：P205原waiter仍指向P201 cwd失败的r1目录，而P201 canonical已恢复为r2。
 发现时P201 rows尚未生成；只将`frozen_rows.run`改到r2并以新run-id重启，P203 map、P199 comparator、budgets、MC、metrics、
 gates均不变。P205 r2是唯一quality read，结果2/2；下一可用算法编号仍为`V67-F169`。

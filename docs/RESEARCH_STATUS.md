@@ -971,8 +971,10 @@ auxiliary或结构/宽度/MC sweep。该证据仍是P201观察后的post-hoc dev
 P228已在任何sensor/target read前冻结10个此前未用official-val scenes和10个distinct logs：`0015/0097/0273/0520/
 0552/0626/0775/0800/0919/1069`，location=`Boston/onenorth/queenstown/holland=5/2/2/1`。P203 teacher、P227
 student、1024 MC、七预算与MAE/Brier/calibration三门全部冻结；archive extraction/preprocess与confirmation waiter运行中。
-IO期间P229正训练一次`64x64` compact monotone student，复用P227输入/teacher/objective/steps，将参数从约22.7k降至约7.0k；
-不做width/depth sweep。若development成立，只在同一P228首次fresh rows上作冻结secondary，不另建测试矩阵。
+IO期间P229完成一次`64x64` compact monotone student，复用P227输入/teacher/objective/steps，将参数从22,280降至7,048
+（减少`68.37%`）。P201 teacher MAE=`.008252`，Brier相对退化仅`.159%`，calibration反而改善`.000945`，2/2通过；
+wall=`50.62s`、peak GPU=`.140GiB`。P230立即接替GPU：固定P229宽度与全部训练合同，只移除8个P199 conditional
+features，检验28个P182 marginal CDF values是否已足够编译teacher；只做这一次feature-interface ablation，不扫子集。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

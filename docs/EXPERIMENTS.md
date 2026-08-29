@@ -1818,7 +1818,18 @@
 - hypothesis：保持P227输入、teacher、source-only objective、10,000 steps与单调8-mass head，只把hidden width从
   `128x128`一次降为`64x64`，参数约从22.7k降为7.0k；
 - role：P228 IO期间运行的development compression，不读取P228；P201沿用P227两项quality decision；
-- status：RTX 3090训练中；不做width/depth/LR/MC sweep。若通过，P228 rows仅作同一fresh read的冻结secondary。
+- result：参数`22,280→7,048`（`-68.37%`）；P201 teacher MAE=`.008252`，student/teacher Brier=
+  `.090622/.090478`（relative degradation `.159%`），calibration=`.023684/.024630`（student改善`.000945`）；2/2；
+- resources/verdict：wall=`50.62s`、peak GPU=`.140GiB`；verdict=
+  `supported_compact_monotone_reliability_curve_distillation`。仍是development，P228才可确认。
+
+### WS-V67-P230-MARGINAL-ONLY-MONOTONE-CURVE-01
+
+- hypothesis：固定P229 `64x64`、teacher、source split、10,000 steps、七预算与decision，只移除8个P199 conditional
+  features，以28个P182 marginal CDF values编译P203(P199) teacher；
+- rationale：若成立，runtime interface不再需要额外传递copula conditioning vector；这只是teacher distillation，不宣称
+  horizon independence；
+- status：RTX 3090训练中；不做feature-subset/width/depth/LR/MC sweep，不读取P228 quality。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
