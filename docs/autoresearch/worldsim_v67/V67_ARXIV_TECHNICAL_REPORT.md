@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P166 point calibration closed negative`
+- 报告状态：`P147 independent multi-horizon support; P166 point calibration closed negative; P167 second confirmation launching`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -337,6 +337,10 @@ P166转向不改变排序的校准问题：固定P126 score，以horizon-conditi
 point expected cost，不产生credible interval、coverage或conformal guarantee。若consumed development成立，才会冻结模型到全新场景。
 P166旧四cohort raw MSE虽逐组小幅下降，但平均仅`4.09%<20%`，10-bin expected-cost error反而四组全差；P147 H0.8也
 退化（F131）。因此论文结论维持“可排序、可降低fixed-coverage cost”，不升级为绝对cost calibrated prediction。
+
+P167不继续修改模型，而将冻结P126-vs-P109/P147五时域协议转移到第二个target-unread 10-scene cohort。该cohort覆盖四个
+location、9个distinct logs；由于仍有log overlap，只能增加scene-level独立重复的强度。执行采用shard-ready preprocess与
+scene-ready GPU scoring的在线流水线，使archive IO与3090评分重叠；结果未产生前，本报告不预写支持或拒绝结论。
 
 ## 3. 核心结果表
 

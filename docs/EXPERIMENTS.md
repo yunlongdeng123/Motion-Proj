@@ -1100,6 +1100,22 @@
 - P147 diagnostic：MSE reduction=`-7.68%/+5.36%/+7.19%/+3.04%/+4.11%`；H0.8明显退化，仍只作post-confirmation描述。
 - interpretation：P126 score含有限的point-cost信息，但source log-MSE改善没有转成raw heavy-tail calibration；不扫knots/bin/loss。
 
+### WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01
+
+- 状态：`frozen/launching`；prep id=`20260830T130000Z__pipelined-multi-horizon-prep-s0-r1`，confirmation id=
+  `20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1`。
+- object：不训练新模型；在第二个target-unread scene cohort复验冻结P126相对P109的五时域continuous boundary-cost增量。
+- cohort：`0269/0346/0968/0524/0557/0904/0802/0928/0930/1065`，四location分配=`3/3/3/1`，shards=
+  `03/04/09/05/06/09/08/09/09/10`，9 distinct logs；sensor/target read前由official metadata冻结。
+- protocol：H=`.8/1.5/2.5/3.0/3.5`、cost floor=`.05m`、per-scene fixed50、P126/P109 artifacts及P147同定义
+  trajectory score/cost全部不变。
+- decisions：mean per-H Spearman gain over P109 `>=.005`；mean per-H selected-cost delta `<=0`。只保留2门；per-H表只描述。
+- pipeline：archive shard完成立即释放scene preprocess；每个processed scene ready立即在3090物化并评分五个H，与剩余IO重叠。
+- locks：只允许formal target前exact shard locator correction；不换scene/model/H/coverage/cost/metric/decision，不扫参，不增加
+  hash/checksum/fingerprint或smoke/regression matrix。
+- claim：至多第二次scene-level independent multi-horizon support；因log overlap不写log/session independence，也无calibrated probability、
+  planner、closed-loop或safety claim。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

@@ -2135,6 +2135,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F132`。
 
+### P167 freeze note — second scene-level multi-horizon confirmation with live IO→GPU pipeline
+
+- candidate：完全冻结P126、P109与P147五时域continuous score/cost定义；本阶段不训练、校准或修改模型。
+- unread cohort：`0269/0346/0968/0524/0557/0904/0802/0928/0930/1065`；四location、9 distinct logs，全部在
+  sensor/target read前从official val metadata选定。因log overlap，独立性只到scene level。
+- execution：shard完成释放scene preprocessing，scene marker释放GPU scoring；允许与剩余archive IO重叠，不等待全cohort ready。
+- decisions：五个H的mean rank gain `>=.005`且mean selected-cost delta `<=0`；不增加子群门或回归矩阵。
+- prevention：只允许target read前修正exact archive locator；不换scene、删scene、改H/score/cost/coverage/decision，失败才使用
+  `V67-F132`并保留完整per-H负结果；不加hash/checksum/fingerprint。
+
+下一可用编号仍为：`V67-F132`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

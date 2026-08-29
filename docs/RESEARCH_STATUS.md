@@ -635,6 +635,16 @@ raw MSE均小幅改善，但reduction仅`4.65%/2.94%/4.23%/4.55%`（mean=`4.09%`
 expected-cost error四组均高于horizon-only。1/2 decisions，F131。P147仅H1.5--H3.5 MSE微降，H0.8退化；因此关闭
 point-calibration family，不扫knots/loss/threshold。P126/P147继续只支持relative reliability ranking/selection，不升级为calibrated cost。
 
+P167直接扩大独立证据而不再训练或审计P126。任何新sensor/target read前，按official val metadata冻结10个repo-target-unread
+scenes：One-North `0269/0346/0968`、Boston `0524/0557/0904`、Queenstown `0802/0928/0930`、Holland Village
+`1065`，对应shards `03/04/09/05/06/09/08/09/09/10`与9个distinct logs。因cohort内及历史存在log overlap，证据只称
+scene-level independent。模型、P109 comparator、H=`.8/1.5/2.5/3.0/3.5`、`.05m` cost floor、per-scene fixed50和P147
+两项macro decisions全部原样冻结；只允许target read前修正exact archive locator。
+
+为避免单卡等待IO，P167实现shard→scene→GPU流水线：7个所需archive shards并行扫描，每个shard完成即以4-worker释放其
+场景预处理；evaluator预先将冻结P126/P109驻留3090，并在单个scene marker出现时立即物化五个H并完成GPU评分，不等全部IO结束。
+prep与confirmation将并发启动；仅做Python语法/入口检查，不增加smoke、回归矩阵、hash、checksum或fingerprint。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
