@@ -38,8 +38,8 @@
 | P125 | `run://worldsim_v67/WS-V67-P125-TWO-MODE-ACTOR-UNCERTAINTY-01/20260830T082500Z__two-mode-actor-uncertainty-s0-r1` | K2 mixture未collapse但三cohort AUROC均退化；reject |
 | P126 | `run://worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1` | AUROC三组同增，P113 events 6→4；P96 0→1故binary reject |
 | P127 | `run://worldsim_v67/WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01/20260830T083500Z__ensemble-continuous-selection-s0-r1` | selected cost全降；Spearman gain=`+.0470/+.1351/+.0755`；support |
-| P128 | `run://worldsim_v67/WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01/20260830T084000Z__ensemble-continuous-confirmation-s0-r1` | frozen before P121 rows；prospective same-read secondary pending |
-| P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | `PENDING_P121_FINAL_FILL` |
+| P128 | `run://worldsim_v67/WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01/20260830T084000Z__ensemble-continuous-confirmation-s0-r1` | ensemble gain=`+.04721`、cost `.27051<.27796`；same-read support with timing caveat |
+| P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
@@ -69,8 +69,8 @@
 | two-mode correlated Gaussian residual | P125 consumed ×3 | components active；三cohort AUROC仍全退化 | reject single-model multimodal family |
 | epistemic+aleatoric deep ensemble | P126 consumed ×3 | AUROC全增；P96 fixed50多1 event | reject binary composite；transfer continuous object once |
 | ensemble continuous selection | P127 consumed ×3 | cost全降、mean Spearman gain=`+.08586` | freeze P128 same-read secondary |
-| ensemble continuous confirmation | P128 P121 same read | pending | prospective secondary only |
-| continuous object independent transfer | P121 target-unread | `PENDING_P121_FINAL_FILL` | `PENDING_P121_FINAL_FILL` |
+| ensemble continuous confirmation | P128 P121 same read | gain=`+.04721`、selected cost更低 | same-read secondary support；commit timing caveat |
+| continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
 
@@ -112,6 +112,8 @@
 | P125 two-mode Gaussian checkpoint/result | P125 canonical run |
 | P126 three-member ensemble checkpoint/result | P126 canonical run |
 | P127 ensemble continuous selection | P127 canonical run |
+| P121 independent continuous rows/summary | P121 prep与primary canonical runs |
+| P128 ensemble same-read summary | P128 canonical run；timing caveat见ledger/report |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |

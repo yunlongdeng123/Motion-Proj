@@ -160,7 +160,9 @@ P120把target改为observed Actor residual沿τ boundary normal的absolute proje
 `.5625/.3795/.6307`。因此论文当前可把它写成consumed-development mechanism，独立claim必须等P121。
 
 P121在新target read前冻结10-scene scene-level independent cohort与两项composite decision，确认P109 continuous-cost ranking
-及fixed50 selection，而不重新打开binary flip gate。Outcome：`PENDING_P121_FINAL_FILL`。
+及fixed50 selection，而不重新打开binary flip gate。14,554 rows/1,581 trajectories上，P109 Spearman=`.76147`，超过
+clearance `+.28823`；fixed50 selected cost=`.27796`，相对全体降低`77.36%`且低于clearance `.32215`。2/2通过，形成
+scene-level independent continuous reliability support。
 
 P121 archive IO期间，P122在P121 rows出现前用已消费P81/P96/P113比较P117 full covariance与P109。Full covariance使
 continuous-cost Spearman平均提升`.00941`，但P96/P113 fixed50 selected cost略退化，预先冻结的nonregression失败并登记F87。
@@ -184,6 +186,11 @@ single-model扩展后首个跨三cohort同向排序信号。P127已在P121 targe
 
 P127的continuous transfer三组全成立：selected cost均下降，Spearman gain=`+.04698/+.13508/+.07551`。因此P128在P121
 rows出现前冻结为prospective same-read secondary，只检验相对P109的rank gain与cost noninferiority；它不替换P121 primary。
+
+P128在同一P121 rows上得到ensemble Spearman `.80868`，相对P109 `+.04721`；selected cost `.27051<.27796`，两门通过。
+时间边界必须披露：runner/config内容在08:34:24 rows-absent检查后冻结并复制，但rows在Git commit guard前物化，故commit
+`572f7d5`晚于materialization；内容在读取outcome前未改。论文称其prospective-content same-read secondary，而非严格
+commit-before-read prereg或第二独立cohort。
 
 ## 3. 核心结果表
 
@@ -214,6 +221,8 @@ rows出现前冻结为prospective same-read secondary，只检验相对P109的ra
 | P125 | consumed K2 Gaussian mixture | P81/P96/P113 events=`0/4/7` | AUROC gain=`-.0021/-.0243/-.0070` | reject learned modes |
 | P126 | consumed deep ensemble | P81/P96/P113 events=`0/1/4` | AUROC gain=`+.0020/+.0100/+.0063` | binary composite reject；rank signal retained |
 | P127 | consumed ensemble continuous | selected cost全降 | Spearman gain=`+.0470/+.1351/+.0755` | support；freeze P128 |
+| P121 | independent continuous primary | selected cost=`.27796`，reduction=`.7736` | Spearman=`.76147`，gain over clearance=`+.28823` | 2/2 support |
+| P128 | P121 same-read ensemble secondary | selected cost=`.27051<.27796` | Spearman gain over P109=`+.04721` | support with timing caveat |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -256,7 +265,8 @@ rows出现前冻结为prospective same-read secondary，只检验相对P109的ra
 - P124同样在IO窗口训练916,722 Actor-time tokens、6,000 steps，wall约53.55s。
 - P125训练K2 mixture 6,000 steps，wall约63.01s；没有component/entropy sweep。
 - P126新训seed1/2各6,000 steps并复用P109 seed0；单卡顺序执行，与P121 IO重叠。
-- P127冻结checkpoint推理wall数秒；P128 runner/config在P121 rows物化前提交。
+- P127冻结checkpoint推理wall数秒；P128 runner/config内容在P121 rows物化前冻结并复制，Git commit晚于materialization，见timing caveat。
+- P121 prep/primary wall=`1829.91/1816.03s`，主要是并行archive scan与等待；P128 inference wall=`.665s`。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界

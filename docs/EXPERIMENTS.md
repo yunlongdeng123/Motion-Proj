@@ -383,7 +383,7 @@
 
 ### WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01
 
-- 状态：`frozen/target unread`；prep=`20260830T080000Z__continuous-boundary-prep-s0-r1`，confirmation=
+- 状态：`done/supported independent scene-level primary`；prep=`20260830T080000Z__continuous-boundary-prep-s0-r1`，confirmation=
   `20260830T080500Z__continuous-boundary-confirmation-s0-r1`。
 - cohort：official val中未处理/未提及scene，四location、cohort内10 distinct sessions：
   `0093/0332/0519/0014/0036/0221/0794/0916/0924/1062`，indices=`75/260/409/13/35/171/614/702/709/802`。
@@ -392,6 +392,10 @@
   projection除以`max(abs(predicted clearance),.05m)`后作trajectory max；H3.5/per-scene fixed50。
 - decisions仅两项：`P109 Spearman>=.70 AND gain over clearance>=.10`；`selected cost reduction>=.70 AND selected cost<=clearance`。
   不训练P120 head，不读binary flip作为gate；不换scene/shard（exact pre-target locator修正除外）/model/cost/floor/coverage/metric/gate。
+- prep：3,902/3,902 required files mapped，new extraction=2,715，10/10 processed；wall=`1829.91s`，无locator failure。
+- result：14,554 rows/1,581 trajectories；P109/clearance Spearman=`.761472/.473237`，gain=`+.288235`；all/P109/
+  clearance selected cost=`1.227612/.277957/.322151`，P109 reduction=`77.36%`。2/2 composite decisions通过，verdict=
+  `supported_independent_continuous_boundary_state_reliability`；scene-level independent，不是session-level。
 
 ### WS-V67-P122-FULL-COVARIANCE-CONTINUOUS-SELECTION-01
 
@@ -475,11 +479,17 @@
 
 ### WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01
 
-- 状态：`frozen/P121 rows unread`；planned canonical=`20260830T084000Z__ensemble-continuous-confirmation-s0-r1`。
+- 状态：`done/supported prospective-content same-read secondary`；canonical=
+  `20260830T084000Z__ensemble-continuous-confirmation-s0-r1`。
 - runner/config/P126 checkpoint/total-variance score/P109 comparator/P120 cost/`.05m` floor/fixed50均在P121 rows物化前冻结；只等待
   P121 primary的同一NPZ，不独立materialize target。
 - decisions仅两项：ensemble Spearman gain over P109≥`.005`；ensemble selected cost≤P109。P121保持唯一primary；P128是
   prospective same-read secondary，成功也不能冒充第二个independent cohort；失败不恢复。
+- result：ensemble/P109 Spearman=`.808683/.761472`，gain=`+.047211`；selected cost=`.270506/.277957`，两门全通过，
+  verdict=`supported_prospective_same_read_ensemble_continuous_selection`；wall=`.665s`。
+- timing caveat：08:34:24 rows absent检查后runner/config完成并复制；传输/commit guard窗口内P121 rows物化，故commit
+  `572f7d5`晚于materialization。P128内容在查看P121 outcome前已冻结且未改，但只称prospective-content，不称严格
+  commit-before-read prereg。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

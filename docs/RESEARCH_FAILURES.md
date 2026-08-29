@@ -1466,6 +1466,15 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   member/weight/score recovery；
 - failure delta：P127无新增failure；下一可用编号仍为F92。
 
+### P121/P128 outcome note — independent primary与same-read ensemble增量均成立
+
+- P121 primary：P109 Spearman `.761472`、超过clearance `+.288235`；fixed50 cost reduction `77.36%`且cost低于clearance，
+  2/2 decisions，scene-level independent support；
+- P128 secondary：ensemble relative P109 Spearman gain `+.047211`、selected cost `.270506<=.277957`，2/2 decisions；
+- timing disclosure：08:34:24确认rows absent后P128内容冻结并复制，rows在Git commit guard前的传输窗口内物化；commit
+  `572f7d5`因此晚于materialization。内容在读取outcome前冻结且未改，但论文只称prospective-content same-read secondary；
+- resolution：无scientific failure，不把P128冒充commit-before-read prereg或独立cohort；下一可用failure仍为F92。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
@@ -1473,9 +1482,8 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   历史session overlap使证据只scene-level independent；
 - decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
   clearance。只保留两门，不加binary flip/AUROC/gate matrix；
-- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。P122--P126已占用
-  F87--F91；当前下一编号F92为P128保留，因此P121 scientific failure按P128结果顺延并
-  关闭continuous object independent claim，不做第二P121 recovery。
+- outcome：冻结protocol未改，P121 2/2 decisions通过；P128也通过且未占用F92。没有第二P121 recovery或新增gate；
+  `V67-F92`恢复为下一可用编号。
 
 下一可用编号仍为：`V67-F92`。
 

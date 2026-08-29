@@ -312,6 +312,17 @@ P127两项continuous decisions全通过。P81/P96/P113 ensemble selected cost=`.
 相对P109的Spearman gain≥`.005`与selected cost noninferiority；不二次materialize、不训练、不改P121 primary。该secondary
 即使成功也只是prospective same-read，不是第二个independent cohort。
 
+P121现已完成并支持scene-level independent continuous object：14,554 rows/1,581 trajectories，P109 Spearman=`.76147`，
+clearance=`.47324`，gain=`+.28823`；fixed50 selected cost=`.27796` vs all=`1.22761`、clearance=`.32215`，reduction=
+`77.36%`。ranking与selection两项composite均通过，verdict=`supported_independent_continuous_boundary_state_reliability`。
+prep exact mapped=3,902、newly extracted=2,715、10/10 processed，wall=`1829.91s`；primary wall=`1816.03s`主要等待IO。
+
+P128同读secondary也两门通过：ensemble Spearman=`.80868`，相对P109 gain=`+.04721`；selected cost=`.27051`，低于P109
+`.27796`，reduction=`77.96%`。准确时间边界：08:34:24检查P121 rows仍不存在，P128 runner/config随后完成并复制到远端；
+在Git commit guard执行时rows已于传输窗口内物化，故commit `572f7d5`晚于materialization，但文件内容在读取P121 outcome前
+已冻结且之后未改。论文将其写为`prospective-content same-read secondary with commit-timing caveat`，不写成严格
+commit-before-read prereg或第二independent cohort。当前下一研究是为ensemble continuous increment冻结全新scene-level cohort。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
