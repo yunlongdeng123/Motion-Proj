@@ -328,7 +328,8 @@ class _GradientReversal(torch.autograd.Function):
 
 
 class DomainAdversarialVisitedReliabilityHead(nn.Module):
-    def __init__(self, input_width, encoder_dimensions, reliability_hidden_width, domain_hidden_width, set_size_count):
+    def __init__(self, input_width, encoder_dimensions, reliability_hidden_width, domain_hidden_width, set_size_count,
+                 conditional_alignment=False):
         super().__init__()
         encoder_layers = []
         width = int(input_width)
@@ -340,23 +341,35 @@ class DomainAdversarialVisitedReliabilityHead(nn.Module):
             nn.Linear(width + 2, int(reliability_hidden_width)), nn.SiLU(),
             nn.Linear(int(reliability_hidden_width), int(set_size_count)),
         )
+        self.conditional_alignment = bool(conditional_alignment)
+        domain_input_width = width * int(set_size_count) if self.conditional_alignment else width
         self.domain_head = nn.Sequential(
-            nn.Linear(width, int(domain_hidden_width)), nn.SiLU(), nn.Linear(int(domain_hidden_width), 1)
+            nn.Linear(domain_input_width, int(domain_hidden_width)), nn.SiLU(), nn.Linear(int(domain_hidden_width), 1)
         )
 
     def encode(self, features):
         return self.encoder(features)
 
-    def forward(self, features, normalized_horizon, log_cost_ceiling):
-        latent = self.encode(features)
+    def reliability_logits_from_latent(self, latent, normalized_horizon, log_cost_ceiling):
         raw_logits = self.reliability_head(
             torch.cat((latent, normalized_horizon[:, None], log_cost_ceiling[:, None]), 1)
         )
         return torch.cummax(raw_logits, dim=1).values
 
-    def domain_logits(self, features, reversal_coefficient):
-        latent = _GradientReversal.apply(self.encode(features), reversal_coefficient)
-        return self.domain_head(latent).squeeze(1)
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        return self.reliability_logits_from_latent(self.encode(features), normalized_horizon, log_cost_ceiling)
+
+    def domain_logits(self, features, reversal_coefficient, normalized_horizon=None, log_cost_ceiling=None):
+        latent = self.encode(features)
+        reversed_latent = _GradientReversal.apply(latent, reversal_coefficient)
+        if self.conditional_alignment:
+            probabilities = torch.sigmoid(
+                self.reliability_logits_from_latent(latent, normalized_horizon, log_cost_ceiling)
+            ).detach()
+            domain_features = (reversed_latent[:, :, None] * probabilities[:, None, :]).flatten(1)
+        else:
+            domain_features = reversed_latent
+        return self.domain_head(domain_features).squeeze(1)
 
 
 def fit_binary_isotonic_map(scores, targets, sample_weights=None):
@@ -1067,7 +1080,7 @@ def main() -> None:
                 model = DomainAdversarialVisitedReliabilityHead(
                     source_feature.shape[1], model_config["hidden_dimensions"],
                     adversarial_config["reliability_hidden_width"], adversarial_config["domain_hidden_width"],
-                    len(set_sizes),
+                    len(set_sizes), adversarial_config.get("conditional_on_reliability", False),
                 ).cuda()
             else:
                 model = DirectVisitedReliabilityHead(
@@ -1097,9 +1110,22 @@ def main() -> None:
                     domain_target = torch.cat((
                         torch.zeros(len(row), device="cuda"), torch.ones(len(row), device="cuda")
                     ))
-                    domain_logits = model.domain_logits(
-                        domain_features, float(adversarial_config["reversal_coefficient"])
-                    )
+                    if adversarial_config.get("conditional_on_reliability", False):
+                        domain_horizon_index = training_horizon_tensor[
+                            torch.randint(len(training_horizon_tensor), (len(domain_features),), device="cuda")
+                        ]
+                        domain_horizon = horizon_tensor[domain_horizon_index]
+                        domain_ceiling = ceiling_tensor[
+                            torch.randint(len(ceiling_tensor), (len(domain_features),), device="cuda")
+                        ]
+                        domain_logits = model.domain_logits(
+                            domain_features, float(adversarial_config["reversal_coefficient"]),
+                            domain_horizon, domain_ceiling,
+                        )
+                    else:
+                        domain_logits = model.domain_logits(
+                            domain_features, float(adversarial_config["reversal_coefficient"])
+                        )
                     domain_loss = F.binary_cross_entropy_with_logits(domain_logits, domain_target)
                     loss = reliability_loss + domain_loss
                     domain_adversarial_last = float(domain_loss.detach())
