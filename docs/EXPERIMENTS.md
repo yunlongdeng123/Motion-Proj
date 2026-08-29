@@ -2014,7 +2014,22 @@
   quantiles；P248迁移为positive-rate alpha spline，并以positive horizon increments保证更长H不要求更小budget；
 - protocol：冻结P246用24-step bisection产生teacher；train levels `.1:.1:.9`，heldout `.15:.1:.85`；source-only L1，
   128 context/16 knots/12k/batch8192；P201两门为inverse normalized-log-budget MAE≤`.075`与重构probability MAE≤`.015`；
-- active canonical：`run://worldsim_v67/WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01/20260831T073000Z__inverse-reliability-budget-compiler-s0-r1`；不读取P243 rows。
+- canonical：`run://worldsim_v67/WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01/20260831T073000Z__inverse-reliability-budget-compiler-s0-r1`；
+- result：P201 inverse/final inverse MAE=`.019881/.016370`，第一门通过；重构冻结P246 probability MAE=
+  `.018624>.015`，第二门失败；source/P183重构MAE=`.016876/.017074`；level/horizon violations=`0/0`；
+  P201 lower/upper censor=`15.06%/1.32%`；
+- resources/verdict：wall=`106.61s`、peak GPU=`.140GiB`；`rejected_inverse_reliability_budget_compiler`，F187。
+
+### WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01
+
+- hypothesis：P248的budget坐标误差已小，但在冻结P246的陡峭CDF区被放大；inverse student需要同时保持设计参数精度和
+  forward response cycle consistency；
+- literature response：tandem inverse networks冻结forward surrogate并通过response reconstruction训练inverse；P249保留
+  P248的budget L1，并用冻结P246计算四horizon cycle probability L1；参考NeurIPS 2020 PCGrad，无需扫描loss权重：
+  cycle gradient仅在与budget gradient冲突时投影，随后norm-match到primary gradient；
+- protocol：P248的source rows、九train/eight heldout levels、128/16 knots、12k/batch8192、seed0、P201两门与
+  双轴non-crossing结构全部不变；不读取P243 rows，不扫cycle weight/steps/width；
+- active canonical：`run://worldsim_v67/WS-V67-P249-TANDEM-CYCLE-INVERSE-BUDGET-01/20260831T080000Z__tandem-cycle-inverse-budget-s0-r1`。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 

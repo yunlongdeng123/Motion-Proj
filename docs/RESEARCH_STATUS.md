@@ -1050,7 +1050,11 @@ P246继续在IO期间训练：保持原七anchor输入，把训练budget域扩�
 surface/final MAE=`.006580/.008776`，P183 final=`.009892`，quality在容差内、violations=`0/0`。P247已在P243
 rows前冻结为八budget同读secondary；不继续扫range。调研ICML 2018 IQN与AISTATS 2022 non-crossing quantiles后，
 P248改变预测对象：给定reliability level，直接输出四个horizon所需的clipped minimum budget；以冻结P246数值逆作teacher，
-positive-rate alpha spline与positive horizon increments保证level/horizon都不交叉，source-only 12k L1训练已启动。
+positive-rate alpha spline与positive horizon increments保证level/horizon都不交叉。P248保持`0/0`结构违规，P201 inverse
+budget MAE=`.019881`远低于`.075`门，但冻结P246重构probability MAE=`.018624>.015`，1/2、F187；约15.06%的
+lower-censored targets与CDF陡峭区共同使小budget误差被放大，不能用budget fidelity替代response fidelity。调研tandem
+inverse networks后，P249保留inverse-budget L1为primary，并通过冻结P246加入cycle probability L1；用PCGrad仅投影冲突
+cycle gradient并按primary gradient norm匹配，不新增人工loss-weight。RTX 3090训练中，P243 archive IO继续并发。
 
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新

@@ -2936,6 +2936,21 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F187`。
 
+### V67-F187 — inverse budget精度通过但未保持forward probability fidelity
+
+- canonical：`run://worldsim_v67/WS-V67-P248-INVERSE-RELIABILITY-BUDGET-COMPILER-01/20260831T073000Z__inverse-reliability-budget-compiler-s0-r1`；
+- 观察：P201 inverse normalized-log-budget MAE=`.019881<=.075`，但在冻结P246重构的probability MAE=
+  `.018624>.015`；1/2；source/P183重构MAE也为`.016876/.017074`；level/horizon violations=`0/0`；
+- 解释：P201约`15.06%` target在budget下界裁剪，且冻结P246的局部CDF斜率不均；单纯平均budget L1会在平坦区和
+  陡峭区等权，因此小坐标误差不能保证response误差；
+- literature/open-source response：tandem neural-network inverse design冻结forward surrogate，并以重构response约束inverse；
+  NeurIPS 2020 PCGrad在多目标梯度冲突时作投影。P249将冻结P246 cycle probability loss迁入训练，同时保留budget L1；
+- response：P249只作一次tandem recovery；cycle gradient冲突时投影并norm-match primary，不扫人工权重；P248结构、
+  levels/data/steps/seed/decisions不变；
+- 防重复：不放宽`.015`、不增加bisection steps或level/knot/width sweep，不把inverse-budget pass包装为整体成功。
+
+下一可用编号：`V67-F188`。
+
 ### P244 milestone note — 解析rate spline改善跨cohort fidelity，无新增failure
 
 - canonical：`run://worldsim_v67/WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01/20260831T063000Z__monotone-rate-spline-surface-s0-r1`；
