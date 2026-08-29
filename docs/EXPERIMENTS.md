@@ -1015,7 +1015,25 @@
   low/high按d符号选择，q90值为0且导数始终为正。context-only项保持H/k order。
 - training：冻结P332 raw与P333 q90 local margin；同source scale-fit split、q `.70-.97`、6k steps；不扫
   polynomial order/anchor/range/capacity。source disjoint development比较P335/P336 aggregate pinball。
-- evaluation：P201 q75/q85/q90/q95 frontier、quantile-order与q90三门；状态=`active GPU training`。
+- canonical=`run://worldsim_v67/WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01/
+  20260901T110000Z__anchor-preserving-monotone-risk-curvature-s0-r1`。
+- result：7,515 rows、6k steps、final pinball=`.036728`；source heldout q75/q85/q90/q95 pinball=
+  `.086739/.063730/.049365/.032113`，mean=`.057986` vs P335 linear=`.058153`，改善`.29%`。
+- P201 q75/q85/q90/q95 mean coverage=`.402459/.341257/.304645/.275956`、highest=
+  `.771311/.714754/.681967/.643443`、max unsafe=`.182609/.065292/.049020/.054054`，q-order=0；
+  q90三门与source pinball门4/4 supported。wall=`54.83s`、GPU=`.14039GiB`、RSS=`1.89553GiB`。
+- verdict=`supported_anchor_preserving_monotone_risk_curvature`；增益很小且q95未改善，关闭高阶曲率调参。
+
+### WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01
+
+- research step：不再增加score多项式容量；冻结P336 score，让context warp学习requested q到effective q的单调
+  重参数化，迁移calibrated regression的distribution recalibration思想。
+- warp：context MLP输出q90两侧正斜率，`q_eff=.90+slope_side*(q-.90)`并clamp `.70-.97`；q90 exact、
+  requested-q order保持，且同一q_eff广播到H/k保持nested orders。
+- split/training：scene modulus5 remainder0训练、remainder3 source development，q `.70-.97`、6k steps；冻结
+  P332/P333/P336，不扫slope bound/anchor/range/capacity。
+- evaluation：source development aggregate pinball对冻结P336；P201 q75/q85/q90/q95 frontier、q-order与q90三门。
+  状态=`active implementation/training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

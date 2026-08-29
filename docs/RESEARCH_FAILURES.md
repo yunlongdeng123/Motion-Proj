@@ -411,7 +411,9 @@
   `.28989 < .30`，2/3 rejected，登记F214；不扫floor/steps/range；
 - P335 result：q90逐值保持P333，P201 coverage/max unsafe=`.30464/.04902`、monotonicity=0，3/3
   supported；q75/q85/q90/q95 quantile-order violations=0，F214关闭；
-- P336 active：在同一q90 anchor上训练双侧positive risk curvature；失败才登记F215；
+- P336 result：source heldout mean pinball=`.057986 <= P335 .058153`，P201 q90三门与q-order通过，
+  4/4 supported；增益仅`.29%`且q95 unsafe=`.05405`未改善，关闭高阶curvature sweep；
+- P337 active：冻结P336并训练q90锚定context risk warp；失败才登记F215；
 - 下一可用 failure id 为 `V67-F215`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

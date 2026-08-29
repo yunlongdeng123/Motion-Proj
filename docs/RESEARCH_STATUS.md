@@ -533,9 +533,17 @@ pinball=`.03735`。P201 q75/q85/q90/q95 mean coverage=`.40710/.34180/.30464/.274
 coverage/high/max unsafe=`.30464/.68197/.04902`。source对应mean coverage=`.45665/.39455/.34804/.31214`。
 F214由exact anchor关闭；q95 max unsafe略高于名义`.05`，且非q90风险点未单独校准/门控，只作empirical frontier。
 
-P336把P335单一直线risk derivative扩为q90锚定的双侧positive curvature：low/high tail分别学习非负二次曲率，
-在q90仍严格为0且全轴导数为正；source disjoint development比较continuous-q pinball，不改变P201 q90门。
-Active=`WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01`。
+P336把P335单一直线risk derivative扩为q90锚定双侧positive curvature。Canonical=`run://worldsim_v67/
+WS-V67-P336-ANCHOR-PRESERVING-MONOTONE-RISK-CURVATURE-01/
+20260901T110000Z__anchor-preserving-monotone-risk-curvature-s0-r1`：7,515 rows、6k steps、final pinball=
+`.03673`。source heldout q75/85/90/95 aggregate pinball=`.057986` vs冻结P335 linear=`.058153`，改善仅
+`.29%`；P201 mean coverage=`.40246/.34126/.30464/.27596`、max unsafe=
+`.18261/.06529/.04902/.05405`，q-order=0，q90与source pinball四门4/4 supported。曲率可行但收益很小，q95
+unsafe未改善，不继续扫polynomial order。
+
+P337冻结P336 continuous-risk score并训练q90锚定的context risk warp：requested q映射到effective base q，q90
+严格不动、两侧正斜率且clamp在`.70-.97`；用source remainder0训练、remainder3比较P336 pinball，P201仍不fit。
+Active=`WS-V67-P337-ANCHOR-PRESERVING-CONTEXT-RISK-WARP-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
