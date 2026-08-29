@@ -2230,6 +2230,14 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F136`。
 
+### P167 partial pipeline note — 2/10 scenes scored while remaining shards scan
+
+- shards03/08完整命中冻结members并释放`0269/0802`；preprocess与GPU scoring均未等待全部cohort。
+- 两scene五H local rank gain全正，但partial result不得触发stop、scene replacement或decision修改。
+- 无locator/资源/算法failure；下一编号保持`V67-F136`。
+
+下一可用编号仍为：`V67-F136`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

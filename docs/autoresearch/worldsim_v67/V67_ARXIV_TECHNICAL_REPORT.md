@@ -375,6 +375,9 @@ P171旧四coverage仍为`.9542/.9279/.9548/.9126`，但相对P170的mean sharpne
 更窄。说明source residual conditional pattern未跨scene稳定迁移，constant P170 offset更可靠。P171未读P167并关闭，P170保持
 唯一prospective cost-bound candidate。
 
+P167当前2/10 scene-ready：`0269/0802`在其余archive shards仍扫描时已完成五H GPU scoring，10个local rank gain全正。
+这只记录流水线和partial方向；论文主表、macro decision与P170 prospective结论必须等待10/10 aggregate。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

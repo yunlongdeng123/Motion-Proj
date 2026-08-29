@@ -77,7 +77,7 @@
 | P164 | `run://worldsim_v67/WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01/20260830T123000Z__interaction-context-actor-ensemble-s0-r1` | mean rank `-.04474`、cost 4/4退；rejected/F129 |
 | P165 | `run://worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/20260830T124000Z__joint-multi-actor-diffusion-s0-r1` | old mean rank `+.00811`、P147 5/5 rank+cost；old fixed50 cost reject/F130 |
 | P166 | `run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/20260830T125000Z__monotone-expected-cost-calibration-s0-r1` | mean MSE reduction `4.09%<20%`、bin error恶化；rejected/F131 |
-| P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | frozen/launching；第二个target-unread 10-scene × five-H，P147协议原样复验 |
+| P167 | `run://worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1` | 2/10 scored while IO；10 local scene-H rank gains全正，macro未读完/无verdict |
 | P168 | `run://worldsim_v67/WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01/20260830T131000Z__joint-tail-mean-compiler-s0-r1` | mean rank `+.00460<.005`、旧四cost全退；未读P167，rejected/F132 |
 | P169 | `run://worldsim_v67/WS-V67-P169-SOFT-FIXED-COVERAGE-COMPILER-01/20260830T131500Z__soft-fixed-coverage-compiler-s0-r1` | cost 3/4微降、P96微退，mean rank `+.00212<.005`；rejected/F133 |
 | P170 | `run://worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2` | old4 coverage min `.9060`、mean sharpness `23.66%`；2/2 dev，frozen waiting P167 |

@@ -1115,6 +1115,8 @@
   hash/checksum/fingerprint或smoke/regression matrix。
 - claim：至多第二次scene-level independent multi-horizon support；因log overlap不写log/session independence，也无calibrated probability、
   planner、closed-loop或safety claim。
+- partial execution：shards03/08完成即释放`0269/0802`，其他shards仍扫描；两scene GPU materialization rows=
+  `8,187/2,798`，10个scene-H local rank gains全正（`.04639--.53723`）。状态=`2/10 scored`，不提前计算verdict。
 
 ### WS-V67-P168-JOINT-TAIL-MEAN-COMPILER-01
 

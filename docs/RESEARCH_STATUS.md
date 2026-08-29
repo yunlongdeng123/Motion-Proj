@@ -691,6 +691,10 @@ P171 canonical r1完成6,000-step训练。P81/P96/P113/P129 coverage=`.95422/.92
 因此未读取P167。Conditional correction在不同scene产生不稳定scale，global P170 offset反而更稳；关闭rectifier支线，不扫hidden/split。
 P170保持唯一等待P167的upper-bound candidate。
 
+P167流水线已交付首批2/10 scenes：shard03/08分别约`1464.9/1490.1s`完成后立即释放`scene-0269/0802`，
+evaluator在其余shards仍扫描时物化`8,187+2,798` rows并完成五H GPU评分。两scene共10个local horizon rank gains全正，
+范围=`+.04639`到`+.53723`；remaining scenes=`8`。该数值只证明pipeline与早期方向，不是macro decision或partial stop依据。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
