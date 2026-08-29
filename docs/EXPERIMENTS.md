@@ -1859,7 +1859,16 @@
 - structure：首个prefix是8-mass budget CDF；其后三个prefix乘以随budget单调增加的retention curve，因此surface
   按budget递增且按prefix horizon递减，无penalty/gate修补；
 - decisions：P201 surface MAE≤`.015`、final-curve MAE≤`.01`、surface Brier/calibration noninferiority；
-- status：RTX 3090 source-only 10,000-step distillation启动；不扫surface architecture/penalty/horizon/budget/MC。
+- result：P201 surface/final teacher MAE=`.006982/.009186`；student/teacher surface Brier=`.075400/.075728`
+  （改善`.433%`），calibration=`.032777/.033704`（改善`.000927`）；budget/horizon violations=`0/0`；3/3；
+- P183：surface Brier改善`.320%`、calibration改善`.000533`，两轴violations仍为0；
+- verdict=`supported_monotone_prefix_reliability_surface_compiler`；wall=`103.98s`、peak GPU=`.224GiB`。
+
+### WS-V67-P235-MARGINAL-ONLY-PREFIX-SURFACE-01
+
+- protocol：固定P233 teacher surface、双轴单调结构、128x128、source split、10,000 steps与P201 decisions；只移除
+  8个P199 condition features，runtime输入为28个P182 marginal CDF values；
+- status：RTX 3090训练中；不扫feature subset/surface architecture/width/horizon/budget/MC，不读P228 quality。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

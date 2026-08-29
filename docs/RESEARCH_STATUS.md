@@ -990,6 +990,11 @@ P183 Brier也改善`.169%`，calibration仅增加`.000339`。verdict=`supported_
 wall=`89.31s`。P233继续把最终七预算curve推进成`4 horizon-prefix × 7 budget` surface：base CDF与三个budget-monotone
 retention curves结构上保证budget递增、prefix horizon递减；source-only distill冻结P199 prefix teachers，full prefix仍用P203。
 P201只作post-hoc development，P228 fresh quality仍未读取。
+P233完成且3/3通过：P201 surface/final teacher MAE=`.006982/.009186`，student/teacher surface Brier=
+`.075400/.075728`（改善`.433%`），calibration=`.032777/.033704`（改善`.000927`）；budget/horizon violations=
+`0/0`。P183 surface Brier/calibration也改善`.320%/.000533`。wall=`103.98s`、peak GPU=`.224GiB`。
+P235已接替GPU，保持P233 surface teacher/structure/steps/decisions，只移除8个P199 condition features，检验28维
+marginal-only runtime interface；不扫feature subset。P234 fresh same-read surface evaluator将在P228 quality前冻结。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

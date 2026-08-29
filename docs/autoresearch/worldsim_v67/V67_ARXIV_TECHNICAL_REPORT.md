@@ -91,6 +91,9 @@ P231虽在P183/P201改善Brier `2.02%/1.29%`，P201 teacher MAE却升到`.027831
 P232在9,672/10,000 steps触发conflict projection，最终P201 MAE=`.009108`，Brier/calibration相对teacher改善
 `.428%/.000491`，3/3通过。P233据此从final curve推进到4-prefix×7-budget surface：用base budget CDF和三个
 budget-monotone retention curves同时保证budget monotonicity与horizon-prefix monotonicity；不依赖post-hoc penalty。
+P233在P201获得surface/final MAE=`.006982/.009186`，surface Brier/calibration相对teacher改善`.433%/.000927`，
+结构violations=`0/0`，3/3通过。P235固定该surface合同，只移除8个P199 condition features，检验marginal-only
+runtime interface；P234将使用P228首次fresh rows作同读secondary确认，不另开cohort。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。

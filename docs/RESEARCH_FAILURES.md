@@ -2813,6 +2813,14 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F179`。
 
+### P233 milestone note — 双轴结构单调surface通过，无新增failure
+
+- P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；
+- P235只作一次marginal-only runtime interface ablation；P234将在P228首次quality前冻结同读fresh secondary；
+- 不增加surface penalty、结构、budget/horizon或MC sweep。
+
+下一可用编号仍为：`V67-F179`。
+
 ### P230 milestone note — marginal-only compiler通过，无新增failure
 
 - P201 teacher MAE=`.009653`，Brier/calibration均优于teacher；P183轻微退化仍在冻结容差；
