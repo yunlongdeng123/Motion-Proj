@@ -1056,7 +1056,25 @@
 - training：source scene-rank fold0上随机q/H/ceiling蒸馏hard P337 authority，6k steps；fold3 development，
   不改变hard teacher或P201 score，不扫temperature/capacity/loss。
 - evaluation：P201 soft expected-size对hard teacher MAE/class accuracy，另保留q90 hard teacher risk/coverage；
-  不把soft relaxation称hard safety control。状态=`active implementation/training`。
+  不把soft relaxation称hard safety control。状态=`done/supported with temperature-collapse limitation`。
+- canonical=`run://worldsim_v67/WS-V67-P338-DIFFERENTIABLE-RISK-CEILING-AUTHORITY-01/
+  20260901T113000Z__differentiable-risk-ceiling-authority-s0-r1`。
+- result：5,463 rows、6k steps、final NLL=`.023100`；source fold3 expected-size MAE/accuracy=
+  `.022478/.998178`，mean/range temperature=`.005056/[.005,.121629]`。
+- P201 12 q×ceiling requests expected-size MAE/accuracy=`.022801/.997883`，mean/range temperature=
+  `.0050018/[.005,.005794]`；q90 hard teacher coverage/max unsafe=`.304645/.049020`，3/3 supported。
+  wall=`74.50s`、GPU=`.14039GiB`、RSS=`1.89768GiB`。
+- verdict=`supported_differentiable_risk_ceiling_authority`；temperature几乎塌到`.005`下界，故只支持soft-hard
+  fidelity，不支持“宽梯度relaxation”主张，不事后改P338 gate。
+
+### WS-V67-P339-ENTROPY-REGULARIZED-DIFFERENTIABLE-AUTHORITY-01
+
+- migration：SoftSort/OT sorting把温度或entropy regularization视为连续算子定义的一部分；P338学习温度在heldout
+  上塌到`.005`，因此不能只追求hard fidelity。
+- method：P338 nested feasibility/probability差分、frozen P337 teacher、scene-rank folds、6k steps完全不变；
+  temperature固定下界改为`.02`、上界仍`.25`，不做floor sweep。
+- gates：P201 expected-size MAE `<=.25`、mean temperature `>=.019`、q90 hard teacher risk `<=.10`、coverage
+  `>=.30`；accuracy描述性报告。状态=`active GPU training`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

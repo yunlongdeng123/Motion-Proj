@@ -416,7 +416,9 @@
 - P337 r1：numeric scene ID `%5`使fit remainder0为空，首个sample前退出，0 training/quality，登记F215；
 - P337 r2：改为sorted unique-scene rank folds后，source pinball改善`1.17%`，P201 q90三门与q-order通过，
   4/4 supported；q95 coverage/unsafe=`.29262/.04819`，F215关闭；
-- P338 active：冻结P337并训练nested differentiable authority relaxation；失败才登记F216；
+- P338 result：P201 expected-size MAE/accuracy=`.02280/.99788`且q90 teacher risk/coverage通过，3/3
+  supported；但mean temperature=`.0050018`塌到下界，只支持fidelity，不声称宽梯度；
+- P339 active：固定SoftSort式`.02` entropy/temperature floor并训练一次；失败才登记F216；
 - 下一可用 failure id 为 `V67-F216`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集

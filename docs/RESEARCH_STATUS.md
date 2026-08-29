@@ -550,9 +550,17 @@ P201 q75/q85/q90/q95 mean coverage=`.39809/.34344/.30464/.29262`、max unsafe=
 `.25581/.10526/.04902/.04819`，q-order=0，4/4 supported。q95相对P336同时提升coverage并把unsafe降到名义
 `.05`以内；F215由group-rank r2关闭。
 
-P338冻结P337 risk-warp frontier，训练context/q/H/ceiling-conditioned positive temperature，把三条nested feasibility
-sigmoid编译为0/1/2/3 authority的可微概率分布；hard teacher不变，source训练soft-hard distillation，P201只读
-soft size fidelity与q90 teacher risk/coverage。Active=`WS-V67-P338-DIFFERENTIABLE-RISK-CEILING-AUTHORITY-01`。
+P338冻结P337并训练context/q/H/ceiling positive temperature。Canonical=`run://worldsim_v67/
+WS-V67-P338-DIFFERENTIABLE-RISK-CEILING-AUTHORITY-01/
+20260901T113000Z__differentiable-risk-ceiling-authority-s0-r1`：5,463 rows、6k steps、final NLL=`.02310`。
+source/P201 expected-size MAE=`.02248/.02280`、hard class accuracy=`.99818/.99788`，q90 hard teacher
+coverage/max unsafe=`.30464/.04902`，3/3 supported。但P201 mean/range temperature=
+`.0050018/[.005,.005794]`，几乎塌到下界，说明高fidelity来自近硬阶跃，effective gradient window过窄。
+
+P339依据ICML 2020 SoftSort、NeurIPS 2019 OT differentiable sorting与ICML 2022 differentiable top-k，把
+entropy/temperature当作显式连续松弛强度而非任其塌缩；固定`.02`下界（一次迁移、不扫floor），其余P338模型/
+split/steps不变，新增mean temperature `>=.019`与原fidelity/risk/coverage门。Active=`WS-V67-P339-ENTROPY-
+REGULARIZED-DIFFERENTIABLE-AUTHORITY-01`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
