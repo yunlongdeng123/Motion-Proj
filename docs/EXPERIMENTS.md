@@ -1965,9 +1965,12 @@
   Boston/onenorth/queenstown/holland=`5/2/2/1`；此前V67确认scene、文档提及scene和已有processed scene均排除；
 - protocol：冻结P242、P203/P199 teacher、anchor与六个geometric midpoints、1024 MC及P242三门；新rows只用于一次
   fresh quality read，不用于P244或任何训练；
-- input pipeline：prep canonical=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T060000Z__continuous-budget-fresh-prep-s0-r1`；
+- input pipeline：r1=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T060000Z__continuous-budget-fresh-prep-s0-r1`
+  在八个推定scene shards提取3,518/3,914 LIDAR后缺396个跨archive members，quality前退出，F190；官方要求所有
+  trainval archives合并，因此保留cohort/extracted files，recovery r3仅并行扫尚未触碰的01/06：
+  `run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T101500Z__continuous-budget-fresh-prep-s0-r3`；
   confirmation waiter=`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T060500Z__continuous-budget-fresh-confirmation-s0-r1`；
-  shards `02/03/04/05/07/08/09/10`正在并行IO，quality read=false。
+  r2在发现仍会先重扫09后主动取消，0新增member/output；r3与GPU训练并行，quality read=false。
 
 ### WS-V67-P244-MONOTONE-RATE-SPLINE-SURFACE-01
 
@@ -2096,7 +2099,10 @@
   P254 bisection作teacher；positive fraction-rate spline保证fraction增加时price不增加；12k/batch8192/seed0；
 - P201 decisions：attained budget fraction MAE≤`.030`、冻结P246/P254 Lagrangian utility regret≤`.002`；不扫
   group size、fraction、bisection、width/loss/steps；
-- active canonical：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T094500Z__group-budget-dual-compiler-s0-r1`；
+- r1：`20260831T094500Z__group-budget-dual-compiler-s0-r1`完成12k训练（末段price MAE约`.007`），但evaluation把
+  已是`G×F×S`的budget tensor再次附加`S`轴，NumPy `broadcast_to`在quality read前退出，F191；
+- active canonical r2：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T101500Z__group-budget-dual-compiler-s0-r2`；
+  只把feature broadcast target改成`budget_shape+(36,)`并直接flatten已有budget；其他合同不变；
   仅固定组surrogate allocation，不是online scheduler或真实compute/planning authority。
 
 ### WS-V67-P250-INVERSE-BUDGET-SAME-READ-CONFIRMATION-01

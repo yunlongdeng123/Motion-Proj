@@ -2996,6 +2996,33 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F190`。
 
+### V67-F190 — P243 scene-shard推定漏掉同log跨archive LIDAR members
+
+- run：`run://worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01/20260831T060000Z__continuous-budget-fresh-prep-s0-r1`；
+- symptom：八个推定shards全部结束并命中3,518/3,914 required LIDAR，但缺396个同一`n015-2018-11-14-19-09-14`
+  log members；prep在preprocess/row materialization/quality前退出；
+- root cause：archive part不是scene-exclusive；scene编号映射可定位大多数文件，但一个log的sensor members可跨part；
+- literature/open-source response：nuScenes官方devkit setup明确要求下载并在同一root合并全部archives且不要覆盖公共目录；
+- resolution：cohort、目标members和已提取文件不变；只并行扫描此前未触碰的01/06补精确missing set。初始recovery入口
+  仍会先重扫09，发现后立即取消且0新增output；r3以`recovery_only`跳过primary scan；
+- claim impact：0 target/quality read，不换scene、不改P242/P244/P246/P249/P252/P254或任何decision。
+
+下一可用编号：`V67-F191`。
+
+### V67-F191 — P256 evaluation重复附加已有group-member轴
+
+- run：`run://worldsim_v67/WS-V67-P256-GROUP-BUDGET-DUAL-COMPILER-01/20260831T094500Z__group-budget-dual-compiler-s0-r1`；
+- symptom：12k训练完成且末段train price MAE约`.007`，首次source evaluation的`_reward`将`G×F×S` budget shape
+  再拼接`S`，请求把`G×1×S×36` broadcast到`G×F×S×S×36`而抛ValueError；P183/P201 metric=0；
+- root cause：helper按原先`G×F` dual-price输入书写，但调用方已先通过P254展开成per-member budgets；
+- literature/open-source response：NumPy官方`broadcast_to`要求原shape与目标shape按广播规则兼容；已有member轴应直接
+  保留，不能再次添加；
+- resolution：feature target改为`budget_z.shape+(36,)`，budget直接flatten；r2从头训练，data/group/fraction/
+  bisection/model/seed/steps/decisions全部不变；
+- prevention：不为单一shape错误增加smoke/regression matrix，仅在正式入口修复调用合同。
+
+下一可用编号：`V67-F192`。
+
 ### P254/P255 shadow-price milestone note — 单轨迹预算policy通过，无新增failure
 
 - P254 canonical=`run://worldsim_v67/WS-V67-P254-SHADOW-PRICE-BUDGET-POLICY-01/20260831T091500Z__shadow-price-budget-policy-s0-r1`；

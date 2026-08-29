@@ -1067,6 +1067,11 @@ cost”最大的预算；positive price-rate spline结构上保证价格升高�
 `.011423`、冻结utility regret=`.000178`、price violations=0；P255已在P243 rows前冻结同读secondary。P256继续
 把64-trajectory fixed groups的requested attainable budget fraction编译为P254 dual price：组特征mean/std与fraction
 输入，结构保证budget fraction增加时price不增；只判预算约束误差与冻结Lagrangian regret，RTX 3090训练中。
+P243 r1的八个推定scene shards合计提取3,518/3,914 required LIDAR，最终缺396个同一`n015` log members而在
+quality前退出，F190。nuScenes官方说明trainval需要合并全部archives，archive part并非scene-exclusive；已保留同一冻结
+cohort和已提取文件，取消会重复扫描09的中间恢复入口，r3只并行扫描尚未触碰的01/06精确补缺，waiters继续等待原processed
+root。P256 r1训练12k已收敛到price MAE约`.007`，但首次quality前的group reward展开把已有member轴重复附加而退出，F191；
+按NumPy广播规则作单行shape修复，data/model/seed/steps/decisions不变，r2已接替GPU。
 P250也已在P243 rows与P249 outcome出现前冻结：若两项artifact ready，只在P243同一次fresh read上评价P249 inverse
 budget与重构probability两门；它是prospective same-read secondary，不是新的独立cohort，且不会改变P249 development判定。
 
