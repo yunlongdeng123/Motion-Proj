@@ -367,6 +367,10 @@ P170 r2在旧P81/P96/P113/P129得到`.9257/.9541/.9102/.9060`经验coverage，�
 分别缩短`15.94%/41.07%/23.02%/14.60%`（平均`23.66%`）；development 2/2。模型与offset在P167 rows前冻结，
 当前等待五时域prospective secondary。论文在P167结果前只可写“development支持进入确认”，不能写跨scene formal coverage。
 
+P171是P170的唯一效率增量：冻结base quantile model，以score+horizon条件的q90 residual rectifier替代constant conformity correction，
+并保留最终held-out scene offset。它对应ICML 2025对conformity score conditional rectification的最小迁移；旧四保持coverage并比P170
+再锐化5%前不读取P167。该阶段仍只允许empirical coverage/sharpness解释。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

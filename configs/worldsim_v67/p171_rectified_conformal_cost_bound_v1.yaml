@@ -1,0 +1,53 @@
+schema_version: worldsim_v67.p171_rectified_conformal_cost_bound.v1
+output_schema_version: worldsim_v67.p171_rectified_conformal_cost_bound_summary.v1
+task_id: WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01
+hypothesis_id: WS-V67-H-P171-001
+role: source_trained_conditional_conformity_rectifier_then_prospective_P167
+seed: 0
+model_artifact: RECTIFIED_CONFORMAL_COST_BOUND.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+frozen_p170:
+  run: worldsim_v67/WS-V67-P170-CONFORMAL-COST-UPPER-BOUND-01/20260830T132500Z__conformal-cost-upper-bound-s0-r2
+  artifact: CONFORMAL_COST_UPPER_BOUND.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+prospective_p167:
+  run: worldsim_v67/WS-V67-P167-PIPELINED-MULTI-HORIZON-CONFIRMATION-01/20260830T130500Z__pipelined-multi-horizon-confirmation-s0-r1
+  artifact: P167_ROBUSTNESS_MULTI_HORIZON_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+  readiness_timeout_seconds: 7200
+split: {ordered_unique_scene_position_modulus: 5, calibration_remainder: 0}
+model:
+  hidden_dimensions: [32, 16]
+  training_steps: 6000
+  batch_size: 32768
+  learning_rate: 0.001
+  weight_decay: 0.0001
+upper_bound: {quantile: 0.90, coverage: 0.90}
+boundary_state_cost: {clearance_floor_m: 0.05}
+decision: {minimum_empirical_coverage: 0.88, minimum_mean_sharpness_reduction_over_p170: 0.05}
+verdict_on_pass: supported_prospective_rectified_conformal_cost_bound
+verdict_on_failure: rejected_rectified_conformal_cost_bound
+locks:
+  P126_and_P170_quantile_model_are_frozen: true
+  rectifier_input_is_only_normalized_P126_score_and_horizon: true
+  every_fifth_ordered_unique_source_scene_is_final_calibration_only: true
+  q90_residual_rectifier_plus_one_final_conformal_offset: true
+  development_requires_coverage_every_old_slice_and_mean_sharpness_over_P170_before_P167: true
+  no_hidden_quantile_split_loss_coverage_sharpness_threshold_or_model_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v267/plassier25a.html
+  - https://proceedings.neurips.cc/paper_files/paper/2019/hash/5103c3584b063c431bd1268e9b5e76fb-Abstract.html
+claim_boundary:
+  - empirical_rectified_cost_bound_under_scene_shift_not_formal_conditional_coverage
+  - prospective_P167_is_scene_level_only_if_old_four_development_passes
+  - no_collision_probability_planner_policy_closed_loop_or_safety_guarantee

@@ -2212,6 +2212,15 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号仍为：`V67-F135`。
 
+### P171 freeze note — learned conditional rectification of frozen P170 conformity residual
+
+- base：P170 model/norms/global offset冻结；rectifier只用score+horizon预测q90 log-cost residual correction。
+- split：P170同一ordered scene group holdout；6,000-step source training后single final q90 offset。
+- decisions：old4 coverage每组≥`.88`+mean sharpness over P170≥5%；通过才读P167。
+- prevention：不扫hidden/quantile/split/loss/threshold；algorithm failure才用`V67-F135`并关闭rectifier trial。
+
+下一可用编号仍为：`V67-F135`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

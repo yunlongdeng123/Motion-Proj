@@ -681,6 +681,11 @@ P170 r2已完成同合同8,000-step训练并通过旧四development 2/2。P81/P9
 `15.94%/41.07%/23.02%/14.60%`，mean=`23.66%>10%`。模型与single offsets已冻结，当前只等待P167五H rows作
 事前prospective secondary；未改coverage/quantile/门。该结果支持进入确认，不作为formal conformal或新独立结论。
 
+P171在不触碰P167的同时训练conditional conformity rectifier。P170 q90 model与global offset均冻结；rectifier只看normalized
+P126 score+horizon，以source非calibration scenes的P170 log-cost residual做q90 pinball，最终仍在同一held-out ordered-scene
+组加一次offset。旧四要求每组coverage≥`.88`且mean upper bound比P170再锐化≥5%；通过才等待P167。依据ICML 2025
+rectified conformity scores，不扫hidden/quantile/split/threshold。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

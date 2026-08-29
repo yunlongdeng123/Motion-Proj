@@ -1163,6 +1163,15 @@
   `15.94%/41.07%/23.02%/14.60%`，mean=`23.66%`。2/2 decisions通过。
 - 状态更新：`development supported / frozen waiting prospective P167`；尚无final verdict，不把旧四结果写成independent coverage。
 
+### WS-V67-P171-RECTIFIED-CONFORMAL-COST-BOUND-01
+
+- 状态：`frozen/launching GPU training`；canonical id=`20260830T133000Z__rectified-conformal-cost-bound-s0-r1`。
+- controlled change：冻结P170 q90 model/norms/global offset；只训练`score+horizon→q90 residual correction`的32/16 MLP。
+- split：与P170相同ordered unique scene每5取1 final calibration-only；其余source训练6,000 steps，最后一次q90 offset。
+- decisions：旧四coverage每组≥`.88`，mean upper-bound相对P170锐化≥5%；通过才等P167 prospective。
+- locks：不扫hidden/quantile/split/loss/threshold，不加hash/checksum/fingerprint或测试矩阵。
+- claim：只作empirical conditional rectification；无formal conditional coverage或safety guarantee。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
