@@ -65,6 +65,24 @@ class CeilingConditionedSelectiveAuthority(nn.Module):
         return frozen_score + residual, residual
 
 
+class HorizonNonconformityScale(nn.Module):
+    """Positive task/horizon-dependent scale for a frozen raw authority score."""
+
+    def __init__(self, input_width: int, hidden_dimensions, minimum_scale: float) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 1))
+        self.network = nn.Sequential(*layers)
+        self.minimum_scale = float(minimum_scale)
+
+    def forward(self, features):
+        return self.minimum_scale + F.softplus(self.network(features).squeeze(1))
+
+
 class GroupwisePairSelector(nn.Module):
     """Permutation-equivariant selector over the complete 15-pair candidate set."""
 
@@ -354,6 +372,7 @@ def main() -> None:
     horizon_quantile_training = bool(config.get("horizon_quantile_training", False))
     horizon_quantile_confirmation = bool(config.get("horizon_quantile_confirmation", False))
     horizon_selective_authority_training = bool(config.get("horizon_selective_authority_training", False))
+    horizon_temporal_calibration_training = bool(config.get("horizon_temporal_calibration_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -387,7 +406,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -443,7 +462,7 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training:
         source_feature, source_target, source_example_scenes, source_conditions = _horizon_task_examples(
             source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
             progress_model, maneuver_model, config["training_progress_preferences"],
@@ -535,6 +554,174 @@ def main() -> None:
                 "calibration": {"horizon_example_count": 0, "additive_offsets": [float(value) for value in offsets], "reused_from": config["frozen_horizon_certificate"]},
                 "source_heldout_horizon_development": None,
                 "P201_heldout_task_and_horizon_development": p201_metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
+        if horizon_temporal_calibration_training:
+            frozen_horizon = torch.load(
+                args.runs_root / config["frozen_horizon_certificate"]["run"] / config["frozen_horizon_certificate"]["artifact"],
+                map_location="cuda",
+            )
+            frozen_selective = torch.load(
+                args.runs_root / config["frozen_horizon_selective_authority"]["run"] / config["frozen_horizon_selective_authority"]["artifact"],
+                map_location="cuda",
+            )
+            feature_mean = np.asarray(frozen_horizon["input_mean"], np.float32)
+            feature_scale = np.asarray(frozen_horizon["input_scale"], np.float32)
+            quantile_offsets = np.asarray(frozen_horizon["calibration_offsets"], np.float32)
+            source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+            p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+            horizon_values = np.asarray(frozen_horizon["horizons_seconds"], np.float32)
+            normalized_horizons = horizon_values / float(horizon_values.max())
+            quantile_model = HorizonMonotoneQuantileHead(
+                int(frozen_horizon["input_width"]), frozen_horizon["hidden_dimensions"]
+            ).cuda()
+            quantile_model.load_state_dict(frozen_horizon["model_state_dict"])
+            quantile_model.eval()
+            selective_model = CeilingConditionedSelectiveAuthority(
+                int(frozen_selective["input_width"]), frozen_selective["hidden_dimensions"],
+                float(frozen_selective["maximum_residual"]),
+            ).cuda()
+            selective_model.load_state_dict(frozen_selective["model_state_dict"])
+            selective_model.eval()
+            split = config["split"]
+            modulus = int(split["scene_modulus"])
+            calibration_rows = source_example_scenes % modulus == int(split["calibration_scene_remainder"])
+            development_rows = source_example_scenes % modulus == int(split["development_scene_remainder"])
+            train_rows = ~(calibration_rows | development_rows)
+            training_horizon_indices = np.asarray(config["training_horizon_indices"], np.int64)
+            heldout_horizon_index = int(config["heldout_horizon_index"])
+
+            def expand_temporal_horizons(features, target, horizon_indices):
+                expanded_feature, expanded_target, expanded_base, expanded_row = [], [], [], []
+                with torch.no_grad():
+                    local_x = torch.from_numpy(features).cuda()
+                    for horizon_index in horizon_indices:
+                        h_value = float(normalized_horizons[horizon_index])
+                        h = torch.full((len(local_x),), h_value, device="cuda")
+                        prediction = quantile_model(local_x, h).cpu().numpy() + quantile_offsets[None]
+                        base_score = np.maximum.accumulate(prediction, axis=1)[:, 2]
+                        expanded_feature.append(np.concatenate((features, np.full((len(features), 1), h_value, np.float32)), 1))
+                        expanded_target.append(target[:, horizon_index])
+                        expanded_base.append(base_score.astype(np.float32))
+                        expanded_row.append(np.arange(len(features)))
+                return np.concatenate(expanded_feature), np.concatenate(expanded_target), np.concatenate(expanded_base), np.concatenate(expanded_row)
+
+            source_expanded, source_expanded_target, source_expanded_base, source_expanded_row = expand_temporal_horizons(
+                source_feature, source_target, training_horizon_indices
+            )
+            p201_expanded, p201_expanded_target, p201_expanded_base, _ = expand_temporal_horizons(
+                p201_feature, p201_target, np.asarray([heldout_horizon_index], np.int64)
+            )
+            expanded_train = train_rows[source_expanded_row]
+            expanded_calibration = calibration_rows[source_expanded_row]
+            expanded_development = development_rows[source_expanded_row]
+            with torch.no_grad():
+                source_raw_score = selective_model(
+                    torch.from_numpy(source_expanded).cuda(), torch.from_numpy(source_expanded_base).cuda()
+                )[0].cpu().numpy()
+                p201_raw_score = selective_model(
+                    torch.from_numpy(p201_expanded).cuda(), torch.from_numpy(p201_expanded_base).cuda()
+                )[0].cpu().numpy()
+            scale_config = config["scale_model"]
+            scale_model = HorizonNonconformityScale(
+                source_expanded.shape[1], scale_config["hidden_dimensions"], float(scale_config["minimum_scale"])
+            ).cuda()
+            optimizer = torch.optim.AdamW(
+                scale_model.parameters(), lr=float(scale_config["learning_rate"]), weight_decay=float(scale_config["weight_decay"])
+            )
+            x = torch.from_numpy(source_expanded).cuda()
+            positive_gap = torch.from_numpy(np.maximum(source_expanded_target - source_raw_score, 0.0).astype(np.float32)).cuda()
+            train_index = torch.from_numpy(np.flatnonzero(expanded_train)).cuda()
+            q = float(config["calibration_score_quantile"])
+            last = 0.0
+            for step in range(int(scale_config["steps"])):
+                row = train_index[torch.randint(len(train_index), (int(scale_config["batch_size"]),), device="cuda")]
+                prediction = scale_model(x[row])
+                error = positive_gap[row] - prediction
+                loss = torch.maximum(q * error, (q - 1.0) * error).mean()
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+                last = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"P325 temporal nonconformity scale step={step + 1} loss={last:.7f}", flush=True)
+            scale_model.eval()
+            with torch.no_grad():
+                source_scale = scale_model(x).cpu().numpy()
+                p201_scale = scale_model(torch.from_numpy(p201_expanded).cuda()).cpu().numpy()
+            normalized_residual = (
+                source_expanded_target[expanded_calibration] - source_raw_score[expanded_calibration]
+            ) / source_scale[expanded_calibration]
+            normalized_threshold = max(0.0, float(np.quantile(normalized_residual, q)))
+            source_score = source_raw_score + normalized_threshold * source_scale
+            p201_score = p201_raw_score + normalized_threshold * p201_scale
+            evaluation_ceilings = np.asarray(frozen_selective["heldout_log_cost_ceilings"], np.float32)
+            source_conditions_expanded = np.concatenate([source_conditions for _ in training_horizon_indices])
+            source_metrics = _selective_metrics(
+                source_score[expanded_development], source_expanded_target[expanded_development],
+                source_conditions_expanded[expanded_development], evaluation_ceilings,
+            )
+            p201_metrics = _selective_metrics(p201_score, p201_expanded_target, p201_conditions, evaluation_ceilings)
+            p324_global_margin = float(frozen_selective["calibration_margin"])
+            p201_p324_metrics = _selective_metrics(
+                p201_raw_score + p324_global_margin, p201_expanded_target, p201_conditions, evaluation_ceilings
+            )
+            p201_base_metrics = _selective_metrics(
+                p201_expanded_base, p201_expanded_target, p201_conditions, evaluation_ceilings
+            )
+            decision = config["decision"]
+            checks = {
+                "P201_time_varying_horizon_authority_risk": p201_metrics["maximum_unsafe_admission_rate"] <= float(decision["maximum_P201_unsafe_admission_rate"]),
+                "P201_time_varying_horizon_authority_coverage": p201_metrics["mean_admission_coverage"] >= float(decision["minimum_P201_mean_admission_coverage"]),
+                "P201_ceiling_admission_monotonicity": p201_metrics["ceiling_admission_monotonicity_violations"] <= int(decision["maximum_P201_ceiling_admission_monotonicity_violations"]),
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "model_state_dict": scale_model.state_dict(),
+                "input_width": source_expanded.shape[1],
+                "hidden_dimensions": scale_config["hidden_dimensions"],
+                "minimum_scale": float(scale_config["minimum_scale"]),
+                "normalized_calibration_threshold": normalized_threshold,
+                "calibration_score_quantile": q,
+                "heldout_log_cost_ceilings": evaluation_ceilings,
+                "frozen_horizon_certificate": config["frozen_horizon_certificate"],
+                "frozen_horizon_selective_authority": config["frozen_horizon_selective_authority"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {
+                    "horizon_example_count": int(expanded_train.sum()), "steps": int(scale_config["steps"]),
+                    "final_pinball_loss": last, "positive_gap_mean": float(positive_gap[train_index].mean().detach()),
+                },
+                "calibration": {
+                    "horizon_example_count": int(expanded_calibration.sum()), "score_quantile": q,
+                    "normalized_nonconformity_threshold": normalized_threshold,
+                    "source_scale_mean": float(np.mean(source_scale[expanded_calibration])),
+                    "source_scale_minimum": float(np.min(source_scale[expanded_calibration])),
+                    "source_scale_maximum": float(np.max(source_scale[expanded_calibration])),
+                },
+                "heldout_horizon_seconds": float(horizon_values[heldout_horizon_index]),
+                "heldout_log_cost_ceilings": [float(value) for value in evaluation_ceilings],
+                "source_development": source_metrics,
+                "P201_post_hoc_development": p201_metrics,
+                "P201_frozen_P324_global_margin_baseline": p201_p324_metrics,
+                "P201_frozen_horizon_q95_baseline": p201_base_metrics,
                 "decision_checks": checks,
                 "resources": {
                     "gpu": torch.cuda.get_device_name(0),
