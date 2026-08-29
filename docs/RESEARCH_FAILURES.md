@@ -280,7 +280,7 @@
 - structural recovery：P301 同一 model 0/1 endpoints逐元素 convex combination已通过，P201 attained MAE=
   `.0285229`、regret=`7.7359e-5`、violations=`0`，F201关闭；P302固定三锚点与 P303归一化正积分 warp
   分别研究非线性表达力/单调用校准；P302进一步达到 attained MAE=`.0256586`、violations=`0`，不重新打开 F201；
-- 下一可用 failure id 为 `V67-F206`。
+- 下一可用 failure id 为 `V67-F207`。
 
 ### V67-F202 — P303 warp积分错误复用 base knot count
 
@@ -330,7 +330,20 @@
 - minimal recovery：r2只替换 source/p201 artifact run path；模型、rows文件、conditions、sizes、teacher、gates不变；
 - resolution：r2 3/3 supported，attained MAE=`.0167472`、regret=`-.0001084`、violations=0；
 - next research：P306保持 P302三锚点规则，只共享重复 context computation；不依赖 P303/P304失败权重；
-- 下一可用 failure id 为 `V67-F206`。
+- 下一可用 failure id 为 `V67-F207`。
+
+### V67-F206 — P306等价执行图被额外fine-tune破坏跨场景fidelity
+
+- canonical=`run://worldsim_v67/WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
+  20260901T023000Z__shared-context-piecewise-authority-s0-r1`；
+- result：P201 attained MAE=`.0306373`未过 P301 `.0285229`门；regret=`5.6335e-5`、violations=0、forward=
+  `.5659s`均通过，3/4；source attained=`.0220001`；
+- root cause：shared-context graph在同权重下与P302等价，失败来自不必要的6k继续训练再次放大source→P201 shift；
+  不是 context factoring数值错误；
+- recovery：P306R按 Network Morphism原则锁死 P302 weights、0 steps，仅改执行图；恢复 P302 attained=
+  `.02565857`并把forward降到`.56142s`，4/4 supported，F206关闭；
+- next object：P307改为精确6-action task-conditioned sets；沿用P306R但不再训练任意scene chunks；
+- 下一可用 failure id 为 `V67-F207`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`

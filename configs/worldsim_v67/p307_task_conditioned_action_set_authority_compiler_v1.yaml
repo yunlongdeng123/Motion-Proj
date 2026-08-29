@@ -1,0 +1,55 @@
+schema_version: worldsim_v67.p307_task_conditioned_action_set_authority_compiler.v1
+output_schema_version: worldsim_v67.p307_task_conditioned_action_set_authority_compiler_summary.v1
+task_id: WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01
+hypothesis_id: WS-V67-H-P307-001
+role: task_conditioned_candidate_action_set_authority_compiler_development
+architecture: P306R_shared_context_three_anchor_lattice_on_six_ego_query_actions
+grouping: task_conditioned_action_query_set
+seed: 0
+model_artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_surface: {run: worldsim_v67/WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adaptive-lcb-s0-r1, artifact: ONE_SIDED_CONTEXT_ADAPTIVE_ADDITIVE_LCB_SURFACE.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_direct: {run: worldsim_v67/WS-V67-P306R-WEIGHT-PRESERVING-SHARED-CONTEXT-AUTHORITY-COMPILER-01/20260901T024500Z__weight-preserving-shared-context-s0-r1, artifact: WEIGHT_PRESERVING_SHARED_CONTEXT_AUTHORITY_COMPILER.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_group_sizes: [6]
+heldout_group_sizes: [6]
+training_alpha_fairness: [0.00, 0.50, 1.00]
+heldout_alpha_fairness: [0.25, 0.75]
+training_risk_tolerances: [0.05, 0.10, 0.20, 0.30, 0.40]
+heldout_risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+training_final_reliability_floors: [0.30, 0.50, 0.70]
+heldout_final_reliability_floors: [0.40, 0.60]
+training_tail_masses: [0.125, 0.25, 0.50]
+heldout_tail_masses: [0.1875, 0.375]
+training_attainable_budget_fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 1024
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {shared_context_anchor_fractions: [0.0, 0.5, 1.0], steps: 6000, batch_size: 384, learning_rate: 0.0003, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision:
+  maximum_P201_attained_budget_fraction_MAE: 0.05
+  maximum_P201_mean_frozen_composite_Lagrangian_regret: 0.005
+  maximum_P201_fraction_budget_monotonicity_violations: 0
+verdict_on_pass: supported_task_conditioned_six_action_set_authority_compiler
+verdict_on_failure: rejected_task_conditioned_six_action_set_authority_compiler
+locks:
+  action_groups_are_exact_scene_anchor_sets_of_six_ego_queries: true
+  P306R_initialization_P295_teacher_and_bisection_are_frozen: true
+  fixed_6000_step_single_run_no_action_lattice_or_training_sweep: true
+  candidate_outputs_are_future_visited_state_reliability_budgets_not_voxel_correctness: true
+  no_action_count_anchor_step_learning_rate_or_gate_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_task_conditioned_action_set_compiler_development_on_consumed_P201_not_fresh_confirmation
+  - reliability_budget_authority_not_direct_action_choice_realized_benefit_or_hard_safety_constraint
+  - six_fixed_ego_queries_not_arbitrary_planner_scheduler_closed_loop_policy_or_safety_claim

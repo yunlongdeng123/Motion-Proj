@@ -287,7 +287,22 @@ element encoder、pooled context与 condition context每个请求只算一次，
 积分与插值。P302 base warm-start，6k steps/lr `.0003`；门要求 P201 attained MAE `<=P301 .02852293`、regret
 `<=.005`、violations=0、forward `<=P301 .627112s`，不扫 anchors/steps。Active=`run://worldsim_v67/
 WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
-20260901T023000Z__shared-context-piecewise-authority-s0-r1`，GPU 已启动。
+20260901T023000Z__shared-context-piecewise-authority-s0-r1`：P201 attained MAE=`.0306373`、regret=`5.6335e-5`、
+violations=0、forward=`.5659s`；速度门通过但 extra fine-tune使 fidelity退化，3/4拒绝，登记 `V67-F206`。
+
+依据 ICML 2016 Network Morphism 的 function-preserving原则，P306R不再训练：原样加载 P302 weights，仅把三次
+重复context计算因式分解为一次。Canonical=`run://worldsim_v67/
+WS-V67-P306R-WEIGHT-PRESERVING-SHARED-CONTEXT-AUTHORITY-COMPILER-01/
+20260901T024500Z__weight-preserving-shared-context-s0-r1`：P201 budget/attained MAE=`.00704093/.02565857`、regret=
+`5.96985e-5`、violations=0，与 P302逐项一致；forward=`.56142s`，比 P301 `.62711s`快`10.48%`、比 P302
+`1.49135s`快`62.35%`，4/4 supported。P306R成为当前 fidelity/monotonicity/latency Pareto compiler。
+
+P307 直接进入用户要求的 task-conditioned action authority：不再按scene顺序切48/96个任意trajectory，而用
+`(scene,anchor_frame)`精确组成6条 Ego query actions（2 progress×3 lateral），每个 action feature仍是“执行τ后四个
+horizon内被访问 world/Actor states”的36维分布表征。P306R warm-start、P295+bisection teacher、6k steps；门为
+P201 action-set attained MAE `<=.05`、regret `<=.005`、violations=0，不做action lattice/coverage sweep。Active=
+`run://worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/
+20260901T030000Z__task-conditioned-action-set-authority-s0-r1`，GPU 已启动。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

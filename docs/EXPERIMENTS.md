@@ -511,8 +511,32 @@
 - warm start/protocol：P302 base、同一 bisection teacher、sizes32/64/128→48/96、6k steps/lr `.0003`。
 - gates：P201 attained MAE `<=P301 .0285229301`、regret `<=.005`、violations=`0`、forward
   `<=P301 .6271123s`；不扫 anchors/steps/lr/gates。
-- active=`run://worldsim_v67/WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
+- canonical=`run://worldsim_v67/WS-V67-P306-SHARED-CONTEXT-PIECEWISE-AUTHORITY-COMPILER-01/
   20260901T023000Z__shared-context-piecewise-authority-s0-r1`。
+- result：P201 budget/attained MAE=`.0080016/.0306373`、regret=`5.6335e-5`、violations=`0`、forward=`.5659s`；
+  latency/regret/monotonicity通过，fidelity失败，3/4，failure=`V67-F206`。source attained=`.0220001`，说明
+  shared execution graph本身正确，但6k追加训练导致同类P201 shift。
+
+### WS-V67-P306R-WEIGHT-PRESERVING-SHARED-CONTEXT-AUTHORITY-COMPILER-01
+
+- recovery：ICML 2016 Network Morphism启发的 function-preserving rewrite；冻结 P302全部weights与三anchor规则，
+  `steps=0`，仅共享 Actor/context computation。
+- canonical=`run://worldsim_v67/WS-V67-P306R-WEIGHT-PRESERVING-SHARED-CONTEXT-AUTHORITY-COMPILER-01/
+  20260901T024500Z__weight-preserving-shared-context-s0-r1`。
+- result：P201 budget/attained MAE=`.00704093/.02565857`、regret=`5.96985e-5`、violations=`0`，与 P302一致；
+  forward=`.56142s`，较 P301快`10.48%`、较 P302快`62.35%`；4/4，verdict=
+  `supported_weight_preserving_shared_context_piecewise_authority_compiler`。wall=`7.11s`。
+
+### WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01
+
+- prediction object：给定同一 `(scene,anchor_frame)` 的固定6条 Ego query trajectories，直接输出每条 action的
+  visited-state reliability budget；不问单个voxel是否正确，也不直接输出action choice。
+- grouping：从四个 horizons共同存在的 `(scene,anchor,query)` keys精确对齐；每组6 actions=2 progress ratios×
+  3 lateral offsets，禁止顺序chunk伪装action set。
+- model/protocol：P306R shared-context `0/.5/1` lattice warm-start；P295+bisection teacher；source/P201、6k steps、
+  batch384；P201 gates attained MAE `<=.05`、regret `<=.005`、violations=`0`。
+- active=`run://worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/
+  20260901T030000Z__task-conditioned-action-set-authority-s0-r1`；不扫action count/lattice/steps/gates。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

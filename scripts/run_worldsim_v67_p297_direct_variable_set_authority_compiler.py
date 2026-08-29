@@ -286,6 +286,31 @@ def _aggregate(rows):
     }
 
 
+def _action_query_groups(feature, rows_path, horizons, expected_size):
+    with np.load(rows_path, allow_pickle=False) as loaded:
+        identities = np.unique(np.stack((
+            loaded["scene_index"],
+            np.rint(loaded["horizon_seconds"] * 10).astype(np.int32),
+            loaded["anchor_frame"],
+            loaded["query_id"],
+        ), 1), axis=0)
+    key_sets = []
+    for horizon in horizons:
+        horizon_code = int(round(float(horizon) * 10))
+        key_sets.append({(int(row[0]), int(row[2]), int(row[3])) for row in identities if int(row[1]) == horizon_code})
+    keys = sorted(set.intersection(*key_sets))
+    if len(keys) != len(feature):
+        raise RuntimeError(f"action keys/features are not aligned: {len(keys)} != {len(feature)}")
+    buckets = {}
+    for index, (scene, anchor, _) in enumerate(keys):
+        buckets.setdefault((scene, anchor), []).append(index)
+    groups = [indices for indices in buckets.values() if len(indices) == int(expected_size)]
+    return (
+        np.stack([feature[indices] for indices in groups]).astype(np.float32),
+        np.asarray([key[0] for key, indices in buckets.items() if len(indices) == int(expected_size)], np.int64),
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
@@ -325,15 +350,13 @@ def main():
         int(config["seed"]),
         float(config["teacher"]["ignored_future_marginal_probability"]),
     )
-    p201_feature, _, _, p201_scenes, _ = _dataset(
-        args.runs_root / config["p201_rows"]["run"] / config["p201_rows"]["artifact"], *common, anchors, *tail
-    )
+    p201_rows_path = args.runs_root / config["p201_rows"]["run"] / config["p201_rows"]["artifact"]
+    source_rows_path = args.runs_root / config["source_rows"]["run"] / config["source_rows"]["artifact"]
+    p201_feature, _, _, p201_scenes, _ = _dataset(p201_rows_path, *common, anchors, *tail)
     if confirmation_only:
         source_feature, source_scenes = p201_feature, p201_scenes
     else:
-        source_feature, _, _, source_scenes, _ = _dataset(
-            args.runs_root / config["source_rows"]["run"] / config["source_rows"]["artifact"], *common, anchors, *tail
-        )
+        source_feature, _, _, source_scenes, _ = _dataset(source_rows_path, *common, anchors, *tail)
     surface_artifact = torch.load(args.runs_root / config["frozen_surface"]["run"] / config["frozen_surface"]["artifact"], map_location="cuda")
     teacher = ConformalizedLCBSurface(
         int(surface_artifact["context_width"]), int(surface_artifact["budget_rate_knot_count"]), int(surface_artifact["tolerance_rate_knot_count"])
@@ -365,10 +388,14 @@ def main():
     heldout_fractions = np.asarray(config["heldout_attainable_budget_fractions"], np.float32)
     chunk = int(config["inference_chunk_size"])
     bisection_steps = int(config["teacher_bisection_steps"])
+    def grouped(feature, scenes, size, rows_path):
+        if config.get("grouping") == "task_conditioned_action_query_set":
+            return _action_query_groups(feature, rows_path, horizons, size)
+        return _groups(feature, scenes, size)
     train = {}
     if not confirmation_only:
         for size in map(int, config["training_group_sizes"]):
-            groups, scenes = _groups(source_feature, source_scenes, size)
+            groups, scenes = grouped(source_feature, source_scenes, size, source_rows_path)
             target_price, _, _ = _target_prices(policy, groups, alphas, tolerance_z, floor_z, tails, fractions, bisection_steps, chunk)
             development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
             train[size] = (
@@ -502,7 +529,7 @@ def main():
     p201 = {}
     for size in map(int, config["heldout_group_sizes"]):
         if not confirmation_only:
-            groups, scenes = _groups(source_feature, source_scenes, size)
+            groups, scenes = grouped(source_feature, source_scenes, size, source_rows_path)
             development = scenes % int(config["split"]["development_scene_modulus"]) == int(config["split"]["development_scene_remainder"])
             target_price, low, high = _target_prices(
                 policy, groups[development], heldout_alphas, heldout_tolerance_z, heldout_floor_z,
@@ -513,7 +540,7 @@ def main():
                 heldout_tolerance_z, heldout_floors, heldout_floor_z, heldout_tails, heldout_fractions,
                 price_mean, price_scale, epsilon, penalty, chunk,
             )
-        groups, _ = _groups(p201_feature, p201_scenes, size)
+        groups, _ = grouped(p201_feature, p201_scenes, size, p201_rows_path)
         target_price, low, high = _target_prices(
             policy, groups, heldout_alphas, heldout_tolerance_z, heldout_floor_z,
             heldout_tails, heldout_fractions, bisection_steps, chunk,
