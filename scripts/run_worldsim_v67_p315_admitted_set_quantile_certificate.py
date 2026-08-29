@@ -344,6 +344,29 @@ class MonotoneHorizonCumulativeRiskHead(nn.Module):
         return torch.logit(unsafe_probability)
 
 
+class FixedGridMultiHorizonReliabilityHead(nn.Module):
+    """Shared context trunk with one direct risk head per supported horizon."""
+
+    def __init__(self, input_width, hidden_dimensions, set_size_count, normalized_horizons):
+        super().__init__()
+        layers = []
+        width = int(input_width) + 1
+        for hidden_width in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden_width)), nn.SiLU()))
+            width = int(hidden_width)
+        self.trunk = nn.Sequential(*layers)
+        self.head = nn.Linear(width, len(normalized_horizons) * int(set_size_count))
+        self.set_size_count = int(set_size_count)
+        self.register_buffer("normalized_horizons", torch.as_tensor(normalized_horizons, dtype=torch.float32))
+
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        hidden = self.trunk(torch.cat((features, log_cost_ceiling[:, None]), 1))
+        all_logits = self.head(hidden).view(len(features), len(self.normalized_horizons), self.set_size_count)
+        horizon_index = (normalized_horizon[:, None] - self.normalized_horizons[None]).abs().argmin(1)
+        logits = all_logits[torch.arange(len(features), device=features.device), horizon_index]
+        return torch.cummax(logits, dim=1).values
+
+
 class CrossFoldDirectVisitedReliabilityEnsemble(nn.Module):
     """Train one active member at a time, then pool probabilities before calibration."""
 
@@ -1142,7 +1165,9 @@ def main() -> None:
             p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
             horizon_values = np.asarray(frozen_lattice["horizons_seconds"], np.float32)
             normalized_horizons = horizon_values / float(horizon_values.max())
-            training_horizon_indices = np.asarray(frozen_lattice["training_horizon_indices"], np.int64)
+            training_horizon_indices = np.asarray(
+                config.get("reliability_training_horizon_indices", frozen_lattice["training_horizon_indices"]), np.int64
+            )
             heldout_horizon_index = int(frozen_lattice["heldout_horizon_index"])
             set_sizes = np.asarray(frozen_lattice["authority_set_sizes"], np.int64)
             ceilings = np.asarray(frozen_lattice["heldout_log_cost_ceilings"], np.float32)
@@ -1163,6 +1188,7 @@ def main() -> None:
                 fit_rows = np.isin(row_fold, ensemble_fit_remainders)
             domain_adversarial_training = bool(config.get("reliability_domain_adversarial_training", False))
             monotone_horizon_cumulative_risk = bool(config.get("reliability_monotone_horizon_cumulative_risk", False))
+            fixed_grid_horizon_indices = config.get("reliability_fixed_grid_horizon_indices")
             if ensemble_fit_remainders is not None:
                 model = CrossFoldDirectVisitedReliabilityEnsemble(
                     len(ensemble_fit_remainders), source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes),
@@ -1174,6 +1200,12 @@ def main() -> None:
                     source_feature.shape[1], model_config["hidden_dimensions"],
                     adversarial_config["reliability_hidden_width"], adversarial_config["domain_hidden_width"],
                     len(set_sizes), adversarial_config.get("conditional_on_reliability", False),
+                ).cuda()
+            elif fixed_grid_horizon_indices is not None:
+                fixed_grid_horizon_indices = np.asarray(fixed_grid_horizon_indices, np.int64)
+                model = FixedGridMultiHorizonReliabilityHead(
+                    source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes),
+                    normalized_horizons[fixed_grid_horizon_indices],
                 ).cuda()
             elif monotone_horizon_cumulative_risk:
                 model = MonotoneHorizonCumulativeRiskHead(
@@ -1739,6 +1771,7 @@ def main() -> None:
                 "reliability_ensemble_pooling": config.get("reliability_ensemble_pooling", "mean"),
                 "reliability_memberwise_calibration": memberwise_calibration,
                 "reliability_monotone_horizon_cumulative_risk": monotone_horizon_cumulative_risk,
+                "reliability_fixed_grid_horizon_indices": fixed_grid_horizon_indices,
                 "feature_calibrator_state_dict": feature_calibrator.state_dict() if feature_calibrator is not None else None,
                 "reliability_feature_calibrator": feature_calibrator_config,
                 "frozen_feature_calibrator": config.get("frozen_feature_calibrator"),

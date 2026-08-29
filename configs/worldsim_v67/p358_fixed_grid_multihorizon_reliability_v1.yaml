@@ -1,0 +1,54 @@
+schema_version: worldsim_v67.p358_fixed_grid_multihorizon_reliability.v1
+output_schema_version: worldsim_v67.p358_fixed_grid_multihorizon_reliability_summary.v1
+task_id: WS-V67-P358-FIXED-GRID-MULTIHORIZON-RELIABILITY-01
+hypothesis_id: WS-V67-H-P358-001
+role: empirical_fixed_grid_multihorizon_task_shift_reliability_development
+horizon_direct_reliability_authority_training: true
+reliability_group_calibration: true
+reliability_isotonic_calibration: true
+reliability_training_horizon_indices: [0, 1, 2, 3]
+reliability_fixed_grid_horizon_indices: [0, 1, 2, 3]
+seed: 0
+model_artifact: FIXED_GRID_MULTIHORIZON_RELIABILITY.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_authority: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+frozen_selector: {run: worldsim_v67/WS-V67-P309-AUTHORITY-RESIDUAL-TOPK-ADMISSION-01/20260901T034500Z__authority-residual-topk-admission-s0-r1, artifact: AUTHORITY_RESIDUAL_TOPK_ADMISSION.pt}
+frozen_progress_compiler: {run: worldsim_v67/WS-V67-P311-PROGRESS-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T041500Z__progress-conditioned-authority-admission-s0-r1, artifact: PROGRESS_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_maneuver_compiler: {run: worldsim_v67/WS-V67-P313-MANEUVER-CONDITIONED-AUTHORITY-ADMISSION-01/20260901T044500Z__maneuver-conditioned-authority-admission-s0-r1, artifact: MANEUVER_CONDITIONED_AUTHORITY_ADMISSION.pt}
+frozen_lattice_authority: {run: worldsim_v67/WS-V67-P332-LATTICE-RISK-SIZE-HORIZON-AUTHORITY-01/20260901T095000Z__lattice-risk-size-horizon-authority-s0-r1, artifact: LATTICE_RISK_SIZE_HORIZON_AUTHORITY.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+authority_set_sizes: [1, 2, 3]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+action_group_size: 6
+selected_action_count: 2
+authority_condition: {alpha_fairness: 0.5, risk_tolerance: 0.15, final_reliability_floor: 0.6, tail_mass: 0.25, attainable_budget_fractions: [0.25, 0.5, 0.75]}
+training_progress_preferences: [0.0, 0.5, 1.0]
+heldout_progress_preferences: [0.25, 0.75]
+training_lateral_commands: [-1.0, 0.0, 1.0]
+heldout_lateral_commands: [-0.5, 0.5]
+lateral_preference_weight: 0.5
+boundary_state_cost: {clearance_floor_m: 0.05}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+evaluation_quantiles: [0.75, 0.85, 0.90, 0.95]
+reliability_split: {strategy: sorted_unique_scene_rank_modulus, scene_modulus: 5, fit_scene_remainder: 0, calibration_scene_remainder: 1, isotonic_scene_remainder: 2, development_scene_remainder: 3}
+reliability_model: {hidden_dimensions: [128, 64], steps: 8000, batch_size: 512, learning_rate: 0.0005, weight_decay: 0.0001}
+calibration: {steps: 2000, learning_rate: 0.02}
+decision: {maximum_P201_unsafe_selected_set_rate: 0.10, minimum_P201_mean_any_authority_coverage: 0.30}
+verdict_on_pass: supported_fixed_grid_multihorizon_reliability
+verdict_on_failure: rejected_fixed_grid_multihorizon_reliability
+locks:
+  all_four_source_horizons_are_supported_training_tasks: true
+  shared_trunk_has_one_direct_head_per_fixed_horizon: true
+  P201_covariates_and_labels_are_not_used_for_training_or_calibration: true
+  no_interpolation_extrapolation_head_sharing_grid_width_step_threshold_or_seed_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - empirical_fixed_grid_horizon_task_shift_development_not_unseen_horizon_generalization
+  - P201_is_reused_development_not_independent_confirmation
+  - no_closed_loop_planner_or_control_claim
