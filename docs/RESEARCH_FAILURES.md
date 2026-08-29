@@ -2204,6 +2204,14 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号为：`V67-F135`。
 
+### P170 r2 development outcome note — F134后原合同2/2通过
+
+- r2未复用r1权重；ordered unique source scene split产生非空、scene-disjoint calibration并完成single q90 offsets。
+- 旧四coverage minimum=`.90601`，mean sharpness reduction=`23.66%`；2/2 development decisions。
+- 当前模型冻结等待P167 prospective rows；没有quantile/split/threshold recovery，也没有新failure。
+
+下一可用编号仍为：`V67-F135`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

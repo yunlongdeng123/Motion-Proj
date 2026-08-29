@@ -363,6 +363,10 @@ P170 r1在完成source q90训练后、任何evaluation前暴露split entry错误
 mod-5 scenes，导致calibration为空（F134）。恢复只在artifact实际unique scene groups上按固定顺序每5取1，保持group-disjoint；
 r2从头训练，未使用r1 loss选择任何参数。因此F134是工程split恢复，不是coverage负结果。
 
+P170 r2在旧P81/P96/P113/P129得到`.9257/.9541/.9102/.9060`经验coverage，并相对horizon-only把mean upper bound
+分别缩短`15.94%/41.07%/23.02%/14.60%`（平均`23.66%`）；development 2/2。模型与offset在P167 rows前冻结，
+当前等待五时域prospective secondary。论文在P167结果前只可写“development支持进入确认”，不能写跨scene formal coverage。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |

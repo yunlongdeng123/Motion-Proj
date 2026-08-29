@@ -1159,6 +1159,9 @@
   F134。r1无coverage/sharpness/verdict，权重未交付。
 - narrow recovery：只改为artifact内ordered unique scene position每5取1，保持scene-disjoint；r2 canonical=
   `20260830T132500Z__conformal-cost-upper-bound-s0-r2`，从头按原q90合同训练。
+- r2 development：P81/P96/P113/P129 coverage=`.92574/.95407/.91016/.90601`；sharpness reduction=
+  `15.94%/41.07%/23.02%/14.60%`，mean=`23.66%`。2/2 decisions通过。
+- 状态更新：`development supported / frozen waiting prospective P167`；尚无final verdict，不把旧四结果写成independent coverage。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

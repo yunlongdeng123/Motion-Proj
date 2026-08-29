@@ -676,6 +676,11 @@ P170 r1完成8,000-step source q90训练后，在任何旧四/P167 evaluation前
 对artifact内实际存在的ordered unique source scenes每5个取第1个作calibration；q90/model/seed/steps/offset/decisions全不变。
 r2将从头训练，不复用r1权重或loss选择。
 
+P170 r2已完成同合同8,000-step训练并通过旧四development 2/2。P81/P96/P113/P129 empirical upper coverage=
+`.92574/.95407/.91016/.90601`，均高于`.88`；相对horizon-only upper-bound sharpness reduction=
+`15.94%/41.07%/23.02%/14.60%`，mean=`23.66%>10%`。模型与single offsets已冻结，当前只等待P167五H rows作
+事前prospective secondary；未改coverage/quantile/门。该结果支持进入确认，不作为formal conformal或新独立结论。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
