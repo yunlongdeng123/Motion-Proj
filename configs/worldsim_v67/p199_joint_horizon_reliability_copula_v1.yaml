@@ -1,0 +1,36 @@
+schema_version: worldsim_v67.p199_joint_horizon_reliability_copula.v1
+output_schema_version: worldsim_v67.p199_joint_horizon_reliability_copula_summary.v1
+task_id: WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01
+hypothesis_id: WS-V67-H-P199-001
+role: source_development_joint_horizon_reliability_dependence
+seed: 0
+model_artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+reliability_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 0}
+model: {hidden_dimensions: [64, 64], training_steps: 6000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+evaluation: {monte_carlo_samples: 1024, probability_clip: 0.0001}
+decision:
+  require_joint_integrated_brier_strictly_better_than_independent_marginals: true
+  minimum_joint_calibration_error_reduction: 0.10
+verdict_on_pass: supported_joint_horizon_reliability_copula_development
+verdict_on_failure: rejected_joint_horizon_reliability_copula
+locks:
+  P126_score_and_P182_marginal_densities_are_frozen: true
+  aligned_key_is_scene_anchor_query_without_hash_or_fingerprint: true
+  only_complete_four_horizon_source_trajectories_are_used: true
+  development_split_is_scene_index_modulo_five_and_not_swept: true
+  copula_family_head_MC_samples_budgets_metrics_and_gates_are_not_swept: true
+  P175_and_P183_are_excluded: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v151/kan22a.html
+  - https://proceedings.mlr.press/v151/yoon22a/yoon22a.pdf
+claim_boundary:
+  - source_development_mechanism_only_not_fresh_or_independent
+  - joint_visited_state_cost_reliability_not_collision_probability
+  - no_conformal_planner_policy_closed_loop_or_safety_claim
