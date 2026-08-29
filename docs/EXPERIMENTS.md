@@ -180,8 +180,22 @@
   上升时 LCB不降、horizon前缀不升。train delta=`.05/.10/.20/.30/.40`，heldout=`.075/.15/.25/.35`。
 - P201 gates仅 conformal-teacher MAE `<=.018` 与 empirical simultaneous-horizon maximum undercoverage `<=.12`；
   P243 consumed descriptive-only；不扫 delta、epsilon、split、member、architecture、steps 或 gate。
-- active=`run://worldsim_v67/WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01/
-  20260831T194500Z__conformalized-epistemic-lcb-s0-r1`；与 P282 后段和 P277 IO 并行。
+- canonical=`run://worldsim_v67/WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01/
+  20260831T194500Z__conformalized-epistemic-lcb-s0-r1`。
+- calibration multipliers train delta `.05/.10/.20/.30/.40`=`11.894/9.766/8.241/5.327/3.540`；P201 surface MAE=
+  `.0046872`、violations budget/horizon/tolerance=`0/0/0`，fidelity pass。
+- P201 empirical simultaneous coverage=`.66597/.64694/.59229/.47075` vs desired=`.925/.85/.75/.65`，maximum
+  undercoverage=`.25903>.12`，coverage fail；1/2，verdict=`rejected_empirical_conformalized_epistemic_LCB_surface`，
+  `V67-F197`。P243 descriptive max undercoverage=`.29225`，方向一致。wall=`166.90s`、peak GPU/RSS=`.1404/1.9247GiB`。
+
+### WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01
+
+- structural recovery：P283 standardized score换成 additive `max_horizon(ensemble mean - frozen teacher)`；quantile
+  直接形成 one-sided probability offset，避免低 disagreement 对系统偏差给出近零校正。
+- 保持 P283 的 source calibration split、delta train/heldout、student、12k steps、P201 fidelity/undercoverage gates；
+  不改 P283 verdict，不扫 epsilon/delta/split/model/gate。
+- active=`run://worldsim_v67/WS-V67-P284-ADDITIVE-CONFORMAL-LCB-SURFACE-01/
+  20260831T200000Z__additive-conformal-lcb-s0-r1`；仍只允许 empirical coverage claim。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

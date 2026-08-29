@@ -104,6 +104,28 @@
   multiplier；由于 unit scene-correlated，只预注册 empirical coverage，明确禁止 distribution-free/conditional guarantee；
 - P283 GPU 与 P277 archive IO 并行；下一可用 failure id 保持 `V67-F197`。
 
+### V67-F197 — P283 ensemble-std multiplier在 P201 严重欠覆盖
+
+- run：`run://worldsim_v67/WS-V67-P283-CONFORMALIZED-EPISTEMIC-LCB-SURFACE-01/
+  20260831T194500Z__conformalized-epistemic-lcb-s0-r1`；
+- symptom：student对 frozen conformal teacher 的 P201 surface MAE=`.004687`、三轴 violations=0，但四个 heldout delta 的
+  simultaneous coverage仅 `.666/.647/.592/.471`，maximum undercoverage=`.2590`，超过冻结 `.12`；
+- diagnosis：校准 multipliers 高达 `4.35--9.77` 仍欠覆盖；P243 max undercoverage=`.2923` 同向，说明 P274 std 在
+  low-disagreement biased rows 上是错误尺度，不能靠 multiplier 蒸馏容量或更多 steps 修复；
+- literature response：dependent-data conformal工作强调 exchangeability破坏会损失 coverage；ICML/UAI 的 group/cluster
+  conformal与 sequential residual方法改用/分组 residual score。当前先做最小对象迁移：P284 使用未标准化 additive
+  one-sided residual quantile；不调 P283 gate、不扫 multiplier、不把 P283 1/2 包装为成功；
+- claim impact：关闭 standardized ensemble multiplier 的 empirical coverage claim；P274 disagreement-error association 与
+  P275 beta-conditioned score fidelity仍保留，但都不升级为 coverage guarantee。
+
+下一可用编号：`V67-F198`。
+
+### P284 additive residual recovery start note
+
+- P284 同一 calibration split/delta/student/steps/gates，仅替换 nonconformity score，canonical r1 已启动；
+- 即使 P284 通过，也只支持 observed-cohort empirical coverage，不支持 iid/exchangeable、conditional或 safety guarantee；
+- P277 IO 继续并行；下一可用 failure id 保持 `V67-F198`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
