@@ -82,10 +82,15 @@ budget MAE=`.0117673`、composite-risk Lagrangian regret=`.000105044`、candidat
 `.008447125/.008447123`、price/floor violations=`0/0`，2/2；wall=`191.22s`、peak GPU=`.4547GiB`。
 
 P280 直接把冻结 P279 primal 编译成 budget-conditioned dual：输入 fixed64 group summary、alpha、beta、floor、tail mass
-与 attainable fraction，输出 shadow price，随后由 P279 产生逐 row budget。只保留 P201 attained-fraction fidelity 与冻结
-composite Lagrangian regret两门；positive fraction-rate spline解析保证 fraction 上升时 price 不升。Active=
-`run://worldsim_v67/WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/
-20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`，GPU 正在训练；P277 fresh IO 继续并行。
+与 attainable fraction，输出 shadow price，随后由 P279 产生逐 row budget。Canonical=`run://worldsim_v67/
+WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`：P201
+price/attained-fraction MAE=`.032479/.016233`、frozen composite regret=`2.67e-6`、fraction-price violations=0，2/2；
+wall=`160.21s`、peak GPU=`.1713GiB`。
+
+P281 用冻结 P279 warm start 开始 variable-cardinality composite primal：训练 group sizes=`32/64/128`，held-out=
+`48/96`，其余 alpha/beta/floor/tail-mass/price protocol 与 P279 完全相同，不改架构。Active=
+`run://worldsim_v67/WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`，GPU 正在训练；P277 fresh IO 继续并行。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

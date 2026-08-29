@@ -140,8 +140,20 @@
   positive fraction-rate spline解析保证 fraction-price 单调。
 - P201 gates仅 attained fraction MAE `<=.075` 与 frozen composite-risk Lagrangian regret `<=.005`；不扫条件网格、
   bisection、architecture、steps 或 gate。
-- active=`run://worldsim_v67/WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/
-  20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`；与 P277 archive/preprocess IO 并行。
+- canonical=`run://worldsim_v67/WS-V67-P280-EPISTEMIC-TAIL-CVAR-GROUP-DUAL-01/
+  20260831T190000Z__epistemic-tail-cvar-group-dual-s0-r1`。
+- result：P201 normalized price MAE=`.0324790`、attained fraction MAE=`.0162331`、frozen composite-risk regret=
+  `2.6696e-6`、fraction-price violations=0；2/2，verdict=
+  `supported_budget_conditioned_epistemic_tail_CVaR_group_dual`。wall=`160.21s`、peak GPU/RSS=`.1713/3.8295GiB`。
+
+### WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01
+
+- frozen P279 warm start；训练 sizes=`32/64/128`，held-out sizes=`48/96`；同一 alpha/beta/floor/tail-mass/price
+  protocol，Deep Sets allocator原生接受不同集合长度，不增加 padding model 或新 head。
+- P201 aggregate gates继承 P279：budget MAE `<=.075`、frozen composite-risk regret `<=.005`；不扫 cardinality、
+  architecture、eta/budget grid、steps 或 gate。
+- active=`run://worldsim_v67/WS-V67-P281-VARIABLE-SET-EPISTEMIC-TAIL-CVAR-ALLOCATOR-01/
+  20260831T191500Z__variable-set-epistemic-tail-cvar-s0-r1`；与 P277 IO 并行。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

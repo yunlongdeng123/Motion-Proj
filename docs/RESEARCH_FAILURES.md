@@ -77,6 +77,12 @@
   属于控制端命令失误而非科学/实现 trial；随后正确 SSH 命令已启动 canonical r1；
 - P277 IO 继续并行；无资源不足或多卡需求，下一可用 failure id 仍为 `V67-F196`。
 
+### P280 outcome / P281 variable-cardinality start note — 无新增 failure
+
+- P280 P201 attained fraction MAE=`.0162331`、composite regret=`2.67e-6`，2/2，fraction-price violations=0；
+- P281 仅将冻结 P279 warm-start到 sizes32/64/128，并在未参与训练的48/96上一次评估，不改变风险对象或门；
+- P277 IO 与 P281 GPU 继续并行；下一可用 failure id 仍为 `V67-F196`。
+
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
 > **覆盖范围**：V1–V6.7、V7/V7.1、N1/cut-in 与跨路线工程/资源/协议教训
