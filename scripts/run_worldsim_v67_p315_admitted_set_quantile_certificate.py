@@ -1028,16 +1028,29 @@ def main() -> None:
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             size_utility = torch.arange(len(set_sizes) + 1, device="cuda", dtype=torch.float32) / float(len(set_sizes))
+            primal_dual = bool(config.get("decision_primal_dual", False))
+            if primal_dual:
+                training_quantiles = torch.tensor(config["primal_dual"]["training_quantiles"], device="cuda", dtype=torch.float32)
+                dual_values = torch.full(
+                    (len(training_quantiles), len(ceiling_tensor)), float(config["primal_dual"]["initial_dual"]), device="cuda"
+                )
             last = 0.0
+            last_conditional_risk = 0.0
             for step in range(int(residual_config["steps"])):
                 row = fit_index[torch.randint(len(fit_index), (int(residual_config["batch_size"]),), device="cuda")]
                 local_horizon_index = training_horizon_tensor[
                     torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
                 ]
-                requested_q = torch.empty(len(row), device="cuda").uniform_(
-                    float(quantile_range[0]), float(quantile_range[1])
-                )
-                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                if primal_dual:
+                    quantile_index = int(torch.randint(len(training_quantiles), ()).item())
+                    ceiling_index = int(torch.randint(len(ceiling_tensor), ()).item())
+                    requested_q = torch.full((len(row),), float(training_quantiles[quantile_index]), device="cuda")
+                    local_ceiling = torch.full((len(row),), float(ceiling_tensor[ceiling_index]), device="cuda")
+                else:
+                    requested_q = torch.empty(len(row), device="cuda").uniform_(
+                        float(quantile_range[0]), float(quantile_range[1])
+                    )
+                    local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
                 local_h = horizon_tensor[local_horizon_index]
                 multiplier_input = torch.cat((source_x[row], local_h[:, None], local_ceiling[:, None]), 1)
                 multiplier = residual_model(multiplier_input)
@@ -1058,14 +1071,30 @@ def main() -> None:
                 unsafe = torch.cat((torch.zeros((len(row), 1), device="cuda"), (actual_cost > local_ceiling[:, None]).float()), 1)
                 expected_utility = torch.sum(probability * size_utility[None], 1)
                 expected_unsafe = torch.sum(probability * unsafe, 1)
-                risk_odds = requested_q / (1.0 - requested_q)
-                loss = (-expected_utility + risk_odds * expected_unsafe).mean()
+                if primal_dual:
+                    soft_coverage = probability[:, 1:].sum(1)
+                    conditional_risk = expected_unsafe.sum() / soft_coverage.sum().clamp_min(1e-6)
+                    target_risk = 1.0 - requested_q[0] - float(config["primal_dual"]["risk_margin"])
+                    violation = conditional_risk - target_risk
+                    positive_violation = torch.relu(violation)
+                    loss = -expected_utility.mean() + dual_values[quantile_index, ceiling_index].detach() * violation
+                    loss = loss + 0.5 * float(config["primal_dual"]["augmented_penalty"]) * positive_violation.square()
+                else:
+                    risk_odds = requested_q / (1.0 - requested_q)
+                    loss = (-expected_utility + risk_odds * expected_unsafe).mean()
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
                 optimizer.step()
+                if primal_dual:
+                    with torch.no_grad():
+                        dual_values[quantile_index, ceiling_index].add_(
+                            float(config["primal_dual"]["dual_learning_rate"]) * violation.detach()
+                        ).clamp_(0.0, float(config["primal_dual"]["maximum_dual"]))
+                    last_conditional_risk = float(conditional_risk.detach())
                 last = float(loss.detach())
                 if step % 500 == 0:
-                    print(f"{config['task_id']} decision step={step + 1} loss={last:.7f}", flush=True)
+                    suffix = f" conditional_risk={last_conditional_risk:.7f}" if primal_dual else ""
+                    print(f"{config['task_id']} decision step={step + 1} loss={last:.7f}{suffix}", flush=True)
             residual_model.eval()
             evaluation_quantiles = np.asarray(config["evaluation_quantiles"], np.float32)
 
@@ -1154,12 +1183,15 @@ def main() -> None:
                 "hidden_dimensions": residual_config["hidden_dimensions"],
                 "multiplier_range": [float(residual_config["minimum_multiplier"]), float(residual_config["maximum_multiplier"])],
                 "frozen_differentiable_authority": config["frozen_differentiable_authority"],
+                "dual_values": dual_values.detach().cpu() if primal_dual else None,
             }, run_dir / config["model_artifact"])
             summary = {
                 "schema_version": config["output_schema_version"], "task_id": config["task_id"],
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(fit_rows.sum()), "steps": int(residual_config["steps"]),
-                             "final_decision_loss": last, "risk_penalty": "requested_quantile_odds"},
+                             "final_decision_loss": last,
+                             "risk_penalty": "conditional_risk_primal_dual" if primal_dual else "requested_quantile_odds",
+                             "dual_values": dual_values.detach().cpu().tolist() if primal_dual else None},
                 "source_decision_focused_frontier": source_adjusted, "source_P337_baseline": source_baseline,
                 "source_warp_multiplier": source_multiplier,
                 "P201_decision_focused_frontier": p201_adjusted, "P201_P337_baseline": p201_baseline,
