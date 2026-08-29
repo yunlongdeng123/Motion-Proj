@@ -2856,6 +2856,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号：`V67-F182`。
 
+### V67-F182 — 全局logistic-mixture连续CDF在heldout预算失真
+
+- canonical：`run://worldsim_v67/WS-V67-P238-CONTINUOUS-BUDGET-PREFIX-SURFACE-01/20260831T040000Z__continuous-budget-prefix-surface-s0-r1`；
+- 观察：P201 heldout surface/final MAE=`.015630/.021162`，calibration increase=`.005166`，0/3；
+- 解释：4-component全局shape即使单调，也无法保留七个已确认knots之间的局部曲率与calibration刻度；
+- 文献响应：NeurIPS 2019 monotone rational-quadratic splines强调通过局部bins与knots提升单调transform灵活性；
+- response：P239直接保留P233 knots并作local log-budget interpolation；不增加components或再训全局CDF；
+- 防重复：不扫mixture K、temperature、scale floor、width/depth或heldout budget定义。
+
+下一可用编号：`V67-F183`。
+
 ### P233 milestone note — 双轴结构单调surface通过，无新增failure
 
 - P201 surface/final MAE均过门，surface Brier/calibration均优于teacher，两轴violations=`0/0`；

@@ -1014,6 +1014,11 @@ P233仍使用`8 conditions + 28 fixed-budget marginals`。调研UAI 2020 MONDE�
 能力而非继续删输入：以七个既有budget训练4-component logistic-mixture base CDF和三个positive-slope retention curves，
 在六个相邻几何中点budget上评价连续插值；结构上保持budget递增/horizon递减。P201三项heldout-budget decisions单次冻结，
 RTX 3090训练中。
+P238 heldout-budget 0/3：P201 surface/final MAE=`.015630/.021162`，Brier degradation=`.574%`虽在容差，
+但calibration increase=`.005166>.002`；双轴violations仍为0，F182。低秩全局logistic mixture关闭，不扫components。
+参考NeurIPS 2019 Neural Spline Flows的knot-preserving局部单调变换，P239直接把fresh-supported P233七预算输出作为
+精确knots，在log-budget内作局部piecewise-linear interpolation；六个几何中点与P238 decisions原样复用，无训练、无拟合、
+无spline-degree sweep，GPU只执行冻结teacher/P233一次评价。
 
 P228/P234 fresh里程碑现已完成。Preparation精确提取3,913个required LIDAR，其中1,560个新提取；10/10 scenes
 preprocess完成，单scene `59.53--63.17s`，总wall=`1554.93s`，并与P229--P237 GPU研究重叠。P228在1,720条全新

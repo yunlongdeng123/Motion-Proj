@@ -1904,7 +1904,16 @@
   retention curves；乘积结构同时保证budget monotonicity和horizon-prefix monotonicity；
 - protocol：只用`.05/.1/.2/.4/.8/1.6/3.2`七点teacher训练；六个相邻几何中点完全heldout，P201只在heldout budgets
   判surface MAE≤`.015`、final MAE≤`.01`、Brier/calibration noninferiority；
-- status：RTX 3090 source-only 10,000-step训练中；不扫component/knot/width/budget/metric/MC。
+- result：P201 heldout surface/final MAE=`.015630/.021162`，Brier degradation=`.574%`，calibration increase=
+  `.005166`；0/3，F182；violations=`0/0`；
+- verdict=`rejected_continuous_budget_prefix_reliability_surface`；wall=`88.39s`。不扫mixture components。
+
+### WS-V67-P239-KNOT-PRESERVING-BUDGET-INTERPOLATION-01
+
+- hypothesis：连续budget compiler应保留已获fresh support的P233七个knots，而不是用低秩全局family重新逼近它们；
+- protocol：在log-budget中对相邻P233 knots作local linear interpolation；六个heldout geometric midpoints正好位于
+  各区间中点；结构保持budget/horizon双轴单调且区间内可微；
+- status：冻结单次evaluation；不训练、不fit derivative、不扫spline degree/knot/budget/metric/MC。
 
 ### WS-V67-P234-PREFIX-SURFACE-FRESH-CONFIRMATION-01
 
