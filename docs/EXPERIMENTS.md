@@ -730,8 +730,25 @@
   steps；一个source q90 nonnegative margin。P201只看heldout tasks/ceilings，不refit。
 - gates：max unsafe edited-pair rate `<=.15`、mean coverage gain vs nominal P317 pair `>=.10`、ceiling
   monotonicity violations=0；不扫pair/ceiling/gate/capacity/seed。
-- active=`run://worldsim_v67/WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/
+- canonical=`run://worldsim_v67/WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/
   20260901T063000Z__action-pair-safety-editor-s0-r1`。
+- training/calibration：217,890 pair examples、6k steps、final loss=`.19281`；逐pair q90 margin=`.51617`。
+- P201 result：mean edited/nominal coverage=`.25738/.26066`，gain=`-.00328 < .10`；max unsafe=`.05263`、
+  monotonicity=0，2/3，verdict=`rejected_task_preserving_action_pair_safety_editor`。strict coverage新增
+  `.00328`，中ceiling gain=`.01148`，但高ceiling gain=`-.02459`；wall=`46.41s`。
+- disposition：登记`V67-F208`；不调q90 margin/quantile/gate。改为一次联合选择15 pairs，只校准最终selected
+  outcome，避免per-candidate校准与事后选择的保守叠加。
+
+### WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01
+
+- selector：permutation-equivariant DeepSets-style 15-pair encoder；listwise oracle CE + differentiable soft decision
+  regret，pair utility preservation weight固定`.10`。5k GPU steps。
+- selected-outcome authority：冻结hard selector后，单个group-aware q90 head仅在被选pair上训练4k steps；source
+  calibration只加一个selected-outcome margin。不是15个candidate各自校准。
+- gates：P201 max unsafe `<=.15`、mean coverage gain vs nominal P317 pair `>=.10`、ceiling monotonicity=0；
+  requested task/ceilings不变，不扫architecture/weight/quantile/gate/seed。
+- active=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
+  20260901T064500Z__groupwise-pair-authority-editor-s0-r1`。
 
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 

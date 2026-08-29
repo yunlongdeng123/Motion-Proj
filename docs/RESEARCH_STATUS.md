@@ -406,12 +406,17 @@ WS-V67-P319-MINIMAL-TASK-PROJECTION-AUTHORITY-01/
 unsafe=`.04444/.01923`，说明projection可用但“只换task、不换action pair”不能关闭严格authority空集。不得降门/
 删除严格ceiling或增加task grid做rescue。
 
-P320把编辑对象改为保持requested task不变、在同组六条actions的全部15个top-2 pairs中重选授权pair；迁移OptNet
-constraint layer与NeurIPS 2022 Safety Editor的最小编辑对象，但只作经验离散editor。以P317 score为base，source
-endpoint tasks×15 pairs训练单个bounded residual risk head，source calibration加一个nonnegative q90 margin；正式
-P201仍看原四个heldout tasks与P317三条ceilings，选择feasible pairs中P313 utility最优者。三门保持unsafe
-`<=.15`、mean coverage gain `>=.10`、monotonicity=0。Active=`run://worldsim_v67/
-WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/20260901T063000Z__action-pair-safety-editor-s0-r1`。
+P320训练逐pair bounded residual editor。Canonical=`run://worldsim_v67/WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/
+20260901T063000Z__action-pair-safety-editor-s0-r1`：217,890 pair examples、6k steps，但任意pair独立q90校准使margin
+膨胀为`.51617`；P201 mean edited/nominal coverage=`.25738/.26066`，gain=`-.00328 < .10`，1/3失败，登记
+`V67-F208`。max unsafe=`.05263`、monotonicity=0；strict只新增`.00328` coverage，高ceiling反而损失`.02459`。
+不得调margin/quantile/gate或只保留低ceiling。
+
+P321按ICML 2022 decision-focused learning-to-rank与permutation-invariant set encoder迁移：单个groupwise selector
+一次接收全部15 pairs，以listwise oracle+soft decision regret联合训练；hard选出一个pair后，第二个q90 head只对最终
+selected outcome拟合/校准，从对象层消除P320的per-candidate multiple-selection margin。requested task、P317三条
+ceilings和三门不变。Active=`run://worldsim_v67/WS-V67-P321-GROUPWISE-PAIR-AUTHORITY-EDITOR-01/
+20260901T064500Z__groupwise-pair-authority-editor-s0-r1`。
 
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 

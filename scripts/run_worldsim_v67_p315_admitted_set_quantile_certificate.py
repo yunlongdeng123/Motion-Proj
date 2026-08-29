@@ -65,6 +65,37 @@ class CeilingConditionedSelectiveAuthority(nn.Module):
         return frozen_score + residual, residual
 
 
+class GroupwisePairSelector(nn.Module):
+    """Permutation-equivariant selector over the complete 15-pair candidate set."""
+
+    def __init__(self, input_width: int, hidden_width: int) -> None:
+        super().__init__()
+        self.encoder = nn.Sequential(nn.Linear(input_width, hidden_width), nn.SiLU(), nn.Linear(hidden_width, hidden_width), nn.SiLU())
+        self.head = nn.Sequential(nn.Linear(2 * hidden_width, hidden_width), nn.SiLU(), nn.Linear(hidden_width, 1))
+
+    def forward(self, features):
+        element = self.encoder(features)
+        context = element.mean(1, keepdim=True).expand_as(element)
+        return self.head(torch.cat((element, context), 2)).squeeze(2)
+
+
+class SelectedPairQuantileHead(nn.Module):
+    """Group-aware q90 log-cost head applied only after one pair has been selected."""
+
+    def __init__(self, input_width: int, hidden_dimensions) -> None:
+        super().__init__()
+        layers = []
+        width = int(input_width)
+        for hidden in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden)), nn.SiLU()))
+            width = int(hidden)
+        layers.append(nn.Linear(width, 1))
+        self.network = nn.Sequential(*layers)
+
+    def forward(self, features):
+        return F.softplus(self.network(features).squeeze(1))
+
+
 @torch.no_grad()
 def _task_examples(descriptors, selector_score, costs, queries, scenes, progress_model, maneuver_model,
                    progress_values, commands, lateral_weight, selected_count):
@@ -239,6 +270,7 @@ def main() -> None:
     selective_authority_confirmation = bool(config.get("selective_authority_confirmation", False))
     task_projection_evaluation = bool(config.get("task_projection_evaluation", False))
     action_pair_editor_training = bool(config.get("action_pair_editor_training", False))
+    groupwise_pair_editor_training = bool(config.get("groupwise_pair_editor_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -336,7 +368,8 @@ def main() -> None:
         config["heldout_progress_preferences"], config["heldout_lateral_commands"],
         float(config["lateral_preference_weight"]), int(config["selected_action_count"]),
     )
-    if selective_authority_training or selective_authority_confirmation or task_projection_evaluation or action_pair_editor_training:
+    if (selective_authority_training or selective_authority_confirmation or task_projection_evaluation
+            or action_pair_editor_training or groupwise_pair_editor_training):
         certificate = torch.load(
             args.runs_root / config["frozen_certificate"]["run"] / config["frozen_certificate"]["artifact"],
             map_location="cuda",
@@ -357,6 +390,237 @@ def main() -> None:
             p201_quantiles = quantile_model(torch.from_numpy(p201_feature).cuda()).cpu().numpy()
         source_frozen_score = np.maximum.accumulate(source_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
         p201_frozen_score = np.maximum.accumulate(p201_quantiles + offsets[None], axis=1)[:, 2].astype(np.float32)
+
+        if groupwise_pair_editor_training:
+            frozen_selective = torch.load(
+                args.runs_root / config["frozen_selective_authority"]["run"] / config["frozen_selective_authority"]["artifact"],
+                map_location="cuda",
+            )
+            selective_model = CeilingConditionedSelectiveAuthority(
+                int(frozen_selective["input_width"]), frozen_selective["hidden_dimensions"],
+                float(frozen_selective["maximum_residual"]),
+            ).cuda()
+            selective_model.load_state_dict(frozen_selective["model_state_dict"])
+            selective_model.eval()
+            selective_margin = float(frozen_selective["calibration_margin"])
+            evaluation_ceilings = np.asarray(frozen_selective["heldout_log_cost_ceilings"], np.float32)
+            source_pair = _pair_examples(
+                source_descriptor, source_selector_score, source_costs, source_queries, source_scenes,
+                progress_model, maneuver_model, config["training_progress_preferences"],
+                config["training_lateral_commands"], float(config["lateral_preference_weight"]),
+            )
+            p201_pair = _pair_examples(
+                p201_descriptor, p201_selector_score, p201_costs, p201_queries, p201_scenes,
+                progress_model, maneuver_model, config["heldout_progress_preferences"],
+                config["heldout_lateral_commands"], float(config["lateral_preference_weight"]),
+            )
+            (source_pair_feature, source_pair_target, source_pair_scenes, _, source_nominal,
+             source_pair_utility, pair_indices) = source_pair
+            (p201_pair_feature, p201_pair_target, _, _, p201_nominal,
+             p201_pair_utility, _) = p201_pair
+            feature_width = source_pair_feature.shape[-1]
+            pair_count = source_pair_feature.shape[1]
+            source_pair_feature = ((source_pair_feature - feature_mean) / feature_scale).astype(np.float32)
+            p201_pair_feature = ((p201_pair_feature - feature_mean) / feature_scale).astype(np.float32)
+
+            def frozen_set_scores(features):
+                flat = features.reshape(-1, features.shape[-1])
+                chunks = []
+                with torch.no_grad():
+                    for begin in range(0, len(flat), 4096):
+                        local = torch.from_numpy(flat[begin:begin + 4096]).cuda()
+                        prediction = quantile_model(local).cpu().numpy()
+                        q95 = np.maximum.accumulate(prediction + offsets[None], axis=1)[:, 2].astype(np.float32)
+                        chunks.append((selective_model(
+                            local, torch.from_numpy(q95).cuda()
+                        )[0].cpu().numpy() + selective_margin).astype(np.float32))
+                return np.concatenate(chunks).reshape(features.shape[:2])
+
+            source_pair_base = frozen_set_scores(source_pair_feature)
+            p201_pair_base = frozen_set_scores(p201_pair_feature)
+
+            def augment(features, base_score, utility):
+                utility_unit = (utility - utility.min(1, keepdims=True)) / np.maximum(
+                    utility.max(1, keepdims=True) - utility.min(1, keepdims=True), 1e-5
+                )
+                return np.concatenate((features, base_score[:, :, None], utility_unit[:, :, None]), 2).astype(np.float32), utility_unit.astype(np.float32)
+
+            source_augmented, source_utility_unit = augment(source_pair_feature, source_pair_base, source_pair_utility)
+            p201_augmented, p201_utility_unit = augment(p201_pair_feature, p201_pair_base, p201_pair_utility)
+            row_scenes = source_pair_scenes[:, 0]
+            split = config["split"]
+            modulus = int(split["scene_modulus"])
+            calibration_rows = row_scenes % modulus == int(split["calibration_scene_remainder"])
+            development_rows = row_scenes % modulus == int(split["development_scene_remainder"])
+            train_rows = ~(calibration_rows | development_rows)
+            model_config = config["groupwise_editor_model"]
+            selector = GroupwisePairSelector(source_augmented.shape[2], int(model_config["hidden_width"])).cuda()
+            optimizer = torch.optim.AdamW(
+                selector.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+            )
+            x = torch.from_numpy(source_augmented).cuda()
+            target = torch.from_numpy(source_pair_target).cuda()
+            utility = torch.from_numpy(source_utility_unit).cuda()
+            train_index = torch.from_numpy(np.flatnonzero(train_rows)).cuda()
+            last_selector = 0.0
+            for step in range(int(model_config["selector_steps"])):
+                row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+                composite = target[row] + float(model_config["utility_preservation_weight"]) * utility[row]
+                oracle = torch.argmin(composite, 1)
+                logits = selector(x[row])
+                probability = torch.softmax(logits / float(model_config["selection_temperature"]), 1)
+                regret = (probability * (composite - composite.min(1, keepdim=True).values)).sum(1).mean()
+                loss = F.cross_entropy(logits, oracle) + float(model_config["decision_regret_weight"]) * regret
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+                last_selector = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"P321 groupwise selector step={step + 1} loss={last_selector:.7f}", flush=True)
+            selector.eval()
+            with torch.no_grad():
+                source_choice = torch.argmax(selector(x), 1).cpu().numpy()
+                p201_choice = torch.argmax(selector(torch.from_numpy(p201_augmented).cuda()), 1).cpu().numpy()
+
+            def selected_features(augmented, choice):
+                row = np.arange(len(augmented))
+                return np.concatenate((augmented[row, choice], augmented.mean(1)), 1).astype(np.float32)
+
+            source_selected_feature = selected_features(source_augmented, source_choice)
+            p201_selected_feature = selected_features(p201_augmented, p201_choice)
+            source_selected_target = source_pair_target[np.arange(len(source_pair_target)), source_choice]
+            p201_selected_target = p201_pair_target[np.arange(len(p201_pair_target)), p201_choice]
+            risk_model = SelectedPairQuantileHead(
+                source_selected_feature.shape[1], model_config["risk_hidden_dimensions"]
+            ).cuda()
+            risk_optimizer = torch.optim.AdamW(
+                risk_model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+            )
+            selected_x = torch.from_numpy(source_selected_feature).cuda()
+            selected_y = torch.from_numpy(source_selected_target).cuda()
+            quantile = float(config["selected_pair_quantile"])
+            last_risk = 0.0
+            for step in range(int(model_config["risk_steps"])):
+                row = train_index[torch.randint(len(train_index), (int(model_config["batch_size"]),), device="cuda")]
+                prediction = risk_model(selected_x[row])
+                error = selected_y[row] - prediction
+                loss = torch.maximum(quantile * error, (quantile - 1) * error).mean()
+                risk_optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                risk_optimizer.step()
+                last_risk = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"P321 selected-pair q90 step={step + 1} pinball={last_risk:.7f}", flush=True)
+            risk_model.eval()
+            with torch.no_grad():
+                source_selected_score = risk_model(selected_x).cpu().numpy()
+                p201_selected_score = risk_model(torch.from_numpy(p201_selected_feature).cuda()).cpu().numpy()
+            selected_calibration_residual = source_selected_target[calibration_rows] - source_selected_score[calibration_rows]
+            selected_margin = max(0.0, float(np.quantile(selected_calibration_residual, quantile)))
+            source_selected_score += selected_margin
+            p201_selected_score += selected_margin
+
+            def groupwise_metrics(selected_score, selected_target, selected_choice, nominal_choice, nominal_base, ceilings):
+                row = np.arange(len(selected_score))
+                by_ceiling = {}
+                coverages, nominal_coverages, unsafe_rates = [], [], []
+                previous = None
+                monotonicity_violations = 0
+                for ceiling in ceilings:
+                    authorized = selected_score <= float(ceiling)
+                    nominal_authorized = nominal_base[row, nominal_choice] <= float(ceiling)
+                    unsafe = authorized & (selected_target > ceiling)
+                    if previous is not None:
+                        monotonicity_violations += int(np.sum(previous & ~authorized))
+                    previous = authorized
+                    count = int(authorized.sum())
+                    coverage = float(np.mean(authorized))
+                    nominal_coverage = float(np.mean(nominal_authorized))
+                    unsafe_rate = float(unsafe.sum() / max(count, 1))
+                    by_ceiling[str(float(ceiling))] = {
+                        "log_cost_ceiling": float(ceiling),
+                        "actual_cost_ceiling": float(np.expm1(ceiling)),
+                        "groupwise_pair_authority_coverage": coverage,
+                        "nominal_pair_authority_coverage": nominal_coverage,
+                        "authority_coverage_gain": coverage - nominal_coverage,
+                        "unsafe_groupwise_pair_rate": unsafe_rate,
+                        "pair_edit_rate_among_authorized": float(np.sum(authorized & (selected_choice != nominal_choice)) / max(count, 1)),
+                        "mean_selected_actual_cost": float(np.mean(np.expm1(selected_target[authorized]))) if count else None,
+                    }
+                    coverages.append(coverage)
+                    nominal_coverages.append(nominal_coverage)
+                    unsafe_rates.append(unsafe_rate)
+                return {
+                    "request_example_count": int(len(selected_score)),
+                    "candidate_pair_count": int(pair_count),
+                    "mean_groupwise_pair_authority_coverage": float(np.mean(coverages)),
+                    "mean_nominal_pair_authority_coverage": float(np.mean(nominal_coverages)),
+                    "mean_authority_coverage_gain": float(np.mean(np.asarray(coverages) - np.asarray(nominal_coverages))),
+                    "maximum_unsafe_groupwise_pair_rate": float(np.max(unsafe_rates)),
+                    "ceiling_authority_monotonicity_violations": monotonicity_violations,
+                    "by_ceiling": by_ceiling,
+                }
+
+            source_metrics = groupwise_metrics(
+                source_selected_score[development_rows], source_selected_target[development_rows],
+                source_choice[development_rows], source_nominal[development_rows],
+                source_pair_base[development_rows], evaluation_ceilings,
+            )
+            p201_metrics = groupwise_metrics(
+                p201_selected_score, p201_selected_target, p201_choice, p201_nominal,
+                p201_pair_base, evaluation_ceilings,
+            )
+            decision = config["decision"]
+            checks = {
+                "P201_groupwise_editor_risk": p201_metrics["maximum_unsafe_groupwise_pair_rate"] <= float(decision["maximum_P201_unsafe_groupwise_pair_rate"]),
+                "P201_groupwise_editor_coverage_gain": p201_metrics["mean_authority_coverage_gain"] >= float(decision["minimum_P201_mean_authority_coverage_gain"]),
+                "P201_groupwise_editor_monotonicity": p201_metrics["ceiling_authority_monotonicity_violations"] <= int(decision["maximum_P201_ceiling_authority_monotonicity_violations"]),
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "selector_state_dict": selector.state_dict(),
+                "risk_model_state_dict": risk_model.state_dict(),
+                "pair_input_width": int(source_augmented.shape[2]),
+                "hidden_width": int(model_config["hidden_width"]),
+                "risk_input_width": int(source_selected_feature.shape[1]),
+                "risk_hidden_dimensions": model_config["risk_hidden_dimensions"],
+                "selected_pair_quantile": quantile,
+                "selected_pair_calibration_margin": selected_margin,
+                "pair_indices": pair_indices,
+                "heldout_log_cost_ceilings": evaluation_ceilings,
+                "frozen_selective_authority": config["frozen_selective_authority"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"],
+                "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"],
+                "status": "done",
+                "verdict": verdict,
+                "role": config["role"],
+                "training": {
+                    "row_count": int(train_rows.sum()),
+                    "pair_example_count": int(train_rows.sum() * pair_count),
+                    "selector_steps": int(model_config["selector_steps"]),
+                    "risk_steps": int(model_config["risk_steps"]),
+                    "final_selector_loss": last_selector,
+                    "final_risk_pinball_loss": last_risk,
+                },
+                "calibration": {"row_count": int(calibration_rows.sum()), "selected_pair_quantile": quantile, "nonnegative_log_cost_margin": selected_margin},
+                "source_development": source_metrics,
+                "P201_post_hoc_development": p201_metrics,
+                "decision_checks": checks,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                    "wall_seconds": time.monotonic() - started,
+                },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
 
         if action_pair_editor_training:
             frozen_selective = torch.load(

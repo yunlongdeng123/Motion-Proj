@@ -375,9 +375,11 @@
   monotonicity violations=0，3/3 supported；未触发F207，不再增加同family confirmation；
 - P319 result：13-task minimum-deviation projection的risk/monotonicity通过，但mean coverage gain=
   `.05847 < .10`，1/3失败，登记F207；严格ceiling仍无feasible task，不降门/删ceiling/扩task grid；
-- P320 active：保持requested task，训练全部15个top-2 action pairs的bounded residual safety editor；失败才登记
-  F208，不改pair/ceiling/gate/capacity/seed或在P201 refit/calibrate；
-- 下一可用 failure id 为 `V67-F208`。
+- P320 result：逐pair bounded residual editor的q90 margin=`.51617`，P201 mean coverage gain=`-.00328 < .10`，
+  risk/monotonicity通过但coverage失败，登记F208；不调margin/quantile/gate；
+- P321 active：groupwise 15-pair decision-focused selector + selected-outcome q90 head；失败才登记F209，不改
+  architecture/weight/quantile/ceiling/gate/seed或在P201 refit/calibrate；
+- 下一可用 failure id 为 `V67-F209`。
 
 ### V67-F207 — P319只投影task不能关闭严格ceiling authority空集
 
@@ -391,6 +393,19 @@
   P320据此保持task不变，枚举六动作的15个top-2 pairs并训练pair-level editor；
 - forbidden rescue：不降`.10` gate、不删除strict ceiling、不增加task grid、不在P201训练或校准；
 - resolution status：`open via P320 action-pair editor`。
+
+### V67-F208 — P320逐pair校准在事后pair选择前产生保守margin叠加
+
+- canonical=`run://worldsim_v67/WS-V67-P320-ACTION-PAIR-SAFETY-EDITOR-01/
+  20260901T063000Z__action-pair-safety-editor-s0-r1`；
+- symptom：217,890 pair examples训练收敛到loss=`.19281`，但15个candidate逐个q90校准要求margin=`.51617`；
+  P201 mean edited/nominal coverage=`.25738/.26066`，gain=`-.00328 < .10`；
+- retained evidence：max unsafe=`.05263`、monotonicity=0；strict/mid gain=`.00328/.01148`，说明pair object有信号，
+  但高ceiling gain=`-.02459`暴露per-pair calibration与事后选择不匹配；
+- literature check/migration：ICML 2022 decision-focused learning-to-rank支持直接优化候选集合排序，set encoder保证
+  permutation equivariance；P321联合选15 pairs，随后只对hard-selected outcome训练/校准q90；
+- forbidden rescue：不调margin/q90/gate、不删除high ceiling、不只报告strict gain、不在P201重训；
+- resolution status：`open via P321 groupwise selected-outcome authority`。
 
 > **最后更新**：2026-08-29
 > **唯一活跃失败事实源**：本文件 `docs/RESEARCH_FAILURES.md`
