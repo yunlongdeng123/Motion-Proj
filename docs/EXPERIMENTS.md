@@ -1838,7 +1838,17 @@
 
 - hypothesis：固定P229 full-input 64x64结构，以`.5` frozen-teacher MSE + `.5` source hard-outcome Brier训练；
 - decisions：P201 teacher MAE≤`.02`、integrated Brier严格优于teacher、calibration absolute increase≤`.002`；
-- status：RTX 3090训练中；单个half/half权重，不扫loss mixing或truth auxiliary，不读取P228 quality。
+- result：P183/P201 Brier相对teacher改善`2.02%/1.29%`，calibration改善`.000888/.000343`；但P201
+  teacher MAE=`.027831>.02`，fidelity gate失败；2/3，F178；
+- verdict=`rejected_truth_regularized_monotone_curve_compiler`；wall=`55.64s`、peak GPU=`.140GiB`。不扫mixing weight。
+
+### WS-V67-P232-GRADIENT-BALANCED-MONOTONE-CURVE-01
+
+- literature response：NeurIPS 2020 PCGrad对冲突梯度作normal-plane projection；ICLR 2026 DTO-KD把task/distillation
+  balancing表述为gradient-level multi-objective optimization；
+- protocol：仅在truth/teacher gradient dot-product为负时投影truth gradient，再无超参地匹配两者gradient norm；P231
+  architecture/source/steps/budgets/decisions不变；
+- status：RTX 3090训练中；不扫loss weight/projection/norm rule，不读取P228 quality。
 
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 

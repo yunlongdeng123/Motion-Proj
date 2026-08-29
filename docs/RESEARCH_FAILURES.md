@@ -2794,6 +2794,17 @@ P219 engineering recovery note（不占算法编号）：r1在任何rows load或
 
 下一可用编号仍为：`V67-F178`。
 
+### V67-F178 — half-teacher/half-truth改善proper score但越过teacher fidelity边界
+
+- canonical：`run://worldsim_v67/WS-V67-P231-TRUTH-REGULARIZED-MONOTONE-CURVE-01/20260831T014500Z__truth-regularized-monotone-curve-s0-r1`；
+- 观察：P183/P201 Brier改善`2.02%/1.29%`、calibration均改善，但P201 teacher MAE=`.027831`，超过冻结`.02`；
+- 解释：固定50/50 output-space混合把student从teacher compiler推成新的source-supervised predictor；quality改善不能覆盖语义失败；
+- 文献响应：NeurIPS 2020 PCGrad和ICLR 2026 DTO-KD均从gradient conflict/dynamic balance处理多目标，而不是继续扫静态权重；
+- response：P232只试一次conflict projection + gradient norm matching；P231不降gate、不扫mixing、不进P228 fresh；
+- 防重复：不再试静态teacher/truth ratio、temperature、truth auxiliary或label smoothing sweep。
+
+下一可用编号：`V67-F179`。
+
 ### P230 milestone note — marginal-only compiler通过，无新增failure
 
 - P201 teacher MAE=`.009653`，Brier/calibration均优于teacher；P183轻微退化仍在冻结容差；

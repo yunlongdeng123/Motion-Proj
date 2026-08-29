@@ -980,6 +980,10 @@ calibration=`.023396/.024630`（student改善`.001233`）。P183 Brier/calibrati
 容差内；marginal-only参数为6,536。该结果说明teacher dependence可被运行时marginal surface编译，不等价于独立性声明。
 P231已接替GPU，固定P229 64x64 full-input结构，以`.5 teacher MSE + .5 source outcome Brier`单次训练，检验proper-loss
 regularization能否在P201严格改善teacher Brier且保持MAE≤`.02`、calibration增加≤`.002`；不扫混合权重。
+P231在P183/P201把Brier改善`2.02%/1.29%`且calibration均改善，但P201 teacher MAE=`.027831>.02`，因此2/3、
+F178；50/50 hard target改变了compiler语义。调研NeurIPS 2020 PCGrad与ICLR 2026 DTO-KD后，P232采用无需loss-weight
+sweep的gradient-level迁移：仅当source-truth gradient与teacher gradient冲突时投影，再把task-gradient norm匹配teacher norm；
+P231 architecture/data/steps/decisions全部不变。RTX 3090训练中，P228 quality仍未读取。
 P201 evaluator首次后台入口因shell工作目录丢失而未驻留，未读任何row/quality；已以绝对项目路径和同一冻结合同重启为r2。
 P206前两次入口分别缺项目`PYTHONPATH`和必填`--runs-root`，均在数据/训练/metric前退出；canonical r3完成，科学合同未变。
 

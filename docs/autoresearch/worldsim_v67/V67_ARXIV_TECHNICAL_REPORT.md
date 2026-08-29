@@ -85,6 +85,9 @@ CDF是否足以编译teacher；它不把distillation等同为horizon independenc
 P230在P201获得MAE=`.009653`，Brier/calibration相对teacher改善`.571%/.001233`，说明conditional teacher可被
 marginal-only runtime interface近似，但仍需fresh确认。P231随后固定64x64 full-input student，以half teacher/half source
 outcome proper loss训练一次，研究distillation是否能从纯emulation推进到quality refinement；不扫mixing weight。
+P231虽在P183/P201改善Brier `2.02%/1.29%`，P201 teacher MAE却升到`.027831>.02`，说明静态half/half loss
+改变了compiler semantics（F178）。P232依据NeurIPS 2020 PCGrad与ICLR 2026 DTO-KD，改为冲突时投影truth gradient并
+匹配teacher-gradient norm；这是单次gradient-level恢复，不做loss-weight sweep。
 
 本研究不提供collision probability calibration、planner/policy authority、closed-loop性能或safety guarantee。可辩护贡献是一个
 任务条件化但分层的可靠性接口：`Actor uncertainty distribution × candidate-trajectory boundary query`。
@@ -628,6 +631,9 @@ geometry进入解析计算，才获得稳定的scene-level independent evidence�
 support”；它仍不等价于collision probability、formal coverage或deployment safety authority。
 
 ## References
+
+- Yu et al., [Gradient Surgery for Multi-Task Learning](https://proceedings.neurips.cc/paper/2020/hash/3fe78a8acf5fda99de95303940a2420c-Abstract.html), NeurIPS 2020.
+- Hayder et al., [DTO-KD: Dynamic Trade-off Optimization for Effective Knowledge Distillation](https://openreview.net/pdf?id=QMItTyQW92), ICLR 2026.
 
 - Chai et al., [MultiPath: Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction](https://proceedings.mlr.press/v100/chai20a.html), CoRL 2019.
 - Farid et al., [Task-Relevant Failure Detection for Trajectory Predictors in Autonomous Vehicles](https://proceedings.mlr.press/v205/farid23a/farid23a.pdf), CoRL 2022.
