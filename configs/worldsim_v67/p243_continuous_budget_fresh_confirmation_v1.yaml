@@ -6,7 +6,7 @@ role: fresh_scene_level_continuous_budget_prefix_surface_confirmation
 seed: 0
 model_artifact: P243_CONTINUOUS_BUDGET_ROWS.npz
 evaluation_data:
-  scene_names: [scene-0161, scene-0283, scene-0457, scene-0695, scene-0907, scene-0350, scene-0975, scene-0790, scene-1011, scene-1048]
+  scene_names: [scene-0161, scene-0283, scene-0457, scene-0695, scene-0907, scene-0350, scene-0975, scene-0790, scene-1048]
   scene_shards:
     scene-0161: "02"
     scene-0283: "03"
@@ -16,7 +16,6 @@ evaluation_data:
     scene-0350: "04"
     scene-0975: "09"
     scene-0790: "08"
-    scene-1011: "09"
     scene-1048: "10"
   recovery_shards: ["01", "06"]
   recovery_only: true
@@ -40,8 +39,8 @@ evaluation_data:
   ego_half_width_m: 1.0
 preparation:
   task_id: WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-PREP-01
-  run_id: 20260831T060000Z__continuous-budget-fresh-prep-s0-r1
-confirmation: {run_id: 20260831T060500Z__continuous-budget-fresh-confirmation-s0-r1}
+  run_id: 20260831T114000Z__continuous-budget-fresh-prep-s0-r4
+confirmation: {run_id: 20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2}
 frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
 frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
 frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
@@ -55,13 +54,15 @@ decision: {maximum_surface_teacher_probability_MAE: 0.015, maximum_final_curve_t
 verdict_on_pass: supported_fresh_continuous_budget_prefix_surface
 verdict_on_failure: rejected_fresh_continuous_budget_prefix_surface
 locks:
-  ten_unused_official_val_scenes_and_ten_distinct_logs_frozen_before_new_sensor_or_target_read: true
-  location_distribution_boston_onenorth_queenstown_holland_is_five_two_two_one: true
+  nine_unused_official_val_scenes_and_nine_distinct_logs_remain_frozen_before_new_sensor_or_target_read: true
+  unavailable_scene_1011_was_removed_without_replacement_after_all_ten_local_official_archives_missed_its_396_lidar_files: true
+  location_distribution_boston_onenorth_queenstown_holland_is_five_two_one_one: true
   P203_teacher_P242_student_six_heldout_budgets_MC_and_three_decisions_are_frozen: true
   all_prior_v67_confirmation_scenes_are_excluded: true
-  no_scene_log_shard_model_width_depth_budget_metric_gate_or_MC_recovery: true
+  no_replacement_scene_log_model_width_depth_budget_metric_gate_or_MC_recovery: true
   add_hash_checksum_fingerprint: false
 claim_boundary:
   - fresh_confirmation_at_scene_level_not_session_or_population_level
+  - local_archive_resource_exception_reduces_the_frozen_cohort_from_ten_to_nine_scenes_without_reading_new_targets
   - continuous_budget_only_inside_point_zero_five_to_three_point_two_not_formal_calibration
   - no_collision_planner_policy_closed_loop_or_safety_claim
