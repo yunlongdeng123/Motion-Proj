@@ -126,6 +126,20 @@ def main() -> None:
             for rows in pool.map(_scan_one_shard, tasks):
                 found_rows.update(rows)
     missing = required - existing - set(found_rows)
+    recovery_shards = [str(value).zfill(2) for value in data.get("recovery_shards", [])]
+    if missing and recovery_shards:
+        recovery_tasks = [
+            (
+                str(archive_root / f"v1.0-trainval{shard}_blobs.tgz"),
+                missing,
+                str(raw_root),
+            )
+            for shard in recovery_shards
+        ]
+        with ProcessPoolExecutor(max_workers=len(recovery_tasks)) as pool:
+            for rows in pool.map(_scan_one_shard, recovery_tasks):
+                found_rows.update(rows)
+        missing = required - existing - set(found_rows)
     if missing:
         raise RuntimeError(
             f"exact shard extraction missed {len(missing)} LIDAR files; "
