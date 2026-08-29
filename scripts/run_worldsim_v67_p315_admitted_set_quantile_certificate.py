@@ -1024,11 +1024,15 @@ def main() -> None:
                 residual_model.parameters(), lr=float(residual_config["learning_rate"]), weight_decay=float(residual_config["weight_decay"])
             )
             y = torch.from_numpy(source_target).cuda()
+            _, source_condition_id = np.unique(source_conditions, axis=0, return_inverse=True)
+            source_condition_id = torch.from_numpy(source_condition_id.astype(np.int64)).cuda()
+            condition_count = int(source_condition_id.max().item()) + 1
             fit_index = torch.from_numpy(np.flatnonzero(fit_rows)).cuda()
             training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
             ceiling_tensor = torch.from_numpy(ceilings).cuda()
             size_utility = torch.arange(len(set_sizes) + 1, device="cuda", dtype=torch.float32) / float(len(set_sizes))
             primal_dual = bool(config.get("decision_primal_dual", False))
+            worst_group_primal_dual = bool(config.get("decision_worst_group_primal_dual", False))
             if primal_dual:
                 training_quantiles = torch.tensor(config["primal_dual"]["training_quantiles"], device="cuda", dtype=torch.float32)
                 dual_values = torch.full(
@@ -1038,9 +1042,10 @@ def main() -> None:
             last_conditional_risk = 0.0
             for step in range(int(residual_config["steps"])):
                 row = fit_index[torch.randint(len(fit_index), (int(residual_config["batch_size"]),), device="cuda")]
-                local_horizon_index = training_horizon_tensor[
-                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
-                ]
+                if not worst_group_primal_dual:
+                    local_horizon_index = training_horizon_tensor[
+                        torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                    ]
                 if primal_dual:
                     quantile_index = int(torch.randint(len(training_quantiles), ()).item())
                     ceiling_index = int(torch.randint(len(ceiling_tensor), ()).item())
@@ -1051,29 +1056,53 @@ def main() -> None:
                         float(quantile_range[0]), float(quantile_range[1])
                     )
                     local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
-                local_h = horizon_tensor[local_horizon_index]
-                multiplier_input = torch.cat((source_x[row], local_h[:, None], local_ceiling[:, None]), 1)
-                multiplier = residual_model(multiplier_input)
-                scores = decision_score(
-                    source_x[row], local_h, requested_q, source_anchor_scale[row, :, local_horizon_index],
-                    source_shape[row], source_base_warp[row], multiplier,
-                )
-                with torch.no_grad():
-                    temperature_input = torch.cat((source_x[row], local_h[:, None], requested_q[:, None], local_ceiling[:, None]), 1)
-                    temperature = temperature_model(temperature_input)
-                feasibility = torch.sigmoid((local_ceiling[:, None] - scores) / temperature[:, None])
-                probability = torch.stack((
-                    1.0 - feasibility[:, 0], feasibility[:, 0] - feasibility[:, 1],
-                    feasibility[:, 1] - feasibility[:, 2], feasibility[:, 2],
-                ), 1).clamp_min(0.0)
-                probability = probability / probability.sum(1, keepdim=True).clamp_min(1e-7)
-                actual_cost = y[row, :, local_horizon_index]
-                unsafe = torch.cat((torch.zeros((len(row), 1), device="cuda"), (actual_cost > local_ceiling[:, None]).float()), 1)
+                probability_parts, unsafe_parts, group_parts = [], [], []
+                local_horizon_choices = training_horizon_tensor if worst_group_primal_dual else [None]
+                for group_horizon_position, group_horizon_index in enumerate(local_horizon_choices):
+                    if worst_group_primal_dual:
+                        local_horizon_index = torch.full_like(row, int(group_horizon_index.item()))
+                    local_h = horizon_tensor[local_horizon_index]
+                    multiplier_input = torch.cat((source_x[row], local_h[:, None], local_ceiling[:, None]), 1)
+                    multiplier = residual_model(multiplier_input)
+                    scores = decision_score(
+                        source_x[row], local_h, requested_q, source_anchor_scale[row, :, local_horizon_index],
+                        source_shape[row], source_base_warp[row], multiplier,
+                    )
+                    with torch.no_grad():
+                        temperature_input = torch.cat((source_x[row], local_h[:, None], requested_q[:, None], local_ceiling[:, None]), 1)
+                        temperature = temperature_model(temperature_input)
+                    feasibility = torch.sigmoid((local_ceiling[:, None] - scores) / temperature[:, None])
+                    local_probability = torch.stack((
+                        1.0 - feasibility[:, 0], feasibility[:, 0] - feasibility[:, 1],
+                        feasibility[:, 1] - feasibility[:, 2], feasibility[:, 2],
+                    ), 1).clamp_min(0.0)
+                    local_probability = local_probability / local_probability.sum(1, keepdim=True).clamp_min(1e-7)
+                    actual_cost = y[row, :, local_horizon_index]
+                    local_unsafe = torch.cat(
+                        (torch.zeros((len(row), 1), device="cuda"), (actual_cost > local_ceiling[:, None]).float()), 1
+                    )
+                    probability_parts.append(local_probability)
+                    unsafe_parts.append(local_unsafe)
+                    if worst_group_primal_dual:
+                        group_parts.append(source_condition_id[row] + group_horizon_position * condition_count)
+                probability = torch.cat(probability_parts)
+                unsafe = torch.cat(unsafe_parts)
                 expected_utility = torch.sum(probability * size_utility[None], 1)
                 expected_unsafe = torch.sum(probability * unsafe, 1)
                 if primal_dual:
                     soft_coverage = probability[:, 1:].sum(1)
-                    conditional_risk = expected_unsafe.sum() / soft_coverage.sum().clamp_min(1e-6)
+                    if worst_group_primal_dual:
+                        group_id = torch.cat(group_parts)
+                        group_risks = []
+                        for local_group in range(condition_count * len(training_horizon_tensor)):
+                            local_group_mask = group_id == local_group
+                            group_risks.append(
+                                expected_unsafe[local_group_mask].sum()
+                                / soft_coverage[local_group_mask].sum().clamp_min(1e-6)
+                            )
+                        conditional_risk = torch.stack(group_risks).max()
+                    else:
+                        conditional_risk = expected_unsafe.sum() / soft_coverage.sum().clamp_min(1e-6)
                     target_risk = 1.0 - requested_q[0] - float(config["primal_dual"]["risk_margin"])
                     violation = conditional_risk - target_risk
                     positive_violation = torch.relu(violation)
@@ -1190,7 +1219,8 @@ def main() -> None:
                 "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
                 "training": {"example_count": int(fit_rows.sum()), "steps": int(residual_config["steps"]),
                              "final_decision_loss": last,
-                             "risk_penalty": "conditional_risk_primal_dual" if primal_dual else "requested_quantile_odds",
+                             "risk_penalty": "worst_group_conditional_risk_primal_dual" if worst_group_primal_dual else
+                                             ("conditional_risk_primal_dual" if primal_dual else "requested_quantile_odds"),
                              "dual_values": dual_values.detach().cpu().tolist() if primal_dual else None},
                 "source_decision_focused_frontier": source_adjusted, "source_P337_baseline": source_baseline,
                 "source_warp_multiplier": source_multiplier,
