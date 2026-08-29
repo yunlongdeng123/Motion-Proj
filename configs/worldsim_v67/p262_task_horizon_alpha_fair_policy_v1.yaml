@@ -1,0 +1,45 @@
+schema_version: worldsim_v67.p262_task_horizon_alpha_fair_policy.v1
+output_schema_version: worldsim_v67.p262_task_horizon_alpha_fair_policy_summary.v1
+task_id: WS-V67-P262-TASK-HORIZON-ALPHA-FAIR-POLICY-01
+hypothesis_id: WS-V67-H-P262-001
+role: task_horizon_and_alpha_preference_conditioned_shadow_price_policy_development
+seed: 0
+model_artifact: TASK_HORIZON_ALPHA_FAIR_POLICY.pt
+source_rows: {run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz}
+p183_rows: {run: worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1, artifact: P183_LOG_COST_DENSITY_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2, artifact: P201_JOINT_HORIZON_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_p246: {run: worldsim_v67/WS-V67-P246-EXTENDED-BUDGET-RATE-SPLINE-01/20260831T070000Z__extended-budget-rate-spline-s0-r1, artifact: EXTENDED_BUDGET_RATE_SPLINE.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+shadow_price_domain: [0.02, 0.40]
+training_price_count: 13
+training_alpha_fairness: [0.00, 0.25, 0.50, 0.75, 1.00]
+heldout_alpha_fairness: [0.125, 0.375, 0.625, 0.875]
+training_horizon_preferences: [-1.00, -0.50, 0.00, 0.50, 1.00]
+heldout_horizon_preferences: [-0.75, -0.25, 0.25, 0.75]
+horizon_preference_logit_scale: 2.0
+teacher_budget_grid_count: 129
+teacher_chunk_size: 4096
+alpha_utility_epsilon: 0.05
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {width: 128, rate_knot_count: 16, steps: 12000, batch_size: 8192, learning_rate: 0.001, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision: {maximum_P201_normalized_log_budget_MAE: 0.075, maximum_P201_mean_frozen_task_alpha_fair_utility_regret: 0.005}
+verdict_on_pass: supported_task_horizon_alpha_fair_shadow_price_policy
+verdict_on_failure: rejected_task_horizon_alpha_fair_shadow_price_policy
+locks:
+  continuous_horizon_preference_reweights_the_four_frozen_prefix_reliabilities: true
+  five_training_and_four_interleaved_heldout_alpha_and_horizon_preferences_are_fixed: true
+  positive_price_rate_spline_enforces_nonincreasing_budget_with_price_for_every_task_preference: true
+  no_preference_scale_alpha_epsilon_price_grid_architecture_loss_metric_gate_or_step_sweep: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - post_hoc_task_preference_development_after_P201_observation_not_fresh_confirmation
+  - horizon_preference_is_a_fixed_exponential_weighting_of_four_frozen_prefix_reliabilities_not_a_learned_user_preference
+  - optimizes_frozen_P246_surrogate_not_measured_task_reward_compute_or_planning_value
+  - no_allocation_collision_planner_policy_closed_loop_or_safety_claim
