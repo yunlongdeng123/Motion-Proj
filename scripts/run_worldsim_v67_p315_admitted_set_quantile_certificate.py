@@ -300,6 +300,22 @@ class DecisionFocusedWarpMultiplier(nn.Module):
         return self.minimum_multiplier + (self.maximum_multiplier - self.minimum_multiplier) * unit
 
 
+class DirectVisitedReliabilityHead(nn.Module):
+    def __init__(self, input_width, hidden_dimensions, set_size_count):
+        super().__init__()
+        layers = []
+        width = input_width + 2
+        for hidden_width in hidden_dimensions:
+            layers.extend((nn.Linear(width, int(hidden_width)), nn.SiLU()))
+            width = int(hidden_width)
+        layers.append(nn.Linear(width, int(set_size_count)))
+        self.network = nn.Sequential(*layers)
+
+    def forward(self, features, normalized_horizon, log_cost_ceiling):
+        raw_logits = self.network(torch.cat((features, normalized_horizon[:, None], log_cost_ceiling[:, None]), 1))
+        return torch.cummax(raw_logits, dim=1).values
+
+
 class LatticeRiskSizeHorizonAuthority(nn.Module):
     """Context-conditioned partial-monotone lattice over horizon, quantile, and set size."""
 
@@ -705,6 +721,7 @@ def main() -> None:
     horizon_anchor_preserving_context_risk_warp_training = bool(config.get("horizon_anchor_preserving_context_risk_warp_training", False))
     horizon_differentiable_risk_ceiling_authority_training = bool(config.get("horizon_differentiable_risk_ceiling_authority_training", False))
     horizon_decision_focused_differentiable_authority_training = bool(config.get("horizon_decision_focused_differentiable_authority_training", False))
+    horizon_direct_reliability_authority_training = bool(config.get("horizon_direct_reliability_authority_training", False))
     torch.manual_seed(seed)
     torch.cuda.reset_peak_memory_stats()
 
@@ -738,7 +755,7 @@ def main() -> None:
         with np.load(path, allow_pickle=False) as loaded:
             arrays = {name: loaded[name] for name in loaded.files}
         _, _, costs, _ = _align(_trajectory_payload(arrays, members, ensemble, floor), horizons)
-        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
+        if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training or horizon_direct_reliability_authority_training:
             return _action_groups_by_horizon(feature, costs, path, horizons, int(config["action_group_size"]))
         return _action_groups(feature, costs, path, horizons, int(config["action_group_size"]))
 
@@ -794,8 +811,8 @@ def main() -> None:
     maneuver_model.load_state_dict(maneuver_artifact["model_state_dict"])
     maneuver_model.eval()
 
-    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
-        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training:
+    if horizon_quantile_training or horizon_quantile_confirmation or horizon_selective_authority_training or horizon_temporal_calibration_training or horizon_risk_matched_quantile_training or horizon_risk_conditioned_surface_training or horizon_implicit_quantile_surface_training or horizon_spline_quantile_surface_training or horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training or horizon_direct_reliability_authority_training:
+        if horizon_size_conditioned_authority_training or horizon_risk_size_authority_training or horizon_lattice_risk_size_authority_training or horizon_locally_adaptive_lattice_calibration_training or horizon_risk_locally_adaptive_lattice_calibration_training or horizon_anchor_preserving_continuous_risk_training or horizon_anchor_preserving_risk_curvature_training or horizon_anchor_preserving_context_risk_warp_training or horizon_differentiable_risk_ceiling_authority_training or horizon_decision_focused_differentiable_authority_training or horizon_direct_reliability_authority_training:
             source_prefix, source_prefix_target = [], []
             p201_prefix, p201_prefix_target = [], []
             for set_size in config["authority_set_sizes"]:
@@ -941,6 +958,182 @@ def main() -> None:
                     "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
                     "wall_seconds": time.monotonic() - started,
                 },
+                "claim_boundary": config["claim_boundary"],
+            }
+            (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+            (run_dir / "status.json").write_text(json.dumps({"status": "done", "completed_at_utc": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n")
+            print(json.dumps({"run_dir": str(run_dir), **summary}, indent=2))
+            return
+        if horizon_direct_reliability_authority_training:
+            frozen_lattice = torch.load(
+                args.runs_root / config["frozen_lattice_authority"]["run"] / config["frozen_lattice_authority"]["artifact"], map_location="cuda"
+            )
+            feature_mean = np.asarray(frozen_lattice["input_mean"], np.float32)
+            feature_scale = np.asarray(frozen_lattice["input_scale"], np.float32)
+            source_feature = ((source_feature - feature_mean) / feature_scale).astype(np.float32)
+            p201_feature = ((p201_feature - feature_mean) / feature_scale).astype(np.float32)
+            horizon_values = np.asarray(frozen_lattice["horizons_seconds"], np.float32)
+            normalized_horizons = horizon_values / float(horizon_values.max())
+            training_horizon_indices = np.asarray(frozen_lattice["training_horizon_indices"], np.int64)
+            heldout_horizon_index = int(frozen_lattice["heldout_horizon_index"])
+            set_sizes = np.asarray(frozen_lattice["authority_set_sizes"], np.int64)
+            ceilings = np.asarray(frozen_lattice["heldout_log_cost_ceilings"], np.float32)
+            source_x = torch.from_numpy(source_feature).cuda()
+            p201_x = torch.from_numpy(p201_feature).cuda()
+            y = torch.from_numpy(source_target).cuda()
+            unique_split_scenes, scene_rank = np.unique(source_example_scenes, return_inverse=True)
+            split = config["reliability_split"]
+            row_fold = (np.arange(len(unique_split_scenes), dtype=np.int64) % int(split["scene_modulus"]))[scene_rank]
+            fit_rows = row_fold == int(split["fit_scene_remainder"])
+            calibration_rows = row_fold == int(split["calibration_scene_remainder"])
+            development_rows = row_fold == int(split["development_scene_remainder"])
+            model_config = config["reliability_model"]
+            model = DirectVisitedReliabilityHead(
+                source_feature.shape[1], model_config["hidden_dimensions"], len(set_sizes)
+            ).cuda()
+            optimizer = torch.optim.AdamW(
+                model.parameters(), lr=float(model_config["learning_rate"]), weight_decay=float(model_config["weight_decay"])
+            )
+            fit_index = torch.from_numpy(np.flatnonzero(fit_rows)).cuda()
+            horizon_tensor = torch.from_numpy(normalized_horizons).cuda()
+            training_horizon_tensor = torch.from_numpy(training_horizon_indices).cuda()
+            ceiling_tensor = torch.from_numpy(ceilings).cuda()
+            last = 0.0
+            for step in range(int(model_config["steps"])):
+                row = fit_index[torch.randint(len(fit_index), (int(model_config["batch_size"]),), device="cuda")]
+                local_horizon_index = training_horizon_tensor[
+                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                ]
+                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
+                target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
+                loss = F.binary_cross_entropy_with_logits(logits, target)
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+                last = float(loss.detach())
+                if step % 500 == 0:
+                    print(f"{config['task_id']} reliability step={step + 1} bce={last:.7f}", flush=True)
+            model.eval()
+            log_temperature = nn.Parameter(torch.zeros((), device="cuda"))
+            calibration_bias = nn.Parameter(torch.zeros((), device="cuda"))
+            calibration_optimizer = torch.optim.Adam((log_temperature, calibration_bias), lr=float(config["calibration"]["learning_rate"]))
+            calibration_index = torch.from_numpy(np.flatnonzero(calibration_rows)).cuda()
+            calibration_last = 0.0
+            for step in range(int(config["calibration"]["steps"])):
+                row = calibration_index[torch.randint(len(calibration_index), (int(model_config["batch_size"]),), device="cuda")]
+                local_horizon_index = training_horizon_tensor[
+                    torch.randint(len(training_horizon_tensor), (len(row),), device="cuda")
+                ]
+                local_ceiling = ceiling_tensor[torch.randint(len(ceiling_tensor), (len(row),), device="cuda")]
+                with torch.no_grad():
+                    raw_logits = model(source_x[row], horizon_tensor[local_horizon_index], local_ceiling)
+                calibrated_logits = raw_logits / log_temperature.exp() + calibration_bias
+                target = (y[row, :, local_horizon_index] > local_ceiling[:, None]).float()
+                calibration_loss = F.binary_cross_entropy_with_logits(calibrated_logits, target)
+                calibration_optimizer.zero_grad(set_to_none=True)
+                calibration_loss.backward()
+                calibration_optimizer.step()
+                calibration_last = float(calibration_loss.detach())
+            evaluation_quantiles = np.asarray(config["evaluation_quantiles"], np.float32)
+
+            def reliability_frontier(features, targets, conditions, row_mask=None):
+                indices = np.arange(len(features)) if row_mask is None else np.flatnonzero(row_mask)
+                index_tensor = torch.from_numpy(indices).cuda()
+                local_x = features[index_tensor]
+                local_h = torch.full((len(local_x),), float(normalized_horizons[heldout_horizon_index]), device="cuda")
+                probabilities = []
+                with torch.no_grad():
+                    for ceiling in ceilings:
+                        local_ceiling = torch.full((len(local_x),), float(ceiling), device="cuda")
+                        logits = model(local_x, local_h, local_ceiling) / log_temperature.exp() + calibration_bias
+                        probabilities.append(torch.sigmoid(logits).cpu().numpy())
+                probabilities = np.stack(probabilities, 1)
+                probabilities = np.minimum.accumulate(probabilities, axis=1)
+                local_target = targets[indices, :, heldout_horizon_index]
+                local_conditions = conditions[indices]
+                frontier, previous_sizes = {}, None
+                ceiling_violations = 0
+                quantile_sizes = []
+                for q_value in evaluation_quantiles:
+                    by_ceiling, coverages, unsafe_rates = {}, [], []
+                    current_sizes = []
+                    for ceiling_index, ceiling in enumerate(ceilings):
+                        feasible = probabilities[:, ceiling_index] <= 1.0 - float(q_value)
+                        selected_position = feasible.sum(1) - 1
+                        admitted = selected_position >= 0
+                        selected_size = np.where(admitted, set_sizes[np.maximum(selected_position, 0)], 0)
+                        selected_target = np.zeros(len(indices), np.float32)
+                        row_index = np.arange(len(indices))
+                        selected_target[admitted] = local_target[row_index[admitted], selected_position[admitted]]
+                        unsafe_rate = float(np.mean(selected_target[admitted] > ceiling)) if admitted.any() else 0.0
+                        by_condition = {}
+                        for progress, command in np.unique(local_conditions, axis=0):
+                            condition_mask = np.isclose(local_conditions[:, 0], progress) & np.isclose(local_conditions[:, 1], command)
+                            local_admitted = condition_mask & admitted
+                            by_condition[f"progress={float(progress)},command={float(command)}"] = {
+                                "any_authority_coverage": float(local_admitted.sum() / max(int(condition_mask.sum()), 1)),
+                                "unsafe_selected_set_rate": float(np.mean(selected_target[local_admitted] > ceiling)) if local_admitted.any() else 0.0,
+                            }
+                        by_ceiling[f"{float(ceiling):.6f}"] = {
+                            "log_cost_ceiling": float(ceiling), "admitted_count": int(admitted.sum()),
+                            "any_authority_coverage": float(np.mean(admitted)), "unsafe_selected_set_rate": unsafe_rate,
+                            "mean_selected_set_size": float(np.mean(selected_size[admitted])) if admitted.any() else 0.0,
+                            "by_task_condition": by_condition,
+                        }
+                        coverages.append(float(np.mean(admitted)))
+                        unsafe_rates.append(unsafe_rate)
+                        current_sizes.append(selected_size)
+                    for left, right in zip(current_sizes[:-1], current_sizes[1:]):
+                        ceiling_violations += int(np.sum(right < left))
+                    quantile_sizes.append(np.stack(current_sizes, 1))
+                    frontier[f"{float(q_value):.2f}"] = {
+                        "mean_any_authority_coverage": float(np.mean(coverages)),
+                        "maximum_unsafe_selected_set_rate": float(np.max(unsafe_rates)),
+                        "by_ceiling": by_ceiling,
+                    }
+                quantile_violations = sum(
+                    int(np.sum(right > left)) for left, right in zip(quantile_sizes[:-1], quantile_sizes[1:])
+                )
+                return frontier, ceiling_violations, quantile_violations, probabilities
+
+            source_frontier, source_ceiling_violations, source_quantile_violations, source_probability = reliability_frontier(
+                source_x, source_target, source_conditions, development_rows
+            )
+            p201_frontier, p201_ceiling_violations, p201_quantile_violations, p201_probability = reliability_frontier(
+                p201_x, p201_target, p201_conditions
+            )
+            anchor = p201_frontier["0.90"]
+            decision = config["decision"]
+            checks = {
+                "P201_q90_hard_risk": anchor["maximum_unsafe_selected_set_rate"] <= float(decision["maximum_P201_unsafe_selected_set_rate"]),
+                "P201_q90_hard_coverage": anchor["mean_any_authority_coverage"] >= float(decision["minimum_P201_mean_any_authority_coverage"]),
+                "P201_ceiling_monotonicity": p201_ceiling_violations == 0,
+                "P201_requested_risk_monotonicity": p201_quantile_violations == 0,
+            }
+            verdict = config["verdict_on_pass"] if all(checks.values()) else config["verdict_on_failure"]
+            torch.save({
+                "model_state_dict": model.state_dict(), "input_width": source_feature.shape[1],
+                "hidden_dimensions": model_config["hidden_dimensions"], "temperature": float(log_temperature.exp().detach()),
+                "calibration_bias": float(calibration_bias.detach()), "frozen_lattice_authority": config["frozen_lattice_authority"],
+            }, run_dir / config["model_artifact"])
+            summary = {
+                "schema_version": config["output_schema_version"], "task_id": config["task_id"],
+                "hypothesis_id": config["hypothesis_id"], "status": "done", "verdict": verdict, "role": config["role"],
+                "training": {"example_count": int(fit_rows.sum()), "steps": int(model_config["steps"]), "final_bce": last},
+                "calibration": {"example_count": int(calibration_rows.sum()), "steps": int(config["calibration"]["steps"]),
+                                "final_bce": calibration_last, "temperature": float(log_temperature.exp().detach()),
+                                "bias": float(calibration_bias.detach())},
+                "source_direct_reliability_frontier": source_frontier,
+                "P201_direct_reliability_frontier": p201_frontier,
+                "source_probability_range": [float(source_probability.min()), float(source_probability.max())],
+                "P201_probability_range": [float(p201_probability.min()), float(p201_probability.max())],
+                "monotonicity": {"source_ceiling": source_ceiling_violations, "source_requested_risk": source_quantile_violations,
+                                 "P201_ceiling": p201_ceiling_violations, "P201_requested_risk": p201_quantile_violations},
+                "decision_checks": checks,
+                "resources": {"gpu": torch.cuda.get_device_name(0), "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 2 ** 30,
+                              "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2 ** 20,
+                              "wall_seconds": time.monotonic() - started},
                 "claim_boundary": config["claim_boundary"],
             }
             (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
