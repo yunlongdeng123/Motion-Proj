@@ -1084,6 +1084,16 @@
 - interpretation：joint residual dependency是首个在旧四和P147五H共9个切片rank全正的新机制，但q75 sampled-cost在旧fixed50
   边界不稳；不扫quantile/sample/coverage，也不以P147 post-read结果恢复candidate。
 
+### WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01
+
+- 状态：`implementation frozen / GPU launch pending`；canonical id=`20260830T125000Z__monotone-expected-cost-calibration-s0-r1`。
+- object：冻结P126 trajectory score与排序，将其映射为`E[continuous boundary-state cost | score,H]`；不继续修P165 q75 selection。
+- model：对normalized score单调的5-knot positive-increment spline，horizon条件化base/slope/increments；8,000 steps、batch32,768。
+- control：只读horizon的线性expected-cost calibration；两者同训`log1p(P120 cost)`，raw-cost报告MSE/MAE/10-bin expected-cost error。
+- decisions：旧P81/P96/P113/P129 calibrated MSE逐组不高于horizon-only，mean MSE reduction≥20%；P147仅描述。
+- locks：不扫knots/width/loss/bin/threshold/metric，不改变P126 rank/selection，不加hash/checksum/fingerprint。
+- claim：只允许point expected-cost calibration；无credible interval、conformal coverage、collision probability或safety claim。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

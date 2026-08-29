@@ -1,0 +1,50 @@
+schema_version: worldsim_v67.p166_monotone_expected_cost_calibration.v1
+output_schema_version: worldsim_v67.p166_monotone_expected_cost_calibration_summary.v1
+task_id: WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01
+hypothesis_id: WS-V67-H-P166-001
+role: consumed_development_horizon_conditioned_expected_boundary_cost_calibration
+seed: 0
+model_artifact: MONOTONE_EXPECTED_COST_CALIBRATION.pt
+frozen_p126:
+  run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1
+  artifact: ACTOR_DEEP_ENSEMBLE.pt
+source_rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+decision_cohorts:
+  - {name: consumed_p81, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p113, run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1, artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz}
+  - {name: consumed_p129, run: worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1, artifact: P129_ENSEMBLE_INDEPENDENT_ROWS.npz}
+post_confirmation_diagnostic:
+  run: worldsim_v67/WS-V67-P147-MULTI-HORIZON-INDEPENDENT-CONFIRMATION-01/20260830T104000Z__multi-horizon-independent-confirmation-s0-r1
+  artifact: P147_MULTI_HORIZON_INDEPENDENT_ROWS.npz
+  horizons_seconds: [0.8, 1.5, 2.5, 3.0, 3.5]
+model:
+  score_knots: [-2.0, -1.0, 0.0, 1.0, 2.0]
+  training_steps: 8000
+  batch_size: 32768
+  learning_rate: 0.003
+  weight_decay: 0.0001
+boundary_state_cost: {clearance_floor_m: 0.05}
+evaluation: {calibration_bins: 10}
+decision: {minimum_mean_mse_reduction: 0.20}
+verdict_on_pass: supported_development_monotone_expected_cost_calibration
+verdict_on_failure: rejected_development_monotone_expected_cost_calibration
+locks:
+  P126_score_and_ranking_are_frozen: true
+  calibration_is_monotone_in_normalized_P126_score_for_every_horizon: true
+  horizon_only_linear_calibration_is_the_control: true
+  target_is_log1p_same_continuous_boundary_state_cost: true
+  P147_is_post_confirmation_consumed_diagnostic_and_not_a_decision_cohort: true
+  no_knots_width_loss_bins_threshold_or_metric_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v80/kuleshov18a.html
+  - https://proceedings.mlr.press/v97/song19a.html
+  - https://proceedings.mlr.press/v202/dheur23a.html
+claim_boundary:
+  - consumed_development_expected_cost_calibration_only
+  - monotone_point_expectation_not_credible_interval_or_conformal_coverage
+  - P147_rows_are_post_confirmation_descriptive_not_new_independent_evidence
+  - no_collision_probability_planner_policy_closed_loop_or_safety_claim

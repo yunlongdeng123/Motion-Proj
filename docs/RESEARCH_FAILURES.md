@@ -2114,6 +2114,13 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 - 防重复：不扫q50/q90/sample count/DDIM steps/coverage或用P147选择quantile；保留“9/9 rank slices positive”为机制结果，
   关闭当前q75 joint-diffusion selection candidate。后续不得以放宽cost gate进入独立确认。
 
+### P166 freeze note — monotone expected-cost calibration of frozen P126 rank
+
+- object：`E[P120 continuous cost | frozen P126 score,H]`，不是P165 quantile recovery或selection head。
+- model/control：5 fixed knots的positive-increment monotone spline vs horizon-only linear calibration；source only training。
+- decisions：旧四cohort MSE逐组不退+mean reduction≥20%；P147 post-confirmation only。
+- prevention：不扫knots/bin/loss/architecture/metric，不改变P126 rank/coverage；失败才使用F131并关闭point-calibration trial。
+
 下一可用编号为：`V67-F131`。
 
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认

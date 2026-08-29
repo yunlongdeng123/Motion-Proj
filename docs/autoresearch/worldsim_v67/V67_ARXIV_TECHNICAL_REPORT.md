@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P147 independent multi-horizon support; P165 joint-rank positive / selection rejected`
+- 报告状态：`P147 independent multi-horizon support; P166 expected-cost calibration active`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -331,6 +331,10 @@ continuous boundary cost q75，因而区别于P149的单Actor coherent modes与a
 `+.00811`，P147五H也全正且cost五组全降。可是旧P81/P96/P129 fixed50 cost分别回退`.00594/.00112/.00900`，
 因此冻结composite仍拒绝（F130）。论文可以报告“joint residual samples提供跨9个切片一致的rank signal”，但不能写成q75
 selection candidate成立，也不能用已读P147选择另一个quantile。
+
+P166转向不改变排序的校准问题：固定P126 score，以horizon-conditioned monotone neural spline预测同定义continuous cost的
+条件期望，并与horizon-only baseline比较。这响应回归不确定性文献中“rank/accuracy不等于calibration”的区分；当前只检验
+point expected cost，不产生credible interval、coverage或conformal guarantee。若consumed development成立，才会冻结模型到全新场景。
 
 ## 3. 核心结果表
 

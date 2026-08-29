@@ -76,6 +76,7 @@
 | P163 | `run://worldsim_v67/WS-V67-P163-DIRECT-FOOTPRINT-SUPPORT-ENSEMBLE-01/20260830T121500Z__direct-footprint-support-ensemble-s0-r1` | mean rank `-.001156`、P96 cost回退；rejected/F127 |
 | P164 | `run://worldsim_v67/WS-V67-P164-INTERACTION-CONTEXT-ACTOR-ENSEMBLE-01/20260830T123000Z__interaction-context-actor-ensemble-s0-r1` | mean rank `-.04474`、cost 4/4退；rejected/F129 |
 | P165 | `run://worldsim_v67/WS-V67-P165-JOINT-MULTI-ACTOR-DIFFUSION-01/20260830T124000Z__joint-multi-actor-diffusion-s0-r1` | old mean rank `+.00811`、P147 5/5 rank+cost；old fixed50 cost reject/F130 |
+| P166 | `run://worldsim_v67/WS-V67-P166-MONOTONE-EXPECTED-COST-CALIBRATION-01/20260830T125000Z__monotone-expected-cost-calibration-s0-r1` | frozen-P126 expected-cost calibration；launch pending |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。

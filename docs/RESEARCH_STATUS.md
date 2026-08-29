@@ -624,6 +624,12 @@ P165 canonical r1已在单3090完成，final noise MSE=`.31946`。旧P81/P96/P11
 `+.02739/+.03219/+.01245/+.00514/+.01188`且cost五组全降，这是强post-confirmation描述而非新独立支持。准确结论是
 joint residual diffusion改善了全局continuous rank，但冻结q75/fixed50 operating point未跨旧cohort成立；不扫quantile/sample。
 
+P166不再优化selection，而把P126/P147已支持的相对rank编译为expected continuous boundary-state cost。参考ICML 2018
+calibrated regression、ICML 2019 distribution calibration与ICML 2023大规模回归校准研究，冻结P126 score/rank；训练一个对score
+严格单调、由horizon条件化的5-knot neural spline，target=`log1p(P120 cost)`，并与只看horizon的同容量线性baseline比较。
+旧四cohort只检查MSE逐组不退和mean reduction≥20%；P147五H仅post-confirmation描述。该对象不改变fixed50 selection，也不声称
+credible interval/conformal guarantee。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于
