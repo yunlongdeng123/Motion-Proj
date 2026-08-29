@@ -323,6 +323,13 @@ P128同读secondary也两门通过：ensemble Spearman=`.80868`，相对P109 gai
 已冻结且之后未改。论文将其写为`prospective-content same-read secondary with commit-timing caveat`，不写成严格
 commit-before-read prereg或第二independent cohort。当前下一研究是为ensemble continuous increment冻结全新scene-level cohort。
 
+P129已仅用official val metadata、docs mention集合和processed目录冻结，任何新sensor/target均未读。Cohort=
+`0017/0345/0962/0095/0522/0625/0798/0921/0927/1063`（indices=`16/262/729/77/412/481/618/706/712/803`），
+location=`3 onenorth/3 Boston/3 Queenstown/1 Holland`、内部10 distinct log sessions；历史相邻session已被使用，故只称
+scene-level independent。P126/P109 checkpoints、law-of-total-variance score、continuous cost、`.05m`、H3.5、fixed50与两门
+全部冻结：ensemble Spearman gain over P109≥`.005`；selected cost≤P109。只允许target前exact locator修正；失败不换scene/
+member/weight/score/cost/coverage/gate。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

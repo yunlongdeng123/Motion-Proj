@@ -192,6 +192,9 @@ P128在同一P121 rows上得到ensemble Spearman `.80868`，相对P109 `+.04721`
 `572f7d5`晚于materialization；内容在读取outcome前未改。论文称其prospective-content same-read secondary，而非严格
 commit-before-read prereg或第二独立cohort。
 
+为确认ensemble increment本身，P129已从official val metadata冻结另一组target-unread 10 scenes，四location分布3/3/3/1且
+cohort内10 distinct logs。P126/P109、continuous cost与两项increment decisions完全不变；P129只作scene-level独立确认。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -223,6 +226,7 @@ commit-before-read prereg或第二独立cohort。
 | P127 | consumed ensemble continuous | selected cost全降 | Spearman gain=`+.0470/+.1351/+.0755` | support；freeze P128 |
 | P121 | independent continuous primary | selected cost=`.27796`，reduction=`.7736` | Spearman=`.76147`，gain over clearance=`+.28823` | 2/2 support |
 | P128 | P121 same-read ensemble secondary | selected cost=`.27051<.27796` | Spearman gain over P109=`+.04721` | support with timing caveat |
+| P129 | independent ensemble increment | pending | pending | frozen target-unread cohort |
 
 ## 4. 失败如何推动研究对象变化
 

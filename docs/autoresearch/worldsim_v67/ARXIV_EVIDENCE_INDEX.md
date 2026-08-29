@@ -39,6 +39,7 @@
 | P126 | `run://worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1` | AUROC三组同增，P113 events 6→4；P96 0→1故binary reject |
 | P127 | `run://worldsim_v67/WS-V67-P127-ENSEMBLE-CONTINUOUS-SELECTION-01/20260830T083500Z__ensemble-continuous-selection-s0-r1` | selected cost全降；Spearman gain=`+.0470/+.1351/+.0755`；support |
 | P128 | `run://worldsim_v67/WS-V67-P128-ENSEMBLE-CONTINUOUS-CONFIRMATION-01/20260830T084000Z__ensemble-continuous-confirmation-s0-r1` | ensemble gain=`+.04721`、cost `.27051<.27796`；same-read support with timing caveat |
+| P129 | `run://worldsim_v67/WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01/20260830T085000Z__ensemble-independent-confirmation-s0-r1` | target-unread scene-level independent；pending |
 | P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | Spearman `.76147`、cost reduction `77.36%`；2/2 independent support |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
@@ -70,6 +71,7 @@
 | epistemic+aleatoric deep ensemble | P126 consumed ×3 | AUROC全增；P96 fixed50多1 event | reject binary composite；transfer continuous object once |
 | ensemble continuous selection | P127 consumed ×3 | cost全降、mean Spearman gain=`+.08586` | freeze P128 same-read secondary |
 | ensemble continuous confirmation | P128 P121 same read | gain=`+.04721`、selected cost更低 | same-read secondary support；commit timing caveat |
+| ensemble increment independent transfer | P129 new scene cohort | pending | frozen one-shot scene-level confirmation |
 | continuous object independent transfer | P121 new scene cohort | Spearman `.76147`、cost reduction `77.36%` | scene-level independent support |
 
 ## 3. Failure map
@@ -114,6 +116,7 @@
 | P127 ensemble continuous selection | P127 canonical run |
 | P121 independent continuous rows/summary | P121 prep与primary canonical runs |
 | P128 ensemble same-read summary | P128 canonical run；timing caveat见ledger/report |
+| P129 frozen cohort/config | `configs/worldsim_v67/p129_ensemble_independent_confirmation_v1.yaml` |
 | P108 independent rows/summary | P108 prep与primary canonical runs |
 | P111 clearance comparator | P111 canonical run |
 | P113 independent rows/summary | P113 prep与primary canonical runs |

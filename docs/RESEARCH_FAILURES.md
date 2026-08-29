@@ -1475,6 +1475,17 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
   `572f7d5`因此晚于materialization。内容在读取outcome前冻结且未改，但论文只称prospective-content same-read secondary；
 - resolution：无scientific failure，不把P128冒充commit-before-read prereg或独立cohort；下一可用failure仍为F92。
 
+### P129 freeze note — ensemble continuous increment独立确认
+
+- metadata-only cohort：`0017/0345/0962/0095/0522/0625/0798/0921/0927/1063`；target-unread、四location 3/3/3/1、
+  内部10 distinct log sessions；只称scene-level independent；
+- candidate/decisions：冻结P126 total variance、P109、continuous cost/floor/H3.5/fixed50；Spearman gain≥`.005`且selected
+  cost≤P109；
+- prevention：只允许target前exact locator correction；scientific failure登记F92并关闭ensemble independent increment，不换
+  scene/member/weight/score/cost/coverage/gate或第二cohort。
+
+下一可用编号仍为：`V67-F92`。
+
 ### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
 
 - candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；

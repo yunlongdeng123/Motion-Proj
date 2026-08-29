@@ -491,6 +491,17 @@
   `572f7d5`晚于materialization。P128内容在查看P121 outcome前已冻结且未改，但只称prospective-content，不称严格
   commit-before-read prereg。
 
+### WS-V67-P129-ENSEMBLE-INDEPENDENT-CONFIRMATION-01
+
+- 状态：`frozen/target unread`；prep planned=`20260830T084500Z__ensemble-independent-prep-s0-r1`，primary planned=
+  `20260830T085000Z__ensemble-independent-confirmation-s0-r1`。
+- cohort：official val target-unread scenes=`0017/0345/0962/0095/0522/0625/0798/0921/0927/1063`，indices=
+  `16/262/729/77/412/481/618/706/712/803`；location 3/3/3/1、cohort内10 distinct log sessions。历史session overlap
+  使证据只scene-level independent。
+- candidate：冻结P126 three-member total-variance ensemble vs P109，continuous boundary-state cost、`.05m` floor、H3.5、
+  per-scene fixed50。decisions仅Spearman gain≥`.005`与selected cost noninferiority。
+- target前只允许exact archive locator修正；不换scene/model/member/weight/score/cost/floor/coverage/metric/gate，不做第二cohort。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。
