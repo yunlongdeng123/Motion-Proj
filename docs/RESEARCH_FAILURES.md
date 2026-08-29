@@ -1367,6 +1367,18 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F87`。
 
+### P121 freeze note — continuous τ-conditioned boundary-state cost独立确认
+
+- candidate：冻结P109 score，不使用已失败P120 learned head；continuous target、`.05m` floor、H3.5、fixed50全冻结；
+- cohort：target-unread `0093/0332/0519/0014/0036/0221/0794/0916/0924/1062`，四location、内部10 distinct sessions；
+  历史session overlap使证据只scene-level independent；
+- decisions：ranking composite=`Spearman>=.70`且比clearance高≥`.10`；selection composite=`cost reduction>=.70`且cost不高于
+  clearance。只保留两门，不加binary flip/AUROC/gate matrix；
+- prevention：不换scene/model/cost/floor/coverage/metric/gate；只允许target前exact archive locator修正。失败登记`V67-F87`并
+  关闭continuous object independent claim，不做第二P121 recovery。
+
+下一可用编号仍为：`V67-F87`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

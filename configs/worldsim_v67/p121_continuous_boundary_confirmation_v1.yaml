@@ -1,0 +1,70 @@
+schema_version: worldsim_v67.p121_continuous_boundary_confirmation.v1
+output_schema_version: worldsim_v67.p121_continuous_boundary_confirmation_summary.v1
+task_id: WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P121-001
+role: independent_scene_level_continuous_tau_conditioned_boundary_state_reliability
+verdict_on_pass: supported_independent_continuous_boundary_state_reliability
+verdict_on_failure: rejected_independent_continuous_boundary_state_reliability
+evaluation_data:
+  scene_names: [scene-0093, scene-0332, scene-0519, scene-0014, scene-0036, scene-0221, scene-0794, scene-0916, scene-0924, scene-1062]
+  scene_shards:
+    scene-0093: "01"
+    scene-0332: "04"
+    scene-0519: "05"
+    scene-0014: "01"
+    scene-0036: "01"
+    scene-0221: "03"
+    scene-0794: "08"
+    scene-0916: "09"
+    scene-0924: "09"
+    scene-1062: "10"
+  metadata_root: /root/autodl-tmp/data/worldsim_v4/nuscenes_meta
+  raw_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  sensor_archive_root: /root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval
+  member_shard_index: /root/autodl-tmp/data/worldsim_v67/p121_continuous_confirmation_lidar_member_shards.json
+  preprocess_workers: 4
+  processed_target_dir: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed
+  processed_root: /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  readiness_timeout_seconds: 7200
+  horizons_seconds: [3.5]
+  history_frame_offsets: [10, 5]
+  anchor_stride_frames: 5
+  path_point_count: 9
+  ego_progress_ratios: [0.5, 1.0]
+  ego_lateral_offsets_m: [-1.5, 0.0, 1.5]
+  maximum_predicted_query_distance_m: 20.0
+  exposure_distance_scale_m: 6.0
+  maximum_actor_state_error_m: 20.0
+  ego_half_width_m: 1.0
+preparation:
+  task_id: WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-PREP-01
+  run_id: 20260830T080000Z__continuous-boundary-prep-s0-r1
+confirmation:
+  run_id: 20260830T080500Z__continuous-boundary-confirmation-s0-r1
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+boundary_state_cost:
+  clearance_floor_m: 0.05
+  definition: trajectory_max_absolute_observed_actor_residual_projected_on_query_boundary_normal_divided_by_absolute_predicted_clearance
+evaluation:
+  top_k_crossing_probabilities: 16
+selection: {coverage_fraction: 0.50}
+decision:
+  minimum_p109_spearman: 0.70
+  minimum_spearman_gain_over_clearance: 0.10
+  minimum_selected_cost_reduction: 0.70
+locks:
+  ten_target_unread_scenes_selected_before_sensor_or_target_read: true
+  cohort_has_four_locations_and_ten_distinct_internal_sessions: true
+  historical_session_overlap_means_only_scene_level_independent: true
+  P109_checkpoint_continuous_cost_floor_H3p5_fixed50_and_decisions_frozen: true
+  no_scene_shard_model_cost_floor_coverage_metric_or_decision_recovery_after_read: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/shah22a.html
+  - https://proceedings.neurips.cc/paper_files/paper/2023/file/8ddcba644f602835a52b962d9a119eea-Paper-Conference.pdf
+claim_boundary:
+  - independent_at_scene_level_but_not_session_level
+  - continuous_tau_conditioned_boundary_state_cost_ranking_and_fixed_coverage_selection
+  - no_binary_collision_calibrated_probability_planner_policy_closed_loop_or_safety_claim

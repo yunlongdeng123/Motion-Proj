@@ -381,6 +381,18 @@
   independent confirmation，但不能用consumed rows写independent claim。
 - resources：wall=`27.30s`、peak GPU=`.08336GiB`、RSS=`1.080GiB`；单3090足够。
 
+### WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01
+
+- 状态：`frozen/target unread`；prep=`20260830T080000Z__continuous-boundary-prep-s0-r1`，confirmation=
+  `20260830T080500Z__continuous-boundary-confirmation-s0-r1`。
+- cohort：official val中未处理/未提及scene，四location、cohort内10 distinct sessions：
+  `0093/0332/0519/0014/0036/0221/0794/0916/0924/1062`，indices=`75/260/409/13/35/171/614/702/709/802`。
+  历史processed sessions几乎覆盖val，故只称scene-level independent，不称session-level；location分布3/3/3/1。
+- frozen candidate：P109 diagonal directional checkpoint；continuous target为observed Actor residual沿τ boundary normal的absolute
+  projection除以`max(abs(predicted clearance),.05m)`后作trajectory max；H3.5/per-scene fixed50。
+- decisions仅两项：`P109 Spearman>=.70 AND gain over clearance>=.10`；`selected cost reduction>=.70 AND selected cost<=clearance`。
+  不训练P120 head，不读binary flip作为gate；不换scene/shard（exact pre-target locator修正除外）/model/cost/floor/coverage/metric/gate。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

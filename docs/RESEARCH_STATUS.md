@@ -262,6 +262,14 @@ trajectories上hidden `64/32` Huber训练6,000 steps，final loss=`.102544`。�
 `.5625/.3795/.6307`。因此否定的是P120新增regressor，不是否定连续prediction object。下一步P121将P109 checkpoint、
 continuous cost definition、H3.5和fixed50全部冻结，在全新target-unread scene cohort一次独立确认；当前三cohort只作development。
 
+P121已在任何新sensor/target read前冻结。官方val中排除所有已处理/已提及scene后，只剩一个完全历史session-unseen的
+Holland Village session，无法同时满足四location与全局session-unseen；因此保持与P108/P113一致的scene-level独立，明确
+不声称session-level。按official order与location取10个内部distinct sessions：`0093/0332/0519/0014/0036/0221/0794/
+0916/0924/1062`（indices=`75/260/409/13/35/171/614/702/709/802`；location分布3/3/3/1）。P109 checkpoint、
+continuous cost definition、`.05m` floor、H3.5、fixed50及两项composite decision全部冻结：Spearman≥`.70`且超过clearance
+≥`.10`；selected cost reduction≥`.70`且selected cost不高于clearance。Shard locator只可在target materialization前修正，
+不得换scene/model/cost/floor/coverage/metric或gate。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

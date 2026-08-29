@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P113 complete; arXiv evidence current through P120`
+- 报告状态：`P113 complete; P121 independent continuous-object confirmation frozen`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -158,6 +158,9 @@ P120把target改为observed Actor residual沿τ boundary normal的absolute proje
 新增continuous regressor未超过P109并登记F86；但冻结P109对该cost在P81/P96/P113的Spearman达到
 `.8065/.7183/.7921`，fixed50 cost reduction=`89.75%/77.05%/83.37%`，而clearance Spearman仅
 `.5625/.3795/.6307`。因此论文当前可把它写成consumed-development mechanism，独立claim必须等P121。
+
+P121在新target read前冻结10-scene scene-level independent cohort与两项composite decision，确认P109 continuous-cost ranking
+及fixed50 selection，而不重新打开binary flip gate。Outcome：`PENDING_P121_FINAL_FILL`。
 
 ## 3. 核心结果表
 

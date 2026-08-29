@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P113 complete; evidence current through P120`
+- 状态：`P113 complete; P121 continuous-object confirmation frozen`
 - 当前主结论：P108 scene-level independent factorization支持；P113 AUROC增量成立但fixed50 uncertainty-over-clearance整体拒绝
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -32,6 +32,7 @@
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | directional/clearance events=`6/5`；AUROC gain=`+.04486`；composite reject |
 | P119 | `run://worldsim_v67/WS-V67-P119-RANKED-RANGE-TAIL-01/20260830T074500Z__ranked-range-tail-s0-r1` | P81/P96/P113 events=`0/0/6`；reject |
 | P120 | `run://worldsim_v67/WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01/20260830T075000Z__continuous-boundary-state-cost-s0-r1` | P109 continuous-cost Spearman=`.8065/.7183/.7921`；new head reject |
+| P121 | `run://worldsim_v67/WS-V67-P121-CONTINUOUS-BOUNDARY-CONFIRMATION-01/20260830T080500Z__continuous-boundary-confirmation-s0-r1` | `PENDING_P121_FINAL_FILL` |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
@@ -55,6 +56,7 @@
 | learned uncertainty超过clearance | P113 independent | AUROC `.92016>.87529`但events `6>5` | reject fixed50 composite claim |
 | ranked-range tail recovery | P119 consumed ×3 | P113仍6 events、AUROC全退化 | reject binary tail recovery |
 | continuous τ-conditioned boundary-state cost | P120 consumed ×3 | P109 strong across all；new regressor worse | freeze P109 object for P121 |
+| continuous object independent transfer | P121 target-unread | `PENDING_P121_FINAL_FILL` | `PENDING_P121_FINAL_FILL` |
 
 ## 3. Failure map
 
