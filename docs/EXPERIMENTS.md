@@ -544,6 +544,16 @@
   direct action choice、realized utility、arbitrary planner/closed-loop或safety claim。下一步冻结模型做跨cohort确认，
   不扫action count/lattice/steps/gates。
 
+### WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01
+
+- frozen candidate：P307 shared-context `0/.5/1` action-set compiler，0-step、无refit；严格继承六动作分组与heldout
+  risk conditions。
+- cohort：P243九场景/1,710 trajectories；已被surface/allocator链消费，但task-conditioned action-compiler family
+  untouched，因此只写family-untouched reuse confirmation，不写globally fresh。
+- gates：attained MAE `<=.05`、regret `<=.005`、violations=`0`；one read，不换cohort或扫action lattice/gates。
+- active=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
+  20260901T033000Z__task-conditioned-action-authority-confirmation-s0-r1`。
+
 ## WorldSim V6.7 Ray-Terminated Actor Surface
 
 ### WS-V67-P95-TRAJECTORY-OCCUPANCY-FLIP-01

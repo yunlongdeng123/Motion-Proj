@@ -1,0 +1,56 @@
+schema_version: worldsim_v67.p308_task_conditioned_action_authority_confirmation.v1
+output_schema_version: worldsim_v67.p308_task_conditioned_action_authority_confirmation_summary.v1
+task_id: WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01
+hypothesis_id: WS-V67-H-P308-001
+role: task_conditioned_action_set_compiler_untouched_cohort_confirmation
+architecture: frozen_P307_shared_context_three_anchor_lattice_on_six_ego_query_actions
+grouping: task_conditioned_action_query_set
+confirmation_only: true
+seed: 0
+model_artifact: CONFIRMED_TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt
+source_rows: {run: worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2, artifact: P243_CONTINUOUS_BUDGET_ROWS.npz}
+p201_rows: {run: worldsim_v67/WS-V67-P243-CONTINUOUS-BUDGET-FRESH-CONFIRMATION-01/20260831T114500Z__continuous-budget-fresh-confirmation-s0-r2, artifact: P243_CONTINUOUS_BUDGET_ROWS.npz}
+frozen_p126: {run: worldsim_v67/WS-V67-P126-ACTOR-DEEP-ENSEMBLE-01/20260830T083000Z__actor-deep-ensemble-s0-r1, artifact: ACTOR_DEEP_ENSEMBLE.pt}
+frozen_p182: {run: worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1, artifact: LOG_COST_MIXTURE_DENSITY.pt}
+frozen_p199: {run: worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2, artifact: JOINT_HORIZON_RELIABILITY_COPULA.pt}
+frozen_p203: {run: worldsim_v67/WS-V67-P203-MONOTONE-BETA-JOINT-CALIBRATION-01/20260830T190000Z__monotone-beta-joint-calibration-s0-r1, artifact: MONOTONE_BETA_JOINT_CALIBRATION.pt}
+frozen_surface: {run: worldsim_v67/WS-V67-P291R-ONE-SIDED-ADAPTIVE-LCB-SURFACE-01/20260831T220000Z__one-sided-adaptive-lcb-s0-r1, artifact: ONE_SIDED_CONTEXT_ADAPTIVE_ADDITIVE_LCB_SURFACE.pt}
+frozen_policy: {run: worldsim_v67/WS-V67-P295-VARIABLE-SET-ADAPTIVE-LCB-TAIL-CVAR-ALLOCATOR-01/20260831T230000Z__variable-set-adaptive-lcb-tail-cvar-s0-r1, artifact: VARIABLE_SET_ADAPTIVE_LCB_TAIL_CVAR_ALLOCATOR.pt}
+frozen_direct: {run: worldsim_v67/WS-V67-P307-TASK-CONDITIONED-ACTION-SET-AUTHORITY-COMPILER-01/20260901T030000Z__task-conditioned-action-set-authority-s0-r1, artifact: TASK_CONDITIONED_ACTION_SET_AUTHORITY_COMPILER.pt}
+horizons_seconds: [0.8, 1.5, 2.5, 3.0]
+feature_anchor_budgets: [0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20]
+training_group_sizes: [6]
+heldout_group_sizes: [6]
+training_alpha_fairness: [0.00, 0.50, 1.00]
+heldout_alpha_fairness: [0.25, 0.75]
+training_risk_tolerances: [0.05, 0.10, 0.20, 0.30, 0.40]
+heldout_risk_tolerances: [0.075, 0.15, 0.25, 0.35]
+training_final_reliability_floors: [0.30, 0.50, 0.70]
+heldout_final_reliability_floors: [0.40, 0.60]
+training_tail_masses: [0.125, 0.25, 0.50]
+heldout_tail_masses: [0.1875, 0.375]
+training_attainable_budget_fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+heldout_attainable_budget_fractions: [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85]
+teacher_bisection_steps: 20
+inference_chunk_size: 1024
+boundary_state_cost: {clearance_floor_m: 0.05}
+split: {development_scene_modulus: 5, development_scene_remainder: 1}
+student: {shared_context_anchor_fractions: [0.0, 0.5, 1.0], steps: 0, batch_size: 192, learning_rate: 0.0003, weight_decay: 0.0001}
+teacher: {monte_carlo_samples: 1024, ignored_future_marginal_probability: 0.9999}
+decision:
+  maximum_P201_attained_budget_fraction_MAE: 0.05
+  maximum_P201_mean_frozen_composite_Lagrangian_regret: 0.005
+  maximum_P201_fraction_budget_monotonicity_violations: 0
+verdict_on_pass: supported_untouched_cohort_task_conditioned_action_set_authority_confirmation
+verdict_on_failure: rejected_untouched_cohort_task_conditioned_action_set_authority_confirmation
+locks:
+  P307_model_and_P243_rows_are_frozen_before_confirmation_quality_read: true
+  exact_scene_anchor_six_action_grouping_is_inherited_without_refit: true
+  no_training_calibration_action_lattice_or_gate_sweep: true
+  P243_is_consumed_by_other_surface_allocator_families_but_untouched_by_task_conditioned_action_compiler: true
+  one_confirmation_read_no_second_cohort_or_model_selection: true
+  add_hash_checksum_fingerprint: false
+claim_boundary:
+  - task_conditioned_action_compiler_family_untouched_cohort_confirmation_not_globally_fresh_scene_confirmation
+  - empirical_future_visited_state_reliability_budget_fidelity_not_direct_action_choice_or_realized_online_utility
+  - six_fixed_ego_queries_not_arbitrary_planner_closed_loop_hard_constraint_or_safety_claim

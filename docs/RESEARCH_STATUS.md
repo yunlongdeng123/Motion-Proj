@@ -308,6 +308,12 @@ budget/attained MAE=`.00647745/.02973484`、frozen composite regret=`2.78998e-5`
 经验reliability分配编译为固定六候选action set的逐动作预算，但仍不是直接action choice、realized benefit、任意
 planner lattice或hard safety constraint。下一步只做一次跨cohort frozen confirmation，不在P201上调action数/anchor/门。
 
+P308 已在读取确认指标前冻结：直接复用 P307 weights与精确六动作 grouping，在P243九场景/1,710 trajectories上
+0-step确认。P243虽已被surface/allocator链消费，但从未用于task-conditioned action-compiler训练或指标选择；三门原样
+继承为attained MAE `<=.05`、regret `<=.005`、violations=0。只读一次，不refit、不换cohort、不扫action lattice。
+Active=`run://worldsim_v67/WS-V67-P308-TASK-CONDITIONED-ACTION-AUTHORITY-CONFIRMATION-01/
+20260901T033000Z__task-conditioned-action-authority-confirmation-s0-r1`。
+
 ## WorldSim V6.7 P81--P106 trajectory reliability chain（2026-08-30）
 
 P81独立10-scene H3.5 primary read通过全部3门：9,559 Actor-query rows含735 unreliable events；按scene固定50%
