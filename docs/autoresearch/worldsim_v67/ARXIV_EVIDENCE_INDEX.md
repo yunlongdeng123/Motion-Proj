@@ -2,7 +2,7 @@
 
 - 工作标题：**From End-to-End Reliability Shortcuts to Actor-Uncertainty Boundary Queries**
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 状态：`P113 complete; evidence current through P119`
+- 状态：`P113 complete; evidence current through P120`
 - 当前主结论：P108 scene-level independent factorization支持；P113 AUROC增量成立但fixed50 uncertainty-over-clearance整体拒绝
 
 本文件是V6.7技术报告的证据导航。逐实验数值以`docs/EXPERIMENTS.md`为准，失败与防重复规则以
@@ -31,6 +31,7 @@
 | P118 | `run://worldsim_v67/WS-V67-P118-CORRELATION-ABLATION-01/20260830T073000Z__correlation-ablation-s0-r1` | conditional-vs-zero rho gain=`+.00030/-.00012`；reject mechanism |
 | P113 | `run://worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1` | directional/clearance events=`6/5`；AUROC gain=`+.04486`；composite reject |
 | P119 | `run://worldsim_v67/WS-V67-P119-RANKED-RANGE-TAIL-01/20260830T074500Z__ranked-range-tail-s0-r1` | P81/P96/P113 events=`0/0/6`；reject |
+| P120 | `run://worldsim_v67/WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01/20260830T075000Z__continuous-boundary-state-cost-s0-r1` | P109 continuous-cost Spearman=`.8065/.7183/.7921`；new head reject |
 
 上述locator已按run tree精确对齐；任何metric disagreement仍回到对应canonical summary，不重算quality。
 
@@ -53,6 +54,7 @@
 | conditional rho direct contribution | P118 same-checkpoint ablation | mean gain=`+.000094`且P96反向 | reject direct-rho attribution |
 | learned uncertainty超过clearance | P113 independent | AUROC `.92016>.87529`但events `6>5` | reject fixed50 composite claim |
 | ranked-range tail recovery | P119 consumed ×3 | P113仍6 events、AUROC全退化 | reject binary tail recovery |
+| continuous τ-conditioned boundary-state cost | P120 consumed ×3 | P109 strong across all；new regressor worse | freeze P109 object for P121 |
 
 ## 3. Failure map
 
@@ -72,6 +74,7 @@
 | `V67-F83` | closed negative | P118 conditional-rho direct mechanism not supported |
 | `V67-F84` | closed negative | P113 AUROC gain did not yield fixed50 event noninferiority |
 | `V67-F85` | closed negative | P119 ranked-range objective did not change P113 tail ordering |
+| `V67-F86` | closed negative | P120 continuous regressor did not exceed frozen P109 |
 
 ## 4. Artifact inventory
 

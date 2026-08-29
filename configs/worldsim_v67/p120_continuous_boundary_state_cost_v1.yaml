@@ -1,0 +1,50 @@
+schema_version: worldsim_v67.p120_continuous_boundary_state_cost.v1
+output_schema_version: worldsim_v67.p120_continuous_boundary_state_cost_summary.v1
+task_id: WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01
+hypothesis_id: WS-V67-H-P120-001
+seed: 0
+role: consumed_development_continuous_tau_conditioned_boundary_state_reliability
+model_artifact: CONTINUOUS_BOUNDARY_STATE_COST.pt
+frozen_p109:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-01/20260830T062500Z__directional-actor-uncertainty-s0-r1
+  artifact: DIRECTIONAL_ACTOR_UNCERTAINTY.pt
+rows:
+  run: worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1
+  source_artifact: SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+development_cohorts:
+  - {name: consumed_p81, artifact: DEVELOPMENT_P81_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - {name: consumed_p96, artifact: DEVELOPMENT_P96_DIRECTIONAL_UNCERTAINTY_ROWS.npz}
+  - name: consumed_p113
+    run: worldsim_v67/WS-V67-P113-DIRECTIONAL-VS-CLEARANCE-CONFIRMATION-01/20260830T070500Z__directional-vs-clearance-s0-r1
+    artifact: P113_DIRECTIONAL_VS_CLEARANCE_ROWS.npz
+boundary_state_cost:
+  clearance_floor_m: 0.05
+  definition: trajectory_max_absolute_observed_actor_residual_projected_on_query_boundary_normal_divided_by_absolute_predicted_clearance
+model:
+  top_k_crossing_probabilities: 16
+  hidden_dimensions: [64, 32]
+  steps: 6000
+  batch_size: 65536
+  learning_rate: 0.001
+  weight_decay: 0.0001
+selection: {coverage_fraction: 0.50}
+decision:
+  minimum_mean_spearman_gain_over_p109: 0.02
+verdict_on_pass: supported_development_continuous_boundary_state_reliability
+verdict_on_failure: rejected_development_continuous_boundary_state_reliability
+locks:
+  prediction_object_changed_from_binary_flip_to_continuous_boundary_state_cost: true
+  target_uses_candidate_tau_boundary_normal_and_clearance: true
+  source_only_optimizer_never_reads_development_targets: true
+  top16_plus_clearance_hidden64_32_huber_6000_steps_seed0_fixed: true
+  P81_P96_P113_are_consumed_development_only: true
+  no_cost_floor_model_loss_seed_coverage_or_metric_sweep: true
+  add_hash_checksum_fingerprint: false
+references:
+  - https://proceedings.mlr.press/v162/shah22a.html
+  - https://proceedings.neurips.cc/paper_files/paper/2023/file/8ddcba644f602835a52b962d9a119eea-Paper-Conference.pdf
+claim_boundary:
+  - continuous_tau_conditioned_boundary_state_reliability_not_binary_collision
+  - consumed_development_only_requires_new_target_unread_confirmation
+  - selected_mean_cost_and_rank_correlation_not_calibrated_probability
+  - no_planner_policy_closed_loop_or_safety_claim

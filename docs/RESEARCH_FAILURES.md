@@ -1348,6 +1348,25 @@ P104的relative failure，但未超过P102的4；因此只关闭`V67-F70`，不�
 
 下一可用编号：`V67-F86`。
 
+### V67-F86 — continuous cost regressor未超过冻结P109 sufficient score
+
+- 分类：`scientific/continuous-selective-regression`；状态：`closed_negative_after_single_trial`；
+- canonical：`run://worldsim_v67/WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01/
+  20260830T075000Z__continuous-boundary-state-cost-s0-r1`；
+- new object：Actor residual沿candidate τ boundary normal的absolute projection除以predicted absolute clearance，再作trajectory max；
+  它是τ-conditioned continuous reliability cost，不是旧endpoint error或binary flip；
+- symptom：learned/P109 selected cost在P81=`.2032/.1863`、P96=`.1850/.1788`、P113=`.2237/.2247`；learned
+  Spearman相对P109 gain=`-.0123/-.0515/+.0173`，两项冻结decision全失败；
+- interpretation：top16+clearance回归头在source拟合continuous target，但没有超过P109 standardized crossing score；P109本身已是
+  跨三个consumed cohorts的强低容量 sufficient ranking statistic；
+- retained evidence：P109 continuous-cost Spearman=`.8065/.7183/.7921`，fixed50 cost reduction=
+  `89.75%/77.05%/83.37%`，明显高于clearance-only ranking；这只支持冻结P121候选，不把P120写成成功；
+- resolution：不扫cost definition/floor/head/loss/seed/coverage，不训练第二regressor。P121在全新target-unread cohort只确认冻结
+  P109 continuous object；
+- claim impact：无learned continuous head或independent continuous reliability claim，仍无collision/safety claim。
+
+下一可用编号：`V67-F87`。
+
 ### V6.6 当前边界（2026-08-28）
 
 - V6.6已终态`v66_research_complete_arxiv_report_ready`。P3C/P6/P8R分别支持independent legacy local ranking、

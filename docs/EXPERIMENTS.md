@@ -362,6 +362,25 @@
   binary band/bound/head sweep，下一步改为连续task-conditioned boundary-state cost。wall=`43.50s`、peak GPU=`.05292GiB`、
   RSS=`1.123GiB`。
 
+### WS-V67-P120-CONTINUOUS-BOUNDARY-STATE-COST-01
+
+- 状态：`done/rejected learned head; frozen P109 continuous object candidate supported on consumed development`；canonical=
+  `20260830T075000Z__continuous-boundary-state-cost-s0-r1`。
+- prediction object：每个Actor/time的observed position residual沿candidate τ boundary normal投影取absolute，除以
+  `max(abs(predicted signed clearance),.05m)`，trajectory内取max。normal与clearance都由τ决定，因此是真正task-conditioned
+  continuous state cost，不是τ无关Actor endpoint error或binary collision label。
+- method：冻结P109 top16 crossing probabilities+log-clearance，以hidden`64/32` MLP、Huber、6,000 steps、batch65,536、
+  seed0在79,478 source trajectories回归`log1p(cost)`；optimizer不读P81/P96/P113。decision为三个cohort selected mean cost
+  均不劣于P109且mean Spearman gain≥`.02`；不扫floor/model/loss/coverage。
+- training：source mean cost=`.645913`，final Huber=`.102544`。
+- result：P81 learned/P109 selected cost=`.203223/.186297`，Spearman=`.794154/.806463`；P96=
+  `.185010/.178783`、`.666818/.718313`；P113=`.223678/.224742`、`.809433/.792089`。cost nonregression与mean
+  Spearman gain两门均失败，verdict=`rejected_development_continuous_boundary_state_reliability`（`V67-F86`）。
+- retained candidate：不训练的P109 base在三cohort Spearman=`.80646/.71831/.79209`、fixed50 cost reduction=
+  `89.75%/77.05%/83.37%`，clearance Spearman=`.56254/.37946/.63073`。这支持把P109+continuous object冻结进全新P121
+  independent confirmation，但不能用consumed rows写independent claim。
+- resources：wall=`27.30s`、peak GPU=`.08336GiB`、RSS=`1.080GiB`；单3090足够。
+
 ### WS-V67-P111-CLEARANCE-CONFIRMATION-BASELINE-01
 
 - 状态：`done/descriptive`；canonical=`20260830T064500Z__clearance-confirmation-baseline-s0-r1`。

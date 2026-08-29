@@ -251,6 +251,17 @@ clearance的5；AUROC还分别下降`.003836/.004586/.001217`。verdict=
 `rejected_development_ranked_range_selective_tail`（`V67-F85`）。因此不扫percentile band/bound/model/loss；binary rare-event
 fixed50 recovery关闭，下一预测对象改为连续τ-conditioned boundary-state cost的selective regression。
 
+P120按ICML 2022 selective regression把对象改成连续cost：每row把observed Actor residual投影到candidate τ的boundary normal，
+除以`max(abs(predicted clearance),.05m)`，再按time/Actor/trajectory max；这不同于τ无关endpoint error。Source 79,478
+trajectories上hidden `64/32` Huber训练6,000 steps，final loss=`.102544`。新增head在P81/P96/P113 selected mean cost=
+`.2032/.1850/.2237`，相对冻结P109的`.1863/.1788/.2247`只在P113微好；Spearman=`.7942/.6668/.8094`，
+相对P109=`-.0123/-.0515/+.0173`，两项decision全失败，登记`V67-F86`，不扫cost/floor/model/loss。
+
+但同一冻结read给出新的稳定候选：P109原score对continuous boundary-state cost的Spearman在P81/P96/P113为
+`.8065/.7183/.7921`，fixed50 actual-cost reduction=`89.75%/77.05%/83.37%`；clearance Spearman仅
+`.5625/.3795/.6307`。因此否定的是P120新增regressor，不是否定连续prediction object。下一步P121将P109 checkpoint、
+continuous cost definition、H3.5和fixed50全部冻结，在全新target-unread scene cohort一次独立确认；当前三cohort只作development。
+
 ## WorldSim V6.7 P81--P94 protocol/training record（fresh read已完成，2026-08-29）
 
 P75在fresh validation上没有建立mean-cost dominance，但固定50% query selection的不可靠事件率`.00175`低于

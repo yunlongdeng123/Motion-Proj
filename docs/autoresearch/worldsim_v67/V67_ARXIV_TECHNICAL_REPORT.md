@@ -1,7 +1,7 @@
 # WorldSim V6.7 ArXiv 技术报告：从端到端可靠性捷径到 Actor uncertainty × trajectory boundary
 
 - 分支：`research/worldsim-v6.7-anisotropic-surface`
-- 报告状态：`P113 complete; arXiv evidence current through P119`
+- 报告状态：`P113 complete; arXiv evidence current through P120`
 - 主要硬件：单张 RTX 3090 24GB
 - 证据角色：development、consumed cross-cohort、scene-level independent confirmation 严格分开
 
@@ -154,6 +154,11 @@ P119随后按ranked-range objective在source fixed50邻域训练bounded tail res
 positive落入冻结range，它在P81/P96/P113得到events=`0/0/6`，与P109完全相同，且AUROC三处都小幅下降。该负结果说明
 改变binary ranking loss仍未解决tail transfer；下一研究应把对象改为连续τ-conditioned boundary-state cost，而不是扫range。
 
+P120把target改为observed Actor residual沿τ boundary normal的absolute projection除以predicted clearance的trajectory max。
+新增continuous regressor未超过P109并登记F86；但冻结P109对该cost在P81/P96/P113的Spearman达到
+`.8065/.7183/.7921`，fixed50 cost reduction=`89.75%/77.05%/83.37%`，而clearance Spearman仅
+`.5625/.3795/.6307`。因此论文当前可把它写成consumed-development mechanism，独立claim必须等P121。
+
 ## 3. 核心结果表
 
 | 阶段 | 数据角色 | query / Actor / P75 selected events | query / Actor AUROC | 结论 |
@@ -176,6 +181,7 @@ positive落入冻结range，它在P81/P96/P113得到events=`0/0/6`，与P109完�
 | P118 | same-checkpoint rho ablation | P81/P96均`0 / 0` | rho gain=`+.00030 / -.00012` | reject direct-rho mechanism |
 | P113 | independent directional vs clearance | directional/clearance=`6 / 5` | `.92016 / .87529` | reject composite；AUROC gate pass |
 | P119 | consumed ranked-range tail | P81/P96/P113=`0 / 0 / 6` | gain=`-.00384/-.00459/-.00122` | reject tail recovery |
+| P120 | consumed continuous boundary cost | P109 selected reduction=`.8975/.7705/.8337` | Spearman=`.8065/.7183/.7921` | base candidate；new head reject |
 
 ## 4. 失败如何推动研究对象变化
 
@@ -193,6 +199,7 @@ positive落入冻结range，它在P81/P96/P113得到events=`0/0/6`，与P109完�
 | `V67-F83` | P117收益由conditional rho推理项直接产生 | zero-rho消融几乎不变且P96反向 |
 | `V67-F84` | 全局AUROC增量可保证fixed50 rare-event优势 | AUROC gain `+.04486`但events `6>5` |
 | `V67-F85` | source ranked-range loss可修复fixed50 transfer | P113仍6 events且三cohort AUROC都退化 |
+| `V67-F86` | continuous regressor可超过P109 base | P81/P96退化；保留P109 continuous object |
 
 ## 5. 系统与资源
 
@@ -206,6 +213,7 @@ positive落入冻结range，它在P81/P96/P113得到events=`0/0/6`，与P109完�
 - P117训练916,722 Actor-time tokens的correlated bivariate Gaussian，6,000 steps，wall约45.49s。
 - P118冻结checkpoint的conditional-vs-zero-rho消融wall约1.03s，不重训、不读取P113。
 - P119 source-only ranked-range GPU训练6,000 steps，wall约43.50s。
+- P120 source-only continuous cost regression 6,000 steps，wall约27.30s。
 - 未新增hash、checksum或fingerprint；没有smoke/regression matrix。
 
 ## 6. 有效性与claim边界
