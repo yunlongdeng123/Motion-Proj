@@ -2,6 +2,16 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P4 outcome note — 支持 empirical selective transfer，不恢复跨域 formal guarantee
+
+- r2 7/7 gates，但 nuScenes calibration 与 AV2 coverage=`8.93%/75.55%`；该 shift 不是可忽略的 calibration noise，
+  而是外域 exchangeability 不成立的直接提醒。
+- AV2 factorized selective false repair=`8.99%`，低于 always repair=`16.56%`；但 mean Chamfer `.1821m` 仍比
+  always repair `.1770m` 高 `5.03mm`。不得写成全面支配或逐 Actor universal certificate。
+- hazard coverage=`92.17%`、hazard selected failure=`2.36%`、cross-input shift=`0/0` 支持“没有靠风险输入拒绝危险 Actor”的
+  结构结论；Actor/hazard retention 仍只是 immutable interface，不是上游 detection/tracking correctness。
+- 本项不是新 failure；下一可用编号仍为 `V7-F11`。
+
 ### V7-F10 — P4 adapter 误把 devkit reverse-index shortcut 当作 raw sample 字段
 
 - run：`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T160000Z__selective-factor-s70401-r1`；

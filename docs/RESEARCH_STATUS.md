@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7 P4 supported / external guarantee gap exposed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2`；
+verdict=`supported_nuscenes_trained_av2_zero_shot_selective_factorization`，7/7 gates。Frozen corpus=`29/56/228`
+nuScenes train/calibration/test Actors；AV2=30/30 logs、634 Actors。factorized nuScenes test repair/hazard AUROC=
+`.6491/.9811`，shared=`.6426/.9166`；paired cross-input shift factorized=`0/0`、shared=`.2014/.2886`。
+
+nuScenes-only threshold=`.999436`；calibration coverage=`8.93%`，test coverage=`3.95%`、population false repair=`.44%`。
+相同 frozen threshold 在 AV2 覆盖 `479/634=75.55%`，把 always-repair false repair 从 `105/634=16.56%` 降到
+`57/634=8.99%`；clean-query/always/selective Chamfer=`.2577/.1770/.1821m`。选择性输出相对 clean query 改善
+`29.35%`，但比 always repair 多 `5.03mm`，明确是 false-repair risk 与平均几何的 trade-off。AV2 repair/hazard
+AUROC=`.6996/.9805`，hazard coverage=`92.17%`，未靠删除危险 Actor 获益。
+
+calibration→AV2 coverage 从 `8.93%→75.55%` 是显著 score-distribution shift；因此只支持 empirical zero-shot
+risk--coverage，不主张 AV2 conformal/exchangeability/safety guarantee。小样本 train=29 Actors 也保留为限制，不放宽
+admissibility 或重训。wall=`434.29s`、GPU=`.0772GiB`、RSS=`1.463GiB`、run=`2.7MiB`、磁盘余量约 `128GiB`。
+CVPR 主稿已写入 P4 方法、结果表、abstract/limitations；移除全 TBD 占位表后 TeX Live 编译为 5 pages /
+932,940 bytes，逐页视觉复核无 clipping/overlap/orphan float。
+
 ## WorldSim V7 P4 r1 raw-schema failure / same-contract r2 recovery（2026-09-02）
 
 P4 r1=`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T160000Z__selective-factor-s70401-r1`

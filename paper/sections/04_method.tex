@@ -17,11 +17,15 @@ Unknown is a first-class state and never silently becomes free. All four actions
 
 \subsection{Validity--Hazard Factorization}
 
-The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. The hazard encoder receives relative pose and velocity, TTC, route relation, map context, and interaction state. Two supervised heads are augmented with paired consistency losses:
+The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:
 \begin{equation}
-\mathcal{L}=\mathcal{L}_{\mathrm{artifact}}+\mathcal{L}_{\mathrm{hazard}}+\lambda_{\mathrm{pair}}\mathcal{L}_{\mathrm{pair}}+\lambda_{\mathrm{leak}}\mathcal{L}_{\mathrm{leak}}.
+\mathcal{L}=\mathrm{BCE}(s_{\mathrm{rep}},y_{\mathrm{rep}})+\mathrm{BCE}(s_{\mathrm{haz}},y_{\mathrm{haz}}).
 \end{equation}
-Pairs span a four-quadrant atlas: valid-safe, valid-hazard, artifact-safe, and artifact-hazard. We measure hazard-from-validity and artifact-from-hazard probes in addition to task AUROC/AUPRC.
+We fit features and weights on nuScenes train only. On a disjoint calibration fold, threshold $q$ is the maximum-coverage value satisfying the population false-repair bound
+\begin{equation}
+\widehat R^+(q)=\frac{1+\sum_{i=1}^{n}\mathbf{1}[s_i\ge q,\,y_i=0]}{n+1}\le\alpha.
+\end{equation}
+Accepted Actors use the compiled surface; abstained Actors retain the clean query. Paired input swaps measure whether either score reads the other task's variables. The finite-sample interpretation requires exchangeability; AV2 uses the frozen $q$ only for empirical zero-shot evaluation.
 
 \subsection{Actor Residuals and Boundary-Cost Density}
 

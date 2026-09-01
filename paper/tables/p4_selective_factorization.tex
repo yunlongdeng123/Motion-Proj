@@ -1,0 +1,19 @@
+\begin{table*}[t]
+  \centering
+  \caption{nuScenes-only selective repair and AV2 zero-shot transfer. False repair is measured over all Actors; coverage is
+  the accepted fraction. Chamfer is for the repair-or-clean-query output. Leak is the maximum mean prediction shift under a
+  paired swap of the other task's input. Each head's nuScenes-calibrated threshold is reused unchanged on AV2.}
+  \label{tab:p4-selective}
+  \small
+  \setlength{\tabcolsep}{4.2pt}
+  \begin{tabular}{llrrrrrr}
+    \toprule
+    Dataset & Head & Repair AUROC $\uparrow$ & Hazard AUROC $\uparrow$ & Coverage $\uparrow$ & False repair $\downarrow$ & Selective CD $\downarrow$ & Max leak $\downarrow$ \\
+    \midrule
+    nuScenes test & shared & 64.26 & 91.66 & 11.84 & 3.51 & 0.231 & 28.86 \\
+    nuScenes test & factorized & \textbf{64.91} & \textbf{98.11} & 3.95 & \textbf{0.44} & 0.246 & \textbf{0.00} \\
+    AV2 zero-shot & shared & \textbf{77.97} & 92.89 & 55.21 & \textbf{3.15} & 0.190 & 23.46 \\
+    AV2 zero-shot & factorized & 69.96 & \textbf{98.05} & \textbf{75.55} & 8.99 & \textbf{0.182} & \textbf{0.00} \\
+    \bottomrule
+  \end{tabular}
+\end{table*}

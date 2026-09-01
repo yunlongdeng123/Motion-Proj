@@ -1,5 +1,27 @@
 # Experiments
 
+## WS-V7-P4 selective factorization formal result（2026-09-02）
+
+### WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01 r2
+
+- canonical：`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2`；
+  verdict=`supported_nuscenes_trained_av2_zero_shot_selective_factorization`；7/7 gates。
+- actors：nuScenes train/calibration/test=`29/56/228`；AV2=`634` over 30/30 logs。train 小样本不通过放宽物理
+  admissibility 恢复，直接成为 claim boundary。
+- nuScenes test：shared vs factorized repair AUROC=`.6426/.6491`、hazard AUROC=`.9166/.9811`；coverage=
+  `11.84/3.95%`、population false repair=`3.51/.44%`、selective Chamfer=`.2309/.2456m`；factorized swap leakage=`0/0`，
+  shared=`.2014/.2886`。
+- AV2 zero-shot：factorized repair/hazard AUROC=`.6996/.9805`；coverage=`75.55%`、population false repair=`8.99%`、
+  conditional selected failure=`11.90%`、hazard coverage=`92.17%`。always-repair failure=`16.56%`。
+- geometry：clean-query/always/selective Chamfer=`.2577/.1770/.1821m`；selective 相对 query `-29.35%`，相对
+  always repair `+5.03mm`。该 trade-off 与全部 634 rows 保留。
+- guarantee gap：factorized calibration coverage=`8.93%`，AV2=`75.55%`；同阈值 score shift 直接阻止把 nuScenes
+  adjusted population risk 解释成 AV2 conformal/safety guarantee。
+- resources：wall=`434.29s`、GPU=`.0772GiB`、RSS=`1.463GiB`、run=`2.7MiB`、free disk=`128GiB`。
+- retained：3 个 nuScenes role Actor JSONL、AV2 Actor JSONL、all selective scores、model/standardizer/threshold、summary/status。
+- paper：新增跨栏 selective-factorization Table 1、risk equation、P4 abstract/limitations；移除失效的全 TBD 总表；
+  TeX Live=5 pages / 932,940 bytes，pages 3--5 人工视觉检查无 overlap/clipping/孤立 float。
+
 ## WS-V7-P4 nuScenes selective factorization freeze（2026-09-02）
 
 ### r1 pre-quality schema recovery

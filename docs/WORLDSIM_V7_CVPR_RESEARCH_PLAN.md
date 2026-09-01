@@ -690,6 +690,17 @@ repair certificate。P4 必须把 validity head 改成 nuScenes-only selective r
 - formal guarantee 只限 exchangeable nuScenes calibration 边界；未知 nuScenes→AV2 shift 只报告 risk--coverage/geometry，
   不声称 conformal、collision、planning、closed-loop 或 road-safety guarantee。Waymo 在本地无冻结 sensor corpus 时暂缓。
 
+### P4 执行结果（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2`；
+7/7 gates，nuScenes Actors=`29/56/228`，AV2=30 logs/634 Actors。factorized nuScenes test repair/hazard AUROC=
+`.6491/.9811`，shared=`.6426/.9166`；factorized paired swap shift=`0/0`，shared=`.2014/.2886`。
+
+相同 nuScenes-only threshold 在 AV2 覆盖 `75.55%`，false repair `16.56%→8.99%`（always→selective）；
+clean-query/always/selective Chamfer=`.2577/.1770/.1821m`，hazard coverage=`92.17%`。结果支持 empirical
+nuScenes→AV2 selective transfer 与结构解耦，但 calibration→AV2 coverage=`8.93%→75.55%` 明确否定跨域 formal
+exchangeability guarantee；selective 也不在平均 Chamfer 上支配 always repair。train 仅 29 Actors，冻结为限制。
+
 ### Baselines
 
 - shared encoder；

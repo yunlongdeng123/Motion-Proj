@@ -9,6 +9,8 @@
   \label{fig:p3b-camera}
 \end{figure*}
 
+\input{tables/p4_selective_factorization}
+
 \paragraph{Data and protocol.}
 We train and select models only on nuScenes. Argoverse~2 Sensor validation logs form a zero-shot external test. Before reading any method output, we sort the 150 validation UUIDs and select every fifth log, yielding 20 quantitative and 10 qualitative logs. No AV2 fine-tuning, post-hoc calibration, threshold selection, or failed-scene deletion is allowed. Final nuScenes and AV2 cohorts are evaluated exactly once after the method freezes.
 
@@ -57,7 +59,21 @@ although mean Chamfer improves, \PthreeActorWorse{}\% of all 634 Actors worsen i
 zero-shot geometry, not a per-Actor repair certificate; this motivates a selective ``repair or abstain'' validity head trained
 and calibrated only on nuScenes.
 
-\input{tables/main_results}
+\paragraph{nuScenes-to-AV2 selective factorization.}
+The strict multi-frame surface contract yields 29/56/\PfourNuActors{} Actors for nuScenes train/calibration/test; we retain the
+small training set rather than loosen admissibility. On nuScenes test, factorization is non-inferior to the shared head for
+repairability (\PfourNuFactorRepairAUROC{} vs.\ \PfourNuSharedRepairAUROC{} AUROC) and raises hazard AUROC from
+\PfourNuSharedHazardAUROC{} to \PfourNuFactorHazardAUROC{}, while maximum paired cross-input shift falls from
+\PfourSharedLeakage{}\% to \PfourFactorLeakage{}\%. The conservative threshold covers \PfourNuFactorCoverage{}\% with
+\PfourNuFactorFalseRepair{}\% population false repairs.
+
+Without AV2 fitting, the same selector covers \PfourAVFactorCoverage{}\% of \PfourAVActors{} Actors and reduces false repair
+from \PfourAVAlwaysFailure{}\% under always-repair to \PfourAVFactorFalseRepair{}\%. Clean-query/always/selective Chamfer is
+\PfourAVQueryChamfer{}/\PfourAVAlwaysChamfer{}/\PfourAVSelectiveChamfer{}\,m. Thus abstention costs only $5$\,mm mean Chamfer
+relative to always-repair while nearly halving false repairs. Hazard AUROC is \PfourAVFactorHazardAUROC{}, hazard coverage is
+\PfourAVHazardCoverage{}\%, and factorized cross-input shift remains zero. However, coverage changes from
+\PfourCalibrationCoverage{}\% on nuScenes calibration to \PfourAVFactorCoverage{}\% on AV2; Table~\ref{tab:p4-selective}
+therefore supports empirical transfer, not a cross-domain conformal guarantee.
 
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.
