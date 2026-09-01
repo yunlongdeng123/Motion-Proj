@@ -261,6 +261,8 @@ def _associate_actor_points(
                         "frame_rank": int(frame_ranks[track_id][int(row.timestamp_ns)]),
                         "points": selected.cpu().numpy(),
                         "sensor_origin": origins[offset].cpu().numpy(),
+                        "actor_center_ego": centers_np[offset].copy(),
+                        "actor_rotation_ego": rotations_np[offset].copy(),
                     }
                 )
 

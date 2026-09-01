@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V7-P3B frozen AV2 RGB/camera-depth/video evidence（2026-09-02）
+
+### WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 freeze
+
+- hypothesis=`WS-V7-H-P3B-001`；source P3-A=
+  `run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3`。
+- cases：复用 `VISUAL_CASES.jsonl` 的 30/30 frozen cases；main=前 8 qualitative logs 首 Actor，supplement=10 logs
+  各前三 lexical Actor；不按可见质量、hazard 或方法结果替换。
+- camera：固定 AV2 ring-camera 顺序；仅按 query LiDAR in-frame count 最大化，平局用固定顺序；RGB decode 在 selection
+  后，crop 仅依赖 query projection。官方 AV2 `v0.3.6` motion-compensated projection 提供 timestamp/calibration boundary。
+- output：每 case 一张 RGB/paired-artifact/four-action/sparse-depth 四联 PNG 与一段 before/after MP4；视频闪烁是 paired
+  synthetic contract probe，不解释为 natural AV2 artifact 或 photorealistic render。
+- implementation：`motion_proj/worldsim_v7/av2_p3b_camera_evidence.py`、
+  `scripts/run_worldsim_v7_p3b_av2_camera_evidence.py`、`configs/worldsim_v7/p3b_av2_camera_evidence_v1.yaml`。
+- formal state：`frozen / not run / quality read=false`；只做一次 10-log generation，不扫 camera/crop/palette，不加回归矩阵。
+
 ## WS-V7-P3 ray-certified hard physical evidence result（2026-09-02）
 
 ### WS-V7-P3-AV2-HARD-EVIDENCE-01 r3

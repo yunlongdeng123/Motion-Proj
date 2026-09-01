@@ -332,6 +332,13 @@ def _compile_actor(
         target_indices = _limit_indices(np.arange(len(target_all)), maximum_points)
         package["diagnostics"] = {
             "track": track,
+            "query_timestamp_ns": int(heldout_records[0]["timestamp_ns"]),
+            "query_actor_center_ego": np.asarray(
+                heldout_records[0]["actor_center_ego"], dtype=np.float32
+            ),
+            "query_actor_rotation_ego": np.asarray(
+                heldout_records[0]["actor_rotation_ego"], dtype=np.float32
+            ),
             "build_frame_points": [
                 _deterministic_limit(item["points"], maximum_points)
                 for item in build_records

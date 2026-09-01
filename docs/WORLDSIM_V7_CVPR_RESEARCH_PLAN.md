@@ -616,6 +616,17 @@ Canonical=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray
 Actor/hazard state shift=0。相较 rejected nearest-surface r2 的 `.1681m` Chamfer，r3 明确选择约 7.2mm 的拟合代价
 换 matched-ray free-space 安全边界。P3-A 关闭，进入 P3-B RGB/camera-depth/video，不扫 tolerance。
 
+### P3-B formal freeze（2026-09-02）
+
+- Formal task=`WS-V7-P3B-AV2-CAMERA-EVIDENCE-01`；逐项复用 P3-A 8 main + 30 supplement cases，case identity 与
+  main/supplement 身份不可变。compiler 只新增 query timestamp 与 Actor ego rigid transform diagnostics，不改 action/metric。
+- 相机候选固定为 AV2 官方 7 ring cameras。选择只计算 query Actor LiDAR points 经官方 motion-compensated projection
+  后的 in-frame count；取最大者，平局按 config 顺序，完成选择后才 decode RGB。crop 只由 query projection 决定。
+- 每 case 固定输出 RGB+observed returns、paired artifact overlay、four-action output、sparse camera-depth 四联图与动态
+  before/after MP4。全部 30 cases 写出，不按可见结果换图，也不扫 camera/crop/palette。
+- paired ghost/duplicate/flicker 与视频闪烁是 synthetic contract evidence；RGB panel 是 calibrated evidence overlay，
+  不是 photorealistic reconstruction。真实几何结论继续由 P3-A target-only LiDAR depth/ray/surface 承担。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

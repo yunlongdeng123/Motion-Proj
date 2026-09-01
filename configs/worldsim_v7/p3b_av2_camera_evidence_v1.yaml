@@ -1,0 +1,37 @@
+task_id: WS-V7-P3B-AV2-CAMERA-EVIDENCE-01
+hypothesis_id: WS-V7-H-P3B-001
+runs_root: /root/autodl-tmp/runs
+p3_config: configs/worldsim_v7/p3_av2_hard_evidence_v1.yaml
+source_p3_run: >-
+  run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3
+source_p3_run_path: >-
+  /root/autodl-tmp/runs/worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3
+device: cuda
+claim_boundary: >-
+  Frozen zero-shot AV2 camera evidence for the already-selected P3-A cases. RGB is decoded
+  only after a camera is selected by query-point visibility and fixed camera order. Camera
+  panels show calibrated evidence overlays, not photorealistic reconstruction. Paired ghost,
+  duplicate, and flicker layers remain synthetic compiler-contract probes; held-out LiDAR
+  depth, target geometry, ray certificates, and immutable Actor/hazard state carry the real
+  geometric claims. No camera, case, or crop is selected by appearance, quality, hazard, or
+  final method result.
+camera:
+  candidate_cameras:
+    - ring_rear_left
+    - ring_side_left
+    - ring_front_left
+    - ring_front_center
+    - ring_front_right
+    - ring_side_right
+    - ring_rear_right
+  crop_padding_fraction: 0.35
+  minimum_crop_width_px: 420
+  minimum_crop_height_px: 320
+  maximum_depth_m: 80.0
+  panel_width_px: 500
+  panel_height_px: 380
+video:
+  panel_width_px: 640
+  panel_height_px: 480
+  fps: 8
+  frames_per_phase: 8

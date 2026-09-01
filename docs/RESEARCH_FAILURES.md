@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3-B freeze prevention note — camera/crop 不读取 RGB 外观或结果质量
+
+- P3-B 逐项复用 P3-A 冻结 `VISUAL_CASES.jsonl`，没有新的案例 admission。相机只按 official AV2 calibration 下
+  query LiDAR points 的 in-frame count 选取，平局按预先写入 config 的 ring-camera 顺序；RGB 在选择完成后才 decode。
+- crop 仅由同一 query projection 的包围盒和固定 padding/minimum size 决定；不按画面美观、遮挡、hazard、Chamfer、
+  free-space 或 action 成功率调整。全部 30 cases 都写 panel/video，不删除难例。
+- paired ghost/duplicate/flicker 仍是 synthetic contract overlay；真实主张来自 P3-A target-only LiDAR depth/ray/surface。
+  P3-B 明示不是 photorealistic reconstruction。本项不是新 failure；下一可用编号仍为 `V7-F09`。
+
 ### V7-F08 — ray-correct 评价确认 nearest-canonical PROJECT 违反 observed-free interval
 
 - run：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T140000Z__hard-evidence-s0-r2`；

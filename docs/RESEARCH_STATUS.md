@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P3-B frozen camera evidence / formal generation next（2026-09-02）
+
+Active=`WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 / WS-V7-H-P3B-001`。案例严格复用 P3-A 已登记的 8 main +
+30 supplement Actor，不允许换 log、Actor 或 main/supplement 身份。每个 Actor 的 query LiDAR 时间戳与 ego-frame
+刚体位姿随 compiler diagnostics 暴露；不改变 P3-A action、surface、metric 或 verdict。
+
+相机冻结为 AV2 官方七个 ring cameras 的固定顺序；只用 query Actor LiDAR points 经官方 motion-compensated
+ego-to-image 投影后的 in-frame 数量选最大者，平局按固定顺序，选完才解码 RGB。crop 只由 query 投影包围盒确定。
+输出固定为 RGB+observed returns、paired artifacts、four-action output、sparse camera depth 四联图，以及每个冻结案例的
+before/after MP4。paired ghost/duplicate/flicker 明示为 synthetic contract overlay；相机图是 calibrated evidence overlay，
+不冒充 photorealistic reconstruction。当前 formal quality read=false；下一动作只执行一次 10-log/30-case GPU generation。
+
 ## WorldSim V7 P3 ray-certified hard evidence supported / RGB-depth P3-B next（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3`；
