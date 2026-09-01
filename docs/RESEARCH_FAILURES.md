@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P9 prevention note — retained-source action proxy 不越权为 closed-loop planning
+
+- P9 只在 P5 exact identities 的 retained P109 outcomes 上组合 frozen P4/P346；既非 fresh cohort，也没有车辆动力学、
+  feedback execution、collision intervention 或 policy learning。
+- 物理分支不允许改 action denominator，task authority 不允许删除 Actor；B0/B1 与 B2/B3 的 action metrics 分别必须
+  相同。任何 physical repair 与 task cost 的差异都不能从该 factorial 推为 causal effect。
+- 若 authority cost/risk 不改善或 coverage 太低，即保留 negative minimal-downstream result；不训练 critic/RL、不改 budget/
+  reliability threshold。当前无新增 failure，下一可用编号仍为 `V7-F16`。
+
 ### Paper layout note — P8-A expanded Table 1 visually valid
 
 - official-template compile=7 pages；Table 1 增加 fresh P4/P6-C rows 后 LaTeX 报 `6.03pt` tabular overfull warning。

@@ -1,0 +1,24 @@
+task_id: WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01
+hypothesis_id: WS-V7-H-P9-001
+runs_root: /root/autodl-tmp/runs
+p5b_actor_rows: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1/ACTOR_INTERFACE_ROWS.jsonl
+frozen_p346_run: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2
+device: cuda
+evaluation:
+  p5_role: test
+  requested_reliability: 0.90
+  frozen_cost_ceiling_index: 1
+  frozen_authority_set_size: 2
+  heldout_progress_preferences: [0.25, 0.75]
+  heldout_lateral_commands: [-0.5, 0.5]
+gates:
+  minimum_task_authority_coverage: 0.10
+claim_boundary: >-
+  A retained-source fixed-six-query, four-horizon demonstration on the exact P5
+  test identities. It composes the frozen P4 physical decision with the frozen
+  V6.7 P346 reliability surface in a 2x2 factorial. There is no fit, calibration,
+  threshold search, new sensor read, policy optimization, actor deletion, or
+  closed-loop execution. Equal action outcomes between physical branches are a
+  non-interference contract, not a causal planning benefit from surface repair.
+verdict_on_pass: supported_composed_physical_and_task_authority_demo
+verdict_on_failure: rejected_composed_physical_and_task_authority_demo

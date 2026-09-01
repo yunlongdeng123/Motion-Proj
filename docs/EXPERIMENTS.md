@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P9 composed fixed-lattice authority freeze（2026-09-02）
+
+- factorial arms：`B0=query+no authority`、`B1=HARP-3D+no authority`、`B2=query+P346 authority`、
+  `B3=HARP-3D+P346 authority`；物理与 task authority 分权。
+- cohort：P5 test exact identities（88 Actors/14 scenes）在 retained P109 rows 上的 fixed 6-query/4-horizon action sets；
+  非新鲜确认，不读新 sensor。
+- frozen point：P346 heldout horizon=`3.0s`、set size=`2`、middle frozen ceiling、requested reliability=`.90`；task
+  conditions=`progress .25/.75 × lateral -.5/.5`。
+- gates：surface CD nonworse；authority coverage `>=.10`；authorized cost/risk nonworse；Actor/hazard retention=`1`。
+- no training/calibration/sweep/critic/RL/closed-loop；action equality across physical branches is structural, not a repair causal claim。
+
+References：`https://proceedings.mlr.press/v205/farid23a/farid23a.pdf`、
+`https://openaccess.thecvf.com/content/CVPR2024/html/Li_Is_Ego_Status_All_You_Need_for_Open-Loop_End-to-End_Autonomous_CVPR_2024_paper.html`。
+
 ## CVPR paper P8-A integration check（2026-09-02）
 
 - added：fresh nuScenes exact-once P4/P6-C rows、20-scene protocol、rejected AUROC/AURC interpretation、P4 retention decision。

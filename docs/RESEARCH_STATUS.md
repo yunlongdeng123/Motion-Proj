@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P9 composed fixed-lattice authority frozen（2026-09-02）
+
+Active=`WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01 / WS-V7-H-P9-001`。将 plan 的四臂收敛为可识别的
+`2×2`：query/HARP-3D physical surface × no-task-authority/frozen P346 authority。输入只用 P5 test exact identities 对应的
+retained P109 rows；固定 6 queries、4 horizons，正式报告 P346 heldout `3.0s`、set size=`2`、middle frozen log-cost
+ceiling、requested reliability=`.90` 与 heldout task conditions `.25/.75 × -.5/.5`。
+
+不训练/refit/calibrate/调 threshold，不读新 sensor，不执行 closed loop。P4 只决定 query/compiled surface，P346 只决定
+action-set authority；两条 physical branch 的 action result 必须相同，这是 non-interference contract。核心判据仅为 HARP-3D
+surface CD 不差于 query、authority coverage `>=.10`、authorized mean cost/unsafe rate 不差于 no-authority、Actor/hazard
+retention=`1`。参考 Task-Relevant Failure Detection 将 prediction error 传播到 planning cost；参考 CVPR 2024 open-loop
+planning audit，禁止把 retained-source proxy 写成 planner/control/safety improvement。
+
 ## WorldSim V7 CVPR paper integrated through P8-A（2026-09-02）
 
 主稿已加入 fresh exact-once two-row comparison、`V7-F15` negative recovery、AURC descriptive boundary 与“P4 remains

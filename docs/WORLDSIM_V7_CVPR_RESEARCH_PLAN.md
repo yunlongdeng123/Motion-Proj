@@ -1070,6 +1070,22 @@ Final test 前不再设计新模型。
 
 ## V7-P9：最小下游应用
 
+### P9 composed-authority freeze（2026-09-02）
+
+为避免把物理 repair 冒充 planner benefit，四臂改写为可识别的 `2×2` factorial：
+
+```text
+B0 query surface + no task authority
+B1 HARP-3D surface + no task authority
+B2 query surface + frozen P346 task authority
+B3 HARP-3D surface + frozen P346 task authority
+```
+
+固定 P5 test exact identities 的 retained P109 rows、6-query/4-horizon lattice、P346 heldout 3.0s、authority set size 2、
+middle frozen cost ceiling、requested reliability .90 与 heldout task conditions。无训练/calibration/threshold/budget sweep、
+无新 sensor read、无 critic/RL/closed-loop。核心只检验 physical CD、authorized visited-cost/risk、coverage 与 denominator/
+Actor/hazard retention；physical branches 的 action result 相同是预期 non-interference，不是无效实验。
+
 RL 不再是主线，也不阻断论文。
 
 下游只回答：
