@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P8-A（2026-09-02）
+
+主稿已加入 fresh exact-once two-row comparison、`V7-F15` negative recovery、AURC descriptive boundary 与“P4 remains
+primary” stop decision；abstract、experiments、limitations、conclusion 和 bibliography 同步。Official-template compile=
+`7 pages/1,150,693 bytes`；pages 4/6/7 visual check 无 clipping/overlap，expanded Table 1 全部留在 text width 内。编译只保留
+既有 `6.03pt` tabular overfull warning；视觉无裁切，未为消除 warning 改科学数值或缩小字体。P6-C 负结果未包装成 transfer win。
+
 ## WorldSim V7 P8-A fresh nuScenes exact-once rejected（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`。

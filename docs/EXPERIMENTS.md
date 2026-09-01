@@ -1,5 +1,12 @@
 # Experiments
 
+## CVPR paper P8-A integration check（2026-09-02）
+
+- added：fresh nuScenes exact-once P4/P6-C rows、20-scene protocol、rejected AUROC/AURC interpretation、P4 retention decision。
+- compile：official template `main.pdf`，7 pages，1,150,693 bytes。
+- visual：pages 4/6/7 inspected；expanded Table 1、new paragraph、limitations/conclusion/reference continuation 无 clipping/overlap。
+- warning：tabular overfull `6.03pt`，视觉仍在 text width；不通过改数值/删边界/缩小字体掩盖。
+
 ## WS-V7-P8A fresh nuScenes exact-once result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`；

@@ -1045,6 +1045,9 @@ selective/query Chamfer=`.196891/.234408m` 的 operating-point support 保留，
 `.105633` 也确认 global ranking 较弱。P6-C 不晋升；P4 保持 paper primary selector。禁止 recovery fit/threshold/scene
 replacement；fresh AV2 formal read 仍按既定 frozen protocol 执行并独立报告。
 
+CVPR main 已同步 P8-A two-row table、negative recovery、AURC boundary 与 P4 retention；official-template=`7 pages`，
+pages 4/6/7 visually valid。该 paper update 不新增 metric gate/model/cohort 或第二次 test read。
+
 所有 architecture、threshold、surface operation、density model、calibration 和 adapter 冻结后，建立：
 
 ```text

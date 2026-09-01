@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper layout note — P8-A expanded Table 1 visually valid
+
+- official-template compile=7 pages；Table 1 增加 fresh P4/P6-C rows 后 LaTeX 报 `6.03pt` tabular overfull warning。
+- 144-dpi page 4 visual audit 确认左右边界未裁切；pages 6/7 的新 exact-once 段、limitations、conclusion 与 references
+  continuation 也无 overlap/orphan float。
+- 不为消除非裁切 warning 改科学数值、缩小不可读字号或删除 negative-result boundary；无新增 failure id，下一可用仍为
+  `V7-F16`。
+
 ### V7-F15 — sparsity-consistent candidate 在 fresh nuScenes 未保持 global repair ranking
 
 - run：`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`；

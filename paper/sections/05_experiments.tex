@@ -94,6 +94,17 @@ nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:p7-envelope}). Structural cross-
 factorization prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical
 P4 result while rejecting the stronger interpretation of a domain-invariant selector.
 
+\paragraph{Fresh exact-once selector boundary.}
+Before this read, we exclude every P4 train/calibration/test scene and freeze 20 of the remaining 106 locally available scenes
+by equally spaced official scene index. The 20 scenes yield \PeightActors{} Actors and are read once, with no replacement or
+model/threshold update. Motivated by source-only LiDAR sparsity consistency~\cite{kim2023dglss}, a pre-frozen candidate increases
+coverage from \PeightPfourCoverage{}\% to \PeightCandidateCoverage{}\% and improves selective Chamfer from
+\PeightPfourChamfer{} to \PeightCandidateChamfer{}\,m. It nevertheless lowers repair AUROC from
+\PeightPfourRepairAUROC{} to \PeightCandidateRepairAUROC{} and fails the pre-registered 2-point non-inferiority margin
+(Table~\ref{tab:p4-selective}). A descriptive common-coverage audit follows the selective-classification AURC formulation
+of Zhou \etal~\cite{zhou2025aurc}: candidate/P4 AURC is \PeightCandidateAURC{}/\PeightPfourAURC{} (lower is better), confirming
+global ranking loss rather than only threshold mismatch. We retain the P4 selector; the recovery remains a negative ablation.
+
 \input{tables/p5_dual_authority}
 
 \paragraph{Physical repair is not trajectory authority.}
