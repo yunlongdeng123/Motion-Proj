@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V7-P6 ratio normalization fit result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；
+  status=`fit_rejected_external_not_read`。
+- corpus：nuScenes train/cal/test=`29/56/228` Actors；fresh AV2 compiled/scored=`0/0`。
+- fit：repair AUROC/AUPRC/Brier=`.60728/.74010/.23857`；P4 AUROC=`.64908`、floor=`.62908`，non-inferiority fail；
+  opportunity transform max feature shift=`0`，invariance pass。
+- operating point：cal threshold=`.998570`、cal coverage=`14.29%`；test coverage=`13.16%`、population false repair=
+  `4.82%`、conditional failure=`36.67%`、query/always/selective CD=`.25130/.20471/.23155m`。
+- conclusion：ratio-only normalization rejected；external phase prohibited，fresh cohort remains unread。Next source-only hypothesis uses
+  fixed sparsity augmentation and score consistency, following CVPR 2023 DGLSS rather than deleting density information。
+
 ## WS-V7-P6 implementation ready（2026-09-02）
 
 - module：12D opportunity-normalized features；raw frame count removed；fixed `.5x/2x` transform acts jointly on frame,

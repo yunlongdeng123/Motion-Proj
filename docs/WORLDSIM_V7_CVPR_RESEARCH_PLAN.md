@@ -817,6 +817,16 @@ External recovery cohort 不复用已消费 30 logs：对 150 个 AV2 val UUID �
 nuScenes non-inferiority、机会变换不变性、fresh coverage/false-repair/Chamfer，以及相对 frozen P4 的 fresh score-shift
 改善；不得在 fresh read 后调 threshold。通过也不产生 formal cross-domain risk guarantee。
 
+### P6-B ratio result / P6-C sparsity-consistency direction（2026-09-02）
+
+Ratio-only canonical=`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`。
+fixed opportunity shift=`0`，但 nuScenes-test repair AUROC=`.60728`，低于 P4 `.64908` 与 floor `.62908`；因此
+`V7-F12` 在 external read 前关闭 ratio-normalization family，fresh AV2 quality 仍未读。
+
+顶会迁移方向改为 CVPR 2023 DGLSS 的 source-only sparsity augmentation + invariant consistency：保留 raw evidence amount，
+训练时构造固定下采样机会视图并约束 repair score 一致。P6-C 必须在读取 fresh AV2 前独立冻结 model/seed/loss/gates；
+不得根据 ratio candidate 或未来 fresh 结果扫描 consistency weight。
+
 ### 主域
 
 - 训练、模型选择和校准：仅 nuScenes；

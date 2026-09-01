@@ -169,6 +169,12 @@ def fit(config: Mapping[str, Any], run_dir: Path, device: torch.device) -> dict[
             config["opportunity_intervention"]["maximum_transformed_feature_shift"]
         ),
     }
+    fit_passed = all(bool(value) for value in fit_gates.values())
+    fit_status = (
+        "model_frozen_waiting_fresh_av2"
+        if fit_passed
+        else "fit_rejected_external_not_read"
+    )
     torch.save(
         {
             "candidate_state": candidate.state_dict(),
@@ -182,7 +188,8 @@ def fit(config: Mapping[str, Any], run_dir: Path, device: torch.device) -> dict[
         run_dir / "MODEL.pt",
     )
     result = {
-        "status": "model_frozen_waiting_fresh_av2",
+        "status": fit_status,
+        "fit_verdict": "passed" if fit_passed else "rejected",
         "training": {
             "dataset": "nuScenes only",
             "actor_count": len(role_rows["train"]),
@@ -199,7 +206,7 @@ def fit(config: Mapping[str, Any], run_dir: Path, device: torch.device) -> dict[
     _write_json(
         run_dir / "status.json",
         {
-            "status": "model_frozen_waiting_fresh_av2",
+            "status": fit_status,
             "completed_fit_at_utc": datetime.now(timezone.utc).isoformat(),
         },
     )
@@ -211,6 +218,8 @@ def external(
 ) -> dict[str, Any]:
     source = Path(str(config["source_p4_run"]))
     fit_summary = _read_json(run_dir / "FIT_SUMMARY.json")
+    if not all(bool(value) for value in fit_summary["fit_gates"].values()):
+        raise RuntimeError("nuScenes-only fit gates rejected; fresh AV2 remains unread")
     candidate_artifact = torch.load(
         run_dir / "MODEL.pt", map_location=device, weights_only=False
     )

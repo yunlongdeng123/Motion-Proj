@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P6 ratio normalization rejected before external read（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；
+status=`fit_rejected_external_not_read`。29/56/228 nuScenes train/cal/test Actors；candidate repair AUROC/AUPRC/Brier=
+`.60728/.74010/.23857`，低于 P4 `.64908` 与预冻结 non-inferiority floor `.62908`，fit gate 失败。机会 `.5x/2x`
+feature shift 精确为 0；calibration threshold=`.998570`、coverage=`14.29%`，test coverage=`13.16%`、population false
+repair=`4.82%`、selective Chamfer=`.23155m`（query `.25130m`）。
+
+没有编译、读取或打分任何 fresh AV2 Actor；external phase 已锁死。登记 `V7-F12`：纯比值表示同时移除 shortcut 与
+legitimate evidence-amount signal，exact invariance 不等于 label-preserving generalization。检索 CVPR 2023 DGLSS 与 CVPR
+2024 LiDAR generalization study 后，下一独立 hypothesis 不再删除密度，而采用 nuScenes-only fixed sparsity augmentation +
+score consistency，保留原始可解释 feature。fresh 20-log cohort 尚未读，可继续作为该新候选的一次外部 confirmation。
+
 ## WorldSim V7 P6 implementation ready / nuScenes-only fit next（2026-09-02）
 
 `opportunity_invariant_selector.py` 已实现 12 维无量纲 validity representation、固定机会干预、单头训练/推理；

@@ -2,6 +2,22 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F12 — ratio-only opportunity invariance 丢失 nuScenes repairability ordering
+
+- run：`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；
+  fit 只读 P4 retained nuScenes rows，fresh AV2 compiled/scored=`0/0`。
+- symptom：固定 `.5x/2x` opportunity transform feature shift=`0`，但 nuScenes-test repair AUROC=`.60728`，低于 P4
+  `.64908` 与 frozen floor `.62908`；cal/test coverage=`14.29/13.16%`，test conditional failure=`36.67%`。
+- root cause：将 surfel/support 全部除以 observation count 是 non-invertible compression；它移除 raw frame-count shortcut
+  的同时也移除了与 repairability label 有关的 evidence amount。结构 exact invariance 不能替代 label sufficiency。
+- literature/open-source response：CVPR 2023 DGLSS 用 source-only random LiDAR subsampling 与 sparsity-invariant feature
+  consistency保留语义关系；CVPR 2024 LiDAR detector generalization study 也支持 source-domain low-resolution augmentation。
+  下一 hypothesis 保留 raw interpretable features，只在 nuScenes 训练施加 fixed opportunity subsampling + score consistency。
+- resolution/impact：ratio-only candidate=`rejected_before_external_read`；runner 阻止 external phase。P3/P4/P7 结论不变，
+  fresh 20-log cohort 未消费。status=`closed_ratio_normalization_family`。
+
+下一可用编号：`V7-F13`。
+
 ### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
 
 - P7 已精确暴露 `observation_frame_count` shortcut，因此 P6 只能删除/归一化该机会变量，不能借 30 个 consumed AV2 logs
@@ -11,7 +27,7 @@
 - runner 强制拆为 nuScenes-only `fit` 与 fresh-only `external`；fit artifact/status=`model_frozen_waiting_fresh_av2`，
   防止 IO 未完成时误读部分 fresh cohort 或用逐日志结果修改模型。
 - P6 即使通过也仍是 empirical transfer；factorized cross-task derivative zero 与 sensor-domain invariance 是两个不同命题。
-  本项不是新 failure；下一可用编号仍为 `V7-F12`。
+  本项不是新 failure；随后 ratio-only fit 暴露 `V7-F12`，下一可用编号为 `V7-F13`。
 
 ### V7-F11 — factorized validity head 依赖跨域不稳定的 sensor-opportunity shortcut
 
