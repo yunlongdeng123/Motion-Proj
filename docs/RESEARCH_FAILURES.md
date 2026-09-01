@@ -2,6 +2,21 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F10 — P4 adapter 误把 devkit reverse-index shortcut 当作 raw sample 字段
+
+- run：`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T160000Z__selective-factor-s70401-r1`；
+  `nuScenes_index` 刚开始即因 `sample.json["anns"]` 抛 `KeyError`。
+- exposure：run 只读取 scene/sample metadata；未读取 sample_data/ego_pose/sample_annotation 全表、LIDAR、Actor geometry、
+  repair label、model score 或 AV2；training=false，formal method-quality read=false，r1=`no_verdict`。
+- root cause：nuScenes raw schema 的 sample 仅有 token/timestamp/scene/prev/next；`anns`/`data` 是官方 devkit
+  `NuScenes.__make_reverse_index__()` 初始化时添加的 shortcut，不存在于原始 JSON。
+- literature/open-source response：nuScenes 官方 schema 规定 annotation 以 `sample_token` 外键指向 sample；官方
+  `nuscenes.py` 也显示 reverse-index 才执行 `sample_record['anns'].append(...)`。
+- resolution：删除完全未使用的 raw `anns` 读取与排序，保留既有 `sample_annotation.sample_token` streaming join；
+  r2 不改冻结 cohort、label、feature、model、seed、threshold、gate 或 claim。状态=`resolved_before_quality_read`。
+
+下一可用编号：`V7-F11`。
+
 ### P4 freeze prevention note — clean-query fallback 与外域风险边界
 
 - P3 的 `before` 包含 synthetic ghost/duplicate/flicker，不能用于证明逐 Actor 修复比原始观测更安全；P4 单独记录
@@ -10,7 +25,7 @@
   nuScenes train/calibration。AV2 未知 dataset shift 不满足已知 exchangeability 前提，只作冻结 zero-shot 描述。
 - hazard 分支不接收任何 validity feature，validity 分支不接收 TTC/clearance 等 hazard feature；paired swap 直接报告
   cross-input score shift，防止“高风险 Actor 被自动拒绝”成为隐蔽策略。
-- 本项不是新 failure；formal quality read=false，下一可用编号仍为 `V7-F10`。
+- 本项不是新 failure；后续已使用 `V7-F10`，下一可用编号为 `V7-F11`。
 
 ### V7-F09 — aggregate hard-geometry gates 掩盖 per-Actor repair degradation
 

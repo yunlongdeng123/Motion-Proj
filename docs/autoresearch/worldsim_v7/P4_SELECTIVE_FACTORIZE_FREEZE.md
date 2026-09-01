@@ -63,3 +63,11 @@ are the complete scientific decision surface; no extra smoke/regression matrix i
   pass and then freezes the model before the single AV2 zero-shot pass.
 - No hash, checksum, fingerprint, fine-tuning, target-conditioned action, planner, policy,
   closed-loop, collision, or population-safety claim is introduced.
+
+## Pre-quality implementation recovery
+
+r1 stopped at raw sample metadata indexing because it expected the devkit-generated `anns`
+shortcut in `sample.json`. Official nuScenes schema keeps annotations in the separate
+`sample_annotation` table linked by `sample_token`; r2 removes the unused shortcut access and
+keeps that streaming foreign-key join. No LIDAR, Actor geometry, label, model score, or AV2
+quality was read, and the frozen scientific contract is unchanged (`V7-F10`).

@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7 P4 r1 raw-schema failure / same-contract r2 recovery（2026-09-02）
+
+P4 r1=`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T160000Z__selective-factor-s70401-r1`
+在 `nuScenes_index` 首阶段访问 raw `sample.json["anns"]` 时退出。官方 schema 证实 raw sample 只有 token/timestamp/
+scene/prev/next；`anns` 是 devkit `NuScenes.__make_reverse_index__()` 运行时补的 shortcut。r1 未读 LIDAR、Actor surface、
+label、model score 或 AV2，状态=`implementation_failed_before_quality_read/no_verdict`（`V7-F10`）。恢复仅删除未使用的
+shortcut 依赖，annotation 继续按官方 `sample_annotation.sample_token` 外键流式关联；数据角色、模型、seed、threshold、
+gates 和 claim boundary 全不变。下一次 run id=r2，不建立第二候选。
+
 ## WorldSim V7 P4 selective repair certificate frozen / formal GPU run next（2026-09-02）
 
 Active=`WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01 / WS-V7-H-P4-001`。冻结 nuScenes `11/14/38`

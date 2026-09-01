@@ -63,7 +63,6 @@ def build_selected_index(
             "scene_name": str(scene["name"]),
             "role": str(scene["role"]),
             "timestamp_us": int(row["timestamp"]),
-            "annotation_tokens": set(str(value) for value in row["anns"]),
         }
 
     sensors = {
@@ -142,7 +141,6 @@ def build_selected_index(
         frame["sensor_rotation_ego"] = [float(value) for value in calibration["rotation"]]
         frame["ego_translation_global"] = [float(value) for value in pose["translation"]]
         frame["ego_rotation_global"] = [float(value) for value in pose["rotation"]]
-        frame["annotation_tokens"] = sorted(frame["annotation_tokens"])
         per_scene[str(frame["scene_name"])].append(frame)
     for scene_frames in per_scene.values():
         scene_frames.sort(key=lambda row: int(row["timestamp_us"]))

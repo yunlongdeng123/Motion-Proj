@@ -2,6 +2,14 @@
 
 ## WS-V7-P4 nuScenes selective factorization freeze（2026-09-02）
 
+### r1 pre-quality schema recovery
+
+- run=`20260902T160000Z__selective-factor-s70401-r1`；在 raw metadata index 阶段 `KeyError: anns`。
+- exposure：0 LIDAR/Actor/compiler/label/model/AV2 quality read；0 training；`no_verdict`。
+- cause：raw nuScenes sample schema 不含 `anns`；该字段由 devkit reverse index 动态产生。
+- fixed boundary：删除未使用的 `sample["anns"]` 访问，仍由 `sample_annotation.sample_token` 官方外键关联；r2
+  原样复用冻结 config，不改 scene、feature、label、architecture、seed、threshold、gate 或 claim。
+
 ### WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01
 
 - data：nuScenes train/calibration/test=`11/14/38` scene、`440/561/1529` keyframes；角色 scene-disjoint；AV2
