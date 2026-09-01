@@ -2,14 +2,27 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F16 — P9 冻结说明误标 P346 heldout horizon
+
+- affected run：`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。
+- symptom：docs freeze 写 `3.0s`；但 frozen config 未硬编码 horizon，runner 明确读取 P346 lattice artifact 的
+  `heldout_horizon_index`，artifact index=`2` 对应 `2.5s`，canonical summary 也在结果生成前记录 `2.5s`。
+- exposure/root cause：retained-source data 已全部消费过；错误来自人工把四 horizon 最后一项误认为 heldout，而 P346 的
+  source training indices 与 heldout index 已由 upstream artifact 冻结。没有根据 P9 metrics 选择 horizon。
+- resolution：以 executable artifact contract 为科学 source of truth，把 docs 的 `3.0s` 更正为 `2.5s`；不改 config/
+  runner/model/data/budget/threshold，不重跑、不生成 r2。
+- claim impact：r1 仍为 canonical `2.5s` retained-source demo；failure 只影响旧文字标签，不影响数值或 verdict。
+
+下一可用编号：`V7-F17`。
+
 ### P9 prevention note — retained-source action proxy 不越权为 closed-loop planning
 
 - P9 只在 P5 exact identities 的 retained P109 outcomes 上组合 frozen P4/P346；既非 fresh cohort，也没有车辆动力学、
   feedback execution、collision intervention 或 policy learning。
 - 物理分支不允许改 action denominator，task authority 不允许删除 Actor；B0/B1 与 B2/B3 的 action metrics 分别必须
   相同。任何 physical repair 与 task cost 的差异都不能从该 factorial 推为 causal effect。
-- 若 authority cost/risk 不改善或 coverage 太低，即保留 negative minimal-downstream result；不训练 critic/RL、不改 budget/
-  reliability threshold。当前无新增 failure，下一可用编号仍为 `V7-F16`。
+- authority cost/risk 与 coverage 已通过 frozen gates；仍不训练 critic/RL、不改 budget/reliability threshold。`V7-F16`
+  为文档 horizon 标签错误；下一可用编号为 `V7-F17`。
 
 ### Paper layout note — P8-A expanded Table 1 visually valid
 

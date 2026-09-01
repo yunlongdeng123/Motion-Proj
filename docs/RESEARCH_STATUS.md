@@ -1,10 +1,27 @@
 # Research Status
 
+## WorldSim V7 P9 composed authority supported（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。
+P5 exact 88 Actors/14 scenes 对应 `39,285` retained rows，形成 `1,228` fixed two-action task sets。冻结 P346 authority
+授权 `607/1,228=49.43%`；all/authorized mean cost=`.149711/.027887`（-81.37%），q90 authorized=`.063627`，unsafe
+rate=`16.45/1.15%`。14/14 scenes 有 authority support；这是 selective abstention，不是执行 planner。
+
+P4 physical composition 将 exact-Actor mean Chamfer 从 query `.229314m` 降至 `.223253m`，5 个 selected Actors 中
+geometric harm=`0`；88 Actors/32 hazards 均保留。B0/B1 action metrics 完全相同，B2/B3 也完全相同，验证 surface choice
+没有暗改 action denominator。5/5 gates，verdict=`supported_composed_physical_and_task_authority_demo`；只支持
+retained-source interface utility，不支持 repair 的 causal planning benefit、closed-loop/collision/road-safety claim。RTX 3090
+peak GPU/RSS=`.1282/.9447GiB`，wall=`2.42s`。
+
+冻结文档将 P346 heldout horizon 误写为 `3.0s`，而 executable config/runner 始终读取 frozen lattice artifact 的
+`heldout_horizon_index=2`，canonical summary 正确为 `2.5s`；登记 `V7-F16` documentation-label mismatch。未改 config、
+model、budget、threshold 或 data，且不重跑。
+
 ## WorldSim V7 P9 composed fixed-lattice authority frozen（2026-09-02）
 
 Active=`WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01 / WS-V7-H-P9-001`。将 plan 的四臂收敛为可识别的
 `2×2`：query/HARP-3D physical surface × no-task-authority/frozen P346 authority。输入只用 P5 test exact identities 对应的
-retained P109 rows；固定 6 queries、4 horizons，正式报告 P346 heldout `3.0s`、set size=`2`、middle frozen log-cost
+retained P109 rows；固定 6 queries、4 horizons，正式报告 P346 artifact heldout `2.5s`、set size=`2`、middle frozen log-cost
 ceiling、requested reliability=`.90` 与 heldout task conditions `.25/.75 × -.5/.5`。
 
 不训练/refit/calibrate/调 threshold，不读新 sensor，不执行 closed loop。P4 只决定 query/compiled surface，P346 只决定

@@ -1081,10 +1081,16 @@ B2 query surface + frozen P346 task authority
 B3 HARP-3D surface + frozen P346 task authority
 ```
 
-固定 P5 test exact identities 的 retained P109 rows、6-query/4-horizon lattice、P346 heldout 3.0s、authority set size 2、
+固定 P5 test exact identities 的 retained P109 rows、6-query/4-horizon lattice、P346 artifact heldout 2.5s、authority set size 2、
 middle frozen cost ceiling、requested reliability .90 与 heldout task conditions。无训练/calibration/threshold/budget sweep、
 无新 sensor read、无 critic/RL/closed-loop。核心只检验 physical CD、authorized visited-cost/risk、coverage 与 denominator/
 Actor/hazard retention；physical branches 的 action result 相同是预期 non-interference，不是无效实验。
+
+Canonical P9=`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。
+1,228 sets 中 authority coverage=`.49430`；mean cost `.149711→.027887`，unsafe `.164495→.011532`；HARP-3D
+surface CD `.229314→.223253m`，Actor/hazard retention=`1/1`，5/5 gates。B0/B1 与 B2/B3 action metrics 分别完全相同，
+证明分权 non-interference。旧 freeze 文字将 artifact heldout 误标为 3.0s，`V7-F16` 更正为实际 2.5s；executable
+contract 与 canonical summary 一直正确，故不改代码、不重跑。
 
 RL 不再是主线，也不阻断论文。
 

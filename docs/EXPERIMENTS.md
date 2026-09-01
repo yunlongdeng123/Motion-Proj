@@ -1,12 +1,23 @@
 # Experiments
 
+## WS-V7-P9 composed fixed-lattice authority result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。
+- footprint：88 exact Actors（32 hazards）、14 scenes、39,285 retained rows、1,228 task sets；6 queries、P346 artifact
+  heldout horizon=`2.5s`、set size=`2`、middle log ceiling=`.159554`、requested reliability=`.90`。
+- no authority → frozen authority：coverage=`1→.49430`，mean cost=`.149711→.027887` (-81.37%)，authorized q90=
+  `.063627`，unsafe rate=`.164495→.011532`；14/14 scenes retain some authority。
+- query → HARP-3D surface：mean Actor Chamfer=`.229314→.223253m`；selected harmful=`0/5`；Actor/hazard retention=`1/1`。
+- 2×2 non-interference：B0/B1 action metrics identical；B2/B3 identical；surface branch does not change action denominator。
+- gates=`5/5`；resources：RTX 3090 peak GPU/RSS=`.1282/.9447GiB`，wall=`2.42s`。Retained-source/open-loop only。
+
 ## WS-V7-P9 composed fixed-lattice authority freeze（2026-09-02）
 
 - factorial arms：`B0=query+no authority`、`B1=HARP-3D+no authority`、`B2=query+P346 authority`、
   `B3=HARP-3D+P346 authority`；物理与 task authority 分权。
 - cohort：P5 test exact identities（88 Actors/14 scenes）在 retained P109 rows 上的 fixed 6-query/4-horizon action sets；
   非新鲜确认，不读新 sensor。
-- frozen point：P346 heldout horizon=`3.0s`、set size=`2`、middle frozen ceiling、requested reliability=`.90`；task
+- frozen point：P346 artifact heldout horizon=`2.5s`、set size=`2`、middle frozen ceiling、requested reliability=`.90`；task
   conditions=`progress .25/.75 × lateral -.5/.5`。
 - gates：surface CD nonworse；authority coverage `>=.10`；authorized cost/risk nonworse；Actor/hazard retention=`1`。
 - no training/calibration/sweep/critic/RL/closed-loop；action equality across physical branches is structural, not a repair causal claim。
