@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P6-C source fit passed 2/2 / fresh external pending（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
+status=`model_frozen_waiting_fresh_av2`。nuScenes test repair AUROC/AUPRC/Brier=`.63239/.75872/.22203`；P4 AUROC=
+`.64908`、frozen floor=`.62908`，non-inferiority 通过。`.5x/.75x` mean score shift candidate/P4=`.019526/.183026`，
+ratio=`.10668<=.70`，干预敏感度降低 `89.33%`，2/2 fit gates。
+
+nuScenes-only threshold=`.998561`；calibration coverage=`19.64%`、adjusted risk=`.03509`；test coverage=`24.12%`、
+population false repair=`6.14%`、conditional failure=`25.45%`、query/always/selective CD=`.25130/.20471/.22195m`。
+model/standardizer/threshold 已冻结；fresh AV2 compiled/scored=`0/0`，下一步只实现 external resume，等 20/20 下载后一次执行。
+wall=`1.375s`、GPU=`.01694GiB`、RSS=`.9720GiB`。
+
 ## WorldSim V7 P6-C implementation ready / formal fit next（2026-09-02）
 
 `sparsity_consistent_selector.py` 已实现固定 opportunity views、combined source-view standardizer、original+augmented

@@ -831,6 +831,10 @@ P6-C 已冻结为原始 13D validity inputs + `.5x/.75x` joint opportunity subsa
 probability consistency，hidden32/seed70602/80 epochs。fresh 前两门固定为 nuScenes AUROC non-inferiority `.02` 与
 intervention-score shift 相对 P4 `<=.70x`；通过后外域仍沿用 coverage/false-repair/Chamfer/Wasserstein 四门，不调阈值。
 
+P6-C fit canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
+nuScenes AUROC=`.63239>=.62908`，candidate/P4 intervention shift=`.019526/.183026`、ratio=`.10668`，2/2 通过。
+model/standardizer/threshold 已冻结；fresh AV2 仍未编译/打分，external 四门保持未读。
+
 ### 主域
 
 - 训练、模型选择和校准：仅 nuScenes；

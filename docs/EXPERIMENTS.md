@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V7-P6C source fit result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
+  status=`model_frozen_waiting_fresh_av2`；2/2 fit gates。
+- source result：repair AUROC/AUPRC/Brier=`.63239/.75872/.22203`；P4/floor=`.64908/.62908`，non-inferior pass；
+  hazard AUROC remains `.98114` from frozen P4 factorized branch。
+- intervention：candidate/P4 mean score shift=`.019526/.183026`，ratio=`.10668`，pass `<=.70`。
+- operating point：threshold=`.998561`；cal/test coverage=`19.64/24.12%`；test population/conditional failure=
+  `6.14/25.45%`；query/always/selective CD=`.25130/.20471/.22195m`。
+- resources：wall=`1.375s`、GPU=`.01694GiB`、RSS=`.9720GiB`；fresh AV2 compiled/scored=`0/0`。
+
 ## WS-V7-P6C implementation ready（2026-09-02）
 
 - implementation：fixed opportunity feature intervention；source-view standardization；supervised + probability-consistency

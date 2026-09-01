@@ -25,6 +25,8 @@
 - 只有 nuScenes non-inferiority 与相对 P4 intervention shift 两门通过，runner 才允许 external phase；否则 fresh quality
   保持 unread。实现只提供 formal fit，未用部分下载日志做 adapter smoke。本项不是新 failure；下一可用编号仍为
   `V7-F13`。
+- formal fit 随后以 AUROC `.63239>=.62908`、shift ratio `.10668<=.70` 通过 2/2；这只解锁 fresh external read，
+  不把 source intervention robustness 升级为 external guarantee，也不改变下一 failure 编号。
 
 ### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
 
