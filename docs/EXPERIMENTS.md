@@ -1,5 +1,24 @@
 # Experiments
 
+## WS-V7-P4 nuScenes selective factorization freeze（2026-09-02）
+
+### WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01
+
+- data：nuScenes train/calibration/test=`11/14/38` scene、`440/561/1529` keyframes；角色 scene-disjoint；AV2
+  外域固定为既有 30 Sensor val logs。训练缺失的 `scene-0230/0242/0255` 仅因 raw LIDAR 不存在而排除。
+- target：`repairable := Chamfer(compiled,target) <= Chamfer(clean query,target)`；selective output 在接受时用
+  compiled surface，在拒绝时保留 clean query。target 只给标签/评价，不进入 runtime features 或 action。
+- models：shared-input two-head baseline 对比 structurally factorized validity/hazard encoders；hidden=`32`、seed=`70401`、
+  epochs=`80`、batch=`256`，无 model/seed/threshold sweep。
+- calibration：standardizer=train only；CRC-style monotone false-repair threshold=nuScenes calibration only，`alpha=.05`；
+  AV2 不训练、不标准化 fit、不校准、不调 gate，只报告 zero-shot AUROC/AUPRC/Brier/risk--coverage/Chamfer。
+- gates：两任务 factorized AUROC 对 shared degradation `<=.02`、factorized cross-input score shift `<=1e-8`、
+  AV2 coverage `>=.10`、false repair 优于 always repair、selective Chamfer 不差于 query、Actor/hazard exact retention。
+- claim boundary：nuScenes-only exchangeability 风险解释；AV2 未知 shift 下无 formal conformal/safety guarantee；
+  Waymo 因无本地冻结 sensor corpus 暂缓，不用浅 adapter 稀释 AV2 深证据。
+- implementation：`p4_nuscenes_selective_factorization_v1.yaml`、`nuscenes_actor_surface.py`、
+  `selective_validity_hazard.py`、`run_worldsim_v7_p4_selective_factorization.py`；formal quality read=false。
+
 ## WS-V7-P3B AV2 camera evidence result / actor-tail read（2026-09-02）
 
 ### WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 r1

@@ -677,6 +677,19 @@ repair certificate。P4 必须把 validity head 改成 nuScenes-only selective r
 
 ## V7-P4：有效性—危险性条件解耦
 
+### P4 执行冻结（2026-09-02）
+
+- Formal task=`WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01`；nuScenes `11/14/38` scenes 分别用于
+  train/calibration/test，角色完全 scene-disjoint；30 个 AV2 frozen logs 仅作外域 zero-shot。
+- P3 `before` 带 synthetic corruption，P4 不再以此定义“修复成功”。逐 Actor label 固定为
+  `Chamfer(compiled,target) <= Chamfer(clean query,target)`；abstain 返回 clean query，target 不进入 action/features。
+- validity 仅用 13 个 runtime surface/ray/provenance/support 特征，hazard 仅用 TTC/clearance/closing/brake/crossing；
+  比较唯一 shared-input two-head baseline 与 structurally factorized two-head candidate。
+- 单 seed、固定 32 hidden/80 epochs，无 architecture/seed/threshold sweep。标准化=train only；false-repair threshold
+  只在 nuScenes calibration 以 `.05` monotone adjusted risk 冻结，随后 AV2 不调任何参数。
+- formal guarantee 只限 exchangeable nuScenes calibration 边界；未知 nuScenes→AV2 shift 只报告 risk--coverage/geometry，
+  不声称 conformal、collision、planning、closed-loop 或 road-safety guarantee。Waymo 在本地无冻结 sensor corpus 时暂缓。
+
 ### Baselines
 
 - shared encoder；

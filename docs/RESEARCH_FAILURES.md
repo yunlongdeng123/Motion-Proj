@@ -2,6 +2,16 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P4 freeze prevention note — clean-query fallback 与外域风险边界
+
+- P3 的 `before` 包含 synthetic ghost/duplicate/flicker，不能用于证明逐 Actor 修复比原始观测更安全；P4 单独记录
+  `query_only`，label 和 selective fallback 都以 untouched clean query 为基线，target 仅在标签/评价阶段读取。
+- SelectiveNet/Conformal Risk Control 的迁移限于 reject/risk--coverage 结构；standardizer/model/threshold 只允许读取
+  nuScenes train/calibration。AV2 未知 dataset shift 不满足已知 exchangeability 前提，只作冻结 zero-shot 描述。
+- hazard 分支不接收任何 validity feature，validity 分支不接收 TTC/clearance 等 hazard feature；paired swap 直接报告
+  cross-input score shift，防止“高风险 Actor 被自动拒绝”成为隐蔽策略。
+- 本项不是新 failure；formal quality read=false，下一可用编号仍为 `V7-F10`。
+
 ### V7-F09 — aggregate hard-geometry gates 掩盖 per-Actor repair degradation
 
 - exposure：P3-B 不挑图的第 8 main case 显示 Chamfer `.527→.967m`。对 P3-A 全 634 Actors 作一次全量 tail read，

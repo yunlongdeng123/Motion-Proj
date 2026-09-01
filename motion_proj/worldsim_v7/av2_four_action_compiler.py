@@ -284,6 +284,7 @@ def _compile_actor(
         np.concatenate(compiled_parts, axis=0),
         float(config["compiler_geometry"]["output_voxel_size_m"]),
     )
+    query_only = _quality(query, target, config, device)
     before = _quality(baseline, target, config, device)
     after = _quality(compiled, target, config, device)
     completed_points = np.asarray(completed, dtype=np.float32).reshape(-1, 3)
@@ -308,6 +309,7 @@ def _compile_actor(
         "completion_decision_count": len(completed),
         "completion_supported_count": completion_supported,
         "before": before,
+        "query_only": query_only,
         "after": after,
         "target_recall_delta": after["target_recall"] - before["target_recall"],
         "surface_precision_delta": after["surface_precision"] - before["surface_precision"],
@@ -315,6 +317,29 @@ def _compile_actor(
         / max(before["symmetric_chamfer_m"], 1e-8),
         "actor_identity_trajectory_size_retention": 1.0,
         "hazard_label_retention": 1.0,
+        "runtime_features": {
+            "log_query_points": float(np.log1p(len(query))),
+            "log_canonical_surfels": float(np.log1p(len(canonical))),
+            "query_surface_mean_m": float(np.mean(query_distance)),
+            "query_surface_p95_m": float(np.quantile(query_distance, 0.95)),
+            "clean_keep_fraction": float(np.mean(keep)),
+            "unknown_query_fraction": float(np.mean(~keep)),
+            "temporal_support_mean": float(np.mean(support)),
+            "temporal_support_p10": float(np.quantile(support, 0.10)),
+            "view_support_mean": float(np.mean(views)),
+            "completion_candidate_fraction": len(completion_indices)
+            / max(len(canonical), 1),
+            "compiled_to_query_ratio": len(compiled) / max(len(query), 1),
+            "sensor_range_m": float(np.linalg.norm(sensor_origin)),
+            "observation_frame_count": float(len(records)),
+        },
+        "hazard_features": {
+            "minimum_ttc_s": float(track.minimum_ttc_s),
+            "minimum_clearance_m": float(track.minimum_clearance_m),
+            "closing_speed_mps": float(track.maximum_closing_speed_mps),
+            "hard_brake_score": float(track.hard_brake_score),
+            "crossing_probability": float(track.crossing_probability),
+        },
     }
     package = {
         "points": compiled,

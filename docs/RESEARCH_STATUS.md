@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P4 selective repair certificate frozen / formal GPU run next（2026-09-02）
+
+Active=`WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01 / WS-V7-H-P4-001`。冻结 nuScenes `11/14/38`
+train/calibration/test scenes（`440/561/1529` keyframes），三个缺 raw LIDAR 的既定 development scenes 仅按文件可用性
+排除，未读方法质量。P4 将 per-Actor target 改为 `compiled Chamfer <= clean-query Chamfer`；拒绝修复时原样返回干净
+query，不再把带 synthetic artifacts 的旧 before 当成可修复性基线。
+
+有效性头只读 13 个运行时几何/表面/provenance 特征，危险头只读 5 个解析轨迹几何；factorized candidate 与唯一
+shared-input two-head baseline 均为固定低容量模型、单 seed、80 epochs，无 sweep。标准化只 fit nuScenes train，`.05`
+false-repair threshold 只在 nuScenes calibration 选择；随后模型和阈值冻结，30/30 AV2 logs 只做 zero-shot read。
+nuScenes calibration 的有限样本风险解释依赖 exchangeability，明确不外推为 AV2 conformal/road-safety guarantee。
+当前 formal method-quality read=false；下一动作是一次单卡 GPU corpus/train/test/AV2 run，不等待其他 IO。
+
 ## WorldSim V7 P3-B camera evidence supported / per-Actor boundary exposed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P3B-AV2-CAMERA-EVIDENCE-01/20260902T150000Z__camera-evidence-s0-r1`；
