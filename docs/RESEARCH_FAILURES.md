@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P2 freeze prevention note — completion 不读取 held-out target
+
+- P1 已证明 build-side canonical surfel support，但 paired hole 的满分不能直接当真实 completion 质量；P2 因此把
+  第一个 held-out frame 固定为 query、其余 held-out frames 固定为 target-only。
+- `COMPLETE` 候选只由 build surface 的 temporal/view support 与 query-space hole 产生；target 只在全部坐标编译完成后
+  计算 support/recall/precision/Chamfer。禁止用 target 删除 completion、调 hole radius 或换 Actor。
+- quantitative 20 logs 与 qualitative 10 logs 在同一冻结实现中一次执行，避免 development 结果后再修改 confirmation。
+- 本项不是新 failure；下一可用编号仍为 `V7-F05`。
+
 ### V7-F04 — background launcher 将准备链与训练命令一起放入 subshell，PID sidecar 未写出
 
 - symptom：formal P1 进程已正常启动，但父 shell 在 background subshell 创建 `launch_logs/` 前写 PID 文件，报告

@@ -1,0 +1,82 @@
+task_id: WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01
+hypothesis_id: WS-V7-H-P2-001
+runs_root: /root/autodl-tmp/runs
+dataset_root: /root/autodl-tmp/data/av2/sensor/val
+cohort_config: configs/worldsim_v7/av2_zero_shot_cohort_v1.json
+cohort_roles: [quantitative, qualitative]
+device: cuda
+claim_boundary: >-
+  Frozen zero-shot AV2 evidence that a build-only Actor canonical surface can compile
+  single-frame physical query primitives with KEEP/PROJECT/COMPLETE/UNKNOWN and improve
+  independent held-out geometry while preserving Actor and hazard state. Corruption probes
+  remain paired synthetic interventions; this is not learned completion, appearance repair,
+  planning, closed-loop, or safety evidence.
+actors:
+  categories:
+    - REGULAR_VEHICLE
+    - BUS
+    - BOX_TRUCK
+    - TRUCK
+    - VEHICULAR_TRAILER
+    - SCHOOL_BUS
+    - ARTICULATED_BUS
+    - LARGE_VEHICLE
+    - MOTORCYCLE
+    - BICYCLIST
+  minimum_track_states: 8
+  actor_batch_size: 16
+  box_padding_m: 0.10
+surface:
+  voxel_size_m: 0.12
+  evaluation_stride: 3
+  minimum_build_frames: 4
+  minimum_heldout_frames: 3
+  minimum_temporal_support: 2
+  minimum_stable_surfels: 12
+  maximum_points_per_actor_frame: 4096
+compiler_thresholds:
+  minimum_sensor_hits: 1
+  minimum_temporal_support: 2
+  minimum_completion_views: 2
+  maximum_project_distance_m: 0.25
+  minimum_free_space_violation_m: 0.02
+  minimum_hole_radius_m: 0.15
+  minimum_normal_alignment: 0.25
+compiler_geometry:
+  keep_distance_m: 0.20
+  ghost_offset_m: 0.12
+  duplicate_shell_offset_m: 0.30
+  flicker_offset_xyz_m: [0.0, 0.0, 0.45]
+  hole_radius_m: 0.20
+  minimum_completion_support: 3
+  maximum_artifact_probes_per_actor: 64
+  maximum_completion_probes_per_actor: 64
+  minimum_query_points: 12
+  minimum_target_points: 12
+  minimum_stable_query_points: 8
+  maximum_metric_points: 4096
+  distance_chunk_size: 1024
+  target_support_distance_m: 0.20
+  output_voxel_size_m: 0.06
+gates:
+  quantitative: &role_gates
+    minimum_actor_count: 64
+    minimum_hazard_actor_count: 8
+    minimum_each_action_count: 100
+    minimum_clean_keep_rate: 0.75
+    minimum_ghost_project_rate: 0.95
+    minimum_unknown_artifact_rate: 0.95
+    minimum_completion_decision_rate: 0.95
+    minimum_completion_target_support: 0.50
+    minimum_artifact_repair_or_reject_rate: 0.95
+    minimum_target_recall_delta: -0.02
+    minimum_surface_precision_delta: 0.05
+    maximum_chamfer_ratio: 0.90
+    minimum_actor_hazard_retention: 1.0
+  qualitative:
+    <<: *role_gates
+    minimum_actor_count: 32
+    minimum_hazard_actor_count: 4
+    minimum_each_action_count: 50
+verdict_on_pass: supported_zero_shot_av2_four_action_physical_compile
+verdict_on_failure: rejected_zero_shot_av2_four_action_physical_compile

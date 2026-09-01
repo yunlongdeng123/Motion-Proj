@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7 P2 real-coordinate compiler frozen / formal 30-log GPU run next（2026-09-02）
+
+分支合同再次核验：`research/worldsim-v7-harp3d-cvpr` 直接从
+`research/worldsim-v6.7-anisotropic-surface@d97c3f2` 拉出；没有从 V6.4 新建 V6.5，也不改写任何历史分支。
+
+Active=`WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 / WS-V7-H-P2-001`。对冻结 30 logs 一次执行：20 quantitative
+给主指标，10 qualitative 全量作为固定 confirmation 与后续可视化候选，不按结果删 log/Actor。每个 Actor 只用
+build frames 构造 canonical surface；第一个 held-out frame 是单帧 query，其余 held-out frames 是独立 target，target
+不参与 action 决策或 completion 选择。
+
+P2 坐标编译固定为：真实且邻近 canonical support 的 query `KEEP`；observed-FREE ghost 投影到最近 canonical surfel
+`PROJECT`；只有 build-side temporal support `>=3`、view support `>=2` 且 query hole `>=0.20m` 的 canonical surfel
+`COMPLETE`；duplicate shell、flicker 与缺少稳定支持的 clean query 为 `UNKNOWN` 并退出 collision surface。Actor ID、
+trajectory、size 与 hazard label 永不改变。13 gates 分别对 quantitative/qualitative 两个 role 执行；配置在任何 P2
+quality read 前冻结，不训练、不校准、不扫阈值。
+
 ## WorldSim V7 P1 supported / P2 four-action physical compile next（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P1-AV2-FACTORIAL-ATLAS-01/20260902T104500Z__av2-factorial-s0-r1`；

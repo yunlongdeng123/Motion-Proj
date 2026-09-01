@@ -494,6 +494,16 @@ artifact score=100%、clean-hazard false-artifact=0，只登记为接口合同�
 
 ## V7-P2：Actor canonical physical surface
 
+### P2 formal freeze（2026-09-02）
+
+- 分支从 `research/worldsim-v6.7-anisotropic-surface@d97c3f2` 直接拉出 V7。
+- Formal task=`WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01`；冻结 30 AV2 logs 一次完成 quantitative 与 qualitative
+  confirmation，不在两阶段之间改 candidate。
+- build/query/target 按固定 frame index 分离；所有 action 仅读取 build canonical 与 query evidence，target-only 几何
+  只用于最终 before/after 评价。
+- `KEEP/PROJECT/COMPLETE/UNKNOWN` 均产生真实坐标 surface；completion 必须有 build-side `>=3` temporal 与 `>=2`
+  view support。13-gate AND rule 在 formal read 前提交。
+
 ### P2-A：多帧 Actor 对齐
 
 将每个 Actor 的多帧 LiDAR / point / primitive 转换到 canonical Actor frame：

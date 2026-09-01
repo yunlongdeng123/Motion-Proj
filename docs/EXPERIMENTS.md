@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V7-P2 real-coordinate four-action compiler（2026-09-02）
+
+### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 freeze
+
+- branch base：`research/worldsim-v6.7-anisotropic-surface@d97c3f2` → `research/worldsim-v7-harp3d-cvpr`。
+- status：`frozen / implementation ready / P2 quality read=false`；hypothesis=`WS-V7-H-P2-001`。
+- cohort：冻结 AV2 30 logs；20 quantitative + 10 qualitative confirmation；all-row reporting，禁止 failed-log/Actor deletion。
+- evidence split：frame index `%3!=0` build canonical；首个 `%3==0` frame query；其余 `%3==0` frames target-only。
+- actions：KEEP real stable query；PROJECT paired observed-FREE ghost；COMPLETE build-only multiframe/multiview holes；
+  UNKNOWN unsupported clean/duplicate/flicker。无 target-conditioned selection。
+- hard geometry：before/after target recall、surface precision、symmetric Chamfer；completion 另报 independent target support。
+- role gates：Actor/hazard/action support、clean keep、ghost project、unknown rejection、completion decision/target support、
+  artifact repair-or-reject、recall/precision/Chamfer、Actor/hazard retention，共 13 项；quantitative 与 qualitative 均需通过。
+- implementation：`motion_proj/worldsim_v7/av2_four_action_compiler.py`、
+  `scripts/run_worldsim_v7_p2_av2_four_action_compile.py`、`configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml`。
+
 ## WS-V7-P1 AV2 factorial atlas（2026-09-02）
 
 ### WS-V7-P1-AV2-FACTORIAL-ATLAS-01 formal result
